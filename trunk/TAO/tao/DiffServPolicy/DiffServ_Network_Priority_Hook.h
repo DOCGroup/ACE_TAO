@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- *  @file    Diffserv_Network_Priority_Hook.h
+ *  @file    DiffServ_Network_Priority_Hook.h
  *
  *  $Id$
  *
