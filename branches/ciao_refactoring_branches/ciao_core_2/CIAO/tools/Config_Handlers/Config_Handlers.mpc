@@ -15,6 +15,7 @@ project (XSC_XML_Generation) : xscdefaults {
    XSC_Files {
         gendir = .
         $(CIAO_ROOT)/docs/schema/Basic_Deployment_Data.xsd
+        $(CIAO_ROOT)/docs/schema/Deployment.xsd
         $(CIAO_ROOT)/docs/schema/ccd.xsd
         $(CIAO_ROOT)/docs/schema/cdd.xsd
         $(CIAO_ROOT)/docs/schema/cdp.xsd
@@ -37,12 +38,12 @@ project (XSC_XML_Handlers) : acelib, xerces {
   after += XSC_XML_Generation
 
   Source_Files {
+    Deployment.cpp
     ccd.cpp
     cdd.cpp
     cdp.cpp
     cid.cpp
     cpd.cpp
-    Deployment.cpp
     iad.cpp
     pcd.cpp
     toplevel.cpp

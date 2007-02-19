@@ -1,3 +1,15 @@
+Mon Feb 19 19:20:35 UTC 2007  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * Package_Handlers/PCD_Handler.cpp
+          
+          Changed to reflect slight change in schema.
+        
+        * CIAO_Events/CIAO_Events_Handlers.mpc
+        * Config_Handlers.mpc
+        * RT-CCM/RT-CCM-Handlers.mpc
+
+          Updated to include XSC generation.
+        
 Mon Feb 19 15:30:04 UTC 2007  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * MPC/config/xscdefaults.mpb
