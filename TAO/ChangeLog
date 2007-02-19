@@ -1,3 +1,10 @@
+Mon Feb 19 21:01:10 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
+
+        * tao/DiffServPolicy/DiffServPolicy.pidl:
+        
+          Changed the PolicyType value to use a value from 
+          the TAO reserved range.
+
 Mon Feb 19 20:34:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/FTRT_Event_Service/Event_Service/FTRT_Event_Service.mpc:
