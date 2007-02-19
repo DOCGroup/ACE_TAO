@@ -44,9 +44,9 @@ module TAO
     NO_NETWORK_PRIORITY
   };
 
-  const CORBA::PolicyType SERVER_NETWORK_PRIORITY_TYPE = 85;
-  const CORBA::PolicyType CLIENT_NETWORK_PRIORITY_TYPE = 86;
-  const CORBA::PolicyType NETWORK_PRIORITY_TYPE = 87;
+  const CORBA::PolicyType SERVER_NETWORK_PRIORITY_TYPE = 0x54410002;
+  const CORBA::PolicyType CLIENT_NETWORK_PRIORITY_TYPE = 0x54410003;
+  const CORBA::PolicyType NETWORK_PRIORITY_TYPE = 0x54410004;
 
   local interface NetworkPriorityPolicy : CORBA::Policy
     {
