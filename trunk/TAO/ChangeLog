@@ -1,3 +1,9 @@
+Mon Feb 19 18:42:50 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tests/Crash_On_Write/run_test.pl:
+
+          Check for -1 instead of -10 to indicate timeout.
+
 Mon Feb 19 18:41:22 UTC 2007  Carlos O'Ryan  <coryan@atdesk.com>
 
         * tao/Default_Network_Priority_Protocols_Hooks.cpp:
@@ -7,7 +13,7 @@ Mon Feb 19 18:41:22 UTC 2007  Carlos O'Ryan  <coryan@atdesk.com>
 Mon Feb 19 16:37:26 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
 
         * tao/DiffServPolicy/DiffServ_Protocols_Hooks.cpp:
-        
+
           Fixed the RTEMS_NO_NETWORK build errors. The errors were in
           throwing exceptions in lines 96 and 102.
 
@@ -18,7 +24,7 @@ Mon Feb 19 14:42:08 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
         * tao/Default_Network_Priority_Protocols_Hooks.cpp:
         * tao/DiffServPolicy/DiffServ_Protocols_Hooks.h:
         * tao/DiffServPolicy/DiffServ_Protocols_Hooks.cpp:
-        
+
           Modified the signature of get_dscp_codepoint () methods, to get rid
           of the "type qualifier meaningless" errors in most of the TAO
           builds.
@@ -26,7 +32,7 @@ Mon Feb 19 14:42:08 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
 Mon Feb 19 14:36:33 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
 
         * tao/TAO_Internal.cpp:
-        
+
           Added a process directive to fix the ORB initialization errors.
 
 Mon Feb 19 12:32:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
