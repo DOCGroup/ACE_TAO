@@ -20,7 +20,7 @@
 #include /**/ "ace/pre.h"
 
 #include "ciao/CCM_ContainerC.h"
-#include "ciao/Deployment_CoreC.h"
+#include "DAnCE/Deployment/Deployment_CoreC.h"
 #include "ciao/CIAO_Server_Export.h"
 
 #include "tao/PortableServer/PortableServer.h"

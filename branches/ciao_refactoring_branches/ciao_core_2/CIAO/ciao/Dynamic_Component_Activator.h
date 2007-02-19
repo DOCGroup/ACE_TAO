@@ -22,7 +22,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ciao/CCM_ContainerC.h"
-#include "ciao/Deployment_CoreC.h"
+#include "DAnCE/Deployment/Deployment_CoreC.h"
 
 #include "tao/PortableServer/Key_Adapters.h"
 #include "tao/PortableServer/PortableServer.h"
