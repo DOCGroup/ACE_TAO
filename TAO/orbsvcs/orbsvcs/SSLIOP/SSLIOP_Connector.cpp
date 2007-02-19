@@ -90,7 +90,7 @@ TAO::SSLIOP::Connector::connect (TAO::Profile_Transport_Resolver *resolver,
 {
   if (TAO_debug_level > 0)
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("TAO (%P|%t) - Connector::connect, ")
+                  ACE_TEXT ("TAO_SSLIOP (%P|%t) - Connector::connect, ")
                   ACE_TEXT ("looking for SSLIOP connection.\n")));
 
   TAO_Endpoint *endpoint = desc->endpoint ();
@@ -266,8 +266,7 @@ TAO::SSLIOP::Connector::make_secure_profile (void)
 
 
 TAO_Profile *
-TAO::SSLIOP::Connector::corbaloc_scan (const char *endpoint,
-                                       size_t &len)
+TAO::SSLIOP::Connector::corbaloc_scan (const char *endpoint, size_t &len)
 {
    int ssl_only = 0;
    if (this->check_prefix (endpoint) == 0)
@@ -383,10 +382,7 @@ TAO::SSLIOP::Connector::iiop_connect (
 
   // Note that the IIOP-only transport descriptor is used!
   return
-    this->TAO::IIOP_SSL_Connector::connect (
-      resolver,
-      &iiop_desc,
-      timeout);
+    this->TAO::IIOP_SSL_Connector::connect (resolver, &iiop_desc, timeout);
 }
 
 TAO_Transport *
@@ -429,8 +425,7 @@ TAO::SSLIOP::Connector::ssliop_connect (
       && qop == ::Security::SecQOPIntegrity)
     throw CORBA::INV_POLICY ();
 
-  const ACE_INET_Addr &remote_address =
-    ssl_endpoint->object_addr ();
+  const ACE_INET_Addr &remote_address = ssl_endpoint->object_addr ();
 
   // Verify that the remote ACE_INET_Addr was initialized
   // properly.  Failure can occur if hostname lookup failed when

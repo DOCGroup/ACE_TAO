@@ -55,9 +55,7 @@ namespace TAO
     public:
 
       /// Constructor
-      ClientCredentials (::X509 * cert,
-                         ::EVP_PKEY * evp,
-                         ::SSL * ssl);
+      ClientCredentials (::X509 * cert, ::EVP_PKEY * evp, ::SSL * ssl);
 
       /**
        * @name SecurityLevel3::Credentials Methods

@@ -6,9 +6,9 @@
 #include "tao/PortableServer/PS_CurrentC.h"
 #include "tao/debug.h"
 
-#if defined(SSLIOP_DEBUG_PEER_CERTIFICATE)
+#if defined (SSLIOP_DEBUG_PEER_CERTIFICATE)
 #include <openssl/x509.h>   // @@ For debugging code below
-#endif /* DEBUG_PEER_CERTIFICATES */
+#endif /* SSLIOP_DEBUG_PEER_CERTIFICATE */
 
 ACE_RCSID (SSLIOP,
            SSLIOP_Invocation_Interceptor,
@@ -41,7 +41,6 @@ TAO::SSLIOP::Server_Invocation_Interceptor::destroy ()
 {
 }
 
-
 void
 TAO::SSLIOP::Server_Invocation_Interceptor::receive_request_service_contexts (
                                               PortableInterceptor::ServerRequestInfo_ptr /*ri*/)
@@ -55,8 +54,7 @@ TAO::SSLIOP::Server_Invocation_Interceptor::receive_request_service_contexts (
   //          SecTargetSecureInvocationPolicy so that we can
   //          accept or reject requests on a per-object basis
   //          instead on a per-endpoint basis.
-  CORBA::Boolean const no_ssl =
-    this->ssliop_current_->no_context ();
+  CORBA::Boolean const no_ssl = this->ssliop_current_->no_context ();
 
   if (TAO_debug_level >= 3)
     ACE_DEBUG ((LM_DEBUG, "SSLIOP (%P|%t) Interceptor (context), ssl=%d\n", !(no_ssl)));
@@ -64,12 +62,12 @@ TAO::SSLIOP::Server_Invocation_Interceptor::receive_request_service_contexts (
   if (no_ssl && this->qop_ != ::Security::SecQOPNoProtection)
     throw CORBA::NO_PERMISSION ();
 
-#if defined(DEBUG_PEER_CERTIFICATES)
+#if defined(SSLIOP_DEBUG_PEER_CERTIFICATE)
   try
     {
       // If the request was not made through an SSL connection, then
       // this method will throw the SSLIOP::Current::NoContext
-      // exception.  Otherwise, it will return a DER encoded X509
+      // exception. Otherwise, it will return a DER encoded X509
       // certificate.
       ::SSLIOP::ASN_1_Cert_var cert =
         this->ssliop_current_->get_peer_certificate ();
@@ -79,9 +77,9 @@ TAO::SSLIOP::Server_Invocation_Interceptor::receive_request_service_contexts (
       //    i.e. prints two lines of information per request.
       if (TAO_debug_level > 1)
         {
-          CORBA::Octet *der_cert = cert->get_buffer ();
+          const CORBA::Octet *der_cert = cert->get_buffer ();
 
-          X509 *peer = ::d2i_X509 (0, &der_cert, cert->length ());
+          ::X509 *peer = ::d2i_X509 (0, &der_cert, cert->length ());
           if (peer != 0)
             {
               char buf[BUFSIZ] = { 0 };
@@ -105,6 +103,11 @@ TAO::SSLIOP::Server_Invocation_Interceptor::receive_request_service_contexts (
 
               ::X509_free (peer);
             }
+          else
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "(%P|%t) No certificate info\n"));
+            }
         }
     }
   catch (const ::SSLIOP::Current::NoContext& )
@@ -121,7 +124,7 @@ TAO::SSLIOP::Server_Invocation_Interceptor::receive_request_service_contexts (
       if (this->qop_ != ::Security::SecQOPNoProtection)
         throw CORBA::NO_PERMISSION ();
     }
-#endif /* DEBUG_PEER_CERTIFICATES */
+#endif /* SSLIOP_DEBUG_PEER_CERTIFICATE */
 }
 
 

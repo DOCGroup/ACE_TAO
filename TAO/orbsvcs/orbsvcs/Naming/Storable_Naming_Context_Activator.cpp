@@ -104,9 +104,10 @@ TAO_Storable_Naming_Context_Activator::etherealize (
     CORBA::Boolean /*cleanup_in_progress*/,
     CORBA::Boolean remaining_activations)
 {
-  if (!remaining_activations) {
-    delete servant;
-  }
+  if (!remaining_activations)
+    {
+      delete servant;
+    }
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

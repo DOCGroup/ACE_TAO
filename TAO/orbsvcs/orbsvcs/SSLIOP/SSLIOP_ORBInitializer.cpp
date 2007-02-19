@@ -40,8 +40,7 @@ void
 TAO::SSLIOP::ORBInitializer::pre_init (
     PortableInterceptor::ORBInitInfo_ptr info)
 {
-  TAO_ORBInitInfo_var tao_info =
-    TAO_ORBInitInfo::_narrow (info);
+  TAO_ORBInitInfo_var tao_info = TAO_ORBInitInfo::_narrow (info);
 
   if (CORBA::is_nil (tao_info.in ()))
     throw CORBA::INV_OBJREF ();
@@ -68,8 +67,7 @@ TAO::SSLIOP::ORBInitializer::pre_init (
   SSLIOP::Current_var ssliop_current = current;
 
   // Register the SSLIOP::Current object reference with the ORB.
-  info->register_initial_reference ("SSLIOPCurrent",
-                                    ssliop_current.in ());
+  info->register_initial_reference ("SSLIOPCurrent", ssliop_current.in ());
 }
 
 void
