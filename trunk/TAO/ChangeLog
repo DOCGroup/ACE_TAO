@@ -1,3 +1,9 @@
+Mon Feb 19 18:59:01 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
+
+        * tao/DiffServPolicy/DiffServ_Network_Priority_Hook.h:
+        
+          Fixed the fuzz build errors.
+
 Mon Feb 19 18:48:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Invocation_Adapter.cpp:
