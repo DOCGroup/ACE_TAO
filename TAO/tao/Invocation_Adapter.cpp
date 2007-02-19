@@ -241,8 +241,7 @@ namespace TAO
     if (is_timeout)
       max_wait_time = &tmp_wait_time;
 
-    (void) this->set_response_flags (stub,
-                                     details);
+    (void) this->set_response_flags (stub, details);
 
     CORBA::Octet rflags = details.response_flags ();
     bool block_connect =
@@ -340,8 +339,7 @@ namespace TAO
 
     Invocation_Status const s = synch.remote_oneway (max_wait_time);
 
-    if (s == TAO_INVOKE_RESTART &&
-        synch.is_forwarded ())
+    if (s == TAO_INVOKE_RESTART && synch.is_forwarded ())
       {
         effective_target = synch.steal_forwarded_reference ();
 
@@ -374,7 +372,6 @@ namespace TAO
           TAO_INVOCATION_LOCATION_FORWARD_MINOR_CODE,
           errno),
         CORBA::COMPLETED_NO);
-
 
     // Reset the profile in the stubs
     stub->add_forward_profiles (stubobj->base_profiles (), permanent_forward);
