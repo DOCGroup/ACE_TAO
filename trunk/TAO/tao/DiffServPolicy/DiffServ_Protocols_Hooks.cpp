@@ -93,13 +93,13 @@ TAO_DS_Network_Priority_Protocols_Hooks::get_dscp_codepoint (
       CORBA::Boolean byte_order;
       if ((cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
         {
-          throw (CORBA::MARSHAL ());
+          throw CORBA::MARSHAL ();
         }
       cdr.reset_byte_order (static_cast<int> (byte_order));
 
       if ((cdr >> dscp_codepoint) == 0)
         {
-          throw (CORBA::MARSHAL ());
+          throw CORBA::MARSHAL ();
         }
     }
 
