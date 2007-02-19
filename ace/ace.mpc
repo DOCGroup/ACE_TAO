@@ -125,6 +125,7 @@ project(ACE) : acedefaults, install, other, codecs, token, svcconf, uuid, fileca
     Mutex.cpp
     Netlink_Addr.cpp
     Notification_Strategy.cpp
+    Notification_Queue.cpp
     Obchunk.cpp
     Object_Manager.cpp
     Object_Manager_Base.cpp

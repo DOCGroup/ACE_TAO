@@ -96,6 +96,7 @@ Naming_Test: !LynxOS !Unicos !VxWorks !nsk !ACE_FOR_TAO
 Network_Adapters_Test: !DISABLE_ToFix_LynxOS_PPC !DISABLE_ToFix_LynxOS_x86
 New_Fail_Test: ALL !DISABLED
 NonBlocking_Conn_Test
+Notification_Queue_Unit_Test
 Notify_Performance_Test: !nsk !ACE_FOR_TAO
 OS_Test
 Object_Manager_Test

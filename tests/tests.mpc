@@ -631,6 +631,13 @@ project(New Fail Test) : acetest {
   }
 }
 
+project(Notification Queue Unit Test) : acetest {
+  exename = Notification_Queue_Unit_Test
+  Source_Files {
+    Notification_Queue_Unit_Test.cpp
+  }
+}
+
 project(Notify Performance Test) : acetest {
   avoids += ace_for_tao
   exename = Notify_Performance_Test
