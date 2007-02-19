@@ -41,8 +41,7 @@ namespace CIAO
   typedef ::PortableServer::Servant (*ServantFactory)
     (::Components::HomeExecutorBase_ptr p,
      ::CIAO::Session_Container *c,
-     const char *ins_name
-    );
+     const char *ins_name);
 
   typedef ACE_Hash_Map_Manager_Ex<ACE_CString,
                                   HomeFactory,
