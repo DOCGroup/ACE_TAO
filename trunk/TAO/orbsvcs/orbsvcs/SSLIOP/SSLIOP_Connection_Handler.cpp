@@ -304,8 +304,7 @@ TAO::SSLIOP::Connection_Handler::handle_timeout (const ACE_Time_Value &,
 }
 
 int
-TAO::SSLIOP::Connection_Handler::handle_close (ACE_HANDLE,
-                                             ACE_Reactor_Mask)
+TAO::SSLIOP::Connection_Handler::handle_close (ACE_HANDLE, ACE_Reactor_Mask)
 {
   ACE_ASSERT (0);
   return 0;
@@ -457,8 +456,7 @@ TAO::SSLIOP::Connection_Handler::teardown_ssl_state (
   TAO::SSLIOP::Current_Impl *previous_current_impl,
   bool &setup_done)
 {
-  this->current_->teardown (previous_current_impl,
-                            setup_done);
+  this->current_->teardown (previous_current_impl, setup_done);
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

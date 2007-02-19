@@ -82,8 +82,7 @@ TAO::IIOP_SSL_Connector::set_validate_endpoint (TAO_Endpoint *endpoint)
   if (iiop_endpoint == 0)
     return -1;
 
-  const ACE_INET_Addr &remote_address =
-    iiop_endpoint->object_addr ();
+  const ACE_INET_Addr &remote_address = iiop_endpoint->object_addr ();
 
   // Verify that the remote ACE_INET_Addr was initialized properly.
   // Failure can occur if hostname lookup failed when initializing the
@@ -93,10 +92,9 @@ TAO::IIOP_SSL_Connector::set_validate_endpoint (TAO_Endpoint *endpoint)
       if (TAO_debug_level > 0)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("TAO (%P|%t) IIOP_SSL connection failed.\n")
-                      ACE_TEXT ("TAO (%P|%t) This is most likely ")
-                      ACE_TEXT ("due to a hostname lookup ")
-                      ACE_TEXT ("failure.\n")));
+                      ACE_TEXT ("TAO (%P|%t) - IIOP_SSL connection failed.\n")
+                      ACE_TEXT ("TAO (%P|%t) - This is most likely ")
+                      ACE_TEXT ("due to a hostname lookup failure.\n")));
         }
 
       return -1;
@@ -128,8 +126,7 @@ TAO::IIOP_SSL_Connector::make_connection (
   // Get the right synch options
   ACE_Synch_Options synch_options;
 
-  this->active_connect_strategy_->synch_options (max_wait_time,
-                                                 synch_options);
+  this->active_connect_strategy_->synch_options (max_wait_time, synch_options);
 
   // If we don't need to block for a transport just set the timeout to
   // be zero.
@@ -145,9 +142,7 @@ TAO::IIOP_SSL_Connector::make_connection (
 
   // Connect.
   int result =
-    this->base_connector_.connect (svc_handler,
-                                   remote_address,
-                                   synch_options);
+    this->base_connector_.connect (svc_handler, remote_address, synch_options);
 
   // The connect() method creates the service handler and bumps the
   // #REFCOUNT# up one extra.  There are three possibilities from
@@ -214,7 +209,7 @@ TAO::IIOP_SSL_Connector::make_connection (
       return 0;
     }
 
-  if (transport->connection_handler ()->keep_waiting ()) 
+  if (transport->connection_handler ()->keep_waiting ())
     {
       svc_handler->add_reference ();
     }
