@@ -1,3 +1,10 @@
+Mon Feb 19 18:48:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Invocation_Adapter.cpp:
+        * tao/Profile_Transport_Resolver.cpp:
+        * tao/Transport_Connector.cpp:
+          Layout changes
+
 Mon Feb 19 18:42:50 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * tests/Crash_On_Write/run_test.pl:
