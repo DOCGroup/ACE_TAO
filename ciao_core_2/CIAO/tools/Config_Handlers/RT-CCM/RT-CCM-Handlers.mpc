@@ -1,11 +1,31 @@
 //$Id$
 
+project (RT_CCM_XML_Generation) : xscdefaults {
+   requires += xsc
+
+   xscflags += --cxx-banner-file $(CIAO_ROOT)/docs/schema/xsc-banner.cpp
+   xscflags += --cxx-header-banner-file $(CIAO_ROOT)/docs/schema/xsc-banner.h
+   xscflags += --cxx-export-symbol RT_CCM_Handlers_Export
+   xscflags += --cxx-namespace-regex "%.*vanderbilt.*%CIAO/Config_Handlers%"
+   xscflags += --cxx-export-header RT_CCM_Handlers_Export.h
+   xscflags += --search-path "$(CIAO_ROOT)/docs/schema"
+   
+   custom_only = 1
+
+   XSC_Files {
+        gendir = .
+        $(CIAO_ROOT)/docs/schema/CIAOServerResources.xsd
+   }
+}
+
 project (RT_CCM_Config_Handlers) : acelib, ciao_deployment_stub, ciao_xml_utils {
   sharedname = RT_CCM_Config_Handlers
   dynamicflags   = RT_CCM_HANDLERS_BUILD_DLL
   macros   += XML_USE_PTHREADS
   includes += $(CIAO_ROOT)/tools/Config_Handlers
   includes += $(CIAO_ROOT)/ciao
+
+  after += RT_CCM_XML_Generation
 
   Source_Files {
         CIAOServerResources.cpp
