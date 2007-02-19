@@ -93,6 +93,15 @@ CIDLC_DEP = <%cidlc_dep%>$(EXEEXT)
 <%if(cidlc_flags)%>
 CIDLC_FLAGS = <%cidlc_flags%>
 <%endif%>
+<%if(xsc_bin)%>
+XSC_BIN = <%xsc_bin%>
+<%endif%>
+<%if(xsc_dep)%>
+XSC_DEP = <%xsc_dep%>$(EXEEXT)
+<%endif%>
+<%if(xsc_flags)%>
+XSC_FLAGS = <%xsc_flags%>
+<%endif%>
 <%if(tao_idl3_to_idl2)%>
 TAO_IDL3_TO_IDL2 = <%tao_idl3_to_idl2%>
 <%endif%>
