@@ -37,9 +37,9 @@ public:
 
   void init_hooks (TAO_ORB_Core *orb_core);
 
-  const CORBA::Long get_dscp_codepoint (TAO_Stub *stub, CORBA::Object *object);
+  CORBA::Long get_dscp_codepoint (TAO_Stub *stub, CORBA::Object *object);
 
-  const CORBA::Long get_dscp_codepoint (TAO_Service_Context &service_context);
+  CORBA::Long get_dscp_codepoint (TAO_Service_Context &service_context);
 
   void np_service_context (TAO_Stub *stub,
                            TAO_Service_Context &service_context,
