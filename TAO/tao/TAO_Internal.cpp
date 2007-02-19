@@ -17,6 +17,7 @@
 #include "tao/Default_Stub_Factory.h"
 #include "tao/Default_Endpoint_Selector_Factory.h"
 #include "tao/Default_Protocols_Hooks.h"
+#include "tao/Default_Network_Priority_Protocols_Hooks.h"
 #include "tao/Default_Thread_Lane_Resources_Manager.h"
 #include "tao/Default_Collocation_Resolver.h"
 #include "tao/Codeset_Manager_Factory_Base.h"
@@ -539,6 +540,8 @@ namespace
     pcfg->process_directive (
       ace_svc_desc_TAO_Default_Endpoint_Selector_Factory);
     pcfg->process_directive (ace_svc_desc_TAO_Default_Protocols_Hooks);
+    pcfg->process_directive (
+      ace_svc_desc_TAO_Default_Network_Priority_Protocols_Hooks);
     pcfg->process_directive (
       ace_svc_desc_TAO_Default_Thread_Lane_Resources_Manager_Factory);
     pcfg->process_directive (ace_svc_desc_TAO_Default_Collocation_Resolver);
