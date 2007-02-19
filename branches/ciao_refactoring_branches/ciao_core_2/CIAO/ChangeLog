@@ -1,3 +1,10 @@
+Mon Feb 19 15:30:04 UTC 2007  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * MPC/config/xscdefaults.mpb
+        * tools/Config_Handlers/Config_Handlers.mpc
+        
+          Added a custom type to MPC to handle XSC generation.
+        
 Wed Feb  7 21:16:36 UTC 2007  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * ciao/Deployment_Data.idl
