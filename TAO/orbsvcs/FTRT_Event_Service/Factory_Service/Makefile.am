@@ -22,7 +22,7 @@ if BUILD_EXCEPTIONS
 if BUILD_INTERCEPTORS
 if !BUILD_ACE_FOR_TAO
 
-noinst_PROGRAMS = ftrtec_factory_service
+bin_PROGRAMS = ftrtec_factory_service
 
 ftrtec_factory_service_CPPFLAGS = \
   -I$(ACE_ROOT) \

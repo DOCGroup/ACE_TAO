@@ -18,7 +18,7 @@ TAO_ROOT = $(top_srcdir)
 
 if BUILD_EXCEPTIONS
 
-noinst_PROGRAMS = LifeCycle_Service
+bin_PROGRAMS = LifeCycle_Service
 
 LifeCycle_Service_CPPFLAGS = \
   -I$(ACE_ROOT) \
