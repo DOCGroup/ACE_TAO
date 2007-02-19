@@ -4,8 +4,8 @@
 
 #include "Deployment.hpp"
 #include "DP_Handler.h"
-#include "ciao/Deployment_DataC.h"
-#include "ciao/CIAO_ServerResourcesC.h"
+#include "DAnCE/Deployment/Deployment_DataC.h"
+#include "DAnCE/Deployment/CIAO_ServerResourcesC.h"
 #include "ace/Get_Opt.h"
 #include "Utils/XML_Helper.h"
 #include "DnC_Dump.h"

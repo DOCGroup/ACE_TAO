@@ -2,7 +2,7 @@
 
 #include "DP_Handler.h"
 #include "ace/UUID.h"
-#include "ciao/Deployment_DataC.h"
+#include "DAnCE/Deployment/Deployment_DataC.h"
 
 #include "CCD_Handler.h"
 #include "ADD_Handler.h"
@@ -266,7 +266,7 @@ ACE_RCSID (Config_Handlers,
 
         // We are assuming there is a realizes for the moment
         // @@ We may want to change this at a later date by creating a sequence of
-        // @@ ComponentInterfaceDescriptions in the DeploymentPlan in ../ciao/Deployment_Data.idl
+        // @@ ComponentInterfaceDescriptions in the DeploymentPlan in ../DAnCE/Deployment/Deployment_Data.idl
         // @@ so we can check for length
         this->xsc_dp_->realizes(CCD_Handler::component_interface_descr(plan.realizes));
         if (!this->xsc_dp_->realizes_p())
