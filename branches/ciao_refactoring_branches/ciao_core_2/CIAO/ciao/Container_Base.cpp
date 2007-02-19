@@ -307,7 +307,7 @@ namespace CIAO
             ACE_THROW_RETURN
               (Deployment::UnknownImplId (
                  "Session_Container::ciao_install_home",
-            exception.c_str ()),
+                 exception.c_str ()),
                   Components::CCMHome::_nil ());
           }
 
@@ -401,16 +401,12 @@ namespace CIAO
           }
 
         ACE_CString exe_entrypt_str (exe_entrypt);
-        static_entrypts_maps_->home_creator_funcptr_map_->find (
-                                                                exe_entrypt_str,
-                                                                hcreator
-                                                                );
+        static_entrypts_maps_->home_creator_funcptr_map_->find (exe_entrypt_str,
+                                                                hcreator);
 
         ACE_CString sv_entrypt_str (sv_entrypt);
-        static_entrypts_maps_->home_servant_creator_funcptr_map_->find (
-                                                                        sv_entrypt_str,
-                                                                        screator
-                                                                        );
+        static_entrypts_maps_->home_servant_creator_funcptr_map_->find (sv_entrypt_str,
+                                                                        screator);
       }
 
     if (hcreator == 0 || screator == 0)
@@ -545,10 +541,8 @@ namespace CIAO
   }
 
   void
-  Session_Container::add_servant_map (
-                                      PortableServer::ObjectId &,
-                                      Dynamic_Component_Servant_Base*
-                                      )
+  Session_Container::add_servant_map (PortableServer::ObjectId &,
+                                      Dynamic_Component_Servant_Base*)
   {
     CIAO_TRACE ("Session_Container::add_servant_map");
   }
@@ -561,9 +555,7 @@ namespace CIAO
   }
 
   void
-  Session_Container::delete_servant_map (
-                                         PortableServer::ObjectId &
-                                         )
+  Session_Container::delete_servant_map (PortableServer::ObjectId &)
   {
     CIAO_TRACE ("Session_Container::delete_servant_map");
   }
