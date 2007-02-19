@@ -4,8 +4,8 @@
             xmlns:Deployment="http://www.omg.org/Deployment"
             targetNamespace="http://www.omg.org/Deployment">
 
-            <xsd:include schemaLocation="ccd.xsd" />
             <xsd:include schemaLocation="cid.xsd" />
+            <xsd:include schemaLocation="ccd.xsd" />
 
   <xsd:complexType name="PackagedComponentImplementation">
     <xsd:sequence>

@@ -9,17 +9,16 @@
  *             Will Otte <wotte@dre.vanderbilt.edu>
  */
 
-
 // Fix for Borland compilers, which seem to have a broken
 // <string> include.
 #ifdef __BORLANDC__
 # include <string.h>
 #endif
 
-#include "XSC_XML_Handlers_Export.h"
 #ifndef TOPLEVEL_HPP
 #define TOPLEVEL_HPP
 
+#include "XSC_XML_Handlers_Export.h"
 // Forward declarations.
 //
 namespace CIAO
@@ -45,26 +44,31 @@ namespace CIAO
       //@@ VC6 anathema
       typedef ::XSCRT::Type Base__;
 
-      // package
-      //
-    public:
-      ::CIAO::Config_Handlers::PackageConfiguration const& package () const;
-      void package (::CIAO::Config_Handlers::PackageConfiguration const& );
+      // basePackage
+      // 
+      public:
+      typedef ::std::list< ::CIAO::Config_Handlers::PackageConfiguration >::iterator basePackage_iterator;
+      typedef ::std::list< ::CIAO::Config_Handlers::PackageConfiguration >::const_iterator basePackage_const_iterator;
+      basePackage_iterator begin_basePackage ();
+      basePackage_iterator end_basePackage ();
+      basePackage_const_iterator begin_basePackage () const;
+      basePackage_const_iterator end_basePackage () const;
+      void add_basePackage (::CIAO::Config_Handlers::PackageConfiguration const& );
+      size_t count_basePackage (void) const;
 
-    protected:
-      ::std::auto_ptr< ::CIAO::Config_Handlers::PackageConfiguration > package_;
+      protected:
+      ::std::list< ::CIAO::Config_Handlers::PackageConfiguration > basePackage_;
 
-    public:
-      TopLevelPackageDescription (::CIAO::Config_Handlers::PackageConfiguration const& package__);
+      public:
+      TopLevelPackageDescription ();
 
       TopLevelPackageDescription (::XSCRT::XML::Element< ACE_TCHAR > const&);
       TopLevelPackageDescription (TopLevelPackageDescription const& s);
-      
-      ~TopLevelPackageDescription () {};
+
       TopLevelPackageDescription&
       operator= (TopLevelPackageDescription const& s);
 
-    private:
+      private:
       char regulator__;
     };
   }
@@ -87,29 +91,47 @@ namespace CIAO
     {
       struct XSC_XML_Handlers_Export TopLevelPackageDescription : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::TopLevelPackageDescription >
       {
-	virtual void
-	traverse (Type&);
+        virtual void
+        traverse (Type&);
 
-	virtual void
-	traverse (Type const&);
+        virtual void
+        traverse (Type const&);
 
-	virtual void
-	pre (Type&);
+        virtual void
+        pre (Type&);
 
-	virtual void
-	pre (Type const&);
+        virtual void
+        pre (Type const&);
 
-	virtual void
-	package (Type&);
+        virtual void
+        basePackage (Type&);
 
-	virtual void
-	package (Type const&);
+        virtual void
+        basePackage (Type const&);
 
-	virtual void
-	post (Type&);
+        virtual void
+        basePackage_pre (Type&);
 
-	virtual void
-	post (Type const&);
+        virtual void
+        basePackage_pre (Type const&);
+
+        virtual void
+        basePackage_next (Type&);
+
+        virtual void
+        basePackage_next (Type const&);
+
+        virtual void
+        basePackage_post (Type&);
+
+        virtual void
+        basePackage_post (Type const&);
+
+        virtual void
+        post (Type&);
+
+        virtual void
+        post (Type const&);
       };
     }
   }
@@ -123,36 +145,58 @@ namespace CIAO
   {
     namespace Writer
     {
-      struct TopLevelPackageDescription : Traversal::TopLevelPackageDescription,
-					  virtual ::XSCRT::Writer< ACE_TCHAR >
+      struct TopLevelPackageDescription : Traversal::TopLevelPackageDescription, 
+      virtual ::XSCRT::Writer< ACE_TCHAR >
       {
-	typedef ::CIAO::Config_Handlers::TopLevelPackageDescription Type;
-	TopLevelPackageDescription (::XSCRT::XML::Element< ACE_TCHAR >&);
+        typedef ::CIAO::Config_Handlers::TopLevelPackageDescription Type;
+        TopLevelPackageDescription (::XSCRT::XML::Element< ACE_TCHAR >&);
 
-	virtual void
-	traverse (Type &o)
-	{
+        virtual void 
+        traverse (Type &o)
+        {
 
-	  this->traverse (const_cast <Type const &> (o));
-	}
-
-
-	virtual void
-	traverse (Type const&);
-
-	virtual void
-	package (Type &o)
-	{
-
-	  this->package (const_cast <Type const &> (o));
-	}
+          this->traverse (const_cast <Type const &> (o));
+        }
 
 
-	virtual void
-	package (Type const&);
+        virtual void
+        traverse (Type const&);
 
-      protected:
-	TopLevelPackageDescription ();
+        virtual void 
+        basePackage_pre (Type &o)
+        {
+
+          this->basePackage_pre (const_cast <Type const &> (o));
+        }
+
+
+        virtual void
+        basePackage_pre (Type const&);
+
+        virtual void 
+        basePackage_next (Type &o)
+        {
+
+          this->basePackage_next (const_cast <Type const &> (o));
+        }
+
+
+        virtual void
+        basePackage_next (Type const&);
+
+        virtual void 
+        basePackage_post (Type &o)
+        {
+
+          this->basePackage_post (const_cast <Type const &> (o));
+        }
+
+
+        virtual void
+        basePackage_post (Type const&);
+
+        protected:
+        TopLevelPackageDescription ();
       };
     }
   }

@@ -1358,3 +1358,1668 @@ namespace CIAO
   }
 }
 
+#include "XMLSchema/TypeInfo.hpp"
+
+namespace CIAO
+{
+  namespace Config_Handlers
+  {
+    namespace
+    {
+      ::XMLSchema::TypeInfoInitializer < ACE_TCHAR > XMLSchemaTypeInfoInitializer_ (::XSCRT::extended_type_info_map ());
+
+      struct EventServiceTypeTypeInfoInitializer
+      {
+        EventServiceTypeTypeInfoInitializer ()
+        {
+          ::XSCRT::TypeId id (typeid (EventServiceType));
+          ::XSCRT::ExtendedTypeInfo nf (id);
+
+          nf.add_base (::XSCRT::ExtendedTypeInfo::Access::public_, false, typeid (::XSCRT::Type));
+
+          ::XSCRT::extended_type_info_map ().insert (::std::make_pair (id, nf));
+        }
+      };
+
+      EventServiceTypeTypeInfoInitializer EventServiceTypeTypeInfoInitializer_;
+
+      struct CIAOEventsDefTypeInfoInitializer
+      {
+        CIAOEventsDefTypeInfoInitializer ()
+        {
+          ::XSCRT::TypeId id (typeid (CIAOEventsDef));
+          ::XSCRT::ExtendedTypeInfo nf (id);
+
+          nf.add_base (::XSCRT::ExtendedTypeInfo::Access::public_, false, typeid (::XSCRT::Type));
+          ::XSCRT::extended_type_info_map ().insert (::std::make_pair (id, nf));
+        }
+      };
+
+      CIAOEventsDefTypeInfoInitializer CIAOEventsDefTypeInfoInitializer_;
+
+      struct EventServiceDescriptionTypeInfoInitializer
+      {
+        EventServiceDescriptionTypeInfoInitializer ()
+        {
+          ::XSCRT::TypeId id (typeid (EventServiceDescription));
+          ::XSCRT::ExtendedTypeInfo nf (id);
+
+          nf.add_base (::XSCRT::ExtendedTypeInfo::Access::public_, false, typeid (::XSCRT::Type));
+          ::XSCRT::extended_type_info_map ().insert (::std::make_pair (id, nf));
+        }
+      };
+
+      EventServiceDescriptionTypeInfoInitializer EventServiceDescriptionTypeInfoInitializer_;
+
+      struct FilterTypeTypeInfoInitializer
+      {
+        FilterTypeTypeInfoInitializer ()
+        {
+          ::XSCRT::TypeId id (typeid (FilterType));
+          ::XSCRT::ExtendedTypeInfo nf (id);
+
+          nf.add_base (::XSCRT::ExtendedTypeInfo::Access::public_, false, typeid (::XSCRT::Type));
+
+          ::XSCRT::extended_type_info_map ().insert (::std::make_pair (id, nf));
+        }
+      };
+
+      FilterTypeTypeInfoInitializer FilterTypeTypeInfoInitializer_;
+
+      struct FilterTypeInfoInitializer
+      {
+        FilterTypeInfoInitializer ()
+        {
+          ::XSCRT::TypeId id (typeid (Filter));
+          ::XSCRT::ExtendedTypeInfo nf (id);
+
+          nf.add_base (::XSCRT::ExtendedTypeInfo::Access::public_, false, typeid (::XSCRT::Type));
+          ::XSCRT::extended_type_info_map ().insert (::std::make_pair (id, nf));
+        }
+      };
+
+      FilterTypeInfoInitializer FilterTypeInfoInitializer_;
+
+      struct AddressServerDescriptionTypeInfoInitializer
+      {
+        AddressServerDescriptionTypeInfoInitializer ()
+        {
+          ::XSCRT::TypeId id (typeid (AddressServerDescription));
+          ::XSCRT::ExtendedTypeInfo nf (id);
+
+          nf.add_base (::XSCRT::ExtendedTypeInfo::Access::public_, false, typeid (::XSCRT::Type));
+          ::XSCRT::extended_type_info_map ().insert (::std::make_pair (id, nf));
+        }
+      };
+
+      AddressServerDescriptionTypeInfoInitializer AddressServerDescriptionTypeInfoInitializer_;
+
+      struct UDPSenderDescriptionTypeInfoInitializer
+      {
+        UDPSenderDescriptionTypeInfoInitializer ()
+        {
+          ::XSCRT::TypeId id (typeid (UDPSenderDescription));
+          ::XSCRT::ExtendedTypeInfo nf (id);
+
+          nf.add_base (::XSCRT::ExtendedTypeInfo::Access::public_, false, typeid (::XSCRT::Type));
+          ::XSCRT::extended_type_info_map ().insert (::std::make_pair (id, nf));
+        }
+      };
+
+      UDPSenderDescriptionTypeInfoInitializer UDPSenderDescriptionTypeInfoInitializer_;
+
+      struct UDPReceiverDescriptionTypeInfoInitializer
+      {
+        UDPReceiverDescriptionTypeInfoInitializer ()
+        {
+          ::XSCRT::TypeId id (typeid (UDPReceiverDescription));
+          ::XSCRT::ExtendedTypeInfo nf (id);
+
+          nf.add_base (::XSCRT::ExtendedTypeInfo::Access::public_, false, typeid (::XSCRT::Type));
+          ::XSCRT::extended_type_info_map ().insert (::std::make_pair (id, nf));
+        }
+      };
+
+      UDPReceiverDescriptionTypeInfoInitializer UDPReceiverDescriptionTypeInfoInitializer_;
+    }
+  }
+}
+
+namespace CIAO
+{
+  namespace Config_Handlers
+  {
+    namespace Traversal
+    {
+      // CIAOEventsDef
+      //
+      //
+
+      void CIAOEventsDef::
+      traverse (Type& o)
+      {
+        pre (o);
+        eventServiceConfiguration (o);
+        if (o.id_p ()) id (o);
+        else id_none (o);
+        post (o);
+      }
+
+      void CIAOEventsDef::
+      traverse (Type const& o)
+      {
+        pre (o);
+        eventServiceConfiguration (o);
+        if (o.id_p ()) id (o);
+        else id_none (o);
+        post (o);
+      }
+
+      void CIAOEventsDef::
+      pre (Type&)
+      {
+      }
+
+      void CIAOEventsDef::
+      pre (Type const&)
+      {
+      }
+
+      void CIAOEventsDef::
+      eventServiceConfiguration (Type& o)
+      {
+        // VC6 anathema strikes again
+        //
+        CIAOEventsDef::Type::eventServiceConfiguration_iterator b (o.begin_eventServiceConfiguration()), e (o.end_eventServiceConfiguration());
+
+        if (b != e)
+        {
+          eventServiceConfiguration_pre (o);
+          for (; b != e;)
+          {
+            dispatch (*b);
+            if (++b != e) eventServiceConfiguration_next (o);
+          }
+
+          eventServiceConfiguration_post (o);
+        }
+      }
+
+      void CIAOEventsDef::
+      eventServiceConfiguration (Type const& o)
+      {
+        // VC6 anathema strikes again
+        //
+        CIAOEventsDef::Type::eventServiceConfiguration_const_iterator b (o.begin_eventServiceConfiguration()), e (o.end_eventServiceConfiguration());
+
+        if (b != e)
+        {
+          eventServiceConfiguration_pre (o);
+          for (; b != e;)
+          {
+            dispatch (*b);
+            if (++b != e) eventServiceConfiguration_next (o);
+          }
+
+          eventServiceConfiguration_post (o);
+        }
+      }
+
+      void CIAOEventsDef::
+      eventServiceConfiguration_pre (Type&)
+      {
+      }
+
+      void CIAOEventsDef::
+      eventServiceConfiguration_pre (Type const&)
+      {
+      }
+
+      void CIAOEventsDef::
+      eventServiceConfiguration_next (Type&)
+      {
+      }
+
+      void CIAOEventsDef::
+      eventServiceConfiguration_next (Type const&)
+      {
+      }
+
+      void CIAOEventsDef::
+      eventServiceConfiguration_post (Type&)
+      {
+      }
+
+      void CIAOEventsDef::
+      eventServiceConfiguration_post (Type const&)
+      {
+      }
+
+      void CIAOEventsDef::
+      id (Type& o)
+      {
+        dispatch (o.id ());
+      }
+
+      void CIAOEventsDef::
+      id (Type const& o)
+      {
+        dispatch (o.id ());
+      }
+
+      void CIAOEventsDef::
+      id_none (Type&)
+      {
+      }
+
+      void CIAOEventsDef::
+      id_none (Type const&)
+      {
+      }
+
+      void CIAOEventsDef::
+      post (Type&)
+      {
+      }
+
+      void CIAOEventsDef::
+      post (Type const&)
+      {
+      }
+
+      // EventServiceDescription
+      //
+      //
+
+      void EventServiceDescription::
+      traverse (Type& o)
+      {
+        pre (o);
+        name (o);
+        node (o);
+        type (o);
+        svc_cfg_file (o);
+        filter (o);
+        addr_serv (o);
+        udp_sender (o);
+        udp_receiver (o);
+        if (o.id_p ()) id (o);
+        else id_none (o);
+        post (o);
+      }
+
+      void EventServiceDescription::
+      traverse (Type const& o)
+      {
+        pre (o);
+        name (o);
+        node (o);
+        type (o);
+        svc_cfg_file (o);
+        filter (o);
+        addr_serv (o);
+        udp_sender (o);
+        udp_receiver (o);
+        if (o.id_p ()) id (o);
+        else id_none (o);
+        post (o);
+      }
+
+      void EventServiceDescription::
+      pre (Type&)
+      {
+      }
+
+      void EventServiceDescription::
+      pre (Type const&)
+      {
+      }
+
+      void EventServiceDescription::
+      name (Type& o)
+      {
+        dispatch (o.name ());
+      }
+
+      void EventServiceDescription::
+      name (Type const& o)
+      {
+        dispatch (o.name ());
+      }
+
+      void EventServiceDescription::
+      node (Type& o)
+      {
+        dispatch (o.node ());
+      }
+
+      void EventServiceDescription::
+      node (Type const& o)
+      {
+        dispatch (o.node ());
+      }
+
+      void EventServiceDescription::
+      type (Type& o)
+      {
+        dispatch (o.type ());
+      }
+
+      void EventServiceDescription::
+      type (Type const& o)
+      {
+        dispatch (o.type ());
+      }
+
+      void EventServiceDescription::
+      svc_cfg_file (Type& o)
+      {
+        dispatch (o.svc_cfg_file ());
+      }
+
+      void EventServiceDescription::
+      svc_cfg_file (Type const& o)
+      {
+        dispatch (o.svc_cfg_file ());
+      }
+
+      void EventServiceDescription::
+      filter (Type& o)
+      {
+        // VC6 anathema strikes again
+        //
+        EventServiceDescription::Type::filter_iterator b (o.begin_filter()), e (o.end_filter());
+
+        if (b != e)
+        {
+          filter_pre (o);
+          for (; b != e;)
+          {
+            dispatch (*b);
+            if (++b != e) filter_next (o);
+          }
+
+          filter_post (o);
+        }
+
+        else filter_none (o);
+      }
+
+      void EventServiceDescription::
+      filter (Type const& o)
+      {
+        // VC6 anathema strikes again
+        //
+        EventServiceDescription::Type::filter_const_iterator b (o.begin_filter()), e (o.end_filter());
+
+        if (b != e)
+        {
+          filter_pre (o);
+          for (; b != e;)
+          {
+            dispatch (*b);
+            if (++b != e) filter_next (o);
+          }
+
+          filter_post (o);
+        }
+
+        else filter_none (o);
+      }
+
+      void EventServiceDescription::
+      filter_pre (Type&)
+      {
+      }
+
+      void EventServiceDescription::
+      filter_pre (Type const&)
+      {
+      }
+
+      void EventServiceDescription::
+      filter_next (Type&)
+      {
+      }
+
+      void EventServiceDescription::
+      filter_next (Type const&)
+      {
+      }
+
+      void EventServiceDescription::
+      filter_post (Type&)
+      {
+      }
+
+      void EventServiceDescription::
+      filter_post (Type const&)
+      {
+      }
+
+      void EventServiceDescription::
+      filter_none (Type&)
+      {
+      }
+
+      void EventServiceDescription::
+      filter_none (Type const&)
+      {
+      }
+
+      void EventServiceDescription::
+      addr_serv (Type& o)
+      {
+        // VC6 anathema strikes again
+        //
+        EventServiceDescription::Type::addr_serv_iterator b (o.begin_addr_serv()), e (o.end_addr_serv());
+
+        if (b != e)
+        {
+          addr_serv_pre (o);
+          for (; b != e;)
+          {
+            dispatch (*b);
+            if (++b != e) addr_serv_next (o);
+          }
+
+          addr_serv_post (o);
+        }
+
+        else addr_serv_none (o);
+      }
+
+      void EventServiceDescription::
+      addr_serv (Type const& o)
+      {
+        // VC6 anathema strikes again
+        //
+        EventServiceDescription::Type::addr_serv_const_iterator b (o.begin_addr_serv()), e (o.end_addr_serv());
+
+        if (b != e)
+        {
+          addr_serv_pre (o);
+          for (; b != e;)
+          {
+            dispatch (*b);
+            if (++b != e) addr_serv_next (o);
+          }
+
+          addr_serv_post (o);
+        }
+
+        else addr_serv_none (o);
+      }
+
+      void EventServiceDescription::
+      addr_serv_pre (Type&)
+      {
+      }
+
+      void EventServiceDescription::
+      addr_serv_pre (Type const&)
+      {
+      }
+
+      void EventServiceDescription::
+      addr_serv_next (Type&)
+      {
+      }
+
+      void EventServiceDescription::
+      addr_serv_next (Type const&)
+      {
+      }
+
+      void EventServiceDescription::
+      addr_serv_post (Type&)
+      {
+      }
+
+      void EventServiceDescription::
+      addr_serv_post (Type const&)
+      {
+      }
+
+      void EventServiceDescription::
+      addr_serv_none (Type&)
+      {
+      }
+
+      void EventServiceDescription::
+      addr_serv_none (Type const&)
+      {
+      }
+
+      void EventServiceDescription::
+      udp_sender (Type& o)
+      {
+        // VC6 anathema strikes again
+        //
+        EventServiceDescription::Type::udp_sender_iterator b (o.begin_udp_sender()), e (o.end_udp_sender());
+
+        if (b != e)
+        {
+          udp_sender_pre (o);
+          for (; b != e;)
+          {
+            dispatch (*b);
+            if (++b != e) udp_sender_next (o);
+          }
+
+          udp_sender_post (o);
+        }
+
+        else udp_sender_none (o);
+      }
+
+      void EventServiceDescription::
+      udp_sender (Type const& o)
+      {
+        // VC6 anathema strikes again
+        //
+        EventServiceDescription::Type::udp_sender_const_iterator b (o.begin_udp_sender()), e (o.end_udp_sender());
+
+        if (b != e)
+        {
+          udp_sender_pre (o);
+          for (; b != e;)
+          {
+            dispatch (*b);
+            if (++b != e) udp_sender_next (o);
+          }
+
+          udp_sender_post (o);
+        }
+
+        else udp_sender_none (o);
+      }
+
+      void EventServiceDescription::
+      udp_sender_pre (Type&)
+      {
+      }
+
+      void EventServiceDescription::
+      udp_sender_pre (Type const&)
+      {
+      }
+
+      void EventServiceDescription::
+      udp_sender_next (Type&)
+      {
+      }
+
+      void EventServiceDescription::
+      udp_sender_next (Type const&)
+      {
+      }
+
+      void EventServiceDescription::
+      udp_sender_post (Type&)
+      {
+      }
+
+      void EventServiceDescription::
+      udp_sender_post (Type const&)
+      {
+      }
+
+      void EventServiceDescription::
+      udp_sender_none (Type&)
+      {
+      }
+
+      void EventServiceDescription::
+      udp_sender_none (Type const&)
+      {
+      }
+
+      void EventServiceDescription::
+      udp_receiver (Type& o)
+      {
+        // VC6 anathema strikes again
+        //
+        EventServiceDescription::Type::udp_receiver_iterator b (o.begin_udp_receiver()), e (o.end_udp_receiver());
+
+        if (b != e)
+        {
+          udp_receiver_pre (o);
+          for (; b != e;)
+          {
+            dispatch (*b);
+            if (++b != e) udp_receiver_next (o);
+          }
+
+          udp_receiver_post (o);
+        }
+
+        else udp_receiver_none (o);
+      }
+
+      void EventServiceDescription::
+      udp_receiver (Type const& o)
+      {
+        // VC6 anathema strikes again
+        //
+        EventServiceDescription::Type::udp_receiver_const_iterator b (o.begin_udp_receiver()), e (o.end_udp_receiver());
+
+        if (b != e)
+        {
+          udp_receiver_pre (o);
+          for (; b != e;)
+          {
+            dispatch (*b);
+            if (++b != e) udp_receiver_next (o);
+          }
+
+          udp_receiver_post (o);
+        }
+
+        else udp_receiver_none (o);
+      }
+
+      void EventServiceDescription::
+      udp_receiver_pre (Type&)
+      {
+      }
+
+      void EventServiceDescription::
+      udp_receiver_pre (Type const&)
+      {
+      }
+
+      void EventServiceDescription::
+      udp_receiver_next (Type&)
+      {
+      }
+
+      void EventServiceDescription::
+      udp_receiver_next (Type const&)
+      {
+      }
+
+      void EventServiceDescription::
+      udp_receiver_post (Type&)
+      {
+      }
+
+      void EventServiceDescription::
+      udp_receiver_post (Type const&)
+      {
+      }
+
+      void EventServiceDescription::
+      udp_receiver_none (Type&)
+      {
+      }
+
+      void EventServiceDescription::
+      udp_receiver_none (Type const&)
+      {
+      }
+
+      void EventServiceDescription::
+      id (Type& o)
+      {
+        dispatch (o.id ());
+      }
+
+      void EventServiceDescription::
+      id (Type const& o)
+      {
+        dispatch (o.id ());
+      }
+
+      void EventServiceDescription::
+      id_none (Type&)
+      {
+      }
+
+      void EventServiceDescription::
+      id_none (Type const&)
+      {
+      }
+
+      void EventServiceDescription::
+      post (Type&)
+      {
+      }
+
+      void EventServiceDescription::
+      post (Type const&)
+      {
+      }
+
+      // Filter
+      //
+      //
+
+      void Filter::
+      traverse (Type& o)
+      {
+        pre (o);
+        name (o);
+        type (o);
+        source (o);
+        if (o.id_p ()) id (o);
+        else id_none (o);
+        post (o);
+      }
+
+      void Filter::
+      traverse (Type const& o)
+      {
+        pre (o);
+        name (o);
+        type (o);
+        source (o);
+        if (o.id_p ()) id (o);
+        else id_none (o);
+        post (o);
+      }
+
+      void Filter::
+      pre (Type&)
+      {
+      }
+
+      void Filter::
+      pre (Type const&)
+      {
+      }
+
+      void Filter::
+      name (Type& o)
+      {
+        dispatch (o.name ());
+      }
+
+      void Filter::
+      name (Type const& o)
+      {
+        dispatch (o.name ());
+      }
+
+      void Filter::
+      type (Type& o)
+      {
+        dispatch (o.type ());
+      }
+
+      void Filter::
+      type (Type const& o)
+      {
+        dispatch (o.type ());
+      }
+
+      void Filter::
+      source (Type& o)
+      {
+        // VC6 anathema strikes again
+        //
+        Filter::Type::source_iterator b (o.begin_source()), e (o.end_source());
+
+        if (b != e)
+        {
+          source_pre (o);
+          for (; b != e;)
+          {
+            dispatch (*b);
+            if (++b != e) source_next (o);
+          }
+
+          source_post (o);
+        }
+      }
+
+      void Filter::
+      source (Type const& o)
+      {
+        // VC6 anathema strikes again
+        //
+        Filter::Type::source_const_iterator b (o.begin_source()), e (o.end_source());
+
+        if (b != e)
+        {
+          source_pre (o);
+          for (; b != e;)
+          {
+            dispatch (*b);
+            if (++b != e) source_next (o);
+          }
+
+          source_post (o);
+        }
+      }
+
+      void Filter::
+      source_pre (Type&)
+      {
+      }
+
+      void Filter::
+      source_pre (Type const&)
+      {
+      }
+
+      void Filter::
+      source_next (Type&)
+      {
+      }
+
+      void Filter::
+      source_next (Type const&)
+      {
+      }
+
+      void Filter::
+      source_post (Type&)
+      {
+      }
+
+      void Filter::
+      source_post (Type const&)
+      {
+      }
+
+      void Filter::
+      id (Type& o)
+      {
+        dispatch (o.id ());
+      }
+
+      void Filter::
+      id (Type const& o)
+      {
+        dispatch (o.id ());
+      }
+
+      void Filter::
+      id_none (Type&)
+      {
+      }
+
+      void Filter::
+      id_none (Type const&)
+      {
+      }
+
+      void Filter::
+      post (Type&)
+      {
+      }
+
+      void Filter::
+      post (Type const&)
+      {
+      }
+
+      // AddressServerDescription
+      //
+      //
+
+      void AddressServerDescription::
+      traverse (Type& o)
+      {
+        pre (o);
+        name (o);
+        port (o);
+        address (o);
+        post (o);
+      }
+
+      void AddressServerDescription::
+      traverse (Type const& o)
+      {
+        pre (o);
+        name (o);
+        port (o);
+        address (o);
+        post (o);
+      }
+
+      void AddressServerDescription::
+      pre (Type&)
+      {
+      }
+
+      void AddressServerDescription::
+      pre (Type const&)
+      {
+      }
+
+      void AddressServerDescription::
+      name (Type& o)
+      {
+        dispatch (o.name ());
+      }
+
+      void AddressServerDescription::
+      name (Type const& o)
+      {
+        dispatch (o.name ());
+      }
+
+      void AddressServerDescription::
+      port (Type& o)
+      {
+        dispatch (o.port ());
+      }
+
+      void AddressServerDescription::
+      port (Type const& o)
+      {
+        dispatch (o.port ());
+      }
+
+      void AddressServerDescription::
+      address (Type& o)
+      {
+        dispatch (o.address ());
+      }
+
+      void AddressServerDescription::
+      address (Type const& o)
+      {
+        dispatch (o.address ());
+      }
+
+      void AddressServerDescription::
+      post (Type&)
+      {
+      }
+
+      void AddressServerDescription::
+      post (Type const&)
+      {
+      }
+
+      // UDPSenderDescription
+      //
+      //
+
+      void UDPSenderDescription::
+      traverse (Type& o)
+      {
+        pre (o);
+        name (o);
+        addr_serv_id (o);
+        post (o);
+      }
+
+      void UDPSenderDescription::
+      traverse (Type const& o)
+      {
+        pre (o);
+        name (o);
+        addr_serv_id (o);
+        post (o);
+      }
+
+      void UDPSenderDescription::
+      pre (Type&)
+      {
+      }
+
+      void UDPSenderDescription::
+      pre (Type const&)
+      {
+      }
+
+      void UDPSenderDescription::
+      name (Type& o)
+      {
+        dispatch (o.name ());
+      }
+
+      void UDPSenderDescription::
+      name (Type const& o)
+      {
+        dispatch (o.name ());
+      }
+
+      void UDPSenderDescription::
+      addr_serv_id (Type& o)
+      {
+        dispatch (o.addr_serv_id ());
+      }
+
+      void UDPSenderDescription::
+      addr_serv_id (Type const& o)
+      {
+        dispatch (o.addr_serv_id ());
+      }
+
+      void UDPSenderDescription::
+      post (Type&)
+      {
+      }
+
+      void UDPSenderDescription::
+      post (Type const&)
+      {
+      }
+
+      // UDPReceiverDescription
+      //
+      //
+
+      void UDPReceiverDescription::
+      traverse (Type& o)
+      {
+        pre (o);
+        name (o);
+        if (o.addr_serv_id_p ()) addr_serv_id (o);
+        else addr_serv_id_none (o);
+        is_multicast (o);
+        listen_port (o);
+        post (o);
+      }
+
+      void UDPReceiverDescription::
+      traverse (Type const& o)
+      {
+        pre (o);
+        name (o);
+        if (o.addr_serv_id_p ()) addr_serv_id (o);
+        else addr_serv_id_none (o);
+        is_multicast (o);
+        listen_port (o);
+        post (o);
+      }
+
+      void UDPReceiverDescription::
+      pre (Type&)
+      {
+      }
+
+      void UDPReceiverDescription::
+      pre (Type const&)
+      {
+      }
+
+      void UDPReceiverDescription::
+      name (Type& o)
+      {
+        dispatch (o.name ());
+      }
+
+      void UDPReceiverDescription::
+      name (Type const& o)
+      {
+        dispatch (o.name ());
+      }
+
+      void UDPReceiverDescription::
+      addr_serv_id (Type& o)
+      {
+        dispatch (o.addr_serv_id ());
+      }
+
+      void UDPReceiverDescription::
+      addr_serv_id (Type const& o)
+      {
+        dispatch (o.addr_serv_id ());
+      }
+
+      void UDPReceiverDescription::
+      addr_serv_id_none (Type&)
+      {
+      }
+
+      void UDPReceiverDescription::
+      addr_serv_id_none (Type const&)
+      {
+      }
+
+      void UDPReceiverDescription::
+      is_multicast (Type& o)
+      {
+        dispatch (o.is_multicast ());
+      }
+
+      void UDPReceiverDescription::
+      is_multicast (Type const& o)
+      {
+        dispatch (o.is_multicast ());
+      }
+
+      void UDPReceiverDescription::
+      listen_port (Type& o)
+      {
+        dispatch (o.listen_port ());
+      }
+
+      void UDPReceiverDescription::
+      listen_port (Type const& o)
+      {
+        dispatch (o.listen_port ());
+      }
+
+      void UDPReceiverDescription::
+      post (Type&)
+      {
+      }
+
+      void UDPReceiverDescription::
+      post (Type const&)
+      {
+      }
+    }
+  }
+}
+
+namespace CIAO
+{
+  namespace Config_Handlers
+  {
+    namespace Writer
+    {
+      // EventServiceType
+      //
+      //
+
+      EventServiceType::
+      EventServiceType (::XSCRT::XML::Element< ACE_TCHAR >& e)
+      : ::XSCRT::Writer< ACE_TCHAR > (e)
+      {
+      }
+
+      EventServiceType::
+      EventServiceType ()
+      {
+      }
+
+      void EventServiceType::
+      traverse (Type const& o)
+      {
+        ::std::basic_string< ACE_TCHAR > s;
+
+        if (o == ::CIAO::Config_Handlers::EventServiceType::EC) s = "EC";
+        else if (o == ::CIAO::Config_Handlers::EventServiceType::RTEC) s = "RTEC";
+        else if (o == ::CIAO::Config_Handlers::EventServiceType::NOTIFY) s = "NOTIFY";
+        else if (o == ::CIAO::Config_Handlers::EventServiceType::RTNOTIFY) s = "RTNOTIFY";
+        else 
+        {
+        }
+
+        if (::XSCRT::XML::Attribute< ACE_TCHAR >* a = attr_ ())
+        {
+          a->value (s);
+        }
+
+        else
+        {
+          top_().value (s);
+        }
+      }
+
+      // CIAOEventsDef
+      //
+      //
+
+      CIAOEventsDef::
+      CIAOEventsDef (::XSCRT::XML::Element< ACE_TCHAR >& e)
+      : ::XSCRT::Writer< ACE_TCHAR > (e)
+      {
+      }
+
+      CIAOEventsDef::
+      CIAOEventsDef ()
+      {
+      }
+
+      void CIAOEventsDef::
+      traverse (Type const& o)
+      {
+        Traversal::CIAOEventsDef::traverse (o);
+      }
+
+      void CIAOEventsDef::
+      eventServiceConfiguration_pre (Type const&)
+      {
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("eventServiceConfiguration", top_ ()));
+      }
+
+      void CIAOEventsDef::
+      eventServiceConfiguration_next (Type const& o)
+      {
+        eventServiceConfiguration_post (o);
+        eventServiceConfiguration_pre (o);
+      }
+
+      void CIAOEventsDef::
+      eventServiceConfiguration_post (Type const&)
+      {
+        pop_ ();
+      }
+
+      void CIAOEventsDef::
+      id (Type const& o)
+      {
+        ::XSCRT::XML::Attribute< ACE_TCHAR > a ("id", "", top_ ());
+        attr_ (&a);
+        Traversal::CIAOEventsDef::id (o);
+        attr_ (0);
+      }
+
+      // EventServiceDescription
+      //
+      //
+
+      EventServiceDescription::
+      EventServiceDescription (::XSCRT::XML::Element< ACE_TCHAR >& e)
+      : ::XSCRT::Writer< ACE_TCHAR > (e)
+      {
+      }
+
+      EventServiceDescription::
+      EventServiceDescription ()
+      {
+      }
+
+      void EventServiceDescription::
+      traverse (Type const& o)
+      {
+        Traversal::EventServiceDescription::traverse (o);
+      }
+
+      void EventServiceDescription::
+      name (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("name", top_ ()));
+        Traversal::EventServiceDescription::name (o);
+        pop_ ();
+      }
+
+      void EventServiceDescription::
+      node (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("node", top_ ()));
+        Traversal::EventServiceDescription::node (o);
+        pop_ ();
+      }
+
+      void EventServiceDescription::
+      type (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("type", top_ ()));
+        Traversal::EventServiceDescription::type (o);
+        pop_ ();
+      }
+
+      void EventServiceDescription::
+      svc_cfg_file (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("svc_cfg_file", top_ ()));
+        Traversal::EventServiceDescription::svc_cfg_file (o);
+        pop_ ();
+      }
+
+      void EventServiceDescription::
+      filter_pre (Type const&)
+      {
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("filter", top_ ()));
+      }
+
+      void EventServiceDescription::
+      filter_next (Type const& o)
+      {
+        filter_post (o);
+        filter_pre (o);
+      }
+
+      void EventServiceDescription::
+      filter_post (Type const&)
+      {
+        pop_ ();
+      }
+
+      void EventServiceDescription::
+      addr_serv_pre (Type const&)
+      {
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("addr_serv", top_ ()));
+      }
+
+      void EventServiceDescription::
+      addr_serv_next (Type const& o)
+      {
+        addr_serv_post (o);
+        addr_serv_pre (o);
+      }
+
+      void EventServiceDescription::
+      addr_serv_post (Type const&)
+      {
+        pop_ ();
+      }
+
+      void EventServiceDescription::
+      udp_sender_pre (Type const&)
+      {
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("udp_sender", top_ ()));
+      }
+
+      void EventServiceDescription::
+      udp_sender_next (Type const& o)
+      {
+        udp_sender_post (o);
+        udp_sender_pre (o);
+      }
+
+      void EventServiceDescription::
+      udp_sender_post (Type const&)
+      {
+        pop_ ();
+      }
+
+      void EventServiceDescription::
+      udp_receiver_pre (Type const&)
+      {
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("udp_receiver", top_ ()));
+      }
+
+      void EventServiceDescription::
+      udp_receiver_next (Type const& o)
+      {
+        udp_receiver_post (o);
+        udp_receiver_pre (o);
+      }
+
+      void EventServiceDescription::
+      udp_receiver_post (Type const&)
+      {
+        pop_ ();
+      }
+
+      void EventServiceDescription::
+      id (Type const& o)
+      {
+        ::XSCRT::XML::Attribute< ACE_TCHAR > a ("id", "", top_ ());
+        attr_ (&a);
+        Traversal::EventServiceDescription::id (o);
+        attr_ (0);
+      }
+
+      // FilterType
+      //
+      //
+
+      FilterType::
+      FilterType (::XSCRT::XML::Element< ACE_TCHAR >& e)
+      : ::XSCRT::Writer< ACE_TCHAR > (e)
+      {
+      }
+
+      FilterType::
+      FilterType ()
+      {
+      }
+
+      void FilterType::
+      traverse (Type const& o)
+      {
+        ::std::basic_string< ACE_TCHAR > s;
+
+        if (o == ::CIAO::Config_Handlers::FilterType::CONJUNCTION) s = "CONJUNCTION";
+        else if (o == ::CIAO::Config_Handlers::FilterType::DISJUNCTION) s = "DISJUNCTION";
+        else if (o == ::CIAO::Config_Handlers::FilterType::LOGICAL_AND) s = "LOGICAL_AND";
+        else if (o == ::CIAO::Config_Handlers::FilterType::NEGATE) s = "NEGATE";
+        else 
+        {
+        }
+
+        if (::XSCRT::XML::Attribute< ACE_TCHAR >* a = attr_ ())
+        {
+          a->value (s);
+        }
+
+        else
+        {
+          top_().value (s);
+        }
+      }
+
+      // Filter
+      //
+      //
+
+      Filter::
+      Filter (::XSCRT::XML::Element< ACE_TCHAR >& e)
+      : ::XSCRT::Writer< ACE_TCHAR > (e)
+      {
+      }
+
+      Filter::
+      Filter ()
+      {
+      }
+
+      void Filter::
+      traverse (Type const& o)
+      {
+        Traversal::Filter::traverse (o);
+      }
+
+      void Filter::
+      name (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("name", top_ ()));
+        Traversal::Filter::name (o);
+        pop_ ();
+      }
+
+      void Filter::
+      type (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("type", top_ ()));
+        Traversal::Filter::type (o);
+        pop_ ();
+      }
+
+      void Filter::
+      source_pre (Type const&)
+      {
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("source", top_ ()));
+      }
+
+      void Filter::
+      source_next (Type const& o)
+      {
+        source_post (o);
+        source_pre (o);
+      }
+
+      void Filter::
+      source_post (Type const&)
+      {
+        pop_ ();
+      }
+
+      void Filter::
+      id (Type const& o)
+      {
+        ::XSCRT::XML::Attribute< ACE_TCHAR > a ("id", "", top_ ());
+        attr_ (&a);
+        Traversal::Filter::id (o);
+        attr_ (0);
+      }
+
+      // AddressServerDescription
+      //
+      //
+
+      AddressServerDescription::
+      AddressServerDescription (::XSCRT::XML::Element< ACE_TCHAR >& e)
+      : ::XSCRT::Writer< ACE_TCHAR > (e)
+      {
+      }
+
+      AddressServerDescription::
+      AddressServerDescription ()
+      {
+      }
+
+      void AddressServerDescription::
+      traverse (Type const& o)
+      {
+        Traversal::AddressServerDescription::traverse (o);
+      }
+
+      void AddressServerDescription::
+      name (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("name", top_ ()));
+        Traversal::AddressServerDescription::name (o);
+        pop_ ();
+      }
+
+      void AddressServerDescription::
+      port (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("port", top_ ()));
+        Traversal::AddressServerDescription::port (o);
+        pop_ ();
+      }
+
+      void AddressServerDescription::
+      address (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("address", top_ ()));
+        Traversal::AddressServerDescription::address (o);
+        pop_ ();
+      }
+
+      // UDPSenderDescription
+      //
+      //
+
+      UDPSenderDescription::
+      UDPSenderDescription (::XSCRT::XML::Element< ACE_TCHAR >& e)
+      : ::XSCRT::Writer< ACE_TCHAR > (e)
+      {
+      }
+
+      UDPSenderDescription::
+      UDPSenderDescription ()
+      {
+      }
+
+      void UDPSenderDescription::
+      traverse (Type const& o)
+      {
+        Traversal::UDPSenderDescription::traverse (o);
+      }
+
+      void UDPSenderDescription::
+      name (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("name", top_ ()));
+        Traversal::UDPSenderDescription::name (o);
+        pop_ ();
+      }
+
+      void UDPSenderDescription::
+      addr_serv_id (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("addr_serv_id", top_ ()));
+        Traversal::UDPSenderDescription::addr_serv_id (o);
+        pop_ ();
+      }
+
+      // UDPReceiverDescription
+      //
+      //
+
+      UDPReceiverDescription::
+      UDPReceiverDescription (::XSCRT::XML::Element< ACE_TCHAR >& e)
+      : ::XSCRT::Writer< ACE_TCHAR > (e)
+      {
+      }
+
+      UDPReceiverDescription::
+      UDPReceiverDescription ()
+      {
+      }
+
+      void UDPReceiverDescription::
+      traverse (Type const& o)
+      {
+        Traversal::UDPReceiverDescription::traverse (o);
+      }
+
+      void UDPReceiverDescription::
+      name (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("name", top_ ()));
+        Traversal::UDPReceiverDescription::name (o);
+        pop_ ();
+      }
+
+      void UDPReceiverDescription::
+      addr_serv_id (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("addr_serv_id", top_ ()));
+        Traversal::UDPReceiverDescription::addr_serv_id (o);
+        pop_ ();
+      }
+
+      void UDPReceiverDescription::
+      is_multicast (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("is_multicast", top_ ()));
+        Traversal::UDPReceiverDescription::is_multicast (o);
+        pop_ ();
+      }
+
+      void UDPReceiverDescription::
+      listen_port (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("listen_port", top_ ()));
+        Traversal::UDPReceiverDescription::listen_port (o);
+        pop_ ();
+      }
+    }
+  }
+}
+
+namespace CIAO
+{
+  namespace Config_Handlers
+  {
+    void
+    CIAOEvents (::CIAO::Config_Handlers::CIAOEventsDef const& s, xercesc::DOMDocument* d)
+    {
+      ::XSCRT::XML::Element< ACE_TCHAR > e (d->getDocumentElement ());
+      if (e.name () != "CIAOEvents")
+      {
+        throw 1;
+      }
+
+      struct W : virtual ::CIAO::Config_Handlers::Writer::CIAOEventsDef,
+      virtual ::CIAO::Config_Handlers::Writer::EventServiceDescription,
+      virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::string< ACE_TCHAR >, ACE_TCHAR >,
+      virtual ::CIAO::Config_Handlers::Writer::EventServiceType,
+      virtual ::CIAO::Config_Handlers::Writer::Filter,
+      virtual ::CIAO::Config_Handlers::Writer::FilterType,
+      virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::ID< ACE_TCHAR >, ACE_TCHAR >,
+      virtual ::CIAO::Config_Handlers::Writer::AddressServerDescription,
+      virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::unsignedShort, ACE_TCHAR >,
+      virtual ::CIAO::Config_Handlers::Writer::UDPSenderDescription,
+      virtual ::CIAO::Config_Handlers::Writer::UDPReceiverDescription,
+      virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::boolean, ACE_TCHAR >,
+      virtual ::XSCRT::Writer< ACE_TCHAR >
+      {
+        W (::XSCRT::XML::Element< ACE_TCHAR >& e)
+        : ::XSCRT::Writer< ACE_TCHAR > (e)
+        {
+        }
+      };
+
+      W w (e);
+      w.dispatch (s);
+    }
+  }
+}
+
