@@ -16,8 +16,7 @@ ACE_RCSID (SSLIOP,
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::SSLIOP::Current_ptr
-TAO::SSLIOP::Util::current (
-  TAO_ORB_Core *orb_core)
+TAO::SSLIOP::Util::current (TAO_ORB_Core *orb_core)
 {
   try
     {

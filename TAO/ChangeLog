@@ -1,32 +1,59 @@
+Mon Feb 19 12:32:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/PortableGroup.idl:
+          Improved doxygen
+
+        * orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Acceptor.h:
+        * orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connection_Handler.h:
+        * orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connector.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Transport.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Accept_Strategy.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_ClientCredentials.h:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Current.h:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Current_Impl.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_ORBInitializer.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Util.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Util.h:
+        * orbsvcs/orbsvcs/Naming/Storable_Naming_Context_Activator.cpp:
+        * orbsvcs/orbsvcs/Shutdown_Utilities.cpp:
+
+          Layout/const changes
+
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Invocation_Interceptor.cpp:
+          Fixed compile problems when SSLIOP_DEBUG_PEER_CERTIFICATE is
+          enabled
+
 Mon Feb 19 04:42:49 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
 
         * tao/DiffServPolicy/DiffServ_Network_Priority_Hook.cpp:
-        
+
           Fixed a compilation error.
 
 Fri Feb 16 16:55:51 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
-        
+
         * tao/PortableServer/Network_Priority_Hook.h:
         * tao/PortableServer/Network_Priority_Hook.cpp:
-        
+
           Added a hook in the POA to make a call on the DiffServ library
           to do DiffServ policy related processing on the server side
           of the application. The specialized implementation of the hook
           is provided by the DiffServ library.
-        
+
         * tao/PortableServer/Root_POA.h:
         * tao/PortableServer/Root_POA.cpp:
-        
+
           Added code to initialize the above mentioned hook.
-        
+
           Added get and set methods for the above mentioned hook.
-        
+
           Added a get method to return the POA's cached policies.
-        
+
         * tao/PortableServer/POA_Cached_Policies.h:
         * tao/PortableServer/POA_Cached_Policies.cpp:
         * tao/PortableServer/POA_Cached_Policies.inl:
-        
+
           Added get and set methods for returning DiffServ policy related
           artifacts. These methods are used in the server side for setting
           the DiffServ codepoints on the replies.
@@ -36,15 +63,15 @@ Fri Feb 16 16:51:38 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
         * tao/ORB_Core.h:
         * tao/ORB_Core.cpp:
         * tao/ORB_Core.inl:
-        
+
           Since a new type of protocols hooks was added as part of the
           TAO DiffServ policy support, the ORB core files are modified to
           instantiate the new type of protocols hooks, if the application
           uses the DiffServ library.
-        
+
           Get and set methods are added to return the new type of protocols
           hooks.
-        
+
           Modified the service_context_list () to add DiffServ policy specific
           service context entry, just like how the method adds RTCORBA policy
           specific service context entry.
@@ -52,47 +79,47 @@ Fri Feb 16 16:51:38 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
 Fri Feb 16 16:50:00 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
 
         * tao/tao.mpc:
-        
+
           Added the new type of protocols hooks files for compilation.
-        
+
         * tao/DiffServPolicy.mpc:
-        
+
           Added a mpc file for compiling the DiffServ library.
 
 Fri Feb 16 16:45:30 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
 
         * tao/Network_Priority_Protocols_Hooks.h:
         * tao/Network_Priority_Protocols_Hooks.cpp:
-        
+
           Added a new type of protocols hook, that is used by the ORB core
           to add in code to do DiffServ policy specific processing. If an
           application uses the DiffServ library, then the library provides
           the specialized hook that needs to be used for adding DiffServ
           codepoints to requests/replies.
-        
+
         * tao/Default_Network_Priority_Protocols_Hooks.h:
         * tao/Default_Network_Priority_Protocols_Hooks.cpp:
-        
+
           The default implementations of the above mentioned new type
-          of protocols hooks. This implementation is used, in case the 
+          of protocols hooks. This implementation is used, in case the
           application does not use the DiffServ library.
 
 Fri Feb 16 16:43:10 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
 
         * tao/orbconf.h:
-        
-          Added new TAO_Cached_Policy_Type definitions for the 
+
+          Added new TAO_Cached_Policy_Type definitions for the
           newly added DiffServ policies.
-        
+
         * tao/IOP_IOR.pidl:
-        
+
           Added a new service context ServiceId for the DiffServ policy
           support.
 
 Fri Feb 16 16:35:43 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
 
         * tao/DiffServPolicy:
-        
+
           Checked in TAO support to specify client-side and server-side
           policies to add DiffServ codepoints to requests and replies. This
           support is different from the current RTCORBA support for adding

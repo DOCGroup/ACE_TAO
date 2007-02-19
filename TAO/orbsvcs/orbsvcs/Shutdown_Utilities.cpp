@@ -87,8 +87,7 @@ Service_Shutdown::~Service_Shutdown ()
 }
 
 int
-Service_Shutdown::handle_signal (int signum,
-                                 siginfo_t*, ucontext_t*)
+Service_Shutdown::handle_signal (int signum, siginfo_t*, ucontext_t*)
 {
   this->functor_(signum);
   return 0;

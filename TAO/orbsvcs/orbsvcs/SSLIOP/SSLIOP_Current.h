@@ -99,8 +99,7 @@ namespace TAO
                   bool &setup_done);
 
       /// Teardown the Current for this request.
-      void teardown (Current_Impl *prev_impl,
-                     bool &setup_done);
+      void teardown (Current_Impl *prev_impl, bool &setup_done);
 
       /**
        * @name Downcast and Reference Counting Methods

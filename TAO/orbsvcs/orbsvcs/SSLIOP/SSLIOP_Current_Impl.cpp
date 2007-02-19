@@ -64,7 +64,7 @@ TAO::SSLIOP::Current_Impl::get_peer_certificate (
     return;
 
   // Get the size of the ASN.1 encoding.
-  const int cert_length = ::i2d_X509 (cert.in (), 0);
+  int const cert_length = ::i2d_X509 (cert.in (), 0);
   if (cert_length <= 0)
     return;
 
