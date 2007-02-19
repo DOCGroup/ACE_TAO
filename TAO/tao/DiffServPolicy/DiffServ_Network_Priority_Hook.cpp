@@ -10,6 +10,7 @@
 #include "tao/Network_Priority_Protocols_Hooks.h"
 #include "tao/ORB_Core.h"
 #include "tao/Connection_Handler.h"
+#include "tao/Transport.h"
 
 ACE_RCSID(DiffServPolicy,
           DiffServ_Network_Priority_Hook,
