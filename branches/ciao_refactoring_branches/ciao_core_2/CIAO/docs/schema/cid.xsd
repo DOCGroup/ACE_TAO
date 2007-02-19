@@ -5,9 +5,10 @@
             targetNamespace="http://www.omg.org/Deployment">
 
   <xsd:include schemaLocation="Basic_Deployment_Data.xsd" />
-  <xsd:include schemaLocation="cpd.xsd" />
+  <xsd:include schemaLocation="ccd.xsd" />
   <xsd:include schemaLocation="iad.xsd" />
   <xsd:include schemaLocation="pcd.xsd" />
+  <xsd:include schemaLocation="cpd.xsd" />
 
   <xsd:complexType name="SubcomponentInstantiationDescription">
     <xsd:sequence>

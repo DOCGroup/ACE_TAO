@@ -1,3 +1,40 @@
+Mon Feb 19 19:25:06 UTC 2007  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * ccd.hpp
+        * cid.cpp
+        * pcd.cpp
+        * Deployment.hpp
+        * toplevel.cpp
+        * cdd.hpp
+        * Basic_Deployment_Data.cpp
+        * cdp.hpp
+        * cpd.hpp
+        * CIAO_Events/CIAOEvents.cpp
+        * CIAO_Events/CIAOEvents.hpp
+        * ccd.cpp
+        * iad.hpp
+        * cid.hpp
+        * pcd.hpp
+        * Deployment.cpp
+        * cdd.cpp
+        * toplevel.hpp
+        * RT-CCM/CIAOServerResources.hpp
+        * RT-CCM/CIAOServerResources.cpp
+        * cdp.cpp
+        * cpd.cpp
+        * Basic_Deployment_Data.hpp
+        * iad.cpp
+        
+        * docs/schema/cid.xsd
+        * docs/schema/cpd.xsd
+        
+          Changed include ordering. 
+        
+        * docs/schema/Basic_Deployment_Data.xsd
+         
+          Added elements to support sequence, struct, and valuetypes
+          in the schema.
+        
 Mon Feb 19 19:20:35 UTC 2007  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * Package_Handlers/PCD_Handler.cpp
