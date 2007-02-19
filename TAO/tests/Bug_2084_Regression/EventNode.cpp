@@ -47,8 +47,11 @@ void EventNode::registerHello ( ::Test::Hello_ptr h )
         }
     }
 
-  CORBA::String_var str = h->get_string( (::CORBA::Long) ACE_Thread::self() );
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) - EventNode: string returned <%s>\n", str.in ()));
+  CORBA::String_var str =
+    h->get_string (static_cast<CORBA::Long> ((size_t)ACE_Thread::self ()));
+  ACE_DEBUG ((LM_DEBUG,
+              "(%P|%t) - EventNode: string returned <%s>\n",
+              str.in ()));
 }
 
 void

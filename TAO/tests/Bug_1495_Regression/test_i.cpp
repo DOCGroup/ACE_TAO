@@ -30,7 +30,7 @@ Bug1495_i::get_thread_id (
     CORBA::Long_out thread_id
   )
 {
-    thread_id = (CORBA::Long)ACE_Thread::self();
+    thread_id = static_cast<CORBA::Long> ((size_t)ACE_Thread::self ());
 }
 
 void
