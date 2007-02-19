@@ -20,7 +20,7 @@ if BUILD_CORBA_MESSAGING
 if BUILD_EXCEPTIONS
 if !BUILD_ACE_FOR_TAO
 
-noinst_PROGRAMS = ftrt_eventservice
+bin_PROGRAMS = ftrt_eventservice
 
 ftrt_eventservice_CPPFLAGS = \
   -I$(ACE_ROOT) \
