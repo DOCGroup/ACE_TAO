@@ -1,3 +1,20 @@
+Mon Feb 19 20:34:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/FTRT_Event_Service/Event_Service/FTRT_Event_Service.mpc:
+        * orbsvcs/FTRT_Event_Service/Gateway_Service/FTRTEC_Gateway_Service.mpc:
+        * orbsvcs/LifeCycle_Service/LifeCycle_Service.mpc:
+        * orbsvcs/FTRT_Event_Service/Factory_Service/FTRTEC_Factory_Service.mpc:
+          Added install as base project so that the executables to
+          get installed
+
+        * orbsvcs/FTRT_Event_Service/Event_Service/Makefile.am:
+        * orbsvcs/FTRT_Event_Service/Factory_Service/Makefile.am:
+        * orbsvcs/FTRT_Event_Service/Gateway_Service/Makefile.am:
+        * orbsvcs/LifeCycle_Service/Makefile.am:
+          Updated because of change above. Fixes bugzilla bug 2813, thanks
+          to Thomas Girard <thomas dot g dot girard at free dot fr>
+          for reporting this.
+
 Mon Feb 19 19:55:46 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * tests/CDR/allocator.cpp:
