@@ -63,7 +63,7 @@ int CIAO::DomainDataManager::update_domain (
   switch (update_kind)
     {
       case ::Deployment::UpdateAll:
-      case ::Deployment::UpdateAvailable:
+      case ::Deployment::UpdateDynamic:
         break;
       case ::Deployment::Add:
         add_to_domain (domainSubset);
