@@ -3,7 +3,7 @@
 #include "NodeApplication_Impl.h"
 #include "ace/SString.h"
 #include "Container_Impl.h"
-#include "Deployment_EventsC.h"
+#include "DAnCE/Deployment/Deployment_EventsC.h"
 #include "ciaosvcs/Events/CIAO_RTEC/CIAO_RTEventC.h"
 
 #if !defined (__ACE_INLINE__)

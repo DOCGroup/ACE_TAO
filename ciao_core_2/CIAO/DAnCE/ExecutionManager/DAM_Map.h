@@ -13,7 +13,7 @@
 #define CIAO_DAM_MAP_H
 #include /**/ "ace/pre.h"
 
-#include "ciao/Deployment_DomainApplicationManagerC.h"
+#include "DAnCE/Deployment/Deployment_DomainApplicationManagerC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

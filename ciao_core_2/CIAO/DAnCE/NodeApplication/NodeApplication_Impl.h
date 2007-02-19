@@ -26,7 +26,7 @@
 #include "ace/SString.h"
 #include "ace/Hash_Map_Manager_T.h"
 #include "tao/ORB.h"
-#include "ciao/Deployment_NodeApplicationS.h"
+#include "DAnCE/Deployment/Deployment_NodeApplicationS.h"
 #include "ciao/Server_init.h"
 #include "ciao/CIAO_common.h"
 #include "ciao/Object_Set_T.h"
