@@ -2,6 +2,10 @@
 
 #include "ace/Notification_Queue.h"
 
+#if !defined (__ACE_INLINE__)
+#include "ace/Notification_Queue.inl"
+#endif /* __ACE_INLINE__ */
+
 ACE_Notification_Queue::
 ACE_Notification_Queue()
   : ACE_Copy_Disabled()
@@ -38,9 +42,9 @@ reset()
   ACE_TRACE ("ACE_Notification_Queue::reset");
 
   // Free up the dynamically allocated resources.
-  ACE_Notification_Buffer **b = 0;
+  ACE_Notification_Queue_Node **b = 0;
 
-  for (ACE_Unbounded_Queue_Iterator<ACE_Notification_Buffer *> alloc_iter (this->alloc_queue_);
+  for (ACE_Unbounded_Queue_Iterator<ACE_Notification_Queue_Node *> alloc_iter (this->alloc_queue_);
        alloc_iter.next (b) != 0;
        alloc_iter.advance ())
     {
@@ -49,8 +53,10 @@ reset()
     }
 
   this->alloc_queue_.reset ();
-  this->notify_queue_.reset ();
-  this->free_queue_.reset ();
+
+  // Swap with an empty list to reset the contents
+  Buffer_List().swap(notify_queue_);
+  Buffer_List().swap(free_queue_);
 }
 
 int ACE_Notification_Queue::
@@ -58,10 +64,10 @@ allocate_more_buffers()
 {
   ACE_TRACE ("ACE_Notification_Queue::allocate_more_buffers");
 
-  ACE_Notification_Buffer *temp = 0;
+  ACE_Notification_Queue_Node *temp = 0;
 
   ACE_NEW_RETURN (temp,
-		  ACE_Notification_Buffer[ACE_REACTOR_NOTIFICATION_ARRAY_SIZE],
+		  ACE_Notification_Queue_Node[ACE_REACTOR_NOTIFICATION_ARRAY_SIZE],
 		  -1);
 
   if (this->alloc_queue_.enqueue_head (temp) == -1)
@@ -71,8 +77,9 @@ allocate_more_buffers()
     }
 
   for (size_t i = 0; i < ACE_REACTOR_NOTIFICATION_ARRAY_SIZE; ++i)
-    if (free_queue_.enqueue_head (temp + i) == -1)
-      return -1;
+    {
+      free_queue_.push_front(temp + i);
+    }
 
   return 0;
 }
@@ -89,82 +96,35 @@ purge_pending_notifications(ACE_Event_Handler * eh,
   if (this->notify_queue_.is_empty ())
     return 0;
 
-  ACE_Notification_Buffer *temp = 0;
-  ACE_Unbounded_Queue <ACE_Notification_Buffer *> local_queue;
+  Buffer_List local_queue;
 
-  size_t queue_size = this->notify_queue_.size ();
   int number_purged = 0;
-  size_t i;
-  for (i = 0; i < queue_size; ++i)
+  while(!notify_queue_.is_empty())
     {
-      if (-1 == this->notify_queue_.dequeue_head (temp))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_LIB_TEXT ("%p\n"),
-                           ACE_LIB_TEXT ("dequeue_head")),
-                          -1);
+      ACE_Notification_Queue_Node * node = notify_queue_.pop_front();
 
-      // If this is not a Reactor notify (it is for a particular handler),
-      // and it matches the specified handler (or purging all),
-      // and applying the mask would totally eliminate the notification, then
-      // release it and count the number purged.
-      if ((0 != temp->eh_) &&
-          (0 == eh || eh == temp->eh_) &&
-          ACE_BIT_DISABLED (temp->mask_, ~mask)) // the existing notificationmask
-                                                 // is left with nothing when
-                                                 // applying the mask
-      {
-        if (-1 == this->free_queue_.enqueue_head (temp))
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_LIB_TEXT ("%p\n"),
-                             ACE_LIB_TEXT ("enqueue_head")),
-                            -1);
+      if (!node->matches_for_purging(eh))
+	{
+	  // Easy case, save the node and continue;
+	  local_queue.push_back(node);
+	  continue;
+	}
 
-        ACE_Event_Handler *event_handler = temp->eh_;
-        event_handler->remove_reference ();
+      if (!node->mask_disables_all_notifications(mask))
+	{
+	  node->clear_mask(mask);
+	  local_queue.push_back(node);
+	  continue;
+	}
 
-        ++number_purged;
-      }
-      else
-      {
-        // To preserve it, move it to the local_queue.
-        // But first, if this is not a Reactor notify (it is for a
-        // particular handler), and it matches the specified handler
-        // (or purging all), then apply the mask
-        if ((0 != temp->eh_) &&
-            (0 == eh || eh == temp->eh_))
-          {
-            ACE_CLR_BITS(temp->mask_, mask);
-          }
-
-        if (-1 == local_queue.enqueue_head (temp))
-          return -1;
-      }
-    }
-
-  if (this->notify_queue_.size ())
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-			 ACE_LIB_TEXT ("Notification queue should be ")
-			 ACE_LIB_TEXT ("empty after purging")),
-			-1);
+      free_queue_.push_back(node);
+      ACE_Event_Handler *event_handler = node->get().eh_;
+      event_handler->remove_reference ();
+      ++number_purged;
     }
 
   // now put it back in the notify queue
-  queue_size = local_queue.size ();
-  for (i = 0; i < queue_size; ++i)
-    {
-      if (-1 == local_queue.dequeue_head (temp))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_LIB_TEXT ("%p\n"),
-                           ACE_LIB_TEXT ("dequeue_head")),
-                          -1);
-
-      if (-1 == this->notify_queue_.enqueue_head (temp))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_LIB_TEXT ("%p\n"),
-                           ACE_LIB_TEXT ("enqueue_head")),
-                          -1);
-    }
+  local_queue.swap(notify_queue_);
 
   return number_purged;
 }
@@ -183,23 +143,21 @@ push_new_notification(
   if (this->notify_queue_.is_empty ())
     notification_required = true;
 
-  ACE_Notification_Buffer *temp = 0;
-
-  if (free_queue_.dequeue_head (temp) == -1)
+  if (free_queue_.is_empty())
     {
       if (allocate_more_buffers() == -1)
 	{
 	  return -1;
 	}
-
-      free_queue_.dequeue_head(temp);
     }
 
-  ACE_ASSERT (temp != 0);
-  *temp = buffer;
+  ACE_Notification_Queue_Node * node =
+    free_queue_.pop_front();
 
-  if (notify_queue_.enqueue_tail (temp) == -1)
-    return -1;
+  ACE_ASSERT (node != 0);
+  node->set(buffer);
+
+  notify_queue_.push_back(node);
 
   if (!notification_required)
     {
@@ -226,36 +184,17 @@ ACE_Notification_Queue::pop_next_notification(
       return 0;
     }
 
-  ACE_Notification_Buffer *temp = 0;
+  ACE_Notification_Queue_Node * node =
+    notify_queue_.pop_front();
 
-  if (notify_queue_.dequeue_head (temp) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_LIB_TEXT ("%p\n"),
-                         ACE_LIB_TEXT ("dequeue_head")),
-                        -1);
-    }
-
-  current = *temp;
-  if (free_queue_.enqueue_head (temp) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_LIB_TEXT ("%p\n"),
-                         ACE_LIB_TEXT ("enqueue_head")),
-                        -1);
-    }
-
-  ACE_Notification_Buffer ** n = 0;
+  current = node->get();
+  free_queue_.push_back(node);
 
   if(!this->notify_queue_.is_empty())
     {
-      // The queue is not empty, need to queue another message.
-      this->notify_queue_.get (n, 0);
       more_messages_queued = true;
-      next = **n;
+      next = notify_queue_.head()->get();
     }
 
   return 1;
 }
-
-					      
