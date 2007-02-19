@@ -1,3 +1,15 @@
+Mon Feb 19 19:33:32 UTC 2007  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/NodeManager/MonitorCB.cpp
+        * DAnCE/TargetManager/DomainDataManager.cpp
+        
+          Corrected to reflect changes in IDL.
+
+        * CCF/CCF/CodeGenerationKit/CommandLine.cpp
+        
+          Added get_all_values to support revrieval of all values for a given
+          option passed on the command line. 
+        
 Mon Feb 19 19:32:34 UTC 2007  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * ciao/Container_Base.cpp
