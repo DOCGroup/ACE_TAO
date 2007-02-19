@@ -46,7 +46,7 @@ public:
   /// the DiffServ codepoint that needs to be added to the request
   /// to be sent to the server.
   ///
-  const CORBA::Long get_dscp_codepoint (TAO_Stub *stub, CORBA::Object *object);
+  CORBA::Long get_dscp_codepoint (TAO_Stub *stub, CORBA::Object *object);
 
   /// This function is used by the server side to figure out the
   /// DiffServ codepoint that is attached and sent as part of the 
@@ -56,7 +56,7 @@ public:
   /// want the server to use in the reply, as a service context
   /// entry in the request.
   ///
-  const CORBA::Long get_dscp_codepoint (TAO_Service_Context &sc);
+  CORBA::Long get_dscp_codepoint (TAO_Service_Context &sc);
 
   /// This function is called from the ORB_Core to add
   /// network priority policy specific information on the request
