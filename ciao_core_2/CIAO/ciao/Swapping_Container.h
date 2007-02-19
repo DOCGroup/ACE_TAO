@@ -25,7 +25,7 @@
 #include "tao/PortableServer/Servant_Base.h"
 #include "ciao/CCM_ContainerC.h"
 #include "ciao/Container_Base.h"
-#include "ciao/Deployment_CoreC.h"
+#include "DAnCE/Deployment/Deployment_CoreC.h"
 #include "ciao/Dynamic_Component_Activator.h"
 #include "ciao/CIAO_Server_Export.h"
 #include "ciao/Servant_Activator.h"
