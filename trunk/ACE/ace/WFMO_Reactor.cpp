@@ -1753,13 +1753,50 @@ ACE_WFMO_Reactor::ok_to_wait (ACE_Time_Value *max_wait_time,
   // Note: There is really no need to involve the <timer_queue_> here
   // because even if a timeout in the <timer_queue_> does expire we
   // will not be able to dispatch it
-  int timeout = max_wait_time == 0 ? INFINITE : max_wait_time->msec ();
 
-  // Atomically wait for both the <lock_> and <ok_to_wait_> event
+  // We need to wait for both the <lock_> and <ok_to_wait_> event.
+  // If not on WinCE, use WaitForMultipleObjects() to wait for both atomically.
+  // On WinCE, the waitAll arg to WFMO must be false, so wait for the
+  // ok_to_wait_ event first (since that's likely to take the longest) then
+  // grab the lock and recheck the ok_to_wait_ event. When we can get them
+  // both, or there's an error/timeout, return.
+#if defined (ACE_HAS_WINCE)
+  ACE_Time_Value timeout = ACE_OS::gettimeofday ();
+  if (max_wait_time != 0)
+    timeout += *max_wait_time;
+  while (1)
+    {
+      int status;
+      if (max_wait_time == 0)
+        status = this->ok_to_wait_.wait ();
+      else
+        status = this->ok_to_wait_.wait (&timeout);
+      if (status == -1)
+        return -1;
+      // The event is signaled, so it's ok to wait; grab the lock and
+      // recheck the event. If something has changed, restart the wait.
+      if (max_wait_time == 0)
+        status = this->lock_.acquire ();
+      else
+        status = this->lock_.acquire (timeout);
+      if (status == -1)
+        return -1;
+
+      // Have the lock_, now re-check the event. If it's not signaled,
+      // another thread changed something so go back and wait again.
+      ACE_Time_Value poll_it = ACE_OS::gettimeofday ();
+      if (this->ok_to_wait_.wait (&poll_it) == 0)
+        break;
+      this->lock_.release ();
+    }
+  return 1;
+
+#else
+  int timeout = max_wait_time == 0 ? INFINITE : max_wait_time->msec ();
   DWORD result = 0;
   while (1)
     {
-#if defined (ACE_HAS_PHARLAP)
+#  if defined (ACE_HAS_PHARLAP)
       // PharLap doesn't implement WaitForMultipleObjectsEx, and doesn't
       // do async I/O, so it's not needed in this case anyway.
       result = ::WaitForMultipleObjects (sizeof this->atomic_wait_array_ / sizeof (ACE_HANDLE),
@@ -1770,13 +1807,7 @@ ACE_WFMO_Reactor::ok_to_wait (ACE_Time_Value *max_wait_time,
       if (result != WAIT_IO_COMPLETION)
         break;
 
-#elif defined (ACE_HAS_WINCE)
-      result = ::WaitForMultipleObjects (sizeof this->atomic_wait_array_ / sizeof (ACE_HANDLE),
-                                         this->atomic_wait_array_,
-                                         FALSE,   // Must be FALSE on WinCE
-                                         timeout);
-      break;  // CE does not have WAIT_IO_COMPLETION defined.
-#else
+#  else
       result = ::WaitForMultipleObjectsEx (sizeof this->atomic_wait_array_ / sizeof (ACE_HANDLE),
                                            this->atomic_wait_array_,
                                            TRUE,
@@ -1786,7 +1817,7 @@ ACE_WFMO_Reactor::ok_to_wait (ACE_Time_Value *max_wait_time,
       if (result != WAIT_IO_COMPLETION)
         break;
 
-#endif /* ACE_HAS_PHARLAP */
+#  endif /* ACE_HAS_PHARLAP */
     }
 
   switch (result)
@@ -1804,6 +1835,7 @@ ACE_WFMO_Reactor::ok_to_wait (ACE_Time_Value *max_wait_time,
 
   // It is ok to enter ::WaitForMultipleObjects
   return 1;
+#endif /* ACE_HAS_WINCE */
 }
 
 DWORD

@@ -1188,7 +1188,9 @@ protected:
   /// Return the ID of the "owner" thread. Does not do any locking.
   virtual ACE_thread_t owner_i (void);
 
-  /// Check to see if it is ok to enter <::WaitForMultipleObjects>.
+  /// Wait up to @a max_wait_time until it's ok to enter
+  /// WaitForMultipleObjects. Returns 1 (and holding lock_) if ok to wait;
+  /// -1 (and not holding lock_) if not.
   virtual int ok_to_wait (ACE_Time_Value *max_wait_time,
                           int alertable);
 
