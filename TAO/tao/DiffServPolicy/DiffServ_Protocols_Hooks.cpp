@@ -4,6 +4,7 @@
 #include "tao/ORB_Core.h"
 #include "tao/Service_Context.h"
 #include "tao/CDR.h"
+#include "tao/SystemException.h"
 #include "tao/DiffServPolicy/Client_Network_Priority_Policy.h"
 #include "ace/OS_NS_string.h"
 
@@ -166,7 +167,7 @@ TAO_DS_Network_Priority_Protocols_Hooks::get_dscp_codepoint (
     {
       TAO::NetworkPriorityPolicy_var client_nw_priority =
         TAO::NetworkPriorityPolicy::_narrow (client_nw_priority_policy.in ());
-       
+
       if (!CORBA::is_nil (client_nw_priority.in ()))
         {
           diffserv_codepoint =

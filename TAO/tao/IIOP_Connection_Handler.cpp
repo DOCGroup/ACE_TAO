@@ -107,23 +107,23 @@ TAO_IIOP_Connection_Handler::open (void*)
 
   TAO_Protocols_Hooks *tph = this->orb_core ()->get_protocols_hooks ();
 
-  bool const client = this->transport ()->opened_as () == TAO::TAO_CLIENT_ROLE;
-
-
-  try
+  if (tph != 0)
     {
-      if (client)
+      try
         {
-          tph->client_protocol_properties_at_orb_level (protocol_properties);
+          if (this->transport ()->opened_as () == TAO::TAO_CLIENT_ROLE)
+            {
+              tph->client_protocol_properties_at_orb_level (protocol_properties);
+            }
+          else
+            {
+              tph->server_protocol_properties_at_orb_level (protocol_properties);
+            }
         }
-      else
+      catch (const ::CORBA::Exception&)
         {
-          tph->server_protocol_properties_at_orb_level (protocol_properties);
+          return -1;
         }
-    }
-  catch (const ::CORBA::Exception&)
-    {
-      return -1;
     }
 
   if (this->set_socket_option (this->peer (),
@@ -508,7 +508,7 @@ TAO_IIOP_Connection_Handler::set_dscp_codepoint (CORBA::Long dscp_codepoint)
   CORBA::Long codepoint = dscp_codepoint;
 
   tos = static_cast<int> (codepoint) << 2;
-  
+
   this->set_tos (tos);
 
   return 0;
@@ -521,14 +521,16 @@ TAO_IIOP_Connection_Handler::set_dscp_codepoint (CORBA::Boolean set_network_prio
 
   if (set_network_priority)
     {
-      TAO_Protocols_Hooks *tph =
-        this->orb_core ()->get_protocols_hooks ();
+      TAO_Protocols_Hooks *tph = this->orb_core ()->get_protocols_hooks ();
 
-      CORBA::Long codepoint =
-        tph->get_dscp_codepoint ();
+      if (tph != 0)
+        {
+          CORBA::Long codepoint =
+            tph->get_dscp_codepoint ();
 
-      tos = static_cast<int> (codepoint) << 2;
-      this->set_tos (tos);
+          tos = static_cast<int> (codepoint) << 2;
+          this->set_tos (tos);
+        }
     }
 
   return 0;

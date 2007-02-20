@@ -1322,16 +1322,11 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
     (this->configuration (),
      ACE_TEXT_CHAR_TO_TCHAR (protocols_hooks_name.c_str()));
 
-  // Must have valid protocol hooks.
-  if (this->protocols_hooks_ == 0)
-    throw ::CORBA::INITIALIZE (
-      CORBA::SystemException::_tao_minor_code (
-        TAO_ORB_CORE_INIT_LOCATION_CODE,
-        0),
-      CORBA::COMPLETED_NO);
-
-  // Initialize the protocols hooks instance.
-  this->protocols_hooks_->init_hooks (this);
+  if (this->protocols_hooks_ != 0)
+    {
+      // Initialize the protocols hooks instance.
+      this->protocols_hooks_->init_hooks (this);
+    }
 
   // Look in the service repository for an instance of the
   // Network Priority Protocol Hooks.
@@ -1797,7 +1792,10 @@ TAO_ORB_Core::service_context_list (
     CORBA::Boolean restart)
 {
   // @NOTE: Can use Interceptors instead..
-  this->protocols_hooks_->rt_service_context (stub, service_context, restart);
+  if (this->protocols_hooks_ != 0)
+    {
+      this->protocols_hooks_->rt_service_context (stub, service_context, restart);
+    }
 
   // call the network priority protocols hooks that has been
   // registered.

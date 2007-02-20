@@ -122,8 +122,7 @@ namespace TAO
   }
 
   bool
-  Invocation_Adapter::get_timeout (TAO_Stub *stub,
-                                   ACE_Time_Value &timeout)
+  Invocation_Adapter::get_timeout (TAO_Stub *stub, ACE_Time_Value &timeout)
   {
     bool has_timeout = false;
     this->target_->orb_core ()->call_timeout_hook (stub,
@@ -175,8 +174,7 @@ namespace TAO
     if (status == TAO_INVOKE_RESTART &&
         coll_inv.is_forwarded ())
       {
-        effective_target =
-            coll_inv.steal_forwarded_reference ();
+        effective_target = coll_inv.steal_forwarded_reference ();
 
 #if TAO_HAS_INTERCEPTORS == 1
         const bool is_permanent_forward =
