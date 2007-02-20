@@ -613,6 +613,12 @@ TAO::SSLIOP::Connector::ssliop_connect (
                                               remote_address,
                                               synch_options);
 
+      // base_connector_.connect() will increment the handler's
+      // #REFCOUNT# once more. This is not required as we already hold
+      // a reference to the handler, so we discard this second
+      // reference.
+      svc_handler->remove_reference ();
+
       // There are three possibilities from calling connect(): (a)
       // connection succeeds immediately - in this case, the
       // #REFCOUNT# on the handler is two; (b) connection completion

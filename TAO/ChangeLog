@@ -1,3 +1,16 @@
+Tue Feb 20 18:35:50 UTC 2007  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp (ssliop_connect):
+          Call remove_reference() on svc_handler so that we don't leak
+          handles.  Thanks to Ken Sedgwick <ken+5a4 at bonsai dot com> for
+          reporting this and testing the fix.  This fixes bugid 1506.
+
+Tue Feb 20 17:56:25 UTC 2007  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * COPYING: Clarified how the COPYING file need to be included with
+          any code released.  Thanks to Scott Mark <sjm at pobox dot com>
+          for helping clarify this.
+  
 Tue Feb 20 16:03:13 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
 
         * tao/PortableServer/Default_Servant_Dispatcher.cpp:
