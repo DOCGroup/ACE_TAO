@@ -20,7 +20,7 @@
 
 #include "tao/LocalObject.h"
 
-#include "ciao/Container_Base.h"
+#include "ciao/Session_Container.h"
 
 #include "ENWS.h"
 #include "TSEC_CheckPointEIC.h"
