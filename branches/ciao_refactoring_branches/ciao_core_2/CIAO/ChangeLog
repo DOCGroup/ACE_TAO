@@ -1,3 +1,14 @@
+Tue Feb 20 16:03:02 UTC 2007  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * RACE/Plan_Analyzer/Interface/PlanIngress.idl
+        * RACE/Planners/Interface/Planner_I.idl
+        * RACE/Controller/Component/Controller.idl
+        * RACE/Output_Adapters/Interface/PlanEgress.idl
+        * RACE/Planner_Manager/Interface/Planner_Manager_I.idl
+        
+          Further updates to support migration of Deployment IDL to 
+          DAnCE/Deployment.
+
 Mon Feb 19 21:27:11 UTC 2007  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * MPC/config/ciao_events_base_dnc.mpb
