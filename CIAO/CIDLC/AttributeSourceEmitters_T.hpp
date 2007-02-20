@@ -70,17 +70,7 @@ struct WriteAttributeSourceEmitter : Traversal::ReadWriteAttribute,
   }
 
   virtual void
-  set_raises_none (SemanticGraph::ReadWriteAttribute&)
-  {
-  }
-
-  virtual void
-  set_raises_pre (SemanticGraph::ReadWriteAttribute&)
-  {
-  }
-
-  virtual void
-  set_raises_post (SemanticGraph::ReadWriteAttribute&)
+  set_raises (SemanticGraph::ReadWriteAttribute&)
   {
   }
 
@@ -189,17 +179,7 @@ struct AttributeSourceEmitter : Traversal::ReadAttribute,
   }
 
   virtual void
-  get_raises_none (SemanticGraph::ReadWriteAttribute&)
-  {
-  }
-
-  virtual void
-  get_raises_pre (SemanticGraph::ReadWriteAttribute&)
-  {
-  }
-
-  virtual void
-  get_raises_post (SemanticGraph::ReadWriteAttribute&)
+  get_raises (SemanticGraph::ReadWriteAttribute&)
   {
   }
 
@@ -277,17 +257,7 @@ struct AttributeSourceEmitter : Traversal::ReadAttribute,
   }
 
   virtual void
-  get_raises_none (SemanticGraph::ReadAttribute&)
-  {
-  }
-
-  virtual void
-  get_raises_pre (SemanticGraph::ReadAttribute&)
-  {
-  }
-
-  virtual void
-  get_raises_post (SemanticGraph::ReadAttribute&)
+  get_raises (SemanticGraph::ReadAttribute&)
   {
   }
 
