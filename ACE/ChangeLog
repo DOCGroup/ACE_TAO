@@ -1,3 +1,10 @@
+Tue Feb 20 15:54:20 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ace/OS_NS_Thread.cpp:
+
+          Reverted my change to check PTHREAD_STACK_MIN.  I just realized
+          that it may not be defined as an integral value (i.e., Solaris).
+
 Tue Feb 20 15:46:06 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * ace/OS_NS_Thread.cpp:
