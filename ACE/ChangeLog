@@ -1,3 +1,23 @@
+Tue Feb 20 15:46:06 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ace/OS_NS_Thread.cpp:
+
+          Added ACE_UNUSED_ARG(id) for RTEMS and modified code to check
+          that size (which is of type size_t) is less than PTHREAD_STACK_MIN
+          only if PTHREAD_STACK_MIN is greater than zero.
+
+        * ace/OS_NS_stdlib.cpp:
+
+          Fixed a compile error on VxWorks where an attempt to cast
+          ACE_thread_t to ACE_RANDR_TYPE failed (since ACE_thread_t is char*
+          on VxWorks).
+
+        * ace/SOCK_Dgram.cpp:
+
+          The iov_len element of the iovec struct is unsigned on RTEMS (as
+          it is with Linux and Borland C++), so use the same #if check to
+          avoid code that causes warnings.
+
 Tue Feb 20 15:06:04 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * ace/SOCK_Dgram.cpp:

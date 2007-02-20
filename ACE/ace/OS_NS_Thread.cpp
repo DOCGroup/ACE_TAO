@@ -3563,6 +3563,7 @@ ACE_OS::sched_params (const ACE_Sched_Params &sched_params,
   if (sched_params.scope () == ACE_SCOPE_PROCESS)
     {
 # if defined(ACE_TANDEM_T1248_PTHREADS) || defined (ACE_HAS_PTHREAD_SCHEDPARAM)
+      ACE_UNUSED_ARG (id);
       ACE_NOTSUP_RETURN (-1);
 # else  /* ! ACE_TANDEM_T1248_PTHREADS */
       int result = ::sched_setscheduler (id == ACE_SELF ? 0 : id,
@@ -3946,7 +3947,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
     {
       size_t size = stacksize;
 
-#   if defined (PTHREAD_STACK_MIN)
+#   if defined (PTHREAD_STACK_MIN) && (PTHREAD_STACK_MIN > 0)
       if (size < static_cast <size_t> (PTHREAD_STACK_MIN))
         size = PTHREAD_STACK_MIN;
 #   endif /* PTHREAD_STACK_MIN */
