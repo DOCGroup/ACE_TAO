@@ -17,6 +17,7 @@
  */
 
 #include "test_config.h"
+#include "ace/Auto_Ptr.h"
 #include "ace/Reactor.h"
 #include "ace/Select_Reactor.h"
 
@@ -46,7 +47,7 @@ run_main (int, ACE_TCHAR *[])
 
   int result = 0;
 
-  std::auto_ptr<ACE_Reactor> reactor(
+  auto_ptr<ACE_Reactor> reactor(
       new ACE_Reactor(new ACE_Select_Reactor, 1));
 
   ACE_Event_Handler_var v(

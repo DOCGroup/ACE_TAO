@@ -1,3 +1,7 @@
+Tue Feb 20 16:12:57 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * tests/Bug_2820_Regression_Test.cpp: ACEify use of auto_ptr.
+
 Tue Feb 20 16:06:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/os_include/os_stdlib.h:
@@ -103,6 +107,17 @@ Tue Feb 20 03:08:26 UTC 2007  Carlos O'Ryan  <coryan@atdesk.com>
         * tests/tests.mpc:
         * tests/Bug_2820_Regression_Test.cpp:
           A new test to demonstrate the problems in bug 2820.
+
+Mon Feb 19 23:13:07 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * ace/WFMO_Reactor.h: Clarify description of ok_to_wait().
+
+        * ace/WFMO_Reactor.cpp (ok_to_wait): Since WinCE can't use the
+          waitAll arg to atomically wait for both the lock and ok_to_wait
+          event, use a 2-step process to get both individually. This avoids
+          entering wfmo either without the ok_to_wait event or without
+          the lock. Thanks to Craig Johnson for reporting this. Also see:
+          Mon Oct 16 14:24:25 UTC 2006  Steve Huston  <shuston@riverace.com>
 
 Mon Feb 19 21:02:55 UTC 2007  Steve Huston  <shuston@riverace.com>
 
