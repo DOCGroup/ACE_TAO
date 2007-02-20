@@ -1,3 +1,43 @@
+Tue Feb 20 14:43:00 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ASNMP/asnmp/pdu.cpp:
+        * apps/JAWS2/JAWS/Cache_Manager.cpp:
+
+          Added a check for self assignment.
+
+        * ace/INET_Addr.cpp:
+        * tests/Multicast_Test_IPV6.cpp:
+        * examples/Web_Crawler/Command_Processor.cpp:
+
+          Removed redundant code to avoid "statement is unreachable"
+          warnings.
+
+        * examples/APG/Naming/Temperature_Monitor.cpp:
+        * examples/APG/Naming/Temperature_Monitor2.cpp:
+        * examples/APG/Streams/Answerer.cpp:
+        * examples/C++NPv1/Logging_Server.cpp:
+        * examples/C++NPv1/Process_Per_Connection_Logging_Server.cpp:
+        * examples/C++NPv1/Thread_Per_Connection_Logging_Server.h:
+
+          Added ACE_NOTREACHED around unreachable code to avoid "statement
+          is unreachable" warnings.
+
+        * examples/Connection/blocking/SPIPE-acceptor.cpp:
+
+          Reverted a bug that was introduced many years ago where threads
+          would be spawned and then the main thread would exit.
+
+        * performance-tests/SCTP/SOCK_SEQPACK_clt.cpp:
+        * performance-tests/SCTP/SOCK_SEQPACK_srv.cpp:
+        * performance-tests/SCTP/SOCK_STREAM_srv.cpp:
+
+          Modified to only compile code if ACE_HAS_SCTP is defined.
+
+        * tests/INET_Addr_Test.cpp:
+
+          Check addr.get_host_addr() for non-zero before passing it to
+          ACE_OS::strcmp().
+
 Tue Feb 20 03:08:26 UTC 2007  Carlos O'Ryan  <coryan@atdesk.com>
 
         * tests/tests.mpc:

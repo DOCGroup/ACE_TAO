@@ -101,7 +101,8 @@ int run_main (int argc, ACE_TCHAR *argv[])
           status = 1;
         }
 
-      if (0 != ACE_OS::strcmp (addr.get_host_addr(), ipv4_addresses[i]))
+      if (addr.get_host_addr () != 0 &&
+          ACE_OS::strcmp (addr.get_host_addr(), ipv4_addresses[i]) != 0)
         {
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("%s failed get_host_addr() check\n")
@@ -114,7 +115,8 @@ int run_main (int argc, ACE_TCHAR *argv[])
 
       // Now we check the operation of get_host_addr(char*,int)
       const char* haddr = addr.get_host_addr (&hostaddr[0], sizeof(hostaddr));
-      if (0 != ACE_OS::strcmp (&hostaddr[0], haddr))
+      if (haddr != 0 &&
+          ACE_OS::strcmp (&hostaddr[0], haddr) != 0)
         {
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("%s failed get_host_addr(char* buf,int) check\n")
@@ -124,7 +126,7 @@ int run_main (int argc, ACE_TCHAR *argv[])
                       haddr));
           status = 1;
         }
-      if (0 != ACE_OS::strcmp (&hostaddr[0], ipv4_addresses[i]))
+      if (ACE_OS::strcmp (&hostaddr[0], ipv4_addresses[i]) != 0)
         {
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("%s failed get_host_addr(char*,int) check\n")
@@ -149,7 +151,8 @@ int run_main (int argc, ACE_TCHAR *argv[])
       addr.set (80, addr32, 0); // addr32 is already in network byte order
       status |= check_type_consistency(addr);
 
-      if (0 != ACE_OS::strcmp (addr.get_host_addr (), ipv4_addresses[i]))
+      if (addr.get_host_addr () != 0 &&
+          ACE_OS::strcmp (addr.get_host_addr (), ipv4_addresses[i]) != 0)
         {
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("%s failed second get_host_addr() check\n")

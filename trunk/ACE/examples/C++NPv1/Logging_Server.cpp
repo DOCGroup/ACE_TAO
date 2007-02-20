@@ -27,7 +27,7 @@ int Logging_Server::run (int argc, char *argv[])
       return -1;
   }
 
-  return 0;
+  ACE_NOTREACHED (return 0;)
 }
 
 
