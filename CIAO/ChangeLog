@@ -1,3 +1,9 @@
+Tue Feb 20 03:56:37 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * DAnCE/StaticConfigurator/StaticDAnCEApp.mpc.tmpl:
+
+          Added missing dependency on iortable base project.
+           
 Mon Feb 19 20:22:14 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/extension/*:
