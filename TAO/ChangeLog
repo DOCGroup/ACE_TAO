@@ -19,7 +19,9 @@ Tue Feb 20 20:10:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
         * tao/Strategies/SHMIOP_Connection_Handler.cpp:
         * tao/Strategies/UIOP_Connection_Handler.cpp:
         * tao/orbsvcs/orbsvcs/SSLIOP_Connection_Handler.cpp:
-          When invoking the protocol hooks, check if we have a valid pointer
+          When invoking the protocol hooks, check if we have a valid pointer.
+          This increases performance and decreases footprint. Fixes bugzilla
+          2823.
 
         * tao/tao.mpc:
           Removed Default_Protocols_Hooks.{h,cpp}
