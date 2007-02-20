@@ -29,11 +29,7 @@ struct OperationEmitter : Traversal::Operation,
 
   virtual void receives_post (Type&);
 
-  virtual void raises_pre (Type&);
-
-  virtual void raises_none (Type&);
-
-  virtual void raises_post (Type&);
+  virtual void raises (Type&);
 
   virtual void post (Type&);
 
@@ -84,13 +80,7 @@ struct FactoryOperationEmitter : Traversal::HomeFactory,
   receives_post (SemanticGraph::HomeFactory&);
 
   virtual void
-  raises_none (SemanticGraph::HomeFactory&);
-
-  virtual void
-  raises_pre (SemanticGraph::HomeFactory&);
-
-  virtual void
-  raises_post (SemanticGraph::HomeFactory&);
+  raises (SemanticGraph::HomeFactory&);
 
   virtual void
   post (SemanticGraph::HomeFactory&);
@@ -109,38 +99,23 @@ struct FinderOperationEmitter : Traversal::HomeFinder,
 {
   FinderOperationEmitter (Context& c, bool for_exec = false);
 
-  virtual void
-  pre (SemanticGraph::HomeFinder&);
+  virtual void pre (SemanticGraph::HomeFinder&);
 
-  virtual void
-  returns (SemanticGraph::HomeFinder&);
+  virtual void returns (SemanticGraph::HomeFinder&);
 
-  virtual void
-  name (SemanticGraph::HomeFinder&);
+  virtual void name (SemanticGraph::HomeFinder&);
 
-  virtual void
-  receives_none (SemanticGraph::HomeFinder&);
+  virtual void receives_none (SemanticGraph::HomeFinder&);
 
-  virtual void
-  receives_pre (SemanticGraph::HomeFinder&);
+  virtual void receives_pre (SemanticGraph::HomeFinder&);
 
-  virtual void
-  receives_post (SemanticGraph::HomeFinder&);
+  virtual void receives_post (SemanticGraph::HomeFinder&);
 
-  virtual void
-  raises_none (SemanticGraph::HomeFinder&);
+  virtual void raises (SemanticGraph::HomeFinder&);
 
-  virtual void
-  raises_pre (SemanticGraph::HomeFinder&);
+  virtual void post (SemanticGraph::HomeFinder&);
 
-  virtual void
-  raises_post (SemanticGraph::HomeFinder&);
-
-  virtual void
-  post (SemanticGraph::HomeFinder&);
-
-  virtual void
-  comma (SemanticGraph::HomeFinder&);
+  virtual void comma (SemanticGraph::HomeFinder&);
 
 private:
   ReturnTypeNameEmitter returns_emitter_;

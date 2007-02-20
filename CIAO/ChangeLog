@@ -1,9 +1,16 @@
+Tue Feb 20 14:15:14 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * CIDLC/OperationHeaderEmitters.cpp:
+        * CIDLC/OperationHeaderEmitters.hpp:
+        * CIDLC/ServantSourceGenerator.cpp:
+          Override raises to get no throw spec at all
+
 Tue Feb 20 03:56:37 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * DAnCE/StaticConfigurator/StaticDAnCEApp.mpc.tmpl:
 
           Added missing dependency on iortable base project.
-           
+
 Mon Feb 19 20:22:14 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/extension/*:
