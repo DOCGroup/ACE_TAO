@@ -1,3 +1,13 @@
+Tue Feb 20 16:03:13 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
+
+        * tao/PortableServer/Default_Servant_Dispatcher.cpp:
+        
+          Modified the pre_invoke_remote_request () method to do
+          some processing, specific to the DiffServ library, to add
+          DiffServ codepoints on the replies. The method relegates the 
+          processing to a network priority hook, defined on the POA,
+          and specialized by the DiffServ library.
+
 Tue Feb 20 15:10:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/AnyTypeCode/TypeCode.{h,cpp,inl}:
