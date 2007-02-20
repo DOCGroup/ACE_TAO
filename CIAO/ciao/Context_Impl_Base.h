@@ -78,8 +78,6 @@ namespace CIAO
 
     virtual void set_rollback_only ();
 
-    virtual CORBA::Object * resolve_service_reference (const char *service_id);
-
     virtual CORBA::Object_ptr resolve_service_reference(const char *service_id);
 
     // CIAO-specific.

@@ -27,7 +27,7 @@
 
 #include "DAnCE/Deployment/Deployment_ContainerS.h"
 #include "DAnCE/Deployment/Deployment_NodeApplicationC.h"
-#include "ciao/DeploymentC.h"
+#include "DAnCE/Deployment//DeploymentC.h"
 #include "ciao/Session_Container.h"
 #include "ace/SString.h"
 #include "ciao/Server_init.h"  // write_IOR function & NameUtility
