@@ -10,6 +10,7 @@ project(CIAO_TargetManager_stub): ciao_client_dnc, ciao_deployment_stub, ciao_no
 
   IDL_Files {
     TargetManagerImpl.idl
+    TargetManagerExt.idl
     DomainEvents.idl
   }
 

@@ -1,3 +1,19 @@
+Tue Feb 20 17:59:51 UTC 2007  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/Deployment/Deployment_TargetManager.idl
+        * DAnCE/Deployment/DAnCE_Core.mpc
+        * DAnCE/TargetManager/DomainDataManager.h
+        * DAnCE/TargetManager/TargetManager.mpc
+        * DAnCE/TargetManager/CmpClient.cpp
+        * DAnCE/TargetManager/ResourceCommitmentManager.h
+        * DAnCE/TargetManager/TargetManagerImpl.idl
+        * DAnCE/NodeApplication/Container_Impl.h
+        * ciao/Context_Impl_Base.h
+        * ciao/Swapping_Container.cpp
+        
+          Cleared up compile errors from
+          Tue Feb 20 16:17:46 UTC 2007  William R. Otte  <wotte@dre.vanderbilt.edu>
+
 Tue Feb 20 17:48:14 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/Context_Impl_Base.h:
