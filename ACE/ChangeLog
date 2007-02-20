@@ -1,3 +1,14 @@
+Tue Feb 20 17:15:37 UTC 2007  Adam Mitz  <mitza@ociweb.com>
+
+        * ace/config-qnx-rtp.h:
+        * include/makeinclude/platform_qnx_rtp_gcc.GNU:
+
+          Moved the version detection from the platform_macros file to the
+          config file.  This allows us to use the QNX system-defined macro
+          _NTO_VERSION, which works in cross-compile environments.  The old
+          method of reading the version number from the "uname -a" output is
+          not compatible with cross-compilation.
+
 Tue Feb 20 16:38:24 UTC 2007  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * bin/MakeProjectCreator/templates/gnu.mpd
