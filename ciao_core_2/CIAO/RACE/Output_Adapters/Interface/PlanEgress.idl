@@ -4,7 +4,7 @@
 
 #ifndef INCLUDED_DEPLOYMENT_DATA
 #define INCLUDED_DEPLOYMENT_DATA
-#include "Deployment_DeploymentPlan.idl"
+#include "DAnCE/Deployment/Deployment_DeploymentPlan.idl"
 #endif
 
 module CIAO
