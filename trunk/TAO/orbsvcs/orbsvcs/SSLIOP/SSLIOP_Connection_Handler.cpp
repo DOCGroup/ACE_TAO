@@ -95,29 +95,27 @@ TAO::SSLIOP::Connection_Handler::open (void *)
   protocol_properties.no_delay_ =
     this->orb_core ()->orb_params ()->nodelay ();
 
-  TAO_Protocols_Hooks *tph =
-    this->orb_core ()->get_protocols_hooks ();
+  TAO_Protocols_Hooks *tph = this->orb_core ()->get_protocols_hooks ();
 
-  int client =
-    this->transport ()->opened_as () == TAO::TAO_CLIENT_ROLE;;
-
-
-  try
+  if (tph != 0)
     {
-      if (client)
+      try
         {
-          tph->client_protocol_properties_at_orb_level (
-            protocol_properties);
+          if (this->transport ()->opened_as () == TAO::TAO_CLIENT_ROLE)
+            {
+              tph->client_protocol_properties_at_orb_level (
+                protocol_properties);
+            }
+          else
+            {
+              tph->server_protocol_properties_at_orb_level (
+                protocol_properties);
+            }
         }
-      else
+      catch (const CORBA::Exception& ex)
         {
-          tph->server_protocol_properties_at_orb_level (
-            protocol_properties);
+          return -1;
         }
-    }
-  catch (const CORBA::Exception& ex)
-    {
-      return -1;
     }
 
   if (this->set_socket_option (this->peer (),
