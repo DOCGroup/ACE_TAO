@@ -2,8 +2,8 @@
 #ifndef REPOSITORY_MANAGER_IDL
 #define REPOSITORY_MANAGER_IDL
 
-#include "ciao/Deployment_Packaging_Data.idl"
-#include "ciao/Deployment.idl"
+#include "DAnCE/Deployment/Deployment_Packaging_Data.idl"
+#include "DAnCE/Deployment/Deployment.idl"
 
 module Deployment {
 

@@ -3,8 +3,8 @@
 #if !defined (DEPLOYMENT_CONTAINER_IDL)
 #define DEPLOYMENT_CONTAINER_IDL
 
-#include "ciao/Deployment_Application.idl"
-#include "ciao/Deployment_Core.idl"
+#include "DAnCE/Deployment/Deployment_Application.idl"
+#include "DAnCE/Deployment/Deployment_Core.idl"
 
 // *************** Packaging and Deployment ***************
 module Deployment

@@ -3,7 +3,7 @@
 #ifndef DEPLOYMENT_TARGETDATA_IDL
 #define DEPLOYMENT_TARGETDATA_IDL
 
-#include "ciao/Deployment_Base.idl"
+#include "DAnCE/Deployment/Deployment_Base.idl"
 #include "tao/StringSeq.pidl"
 #include "tao/ULongSeq.pidl"
 
@@ -14,6 +14,7 @@ module Deployment {
     ::CORBA::StringSeq resourceType;
     SatisfierProperties property;
   };
+
   typedef sequence < Resource > Resources;
 
   struct SharedResource {

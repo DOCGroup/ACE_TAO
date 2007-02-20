@@ -4,7 +4,7 @@
 
 #include "CIAOEvents.hpp"
 #include "CIAOEvents_Handler.h"
-#include "ciao/Deployment_EventsC.h"
+#include "DAnCE/Deployment/Deployment_EventsC.h"
 
 #include "ace/Get_Opt.h"
 #include "tao/ORB.h"

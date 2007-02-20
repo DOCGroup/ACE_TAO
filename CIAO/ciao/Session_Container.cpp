@@ -6,7 +6,7 @@
 #include "tao/Utils/PolicyList_Destroyer.h"
 #include "ace/OS_NS_stdio.h"
 #include "Servant_Activator.h"
-#include "ciao/Deployment_CoreC.h"
+#include "DAnCE/Deployment/Deployment_CoreC.h"
 
 #if !defined (__ACE_INLINE__)
 # include "Session_Container.inl"

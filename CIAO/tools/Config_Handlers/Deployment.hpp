@@ -9,17 +9,16 @@
  *             Will Otte <wotte@dre.vanderbilt.edu>
  */
 
-
 // Fix for Borland compilers, which seem to have a broken
 // <string> include.
 #ifdef __BORLANDC__
 # include <string.h>
 #endif
 
-#include "XSC_XML_Handlers_Export.h"
 #ifndef DEPLOYMENT_HPP
 #define DEPLOYMENT_HPP
 
+#include "XSC_XML_Handlers_Export.h"
 // Forward declarations.
 //
 namespace CIAO

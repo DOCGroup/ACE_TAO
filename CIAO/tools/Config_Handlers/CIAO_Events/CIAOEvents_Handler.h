@@ -14,9 +14,9 @@
 #include /**/ "ace/pre.h"
 
 #include "Utils/XML_Helper.h"
-#include "ciao/Deployment_EventsC.h"
+#include "DAnCE/Deployment/Deployment_EventsC.h"
 #include "CIAO_Events_Handlers_Export.h"
-#include "ciao/DeploymentC.h"
+#include "DAnCE/Deployment/DeploymentC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

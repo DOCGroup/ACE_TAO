@@ -3,12 +3,12 @@
  *
  * Changes made to this code will most likely be overwritten
  * when the handlers are recompiled.
- *
+ * 
  * If you find errors or feel that there are bugfixes to be made,
  * please contact the current XSC maintainer:
  *             Will Otte <wotte@dre.vanderbilt.edu>
  */
-
+ 
 #include "toplevel.hpp"
 
 namespace CIAO
@@ -16,49 +16,75 @@ namespace CIAO
   namespace Config_Handlers
   {
     // TopLevelPackageDescription
-    //
+    // 
 
     TopLevelPackageDescription::
-    TopLevelPackageDescription (::CIAO::Config_Handlers::PackageConfiguration const& package__)
-      :
-      ::XSCRT::Type (),
-      package_ (new ::CIAO::Config_Handlers::PackageConfiguration (package__)),
-      regulator__ ()
+    TopLevelPackageDescription ()
+    : 
+    ::XSCRT::Type (), 
+    regulator__ ()
     {
-      package_->container (this);
     }
 
     TopLevelPackageDescription::
     TopLevelPackageDescription (::CIAO::Config_Handlers::TopLevelPackageDescription const& s)
-      :
-      ::XSCRT::Type (),
-      package_ (new ::CIAO::Config_Handlers::PackageConfiguration (*s.package_)),
-      regulator__ ()
+    :
+    ::XSCRT::Type (),
+    regulator__ ()
     {
-      package_->container (this);
+      {
+        for (basePackage_const_iterator i (s.basePackage_.begin ());i != s.basePackage_.end ();++i) add_basePackage (*i);
+      }
     }
 
     ::CIAO::Config_Handlers::TopLevelPackageDescription& TopLevelPackageDescription::
     operator= (::CIAO::Config_Handlers::TopLevelPackageDescription const& s)
     {
-      package (s.package ());
+      basePackage_.clear ();
+      {
+        for (basePackage_const_iterator i (s.basePackage_.begin ());i != s.basePackage_.end ();++i) add_basePackage (*i);
+      }
 
       return *this;
     }
 
 
     // TopLevelPackageDescription
-    //
-    ::CIAO::Config_Handlers::PackageConfiguration const& TopLevelPackageDescription::
-    package () const
+    // 
+    TopLevelPackageDescription::basePackage_iterator TopLevelPackageDescription::
+    begin_basePackage ()
     {
-      return *package_;
+      return basePackage_.begin ();
+    }
+
+    TopLevelPackageDescription::basePackage_iterator TopLevelPackageDescription::
+    end_basePackage ()
+    {
+      return basePackage_.end ();
+    }
+
+    TopLevelPackageDescription::basePackage_const_iterator TopLevelPackageDescription::
+    begin_basePackage () const
+    {
+      return basePackage_.begin ();
+    }
+
+    TopLevelPackageDescription::basePackage_const_iterator TopLevelPackageDescription::
+    end_basePackage () const
+    {
+      return basePackage_.end ();
     }
 
     void TopLevelPackageDescription::
-    package (::CIAO::Config_Handlers::PackageConfiguration const& e)
+    add_basePackage (::CIAO::Config_Handlers::PackageConfiguration const& e)
     {
-      *package_ = e;
+      basePackage_.push_back (e);
+    }
+
+    size_t TopLevelPackageDescription::
+    count_basePackage(void) const
+    {
+      return basePackage_.size ();
     }
   }
 }
@@ -72,26 +98,26 @@ namespace CIAO
 
     TopLevelPackageDescription::
     TopLevelPackageDescription (::XSCRT::XML::Element< ACE_TCHAR > const& e)
-      :Base__ (e), regulator__ ()
+    :Base__ (e), regulator__ ()
     {
 
       ::XSCRT::Parser< ACE_TCHAR > p (e);
 
       while (p.more_elements ())
+      {
+        ::XSCRT::XML::Element< ACE_TCHAR > e (p.next_element ());
+        ::std::basic_string< ACE_TCHAR > n (::XSCRT::XML::uq_name (e.name ()));
+
+        if (n == "basePackage")
         {
-          ::XSCRT::XML::Element< ACE_TCHAR > e (p.next_element ());
-          ::std::basic_string< ACE_TCHAR > n (::XSCRT::XML::uq_name (e.name ()));
-
-          if (n == "package")
-            {
-              package_ = ::std::auto_ptr< ::CIAO::Config_Handlers::PackageConfiguration > (new ::CIAO::Config_Handlers::PackageConfiguration (e));
-              package_->container (this);
-            }
-
-          else
-            {
-            }
+          ::CIAO::Config_Handlers::PackageConfiguration t (e);
+          add_basePackage (t);
         }
+
+        else 
+        {
+        }
+      }
     }
   }
 }
@@ -144,7 +170,7 @@ namespace CIAO
       traverse (Type& o)
       {
         pre (o);
-        package (o);
+        basePackage (o);
         post (o);
       }
 
@@ -152,7 +178,7 @@ namespace CIAO
       traverse (Type const& o)
       {
         pre (o);
-        package (o);
+        basePackage (o);
         post (o);
       }
 
@@ -167,15 +193,73 @@ namespace CIAO
       }
 
       void TopLevelPackageDescription::
-      package (Type& o)
+      basePackage (Type& o)
       {
-        dispatch (o.package ());
+        // VC6 anathema strikes again
+        //
+        TopLevelPackageDescription::Type::basePackage_iterator b (o.begin_basePackage()), e (o.end_basePackage());
+
+        if (b != e)
+        {
+          basePackage_pre (o);
+          for (; b != e;)
+          {
+            dispatch (*b);
+            if (++b != e) basePackage_next (o);
+          }
+
+          basePackage_post (o);
+        }
       }
 
       void TopLevelPackageDescription::
-      package (Type const& o)
+      basePackage (Type const& o)
       {
-        dispatch (o.package ());
+        // VC6 anathema strikes again
+        //
+        TopLevelPackageDescription::Type::basePackage_const_iterator b (o.begin_basePackage()), e (o.end_basePackage());
+
+        if (b != e)
+        {
+          basePackage_pre (o);
+          for (; b != e;)
+          {
+            dispatch (*b);
+            if (++b != e) basePackage_next (o);
+          }
+
+          basePackage_post (o);
+        }
+      }
+
+      void TopLevelPackageDescription::
+      basePackage_pre (Type&)
+      {
+      }
+
+      void TopLevelPackageDescription::
+      basePackage_pre (Type const&)
+      {
+      }
+
+      void TopLevelPackageDescription::
+      basePackage_next (Type&)
+      {
+      }
+
+      void TopLevelPackageDescription::
+      basePackage_next (Type const&)
+      {
+      }
+
+      void TopLevelPackageDescription::
+      basePackage_post (Type&)
+      {
+      }
+
+      void TopLevelPackageDescription::
+      basePackage_post (Type const&)
+      {
       }
 
       void TopLevelPackageDescription::
@@ -203,7 +287,7 @@ namespace CIAO
 
       TopLevelPackageDescription::
       TopLevelPackageDescription (::XSCRT::XML::Element< ACE_TCHAR >& e)
-        : ::XSCRT::Writer< ACE_TCHAR > (e)
+      : ::XSCRT::Writer< ACE_TCHAR > (e)
       {
       }
 
@@ -219,10 +303,21 @@ namespace CIAO
       }
 
       void TopLevelPackageDescription::
-      package (Type const& o)
+      basePackage_pre (Type const&)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("package", top_ ()));
-        Traversal::TopLevelPackageDescription::package (o);
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("basePackage", top_ ()));
+      }
+
+      void TopLevelPackageDescription::
+      basePackage_next (Type const& o)
+      {
+        basePackage_post (o);
+        basePackage_pre (o);
+      }
+
+      void TopLevelPackageDescription::
+      basePackage_post (Type const&)
+      {
         pop_ ();
       }
     }

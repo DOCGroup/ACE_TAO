@@ -34,7 +34,12 @@ module Deployment
 
   /// CIAO specific extension
   typedef sequence<ESInstallationInfo> ESInstallationInfos;
-
+  
+  // @@changed
+  //interface NodeApplication : Application
+  //{  
+  //};
+  
   interface NodeApplication : Application
   {
     /// CIAO specific extensions

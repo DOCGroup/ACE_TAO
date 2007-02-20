@@ -3,13 +3,17 @@
 #ifndef DEPLOYMENT_DATA_IDL
 #define DEPLOYMENT_DATA_IDL
 
-#include "ciao/Deployment_DeploymentPlan.idl"
+#include "DAnCE/Deployment/Deployment_DeploymentPlan.idl"
 
 module Deployment {
 
   struct ComponentPackageReference {
     string requiredUUID;
     string requiredName;
+
+    // @@changed
+    //ComponentInterfaceDescription requiredType;
+
     string requiredType;
   };
 
@@ -21,8 +25,9 @@ module Deployment {
     ResourceUsageKinds resourceUsage;
     string resourcePort;
     string componentPort;
-    string resourceType;
+    // @@ changed: order of name and resourceType
     string name;
+    string resourceType;
     Properties property;
   };
 

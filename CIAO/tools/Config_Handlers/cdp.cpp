@@ -3,12 +3,12 @@
  *
  * Changes made to this code will most likely be overwritten
  * when the handlers are recompiled.
- *
+ * 
  * If you find errors or feel that there are bugfixes to be made,
  * please contact the current XSC maintainer:
  *             Will Otte <wotte@dre.vanderbilt.edu>
  */
-
+ 
 #include "cdp.hpp"
 
 namespace CIAO
@@ -16,24 +16,24 @@ namespace CIAO
   namespace Config_Handlers
   {
     // DeploymentPlan
-    //
+    // 
 
     DeploymentPlan::
     DeploymentPlan ()
-      :
-      ::XSCRT::Type (),
-      regulator__ ()
+    : 
+    ::XSCRT::Type (), 
+    regulator__ ()
     {
     }
 
     DeploymentPlan::
     DeploymentPlan (::CIAO::Config_Handlers::DeploymentPlan const& s)
-      :
-      ::XSCRT::Type (),
-      label_ (s.label_.get () ? new ::XMLSchema::string< ACE_TCHAR > (*s.label_) : 0),
-        UUID_ (s.UUID_.get () ? new ::XMLSchema::string< ACE_TCHAR > (*s.UUID_) : 0),
-          realizes_ (s.realizes_.get () ? new ::CIAO::Config_Handlers::ComponentInterfaceDescription (*s.realizes_) : 0),
-          regulator__ ()
+    :
+    ::XSCRT::Type (),
+    label_ (s.label_.get () ? new ::XMLSchema::string< ACE_TCHAR > (*s.label_) : 0),
+    UUID_ (s.UUID_.get () ? new ::XMLSchema::string< ACE_TCHAR > (*s.UUID_) : 0),
+    realizes_ (s.realizes_.get () ? new ::CIAO::Config_Handlers::ComponentInterfaceDescription (*s.realizes_) : 0),
+    regulator__ ()
     {
       if (label_.get ()) label_->container (this);
       if (UUID_.get ()) UUID_->container (this);
@@ -110,7 +110,7 @@ namespace CIAO
 
 
     // DeploymentPlan
-    //
+    // 
     bool DeploymentPlan::
     label_p () const
     {
@@ -127,19 +127,19 @@ namespace CIAO
     label (::XMLSchema::string< ACE_TCHAR > const& e)
     {
       if (label_.get ())
-        {
-          *label_ = e;
-        }
+      {
+        *label_ = e;
+      }
 
       else
-        {
-          label_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (new ::XMLSchema::string< ACE_TCHAR > (e));
-          label_->container (this);
-        }
+      {
+        label_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (new ::XMLSchema::string< ACE_TCHAR > (e));
+        label_->container (this);
+      }
     }
 
     // DeploymentPlan
-    //
+    // 
     bool DeploymentPlan::
     UUID_p () const
     {
@@ -156,19 +156,19 @@ namespace CIAO
     UUID (::XMLSchema::string< ACE_TCHAR > const& e)
     {
       if (UUID_.get ())
-        {
-          *UUID_ = e;
-        }
+      {
+        *UUID_ = e;
+      }
 
       else
-        {
-          UUID_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (new ::XMLSchema::string< ACE_TCHAR > (e));
-          UUID_->container (this);
-        }
+      {
+        UUID_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (new ::XMLSchema::string< ACE_TCHAR > (e));
+        UUID_->container (this);
+      }
     }
 
     // DeploymentPlan
-    //
+    // 
     bool DeploymentPlan::
     realizes_p () const
     {
@@ -185,19 +185,19 @@ namespace CIAO
     realizes (::CIAO::Config_Handlers::ComponentInterfaceDescription const& e)
     {
       if (realizes_.get ())
-        {
-          *realizes_ = e;
-        }
+      {
+        *realizes_ = e;
+      }
 
       else
-        {
-          realizes_ = ::std::auto_ptr< ::CIAO::Config_Handlers::ComponentInterfaceDescription > (new ::CIAO::Config_Handlers::ComponentInterfaceDescription (e));
-          realizes_->container (this);
-        }
+      {
+        realizes_ = ::std::auto_ptr< ::CIAO::Config_Handlers::ComponentInterfaceDescription > (new ::CIAO::Config_Handlers::ComponentInterfaceDescription (e));
+        realizes_->container (this);
+      }
     }
 
     // DeploymentPlan
-    //
+    // 
     DeploymentPlan::implementation_iterator DeploymentPlan::
     begin_implementation ()
     {
@@ -235,7 +235,7 @@ namespace CIAO
     }
 
     // DeploymentPlan
-    //
+    // 
     DeploymentPlan::instance_iterator DeploymentPlan::
     begin_instance ()
     {
@@ -273,7 +273,7 @@ namespace CIAO
     }
 
     // DeploymentPlan
-    //
+    // 
     DeploymentPlan::connection_iterator DeploymentPlan::
     begin_connection ()
     {
@@ -311,7 +311,7 @@ namespace CIAO
     }
 
     // DeploymentPlan
-    //
+    // 
     DeploymentPlan::dependsOn_iterator DeploymentPlan::
     begin_dependsOn ()
     {
@@ -349,7 +349,7 @@ namespace CIAO
     }
 
     // DeploymentPlan
-    //
+    // 
     DeploymentPlan::artifact_iterator DeploymentPlan::
     begin_artifact ()
     {
@@ -387,7 +387,7 @@ namespace CIAO
     }
 
     // DeploymentPlan
-    //
+    // 
     DeploymentPlan::infoProperty_iterator DeploymentPlan::
     begin_infoProperty ()
     {
@@ -435,74 +435,74 @@ namespace CIAO
 
     DeploymentPlan::
     DeploymentPlan (::XSCRT::XML::Element< ACE_TCHAR > const& e)
-      :Base__ (e), regulator__ ()
+    :Base__ (e), regulator__ ()
     {
 
       ::XSCRT::Parser< ACE_TCHAR > p (e);
 
       while (p.more_elements ())
+      {
+        ::XSCRT::XML::Element< ACE_TCHAR > e (p.next_element ());
+        ::std::basic_string< ACE_TCHAR > n (::XSCRT::XML::uq_name (e.name ()));
+
+        if (n == "label")
         {
-          ::XSCRT::XML::Element< ACE_TCHAR > e (p.next_element ());
-          ::std::basic_string< ACE_TCHAR > n (::XSCRT::XML::uq_name (e.name ()));
-
-          if (n == "label")
-            {
-              ::XMLSchema::string< ACE_TCHAR > t (e);
-              label (t);
-            }
-
-          else if (n == "UUID")
-            {
-              ::XMLSchema::string< ACE_TCHAR > t (e);
-              UUID (t);
-            }
-
-          else if (n == "realizes")
-            {
-              ::CIAO::Config_Handlers::ComponentInterfaceDescription t (e);
-              realizes (t);
-            }
-
-          else if (n == "implementation")
-            {
-              ::CIAO::Config_Handlers::MonolithicDeploymentDescription t (e);
-              add_implementation (t);
-            }
-
-          else if (n == "instance")
-            {
-              ::CIAO::Config_Handlers::InstanceDeploymentDescription t (e);
-              add_instance (t);
-            }
-
-          else if (n == "connection")
-            {
-              ::CIAO::Config_Handlers::PlanConnectionDescription t (e);
-              add_connection (t);
-            }
-
-          else if (n == "dependsOn")
-            {
-              ::CIAO::Config_Handlers::ImplementationDependency t (e);
-              add_dependsOn (t);
-            }
-
-          else if (n == "artifact")
-            {
-              ::CIAO::Config_Handlers::ArtifactDeploymentDescription t (e);
-              add_artifact (t);
-            }
-
-          else if (n == "infoProperty")
-            {
-              ::CIAO::Config_Handlers::Property t (e);
-              add_infoProperty (t);
-            }
-
-          else
-            {
-            }
+          ::XMLSchema::string< ACE_TCHAR > t (e);
+          label (t);
         }
+
+        else if (n == "UUID")
+        {
+          ::XMLSchema::string< ACE_TCHAR > t (e);
+          UUID (t);
+        }
+
+        else if (n == "realizes")
+        {
+          ::CIAO::Config_Handlers::ComponentInterfaceDescription t (e);
+          realizes (t);
+        }
+
+        else if (n == "implementation")
+        {
+          ::CIAO::Config_Handlers::MonolithicDeploymentDescription t (e);
+          add_implementation (t);
+        }
+
+        else if (n == "instance")
+        {
+          ::CIAO::Config_Handlers::InstanceDeploymentDescription t (e);
+          add_instance (t);
+        }
+
+        else if (n == "connection")
+        {
+          ::CIAO::Config_Handlers::PlanConnectionDescription t (e);
+          add_connection (t);
+        }
+
+        else if (n == "dependsOn")
+        {
+          ::CIAO::Config_Handlers::ImplementationDependency t (e);
+          add_dependsOn (t);
+        }
+
+        else if (n == "artifact")
+        {
+          ::CIAO::Config_Handlers::ArtifactDeploymentDescription t (e);
+          add_artifact (t);
+        }
+
+        else if (n == "infoProperty")
+        {
+          ::CIAO::Config_Handlers::Property t (e);
+          add_infoProperty (t);
+        }
+
+        else 
+        {
+        }
+      }
     }
   }
 }
@@ -673,16 +673,16 @@ namespace CIAO
         DeploymentPlan::Type::implementation_iterator b (o.begin_implementation()), e (o.end_implementation());
 
         if (b != e)
+        {
+          implementation_pre (o);
+          for (; b != e;)
           {
-            implementation_pre (o);
-            for (; b != e;)
-              {
-                dispatch (*b);
-                if (++b != e) implementation_next (o);
-              }
-
-            implementation_post (o);
+            dispatch (*b);
+            if (++b != e) implementation_next (o);
           }
+
+          implementation_post (o);
+        }
       }
 
       void DeploymentPlan::
@@ -693,16 +693,16 @@ namespace CIAO
         DeploymentPlan::Type::implementation_const_iterator b (o.begin_implementation()), e (o.end_implementation());
 
         if (b != e)
+        {
+          implementation_pre (o);
+          for (; b != e;)
           {
-            implementation_pre (o);
-            for (; b != e;)
-              {
-                dispatch (*b);
-                if (++b != e) implementation_next (o);
-              }
-
-            implementation_post (o);
+            dispatch (*b);
+            if (++b != e) implementation_next (o);
           }
+
+          implementation_post (o);
+        }
       }
 
       void DeploymentPlan::
@@ -743,16 +743,16 @@ namespace CIAO
         DeploymentPlan::Type::instance_iterator b (o.begin_instance()), e (o.end_instance());
 
         if (b != e)
+        {
+          instance_pre (o);
+          for (; b != e;)
           {
-            instance_pre (o);
-            for (; b != e;)
-              {
-                dispatch (*b);
-                if (++b != e) instance_next (o);
-              }
-
-            instance_post (o);
+            dispatch (*b);
+            if (++b != e) instance_next (o);
           }
+
+          instance_post (o);
+        }
 
         else instance_none (o);
       }
@@ -765,16 +765,16 @@ namespace CIAO
         DeploymentPlan::Type::instance_const_iterator b (o.begin_instance()), e (o.end_instance());
 
         if (b != e)
+        {
+          instance_pre (o);
+          for (; b != e;)
           {
-            instance_pre (o);
-            for (; b != e;)
-              {
-                dispatch (*b);
-                if (++b != e) instance_next (o);
-              }
-
-            instance_post (o);
+            dispatch (*b);
+            if (++b != e) instance_next (o);
           }
+
+          instance_post (o);
+        }
 
         else instance_none (o);
       }
@@ -827,16 +827,16 @@ namespace CIAO
         DeploymentPlan::Type::connection_iterator b (o.begin_connection()), e (o.end_connection());
 
         if (b != e)
+        {
+          connection_pre (o);
+          for (; b != e;)
           {
-            connection_pre (o);
-            for (; b != e;)
-              {
-                dispatch (*b);
-                if (++b != e) connection_next (o);
-              }
-
-            connection_post (o);
+            dispatch (*b);
+            if (++b != e) connection_next (o);
           }
+
+          connection_post (o);
+        }
 
         else connection_none (o);
       }
@@ -849,16 +849,16 @@ namespace CIAO
         DeploymentPlan::Type::connection_const_iterator b (o.begin_connection()), e (o.end_connection());
 
         if (b != e)
+        {
+          connection_pre (o);
+          for (; b != e;)
           {
-            connection_pre (o);
-            for (; b != e;)
-              {
-                dispatch (*b);
-                if (++b != e) connection_next (o);
-              }
-
-            connection_post (o);
+            dispatch (*b);
+            if (++b != e) connection_next (o);
           }
+
+          connection_post (o);
+        }
 
         else connection_none (o);
       }
@@ -911,16 +911,16 @@ namespace CIAO
         DeploymentPlan::Type::dependsOn_iterator b (o.begin_dependsOn()), e (o.end_dependsOn());
 
         if (b != e)
+        {
+          dependsOn_pre (o);
+          for (; b != e;)
           {
-            dependsOn_pre (o);
-            for (; b != e;)
-              {
-                dispatch (*b);
-                if (++b != e) dependsOn_next (o);
-              }
-
-            dependsOn_post (o);
+            dispatch (*b);
+            if (++b != e) dependsOn_next (o);
           }
+
+          dependsOn_post (o);
+        }
 
         else dependsOn_none (o);
       }
@@ -933,16 +933,16 @@ namespace CIAO
         DeploymentPlan::Type::dependsOn_const_iterator b (o.begin_dependsOn()), e (o.end_dependsOn());
 
         if (b != e)
+        {
+          dependsOn_pre (o);
+          for (; b != e;)
           {
-            dependsOn_pre (o);
-            for (; b != e;)
-              {
-                dispatch (*b);
-                if (++b != e) dependsOn_next (o);
-              }
-
-            dependsOn_post (o);
+            dispatch (*b);
+            if (++b != e) dependsOn_next (o);
           }
+
+          dependsOn_post (o);
+        }
 
         else dependsOn_none (o);
       }
@@ -995,16 +995,16 @@ namespace CIAO
         DeploymentPlan::Type::artifact_iterator b (o.begin_artifact()), e (o.end_artifact());
 
         if (b != e)
+        {
+          artifact_pre (o);
+          for (; b != e;)
           {
-            artifact_pre (o);
-            for (; b != e;)
-              {
-                dispatch (*b);
-                if (++b != e) artifact_next (o);
-              }
-
-            artifact_post (o);
+            dispatch (*b);
+            if (++b != e) artifact_next (o);
           }
+
+          artifact_post (o);
+        }
 
         else artifact_none (o);
       }
@@ -1017,16 +1017,16 @@ namespace CIAO
         DeploymentPlan::Type::artifact_const_iterator b (o.begin_artifact()), e (o.end_artifact());
 
         if (b != e)
+        {
+          artifact_pre (o);
+          for (; b != e;)
           {
-            artifact_pre (o);
-            for (; b != e;)
-              {
-                dispatch (*b);
-                if (++b != e) artifact_next (o);
-              }
-
-            artifact_post (o);
+            dispatch (*b);
+            if (++b != e) artifact_next (o);
           }
+
+          artifact_post (o);
+        }
 
         else artifact_none (o);
       }
@@ -1079,16 +1079,16 @@ namespace CIAO
         DeploymentPlan::Type::infoProperty_iterator b (o.begin_infoProperty()), e (o.end_infoProperty());
 
         if (b != e)
+        {
+          infoProperty_pre (o);
+          for (; b != e;)
           {
-            infoProperty_pre (o);
-            for (; b != e;)
-              {
-                dispatch (*b);
-                if (++b != e) infoProperty_next (o);
-              }
-
-            infoProperty_post (o);
+            dispatch (*b);
+            if (++b != e) infoProperty_next (o);
           }
+
+          infoProperty_post (o);
+        }
 
         else infoProperty_none (o);
       }
@@ -1101,16 +1101,16 @@ namespace CIAO
         DeploymentPlan::Type::infoProperty_const_iterator b (o.begin_infoProperty()), e (o.end_infoProperty());
 
         if (b != e)
+        {
+          infoProperty_pre (o);
+          for (; b != e;)
           {
-            infoProperty_pre (o);
-            for (; b != e;)
-              {
-                dispatch (*b);
-                if (++b != e) infoProperty_next (o);
-              }
-
-            infoProperty_post (o);
+            dispatch (*b);
+            if (++b != e) infoProperty_next (o);
           }
+
+          infoProperty_post (o);
+        }
 
         else infoProperty_none (o);
       }
@@ -1180,7 +1180,7 @@ namespace CIAO
 
       DeploymentPlan::
       DeploymentPlan (::XSCRT::XML::Element< ACE_TCHAR >& e)
-        : ::XSCRT::Writer< ACE_TCHAR > (e)
+      : ::XSCRT::Writer< ACE_TCHAR > (e)
       {
       }
 

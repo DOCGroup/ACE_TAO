@@ -1,3 +1,291 @@
+Tue Feb 20 16:17:46 UTC 2007  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * Merged ciao_core_2 to head.
+        
+        Tue Feb 20 16:03:02 UTC 2007  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * RACE/Plan_Analyzer/Interface/PlanIngress.idl
+        * RACE/Planners/Interface/Planner_I.idl
+        * RACE/Controller/Component/Controller.idl
+        * RACE/Output_Adapters/Interface/PlanEgress.idl
+        * RACE/Planner_Manager/Interface/Planner_Manager_I.idl
+        
+          Further updates to support migration of Deployment IDL to 
+          DAnCE/Deployment.
+
+  Mon Feb 19 21:27:11 UTC 2007  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * MPC/config/ciao_events_base_dnc.mpb
+        * MPC/config/ciaoexe.mpb
+        * MPC/config/ciao_client_dnc.mpb
+        * MPC/config/ciao_container_dnc.mpb
+        * MPC/config/ciao_servant_dnc.mpb
+        * MPC/config/ciao_component_dnc.mpb
+        * MPC/config/ciao_events_dnc.mpb
+        * MPC/config/ciao_server_dnc.mpb
+        
+          Removed the _DnC_ from a bunch of projects, as since we no longer have
+          DnC and non DnC versions of CIAO, its reall superfluous.
+
+        * DAnCE/Deployment
+        * DAnCE/Deployment/Deployment_NodeApplication.idl
+        * DAnCE/Deployment/Deployment_Data.idl
+        * DAnCE/Deployment/Deployment_svnt_export.h
+        * DAnCE/Deployment/Deployment_Base.idl
+        * DAnCE/Deployment/Deployment_RepositoryManager.idl
+        * DAnCE/Deployment/Deployment_Packaging_Data.idl
+        * DAnCE/Deployment/Deployment_Target_Data.idl
+        * DAnCE/Deployment/CIAO_NodeApplication_CallBack.idl
+        * DAnCE/Deployment/Deployment_TargetData.idl
+        * DAnCE/Deployment/Deployment.idl
+        * DAnCE/Deployment/Deployment_NodeManager.idl
+        * DAnCE/Deployment/Deployment_TargetManager.idl
+        * DAnCE/Deployment/Deployment_Container.idl
+        * DAnCE/Deployment/NodeApp_CB_Impl.cpp
+        * DAnCE/Deployment/Deployment_DomainApplicationManager.idl
+        * DAnCE/Deployment/Deployment_Core.idl
+        * DAnCE/Deployment/NodeApp_CB_Impl.h
+        * DAnCE/Deployment/Deployment_DeploymentPlan.idl
+        * DAnCE/Deployment/Deployment_DomainApplication.idl
+        * DAnCE/Deployment/CIAO_ServerResources.idl
+        * DAnCE/Deployment/Deployment_stub_export.h
+        * DAnCE/Deployment/Deployment_ExecutionManager.idl
+        * DAnCE/Deployment/Deployment_ApplicationManager.idl
+        * DAnCE/Deployment/Deployment_Connection.idl
+        * DAnCE/Deployment/Deployment_Application.idl
+        * DAnCE/Deployment/Deployment_NodeApplicationManager.idl
+        * DAnCE/Deployment/Deployment_Events.idl
+        * DAnCE/Deployment/Deployment_common.h
+        
+          Moved these IDLs from CIAO_ROOT/ciao in an effort to isolate the 
+          DnC IDL from the CIAO IDL and control directory size explosion of
+          CIAO_ROOT/ciao.
+        
+        * tools/Config_Handlers/DnC_Dump.h
+        * tools/Config_Handlers/DP_Handler.cpp
+        * tools/Config_Handlers/MDD_Handler.cpp
+        * tools/Config_Handlers/CPD_Handler.cpp
+        * tools/Config_Handlers/Property_Handler.cpp
+        * tools/Config_Handlers/ID_Handler.cpp
+        * tools/Config_Handlers/DnC_Dump.cpp
+        * tools/Config_Handlers/Package_Handlers/Comp_Intf_Descr_Handler.h
+        * tools/Config_Handlers/Package_Handlers/PCD_Handler.cpp
+        * tools/Config_Handlers/Package_Handlers/CPD_Handler.cpp
+        * tools/Config_Handlers/Package_Handlers/NIA_Handler.h
+        * tools/Config_Handlers/Package_Handlers/SID_Handler.cpp
+        * tools/Config_Handlers/Package_Handlers/test.cpp
+        * tools/Config_Handlers/Package_Handlers/CAD_Handler.cpp
+        * tools/Config_Handlers/Package_Handlers/CAD_Handler.h
+        * tools/Config_Handlers/Package_Handlers/CID_Handler.cpp
+        * tools/Config_Handlers/PCD_Handler.cpp
+        * tools/Config_Handlers/CRDD_Handler.cpp
+        * tools/Config_Handlers/DataType_Handler.h
+        * tools/Config_Handlers/STD_CPD_Handler.cpp
+        * tools/Config_Handlers/CIAO_Events/test.cpp
+        * tools/Config_Handlers/CIAO_Events/CIAOEvents_Handler.h
+        * tools/Config_Handlers/CIAO_Events/CIAOEvents_Handler.cpp
+        * tools/Config_Handlers/Req_Handler.cpp
+        * tools/Config_Handlers/DP_PCD_Handler.cpp
+        * tools/Config_Handlers/RDD_Handler.cpp
+        * tools/Config_Handlers/STD_CID_Handler.cpp
+        * tools/Config_Handlers/ERE_Handler.cpp
+        * tools/Config_Handlers/XML_File_Intf.cpp
+        * tools/Config_Handlers/test.cpp
+        * tools/Config_Handlers/CCD_Handler.cpp
+        * tools/Config_Handlers/SatisfierProperty_Handler.cpp
+        * tools/Config_Handlers/RT-CCM/CLA_Handler.h
+        * tools/Config_Handlers/RT-CCM/TPL_Handler.h
+        * tools/Config_Handlers/RT-CCM/OC_Handler.h
+        * tools/Config_Handlers/RT-CCM/PM_Handler.h
+        * tools/Config_Handlers/RT-CCM/OR_Handler.h
+        * tools/Config_Handlers/RT-CCM/PS_Handler.h
+        * tools/Config_Handlers/RT-CCM/TP_Handler.h
+        * tools/Config_Handlers/RT-CCM/CB_Handler.h
+        * tools/Config_Handlers/RT-CCM/SRD_Handler.h
+        * tools/Config_Handlers/PSPE_Handler.cpp
+        * tools/Config_Handlers/Dump_Obj.h
+        * tools/Config_Handlers/ESD_Handler.cpp
+        * tools/Config_Handlers/ComponentPropertyDescription_Handler.cpp
+        * tools/Config_Handlers/CEPE_Handler.cpp
+        * tools/Config_Handlers/STD_CID_Handler.h
+        * tools/Config_Handlers/IRDD_Handler.cpp
+        * tools/Config_Handlers/DD_Handler.cpp
+        * tools/Config_Handlers/ADD_Handler.cpp
+        * tools/Config_Handlers/IDD_Handler.cpp
+        * ciaosvcs/Events/CIAO_Events_Base/CIAO_Events_Base.mpc
+        * ciaosvcs/Events/CIAO_Events.mpc
+        * DAnCE/NodeManager/MonitorController.h
+        * DAnCE/NodeManager/MonitorCB.h
+        * DAnCE/NodeManager/BaseMonitor.h
+        * DAnCE/Plan_Generator/PCVisitorBase.h
+        * DAnCE/Plan_Generator/Plan_Generator_Impl.h
+        * DAnCE/TargetManager/CmpClient.cpp
+        * DAnCE/TargetManager/DomainEvents.idl
+        * DAnCE/TargetManager/TargetManagerImpl.idl
+        * DAnCE/tests/NodeApplicationTest/NodeApp_test_client_ex.cpp
+        * DAnCE/tests/NodeApplicationTest/NodeApp_test_client.cpp
+        * DAnCE/tests/NodeApplicationTest/NodeApp_test_client_dynamic.cpp
+        * DAnCE/tests/NodeApplicationTest/NodeApp_test_client_simple.cpp
+        * DAnCE/Interfaces/ExecutionManagerDaemon.idl
+        * DAnCE/Interfaces/NodeManagerDaemon.idl
+        * DAnCE/NodeApplicationManager/ImplementationInfo.cpp
+        * DAnCE/NodeApplicationManager/Containers_Info_Map.h
+        * DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.cpp
+        * DAnCE/NodeApplicationManager/ImplementationInfo.h
+        * DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.h
+        * DAnCE/NodeApplicationManager/Containers_Info_Map.cpp
+        * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp
+        * DAnCE/DomainApplicationManager/Deployment_Configuration.h
+        * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.h
+        * DAnCE/NodeApplication/NodeApplication_Impl.h
+        * DAnCE/NodeApplication/Container_Impl.h
+        * DAnCE/NodeApplication/RTConfig_Manager.h
+        * DAnCE/NodeApplication/NodeApp_Configurator.h
+        * DAnCE/NodeApplication/RTNodeApp_Configurator.cpp
+        * DAnCE/NodeApplication/NodeApplication_Core.cpp
+        * DAnCE/NodeApplication/NodeApplication_Impl.cpp
+        * DAnCE/RepositoryManager/RM_Helper.h
+        * DAnCE/RepositoryManager/RepositoryManagerDaemon.idl
+        * DAnCE/RepositoryManager/PC_Updater.cpp
+        * DAnCE/RepositoryManager/RepositoryManager_Impl.cpp
+        * DAnCE/RepositoryManager/PC_Updater.h
+        * DAnCE/ExecutionManager/DAM_Map.h
+        * DAnCE/ExecutionManager/Execution_Manager_Impl.h
+        * DAnCE/ExecutionManager/ExecutionManager.mpc
+        * ciao/Swapping_Container.h
+        * ciao/Dynamic_Component_Activator.h
+        * ciao/CCM_Core.mpc
+        * ciao/Container_Base.h
+
+          For the most part, modifications to support movement of DnC interfaces
+          to DAnCE/Deployment.  One or two files were further modified to support
+          removal of DnC from project names. 
+        
+  Mon Feb 19 19:40:19 UTC 2007  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * MPC/config/ciaoexe.mpb
+        * DAnCE/NodeManager/NodeManager.mpc
+        * DAnCE/NodeApplication/NodeApplication.mpc
+        * DAnCE/RepositoryManager/RepositoryManager.mpc
+        * DAnCE/Plan_Launcher/Plan_Launcher.mpc
+        
+          Modified to install exes to CIAO_ROOT/bin.
+
+  Mon Feb 19 19:33:32 UTC 2007  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/NodeManager/MonitorCB.cpp
+        * DAnCE/TargetManager/DomainDataManager.cpp
+        
+          Corrected to reflect changes in IDL.
+
+        * CCF/CCF/CodeGenerationKit/CommandLine.cpp
+        
+          Added get_all_values to support revrieval of all values for a given
+          option passed on the command line. 
+        
+  Mon Feb 19 19:32:34 UTC 2007  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * ciao/Container_Base.cpp
+        
+          Cosmetic format changes.
+        
+        * ciao/CCM_Context.idl
+        
+          re-added removed comment.
+        
+  Mon Feb 19 19:25:06 UTC 2007  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * ccd.hpp
+        * cid.cpp
+        * pcd.cpp
+        * Deployment.hpp
+        * toplevel.cpp
+        * cdd.hpp
+        * Basic_Deployment_Data.cpp
+        * cdp.hpp
+        * cpd.hpp
+        * CIAO_Events/CIAOEvents.cpp
+        * CIAO_Events/CIAOEvents.hpp
+        * ccd.cpp
+        * iad.hpp
+        * cid.hpp
+        * pcd.hpp
+        * Deployment.cpp
+        * cdd.cpp
+        * toplevel.hpp
+        * RT-CCM/CIAOServerResources.hpp
+        * RT-CCM/CIAOServerResources.cpp
+        * cdp.cpp
+        * cpd.cpp
+        * Basic_Deployment_Data.hpp
+        * iad.cpp
+        
+        * docs/schema/cid.xsd
+        * docs/schema/cpd.xsd
+        
+          Changed include ordering. 
+        
+        * docs/schema/Basic_Deployment_Data.xsd
+         
+          Added elements to support sequence, struct, and valuetypes
+          in the schema.
+        
+  Mon Feb 19 19:20:35 UTC 2007  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * Package_Handlers/PCD_Handler.cpp
+          
+          Changed to reflect slight change in schema.
+        
+        * CIAO_Events/CIAO_Events_Handlers.mpc
+        * Config_Handlers.mpc
+        * RT-CCM/RT-CCM-Handlers.mpc
+
+          Updated to include XSC generation.
+        
+  Mon Feb 19 15:30:04 UTC 2007  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * MPC/config/xscdefaults.mpb
+        * tools/Config_Handlers/Config_Handlers.mpc
+        
+          Added a custom type to MPC to handle XSC generation.
+        
+  Wed Feb  7 21:16:36 UTC 2007  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * ciao/Deployment_Data.idl
+        * ciao/Deployment_ApplicationManager.idl
+        * ciao/CCM_CCMException.idl
+        * ciao/Deployment_Application.idl
+        * ciao/Context_Impl_Base.h
+        * ciao/Deployment.idl
+        * ciao/Context_Impl_Base.cpp
+        * ciao/Deployment_NodeApplication.idl
+        * ciao/Deployment_TargetData.idl
+        * ciao/CCM_Events.idl
+        * ciao/Deployment_ExecutionManager.idl
+        * ciao/Deployment_NodeApplicationManager.idl
+        * ciao/CCM_Context.idl
+        * ciao/Deployment_Base.idl
+        * ciao/Deployment_Packaging_Data.idl
+        * ciao/Deployment_DomainApplicationManager.idl
+        * ciao/Deployment_Connection.idl
+        * ciao/Deployment_TargetManager.idl
+        * ciao/Deployment_DeploymentPlan.idl
+        * ciao/Deployment_NodeManager.idl
+        
+          Updated with changes to comply with the 06-02-01 version of the
+          DnC spec.  Many of these changes would break the entire toolchain,
+          so they are commented out for the time being.  grep for
+
+          @@changed @@add @@delete
+        
+          to find changes.
+          
+        * ciao/CCM_Core.mpc
+        *ciao/Deployment_DomainApplication.idl
+        
+         Added DomainApplication interface, completely missing from our IDL.
+
+
 Tue Feb 20 14:15:14 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * CIDLC/OperationHeaderEmitters.cpp:

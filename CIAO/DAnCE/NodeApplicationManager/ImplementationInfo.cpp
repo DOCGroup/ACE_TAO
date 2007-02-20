@@ -3,7 +3,7 @@
 #define CIAO_IMPLEMENTATION_INFO_CPP
 
 #include "ImplementationInfo.h"
-#include "ciao/CIAO_ServerResourcesC.h"
+#include "DAnCE/Deployment/CIAO_ServerResourcesC.h"
 #include "ace/SString.h"
 
 CIAO::NodeImplementationInfoHandler::
