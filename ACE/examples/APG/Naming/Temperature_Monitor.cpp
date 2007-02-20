@@ -128,6 +128,6 @@ void Temperature_Monitor::monitor (void)
       ACE_OS::sleep (this->opt_.poll_interval ());
     }
 
-  delete this->thermometer_;
+  ACE_NOTREACHED (delete this->thermometer_;)
 }
 // Listing 2

@@ -57,7 +57,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR **argv){
   ACE_ERROR_RETURN((LM_ERROR,
                     ACE_TEXT ("SCTP was NOT installed/accessible when this binary was compiled.\n")),
                    1);
-#endif
+#else
 
   // check that valid options were specified
   if (optsMgr._error) {
@@ -107,6 +107,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR **argv){
     ACE_SCTP::report();
 
   return 0;
+#endif /* ACE_HAS_SCTP */
 }
 
 // create a histogram to store test results

@@ -941,13 +941,6 @@ int ACE_INET_Addr::set_address (const char *ip_addr,
 
       return 0;
     } /* end len == 16 */
-  else
-    {
-      /* unknown or unsupported address length */
-      errno = EAFNOSUPPORT;
-      return -1;
-    }
-
 #endif /* ACE_HAS_IPV6 */
 
   // Here with an unrecognized length.
