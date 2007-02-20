@@ -2,8 +2,6 @@
 #
 # QNX/RTP hosted, using gcc-2.95.2
 
-nto_version := $(shell uname -a | awk '{ gsub("\\.","", $$3 ); print $$3;}')
-
 inline ?= 1
 debug ?= 1
 optimize ?= 0
@@ -33,8 +31,7 @@ endif #debug
 CC      ?= gcc
 CXX     ?= g++
 
-CFLAGS  += -pipe -W -Wall -Wpointer-arith -DACE_NTO_VERS=$(nto_version)
-CPPFLAGS += -DACE_NTO_VERS=$(nto_version)
+CFLAGS  += -pipe -W -Wall -Wpointer-arith
 
 DLD     = $(CXX)
 LD      = $(CXX)
