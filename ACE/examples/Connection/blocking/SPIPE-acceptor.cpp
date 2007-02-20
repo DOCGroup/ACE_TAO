@@ -188,16 +188,17 @@ IPC_Server::svc (void)
           // Run single-threaded.
           if (n_threads_ <= 1)
             run_reactor_event_loop (0);
-          else if (ACE_Thread_Manager::instance ()->spawn_n
+          else
+            {
+              if (ACE_Thread_Manager::instance ()->spawn_n
                    (n_threads_,
                     run_reactor_event_loop,
                     0,
                     THR_NEW_LWP) == -1)
-            {
-              ACE_ERROR_RETURN ((LM_ERROR,
-                                 ACE_TEXT ("%p\n"),
-                                 ACE_TEXT ("spawn_n")),
-                                1);
+                ACE_ERROR_RETURN ((LM_ERROR,
+                                   ACE_TEXT ("%p\n"),
+                                   ACE_TEXT ("spawn_n")),
+                                  1);
 
               ACE_Thread_Manager::instance ()->wait ();
             }
