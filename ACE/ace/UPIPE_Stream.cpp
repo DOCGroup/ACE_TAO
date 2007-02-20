@@ -139,7 +139,7 @@ ACE_UPIPE_Stream::recv (char *buffer,
                             this_len);
             bytes_read += this_len;
             this->mb_last_ = this->mb_last_->release ();   // mb_last_ now 0
-            return bytes_read;
+            return static_cast<ssize_t> (bytes_read);
           }
         else
           {
@@ -167,13 +167,13 @@ ACE_UPIPE_Stream::recv (char *buffer,
           {
             if (errno == EWOULDBLOCK && bytes_read > 0)
               // Return the number of bytes read before we timed out.
-              return bytes_read;
+              return static_cast<ssize_t> (bytes_read);
             else
               return -1;
           }
       }
 
-  return bytes_read;
+  return static_cast<ssize_t> (bytes_read);
 }
 
 ssize_t
