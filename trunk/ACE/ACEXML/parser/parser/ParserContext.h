@@ -26,7 +26,6 @@
 #include "ACEXML/common/LocatorImpl.h"
 #include "ace/Functor.h"
 #include "ace/Containers_T.h"
-#include "ace/Swap.h"
 
 class ACEXML_PARSER_Export ACEXML_Parser_Context
 {

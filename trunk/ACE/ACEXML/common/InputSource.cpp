@@ -3,7 +3,6 @@
 #include "ACEXML/common/InputSource.h"
 #include "ACEXML/common/StreamFactory.h"
 #include "ace/ACE.h"
-#include "ace/Swap.h"
 
 ACEXML_InputSource::ACEXML_InputSource (void)
   : charStream_ (0),
