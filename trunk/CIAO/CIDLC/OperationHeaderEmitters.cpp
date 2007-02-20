@@ -43,17 +43,7 @@ OperationEmitter::receives_post (Type&)
 }
 
 void
-OperationEmitter::raises_pre (Type&)
-{
-}
-
-void
-OperationEmitter::raises_none (Type&)
-{
-}
-
-void
-OperationEmitter::raises_post (Type&)
+OperationEmitter::raises (Type&)
 {
 }
 
@@ -142,17 +132,7 @@ FactoryOperationEmitter::receives_post (SemanticGraph::HomeFactory&)
 }
 
 void
-FactoryOperationEmitter::raises_none (SemanticGraph::HomeFactory&)
-{
-}
-
-void
-FactoryOperationEmitter::raises_pre (SemanticGraph::HomeFactory&)
-{
-}
-
-void
-FactoryOperationEmitter::raises_post (SemanticGraph::HomeFactory&)
+FactoryOperationEmitter::raises (SemanticGraph::HomeFactory&)
 {
 }
 
@@ -224,17 +204,7 @@ FinderOperationEmitter::receives_post (SemanticGraph::HomeFinder&)
 }
 
 void
-FinderOperationEmitter::raises_none (SemanticGraph::HomeFinder&)
-{
-}
-
-void
-FinderOperationEmitter::raises_pre (SemanticGraph::HomeFinder&)
-{
-}
-
-void
-FinderOperationEmitter::raises_post (SemanticGraph::HomeFinder&)
+FinderOperationEmitter::raises (SemanticGraph::HomeFinder&)
 {
 }
 

@@ -216,17 +216,7 @@ namespace
     }
 
     virtual void
-    raises_pre (Type&)
-    {
-    }
-
-    virtual void
-    raises_none (Type&)
-    {
-    }
-
-    virtual void
-    raises_post (Type&)
+    raises (Type&)
     {
     }
 
@@ -3633,17 +3623,7 @@ namespace
       }
 
       virtual void
-      raises_none (SemanticGraph::HomeFactory&)
-      {
-      }
-
-      virtual void
-      raises_pre (SemanticGraph::HomeFactory&)
-      {
-      }
-
-      virtual void
-      raises_post (SemanticGraph::HomeFactory&)
+      raises (SemanticGraph::HomeFactory&)
       {
       }
 
@@ -3768,17 +3748,7 @@ namespace
       }
 
       virtual void
-      raises_none (SemanticGraph::HomeFinder&)
-      {
-      }
-
-      virtual void
-      raises_pre (SemanticGraph::HomeFinder&)
-      {
-      }
-
-      virtual void
-      raises_post (SemanticGraph::HomeFinder&)
+      raises (SemanticGraph::HomeFinder&)
       {
       }
 
