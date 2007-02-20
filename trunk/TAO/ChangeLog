@@ -1,3 +1,37 @@
+Tue Feb 20 20:10:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Default_Protocols_Hooks.{cpp,h}:
+          Removed, instead of just invoking the protocol hooks, just
+          check if the protocol_hook pointer is 0 or not. If non zero
+          then invoke the method
+
+        * tao/DiffServPolicy/DiffServ_Protocols_Hooks.cpp:
+          Added missing include to build with Borland
+
+        * tao/IIOP_Connection_Handler.cpp:
+        * tao/ORB_Core.cpp:
+        * tao/Remote_Invocation.cpp:
+        * tao/RTCORBA/RT_Current.cpp:
+        * tao/RTCORBA/RT_Invocation_Endpoint_Selectors.cpp:
+        * tao/RTPortableServer/RT_Servant_Dispatcher.cpp:
+        * tao/Strategies/DIOP_Connection_Handler.cpp:
+        * tao/Strategies/SCIOP_Connection_Handler.cpp:
+        * tao/Strategies/SHMIOP_Connection_Handler.cpp:
+        * tao/Strategies/UIOP_Connection_Handler.cpp:
+        * tao/orbsvcs/orbsvcs/SSLIOP_Connection_Handler.cpp:
+          When invoking the protocol hooks, check if we have a valid pointer
+
+        * tao/tao.mpc:
+          Removed Default_Protocols_Hooks.{h,cpp}
+
+        * tao/TAO_Internal.cpp:
+          Removed default protocol hooks
+
+        * tao/Default_Collocation_Resolver.cpp:
+        * tao/Invocation_Adapter.cpp:
+        * tao/PortableServer/Object_Adapter.cpp:
+          Layout change
+
 Tue Feb 20 18:35:50 UTC 2007  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp (ssliop_connect):
@@ -10,14 +44,14 @@ Tue Feb 20 17:56:25 UTC 2007  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
         * COPYING: Clarified how the COPYING file need to be included with
           any code released.  Thanks to Scott Mark <sjm at pobox dot com>
           for helping clarify this.
-  
+
 Tue Feb 20 16:03:13 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
 
         * tao/PortableServer/Default_Servant_Dispatcher.cpp:
-        
+
           Modified the pre_invoke_remote_request () method to do
           some processing, specific to the DiffServ library, to add
-          DiffServ codepoints on the replies. The method relegates the 
+          DiffServ codepoints on the replies. The method relegates the
           processing to a network priority hook, defined on the POA,
           and specialized by the DiffServ library.
 

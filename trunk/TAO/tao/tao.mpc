@@ -55,7 +55,6 @@ project(TAO) : acelib, install, tao_output, taodefaults, pidl, extra_core, tao_v
     default_client.cpp
     Default_Collocation_Resolver.cpp
     Default_Endpoint_Selector_Factory.cpp
-    Default_Protocols_Hooks.cpp
     Default_Network_Priority_Protocols_Hooks.cpp
     default_resource.cpp
     default_server.cpp
@@ -322,7 +321,6 @@ project(TAO) : acelib, install, tao_output, taodefaults, pidl, extra_core, tao_v
     Default_Endpoint_Selector_Factory.h
     default_environment.h
     default_ports.h
-    Default_Protocols_Hooks.h
     Default_Network_Priority_Protocols_Hooks.h
     default_resource.h
     default_server.h

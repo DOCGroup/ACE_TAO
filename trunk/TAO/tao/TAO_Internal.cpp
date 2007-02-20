@@ -16,7 +16,6 @@
 #include "tao/Adapter_Factory.h"
 #include "tao/Default_Stub_Factory.h"
 #include "tao/Default_Endpoint_Selector_Factory.h"
-#include "tao/Default_Protocols_Hooks.h"
 #include "tao/Default_Network_Priority_Protocols_Hooks.h"
 #include "tao/Default_Thread_Lane_Resources_Manager.h"
 #include "tao/Default_Collocation_Resolver.h"
@@ -338,7 +337,6 @@ TAO::ORB::open_services (ACE_Service_Gestalt* pcfg,
 
       register_additional_services_i (theone);
 
-
       if (TAO_debug_level > 4)
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("TAO (%P|%t) Default ORB - global ")
@@ -539,7 +537,6 @@ namespace
     pcfg->process_directive (ace_svc_desc_TAO_Default_Stub_Factory);
     pcfg->process_directive (
       ace_svc_desc_TAO_Default_Endpoint_Selector_Factory);
-    pcfg->process_directive (ace_svc_desc_TAO_Default_Protocols_Hooks);
     pcfg->process_directive (
       ace_svc_desc_TAO_Default_Network_Priority_Protocols_Hooks);
     pcfg->process_directive (
@@ -809,7 +806,6 @@ namespace
           }
       }
 #endif  /* TAO_DEBUG && !ACE_HAS_WINCE */
-
 
     // Extract the Service Configurator ORB options from the argument
     // vector.
