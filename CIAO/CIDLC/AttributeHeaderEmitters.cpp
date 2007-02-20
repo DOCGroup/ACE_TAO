@@ -40,17 +40,7 @@ WriteAttributeHeaderEmitter::get_raises (SemanticGraph::ReadWriteAttribute&)
 }
 
 void
-WriteAttributeHeaderEmitter::set_raises_none (SemanticGraph::ReadWriteAttribute&)
-{
-}
-
-void
-WriteAttributeHeaderEmitter::set_raises_pre (SemanticGraph::ReadWriteAttribute&)
-{
-}
-
-void
-WriteAttributeHeaderEmitter::set_raises_post (SemanticGraph::ReadWriteAttribute&)
+WriteAttributeHeaderEmitter::set_raises (SemanticGraph::ReadWriteAttribute&)
 {
 }
 
