@@ -646,6 +646,13 @@ project(Object Manager Test) : acetest {
   }
 }
 
+project(Object Manager Flipping Test) : acetest {
+  exename = Object_Manager_Flipping_Test
+  Source_Files {
+    Object_Manager_Flipping_Test.cpp
+  }
+}
+
 project(Obstack Test) : acetest {
   exename = Obstack_Test
   Source_Files {
