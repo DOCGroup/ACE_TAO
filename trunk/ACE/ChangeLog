@@ -1,3 +1,14 @@
+Tue Feb 20 16:06:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/os_include/os_stdlib.h:
+          Simplified the ACE_RANDR_TYPE define setting
+
+        * ace/OS_NS_stdio.inl:
+        * ace/SOCK_Dgram.cpp:
+        * ace/WFMO_Reactor.cpp:
+          Simplified Borland C++ checks, no need to check for the version
+          number
+
 Tue Feb 20 15:54:20 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * ace/OS_NS_Thread.cpp:
