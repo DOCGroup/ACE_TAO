@@ -14,7 +14,8 @@ NamingTask::NamingTask (const char* orbname, int argc, char** argv, unsigned sho
   for(; my_argc<argc ;++my_argc)
     my_argv[my_argc] = argv[my_argc];
   ACE_OS::sprintf (buf, "iiop://localhost:%d", port);
-  my_argv[my_argc++] = "-ORBEndpoint";
+  const char* epopt = "-ORBEndpoint";
+  my_argv[my_argc++] = const_cast<char*> (epopt);
   my_argv[my_argc++] = buf;
 
   ACE_Argv_Type_Converter satc (my_argc, my_argv);

@@ -1,33 +1,42 @@
+Tue Feb 20 13:21:08 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/tests/Bug_2800_Regression/NamingTask.cpp:
+        * tests/Bug_2809_Regression/server.cpp:
+
+          Deal with conversion from string constant to char*.  Store the
+          string constants in a const char* and then use const_cast<> where
+          necessary.
+
 Tue Feb 20 06:38:34 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
 
         * tao/Connection_Handler.h:
         * tao/Connection_Handler.cpp:
-        
+
           Added a new set_dscp_codepoint () method with a CORBA::Long
           as an input argument. This function is added as part of the
           DiffServ policy support.
-        
+
         * tao/IIOP_Connection_Handler.h:
         * tao/IIOP_Connection_Handler.cpp:
         * tao/Strategies/DIOP_Connection_Handler.h:
         * tao/Strategies/DIOP_Connection_Handler.cpp:
         * tao/Strategies/SCIOP_Connection_Handler.h:
         * tao/Strategies/SCIOP_Connection_Handler.cpp:
-        
+
           Concrete protocol implementations of the above defined method.
 
 Tue Feb 20 05:14:39 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
 
         * tao/IOP_IOR.pidl:
-        
+
           Changed the value of the newly added ServiceID (REP_NWPRIORITY)
           to be among the TAO reserved range.
 
 Mon Feb 19 21:01:10 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
 
         * tao/DiffServPolicy/DiffServPolicy.pidl:
-        
-          Changed the PolicyType value to use a value from 
+
+          Changed the PolicyType value to use a value from
           the TAO reserved range.
 
 Mon Feb 19 20:34:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
