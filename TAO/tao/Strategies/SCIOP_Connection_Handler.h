@@ -105,6 +105,7 @@ public:
 
   /// Set Diff-Serv codepoint on outgoing packets.
   int set_dscp_codepoint (CORBA::Boolean set_network_priority);
+  int set_dscp_codepoint (CORBA::Long dscp);
 
 protected:
 
@@ -117,6 +118,9 @@ protected:
    * contents to the default value, if any
    */
   TAO_SCIOP_Connection_Handler (TAO_ORB_Core *orb_core);
+
+  /// Helper method needed by the set_dscp_codepoint () methods
+  int set_tos (int tos);
 
   //@{
   /**

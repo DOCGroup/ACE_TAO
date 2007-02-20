@@ -123,6 +123,7 @@ public:
 
   /// Set Diff-Serv codepoint on outgoing packets.
   int set_dscp_codepoint (CORBA::Boolean set_network_priority);
+  int set_dscp_codepoint (CORBA::Long dscp_codepoint);
 
 protected:
 
@@ -132,6 +133,9 @@ protected:
    */
   virtual int release_os_resources (void);
   //@}
+
+  /// Helper method used by the set_dscp_codepoint () methods
+  int set_tos (int tos);
 
   // DIOP Additions - Begin
   /**

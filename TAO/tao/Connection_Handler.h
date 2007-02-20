@@ -131,6 +131,7 @@ public:
   /// protocols (UIOP).  Default implementation is for local
   /// protocols.  Remote protocols must overwrite implementation.
   virtual int set_dscp_codepoint (CORBA::Boolean set_network_priority);
+  virtual int set_dscp_codepoint (CORBA::Long dscp_codepoint);
 
   /// Release the OS resources related to this handler.
   virtual int release_os_resources (void);
