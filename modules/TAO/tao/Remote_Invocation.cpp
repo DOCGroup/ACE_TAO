@@ -151,6 +151,24 @@ namespace TAO
     TAO_Connection_Handler *connection_handler =
       this->resolver_.transport ()->connection_handler ();
 
+    // This code checks first if RTCORBA way of setting DiffServ codepoints
+    // is defined.
+    // The "set_client_network_priority" flag will be 1 if RTCORBA
+    // is setting the DiffServ codepoints.
+    // If not, we check if the DiffServ policy is used to set the DiffServ
+    // codepoint.
+    // We will have to change this to check on the DiffServ policy first.
+    // But then the proper values of DiffServ codepoints problem happens.
+    // You had suggested me to have a flag on if the real values
+    // are set or not.
+    // Instead, we could go with a flag.
+    // In the Default_Network_Priority_Protocols_Hook, that flag could be
+    // 0.
+    // In the DiffServ_Protocols_Hooks, the flag could be 1.
+    // So by checking on the flag, we can decide if the DiffServ policy is 
+    // properly used.
+    //
+
     if (set_client_network_priority)
       {
         // RTCORBA is used and the RTCORBA way of setting DiffServ codepoints

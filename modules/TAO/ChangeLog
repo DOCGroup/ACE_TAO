@@ -1,3 +1,11 @@
+Tue Feb 20 16:26:39 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
+
+        * tao/Remote_Invocation.cpp:
+        
+          Added some notes in the send_message () method to explain
+          how RTCORBA and DiffServ policy can work together to set
+          DiffServ codepoints.
+
 Thu Feb 15 02:28:56 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
 
         * tests/DiffServ/README:
