@@ -1,3 +1,18 @@
+Tue Feb 20 15:06:04 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ace/SOCK_Dgram.cpp:
+
+          The iov_len element of the iovec struct is unsigned on Linux (as
+          it is with Borland C++), so use the same #if check to avoid code
+          that causes warnings.
+
+        * ace/Containers_T.cpp:
+        * ace/Timer_Heap_T.cpp:
+        * ace/UPIPE_Stream.cpp:
+        * ace/UUID.cpp:
+
+          Added static_cast<> to avoid conversion warnings.
+
 Tue Feb 20 15:00:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * m4/compiler.m4:
