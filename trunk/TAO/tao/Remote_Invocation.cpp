@@ -9,6 +9,7 @@
 #include "tao/operation_details.h"
 #include "tao/ORB_Core.h"
 #include "tao/Protocols_Hooks.h"
+#include "tao/Network_Priority_Protocols_Hooks.h"
 #include "tao/debug.h"
 #include "tao/SystemException.h"
 
@@ -134,17 +135,44 @@ namespace TAO
     TAO_Protocols_Hooks *tph =
       this->resolver_.stub ()->orb_core ()->get_protocols_hooks ();
 
-    if (tph != 0)
+    TAO_Network_Priority_Protocols_Hooks *nph =
+      this->resolver_.stub ()->orb_core ()->
+        get_network_priority_protocols_hooks ();
+
+    TAO_Connection_Handler *connection_handler =
+      this->resolver_.transport ()->connection_handler ();
+
+    if (nph != 0)
       {
+        // nph = 0, means DiffServ library is not used
+        // nph = 0, means DiffServ library is used, and 
+        // request DSCP and reply DSCP are set.
+        // Note that the application could still be using
+        // RTCORBA, but still setting DIffServ codepoints
+        // using the DiffServ library takes precedence.
+        //
+        CORBA::Long dscp = nph->get_dscp_codepoint (this->resolver_.stub (),
+          this->resolver_.object ());
+        connection_handler->set_dscp_codepoint (dscp);
+      }
+    else if (tph != 0)
+      {
+        // If we execute this code, DiffServ library is not used,
+        // but RTCORBA could be used.
+        // Which means that using the enable_network_priority flag,
+        // the application might want to set DiffServ codepoints.
+        // Check if that is the case.
+        //
         CORBA::Boolean const set_client_network_priority =
-          tph->set_client_network_priority (this->resolver_.transport ()->tag (),
-                                            this->resolver_.stub ());
-
-        TAO_Connection_Handler *connection_handler =
-          this->resolver_.transport ()->connection_handler ();
-
+          tph->set_client_network_priority (
+            this->resolver_.transport ()->tag (),
+            this->resolver_.stub ());
         connection_handler->set_dscp_codepoint (set_client_network_priority);
       }
+
+    // Note that if noth nph and tph are 0, then we do not make any
+    // virtual calls any more, because we have removed the default
+    // implementations.
 
     int const retval =
       this->resolver_.transport ()->send_request (
