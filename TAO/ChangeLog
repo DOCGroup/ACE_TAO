@@ -1,3 +1,21 @@
+Tue Feb 20 06:38:34 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
+
+        * tao/Connection_Handler.h:
+        * tao/Connection_Handler.cpp:
+        
+          Added a new set_dscp_codepoint () method with a CORBA::Long
+          as an input argument. This function is added as part of the
+          DiffServ policy support.
+        
+        * tao/IIOP_Connection_Handler.h:
+        * tao/IIOP_Connection_Handler.cpp:
+        * tao/Strategies/DIOP_Connection_Handler.h:
+        * tao/Strategies/DIOP_Connection_Handler.cpp:
+        * tao/Strategies/SCIOP_Connection_Handler.h:
+        * tao/Strategies/SCIOP_Connection_Handler.cpp:
+        
+          Concrete protocol implementations of the above defined method.
+
 Tue Feb 20 05:14:39 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
 
         * tao/IOP_IOR.pidl:
