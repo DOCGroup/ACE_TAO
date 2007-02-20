@@ -406,6 +406,12 @@ TAO_Connection_Handler::set_dscp_codepoint (CORBA::Boolean)
 }
 
 int
+TAO_Connection_Handler::set_dscp_codepoint (CORBA::Long)
+{
+  return 0;
+}
+
+int
 TAO_Connection_Handler::release_os_resources (void)
 {
   return 0;

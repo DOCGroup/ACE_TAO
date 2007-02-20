@@ -45,6 +45,9 @@ namespace IIOP
   class ListenPointList;
 }
 
+// Forward Decls
+class TAO_Pluggable_Messaging;
+
 // ****************************************************************
 
 /**
@@ -64,7 +67,8 @@ public:
   TAO_IIOP_Connection_Handler (ACE_Thread_Manager * = 0);
 
   /// Constructor.
-  TAO_IIOP_Connection_Handler (TAO_ORB_Core *orb_core, CORBA::Boolean flag);
+  TAO_IIOP_Connection_Handler (TAO_ORB_Core *orb_core,
+                               CORBA::Boolean flag);
 
   /// Destructor.
   ~TAO_IIOP_Connection_Handler (void);
@@ -100,6 +104,7 @@ public:
 
   /// Set Diff-Serv codepoint on outgoing packets.
   int set_dscp_codepoint (CORBA::Boolean set_network_priority);
+  int set_dscp_codepoint (CORBA::Long dscp_codepoint);
 
   virtual int open_handler (void *);
 
@@ -126,6 +131,10 @@ protected:
    */
   virtual int release_os_resources (void);
   //@}
+
+  // helper function used by the set_dscp_codepoint () methods to
+  // set the TOS field in the IP packets.
+  int set_tos (int tos);
 
 private:
 

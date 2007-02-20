@@ -258,28 +258,15 @@ TAO_DIOP_Connection_Handler::release_os_resources (void)
 }
 
 int
-TAO_DIOP_Connection_Handler::set_dscp_codepoint (CORBA::Boolean set_network_priority)
+TAO_DIOP_Connection_Handler::set_tos (int tos)
 {
-  int tos = IPDSFIELD_DSCP_DEFAULT << 2;
-
-  if (set_network_priority)
-    {
-      TAO_Protocols_Hooks *tph =
-        this->orb_core ()->get_protocols_hooks ();
-
-      CORBA::Long codepoint =
-        tph->get_dscp_codepoint ();
-
-      tos = (int)(codepoint) << 2;
-    }
-
   if (tos != this->dscp_codepoint_)
     {
       int result = this->dgram ().set_option (IPPROTO_IP,
                                               IP_TOS,
                                               (int *) &tos ,
                                               (int) sizeof (tos));
-
+      
       if (TAO_debug_level)
         {
           ACE_DEBUG ((LM_DEBUG,
@@ -293,9 +280,35 @@ TAO_DIOP_Connection_Handler::set_dscp_codepoint (CORBA::Boolean set_network_prio
       // On successful setting of TOS field.
       if (result == 0)
         this->dscp_codepoint_ = tos;
-
     }
+  return 0;
+}
 
+int
+TAO_DIOP_Connection_Handler::set_dscp_codepoint (CORBA::Long dscp)
+{
+  int tos = IPDSFIELD_DSCP_DEFAULT << 2;
+  tos = (int)(dscp) << 2;
+  this->set_tos (tos);
+  return 0;
+}
+
+int
+TAO_DIOP_Connection_Handler::set_dscp_codepoint (CORBA::Boolean set_network_priority)
+{
+  int tos = IPDSFIELD_DSCP_DEFAULT << 2;
+
+  if (set_network_priority)
+    {
+      TAO_Protocols_Hooks *tph =
+        this->orb_core ()->get_protocols_hooks ();
+
+      CORBA::Long codepoint =
+        tph->get_dscp_codepoint ();
+
+      tos = (int)(codepoint) << 2;
+      this->set_tos (tos);
+    }
   return 0;
 }
 
