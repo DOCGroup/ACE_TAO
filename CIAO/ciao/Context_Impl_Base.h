@@ -77,11 +77,8 @@ namespace CIAO
     virtual CORBA::Boolean is_caller_in_role (const char *role);
 
     virtual void set_rollback_only ();
-    
-    virtual CORBA::Object *
-    resolve_service_reference (const char *service_id)
-      ACE_THROW_SPEC ((CORBA::SystemException));
-    
+
+    virtual CORBA::Object * resolve_service_reference (const char *service_id);
 
     virtual CORBA::Object_ptr resolve_service_reference(const char *service_id);
 
