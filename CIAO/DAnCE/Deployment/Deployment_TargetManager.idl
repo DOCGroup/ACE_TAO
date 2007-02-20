@@ -8,6 +8,7 @@
 #include "DAnCE/Deployment/Deployment_DeploymentPlan.idl"
 // Only needed for ResourceNotAvailable but that should go, so this include also
 #include "DAnCE/Deployment/Deployment_ApplicationManager.idl"
+#include "DAnCE/Deployment/Deployment_ResourceCommitmentManager.idl"
 
 module Deployment {
 
@@ -19,53 +20,21 @@ module Deployment {
     // @@changed
     UpdateDynamic
   };
-
-  /**
-   * @todo The ResourceCommitmentManager is part of 06-04-01 and this is not
-   * part of the Target Manager yet
-   */
-//   // @@add for conformance to 06-02-01
-//   struct ResourceAllocation {
-//     string elementName;
-//     string resourceName;
-//     Properties property;
-//   };
-  
-//   // @@added for conformance to 06-02-01
-//   exception ResourceCommitmentFailure {
-//     string reason;
-//     long index;
-//     string propertyName;
-//     ::CORBA::AnySeq propertyValue;
-//   };
-  
-//   // @@added for conformance to 06-02-01
-//   interface ResourceCommitmentManager {    
-//     void commitResources (in ResourceAllocations resources)
-//       raises (ResourceCommitmentFailure);
-
-//     void releaseResources (in ResourceAllocations resources)
-//       raises (ResourceCommitmentFailure);
-//   };
   
   interface TargetManager {
     Domain getAllResources ();
     Domain getAvailableResources ();
-    /// @todo 06-04-01 specifies this differently
-    void commitResources (in DeploymentPlan plan)
-      raises (ResourceNotAvailable, PlanError);
-    
+
     // @@changed
-    //     ResourceCommitmentManager commitResources (in ResourceAllocations
-    //                                                resources)
-    //       raises (ResourceCommitmentFailure);
+    ResourceCommitmentManager createResourceCommitment (in ResourceAllocations resources)
+      raises (ResourceCommitmentFailure);
     
     // @@added
-    // void destroyResourceCommitment (in ResourceCommitmentManager manager);
+    void destroyResourceCommitment (in ResourceCommitmentManager manager);
 
     /// @todo This is not part of 06-04-01
     // @@delete:
-    void releaseResources (in DeploymentPlan argname);
+    //void releaseResources (in DeploymentPlan argname);
 
     void updateDomain (in ::CORBA::StringSeq elements,
                        in Domain domainSubset,

@@ -16,6 +16,7 @@
 
 #include "TargetManagerImplC.h"
 #include "DAnCE/DomainApplicationManager/Deployment_Configuration.h"
+#include "DAnCE/Deployment/Deployment_ResourceCommitmentManagerC.h"
 
 /**
  * @namespace CIAO
