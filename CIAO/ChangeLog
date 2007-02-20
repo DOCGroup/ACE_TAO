@@ -1,7 +1,12 @@
+Tue Feb 20 17:10:14 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Extension_Context.{h,cpp}:
+          Moved to ciao/extension
+
 Tue Feb 20 16:17:46 UTC 2007  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * Merged ciao_core_2 to head.
-        
+
         Tue Feb 20 16:03:02 UTC 2007  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * RACE/Plan_Analyzer/Interface/PlanIngress.idl
@@ -9,8 +14,8 @@ Tue Feb 20 16:17:46 UTC 2007  William R. Otte  <wotte@dre.vanderbilt.edu>
         * RACE/Controller/Component/Controller.idl
         * RACE/Output_Adapters/Interface/PlanEgress.idl
         * RACE/Planner_Manager/Interface/Planner_Manager_I.idl
-        
-          Further updates to support migration of Deployment IDL to 
+
+          Further updates to support migration of Deployment IDL to
           DAnCE/Deployment.
 
   Mon Feb 19 21:27:11 UTC 2007  William R. Otte  <wotte@dre.vanderbilt.edu>
@@ -23,7 +28,7 @@ Tue Feb 20 16:17:46 UTC 2007  William R. Otte  <wotte@dre.vanderbilt.edu>
         * MPC/config/ciao_component_dnc.mpb
         * MPC/config/ciao_events_dnc.mpb
         * MPC/config/ciao_server_dnc.mpb
-        
+
           Removed the _DnC_ from a bunch of projects, as since we no longer have
           DnC and non DnC versions of CIAO, its reall superfluous.
 
@@ -56,11 +61,11 @@ Tue Feb 20 16:17:46 UTC 2007  William R. Otte  <wotte@dre.vanderbilt.edu>
         * DAnCE/Deployment/Deployment_NodeApplicationManager.idl
         * DAnCE/Deployment/Deployment_Events.idl
         * DAnCE/Deployment/Deployment_common.h
-        
-          Moved these IDLs from CIAO_ROOT/ciao in an effort to isolate the 
+
+          Moved these IDLs from CIAO_ROOT/ciao in an effort to isolate the
           DnC IDL from the CIAO IDL and control directory size explosion of
           CIAO_ROOT/ciao.
-        
+
         * tools/Config_Handlers/DnC_Dump.h
         * tools/Config_Handlers/DP_Handler.cpp
         * tools/Config_Handlers/MDD_Handler.cpp
@@ -159,8 +164,8 @@ Tue Feb 20 16:17:46 UTC 2007  William R. Otte  <wotte@dre.vanderbilt.edu>
 
           For the most part, modifications to support movement of DnC interfaces
           to DAnCE/Deployment.  One or two files were further modified to support
-          removal of DnC from project names. 
-        
+          removal of DnC from project names.
+
   Mon Feb 19 19:40:19 UTC 2007  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * MPC/config/ciaoexe.mpb
@@ -168,31 +173,31 @@ Tue Feb 20 16:17:46 UTC 2007  William R. Otte  <wotte@dre.vanderbilt.edu>
         * DAnCE/NodeApplication/NodeApplication.mpc
         * DAnCE/RepositoryManager/RepositoryManager.mpc
         * DAnCE/Plan_Launcher/Plan_Launcher.mpc
-        
+
           Modified to install exes to CIAO_ROOT/bin.
 
   Mon Feb 19 19:33:32 UTC 2007  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/NodeManager/MonitorCB.cpp
         * DAnCE/TargetManager/DomainDataManager.cpp
-        
+
           Corrected to reflect changes in IDL.
 
         * CCF/CCF/CodeGenerationKit/CommandLine.cpp
-        
+
           Added get_all_values to support revrieval of all values for a given
-          option passed on the command line. 
-        
+          option passed on the command line.
+
   Mon Feb 19 19:32:34 UTC 2007  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * ciao/Container_Base.cpp
-        
+
           Cosmetic format changes.
-        
+
         * ciao/CCM_Context.idl
-        
+
           re-added removed comment.
-        
+
   Mon Feb 19 19:25:06 UTC 2007  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * ccd.hpp
@@ -219,36 +224,36 @@ Tue Feb 20 16:17:46 UTC 2007  William R. Otte  <wotte@dre.vanderbilt.edu>
         * cpd.cpp
         * Basic_Deployment_Data.hpp
         * iad.cpp
-        
+
         * docs/schema/cid.xsd
         * docs/schema/cpd.xsd
-        
-          Changed include ordering. 
-        
+
+          Changed include ordering.
+
         * docs/schema/Basic_Deployment_Data.xsd
-         
+
           Added elements to support sequence, struct, and valuetypes
           in the schema.
-        
+
   Mon Feb 19 19:20:35 UTC 2007  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * Package_Handlers/PCD_Handler.cpp
-          
+
           Changed to reflect slight change in schema.
-        
+
         * CIAO_Events/CIAO_Events_Handlers.mpc
         * Config_Handlers.mpc
         * RT-CCM/RT-CCM-Handlers.mpc
 
           Updated to include XSC generation.
-        
+
   Mon Feb 19 15:30:04 UTC 2007  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * MPC/config/xscdefaults.mpb
         * tools/Config_Handlers/Config_Handlers.mpc
-        
+
           Added a custom type to MPC to handle XSC generation.
-        
+
   Wed Feb  7 21:16:36 UTC 2007  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * ciao/Deployment_Data.idl
@@ -271,18 +276,18 @@ Tue Feb 20 16:17:46 UTC 2007  William R. Otte  <wotte@dre.vanderbilt.edu>
         * ciao/Deployment_TargetManager.idl
         * ciao/Deployment_DeploymentPlan.idl
         * ciao/Deployment_NodeManager.idl
-        
+
           Updated with changes to comply with the 06-02-01 version of the
           DnC spec.  Many of these changes would break the entire toolchain,
           so they are commented out for the time being.  grep for
 
           @@changed @@add @@delete
-        
+
           to find changes.
-          
+
         * ciao/CCM_Core.mpc
         *ciao/Deployment_DomainApplication.idl
-        
+
          Added DomainApplication interface, completely missing from our IDL.
 
 
