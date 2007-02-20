@@ -45,7 +45,7 @@ CORBA::TypeCode::equal (TypeCode_ptr tc) const
   CORBA::TCKind const tc_kind = tc->kind ();
 
   if (tc_kind != this->kind_)
-    return 0;
+    return false;
 
   try
     {
@@ -54,14 +54,14 @@ CORBA::TypeCode::equal (TypeCode_ptr tc) const
       char const * const this_id = this->id ();
 
       if (ACE_OS::strcmp (this_id, tc_id) != 0)
-        return 0;
+        return false;
 
       char const * const tc_name = tc->name ();
 
       char const * const this_name = this->name ();
 
       if (ACE_OS::strcmp (this_name, tc_name) != 0)
-        return 0;
+        return false;
     }
   catch (const ::CORBA::TypeCode::BadKind&)
     {
@@ -89,37 +89,27 @@ CORBA::TypeCode::equivalent (TypeCode_ptr tc) const
   CORBA::TypeCode_ptr const mutable_this =
     const_cast<CORBA::TypeCode_ptr> (this);
 
-  CORBA::TypeCode_var unaliased_this =
-    TAO::unaliased_typecode (mutable_this
-                            );
+  CORBA::TypeCode_var unaliased_this = TAO::unaliased_typecode (mutable_this);
 
-  CORBA::TypeCode_var unaliased_tc =
-    TAO::unaliased_typecode (tc
-                            );
+  CORBA::TypeCode_var unaliased_tc = TAO::unaliased_typecode (tc);
 
+  CORBA::TCKind const this_kind = unaliased_this->kind ();
 
-  CORBA::TCKind const this_kind =
-    unaliased_this->kind ();
-
-  CORBA::TCKind const tc_kind =
-    unaliased_tc->kind ();
+  CORBA::TCKind const tc_kind = unaliased_tc->kind ();
 
   if (tc_kind != this_kind)
     return false;
 
   try
     {
-      char const * const this_id =
-        unaliased_this->id ();
+      char const * const this_id = unaliased_this->id ();
 
-      char const * const tc_id =
-        unaliased_tc->id ();
+      char const * const tc_id = unaliased_tc->id ();
 
       if (ACE_OS::strlen (this_id) == 0
           || ACE_OS::strlen (tc_id) == 0)
         {
-          return unaliased_this->equivalent_i (unaliased_tc.in ()
-                                              );
+          return unaliased_this->equivalent_i (unaliased_tc.in ());
         }
       else if (ACE_OS::strcmp (this_id, tc_id) != 0)
         {
@@ -131,8 +121,7 @@ CORBA::TypeCode::equivalent (TypeCode_ptr tc) const
       // Some TypeCodes do not support the id() operation.  Ignore the
       // failure, and continue equivalence verification using TypeCode
       // subclass-specific techniques.
-      return unaliased_this->equivalent_i (unaliased_tc.in ()
-                                          );
+      return unaliased_this->equivalent_i (unaliased_tc.in ());
     }
 
   return true;
@@ -157,22 +146,19 @@ CORBA::TypeCode::member_count_i (void) const
 }
 
 char const *
-CORBA::TypeCode::member_name_i (CORBA::ULong /* index */
-                                ) const
+CORBA::TypeCode::member_name_i (CORBA::ULong /* index */) const
 {
   throw ::CORBA::TypeCode::BadKind ();
 }
 
 CORBA::TypeCode_ptr
-CORBA::TypeCode::member_type_i (CORBA::ULong /* index */
-                                ) const
+CORBA::TypeCode::member_type_i (CORBA::ULong /* index */) const
 {
   throw ::CORBA::TypeCode::BadKind ();
 }
 
 CORBA::Any *
-CORBA::TypeCode::member_label_i (CORBA::ULong /* index */
-                                 ) const
+CORBA::TypeCode::member_label_i (CORBA::ULong /* index */) const
 {
   throw ::CORBA::TypeCode::BadKind ();
 }
@@ -214,8 +200,7 @@ CORBA::TypeCode::fixed_scale_i (void) const
 }
 
 CORBA::Visibility
-CORBA::TypeCode::member_visibility_i (CORBA::ULong /* index */
-                                      ) const
+CORBA::TypeCode::member_visibility_i (CORBA::ULong /* index */) const
 {
   throw ::CORBA::TypeCode::BadKind ();
 }
@@ -373,8 +358,7 @@ operator<< (TAO_OutputCDR & cdr,
 // ---------------------------------------------------------------
 
 CORBA::TypeCode_ptr
-TAO::unaliased_typecode (CORBA::TypeCode_ptr tc
-                         )
+TAO::unaliased_typecode (CORBA::TypeCode_ptr tc)
 {
   if (CORBA::is_nil (tc))
     {
@@ -391,8 +375,7 @@ TAO::unaliased_typecode (CORBA::TypeCode_ptr tc
       // Iterate until we get to the actual unaliased type.
       do
         {
-          tc_content =
-            tc_content->content_type ();
+          tc_content = tc_content->content_type ();
 
           tc_kind = tc_content->kind ();
         }
@@ -452,12 +435,9 @@ namespace TAO
 // =========================================================
 
 CORBA::TCKind
-TAO::unaliased_kind (CORBA::TypeCode_ptr tc
-                     )
+TAO::unaliased_kind (CORBA::TypeCode_ptr tc)
 {
-  CORBA::TypeCode_var unaliased_tc =
-    TAO::unaliased_typecode (tc
-                            );
+  CORBA::TypeCode_var unaliased_tc = TAO::unaliased_typecode (tc);
 
   return unaliased_tc->kind ();
 }

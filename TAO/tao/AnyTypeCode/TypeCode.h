@@ -86,11 +86,8 @@ namespace CORBA
 
       virtual void _raise (void) const;
 
-      virtual void _tao_encode (TAO_OutputCDR & cdr
-                                ) const;
-      virtual void _tao_decode (TAO_InputCDR & cdr
-                               );
-
+      virtual void _tao_encode (TAO_OutputCDR & cdr) const;
+      virtual void _tao_decode (TAO_InputCDR & cdr);
     };
 
     /**
@@ -115,11 +112,8 @@ namespace CORBA
 
       virtual void _raise (void) const;
 
-      virtual void _tao_encode (TAO_OutputCDR & cdr
-                                ) const;
-      virtual void _tao_decode (TAO_InputCDR & cdr
-                               );
-
+      virtual void _tao_encode (TAO_OutputCDR & cdr) const;
+      virtual void _tao_decode (TAO_InputCDR & cdr);
     };
 
     static CORBA::TypeCode_ptr const _tc_Bounds;
@@ -159,8 +153,7 @@ namespace CORBA
      *         the same and invoking any operation on the this
      *         @c TypeCode and @a tc returns identical results.
      */
-    Boolean equal (TypeCode_ptr tc
-                   ) const;
+    Boolean equal (TypeCode_ptr tc) const;
 
     /// Equivalence of two @c TypeCodes.
     /**
@@ -169,8 +162,7 @@ namespace CORBA
      *
      * @see equal
      */
-    Boolean equivalent (TypeCode_ptr tc
-                        ) const;
+    Boolean equivalent (TypeCode_ptr tc) const;
 
     /// The kind of @c TypeCode.
     TCKind kind (void) const;
@@ -279,8 +271,7 @@ namespace CORBA
      *       behavior is required by the C++ mapping.  In particular,
      *       ownership is maintained by the @c TypeCode.
      */
-    char const * member_name (ULong index
-                              ) const;
+    char const * member_name (ULong index) const;
 
     /// The type member @c TypeCode.
     /**
@@ -292,8 +283,7 @@ namespace CORBA
      * @li @c tk_except
      * @li @c tk_event
      */
-    TypeCode_ptr member_type (ULong index
-                              ) const;
+    TypeCode_ptr member_type (ULong index) const;
 
     /// The union member label.
     /**
@@ -301,8 +291,7 @@ namespace CORBA
      *
      * @li @c tk_union
      */
-    Any * member_label (ULong index
-                        ) const;
+    Any * member_label (ULong index) const;
 
     /// The type of all non-default union member labels.
     /**
@@ -366,8 +355,7 @@ namespace CORBA
      * @li @c tk_value
      * @li @c tk_event
      */
-    Visibility member_visibility (ULong index
-                                  ) const;
+    Visibility member_visibility (ULong index) const;
 
     /// The @c ValueModifier of the @c valuetype of @c eventtype
     /// represented by this @c TypeCode.
@@ -471,34 +459,25 @@ namespace CORBA
      * counterparts are pure virtual.
      */
     //@{
-    virtual Boolean equal_i (TypeCode_ptr tc
-                             ) const = 0;
-    virtual Boolean equivalent_i (TypeCode_ptr tc
-                                  ) const = 0;
-    virtual TypeCode_ptr get_compact_typecode_i (
-      void) const = 0;
+    virtual Boolean equal_i (TypeCode_ptr tc) const = 0;
+    virtual Boolean equivalent_i (TypeCode_ptr tc) const = 0;
+    virtual TypeCode_ptr get_compact_typecode_i (void) const = 0;
 
     virtual char const * id_i (void) const;
     virtual char const * name_i (void) const;
     virtual ULong member_count_i (void) const;
-    virtual char const * member_name_i (ULong index
-                                        ) const;
-    virtual TypeCode_ptr member_type_i (ULong index
-                                        ) const;
-    virtual Any * member_label_i (ULong index
-                                  ) const;
-    virtual TypeCode_ptr discriminator_type_i (
-      void) const;
+    virtual char const * member_name_i (ULong index) const;
+    virtual TypeCode_ptr member_type_i (ULong index) const;
+    virtual Any * member_label_i (ULong index) const;
+    virtual TypeCode_ptr discriminator_type_i (void) const;
     virtual Long default_index_i (void) const;
     virtual ULong length_i (void) const;
     virtual TypeCode_ptr content_type_i (void) const;
     virtual UShort fixed_digits_i (void) const;
     virtual UShort fixed_scale_i (void) const;
-    virtual Visibility member_visibility_i (ULong index
-                                            ) const;
+    virtual Visibility member_visibility_i (ULong index) const;
     virtual ValueModifier type_modifier_i (void) const;
-    virtual TypeCode_ptr concrete_base_type_i (
-      void) const;
+    virtual TypeCode_ptr concrete_base_type_i (void) const;
     //@}
 
   private:
@@ -517,12 +496,10 @@ namespace CORBA
 
 
 TAO_AnyTypeCode_Export
-CORBA::Boolean operator<< (TAO_OutputCDR & cdr,
-                           const CORBA::TypeCode_ptr tc);
+CORBA::Boolean operator<< (TAO_OutputCDR & cdr, const CORBA::TypeCode_ptr tc);
 
 TAO_AnyTypeCode_Export
-CORBA::Boolean operator>> (TAO_InputCDR & cdr,
-                           CORBA::TypeCode_ptr & tc);
+CORBA::Boolean operator>> (TAO_InputCDR & cdr, CORBA::TypeCode_ptr & tc);
 
 namespace TAO
 {
@@ -544,9 +521,8 @@ namespace TAO
 
   /// Return the unaliased content @c TypeCode of the given
   /// @c TypeCode.
-  TAO_AnyTypeCode_Export CORBA::TypeCode_ptr unaliased_typecode (
-    CORBA::TypeCode_ptr tc
-   );
+  TAO_AnyTypeCode_Export
+  CORBA::TypeCode_ptr unaliased_typecode (CORBA::TypeCode_ptr tc);
 
   /// Return the unaliased @c TCKind of the given @c TypeCode.
   /**
@@ -555,8 +531,7 @@ namespace TAO
    *       @c unaliased_typecode().
    */
   TAO_AnyTypeCode_Export
-  CORBA::TCKind unaliased_kind (CORBA::TypeCode_ptr tc
-                               );
+  CORBA::TCKind unaliased_kind (CORBA::TypeCode_ptr tc);
 
   // ---------------------------------------------------------------
 
