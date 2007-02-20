@@ -35,10 +35,13 @@ TAO_RT_Current::the_priority (void)
 {
   TAO_Protocols_Hooks *tph = this->orb_core_->get_protocols_hooks ();
 
-  RTCORBA::Priority priority;
+  RTCORBA::Priority priority = 0;
 
-  if (tph->get_thread_CORBA_priority (priority) == -1)
-    throw ::CORBA::DATA_CONVERSION (1, CORBA::COMPLETED_NO);
+  if (tph != 0)
+    {
+      if (tph->get_thread_CORBA_priority (priority) == -1)
+        throw ::CORBA::DATA_CONVERSION (1, CORBA::COMPLETED_NO);
+    }
 
   return priority;
 }
@@ -49,8 +52,11 @@ TAO_RT_Current::the_priority (RTCORBA::Priority the_priority)
 
   TAO_Protocols_Hooks *tph = this->orb_core_->get_protocols_hooks ();
 
-  if (tph->set_thread_CORBA_priority (the_priority) == -1)
-    throw ::CORBA::DATA_CONVERSION (1, CORBA::COMPLETED_NO);
+  if (tph != 0)
+    {
+      if (tph->set_thread_CORBA_priority (the_priority) == -1)
+        throw ::CORBA::DATA_CONVERSION (1, CORBA::COMPLETED_NO);
+    }
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

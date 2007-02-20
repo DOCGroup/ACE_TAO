@@ -134,14 +134,17 @@ namespace TAO
     TAO_Protocols_Hooks *tph =
       this->resolver_.stub ()->orb_core ()->get_protocols_hooks ();
 
-    CORBA::Boolean const set_client_network_priority =
-      tph->set_client_network_priority (this->resolver_.transport ()->tag (),
-                                        this->resolver_.stub ());
+    if (tph != 0)
+      {
+        CORBA::Boolean const set_client_network_priority =
+          tph->set_client_network_priority (this->resolver_.transport ()->tag (),
+                                            this->resolver_.stub ());
 
-    TAO_Connection_Handler *connection_handler =
-      this->resolver_.transport ()->connection_handler ();
+        TAO_Connection_Handler *connection_handler =
+          this->resolver_.transport ()->connection_handler ();
 
-    connection_handler->set_dscp_codepoint (set_client_network_priority);
+        connection_handler->set_dscp_codepoint (set_client_network_priority);
+      }
 
     int const retval =
       this->resolver_.transport ()->send_request (

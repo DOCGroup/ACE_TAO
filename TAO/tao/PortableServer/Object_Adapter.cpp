@@ -426,8 +426,7 @@ TAO_Object_Adapter::locate_poa (const TAO::ObjectKey &key,
                              is_persistent,
                              is_root,
                              poa_creation_time,
-                             poa
-                            );
+                             poa);
   }
 
   if (result != 0)
@@ -485,8 +484,7 @@ int
 TAO_Object_Adapter::find_transient_poa (const poa_name &system_name,
                                         CORBA::Boolean root,
                                         const TAO::Portable_Server::Temporary_Creation_Time &poa_creation_time,
-                                        TAO_Root_POA *&poa
-                                        )
+                                        TAO_Root_POA *&poa)
 {
   int result = 0;
 
@@ -496,8 +494,7 @@ TAO_Object_Adapter::find_transient_poa (const poa_name &system_name,
     }
   else
     {
-      result = this->transient_poa_map_->find (system_name,
-                                               poa);
+      result = this->transient_poa_map_->find (system_name, poa);
     }
 
   if (poa == 0
@@ -567,10 +564,7 @@ TAO_Object_Adapter::find_servant_i (const TAO::ObjectKey &key,
 
   this->locate_poa (key, id, poa);
 
-  TAO_SERVANT_LOCATION servant_location = poa->locate_servant_i (id,
-                                                                 servant);
-
-  return servant_location;
+  return poa->locate_servant_i (id, servant);
 }
 
 void
@@ -650,8 +644,7 @@ TAO_Object_Adapter::open (void)
                                                 this->lock (),
                                                 this->thread_lock (),
                                                 this->orb_core_,
-                                                this
-                                               );
+                                                this);
 
   // The Object_Adapter will keep a reference to the Root POA so that
   // on its destruction, it can check whether the Root POA has been
@@ -750,8 +743,7 @@ TAO_Object_Adapter::dispatch (TAO::ObjectKey &key,
                                                  0,  // servant_upcall
                                                  0,  // exceptions
                                                  0, // nexceptions
-                                                 ocs.out ()
-                                                );
+                                                 ocs.out ());
 
           /// If we have a cached result, just go ahead and send the reply
           /// and let us  return
@@ -781,8 +773,7 @@ TAO_Object_Adapter::dispatch (TAO::ObjectKey &key,
                                                          0,  // nargs
                                                          0,  // servant_upcall
                                                          0,  // exceptions
-                                                         0   // nexceptions
-                                                        );
+                                                         0);   // nexceptions
 
           // If a PortableInterceptor::ForwardRequest exception was
           // thrown, then set the forward_to object reference and return
@@ -795,10 +786,7 @@ TAO_Object_Adapter::dispatch (TAO::ObjectKey &key,
         }
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
-      result = this->dispatch_servant (key,
-                                       request,
-                                       forward_to
-                                      );
+      result = this->dispatch_servant (key, request, forward_to);
 
 #if TAO_HAS_INTERCEPTORS == 1
 
@@ -835,11 +823,9 @@ TAO_Object_Adapter::dispatch (TAO::ObjectKey &key,
                                        0,  // nargs
                                        0,  // servant_upcall
                                        0,  // exceptions
-                                       0   // nexceptions
-                                      );
+                                       0);   // nexceptions
 
-          status =
-            request.reply_status ();
+          status = request.reply_status ();
         }
 
       // Only re-throw the exception if it hasn't been transformed by
@@ -1229,8 +1215,7 @@ TAO_Object_Adapter::servant_dispatcher (TAO_Servant_Dispatcher *dispatcher)
 
 void
 TAO_Object_Adapter::do_dispatch (TAO_ServerRequest& req,
-                                 TAO::Portable_Server::Servant_Upcall& upcall
-                                 )
+                                 TAO::Portable_Server::Servant_Upcall& upcall)
 {
   upcall.servant ()->_dispatch(req, &upcall);
 }

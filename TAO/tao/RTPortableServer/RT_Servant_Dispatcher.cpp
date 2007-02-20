@@ -82,84 +82,121 @@ TAO_RT_Servant_Dispatcher::pre_invoke_remote_request (
   // Remember current thread's priority.
   TAO_Protocols_Hooks *tph = poa.orb_core ().get_protocols_hooks ();
 
-  const char *priority_model = 0;
-  RTCORBA::Priority target_priority = TAO_INVALID_PRIORITY;
-
-  // NOT_SPECIFIED PriorityModel processing.
-  if (poa.priority_model () ==
-      TAO::Portable_Server::Cached_Policies::NOT_SPECIFIED)
+  if (tph != 0)
     {
-      priority_model = "RTCORBA::NOT_SPECIFIED";
-    }
+      const char *priority_model = 0;
+      RTCORBA::Priority target_priority = TAO_INVALID_PRIORITY;
 
-  // CLIENT_PROPAGATED PriorityModel processing.
-  else if (poa.priority_model () ==
-      TAO::Portable_Server::Cached_Policies::CLIENT_PROPAGATED)
-    {
-      priority_model = "RTCORBA::CLIENT_PROPAGATED";
-
-      // Attempt to extract client-propagated priority from the
-      // ServiceContextList of the request.
-      const IOP::ServiceContext *context = 0;
-
-      if (request_service_context.get_context (IOP::RTCorbaPriority,
-                                               &context) == 1)
+      // NOT_SPECIFIED PriorityModel processing.
+      if (poa.priority_model () ==
+          TAO::Portable_Server::Cached_Policies::NOT_SPECIFIED)
         {
-          // Extract the target priority
-          TAO_InputCDR cdr (reinterpret_cast
-                            <const char*>
-                             (context->context_data.get_buffer ()),
-                            context->context_data.length ());
-          CORBA::Boolean byte_order;
-          if ((cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
-            throw ::CORBA::MARSHAL ();
-          cdr.reset_byte_order (static_cast<int> (byte_order));
+          priority_model = "RTCORBA::NOT_SPECIFIED";
+        }
 
-          if ((cdr >> target_priority) == 0)
-            throw ::CORBA::MARSHAL ();
+      // CLIENT_PROPAGATED PriorityModel processing.
+      else if (poa.priority_model () ==
+          TAO::Portable_Server::Cached_Policies::CLIENT_PROPAGATED)
+        {
+          priority_model = "RTCORBA::CLIENT_PROPAGATED";
 
-          // Save the target priority in the response service
-          // context to propagate back to the client as specified
-          // by the RTCORBA specification.
-          reply_service_context.set_context (*context);
+          // Attempt to extract client-propagated priority from the
+          // ServiceContextList of the request.
+          const IOP::ServiceContext *context = 0;
+
+          if (request_service_context.get_context (IOP::RTCorbaPriority,
+                                                   &context) == 1)
+            {
+              // Extract the target priority
+              TAO_InputCDR cdr (reinterpret_cast
+                                <const char*>
+                                 (context->context_data.get_buffer ()),
+                                context->context_data.length ());
+              CORBA::Boolean byte_order;
+              if ((cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
+                throw ::CORBA::MARSHAL ();
+              cdr.reset_byte_order (static_cast<int> (byte_order));
+
+              if ((cdr >> target_priority) == 0)
+                throw ::CORBA::MARSHAL ();
+
+              // Save the target priority in the response service
+              // context to propagate back to the client as specified
+              // by the RTCORBA specification.
+              reply_service_context.set_context (*context);
+            }
+          else
+            {
+              // Use default priority if none came in the request.
+              // (Request must have come from a non-RT ORB.)
+              target_priority = poa.server_priority ();
+            }
         }
       else
+        // SERVER_DECLARED PriorityModel processing.
         {
-          // Use default priority if none came in the request.
-          // (Request must have come from a non-RT ORB.)
-          target_priority = poa.server_priority ();
+          priority_model = "RTCORBA::SERVER_DECLARED";
+
+          // Use the request associated with the servant.
+          target_priority = servant_priority;
         }
-    }
-  else
-    // SERVER_DECLARED PriorityModel processing.
-    {
-      priority_model = "RTCORBA::SERVER_DECLARED";
 
-      // Use the request associated with the servant.
-      target_priority = servant_priority;
-    }
-
-  char thread_pool_id[BUFSIZ];
-  if (TAO_debug_level > 0)
-    {
-      if (thread_pool == 0)
-        ACE_OS::strcpy (thread_pool_id,
-                        "default thread pool");
-      else
-        ACE_OS::sprintf (thread_pool_id,
-                         "thread pool %d",
-                         thread_pool->id ());
-    }
-
-  // Target priority is invalid.
-  if (target_priority == TAO_INVALID_PRIORITY)
-    {
+      char thread_pool_id[BUFSIZ];
       if (TAO_debug_level > 0)
         {
+          if (thread_pool == 0)
+            ACE_OS::strcpy (thread_pool_id,
+                            "default thread pool");
+          else
+            ACE_OS::sprintf (thread_pool_id,
+                             "thread pool %d",
+                             thread_pool->id ());
+        }
 
-// If we are in a multi-threaded configuration, print out the current
-// thread priority.
-#if defined (ACE_HAS_THREADS)
+      // Target priority is invalid.
+      if (target_priority == TAO_INVALID_PRIORITY)
+        {
+          if (TAO_debug_level > 0)
+            {
+
+    // If we are in a multi-threaded configuration, print out the current
+    // thread priority.
+    #if defined (ACE_HAS_THREADS)
+
+              if (tph->get_thread_CORBA_and_native_priority (
+                    pre_invoke_state.original_CORBA_priority_,
+                    pre_invoke_state.original_native_priority_
+                   ) == -1)
+                throw ::CORBA::DATA_CONVERSION (CORBA::OMGVMCID | 2,
+                                                   CORBA::COMPLETED_NO);
+
+              ACE_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("(%P|%t): %s processing using %s ")
+                          ACE_TEXT ("original thread CORBA/native priority %d/%d ")
+                          ACE_TEXT ("not changed\n"),
+                          ACE_TEXT_CHAR_TO_TCHAR (priority_model),
+                          ACE_TEXT_CHAR_TO_TCHAR (thread_pool_id),
+                          pre_invoke_state.original_CORBA_priority_,
+                          pre_invoke_state.original_native_priority_));
+
+    // If we are in a single-threaded configuration, we cannot get the
+    // current thread priority.  Therefore, print out a simpler message.
+    #else /* ACE_HAS_THREADS */
+
+              ACE_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("(%P|%t): %s processing using %s ")
+                          ACE_TEXT ("original thread CORBA/native priority ")
+                          ACE_TEXT ("not changed\n"),
+                          ACE_TEXT_CHAR_TO_TCHAR (priority_model),
+                          ACE_TEXT_CHAR_TO_TCHAR (thread_pool_id)));
+
+    #endif /* ACE_HAS_THREADS */
+
+            }
+        }
+      else
+        {
+          // Get the current thread's priority.
 
           if (tph->get_thread_CORBA_and_native_priority (
                 pre_invoke_state.original_CORBA_priority_,
@@ -168,96 +205,62 @@ TAO_RT_Servant_Dispatcher::pre_invoke_remote_request (
             throw ::CORBA::DATA_CONVERSION (CORBA::OMGVMCID | 2,
                                                CORBA::COMPLETED_NO);
 
-          ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%P|%t): %s processing using %s ")
-                      ACE_TEXT ("original thread CORBA/native priority %d/%d ")
-                      ACE_TEXT ("not changed\n"),
-                      ACE_TEXT_CHAR_TO_TCHAR (priority_model),
-                      ACE_TEXT_CHAR_TO_TCHAR (thread_pool_id),
-                      pre_invoke_state.original_CORBA_priority_,
-                      pre_invoke_state.original_native_priority_));
-
-// If we are in a single-threaded configuration, we cannot get the
-// current thread priority.  Therefore, print out a simpler message.
-#else /* ACE_HAS_THREADS */
-
-          ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%P|%t): %s processing using %s ")
-                      ACE_TEXT ("original thread CORBA/native priority ")
-                      ACE_TEXT ("not changed\n"),
-                      ACE_TEXT_CHAR_TO_TCHAR (priority_model),
-                      ACE_TEXT_CHAR_TO_TCHAR (thread_pool_id)));
-
-#endif /* ACE_HAS_THREADS */
-
-        }
-    }
-  else
-    {
-      // Get the current thread's priority.
-
-      if (tph->get_thread_CORBA_and_native_priority (
-            pre_invoke_state.original_CORBA_priority_,
-            pre_invoke_state.original_native_priority_
-           ) == -1)
-        throw ::CORBA::DATA_CONVERSION (CORBA::OMGVMCID | 2,
-                                           CORBA::COMPLETED_NO);
-
-      // Priority needs to be changed temporarily changed for the
-      // duration of request.
-      if (target_priority != pre_invoke_state.original_CORBA_priority_)
-        {
-          if (tph->set_thread_CORBA_priority (target_priority) == -1)
-            throw ::CORBA::DATA_CONVERSION (CORBA::OMGVMCID | 2,
-                                               CORBA::COMPLETED_NO);
-
-          pre_invoke_state.state_ =
-            TAO::Portable_Server::Servant_Upcall::Pre_Invoke_State::PRIORITY_RESET_REQUIRED;
-
-          if (TAO_debug_level > 0)
+          // Priority needs to be changed temporarily changed for the
+          // duration of request.
+          if (target_priority != pre_invoke_state.original_CORBA_priority_)
             {
-              CORBA::Short native_priority;
-              tph->get_thread_native_priority (native_priority);
+              if (tph->set_thread_CORBA_priority (target_priority) == -1)
+                throw ::CORBA::DATA_CONVERSION (CORBA::OMGVMCID | 2,
+                                                   CORBA::COMPLETED_NO);
 
-              ACE_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("%s processing using %s ")
-                          ACE_TEXT ("(%P|%t): original thread CORBA/native priority %d/%d ")
-                          ACE_TEXT ("temporarily changed to CORBA/native priority %d/%d\n"),
-                          ACE_TEXT_CHAR_TO_TCHAR (priority_model),
-                          ACE_TEXT_CHAR_TO_TCHAR (thread_pool_id),
-                          pre_invoke_state.original_CORBA_priority_,
-                          pre_invoke_state.original_native_priority_,
-                          target_priority,
-                          native_priority));
+              pre_invoke_state.state_ =
+                TAO::Portable_Server::Servant_Upcall::Pre_Invoke_State::PRIORITY_RESET_REQUIRED;
+
+              if (TAO_debug_level > 0)
+                {
+                  CORBA::Short native_priority;
+                  tph->get_thread_native_priority (native_priority);
+
+                  ACE_DEBUG ((LM_DEBUG,
+                              ACE_TEXT ("%s processing using %s ")
+                              ACE_TEXT ("(%P|%t): original thread CORBA/native priority %d/%d ")
+                              ACE_TEXT ("temporarily changed to CORBA/native priority %d/%d\n"),
+                              ACE_TEXT_CHAR_TO_TCHAR (priority_model),
+                              ACE_TEXT_CHAR_TO_TCHAR (thread_pool_id),
+                              pre_invoke_state.original_CORBA_priority_,
+                              pre_invoke_state.original_native_priority_,
+                              target_priority,
+                              native_priority));
+                }
+            }
+          // No change in priority required.
+          else
+            {
+              if (TAO_debug_level > 0)
+                {
+                  ACE_DEBUG ((LM_DEBUG,
+                              ACE_TEXT ("%s processing using %s ")
+                              ACE_TEXT ("(%P|%t): original thread CORBA/native priority %d/%d ")
+                              ACE_TEXT ("is the same as the target priority\n"),
+                              ACE_TEXT_CHAR_TO_TCHAR (priority_model),
+                              ACE_TEXT_CHAR_TO_TCHAR (thread_pool_id),
+                              pre_invoke_state.original_CORBA_priority_,
+                              pre_invoke_state.original_native_priority_));
+                }
             }
         }
-      // No change in priority required.
-      else
-        {
-          if (TAO_debug_level > 0)
-            {
-              ACE_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("%s processing using %s ")
-                          ACE_TEXT ("(%P|%t): original thread CORBA/native priority %d/%d ")
-                          ACE_TEXT ("is the same as the target priority\n"),
-                          ACE_TEXT_CHAR_TO_TCHAR (priority_model),
-                          ACE_TEXT_CHAR_TO_TCHAR (thread_pool_id),
-                          pre_invoke_state.original_CORBA_priority_,
-                          pre_invoke_state.original_native_priority_));
-            }
-        }
+
+      CORBA::Policy_var policy =
+        poa.policies ().get_cached_policy (TAO_CACHED_POLICY_RT_SERVER_PROTOCOL);
+
+      CORBA::Boolean set_server_network_priority =
+        tph->set_server_network_priority (req.transport ()->tag (), policy.in ());
+
+      TAO_Connection_Handler *connection_handler =
+        req.transport ()->connection_handler ();
+
+      connection_handler->set_dscp_codepoint (set_server_network_priority);
     }
-
-  CORBA::Policy_var policy =
-    poa.policies ().get_cached_policy (TAO_CACHED_POLICY_RT_SERVER_PROTOCOL);
-
-  CORBA::Boolean set_server_network_priority =
-    tph->set_server_network_priority (req.transport ()->tag (), policy.in ());
-
-  TAO_Connection_Handler *connection_handler =
-    req.transport ()->connection_handler ();
-
-  connection_handler->set_dscp_codepoint (set_server_network_priority);
 }
 
 void
@@ -296,20 +299,23 @@ TAO_RT_Servant_Dispatcher::pre_invoke_collocated_request (TAO_Root_POA &poa,
   // Remember current thread's priority.
   TAO_Protocols_Hooks *tph = poa.orb_core ().get_protocols_hooks ();
 
-  if (tph->get_thread_CORBA_and_native_priority (
-        pre_invoke_state.original_CORBA_priority_,
-        pre_invoke_state.original_native_priority_) == -1)
-    throw ::CORBA::DATA_CONVERSION (CORBA::OMGVMCID | 2, CORBA::COMPLETED_NO);
-
-  // Change the priority of the current thread for the duration of
-  // request.
-  if (servant_priority != pre_invoke_state.original_CORBA_priority_)
+  if (tph != 0)
     {
-      if (tph->set_thread_CORBA_priority (servant_priority) == -1)
+      if (tph->get_thread_CORBA_and_native_priority (
+            pre_invoke_state.original_CORBA_priority_,
+            pre_invoke_state.original_native_priority_) == -1)
         throw ::CORBA::DATA_CONVERSION (CORBA::OMGVMCID | 2, CORBA::COMPLETED_NO);
 
-      pre_invoke_state.state_ =
-        TAO::Portable_Server::Servant_Upcall::Pre_Invoke_State::PRIORITY_RESET_REQUIRED;
+      // Change the priority of the current thread for the duration of
+      // request.
+      if (servant_priority != pre_invoke_state.original_CORBA_priority_)
+        {
+          if (tph->set_thread_CORBA_priority (servant_priority) == -1)
+            throw ::CORBA::DATA_CONVERSION (CORBA::OMGVMCID | 2, CORBA::COMPLETED_NO);
+
+          pre_invoke_state.state_ =
+            TAO::Portable_Server::Servant_Upcall::Pre_Invoke_State::PRIORITY_RESET_REQUIRED;
+        }
     }
 }
 
@@ -330,11 +336,13 @@ TAO_RT_Servant_Dispatcher::post_invoke (TAO_Root_POA &poa,
           // value.
           TAO_Protocols_Hooks *tph = poa.orb_core ().get_protocols_hooks ();
 
-          if (tph->set_thread_native_priority (
-                 pre_invoke_state.original_native_priority_)
-              == -1)
-            throw ::CORBA::DATA_CONVERSION (CORBA::OMGVMCID | 2,
-                                               CORBA::COMPLETED_NO);
+          if (tph != 0)
+            {
+              if (tph->set_thread_native_priority (
+                     pre_invoke_state.original_native_priority_) == -1)
+                throw ::CORBA::DATA_CONVERSION (CORBA::OMGVMCID | 2,
+                                                 CORBA::COMPLETED_NO);
+            }
         }
       catch (const ::CORBA::Exception& ex)
         {
