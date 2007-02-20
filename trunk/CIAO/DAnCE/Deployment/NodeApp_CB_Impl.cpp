@@ -6,6 +6,7 @@ NodeApplication_Callback_Impl  (CORBA::ORB_ptr o,
                                 PortableServer::POA_ptr p,
                                 Deployment::NodeApplicationManager_ptr s,
                                 const Deployment::Properties &properties)
+    ACE_THROW_SPEC ((CORBA::SystemException))
   : orb_ (CORBA::ORB::_duplicate (o)),
     poa_ (PortableServer::POA::_duplicate (p)),
     nam_ (Deployment::NodeApplicationManager::_duplicate (s))
@@ -41,6 +42,7 @@ Deployment::NodeApplicationManager_ptr
 CIAO::NodeApplication_Callback_Impl::register_node_application (
     Deployment::NodeApplication_ptr na,
     Deployment::Properties_out properties)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   properties = this->properties_._retn ();
 

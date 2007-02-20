@@ -2,7 +2,7 @@
 #include "STD_CPD_Handler.h"
 #include "STD_CID_Handler.h"
 #include "Basic_Deployment_Data.hpp"
-#include "ciao/Deployment_DataC.h"
+#include "DAnCE/Deployment/Deployment_DataC.h"
 #include "Deployment.hpp"
 
 namespace CIAO

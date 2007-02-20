@@ -49,7 +49,13 @@
   <xsd:complexType name="DataType">
     <xsd:sequence>
       <xsd:element name="kind" type="Deployment:TCKind"/>
-      <xsd:element name="enum" type="Deployment:EnumType" minOccurs="0"/>
+      <xsd:choice minOccurs="0">
+        <xsd:element name="enum" type="Deployment:EnumType" />
+        <xsd:element name="struct" type="Deployment:StructType"/>
+        <xsd:element name="value" type="Deployment:ValueType"/>
+        <xsd:element name="sequence" type="Deployment:SequenceType"/>
+       </xsd:choice>
+
 <!--
 @@ not supported now..
 
@@ -57,13 +63,11 @@
       <xsd:element name="boundedString" type="Deployment:BoundedStringType"/>
       <xsd:element name="fixed" type="Deployment:FixedType"/>
       <xsd:element name="array" type="Deployment:ArrayType"/>
-      <xsd:element name="sequence" type="Deployment:SequenceType"/>
       <xsd:element name="alias" type="Deployment:AliasType"/>
-      <xsd:element name="struct" type="Deployment:StructType"/>
-      <xsd:element name="value" type="Deployment:ValueType"/>
       <xsd:element name="union" type="Deployment:UnionType"/>
 -->
     </xsd:sequence>
+    <xsd:attribute name="id" type="xsd:ID"/>
   </xsd:complexType>
 
   <xsd:complexType name="DataValue">
@@ -90,7 +94,7 @@
       <!-- <xsd:element name="discriminator" type="Deployment:DataValue"/> -->
       <!-- <xsd:element name="value" type="Deployment:DataValue"/> -->
       <!-- <xsd:element name="boxedValue" type="Deployment:DataValue"/> -->
-      <!-- <xsd:element name="member" type="Deployment:NamedValue"/> -->
+      <xsd:element name="member" type="Deployment:NamedValue"/>
     </xsd:choice>
   </xsd:complexType>
 
@@ -99,6 +103,53 @@
       <xsd:element name="name" type="xsd:string"/>
       <xsd:element name="typeId" type="xsd:string"/>
       <xsd:element name="member" type="xsd:string" maxOccurs="unbounded"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="StructType">
+    <xsd:sequence>
+      <xsd:element name="name" type="xsd:string"/>
+      <xsd:element name="typeId" type="xsd:string"/>
+      <xsd:element name="member" type="Deployment:StructMemberType" minOccurs="0" maxOccurs="unbounded"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="StructMemberType">
+    <xsd:sequence>
+      <xsd:element name="name" type="xsd:string"/>
+      <xsd:element name="type" type="Deployment:DataType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="ValueType">
+    <xsd:sequence>
+      <xsd:element name="name" type="xsd:string"/>
+      <xsd:element name="typeId" type="xsd:string"/>
+      <xsd:element name="modifier" type="xsd:string"/>
+      <xsd:element name="baseType" type="Deployment:DataType"/>
+      <xsd:element name="member" type="Deployment:ValueMemberType" minOccurs="0" maxOccurs="unbounded" />
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="ValueMemberType">
+    <xsd:sequence>
+      <xsd:element name="name" type="xsd:string"/>
+      <xsd:element name="visibility" type="xsd:string"/>
+      <xsd:element name="type" type="Deployment:DataType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="NamedValue">
+    <xsd:sequence>
+      <xsd:element name="name" type="xsd:string"/>
+      <xsd:element name="value" type="Deployment:DataValue"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="SequenceType">
+    <xsd:sequence>
+      <xsd:element name="bound" type="xsd:string" minOccurs="0" />
+      <xsd:element name="elementType" type="Deployment:DataType"/>
     </xsd:sequence>
   </xsd:complexType>
 

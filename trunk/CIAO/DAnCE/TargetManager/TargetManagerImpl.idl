@@ -11,7 +11,8 @@
 #define TARGETMGR_IDL
 
 #include "ciao/Components.idl"
-#include "ciao/Deployment_PlanError.idl"
+#include "DAnCE/Deployment/Deployment_Target_Data.idl"
+#include "TargetManagerExt.idl"
 #include "DomainEvents.idl"
 
 module CIAO

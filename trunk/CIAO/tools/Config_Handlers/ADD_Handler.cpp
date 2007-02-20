@@ -1,7 +1,7 @@
 // $Id$
 #include "ADD_Handler.h"
 #include "cdp.hpp"
-#include "ciao/Deployment_DataC.h"
+#include "DAnCE/Deployment/Deployment_DataC.h"
 #include "Property_Handler.h"
 #include "ace/UUID.h"
 

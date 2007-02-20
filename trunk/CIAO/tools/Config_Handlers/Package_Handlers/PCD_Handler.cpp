@@ -1,7 +1,7 @@
 // $Id$
 #include "tao/AnyTypeCode/AnyTypeCode_methods.h"
 #include "ciao/CIAO_common.h"
-#include "ciao/Deployment_Packaging_DataC.h"
+#include "DAnCE/Deployment/Deployment_Packaging_DataC.h"
 #include "Utils/XML_Helper.h"
 #include "Utils/XercesString.h"
 #include "Utils/Exceptions.h"
@@ -37,14 +37,10 @@ namespace CIAO
 
         if (root == XStr ("Deployment:topLevelPackageDescription"))
           {
-	    PackageConfiguration foo;
-	    TopLevelPackageDescription tpd (foo);
+            TopLevelPackageDescription tpd = topLevelPackageDescription (dom);
 
-            tpd = topLevelPackageDescription (dom);
-
-            PCD_Handler::package_config (tpd.package (),
+            PCD_Handler::package_config (*tpd.begin_basePackage (),
                                          toconfig);
-
           }
         else if (root == XStr ("Deployment:packageConfiguration"))
           {
@@ -75,10 +71,10 @@ namespace CIAO
 
         const PackageConfiguration *pcd;
 
-        if (desc.href_p ())
+        if (desc.contentLocation_p ())
           {
             // Take ownership of the resolved pcd
-            xsc_pcd.reset (PCD_Handler:: resolve_package_config (desc.href ().c_str ()));
+            xsc_pcd.reset (PCD_Handler:: resolve_package_config (desc.contentLocation ().c_str ()));
             pcd = xsc_pcd.get ();
           }
         else

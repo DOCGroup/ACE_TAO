@@ -21,7 +21,12 @@ module Deployment {
     long msec_;
   };
 
-
+  // @@changed:
+  // interface NodeApplicationManager :
+  //     ApplicationManager
+  //   {
+  //   };
+  
   interface NodeApplicationManager :
     ApplicationManager
   {

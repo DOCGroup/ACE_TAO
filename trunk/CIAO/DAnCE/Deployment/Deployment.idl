@@ -3,8 +3,8 @@
 #ifndef DEPLOYMENT_IDL
 #define DEPLOYMENT_IDL
 
-#include "ciao/Deployment_Packaging_Data.idl"
-#include "ciao/Deployment_PlanError.idl"
+#include "DAnCE/Deployment/Deployment_Packaging_Data.idl"
+#include "DAnCE/Deployment/Deployment_PlanError.idl"
 
 module Deployment {
 
@@ -12,7 +12,23 @@ module Deployment {
     string name;
     string reason;
   };
-
+  
+  // @@added
+  exception InvalidNodeExecParameter {
+    string name;
+    string reason;
+  };
+  
+  // @@added
+  exception InvalidComponentExecParameter {
+    string name;
+    string reason;
+  };
+  
+  // @@added
+  exception LastConfiguration {
+  };
+  
   exception NoSuchName {
   };
 

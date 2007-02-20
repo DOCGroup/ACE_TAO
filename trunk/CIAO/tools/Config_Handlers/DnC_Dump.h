@@ -12,8 +12,8 @@
 #define DNC_DUMP_H
 #include /**/ "ace/pre.h"
 
-#include "ciao/DeploymentC.h"
-#include "ciao/Deployment_TargetDataC.h"
+#include "DAnCE/Deployment/DeploymentC.h"
+#include "DAnCE/Deployment/Deployment_TargetDataC.h"
 #include "Config_Handlers_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)

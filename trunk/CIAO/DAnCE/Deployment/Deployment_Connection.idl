@@ -3,7 +3,7 @@
 #if !defined (DEPLOYMENT_CONNECTION_IDL)
 #define DEPLOYMENT_CONNECTION_IDL
 
-#include "ciao/Deployment_DeploymentPlan.idl"
+#include "DAnCE/Deployment/Deployment_DeploymentPlan.idl"
 #include <ciaosvcs/Events/CIAO_Events_Base/CIAO_Events.idl>
 
 // *************** Packaging and Deployment ***************
@@ -11,7 +11,14 @@ module Deployment
 {
   typedef sequence < Object > Endpoints;
   //typedef Object Endpoint;
-
+  
+  // @@changed
+  // struct Connection
+  //   {
+  //     string name;
+  //     Endpoints endpoint;
+  //   };
+  
   // CIAO's specific <Connection> type defition.
   // To avoid the connection info in the plan being passed to the
   // local node and to make the implementation not very cumbersome

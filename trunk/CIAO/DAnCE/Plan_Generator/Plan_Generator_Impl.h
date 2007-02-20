@@ -10,7 +10,7 @@
 #ifndef PLAN_GENERATOR_IMPL_H
 #define PLAN_GENERATOR_IMPL_H
 
-#include "ciao/Deployment_RepositoryManagerC.h"
+#include "DAnCE/Deployment/Deployment_RepositoryManagerC.h"
 #include "Plan_Generator_Impl_Export.h"
 
 namespace CIAO

@@ -41,7 +41,8 @@ namespace CIAO
     NodeApplication_Callback_Impl (CORBA::ORB_ptr o,
                                    PortableServer::POA_ptr p,
                                    Deployment::NodeApplicationManager_ptr s,
-                                   const Deployment::Properties &properties);
+                                   const Deployment::Properties &properties)
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
     /// Get the containing POA.  This operation does *not* increase
     /// the reference count of the POA.
@@ -52,7 +53,8 @@ namespace CIAO
     /// NodeApplicationManager
     Deployment::NodeApplicationManager_ptr
     register_node_application (Deployment::NodeApplication_ptr na,
-                               Deployment::Properties_out properties);
+                               Deployment::Properties_out properties)
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
     Deployment::NodeApplication_ptr get_nodeapp_ref (void);
 
