@@ -1,3 +1,12 @@
+Tue Feb 20 20:28:28 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
+
+        * tao/Default_Network_Priority_Protocols_Hooks.{cpp,h}:
+        
+          Removed. The network_priority_protocols_hooks is no
+          longer going to incur virtual call overhead, and instead
+          just remains as a pointer, which is 0 or not. Non-zero
+          instance means, that the DiffServ library is linked in.
+
 Tue Feb 20 20:10:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Default_Protocols_Hooks.{cpp,h}:
