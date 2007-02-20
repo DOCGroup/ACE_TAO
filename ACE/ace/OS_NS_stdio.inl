@@ -557,11 +557,11 @@ ACE_OS::fdopen (ACE_HANDLE handle, const ACE_TCHAR *mode)
 
       if (!file)
         {
-#   if (defined(__BORLANDC__) && __BORLANDC__ >= 0x0530)
+#   if defined(__BORLANDC__)
           ::_rtl_close (crt_handle);
 #   else
           ::_close (crt_handle);
-#   endif /* (defined(__BORLANDC__) && __BORLANDC__ >= 0x0530) */
+#   endif /* defined(__BORLANDC__) */
         }
     }
 
