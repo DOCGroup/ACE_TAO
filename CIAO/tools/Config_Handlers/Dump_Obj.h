@@ -12,7 +12,7 @@
 #define CIAO_DUMP_OBJ_H
 #include /**/ "ace/pre.h"
 
-#include "ciao/DeploymentC.h"
+#include "DAnCE/Deployment/DeploymentC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once

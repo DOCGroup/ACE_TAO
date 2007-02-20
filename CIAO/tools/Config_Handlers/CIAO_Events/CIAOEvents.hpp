@@ -15,10 +15,10 @@
 # include <string.h>
 #endif
 
-#include "CIAO_Events_Handlers_Export.h"
 #ifndef CIAOEVENTS_HPP
 #define CIAOEVENTS_HPP
 
+#include "CIAO_Events_Handlers_Export.h"
 // Forward declarations.
 //
 namespace CIAO
@@ -57,7 +57,7 @@ namespace CIAO
 
       enum Value
       {
-        EC_l,RTEC_l,NOTIFY_l,RTNOTIFY_l
+        EC_l,RTEC_l,NOTIFY_l,RTNOTIFY_l,
       };
 
 
@@ -268,7 +268,7 @@ namespace CIAO
 
       enum Value
       {
-        CONJUNCTION_l,DISJUNCTION_l,LOGICAL_AND_l,NEGATE_l
+        CONJUNCTION_l,DISJUNCTION_l,LOGICAL_AND_l,NEGATE_l,
       };
 
 
@@ -508,6 +508,1030 @@ namespace CIAO
     CIAO_Events_Handlers_Export
     ::CIAO::Config_Handlers::CIAOEventsDef
     CIAOEvents (xercesc::DOMDocument const*);
+  }
+}
+
+#include "XMLSchema/Traversal.hpp"
+
+namespace CIAO
+{
+  namespace Config_Handlers
+  {
+    namespace Traversal
+    {
+      typedef
+      ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::EventServiceType >
+      EventServiceType;
+
+      struct CIAO_Events_Handlers_Export CIAOEventsDef : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::CIAOEventsDef >
+      {
+        virtual void
+        traverse (Type&);
+
+        virtual void
+        traverse (Type const&);
+
+        virtual void
+        pre (Type&);
+
+        virtual void
+        pre (Type const&);
+
+        virtual void
+        eventServiceConfiguration (Type&);
+
+        virtual void
+        eventServiceConfiguration (Type const&);
+
+        virtual void
+        eventServiceConfiguration_pre (Type&);
+
+        virtual void
+        eventServiceConfiguration_pre (Type const&);
+
+        virtual void
+        eventServiceConfiguration_next (Type&);
+
+        virtual void
+        eventServiceConfiguration_next (Type const&);
+
+        virtual void
+        eventServiceConfiguration_post (Type&);
+
+        virtual void
+        eventServiceConfiguration_post (Type const&);
+
+        virtual void
+        id (Type&);
+
+        virtual void
+        id (Type const&);
+
+        virtual void
+        id_none (Type&);
+
+        virtual void
+        id_none (Type const&);
+
+        virtual void
+        post (Type&);
+
+        virtual void
+        post (Type const&);
+      };
+
+      struct CIAO_Events_Handlers_Export EventServiceDescription : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::EventServiceDescription >
+      {
+        virtual void
+        traverse (Type&);
+
+        virtual void
+        traverse (Type const&);
+
+        virtual void
+        pre (Type&);
+
+        virtual void
+        pre (Type const&);
+
+        virtual void
+        name (Type&);
+
+        virtual void
+        name (Type const&);
+
+        virtual void
+        node (Type&);
+
+        virtual void
+        node (Type const&);
+
+        virtual void
+        type (Type&);
+
+        virtual void
+        type (Type const&);
+
+        virtual void
+        svc_cfg_file (Type&);
+
+        virtual void
+        svc_cfg_file (Type const&);
+
+        virtual void
+        filter (Type&);
+
+        virtual void
+        filter (Type const&);
+
+        virtual void
+        filter_pre (Type&);
+
+        virtual void
+        filter_pre (Type const&);
+
+        virtual void
+        filter_next (Type&);
+
+        virtual void
+        filter_next (Type const&);
+
+        virtual void
+        filter_post (Type&);
+
+        virtual void
+        filter_post (Type const&);
+
+        virtual void
+        filter_none (Type&);
+
+        virtual void
+        filter_none (Type const&);
+
+        virtual void
+        addr_serv (Type&);
+
+        virtual void
+        addr_serv (Type const&);
+
+        virtual void
+        addr_serv_pre (Type&);
+
+        virtual void
+        addr_serv_pre (Type const&);
+
+        virtual void
+        addr_serv_next (Type&);
+
+        virtual void
+        addr_serv_next (Type const&);
+
+        virtual void
+        addr_serv_post (Type&);
+
+        virtual void
+        addr_serv_post (Type const&);
+
+        virtual void
+        addr_serv_none (Type&);
+
+        virtual void
+        addr_serv_none (Type const&);
+
+        virtual void
+        udp_sender (Type&);
+
+        virtual void
+        udp_sender (Type const&);
+
+        virtual void
+        udp_sender_pre (Type&);
+
+        virtual void
+        udp_sender_pre (Type const&);
+
+        virtual void
+        udp_sender_next (Type&);
+
+        virtual void
+        udp_sender_next (Type const&);
+
+        virtual void
+        udp_sender_post (Type&);
+
+        virtual void
+        udp_sender_post (Type const&);
+
+        virtual void
+        udp_sender_none (Type&);
+
+        virtual void
+        udp_sender_none (Type const&);
+
+        virtual void
+        udp_receiver (Type&);
+
+        virtual void
+        udp_receiver (Type const&);
+
+        virtual void
+        udp_receiver_pre (Type&);
+
+        virtual void
+        udp_receiver_pre (Type const&);
+
+        virtual void
+        udp_receiver_next (Type&);
+
+        virtual void
+        udp_receiver_next (Type const&);
+
+        virtual void
+        udp_receiver_post (Type&);
+
+        virtual void
+        udp_receiver_post (Type const&);
+
+        virtual void
+        udp_receiver_none (Type&);
+
+        virtual void
+        udp_receiver_none (Type const&);
+
+        virtual void
+        id (Type&);
+
+        virtual void
+        id (Type const&);
+
+        virtual void
+        id_none (Type&);
+
+        virtual void
+        id_none (Type const&);
+
+        virtual void
+        post (Type&);
+
+        virtual void
+        post (Type const&);
+      };
+
+      typedef
+      ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::FilterType >
+      FilterType;
+
+      struct CIAO_Events_Handlers_Export Filter : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::Filter >
+      {
+        virtual void
+        traverse (Type&);
+
+        virtual void
+        traverse (Type const&);
+
+        virtual void
+        pre (Type&);
+
+        virtual void
+        pre (Type const&);
+
+        virtual void
+        name (Type&);
+
+        virtual void
+        name (Type const&);
+
+        virtual void
+        type (Type&);
+
+        virtual void
+        type (Type const&);
+
+        virtual void
+        source (Type&);
+
+        virtual void
+        source (Type const&);
+
+        virtual void
+        source_pre (Type&);
+
+        virtual void
+        source_pre (Type const&);
+
+        virtual void
+        source_next (Type&);
+
+        virtual void
+        source_next (Type const&);
+
+        virtual void
+        source_post (Type&);
+
+        virtual void
+        source_post (Type const&);
+
+        virtual void
+        id (Type&);
+
+        virtual void
+        id (Type const&);
+
+        virtual void
+        id_none (Type&);
+
+        virtual void
+        id_none (Type const&);
+
+        virtual void
+        post (Type&);
+
+        virtual void
+        post (Type const&);
+      };
+
+      struct CIAO_Events_Handlers_Export AddressServerDescription : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::AddressServerDescription >
+      {
+        virtual void
+        traverse (Type&);
+
+        virtual void
+        traverse (Type const&);
+
+        virtual void
+        pre (Type&);
+
+        virtual void
+        pre (Type const&);
+
+        virtual void
+        name (Type&);
+
+        virtual void
+        name (Type const&);
+
+        virtual void
+        port (Type&);
+
+        virtual void
+        port (Type const&);
+
+        virtual void
+        address (Type&);
+
+        virtual void
+        address (Type const&);
+
+        virtual void
+        post (Type&);
+
+        virtual void
+        post (Type const&);
+      };
+
+      struct CIAO_Events_Handlers_Export UDPSenderDescription : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::UDPSenderDescription >
+      {
+        virtual void
+        traverse (Type&);
+
+        virtual void
+        traverse (Type const&);
+
+        virtual void
+        pre (Type&);
+
+        virtual void
+        pre (Type const&);
+
+        virtual void
+        name (Type&);
+
+        virtual void
+        name (Type const&);
+
+        virtual void
+        addr_serv_id (Type&);
+
+        virtual void
+        addr_serv_id (Type const&);
+
+        virtual void
+        post (Type&);
+
+        virtual void
+        post (Type const&);
+      };
+
+      struct CIAO_Events_Handlers_Export UDPReceiverDescription : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::UDPReceiverDescription >
+      {
+        virtual void
+        traverse (Type&);
+
+        virtual void
+        traverse (Type const&);
+
+        virtual void
+        pre (Type&);
+
+        virtual void
+        pre (Type const&);
+
+        virtual void
+        name (Type&);
+
+        virtual void
+        name (Type const&);
+
+        virtual void
+        addr_serv_id (Type&);
+
+        virtual void
+        addr_serv_id (Type const&);
+
+        virtual void
+        addr_serv_id_none (Type&);
+
+        virtual void
+        addr_serv_id_none (Type const&);
+
+        virtual void
+        is_multicast (Type&);
+
+        virtual void
+        is_multicast (Type const&);
+
+        virtual void
+        listen_port (Type&);
+
+        virtual void
+        listen_port (Type const&);
+
+        virtual void
+        post (Type&);
+
+        virtual void
+        post (Type const&);
+      };
+    }
+  }
+}
+
+#include "XMLSchema/Writer.hpp"
+
+namespace CIAO
+{
+  namespace Config_Handlers
+  {
+    namespace Writer
+    {
+      struct EventServiceType : Traversal::EventServiceType, 
+      virtual ::XSCRT::Writer< ACE_TCHAR >
+      {
+        EventServiceType (::XSCRT::XML::Element< ACE_TCHAR >&);
+
+        virtual void 
+        traverse (Type &o)
+        {
+          this->traverse (const_cast <Type const &> (o));
+        }
+
+        virtual void
+        traverse (Type const&);
+
+        protected:
+        EventServiceType ();
+      };
+
+      struct CIAOEventsDef : Traversal::CIAOEventsDef, 
+      virtual ::XSCRT::Writer< ACE_TCHAR >
+      {
+        typedef ::CIAO::Config_Handlers::CIAOEventsDef Type;
+        CIAOEventsDef (::XSCRT::XML::Element< ACE_TCHAR >&);
+
+        virtual void 
+        traverse (Type &o)
+        {
+
+          this->traverse (const_cast <Type const &> (o));
+        }
+
+
+        virtual void
+        traverse (Type const&);
+
+        virtual void 
+        eventServiceConfiguration_pre (Type &o)
+        {
+
+          this->eventServiceConfiguration_pre (const_cast <Type const &> (o));
+        }
+
+
+        virtual void
+        eventServiceConfiguration_pre (Type const&);
+
+        virtual void 
+        eventServiceConfiguration_next (Type &o)
+        {
+
+          this->eventServiceConfiguration_next (const_cast <Type const &> (o));
+        }
+
+
+        virtual void
+        eventServiceConfiguration_next (Type const&);
+
+        virtual void 
+        eventServiceConfiguration_post (Type &o)
+        {
+
+          this->eventServiceConfiguration_post (const_cast <Type const &> (o));
+        }
+
+
+        virtual void
+        eventServiceConfiguration_post (Type const&);
+
+        virtual void 
+        id (Type &o)
+        {
+
+          this->id (const_cast <Type const &> (o));
+        }
+
+
+        virtual void
+        id (Type const&);
+
+        protected:
+        CIAOEventsDef ();
+      };
+
+      struct EventServiceDescription : Traversal::EventServiceDescription, 
+      virtual ::XSCRT::Writer< ACE_TCHAR >
+      {
+        typedef ::CIAO::Config_Handlers::EventServiceDescription Type;
+        EventServiceDescription (::XSCRT::XML::Element< ACE_TCHAR >&);
+
+        virtual void 
+        traverse (Type &o)
+        {
+
+          this->traverse (const_cast <Type const &> (o));
+        }
+
+
+        virtual void
+        traverse (Type const&);
+
+        virtual void 
+        name (Type &o)
+        {
+
+          this->name (const_cast <Type const &> (o));
+        }
+
+
+        virtual void
+        name (Type const&);
+
+        virtual void 
+        node (Type &o)
+        {
+
+          this->node (const_cast <Type const &> (o));
+        }
+
+
+        virtual void
+        node (Type const&);
+
+        virtual void 
+        type (Type &o)
+        {
+
+          this->type (const_cast <Type const &> (o));
+        }
+
+
+        virtual void
+        type (Type const&);
+
+        virtual void 
+        svc_cfg_file (Type &o)
+        {
+
+          this->svc_cfg_file (const_cast <Type const &> (o));
+        }
+
+
+        virtual void
+        svc_cfg_file (Type const&);
+
+        virtual void 
+        filter_pre (Type &o)
+        {
+
+          this->filter_pre (const_cast <Type const &> (o));
+        }
+
+
+        virtual void
+        filter_pre (Type const&);
+
+        virtual void 
+        filter_next (Type &o)
+        {
+
+          this->filter_next (const_cast <Type const &> (o));
+        }
+
+
+        virtual void
+        filter_next (Type const&);
+
+        virtual void 
+        filter_post (Type &o)
+        {
+
+          this->filter_post (const_cast <Type const &> (o));
+        }
+
+
+        virtual void
+        filter_post (Type const&);
+
+        virtual void 
+        addr_serv_pre (Type &o)
+        {
+
+          this->addr_serv_pre (const_cast <Type const &> (o));
+        }
+
+
+        virtual void
+        addr_serv_pre (Type const&);
+
+        virtual void 
+        addr_serv_next (Type &o)
+        {
+
+          this->addr_serv_next (const_cast <Type const &> (o));
+        }
+
+
+        virtual void
+        addr_serv_next (Type const&);
+
+        virtual void 
+        addr_serv_post (Type &o)
+        {
+
+          this->addr_serv_post (const_cast <Type const &> (o));
+        }
+
+
+        virtual void
+        addr_serv_post (Type const&);
+
+        virtual void 
+        udp_sender_pre (Type &o)
+        {
+
+          this->udp_sender_pre (const_cast <Type const &> (o));
+        }
+
+
+        virtual void
+        udp_sender_pre (Type const&);
+
+        virtual void 
+        udp_sender_next (Type &o)
+        {
+
+          this->udp_sender_next (const_cast <Type const &> (o));
+        }
+
+
+        virtual void
+        udp_sender_next (Type const&);
+
+        virtual void 
+        udp_sender_post (Type &o)
+        {
+
+          this->udp_sender_post (const_cast <Type const &> (o));
+        }
+
+
+        virtual void
+        udp_sender_post (Type const&);
+
+        virtual void 
+        udp_receiver_pre (Type &o)
+        {
+
+          this->udp_receiver_pre (const_cast <Type const &> (o));
+        }
+
+
+        virtual void
+        udp_receiver_pre (Type const&);
+
+        virtual void 
+        udp_receiver_next (Type &o)
+        {
+
+          this->udp_receiver_next (const_cast <Type const &> (o));
+        }
+
+
+        virtual void
+        udp_receiver_next (Type const&);
+
+        virtual void 
+        udp_receiver_post (Type &o)
+        {
+
+          this->udp_receiver_post (const_cast <Type const &> (o));
+        }
+
+
+        virtual void
+        udp_receiver_post (Type const&);
+
+        virtual void 
+        id (Type &o)
+        {
+
+          this->id (const_cast <Type const &> (o));
+        }
+
+
+        virtual void
+        id (Type const&);
+
+        protected:
+        EventServiceDescription ();
+      };
+
+      struct FilterType : Traversal::FilterType, 
+      virtual ::XSCRT::Writer< ACE_TCHAR >
+      {
+        FilterType (::XSCRT::XML::Element< ACE_TCHAR >&);
+
+        virtual void 
+        traverse (Type &o)
+        {
+          this->traverse (const_cast <Type const &> (o));
+        }
+
+        virtual void
+        traverse (Type const&);
+
+        protected:
+        FilterType ();
+      };
+
+      struct Filter : Traversal::Filter, 
+      virtual ::XSCRT::Writer< ACE_TCHAR >
+      {
+        typedef ::CIAO::Config_Handlers::Filter Type;
+        Filter (::XSCRT::XML::Element< ACE_TCHAR >&);
+
+        virtual void 
+        traverse (Type &o)
+        {
+
+          this->traverse (const_cast <Type const &> (o));
+        }
+
+
+        virtual void
+        traverse (Type const&);
+
+        virtual void 
+        name (Type &o)
+        {
+
+          this->name (const_cast <Type const &> (o));
+        }
+
+
+        virtual void
+        name (Type const&);
+
+        virtual void 
+        type (Type &o)
+        {
+
+          this->type (const_cast <Type const &> (o));
+        }
+
+
+        virtual void
+        type (Type const&);
+
+        virtual void 
+        source_pre (Type &o)
+        {
+
+          this->source_pre (const_cast <Type const &> (o));
+        }
+
+
+        virtual void
+        source_pre (Type const&);
+
+        virtual void 
+        source_next (Type &o)
+        {
+
+          this->source_next (const_cast <Type const &> (o));
+        }
+
+
+        virtual void
+        source_next (Type const&);
+
+        virtual void 
+        source_post (Type &o)
+        {
+
+          this->source_post (const_cast <Type const &> (o));
+        }
+
+
+        virtual void
+        source_post (Type const&);
+
+        virtual void 
+        id (Type &o)
+        {
+
+          this->id (const_cast <Type const &> (o));
+        }
+
+
+        virtual void
+        id (Type const&);
+
+        protected:
+        Filter ();
+      };
+
+      struct AddressServerDescription : Traversal::AddressServerDescription, 
+      virtual ::XSCRT::Writer< ACE_TCHAR >
+      {
+        typedef ::CIAO::Config_Handlers::AddressServerDescription Type;
+        AddressServerDescription (::XSCRT::XML::Element< ACE_TCHAR >&);
+
+        virtual void 
+        traverse (Type &o)
+        {
+
+          this->traverse (const_cast <Type const &> (o));
+        }
+
+
+        virtual void
+        traverse (Type const&);
+
+        virtual void 
+        name (Type &o)
+        {
+
+          this->name (const_cast <Type const &> (o));
+        }
+
+
+        virtual void
+        name (Type const&);
+
+        virtual void 
+        port (Type &o)
+        {
+
+          this->port (const_cast <Type const &> (o));
+        }
+
+
+        virtual void
+        port (Type const&);
+
+        virtual void 
+        address (Type &o)
+        {
+
+          this->address (const_cast <Type const &> (o));
+        }
+
+
+        virtual void
+        address (Type const&);
+
+        protected:
+        AddressServerDescription ();
+      };
+
+      struct UDPSenderDescription : Traversal::UDPSenderDescription, 
+      virtual ::XSCRT::Writer< ACE_TCHAR >
+      {
+        typedef ::CIAO::Config_Handlers::UDPSenderDescription Type;
+        UDPSenderDescription (::XSCRT::XML::Element< ACE_TCHAR >&);
+
+        virtual void 
+        traverse (Type &o)
+        {
+
+          this->traverse (const_cast <Type const &> (o));
+        }
+
+
+        virtual void
+        traverse (Type const&);
+
+        virtual void 
+        name (Type &o)
+        {
+
+          this->name (const_cast <Type const &> (o));
+        }
+
+
+        virtual void
+        name (Type const&);
+
+        virtual void 
+        addr_serv_id (Type &o)
+        {
+
+          this->addr_serv_id (const_cast <Type const &> (o));
+        }
+
+
+        virtual void
+        addr_serv_id (Type const&);
+
+        protected:
+        UDPSenderDescription ();
+      };
+
+      struct UDPReceiverDescription : Traversal::UDPReceiverDescription, 
+      virtual ::XSCRT::Writer< ACE_TCHAR >
+      {
+        typedef ::CIAO::Config_Handlers::UDPReceiverDescription Type;
+        UDPReceiverDescription (::XSCRT::XML::Element< ACE_TCHAR >&);
+
+        virtual void 
+        traverse (Type &o)
+        {
+
+          this->traverse (const_cast <Type const &> (o));
+        }
+
+
+        virtual void
+        traverse (Type const&);
+
+        virtual void 
+        name (Type &o)
+        {
+
+          this->name (const_cast <Type const &> (o));
+        }
+
+
+        virtual void
+        name (Type const&);
+
+        virtual void 
+        addr_serv_id (Type &o)
+        {
+
+          this->addr_serv_id (const_cast <Type const &> (o));
+        }
+
+
+        virtual void
+        addr_serv_id (Type const&);
+
+        virtual void 
+        is_multicast (Type &o)
+        {
+
+          this->is_multicast (const_cast <Type const &> (o));
+        }
+
+
+        virtual void
+        is_multicast (Type const&);
+
+        virtual void 
+        listen_port (Type &o)
+        {
+
+          this->listen_port (const_cast <Type const &> (o));
+        }
+
+
+        virtual void
+        listen_port (Type const&);
+
+        protected:
+        UDPReceiverDescription ();
+      };
+    }
+  }
+}
+
+namespace CIAO
+{
+  namespace Config_Handlers
+  {
+    CIAO_Events_Handlers_Export
+    void
+    CIAOEvents (::CIAO::Config_Handlers::CIAOEventsDef const&, xercesc::DOMDocument*);
   }
 }
 

@@ -12,7 +12,7 @@
 #include /**/ "ace/pre.h"
 
 #include "RT_CCM_Handlers_Export.h"
-#include "ciao/CIAO_ServerResourcesC.h"
+#include "DAnCE/Deployment/CIAO_ServerResourcesC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

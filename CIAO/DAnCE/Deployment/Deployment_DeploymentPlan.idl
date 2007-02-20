@@ -3,7 +3,7 @@
 #ifndef DEPLOYMENT_DEPLOYMENTPLAN_IDL
 #define DEPLOYMENT_DEPLOYMENTPLAN_IDL
 
-#include "ciao/Deployment_Base.idl"
+#include "DAnCE/Deployment/Deployment_Base.idl"
 #include "tao/StringSeq.pidl"
 #include "tao/ULongSeq.pidl"
 #include "tao/Typecode_types.pidl"
@@ -56,7 +56,14 @@ module Deployment {
     string name;
     ::CORBA::StringSeq source;
     ::CORBA::ULongSeq artifactRef;
+    // @@changed 
+    // Properties nodeExecParameter;
     Properties execParameter;
+    
+    // @@added
+    // Properties componentExecParameter;
+    
+    // @@delete:
     Requirements deployRequirement;
   };
 
@@ -72,6 +79,11 @@ module Deployment {
 
   struct InstanceResourceDeploymentDescription {
     ResourceUsageKind resourceUsage;
+    // @@added
+    //string resourcePort;
+    // @@added
+    //string componentPort;
+    
     string requirementName;
     string resourceName;
     Properties property;
@@ -108,6 +120,12 @@ module Deployment {
 
   struct ExternalReferenceEndpoint {
     string location;
+    // @@added
+    // boolean provider;
+    // @@added
+    // string portName;
+    // @@added
+    // ::CORBA::StringSeq supportedType;
   };
 
   typedef sequence < ExternalReferenceEndpoint > ExternalReferenceEndpoints;
@@ -169,12 +187,28 @@ module Deployment {
     string node;
     ::CORBA::StringSeq source;
     Properties execParameter;
+
+    // @@delete:
     Requirements deployRequirement;
+
     ResourceDeploymentDescriptions deployedResource;
   };
 
   typedef sequence < ArtifactDeploymentDescription > ArtifactDeploymentDescriptions;
-
+  
+  // @@added
+  enum PlanLocalityKind {
+    PlanSameProcess,
+    PlanDifferentProcess,
+    PlanNoConstraint
+  };
+  
+  // @@added
+  struct PlanLocality {
+    PlanLocalityKind constraint;
+    ::CORBA::ULongSeq constrainedInstanceRef;
+  };
+  
   struct DeploymentPlan {
     string label;
     string UUID;
@@ -182,10 +216,12 @@ module Deployment {
     MonolithicDeploymentDescriptions implementation;
     InstanceDeploymentDescriptions instance;
     PlanConnectionDescriptions connection;
-            PlanPropertyMappings externalProperty;
+    PlanPropertyMappings externalProperty;
     ImplementationDependencies dependsOn;
     ArtifactDeploymentDescriptions artifact;
     Properties infoProperty;
+    // @added
+    // PlanLocalities localityConstraint;
   };
 };
 

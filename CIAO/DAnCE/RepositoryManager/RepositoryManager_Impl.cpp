@@ -31,8 +31,8 @@
 #include "ace/Malloc_Allocator.h"       //for ACE_New_Allocator
 
 //for the PackageConfiguration parsing
-#include "ciao/Deployment_DataC.h"
-#include "ciao/Deployment_Packaging_DataC.h"
+#include "DAnCE/Deployment/Deployment_DataC.h"
+#include "DAnCE/Deployment/Deployment_Packaging_DataC.h"
 #include "Package_Handlers/PCD_Handler.h"
 
 #include "RM_Helper.h"            //to be able to externalize/internalize a PackageConfiguration

@@ -22,7 +22,7 @@ project(NodeApplicationLib): ciao_server_dnc, ciao_events_dnc, ciao_noop_configu
   }
 }
 
-project(NodeApplication): ciao_server_dnc, ciao_events_dnc, ciao_nodeapplication, ciao_noop_configurator {
+project(NodeApplication): ciao_server_dnc, ciao_events_dnc, ciao_nodeapplication, ciao_noop_configurator, ciaoexe {
   exename   = NodeApplication
 
   Source_Files {

@@ -4,9 +4,9 @@
 #define DEPLOYMENT_CORE_IDL
 
 #include "ciao/CCM_Component.idl"
-#include "ciao/Deployment_TargetData.idl"
-#include "ciao/Deployment_Data.idl"
-#include "ciao/Deployment_Application.idl"
+#include "DAnCE/Deployment/Deployment_TargetData.idl"
+#include "DAnCE/Deployment/Deployment_Data.idl"
+#include "DAnCE/Deployment/Deployment_Application.idl"
 
 // *************** Packaging and Deployment ***************
 module Deployment

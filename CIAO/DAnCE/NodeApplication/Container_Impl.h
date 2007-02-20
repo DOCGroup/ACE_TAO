@@ -25,8 +25,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ciao/Deployment_ContainerS.h"
-#include "ciao/Deployment_NodeApplicationC.h"
+#include "DAnCE/Deployment/Deployment_ContainerS.h"
+#include "DAnCE/Deployment/Deployment_NodeApplicationC.h"
 #include "ciao/DeploymentC.h"
 #include "ciao/Session_Container.h"
 #include "ace/SString.h"

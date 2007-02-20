@@ -8,7 +8,7 @@
 #include "Property_Handler.h"
 #include "CPD_Handler.h"
 #include "ComponentPropertyDescription_Handler.h"
-#include "ciao/Deployment_DataC.h"
+#include "DAnCE/Deployment/Deployment_DataC.h"
 
 namespace CIAO
 {

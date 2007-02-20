@@ -2,6 +2,6 @@
 // $Id$
 
 project : orbsvcslib, ciao_container_dnc, ciao_client_dnc {
-  libs     += CIAO_DnC_Events_Base
-  after    += CIAO_DnC_Events_Base
+  libs     += CIAO_Events_Base
+  after    += CIAO_Events_Base
 }

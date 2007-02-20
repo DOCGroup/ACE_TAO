@@ -2,7 +2,7 @@
 #include "tao/AnyTypeCode/AnyTypeCode_methods.h"
 #include "Package_Handlers/SID_Handler.h"
 #include "cid.hpp"
-#include "ciao/DeploymentC.h"
+#include "DAnCE/Deployment/DeploymentC.h"
 #include "Package_Handlers/CPD_Handler.h"
 #include "Package_Handlers/PCD_Handler.h"
 #include "Req_Handler.h"
