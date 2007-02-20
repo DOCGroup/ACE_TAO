@@ -1339,16 +1339,11 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
     (this->configuration (),
      ACE_TEXT_CHAR_TO_TCHAR (network_priority_protocols_hooks_name.c_str()));
 
-  // Must have valid protocol hooks.
-  if (this->network_priority_protocols_hooks_ == 0)
-    throw ::CORBA::INITIALIZE (
-                        CORBA::SystemException::_tao_minor_code (
-                          TAO_ORB_CORE_INIT_LOCATION_CODE,
-                          0),
-                        CORBA::COMPLETED_NO);
-
-  // Initialize the protocols hooks instance.
-  this->network_priority_protocols_hooks_->init_hooks (this);
+  if (this->network_priority_protocols_hooks_ != 0)
+    {
+      // Initialize the protocols hooks instance.
+      this->network_priority_protocols_hooks_->init_hooks (this);
+    }
 
   // As a last step perform initializations of the service callbacks
   this->services_callbacks_init ();
@@ -1799,9 +1794,11 @@ TAO_ORB_Core::service_context_list (
 
   // call the network priority protocols hooks that has been
   // registered.
-  this->network_priority_protocols_hooks_->np_service_context (stub,
-                                              service_context,
-                                              restart);
+  if (network_priority_protocols_hooks_ != 0)
+    {
+      this->network_priority_protocols_hooks_->np_service_context (stub,
+        service_context, restart);
+    }
 }
 
 TAO_Client_Strategy_Factory *
