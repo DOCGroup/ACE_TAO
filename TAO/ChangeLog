@@ -1,3 +1,10 @@
+Tue Feb 20 05:14:39 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
+
+        * tao/IOP_IOR.pidl:
+        
+          Changed the value of the newly added ServiceID (REP_NWPRIORITY)
+          to be among the TAO reserved range.
+
 Mon Feb 19 21:01:10 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
 
         * tao/DiffServPolicy/DiffServPolicy.pidl:
