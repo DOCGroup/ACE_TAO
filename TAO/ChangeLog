@@ -1,3 +1,41 @@
+Tue Feb 20 20:59:38 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
+
+        * tao/TAO_Internal.cpp:
+        
+          Removed the process directive for Default Network Priority
+          Protocols Hooks.
+        
+        * tao/DiffServPolicy/DiffServPolicy.cpp:
+        
+          Added code to set the name of the DiffServ Network
+          Priority Protocols Hooks with the ORB Core. At ORB
+          initialization time, the ORB Core will open a service
+          configurator based on this name, to set the network
+          priority protocols hooks.
+        
+        * tao/ORB_Core.cpp:
+        
+          Previosuly, during the initializations of the protocols hooks,
+          if the protocols hooks turned out to be 0, a initialization
+          error was thrown. Removed that, because now the protocols
+          hooks could be 0, because we have removed the default
+          implementations.
+        
+        * tao/DiffServPolicy/DiffServ_Network_Priority_Hook.cpp:
+        
+          Check if the returned network priority protocolos hooks
+          from the ORB Core is not 0, before using it.
+        
+        * tao/Remote_Invocation.cpp:
+        
+          Modified the send_message () to check if DiffServ policy is being
+          used to set the DiffServ codepoints on the requests and replies.
+          This method already has code to check the enable_network_priority
+          flag from the RTCORBA library, to set DiffServ codepoints
+          on the requests and replies. Now, using DiffServ library always
+          takes precedence irrespective if whether the application uses
+          RTCORBA or not.
+
 Tue Feb 20 20:36:12 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
 
         * tao/tao.mpc:
