@@ -99,6 +99,7 @@ NonBlocking_Conn_Test
 Notify_Performance_Test: !nsk !ACE_FOR_TAO
 OS_Test
 Object_Manager_Test
+Object_Manager_Flipping_Test
 Obstack_Test
 OrdMultiSet_Test
 Pipe_Test: !VxWorks
