@@ -1,3 +1,9 @@
+Tue Feb 20 20:36:12 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
+
+        * tao/tao.mpc:
+        
+          Removed Default_Network_Priority_Protocols_Hooks.{h,cpp}.
+
 Tue Feb 20 20:28:28 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
 
         * tao/Default_Network_Priority_Protocols_Hooks.{cpp,h}:
