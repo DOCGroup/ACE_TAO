@@ -1,3 +1,9 @@
+Tue Feb 20 17:48:14 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Context_Impl_Base.h:
+        * DAnCE/Deployment/NodeApp_CB_Impl.{h,cpp}:
+          Removed ACE_THROW_SPEC
+
 Tue Feb 20 17:10:14 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/Extension_Context.{h,cpp}:
