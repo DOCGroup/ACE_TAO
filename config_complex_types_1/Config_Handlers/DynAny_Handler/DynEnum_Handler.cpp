@@ -18,6 +18,28 @@ namespace CIAO
     DynEnum_Handler::extract_into_dynany (const DataType &type,
                                           const DataValue &value)
     {
+      CORBA::TypeCode_ptr tc = DynEnum_Handler::create_typecode (type);
+      
+      // Make the actual DynEnum
+      DynamicAny::DynAny_var temp =
+        DYNANY_HANDLER->daf ()->create_dyn_any_from_type_code (tc);
+      DynamicAny::DynEnum_var retval = DynamicAny::DynEnum::_narrow (temp.in ());
+
+      retval->set_as_string (value.begin_enum ()->c_str ());
+
+      return retval._retn ();
+    }
+
+    void
+    DynEnum_Handler::extract_out_of_dynany (const DynamicAny::DynAny_ptr dyn)
+    {
+      ACE_UNUSED_ARG (dyn);
+      ACE_ERROR ((LM_ERROR, "Extracting Enums not yet supported\n"));
+    }
+    
+    CORBA::TypeCode_ptr
+    DynEnum_Handler::create_typecode (const DataType &type)
+    {
       if (!type.enum_p ())
         {
           ACE_ERROR ((LM_ERROR, "ERROR: Enum type descriptioin required"));
@@ -44,28 +66,13 @@ namespace CIAO
         DYNANY_HANDLER->orb ()->create_enum_tc (type.enum_ ().typeId ().c_str (),
                                      type.enum_ ().name ().c_str (),
                                      members);
-
-      ACE_ERROR ((LM_ERROR, "Type: %s \nName: %s\nvalue: %s\n",
-                  type.enum_ ().typeId ().c_str (),
-                  type.enum_ ().name ().c_str (),
-                  value.begin_enum ()->c_str ()));
-
-      // Make the actual DynEnum
-      DynamicAny::DynAny_var temp =
-        DYNANY_HANDLER->daf ()->create_dyn_any_from_type_code (tc);
-      DynamicAny::DynEnum_var retval = DynamicAny::DynEnum::_narrow (temp.in ());
-
-      retval->set_as_string (value.begin_enum ()->c_str ());
-
-      return retval._retn ();
+      
+      DYNANY_HANDLER->register_typecode (type.enum_ ().typeId (),
+                                         tc);
+      
+      return tc;
     }
-
-    void
-    DynEnum_Handler::extract_out_of_dynany (const DynamicAny::DynAny_ptr dyn)
-    {
-      ACE_UNUSED_ARG (dyn);
-      ACE_ERROR ((LM_ERROR, "Extracting Enums not yet supported\n"));
-    }
+    
   }
 }
 

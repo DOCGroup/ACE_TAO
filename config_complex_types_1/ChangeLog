@@ -1,3 +1,15 @@
+Wed Feb 21 16:11:05 UTC 2007  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * tools/Config_Handlers/DynAny_Handler/DynAny_Handler.cpp
+        * tools/Config_Handlers/DynAny_Handler/DynSequence_Handler.cpp
+        * tools/Config_Handlers/DynAny_Handler/DynEnum_Handler.h
+        * tools/Config_Handlers/DynAny_Handler/DynAny_Handler.h
+        * tools/Config_Handlers/DynAny_Handler/DynSequence_Handler.h
+        * tools/Config_Handlers/DynAny_Handler/DynEnum_Handler.cpp
+        
+          preliminary work to refactor typecode creation and adding
+          sequence work.  Not complete and doesn't compile.
+        
 Tue Feb 20 21:36:38 UTC 2007  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * Branched to work on extended complex type support for

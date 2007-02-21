@@ -234,7 +234,122 @@ namespace CIAO
           ACE_ERROR ((LM_ERROR, "DynAny_Handler: I have no idea how to perform a referse mapping.\n"));
           throw 1;
         }
+    }
+    
+    CORBA::TypeCode_ptr 
+    DynAny_Handler::create_typecode (const DataType &type)
+    {
+      
+      switch (type.kind ().integral ())
+        {
+          // ========== BASIC TYPES
+        case TCKind::tk_null_l:
+        case TCKind::tk_void_l:
+          ACE_ERROR ((LM_WARNING, "I don't know how to handle null or void types\n"));
 
+        case TCKind::tk_short_l:
+          return CORBA::_tc_short;
+          break;
+
+        case TCKind::tk_long_l:
+          return CORBA::_tc_long;
+          break;
+
+        case TCKind::tk_ushort_l:
+          return CORBA::_tc_ushort;
+          break;
+
+        case TCKind::tk_ulong_l:
+          return CORBA::_tc_ulong;
+          break;
+
+        case TCKind::tk_float_l:
+          return CORBA::_tc_float;
+          break;
+
+        case TCKind::tk_double_l:
+          return CORBA::_tc_double;
+          break;
+
+        case TCKind::tk_boolean_l:
+          return CORBA::_tc_boolean;
+          break;
+
+        case TCKind::tk_char_l:
+          return CORBA::_tc_char;
+          break;
+
+        case TCKind::tk_octet_l:
+          return CORBA::_tc_octet;
+          break;
+
+        case TCKind::tk_string_l:
+          return CORBA::_tc_string;
+          break;
+
+        case TCKind::tk_longlong_l:
+          return CORBA::_tc_longlong;
+          break;
+
+        case TCKind::tk_ulonglong_l:
+          return CORBA::_tc_ulonglong;
+          break;
+
+         case TCKind::tk_longdouble_l:
+           break;
+
+        case TCKind::tk_wchar_l:
+          return CORBA::_tc_wchar;
+          break;
+
+        case TCKind::tk_wstring_l:
+          break;
+
+        case TCKind::tk_enum_l:
+          return DynEnum_Handler::create_typecode (type);
+
+        case TCKind::tk_wfixed_l:
+        case TCKind::tk_any_l:
+        case TCKind::tk_TypeCode_l:
+        case TCKind::tk_Principal_l:
+        case TCKind::tk_objref_l:
+        case TCKind::tk_struct_l:
+        case TCKind::tk_union_l:
+        case TCKind::tk_sequence_l:
+        case TCKind::tk_array_l:
+        case TCKind::tk_alias_l:
+        case TCKind::tk_except_l:
+        case TCKind::tk_value_l:
+        case TCKind::tk_value_box_l:
+        case TCKind::tk_native_l:
+        case TCKind::tk_abstract_interface_l:
+        case TCKind::tk_local_interface_l:
+        case TCKind::tk_component_l:
+        case TCKind::tk_home_l:
+        case TCKind::tk_event_l:
+          ACE_ERROR ((LM_ERROR, "Type not supported\n"));
+          throw 1;
+        }
+    }
+    
+    void 
+    DynAny_Handler::register_typecode (const std::string typeID,
+                                       CORBA::TypeCode_ptr tc)
+    {
+      this->typecode_map_[typeID] = tc;
+    }
+    
+    
+    CORBA::TypeCode_ptr get_typecode (const std::string typeID)
+    {
+      try
+        {
+          return this->typecode_map_ [typeID];
+        }
+      catch (...)
+        {
+          return 0;
+        }
     }
   }
 }

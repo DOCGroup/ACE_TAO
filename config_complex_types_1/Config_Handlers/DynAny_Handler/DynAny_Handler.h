@@ -18,6 +18,8 @@
 #include "tao/DynamicAny/DynamicAny.h"
 #include "ace/Singleton.h"
 
+#include <map>
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -55,12 +57,21 @@ namespace CIAO
       CORBA::ORB_ptr orb ();
 
       DynamicAny::DynAnyFactory_ptr daf ();
+      
+      CORBA::TypeCode_ptr create_typecode (const DataType &type);
+      
+      void register_typecode (const std::string typeID,
+                              CORBA::TypeCode_ptr tc);
+      
+      CORBA::TypeCode_ptr get_typecode (const std::string typeID);
 
     private:
 
       CORBA::ORB_var orb_;
 
       DynamicAny::DynAnyFactory_var daf_;
+      
+      std::map <std::string, CORBA::TypeCode_ptr> typecode_map_;
     };
 
     typedef ACE_Singleton<DynAny_Handler, ACE_Null_Mutex> DynAny_Singleton;
