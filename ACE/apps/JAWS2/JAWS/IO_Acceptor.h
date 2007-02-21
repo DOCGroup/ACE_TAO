@@ -125,11 +125,11 @@ private:
                       int reset_new_handle = 0) const;
 
 private:
-#if defined (ACE_WIN32) || defined (ACE_HAS_AIO_CALLS)
+#if defined (ACE_HAS_WIN32_OVERLAPPED_IO) || defined (ACE_HAS_AIO_CALLS)
   ACE_Asynch_Acceptor<JAWS_Asynch_Handler> &acceptor_;
   ACE_Asynch_Acceptor<JAWS_Asynch_Handler> *acceptor_ptr_;
   ACE_HANDLE handle_;
-#endif /* defined (ACE_WIN32) */
+#endif /* ACE_HAS_WIN32_OVERLAPPED_IO || ACE_HAS_AIO_CALLS */
 };
 
 typedef ACE_Singleton<JAWS_IO_Synch_Acceptor, ACE_SYNCH_MUTEX>

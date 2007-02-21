@@ -44,14 +44,13 @@
 static ACE_Atomic_Op <ACE_SYNCH_MUTEX, size_t> Completions_To_Go;
 
 
-#if (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) || \
-     defined (ACE_HAS_AIO_CALLS)
+#if defined (ACE_HAS_WIN32_OVERLAPPED_IO) || defined (ACE_HAS_AIO_CALLS)
 // This only works on Win32 platforms and on Unix platforms supporting
 // POSIX aio calls.
 
 #if defined (ACE_HAS_AIO_CALLS)
 #define RESULT_CLASS ACE_POSIX_Asynch_Result
-#elif defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
+#elif defined (ACE_HAS_WIN32_OVERLAPPED_IO)
 #define RESULT_CLASS ACE_WIN32_Asynch_Result
 #endif /* ACE_HAS_AIO_CALLS */
 
@@ -292,7 +291,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   return status;
 }
 
-#else /* ACE_WIN32 && !ACE_HAS_WINCE || ACE_HAS_AIO_CALLS && !ACE_POSIX_AIOCB_PROACTOR*/
+#else /* ACE_HAS_WIN32_OVERLAPPED_IO || ACE_HAS_AIO_CALLS */
 
 int
 main (int, char *[])
@@ -302,5 +301,5 @@ main (int, char *[])
   return 1;
 }
 
-#endif /* ACE_WIN32 && !ACE_HAS_WINCE || ACE_HAS_AIO_CALLS && !ACE_POSIX_AIOCB_PROACTOR*/
+#endif /* ACE_HAS_WIN32_OVERLAPPED_IO || ACE_HAS_AIO_CALLS */
 

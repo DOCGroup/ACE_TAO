@@ -34,7 +34,7 @@ ACE_OS::flock_adjust_params (ACE_OS::ace_flock_t *lock,
     case SEEK_CUR:
       {
         LARGE_INTEGER offset;
-# if !defined (ACE_LACKS_SETFILEPOINTEREX)
+# if !defined (ACE_LACKS_WIN32_SETFILEPOINTEREX)
         LARGE_INTEGER distance;
         distance.QuadPart = 0;
         if (!::SetFilePointerEx (lock->handle_,
@@ -56,7 +56,7 @@ ACE_OS::flock_adjust_params (ACE_OS::ace_flock_t *lock,
             ACE_OS::set_errno_to_last_error ();
             return;
           }
-# endif /* ACE_LACKS_SETFILEPOINTEREX */
+# endif /* ACE_LACKS_WIN32_SETFILEPOINTEREX */
 
 # if defined (_FILE_OFFSET_BITS) && _FILE_OFFSET_BITS == 64
         start += offset.QuadPart;

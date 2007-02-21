@@ -512,7 +512,7 @@ run_tests (void)
     }
   }
 
-#if defined (ACE_WIN32)
+#if defined (ACE_WIN32) && !defined (ACE_LACKS_WIN32_REGISTRY)
   {
     ACE_Configuration_Win32Registry RegConfig (HKEY_LOCAL_MACHINE);
     int result = test_subkey_path (&RegConfig);
@@ -549,7 +549,8 @@ run_tests (void)
                         -1);
   }
 
-#endif /* ACE_WIN32 */
+#endif /* ACE_WIN32 && !ACE_LACKS_WIN32_REGISTRY */
+
   // Test Heap version
   ACE_Configuration_Heap heap_config;
 

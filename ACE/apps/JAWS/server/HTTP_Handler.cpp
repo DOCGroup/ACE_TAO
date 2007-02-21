@@ -285,7 +285,7 @@ No_Cache_Synch_HTTP_Handler_Factory::destroy_http_handler (HTTP_Handler &handler
 //----------------
 
 // This only works on Win32
-#if defined (ACE_WIN32)
+#if defined (ACE_HAS_WIN32_OVERLAPPED_IO)
 void
 Asynch_HTTP_Handler_Factory::open (ACE_HANDLE handle,
 				   ACE_Message_Block &mb)
@@ -311,4 +311,4 @@ Asynch_HTTP_Handler_Factory::create_http_handler (void)
 {
   return 0;
 }
-#endif /* ACE_WIN32 */
+#endif /* ACE_HAS_WIN32_OVERLAPPED_IO */

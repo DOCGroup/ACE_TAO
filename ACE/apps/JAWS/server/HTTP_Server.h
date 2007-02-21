@@ -130,7 +130,7 @@ private:
 };
 
 // This only works on Win32
-#if defined (ACE_WIN32)
+#if defined (ACE_HAS_WIN32_OVERLAPPED_IO)
 class Asynch_Thread_Pool_Task : public ACE_Task<ACE_NULL_SYNCH>
   // = TITLE
   //     Used to implement Asynch Thread Pool
@@ -146,7 +146,7 @@ public:
 private:
   ACE_Proactor &proactor_;
 };
-#endif /* ACE_WIN32 */
+#endif /* ACE_HAS_WIN32_OVERLAPPED_IO */
 
 ACE_SVC_FACTORY_DECLARE (HTTP_Server)
 

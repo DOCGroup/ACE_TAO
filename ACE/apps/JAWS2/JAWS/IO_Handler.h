@@ -145,7 +145,7 @@ public:
 
 };
 
-#if defined(ACE_WIN32) || defined(ACE_HAS_AIO_CALLS)
+#if defined (ACE_HAS_WIN32_OVERLAPPED_IO) || defined(ACE_HAS_AIO_CALLS)
 
 // Forward reference.
 class JAWS_Asynch_IO_Handler;
@@ -190,7 +190,7 @@ public:
 private:
   JAWS_Asynch_IO_Handler *ioh_;
 };
-#endif /* defined(ACE_WIN32) || defined(ACE_HAS_AIO_CALLS) */
+#endif /* defined(ACE_HAS_WIN32_OVERLAPPED_IO) || defined(ACE_HAS_AIO_CALLS) */
 
 
 class JAWS_Export JAWS_IO_Handler : public JAWS_Abstract_IO_Handler
@@ -267,7 +267,7 @@ typedef JAWS_IO_Handler_Factory JAWS_Synch_IO_Handler_Factory;
 typedef ACE_Singleton<JAWS_Synch_IO_Handler_Factory, ACE_SYNCH_MUTEX>
         JAWS_Synch_IO_Handler_Factory_Singleton;
 
-#if defined(ACE_WIN32) || defined(ACE_HAS_AIO_CALLS)
+#if defined(ACE_HAS_WIN32_OVERLAPPED_IO) || defined(ACE_HAS_AIO_CALLS)
 
 class JAWS_Export JAWS_Asynch_IO_Handler_Factory : public JAWS_IO_Handler_Factory
 {
@@ -310,7 +310,7 @@ protected:
 typedef JAWS_IO_Handler JAWS_Asynch_IO_Handler;
 typedef JAWS_IO_Handler_Factory JAWS_Asynch_IO_Handler_Factory;
 
-#endif /* defined(ACE_WIN32) || defined(ACE_HAS_AIO_CALLS) */
+#endif /* defined(ACE_HAS_WIN32_OVERLAPPED_IO) || defined(ACE_HAS_AIO_CALLS) */
 
 typedef ACE_Singleton<JAWS_Asynch_IO_Handler_Factory, ACE_SYNCH_MUTEX>
         JAWS_Asynch_IO_Handler_Factory_Singleton;
