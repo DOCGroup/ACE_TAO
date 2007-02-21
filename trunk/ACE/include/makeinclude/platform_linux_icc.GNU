@@ -70,6 +70,9 @@ endif
 ifeq (9.1,$(findstring 9.1,$(CXX_VERSION)))
   CFLAGS += -wd1684
 endif
+ifeq (10.0,$(findstring 10.0,$(CXX_VERSION)))
+  CFLAGS += -wd1684
+endif
 
 ifeq ($(inline),0)
   CPPFLAGS += -fno-inline
