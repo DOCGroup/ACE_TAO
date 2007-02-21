@@ -414,7 +414,7 @@ run_event_loop (u_short port)
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ACE_SSL_Context *context = ACE_SSL_Context::instance ();
 
