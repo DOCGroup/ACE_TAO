@@ -12,8 +12,8 @@
 
 #include "ciao/Components.idl"
 #include "DAnCE/Deployment/Deployment_PlanError.idl"
-#include "TargetManagerExt.idl"
-#include "DomainEvents.idl"
+#include "DAnCE/TargetManager/TargetManagerExt.idl"
+#include "DAnCE/TargetManager/DomainEvents.idl"
 
 module CIAO
 {
