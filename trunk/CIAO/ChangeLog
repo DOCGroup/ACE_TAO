@@ -1,3 +1,17 @@
+Wed Feb 21 22:01:45 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
+
+        * docs/schema/Basic_Deployment_Data.xsd:
+        
+          Updated the InstanceDeploymentDescription element's
+          deployedResource sub-element to be a sequence.
+        
+        * tools/Config_Handlers/Basic_Deployment_Data.cpp:
+        * tools/Config_Handlers/IRDD_Handler.h:
+        * tools/Config_Handlers/Basic_Deployment_Data.hpp:
+        * tools/Config_Handlers/IDD_Handler.cpp:
+        
+          Associated config handler changes.
+
 Wed Feb 21 20:30:34 UTC 2007  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DynAny_Handler/DynAny_Handler.cpp
