@@ -283,7 +283,6 @@ project(ACE_FOR_TAO) : acedefaults, install, svcconf, uuid, versioned_namespace,
     OS_String.inl
     Refcounted_Auto_Ptr.inl
     Reverse_Lock_T.inl
-    Swap.inl
     TSS_T.inl
     ace_wchar.inl
     MMAP_Memory_Pool.inl
@@ -334,7 +333,6 @@ project(ACE_FOR_TAO) : acedefaults, install, svcconf, uuid, versioned_namespace,
     String_Base_Const.h
     Svc_Conf.h
     Svc_Conf_Tokens.h
-    Swap.h
     Synch.h
     Synch_Traits.h
     TSS_T.h

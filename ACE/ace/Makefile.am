@@ -969,8 +969,6 @@ nobase_include_HEADERS += \
   Svc_Conf_Tokens.h \
   Svc_Handler.cpp \
   Svc_Handler.h \
-  Swap.h \
-  Swap.inl \
   Synch.h \
   Synch_Options.h \
   Synch_T.cpp \

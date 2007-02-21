@@ -1,3 +1,13 @@
+Wed Feb 21 08:35:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Swap.{h,cpp,inl}:
+          Removed, use std::swap instead of ACE_Swap
+
+        * ace/ace.mpc:
+        * ace/ace_for_tao.mpc:
+        * ace/Makefile.am:
+          Removed Swap.{h,cpp,inl}
+
 Wed Feb 21 08:13:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/IPC_SAP/SSL_SAP/SSL-server-poll.cpp:
