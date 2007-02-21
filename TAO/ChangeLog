@@ -1,3 +1,9 @@
+Wed Feb 21 11:42:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_1383_Regression/*:
+          Code for this test, not enabled for automatic testing, just
+          integrated this and validated that it just works
+
 Wed Feb 21 10:41:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/AnyTypeCode/TypeCode.cpp:
