@@ -265,7 +265,7 @@
       <xsd:element name="source" type="xsd:string"/>
       <xsd:element name="implementation" type="xsd:IDREF"/> <!-- MonolithicDeploymentDescription -->
       <xsd:element name="configProperty" type="Deployment:Property" minOccurs="0" maxOccurs="unbounded"/>
-      <xsd:element name="deployedResource" type="Deployment:InstanceResourceDeploymentDescription" minOccurs="0"/>
+      <xsd:element name="deployedResource" type="Deployment:InstanceResourceDeploymentDescription" minOccurs="0" maxOccurs="unbounded"/>
       <xsd:element name="deployedSharedResource" type="Deployment:InstanceResourceDeploymentDescription" minOccurs="0"/>
     </xsd:sequence>
     <xsd:attribute name="id" type="xsd:ID"/>
