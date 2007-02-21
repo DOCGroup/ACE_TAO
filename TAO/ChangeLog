@@ -1,7 +1,16 @@
+Wed Feb 21 14:21:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/POA/Bug_1592_Regression/*:
+          New test program for bug 1592, not fixed yet.
+
+        * tests/POA/Excessive_Object_Deactivations/Excessive_Object_Deactivations.mpc:
+        * tests/POA/MT_Servant_Locator/MT_Servant_Locator.mpc:
+          Simplified
+
 Wed Feb 21 14:15:38 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
 
         * tao/RTPortableServer/RT_Servant_Dispatcher.cpp:
-        
+
           Modified the pre_invoke_remote_request () method
           to add checks specific to the DiffServ policy,
           to add DiffServ codepoints on the server replies.
