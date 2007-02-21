@@ -86,8 +86,7 @@ namespace CIDL_TargetManager_i
       get_data_manager ()->update_domain (
                     elements,
                     domainSubset,
-                    updateKind
-                    );
+                    updateKind);
 
     // here tell the planner about the changes
 
@@ -97,7 +96,6 @@ namespace CIDL_TargetManager_i
     if (updateKind == ::Deployment::Delete ||
         updateKind == ::Deployment::Add)
       {
-
         CIAO::Domain_Changed_Event_var changed_event =
           new OBV_CIAO::Domain_Changed_Event ();
 
@@ -169,8 +167,7 @@ namespace CIDL_TargetManager_i
       {
         this->exec_object_ = new TargetManager_exec_i(this,
                       context_->_ciao_the_Container()->the_ORB(),
-                      context_
-                      );
+                      context_);
       }
 
     return ::Deployment::CCM_TargetManager::_duplicate (this->exec_object_.in ());
@@ -183,8 +180,7 @@ namespace CIDL_TargetManager_i
   ::Components::SessionContext_ptr ctx)
   {
     this->context_ =
-    TargetManagerImpl_Context::_narrow (
-    ctx);
+    TargetManagerImpl_Context::_narrow (ctx);
 
     if (this->context_ == 0)
     {
