@@ -12,6 +12,8 @@
 #include "tao/Connection_Handler.h"
 #include "tao/Service_Context.h"
 #include "tao/Protocols_Hooks.h"
+#include "tao/Network_Priority_Protocols_Hooks.h"
+#include "tao/PortableServer/Network_Priority_Hook.h"
 #include "tao/debug.h"
 #include "tao/CDR.h"
 
@@ -247,16 +249,25 @@ TAO_RT_Servant_Dispatcher::pre_invoke_remote_request (
                 }
             }
         }
+    }
 
+  TAO_Network_Priority_Protocols_Hooks *nph =
+    poa.orb_core ().get_network_priority_protocols_hooks ();
+
+  if (nph != 0)
+    {
+      poa.network_priority_hook ()-> set_dscp_codepoint (req, poa);
+    }
+  else if (tph != 0)
+    {
       CORBA::Policy_var policy =
-        poa.policies ().get_cached_policy (TAO_CACHED_POLICY_RT_SERVER_PROTOCOL);
-
+        poa.policies ().get_cached_policy (
+          TAO_CACHED_POLICY_RT_SERVER_PROTOCOL);
       CORBA::Boolean set_server_network_priority =
-        tph->set_server_network_priority (req.transport ()->tag (), policy.in ());
-
+        tph->set_server_network_priority (
+          req.transport ()->tag (), policy.in ());
       TAO_Connection_Handler *connection_handler =
         req.transport ()->connection_handler ();
-
       connection_handler->set_dscp_codepoint (set_server_network_priority);
     }
 }
