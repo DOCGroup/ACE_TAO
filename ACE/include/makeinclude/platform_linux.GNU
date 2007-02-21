@@ -104,9 +104,9 @@ LIBS    += -ldl
 
 ifeq ($(threads),1)
   LIBS += -lpthread
+  # look for the rt library in the usual places
+  LIBS += $(shell test "`ls -L /usr/lib/librt.so* /lib/librt.so*`" && echo -lrt)
 endif
-# look for the rt library in the usual places
-LIBS += $(shell test "`ls -L /usr/lib/librt.so* /lib/librt.so*`" && echo -lrt)
 
 ifeq ($(optimize),1)
   SOFLAGS += -Wl,-O3
