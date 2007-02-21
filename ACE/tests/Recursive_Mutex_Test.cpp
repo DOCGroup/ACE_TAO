@@ -58,9 +58,16 @@ test_recursion_depth (int nesting_level,
 {
   if (nesting_level < n_iterations)
     {
+#if !defined (ACE_HAS_WTHREADS)
+      // This will work for Windows, too, if ACE_TEST_MUTEX is
+      // ACE_Recursive_Thread_Mutex instead of ACE_Process_Mutex.
+      ACE_ASSERT (nesting_level == 0
+                  || nesting_level == rm->get_nesting_level ());
+#endif  /* !ACE_HAS_WTHREADS */
       int result = rm->acquire ();
       ACE_ASSERT (result == 0);
 #if !defined (ACE_HAS_WTHREADS)
+      ACE_ASSERT ((nesting_level + 1) == rm->get_nesting_level ());
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%P|%t) = acquired, nesting = %d, thread id = %u\n"),
                   rm->get_nesting_level (),
@@ -70,6 +77,9 @@ test_recursion_depth (int nesting_level,
       test_recursion_depth (nesting_level + 1,
                             rm);
 
+#if !defined (ACE_HAS_WTHREADS)
+      ACE_ASSERT ((nesting_level + 1) == rm->get_nesting_level ());
+#endif  /* !ACE_HAS_WTHREADS */
       result = rm->release ();
       ACE_ASSERT (result == 0);
 #if !defined (ACE_HAS_WTHREADS)
@@ -77,6 +87,8 @@ test_recursion_depth (int nesting_level,
                   ACE_TEXT ("(%P|%t) = released, nesting = %d, thread id = %u\n"),
                   rm->get_nesting_level (),
                   rm->get_thread_id ()));
+      ACE_ASSERT (nesting_level == 0
+                  || nesting_level == rm->get_nesting_level ());
 #endif /* !ACE_HAS_WTHREADS */
     }
 }
