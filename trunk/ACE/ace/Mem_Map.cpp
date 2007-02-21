@@ -93,7 +93,7 @@ ACE_Mem_Map::map_it (ACE_HANDLE handle,
   // Check <length_request>
   if (length_request == static_cast<size_t> (-1))
     // Set length to file_request or size_t max.
-    this->length_ = ACE_Utils::Truncate<size_t> (current_file_length - offset);
+    this->length_ = ACE_Utils::truncate_cast<size_t> (current_file_length - offset);
   else
     { 
       // Make sure that we have not been asked to do the impossible.

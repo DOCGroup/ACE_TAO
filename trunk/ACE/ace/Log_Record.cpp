@@ -358,7 +358,7 @@ operator>> (ACE_InputCDR &cdr,
     auto_ptr<ACE_TCHAR> log_msg_p (log_msg);
     log_record.type (type);
     log_record.pid (pid);
-    log_record.time_stamp (ACE_Time_Value (ACE_Utils::Truncate<time_t> (sec),
+    log_record.time_stamp (ACE_Time_Value (ACE_Utils::truncate_cast<time_t> (sec),
                                            usec));
 #if defined (ACE_USES_WCHAR)
     cdr.read_wchar_array (log_msg, buffer_len);

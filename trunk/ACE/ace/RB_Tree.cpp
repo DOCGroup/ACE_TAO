@@ -1004,6 +1004,9 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::remove_i (ACE_RB_Tree_Node<
   else
     y = z;
 
+  if (!y)
+    return -1;
+
   if (y->left ())
     x = y->left ();
   else

@@ -721,13 +721,15 @@ ACE_DLL_Manager::unload_dll (ACE_DLL_Handle *dll_handle, int force_unload)
             {
               // Declare the type of the symbol:
               typedef int (*dll_unload_policy)(void);
-              dll_unload_policy the_policy = 0;
-              void *unload_policy_ptr =
+
+              void * const unload_policy_ptr =
                 dll_handle->symbol (ACE_LIB_TEXT ("_get_dll_unload_policy"), 1);
-              ptrdiff_t temp_p =
-                reinterpret_cast<ptrdiff_t> (unload_policy_ptr);
-              the_policy =
+              intptr_t const temp_p =
+                reinterpret_cast<intptr_t> (unload_policy_ptr);
+
+              dll_unload_policy const the_policy =
                 reinterpret_cast<dll_unload_policy> (temp_p);
+
               if (the_policy != 0)
                 unload = ACE_BIT_DISABLED (the_policy (),
                                            ACE_DLL_UNLOAD_POLICY_LAZY);

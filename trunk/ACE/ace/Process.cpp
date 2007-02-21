@@ -112,15 +112,21 @@ ACE_Process::spawn (ACE_Process_Options &options)
            h != ACE_INVALID_HANDLE && curr_len + 20 < max_len;
            h = h_iter ())
         {
-#if defined (ACE_WIN64)
+#if defined (ACE_WIN32)
+# if defined (ACE_WIN64)
           curr_len += ACE_OS::sprintf (&cmd_line_buf[curr_len],
-                                       ACE_LIB_TEXT (" +H %I64d"),
+                                       ACE_LIB_TEXT (" +H %I64p"),
                                        h);
+# else
+          curr_len += ACE_OS::sprintf (&cmd_line_buf[curr_len],
+                                       ACE_LIB_TEXT (" +H %p"),
+                                       h);
+# endif  /* ACE_WIN64 */
 #else
           curr_len += ACE_OS::sprintf (&cmd_line_buf[curr_len],
                                        ACE_LIB_TEXT (" +H %d"),
                                        h);
-#endif /* ACE_WIN64 */
+#endif /* ACE_WIN32 */
         }
     }
 
@@ -871,7 +877,7 @@ ACE_Process_Options::setenv (const ACE_TCHAR *variable_name,
   do 
     {
       retval = ACE_OS::vsnprintf (safe_stack_buf.get (), tmp_buflen, safe_newformat.get (), argp);
-      if (retval > ACE_Utils::Truncate<int> (tmp_buflen))
+      if (retval > ACE_Utils::truncate_cast<int> (tmp_buflen))
         {
           tmp_buflen *= 2;
           ACE_NEW_RETURN (stack_buf, ACE_TCHAR[tmp_buflen], -1);

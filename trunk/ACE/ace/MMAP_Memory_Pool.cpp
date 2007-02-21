@@ -63,7 +63,7 @@ ACE_MMAP_Memory_Pool::sync (int flags)
 {
   ACE_TRACE ("ACE_MMAP_Memory_Pool::sync");
 
-  size_t const len = ACE_Utils::Truncate<size_t> (
+  size_t const len = ACE_Utils::truncate_cast<size_t> (
     ACE_OS::lseek (this->mmap_.handle (), 0, SEEK_END));
 
   return this->mmap_.sync (len, flags);
@@ -96,7 +96,7 @@ ACE_MMAP_Memory_Pool::protect (int prot)
 {
   ACE_TRACE ("ACE_MMAP_Memory_Pool::protect");
 
-  size_t const len = ACE_Utils::Truncate<size_t> (
+  size_t const len = ACE_Utils::truncate_cast<size_t> (
     ACE_OS::lseek (this->mmap_.handle (), 0, SEEK_END));
 
   return this->mmap_.protect (len, prot);
@@ -229,7 +229,7 @@ ACE_MMAP_Memory_Pool::commit_backing_store_name (size_t rounded_bytes,
        cur_block += seek_len)
     {
       map_size =
-        ACE_Utils::Truncate<size_t> (
+        ACE_Utils::truncate_cast<size_t> (
           ACE_OS::lseek (this->mmap_.handle (),
                          static_cast<ACE_OFF_T> (seek_len - 1),
                          SEEK_END));
@@ -418,7 +418,7 @@ ACE_MMAP_Memory_Pool::remap (void *addr)
   ACE_TRACE ("ACE_MMAP_Memory_Pool::remap");
   //  ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("Remapping with fault address at: %X\n"), addr));
   size_t const current_map_size =
-    ACE_Utils::Truncate<size_t> (ACE_OS::filesize (this->mmap_.handle ()));
+    ACE_Utils::truncate_cast<size_t> (ACE_OS::filesize (this->mmap_.handle ()));
   // ACE_OS::lseek (this->mmap_.handle (), 0, SEEK_END);
 
   if (!(addr < (void *) ((char *) this->mmap_.addr () + current_map_size)
@@ -502,7 +502,7 @@ ACE_MMAP_Memory_Pool::handle_signal (int signum, siginfo_t *siginfo, ucontext_t 
     {
       // Check if the current mapping is up to date.
       size_t const current_map_size =
-        ACE_Utils::Truncate<size_t> (ACE_OS::filesize (this->mmap_.handle ()));
+        ACE_Utils::truncate_cast<size_t> (ACE_OS::filesize (this->mmap_.handle ()));
 
       if (static_cast<size_t> (current_map_size) == this->mmap_.size ())
         {

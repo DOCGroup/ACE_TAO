@@ -329,13 +329,16 @@ ACE_Svc_Conf_Lexer::scan (ACE_YYSTYPE* ace_yylval,
                 // Now, we need to move back in the string until we find the
                 // same character that started the string
                 bool string_end_found = false;
-                for(ssize_t i = (current - 1) - buffer->index_; i >= 0; i--)
+                if (current > buffer->index_)
                   {
-                    if (source[i] == buffer->string_start_)
+                    for (size_t i = current - buffer->index_; i-- != 0; )
                       {
-                        current = buffer->index_ + i + 1;
-                        string_end_found = true;
-                        break;
+                        if (source[i] == buffer->string_start_)
+                          {
+                            current = buffer->index_ + i + 1;
+                            string_end_found = true;
+                            break;
+                          }
                       }
                   }
 

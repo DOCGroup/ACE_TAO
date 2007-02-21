@@ -587,36 +587,35 @@ ACE_Function_Node::symbol (ACE_Service_Gestalt *,
   ACE_TRACE ("ACE_Function_Node::symbol");
   if (this->open_dll (yyerrno) == 0)
     {
-      ACE_Service_Factory_Ptr func = 0;
       this->symbol_ = 0;
 
       // Locate the factory function <function_name> in the shared
       // object.
-      ACE_TCHAR *function_name = const_cast<ACE_TCHAR *> (this->function_name_);
-      void *func_p = this->dll_.symbol (function_name);
+      ACE_TCHAR * const function_name =
+        const_cast<ACE_TCHAR *> (this->function_name_);
+
+      void * const func_p = this->dll_.symbol (function_name);
       if (func_p == 0)
         {
           ++yyerrno;
 
-          if (this->symbol_ == 0)
-            {
-              ++yyerrno;
-
 #ifndef ACE_NLOGGING
-              ACE_TCHAR *errmsg = this->dll_.error ();
-              ACE_ERROR ((LM_ERROR,
-                          ACE_LIB_TEXT ("DLL::symbol failed for function %s: ")
-                          ACE_LIB_TEXT ("%s\n"),
-                          function_name,
-                          errmsg ? errmsg :
-        ACE_LIB_TEXT ("no error reported")));
+          ACE_TCHAR * const errmsg = this->dll_.error ();
+          ACE_ERROR ((LM_ERROR,
+                      ACE_LIB_TEXT ("DLL::symbol failed for function %s: ")
+                      ACE_LIB_TEXT ("%s\n"),
+                      function_name,
+                      errmsg ? errmsg : ACE_LIB_TEXT ("no error reported")));
 #endif /* ACE_NLOGGING */
 
-              return 0;
-            }
+          return 0;
         }
-      ptrdiff_t temp_p = reinterpret_cast<ptrdiff_t> (func_p);
-      func = reinterpret_cast<ACE_Service_Factory_Ptr> (temp_p);
+
+      intptr_t const temp_p = reinterpret_cast<intptr_t> (func_p);
+
+      ACE_Service_Factory_Ptr func =
+        reinterpret_cast<ACE_Service_Factory_Ptr> (temp_p);
+
       // Invoke the factory function and record it's return value.
       this->symbol_ = (*func) (gobbler);
 

@@ -85,20 +85,17 @@ ACE_Recursive_Thread_Mutex::get_nesting_level (void)
 #if defined (ACE_HAS_WINCE) || defined (ACE_VXWORKS)
   ACE_NOTSUP_RETURN (-1);
 #elif defined (ACE_HAS_RECURSIVE_MUTEXES)
+# if defined (ACE_WIN32)
+  // This is really a Win32-ism...
   // Nothing inside of a CRITICAL_SECTION object should ever be
   // accessed directly.  It is documented to change at any time.
-# if defined (ACE_WIN64) && !defined(_M_AMD64)
-  // Things are different on Windows XP 64-bit. However, as of Feb 2006
-  // Windows XP 64-bit edition on Intel EM64T w/ VC8, LockCount is
-  // decremented at first acquire and then doesn't change. RecursionCount,
-  // however, works the same as Win32, below.
-  return this->lock_.LockCount + 1;
-# elif defined (ACE_WIN32)
-  // This is really a Win32-ism...
+  //
+  // It has been reported that this this works for all three
+  // architectures.  However, this does not work on Win64 before SP1.  
   return this->lock_.RecursionCount;
 # else
   ACE_NOTSUP_RETURN (-1);
-# endif /* ACE_HAS_RECURSIVE_MUTEXES */
+# endif /* ACE_WIN32 */
 #else
   int nesting_level = 0;
   ACE_OS::mutex_lock (&this->lock_.nesting_mutex_);

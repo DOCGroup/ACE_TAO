@@ -71,15 +71,15 @@ ACE_Naming_Context::open (Context_Scope_Type scope_in, int lite)
   // Perform factory operation to select appropriate type of
   // Name_Space subclass.
 
-#if (defined (ACE_WIN32) && defined (UNICODE))
-// This only works on Win32 platforms when UNICODE is turned on
+#if (defined (ACE_WIN32) && defined (ACE_USES_WCHAR))
+// This only works on Win32 platforms when ACE_USES_WCHAR is turned on
 
   if (this->name_options_->use_registry ())
     // Use ACE_Registry
     ACE_NEW_RETURN (this->name_space_,
                     ACE_Registry_Name_Space (this->name_options_),
                     -1);
-#endif /* ACE_WIN32 && UNICODE */
+#endif /* ACE_WIN32 && ACE_USES_WCHAR */
   if (!this->name_options_->use_registry ())
     if (scope_in == ACE_Naming_Context::NET_LOCAL && this->local () == 0)
       {

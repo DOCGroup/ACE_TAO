@@ -524,7 +524,7 @@ ACE_Filecache_Object::ACE_Filecache_Object (const ACE_TCHAR *filename,
       return;
     }
 
-  this->size_ = ACE_Utils::Truncate<ACE_OFF_T> (this->stat_.st_size);
+  this->size_ = ACE_Utils::truncate_cast<ACE_OFF_T> (this->stat_.st_size);
   this->tempname_ = this->filename_;
 
   // Can we open the file?

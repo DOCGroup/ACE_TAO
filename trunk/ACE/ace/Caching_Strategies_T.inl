@@ -135,11 +135,10 @@ ACE_LRU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::purge_percent (double per
 }
 
 template<class ATTRIBUTES, class CACHING_UTILITY> ACE_INLINE int
-ACE_LRU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::notify_bind (int result,
-                                                                    const ATTRIBUTES &attr)
+ACE_LRU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::notify_bind (
+  int result,
+  const ATTRIBUTES & /* attr */)
 {
-  ACE_UNUSED_ARG (attr);
-
   if (result == 0)
     ++this->timer_;
 
@@ -147,8 +146,9 @@ ACE_LRU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::notify_bind (int result,
 }
 
 template<class ATTRIBUTES, class CACHING_UTILITY> ACE_INLINE int
-ACE_LRU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::notify_find (int result,
-                                                                    ATTRIBUTES &attr)
+ACE_LRU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::notify_find (
+  int result,
+  ATTRIBUTES &attr)
 {
   if (result == 0)
     {
@@ -160,28 +160,26 @@ ACE_LRU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::notify_find (int result,
 }
 
 template<class ATTRIBUTES, class CACHING_UTILITY> ACE_INLINE int
-ACE_LRU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::notify_unbind (int result,
-                                                                      const ATTRIBUTES &attr)
+ACE_LRU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::notify_unbind (
+  int result,
+  const ATTRIBUTES & /* attr */)
 {
-  ACE_UNUSED_ARG (attr);
   return result;
 }
 
 template<class ATTRIBUTES, class CACHING_UTILITY> ACE_INLINE int
-ACE_LRU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::notify_trybind (int result,
-                                                                       ATTRIBUTES &attr)
+ACE_LRU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::notify_trybind (
+  int result,
+  ATTRIBUTES & /* attr */)
 {
-  ACE_UNUSED_ARG (attr);
-
   return result;
 }
 
 template<class ATTRIBUTES, class CACHING_UTILITY> ACE_INLINE int
-ACE_LRU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::notify_rebind (int result,
-                                                                      const ATTRIBUTES &attr)
+ACE_LRU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::notify_rebind (
+  int result,
+  const ATTRIBUTES & /* attr */)
 {
-  ACE_UNUSED_ARG (attr);
-
   if (result == 0)
     ++this->timer_;
 
@@ -228,9 +226,8 @@ ACE_LFU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::purge_percent (double per
 
 template<class ATTRIBUTES, class CACHING_UTILITY> ACE_INLINE int
 ACE_LFU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::notify_bind (int result,
-                                                                    const ATTRIBUTES &attr)
+                                                                    const ATTRIBUTES & /* attr */)
 {
-  ACE_UNUSED_ARG (attr);
 
   return result;
 }
@@ -247,28 +244,22 @@ ACE_LFU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::notify_find (int result,
 
 template<class ATTRIBUTES, class CACHING_UTILITY> ACE_INLINE int
 ACE_LFU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::notify_trybind (int result,
-                                                                       ATTRIBUTES &attr)
+                                                                       ATTRIBUTES & /* attr */)
 {
-  ACE_UNUSED_ARG (attr);
-
   return result;
 }
 
 template<class ATTRIBUTES, class CACHING_UTILITY> ACE_INLINE int
 ACE_LFU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::notify_rebind (int result,
-                                                                      const ATTRIBUTES &attr)
+                                                                      const ATTRIBUTES & /* attr */)
 {
-  ACE_UNUSED_ARG (attr);
-
   return result;
 }
 
 template<class ATTRIBUTES, class CACHING_UTILITY> ACE_INLINE int
 ACE_LFU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::notify_unbind (int result,
-                                                                      const ATTRIBUTES &attr)
+                                                                      const ATTRIBUTES & /* attr */)
 {
-  ACE_UNUSED_ARG (attr);
-
   return result;
 }
 
