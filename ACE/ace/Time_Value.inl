@@ -25,8 +25,8 @@ ACE_Time_Value::operator timeval () const
 #if defined (ACE_HAS_TIME_T_LONG_MISMATCH)
   // Recall that on some Windows we substitute another type for timeval in tv_
   ACE_Time_Value *me = const_cast<ACE_Time_Value*> (this);
-  me->ext_tv_.tv_sec = ACE_Utils::Truncate<long> (this->tv_.tv_sec);
-  me->ext_tv_.tv_usec = ACE_Utils::Truncate<long> (this->tv_.tv_usec);
+  me->ext_tv_.tv_sec = ACE_Utils::truncate_cast<long> (this->tv_.tv_sec);
+  me->ext_tv_.tv_usec = ACE_Utils::truncate_cast<long> (this->tv_.tv_usec);
   return this->ext_tv_;
 #else
   return this->tv_;
@@ -58,8 +58,8 @@ ACE_Time_Value::operator const timeval * () const
 #if defined (ACE_HAS_TIME_T_LONG_MISMATCH)
   // Recall that on some Windows we substitute another type for timeval in tv_
   ACE_Time_Value *me = const_cast<ACE_Time_Value*> (this);
-  me->ext_tv_.tv_sec = ACE_Utils::Truncate<long> (this->tv_.tv_sec);
-  me->ext_tv_.tv_usec = ACE_Utils::Truncate<long> (this->tv_.tv_usec);
+  me->ext_tv_.tv_sec = ACE_Utils::truncate_cast<long> (this->tv_.tv_sec);
+  me->ext_tv_.tv_usec = ACE_Utils::truncate_cast<long> (this->tv_.tv_usec);
   return (const timeval *) &this->ext_tv_;
 #else
   return (const timeval *) &this->tv_;
@@ -148,7 +148,7 @@ ACE_Time_Value::msec (void) const
   // called out in the user documentation for this with a recommendation to
   // use msec(ACE_UINT64&) instead, so just go ahead and truncate.
   time_t secs = this->tv_.tv_sec * 1000 + this->tv_.tv_usec / 1000;
-  return ACE_Utils::Truncate<unsigned long> (secs);
+  return ACE_Utils::truncate_cast<unsigned long> (secs);
 }
 
 #if !defined (ACE_LACKS_LONGLONG_T)

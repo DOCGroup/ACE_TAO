@@ -121,7 +121,36 @@ ACE_SOCK_Connector::shared_connect_finish (ACE_SOCK_Stream &new_stream,
           // This expression checks if we were polling.
           if (timeout->sec () == 0
               && timeout->usec () == 0)
-            error = EWOULDBLOCK;
+            {
+#if defined(ACE_WIN32)
+              // In order to detect when the socket that has been
+              // bound to is in TIME_WAIT we need to do the connect
+              // (which will always return EWOULDBLOCK) and then do an
+              // ACE::handle_timed_complete() (with timeout==0,
+              // i.e. poll). This will do a select() on the handle
+              // which will immediately return with the handle in an
+              // error state. The error code is then retrieved with
+              // getsockopt(). Good sockets however will return from
+              // the select() with ETIME - in this case return
+              // EWOULDBLOCK so the wait strategy can complete the
+              // connection.
+              if(ACE::handle_timed_complete (new_stream.get_handle (),
+                                             timeout) == ACE_INVALID_HANDLE)
+                {
+                  int const tmp = errno;
+                  if (tmp != ETIME)
+                    {
+                      error = tmp;
+                    }
+                  else
+                    error = EWOULDBLOCK;
+                }
+              else
+                result = 0;
+#else  /* ACE_WIN32 */
+              error = EWOULDBLOCK;
+#endif /* ACE_WIN32 */
+            }
           // Wait synchronously using timeout.
           else if (this->complete (new_stream,
                                    0,

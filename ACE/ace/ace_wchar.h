@@ -248,6 +248,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #define ACE_TEXT_STARTUPINFO                     STARTUPINFOW
 #define ACE_TEXT_WIN32_FIND_DATA                 WIN32_FIND_DATAW
 #define ACE_TEXT_OSVERSIONINFO                   OSVERSIONINFOW
+#define ACE_TEXT_EXPLICIT_ACCESS                 EXPLICIT_ACCESS_W
 
 #define ACE_TEXT_CreateEvent                     ::CreateEventW
 #define ACE_TEXT_CreateFile                      ::CreateFileW
@@ -268,6 +269,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #define ACE_TEXT_GetModuleFileName               ::GetModuleFileNameW
 #define ACE_TEXT_GetTempPath                     ::GetTempPathW
 #define ACE_TEXT_GetUserName                     ::GetUserNameW
+#define ACE_TEXT_GetUserNameEx                   ::GetUserNameExW
 #define ACE_TEXT_GetVersionEx                    ::GetVersionExW
 #define ACE_TEXT_LoadLibrary                     ::LoadLibraryW
 #define ACE_TEXT_MoveFileEx                      ::MoveFileExW
@@ -293,12 +295,15 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #define ACE_TEXT_SearchPath                      ::SearchPathW
 #define ACE_TEXT_StartService                    ::StartServiceW
 #define ACE_TEXT_StartServiceCtrlDispatcher      ::StartServiceCtrlDispatcherW
+#define ACE_TEXT_SetFileSecurity                 ::SetFileSecurityW
+#define ACE_TEXT_SetEntriesInAcl                 ::SetEntriesInAclW
 
 #else /* ACE_USES_WCHAR */
 #define ACE_TEXT_SERVICE_TABLE_ENTRY             SERVICE_TABLE_ENTRYA
 #define ACE_TEXT_STARTUPINFO                     STARTUPINFOA
 #define ACE_TEXT_WIN32_FIND_DATA                 WIN32_FIND_DATAA
 #define ACE_TEXT_OSVERSIONINFO                   OSVERSIONINFOA
+#define ACE_TEXT_EXPLICIT_ACCESS                 EXPLICIT_ACCESS_A
 
 #define ACE_TEXT_CreateEvent                     ::CreateEventA
 #define ACE_TEXT_CreateFile                      ::CreateFileA
@@ -319,6 +324,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #define ACE_TEXT_GetModuleFileName               ::GetModuleFileNameA
 #define ACE_TEXT_GetTempPath                     ::GetTempPathA
 #define ACE_TEXT_GetUserName                     ::GetUserNameA
+#define ACE_TEXT_GetUserNameEx                   ::GetUserNameExA
 #define ACE_TEXT_GetVersionEx                    ::GetVersionExA
 #define ACE_TEXT_LoadLibrary                     ::LoadLibraryA
 #define ACE_TEXT_MoveFileEx                      ::MoveFileExA
@@ -344,6 +350,8 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #define ACE_TEXT_SearchPath                      ::SearchPathA
 #define ACE_TEXT_StartService                    ::StartServiceA
 #define ACE_TEXT_StartServiceCtrlDispatcher      ::StartServiceCtrlDispatcherA
+#define ACE_TEXT_SetFileSecurity                 ::SetFileSecurityA
+#define ACE_TEXT_SetEntriesInAcl                 ::SetEntriesInAclA
 #endif /* ACE_USES_WCHAR */
 #endif /* ACE_WIN32 */
 

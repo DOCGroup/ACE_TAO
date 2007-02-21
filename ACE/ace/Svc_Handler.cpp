@@ -324,11 +324,10 @@ ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::close (u_long)
 }
 
 template <PR_ST_1, ACE_SYNCH_DECL> int
-ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::init (int argc, ACE_TCHAR *argv[])
+ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::init (int /* argc */,
+                                               ACE_TCHAR * /* argv */[])
 {
   ACE_TRACE ("ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::init");
-  ACE_UNUSED_ARG (argc);
-  ACE_UNUSED_ARG (argv);
   return -1;
 }
 

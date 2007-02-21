@@ -29,6 +29,16 @@
 // ... and the final standard even!
 #define ACE_HAS_PTHREADS_STD
 
+// On linux this is part of pthreads
+#  if (defined _POSIX_C_SOURCE && (_POSIX_C_SOURCE - 0) >= 199309L)
+#    if !defined (ACE_HAS_CLOCK_GETTIME)
+#      if !defined(__PGI)
+#        define ACE_HAS_CLOCK_GETTIME
+#      endif /* __PGI */
+#      define ACE_HAS_CLOCK_SETTIME
+#    endif  /* !ACE_HAS_CLOCK_GETTIME */
+#  endif  /* _POSIX_C_SOURCE >= 199309L */
+
 #if !defined (ACE_HAS_PTHREADS_UNIX98_EXT)
 #  define ACE_LACKS_RWLOCK_T
 #else

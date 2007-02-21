@@ -25,10 +25,12 @@
 #  pragma once
 # endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/os_include/os_unistd.h"
-#include "ace/Time_Value.h"
-#include "ace/os_include/os_stdio.h"
 #include /**/ "ace/ACE_export.h"
+#include "ace/Time_Value.h"
+#include "ace/Basic_Types.h"
+#include "ace/os_include/os_unistd.h"
+#include "ace/os_include/os_stdio.h"
+
 
 #if defined (ACE_EXPORT_MACRO)
 #  undef ACE_EXPORT_MACRO
@@ -264,7 +266,7 @@ namespace ACE_OS
                     size_t bufsiz);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  void *sbrk (ptrdiff_t brk);
+  void *sbrk (intptr_t brk);
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int setgid (gid_t);

@@ -60,6 +60,8 @@
 #   pragma message disable basclsnondto
 #   pragma message disable boolexprconst
 #   pragma message disable undpreid
+#   pragma message disable notusetmpfunprm
+#   pragma message disable bltinclnk
 
 #   if (__DECCXX_VER >= 60190029)
       // 6.1-029 and later support msg 1136.  Disable it because it

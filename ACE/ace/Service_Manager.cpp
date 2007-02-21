@@ -179,7 +179,7 @@ ACE_Service_Manager::list_services (void)
        sri.next (sr) != 0;
        sri.advance ())
     {
-      size_t len = ACE_OS::strlen (sr->name ()) + 11;
+      ssize_t len = static_cast<ssize_t> (ACE_OS::strlen (sr->name ())) + 11;
       ACE_TCHAR buf[BUFSIZ];
       ACE_TCHAR *p = buf + len;
 
