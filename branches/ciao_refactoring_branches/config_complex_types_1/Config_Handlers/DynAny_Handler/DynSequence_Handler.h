@@ -1,12 +1,12 @@
 /**
  * $Id$
  *
- * @file DynEnum_Handler.h
+ * @file DynSequence_Handler.h
  * @author Will Otte <wotte@dre.vanderbilt.edu>
  */
 
-#ifndef CIAO_CONFIG_HANDLERS_DYNENUM_HANDLER_H
-#define CIAO_CONFIG_HANDLERS_DYNENUM_HANDLER_H
+#ifndef CIAO_CONFIG_HANDLERS_DYNSEQUENCE_HANDLER_H
+#define CIAO_CONFIG_HANDLERS_DYNSEQUENCE_HANDLER_H
 #include /**/ "ace/pre.h"
 
 #include "DynAny_Handler_Export.h"
@@ -27,15 +27,15 @@ namespace CIAO
     class DataValue;
 
     /**
-     * @class DynEnum_Handler
-     * @brief Translates enums specified in deployment plans into Dynamic Anys
+     * @class DynSequence_Handler
+     * @brief Translates sequences specified in deployment plans into Dynamic Anys
      *
      */
-    class DynEnum_Handler
+    class DynSequence_Handler
     {
     public:
       static DynamicAny::DynAny_ptr extract_into_dynany (const DataType &type,
-                                                      const DataValue &value);
+                                                         const DataValue &value);
 
       static void extract_out_of_dynany (const DynamicAny::DynAny_ptr dyn);
       
@@ -47,5 +47,5 @@ namespace CIAO
 
 
 #include /**/ "ace/post.h"
-#endif /* CIAO_CONFIG_HANDLERS_DYNENUM_HANDLER_H*/
+#endif /* CIAO_CONFIG_HANDLERS_DYNSEQUENCE_HANDLER_H*/
 
