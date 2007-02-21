@@ -1,9 +1,18 @@
+Wed Feb 21 08:30:14 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Swapping_Container.cpp:
+        * DAnCE/TargetManager/TargetManager_exec.cpp:
+          Layout change
+
+        * tools/Config_Handlers/Utils/XercesString.{h,cpp}:
+          Use std::swap instead of ACE_Swap
+
 Tue Feb 20 17:56:25 UTC 2007  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * COPYING: Clarified how the COPYING file need to be included with
           any code released.  Thanks to Scott Mark <sjm at pobox dot com>
           for helping clarify this.
-  
+
 Tue Feb 20 17:59:51 UTC 2007  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/Deployment/Deployment_TargetManager.idl
@@ -16,7 +25,7 @@ Tue Feb 20 17:59:51 UTC 2007  William R. Otte  <wotte@dre.vanderbilt.edu>
         * DAnCE/NodeApplication/Container_Impl.h
         * ciao/Context_Impl_Base.h
         * ciao/Swapping_Container.cpp
-        
+
           Cleared up compile errors from
           Tue Feb 20 16:17:46 UTC 2007  William R. Otte  <wotte@dre.vanderbilt.edu>
 
