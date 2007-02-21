@@ -16,6 +16,7 @@ project(CIAO_TargetManager_stub): ciao_client_dnc, ciao_deployment_stub, ciao_no
 
   Source_Files {
     TargetManagerImplC.cpp
+    TargetManagerExtC.cpp
     DomainEventsC.cpp
   }
 }
@@ -39,6 +40,7 @@ project(CIAO_TargetManager_svnt) : ciao_servant_dnc, ciao_targetmanager_stub {
   Source_Files {
     TargetManagerEC.cpp
     TargetManagerImplS.cpp
+    TargetManagerS.cpp
     TargetManager_svnt.cpp
     DomainEventsS.cpp
   }
