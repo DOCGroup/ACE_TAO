@@ -1,33 +1,42 @@
+Wed Feb 21 08:14:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/RTCORBA/RT_Protocols_Hooks.cpp:
+        * tao/RTPortableServer/RT_Servant_Dispatcher.cpp:
+          Layout changes
+
+        * Utils/Servant_Var.inl:
+          Use std::swap instead of ACE_Swap
+
 Tue Feb 20 20:59:38 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
 
         * tao/TAO_Internal.cpp:
-        
+
           Removed the process directive for Default Network Priority
           Protocols Hooks.
-        
+
         * tao/DiffServPolicy/DiffServPolicy.cpp:
-        
+
           Added code to set the name of the DiffServ Network
           Priority Protocols Hooks with the ORB Core. At ORB
           initialization time, the ORB Core will open a service
           configurator based on this name, to set the network
           priority protocols hooks.
-        
+
         * tao/ORB_Core.cpp:
-        
+
           Previosuly, during the initializations of the protocols hooks,
           if the protocols hooks turned out to be 0, a initialization
           error was thrown. Removed that, because now the protocols
           hooks could be 0, because we have removed the default
           implementations.
-        
+
         * tao/DiffServPolicy/DiffServ_Network_Priority_Hook.cpp:
-        
+
           Check if the returned network priority protocolos hooks
           from the ORB Core is not 0, before using it.
-        
+
         * tao/Remote_Invocation.cpp:
-        
+
           Modified the send_message () to check if DiffServ policy is being
           used to set the DiffServ codepoints on the requests and replies.
           This method already has code to check the enable_network_priority
@@ -39,13 +48,13 @@ Tue Feb 20 20:59:38 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
 Tue Feb 20 20:36:12 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
 
         * tao/tao.mpc:
-        
+
           Removed Default_Network_Priority_Protocols_Hooks.{h,cpp}.
 
 Tue Feb 20 20:28:28 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
 
         * tao/Default_Network_Priority_Protocols_Hooks.{cpp,h}:
-        
+
           Removed. The network_priority_protocols_hooks is no
           longer going to incur virtual call overhead, and instead
           just remains as a pointer, which is 0 or not. Non-zero
