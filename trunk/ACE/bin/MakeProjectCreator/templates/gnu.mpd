@@ -606,7 +606,7 @@ idl_stubs: $(ADDITIONAL_IDL_TARGETS)
 
 # This assignment forces make to run the idl_stubs
 # target before building any of the source files.
-FORCED_IDL_STUBS = <%source_files%>
+FORCED_IDL_STUBS = <%source_files%>  <%if(pch_source)%>$(ACE_PCH_SOURCE)<%endif%>
 <%foreach(custom_types)%>
 <%foreach(custom_type->input_files)%>
 <%if(custom_type->input_file->source_output_files)%>
