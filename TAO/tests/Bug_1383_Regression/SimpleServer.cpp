@@ -2,7 +2,7 @@
 
 #include "tao/corba.h"
 #include "tao/IORTable/IORTable.h"
-#include "Simple_i.h"
+#include "simple_i.h"
 
 void advertise(CORBA::ORB_ptr orb, CORBA::Object_ptr obj)
 {
