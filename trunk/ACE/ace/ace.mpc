@@ -363,7 +363,6 @@ project(ACE) : acedefaults, install, other, codecs, token, svcconf, uuid, fileca
     Lock_Adapter_T.inl
     Refcounted_Auto_Ptr.inl
     Reverse_Lock_T.inl
-    Swap.inl
     TSS_T.inl
     ace_wchar.inl
     OS.inl
@@ -415,7 +414,6 @@ project(ACE) : acedefaults, install, other, codecs, token, svcconf, uuid, fileca
     String_Base_Const.h
     Svc_Conf.h
     Svc_Conf_Tokens.h
-    Swap.h
     Synch.h
     Synch_Traits.h
     TSS_T.h
