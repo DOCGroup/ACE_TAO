@@ -179,7 +179,7 @@ ACE_Hash<char *>::operator () (const char *t) const
 ACE_INLINE unsigned long
 ACE_Hash<void *>::operator () (const void *t) const
 {
-  return (unsigned long)((ptrdiff_t) t);
+  return static_cast<unsigned long> (reinterpret_cast<uintptr_t> (t));
 }
 
 /***********************************************************************/

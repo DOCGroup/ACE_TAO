@@ -74,10 +74,11 @@ ACE_Unbounded_Set<T>::dump (void) const
   size_t count = 1;
 #endif /* ! ACE_NLOGGING */
 
-  for (ACE_Unbounded_Set_Iterator<T> iter (*(ACE_Unbounded_Set<T> *) this);
-       iter.next (item) != 0;
-       iter.advance ())
-    ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("count = %d\n"), count++));
+  const_iterator const the_end = this->end ();
+  for (const_iterator i (this->begin ());
+       i != end;
+       ++i)
+    ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("count = %u\n"), count++));
 
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
@@ -183,18 +184,12 @@ template <class T> int
 ACE_Unbounded_Set<T>::find (const T &item) const
 {
   // ACE_TRACE ("ACE_Unbounded_Set<T>::find");
-  // Set <item> into the dummy node.
-  this->head_->item_ = item;
+  const_iterator const the_end = this->end ();
+  for (const_iterator i = this->begin (); i != the_end; ++i)
+    if ((*i) == item)
+      return 0;
 
-  ACE_Node<T> *temp = this->head_->next_;
-
-  // Keep looping until we find the item.
-  while (!(temp->item_ == item))
-    temp = temp->next_;
-
-  // If we found the dummy node then it's not really there, otherwise,
-  // it is there.
-  return temp == this->head_ ? -1 : 0;
+  return -1;
 }
 
 template <class T> int
@@ -236,20 +231,33 @@ ACE_Unbounded_Set<T>::remove (const T &item)
     }
 }
 
-template <class T> ACE_Unbounded_Set_Iterator<T>
+template <class T> typename ACE_Unbounded_Set<T>::iterator
 ACE_Unbounded_Set<T>::begin (void)
 {
   // ACE_TRACE ("ACE_Unbounded_Set<T>::begin");
-  return ACE_Unbounded_Set_Iterator<T> (*this);
+  return iterator (*this);
 }
 
-template <class T> ACE_Unbounded_Set_Iterator<T>
+template <class T> typename ACE_Unbounded_Set<T>::iterator
 ACE_Unbounded_Set<T>::end (void)
 {
   // ACE_TRACE ("ACE_Unbounded_Set<T>::end");
-  return ACE_Unbounded_Set_Iterator<T> (*this, 1);
+  return iterator (*this, 1);
 }
 
+template <class T> typename ACE_Unbounded_Set<T>::const_iterator
+ACE_Unbounded_Set<T>::begin (void) const
+{
+  // ACE_TRACE ("ACE_Unbounded_Set<T>::begin");
+  return const_iterator (*this);
+}
+
+template <class T> typename ACE_Unbounded_Set<T>::const_iterator
+ACE_Unbounded_Set<T>::end (void) const
+{
+  // ACE_TRACE ("ACE_Unbounded_Set<T>::end");
+  return const_iterator (*this, 1);
+}
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Unbounded_Set_Iterator)
 
@@ -262,8 +270,10 @@ ACE_Unbounded_Set_Iterator<T>::dump (void) const
 }
 
 template <class T>
-ACE_Unbounded_Set_Iterator<T>::ACE_Unbounded_Set_Iterator (ACE_Unbounded_Set<T> &s, int end)
-  : current_ (end == 0 ? s.head_->next_ : s.head_ ),
+ACE_Unbounded_Set_Iterator<T>::ACE_Unbounded_Set_Iterator (
+  ACE_Unbounded_Set<T> &s,
+  bool end)
+  : current_ (!end ? s.head_->next_ : s.head_ ),
     set_ (&s)
 {
   // ACE_TRACE ("ACE_Unbounded_Set_Iterator<T>::ACE_Unbounded_Set_Iterator");
@@ -367,8 +377,10 @@ ACE_Unbounded_Set_Const_Iterator<T>::dump (void) const
 }
 
 template <class T>
-ACE_Unbounded_Set_Const_Iterator<T>::ACE_Unbounded_Set_Const_Iterator (const ACE_Unbounded_Set<T> &s, int end)
-  : current_ (end == 0 ? s.head_->next_ : s.head_ ),
+ACE_Unbounded_Set_Const_Iterator<T>::ACE_Unbounded_Set_Const_Iterator (
+  const ACE_Unbounded_Set<T> &s,
+  bool end)
+  : current_ (!end ? s.head_->next_ : s.head_ ),
     set_ (&s)
 {
   // ACE_TRACE ("ACE_Unbounded_Set_Const_Iterator<T>::ACE_Unbounded_Set_Const_Iterator");
@@ -445,6 +457,20 @@ ACE_Unbounded_Set_Const_Iterator<T>::operator* (void)
   ACE_UNUSED_ARG (result);
 
   return *retv;
+}
+
+template <class T> bool
+ACE_Unbounded_Set_Const_Iterator<T>::operator== (const ACE_Unbounded_Set_Const_Iterator<T> &rhs) const
+{
+  //ACE_TRACE ("ACE_Unbounded_Set_Const_Iterator<T>::operator==");
+  return (this->set_ == rhs.set_ && this->current_ == rhs.current_);
+}
+
+template <class T> bool
+ACE_Unbounded_Set_Const_Iterator<T>::operator!= (const ACE_Unbounded_Set_Const_Iterator<T> &rhs) const
+{
+  //ACE_TRACE ("ACE_Unbounded_Set_Const_Iterator<T>::operator!=");
+  return (this->set_ != rhs.set_ || this->current_ != rhs.current_);
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL

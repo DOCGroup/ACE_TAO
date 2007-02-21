@@ -447,6 +447,12 @@ ACE_OS::cuserid (char *user, size_t maxlen)
 
   // Make sure the password file is closed.
   ::endpwent ();
+ 	 
+  if (pw == 0)
+    {
+      errno = ENOENT;
+      return 0;
+    }
 
   size_t max_length = 0;
   char *userid = 0;

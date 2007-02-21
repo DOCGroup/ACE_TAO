@@ -115,7 +115,12 @@ extern "C"
 # endif /* W_OK */
 
 # if !defined (X_OK)
-#   define X_OK    01      /* Test for eXecute permission. */
+#   if defined (ACE_WIN32)
+      /* Windows has no test for X_OK - use R_OK instead */
+#     define X_OK    R_OK      /* Test for eXecute permission. */
+#   else  /* ACE_WIN32 */
+#     define X_OK    01      /* Test for eXecute permission. */
+#   endif /* ACE_WIN32 */
 # endif /* X_OK */
 
 # if !defined (F_OK)

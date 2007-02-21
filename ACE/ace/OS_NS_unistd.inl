@@ -530,7 +530,7 @@ ACE_OS::hostname (char name[], size_t maxnamelen)
 #elif defined (ACE_VXWORKS) || defined (ACE_HAS_WINCE)
   ACE_OSCALL_RETURN (::gethostname (name, maxnamelen), int, -1);
 #elif defined (ACE_WIN32)
-  if (::gethostname (name, ACE_Utils::Truncate<int> (maxnamelen)) == 0)
+  if (::gethostname (name, ACE_Utils::truncate_cast<int> (maxnamelen)) == 0)
   {
     return 0;
   }
@@ -785,7 +785,7 @@ ACE_OS::pipe (ACE_HANDLE fds[])
 }
 
 ACE_INLINE void *
-ACE_OS::sbrk (ptrdiff_t brk)
+ACE_OS::sbrk (intptr_t brk)
 {
 #if defined (ACE_LACKS_SBRK)
   ACE_UNUSED_ARG (brk);

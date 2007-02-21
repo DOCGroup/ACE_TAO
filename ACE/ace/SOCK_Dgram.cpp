@@ -111,7 +111,7 @@ ACE_SOCK_Dgram::recv (iovec *io_vec,
         }
       else
         {
-          io_vec->iov_len = ACE_Utils::Truncate<size_t> (rcv_len);
+          io_vec->iov_len = ACE_Utils::truncate_cast<size_t> (rcv_len);
           addr.set_size (addr_len);
         }
       return rcv_len;
@@ -729,6 +729,8 @@ ACE_SOCK_Dgram::make_multicast_ifaddr6 (ipv6_mreq *ret_mreq,
       delete[] buf; // clean up
     }
   else
+#else  /* ACE_WIN32 */
+    ACE_UNUSED_ARG(net_if);
 #endif /* ACE_WIN32 */
     lmreq.ipv6mr_interface = 0;
 

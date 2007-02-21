@@ -452,7 +452,7 @@ namespace ACE_Utils
   // -----------------------------------------------------
 
   /**
-   * @class Truncate
+   * @class truncate_cast
    *
    * @brief Helper function to truncate an integral value to the
    *        maximum  value of the given type.
@@ -465,7 +465,7 @@ namespace ACE_Utils
    * @internal Internal use only.
    */
   template<typename TO, typename FROM>
-  inline TO Truncate (FROM val)
+  inline TO truncate_cast (FROM val)
   {
     // If the size of FROM is less than the size of TO, "val" will
     // never be greater than the maximum "TO" value, so there is no
@@ -919,6 +919,16 @@ namespace ACE_Utils
 
 #endif  /* !__BORLANDC__ || __BORLANDC__ > 0x590 */
 
+  /**
+   * @deprecated @c Truncate<> is left in place for backward
+   *             compatibility.  Use @c truncate_cast<> instead.
+   */
+  template<typename TO, typename FROM>
+  inline TO Truncate (FROM val)
+  {
+    return truncate_cast<TO, FROM> (val);
+  }
+  
 } // namespace ACE_Utils
 
 ACE_END_VERSIONED_NAMESPACE_DECL

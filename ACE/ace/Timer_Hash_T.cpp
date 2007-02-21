@@ -376,7 +376,7 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET>::reschedule (ACE_Timer_Node_T<
       const_cast<void *> (expired->get_act ()));
 
   size_t secs_hash_input =
-    ACE_Utils::Truncate<size_t> (expired->get_timer_value ().sec ());
+    ACE_Utils::truncate_cast<size_t> (expired->get_timer_value ().sec ());
   h->pos_ = secs_hash_input % this->table_size_;
 
   h->orig_id_ =
@@ -411,7 +411,7 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET>::schedule_i (const TYPE &type,
 {
   ACE_TRACE ("ACE_Timer_Hash_T::schedule_i");
 
-  size_t secs_hash_input = ACE_Utils::Truncate<size_t> (future_time.sec ());
+  size_t secs_hash_input = ACE_Utils::truncate_cast<size_t> (future_time.sec ());
   size_t position = secs_hash_input % this->table_size_;
 
   Hash_Token<TYPE> *h = 0;
@@ -454,7 +454,7 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET>::schedule_i (const TYPE &type,
   // size of a pointer is 64 bits, but a long is 32. Since this class
   // is not much used, I'm hacking this, at least for now. If it becomes
   // an issue, I'll look at it again then.
-  ptrdiff_t hi = reinterpret_cast<ptrdiff_t> (h);
+  intptr_t hi = reinterpret_cast<intptr_t> (h);
   if (this->pointer_base_ == 0)
     this->pointer_base_ = hi & 0xffffffff00000000;
   return static_cast<long> (hi & 0xffffffff);
