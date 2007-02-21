@@ -188,9 +188,7 @@ TAO::SSLIOP::Connector::connect (TAO::Profile_Transport_Resolver *resolver,
   if ((!establish_trust && qop == ::Security::SecQOPNoProtection)
       || ssl_endpoint->ssl_component ().port == 0)
     {
-      return this->iiop_connect (ssl_endpoint,
-                                 resolver,
-                                 timeout);
+      return this->iiop_connect (ssl_endpoint, resolver, timeout);
     }
 
   return this->ssliop_connect (ssl_endpoint,
@@ -210,8 +208,7 @@ TAO::SSLIOP::Connector::create_profile (TAO_InputCDR& cdr)
                   TAO_SSLIOP_Profile (this->orb_core ()),
                   0);
 
-  const int r = pfile->decode (cdr);
-  if (r == -1)
+  if (pfile->decode (cdr) == -1)
     {
       pfile->_decr_refcnt ();
       pfile = 0;
@@ -568,8 +565,7 @@ TAO::SSLIOP::Connector::ssliop_connect (
       // Trust in neither the client nor the target is explicitly
       // specified.  Use the default setting.
       else
-        verify_mode =
-          ACE_SSL_Context::instance ()->default_verify_mode ();
+        verify_mode = ACE_SSL_Context::instance ()->default_verify_mode ();
 
       ::SSL_set_verify (svc_handler->peer ().ssl (),
                         verify_mode,

@@ -488,8 +488,7 @@ TAO::SSLIOP::Protocol_Factory::init (int argc,
 
   if (private_key_path != 0)
     {
-      if (ssl_ctx->private_key (private_key_path,
-                                private_key_type) != 0)
+      if (ssl_ctx->private_key (private_key_path, private_key_type) != 0)
         {
           if (TAO_debug_level > 0)
             {

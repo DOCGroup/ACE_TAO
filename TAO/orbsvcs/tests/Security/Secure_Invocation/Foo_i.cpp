@@ -23,8 +23,7 @@ Foo_i::baz (void)
   SecurityLevel3::ClientCredentials_var credentials =
     this->current_->client_credentials ();
 
-  CORBA::String_var id =
-    credentials->creds_id ();
+  CORBA::String_var id = credentials->creds_id ();
 
   ACE_DEBUG ((LM_DEBUG,
               "\n"

@@ -1,3 +1,38 @@
+Wed Feb 21 08:24:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/tutorials/Quoter/Simple/Server/index.html:
+          Updated because of throw spec removal
+
+        * orbsvcs/orbsvcs/Event/EC_Channel_Destroyer.{h,cpp}:
+        * orbsvcs/orbsvcs/Event/EC_Proxy_Disconnector.{h,cpp}:
+          Use throw()
+
+        * orbsvcs/orbsvcs/Event/ECG_UDP_Receiver.h:
+          Use false instead of 0
+
+        * orbsvcs/orbsvcs/Naming/Bindings_Iterator_T.{h,cpp}:
+          Make destroyed a real bool
+
+        * orbsvcs/orbsvcs/Naming/Naming_Server.cpp:
+        * orbsvcs/orbsvcs/Naming/Storable.cpp:
+        * orbsvcs/orbsvcs/Naming/Storable.h:
+        * orbsvcs/orbsvcs/Naming/Storable_Naming_Context.cpp:
+        * orbsvcs/orbsvcs/Naming/Storable_Naming_Context.h:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Factory.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_ORBInitializer.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp:
+        * orbsvcs/tests/Security/Secure_Invocation/Foo_i.cpp:
+          Layout change
+
+        * orbsvcs/performance-tests/RTEvent/lib/Implicit_Deactivator.cpp
+        * orbsvcs/performance-tests/RTEvent/lib/Servant_var.h:
+        * orbsvcs/performance-tests/RTEvent/lib/Servant_var.inl:
+          Use std::swap instead of ACE_Swap
+
+        * orbsvcs/tests/Security/Secure_Invocation/Secure_Invocation.mpc:
+          Simplified this file
+
 Wed Feb 21 08:14:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/RTCORBA/RT_Protocols_Hooks.cpp:
