@@ -186,7 +186,7 @@ protected:
 
   /// Constructor (protected).  Clients can create new
   /// TAO_ECG_UDP_Receiver objects using the static create() method.
-  TAO_ECG_UDP_Receiver (CORBA::Boolean perform_crc = 0);
+  TAO_ECG_UDP_Receiver (CORBA::Boolean perform_crc = false);
 
 private:
 

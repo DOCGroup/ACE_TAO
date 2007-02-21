@@ -172,8 +172,7 @@ public:
    * Remove a binding containing <id> and <kind> from the table.
    * Return 0 on success and -1 on failure.
    */
-  virtual int unbind (const char * id,
-                      const char * kind);
+  virtual int unbind (const char * id, const char * kind);
 
   /**
    * Find the binding containing <id> and <kind> in the table, and

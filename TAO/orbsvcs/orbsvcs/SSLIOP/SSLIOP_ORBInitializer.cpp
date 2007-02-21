@@ -97,8 +97,7 @@ TAO::SSLIOP::ORBInitializer::post_init (
 
       if (tao_current != 0)
         {
-          const size_t slot =
-            this->get_tss_slot_id (info);
+          size_t const slot = this->get_tss_slot_id (info);
 
           tao_current->tss_slot (slot);
         }
@@ -175,8 +174,7 @@ TAO::SSLIOP::ORBInitializer::post_init (
 
   auto_ptr<TAO::SSLIOP::CredentialsAcquirerFactory> safe_factory;
 
-  tao_curator->register_acquirer_factory ("SL3TLS",
-                                          factory);
+  tao_curator->register_acquirer_factory ("SL3TLS", factory);
 
   (void) safe_factory.release ();  // CredentialsCurator now owns
                                    // CredentialsAcquirerFactory.

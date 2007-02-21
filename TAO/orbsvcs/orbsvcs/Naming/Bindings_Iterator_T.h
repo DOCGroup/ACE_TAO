@@ -94,8 +94,7 @@ public:
    * in <hash_entry>.  Return 1 if everything went smoothly, 0 if an
    * allocation failed.
    */
-  static int populate_binding (TABLE_ENTRY *hash_entry,
-                               CosNaming::Binding &b);
+  static int populate_binding (TABLE_ENTRY *hash_entry, CosNaming::Binding &b);
 
 private:
   /**
@@ -106,7 +105,7 @@ private:
    * because immediate destruction of this servant might not be possible
    * due to pending requests in the POA.
    */
-  int destroyed_;
+  bool destroyed_;
 
   /**
    * Pointer to the Naming Context we are iterating over.  We need

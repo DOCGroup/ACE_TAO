@@ -9,7 +9,8 @@
 #include "Implicit_Deactivator.h"
 #include "tao/PortableServer/Servant_Base.h"
 #include "tao/Environment.h"
-#include "ace/Swap.h"
+
+#include <algorithm>
 
 #if !defined(__ACE_INLINE__)
 #include "Implicit_Deactivator.inl"
@@ -37,8 +38,8 @@ Implicit_Deactivator::operator= (Implicit_Deactivator &rhs)
   Implicit_Deactivator tmp (rhs);
   // @@ This seems bogus, there should be a more efficient way to swap
   //    vars
-  ACE_Swap<PortableServer::POA_var>::swap (this->poa_, tmp.poa_);
-  ACE_Swap<PortableServer::ObjectId_var>::swap (this->id_, tmp.id_);
+  std::swap (this->poa_, tmp.poa_);
+  std::swap (this->id_, tmp.id_);
   return *this;
 }
 
@@ -47,9 +48,12 @@ Implicit_Deactivator::~Implicit_Deactivator ()
   if (this->id_.ptr () == 0)
     return;
 
-  try{
+  try
+  {
     this->poa_->deactivate_object (this->id_.in ());
-  } catch (const CORBA::Exception&) {
+  }
+  catch (const CORBA::Exception&)
+  {
     // @@ TODO This event should be logged. Cannot throw because that
     //    would make it impossible to use this class effectively.
     //    Read Servant_var.cpp for more details.
@@ -62,7 +66,7 @@ Implicit_Deactivator::operator= (PortableServer::Servant servant)
   Implicit_Deactivator tmp (servant);
   // @@ This seems bogus, there should be a more efficient way to swap
   //    vars
-  ACE_Swap<PortableServer::POA_var>::swap (this->poa_, tmp.poa_);
-  ACE_Swap<PortableServer::ObjectId_var>::swap (this->id_, tmp.id_);
+  std::swap (this->poa_, tmp.poa_);
+  std::swap (this->id_, tmp.id_);
   return *this;
 }
