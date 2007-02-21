@@ -71,31 +71,20 @@ private:
 class Quoter_Stock_i : public POA_Quoter::Stock {
 public:
   // some details omitted
-  char *symbol () throw (CORBA::SystemException);
-  char *full_name () throw (CORBA::SystemException);
-  CORBA::Double price () throw (CORBA::SystemException);
+  char *symbol ();
+  char *full_name ();
+  CORBA::Double price ();
 };
 
 // In the .cpp file:
 char *
-Quoter_Stock_i::symbol () throw (CORBA::SystemException)
+Quoter_Stock_i::symbol ()
 {
   return CORBA::string_dup (this->symbol_.c_str ());
 }
 </PRE>
     <P>The other attributes and methods are similar, so we don't
       reproduce them here.
-    </P>
-    <P>The first question is what are those <CODE>throw()</CODE>
-      specifications doing there?  Any CORBA operation or attribute
-      can raise a <CODE>CORBA::SystemException</CODE>.  The IDL compiler
-      must generate a throw specification that includes the CORBA
-      system exceptions and any user exceptions listed in the
-      <CODE>raise</CODE> clause.  In turn, the C++ specification requires
-      that any derived classes cannot add exceptions to a throw
-      specification, so you must have a throw specification in your
-      methods, either including <CODE>CORBA::SystemException</CODE> or
-      empty.
     </P>
 
     <H4>Memory management rules for arguments</H4>
@@ -157,8 +146,7 @@ class Quoter_Stock_Factory_i : public POA_Quoter::Stock_Factory
 public:
   Quoter_Stock_Factory ();
 
-  Quoter::Stock_ptr get_stock (const char *symbol)
-    throw (Quoter::Invalid_Stock_Symbol);
+  Quoter::Stock_ptr get_stock (const char *symbol);
 
 private:
   Quoter_Stock_i rhat_;
@@ -173,7 +161,6 @@ private:
 <PRE>
 Quoter::Stock_ptr
 Quoter_Stock_Factory_i::get_stock (const char *symbol)
-    throw (Quoter::Invalid_Stock_Symbol)
 {
   if (strcmp (symbol, "RHAT") == 0) {
     return this->rhat_._this();

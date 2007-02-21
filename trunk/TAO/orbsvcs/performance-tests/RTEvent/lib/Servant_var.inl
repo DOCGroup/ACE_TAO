@@ -7,6 +7,8 @@
  * @author Carlos O'Ryan <coryan@uci.edu>
  */
 
+#include <algorithm>
+
 template<class SERVANT> ACE_INLINE SERVANT *
 Servant_var<SERVANT>::duplicate (SERVANT *servant)
 {
@@ -31,7 +33,7 @@ template<class SERVANT> ACE_INLINE Servant_var<SERVANT>&
 Servant_var<SERVANT>::operator= (const Servant_var<SERVANT> &rhs)
 {
   Servant_var<SERVANT> tmp (rhs);
-  ACE_Swap<SERVANT*>::swap (this->ptr_, tmp.ptr_);
+  std::swap (this->ptr_, tmp.ptr_);
   return *this;
 }
 
@@ -39,7 +41,7 @@ template<class SERVANT> ACE_INLINE Servant_var<SERVANT>&
 Servant_var<SERVANT>::operator= (SERVANT *rhs)
 {
   Servant_var<SERVANT> tmp (rhs);
-  ACE_Swap<SERVANT*>::swap (this->ptr_, tmp.ptr_);
+  std::swap (this->ptr_, tmp.ptr_);
   return *this;
 }
 
@@ -77,7 +79,7 @@ template<class SERVANT> ACE_INLINE SERVANT *&
 Servant_var<SERVANT>::out ()
 {
   Servant_var<SERVANT> tmp;
-  ACE_Swap<SERVANT*>::swap (tmp.ptr_, this->ptr_);
+  std::swap (tmp.ptr_, this->ptr_);
 
   return this->ptr_;
 }

@@ -115,8 +115,7 @@ TAO_Naming_Server::init (CORBA::ORB_ptr orb,
         {
           // Try to find an existing Naming Service.
           CORBA::Object_var naming_obj =
-            orb->resolve_initial_references ("NameService",
-                                             timeout);
+            orb->resolve_initial_references ("NameService", timeout);
 
           if (!CORBA::is_nil (naming_obj.in ()))
             {
@@ -658,7 +657,6 @@ TAO_Naming_Server::fini (void)
   try
     {
       this->ns_poa_->destroy (1, 1);
-
 
       CORBA::Object_var table_object =
         this->orb_->resolve_initial_references ("IORTable");

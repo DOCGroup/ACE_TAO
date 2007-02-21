@@ -77,7 +77,7 @@ class TAO_NS_Persistence_Global
   private:
   unsigned int counter_;
 };
-  
+
 class TAO_Storable_Base
 {
 public:
@@ -122,7 +122,7 @@ public:
   bool fail (void) const;
 
   virtual TAO_Storable_Base& operator << (
-              const TAO_NS_Persistence_Header& header)  = 0;
+              const TAO_NS_Persistence_Header& header) = 0;
 
   virtual TAO_Storable_Base& operator << (
               const TAO_NS_Persistence_Record& record) = 0;
@@ -142,7 +142,7 @@ public:
 private:
   Storable_State state_;
 };
-  
+
 class TAO_Naming_Service_Persistence_Factory
 {
 public:

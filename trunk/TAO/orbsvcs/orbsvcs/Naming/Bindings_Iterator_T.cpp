@@ -17,7 +17,7 @@ TAO_Bindings_Iterator<ITERATOR, TABLE_ENTRY>::TAO_Bindings_Iterator (
   ITERATOR *hash_iter,
   PortableServer::POA_ptr poa,
   TAO_SYNCH_RECURSIVE_MUTEX &lock)
-  : destroyed_ (0),
+  : destroyed_ (false),
     context_ (context),
     hash_iter_ (hash_iter),
     lock_ (lock),
@@ -173,7 +173,7 @@ TAO_Bindings_Iterator<ITERATOR, TABLE_ENTRY>::destroy (void)
     throw CORBA::OBJECT_NOT_EXIST ();
 
   // Mark the object invalid.
-  this->destroyed_ = 1;
+  this->destroyed_ = true;
 
   PortableServer::ObjectId_var id =
     poa_->servant_to_id (this);

@@ -138,8 +138,7 @@ TAO::SSLIOP::Transport::send_request (TAO_Stub *stub,
                                       int message_semantics,
                                       ACE_Time_Value *max_wait_time)
 {
-  if (this->ws_->sending_request (orb_core,
-                                  message_semantics) == -1)
+  if (this->ws_->sending_request (orb_core, message_semantics) == -1)
     return -1;
 
   if (this->send_message (stream,

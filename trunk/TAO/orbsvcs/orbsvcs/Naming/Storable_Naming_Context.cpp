@@ -68,8 +68,7 @@ TAO_Storable_ExtId::TAO_Storable_ExtId (void)
 {
 }
 
-TAO_Storable_ExtId::TAO_Storable_ExtId (const char *id,
-                                            const char *kind)
+TAO_Storable_ExtId::TAO_Storable_ExtId (const char *id, const char *kind)
   : id_ (id)
   , kind_ (kind)
 {
@@ -173,8 +172,7 @@ TAO_Storable_Bindings_Map::find (const char *id,
   TAO_Storable_ExtId name (id, kind);
   TAO_Storable_IntId entry;
 
-  if (this->map_.find (name,
-                       entry) != 0)
+  if (this->map_.find (name, entry) != 0)
     {
       return -1;
     }
