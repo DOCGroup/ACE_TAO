@@ -72,7 +72,6 @@ Server_Request_Interceptor::send_reply (
 
   if (ACE_OS::strcmp (op.in (), "shutdown") != 0)
     {
-      ACE_ASSERT (::ending_interception_point_called == 0);
       if (::ending_interception_point_called != 0)
         {
           throw CORBA::INTERNAL ();
