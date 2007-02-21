@@ -1,3 +1,8 @@
+Wed Feb 21 14:23:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+          Added bug 1592 regression
+
 Tue Feb 20 17:56:25 UTC 2007  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * COPYING: Clarified how the COPYING file need to be included with
@@ -57,7 +62,7 @@ Tue Feb 20 16:38:24 UTC 2007  William R. Otte  <wotte@dre.vanderbilt.edu>
 
           Added logic in gnu template for new XSC custom type in CIAO,
           and disabled xsc by default in global.features.
-  
+
 Tue Feb 20 16:12:57 UTC 2007  Steve Huston  <shuston@riverace.com>
 
         * tests/Bug_2820_Regression_Test.cpp: ACEify use of auto_ptr.
