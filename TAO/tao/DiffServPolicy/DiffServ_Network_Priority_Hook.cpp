@@ -65,7 +65,7 @@ void
 TAO_DiffServ_Network_Priority_Hook::set_dscp_codepoint (
   TAO_ServerRequest &req, TAO_Root_POA &poa)
 {
-  CORBA::Long dscp_codepoint;
+  CORBA::Long dscp_codepoint = 0;
   TAO_Service_Context &request_service_context =
     req.request_service_context ();
 
@@ -87,10 +87,6 @@ TAO_DiffServ_Network_Priority_Hook::set_dscp_codepoint (
                   SERVER_DECLARED_NETWORK_PRIORITY)
     {
       dscp_codepoint = poa.cached_policies ().reply_diffserv_codepoint ();
-    }
-  else
-    {
-      dscp_codepoint = 0;
     }
 
   TAO_Connection_Handler *connection_handler =
