@@ -368,7 +368,7 @@ int
 HTTP_Server::asynch_thread_pool (void)
 {
 // This only works on Win32
-#if defined (ACE_WIN32)
+#if defined (ACE_HAS_WIN32_OVERLAPPED_IO)
   // Create the appropriate acceptor for this concurrency strategy and
   // an appropriate handler for this I/O strategy
   ACE_Asynch_Acceptor<Asynch_HTTP_Handler_Factory> acceptor;
@@ -389,12 +389,12 @@ HTTP_Server::asynch_thread_pool (void)
 
   // Wait for the threads to finish.
   return this->tm_.wait ();
-#endif /* ACE_WIN32 */
+#endif /* ACE_HAS_WIN32_OVERLAPPED_IO */
   return -1;
 }
 
 // This only works on Win32
-#if defined (ACE_WIN32)
+#if defined (ACE_HAS_WIN32_OVERLAPPED_IO)
 
 Asynch_Thread_Pool_Task::Asynch_Thread_Pool_Task (ACE_Proactor &proactor,
                                                   ACE_Thread_Manager &tm)
@@ -418,7 +418,7 @@ Asynch_Thread_Pool_Task::svc (void)
   return 0;
 }
 
-#endif /* ACE_WIN32 */
+#endif /* ACE_HAS_WIN32_OVERLAPPED_IO */
 
 // Define the factory function.
 ACE_SVC_FACTORY_DEFINE (HTTP_Server)

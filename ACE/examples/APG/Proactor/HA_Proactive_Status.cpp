@@ -11,7 +11,7 @@
 #include "ace/Proactor.h"
 #include "ace/os_include/arpa/os_inet.h"
 
-#if (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) || (defined (ACE_HAS_AIO_CALLS))
+#if defined (ACE_HAS_WIN32_OVERLAPPED_IO) || defined (ACE_HAS_AIO_CALLS)
 
 // Listing 1 code/ch08
 void
@@ -159,5 +159,5 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   return 1;
 }
 
-#endif /* (ACE_WIN32 && != ACE_HAS_WINCE) || ACE_HAS_AIO_CALLS*/
+#endif /* ACE_HAS_WIN32_OVERLAPPED_IO || ACE_HAS_AIO_CALLS */
 

@@ -34,7 +34,10 @@
 #define ACE_LACKS_TCP_NODELAY
 #define ACE_LACKS_MSG_WFMO
 #define ACE_LACKS_WIN32_MOVEFILEEX
+#define ACE_LACKS_WIN32_REGISTRY
 #define ACE_LACKS_WIN32_SECURITY_DESCRIPTORS
+#define ACE_LACKS_WIN32_SERVICES
+#define ACE_LACKS_WIN32_SETFILEPOINTEREX
 
 // There's no host table, by default. So using "localhost" won't work.
 // If your system does have the ability to use "localhost" and you want to,
@@ -59,7 +62,6 @@
 // Now remove things that desktop/server Windows has but Pharlap ETS doesn't.
 #undef ACE_HAS_INTERLOCKED_EXCHANGEADD
 #undef ACE_HAS_WCHAR
-#define ACE_LACKS_SETFILEPOINTEREX
 
 #include /**/ <embkern.h>
 #if defined (ACE_HAS_PHARLAP_RT)

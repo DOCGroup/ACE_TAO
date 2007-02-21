@@ -324,8 +324,8 @@ JAWS_Synch_IO::send_message (JAWS_IO_Handler *ioh,
   stream.send_n (buffer, length);
 }
 
-// This only works on Win32
-#if defined (ACE_WIN32) || defined (ACE_HAS_AIO_CALLS)
+// This only works on asynch I/O-capable systems.
+#if defined (ACE_HAS_WIN32_OVERLAPPED_IO) || defined (ACE_HAS_AIO_CALLS)
 
 JAWS_Asynch_IO::JAWS_Asynch_IO (void)
 {
@@ -591,5 +591,5 @@ JAWS_Asynch2_IO::accept (JAWS_IO_Handler *,
 {
 }
 
-#endif /* ACE_WIN32 */
+#endif /* ACE_HAS_WIN32_OVERLAPPED_IO || ACE_HAS_AIO_CALLS */
 

@@ -21,8 +21,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if defined (ACE_WIN32) && !defined (ACE_HAS_PHARLAP)
-// This only works on Win32 platforms (but Pharlap ETS doesn't offer registry).
+#if defined (ACE_WIN32) && !defined (ACE_LACKS_WIN32_REGISTRY)
+// This only works on registry-capable Win32 platforms.
 
 #include "ace/Containers.h"
 #include "ace/SString.h"
@@ -558,6 +558,6 @@ private:
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#endif /* ACE_WIN32 && !ACE_HAS_PHARLAP */
+#endif /* ACE_WIN32 && !ACE_LACKS_WIN32_REGISTRY */
 #include /**/ "ace/post.h"
 #endif /* ACE_REGISTRY_H */

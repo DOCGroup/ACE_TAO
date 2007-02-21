@@ -31,8 +31,8 @@
 
 ACE_RCSID(Proactor, test_udp_proactor, "test_proactor.cpp,v 1.29 2001/02/02 23:41:16 shuston Exp")
 
-#if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE) || defined (ACE_HAS_AIO_CALLS)
-  // This only works on Win32 platforms.
+#if defined (ACE_HAS_WIN32_OVERLAPPED_IO) || defined (ACE_HAS_AIO_CALLS)
+  // This only works on asynch I/O-capable platforms.
 
 // Host that we're connecting to.
 static ACE_TCHAR *host = 0;
@@ -418,7 +418,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   return 0;
 }
 
-#else /* ACE_WIN32 && !ACE_HAS_WINCE || ACE_HAS_AIO_CALLS*/
+#else /* ACE_HAS_WIN32_OVERLAPPED_IO || ACE_HAS_AIO_CALLS*/
 
 int
 ACE_TMAIN (int, ACE_TCHAR *[])
@@ -428,5 +428,5 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   return 1;
 }
 
-#endif /* ACE_WIN32 && !ACE_HAS_WINCE || ACE_HAS_AIO_CALLS*/
+#endif /* ACE_HAS_WIN32_OVERLAPPED_IO || ACE_HAS_AIO_CALLS */
 

@@ -195,7 +195,7 @@ JAWS_Synch_IO::send_message (const char *buffer,
 }
 
 // This only works on Win32
-#if defined (ACE_WIN32)
+#if defined (ACE_HAS_WIN32_OVERLAPPED_IO)
 
 JAWS_Asynch_IO::JAWS_Asynch_IO (void)
 {
@@ -421,7 +421,7 @@ JAWS_Asynch_IO::handle_write_stream (const ACE_Asynch_Write_Stream::Result &resu
     this->handler_->error_message_complete ();
 }
 
-#endif /* ACE_WIN32 */
+#endif /* ACE_HAS_WIN32_OVERLAPPED_IO */
 
 //-------------------Adding SYNCH IO no Caching
 

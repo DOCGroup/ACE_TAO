@@ -188,7 +188,7 @@ public:
 
 //--------------
 
-#if defined (ACE_WIN32)
+#if defined (ACE_HAS_WIN32_OVERLAPPED_IO)
 class Asynch_HTTP_Handler_Factory : public HTTP_Handler_Factory, public ACE_Service_Handler
   // = TITLE
   //     This class is used to create new HTTP handlers that will use
@@ -217,5 +217,5 @@ private:
   // handlers. New handlers can only be created by the framework when
   // new client connections arrive.
 };
-#endif /* ACE_WIN32 */
+#endif /* ACE_HAS_WIN32_OVERLAPPED_IO */
 #endif /* HTTP_HANDLER_H */

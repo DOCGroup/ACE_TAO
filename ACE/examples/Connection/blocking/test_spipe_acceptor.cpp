@@ -6,7 +6,7 @@
 
 ACE_RCSID(blocking, test_spipe_acceptor, "$Id$")
 
-#if ((defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) || (defined (ACE_HAS_AIO_CALLS)))
+#if defined (ACE_HAS_WIN32_OVERLAPPED_IO) || defined (ACE_HAS_AIO_CALLS)
 
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
