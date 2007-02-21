@@ -1,3 +1,258 @@
+Wed Feb 21 19:27:14 UTC 2007  Ossama Othman  <ossama_othman at symantec dot com>
+
+        * ace/Array_Base.cpp (size):
+
+          Simplified return value logic.
+
+        * ace/Auto_Ptr.h (ACE_auto_ptr_reset):
+
+          Added missing "brief" documentation.
+
+        * ace/Caching_Strategies_T.inl:
+        * ace/Svc_Handler.cpp (init):
+
+          Removed unnecessary uses of ACE_UNUSED_ARG macro.  Just comment
+          out the parameter name instead.
+
+        * ace/DLL_Manager.cpp (unload_all):
+        * ace/Functor.inl (operator()):
+        * ace/OS_NS_unistd.h (sbrk):
+        * ace/OS_NS_unistd.inl (sbrk):
+        * ace/Parse_Node.cpp:
+        * ace/Timer_Hash_T.cpp:
+
+          Corrected type used to store pointer value.
+          s/ptrdiff_t/{u}intptr_t/.
+
+        * ace/SOCK_Dgram.cpp:
+
+          Fixed unused argument warning.
+
+        * ace/String_Base_Const.cpp:
+
+          Workaround npos constant run-time initialization problem in some
+          mixed shared/static linking conditions by making it easy for the
+          compiler to embed the value of the constant in the object file
+          at compile-time.
+
+        * ace/Truncate.h (Truncate, truncate_cast):
+
+          Deprecated ACE_Utils::Truncate() function name in favor of
+          ACE_Utils::truncate_cast().  The former better reflects what the
+          function template actually does.
+
+        * ace/Unbounded_Set.cpp:
+        * ace/Unbounded_Set.h:
+        * ace/Unbounded_Set.inl:
+
+          Implement find() method in terms of begin/end iterators to prevent
+	  search from looping indefinitely under some race condition
+          scenarios.
+
+          Added missing const_iterator factory methods.
+
+          Added missing const_iterator equality and inequality operators.
+
+        * ace/OS_NS_unistd.inl:
+        * ace/Time_Value.inl:
+        * ace/Token_Request_Reply.inl:
+        * ace/FILE_IO.cpp:
+        * ace/Filecache.cpp:
+        * ace/High_Res_Timer.cpp:
+        * ace/Log_Record.cpp:
+        * ace/MMAP_Memory_Pool.cpp:
+        * ace/Mem_Map.cpp:
+        * ace/Message_Queue.cpp:
+        * ace/Message_Queue_T.cpp:
+        * ace/Name_Request_Reply.cpp:
+        * ace/Process.cpp:
+        * ace/SOCK_Dgram.cpp:
+        * ace/SOCK_IO.cpp:
+        * ace/Timer_Hash_T.cpp:
+
+          s/ACE_Utils::Truncate/ACE_Utils::truncate_cast/g.  The former is
+          deprecated.
+
+        From Andrew Schnable
+        * ace/os_include/os_unistd.h (X_OK):
+
+          Windows has no access() test for X_OK.  Use R_OK instead.
+
+        From Russell Mora
+        * ace/ACE.inl (hex2byte):
+        * ace/Capabilities.h (is_line, is_empty):
+        * ace/Capabilities.cpp (parse, fillent, is_entry, is_empty, is_line):
+        * ace/Get_Opt.cpp (long_option): 
+        * ace/OS_NS_ctype.inl (ace_isalnum):
+
+          Added ACE::ace_isalnum, ACE::ace_isdigit and ACE::ace_islower
+          and changed to use them where appropriate.  This prevents the
+          narrow char versions being called with wide chars.
+
+        * ace/Asynch_IO.cpp:
+
+          Fixed preprocessor scoping issue in builds where
+          ACE_HAS_AIO_CALLS is undefined and versioned namspaces are
+          enabled.   ACE_END_VERSIONED_NAMESPACE_DECL ended up being
+          preprocessed when it should not have.
+
+        * ace/Configuration_Import_Export.cpp (export_config):
+
+          Check the return value of fclose() is required because data may
+          have been buffered and will be fflush()d with the fclose().
+
+        * ace/Log_Msg.h:
+        * ace/Log_Msg.cpp:
+
+          Changed message offset to correct type, ptrdiff_t, since it
+          contains a pointer difference value.
+
+        * ace/Null_Semaphore.h:
+
+          Added include to get definition of size_t.  This is required for
+          static single-threaded builds on Darwin.
+
+        * ace/OS_NS_stdio.inl (cuserid):
+
+          Check for unexpected failure of getpwuid function; don't
+          dereference null pointer.
+
+        * ace/Process.cpp (spawn):
+
+          On Windows platforms a process handle is a pointer, not an int.
+          Corrected format specifiers accordingly.
+
+        * ace/RB_Tree.cpp (remove_i):
+
+         Fixes for Coverity REVERSE_INULL issues.  Check for null pointer
+         before dereferencing.
+
+        * ace/Recursive_Thread_Mutex.cpp (get_nesting_level):
+
+          Reverted change that altered implementation for IA64 Windows
+          builds.  The returned nesting level was incorrect.  Use the
+          implementation used by both 32-bit and AMD 64 bit builds.
+          
+        * tests/Recursive_Mutex_Test.cpp (test_recursion_depth):
+
+          Added test cases for the above problem.
+
+        * ace/SOCK_Connector.cpp (shared_connect_finish):
+
+          On Windows, in order to detect when the socket that has been
+          bound to is in TIME_WAIT we need to do the connect (which will
+          always return EWOULDBLOCK) and then do an
+          ACE::handle_timed_complete() (with timeout==0, i.e. poll).  This
+          will do a select() on the handlewhich will immediately return
+          with the handle in an error state.  The error code is then
+          retrieved with getsockopt().
+
+	  Good sockets however will return from the select() with ETIME -
+          in this case return EWOULDBLOCK so the wait strategy can
+          complete the connection.
+
+        * ace/Service_Manager.cpp (list_services):
+
+          Type conversion - it is unlikely the name of the service is a
+          string bigger than 2GB (on 32-bit systems) so a static_cast<> is
+          safe here.
+
+        * ace/Svc_Conf_Lexer.cpp (scan):
+
+          Changed the loop indexing to allow loop variable to be the same
+          type as variable used to initialise the loop.  This avoids
+          conversion warnings.
+
+          (yylex):
+
+          Fixed unused variable warning.
+
+        * ace/UNIX_Addr.inl (set):
+
+          Correct wide string to narrow string conversion.
+
+        * ace/config-cxx-common.h:
+
+          Eliminated copious amounts of warnings.
+
+        * ace/config-linux.h (ACE_HAS_CLOCK_GETTIME):
+        * ace/config-linux-common.h (ACE_HAS_CLOCK_GETTIME):
+
+          On linux clock_gettime/clock_settime are not available for
+          single-threaded builds.
+
+        * ace/os_include/os_dlfcn.h (ACE_DEFAULT_SHLIB_MODE):
+
+          Added DYNAMIC_PATH to the default flags used to call shl_load()
+	  on HP 11.00 (PARISC1.1/32-bit) so that RPATH and SHLIB_PATH are
+	  searched to find the requested .sl.
+
+        * bin/MakeProjectCreator/templates/gnu.mpd (FORCED_IDL_STUBS):
+
+          PCH source files are also dependent on the IDL compiler
+          generated files.
+
+        * include/makeinclude/platform_hpux_aCC.GNU (SONAME):
+
+          HP platform (non-g++) was missing the appropriate LDFLAGS for
+          building versioned shared libraries.  Copied from the hpux
+          section of platform_g++_common.GNU.
+
+          Disable warnings when 64 bit file offsets are enabled in HP
+          11.11 builds.
+
+        * include/makeinclude/platform_irix6.x_sgic++.GNU (AR, ARFLAGS):
+
+          By default IRIX uses a prelinker to instantiate templates, thus
+          archives need to be created via CC (using the -ar option) so
+          that the required templates can be instantiated.  This was the
+          cause of the missing symbols problems reported by users of the
+          static libraries.
+
+        * include/makeinclude/platform_tru64_cxx.GNU:
+
+          It seems that the default debug level in the Compaq C++ compiler
+          really goes to town when a template is instantiated - it seems
+          to add debug information for every scrap of code that the
+          template instantiation ever see resulting in debug template
+          instantiations that are up to 1000x bigger than their release
+          counterparts.  Dialing the level back down to -g1 (-g2 is the
+          default) seems to avoid this issue and we still get debug
+          symbols for the template instantiation itself.
+
+        * tests/NonBlocking_Conn_Test.cpp (test_connect):
+
+          Fixed potential buffer overrun error.
+
+        From Duane Binder
+        * ace/ace_wchar.h:
+
+          Added ACE_TEXT_ macros needed by some apps.
+
+        * ace/Process.inl (creation_flags):
+        * ace/Naming_Context.cpp:
+        * ace/Registry_Name_Space.cpp:
+        * ace/Registry_Name_Space.h:
+
+          Use ACE_USES_WCHAR not UNICODE.  Whether ACE uses Windows
+          wchar_t APIs is controlled by ACE_USES_WCHAR and not UNICODE.
+
+        * include/makeinclude/platform_freebsd.GNU:
+
+          Remove pthread and semaphore references for singled threaded
+          FreeBSD builds.
+
+        * include/makeinclude/platform_linux.GNU (LIBS):
+
+          Prevent single threaded linux builds from linking libpthread
+          (via librt).
+
+        * include/makeinclude/rules.lib.GNU:
+
+          Not all static libraries have template instantiations.  Test if
+          $(TEMPINCDIR) exists before trying to add objects in an archive
+          library (was a problem on Tru64 with debug builds).
+
 Wed Feb 21 14:23:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/tao_orb_tests.lst:
