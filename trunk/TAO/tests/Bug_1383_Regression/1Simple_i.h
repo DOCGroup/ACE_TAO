@@ -6,8 +6,8 @@
 #include "tao/corba.h"
 #include "ace/Event_Handler.h"
 
-#include "SimpleS.h"
-#include "CalleeC.h"
+#include "simpleS.h"
+#include "calleeC.h"
 
 class Simple_i : public POA_Simple, ACE_Event_Handler {
 public:

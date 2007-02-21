@@ -1,6 +1,6 @@
 // $Id$
 
-#include "Simple_i.h"
+#include "simple_i.h"
 #include "tao/ORB_Core.h"
 #include "ace/Reactor.h"
 
