@@ -1,3 +1,24 @@
+Wed Feb 21 23:55:27 UTC 2007  Wallace Zhang  <zhang_w@ociweb.com>
+
+        * tests/DSI_AMI_Gateway:
+
+        * tests/DSI_AMI_Gateway/DSI_AMI_Gateway.mpc:
+        * tests/DSI_AMI_Gateway/Makefile.am:
+        * tests/DSI_AMI_Gateway/client.cpp:
+        * tests/DSI_AMI_Gateway/gateway.cpp:
+        * tests/DSI_AMI_Gateway/run_exception_test.pl:
+        * tests/DSI_AMI_Gateway/run_test.pl:
+        * tests/DSI_AMI_Gateway/server.cpp:
+        * tests/DSI_AMI_Gateway/test.idl:
+        * tests/DSI_AMI_Gateway/test_dsi.h:
+        * tests/DSI_AMI_Gateway/test_dsi.inl:
+        * tests/DSI_AMI_Gateway/test_dsi.cpp:
+        * tests/DSI_AMI_Gateway/test_i.h:
+        * tests/DSI_AMI_Gateway/test_i.inl:
+        * tests/DSI_AMI_Gateway/test_i.cpp:
+
+        Added a new test.
+
 Fri Feb 16 00:00:49 UTC 2007  Wallace Zhang  <zhang_w@ociweb.com>
 
         * orbsvcs/orbsvcs/AsynchProxyTools:
