@@ -1,8 +1,22 @@
+Wed Feb 21 14:47:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Makefile.am:
+          Updated for some changes
+
+        * tao/AnyTypeCode/Any.cpp:
+          Documentation update
+
+        * tao/PI_Server/ServerInterceptorAdapter.cpp:
+        * tao/PI_Server/ServerRequestInfo.cpp:
+        * tao/PortableServer/Object_Adapter.cpp:
+        * tao/PortableServer/Servant_Upcall.cpp:
+          Layout changes
+
 Wed Feb 21 14:25:05 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
 
         * orbsvcs/orbsvcs/HTIOP/HTIOP_Connection_Handler.h:
         * orbsvcs/orbsvcs/HTIOP/HTIOP_Connection_Handler.cpp:
-        
+
           Added a new set_dscp_codepoint () method.
 
 Wed Feb 21 14:21:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>

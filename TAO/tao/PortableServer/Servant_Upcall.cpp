@@ -102,8 +102,7 @@ namespace TAO
       // Check if a non-servant upcall is in progress.  If a non-servant
       // upcall is in progress, wait for it to complete.  Unless of
       // course, the thread making the non-servant upcall is this thread.
-      this->object_adapter_->wait_for_non_servant_upcalls_to_complete (
-        );
+      this->object_adapter_->wait_for_non_servant_upcalls_to_complete ();
 
       // Locate the POA.
       this->object_adapter_->locate_poa (key, this->system_id_, this->poa_);
@@ -213,8 +212,7 @@ namespace TAO
     Servant_Upcall::lookup_POA (const TAO::ObjectKey &key)
     {
       // Acquire the object adapter lock first.
-      int const result = this->object_adapter_->lock ().acquire ();
-      if (result == -1)
+      if (this->object_adapter_->lock ().acquire () == -1)
         // Locking error.
         throw ::CORBA::OBJ_ADAPTER ();
 
@@ -318,9 +316,7 @@ namespace TAO
       // lock.  Otherwise, the thread that wants to release this lock will
       // not be able to do so since it can't acquire the object adapterx
       // lock.
-      int const result = this->poa_->enter();
-
-      if (result == -1)
+      if (this->poa_->enter() == -1)
         // Locking error.
         throw ::CORBA::OBJ_ADAPTER ();
 #endif /* !TAO_HAS_MINIMUM_POA == 0 */
