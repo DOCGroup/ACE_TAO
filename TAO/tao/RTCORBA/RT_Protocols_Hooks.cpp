@@ -384,8 +384,7 @@ TAO_RT_Protocols_Hooks::set_network_priority (
 
 CORBA::Boolean
 TAO_RT_Protocols_Hooks::set_client_network_priority (IOP::ProfileId protocol_tag,
-                                                     TAO_Stub *stub
-                                                     )
+                                                     TAO_Stub *stub)
 {
   if (protocol_tag != IOP::TAG_INTERNET_IOP &&
       protocol_tag != TAO_TAG_DIOP_PROFILE &&
@@ -395,14 +394,12 @@ TAO_RT_Protocols_Hooks::set_client_network_priority (IOP::ProfileId protocol_tag
   RTCORBA::ProtocolProperties_var protocol_properties =
     this->client_protocol_properties_at_object_level (protocol_tag, stub);
 
-  return this->set_network_priority (protocol_tag,
-                                     protocol_properties.in ());
+  return this->set_network_priority (protocol_tag, protocol_properties.in ());
 }
 
 CORBA::Boolean
 TAO_RT_Protocols_Hooks::set_server_network_priority (IOP::ProfileId protocol_tag,
-                                                     CORBA::Policy *policy
-                                                     )
+                                                     CORBA::Policy *policy)
 {
   if (protocol_tag != IOP::TAG_INTERNET_IOP &&
       protocol_tag != TAO_TAG_DIOP_PROFILE &&
@@ -432,8 +429,7 @@ TAO_RT_Protocols_Hooks::get_dscp_codepoint (void)
       RTCORBA::NetworkPriorityMapping *pm =
         this->network_mapping_manager_->mapping ();
 
-      CORBA::Short const priority =
-        this->current_->the_priority ();
+      CORBA::Short const priority = this->current_->the_priority ();
 
       if (pm->to_network (priority, codepoint) == 0)
         {
@@ -491,8 +487,7 @@ TAO_RT_Protocols_Hooks::rt_service_context (
 
           this->add_rt_service_context_hook (service_context,
                                              priority_model_policy.in (),
-                                             client_priority
-                                            );
+                                             client_priority);
         }
       else
         {
@@ -592,14 +587,10 @@ int
 TAO_RT_Protocols_Hooks::get_thread_CORBA_priority (CORBA::Short &priority)
 {
   CORBA::Short native_priority = 0;
-  int const result =
-    this->get_thread_CORBA_and_native_priority (priority,
-                                                native_priority
-                                               );
 
-  if (result == -1)
+  if (this->get_thread_CORBA_and_native_priority (priority, native_priority) == -1)
     {
-      return result;
+      return -1;
     }
 
   return 0;
@@ -633,12 +624,9 @@ TAO_RT_Protocols_Hooks::get_thread_CORBA_and_native_priority (
     CORBA::Short &priority,
     CORBA::Short &native_priority)
 {
-  int const result =
-    this->get_thread_native_priority (native_priority);
-
-  if (result == -1)
+  if (this->get_thread_native_priority (native_priority) == -1)
     {
-      return result;
+      return -1;
     }
 
   TAO_Priority_Mapping *priority_mapping =
@@ -657,8 +645,7 @@ TAO_RT_Protocols_Hooks::get_thread_CORBA_and_native_priority (
 }
 
 int
-TAO_RT_Protocols_Hooks::set_thread_CORBA_priority (CORBA::Short priority
-                                                   )
+TAO_RT_Protocols_Hooks::set_thread_CORBA_priority (CORBA::Short priority)
 {
   TAO_Priority_Mapping *priority_mapping =
     this->mapping_manager_.in ()->mapping ();
