@@ -13,7 +13,7 @@
 
 ACE_RCSID(blocking, SPIPE_acceptor, "$Id$")
 
-#if ((defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) || (defined (ACE_HAS_AIO_CALLS)))
+#if defined (ACE_HAS_WIN32_OVERLAPPED_IO) || defined (ACE_HAS_AIO_CALLS)
 
 Svc_Handler::Svc_Handler (void)
   : mb_ (BUFSIZ + 1)
@@ -220,6 +220,6 @@ IPC_Server::svc (void)
   return 0;
 }
 
-#endif /* ACE_WIN32 || ACE_HAS_AIO_CALLS*/
+#endif /* ACE_HAS_WIN32_OVERLAPPED_IO || ACE_HAS_AIO_CALLS */
 #endif /* SPIPE_ACCEPTOR_C */
 

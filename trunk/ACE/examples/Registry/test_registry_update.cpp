@@ -15,7 +15,7 @@
 
 #include "ace/OS_main.h"
 
-#if defined (ACE_WIN32)
+#if defined (ACE_WIN32) && !defined (ACE_LACKS_WIN32_REGISTRY)
 
 #include "ace/Registry.h"
 
@@ -152,10 +152,10 @@ setup_names ()
 
   component.id_ = ACE_TEXT ("Instance Counter"), ::counter_name.insert (component);
 }
-#else /* !ACE_WIN32 */
+#else /* !ACE_WIN32 || ACE_LACKS_WIN32_REGISTRY */
 int
 ACE_TMAIN (int , ACE_TCHAR *[])
 {
   return 0;
 }
-#endif /* ACE_WIN32 */
+#endif /* ACE_WIN32 && !ACE_LACKS_WIN32_REGISTRY */

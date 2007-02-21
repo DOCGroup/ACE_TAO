@@ -1,8 +1,7 @@
 // $Id$
 
 #include "ace/config-all.h"
-#if defined (ACE_WIN32) && \
-   !defined (ACE_HAS_PHARLAP) && !defined (ACE_HAS_WINCE)
+#if defined (ACE_WIN32) && !defined (ACE_LACKS_WIN32_SERVICES)
 
 #include "ace/NT_Service.h"
 
@@ -615,4 +614,4 @@ ACE_NT_Service::wait_for_service_state (DWORD desired_state,
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#endif /* ACE_WIN32 && !ACE_HAS_PHARLAP */
+#endif /* ACE_WIN32 && !ACE_LACKS_WIN32_SERVICES */

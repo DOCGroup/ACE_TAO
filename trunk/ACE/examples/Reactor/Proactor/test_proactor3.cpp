@@ -40,11 +40,11 @@
 
 ACE_RCSID(Proactor, test_proactor, "test_proactor.cpp,v 1.27 2000/03/07 17:15:56 schmidt Exp")
 
-#if ((defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) || (defined (ACE_HAS_AIO_CALLS)))
+#if defined (ACE_HAS_WIN32_OVERLAPPED_IO) || defined (ACE_HAS_AIO_CALLS)
   // This only works on Win32 platforms and on Unix platforms
   // supporting POSIX aio calls.
 
-#if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
+#if defined (ACE_HAS_WIN32_OVERLAPPED_IO)
 
 #	include "ace/WIN32_Proactor.h"
 
@@ -53,7 +53,7 @@ ACE_RCSID(Proactor, test_proactor, "test_proactor.cpp,v 1.27 2000/03/07 17:15:56
 #	include "ace/POSIX_Proactor.h"
 #	include "ace/SUN_Proactor.h"
 
-#endif /* defined (ACE_WIN32) && !defined (ACE_HAS_WINCE) */
+#endif /* ACE_HAS_WIN32_OVERLAPPED_IO */
 
 //  Some debug helper functions
 static int disable_signal (int sigmin, int sigmax);
@@ -114,7 +114,7 @@ MyTask::create_proactor (void)
 
   if (threads_ == 0)
     {
-#if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
+#if defined (ACE_HAS_WIN32_OVERLAPPED_IO)
       ACE_WIN32_Proactor *proactor = new ACE_WIN32_Proactor;
       ACE_DEBUG ((LM_DEBUG,"(%t) Create Proactor Type=WIN32"));
 
@@ -861,4 +861,4 @@ print_sigmask (void)
 }
 #endif /* 0 */
 
-#endif /* ACE_WIN32 && !ACE_HAS_WINCE || ACE_HAS_AIO_CALLS*/
+#endif /* ACE_HAS_WIN32_OVERLAPPED_IO || ACE_HAS_AIO_CALLS */

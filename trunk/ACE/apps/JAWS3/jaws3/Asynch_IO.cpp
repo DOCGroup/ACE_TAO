@@ -11,7 +11,7 @@
 #include "jaws3/Event_Completer.h"
 #include "jaws3/Event_Result.h"
 
-#if defined (ACE_HAS_AIO_CALLS) || defined (ACE_WIN32)
+#if defined (ACE_HAS_AIO_CALLS) || defined (ACE_HAS_WIN32_OVERLAPPED_IO)
 
 #include "jaws3/Asynch_IO_Helpers.h"
 
@@ -254,7 +254,7 @@ JAWS_Asynch_IO::transmit ( ACE_HANDLE handle
                                           );
 }
 
-#endif /* defined (ACE_HAS_AIO_CALLS) || defined (ACE_WIN32) */
+#endif /* ACE_HAS_AIO_CALLS || ACE_HAS_WIN32_OVERLAPPED_IO */
 
 // For now, we will simulate timed Asynch IO with timed Reactive IO.
 // In the future, we will implement the timed Asynch IO with timers

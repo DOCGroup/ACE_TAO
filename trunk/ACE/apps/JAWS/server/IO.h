@@ -174,7 +174,7 @@ protected:
 };
 
 // This only works on Win32
-#if defined (ACE_WIN32)
+#if defined (ACE_HAS_WIN32_OVERLAPPED_IO)
 
 class JAWS_Asynch_IO : public JAWS_IO, public ACE_Handler
   // = TITLE
@@ -234,7 +234,7 @@ protected:
   // completes.
 };
 
-#endif /* ACE_WIN32 */
+#endif /* ACE_HAS_WIN32_OVERLAPPED_IO */
 
 
 //-------------------Adding SYNCH IO no Caching

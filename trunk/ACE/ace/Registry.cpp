@@ -6,7 +6,7 @@ ACE_RCSID (ace,
            Registry,
            "$Id$")
 
-#if defined (ACE_WIN32) && !defined (ACE_HAS_PHARLAP)
+#if defined (ACE_WIN32) && !defined (ACE_LACKS_WIN32_REGISTRY)
 
 #  include "ace/os_include/os_netdb.h"
 #  include "ace/OS_NS_unistd.h"
@@ -1136,4 +1136,4 @@ ACE_Predefined_Naming_Contexts::is_local_host (const ACE_TCHAR *machine_name)
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#endif /* ACE_WIN32 && !ACE_HAS_PHARLAP */
+#endif /* ACE_WIN32 && !ACE_LACKS_WIN32_REGISTRY */

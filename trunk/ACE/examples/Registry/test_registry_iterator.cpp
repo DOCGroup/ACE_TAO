@@ -9,7 +9,7 @@
 
 #include "ace/OS_main.h"
 
-#if defined (ACE_WIN32)
+#if defined (ACE_WIN32) && !defined (ACE_LACKS_WIN32_REGISTRY)
 
 #include "ace/Registry.h"
 
@@ -137,10 +137,10 @@ indent (u_long indentation)
   for (; indentation > 0; indentation--)
     cout << " ";
 }
-#else /* !ACE_WIN32 */
+#else /* !ACE_WIN32 || ACE_LACKS_WIN32_REGISTRY */
 int
 ACE_TMAIN (int , ACE_TCHAR *[])
 {
   return 0;
 }
-#endif /* ACE_WIN32 */
+#endif /* ACE_WIN32 && !ACE_LACKS_WIN32_REGISTRY */

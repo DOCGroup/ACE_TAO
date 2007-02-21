@@ -164,6 +164,16 @@ public:
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
+/*
+** LabVIEW RT cannot directly use an executable. Need to build the program
+** as a DLL and call it from something else. The ACE test framework knows this
+** trick and uses a LabVIEW RT target-resident control program to load a
+** DLL, look up it's main() entrypoint, and call it.
+*/
+#       if defined (ACE_BUILD_LABVIEW_EXE_AS_DLL)
+extern "C" __declspec (dllexport) int main (int, char *[]);
+#       endif /* ACE_BUILD_LABVIEW_EXE_AS_DLL) */
+
 #       define main \
 ace_main_i (int, char *[]); \
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL \

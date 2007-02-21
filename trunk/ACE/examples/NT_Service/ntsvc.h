@@ -21,6 +21,8 @@
 #ifndef NTSVC_H_
 #define NTSVC_H_
 
+#if defined (ACE_WIN32) && !defined (ACE_LACKS_WIN32_SERVICES)
+
 #include "ace/Event_Handler.h"
 #include "ace/NT_Service.h"
 #include "ace/Singleton.h"
@@ -61,5 +63,7 @@ private:
 // and the ACE_Object_Manager deletes it at run-down.
 
 typedef ACE_Singleton<Service, ACE_Mutex> SERVICE;
+
+#endif /* ACE_WIN32 && !ACE_LACKS_WIN32_SERVICES */
 
 #endif /* #ifndef NTSVC_H_ */

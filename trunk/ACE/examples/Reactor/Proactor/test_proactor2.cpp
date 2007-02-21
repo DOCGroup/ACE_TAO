@@ -42,11 +42,11 @@
 
 ACE_RCSID(Proactor, test_proactor2, "test_proactor2.cpp,v 1.27 2000/03/07 17:15:56 schmidt Exp")
 
-#if ((defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) || (defined (ACE_HAS_AIO_CALLS)))
+#if defined (ACE_HAS_WIN32_OVERLAPPED_IO) || defined (ACE_HAS_AIO_CALLS)
   // This only works on Win32 platforms and on Unix platforms supporting
   // POSIX aio calls.
 
-#if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
+#if defined (ACE_HAS_WIN32_OVERLAPPED_IO)
 
 #include "ace/WIN32_Proactor.h"
 
@@ -676,7 +676,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   if (parse_args (argc, argv) == -1)
     return -1;
 
-#if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
+#if defined (ACE_HAS_WIN32_OVERLAPPED_IO)
 
   ACE_WIN32_Proactor *      pImpl = new ACE_WIN32_Proactor;
 
@@ -805,4 +805,4 @@ int PrintSigMask ()
   return 0;
 }
 
-#endif /* ACE_WIN32 && !ACE_HAS_WINCE || ACE_HAS_AIO_CALLS*/
+#endif /* ACE_HAS_WIN32_OVERLAPPED_IO || ACE_HAS_AIO_CALLS */

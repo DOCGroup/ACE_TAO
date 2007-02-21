@@ -1,3 +1,62 @@
+Wed Feb 21 21:46:18 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * ace/config-pharlap.h:
+        * ace/config-WinCE.h:
+        * ace/OS_NS_stdio.inl: Changed ACE_LACKS_SETFILEPOINTEREX to
+          ACE_LACKS_WIN32_SETFILEPOINTEREX to be consistent with the other
+          ACE_*_WIN32_*things.
+
+        * ace/config-pharlap.h:
+        * ace/config-WinCE.h:
+        * ace/NT_Service.{h cpp}:
+        * examples/NT_Service/nt_svc.{h cpp}:
+        * examples/NT_Service/main.cpp:
+          Also added ACE_LACKS_WIN32_SERVICES for Pharlap and CE. This marks
+          a platform that is Windows, but doesn't have Windows services.
+
+        * ace/Configuration.{h cpp}:
+        * ace/Registry.{h cpp}: Rather than exclude registry-using code using
+          ACE_HAS_PHARLAP, use a new setting ACE_LACKS_WIN32_REGISTRY.
+
+        * ace/config-pharlap.h: Added ACE_LACKS_WIN32_REGISTRY.
+
+        * protocols/ace/HTBP/HTBP_Environment.cpp:
+        * examples/Reactor/WFMO_Reactor/Registry_Changes.cpp:
+        * examples/Registry/test_registry_update.cpp:
+        * examples/Registry/test_registry_iterator.cpp:
+        * tests/Config_Test.cpp: Don't try registry stuff
+          if ACE_LACKS_WIN32_REGISTRY is set.
+
+        * examples/Reactor/WFMO_Reactor/Window_Messages.cpp: Don't try this if
+          ACE_LACKS_MSG_WFMO is set.
+
+        * apps/JAWS/server/IO.{h cpp}:
+        * apps/JAWS/server/HTTP_Handler.{h cpp}:
+        * apps/JAWS/server/HTTP_Server.{h cpp}:
+        * apps/JAWS2/JAWS/IO.{h cpp}:
+        * apps/JAWS2/JAWS/IO_Acceptor.{h cpp}:
+        * apps/JAWS2/JAWS/IO_Handler.{h cpp}:
+        * apps/JAWS3/jaws3/Asynch_IO.cpp:
+        * examples/APG/Proactor/HA_Proactive_Status.{h cpp}:
+        * examples/Connection/blocking/SPIPE-acceptor.{h cpp}:
+        * examples/Connection/blocking/test_spipe_acceptor.cpp:
+        * examples/Reactor/Proactor/post_completions.cpp:
+        * examples/Reactor/Proactor/simple_test_proactor.cpp:
+        * examples/Reactor/Proactor/test_cancel.cpp:
+        * examples/Reactor/Proactor/test_end_event_loop.cpp:
+        * examples/Reactor/Proactor/test_multiple_loops.cpp:
+        * examples/Reactor/Proactor/test_proactor.cpp:
+        * examples/Reactor/Proactor/test_proactor2.cpp:
+        * examples/Reactor/Proactor/test_proactor3.cpp:
+        * examples/Reactor/Proactor/test_timeout.cpp:
+        * examples/Reactor/Proactor/test_timeout_st.cpp:
+        * examples/Reactor/Proactor/test_udp_proactor.cpp:
+        * examples/Reactor/WFMO_Reactor/Talker.cpp:
+          Decide on whether or not to compile the asynch support classes
+          based on ACE_HAS_WIN32_OVERLAPPED_IO, not ACE_WIN32. ACE_WIN32
+          is broader than that overlapped I/O-capable ones; Pharlap ETS
+          doesn't do overlapped I/O, for instance.
+
 Wed Feb 21 19:27:14 UTC 2007  Ossama Othman  <ossama_othman at symantec dot com>
 
         * ace/Array_Base.cpp (size):
