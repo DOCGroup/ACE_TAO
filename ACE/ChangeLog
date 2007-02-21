@@ -1,3 +1,10 @@
+Wed Feb 21 08:13:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/IPC_SAP/SSL_SAP/SSL-server-poll.cpp:
+        * examples/IPC_SAP/SSL_SAP/SSL-server-simple.cpp:
+        * examples/IPC_SAP/SSL_SAP/SSL-server.cpp:
+          Fixed compile problems when wchar is enabled
+
 Tue Feb 20 19:15:30 UTC 2007  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * tests/run_test.lst:

@@ -204,7 +204,7 @@ main (int, char *[])
 }
 #else
 #include "ace/OS_NS_stdio.h"
-int main (int, char *[])
+int ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_OS::fprintf (stderr, "This feature is not supported\n");
   return 0;
