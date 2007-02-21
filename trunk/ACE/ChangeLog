@@ -9,7 +9,7 @@ Wed Feb 21 21:46:18 UTC 2007  Steve Huston  <shuston@riverace.com>
         * ace/config-pharlap.h:
         * ace/config-WinCE.h:
         * ace/NT_Service.{h cpp}:
-        * examples/NT_Service/nt_svc.{h cpp}:
+        * examples/NT_Service/nt_svc.h:
         * examples/NT_Service/main.cpp:
           Also added ACE_LACKS_WIN32_SERVICES for Pharlap and CE. This marks
           a platform that is Windows, but doesn't have Windows services.
