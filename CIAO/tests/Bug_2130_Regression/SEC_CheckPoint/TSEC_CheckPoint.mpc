@@ -54,17 +54,17 @@ project(TSEC_CheckPoint_svnt) : ciao_servant_dnc, event {
 }
 
 
-project(TSEC_CheckPoint_exec) : ciao_component_dnc, event {
+project(TSEC_CheckPoint_exec) : ciao_component_dnc, event, ciao_server_dnc {
   avoids += ace_for_tao
   after   += TSEC_CheckPoint_svnt
   after   += ENW_skel ENW_stub
 
-  includes   += ../interfaces 
+  includes   += ../interfaces
 
   sharedname = TSEC_CheckPoint_exec
-  libpaths  += ../interfaces 
+  libpaths  += ../interfaces
   libs      += TSEC_CheckPoint_stub TSEC_CheckPoint_svnt
-  libs      += ENW_stub ENW_skel CIAO_DnC_Server TAO_CosNaming
+  libs      += ENW_stub ENW_skel
 
   idlflags  -= -GT
   idlflags  +=  -SS -St \
