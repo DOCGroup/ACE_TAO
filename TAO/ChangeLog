@@ -1,3 +1,10 @@
+Wed Feb 21 14:25:05 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/HTIOP/HTIOP_Connection_Handler.h:
+        * orbsvcs/orbsvcs/HTIOP/HTIOP_Connection_Handler.cpp:
+        
+          Added a new set_dscp_codepoint () method.
+
 Wed Feb 21 14:21:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/POA/Bug_1592_Regression/*:
