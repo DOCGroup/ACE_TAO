@@ -260,8 +260,7 @@ TAO::ServerRequestInfo::get_reply_service_context (IOP::ServiceId id)
 IOP::ServiceContext *
 TAO::ServerRequestInfo::get_service_context_i (
     TAO_Service_Context & service_context_list,
-    IOP::ServiceId id
-    )
+    IOP::ServiceId id)
 {
   IOP::ServiceContext_var service_context;
 
@@ -395,8 +394,7 @@ TAO::ServerRequestInfo::adapter_id (void)
 }
 
 char *
-TAO::ServerRequestInfo::target_most_derived_interface (
-    void)
+TAO::ServerRequestInfo::target_most_derived_interface (void)
 {
   PortableServer::Servant const servant =
     (this->servant_upcall_ == 0
@@ -438,8 +436,7 @@ TAO::ServerRequestInfo::get_server_policy (CORBA::PolicyType type)
 
 void
 TAO::ServerRequestInfo::set_slot (PortableInterceptor::SlotId id,
-                                  const CORBA::Any &data
-                                  )
+                                  const CORBA::Any &data)
 {
   // Retrieve the total number of assigned slots from the PICurrent
   // object.  No TSS access is incurred.
@@ -461,8 +458,7 @@ TAO::ServerRequestInfo::set_slot (PortableInterceptor::SlotId id,
 }
 
 CORBA::Boolean
-TAO::ServerRequestInfo::target_is_a (const char * id
-                                     )
+TAO::ServerRequestInfo::target_is_a (const char * id)
 {
   // Implemented in the generated skeleton.
 
@@ -471,21 +467,18 @@ TAO::ServerRequestInfo::target_is_a (const char * id
      ? 0
      : this->servant_upcall_->servant ());
 
-
   if (servant == 0)
     {
       throw ::CORBA::NO_RESOURCES (CORBA::OMGVMCID | 1, CORBA::COMPLETED_NO);
     }
 
-  return servant->_is_a (id
-                        );
+  return servant->_is_a (id);
 }
 
 void
 TAO::ServerRequestInfo::add_reply_service_context (
     const IOP::ServiceContext & service_context,
-    CORBA::Boolean replace
-    )
+    CORBA::Boolean replace)
 {
   // Get the service context from the list
   TAO_Service_Context &service_context_list =

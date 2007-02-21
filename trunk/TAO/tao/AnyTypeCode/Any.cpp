@@ -477,7 +477,7 @@ operator<<= (CORBA::Any &any, CORBA::Object_ptr *objptr)
 }
 
 // These are copying versions for unbounded (w)strings. They are not inlined,
-// to avoid use in Any.i before definition in ORB.i.
+// to avoid use in Any.inl before definition in ORB.inl.
 
 void
 operator<<= (CORBA::Any &any, const char *s)

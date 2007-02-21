@@ -764,7 +764,6 @@ libTAO_la_SOURCES = \
   DLL_Parser.cpp \
   Default_Collocation_Resolver.cpp \
   Default_Endpoint_Selector_Factory.cpp \
-  Default_Protocols_Hooks.cpp \
   Default_Stub_Factory.cpp \
   Default_Thread_Lane_Resources_Manager.cpp \
   DomainC.cpp \
@@ -844,6 +843,7 @@ libTAO_la_SOURCES = \
   Messaging_SyncScopeC.cpp \
   Muxed_TMS.cpp \
   NVList_Adapter.cpp \
+  Network_Priority_Protocols_Hooks.cpp \
   New_Leader_Generator.cpp \
   Null_Fragmentation_Strategy.cpp \
   ORB.cpp \
@@ -1065,7 +1065,6 @@ nobase_include_HEADERS = \
   DLL_Parser.h \
   Default_Collocation_Resolver.h \
   Default_Endpoint_Selector_Factory.h \
-  Default_Protocols_Hooks.h \
   Default_Stub_Factory.h \
   Default_Thread_Lane_Resources_Manager.h \
   Domain.pidl \
@@ -1223,6 +1222,7 @@ nobase_include_HEADERS = \
   Messaging_SyncScopeC.h \
   Muxed_TMS.h \
   NVList_Adapter.h \
+  Network_Priority_Protocols_Hooks.h \
   New_Leader_Generator.h \
   Null_Fragmentation_Strategy.h \
   ORB.h \

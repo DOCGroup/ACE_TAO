@@ -435,8 +435,7 @@ TAO_Object_Adapter::locate_poa (const TAO::ObjectKey &key,
 
 int
 TAO_Object_Adapter::activate_poa (const poa_name &folded_name,
-                                  TAO_Root_POA *&poa
-                                  )
+                                  TAO_Root_POA *&poa)
 {
   int result = -1;
 

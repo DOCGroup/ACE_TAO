@@ -33,8 +33,7 @@ TAO::ServerRequestInterceptor_Adapter_Impl::tao_ft_interception_point (
   void * servant_upcall,
   CORBA::TypeCode_ptr const * exceptions,
   CORBA::ULong nexceptions,
-  CORBA::OctetSeq_out oc
-  )
+  CORBA::OctetSeq_out oc)
 {
   // This method implements one of the "starting" server side
   // interception point.
@@ -59,9 +58,7 @@ TAO::ServerRequestInterceptor_Adapter_Impl::tao_ft_interception_point (
           if (registered.details_.should_be_processed (is_remote_request))
             {
               registered.interceptor_->
-                tao_ft_interception_point (&request_info,
-                                           oc
-                                          );
+                tao_ft_interception_point (&request_info, oc);
             }
 
           if (oc != 0)
@@ -71,8 +68,7 @@ TAO::ServerRequestInterceptor_Adapter_Impl::tao_ft_interception_point (
                                        nargs,
                                        servant_upcall,
                                        exceptions,
-                                       nexceptions
-                                      );
+                                       nexceptions);
 
               return;
             }
@@ -91,8 +87,7 @@ TAO::ServerRequestInterceptor_Adapter_Impl::tao_ft_interception_point (
                                nargs,
                                servant_upcall,
                                exceptions,
-                               nexceptions
-                              );
+                               nexceptions);
     }
 }
 
@@ -103,8 +98,7 @@ TAO::ServerRequestInterceptor_Adapter_Impl::receive_request_service_contexts (
   size_t nargs,
   void * servant_upcall,
   CORBA::TypeCode_ptr const * exceptions,
-  CORBA::ULong nexceptions
-  )
+  CORBA::ULong nexceptions)
 {
   // This method implements one of the "intermediate" server side
   // interception point.
@@ -147,8 +141,7 @@ TAO::ServerRequestInterceptor_Adapter_Impl::receive_request_service_contexts (
           if (registered.details_.should_be_processed (is_remote_request))
             {
               registered.interceptor_->
-                receive_request_service_contexts (&request_info
-                                                 );
+                receive_request_service_contexts (&request_info);
             }
         }
     }
@@ -161,8 +154,7 @@ TAO::ServerRequestInterceptor_Adapter_Impl::receive_request_service_contexts (
                                nargs,
                                servant_upcall,
                                exceptions,
-                               nexceptions
-                              );
+                               nexceptions);
     }
 }
 
@@ -178,8 +170,7 @@ TAO::ServerRequestInterceptor_Adapter_Impl::receive_request_service_contexts (
   size_t nargs,
   void * servant_upcall,
   CORBA::TypeCode_ptr const * exceptions,
-  CORBA::ULong nexceptions
-  )
+  CORBA::ULong nexceptions)
 {
   // This method implements one of the "starting" server side
   // interception point if extended interceptors are not in place.
@@ -210,8 +201,7 @@ TAO::ServerRequestInterceptor_Adapter_Impl::receive_request_service_contexts (
           if (registered.details_.should_be_processed (is_remote_request))
             {
               registered.interceptor_->
-                receive_request_service_contexts (&request_info
-                                                 );
+                receive_request_service_contexts (&request_info);
             }
 
           // The starting interception point completed successfully.
@@ -228,8 +218,7 @@ TAO::ServerRequestInterceptor_Adapter_Impl::receive_request_service_contexts (
                                nargs,
                                servant_upcall,
                                exceptions,
-                               nexceptions
-                              );
+                               nexceptions);
     }
 }
 
@@ -281,8 +270,7 @@ TAO::ServerRequestInterceptor_Adapter_Impl::receive_request (
           if (registered.details_.should_be_processed (is_remote_request))
             {
               registered.interceptor_->
-                receive_request (&request_info
-                                );
+                receive_request (&request_info);
             }
 
           // Note that no interceptors are pushed on to or popped off
@@ -299,8 +287,7 @@ TAO::ServerRequestInterceptor_Adapter_Impl::receive_request (
                         nargs,
                         servant_upcall,
                         exceptions,
-                        nexceptions
-                       );
+                        nexceptions);
     }
 
 }
@@ -347,9 +334,7 @@ TAO::ServerRequestInterceptor_Adapter_Impl::send_reply (
 
       if (registered.details_.should_be_processed (is_remote_request))
         {
-          registered.interceptor_->
-            send_reply (&request_info
-                       );
+          registered.interceptor_->send_reply (&request_info);
         }
     }
 
@@ -365,8 +350,7 @@ TAO::ServerRequestInterceptor_Adapter_Impl::send_exception (
   size_t nargs,
   void * servant_upcall,
   CORBA::TypeCode_ptr const * exceptions,
-  CORBA::ULong nexceptions
-  )
+  CORBA::ULong nexceptions)
 {
   // This is an "ending" server side interception point so we only
   // process the interceptors pushed on to the flow stack.
@@ -402,9 +386,7 @@ TAO::ServerRequestInterceptor_Adapter_Impl::send_exception (
 
           if (registered.details_.should_be_processed (is_remote_request))
             {
-              registered.interceptor_->
-                send_exception (&request_info
-                               );
+              registered.interceptor_->send_exception (&request_info);
             }
         }
     }
@@ -460,8 +442,7 @@ TAO::ServerRequestInterceptor_Adapter_Impl::send_other (
   size_t nargs,
   void * servant_upcall,
   CORBA::TypeCode_ptr const * exceptions,
-  CORBA::ULong nexceptions
-  )
+  CORBA::ULong nexceptions)
 {
   // This is an "ending" server side interception point so we only
   // process the interceptors pushed on to the flow stack.
@@ -510,15 +491,13 @@ TAO::ServerRequestInterceptor_Adapter_Impl::send_other (
                         nargs,
                         servant_upcall,
                         exceptions,
-                        nexceptions
-                       );
+                        nexceptions);
     }
 }
 
 void
 TAO::ServerRequestInterceptor_Adapter_Impl::add_interceptor (
-  PortableInterceptor::ServerRequestInterceptor_ptr interceptor
-  )
+  PortableInterceptor::ServerRequestInterceptor_ptr interceptor)
 {
   this->interceptor_list_.add_interceptor (interceptor);
 }
