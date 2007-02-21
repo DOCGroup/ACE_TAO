@@ -294,6 +294,12 @@ TAO::HTIOP::Connection_Handler::process_listen_point_list
 }
 
 int
+TAO::HTIOP::Connection_Handler::set_dscp_codepoint (CORBA::Long /*dscp*/)
+{
+  return 0;
+}
+
+int
 TAO::HTIOP::Connection_Handler::set_dscp_codepoint (
   CORBA::Boolean /*enable_network_priority*/)
 {
