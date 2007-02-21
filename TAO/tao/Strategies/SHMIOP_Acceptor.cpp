@@ -202,8 +202,7 @@ TAO_SHMIOP_Acceptor::open (TAO_ORB_Core *orb_core,
   if (port)
     this->address_.set (ACE_TEXT_CHAR_TO_TCHAR(port));
 
-  return this->open_i (orb_core,
-                       reactor);
+  return this->open_i (orb_core, reactor);
 }
 
 int
@@ -313,8 +312,7 @@ TAO_SHMIOP_Acceptor::open_i (TAO_ORB_Core* orb_core, ACE_Reactor *reactor)
       // This will be the actualy host name of the original endpoint.
       ACE_TCHAR tmp_host[MAXHOSTNAMELEN+1];
 
-      if (this->address_.get_host_name (tmp_host,
-                                        sizeof tmp_host) != 0)
+      if (this->address_.get_host_name (tmp_host, sizeof tmp_host) != 0)
         {
           if (TAO_debug_level > 0)
             ACE_ERROR ((LM_ERROR,

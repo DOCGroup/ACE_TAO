@@ -1,3 +1,10 @@
+Wed Feb 21 10:41:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/AnyTypeCode/TypeCode.cpp:
+        * tao/Strategies/SHMIOP_Acceptor.cpp:
+        * tao/Strategies/UIOP_Connection_Handler.cpp:
+          Layout changes
+
 Wed Feb 21 08:28:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Any/Recursive/client.cpp:
