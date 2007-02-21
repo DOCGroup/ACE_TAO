@@ -1,3 +1,9 @@
+Tue Feb 20 17:56:25 UTC 2007  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * COPYING: Clarified how the COPYING file need to be included with
+          any code released.  Thanks to Scott Mark <sjm at pobox dot com>
+          for helping clarify this.
+  
 Tue Feb 20 17:59:51 UTC 2007  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/Deployment/Deployment_TargetManager.idl
@@ -313,6 +319,7 @@ Tue Feb 20 16:17:46 UTC 2007  William R. Otte  <wotte@dre.vanderbilt.edu>
          Added DomainApplication interface, completely missing from our IDL.
 
 
+>>>>>>> .r77261
 Tue Feb 20 14:15:14 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * CIDLC/OperationHeaderEmitters.cpp:
