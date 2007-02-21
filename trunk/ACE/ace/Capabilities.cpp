@@ -1,5 +1,5 @@
 #include "ace/Capabilities.h"
-#include "ace/os_include/os_ctype.h"
+#include "ace/OS_NS_ctype.h"
 #include "ace/OS_Memory.h"
 #include "ace/OS_NS_string.h"
 
@@ -69,12 +69,12 @@ ACE_Capabilities::parse (const ACE_TCHAR *buf, ACE_TString &cap)
               cap += *buf++;
               continue;
             }
-          if (isdigit(*buf))
+          if (ACE_OS::ace_isdigit(*buf))
             {
               // @@ UNICODE Does this work with unicode?
               int oc = 0;
               for (int i = 0;
-                   i < 3 && *buf && isdigit (*buf);
+                   i < 3 && *buf && ACE_OS::ace_isdigit (*buf);
                    i++)
                 oc = oc * 8 + (*buf++ - ACE_LIB_TEXT ('0'));
 
@@ -92,7 +92,7 @@ ACE_Capabilities::parse (const ACE_TCHAR *buf, int &cap)
 {
   int n = 0;
 
-  while (*buf && isdigit (*buf))
+  while (*buf && ACE_OS::ace_isdigit (*buf))
     n = n * 10 + (*buf++ - ACE_LIB_TEXT ('0'));
 
   cap = n;
@@ -128,7 +128,7 @@ ACE_Capabilities::fillent (const ACE_TCHAR *buf)
       ACE_CapEntry *ce;
 
       // Skip blanks
-      while (*buf && isspace(*buf)) buf++;
+      while (*buf && ACE_OS::ace_isspace(*buf)) buf++;
       // If we get end of line return
 
       if (*buf == ACE_LIB_TEXT ('\0'))
@@ -202,7 +202,7 @@ ACE_Capabilities::is_entry (const ACE_TCHAR *name, const ACE_TCHAR *line)
   for (;;)
     {
       // Skip blanks or irrelevant characters
-      while (*line && isspace(*line))
+      while (*line && ACE_OS::ace_isspace(*line))
         ++line;
 
       // End of line reached
@@ -292,7 +292,7 @@ ACE_Capabilities::getval (const ACE_TCHAR *keyname, int &val)
 static int
 is_empty (const ACE_TCHAR *line)
 {
-  while (*line && isspace (*line))
+  while (*line && ACE_OS::ace_isspace (*line))
     ++line;
 
   return *line == ACE_LIB_TEXT ('\0') || *line == ACE_LIB_TEXT ('#');
@@ -301,7 +301,7 @@ is_empty (const ACE_TCHAR *line)
 static int
 is_line (const ACE_TCHAR *line)
 {
-  while (*line && isspace (*line))
+  while (*line && ACE_OS::ace_isspace (*line))
     ++line;
 
   return *line != ACE_LIB_TEXT ('\0');
