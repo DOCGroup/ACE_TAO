@@ -56,7 +56,7 @@ namespace TAO
       if (!CORBA::is_nil (this->servant_locator_.in ()))
         {
           throw ::CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 6,
-                                           CORBA::COMPLETED_NO);
+                                        CORBA::COMPLETED_NO);
         }
 
       this->servant_locator_ = PortableServer::ServantLocator::_narrow (imgr);
@@ -69,9 +69,8 @@ namespace TAO
       const PortableServer::ObjectId &system_id,
       PortableServer::Servant &servant)
     {
-      TAO_SERVANT_LOCATION location = TAO_SERVANT_NOT_FOUND;
-
-      location = this->poa_->servant_present (system_id, servant);
+      TAO_SERVANT_LOCATION  location =
+        this->poa_->servant_present (system_id, servant);
 
       if (location == TAO_SERVANT_NOT_FOUND)
         {
@@ -203,7 +202,8 @@ namespace TAO
       // exception the methods normal return is overrriden, the request completes
       // with the exception
 
-      if (!CORBA::is_nil (this->servant_locator_.in ()))
+      if (!CORBA::is_nil (this->servant_locator_.in ()) &&
+          servant_upcall.servant())
         {
           try
             {

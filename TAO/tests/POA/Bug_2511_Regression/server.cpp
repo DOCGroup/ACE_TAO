@@ -241,5 +241,5 @@ main (int argc, char **argv)
       retval = -1;
     }
 
-  return retval;
+  return errorCount;
 }

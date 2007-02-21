@@ -1,3 +1,16 @@
+Wed Feb 21 12:23:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/POA/Bug_2511_Regression/server.cpp:
+          Return the error count, in case of a failure then the test
+          framework will notice this
+
+        * tao/PortableServer/RequestProcessingStrategyServantLocator.cpp:
+          Don't call postinvoke when we don't have a servant. Fixes bugzilla
+          bugs 2511 and 2658. Thanks to Martin Cornelius
+          <Martin dot Cornelius at smiths-heimann dot com> and Milan
+          Cvetkovic <milan dot cvetkovic at mpathix dot com> for reporting
+          this and providing a test case and a proposed fix.
+
 Wed Feb 21 11:42:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_1383_Regression/*:
