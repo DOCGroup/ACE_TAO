@@ -83,8 +83,17 @@ endif
 endif
 
 PIC		= -KPIC
-AR		= ar
-ARFLAGS		= r
+
+ifneq ($(templates),implicit)
+  AR            = ar
+  ARFLAGS       = r
+else
+# We need to create the archive via CC so that the prelinker can
+# instantiate the required templates.
+  AR            = CC -ar
+  ARFLAGS       = -o
+endif # templates != implicit
+
 RANLIB		= echo
 SOFLAGS		+= -shared $(CCFLAGS) $(CPPFLAGS) -all -multigot
 SOBUILD		= $(RM) $@; $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.o $< && \
