@@ -190,3 +190,20 @@ ifeq ($(threads),1)
   endif
 endif
 LIBS          += -lxti -lrt -ldld
+
+# The correct flags to pass to the linker for dynamic shared library
+# versioning
+#
+ifneq ($(SONAME),)
+  SOFLAGS += -Wl,+h -Wl,$(SONAME)
+endif
+
+# if _FILE_OFFSET_BITS==64 then the HP headers will produce
+# spurious 600 warnings, except on 11.23
+# Can also (possible) be fixed with patch PHKL_34670 on HP-UX 11.11
+#
+ifeq ($(64bitoffsets),1)
+  ifneq ($(HPUX_VERS), 1123)
+    CCFLAGS += +W600
+  endif
+endif

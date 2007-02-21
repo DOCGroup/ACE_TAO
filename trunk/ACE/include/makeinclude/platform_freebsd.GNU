@@ -46,7 +46,7 @@ PRELIB = @echo
 ifeq ($(threads),1)
 RET = $(shell test $(OSVERSION) -lt 500016 && printf 1)
 ifeq ($(RET),1)
-  PTHREAD_CFLAGS = -D_THREAD_SAFE
+  PTHREAD_CPPFLAGS = -D_THREAD_SAFE
   PTHREAD_LIBS   = -pthread
 else
   RET = $(shell test $(OSVERSION) -lt 502102 && printf 1)
@@ -57,9 +57,11 @@ else
   endif
 endif # RET
 
-CFLAGS  += $(PTHREAD_CFLAGS)
+CPPFLAGS  += $(PTHREAD_CPPFLAGS)
 LIBS += $(PTHREAD_LIBS)
 
+else
+CPPFLAGS += -DACE_MT_SAFE=0
 endif # threads
 
 # Test for template instantiation, add to SOFLAGS if SONAME set,
