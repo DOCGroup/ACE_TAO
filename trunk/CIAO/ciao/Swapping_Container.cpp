@@ -213,7 +213,9 @@ namespace CIAO
         tmp = this->home_servant_poa_.in ();
       }
     else
-      tmp = this->facet_cons_poa_.in ();
+      {
+        tmp = this->facet_cons_poa_.in ();
+      }
 
     PortableServer::ObjectId_var oid = tmp->activate_object (p);
 
