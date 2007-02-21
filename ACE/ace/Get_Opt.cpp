@@ -489,15 +489,7 @@ ACE_Get_Opt::long_option (const ACE_TCHAR *name,
   // when the long option is found, but won't allow the caller to pass it on
   // the command line (how could they?).  The special case is 0, but since
   // we always return it, we let the caller worry about that.
-#if defined (_MSC_VER) && (_MSC_VER >= 1300)
-  // For MSVC 7.x, we need to prevent "illegal" character getting into
-  // isalnum, otherwise, it will crash the program.
-  if (short_option > 0 &&
-      short_option < 256 &&
-      ACE_OS::ace_isalnum (static_cast<char> (short_option)) != 0)
-#else
   if (ACE_OS::ace_isalnum (short_option) != 0)
-#endif /* _MSC_VER && _MSC_VER >= 1300 */
     {
       // If the short_option already exists, make sure it matches, otherwise
       // add it.
