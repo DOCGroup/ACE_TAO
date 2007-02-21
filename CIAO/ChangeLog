@@ -1,3 +1,12 @@
+Wed Feb 21 20:30:34 UTC 2007  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DynAny_Handler/DynAny_Handler.cpp
+        * CIAO_Events/CIAOEvents.hpp
+        * RT-CCM/CIAOServerResources.hpp
+        * Basic_Deployment_Data.hpp
+        
+          Compile fixes for Borland and pedantic G++ compilers. 
+
 Wed Feb 21 19:16:14 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/TargetManager/TargetManager.mpc:

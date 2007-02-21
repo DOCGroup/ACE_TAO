@@ -709,7 +709,7 @@ namespace CIAO
 
       enum Value
       {
-        SERVER_DECLARED_l,CLIENT_PROPAGATED_l,
+        SERVER_DECLARED_l, CLIENT_PROPAGATED_l
       };
 
 
