@@ -103,7 +103,7 @@ TAO_UIOP_Connection_Handler::open (void*)
               tph->server_protocol_properties_at_orb_level (protocol_properties);
             }
         }
-      catch (const ::CORBA::Exception& ex)
+      catch (const ::CORBA::Exception&)
         {
           return -1;
         }
@@ -196,14 +196,13 @@ TAO_UIOP_Connection_Handler::handle_timeout (const ACE_Time_Value &,
   // We don't use this upcall for I/O.  This is only used by the
   // Connector to indicate that the connection timedout.  Therefore,
   // we should call close().
-  int ret = this->close ();
+  int const ret = this->close ();
   this->reset_state (TAO_LF_Event::LFS_TIMEOUT);
   return ret;
 }
 
 int
-TAO_UIOP_Connection_Handler::handle_close (ACE_HANDLE,
-                                           ACE_Reactor_Mask)
+TAO_UIOP_Connection_Handler::handle_close (ACE_HANDLE, ACE_Reactor_Mask)
 {
   ACE_ASSERT (0);
   return 0;
@@ -240,8 +239,7 @@ TAO_UIOP_Connection_Handler::add_transport_to_cache (void)
     this->orb_core ()->lane_resources ().transport_cache ();
 
   // Add the handler to Cache
-  return cache.cache_idle_transport (&prop,
-                                     this->transport ());
+  return cache.cache_idle_transport (&prop, this->transport ());
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -369,8 +369,7 @@ TAO::unaliased_typecode (CORBA::TypeCode_ptr tc)
 
   if (tc_kind == CORBA::tk_alias)
     {
-      CORBA::TypeCode_var tc_content =
-        CORBA::TypeCode::_duplicate (tc);
+      CORBA::TypeCode_var tc_content = CORBA::TypeCode::_duplicate (tc);
 
       // Iterate until we get to the actual unaliased type.
       do
