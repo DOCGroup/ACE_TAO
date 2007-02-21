@@ -156,6 +156,7 @@ TAO/tests/POA/Default_Servant/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MI
 TAO/tests/POA/Single_Threaded_POA/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ST
 TAO/tests/POA/Non_Servant_Upcalls/run_test.pl: !SUNCC5_1
 TAO/tests/POA/MT_Servant_Locator/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ST
+TAO/tests/POA/Bug_1592_Regression/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO
 TAO/tests/POA/Bug_2511_Regression/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO
 TAO/tests/POA/Nested_Non_Servant_Upcalls/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ST
 TAO/tests/POA/Deactivate_Object/run_test.pl
