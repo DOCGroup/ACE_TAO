@@ -2,8 +2,7 @@
 //
 // $Id$
 
-#include "tao/Exception.h"
-#include "ace/Swap.h"
+#include <algorithm>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -30,7 +29,7 @@ template <class T>
 ACE_INLINE void
 TAO::Utils::Servant_Var<T>::swap (Servant_Var<T> & rhs) throw ()
 {
-  ACE_Swap<T*>::swap (this->ptr_, rhs.ptr_);
+  std::swap (this->ptr_, rhs.ptr_);
 }
 
 template <class T>
