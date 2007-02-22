@@ -1,28 +1,33 @@
+Thu Feb 22 12:58:42 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/compiler.bor:
+          Removed BCB4/5 support
+
 Thu Feb 22 11:19:59 UTC 2007  Olli Savia  <ops@iki.fi>
 
         * ace/OS_NS_dirent.h:
         * ace/OS_NS_dirent.inl:
           Added ACE_OS::alphasort(). alphasort() is a BSD extension found
           on Linux as well.
-         
+
         * ace/config-lynxos.h:
           Added ACE_LACKS_ALPHASORT_PROTOTYPE.
-        
+
         * ace/config-win32-common.h:
           Added ACE_LACKS_ALPHASORT.
-        
+
         * ace/os_include/os_dirent.h:
           Added alphasort prototype.
-        
+
         * tests/Dirent_Test.cpp:
           Chaged to use use ACE_OS::alphasort().
 
-Wed Feb 22 09:24:42 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+Thu Feb 22 09:24:42 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Truncate.h (Truncate, truncate_cast):
           Also renamed the Borland part
 
-Wed Feb 22 04:57:42 UTC 2007  Ossama Othman  <ossama_othman at symantec dot com>
+Thu Feb 22 04:57:42 UTC 2007  Ossama Othman  <ossama_othman at symantec dot com>
 
         * tests/NonBlocking_Conn_Test.cpp (test_connect):
 
