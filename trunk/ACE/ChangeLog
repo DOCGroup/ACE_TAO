@@ -1,3 +1,16 @@
+Thu Feb 22 18:37:00 UTC 2007  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * ace/Service_Config.h:
+        * ace/Service_Config.inl:
+        * ace/Service_Config.cpp:
+        * ace/Service_Gestalt.h:
+        * ace/Service_Gestalt.cpp:
+
+          Fixing build troubles caused by the different ACE_TSS interface
+          for single-threaded builds. Eliminated the intermediary class
+          (TSS_Resources) and now storing the actual service gestalt
+          pointer in TSS, thus reducig the memory allocation overhead.
+
 Thu Feb 22 16:45:30 UTC 2007  Steve Huston  <shuston@riverace.com>
 
         * tests/MT_SOCK_Test.cpp: Document the actual cause of what's been
@@ -39,7 +52,7 @@ Thu Feb 22 13:03:01 UTC 2007  Carlos O'Ryan  <coryan@atdesk.com>
         * Merged changes from the bug_2815 branch.  From revision 77182 to
           revision 77315.
 
-	Tue Feb 20 18:17:00 UTC 2007  Carlos O'Ryan  <coryan@atdesk.com>
+        Tue Feb 20 18:17:00 UTC 2007  Carlos O'Ryan  <coryan@atdesk.com>
 
         * ace/ace_for_tao.mpc:
           Add Notification_Queue.cpp to this file too.  Thanks to Johnny
@@ -91,7 +104,7 @@ Thu Feb 22 13:03:01 UTC 2007  Carlos O'Ryan  <coryan@atdesk.com>
 
         * ace/Notification_Queue.h:
         * ace/Notification_Queue.inl:
-	* ace/Notification_Queue.cpp:
+        * ace/Notification_Queue.cpp:
           Re-factored to use ACE_Intrusive_List in the implementation.
           This eliminates memory allocations during additions and removal
           of elements.  Also, many of the operations cannot fail, so the

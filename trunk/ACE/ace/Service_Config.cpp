@@ -89,27 +89,6 @@ int ACE_Service_Config::be_a_daemon_ = 0;
 int ACE_Service_Config::signum_ = SIGHUP;
 
 
-///
-ACE_Service_Config::TSS_Resources::TSS_Resources (void)
-  : ptr_ (ACE_Service_Config::global())
-{
-}
-
-///
-ACE_Service_Gestalt *
-ACE_Service_Config::TSS_Resources::ptr () const
-{
-  return this->ptr_;
-}
-
-///
-ACE_Service_Gestalt *
-ACE_Service_Config::TSS_Resources::ptr (ACE_Service_Gestalt *n)
-{
-  return this->ptr_ = n;
-}
-
-
 void
 ACE_Service_Config::dump (void) const
 {
@@ -395,6 +374,7 @@ ACE_Service_Config::ACE_Service_Config (int ignore_static_svcs,
                                         size_t size,
                                         int signum)
   : ACE_Service_Gestalt (size, false, ignore_static_svcs)
+  , tss_ (this)
 {
   ACE_TRACE ("ACE_Service_Config::ACE_Service_Config");
 
@@ -462,6 +442,7 @@ ACE_Service_Config::create_service_type_impl (const ACE_TCHAR *name,
 ACE_Service_Config::ACE_Service_Config (const ACE_TCHAR program_name[],
                                         const ACE_TCHAR *logger_key)
   : ACE_Service_Gestalt (ACE_Service_Repository::DEFAULT_SIZE, false)
+  , tss_ (this)
 {
   ACE_TRACE ("ACE_Service_Config::ACE_Service_Config");
 
@@ -568,6 +549,10 @@ ACE_Service_Config::fini_svcs (void)
 ACE_Service_Config::~ACE_Service_Config (void)
 {
   ACE_TRACE ("ACE_Service_Config::~ACE_Service_Config");
+
+  // We do not want ~ACE_TSS<> to delete this again (single-thread
+  // builds)
+  this->tss_.ts_object (0);
 }
 
 // ************************************************************
