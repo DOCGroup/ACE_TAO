@@ -1,3 +1,9 @@
+Thu Feb 22 15:07:22 UTC 2007  Ciju John  <johnc@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/GNUACEProjectCreator.pm:
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+          Additions to support DDS specific build rules and versioning.
+
 Thu Feb 22 13:56:42 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Makefile.am:
