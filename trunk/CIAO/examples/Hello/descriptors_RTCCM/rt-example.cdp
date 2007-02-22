@@ -104,7 +104,7 @@
       <requirementName>CIAO:PolicySet</requirementName>
       <resourceName>test_server_resource_id</resourceName>
       <property>
-        <name>CIAO:PolicySetName</name>
+        <name>CIAO:InstancePolicy</name>
         <value>
           <type>
             <kind>tk_string</kind>
@@ -140,7 +140,7 @@
       <requirementName>CIAO:PolicySet</requirementName>
       <resourceName>test_server_resource_id</resourceName>
       <property>
-        <name>CIAO:PolicySetName</name>
+        <name>CIAO:InstancePolicy</name>
         <value>
           <type>
             <kind>tk_string</kind>
