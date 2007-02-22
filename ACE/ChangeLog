@@ -1,3 +1,8 @@
+Wed Feb 22 09:24:42 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Truncate.h (Truncate, truncate_cast):
+          Also renamed the Borland part
+
 Wed Feb 22 04:57:42 UTC 2007  Ossama Othman  <ossama_othman at symantec dot com>
 
         * tests/NonBlocking_Conn_Test.cpp (test_connect):
@@ -147,7 +152,7 @@ Wed Feb 21 19:27:14 UTC 2007  Ossama Othman  <ossama_othman at symantec dot com>
         * ace/ACE.inl (hex2byte):
         * ace/Capabilities.h (is_line, is_empty):
         * ace/Capabilities.cpp (parse, fillent, is_entry, is_empty, is_line):
-        * ace/Get_Opt.cpp (long_option): 
+        * ace/Get_Opt.cpp (long_option):
         * ace/OS_NS_ctype.inl (ace_isalnum):
 
           Added ACE::ace_isalnum, ACE::ace_isdigit and ACE::ace_islower
@@ -197,7 +202,7 @@ Wed Feb 21 19:27:14 UTC 2007  Ossama Othman  <ossama_othman at symantec dot com>
           Reverted change that altered implementation for IA64 Windows
           builds.  The returned nesting level was incorrect.  Use the
           implementation used by both 32-bit and AMD 64 bit builds.
-          
+
         * tests/Recursive_Mutex_Test.cpp (test_recursion_depth):
 
           Added test cases for the above problem.
