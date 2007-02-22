@@ -6,7 +6,6 @@ DSI_Simple_Server::DSI_Simple_Server (CORBA::ORB_ptr orb,
                                       PortableServer::POA_ptr poa)
   :  orb_ (CORBA::ORB::_duplicate (orb)),
      target_ (CORBA::Object::_duplicate (target)),//Simple_Server::_duplicate (target)),
-     poa_ (PortableServer::POA::_duplicate (poa)),
-     marshal_demarshal_(false)
+     poa_ (PortableServer::POA::_duplicate (poa))
 {
 }

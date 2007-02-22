@@ -18,6 +18,7 @@
 
 #include "tao/DynamicInterface/Server_Request.h"
 #include "tao/DynamicInterface/Dynamic_Implementation.h"
+#include "tao/DynamicInterface/AMH_DSI_Response_Handler.h"
 #include "tao/PortableServer/PortableServer.h"
 #include "tao/ORB.h"
 
@@ -35,15 +36,22 @@ public:
                      PortableServer::POA_ptr poa);
   // ctor
 
+  virtual void _dispatch (TAO_ServerRequest &request,
+                          void *context);
+  // Turns around and calls invoke, but using AMH style handler
   // = The DynamicImplementation methods.
-  virtual void invoke (CORBA::ServerRequest_ptr request)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+  //
+
+  // we need this because it is a pure virtual method in
+  // its parent class
+  virtual void invoke (CORBA::ServerRequest_ptr request);
+  virtual void invoke (CORBA::ServerRequest_ptr request,
+                       TAO_AMH_DSI_Response_Handler_ptr rh);
 
   virtual CORBA::RepositoryId _primary_interface (
       const PortableServer::ObjectId &oid,
       PortableServer::POA_ptr poa
-    )
-      ACE_THROW_SPEC (());
+    );
 
   virtual PortableServer::POA_ptr _default_POA (
     );
@@ -57,8 +65,6 @@ private:
 
   PortableServer::POA_var poa_;
   // The POA
-
-  bool marshal_demarshal_;
 };
 
 #if defined(__ACE_INLINE__)

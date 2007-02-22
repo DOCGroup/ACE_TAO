@@ -5,20 +5,85 @@
 #include "tao/DynamicInterface/Unknown_User_Exception.h"
 #include "tao/TAO_Server_Request.h"
 #include "tao/Transport.h"
+#include "tao/ORB_Core.h"
+#include "tao/Thread_Lane_Resources.h"
+#include "My_DII_Reply_Handler.h"
 
 #if !defined(__ACE_INLINE__)
 #include "test_dsi.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(DSI_Gateway, test_dsi, "$Id$")
+ACE_RCSID(DSI_AMI_Gateway, test_dsi, "$Id$")
+
+void
+DSI_Simple_Server::_dispatch (TAO_ServerRequest &request,
+                         void * //context
+                     )
+{
+  // No need to do any of this if the client isn't waiting.
+  if (request.response_expected ())
+    {
+      if (!CORBA::is_nil (request.forward_location ()))
+        {
+          request.init_reply ();
+          request.tao_send_reply ();
+
+          // No need to invoke in this case.
+          return;
+        }
+      else if (request.sync_with_server ())
+        {
+          // The last line before the call to this function
+          // was an ACE_CHECK_RETURN, so if we're here, we
+          // know there is no exception so far, and that's all
+          // a SYNC_WITH_SERVER client request cares about.
+          request.send_no_exception_reply ();
+        }
+    }
+
+  // Create DSI request object.
+  CORBA::ServerRequest *dsi_request = 0;
+  ACE_NEW (dsi_request,
+           CORBA::ServerRequest (request));
+
+  ACE_TRY
+    {
+      TAO_AMH_DSI_Response_Handler_ptr rh_ptr = 0;
+      ACE_NEW (rh_ptr, TAO_AMH_DSI_Response_Handler(request));
+
+      TAO_AMH_DSI_Response_Handler_var rh = rh_ptr;
+
+      // init the handler
+      TAO_AMH_BUFFER_ALLOCATOR* amh_allocator =
+              request.orb()->orb_core ()->lane_resources().amh_response_handler_allocator();
+      rh->init (request, amh_allocator);
+      // Delegate to user.
+      this->invoke (dsi_request,
+                    rh.in());
+    }
+  ACE_CATCH (CORBA::Exception, ex)
+
+    {
+      // Only if the client is waiting.
+      if (request.response_expected () && !request.sync_with_server ())
+        {
+          request.tao_send_reply_exception (ex);
+        }
+    }
+  ACE_ENDTRY;
+
+  CORBA::release (dsi_request);
+}
 
 void
 DSI_Simple_Server::invoke (CORBA::ServerRequest_ptr request)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  //marshal_demarshal_=true;
-  if(marshal_demarshal_)
-  {
+}
+
+void
+DSI_Simple_Server::invoke (CORBA::ServerRequest_ptr request,
+                           TAO_AMH_DSI_Response_Handler * rph)
+{
   CORBA::NVList_ptr list;
   this->orb_->create_list (0, list);
 
@@ -43,7 +108,10 @@ DSI_Simple_Server::invoke (CORBA::ServerRequest_ptr request)
   try
     {
       // Updates the byte order state, if necessary.
-      target_request->invoke ();
+      My_DII_Reply_Handler * rh_ptr = 0;
+      ACE_NEW (rh_ptr, My_DII_Reply_Handler (rph, this->orb_));
+
+      target_request->sendc (rh_ptr);
     }
   catch (const CORBA::UNKNOWN& ex)
     {
@@ -60,29 +128,6 @@ DSI_Simple_Server::invoke (CORBA::ServerRequest_ptr request)
   // Outgoing reply must have the same byte order as the incoming one.
   request->_tao_reply_byte_order (target_request->_tao_byte_order ());
 
-  }
-  else
-  {
-    // forward the request without marshalling and demarshalling.
-    TAO_ServerRequest & tao_server_request = request->_tao_server_request ();
-    TAO_Transport* request_ptr = tao_server_request.transport ();
-    TAO_Stub *stubobj = target_ ->_stubobj ();
-
-    // the following code is doing the copy but with memory leak
-    TAO_OutputCDR outcdr (tao_server_request.incoming ()->start ()->duplicate ());
-    outcdr.write_octet_array_mb(tao_server_request.incoming ()->start ());
-
-      ACE_DEBUG((LM_DEBUG,"the length of incoming cdr = %d\n"
-                        "the length of outgoing cdr = %d\n"
-                        "the length of my outcdr = %d\n",
-                        tao_server_request.incoming()->length(),
-                        tao_server_request.outgoing()->length(),
-                        outcdr.length ()));
-    request_ptr->send_message ( outcdr,
-                                stubobj,
-                                TAO_Transport::TAO_ONEWAY_REQUEST);
-
-  }
   if (ACE_OS::strcmp ("shutdown", request->operation ()) == 0)
     {
       this->orb_->shutdown (0);
@@ -92,7 +137,6 @@ DSI_Simple_Server::invoke (CORBA::ServerRequest_ptr request)
 CORBA::RepositoryId
 DSI_Simple_Server::_primary_interface (const PortableServer::ObjectId &,
                                        PortableServer::POA_ptr)
-    ACE_THROW_SPEC (())
 {
   return CORBA::string_dup ("IDL:Simple_Server:1.0");
 }

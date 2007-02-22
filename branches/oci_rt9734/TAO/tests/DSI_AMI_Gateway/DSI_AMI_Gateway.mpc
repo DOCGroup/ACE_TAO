@@ -41,10 +41,7 @@ project(*Gateway): taoexe, portableserver, messaging, avoids_minimum_corba, avoi
   Source_Files {
     test_dsi.cpp
     gateway.cpp
-  }
-  Source_Files {
-    testC.cpp
-    testS.cpp
+    My_DII_Reply_Handler.cpp
   }
   IDL_Files {
   }
