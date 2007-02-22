@@ -1,3 +1,14 @@
+Thu Feb 22 22:22:13 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
+
+        * examples/Hello/descriptors_RTCCM/rt-example.cdp:
+        
+          Updated the RT-CCM example deployment plan to conform
+          to the latest changes in specifying the POA policies
+          within the deployment plan.
+        
+          The POA policies now need to be specified with a tag name
+          as CIAO:InstancePolicy.
+
 Thu Feb 22 22:19:14 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
 
         * DAnCE/NodeApplicationManager/Containers_Info_Map.cpp:
