@@ -2,6 +2,8 @@
 
 #include "PS_Handler.h"
 #include "PM_Handler.h"
+#include "NPM_Handler.h"
+#include "CNPM_Handler.h"
 #include "CIAOServerResources.hpp"
 
 namespace CIAO
@@ -19,6 +21,8 @@ namespace CIAO
       CORBA::ULong len (dest.policies.length ());
       dest.policies.length (len +
                             src.count_priorityModel () +
+                            src.count_nwpriorityModel () +
+                            src.count_cnwpriorityModel () +
                             src.count_threadpool () +
                             src.count_priorityBandedConnection ());
 
@@ -31,6 +35,30 @@ namespace CIAO
           PM_Handler::priority_model_pd (*i, pmd);
 
           dest.policies[len++].PriorityModelDef (pmd);
+        }
+
+      for (PolicySet::nwpriorityModel_const_iterator i = 
+           src.begin_nwpriorityModel ();
+           i != src.end_nwpriorityModel ();
+           ++i)
+        {
+          ::CIAO::DAnCE::NWPriorityModelPolicyDef npmd;
+
+          NPM_Handler::nw_priority_model_pd (*i, npmd);
+
+          dest.policies[len++].NWPriorityModelDef (npmd);
+        }
+
+      for (PolicySet::cnwpriorityModel_const_iterator i = 
+           src.begin_cnwpriorityModel ();
+           i != src.end_cnwpriorityModel ();
+           ++i)
+        {
+          ::CIAO::DAnCE::CNWPriorityModelPolicyDef cnpmd;
+
+          CNPM_Handler::cnw_priority_pd (*i, cnpmd);
+
+          dest.policies[len++].CNWPriorityModelDef (cnpmd);
         }
 
       for (PolicySet::threadpool_const_iterator i = src.begin_threadpool ();
@@ -55,12 +83,8 @@ namespace CIAO
 
           dest.policies[len++].PriorityBandedConnectionDef (pbc);
         }
-
-
-
       return true;
     }
-
 
     PolicySet
     PS_Handler::policy_set (const ::CIAO::DAnCE::PolicySet &src)
@@ -74,7 +98,7 @@ namespace CIAO
            i < src.policies.length ();
            ++i)
         {
-          ACE_ERROR ((LM_ERROR,
+          ACE_DEBUG ((LM_ERROR,
                       "Attempting switch for i = %d\n",
                       i));
 
@@ -82,7 +106,20 @@ namespace CIAO
             {
             case ::CIAO::DAnCE::PRIORITY_MODEL_POLICY_TYPE:
               ps.add_priorityModel (
-                PM_Handler::priority_model_pd (src.policies[i].PriorityModelDef ()));
+                PM_Handler::priority_model_pd (
+                     src.policies[i].PriorityModelDef ()));
+              break;
+
+            case ::CIAO::DAnCE::NETWORK_PRIORITY_TYPE:
+              ps.add_nwpriorityModel (
+                NPM_Handler::nw_priority_model_pd (
+                   src.policies[i].NWPriorityModelDef ()));
+              break;
+
+            case ::CIAO::DAnCE::CLIENT_NETWORK_PRIORITY_TYPE:
+              ps.add_cnwpriorityModel (
+                CNPM_Handler::cnw_priority_pd (
+                   src.policies[i].CNWPriorityModelDef ()));
               break;
 
             case ::CIAO::DAnCE::THREADPOOL_POLICY_TYPE:
@@ -90,7 +127,8 @@ namespace CIAO
               break;
 
             case ::CIAO::DAnCE::PRIORITY_BANDED_CONNECTION_POLICY_TYPE:
-              ps.add_priorityBandedConnection (src.policies[i].PriorityBandedConnectionDef ().Id.in ());
+              ps.add_priorityBandedConnection (
+                src.policies[i].PriorityBandedConnectionDef ().Id.in ());
               break;
 
             case 0:
