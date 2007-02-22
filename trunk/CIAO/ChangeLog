@@ -1,3 +1,14 @@
+Thu Feb 22 01:26:05 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
+
+        * docs/schema/CIAOServerResources.xsd:
+        
+          Added elements for representing the DiffServ policy.
+        
+        * tools/Config_Handlers/RT-CCM/CIAOServerResources.hpp:
+        * tools/Config_Handlers/RT-CCM/CIAOServerResources.cpp:
+        
+          Associated config handlers change.
+
 Wed Feb 21 22:01:45 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
 
         * docs/schema/Basic_Deployment_Data.xsd:
