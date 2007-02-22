@@ -142,6 +142,17 @@ scandir (const ACE_TCHAR *dirname,
 #endif /* ACE_HAS_SCANDIR */
 }
 
+ACE_INLINE int
+alphasort (const void *a, const void *b)
+{
+#if defined (ACE_LACKS_ALPHASORT)
+  return ACE_OS::strcmp ((*(struct dirent **)a)->d_name,
+			 (*(struct dirent **)b)->d_name);
+#else
+  return ::alphasort (a, b);
+#endif
+}
+
 ACE_INLINE void
 seekdir (ACE_DIR *d, long loc)
 {

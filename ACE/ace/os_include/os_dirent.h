@@ -100,6 +100,10 @@ int scandir (const char *,
              int (*) (const void *, const void *));
 #endif /* ACE_LACKS_SCANDIR_PROTOTYPE */
 
+#if defined (ACE_LACKS_ALPHASORT_PROTOTYPE)
+int alphasort (const void *, const void *);
+#endif /* ACE_LACKS_ALPHASORT_PROTOTYPE */
+
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */

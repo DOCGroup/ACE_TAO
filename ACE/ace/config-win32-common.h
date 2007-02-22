@@ -565,6 +565,7 @@
 #define ACE_LACKS_OPENDIR
 #define ACE_LACKS_CLOSEDIR
 #define ACE_LACKS_READDIR
+#define ACE_LACKS_ALPHASORT
 #define ACE_LACKS_MKSTEMP
 #define ACE_LACKS_LSTAT
 // Looks like Win32 has a non-const swab function
