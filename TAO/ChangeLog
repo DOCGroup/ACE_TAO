@@ -1,3 +1,8 @@
+Thu Feb 22 09:14:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/POA/Bug_1592_Regression/client.cpp:
+          Added this file, missed it in a previous commit
+
 Wed Feb 21 14:47:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Makefile.am:
