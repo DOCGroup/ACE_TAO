@@ -34,8 +34,8 @@ TAO_DiffServ_Network_Priority_Hook::update_network_priority (
 
       if (policy->policy_type () == TAO::NETWORK_PRIORITY_TYPE)
         {
-          ::TAO::NetworkPriorityPolicy_var npp
-            = ::TAO::NetworkPriorityPolicy::_narrow (policy);
+          ::TAO::NetworkPriorityPolicy_var npp =
+            ::TAO::NetworkPriorityPolicy::_narrow (policy.in ());
 
           if (!CORBA::is_nil (npp.in ()))
             {
