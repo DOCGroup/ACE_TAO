@@ -83,7 +83,7 @@ public:
   /// Constructor either associates the instance with the process-wide
   /// singleton instance of ACE_Service_Repository, or creates and
   /// manages its own instance of the specified size.
-  ACE_Service_Gestalt (size_t size,
+  ACE_Service_Gestalt (size_t size = 1024,
                        bool svc_repo_is_owned = true,
                        bool no_static_svcs = true);
 

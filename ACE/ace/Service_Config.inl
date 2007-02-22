@@ -60,7 +60,7 @@ ACE_Service_Config::parse_args (int argc, ACE_TCHAR *argv[])
 ACE_INLINE ACE_Service_Gestalt *
 ACE_Service_Config::instance (void)
 {
-  return ACE_Service_Config::global ()->tss_->ptr ();
+  return ACE_Service_Config::global ()->tss_;
 }
 
 
@@ -72,14 +72,14 @@ ACE_Service_Config::instance (void)
 ACE_INLINE ACE_Service_Gestalt *
 ACE_Service_Config::current (void)
 {
-  return ACE_Service_Config::global ()->tss_->ptr ();
+  return ACE_Service_Config::global ()->tss_;
 }
 
 /// A mutator to set the "current" (TSS) gestalt instance.
 ACE_INLINE ACE_Service_Gestalt*
 ACE_Service_Config::current (ACE_Service_Gestalt *newcurrent)
 {
-  return ACE_Service_Config::global ()->tss_->ptr (newcurrent);
+  return ACE_Service_Config::global ()->tss_.ts_object (newcurrent);
 }
 
 

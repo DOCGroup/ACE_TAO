@@ -218,17 +218,7 @@ protected:
    * independent of which thread is actually using the SC at the time
    * to do so.
    */
-  class ACE_Export TSS_Resources
-  {
-  public:
-    TSS_Resources (void);
-    ACE_Service_Gestalt *ptr () const;
-    ACE_Service_Gestalt *ptr (ACE_Service_Gestalt *n);
-  private:
-    ACE_Service_Gestalt *ptr_;
-  };
-
-  ACE_TSS_TYPE (TSS_Resources) tss_;
+  ACE_TSS <ACE_Service_Gestalt> tss_;
 
   /// = Static interfaces
 

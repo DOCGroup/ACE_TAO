@@ -1298,8 +1298,7 @@ ACE_Service_Gestalt::close (void)
 {
   ACE_TRACE ("ACE_Service_Gestalt::close");
 
-  this->is_opened_--;
-  if (this->is_opened_ > 0)
+  if (!this->is_opened_ || --this->is_opened_ != 0)
     return 0;
 
   // Delete the list fo svc.conf files
