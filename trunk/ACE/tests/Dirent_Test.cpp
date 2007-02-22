@@ -71,7 +71,7 @@ selector (const ACE_DIRENT *d)
 static int
 comparator (const ACE_DIRENT **d1, const ACE_DIRENT **d2)
 {
-  return ACE_OS::strcmp ((*d1)->d_name, (*d2)->d_name);
+  return ACE_OS::alphasort (d1, d2);
 }
 
 } /* extern "C" */

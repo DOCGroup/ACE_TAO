@@ -82,6 +82,9 @@ namespace ACE_OS {
                ACE_SCANDIR_COMPARATOR comparator);
 
   ACE_NAMESPACE_INLINE_FUNCTION
+  int alphasort (const void *, const void *);
+
+  ACE_NAMESPACE_INLINE_FUNCTION
   void seekdir (ACE_DIR *,
                 long loc);
 
