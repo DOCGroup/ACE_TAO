@@ -32,22 +32,12 @@
 # LIB_EXT - the extension to be used for libs
 #
 
-# Get the BCBVER and VCLVER, if it is not set, we default to BCB6.
+# Check for BCBVER
 !if $(BCBVER) == 8
-VCLVER =
 !else
 !if $(BCBVER) == 6
-VCLVER =
-!else
-!if $(BCBVER) == 5
-VCLVER = 50
-!else
-!if $(BCBVER) == 4
-VCLVER = 40
 !else
 !error BCBVER must be explicitly set as environment variable or is set to a not supported value.
-!endif
-!endif
 !endif
 !endif
 
@@ -79,7 +69,7 @@ CPU_CFLAG =
 DEBUG_CFLAGS = -v -y -Od -r- -vi- -k -D_DEBUG -DACE_NO_INLINE=1
 DEBUG_LFLAGS = -v -L$(BCB)\lib\debug
 !else
-!if $(BCBVER) == 6 || $(BCBVER) == 5
+!if $(BCBVER) == 6
 DEBUG_CFLAGS = -OS -Ov -Og -DNDEBUG
 !else
 DEBUG_CFLAGS = -O2 -DNDEBUG
