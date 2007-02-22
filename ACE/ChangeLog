@@ -1,3 +1,22 @@
+Thu Feb 22 11:19:59 UTC 2007  Olli Savia  <ops@iki.fi>
+
+        * ace/OS_NS_dirent.h:
+        * ace/OS_NS_dirent.inl:
+          Added ACE_OS::alphasort(). alphasort() is a BSD extension found
+          on Linux as well.
+         
+        * ace/config-lynxos.h:
+          Added ACE_LACKS_ALPHASORT_PROTOTYPE.
+        
+        * ace/config-win32-common.h:
+          Added ACE_LACKS_ALPHASORT.
+        
+        * ace/os_include/os_dirent.h:
+          Added alphasort prototype.
+        
+        * tests/Dirent_Test.cpp:
+          Chaged to use use ACE_OS::alphasort().
+
 Wed Feb 22 09:24:42 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Truncate.h (Truncate, truncate_cast):
@@ -116,7 +135,7 @@ Wed Feb 21 19:27:14 UTC 2007  Ossama Othman  <ossama_othman at symantec dot com>
         * ace/Unbounded_Set.inl:
 
           Implement find() method in terms of begin/end iterators to prevent
-	  search from looping indefinitely under some race condition
+          search from looping indefinitely under some race condition
           scenarios.
 
           Added missing const_iterator factory methods.
@@ -217,7 +236,7 @@ Wed Feb 21 19:27:14 UTC 2007  Ossama Othman  <ossama_othman at symantec dot com>
           with the handle in an error state.  The error code is then
           retrieved with getsockopt().
 
-	  Good sockets however will return from the select() with ETIME -
+          Good sockets however will return from the select() with ETIME -
           in this case return EWOULDBLOCK so the wait strategy can
           complete the connection.
 
@@ -254,8 +273,8 @@ Wed Feb 21 19:27:14 UTC 2007  Ossama Othman  <ossama_othman at symantec dot com>
         * ace/os_include/os_dlfcn.h (ACE_DEFAULT_SHLIB_MODE):
 
           Added DYNAMIC_PATH to the default flags used to call shl_load()
-	  on HP 11.00 (PARISC1.1/32-bit) so that RPATH and SHLIB_PATH are
-	  searched to find the requested .sl.
+          on HP 11.00 (PARISC1.1/32-bit) so that RPATH and SHLIB_PATH are
+          searched to find the requested .sl.
 
         * bin/MakeProjectCreator/templates/gnu.mpd (FORCED_IDL_STUBS):
 
