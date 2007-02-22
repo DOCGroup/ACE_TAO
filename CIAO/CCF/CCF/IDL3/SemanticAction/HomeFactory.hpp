@@ -15,6 +15,10 @@ namespace CCF
     {
       struct HomeFactory
       {
+        virtual ~HomeFactory ()
+        {
+        }
+        
         virtual void
         name (SimpleIdentifierPtr const& id) = 0;
 

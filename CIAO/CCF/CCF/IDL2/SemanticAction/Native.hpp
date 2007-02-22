@@ -15,6 +15,10 @@ namespace CCF
     {
       struct Native
       {
+        virtual ~Native ()
+        {
+        }
+        
         virtual void
         name (SimpleIdentifierPtr const& id) = 0;
 

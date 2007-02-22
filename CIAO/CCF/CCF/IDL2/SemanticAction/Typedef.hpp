@@ -15,6 +15,10 @@ namespace CCF
     {
       struct Typedef
       {
+        virtual ~Typedef ()
+        {
+        }
+        
         virtual void
         pre (KeywordPtr const& id) = 0;
 

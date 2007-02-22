@@ -15,6 +15,10 @@ namespace CCF
     {
       struct Member
       {
+        virtual ~Member ()
+        {
+        }
+        
         virtual void
         type (IdentifierPtr const& id) = 0;
 

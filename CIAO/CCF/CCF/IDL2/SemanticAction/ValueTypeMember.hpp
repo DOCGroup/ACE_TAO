@@ -15,6 +15,10 @@ namespace CCF
     {
       struct ValueTypeMember
       {
+        virtual ~ValueTypeMember ()
+        {
+        }
+        
         virtual void
         begin_private () = 0;
 

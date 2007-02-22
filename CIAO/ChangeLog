@@ -1,3 +1,38 @@
+Thu Feb 22 22:18:24 UTC 2007  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * CCF/CCF/CompilerElements/TokenStream.hpp
+        * CCF/CCF/IDL2/SemanticAction/Exception.hpp
+        * CCF/CCF/IDL2/SemanticAction/TypeId.hpp
+        * CCF/CCF/IDL2/SemanticAction/Operation.hpp
+        * CCF/CCF/IDL2/SemanticAction/Interface.hpp
+        * CCF/CCF/IDL2/SemanticAction/Typedef.hpp
+        * CCF/CCF/IDL2/SemanticAction/Attribute.hpp
+        * CCF/CCF/IDL2/SemanticAction/Enum.hpp
+        * CCF/CCF/IDL2/SemanticAction/ValueTypeFactory.hpp
+        * CCF/CCF/IDL2/SemanticAction/ValueTypeMember.hpp
+        * CCF/CCF/IDL2/SemanticAction/Member.hpp
+        * CCF/CCF/IDL2/SemanticAction/Elements.hpp
+        * CCF/CCF/IDL2/SemanticAction/ValueType.hpp
+        * CCF/CCF/IDL2/SemanticAction/NumericExpression.hpp
+        * CCF/CCF/IDL2/SemanticAction/Include.hpp
+        * CCF/CCF/IDL2/SemanticAction/Struct.hpp
+        * CCF/CCF/IDL2/SemanticAction/Module.hpp
+        * CCF/CCF/IDL2/SemanticAction/Native.hpp
+        * CCF/CCF/IDL2/SemanticAction/Const.hpp
+        * CCF/CCF/IDL2/SemanticAction/Union.hpp
+        * CCF/CCF/CIDL/SemanticAction/HomeExecutor.hpp
+        * CCF/CCF/IDL3/SemanticAction/EventTypeFactory.hpp
+        * CCF/CCF/IDL3/SemanticAction/Provides.hpp
+        * CCF/CCF/IDL3/SemanticAction/Consumes.hpp
+        * CCF/CCF/IDL3/SemanticAction/Publishes.hpp
+        * CCF/CCF/IDL3/SemanticAction/Uses.hpp
+        * CCF/CCF/IDL3/SemanticAction/HomeFactory.hpp
+        * CCF/CCF/IDL3/SemanticAction/HomeFinder.hpp
+        * CCF/CCF/IDL3/SemanticAction/Emits.hpp
+        
+          Addressed warnings relating to classes w/ virtual methods having
+          non virtual destructors.
+
 Thu Feb 22 21:36:35 UTC 2007  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * tools/Config_Handlers/DynAny_Handler/DynAny_Handler.cpp

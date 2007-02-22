@@ -15,6 +15,10 @@ namespace CCF
     {
       struct Struct : Scope
       {
+        virtual ~Struct ()
+        {
+        }
+        
         virtual void
         begin_def (SimpleIdentifierPtr const& id) = 0;
 

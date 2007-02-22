@@ -15,6 +15,10 @@ namespace CCF
     {
       struct TypeId
       {
+        virtual ~TypeId ()
+        {
+        }
+        
         virtual void
         begin (IdentifierPtr const& name, StringLiteralPtr const& id) = 0;
 
@@ -25,6 +29,10 @@ namespace CCF
 
       struct TypePrefix
       {
+        virtual ~TypePrefix ()
+        {
+        }
+        
         virtual void
         begin (IdentifierPtr const& name, StringLiteralPtr const& prefix) = 0;
 

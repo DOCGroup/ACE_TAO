@@ -15,6 +15,10 @@ namespace CCF
     {
       struct Exception : Scope
       {
+        virtual ~Exception ()
+        {
+        }
+        
         virtual void
         begin (SimpleIdentifierPtr const& id) = 0;
 
