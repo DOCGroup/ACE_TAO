@@ -36,6 +36,7 @@ Bug_2497_Regression_Test
 Bug_2540_Regression_Test
 Bug_2659_Regression_Test: !ST
 Bug_2653_Regression_Test: !ST
+Bug_2815_Regression_Test
 CDR_Array_Test: !ACE_FOR_TAO
 CDR_File_Test: !ACE_FOR_TAO
 CDR_Test
@@ -96,6 +97,7 @@ Naming_Test: !LynxOS !Unicos !VxWorks !nsk !ACE_FOR_TAO
 Network_Adapters_Test: !DISABLE_ToFix_LynxOS_PPC !DISABLE_ToFix_LynxOS_x86
 New_Fail_Test: ALL !DISABLED
 NonBlocking_Conn_Test
+Notification_Queue_Unit_Test
 Notify_Performance_Test: !nsk !ACE_FOR_TAO
 OS_Test
 Object_Manager_Test

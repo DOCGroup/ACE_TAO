@@ -69,7 +69,7 @@ ACE_Intrusive_List<T>::pop_front (void)
   T *node = this->head_;
   if (node == 0)
     return 0;
-  this->remove_i (node);
+  this->unsafe_remove (node);
   return node;
 }
 
@@ -79,7 +79,7 @@ ACE_Intrusive_List<T>::pop_back (void)
   T *node = this->tail_;
   if (node == 0)
     return 0;
-  this->remove_i (node);
+  this->unsafe_remove (node);
   return node;
 }
 
@@ -90,14 +90,14 @@ ACE_Intrusive_List<T>::remove (T *node)
     {
       if (node == i)
         {
-          this->remove_i (node);
+          this->unsafe_remove (node);
           return;
         }
     }
 }
 
 template<class T> void
-ACE_Intrusive_List<T>::remove_i (T *node)
+ACE_Intrusive_List<T>::unsafe_remove (T *node)
 {
   if (node->prev () != 0)
     node->prev ()->next (node->next ());

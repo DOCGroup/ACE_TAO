@@ -99,14 +99,17 @@ public:
    */
   void remove (T *node);
 
-private:
-  /// Remove a element from the list
+  /// Swap two lists
+  void swap(ACE_Intrusive_List<T> & rhs);
+
+  /// Remove a element from the list without checking
   /**
    * No attempts are performed to check if T* really belongs to the
    * list.  The effects of removing an invalid element are unspecified
    */
-  void remove_i (T *node);
+  void unsafe_remove (T *node);
 
+private:
   /** @name Disallow copying
    *
    */

@@ -1,3 +1,113 @@
+Thu Feb 22 13:03:01 UTC 2007  Carlos O'Ryan  <coryan@atdesk.com>
+
+        * Merged changes from the bug_2815 branch.  From revision 77182 to
+          revision 77315.
+
+	Tue Feb 20 18:17:00 UTC 2007  Carlos O'Ryan  <coryan@atdesk.com>
+
+        * ace/ace_for_tao.mpc:
+          Add Notification_Queue.cpp to this file too.  Thanks to Johnny
+          Willemsen for pointing this out.
+
+          Mon Feb 19 21:53:58 UTC 2007  Carlos O'Ryan  <coryan@atdesk.com>
+
+        * ace/Intrusive_List.inl:
+          I learned a minute ago that std::swap() was kosher.  Use it in
+          favor of ACE_Swap<>.
+
+          Mon Feb 19 21:47:48 UTC 2007  Carlos O'Ryan  <coryan@atdesk.com>
+
+        * tests/run_test.lst:
+        * tests/Bug_2815_Regression_Test.cpp:
+          Adjusted the number of iterations so the test would pass on my
+          G4-based laptop without optimizations or inlining.  The previous
+          numbers were just guesses anyway and I hope the new numbers will
+          result in no failures for the scoreboard.
+
+          Mon Feb 19 21:29:32 UTC 2007  Carlos O'Ryan  <coryan@atdesk.com>
+
+        * ace/Notification_Queue.cpp:
+          Modified the purging algorithm.  The algorithm used a temporary
+          list to store the elements not purged, so basically all nodes
+          were either moved to the free list or to the temporary list.
+          The new algorithm only removes the nodes that needs purging.
+          In the vast majority of the cases this is more efficient because
+          most nodes are not purged.
+          This resulted in a factor of 2 improvement for
+          tests/Bug_2815_Regression_Test, keep in mind that in this
+          program 1/16th of the nodes are purged.  So in practice I would
+          expect even better results.
+          I also changed the order in which the free nodes are re-used, I
+          think LIFO order has a better chance of re-using the cache, but
+          I have no evidence or experiments to prove this.
+
+        * ace/Intrusive_List.h:
+        * ace/Intrusive_List.cpp:
+          Renamed the remove_i() function to unsafe_remove() and promoted
+          its access to "public".  The function is not safe to use in
+          general, thus the name, but it resulted in a factor of 2
+          performance improvement for ACE_Notification_Queue.
+
+        * tests/Bug_2815_Regression_Test.cpp:
+          Fixed memory leaks (in the test not the library)
+
+          Mon Feb 19 20:32:34 UTC 2007  Carlos O'Ryan  <coryan@atdesk.com>
+
+        * ace/Notification_Queue.h:
+        * ace/Notification_Queue.inl:
+	* ace/Notification_Queue.cpp:
+          Re-factored to use ACE_Intrusive_List in the implementation.
+          This eliminates memory allocations during additions and removal
+          of elements.  Also, many of the operations cannot fail, so the
+          code became smaller.
+
+        * ace/Intrusive_List.h:
+        * ace/Intrusive_List.inl:
+          Add a swap() member function.
+
+          Mon Feb 19 04:49:35 UTC 2007  coryan  <coryan@atdesk.com>
+
+        * ace/Notification_Queue.h:
+        * ace/Notification_Queue.cpp:
+        * ace/ace.mpc:
+          New class to encapsulate the implementation of a user-space
+          based notification queue.  The code was duplicated in both
+          Select_Reactor.{h,cpp} and Dev_Poll_Reactor.{h,cpp}
+
+        * tests/tests.mpc:
+        * tests/run_test.lst:
+        * tests/Notification_Queue_Unit_Test.cpp:
+          New unit test for the notification queue class.
+        
+        * ace/Dev_Poll_Reactor.h:
+        * ace/Dev_Poll_Reactor.cpp:
+        * ace/Select_Reactor_Base.h:
+        * ace/Select_Reactor_Base.cpp:
+          Refactored notification queue code to a new class
+          (ACE_Notification_Queue)
+
+        * tests/Bug_2815_Regression_Test.cpp:
+          Add code to help with debugging.  Basically my refactoring above
+          had at least one bug, and this test uncovered it.  But it was
+          hard to debug because there was no single breakpoint to detect
+          when the failure condition was triggered.
+
+        * tests:
+          Add new files to svn:ignore property.  Also added some old
+          files.
+
+        * tests/SSL:
+        * include/makeinclude:
+          Add missing files to svn:ignore
+
+          Sun Feb 18 21:13:41 UTC 2007  coryan  <coryan@atdesk.com>
+
+        * tests/tests.mpc: 
+        * tests/Bug_2815_Regression_Test.cpp:
+          Add new regression test for bug 2815.  I have not added the test
+          to the automated test suite because (1) it fails, and (2) it is
+          a test to reproduce performance 
+
 Thu Feb 22 12:58:42 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/compiler.bor:

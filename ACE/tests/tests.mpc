@@ -234,6 +234,13 @@ project(Bug_2653_Regression_Test) : acetest {
   }
 }
 
+project(Bug_2815_Regression_Test) : acetest {
+  exename = Bug_2815_Regression_Test
+  Source_Files {
+    Bug_2815_Regression_Test.cpp
+  }
+}
+
 project(Bug_2820_Regression_Test) : acetest {
   exename = Bug_2820_Regression_Test
   Source_Files {
@@ -628,6 +635,13 @@ project(New Fail Test) : acetest {
   exename = New_Fail_Test
   Source_Files {
     New_Fail_Test.cpp
+  }
+}
+
+project(Notification Queue Unit Test) : acetest {
+  exename = Notification_Queue_Unit_Test
+  Source_Files {
+    Notification_Queue_Unit_Test.cpp
   }
 }
 
