@@ -38,7 +38,10 @@ namespace CIAO
     class PriorityBandDef;
     class PolicySet;
     class PriorityModel;
+    class NWPriorityModel;
     class PriorityModelPolicyDef;
+    class NWPriorityModelPolicyDef;
+    class CNWPriorityModelPolicyDef;
   }
 }
 
@@ -643,6 +646,36 @@ namespace CIAO
       protected:
       ::std::list< ::CIAO::Config_Handlers::PriorityModelPolicyDef > priorityModel_;
 
+      // nwpriorityModel
+      //
+      public:
+      typedef ::std::list< ::CIAO::Config_Handlers::NWPriorityModelPolicyDef >::iterator nwpriorityModel_iterator;
+      typedef ::std::list< ::CIAO::Config_Handlers::NWPriorityModelPolicyDef >::const_iterator nwpriorityModel_const_iterator;
+      nwpriorityModel_iterator begin_nwpriorityModel ();
+      nwpriorityModel_iterator end_nwpriorityModel ();
+      nwpriorityModel_const_iterator begin_nwpriorityModel () const;
+      nwpriorityModel_const_iterator end_nwpriorityModel () const;
+      void add_nwpriorityModel (::CIAO::Config_Handlers::NWPriorityModelPolicyDef const& );
+      size_t count_nwpriorityModel (void) const;
+
+      protected:
+      ::std::list< ::CIAO::Config_Handlers::NWPriorityModelPolicyDef > nwpriorityModel_;
+
+      // cnwpriorityModel
+      //
+      public:
+      typedef ::std::list< ::CIAO::Config_Handlers::CNWPriorityModelPolicyDef >::iterator cnwpriorityModel_iterator;
+      typedef ::std::list< ::CIAO::Config_Handlers::CNWPriorityModelPolicyDef >::const_iterator cnwpriorityModel_const_iterator;
+      cnwpriorityModel_iterator begin_cnwpriorityModel ();
+      cnwpriorityModel_iterator end_cnwpriorityModel ();
+      cnwpriorityModel_const_iterator begin_cnwpriorityModel () const;
+      cnwpriorityModel_const_iterator end_cnwpriorityModel () const;
+      void add_cnwpriorityModel (::CIAO::Config_Handlers::CNWPriorityModelPolicyDef const& );
+      size_t count_cnwpriorityModel (void) const;
+
+      protected:
+      ::std::list< ::CIAO::Config_Handlers::CNWPriorityModelPolicyDef > cnwpriorityModel_;
+
       // threadpool
       // 
       public:
@@ -732,6 +765,39 @@ namespace CIAO
 
     bool RT_CCM_Handlers_Export operator!= (PriorityModel const &a, PriorityModel const &b);
 
+    class RT_CCM_Handlers_Export NWPriorityModel : public ::XSCRT::Type
+    {
+      public:
+      NWPriorityModel (::XSCRT::XML::Element< ACE_TCHAR > const&);
+      NWPriorityModel (::XSCRT::XML::Attribute< ACE_TCHAR > const&);
+
+      static NWPriorityModel const SERVER_DECLARED_NWPRIORITY;
+      static NWPriorityModel const CLIENT_PROPAGATED_NWPRIORITY;
+
+      enum Value
+      {
+        SERVER_DECLARED_NWPRIORITY_l, CLIENT_PROPAGATED_NWPRIORITY_l,
+      };
+
+
+      Value
+      integral () const;
+
+      friend bool RT_CCM_Handlers_Export
+      operator== (NWPriorityModel const& a, NWPriorityModel const& b);
+
+      friend bool RT_CCM_Handlers_Export
+      operator!= (NWPriorityModel const& a, NWPriorityModel const& b);
+
+      private:
+      NWPriorityModel (Value v);
+
+      Value v_;
+    };
+
+    bool RT_CCM_Handlers_Export operator== (NWPriorityModel const &a, NWPriorityModel const &b);
+
+    bool RT_CCM_Handlers_Export operator!= (NWPriorityModel const &a, NWPriorityModel const &b);
 
     class RT_CCM_Handlers_Export PriorityModelPolicyDef : public ::XSCRT::Type
     {
@@ -770,6 +836,89 @@ namespace CIAO
       private:
       char regulator__;
     };
+
+    class RT_CCM_Handlers_Export NWPriorityModelPolicyDef : public ::XSCRT::Type
+    {
+      //@@ VC6 anathema
+      typedef ::XSCRT::Type Base__;
+
+      // nw_priority_model
+      //
+      public:
+      ::CIAO::Config_Handlers::NWPriorityModel const& nw_priority_model () const;
+      void nw_priority_model (::CIAO::Config_Handlers::NWPriorityModel const&);
+
+      protected:
+      ::std::auto_ptr< ::CIAO::Config_Handlers::NWPriorityModel > nw_priority_model_;
+
+      // request_dscp
+      //
+      public:
+      ::XMLSchema::long_ const& request_dscp () const;
+      void request_dscp (::XMLSchema::long_ const& );
+
+      protected:
+      ::std::auto_ptr< ::XMLSchema::long_ > request_dscp_;
+
+      // reply_dscp
+      //
+      public:
+      ::XMLSchema::long_ const& reply_dscp () const;
+      void reply_dscp (::XMLSchema::long_ const& );
+
+      protected:
+      ::std::auto_ptr< ::XMLSchema::long_ > reply_dscp_;
+
+      public:
+      NWPriorityModelPolicyDef (::CIAO::Config_Handlers::NWPriorityModel const& nw_priority_model__, ::XMLSchema::long_ const& request_dscp__, ::XMLSchema::long_ const& reply_dscp__);
+
+      NWPriorityModelPolicyDef (::XSCRT::XML::Element< ACE_TCHAR > const&);
+      NWPriorityModelPolicyDef (NWPriorityModelPolicyDef const& s);
+
+      NWPriorityModelPolicyDef&
+      operator= (NWPriorityModelPolicyDef const& s);
+
+      private:
+      char regulator__;
+    };
+
+    class RT_CCM_Handlers_Export CNWPriorityModelPolicyDef : public ::XSCRT::Type
+    {
+      //@@ VC6 anathema
+      typedef ::XSCRT::Type Base__;
+
+      // request_dscp
+      //
+      public:
+      ::XMLSchema::long_ const& request_dscp () const;
+      void request_dscp (::XMLSchema::long_ const& );
+
+      protected:
+      ::std::auto_ptr< ::XMLSchema::long_ > request_dscp_;
+
+      // reply_dscp
+      //
+      public:
+      ::XMLSchema::long_ const& reply_dscp () const;
+      void reply_dscp (::XMLSchema::long_ const& );
+
+      protected:
+      ::std::auto_ptr< ::XMLSchema::long_ > reply_dscp_;
+
+      public:
+      CNWPriorityModelPolicyDef (::XMLSchema::long_ const& request_dscp__,
+                                 ::XMLSchema::long_ const& reply_dscp__);
+
+      CNWPriorityModelPolicyDef (::XSCRT::XML::Element< ACE_TCHAR > const&);
+      CNWPriorityModelPolicyDef (CNWPriorityModelPolicyDef const& s);
+
+      CNWPriorityModelPolicyDef&
+      operator= (CNWPriorityModelPolicyDef const& s);
+
+      private:
+      char regulator__;
+    };
+
   }
 }
 
@@ -1457,6 +1606,66 @@ namespace CIAO
         priorityModel_none (Type const&);
 
         virtual void
+        nwpriorityModel (Type&);
+
+        virtual void
+        nwpriorityModel (Type const&);
+
+        virtual void
+        nwpriorityModel_pre (Type&);
+
+        virtual void
+        nwpriorityModel_pre (Type const&);
+
+        virtual void
+        nwpriorityModel_next (Type&);
+
+        virtual void
+        nwpriorityModel_next (Type const&);
+
+        virtual void
+        nwpriorityModel_post (Type&);
+
+        virtual void
+        nwpriorityModel_post (Type const&);
+
+        virtual void
+        nwpriorityModel_none (Type&);
+
+        virtual void
+        nwpriorityModel_none (Type const&);
+
+        virtual void
+        cnwpriorityModel (Type&);
+
+        virtual void
+        cnwpriorityModel (Type const&);
+
+        virtual void
+        cnwpriorityModel_pre (Type&);
+
+        virtual void
+        cnwpriorityModel_pre (Type const&);
+
+        virtual void
+        cnwpriorityModel_next (Type&);
+
+        virtual void
+        cnwpriorityModel_next (Type const&);
+
+        virtual void
+        cnwpriorityModel_post (Type&);
+
+        virtual void
+        cnwpriorityModel_post (Type const&);
+
+        virtual void
+        cnwpriorityModel_none (Type&);
+
+        virtual void
+        cnwpriorityModel_none (Type const&);
+
+        virtual void
         threadpool (Type&);
 
         virtual void
@@ -1539,6 +1748,10 @@ namespace CIAO
       ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::PriorityModel >
       PriorityModel;
 
+      typedef
+      ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::NWPriorityModel >
+      NWPriorityModel;
+
       struct RT_CCM_Handlers_Export PriorityModelPolicyDef : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::PriorityModelPolicyDef >
       {
         virtual void
@@ -1577,6 +1790,79 @@ namespace CIAO
         virtual void
         post (Type const&);
       };
+
+      struct RT_CCM_Handlers_Export NWPriorityModelPolicyDef : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::NWPriorityModelPolicyDef >
+      {
+        virtual void
+        traverse (Type&);
+
+        virtual void
+        traverse (Type const&);
+
+        virtual void
+        pre (Type&);
+
+        virtual void
+        pre (Type const&);
+
+        virtual void
+        nw_priority_model (Type&);
+
+        virtual void
+        nw_priority_model (Type const&);
+
+        virtual void
+        request_dscp (Type&);
+
+        virtual void
+        request_dscp (Type const&);
+
+        virtual void
+        reply_dscp (Type&);
+
+        virtual void
+        reply_dscp (Type const&);
+
+        virtual void
+        post (Type&);
+
+        virtual void
+        post (Type const&);
+      };
+
+      struct RT_CCM_Handlers_Export CNWPriorityModelPolicyDef : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::CNWPriorityModelPolicyDef >
+      {
+        virtual void
+        traverse (Type&);
+
+        virtual void
+        traverse (Type const&);
+
+        virtual void
+        pre (Type&);
+
+        virtual void
+        pre (Type const&);
+
+        virtual void
+        request_dscp (Type&);
+
+        virtual void
+        request_dscp (Type const&);
+
+        virtual void
+        reply_dscp (Type&);
+
+        virtual void
+        reply_dscp (Type const&);
+
+        virtual void
+        post (Type&);
+
+        virtual void
+        post (Type const&);
+      };
+
     }
   }
 }
@@ -2388,6 +2674,72 @@ namespace CIAO
         virtual void
         priorityModel_post (Type const&);
 
+        virtual void
+        nwpriorityModel_pre (Type &o)
+        {
+
+          this->nwpriorityModel_pre (const_cast <Type const &> (o));
+        }
+
+
+        virtual void
+        nwpriorityModel_pre (Type const&);
+
+        virtual void
+        nwpriorityModel_next (Type &o)
+        {
+
+          this->nwpriorityModel_next (const_cast <Type const &> (o));
+        }
+
+
+        virtual void
+        nwpriorityModel_next (Type const&);
+
+        virtual void
+        nwpriorityModel_post (Type &o)
+        {
+
+          this->nwpriorityModel_post (const_cast <Type const &> (o));
+        }
+
+
+        virtual void
+        nwpriorityModel_post (Type const&);
+
+        virtual void
+        cnwpriorityModel_pre (Type &o)
+        {
+
+          this->cnwpriorityModel_pre (const_cast <Type const &> (o));
+        }
+
+
+        virtual void
+        cnwpriorityModel_pre (Type const&);
+
+        virtual void
+        cnwpriorityModel_next (Type &o)
+        {
+
+          this->cnwpriorityModel_next (const_cast <Type const &> (o));
+        }
+
+
+        virtual void
+        cnwpriorityModel_next (Type const&);
+
+        virtual void
+        cnwpriorityModel_post (Type &o)
+        {
+
+          this->cnwpriorityModel_post (const_cast <Type const &> (o));
+        }
+
+
+        virtual void
+        cnwpriorityModel_post (Type const&);
+
         virtual void 
         threadpool_pre (Type &o)
         {
@@ -2487,6 +2839,24 @@ namespace CIAO
         PriorityModel ();
       };
 
+      struct NWPriorityModel : Traversal::NWPriorityModel,
+      virtual ::XSCRT::Writer< ACE_TCHAR >
+      {
+        NWPriorityModel (::XSCRT::XML::Element< ACE_TCHAR >&);
+
+        virtual void
+        traverse (Type &o)
+        {
+          this->traverse (const_cast <Type const &> (o));
+        }
+
+        virtual void
+        traverse (Type const&);
+
+        protected:
+        NWPriorityModel ();
+      };
+
       struct PriorityModelPolicyDef : Traversal::PriorityModelPolicyDef, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
@@ -2528,6 +2898,103 @@ namespace CIAO
 
         protected:
         PriorityModelPolicyDef ();
+      };
+
+      struct NWPriorityModelPolicyDef : Traversal::NWPriorityModelPolicyDef,
+      virtual ::XSCRT::Writer< ACE_TCHAR >
+      {
+        typedef ::CIAO::Config_Handlers::NWPriorityModelPolicyDef Type;
+        NWPriorityModelPolicyDef (::XSCRT::XML::Element< ACE_TCHAR >&);
+
+        virtual void
+        traverse (Type &o)
+        {
+
+          this->traverse (const_cast <Type const &> (o));
+        }
+
+
+        virtual void
+        traverse (Type const&);
+
+        virtual void
+        nw_priority_model (Type &o)
+        {
+
+          this->nw_priority_model (const_cast <Type const &> (o));
+        }
+
+
+        virtual void
+        nw_priority_model (Type const&);
+
+        virtual void
+        request_dscp (Type &o)
+        {
+
+          this->request_dscp (const_cast <Type const &> (o));
+        }
+
+
+        virtual void
+        request_dscp (Type const&);
+
+        virtual void
+        reply_dscp (Type &o)
+        {
+
+          this->reply_dscp (const_cast <Type const &> (o));
+        }
+
+
+        virtual void
+        reply_dscp (Type const&);
+
+        protected:
+        NWPriorityModelPolicyDef ();
+      };
+
+      struct CNWPriorityModelPolicyDef : Traversal::CNWPriorityModelPolicyDef,
+      virtual ::XSCRT::Writer< ACE_TCHAR >
+      {
+        typedef ::CIAO::Config_Handlers::CNWPriorityModelPolicyDef Type;
+        CNWPriorityModelPolicyDef (::XSCRT::XML::Element< ACE_TCHAR >&);
+
+        virtual void
+        traverse (Type &o)
+        {
+
+          this->traverse (const_cast <Type const &> (o));
+        }
+
+
+        virtual void
+        traverse (Type const&);
+
+        virtual void
+        request_dscp (Type &o)
+        {
+
+          this->request_dscp (const_cast <Type const &> (o));
+        }
+
+
+        virtual void
+        request_dscp (Type const&);
+
+        virtual void
+        reply_dscp (Type &o)
+        {
+
+          this->reply_dscp (const_cast <Type const &> (o));
+        }
+
+
+        virtual void
+        reply_dscp (Type const&);
+
+        protected:
+        CNWPriorityModelPolicyDef ();
       };
     }
   }
