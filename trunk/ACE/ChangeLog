@@ -1,3 +1,12 @@
+Thu Feb 22 16:45:30 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * tests/MT_SOCK_Test.cpp: Document the actual cause of what's been
+          observed for some time with some Windows systems exhibiting a
+          "delayed rejection" of connections in excess of the listener's
+          backlog. Thank you to Aleksandar Vukajlovic <vukajlo at finsoft
+          dot co dot yu> for citing the full cause with its supporting
+          documentation and explanation.
+
 Thu Feb 22 15:59:12 UTC 2007  Steve Huston  <shuston@riverace.com>
 
         * ace/config-win32-common.h: Change the comments around ACE_HAS_PENTIUM
