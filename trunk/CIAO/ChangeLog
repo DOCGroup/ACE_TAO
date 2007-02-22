@@ -1,7 +1,14 @@
+Thu Feb 22 22:59:01 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
+
+        * docs/schema/ServerResourceUsage.txt:
+        
+          Updated the text document with the new usage guidelines.
+
 Thu Feb 22 22:53:52 UTC 2007  Nilabja R  <nilabjar@dre.vanderbilt.edu>
 
         * DAnCE/TargetManager/CmpClient.cpp:
-				  Changed in order to remove a warning in the build
+	 
+          Changed in order to remove a warning in the build
 
 Thu Feb 22 22:22:13 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
 
