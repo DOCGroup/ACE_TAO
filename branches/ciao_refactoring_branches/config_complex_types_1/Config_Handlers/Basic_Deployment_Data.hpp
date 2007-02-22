@@ -118,7 +118,7 @@ namespace CIAO
 
       enum Value
       {
-        tk_null_l,tk_void_l,tk_short_l,tk_long_l,tk_ushort_l,tk_ulong_l,tk_float_l,tk_double_l,tk_boolean_l,tk_char_l,tk_octet_l,tk_any_l,tk_TypeCode_l,tk_Principal_l,tk_objref_l,tk_struct_l,tk_union_l,tk_enum_l,tk_string_l,tk_sequence_l,tk_array_l,tk_alias_l,tk_except_l,tk_longlong_l,tk_ulonglong_l,tk_longdouble_l,tk_wchar_l,tk_wstring_l,tk_wfixed_l,tk_value_l,tk_value_box_l,tk_native_l,tk_abstract_interface_l,tk_local_interface_l,tk_component_l,tk_home_l,tk_event_l,
+        tk_null_l, tk_void_l, tk_short_l, tk_long_l, tk_ushort_l, tk_ulong_l, tk_float_l, tk_double_l, tk_boolean_l, tk_char_l, tk_octet_l, tk_any_l, tk_TypeCode_l, tk_Principal_l, tk_objref_l, tk_struct_l, tk_union_l, tk_enum_l, tk_string_l, tk_sequence_l, tk_array_l, tk_alias_l, tk_except_l, tk_longlong_l, tk_ulonglong_l, tk_longdouble_l, tk_wchar_l, tk_wstring_l, tk_wfixed_l, tk_value_l, tk_value_box_l, tk_native_l, tk_abstract_interface_l, tk_local_interface_l, tk_component_l, tk_home_l, tk_event_l
       };
 
 
@@ -882,7 +882,7 @@ namespace CIAO
 
       enum Value
       {
-        Quantity_l,Capacity_l,Minimum_l,Maximum_l,Attribute_l,Selection_l,
+        Quantity_l, Capacity_l, Minimum_l, Maximum_l, Attribute_l, Selection_l
       };
 
 
@@ -1365,7 +1365,7 @@ namespace CIAO
 
       enum Value
       {
-        None_l,InstanceUsesResource_l,ResourceUsesInstance_l,PortUsesResource_l,ResourceUsesPort_l,
+        None_l, InstanceUsesResource_l, ResourceUsesInstance_l, PortUsesResource_l, ResourceUsesPort_l
       };
 
 
@@ -1511,12 +1511,17 @@ namespace CIAO
       // deployedResource
       // 
       public:
-      bool deployedResource_p () const;
-      ::CIAO::Config_Handlers::InstanceResourceDeploymentDescription const& deployedResource () const;
-      void deployedResource (::CIAO::Config_Handlers::InstanceResourceDeploymentDescription const& );
+      typedef ::std::list< ::CIAO::Config_Handlers::InstanceResourceDeploymentDescription >::iterator deployedResource_iterator;
+      typedef ::std::list< ::CIAO::Config_Handlers::InstanceResourceDeploymentDescription >::const_iterator deployedResource_const_iterator;
+      deployedResource_iterator begin_deployedResource ();
+      deployedResource_iterator end_deployedResource ();
+      deployedResource_const_iterator begin_deployedResource () const;
+      deployedResource_const_iterator end_deployedResource () const;
+      void add_deployedResource (::CIAO::Config_Handlers::InstanceResourceDeploymentDescription const& );
+      size_t count_deployedResource (void) const;
 
       protected:
-      ::std::auto_ptr< ::CIAO::Config_Handlers::InstanceResourceDeploymentDescription > deployedResource_;
+      ::std::list< ::CIAO::Config_Handlers::InstanceResourceDeploymentDescription > deployedResource_;
 
       // deployedSharedResource
       // 
@@ -1571,7 +1576,7 @@ namespace CIAO
 
       enum Value
       {
-        Facet_l,SimplexReceptacle_l,MultiplexReceptacle_l,EventEmitter_l,EventPublisher_l,EventConsumer_l,
+        Facet_l, SimplexReceptacle_l, MultiplexReceptacle_l, EventEmitter_l, EventPublisher_l, EventConsumer_l
       };
 
 
@@ -4054,6 +4059,24 @@ namespace CIAO
 
         virtual void
         deployedResource (Type const&);
+
+        virtual void
+        deployedResource_pre (Type&);
+
+        virtual void
+        deployedResource_pre (Type const&);
+
+        virtual void
+        deployedResource_next (Type&);
+
+        virtual void
+        deployedResource_next (Type const&);
+
+        virtual void
+        deployedResource_post (Type&);
+
+        virtual void
+        deployedResource_post (Type const&);
 
         virtual void
         deployedResource_none (Type&);
@@ -7074,15 +7097,37 @@ namespace CIAO
         configProperty_post (Type const&);
 
         virtual void 
-        deployedResource (Type &o)
+        deployedResource_pre (Type &o)
         {
 
-          this->deployedResource (const_cast <Type const &> (o));
+          this->deployedResource_pre (const_cast <Type const &> (o));
         }
 
 
         virtual void
-        deployedResource (Type const&);
+        deployedResource_pre (Type const&);
+
+        virtual void 
+        deployedResource_next (Type &o)
+        {
+
+          this->deployedResource_next (const_cast <Type const &> (o));
+        }
+
+
+        virtual void
+        deployedResource_next (Type const&);
+
+        virtual void 
+        deployedResource_post (Type &o)
+        {
+
+          this->deployedResource_post (const_cast <Type const &> (o));
+        }
+
+
+        virtual void
+        deployedResource_post (Type const&);
 
         virtual void 
         deployedSharedResource (Type &o)

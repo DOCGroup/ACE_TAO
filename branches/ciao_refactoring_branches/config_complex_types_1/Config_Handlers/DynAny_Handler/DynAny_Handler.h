@@ -49,9 +49,8 @@ namespace CIAO
 
       ~DynAny_Handler (void);
 
-      DynamicAny::DynAny_ptr  extract_into_dynany (const DataType& type,
-                                                   const DataValue& value);
-
+      DynamicAny::DynAny_ptr  extract_into_dynany (const Any &any);
+      
       Any extract_from_dynany (const CORBA::Any &any);
 
       CORBA::ORB_ptr orb ();

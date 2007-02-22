@@ -80,12 +80,10 @@ namespace CIAO
                          src.end_configProperty (),
                          Property_Functor (dest.configProperty));
 
-          if (src.deployedResource_p ())
-            {
-              dest.deployedResource.length (1);
-              IRDD_Handler::instance_resource_deployment_descr (src.deployedResource (),
-                                                                dest.deployedResource[0]);
-            }
+          dest.deployedResource.length (src.count_deployedResource ());
+          std::for_each (src.begin_deployedResource (),
+                         src.end_deployedResource (),
+                         IRDD_Functor (dest.deployedResource));
 
           if (src.deployedSharedResource_p ())
             {
@@ -134,9 +132,12 @@ namespace CIAO
                                                                  src.configProperty[j]));
         }
 
-      //Check if there is a deployedResource, if so store
-      if(src.deployedResource.length() != 0)
-        idd.deployedResource(IRDD_Handler::instance_resource_deployment_descr(src.deployedResource[0]));
+      // Get and store the deployedResource(s)
+      size_t dp_total = src.deployedResource.length ();
+      for (size_t k = 0; k < dp_total; k++)
+        {
+          idd.add_deployedResource (IRDD_Handler::instance_resource_deployment_descr (src.deployedResource[k]));
+        }
 
       //Check if there is a deployedSharedResource, if so store it
       if(src.deployedSharedResource.length() != 0)

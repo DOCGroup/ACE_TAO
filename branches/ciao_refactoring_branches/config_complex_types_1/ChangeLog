@@ -1,3 +1,27 @@
+Thu Feb 22 21:41:13 UTC 2007  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * tools/Config_Handlers/DynAny_Handler/DynAny_Handler.cpp
+        * tools/Config_Handlers/DynAny_Handler/DynSequence_Handler.cpp
+        * tools/Config_Handlers/DynAny_Handler/DynAny_Handler.h
+        * tools/Config_Handlers/Any_Handler.cpp
+        * tools/Config_Handlers/Basic_Deployment_Data.cpp
+        * tools/Config_Handlers/CIAO_Events/CIAOEvents.hpp
+        * tools/Config_Handlers/Utils/XercesString.cpp
+        * tools/Config_Handlers/Utils/XercesString.h
+        * tools/Config_Handlers/IRDD_Handler.h
+        * tools/Config_Handlers/RT-CCM/CNPM_Handler.h
+        * tools/Config_Handlers/RT-CCM/CIAOServerResources.hpp
+        * tools/Config_Handlers/RT-CCM/PS_Handler.cpp
+        * tools/Config_Handlers/RT-CCM/RT-CCM-Handlers.mpc
+        * tools/Config_Handlers/RT-CCM/NPM_Handler.cpp
+        * tools/Config_Handlers/RT-CCM/CNPM_Handler.cpp
+        * tools/Config_Handlers/RT-CCM/NPM_Handler.h
+        * tools/Config_Handlers/RT-CCM/CIAOServerResources.cpp
+        * tools/Config_Handlers/Basic_Deployment_Data.hpp
+        * tools/Config_Handlers/IDD_Handler.cpp
+        
+          Merge from head to pick up recent changes there.
+        
 Wed Feb 21 16:11:05 UTC 2007  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * tools/Config_Handlers/DynAny_Handler/DynAny_Handler.cpp

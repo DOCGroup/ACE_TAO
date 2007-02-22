@@ -15,6 +15,7 @@
 #include "Common.h"
 #include "Config_Handlers_Export.h"
 #include "ace/config-lite.h"
+#include "Utils/Functors.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -25,6 +26,7 @@
 namespace Deployment
 {
 struct InstanceResourceDeploymentDescription;
+class InstanceResourceDeploymentDescriptions;
 }
 
 
@@ -60,9 +62,11 @@ static InstanceResourceDeploymentDescription
 instance_resource_deployment_descr (
 const Deployment::InstanceResourceDeploymentDescription& src)
 throw (Config_Error);
-
-
 };
+typedef Sequence_Handler <InstanceResourceDeploymentDescription,
+                          ::Deployment::InstanceResourceDeploymentDescriptions,
+                          ::Deployment::InstanceResourceDeploymentDescription,
+                          IRDD_Handler::instance_resource_deployment_descr > IRDD_Functor;
 }
 }
 

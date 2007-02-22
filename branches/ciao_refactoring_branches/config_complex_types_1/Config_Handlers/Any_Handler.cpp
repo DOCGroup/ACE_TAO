@@ -29,7 +29,7 @@ namespace CIAO
     {
       CIAO_TRACE("Any_Handler::extract_into_any");
       DynamicAny::DynAny_var dyn = DYNANY_HANDLER->extract_into_dynany (desc.type (),
-                                                                        desc.value ());
+                                                                        desc.begin_value ());
 
       toconfig = *dyn->to_any ();
 
