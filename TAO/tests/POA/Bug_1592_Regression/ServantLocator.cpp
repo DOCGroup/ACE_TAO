@@ -13,9 +13,9 @@ extern CORBA::Boolean receive_request_service_contexts_called;
 extern CORBA::Boolean ending_interception_point_called;
 
 ServantLocator::ServantLocator (CORBA::ORB_ptr orb)
-  : orb_ (CORBA::ORB::_duplicate (orb)),
+  : error_status_ (false),
+    orb_ (CORBA::ORB::_duplicate (orb)),
     servant_ (),
-    error_status_ (false)
 {
 }
 
