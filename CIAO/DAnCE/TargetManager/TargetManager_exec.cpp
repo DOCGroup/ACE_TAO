@@ -35,7 +35,7 @@ namespace CIDL_TargetManager_i
 
     // Create Domain Data here
 
-    CIAO::DomainDataManager::create (orb_, target.in ());
+    CIAO::DomainDataManager::create (orb_.in (), target.in ());
 //    CIAO::Domain_Singleton::instance ();
   }
 
