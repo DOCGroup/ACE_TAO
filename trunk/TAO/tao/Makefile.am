@@ -2904,6 +2904,7 @@ libTAO_PortableServer_la_SOURCES = \
   PortableServer/LifespanStrategyTransient.cpp \
   PortableServer/LifespanStrategyTransientFactoryImpl.cpp \
   PortableServer/Local_Servant_Base.cpp \
+  PortableServer/Network_Priority_Hook.cpp \
   PortableServer/Non_Servant_Upcall.cpp \
   PortableServer/ORT_Adapter_Factory.cpp \
   PortableServer/Object_Adapter.cpp \
@@ -3077,6 +3078,7 @@ nobase_include_HEADERS += \
   PortableServer/LifespanStrategyTransientFactoryImpl.h \
   PortableServer/Local_Servant_Base.h \
   PortableServer/Local_Servant_Base.inl \
+  PortableServer/Network_Priority_Hook.h \
   PortableServer/Non_Servant_Upcall.h \
   PortableServer/Non_Servant_Upcall.inl \
   PortableServer/ORT_Adapter.h \
