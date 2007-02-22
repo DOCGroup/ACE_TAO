@@ -4,6 +4,10 @@
 
 #include "ace/OS_Memory.h"
 
+#if defined (ACE_LACKS_ALPHASORT)
+# include "ace/OS_NS_string.h"
+#endif /* ACE_LACKS_ALPHASORT */
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE_OS
