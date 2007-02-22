@@ -23,7 +23,7 @@ int main(int argc, char * argv[])
 
 	// Get the "RootPOA"
   CORBA::Object_var obj = orb->resolve_initial_references("RootPOA");
-	PortableServer::POA_var poa = PortableServer::POA::_narrow(obj);
+  PortableServer::POA_var poa = PortableServer::POA::_narrow(obj.in ());
 
 	// activate its managers so it can handle incoming requests
 	poa->the_POAManager()->activate();
@@ -36,14 +36,14 @@ int main(int argc, char * argv[])
 	// orb with no name service or common file involved.
   obj = orb->string_to_object("corbaloc::localhost:9999/Simple");
 
-  if (CORBA::is_nil(obj)) {
+  if (CORBA::is_nil(obj.in ())) {
     ACE_ERROR ((LM_ERROR, "could not get reference\n"));
 		return 1;
 	}
 
 	// narrow the reference to the particular type we wish to deal with
-	Simple_var simple = Simple::_narrow(obj);
-  if (CORBA::is_nil(simple)) {
+  Simple_var simple = Simple::_narrow(obj.in ());
+  if (CORBA::is_nil(simple.in ())) {
     ACE_ERROR ((LM_ERROR, "could not get reference\n"));
 		return 1;
 	}
@@ -76,11 +76,11 @@ int main(int argc, char * argv[])
 	Callee_i * callee_i = new Callee_i;
 	// get the CORBA reference
 	Callee_var callee = callee_i->_this();
-  if (CORBA::is_nil(callee)) {
+  if (CORBA::is_nil(callee.in ())) {
     ACE_ERROR ((LM_ERROR, "could not get callback object\n"));
     return 1;
 	} else {
-    CORBA::String_var str = orb->object_to_string(callee);
+    CORBA::String_var str = orb->object_to_string(callee.in ());
     FILE *output_file= ACE_OS::fopen ("ior", "w");
     if (output_file == 0)
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -104,7 +104,7 @@ int main(int argc, char * argv[])
   ACE_DEBUG ((LM_DEBUG, "Profile count is %d\n",
               iorm->get_profile_count(merged.in())));
 
-	simple->registerCallee(doubleCallee);
+  simple->registerCallee(doubleCallee.in ());
 
   ACE_OS::sleep(120);
 
