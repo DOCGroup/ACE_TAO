@@ -1,3 +1,11 @@
+Thu Feb 22 13:56:42 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Makefile.am:
+          Added Notification_Queue.{h,cpp,inl}:
+
+        * ace/OS_NS_dirent.inl:
+          Added include when ACE_LACKS_ALPHASORT is defined
+
 Thu Feb 22 13:03:01 UTC 2007  Carlos O'Ryan  <coryan@atdesk.com>
 
         * Merged changes from the bug_2815 branch.  From revision 77182 to
@@ -78,7 +86,7 @@ Thu Feb 22 13:03:01 UTC 2007  Carlos O'Ryan  <coryan@atdesk.com>
         * tests/run_test.lst:
         * tests/Notification_Queue_Unit_Test.cpp:
           New unit test for the notification queue class.
-        
+
         * ace/Dev_Poll_Reactor.h:
         * ace/Dev_Poll_Reactor.cpp:
         * ace/Select_Reactor_Base.h:
@@ -102,11 +110,11 @@ Thu Feb 22 13:03:01 UTC 2007  Carlos O'Ryan  <coryan@atdesk.com>
 
           Sun Feb 18 21:13:41 UTC 2007  coryan  <coryan@atdesk.com>
 
-        * tests/tests.mpc: 
+        * tests/tests.mpc:
         * tests/Bug_2815_Regression_Test.cpp:
           Add new regression test for bug 2815.  I have not added the test
           to the automated test suite because (1) it fails, and (2) it is
-          a test to reproduce performance 
+          a test to reproduce performance
 
 Thu Feb 22 12:58:42 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
