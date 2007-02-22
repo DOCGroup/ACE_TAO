@@ -7096,7 +7096,7 @@ namespace CIAO
         virtual void
         configProperty_post (Type const&);
 
-        virtual void
+        virtual void 
         deployedResource_pre (Type &o)
         {
 
@@ -7107,7 +7107,7 @@ namespace CIAO
         virtual void
         deployedResource_pre (Type const&);
 
-        virtual void
+        virtual void 
         deployedResource_next (Type &o)
         {
 
@@ -7118,7 +7118,7 @@ namespace CIAO
         virtual void
         deployedResource_next (Type const&);
 
-        virtual void
+        virtual void 
         deployedResource_post (Type &o)
         {
 

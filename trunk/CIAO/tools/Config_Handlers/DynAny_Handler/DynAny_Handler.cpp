@@ -165,7 +165,7 @@ namespace CIAO
       DynamicAny::DynAny_var dyn = this->daf_->create_dyn_any (any);
 
       DataValue val;
-      /*
+
       switch (dyn->type ()->kind ())
         {
         case CORBA::tk_short:
@@ -234,7 +234,7 @@ namespace CIAO
           ACE_ERROR ((LM_ERROR, "DynAny_Handler: I have no idea how to perform a referse mapping.\n"));
           throw 1;
         }
-      */
+
     }
   }
 }
