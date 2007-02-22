@@ -82,7 +82,7 @@ namespace CIAO
 
     CNWPriorityModelPolicyDef
     CNPM_Handler::cnw_priority_pd (
-      const ::CIAO::DAnCE::CNWPriorityModelPolicyDef &src)
+      const ::CIAO::DAnCE::CNWPriorityModelPolicyDef&)
     {
       auto_ptr <CNWPriorityModelPolicyDef> pmd;
       pmd.reset (new CNWPriorityModelPolicyDef (0, 0));
