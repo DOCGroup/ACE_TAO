@@ -1,3 +1,9 @@
+Thu Feb 22 17:07:08 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
+
+        * tools/Config_Handlers/RT-CCM/CNPM_Handler.cpp:
+        
+          Removed a unused input argument from cnw_priority_pd () method.
+
 Thu Feb 22 02:30:29 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
 
         * DAnCE/Deployment/CIAO_ServerResources.idl:
