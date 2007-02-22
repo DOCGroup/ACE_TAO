@@ -1,3 +1,10 @@
+Thu Feb 22 02:30:29 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
+
+        * DAnCE/Deployment/CIAO_ServerResources.idl:
+        
+          Modified the IDL to conform to the changes made in the
+          schema.
+
 Thu Feb 22 02:27:00 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
 
         * tools/Config_Handlers/RT-CCM/CNPM_Handler.h:
