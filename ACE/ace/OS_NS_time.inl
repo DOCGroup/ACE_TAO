@@ -229,9 +229,6 @@ ACE_OS::gethrtime (const ACE_HRTimer_Op op)
   ACE_hrtime_t now;
 # endif /* ! ACE_LACKS_LONGLONG_T */
 
-  // See comments about the RDTSC Pentium instruction for the ACE_WIN32
-  // version of ACE_OS::gethrtime (), below.
-  //
   // Read the high-res tick counter directly into memory variable "now".
   // The A constraint signifies a 64-bit int.
   asm volatile ("rdtsc" : "=A" (now) : : "memory");

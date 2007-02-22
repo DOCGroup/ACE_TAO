@@ -1,3 +1,16 @@
+Thu Feb 22 15:59:12 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * ace/config-win32-common.h: Change the comments around ACE_HAS_PENTIUM
+          to more accurately reflect its use and setting. With the switch to
+          QueryPerformanceCounter() for high-res timers on Windows, this
+          setting doesn't have any affect on timers, but it is used in
+          some CDR operations. This resolves Bugzilla #1410.
+
+        * ace/OS_NS_time.inl (gethrtime):
+        * ace/gethrtime.cpp: Remove the comments directing the reader to a
+          description of using RDTSC on Windows. The comment is long gone, and
+          RDTSC isn't used on Windows/VC any longer anyway.
+
 Thu Feb 22 15:07:22 UTC 2007  Ciju John  <johnc@ociweb.com>
 
         * bin/MakeProjectCreator/modules/GNUACEProjectCreator.pm:
