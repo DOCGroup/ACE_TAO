@@ -15,6 +15,10 @@ namespace CCF
     {
       struct Scope
       {
+        virtual ~Scope ()
+        {
+        }
+        
         virtual void
         open_scope () = 0;
 

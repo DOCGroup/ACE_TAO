@@ -15,6 +15,10 @@ namespace CCF
     {
       struct Const
       {
+        virtual ~Const ()
+        {
+        }
+        
         virtual void
         begin (IdentifierPtr const& type,
                SimpleIdentifierPtr const& name) = 0;

@@ -15,6 +15,10 @@ namespace CCF
     {
       struct NumericExpression
       {
+        virtual ~NumericExpression ()
+        {
+        }
+        
         virtual void
         flush () = 0;
 

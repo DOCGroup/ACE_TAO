@@ -15,6 +15,10 @@ namespace CCF
     {
       struct Module : Scope
       {
+        virtual ~Module ()
+        {
+        }
+        
         virtual void
         begin (SimpleIdentifierPtr const& id) = 0;
 

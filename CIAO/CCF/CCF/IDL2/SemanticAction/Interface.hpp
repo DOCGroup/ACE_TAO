@@ -15,6 +15,10 @@ namespace CCF
     {
       struct Interface : Scope
       {
+        virtual ~Interface ()
+        {
+        }
+        
         virtual void
         begin_abstract_def (SimpleIdentifierPtr const& id) = 0;
 
