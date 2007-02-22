@@ -3237,37 +3237,32 @@ namespace CIAO
 
     // InstanceDeploymentDescription
     // 
-    InstanceDeploymentDescription::deployedResource_iterator
-InstanceDeploymentDescription::
+    InstanceDeploymentDescription::deployedResource_iterator InstanceDeploymentDescription::
     begin_deployedResource ()
     {
       return deployedResource_.begin ();
     }
 
-    InstanceDeploymentDescription::deployedResource_iterator
-InstanceDeploymentDescription::
+    InstanceDeploymentDescription::deployedResource_iterator InstanceDeploymentDescription::
     end_deployedResource ()
     {
       return deployedResource_.end ();
     }
 
-    InstanceDeploymentDescription::deployedResource_const_iterator
-InstanceDeploymentDescription::
+    InstanceDeploymentDescription::deployedResource_const_iterator InstanceDeploymentDescription::
     begin_deployedResource () const
     {
       return deployedResource_.begin ();
     }
 
-    InstanceDeploymentDescription::deployedResource_const_iterator
-InstanceDeploymentDescription::
+    InstanceDeploymentDescription::deployedResource_const_iterator InstanceDeploymentDescription::
     end_deployedResource () const
     {
       return deployedResource_.end ();
     }
 
     void InstanceDeploymentDescription::
-    add_deployedResource
-(::CIAO::Config_Handlers::InstanceResourceDeploymentDescription const& e)
+    add_deployedResource (::CIAO::Config_Handlers::InstanceResourceDeploymentDescription const& e)
     {
       deployedResource_.push_back (e);
     }
@@ -11616,8 +11611,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        InstanceDeploymentDescription::Type::deployedResource_iterator b
-(o.begin_deployedResource()), e (o.end_deployedResource());
+        InstanceDeploymentDescription::Type::deployedResource_iterator b (o.begin_deployedResource()), e (o.end_deployedResource());
 
         if (b != e)
         {
@@ -11639,8 +11633,7 @@ namespace CIAO
       {
         // VC6 anathema strikes again
         //
-        InstanceDeploymentDescription::Type::deployedResource_const_iterator b
-(o.begin_deployedResource()), e (o.end_deployedResource());
+        InstanceDeploymentDescription::Type::deployedResource_const_iterator b (o.begin_deployedResource()), e (o.end_deployedResource());
 
         if (b != e)
         {
@@ -15552,8 +15545,7 @@ namespace CIAO
       void InstanceDeploymentDescription::
       deployedResource_pre (Type const&)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("deployedResource", top_
-()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("deployedResource", top_ ()));
       }
 
       void InstanceDeploymentDescription::
