@@ -1,3 +1,15 @@
+Thu Feb 22 22:01:13 UTC 2007  Wallace Zhang  <zhang_w@ociweb.com>
+
+        * tests/DSI_AMI_Gateway/DSI_AMI_Gateway.mpc:
+        * tests/DSI_AMI_Gateway/My_DII_Reply_Handler.h:
+        * tests/DSI_AMI_Gateway/My_DII_Reply_Handler.cpp:
+        * tests/DSI_AMI_Gateway/test_dsi.h:
+        * tests/DSI_AMI_Gateway/test_dsi.inl:
+        * tests/DSI_AMI_Gateway/test_dsi.cpp:
+
+          Updated this test with full features, i.e.,
+          DII+AMI+DSI+DSH.
+
 Wed Feb 21 23:55:27 UTC 2007  Wallace Zhang  <zhang_w@ociweb.com>
 
         * tests/DSI_AMI_Gateway:
