@@ -1,3 +1,10 @@
+Thu Feb 22 22:19:14 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
+
+        * DAnCE/NodeApplicationManager/Containers_Info_Map.cpp:
+        
+          Modifications to read in DiffServ policy specifications
+          within the deployment plan.
+
 Thu Feb 22 22:18:24 UTC 2007  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * CCF/CCF/CompilerElements/TokenStream.hpp

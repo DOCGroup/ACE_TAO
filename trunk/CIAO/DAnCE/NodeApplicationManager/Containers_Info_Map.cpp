@@ -80,108 +80,180 @@ namespace CIAO
     // component instance. For each policy set, we create a separate container
     // to host all the components with such policy set.
     // NOTE: all the component instances without policies are specified should
-    // be hosted in the same container, and in our map the key is an empty string ""
+    // be hosted in the same container, and in our map the key is an empty
+    // string ""
+    int first_time = 0;
     for (CORBA::ULong i = 0; i < instance_len; ++i)
       {
         CORBA::String_var my_resource_id ("");
-        const char *my_policy_set_id = "";
+        const char *diff_policy_set_id = "";
+        bool found = false;
 
         // @@ super hack here.  we are assuming RT policy set is
         // the only thing that will be specified.
-        if (this->plan_.instance[i].deployedResource.length () != 0)
+        CORBA::ULong dp_length =
+          this->plan_.instance[i].deployedResource.length ();
+
+        if (dp_length == 0)
+          {
+            found = true;
+          }
+
+        for (CORBA::ULong x = 0; x < dp_length; ++x)
           {
             my_resource_id =
-              this->plan_.instance[i].deployedResource[0].resourceName.in ();
+              this->plan_.instance[i].deployedResource[x].resourceName.in ();
 
-            this->plan_.instance[i].deployedResource[0].property[0].value >>=
-              my_policy_set_id;
+            CORBA::ULong property_length =
+              this->plan_.instance[i].deployedResource[x].property.length ();
+
+            found = true;
+
+            for (CORBA::ULong p = 0; p < property_length; ++p)
+              {
+                if (ACE_OS::strcmp (
+                      this->plan_.instance[i].deployedResource[x].
+                      property[p].name.in (),
+                      "CIAO:InstancePolicy") == 0)
+                  { // should be only one of them.
+                    // each instance will have one one CIAO:InstancePolicy
+                    // definition.
+                    this->plan_.instance[i].deployedResource[x].property[p].
+                    value >>= diff_policy_set_id;
+                    if (this->map_.find (diff_policy_set_id) != 0)
+                      {
+                        // we found a policy that is different from what
+                        // we have seen before.
+                        found = true;
+                      }
+                    else
+                      {
+                        found = false;
+                      }
+                  }
+              }
           }
 
         // If we find a existing policy_set_id, then do nothing.
-        if (this->map_.find (my_policy_set_id) == 0)
-          continue;
-        if (ACE_OS::strcmp (my_policy_set_id, "") == 0)
+        if (found == false)
           {
-            // no policy set id has been specified
-            Deployment::ContainerImplementationInfo * info;
-            ACE_NEW (info, Deployment::ContainerImplementationInfo);
-            this->map_.bind (my_policy_set_id, info);
+            // we did not find a new instance policy.
+            // but the instance's receptacles could have their
+            // own policies.
             continue;
           }
+
+        if (ACE_OS::strcmp (diff_policy_set_id, "") == 0)
+          {
+            // no policy set id has been specified
+            // but we could have some receptacle policies around.
+            //
+            if (first_time == 0)
+              {
+                Deployment::ContainerImplementationInfo * info;
+                ACE_NEW (info, Deployment::ContainerImplementationInfo);
+                this->map_.bind (diff_policy_set_id, info);
+                first_time = 1;
+                continue;
+              }
+          }
         else
+          {
+            Deployment::ContainerImplementationInfo * info;
+            ACE_NEW (info, Deployment::ContainerImplementationInfo);
 
-    {
-      Deployment::ContainerImplementationInfo * info;
-      ACE_NEW (info, Deployment::ContainerImplementationInfo);
+            // Fetch the actual policy_set_def from the infoProperty
+            // Ugly due to the IDL data structure definition! :(
+            CORBA::ULong j;
+            CORBA::ULong infoProperty_length =
+                this->plan_.infoProperty.length ();
 
-      // Fetch the actual policy_set_def from the infoProperty
-      // Ugly due to the IDL data structure definition! :(
-      CORBA::ULong j;
-      CORBA::ULong infoProperty_length = this->plan_.infoProperty.length ();
-      bool found = false;
+            for (j = 0; j < infoProperty_length; ++j)
+              {
+                if (ACE_OS::strcmp (this->plan_.infoProperty[j].name.in (),
+                                    "CIAOServerResources") != 0)
+                  continue;
 
-      for (j = 0; j < infoProperty_length; ++j)
-        {
-          if (ACE_OS::strcmp (this->plan_.infoProperty[j].name.in (),
-                              "CIAOServerResources") != 0)
-            continue;
+                CIAO::DAnCE::ServerResource *server_resource_def = 0;
+                this->plan_.infoProperty[j].value >>= server_resource_def;
 
-          CIAO::DAnCE::ServerResource *server_resource_def = 0;
-          this->plan_.infoProperty[j].value >>= server_resource_def;
+                if (ACE_OS::strcmp ((*server_resource_def).Id,
+                                    my_resource_id.in ()) == 0)
+                  {
+                    // Iterate over the policy_sets
+                    CORBA::ULong k;
+                    CORBA::ULong policy_sets_length =
+                      (*server_resource_def).orb_config.policy_set.length ();
+                    const char *comparing_policy_set_id;
+                    CORBA::ULong config_length;
+                    CORBA::ULong new_config_length;
+                    for (k = 0; k < policy_sets_length; ++k)
+                      {
+                        CORBA::ULong new_dp_length =
+                          this->plan_.instance[i].deployedResource.length ();
 
-          if (ACE_OS::strcmp ((*server_resource_def).Id,
-                              my_resource_id.in ()) == 0)
-            {
-              // Iterate over the policy_sets
-              CORBA::ULong k;
-              CORBA::ULong policy_sets_length =
-                (*server_resource_def).orb_config.policy_set.length ();
-              for (k = 0; k < policy_sets_length; ++k)
-                {
-                  ACE_DEBUG ((LM_DEBUG, "Looking for policy set id: %s\n", my_policy_set_id));
-                  ACE_DEBUG ((LM_DEBUG, "Compare against policy set id: %s\n\n",
-                              (*server_resource_def).orb_config.policy_set[k].Id.in ()));
-
-                  if (ACE_OS::strcmp (my_policy_set_id,
-                          (*server_resource_def).orb_config.policy_set[k].Id) == 0)
-                    {
-                      // Foud the target policy set def
-                      info->container_config.length (1);
-                      info->container_config[0].name =
-                        CORBA::string_dup ("ContainerPolicySet");
-                      info->container_config[0].value <<=
-                        my_policy_set_id;
-                        // (*server_resource_def).orb_config.policy_set[k];
-
-                      ACE_DEBUG ((LM_DEBUG, "Found matching rt policy set*****\n\n"));
-                      found = true;
-                      break;
-                    }
-                }
-              if (k == policy_sets_length)
-                {
-                  // No Server Resource Def found?
-                  ACE_DEBUG ((LM_DEBUG,
-                      "No matching policy set def found in resource def: %s!\n",
-                      my_resource_id.in ()));
-                }
-            }
-
-          // if we successfully found the policy_set_id
-          if (found)
-            break;
-        } // end of for loop for fetching policy_set_def
-
-      if (j == this->plan_.infoProperty.length ())
-        {
-          // No Server Resource Def found?! Inconsistent descriptor files.
-          ACE_ERROR ((LM_ERROR, "(%P|%t) Descriptor error: "
-              "No matching server resource def found for component: %s!\n",
-              this->plan_.instance[i].name.in ()));
-        }
-      else
-        this->map_.bind (my_policy_set_id, info);
-    }
+                        for (CORBA::ULong z = 0; z < new_dp_length;
+                             ++z)
+                          {
+                            CORBA::ULong new_property_length =
+                              this->plan_.instance[i].deployedResource[z].
+                                property.length ();
+                            for (CORBA::ULong s = 0;
+                                 s < new_property_length; ++s)
+                              {
+                                this->plan_.instance[i].deployedResource[z].
+                                property[s].value >>= comparing_policy_set_id;
+                                if (ACE_OS::strcmp (comparing_policy_set_id,
+                                      (*server_resource_def).
+                                      orb_config.policy_set[k].Id) == 0)
+                                  {
+                                    config_length =
+                                      info->container_config.length ();
+                                    new_config_length =
+                                      config_length + 1;
+                                    info->container_config.length (
+                                      new_config_length);
+                                    if (ACE_OS::strcmp (
+                                         this->plan_.instance[i].
+                                         deployedResource[z].
+                                         property[s].name.in (),
+                                         "CIAO:InstancePolicy") == 0)
+                                      {
+                                        info->
+                                         container_config[config_length].name =
+                                          CORBA::string_dup
+                                            ("ContainerPolicySet");
+                                      }
+                                    else if (ACE_OS::strcmp (
+                                              this->plan_.instance[i].
+                                              deployedResource[z].
+                                              property[s].name.in (),
+                                              "CIAO:ReceptaclePolicy") == 0)
+                                      {
+                                        info->
+                                         container_config[config_length].name =
+                                          CORBA::string_dup
+                                             ("ReceptaclePolicySet");
+                                      }
+                                    else
+                                      {
+                                        info->
+                                          container_config[config_length].name =
+                                            this->plan_.instance[i].
+                                               deployedResource[z].
+                                               property[s].name.in ();
+                                      }
+                                    info->
+                                      container_config[config_length].value <<=
+                                        comparing_policy_set_id;
+                                  }
+                              }
+                          }
+                      }
+                    this->map_.bind (diff_policy_set_id, info);
+                  }
+              }
+          }
       }
   }
 
@@ -216,17 +288,34 @@ namespace CIAO
     Deployment::ContainerImplementationInfo container_info;
 
     const char * policy_set_id = "";
-    if (instance.deployedResource.length () != 0)
+
+    CORBA::ULong dp_length =
+      instance.deployedResource.length ();
+
+    for (CORBA::ULong x = 0; x < dp_length; ++x)
       {
-        instance.deployedResource[0].property[0].value >>= policy_set_id;
-        //        instance.deployedResource[0].resourceValue >>= policy_set_id;
-        //ACE_ERROR ((LM_ERROR, "ERROR: RT-CCM support has been disabled until code in Containers_Info_Map is updated to reflect IDL changes."));
+        CORBA::ULong property_length =
+          instance.deployedResource[x].property.length ();
+
+        for (CORBA::ULong p = 0; p < property_length; ++p)
+          {
+            if (ACE_OS::strcmp (
+                  instance.deployedResource[x].
+                  property[p].name.in (),
+                  "CIAO:InstancePolicy") == 0)
+              {
+                instance.deployedResource[x].property[p].value >>=
+                  policy_set_id;
+              }
+          }
       }
 
     // Find the ContainerImplementationInfo entry from the map
     MAP::ENTRY *entry = 0;
     if (this->map_.find (policy_set_id, entry) != 0)
-      return false; //should never happen
+      {
+        return false; //should never happen
+      }
     else
       {
         this->insert_instance_into_container (
@@ -259,6 +348,45 @@ namespace CIAO
     if (instance.configProperty.length () > 0)
       {
         impl_infos[i].component_config = instance.configProperty;
+      }
+
+    CORBA::ULong config_length =
+      impl_infos[i].component_config.length ();
+
+    CORBA::ULong dp_length =
+      instance.deployedResource.length ();
+
+    const char* policy_set_id = "";
+
+    for (CORBA::ULong x = 0; x < dp_length; ++x)
+      {
+        CORBA::ULong property_length =
+          instance.deployedResource[x].property.length ();
+
+        for (CORBA::ULong p = 0; p < property_length; ++p)
+          {
+            if (ACE_OS::strcmp (
+                  instance.deployedResource[x].
+                  property[p].name.in (),
+                  "CIAO:InstancePolicy") != 0)
+              {
+                if (ACE_OS::strcmp (
+                      instance.deployedResource[x].
+                      property[p].name.in (),
+                      "CIAO:ReceptaclePolicy") != 0)
+                  {
+                    config_length =
+                      impl_infos[i].component_config.length ();
+                    impl_infos[i].component_config.length (config_length + 1);
+                    impl_infos[i].component_config[config_length].name =
+                      instance.deployedResource[x].property[p].name.in ();
+                    instance.deployedResource[x].property[p].value >>=
+                      policy_set_id;
+                    impl_infos[i].component_config[config_length].value <<=
+                      policy_set_id;
+                  }
+              }
+          }
       }
 
     bool svnt_found = false;
