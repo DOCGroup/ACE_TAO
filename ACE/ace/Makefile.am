@@ -166,6 +166,7 @@ libACE_la_SOURCES = \
   Naming_Context.cpp \
   Netlink_Addr.cpp \
   Notification_Strategy.cpp \
+  Notification_Queue.cpp \
   OS_Errno.cpp \
   OS_Log_Msg_Attributes.cpp \
   OS_NS_Thread.cpp \
@@ -699,6 +700,8 @@ nobase_include_HEADERS += \
   Node.h \
   Notification_Strategy.h \
   Notification_Strategy.inl \
+  Notification_Queue.h \
+  Notification_Queue.inl \
   Null_Barrier.h \
   Null_Condition.h \
   Null_Mutex.h \
