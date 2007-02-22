@@ -163,7 +163,7 @@ namespace TM_Tester
               resource_seq[e.index].resourceName.in (),
               e.propertyName.in ()));
       }
-      catch(const CORBA::Exception & ex)
+      catch(const CORBA::Exception &)
       {
         ACE_ERROR ((LM_ERROR, "Error:TargetManager:commitResources Exception\n"));
         ACE_ERROR ((LM_ERROR, "Error:TargetManager:CORBA Generic Exception\n"));
@@ -187,7 +187,7 @@ namespace TM_Tester
       {
         ACE_ERROR ((LM_ERROR, "Error:TargetManager releaseResources ResourceNotAvailable Exception\n"));
       }
-      catch(const CORBA::Exception & ex)
+      catch(const CORBA::Exception &)
       {
         ACE_ERROR ((LM_ERROR, "Error:TargetManager:releaseResources Exception\n"));
         ACE_ERROR ((LM_ERROR, "Error:TargetManager:CORBA Generic Exception\n"));
@@ -216,7 +216,7 @@ namespace TM_Tester
           {
             ACE_ERROR ((LM_ERROR, "Error:TargetManager:CORBA::NO_IMPLEMENT thrown\n"));
           }
-          catch(CORBA::Exception & ex)
+          catch(CORBA::Exception &)
           {
             ACE_ERROR ((LM_ERROR, "Error:TargetManager:CORBA Generic Exception\n"));
             ACE_ERROR ((LM_ERROR, "Error:TargetManager:Exception in UpdateDomain call"));
@@ -232,7 +232,7 @@ namespace TM_Tester
           {
             ACE_ERROR ((LM_ERROR, "Error:TargetManager:CORBA::NO_IMPLEMENT thrown\n"));
           }
-          catch(CORBA::Exception & ex)
+          catch(CORBA::Exception &)
           {
             ACE_ERROR ((LM_ERROR, "Error:TargetManager:CORBA Generic Exception\n"));
             ACE_ERROR ((LM_ERROR, "Error:TargetManager:Exception in UpdateDomain call"));
@@ -254,7 +254,7 @@ namespace TM_Tester
       {
         ACE_ERROR ((LM_ERROR, "Error:TargetManager:CORBA::NO_IMPLEMENT thrown\n"));
       }
-      catch(CORBA::Exception & ex)
+      catch(CORBA::Exception &)
       {
         ACE_ERROR ((LM_ERROR ,"Error:TargetManager:CORBA Generic Exception\n"));
         ACE_ERROR ((LM_ERROR,  "Error:TargetManager:Exception in TargetManager call\n"));
@@ -263,7 +263,7 @@ namespace TM_Tester
       // Finally destroy the ORB
       orb->destroy ();
     }
-    catch (CORBA::Exception & ex)
+    catch (CORBA::Exception &)
     {
       ACE_ERROR ((LM_ERROR,  "Error:TargetManager:CORBA exception raised!\n"));
     }
