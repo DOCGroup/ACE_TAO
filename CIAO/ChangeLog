@@ -1,3 +1,18 @@
+Thu Feb 22 21:36:35 UTC 2007  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * tools/Config_Handlers/DynAny_Handler/DynAny_Handler.cpp
+        
+          Fix for compile warning. 
+        
+        * tools/Config_Handlers/Basic_Deployment_Data.cpp
+        * tools/Config_Handlers/RT-CCM/CIAOServerResources.hpp
+        * tools/Config_Handlers/RT-CCM/CIAOServerResources.cpp
+        * tools/Config_Handlers/Basic_Deployment_Data.hpp
+
+          Regenerated with newer version of XSC than Jai had, re-applying
+          fixes from 
+          Wed Feb 21 20:30:34 UTC 2007  William R. Otte  <wotte@dre.vanderbilt.edu>
+        
 Thu Feb 22 17:07:08 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
 
         * tools/Config_Handlers/RT-CCM/CNPM_Handler.cpp:

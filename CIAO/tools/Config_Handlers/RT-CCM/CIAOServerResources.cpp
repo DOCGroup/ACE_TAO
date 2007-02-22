@@ -1424,7 +1424,7 @@ namespace CIAO
     }
 
     // PolicySet
-    //
+    // 
     PolicySet::nwpriorityModel_iterator PolicySet::
     begin_nwpriorityModel ()
     {
@@ -1462,7 +1462,7 @@ namespace CIAO
     }
 
     // PolicySet
-    //
+    // 
     PolicySet::cnwpriorityModel_iterator PolicySet::
     begin_cnwpriorityModel ()
     {
@@ -1639,7 +1639,7 @@ namespace CIAO
     }
 
     // NWPriorityModel
-    //
+    // 
 
     NWPriorityModel::Value NWPriorityModel::
     integral () const
@@ -1751,15 +1751,16 @@ namespace CIAO
       }
     }
 
+
     // NWPriorityModelPolicyDef
-    //
+    // 
 
     NWPriorityModelPolicyDef::
     NWPriorityModelPolicyDef (::CIAO::Config_Handlers::NWPriorityModel const& nw_priority_model__,
                               ::XMLSchema::long_ const& request_dscp__,
                               ::XMLSchema::long_ const& reply_dscp__)
-    :
-    ::XSCRT::Type (),
+    : 
+    ::XSCRT::Type (), 
     nw_priority_model_ (new ::CIAO::Config_Handlers::NWPriorityModel (nw_priority_model__)),
     request_dscp_ (new ::XMLSchema::long_ (request_dscp__)),
     reply_dscp_ (new ::XMLSchema::long_ (reply_dscp__)),
@@ -1796,8 +1797,9 @@ namespace CIAO
       return *this;
     }
 
+
     // NWPriorityModelPolicyDef
-    //
+    // 
     ::CIAO::Config_Handlers::NWPriorityModel const& NWPriorityModelPolicyDef::
     nw_priority_model () const
     {
@@ -1811,7 +1813,7 @@ namespace CIAO
     }
 
     // NWPriorityModelPolicyDef
-    //
+    // 
     ::XMLSchema::long_ const& NWPriorityModelPolicyDef::
     request_dscp () const
     {
@@ -1825,7 +1827,7 @@ namespace CIAO
     }
 
     // NWPriorityModelPolicyDef
-    //
+    // 
     ::XMLSchema::long_ const& NWPriorityModelPolicyDef::
     reply_dscp () const
     {
@@ -1840,13 +1842,13 @@ namespace CIAO
 
 
     // CNWPriorityModelPolicyDef
-    //
+    // 
 
     CNWPriorityModelPolicyDef::
     CNWPriorityModelPolicyDef (::XMLSchema::long_ const& request_dscp__,
                                ::XMLSchema::long_ const& reply_dscp__)
-    :
-    ::XSCRT::Type (),
+    : 
+    ::XSCRT::Type (), 
     request_dscp_ (new ::XMLSchema::long_ (request_dscp__)),
     reply_dscp_ (new ::XMLSchema::long_ (reply_dscp__)),
     regulator__ ()
@@ -1877,8 +1879,9 @@ namespace CIAO
       return *this;
     }
 
+
     // CNWPriorityModelPolicyDef
-    //
+    // 
     ::XMLSchema::long_ const& CNWPriorityModelPolicyDef::
     request_dscp () const
     {
@@ -1892,7 +1895,7 @@ namespace CIAO
     }
 
     // CNWPriorityModelPolicyDef
-    //
+    // 
     ::XMLSchema::long_ const& CNWPriorityModelPolicyDef::
     reply_dscp () const
     {
@@ -2481,7 +2484,7 @@ namespace CIAO
 
       if (v == "SERVER_DECLARED_NWPRIORITY") v_ = SERVER_DECLARED_NWPRIORITY_l;
       else if (v == "CLIENT_PROPAGATED_NWPRIORITY") v_ = CLIENT_PROPAGATED_NWPRIORITY_l;
-      else
+      else 
       {
       }
     }
@@ -2494,7 +2497,7 @@ namespace CIAO
 
       if (v == "SERVER_DECLARED_NWPRIORITY") v_ = SERVER_DECLARED_NWPRIORITY_l;
       else if (v == "CLIENT_PROPAGATED_NWPRIORITY") v_ = CLIENT_PROPAGATED_NWPRIORITY_l;
-      else
+      else 
       {
       }
     }
@@ -2577,7 +2580,7 @@ namespace CIAO
           reply_dscp_->container (this);
         }
 
-        else
+        else 
         {
         }
       }
@@ -2610,7 +2613,7 @@ namespace CIAO
           reply_dscp_->container (this);
         }
 
-        else
+        else 
         {
         }
       }
@@ -5031,7 +5034,7 @@ namespace CIAO
         dispatch (o.reply_dscp ());
       }
 
-       void CNWPriorityModelPolicyDef::
+      void CNWPriorityModelPolicyDef::
       post (Type&)
       {
       }
@@ -5811,7 +5814,7 @@ namespace CIAO
 
         if (o == ::CIAO::Config_Handlers::NWPriorityModel::SERVER_DECLARED_NWPRIORITY) s = "SERVER_DECLARED_NWPRIORITY";
         else if (o == ::CIAO::Config_Handlers::NWPriorityModel::CLIENT_PROPAGATED_NWPRIORITY) s = "CLIENT_PROPAGATED_NWPRIORITY";
-        else
+        else 
         {
         }
 
@@ -5983,8 +5986,7 @@ namespace CIAO
       virtual ::CIAO::Config_Handlers::Writer::PriorityModel,
       virtual ::CIAO::Config_Handlers::Writer::NWPriorityModelPolicyDef,
       virtual ::CIAO::Config_Handlers::Writer::NWPriorityModel,
-      virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::long_,
-ACE_TCHAR >,
+      virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::long_, ACE_TCHAR >,
       virtual ::CIAO::Config_Handlers::Writer::CNWPriorityModelPolicyDef,
       virtual ::XMLSchema::Writer::IDREF< ACE_TCHAR >, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
