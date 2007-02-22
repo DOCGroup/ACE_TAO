@@ -135,7 +135,7 @@ test_connect (ACE_Reactor &reactor,
     {
       ACE_TCHAR buffer[1024];
       addresses[i].addr_to_string (buffer,
-                                   sizeof buffer / sizeof ACE_TCHAR,
+                                   sizeof buffer / sizeof (ACE_TCHAR),
                                    1);
 
       ACE_DEBUG ((LM_DEBUG,
