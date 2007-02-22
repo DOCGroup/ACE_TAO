@@ -910,7 +910,7 @@ namespace ACE_Utils
 
   // -------------------------------------
   template<typename TO, typename FROM>
-  inline TO Truncate (FROM val)
+  inline TO truncate_cast (FROM val)
   {
     typedef Truncator<FROM, TO> truncator;
 
@@ -928,7 +928,7 @@ namespace ACE_Utils
   {
     return truncate_cast<TO, FROM> (val);
   }
-  
+
 } // namespace ACE_Utils
 
 ACE_END_VERSIONED_NAMESPACE_DECL
