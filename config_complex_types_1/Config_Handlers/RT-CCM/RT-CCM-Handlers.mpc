@@ -34,6 +34,8 @@ project (RT_CCM_Config_Handlers) : acelib, ciao_deployment_stub, ciao_xml_utils 
         OR_Handler.cpp
         PM_Handler.cpp
         PS_Handler.cpp
+        CNPM_Handler.cpp
+        NPM_Handler.cpp
         SRD_Handler.cpp
         TP_Handler.cpp
         TPL_Handler.cpp

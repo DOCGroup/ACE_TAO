@@ -1,6 +1,7 @@
 // $Id$
 
 #include <ostream>
+#include <algorithm>
 
 #include "XercesString.h"
 using xercesc::XMLString;
@@ -39,7 +40,7 @@ namespace Config_Handlers
     if (&rhs == this)
       return *this;
     XStr temp (rhs);
-    ACE_Swap<XMLCh*>::swap (this->_wstr, temp._wstr);
+    std::swap (this->_wstr, temp._wstr);
     return *this;
   }
 
