@@ -1,3 +1,24 @@
+Thu Feb 22 02:27:00 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
+
+        * tools/Config_Handlers/RT-CCM/CNPM_Handler.h:
+        * tools/Config_Handlers/RT-CCM/CNPM_Handler.cpp:
+        * tools/Config_Handlers/RT-CCM/NPM_Handler.h:
+        * tools/Config_Handlers/RT-CCM/NPM_Handler.cpp:
+        
+          New config handlers for handling the DiffServ policy
+          additions in the CIAOServerResources schema.
+        
+        * tools/Config_Handlers/RT-CCM/PS_Handler.cpp:
+        
+          PolicySet within the CIAOServerResources schema will now
+          have DiffServ policy specify sub-elements. So the PolicySet
+          handler is modified to call the specific handlers checked-in
+          above.
+        
+        * tools/Config_Handlers/RT-CCM/RT-CCM-Handlers.mpc:
+        
+          Included the new files in the MPC.
+
 Thu Feb 22 01:26:05 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
 
         * docs/schema/CIAOServerResources.xsd:
