@@ -15,6 +15,10 @@ namespace CCF
     {
       struct Attribute
       {
+        virtual ~Attribute ()
+        {
+        }
+        
         virtual void
         begin_ro () = 0;
 

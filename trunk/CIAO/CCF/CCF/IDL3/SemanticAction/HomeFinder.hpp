@@ -15,6 +15,10 @@ namespace CCF
     {
       struct HomeFinder
       {
+        virtual ~HomeFinder ()
+        {
+        }
+        
         virtual void
         name (SimpleIdentifierPtr const& id) = 0;
 

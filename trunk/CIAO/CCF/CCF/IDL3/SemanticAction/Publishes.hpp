@@ -15,6 +15,10 @@ namespace CCF
     {
       struct Publishes
       {
+        virtual ~Publishes ()
+        {
+        }
+        
         virtual void
         type (IdentifierPtr const& id) = 0;
 

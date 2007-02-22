@@ -15,6 +15,10 @@ namespace CCF
     {
       struct Enum
       {
+        virtual ~Enum ()
+        {
+        }
+        
         virtual void
         begin (SimpleIdentifierPtr const& id) = 0;
 

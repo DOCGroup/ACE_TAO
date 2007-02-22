@@ -15,6 +15,10 @@ namespace CCF
     {
       struct ValueType : Scope
       {
+        virtual ~ValueType ()
+        {
+        }
+        
         virtual void
         begin_abstract_def (SimpleIdentifierPtr const& id) = 0;
 
