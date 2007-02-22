@@ -101,10 +101,12 @@ client (void *arg)
       {
         // This is, I believe, more of an issue with WinXP-64 _server_
         // side, but we can trap it here since we know we're connecting
-        // to localhost. It appears, though I haven't found documentation
-        // stating, that WinXP-64 will appear to accept connections at the
-        // TCP level past the listen backlog but if data arrives before the
-        // actual application-level accept() occurs, the connection is reset.
+        // to localhost. Some Windows versions will appear to accept
+        // connections at the TCP level past the listen backlog but if
+        // data arrives before the actual application-level accept() occurs,
+        // the connection is reset. This is caused when we trip the Windows
+        // SYN attack prevention (http://technet2.microsoft.com/WindowsServer/
+        // en/library/910c8482-e5e5-4e2c-9ea4-11301ddfc4661033.mspx?mfr=true)
         // So, if we get a reset on the first send, don't flag the error -
         // just note it and act like the connection was refused.
         if (c == ACE_ALPHABET && errno == ECONNRESET) // First byte sent
