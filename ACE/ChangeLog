@@ -1,3 +1,11 @@
+Fri Feb 23 17:47:28 UTC 2007  Carlos O'Ryan  <coryan@atdesk.com>
+
+        * tests/Bug_2815_Regression_Test.cpp:
+          The test should be enabled only if the notification queue is
+          also enabled.  Basically purge_pending_notifications() is not
+          supported without the notification queue, and that is the
+          operation we want to test.
+
 Fri Feb 23 15:37:03 UTC 2007  Steve Huston  <shuston@riverace.com>
 
         * ace/OS_NS_dirent.inl (alphasort): Use a bigger hammer on the casts.
