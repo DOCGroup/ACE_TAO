@@ -1,3 +1,15 @@
+Fri Feb 23 08:56:15 UTC 2007  Olli Savia  <ops@iki.fi>
+
+        * ace/OS_NS_dirent.inl:
+          Added casts to fix compile errors.
+        
+        * ace/config-rtems.h:
+        * ace/config-vxworks5.x.h:
+        * ace/config-vxworks6.2.h:
+        * ace/config-vxworks6.3.h:
+        * ace/config-vxworks6.4.h:
+          Added ACE_LACKS_ALPHASORT.
+        
 Thu Feb 22 18:37:00 UTC 2007  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * ace/Service_Config.h:

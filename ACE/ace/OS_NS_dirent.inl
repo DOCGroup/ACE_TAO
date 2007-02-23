@@ -153,7 +153,15 @@ alphasort (const void *a, const void *b)
   return ACE_OS::strcmp ((*(struct dirent **)a)->d_name,
 			 (*(struct dirent **)b)->d_name);
 #else
+#  if defined (ACE_SCANDIR_CMP_USES_VOIDPTR)
+  return ::alphasort (const_cast<void *>(a),
+		      const_cast<void *>(b));
+#  elif defined (ACE_SCANDIR_CMP_USES_CONST_VOIDPTR)
   return ::alphasort (a, b);
+#  else
+  return ::alphasort (static_cast<const dirent **>(a),
+		      static_cast<const dirent **>(b));
+#  endif
 #endif
 }
 
