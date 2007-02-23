@@ -1,3 +1,10 @@
+Fri Feb 23 23:10:17 UTC 2007  Ossama Othman  <ossama_othman at symantec dot com>
+
+        * tests/Recursive_Mutex_Test.cpp (test_recursion_depth):
+
+          Issue error messages instead of assert()ing.  VxWorks builds
+          will hang on a crash.  Thanks to Johnny for pointing this out.
+
 Fri Feb 23 19:24:30 USMST 2007  Yan Dai  <dai_y@ociweb.com>
 
         * performance-tests/SCTP/SOCK_SEQPACK_srv.cpp:
@@ -433,7 +440,7 @@ Wed Feb 21 19:27:14 UTC 2007  Ossama Othman  <ossama_othman at symantec dot com>
           bound to is in TIME_WAIT we need to do the connect (which will
           always return EWOULDBLOCK) and then do an
           ACE::handle_timed_complete() (with timeout==0, i.e. poll).  This
-          will do a select() on the handlewhich will immediately return
+          will do a select() on the handle which will immediately return
           with the handle in an error state.  The error code is then
           retrieved with getsockopt().
 
