@@ -1,6 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-feature(ace_for_tao) {
-  macros += TAO_HAS_SHMIOP=0 TAO_HAS_UIOP=0
-}
