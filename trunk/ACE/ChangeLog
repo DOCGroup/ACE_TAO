@@ -1,3 +1,11 @@
+Fri Feb 23 19:24:30 USMST 2007  Yan Dai  <dai_y@ociweb.com>
+
+        * performance-tests/SCTP/SOCK_SEQPACK_srv.cpp:
+
+          Made run_server() and other functions and structures only compiled 
+          when ACE_HAS_SCTP is defined. This should resolve the warning that the
+          run_server() is defined but not used on some platforms.
+
 Fri Feb 23 17:47:28 UTC 2007  Carlos O'Ryan  <coryan@atdesk.com>
 
         * tests/Bug_2815_Regression_Test.cpp:
