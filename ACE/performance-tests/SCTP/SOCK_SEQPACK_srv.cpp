@@ -33,6 +33,8 @@ extern "C" {
 // class that manages setting of options
 #include "Options_Manager.h"
 
+#ifdef ACE_HAS_SCTP
+
 // structure to bundle arguments for thread functions
 struct ArgStruct {
   ACE_SOCK_SEQPACK_Association * stream;
@@ -211,6 +213,9 @@ static void run_server (ACE_HANDLE handle)
 #endif /* ACE_HAS_THREADS */
 
 }
+
+#endif
+
 
 int ACE_TMAIN (int argc, ACE_TCHAR **argv){
 
