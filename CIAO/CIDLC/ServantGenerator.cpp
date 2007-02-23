@@ -71,7 +71,7 @@ void ServantGenerator::options (CL::Description& d)
                   "svnt-export-macro",
                   "macro",
                   "Replace default servant DLL export macro "
-                  "with provided ,acro.",
+                  "with provided macro.",
                   CL::OptionType::value));
 
   d.add_option (CL::OptionDescription (
