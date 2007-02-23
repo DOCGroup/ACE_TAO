@@ -15,7 +15,7 @@ extern CORBA::Boolean ending_interception_point_called;
 ServantLocator::ServantLocator (CORBA::ORB_ptr orb)
   : error_status_ (false),
     orb_ (CORBA::ORB::_duplicate (orb)),
-    servant_ (),
+    servant_ ()
 {
 }
 
