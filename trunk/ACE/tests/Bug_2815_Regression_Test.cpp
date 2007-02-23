@@ -205,14 +205,12 @@ run_main (int, ACE_TCHAR *[])
 
 #if !defined(ACE_HAS_REACTOR_NOTIFICATION_QUEUE)
   ACE_DEBUG ((LM_INFO,
-              ACE_TEXT ("Notification queue disabled, ")
-              ACE_TEXT ("small test version, ")
-              ACE_TEXT ("which is of no practical use\n")));
+              ACE_TEXT ("Notification queue disabled. ")
+              ACE_TEXT ("This test depends on purge_pending_notifications. ")
+              ACE_TEXT ("Thus, the test is disabled in this case\n")));
 
-  int max_notifications = 16;
 #else
   int max_notifications = 512 * 1024;
-#endif /* ACE_HAS_THREADS */
 
   {
     ACE_Reactor select_reactor (
@@ -235,6 +233,7 @@ run_main (int, ACE_TCHAR *[])
     handler.run();
   }
 
+#endif /* ACE_HAS_THREADS */
   ACE_END_TEST;
 
   return 0;
