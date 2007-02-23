@@ -1,3 +1,7 @@
+Fri Feb 23 15:37:03 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * ace/OS_NS_dirent.inl (alphasort): Use a bigger hammer on the casts.
+
 Fri Feb 23 10:50:41 UTC 2007  Olli Savia  <ops@iki.fi>
 
         * ace/OS_NS_dirent.inl:
