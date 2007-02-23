@@ -150,8 +150,8 @@ ACE_INLINE int
 alphasort (const void *a, const void *b)
 {
 #if defined (ACE_LACKS_ALPHASORT)
-  return ACE_OS::strcmp ((*(struct dirent **)a)->d_name,
-			 (*(struct dirent **)b)->d_name);
+  return ACE_OS::strcmp ((*static_cast<const struct ACE_DIRENT * const *>(a))->d_name,
+			 (*static_cast<const struct ACE_DIRENT * const *>(b))->d_name);
 #else
 #  if defined (ACE_SCANDIR_CMP_USES_VOIDPTR)
   return ::alphasort (const_cast<void *>(a),
@@ -159,8 +159,8 @@ alphasort (const void *a, const void *b)
 #  elif defined (ACE_SCANDIR_CMP_USES_CONST_VOIDPTR)
   return ::alphasort (a, b);
 #  else
-  return ::alphasort (static_cast<const dirent **>(a),
-		      static_cast<const dirent **>(b));
+  return ::alphasort (static_cast<const struct ACE_DIRENT * const *>(a),
+		      static_cast<const struct ACE_DIRENT * const *>(b));
 #  endif
 #endif
 }
