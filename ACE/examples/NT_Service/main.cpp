@@ -261,7 +261,7 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 #include "ace/OS_main.h"
 
 int
-ACE_TMAIN (int argc, ACE_TCHAR* argv[])
+ACE_TMAIN (int, ACE_TCHAR*[])
 {
   // This program needs Windows services.
   return 0;

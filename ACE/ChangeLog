@@ -1,3 +1,8 @@
+Sat Feb 24 17:03:47 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * examples/NT_Service/main.cpp: Fix unused arg warnings for builds
+          without NT Services.
+
 Sat Feb 24 09:01:19 UTC 2007  Ossama Othman  <ossama_othman at symantec dot com>
 
         * ace/config-linux.h:
