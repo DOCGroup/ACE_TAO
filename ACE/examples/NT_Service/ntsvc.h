@@ -21,6 +21,8 @@
 #ifndef NTSVC_H_
 #define NTSVC_H_
 
+#include "ace/config-lite.h"
+
 #if defined (ACE_WIN32) && !defined (ACE_LACKS_WIN32_SERVICES)
 
 #include "ace/Event_Handler.h"
