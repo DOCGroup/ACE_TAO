@@ -20,7 +20,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ciao/Deployment_CoreC.h"
+#include "DAnCE/Deployment/Deployment_CoreC.h"
 
 namespace CIAO
 {
