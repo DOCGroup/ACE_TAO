@@ -44,8 +44,7 @@ namespace TAO
         }
       catch (const ::CORBA::Exception&)
         {
-          (void) child->destroy (1,
-                                 1);
+          (void) child->destroy (1, 1);
 
           return false;
         }

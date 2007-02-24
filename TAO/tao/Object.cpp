@@ -475,10 +475,6 @@ CORBA::Object::_non_existent (void)
     {
       retval = true;
     }
-  catch (const ::CORBA::Exception&)
-    {
-      throw;
-    }
 
   return retval;
 }
@@ -556,8 +552,7 @@ CORBA::Object::_set_policy_overrides (
     throw ::CORBA::NO_IMPLEMENT ();
 
   TAO_Stub* stub =
-    this->protocol_proxy_->set_policy_overrides (policies,
-                                                 set_add);
+    this->protocol_proxy_->set_policy_overrides (policies, set_add);
 
   TAO_Stub_Auto_Ptr safe_stub (stub);
 
@@ -601,14 +596,15 @@ CORBA::Object::_validate_connection (
   TAO_OBJECT_IOR_EVALUATE_RETURN;
 
   inconsistent_policies = 0;
-
-  CORBA::Boolean retval = false;
+  CORBA::Boolean retval = true;
 
 #if (TAO_HAS_MINIMUM_CORBA == 0)
-  // If the object is collocated then use non_existent to see whether
-  // it's there.
+  // Note that the OBJECT_NOT_EXIST exception should be propagated to
+  // the caller rather than return false, which is why we do not use
+  // CORBA::Object::_non_existent().  This behavior is consistent
+  // with the non-collocated case.
   if (this->_is_collocated ())
-      return !(this->_non_existent ());
+      return !(this->proxy_broker ()->_non_existent (this));
 
   TAO::LocateRequest_Invocation_Adapter tao_call (this);
   try
@@ -620,12 +616,8 @@ CORBA::Object::_validate_connection (
       inconsistent_policies = tao_call.get_inconsistent_policies ();
       retval = false;
     }
-  catch (const ::CORBA::Exception&)
-    {
-      throw;
-    }
-
-  retval = true;
+#else
+  retval = false;
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
   return retval;

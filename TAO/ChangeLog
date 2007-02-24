@@ -1,3 +1,35 @@
+Sat Feb 24 06:56:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/AnyTypeCode/Any_Impl_T.cpp:
+        * tao/AnyTypeCode/Any_Special_Impl_T.cpp:
+        * tao/AnyTypeCode/Any_SystemException.cpp:
+          Use false instead of 0
+
+        * tao/AnyTypeCode/ExceptionA.cpp:
+        * tao/LocateRequest_Invocation.cpp:
+        * tao/PortableServer/Adapter_Activator.cpp:
+          Layout change
+
+        * tao/EndpointPolicy/EndpointPolicy_ORBInitializer.cpp:
+        * tao/HTTP_Parser.cpp:
+        * tao/IFR_Client/IFR_Client_Adapter_Impl.cpp:
+        * tao/LocateRequest_Invocation_Adapter.cpp:
+        * tao/Messaging/Messaging_ORBInitializer.cpp:
+        * tao/PI/PI_ORBInitializer.cpp:
+        * tao/PI_Server/PortableServer_ORBInitializer.cpp:
+        * tao/PortableServer/Collocated_Object_Proxy_Broker.cpp:
+        * tao/RTCORBA/RT_ORBInitializer.cpp:
+          Removed not needed catch
+
+        * tao/Object.cpp:
+          Fixed _validate_connection
+
+        * tests/Bug_2826_Regression/*:
+          New regression for bug 2826 that is about a problem with
+          validate_connection. Thanks to Steven Xie
+          <steven dot xie at mpathix dot com> for reporting this
+          and making the test program
+
 Thu Feb 22 09:35:00 UTC 2007  Simon Massey  <sma@prismtech.com>
 
         * orbsvcs/orbsvcs/GSSUP.idl:

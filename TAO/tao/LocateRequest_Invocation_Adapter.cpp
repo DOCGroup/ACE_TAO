@@ -83,10 +83,6 @@ namespace TAO
               resolver.steal_inconsistent_policies ();
             throw;
           }
-        catch (const ::CORBA::Exception&)
-          {
-            throw;
-          }
       }
 
     return;
