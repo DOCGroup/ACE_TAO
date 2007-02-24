@@ -1,3 +1,9 @@
+Sat Feb 24 19:34:08 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
+
+        * MPC/config/diffservpolicy.mpb:
+        
+          Added a MPC project file for the DiffServ policy.
+
 Sat Feb 24 06:56:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/AnyTypeCode/Any_Impl_T.cpp:
