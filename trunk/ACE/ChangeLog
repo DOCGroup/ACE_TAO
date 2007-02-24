@@ -1,3 +1,12 @@
+Sat Feb 24 22:51:09 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * ace/config-sunos5.5.h:
+        * ace/config-sunos5.10.h: Add ACE_LACKS_ALPHASORT at Solaris 2.5 and
+          remove it at Solaris 10. Solaris 8 and 9 have an alphasort() but
+          only for use with the BSD cc compiler and with disclaimer that it's
+          not supported for use with system libraries nor with multiple
+          threads. Solaris 10 brings it into supported use.
+
 Sat Feb 24 17:03:47 UTC 2007  Steve Huston  <shuston@riverace.com>
 
         * examples/NT_Service/main.cpp:
