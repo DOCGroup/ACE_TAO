@@ -1,3 +1,14 @@
+Sat Feb 24 21:32:05 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
+
+        * DAnCE/NodeApplication/RTConfig_Manager.cpp:
+        * DAnCE/NodeApplication/NodeApplication.mpc:
+        * DAnCE/NodeApplication/RTConfig_Manager.h:
+        * DAnCE/NodeApplication/NodeApp_Configurator.h:
+        * DAnCE/NodeApplication/NodeApplication_Core.cpp:
+        * DAnCE/NodeApplication/Configurator_Factory.cpp:
+        
+          Reverted some inadvertent check-ins.
+
 Sat Feb 24 20:53:14 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
 
         * DAnCE/NodeApplication/NodeApp_Configurator.h:

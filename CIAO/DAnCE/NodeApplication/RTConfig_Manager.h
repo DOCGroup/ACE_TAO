@@ -32,6 +32,7 @@
 #include "Config_Manager.h"
 #include "RTNA_Configurator_Export.h"
 
+
 namespace CIAO
 {
   /**
