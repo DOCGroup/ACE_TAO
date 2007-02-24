@@ -66,6 +66,10 @@
 #define ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R
 #endif
 
+#else
+// AIO support pulls in the rt library, which pulls in the pthread
+// library.  Disable AIO in single-threaded builds.
+# undef ACE_HAS_AIO_CALLS
 #endif  /* ACE_MT_SAFE */
 
 #include /**/ "ace/post.h"

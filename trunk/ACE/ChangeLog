@@ -1,3 +1,15 @@
+Sat Feb 24 09:01:19 UTC 2007  Ossama Othman  <ossama_othman at symantec dot com>
+
+        * ace/config-linux.h:
+
+          AIO support pulls in the rt library, which pulls in the pthread
+          library.  Disable AIO in single-threaded builds.
+
+        * tests/Recursive_Mutex_Test.cpp:
+
+          Check if ACE_Recursive_Thread_Mutex::get_nesting_level() is
+          supported before attempting to use it.
+
 Sat Feb 24 08:34:08 UTC 2007  Olli Savia  <ops@iki.fi>
 
         * ace/config-openvms.h:
