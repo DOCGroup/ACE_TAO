@@ -8,30 +8,16 @@
 # include "RTConfig_Manager.inl"
 #endif /* __ACE_INLINE__ */
 
-
 void
-CIAO::RTResource_Config_Manager::init (CORBA::ORB_ptr orb)
+CIAO::RTResource_Config_Manager::init (RTCORBA::RTORB_ptr rtorb)
 {
-  CORBA::Object_var object =
-    orb->resolve_initial_references ("RTORB");
-  this->rtorb_ = RTCORBA::RTORB::_narrow (object.in ());
-}
-
-int
-CIAO::RTResource_Config_Manager::pre_orb_initialize (void)
-{
-  return 0;
-}
-
-int
-CIAO::RTResource_Config_Manager::post_orb_initialize (CORBA::ORB_ptr)
-{
-  return 0;
+  this->rtorb_ = RTCORBA::RTORB::_duplicate (rtorb);
 }
 
 void
 CIAO::RTResource_Config_Manager::print_resources
 (const CIAO::DAnCE::ServerResource &server_resource)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   const CIAO::DAnCE::ORBResource &orb_resource
     = server_resource.orb_config.orb_resources[0];
@@ -117,6 +103,7 @@ CIAO::RTResource_Config_Manager::print_resources
 void
 CIAO::RTResource_Config_Manager::init_resources
 (const CIAO::DAnCE::ServerResource &server_resource)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
               "RTResource_Config_Manager::init_resource.\n"));
@@ -264,59 +251,36 @@ CIAO::RTResource_Config_Manager::init_resources
 
       CORBA::PolicyList_var policy_list = new CORBA::PolicyList (np);
       policy_list->length (np);
-      CORBA::ULong index = 0;
-      CORBA::ULong array_index = np;
 
       // Create a list of policies
       for (CORBA::ULong pc = 0; pc < np; ++pc)
         {
-          CORBA::Policy_var temp_policy = 
-            this->create_single_policy (sets[i].policies[pc]);
-          if (temp_policy == 0)
-            {
-              array_index = array_index - 1;
-              policy_list->length (array_index);
-            }
-          else
-            {
-              policy_list[index] = temp_policy;
-              index = index + 1;
-            }
+          policy_list[pc] = this->create_single_policy (sets[i].policies[pc]);
         }
 
       // Bind the policy list to the name.  The bind operation should
       // surrender the ownership of the newly created PolicyList
       // sequence to the map.
-      if (array_index != 0)
+      if (this->policy_map_.bind (sets[i].Id.in (),
+                                  policy_list) != 0)
         {
-          if (this->policy_map_.bind (sets[i].Id.in (),
-                                      policy_list) != 0)
-            {
-              ACE_DEBUG ((LM_DEBUG,
-                          "Error binding Policy_Set with name: %s\n",
-                          sets[i].Id.in ()));
-              throw CORBA::INTERNAL (); 
-            }
-          else
-            {
-              ACE_DEBUG ((LM_DEBUG,
-                          "RTResource_Config_Manager::init_resource "
-                          "added policy set: %s with %d policies\n",
-                          sets[i].Id.in (), array_index));
-            }
+          ACE_ERROR ((LM_ERROR,
+                      "Error binding Policy_Set with name: %s\n",
+                      sets[i].Id.in ()));
+          throw CORBA::INTERNAL ();
         }
       else
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "RTResource_Config_Manager::init_resource "
-                      "added policy set: %s with %d policies\n",
-                      sets[i].Id.in (), array_index));
+                      "RTResource_Config_Manager::init_resource added policy set: %s\n",
+                      sets[i].Id.in ()));
         }
     }
 }
 
 void
 CIAO::RTResource_Config_Manager::fini ()
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TP_MAP::ITERATOR iter = this->threadpool_map_.begin ();
   TP_MAP::ITERATOR end = this->threadpool_map_.end ();
@@ -330,12 +294,13 @@ CIAO::RTResource_Config_Manager::fini ()
 
 RTCORBA::ThreadpoolId
 CIAO::RTResource_Config_Manager::find_threadpool_by_name (const char *name)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (name == 0)
     {
       ACE_ERROR ((LM_ERROR,
                   "Invalid name string found in \"find_threadpool_by_name\"\n"));
-      throw CORBA::BAD_PARAM ();
+      ACE_THROW_RETURN (CORBA::BAD_PARAM (), 0);
     }
 
 
@@ -346,7 +311,7 @@ CIAO::RTResource_Config_Manager::find_threadpool_by_name (const char *name)
       ACE_ERROR ((LM_ERROR,
                   "Unable to find a threadpool named %s\n",
                   name));
-      throw CORBA::INTERNAL ();
+      ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
     }
 
   return ret_id;
@@ -354,12 +319,13 @@ CIAO::RTResource_Config_Manager::find_threadpool_by_name (const char *name)
 
 RTCORBA::PriorityBands *
 CIAO::RTResource_Config_Manager::find_priority_bands_by_name (const char *name)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (name == 0)
     {
       ACE_ERROR ((LM_ERROR,
                   "Invalid name string found in \"find_priority_bands_by_name\"\n"));
-      throw CORBA::BAD_PARAM ();
+      ACE_THROW_RETURN (CORBA::BAD_PARAM (), 0);
     }
 
   PB_MAP::ENTRY *entry = 0;
@@ -369,7 +335,7 @@ CIAO::RTResource_Config_Manager::find_priority_bands_by_name (const char *name)
       ACE_ERROR ((LM_ERROR,
                   "Unable to find a connection bands named %s\n",
                   name));
-      throw CORBA::INTERNAL ();
+      ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
     }
 
   RTCORBA::PriorityBands_var retv = new RTCORBA::PriorityBands;
@@ -377,35 +343,15 @@ CIAO::RTResource_Config_Manager::find_priority_bands_by_name (const char *name)
   return retv._retn ();
 }
 
-bool
-CIAO::RTResource_Config_Manager::policy_exists (const char *name)
-{
-  if (name == 0)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  "Invalid name string found in "
-                  "CIAO::NAResource_Config_Manager::policy_exists\n"));
-      throw CORBA::INTERNAL ();
-    }
-
-  POLICY_MAP::ENTRY *entry = 0;
-
-  if (this->policy_map_.find (name, entry) != 0)
-    {
-      return false;
-    }
-
-  return true;
-}
-
 CORBA::PolicyList *
 CIAO::RTResource_Config_Manager::find_policies_by_name (const char *name)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (name == 0)
     {
       ACE_ERROR ((LM_ERROR,
                   "Invalid name string found in \"find_policies_by_name\"\n"));
-      throw CORBA::BAD_PARAM ();
+      ACE_THROW_RETURN (CORBA::BAD_PARAM (), 0);
     }
 
 
@@ -419,7 +365,7 @@ CIAO::RTResource_Config_Manager::find_policies_by_name (const char *name)
       ACE_ERROR ((LM_ERROR,
                   "Unable to find a PolicyList named %s\n",
                   name));
-      throw CORBA::INTERNAL ();
+      ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
     }
 
   // duplicate the sequence PolicyList.
@@ -434,6 +380,7 @@ CIAO::RTResource_Config_Manager::find_policies_by_name (const char *name)
 CORBA::Policy_ptr
 CIAO::RTResource_Config_Manager::create_single_policy
 (const CIAO::DAnCE::PolicyDef &policy_def)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   //  if (CIAO::debug_level () > 9)
     ACE_DEBUG ((LM_DEBUG,
@@ -491,19 +438,11 @@ CIAO::RTResource_Config_Manager::create_single_policy
       break;
 
     default:
-      retv = 0;
+      ACE_ERROR ((LM_ERROR,
+                  "Invalid policy type - RTPolicy_Set_Manager::create_single_policy\n"));
+      ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
     }
 
   return retv._retn ();
 }
 
-extern "C" CIAO_RTNA_Configurator_Export CIAO::Config_Manager
-*create_rt_config_manager (void);
-
-CIAO::Config_Manager *
-create_rt_config_manager (void)
-{
-  CIAO::RTResource_Config_Manager *config;
-  ACE_NEW_RETURN (config, CIAO::RTResource_Config_Manager, 0);
-  return config;
-}

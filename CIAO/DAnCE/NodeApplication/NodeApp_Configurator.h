@@ -20,12 +20,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "DAnCE/Deployment/Deployment_CoreC.h"
 #include "ciao/Deployment_CoreC.h"
-#include "Config_Manager.h"
-#include "ace/DLL.h"
-#include "ace/Auto_Ptr.h"
-
 
 namespace CIAO
 {
@@ -40,62 +35,36 @@ namespace CIAO
   class NodeApp_Configurator
   {
   public:
-
-    /// Default constructor.
-    NodeApp_Configurator (void);
-
     /// Default destructor.
-    virtual ~NodeApp_Configurator (void);
+    virtual ~NodeApp_Configurator (void) {}
 
     /**
      * @brief "pre_orb_initialize" is called before ORB_init.
      */
-    virtual int pre_orb_initialize (void);
+    virtual int pre_orb_initialize (void) = 0;
 
     /**
      * @brief "post_orb_initialize" is called after NodeApplication
      * get a hold at this object.
      */
-    virtual int post_orb_initialize (CORBA::ORB_ptr o);
+    virtual int post_orb_initialize (CORBA::ORB_ptr o) = 0;
 
     /**
      * @brief "init_resource_manager" is called by NodeApplication when
      * it receives an "install" commands.
      */
     virtual int
-    init_resource_manager (const ::Deployment::Properties &properties);
+    init_resource_manager (const ::Deployment::Properties &properties) = 0;
 
     /**
      * @brief get a policyset by its name.
      */
     virtual CORBA::PolicyList *
-    find_container_policies (const ::Deployment::Properties &properties);
+    find_container_policies (const ::Deployment::Properties &properties) = 0;
 
     /// @@ Perhaps we also need a finalizer method here.  Perhaps we
     /// even need to differentiate finalizer before ORB is destroyed
     /// and the one after that.
-
-    void set_rt_support (void);
-
-    int create_config_managers (void);
-
-    bool
-    policy_exists (const char *policy_set_id);
-
-    CORBA::PolicyList *
-    find_policies_by_name (const char *name);
-
-  protected:
-
-    int rt_support_;
-
-    CORBA::ORB_var orb_;
-
-    auto_ptr<Config_Manager> rt_config_manager_;
-
-    auto_ptr<Config_Manager> na_config_manager_;
-
-    ACE_DLL config_dll_;
   };
 }
 
