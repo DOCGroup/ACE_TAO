@@ -3443,6 +3443,8 @@ esac
 
 ACE_CHECK_LACKS_FUNCS(access)
 
+ACE_CHECK_LACKS_FUNCS(alphasort)
+
 ACE_CHECK_LACKS_FUNCS(asctime)
 
 ACE_CHECK_LACKS_FUNCS(asctime_r)
