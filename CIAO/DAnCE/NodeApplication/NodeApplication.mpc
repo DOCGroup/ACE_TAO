@@ -1,6 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
+
 project(NoOp_Configurator): ciao_deployment_stub {
   sharedname   = CIAO_NoOp_Configurator
   dynamicflags = NOOP_CONFIGURATOR_BUILD_DLL
