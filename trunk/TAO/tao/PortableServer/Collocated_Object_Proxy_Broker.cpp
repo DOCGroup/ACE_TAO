@@ -90,10 +90,6 @@ namespace TAO
       {
         // Ignore this exception.
       }
-    catch (const ::CORBA::Exception&)
-      {
-        throw;
-      }
 
     return _tao_retval;
   }
@@ -168,10 +164,6 @@ namespace TAO
       {
         // Ignore this exception.
       }
-    catch (const ::CORBA::Exception&)
-      {
-        throw;
-      }
 
     return _tao_retval._retn ();
   }
@@ -214,10 +206,6 @@ namespace TAO
     catch (const ::CORBA::OBJECT_NOT_EXIST&)
       {
         // Ignore this exception.
-      }
-    catch (const ::CORBA::Exception&)
-      {
-        throw;
       }
 
     return _tao_retval;

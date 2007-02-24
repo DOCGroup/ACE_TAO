@@ -109,8 +109,7 @@ namespace TAO
         throw ::CORBA::OBJECT_NOT_EXIST (TAO::VMCID, CORBA::COMPLETED_YES);
       case TAO_GIOP_OBJECT_FORWARD:
       case TAO_GIOP_OBJECT_FORWARD_PERM:
-        return this->location_forward (cdr
-                                      );
+        return this->location_forward (cdr);
 
       case TAO_GIOP_LOC_SYSTEM_EXCEPTION:
         {

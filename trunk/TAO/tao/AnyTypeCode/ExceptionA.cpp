@@ -39,8 +39,7 @@ namespace TAO
   {
     try
       {
-        this->value_->_tao_encode (cdr
-                                  );
+        this->value_->_tao_encode (cdr);
 
         return true;
       }
