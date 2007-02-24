@@ -96,6 +96,7 @@
 #define ACE_LACKS_SYSCALL
 #define ACE_LACKS_SYS_MSG_H
 #define ACE_LACKS_SYSV_SHMEM
+#define ACE_LACKS_ALPHASORT
 //#define ACE_LACKS_TCP_NODELAY  // Based on the  QNX RTP documentation, this option seems to
                                  // to be supported.
 #define ACE_LACKS_TELLDIR
