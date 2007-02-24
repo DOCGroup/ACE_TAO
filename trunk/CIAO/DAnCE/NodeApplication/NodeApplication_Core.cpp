@@ -186,6 +186,8 @@ CIAO::NodeApplication_Core::startup (int argc, char *argv[])
   if (this->configurator_->pre_orb_initialize ())
     return -1;
 
+
+
   // Initialize orb
   this->orb_ =
     CORBA::ORB_init (argc,

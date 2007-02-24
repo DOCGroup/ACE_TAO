@@ -8,6 +8,7 @@
 # include "RTConfig_Manager.inl"
 #endif /* __ACE_INLINE__ */
 
+
 void
 CIAO::RTResource_Config_Manager::init (CORBA::ORB_ptr orb)
 {
