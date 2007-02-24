@@ -107,6 +107,7 @@ client_SOURCES = \
   ami_testC.cpp \
   ami_testS.cpp \
   client.cpp \
+  ami_test_i.cpp \
   ami_test_i.h
 
 client_LDADD = \
