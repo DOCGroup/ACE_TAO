@@ -19,10 +19,10 @@
 //
 // ============================================================================
 
-#if defined (ACE_WIN32) && !defined (ACE_LACKS_WIN32_SERVICES)
-
 #include "ace/Get_Opt.h"
 #include "ntsvc.h"
+
+#if defined (ACE_WIN32) && !defined (ACE_LACKS_WIN32_SERVICES)
 // FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
 #include "ace/OS_NS_errno.h"
