@@ -98,6 +98,7 @@
 #define ACE_LACKS_TIMESPEC_T
 #define ACE_LACKS_T_ERRNO
 #define ACE_LACKS_U_LONGLONG_T
+#define ACE_LACKS_ALPHASORT
 
 #define ACE_LACKS_RLIMIT         // QNX rlimit syscalls don't work properly with ACE.
 
