@@ -13,6 +13,11 @@
 
 #define ACE_LACKS_STDINT_H
 
+// alphasort() is present on earlier Solaris versions but is marked as not for
+// use on non-BSD systems and not supported for use in applications that use
+// system libraries or with multiple threads. So it's mostly useless.
+#define ACE_LACKS_ALPHASORT
+
 // SunOS 5.5 does not provide getloadavg()
 #define ACE_LACKS_GETLOADAVG
 

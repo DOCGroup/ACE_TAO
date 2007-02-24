@@ -14,4 +14,9 @@
 
 #define ACE_HAS_SCANDIR
 
+// Solaris 10 offers a useable alphasort() unlike previous Solaris versions.
+#if defined (ACE_LACKS_ALPHASORT)
+#  undef ACE_LACKS_ALPHASORT
+#endif
+
 #endif /* ACE_CONFIG_H */
