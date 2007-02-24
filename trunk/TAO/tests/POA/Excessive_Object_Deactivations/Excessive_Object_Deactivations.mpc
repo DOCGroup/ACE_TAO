@@ -2,4 +2,5 @@
 // $Id$
 
 project(POA*): taoserver, avoids_corba_e_micro {
+  exename = Excessive_Object_Deactivations
 }
