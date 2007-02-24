@@ -1,7 +1,9 @@
 Sat Feb 24 17:03:47 UTC 2007  Steve Huston  <shuston@riverace.com>
 
-        * examples/NT_Service/main.cpp: Fix unused arg warnings for builds
-          without NT Services.
+        * examples/NT_Service/main.cpp:
+        * examples/NT_Service/nt_svc.{h cpp}: Don't check for disabling
+          macros until a config file has been included, else it never builds
+          anywhere. Thanks to Johnny Willemsen for pointing this out.
 
 Sat Feb 24 09:01:19 UTC 2007  Ossama Othman  <ossama_othman at symantec dot com>
 
