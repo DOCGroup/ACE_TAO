@@ -132,10 +132,6 @@ TAO_IFR_Client_Adapter_Impl::get_interface_remote (
     {
       return CORBA::InterfaceDef::_nil ();
     }
-  catch (const ::CORBA::Exception&)
-    {
-      throw;
-    }
 
   return _tao_retval.retn ();
 }

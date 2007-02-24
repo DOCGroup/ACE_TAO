@@ -119,7 +119,7 @@ TAO::Any_Impl_T<T>::extract (const CORBA::Any & any,
     {
     }
 
-  return 0;
+  return false;
 }
 
 template<typename T>

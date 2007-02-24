@@ -146,7 +146,7 @@ TAO::Any_SystemException::extract (const CORBA::Any & any,
     {
     }
 
-  return 0;
+  return false;
 }
 
 void

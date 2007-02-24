@@ -162,7 +162,7 @@ TAO::Any_Special_Impl_T<T, from_T, to_T>::extract (const CORBA::Any & any,
     {
     }
 
-  return 0;
+  return false;
 }
 
 template<typename T, typename from_T, typename to_T>

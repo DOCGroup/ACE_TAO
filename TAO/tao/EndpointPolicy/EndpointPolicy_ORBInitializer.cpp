@@ -69,11 +69,6 @@ TAO_EndpointPolicy_ORBInitializer::register_policy_factories (
         }
       throw;
     }
-  catch (const ::CORBA::Exception&)
-    {
-      // Rethrow any other exceptions...
-      throw;
-    }
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

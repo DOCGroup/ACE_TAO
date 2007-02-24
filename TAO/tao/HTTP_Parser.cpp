@@ -119,17 +119,7 @@ TAO_HTTP_Parser::parse_string (const char *ior,
   for (ACE_Message_Block * curr = mb; curr != 0; curr = curr->cont ())
     string += curr->rd_ptr();
 
-  CORBA::Object_ptr object = CORBA::Object::_nil ();
-  try
-    {
-      object = orb->string_to_object (string.c_str());
-    }
-  catch (const ::CORBA::Exception&)
-    {
-      throw;
-    }
-
-  return object;
+  return orb->string_to_object (string.c_str());
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

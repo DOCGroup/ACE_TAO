@@ -265,11 +265,6 @@ TAO_RT_ORBInitializer::register_policy_factories (
             }
           throw;
         }
-      catch (const ::CORBA::Exception&)
-        {
-          // Rethrow any other exceptions...
-          throw;
-        }
     }
 }
 
