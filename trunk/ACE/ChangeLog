@@ -1,3 +1,10 @@
+Sat Feb 24 08:34:08 UTC 2007  Olli Savia  <ops@iki.fi>
+
+        * ace/config-openvms.h:
+        * ace/config-qnx-rtp-62x.h:
+        * ace/config-qnx-rtp-pre62x.h:
+          Added ACE_LACKS_ALPHASORT.
+
 Fri Feb 23 23:10:17 UTC 2007  Ossama Othman  <ossama_othman at symantec dot com>
 
         * tests/Recursive_Mutex_Test.cpp (test_recursion_depth):
@@ -9,7 +16,7 @@ Fri Feb 23 19:24:30 USMST 2007  Yan Dai  <dai_y@ociweb.com>
 
         * performance-tests/SCTP/SOCK_SEQPACK_srv.cpp:
 
-          Made run_server() and other functions and structures only compiled 
+          Made run_server() and other functions and structures only compiled
           when ACE_HAS_SCTP is defined. This should resolve the warning that the
           run_server() is defined but not used on some platforms.
 
@@ -29,7 +36,7 @@ Fri Feb 23 10:50:41 UTC 2007  Olli Savia  <ops@iki.fi>
 
         * ace/OS_NS_dirent.inl:
           Fixed casts again. Hopefully now I got it right.
-        
+
 Fri Feb 23 08:56:15 UTC 2007  Olli Savia  <ops@iki.fi>
 
         * ace/OS_NS_dirent.inl:
