@@ -1,3 +1,7 @@
+Sat Feb 24 23:01:16 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * configure.ac: Added ACE_CHECK_LACKS_FUNCS(alphasort)
+
 Sat Feb 24 22:51:09 UTC 2007  Steve Huston  <shuston@riverace.com>
 
         * ace/config-sunos5.5.h:
