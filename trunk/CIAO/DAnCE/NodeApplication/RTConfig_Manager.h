@@ -25,7 +25,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/RTCORBA/RTCORBA.h"
-#include "ciao/CIAO_ServerResourcesC.h"
+#include "DAnCE/Deployment/CIAO_ServerResourcesC.h"
 #include "ace/Null_Mutex.h"
 #include "ace/SString.h"
 #include "ace/Hash_Map_Manager_T.h"
@@ -56,30 +56,24 @@ namespace CIAO
     void init (RTCORBA::RTORB_ptr rtorb);
 
     /// Initializing the RTResource_Config_Manager
-    void init_resources (const CIAO::DAnCE::ServerResource &info)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+    void init_resources (const CIAO::DAnCE::ServerResource &info);
 
     /// Finalizing the RTResource_Config_Manager and the resources it
     /// manages.
-    void fini ()
-      ACE_THROW_SPEC ((CORBA::SystemException));
+    void fini ();
 
     /// Query a policy set by name
-    CORBA::PolicyList *find_policies_by_name (const char *name)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+    CORBA::PolicyList *find_policies_by_name (const char *name);
 
   protected:
-    void print_resources (const CIAO::DAnCE::ServerResource &info)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+    void print_resources (const CIAO::DAnCE::ServerResource &info);
 
     /// Query a thread pool by name.
-    RTCORBA::ThreadpoolId find_threadpool_by_name (const char *name)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+    RTCORBA::ThreadpoolId find_threadpool_by_name (const char *name);
 
 
     /// Query a priority bands info by name.
-    RTCORBA::PriorityBands *find_priority_bands_by_name (const char *name)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+    RTCORBA::PriorityBands *find_priority_bands_by_name (const char *name);
 
   private:
     /// Cached an ORB reference.
@@ -109,8 +103,7 @@ namespace CIAO
 
     /// create a single policy
     CORBA::Policy_ptr create_single_policy
-    (const CIAO::DAnCE::PolicyDef &policy_def)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+    (const CIAO::DAnCE::PolicyDef &policy_def);
 
     /// Hash_Map stuff.
     typedef ACE_Hash_Map_Manager_Ex<ACE_CString,
