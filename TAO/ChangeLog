@@ -1,3 +1,14 @@
+Sun Feb 25 17:09:10 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
+
+        * tests/DiffServ:
+        * tests/DiffServ/client.cpp:
+        * tests/DiffServ/diffserv.mpc:
+        * tests/DiffServ/test.idl:
+        * tests/DiffServ/server.cpp:
+        * tests/DiffServ/README:
+        
+          Added a new test for the DiffServ policy.
+
 Sat Feb 24 19:34:08 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
 
         * MPC/config/diffservpolicy.mpb:
