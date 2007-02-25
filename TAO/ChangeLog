@@ -1,3 +1,10 @@
+Sun Feb 25 21:56:31 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
+
+        * tests/DiffServ/server.cpp:
+        
+          Removed ACE_THROW_SPEC in the function definitions and
+          declarations. Helps fix the fuzz build errors.
+
 Sun Feb 25 17:28:52 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
 
         * tests/DiffServ/run_test.pl:
