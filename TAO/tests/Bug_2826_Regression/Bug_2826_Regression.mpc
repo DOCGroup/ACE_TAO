@@ -1,0 +1,9 @@
+// -*- MPC -*-
+// $Id$
+
+project(*) : taoserver {
+  exename = server
+  Source_Files {
+    bug_2826_regression.cpp
+  }
+}
