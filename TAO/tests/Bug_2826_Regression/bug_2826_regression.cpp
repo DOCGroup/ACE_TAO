@@ -1,9 +1,3 @@
-
-
-
-
-
-
 // $Id$
 
 #include "tao/ORB_Core.h"
@@ -59,7 +53,7 @@ int vc_check(foo_ptr ff, bool active=true)
   }
   return 0;
 }
-};
+}
 
 int main (int argc, char *argv[])
 {
