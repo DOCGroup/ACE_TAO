@@ -63,11 +63,9 @@ class Test_i : public POA_Test
 public:
   Test_i (CORBA::ORB_ptr orb);
 
-  void test_method (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void test_method (void);
 
-  void shutdown (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void shutdown (void);
 
 private:
   CORBA::ORB_var orb_;
@@ -79,16 +77,14 @@ Test_i::Test_i (CORBA::ORB_ptr orb)
 }
 
 void
-Test_i::test_method (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+Test_i::test_method (void)
 {
   ACE_DEBUG ((LM_DEBUG,
               "Test_i::test_method\n"));
 }
 
 void
-Test_i::shutdown (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+Test_i::shutdown (void)
 {
   this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
 }
