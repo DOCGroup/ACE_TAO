@@ -1,3 +1,9 @@
+Sun Feb 25 17:26:37 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
+
+        * bin/tao_orb_tests.lst:
+        
+          Added the DiffServ policy test's run_test.pl.
+
 Sat Feb 24 23:01:16 UTC 2007  Steve Huston  <shuston@riverace.com>
 
         * configure.ac: Added ACE_CHECK_LACKS_FUNCS(alphasort)
