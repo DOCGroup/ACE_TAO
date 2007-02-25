@@ -1,3 +1,9 @@
+Sun Feb 25 17:28:52 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
+
+        * tests/DiffServ/run_test.pl:
+        
+          Added a regression test script for the DiffServ policy test.
+
 Sun Feb 25 17:09:10 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
 
         * tests/DiffServ:
