@@ -379,10 +379,10 @@ ACE_Service_Repository::insert (const ACE_Service_Type *sr)
 #ifndef ACE_NLOGGING
     if (ACE::debug ())
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_LIB_TEXT ("ACE (%P|%t) SR::insert, repo=%@ [%d] (%d), ")
-                  ACE_LIB_TEXT ("name=%s, type=%@, impl=%@, object=%@, active=%d\n"),
-                  this, i, this->total_size_, sr->name(),
-                  sr->type (),
+                  ACE_LIB_TEXT ("ACE (%P|%t) SR::insert")
+                  ACE_LIB_TEXT (" - repo=%@ [%d] (%d), name=%s")
+                  ACE_LIB_TEXT (", type=%@, object=%@, active=%d\n"),
+                  this, i, this->total_size_, sr->name(), sr->type (),
                   (sr->type () != 0) ? sr->type ()->object () : 0,
                   sr->active ()));
 #endif
@@ -394,8 +394,9 @@ ACE_Service_Repository::insert (const ACE_Service_Type *sr)
 #ifndef ACE_NLOGGING
       if (ACE::debug ())
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_LIB_TEXT ("ACE (%P|%t) SR::insert - destroying (replacing), repo=%@ [%d] (%d), ")
-                    ACE_LIB_TEXT ("name=%s, type=%@, impl=%@, object=%@, active=%d\n"),
+                    ACE_LIB_TEXT ("ACE (%P|%t) SR::insert")
+                    ACE_LIB_TEXT (" - destroying (replacing), repo=%@ [%d] (%d), name=%s")
+                    ACE_LIB_TEXT (", type=%@, object=%@, active=%d\n"),
                     this, i, this->total_size_, s->name(), s->type (),
                     (s->type () != 0) ? s->type ()->object () : 0,
                     s->active ()));

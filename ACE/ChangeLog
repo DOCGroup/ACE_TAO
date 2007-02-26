@@ -1,3 +1,17 @@
+Mon Feb 26 20:58:05 UTC 2007  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * ace/Service_Gestalt.cpp (insert):
+
+          Removed the usage of fprintf to print messages about service
+          descriptors, inserted using static initializers. It is the only
+          way if you want to see what is being inserted before ACE_Log_Msg
+          gets initialized but because it uses stderr directly, it may
+          affect some aplications' expected output.
+
+        * ace/Service_Repository.cpp (insert):
+
+          Fixing a defective debug statement.
+
 Mon Feb 26 19:06:36 UTC 2007  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * ace/CDR_Stream.cpp (grow_and_adjust, clone_nocopy):
