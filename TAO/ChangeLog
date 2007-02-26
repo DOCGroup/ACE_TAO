@@ -1,3 +1,9 @@
+Mon Feb 26 17:18:20 UTC 2007  Adam Mitz  <mitza@ociweb.com>
+
+        * tests/Sequence_Unit_Tests/unbounded_sequence_cdr_ut.cpp:
+
+          Added a #include for the octet-sequence specialization.
+
 Mon Feb 26 14:44:07 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * TAO_IDL/fe/idl.ll:
