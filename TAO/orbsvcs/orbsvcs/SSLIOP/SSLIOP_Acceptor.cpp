@@ -245,8 +245,11 @@ TAO::SSLIOP::Acceptor::create_shared_profile (const TAO::ObjectKey &object_key,
                                             &(this->ssl_component_)),
                       -1);
 
-      TAO_SSLIOP_Endpoint *ssliop_endp =
+      TAO_SSLIOP_Endpoint * const ssliop_endp =
         dynamic_cast<TAO_SSLIOP_Endpoint *> (ssliop_profile->endpoint ());
+
+      if (!ssliop_endp)
+        return -1;
 
       ssliop_endp->priority (priority);
       ssliop_endp->iiop_endpoint ()->priority (priority);

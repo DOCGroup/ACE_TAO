@@ -154,10 +154,11 @@ TAO_Notify_FilterAdmin::load_child (const ACE_CString &type, CORBA::Long id,
     CORBA::ORB_var orb = properties->orb();
     ACE_ASSERT(! CORBA::is_nil(orb.in()));
     ACE_CString ior;
-    attrs.load("IOR", ior);
 
+    (void) attrs.load("IOR", ior);
     CORBA::Object_var obj = orb->string_to_object(ior.c_str());
     CosNotifyFilter::Filter_var filter = CosNotifyFilter::Filter::_unchecked_narrow(obj.in());
+
     if (! CORBA::is_nil(filter.in()))
     {
       this->filter_ids_.set_last_used(id);

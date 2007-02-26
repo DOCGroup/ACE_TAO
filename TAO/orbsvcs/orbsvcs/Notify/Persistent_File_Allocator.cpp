@@ -248,7 +248,8 @@ Persistent_File_Allocator::read(Persistent_Storage_Block* psb)
       {
         // We want to start at the end of the queue and work backwards...
         size_t actual_block = (queue_size - idx) - 1;
-        if (0 == this->block_queue_.get(psbtemp, actual_block))
+        if ((0 == this->block_queue_.get(psbtemp, actual_block))
+            && (psbtemp != 0))
         {
           cached = ((*psbtemp)->block_number() == psb->block_number());
         }

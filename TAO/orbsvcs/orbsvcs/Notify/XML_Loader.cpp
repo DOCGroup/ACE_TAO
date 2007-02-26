@@ -78,13 +78,14 @@ namespace TAO_Notify
     if (result)
     {
       this->live_ = false;
-      ACEXML_FileCharStream* fstm = new ACEXML_FileCharStream;
+      auto_ptr<ACEXML_FileCharStream> fstm (new ACEXML_FileCharStream);
       // xml input source will take ownership
 
       if (fstm->open (this->file_name_.c_str ()) == 0)
       {
         // InputSource takes ownership
-        ACEXML_InputSource input (fstm);
+        ACEXML_InputSource input (fstm.get ());
+        (void) fstm.release ();
 
         ACEXML_Parser parser;
         parser.setContentHandler (this);
@@ -127,13 +128,14 @@ namespace TAO_Notify
     ACE_ASSERT (root != 0);
     this->live_ = true;
 
-    ACEXML_FileCharStream* fstm = new ACEXML_FileCharStream;
+    auto_ptr<ACEXML_FileCharStream> fstm (new ACEXML_FileCharStream);
     // xml input source will take ownership
 
     if (fstm->open (this->file_name_.c_str ()) == 0)
     {
       // InputSource takes ownership
-      ACEXML_InputSource input (fstm);
+      ACEXML_InputSource input (fstm.get ());
+      (void) fstm.release ();
 
       ACEXML_Parser parser;
       parser.setContentHandler (this);
