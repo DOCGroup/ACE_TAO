@@ -1,3 +1,10 @@
+Mon Feb 26 10:08:19 UTC 2007  Olli Savia  <ops@iki.fi>
+
+        * tests/SOCK_Dgram_Bcast_Test.cpp:
+          Pass correct buffer length to ACE_OS::vsnprintf().
+          Thanks to Yves Alloyer <alloyer at ipanematech dot com> for
+          reporting this and providing initial patch.
+
 Mon Feb 26 08:50:13 UTC 2007  Olli Savia  <ops@iki.fi>
 
         * ace/Process.cpp (command_line):
