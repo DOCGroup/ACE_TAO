@@ -6,6 +6,7 @@
 #include "orbsvcs/Naming/Flat_File_Persistence.h"
 
 #include "ace/Log_Msg.h"
+#include "ace/Numeric_Limits.h"
 #include "ace/OS_NS_sys_stat.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_fcntl.h"
@@ -216,8 +217,7 @@ TAO_NS_FlatFileStream::operator <<(
 }
 
 TAO_Storable_Base &
-TAO_NS_FlatFileStream::operator >>(
-                       TAO_NS_Persistence_Record &record)
+TAO_NS_FlatFileStream::operator >>(TAO_NS_Persistence_Record &record)
 {
   ACE_TRACE("TAO_NS_FlatFileStream::operator >>");
   TAO_NS_Persistence_Record::Record_Type type;
@@ -246,11 +246,18 @@ TAO_NS_FlatFileStream::operator >>(
       this->setstate (eofbit);
       return *this;
     }
-  char *id = new char[bufSize+1];
-  //char *id;
-  //ACE_NEW_RETURN (id, char[bufSize+1], 1);
-  if (ACE_OS::fgets(ACE_TEXT_CHAR_TO_TCHAR(id), bufSize+1, fl_) == 0 &&
-      bufSize != 0)
+
+  if (bufSize <= 0
+      || bufSize >= ACE_Numeric_Limits<ACE_CString::size_type>::max ())
+    {
+      this->setstate (badbit);
+      return *this;
+    }
+
+  ++bufSize; // Add one for terminator.
+
+  char *id = new char[bufSize];
+  if (ACE_OS::fgets(ACE_TEXT_CHAR_TO_TCHAR(id), bufSize, fl_) == 0)
     {
       this->setstate (badbit);
       return *this;
@@ -269,11 +276,18 @@ TAO_NS_FlatFileStream::operator >>(
       this->setstate (eofbit);
       return *this;
     }
-  char *kind = new char[bufSize+1];
-  //char *kind;
-  //ACE_NEW (kind, char[bufSize+1]);
-  if (ACE_OS::fgets(ACE_TEXT_CHAR_TO_TCHAR(kind), bufSize+1, fl_) == 0 &&
-      bufSize != 0)
+
+  if (bufSize <= 0
+      || bufSize >= ACE_Numeric_Limits<ACE_CString::size_type>::max ())
+    {
+      this->setstate (badbit);
+      return *this;
+    }
+
+  ++bufSize; // Add one for terminator.
+
+  char *kind = new char[bufSize];
+  if (ACE_OS::fgets(ACE_TEXT_CHAR_TO_TCHAR(kind), bufSize, fl_) == 0)
     {
       this->setstate (badbit);
       return *this;
@@ -293,11 +307,18 @@ TAO_NS_FlatFileStream::operator >>(
       this->setstate (eofbit);
       return *this;
     }
-  char *ref = new char[bufSize+1];
-  //char *ref;
-  //ACE_NEW(ref, char[bufSize+1]);
-  if (ACE_OS::fgets(ACE_TEXT_CHAR_TO_TCHAR(ref), bufSize+1, fl_) == 0 &&
-      bufSize != 0)
+
+  if (bufSize <= 0
+      || bufSize >= ACE_Numeric_Limits<ACE_CString::size_type>::max ())
+    {
+      this->setstate (badbit);
+      return *this;
+    }
+
+  ++bufSize; // Add one for terminator.
+
+  char *ref = new char[bufSize];
+  if (ACE_OS::fgets(ACE_TEXT_CHAR_TO_TCHAR(ref), bufSize, fl_) == 0)
     {
       this->setstate (badbit);
       return *this;
