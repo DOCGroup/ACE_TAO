@@ -1,3 +1,9 @@
+Mon Feb 26 13:43:44 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
+
+        * tests/DiffServ/server.cpp:
+        
+          Removed usage of old macros.
+
 Sun Feb 25 21:56:31 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
 
         * tests/DiffServ/server.cpp:
