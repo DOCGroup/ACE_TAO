@@ -1,3 +1,287 @@
+Mon Feb 26 23:27:03 UTC 2007  Ossama Othman  <ossama_othman at symantec dot com>
+
+        * TAO_IDL/include/fe_extern.h (File, FE_set_yyin):
+        * TAO_IDL/fe/fe_extern.cpp (FE_set_yyin):
+
+          Removed useless "File" class forward declaration.  Just use
+          the standard "FILE" type instead.
+
+        * TAO_IDL/be/be_visitor_exception/cdr_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_structure/cdr_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_structure/serializer_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/marshal_cs.cpp:
+
+          Added missing visit_scope() method return value check detected
+          by Coverity.
+
+        * TAO_IDL/be/be_visitor_typecode/struct_typecode.cpp:
+        * TAO_IDL/be/be_visitor_typecode/union_typecode.cpp:
+        * TAO_IDL/be/be_visitor_typecode/value_typecode.cpp:
+
+          Added missing accept() method return value check detected by
+          Coverity.
+
+        * TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp:
+
+          Fixed buffer overrun detected by Coverity.
+
+        * TAO_IDL/be/be_visitor_amh_pre_proc.cpp:
+        * tao/Acceptor_Registry.cpp:
+        * tao/CodecFactory/CDR_Encaps_Codec.cpp:
+        * tao/DynamicAny/DynArray_i.cpp:
+        * tao/DynamicAny/DynStruct_i.cpp:
+        * tao/DynamicAny/DynUnion_i.cpp:
+        * tao/DynamicAny/DynEnum_i.cpp:
+        * tao/DynamicAny/DynSequence_i.cpp:
+        * tao/DynamicInterface/DII_Invocation.cpp:
+        * tao/EndpointPolicy/EndpointPolicy_ORBInitializer.cpp:
+        * tao/EndpointPolicy/EndpointPolicy_Factory.cpp:
+        * tao/ObjRefTemplate/ObjectReferenceTemplate_i.cpp:
+        * orbsvcs/orbsvcs/ETCL/ETCL_Constraint.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.cpp:
+
+          Added missing dynamic_cast<> return value check detected by
+          Coverity, i.e. a Coverity FORWARD_NULL error.
+
+        * TAO_IDL/be/be_interface_strategy.cpp (compute_coll_names):
+
+          Place full_coll_name_ and local_coll_name_ pointer members in a
+          well defined state by resetting them to zero  after deallocating
+          memory they pointed to in case this method returns prematurely,
+          and attempts to access them later on occur.  Addresses a problem
+          flagged by Coverity.
+
+        * TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+        * TAO_IDL/be/be_visitor_interface/amh_ss.cpp:
+        * tao/BiDir_GIOP/BiDir_PolicyFactory.cpp:
+        * tao/CodecFactory/CodecFactory.cpp:
+        * tao/DynamicInterface/Dynamic_Implementation.cpp:
+        * tao/PI/PICurrent_Loader.cpp:
+        * tao/RTCORBA/RT_PolicyFactory.cpp:
+
+          Initialize generated CORBA::Object_ptr skeleton variables with
+          CORBA::Object_ptr() instead of CORBA::Object::_nil().  Addresses
+          Coverity UNUSED_VALUE errors.
+
+        * TAO_IDL/be/be_sequence.cpp:
+        * TAO_IDL/be/be_visitor_array/array_ch.cpp:
+        * TAO_IDL/be/be_visitor_array/array_ci.cpp:
+        * TAO_IDL/be/be_visitor_array/cdr_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_array/serializer_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_operation/amh_ss.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation.cpp:
+        * TAO_IDL/be/be_visitor_operation/upcall_command_ss.cpp:
+        * TAO_IDL/be/be_visitor_valuebox/valuebox_cs.cpp:
+
+          Moved zero pointer check before the pointer is actually
+          dereferenced.  Addresses Coverity REVERSE_INULL error.
+
+        * TAO_IDL/be/be_codegen.cpp:
+
+          Include "tao/ORB_Constants.h" if operations or valuetypes are
+          seen.  Users may check SystemException minor codes.
+
+          Corrected npos constant scope.  s/ACE_SString/ACE_CString/g
+
+          Const-correctness improvements.
+
+          Delay array instantiation optimization until it is needed.
+          Minor performance optimization in presence of bad function
+          parameters.
+
+        * TAO_IDL/be/be_interface.cpp (gen_def_ctors):
+
+          Issue diagnostic message if inheritance graph traversal fails.
+
+        * TAO_IDL/be/be_decl.cpp:
+
+          Do not continue if scope narrowing fails.
+
+        * TAO_IDL/ast/ast_constant.cpp:
+        * TAO_IDL/ast/ast_expression.cpp:
+        * TAO_IDL/ast/ast_enum.cpp:
+        * tao/AnyTypeCode/Any_Basic_Impl.cpp:
+        * tao/AnyTypeCode/Any_Basic_Impl_T.cpp:
+        * tao/AnyTypeCode/Any_Dual_Impl_T.cpp:
+        * tao/AnyTypeCode/Any_Impl_T.cpp:
+        * tao/AnyTypeCode/Any_Special_Impl_T.cpp:
+        * tao/AnyTypeCode/Any_SystemException.cpp:
+        * tao/AnyTypeCode/TypeCode_CDR_Extraction.cpp:
+        * tao/AnyTypeCode/append.cpp:
+        * tao/AnyTypeCode/skip.cpp:
+        * tao/RTCORBA/RT_Transport_Descriptor.cpp:
+        * tao/RTCORBA/RT_Invocation_Endpoint_Selectors.cpp:
+        * tao/RTCORBA/RT_ORB.cpp:
+        * tao/RTCORBA/RT_Protocols_Hooks.cpp:
+        * tao/RTCORBA/RT_Endpoint_Utils.cpp:
+        * tao/RTPortableServer/RT_Policy_Validator.cpp:
+
+          Check for null pointer before dereferencing.  Addresses Coverity
+          FORWARD_NULL errors.
+
+        * TAO_IDL/fe/lex.yy.cpp:
+        * TAO_IDL/fe/idl.ll:
+
+          Improved consistency between local variable and return value
+          types.
+
+          Improved const-correctness.
+
+          Fixed dead code IDL comment scanning flagged by Coverity.
+
+          Cleaned up node memory management.
+
+        * TAO_IDL/driver/drv_preproc.cpp:
+
+          Removed useless "File" class forward declaration.  Just use
+          the standard "FILE" type instead.
+
+          Removed use of "friggin'" from TAO_IDL error diagnostic.  Some
+          users may appreciate this humor.
+
+        * TAO_IDL/util/utl_string.cpp:
+
+          Use operator new() instead of malloc().
+
+          (~UTL_String):
+
+          Deallocate string array members.  Addresses exception-safety
+          issues, as well as Coverity CTOR_DTOR errors.
+
+          (destroy):
+
+          Deallocate string array members, and reset them to zero.
+
+        * tao/Exception.h:
+        * tao/SystemException.h:
+
+          Made copy constructor protected, as required by the C++
+          mapping.
+
+        * tao/IIOP_Acceptor.cpp:
+
+          Addressed buffer overrun.
+
+        * tao/IIOP_Connector.cpp:
+
+          Corrected method name in diagnostic message.
+
+          Cosmetic changes.
+
+        * tao/MCAST_Parser.cpp:
+        * tao/MCAST_Parser.h:
+        * tao/MCAST_Parser.inl:
+
+          Replaced unnecessary delayed conversions from port and TTL
+          strings to integral values.  Just store and use the integral
+          values directly instead of passing around a bunch of strings.
+          Simplifies implementation.
+
+          Added valid TTL check.  The valid TTL range is (0,255].
+
+          Corrected string position variable type to match return value of
+          ACE_CString::find(), i.e. ACE_CString::size_type.
+
+        * tao/Object_KeyC.h:
+        * tao/Object_KeyC.cpp (encode_sequence_to_string):
+          (decode_string_to_sequence):
+        * tao/diffs/Object_Key.diff:
+
+          In the decoding case, ensure sequence length value does not
+          exceed maximum value for sequence index type (CORBA::ULong).
+          This is mostly an issue for 64-bit MS Windows builds.
+
+          Corrected types used in explicit casts.
+
+          Improved const-correctness.
+
+          Improved performance.
+
+        * tao/Policy_Set.cpp:
+
+          Verify TAO_Cached_Policy_Type value is greater than zero before
+          using it as an array index.  Addresses Coverity NEGATIVE_RETURNS
+          errors.
+
+        * tao/Queued_Message.h:
+
+          Removed include directive for "ace/Time_Value.h".  A forward
+          declaration will suffice.
+
+        * tao/TAO_Internal.cpp (open_services):
+
+          Addressed warning regarding potential conflict with similarly
+          named variables in difference scopes.
+
+        * tao/Transport.cpp (cleanup_queue_i):
+
+          Corrected byte count type to match message length type.
+
+        * tao/orbconf.h (TAO_DEFAULT_ADAPTER_REGISTRY_SIZE):
+        * tao/IORTable/Table_Adapter.cpp (priority):
+
+          Created this new constant, and used it where appropriate.
+
+        * tao/AnyTypeCode/String_TypeCode_Traits.h:
+
+          Initialize CORBA::TypeCode_ptr variables with
+          CORBA::TypeCode_ptr() instead of CORBA::TypeCode::_nil().
+          Addresses Coverity UNUSED_VALUE errors.
+
+        * tao/CSD_ThreadPool/CSD_TP_Task.cpp:
+
+          Removed dead/unreachable code.
+
+        * tao/PortableServer/ServantRetentionStrategyFactoryImpl.cpp:
+
+          Only issue diagnostic message if debugging is enabled by user.
+
+        * tao/RTCORBA/RT_PolicyFactory.cpp:
+        * orbsvcs/orbsvcs/Security/SL3_PolicyFactory.cpp:
+        * orbsvcs/orbsvcs/Security/SL3_ObjectCredentialsPolicy.cpp:
+        * orbsvcs/orbsvcs/Security/SL3_ContextEstablishmentPolicy.cpp:
+
+          Initialize CORBA::Policy_ptr variables with CORBA::Policy_ptr()
+          instead of CORBA::Policy::_nil().  Addresses Coverity
+          UNUSED_VALUE errors.
+
+        * tao/TypeCodeFactory/TypeCodeFactory_i.cpp:
+
+          Added missing dynamic_cast<> return value check detected by
+          Coverity, i.e. a Coverity FORWARD_NULL error.
+
+          Initialize CORBA::TypeCode_ptr variables with
+          CORBA::TypeCode_ptr() instead of CORBA::TypeCode::_nil().
+          Addresses Coverity UNUSED_VALUE errors.
+
+        * orbsvcs/orbsvcs/Naming/Flat_File_Persistence.cpp:
+
+          Verify buffer size falls into a valid range instead of just
+          checking for a non-zero value.  Addresses Coverity
+          TAINTED_SCALAR errors.
+
+        * orbsvcs/orbsvcs/Notify/XML_Loader.cpp:
+
+          Fixed potential memory leaks.  Addresses Coverity RESOURCE_LEAK
+          errors.
+
+        * orbsvcs/orbsvcs/Notify/Routing_Slip_Persistence_Manager.cpp:
+
+          Fixed potential dynamic deallocation of a statically
+          instantiated object.
+
+        * orbsvcs/orbsvcs/Notify/FilterAdmin.cpp:
+
+          Explicitly cast return value of "attrs.load()" call to void.  We
+          don't appear to care about it.  Address Coverity CHECKED_RETURN
+          error.
+
+        From Russell Mora
+        * orbsvcs/orbsvcs/Notify/Persistent_File_Allocator.cpp (read):
+
+          Fix for coverity flaged REVERSE_INULL problem.  Do not
+          dereference null pointer.
+
 Mon Feb 26 19:30:28 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * tests/IDL_Test/constants.idl:
