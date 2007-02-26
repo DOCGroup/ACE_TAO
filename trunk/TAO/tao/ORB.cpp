@@ -853,13 +853,10 @@ CORBA::ORB::resolve_service (TAO::MCAST_SERVICEID mcast_service_id)
       static char const mcast_fmt[] = "mcast://:%d::";
       static size_t const PORT_BUF_SIZE = 256;
 
-      char def_init_ref[PORT_BUF_SIZE] = { 0 }; // snprintf() doesn't
-                                                // null terminate.
-                                                // Make sure we do.
+      char def_init_ref[PORT_BUF_SIZE] = { 0 };
 
       ACE_OS::snprintf (def_init_ref,
-                        PORT_BUF_SIZE - 1, // Account for null
-                                           // terminator.
+                        PORT_BUF_SIZE,
                         mcast_fmt,
                         port);
 
