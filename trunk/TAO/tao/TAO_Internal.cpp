@@ -293,15 +293,15 @@ TAO::ORB::open_services (ACE_Service_Gestalt* pcfg,
 
       // Be certain to copy the program name so that service configurator
       // has something to skip!
-      ACE_CString argv0 ("");
+      ACE_CString gargv0 ("");
 
       if (argc > 0 && argv != 0)
         {
-          argv0 = ACE_TEXT_ALWAYS_CHAR (argv[0]);
+          gargv0 = ACE_TEXT_ALWAYS_CHAR (argv[0]);
         }
 
       global_svc_config_argv.length (1);
-      global_svc_config_argv[0] = argv0.c_str ();
+      global_svc_config_argv[0] = gargv0.c_str ();
 
       if (parse_global_args_i (argc, argv, global_svc_config_argv, true) == -1)
         {

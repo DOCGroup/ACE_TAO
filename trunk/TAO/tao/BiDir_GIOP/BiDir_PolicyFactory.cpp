@@ -18,7 +18,7 @@ TAO_BiDir_PolicyFactory::create_policy (
     CORBA::PolicyType type,
     const CORBA::Any &value)
 {
-  CORBA::Policy_ptr policy = CORBA::Policy::_nil ();
+  CORBA::Policy_ptr policy = CORBA::Policy_ptr ();
 
   if (type == BiDirPolicy::BIDIRECTIONAL_POLICY_TYPE)
     {

@@ -56,32 +56,42 @@ public:
 private:
 
   CORBA::Object_ptr multicast_to_service (const char *service_name,
-                                          CORBA::UShort port,
+                                          unsigned short port,
                                           const char *mcast_address,
-                                          const char *mcast_ttl,
+                                          int mcast_ttl,
                                           const char *mcast_nic,
                                           CORBA::ORB_ptr orb,
                                           ACE_Time_Value *timeout);
 
   int multicast_query (char *&buf,
                        const char *service_name,
-                       u_short port,
+                       unsigned short port,
                        const char *mcast_address,
-                       const char *mcast_ttl,
+                       int mcast_ttl,
                        const char *mcast_nic,
                        ACE_Time_Value *timeout,
                        CORBA::ORB_ptr orb);
 
   /* Simple method to assign values to the global members:
      mcast_address_, mcast_port_, mcast_nic_, mcast_ttl_ */
-  void assign_to_variables (const char * &mcast_name_ptr);
+  void assign_to_variables (char const * mcast_name_ptr);
 
-  // Global private variables
+private:
+
   CORBA::String_var mcast_address_;
-  CORBA::String_var mcast_port_;
+
+  /// Default multicast port (currently Name Service mcast port).
+  unsigned short    mcast_port_;
+
+  /// Multicast network interface card.
   CORBA::String_var mcast_nic_;
-  CORBA::String_var mcast_ttl_;
+
+  /// Default time-to-live (default is 1).
+  int               mcast_ttl_;
+
+  /// Multicast service name
   CORBA::String_var service_name_;
+
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

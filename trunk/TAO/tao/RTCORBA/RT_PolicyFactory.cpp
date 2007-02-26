@@ -42,7 +42,7 @@ TAO_RT_PolicyFactory::create_policy (
 CORBA::Policy_ptr
 TAO_RT_PolicyFactory::_create_policy (CORBA::PolicyType type)
 {
-  CORBA::Policy_ptr policy = CORBA::Policy::_nil ();
+  CORBA::Policy_ptr policy = CORBA::Policy_ptr ();
 
   if (type == RTCORBA::PRIORITY_MODEL_POLICY_TYPE)
     {

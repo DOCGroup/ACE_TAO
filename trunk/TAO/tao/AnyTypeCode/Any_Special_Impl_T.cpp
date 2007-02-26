@@ -88,31 +88,31 @@ TAO::Any_Special_Impl_T<T, from_T, to_T>::extract (const CORBA::Any & any,
         TAO::unaliased_typecode (any_type
                                 );
 
-      CORBA::TCKind any_kind =
+      CORBA::TCKind const any_kind =
         unaliased_any_type->kind ();
 
-      CORBA::TCKind try_kind = tc->kind ();
+      CORBA::TCKind const try_kind = tc->kind ();
 
       if (any_kind != try_kind)
         {
           return false;
         }
 
-      CORBA::ULong length = unaliased_any_type->length ();
+      CORBA::ULong const length = unaliased_any_type->length ();
 
       if (length != bound)
         {
           return false;
         }
 
-      TAO::Any_Impl *impl = any.impl ();
+      TAO::Any_Impl * const impl = any.impl ();
 
       typedef TAO::Any_Special_Impl_T<T, from_T, to_T>
         BOUNDED_TSTRING_ANY_IMPL;
 
-      if (!impl->encoded ())
+      if (impl && !impl->encoded ())
         {
-          TAO::Any_Special_Impl_T<T, from_T, to_T> *narrow_impl =
+          TAO::Any_Special_Impl_T<T, from_T, to_T> * const narrow_impl =
             dynamic_cast <BOUNDED_TSTRING_ANY_IMPL *> (impl);
 
           if (narrow_impl == 0)
@@ -137,8 +137,11 @@ TAO::Any_Special_Impl_T<T, from_T, to_T>::extract (const CORBA::Any & any,
         );
 
       // We know this will work since the unencoded case is covered above.
-      TAO::Unknown_IDL_Type *unk =
+      TAO::Unknown_IDL_Type * const unk =
         dynamic_cast<TAO::Unknown_IDL_Type *> (impl);
+
+      if (!unk)
+        return false;
 
       // We don't want the rd_ptr of unk to move, in case it is
       // shared by another Any. This copies the state, not the buffer.

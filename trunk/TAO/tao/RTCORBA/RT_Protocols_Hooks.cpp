@@ -472,6 +472,9 @@ TAO_RT_Protocols_Hooks::rt_service_context (
       TAO_RT_Stub *rt_stub =
         dynamic_cast<TAO_RT_Stub *> (stub);
 
+      if (!rt_stub)
+        throw CORBA::INTERNAL ();
+
       CORBA::Policy_var priority_model_policy =
         rt_stub->get_cached_policy (TAO_CACHED_POLICY_PRIORITY_MODEL);
 

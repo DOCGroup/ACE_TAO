@@ -124,8 +124,11 @@ TAO::Any_SystemException::extract (const CORBA::Any & any,
       auto_ptr<TAO::Any_SystemException > replacement_safety (replacement);
 
       // We know this will work since the unencoded case is covered above.
-      TAO::Unknown_IDL_Type *unk =
+      TAO::Unknown_IDL_Type * const unk =
         dynamic_cast<TAO::Unknown_IDL_Type *> (impl);
+
+      if (!unk)
+        return false;
 
       // We don't want the rd_ptr of unk to move, in case it is
       // shared by another Any. This copies the state, not the buffer.

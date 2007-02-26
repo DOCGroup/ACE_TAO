@@ -215,28 +215,34 @@ TAO_IIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
   TAO_IIOP_Connection_Handler **sh_ptr = &svc_handler;
   TAO_IIOP_Endpoint **ep_ptr = &iiop_endpoint;
   TAO_LF_Multi_Event mev;
-  mev.add_event(svc_handler);
-  TAO_Transport* tp = this->complete_connection (result, desc,
-                                                 sh_ptr, ep_ptr,
-                                                 1U, r, &mev,  timeout);
-  return tp;
+  mev.add_event (svc_handler);
+
+  return this->complete_connection (result,
+                                    desc,
+                                    sh_ptr,
+                                    ep_ptr,
+                                    1U,
+                                    r,
+                                    &mev,
+                                    timeout);
 }
 
 TAO_Transport *
-TAO_IIOP_Connector::make_parallel_connection (TAO::Profile_Transport_Resolver *r,
-                                     TAO_Transport_Descriptor_Interface &desc,
-                                     ACE_Time_Value *timeout)
+TAO_IIOP_Connector::make_parallel_connection (
+  TAO::Profile_Transport_Resolver * r,
+  TAO_Transport_Descriptor_Interface & desc,
+  ACE_Time_Value * timeout)
 {
   TAO_Endpoint *root_ep = desc.endpoint();
   unsigned max_count = 1;
   unsigned long ns_stagger =
-    this->orb_core()->orb_params()->parallel_connect_delay();
+    this->orb_core ()->orb_params ()->parallel_connect_delay ();
   unsigned long sec_stagger = ns_stagger/1000;
   ns_stagger = (ns_stagger % 1000) * 1000000;
-  for (TAO_Endpoint *ep = root_ep->next_filtered (this->orb_core(),0);
+  for (TAO_Endpoint *ep = root_ep->next_filtered (this->orb_core(), 0);
        ep != 0;
-       ep = ep->next_filtered(this->orb_core(),root_ep))
-    max_count++;
+       ep = ep->next_filtered (this->orb_core(), root_ep))
+    ++max_count;
 
   if (TAO_debug_level > 2)
     ACE_DEBUG ((LM_DEBUG,
@@ -296,8 +302,14 @@ TAO_IIOP_Connector::make_parallel_connection (TAO::Profile_Transport_Resolver *r
 
   TAO_Transport *winner = 0;
   if (count > 0) // only complete if at least one pending or success
-    winner = this->complete_connection (result,desc,
-                                        shlist,eplist,count,r,&mev,timeout);
+    winner = this->complete_connection (result,
+                                        desc,
+                                        shlist,
+                                        eplist,
+                                        count,r,
+                                        &mev,
+                                        timeout);
+
   delete [] shlist; // reference reductions should have been done already
   delete [] eplist;
   return winner;
@@ -493,7 +505,7 @@ TAO_IIOP_Connector::complete_connection (int result,
           for (unsigned i = 0; i < count; i++)
             {
               ACE_ERROR ((LM_ERROR,
-                          ACE_TEXT ("(%P|%t) IIOP_Connector::make_connection,")
+                          ACE_TEXT ("(%P|%t) IIOP_Connector::complete_connection,")
                           ACE_TEXT (" connection to <%s:%d> failed (%p)\n"),
                           ACE_TEXT_CHAR_TO_TCHAR (ep_list[i]->host ()),
                           ep_list[i]->port (),

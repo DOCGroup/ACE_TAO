@@ -159,8 +159,11 @@ TAO_DynUnion_i::set_from_any (const CORBA::Any & any)
 
   if (impl->encoded ())
     {
-      TAO::Unknown_IDL_Type *tmp =
+      TAO::Unknown_IDL_Type * const tmp =
         dynamic_cast<TAO::Unknown_IDL_Type *> (impl);
+
+      if (!tmp)
+        ACE_THROW (CORBA::INTERNAL ());
 
       in = tmp->_tao_get_cdr ();
     }
@@ -698,8 +701,11 @@ TAO_DynUnion_i::to_any (void)
 
   if (disc_any_impl->encoded ())
     {
-      TAO::Unknown_IDL_Type *disc_unk =
+      TAO::Unknown_IDL_Type * const disc_unk =
         dynamic_cast<TAO::Unknown_IDL_Type *> (disc_any_impl);
+
+      if (!disc_unk)
+        ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
 
       disc_in_cdr = disc_unk->_tao_get_cdr ();
     }
@@ -730,8 +736,11 @@ TAO_DynUnion_i::to_any (void)
 
       if (member_any_impl->encoded ())
         {
-          TAO::Unknown_IDL_Type *member_unk =
+          TAO::Unknown_IDL_Type * const member_unk =
             dynamic_cast<TAO::Unknown_IDL_Type *> (member_any_impl);
+
+          if (!member_unk)
+            ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
 
           member_in_cdr = member_unk->_tao_get_cdr ();
         }
@@ -991,8 +1000,11 @@ TAO_DynUnion_i::label_match (const CORBA::Any &my_any,
 
         if (my_impl->encoded ())
           {
-            TAO::Unknown_IDL_Type *my_unk =
+            TAO::Unknown_IDL_Type * const my_unk =
               dynamic_cast<TAO::Unknown_IDL_Type *> (my_impl);
+
+            if (!my_unk)
+              ACE_THROW_RETURN (CORBA::INTERNAL (), false);
 
             // We don't want unk's rd_ptr to move, in case we are shared by
             // another Any, so we use this to copy the state, not the buffer.
@@ -1011,8 +1023,11 @@ TAO_DynUnion_i::label_match (const CORBA::Any &my_any,
 
         if (other_impl->encoded ())
           {
-            TAO::Unknown_IDL_Type *other_unk =
+            TAO::Unknown_IDL_Type * const other_unk =
               dynamic_cast<TAO::Unknown_IDL_Type *> (other_impl);
+
+            if (!other_unk)
+              ACE_THROW_RETURN (CORBA::INTERNAL (), false);
 
             // We don't want unk's rd_ptr to move, in case we are shared by
             // another Any, so we use this to copy the state, not the buffer.
