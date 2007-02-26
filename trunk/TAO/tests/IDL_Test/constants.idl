@@ -66,6 +66,14 @@ const double take = 2e3;
 const double dip = 1.797693134862315E+308;
 const double trouble = 2.2250738585072014E-308;
 
+// const values created through mathematic operations
+const long neg = -8;
+const long sub1 = 0x10 - 0x01;
+const long sub2 = 0x10 + (-0x01);
+const unsigned long add1 = 16 + 1;
+const unsigned long mul1 = 0x80 * 0x70;
+const unsigned long div1 = 99 / 12;
+
 // The original Sun code for bitwise operators was broken.
 
 const unsigned short stuff = ~0;
