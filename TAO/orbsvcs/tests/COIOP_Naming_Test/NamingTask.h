@@ -8,7 +8,7 @@
 #include "orbsvcs/CosNamingC.h"
 #include "ace/Synch_Traits.h"
 
-class NamingTask : public ACE_Task<ACE_MT_SYNCH>
+class NamingTask : public ACE_Task_Base
 {
 public:
   NamingTask (const char* orbname, int argc, char** argv);
