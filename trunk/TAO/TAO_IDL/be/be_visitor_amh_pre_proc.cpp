@@ -153,8 +153,14 @@ be_visitor_amh_pre_proc::create_response_handler (
   class_name += node->local_name ();
   class_name += "ResponseHandler";
 
-  UTL_ScopedName *amh_name =
+  UTL_ScopedName * const amh_name =
     dynamic_cast<UTL_ScopedName*> (node->name ()->copy ());
+
+  if (!amh_name)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "be_visitor_amh_pre_proc::create_response_handler"
+                       " - Scope downcast failed.\n"),
+                      0);
   Identifier *local_name = amh_name->last_component ();
   local_name->replace_string (class_name.c_str ());
 

@@ -177,6 +177,16 @@ be_visitor_valuebox_cs::visit_valuebox (be_valuebox *node)
 
   AST_Type * at = node->boxed_type()->unaliased_type();
   be_type *bt = be_type::narrow_from_decl (at);
+
+  if (!bt)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_valuebox_cs::"
+                         "visit_valuebox - "
+                         "Bad type\n"),
+                        -1);
+    }
+
   bool is_array = false;
   const char * unmarshal_arg;
   be_predefined_type *bpt = be_predefined_type::narrow_from_decl (bt);
@@ -275,7 +285,7 @@ be_visitor_valuebox_cs::visit_valuebox (be_valuebox *node)
 
   // Emit the type specific elements.  The visit_* methods in this
   // module do that work.
-  if (!bt || (bt->accept (this) == -1))
+  if (bt->accept (this) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          " (%N:%l) be_visitor_valuebox_cs::visit_valuebox - "
@@ -421,7 +431,7 @@ be_visitor_valuebox_cs::visit_sequence (be_sequence *node)
   if (bt == 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_valuebox_ch::"
+                         "(%N:%l) be_visitor_valuebox_cs::"
                          "visit_sequence - "
                          "Bad element type\n"),
                         -1);

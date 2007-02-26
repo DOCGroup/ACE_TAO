@@ -60,7 +60,6 @@ be_visitor_array_serializer_op_cs::visit_array (be_array *node)
 
   // Retrieve the base type.
   be_type *bt = be_type::narrow_from_decl (node->base_type ());
-  AST_Decl::NodeType nt = bt->node_type ();
 
   if (!bt)
     {
@@ -70,6 +69,8 @@ be_visitor_array_serializer_op_cs::visit_array (be_array *node)
                          "Bad base type\n"),
                         -1);
     }
+  
+  AST_Decl::NodeType nt = bt->node_type ();
 
   // If we contain an anonymous sequence,
   // generate code for the sequence here.

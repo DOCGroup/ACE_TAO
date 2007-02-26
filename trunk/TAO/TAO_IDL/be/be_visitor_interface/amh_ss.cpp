@@ -76,7 +76,7 @@ be_visitor_amh_interface_ss::this_method (be_interface *node)
       << "TAO_Stub *stub = this->_create_stub ();" << be_nl << be_nl;
 
   *os << "TAO_Stub_Auto_Ptr safe_stub (stub);" << be_nl
-      << "::CORBA::Object_ptr tmp = CORBA::Object::_nil ();" << be_nl
+      << "::CORBA::Object_ptr tmp = CORBA::Object_ptr ();" << be_nl
       << be_nl
       << "::CORBA::Boolean _tao_opt_colloc =" << be_idt_nl
       << "stub->servant_orb_var ()->orb_core ()->"

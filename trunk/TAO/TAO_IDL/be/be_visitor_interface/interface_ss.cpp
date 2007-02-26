@@ -854,7 +854,9 @@ be_visitor_interface_ss::this_method (be_interface *node)
       << be_nl << be_nl
       << "TAO_Stub_Auto_Ptr safe_stub (stub);" << be_nl;
 
-  *os << "::CORBA::Object_ptr tmp = CORBA::Object::_nil ();"
+  /* Coverity whines about an unused return value from _nil() when
+     initializing tmp.  Just use zero instead. */
+  *os << "::CORBA::Object_ptr tmp = CORBA::Object_ptr ();"
       << be_nl << be_nl
       << "::CORBA::Boolean const _tao_opt_colloc =" << be_idt_nl
       << "stub->servant_orb_var ()->orb_core ()->"

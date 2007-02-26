@@ -480,10 +480,11 @@ be_interface::redefine (AST_Interface *from)
 void
 be_interface::gen_def_ctors (TAO_OutStream *os)
 {
-  (void) this->traverse_inheritance_graph (
-      be_interface::gen_def_ctors_helper,
-      os
-    );
+  if (this->traverse_inheritance_graph (be_interface::gen_def_ctors_helper,
+                                        os) == -1)
+    ACE_ERROR ((LM_ERROR,
+                "(%N:%l) be_interface::gen_def_ctors "
+                "error inheritance graph\n"));
 }
 
 

@@ -46,7 +46,6 @@ int be_visitor_array_ch::visit_array (be_array *node)
 
   // Retrieve the type.
   be_type *bt = be_type::narrow_from_decl (node->base_type ());
-  AST_Decl::NodeType nt = bt->node_type ();
 
   if (!bt)
     {
@@ -56,6 +55,8 @@ int be_visitor_array_ch::visit_array (be_array *node)
                          "bad base type\n"),
                         -1);
     }
+
+  AST_Decl::NodeType nt = bt->node_type ();
 
   *os << be_nl << be_nl << "// TAO_IDL - Generated from " << be_nl
                << "// " __FILE__ << ":" << __LINE__;

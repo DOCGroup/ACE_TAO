@@ -1513,8 +1513,8 @@ case 77:
 TAO_YY_RULE_SETUP
 {
                   /* Skip the quotes */
-                  char *tmp = ace_tao_yytext;
-                  for(int i = ACE_OS::strlen(tmp) - 1; i >= 0; --i) {
+                  char * const tmp = ace_tao_yytext;
+                  for(size_t i = ACE_OS::strlen (tmp); i-- != 0; ) {
                     if (isspace(tmp[i])) {
                       tmp[i] = '\0';
                     }
@@ -1533,8 +1533,8 @@ case 78:
 TAO_YY_RULE_SETUP
 {
                   /* Skip the bookends */
-                  char *tmp = ACE_OS::strdup (ace_tao_yytext);
-                  for(int i = ACE_OS::strlen(tmp) - 1; i >= 0; --i) {
+                  char * const tmp = ACE_OS::strdup (ace_tao_yytext);
+                  for(size_t i = ACE_OS::strlen (tmp); i-- != 0; ) {
                     if (isspace(tmp[i])) {
                       tmp[i] = '\0';
                     }
@@ -1655,15 +1655,16 @@ case 100:
 TAO_YY_RULE_SETUP
 {
                   for(;;) {
-                    char c = tao_yyinput();
+                    char const c = tao_yyinput();
                     if (c == '*') {
-                      char next = tao_yyinput();
+                      char const next = tao_yyinput();
                       if (next == '/')
                         break;
                       else
                         tao_yyunput(c, 0);
-                      if (c == '\n')
-                        idl_global->set_lineno(idl_global->lineno() + 1);
+                    }
+                    else if (c == '\n') {
+                      idl_global->set_lineno(idl_global->lineno() + 1);
                     }
                   }
                 }
@@ -3289,7 +3290,7 @@ idl_valid_version (char *s)
         }
     }
 
-  int len = minor - s;
+  ptrdiff_t const len = minor - s;
 
   for (i = 0; i < len; ++i)
     {
@@ -3312,22 +3313,22 @@ idl_valid_version (char *s)
 static AST_Decl *
 idl_find_node (char *s)
 {
-  UTL_ScopedName *node = idl_global->string_to_scoped_name (s);
-  AST_Decl *d = 0;
+  UTL_ScopedName * node = idl_global->string_to_scoped_name (s);
+  AST_Decl * d = 0;
 
   if (node != 0)
     {
       d = idl_global->scopes ().top_non_null ()->lookup_by_name (node,
                                                                  true);
+
+      if (d == 0)
+        {
+          idl_global->err ()->lookup_error (node);
+        }
+
+      node->destroy ();
+      delete node;
     }
 
-  if (d == 0)
-    {
-      idl_global->err ()->lookup_error (node);
-    }
-
-  node->destroy ();
-  delete node;
-  node = 0;
   return d;
 }
