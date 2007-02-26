@@ -127,7 +127,7 @@ TAO_Notify_Method_Request_Dispatch::unmarshal (
       {
         id_path.push_back (id);
         char idbuf[20];
-        ACE_OS::snprintf (idbuf, sizeof(idbuf)-1, "/%d", static_cast<int> (id));
+        ACE_OS::snprintf (idbuf, sizeof(idbuf), "/%d", static_cast<int> (id));
         textpath += idbuf;
       }
       else
