@@ -463,7 +463,7 @@ TAO_CodeGen::start_server_header (const char *fname)
       // String'ifying the name.
       UTL_String idl_name_str (idl_name);
 
-      const char* server_hdr =
+      char const * const server_hdr =
         BE_GlobalData::be_get_server_hdr (&idl_name_str, 1);
 
       idl_name_str.destroy ();
@@ -897,7 +897,7 @@ TAO_CodeGen::start_anyop_header (const char *fname)
               ACE_CString final_hdr = "tao/AnyTypeCode/";
               ACE_CString::size_type pos = work_hdr.rfind ('/');
 
-              if (pos != ACE_SString::npos)
+              if (pos != ACE_CString::npos)
                 {
                   ACE_CString scope (work_hdr.substr (0, pos - 1));
 
@@ -909,7 +909,7 @@ TAO_CodeGen::start_anyop_header (const char *fname)
                   // Only .pidl files in $TAO_ROOT/tao itself have
                   // their generated *A.* files moved to the AnyTypeCode
                   // library.
-                  if (scope.find ('/') == ACE_SString::npos)
+                  if (scope.find ('/') == ACE_CString::npos)
                     {
                       work_hdr = work_hdr.substr (pos + 1);
                       final_hdr += work_hdr;
@@ -1243,7 +1243,11 @@ TAO_CodeGen::end_server_inline (void)
 int
 TAO_CodeGen::end_implementation_header (const char *fname)
 {
-  char macro_name [NAMEBUFSIZE] = { 0 };
+  if (fname == 0)
+    {
+      // Bad file name.
+      return -1;
+    }
 
   const char *suffix = ACE_OS::strrchr (fname, '.');
 
@@ -1251,16 +1255,10 @@ TAO_CodeGen::end_implementation_header (const char *fname)
     {
       // File seems to have no extension, so let us take the name
       // as it is.
-      if (fname == 0)
-        {
-          // Bad file name.
-          return -1;
-        }
-      else
-        {
-          suffix = fname;
-        }
+      suffix = fname;
     }
+
+  char macro_name [NAMEBUFSIZE] = { 0 };
 
   // Convert letters in fname to upper case.
   for (int i = 0; i < (suffix - fname); ++i)
@@ -1627,6 +1625,15 @@ TAO_CodeGen::gen_stub_hdr_includes (void)
   this->gen_standard_include (this->client_header_,
                               "tao/Basic_Types.h");
 
+  // May need ORB_Constants if users check SystemException minor
+  // codes.
+  this->gen_cond_file_include (
+      idl_global->operation_seen_ || idl_global->valuefactory_seen_
+         || idl_global->valuebase_seen_,
+      "tao/ORB_Constants.h",
+      this->client_header_
+    );
+
   // Conditionally included.
 
   // DDS/DCPS marshaling.
@@ -1696,10 +1703,10 @@ TAO_CodeGen::gen_stub_hdr_includes (void)
     {
       for (size_t j = 0; j < idl_global->n_included_idl_files (); ++j)
         {
-          char* idl_name = idl_global->included_idl_files ()[j];
+          char * const idl_name = idl_global->included_idl_files ()[j];
 
           ACE_CString pidl_checker (idl_name);
-          bool got_pidl =
+          bool const got_pidl =
             (pidl_checker.substr (pidl_checker.length () - 5) == ".pidl");
 
           // If we're here and we have a .pidl file, we need to generate
@@ -1709,7 +1716,7 @@ TAO_CodeGen::gen_stub_hdr_includes (void)
               // Make a String out of it.
               UTL_String idl_name_str = idl_name;
 
-              const char *anyop_hdr =
+              char const * const anyop_hdr =
                 BE_GlobalData::be_get_anyop_header (&idl_name_str, 1);
 
               idl_name_str.destroy ();
@@ -1718,9 +1725,9 @@ TAO_CodeGen::gen_stub_hdr_includes (void)
               // AnyTypeCode prefix.
               ACE_CString work_hdr (anyop_hdr);
               ACE_CString final_hdr = "tao/AnyTypeCode/";
-              ACE_CString::size_type pos = work_hdr.rfind ('/');
+              ACE_CString::size_type const pos = work_hdr.rfind ('/');
 
-              if (pos != ACE_SString::npos)
+              if (pos != ACE_CString::npos)
                 {
                   ACE_CString scope (work_hdr.substr (0, pos));
 
@@ -1732,7 +1739,7 @@ TAO_CodeGen::gen_stub_hdr_includes (void)
                   // Only .pidl files in $TAO_ROOT/tao itself have
                   // their generated *A.* files moved to the AnyTypeCode
                   // library.
-                  if (scope.find ('/') == ACE_SString::npos)
+                  if (scope.find ('/') == ACE_CString::npos)
                     {
                       work_hdr = work_hdr.substr (pos + 1);
                       final_hdr += work_hdr;

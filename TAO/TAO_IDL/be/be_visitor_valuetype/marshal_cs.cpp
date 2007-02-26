@@ -99,7 +99,15 @@ be_visitor_valuetype_marshal_cs::visit_valuetype (be_valuetype *node)
 
   be_visitor_context new_ctx = *this->ctx_;
   be_visitor_valuetype_field_cdr_decl field_out_cdr (&new_ctx);
-  field_out_cdr.visit_scope (node);
+
+  if (field_out_cdr.visit_scope (node) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_valuetype_marshal_cs::"
+                         "visit_valuetype - "
+                         "codegen for field out cdr scope failed\n"), 
+                        -1);
+    }
 
   if (node->data_members_count () > 0)
     {

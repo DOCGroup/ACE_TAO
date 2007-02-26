@@ -97,7 +97,7 @@ UTL_String::UTL_String (const char *str)
     {
       this->len = ACE_OS::strlen (str);
       this->p_str = ACE::strnew (str);
-      this->c_str = (char *) ACE_OS::malloc (this->len + 1);
+      this->c_str = new char[this->len + 1];
       this->canonicalize ();
     }
 }
@@ -124,7 +124,7 @@ UTL_String::UTL_String (UTL_String *s)
         {
           this->len = ACE_OS::strlen (b);
           this->p_str = ACE::strnew (b);
-          this->c_str = (char *) ACE_OS::malloc (this->len + 1);
+          this->c_str = new char[this->len + 1];
           this->canonicalize ();
         }
     }
@@ -132,6 +132,8 @@ UTL_String::UTL_String (UTL_String *s)
 
 UTL_String::~UTL_String (void)
 {
+  ACE::strdelete (this->p_str);
+  delete [] this->c_str;
 }
 
 // Compute a canonical form for this string. This is (implemented as)
@@ -230,17 +232,11 @@ UTL_String::compare_quiet (UTL_String *s)
 void
 UTL_String::destroy (void)
 {
-  if (this->p_str != 0)
-    {
-      ACE::strdelete (this->p_str);
-      this->p_str = 0;
-    }
+  ACE::strdelete (this->p_str);
+  this->p_str = 0;
 
-  if (this->c_str != 0)
-    {
-      ACE_OS::free (this->c_str);
-      this->c_str = 0;
-    }
+  delete [] this->c_str;
+  this->c_str = 0;
 }
 
 // Get the char * from a String.
@@ -256,7 +252,7 @@ UTL_String::get_canonical_rep (void)
 {
   if (this->c_str == 0)
     {
-      this->c_str = (char *) ACE_OS::malloc (this->len + 1);
+      this->c_str = new char[this->len + 1];
       this->canonicalize ();
     }
 

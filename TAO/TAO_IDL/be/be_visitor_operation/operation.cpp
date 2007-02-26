@@ -41,8 +41,17 @@ be_visitor_operation::void_return_type (be_type *bt)
 {
   if (bt->node_type () == AST_Decl::NT_pre_defined)
     {
-      AST_PredefinedType::PredefinedType pdt =
-        be_predefined_type::narrow_from_decl (bt)->pt ();
+      be_predefined_type * const bpd =
+        be_predefined_type::narrow_from_decl (bt);
+
+      if (!bpd)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "TAO_IDL (%N:%l) "
+                           "be_predefined_type::narrow_from_decl "
+                           "failed\n"),
+                          0);
+
+      AST_PredefinedType::PredefinedType const pdt = bpd->pt ();
 
       if (pdt == AST_PredefinedType::PT_void)
         {
@@ -144,8 +153,8 @@ be_visitor_operation::gen_stub_operation_body (
   if (!intf)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_operation_thru_poa_collocated_ss::"
-                         "visit_operation - "
+                         "(%N:%l) be_visitor_operation::"
+                         "gen_stub_operation_body - "
                          "bad interface scope\n"),
                         -1);
     }
