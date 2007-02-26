@@ -73,6 +73,12 @@
 <rule name="enum-single-entry">
 <presetreference>Enums_Single Entry_Normal</presetreference>
 </rule>
+<rule name="exceptions-exc-pos">
+<presetreference>Exceptions_Exception Position_Packed</presetreference>
+</rule>
+<rule name="exceptions-throw-pos">
+<presetreference>Exceptions_Throw Position_Same Line</presetreference>
+</rule>
 <rule name="expression-casts">
 <presetreference>Expressions_C Style Casts_No space after</presetreference>
 </rule>
