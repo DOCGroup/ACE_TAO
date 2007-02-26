@@ -9,15 +9,12 @@ ACE_RCSID (Compression,
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 CORBA::Object_ptr
-TAO_Compression_Loader::create_object (
-  CORBA::ORB_ptr,
-  int,
-  ACE_TCHAR *[])
+TAO_Compression_Loader::create_object (CORBA::ORB_ptr, int, ACE_TCHAR *[])
 {
   CORBA::Object_ptr obj = CORBA::Object::_nil ();
   ACE_NEW_RETURN (obj,
-                  TAO::CompressionManager (),
-                  CORBA::Object::_nil ());
+                    TAO::CompressionManager (),
+                    CORBA::Object::_nil ());
   return obj;
 }
 
@@ -25,7 +22,8 @@ TAO_Compression_Loader::create_object (
 int
 TAO_Compression_Loader::Initializer (void)
 {
-  return ACE_Service_Config::process_directive (ace_svc_desc_TAO_Compression_Loader);
+  return ACE_Service_Config::process_directive (
+    ace_svc_desc_TAO_Compression_Loader);
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

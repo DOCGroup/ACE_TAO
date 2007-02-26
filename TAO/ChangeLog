@@ -1,3 +1,9 @@
+Mon Feb 26 13:57:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Compression/*.{h,cpp}:
+        * tao/UB_String_Argument_T.{cpp,inl}:
+          Refactored layout using 1.12 version of StyleManager
+
 Mon Feb 26 13:43:45 UTC 2007  Olli Savia  <ops@iki.fi>
 
         * orbsvcs/orbsvcs/Notify/Method_Request_Dispatch.cpp:
@@ -13,7 +19,7 @@ Mon Feb 26 13:43:45 UTC 2007  Olli Savia  <ops@iki.fi>
 Mon Feb 26 13:43:44 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
 
         * tests/DiffServ/server.cpp:
-        
+
           Removed usage of old macros.
 
 Sun Feb 25 21:56:31 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
