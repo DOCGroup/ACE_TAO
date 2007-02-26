@@ -1070,7 +1070,7 @@ TAO_Transport::cleanup_queue_i ()
          this->id ()));
     }
 
-  int byte_count = 0;
+  size_t byte_count = 0;
   int msg_count = 0;
 
   // Cleanup all messages
@@ -1097,7 +1097,7 @@ TAO_Transport::cleanup_queue_i ()
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) - Transport[%d]::cleanup_queue_i, ")
-                  ACE_TEXT ("discarded %d messages, %d bytes.\n"),
+                  ACE_TEXT ("discarded %d messages, %u bytes.\n"),
                   this->id (), msg_count, byte_count));
     }
 }

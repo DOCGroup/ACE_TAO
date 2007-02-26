@@ -9,6 +9,7 @@
 #include "tao/AnyTypeCode/TypeCode.h"
 #include "tao/AnyTypeCode/Any.h"
 #include "tao/CDR.h"
+#include "tao/SystemException.h"
 
 #if ! defined (__ACE_INLINE__)
 #include "orbsvcs/ETCL/ETCL_Constraint.inl"
@@ -93,6 +94,9 @@ TAO_ETCL_Literal_Constraint::TAO_ETCL_Literal_Constraint (CORBA::Any * any)
             {
               TAO::Unknown_IDL_Type *unk =
                 dynamic_cast<TAO::Unknown_IDL_Type *> (impl);
+
+              if (!unk)
+                throw CORBA::INTERNAL ();
 
               // We don't want unk's rd_ptr to move, in case we are shared by
               // another Any, so we use this to copy the state, not the buffer.
