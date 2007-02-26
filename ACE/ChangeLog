@@ -1,7 +1,14 @@
+Mon Feb 26 08:50:13 UTC 2007  Olli Savia  <ops@iki.fi>
+
+        * ace/Process.cpp (command_line):
+          Pass correct buffer length to ACE_OS::vsnprintf().
+          Thanks to Yves Alloyer <alloyer at ipanematech dot com> for
+          reporting this and providing initial patch.
+
 Sun Feb 25 17:26:37 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
 
         * bin/tao_orb_tests.lst:
-        
+
           Added the DiffServ policy test's run_test.pl.
 
 Sat Feb 24 23:01:16 UTC 2007  Steve Huston  <shuston@riverace.com>
