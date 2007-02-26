@@ -3327,7 +3327,7 @@ idl_find_node (char *s)
         }
 
       node->destroy ();
-       delete node;
+      delete node;
     }
 
   return d;
