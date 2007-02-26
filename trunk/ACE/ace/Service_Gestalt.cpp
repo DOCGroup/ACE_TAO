@@ -456,41 +456,18 @@ ACE_Service_Gestalt::add_processed_static_svc
 }
 
 
-/// Queues static service object descriptor which, during open() will
-/// be given to process_directive() to create the Service
+/// Queues a static service object descriptor which, during open()
+/// will be given to process_directive() to create the Service
 /// Object. Normally, only called from static initializers, prior to
-/// calling open().
+/// calling open() but loading a service from a DLL can cause it too.
 
 int
 ACE_Service_Gestalt::insert (ACE_Static_Svc_Descriptor *stsd)
 {
-  if (ACE::debug ())
-    {
-      static int pid = ACE_OS::getpid ();
-
-      // If called during static initialization ACE_Log_Msg may not
-      // have been initialized yet, so use printf intead. Using a "//"
-      // prefix in case the executable is a C++ code generator and the
-      // output gets embedded in the generated code.
-      ACE_OS::fprintf (stderr,
-           "// (%d|0) SG::insert"
-           " repo=%p (opened=%d) - enqueue %s,"
-           " active=%d.\n",
-           pid,
-           this->repo_,
-           this->is_opened_,
-           stsd->name_,
-           stsd->active_);
-    }
-
   if (this->static_svcs_ == 0)
     ACE_NEW_RETURN (this->static_svcs_,
                     ACE_STATIC_SVCS,
                     -1);
-
-  // Inserting a service after the Gestalt has been opened makes it
-  // impossible to activate it later. Perhaps open came too soon?
-  //ACE_ASSERT (this->is_opened_ == 0);
 
   return this->static_svcs_->insert (stsd);
 }
