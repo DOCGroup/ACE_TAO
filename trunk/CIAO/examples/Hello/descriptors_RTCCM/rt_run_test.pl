@@ -7,8 +7,8 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 
 use lib "$ENV{'ACE_ROOT'}/bin";
 use PerlACE::Run_Test;
-$CIAO_ROOT = "$ENV{'CIAO_ROOT'}";
-$DAnCE = "$ENV{'ACE_ROOT'}/TAO/CIAO/DAnCE";
+$CIAO_ROOT = $PerlACE::CIAO_ROOT;
+$DAnCE = "$CIAO_ROOT/DAnCE";
 
 $daemons_running = 0;
 $em_running = 0;

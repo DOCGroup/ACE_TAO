@@ -1,3 +1,11 @@
+Mon Feb 26 17:21:55 UTC 2007  Adam Mitz  <mitza@ociweb.com>
+
+        * examples/Hello/descriptors_RTCCM/rt_run_test.pl:
+
+          Locate the CIAO directory using $PerlACE::CIAO_ROOT instead of
+          assuming that it is nested within TAO.  This change supports the
+          peer-style directory layout.
+
 Sat Feb 24 21:32:05 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
 
         * DAnCE/NodeApplication/RTConfig_Manager.cpp:
@@ -6,64 +14,64 @@ Sat Feb 24 21:32:05 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
         * DAnCE/NodeApplication/NodeApp_Configurator.h:
         * DAnCE/NodeApplication/NodeApplication_Core.cpp:
         * DAnCE/NodeApplication/Configurator_Factory.cpp:
-        
+
           Reverted some inadvertent check-ins.
 
 Sat Feb 24 20:53:14 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
 
         * DAnCE/NodeApplication/NodeApp_Configurator.h:
         * DAnCE/NodeApplication/NodeApp_Configurator.cpp:
-        
+
           Changed the current structure of the NodeApplication library
           by introducing the NodeApp_Configurator, that will now be
           used to manage both RT and non-RT policies using the respective
           config managers.
-        
+
         * DAnCE/NodeApplication/Configurator_Factory.cpp:
-        
+
           Previously, when RT support was required, the Configurator
           Factory would create the RT config manager.
-        
+
           Instead, now the NodeApp_Configurator is created, which will
           then subsequently create the RT or non-RT config managers
           depending on whether RT support is required or not.
-        
+
           By default a non-RT config manager is created, which will be used
           to create the non-RT policies.
-        
+
         * DAnCE/NodeApplication/NodeApplication_Core.cpp:
-        
+
           Made modifications to create the RT and non-RT config managers.
-        
+
         * DAnCE/NodeApplication/RTConfig_Manager.cpp:
         * DAnCE/NodeApplication/RTConfig_Manager.h:
-        
+
           Made modifications to conform to the base config manager class.
-        
+
         * DAnCE/NodeApplication/NodeApplication.mpc:
-        
+
           Made modifications to compile the newly added files.
 
 Sat Feb 24 19:52:49 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
 
         * DAnCE/NodeApplication/Config_Manager.h:
-        
+
           A new base class for the RT and non-RT NodeApplication
           config managers, that are used by the NodeApplication
           configurators.
-        
+
         * DAnCE/NodeApplication/NAConfig_Manager.cpp:
         * DAnCE/NodeApplication/NAConfig_Manager.h:
         * DAnCE/NodeApplication/NAConfig_Manager.inl:
         * DAnCE/NodeApplication/NA_Configurator_Export.h:
-        
+
           A non-RT NodeApplication config manager that is being used to
           create the DiffServ policies. In general, this config manager
           can be used to create all the TAO-specific policies that are
           created using ORB, rather than RT-ORB.
-        
+
         * DAnCE/NodeApplication/NodeApplication.mpc:
-        
+
           Updated the MPC file to compile the new non-RT NodeApplication
           config manager library.
 
@@ -71,13 +79,13 @@ Fri Feb 23 04:08:04 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * CIDLC/ServantGenerator.cpp:
 
-          cidlc --help prints the following:     
-       
+          cidlc --help prints the following:
+
             [--svnt-export-macro macro]
             Replace default servant DLL export macro with provided ,acro.
 
-          Fixed the misspelling of macro in the cidlc help message. 
-        
+          Fixed the misspelling of macro in the cidlc help message.
+
 
 Thu Feb 22 22:59:01 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
 
