@@ -1,3 +1,14 @@
+Mon Feb 26 17:17:08 UTC 2007  Adam Mitz  <mitza@ociweb.com>
+
+        * bin/PerlACE/Run_Test.pm:
+
+          Set up the $PerlACE::CIAO_ROOT variable, just like $PerlACE::TAO_ROOT
+          except for CIAO.
+
+        * bin/auto_run_tests.pl:
+
+          Find CIAO tests relative to the $CIAO_ROOT directory.
+
 Mon Feb 26 13:56:42 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/ACETAOCIAO.style:

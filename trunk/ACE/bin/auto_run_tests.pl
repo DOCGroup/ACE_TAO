@@ -126,10 +126,14 @@ foreach my $test_lst (@file_list) {
         if ($directory =~ m:^TAO/(.*):) {
           $directory = $1;
         }
+        if ($directory =~ m:^CIAO/(.*):) {
+          $directory = $1;
+        }
 
         $status = undef;
         foreach my $path ($ACE_ROOT."/$directory",
                           $TAO_ROOT."/$directory",
+                          $CIAO_ROOT."/$directory",
                           $startdir."/$directory",
                           $startdir."/$orig_dir") {
           if (-d $path && ($status = chdir ($path))) {
