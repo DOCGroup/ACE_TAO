@@ -86,7 +86,7 @@ Test_i::test_method (void)
 void
 Test_i::shutdown (void)
 {
-  this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
+  this->orb_->shutdown (0);
 }
 
 static const char *simple_servant_ior_file = "simple_servant.ior";
