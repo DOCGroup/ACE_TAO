@@ -35,29 +35,23 @@ namespace TAO
     public virtual ::Compression::Compressor,
     public virtual TAO_Local_RefCounted_Object
   {
-    public:
+  public:
     BaseCompressor (::Compression::CompressionLevel compression_level,
                     ::Compression::CompressorFactory_ptr compressor_factory);
 
-    virtual void compress (
-        const ::CORBA::OctetSeq & source,
-        ::CORBA::OctetSeq & target
-      )
-      = 0;
+    virtual void compress (const ::CORBA::OctetSeq &source,
+                           ::CORBA::OctetSeq &target) = 0;
 
-    virtual void decompress (
-        const ::CORBA::OctetSeq & source,
-        ::CORBA::OctetSeq & target
-      )
-      = 0;
+    virtual void decompress (const ::CORBA::OctetSeq &source,
+                             ::CORBA::OctetSeq &target) = 0;
 
     virtual ::Compression::CompressorFactory_ptr compressor_factory (void);
 
     virtual ::Compression::CompressionLevel compression_level (void);
 
-    protected:
-      ::Compression::CompressionLevel compression_level_;
-      ::Compression::CompressorFactory_var compressor_factory_;
+  protected:
+    ::Compression::CompressionLevel compression_level_;
+    ::Compression::CompressorFactory_var compressor_factory_;
   };
 }
 
