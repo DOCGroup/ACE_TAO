@@ -33,6 +33,9 @@ TAO_RT_ORB::TAO_RT_ORB (TAO_ORB_Core *orb_core,
   TAO_RT_Thread_Lane_Resources_Manager *rt_thread_lane_resources_manager =
     dynamic_cast <TAO_RT_Thread_Lane_Resources_Manager *> (thread_lane_resources_manager);
 
+  if (!rt_thread_lane_resources_manager)
+    throw CORBA::INTERNAL ();
+
   this->tp_manager_ =
     &rt_thread_lane_resources_manager->tp_manager ();
 }

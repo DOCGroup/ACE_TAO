@@ -57,7 +57,11 @@ TAO_DynSequence_i::init (const CORBA::Any& any)
 
   if (impl->encoded ())
     {
-      TAO::Unknown_IDL_Type *unk = dynamic_cast<TAO::Unknown_IDL_Type *> (impl);
+      TAO::Unknown_IDL_Type * const unk =
+        dynamic_cast<TAO::Unknown_IDL_Type *> (impl);
+
+      if (!unk)
+        ACE_THROW (CORBA::INTERNAL ());
 
       cdr = unk->_tao_get_cdr ();
     }
@@ -478,8 +482,11 @@ TAO_DynSequence_i::from_any (const CORBA::Any & any)
 
       if (impl->encoded ())
         {
-          TAO::Unknown_IDL_Type *unk =
+          TAO::Unknown_IDL_Type * const unk =
             dynamic_cast<TAO::Unknown_IDL_Type *> (impl);
+
+          if (!unk)
+            ACE_THROW (CORBA::INTERNAL ());
 
           cdr = unk->_tao_get_cdr ();
         }
@@ -579,8 +586,11 @@ TAO_DynSequence_i::to_any (void)
 
       if (field_impl->encoded ())
         {
-          TAO::Unknown_IDL_Type *field_unk =
+          TAO::Unknown_IDL_Type * const field_unk =
             dynamic_cast<TAO::Unknown_IDL_Type *> (field_impl);
+
+          if (!field_unk)
+            ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
 
           field_cdr = field_unk->_tao_get_cdr ();
         }

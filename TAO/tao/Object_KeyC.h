@@ -120,21 +120,21 @@ namespace TAO
     // Hand crafted.
 
     static void encode_sequence_to_string (
-        char * &str,
-        const TAO::unbounded_value_sequence<CORBA::Octet> &seq
+        char* & str,
+        TAO::unbounded_value_sequence<CORBA::Octet> const & seq
       );
     static void decode_string_to_sequence (
         TAO::unbounded_value_sequence<CORBA::Octet> &seq,
-        const char *str
+        char const * str
       );
-    static int is_legal (u_char & c);
+    static CORBA::Boolean is_legal (unsigned char c);
 
     /// A special method that gives no regard to how the ORB has
     /// configured  the resource factory. This will be used only
     /// during Profile decoding and should be safe. This is a solution
-    /// for the bug report [BUG 1616]
-    static CORBA::Boolean demarshal_key (ObjectKey &key,
-                                         TAO_InputCDR &cdr);
+    /// for the bug report [Bug 1616]
+    static CORBA::Boolean demarshal_key (ObjectKey & key,
+                                         TAO_InputCDR & cdr);
   };
 
 #endif /* end #if !defined */

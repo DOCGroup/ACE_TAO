@@ -397,6 +397,10 @@ int TAO_Acceptor_Registry::open_default (TAO_ORB_Core *orb_core,
                   ACE_INET_Addr addr(static_cast<unsigned short> (0)); // IPv4 ANY
 
                   TAO_IIOP_Acceptor* iiop_acceptor = dynamic_cast<TAO_IIOP_Acceptor*> (acceptor);
+
+                  if (!iiop_acceptor)
+                    return -1;
+
                   iiop_acceptor->set_default_address (addr);
 
                   if (this->open_default_i (orb_core,
@@ -435,6 +439,10 @@ int TAO_Acceptor_Registry::open_default (TAO_ORB_Core *orb_core,
                   addr.set (port, ACE_IPV6_ANY, AF_INET6); // IPv6 ANY on specified port
 
                   iiop_acceptor = dynamic_cast<TAO_IIOP_Acceptor*> (acceptor);
+ 
+                  if (!iiop_acceptor)
+                    return -1;
+
                   iiop_acceptor->set_default_address (addr);
 
                   if (this->open_default_i (orb_core,
@@ -730,6 +738,10 @@ TAO_Acceptor_Registry::open_i (TAO_ORB_Core *orb_core,
                   ACE_INET_Addr addr(static_cast<unsigned short> (0)); // IPv4 ANY
 
                   TAO_IIOP_Acceptor* iiop_acceptor = dynamic_cast<TAO_IIOP_Acceptor*> (acceptor);
+
+                  if (!iiop_acceptor)
+                    return -1;
+
                   iiop_acceptor->set_default_address (addr);
 
                   if (this->open_default_i (orb_core,
@@ -769,6 +781,9 @@ TAO_Acceptor_Registry::open_i (TAO_ORB_Core *orb_core,
                       addr.set (port, ACE_IPV6_ANY, AF_INET6); // IPv6 ANY on specified port
 
                       iiop_acceptor = dynamic_cast<TAO_IIOP_Acceptor*> (acceptor);
+                      if (!iiop_acceptor)
+                        return -1;
+
                       iiop_acceptor->set_default_address (addr);
 
                       if (this->open_default_i (orb_core,

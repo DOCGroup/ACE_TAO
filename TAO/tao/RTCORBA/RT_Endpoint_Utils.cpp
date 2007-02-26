@@ -24,7 +24,11 @@ TAO_RT_Endpoint_Utils::policy (TAO_Cached_Policy_Type type,
 {
   CORBA::Policy *policy = CORBA::Policy::_nil ();
 
-  TAO_RT_Stub *rt_stub = dynamic_cast<TAO_RT_Stub *> (r.stub ());
+  TAO_RT_Stub * const rt_stub =
+    dynamic_cast<TAO_RT_Stub *> (r.stub ());
+
+  if (!rt_stub)
+    throw CORBA::INTERNAL ();
 
   try
     {

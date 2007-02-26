@@ -51,21 +51,26 @@ namespace TAO
   Dynamic::ParameterList *
   DII_Invocation::arguments (void)
   {
-    // Generate the argument list on demand.
-    Dynamic::ParameterList *parameter_list =
-      TAO_RequestInfo_Util::make_parameter_list ();
+    Dynamic::ParameterList_var safe_parameter_list;
 
-    Dynamic::ParameterList_var safe_parameter_list = parameter_list;
-
-    TAO::Argument **args = this->details_.args ();
+    TAO::Argument ** const args = this->details_.args ();
 
     if (this->details_.args_num () > 1)
       {
         // Take the second argument since the first is a return value.
-        TAO::NVList_Argument *tmp_arg =
+        TAO::NVList_Argument * const tmp_arg =
           dynamic_cast <TAO::NVList_Argument*> (args[1]);
 
-        tmp_arg->interceptor_paramlist (parameter_list);
+        if (tmp_arg)
+          {
+            // Generate the argument list on demand.
+            Dynamic::ParameterList * const parameter_list =
+              TAO_RequestInfo_Util::make_parameter_list ();
+
+            safe_parameter_list = parameter_list;
+
+            tmp_arg->interceptor_paramlist (parameter_list);
+          }
       }
 
     return safe_parameter_list._retn ();
@@ -173,21 +178,26 @@ namespace TAO
   Dynamic::ParameterList *
   DII_Deferred_Invocation::arguments (void)
   {
-    // Generate the argument list on demand.
-    Dynamic::ParameterList *parameter_list =
-      TAO_RequestInfo_Util::make_parameter_list ();
+    Dynamic::ParameterList_var safe_parameter_list;
 
-    Dynamic::ParameterList_var safe_parameter_list = parameter_list;
-
-    TAO::Argument **args = this->details_.args ();
+    TAO::Argument ** const args = this->details_.args ();
 
     if (this->details_.args_num () > 1)
       {
         // Take the second argument since the first is a return value.
-        TAO::NVList_Argument *tmp_arg =
+        TAO::NVList_Argument * const tmp_arg =
           dynamic_cast <TAO::NVList_Argument*> (args[1]);
 
-        tmp_arg->interceptor_paramlist (parameter_list);
+        if (tmp_arg)
+          {
+            // Generate the argument list on demand.
+            Dynamic::ParameterList * const parameter_list =
+              TAO_RequestInfo_Util::make_parameter_list ();
+
+            safe_parameter_list = parameter_list;
+
+            tmp_arg->interceptor_paramlist (parameter_list);
+          }
       }
 
     return safe_parameter_list._retn ();

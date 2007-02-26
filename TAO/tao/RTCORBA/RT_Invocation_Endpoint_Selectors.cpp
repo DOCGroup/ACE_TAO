@@ -149,6 +149,9 @@ TAO_RT_Invocation_Endpoint_Selector::endpoint_from_profile (
   // Narrow to the RT Stub.
   TAO_RT_Stub *rt_stub = dynamic_cast <TAO_RT_Stub *> (r.stub ());
 
+  if (!rt_stub)
+    throw CORBA::INTERNAL ();
+
   // Get the priority model policy.
   CORBA::Policy_var priority_model_policy =
     rt_stub->get_cached_policy (TAO_CACHED_POLICY_PRIORITY_MODEL);

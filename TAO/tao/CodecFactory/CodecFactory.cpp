@@ -27,7 +27,7 @@ TAO_CodecFactory_Loader::create_object (
   ACE_TCHAR *[]
   )
 {
-  CORBA::Object_ptr obj = CORBA::Object::_nil ();
+  CORBA::Object_ptr obj = CORBA::Object_ptr ();
   ACE_NEW_RETURN (obj,
                   TAO_CodecFactory (orb->orb_core ()),
                   CORBA::Object::_nil ());

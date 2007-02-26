@@ -45,7 +45,7 @@ namespace TAO
       {
         typedef TAO::TypeCode::String<TAO::True_RefCount_Policy> typecode_type;
 
-        CORBA::TypeCode_ptr tc = CORBA::TypeCode::_nil ();
+        CORBA::TypeCode_ptr tc = CORBA::TypeCode_ptr ();
         ACE_NEW_RETURN (tc,
                         typecode_type (kind, bound),
                         tc);
@@ -62,7 +62,7 @@ namespace TAO
       {
         typedef TAO::TypeCode::String<TAO::True_RefCount_Policy> typecode_type;
 
-        CORBA::TypeCode_ptr tc = CORBA::TypeCode::_nil ();
+        CORBA::TypeCode_ptr tc = CORBA::TypeCode_ptr ();
         ACE_NEW_RETURN (tc,
                         typecode_type (kind, bound),
                         tc);

@@ -228,9 +228,6 @@ TAO::CSD::TP_Task::svc()
       // handle falls out of scope and its destructor performs the
       // _remove_ref() call on the underlying TP_Request object.
     }
-
-  // This will never get executed.
-  return 0;
 }
 
 

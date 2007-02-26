@@ -60,11 +60,14 @@ TAO_Policy_Set::TAO_Policy_Set (const TAO_Policy_Set &rhs)
           CORBA::Policy_var copy =
             policy->copy ();
 
+          TAO_Cached_Policy_Type const cached_type =
+            copy->_tao_cached_type ();
+
           // Add the "cacheable" policies into the cache.
-          if (copy->_tao_cached_type () != TAO_CACHED_POLICY_UNCACHED)
+          if (cached_type != TAO_CACHED_POLICY_UNCACHED
+              && cached_type >= 0)
             {
-              this->cached_policies_[copy->_tao_cached_type ()] =
-                copy.ptr ();
+              this->cached_policies_[cached_type] = copy.ptr ();
             }
 
           this->policy_list_[i] = copy._retn ();
@@ -111,10 +114,14 @@ TAO_Policy_Set::copy_from (TAO_Policy_Set *source)
       CORBA::ULong const length = this->policy_list_.length ();
       this->policy_list_.length (length + 1);
 
+      TAO_Cached_Policy_Type const cached_type =
+        copy->_tao_cached_type ();
+
       // Add the "cacheable" policies into the cache.
-      if (copy->_tao_cached_type () != TAO_CACHED_POLICY_UNCACHED)
+      if (cached_type != TAO_CACHED_POLICY_UNCACHED
+          && cached_type >= 0)
         {
-          this->cached_policies_[copy->_tao_cached_type ()] = copy.ptr ();
+          this->cached_policies_[cached_type] = copy.ptr ();
         }
 
       this->policy_list_[length] = copy._retn ();
@@ -235,9 +242,11 @@ TAO_Policy_Set::set_policy (const CORBA::Policy_ptr policy)
 
   // If this is a policy that gets accessed on the critical path,
   // save a pointer to it in the cache.
-  TAO_Cached_Policy_Type cached_policy_type = policy->_tao_cached_type ();
+  TAO_Cached_Policy_Type const cached_policy_type =
+    policy->_tao_cached_type ();
 
-  if (cached_policy_type != TAO_CACHED_POLICY_UNCACHED)
+  if (cached_policy_type != TAO_CACHED_POLICY_UNCACHED
+      && cached_policy_type >= 0)
     {
       this->cached_policies_[cached_policy_type] = copy.ptr ();
     }

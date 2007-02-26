@@ -22,7 +22,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 
 TAO_EndpointPolicy_Factory::TAO_EndpointPolicy_Factory (TAO_ORB_Core * orb_core)
-: orb_core_ (orb_core)
+  : orb_core_ (orb_core)
 {
 }
 
@@ -33,52 +33,57 @@ TAO_EndpointPolicy_Factory::create_policy (
     const CORBA::Any &value)
 {
   if (type == EndpointPolicy::ENDPOINT_POLICY_TYPE)
-  {
-    const EndpointPolicy::EndpointList* endpoint_list;
-    if ((value >>= endpoint_list) == 0)
-      throw ::CORBA::PolicyError (CORBA::BAD_POLICY_VALUE);
-
-    TAO_Acceptor_Registry & registry
-      = this->orb_core_->lane_resources ().acceptor_registry ();
-
-    TAO_Acceptor ** acceptors_begin = registry.begin ();
-    TAO_Acceptor ** acceptors_end = registry.end ();
-    CORBA::ULong num_eps = endpoint_list->length ();
-
-    // The endpoint list in the value is validated to ensure that
-    // at least one endpoint in the list matches an endpoint the
-    // ORB is listening on.
-
-    bool found_one = false;
-    for (CORBA::ULong idx = 0; !found_one && idx < num_eps; ++idx)
     {
-      CORBA::ULong prot_tag = (*endpoint_list)[idx]->protocol_tag();
+      const EndpointPolicy::EndpointList* endpoint_list;
+      if (!(value >>= endpoint_list))
+        throw ::CORBA::PolicyError (CORBA::BAD_POLICY_VALUE);
 
-      const TAO_Endpoint_Value_Impl *evi =
-        dynamic_cast <const TAO_Endpoint_Value_Impl*> ((*endpoint_list)[idx]);
+      TAO_Acceptor_Registry & registry =
+        this->orb_core_->lane_resources ().acceptor_registry ();
 
-      for (TAO_Acceptor** acceptor = acceptors_begin;
-           !found_one && acceptor != acceptors_end;
-           ++acceptor)
+      TAO_Acceptor ** const acceptors_begin = registry.begin ();
+      TAO_Acceptor ** const acceptors_end = registry.end ();
+      CORBA::ULong const num_eps = endpoint_list->length ();
+
+      // The endpoint list in the value is validated to ensure that
+      // at least one endpoint in the list matches an endpoint the
+      // ORB is listening on.
+
+      bool found_one = false;
+      for (CORBA::ULong idx = 0; !found_one && idx < num_eps; ++idx)
         {
-          if ((*acceptor)->tag() == prot_tag)
-            found_one = evi->validate_acceptor(*acceptor);
+          CORBA::ULong prot_tag = (*endpoint_list)[idx]->protocol_tag();
+
+          TAO_Endpoint_Value_Impl const * const evi =
+            dynamic_cast <TAO_Endpoint_Value_Impl const *> (
+              (*endpoint_list)[idx].in ());
+
+          if (!evi)
+            continue;
+
+          for (TAO_Acceptor** acceptor = acceptors_begin;
+               !found_one && acceptor != acceptors_end;
+               ++acceptor)
+            {
+              if ((*acceptor)->tag () == prot_tag)
+                found_one = evi->validate_acceptor (*acceptor);
+            }
         }
+  
+      // There is no endpoint policy value matches an endpoint the ORB
+      // is listening on. A CORBA::PolicyError exception with a
+      // PolicyErrorCode of UNSUPPORTED_POLICY_VALUE is raised.
+      if (!found_one)
+        throw ::CORBA::PolicyError (CORBA::UNSUPPORTED_POLICY_VALUE);
+
+      TAO_EndpointPolicy_i *tmp = 0;
+      ACE_NEW_THROW_EX (tmp,
+                        TAO_EndpointPolicy_i (*endpoint_list),
+                        CORBA::NO_MEMORY (TAO::VMCID,
+                                          CORBA::COMPLETED_NO));
+
+      return tmp;
     }
-    // There is no endpoint policy value matches an endpoint the ORB
-    // is listening on. A CORBA::PolicyError exception with a
-    // PolicyErrorCode of UNSUPPORTED_POLICY_VALUE is raised.
-    if (!found_one)
-      throw ::CORBA::PolicyError (CORBA::UNSUPPORTED_POLICY_VALUE);
-
-    TAO_EndpointPolicy_i *tmp = 0;
-    ACE_NEW_THROW_EX (tmp,
-      TAO_EndpointPolicy_i (*endpoint_list),
-      CORBA::NO_MEMORY (TAO::VMCID,
-      CORBA::COMPLETED_NO));
-
-    return tmp;
-  }
   else
     throw ::CORBA::PolicyError (CORBA::BAD_POLICY_TYPE);
 }

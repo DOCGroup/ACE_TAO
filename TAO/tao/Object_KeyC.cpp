@@ -38,6 +38,7 @@
 #endif /* __BORLANDC__ */
 
 #include "ace/ACE.h"
+#include "ace/Truncate.h"
 #include "ace/OS_NS_string.h"
 #include "ace/os_include/os_ctype.h"
 
@@ -97,8 +98,8 @@ TAO::ObjectKey::~ObjectKey (void)
 // Hand crafted.
 
 void
-TAO::ObjectKey::encode_sequence_to_string (char * &str,
-                                           const TAO::unbounded_value_sequence<CORBA::Octet> &seq)
+TAO::ObjectKey::encode_sequence_to_string (char* & str,
+                                           TAO::unbounded_value_sequence<CORBA::Octet> const & seq)
 {
   // We must allocate a buffer which is (gag) 3 times the length
   // of the sequence, which is the length required in the worst-case
@@ -109,19 +110,22 @@ TAO::ObjectKey::encode_sequence_to_string (char * &str,
   // OR, we could just return this space.  The classic time-space tradeoff,
   // and for now we'll let time win out, which means that we only do the
   // allocation once.
-  u_int len = 3 * seq.length (); /* space for zero termination not needed */;
+  CORBA::ULong const seq_len = seq.length ();
+  CORBA::ULong const len = 3 * seq_len; /* space for zero termination
+                                           not needed */
   str = CORBA::string_alloc (len);
 
-  char *cp = str;
+  char * const eos = str + len;
+  char *       cp  = str;
 
-  for (u_int i = 0;
-       cp < (str + len) && i < seq.length();
+  for (CORBA::ULong i = 0;
+       cp < eos && i < seq_len;
        ++i)
     {
-      u_char bt = seq[i];
+      unsigned char bt = seq[i];
       if (is_legal (bt))
         {
-          *cp++ = (char) bt;
+          *cp++ = static_cast<char> (bt);
           continue;
         }
 
@@ -133,11 +137,12 @@ TAO::ObjectKey::encode_sequence_to_string (char * &str,
   *cp = '\0';
 }
 
-int TAO::ObjectKey::is_legal (u_char & c)
+CORBA::Boolean
+TAO::ObjectKey::is_legal (unsigned char c)
 {
-  if (isalnum(c))
+  if (isalnum (c))
   {
-    return 1;
+    return true;
   }
   else
   {
@@ -150,8 +155,9 @@ int TAO::ObjectKey::is_legal (u_char & c)
 }
 
 void
-TAO::ObjectKey::decode_string_to_sequence (TAO::unbounded_value_sequence<CORBA::Octet> &seq,
-                                           const char *str)
+TAO::ObjectKey::decode_string_to_sequence (
+  TAO::unbounded_value_sequence<CORBA::Octet> & seq,
+  char const * str)
 {
   if (str == 0)
     {
@@ -159,18 +165,24 @@ TAO::ObjectKey::decode_string_to_sequence (TAO::unbounded_value_sequence<CORBA::
       return;
     }
 
-  size_t length = ACE_OS::strlen (str);
-  const char *eos = str + length;
-  const char *cp = str;
+  size_t const str_len = ACE_OS::strlen (str);
 
-  // Set the length of the sequence to be as long as
-  // we'll possibly need...we'll reset it to the actual
-  // length later.
-  seq.length (length);
+  // Ensure sequence length value does not exceed maximum value for
+  // sequence index type (CORBA::ULong).  This is mostly an issue for
+  // 64-bit MS Windows builds.
+  CORBA::ULong const len =
+    ACE_Utils::truncate_cast<CORBA::ULong> (str_len);
+  
+  char const * const eos = str + str_len;
+  char const *       cp  = str;
 
-  u_int i = 0;
+  // Set the length of the sequence to be as long as we'll possibly
+  // need...we'll reset it to the actual length later.
+  seq.length (len);
+
+  CORBA::ULong i = 0;
   for (;
-       cp < eos && i < seq.length ();
+       cp < eos && i < len;
        ++i)
     {
       if (*cp == '%' || *cp == '\\')
@@ -178,8 +190,8 @@ TAO::ObjectKey::decode_string_to_sequence (TAO::unbounded_value_sequence<CORBA::
           // This is an escaped non-printable,
           // so we decode the hex values into
           // the sequence's octet
-          seq[i] = (u_char) (ACE::hex2byte (cp[1]) << 4);
-          seq[i] |= (u_char) ACE::hex2byte (cp[2]);
+          seq[i]  = static_cast<CORBA::Octet> (ACE::hex2byte (cp[1]) << 4);
+          seq[i] |= static_cast<CORBA::Octet> (ACE::hex2byte (cp[2]));
           cp += 3;
         }
       else

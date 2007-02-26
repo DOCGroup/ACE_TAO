@@ -61,18 +61,18 @@ TAO::Any_Impl_T<T>::extract (const CORBA::Any & any,
   try
     {
       CORBA::TypeCode_ptr any_tc = any._tao_get_typecode ();
-      CORBA::Boolean _tao_equiv = any_tc->equivalent (tc);
+      CORBA::Boolean const _tao_equiv = any_tc->equivalent (tc);
 
       if (_tao_equiv == 0)
         {
           return false;
         }
 
-      TAO::Any_Impl *impl = any.impl ();
+      TAO::Any_Impl * const impl = any.impl ();
 
-      if (!impl->encoded ())
+      if (impl && !impl->encoded ())
         {
-          TAO::Any_Impl_T<T> *narrow_impl =
+          TAO::Any_Impl_T<T> * const narrow_impl =
             dynamic_cast <TAO::Any_Impl_T<T> *> (impl);
 
           if (narrow_impl == 0)
@@ -94,8 +94,11 @@ TAO::Any_Impl_T<T>::extract (const CORBA::Any & any,
       auto_ptr<TAO::Any_Impl_T<T> > replacement_safety (replacement);
 
       // We know this will work since the unencoded case is covered above.
-      TAO::Unknown_IDL_Type *unk =
+      TAO::Unknown_IDL_Type * const unk =
         dynamic_cast<TAO::Unknown_IDL_Type *> (impl);
+
+      if (!unk)
+        return false;
 
       // We don't want the rd_ptr of unk to move, in case it is
       // shared by another Any. This copies the state, not the buffer.
@@ -126,14 +129,14 @@ template<typename T>
 CORBA::Boolean
 TAO::Any_Impl_T<T>::to_object (CORBA::Object_ptr &) const
 {
-  return 0;
+  return false;
 }
 
 template<typename T>
 CORBA::Boolean
 TAO::Any_Impl_T<T>::to_value (CORBA::ValueBase *&) const
 {
-  return 0;
+  return false;
 }
 
 template<typename T>
@@ -141,7 +144,7 @@ template<typename T>
 CORBA::Boolean
 TAO::Any_Impl_T<T>::to_abstract_base (CORBA::AbstractBase_ptr &) const
 {
-  return 0;
+  return false;
 }
 
 template<typename T>
