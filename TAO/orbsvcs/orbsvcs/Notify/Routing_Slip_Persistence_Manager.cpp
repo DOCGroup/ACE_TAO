@@ -616,7 +616,9 @@ Routing_Slip_Persistence_Manager::build_chain(
       // allocator obtains ownership, so write out and delete the header
       // only.
       result &= this->allocator_->write(prevblk);
-      delete prevhdr;
+
+      if (prevhdr != &first_header)
+        delete prevhdr;
     }
     prevblk = curblk;
     prevhdr = hdr;
@@ -625,7 +627,9 @@ Routing_Slip_Persistence_Manager::build_chain(
   {
     prevhdr->put_header(*prevblk);
     result &= this->allocator_->write(prevblk);
-    delete prevhdr;
+
+    if (prevhdr != &first_header)
+      delete prevhdr;
   }
   pos = first_header.put_header(
     *first_block);

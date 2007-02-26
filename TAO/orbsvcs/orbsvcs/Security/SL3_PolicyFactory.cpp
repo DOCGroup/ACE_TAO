@@ -16,7 +16,7 @@ CORBA::Policy_ptr
 TAO::SL3::PolicyFactory::create_policy (CORBA::PolicyType type,
                                         const CORBA::Any & value)
 {
-  CORBA::Policy_ptr policy = CORBA::Policy::_nil ();
+  CORBA::Policy_ptr policy = CORBA::Policy_ptr ();
 
   if (type == SecurityLevel3::ContextEstablishmentPolicyType)
     {
