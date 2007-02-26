@@ -84,7 +84,16 @@ be_visitor_structure_serializer_op_cs::visit_structure (be_structure *node)
   {
     be_visitor_context new_ctx (*this->ctx_);
     be_visitor_serializer_op_field_decl field_decl (&new_ctx);
-    field_decl.visit_scope (node);
+
+    if (field_decl.visit_scope (node) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_serializer_op_cs::"
+                             "visit_structure - "
+                             "codegen for field decl scope failed\n"), 
+                            -1);
+        }        
+
 #ifdef DCPS_DEBUG_IDL
     *os << "size_t result = 0;" << be_nl;
 #else

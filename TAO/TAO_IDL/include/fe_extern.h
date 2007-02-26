@@ -78,13 +78,11 @@ TAO_IDL_FE_Export void FE_store_env_include_paths (void);
 TAO_IDL_FE_Export const char *FE_get_cpp_loc_from_env (void);
 TAO_IDL_FE_Export const char *FE_get_cpp_args_from_env (void);
 
-class File;
-
 TAO_IDL_FE_Export int
 FE_yyparse (void);
 
 TAO_IDL_FE_Export void
-FE_set_yyin (File *);    // Set yyin
+FE_set_yyin (FILE *);    // Set yyin
 
 // Interface to constructors for objects need by the driver
 

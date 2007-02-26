@@ -304,6 +304,13 @@ be_sequence::managed_type (void)
 
       bt = be_type::narrow_from_decl (this->base_type ());
 
+      if (!bt)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "TAO_IDL (%N:%l) "
+                           "be_type::narrow_from_decl "
+                           "failed\n"),
+                          be_sequence::MNG_UNKNOWN);
+
       if (bt->node_type () == AST_Decl::NT_typedef)
         {
           // Get the primitive base type of this typedef node.
@@ -339,8 +346,16 @@ be_sequence::managed_type (void)
             break;
           case AST_Decl::NT_pre_defined:
             {
-              be_predefined_type *bpd =
+              be_predefined_type * const bpd =
                 be_predefined_type::narrow_from_decl (prim_type);
+
+              if (!bt)
+                ACE_ERROR_RETURN ((LM_ERROR,
+                                   "TAO_IDL (%N:%l) "
+                                   "be_predefined_type::narrow_from_decl "
+                                   "failed\n"),
+                                  be_sequence::MNG_UNKNOWN);
+
               AST_PredefinedType::PredefinedType pt = bpd->pt ();
 
               switch (pt)

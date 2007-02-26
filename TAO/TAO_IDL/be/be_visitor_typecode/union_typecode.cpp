@@ -133,8 +133,11 @@ TAO::be_visitor_union_typecode::gen_case_typecodes (be_union * node)
       be_type * const member_type =
         be_type::narrow_from_decl ((*member_ptr)->field_type ());
 
-      if (this->is_typecode_generation_required (member_type))
-        member_type->accept (this);
+      if (this->is_typecode_generation_required (member_type)
+          && member_type->accept (this) != 0)
+        {
+          return -1;
+        }
     }
 
   return 0;

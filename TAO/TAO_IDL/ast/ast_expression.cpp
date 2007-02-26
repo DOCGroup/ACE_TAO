@@ -3038,7 +3038,10 @@ AST_Expression::dump (ACE_OSTREAM_TYPE &o)
       break;
     // Unevaluated symbol.
     case EC_symbol:
-      this->pd_n->dump (o);
+      if (this->pd_n)
+        this->pd_n->dump (o);
+      else
+        o << ACE_TEXT ("(nil symbolic name)");
       break;
     case EC_none:
       break;

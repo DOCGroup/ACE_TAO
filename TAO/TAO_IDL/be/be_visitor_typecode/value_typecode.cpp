@@ -203,9 +203,10 @@ TAO::be_visitor_value_typecode::gen_member_typecodes (be_valuetype * node)
       be_type * const member_type =
         be_type::narrow_from_decl (field->field_type ());
 
-      if (this->is_typecode_generation_required (member_type))
+      if (this->is_typecode_generation_required (member_type)
+          && member_type->accept (this) != 0)
         {
-          member_type->accept (this);
+          return -1;
         }
       else if (member_type == static_cast<be_type *> (node))
         {

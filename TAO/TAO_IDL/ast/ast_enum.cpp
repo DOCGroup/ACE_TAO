@@ -278,7 +278,7 @@ AST_Enum::fe_add_enum_val (AST_EnumVal *t)
 
       t1->set_name (sn);
     }
-
+      
   // Already defined and cannot be redefined? Or already used?
   if ((d = this->lookup_for_add (t, false)) != 0)
     {
@@ -315,6 +315,9 @@ AST_Enum::fe_add_enum_val (AST_EnumVal *t)
   this->add_to_referenced (t,
                            false,
                            t->local_name ());
+
+  if (t1 == 0)
+    return 0;  // Prevent dereferencing null pointer in nested calls.
 
   // Add it to enclosing scope.
   idl_global->scopes ().next_to_top ()->fe_add_enum_val (t1);

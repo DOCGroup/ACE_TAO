@@ -74,6 +74,11 @@ be_interface_strategy::compute_coll_names (int type,
       this->cached_type_ = type;
       delete [] this->full_coll_name_;
       delete [] this->local_coll_name_;
+
+      // Reset to zero in case allocations below fail, and cause
+      // premature return to caller.
+      this->full_coll_name_ = 0;
+      this->local_coll_name_ = 0;
     }
 
   static const char *collocated_names[] = {"_tao_thru_poa_collocated_",
@@ -641,7 +646,7 @@ be_interface_default_strategy::flat_server_scope (void)
 
   size_t offset = ACE_OS::strlen (name);
   size_t length = ACE_OS::strlen (full_name) - offset;
-  ACE_NEW_RETURN (this->flat_client_scope_,
+  ACE_NEW_RETURN (this->flat_server_scope_,
                   char[length + 1],
                   0);
 

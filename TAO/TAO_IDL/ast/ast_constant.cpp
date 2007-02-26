@@ -302,10 +302,10 @@ AST_Constant::enum_full_name (void)
 {
   if (this->pd_et == AST_Expression::EV_enum)
     {
-      UTL_Scope *s = this->defined_in ();
-      AST_Decl *d = s->lookup_by_name (this->pd_constant_value->n (),
-                                       1);
-      return (ScopeAsDecl (d->defined_in ()))->name ();
+      UTL_Scope * const s = this->defined_in ();
+      AST_Decl  * const d = s->lookup_by_name (this->pd_constant_value->n (),
+                                               1);
+      return (d ? (ScopeAsDecl (d->defined_in ()))->name () : 0);
     }
   else
     {

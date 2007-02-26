@@ -190,9 +190,10 @@ TAO::be_visitor_struct_typecode::gen_member_typecodes (AST_Structure * node)
       be_type * const member_type =
         be_type::narrow_from_decl ((*member_ptr)->field_type ());
 
-      if (this->is_typecode_generation_required (member_type))
+      if (this->is_typecode_generation_required (member_type)
+          && member_type->accept (this) != 0)
         {
-          (void) member_type->accept (this);
+          return -1;
         }
     }
 

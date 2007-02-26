@@ -119,7 +119,15 @@ be_visitor_structure_cdr_op_cs::visit_structure (be_structure *node)
   else
     {
       new_ctx.sub_state (TAO_CodeGen::TAO_CDR_INPUT);
-      field_decl.visit_scope (node);
+
+      if (field_decl.visit_scope (node) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_structure_cdr_op_cs::"
+                             "visit_structure - "
+                             "codegen for field decl scope failed\n"), 
+                            -1);
+        }        
 
       *os << "return" << be_idt_nl;
 
