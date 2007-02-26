@@ -1,3 +1,15 @@
+Mon Feb 26 13:43:45 UTC 2007  Olli Savia  <ops@iki.fi>
+
+        * orbsvcs/orbsvcs/Notify/Method_Request_Dispatch.cpp:
+        * orbsvcs/tests/FT_App/FT_Creator.cpp:
+        * orbsvcs/tests/FT_App/TAO_Object_Group_Creator.cpp:
+        * tao/ORB.cpp:
+        * tao/ORB_Core.cpp:
+
+          Pass correct buffer length to ACE_OS::snprintf().
+          Thanks to Yves Alloyer <alloyer at ipanematech dot com> for
+          reporting this and providing initial patch. This fixes Bug #2797.
+
 Mon Feb 26 13:43:44 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
 
         * tests/DiffServ/server.cpp:
@@ -7,14 +19,14 @@ Mon Feb 26 13:43:44 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
 Sun Feb 25 21:56:31 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
 
         * tests/DiffServ/server.cpp:
-        
+
           Removed ACE_THROW_SPEC in the function definitions and
           declarations. Helps fix the fuzz build errors.
 
 Sun Feb 25 17:28:52 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
 
         * tests/DiffServ/run_test.pl:
-        
+
           Added a regression test script for the DiffServ policy test.
 
 Sun Feb 25 17:09:10 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
@@ -25,13 +37,13 @@ Sun Feb 25 17:09:10 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
         * tests/DiffServ/test.idl:
         * tests/DiffServ/server.cpp:
         * tests/DiffServ/README:
-        
+
           Added a new test for the DiffServ policy.
 
 Sat Feb 24 19:34:08 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
 
         * MPC/config/diffservpolicy.mpb:
-        
+
           Added a MPC project file for the DiffServ policy.
 
 Sat Feb 24 06:56:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>

@@ -364,11 +364,10 @@ CORBA::Object_ptr TAO::Object_Group_Creator::create_group (
 
           char replica_ior_filename[200]; // "${role}_$ (location)_${factory_id}.ior"
 
-          ACE_OS::snprintf (replica_ior_filename, sizeof (replica_ior_filename)-1, "%s_%s_%lu.ior",
+          ACE_OS::snprintf (replica_ior_filename, sizeof (replica_ior_filename), "%s_%s_%lu.ior",
             role,
             loc_name,
             static_cast<unsigned long> (ulong_id));
-          replica_ior_filename[sizeof (replica_ior_filename)-1] = '\0';
 
           ACE_ERROR ( (LM_INFO,
             "%T %n (%P|%t) Object_Group_Creator: Writing ior for created object to %s\n",
