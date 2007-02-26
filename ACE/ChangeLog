@@ -1,3 +1,20 @@
+Mon Feb 26 19:06:36 UTC 2007  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * ace/CDR_Stream.cpp (grow_and_adjust, clone_nocopy):
+
+          For large sizes the message block constructor may fail to
+          allocate and/or initialize the necessary ACE_Data_Block
+          instances. The failure to initialize can go unnoticed and may
+          cause an unlimited number of recursive invocations of
+          grow_and_adjust. The change adds a test for the invariant of the
+          newly allocated ACE_Message_Block instance.
+
+        * ace/Message_Block.cpp (clone_nocopy):
+
+          When memory is scarce the allocation of ACE_Data_Block may
+          succeed while the initialization can fail.  Adding a test,
+          before the message block is declared good.
+
 Mon Feb 26 17:17:08 UTC 2007  Adam Mitz  <mitza@ociweb.com>
 
         * bin/PerlACE/Run_Test.pm:
