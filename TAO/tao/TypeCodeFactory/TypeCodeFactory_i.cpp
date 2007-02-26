@@ -143,7 +143,7 @@ TAO_TypeCodeFactory_i::create_union_tc (
     CORBA::TypeCode_ptr discriminator_type,
     const CORBA::UnionMemberSeq &members)
 {
-  CORBA::TypeCode_ptr tc = CORBA::TypeCode::_nil ();
+  CORBA::TypeCode_ptr tc = CORBA::TypeCode_ptr ();
 
   if (name == 0 || !this->valid_name (name))
     {
@@ -362,6 +362,10 @@ TAO_TypeCodeFactory_i::create_union_tc (
                   {
                     TAO::Unknown_IDL_Type * const unk =
                       dynamic_cast<TAO::Unknown_IDL_Type *> (impl);
+
+                    if (!unk)
+                      ACE_THROW_RETURN (CORBA::INTERNAL (),
+                                        CORBA::TypeCode::_nil ());
 
                     // We don't want unk's rd_ptr to move, in case we
                     // are shared by another Any, so we use this to
@@ -584,7 +588,11 @@ TAO_TypeCodeFactory_i::create_union_tc (
       recursive_typecode_type * const rtc =
         dynamic_cast<recursive_typecode_type *> (recursive_tc.in ());
 
-      ACE_ASSERT (rtc);
+      if (!rtc)
+        {
+          ACE_THROW_RETURN (CORBA::INTERNAL (),
+                            tc);
+        }
 
       rtc->union_parameters (name,
                              duped_disc_type,
@@ -613,7 +621,7 @@ TAO_TypeCodeFactory_i::create_enum_tc (
     const char *name,
     const CORBA::EnumMemberSeq &members)
 {
-  CORBA::TypeCode_ptr tc = CORBA::TypeCode::_nil ();
+  CORBA::TypeCode_ptr tc = CORBA::TypeCode_ptr ();
 
   if (name == 0 || !this->valid_name (name))
     {
@@ -787,7 +795,7 @@ TAO_TypeCodeFactory_i::create_native_tc (
 CORBA::TypeCode_ptr
 TAO_TypeCodeFactory_i::create_recursive_tc (const char *id)
 {
-  CORBA::TypeCode_ptr tc = CORBA::TypeCode::_nil ();
+  CORBA::TypeCode_ptr tc = CORBA::TypeCode_ptr ();
 
   if (id == 0 || !this->valid_id (id))
     {
@@ -992,6 +1000,9 @@ TAO_TypeCodeFactory_i::compute_default_label (
                   TAO::Unknown_IDL_Type *unk =
                     dynamic_cast<TAO::Unknown_IDL_Type *> (impl);
 
+                  if (!unk)
+                    throw CORBA::INTERNAL ();
+
                   // We don't want unk's rd_ptr to move, in case
                   // we are shared by another Any, so we use this
                   // to copy the state, not the buffer.
@@ -1172,7 +1183,7 @@ TAO_TypeCodeFactory_i::sequence_array_tc_common (
 
   )
 {
-  CORBA::TypeCode_ptr tc = CORBA::TypeCode::_nil ();
+  CORBA::TypeCode_ptr tc = CORBA::TypeCode_ptr ();
 
   CORBA::Boolean const valid_element =
     this->valid_content_type (element_type
@@ -1204,7 +1215,7 @@ TAO_TypeCodeFactory_i::struct_except_tc_common (
 
   )
 {
-  CORBA::TypeCode_ptr tc = CORBA::TypeCode::_nil ();
+  CORBA::TypeCode_ptr tc = CORBA::TypeCode_ptr ();
 
   if (name == 0 || !this->valid_name (name))
     {
@@ -1284,7 +1295,11 @@ TAO_TypeCodeFactory_i::struct_except_tc_common (
       recursive_typecode_type * const rtc =
         dynamic_cast<recursive_typecode_type *> (recursive_tc.in ());
 
-      ACE_ASSERT (rtc);
+      if (!rtc)
+        {
+          ACE_THROW_RETURN (CORBA::INTERNAL (),
+                            tc);
+        }
 
       rtc->struct_parameters (name, fields, len);
 
@@ -1310,7 +1325,7 @@ TAO_TypeCodeFactory_i::alias_value_box_tc_common (
     CORBA::TCKind kind
   )
 {
-  CORBA::TypeCode_ptr tc = CORBA::TypeCode::_nil ();
+  CORBA::TypeCode_ptr tc = CORBA::TypeCode_ptr ();
 
   if (name == 0 || !this->valid_name (name))
     {
@@ -1354,7 +1369,7 @@ TAO_TypeCodeFactory_i::value_event_tc_common (
 
   )
 {
-  CORBA::TypeCode_ptr tc = CORBA::TypeCode::_nil ();
+  CORBA::TypeCode_ptr tc = CORBA::TypeCode_ptr ();
 
   if (name == 0 || !this->valid_name (name))
     {
@@ -1438,7 +1453,11 @@ TAO_TypeCodeFactory_i::value_event_tc_common (
       recursive_typecode_type * const rtc =
         dynamic_cast<recursive_typecode_type *> (recursive_tc.in ());
 
-      ACE_ASSERT (rtc);
+      if (!rtc)
+        {
+          ACE_THROW_RETURN (CORBA::INTERNAL (),
+                            tc);
+        }
 
       rtc->valuetype_parameters (name,
                                  type_modifier,
@@ -1662,6 +1681,10 @@ TAO_TypeCodeFactory_i::unique_label_values (
                   TAO::Unknown_IDL_Type *unk =
                     dynamic_cast<TAO::Unknown_IDL_Type *> (impl);
 
+                  if (!unk)
+                    ACE_THROW_RETURN (CORBA::INTERNAL (),
+                                      false);
+
                   // We don't want unk's rd_ptr to move, in case
                   // we are shared by another Any, so we use this
                   // to copy the state, not the buffer.
@@ -1768,7 +1791,11 @@ TAO_TypeCodeFactory_i::check_recursion (CORBA::TCKind kind,
                             TAO::TypeCodeFactory::Recursive_TypeCode *> (
                               member_tc.in ());
 
-                        ACE_ASSERT (rtc);
+                        if (!rtc)
+                          {
+                            ACE_THROW_RETURN (CORBA::INTERNAL (),
+                                              false);
+                          }
 
                         if (CORBA::is_nil (recursive_tc))
                           {
@@ -1837,7 +1864,11 @@ TAO_TypeCodeFactory_i::check_recursion (CORBA::TCKind kind,
                   dynamic_cast<TAO::TypeCodeFactory::Recursive_TypeCode *>
                   (content_tc.in ());
 
-                ACE_ASSERT (rtc);
+                if (!rtc)
+                  {
+                    ACE_THROW_RETURN (CORBA::INTERNAL (),
+                                      false);
+                  }
 
                 if (CORBA::is_nil (recursive_tc))
                   {
@@ -1873,7 +1904,7 @@ TAO_TypeCodeFactory_i::check_recursion (CORBA::TCKind kind,
 CORBA::TypeCode_ptr
 TAO_TypeCodeFactory_i::make_recursive_tc (CORBA::TCKind kind, char const * id)
 {
-  CORBA::TypeCode_ptr tc = CORBA::TypeCode::_nil ();
+  CORBA::TypeCode_ptr tc = CORBA::TypeCode_ptr ();
 
   switch (kind)
     {

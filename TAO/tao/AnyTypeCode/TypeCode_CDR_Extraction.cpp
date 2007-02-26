@@ -84,7 +84,7 @@ namespace
 
   // ---------------------------------------------------------
 
-  CORBA::ULong const TYPECODE_INDIRECTION = 0xffffffff;
+  CORBA::ULong const TYPECODE_INDIRECTION = 0xffffffffU;
 
   // ---------------------------------------------------------
 
@@ -120,8 +120,8 @@ namespace
 
         if (ACE_OS::strcmp (info.id, id) == 0)
           {
-            // We have a mathing id, so store the typecode in the out array
-            // and then compare the others.
+            // We have a matching id, so store the TypeCode in the out
+            // array and then compare the others.
             size_t const old_size = tcs.size ();
             if (tcs.size (old_size + 1) == -1)  // Incremental growth -- *sigh*
               return false;
@@ -435,7 +435,8 @@ TAO::TypeCodeFactory::tc_struct_factory (CORBA::TCKind kind,
           recursive_typecode_type * const rtc =
             dynamic_cast<recursive_typecode_type *> (info.type);
 
-          ACE_ASSERT (rtc);
+          if (!rtc)
+            return false;  // Should never occur.
 
           rtc->struct_parameters (name.in (),
                                   fields,
@@ -675,7 +676,7 @@ TAO::TypeCodeFactory::tc_union_factory (CORBA::TCKind /* kind */,
                                case_array_type,
                                TAO::True_RefCount_Policy> typecode_type;
 
-  // Check if we have recursive members, this could be multiple
+  // Check if we have recursive members.  There could be multiple.
   TAO::TypeCodeFactory::TC_Info_List recursive_tc;
   if (find_recursive_tc (id.in (), recursive_tc, infos))
     {
@@ -695,7 +696,8 @@ TAO::TypeCodeFactory::tc_union_factory (CORBA::TCKind /* kind */,
           recursive_typecode_type * const rtc =
             dynamic_cast<recursive_typecode_type *> (info.type);
 
-          ACE_ASSERT (rtc);
+          if (!rtc)
+            return false;  // Should never occur.
 
           rtc->union_parameters (name.in (),
                                  discriminant_type,
@@ -1050,7 +1052,8 @@ TAO::TypeCodeFactory::tc_value_factory (CORBA::TCKind kind,
           recursive_typecode_type * const rtc =
             dynamic_cast<recursive_typecode_type *> (info.type);
 
-          ACE_ASSERT (rtc);
+          if (!rtc)
+            return false;  // Should never occur.
 
           rtc->valuetype_parameters (name.in (),
                                      type_modifier,

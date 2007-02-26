@@ -94,7 +94,7 @@ TAO_Table_Adapter::check_close (int)
 int
 TAO_Table_Adapter::priority (void) const
 {
-  return 16; // @@
+  return static_cast<int> (TAO_DEFAULT_ADAPTER_REGISTRY_SIZE);
 }
 
 int

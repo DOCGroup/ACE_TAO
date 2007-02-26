@@ -36,7 +36,7 @@ TAO_DynamicImplementation::_this (void)
   TAO_Stub *stub = this->_create_stub ();
 
   // Create a object.
-  CORBA::Object_ptr retval = CORBA::Object::_nil ();
+  CORBA::Object_ptr retval = CORBA::Object_ptr ();
   ACE_NEW_RETURN (retval,
                   CORBA::Object (stub,
                                  1,

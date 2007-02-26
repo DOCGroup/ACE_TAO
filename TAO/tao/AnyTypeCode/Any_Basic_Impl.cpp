@@ -101,7 +101,7 @@ namespace TAO
     try
       {
         CORBA::TypeCode_ptr any_tc = any._tao_get_typecode ();
-        CORBA::Boolean _tao_equiv =
+        CORBA::Boolean const _tao_equiv =
           any_tc->equivalent (tc);
 
         if (!_tao_equiv)
@@ -109,11 +109,11 @@ namespace TAO
             return false;
           }
 
-        TAO::Any_Impl *impl = any.impl ();
+        TAO::Any_Impl * const impl = any.impl ();
 
-        if (!impl->encoded ())
+        if (impl && !impl->encoded ())
           {
-            TAO::Any_Basic_Impl *narrow_impl =
+            TAO::Any_Basic_Impl * const narrow_impl =
               dynamic_cast<TAO::Any_Basic_Impl *> (impl);
 
             if (narrow_impl == 0)
@@ -131,8 +131,11 @@ namespace TAO
         auto_ptr<TAO::Any_Basic_Impl> replacement_safety (replacement);
 
         // We know this will work since the unencoded case is covered above.
-        TAO::Unknown_IDL_Type *unk =
+        TAO::Unknown_IDL_Type * const unk =
           dynamic_cast<TAO::Unknown_IDL_Type *> (impl);
+
+        if (!unk)
+          return false;
 
         // Get the kind of the type where we are extracting in ie. the
         // aliased  type if there are any. Passing the aliased kind
@@ -170,7 +173,7 @@ namespace TAO
   CORBA::Boolean
   Any_Basic_Impl::marshal_value (TAO_OutputCDR &cdr)
   {
-    CORBA::TCKind tckind = static_cast<CORBA::TCKind> (this->kind_);
+    CORBA::TCKind const tckind = static_cast<CORBA::TCKind> (this->kind_);
 
     switch (tckind)
     {
@@ -203,7 +206,7 @@ namespace TAO
       case CORBA::tk_wchar:
         return cdr << CORBA::Any::from_wchar (this->u_.wc);
       default:
-        return 0;
+        return false;
     }
   }
 

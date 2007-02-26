@@ -2,6 +2,7 @@
 
 #include "tao/PortableServer/ServantRetentionStrategyFactoryImpl.h"
 #include "tao/PortableServer/ServantRetentionStrategy.h"
+#include "tao/debug.h"
 #include "ace/Dynamic_Service.h"
 #include "ace/Log_Msg.h"
 
@@ -40,9 +41,14 @@ namespace TAO
         ACE_Dynamic_Service<ServantRetentionStrategyFactory>::instance (strategy_factory_name);
 
       if (strategy_factory == 0)
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("(%P|%t) ERROR, Unable to get %s\n"),
-                    strategy_factory_name));
+        {
+          if (TAO_debug_level > 1)
+            ACE_ERROR ((LM_ERROR,
+                        ACE_TEXT ("(%P|%t) ERROR, Unable to get %s\n"),
+                        strategy_factory_name));
+
+          return 0;
+        }
 
       return strategy_factory->create (value);
     }

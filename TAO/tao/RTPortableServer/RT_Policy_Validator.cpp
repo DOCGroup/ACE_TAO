@@ -537,11 +537,17 @@ TAO_POA_RT_Policy_Validator::extract_thread_pool (TAO_ORB_Core &orb_core,
 
   RTCORBA::RTORB_var rt_orb = RTCORBA::RTORB::_narrow (object.in ());
 
-  TAO_RT_ORB *tao_rt_orb = dynamic_cast <TAO_RT_ORB *> (rt_orb.in ());
+  TAO_RT_ORB * const tao_rt_orb =
+    dynamic_cast <TAO_RT_ORB *> (rt_orb.in ());
 
-  TAO_Thread_Pool_Manager &tp_manager = tao_rt_orb->tp_manager ();
+  if (!tao_rt_orb)
+    ACE_THROW_RETURN (CORBA::INTERNAL (),
+                      0);
 
-  TAO_Thread_Pool *thread_pool = tp_manager.get_threadpool (thread_pool_id);
+  TAO_Thread_Pool_Manager & tp_manager = tao_rt_orb->tp_manager ();
+
+  TAO_Thread_Pool * const thread_pool =
+    tp_manager.get_threadpool (thread_pool_id);
 
   if (thread_pool == 0)
     throw PortableServer::POA::InvalidPolicy ();
