@@ -254,8 +254,8 @@ oneway          return IDL_ONEWAY;
 
 (\"([^\\\"]*|\\[ntvbrfax\\\?\'\"]|\\[0-7]{1,3})*\"[ \t]*)+ {
                   /* Skip the quotes */
-                  char *tmp = ace_yytext;
-                  for(int i = ACE_OS::strlen(tmp) - 1; i >= 0; --i) {
+                  char * const tmp = ace_yytext;
+                  for(size_t i = ACE_OS::strlen (tmp); i-- != 0; ) {
                     if (isspace(tmp[i])) {
                       tmp[i] = '\0';
                     }
@@ -272,7 +272,7 @@ oneway          return IDL_ONEWAY;
 (L\"([^\\\"]*|\\[ntvbrfax\\\?\'\"]|\\[0-7]{1,3}|\\u([0-9a-fA-F]{1,4}))*\"[ \t]*)+ {
                   /* Skip the bookends */
                   char *tmp = ACE_OS::strdup (ace_yytext);
-                  for(int i = ACE_OS::strlen(tmp) - 1; i >= 0; --i) {
+                  for(size_t i = ACE_OS::strlen (tmp); i-- != 0; ) {
                     if (isspace(tmp[i])) {
                       tmp[i] = '\0';
                     }
@@ -348,15 +348,16 @@ L"'"\\u([0-9a-fA-F]{1,4})"'" {
                 }
 "/*"            {
                   for(;;) {
-                    char c = yyinput();
+                    char const c = yyinput();
                     if (c == '*') {
-                      char next = yyinput();
+                      char const next = yyinput();
                       if (next == '/')
                         break;
                       else
                         yyunput(c, NULL);
-                      if (c == '\n')
-                        idl_global->set_lineno(idl_global->lineno() + 1);
+                    }
+                    else if (c == '\n') {
+                      idl_global->set_lineno(idl_global->lineno() + 1);
                     }
                   }
                 }
@@ -1086,7 +1087,7 @@ idl_valid_version (char *s)
         }
     }
 
-  int len = minor - s;
+  ptrdiff_t const len = minor - s;
 
   for (i = 0; i < len; ++i)
     {
@@ -1109,22 +1110,22 @@ idl_valid_version (char *s)
 static AST_Decl *
 idl_find_node (char *s)
 {
-  UTL_ScopedName *node = idl_global->string_to_scoped_name (s);
-  AST_Decl *d = 0;
+  UTL_ScopedName * node = idl_global->string_to_scoped_name (s);
+  AST_Decl * d = 0;
 
   if (node != 0)
     {
       d = idl_global->scopes ().top_non_null ()->lookup_by_name (node,
                                                                  true);
+
+      if (d == 0)
+        {
+          idl_global->err ()->lookup_error (node);
+        }
+
+      node->destroy ();
+      delete node;
     }
 
-  if (d == 0)
-    {
-      idl_global->err ()->lookup_error (node);
-    }
-
-  node->destroy ();
-  delete node;
-  node = 0;
   return d;
 }
