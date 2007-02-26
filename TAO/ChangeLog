@@ -19,7 +19,7 @@ Mon Feb 26 14:44:07 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
           Tue Nov 28 19:32:46 UTC 2006.  While it fixed an issues with the
           Sun preprocessor (e.g., negative numbers coming out like "- 9"),
           it causes problems with normal subtraction.  Thanks to Jules
-          Colding <olding at omesc dot com> for reporting this.  This fixes
+          Colding <colding at omesc dot com> for reporting this.  This fixes
           bugzilla bug #2821.
 
 Mon Feb 26 13:57:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
