@@ -196,7 +196,7 @@ ACE_High_Res_Timer::global_scale_factor (void)
      defined (ACE_HAS_PENTIUM) || defined (ACE_HAS_ALPHA_TIMER)) && \
     !defined (ACE_HAS_HI_RES_TIMER) && \
     ((defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) || \
-     defined (ghs) || defined (__GNUG__) || defined (__KCC) || \
+     defined (ghs) || defined (__GNUG__) || \
      defined (__INTEL_COMPILER))
   // Check if the global scale factor needs to be set, and do if so.
   if (ACE_High_Res_Timer::global_scale_factor_status_ == 0)
