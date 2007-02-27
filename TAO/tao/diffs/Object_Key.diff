@@ -6,6 +6,7 @@
 
 +#include "ace/ACE.h"
 +#include "ace/Numeric_Limits.h"
++#include "ace/Truncate.h"
 +#include "ace/OS_NS_string.h"
 +#include "ace/os_include/os_ctype.h"
 +
@@ -88,10 +89,7 @@
 +  // sequence index type (CORBA::ULong).  This is mostly an issue for
 +  // 64-bit MS Windows builds.
 +  CORBA::ULong const len =
-+    (sizeof (str_len) > sizeof (CORBA::ULong)  // both unsigned
-+     && str_len > ACE_Numeric_Limits<CORBA::ULong>::max ()
-+     ? ACE_Numeric_Limits<CORBA::ULong>::max ()
-+     : static_cast<CORBA::ULong> (str_len));
++    ACE_Utils::truncate_cast<CORBA::ULong> (str_len);
 +
 +  char const * const eos = str + len;
 +  char const *       cp  = str;
