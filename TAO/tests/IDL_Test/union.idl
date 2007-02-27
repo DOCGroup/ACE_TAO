@@ -71,7 +71,7 @@ union foo switch (short)
   default: long   foo_iface_member;
   case  0: long   foo_iface_member2;
 };
-#endif /* sun */
+#endif /* !__SUNPRO_CC || __SUNPRO_CC > 0x580 */
 
 // Make sure that CORBA_Any::to_* is used everywhere.
 module UnionDiscTest
