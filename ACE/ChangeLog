@@ -1,3 +1,16 @@
+Tue Feb 27 21:18:07 UTC 2007  Ossama Othman  <ossama_othman at symantec dot com>
+
+        * tests/Integer_Truncate_Test.cpp:
+        * tests/CDR_File_Test.cpp:
+
+          s/ACE_Utils::Truncate/ACE_Utils::truncate_cast/g.  The former is
+          deprecated.
+
+        * tests/High_Res_Timer_Test.cpp:
+
+          Improved variable types to make use of
+          ACE_Utils::truncate_cast<> unnecessary.
+
 Tue Feb 27 18:55:12 UTC 2007  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * ace/CDR_Stream.cpp:
