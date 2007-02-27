@@ -72,7 +72,7 @@ void null_test(char const * test_name)
 
   TEST_EQUAL(0, 0, "Test framework failure");
   TEST_NOT_EQUAL(1, 0, "Test framework failure");
-  TEST_ASSERT(true, ACE_TEXT("True is still true"));
+  TEST_ASSERT(true, "True is still true");
 }
 
 class Event_Handler : public ACE_Event_Handler
