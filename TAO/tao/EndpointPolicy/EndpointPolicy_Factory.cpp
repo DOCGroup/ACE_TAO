@@ -56,7 +56,7 @@ TAO_EndpointPolicy_Factory::create_policy (
 
           TAO_Endpoint_Value_Impl const * const evi =
             dynamic_cast <TAO_Endpoint_Value_Impl const *> (
-              (*endpoint_list)[idx].in ());
+              (*endpoint_list)[idx]);
 
           if (!evi)
             continue;
