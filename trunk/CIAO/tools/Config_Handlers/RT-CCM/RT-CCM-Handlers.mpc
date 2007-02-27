@@ -6,7 +6,7 @@ project (RT_CCM_XML_Generation) : xscdefaults {
    xscflags += --cxx-banner-file $(CIAO_ROOT)/docs/schema/xsc-banner.cpp
    xscflags += --cxx-header-banner-file $(CIAO_ROOT)/docs/schema/xsc-banner.h
    xscflags += --cxx-export-symbol RT_CCM_Handlers_Export
-   xscflags += --cxx-namespace-regex "%.*vanderbilt.*%CIAO/Config_Handlers%"
+   xscflags += --cxx-namespace-regex  <%quote%>%.*vanderbilt.*%CIAO/Config_Handlers%<%quote%>
    xscflags += --cxx-export-header RT_CCM_Handlers_Export.h
    xscflags += --search-path "$(CIAO_ROOT)/docs/schema"
    

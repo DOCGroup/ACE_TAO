@@ -6,7 +6,7 @@ project (CIAO_Events_XML_Generation) : xscdefaults {
    xscflags += --cxx-banner-file $(CIAO_ROOT)/docs/schema/xsc-banner.cpp
    xscflags += --cxx-header-banner-file $(CIAO_ROOT)/docs/schema/xsc-banner.h
    xscflags += --cxx-export-symbol CIAO_Events_Handlers_Export
-   xscflags += --cxx-namespace-regex "%.*vanderbilt.*%CIAO/Config_Handlers%"
+   xscflags += --cxx-namespace-regex  <%quote%>%.*vanderbilt.*%CIAO/Config_Handlers%<%quote%>
    xscflags += --cxx-export-header CIAO_Events_Handlers_Export.h
    xscflags += --search-path "$(CIAO_ROOT)/docs/schema"
    
