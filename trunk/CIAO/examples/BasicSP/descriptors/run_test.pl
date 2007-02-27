@@ -92,9 +92,9 @@ sub run_node_daemons {
       $port = $ports[$i];
 
       $iiop = "iiop://localhost:$port";
-      $node_app = "$DAnCE/NodeApplication/NodeApplication";
+      $node_app = "$CIAO_ROOT/bin/NodeApplication";
 
-      $d_cmd = "$DAnCE/NodeManager/NodeManager";
+      $d_cmd = "$CIAO_ROOT/bin/NodeManager";
       $d_param = "-ORBEndpoint $iiop -s $node_app -o $iorfile -d 30";
 
       $Daemons[$i] = new PerlACE::Process ($d_cmd, $d_param);
@@ -130,7 +130,7 @@ $daemons_running = 1;
 
 # Invoke execution manager.
 print "Invoking execution manager\n";
-$EM = new PerlACE::Process ("$DAnCE/ExecutionManager/Execution_Manager",
+$EM = new PerlACE::Process ("$CIAO_ROOT/bin/Execution_Manager",
                             "-o EM.ior -i $dat_file");
 $EM->Spawn ();
 
@@ -149,7 +149,7 @@ sleep (10);
 # Invoke executor - start the application -.
 print "Invoking executor - start the application -\n";
 $E =
-  new PerlACE::Process ("$DAnCE/Plan_Launcher/plan_launcher",
+  new PerlACE::Process ("$CIAO_ROOT/bin/plan_launcher",
                         "-p flattened_deploymentplan.cdp -k file://EM.ior");
 
 $E->SpawnWaitKill (60);
@@ -168,7 +168,7 @@ if ($result != 0) {
 # Invoke executor - stop the application -.
 print "Invoking executor - stop the application -\n";
 $E =
-  new PerlACE::Process ("$DAnCE/Plan_Launcher/plan_launcher",
+  new PerlACE::Process ("$CIAO_ROOT/bin/plan_launcher",
                         "-p flattern_deploymentplan.cdp -k file://EM.ior");
 $E->SpawnWaitKill (3000);
 
