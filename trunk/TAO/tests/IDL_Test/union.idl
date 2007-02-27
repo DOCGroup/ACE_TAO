@@ -62,7 +62,7 @@ module Necessary
 // At the moment, the SunCC preprocessor separates the negative
 // sign from the number.  This causes problems for the scanner/lexer
 // used by tao_idl.
-#if !defined (sun)
+#if !defined (__SUNPRO_CC) || (__SUNPRO_CC > 0x580)
 union foo switch (short)
 {
   case -3:

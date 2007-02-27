@@ -1,3 +1,10 @@
+Tue Feb 27 13:21:05 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tests/IDL_Test/union.idl:
+
+          Changed to only exclude the union with negative cases from SunCC
+          version 5.8 or below.
+
 Tue Feb 27 12:41:52 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * examples/TypeCode_Creation/main.cpp:
