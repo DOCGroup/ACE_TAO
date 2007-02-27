@@ -1,3 +1,9 @@
+Tue Feb 27 03:29:42 UTC 2007  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * tools/Config_Handlers/DynAny_Handler.mpc
+        
+          Inherit from config_handlers_base to disable symbol visibility.
+
 Tue Feb 27 03:10:14 UTC 2007  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * tools/Config_Handlers/CIAO_Events/CIAO_Events_Handlers.mpc
