@@ -57,8 +57,7 @@ TAO_MCAST_Parser::parse_string (const char *ior, CORBA::ORB_ptr orb)
                                 this->mcast_ttl_,
                                 this->mcast_nic_.in (),
                                 orb,
-                                timeout
-                                ACE_ENV_ARG_PARAMETER);
+                                timeout);
 }
 
 CORBA::Object_ptr
