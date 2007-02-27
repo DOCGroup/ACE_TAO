@@ -27,9 +27,10 @@
 #include "ace/If_Then_Else.h"
 #include "ace/Numeric_Limits.h"
 
-#if defined (__BORLANDC__) && __BORLANDC__ <= 0x590
+#if defined (ACE_LACKS_LONGLONG_T) \
+    || defined (__BORLANDC__) && __BORLANDC__ <= 0x590
 # include "ace/Basic_Types.h"
-#endif  /* __BORLANDC__ <= 0x590 */
+#endif  /* ACE_LACKS_LONGLONG_T || __BORLANDC__ <= 0x590 */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -52,6 +53,8 @@ namespace ACE_Utils
   __extension__
 # endif  /* __GNUC__ */
   template<> struct Sign_Check<unsigned long long> { ACE_STATIC_CONSTANT (bool, is_signed = 0); };
+#else
+  template<> struct Sign_Check<ACE_U_LongLong> { ACE_STATIC_CONSTANT (bool, is_signed = 0); };
 #endif  /* !ACE_LACKS_LONGLONG_T */
 
   // Specialize the signed cases.
@@ -121,6 +124,14 @@ namespace ACE_Utils
   struct To_Unsigned<unsigned long long>
   {
     typedef unsigned long long unsigned_type;
+
+    unsigned_type operator() (unsigned_type x) { return x; }
+  };
+#else
+  template<>
+  struct To_Unsigned<ACE_U_LongLong>
+  {
+    typedef ACE_U_LongLong unsigned_type;
 
     unsigned_type operator() (unsigned_type x) { return x; }
   };
@@ -430,6 +441,24 @@ namespace ACE_Utils
       return val;
     }
   };
+
+
+#if defined (ACE_LACKS_LONGLONG_T) || defined (ACE_LACKS_UNSIGNEDLONGLONG_T)
+  // Partial specialization for the case where we're casting from
+  // ACE_U_LongLong to a smaller integer.
+  template<typename TO>
+  struct Truncator<ACE_U_LongLong, TO>
+  {
+    TO operator() (ACE_U_LongLong const & val)
+    {
+      // ACE_U_LongLong returns a ACE_UINT32.
+      return
+        Truncator<ACE_UINT32, TO> (
+          val) > ACE_Numeric_Limits<ACE_UIN32>::max ()
+          ? val.lo ());
+    }
+  };
+#endif /* ACE_LACKS_LONGLONG_T || ACE_LACKS_UNSIGNEDLONGLONG_T */
 
   // -----------------------------------------------------
   /**
@@ -908,7 +937,22 @@ namespace ACE_Utils
     }
   };
 
+  // Partial specialization for the case where the types are the same,
+  // but the from type is const.  No truncation is necessary.
+  //
+  // This is only necessary to workaround a problem with the BCB6
+  // compiler.
+  template<typename T>
+  struct Truncator<T const, T>
+  {
+    T operator() (T val)
+    {
+      return val;
+    }
+  };
+
   // -------------------------------------
+
   template<typename TO, typename FROM>
   inline TO truncate_cast (FROM val)
   {
@@ -918,16 +962,6 @@ namespace ACE_Utils
   }
 
 #endif  /* !__BORLANDC__ || __BORLANDC__ > 0x590 */
-
-  /**
-   * @deprecated @c Truncate<> is left in place for backward
-   *             compatibility.  Use @c truncate_cast<> instead.
-   */
-  template<typename TO, typename FROM>
-  inline TO Truncate (FROM val)
-  {
-    return truncate_cast<TO, FROM> (val);
-  }
 
 } // namespace ACE_Utils
 
