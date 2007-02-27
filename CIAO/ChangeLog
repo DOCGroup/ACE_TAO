@@ -1,3 +1,27 @@
+Tue Feb 27 03:00:25 UTC 2007  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * docs/tutorials/Quoter/Simple/descriptors/runNodeDaemons.pl
+        * tests/Bug_2130_Regression/descriptors/run_test.pl
+        * DAnCE/TargetManager/descriptors/run_test_TargetManager.pl
+        * DAnCE/tests/scripts/BasicSP/basicNodeDaemon.pl
+        * DAnCE/tests/NodeApplicationTest/run_test_simple.pl
+        * DAnCE/tests/NodeApplicationTest/run_test_ex.pl
+        * DAnCE/tests/NodeApplicationTest/run_test.pl
+        * examples/Hello/descriptors/run_NodeDaemons.pl
+        * examples/Hello/descriptors/run_test_without_ns.pl
+        * examples/Hello/descriptors/run_test.pl
+        * examples/Hello/descriptors_events/run_NodeDaemons.pl
+        * examples/Hello/descriptors_events/run_NodeDaemons_svc_conf.pl
+        * examples/Hello/descriptors_events/run_NodeDaemons_with_ip.pl
+        * examples/Hello/descriptors_RTCCM/rt_run_test.pl
+        * examples/BasicSP/descriptors/run_test.pl
+        * examples/BasicSP/descriptors/basicNodeDaemon.pl
+        * examples/Display/descriptors/run_test_without_ns.pl
+        * examples/Display/descriptors/basicNodeDaemon.pl
+        * examples/Display/descriptors/run_NodeDaemons.pl
+        
+          Updated to reflect movement of binaries to CIAO_ROOT/bin.
+        
 Mon Feb 26 17:21:55 UTC 2007  Adam Mitz  <mitza@ociweb.com>
 
         * examples/Hello/descriptors_RTCCM/rt_run_test.pl:
