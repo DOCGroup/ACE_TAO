@@ -1,3 +1,11 @@
+Tue Feb 27 14:20:26 UTC 2007  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * ace/CDR_Stream.cpp:
+        * ace/Message_Block.cpp:
+
+          Reverting my patch from "Mon Feb 26 19:06:36 UTC 2007". It needs
+          more work.
+
 Tue Feb 27 13:57:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/High_Res_Timer.cpp:

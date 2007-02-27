@@ -360,23 +360,10 @@ ACE_Data_Block::ACE_Data_Block (size_t size,
   if (msg_data == 0)
     ACE_ALLOCATOR (this->base_,
                    (char *) this->allocator_strategy_->malloc (size));
+    // ACE_ALLOCATOR returns on alloc failure...
 
-  // ACE_ALLOCATOR returns on alloc failure but we cant throw ...
-  if (this->base_ == 0)
-    this->cur_size_ = this->max_size_ = 0;
-  else
-    {
-      
-#if defined (ACE_INITIALIZE_MEMORY_BEFORE_USE)
-      (void) ACE_OS::memset (this->base_,
-                             '\0',
-                             size);
-#endif /* ACE_INITIALIZE_MEMORY_BEFORE_USE */
-      
-      // The memory is legit, whether passed in or allocated, so set
-      // the size.
-      this->cur_size_ = this->max_size_ = size;
-    }
+  // The memory is legit, whether passed in or allocated, so set the size.
+  this->cur_size_ = this->max_size_ = size;
 }
 
 ACE_Message_Block::ACE_Message_Block (const char *data,
@@ -733,12 +720,10 @@ ACE_Message_Block::init_i (size_t size,
 
   // Reset the data_block_ pointer.
   this->data_block (db);
-
   // If the data alloc failed, the ACE_Data_Block ctor can't relay
   // that directly. Therefore, need to check it explicitly.
   if (db->size () < size)
     return -1;
-
   return 0;
 }
 
@@ -1134,16 +1119,6 @@ ACE_Data_Block::clone_nocopy (ACE_Message_Block::Message_Flags mask,
                                          this->data_block_allocator_),
                          0);
 
-  // Message block initialization may fail while the construction
-  // succeds.  Since as a matter of policy, ACE may throw no
-  // exceptions, we have to do a separate check like this.
-  if (nb != 0 && nb->size () != this->max_size_)
-    { 
-      this->data_block_allocator_->free (nb);
-      errno = ENOMEM;
-      return 0;
-    }
-  
 
   // Set new flags minus the mask...
   nb->clr_flags (mask | always_clear);
