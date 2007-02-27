@@ -38,7 +38,7 @@ ACEXML_FileCharStream::open (const ACEXML_Char *name)
   if (ACE_OS::stat (name, &statbuf) < 0)
     return -1;
 
-  this->size_ = ACE_Utils::Truncate<ACE_OFF_T> (statbuf.st_size);
+  this->size_ = ACE_Utils::truncate_cast<ACE_OFF_T> (statbuf.st_size);
   this->filename_ = ACE::strnew (name);
   return this->determine_encoding();
 }
