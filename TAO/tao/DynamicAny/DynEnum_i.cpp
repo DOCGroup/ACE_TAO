@@ -55,7 +55,7 @@ TAO_DynEnum_i::init (const CORBA::Any &any)
         dynamic_cast<TAO::Unknown_IDL_Type *> (impl);
 
       if (!unk)
-        ACE_THROW (CORBA::INTERNAL ());
+        throw CORBA::INTERNAL ();
 
       // We don't want unk's rd_ptr to move, in case we are shared by
       // another Any, so we use this to copy the state, not the buffer.
@@ -181,7 +181,7 @@ TAO_DynEnum_i::from_any (const CORBA::Any& any)
             dynamic_cast<TAO::Unknown_IDL_Type *> (impl);
 
           if (!unk)
-            ACE_THROW (CORBA::INTERNAL ());
+            throw CORBA::INTERNAL ();
 
           // We don't want unk's rd_ptr to move, in case we are shared by
           // another Any, so we use this to copy the state, not the buffer.
@@ -248,7 +248,7 @@ TAO_DynEnum_i::equal (DynamicAny::DynAny_ptr rhs)
         dynamic_cast<TAO::Unknown_IDL_Type *> (impl);
 
       if (!unk)
-        ACE_THROW (CORBA::INTERNAL ());
+        throw CORBA::INTERNAL ();
 
       // We don't want unk's rd_ptr to move, in case we are shared by
       // another Any, so we use this to copy the state, not the buffer.

@@ -541,8 +541,7 @@ TAO_POA_RT_Policy_Validator::extract_thread_pool (TAO_ORB_Core &orb_core,
     dynamic_cast <TAO_RT_ORB *> (rt_orb.in ());
 
   if (!tao_rt_orb)
-    ACE_THROW_RETURN (CORBA::INTERNAL (),
-                      0);
+    throw CORBA::INTERNAL ();
 
   TAO_Thread_Pool_Manager & tp_manager = tao_rt_orb->tp_manager ();
 
