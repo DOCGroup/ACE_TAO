@@ -65,19 +65,9 @@ int handle_test (ACE_DLL &dll)
 
 int basic_test (ACE_DLL &dll)
 {
-#if defined (__KCC)
-  /* With KCC, turning on close-on-destruction will cause problems
-     when libKCC tries to call dtors. */
-  int retval = dll.open (ACE_TEXT (OBJ_PREFIX)
-                         ACE_TEXT ("DLL_Test_Lib")
-                         ACE_TEXT (OBJ_SUFFIX),
-                         ACE_DEFAULT_SHLIB_MODE,
-                         0);
-#else
   int retval = dll.open (OBJ_PREFIX
                          ACE_TEXT ("DLL_Test_Lib")
                          OBJ_SUFFIX);
-#endif /* __KCC */
 
   if (retval != 0)
     {
