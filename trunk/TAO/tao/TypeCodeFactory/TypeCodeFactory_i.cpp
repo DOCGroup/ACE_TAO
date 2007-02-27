@@ -364,8 +364,7 @@ TAO_TypeCodeFactory_i::create_union_tc (
                       dynamic_cast<TAO::Unknown_IDL_Type *> (impl);
 
                     if (!unk)
-                      ACE_THROW_RETURN (CORBA::INTERNAL (),
-                                        CORBA::TypeCode::_nil ());
+                      throw CORBA::INTERNAL ();
 
                     // We don't want unk's rd_ptr to move, in case we
                     // are shared by another Any, so we use this to
@@ -590,8 +589,7 @@ TAO_TypeCodeFactory_i::create_union_tc (
 
       if (!rtc)
         {
-          ACE_THROW_RETURN (CORBA::INTERNAL (),
-                            tc);
+          throw CORBA::INTERNAL ();
         }
 
       rtc->union_parameters (name,
@@ -1297,8 +1295,7 @@ TAO_TypeCodeFactory_i::struct_except_tc_common (
 
       if (!rtc)
         {
-          ACE_THROW_RETURN (CORBA::INTERNAL (),
-                            tc);
+          throw CORBA::INTERNAL ();
         }
 
       rtc->struct_parameters (name, fields, len);
@@ -1455,8 +1452,7 @@ TAO_TypeCodeFactory_i::value_event_tc_common (
 
       if (!rtc)
         {
-          ACE_THROW_RETURN (CORBA::INTERNAL (),
-                            tc);
+          throw CORBA::INTERNAL ();
         }
 
       rtc->valuetype_parameters (name,
@@ -1682,8 +1678,7 @@ TAO_TypeCodeFactory_i::unique_label_values (
                     dynamic_cast<TAO::Unknown_IDL_Type *> (impl);
 
                   if (!unk)
-                    ACE_THROW_RETURN (CORBA::INTERNAL (),
-                                      false);
+                    throw CORBA::INTERNAL ();
 
                   // We don't want unk's rd_ptr to move, in case
                   // we are shared by another Any, so we use this
@@ -1793,8 +1788,7 @@ TAO_TypeCodeFactory_i::check_recursion (CORBA::TCKind kind,
 
                         if (!rtc)
                           {
-                            ACE_THROW_RETURN (CORBA::INTERNAL (),
-                                              false);
+                            throw CORBA::INTERNAL ();
                           }
 
                         if (CORBA::is_nil (recursive_tc))
@@ -1866,8 +1860,7 @@ TAO_TypeCodeFactory_i::check_recursion (CORBA::TCKind kind,
 
                 if (!rtc)
                   {
-                    ACE_THROW_RETURN (CORBA::INTERNAL (),
-                                      false);
+                    throw CORBA::INTERNAL ();
                   }
 
                 if (CORBA::is_nil (recursive_tc))
