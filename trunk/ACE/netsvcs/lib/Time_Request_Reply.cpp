@@ -99,7 +99,7 @@ ACE_Time_Value
 ACE_Time_Request::timeout (void) const
 {
   ACE_TRACE ("ACE_Time_Request::timeout");
-  time_t sec = ACE_Utils::Truncate<time_t> (this->transfer_.sec_timeout_);
+  time_t sec = ACE_Utils::truncate_cast<time_t> (this->transfer_.sec_timeout_);
   return ACE_Time_Value (sec, this->transfer_.usec_timeout_);
 }
 
@@ -165,7 +165,7 @@ ACE_Time_Request::decode (void)
   ACE_CDR::swap_8 ((const char *)&secs, (char *)&this->transfer_.time_);
 #endif
 
-  this->time_ = ACE_Utils::Truncate<time_t> (this->transfer_.time_);
+  this->time_ = ACE_Utils::truncate_cast<time_t> (this->transfer_.time_);
   return 0;
 }
 
