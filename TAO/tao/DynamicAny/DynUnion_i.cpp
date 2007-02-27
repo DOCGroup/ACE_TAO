@@ -163,7 +163,7 @@ TAO_DynUnion_i::set_from_any (const CORBA::Any & any)
         dynamic_cast<TAO::Unknown_IDL_Type *> (impl);
 
       if (!tmp)
-        ACE_THROW (CORBA::INTERNAL ());
+        throw CORBA::INTERNAL ();
 
       in = tmp->_tao_get_cdr ();
     }
@@ -705,7 +705,7 @@ TAO_DynUnion_i::to_any (void)
         dynamic_cast<TAO::Unknown_IDL_Type *> (disc_any_impl);
 
       if (!disc_unk)
-        ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
+        throw CORBA::INTERNAL ();
 
       disc_in_cdr = disc_unk->_tao_get_cdr ();
     }
@@ -740,7 +740,7 @@ TAO_DynUnion_i::to_any (void)
             dynamic_cast<TAO::Unknown_IDL_Type *> (member_any_impl);
 
           if (!member_unk)
-            ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
+            throw CORBA::INTERNAL ();
 
           member_in_cdr = member_unk->_tao_get_cdr ();
         }
@@ -1004,7 +1004,7 @@ TAO_DynUnion_i::label_match (const CORBA::Any &my_any,
               dynamic_cast<TAO::Unknown_IDL_Type *> (my_impl);
 
             if (!my_unk)
-              ACE_THROW_RETURN (CORBA::INTERNAL (), false);
+              throw CORBA::INTERNAL ();
 
             // We don't want unk's rd_ptr to move, in case we are shared by
             // another Any, so we use this to copy the state, not the buffer.
@@ -1027,7 +1027,7 @@ TAO_DynUnion_i::label_match (const CORBA::Any &my_any,
               dynamic_cast<TAO::Unknown_IDL_Type *> (other_impl);
 
             if (!other_unk)
-              ACE_THROW_RETURN (CORBA::INTERNAL (), false);
+              throw CORBA::INTERNAL ();
 
             // We don't want unk's rd_ptr to move, in case we are shared by
             // another Any, so we use this to copy the state, not the buffer.
