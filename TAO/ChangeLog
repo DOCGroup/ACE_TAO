@@ -1,3 +1,12 @@
+Mon Feb 27 06:32:42 UTC 2007  Ossama Othman  <ossama_othman at symantec dot com>
+
+        * tao/EndpointPolicy/EndpointPolicy_Factory.cpp (create_policy):
+
+          It seems the const TAO object reference sequence element
+          operator[] no longer returns a "_var" or managed type.  Drop the
+          newly added ".in()" accessor call.  Addresses g++ 4.1 build
+          errors.
+
 Mon Feb 26 23:27:03 UTC 2007  Ossama Othman  <ossama_othman at symantec dot com>
 
         * NEWS:
