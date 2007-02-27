@@ -1,4 +1,11 @@
-Mon Feb 27 06:32:42 UTC 2007  Ossama Othman  <ossama_othman at symantec dot com>
+Tue Feb 27 11:05:00 UTC 2007  Simon Massey  <sma@prismtech.com>
+
+        * orbsvcs/orbsvcs/Naming/Naming_Server.cpp:
+
+          Some compilers do not process the #if before the macro subsitution
+          adjacent string concatination.
+
+Tue Feb 27 06:32:42 UTC 2007  Ossama Othman  <ossama_othman at symantec dot com>
 
         * tao/EndpointPolicy/EndpointPolicy_Factory.cpp (create_policy):
 

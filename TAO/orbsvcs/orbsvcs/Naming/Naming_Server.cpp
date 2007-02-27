@@ -241,6 +241,13 @@ TAO_Naming_Server::parse_args (int argc,
         break;
       case '?':
       default:
+        const ACE_TCHAR *reqNonMinCorba=
+#if (TAO_HAS_MINIMUM_POA == 0)
+          ACE_TEXT ("  -u <storable_persistence_directory (not used with -f)> ")
+          ACE_TEXT ("  -r <redundant_persistence_directory> ");
+#else
+          ACE_TEXT ("");
+#endif /* TAO_HAS_MINIMUM_POA */
         ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("usage:  %s ")
                            ACE_TEXT ("-d ")
@@ -249,14 +256,10 @@ TAO_Naming_Server::parse_args (int argc,
                            ACE_TEXT ("-s <context_size> ")
                            ACE_TEXT ("-b <base_address> ")
                            ACE_TEXT ("-m <1=enable multicast, 0=disable multicast(default) ")
-                           ACE_TEXT ("-f <persistence_file_name> ")
-#if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT)
-                           ACE_TEXT ("-u <storable_persistence_directory (not used with -f)> ")
-                           ACE_TEXT ("-r <redundant_persistence_directory> ")
-#endif /* TAO_HAS_MINIMUM_POA */
+                           ACE_TEXT ("-f <persistence_file_name> %s")
                            ACE_TEXT ("-z <relative round trip timeout> ")
                            ACE_TEXT ("\n"),
-                           argv [0]),
+                           argv [0], reqNonMinCorba),
                           -1);
       }
 
