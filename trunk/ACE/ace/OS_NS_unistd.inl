@@ -142,7 +142,7 @@ ACE_OS::chdir (const char *path)
 ACE_INLINE int
 ACE_OS::chdir (const wchar_t *path)
 {
-#if defined (ACE_WIN32)
+#if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
   ACE_OSCALL_RETURN (::_wchdir (path), int, -1);
 #else /* ACE_WIN32 */
   return ACE_OS::chdir (ACE_Wide_To_Ascii (path).char_rep ());
@@ -355,7 +355,7 @@ ACE_OS::ftruncate (ACE_HANDLE handle, ACE_OFF_T offset)
 {
   ACE_OS_TRACE ("ACE_OS::ftruncate");
 #if defined (ACE_WIN32)
-#  if !defined (ACE_LACKS_SETFILEPOINTEREX)
+#  if !defined (ACE_LACKS_WIN32_SETFILEPOINTEREX)
   LARGE_INTEGER loff;
   loff.QuadPart = offset;
   if (::SetFilePointerEx (handle, loff, 0, FILE_BEGIN))
@@ -659,7 +659,7 @@ ACE_OS::llseek (ACE_HANDLE handle, ACE_LOFF_T offset, int whence)
   ACE_OSCALL_RETURN (::lseek64 (handle, offset, whence), ACE_LOFF_T, -1);
 #elif defined (ACE_HAS_LLSEEK)
 # if defined (ACE_WIN32)
-#  ifndef ACE_LACKS_SETFILEPOINTEREX
+#  ifndef ACE_LACKS_WIN32_SETFILEPOINTEREX
   LARGE_INTEGER distance, new_file_pointer;
 
   distance.QuadPart = offset;
@@ -683,7 +683,7 @@ ACE_OS::llseek (ACE_HANDLE handle, ACE_LOFF_T offset, int whence)
     return static_cast<ACE_LOFF_T> (-1);
   l_offset.HighPart = high_offset;
   return l_offset.QuadPart;
-#  endif  /* ACE_LACKS_SETFILEPOINTEREX */
+#  endif  /* ACE_LACKS_WIN32_SETFILEPOINTEREX */
 # else
     ACE_OSCALL_RETURN (::llseek (handle, offset, whence), ACE_LOFF_T, -1);
 # endif /* WIN32 */
@@ -1008,7 +1008,7 @@ ACE_OS::truncate (const ACE_TCHAR *filename,
                                     O_WRONLY,
                                     ACE_DEFAULT_FILE_PERMS);
 
-#  if !defined (ACE_LACKS_SETFILEPOINTEREX)
+#  if !defined (ACE_LACKS_WIN32_SETFILEPOINTEREX)
   LARGE_INTEGER loffset;
   loffset.QuadPart = offset;
 #else
@@ -1019,7 +1019,7 @@ ACE_OS::truncate (const ACE_TCHAR *filename,
   if (handle == ACE_INVALID_HANDLE)
     ACE_FAIL_RETURN (-1);
 
-#  if !defined (ACE_LACKS_SETFILEPOINTEREX)
+#  if !defined (ACE_LACKS_WIN32_SETFILEPOINTEREX)
   else if (::SetFilePointerEx (handle,
                                loffset,
                                0,
@@ -1030,7 +1030,7 @@ ACE_OS::truncate (const ACE_TCHAR *filename,
                              &high_offset,
                              FILE_BEGIN) != INVALID_SET_FILE_POINTER
            || GetLastError () == NO_ERROR)
-#  endif
+#  endif /* ACE_LACKS_WIN32_SETFILEPOINTEREX */
     {
       BOOL result = ::SetEndOfFile (handle);
       ::CloseHandle (handle);
