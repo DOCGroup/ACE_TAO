@@ -1,3 +1,14 @@
+Tue Feb 27 18:55:12 UTC 2007  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * ace/CDR_Stream.cpp:
+        * ace/Message_Block.cpp:
+        
+          The intent of the change is to better detect (and be able to
+          recover from) a situation when memory allocation fails in
+          constructing or initializing an ACE_Data_Block. It fixes a
+          problem with the change from "Mon Feb 26 19:06:36 UTC 2007"
+          which wasn't accounting for the new datablock size correctly.
+
 Tue Feb 27 19:33:13 UTC 2007  Ossama Othman  <ossama_othman at symantec dot com>
 
         * ace/Truncate.h:
