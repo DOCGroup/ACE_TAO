@@ -156,7 +156,7 @@ protected:
   /// @note extraction location is path/*archive_name*/
   /// @retval 1 on success
   /// @retval 0 on error
-  int remove_extracted_package (const char* package_path, const char* extraction_location);
+  int remove_extracted_package (const char* package_path);
 
   /// Function to extract the type of the component from
   /// the PackageConfiguration and update the interface map
@@ -174,6 +174,9 @@ protected:
 
   /// Function to dump the state of the RepositoryManager
   void dump (void);
+
+  /// Function to save the package info of the RepositoryManager
+  void save (void);
 
 private:
   /// Cached information about the installed PackageConfigurations

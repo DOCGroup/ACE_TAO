@@ -40,6 +40,7 @@
 
 #include "ace/Thread.h"           //for obtaining the ID of the current thread
 #include "ace/OS_NS_stdlib.h"     //for itoa ()
+#include "ace/Dirent.h"
 
 #include "URL_Parser.h"           //for parsing the URL
 #include "tao/HTTP_Client.h"      //the HTTP client class to downloading packages
@@ -157,36 +158,6 @@ CIAO_RepositoryManagerDaemon_i::~CIAO_RepositoryManagerDaemon_i (void)
 void CIAO_RepositoryManagerDaemon_i::shutdown ()
 
 {
-  // Save the names, UUIDs, & types info to the configuration files.
-  ACE_Configuration_Heap cfg;
-  cfg.open ();
-  ACE_Configuration_Section_Key root = cfg.root_section ();
-
-  ACE_Configuration_Section_Key NameSection;
-  cfg.open_section (root, RM_RECORD_NAME_SECTION, 1, NameSection);
-  for (PCMap_Iterator iter = this->names_.begin ();
-    iter != this->names_.end ();
-    ++iter)
-  {
-    PCEntry& element = *iter;
-    cfg.set_string_value (NameSection, element.ext_id_.c_str (), element.int_id_.c_str ());
-  }
-
-  ACE_Configuration_Section_Key UUIDSection;
-  cfg.open_section (root, RM_RECORD_UUID_SECTION, 1, UUIDSection);
-  for (PCMap_Iterator iter = this->uuids_.begin ();
-    iter != this->uuids_.end ();
-    ++iter)
-  {
-    PCEntry& element = *iter;
-    cfg.set_string_value (UUIDSection, element.ext_id_.c_str (), element.int_id_.c_str ());
-  }
-
-  ACE_Registry_ImpExp exporter (cfg);
-  ACE_OS::chdir (install_path.c_str ());
-  exporter.export_config (RM_RECORD_FILE);
-  ACE_OS::chdir (this->cwd_);
-
   // Release resource.
   this->names_.unbind_all ();
   this->uuids_.unbind_all ();
@@ -284,7 +255,7 @@ void CIAO_RepositoryManagerDaemon_i::installPackage (
   if (pc_name == "")
   {
     //clean the extracted files
-    remove_extracted_package (package_path.c_str (), path.c_str ());
+    remove_extracted_package (path.c_str ());
     //remove the package
     remove (package_path.c_str ());
 
@@ -301,7 +272,7 @@ void CIAO_RepositoryManagerDaemon_i::installPackage (
   if (this->uuids_.find (ACE_CString (pc->UUID), entry) == 0)
   {
     //clean the extracted files
-    remove_extracted_package (package_path.c_str (), path.c_str ());
+    remove_extracted_package (path.c_str ());
     //remove the package
     remove (package_path.c_str ());
 
@@ -316,7 +287,7 @@ void CIAO_RepositoryManagerDaemon_i::installPackage (
   if (!(pc->basePackage.length () > 0))
   {
     //clean the extracted files
-    remove_extracted_package (package_path.c_str (), path.c_str ());
+    remove_extracted_package (path.c_str ());
     //remove the package
     remove (package_path.c_str ());
 
@@ -330,7 +301,7 @@ void CIAO_RepositoryManagerDaemon_i::installPackage (
     ACE_DEBUG ((LM_ERROR, "[RM] problem updating the PackageConfiguration!\n"));
 
     //clean the extracted files
-    remove_extracted_package (package_path.c_str (), path.c_str ());
+    remove_extracted_package (path.c_str ());
     //remove the package
     remove (package_path.c_str ());
     throw Deployment::PackageError ();
@@ -350,7 +321,7 @@ void CIAO_RepositoryManagerDaemon_i::installPackage (
                  installationName));
 
     //clean the extracted files
-    remove_extracted_package (package_path.c_str (), path.c_str ());
+    remove_extracted_package (path.c_str ());
     //remove the package
     remove (package_path.c_str ());
     //remove the PackageConfiguration externalization
@@ -371,7 +342,7 @@ void CIAO_RepositoryManagerDaemon_i::installPackage (
      this->names_.unbind (installationName);
 
      //clean the extracted files
-     remove_extracted_package (package_path.c_str (), path.c_str ());
+     remove_extracted_package (path.c_str ());
      //remove the package
      remove (package_path.c_str ());
      //remove the PackageConfiguration externalization
@@ -386,6 +357,8 @@ void CIAO_RepositoryManagerDaemon_i::installPackage (
     ACE_ERROR ((LM_ERROR, "Failed to add the type\n"));
 
   this->dump ();
+
+  this->save ();
 
   ACE_DEBUG ((LM_INFO,
               "Installed PackageConfiguration \n\tname: %s \n\tuuid: %s\n",
@@ -483,7 +456,7 @@ void CIAO_RepositoryManagerDaemon_i::createPackage (
   {
     ACE_ERROR ((LM_ERROR, "[RM] problem updating the PackageConfiguration!\n"));
     //clean the extracted files
-    remove_extracted_package (package_path.c_str (), path.c_str ());
+    remove_extracted_package (path.c_str ());
     //remove the package
     remove (package_path.c_str ());
     throw Deployment::PackageError ();
@@ -502,7 +475,7 @@ void CIAO_RepositoryManagerDaemon_i::createPackage (
                  installationName));
 
     //clean the extracted files
-    remove_extracted_package (package_path.c_str (), path.c_str ());
+    remove_extracted_package (path.c_str ());
     //remove the package
     remove (package_path.c_str ());
     //remove the PackageConfiguration externalization
@@ -523,7 +496,7 @@ void CIAO_RepositoryManagerDaemon_i::createPackage (
      this->names_.unbind (installationName);
 
      //clean the extracted files
-     remove_extracted_package (package_path.c_str (), path.c_str ());
+     remove_extracted_package (path.c_str ());
      //remove the package
      remove (package_path.c_str ());
      //remove the PackageConfiguration externalization
@@ -539,6 +512,8 @@ void CIAO_RepositoryManagerDaemon_i::createPackage (
     ACE_ERROR ((LM_ERROR, "Failed to add the type\n"));
 
   this->dump ();
+
+  this->save ();
 
   ACE_DEBUG ((LM_INFO,
               "Created PackageConfiguration \n  directory: %s \n  name: %s \n  uuid: %s\n",
@@ -816,13 +791,15 @@ void CIAO_RepositoryManagerDaemon_i::deletePackage (
   //actually delete the package here!
 
   //clean the extracted files
-  remove_extracted_package (package_path.c_str (), path.c_str ());
+  remove_extracted_package (path.c_str ());
   //remove the package
   remove (package_path.c_str ());
   //remove the PackageConfiguration externalization
   remove (pc_path.c_str ());
 
   this->dump ();
+
+  this->save ();
 
   if (internal_err)
     throw CORBA::INTERNAL ();
@@ -1085,66 +1062,48 @@ int CIAO_RepositoryManagerDaemon_i::remove_descriptor_files (char* package)
   return return_code;
 }
 
-//function to remove the files extracted from the package upon istallation
-//It reads the names of the files from the package. They correspond to the
-//names on disk. It deletes each file, then it deletes the directories that
-//contain them.
-//return 1 on success
-//       0 on error
+int CIAO_RepositoryManagerDaemon_i::remove_extracted_package (const char* path)
+  {
+    ACE_TCHAR full_path[MAXPATHLEN];
+    ACE_OS::getcwd (full_path, sizeof(full_path));
 
-int CIAO_RepositoryManagerDaemon_i::remove_extracted_package
-                                       (const char* package_path,
-                                        const char* extraction_location)
-{
-  //change the working dir
-  if (ACE_OS::chdir (extraction_location) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "[RM::remove_extracted_package] Unable to chdir to doomed directory!\n"),
-                      0);
+    ACE_OS::chdir (path);
 
-  int return_code = 1;
+    ACE_Dirent dir (path);
 
-  //create a doubly link list
-  ACE_New_Allocator allocator;
-  ACE_Double_Linked_List<ZIP_File_Info> list (&allocator);
-
-  //get the list of files in the package and figure out the names of all necessary files
-  if (!(ZIP_Wrapper::file_list_info (const_cast <char*> (package_path), list)))
+    for (ACE_DIRENT *directory; (directory = dir.read ()) != 0;)
     {
-      //change back the the old working dir
-      ACE_OS::chdir (this->cwd_);
-      return 0;
-    }
+      if (ACE_OS::strcmp (directory->d_name, ".") == 0
+          || ACE_OS::strcmp (directory->d_name, "..") == 0)
+        continue;
 
-  while (!list.is_empty ())
-    {
-      ZIP_File_Info* inf = list.delete_head ();
+      ACE_stat stat_buf;
+      ACE_OS::lstat (directory->d_name, &stat_buf);
 
-      //delete file from disk
-      if(remove (inf->name_.c_str ()))
+      ACE_CString temp = path;
+      temp += "/";
+      temp += directory->d_name;
+      switch (stat_buf.st_mode & S_IFMT)
         {
-          ACE_ERROR ((LM_ERROR,
-                      "[RM::remove_extracted files] Unable to delete %s!\n", inf->name_.c_str ()));
-          return_code = 0;
+        case S_IFREG: // Either a regular file or an executable.   
+          remove (temp.c_str ());
+          break;
+
+        case S_IFDIR:
+          remove_extracted_package (temp.c_str ());
+          break;
+
+        default:
+          break;
         }
-
-      //deallocate the head of the filename list
-      delete inf;
     }
+    
+    ACE_OS::chdir (full_path);
+    
+    ACE_OS::rmdir (path);
 
-  //now remove the descriptors and implementations directories.
-  ACE_OS::rmdir ("descriptors");
-  ACE_OS::rmdir ("implementations");
-
-  //now go one directory up and delete the extraction directory
-  ACE_OS::chdir (this->install_root_.c_str ());
-  ACE_OS::rmdir (extraction_location);
-
-  //change back the the old working dir
-  ACE_OS::chdir (this->cwd_);
-
-  return return_code;
-}
+    return 0;
+  }
 
 //function to extract the type of the component from
 //the PackageConfiguration and update the interface map
@@ -1230,4 +1189,38 @@ void CIAO_RepositoryManagerDaemon_i::dump (void)
   this->types_.dump ();
 
 #endif /* ACE_HAS_DUMP */
+}
+
+//function to save the package info of the RepositoryManager
+void CIAO_RepositoryManagerDaemon_i::save (void)
+{
+  // Save the names, UUIDs, & types info to the configuration files.
+  ACE_Configuration_Heap cfg;
+  cfg.open ();
+  ACE_Configuration_Section_Key root = cfg.root_section ();
+
+  ACE_Configuration_Section_Key NameSection;
+  cfg.open_section (root, RM_RECORD_NAME_SECTION, 1, NameSection);
+  for (PCMap_Iterator iter = this->names_.begin ();
+    iter != this->names_.end ();
+    ++iter)
+  {
+    PCEntry& element = *iter;
+    cfg.set_string_value (NameSection, element.ext_id_.c_str (), element.int_id_.c_str ());
+  }
+
+  ACE_Configuration_Section_Key UUIDSection;
+  cfg.open_section (root, RM_RECORD_UUID_SECTION, 1, UUIDSection);
+  for (PCMap_Iterator iter = this->uuids_.begin ();
+    iter != this->uuids_.end ();
+    ++iter)
+  {
+    PCEntry& element = *iter;
+    cfg.set_string_value (UUIDSection, element.ext_id_.c_str (), element.int_id_.c_str ());
+  }
+
+  ACE_Registry_ImpExp exporter (cfg);
+  ACE_OS::chdir (install_path.c_str ());
+  exporter.export_config (RM_RECORD_FILE);
+  ACE_OS::chdir (this->cwd_);
 }
