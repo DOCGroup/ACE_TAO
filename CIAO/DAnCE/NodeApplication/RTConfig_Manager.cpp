@@ -9,9 +9,23 @@
 #endif /* __ACE_INLINE__ */
 
 void
-CIAO::RTResource_Config_Manager::init (RTCORBA::RTORB_ptr rtorb)
+CIAO::RTResource_Config_Manager::init (CORBA::ORB_ptr orb)
 {
-  this->rtorb_ = RTCORBA::RTORB::_duplicate (rtorb);
+  CORBA::Object_var object =
+    orb->resolve_initial_references ("RTORB");
+  this->rtorb_ = RTCORBA::RTORB::_narrow (object.in ());
+}
+
+int
+CIAO::RTResource_Config_Manager::pre_orb_initialize (void)
+{
+  return 0;
+}
+
+int
+CIAO::RTResource_Config_Manager::post_orb_initialize (CORBA::ORB_ptr)
+{
+  return 0;
 }
 
 void
@@ -249,29 +263,53 @@ CIAO::RTResource_Config_Manager::init_resources
 
       CORBA::PolicyList_var policy_list = new CORBA::PolicyList (np);
       policy_list->length (np);
+      CORBA::ULong index = 0;
+      CORBA::ULong array_index = np;
 
       // Create a list of policies
       for (CORBA::ULong pc = 0; pc < np; ++pc)
         {
-          policy_list[pc] = this->create_single_policy (sets[i].policies[pc]);
+          CORBA::Policy_var temp_policy = 
+            this->create_single_policy (sets[i].policies[pc]);
+          if (temp_policy == 0)
+            {
+              array_index = array_index - 1;
+              policy_list->length (array_index);
+            }
+          else
+            {
+              policy_list[index] = temp_policy;
+              index = index + 1;
+            }
         }
 
       // Bind the policy list to the name.  The bind operation should
       // surrender the ownership of the newly created PolicyList
       // sequence to the map.
-      if (this->policy_map_.bind (sets[i].Id.in (),
-                                  policy_list) != 0)
+      if (array_index != 0)
         {
-          ACE_ERROR ((LM_ERROR,
-                      "Error binding Policy_Set with name: %s\n",
-                      sets[i].Id.in ()));
-          throw CORBA::INTERNAL ();
+          if (this->policy_map_.bind (sets[i].Id.in (),
+                                      policy_list) != 0)
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "Error binding Policy_Set with name: %s\n",
+                          sets[i].Id.in ()));
+              throw CORBA::INTERNAL (); 
+            }
+          else
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "RTResource_Config_Manager::init_resource "
+                          "added policy set: %s with %d policies\n",
+                          sets[i].Id.in (), array_index));
+            }
         }
       else
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "RTResource_Config_Manager::init_resource added policy set: %s\n",
-                      sets[i].Id.in ()));
+                      "RTResource_Config_Manager::init_resource "
+                      "added policy set: %s with %d policies\n",
+                      sets[i].Id.in (), array_index));
         }
     }
 }
@@ -336,6 +374,27 @@ CIAO::RTResource_Config_Manager::find_priority_bands_by_name (const char *name)
   RTCORBA::PriorityBands_var retv = new RTCORBA::PriorityBands;
   (*retv.ptr ()) = (*entry->int_id_.ptr ());
   return retv._retn ();
+}
+
+bool
+CIAO::RTResource_Config_Manager::policy_exists (const char *name)
+{
+  if (name == 0)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "Invalid name string found in "
+                  "CIAO::NAResource_Config_Manager::policy_exists\n"));
+      throw CORBA::INTERNAL ();
+    }
+
+  POLICY_MAP::ENTRY *entry = 0;
+
+  if (this->policy_map_.find (name, entry) != 0)
+    {
+      return false;
+    }
+
+  return true;
 }
 
 CORBA::PolicyList *
@@ -431,11 +490,19 @@ CIAO::RTResource_Config_Manager::create_single_policy
       break;
 
     default:
-      ACE_ERROR ((LM_ERROR,
-                  "Invalid policy type - RTPolicy_Set_Manager::create_single_policy\n"));
-      throw CORBA::INTERNAL ();
+      retv = 0;
     }
 
   return retv._retn ();
 }
 
+extern "C" CIAO_RTNA_Configurator_Export CIAO::Config_Manager
+*create_rt_config_manager (void);
+
+CIAO::Config_Manager *
+create_rt_config_manager (void)
+{
+  CIAO::RTResource_Config_Manager *config;
+  ACE_NEW_RETURN (config, CIAO::RTResource_Config_Manager, 0);
+  return config;
+}
