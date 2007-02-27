@@ -1,3 +1,22 @@
+Tue Feb 27 18:43:11 UTC 2007  Ossama Othman  <ossama_othman at symantec dot com>
+
+        * tao/Exception.h:
+        * tao/SystemException.h:
+
+          Made copy constructor public again to silence VC7.1 level 4
+          warnings.  This constructor should be protected, but VC7.1 at
+          warning level 4 complains about the inaccessible copy
+          constructor preventing it from being caught.  However, that
+          probably isn't true for most cases since CORBA exceptions are
+          typically caught by reference, not by copy.
+
+          Added a note describing why the copy constructor is not
+          protected.
+
+        * tao/diffs/Object_Key.diff:
+
+          Synchronized with latest version of Object_KeyC.cpp.
+
 Tue Feb 27 13:21:05 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * tests/IDL_Test/union.idl:
