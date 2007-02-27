@@ -6,7 +6,7 @@ project (XSC_XML_Generation) : xscdefaults {
    xscflags += --cxx-banner-file $(CIAO_ROOT)/docs/schema/xsc-banner.cpp
    xscflags += --cxx-header-banner-file $(CIAO_ROOT)/docs/schema/xsc-banner.h
    xscflags += --cxx-export-symbol XSC_XML_Handlers_Export
-   xscflags += --cxx-namespace-regex "%.*Deployment.*%CIAO/Config_Handlers%"
+   xscflags += --cxx-namespace-regex  <%quote%>%.*Deployment.*%CIAO/Config_Handlers%<%quote%>
    xscflags += --cxx-export-header XSC_XML_Handlers_Export.h
    xscflags += --search-path "$(CIAO_ROOT)/docs/schema"
    
