@@ -1,3 +1,9 @@
+Tue Feb 27 11:45:06 UTC 2007  Carlos O'Ryan  <coryan@atdesk.com>
+
+        * tests/Notification_Queue_Unit_Test.cpp:
+          Fixed compilation error in Redhat_Enterprise_Linux_3_Debug_WChar
+          build.  Thanks to Johnny Willemsen for letting me know.
+
 Tue Feb 27 03:34:40 UTC 2007  Carlos O'Ryan  <coryan@atdesk.com>
 
         * tests/Notification_Queue_Unit_Test.cpp:
