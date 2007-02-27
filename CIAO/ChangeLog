@@ -1,3 +1,13 @@
+Tue Feb 27 03:10:14 UTC 2007  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * tools/Config_Handlers/CIAO_Events/CIAO_Events_Handlers.mpc
+        * tools/Config_Handlers/Config_Handlers.mpc
+        * tools/Config_Handlers/RT-CCM/RT-CCM-Handlers.mpc
+          
+          Changed double quotes to <%quote%> to correctly generate in 
+          Visual Studio projects.  Thanks to Kitty for suggesting the
+          fix.
+
 Tue Feb 27 03:00:25 UTC 2007  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * docs/tutorials/Quoter/Simple/descriptors/runNodeDaemons.pl
