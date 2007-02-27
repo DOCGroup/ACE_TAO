@@ -232,7 +232,7 @@ TAO_NS_FlatFileStream::operator >>(TAO_NS_Persistence_Record &record)
       return *this;
     }
   type = (TAO_NS_Persistence_Record::Record_Type) temp_type_in;
-  record.type(type);
+  record.type (type);
 
   int bufSize = 0;
 
@@ -248,23 +248,19 @@ TAO_NS_FlatFileStream::operator >>(TAO_NS_Persistence_Record &record)
     }
 
   if (bufSize <= 0
-      || bufSize >= ACE_Numeric_Limits<ACE_CString::size_type>::max ())
+      || static_cast<ACE_CString::size_type> (bufSize) >= ACE_Numeric_Limits<ACE_CString::size_type>::max ())
     {
       this->setstate (badbit);
       return *this;
     }
 
-  ++bufSize; // Add one for terminator.
-
-  char *id = new char[bufSize];
-  if (ACE_OS::fgets(ACE_TEXT_CHAR_TO_TCHAR(id), bufSize, fl_) == 0)
+  ACE_CString id (ACE_CString::size_type (bufSize + 1));
+  if (ACE_OS::fgets(ACE_TEXT_CHAR_TO_TCHAR(&id[0]), bufSize + 1, fl_) == 0)
     {
       this->setstate (badbit);
       return *this;
     }
-  ACE_CString newId(id);
-  record.id(newId);
-  delete [] id;
+  record.id (id);
 
   //kind
   switch (fscanf(fl_, "%d\n", &bufSize))
@@ -278,24 +274,20 @@ TAO_NS_FlatFileStream::operator >>(TAO_NS_Persistence_Record &record)
     }
 
   if (bufSize <= 0
-      || bufSize >= ACE_Numeric_Limits<ACE_CString::size_type>::max ())
+      || static_cast<ACE_CString::size_type> (bufSize) >= ACE_Numeric_Limits<ACE_CString::size_type>::max ())
     {
       this->setstate (badbit);
       return *this;
     }
 
-  ++bufSize; // Add one for terminator.
-
-  char *kind = new char[bufSize];
-  if (ACE_OS::fgets(ACE_TEXT_CHAR_TO_TCHAR(kind), bufSize, fl_) == 0)
+  ACE_CString kind (ACE_CString::size_type (bufSize + 1));
+  if (ACE_OS::fgets(ACE_TEXT_CHAR_TO_TCHAR(&kind[0]), bufSize + 1, fl_) == 0)
     {
       this->setstate (badbit);
       return *this;
     }
   kind[bufSize] = '\0';
-  ACE_CString newKind(kind);
-  record.kind(newKind);
-  delete [] kind;
+  record.kind (kind);
 
    //ref
   switch (fscanf(fl_, "%d\n", &bufSize))
@@ -309,23 +301,19 @@ TAO_NS_FlatFileStream::operator >>(TAO_NS_Persistence_Record &record)
     }
 
   if (bufSize <= 0
-      || bufSize >= ACE_Numeric_Limits<ACE_CString::size_type>::max ())
+      || static_cast<ACE_CString::size_type> (bufSize) >= ACE_Numeric_Limits<ACE_CString::size_type>::max ())
     {
       this->setstate (badbit);
       return *this;
     }
 
-  ++bufSize; // Add one for terminator.
-
-  char *ref = new char[bufSize];
-  if (ACE_OS::fgets(ACE_TEXT_CHAR_TO_TCHAR(ref), bufSize, fl_) == 0)
+  ACE_CString ref (ACE_CString::size_type (bufSize + 1));
+  if (ACE_OS::fgets(ACE_TEXT_CHAR_TO_TCHAR(&ref[0]), bufSize + 1, fl_) == 0)
     {
       this->setstate (badbit);
       return *this;
     }
-  ACE_CString newRef(ref);
-  record.ref(newRef);
-  delete [] ref;
+  record.ref (ref);
 
   return *this;
 
