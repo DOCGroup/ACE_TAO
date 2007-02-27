@@ -1,3 +1,10 @@
+Tue Feb 27 17:44:08 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
+
+        * examples/Hello/descriptors/run_test_without_ns.pl:
+        
+          Updated the script in finding the location of the Execution
+          Manager executable.
+
 Tue Feb 27 05:26:53 UTC 2007  Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
 
         * DAnCE/RepositoryManager/RepositoryManager_Impl.h

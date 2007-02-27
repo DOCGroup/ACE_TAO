@@ -96,7 +96,7 @@ $ns_running = 1;
 
 # Invoke execution manager.
 print "Invoking execution manager\n";
-$EM = new PerlACE::Process ("$CIAO_ROOT/bin/ExecutionManager/Execution_Manager",
+$EM = new PerlACE::Process ("$CIAO_ROOT/bin/Execution_Manager",
                             "-o EM.ior -i $dat_file");
 $EM->Spawn ();
 
