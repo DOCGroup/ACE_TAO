@@ -9,7 +9,7 @@
 //    union.idl
 //
 // = DESCRIPTION
-//    This file contains examples of IDL code that has 
+//    This file contains examples of IDL code that has
 //    caused problems in the past for the TAO IDL
 //    compiler. This test is to make sure the problems
 //    stay fixed.
@@ -38,9 +38,9 @@ union Data switch (DataType)
 
 // Explicit default case
 
-module Necessary 
+module Necessary
 {
-  // It is important to have a module, in which 
+  // It is important to have a module, in which
   // the following union is declared.
 
   typedef long Result;
@@ -52,25 +52,40 @@ module Necessary
     };
 
   union WhichResult switch (Kind )
-    {   
+    {
       case e_Result: Result  m_Result;
       default: long m_Unused;
     };
 };
 
+// Union with negative cases
+// At the moment, the SunCC preprocessor separates the negative
+// sign from the number.  This causes problems for the scanner/lexer
+// used by tao_idl.
+#if !defined (sun)
+union foo switch (short)
+{
+  case -3:
+  case  4:
+  case -1: string foo_str_member;
+  default: long   foo_iface_member;
+  case  0: long   foo_iface_member2;
+};
+#endif /* sun */
+
 // Make sure that CORBA_Any::to_* is used everywhere.
 module UnionDiscTest
-  {
-   	union BooleanUnion switch (boolean) 
-      {
-      	case TRUE: string value;
-   		};
+{
+  union BooleanUnion switch (boolean)
+    {
+      case TRUE: string value;
+    };
 
-    union CharUnion switch (char)
-      {
-        case 'a': string value;
-      };
-	};
+  union CharUnion switch (char)
+    {
+      case 'a': string value;
+    };
+};
 
 
 // Nested unions
@@ -115,39 +130,39 @@ module UnionTest3
 {
    enum ValChoice 
      {
-    	 intVal,
-    	 realVal
-   	 };
+       intVal,
+       realVal
+     };
 
    union ValType switch(ValChoice) 
      {
        case intVal: long integerValue;
        case realVal: double realValue;
-   	 };
+     };
 
    struct UpType 
      {
        ValType high;
        ValType low;
-   	 };
+     };
 
    struct DownType 
      {
        ValType high;
        ValType low;
-   	 };
+     };
 
    enum IndChoice 
      {
        up_Level,
        down_Level
-   	 };
+     };
 
    union IndType switch(IndChoice) 
      {
        case up_Level: UpType up;
        case down_Level: DownType down;
-   	 };
+     };
 };
 
 // Make sure inner union is generated in header file with
