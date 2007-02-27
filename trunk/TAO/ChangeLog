@@ -7,6 +7,13 @@ Mon Feb 27 06:32:42 UTC 2007  Ossama Othman  <ossama_othman at symantec dot com>
           newly added ".in()" accessor call.  Addresses g++ 4.1 build
           errors.
 
+        * orbsvcs/orbsvcs/Naming/Flat_File_Persistence.cpp (operator >>):
+
+          Fixed partial merge where a number of changes were not
+          committed.
+         
+          Addressed comparison signed/unsigned warnings.
+
 Mon Feb 26 23:27:03 UTC 2007  Ossama Othman  <ossama_othman at symantec dot com>
 
         * NEWS:
