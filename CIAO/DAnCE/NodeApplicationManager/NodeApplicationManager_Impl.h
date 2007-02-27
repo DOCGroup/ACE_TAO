@@ -343,7 +343,7 @@ namespace CIAO
 
     Static_Config_EntryPoints_Maps* static_config_entrypoints_maps_;
 
-    CIAO::NoOp_Configurator configurator_;
+    CIAO::NodeApp_Configurator configurator_;
   };
 }
 
