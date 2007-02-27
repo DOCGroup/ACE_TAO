@@ -1,3 +1,8 @@
+Tue Feb 27 14:59:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Process_Manager_Test.cpp:
+          Fixed incorrect initialized variable
+
 Tue Feb 27 14:20:26 UTC 2007  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * ace/CDR_Stream.cpp:
