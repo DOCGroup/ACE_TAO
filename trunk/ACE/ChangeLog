@@ -1,3 +1,11 @@
+Tue Feb 27 15:18:50 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/docs/templates/gnu.txt:
+
+          Added documentation for template variables used by the gnuace
+          project type.  This is used by document_template.pl found in
+          MPC/devtools.
+
 Tue Feb 27 14:59:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Process_Manager_Test.cpp:
