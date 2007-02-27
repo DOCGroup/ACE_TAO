@@ -1,3 +1,12 @@
+Tue Feb 27 03:34:40 UTC 2007  Carlos O'Ryan  <coryan@atdesk.com>
+
+        * tests/Notification_Queue_Unit_Test.cpp:
+          Use functions instead of macros to workaround compiler warnings
+          in the HP-UX_11iv2_IA64_aCC_wchar build.
+          The warnings were harmless, but the code is more readable this
+          way in any case.  Thanks to Johnny Willemsen for bringing the
+          warnings to my attention.
+
 Mon Feb 26 20:58:05 UTC 2007  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * ace/Service_Gestalt.cpp (insert):
