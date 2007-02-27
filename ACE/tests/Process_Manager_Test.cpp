@@ -108,7 +108,7 @@ command_line_test ()
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Testing for last character of command line\n")));
-  int result = 1;
+  int result = 0;
   const ACE_TCHAR *command = ACE_TEXT ("test Hello");
   size_t command_len = ACE_OS::strlen (command);
   ACE_Process_Options options (1, command_len + 1);
