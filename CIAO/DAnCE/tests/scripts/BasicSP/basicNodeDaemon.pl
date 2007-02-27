@@ -34,23 +34,23 @@ unlink $iorfile5;
 
 $CIAO_ROOT=$ENV{'CIAO_ROOT'};
 
-$SV1 = new PerlACE::Process ("$CIAO_ROOT/DAnCE/NodeManager/NodeManager",
+$SV1 = new PerlACE::Process ("$CIAO_ROOT/bin/NodeManager",
                              "-ORBEndpoint iiop://localhost:10000 -s
 $CIAO_ROOT/DAnCE/NodeApplication/NodeApplication");
 
-$SV2 = new PerlACE::Process ("$CIAO_ROOT/DAnCE/NodeManager/NodeManager",
+$SV2 = new PerlACE::Process ("$CIAO_ROOT/bin/NodeManager",
                              "-ORBEndpoint iiop://localhost:20000  -s
 $CIAO_ROOT/DAnCE/NodeApplication/NodeApplication");
 
-$SV3 = new PerlACE::Process ("$CIAO_ROOT/DAnCE/NodeManager/NodeManager",
+$SV3 = new PerlACE::Process ("$CIAO_ROOT/bin/NodeManager",
                              "-ORBEndpoint iiop://localhost:30000  -s
 $CIAO_ROOT/DAnCE/NodeApplication/NodeApplication");
 
-$SV4 = new PerlACE::Process ("$CIAO_ROOT/DAnCE/NodeManager/NodeManager",
+$SV4 = new PerlACE::Process ("$CIAO_ROOT/bin/NodeManager",
                              "-ORBEndpoint iiop://localhost:40000  -s
 $CIAO_ROOT/DAnCE/NodeApplication/NodeApplication");
 
-$SV5 = new PerlACE::Process ("$CIAO_ROOT/DAnCE/NodeManager/NodeManager",
+$SV5 = new PerlACE::Process ("$CIAO_ROOT/bin/NodeManager",
                              "-ORBEndpoint iiop://localhost:50000  -s
 $CIAO_ROOT/DAnCE/NodeApplication/NodeApplication");
 $SV1->Spawn ();
