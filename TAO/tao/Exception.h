@@ -102,6 +102,18 @@ namespace CORBA
   class TAO_Export Exception
   {
   public:
+
+    /// Copy constructor.
+    /**
+     * @note This constructor should be protected, but VC7.1 at
+     *       warning level 4 complains about the inaccessible copy
+     *       constructor preventing it from being caught.  However,
+     *       that probably isn't true for most cases since CORBA
+     *       exceptions are typically caught by reference, not by
+     *       copy.
+     */
+    Exception (const Exception &src);
+
     /// Destructor.
     virtual ~Exception (void);
 
@@ -177,9 +189,6 @@ namespace CORBA
 
     /// Default constructor.
     Exception (void);
-
-    /// Copy constructor.
-    Exception (const Exception &src);
 
     /// Assignment operator.
     Exception & operator = (const Exception & src);
