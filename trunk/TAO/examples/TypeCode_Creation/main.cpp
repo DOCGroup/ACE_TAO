@@ -35,7 +35,7 @@ int main(int argc, char *argv[])
       // Not needed for ORB-created typecodes
       // (see CORBA 2.4.2 section 10.7.3).
       foo_members[0].type_def = CORBA::IDLType::_nil ();
-      CORBA::Short label_value = -3;
+      CORBA::Short label_value = 3;
       foo_members[0].label <<= label_value;
 
       foo_members[1].name = CORBA::string_dup ("foo_str_member");
@@ -47,7 +47,7 @@ int main(int argc, char *argv[])
       foo_members[2].name = CORBA::string_dup ("foo_str_member");
       foo_members[2].type = CORBA::TypeCode::_duplicate (CORBA::_tc_string);
       foo_members[2].type_def = CORBA::IDLType::_nil ();
-      label_value = -1;
+      label_value = 1;
       foo_members[2].label <<= label_value;
 
       // The default member.

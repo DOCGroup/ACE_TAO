@@ -12,9 +12,9 @@ interface iface {};
 
 union foo switch (short)
 {
-  case -3:
+  case  3:
   case  4:
-  case -1: string foo_str_member;
+  case  1: string foo_str_member;
   default: iface foo_iface_member;
   case  0: iface foo_iface_member2;
 };

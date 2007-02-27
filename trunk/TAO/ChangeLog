@@ -1,3 +1,17 @@
+Tue Feb 27 12:41:52 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * examples/TypeCode_Creation/main.cpp:
+        * examples/TypeCode_Creation/test.idl:
+
+          Modified the idl union to not use negative numbers in the cases.
+
+        * tests/IDL_Test/union.idl:
+
+          Added a union that uses negative numbers in the cases.  This is
+          currently #ifdef'ed to not be processed by the Sun preprocessor as
+          it separates the negative sign and the number causing problems for
+          the tao_idl lexer/scanner.  This is for bugzilla bug #2821.
+
 Tue Feb 27 11:05:00 UTC 2007  Simon Massey  <sma@prismtech.com>
 
         * orbsvcs/orbsvcs/Naming/Naming_Server.cpp:
@@ -18,7 +32,7 @@ Tue Feb 27 06:32:42 UTC 2007  Ossama Othman  <ossama_othman at symantec dot com>
 
           Fixed partial merge where a number of changes were not
           committed.
-         
+
           Addressed comparison signed/unsigned warnings.
 
 Mon Feb 26 23:27:03 UTC 2007  Ossama Othman  <ossama_othman at symantec dot com>
