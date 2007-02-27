@@ -1,7 +1,14 @@
+Tue Feb 27 20:11:28 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * CIDLC/ServantSourceGenerator.cpp:
+
+          Fixed cut and paste error in code generation of type-specific
+          disconnect_*() method for multiplex uses ports.
+
 Tue Feb 27 17:44:08 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
 
         * examples/Hello/descriptors/run_test_without_ns.pl:
-        
+
           Updated the script in finding the location of the Execution
           Manager executable.
 
@@ -9,15 +16,15 @@ Tue Feb 27 05:26:53 UTC 2007  Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
 
         * DAnCE/RepositoryManager/RepositoryManager_Impl.h
         * DAnCE/RepositoryManager/RepositoryManager_Impl.cpp
-        
+
           Modified the remove_extracted_package () function.
           Added the functionality to save the package information when
           install or delete a package.
-        
+
 Tue Feb 27 03:29:42 UTC 2007  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * tools/Config_Handlers/DynAny_Handler.mpc
-        
+
           Inherit from config_handlers_base to disable symbol visibility.
 
 Tue Feb 27 03:10:14 UTC 2007  William R. Otte  <wotte@dre.vanderbilt.edu>
@@ -25,8 +32,8 @@ Tue Feb 27 03:10:14 UTC 2007  William R. Otte  <wotte@dre.vanderbilt.edu>
         * tools/Config_Handlers/CIAO_Events/CIAO_Events_Handlers.mpc
         * tools/Config_Handlers/Config_Handlers.mpc
         * tools/Config_Handlers/RT-CCM/RT-CCM-Handlers.mpc
-          
-          Changed double quotes to <%quote%> to correctly generate in 
+
+          Changed double quotes to <%quote%> to correctly generate in
           Visual Studio projects.  Thanks to Kitty for suggesting the
           fix.
 
@@ -51,9 +58,9 @@ Tue Feb 27 03:00:25 UTC 2007  William R. Otte  <wotte@dre.vanderbilt.edu>
         * examples/Display/descriptors/run_test_without_ns.pl
         * examples/Display/descriptors/basicNodeDaemon.pl
         * examples/Display/descriptors/run_NodeDaemons.pl
-        
+
           Updated to reflect movement of binaries to CIAO_ROOT/bin.
-        
+
 Mon Feb 26 17:21:55 UTC 2007  Adam Mitz  <mitza@ociweb.com>
 
         * examples/Hello/descriptors_RTCCM/rt_run_test.pl:

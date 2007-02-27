@@ -713,8 +713,7 @@ namespace
         os << "if (! CIAO::Map_Key_Cookie::extract (ck, key))"
            << endl
            << "{"
-           << "throw  "
-           << STRS[EXCP_IC] << " ();" << endl;
+           << "throw " << STRS[EXCP_IC] << " ();" << endl;
 
         os << endl
            << "}";
@@ -722,8 +721,7 @@ namespace
         os << "if (this->ciao_uses_" << u.name ()
            << "_.unbind (key, retv) != 0)" << endl
            << "{"
-           << "throw "
-           << " ();" << endl;
+           << "throw " << STRS[EXCP_IC] << " ();" << endl;
 
         os << endl
            << "}";
