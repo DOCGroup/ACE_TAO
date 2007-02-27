@@ -1,5 +1,9 @@
 Mon Feb 26 23:27:03 UTC 2007  Ossama Othman  <ossama_othman at symantec dot com>
 
+        * NEWS:
+
+          Updated to reflect latest changes.
+
         * TAO_IDL/include/fe_extern.h (File, FE_set_yyin):
         * TAO_IDL/fe/fe_extern.cpp (FE_set_yyin):
 
@@ -146,7 +150,7 @@ Mon Feb 26 23:27:03 UTC 2007  Ossama Othman  <ossama_othman at symantec dot com>
           (~UTL_String):
 
           Deallocate string array members.  Addresses exception-safety
-          issues, as well as Coverity CTOR_DTOR errors.
+          issues, as well as Coverity CTOR_DTOR_LEAK errors.
 
           (destroy):
 
