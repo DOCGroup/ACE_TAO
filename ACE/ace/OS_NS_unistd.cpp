@@ -345,6 +345,12 @@ ACE_OS::num_processors (void)
     return num_processors;
   else
     return -1;
+#elif defined (__hpux)
+  struct pst_dynamic psd;
+  if (::pstat_getdynamic (&psd, sizeof (psd), (size_t) 1, 0) != -1)
+    return psd.psd_max_proc_cnt;
+  else
+    return -1;
 #else
   ACE_NOTSUP_RETURN (-1);
 #endif
