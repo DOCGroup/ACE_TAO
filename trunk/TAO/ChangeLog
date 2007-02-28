@@ -1,3 +1,13 @@
+Wed Feb 28 15:24:30 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * MPC/config/diffservpolicy.mpb:
+
+          Added avoids_minimum_corba, avoids_corba_e_compact, and
+          avoids_corba_e_micro as base projects and removed the install base
+          project.  This library is not available when minimum_corba,
+          corba_e_compact or corba_e_micro is enabled.  And, users of this
+          library may not want/need their binary or library to be installed.
+
 Wed Feb 28 14:59:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp:
