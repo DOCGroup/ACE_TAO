@@ -1,3 +1,15 @@
+Wed Feb 28 09:58:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/ADDIDL.DSM:
+          Moved to TAO
+
+        * bin/msvc_cidlc.pl:
+          Moved to CIAO
+
+        * indent_macros.perl:
+        * indent_macros.pl:
+          Renamed extension to .pl
+
 Wed Feb 28 09:44:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/corba-boolean.perl:
