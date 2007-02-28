@@ -1,3 +1,9 @@
+Wed Feb 28 12:34:55 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tao/CodecFactory/CDR_Encaps_Codec.cpp:
+
+          Removed an ACE_THROW_RETURN that somehow made it back in.
+
 Wed Feb 28 10:05:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/AnyTypeCode/append.cpp:
