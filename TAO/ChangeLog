@@ -1,3 +1,11 @@
+Wed Feb 28 14:59:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp:
+        * orbsvcs/tests/Security/MT_IIOP_SSL/Server_Worker.cpp:
+        * orbsvcs/tests/Security/MT_SSLIOP/Client_Worker.cpp:
+        * orbsvcs/tests/Security/MT_SSLIOP/Server_Worker.cpp:
+          Fixed unreferenced local variable warnings
+
 Wed Feb 28 14:44:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Param_Test/options.cpp:
