@@ -1,3 +1,10 @@
+Wed Feb 28 09:40:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/*:
+        * Release:
+          Added new bin directory and moved some scripts of the ACE_wrappers/bin
+          to this directory so that we don't ship TAO specific scripts with ACE
+
 Tue Feb 27 21:09:01 UTC 2007  Ossama Othman  <ossama_othman at symantec dot com>
 
         * tao/MCAST_Parser.cpp (parse_string):

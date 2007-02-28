@@ -24,6 +24,7 @@ CONTROLLED_FILES = \
         TAO/TAO_*.mwc \
 	TAO/TAO_IDL \
 	TAO/VERSION \
+        TAO/bin \
 	TAO/configure.ac \
 	TAO/docs \
 	TAO/examples \
