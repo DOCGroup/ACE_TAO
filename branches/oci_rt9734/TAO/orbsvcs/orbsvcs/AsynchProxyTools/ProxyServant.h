@@ -20,8 +20,8 @@ public:
   TAO_ProxyServant();
   void invoke (CORBA::ServerRequest_ptr request,
                TAO_AMH_DSI_Response_Handler_ptr rh);
-  virtual void invoke_i () = 0;
+  virtual void invoke_i (CORBA::ServerRequest_ptr request,
+                         TAO_AMH_DSI_Response_Handler_ptr response_handler
+                        ) = 0;
 };
-
-
 #endif // TAO_PROXY_SERVANT
