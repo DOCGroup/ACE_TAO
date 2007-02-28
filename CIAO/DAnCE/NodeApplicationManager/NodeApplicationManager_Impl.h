@@ -148,12 +148,10 @@ namespace CIAO
 
     /// Internal help function to create new NodeApplicationProcess
     virtual Deployment::NodeApplication_ptr
-    create_node_application (const ACE_CString & options)
-      =0;
+    create_node_application (const ACE_CString & options) = 0;
 
     /// Helper function to get the connection.
-    virtual Deployment::Connections *
-    create_connections ();
+    virtual Deployment::Connections * create_connections ();
 
     /**
      * Find the configurations in the plan and prepare them to pass to the
