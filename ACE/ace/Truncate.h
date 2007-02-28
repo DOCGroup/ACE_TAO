@@ -454,7 +454,7 @@ namespace ACE_Utils
       // ACE_U_LongLong returns a ACE_UINT32.
       return
         Truncator<ACE_UINT32, TO> (
-          val) > ACE_Numeric_Limits<ACE_UIN32>::max ()
+          val) > ACE_Numeric_Limits<ACE_UINT32>::max ()
           ? val.lo ());
     }
   };
