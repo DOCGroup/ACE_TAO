@@ -1,3 +1,11 @@
+Wed Feb 28 22:14:41 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/orbsvcs/AsynchProxyTools/AsyncProxyTools_Export.h:
+        * orbsvcs/orbsvcs/AsynchProxyTools/ProxyReplyHandler.h:
+        * orbsvcs/orbsvcs/AsynchProxyTools/ProxyServant.h:
+
+          Added library export macros.
+
 Thu Feb 22 22:01:13 UTC 2007  Wallace Zhang  <zhang_w@ociweb.com>
 
         * tests/DSI_AMI_Gateway/DSI_AMI_Gateway.mpc:
