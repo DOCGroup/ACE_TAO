@@ -177,6 +177,39 @@ namespace TAO
 
     return status;
   }
-} // End namespace TAO
 
+  DII_Asynch_Invocation_Adapter::DII_Asynch_Invocation_Adapter (CORBA::Object *target,
+                                                                Argument **args,
+                                                                int arg_count,
+                                                                const char *operation,
+                                                                int op_len,
+                                                                CORBA::Request *req,
+                                                                TAO::Invocation_Mode mode)
+    : DII_Invocation_Adapter (target,
+                              args,
+                              arg_count,
+                              operation,
+                              op_len,
+                              0,
+                              req,
+                              mode)
+  {
+  }
+
+  void
+  DII_Asynch_Invocation_Adapter::invoke (Messaging::ReplyHandler_ptr)
+  {
+  }
+
+  Invocation_Status
+  DII_Asynch_Invocation_Adapter::invoke_twoway (
+        TAO_Operation_Details &,
+        CORBA::Object_var &,
+        Profile_Transport_Resolver &,
+        ACE_Time_Value *&)
+  {
+    return TAO_INVOKE_FAILURE;
+  }
+
+} // End namespace TAO
 TAO_END_VERSIONED_NAMESPACE_DECL

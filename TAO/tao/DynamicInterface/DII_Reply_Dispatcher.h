@@ -25,6 +25,10 @@
 #include "tao/orbconf.h"
 #include "tao/Asynch_Reply_Dispatcher_Base.h"
 
+#if defined (TAO_HAS_AMI)
+#include "tao/Messaging/Messaging.h"
+#endif /* TAO_HAS_AMI */
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace CORBA
@@ -40,7 +44,6 @@ class TAO_ORB_Core;
  *
  * @brief Reply dispatcher for DII deferred requests.
  */
-
 class TAO_DynamicInterface_Export TAO_DII_Deferred_Reply_Dispatcher
   : public TAO_Asynch_Reply_Dispatcher_Base
 {
@@ -50,7 +53,7 @@ public:
 
 
 
-  // = The Reply_Dispatcher methods
+  /// The Reply_Dispatcher methods
   virtual int dispatch_reply (TAO_Pluggable_Reply_Params &param);
 
   virtual void connection_closed (void);
@@ -70,6 +73,42 @@ private:
   /// Where the reply needs to go.
   const CORBA::Request_ptr req_;
 };
+
+#if defined (TAO_HAS_AMI)
+/**
+ * @class TAO_DII_Asynch_Reply_Dispatcher
+ *
+ * @brief Reply dispatcher for DII asynch requests.
+ */
+class TAO_DynamicInterface_Export TAO_DII_Asynch_Reply_Dispatcher
+  : public TAO_Asynch_Reply_Dispatcher_Base
+{
+public:
+  TAO_DII_Asynch_Reply_Dispatcher (const Messaging::ReplyHandler_ptr callback,
+                                     TAO_ORB_Core *orb_core);
+  virtual ~TAO_DII_Asynch_Reply_Dispatcher (void);
+
+  /// The Reply_Dispatcher methods
+  virtual int dispatch_reply (TAO_Pluggable_Reply_Params &param);
+
+  virtual void connection_closed (void);
+
+private:
+
+  /// The buffer that is used to initialise the data block
+  char buf_[ACE_CDR::DEFAULT_BUFSIZE];
+
+  /// datablock that is created on teh stack to initialise the CDR
+  /// stream underneath.
+  ACE_Data_Block db_;
+
+  /// CDR stream for reading the input.
+  TAO_InputCDR reply_cdr_;
+
+  /// Where the reply needs to go.
+  const Messaging::ReplyHandler_ptr callback_;
+};
+#endif /* TAO_HAS_AMI */
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
