@@ -105,8 +105,7 @@ protected:
   void _tao_rh_send_reply (void);
 
   /// Send back an exception to the client.
-  void _tao_rh_send_exception (CORBA::Exception &ex
-                              );
+  void _tao_rh_send_exception (const CORBA::Exception &ex);
 
 protected:
 

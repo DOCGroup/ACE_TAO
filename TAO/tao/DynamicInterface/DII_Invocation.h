@@ -31,6 +31,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_DII_Deferred_Reply_Dispatcher;
+class TAO_DII_Asynch_Reply_Dispatcher;
 
 namespace Dynamic
 {
@@ -93,6 +94,42 @@ namespace TAO
     CORBA::Request_ptr host_;
 
   };
+
+  /**
+   * @class TAO_GIOP_DII_Asynch_Invocation
+   *
+   * @brief This class is responsible to send the asynchronous
+   * invocation.
+   *
+   * This class is responsible to send the asynchronous
+   * invocation. This class connects (or looks up a connection from the cache)
+   * to the remote server, builds the CDR stream for the Request, send
+   * the CDR stream and returns.
+   *
+   */
+  class TAO_DynamicInterface_Export TAO_GIOP_DII_Asynch_Invocation
+    : public TAO::Asynch_Remote_Invocation
+  {
+  public:
+    TAO_GIOP_DII_Asynch_Invocation (TAO_Stub *data,
+                                    TAO_ORB_Core* orb_core,
+                                    CORBA::Boolean argument_flag,
+                                    const CORBA::Request_ptr req,
+                                    CORBA::Object_ptr reply_handler,
+                                    int byte_order = TAO_ENCAP_BYTE_ORDER);
+
+    int invoke (void);
+
+  private:
+    /// Implementation of the invoke() methods, handles the basic
+    /// send/reply code and the system exceptions.
+    int invoke_i (void);
+
+
+    /// Reply dispatcher for the current synchronous Asynch_Invocation.
+    TAO_DII_Asynch_Reply_Dispatcher *rd_;
+  };
+
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -10,6 +10,11 @@ ACE_RCSID (DynamicInterface,
 #include "tao/DynamicInterface/DII_Arguments.h"
 #include "tao/DynamicInterface/Context.h"
 
+#if defined (TAO_HAS_AMI)
+#include "tao/Messaging/Asynch_Invocation_Adapter.h"
+#include "tao/DynamicInterface/DII_Reply_Handler.h"
+#endif /* TAO_HAS_AMI */
+
 #include "tao/AnyTypeCode/NVList.h"
 #include "tao/Object.h"
 #include "tao/Pluggable_Messaging_Utils.h"
@@ -246,6 +251,63 @@ CORBA::Request::send_deferred (void)
                     0
                    );
 }
+
+#if defined (TAO_HAS_AMI)
+void
+CORBA::Request::sendc (CORBA::Object_ptr handler)
+{
+  TAO::NamedValue_Argument _tao_retval (this->result_);
+
+  TAO::NVList_Argument _tao_in_list (this->args_,
+                                     this->lazy_evaluation_);
+
+  TAO::Argument *_tao_arg_list [] = {
+    &_tao_retval,
+    &_tao_in_list
+  };
+
+  TAO::Asynch_Invocation_Adapter _tao_call (
+       this->target_,
+       _tao_arg_list,
+       sizeof( _tao_arg_list ) / sizeof( TAO::Argument* ),
+       const_cast<char *> (this->opname_),
+       static_cast<CORBA::ULong> (ACE_OS::strlen (this->opname_)),
+       0 // collocation proxy broker
+       );
+
+  _tao_call.invoke (dynamic_cast<Messaging::ReplyHandler_ptr>(handler),
+                    &CORBA::Request::_tao_reply_stub);
+
+}
+
+void
+CORBA::Request::_tao_reply_stub (TAO_InputCDR &_tao_in,
+                                 Messaging::ReplyHandler_ptr rh,
+                                 CORBA::ULong reply_status)
+{
+  // Retrieve Reply Handler object.
+  TAO_DII_Reply_Handler* reply_handler = dynamic_cast<TAO_DII_Reply_Handler*> (rh);
+
+  // Exception handling
+  switch (reply_status)
+    {
+    case TAO_AMI_REPLY_OK:
+    case TAO_AMI_REPLY_NOT_OK:
+      {
+        reply_handler->handle_response(_tao_in);
+        break;
+      }
+    case TAO_AMI_REPLY_USER_EXCEPTION:
+    case TAO_AMI_REPLY_SYSTEM_EXCEPTION:
+      {
+        reply_handler->handle_excep (_tao_in,
+                                     reply_status);
+
+        break;
+      }
+    }
+}
+#endif /* TAO_HAS_AMI */
 
 void
 CORBA::Request::get_response (void)

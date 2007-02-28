@@ -175,7 +175,7 @@ TAO_AMH_Response_Handler::_tao_rh_send_reply (void)
 }
 
 void
-TAO_AMH_Response_Handler::_tao_rh_send_exception (CORBA::Exception &ex)
+TAO_AMH_Response_Handler::_tao_rh_send_exception (const CORBA::Exception &ex)
 {
   {
     ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
