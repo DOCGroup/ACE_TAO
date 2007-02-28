@@ -61,8 +61,7 @@ TAO_CodecFactory::create_codec_with_codesets (const IOP::Encoding_1_2 & enc)
                                enc.minor_version,
                                enc.format,
                                char_trans,
-                               wchar_trans
-                              );
+                               wchar_trans);
 }
 
 IOP::Codec_ptr
@@ -72,8 +71,7 @@ TAO_CodecFactory::create_codec (const IOP::Encoding & enc)
                                enc.minor_version,
                                enc.format,
                                0,
-                               0
-                              );
+                               0);
 }
 
 IOP::Codec_ptr
@@ -81,8 +79,7 @@ TAO_CodecFactory::create_codec_i (CORBA::Octet major,
                                   CORBA::Octet minor,
                                   IOP::EncodingFormat encoding_format,
                                   TAO_Codeset_Translator_Base * char_trans,
-                                  TAO_Codeset_Translator_Base * wchar_trans
-                                  )
+                                  TAO_Codeset_Translator_Base * wchar_trans)
 {
   // @todo: Ideally we should have some sort of CodecFactory
   //        registry to make it possible to add factories

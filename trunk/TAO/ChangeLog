@@ -1,3 +1,13 @@
+Wed Feb 28 12:42:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/CodecFactory/CDR_Encaps_Codec.cpp:
+        * tao/CodecFactory/CDR_Encaps_Codec.h:
+        * tao/CodecFactory/CodecFactory.cpp:
+        * tao/CodecFactory/CodecFactory.h:
+        * tao/CodecFactory/CodecFactory_impl.cpp:
+        * tao/CodecFactory/CodecFactory_impl.h:
+          Layout changes
+
 Wed Feb 28 12:34:55 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * tao/CodecFactory/CDR_Encaps_Codec.cpp:
