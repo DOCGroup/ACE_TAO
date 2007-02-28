@@ -27,6 +27,8 @@
 
 #include "tao/ORB.h"
 
+#include "ace/Hash_Map_Manager_T.h"
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -35,6 +37,15 @@ namespace CIAO
 {
   class Dynamic_Component_Servant_Base;
   class Container_Impl;
+
+  typedef ACE_Hash_Map_Manager_Ex<ACE_CString,
+                                  CORBA::PolicyList,
+                                  ACE_Hash<ACE_CString>,
+                                  ACE_Equal_To<ACE_CString>,
+                                  ACE_Null_Mutex> REC_POL_MAP;
+  typedef ACE_Hash_Map_Iterator<ACE_CString,
+                                CORBA::PolicyList,
+                                ACE_Null_Mutex> REC_POL_MAP_ITERATOR;
 
   /**
    * @class Container
@@ -68,6 +79,9 @@ namespace CIAO
 
     /// Get a reference to the underlying ORB.
     CORBA::ORB_ptr the_ORB (void) const;
+
+    /// Set the policy map for all the receptacles hosted in this container.
+    void set_receptacle_policy_map (::CIAO::REC_POL_MAP &rec_pol_map);
 
     /// Initialize the container with a name.
     virtual int init (const char *name = 0,
@@ -113,6 +127,7 @@ namespace CIAO
 
     PortableServer::POA_var home_servant_poa_;
     Container_Impl *container_impl_;
+    ::CIAO::REC_POL_MAP rec_pol_map_;
   private:
     /// Not allowed to be used
     Container (void);

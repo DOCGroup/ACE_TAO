@@ -1,3 +1,32 @@
+Wed Feb 28 22:04:52 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
+
+        * ciao/Container_Base.cpp:
+        * ciao/Container_Base.h:
+        
+          Added a new private variable of type ACE_Hash_Map to hold
+          the receptacle policy list.
+        
+          Added a set operation for setting the value of the receptacle policy
+          map.
+        
+        * DAnCE/NodeApplication/NodeApplication_Impl.cpp:
+        
+          When the Container_Impl class is created, pass on the
+          NA's configurator. The configurator will be used by the
+          Container_Impl class to identify the policies that needs to
+          be set on the components and their ports. Finally, the
+          Container_Impl class lets the container know about these policies.
+        
+        * DAnCE/NodeApplication/Container_Impl.h:
+        * DAnCE/NodeApplication/Container_Impl.inl:
+        * DAnCE/NodeApplication/Container_Impl.cpp:
+        
+          Modified the constructor to receive the NA configurator as
+          an input argument.
+        
+          Added capabilities to collect the policies associated with the
+          receptacles of the components.
+
 Wed Feb 28 14:30:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * CIAO_TAO.mwc:

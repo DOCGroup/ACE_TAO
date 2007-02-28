@@ -32,6 +32,7 @@
 #include "ace/SString.h"
 #include "ciao/Server_init.h"  // write_IOR function & NameUtility
 #include "ciao/CIAO_common.h" // CIAO::debug_level
+#include "NodeApp_Configurator.h"
 
 namespace CIAO
 {
@@ -54,6 +55,7 @@ namespace CIAO
     Container_Impl (CORBA::ORB_ptr o,
                     PortableServer::POA_ptr p,
                     ::Deployment::NodeApplication_ptr server,
+                    NodeApp_Configurator &c,
                     const Static_Config_EntryPoints_Maps* static_entrypts_maps =0);
 
     /// Destructor
@@ -149,6 +151,8 @@ protected:
 
     /// Cached NodeApplication.
     Deployment::NodeApplication_var nodeapp_;
+
+    NodeApp_Configurator &configurator_;
 
     /// To store all created CCMHome object
     typedef ACE_Hash_Map_Manager_Ex<ACE_CString,
