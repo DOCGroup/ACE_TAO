@@ -83,6 +83,9 @@ namespace CIAO
     /// Set the policy map for all the receptacles hosted in this container.
     void set_receptacle_policy_map (::CIAO::REC_POL_MAP &rec_pol_map);
 
+    /// get the receptacle policy given the receptacle name
+    CORBA::PolicyList get_receptacle_policy (const char *name);
+
     /// Initialize the container with a name.
     virtual int init (const char *name = 0,
                       const CORBA::PolicyList *more_policies = 0) = 0;
