@@ -233,8 +233,7 @@ TAO::TypeCode::Union<char const *,
 
 //   if (adapter == 0)
 //     {
-//       ACE_THROW_RETURN (CORBA::INTERNAL (),
-//                         CORBA::TypeCode::_nil ());
+//       throw ::CORBA::INTERNAL ();
 //     }
 
 //   return
@@ -270,8 +269,7 @@ TAO::TypeCode::Union<char const *,
                      CORBA::TypeCode_ptr const *,
                      TAO::TypeCode::Case<char const *,
                                          CORBA::TypeCode_ptr const *> const * const *,
-                     TAO::Null_RefCount_Policy>::name_i (
-  void) const
+                     TAO::Null_RefCount_Policy>::name_i (void) const
 {
   // Ownership is retained by the TypeCode, as required by the C++
   // mapping.
@@ -283,8 +281,7 @@ TAO::TypeCode::Union<char const *,
                      CORBA::TypeCode_ptr const *,
                      TAO::TypeCode::Case<char const *,
                                          CORBA::TypeCode_ptr const *> const * const *,
-                     TAO::Null_RefCount_Policy>::member_count_i (
-  void) const
+                     TAO::Null_RefCount_Policy>::member_count_i (void) const
 {
   return this->ncases_;
 }
@@ -295,8 +292,7 @@ TAO::TypeCode::Union<char const *,
                      TAO::TypeCode::Case<char const *,
                                          CORBA::TypeCode_ptr const *> const * const *,
                      TAO::Null_RefCount_Policy>::member_name_i (
-  CORBA::ULong index
-  ) const
+  CORBA::ULong index) const
 {
   // Ownership is retained by the TypeCode, as required by the C++
   // mapping.
@@ -360,8 +356,7 @@ TAO::TypeCode::Union<char const *,
                      CORBA::TypeCode_ptr const *,
                      TAO::TypeCode::Case<char const *,
                                          CORBA::TypeCode_ptr const *> const * const *,
-                     TAO::Null_RefCount_Policy>::discriminator_type_i (
-  void) const
+                     TAO::Null_RefCount_Policy>::discriminator_type_i (void) const
 {
   return
     CORBA::TypeCode::_duplicate (
@@ -373,8 +368,7 @@ TAO::TypeCode::Union<char const *,
                      CORBA::TypeCode_ptr const *,
                      TAO::TypeCode::Case<char const *,
                                          CORBA::TypeCode_ptr const *> const * const *,
-                     TAO::Null_RefCount_Policy>::default_index_i (
-  void) const
+                     TAO::Null_RefCount_Policy>::default_index_i (void) const
 {
   return this->default_index_;
 }

@@ -51,8 +51,7 @@ TAO_DynamicImplementation::_get_interface (void)
 {
   TAO_IFR_Client_Adapter *adapter =
     ACE_Dynamic_Service<TAO_IFR_Client_Adapter>::instance (
-        TAO_ORB_Core::ifr_client_adapter_name ()
-      );
+        TAO_ORB_Core::ifr_client_adapter_name ());
 
   if (adapter == 0)
     {
