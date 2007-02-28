@@ -36,6 +36,10 @@
 #include "tao/CDR.h"
 #include "tao/AnyTypeCode/NVList.h"
 
+#if defined (TAO_HAS_AMI)
+#include "tao/Messaging/Messaging.h"
+#endif /* TAO_HAS_AMI */
+
 #include "ace/SString.h"
 
 #if defined (TAO_EXPORT_MACRO)
@@ -151,7 +155,18 @@ namespace CORBA
     /// Callback method for deferred synchronous requests.
     void handle_response (TAO_InputCDR &incoming,
                           CORBA::ULong reply_status
-                          );
+                         );
+
+#if defined (TAO_HAS_AMI)
+    /// The 'asychronous' send method. The object is a DSI based callback
+    /// handler. This handler must implement Messaging::ReplyHandler
+    void sendc (CORBA::Object_ptr handler);
+
+    static void _tao_reply_stub (TAO_InputCDR &_tao_reply_cdr,
+                                 Messaging::ReplyHandler_ptr _tao_reply_handler,
+                                 CORBA::ULong reply_status
+                                );
+#endif /* TAO_HAS_AMI */
 
     /// Pseudo object methods.
     static CORBA::Request* _duplicate (CORBA::Request*);
