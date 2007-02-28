@@ -1,3 +1,10 @@
+Wed Feb 28 13:32:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-hpux-11.00.h:
+          Moved ACE_HAS_SSIZE_T outside of the compiler specific part, gcc
+          and aCC do have ssize_t. Also moved ACE_HAS_XPG4_MULTIBYTE_CHAR
+          outside of the compiler part.
+
 Wed Feb 28 11:09:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_unistd.cpp (num_processors):
