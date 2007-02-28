@@ -1,3 +1,12 @@
+Wed Feb 28 09:44:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/corba-boolean.perl:
+        * bin/rm_exception_macros.pl:
+        * bin/subst_env.pl:
+        * bin/tao_env.pl:
+        * bin/tao_svcconf.pl:
+          Moved to TAO/bin, no need to ship these with ACE
+
 Wed Feb 28 08:14:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/DLL_Manager.cpp:
