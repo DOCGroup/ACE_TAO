@@ -1,3 +1,10 @@
+Wed Feb 28 23:11:13 UTC 2007  Wallace Zhang  <zhang_w@ociweb.com>
+
+        * orbsvcs/orbsvcs/AsynchProxyTools/ProxyServant.h:
+        * orbsvcs/orbsvcs/AsynchProxyTools/ProxyServant.cpp:
+
+          Added basic implementation for TAO_ProxyServant.
+
 Wed Feb 28 16:41:23 2007  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/orbsvcs/AsynchProxyTools/AsynchProxyTools_Export.h:
