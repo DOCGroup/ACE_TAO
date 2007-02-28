@@ -19,6 +19,7 @@ project(NodeApplicationLib): ciao_server_dnc, ciao_events_dnc, ciao_noop_configu
     Container_Impl.cpp
     NodeApplication_Core.cpp
     NodeApplication_Impl.cpp
+    NodeApp_Configurator.cpp
   }
 }
 
