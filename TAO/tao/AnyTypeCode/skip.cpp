@@ -96,9 +96,7 @@ TAO_Marshal_Primitive::skip (CORBA::TypeCode_ptr  tc, TAO_InputCDR *stream)
 }
 
 TAO::traverse_status
-TAO_Marshal_Any::skip (CORBA::TypeCode_ptr,
-                       TAO_InputCDR *stream
-                       )
+TAO_Marshal_Any::skip (CORBA::TypeCode_ptr, TAO_InputCDR *stream)
 {
   // Typecode of the element that makes the Any.
   CORBA::TypeCode_var elem_tc;
@@ -107,9 +105,7 @@ TAO_Marshal_Any::skip (CORBA::TypeCode_ptr,
   if (!(*stream >> elem_tc.inout ()))
     return TAO::TRAVERSE_STOP;
 
-  return TAO_Marshal_Object::perform_skip (elem_tc.in (),
-                                           stream
-                                          );
+  return TAO_Marshal_Object::perform_skip (elem_tc.in (), stream);
 }
 
 TAO::traverse_status
@@ -209,9 +205,7 @@ TAO_Marshal_TypeCode::skip (CORBA::TypeCode_ptr, TAO_InputCDR *stream)
 }
 
 TAO::traverse_status
-TAO_Marshal_Principal::skip (CORBA::TypeCode_ptr,
-                             TAO_InputCDR *stream
-                             )
+TAO_Marshal_Principal::skip (CORBA::TypeCode_ptr, TAO_InputCDR *stream)
 {
   CORBA::Boolean continue_skipping = true;
 
@@ -238,15 +232,12 @@ TAO_Marshal_Principal::skip (CORBA::TypeCode_ptr,
 }
 
 TAO::traverse_status
-TAO_Marshal_ObjRef::skip (CORBA::TypeCode_ptr,
-                          TAO_InputCDR *stream
-                          )
+TAO_Marshal_ObjRef::skip (CORBA::TypeCode_ptr, TAO_InputCDR *stream)
 {
   CORBA::Boolean continue_skipping = true;
 
   // return status
-  TAO::traverse_status retval =
-    TAO::TRAVERSE_CONTINUE;
+  TAO::traverse_status retval = TAO::TRAVERSE_CONTINUE;
 
   // First, skip the type hint. This will be the type_id encoded in an
   // object reference.
@@ -298,9 +289,7 @@ TAO_Marshal_ObjRef::skip (CORBA::TypeCode_ptr,
 }
 
 TAO::traverse_status
-TAO_Marshal_Struct::skip (CORBA::TypeCode_ptr  tc,
-                          TAO_InputCDR *stream
-                          )
+TAO_Marshal_Struct::skip (CORBA::TypeCode_ptr  tc, TAO_InputCDR *stream)
 {
   TAO::traverse_status retval = TAO::TRAVERSE_CONTINUE;
   CORBA::TypeCode_var param;
@@ -315,9 +304,7 @@ TAO_Marshal_Struct::skip (CORBA::TypeCode_ptr  tc,
     {
       param = tc->member_type (i);
 
-      retval = TAO_Marshal_Object::perform_skip (param.in (),
-                                                 stream
-                                                );
+      retval = TAO_Marshal_Object::perform_skip (param.in (), stream);
     }
 
   if (retval == TAO::TRAVERSE_CONTINUE)
@@ -331,9 +318,7 @@ TAO_Marshal_Struct::skip (CORBA::TypeCode_ptr  tc,
 }
 
 TAO::traverse_status
-TAO_Marshal_Union::skip (CORBA::TypeCode_ptr  tc,
-                         TAO_InputCDR *src
-                         )
+TAO_Marshal_Union::skip (CORBA::TypeCode_ptr  tc, TAO_InputCDR *src)
 {
   CORBA::TypeCode_var discrim_tc =
     tc->discriminator_type ();
@@ -486,8 +471,7 @@ TAO_Marshal_Union::skip (CORBA::TypeCode_ptr  tc,
                   dynamic_cast<TAO::Unknown_IDL_Type *> (impl);
 
                 if (!unk)
-                  ACE_THROW_RETURN (CORBA::INTERNAL (),
-                                    TAO::TRAVERSE_STOP);
+                  throw ::CORBA::INTERNAL ();
 
                 // We don't want unk's rd_ptr to move, in case
                 // we are shared by another Any, so we use this
@@ -570,9 +554,7 @@ TAO_Marshal_Union::skip (CORBA::TypeCode_ptr  tc,
 }
 
 TAO::traverse_status
-TAO_Marshal_String::skip (CORBA::TypeCode_ptr,
-                          TAO_InputCDR *stream
-                          )
+TAO_Marshal_String::skip (CORBA::TypeCode_ptr, TAO_InputCDR *stream)
 {
   CORBA::Boolean continue_skipping = true;
 
@@ -597,9 +579,7 @@ TAO_Marshal_String::skip (CORBA::TypeCode_ptr,
 }
 
 TAO::traverse_status
-TAO_Marshal_Sequence::skip (CORBA::TypeCode_ptr  tc,
-                            TAO_InputCDR *stream
-                            )
+TAO_Marshal_Sequence::skip (CORBA::TypeCode_ptr tc, TAO_InputCDR *stream)
 {
   // Size of element.
   CORBA::ULong bounds;
