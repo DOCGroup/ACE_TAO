@@ -102,8 +102,7 @@ TAO_CDR_Encaps_Codec::encode (const CORBA::Any & data)
 }
 
 CORBA::Any *
-TAO_CDR_Encaps_Codec::decode (const CORBA::OctetSeq & data
-                              )
+TAO_CDR_Encaps_Codec::decode (const CORBA::OctetSeq & data)
 {
   // @todo How do we check for a format mismatch so that we can throw
   //       a IOP::Codec::FormatMismatch exception?
@@ -163,11 +162,9 @@ TAO_CDR_Encaps_Codec::decode (const CORBA::OctetSeq & data
 }
 
 CORBA::OctetSeq *
-TAO_CDR_Encaps_Codec::encode_value (const CORBA::Any & data
-                                    )
+TAO_CDR_Encaps_Codec::encode_value (const CORBA::Any & data)
 {
-  this->check_type_for_encoding (data
-                                );
+  this->check_type_for_encoding (data);
 
   // ----------------------------------------------------------------
   TAO_OutputCDR cdr ((size_t) 0,            // size
@@ -198,7 +195,7 @@ TAO_CDR_Encaps_Codec::encode_value (const CORBA::Any & data
             dynamic_cast<TAO::Unknown_IDL_Type *> (impl);
 
           if (!unk)
-            throw CORBA::INTERNAL ();
+            throw ::CORBA::INTERNAL ();
 
           // We don't want unk's rd_ptr to move, in case we are shared by
           // another Any, so we use this to copy the state, not the buffer.
@@ -206,8 +203,7 @@ TAO_CDR_Encaps_Codec::encode_value (const CORBA::Any & data
 
           TAO_Marshal_Object::perform_append (data._tao_get_typecode (),
                                               &for_reading,
-                                              &cdr
-                                             );
+                                              &cdr);
         }
       else
         {
@@ -252,8 +248,7 @@ TAO_CDR_Encaps_Codec::encode_value (const CORBA::Any & data
 
 CORBA::Any *
 TAO_CDR_Encaps_Codec::decode_value (const CORBA::OctetSeq & data,
-                                    CORBA::TypeCode_ptr tc
-                                    )
+                                    CORBA::TypeCode_ptr tc)
 {
   // The ACE_CDR::mb_align() call can shift the rd_ptr by up
   // to ACE_CDR::MAX_ALIGNMENT-1 bytes. Similarly, the offset
@@ -334,10 +329,7 @@ TAO_CDR_Encaps_Codec::decode_value (const CORBA::OctetSeq & data,
 }
 
 void
-TAO_CDR_Encaps_Codec::check_type_for_encoding (
-    const CORBA::Any & data
-
-  )
+TAO_CDR_Encaps_Codec::check_type_for_encoding (const CORBA::Any & data)
 {
   // @@ TODO: Are there any other conditions we need to check?
 
