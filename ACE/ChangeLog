@@ -1,3 +1,9 @@
+Wed Feb 28 19:16:12 UTC 2007  Martin Corino  <mcorino@remedy.nl>
+
+        * ace/DLL_Manager.cpp:
+        * ace/Parse_Node.cpp:
+          Fixed pointer conversion warnings on OpenVMS.
+
 Wed Feb 28 17:44:20 UTC 2007  Ossama Othman  <ossama_othman at symantec dot com>
 
         * ace/Truncate.h (Truncator):
