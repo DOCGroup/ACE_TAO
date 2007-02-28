@@ -1,8 +1,0 @@
-// $Id$
-
-project : ciaocidldefaults {
-  after += RACE_common_stub
-  libs  += RACE_common_stub CIAO_Deployment_stub
-  includes += $(CIAO_ROOT)/RACE
-  idlflags += -I$(CIAO_ROOT)/RACE
-}

@@ -22,11 +22,8 @@ NodeApplicationManager_Impl_Base (CORBA::ORB_ptr o,
 ACE_INLINE
 void
 CIAO::NodeApplicationManager_Impl_Base::
-parse_config_value (ACE_CString & str)
+parse_config_value (ACE_CString &)
 {
-  // The unused arg is for future improvemnts.
-  ACE_UNUSED_ARG (str);
-
   throw CORBA::NO_IMPLEMENT();
 }
 

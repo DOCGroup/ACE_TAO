@@ -1,8 +1,30 @@
+Wed Feb 28 09:33:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * MPC/config/ciao_nodeapp_configurator.mpb:
+          New base project
+
+        * MPC/config/ciao_nodeapplication.mpb:
+          Updated because of new project
+
+        * MPC/config/ciao_race_component.mpb:
+        * MPC/config/ciao_race_default.mpb:
+        * MPC/config/ciao_race_monitor.mpb:
+          Removed, RACE is removed for the moment
+
+        * DAnCE/NodeApplication/NodeApplication.mpc:
+          Use the new base project
+
+        * NodeApplicationManager/NodeApplicationManager_Impl.h:
+          Layout changes
+
+        * NodeApplicationManager/NodeApplicationManager_Impl.inl:
+          No need to use ACE_UNUSED_ARG
+
 Wed Feb 28 07:00:15 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
 
         * DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.cpp:
         * DAnCE/NodeApplication/NodeApplication.mpc:
-        
+
           Added missing includes to the .cpp file, and added
           missing file for compilation in the .mpc file.
 
@@ -39,9 +61,9 @@ Tue Feb 27 21:35:17 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
         * DAnCE/NodeApplication/NodeApplication.mpc:
 
           Made modifications to compile the newly added files.
-        
+
         * DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.h:
-        
+
           Changed the private variable type for the NA Configurator used.
 
 Tue Feb 27 20:11:28 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>

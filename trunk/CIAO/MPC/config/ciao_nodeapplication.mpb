@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project : ciao_deployment_stub, ciao_noop_configurator {
+project : ciao_deployment_stub, ciao_nodeapp_configurator {
   libs  += CIAO_NodeApplication
   after += NodeApplicationLib
 }
