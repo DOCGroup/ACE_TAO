@@ -3,6 +3,7 @@
 #include "NAConfig_Manager.h"
 #include "ciao/CIAO_common.h"
 #include "ace/SString.h"
+#include "tao/SystemException.h"
 #include "tao/DiffServPolicy/DiffServPolicyC.h"
 #include "tao/DiffServPolicy/Client_Network_Priority_Policy.h"
 #include "tao/DiffServPolicy/Server_Network_Priority_Policy.h"
@@ -33,7 +34,7 @@ CIAO::NAResource_Config_Manager::init_resources
 
   if (CORBA::is_nil (this->orb_.in()))
     {
-      ACE_DEBUG ((LM_DEBUG,
+      ACE_ERROR ((LM_ERROR,
                   "NAResource_Config_Manager has not been properly initialized\n"));
       throw CORBA::INTERNAL ();
     }
@@ -56,7 +57,7 @@ CIAO::NAResource_Config_Manager::init_resources
           CORBA::Policy_var temp_policy =
             this->create_single_policy (sets[i].policies[pc]);
 
-          if (temp_policy == 0)
+          if (CORBA::is_nil (temp_policy.in ()))
             {
               array_index = array_index - 1;
               policy_list->length (array_index);
@@ -76,7 +77,7 @@ CIAO::NAResource_Config_Manager::init_resources
           if (this->policy_map_.bind (sets[i].Id.in (),
                                       policy_list) != 0)
             {
-              ACE_DEBUG ((LM_DEBUG,
+              ACE_ERROR ((LM_ERROR,
                           "Error binding Policy_Set with name: %s\n",
                           sets[i].Id.in ()));
               throw CORBA::INTERNAL ();
@@ -85,7 +86,7 @@ CIAO::NAResource_Config_Manager::init_resources
             {
               ACE_DEBUG ((LM_DEBUG,
                           "NAResource_Config_Manager::init_resource"
-                          " added policy set : %s with %d policies\n", 
+                          " added policy set : %s with %d policies\n",
                           sets[i].Id.in (), array_index));
             }
         }
@@ -104,7 +105,7 @@ CIAO::NAResource_Config_Manager::policy_exists (const char *name)
 {
   if (name == 0)
     {
-      ACE_DEBUG ((LM_DEBUG,
+      ACE_ERROR ((LM_ERROR,
                   "Invalid name string found in "
                   "CIAO::NAResource_Config_Manager::policy_exists\n"));
       throw CORBA::INTERNAL ();
