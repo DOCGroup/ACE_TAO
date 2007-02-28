@@ -24,6 +24,7 @@
 #include "Config_Manager.h"
 #include "ace/DLL.h"
 #include "ace/Auto_Ptr.h"
+#include "NodeApp_Configurator_Export.h"
 
 namespace CIAO
 {
@@ -35,7 +36,7 @@ namespace CIAO
    * NodeApp_Configurator base class that's needed for configuring the
    * NodeApplication process.
    **/
-  class NodeApp_Configurator
+  class NODEAPP_Configurator_Export NodeApp_Configurator
   {
   public:
 
@@ -77,8 +78,7 @@ namespace CIAO
 
     int create_config_managers (void);
 
-    bool
-    policy_exists (const char *policy_set_id);
+    bool policy_exists (const char *policy_set_id);
 
     CORBA::PolicyList *
     find_policies_by_name (const char *name);
