@@ -1,3 +1,10 @@
+Wed Feb 28 17:44:20 UTC 2007  Ossama Othman  <ossama_othman at symantec dot com>
+
+        * ace/Truncate.h (Truncator):
+
+          Fixed typo in the ACE_LACKS_UNSIGNEDLONGLONG_T case.
+          s/ACE_UIN32/ACE_UINT32/.
+
 Wed Feb 28 13:32:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-hpux-11.00.h:
