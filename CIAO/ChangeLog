@@ -1,3 +1,8 @@
+Wed Feb 28 14:30:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * CIAO_TAO.mwc:
+          Removed RACE
+
 Wed Feb 28 09:33:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * MPC/config/ciao_nodeapp_configurator.mpb:
