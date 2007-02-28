@@ -1,3 +1,9 @@
+Wed Feb 28 21:34:45 UTC 2007  Wallace Zhang  <zhang_w@ociweb.com>
+
+        * bin/tao_orb_tests.lst:
+
+          Added two new TAO tests.
+
 Wed Feb 28 19:16:12 UTC 2007  Martin Corino  <mcorino@remedy.nl>
 
         * ace/DLL_Manager.cpp:
