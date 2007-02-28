@@ -475,6 +475,7 @@ CIAO::NodeApplication_Impl::create_container (
                     CIAO::Container_Impl (this->orb_.in (),
                                           this->poa_.in (),
                                           this->get_objref (),
+                                          this->configurator_,
                                           this->static_entrypts_maps_),
                     CORBA::NO_MEMORY ());
 
