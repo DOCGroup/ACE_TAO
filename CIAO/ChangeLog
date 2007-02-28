@@ -1,3 +1,11 @@
+Wed Feb 28 22:19:37 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
+
+        * ciao/Container_Base.cpp:
+        * ciao/Container_Base.h:
+        
+          Added a method to get the receptacle policy associated
+          with a receptacle.
+
 Wed Feb 28 22:04:52 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
 
         * ciao/Container_Base.cpp:
