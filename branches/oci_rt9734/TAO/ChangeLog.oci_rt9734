@@ -1,3 +1,9 @@
+Wed Feb 28 16:41:23 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/orbsvcs/AsynchProxyTools/AsynchProxyTools_Export.h:
+          The file was named wrong (omitted the 'h' in Asynch). Deleted
+          the old file and added this.
+
 Wed Feb 28 22:14:41 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/orbsvcs/AsynchProxyTools/AsyncProxyTools_Export.h:
