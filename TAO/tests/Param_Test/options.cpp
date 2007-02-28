@@ -192,7 +192,7 @@ Options::read_ior (char *filename)
                        "Unable to open %s for writing: %p\n",
                        filename),
                       -1);
-  ACE_Read_Buffer ior_buffer (f_handle);
+  ACE_Read_Buffer ior_buffer (f_handle, true);
   this->ior_ = ior_buffer.read ();
 
   if (this->ior_.in () == 0)

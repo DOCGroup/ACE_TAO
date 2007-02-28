@@ -1,3 +1,8 @@
+Wed Feb 28 14:44:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Param_Test/options.cpp:
+          Fixed memory leak when reading ior file
+
 Wed Feb 28 12:42:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/CodecFactory/CDR_Encaps_Codec.cpp:
