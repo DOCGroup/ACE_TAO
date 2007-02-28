@@ -264,8 +264,7 @@ TAO::TypeCode::Union<StringType,
 
 //   if (adapter == 0)
 //     {
-//       ACE_THROW_RETURN (CORBA::INTERNAL (),
-//                         CORBA::TypeCode::_nil ());
+//       throw ::CORBA::INTERNAL ();
 //     }
 
 //   return
@@ -293,8 +292,7 @@ char const *
 TAO::TypeCode::Union<StringType,
                      TypeCodeType,
                      CaseArrayType,
-                     RefCountPolicy>::id_i (
-  void) const
+                     RefCountPolicy>::id_i (void) const
 {
   // Ownership is retained by the TypeCode, as required by the C++
   // mapping.
@@ -309,8 +307,7 @@ char const *
 TAO::TypeCode::Union<StringType,
                      TypeCodeType,
                      CaseArrayType,
-                     RefCountPolicy>::name_i (
-  void) const
+                     RefCountPolicy>::name_i (void) const
 {
   // Ownership is retained by the TypeCode, as required by the C++
   // mapping.
@@ -339,8 +336,7 @@ char const *
 TAO::TypeCode::Union<StringType,
                      TypeCodeType,
                      CaseArrayType,
-                     RefCountPolicy>::member_name_i (CORBA::ULong index
-                                                     ) const
+                     RefCountPolicy>::member_name_i (CORBA::ULong index) const
 {
   // Ownership is retained by the TypeCode, as required by the C++
   // mapping.
@@ -358,8 +354,7 @@ CORBA::TypeCode_ptr
 TAO::TypeCode::Union<StringType,
                      TypeCodeType,
                      CaseArrayType,
-                     RefCountPolicy>::member_type_i (CORBA::ULong index
-                                                     ) const
+                     RefCountPolicy>::member_type_i (CORBA::ULong index) const
 {
   if (index >= this->ncases_)
     throw ::CORBA::TypeCode::Bounds ();
@@ -413,8 +408,7 @@ CORBA::TypeCode_ptr
 TAO::TypeCode::Union<StringType,
                      TypeCodeType,
                      CaseArrayType,
-                     RefCountPolicy>::discriminator_type_i (
-  void) const
+                     RefCountPolicy>::discriminator_type_i (void) const
 {
   return
     CORBA::TypeCode::_duplicate (
@@ -429,8 +423,7 @@ CORBA::Long
 TAO::TypeCode::Union<StringType,
                      TypeCodeType,
                      CaseArrayType,
-                     RefCountPolicy>::default_index_i (
-  void) const
+                     RefCountPolicy>::default_index_i (void) const
 {
   return this->default_index_;
 }

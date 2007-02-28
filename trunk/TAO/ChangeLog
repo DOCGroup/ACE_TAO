@@ -1,3 +1,13 @@
+Wed Feb 28 10:05:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/AnyTypeCode/append.cpp:
+        * tao/AnyTypeCode/Union_TypeCode.cpp:
+        * tao/AnyTypeCode/Union_TypeCode_Static.cpp:
+          Zapped another few old exception macros
+
+        * tao/DynamicInterface/Dynamic_Implementation.cpp:
+          Layout changes
+
 Wed Feb 28 09:40:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/*:
