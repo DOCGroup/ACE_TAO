@@ -198,7 +198,7 @@ TAO_CDR_Encaps_Codec::encode_value (const CORBA::Any & data
             dynamic_cast<TAO::Unknown_IDL_Type *> (impl);
 
           if (!unk)
-            ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
+            throw CORBA::INTERNAL ();
 
           // We don't want unk's rd_ptr to move, in case we are shared by
           // another Any, so we use this to copy the state, not the buffer.
