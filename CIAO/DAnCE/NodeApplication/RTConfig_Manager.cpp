@@ -269,9 +269,9 @@ CIAO::RTResource_Config_Manager::init_resources
       // Create a list of policies
       for (CORBA::ULong pc = 0; pc < np; ++pc)
         {
-          CORBA::Policy_var temp_policy = 
+          CORBA::Policy_var temp_policy =
             this->create_single_policy (sets[i].policies[pc]);
-          if (temp_policy == 0)
+          if (CORBA::is_nil (temp_policy.in ()))
             {
               array_index = array_index - 1;
               policy_list->length (array_index);
@@ -291,10 +291,10 @@ CIAO::RTResource_Config_Manager::init_resources
           if (this->policy_map_.bind (sets[i].Id.in (),
                                       policy_list) != 0)
             {
-              ACE_DEBUG ((LM_DEBUG,
+              ACE_ERROR ((LM_ERROR,
                           "Error binding Policy_Set with name: %s\n",
                           sets[i].Id.in ()));
-              throw CORBA::INTERNAL (); 
+              throw CORBA::INTERNAL ();
             }
           else
             {
