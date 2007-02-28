@@ -47,8 +47,7 @@ TAO::SSLIOP::Connection_Handler::Connection_Handler (
     TAO_Connection_Handler (orb_core),
     current_ ()
 {
-  this->current_ =
-    TAO::SSLIOP::Util::current (orb_core);
+  this->current_ = TAO::SSLIOP::Util::current (orb_core);
 
   TAO::SSLIOP::Transport* specific_transport = 0;
   ACE_NEW (specific_transport,
@@ -112,7 +111,7 @@ TAO::SSLIOP::Connection_Handler::open (void *)
                 protocol_properties);
             }
         }
-      catch (const CORBA::Exception& ex)
+      catch (const CORBA::Exception&)
         {
           return -1;
         }
@@ -364,8 +363,7 @@ TAO::SSLIOP::Connection_Handler::add_transport_to_cache (void)
     this->orb_core ()->lane_resources ().transport_cache ();
 
   // Add the handler to Cache
-  return cache.cache_idle_transport (&prop,
-                                     this->transport ());
+  return cache.cache_idle_transport (&prop, this->transport ());
 }
 
 int

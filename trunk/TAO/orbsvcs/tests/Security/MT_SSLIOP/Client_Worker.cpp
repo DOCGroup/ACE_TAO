@@ -29,7 +29,7 @@ Client_Worker::validate_connection (void)
             ACE_DEBUG (( LM_DEBUG,
                          "******** VALIDATED ******* \n"));
         }
-      catch (const CORBA::Exception& ex)
+      catch (const CORBA::Exception&)
         {
         }
    }
