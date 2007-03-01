@@ -4225,12 +4225,14 @@ libTAO_DynamicInterface_la_CPPFLAGS = \
   -DTAO_DYNAMICINTERFACE_BUILD_DLL
 
 libTAO_DynamicInterface_la_SOURCES = \
+  DynamicInterface/AMH_DSI_Response_Handler.cpp \
   DynamicInterface/Context.cpp \
   DynamicInterface/DII_Arguments.cpp \
   DynamicInterface/DII_Arguments_Converter_Impl.cpp \
   DynamicInterface/DII_Invocation.cpp \
   DynamicInterface/DII_Invocation_Adapter.cpp \
   DynamicInterface/DII_Reply_Dispatcher.cpp \
+  DynamicInterface/DII_Reply_Handler.cpp \
   DynamicInterface/Dynamic_Adapter_Impl.cpp \
   DynamicInterface/Dynamic_Implementation.cpp \
   DynamicInterface/ExceptionList.cpp \
