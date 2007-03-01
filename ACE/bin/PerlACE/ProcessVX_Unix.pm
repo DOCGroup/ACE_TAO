@@ -262,7 +262,8 @@ sub Spawn ()
         @cmds[$cmdnr++] = 'C memShow()';
     }
 
-    @cmds[$cmdnr++] = $program . '.vxe ' . $self->{ARGUMENTS};
+    $cmdline = $program . '.vxe ' . $self->{ARGUMENTS};
+    @cmds[$cmdnr++] = $cmdline;
 
     FORK:
     {

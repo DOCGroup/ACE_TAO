@@ -86,6 +86,10 @@ sub Executable
 
     my $executable = $self->{EXECUTABLE};
 
+    if (PerlACE::is_vxworks_test()) {
+        $executable = PerlACE::VX_HostFile ($executable);
+    }
+    
     if ($self->{IGNOREEXESUBDIR}) {
         return $executable;
     }
