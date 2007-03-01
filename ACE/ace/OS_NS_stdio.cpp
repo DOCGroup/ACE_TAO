@@ -328,7 +328,7 @@ ACE_OS::snprintf (wchar_t *buf, size_t maxlen, const wchar_t *format, ...)
   // ACE_OS_TRACE ("ACE_OS::snprintf");
 # if (defined _XOPEN_SOURCE && (_XOPEN_SOURCE - 0) >= 500) || \
      (defined (sun) && !defined (_XPG4) || defined(_XPG5)) || \
-     defined (ACE_WIN32)
+     defined (ACE_WIN32) || defined (ACE_HAS_VSWPRINTF)
   int result;
   va_list ap;
   va_start (ap, format);
@@ -387,7 +387,8 @@ ACE_OS::sprintf (wchar_t *buf, const wchar_t *format, ...)
 
 # if (defined _XOPEN_SOURCE && (_XOPEN_SOURCE - 0) >= 500) || \
      (defined (sun) && !defined (_XPG4) || defined(_XPG5)) || \
-     (defined ACE_HAS_DINKUM_STL) || defined (__DMC__)
+     (defined ACE_HAS_DINKUM_STL) || defined (__DMC__) || \
+      defined ACE_HAS_VSWPRINTF
 
   // The XPG4/UNIX98/C99 signature of the wide-char sprintf has a
   // maxlen argument. Since this method doesn't supply one, pass in
