@@ -1,3 +1,12 @@
+Thu Mar  1 08:51:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_stdio.{cpp,inl}:
+          Introduced new ACE_HAS_VSWPRINTF that we can set when a platform
+          has this method
+
+        * ace/config-hpux-11.00.h:
+          Added ACE_HAS_VSWPRINTF
+
 Wed Feb 28 21:34:45 UTC 2007  Wallace Zhang  <zhang_w@ociweb.com>
 
         * bin/tao_orb_tests.lst:

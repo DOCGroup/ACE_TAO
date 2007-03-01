@@ -382,6 +382,7 @@
 
 #define ACE_LACKS_SUSECONDS_T
 #define ACE_LACKS_SYS_SYSCTL_H
+#define ACE_HAS_VSWPRINTF
 
 // Shared library name/path components
 #if defined (__ia64)
