@@ -20,7 +20,8 @@ TAO_DII_Reply_Handler_var::TAO_DII_Reply_Handler_var (void)
 }
 
 ACE_INLINE
-TAO_DII_Reply_Handler_var::TAO_DII_Reply_Handler_var (TAO_DII_Reply_Handler_ptr p)
+TAO_DII_Reply_Handler_var::TAO_DII_Reply_Handler_var (
+    TAO_DII_Reply_Handler_ptr p)
   : ptr_ (p)
 {}
 
@@ -37,7 +38,8 @@ TAO_DII_Reply_Handler_var::ptr (void) const
 }
 
 ACE_INLINE
-TAO_DII_Reply_Handler_var::TAO_DII_Reply_Handler_var (const TAO_DII_Reply_Handler_var &p)
+TAO_DII_Reply_Handler_var::TAO_DII_Reply_Handler_var (
+    const TAO_DII_Reply_Handler_var &p)
   : ptr_ (TAO_DII_Reply_Handler::_duplicate (p.ptr ()))
 {}
 

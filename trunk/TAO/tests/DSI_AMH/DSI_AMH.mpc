@@ -1,7 +1,8 @@
 // -*- MPC -*-
 // $Id$
 
-project(*Server): taoserver, dynamicinterface, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
+project(*Server): taoserver, dynamicinterface, avoids_minimum_corba,
+avoids_corba_e_compact, avoids_corba_e_micro {
   IDL_Files {
   }
   Source_Files {
@@ -10,7 +11,8 @@ project(*Server): taoserver, dynamicinterface, avoids_minimum_corba, avoids_corb
   }
 }
 
-project(*Client): taoclient, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
+project(*Client): taoclient, avoids_minimum_corba,
+avoids_corba_e_compact, avoids_corba_e_micro {
   Source_Files {
     TestC.cpp
     client.cpp

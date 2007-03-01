@@ -181,7 +181,9 @@ TAO_DII_Asynch_Reply_Dispatcher::dispatch_reply (
   if (TAO_debug_level >= 4)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("(%P | %t):TAO_DII_Asynch_Reply_Dispatcher::dispatch_reply: status = %d\n"), this->reply_status_));
+                  ACE_TEXT ("(%P | %t):")
+                  ACE_TEXT ("TAO_DII_Asynch_Reply_Dispatcher::dispatch_reply: status = %d\n"),
+                  this->reply_status_));
     }
 
   try
@@ -219,9 +221,10 @@ TAO_DII_Asynch_Reply_Dispatcher::connection_closed (void)
 
       // Turn into an output CDR
       TAO_InputCDR cdr (out_cdr);
-      CORBA::Request::_tao_reply_stub (this->reply_cdr_,
-                                       this->callback_,
-                                       TAO_PLUGGABLE_MESSAGE_SYSTEM_EXCEPTION);
+      CORBA::Request::_tao_reply_stub (
+          this->reply_cdr_,
+          this->callback_,
+          TAO_PLUGGABLE_MESSAGE_SYSTEM_EXCEPTION);
     }
   catch (const CORBA::Exception& ex)
     {
