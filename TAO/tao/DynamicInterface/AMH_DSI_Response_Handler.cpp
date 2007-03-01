@@ -220,11 +220,6 @@ TAO_AMH_DSI_Exception_Holder_out::operator-> (void)
 TAO_AMH_DSI_Exception_Holder *
 TAO_AMH_DSI_Exception_Holder::_downcast (CORBA::ValueBase * v)
 {
-  if (v == 0)
-    {
-      return 0;
-    }
-
   return dynamic_cast < TAO_AMH_DSI_Exception_Holder * >(v);
 }
 
