@@ -128,6 +128,8 @@
 // Compiler supports template specialization.
 #    define ACE_HAS_TEMPLATE_SPECIALIZATION
 
+#    define ACE_HAS_VSWPRINTF
+
 #  endif /* __cplusplus < 199707L */
 
 // Compiler doesn't handle 'signed char' correctly (used in ace/IOStream.h)
@@ -382,7 +384,6 @@
 
 #define ACE_LACKS_SUSECONDS_T
 #define ACE_LACKS_SYS_SYSCTL_H
-#define ACE_HAS_VSWPRINTF
 
 // Shared library name/path components
 #if defined (__ia64)
