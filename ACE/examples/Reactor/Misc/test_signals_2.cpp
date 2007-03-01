@@ -168,7 +168,7 @@ public:
 	else
 	  ACE_DEBUG ((LM_DEBUG,
                       "\nshutting down SIGINT in Sig_Handler_1 (%s, %d, %d)",
-		     this->msg_,
+                      this->msg_,
                       this->int_sigkey_,
                       this->quit_sigkey_));
       }
@@ -229,7 +229,6 @@ external_handler (int signum)
               signum));
 }
 
-#if !defined (HPUX)
 int
 ACE_TMAIN (int argc, ACE_TCHAR *[])
 {
@@ -273,19 +272,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *[])
                   "\nwaiting for SIGINT or SIGQUIT\n"));
 
       if (reactor.handle_events () == -1)
-	ACE_ERROR ((LM_ERROR,
+        ACE_ERROR ((LM_ERROR,
                     "%p\n",
                     "handle_events"));
     }
 
   ACE_NOTREACHED (return 0);
 }
-#else
-int
-main (int, char *[])
-{
-  ACE_ERROR_RETURN ((LM_ERROR,
-                     "The HP C++ compiler is too lame to support this feature\n"),
-                    -1);
-}
-#endif /* HPUX */
