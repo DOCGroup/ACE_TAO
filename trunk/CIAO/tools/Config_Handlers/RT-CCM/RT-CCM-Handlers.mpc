@@ -18,7 +18,7 @@ project (RT_CCM_XML_Generation) : xscdefaults {
    }
 }
 
-project (RT_CCM_Config_Handlers) : acelib, ciao_deployment_stub, ciao_xml_utils {
+project (RT_CCM_Config_Handlers) : acelib, ciao_deployment_stub, ciao_config_handlers_base {
   sharedname = RT_CCM_Config_Handlers
   dynamicflags   = RT_CCM_HANDLERS_BUILD_DLL
   macros   += XML_USE_PTHREADS
