@@ -1,3 +1,11 @@
+Thu Mar  1 22:20:28 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
+
+        * DAnCE/NodeApplication/Container_Impl.cpp:
+        
+          A minor change to add a "_" to the receptacle name,
+          that is used as a key in a Hash Map storing the
+          receptacle policies and the receptacle name.
+
 Thu Mar  1 07:17:00 UTC 2007  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * tools/Config_Handlers/ccd.hpp:

@@ -101,6 +101,7 @@ CIAO::Container_Impl::install (
                        name.in ();
                      instance_name = impl_infos[i].
                        component_instance_name.in ();
+                     receptacle_name += "_";
                      receptacle_name += instance_name;
                      CORBA::PolicyList_var policies =
                        this->configurator_.find_policies_by_name (
