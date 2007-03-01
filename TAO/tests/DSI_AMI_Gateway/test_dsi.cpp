@@ -75,7 +75,7 @@ DSI_Simple_Server::_dispatch (TAO_ServerRequest &request,
 }
 
 void
-DSI_Simple_Server::invoke (CORBA::ServerRequest_ptr request)
+DSI_Simple_Server::invoke (CORBA::ServerRequest_ptr)
 {
 }
 
