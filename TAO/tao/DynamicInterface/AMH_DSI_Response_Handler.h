@@ -26,6 +26,8 @@
 #include "tao/Valuetype/ValueBase.h"
 #include "dynamicinterface_export.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class TAO_AMH_DSI_Response_Handler;
 typedef TAO_AMH_DSI_Response_Handler *TAO_AMH_DSI_Response_Handler_ptr;
 
@@ -251,6 +253,8 @@ private:
   TAO_ORB_Core *orb_core_;
   CORBA::ULong exception_type_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 # include "AMH_DSI_Response_Handler.inl"
