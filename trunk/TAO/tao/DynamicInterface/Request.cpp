@@ -168,9 +168,7 @@ CORBA::Request::invoke (void)
        this->exceptions_.in (),
        this);
 
-  _tao_call.invoke (0,
-                    0
-                   );
+  _tao_call.invoke (0, 0);
 
   // If this request was created by a gateway, then result_
   // and/or args_ are shared by a CORBA::ServerRequest, whose
@@ -203,9 +201,7 @@ CORBA::Request::send_oneway (void)
       TAO::TAO_SYNCHRONOUS_INVOCATION,
       true); // is_dii_request
 
-  _tao_call.invoke (0,
-                    0
-                   );
+  _tao_call.invoke (0, 0);
 }
 
 void
@@ -247,9 +243,7 @@ CORBA::Request::send_deferred (void)
       this->orb_->orb_core (),
       this);
 
-  _tao_call.invoke (0,
-                    0
-                   );
+  _tao_call.invoke (0, 0);
 }
 
 #if defined (TAO_HAS_AMI)
@@ -345,8 +339,7 @@ CORBA::Request::poll_response (void)
 
 void
 CORBA::Request::handle_response (TAO_InputCDR &incoming,
-                                 CORBA::ULong reply_status
-                                 )
+                                 CORBA::ULong reply_status)
 {
   // If this request was created by a gateway, then result_
   // and/or args_ are shared by a CORBA::ServerRequest, whose
@@ -360,14 +353,12 @@ CORBA::Request::handle_response (TAO_InputCDR &incoming,
       if (this->result_ != 0)
         {
           // We can be sure that the impl is a TAO::Unknown_IDL_Type.
-          this->result_->value ()->impl ()->_tao_decode (incoming
-                                                        );
+          this->result_->value ()->impl ()->_tao_decode (incoming);
         }
 
       this->args_->_tao_incoming_cdr (incoming,
                                       CORBA::ARG_OUT | CORBA::ARG_INOUT,
-                                      this->lazy_evaluation_
-                                     );
+                                      this->lazy_evaluation_);
 
       {
         ACE_GUARD (TAO_SYNCH_MUTEX,

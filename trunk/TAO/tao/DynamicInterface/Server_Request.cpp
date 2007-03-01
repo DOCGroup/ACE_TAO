@@ -195,8 +195,7 @@ CORBA::ServerRequest::dsi_marshal (void)
       this->orb_server_request_.init_reply ();
 
       this->exception_->impl ()->marshal_value (
-                                     *this->orb_server_request_.outgoing ()
-                                   );
+                                     *this->orb_server_request_.outgoing ());
     }
 
   this->orb_server_request_.tao_send_reply ();

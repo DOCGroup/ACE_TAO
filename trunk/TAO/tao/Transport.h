@@ -247,8 +247,7 @@ class TAO_Export TAO_Transport
 public:
 
   /// Default creator, requires the tag value be supplied.
-  TAO_Transport (CORBA::ULong tag,
-                 TAO_ORB_Core *orb_core);
+  TAO_Transport (CORBA::ULong tag, TAO_ORB_Core *orb_core);
 
   /// Destructor
   virtual ~TAO_Transport (void);
@@ -473,8 +472,7 @@ public:
    * connector side. On the acceptor side the connection handler
    * would take care of the messaging objects.
    */
-  virtual int messaging_init (CORBA::Octet major,
-                              CORBA::Octet minor) = 0;
+  virtual int messaging_init (CORBA::Octet major, CORBA::Octet minor) = 0;
 
   /// Extracts the list of listen points from the @a cdr stream. The
   /// list would have the protocol specific details of the
@@ -639,8 +637,6 @@ public:
                             int message_semantics,
                             ACE_Time_Value *max_time_wait) = 0;
 
-
-
   /// This method formats the stream and then sends the message on the
   /// transport.
   /**
@@ -654,7 +650,6 @@ public:
                             TAO_Stub *stub = 0,
                             int message_semantics = TAO_Transport::TAO_TWOWAY_REQUEST,
                             ACE_Time_Value *max_time_wait = 0) = 0;
-
 
   /// Sent the contents of @a message_block
   /**
@@ -738,8 +733,7 @@ public:
    *       messages (oneways) that have been sitting for too long on
    *       the queue.
    */
-  int handle_timeout (const ACE_Time_Value &current_time,
-                      const void* act);
+  int handle_timeout (const ACE_Time_Value &current_time, const void* act);
 
   /// Accessor to recv_buffer_size_
   size_t recv_buffer_size (void) const;
