@@ -18,7 +18,7 @@ project (CIAO_Events_XML_Generation) : xscdefaults {
    }
 }
 
-project (CIAO_Events_Handlers) : acelib, ciao_xml_utils, ciao_events_dnc, ciao_deployment_stub {
+project (CIAO_Events_Handlers) : acelib, ciao_config_handlers_base, ciao_events_dnc, ciao_deployment_stub {
   sharedname = CIAO_Events_Handlers
   dynamicflags   = CIAO_EVENTS_HANDLERS_BUILD_DLL
   macros   += XML_USE_PTHREADS
@@ -34,7 +34,7 @@ project (CIAO_Events_Handlers) : acelib, ciao_xml_utils, ciao_events_dnc, ciao_d
   }
 }
 
-project (CIAO_Events_Handlers_Tests) : ciao_xml_utils, ciao_server_dnc {
+project (CIAO_Events_Handlers_Tests) : ciao_config_handlers_base, ciao_server_dnc {
   exename = test
   after    += CIAO_Events_Handlers
   macros   += XML_USE_PTHREADS
