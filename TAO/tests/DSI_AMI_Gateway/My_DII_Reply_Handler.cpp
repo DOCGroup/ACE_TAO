@@ -5,8 +5,9 @@
 #include "tao/AnyTypeCode/NVList.h"
 #include "tao/AnyTypeCode/Any.h"
 
-My_DII_Reply_Handler::My_DII_Reply_Handler(TAO_AMH_DSI_Response_Handler_ptr rph,
-                                           CORBA::ORB_var orb)
+My_DII_Reply_Handler::My_DII_Reply_Handler(
+    TAO_AMH_DSI_Response_Handler_ptr rph,
+    CORBA::ORB_var orb)
  : response_handler_ (rph),
   orb_ (orb)
 {

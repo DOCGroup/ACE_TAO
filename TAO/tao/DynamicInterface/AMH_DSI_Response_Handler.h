@@ -1,6 +1,6 @@
 // -*- C++ -*-
 
-//============================================================================
+//=====================================================================
 /**
  *  @file AMH_DSI_Response_Handler.h
  *
@@ -8,7 +8,7 @@
  *
  *  @brief Handle the Repsonse appropriately.
  */
-//=============================================================================
+//=====================================================================
 
 #ifndef TAO_AMH_DSI_RESPONSE_HANDLER_H
 #define TAO_AMH_DSI_RESPONSE_HANDLER_H
@@ -42,11 +42,14 @@ class TAO_DynamicInterface_Export TAO_AMH_DSI_Response_Handler_var
 public:
   TAO_AMH_DSI_Response_Handler_var (void);
   TAO_AMH_DSI_Response_Handler_var (TAO_AMH_DSI_Response_Handler_ptr);
-  TAO_AMH_DSI_Response_Handler_var (const TAO_AMH_DSI_Response_Handler_var &);
+  TAO_AMH_DSI_Response_Handler_var (
+      const TAO_AMH_DSI_Response_Handler_var &);
   ~TAO_AMH_DSI_Response_Handler_var (void);
 
-  TAO_AMH_DSI_Response_Handler_var &operator= (TAO_AMH_DSI_Response_Handler_ptr);
-  TAO_AMH_DSI_Response_Handler_var &operator= (const TAO_AMH_DSI_Response_Handler_var &);
+  TAO_AMH_DSI_Response_Handler_var &operator= (
+      TAO_AMH_DSI_Response_Handler_ptr);
+  TAO_AMH_DSI_Response_Handler_var &operator= (
+      const TAO_AMH_DSI_Response_Handler_var &);
   TAO_AMH_DSI_Response_Handler_ptr operator-> (void) const;
 
   operator const TAO_AMH_DSI_Response_Handler_ptr &() const;
@@ -78,12 +81,16 @@ class TAO_DynamicInterface_Export TAO_AMH_DSI_Exception_Holder_var
 public:
   TAO_AMH_DSI_Exception_Holder_var (void);
   TAO_AMH_DSI_Exception_Holder_var (TAO_AMH_DSI_Exception_Holder*);
-  TAO_AMH_DSI_Exception_Holder_var (const TAO_AMH_DSI_Exception_Holder*);
-  TAO_AMH_DSI_Exception_Holder_var (const TAO_AMH_DSI_Exception_Holder_var &);
+  TAO_AMH_DSI_Exception_Holder_var (
+      const TAO_AMH_DSI_Exception_Holder*);
+  TAO_AMH_DSI_Exception_Holder_var (
+      const TAO_AMH_DSI_Exception_Holder_var &);
   ~TAO_AMH_DSI_Exception_Holder_var (void);
 
-  TAO_AMH_DSI_Exception_Holder_var &operator= (TAO_AMH_DSI_Exception_Holder*);
-  TAO_AMH_DSI_Exception_Holder_var &operator= (const TAO_AMH_DSI_Exception_Holder_var &);
+  TAO_AMH_DSI_Exception_Holder_var &operator= (
+      TAO_AMH_DSI_Exception_Holder*);
+  TAO_AMH_DSI_Exception_Holder_var &operator= (
+      const TAO_AMH_DSI_Exception_Holder_var &);
   TAO_AMH_DSI_Exception_Holder* operator-> (void) const;
 
   operator const TAO_AMH_DSI_Exception_Holder* () const;
@@ -115,10 +122,14 @@ class TAO_DynamicInterface_Export TAO_AMH_DSI_Exception_Holder_out
 public:
   TAO_AMH_DSI_Exception_Holder_out (TAO_AMH_DSI_Exception_Holder* &);
   TAO_AMH_DSI_Exception_Holder_out (TAO_AMH_DSI_Exception_Holder_var &);
-  TAO_AMH_DSI_Exception_Holder_out (const TAO_AMH_DSI_Exception_Holder_out &);
-  TAO_AMH_DSI_Exception_Holder_out &operator= (const TAO_AMH_DSI_Exception_Holder_out &);
-  TAO_AMH_DSI_Exception_Holder_out &operator= (const TAO_AMH_DSI_Exception_Holder_var &);
-  TAO_AMH_DSI_Exception_Holder_out &operator= (TAO_AMH_DSI_Exception_Holder*);
+  TAO_AMH_DSI_Exception_Holder_out (
+      const TAO_AMH_DSI_Exception_Holder_out &);
+  TAO_AMH_DSI_Exception_Holder_out &operator= (
+      const TAO_AMH_DSI_Exception_Holder_out &);
+  TAO_AMH_DSI_Exception_Holder_out &operator= (
+      const TAO_AMH_DSI_Exception_Holder_var &);
+  TAO_AMH_DSI_Exception_Holder_out &operator= (
+      TAO_AMH_DSI_Exception_Holder*);
   operator TAO_AMH_DSI_Exception_Holder*& ();
   TAO_AMH_DSI_Exception_Holder*& ptr (void);
   TAO_AMH_DSI_Exception_Holder* operator-> (void);
@@ -157,13 +168,13 @@ public:
 
   CORBA::TypeCode_ptr _tao_type (void) const;
   void _tao_obv_truncatable_repo_ids (Repository_Id_List &) const;
-  CORBA::Boolean _tao_match_formal_type (ptrdiff_t ) const; 
+  CORBA::Boolean _tao_match_formal_type (ptrdiff_t ) const;
 
 protected:
   TAO_AMH_DSI_Exception_Holder (void);
   ///  *** Terrible Hack ? ***
-  virtual CORBA::Boolean _tao_marshal_v (TAO_OutputCDR &) const { return true; }
-  virtual CORBA::Boolean _tao_unmarshal_v (TAO_InputCDR &) { return true; }
+  virtual CORBA::Boolean _tao_marshal_v (TAO_OutputCDR &) const;
+  virtual CORBA::Boolean _tao_unmarshal_v (TAO_InputCDR &);
 
 private:
   TAO_AMH_DSI_Exception_Holder (const TAO_AMH_DSI_Exception_Holder &);
@@ -171,8 +182,10 @@ private:
   CORBA::Exception *exception;
 
 protected:
-  virtual CORBA::Boolean _tao_marshal__Test_TAO_AMH_DSI_Exception_Holder (TAO_OutputCDR &) {return true;}
-  virtual CORBA::Boolean _tao_unmarshal__Test_TAO_AMH_DSI_Exception_Holder (TAO_InputCDR &) {return true;}
+  virtual CORBA::Boolean _tao_marshal__Test_TAO_AMH_DSI_Exception_Holder (
+              TAO_OutputCDR &);
+  virtual CORBA::Boolean _tao_unmarshal__Test_TAO_AMH_DSI_Exception_Holder (
+              TAO_InputCDR &);
 };
 
 /**
@@ -222,7 +235,8 @@ public:
   CORBA::Object_ptr _this ();
 
   /// CORBA Object related methods
-  static TAO_AMH_DSI_Response_Handler* _duplicate (TAO_AMH_DSI_Response_Handler_ptr);
+  static TAO_AMH_DSI_Response_Handler* _duplicate (
+             TAO_AMH_DSI_Response_Handler_ptr);
   static TAO_AMH_DSI_Response_Handler* _nil (void);
   static TAO_AMH_DSI_Response_Handler* _narrow (CORBA::Object_ptr);
   static TAO_AMH_DSI_Response_Handler* _unchecked_narrow (CORBA::Object_ptr);

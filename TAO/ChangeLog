@@ -1,3 +1,26 @@
+Thu Mar  1 18:58:47 UTC 2007  Wallace Zhang  <zhang_w@ociweb.com>
+
+        * tao/DynamicInterface/AMH_DSI_Response_Handler.h:
+        * tao/DynamicInterface/AMH_DSI_Response_Handler.cpp:
+        * tao/DynamicInterface/DII_Invocation_Adapter.h:
+        * tao/DynamicInterface/DII_Invocation_Adapter.cpp:
+        * tao/DynamicInterface/DII_Reply_Dispatcher.cpp:
+        * tao/DynamicInterface/DII_Reply_Handler.h:
+        * tao/DynamicInterface/DII_Reply_Handler.inl:
+        * tao/DynamicInterface/Request.h:
+        * tao/DynamicInterface/Request.cpp:
+        * tests/DSI_AMH/DSI_AMH.mpc:
+        * tests/DSI_AMH/README:
+        * tests/DSI_AMH/Roundtrip.cpp:
+        * tests/DSI_AMH/server.cpp:
+        * tests/DSI_AMI_Gateway/My_DII_Reply_Handler.cpp:
+        * tests/DSI_AMI_Gateway/gateway.cpp:
+        * tests/DSI_AMI_Gateway/test_dsi.h:
+        * tests/DSI_AMI_Gateway/test_dsi.inl:
+        * tests/DSI_AMI_Gateway/test_dsi.cpp:
+
+          Changed some lengthy lines to be less than 80 characters.
+
 Thu Mar  1 16:14:43 UTC 2007  Wallace Zhang  <zhang_w@ociweb.com>
 
         * tao/Makefile.am:
