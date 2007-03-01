@@ -1,3 +1,11 @@
+Thu Mar  1 03:54:50 UTC 2007  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * tools/Config_Handlers/CIAO_Events/CIAO_Events_Handlers.mpc
+        * tools/Config_Handlers/RT-CCM/RT-CCM-Handlers.mpc
+        
+          Changed base project from ciao_xml_utils to ciao_config_handlers_base
+          to pull in specific block that turns off visibility.
+
 Wed Feb 28 22:19:37 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
 
         * ciao/Container_Base.cpp:
