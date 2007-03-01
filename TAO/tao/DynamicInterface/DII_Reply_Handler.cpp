@@ -48,8 +48,8 @@ TAO_DII_Reply_Handler::_unchecked_narrow (CORBA::Object_ptr obj)
     return TAO_DII_Reply_Handler::_nil ();
 
   return
-    reinterpret_cast<TAO_DII_Reply_Handler_ptr>
-                         (&TAO_DII_Reply_Handler::_tao_class_id);
+    reinterpret_cast<TAO_DII_Reply_Handler_ptr> (
+        &TAO_DII_Reply_Handler::_tao_class_id);
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
