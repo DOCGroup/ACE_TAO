@@ -84,8 +84,7 @@ namespace CORBA
 
     /// Narrow to an UnknowUserException.
     static UnknownUserException * _downcast (CORBA::Exception *ex);
-    static UnknownUserException const * _downcast (
-      CORBA::Exception const * ex);
+    static UnknownUserException const * _downcast (CORBA::Exception const * ex);
 
     // = TAO specific extension.
 

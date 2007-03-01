@@ -96,8 +96,7 @@ namespace CORBA
     void create_child (const char *child_ctx_name,
                        CORBA::Context_out child_ctx);
 
-    void set_one_value (const char *propname,
-                        const CORBA::Any &propvalue);
+    void set_one_value (const char *propname, const CORBA::Any &propvalue);
 
     void set_values (CORBA::NVList_ptr values);
 
