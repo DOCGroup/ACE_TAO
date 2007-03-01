@@ -1319,7 +1319,7 @@ ACE::get_ip_interfaces (size_t &count,
         {
 # if !defined(_UNICOS)
           struct sockaddr_in *addr =
-              addr =  reinterpret_cast<sockaddr_in *> (&pcur->IFR_ADDR);
+            reinterpret_cast<sockaddr_in *> (&pcur->IFR_ADDR);
 
           // Sometimes the kernel returns 0.0.0.0 as an IPv4 interface
           // address; skip those...
