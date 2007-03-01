@@ -1,3 +1,10 @@
+Thu Mar  1 14:53:53 UTC 2007  Wallace Zhang  <zhang_w@ociweb.com>
+
+        * tao/DynamicInterface/AMH_DSI_Response_Handler.cpp:
+
+          No need to check for null pointer since dynamic_cast already
+          does the check for us.
+
 Thu Mar  1 14:01:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/DynamicInterface/Context.h:
