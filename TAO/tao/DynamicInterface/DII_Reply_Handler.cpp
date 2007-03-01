@@ -21,7 +21,7 @@ ACE_RCSID(DynamicInterface, Request, "$Id$")
 TAO_DII_Reply_Handler_ptr
 TAO_DII_Reply_Handler::_nil (void)
 {
-  return (TAO_DII_Reply_Handler_ptr)0;
+  return static_cast<TAO_DII_Reply_Handler_ptr> (0);
 }
 
 // DII Request class implementation
@@ -47,6 +47,6 @@ TAO_DII_Reply_Handler::_unchecked_narrow (CORBA::Object_ptr obj)
     return TAO_DII_Reply_Handler::_nil ();
 
   return
-    ACE_reinterpret_cast (TAO_DII_Reply_Handler_ptr,
-                            &TAO_DII_Reply_Handler::_tao_class_id);
+    reinterpret_cast<TAO_DII_Reply_Handler_ptr>
+                         (&TAO_DII_Reply_Handler::_tao_class_id);
 }

@@ -196,7 +196,7 @@ TAO_AMH_DSI_Exception_Holder_out &
 TAO_AMH_DSI_Exception_Holder_out::operator= (
     const TAO_AMH_DSI_Exception_Holder_out &p)
 {
-  this->ptr_ = ACE_const_cast (TAO_AMH_DSI_Exception_Holder_out &, p).ptr_;
+  this->ptr_ = const_cast<TAO_AMH_DSI_Exception_Holder_out &> (p).ptr_;
   return *this;
 }
 
@@ -344,10 +344,9 @@ TAO_AMH_DSI_Response_Handler::invoke_reply (CORBA::NVList_ptr args,
       }
     this->_tao_rh_send_reply ();
   }
-  catch (const CORBA::Exception & ex)
+  catch (const CORBA::Exception &)
     {
       // TODO:
-      ACE_UNUSED_ARG (ex);
     }
 }
 
@@ -401,10 +400,9 @@ TAO_AMH_DSI_Response_Handler::gateway_exception_reply (
       //  this->sent_gateway_exception_ = 1;
       this->_tao_rh_send_reply ();
     }
-  catch (const CORBA::Exception & ex)
+  catch (const CORBA::Exception &)
     {
       // TODO:
-      ACE_UNUSED_ARG (ex);
     }
 
 }
@@ -447,9 +445,9 @@ TAO_AMH_DSI_Response_Handler::gateway_exception_reply (
   //  this->sent_gateway_exception_ = 1;
     this->_tao_rh_send_reply ();
   }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception &)
   {
-    ACE_UNUSED_ARG (ex);
+    // TODO:
   }
 
 }
