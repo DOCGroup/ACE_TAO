@@ -4254,6 +4254,8 @@ libTAO_DynamicInterface_la_LIBADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 nobase_include_HEADERS += \
+  DynamicInterface/AMH_DSI_Response_Handler.h \
+  DynamicInterface/AMH_DSI_Response_Handler.inl \
   DynamicInterface/Context.h \
   DynamicInterface/Context.inl \
   DynamicInterface/DII_Arguments.h \
@@ -4263,6 +4265,7 @@ nobase_include_HEADERS += \
   DynamicInterface/DII_Invocation.h \
   DynamicInterface/DII_Invocation_Adapter.h \
   DynamicInterface/DII_Reply_Dispatcher.h \
+  DynamicInterface/DII_Reply_Handler.h \
   DynamicInterface/Dynamic_Adapter_Impl.h \
   DynamicInterface/Dynamic_Implementation.h \
   DynamicInterface/ExceptionList.h \
