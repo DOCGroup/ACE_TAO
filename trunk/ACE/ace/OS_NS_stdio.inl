@@ -447,7 +447,7 @@ ACE_OS::cuserid (char *user, size_t maxlen)
 
   // Make sure the password file is closed.
   ::endpwent ();
- 	 
+
   if (pw == 0)
     {
       errno = ENOENT;
@@ -982,7 +982,8 @@ ACE_OS::vsprintf (wchar_t *buffer, const wchar_t *format, va_list argptr)
 {
 # if (defined _XOPEN_SOURCE && (_XOPEN_SOURCE - 0) >= 500) || \
      (defined (sun) && !(defined(_XOPEN_SOURCE) && (_XOPEN_VERSION-0==4))) || \
-     (defined (ACE_HAS_DINKUM_STL) || defined (__DMC__))
+     (defined (ACE_HAS_DINKUM_STL) || defined (__DMC__)) || \
+      defined (ACE_HAS_VSWPRINTF)
 
   // The XPG4/UNIX98/C99 signature of the wide-char sprintf has a
   // maxlen argument. Since this method doesn't supply one, pass in
@@ -1013,7 +1014,8 @@ ACE_OS::vsnprintf (wchar_t *buffer, size_t maxlen, const wchar_t *format, va_lis
 {
 # if (defined _XOPEN_SOURCE && (_XOPEN_SOURCE - 0) >= 500) || \
      (defined (sun) && !(defined(_XOPEN_SOURCE) && (_XOPEN_VERSION-0==4))) || \
-     (defined (ACE_HAS_DINKUM_STL) || defined (__DMC__))
+     (defined (ACE_HAS_DINKUM_STL) || defined (__DMC__)) || \
+      defined (ACE_HAS_VSWPRINTF)
 
   return vswprintf (buffer, maxlen, format, ap);
 
