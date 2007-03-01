@@ -1,3 +1,11 @@
+Thu Mar  1 21:51:59 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/orbsvcs/AsynchProxyTools.mpc:
+        * orbsvcs/orbsvcs/TAO_AsynchProxyTools.pc.in:
+        * orbsvcs/orbsvcs/AsynchProxyTools/ProxyReplyHandler.cpp:
+
+          Added new files.
+
 Wed Feb 28 23:11:13 UTC 2007  Wallace Zhang  <zhang_w@ociweb.com>
 
         * orbsvcs/orbsvcs/AsynchProxyTools/ProxyServant.h:

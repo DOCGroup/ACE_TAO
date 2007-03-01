@@ -1,0 +1,25 @@
+// -*- MPC -*-
+// $Id$
+
+project(AsynchProxyTools) : orbsvcslib, install, dynamicinterface, messaging {
+  sharedname   = TAO_AsynchProxyTools
+  dynamicflags = TAO_ASYNCHPROXYTOOLS_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    AsynchProxyTools/ProxyReplyHandler.cpp
+    AsynchProxyTools/ProxyServant.cpp
+  }
+
+  Header_Files {
+    AsynchProxyTools/AsynchProxyTools_Export.h
+    AsynchProxyTools/ProxyReplyHandler.h
+    AsynchProxyTools/ProxyServant.h
+  }
+
+  Pkgconfig_Files {
+    TAO_AsynchProxyTools.pc.in
+  }
+}
