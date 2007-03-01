@@ -150,8 +150,7 @@ class TAO_DynamicInterface_Export TAO_AMH_DSI_Exception_Holder
 {
 public:
   typedef TAO_AMH_DSI_Exception_Holder_var _var_type;
-  TAO_AMH_DSI_Exception_Holder (CORBA::Exception *ex)
-  { this->exception = ex; }
+  TAO_AMH_DSI_Exception_Holder (CORBA::Exception *ex);
 
   virtual ~TAO_AMH_DSI_Exception_Holder (void);
 
@@ -179,7 +178,7 @@ protected:
 private:
   TAO_AMH_DSI_Exception_Holder (const TAO_AMH_DSI_Exception_Holder &);
   void operator= (const TAO_AMH_DSI_Exception_Holder &);
-  CORBA::Exception *exception;
+  CORBA::Exception *exception_;
 
 protected:
   virtual CORBA::Boolean _tao_marshal__Test_TAO_AMH_DSI_Exception_Holder (
@@ -222,8 +221,7 @@ public:
   virtual void invoke_reply (CORBA::NVList_ptr args,
                              CORBA::NamedValue_ptr result);
 
-  virtual void invoke_excep ( TAO_AMH_DSI_Exception_Holder * h
- );
+  virtual void invoke_excep ( TAO_AMH_DSI_Exception_Holder * h);
 
   virtual void gateway_exception_reply (CORBA::ULong reply_status,
                                         TAO_OutputCDR &encap);

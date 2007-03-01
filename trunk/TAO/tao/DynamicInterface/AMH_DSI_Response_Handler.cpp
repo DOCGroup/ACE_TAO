@@ -14,7 +14,8 @@
 #include "tao/Pluggable_Messaging_Utils.h"
 #include "tao/AnyTypeCode/Any_Impl.h"
 
-ACE_RCSID (DynamicInterface, AMH_DSI_Response_Handler, "$Id$")
+ACE_RCSID (DynamicInterface, AMH_DSI_Response_Handler,
+           "$Id$")
 
 #if !defined (__ACE_INLINE__)
 # include "AMH_DSI_Response_Handler.inl"
@@ -26,6 +27,11 @@ const char*
 TAO_AMH_DSI_Exception_Holder::_tao_obv_static_repository_id ()
 {
   return "IDL:TAO_AMH_DSI_Exception_Holder:1.0";
+}
+
+TAO_AMH_DSI_Exception_Holder::TAO_AMH_DSI_Exception_Holder (CORBA::Exception *ex)
+  : exception_ (ex)
+{
 }
 
 TAO_AMH_DSI_Exception_Holder::~TAO_AMH_DSI_Exception_Holder ()
@@ -294,7 +300,7 @@ TAO_AMH_DSI_Exception_Holder::_tao_unmarshal (
 void
 TAO_AMH_DSI_Exception_Holder::raise_invoke ()
 {
-  this->exception->_raise ();
+  this->exception_->_raise ();
 }
 
 // The pseudo-object _nil method.
