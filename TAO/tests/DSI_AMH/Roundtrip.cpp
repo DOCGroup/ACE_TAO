@@ -130,8 +130,9 @@ Roundtrip::_dispatch (TAO_ServerRequest &request,
       TAO_AMH_DSI_Response_Handler_var rh = rh_ptr;
 
       // init the handler
+      TAO_ORB_Core *orbcore = request.orb()->orb_core ();
       TAO_AMH_BUFFER_ALLOCATOR* amh_allocator =
-              request.orb()->orb_core ()->lane_resources().amh_response_handler_allocator();
+          orbcore->lane_resources().amh_response_handler_allocator();
       rh->init (request, amh_allocator);
       // Delegate to user.
       this->invoke (dsi_request,

@@ -22,7 +22,7 @@
 
 #include "tao/Invocation_Adapter.h"
 
-#if defined (TAO_HAS_AMI) 
+#if defined (TAO_HAS_AMI)
 #include "tao/Messaging/Messaging.h"
 #endif /* TAO_HAS_AMI */
 
@@ -167,14 +167,13 @@ namespace TAO
   {
   public:
     DII_Asynch_Invocation_Adapter (
-                                   CORBA::Object *target,
-                                   Argument **args,
-                                   int arg_number,
-                                   const char *operation,
-                                   int op_len,
-
-                                   CORBA::Request *req,
-                                   TAO::Invocation_Mode mode = TAO_DII_ASYNCH_INVOCATION);
+       CORBA::Object *target,
+       Argument **args,
+       int arg_number,
+       const char *operation,
+       int op_len,
+       CORBA::Request *req,
+       TAO::Invocation_Mode mode = TAO_DII_ASYNCH_INVOCATION);
 
     /// Invoke the target
     void invoke (Messaging::ReplyHandler_ptr reply_handler_ptr);
@@ -182,10 +181,10 @@ namespace TAO
 
   protected:
     virtual Invocation_Status invoke_twoway (
-                                             TAO_Operation_Details &op,
-                                             CORBA::Object_var &effective_target,
-                                             Profile_Transport_Resolver &r,
-                                             ACE_Time_Value *&max_wait_time);
+                TAO_Operation_Details &op,
+                CORBA::Object_var &effective_target,
+                Profile_Transport_Resolver &r,
+                ACE_Time_Value *&max_wait_time);
 
   private:
     /// Reply dispatcher for the current Invocation.

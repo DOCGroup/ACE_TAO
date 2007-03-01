@@ -160,9 +160,10 @@ namespace CORBA
     /// handler. This handler must implement Messaging::ReplyHandler
     void sendc (CORBA::Object_ptr handler);
 
-    static void _tao_reply_stub (TAO_InputCDR &_tao_reply_cdr,
-                                 Messaging::ReplyHandler_ptr _tao_reply_handler,
-                                 CORBA::ULong reply_status);
+    static void _tao_reply_stub (
+                    TAO_InputCDR &_tao_reply_cdr,
+                    Messaging::ReplyHandler_ptr _tao_reply_handler,
+                    CORBA::ULong reply_status);
 #endif /* TAO_HAS_AMI */
 
     /// Pseudo object methods.

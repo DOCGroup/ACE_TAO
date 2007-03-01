@@ -178,13 +178,14 @@ namespace TAO
     return status;
   }
 
-  DII_Asynch_Invocation_Adapter::DII_Asynch_Invocation_Adapter (CORBA::Object *target,
-                                                                Argument **args,
-                                                                int arg_count,
-                                                                const char *operation,
-                                                                int op_len,
-                                                                CORBA::Request *req,
-                                                                TAO::Invocation_Mode mode)
+  DII_Asynch_Invocation_Adapter::DII_Asynch_Invocation_Adapter (
+      CORBA::Object *target,
+      Argument **args,
+      int arg_count,
+      const char *operation,
+      int op_len,
+      CORBA::Request *req,
+      TAO::Invocation_Mode mode)
     : DII_Invocation_Adapter (target,
                               args,
                               arg_count,

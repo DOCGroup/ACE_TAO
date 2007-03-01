@@ -119,7 +119,8 @@ DSI_Simple_Server::invoke (CORBA::ServerRequest_ptr request,
       // Outgoing reply must have the same byte order as the incoming one.
       request->_tao_reply_byte_order (target_request->_tao_byte_order ());
 
-      request->gateway_exception_reply (target_request->raw_user_exception ());
+      request->gateway_exception_reply (
+          target_request->raw_user_exception ());
 
       return;
     }
