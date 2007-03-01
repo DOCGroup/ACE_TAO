@@ -176,7 +176,7 @@ namespace TAO
        TAO::Invocation_Mode mode = TAO_DII_ASYNCH_INVOCATION);
 
     /// Invoke the target
-    void invoke (Messaging::ReplyHandler_ptr reply_handler_ptr);
+    void invoke_reply_handler (Messaging::ReplyHandler_ptr reply_handler_ptr);
 
 
   protected:
