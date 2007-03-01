@@ -10,7 +10,7 @@
 #include "ciao/Container_Base.h"
 #include "DAnCE/Deployment/CIAO_ServerResourcesC.h"
 #include "NodeApplication/NodeApplication_Impl.h"
-#include "NodeApplication/NodeApp_Configurator.cpp"
+#include "NodeApplication/NodeApp_Configurator.h"
 #include "ace/Reactor.h"
 
 #if !defined (__ACE_INLINE__)
