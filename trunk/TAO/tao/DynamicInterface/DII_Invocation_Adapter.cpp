@@ -198,7 +198,7 @@ namespace TAO
   }
 
   void
-  DII_Asynch_Invocation_Adapter::invoke (Messaging::ReplyHandler_ptr)
+  DII_Asynch_Invocation_Adapter::invoke_reply_handler (Messaging::ReplyHandler_ptr)
   {
   }
 
