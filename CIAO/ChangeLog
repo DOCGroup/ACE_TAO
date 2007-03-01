@@ -1,3 +1,18 @@
+Thu Mar  1 23:05:27 UTC 2007  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * docs/tutorials/Quoter/Simple/images/step6.jpg:
+        * docs/tutorials/Quoter/Simple/images/step1.jpg:
+        * docs/tutorials/Quoter/Simple/images/step2.jpg:
+        * docs/tutorials/Quoter/Simple/images/step3.jpg:
+        * docs/tutorials/Quoter/Simple/images/steps.jpg:
+        
+          Lowercased file names, removed spaces.
+        
+        * docs/tutorials/Quoter/Simple/03.html:
+        * docs/tutorials/Quoter/Simple/04.html:
+        * docs/tutorials/Quoter/Simple/index.html:
+        
+          Changes to reflect above change.
 Thu Mar  1 22:20:28 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
 
         * DAnCE/NodeApplication/Container_Impl.cpp:
