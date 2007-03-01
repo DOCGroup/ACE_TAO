@@ -58,14 +58,11 @@ TAO_DynamicImplementation::_get_interface (void)
       throw ::CORBA::INTF_REPOS ();
     }
 
-  CORBA::RepositoryId_var id =
-    this->get_id_from_primary_interface ();
+  CORBA::RepositoryId_var id = this->get_id_from_primary_interface ();
 
   // This doesn't take multiple ORBs into account, but it's being
   // used only to resolve the IFR, so we should be ok.
-  return adapter->get_interface (TAO_ORB_Core_instance ()->orb (),
-                                 id.in ()
-                                );
+  return adapter->get_interface (TAO_ORB_Core_instance ()->orb (), id.in ());
 }
 
 const char *
@@ -76,10 +73,8 @@ TAO_DynamicImplementation::_interface_repository_id (void) const
 }
 
 void *
-TAO_DynamicImplementation::_downcast (const char *repository_id)
+TAO_DynamicImplementation::_downcast (const char *)
 {
-  ACE_UNUSED_ARG (repository_id);
-
   // Don't know enough to do better.
   return this;
 }
@@ -106,8 +101,7 @@ TAO_DynamicImplementation::_create_stub (void)
 
   CORBA::PolicyList_var client_exposed_policies =
     poa_current_impl->poa ()->client_exposed_policies (
-        poa_current_impl->priority ()
-      );
+        poa_current_impl->priority ());
 
   CORBA::RepositoryId_var pinterface =
     this->_primary_interface (poa_current_impl->object_id (), poa.in ());

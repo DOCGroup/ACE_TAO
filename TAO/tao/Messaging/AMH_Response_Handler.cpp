@@ -121,8 +121,7 @@ TAO_AMH_Response_Handler::_tao_rh_init_reply (void)
   {
     ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
 
-    this->mesg_base_->generate_reply_header (this->_tao_out,
-                                             reply_params);
+    this->mesg_base_->generate_reply_header (this->_tao_out, reply_params);
 
     // We are done initialising the reply
     this->reply_status_ = TAO_RS_INITIALIZED;

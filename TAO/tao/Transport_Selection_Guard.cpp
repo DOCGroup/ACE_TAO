@@ -61,8 +61,6 @@ namespace TAO
 
   }
 
-
-
   /// Dtor
   Transport_Selection_Guard::~Transport_Selection_Guard (void)
   {

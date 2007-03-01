@@ -83,9 +83,7 @@ TAO_Connector::~TAO_Connector (void)
 }
 
 TAO_Profile *
-TAO_Connector::corbaloc_scan (const char *str,
-                              size_t &len
-                              )
+TAO_Connector::corbaloc_scan (const char *str, size_t &len)
 {
   if (this->check_prefix (str) != 0)
     return 0;
