@@ -56,7 +56,7 @@ TAO_AMH_DSI_Exception_Holder_var::TAO_AMH_DSI_Exception_Holder_var (TAO_AMH_DSI_
 }
 
 TAO_AMH_DSI_Exception_Holder_var::TAO_AMH_DSI_Exception_Holder_var (const TAO_AMH_DSI_Exception_Holder * p):
-ptr_ (ACE_const_cast (TAO_AMH_DSI_Exception_Holder *, p))
+ptr_ (const_cast<TAO_AMH_DSI_Exception_Holder *> (p))
 {
 }
 
@@ -174,7 +174,7 @@ TAO_AMH_DSI_Exception_Holder_out::TAO_AMH_DSI_Exception_Holder_out (TAO_AMH_DSI_
 }
 
 TAO_AMH_DSI_Exception_Holder_out::TAO_AMH_DSI_Exception_Holder_out (const TAO_AMH_DSI_Exception_Holder_out &p)
-  : ptr_ (ACE_const_cast (TAO_AMH_DSI_Exception_Holder_out&, p).ptr_)
+  : ptr_ (const_cast<TAO_AMH_DSI_Exception_Holder_out&> (p).ptr_)
 {}
 
 TAO_AMH_DSI_Exception_Holder_out &
@@ -238,10 +238,7 @@ void
 TAO_AMH_DSI_Exception_Holder::_tao_any_destructor (void *_tao_void_pointer)
 {
   TAO_AMH_DSI_Exception_Holder *tmp =
-    ACE_static_cast (
-        TAO_AMH_DSI_Exception_Holder *,
-        _tao_void_pointer
-      );
+    static_cast<TAO_AMH_DSI_Exception_Holder *> (_tao_void_pointer);
   delete tmp;
 }
 
