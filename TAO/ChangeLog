@@ -1,3 +1,9 @@
+Thu Mar  1 21:22:25 UTC 2007  Wallace Zhang  <zhang_w@ociweb.com>
+
+        * tests/DSI_AMH/DSI_AMH.mpc:
+
+          Fixed a mpc error.
+
 Thu Mar  1 21:13:06 UTC 2007  Wallace Zhang  <zhang_w@ociweb.com>
 
         * tao/DynamicInterface/DII_Invocation_Adapter.h:
