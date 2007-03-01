@@ -7,10 +7,8 @@ namespace CIAO
 {
   namespace Config_Handlers
   {
-    bool TP_Handler::thread_pool (
-                                  const ThreadpoolDef &src,
-                                  ::CIAO::DAnCE::ORS_Threadpool &dest
-                                  )
+    bool TP_Handler::thread_pool (const ThreadpoolDef &src,
+                                  ::CIAO::DAnCE::ORS_Threadpool &dest)
     {
       dest.Id = CORBA::String_var (src.id ().c_str ());
 
@@ -38,19 +36,15 @@ namespace CIAO
     }
 
     ThreadpoolDef
-    TP_Handler::thread_pool (
-                             const ::CIAO::DAnCE::ORS_Threadpool &src
-                             )
+    TP_Handler::thread_pool (const ::CIAO::DAnCE::ORS_Threadpool &src)
     {
-      ThreadpoolDef tp (
-                        XMLSchema::unsignedLong (src.stacksize),
+      ThreadpoolDef tp (XMLSchema::unsignedLong (src.stacksize),
                         XMLSchema::unsignedLong (src.static_threads),
                         XMLSchema::unsignedLong (src.dynamic_threads),
-                        Priority (src.default_priority),
+                        XMLSchema::int_ (src.default_priority),
                         XMLSchema::boolean (src.allow_request_buffering),
                         XMLSchema::unsignedLong (src.max_buffered_requests),
-                        XMLSchema::unsignedLong (src.max_request_buffer_size)
-                        );
+                        XMLSchema::unsignedLong (src.max_request_buffer_size));
 
       if (src.Id.in () == 0)
         {

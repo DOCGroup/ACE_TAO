@@ -25,49 +25,48 @@
 
 namespace Deployment
 {
-struct InstanceResourceDeploymentDescription;
-class InstanceResourceDeploymentDescriptions;
+  struct InstanceResourceDeploymentDescription;
+  class InstanceResourceDeploymentDescriptions;
 }
 
 
 namespace CIAO
 {
-namespace Config_Handlers
-{
+  namespace Config_Handlers
+    {
 
-class InstanceResourceDeploymentDescription;
+      class InstanceResourceDeploymentDescription;
 
 
-/*
-* @class IRDD_Handler
-*
-* @brief Handler class for <InstanceResourceDeploymentDescription> types.
-*
-* This class defines handler methods to map values from
-* XSC InstanceResourceDeploymentDescription objects, parsed from the descriptor files, to the
-* corresponding CORBA IDL Any type.
-*
-*/
-class Config_Handlers_Export IRDD_Handler {
-public:
-IRDD_Handler (void);
-virtual ~IRDD_Handler (void);
+      /*
+       * @class IRDD_Handler
+       *
+       * @brief Handler class for <InstanceResourceDeploymentDescription> types.
+       *
+       * This class defines handler methods to map values from
+       * XSC InstanceResourceDeploymentDescription objects, parsed from the descriptor files, to the
+       * corresponding CORBA IDL Any type.
+       *
+       */
+      class Config_Handlers_Export IRDD_Handler {
+      public:
+	IRDD_Handler (void);
+	virtual ~IRDD_Handler (void);
 
-static void instance_resource_deployment_descr (
-const InstanceResourceDeploymentDescription& desc,
-Deployment::InstanceResourceDeploymentDescription& toconfig)
-throw (Config_Error);
+	static void handle_irdd (const InstanceResourceDeploymentDescription& desc,
+							Deployment::InstanceResourceDeploymentDescription& toconfig)
+	  throw (Config_Error);
 
-static InstanceResourceDeploymentDescription
-instance_resource_deployment_descr (
-const Deployment::InstanceResourceDeploymentDescription& src)
-throw (Config_Error);
-};
-typedef Sequence_Handler <InstanceResourceDeploymentDescription,
-                          ::Deployment::InstanceResourceDeploymentDescriptions,
-                          ::Deployment::InstanceResourceDeploymentDescription,
-                          IRDD_Handler::instance_resource_deployment_descr > IRDD_Functor;
-}
+	static InstanceResourceDeploymentDescription
+	  instance_resource_deployment_descr (const Deployment::InstanceResourceDeploymentDescription& src)
+	  throw (Config_Error);
+      };
+
+      typedef Sequence_Handler < InstanceResourceDeploymentDescription,
+				 ::Deployment::InstanceResourceDeploymentDescriptions,
+				 ::Deployment::InstanceResourceDeploymentDescription,
+				 IRDD_Handler::handle_irdd > IRDD_Functor;
+    }
 }
 
 #include /**/ "ace/post.h"

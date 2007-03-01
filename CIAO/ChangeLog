@@ -1,7 +1,48 @@
+Thu Mar  1 07:17:00 UTC 2007  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * tools/Config_Handlers/ccd.hpp:
+        * tools/Config_Handlers/cid.cpp:
+        * tools/Config_Handlers/pcd.cpp:
+        * tools/Config_Handlers/toplevel.cpp:
+        * tools/Config_Handlers/cdd.hpp:
+        * tools/Config_Handlers/Basic_Deployment_Data.cpp:
+        * tools/Config_Handlers/cpd.hpp:
+        * tools/Config_Handlers/cdp.hpp:
+        * tools/Config_Handlers/CIAO_Events/CIAOEvents.cpp:
+        * tools/Config_Handlers/CIAO_Events/CIAOEvents.hpp:
+        * tools/Config_Handlers/ccd.cpp:
+        * tools/Config_Handlers/iad.hpp:
+        * tools/Config_Handlers/cid.hpp:
+        * tools/Config_Handlers/pcd.hpp:
+        * tools/Config_Handlers/Deployment.cpp:
+        * tools/Config_Handlers/cdd.cpp:
+        * tools/Config_Handlers/toplevel.hpp:
+        * tools/Config_Handlers/RT-CCM/CIAOServerResources.hpp:
+        * tools/Config_Handlers/RT-CCM/CIAOServerResources.cpp:
+        * tools/Config_Handlers/cdp.cpp:
+        * tools/Config_Handlers/cpd.cpp:
+        * tools/Config_Handlers/Basic_Deployment_Data.hpp:
+        * tools/Config_Handlers/iad.cpp:
+        
+          Regenrated with the latest version of XSC to pick up
+          bugfixes, esp for addressing warnings in Borland.
+        
+        * tools/Config_Handlers/Package_Handlers/PCD_Handler.cpp:
+        * tools/Config_Handlers/RT-CCM/TP_Handler.cpp:
+        * tools/Config_Handlers/IRDD_Handler.h:
+        * tools/Config_Handlers/IRDD_Handler.cpp:
+        * tools/Config_Handlers/IDD_Handler.cpp:
+        
+          Borland compile errors resolved. 
+        
+        * tools/Config_Handlers/Property_Handler.h:
+        
+          Layout changes.
+
 Thu Mar  1 03:54:50 UTC 2007  William R. Otte  <wotte@dre.vanderbilt.edu>
 
-        * tools/Config_Handlers/CIAO_Events/CIAO_Events_Handlers.mpc
-        * tools/Config_Handlers/RT-CCM/RT-CCM-Handlers.mpc
+        * tools/Config_Handlers/CIAO_Events/CIAO_Events_Handlers.mpc:
+        * tools/Config_Handlers/RT-CCM/RT-CCM-Handlers.mpc:
         
           Changed base project from ciao_xml_utils to ciao_config_handlers_base
           to pull in specific block that turns off visibility.

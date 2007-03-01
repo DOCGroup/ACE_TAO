@@ -45,8 +45,7 @@ namespace CIAO
   {
     class XSC_XML_Handlers_Export Domain : public ::XSCRT::Type
     {
-      //@@ VC6 anathema
-      typedef ::XSCRT::Type Base__;
+      typedef ::XSCRT::Type Base;
 
       // UUID
       // 
@@ -159,8 +158,7 @@ namespace CIAO
 
     class XSC_XML_Handlers_Export Bridge : public ::XSCRT::Type
     {
-      //@@ VC6 anathema
-      typedef ::XSCRT::Type Base__;
+      typedef ::XSCRT::Type Base;
 
       // name
       // 
@@ -227,8 +225,7 @@ namespace CIAO
 
     class XSC_XML_Handlers_Export Interconnect : public ::XSCRT::Type
     {
-      //@@ VC6 anathema
-      typedef ::XSCRT::Type Base__;
+      typedef ::XSCRT::Type Base;
 
       // name
       // 
@@ -310,8 +307,7 @@ namespace CIAO
 
     class XSC_XML_Handlers_Export Node : public ::XSCRT::Type
     {
-      //@@ VC6 anathema
-      typedef ::XSCRT::Type Base__;
+      typedef ::XSCRT::Type Base;
 
       // name
       // 
@@ -393,8 +389,7 @@ namespace CIAO
 
     class XSC_XML_Handlers_Export SharedResource : public ::XSCRT::Type
     {
-      //@@ VC6 anathema
-      typedef ::XSCRT::Type Base__;
+      typedef ::XSCRT::Type Base;
 
       // name
       // 

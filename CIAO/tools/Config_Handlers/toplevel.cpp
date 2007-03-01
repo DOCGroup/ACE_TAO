@@ -3,12 +3,18 @@
  *
  * Changes made to this code will most likely be overwritten
  * when the handlers are recompiled.
- * 
+ *
  * If you find errors or feel that there are bugfixes to be made,
  * please contact the current XSC maintainer:
  *             Will Otte <wotte@dre.vanderbilt.edu>
  */
- 
+
+// Fix for Borland compilers, which seem to have a broken
+// <string> include.
+#ifdef __BORLANDC__
+# include <string.h>
+#endif
+
 #include "toplevel.hpp"
 
 namespace CIAO
@@ -98,7 +104,7 @@ namespace CIAO
 
     TopLevelPackageDescription::
     TopLevelPackageDescription (::XSCRT::XML::Element< ACE_TCHAR > const& e)
-    :Base__ (e), regulator__ ()
+    :Base (e), regulator__ ()
     {
 
       ::XSCRT::Parser< ACE_TCHAR > p (e);

@@ -42,8 +42,7 @@ namespace CIAO
   {
     class XSC_XML_Handlers_Export PackagedComponentImplementation : public ::XSCRT::Type
     {
-      //@@ VC6 anathema
-      typedef ::XSCRT::Type Base__;
+      typedef ::XSCRT::Type Base;
 
       // name
       // 
@@ -80,8 +79,7 @@ namespace CIAO
 
     class XSC_XML_Handlers_Export ComponentPackageDescription : public ::XSCRT::Type
     {
-      //@@ VC6 anathema
-      typedef ::XSCRT::Type Base__;
+      typedef ::XSCRT::Type Base;
 
       // label
       // 
