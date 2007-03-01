@@ -88,8 +88,8 @@ namespace CIAO
           if (src.deployedSharedResource_p ())
             {
               dest.deployedSharedResource.length (1);
-              IRDD_Handler::instance_resource_deployment_descr (src.deployedSharedResource (),
-                                                                dest.deployedSharedResource[0]);
+              IRDD_Handler::handle_irdd (src.deployedSharedResource (),
+					 dest.deployedSharedResource[0]);
             }
 
         }

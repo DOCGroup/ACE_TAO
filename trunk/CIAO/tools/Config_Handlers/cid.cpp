@@ -3,12 +3,18 @@
  *
  * Changes made to this code will most likely be overwritten
  * when the handlers are recompiled.
- * 
+ *
  * If you find errors or feel that there are bugfixes to be made,
  * please contact the current XSC maintainer:
  *             Will Otte <wotte@dre.vanderbilt.edu>
  */
- 
+
+// Fix for Borland compilers, which seem to have a broken
+// <string> include.
+#ifdef __BORLANDC__
+# include <string.h>
+#endif
+
 #include "cid.hpp"
 
 namespace CIAO
@@ -1364,7 +1370,7 @@ namespace CIAO
 
     SubcomponentInstantiationDescription::
     SubcomponentInstantiationDescription (::XSCRT::XML::Element< ACE_TCHAR > const& e)
-    :Base__ (e), regulator__ ()
+    :Base (e), regulator__ ()
     {
 
       ::XSCRT::Parser< ACE_TCHAR > p (e);
@@ -1442,7 +1448,7 @@ namespace CIAO
 
     SubcomponentPropertyReference::
     SubcomponentPropertyReference (::XSCRT::XML::Element< ACE_TCHAR > const& e)
-    :Base__ (e), regulator__ ()
+    :Base (e), regulator__ ()
     {
 
       ::XSCRT::Parser< ACE_TCHAR > p (e);
@@ -1475,7 +1481,7 @@ namespace CIAO
 
     AssemblyPropertyMapping::
     AssemblyPropertyMapping (::XSCRT::XML::Element< ACE_TCHAR > const& e)
-    :Base__ (e), regulator__ ()
+    :Base (e), regulator__ ()
     {
 
       ::XSCRT::Parser< ACE_TCHAR > p (e);
@@ -1514,7 +1520,7 @@ namespace CIAO
 
     ComponentAssemblyDescription::
     ComponentAssemblyDescription (::XSCRT::XML::Element< ACE_TCHAR > const& e)
-    :Base__ (e), regulator__ ()
+    :Base (e), regulator__ ()
     {
 
       ::XSCRT::Parser< ACE_TCHAR > p (e);
@@ -1553,7 +1559,7 @@ namespace CIAO
 
     MonolithicImplementationDescription::
     MonolithicImplementationDescription (::XSCRT::XML::Element< ACE_TCHAR > const& e)
-    :Base__ (e), regulator__ ()
+    :Base (e), regulator__ ()
     {
 
       ::XSCRT::Parser< ACE_TCHAR > p (e);
@@ -1598,7 +1604,7 @@ namespace CIAO
 
     ComponentImplementationDescription::
     ComponentImplementationDescription (::XSCRT::XML::Element< ACE_TCHAR > const& e)
-    :Base__ (e), regulator__ ()
+    :Base (e), regulator__ ()
     {
 
       ::XSCRT::Parser< ACE_TCHAR > p (e);

@@ -41,8 +41,7 @@ namespace CIAO
   {
     class XSC_XML_Handlers_Export TopLevelPackageDescription : public ::XSCRT::Type
     {
-      //@@ VC6 anathema
-      typedef ::XSCRT::Type Base__;
+      typedef ::XSCRT::Type Base;
 
       // basePackage
       // 

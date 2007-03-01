@@ -144,8 +144,7 @@ namespace CIAO
 
     class XSC_XML_Handlers_Export DataType : public ::XSCRT::Type
     {
-      //@@ VC6 anathema
-      typedef ::XSCRT::Type Base__;
+      typedef ::XSCRT::Type Base;
 
       // kind
       // 
@@ -223,8 +222,7 @@ namespace CIAO
 
     class XSC_XML_Handlers_Export DataValue : public ::XSCRT::Type
     {
-      //@@ VC6 anathema
-      typedef ::XSCRT::Type Base__;
+      typedef ::XSCRT::Type Base;
 
       // short
       // 
@@ -452,8 +450,7 @@ namespace CIAO
 
     class XSC_XML_Handlers_Export EnumType : public ::XSCRT::Type
     {
-      //@@ VC6 anathema
-      typedef ::XSCRT::Type Base__;
+      typedef ::XSCRT::Type Base;
 
       // name
       // 
@@ -505,8 +502,7 @@ namespace CIAO
 
     class XSC_XML_Handlers_Export StructType : public ::XSCRT::Type
     {
-      //@@ VC6 anathema
-      typedef ::XSCRT::Type Base__;
+      typedef ::XSCRT::Type Base;
 
       // name
       // 
@@ -558,8 +554,7 @@ namespace CIAO
 
     class XSC_XML_Handlers_Export StructMemberType : public ::XSCRT::Type
     {
-      //@@ VC6 anathema
-      typedef ::XSCRT::Type Base__;
+      typedef ::XSCRT::Type Base;
 
       // name
       // 
@@ -596,8 +591,7 @@ namespace CIAO
 
     class XSC_XML_Handlers_Export ValueType : public ::XSCRT::Type
     {
-      //@@ VC6 anathema
-      typedef ::XSCRT::Type Base__;
+      typedef ::XSCRT::Type Base;
 
       // name
       // 
@@ -669,8 +663,7 @@ namespace CIAO
 
     class XSC_XML_Handlers_Export ValueMemberType : public ::XSCRT::Type
     {
-      //@@ VC6 anathema
-      typedef ::XSCRT::Type Base__;
+      typedef ::XSCRT::Type Base;
 
       // name
       // 
@@ -717,8 +710,7 @@ namespace CIAO
 
     class XSC_XML_Handlers_Export NamedValue : public ::XSCRT::Type
     {
-      //@@ VC6 anathema
-      typedef ::XSCRT::Type Base__;
+      typedef ::XSCRT::Type Base;
 
       // name
       // 
@@ -755,8 +747,7 @@ namespace CIAO
 
     class XSC_XML_Handlers_Export SequenceType : public ::XSCRT::Type
     {
-      //@@ VC6 anathema
-      typedef ::XSCRT::Type Base__;
+      typedef ::XSCRT::Type Base;
 
       // bound
       // 
@@ -793,8 +784,7 @@ namespace CIAO
 
     class XSC_XML_Handlers_Export Any : public ::XSCRT::Type
     {
-      //@@ VC6 anathema
-      typedef ::XSCRT::Type Base__;
+      typedef ::XSCRT::Type Base;
 
       // type
       // 
@@ -831,8 +821,7 @@ namespace CIAO
 
     class XSC_XML_Handlers_Export Property : public ::XSCRT::Type
     {
-      //@@ VC6 anathema
-      typedef ::XSCRT::Type Base__;
+      typedef ::XSCRT::Type Base;
 
       // name
       // 
@@ -908,8 +897,7 @@ namespace CIAO
 
     class XSC_XML_Handlers_Export SatisfierProperty : public ::XSCRT::Type
     {
-      //@@ VC6 anathema
-      typedef ::XSCRT::Type Base__;
+      typedef ::XSCRT::Type Base;
 
       // name
       // 
@@ -966,8 +954,7 @@ namespace CIAO
 
     class XSC_XML_Handlers_Export Resource : public ::XSCRT::Type
     {
-      //@@ VC6 anathema
-      typedef ::XSCRT::Type Base__;
+      typedef ::XSCRT::Type Base;
 
       // name
       // 
@@ -1024,8 +1011,7 @@ namespace CIAO
 
     class XSC_XML_Handlers_Export Requirement : public ::XSCRT::Type
     {
-      //@@ VC6 anathema
-      typedef ::XSCRT::Type Base__;
+      typedef ::XSCRT::Type Base;
 
       // resourceType
       // 
@@ -1077,8 +1063,7 @@ namespace CIAO
 
     class XSC_XML_Handlers_Export ResourceDeploymentDescription : public ::XSCRT::Type
     {
-      //@@ VC6 anathema
-      typedef ::XSCRT::Type Base__;
+      typedef ::XSCRT::Type Base;
 
       // requirementName
       // 
@@ -1130,8 +1115,7 @@ namespace CIAO
 
     class XSC_XML_Handlers_Export ArtifactDeploymentDescription : public ::XSCRT::Type
     {
-      //@@ VC6 anathema
-      typedef ::XSCRT::Type Base__;
+      typedef ::XSCRT::Type Base;
 
       // name
       // 
@@ -1254,8 +1238,7 @@ namespace CIAO
 
     class XSC_XML_Handlers_Export MonolithicDeploymentDescription : public ::XSCRT::Type
     {
-      //@@ VC6 anathema
-      typedef ::XSCRT::Type Base__;
+      typedef ::XSCRT::Type Base;
 
       // name
       // 
@@ -1391,8 +1374,7 @@ namespace CIAO
 
     class XSC_XML_Handlers_Export InstanceResourceDeploymentDescription : public ::XSCRT::Type
     {
-      //@@ VC6 anathema
-      typedef ::XSCRT::Type Base__;
+      typedef ::XSCRT::Type Base;
 
       // resourceUsage
       // 
@@ -1454,8 +1436,7 @@ namespace CIAO
 
     class XSC_XML_Handlers_Export InstanceDeploymentDescription : public ::XSCRT::Type
     {
-      //@@ VC6 anathema
-      typedef ::XSCRT::Type Base__;
+      typedef ::XSCRT::Type Base;
 
       // name
       // 
@@ -1602,8 +1583,7 @@ namespace CIAO
 
     class XSC_XML_Handlers_Export ComponentPortDescription : public ::XSCRT::Type
     {
-      //@@ VC6 anathema
-      typedef ::XSCRT::Type Base__;
+      typedef ::XSCRT::Type Base;
 
       // name
       // 
@@ -1705,8 +1685,7 @@ namespace CIAO
 
     class XSC_XML_Handlers_Export ComponentPropertyDescription : public ::XSCRT::Type
     {
-      //@@ VC6 anathema
-      typedef ::XSCRT::Type Base__;
+      typedef ::XSCRT::Type Base;
 
       // name
       // 
@@ -1743,8 +1722,7 @@ namespace CIAO
 
     class XSC_XML_Handlers_Export ComponentExternalPortEndpoint : public ::XSCRT::Type
     {
-      //@@ VC6 anathema
-      typedef ::XSCRT::Type Base__;
+      typedef ::XSCRT::Type Base;
 
       // portName
       // 
@@ -1771,8 +1749,7 @@ namespace CIAO
 
     class XSC_XML_Handlers_Export PlanSubcomponentPortEndpoint : public ::XSCRT::Type
     {
-      //@@ VC6 anathema
-      typedef ::XSCRT::Type Base__;
+      typedef ::XSCRT::Type Base;
 
       // portName
       // 
@@ -1829,8 +1806,7 @@ namespace CIAO
 
     class XSC_XML_Handlers_Export ExternalReferenceEndpoint : public ::XSCRT::Type
     {
-      //@@ VC6 anathema
-      typedef ::XSCRT::Type Base__;
+      typedef ::XSCRT::Type Base;
 
       // location
       // 
@@ -1857,8 +1833,7 @@ namespace CIAO
 
     class XSC_XML_Handlers_Export ConnectionResourceDeploymentDescription : public ::XSCRT::Type
     {
-      //@@ VC6 anathema
-      typedef ::XSCRT::Type Base__;
+      typedef ::XSCRT::Type Base;
 
       // targetName
       // 
@@ -1920,8 +1895,7 @@ namespace CIAO
 
     class XSC_XML_Handlers_Export PlanConnectionDescription : public ::XSCRT::Type
     {
-      //@@ VC6 anathema
-      typedef ::XSCRT::Type Base__;
+      typedef ::XSCRT::Type Base;
 
       // name
       // 
@@ -2033,8 +2007,7 @@ namespace CIAO
 
     class XSC_XML_Handlers_Export ImplementationDependency : public ::XSCRT::Type
     {
-      //@@ VC6 anathema
-      typedef ::XSCRT::Type Base__;
+      typedef ::XSCRT::Type Base;
 
       // requiredType
       // 
@@ -2061,8 +2034,7 @@ namespace CIAO
 
     class XSC_XML_Handlers_Export Capability : public ::XSCRT::Type
     {
-      //@@ VC6 anathema
-      typedef ::XSCRT::Type Base__;
+      typedef ::XSCRT::Type Base;
 
       // name
       // 
@@ -2119,8 +2091,7 @@ namespace CIAO
 
     class XSC_XML_Handlers_Export ImplementationRequirement : public ::XSCRT::Type
     {
-      //@@ VC6 anathema
-      typedef ::XSCRT::Type Base__;
+      typedef ::XSCRT::Type Base;
 
       // resourceUsage
       // 
@@ -2202,8 +2173,7 @@ namespace CIAO
 
     class XSC_XML_Handlers_Export ComponentPackageReference : public ::XSCRT::Type
     {
-      //@@ VC6 anathema
-      typedef ::XSCRT::Type Base__;
+      typedef ::XSCRT::Type Base;
 
       // requiredUUID
       // 
@@ -2250,8 +2220,7 @@ namespace CIAO
 
     class XSC_XML_Handlers_Export SubcomponentPortEndpoint : public ::XSCRT::Type
     {
-      //@@ VC6 anathema
-      typedef ::XSCRT::Type Base__;
+      typedef ::XSCRT::Type Base;
 
       // portName
       // 
@@ -2288,8 +2257,7 @@ namespace CIAO
 
     class XSC_XML_Handlers_Export AssemblyConnectionDescription : public ::XSCRT::Type
     {
-      //@@ VC6 anathema
-      typedef ::XSCRT::Type Base__;
+      typedef ::XSCRT::Type Base;
 
       // name
       // 

@@ -3,12 +3,18 @@
  *
  * Changes made to this code will most likely be overwritten
  * when the handlers are recompiled.
- * 
+ *
  * If you find errors or feel that there are bugfixes to be made,
  * please contact the current XSC maintainer:
  *             Will Otte <wotte@dre.vanderbilt.edu>
  */
- 
+
+// Fix for Borland compilers, which seem to have a broken
+// <string> include.
+#ifdef __BORLANDC__
+# include <string.h>
+#endif
+
 #include "cdd.hpp"
 
 namespace CIAO
@@ -1080,7 +1086,7 @@ namespace CIAO
 
     Domain::
     Domain (::XSCRT::XML::Element< ACE_TCHAR > const& e)
-    :Base__ (e), regulator__ ()
+    :Base (e), regulator__ ()
     {
 
       ::XSCRT::Parser< ACE_TCHAR > p (e);
@@ -1143,7 +1149,7 @@ namespace CIAO
 
     Bridge::
     Bridge (::XSCRT::XML::Element< ACE_TCHAR > const& e)
-    :Base__ (e), regulator__ ()
+    :Base (e), regulator__ ()
     {
 
       ::XSCRT::Parser< ACE_TCHAR > p (e);
@@ -1188,7 +1194,7 @@ namespace CIAO
 
     Interconnect::
     Interconnect (::XSCRT::XML::Element< ACE_TCHAR > const& e)
-    :Base__ (e), regulator__ ()
+    :Base (e), regulator__ ()
     {
 
       ::XSCRT::Parser< ACE_TCHAR > p (e);
@@ -1239,7 +1245,7 @@ namespace CIAO
 
     Node::
     Node (::XSCRT::XML::Element< ACE_TCHAR > const& e)
-    :Base__ (e), regulator__ ()
+    :Base (e), regulator__ ()
     {
 
       ::XSCRT::Parser< ACE_TCHAR > p (e);
@@ -1290,7 +1296,7 @@ namespace CIAO
 
     SharedResource::
     SharedResource (::XSCRT::XML::Element< ACE_TCHAR > const& e)
-    :Base__ (e), regulator__ ()
+    :Base (e), regulator__ ()
     {
 
       ::XSCRT::Parser< ACE_TCHAR > p (e);
