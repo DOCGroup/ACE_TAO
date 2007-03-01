@@ -89,11 +89,8 @@ public:
 
   static int _tao_class_id;
 
-  /// Useful for template programming.
-#if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
   typedef TAO_DII_Reply_Handler_ptr _ptr_type;
   typedef TAO_DII_Reply_Handler_var _var_type;
-#endif /* __GNUC__ */
 
 };
 
