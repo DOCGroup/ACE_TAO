@@ -3,12 +3,18 @@
  *
  * Changes made to this code will most likely be overwritten
  * when the handlers are recompiled.
- * 
+ *
  * If you find errors or feel that there are bugfixes to be made,
  * please contact the current XSC maintainer:
  *             Will Otte <wotte@dre.vanderbilt.edu>
  */
- 
+
+// Fix for Borland compilers, which seem to have a broken
+// <string> include.
+#ifdef __BORLANDC__
+# include <string.h>
+#endif
+
 #include "CIAOServerResources.hpp"
 
 namespace CIAO
@@ -578,35 +584,6 @@ namespace CIAO
     }
 
 
-    // Priority
-    // 
-
-    Priority::
-    Priority (::XMLSchema::int_ const& b__)
-    : 
-    Base__ (b__),
-    regulator__ ()
-    {
-    }
-
-    Priority::
-    Priority (::CIAO::Config_Handlers::Priority const& s)
-    :
-    Base__ (s),
-    regulator__ ()
-    {
-    }
-
-    ::CIAO::Config_Handlers::Priority& Priority::
-    operator= (::CIAO::Config_Handlers::Priority const& s)
-    {
-      static_cast< Base__& > (*this) = static_cast< Base__ const& > (s);
-
-      return *this;
-    }
-
-
-
     // ThreadpoolDef
     // 
 
@@ -614,7 +591,7 @@ namespace CIAO
     ThreadpoolDef (::XMLSchema::unsignedLong const& stacksize__,
                    ::XMLSchema::unsignedLong const& static_threads__,
                    ::XMLSchema::unsignedLong const& dynamic_threads__,
-                   ::CIAO::Config_Handlers::Priority const& default_priority__,
+                   ::XMLSchema::int_ const& default_priority__,
                    ::XMLSchema::boolean const& allow_request_buffering__,
                    ::XMLSchema::unsignedLong const& max_buffered_requests__,
                    ::XMLSchema::unsignedLong const& max_request_buffered_size__)
@@ -623,7 +600,7 @@ namespace CIAO
     stacksize_ (new ::XMLSchema::unsignedLong (stacksize__)),
     static_threads_ (new ::XMLSchema::unsignedLong (static_threads__)),
     dynamic_threads_ (new ::XMLSchema::unsignedLong (dynamic_threads__)),
-    default_priority_ (new ::CIAO::Config_Handlers::Priority (default_priority__)),
+    default_priority_ (new ::XMLSchema::int_ (default_priority__)),
     allow_request_buffering_ (new ::XMLSchema::boolean (allow_request_buffering__)),
     max_buffered_requests_ (new ::XMLSchema::unsignedLong (max_buffered_requests__)),
     max_request_buffered_size_ (new ::XMLSchema::unsignedLong (max_request_buffered_size__)),
@@ -645,7 +622,7 @@ namespace CIAO
     stacksize_ (new ::XMLSchema::unsignedLong (*s.stacksize_)),
     static_threads_ (new ::XMLSchema::unsignedLong (*s.static_threads_)),
     dynamic_threads_ (new ::XMLSchema::unsignedLong (*s.dynamic_threads_)),
-    default_priority_ (new ::CIAO::Config_Handlers::Priority (*s.default_priority_)),
+    default_priority_ (new ::XMLSchema::int_ (*s.default_priority_)),
     allow_request_buffering_ (new ::XMLSchema::boolean (*s.allow_request_buffering_)),
     max_buffered_requests_ (new ::XMLSchema::unsignedLong (*s.max_buffered_requests_)),
     max_request_buffered_size_ (new ::XMLSchema::unsignedLong (*s.max_request_buffered_size_)),
@@ -730,14 +707,14 @@ namespace CIAO
 
     // ThreadpoolDef
     // 
-    ::CIAO::Config_Handlers::Priority const& ThreadpoolDef::
+    ::XMLSchema::int_ const& ThreadpoolDef::
     default_priority () const
     {
       return *default_priority_;
     }
 
     void ThreadpoolDef::
-    default_priority (::CIAO::Config_Handlers::Priority const& e)
+    default_priority (::XMLSchema::int_ const& e)
     {
       *default_priority_ = e;
     }
@@ -1044,12 +1021,12 @@ namespace CIAO
     ThreadpoolLaneDef::
     ThreadpoolLaneDef (::XMLSchema::unsignedLong const& static_threads__,
                        ::XMLSchema::unsignedLong const& dynamic_threads__,
-                       ::CIAO::Config_Handlers::Priority const& priority__)
+                       ::XMLSchema::int_ const& priority__)
     : 
     ::XSCRT::Type (), 
     static_threads_ (new ::XMLSchema::unsignedLong (static_threads__)),
     dynamic_threads_ (new ::XMLSchema::unsignedLong (dynamic_threads__)),
-    priority_ (new ::CIAO::Config_Handlers::Priority (priority__)),
+    priority_ (new ::XMLSchema::int_ (priority__)),
     regulator__ ()
     {
       static_threads_->container (this);
@@ -1063,7 +1040,7 @@ namespace CIAO
     ::XSCRT::Type (),
     static_threads_ (new ::XMLSchema::unsignedLong (*s.static_threads_)),
     dynamic_threads_ (new ::XMLSchema::unsignedLong (*s.dynamic_threads_)),
-    priority_ (new ::CIAO::Config_Handlers::Priority (*s.priority_)),
+    priority_ (new ::XMLSchema::int_ (*s.priority_)),
     regulator__ ()
     {
       static_threads_->container (this);
@@ -1114,14 +1091,14 @@ namespace CIAO
 
     // ThreadpoolLaneDef
     // 
-    ::CIAO::Config_Handlers::Priority const& ThreadpoolLaneDef::
+    ::XMLSchema::int_ const& ThreadpoolLaneDef::
     priority () const
     {
       return *priority_;
     }
 
     void ThreadpoolLaneDef::
-    priority (::CIAO::Config_Handlers::Priority const& e)
+    priority (::XMLSchema::int_ const& e)
     {
       *priority_ = e;
     }
@@ -1683,7 +1660,7 @@ namespace CIAO
     :
     ::XSCRT::Type (),
     priority_model_ (new ::CIAO::Config_Handlers::PriorityModel (*s.priority_model_)),
-    server_priority_ (s.server_priority_.get () ? new ::CIAO::Config_Handlers::Priority (*s.server_priority_) : 0),
+    server_priority_ (s.server_priority_.get () ? new ::XMLSchema::int_ (*s.server_priority_) : 0),
     regulator__ ()
     {
       priority_model_->container (this);
@@ -1696,7 +1673,7 @@ namespace CIAO
       priority_model (s.priority_model ());
 
       if (s.server_priority_.get ()) server_priority (*(s.server_priority_));
-      else server_priority_ = ::std::auto_ptr< ::CIAO::Config_Handlers::Priority > (0);
+      else server_priority_ = ::std::auto_ptr< ::XMLSchema::int_ > (0);
 
       return *this;
     }
@@ -1724,20 +1701,20 @@ namespace CIAO
       return server_priority_.get () != 0;
     }
 
-    ::CIAO::Config_Handlers::Priority const& PriorityModelPolicyDef::
+    ::XMLSchema::int_ const& PriorityModelPolicyDef::
     server_priority () const
     {
       return *server_priority_;
     }
 
-    ::CIAO::Config_Handlers::Priority& PriorityModelPolicyDef::
+    ::XMLSchema::int_& PriorityModelPolicyDef::
     server_priority ()
     {
       return *server_priority_;
     }
 
     void PriorityModelPolicyDef::
-    server_priority (::CIAO::Config_Handlers::Priority const& e)
+    server_priority (::XMLSchema::int_ const& e)
     {
       if (server_priority_.get ())
       {
@@ -1746,7 +1723,7 @@ namespace CIAO
 
       else
       {
-        server_priority_ = ::std::auto_ptr< ::CIAO::Config_Handlers::Priority > (new ::CIAO::Config_Handlers::Priority (e));
+        server_priority_ = ::std::auto_ptr< ::XMLSchema::int_ > (new ::XMLSchema::int_ (e));
         server_priority_->container (this);
       }
     }
@@ -1919,7 +1896,7 @@ namespace CIAO
 
     ServerResourcesDef::
     ServerResourcesDef (::XSCRT::XML::Element< ACE_TCHAR > const& e)
-    :Base__ (e), regulator__ ()
+    :Base (e), regulator__ ()
     {
 
       ::XSCRT::Parser< ACE_TCHAR > p (e);
@@ -1973,7 +1950,7 @@ namespace CIAO
 
     ServerCmdlineOptions::
     ServerCmdlineOptions (::XSCRT::XML::Element< ACE_TCHAR > const& e)
-    :Base__ (e), regulator__ ()
+    :Base (e), regulator__ ()
     {
 
       ::XSCRT::Parser< ACE_TCHAR > p (e);
@@ -2000,7 +1977,7 @@ namespace CIAO
 
     ACESvcConf::
     ACESvcConf (::XSCRT::XML::Element< ACE_TCHAR > const& e)
-    :Base__ (e), regulator__ ()
+    :Base (e), regulator__ ()
     {
 
       ::XSCRT::Parser< ACE_TCHAR > p (e);
@@ -2027,7 +2004,7 @@ namespace CIAO
 
     ORBConfigs::
     ORBConfigs (::XSCRT::XML::Element< ACE_TCHAR > const& e)
-    :Base__ (e), regulator__ ()
+    :Base (e), regulator__ ()
     {
 
       ::XSCRT::Parser< ACE_TCHAR > p (e);
@@ -2060,7 +2037,7 @@ namespace CIAO
 
     ORBResources::
     ORBResources (::XSCRT::XML::Element< ACE_TCHAR > const& e)
-    :Base__ (e), regulator__ ()
+    :Base (e), regulator__ ()
     {
 
       ::XSCRT::Parser< ACE_TCHAR > p (e);
@@ -2094,29 +2071,12 @@ namespace CIAO
       }
     }
 
-    // Priority
-    //
-
-    Priority::
-    Priority (::XSCRT::XML::Element< ACE_TCHAR > const& e)
-    :Base__ (e), regulator__ ()
-    {
-    }
-
-    Priority::
-    Priority (::XSCRT::XML::Attribute< ACE_TCHAR > const& a)
-    :
-    Base__ (a),
-    regulator__ ()
-    {
-    }
-
     // ThreadpoolDef
     //
 
     ThreadpoolDef::
     ThreadpoolDef (::XSCRT::XML::Element< ACE_TCHAR > const& e)
-    :Base__ (e), regulator__ ()
+    :Base (e), regulator__ ()
     {
 
       ::XSCRT::Parser< ACE_TCHAR > p (e);
@@ -2146,7 +2106,7 @@ namespace CIAO
 
         else if (n == "default_priority")
         {
-          default_priority_ = ::std::auto_ptr< ::CIAO::Config_Handlers::Priority > (new ::CIAO::Config_Handlers::Priority (e));
+          default_priority_ = ::std::auto_ptr< ::XMLSchema::int_ > (new ::XMLSchema::int_ (e));
           default_priority_->container (this);
         }
 
@@ -2194,7 +2154,7 @@ namespace CIAO
 
     ThreadpoolWithLanesDef::
     ThreadpoolWithLanesDef (::XSCRT::XML::Element< ACE_TCHAR > const& e)
-    :Base__ (e), regulator__ ()
+    :Base (e), regulator__ ()
     {
 
       ::XSCRT::Parser< ACE_TCHAR > p (e);
@@ -2266,7 +2226,7 @@ namespace CIAO
 
     ThreadpoolLaneDef::
     ThreadpoolLaneDef (::XSCRT::XML::Element< ACE_TCHAR > const& e)
-    :Base__ (e), regulator__ ()
+    :Base (e), regulator__ ()
     {
 
       ::XSCRT::Parser< ACE_TCHAR > p (e);
@@ -2290,7 +2250,7 @@ namespace CIAO
 
         else if (n == "priority")
         {
-          priority_ = ::std::auto_ptr< ::CIAO::Config_Handlers::Priority > (new ::CIAO::Config_Handlers::Priority (e));
+          priority_ = ::std::auto_ptr< ::XMLSchema::int_ > (new ::XMLSchema::int_ (e));
           priority_->container (this);
         }
 
@@ -2305,7 +2265,7 @@ namespace CIAO
 
     ConnectionBandsDef::
     ConnectionBandsDef (::XSCRT::XML::Element< ACE_TCHAR > const& e)
-    :Base__ (e), regulator__ ()
+    :Base (e), regulator__ ()
     {
 
       ::XSCRT::Parser< ACE_TCHAR > p (e);
@@ -2347,7 +2307,7 @@ namespace CIAO
 
     PriorityBandDef::
     PriorityBandDef (::XSCRT::XML::Element< ACE_TCHAR > const& e)
-    :Base__ (e), regulator__ ()
+    :Base (e), regulator__ ()
     {
 
       ::XSCRT::Parser< ACE_TCHAR > p (e);
@@ -2380,7 +2340,7 @@ namespace CIAO
 
     PolicySet::
     PolicySet (::XSCRT::XML::Element< ACE_TCHAR > const& e)
-    :Base__ (e), regulator__ ()
+    :Base (e), regulator__ ()
     {
 
       ::XSCRT::Parser< ACE_TCHAR > p (e);
@@ -2510,7 +2470,7 @@ namespace CIAO
 
     PriorityModelPolicyDef::
     PriorityModelPolicyDef (::XSCRT::XML::Element< ACE_TCHAR > const& e)
-    :Base__ (e), regulator__ ()
+    :Base (e), regulator__ ()
     {
 
       ::XSCRT::Parser< ACE_TCHAR > p (e);
@@ -2537,7 +2497,7 @@ namespace CIAO
         ::std::basic_string< ACE_TCHAR > n (::XSCRT::XML::uq_name (a.name ()));
         if (n == "server_priority")
         {
-          ::CIAO::Config_Handlers::Priority t (a);
+          ::XMLSchema::int_ t (a);
           server_priority (t);
         }
 
@@ -2552,7 +2512,7 @@ namespace CIAO
 
     NWPriorityModelPolicyDef::
     NWPriorityModelPolicyDef (::XSCRT::XML::Element< ACE_TCHAR > const& e)
-    :Base__ (e), regulator__ ()
+    :Base (e), regulator__ ()
     {
 
       ::XSCRT::Parser< ACE_TCHAR > p (e);
@@ -2591,7 +2551,7 @@ namespace CIAO
 
     CNWPriorityModelPolicyDef::
     CNWPriorityModelPolicyDef (::XSCRT::XML::Element< ACE_TCHAR > const& e)
-    :Base__ (e), regulator__ ()
+    :Base (e), regulator__ ()
     {
 
       ::XSCRT::Parser< ACE_TCHAR > p (e);
@@ -2722,20 +2682,6 @@ namespace CIAO
       };
 
       ORBResourcesTypeInfoInitializer ORBResourcesTypeInfoInitializer_;
-
-      struct PriorityTypeInfoInitializer
-      {
-        PriorityTypeInfoInitializer ()
-        {
-          ::XSCRT::TypeId id (typeid (Priority));
-          ::XSCRT::ExtendedTypeInfo nf (id);
-
-          nf.add_base (::XSCRT::ExtendedTypeInfo::Access::public_, false, typeid (::XMLSchema::int_));
-          ::XSCRT::extended_type_info_map ().insert (::std::make_pair (id, nf));
-        }
-      };
-
-      PriorityTypeInfoInitializer PriorityTypeInfoInitializer_;
 
       struct ThreadpoolDefTypeInfoInitializer
       {
@@ -3634,44 +3580,6 @@ namespace CIAO
       }
 
       void ORBResources::
-      post (Type const&)
-      {
-      }
-
-      // Priority
-      //
-      //
-
-      void Priority::
-      traverse (Type& o)
-      {
-        pre (o);
-        post (o);
-      }
-
-      void Priority::
-      traverse (Type const& o)
-      {
-        pre (o);
-        post (o);
-      }
-
-      void Priority::
-      pre (Type&)
-      {
-      }
-
-      void Priority::
-      pre (Type const&)
-      {
-      }
-
-      void Priority::
-      post (Type&)
-      {
-      }
-
-      void Priority::
       post (Type const&)
       {
       }
@@ -5302,28 +5210,6 @@ namespace CIAO
         pop_ ();
       }
 
-      // Priority
-      //
-      //
-
-      Priority::
-      Priority (::XSCRT::XML::Element< ACE_TCHAR >& e)
-      : ::XSCRT::Writer< ACE_TCHAR > (e)
-      {
-      }
-
-      Priority::
-      Priority ()
-      {
-      }
-
-      void Priority::
-      traverse (Type const& o)
-      {
-        ::XMLSchema::Writer::FundamentalType< ::XMLSchema::int_, ACE_TCHAR >::traverse (o);
-        Traversal::Priority::traverse (o);
-      }
-
       // ThreadpoolDef
       //
       //
@@ -5973,14 +5859,13 @@ namespace CIAO
       virtual ::CIAO::Config_Handlers::Writer::ORBResources,
       virtual ::CIAO::Config_Handlers::Writer::ThreadpoolDef,
       virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::unsignedLong, ACE_TCHAR >,
-      virtual ::CIAO::Config_Handlers::Writer::Priority,
+      virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::int_, ACE_TCHAR >,
       virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::boolean, ACE_TCHAR >,
       virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::ID< ACE_TCHAR >, ACE_TCHAR >,
       virtual ::CIAO::Config_Handlers::Writer::ThreadpoolWithLanesDef,
       virtual ::CIAO::Config_Handlers::Writer::ThreadpoolLaneDef,
       virtual ::CIAO::Config_Handlers::Writer::ConnectionBandsDef,
       virtual ::CIAO::Config_Handlers::Writer::PriorityBandDef,
-      virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::int_, ACE_TCHAR >,
       virtual ::CIAO::Config_Handlers::Writer::PolicySet,
       virtual ::CIAO::Config_Handlers::Writer::PriorityModelPolicyDef,
       virtual ::CIAO::Config_Handlers::Writer::PriorityModel,

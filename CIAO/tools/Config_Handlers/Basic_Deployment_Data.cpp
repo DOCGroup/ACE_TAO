@@ -3,12 +3,18 @@
  *
  * Changes made to this code will most likely be overwritten
  * when the handlers are recompiled.
- * 
+ *
  * If you find errors or feel that there are bugfixes to be made,
  * please contact the current XSC maintainer:
  *             Will Otte <wotte@dre.vanderbilt.edu>
  */
- 
+
+// Fix for Borland compilers, which seem to have a broken
+// <string> include.
+#ifdef __BORLANDC__
+# include <string.h>
+#endif
+
 #include "Basic_Deployment_Data.hpp"
 
 namespace CIAO
@@ -5300,7 +5306,7 @@ namespace CIAO
 
     DataType::
     DataType (::XSCRT::XML::Element< ACE_TCHAR > const& e)
-    :Base__ (e), regulator__ ()
+    :Base (e), regulator__ ()
     {
 
       ::XSCRT::Parser< ACE_TCHAR > p (e);
@@ -5366,7 +5372,7 @@ namespace CIAO
 
     DataValue::
     DataValue (::XSCRT::XML::Element< ACE_TCHAR > const& e)
-    :Base__ (e), regulator__ ()
+    :Base (e), regulator__ ()
     {
 
       ::XSCRT::Parser< ACE_TCHAR > p (e);
@@ -5471,7 +5477,7 @@ namespace CIAO
 
     EnumType::
     EnumType (::XSCRT::XML::Element< ACE_TCHAR > const& e)
-    :Base__ (e), regulator__ ()
+    :Base (e), regulator__ ()
     {
 
       ::XSCRT::Parser< ACE_TCHAR > p (e);
@@ -5510,7 +5516,7 @@ namespace CIAO
 
     StructType::
     StructType (::XSCRT::XML::Element< ACE_TCHAR > const& e)
-    :Base__ (e), regulator__ ()
+    :Base (e), regulator__ ()
     {
 
       ::XSCRT::Parser< ACE_TCHAR > p (e);
@@ -5549,7 +5555,7 @@ namespace CIAO
 
     StructMemberType::
     StructMemberType (::XSCRT::XML::Element< ACE_TCHAR > const& e)
-    :Base__ (e), regulator__ ()
+    :Base (e), regulator__ ()
     {
 
       ::XSCRT::Parser< ACE_TCHAR > p (e);
@@ -5582,7 +5588,7 @@ namespace CIAO
 
     ValueType::
     ValueType (::XSCRT::XML::Element< ACE_TCHAR > const& e)
-    :Base__ (e), regulator__ ()
+    :Base (e), regulator__ ()
     {
 
       ::XSCRT::Parser< ACE_TCHAR > p (e);
@@ -5633,7 +5639,7 @@ namespace CIAO
 
     ValueMemberType::
     ValueMemberType (::XSCRT::XML::Element< ACE_TCHAR > const& e)
-    :Base__ (e), regulator__ ()
+    :Base (e), regulator__ ()
     {
 
       ::XSCRT::Parser< ACE_TCHAR > p (e);
@@ -5672,7 +5678,7 @@ namespace CIAO
 
     NamedValue::
     NamedValue (::XSCRT::XML::Element< ACE_TCHAR > const& e)
-    :Base__ (e), regulator__ ()
+    :Base (e), regulator__ ()
     {
 
       ::XSCRT::Parser< ACE_TCHAR > p (e);
@@ -5705,7 +5711,7 @@ namespace CIAO
 
     SequenceType::
     SequenceType (::XSCRT::XML::Element< ACE_TCHAR > const& e)
-    :Base__ (e), regulator__ ()
+    :Base (e), regulator__ ()
     {
 
       ::XSCRT::Parser< ACE_TCHAR > p (e);
@@ -5738,7 +5744,7 @@ namespace CIAO
 
     Any::
     Any (::XSCRT::XML::Element< ACE_TCHAR > const& e)
-    :Base__ (e), regulator__ ()
+    :Base (e), regulator__ ()
     {
 
       ::XSCRT::Parser< ACE_TCHAR > p (e);
@@ -5771,7 +5777,7 @@ namespace CIAO
 
     Property::
     Property (::XSCRT::XML::Element< ACE_TCHAR > const& e)
-    :Base__ (e), regulator__ ()
+    :Base (e), regulator__ ()
     {
 
       ::XSCRT::Parser< ACE_TCHAR > p (e);
@@ -5848,7 +5854,7 @@ namespace CIAO
 
     SatisfierProperty::
     SatisfierProperty (::XSCRT::XML::Element< ACE_TCHAR > const& e)
-    :Base__ (e), regulator__ ()
+    :Base (e), regulator__ ()
     {
 
       ::XSCRT::Parser< ACE_TCHAR > p (e);
@@ -5893,7 +5899,7 @@ namespace CIAO
 
     Resource::
     Resource (::XSCRT::XML::Element< ACE_TCHAR > const& e)
-    :Base__ (e), regulator__ ()
+    :Base (e), regulator__ ()
     {
 
       ::XSCRT::Parser< ACE_TCHAR > p (e);
@@ -5932,7 +5938,7 @@ namespace CIAO
 
     Requirement::
     Requirement (::XSCRT::XML::Element< ACE_TCHAR > const& e)
-    :Base__ (e), regulator__ ()
+    :Base (e), regulator__ ()
     {
 
       ::XSCRT::Parser< ACE_TCHAR > p (e);
@@ -5971,7 +5977,7 @@ namespace CIAO
 
     ResourceDeploymentDescription::
     ResourceDeploymentDescription (::XSCRT::XML::Element< ACE_TCHAR > const& e)
-    :Base__ (e), regulator__ ()
+    :Base (e), regulator__ ()
     {
 
       ::XSCRT::Parser< ACE_TCHAR > p (e);
@@ -6010,7 +6016,7 @@ namespace CIAO
 
     ArtifactDeploymentDescription::
     ArtifactDeploymentDescription (::XSCRT::XML::Element< ACE_TCHAR > const& e)
-    :Base__ (e), regulator__ ()
+    :Base (e), regulator__ ()
     {
 
       ::XSCRT::Parser< ACE_TCHAR > p (e);
@@ -6088,7 +6094,7 @@ namespace CIAO
 
     MonolithicDeploymentDescription::
     MonolithicDeploymentDescription (::XSCRT::XML::Element< ACE_TCHAR > const& e)
-    :Base__ (e), regulator__ ()
+    :Base (e), regulator__ ()
     {
 
       ::XSCRT::Parser< ACE_TCHAR > p (e);
@@ -6195,7 +6201,7 @@ namespace CIAO
 
     InstanceResourceDeploymentDescription::
     InstanceResourceDeploymentDescription (::XSCRT::XML::Element< ACE_TCHAR > const& e)
-    :Base__ (e), regulator__ ()
+    :Base (e), regulator__ ()
     {
 
       ::XSCRT::Parser< ACE_TCHAR > p (e);
@@ -6240,7 +6246,7 @@ namespace CIAO
 
     InstanceDeploymentDescription::
     InstanceDeploymentDescription (::XSCRT::XML::Element< ACE_TCHAR > const& e)
-    :Base__ (e), regulator__ ()
+    :Base (e), regulator__ ()
     {
 
       ::XSCRT::Parser< ACE_TCHAR > p (e);
@@ -6362,7 +6368,7 @@ namespace CIAO
 
     ComponentPortDescription::
     ComponentPortDescription (::XSCRT::XML::Element< ACE_TCHAR > const& e)
-    :Base__ (e), regulator__ ()
+    :Base (e), regulator__ ()
     {
 
       ::XSCRT::Parser< ACE_TCHAR > p (e);
@@ -6431,7 +6437,7 @@ namespace CIAO
 
     ComponentPropertyDescription::
     ComponentPropertyDescription (::XSCRT::XML::Element< ACE_TCHAR > const& e)
-    :Base__ (e), regulator__ ()
+    :Base (e), regulator__ ()
     {
 
       ::XSCRT::Parser< ACE_TCHAR > p (e);
@@ -6464,7 +6470,7 @@ namespace CIAO
 
     ComponentExternalPortEndpoint::
     ComponentExternalPortEndpoint (::XSCRT::XML::Element< ACE_TCHAR > const& e)
-    :Base__ (e), regulator__ ()
+    :Base (e), regulator__ ()
     {
 
       ::XSCRT::Parser< ACE_TCHAR > p (e);
@@ -6491,7 +6497,7 @@ namespace CIAO
 
     PlanSubcomponentPortEndpoint::
     PlanSubcomponentPortEndpoint (::XSCRT::XML::Element< ACE_TCHAR > const& e)
-    :Base__ (e), regulator__ ()
+    :Base (e), regulator__ ()
     {
 
       ::XSCRT::Parser< ACE_TCHAR > p (e);
@@ -6536,7 +6542,7 @@ namespace CIAO
 
     ExternalReferenceEndpoint::
     ExternalReferenceEndpoint (::XSCRT::XML::Element< ACE_TCHAR > const& e)
-    :Base__ (e), regulator__ ()
+    :Base (e), regulator__ ()
     {
 
       ::XSCRT::Parser< ACE_TCHAR > p (e);
@@ -6563,7 +6569,7 @@ namespace CIAO
 
     ConnectionResourceDeploymentDescription::
     ConnectionResourceDeploymentDescription (::XSCRT::XML::Element< ACE_TCHAR > const& e)
-    :Base__ (e), regulator__ ()
+    :Base (e), regulator__ ()
     {
 
       ::XSCRT::Parser< ACE_TCHAR > p (e);
@@ -6608,7 +6614,7 @@ namespace CIAO
 
     PlanConnectionDescription::
     PlanConnectionDescription (::XSCRT::XML::Element< ACE_TCHAR > const& e)
-    :Base__ (e), regulator__ ()
+    :Base (e), regulator__ ()
     {
 
       ::XSCRT::Parser< ACE_TCHAR > p (e);
@@ -6671,7 +6677,7 @@ namespace CIAO
 
     ImplementationDependency::
     ImplementationDependency (::XSCRT::XML::Element< ACE_TCHAR > const& e)
-    :Base__ (e), regulator__ ()
+    :Base (e), regulator__ ()
     {
 
       ::XSCRT::Parser< ACE_TCHAR > p (e);
@@ -6698,7 +6704,7 @@ namespace CIAO
 
     Capability::
     Capability (::XSCRT::XML::Element< ACE_TCHAR > const& e)
-    :Base__ (e), regulator__ ()
+    :Base (e), regulator__ ()
     {
 
       ::XSCRT::Parser< ACE_TCHAR > p (e);
@@ -6737,7 +6743,7 @@ namespace CIAO
 
     ImplementationRequirement::
     ImplementationRequirement (::XSCRT::XML::Element< ACE_TCHAR > const& e)
-    :Base__ (e), regulator__ ()
+    :Base (e), regulator__ ()
     {
 
       ::XSCRT::Parser< ACE_TCHAR > p (e);
@@ -6794,7 +6800,7 @@ namespace CIAO
 
     ComponentPackageReference::
     ComponentPackageReference (::XSCRT::XML::Element< ACE_TCHAR > const& e)
-    :Base__ (e), regulator__ ()
+    :Base (e), regulator__ ()
     {
 
       ::XSCRT::Parser< ACE_TCHAR > p (e);
@@ -6833,7 +6839,7 @@ namespace CIAO
 
     SubcomponentPortEndpoint::
     SubcomponentPortEndpoint (::XSCRT::XML::Element< ACE_TCHAR > const& e)
-    :Base__ (e), regulator__ ()
+    :Base (e), regulator__ ()
     {
 
       ::XSCRT::Parser< ACE_TCHAR > p (e);
@@ -6866,7 +6872,7 @@ namespace CIAO
 
     AssemblyConnectionDescription::
     AssemblyConnectionDescription (::XSCRT::XML::Element< ACE_TCHAR > const& e)
-    :Base__ (e), regulator__ ()
+    :Base (e), regulator__ ()
     {
 
       ::XSCRT::Parser< ACE_TCHAR > p (e);

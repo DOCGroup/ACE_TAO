@@ -53,9 +53,8 @@ namespace CIAO
 	  /// <CIAO::Config_Handlers::Property> to the CORBA IDL type
 	  /// <Deployment::Property>.
 	  static void handle_property (const Property& desc,
-				    ::Deployment::Property& toconfig);
-	  static Property get_property (
-					const ::Deployment::Property& src);
+				       ::Deployment::Property& toconfig);
+	  static Property get_property (const ::Deployment::Property& src);
 	};
 
 

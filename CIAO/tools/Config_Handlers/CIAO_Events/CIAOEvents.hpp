@@ -83,8 +83,7 @@ namespace CIAO
 
     class CIAO_Events_Handlers_Export CIAOEventsDef : public ::XSCRT::Type
     {
-      //@@ VC6 anathema
-      typedef ::XSCRT::Type Base__;
+      typedef ::XSCRT::Type Base;
 
       // eventServiceConfiguration
       // 
@@ -128,8 +127,7 @@ namespace CIAO
 
     class CIAO_Events_Handlers_Export EventServiceDescription : public ::XSCRT::Type
     {
-      //@@ VC6 anathema
-      typedef ::XSCRT::Type Base__;
+      typedef ::XSCRT::Type Base;
 
       // name
       // 
@@ -294,8 +292,7 @@ namespace CIAO
 
     class CIAO_Events_Handlers_Export Filter : public ::XSCRT::Type
     {
-      //@@ VC6 anathema
-      typedef ::XSCRT::Type Base__;
+      typedef ::XSCRT::Type Base;
 
       // name
       // 
@@ -358,8 +355,7 @@ namespace CIAO
 
     class CIAO_Events_Handlers_Export AddressServerDescription : public ::XSCRT::Type
     {
-      //@@ VC6 anathema
-      typedef ::XSCRT::Type Base__;
+      typedef ::XSCRT::Type Base;
 
       // name
       // 
@@ -406,8 +402,7 @@ namespace CIAO
 
     class CIAO_Events_Handlers_Export UDPSenderDescription : public ::XSCRT::Type
     {
-      //@@ VC6 anathema
-      typedef ::XSCRT::Type Base__;
+      typedef ::XSCRT::Type Base;
 
       // name
       // 
@@ -444,8 +439,7 @@ namespace CIAO
 
     class CIAO_Events_Handlers_Export UDPReceiverDescription : public ::XSCRT::Type
     {
-      //@@ VC6 anathema
-      typedef ::XSCRT::Type Base__;
+      typedef ::XSCRT::Type Base;
 
       // name
       // 

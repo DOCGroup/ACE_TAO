@@ -52,8 +52,7 @@ namespace CIAO
   {
     class XSC_XML_Handlers_Export SubcomponentInstantiationDescription : public ::XSCRT::Type
     {
-      //@@ VC6 anathema
-      typedef ::XSCRT::Type Base__;
+      typedef ::XSCRT::Type Base;
 
       // name
       // 
@@ -161,8 +160,7 @@ namespace CIAO
 
     class XSC_XML_Handlers_Export SubcomponentPropertyReference : public ::XSCRT::Type
     {
-      //@@ VC6 anathema
-      typedef ::XSCRT::Type Base__;
+      typedef ::XSCRT::Type Base;
 
       // propertyName
       // 
@@ -199,8 +197,7 @@ namespace CIAO
 
     class XSC_XML_Handlers_Export AssemblyPropertyMapping : public ::XSCRT::Type
     {
-      //@@ VC6 anathema
-      typedef ::XSCRT::Type Base__;
+      typedef ::XSCRT::Type Base;
 
       // name
       // 
@@ -252,8 +249,7 @@ namespace CIAO
 
     class XSC_XML_Handlers_Export ComponentAssemblyDescription : public ::XSCRT::Type
     {
-      //@@ VC6 anathema
-      typedef ::XSCRT::Type Base__;
+      typedef ::XSCRT::Type Base;
 
       // instance
       // 
@@ -316,8 +312,7 @@ namespace CIAO
 
     class XSC_XML_Handlers_Export MonolithicImplementationDescription : public ::XSCRT::Type
     {
-      //@@ VC6 anathema
-      typedef ::XSCRT::Type Base__;
+      typedef ::XSCRT::Type Base;
 
       // nodeExecParameter
       // 
@@ -395,8 +390,7 @@ namespace CIAO
 
     class XSC_XML_Handlers_Export ComponentImplementationDescription : public ::XSCRT::Type
     {
-      //@@ VC6 anathema
-      typedef ::XSCRT::Type Base__;
+      typedef ::XSCRT::Type Base;
 
       // label
       // 
