@@ -16,6 +16,7 @@ ACE_RCSID(DynamicInterface, Request, "$Id$")
 # include "DII_Reply_Handler.inl"
 #endif /* ! __ACE_INLINE__ */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // The pseudo-object _nil method.
 TAO_DII_Reply_Handler_ptr
@@ -50,3 +51,5 @@ TAO_DII_Reply_Handler::_unchecked_narrow (CORBA::Object_ptr obj)
     reinterpret_cast<TAO_DII_Reply_Handler_ptr>
                          (&TAO_DII_Reply_Handler::_tao_class_id);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

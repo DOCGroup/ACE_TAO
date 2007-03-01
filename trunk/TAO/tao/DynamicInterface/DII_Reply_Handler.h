@@ -23,6 +23,8 @@
 #include "tao/LocalObject.h"
 #include "dynamicinterface_export.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /// Forward declaration
 class TAO_DII_Reply_Handler;
 typedef TAO_DII_Reply_Handler* TAO_DII_Reply_Handler_ptr;
@@ -93,6 +95,8 @@ public:
   typedef TAO_DII_Reply_Handler_var _var_type;
 
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 # include "DII_Reply_Handler.inl"
