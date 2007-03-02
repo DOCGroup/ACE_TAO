@@ -2401,11 +2401,11 @@ perl bin/mwc.pl  -type vc71 -relative ACE_ROOT=C:/ace/ACE_wrappers -relative TAO
       for building on Windows. Building the ACE library is the same as
       for regular Windows platforms, except you choose one of the PharLap
       ETS configurations to build within Visual Studio.
-      For an example of how to build
-      binaries, see the tests directory. The tests_pharlap_msvc.lnk
-      file is a LinkLoc commands file that the ACE tests are built
-      with. It is likely that local sites may need to adjust this file
-      for their target environment.</p><p>
+      For an example of how to build binaries, see the tests directory.
+      The tests_pharlap_msvc.lnk file is a LinkLoc commands file that the
+      ACE tests are built with. It is likely that local sites may need
+      to adjust this file for their target environment.
+      </p><p>
 
       <note>To build ACE for National Instruments' LabVIEW RT, use
       the Pharlap ETS information above, but add the following line to your
@@ -2415,6 +2415,18 @@ perl bin/mwc.pl  -type vc71 -relative ACE_ROOT=C:/ace/ACE_wrappers -relative TAO
       </pre>
       This setting makes the necessary adjustments for LabVIEW's implementation
       of Pharlap ETS.</note>
+
+      <note>By default, the ACE tests log their output/results to the
+      system console on Pharlap ETS. To change this behavior and make the
+      test output log to a file in the <code>log</code> directory under the
+      current working directory while executing, add the following line to
+      your config.h file:
+      <pre>
+      #define ACE_PHARLAP_TESTLOG_TO_FILE
+      </pre>
+      This setting has no affect on TAO tests which always write test output
+      to stdout.
+      </note>
 
 </p></li><li><strong>Mac OS X (10.2.x)</strong><p>
 
