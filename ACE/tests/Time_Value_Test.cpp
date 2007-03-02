@@ -49,16 +49,7 @@ ACE_RCSID(tests, Time_Value_Test, "$Id$")
 #include "ace/ACE.h"
 #include "ace/Time_Value.h"
 
-#if !defined(ACE_LACKS_NUMERIC_LIMITS)
-// some platforms pollute the namespace by defining max() and min() macros
-#ifdef max
-#undef max
-#endif
-#ifdef min
-#undef min
-#endif
-#include <limits>
-#endif /* ACE_LACKS_NUMERIC_LIMITS */
+#include "ace/Numeric_Limits.h"
 
 #if defined (sun) && !defined (ACE_LACKS_LONGLONG_T)
 static
@@ -252,13 +243,8 @@ run_main (int, ACE_TCHAR *[])
   tv1 *= -10.0;
   ACE_ASSERT (tv1.sec () == tv2.sec () && tv1.usec () == tv2.usec ());
 
-#if !defined(ACE_LACKS_NUMERIC_LIMITS)
-  const time_t max_time_t = std::numeric_limits<time_t>::max ();
-  const time_t min_time_t = std::numeric_limits<time_t>::min ();
-#else
-  const time_t max_time_t = LONG_MAX;
-  const time_t min_time_t = LONG_MIN;
-#endif
+  const time_t max_time_t = ACE_Numeric_Limits<time_t>::max ();
+  const time_t min_time_t = ACE_Numeric_Limits<time_t>::min ();
 
   // test results near limits
   tv1.set ((max_time_t >> 1), 499999);

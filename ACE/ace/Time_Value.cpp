@@ -219,13 +219,8 @@ ACE_Time_Value::operator *= (double d)
      + static_cast<double> (this->usec ()) / ACE_ONE_SECOND_IN_USECS) * d;
 
   // shall we saturate the result?
-#if !defined(ACE_LACKS_NUMERIC_LIMITS)
-  static const double max_int = std::numeric_limits<time_t>::max () + 0.999999;
-  static const double min_int = std::numeric_limits<time_t>::min () - 0.999999;
-#else
-  static const double max_int = LONG_MAX + 0.999999;
-  static const double min_int = LONG_MIN - 0.999999;
-#endif
+  static const double max_int = ACE_Numeric_Limits<time_t>::max () + 0.999999;
+  static const double min_int = ACE_Numeric_Limits<time_t>::min () - 0.999999;
 
   if (time_total > max_int)
     time_total = max_int;

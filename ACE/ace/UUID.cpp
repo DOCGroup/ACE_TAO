@@ -469,7 +469,14 @@ namespace ACE_Utils
   void
   UUID_Generator::get_systemtime (UUID_time & timestamp)
   {
-    const UUID_time timeOffset = ACE_UINT64_LITERAL (0x1B21DD213814000);
+    const UUID_time timeOffset =
+#if defined (ACE_LACKS_UNSIGNEDLONGLONG_T)
+      ACE_U_LongLong (0x1B21DD213814000);
+#elif defined (ACE_LACKS_LONGLONG_T)
+      ACE_U_LongLong (0x13814000u, 0x1B21DD2u);
+#else
+      ACE_UINT64_LITERAL (0x1B21DD213814000);
+#endif  /* ACE_LACKS_LONG_LONG_T */
 
     /// Get the time of day, convert to 100ns ticks then add the offset.
     ACE_Time_Value now = ACE_OS::gettimeofday();
