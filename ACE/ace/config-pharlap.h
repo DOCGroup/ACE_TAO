@@ -69,5 +69,12 @@
 #define ACE_LACKS_IP_ADD_MEMBERSHIP
 #endif /* ACE_HAS_PHARLAP_RT */
 
+// Although IN_CLASSD is defined in both winsock.h and winsock2.h, it ends
+// up undefined for Pharlap ETS builds. If this is the case, set things up
+// so nothing looks like class D.
+#if !defined (IN_CLASSD)
+#  define IN_CLASSD(i) (0)
+#endif
+
 #include /**/ "ace/post.h"
 #endif /* ACE_CONFIG_PHARLAP_H */
