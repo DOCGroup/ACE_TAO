@@ -1,3 +1,16 @@
+Fri Mar  2 20:48:45 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * ACE-INSTALL.html: Improved the description of using Pharlap ETS and
+          described the ACE_PHARLAP_TESTLOG_TO_FILE config setting.
+
+        * ace/config-pharlap.h: Add a IN_CLASSD(i) macro that always reports
+          false. Although Pharlap is supposed to support multicast, the
+          IN_CLASSD macro is only added at WinSock 2.
+
+        * tests/Test_Output.cpp: Allow Pharlap to log to a file by setting
+          ACE_PHARLAP_TESTLOG_TO_FILE in config.h. The default behavior of
+          logging to the system console still stands.
+
 Fri Mar  2 18:18:25 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/GNUACEWorkspaceCreator.pm:
