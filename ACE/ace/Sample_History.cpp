@@ -46,9 +46,14 @@ ACE_Sample_History::dump_samples (const ACE_TCHAR *msg,
 #ifndef ACE_NLOGGING
   for (size_t i = 0; i != this->sample_count_; ++i)
     {
-      const ACE_UINT64 x = this->samples_[i] / scale_factor;
-      const ACE_UINT32 val = ACE_CU64_TO_CU32 (x);
-      ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT("%s: %d %u\n"), msg, i, val));
+      const ACE_UINT64 val = this->samples_[i] / scale_factor;
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_LIB_TEXT ("%s: ")
+                  ACE_SIZE_T_FORMAT_SPECIFIER
+                  ACE_LIB_TEXT ("%Q\n"),
+                  msg,
+                  i,
+                  val));
     }
 #else
   ACE_UNUSED_ARG (msg);
