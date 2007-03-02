@@ -13,7 +13,7 @@
 
 #include "Locator_NT_Service.h"
 
-#if defined (ACE_WIN32)
+#if defined (ACE_WIN32) && !defined (ACE_LACKS_WIN32_SERVICES)
 
 #include "ImR_Locator_i.h"
 #include "Locator_Options.h"
@@ -108,4 +108,4 @@ Locator_NT_Service::svc (void)
   return -1;
 }
 
-#endif /* ACE_WIN32 */
+#endif /* ACE_WIN32 && !ACE_LACKS_WIN32_SERVICES */
