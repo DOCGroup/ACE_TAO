@@ -1,3 +1,10 @@
+Fri Mar  2 18:45:34 UTC 2007  Wallace Zhang  <zhang_w@ociweb.com>
+
+        * tao/DynamicInterface/AMH_DSI_Response_Handler.inl:
+        * tao/DynamicInterface/DII_Reply_Handler.inl:
+
+          Added the missing versioned namespace guard.
+
 Fri Mar  2 07:21:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_attribute.cpp:
