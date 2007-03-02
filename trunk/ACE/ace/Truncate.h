@@ -445,17 +445,22 @@ namespace ACE_Utils
 
 #if defined (ACE_LACKS_LONGLONG_T) || defined (ACE_LACKS_UNSIGNEDLONGLONG_T)
   // Partial specialization for the case where we're casting from
-  // ACE_U_LongLong to a smaller integer.
+  // ACE_U_LongLong to a smaller integer.  We assume that we're always
+  // truncating from ACE_U_LongLong to a smaller type.  The partial
+  // specialization above handles the case where both the FROM and TO
+  // types are ACE_U_LongLong.
   template<typename TO>
   struct Truncator<ACE_U_LongLong, TO>
   {
     TO operator() (ACE_U_LongLong const & val)
     {
-      // ACE_U_LongLong returns a ACE_UINT32.
+      // If val less than or equal to ACE_Numeric_Limits<TO>::max(),
+      // val.lo() must be less than or equal to
+      // ACE_Numeric_Limits<TO>::max (), as well.
       return
-        Truncator<ACE_UINT32, TO> (
-          val) > ACE_Numeric_Limits<ACE_UINT32>::max ()
-          ? val.lo ());
+        (val > ACE_Numeric_Limits<TO>::max ()
+         ? ACE_Numeric_Limits<TO>::max ()
+         : static_cast<TO> (val.lo ()));
     }
   };
 #endif /* ACE_LACKS_LONGLONG_T || ACE_LACKS_UNSIGNEDLONGLONG_T */
