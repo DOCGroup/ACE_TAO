@@ -251,7 +251,6 @@ protected:
 
 private:
   TAO_ORB_Core *orb_core_;
-  CORBA::ULong exception_type_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

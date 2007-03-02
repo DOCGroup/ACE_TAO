@@ -18,12 +18,12 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_AMH_Response_Handler::TAO_AMH_Response_Handler ()
-  : mesg_base_ (0)
+  : exception_type_ (TAO_GIOP_NO_EXCEPTION)
+  , mesg_base_ (0)
   , request_id_ (0)
   , transport_ (0)
   , orb_core_ (0)
   , argument_flag_ (1)
-  , exception_type_ (TAO_GIOP_NO_EXCEPTION)
   , reply_status_ (TAO_RS_UNINITIALIZED)
   , allocator_ (0)
 {

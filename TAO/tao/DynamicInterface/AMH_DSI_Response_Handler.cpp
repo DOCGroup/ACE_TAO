@@ -314,8 +314,7 @@ TAO_AMH_DSI_Response_Handler::_nil (void)
 TAO_AMH_DSI_Response_Handler::TAO_AMH_DSI_Response_Handler (
     TAO_ServerRequest & sr)
   : TAO_AMH_Response_Handler (),
-    orb_core_ (sr.orb_core ()),
-    exception_type_ (TAO_GIOP_NO_EXCEPTION)
+    orb_core_ (sr.orb_core ())
 {
 }
 
