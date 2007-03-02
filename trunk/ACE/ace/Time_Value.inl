@@ -193,16 +193,20 @@ ACE_Time_Value::usec (suseconds_t usec)
   this->tv_.tv_usec = usec;
 }
 
-#if !defined (ACE_LACKS_LONGLONG_T)
 ACE_INLINE void
-ACE_Time_Value::to_usec (ACE_UINT64 &usec) const
+ACE_Time_Value::to_usec (ACE_UINT64 & usec) const
 {
   // ACE_OS_TRACE ("ACE_Time_Value::to_usec");
+
+#ifdef ACE_LACKS_LONGLONG_T
+  // No native 64-bit type, meaning time_t is most likely 32 bits.
+  usec = ACE_U_LongLong (this->tv_.tv_sec);
+#else
   usec = static_cast<ACE_UINT64> (this->tv_.tv_sec);
+#endif  /* ACE_LACKS_LONG_LONG_T */
   usec *= 1000000;
   usec += this->tv_.tv_usec;
 }
-#endif /*ACE_LACKS_LONGLONG_T*/
 
 ACE_INLINE ACE_Time_Value
 operator * (double d, const ACE_Time_Value &tv)

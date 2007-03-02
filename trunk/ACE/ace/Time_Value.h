@@ -193,14 +193,11 @@ public:
   /// Set microseconds.
   void usec (suseconds_t usec);
 
-#if !defined (ACE_LACKS_LONGLONG_T)
   /**
    * @return Sum of second field (in microseconds) and microsecond field
    *         and return them via the @param usec parameter.
    */
   void to_usec (ACE_UINT64 &usec) const;
-
-#endif /*ACE_LACKS_LONGLONG_T */
 
   // = The following arithmetic methods operate on ACE_Time_Value's.
 

@@ -1,3 +1,50 @@
+Fri Mar  2 21:42:54 UTC 2007  Ossama Othman  <ossama_othman at symantec dot com>
+
+        * ace/Basic_Types.h (ACE_UINT64_MAX):
+
+          Corrected value for the ACE_LACKS_{UNSIGNED}LONG_LONG_T case.
+
+          (ACE_U64_TO_U32, ACE_CU64_TO_CU32):
+
+          Converted these macros to inlined functions.
+
+          (ACE_LONGLONG_TO_PTR):
+
+          Cast pointer to intptr_t instead of ptrdiff_t before casting
+          to the pointer type.  The ptrdiff_t type  is meant for pointer
+          differences.
+
+        * ace/High_Res_Timer.cpp (dump):
+
+          Drop ACE_CU64_TO_CU32 macro in favor of standard static_cast<>.
+          There was no real use for that macro in this case.
+
+        * ace/Numeric_Limits.h (ACE_Numeric_Limits):
+
+          Added a specialization for ACE_U_LongLong.
+
+        * ace/Sample_History.cpp (dump_samples):
+
+          Removed unnecessary cast to 32 bit value.
+
+          Corrected Log_Msg format specifier for unsigned type.
+
+        * ace/Time_Value.cpp (operator*=):
+        * tests/Time_Value_Test.cpp (run_main):
+
+          Removed ACE_LACKS_NUMERIC_LIMITS preprocessor conditional.  Use
+          ACE_Numeric_Limits<> instead.  It is always available.
+
+        * ace/Time_Value.h (to_usec):
+        * ace/Time_Value.inl (to_usec):
+
+          Enabled support for this method when ACE_LACKS_LONGLONG_T is
+          defined.
+
+        * ace/UUID.cpp (get_systemtime):
+
+          Fixed support for ACE_U_LongLong type.
+
 Fri Mar  2 20:48:45 UTC 2007  Steve Huston  <shuston@riverace.com>
 
         * ACE-INSTALL.html: Improved the description of using Pharlap ETS and

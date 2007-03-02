@@ -52,6 +52,11 @@
 #  undef max
 # endif  /* __MINGW32__ */
 
+# if defined (ACE_LACKS_LONGLONG_T) || defined (ACE_LACKS_UNSIGNEDLONGLONG_T)
+// For ACE_U_LongLong.
+#  include "ace/Basic_Types.h"
+# endif  /* ACE_LACKS_LONGLONG_T || ACE_LACKS_UNSIGNEDLONGLONG_T */
+
 # include <limits>
 #endif /* ACE_LACKS_NUMERIC_LIMITS */
 
@@ -234,19 +239,28 @@ struct ACE_Numeric_Limits
 template<>
 struct ACE_Numeric_Limits<LONGLONG>
 {
-   static LONGLONG min (void) { return _I64_MIN; }
-   static LONGLONG max (void) { return _I64_MAX; }
+  static LONGLONG min (void) { return _I64_MIN; }
+  static LONGLONG max (void) { return _I64_MAX; }
 };
 
 template<>
 struct ACE_Numeric_Limits<ULONGLONG>
 {
-   static ULONGLONG min (void) { return 0; }
-   static ULONGLONG max (void) { return _UI64_MAX; }
+  static ULONGLONG min (void) { return 0; }
+  static ULONGLONG max (void) { return _UI64_MAX; }
 };
 # endif  /* ACE_WIN64 && _MSC_VER <= 1310 */
 
 #endif /* ACE_LACKS_NUMERIC_LIMITS */
+
+#if defined (ACE_LACKS_LONGLONG_T) || defined (ACE_LACKS_UNSIGNEDLONGLONG_T)
+template<>
+struct ACE_Numeric_Limits<ACE_U_LongLong>
+{
+  static ACE_U_LongLong min (void) { return ACE_U_LongLong (); /* 0 */ }
+  static ACE_U_LongLong max (void) { return ACE_UINT64_MAX; }
+};
+#endif  /* ACE_LACKS_LONGLONG_T || defined ACE_LACKS_UNSIGNEDLONGLONG_T */
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 

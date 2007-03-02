@@ -440,7 +440,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
   reinterpret_cast<PTR_TYPE> (L.lo ())
 #else  /* ! ACE_LACKS_LONGLONG_T */
 # define ACE_LONGLONG_TO_PTR(PTR_TYPE, L) \
-  reinterpret_cast<PTR_TYPE> (static_cast<ptrdiff_t> (L))
+  reinterpret_cast<PTR_TYPE> (static_cast<intptr_t> (L))
 #endif /* ! ACE_LACKS_LONGLONG_T */
 
 // If the platform lacks an unsigned long long, define one.
@@ -613,7 +613,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
     // @note  the above four accessors are inlined here in
     // order to minimize the extent of the data_ struct.  It's
-    // only used here; the .i and .cpp files use the accessors.
+    // only used here; the .inl and .cpp files use the accessors.
 
     /// These functions are used to implement multiplication.
     ACE_UINT32 ul_shift (ACE_UINT32 a,
@@ -641,16 +641,42 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 
 # endif /* ACE_LACKS_LONGLONG_T */
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // Conversions from ACE_UINT64 to ACE_UINT32.  ACE_CU64_TO_CU32 should
 // be used on const ACE_UINT64's.
 # if defined (ACE_LACKS_LONGLONG_T) || defined (ACE_LACKS_UNSIGNEDLONGLONG_T)
-#   define ACE_U64_TO_U32(n) ((n).lo ())
-#   define ACE_CU64_TO_CU32(n) ((n).lo ())
+inline ACE_UINT32
+ACE_U64_TO_U32 (ACE_U_LongLong const & n)
+{
+  /**
+   * @note We could add a cast operator to ACE_U_LongLong but that may
+   *       cause more problems than it solves.  Force users to perform
+   *       an explicit cast via ACE_{C}U64_TO_{C}U32.
+   */
+  return n.lo ();
+}
+
+inline ACE_UINT32
+ACE_CU64_TO_CU32 (ACE_U_LongLong const & n)
+{
+  return ACE_U64_TO_U32 (n);
+}
 # else  /* ! ACE_LACKS_LONGLONG_T */
-#   define ACE_U64_TO_U32(n) (static_cast<ACE_UINT32> (n))
-#   define ACE_CU64_TO_CU32(n) \
-     (static_cast<ACE_CAST_CONST ACE_UINT32> (n))
+inline ACE_UINT32
+ACE_U64_TO_U32 (ACE_UINT64 n)
+{
+  return static_cast<ACE_UINT32> (n);
+}
+
+inline ACE_UINT32
+ACE_CU64_TO_CU32 (ACE_UINT64 n)
+{
+  return static_cast<ACE_UINT32> (n);
+}
 # endif /* ! ACE_LACKS_LONGLONG_T */
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 // 64-bit literals require special marking on some platforms.
 # if defined (ACE_LACKS_LONGLONG_T)
@@ -836,7 +862,19 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #define ACE_UINT32_MAX 0xFFFFFFFF
 #define ACE_INT64_MAX ACE_INT64_LITERAL(0x7FFFFFFFFFFFFFFF)
 #define ACE_INT64_MIN -(ACE_INT64_MAX)-1
-#define ACE_UINT64_MAX ACE_UINT64_LITERAL(0xFFFFFFFFFFFFFFFF)
+
+#if defined (ACE_LACKS_LONGLONG_T) || defined (ACE_LACKS_UNSIGNEDLONGLONG_T)
+# if defined (ACE_LACKS_UNSIGNEDLONGLONG_T)
+// ACE_U_LongLong's constructor accepts a "long long" in this
+// case.
+#  define ACE_UINT64_MAX ACE_U_LongLong (0xFFFFFFFFFFFFFFFF);
+# else
+// ACE_U_LongLong's constructor accepts an ACE_UINT32 low and high
+// pair of parameters.
+#  define ACE_UINT64_MAX ACE_U_LongLong (0xFFFFFFFFu, 0xFFFFFFFFu);
+# endif  /* ACE_LACKS_UNSIGNEDLONGLONG_T */
+#endif  /* ACE_LACKS_LONGLONG_T || defined ACE_LACKS_UNSIGNEDLONGLONG_T */
+
 // These use ANSI/IEEE format.
 #define ACE_FLT_MAX 3.402823466e+38F
 #define ACE_FLT_MIN 1.175494351e-38F
