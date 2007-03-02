@@ -200,7 +200,7 @@ TAO_IFR_Server::open_config (void)
 {
   if (OPTIONS::instance ()->using_registry ())
     {
-#if defined (ACE_WIN32)
+#if defined (ACE_WIN32) && !defined (ACE_LACKS_WIN32_REGISTRY)
       HKEY root =
         ACE_Configuration_Win32Registry::resolve_key (
             HKEY_LOCAL_MACHINE,
@@ -210,7 +210,7 @@ TAO_IFR_Server::open_config (void)
       ACE_NEW_THROW_EX (this->config_,
                         ACE_Configuration_Win32Registry (root),
                         CORBA::NO_MEMORY ());
-#endif /* ACE_WIN32 */
+#endif /* ACE_WIN32 && !ACE_LACKS_WIN32_REGISTRY */
 
       return 0;
     }

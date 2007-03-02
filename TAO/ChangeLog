@@ -1,3 +1,22 @@
+Fri Mar  2 20:48:45 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * TAO-INSTALL.html: Added a description of cross-compiling on
+          Windows with Visual Studio.
+
+        * orbsvcs/ImplRepo_Service/Activator_NT_Service.{h cpp}:
+        * orbsvcs/ImplRepo_Service/Locator_NT_Service.{h cpp}:
+        * orbsvcs/ImplRepo_Service/ImR_Activator.cpp:
+        * orbsvcs/ImplRepo_Service/ImR_Locator.cpp:
+        * orbsvcs/Naming_Service/NT_Naming_Server.cpp:
+        * orbsvcs/Naming_Service/NT_Naming_Service.{h cpp}:
+        * orbsvcs/Notify_Service/NT_Notify_Server.cpp:
+        * orbsvcs/Notify_Service/NT_Notify_Service.{h cpp}: Don't try this
+          on ACE_WIN32 platforms where ACE_LACKS_WIN32_SERVICES.
+
+        * orbsvcs/orbsvcs/IFRService/IFR_Service_Utils.cpp (open_config):
+        * orbsvcs/ImplRepo_Service/Locator_Repository.cpp: Don't try to build
+          the Windows registry-using code where ACE_LACKS_WIN32_REGISTRY.
+
 Fri Mar  2 21:00:23 UTC 2007  Wallace Zhang  <zhang_w@ociweb.com>
 
         * tests/DSI_AMI_Gateway/test_dsi.cpp:

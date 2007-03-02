@@ -80,14 +80,14 @@ run_standalone (Activator_Options& opts)
   return 1;
 }
 
-#if defined (ACE_WIN32)
+#if defined (ACE_WIN32) && !defined (ACE_LACKS_WIN32_SERVICES)
 ACE_NT_SERVICE_DEFINE (service, Activator_NT_Service, IMR_ACTIVATOR_SERVICE_NAME);
-#endif /* ACE_WIN32 */
+#endif /* ACE_WIN32 && !ACE_LACKS_WIN32_SERVICES */
 
 int
 run_service (void)
 {
-#if defined (ACE_WIN32)
+#if defined (ACE_WIN32) && !defined (ACE_LACKS_WIN32_SERVICES)
   SERVICE::instance()->name (IMR_ACTIVATOR_SERVICE_NAME, IMR_ACTIVATOR_DISPLAY_NAME);
   ACE_NT_SERVICE_RUN (service, SERVICE::instance (), ret);
 
@@ -97,7 +97,7 @@ run_service (void)
   return ret;
 #else /* ACE_WIN32 */
   return 1;
-#endif /* ACE_WIN32 */
+#endif /* ACE_WIN32 && !ACE_LACKS_WIN32_SERVICES */
 }
 
 /**
@@ -112,7 +112,7 @@ run_service_command (Activator_Options& opts)
   if (opts.service_command () == Activator_Options::SC_NONE)
     return 0;
 
-#if defined (ACE_WIN32)
+#if defined (ACE_WIN32) && !defined (ACE_LACKS_WIN32_SERVICES)
   SERVICE::instance()->name (IMR_ACTIVATOR_SERVICE_NAME, IMR_ACTIVATOR_DISPLAY_NAME);
 
   if (opts.service_command () == Activator_Options::SC_INSTALL ||
@@ -180,7 +180,7 @@ run_service_command (Activator_Options& opts)
 #else /* ACE_WIN32 */
   ACE_ERROR ((LM_ERROR, "NT Service not supported on this platform"));
   return -1;
-#endif /* ACE_WIN32 */
+#endif /* ACE_WIN32 && !ACE_LACKS_WIN32_SERVICES */
 }
 
 int
