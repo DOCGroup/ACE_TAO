@@ -1,6 +1,8 @@
 // -*- C++ -*-
 // $Id$
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_INLINE TAO_DII_Reply_Handler_ptr
 TAO_DII_Reply_Handler::_duplicate (TAO_DII_Reply_Handler_ptr x)
 {
@@ -108,3 +110,4 @@ TAO_DII_Reply_Handler_var::_retn (void)
   this->ptr_ = TAO_DII_Reply_Handler::_nil ();
   return val;
 }
+TAO_END_VERSIONED_NAMESPACE_DECL
