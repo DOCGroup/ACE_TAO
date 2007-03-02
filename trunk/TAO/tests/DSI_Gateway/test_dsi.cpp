@@ -39,10 +39,8 @@ DSI_Simple_Server::invoke (CORBA::ServerRequest_ptr request)
       // Updates the byte order state, if necessary.
       target_request->invoke ();
     }
-  catch (const CORBA::UNKNOWN& ex)
+  catch (const CORBA::UNKNOWN&)
     {
-      ACE_UNUSED_ARG (ex);
-
       // Outgoing reply must have the same byte order as the incoming one.
       request->_tao_reply_byte_order (target_request->_tao_byte_order ());
 
