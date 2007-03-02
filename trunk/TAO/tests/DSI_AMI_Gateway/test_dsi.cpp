@@ -111,6 +111,7 @@ DSI_Simple_Server::invoke (CORBA::ServerRequest_ptr request,
       ACE_NEW (rh_ptr, My_DII_Reply_Handler (rph, this->orb_));
 
       target_request->sendc (rh_ptr);
+      CORBA::release (rh_ptr);
     }
   catch (const CORBA::UNKNOWN&)
     {

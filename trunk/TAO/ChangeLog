@@ -1,3 +1,9 @@
+Fri Mar  2 22:15:32 UTC 2007  Wallace Zhang  <zhang_w@ociweb.com>
+
+        * tests/DSI_AMI_Gateway/test_dsi.cpp:
+
+          Fixed a memory leak.
+
 Fri Mar  2 20:48:45 UTC 2007  Steve Huston  <shuston@riverace.com>
 
         * TAO-INSTALL.html: Added a description of cross-compiling on
