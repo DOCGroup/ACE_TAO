@@ -23,7 +23,7 @@ static const char* SERVERS_ROOT_KEY = "Servers";
 static const char* ACTIVATORS_ROOT_KEY = "Activators";
 static const char* TOKEN = "Token";
 
-#if defined (ACE_WIN32)
+#if defined (ACE_WIN32) && !defined (ACE_LACKS_WIN32_REGISTRY)
 static const char* WIN32_REG_KEY = "Software\\TAO\\ImplementationRepository";
 #endif
 
@@ -309,7 +309,7 @@ Locator_Repository::init(const Options& opts)
       }
     case Options::REPO_REGISTRY:
       {
-#if defined (ACE_WIN32)
+#if defined (ACE_WIN32) && !defined (ACE_LACKS_WIN32_REGISTRY)
         if (opts.repository_erase ())
           {
             ACE_Configuration_Win32Registry config ( HKEY_LOCAL_MACHINE );

@@ -17,7 +17,7 @@
 
 #include "ace/config-all.h"
 
-#if defined (ACE_WIN32)
+#if defined (ACE_WIN32) && !defined (ACE_LACKS_WIN32_SERVICES)
 
 #include "ace/NT_Service.h"
 #include "ace/Singleton.h"
@@ -58,8 +58,6 @@ private:
 
 typedef ACE_Singleton<Activator_NT_Service, ACE_Mutex> SERVICE;
 
-#endif /* ACE_WIN32 */
+#endif /* ACE_WIN32 && !ACE_LACKS_WIN32_SERVICES */
 
 #endif /* Activator_NT_Service_H */
-
-
