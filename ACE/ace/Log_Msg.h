@@ -123,12 +123,12 @@ class ACE_Log_Record;
  *
  * This class is very flexible since it allows formatted error
  * messages to be printed in a thread-safe manner to various
- * locations, such as stdout, stderr, cerr, a distributed logger, etc.
- * The current message is also kept in a thread-specific storage
- * location (threads spawned using ACE_Thread_Manager automatically get
- * an ACE_Log_Msg object that inherits the spawning thread's settings), which
- * can be used to communicate errors between framework methods and
- * callers.  A message is logged by the log() method, only if the
+ * locations, such as stderr, cerr, a distributed logger, etc.  The
+ * current message is also kept in a thread-specific storage location
+ * (threads spawned using ACE_Thread_Manager automatically get an
+ * ACE_Log_Msg object that inherits the spawning thread's settings),
+ * which can be used to communicate errors between framework methods
+ * and callers.  A message is logged by the log() method, only if the
  * message priority is currently enabled.  Moreover, only the current
  * log message is stored here -- it will be overwritten by the
  * subsequent call to log().
