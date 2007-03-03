@@ -866,7 +866,9 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #if defined (ACE_LACKS_LONGLONG_T) || defined (ACE_LACKS_UNSIGNEDLONGLONG_T)
 # if defined (ACE_LACKS_UNSIGNEDLONGLONG_T)
 // ACE_U_LongLong's constructor accepts a "long long" in this
-// case.  (set it to ACE_U_LongLong (-1);
+// case.  Set it to ACE_U_LongLong (-1) since the bit pattern for long
+// long (-1) should is the same as the maximum unsigned long long
+// value.
 #  define ACE_UINT64_MAX ACE_U_LongLong (ACE_INT64_MIN)
 # else
 // ACE_U_LongLong's constructor accepts an ACE_UINT32 low and high
