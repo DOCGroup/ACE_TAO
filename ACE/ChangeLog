@@ -1,3 +1,13 @@
+Fri Mar  3 5:01:19 UTC 2007  Ossama Othman  <ossama_othman at symantec dot com>
+
+        * ace/Basic_Types.h (ACE_UINT64_MAX):
+
+          Reintroduced this constant for the case where 64 bit integers
+          are natively supported.  It was inadvertently removed.
+
+          Removed stray semi-colon in ACE_LACKS_{UNSIGNED}LONGLONG_T
+          case.
+
 Fri Mar  2 21:42:54 UTC 2007  Ossama Othman  <ossama_othman at symantec dot com>
 
         * ace/Basic_Types.h (ACE_UINT64_MAX):
