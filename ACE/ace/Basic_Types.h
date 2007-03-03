@@ -867,14 +867,14 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 # if defined (ACE_LACKS_UNSIGNEDLONGLONG_T)
 // ACE_U_LongLong's constructor accepts a "long long" in this
 // case.
-#  define ACE_UINT64_MAX ACE_U_LongLong (0xFFFFFFFFFFFFFFFF)
+#  define ACE_UINT64_MAX ACE_U_LongLong (ACE_INT64_MAX)
 # else
 // ACE_U_LongLong's constructor accepts an ACE_UINT32 low and high
 // pair of parameters.
 #  define ACE_UINT64_MAX ACE_U_LongLong (0xFFFFFFFFu, 0xFFFFFFFFu)
 # endif  /* ACE_LACKS_UNSIGNEDLONGLONG_T */
 #else
-#  define ACE_UINT64_MAX ACE_UINT64_LITERAL (0xFFFFFFFFFFFFFFFF);
+#  define ACE_UINT64_MAX ACE_UINT64_LITERAL (0xFFFFFFFFFFFFFFFF)
 #endif  /* ACE_LACKS_LONGLONG_T || defined ACE_LACKS_UNSIGNEDLONGLONG_T */
 
 // These use ANSI/IEEE format.
