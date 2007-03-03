@@ -89,6 +89,12 @@ Fri Mar  2 17:48:09 UTC 2007  Ossama Othman  <ossama_othman at symantec dot com>
           Fixed one more typo in the ACE_U_LongLong partial specialization
           of this functor.  Also corrected truncation logic.
 
+Thu Mar  1 16:30:13 UTC 2007  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/Log_Msg.h (ACE_Log_Msg): Updated the document to remove the
+          claim that stdout can be used.  Thanks to Ian C White
+          <Ian_C_White at raytheon dot com> for reporting this.
+
 Thu Mar 1 13:15:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-hpux-11.00.h:
