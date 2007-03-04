@@ -1,3 +1,10 @@
+Sun Mar  4 21:49:19 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * docs/tutorials/Quoter/Simple/Icons:
+        * docs/tutorials/Quoter/Simple/Model:
+
+          Added GME model of the Quoter tutorial.
+
 Thu Mar  1 23:05:27 UTC 2007  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * docs/tutorials/Quoter/Simple/images/step6.jpg:
@@ -5,18 +12,18 @@ Thu Mar  1 23:05:27 UTC 2007  William R. Otte  <wotte@dre.vanderbilt.edu>
         * docs/tutorials/Quoter/Simple/images/step2.jpg:
         * docs/tutorials/Quoter/Simple/images/step3.jpg:
         * docs/tutorials/Quoter/Simple/images/steps.jpg:
-        
+
           Lowercased file names, removed spaces.
-        
+
         * docs/tutorials/Quoter/Simple/03.html:
         * docs/tutorials/Quoter/Simple/04.html:
         * docs/tutorials/Quoter/Simple/index.html:
-        
+
           Changes to reflect above change.
 Thu Mar  1 22:20:28 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
 
         * DAnCE/NodeApplication/Container_Impl.cpp:
-        
+
           A minor change to add a "_" to the receptacle name,
           that is used as a key in a Hash Map storing the
           receptacle policies and the receptacle name.
@@ -46,27 +53,27 @@ Thu Mar  1 07:17:00 UTC 2007  William R. Otte  <wotte@dre.vanderbilt.edu>
         * tools/Config_Handlers/cpd.cpp:
         * tools/Config_Handlers/Basic_Deployment_Data.hpp:
         * tools/Config_Handlers/iad.cpp:
-        
+
           Regenrated with the latest version of XSC to pick up
           bugfixes, esp for addressing warnings in Borland.
-        
+
         * tools/Config_Handlers/Package_Handlers/PCD_Handler.cpp:
         * tools/Config_Handlers/RT-CCM/TP_Handler.cpp:
         * tools/Config_Handlers/IRDD_Handler.h:
         * tools/Config_Handlers/IRDD_Handler.cpp:
         * tools/Config_Handlers/IDD_Handler.cpp:
-        
-          Borland compile errors resolved. 
-        
+
+          Borland compile errors resolved.
+
         * tools/Config_Handlers/Property_Handler.h:
-        
+
           Layout changes.
 
 Thu Mar  1 03:54:50 UTC 2007  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * tools/Config_Handlers/CIAO_Events/CIAO_Events_Handlers.mpc:
         * tools/Config_Handlers/RT-CCM/RT-CCM-Handlers.mpc:
-        
+
           Changed base project from ciao_xml_utils to ciao_config_handlers_base
           to pull in specific block that turns off visibility.
 
@@ -74,7 +81,7 @@ Wed Feb 28 22:19:37 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
 
         * ciao/Container_Base.cpp:
         * ciao/Container_Base.h:
-        
+
           Added a method to get the receptacle policy associated
           with a receptacle.
 
@@ -82,28 +89,28 @@ Wed Feb 28 22:04:52 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
 
         * ciao/Container_Base.cpp:
         * ciao/Container_Base.h:
-        
+
           Added a new private variable of type ACE_Hash_Map to hold
           the receptacle policy list.
-        
+
           Added a set operation for setting the value of the receptacle policy
           map.
-        
+
         * DAnCE/NodeApplication/NodeApplication_Impl.cpp:
-        
+
           When the Container_Impl class is created, pass on the
           NA's configurator. The configurator will be used by the
           Container_Impl class to identify the policies that needs to
           be set on the components and their ports. Finally, the
           Container_Impl class lets the container know about these policies.
-        
+
         * DAnCE/NodeApplication/Container_Impl.h:
         * DAnCE/NodeApplication/Container_Impl.inl:
         * DAnCE/NodeApplication/Container_Impl.cpp:
-        
+
           Modified the constructor to receive the NA configurator as
           an input argument.
-        
+
           Added capabilities to collect the policies associated with the
           receptacles of the components.
 
