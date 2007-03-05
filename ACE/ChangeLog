@@ -1,3 +1,25 @@
+Mon Mar  5 23:09:59 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * ace/Log_Msg.{h cpp}: Added new format specifiers:
+          %b to format ssize_t values
+          %B to format size_t values
+          %: to format time_t values
+
+          Note that these use, when necessary, printf format specifiers such
+          as ACE_SIZE_T_FORMAT_SPECIFIER and ACE_INT64_FORMAT_SPECIFIER.
+          The printf formatters can't be used portably in ACE_Log_Msg format
+          strings because 1) some of them use %I, which has a different meaning
+          in ACE_Log_Msg already and 2) some of the new printf formats are
+          more complicated that ACE_Log_Msg knows how to deal with in its
+          existing logic to use format modifiers. The new ACE_Log_Msg format
+          specifiers make it easy to portably log these types that can change
+          sizes across platforms.
+
+        * ace/Log_Record.cpp (dump):
+        * tests/Cached_Allocator_Test.cpp:
+        * tests/High_Res_Timer_Test.cpp: Use the new ACE_Log_Msg format
+          specifiers for size_t and time_t logged values.
+
 Mon Mar  5 22:23:01 UTC 2007  Adam Mitz  <mitza@ociweb.com>
 
         * bin/clean_sems.sh:

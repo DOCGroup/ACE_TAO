@@ -472,6 +472,8 @@ public:
    *  - 'A': print an ACE_timer_t value (which could be either double
    *         or ACE_UINT32.)
    *  - 'a': abort the program at this point abruptly.
+   *  - 'b': print a ssize_t value
+   *  - 'B': print a size_t value
    *  - 'c': print a character
    *  - 'C': print a character string
    *  - 'i', 'd': print a decimal number
@@ -506,6 +508,7 @@ public:
    *  - 'X': print as a hex number
    *  - 'z': print an ACE_OS::WChar character
    *  - 'Z': print an ACE_OS::WChar character string
+   *  - ':': print a time_t value as an integral number
    *  - '%': print out a single percent sign, '%'
    */
   ssize_t log (ACE_Log_Priority priority, const ACE_TCHAR *format, ...);
