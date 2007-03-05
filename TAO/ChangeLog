@@ -1,4 +1,12 @@
-Mon Mar  5 09:44:32 UTC 2007  Wallace Zhang  <zhang_w@ociweb.com>
+Mon Mar  5 11:03:32 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Bounded_Object_Reference_Sequence_T.h:
+        * tao/Unbounded_Object_Reference_Sequence_T.h:
+          Reverted the change for bugzilla 2829, some builds show errors,
+          will investigate these builds first
+
+Mon Mar  5 09:44:32 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
 
         * tao/Bounded_Object_Reference_Sequence_T.h:
         * tao/EndpointPolicy/EndpointPolicy_Factory.cpp:
