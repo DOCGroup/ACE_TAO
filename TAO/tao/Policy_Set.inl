@@ -15,7 +15,7 @@ TAO_Policy_Set::compatible_scope (TAO_Policy_Scope policy_scope) const
 ACE_INLINE CORBA::Policy *
 TAO_Policy_Set::get_policy_by_index (CORBA::ULong index) const
 {
-  return CORBA::Policy::_duplicate (this->policy_list_[index]);
+  return CORBA::Policy::_duplicate (this->policy_list_[index].in ());
 }
 
 ACE_INLINE CORBA::ULong
