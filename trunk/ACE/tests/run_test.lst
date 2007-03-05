@@ -71,7 +71,7 @@ INET_Addr_Test
 IOStream_Test
 Integer_Truncate_Test
 Lazy_Map_Manager_Test
-Log_Msg_Test: !LynxOS !ACE_FOR_TAO
+Log_Msg_Test: !ACE_FOR_TAO
 Logging_Strategy_Test: !DISABLE_ToFix_LynxOS_PPC !STATIC !ST
 Manual_Event_Test: !DISABLE_ToFix_LynxOS_PPC
 MEM_Stream_Test: !DISABLE_ToFix_LynxOS_PPC !DISABLE_ToFix_LynxOS_x86 !VxWorks !nsk !ACE_FOR_TAO
