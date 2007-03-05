@@ -47,6 +47,7 @@
 
 #include "be_visitor_union_branch/private_ch.cpp"
 #include "be_visitor_union_branch/public_assign_cs.cpp"
+#include "be_visitor_union_branch/public_constructor_cs.cpp"
 #include "be_visitor_union_branch/public_reset_cs.cpp"
 #include "be_visitor_union_branch/public_ch.cpp"
 #include "be_visitor_union_branch/public_ci.cpp"
@@ -56,6 +57,6 @@
 #include "be_visitor_union_branch/serializer_op_ch.cpp"
 #include "be_visitor_union_branch/serializer_op_cs.cpp"
 
-ACE_RCSID (be, 
-           be_visitor_union_branch, 
+ACE_RCSID (be,
+           be_visitor_union_branch,
            "$Id$")
