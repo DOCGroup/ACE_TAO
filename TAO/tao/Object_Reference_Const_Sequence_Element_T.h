@@ -52,7 +52,7 @@ public:
     return *element_;
   }
 
-  inline const_value_type in (void) const {
+  inline object_reference_type * const in (void) const {
     return *this->element_;
   }
 
