@@ -3,7 +3,9 @@ Mon Mar 5 09:21:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
         * ace/Atomic_Op_Sparc.c:
         * ace/Atomic_Op.{h,cpp}:
           Added optimized functions for SunCC on x86. Thanks to
-          Dennis Chernoivanov <cdi at tbricks dot com> for reporting this
+          Dennis Chernoivanov <cdi at tbricks dot com> for reporting this.
+          If you want to enable these, add atomic_ops_sparc=1 to your
+          platform_macros.GNU file
 
 Sat Mar  3 17:35:52 UTC 2007  Ossama Othman  <ossama_othman at symantec dot com>
 
