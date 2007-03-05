@@ -37,6 +37,7 @@ Bug_2540_Regression_Test
 Bug_2659_Regression_Test: !ST
 Bug_2653_Regression_Test: !ST
 Bug_2815_Regression_Test
+Bug_2820_Regression_Test
 CDR_Array_Test: !ACE_FOR_TAO
 CDR_File_Test: !ACE_FOR_TAO
 CDR_Test
