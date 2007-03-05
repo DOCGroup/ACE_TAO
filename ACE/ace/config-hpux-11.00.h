@@ -133,6 +133,8 @@
 // Compiler doesn't handle 'signed char' correctly (used in ace/IOStream.h)
 #  define ACE_LACKS_SIGNED_CHAR
 
+#  define ACE_HAS_VSWPRINTF
+
 #endif /* __GNUG__, HP */
 
 //*********************************************************************
