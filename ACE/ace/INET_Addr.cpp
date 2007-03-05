@@ -905,7 +905,9 @@ int ACE_INET_Addr::set_address (const char *ip_addr,
                               sizeof (ip6));
               return 0;
             }
-          if (ip4 == INADDR_LOOPBACK)
+
+          // RFC 3330 defines loopback as any address with 127.x.x.x
+          if ((ip4 & 0XFF000000) == (INADDR_LOOPBACK & 0XFF000000))
             {
               in6_addr ip6 = in6addr_loopback;
               ACE_OS::memcpy (&this->inet_addr_.in6_.sin6_addr,

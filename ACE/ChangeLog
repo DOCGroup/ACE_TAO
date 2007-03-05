@@ -1,8 +1,19 @@
+Mon Mar  5 17:22:26 UTC 2007  Ciju John  <johnc@ociweb.com>
+
+        * ace/INET_Addr.inl:
+        * ace/INET_Addr.cpp:
+        * ace/QoS/SOCK_Dgram_Mcast_QoS.cpp:
+          RFC 3330 defines loopback as any address with 127.x.x.x. The
+          is_loopback API currently simply compares against the
+          INADDR_LOOPBACK macro. Doing so restricts loopback definition to
+          127.0.0.1 which is inconsistent with the RFC definition. This
+          change will include any address with 127.x.x.x as loopback.
+
 Mon Mar  5 14:16:49 UTC 2007  Olli Savia  <ops@iki.fi>
 
         * tests/run_test.lst:
           Updated for LynxOS.
-        
+
 Mon Mar 5 11:25:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-hpux-11.00.h:
