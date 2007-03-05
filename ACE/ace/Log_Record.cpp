@@ -111,14 +111,13 @@ ACE_Log_Record::dump (void) const
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("length_ = %d\n"), this->length_));
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\ntype_ = %u\n"), this->type_));
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\ntime_stamp_ = (")
-                        ACE_UINT64_FORMAT_SPECIFIER
-                        ACE_LIB_TEXT (", %d)\n"),
-              (ACE_UINT64)this->secs_, this->usecs_));
+  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\ntime_stamp_ = (%:, %d)\n"),
+              this->secs_, this->usecs_));
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\npid_ = %u\n"), this->pid_));
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nmsg_data_ (0x%@) = %s\n"),
               this->msg_data_, this->msg_data_));
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nmsg_data_size_ = ") ACE_SIZE_T_FORMAT_SPECIFIER ACE_LIB_TEXT ("\n"), this->msg_data_size_));
+  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nmsg_data_size_ = %B\n"),
+              this->msg_data_size_));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
 }
