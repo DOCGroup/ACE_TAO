@@ -87,6 +87,16 @@ module UnionDiscTest
     };
 };
 
+// AnyUnion
+enum AnyUnionEnum {
+  ANYUNIONENUM2
+};
+
+union MyAnyUnion switch (AnyUnionEnum) {
+  case ANYUNIONENUM2:
+    any my_any;
+};
+
 
 // Nested unions
 
@@ -109,7 +119,7 @@ enum disc_outer
 };
 
 union inner1 switch (disc1)
-{ 
+{
   case one: short s;
   case two: long l;
 };
@@ -126,39 +136,39 @@ union outer switch (disc_outer)
   case out2: inner2 second;
 };
 
-module UnionTest3 
+module UnionTest3
 {
-   enum ValChoice 
+   enum ValChoice
      {
        intVal,
        realVal
      };
 
-   union ValType switch(ValChoice) 
+   union ValType switch(ValChoice)
      {
        case intVal: long integerValue;
        case realVal: double realValue;
      };
 
-   struct UpType 
+   struct UpType
      {
        ValType high;
        ValType low;
      };
 
-   struct DownType 
+   struct DownType
      {
        ValType high;
        ValType low;
      };
 
-   enum IndChoice 
+   enum IndChoice
      {
        up_Level,
        down_Level
      };
 
-   union IndType switch(IndChoice) 
+   union IndType switch(IndChoice)
      {
        case up_Level: UpType up;
        case down_Level: DownType down;
@@ -168,22 +178,22 @@ module UnionTest3
 // Make sure inner union is generated in header file with
 // proper scoping (or lack thereof) in its name, depending
 // on the platform.
-enum XType 
-{ 
-  X_A 
+enum XType
+{
+  X_A
 };
 
-enum ZType 
-{ 
-  Z_A 
+enum ZType
+{
+  Z_A
 };
 
-union X switch (XType) 
+union X switch (XType)
 {
   case X_A:
-    struct Y 
+    struct Y
       {
-        union Z switch (ZType) 
+        union Z switch (ZType)
         {
           case Z_A: long a;
         } u;
@@ -228,24 +238,24 @@ struct Element
   } Value;
 };
 
-// A fix to the IDL compiler's typecoce generation created
+// A fix to the IDL compiler's typecode generation created
 // a problem with unions that have more than one member,
 // where any member except the last is itself a scoped type.
 // This is the simplest example that will reproduce the problem,
 // if it ever reappears.
-enum TestOneEnum 
-{ 
-  TALL, 
+enum TestOneEnum
+{
+  TALL,
   SCHORT
 };
 
-enum TestTwoEnum 
-{ 
-  LIGHT, 
+enum TestTwoEnum
+{
+  LIGHT,
   DARK
 };
 
-union TestUnion switch (short) 
+union TestUnion switch (short)
 {
   case 1: TestOneEnum oneEnum;
   case 2: TestTwoEnum twoEnum;
@@ -263,23 +273,23 @@ union decl_heavy_union switch (short)
       ONE,
       TWO
     } m_which;
-  case 2: 
-    enum en 
+  case 2:
+    enum en
     {
-      a, 
-      b, 
+      a,
+      b,
       c
     } m_en_arr[10];
-  case 3: 
-    struct st 
+  case 3:
+    struct st
     {
-      long a; 
+      long a;
       char b;
     } m_st_arr[10];
-  case 4: 
-    union un switch (long) 
+  case 4:
+    union un switch (long)
     {
-      case 1: long a; 
+      case 1: long a;
       case 2: char b;
     } m_un_arr[10];
 };

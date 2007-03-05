@@ -50,6 +50,27 @@ module Test
     long i;
   };
 
+  union RecursiveUnion2;
+  typedef sequence<RecursiveUnion2> RecursiveUnionSeq2;
+
+  union RecursiveUnion2 switch (short)
+  {
+  case 0:
+    struct Innerstruct3a
+    {
+      RecursiveUnionSeq2 recursive_unions;
+    } insb;
+  case 1:
+    short a;
+  case 2:
+    struct Innerstruct3b
+    {
+      RecursiveUnionSeq2 recursive_unions_second;
+    } insa;
+  default:
+    long i;
+  };
+
   union RecursiveUnionNoDefault;
   typedef sequence<RecursiveUnionNoDefault> RecursiveUnionSeqNoDefault;
 
