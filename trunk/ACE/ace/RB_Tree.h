@@ -594,6 +594,9 @@ class ACE_RB_Tree_Iterator_Base
 
 public:
 
+  /// Copy constructor.
+  ACE_RB_Tree_Iterator_Base (const ACE_RB_Tree_Iterator_Base<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> &iter);
+
   /// Assignment operator: copies both the tree reference and the position in the tree.
   void operator= (const ACE_RB_Tree_Iterator_Base<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> &iter);
 
@@ -652,9 +655,6 @@ protected:
    */
   ACE_RB_Tree_Iterator_Base (const EXT_ID& key,
                              ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS,ACE_LOCK> &tree);
-
-  /// Copy constructor.
-  ACE_RB_Tree_Iterator_Base (const ACE_RB_Tree_Iterator_Base<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> &iter);
 
   /// Destructor.
   ~ACE_RB_Tree_Iterator_Base (void);
