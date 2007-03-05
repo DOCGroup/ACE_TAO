@@ -1,3 +1,15 @@
+Mon Mar  5 20:13:32 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/ast/ast_sequence.cpp:
+          Fixed last part of bug 2776, the typecode for recursive valuetype s
+          is now generated correctly as recursive
+
+        * TAO_IDL/ast/ast_valuetype.cpp:
+        * TAO_IDL/be/be_valuetype.cpp:
+        * TAO_IDL/be_include/be_valuetype.h:
+        * TAO_IDL/include/ast_valuetype.h:
+          Moved in_recursion method from be to ast class
+
 Mon Mar  5 19:00:32 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_typecode/struct_typecode.cpp:
