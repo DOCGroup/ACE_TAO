@@ -125,9 +125,6 @@ public:
     );
   // Compute the count of private/public/all data members.
 
-  virtual bool in_recursion (ACE_Unbounded_Queue<AST_Type *> &list);
-  // Check if we are in recursion.
-
   static int abstract_supports_helper (be_interface *node,
                                        be_interface *base,
                                        TAO_OutStream *os);

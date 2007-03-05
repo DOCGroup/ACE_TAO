@@ -695,7 +695,7 @@ AST_Structure::fwd_redefinition_helper (AST_Structure *&i,
 
               fd->redefine (i);
               AST_StructureFwd *fwd = fd->fwd_decl ();
-              
+
               if (0 != fwd)
                 {
                   // So the fwd decl won't destroy us at cleanup time.
