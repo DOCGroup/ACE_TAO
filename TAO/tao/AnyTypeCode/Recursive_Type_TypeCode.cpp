@@ -57,8 +57,7 @@ CORBA::Boolean
 TAO::TypeCode::Recursive_Type<TypeCodeBase,
                               TypeCodeType,
                               MemberArrayType>::equal_i (
-  CORBA::TypeCode_ptr tc
-  ) const
+  CORBA::TypeCode_ptr tc) const
 {
   ACE_GUARD_RETURN (TAO_SYNCH_RECURSIVE_MUTEX,
                     guard,
@@ -76,8 +75,7 @@ TAO::TypeCode::Recursive_Type<TypeCodeBase,
       // Only reset the recursion flag at the top-level.
       Reset flag (this->in_recursion_);
 
-      return this->TypeCodeBase::equal_i (tc
-                                         );
+      return this->TypeCodeBase::equal_i (tc);
     }
 
   // Nothing else to do.
@@ -89,8 +87,7 @@ CORBA::Boolean
 TAO::TypeCode::Recursive_Type<TypeCodeBase,
                               TypeCodeType,
                               MemberArrayType>::equivalent_i (
-  CORBA::TypeCode_ptr tc
-  ) const
+  CORBA::TypeCode_ptr tc) const
 {
   ACE_GUARD_RETURN (TAO_SYNCH_RECURSIVE_MUTEX,
                     guard,
@@ -108,8 +105,7 @@ TAO::TypeCode::Recursive_Type<TypeCodeBase,
       // Only reset the recursion flag at the top-level.
       Reset flag (this->in_recursion_);
 
-      return this->TypeCodeBase::equivalent_i (tc
-                                              );
+      return this->TypeCodeBase::equivalent_i (tc);
     }
 
   // Nothing else to do.

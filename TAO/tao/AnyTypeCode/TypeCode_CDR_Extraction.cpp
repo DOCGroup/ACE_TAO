@@ -414,13 +414,11 @@ TAO::TypeCodeFactory::tc_struct_factory (CORBA::TCKind kind,
     member_array_type,
     TAO::True_RefCount_Policy> typecode_type;
 
-
   // Check if struct TypeCode is recursive.
   TAO::TypeCodeFactory::TC_Info_List recursive_tc;
   if (kind == CORBA::tk_struct && find_recursive_tc (id.in (), recursive_tc, infos))
     {
       // Set remaining parameters.
-
       typedef TAO::TypeCode::Recursive_Type<typecode_type,
                                             CORBA::TypeCode_var,
                                             member_array_type>
@@ -438,9 +436,7 @@ TAO::TypeCodeFactory::tc_struct_factory (CORBA::TCKind kind,
           if (!rtc)
             return false;  // Should never occur.
 
-          rtc->struct_parameters (name.in (),
-                                  fields,
-                                  nfields);
+          rtc->struct_parameters (name.in (), fields, nfields);
         }
 
       tc = recursive_tc[0].type;
