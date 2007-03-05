@@ -129,7 +129,7 @@ ACE_SOCK_Dgram_Mcast_QoS::subscribe_ifs (const ACE_INET_Addr &mcast_addr,
             --if_cnt;
 
             // Convert to 0-based for indexing, next loop check.
-            if (if_addrs[if_cnt].get_ip_address() == INADDR_LOOPBACK)
+            if (if_addrs[if_cnt].is_loopback())
               continue;
             if (this->subscribe (mcast_addr,
                                  qos_params,
