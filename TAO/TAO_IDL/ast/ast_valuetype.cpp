@@ -73,6 +73,91 @@ AST_ValueType::~AST_ValueType (void)
 {
 }
 
+bool
+AST_ValueType::in_recursion (ACE_Unbounded_Queue<AST_Type *> &list)
+{
+  // We should calculate this only once. If it has already been
+  // done, just return it.
+  if (this->in_recursion_ != -1)
+    {
+      return this->in_recursion_;
+    }
+
+  list.enqueue_tail (this);
+
+  for (UTL_ScopeActiveIterator si (this, UTL_Scope::IK_decls);
+       !si.is_done ();
+       si.next())
+    {
+      AST_Decl *d = si.item ();
+
+      if (!d)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_valuetype::in_recursion - "
+                             "bad node in this scope\n"),
+                            0);
+        }
+
+      AST_Field *field = AST_Field::narrow_from_decl (d);
+
+      if (field == 0)
+        {
+          continue;
+        }
+
+      AST_Type *type = field->field_type ();
+
+      // A valuetype may contain itself as a member. This will not
+      // cause a problem when checking if the valuetype itself is
+      // recursive, but if another valuetype contains a recursive
+      // one, the string compare below is not sufficient, and we
+      // will go into an infinite recursion of calls to in_recursion ;-).
+      // The check below will catch that use case.
+      if (this == type)
+        {
+          this->in_recursion_ = 1;
+          idl_global->recursive_type_seen_ = true;
+          return this->in_recursion_;
+        }
+
+      if (type == 0)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_valuetype::in_recursion - "
+                             "bad base type\n"),
+                            0);
+        }
+
+      // IDL doesn't have such a feature as name reuse so
+      // just compare fully qualified names.
+      if (this->match_names (this, list))
+        {
+          this->in_recursion_ = 1;
+          idl_global->recursive_type_seen_ = true;
+          return this->in_recursion_;
+        }
+
+      if (type->node_type () == AST_Decl::NT_typedef)
+        {
+          AST_Typedef *td = AST_Typedef::narrow_from_decl (type);
+          type = td->primitive_base_type ();
+        }
+
+      // Now hand over to our field type.
+      if (type->in_recursion (list))
+        {
+          this->in_recursion_ = 1;
+          idl_global->recursive_type_seen_ = true;
+          return this->in_recursion_;
+        }
+
+    } // end of for loop
+
+  this->in_recursion_ = 0;
+  return this->in_recursion_;
+}
+
 void
 AST_ValueType::redefine (AST_Interface *from)
 {
@@ -271,7 +356,7 @@ AST_ValueType::destroy (void)
   delete [] this->pd_supports;
   this->pd_supports = 0;
   this->pd_n_supports = 0;
-  
+
   this->AST_Interface::destroy ();
 }
 

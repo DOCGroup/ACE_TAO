@@ -26,6 +26,9 @@ public:
 
   virtual ~AST_ValueType (void);
 
+  virtual bool in_recursion (ACE_Unbounded_Queue<AST_Type *> &list);
+  // Are we or the node represented by node involved in recursion.
+
   // This also calls the base class version.
   virtual void redefine (AST_Interface *from);
 
