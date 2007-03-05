@@ -1,3 +1,13 @@
+Mon Mar  5 11:09:32 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/AnyTypeCode/Recursive_Type_TypeCode.cpp:
+        * tao/AnyTypeCode/Recursive_Type_TypeCode.h:
+        * tao/AnyTypeCode/Struct_TypeCode.cpp:
+        * tao/AnyTypeCode/Struct_TypeCode.h:
+        * tao/AnyTypeCode/Struct_TypeCode_Static.cpp:
+        * tao/AnyTypeCode/TypeCode_CDR_Extraction.cpp:
+          Layout changes
+
 Mon Mar  5 11:03:32 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Bounded_Object_Reference_Sequence_T.h:

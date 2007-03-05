@@ -111,9 +111,7 @@ CORBA::Boolean
 TAO::TypeCode::Struct<StringType,
                       TypeCodeType,
                       FieldArrayType,
-                      RefCountPolicy>::equal_i (
-  CORBA::TypeCode_ptr tc
-  ) const
+                      RefCountPolicy>::equal_i (CORBA::TypeCode_ptr tc) const
 {
   // This call shouldn't throw since CORBA::TypeCode::equal() verified
   // that the TCKind is the same as our's prior to invoking this
@@ -132,8 +130,7 @@ TAO::TypeCode::Struct<StringType,
 
       char const * const lhs_name =
         Traits<StringType>::get_string (lhs_field.name);
-      char const * const rhs_name = tc->member_name (i
-                                                    );
+      char const * const rhs_name = tc->member_name (i);
 
       if (ACE_OS::strcmp (lhs_name, rhs_name) != 0)
         return false;
@@ -141,12 +138,10 @@ TAO::TypeCode::Struct<StringType,
       CORBA::TypeCode_ptr const lhs_tc =
         Traits<StringType>::get_typecode (lhs_field.type);
       CORBA::TypeCode_var const rhs_tc =
-        tc->member_type (i
-                        );
+        tc->member_type (i);
 
       CORBA::Boolean const equal_members =
-        lhs_tc->equal (rhs_tc.in ()
-                      );
+        lhs_tc->equal (rhs_tc.in ());
 
       if (!equal_members)
         return false;
@@ -164,8 +159,7 @@ TAO::TypeCode::Struct<StringType,
                       TypeCodeType,
                       FieldArrayType,
                       RefCountPolicy>::equivalent_i (
-  CORBA::TypeCode_ptr tc
-  ) const
+  CORBA::TypeCode_ptr tc) const
 {
   // Perform a structural comparison, excluding the name() and
   // member_name() operations.
@@ -181,12 +175,10 @@ TAO::TypeCode::Struct<StringType,
       CORBA::TypeCode_ptr const lhs =
         Traits<StringType>::get_typecode (this->fields_[i].type);
       CORBA::TypeCode_var const rhs =
-        tc->member_type (i
-                        );
+        tc->member_type (i);
 
       CORBA::Boolean const equiv_members =
-        lhs->equivalent (rhs.in ()
-                        );
+        lhs->equivalent (rhs.in ());
 
       if (!equiv_members)
         return false;
@@ -225,8 +217,7 @@ TAO::TypeCode::Struct<StringType,
           tc_fields[i].name = empty_name;
           tc_fields[i].type =
             Traits<StringType>::get_typecode (
-              this->fields_[i].type)->get_compact_typecode (
-                );
+              this->fields_[i].type)->get_compact_typecode ();
         }
     }
 
@@ -244,8 +235,7 @@ TAO::TypeCode::Struct<StringType,
                                       this->base_attributes_.id (),
                                       ""  /* empty name */,
                                       tc_fields,
-                                      this->nfields_
-                                     );
+                                      this->nfields_);
 }
 
 template <typename StringType,
@@ -256,8 +246,7 @@ char const *
 TAO::TypeCode::Struct<StringType,
                       TypeCodeType,
                       FieldArrayType,
-                      RefCountPolicy>::id_i (
-  void) const
+                      RefCountPolicy>::id_i (void) const
 {
   // Ownership is retained by the TypeCode, as required by the C++
   // mapping.
@@ -272,8 +261,7 @@ char const *
 TAO::TypeCode::Struct<StringType,
                       TypeCodeType,
                       FieldArrayType,
-                      RefCountPolicy>::name_i (
-  void) const
+                      RefCountPolicy>::name_i (void) const
 {
   // Ownership is retained by the TypeCode, as required by the C++
   // mapping.
@@ -288,8 +276,7 @@ CORBA::ULong
 TAO::TypeCode::Struct<StringType,
                       TypeCodeType,
                       FieldArrayType,
-                      RefCountPolicy>::member_count_i (
-  void) const
+                      RefCountPolicy>::member_count_i (void) const
 {
   return this->nfields_;
 }
@@ -303,8 +290,7 @@ TAO::TypeCode::Struct<StringType,
                       TypeCodeType,
                       FieldArrayType,
                       RefCountPolicy>::member_name_i (
-  CORBA::ULong index
-  ) const
+  CORBA::ULong index) const
 {
   // Ownership is retained by the TypeCode, as required by the C++
   // mapping.
@@ -323,8 +309,7 @@ TAO::TypeCode::Struct<StringType,
                       TypeCodeType,
                       FieldArrayType,
                       RefCountPolicy>::member_type_i (
-  CORBA::ULong index
-  ) const
+  CORBA::ULong index) const
 {
   if (index >= this->nfields_)
     throw ::CORBA::TypeCode::Bounds ();
