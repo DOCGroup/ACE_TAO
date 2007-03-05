@@ -16,7 +16,8 @@ Mon Mar  5 19:00:32 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
         * TAO_IDL/be/be_visitor_typecode/union_typecode.cpp:
         * TAO_IDL/be/be_visitor_typecode/value_typecode.cpp:
           Fixed bug 2776 partially, improved the detection whether we have
-          a recursive type or not.
+          a recursive type or not. Thanks to Martin Corino
+          <mcorino at remedy dot nl> for reporting this issue.
 
 Mon Mar  5 14:45:32 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
