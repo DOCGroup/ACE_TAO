@@ -74,7 +74,7 @@ run_main (int, ACE_TCHAR *[])
 		 notify_count, pre_notify_count, pos_notify_count));
     }
 
-  reactor.release();
+  reactor.reset();
 
   ACE_Event_Handler::Reference_Count pos_release_count =
     v->add_reference();
@@ -90,8 +90,8 @@ run_main (int, ACE_TCHAR *[])
 		 pre_notify_count, pos_release_count));
     }
 
-  // Remove a reference for each time we explicitly increased it.
-  v->remove_reference();
+  // Remove a reference for each time we explicitly increased it,
+  // minus one time because the _var will take care of that.
   v->remove_reference();
   v->remove_reference();
 
