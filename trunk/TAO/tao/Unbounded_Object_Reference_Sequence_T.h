@@ -70,8 +70,8 @@ public:
     impl_.length(length);
   }
   /// @copydoc details::generic_sequence::operator[]
-  inline const_element_type operator[](CORBA::ULong i) const {
-    return const_element_type (impl_[i], release());
+  inline value_type const & operator[](CORBA::ULong i) const {
+    return impl_[i];
   }
   /// @copydoc details::generic_sequence::operator[]
   inline element_type operator[](CORBA::ULong i) {
