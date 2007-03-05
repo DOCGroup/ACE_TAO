@@ -1,3 +1,9 @@
+Mon Mar  5 17:16:16 UTC 2007  Carlos O'Ryan  <coryan@atdesk.com>
+
+        * tests/Bug_2820_Regression_Test.cpp:
+          The test was broken, it did not delete the Reactor, so it failed
+          to test what we wanted. 
+
 Mon Mar  5 14:16:49 UTC 2007  Olli Savia  <ops@iki.fi>
 
         * tests/run_test.lst:
