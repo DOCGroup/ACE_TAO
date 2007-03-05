@@ -558,7 +558,8 @@ Mon Feb 26 23:27:03 UTC 2007  Ossama Othman  <ossama_othman at symantec dot com>
 
           Improved const-correctness.
 
-          Fixed dead code IDL comment scanning flagged by Coverity.
+          Fixed dead code related to IDL comment scanning.  Flagged by
+          Coverity.
 
           Cleaned up node memory management.
 
@@ -568,7 +569,7 @@ Mon Feb 26 23:27:03 UTC 2007  Ossama Othman  <ossama_othman at symantec dot com>
           the standard "FILE" type instead.
 
           Removed use of "friggin'" from TAO_IDL error diagnostic.  Some
-          users may appreciate this humor.
+          users may not appreciate this humor.
 
         * TAO_IDL/util/utl_string.cpp:
 
