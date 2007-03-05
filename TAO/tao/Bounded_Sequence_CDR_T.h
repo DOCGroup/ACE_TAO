@@ -476,7 +476,7 @@ namespace TAO {
       return false;
     }
     for(CORBA::ULong i = 0; i < length; ++i) {
-      if (!TAO::Objref_Traits<object_type>::marshal (source[i].in (), strm)) {
+      if (!TAO::Objref_Traits<object_type>::marshal (source[i], strm)) {
         return false;
       }
     }
