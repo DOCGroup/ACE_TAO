@@ -56,7 +56,7 @@ TAO_EndpointPolicy_Factory::create_policy (
 
           TAO_Endpoint_Value_Impl const * const evi =
             dynamic_cast <TAO_Endpoint_Value_Impl const *> (
-              (*endpoint_list)[idx]);
+              (*endpoint_list)[idx].in ());
 
           if (!evi)
             continue;
@@ -69,7 +69,7 @@ TAO_EndpointPolicy_Factory::create_policy (
                 found_one = evi->validate_acceptor (*acceptor);
             }
         }
-  
+
       // There is no endpoint policy value matches an endpoint the ORB
       // is listening on. A CORBA::PolicyError exception with a
       // PolicyErrorCode of UNSUPPORTED_POLICY_VALUE is raised.

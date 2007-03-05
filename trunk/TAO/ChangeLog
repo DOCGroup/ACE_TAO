@@ -1,3 +1,31 @@
+Mon Mar  5 09:44:32 UTC 2007  Wallace Zhang  <zhang_w@ociweb.com>
+
+        * tao/Bounded_Object_Reference_Sequence_T.h:
+        * tao/EndpointPolicy/EndpointPolicy_Factory.cpp:
+        * tao/Makefile.am:
+        * tao/Object_Reference_Const_Sequence_Element_T.h:
+        * tao/String_Const_Sequence_Element_T.h:
+        * tao/tao.mpc:
+        * tao/Unbounded_Object_Reference_Sequence_T.h:
+          Fixed bugzilla 2829, make it possible to use .in()
+          on the element returned by const operator [] for an
+          object reference sequence
+
+        * tao/ORB_Core.cpp:
+          layout change
+
+        * TAO_IDL/be/be_visitor_union/union_cs.cpp
+        * TAO_IDL/be/be_visitor_union_branch.cpp
+        * TAO_IDL/be/be_visitor_union_branch/public_constructor_cs.cpp
+        * TAO_IDL/be/be_visitor_union_branch/public_reset_cs.cpp
+        * TAO_IDL/be_include/be_codegen.h
+        * TAO_IDL/be_include/be_visitor_union_branch.h
+        * TAO_IDL/be_include/be_visitor_union_branch/public_constructor_cs.h
+          Fixed bugzilla 2839, when an union is created by default
+          and the discriminator is for a value that is allocated
+          from the heap then allocate a value else we get
+          a crash when marshaling this default union
+
 Fri Mar  2 22:15:32 UTC 2007  Wallace Zhang  <zhang_w@ociweb.com>
 
         * tests/DSI_AMI_Gateway/test_dsi.cpp:
