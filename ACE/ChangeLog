@@ -1,3 +1,8 @@
+Mon Mar 5 11:25:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-hpux-11.00.h:
+          Enabled ACE_HAS_VSFWPRINTF for aCC compiler
+
 Mon Mar 5 09:21:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Atomic_Op_Sparc.c:
