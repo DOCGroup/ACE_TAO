@@ -15,7 +15,7 @@ fi
 
 case "$SYSTEM" in
   "Linux" )
-    ipcs -a | grep $USER | awk '{ print ($2) }' | xargs ipcrm sem;
+    ipcs -a | grep $USER | awk '{ print ($2) }' | xargs -r ipcrm sem;
     ;;
   * )
     semids=`$IPCS | grep "^s" | grep $USER | awk '{ print ($2) }'`
