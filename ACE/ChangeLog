@@ -1,3 +1,14 @@
+Mon Mar  5 22:23:01 UTC 2007  Adam Mitz  <mitza@ociweb.com>
+
+        * bin/clean_sems.sh:
+
+          s/xargs/xargs -r/  The -r switch to xargs prevents the command from
+          being executed when there are no arguments.  This will prevent the
+          extra scoreboard output on Linux (when rem_sems is used):
+            usage: ipcrm [ [-q msqid] [-m shmid] [-s semid]
+            [-Q msgkey] [-M shmkey] [-S semkey] ... ]
+            deprecated usage: ipcrm {shm | msg | sem} id ...
+
 Mon Mar  5 18:02:42 UTC 2007  Ossama Othman  <ossama_othman at symantec dot com>
 
         * ace/Basic_Types.h (ACE_UINT64_MAX):
