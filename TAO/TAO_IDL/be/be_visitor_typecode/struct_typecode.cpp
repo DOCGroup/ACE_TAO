@@ -130,8 +130,6 @@ TAO::be_visitor_struct_typecode::visit (AST_Structure * node,
   static char const StringType[]      = "char const *";
   static char const TypeCodeType[]    = "::CORBA::TypeCode_ptr const *";
   static char const MemberArrayType[] = "TAO::TypeCode::Struct_Field";
-//    "TAO::TypeCode::Struct_Field<char const *, "
-//    "::CORBA::TypeCode_ptr const *> const *";
 
   // Generate the TypeCode instantiation.
   os << "static ";
@@ -194,6 +192,20 @@ TAO::be_visitor_struct_typecode::gen_member_typecodes (AST_Structure * node)
           && member_type->accept (this) != 0)
         {
           return -1;
+        }
+
+      be_structure *bs = be_structure::narrow_from_decl (node);
+      if (bs)
+        {
+          be_visitor_typecode_defn::QNode const * const qnode =
+            this->queue_lookup (this->tc_queue_, bs);
+
+          ACE_Unbounded_Queue<AST_Type *> recursion_queue;
+          if (qnode
+            && member_type->in_recursion (recursion_queue))
+            {
+              this->is_recursive_ = true;
+            }
         }
     }
 

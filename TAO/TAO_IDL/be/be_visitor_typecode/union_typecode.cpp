@@ -138,6 +138,16 @@ TAO::be_visitor_union_typecode::gen_case_typecodes (be_union * node)
         {
           return -1;
         }
+
+      be_visitor_typecode_defn::QNode const * const qnode =
+        this->queue_lookup (this->tc_queue_, node);
+
+      ACE_Unbounded_Queue<AST_Type *> recursion_queue;
+      if (qnode
+        && member_type->in_recursion (recursion_queue))
+        {
+          this->is_recursive_ = true;
+        }
     }
 
   return 0;
