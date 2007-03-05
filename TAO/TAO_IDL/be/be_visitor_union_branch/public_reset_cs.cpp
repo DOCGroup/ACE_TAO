@@ -18,8 +18,8 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_union_branch, 
-           public_reset_cs, 
+ACE_RCSID (be_visitor_union_branch,
+           public_reset_cs,
            "$Id$")
 
 // *****************************************************
@@ -41,8 +41,7 @@ be_visitor_union_branch_public_reset_cs::
 // visit the union_branch node
 int
 be_visitor_union_branch_public_reset_cs::visit_union_branch (
-    be_union_branch *node
-  )
+    be_union_branch *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
   be_type *bt = be_type::narrow_from_decl (node->field_type ());
@@ -52,14 +51,14 @@ be_visitor_union_branch_public_reset_cs::visit_union_branch (
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_cs::"
                          "visit_union_branch - "
-                         "Bad union_branch type\n"), 
+                         "Bad union_branch type\n"),
                         -1);
     }
 
   this->ctx_->node (node); // save the node
-  
+
   *os << be_nl;
-  
+
   for (unsigned long i = 0; i < node->label_list_length (); ++i)
     {
       // check if we are printing the default case
@@ -84,7 +83,7 @@ be_visitor_union_branch_public_reset_cs::visit_union_branch (
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_cs::"
                          "visit_union_branch - "
-                         "codegen for union_branch type failed\n"), 
+                         "codegen for union_branch type failed\n"),
                         -1);
     }
 
@@ -114,7 +113,7 @@ be_visitor_union_branch_public_reset_cs::visit_array (be_array *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_public_reset_cs::"
                          "visit_enum - "
-                         "bad context information\n"), 
+                         "bad context information\n"),
                          -1);
     }
 
@@ -124,8 +123,8 @@ be_visitor_union_branch_public_reset_cs::visit_array (be_array *node)
 
   // save the node's local name and full name in a buffer for quick use later
   // on
-  ACE_OS::memset (fname, 
-                  '\0', 
+  ACE_OS::memset (fname,
+                  '\0',
                   NAMEBUFSIZE);
 
   if (bt->node_type () != AST_Decl::NT_typedef // not a typedef
@@ -174,7 +173,7 @@ be_visitor_union_branch_public_reset_cs::visit_enum (be_enum *)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_public_reset_cs::"
                          "visit_enum - "
-                         "bad context information\n"), 
+                         "bad context information\n"),
                         -1);
     }
 
@@ -197,7 +196,7 @@ be_visitor_union_branch_public_reset_cs::visit_interface (be_interface *)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_public_reset_cs::"
                          "visit_interface - "
-                         "bad context information\n"), 
+                         "bad context information\n"),
                         -1);
     }
 
@@ -225,7 +224,7 @@ be_visitor_union_branch_public_reset_cs::visit_interface_fwd (be_interface_fwd *
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_public_reset_cs::"
                          "visit_interface_fwd - "
-                         "bad context information\n"), 
+                         "bad context information\n"),
                         -1);
     }
 
@@ -253,7 +252,7 @@ be_visitor_union_branch_public_reset_cs::visit_valuebox (be_valuebox *)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_public_reset_cs::"
                          "visit_valuebox - "
-                         "bad context information\n"), 
+                         "bad context information\n"),
                         -1);
     }
 
@@ -281,7 +280,7 @@ be_visitor_union_branch_public_reset_cs::visit_valuetype (be_valuetype *)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_public_reset_cs::"
                          "visit_valuetype - "
-                         "bad context information\n"), 
+                         "bad context information\n"),
                         -1);
     }
 
@@ -309,7 +308,7 @@ be_visitor_union_branch_public_reset_cs::visit_valuetype_fwd (be_valuetype_fwd *
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_public_reset_cs::"
                          "visit_valuetype_fwd - "
-                         "bad context information\n"), 
+                         "bad context information\n"),
                         -1);
     }
 
@@ -339,7 +338,7 @@ be_visitor_union_branch_public_reset_cs::visit_predefined_type (
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_public_reset_cs::"
                          "visit_predefined_type - "
-                         "bad context information\n"), 
+                         "bad context information\n"),
                         -1);
     }
 
@@ -395,7 +394,7 @@ be_visitor_union_branch_public_reset_cs::visit_sequence (be_sequence *)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_public_reset_cs::"
                          "visit_sequence - "
-                         "bad context information\n"), 
+                         "bad context information\n"),
                         -1);
     }
 
@@ -424,7 +423,7 @@ be_visitor_union_branch_public_reset_cs::visit_string (be_string *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_public_reset_cs::"
                          "visit_string - "
-                         "bad context information\n"), 
+                         "bad context information\n"),
                         -1);
     }
 
@@ -471,7 +470,7 @@ be_visitor_union_branch_public_reset_cs::visit_structure (be_structure *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_public_reset_cs::"
                          "visit_structure - "
-                         "bad context information\n"), 
+                         "bad context information\n"),
                         -1);
     }
 
@@ -505,7 +504,7 @@ be_visitor_union_branch_public_reset_cs::visit_typedef (be_typedef *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_public_reset_cs::"
                          "visit_typedef - "
-                         "Bad primitive type\n"), 
+                         "Bad primitive type\n"),
                         -1);
     }
 
@@ -526,7 +525,7 @@ be_visitor_union_branch_public_reset_cs::visit_union (be_union *)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_public_reset_cs::"
                          "visit_union - "
-                         "bad context information\n"), 
+                         "bad context information\n"),
                         -1);
     }
 

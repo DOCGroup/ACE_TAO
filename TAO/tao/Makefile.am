@@ -1253,6 +1253,7 @@ nobase_include_HEADERS = \
   Object_Ref_Table.h \
   Object_Ref_Table.inl \
   Object_Reference_Sequence_Element_T.h \
+  Object_Reference_Const_Sequence_Element_T.h \
   Object_Reference_Traits_Base_T.h \
   Object_Reference_Traits_T.h \
   Object_T.cpp \

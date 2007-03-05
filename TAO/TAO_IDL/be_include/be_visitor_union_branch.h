@@ -28,6 +28,7 @@
 #include "be_visitor_union_branch/public_ci.h"
 #include "be_visitor_union_branch/public_cs.h"
 #include "be_visitor_union_branch/public_assign_cs.h"
+#include "be_visitor_union_branch/public_constructor_cs.h"
 #include "be_visitor_union_branch/public_reset_cs.h"
 #include "be_visitor_union_branch/private_ch.h"
 #include "be_visitor_union_branch/cdr_op_ch.h"

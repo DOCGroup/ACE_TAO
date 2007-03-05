@@ -207,7 +207,7 @@ public:
       TAO_TC_DEFN_ENCAP_LEN,                  // encap size computation
       TAO_TC_DEFN_SCOPE_LEN,                  // scope size computation
 
-      // Means we are not generating the assignment operator.
+      // Means we are generating the copy constructor
       TAO_UNION_COPY_CONSTRUCTOR,
 
       // Generating the _var template parameter in sequence of arrays.

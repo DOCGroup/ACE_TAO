@@ -13,6 +13,7 @@
 #include "Object_Reference_Traits_T.h"
 #include "Generic_Sequence_T.h"
 #include "Object_Reference_Sequence_Element_T.h"
+#include "Object_Reference_Const_Sequence_Element_T.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -32,6 +33,7 @@ public:
   typedef details::bounded_reference_allocation_traits<value_type,element_traits,MAX,true> allocation_traits;
 
   typedef details::object_reference_sequence_element<element_traits> element_type;
+  typedef details::object_reference_const_sequence_element<element_traits> const_element_type;
   typedef element_type subscript_type;
   typedef value_type const & const_subscript_type;
 
@@ -62,8 +64,8 @@ public:
     implementation_type::range::check_length(length, MAX);
     impl_.length(length);
   }
-  inline value_type const & operator[](CORBA::ULong i) const {
-    return impl_[i];
+  inline const_element_type operator[](CORBA::ULong i) const {
+    return const_element_type(impl_[i], release());
   }
   inline element_type operator[](CORBA::ULong i) {
     return element_type(impl_[i], release());
