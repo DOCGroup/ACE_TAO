@@ -1,0 +1,13 @@
+// $Id$
+
+#include "Receiver.idl"
+
+composition session ReceiverImpl
+{
+  home executor ReceiverHomeExec
+  {
+    implements Protocols::ReceiverHome;
+    manages ReceiverExec;
+  };
+};
+

@@ -1,0 +1,15 @@
+
+/* Important Node */
+div.important {
+	position: center;
+	width: 75%;
+	text-align: left;
+	border: 1;
+	background: #FAEBD7;
+}
+
+div.important strong {
+	font-weight: bold;
+	color: red;
+	font-variant: small-caps;
+}

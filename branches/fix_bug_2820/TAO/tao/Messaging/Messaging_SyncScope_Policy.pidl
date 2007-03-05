@@ -1,0 +1,47 @@
+// -*- IDL -*-
+
+//=============================================================================
+/**
+ *  @file   Messaging_SyncScope_Policy.pidl
+ *
+ *  $Id$
+ *
+ * This file was used to generate the code in
+ * Messaging_SyncScope_Policy{C}.{h,cpp}
+ *
+ * The command used to generate code from this file is:
+ *
+ *   tao_idl
+ *        -o orig -Gp -Gd -GA -Sci
+ *        -Wb,export_macro=TAO_Messaging_Export
+ *        -Wb,export_include=messaging_export.h
+ *        -Wb,pre_include="ace/pre.h"
+ *        -Wb,post_include="ace/post.h" -I$(TAO_ROOT)
+ *        Messaging_SyncScope_Policy.pidl
+ *
+ *   The generated files are ready to use
+ */
+//=============================================================================
+
+#ifndef TAO_MESSAGING_SYNCSCOPE_POLICY_PIDL
+#define TAO_MESSAGING_SYNCSCOPE_POLICY_PIDL
+
+#include "tao/Policy.pidl"
+#include "tao/Messaging_SyncScope.pidl"
+#include "tao/Messaging/Messaging_Types.pidl"
+
+#pragma prefix "omg.org"
+
+module Messaging
+{
+  // Synchronization Policy (default = WITH_TRANSPORT)
+
+  //
+  // Locally-Constrained Policy Objects
+  //
+  local interface SyncScopePolicy : CORBA::Policy {
+    readonly attribute SyncScope synchronization;
+  };
+};
+
+#endif /*TAO_MESSAGING_SYNCSCOPE_POLICY_PIDL*/
