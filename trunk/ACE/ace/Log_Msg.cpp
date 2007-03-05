@@ -903,6 +903,8 @@ ACE_Log_Msg::open (const ACE_TCHAR *prog_name,
  * Valid Options (prefixed by '%', as in printf format strings) include:
  *   'A': print an ACE_timer_t value
  *   'a': exit the program at this point (var-argument is the exit status!)
+ *   'b': print a ssize_t value
+ *   'B': print a size_t value
  *   'c': print a character
  *   'C': print a character string
  *   'i', 'd': print a decimal number
@@ -933,6 +935,7 @@ ACE_Log_Msg::open (const ACE_TCHAR *prog_name,
  *   'W': print out a wide character string.
  *   'z': print an ACE_OS::WChar character
  *   'Z': print an ACE_OS::WChar character string
+ *   ':': print a time_t value as an integral number
  *   '%': format a single percent sign, '%'
  */
 ssize_t
@@ -1924,6 +1927,58 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
  #endif /* ! ACE_LACKS_LONGLONG_T */
                    ACE_UPDATE_COUNT (bspace, this_len);
                    break;
+
+                case 'b':
+                  {
+                    const ACE_TCHAR *fmt = ACE_SSIZE_T_FORMAT_SPECIFIER;
+                    ACE_OS::strcpy (fp, &fmt[1]);    // Skip leading %
+                  }
+                  if (can_check)
+                    this_len = ACE_OS::snprintf (bp, bspace,
+                                                 format,
+                                                 va_arg (argp, ssize_t));
+                  else
+                    this_len = ACE_OS::sprintf (bp,
+                                                format,
+                                                va_arg (argp, ssize_t));
+                  ACE_UPDATE_COUNT (bspace, this_len);
+                  break;
+
+                case 'B':
+                  {
+                    const ACE_TCHAR *fmt = ACE_SIZE_T_FORMAT_SPECIFIER;
+                    ACE_OS::strcpy (fp, &fmt[1]);    // Skip leading %
+                  }
+                  if (can_check)
+                    this_len = ACE_OS::snprintf (bp, bspace,
+                                                 format,
+                                                 va_arg (argp, size_t));
+                  else
+                    this_len = ACE_OS::sprintf (bp,
+                                                format,
+                                                va_arg (argp, size_t));
+                  ACE_UPDATE_COUNT (bspace, this_len);
+                  break;
+
+                case ':':
+                  {
+                    // Assume a 32 bit time_t and change if needed.
+                    const ACE_TCHAR *fmt = ACE_LIB_TEXT ("%d");
+                    if (sizeof (time_t) == 8)
+                      fmt = ACE_INT64_FORMAT_SPECIFIER;
+
+                    ACE_OS::strcpy (fp, &fmt[1]);    // Skip leading %
+                  }
+                  if (can_check)
+                    this_len = ACE_OS::snprintf (bp, bspace,
+                                                 format,
+                                                 va_arg (argp, time_t));
+                  else
+                    this_len = ACE_OS::sprintf (bp,
+                                                format,
+                                                va_arg (argp, time_t));
+                  ACE_UPDATE_COUNT (bspace, this_len);
+                  break;
 
                 case '@':
                     ACE_OS::strcpy (fp, ACE_LIB_TEXT ("p"));

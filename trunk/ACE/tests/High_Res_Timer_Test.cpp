@@ -22,7 +22,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_unistd.h"
 
-ACE_RCSID(tests, High_Res_Timer_Test, "High_Res_Timer_Test.cpp,v 4.6 2000/04/23 04:43:58 brunsch Exp")
+ACE_RCSID(tests, High_Res_Timer_Test, "$Id$")
 
 static
 u_int
@@ -142,7 +142,7 @@ run_main (int argc, ACE_TCHAR *argv[])
             measured.sec () * ACE_ONE_SECOND_IN_USECS + measured.usec ();
 
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("interval: %Q usec, measured: %Q usec %s\n"),
+                      ACE_TEXT ("interval: %: usec, measured: %: usec %s\n"),
                       interval_usec,
                       measured_usec,
                       (intervals[i] <= TIMER_RESOLUTION
@@ -160,7 +160,7 @@ run_main (int argc, ACE_TCHAR *argv[])
           // Check the ACE_Timer_Value-calculated microseconds against
           // the ACE_High_Res_Timer-calculated nanoseconds.
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("ACE_Time_Value usec: %Q, ACE_HR nsec: %Q\n"),
+                      ACE_TEXT ("ACE_Time_Value usec: %:, ACE_HR nsec: %Q\n"),
                       measured_usec,
                       nanoseconds));
           // This gives problems -> should be fixed
