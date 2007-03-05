@@ -1,3 +1,27 @@
+Mon Mar  5 18:02:42 UTC 2007  Ossama Othman  <ossama_othman at symantec dot com>
+
+        * ace/Basic_Types.h (ACE_UINT64_MAX):
+
+          Simplified preprocessor conditionals.
+
+        * ace/RB_Tree.h (ACE_RB_Tree_Iterator_Base):
+
+          Made copy constructor public instead of private.  The assignment
+          operator was already public so there was nothing to be gained by
+          making the copy constructor protected.  Addresses Sun Studio 10
+          warnings.
+
+        * ace/Time_Value.inl (to_usec):
+
+          Added support for ACE_LACKS_UNSIGNEDLONGLONG_T case.
+
+        * ace/UUID.cpp (get_systemtime):
+
+          In the ACE_LACKS_UNSIGNEDLONGLONG_T case, wrap 64-bit integer
+          constant with ACE_INT64_LITERAL macro.  Addresses potential
+          problem where the constant is intepreted as a "long", instead of
+          "long long".
+
 Mon Mar  5 17:22:26 UTC 2007  Ciju John  <johnc@ociweb.com>
 
         * ace/INET_Addr.inl:
