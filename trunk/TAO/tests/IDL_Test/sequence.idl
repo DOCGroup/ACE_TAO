@@ -21,6 +21,21 @@
 
 #include "tao/OctetSeq.pidl"
 
+struct myfoostruct;
+typedef sequence<myfoostruct> myfoostructseq;
+
+struct myfoostruct
+{
+  string str_mem;
+  myfoostructseq rec_mem;
+};
+
+exception nasty
+{
+  string id;
+  myfoostruct rec_info;
+};
+
 // This will produce a link error if a handcraft we have added to
 // tao/OctetSeqC.h is ever removed.
 typedef sequence<CORBA::OctetSeq> OctetSeqSeq;
