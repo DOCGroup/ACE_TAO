@@ -16,6 +16,15 @@ namespace
   {
     return std::toupper (c);
   }
+
+  void
+  str_upcase (std::string &str)
+  {
+    std::transform (str.begin (),
+                    str.end (),
+                    str.begin (),
+                    upcase);
+  }
 }
 
 #endif  // UPCASE_HPP

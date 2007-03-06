@@ -343,30 +343,60 @@ namespace
       virtual void
       traverse (SemanticGraph::MultiUser& u)
       {
-        os << "// Multiplex " << u.name () << " connection." << endl
-           << "ACE_Active_Map_Manager<" << endl;
+        os << endl
+           << "// Multiplex " << u.name () << " connection." << endl
+           << "typedef ACE_Array_Map< ::CORBA::ULong," << endl
+           << "                       ";
 
         Traversal::MultiUserData::belongs (u, belongs_);
 
         os << "_var>" << endl
-           << "ciao_uses_" << u.name () << "_;" << endl;
+           << "  ";
+
+        string uc_port_name (u.name ().str ());
+        str_upcase (uc_port_name);
+
+        os << uc_port_name << "_TABLE;"
+           << uc_port_name << "_TABLE ciao_uses_"
+           << u.name () << "_;";
+
+        if (! ctx.cl ().get_value ("static-config", false))
+        {
+          os << "TAO_SYNCH_MUTEX " << u.name () << "_lock_;";
+        }
      }
 
       virtual void
       traverse (SemanticGraph::Publisher& p)
       {
-        os << "ACE_Active_Map_Manager<" << endl;
+        os << endl
+           << "typedef ACE_Array_Map< ::CORBA::ULong," << endl
+           << "                       ";
 
         Traversal::PublisherData::belongs (p, belongs_);
 
         os << "Consumer_var>" << endl
-           << "ciao_publishes_" << p.name () << "_map_;"
-           << endl;
+           << "  ";
 
-        os << "ACE_Active_Map_Manager<" << endl
-           << STRS[COMP_ECB] << "_var>" << endl
-           << "ciao_publishes_" << p.name () << "_generic_map_;"
-           << endl;
+        string uc_port_name (p.name ().str ());
+        str_upcase (uc_port_name);
+
+        os << uc_port_name << "_TABLE;"
+           << uc_port_name << "_TABLE ciao_publishes_"
+           << p.name () << "_;";
+
+        if (! ctx.cl ().get_value ("static-config", false))
+        {
+          os << "TAO_SYNCH_MUTEX " << p.name () << "_lock_;";
+        }
+
+        os << endl
+           << "typedef ACE_Array_Map< ::CORBA::ULong," << endl
+           << "                       " << STRS[COMP_ECB]
+           << "_var>" << endl
+           << "  " << uc_port_name << "_GENERIC_TABLE;"
+           << uc_port_name << "_GENERIC_TABLE ciao_publishes_"
+           << p.name () << "_generic_;";
       }
 
     private:
@@ -1316,8 +1346,7 @@ namespace
          << "create" << name << "_Servant (" << endl
          << "::Components::HomeExecutorBase_ptr p," << endl
          << "CIAO::Session_Container *c," << endl
-         << "const char *ins_name" << endl
-         << ");" << endl;
+         << "const char *ins_name);" << endl;
     }
 
   private:
@@ -1461,19 +1490,11 @@ ServantHeaderEmitter::pre (TranslationUnit&)
   }
 
   string uc_file_name = file_name;
-
-  std::transform (uc_file_name.begin (),
-                  uc_file_name.end (),
-                  uc_file_name.begin (),
-                  upcase);
+  str_upcase (uc_file_name);
 
   string uc_file_suffix = cl_.get_value ("svnt-hdr-file-suffix",
                                          "_svnt.h");
-
-  std::transform (uc_file_suffix.begin (),
-                  uc_file_suffix.end (),
-                  uc_file_suffix.begin (),
-                  upcase);
+  str_upcase (uc_file_suffix);
 
   string guard =
       "CIAO_GLUE_SESSION_"
@@ -1626,19 +1647,11 @@ ServantHeaderEmitter::post (TranslationUnit&)
   if (file_.empty ()) return;
 
   string uc_file_name = file_.leaf ();
-
-  std::transform (uc_file_name.begin (),
-                  uc_file_name.end (),
-                  uc_file_name.begin (),
-                  upcase);
+  str_upcase (uc_file_name);
 
   string uc_file_suffix = cl_.get_value ("svnt-hdr-file-suffix",
                                          "_svnt.h");
-
-  std::transform (uc_file_suffix.begin (),
-                  uc_file_suffix.end (),
-                  uc_file_suffix.begin (),
-                  upcase);
+  str_upcase (uc_file_suffix);
 
   string guard =
     "CIAO_GLUE_SESSION_"

@@ -12,7 +12,7 @@ namespace CIAO
   int
   Server_init (CORBA::ORB_ptr o)
   {
-    CIAO_REGISTER_VALUE_FACTORY (o, CIAO::Map_Key_Cookie_init,
+    CIAO_REGISTER_VALUE_FACTORY (o, CIAO::Cookie_Impl_init,
                                 Components::Cookie);
     CIAO_REGISTER_VALUE_FACTORY (o, Components::PortDescription_init,
                                 Components::PortDescription);

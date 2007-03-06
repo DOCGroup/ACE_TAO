@@ -202,14 +202,13 @@ namespace CIAO
     ::Components::FacetDescriptions_var retval = tmp;
 
     retval->length (this->facet_table_.size ());
-    CORBA::ULong i = 0;
+    CORBA::ULong i = 0UL;
 
     for (FacetTable::const_iterator iter = this->facet_table_.begin ();
          iter != this->facet_table_.end ();
          ++iter, ++i)
       {
-        FacetTable::const_reference entry = *iter;
-        retval[i] = entry.second;
+        retval[i] = iter->second;
       }
 
     return retval._retn ();
@@ -228,14 +227,13 @@ namespace CIAO
     ::Components::ConsumerDescriptions_var retval = tmp;
 
     retval->length (this->consumer_table_.size ());
-    CORBA::ULong i = 0;
+    CORBA::ULong i = 0UL;
 
     for (ConsumerTable::const_iterator iter = this->consumer_table_.begin ();
          iter != this->consumer_table_.end ();
          ++iter, ++i)
       {
-        ConsumerTable::const_reference entry = *iter;
-        retval[i] = entry.second;
+        retval[i] = iter->second;
       }
 
     return retval._retn ();
@@ -464,7 +462,9 @@ namespace CIAO
     }
     else
     {
-      ACE_DEBUG ((LM_DEBUG, "Found a receptacle named (%s)\n", receptacle_name));
+      ACE_DEBUG ((LM_DEBUG,
+                  "Found a receptacle named (%s)\n",
+                  receptacle_name));
       rd = safe.inout ();
 
       ::Components::ConnectionDescription *cd = 0;
@@ -479,12 +479,16 @@ namespace CIAO
       cds.length (old_length + 1);
       ACE_DEBUG ((LM_DEBUG, "New length  %d\n", cds.length ()));
       cds [old_length] = cd_safe;
-      ACE_DEBUG ((LM_DEBUG, "Added new connection to receptacle named  (%s)\n", receptacle_name));
+      ACE_DEBUG ((LM_DEBUG,
+                  "Added new connection to receptacle named  (%s)\n",
+                  receptacle_name));
     }
 
     if (this->receptacle_table_.bind (receptacle_name, safe) == 0)
       {
-        ACE_DEBUG ((LM_DEBUG, "Successfully added new receptacle named (%s)\n", receptacle_name));
+        ACE_DEBUG ((LM_DEBUG,
+                    "Successfully added new receptacle named (%s)\n",
+                    receptacle_name));
       }
   }
 

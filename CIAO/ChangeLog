@@ -1,3 +1,32 @@
+Tue Mar  6 20:21:45 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * ciao/Cookies.h:
+        * ciao/Servant_Impl_Base.h:
+        * ciao/Servant_Impl_Utils_T.cpp:
+        * ciao/Server_init.cpp:
+        * ciao/Cookies.inl:
+        * ciao/Servant_Impl_Base.cpp:
+        * ciao/Cookies.cpp:
+        * ciao/Dynamic_Component_Servant_Base.h:
+        * CIDLC/ExecImplHeaderGenerator.cpp:
+        * CIDLC/AttributeSourceEmitters_T.hpp:
+        * CIDLC/ServantHeaderGenerator.cpp:
+        * CIDLC/ServantSourceGenerator.cpp:
+        * CIDLC/ExecImplGenerator.cpp:
+        * CIDLC/Upcase.hpp:
+        * CIDLC/ServantGenerator.cpp:
+
+          - changed the container used to hold object reference for
+            multiplex receptacle and event source ports from
+            ACE_Active_Object_Map to ACE_Array_Map
+
+          - removed class CIAO::Map_Key_Cookie (since it encodes an
+            ACE_Active_Object_Map_Key, which is tightly coupled with
+            ACE_Active_Object_Map) and replaced it with class
+            Cookie_Impl, which encodes a CORBA::ULong
+
+          - formatting and cosmetic changes to CIDLC-generated code
+
 Tue Mar  6 13:21:24 UTC 2007  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * COPYING: Updated this file to clarify that the CIAO license need
@@ -5,7 +34,7 @@ Tue Mar  6 13:21:24 UTC 2007  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
           Kircher <michael dot kircher at siemens dot com> and Werner
           Burger <werner dot burger at siemens dot com> for motivating
           this.
-  
+
 Sun Mar  4 21:49:19 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * docs/tutorials/Quoter/Simple/Icons:
