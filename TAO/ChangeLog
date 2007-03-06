@@ -1,3 +1,16 @@
+Tue Mar  6 09:38:32 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Collocation/run_test.pl:
+        * tests/Collocation_Exception_Test/run_test.pl:
+        * tests/Collocation_Oneway_Tests/run_test.pl:
+        * tests/Collocation_Tests/run_test.pl:
+        * tests/RTCORBA/Activate_Object_Multiple_ORBs/run_test.pl:
+        * tests/RTCORBA/Client_Propagated/run_test.pl:
+        * tests/RTCORBA/Server_Declared/run_test.pl:
+        * tests/Servant_To_Reference_Test/run_test.pl:
+        * tests/UNKNOWN_Exception/run_test.pl:
+          Use a PerlACE variable for the time to wait for a process
+
 Tue Mar  6 09:06:32 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/DSI_AMH/run_test.pl:

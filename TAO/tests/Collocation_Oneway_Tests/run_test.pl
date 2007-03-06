@@ -21,7 +21,7 @@ else {
 
 print STDERR "======== Running in Default Mode \n";
 $SV->Arguments ("-o $iorfile -k file://$iorfile -m none ");
-$sv = $SV->SpawnWaitKill (60);
+$sv = $SV->SpawnWaitKill ($PerlACE::wait_interval_for_process_creation);
 
 if ($sv != 0) {
     print STDERR "ERROR in Collocation_Oneway_Test\n";
@@ -31,7 +31,7 @@ unlink $iorfile;
 
 print STDERR "======== Running in Default Mode \n";
 $SV->Arguments ("-o $iorfile -k file://$iorfile -m transport");
-$sv = $SV->SpawnWaitKill (60);
+$sv = $SV->SpawnWaitKill ($PerlACE::wait_interval_for_process_creation);
 
 if ($sv != 0) {
     print STDERR "ERROR in Collocation_Oneway_Test\n";
@@ -41,7 +41,7 @@ unlink $iorfile;
 
 print STDERR "======== Running in Default Mode \n";
 $SV->Arguments ("-o $iorfile -k file://$iorfile -m server");
-$sv = $SV->SpawnWaitKill (60);
+$sv = $SV->SpawnWaitKill ($PerlACE::wait_interval_for_process_creation);
 
 if ($sv != 0) {
     print STDERR "ERROR in Collocation_Oneway_Test\n";
@@ -51,7 +51,7 @@ unlink $iorfile;
 
 print STDERR "======== Running in Default Mode \n";
 $SV->Arguments ("-o $iorfile -k file://$iorfile -m target");
-$sv = $SV->SpawnWaitKill (60);
+$sv = $SV->SpawnWaitKill ($PerlACE::wait_interval_for_process_creation);
 
 if ($sv != 0) {
     print STDERR "ERROR in Collocation_Oneway_Test\n";

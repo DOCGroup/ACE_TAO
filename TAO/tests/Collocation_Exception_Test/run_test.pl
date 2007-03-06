@@ -21,7 +21,7 @@ else {
 
 print STDERR "======== Running in Default Mode \n";
 $SV->Arguments ("-o $iorfile -k file://$iorfile");
-$sv = $SV->SpawnWaitKill (60);
+$sv = $SV->SpawnWaitKill ($PerlACE::wait_interval_for_process_creation);
 
 if ($sv != 0) {
     print STDERR "ERROR in Collocation_Exception_Test\n";
