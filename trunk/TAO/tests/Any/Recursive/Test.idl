@@ -33,6 +33,27 @@ module Test
     long i;
   };
 
+  struct NestedRecursiveStruct5;
+  typedef sequence<NestedRecursiveStruct5> NestedRecursiveStructSeq5;
+  struct NestedRecursiveStruct5
+  {
+    long i;
+    union MyUnion5 switch (short)
+    {
+      case 0:
+        struct InnerStruct5
+        {
+          union Intern5 switch (short)
+          {
+            case 0:
+              NestedRecursiveStructSeq5 recursive_structs5;
+          } intbb5;
+        } ins65;
+      default:
+        long i;
+    } in5;
+  };
+
   // --------------------------
 
   union RecursiveUnion;

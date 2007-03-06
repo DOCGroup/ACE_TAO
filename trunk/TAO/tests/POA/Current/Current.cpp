@@ -29,21 +29,16 @@ main (int argc, char **argv)
   try
     {
       // Initialize the ORB first.
-      CORBA::ORB_var orb =
-        CORBA::ORB_init (argc,
-                         argv,
-                         0);
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
       CORBA::Object_var object;
 
-      object =
-        orb->resolve_initial_references ("POACurrent");
+      object = orb->resolve_initial_references ("POACurrent");
 
       PortableServer::Current_var current =
         PortableServer::Current::_narrow (object.in ());
 
-      object =
-        orb->resolve_initial_references ("RootPOA");
+      object = orb->resolve_initial_references ("RootPOA");
 
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (object.in ());

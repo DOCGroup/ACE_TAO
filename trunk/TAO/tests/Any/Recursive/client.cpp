@@ -182,9 +182,15 @@ nested_recursive_struct_test (CORBA::ORB_ptr /* orb */,
   CORBA::Any the_any;
   the_any <<= foo;
 
-  ::perform_invocation<Test::NestedRecursiveStruct> (hello,
-                                               the_any);
+  ::perform_invocation<Test::NestedRecursiveStruct> (hello, the_any);
+
+  Test::NestedRecursiveStruct5 foo5;
+
+  the_any <<= foo;
+
+  ::perform_invocation<Test::NestedRecursiveStruct5> (hello, the_any);
 }
+
 
 void
 recursive_union_test (CORBA::ORB_ptr /* orb */,
@@ -202,8 +208,7 @@ recursive_union_test (CORBA::ORB_ptr /* orb */,
   foo_enum.i (test_long);
   the_any <<= foo_enum;
 
-  ::perform_invocation<Test::EnumUnion> (hello,
-                                         the_any);
+  ::perform_invocation<Test::EnumUnion> (hello, the_any);
 
   // Non-recursive member case.
   Test::RecursiveUnion foo;
@@ -211,8 +216,7 @@ recursive_union_test (CORBA::ORB_ptr /* orb */,
 
   the_any <<= foo;
 
-  ::perform_invocation<Test::RecursiveUnion> (hello,
-                                              the_any);
+  ::perform_invocation<Test::RecursiveUnion> (hello, the_any);
 
   Test::RecursiveUnion2 foo2;
   foo2.i (test_long);
@@ -466,11 +470,11 @@ main (int argc, char *argv[])
 
       static test_func const tests[] =
         {
-          recursive_union_test
-          , recursive_struct_test
+          recursive_struct_test
           , nested_recursive_struct_test
           , indirectly_recursive_valuetype_test
           , directly_recursive_valuetype_test
+          , recursive_union_test
 #if TAO_HAS_MINIMUM_CORBA == 0
           , recursive_struct_typecodefactory_test
           , recursive_union_typecodefactory_test
