@@ -1,3 +1,25 @@
+Tue Mar  6 09:03:32 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/POA/Bug_2511_Regression/run_test.pl:
+        * tests/POA/Current/run_test.pl:
+        * tests/POA/Deactivate_Object/run_test.pl:
+        * tests/POA/Default_Servant/run_test.pl:
+        * tests/POA/Etherealization/run_test.pl:
+        * tests/POA/Excessive_Object_Deactivations/run_test.pl:
+        * tests/POA/Identity/run_test.pl:
+        * tests/POA/MT_Servant_Locator/run_test.pl:
+        * tests/POA/Nested_Non_Servant_Upcalls/run_test.pl:
+        * tests/POA/Non_Servant_Upcalls/run_test.pl:
+        * tests/POA/Object_Reactivation/run_test.pl:
+        * tests/POA/Persistent_ID/run_test.pl:
+        * tests/POA/POA_Destruction/run_test.pl:
+        * tests/POA/POAManagerFactory/run_test.pl:
+        * tests/POA/Policies/run_test.pl:
+        * tests/POA/Reference_Counting/run_test.pl:
+        * tests/POA/Single_Threaded_POA/run_test.pl:
+        * tests/POA/wait_for_completion/run_test.pl:
+          Use a PerlACE variable for the time to wait for a process
+
 Tue Mar  6 08:59:32 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Codec/run_test.pl:
