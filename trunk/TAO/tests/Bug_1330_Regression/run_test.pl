@@ -25,7 +25,7 @@ $SERVER->Arguments("-ORBEndpoint iiop://localhost:$port");
 $SERVER->Spawn();
 
 # We don't need the IOR file but we can wait on the file
-if (PerlACE::waitforfile_timed ($server_ior_file, 10) == -1)
+if (PerlACE::waitforfile_timed ($server_ior_file, $PerlACE::wait_interval_for_process_creation) == -1)
 {
    print STDERR "ERROR: cannot find $server_ior_file\n";
    $SERVER->Kill();
