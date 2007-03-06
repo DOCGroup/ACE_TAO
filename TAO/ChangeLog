@@ -1,3 +1,15 @@
+Tue Mar  6 09:06:32 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/DSI_AMH/run_test.pl:
+        * tests/DSI_AMI_Gateway/run_test.pl:
+        * tests/DSI_Gateway/run_test.pl:
+        * tests/DynAny_Test/run_test.pl:
+        * tests/Explicit_Event_Loop/run_test.pl:
+        * tests/ORB_destroy/run_test.pl:
+        * tests/ORB_init/run_test.pl:
+        * tests/ORB_Local_Config/run_tests_all.pl:
+          Use a PerlACE variable for the time to wait for a process
+
 Tue Mar  6 09:03:32 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/POA/Bug_2511_Regression/run_test.pl:
