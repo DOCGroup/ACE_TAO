@@ -9,7 +9,7 @@ use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::Run_Test;
 
 my($T)      = new PerlACE::Process ("test");
-my($test)   = $T->SpawnWaitKill (20);
+my($test)   = $T->SpawnWaitKill ($PerlACE::wait_interval_for_process_creation);
 my($status) = 0;
 
 if ($test != 0) {

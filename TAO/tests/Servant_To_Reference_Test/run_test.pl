@@ -16,12 +16,12 @@ if (PerlACE::is_vxworks_test()) {
     $SV = new PerlACE::ProcessVX ("server", "-o server.ior");
 }
 else {
-    $SV = new PerlACE::Process ("server", "-o $iorfile");    
+    $SV = new PerlACE::Process ("server", "-o $iorfile");
 }
 
 $SV->Spawn ();
 
-$server = $SV->WaitKill (120);
+$server = $SV->WaitKill ($PerlACE::wait_interval_for_process_creation);
 
 if ($server != 0) {
     print STDERR "ERROR: server returned $server\n";
