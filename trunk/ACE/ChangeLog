@@ -1,3 +1,10 @@
+Tue Mar  6 15:00:00 UTC 2007  Ciju John  <johnc@ociweb.com>
+
+        * tests/INET_Addr_Test.cpp:
+          Add test for ACE_INET_Addr::is_loopback () API. This tests a
+          selected set of addresses to validate API's conformance with RFC
+          3330.
+
 Tue Mar  6 13:21:24 UTC 2007  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * COPYING: Updated this file to clarify that the ACE license need
