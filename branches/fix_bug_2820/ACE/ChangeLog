@@ -1,3 +1,16 @@
+Tue Mar  6 02:07:43 UTC 2007  Carlos O'Ryan  <coryan@atdeesk.com>
+
+        * ace/Select_Reactor_Base.cpp:
+          Fixed bugs in loop to extract event handlers from notification
+          pipe.
+        
+        * tests/Bug_2820_Regression_Test.cpp:
+          Fixed several problems in the test:
+          - The Event_Handler called on the Reactor on its destructor, but
+            by then the reactor was already destroyed.
+          - Improved debugging messages.
+          - Fixed memory management problems, valgrind is happy now.
+
 Mon Mar  5 18:01:36 UTC 2007  Carlos O'Ryan  <coryan@atdesk.com>
 
         * ace/Notification_Queue.cpp:
