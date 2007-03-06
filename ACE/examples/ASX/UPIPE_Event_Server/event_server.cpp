@@ -116,8 +116,10 @@ consumer (void *)
     if (secs <= 0)
       secs=1;
 
-    cout << "consumer got " << cnt << " messages of size " << msiz
-         << "within " << secs << " seconds" << endl;
+    ACE_DEBUG ((LM_INFO,
+                ACE_TEXT ("consumer got %d messages of size %d ")
+                ACE_TEXT ("within %: seconds\n"),
+                cnt, msiz, secs));
 
     ACE_OS::sleep (2);
     cout << "consumer terminating " << endl;
