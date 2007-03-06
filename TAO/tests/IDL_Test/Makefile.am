@@ -809,8 +809,6 @@ typedef-stamp: $(srcdir)/typedef.idl $(TAO_IDL_DEP)
 	@touch $@
 
 BUILT_SOURCES += \
-  valuetypeA.cpp \
-  valuetypeA.h \
   valuetypeC.cpp \
   valuetypeC.h \
   valuetypeC.inl \
@@ -822,8 +820,6 @@ BUILT_SOURCES += \
 
 CLEANFILES += \
   valuetype-stamp \
-  valuetypeA.cpp \
-  valuetypeA.h \
   valuetypeC.cpp \
   valuetypeC.h \
   valuetypeC.inl \
@@ -833,7 +829,7 @@ CLEANFILES += \
   valuetypeS_T.cpp \
   valuetypeS_T.h
 
-valuetypeA.cpp valuetypeA.h valuetypeC.cpp valuetypeC.h valuetypeC.inl valuetypeS.cpp valuetypeS.h valuetypeS.inl valuetypeS_T.cpp valuetypeS_T.h: valuetype-stamp
+valuetypeC.cpp valuetypeC.h valuetypeC.inl valuetypeS.cpp valuetypeS.h valuetypeS.inl valuetypeS_T.cpp valuetypeS_T.h: valuetype-stamp
 
 valuetype-stamp: $(srcdir)/valuetype.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -GC -GH -Gd -GA -GT $(srcdir)/valuetype.idl
@@ -980,7 +976,6 @@ main_SOURCES = \
   typeprefixS.cpp \
   unionC.cpp \
   unionS.cpp \
-  valuetypeA.cpp \
   valuetypeC.cpp \
   valuetypeS.cpp \
   Bug_2577_RegressionC.h \
@@ -1142,7 +1137,6 @@ main_SOURCES = \
   unionS.h \
   unionS.inl \
   unionS_T.h \
-  valuetypeA.h \
   valuetypeC.h \
   valuetypeC.inl \
   valuetypeS.h \
