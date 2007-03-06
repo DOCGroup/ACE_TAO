@@ -18,7 +18,7 @@ if (PerlACE::is_vxworks_test()) {
     $SV = new PerlACE::ProcessVX ("server", "-o test.ior");
 }
 else {
-    $SV = new PerlACE::Process ("server", "-o $file");    
+    $SV = new PerlACE::Process ("server", "-o $file");
 }
 $CL = new PerlACE::Process ("client", "-k file://$file");
 
@@ -28,7 +28,7 @@ print STDERR "\n\n==== Running PortableInterceptor ORB::shutdown() test\n";
 
 $SV->Spawn ();
 
-if (PerlACE::waitforfile_timed ($file, 15) == -1) {
+if (PerlACE::waitforfile_timed ($file, $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: cannot find file <$file>\n";
     $SV->Kill ();
     exit 1;
