@@ -7,7 +7,6 @@ project(*Main): taoserver, messaging {
   IDL_Files {
     idlflags += -GC -GH -Gd -GT
     array.idl
-    valuetype.idl
     Bug_2350_Regression.idl
     Bug_2577_Regression.idl
     Bug_2582_Regression.idl
@@ -35,6 +34,7 @@ project(*Main): taoserver, messaging {
   IDL_Files {
     idlflags += -GC -GH -Gd -GA -GT
     anonymous.idl
+    valuetype.idl
     constants.idl
     generic_object.idl
     keywords.idl

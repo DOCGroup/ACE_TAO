@@ -227,4 +227,29 @@ module Test
     oneway void shutdown ();
   };
 
+  valuetype Recursive2;
+  typedef sequence<Recursive2> Recursive2Seq2;
+
+  valuetype Recursive2
+  {
+    public struct Innerstruct3a
+    {
+      Recursive2Seq2 recursive_unions;
+    } insa;
+    public short a;
+    public struct Innerstruct3b
+    {
+      Recursive2Seq2 recursive_second;
+    } insb;
+  };
+
+  valuetype Recursive3;
+  typedef sequence<Recursive3> RecursiveSeq3;
+
+  valuetype Recursive3
+  {
+    public RecursiveSeq3 seq1;
+    public short a;
+    public RecursiveSeq3 seq2;
+  };
 };
