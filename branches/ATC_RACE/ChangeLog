@@ -1,3 +1,11 @@
+Tue Mar  6 23:31:42 UTC 2007  Nishanth Shankaran  <nshankar@nospam.com>
+
+        * Controller/common:
+        * Controller/common/Domain.h:
+        * Controller/common/Subtask.h:
+        * Controller/common/Task.h: Adding structure of an end-to-end
+          task.
+
 Fri Jan 19 18:52:36 UTC 2007  Nishanth Shankaran  <nshankar@nospam.com>
 
         * Monitor/Central_Monitor/Monitor.idl:
