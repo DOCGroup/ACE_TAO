@@ -1,3 +1,31 @@
+Tue Mar  6 08:59:32 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Codec/run_test.pl:
+        * tests/POA/Bug_1592_Regression/run_test.pl:
+        * tests/Portable_Interceptors/AdvSlot/run_test.pl:
+        * tests/Portable_Interceptors/AdvSlotDblCpy/run_test.pl:
+        * tests/Portable_Interceptors/AdvSlotExt/run_test.pl:
+        * tests/Portable_Interceptors/Benchmark/run_test.pl:
+        * tests/Portable_Interceptors/Bug_1559/run_test.pl:
+        * tests/Portable_Interceptors/Bug_2088/run_test.pl:
+        * tests/Portable_Interceptors/Bug_2510_Regression/run_test.pl:
+        * tests/Portable_Interceptors/Collocated/Dynamic/run_test.pl:
+        * tests/Portable_Interceptors/Dynamic/run_test.pl:
+        * tests/Portable_Interceptors/ForwardRequest/run_test.pl:
+        * tests/Portable_Interceptors/IORInterceptor/run_test.pl:
+        * tests/Portable_Interceptors/ORB_Shutdown/run_test.pl:
+        * tests/Portable_Interceptors/PICurrent/run_test.pl:
+        * tests/Portable_Interceptors/PolicyFactory/run_test.pl:
+        * tests/Portable_Interceptors/Processing_Mode_Policy/Collocated/run_test.pl:
+        * tests/Portable_Interceptors/Processing_Mode_Policy/Remote/run_test.pl:
+        * tests/Portable_Interceptors/Recursive_ORBInitializer/run_test.pl:
+        * tests/Portable_Interceptors/Redirection/run_test.pl:
+        * tests/Portable_Interceptors/Register_Initial_References/run_test.pl:
+        * tests/Portable_Interceptors/Request_Interceptor_Flow/run_test.pl:
+        * tests/Portable_Interceptors/Service_Context_Manipulation/run_test.pl:
+        * tests/Portable_Interceptors/Slot/run_test.pl:
+          Use a PerlACE variable for the time to wait for a process
+
 Tue Mar  6 08:15:32 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Any/Recursive/Test.idl:

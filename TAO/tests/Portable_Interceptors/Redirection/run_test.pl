@@ -27,13 +27,13 @@ print STDERR "\n\n==== Running PortableInterceptor::Redirection test\n";
 $SV1->Spawn ();
 $SV2->Spawn ();
 
-if (PerlACE::waitforfile_timed ($file1, 15) == -1) {
+if (PerlACE::waitforfile_timed ($file1, $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: cannot find file <$file1>\n";
     $SV1->Kill ();
     exit 1;
 }
 
-if (PerlACE::waitforfile_timed ($file2, 15) == -1) {
+if (PerlACE::waitforfile_timed ($file2, $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: cannot find file <$file2>\n";
     $SV2->Kill ();
     exit 1;
