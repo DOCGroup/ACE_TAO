@@ -24,8 +24,8 @@ endif
 
 ifeq ("$(OS)", "Windows_NT")
 ifneq ($(MAKE_MODE), unix)
-vxworks_ntbuild = 1
-MKDIR_NTSTYLE = 1
+vxworks_ntbuild ?= 1
+MKDIR_NTSTYLE ?= 1
 endif
 endif
 
