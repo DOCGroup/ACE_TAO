@@ -1,3 +1,9 @@
+Tue Mar  6 15:27:52 UTC 2007  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * NEWS:
+         
+          Noted removal of eVC3/4 projects.
+
 Tue Mar  6 15:00:00 UTC 2007  Ciju John  <johnc@ociweb.com>
 
         * tests/INET_Addr_Test.cpp:
