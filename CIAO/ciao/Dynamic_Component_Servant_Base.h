@@ -17,11 +17,11 @@
 
 #include "ciao/CIAO_Server_Export.h"
 
+#include "tao/PortableServer/PortableServer.h"
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
-#include "tao/PortableServer/PortableServer.h"
 
 namespace CIAO
 {

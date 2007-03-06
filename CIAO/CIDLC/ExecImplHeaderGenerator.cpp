@@ -633,19 +633,11 @@ ExecImplHeaderEmitter::pre (TranslationUnit&)
   }
 
   string uc_file_name = file_name;
-
-  std::transform (uc_file_name.begin (),
-                  uc_file_name.end (),
-                  uc_file_name.begin (),
-                  upcase);
+  str_upcase (uc_file_name);
 
   string uc_file_suffix = cl_.get_value ("exec-hdr-file-suffix",
                                          "_exec.h");
-
-  std::transform (uc_file_suffix.begin (),
-                  uc_file_suffix.end (),
-                  uc_file_suffix.begin (),
-                  upcase);
+  str_upcase (uc_file_suffix);
 
   string guard =
     "CIAO_"
@@ -756,19 +748,11 @@ ExecImplHeaderEmitter::post (TranslationUnit&)
   if (file_.empty ()) return;
 
   string uc_file_name = file_.leaf ();
-
-  std::transform (uc_file_name.begin (),
-                  uc_file_name.end (),
-                  uc_file_name.begin (),
-                  upcase);
+  str_upcase (uc_file_name);
 
   string uc_file_suffix = cl_.get_value ("exec-hdr-file-suffix",
                                          "_exec.h");
-
-  std::transform (uc_file_suffix.begin (),
-                  uc_file_suffix.end (),
-                  uc_file_suffix.begin (),
-                  upcase);
+  str_upcase (uc_file_suffix);
 
   string guard =
     "CIAO_"
