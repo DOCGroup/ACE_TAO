@@ -1,3 +1,11 @@
+Tue Mar  6 13:21:24 UTC 2007  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * COPYING: Updated this file to clarify that the TAO license need
+          not be shipped with binary-only releases.  Thanks to Michael
+          Kircher <michael dot kircher at siemens dot com> and Werner
+          Burger <werner dot burger at siemens dot com> for motivating
+          this.
+  
 Tue Mar  6 09:52:32 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Big_AMI/run_test.pl:

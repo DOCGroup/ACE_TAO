@@ -1,3 +1,11 @@
+Tue Mar  6 13:21:24 UTC 2007  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * COPYING: Updated this file to clarify that the CIAO license need
+          not be shipped with binary-only releases.  Thanks to Michael
+          Kircher <michael dot kircher at siemens dot com> and Werner
+          Burger <werner dot burger at siemens dot com> for motivating
+          this.
+  
 Sun Mar  4 21:49:19 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * docs/tutorials/Quoter/Simple/Icons:
