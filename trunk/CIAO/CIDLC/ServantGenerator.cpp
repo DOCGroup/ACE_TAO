@@ -6,6 +6,7 @@
 #include "ServantHeaderGenerator.hpp"
 #include "ServantSourceGenerator.hpp"
 #include "CxxNamePrinter.hpp"
+#include "Upcase.hpp"
 
 #include "CCF/CodeGenerationKit/Regex.hpp"
 #include "CCF/CodeGenerationKit/IndentationCxx.hpp"
@@ -18,17 +19,6 @@ using namespace Traversal;
 
 using std::string;
 using std::ostream;
-
-namespace
-{
-  // On some platforms toupper can be something else than a
-  // function.
-  int
-  upcase (int c)
-  {
-    return toupper (c);
-  }
-}
 
 ServantGenerator::ServantGenerator (CommandLine const& cl)
     : cl_ (cl),
@@ -92,6 +82,11 @@ void ServantGenerator::options (CL::Description& d)
                   "type",
                   "Generate code for custom container of the provided type.",
                   CL::OptionType::value));
+                  
+  d.add_option (CL::OptionDescription (
+                  "static-config",
+                  "No dynamic configuration, no locks on state access.",
+                  CL::OptionType::flag));
 }
 
 
@@ -158,12 +153,7 @@ ServantGenerator::compute_export_macro (const fs::path& file_path)
   {
     // Modify a copy of the filename string.
     export_macro_ = file_name_;
-
-    // Convert filename string to upper case.
-    transform (export_macro_.begin (),
-               export_macro_.end (),
-               export_macro_.begin (),
-               upcase);
+    str_upcase (export_macro_);
 
     // Replace the suffix.
     export_macro_ =

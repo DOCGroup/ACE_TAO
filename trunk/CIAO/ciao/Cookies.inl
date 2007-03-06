@@ -4,7 +4,7 @@
 namespace CIAO
 {
   ACE_INLINE
-  Map_Key_Cookie::Map_Key_Cookie (void)
+  Cookie_Impl::Cookie_Impl (void)
   {
   }
 }

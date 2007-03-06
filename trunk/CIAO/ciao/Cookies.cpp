@@ -11,64 +11,57 @@ ACE_RCSID (ciao,
 
 namespace CIAO
 {
-  Map_Key_Cookie::Map_Key_Cookie (const ACE_Active_Map_Manager_Key &key)
+  Cookie_Impl::Cookie_Impl (CORBA::ULong const &key)
   {
-    this->cookieValue ().length (ACE_Active_Map_Manager_Key::size ());
-    key.encode (this->cookieValue ().get_buffer (0));
+    this->cookieValue ().length (sizeof (CORBA::ULong));
+    ACE_OS::memcpy (this->cookieValue ().get_buffer (false),
+                    &key,
+                    sizeof (CORBA::ULong));
   }
 
-  Map_Key_Cookie::~Map_Key_Cookie (void)
+  Cookie_Impl::~Cookie_Impl (void)
   {
-  }
-
-  bool
-  Map_Key_Cookie::insert (ACE_Active_Map_Manager_Key &key)
-  {
-    this->cookieValue ().length (ACE_Active_Map_Manager_Key::size ());
-    key.encode (this->cookieValue ().get_buffer (0));
-    return true;
   }
 
   bool
-  Map_Key_Cookie::extract (::Components::Cookie *ck,
-                           ACE_Active_Map_Manager_Key &key)
+  Cookie_Impl::extract (Components::Cookie const * const ck,
+                        CORBA::ULong &key)
   {
-    Map_Key_Cookie *c =
-      dynamic_cast <Map_Key_Cookie *> (ck);
+    Cookie_Impl const * const c =
+      dynamic_cast <Cookie_Impl const * const> (ck);
 
     if (c == 0)
-      return false;
+      {
+        return false;
+      }
 
-    ::CORBA::OctetSeq *x = c->get_cookie ();
+    CORBA::OctetSeq const &x = c->cookieValue ();
 
-    if (x->length () != ACE_Active_Map_Manager_Key::size ())
-      return false;
+    if (x.length () != sizeof (CORBA::ULong))
+      {
+        return false;
+      }
 
-    key.decode (x->get_buffer ());
+    key = *reinterpret_cast<const CORBA::ULong *> (x.get_buffer ());
 
     return true;
-  }
-
-  ::CORBA::OctetSeq *
-  Map_Key_Cookie::get_cookie (void)
-  {
-    return &this->cookieValue ();
   }
 
   //========================================================
+
   CORBA::ValueBase *
-  Map_Key_Cookie_init::create_for_unmarshal ()
+  Cookie_Impl_init::create_for_unmarshal (void)
   {
     CORBA::ValueBase *ret_val = 0;
 
     ACE_NEW_THROW_EX (ret_val,
-                      CIAO::Map_Key_Cookie,
+                      CIAO::Cookie_Impl,
                       CORBA::NO_MEMORY ());
 
     return ret_val;
   }
 
-  Map_Key_Cookie_init::~Map_Key_Cookie_init ()
+  Cookie_Impl_init::~Cookie_Impl_init (void)
   {
   }
 }

@@ -6,6 +6,7 @@
 #include "ExecImplHeaderGenerator.hpp"
 #include "ExecImplSourceGenerator.hpp"
 #include "CxxNamePrinter.hpp"
+#include "Upcase.hpp"
 
 #include "CCF/CodeGenerationKit/Regex.hpp"
 #include "CCF/CodeGenerationKit/IndentationCxx.hpp"
@@ -18,17 +19,6 @@ using namespace Traversal;
 
 using std::string;
 using std::ostream;
-
-namespace
-{
-  // On some platforms toupper can be something else than a
-  // function.
-  int
-  upcase (int c)
-  {
-    return toupper (c);
-  }
-}
 
 ExecImplGenerator::ExecImplGenerator (CommandLine const& cl)
     : cl_ (cl),
@@ -147,13 +137,7 @@ ExecImplGenerator::compute_export_macro (const fs::path& file_path)
   {
     // Modify a copy of the filename string.
     export_macro_ = file_name_;
-
-
-    // Convert filename string to upper case.
-    transform (export_macro_.begin (),
-               export_macro_.end (),
-               export_macro_.begin (),
-               upcase);
+    str_upcase (export_macro_);
 
     // Replace the suffix.
     export_macro_ =
