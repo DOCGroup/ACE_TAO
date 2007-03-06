@@ -1,3 +1,16 @@
+Tue Mar  6 23:06:15 UTC 2007  Ossama Othman  <ossama_othman at symantec dot com>
+
+        * ace/Time_Value.cpp (operator*=):
+
+          Use long double for internal computations if double is not large
+          enough to retain precision of the time_t/suseconds_t values.
+          This will only provide improved behavior with compilers that
+          support double-extended precision floating numbers, i.e. >= 79
+          bits.
+
+          Added comments to explain what is being done in the
+          implementation.
+
 Tue Mar 6 07:47:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS.inl:
