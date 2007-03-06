@@ -30,7 +30,7 @@ sub run_client ($)
     $CL->Arguments ("-k file://$iorfile " . $args);
 
     my $client = $CL->SpawnWaitKill (200);
-    
+
     if ($client != 0) {
         $time = localtime;
         print STDERR "ERROR: client returned $client at $time\n";
@@ -123,9 +123,9 @@ if ($single == 1) {
 
     $SV->Spawn ();
 
-    if (PerlACE::waitforfile_timed ($iorfile, 10) == -1) {
+    if (PerlACE::waitforfile_timed ($iorfile, $PerlACE::wait_interval_for_process_creation) == -1) {
         print STDERR "ERROR: cannot find file <$iorfile>\n";
-        $SV->Kill (); 
+        $SV->Kill ();
         exit 1;
     }
 
@@ -143,16 +143,16 @@ if ($single == 1) {
 
 if ($multi == 1) {
     unlink $iorfile;
-    
+
     print STDERR "\n\n*** Thread-Pool server ***\n\n\n";
 
     $SV->Arguments ("-o $sv_iorfile -e 5 $tpool_reactor_directive");
 
     $SV->Spawn ();
 
-    if (PerlACE::waitforfile_timed ($iorfile, 10) == -1) {
+    if (PerlACE::waitforfile_timed ($iorfile, $PerlACE::wait_interval_for_process_creation) == -1) {
         print STDERR "ERROR: cannot find file <$iorfile>\n";
-        $SV->Kill (); 
+        $SV->Kill ();
         exit 1;
     }
 
@@ -163,7 +163,7 @@ if ($multi == 1) {
     if ($server != 0) {
         $time = localtime;
         print STDERR "ERROR: server returned $server at $time\n";
-        $SV->Kill (); 
+        $SV->Kill ();
     }
 
     unlink $iorfile;

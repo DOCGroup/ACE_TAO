@@ -1,3 +1,29 @@
+Tue Mar  6 09:52:32 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Big_AMI/run_test.pl:
+        * tests/Big_Reply/run_test.pl:
+        * tests/Bug_1330_Regression/run_test.pl:
+        * tests/Bug_1627_Regression/run_test.pl:
+        * tests/Bug_2234_Regression/run_test.pl:
+        * tests/Connection_Purging/run_test.pl:
+        * tests/Leader_Followers/run_test.pl:
+        * tests/MT_Client/run_test.pl:
+        * tests/Multiple_Inheritance/run_test.pl:
+        * tests/Native_Exceptions/run_test.pl:
+        * tests/Nested_Event_Loop/run_test.pl:
+        * tests/OctetSeq/run_test.pl:
+        * tests/OctetSeq/run_test1.pl:
+        * tests/OctetSeq/run_test2.pl:
+        * tests/Oneways_Invoking_Twoways/run_test.pl:
+        * tests/Oneways_Invoking_Twoways/run_test_svc.pl:
+        * tests/Reliable_Oneways/run_sync_none.pl:
+        * tests/Reliable_Oneways/run_sync_with_server.pl:
+        * tests/Reliable_Oneways/run_sync_with_target.pl:
+        * tests/Reliable_Oneways/run_sync_with_transport.pl:
+        * tests/Reliable_Oneways/run_test.pl:
+        * tests/Server_Leaks/run_test.pl:
+          Use a PerlACE variable for the time to wait for a process
+
 Tue Mar  6 09:50:32 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/POA/Adapter_Activator/run_test.pl:
