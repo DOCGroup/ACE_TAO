@@ -75,7 +75,11 @@ using std::strftime;
 # endif /* UNIXWARE */
 
 # if defined (ACE_HAS_GETIFADDRS)
-#   include /**/ <ifaddrs.h>
+#   if defined (ACE_VXWORKS)
+#     include /**/ <net/ifaddrs.h>
+#   else
+#     include /**/ <ifaddrs.h>
+#   endif
 # endif /* ACE_HAS_GETIFADDRS */
 
 

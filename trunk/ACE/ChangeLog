@@ -1,7 +1,12 @@
+Tue Mar 6 07:47:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS.inl:
+          Fixed compile error with VxWorks 6.x using a Windows host
+
 Tue Mar  6 15:27:52 UTC 2007  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * NEWS:
-         
+
           Noted removal of eVC3/4 projects.
 
 Tue Mar  6 15:00:00 UTC 2007  Ciju John  <johnc@ociweb.com>
