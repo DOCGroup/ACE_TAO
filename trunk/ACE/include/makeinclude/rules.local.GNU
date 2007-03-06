@@ -32,6 +32,7 @@ ifdef sun
 endif
 
 vxworks_ntbuild ?= 0
+lacks_touch ?= 0
 
 #### TEMPLATE_REPOSITORY can be set in individual platform files
 #### to create template repository directories.  See
