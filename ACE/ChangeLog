@@ -1,3 +1,11 @@
+Tue Mar  6 13:21:24 UTC 2007  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * COPYING: Updated this file to clarify that the ACE license need
+          not be shipped with binary-only releases.  Thanks to Michael
+          Kircher <michael dot kircher at siemens dot com> and Werner
+          Burger <werner dot burger at siemens dot com> for motivating
+          this.
+
 Tue Mar  6 12:43:01 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * tests/Date_Time_Test.cpp:
