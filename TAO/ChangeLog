@@ -1,3 +1,14 @@
+Tue Mar  6 08:15:32 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Any/Recursive/Test.idl:
+          Added another test case
+
+        * tests/Any/Recursive/client.cpp:
+          Extended with more tests
+
+        * tests/POA/Current/Current.cpp:
+          Layout changes
+
 Tue Mar  6 03:08:49 UTC 2007  Carlos O'Ryan  <coryan@atdesk.com>
 
         * tests/POA/Bug_1592_Regression/run_test.pl:
