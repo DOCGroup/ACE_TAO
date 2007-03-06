@@ -15,7 +15,7 @@ else {
     $T = new PerlACE::Process ("Etherealization");
 }
 
-$test = $T->SpawnWaitKill (60);
+$test = $T->SpawnWaitKill ($PerlACE::wait_interval_for_process_creation);
 
 if ($test != 0) {
     print STDERR "ERROR: test returned $test\n";
