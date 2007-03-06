@@ -646,9 +646,9 @@ ACE_Select_Reactor_Notify::close (void)
   // "stored" in the pipe had their reference counts increased.  We
   // need to decrease them before closing the pipe....
   ACE_Notification_Buffer b;
-  for (int r = 0;
-       r = read_notify_pipe(notification_pipe_.read_handle(), b);
-       r != -1)
+  for (int r = read_notify_pipe(notification_pipe_.read_handle(), b);
+       r > 0;
+       r = read_notify_pipe(notification_pipe_.read_handle(), b))
     {
       if (b.eh_ == 0) continue;
       b.eh_->remove_reference();
