@@ -36,6 +36,9 @@ public:
   /// Constructor
   Simple_Handler(ACE_Reactor * reactor);
 
+  /// Destructor
+  ~Simple_Handler();
+
   /// Receive (and ignore) the notifications
   virtual int handle_exception(ACE_HANDLE);
 };
@@ -74,7 +77,10 @@ run_main (int, ACE_TCHAR *[])
 		 notify_count, pre_notify_count, pos_notify_count));
     }
 
-  reactor.release();
+  reactor.reset();
+
+  // Reset the reactor in the event handler, since it is gone.p
+  v->reactor(0);
 
   ACE_Event_Handler::Reference_Count pos_release_count =
     v->add_reference();
@@ -90,18 +96,22 @@ run_main (int, ACE_TCHAR *[])
 		 pre_notify_count, pos_release_count));
     }
 
+  ACE_DEBUG ((LM_INFO,
+	      ACE_TEXT("Ref count results.  pre_notify refcount=%d,")
+	      ACE_TEXT(" pos_notify=%d, pos_delete=%d\n"),
+	      pre_notify_count, pos_notify_count, pos_release_count));
+  
   // Remove a reference for each time we explicitly increased it.
   v->remove_reference();
   v->remove_reference();
-  v->remove_reference();
+  ACE_Event_Handler::Reference_Count pos_remove_count =
+      v->remove_reference();
 
-  if (result == 0)
-    {
-      ACE_DEBUG ((LM_INFO,
-		  ACE_TEXT("Test passed.  pre_notify refcount=%d,")
-		  ACE_TEXT(" pos_notify=%d, pos_delete=%d\n"),
-		  pre_notify_count, pos_notify_count, pos_release_count));
-    }
+  ACE_DEBUG ((LM_INFO,
+	      ACE_TEXT("Ref count results.  pre_notify refcount=%d,")
+	      ACE_TEXT(" pos_notify=%d, pos_delete=%d, pos_remove=%d\n"),
+	      pre_notify_count, pos_notify_count, pos_release_count,
+	      pos_remove_count));
 
   ACE_END_TEST;
 
@@ -117,6 +127,11 @@ Simple_Handler(
 {
   reference_counting_policy().value(
         ACE_Event_Handler::Reference_Counting_Policy::ENABLED);
+}
+
+Simple_Handler::
+~Simple_Handler()
+{
 }
 
 int Simple_Handler::

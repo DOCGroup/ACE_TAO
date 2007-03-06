@@ -1,3 +1,41 @@
+Tue Mar  6 02:37:53 UTC 2007  Carlos O'Ryan  <coryan@atdeesk.com>
+
+        * Merged changes from the fix_bug_2820 branch.  From revision
+          77533 to revision 77546.
+
+	Tue Mar  6 02:07:43 UTC 2007  Carlos O'Ryan  <coryan@atdeesk.com>
+
+        * ace/Select_Reactor_Base.cpp:
+          Fixed bugs in loop to extract event handlers from notification
+          pipe.
+        
+        * tests/Bug_2820_Regression_Test.cpp:
+          Fixed several problems in the test:
+          - The Event_Handler called on the Reactor on its destructor, but
+            by then the reactor was already destroyed.
+          - Improved debugging messages.
+          - Fixed memory management problems, valgrind is happy now.
+
+	Mon Mar  5 18:01:36 UTC 2007  Carlos O'Ryan  <coryan@atdesk.com>
+
+        * ace/Notification_Queue.cpp:
+          When deleting the queue we must decrease the reference count on
+          all the event handlers stored there.
+          
+        * ace/Select_Reactor_Base.cpp:
+          When the notification pipe is destroyed we must read the data
+          stored there and release all the event handlers.  Otherwise the
+          reference counts are broken.
+
+        * tests/run_test.lst:
+          Add Bug_2820_Regression_Test to the list.
+
+        Mon Mar  5 17:16:16 UTC 2007  Carlos O'Ryan  <coryan@atdesk.com>
+
+        * tests/Bug_2820_Regression_Test.cpp:
+          The test was broken, it did not delete the Reactor, so it failed
+          to test what we wanted. 
+
 Tue Mar  6 00:10:36 UTC 2007  Steve Huston  <shuston@riverace.com>
 
         * examples/ASX/UPIPE_Event_Server/event_server.cpp: Use ACE_DEBUG

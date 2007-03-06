@@ -41,9 +41,16 @@ reset()
 {
   ACE_TRACE ("ACE_Notification_Queue::reset");
 
-  // Free up the dynamically allocated resources.
-  ACE_Notification_Queue_Node **b = 0;
+  // Release all the event handlers still in the queue ...
+  for (ACE_Notification_Queue_Node * node = notify_queue_.head();
+       node != 0;
+       node = node->next())
+    {
+      (void) node->get().eh_->remove_reference();
+    }
 
+  // ... free up the dynamically allocated resources ...
+  ACE_Notification_Queue_Node **b = 0;
   for (ACE_Unbounded_Queue_Iterator<ACE_Notification_Queue_Node *> alloc_iter (this->alloc_queue_);
        alloc_iter.next (b) != 0;
        alloc_iter.advance ())
@@ -52,9 +59,10 @@ reset()
       *b = 0;
     }
 
+  // ... cleanup the list of allocated blocks ...
   this->alloc_queue_.reset ();
 
-  // Swap with an empty list to reset the contents
+  // ... swap with empty lists to reset the contents ...
   Buffer_List().swap(notify_queue_);
   Buffer_List().swap(free_queue_);
 }
