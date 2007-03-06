@@ -186,7 +186,7 @@ nested_recursive_struct_test (CORBA::ORB_ptr /* orb */,
 
   Test::NestedRecursiveStruct5 foo5;
 
-  the_any <<= foo;
+  the_any <<= foo5;
 
   ::perform_invocation<Test::NestedRecursiveStruct5> (hello, the_any);
 }
