@@ -27,7 +27,7 @@ $CL  = new PerlACE::Process ("client", "-s 3 -k file://$iorfile3");
 
 $SV1->Spawn ();
 
-if (PerlACE::waitforfile_timed ($iorfile1, 15) == -1) {
+if (PerlACE::waitforfile_timed ($iorfile1, $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: cannot find file <$iorfile1>\n";
     $SV1->Kill (); 
     exit 1;
@@ -35,7 +35,7 @@ if (PerlACE::waitforfile_timed ($iorfile1, 15) == -1) {
 
 $SV2->Spawn ();
 
-if (PerlACE::waitforfile_timed ($iorfile2, 15) == -1) {
+if (PerlACE::waitforfile_timed ($iorfile2, $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: cannot find file <$iorfile2>\n";
     $SV1->Kill (); 
     $SV2->Kill ();
@@ -44,7 +44,7 @@ if (PerlACE::waitforfile_timed ($iorfile2, 15) == -1) {
 
 $SV3->Spawn ();
 
-if (PerlACE::waitforfile_timed ($iorfile3, 15) == -1) {
+if (PerlACE::waitforfile_timed ($iorfile3, $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: cannot find file <server3>\n";
     $SV1->Kill (); 
     $SV2->Kill ();
