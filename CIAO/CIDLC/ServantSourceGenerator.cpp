@@ -1478,20 +1478,40 @@ namespace
 
         Traversal::SingleUserData::belongs (u, belongs_);
 
-        os << "_var _ciao_conn =" << endl;
+        os << "_var _ciao_conn =" << endl
+           << "  ";
 
         Traversal::SingleUserData::belongs (u, belongs_);
 
         os << "::_narrow (connection);" << endl
            << "if ( ::CORBA::is_nil (_ciao_conn.in ()))" << endl
            << "{"
-           << "throw " << STRS[EXCP_IC] << " ();"
-           << endl
-           << "}"
-           << "/// Simplex connect." << endl
-           << "this->connect_" << u.name () << " (" << endl
-           << "_ciao_conn.in ()" << endl
-           << ");"
+           << "throw " << STRS[EXCP_IC] << " ();" << endl
+           << "}";
+
+        os << "ACE_CString receptacle_name (\""
+           << u.name ().unescaped_str () << "\");"
+           << "receptacle_name += '_';"
+           << "receptacle_name += this->context_->_ciao_instance_id ();"
+           << "::CORBA::PolicyList policy_list =" << endl
+           << "  this->container_->get_receptacle_policy ("
+           << "receptacle_name.c_str ());" << endl;
+
+        os << "if (policy_list.length () != 0)" << endl
+           << "{"
+           << "::CORBA::Object_var over_ridden_object =" << endl
+           << "  _ciao_conn->_set_policy_overrides (policy_list," << endl
+           << "CORBA::SET_OVERRIDE);"
+           << "_ciao_conn =" << endl
+           << "  ";
+
+        Traversal::SingleUserData::belongs (u, belongs_);
+
+        os << "::_narrow (over_ridden_object);"
+           << "}";
+
+        os << "/// Simplex connect." << endl
+           << "this->connect_" << u.name () << " (_ciao_conn.in ());"
            << endl
            << "return 0;" << endl
            << "}";
@@ -2146,11 +2166,8 @@ namespace
            << "{"
            << "return false;" << endl
            << "}"
-           << "CORBA::ValueBase_var v =" << endl
-           << "  f->create_for_unmarshal ();"
-           << endl;
-
-        os << "f->_remove_ref ();" << endl;
+           << "CORBA::ValueBase_var v = f->create_for_unmarshal ();"
+           << "f->_remove_ref ();" << endl;
 
         os << "if (v.in () == 0)" << endl
            << "{"

@@ -1,3 +1,10 @@
+Tue Mar  6 23:43:58 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * CIDLC/ServantSourceGenerator.cpp:
+
+          Added code generation for attaching diffserv policies to
+          receptacle interfaces at connection time.
+
 Tue Mar  6 20:21:45 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * ciao/Cookies.h:
