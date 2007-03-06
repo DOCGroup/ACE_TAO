@@ -1,9 +1,15 @@
+Tue Mar  6 12:43:01 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tests/Date_Time_Test.cpp:
+
+          Handle the rare case where the minute rolls over during the test.
+
 Tue Mar  6 04:41:36 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * examples/DLL/README:
 
           README was referring to files (dsp/dsw) used by Visual Studio C++ 6.
-          Updated to refer to files (sln/vcproj) used by VC++ 7.1 or later. 
+          Updated to refer to files (sln/vcproj) used by VC++ 7.1 or later.
 
 Tue Mar  6 02:37:53 UTC 2007  Carlos O'Ryan  <coryan@atdeesk.com>
 
