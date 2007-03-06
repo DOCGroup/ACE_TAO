@@ -36,7 +36,7 @@ $SV->Spawn ();
 
 # In this example all the files are written out at the same time. So  make a
 # check only for the first file
-if (PerlACE::waitforfile_timed ($iorfile_1, 5) == -1) {
+if (PerlACE::waitforfile_timed ($iorfile_1, $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: cannot find ior files\n";
     $SV->Kill (); 
     exit 1;
