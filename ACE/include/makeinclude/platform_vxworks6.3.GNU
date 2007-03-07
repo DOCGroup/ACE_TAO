@@ -29,6 +29,7 @@ threads ?= 1
 exceptions ?= 1
 rtp ?= 1
 pthread ?= 1
+xerces ?= 0
 
 ifeq ($(static_libs),1)
   shared_libs = 0
