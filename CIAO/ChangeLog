@@ -1,3 +1,34 @@
+Wed Mar  7 02:20:26 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * docs/tutorials/CoSMIC:
+        * docs/tutorials/CoSMIC/01.html:
+        * docs/tutorials/CoSMIC/02.html:
+        * docs/tutorials/CoSMIC/03.html:
+        * docs/tutorials/CoSMIC/04.html:
+        * docs/tutorials/CoSMIC/Icons:
+        * docs/tutorials/CoSMIC/Icons/AddConnMode.gif:
+        * docs/tutorials/CoSMIC/Icons/SetMode.gif:
+        * docs/tutorials/CoSMIC/Images:
+        * docs/tutorials/CoSMIC/Images/fig1.jpg:
+        * docs/tutorials/CoSMIC/Images/fig10.jpg:
+        * docs/tutorials/CoSMIC/Images/fig11.jpg:
+        * docs/tutorials/CoSMIC/Images/fig12.jpg:
+        * docs/tutorials/CoSMIC/Images/fig2.jpg:
+        * docs/tutorials/CoSMIC/Images/fig3.jpg:
+        * docs/tutorials/CoSMIC/Images/fig4.jpg:
+        * docs/tutorials/CoSMIC/Images/fig5.jpg:
+        * docs/tutorials/CoSMIC/Images/fig6.jpg:
+        * docs/tutorials/CoSMIC/Images/fig7.jpg:
+        * docs/tutorials/CoSMIC/Images/fig8.jpg:
+        * docs/tutorials/CoSMIC/Images/fig9.jpg:
+        * docs/tutorials/CoSMIC/Model:
+        * docs/tutorials/CoSMIC/Model/Quoter.xme:
+        * docs/tutorials/CoSMIC/index.html:
+        * docs/tutorials/CoSMIC/style.css:
+
+          Removed these files. This tutorial has been subsumed by the 
+          tutorial in docs/tutorials/Quoter.
+
 Tue Mar  6 23:43:58 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * CIDLC/ServantSourceGenerator.cpp:
