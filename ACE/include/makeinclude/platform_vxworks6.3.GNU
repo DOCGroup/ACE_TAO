@@ -58,17 +58,17 @@ endif # x86-win32
 ifneq (,$(HOST_ROOT))
 TAO_IDLFLAGS += -g $(HOST_ROOT)/bin/gperf
 ifeq ("$(WIND_HOST_TYPE)","x86-win32")
-  TAO_IDL ?= $(HOST_ROOT)/bin/tao_idl.exe
-  TAO_IDL3_TO_IDL2 ?= $(HOST_ROOT)/bin/tao_idl3_to_idl2.exe
-  CIDLC ?= $(HOST_ROOT)/TAO/CIAO/bin/cidlc.exe
+  TAO_IDL = $(HOST_ROOT)/bin/tao_idl.exe
+  TAO_IDL3_TO_IDL2 = $(HOST_ROOT)/bin/tao_idl3_to_idl2.exe
+  CIDLC = $(HOST_ROOT)/TAO/CIAO/bin/cidlc.exe
 else
-  TAO_IDL ?= $(HOST_ROOT)/bin/tao_idl$(EXEEXT)
-  TAO_IDL3_TO_IDL2 ?= $(HOST_ROOT)/bin/tao_idl3_to_idl2$(EXEEXT)
-  CIDLC ?= $(HOST_ROOT)/TAO/CIAO/bin/cidlc$(EXEEXT)
+  TAO_IDL = $(HOST_ROOT)/bin/tao_idl$(EXEEXT)
+  TAO_IDL3_TO_IDL2 = $(HOST_ROOT)/bin/tao_idl3_to_idl2$(EXEEXT)
+  CIDLC = $(HOST_ROOT)/TAO/CIAO/bin/cidlc$(EXEEXT)
 endif
-TAO_IDL_DEP ?= $(TAO_IDL)
-TAO_IDL3_TO_IDL2_DEP ?= $(TAO_IDL3_TO_IDL2)
-CIDLC_DEP ?= $(CIDLC)
+TAO_IDL_DEP = $(TAO_IDL)
+TAO_IDL3_TO_IDL2_DEP = $(TAO_IDL3_TO_IDL2)
+CIDLC_DEP = $(CIDLC)
 endif
 
 HOST_DIR = $(WIND_BASE)/host/$(WIND_HOST_TYPE)
