@@ -47,13 +47,16 @@ Roundtrip::invoke (CORBA::ServerRequest_ptr request,
           || ACE_OS::strcmp (arg, "") == 0)
         type_matches = true;
 
-      CORBA::Any result;
-      result <<= CORBA::Any::from_boolean (type_matches);
+      CORBA::Any result_any;
+      result_any <<= CORBA::Any::from_boolean (type_matches);
 
-      request->set_result (result);
+      //request->set_result (result);
 
       // AMH way of replying
-      rh->invoke_reply (list, nv);
+      CORBA::NamedValue_ptr result = 0;
+      this->orb_->create_named_value (result);
+      *(result->value()) = result_any;
+      rh->invoke_reply (list, result);
       return;
     }
 
