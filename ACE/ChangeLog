@@ -1,3 +1,14 @@
+Wed Mar  7 02:51:50 UTC 2007  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * docs/bczar/bczar.html
+        
+          Updated bczar documentation to reflect change in release script. 
+        
+        * bin/make_release
+        * bin/make_release.py
+        
+          Removed the old release script and added the new one.
+
 Tue Mar  6 23:06:15 UTC 2007  Ossama Othman  <ossama_othman at symantec dot com>
 
         * ace/Time_Value.cpp (operator*=):
