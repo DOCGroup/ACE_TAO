@@ -1,12 +1,21 @@
+Wed Mar 7 09:56:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Atomic_Op.cpp:
+          Implemented the single_cpu_* methods for PPC, because of the lack
+          of a multi cpu ppc board we don't have these methods implemented
+          and we don't enable this by default. If you want to use the PPC
+          optimized operations for a single cpu board add
+          ACE_HAS_BUILTIN_ATOMIC_OP to your config.h
+
 Wed Mar  7 02:51:50 UTC 2007  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * docs/bczar/bczar.html
-        
-          Updated bczar documentation to reflect change in release script. 
-        
+
+          Updated bczar documentation to reflect change in release script.
+
         * bin/make_release
         * bin/make_release.py
-        
+
           Removed the old release script and added the new one.
 
 Tue Mar  6 23:06:15 UTC 2007  Ossama Othman  <ossama_othman at symantec dot com>

@@ -38,6 +38,12 @@ single_cpu_increment (volatile long *value)
       (defined (__SUNPRO_CC) && (defined (__i386) || defined (__x86_64)))
   return ace_atomic_add_long (
            reinterpret_cast<volatile unsigned long*> (value), 1);
+#elif defined(__GNUC__) && defined(PPC)
+  long tmp;
+  asm("lwz %0,%1" : "=r" (tmp) : "m" (*value) );
+  asm("addi %0,%0,1" : "+r" (tmp) );
+  asm("stw %0,%1" : "+r" (tmp), "=m" (*value) );
+  return tmp;
 #else /* __GNUC__ && ACE_HAS_PENTIUM */
   ACE_UNUSED_ARG (value);
   ACE_NOTSUP_RETURN (-1);
@@ -56,6 +62,12 @@ single_cpu_decrement (volatile long *value)
       (defined (__SUNPRO_CC) && (defined (__i386) || defined (__x86_64)))
   return ace_atomic_add_long (
             reinterpret_cast<volatile unsigned long*> (value), -1);
+#elif defined(__GNUC__) && defined(PPC)
+  long tmp;
+  asm("lwz %0,%1" : "=r" (tmp) : "m" (*value) );
+  asm("addi %0,%0,-1" : "+r" (tmp) );
+  asm("stw %0,%1" : "+r" (tmp), "=m" (*value) );
+  return tmp;
 #else /* __GNUC__ && ACE_HAS_PENTIUM */
   ACE_UNUSED_ARG (value);
   ACE_NOTSUP_RETURN (-1);
@@ -73,6 +85,11 @@ single_cpu_exchange (volatile long *value, long rhs)
       (defined (__SUNPRO_CC) && (defined (__i386) || defined (__x86_64)))
   return ace_atomic_swap_long (
            reinterpret_cast<volatile unsigned long*> (value), rhs);
+#elif defined(__GNUC__) && defined(PPC)
+  long tmp;
+  asm("lwz %0,%1" : "=r" (tmp) : "m" (rhs) );
+  asm("stw %0,%1" : "+r" (tmp), "=m" (*value) );
+  return tmp;
 #else /* __GNUC__ && ACE_HAS_PENTIUM */
   ACE_UNUSED_ARG (value);
   ACE_UNUSED_ARG (rhs);
@@ -91,6 +108,11 @@ single_cpu_exchange_add (volatile long *value, long rhs)
       (defined (__SUNPRO_CC) && (defined (__i386) || defined (__x86_64)))
   return ace_atomic_swap_add_long (
            reinterpret_cast<volatile unsigned long*> (value), rhs);
+#elif defined(__GNUC__) && defined(PPC)
+  long tmp;
+  asm("add %0,%1,%2" : "=r" (tmp) : "r" (*value), "r" (rhs) );
+  asm("stw %0,%1" : "+r" (tmp), "=m" (*value) );
+  return tmp;
 #elif defined (WIN32) && !defined (ACE_HAS_INTERLOCKED_EXCHANGEADD)
 # if defined (_MSC_VER)
   __asm
