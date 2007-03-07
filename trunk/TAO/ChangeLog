@@ -1,3 +1,20 @@
+Wed Mar  7 14:07:32 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/Servant_var.{h,cpp}:
+          The const operator->() should return a T*, not T const *, removed
+          the non const operator->(), no need for it. This makes the Servant_var
+          complaint with the CORBA C++ mapping. Thanks to Andres Hurtis
+          <andrej100 at gmail dot com> for reporting this. This fixes bugzilla
+          2847.
+
+        * tao/AnyTypeCode/Marshal.cpp:
+        * tao/AnyTypeCode/Union_TypeCode.cpp:
+          Layout change
+
+        * tao/AnyTypeCode/Sequence_TypeCode_Static.cpp:
+        * tao/AnyTypeCode/TypeCode_Case_Base_T.cpp:
+          Bool change
+
 Wed Mar  7 12:32:32 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * rules.tao.GNU:

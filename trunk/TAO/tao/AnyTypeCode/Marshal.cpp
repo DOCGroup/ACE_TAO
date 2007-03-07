@@ -32,9 +32,7 @@ TAO_Marshal_Object::~TAO_Marshal_Object (void)
 }
 
 TAO::traverse_status
-TAO_Marshal_Object::perform_skip (CORBA::TypeCode_ptr tc,
-                                  TAO_InputCDR *stream
-                                  )
+TAO_Marshal_Object::perform_skip (CORBA::TypeCode_ptr tc, TAO_InputCDR *stream)
 {
   CORBA::ULong const kind = tc->kind ();
 
@@ -143,8 +141,7 @@ TAO_Marshal_Object::perform_skip (CORBA::TypeCode_ptr tc,
 TAO::traverse_status
 TAO_Marshal_Object::perform_append (CORBA::TypeCode_ptr tc,
                                     TAO_InputCDR *src,
-                                    TAO_OutputCDR *dest
-                                    )
+                                    TAO_OutputCDR *dest)
 {
   CORBA::ULong kind = tc->kind ();
 

@@ -132,8 +132,7 @@ TAO::TypeCode::Union<StringType,
 
   CORBA::Boolean const equal_discriminators =
     Traits<StringType>::get_typecode (this->discriminant_type_)->equal (
-      tc_discriminator.in ()
-     );
+      tc_discriminator.in ());
 
   if (!equal_discriminators)
     return false;
@@ -151,10 +150,7 @@ TAO::TypeCode::Union<StringType,
 
       case_type const & lhs_case = *this->cases_[i];
 
-      bool const equal_case =
-        lhs_case.equal (i,
-                        tc
-                       );
+      bool const equal_case = lhs_case.equal (i, tc);
 
       if (!equal_case)
         return false;
@@ -192,8 +188,7 @@ TAO::TypeCode::Union<StringType,
 
   CORBA::Boolean const equiv_discriminators =
     Traits<StringType>::get_typecode (this->discriminant_type_)->equivalent (
-      tc_discriminator.in ()
-     );
+      tc_discriminator.in ());
 
   if (!equiv_discriminators)
     return false;
@@ -212,9 +207,7 @@ TAO::TypeCode::Union<StringType,
       case_type const & lhs_case = *this->cases_[i];
 
       bool const equivalent_case =
-        lhs_case.equivalent (i,
-                             tc
-                            );
+        lhs_case.equivalent (i, tc);
 
       if (!equivalent_case)
         return false;
