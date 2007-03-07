@@ -358,8 +358,15 @@ ACE_Data_Block::ACE_Data_Block (size_t size,
                    ACE_Allocator::instance ());
 
   if (msg_data == 0)
-    ACE_ALLOCATOR (this->base_,
-                   (char *) this->allocator_strategy_->malloc (size));
+    {
+      ACE_ALLOCATOR (this->base_,
+                     (char *) this->allocator_strategy_->malloc (size));
+#if defined (ACE_INITIALIZE_MEMORY_BEFORE_USE)
+      (void) ACE_OS::memset (this->base_,
+                             '\0',
+                             size);
+#endif /* ACE_INITIALIZE_MEMORY_BEFORE_USE */
+    }
 
   // ACE_ALLOCATOR returns on alloc failure but we cant throw, so setting
   // the size to 0 (i.e. "bad bit") ...
@@ -367,14 +374,6 @@ ACE_Data_Block::ACE_Data_Block (size_t size,
     {
       size = 0;
     }
-#if defined (ACE_INITIALIZE_MEMORY_BEFORE_USE)
-  else
-    {
-      (void) ACE_OS::memset (this->base_,
-                             '\0',
-                             size);
-    }
-#endif /* ACE_INITIALIZE_MEMORY_BEFORE_USE */
 
   // The memory is legit, whether passed in or allocated, so set
   // the size.
