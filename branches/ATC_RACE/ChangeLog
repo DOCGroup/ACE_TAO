@@ -1,3 +1,10 @@
+Wed Mar  7 16:27:59 UTC 2007  Nishanth Shankaran  <nshankar@nospam.com>
+
+        * Controller/common/Subtask.h: Added the time_val structure.
+
+        * Controller/common/Task.h: Made cosmetic changes to the
+          structure.
+
 Tue Mar  6 23:31:42 UTC 2007  Nishanth Shankaran  <nshankar@nospam.com>
 
         * Controller/common:
