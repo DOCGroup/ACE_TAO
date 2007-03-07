@@ -1,3 +1,9 @@
+Wed Mar  7 17:58:38 UTC 2007  Wallace Zhang  <zhang_w@ociweb.com>
+
+        * tests/DSI_AMH/Roundtrip.cpp:
+
+          Corrected the return value when using AMH to invoke_reply.
+
 Wed Mar  7 14:07:32 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/Servant_var.{h,cpp}:
