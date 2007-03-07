@@ -836,7 +836,7 @@ CLEANFILES += \
 valuetypeA.cpp valuetypeA.h valuetypeC.cpp valuetypeC.h valuetypeC.inl valuetypeS.cpp valuetypeS.h valuetypeS.inl valuetypeS_T.cpp valuetypeS_T.h: valuetype-stamp
 
 valuetype-stamp: $(srcdir)/valuetype.idl $(TAO_IDL_DEP)
-        $(TAO_IDL) $(TAO_IDLFLAGS) -GC -GA -GH -Gd -GT $(srcdir)/valuetype.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -GC -GH -Gd -GA -GT $(srcdir)/valuetype.idl
 	@touch $@
 
 BUILT_SOURCES += \
