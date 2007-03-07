@@ -50,8 +50,6 @@ Roundtrip::invoke (CORBA::ServerRequest_ptr request,
       CORBA::Any result_any;
       result_any <<= CORBA::Any::from_boolean (type_matches);
 
-      //request->set_result (result);
-
       // AMH way of replying
       CORBA::NamedValue_ptr result = 0;
       this->orb_->create_named_value (result);
@@ -72,8 +70,6 @@ Roundtrip::invoke (CORBA::ServerRequest_ptr request,
       request->arguments (list);
 
       CORBA::NamedValue_ptr nv = list->item (0);
-
-      request->set_result (*(nv->value ()));
 
       // AMH way of replying
       rh->invoke_reply (list, nv);

@@ -1,3 +1,9 @@
+Wed Mar  7 18:28:14 UTC 2007  Wallace Zhang  <zhang_w@ociweb.com>
+
+        * tests/DSI_AMH/Roundtrip.cpp:
+
+          We don't need to do set_result() when using AMH.
+
 Wed Mar  7 17:58:38 UTC 2007  Wallace Zhang  <zhang_w@ociweb.com>
 
         * tests/DSI_AMH/Roundtrip.cpp:
