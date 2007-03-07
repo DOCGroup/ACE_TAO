@@ -1,3 +1,18 @@
+Wed Mar  7 17:32:51 UTC 2007  Ossama Othman  <ossama_othman at symantec dot com>
+
+        * ace/Time_Value.cpp (operator*=):
+
+          Altered implementation to avoid converting the microseconds
+          component of the ACE_Time_Value to a fraction of a second.  In
+          the case were the floating point type's mantissa width is the
+          same as the width of the time_t (seconds) value, a maxed out
+          ACE_Time_Value seconds component would utilize all bits in the
+          mantissa, leaving no room for a fraction.  The microseconds
+          component would end up not contributing to the multiplication.
+          Multiply the seconds and microseconds components separately
+          instead.  This also saves us a floating point division, which
+          can be expensive.
+
 Wed Mar  7 16:35:04 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/config/ace_openssl.mpb:
