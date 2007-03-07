@@ -591,14 +591,18 @@ ssl ?=
 ifeq ($(ssl),0)
   override ssl =
 else
-  ifneq ($(SSL_ROOT),)
-    # Don't do a thing..
-  else
-    CPPFLAGS += $(PLATFORM_SSL_CPPFLAGS)
-    LDFLAGS  += $(PLATFORM_SSL_LDFLAGS)
-    LIBS     += $(PLATFORM_SSL_LIBS)
-    ACE_MAKE_OPTIONS += ssl
+  ifneq ($(SSL_ROOT), /usr)
+    ifneq ($(SSL_ROOT),)
+      PLATFORM_SSL_CPPFLAGS += -I$(SSL_ROOT)/include
+      PLATFORM_SSL_LDFLAGS  += -L$(SSL_ROOT)/lib
+    endif
   endif
+  PLATFORM_SSL_LIBS ?= -lssl -lcrypto
+
+  CPPFLAGS += $(PLATFORM_SSL_CPPFLAGS)
+  LDFLAGS  += $(PLATFORM_SSL_LDFLAGS)
+  LIBS     += $(PLATFORM_SSL_LIBS)
+  ACE_MAKE_OPTIONS += ssl
 endif
 
 ## These are related to MPC.  When 'requires' is used in a project
