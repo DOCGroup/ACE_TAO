@@ -1,3 +1,13 @@
+PLANNED MAJOR CHANGES FOR NEXT RELEASE (i.e., after 0.5.7)
+===========================================================================
+. Start update of IDL/semantics to conform to 06-04-01 specification.  
+  This will immediately break most CIAO specific extensions, such as shared
+  components and ReDaC.  
+
+. Expand support for complex types in deployment XML.
+
+. Enable use of CDR encoded deployment plans.
+
 PLANNED MAJOR CHANGES "SOMETIME IN THE FUTURE" (i.e., exact beta not known)
 ===========================================================================
 
@@ -76,6 +86,11 @@ USER VISIBLE CHANGES BETWEEN CIAO-0.5.6 and CIAO-0.5.7
 . RACE has been fully removed from the distribution, a new version
   is work in progress and will be added again to the distribution
   when it is ready
+
+. MPC base projects that contained _dnc_ have been renamed to not
+  include that string. 
+
+. DAnCE executables are now installed into $CIAO_ROOT/bin
 
 USER VISIBLE CHANGES BETWEEN CIAO-0.5.5 and CIAO-0.5.6
 ======================================================
