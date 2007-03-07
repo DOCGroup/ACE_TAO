@@ -1,3 +1,12 @@
+Wed Mar 7 12:34:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/wrapper_macros.GNU:
+          Removed setting of ACELIB, in the generated makefiles it is
+          always cleared again
+
+        * bin/MakeProjectCreator/templates.gnu.mpb:
+          Removed clearing of ACELIB and setting of tao_dont_use_idl_make_rule
+
 Wed Mar 7 12:20:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/rules.local.GNU:
