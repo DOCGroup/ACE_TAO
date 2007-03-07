@@ -587,7 +587,7 @@ ifneq ($(gl),)
   ACE_MAKE_OPTIONS += gl
 endif # gl
 
-ssl ?=
+ssl ?= 0
 ifeq ($(ssl),0)
   override ssl =
 else
