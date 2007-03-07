@@ -17,7 +17,7 @@ USER VISIBLE CHANGES BETWEEN ACE-5.5.6 and ACE-5.5.7
 
 . Solutions for the eVC3/4 platform have been removed from this
   release.  Note that we package WinCE projects/workspaces for use
-  with VC8.  
+  with VC8.
 
 . There were 3 new ACE_Log_Msg logging format specifiers added to make logging
   easier for types that may change sizes across platforms. These all take one
@@ -43,6 +43,9 @@ USER VISIBLE CHANGES BETWEEN ACE-5.5.6 and ACE-5.5.7
   second argument, long time_stamp, was changed to be of type time_t. This
   aligns the type with the expected value, a time stamp such as that returned
   from ACE_OS::time().
+
+. Added suppor for VxWorks 6.x cross compilation using a Windows host
+  system
 
 USER VISIBLE CHANGES BETWEEN ACE-5.5.5 and ACE-5.5.6
 ====================================================
