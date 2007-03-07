@@ -1,3 +1,9 @@
+Wed Mar 7 12:20:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/rules.local.GNU:
+          Removed check for TAO_IDL_DEP, the generated GNUmakefiles do
+          check for this
+
 Wed Mar  7 11:46:46 UTC 2007  Carlos O'Ryan  <coryan@>
 
         * tests/Bug_2820_Regression_Test.cpp:
