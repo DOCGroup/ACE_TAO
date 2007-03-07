@@ -3,9 +3,9 @@ Wed Mar  7 19:07:58 UTC 2007  Iliyan Jeliazkov  <iliyan@ociweb.com>
         * ace/Message_Block.cpp:
 
           Fixing a problem caused by inadvertently overwriting an external
-          buffer passed in, when ACE_INITIALIZE_MEMORY_BEFORE_USE is set
-          (as result of ACE_HAS_VALGRIND). Thanks to Johnny Willemsen for
-          reporting it.
+          buffer passed in the constructor. It happens when
+          ACE_INITIALIZE_MEMORY_BEFORE_USE is set (as result of setting
+          ACE_HAS_VALGRIND). Thanks to Johnny Willemsen for reporting it.
 
 Wed Mar  7 18:44:10 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
