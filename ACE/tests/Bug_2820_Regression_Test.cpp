@@ -77,7 +77,7 @@ run_main (int, ACE_TCHAR *[])
 		 notify_count, pre_notify_count, pos_notify_count));
     }
 
-  reactor.reset();
+  ACE_auto_ptr_reset(reactor, (ACE_Reactor*)0);
 
   // Reset the reactor in the event handler, since it is gone.p
   v->reactor(0);
