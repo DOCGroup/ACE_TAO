@@ -11,14 +11,25 @@ namespace CIAO
   namespace RACE
   {
 
+    /// Structure of the time value.
+    struct time_val
+    {
+      /// Seconds.
+      size_t sec;
+
+      /// Microseconds.
+      size_t usec;
+    };
+
+
     /// Estimated execution times.
     struct Execution_Time
     {
       /// Best case execution time.
-      double BCET_;
+      time_val BCET;
 
       /// Worst case execution time.
-      double WCET_;
+      time_val WCET;
     };
 
     /// Structure of a subtask.
@@ -30,7 +41,7 @@ namespace CIAO
       /// Logical name.
       std::string label;
 
-      /// "Reference" to the node where the subtaks is deployed. This is
+      /// "Reference" to the node on which the subtaks is deployed. This is
       /// actually the index into the nodes vector in the domain structure.
       size_t node;
 

@@ -19,25 +19,25 @@ namespace CIAO
       std::string label;
 
       /// Minimum execution rate (in Hz).
-      size_t min_rate_;
+      size_t min_rate;
 
       /// Maximum execution rate (in Hz).
-      size_t max_rate_;
+      size_t max_rate;
 
       /// Current execution rate (in Hz).
-      size_t curr_rate_;
+      size_t curr_rate;
 
       /// Current RT-CORBA priority.
-      size_t priority_;
+      size_t priority;
 
       /// Relative importance.
-      size_t importance_;
+      size_t importance;
 
       /// End-to-end deadline.
-      double deadline_;
+      double deadline;
 
       /// Subtaks of this task.
-      std::vector <Subtask> subtasks_;
+      std::vector <Subtask> subtasks;
     };
   }
 }
