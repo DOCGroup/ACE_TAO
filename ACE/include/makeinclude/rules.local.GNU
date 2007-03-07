@@ -461,15 +461,6 @@ IDL_CLIENT_HDR_EXT ?=
 
 idl_stubs.local: $(foreach file, $(IDL_FILES), $(file)$(IDL_CLIENT_HDR_EXT))
 
-ifdef $(TAO_IDL_DEP)
-$(TAO_IDL_DEP):
-	@if test ! -s $(TAO_IDL_DEP); then \
-	  echo " ***"; \
-	  echo " *** ERROR: $(TAO_IDL_DEP) not found."; \
-	  echo " ***"; \
-	  echo; /bin/false; fi
-endif # TAO_IDL_DEP
-
 #----------------------------------------------------------------------------
 #       RCS info target
 #----------------------------------------------------------------------------
