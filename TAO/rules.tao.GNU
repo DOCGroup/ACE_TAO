@@ -11,18 +11,7 @@
 ####
 #### Required macros for TAO.
 ####
-ifndef TAO_ROOT
-  TAO_ROOT = $(ACE_ROOT)/TAO
-endif
-
-ifndef TAO_IDL
-  TAO_IDL = $(TAO_ROOT)/TAO_IDL/tao_idl
-  TAO_IDL_DEP = $(TAO_IDL)$(EXEEXT)
-else
-ifndef TAO_IDL_DEP
-  TAO_IDL_DEP = $(TAO_IDL)
-endif
-endif
+TAO_ROOT ?= $(ACE_ROOT)/TAO
 
 ifeq (,$(findstring -L$(TAO_ROOT)/tao,$(LDFLAGS)))
   LDFLAGS += -L$(TAO_ROOT)/tao
@@ -142,79 +131,6 @@ ifeq (1,$(CROSS-COMPILE))
   ACE_MAKE_OPTIONS += cross_compile
 else
 endif # ! CROSS-COMPILE
-
-####
-#### Event Channel customization.
-####
-# Uncomment out the following line (or invoke make with
-# TAO_LACKS_EVENT_CHANNEL_ANY=1)
-# if you don't want support for anys in the Event Channel.
-# TAO_LACKS_EVENT_CHANNEL_ANY = 1
-ifneq ($(TAO_LACKS_EVENT_CHANNEL_ANY),)
-  override TAO_LACKS_EVENT_CHANNEL_ANY = -DTAO_LACKS_EVENT_CHANNEL_ANY
-endif
-
-# TAO_LACKS_EVENT_CHANNEL_OCTET_SEQUENCE = 1
-ifneq ($(TAO_LACKS_EVENT_CHANNEL_OCTET_SEQUENCE),)
-  override TAO_LACKS_EVENT_CHANNEL_OCTET_SEQUENCE := \
- -DTAO_LACKS_EVENT_CHANNEL_OCTET_SEQUENCE
-endif
-
-# TAO_LACKS_EVENT_CHANNEL_TIMESTAMPS = 1
-ifneq ($(TAO_LACKS_EVENT_CHANNEL_TIMESTAMPS),)
-  override TAO_LACKS_EVENT_CHANNEL_TIMESTAMPS := \
- -DTAO_LACKS_EVENT_CHANNEL_TIMESTAMPS
-endif
-
-# TAO_IDLFLAGS should include $TAO_ROOT by default
-VTAO_IDLFLAGS += $(TAO_IDLFLAGS) -I$(TAO_ROOT)
-VTAO_IDLFLAGS += \
-	$(TAO_LACKS_EVENT_CHANNEL_ANY) \
-	$(TAO_LACKS_EVENT_CHANNEL_OCTET_SEQUENCE) \
-	$(TAO_LACKS_EVENT_CHANNEL_TIMESTAMPS)
-
-CPPFLAGS += \
-	$(TAO_LACKS_EVENT_CHANNEL_ANY) \
-	$(TAO_LACKS_EVENT_CHANNEL_OCTET_SEQUENCE) \
-	$(TAO_LACKS_EVENT_CHANNEL_TIMESTAMPS)
-
-# MPC currently defines IDL_SRC in each generated Makefile, so don't redefine it in that case.
-ifndef IDL_SRC
-  IDL_SRC = $(foreach ext, C.cpp S.cpp, $(foreach file, $(IDL_FILES), $(file)$(ext)))
-endif
-IDL_OBJS = $(IDL_SRC:%.cpp=%.$(OBJEXT))
-
-####
-#### Build rules.
-####
-IDL_EXT_MINUS=$(IDL_CLIENT_INL_EXT) $(IDL_CLIENT_SRC_EXT) \
-	$(IDL_SERVER_HDR_EXT) $(IDL_SERVER_INL_EXT) \
-	$(IDL_SERVER_SRC_EXT) $(IDL_SERVER_THDR_EXT) \
-	$(IDL_SERVER_TINL_EXT) $(IDL_SERVER_TSRC_EXT)
-IDL_EXT=$(IDL_CLIENT_HDR_EXT) $(IDL_EXT_MINUS)
-IDL_EXT2_MINUS=Cli.inl Cli.cpp Ser.h Ser.inl Ser.cpp Ser_T.h Ser_T.inl Ser_T.cpp
-IDL_EXT2=Cli.h $(IDL_EXT2_MINUS)
-
-# Don't remove the IDL stubs if make is interupted.
-.PRECIOUS: $(foreach ext, $(IDL_EXT), $(foreach file, $(IDL_FILES), $(file)$(ext)))
-
-# This rule makes all the IDL stub files dependent on the client header
-# which has it's own rule below that invokes the idl compiler.
-$(foreach ext, $(IDL_EXT_MINUS), %$(ext)): %$(IDL_CLIENT_HDR_EXT)
-	@
-# Invoke the idl compiler to create the client header
-ifneq ($(tao_dont_use_idl_make_rule),1)
-%C.h: %.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(VTAO_IDLFLAGS) $<
-endif
-
-$(foreach ext, $(IDL_EXT2_MINUS), %$(ext)): %Cli.h
-	@
-
-ifneq ($(tao_dont_use_idl_make_rule),1)
-%Cli.h: %.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(VTAO_IDLFLAGS) $<
-endif
 
 # Turn on symbol versioning. The scheme that we follow is to allow
 # applications dependent on libraries, with same version numbers (major,
