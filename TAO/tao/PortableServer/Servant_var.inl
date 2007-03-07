@@ -100,15 +100,8 @@ PortableServer::Servant_var<T>::operator= (T * p)
 */
 
 template <class T>
-ACE_INLINE T const *
-PortableServer::Servant_var<T>::operator->() const
-{
-  return this->ptr_;
-}
-
-template <class T>
 ACE_INLINE T *
-PortableServer::Servant_var<T>::operator->()
+PortableServer::Servant_var<T>::operator->() const
 {
   return this->ptr_;
 }

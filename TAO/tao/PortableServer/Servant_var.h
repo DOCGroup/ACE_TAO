@@ -100,10 +100,7 @@ namespace PortableServer
     */
 
     /// Smart pointer operator-> provides access to the underlying object.
-    T const * operator->() const;
-
-    /// Smart pointer operator-> provides access to the underlying object.
-    T * operator->();
+    T * operator->() const;
 
     /// Dereference the underlying object.
     T const & operator*() const;

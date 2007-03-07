@@ -29,7 +29,7 @@ TAO::TypeCode::Case<StringType, TypeCodeType>::equal (CORBA::ULong index,
                                                 );
 
   if (ACE_OS::strcmp (lhs_name, rhs_name) != 0)
-    return 0;
+    return false;
 
   // Check case TypeCodes.
   CORBA::TypeCode_ptr const lhs_tc = this->type ();
@@ -42,7 +42,7 @@ TAO::TypeCode::Case<StringType, TypeCodeType>::equal (CORBA::ULong index,
                   );
 
   if (!equal_members)
-    return 0;
+    return false;
 
   // Check case label.
   return this->equal_label (index,
