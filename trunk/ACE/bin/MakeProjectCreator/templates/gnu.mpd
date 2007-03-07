@@ -155,8 +155,6 @@ VSHDIR = <%targetoutdir%>.shobj/
 
 <%endif%>
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
-## We don't need the ACELIB setting from wrapper_macros.GNU
-ACELIB =
 <%if(!dds && version)%>
 
 ifeq ($(versioned_so),1)
@@ -171,7 +169,6 @@ include $(DDS_ROOT)/rules.dds.GNU
 include $(CIAO_ROOT)/rules.ciao.GNU
 <%endif%>
 <%if(tao)%>
-tao_dont_use_idl_make_rule = 1
 include $(TAO_ROOT)/rules.tao.GNU
 <%endif%>
 

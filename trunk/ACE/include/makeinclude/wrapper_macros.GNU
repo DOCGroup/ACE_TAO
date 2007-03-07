@@ -377,8 +377,6 @@ VAR             =
 VDIR          ?= .obj/
 VSHDIR        ?= .shobj/
 
-ACELIB ?= -lACE
-
 # NOTE: VLDLIBS is defined below, in case it is overridden for static-
 #       or shared-only builds.
 ifeq (default,$(origin YACC))
@@ -705,7 +703,7 @@ else # ! shared_libs
   endif # static_libs
 endif # shared_libs
 
-VLDLIBS = $(LDLIBS) $(ACELIB) $(LIBS)
+VLDLIBS = $(LDLIBS) $(LIBS)
 
 probe ?=
 ifeq ($(probe),0)
