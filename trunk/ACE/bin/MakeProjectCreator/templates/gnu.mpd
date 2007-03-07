@@ -429,9 +429,9 @@ endif
 <%endfor%>
 <%if(libpaths)%>
 ifeq ($(VXWORKSLINK),true)
-LDLIBPATH     =<%foreach(libpaths)%> <%if(targetoutdir)%>-L<%libpath%>/<%targetoutdir%> <%endif%>-L<%libpath%><%endfor%>
+LDLIBPATH     =<%foreach(libpaths)%> <%if(targetoutdir)%>-L<%libpath%>/<%targetoutdir%> <%endif%>-L<%libpath%><%endfor%><%if(linkflags)%> <%linkflags%><%endif%>
 else
-LDFLAGS      +=<%foreach(libpaths)%> <%if(targetoutdir)%>-L<%libpath%>/<%targetoutdir%> <%endif%>-L<%libpath%><%endfor%>
+LDFLAGS      +=<%foreach(libpaths)%> <%if(targetoutdir)%>-L<%libpath%>/<%targetoutdir%> <%endif%>-L<%libpath%><%endfor%><%if(linkflags)%> <%linkflags%><%endif%>
 endif
 <%endif%>
 <%if(includes)%>
@@ -439,6 +439,9 @@ CPPFLAGS     +=<%foreach(includes)%> -I<%include%><%endfor%>
 <%endif%>
 <%if(macros)%>
 CPPFLAGS     +=<%foreach(macros)%> -D<%macro%><%endfor%>
+<%endif%>
+<%if(compile_flags)%>
+CPPFLAGS     += <%compile_flags%>
 <%endif%>
 <%if(dynamicflags)%>
 ifeq ($(shared_libs),1)

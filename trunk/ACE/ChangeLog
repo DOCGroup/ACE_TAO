@@ -1,3 +1,24 @@
+Wed Mar  7 16:35:04 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/config/ace_openssl.mpb:
+        * include/makeinclude/wrapper_macros.GNU:
+
+          Removed the addition of $(SSL_ROOT)/include and $(SSL_ROOT)/lib
+          from the includes and libpaths project variables and ssl and
+          crypto from the lit_libs settings for gnuace (as was done for
+          automake).
+
+          This functionality will now come from wrapper_macros.GNU in the
+          form of PLATFORM_SSL_CPPFLAGS, PLATFORM_SSL_LDFLAGS and
+          PLATFORM_SSL_LIBS.  If these variables are not set, they will be
+          given defaults based on the SSL_ROOT variable, as long as SSL_ROOT
+          is set and is not set to /usr.
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+
+          Added support for the compile_flags and linkflags template
+          variables.
+
 Wed Mar 7 13:12:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_vxworks5.5.x.GNU:
