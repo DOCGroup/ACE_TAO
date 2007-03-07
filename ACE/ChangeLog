@@ -1,3 +1,11 @@
+Wed Mar  7 18:44:10 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * include/makeinclude/wrapper_macros.GNU:
+
+          Fixed an issue where if ssl wasn't set to zero, it was assumed to
+          be set to non-zero (ignoring the case where it could be set to
+          empty).
+
 Wed Mar  7 17:32:51 UTC 2007  Ossama Othman  <ossama_othman at symantec dot com>
 
         * ace/Time_Value.cpp (operator*=):
