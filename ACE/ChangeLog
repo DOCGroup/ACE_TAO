@@ -1,3 +1,9 @@
+Wed Mar  7 11:46:46 UTC 2007  Carlos O'Ryan  <coryan@>
+
+        * tests/Bug_2820_Regression_Test.cpp:
+          Use the standard ACE workaround for platforms with a broken
+          std::auto_ptr<>.
+
 Wed Mar 7 09:56:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Atomic_Op.cpp:
