@@ -1,3 +1,12 @@
+Wed Mar 7 13:12:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_vxworks5.5.x.GNU:
+        * include/makeinclude/platform_vxworks6.2.GNU:
+          Simplified these files
+
+        * include/makeinclude/platform_vxworks6.3.GNU:
+          Added support to use a windows host system for the cross build
+
 Wed Mar 7 12:34:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/wrapper_macros.GNU:

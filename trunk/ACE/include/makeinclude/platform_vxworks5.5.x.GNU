@@ -22,19 +22,12 @@ ifneq (,$(HOST_ROOT))
   TAO_IDLFLAGS += -g $(HOST_ROOT)/bin/gperf
 endif
 
-ifeq ("$(OS)", "Windows_NT")
-ifneq ($(MAKE_MODE), unix)
-vxworks_ntbuild = 1
-MKDIR_NTSTYLE = 1
-lacks_touch = 1
-endif
-endif
-
 debug ?= 1
 optimize ?= 1
 rtti ?= 1
 threads ?= 1
 exceptions ?= 1
+xerces ?= 0
 
 ifeq ($(static_libs),1)
   shared_libs = 0
@@ -56,11 +49,11 @@ ifeq (,$(WIND_HOST_TYPE))
 	@ERROR: you must set your WIND_HOST_TYPE environment variable
 endif # WIND_HOST_TYPE
 
-ifeq ($(DIAB_HOST_TYPE),)
-ifeq ("$(OS)", "Windows_NT")
-  DIAB_HOST_TYPE = WIN32
-else
-  DIAB_HOST_TYPE = UNIX
+ifeq ("$(WIND_HOST_TYPE)","x86-win32")
+ifneq ($(MAKE_MODE), unix)
+vxworks_ntbuild = 1
+MKDIR_NTSTYLE = 1
+lacks_touch = 1
 endif
 endif
 
