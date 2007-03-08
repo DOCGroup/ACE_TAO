@@ -112,11 +112,13 @@ Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::accept_svc_handler (SVC_HANDL
       return result;
     }
 
-  // If the error occured due to teh fact that the file descriptor
+  // If the error occured due to the fact that the file descriptor
   // limit was exhausted, then purge the connection cache of some
   // entries.
-  result = this->out_of_sockets_handler ();
-  ACE_ASSERT (result == 0);
+  if (0 != this->out_of_sockets_handler ())
+    ACE_ERROR ((LM_ERROR,
+                ACE_TEXT ("%p\n"),
+                ACE_TEXT ("out_of_sockets_handler")));
 
   // Close down handler to avoid memory leaks.
   svc_handler->close (0);
@@ -281,10 +283,19 @@ test_connection_management (CACHING_STRATEGY &caching_strategy)
                                    ACE_Reactor::instance (),
                                    0,
                                    &listen_one_time_accept_strategy);
-  ACE_ASSERT (result == 0);
+  if (result != 0)
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("acceptor open")));
+      return;
+    }
 
   result = listen_one_time_acceptor.acceptor ().get_local_addr (server_addr);
-  ACE_ASSERT (result == 0);
+  if (result != 0)
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("acceptor getaddr")));
+      listen_one_time_acceptor.close ();
+      return;
+    }
 
   for (int i = 1; i <= iterations; ++i)
     {
@@ -311,7 +322,7 @@ test_connection_management (CACHING_STRATEGY &caching_strategy)
               ACE_ERROR ((LM_ERROR,
                           ACE_TEXT ("%p\n"),
                           ACE_TEXT ("open")));
-              ACE_ASSERT (0);
+              break;
             }
 
           if (listen_multiple_times_acceptor.acceptor ().get_local_addr (server_addr) == -1)
@@ -319,7 +330,7 @@ test_connection_management (CACHING_STRATEGY &caching_strategy)
               ACE_ERROR ((LM_ERROR,
                           ACE_TEXT ("%p\n"),
                           ACE_TEXT ("get_local_addr")));
-              ACE_ASSERT (0);
+              break;
             }
 
         }
@@ -330,11 +341,10 @@ test_connection_management (CACHING_STRATEGY &caching_strategy)
                         server_addr.get_port_number ()));
 
       // Run the cached blocking test.
-      int result = cached_connect (strategy_connector,
-                                   server_addr);
-      ACE_ASSERT (result != -1);
-
-      server ();
+      if (-1 == cached_connect (strategy_connector, server_addr))
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("cached_connect")));
+      else
+        server ();
     }
 }
 
@@ -465,8 +475,8 @@ run_main (int argc, ACE_TCHAR *argv[])
   // Consume all handles in the process, leaving us
   // <keep_handles_available> to play with.
   ACE_Handle_Gobbler handle_gobbler;
-  result = handle_gobbler.consume_handles (keep_handles_available);
-  ACE_ASSERT (result == 0);
+  if (0 != handle_gobbler.consume_handles (keep_handles_available))
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("handle_gobbler")));
 
   // Do we need to test all the strategies.  Note, that the less
   // useful null strategy is ignored in this case.
