@@ -34,6 +34,7 @@ ECT_Consumer_Driver::ECT_Consumer_Driver (void)
     n_suppliers_ (1),
     type_start_ (ACE_ES_EVENT_UNDEFINED),
     type_count_ (1),
+    stall_length_(0),
     shutdown_event_channel_ (1),
     pid_file_name_ (0),
     active_count_ (0)
@@ -227,7 +228,8 @@ ECT_Consumer_Driver::connect_consumers
       ACE_NEW (this->consumers_[i],
                Test_Consumer (this,
                               this->consumers_ + i,
-                              this->n_suppliers_));
+                              this->n_suppliers_,
+                              this->stall_length_));
 
       this->consumers_[i]->connect (scheduler,
                                     buf,
@@ -269,7 +271,7 @@ ECT_Consumer_Driver::disconnect_consumers (void)
 int
 ECT_Consumer_Driver::parse_args (int argc, char *argv [])
 {
-  ACE_Get_Opt get_opt (argc, argv, "xdc:s:h:p:");
+  ACE_Get_Opt get_opt (argc, argv, "xdc:s:h:p:o:");
   int opt;
 
   while ((opt = get_opt ()) != EOF)
@@ -301,6 +303,10 @@ ECT_Consumer_Driver::parse_args (int argc, char *argv [])
 
         case 'p':
           this->pid_file_name_ = get_opt.opt_arg ();
+          break;
+
+        case 'o':
+          this->stall_length_ = ACE_OS::atoi (get_opt.opt_arg ());
           break;
 
         case '?':

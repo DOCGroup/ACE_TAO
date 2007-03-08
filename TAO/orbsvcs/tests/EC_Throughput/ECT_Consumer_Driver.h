@@ -78,6 +78,9 @@ private:
   // We receive the events whose type is in the range
   // [type_start,type_start+type_count)
 
+  int stall_length_;
+  // How long (in seconds) the consumer will wait after receiving the first event.
+
   int shutdown_event_channel_;
   // If not zero it will shutdown the event channel upon exit.
 

@@ -1,3 +1,37 @@
+Thu Mar  8 17:49:52 UTC 2007  Trevor Fields  <fields_t@ociweb.com>
+
+          Fixed the Event Service crashing when dispatching
+          queue fills up and using the MT dispatching.
+
+        * orbsvcs/orbsvcs/Event/EC_Dispatching_Task.cpp:
+
+          Check for non-NULL TAO_EC_Queue_Full_Service_Object before
+          attempting to use.
+
+        * orbsvcs/orbsvcs/Event/EC_MT_Dispatching.cpp:
+
+          Pass in the TAO_EC_Queue_Full_Service_Object reference into
+          the TAO_EC_Dispatching_Task constrcutor.
+
+        * orbsvcs/tests/EC_Throughput/ECT_Consumer.cpp:
+        * orbsvcs/tests/EC_Throughput/ECT_Consumer.h:
+        * orbsvcs/tests/EC_Throughput/ECT_Consumer_Driver.cpp:
+        * orbsvcs/tests/EC_Throughput/ECT_Consumer_Driver.h:
+
+          Add -o parameter to delay the client for a number of
+          seconds upon the reception of the first event.
+
+        * orbsvcs/tests/EC_Throughput/ec_mt_overflow.conf:
+        * orbsvcs/tests/EC_Throughput/ec_mt_overflow.conf.xml:
+        * orbsvcs/tests/EC_Throughput/run_test_overflow.pl:
+
+          Added a test to try and stress the event service enough
+          to fill a dispatching queue.  This test does not always
+          fill the queue and therefore can succeed on systems
+          where a filled queue can result in crash of the
+          Event_Service.
+
+
 Thu Mar  8 15:56:40 UTC 2007  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * tao/TAO_Internal.cpp:

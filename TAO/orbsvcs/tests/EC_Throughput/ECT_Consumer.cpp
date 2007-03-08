@@ -12,6 +12,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/Auto_Ptr.h"
 #include "ace/Sched_Params.h"
+#include "ace/OS_NS_unistd.h"
 
 ACE_RCSID (EC_Throughput,
            ECT_Consumer,
@@ -19,12 +20,14 @@ ACE_RCSID (EC_Throughput,
 
 Test_Consumer::Test_Consumer (ECT_Driver *driver,
                               void *cookie,
-                              int n_suppliers)
+                              int n_suppliers,
+                              int stall_length)
   : driver_ (driver),
     cookie_ (cookie),
     n_suppliers_ (n_suppliers),
     recv_count_ (0),
-    shutdown_count_ (0)
+    shutdown_count_ (0),
+    stall_length_(stall_length)
 {
 }
 
@@ -119,7 +122,14 @@ Test_Consumer::push (const RtecEventComm::EventSet& events)
 
   // We start the timer as soon as we receive the first event...
   if (this->recv_count_ == 0)
-    this->first_event_ = ACE_OS::gethrtime ();
+    {
+      this->first_event_ = ACE_OS::gethrtime ();
+      ACE_DEBUG ((LM_DEBUG,
+                "ECT_Consumer (%P|%t) stalling for %d seconds\n", this->stall_length_));
+      ACE_OS::sleep(this->stall_length_);
+      ACE_DEBUG ((LM_DEBUG, "ECT_Consumer (%P|%t) finished stalling\n"));
+    }
+
 
   this->recv_count_ += events.length ();
 
