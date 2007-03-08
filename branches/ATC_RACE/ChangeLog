@@ -1,3 +1,15 @@
+Thu Mar  8 23:17:24 UTC 2007  Nishanth Shankaran  <nshankar@nospam.com>
+
+        * common/Goal.idl:
+        * common/OpString.idl:
+        * common/QoS.idl:
+        * common/Time.idl:
+
+        Refined the operational string structure and re-structured the IDL files.
+
+        * common/RACE_common.mpc: Commented out building of RACE_common
+          project due to compilation errors. Need to fix later on.
+
 Wed Mar  7 16:27:59 UTC 2007  Nishanth Shankaran  <nshankar@nospam.com>
 
         * Controller/common/Subtask.h: Added the time_val structure.

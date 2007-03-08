@@ -1,0 +1,32 @@
+#ifndef TIME_WINDOW_IDL
+#define TIME_WINDOW_IDL
+
+module CIAO
+{
+  module RACE
+    {
+
+      const long UNDEFINED_TIME_ENTRY = -1;
+
+      struct TimeValue
+      {
+        // Seconds since Jan. 1, 1970
+        long    sec;
+        //and microseconds
+        long    usec;
+      };
+
+      // A time window is a range between an earliest and latest time value.
+      struct TimeWindow
+      {
+        // Beginning of time window.
+        CIAO::RACE::TimeValue earliest;
+
+        // End of time window.
+        CIAO::RACE::TimeValue latest;
+      };
+
+  };
+};
+
+#endif /* TIME_WINDOW_IDL */
