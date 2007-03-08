@@ -758,12 +758,21 @@ namespace
               negotiate_codesets = (ACE_OS::atoi (current_arg));
             arg_shifter.ignore_arg();
           }
-        // Can't interpret this argument.
-        // Move on to the next argument.
+        else if (0 != (current_arg =
+                       arg_shifter.get_the_parameter
+                       (ACE_TEXT ("-ORBDebugLevel"))))
+          {
+            // Allowing different ORBs to change the global debug
+            // level may be unexpected, but since this
+            TAO_debug_level = ACE_OS::atoi (current_arg);
+
+            arg_shifter.consume_arg ();
+          }
         else
           {
-            // Any arguments that don't match are ignored so that
-            // the caller can still use them.
+            // Can't interpret this argument.  Move on to the next
+            // argument.  Any arguments that don't match are ignored
+            // so that the caller can still use them.
             arg_shifter.ignore_arg ();
           }
       }
@@ -821,17 +830,6 @@ namespace
                 ACE::debug (1);
               }
 
-            arg_shifter.consume_arg ();
-          }
-        else if (0 != (current_arg =
-                       arg_shifter.get_the_parameter
-                       (ACE_TEXT ("-ORBDebugLevel"))))
-          {
-            if (apply_values)
-              {
-                TAO_debug_level =
-                  ACE_OS::atoi (current_arg);
-              }
             arg_shifter.consume_arg ();
           }
         else if (0 == arg_shifter.cur_arg_strncasecmp

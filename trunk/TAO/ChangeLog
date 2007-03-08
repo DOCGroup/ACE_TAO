@@ -1,3 +1,12 @@
+Thu Mar  8 15:56:40 UTC 2007  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * tao/TAO_Internal.cpp:
+
+          Moving the -ORBDebugLevel processing from the process-global
+          initialization section to the ORB-specific initialization. This
+          resolves bug#2809 by allowing new ORBs to change the global
+          debug level.
+
 Wed Mar  8 01:28:17 UTC 2007  Ossama Othman  <ossama_othman at symantec dot com>
 
         * orbsvcs/orbsvcs/Naming/Flat_File_Persistence.cpp:
