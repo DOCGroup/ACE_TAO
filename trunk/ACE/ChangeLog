@@ -1,3 +1,13 @@
+Thu Mar  8 12:17:50 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/config/ace_openssl.mpb:
+        * include/makeinclude/wrapper_macros.GNU:
+
+          Moved the addition of SSL related macros out of wrapper_macros.GNU
+          and into a specific section in ace_openssl.mpb.  The result is
+          that the SSL related information is only added to the projects
+          that inherit from ace_openssl (instead of every single project).
+
 Thu Mar  8 02:59:02 UTC 2007  Carlos O'Ryan  <coryan@atdesk.com>
 
         * ace/Notification_Queue.cpp:
