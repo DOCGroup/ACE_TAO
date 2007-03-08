@@ -136,17 +136,17 @@ run_main (int, ACE_TCHAR *[])
   {
     /* Set #2 */
     ACE_CString s0 = "hello";
-    ACE_CString s1 ("hello", 0, 0);
-    ACE_CString s2 ("world", 0, 0);
-    ACE_CString s3 ("ll", 0, 0);
-    ACE_CString s4 ("ello", 0, 0);
+    ACE_CString s1 ("hello", 0, false);
+    ACE_CString s2 ("world", 0, false);
+    ACE_CString s3 ("ll", 0, false);
+    ACE_CString s4 ("ello", 0, false);
     ACE_CString s5 = s1 + " " + s2;
 
     char single_character = 'z';
     ACE_CString single_character_string (single_character);
 
-    ACE_CString empty_string (0, 0, 0);
-    ACE_CString zero_size_string (s1.c_str (), 0, 0, 0);
+    ACE_CString empty_string (0, 0, false);
+    ACE_CString zero_size_string (s1.c_str (), 0, false, 0);
 
     // Not equal comparisons. Error if they are equal
     if (s1 == s2){ACE_ERROR((LM_ERROR,"Set #2: \n"));return 1;}

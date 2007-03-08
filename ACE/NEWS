@@ -15,6 +15,45 @@ PLANNED CHANGES FOR "ACE-5.5.7"
 USER VISIBLE CHANGES BETWEEN ACE-5.5.6 and ACE-5.5.7
 ====================================================
 
+. The "release" argument to a number of ACE_String_Base<> methods was changed
+  from int to bool to more accurately reflect its purpose. The following
+  methods were changed:
+
+            ACE_String_Base (const CHAR *s,
+                             ACE_Allocator *the_allocator = 0,
+                             int release = 1);
+          to
+            ACE_String_Base (const CHAR *s,
+                             ACE_Allocator *the_allocator = 0,
+                             bool release = true);
+
+            ACE_String_Base (const CHAR *s,
+                             size_type len,
+                             ACE_Allocator *the_allocator = 0,
+                             int release = 1);
+          to
+            ACE_String_Base (const CHAR *s,
+                             size_type len,
+                             ACE_Allocator *the_allocator = 0,
+                             bool release = true);
+
+            void set (const CHAR * s, int release = 1);
+          to
+            void set (const CHAR * s, bool release = true);
+
+            void set (const CHAR * s, size_type len, int release);
+          to
+            void set (const CHAR * s, size_type len, bool release);
+
+            void clear (int release = 0);
+          to
+            void clear (bool release = false);
+
+  Since ACE_String_Base forms the basis of the ACE_CString and ACE_TString
+  classes, this may ripple out to user application code. If you encounter
+  errors in this area while building your applications, replace the
+  int argument you are passing to the method now with either true or false.
+
 . Solutions for the eVC3/4 platform have been removed from this
   release.  Note that we package WinCE projects/workspaces for use
   with VC8.
