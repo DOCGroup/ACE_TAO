@@ -1,3 +1,10 @@
+Wed Mar  8 01:28:17 UTC 2007  Ossama Othman  <ossama_othman at symantec dot com>
+
+        * orbsvcs/orbsvcs/Naming/Flat_File_Persistence.cpp:
+
+          Corrected zero buffer length handling to match previous
+          behavior.
+
 Wed Mar  7 18:28:14 UTC 2007  Wallace Zhang  <zhang_w@ociweb.com>
 
         * tests/DSI_AMH/Roundtrip.cpp:
