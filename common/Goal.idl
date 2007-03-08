@@ -1,0 +1,61 @@
+#ifndef GOAL_IDL
+#define GOAL_IDL
+
+#include "QoS.idl"
+#include "Time.idl"
+
+module CIAO
+{
+  module RACE
+    {
+      struct GoalCondition
+      {
+        // ID of condition (in Task Network).
+        long condID;
+
+        // Utility value (specifying importance of this goal condition).
+        long utility;
+      };
+
+      typedef sequence <GoalCondition> GoalConditions;
+
+      struct TimeConstraint
+      {
+        // ID of condition (in Task Network).
+        long condID;
+
+        // Start-by (end-by) time for this data (non-data) condition.
+        TimeValue constraint;
+      };
+
+      typedef sequence <TimeConstraint> TimeConstraints;
+
+      struct GoalStructure
+      {
+        // Universally unique ID of goal.
+        string UUID;
+
+        // Human-readable name (for debugging, not identification).
+        string name;
+
+        // Goal conditions with utility values.
+        GoalConditions goalConds;
+
+        // Start-by and end-by constraints on conditions, in relative time
+        // (relative to start of opstring to achieve this goal).
+        TimeConstraints relTimes;
+
+        // Start-by and end-by constraints on conditions, in clock time.
+        TimeConstraints absTimes;
+
+        // QoS requirements.
+        QoSSpecifications QoSRequirements;
+
+        // Expected time range for start of opstring (for achieving this goal)
+        // execution.
+        TimeWindow startWindow;
+      };
+  };
+};
+
+#endif /* GOAL_IDL */

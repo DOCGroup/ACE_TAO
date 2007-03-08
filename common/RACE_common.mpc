@@ -1,49 +1,65 @@
-project(RACE_common_stub): ciao_deployment_stub {
+// project(RACE_common_stub): ciao_deployment_stub {
 
-  sharedname = RACE_common_stub
-  idlflags += -Wb,stub_export_macro=RACE_COMMON_STUB_Export \
-              -Wb,stub_export_include=RACE_common_stub_export.h
+//   sharedname = RACE_common_stub
+//   idlflags += -Wb,stub_export_macro=RACE_COMMON_STUB_Export \
+//               -Wb,stub_export_include=RACE_common_stub_export.h
 
-  dynamicflags   = RACE_COMMON_STUB_BUILD_DLL
+//   dynamicflags   = RACE_COMMON_STUB_BUILD_DLL
 
-  IDL_Files {
-    RACE_common.idl
-  }
+//   IDL_Files {
+//     RACE_common.idl
+//   }
 
-  Source_Files {
-    RACE_commonC.cpp
-  }
+//   Source_Files {
+//     RACE_commonC.cpp
+//   }
 
-  Header_Files {
-    RACE_commonC.h
-  }
+//   Header_Files {
+//     RACE_commonC.h
+//   }
 
-  Inline_Files {
-    RACE_commonC.inl
-  }
-}
+//   Inline_Files {
+//     RACE_commonC.inl
+//   }
+// }
 
 project(OpString_stub): ciao_deployment_stub {
 
   sharedname = OpString_stub
   idlflags += -Wb,stub_export_macro=OPSTRING_STUB_Export \
-              -Wb,stub_export_include=OpString_stub_export.h
+              -Wb,stub_export_include=OpString_stub_export.h \
+              -I $(CIAO_ROOT)/DAnCE/Deployment
 
   dynamicflags   = OPSTRING_STUB_BUILD_DLL
 
   IDL_Files {
     OpString.idl
+    Goal.idl
+    QoS.idl
+    Time.idl
   }
 
   Header_Files {
     OpStringC.h
+    GoalC.h
+    QoSC.h
+    TimeC.h
+
   }
 
   Inline_Files {
     OpStringC.inl
+    GoalC.inl
+    QoSC.inl
+    TimeC.inl
+
   }
 
   Source_Files {
     OpStringC.cpp
+    GoalC.cpp
+    QoSC.cpp
+    TimeC.cpp
+
   }
 }
