@@ -22,6 +22,8 @@ ACE_RCSID(tests,
   ACTION(purge_with_no_matches) \
   ACTION(purge_with_single_match) \
   ACTION(purge_with_multiple_matches) \
+  ACTION(reset_empty_queue) \
+  ACTION(reset_non_empty_queue) \
 
 // Declare all the tests
 #define ACTION(TEST_NAME) void TEST_NAME (char const * test_name);
@@ -247,6 +249,36 @@ void purge_with_multiple_matches(char const * test_name)
   result = queue.purge_pending_notifications(&eh1,
 					     ACE_Event_Handler::WRITE_MASK);
   TEST_EQUAL(result, 1, "purge of eh1/WRITE should return 1");
+}
+
+void reset_empty_queue(char const * /* test_name */)
+{
+  ACE_Notification_Queue queue;
+
+  queue.reset();
+}
+
+void reset_non_empty_queue(char const * /* test_name */)
+{
+  ACE_Notification_Queue queue;
+
+  Event_Handler eh1(1);
+  Event_Handler eh2(2);
+
+  queue.push_new_notification(
+      ACE_Notification_Buffer(0,
+			      ACE_Event_Handler::READ_MASK));
+  queue.push_new_notification(
+      ACE_Notification_Buffer(&eh1,
+			      ACE_Event_Handler::READ_MASK));
+  queue.push_new_notification(
+      ACE_Notification_Buffer(&eh2,
+			      ACE_Event_Handler::WRITE_MASK));
+  queue.push_new_notification(
+      ACE_Notification_Buffer(0,
+			      ACE_Event_Handler::WRITE_MASK));
+
+  queue.reset();
 }
 
 void test_equal(int x, int y, char const * x_msg, char const * y_msg,

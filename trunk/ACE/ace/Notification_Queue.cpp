@@ -46,6 +46,10 @@ reset()
        node != 0;
        node = node->next())
     {
+      if (node->get().eh_ == 0)
+        {
+          continue;
+        }
       (void) node->get().eh_->remove_reference();
     }
 
