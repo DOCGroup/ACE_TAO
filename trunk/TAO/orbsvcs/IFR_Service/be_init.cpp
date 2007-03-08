@@ -27,7 +27,7 @@ BE_save_orb_args (int &argc, char *argv[])
           // No-copy constructor.
           ACE_CString tmp (argv[i + 1],
                            0,
-                           0);
+                           false);
 
           // If the arg ends with either .idl or .pidl, we're done.
 

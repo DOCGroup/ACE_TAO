@@ -1,3 +1,13 @@
+Thu Mar  8 21:27:54 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * orbsvcs/IFR_Service/be_init.cpp (BE_save_orb_args):
+        * orbsvcs/orbsvcs/AV/FlowSpec_Entry.cpp (get_local_addr_str):
+        * orbsvcs/orbsvcs/IFRService/IRObject_i.cpp (update_key):
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Profile.cpp:
+        * orbsvcs/orbsvcs/Log/Log_Constraint_Visitors.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_Constraint_Visitors.cpp:
+        * tao/TypeCodeFactory/TypeCodeFactory_i.cpp (valid_id):
+
 Thu Mar  8 17:49:52 UTC 2007  Trevor Fields  <fields_t@ociweb.com>
 
           Fixed the Event Service crashing when dispatching

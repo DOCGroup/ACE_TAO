@@ -266,7 +266,7 @@ TAO_UIPMC_Profile::parse_string_i (const char *string)
   // The Domain ID is terminated with a '-'.
 
   // Wrap the string in a ACE_CString
-  ACE_CString ace_str (string, 0, 0);
+  ACE_CString ace_str (string, 0, false);
 
   // Look for the group domain delimitor.
   ACE_CString::size_type pos = ace_str.find ('-');
