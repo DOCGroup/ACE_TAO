@@ -1,3 +1,10 @@
+Thu Mar  8 18:06:14 UTC 2007  Ossama Othman  <ossama_othman at symantec dot com>
+
+        * ace/Time_Value.cpp (operator *=):
+
+          Removed vestigial time value saturation code that does not work
+          correctly with latest implementation.
+
 Thu Mar 8 14:21:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-vxworks6.2.h:
