@@ -598,11 +598,7 @@ else
     endif
   endif
   PLATFORM_SSL_LIBS ?= -lssl -lcrypto
-
-  CPPFLAGS += $(PLATFORM_SSL_CPPFLAGS)
-  LDFLAGS  += $(PLATFORM_SSL_LDFLAGS)
-  LIBS     += $(PLATFORM_SSL_LIBS)
-  ACE_MAKE_OPTIONS += ssl
+  ACE_MAKE_OPTIONS  += ssl
 endif
 
 ## These are related to MPC.  When 'requires' is used in a project
