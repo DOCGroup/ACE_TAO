@@ -173,18 +173,21 @@ out_of_sockets_handler (void)
     {
       // Close connections which are cached by explicitly purging the
       // connection cache maintained by the connector.
-      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Purging connections from Connection Cache...\n")));
+      ACE_DEBUG
+        ((LM_DEBUG,
+          ACE_TEXT ("Purging connections from Connection Cache...\n")));
 
-      int retval = connect_strategy->purge_connections ();
-      ACE_ASSERT (retval != -1);
+      if (-1 == connect_strategy->purge_connections ())
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT ("%p\n"),
+                    ACE_TEXT ("purge_connections")));
     }
   else
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("%p\n"),
-                  ACE_TEXT ("out_of_sockets_handler  failed!")));
-      // This shouldn't happen!
-      ACE_ASSERT (0);
+                  ACE_TEXT ("in out_of_sockets_handler, ")
+                  ACE_TEXT ("but out_of_handles said no")));
     }
 }
 
@@ -260,11 +263,18 @@ test_connection_management (CACHING_STRATEGY &caching_strategy)
   ACCEPTOR listen_one_time_acceptor;
   ACE_INET_Addr server_addr;
 
-  int result = listen_one_time_acceptor.open (ACE_sap_any_cast (const ACE_INET_Addr &));
-  ACE_ASSERT (result == 0);
+  if (0 != listen_one_time_acceptor.open (ACE_sap_any_cast (const ACE_INET_Addr &)))
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("acceptor open")));
+      return;
+    }
 
-  result = listen_one_time_acceptor.acceptor ().get_local_addr (server_addr);
-  ACE_ASSERT (result == 0);
+  if (0 != listen_one_time_acceptor.acceptor ().get_local_addr (server_addr))
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("acceptor getaddr")));
+      listen_one_time_acceptor.close ();
+      return;
+    }
 
   for (int i = 1; i <= iterations; ++i)
     {
@@ -295,7 +305,7 @@ test_connection_management (CACHING_STRATEGY &caching_strategy)
               ACE_ERROR ((LM_ERROR,
                           ACE_TEXT ("%p\n"),
                           ACE_TEXT ("get_local_addr")));
-              ACE_ASSERT (0);
+              break;
             }
 
           if (debug)
@@ -305,12 +315,10 @@ test_connection_management (CACHING_STRATEGY &caching_strategy)
         }
 
       // Run the cached blocking test.
-      int result = cached_connect (strategy_connector,
-                                   server_addr);
-      ACE_ASSERT (result != -1);
+      if (-1 == cached_connect (strategy_connector, server_addr))
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("cached_connect")));
 
-      result = server (&acceptor);
-      if (result == -1)
+      if (-1 == server (&acceptor))
         out_of_sockets_handler ();
     }
 }
@@ -441,8 +449,8 @@ run_main (int argc, ACE_TCHAR *argv[])
   // Consume all handles in the process, leaving us
   // <keep_handles_available> to play with.
   ACE_Handle_Gobbler handle_gobbler;
-  result = handle_gobbler.consume_handles (keep_handles_available);
-  ACE_ASSERT (result == 0);
+  if (0 != handle_gobbler.consume_handles (keep_handles_available))
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("handle_gobbler")));
 
   // Do we need to test all the strategies.  Note, that the less
   // useful null strategy is ignored in this case.
