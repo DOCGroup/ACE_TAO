@@ -173,18 +173,6 @@ ifneq ($(VX_LIB_BUILD),1)
   endif
 endif
 
-ifeq ($(SHARED_LIBS), 1)
-ifeq ("$(TOOL_FAMILY)","gnu")
-  C++FLAGS += -fpic
-  SOFLAGS += -fpic-shared
-  LDFLAGS += -non-static
-else
-  C++FLAGS += -Xpic
-  SOFLAGS += -Xdynamic
-  LDFLAGS += -Xdynamic
-endif
-endif
-
 ifeq ($(rtp),1)
   include $(WIND_USR)/make/defs.default
   include $(WIND_USR)/tool/$(TOOL_FAMILY)/make.$(CPU)$(TOOL)
@@ -207,6 +195,18 @@ else
   include $(TGT_DIR)/h/make/defs.$(WIND_HOST_TYPE)
   include $(TGT_DIR)/h/make/defs.$(PRJ_TYPE)
   include $(TGT_DIR)/h/tool/$(TOOL_FAMILY)/make.$(CPU)$(TOOL)
+endif
+
+ifeq ($(SHARED_LIBS), 1)
+ifeq ("$(TOOL_FAMILY)","gnu")
+  C++FLAGS += -fpic
+  SOFLAGS += -fpic-shared
+  LDFLAGS += -non-static
+else
+  C++FLAGS += -Xpic
+  SOFLAGS += -Xdynamic
+  LDFLAGS += -Xdynamic
+endif
 endif
 
 ## make sure we don't use that stupid, crippled vxrm.bat script.
