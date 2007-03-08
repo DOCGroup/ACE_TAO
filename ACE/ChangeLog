@@ -1,3 +1,10 @@
+Thu Mar  8 21:24:38 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * tests/Cached_Conn_Test.cpp:
+        * tests/Cached_Accept_Conn_Test.cpp: Replace use of ACE_ASSERT with
+          ACE_ERROR. ACE_ASSERTS on single-process targets do really bad
+          things...
+
 Thu Mar 8 20:29:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_vxworks6.3.GNU:
