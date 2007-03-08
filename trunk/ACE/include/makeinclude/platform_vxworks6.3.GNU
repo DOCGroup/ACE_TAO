@@ -173,6 +173,18 @@ ifneq ($(VX_LIB_BUILD),1)
   endif
 endif
 
+ifeq ($(SHARED_LIBS), 1)
+ifeq ("$(TOOL_FAMILY)","gnu")
+  C++FLAGS += -fpic
+  SOFLAGS += -fpic-shared
+  LDFLAGS += -non-static
+else
+  C++FLAGS += -Xpic
+  SOFLAGS += -Xdynamic
+  LDFLAGS += -Xdynamic
+endif
+endif
+
 ifeq ($(rtp),1)
   include $(WIND_USR)/make/defs.default
   include $(WIND_USR)/tool/$(TOOL_FAMILY)/make.$(CPU)$(TOOL)
