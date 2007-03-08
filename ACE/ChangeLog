@@ -1,3 +1,14 @@
+Thu Mar  8 02:59:02 UTC 2007  Carlos O'Ryan  <coryan@atdesk.com>
+
+        * ace/Notification_Queue.cpp:
+          Fixed implementation of reset() make sure the code works right
+          when there are null event handlers in the queue.  This should
+          have been part of the original fixes for bug 2820.
+
+        * tests/Notification_Queue_Unit_Test.cpp:
+          Add new test cases for the reset() operation, in particular
+          check for null event handlers in the queue.
+
 Wed Mar  7 19:07:58 UTC 2007  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * ace/Message_Block.cpp:
@@ -75,7 +86,7 @@ Wed Mar 7 12:20:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
           Removed check for TAO_IDL_DEP, the generated GNUmakefiles do
           check for this
 
-Wed Mar  7 11:46:46 UTC 2007  Carlos O'Ryan  <coryan@>
+Wed Mar  7 11:46:46 UTC 2007  Carlos O'Ryan  <coryan@atdesk.com>
 
         * tests/Bug_2820_Regression_Test.cpp:
           Use the standard ACE workaround for platforms with a broken
