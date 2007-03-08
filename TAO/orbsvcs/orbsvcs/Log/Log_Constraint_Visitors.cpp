@@ -29,7 +29,7 @@ TAO_Log_Constraint_Visitor::TAO_Log_Constraint_Visitor (const DsLogAdmin::LogRec
 #else
   val_id <<= static_cast<ACE_UINT32> (rec.id);
 #endif
-  this->property_lookup_.bind (ACE_CString("id", 0, 0), val_id);
+  this->property_lookup_.bind (ACE_CString("id", 0, false), val_id);
 
 
   CORBA::Any val_time;
@@ -38,9 +38,9 @@ TAO_Log_Constraint_Visitor::TAO_Log_Constraint_Visitor (const DsLogAdmin::LogRec
 #else
   val_time <<= static_cast<ACE_UINT32> (rec.time);
 #endif
-  this->property_lookup_.bind (ACE_CString("time", 0, 0), val_time);
+  this->property_lookup_.bind (ACE_CString("time", 0, false), val_time);
 
-  this->property_lookup_.bind (ACE_CString("info", 0, 0), rec.info);
+  this->property_lookup_.bind (ACE_CString("info", 0, false), rec.info);
 
   // Bind an entry for each item in the record's attribute list.
   CORBA::Long len = rec.attr_list.length();
@@ -48,7 +48,7 @@ TAO_Log_Constraint_Visitor::TAO_Log_Constraint_Visitor (const DsLogAdmin::LogRec
     {
       this->property_lookup_.bind (ACE_CString(rec.attr_list[i].name,
                  0,
-                 0),
+                 false),
            rec.attr_list[i].value);
     }
 }
@@ -89,7 +89,7 @@ TAO_Log_Constraint_Visitor::visit_identifier (TAO_ETCL_Identifier *ident)
 {
   int return_value = -1;
   const char *name = ident->value ();
-  ACE_CString key (name, 0, 0);
+  ACE_CString key (name, 0, false);
 
   CORBA::Any any;
 
@@ -371,7 +371,7 @@ TAO_Log_Constraint_Visitor::visit_component_assoc (
   CORBA::Any any;
   ACE_CString key (assoc->identifier ()->value (),
        0,
-       0);
+       false);
 
   if (this->property_lookup_.find (key, any) != 0
       || any.impl () == 0)
@@ -644,7 +644,7 @@ TAO_Log_Constraint_Visitor::visit_exist (TAO_ETCL_Exist *exist)
       this->queue_.dequeue_head (top);
 
       const char *value = (const char *) top;
-      ACE_CString key (value, 0, 0);
+      ACE_CString key (value, 0, false);
 
       CORBA::Boolean result = (this->property_lookup_.find (key) == 0);
 

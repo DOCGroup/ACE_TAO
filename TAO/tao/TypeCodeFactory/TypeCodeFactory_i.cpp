@@ -1513,7 +1513,7 @@ TAO_TypeCodeFactory_i::valid_id (const char *id)
 {
   ACE_CString safety (id,
                       0,
-                      0);
+                      false);
 
   ACE_CString::size_type const pos = safety.find (':');
 

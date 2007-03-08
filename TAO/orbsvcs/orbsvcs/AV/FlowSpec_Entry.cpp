@@ -477,7 +477,7 @@ TAO_FlowSpec_Entry::get_local_addr_str (void)
 
         ACE_INET_Addr *inet_addr = dynamic_cast<ACE_INET_Addr *> (this->local_addr_);
         inet_addr->addr_to_string (buf,BUFSIZ);
-        ACE_CString cstring (buf, 0, 0);
+        ACE_CString cstring (buf, 0, false);
 
         return cstring.rep ();
       }
