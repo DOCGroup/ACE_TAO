@@ -199,11 +199,11 @@ endif
 
 ifeq ($(SHARED_LIBS), 1)
 ifeq ("$(TOOL_FAMILY)","gnu")
-  C++FLAGS += -fpic
+  PIC = -fpic
   SOFLAGS += -fpic-shared
   LDFLAGS += -non-static
 else
-  C++FLAGS += -Xpic
+  PIC = -Xpic
   SOFLAGS += -Xdynamic
   LDFLAGS += -Xdynamic
 endif
