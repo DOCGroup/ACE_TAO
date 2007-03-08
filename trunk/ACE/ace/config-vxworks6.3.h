@@ -162,7 +162,9 @@
 
 #if defined __RTP__
   // We are building for RTP mode
-  #define ACE_HAS_SVR4_DYNAMIC_LINKING
+  #if !defined (ACE_AS_STATIC_LIBS)
+  #  define ACE_HAS_SVR4_DYNAMIC_LINKING
+  #endif
   #define ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R
   #define ACE_LACKS_REGEX_H
   #define ACE_LACKS_PUTENV

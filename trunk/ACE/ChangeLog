@@ -1,3 +1,11 @@
+Thu Mar 8 14:21:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-vxworks6.2.h:
+        * ace/config-vxworks6.3.h:
+        * ace/config-vxworks6.4.h:
+          Don't set ACE_HAS_SVR4_DYNAMIC_LINKING when we do a static
+          rtp build.
+
 Thu Mar 8 13:04:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_vxworks6.3.GNU:
