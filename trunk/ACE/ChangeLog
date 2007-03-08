@@ -1,3 +1,8 @@
+Thu Mar 8 19:06:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_vxworks6.3.GNU:
+          Only add dl to LDLIBS when building shared
+
 Thu Mar  8 18:06:14 UTC 2007  Ossama Othman  <ossama_othman at symantec dot com>
 
         * ace/Time_Value.cpp (operator *=):
