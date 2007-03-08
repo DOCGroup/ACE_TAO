@@ -30,7 +30,7 @@ ACE_String_Base<CHAR>::ACE_String_Base (ACE_Allocator *the_allocator)
     len_ (0),
     buf_len_ (0),
     rep_ (&ACE_String_Base<CHAR>::NULL_String_),
-    release_ (0)
+    release_ (false)
 {
   ACE_TRACE ("ACE_String_Base<CHAR>::ACE_String_Base");
 }
@@ -40,12 +40,12 @@ ACE_String_Base<CHAR>::ACE_String_Base (ACE_Allocator *the_allocator)
 template <class CHAR>
 ACE_String_Base<CHAR>::ACE_String_Base (const CHAR *s,
                                         ACE_Allocator *the_allocator,
-                                        int release)
+                                        bool release)
   : allocator_ (the_allocator ? the_allocator : ACE_Allocator::instance ()),
     len_ (0),
     buf_len_ (0),
     rep_ (0),
-    release_ (0)
+    release_ (false)
 {
   ACE_TRACE ("ACE_String_Base<CHAR>::ACE_String_Base");
   this->set (s, release);
@@ -58,7 +58,7 @@ ACE_String_Base<CHAR>::ACE_String_Base (CHAR c,
     len_ (0),
     buf_len_ (0),
     rep_ (0),
-    release_ (0)
+    release_ (false)
 {
   ACE_TRACE ("ACE_String_Base<CHAR>::ACE_String_Base");
 
@@ -72,12 +72,12 @@ ACE_String_Base<CHAR>::ACE_String_Base (
   const CHAR *s,
   typename ACE_String_Base<CHAR>::size_type  len,
   ACE_Allocator *the_allocator,
-  int release)
+  bool release)
   : allocator_ (the_allocator ? the_allocator : ACE_Allocator::instance ()),
     len_ (0),
     buf_len_ (0),
     rep_ (0),
-    release_ (0)
+    release_ (false)
 {
   ACE_TRACE ("ACE_String_Base<CHAR>::ACE_String_Base");
 
@@ -92,7 +92,7 @@ ACE_String_Base<CHAR>::ACE_String_Base (const ACE_String_Base<CHAR> &s)
     len_ (0),
     buf_len_ (0),
     rep_ (0),
-    release_ (0)
+    release_ (false)
 {
   ACE_TRACE ("ACE_String_Base<CHAR>::ACE_String_Base");
 
@@ -108,7 +108,7 @@ ACE_String_Base<CHAR>::ACE_String_Base (
     len_ (0),
     buf_len_ (0),
     rep_ (0),
-    release_ (0)
+    release_ (false)
 {
   ACE_TRACE ("ACE_String_Base<CHAR>::ACE_String_Base");
 
@@ -120,7 +120,7 @@ ACE_String_Base<CHAR>::~ACE_String_Base (void)
 {
   ACE_TRACE ("ACE_String_Base<CHAR>::~ACE_String_Base");
 
-  if (this->buf_len_ != 0 && this->release_ != 0)
+  if (this->buf_len_ != 0 && this->release_)
       this->allocator_->free (this->rep_);
 }
 
@@ -128,7 +128,7 @@ ACE_String_Base<CHAR>::~ACE_String_Base (void)
 template <class CHAR> void
 ACE_String_Base<CHAR>::set (const CHAR *s,
                             typename ACE_String_Base<CHAR>::size_type len,
-                            int release)
+                            bool release)
 {
   // Case 1. Going from memory to more memory
   size_type new_buf_len = len + 1;
@@ -138,25 +138,25 @@ ACE_String_Base<CHAR>::set (const CHAR *s,
       ACE_ALLOCATOR (temp,
                      (CHAR *) this->allocator_->malloc (new_buf_len * sizeof (CHAR)));
 
-    if (this->buf_len_ != 0 && this->release_ != 0)
+      if (this->buf_len_ != 0 && this->release_)
         this->allocator_->free (this->rep_);
 
       this->rep_ = temp;
       this->buf_len_ = new_buf_len;
-      this->release_ = 1;
+      this->release_ = true;
       this->len_ = len;
       ACE_OS::memcpy (this->rep_, s, len * sizeof (CHAR));
-    this->rep_[len] = 0;
+      this->rep_[len] = 0;
     }
   else // Case 2. No memory allocation is necessary.
     {
       // Free memory if necessary and figure out future ownership
-    if (release == 0 || s == 0 || len == 0)
+      if (!release || s == 0 || len == 0)
         {
-      if (this->buf_len_ != 0 && this->release_ != 0)
+          if (this->buf_len_ != 0 && this->release_)
             {
               this->allocator_->free (this->rep_);
-              this->release_ = 0;
+              this->release_ = false;
             }
         }
       // Populate data.
@@ -165,14 +165,14 @@ ACE_String_Base<CHAR>::set (const CHAR *s,
           this->buf_len_ = 0;
           this->len_ = 0;
           this->rep_ = &ACE_String_Base<CHAR>::NULL_String_;
-      this->release_ = 0;
+          this->release_ = false;
         }
-    else if (release == 0) // Note: No guarantee that rep_ is null terminated.
+      else if (!release) // Note: No guarantee that rep_ is null terminated.
         {
           this->buf_len_ = len;
           this->len_ = len;
           this->rep_ = const_cast <CHAR *> (s);
-      this->release_ = 0;
+          this->release_ = false;
         }
       else
         {
@@ -237,10 +237,10 @@ ACE_String_Base<CHAR>::append (const CHAR* s,
 
       ACE_OS::memcpy (t + this->len_, s, slen * sizeof (CHAR));
 
-      if (this->buf_len_ != 0 && this->release_ != 0)
+      if (this->buf_len_ != 0 && this->release_)
         this->allocator_->free (this->rep_);
 
-      this->release_ = 1;
+      this->release_ = true;
       this->rep_ = t;
       this->buf_len_ = new_buf_len;
     }
@@ -279,13 +279,13 @@ ACE_String_Base<CHAR>::fast_resize (size_t len)
   // Only reallocate if we don't have enough space...
   if (this->buf_len_ <= len)
     {
-      if (this->buf_len_ != 0 && this->release_ != 0)
+      if (this->buf_len_ != 0 && this->release_)
         this->allocator_->free (this->rep_);
 
       this->rep_ = static_cast<CHAR*>
                      (this->allocator_->malloc ((len + 1) * sizeof (CHAR)));
       this->buf_len_ = len + 1;
-      this->release_ = 1;
+      this->release_ = true;
     }
   this->len_ = 0;
   if (len > 0)
@@ -293,23 +293,23 @@ ACE_String_Base<CHAR>::fast_resize (size_t len)
 }
 
 template <class CHAR> void
-ACE_String_Base<CHAR>::clear (int release)
+ACE_String_Base<CHAR>::clear (bool release)
 {
-  // This can't use set(), because that would free memory if release=0
-  if (release != 0)
+  // This can't use set(), because that would free memory if release=false
+  if (release)
   {
-    if (this->buf_len_ != 0 && this->release_ != 0)
+    if (this->buf_len_ != 0 && this->release_)
       this->allocator_->free (this->rep_);
 
     this->rep_ = &ACE_String_Base<CHAR>::NULL_String_;
-  this->len_ = 0;
+    this->len_ = 0;
     this->buf_len_ = 0;
-    this->release_ = 0;
-}
-  else
-  {
-    this->fast_clear ();
+    this->release_ = false;
   }
+  else
+    {
+      this->fast_clear ();
+    }
 }
 
 // Assignment operator (does copy memory).
@@ -338,7 +338,7 @@ ACE_String_Base<CHAR>::operator= (const ACE_String_Base<CHAR> &s)
 }
 
 template <class CHAR> void
-ACE_String_Base<CHAR>::set (const CHAR *s, int release)
+ACE_String_Base<CHAR>::set (const CHAR *s, bool release)
 {
   size_t length = 0;
   if (s != 0)
@@ -351,7 +351,7 @@ template <class CHAR> void
 ACE_String_Base<CHAR>::fast_clear (void)
 {
   this->len_ = 0;
-  if (this->release_ != 0)
+  if (this->release_)
     {
       // String retains the original buffer.
       if (this->rep_ != &ACE_String_Base<CHAR>::NULL_String_)

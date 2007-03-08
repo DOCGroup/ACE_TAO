@@ -1167,7 +1167,7 @@ ACE_Configuration_ExtId::operator!= (const ACE_Configuration_ExtId& rhs) const
 u_long
 ACE_Configuration_ExtId::hash (void) const
 {
-  ACE_TString temp (name_, 0, 0);
+  ACE_TString temp (name_, 0, false);
   return temp.hash ();
 }
 
@@ -1366,7 +1366,7 @@ ACE_Configuration_Heap::load_key (const ACE_Configuration_Section_Key& key,
       return -1;
     }
 
-  ACE_TString temp (pKey->path_, 0, 0);
+  ACE_TString temp (pKey->path_, 0, false);
   name.assign_nocopy (temp);
   return 0;
 }
@@ -1552,7 +1552,7 @@ ACE_Configuration_Heap::open_simple_section (const ACE_Configuration_Section_Key
                                              int create,
                                              ACE_Configuration_Section_Key& result)
 {
-  ACE_TString section (0, 0, 0);
+  ACE_TString section (0, 0, false);
 
   if (load_key (base, section))
     {
@@ -1994,7 +1994,7 @@ ACE_Configuration_Heap::get_integer_value (const ACE_Configuration_Section_Key& 
     return -1;
 
   // Get the section name from the key
-  ACE_TString section (0, 0, 0);
+  ACE_TString section (0, 0, false);
 
   if (this->load_key (key, section) != 0)
     {
