@@ -192,6 +192,7 @@ ifeq ($(rtp),1)
   ifeq ($(SHARED_LIBS), 1)
     LDLIBS += -ldl
   endif
+  SOFLAGS += -mrtp
 else
   include $(TGT_DIR)/h/make/defs.default
   include $(TGT_DIR)/h/make/defs.$(WIND_HOST_TYPE)
@@ -202,7 +203,7 @@ endif
 ifeq ($(SHARED_LIBS), 1)
 ifeq ("$(TOOL_FAMILY)","gnu")
   PIC = -fpic
-  SOFLAGS += -fpic-shared
+  SOFLAGS += -fpic -shared
   LDFLAGS += -non-static
 else
   PIC = -Xpic
