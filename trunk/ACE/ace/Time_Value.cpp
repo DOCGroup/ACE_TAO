@@ -235,18 +235,16 @@ ACE_Time_Value::operator *= (double d)
   float_type time_sec = static_cast<float_type> (this->sec ()) * d;
   float_type time_usec = static_cast<float_type> (this->usec ()) * d;
 
-  // Shall we saturate the result?
   float_type const max_time_t =
-    ACE_Numeric_Limits<time_t>::max () + static_cast<float_type> (0.999999);
+    static_cast<float_type> (ACE_Numeric_Limits<time_t>::max ());
   float_type const min_time_t =
-    ACE_Numeric_Limits<time_t>::min () - static_cast<float_type> (0.999999);
+    static_cast<float_type> (ACE_Numeric_Limits<time_t>::min ());
 
+  // -999999 to 999999 microseconds
   float_type const max_suseconds_t =
-    ACE_Numeric_Limits<suseconds_t>::max ()
-    + static_cast<float_type> (0.999999);
+    static_cast<float_type> (ACE_Numeric_Limits<suseconds_t>::max ());
   float_type const min_suseconds_t =
-    ACE_Numeric_Limits<suseconds_t>::min ()
-    - static_cast<float_type> (0.999999);
+    static_cast<float_type> (ACE_Numeric_Limits<suseconds_t>::min ());
 
   // Truncate if necessary.
   if (time_sec > max_time_t)
@@ -266,9 +264,13 @@ ACE_Time_Value::operator *= (double d)
   static float_type const roundup_threshold = 0.5; // Always 0.5.
 
   // round up the result to save the last usec
-  if (useconds > 0 && usec_diff >= roundup_threshold)
+  if (useconds > 0
+      && time_usec < max_suseconds_t
+      && usec_diff >= roundup_threshold)
     ++useconds;
-  else if (useconds < 0 && usec_diff <= -roundup_threshold)
+  else if (useconds < 0
+           && time_usec > min_suseconds_t
+           && usec_diff <= -roundup_threshold)
     --useconds;
 
   this->set (seconds, useconds);
