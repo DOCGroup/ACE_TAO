@@ -1,3 +1,12 @@
+Fri Mar  9 16:49:03 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * ace/OS_NS_string.inl (strncat): Disable the TR24731/2005 calls to
+          strncat_s() and wcsncat_s() for now. The dest length includes the
+          characters that were already in dest before appending src. To really
+          use the safer functions, the dest max length is needed from the
+          caller. So, we'll either need a new method or an added arg to the
+          current methods.
+
 Fri Mar  9 16:27:23 UTC 2007  Steve Huston  <shuston@riverace.com>
 
         * ace/OS_NS_stdio.cpp (snprintf):
