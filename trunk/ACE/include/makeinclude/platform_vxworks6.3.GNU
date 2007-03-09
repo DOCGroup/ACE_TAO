@@ -179,6 +179,7 @@ ifeq ($(rtp),1)
   include $(WIND_USR)/make/defs.$(WIND_HOST_TYPE)
   ifeq ("$(TOOL_FAMILY)","gnu")
     CPPFLAGS += -mrtp
+    SOFLAGS += -mrtp
   endif
   LDFLAGS := $(filter-out -X, $(LDFLAGS))
   LDFLAGS := $(filter-out -N, $(LDFLAGS))
@@ -189,7 +190,6 @@ ifeq ($(rtp),1)
   else
     LDFLAGS += -L$(WIND_USR)/lib/$(VX_CPU_FAMILY)/$(CPU)/common
   endif
-  SOFLAGS += -mrtp
 else
   include $(TGT_DIR)/h/make/defs.default
   include $(TGT_DIR)/h/make/defs.$(WIND_HOST_TYPE)
