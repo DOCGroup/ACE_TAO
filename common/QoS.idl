@@ -1,0 +1,48 @@
+#ifndef QOS_IDL
+#define QOS_IDL
+
+module CIAO
+{
+  module RACE
+    {
+      // Kind of comparison for a QoS specification.
+      enum QoSComparator
+      {
+        LESS_THAN,
+        GREATER_THAN,
+        EQUAL,
+        LESS_THAN_EQUAL,
+        GREATER_THAN_EQUAL,
+        NOT_EQUAL
+      };
+
+      // Type of QoS specification.
+      enum QoSType
+      {
+        DEADLINE,
+        OTHERS
+      };
+
+      // QoS structure.
+      struct QoSSpecification
+      {
+        // Human-readable name (for debugging, not identification).
+        string name;
+
+        // Type of QoS.
+        QoSType type;
+
+        // Specific type ID of component that monitors this QoS.
+        string MonitorID;
+
+        // Comparison used for this QoS specification.
+        QoSComparator comparator;
+
+        // Value to compare actual QoS to (using comparator).
+        any value;
+      };
+
+      typedef sequence <QoSSpecification> QoSSpecifications;
+  };
+};
+#endif /* QOS_IDL */

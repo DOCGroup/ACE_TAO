@@ -1,0 +1,31 @@
+// $Id$
+
+#ifndef RACE_DANCE_OUTPUT_ADAPTER_IDL
+#define RACE_DANCE_OUTPUT_ADAPTER_IDL
+
+#include <Components.idl>
+#include "RACE/Output_Adapters/Base/Output_Adapter.idl"
+#include "RACE/Controller/Component/Interface.idl"
+
+module CIAO
+{
+  module RACE
+  {
+    interface Plan_Status
+    {
+      boolean teardown (in string uuid);
+    };
+
+    component DAnCE_Output_Adapter : Output_Adapter
+    {
+      uses Descriptors control_output;
+      provides Plan_Status plan_status;
+    };
+
+    home DAnCE_Output_Adapter_Home manages DAnCE_Output_Adapter
+    {
+    };
+  };
+};
+
+#endif /* RACE_DANCE_OUTPUT_ADAPTER_IDL */

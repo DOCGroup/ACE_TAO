@@ -1,7 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project : orbsvcslib, dseventlogadmin_skel, dslogadmin_serv, event_serv {
-  after      += DsEventLogAdmin_Serv
-  libs       += TAO_DsEventLogAdmin_Serv
-}

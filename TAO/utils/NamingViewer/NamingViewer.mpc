@@ -1,9 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project : namingexe, ace_mfc {
-  exename    = NamingViewer
-  install    = $(ACE_ROOT)/bin
-  pch_header = StdAfx.h
-  pch_source = StdAfx.cpp
-}

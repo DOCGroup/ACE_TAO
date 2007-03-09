@@ -1,9 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project(*Server): taoserver, compression, zlibcompressor {
-  Source_Files {
-    server.cpp
-  }
-}
-
