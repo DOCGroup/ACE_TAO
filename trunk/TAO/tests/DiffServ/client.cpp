@@ -137,10 +137,12 @@ main (int argc, char *argv[])
       nw_priority->network_priority_model (
         TAO::CLIENT_PROPAGATED_NETWORK_PRIORITY);
 
-      policy_list[0] = nw_priority.in ();
+      policy_list[0] = TAO::NetworkPriorityPolicy::_duplicate (nw_priority.in ());
 
       CORBA::Object_var over_ridden_object = server->_set_policy_overrides (
          policy_list, CORBA::SET_OVERRIDE);
+
+      policy_list[0]->destroy ();
 
       server = Test::_narrow (over_ridden_object.in ());
 
@@ -152,7 +154,7 @@ main (int argc, char *argv[])
 
       server->shutdown ();
     }
-  catch (const CORBA::Exception& ex) 
+  catch (const CORBA::Exception& ex)
     {
       ex._tao_print_exception ("Caught exception:");
       return -1;

@@ -154,21 +154,20 @@ main (int argc, char *argv[])
       TAO::NetworkPriorityPolicy_var nw_priority =
         TAO::NetworkPriorityPolicy::_narrow (npp.in ());
 
-      nw_priority->network_priority_model (
-         npm);
+      nw_priority->network_priority_model (npm);
 
-      nw_priority->request_diffserv_codepoint (
-         request_dscp);
+      nw_priority->request_diffserv_codepoint (request_dscp);
 
-      nw_priority->reply_diffserv_codepoint (
-         reply_dscp);
+      nw_priority->reply_diffserv_codepoint (reply_dscp);
 
-      policy_list[0] = nw_priority.in ();
+      policy_list[0] = TAO::NetworkPriorityPolicy::_duplicate (nw_priority.in ());
 
       PortableServer::POA_var child_poa =
         root_poa->create_POA ("Child_POA",
                               poa_manager.in (),
                               policy_list);
+
+      policy_list[0]->destroy ();
 
       // Servant.
       Test_i servant (orb.in ());
