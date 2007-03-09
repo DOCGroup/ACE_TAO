@@ -1,3 +1,8 @@
+Fri Mar 9 09:42:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_vxworks6.3.GNU:
+          No need to explicitly link dl when building shared
+
 Thu Mar  8 23:44:14 Pacific Standard Time 2007    <ossama_othman@symantec.com>
 
         * tests/Time_Value_Test.cpp (run_main):
@@ -166,7 +171,7 @@ Fri Mar  9 00:57:26 UTC 2007  Carlos O'Ryan  <coryan@atdesk.com>
           Fixed bug 2845, the event handler destructor no longer calls
           purge_pending_notifications.  More details about the rationale
           can be found in the bug report.
-        
+
         * NEWS:
         * docs/ACE-FMM.html:
           Prominently document the change, since it may catch people

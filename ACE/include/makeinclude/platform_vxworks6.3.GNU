@@ -189,9 +189,6 @@ ifeq ($(rtp),1)
   else
     LDFLAGS += -L$(WIND_USR)/lib/$(VX_CPU_FAMILY)/$(CPU)/common
   endif
-  ifeq ($(SHARED_LIBS), 1)
-    LDLIBS += -ldl
-  endif
   SOFLAGS += -mrtp
 else
   include $(TGT_DIR)/h/make/defs.default
