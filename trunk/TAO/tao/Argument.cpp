@@ -22,7 +22,7 @@ TAO::Argument::demarshal (TAO_InputCDR &)
   return true;
 }
 
-TAO::Argument*
+TAO::Argument *
 TAO::Argument::clone ()
 {
   return 0;
@@ -61,10 +61,10 @@ TAO::RetArgument::mode (void) const
 
 #endif /* TAO_HAS_INTERCEPTORS */
 
-TAO::Argument*
+TAO::Argument *
 TAO::Void_Return_Argument::clone (void)
 {
-  TAO::Argument* clone_arg = 0;
+  TAO::Argument *clone_arg = 0;
   ACE_NEW_RETURN (clone_arg,
                   Void_Return_Argument (),
                   0);
