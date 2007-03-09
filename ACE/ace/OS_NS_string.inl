@@ -259,7 +259,7 @@ ACE_OS::strlen (const ACE_WCHAR_T *s)
 ACE_INLINE char *
 ACE_OS::strncat (char *s, const char *t, size_t len)
 {
-#if defined (ACE_HAS_TR24731_2005_CRT)
+#if 0 /* defined (ACE_HAS_TR24731_2005_CRT) */
   strncat_s (s, len + 1, t, _TRUNCATE);
   return s;
 #else
@@ -272,7 +272,7 @@ ACE_OS::strncat (ACE_WCHAR_T *s, const ACE_WCHAR_T *t, size_t len)
 {
 #  if !defined (ACE_HAS_WCHAR) || defined (ACE_LACKS_WCSNCAT)
   return ACE_OS::wcsncat_emulation (s, t, len);
-#  elif defined (ACE_HAS_TR24731_2005_CRT)
+#  elif 0 /* defined (ACE_HAS_TR24731_2005_CRT) */
   wcsncat_s (s, len + 1, t, _TRUNCATE);
   return s;
 #  else /* !ACE_HAS_WCHAR || ACE_LACKS_WCSNCAT */
