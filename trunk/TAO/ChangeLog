@@ -1,3 +1,10 @@
+Thu Mar  9 06:43:52 UTC 2007  Ossama Othman  <ossama_othman at symantec dot com>
+
+        * orbsvcs/orbsvcs/Naming/Flat_File_Persistence.cpp (operator>>):
+
+          Addressed ambiguous ACE_CString constructor calls caused by
+          recent changes to constructor "release" parameter type.
+
 Fri Mar  9 000:27:39 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_global.cpp:

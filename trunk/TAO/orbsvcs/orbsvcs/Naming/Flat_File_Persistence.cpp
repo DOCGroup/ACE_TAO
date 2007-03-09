@@ -267,7 +267,7 @@ TAO_NS_FlatFileStream::operator >>(TAO_NS_Persistence_Record &record)
         this->setstate (badbit);
         return *this;
       }
-    record.id (ACE_CString (the_id.get (), 0, 0));
+    record.id (ACE_CString (the_id.get (), 0, false));
   }
 
   //kind
@@ -298,7 +298,7 @@ TAO_NS_FlatFileStream::operator >>(TAO_NS_Persistence_Record &record)
         this->setstate (badbit);
         return *this;
       }
-    record.kind (ACE_CString (the_kind.get (), 0, 0));
+    record.kind (ACE_CString (the_kind.get (), 0, false));
   }
 
    //ref
@@ -329,7 +329,7 @@ TAO_NS_FlatFileStream::operator >>(TAO_NS_Persistence_Record &record)
         this->setstate (badbit);
         return *this;
       }
-    record.ref (ACE_CString (the_ref.get (), 0, 0));
+    record.ref (ACE_CString (the_ref.get (), 0, false));
   }
 
   return *this;
