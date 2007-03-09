@@ -1,3 +1,14 @@
+Fri Mar  9 16:27:23 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * ace/OS_NS_stdio.cpp (snprintf):
+        * ace/OS_NS_string.inl (strncat): When using the "safe" calls from
+          TR24731/2005, specify the dest count as the user-specified source
+          length + 1 for the null. This assumes the caller knows the dest
+          buffer is long enough to hold what's specified. Specifying
+          _TRUNCATE as the src count gets the behavior we expect - the
+          specified number of bytes are copied with the assurance a nul
+          terminator is added. This avoids the CRT error handler.
+
 Fri Mar  9 16:10:09 UTC 2007  Steve Huston  <shuston@riverace.com>
 
         * ace/Log_Msg_NT_Event_Log.{h cpp}: Changed return type of log() from
