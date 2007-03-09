@@ -1,3 +1,15 @@
+Fri Mar  9 00:57:26 UTC 2007  Carlos O'Ryan  <coryan@atdesk.com>
+
+        * ace/Event_Handler.cpp:
+          Fixed bug 2845, the event handler destructor no longer calls
+          purge_pending_notifications.  More details about the rationale
+          can be found in the bug report.
+        
+        * NEWS:
+        * docs/ACE-FMM.html:
+          Prominently document the change, since it may catch people
+          unawares.
+
 Thu Mar  8 21:27:54 UTC 2007  Steve Huston  <shuston@riverace.com>
 
         * ace/String_Base.{h cpp}: Change ACE_String_Base::release_ from int
