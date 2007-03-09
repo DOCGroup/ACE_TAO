@@ -1,3 +1,157 @@
+Fri Mar  9 00:53:43 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        Changes to resolve or quiet warnings from Visual Studio .NET 2005:
+
+        * bin/MakeProjectCreator/config/acedefaults.mpb:
+        * bin/MakeProjectCreator/config/vc8_warnings.mpb: Removed the
+          default addition of _CRT_SECURE_NO_DEPRECATE from the MPC VC8
+          project templates. Many of the places where the changes recommended
+          by Microsoft could be made have been made (see further below). There
+          are still a number of places where the warnings are generated,
+          mostly because ACE wraps "unsafe" methods such as strcpy(), printf(),
+          etc. These can't legitimately be changed. So most of what can (and
+          should) be changed in ACE has been. To keep the warnings quiet
+          without removing them from any user application that includes ACE
+          headers, the acedefaults.mpb base project now inherits from
+          vc8_warnings - vc8_warnings will, by default, silence the warnings
+          we don't really need to see, but users of ACE will still get the
+          warnings when building their apps, unless they take similar steps
+          to silence them (or if they generate projects using the acedefaults
+          base project with MPC).
+          We can still elect to enable all the warnings by setting MPC features
+          to 0 (see vc8_warnings.mpb for features). And this is a good thing
+          to do still since we can improve the security situation by reviewing
+          things flagged as warnings and repair what's needed (not everything
+          flagged will be in need of a fix).
+
+        * ace/config-win32-msvc-8.h: Removed most of the pragmas that silenced
+          legit warnings from VC8. Added ACE_HAS_TR24731_2005_CRT indicating
+          that there's a C Run-Time implementing C99 draft TR 24731 dated
+          October 2005 detailing security improvements to the C run-time.
+          This macros indicates that the more secure versions of the calls
+          can be used where desireable.
+          Also added a macro, ACE_WIN32_VC8, to easily tell where we need to
+          selectively disable a warning that we can tell by inspection is
+          irrelevant. Such as use of 'this' in an initializer list and we can
+          tell by inspecting the code in question to be sure that the passed
+          pointer isn't used to call a method on an object that's not fully
+          constructed yet.
+
+        * ace/config-macros.h: When ACE_HAS_TR24731_2005_CRT is defined,
+          define ACE_SECURECRTCALL to make a call and adjust the returned
+          error value to the ACE return value convention.
+
+        * ace/README: Describe ACE_HAS_TR24731_2005_CRT.
+
+        * NEWS: Described the removing of the warning preventers and that
+          user code may trigger warnings that weren't showing up in previous
+          ACE versions.
+
+        * ace/Global_Macros.h: For VC8 with ACE_HAS_EXCEPTIONS, define
+          ACE_THROW_SPEC as throw(...) always. VC8 always treats any throw
+          spec as throw(...) and issues a warning to this effect. This change
+          silences the warnings. The #if intends to set this for VC8 only,
+          guessing that any VC9 will be _MSC_VER 1500.
+
+        * ace/os_includes/sys/os_types.h: For non-Borland, non-Mingw ACE_WIN32
+          change mode_t from u_short to int. Matches CRT docs.
+
+        * ace/Local_Tokens.cpp:
+        * ace/Select_Reactor_Base.inl:
+        * ace/WFMO_Reactor.cpp:
+        * apps/Gateway/Gateway/Event_Channel.cpp:
+          Disable VC8's C4355 warning that 'this' is used in an initializer
+          list; we know, and it's ok.
+
+        * ace/Select_Reactor_T.cpp (ctor): Rather than pass a reference to
+          'this' incompletely constructed object to token_, call token_'s
+          reactor() method to set the reactor impl pointer.
+
+        * ace/Registry.{h cpp}: Rearranged setting of Binding_Iterator in the
+          inherited Iteration_State object. Instead of passing a reference to
+          an object that's not yet fully constructed, call a new iterator()
+          method to set that pointer.
+
+        * ace/Service_Config.cpp (ctor): Rather than set the TSS pointer in
+          the initializer list before it's complete, call ts_object() to set
+          it within the constructor body. We could also catch a setup error
+          here and throw an exception if ACE ever goes that way.
+
+        * ace/OS_NS_time.h (ace_timezone): Use the GetTimeZoneInformation()
+          system call to get timezone bias for all Windows platforms and
+          compilers. Much easier and faster than going through the C run-time
+          and will work with new US daylight savings changes automatically.
+
+        * ace/OS_NS_sys_stat.inl: (umask):
+        * ace/OS_NS_stdio.inl (vsnprintf):
+        * ace/OS_NS_stdio.cpp (sprintf, snprintf):
+        * ace/OS_NS_string.inl (strtok_r, strncat):
+        * ace/OS_NS_string.cpp (strerror):
+          Use "safer" functions when ACE_HAS_TR24731_2005_CRT.
+
+        * ace/OS_NS_time.{inl cpp}: (asctime_r, ctime_r, gmtime_r,
+          localtime_r): Use new functions when ACE_HAS_TR24731_2005_CRT.
+          NOTE - I purposely did not substitute the secure version for the
+          non _r methods (asctime, ctime, etc.) since that would have to use
+          a local static variable. That defeats the purpose of being able to
+          use a caller-supplied destination. Thus, the places that can
+          substitute a secure function are, and those that can't don't. This
+          will notify users of code that's potentially unsafe and allow them to
+          switch to the safer _r version. We can set the
+          _CRT_SECURE_NO_WARNINGS macro for non-inline builds (where the unsafe
+          versions will be compiled in) and leave the warning in place for
+          inlined builds to put the user on notice that a potentially unsafe
+          method is being used.
+
+        * ace/UUID.cpp (from_string_i): Use sscanf_s for VC8.
+
+        * ace/Atomic_Op_T.{cpp inl}:
+        * ace/INET_Addr.cpp:
+        * ace/Filecache.cpp:
+        * ace/Future.cpp:
+        * ace/Map_Manager.inl:
+        * ace/Message_Queue_T.cpp:
+        * ace/Process_Mutex.cpp:
+        * ace/RW_Process_Mutex.cpp:
+        * ace/Stream.cpp: Don't use 'this' in initializer list. Quiets
+          VC8's warnings.
+
+        * protocols/ace/TMCast/Group.{hpp cpp}: Change 'throw' to
+          ACE_THROW_SPEC to quiet the VC8 warnings.
+
+        * tests/unload_libace.mpb: Add _CRT_SECURE_NO_WARNINGS for VC8. Else
+          VC8 warns about fopen() and we don't care.
+
+        * ace/README: Added ACE_LACKS_WIN32_GETPROCESSTIMES.
+
+        * ace/config-WinCE.h: Added ACE_LACKS_WIN32_SECURITY_DESCRIPTORS and
+          ACE_LACKS_WIN32_GETPROCESSTIMES.
+
+        * ace/OS_NS_dirent.cpp (opendir_emulation): WinCE offers
+          GetFileAttributes() but documents a failing return value as
+          0xFFFFFFFF whereas on desktop/server Windows a failed call returns
+          INVALID_FILE_ATTRIBUTES. So on WinCE, define INVALID_FILE_ATTRIBUTES.
+
+        * ace/OS_NS_sys_resource.inl (getrusage): Don't try GetProcessTimes()
+          on Win32 if ACE_LACKS_WIN32_GETPROCESSTIMES is set.
+
+        * ace/OS_NS_stdio.inl (cuserid): WinCE returns ENOTSUP for these.
+
+        * ace/OS_NS_unistd.inl (chdir): If ACE_HAS_WINCE, return ENOTSUP.
+
+        * ace/Log_Record.cpp (operator<<): Truncate the message data length
+          down to 32 bits (ACE_CDR::ULong) size since that's all the
+          CDR ops and header field can handle.
+
+        * ace/Log_Msg_Backend.h:
+        * ace/Log_msg_UNIX_Syslog.{h cpp}:
+        * ace/Log_Msg_IPC.h:
+        * ace/Log_Msg_IPC.cpp (log): Changed the return type of log() from int
+          to ssize_t to match what it's returning (byte count or error).
+          Corrected the max_payload_size calculation
+          to match the header that operator<< (above) writes. The MAXLOGMSGLEN
+          isn't always enough now that ACE_Log_Record's data can be extended.
+
 Fri Mar  9 00:57:26 UTC 2007  Carlos O'Ryan  <coryan@atdesk.com>
 
         * ace/Event_Handler.cpp:
@@ -1022,7 +1176,8 @@ Wed Feb 21 21:46:18 UTC 2007  Steve Huston  <shuston@riverace.com>
 
         * ace/config-pharlap.h:
         * ace/config-WinCE.h:
-        * ace/OS_NS_stdio.inl: Changed ACE_LACKS_SETFILEPOINTEREX to
+        * ace/OS_NS_stdio.inl:
+        * ace/OS_NS_unistd.inl: Changed ACE_LACKS_SETFILEPOINTEREX to
           ACE_LACKS_WIN32_SETFILEPOINTEREX to be consistent with the other
           ACE_*_WIN32_*things.
 

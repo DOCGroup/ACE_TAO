@@ -67,7 +67,7 @@ ACE_Atomic_Op<ACE_LOCK, TYPE>::ACE_Atomic_Op (void)
 
 template <class ACE_LOCK, class TYPE>
 ACE_Atomic_Op<ACE_LOCK, TYPE>::ACE_Atomic_Op (const TYPE &c)
-  : impl_ (this->own_mutex_, c)
+  : impl_ (own_mutex_, c)
 {
   // ACE_TRACE ("ACE_Atomic_Op<ACE_LOCK, TYPE>::ACE_Atomic_Op");
 }

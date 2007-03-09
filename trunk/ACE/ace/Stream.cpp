@@ -589,7 +589,7 @@ ACE_Stream<ACE_SYNCH_USE>::ACE_Stream (void * a,
                                        ACE_Module<ACE_SYNCH_USE> *head,
                                        ACE_Module<ACE_SYNCH_USE> *tail)
   : linked_us_ (0),
-    final_close_ (this->lock_)
+    final_close_ (lock_)
 {
   ACE_TRACE ("ACE_Stream<ACE_SYNCH_USE>::ACE_Stream");
   if (this->open (a, head, tail) == -1)

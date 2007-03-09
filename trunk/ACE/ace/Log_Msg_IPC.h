@@ -59,7 +59,7 @@ public:
   virtual int open (const ACE_TCHAR *logger_key);
   virtual int reset (void);
   virtual int close (void);
-  virtual int log (ACE_Log_Record &log_record);
+  virtual ssize_t log (ACE_Log_Record &log_record);
 
 private:
   ACE_LOG_MSG_IPC_STREAM message_queue_;

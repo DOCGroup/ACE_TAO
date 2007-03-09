@@ -15,6 +15,31 @@ PLANNED CHANGES FOR "ACE-5.5.7"
 USER VISIBLE CHANGES BETWEEN ACE-5.5.6 and ACE-5.5.7
 ====================================================
 
+. ACE 5.5 contained a set of pragmas which prevented Visual Studio 2005 (VC8)
+  from issuing warnings where C run-time functions are used but a more
+  secure alternative is available. For more information on the C run-time
+  issues and Microsoft's response, please see the following MSDN page:
+  http://msdn2.microsoft.com/en-us/library/8ef0s5kh(VS.80).aspx.
+  In this beta, the pragmas which prevented the warnings have been removed.
+  The ACE library has been reviewed and most of the use of "unsafe" functions
+  has been fixed where possible. Since not all of the warnings emanating from
+  ACE are situations that can or should be fixed, the ACE VC8 projects will
+  prevent the warnings while building the ACE kit and its contained examples,
+  tests, etc. The warnings are disabled by adding Microsoft-specified macros
+  to the compile line via MPC. If desired, the warnings can be re-enabled by
+  regenerating the project files with different MPC features. Note, however,
+  that while ACE without warnings caused by the new C run-time functions, your
+  application builds may trigger these warnings either by use of the "unsafe"
+  C run-time functions or via use of an inlined ACE_OS method which uses it.
+  If the warning is caused by an ACE_OS method, there is a more safe alternate
+  available, probably located by appending _r to the method name (e.g.,
+  instead of using ACE_OS::ctime(), use ACE_OS::ctime_r()).
+  There are other cases where the compiler may have issued warnings and ACE
+  prevented this via a #pragma. These #pragmas have been removed as well.
+  This may cause your application builds to trigger more warnings from VC8
+  than past ACE versions. You should review your code and either correct
+  the code or disable the warnings locally, as appropriate.
+
 . The "release" argument to a number of ACE_String_Base<> methods was changed
   from int to bool to more accurately reflect its purpose. The following
   methods were changed:

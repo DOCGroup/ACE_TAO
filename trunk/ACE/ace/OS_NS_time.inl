@@ -48,6 +48,11 @@ ACE_OS::asctime_r (const struct tm *t, char *buf, int buflen)
   ACE_UNUSED_ARG (buf);
   ACE_UNUSED_ARG (buflen);
   ACE_NOTSUP_RETURN (0);
+#elif defined (ACE_HAS_TR24731_2005_CRT)
+  char *result = buf;
+  ACE_SECURECRTCALL (asctime_s (buf, static_cast<size_t> (buflen), t), \
+                     char*, 0, result);
+  return result;
 #else
   char *result = 0;
   ACE_OSCALL (ACE_STD_NAMESPACE::asctime (t), char *, 0, result);
@@ -169,6 +174,20 @@ ACE_OS::ctime_r (const time_t *t, ACE_TCHAR *buf, int buflen)
 #   else
   return bufp;
 #   endif /* ACE_USES_WCHAR */
+
+#elif defined (ACE_HAS_TR24731_2005_CRT)
+  if (buflen < ctime_buf_size)
+    {
+      errno = ERANGE;
+      return 0;
+    }
+  ACE_TCHAR *result = buf;
+#  if defined (ACE_USES_WCHAR)
+  ACE_SECURECRTCALL (_wctime_s (buf, buflen, t), wchar_t *, 0, result);
+#  else
+  ACE_SECURECRTCALL (ctime_s (buf, buflen, t), char *, 0, result);
+#  endif
+  return result;
 
 #else /* ACE_HAS_REENTRANT_FUNCTIONS */
   if (buflen < ctime_buf_size)
@@ -349,6 +368,10 @@ ACE_OS::gmtime_r (const time_t *t, struct tm *res)
 # else
   ACE_OSCALL_RETURN (::gmtime_r (t, res), struct tm *, 0);
 # endif /* DIGITAL_UNIX */
+#elif defined (ACE_HAS_TR24731_2005_CRT)
+  struct tm *tm_p = res;
+  ACE_SECURECRTCALL (gmtime_s (res, t), struct tm *, 0, tm_p);
+  return tm_p;
 #elif defined (ACE_LACKS_GMTIME_R)
   ACE_UNUSED_ARG (t);
   ACE_UNUSED_ARG (res);

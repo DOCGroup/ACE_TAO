@@ -1,0 +1,21 @@
+// -*- MPC -*-
+// $Id$
+
+// This file contains a number of optional features that disable VC8
+// warnings regarding various items that VC8 turned into warnings that were
+// not present in earlier versions. Some people may consider these superfluous
+// or have already checked code to be sure it causes no trouble. So these
+// warnings are disabled by default. To enable them, generate your projects
+// with the feature set to 0.
+
+feature(vc8_avoid_crt_secure_warnings) {
+  specific(vc8) {
+    macros += _CRT_SECURE_NO_WARNINGS
+  }
+}
+
+feature(vc8_avoid_scl_secure_warnings) {
+  specific(vc8) {
+    macros += _SCL_SECURE_NO_WARNINGS
+  }
+}

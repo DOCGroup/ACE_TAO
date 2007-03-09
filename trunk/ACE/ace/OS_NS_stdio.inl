@@ -413,6 +413,10 @@ ACE_OS::cuserid (char *user, size_t maxlen)
   ACE_UNUSED_ARG (user);
   ACE_UNUSED_ARG (maxlen);
   ACE_NOTSUP_RETURN (0);
+#elif defined (ACE_HAS_WINCE)
+  ACE_UNUSED_ARG (user);
+  ACE_UNUSED_ARG (maxlen);
+  ACE_NOTSUP_RETURN (0);
 #elif defined (ACE_WIN32)
   BOOL result = GetUserNameA (user, (u_long *) &maxlen);
   if (result == FALSE)
@@ -500,7 +504,11 @@ ACE_OS::cuserid (char *user, size_t maxlen)
 ACE_INLINE wchar_t *
 ACE_OS::cuserid (wchar_t *user, size_t maxlen)
 {
-# if defined (ACE_WIN32)
+# if defined (ACE_HAS_WINCE)
+  ACE_UNUSED_ARG (user);
+  ACE_UNUSED_ARG (maxlen);
+  ACE_NOTSUP_RETURN (0);
+# elif defined (ACE_WIN32)
   BOOL result = GetUserNameW (user, (u_long *) &maxlen);
   if (result == FALSE)
     ACE_FAIL_RETURN (0);
@@ -941,7 +949,9 @@ ACE_OS::vsnprintf (char *buffer, size_t maxlen, const char *format, va_list ap)
 {
 #if !defined (ACE_LACKS_VSNPRINTF)
   int result;
-#  if !defined (ACE_WIN32)
+#  if defined (ACE_HAS_TR24731_2005_CRT)
+  result = _vsnprintf_s (buffer, maxlen, _TRUNCATE, format, ap);
+#  elif !defined (ACE_WIN32)
   result = ::vsnprintf (buffer, maxlen, format, ap);
 #  else
   result = ::_vsnprintf (buffer, maxlen, format, ap);
@@ -983,7 +993,7 @@ ACE_OS::vsprintf (wchar_t *buffer, const wchar_t *format, va_list argptr)
 # if (defined _XOPEN_SOURCE && (_XOPEN_SOURCE - 0) >= 500) || \
      (defined (sun) && !(defined(_XOPEN_SOURCE) && (_XOPEN_VERSION-0==4))) || \
      (defined (ACE_HAS_DINKUM_STL) || defined (__DMC__)) || \
-      defined (ACE_HAS_VSWPRINTF)
+      defined (ACE_HAS_VSWPRINTF) || defined (ACE_WIN32_VC8)
 
   // The XPG4/UNIX98/C99 signature of the wide-char sprintf has a
   // maxlen argument. Since this method doesn't supply one, pass in
@@ -993,8 +1003,8 @@ ACE_OS::vsprintf (wchar_t *buffer, const wchar_t *format, va_list argptr)
   return vswprintf (buffer, 4096, format, argptr);
 
 # elif defined (ACE_WIN32)
-  // Windows has vswprintf, but the signature is from the older ISO C
-  // standard. Also see ACE_OS::snprintf() for more info on this.
+  // Windows has vswprintf, but the pre-VC8 signature is from the older
+  // ISO C standard. Also see ACE_OS::snprintf() for more info on this.
 
   return vswprintf (buffer, format, argptr);
 
@@ -1019,12 +1029,16 @@ ACE_OS::vsnprintf (wchar_t *buffer, size_t maxlen, const wchar_t *format, va_lis
 
   return vswprintf (buffer, maxlen, format, ap);
 
+# elif defined (ACE_HAS_TR24731_2005_CRT)
+
+  return _vsnwprintf_s (buffer, maxlen, _TRUNCATE, format, ap);
+
 # elif defined (ACE_WIN32)
 
   int result = ::_vsnwprintf (buffer, maxlen, format, ap);
 
   // Win32 doesn't regard a full buffer with no 0-terminate as an
-  // overrun.
+// overrun.
   if (result == static_cast<int> (maxlen))
     result = -1;
 

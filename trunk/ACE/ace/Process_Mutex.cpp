@@ -48,7 +48,7 @@ ACE_Process_Mutex::ACE_Process_Mutex (const char *name, void *arg, mode_t mode)
 #else
   : lock_ (USYNC_PROCESS,
            name ?
-             ACE_TEXT_CHAR_TO_TCHAR (name) : this->unique_name (),
+             ACE_TEXT_CHAR_TO_TCHAR (name) : unique_name (),
            (ACE_mutexattr_t *) arg,
            mode)
 #endif /* _ACE_USE_SV_SEM */
@@ -73,7 +73,7 @@ ACE_Process_Mutex::ACE_Process_Mutex (const wchar_t *name,
 #else
   : lock_ (USYNC_PROCESS,
            name ?
-             ACE_TEXT_WCHAR_TO_TCHAR (name) : this->unique_name (),
+             ACE_TEXT_WCHAR_TO_TCHAR (name) : unique_name (),
            (ACE_mutexattr_t *) arg,
            mode)
 #endif /* _ACE_USE_SV_SEM */
