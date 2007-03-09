@@ -337,18 +337,6 @@ endif
 
 CCFLAGS         += $(C++FLAGS)
 
-ifeq (0,$(rtp))
-PIC              =
-else
-  ifeq ("$(TOOL_FAMILY)","diab")
-    PIC = -Xpic
-  else
-  ifeq ("$(TOOL_FAMILY)","gnu")
-    PIC = -fpic
-  endif
-endif
-endif
-
 ifeq ("$(VXWORKSLINK)","true")
 
   ifdef repo
