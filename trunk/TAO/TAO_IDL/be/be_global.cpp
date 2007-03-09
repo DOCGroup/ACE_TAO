@@ -1771,7 +1771,7 @@ BE_GlobalData::parse_args (long &i, char **av)
         if (av[i][2] == '\0')
           {
             idl_global->append_idl_flag (av[i + 1]);
-            ACE_CString tmp (av[i + 1], 0, 0);
+            ACE_CString tmp (av[i + 1], 0, false);
 #if defined (ACE_WIN32)
             // WIN32's CreateProcess needs the full executable name
             // when the gperf path is modified, but not for the default

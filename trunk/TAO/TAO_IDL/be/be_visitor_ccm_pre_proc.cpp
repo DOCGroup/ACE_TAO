@@ -951,7 +951,7 @@ be_visitor_ccm_pre_proc::gen_push_op (be_eventtype *node,
   push_op->set_name (op_full_name);
   ACE_CString arg_string ("the_",
                           0,
-                          0);
+                          false);
   arg_string += node->local_name ();
   Identifier arg_id (arg_string.fast_rep ());
   UTL_ScopedName arg_name (&arg_id,
@@ -1843,7 +1843,7 @@ be_visitor_ccm_pre_proc::create_scoped_name (const char *prefix,
 {
   ACE_CString local_string (prefix,
                             0,
-                            0);
+                            false);
   local_string += local_name;
   local_string += suffix;
   Identifier *local_id = 0;
