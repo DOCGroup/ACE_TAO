@@ -1092,65 +1092,49 @@ namespace
       virtual void
       traverse (SemanticGraph::Publisher& p)
       {
+        string uc_port_name (p.name ().str ());
+        str_upcase (uc_port_name);
+
         os << "if (ACE_OS::strcmp (publisher_name, \""
            << p.name ().unescaped_str () << "\") == 0)" << endl
            << "{"
            << "_ciao_size = this->ciao_publishes_" << p.name ()
-           << "_map_.current_size ();" << endl
-           << "ACE_NEW_THROW_EX ("
+           << "_.size ();" << endl;
+           
+        os << "ACE_NEW_THROW_EX ("
            << "tmp," << endl
            << STRS[COMP_CD] << " (_ciao_size)," << endl
            << "::CORBA::NO_MEMORY ());" << endl
            << "retval = tmp;"
-           << "retval->length (_ciao_size);" << endl
-           << "ACE_Active_Map_Manager<" << endl;
-
-        Traversal::PublisherData::belongs (p, belongs_);
-
-        os << "Consumer_var>::iterator end =" << endl
-           << "  this->ciao_publishes_" << p.name ()
-           << "_map_.end ();" << endl
-           << "for (ACE_Active_Map_Manager<" << endl
-           << "  ";
-
-        Traversal::PublisherData::belongs (p, belongs_);
-
-        os << "Consumer_var>::iterator iter =" << endl
-           << "    this->ciao_publishes_" << p.name ()
-           << "_map_.begin ();"
-           << "iter != end;"
-           << "++iter)" << endl
-           << "{"
-           << "ACE_Active_Map_Manager<" << endl;
-
-        Traversal::PublisherData::belongs (p, belongs_);
-
-        os << "Consumer_var>::entry &e = *iter;" << endl;
-
-        Traversal::PublisherData::belongs (p, belongs_);
-
-        os << "Consumer_var c =" << endl;
-
-        Traversal::PublisherData::belongs (p, belongs_);
-
-        os << "Consumer::_narrow (e.int_id_.in ());"
+           << "retval->length (_ciao_size);" << endl;
+           
+        os << "for (" << uc_port_name << "_TABLE::const_iterator iter ="
            << endl
-           << "if ( ::CORBA::is_nil (c.in ()))"
+           << "  this->ciao_publishes_" << p.name () << "_.begin ();"
+           << endl
+           << "iter != this->ciao_publishes_" << p.name () << "_.end ();"
+           << endl
+           << "++iter, ++_ciao_index)" << endl
+           << "{"      
+           << "if ( ::CORBA::is_nil (iter->second.in ()))"
            << "{"
            << "throw " << STRS[EXCP_IC] << " ();"
-           << "}"
-           << "::Components::ConsumerDescription *cd = 0;"
+           << "}";
+           
+        os << "::Components::ConsumerDescription *cd = 0;"
            << "ACE_NEW_THROW_EX ("
            << "cd," << endl
            << "OBV_Components::ConsumerDescription ()," << endl
-           << "::CORBA::NO_MEMORY ());" << endl
-           << "::Components::ConsumerDescription_var safe = cd;"
+           << "::CORBA::NO_MEMORY ());" << endl;
+           
+        os << "::Components::ConsumerDescription_var safe = cd;"
            << "safe->name (\"\");"
            << "safe->type_id (\"\");"
-           << "safe->consumer (c.in ());" << endl
-           << "retval[_ciao_index++] = safe;"
-           << "}"
-           << "return retval._retn ();"
+           << "safe->consumer (iter->second.in ());"
+           << "retval[_ciao_index] = safe;"
+           << "}";
+           
+        os << "return retval._retn ();"
            << "}";
       }
 
