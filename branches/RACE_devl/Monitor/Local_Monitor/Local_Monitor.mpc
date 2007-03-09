@@ -1,0 +1,18 @@
+project(Local_Monitor): ciao_client_dnc, naming, ciao_race_default, portableserver{
+  sharedname = Local_Monitor
+  after += Monitor_stub
+  libs += Monitor_stub
+
+  dynamicflags   = LOCAL_MONITOR_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Header_Files {
+  Local_Monotor.h
+  }
+
+  Source_Files {
+    Local_Monitor.cpp
+  }
+}

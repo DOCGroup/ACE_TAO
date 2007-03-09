@@ -1,0 +1,602 @@
+Thu Mar  8 23:17:24 UTC 2007  Nishanth Shankaran  <nshankar@nospam.com>
+
+        * common/Goal.idl:
+        * common/OpString.idl:
+        * common/QoS.idl:
+        * common/Time.idl:
+
+        Refined the operational string structure and re-structured the IDL files.
+
+        * common/RACE_common.mpc: Commented out building of RACE_common
+          project due to compilation errors. Need to fix later on.
+
+Wed Mar  7 16:27:59 UTC 2007  Nishanth Shankaran  <nshankar@nospam.com>
+
+        * Controller/common/Subtask.h: Added the time_val structure.
+
+        * Controller/common/Task.h: Made cosmetic changes to the
+          structure.
+
+Tue Mar  6 23:31:42 UTC 2007  Nishanth Shankaran  <nshankar@nospam.com>
+
+        * Controller/common:
+        * Controller/common/Domain.h:
+        * Controller/common/Subtask.h:
+        * Controller/common/Task.h: Adding structure of an end-to-end
+          task.
+
+Fri Jan 19 18:52:36 UTC 2007  Nishanth Shankaran  <nshankar@nospam.com>
+
+        * Monitor/Central_Monitor/Monitor.idl:
+        * Monitor/Central_Monitor/Monitor.mpc:
+        * Monitor/Local_Monitor/Local_Monitor.h:
+        * Monitor/Local_Monitor/Local_Monitor.mpc: Updated these files to
+          fix compilation errors on linux.
+
+        * Monitor/Central_Monitor/Interface.idl:
+        * Monitor/Central_Monitor/Interface_stub_export.h:
+        * Monitor/Central_Monitor/Interface_svnt_export.h:
+
+          Removed these files.
+
+Fri Jan 19 17:53:23 UTC 2007  Nishanth Shankaran  <nshankar@nospam.com>
+
+        * Monitor/Central_Monitor/Interface.idl:
+        * Monitor/Central_Monitor/Interface_stub_export.h:
+        * Monitor/Central_Monitor/Interface_svnt_export.h: Refactored the
+          Interface "provided" by the Central Monitor component into a
+          separate IDL file.
+
+Fri Jan 19 17:44:42 UTC 2007  Nishanth Shankaran  <nshankar@nospam.com>
+
+        * Controller/Component/Controller.idl:
+        * Controller/Component/Interface.idl:
+        * Input_Adapters/Interactive_Input_Adapter/Interactive_Input_Adapter.idl:
+        * Monitor/Central_Monitor/Monitor.idl:
+        * Monitor/Central_Monitor/Monitor.mpc:
+        * Monitor/Local_Monitor/Local_Monitor.h:
+        * Monitor/Local_Monitor/Local_Monitor.cpp:
+        * Monitor/Local_Monitor/Local_Monitor.mpc:
+        * Output_Adapters/Interface/PlanEgress.idl:
+        * Plan_Analyzer/Interface/Analyzer_I.idl:
+        * Plan_Analyzer/Interface/PlanIngress.idl:
+        * Planner_Manager/Interface/Planner_Manager_I.idl:
+        * Planners/Interface/Planner_I.idl:
+        * Planners/StaticPlanner/StaticPlanner.idl:
+        * common/RACE_common.idl: Fixed the IDL files to be consistent
+          with the recent refactoring of CIAO IDL files.
+
+Thu Nov 30 19:00:22 UTC 2006  Nishanth Shankaran  <nshankar@nospam.com>
+
+        * Controller/Component/Controller.mpc:
+        * Input_Adapters/Base/Input_Adapter.mpc:
+        * Input_Adapters/Interactive_Input_Adapter/Interactive_Input_Adapter.mpc:
+        * Monitor/Central_Monitor/Monitor.mpc:
+        * Output_Adapters/Component/Output_Manager.mpc:
+        * Output_Adapters/DAnCE_Output_Adapter/DAnCE_Output_Adapter.mpc:
+        * Output_Adapters/Interface/Output_Adapter_Interface.mpc:
+        * Output_Adapters/XML_Output_Adapter/XML_Output_Adapter.mpc:
+        * Plan_Analyzer/Component/Plan_Analyzer.mpc:
+        * Plan_Analyzer/Interface/Plan_Analyzer_Interface.mpc:
+        * Planner_Manager/Component/Planner_Manager.mpc:
+        * Planner_Manager/Interface/Planner_Manager_Interface.mpc:
+        * Planners/Base/Planner.mpc:
+        * Planners/Interface/Planner_Interface.mpc:
+        * Planners/StaticPlanner/StaticPlanner.mpc:
+        * common/RACE_common.mpc: Modified the mpc files to take care of
+          the export macro stuff.
+
+Tue Nov 14 18:52:38 UTC 2006  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
+
+        * SA_POP/SPACE.san.xml: Removed
+        * SA_POP/SPACE.tm.xml: Removed
+        * SA_POP/SPACE_Goal1.san.xml: Removed
+        * SA_POP/SPACE_Goal2.san.xml: Removed
+
+        * SA_POP/server/SPACE.san: Added revised space example task network
+        * SA_POP/server/SPACE.tm: Added revised space example task network
+        * SA_POP/server/client.cpp: Revised for multiple condition goals
+
+        Updated SA-POP SPACE example and client.
+
+Tue Nov 14 05:44:28 GMT 2006  Nishanth Shankaran  <nshankar@nospam.com>
+
+        * Monitor/Local_Monitor/Local_Monitor_export.h: Added the export
+          macro file.
+
+        * Monitor/Local_Monitor/Local_Monitor.cpp:
+        * Monitor/Local_Monitor/Local_Monitor.h (CIAO):
+        * Monitor/Local_Monitor/Local_Monitor.mpc (project): Updated the monitor.
+
+Wed Nov  8 00:38:28 UTC 2006  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
+
+        * SA_POP/server/Driver.cpp:
+        * SA_POP/server/client.h:
+        * SA_POP/server/client.cpp:
+        * SA_POP/server/server.cpp:
+
+        Client and server updates/debugging for ATC Demo
+
+Tue Nov  7 19:50:13 UTC 2006  Nishanth Shankaran  <nshankar@nosmam.com>
+
+        * SA_POP/SA_POP.mpc:
+        * SA_POP/SA_WorkingPlan.h:
+
+        * SA_POP/server/Driver.cpp:
+        * SA_POP/server/Driver.mpc: Fixed linking error on mac.
+
+Tue Nov  7 19:23:15 UTC 2006  Nishanth Shankaran  <nshankar@nospam.com>
+
+        * SA_POP/Builder.h:
+        * SA_POP/LogScreenOut.h:
+        * SA_POP/LogScreenOut_Export.h:
+
+        * SA_POP/SANet/SANetFileIn.h:
+        * SA_POP/SANet/SANetFileIn_Export.h:
+
+        * SA_POP/SA_Builder.h:
+        * SA_POP/SA_Builder.cpp:
+        * SA_POP/SA_Builder_Export.h:
+        * SA_POP/SA_POP.mpc:
+        * SA_POP/TaskMapFileIn.h:
+        * SA_POP/TaskMapFileIn_Export.h:
+
+        * SA_POP/server/Driver.h:
+        * SA_POP/server/Driver.cpp:
+        * SA_POP/server/Driver.idl:
+        * SA_POP/server/Driver.mpc:
+        * SA_POP/server/Driver_stub_export.h:
+        * SA_POP/server/Driver_svnt_export.h: Fixed problems related to
+          "export macros" on windows.
+
+Mon Nov  6 22:37:28 UTC 2006  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
+
+        * SA_POP/server/Driver.mpc:
+        * SA_POP/server/client.h: Added file.
+        * SA_POP/server/client.cpp:
+
+        Updated SA-POP demo client for text UI options.
+
+Mon Nov  6 04:42:43 UTC 2006  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
+
+        * common/OpString.idl:
+
+        * SA_POP/SA_POP.mpc:
+        * SA_POP/SA_POP_Types.h:
+        * SA_POP/SA_WorkingPlan.cpp:
+        * SA_POP/Converter.h: Removed
+        * SA_POP/Converter.cpp: Removed
+        * SA_POP/Driever.cpp: Removed
+
+        * SA_POP/server/Driver.h:
+        * SA_POP/server/Driver.cpp:
+        * SA_POP/server/Driver.mpc:
+        * SA_POP/server/server.cpp:
+
+        Updated SA-POP driver/server to handle IDL goal structure.
+
+Sat Nov  4 19:07:07 UTC 2006  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
+
+        * SA_POP/Driver.cpp:
+        * SA_POP/Planner.h:
+        * SA_POP/Planner.cpp:
+        * SA_POP/SA_POP_Types.h:
+        * SA_POP/SA_WorkingPlan.h:
+        * SA_POP/SA_WorkingPlan.cpp:
+        * SA_POP/SPACE.san.xml:
+        * SA_POP/WorkingPlan.h:
+        * SA_POP/SANet/SANet.cpp:
+        * SA_POP/SANet/SANode.h:
+        * SA_POP/SANet/SANode.cpp:
+
+        Updated SA-POP goal handling.
+
+
+Thu Nov  2 23:41:56 UTC 2006  Nishanth Shankaran  <nshankar@nospam.com>
+
+        * SA_POP/server:
+        * SA_POP/server/Driver.h:
+        * SA_POP/server/Driver.idl:
+        * SA_POP/server/Driver.cpp:
+        * SA_POP/server/Driver.mpc:
+        * SA_POP/server/client.cpp:
+        * SA_POP/server/server.cpp: Added the "driver server".
+
+Thu Nov  2 19:25:01 UTC 2006  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
+
+        * SA_POP/Driver.cpp:
+        * SA_POP/SA_POP_Types.h:
+        * SA_POP/SA_PlanCommands.cpp:
+        * SA_POP/SA_WorkingPlan.cpp:
+
+        Revised code to correct errors in Linux compilation.
+
+Thu Nov  2 17:48:07 UTC 2006  Nishanth Shankaran  <nshanka@nospam.com>
+
+        * Controller/Component/Poller.cpp: Fixed compiler warnings.
+
+        * Output_Adapters/Component/Output_Manager_exec.cpp:
+        * Output_Adapters/DAnCE_Output_Adapter/DAnCE_Output_Adapter_exec.h:
+        * Output_Adapters/DAnCE_Output_Adapter/DAnCE_Output_Adapter_exec.cpp:
+
+        Make some cosmetic changes.
+
+        * Output_Adapters/XML_Output_Adapter:
+        * Output_Adapters/XML_Output_Adapter/XML_Output_Adapter.cidl:
+        * Output_Adapters/XML_Output_Adapter/XML_Output_Adapter.idl:
+        * Output_Adapters/XML_Output_Adapter/XML_Output_Adapter.mpc:
+        * Output_Adapters/XML_Output_Adapter/XML_Output_Adapter_exec.h:
+        * Output_Adapters/XML_Output_Adapter/XML_Output_Adapter_exec.cpp:
+        * Output_Adapters/XML_Output_Adapter/XML_Output_Adapter_exec_export.h:
+        * Output_Adapters/XML_Output_Adapter/XML_Output_Adapter_stub_export.h:
+        * Output_Adapters/XML_Output_Adapter/XML_Output_Adapter_svnt_export.h:
+
+        Added the XML output adapter.
+
+        * RACE.mwc: Create a new project file.
+
+        * descriptors/RACE.cdp: Modified the descriptor to include the XML
+          output adapter.
+Wed Nov  1 19:24:27 UTC 2006  Nishanth Shankaran  <nshankar@nospam.com>
+
+        * descriptors/run_all.pl:
+        * descriptors/run_ground.pl:
+        * descriptors/run_space.pl: Added these startup scripts.
+
+Wed Nov  1 18:58:45 UTC 2006  Nishanth Shankaran  <nshankar@nospan.com>
+
+        * SA_POP/Converter.h:
+        * SA_POP/SANet/SANetFileIn.h:
+        * SA_POP/SA_POP.mpc:
+        * common/OpString.idl:
+
+        Fixed compilation errors and warnings on linux.
+
+Wed Nov  1 17:07:41 UTC 2006  Nishanth Shankaran  <nshankar@nospam.com>
+
+        * SA_POP/Converter.cpp:
+        * SA_POP/Driver.cpp:
+
+        * descriptors/Domain.cdd:
+        * descriptors/NodeDetails.dat:
+        * descriptors/RACE.cdp:
+        * descriptors/run_RACE.pl:
+
+        Checking in the codebase used for the ATC demo.
+
+Wed Oct 25 22:27:20 UTC 2006  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
+
+        * common/OpString.idl:  Added Goal IDL structure.
+
+Fri Oct 13 15:52:30 UTC 2006  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
+
+        * SA_POP/Builder.h
+        * SA_POP/Converter.cpp
+        * SA_POP/Converter.h
+        * SA_POP/Driver.cpp
+        * SA_POP/LogFileOut.cpp
+        * SA_POP/LogFileOut.h
+        * SA_POP/LogScreenOut.cpp
+        * SA_POP/LogScreenOut.h
+        * SA_POP/OutAdapter.h
+        * SA_POP/PlanCommands.h
+        * SA_POP/PlanHeuristics.h
+        * SA_POP/Planner.cpp
+        * SA_POP/Planner.h
+        * SA_POP/PlanStrategy.h
+        * SA_POP/SA_Builder.cpp
+        * SA_POP/SA_Builder.h
+        * SA_POP/SA_PlanCommands.cpp
+        * SA_POP/SA_PlanCommands.h
+        * SA_POP/SA_PlanHeuristics.cpp
+        * SA_POP/SA_PlanHeuristics.h
+        * SA_POP/SA_PlanStrategy.cpp
+        * SA_POP/SA_PlanStrategy.h
+        * SA_POP/SA_POP.mpc
+        * SA_POP/SA_POP_Exceptions.cpp
+        * SA_POP/SA_POP_Exceptions.h
+        * SA_POP/SA_POP_Types.h
+        * SA_POP/SA_SchedStrategy.cpp
+        * SA_POP/SA_SchedStrategy.h
+        * SA_POP/SA_WorkingPlan.cpp
+        * SA_POP/SA_WorkingPlan.h
+        * SA_POP/SchedStrategy.h
+        * SA_POP/SPACE.san.xml
+        * SA_POP/SPACE.tm.xml
+        * SA_POP/SPACE_Goal1.san.xml
+        * SA_POP/SPACE_Goal2.san.xml
+        * SA_POP/TaskImpl.cpp
+        * SA_POP/TaskImpl.h
+        * SA_POP/TaskMap.cpp
+        * SA_POP/TaskMap.h
+        * SA_POP/TaskMapFileIn.cpp
+        * SA_POP/TaskMapFileIn.h
+        * SA_POP/WorkingPlan.h
+        * SA_POP/XML_TaskMap.cpp
+        * SA_POP/XML_TaskMap.hpp
+        * SA_POP/SANet/SANet.cpp
+        * SA_POP/SANet/SANet.h
+        * SA_POP/SANet/SANetFileIn.cpp
+        * SA_POP/SANet/SANetFileIn.h
+        * SA_POP/SANet/SANet_Exceptions.cpp
+        * SA_POP/SANet/SANet_Exceptions.h
+        * SA_POP/SANet/SANet_Types.h
+        * SA_POP/SANet/SANode.cpp
+        * SA_POP/SANet/SANode.h
+        * SA_POP/SANet/XML_SANet.cpp
+        * SA_POP/SANet/XML_SANet.hpp
+        * common/OpString.idl: Revised to fix namespace problem with TimeValue.
+        * Input_Adapters/Interactive_Input_Adapter/Interactive_Input_Adapter.mpc: Removed Converter project.
+        * Input_Adapters/Interactive_Input_Adapter/Converter.cpp: Moved to SA_POP directory.
+        * Input_Adapters/Interactive_Input_Adapter/Converter.h: Moved to SA_POP directory.
+
+        Added SA-POP files.
+
+
+Wed Oct 11 14:02:30 UTC 2006  Nishanth Shankaran  <nshankar@dre.vanderbilt.edu>
+
+        * Controller/Component/starter.cpp:
+        * Monitor/Local_Monitor/Local_Monitor.h:
+        * Monitor/Local_Monitor/Local_Monitor.cpp: Fixed compilation
+          errors on windows.
+
+        * common/OpString.idl: Fixed compilation errors.
+
+Wed Oct 11 00:48:28 UTC 2006  Nishanth Shankaran  <nshankar@dre.vanderbilt.edu>
+
+        * Controller/Component/Controller.mpc:
+        * Controller/Component/Controller_exec.cpp:
+        * Controller/Component/Descriptor.cpp: Fixed compilation errors
+          related to variadic macros.
+
+        * Controller/Component/RACE_common.h:
+
+          Removed this file.
+
+
+
+Tue Oct 10 23:12:25 UTC 2006  Nishanth Shankaran  <nshankar@dre.vanderbilt.edu>
+
+        * Input_Adapters/Interactive_Input_Adapter/Converter.h:
+        * Input_Adapters/Interactive_Input_Adapter/Converter.cpp: Checking
+          in the initial version of the "converter" that converts
+          OperationalString IDL structure to DeploymentPlan IDL structure.
+        * Input_Adapters/Interactive_Input_Adapter/Interactive_Input_Adapter.idl:
+        * Input_Adapters/Interactive_Input_Adapter/Interactive_Input_Adapter.mpc:
+        * Input_Adapters/Interactive_Input_Adapter/Interactive_Input_Adapter_exec.h:
+        * Input_Adapters/Interactive_Input_Adapter/Interactive_Input_Adapter_exec.cpp:
+
+        Updated the IIA to accept inputs from the converter.
+
+        * common/OpString.idl: Extended the OperationalString and
+          InstanceDescription structures.
+
+
+Mon Oct  2 20:14:55 UTC 2006  Nishanth Shankaran  <nshankar@dre.vanderbilt.edu>
+
+        * Output_Adapters/Component/Output_Manager.mpc:
+        * Output_Adapters/DAnCE_Output_Adapter/DAnCE_Output_Adapter.mpc:
+          Fixed linking errors on mac.
+
+        * descriptors/RACE.cdp: Checking in the CDP generated from the
+          RACE model.
+
+Mon Sep 18 23:24:48 UTC 2006  Nishanth Shankaran  <nshankar@dre.vanderbilt.edu>
+
+        * common/Opstring.idl: Updated the IDL structure.
+
+Mon Sep 18 18:57:51 UTC 2006  Nishanth Shankaran  <nshankar@dre.vanderbilt.edu>
+
+        * common/OpString.idl:
+        * common/OpString_stub_export.h:
+        * common/RACE_common.idl:
+        * common/RACE_common.mpc: Added the operational-string IDL
+          structure.
+
+Tue Sep  5 23:29:45 UTC 2006  Nishanth Shankaran  <nshankar@dre.vanderbilt.edu>
+
+        * Controller/Component/Controller.mpc:
+        * Output_Adapters/Component/Output_Manager.mpc:
+        * Output_Adapters/DAnCE_Output_Adapter/DAnCE_Output_Adapter.mpc:
+        * Planner_Manager/Component/Planner_Manager.mpc:
+        * Planners/StaticPlanner/StaticPlanner.mpc: Updated the mpc files
+          to prevent linking errors on mac.
+
+        * Controller/Component/Path.idl: Removed this file as it's no
+          longer needed.
+
+Tue Sep  5 21:03:22 UTC 2006  Nishanth Shankaran  <nshankar@dre.vanderbilt.edu>
+
+        * descriptors/flattened_deploymentplan.cdp: Removed this file
+          since it was accidently added during the previous check-in.
+
+Tue Sep  5 20:33:35 UTC 2006  Nishanth Shankaran  <nshankar@dre.vanderbilt.edu>
+
+        * Controller:
+
+        * Controller/Component:
+
+        * Controller/Component/Controller.cidl:
+        * Controller/Component/Controller.idl:
+        * Controller/Component/Controller.mpc:
+        * Controller/Component/Controller_exec.h:
+        * Controller/Component/Controller_exec.cpp:
+        * Controller/Component/Controller_exec_export.h:
+        * Controller/Component/Controller_stub_export.h:
+        * Controller/Component/Controller_svnt_export.h:
+        * Controller/Component/Descriptor.h:
+        * Controller/Component/Descriptor.cpp:
+        * Controller/Component/Interface.idl:
+        * Controller/Component/Path.idl:
+        * Controller/Component/PathS_T.h:
+        * Controller/Component/PathS_T.inl:
+        * Controller/Component/PathS_T.cpp:
+        * Controller/Component/Path_exec_export.h:
+        * Controller/Component/Path_stub_export.h:
+        * Controller/Component/Path_svnt_export.h:
+        * Controller/Component/Poller.:
+        * Controller/Component/Poller.h:
+        * Controller/Component/Poller.cpp:
+        * Controller/Component/RACE_common.h:
+        * Controller/Component/common.h:
+        * Controller/Component/starter.cpp:
+
+        * Input_Adapters:
+
+        * Input_Adapters/Base:
+
+        * Input_Adapters/Base/Input_Adapter.idl:
+        * Input_Adapters/Base/Input_Adapter.mpc:
+        * Input_Adapters/Base/Input_Adapter_stub_export.h:
+        * Input_Adapters/Base/Input_Adapter_svnt_export.h:
+
+        * Input_Adapters/Interactive_Input_Adapter:
+
+        * Input_Adapters/Interactive_Input_Adapter/Injector.cpp:
+        * Input_Adapters/Interactive_Input_Adapter/Interactive_Input_Adapter.cidl:
+        * Input_Adapters/Interactive_Input_Adapter/Interactive_Input_Adapter.idl:
+        * Input_Adapters/Interactive_Input_Adapter/Interactive_Input_Adapter.mpc:
+        * Input_Adapters/Interactive_Input_Adapter/Interactive_Input_Adapter_exec.h:
+        * Input_Adapters/Interactive_Input_Adapter/Interactive_Input_Adapter_exec.cpp:
+        * Input_Adapters/Interactive_Input_Adapter/Interactive_Input_Adapter_exec_export.h:
+        * Input_Adapters/Interactive_Input_Adapter/Interactive_Input_Adapter_stub_export.h:
+        * Input_Adapters/Interactive_Input_Adapter/Interactive_Input_Adapter_svnt_export.h:
+
+        * Monitor:
+
+        * Monitor/Central_Monitor:
+
+        * Monitor/Central_Monitor/Monitor.h:
+        * Monitor/Central_Monitor/Monitor.cidl:
+        * Monitor/Central_Monitor/Monitor.idl:
+        * Monitor/Central_Monitor/Monitor.cpp:
+        * Monitor/Central_Monitor/Monitor.mpc:
+        * Monitor/Central_Monitor/Monitor_exec.h:
+        * Monitor/Central_Monitor/Monitor_exec.cpp:
+        * Monitor/Central_Monitor/Monitor_exec_export.h:
+        * Monitor/Central_Monitor/Monitor_stub_export.h:
+        * Monitor/Central_Monitor/Monitor_svnt_export.h:
+
+        * Monitor/Local_Monitor:
+
+        * Monitor/Local_Monitor/Local_Monitor.h:
+        * Monitor/Local_Monitor/Local_Monitor.cpp:
+        * Monitor/Local_Monitor/Local_Monitor.mpc:
+
+        * Output_Adapters:
+
+        * Output_Adapters/Base:
+
+        * Output_Adapters/Base/Output_Adapter.idl:
+        * Output_Adapters/Base/Output_Adapter.mpc:
+        * Output_Adapters/Base/Output_Adapter_stub_export.h:
+        * Output_Adapters/Base/Output_Adapter_svnt_export.h:
+
+        * Output_Adapters/Component:
+
+        * Output_Adapters/Component/Output_Manager.cidl:
+        * Output_Adapters/Component/Output_Manager.idl:
+        * Output_Adapters/Component/Output_Manager.mpc:
+        * Output_Adapters/Component/Output_Manager_exec.h:
+        * Output_Adapters/Component/Output_Manager_exec.cpp:
+        * Output_Adapters/Component/Output_Manager_exec_export.h:
+        * Output_Adapters/Component/Output_Manager_stub_export.h:
+        * Output_Adapters/Component/Output_Manager_svnt_export.h:
+
+        * Output_Adapters/DAnCE_Output_Adapter:
+
+        * Output_Adapters/DAnCE_Output_Adapter/DAnCE_Output_Adapter.cidl:
+        * Output_Adapters/DAnCE_Output_Adapter/DAnCE_Output_Adapter.idl:
+        * Output_Adapters/DAnCE_Output_Adapter/DAnCE_Output_Adapter.mpc:
+        * Output_Adapters/DAnCE_Output_Adapter/DAnCE_Output_Adapter_exec.h:
+        * Output_Adapters/DAnCE_Output_Adapter/DAnCE_Output_Adapter_exec.cpp:
+        * Output_Adapters/DAnCE_Output_Adapter/DAnCE_Output_Adapter_exec_export.h:
+        * Output_Adapters/DAnCE_Output_Adapter/DAnCE_Output_Adapter_stub_export.h:
+        * Output_Adapters/DAnCE_Output_Adapter/DAnCE_Output_Adapter_svnt_export.h:
+
+        * Output_Adapters/Interface:
+
+        * Output_Adapters/Interface/Output_Adapter_Interface.mpc:
+        * Output_Adapters/Interface/Output_Adapter_Interface_stub_export.h:
+        * Output_Adapters/Interface/Output_Adapter_Interface_svnt_export.h:
+        * Output_Adapters/Interface/PlanEgress.idl:
+
+        * Plan_Analyzer:
+
+        * Plan_Analyzer/Component:
+
+        * Plan_Analyzer/Component/Plan_Analyzer.cidl:
+        * Plan_Analyzer/Component/Plan_Analyzer.idl:
+        * Plan_Analyzer/Component/Plan_Analyzer.mpc:
+        * Plan_Analyzer/Component/Plan_Analyzer_exec.h:
+        * Plan_Analyzer/Component/Plan_Analyzer_exec.cpp:
+        * Plan_Analyzer/Component/Plan_Analyzer_exec_export.h:
+        * Plan_Analyzer/Component/Plan_Analyzer_stub_export.h:
+        * Plan_Analyzer/Component/Plan_Analyzer_svnt_export.h:
+
+        * Plan_Analyzer/Interface:
+
+        * Plan_Analyzer/Interface/Analyzer_I.idl:
+        * Plan_Analyzer/Interface/Analyzer_I_exec_export.h:
+        * Plan_Analyzer/Interface/Analyzer_I_stub_export.h:
+        * Plan_Analyzer/Interface/Analyzer_I_svnt_export.h:
+        * Plan_Analyzer/Interface/PlanIngress.idl:
+        * Plan_Analyzer/Interface/Plan_Analyzer_Interface.mpc:
+        * Plan_Analyzer/Interface/Plan_Analyzer_Interface_stub_export.h:
+        * Plan_Analyzer/Interface/Plan_Analyzer_Interface_svnt_export.h:
+
+        * Planner_Manager:
+
+        * Planner_Manager/Component:
+
+        * Planner_Manager/Component/Planner_Manager.cidl:
+        * Planner_Manager/Component/Planner_Manager.idl:
+        * Planner_Manager/Component/Planner_Manager.mpc:
+        * Planner_Manager/Component/Planner_Manager_exec.h:
+        * Planner_Manager/Component/Planner_Manager_exec.cpp:
+        * Planner_Manager/Component/Planner_Manager_exec_export.h:
+        * Planner_Manager/Component/Planner_Manager_stub_export.h:
+        * Planner_Manager/Component/Planner_Manager_svnt_export.h:
+
+        * Planner_Manager/Interface:
+
+        * Planner_Manager/Interface/Planner_Manager_I.idl:
+        * Planner_Manager/Interface/Planner_Manager_Interface.mpc:
+        * Planner_Manager/Interface/Planner_Manager_Interface_stub_export.h:
+        * Planner_Manager/Interface/Planner_Manager_Interface_svnt_export.h:
+
+        * Planners:
+
+        * Planners/Base:
+
+        * Planners/Base/Planner.idl:
+        * Planners/Base/Planner.mpc:
+        * Planners/Base/Planner_stub_export.h:
+        * Planners/Base/Planner_svnt_export.h:
+
+        * Planners/Interface:
+
+        * Planners/Interface/Planner_I.idl:
+        * Planners/Interface/Planner_Interface.mpc:
+        * Planners/Interface/Planner_Interface_stub_export.h:
+        * Planners/Interface/Planner_Interface_svnt_export.h:
+
+        * Planners/StaticPlanner:
+
+        * Planners/StaticPlanner/StaticPlanner.cidl:
+        * Planners/StaticPlanner/StaticPlanner.idl:
+        * Planners/StaticPlanner/StaticPlanner.mpc:
+        * Planners/StaticPlanner/StaticPlanner_exec.h:
+        * Planners/StaticPlanner/StaticPlanner_exec.cpp:
+        * Planners/StaticPlanner/StaticPlanner_exec_export.h:
+        * Planners/StaticPlanner/StaticPlanner_stub_export.h:
+        * Planners/StaticPlanner/StaticPlanner_svnt_export.h:
+
+        * common/RACE_Log_Msg.h:
+
+        * descriptors/Domain.cdd:
+        * descriptors/NodeDetails.dat:
+        * descriptors/RACE.cdp:
+        * descriptors/run_RACE.pl:
+
+        Checking in the initial version of RACE.

@@ -1,0 +1,32 @@
+//Planner_Manager.idl,v 1.2 2006/02/01 04:33:11 wotte Exp
+#ifndef RACE_PLANNER_MANAGER_IDL
+#define RACE_PLANNER_MANAGER_IDL
+
+#include <Components.idl>
+#include "RACE/Planner_Manager/Interface/Planner_Manager_I.idl"
+
+#include "RACE/Planners/Interface/Planner_I.idl"
+#include "RACE/Output_Adapters/Interface/PlanEgress.idl"
+
+#include "DAnCE/TargetManager/DomainEvents.idl"
+
+module CIAO
+{
+  module RACE
+  {
+    component Planner_Manager
+    {
+      provides Planner_Manager_I planner_manager_i;
+      uses multiple Planner_I planners;
+      uses multiple PlanEgress outputs;
+      consumes Domain_Changed_Event domain_changed;
+      readonly attribute RACE_Classifications classes;
+    };
+
+    home Planner_Manager_Home manages Planner_Manager
+    {
+    };
+  };
+};
+
+#endif /* RACE_PLANNER_MANAGER_IDL */

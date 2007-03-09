@@ -1,0 +1,144 @@
+#ifndef OPERATIONAL_STRING_IDL
+#define OPERATIONAL_STRING_IDL
+
+#include "DAnCE/Deployment/Deployment_DeploymentPlan.idl"
+#include "QoS.idl"
+#include "Time.idl"
+#include "Goal.idl"
+
+
+module CIAO
+{
+  module RACE
+    {
+
+      // A task instance in an opstring.
+      struct InstanceDescription
+      {
+        // Universally unique ID of the instance.
+        string UUID;
+
+        // Human-readable name (for debugging, not identification).
+        string name;
+
+        // Node to which instance is deployed.
+        string node;
+
+
+        // Reference to the concrete implementation used by this instance -
+        // index into the Deployment::MonolithicDeploymentDescriptions of
+        // the operational string that implements this instance.
+        unsigned long implementationRef;
+
+        // ID of task performed by instance (in Task Network).
+        string taskId;
+
+        // Supported type ID of task (in Repository Manager).
+        string taskTypeId;
+
+        // Specific type ID of suggested component (in Repository Manager).
+        string suggestedImpl;
+
+        // Initial values of component configuration parameters.
+        ::Deployment::Properties configProperty;
+
+        // Expected time range of instance start.
+        TimeWindow startWindow;
+
+        // Expected time range of instance finish.
+        TimeWindow endWindow;
+      };
+
+      typedef sequence <InstanceDescription> InstanceDescriptions;
+
+      typedef ::Deployment::PlanConnectionDescriptions DataLinkDescriptions;
+
+      // Type of an ordering link in opstring (data links handled separately).
+      // CAUSAL: causal link; must be obeyed for correct functionality.
+      // SCHEDULING: scheduling link introduced during scheduling to prevent
+      //             potential resource violations; can be ignored if
+      //             additional scheduling is done.
+      // THREAT: threat link, introduced to avoid a causal link threat;
+      //         must be obeyed for correct functionality.
+      enum ConnectionType
+      {
+        CAUSAL,
+        SCHEDULING,
+        THREAT
+      };
+
+      // A link specifying an ordering between two instances (the endpoints).
+      struct OrderLinkDescription
+      {
+        // Human-readable name (for debugging, not identification).
+        string name;
+
+        // Type of link.
+        ConnectionType type;
+
+        // Identifies ports of task instances external to this operational
+        // string as an endpoint of this link.
+        ::Deployment::ComponentExternalPortEndpoints externalEndpoint;
+
+        // Identifies ports of task instances within this operational
+        // string as an endpoint of this link.
+        ::Deployment::PlanSubcomponentPortEndpoints internalEndpoint;
+
+        // Identifies a location outside the operational string as an
+        // endpoint of the link.
+        ::Deployment::ExternalReferenceEndpoints externalReference;
+
+      };
+
+      typedef sequence <OrderLinkDescription> OrderLinkDescriptions;
+
+      // Operational String.
+      struct OperationalString
+      {
+        // Universally unique ID of opstring.
+        // (Should correspond to goal UUID).
+        string UUID;
+
+        // Human-readable name (for debugging, not identification).
+        string label;
+
+        // Goal achieved by this opstring.
+        GoalStructure goal;
+
+        // Task instances in opstring.
+        InstanceDescriptions instance;
+
+        // Data links (between task instances) in opstring.
+        DataLinkDescriptions dataLink;
+
+        // Ordering links (between task instances) in opstring.
+        OrderLinkDescriptions orderLink;
+
+        // Priority of this opstring.
+        // (Should be derived from expected utility of goal).
+        long priority;
+
+        // QoS requirements.
+        QoSSpecifications QoSRequirement;
+
+        // Expected time range for start of opstring execution.
+        TimeWindow startWindow;
+
+        // Expected time range for end of opstring execution.
+        TimeWindow endWindow;
+
+        // Properties for deployment of opstring.
+        ::Deployment::Properties infoProperty;
+
+        // Component implementations used in this opstring.
+        ::Deployment::MonolithicDeploymentDescriptions implementation;
+
+        // Implementation artifacts related to this opstring.
+        ::Deployment::ArtifactDeploymentDescriptions artifact;
+
+      };
+
+  };
+};
+
+#endif /* OPERATIONAL_STRING_IDL */

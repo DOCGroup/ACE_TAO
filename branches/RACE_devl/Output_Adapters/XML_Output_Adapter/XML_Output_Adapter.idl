@@ -1,0 +1,21 @@
+//XML_Output_Adapter.idl,v 1.1 2005/09/06 19:57:22 wotte Exp
+#ifndef RACE_XML_OUTPUT_ADAPTER_IDL
+#define RACE_XML_OUTPUT_ADAPTER_IDL
+
+#include <Components.idl>
+#include "RACE/Output_Adapters/Base/Output_Adapter.idl"
+module CIAO
+{
+  module RACE
+  {
+    component XML_Output_Adapter : Output_Adapter
+    {
+    };
+
+    home XML_Output_Adapter_Home manages XML_Output_Adapter
+    {
+    };
+  };
+};
+
+#endif /* RACE_XML_OUTPUT_ADAPTER_IDL */
