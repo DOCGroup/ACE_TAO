@@ -384,7 +384,7 @@ UTL_Scope::idl_keyword_clash (Identifier *e)
 
   ACE_CString ext_id (utl_tmp.get_canonical_rep (),
                       0,
-                      0);
+                      false);
 
   int status = idl_global->idl_keywords ().find (ext_id);
 
