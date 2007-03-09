@@ -241,6 +241,53 @@ int MyHandler::handle_close (ACE_HANDLE handle,
 </td>
 <tr><td colspan=2><hr noshade></td></tr>
 
+<tr>
+<td align=right valign=top>
+	<b>symptom</b>
+</td>
+<td align=left valign=top>
+  Application crashes after deleting Event_Handler.
+</td>
+</tr>
+<tr>
+<td align=right valign=top>
+	<b>probable cause</b>
+</td>
+<td align=left valign=top>
+  You left a dangling pointer to the Event_Handler in the Reactor.
+  It is the application's responsibility to remove all pending notifications,
+  timer events and completely remove the event handler I/O registrations
+  before removing the event handler.
+
+  Also, the application should remove the event handler from the reactor
+  <b>before</b> closing the underlying file descriptor / handle.
+  Otherwise:
+  <ul>
+  <li>The reactor does not know how to remove the event handler, because the
+  handle is used as the identifier for the event handlers</li>
+  <li>The file descriptor / handle may be reused by another thread, leading to
+  nasty race conditions.</li>
+  </ul>
+</td>
+</tr>
+<tr>
+<td align=right valign=top>
+	<b>solution</b>
+  <ul>
+    <li>Use reference counted event handlers.  The reactor and the application
+      cooperate to remove the event handler when the last reference goes away.
+    </li>
+    <li>Remember to call <tt>purge_pending_notifications()</tt>,
+     <tt>remove_handler()</tt> and <tt>cancel_timer()</tt> before deleting the
+  event handler.
+    </li>
+  </ul>
+</td>
+<td align=left valign=top>
+
+</td>
+<tr><td colspan=2><hr noshade></td></tr>
+
 <!--
 
 <tr>
