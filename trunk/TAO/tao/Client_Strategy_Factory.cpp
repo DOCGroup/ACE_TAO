@@ -19,8 +19,7 @@ TAO_Client_Strategy_Factory::create_profile_lock (void)
 TAO_Configurable_Refcount
 TAO_Client_Strategy_Factory::create_profile_refcount (void)
 {
-  return TAO_Configurable_Refcount (
-                  TAO_Configurable_Refcount::TAO_NULL_LOCK);
+  return TAO_Configurable_Refcount (TAO_Configurable_Refcount::TAO_NULL_LOCK);
 }
 
 TAO_Transport_Mux_Strategy *
