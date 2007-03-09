@@ -228,52 +228,35 @@ ACE_Time_Value::operator *= (double d)
                             double,
                             long double>::result_type float_type;
 
-  // Handle seconds and microseconds separately, rather than
-  // converting microseconds to a fraction of a second and adding that
-  // fraction to the floating point equivalent of seconds.  This
-  // allows for improved precision.
-  float_type time_sec = static_cast<float_type> (this->sec ()) * d;
-  float_type time_usec = static_cast<float_type> (this->usec ()) * d;
+  float_type time_total =
+    (this->sec ()
+     + static_cast<float_type> (this->usec ()) / ACE_ONE_SECOND_IN_USECS) * d;
 
-  float_type const max_time_t =
-    static_cast<float_type> (ACE_Numeric_Limits<time_t>::max ());
-  float_type const min_time_t =
-    static_cast<float_type> (ACE_Numeric_Limits<time_t>::min ());
+  // shall we saturate the result?
+  static const float_type max_int =
+    ACE_Numeric_Limits<time_t>::max () + 0.999999;
+  static const float_type min_int =
+    ACE_Numeric_Limits<time_t>::min () - 0.999999;
 
-  // -999999 to 999999 microseconds
-  float_type const max_suseconds_t =
-    static_cast<float_type> (ACE_Numeric_Limits<suseconds_t>::max ());
-  float_type const min_suseconds_t =
-    static_cast<float_type> (ACE_Numeric_Limits<suseconds_t>::min ());
+  if (time_total > max_int)
+    time_total = max_int;
+  if (time_total < min_int)
+    time_total = min_int;
 
-  // Truncate if necessary.
-  if (time_sec > max_time_t)
-    time_sec = max_time_t;
-  else if (time_sec < min_time_t)
-    time_sec = min_time_t;
+  const time_t time_sec = static_cast<time_t> (time_total);
 
-  if (time_usec > max_suseconds_t)
-    time_usec = max_suseconds_t;
-  else if (time_sec < min_suseconds_t)
-    time_usec = min_suseconds_t;
+  time_total -= time_sec;
+  time_total *= ACE_ONE_SECOND_IN_USECS;
 
-  time_t const seconds = static_cast<time_t> (time_sec);
-  suseconds_t useconds = static_cast<suseconds_t> (time_usec);
-
-  float_type const usec_diff = time_usec - static_cast<float_type> (useconds);
-  static float_type const roundup_threshold = 0.5; // Always 0.5.
+  suseconds_t time_usec = static_cast<suseconds_t> (time_total);
 
   // round up the result to save the last usec
-  if (useconds > 0
-      && time_usec < max_suseconds_t
-      && usec_diff >= roundup_threshold)
-    ++useconds;
-  else if (useconds < 0
-           && time_usec > min_suseconds_t
-           && usec_diff <= -roundup_threshold)
-    --useconds;
+  if (time_usec > 0 && (time_total - time_usec) >= 0.5)
+    ++time_usec;
+  else if (time_usec < 0 && (time_total - time_usec) <= -0.5)
+    --time_usec;
 
-  this->set (seconds, useconds);
+  this->set (time_sec, time_usec);
 
   return *this;
 }
