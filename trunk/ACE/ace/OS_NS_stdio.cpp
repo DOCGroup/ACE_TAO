@@ -333,7 +333,7 @@ ACE_OS::snprintf (wchar_t *buf, size_t maxlen, const wchar_t *format, ...)
   va_list ap;
   va_start (ap, format);
 #  if defined (ACE_HAS_TR24731_2005_CRT)
-  result = _vsnwprintf_s (buf, maxlen, _TRUNCATE, format, ap);
+  result = _vsnwprintf_s (buf, maxlen + 1, _TRUNCATE, format, ap);
 #  elif defined (ACE_WIN32)
   // Microsoft's vswprintf() doesn't have the maxlen argument that
   // XPG4/UNIX98 define. They do, however, recommend use of _vsnwprintf()
