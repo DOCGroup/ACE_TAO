@@ -1,3 +1,11 @@
+Thu Mar  8 23:44:14 Pacific Standard Time 2007    <ossama_othman@symantec.com>
+
+        * tests/Time_Value_Test.cpp (run_main):
+
+          Simplified assertions.  Rather than test equality of sec() and
+          usec() components separately, just test equality of the
+          ACE_Time_Value objects as a whole.
+
 Fri Mar  9 00:53:43 UTC 2007  Steve Huston  <shuston@riverace.com>
 
         Changes to resolve or quiet warnings from Visual Studio .NET 2005:
