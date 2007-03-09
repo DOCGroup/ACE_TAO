@@ -1,3 +1,15 @@
+Fri Mar  9 000:27:39 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_global.cpp:
+        * TAO_IDL/be/be_visitor_ccm_pre_proc.cpp:
+        * TAO_IDL/util/utl_identifier.cpp:
+        * TAO_IDL/util/utl_global.cpp:
+        * TAO_IDL/util/utl_scope.cpp:
+        
+          Changed the signature of ACE_CString constructor calls to avoid
+          ambiguity errors due to recent changes in the ACE_CString
+          class.
+
 Thu Mar  9 00:08:52 UTC 2007  Ossama Othman  <ossama_othman at symantec dot com>
 
         * orbsvcs/orbsvcs/Naming/Flat_File_Persistence.cpp (operator>>):

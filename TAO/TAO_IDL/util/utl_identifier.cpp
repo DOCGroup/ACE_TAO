@@ -99,7 +99,7 @@ Identifier::Identifier (const char *s)
 
       shift = true;
       this->escaped_ = true;
-      ACE_CString str (s, 0, 0);
+      ACE_CString str (s, 0, false);
 
       if (str.find ("_tc_") == 0
           || str.find ("_tao_") == 0)
