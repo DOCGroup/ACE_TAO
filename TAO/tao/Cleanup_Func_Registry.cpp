@@ -13,9 +13,8 @@ ACE_RCSID (tao,
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 int
-TAO_Cleanup_Func_Registry::register_cleanup_function (
-  ACE_CLEANUP_FUNC func,
-  size_t &slot_id)
+TAO_Cleanup_Func_Registry::register_cleanup_function (ACE_CLEANUP_FUNC func,
+                                                      size_t &slot_id)
 {
   size_t const slot = this->cleanup_funcs_.size ();
 
@@ -29,7 +28,7 @@ TAO_Cleanup_Func_Registry::register_cleanup_function (
 }
 
 void
-TAO_Cleanup_Func_Registry::cleanup (ACE_Array_Base<void *> &ts_objects)
+TAO_Cleanup_Func_Registry::cleanup (ACE_Array_Base <void *> &ts_objects)
 {
   size_t const len = ts_objects.size ();
 
