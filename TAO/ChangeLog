@@ -1,3 +1,9 @@
+Fri Mar  9 13:47:52 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/DiffServ/client.cpp:
+        * tests/DiffServ/server.cpp:
+          Added missing duplicate calls
+
 Fri Mar  9 11:03:52 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Adapter_Registry.cpp:
