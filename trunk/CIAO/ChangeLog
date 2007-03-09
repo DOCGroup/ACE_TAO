@@ -1,3 +1,8 @@
+Fri Mar  9 15:53:02 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * tools/IDL3_to_IDL2/idl3_to_idl2_visitor.cpp: Adjusted 3rd arg to
+          ACE_CString for matching change in ACE from yesterday.
+
 Fri Mar  9 14:09:19 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/NodeApplication/RTConfig_Manager.{cpp,inl}:
