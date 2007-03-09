@@ -99,7 +99,7 @@ ACE_Log_Msg_NT_Event_Log::close (void)
     return -1;
 }
 
-int
+ssize_t
 ACE_Log_Msg_NT_Event_Log::log (ACE_Log_Record &log_record)
 {
   // Make a copy of the log text and replace any newlines with
