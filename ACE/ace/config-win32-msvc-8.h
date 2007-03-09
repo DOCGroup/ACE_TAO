@@ -23,6 +23,10 @@
 #error Use config-win32.h in config.h instead of this header
 #endif /* ACE_CONFIG_WIN32_H */
 
+#ifndef ACE_WIN32_VC8
+#  define ACE_WIN32_VC8
+#endif
+
 // Visual C++ 8.0 (.NET) deprecated the old iostreams
 #if !defined (ACE_HAS_STANDARD_CPP_LIBRARY)
 #define ACE_HAS_STANDARD_CPP_LIBRARY 1
@@ -101,21 +105,16 @@
 // There are too many instances of this warning to fix it right now.
 // Maybe in the future.
 
-// C++ Exception Specification ignored
-#pragma warning(disable:4290)
-
 // 'this' : used in base member initializer list
 #pragma warning(disable:4355)
-
-// 'class1' : inherits 'class2::member' via dominance
-#pragma warning(disable:4250)
 
 // Disable warning of using Microsoft Extension.
 # pragma warning(disable:4231)
 
-// Disable deprecation warnings, because setting _CRT_SECURE_NO_DEPRECATE
-// did not prevent the warnings.
-#pragma warning(disable:4996)
+// CE (at least thru Windows Mobile 5) doesn't have the new, secure CRT.
+#if !defined (ACE_HAS_WINCE) && !defined (ACE_HAS_TR24731_2005_CRT)
+#  define ACE_HAS_TR24731_2005_CRT
+#endif
 
 // On CE w/o MFC config-WinCE.h needs to declare a placement new. This
 // triggers a warning that there's no placement delete, which can be ignored.

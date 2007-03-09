@@ -23,14 +23,16 @@ namespace ACE_TMCast
   public:
     ~Group ();
 
-    Group (ACE_INET_Addr const& addr, char const* id) throw (Failed);
+    Group (ACE_INET_Addr const& addr, char const* id) ACE_THROW_SPEC((Failed));
 
   public:
     void
-    send (void const* msg, size_t size) throw (InvalidArg, Failed, Aborted);
+    send (void const* msg, size_t size)
+      ACE_THROW_SPEC((InvalidArg, Failed, Aborted));
 
     size_t
-    recv (void* msg, size_t size) throw (Failed, InsufficienSpace);
+    recv (void* msg, size_t size)
+      ACE_THROW_SPEC((Failed, InsufficienSpace));
 
   private:
     bool

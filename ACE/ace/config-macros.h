@@ -486,7 +486,18 @@
     if (RESULT == FAILVALUE) \
       ACE_OS::set_errno_to_last_error (); \
   } while (0)
+
 #endif  /* ACE_WIN32 */
+
+// The C99 security-improved run-time returns an error value on failure;
+// 0 on success.
+#if defined (ACE_HAS_TR24731_2005_CRT)
+#  define ACE_SECURECRTCALL(X,TYPE,FAILVALUE,RESULT) \
+  do { \
+    errno_t ___ = X; \
+    if (___ != 0) { errno = ___; RESULT = FAILVALUE; } \
+  } while (0)
+#endif /* ACE_HAS_TR24731_2005_CRT */
 
 // ============================================================================
 // Fundamental types

@@ -21,6 +21,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/os_include/sys/os_types.h"
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class ACE_Log_Record;
@@ -57,9 +59,9 @@ public:
   virtual int close (void) = 0;
 
   /// Backend routine.  This is called when we want to log a message.
-  /// Since this routine is pure virtual, it must be overwritten by the
+  /// Since this routine is pure virtual, it must be implemented by the
   /// subclass.
-  virtual int log (ACE_Log_Record &log_record) = 0;
+  virtual ssize_t log (ACE_Log_Record &log_record) = 0;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

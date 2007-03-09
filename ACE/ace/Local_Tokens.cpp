@@ -1141,6 +1141,10 @@ ACE_Token_Proxy::name (void) const
   return this->token_->name ();
 }
 
+#if defined (ACE_WIN32_VC8)
+#  pragma warning (push)
+#  pragma warning (disable:4355)  /* Use of 'this' in initializer list */
+#endif
 ACE_Token_Proxy::ACE_Token_Proxy (void)
 : token_ (0),
   waiter_ (this, 0)
@@ -1158,6 +1162,9 @@ ACE_Token_Proxy::ACE_Token_Proxy (const ACE_Token_Proxy &)
 {
   ACE_TRACE ("ACE_Token_Proxy::ACE_Token_Proxy");
 }
+#if defined (ACE_WIN32_VC8)
+#  pragma warning (pop)
+#endif
 
 // @@ should I do a mutex_->release ()?
 ACE_Token_Proxy::~ACE_Token_Proxy (void)

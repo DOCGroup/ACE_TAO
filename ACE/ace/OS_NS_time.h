@@ -77,17 +77,10 @@ struct tm {
  */
 inline long ace_timezone()
 {
-#if defined (ACE_HAS_WINCE)
+#if defined (ACE_HAS_WIN32)
   TIME_ZONE_INFORMATION tz;
   GetTimeZoneInformation (&tz);
   return tz.Bias * 60;
-#elif defined (ACE_WIN32) && !defined (ACE_HAS_DINKUM_STL)
-  return _timezone;  // For Win32.
-#elif defined (ACE_WIN32) && defined (ACE_HAS_DINKUM_STL)
-  time_t tod = time(0);   // get current time
-  time_t t1 = mktime(gmtime(&tod));   // convert without timezone
-  time_t t2 = mktime(localtime(&tod));   // convert with timezone
-  return difftime(t1, t2); // compute difference in seconds
 #elif defined (ACE_HAS_TIMEZONE)
   // The XPG/POSIX specification requires that tzset() be called to
   // set the global variable <timezone>.

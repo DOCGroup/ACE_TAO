@@ -333,7 +333,7 @@ namespace ACE_TMCast
     }
 
     GroupImpl (ACE_INET_Addr const& addr, char const* id)
-      throw (Group::Failed)
+      ACE_THROW_SPEC((Group::Failed))
         : send_cond_ (mutex_),
           recv_cond_ (mutex_),
           failed_ (false),
@@ -356,7 +356,7 @@ namespace ACE_TMCast
 
     void
     send (void const* msg, size_t size)
-      throw (Group::InvalidArg, Group::Failed, Group::Aborted)
+      ACE_THROW_SPEC((Group::InvalidArg, Group::Failed, Group::Aborted))
     {
       if (size > Protocol::MAX_PAYLOAD_SIZE) throw InvalidArg ();
 
@@ -410,7 +410,8 @@ namespace ACE_TMCast
 
 
     size_t
-    recv (void* msg, size_t size) throw (Group::Failed, Group::InsufficienSpace)
+    recv (void* msg, size_t size)
+      ACE_THROW_SPEC((Group::Failed, Group::InsufficienSpace))
     {
       AutoLock lock (mutex_);
 
@@ -481,7 +482,7 @@ namespace ACE_TMCast
   //
   Group::
   Group (ACE_INET_Addr const& addr, char const* id)
-    throw (Group::Failed)
+    ACE_THROW_SPEC((Group::Failed))
       : pimpl_ (new GroupImpl (addr, id))
   {
   }
@@ -492,13 +493,15 @@ namespace ACE_TMCast
   }
 
   void
-  Group::send (void const* msg, size_t size) throw (Group::InvalidArg, Group::Failed, Group::Aborted)
+  Group::send (void const* msg, size_t size)
+    ACE_THROW_SPEC((Group::InvalidArg, Group::Failed, Group::Aborted))
   {
     pimpl_->send (msg, size);
   }
 
   size_t
-  Group::recv (void* msg, size_t size) throw (Group::Failed, Group::InsufficienSpace)
+  Group::recv (void* msg, size_t size)
+    ACE_THROW_SPEC((Group::Failed, Group::InsufficienSpace))
   {
     return pimpl_->recv (msg, size);
   }

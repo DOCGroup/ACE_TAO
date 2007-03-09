@@ -482,12 +482,13 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::ACE_Select_Reactor_T
    int mask_signals,
    int s_queue)
     : ACE_Select_Reactor_Impl (mask_signals)
-    , token_ (*this, s_queue)
+    , token_ (s_queue)
     , lock_adapter_ (token_)
     , deactivated_ (0)
 {
   ACE_TRACE ("ACE_Select_Reactor_T::ACE_Select_Reactor_T");
 
+  this->token_.reactor (*this);
   // First try to open the Reactor with the hard-coded default.
   if (this->open (ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::DEFAULT_SIZE,
                   0,
@@ -534,12 +535,13 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::ACE_Select_Reactor_T
    int mask_signals,
    int s_queue)
     : ACE_Select_Reactor_Impl (mask_signals)
-    , token_ (*this, s_queue)
+    , token_ (s_queue)
     , lock_adapter_ (token_)
     , deactivated_ (0)
 {
   ACE_TRACE ("ACE_Select_Reactor_T::ACE_Select_Reactor_T");
 
+  this->token_.reactor (*this);
   if (this->open (size,
                   rs,
                   sh,
