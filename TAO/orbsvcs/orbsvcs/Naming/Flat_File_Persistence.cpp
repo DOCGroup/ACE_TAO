@@ -7,6 +7,7 @@
 
 #include "ace/Log_Msg.h"
 #include "ace/Numeric_Limits.h"
+#include "ace/Auto_Ptr.h"
 #include "ace/OS_NS_sys_stat.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_fcntl.h"
@@ -236,6 +237,8 @@ TAO_NS_FlatFileStream::operator >>(TAO_NS_Persistence_Record &record)
   record.type (type);
 
   int bufSize = 0;
+  ACE_CString::size_type const max_buf_len =
+    ACE_Numeric_Limits<ACE_CString::size_type>::max ();
 
   //id
   switch (fscanf(fl_, "%d\n", &bufSize))
@@ -249,20 +252,23 @@ TAO_NS_FlatFileStream::operator >>(TAO_NS_Persistence_Record &record)
     }
 
   if (bufSize < 0
-      || static_cast<ACE_CString::size_type> (bufSize) >= ACE_Numeric_Limits<ACE_CString::size_type>::max ())
+      || static_cast<ACE_CString::size_type> (bufSize) >= max_buf_len)
     {
       this->setstate (badbit);
       return *this;
     }
-
-  ACE_CString id (ACE_CString::size_type (bufSize + 1));
-  if (ACE_OS::fgets(ACE_TEXT_CHAR_TO_TCHAR(&id[0]), bufSize + 1, fl_) == 0
-      && bufSize != 0)
-    {
-      this->setstate (badbit);
-      return *this;
-    }
-  record.id (id);
+  {
+    ACE_Auto_Basic_Array_Ptr<char> the_id (new char[bufSize + 1]);
+    if (ACE_OS::fgets (ACE_TEXT_CHAR_TO_TCHAR (the_id.get ()),
+                       bufSize + 1,
+                       fl_) == 0
+        && bufSize != 0)
+      {
+        this->setstate (badbit);
+        return *this;
+      }
+    record.id (ACE_CString (the_id.get (), 0, 0));
+  }
 
   //kind
   switch (fscanf(fl_, "%d\n", &bufSize))
@@ -276,21 +282,24 @@ TAO_NS_FlatFileStream::operator >>(TAO_NS_Persistence_Record &record)
     }
 
   if (bufSize < 0
-      || static_cast<ACE_CString::size_type> (bufSize) >= ACE_Numeric_Limits<ACE_CString::size_type>::max ())
+      || static_cast<ACE_CString::size_type> (bufSize) >= max_buf_len)
     {
       this->setstate (badbit);
       return *this;
     }
 
-  ACE_CString kind (ACE_CString::size_type (bufSize + 1));
-  if (ACE_OS::fgets(ACE_TEXT_CHAR_TO_TCHAR(&kind[0]), bufSize + 1, fl_) == 0
-      && bufSize != 0)
-    {
-      this->setstate (badbit);
-      return *this;
-    }
-  kind[bufSize] = '\0';
-  record.kind (kind);
+  {
+    ACE_Auto_Basic_Array_Ptr<char> the_kind (new char[bufSize + 1]);
+    if (ACE_OS::fgets (ACE_TEXT_CHAR_TO_TCHAR (the_kind.get ()),
+                       bufSize + 1,
+                       fl_) == 0
+        && bufSize != 0)
+      {
+        this->setstate (badbit);
+        return *this;
+      }
+    record.kind (ACE_CString (the_kind.get (), 0, 0));
+  }
 
    //ref
   switch (fscanf(fl_, "%d\n", &bufSize))
@@ -304,20 +313,24 @@ TAO_NS_FlatFileStream::operator >>(TAO_NS_Persistence_Record &record)
     }
 
   if (bufSize < 0
-      || static_cast<ACE_CString::size_type> (bufSize) >= ACE_Numeric_Limits<ACE_CString::size_type>::max ())
+      || static_cast<ACE_CString::size_type> (bufSize) >= max_buf_len)
     {
       this->setstate (badbit);
       return *this;
     }
 
-  ACE_CString ref (ACE_CString::size_type (bufSize + 1));
-  if (ACE_OS::fgets(ACE_TEXT_CHAR_TO_TCHAR(&ref[0]), bufSize + 1, fl_) == 0
-      && bufSize != 0)
-    {
-      this->setstate (badbit);
-      return *this;
-    }
-  record.ref (ref);
+  {
+    ACE_Auto_Basic_Array_Ptr<char> the_ref (new char[bufSize + 1]);
+    if (ACE_OS::fgets (ACE_TEXT_CHAR_TO_TCHAR (the_ref.get ()),
+                       bufSize + 1,
+                       fl_) == 0
+        && bufSize != 0)
+      {
+        this->setstate (badbit);
+        return *this;
+      }
+    record.ref (ACE_CString (the_ref.get (), 0, 0));
+  }
 
   return *this;
 

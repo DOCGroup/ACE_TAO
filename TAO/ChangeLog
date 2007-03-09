@@ -1,3 +1,10 @@
+Thu Mar  9 00:08:52 UTC 2007  Ossama Othman  <ossama_othman at symantec dot com>
+
+        * orbsvcs/orbsvcs/Naming/Flat_File_Persistence.cpp (operator>>):
+
+          Addressed problem where ACE_CString length was not set, which
+          resulted in no-op copy to another ACE_CString.
+
 Thu Mar  8 21:27:54 UTC 2007  Steve Huston  <shuston@riverace.com>
 
         * orbsvcs/IFR_Service/be_init.cpp (BE_save_orb_args):
