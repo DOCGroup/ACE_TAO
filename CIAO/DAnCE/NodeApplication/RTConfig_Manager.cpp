@@ -278,7 +278,7 @@ CIAO::RTResource_Config_Manager::init_resources
             }
           else
             {
-              policy_list[index] = temp_policy;
+              policy_list[index] = CORBA::Policy::_duplicate (temp_policy.in ());
               index = index + 1;
             }
         }
@@ -289,7 +289,7 @@ CIAO::RTResource_Config_Manager::init_resources
       if (array_index != 0)
         {
           if (this->policy_map_.bind (sets[i].Id.in (),
-                                      policy_list) != 0)
+                                      policy_list._retn ()) != 0)
             {
               ACE_ERROR ((LM_ERROR,
                           "Error binding Policy_Set with name: %s\n",
@@ -494,6 +494,11 @@ CIAO::RTResource_Config_Manager::create_single_policy
     }
 
   return retv._retn ();
+}
+
+CIAO::RTResource_Config_Manager::~RTResource_Config_Manager ()
+{
+  this->fini ();
 }
 
 extern "C" CIAO_RTNA_Configurator_Export CIAO::Config_Manager
