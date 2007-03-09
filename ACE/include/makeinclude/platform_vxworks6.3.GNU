@@ -314,7 +314,7 @@ endif
 endif # rtti
 
 ifeq ("$(TOOL_FAMILY)","diab")
-  LDLIBS += -lstlstd
+  LIBS += -lstlstd
 endif
 
 ifneq ($(findstring $(VX_CPU_FAMILY),ppc arm),)
