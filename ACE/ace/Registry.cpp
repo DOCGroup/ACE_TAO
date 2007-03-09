@@ -814,10 +814,10 @@ ACE_Registry::Naming_Context::list (Binding_List &list)
 
 // Default constructor
 ACE_Registry::Binding_Iterator::Binding_Iterator ()
-  : object_iteration_ (*this),
-    context_iteration_ (*this),
-    iteration_complete_ (*this)
 {
+  this->object_iteration_.iterator (this);
+  this->context_iteration_.iterator (this);
+  this->iteration_complete_.iterator (this);
   this->reset ();
 }
 
@@ -839,27 +839,15 @@ ACE_Registry::Binding_Iterator::Iteration_State::reset ()
 }
 
 
-ACE_Registry::Binding_Iterator::Iteration_State::Iteration_State (Binding_Iterator &iter)
-  : parent_ (&iter),
-    index_ (0)
+void
+ACE_Registry::Binding_Iterator::Iteration_State::iterator (Binding_Iterator *iter)
 {
+  this->parent_ = iter;
 }
 
 
-ACE_Registry::Binding_Iterator::Object_Iteration::Object_Iteration (Binding_Iterator &iter)
-  : Iteration_State (iter)
-{
-}
-
-
-ACE_Registry::Binding_Iterator::Context_Iteration::Context_Iteration (Binding_Iterator &iter)
-  : Iteration_State (iter)
-{
-}
-
-
-ACE_Registry::Binding_Iterator::Iteration_Complete::Iteration_Complete (Binding_Iterator &iter)
-  : Iteration_State (iter)
+ACE_Registry::Binding_Iterator::Iteration_State::Iteration_State ()
+  : index_ (0)
 {
 }
 

@@ -1064,6 +1064,10 @@ ACE_WFMO_Reactor::work_pending (const ACE_Time_Value &)
   ACE_NOTSUP_RETURN (-1);
 }
 
+#if defined (ACE_WIN32_VC8)
+#  pragma warning (push)
+#  pragma warning (disable:4355)  /* Use of 'this' in initializer list */
+#  endif
 ACE_WFMO_Reactor::ACE_WFMO_Reactor (ACE_Sig_Handler *sh,
                                     ACE_Timer_Queue *tq,
                                     ACE_Reactor_Notify *notify)
@@ -1129,6 +1133,9 @@ ACE_WFMO_Reactor::ACE_WFMO_Reactor (size_t size,
                 ACE_LIB_TEXT ("%p\n"),
                 ACE_LIB_TEXT ("WFMO_Reactor")));
 }
+#if defined (ACE_WIN32_VC8)
+#  pragma warning (pop)
+#endif
 
 int
 ACE_WFMO_Reactor::current_info (ACE_HANDLE, size_t &)

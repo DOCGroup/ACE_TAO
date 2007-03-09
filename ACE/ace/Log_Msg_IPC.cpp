@@ -43,18 +43,19 @@ ACE_Log_Msg_IPC::close (void)
   return this->message_queue_.close ();
 }
 
-int
+ssize_t
 ACE_Log_Msg_IPC::log (ACE_Log_Record &log_record)
 {
   // Serialize the log record using a CDR stream, allocate enough
   // space for the complete <ACE_Log_Record>.
-  const size_t max_payload_size =
-    4 // type()
-    + 8 // timestamp
-    + 4 // process id
-    + 4 // data length
-    + ACE_Log_Record::MAXLOGMSGLEN // data
-    + ACE_CDR::MAX_ALIGNMENT; // padding;
+  size_t max_payload_size =
+    4    // type
+    + 4  // pid
+    + 12 // timestamp
+    + 4  // process id
+    + 4  // data length
+    + log_record.msg_data_len ()  // message
+    + ACE_CDR::MAX_ALIGNMENT;     // padding;
 
   // Insert contents of <log_record> into payload stream.
   ACE_OutputCDR payload (max_payload_size);

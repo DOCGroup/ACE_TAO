@@ -97,6 +97,8 @@ public:
 /**
  * @class ACE_WFMO_Reactor_Handler_Repository
  *
+ * @internal This class is for internal ACE use only.
+ *
  * @brief Used to map ACE_HANDLEs onto the appropriate
  * ACE_Event_Handler * and other information.
  */

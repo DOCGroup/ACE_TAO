@@ -324,17 +324,21 @@ int
 operator<< (ACE_OutputCDR &cdr,
             const ACE_Log_Record &log_record)
 {
-  size_t msglen = log_record.msg_data_len ();
+  // The written message length can't be more than 32 bits (ACE_CDR::ULong)
+  // so reduce it here if needed.
+  ACE_CDR::ULong u_msglen =
+    ACE_Utils::truncate_cast<ACE_CDR::ULong> (log_record.msg_data_len ());
+
   // Insert each field from <log_record> into the output CDR stream.
   cdr << ACE_CDR::Long (log_record.type ());
   cdr << ACE_CDR::Long (log_record.pid ());
   cdr << ACE_CDR::LongLong (log_record.time_stamp ().sec ());
   cdr << ACE_CDR::Long (log_record.time_stamp ().usec ());
-  cdr << ACE_CDR::ULong (msglen);
+  cdr << u_msglen;
 #if defined (ACE_USES_WCHAR)
-  cdr.write_wchar_array (log_record.msg_data (), msglen);
+  cdr.write_wchar_array (log_record.msg_data (), u_msglen);
 #else
-  cdr.write_char_array (log_record.msg_data (), msglen);
+  cdr.write_char_array (log_record.msg_data (), u_msglen);
 #endif /* ACE_USES_WCHAR */
   return cdr.good_bit ();
 }

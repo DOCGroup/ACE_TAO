@@ -332,7 +332,9 @@ ACE_OS::snprintf (wchar_t *buf, size_t maxlen, const wchar_t *format, ...)
   int result;
   va_list ap;
   va_start (ap, format);
-#  if defined (ACE_WIN32)
+#  if defined (ACE_HAS_TR24731_2005_CRT)
+  result = _vsnwprintf_s (buf, maxlen, _TRUNCATE, format, ap);
+#  elif defined (ACE_WIN32)
   // Microsoft's vswprintf() doesn't have the maxlen argument that
   // XPG4/UNIX98 define. They do, however, recommend use of _vsnwprintf()
   // as a substitute, which does have the same signature as the UNIX98 one.
@@ -388,7 +390,7 @@ ACE_OS::sprintf (wchar_t *buf, const wchar_t *format, ...)
 # if (defined _XOPEN_SOURCE && (_XOPEN_SOURCE - 0) >= 500) || \
      (defined (sun) && !defined (_XPG4) || defined(_XPG5)) || \
      (defined ACE_HAS_DINKUM_STL) || defined (__DMC__) || \
-      defined ACE_HAS_VSWPRINTF
+      defined ACE_HAS_VSWPRINTF || defined (ACE_WIN32_VC8)
 
   // The XPG4/UNIX98/C99 signature of the wide-char sprintf has a
   // maxlen argument. Since this method doesn't supply one, pass in
@@ -403,7 +405,7 @@ ACE_OS::sprintf (wchar_t *buf, const wchar_t *format, ...)
   return result;
 
 # elif defined (ACE_WIN32)
-  // Windows has vswprintf, but the signature is from the older ISO C
+  // Pre-VC8 Windows has vswprintf, but the signature is from the older ISO C
   // standard. Also see ACE_OS::snprintf() for more info on this.
 
   int result;

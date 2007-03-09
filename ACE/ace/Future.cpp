@@ -146,7 +146,7 @@ template <class T>
 ACE_Future_Rep<T>::ACE_Future_Rep (void)
   : value_ (0),
     ref_count_ (0),
-    value_ready_ (this->value_ready_mutex_)
+    value_ready_ (value_ready_mutex_)
 {
 }
 

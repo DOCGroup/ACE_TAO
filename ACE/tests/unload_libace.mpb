@@ -3,4 +3,7 @@
 
 feature(ace_for_tao) {
   macros += ACE_LIB_NAME=\\"ACE_FOR_TAO\\"
+  specific(vc8) {
+    macros += _CRT_SECURE_NO_WARNINGS
+  }
 }

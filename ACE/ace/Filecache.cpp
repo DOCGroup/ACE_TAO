@@ -229,7 +229,7 @@ ACE_Filecache::instance (void)
 
 ACE_Filecache::ACE_Filecache (void)
   : size_ (ACE_DEFAULT_VIRTUAL_FILESYSTEM_TABLE_SIZE),
-    hash_ (this->size_)
+    hash_ (size_)
 {
 }
 

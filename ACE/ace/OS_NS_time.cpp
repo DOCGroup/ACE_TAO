@@ -231,6 +231,9 @@ ACE_OS::localtime_r (const time_t *t, struct tm *res)
 # else
   ACE_OSCALL_RETURN (::localtime_r (t, res), struct tm *, 0);
 # endif /* DIGITAL_UNIX */
+#elif defined (ACE_HAS_TR24731_2005_CRT)
+  ACE_SECURECRTCALL (localtime_s (res, t), struct tm *, 0, res);
+  return res;
 #elif !defined (ACE_HAS_WINCE)
   ACE_OS_GUARD
 

@@ -217,7 +217,12 @@ namespace ACE_Utils
         // MSVC. It appears that most platforms support sscanf though
         // so we need to use it directly.
         const int nScanned =
-          ::sscanf(uuid_string.c_str(),
+#if defined (ACE_HAS_TR24731_2005_CRT)
+          sscanf_s (
+#else
+          ::sscanf(
+#endif
+                   uuid_string.c_str(),
                    "%8x-%4x-%4x-%2x%2x-%2x%2x%2x%2x%2x%2x",
                    &timeLow,
                    &timeMid,
@@ -243,6 +248,24 @@ namespace ACE_Utils
     else
       {
         const int nScanned =
+#if defined (ACE_HAS_TR24731_2005_CRT)
+          sscanf_s (uuid_string.c_str(),
+                    "%8x-%4x-%4x-%2x%2x-%2x%2x%2x%2x%2x%2x-%s",
+                    &timeLow,
+                    &timeMid,
+                    &timeHiAndVersion,
+                    &clockSeqHiAndReserved,
+                    &clockSeqLow,
+                    &node[0],
+                    &node[1],
+                    &node[2],
+                    &node[3],
+                    &node[4],
+                    &node[5],
+                    thr_pid_buf,
+                    BUFSIZ
+                    );
+#else
           ::sscanf (uuid_string.c_str(),
                     "%8x-%4x-%4x-%2x%2x-%2x%2x%2x%2x%2x%2x-%s",
                     &timeLow,
@@ -258,6 +281,7 @@ namespace ACE_Utils
                     &node[5],
                     thr_pid_buf
                     );
+#endif /* ACE_HAS_TR24731_2005_CRT */
 
         if (nScanned != 12)
           {
