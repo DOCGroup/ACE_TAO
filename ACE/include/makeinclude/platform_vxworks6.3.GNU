@@ -204,7 +204,7 @@ ifeq ("$(TOOL_FAMILY)","gnu")
   LDFLAGS += -non-static
 else
   PIC = -Xpic
-  SOFLAGS += -Xdynamic
+  SOFLAGS += -Xshared
   LDFLAGS += -Xdynamic
 endif
 endif
