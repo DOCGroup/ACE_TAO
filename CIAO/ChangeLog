@@ -6,7 +6,7 @@ Sat Mar 10 01:11:40 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
         * docs/tutorials/Quoter/Simple/04.html:
         * docs/tutorials/Quoter/Simple/index.html:
 
-          Added $Id$ to each file to fix fuzz errors.
+          Added $Id to each file to fix fuzz errors.
 
 Fri Mar  9 21:11:20 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
 
