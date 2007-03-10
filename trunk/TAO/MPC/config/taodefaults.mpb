@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project : exceptions {
+project : exceptions, tao_vc8warnings {
   staticflags += TAO_AS_STATIC_LIBS
   includes    += $(TAO_ROOT)
   libpaths    += $(ACE_ROOT)/lib

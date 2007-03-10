@@ -1,3 +1,14 @@
+Sat Mar 10 22:49:01 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * MPC/config/tao_vc8warnings.mpb: New base containing features that
+          turn VC8 warnings on/off. Some of these may benefit from some looking
+          at; if you want to see them, regenerate projects with the feature
+          turned off.
+
+        * MPC/config/taodefaults.mpb:
+        * TAO_IDL/tao_idl.mpc: Inherit from tao_vc8warnings.mpb to
+          shut off the VC8 warnings.
+
 Fri Mar  9 13:47:52 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/DiffServ/client.cpp:
