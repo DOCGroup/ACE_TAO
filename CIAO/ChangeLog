@@ -1,3 +1,13 @@
+Sat Mar 10 22:49:01 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * MPC/config/ciao_vc8warnings.mpb: New base containing features that
+          turn VC8 warnings on/off. Some of these may benefit from some looking
+          at; if you want to see them, regenerate projects with the feature
+          turned off.
+
+        * MPC/config/ciao_client_dnc.mpb: Inherit from ciao_vc8warnings to
+          shut off the gazillions of VC8 warnings.
+
 Sat Mar 10 01:11:40 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * docs/tutorials/Quoter/Simple/01.html:
