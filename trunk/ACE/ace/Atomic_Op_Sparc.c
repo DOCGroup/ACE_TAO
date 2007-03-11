@@ -36,8 +36,8 @@ ace_atomic_swap_long:             \n\
       ");
 
   __asm("\n\
-      .globl  ace_atomic_swap_long      \n\
-      .type   ace_atomic_swap_long,@function    \n\
+      .globl  ace_atomic_swap_add_long      \n\
+      .type   ace_atomic_swap_add_long,@function    \n\
       .align  4         \n\
 ace_atomic_swap_add_long:           \n\
       movl    0x00000004(%esp), %edx    \n\
