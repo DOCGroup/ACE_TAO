@@ -1101,7 +1101,6 @@ ACE_INET_Addr::get_ip_address (void) const
     }
 #endif /* ACE_HAS_IPV6 */
   return ACE_NTOHL (ACE_UINT32 (this->inet_addr_.in4_.sin_addr.s_addr));
-  return 0;
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL
