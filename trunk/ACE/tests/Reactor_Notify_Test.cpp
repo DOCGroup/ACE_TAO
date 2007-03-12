@@ -433,7 +433,14 @@ run_notify_purge_test (void)
                   status));
     // Fifth test:
     r->notify (n2);
-    // <ap> destructor should cause n2's notify to be cancelled.
+
+    // The destructor of the event handler no longer removes the
+    // notifications.  It is the application's responsability to do
+    // so.
+    r->purge_pending_notifications(n2,
+				   ACE_Event_Handler::ALL_EVENTS_MASK);
+    r->purge_pending_notifications(&n1,
+				   ACE_Event_Handler::ALL_EVENTS_MASK);
   }
 
   ACE_Time_Value t (1);
