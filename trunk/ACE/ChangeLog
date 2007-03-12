@@ -1,3 +1,9 @@
+Mon Mar 12 21:47:51 UTC 2007  Wallace Zhang  <zhang_w@ociweb.com>
+
+        * ace/OS_NS_stdio.inl:
+
+          Fixed compilation errors on WinCE 5.0 builds.
+
 Mon Mar 12 22:26:08 UTC 2007  Ossama Othman  <ossama_othman at symantec dot com>
 
         * ace/checked_iterator.h (ACE_make_checked_array_iterator):
@@ -11,7 +17,7 @@ Mon Mar 12 22:26:08 UTC 2007  Ossama Othman  <ossama_othman at symantec dot com>
           Call new ACE_make_checked_array_iterator<>() iterator factory
           function to generate destination iterator.  Addresses VC8
           "C4996" warnings when security related warnings are enabled.
-        
+
         * ace/Makefile.am:
         * ace/ace.mpc:
         * ace/ace_for_tao.mpc:
