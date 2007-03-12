@@ -1,3 +1,8 @@
+Mon Mar 12 13:54:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_other_tests.lst:
+          Don't run bug 2800 regression tests in a ST configuration
+
 Mon Mar 12 13:12:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-vxworks6.3.h:
