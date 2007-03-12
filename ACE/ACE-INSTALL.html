@@ -2406,7 +2406,17 @@ perl bin/mwc.pl  -type vc71 -relative ACE_ROOT=C:/ace/ACE_wrappers -relative TAO
       ACE tests are built with. It is likely that local sites may need
       to adjust this file for their target environment.
       </p><p>
-
+      When executing programs on the target system, it is possible that not
+      all of the VC++ support DLLs are resident on the target. In particular,
+      the debug-supporting DLLs may not be present. If you require these, be
+      sure to add those needed. For example, on the standard LabVIEW RT 8.2
+      distribution using Pharlap ETS, the following DLLs must be copied to
+      the target before being able to run Debug programs:
+      <ul>
+        <li>msvcp71d.dll</li>
+        <li>msvcr71d.dll</li>
+      </ul>
+      </p><p>
       <note>To build ACE for National Instruments' LabVIEW RT, use
       the Pharlap ETS information above, but add the following line to your
       config.h file:

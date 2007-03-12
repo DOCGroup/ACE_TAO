@@ -1,3 +1,8 @@
+Mon Mar 12 16:39:25 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * ACE-INSTALL.html: Note that LabVIEW RT targets may require
+          the user to copy Windows DLLs to the target for Debug mode.
+
 Mon Mar 12 14:15:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/INET_Addr.cpp:
