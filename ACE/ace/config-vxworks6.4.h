@@ -176,7 +176,6 @@
 #define ACE_LACKS_FCNTL
 
 // Some string things
-#define ACE_LACKS_STRCASECMP
 #define ACE_LACKS_ITOW
 #define ACE_LACKS_WCSDUP
 #define ACE_LACKS_WCSICMP
@@ -197,6 +196,7 @@
   #  define ACE_LACKS_PUTENV
   #endif
   #define ACE_HAS_SETENV
+  #define ACE_LACKS_STRCASECMP
   #define ACE_HAS_3_PARAM_WCSTOK
   #define ACE_HAS_WCHAR
   #define ACE_HAS_VFWPRINTF
@@ -221,7 +221,6 @@
   #define ACE_LACKS_WAITPID
   #define ACE_LACKS_SYS_TIME_H
   #define ACE_LACKS_SYS_SELECT_H
-  #define ACE_LACKS_STRINGS_H
   #define ACE_MKDIR_LACKS_MODE
   #define ACE_HAS_SIZET_PTR_ASCTIME_R_AND_CTIME_R
   #define ACE_LACKS_SEARCH_H

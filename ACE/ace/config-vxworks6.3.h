@@ -151,7 +151,6 @@
 #define ACE_LACKS_FCNTL
 
 // Some string things
-#define ACE_LACKS_STRCASECMP
 #define ACE_LACKS_ITOW
 #define ACE_LACKS_WCSDUP
 #define ACE_LACKS_WCSICMP
@@ -175,6 +174,7 @@
   #define ACE_SIZEOF_WCHAR 2
   #define ACE_HAS_SHM_OPEN
   #define ACE_HAS_AIO_CALLS
+  #define ACE_LACKS_STRCASECMP
   // VxWorks seems to either not define this or define as zero up till now
   #if !defined (IOV_MAX) || (IOV_MAX == 0)
     #define ACE_IOV_MAX 16
@@ -193,7 +193,6 @@
   #define ACE_LACKS_WAITPID
   #define ACE_LACKS_SYS_TIME_H
   #define ACE_LACKS_SYS_SELECT_H
-  #define ACE_LACKS_STRINGS_H
   #define ACE_MKDIR_LACKS_MODE
   #define ACE_HAS_SIZET_PTR_ASCTIME_R_AND_CTIME_R
   #define ACE_LACKS_SEARCH_H
