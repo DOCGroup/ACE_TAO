@@ -425,6 +425,7 @@ project(ACE) : acedefaults, install, other, codecs, token, svcconf, uuid, fileca
     Version.h
     Versioned_Namespace.h
     ace_wchar.h
+    checked_iterator.h
     config-WinCE.h
     config-all.h
     config-borland-common.h

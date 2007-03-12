@@ -1,3 +1,24 @@
+Mon Mar 12 22:26:08 UTC 2007  Ossama Othman  <ossama_othman at symantec dot com>
+
+        * ace/checked_iterator.h (ACE_make_checked_array_iterator):
+
+          New function template that returns a checked iterator if
+          supported by the platform (currently VC8 or better), and a
+          pointer otherwise.
+
+        * ace/Array_Map.cpp (ACE_Array_Map, grow, operator==):
+
+          Call new ACE_make_checked_array_iterator<>() iterator factory
+          function to generate destination iterator.  Addresses VC8
+          "C4996" warnings when security related warnings are enabled.
+        
+        * ace/Makefile.am:
+        * ace/ace.mpc:
+        * ace/ace_for_tao.mpc:
+
+          Added new ace/checked_iterator.h header to the appropriate
+          header lists.
+
 Mon Mar 12 21:15:46 UTC 2007  Carlos O'Ryan  <coryan@atdeesk.com>
 
         * tests/Reactor_Notify_Test.cpp:
