@@ -1,3 +1,29 @@
+Mon Mar 12 21:03:15 UTC 2007  Ossama Othman  <ossama_othman at symantec dot com>
+
+        * tao/checked_iterator.h (TAO_checked_array_iterator):
+
+          New function template that returns a checked iterator if
+          supported by the platform (currently VC8 or better), and a
+          pointer otherwise.
+
+        * tao/Generic_Sequence_T.h (generic_sequence, length):
+        * tao/Unbounded_Octet_Sequence_T.h (length):
+
+          Call new TAO_checked_array_iterator<>() iterator factory
+          function to generate destination iterator.  Addresses VC8
+          "C4996" warnings when security related warnings are enabled.
+
+        * tao/Value_Traits_T.h (copy_range):
+
+          Made this trait method a member template to simplify support for
+          checked destination iterators.
+
+        * tao/Makefile.am:
+        * tao/tao.mpc:
+
+          Added new tao/checked_iterator.h header to the appropriate
+          header lists.
+
 Mon Mar 12 17:38:26 UTC 2007  Steve Huston  <shuston@riverace.com>
 
         * MPC/config/tao_vc8warnings.mpb: Added disabler for the
