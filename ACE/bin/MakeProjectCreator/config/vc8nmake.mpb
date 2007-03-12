@@ -5,7 +5,7 @@ project {
   specific(nmake) {
     compile_flags -= /EHs
     compile_flags += /EHa
-    compile_flags += /D _CRT_SECURE_NO_DEPRECATE /wd4250
+    compile_flags += /D _CRT_NONSTDC_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _SCL_SECURE_NO_WARNINGS /wd4250 /wd4290
   }
 }
 
