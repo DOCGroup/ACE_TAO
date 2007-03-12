@@ -949,7 +949,10 @@ ACE_OS::vsnprintf (char *buffer, size_t maxlen, const char *format, va_list ap)
 {
 #if !defined (ACE_LACKS_VSNPRINTF)
   int result;
-#  if defined (ACE_HAS_TR24731_2005_CRT)
+#  if 0 /* defined (ACE_HAS_TR24731_2005_CRT) */
+  // _vsnprintf_s() doesn't report the length needed when it truncates. This
+  // info is needed and relied on by others things in ACE+TAO, so don't use
+  // this. There's adequate protection via the maxlen.
   result = _vsnprintf_s (buffer, maxlen, _TRUNCATE, format, ap);
 #  elif !defined (ACE_WIN32)
   result = ::vsnprintf (buffer, maxlen, format, ap);
