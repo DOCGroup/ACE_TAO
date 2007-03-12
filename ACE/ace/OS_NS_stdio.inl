@@ -996,7 +996,7 @@ ACE_OS::vsprintf (wchar_t *buffer, const wchar_t *format, va_list argptr)
 # if (defined _XOPEN_SOURCE && (_XOPEN_SOURCE - 0) >= 500) || \
      (defined (sun) && !(defined(_XOPEN_SOURCE) && (_XOPEN_VERSION-0==4))) || \
      (defined (ACE_HAS_DINKUM_STL) || defined (__DMC__)) || \
-      defined (ACE_HAS_VSWPRINTF) || defined (ACE_WIN32_VC8)
+      defined (ACE_HAS_VSWPRINTF) || defined (ACE_WIN32_VC8) && !defined (ACE_HAS_WINCE)
 
   // The XPG4/UNIX98/C99 signature of the wide-char sprintf has a
   // maxlen argument. Since this method doesn't supply one, pass in
