@@ -12,10 +12,25 @@ feature(vc8_avoid_crt_secure_warnings) {
   specific(vc8) {
     macros += _CRT_SECURE_NO_WARNINGS
   }
+  specific(nmake) {
+    compile_flags += /D _CRT_NONSTDC_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE
+  }
 }
 
 feature(vc8_avoid_scl_secure_warnings) {
   specific(vc8) {
     macros += _SCL_SECURE_NO_WARNINGS
+  }
+  specific(nmake) {
+    compile_flags += /D _SCL_SECURE_NO_WARNINGS
+  }
+}
+
+feature(vc8_avoid_this_in_initializer_warnings) {
+  specific(vc8) {
+    DisableSpecificWarnings += 4355
+  }
+  specific(nmake) {
+    compile_flags += /wd4355
   }
 }
