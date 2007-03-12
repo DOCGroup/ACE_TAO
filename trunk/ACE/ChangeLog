@@ -1,3 +1,9 @@
+Mon Mar 12 17:55:18 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * ace/OS_NS_stdio.inl (vsnprintf): Back out the attempt to use the
+          new _vsnprintf_s() - it doesn't report the required string length
+          when it exceeds maxlen and we need this info.
+
 Mon Mar 12 17:38:26 UTC 2007  Steve Huston  <shuston@riverace.com>
 
         * bin/MakeProjectCreator/config/vc8_warnings.mpb:
