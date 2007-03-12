@@ -1,3 +1,15 @@
+Mon Mar 12 17:38:26 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * MPC/config/tao_vc8warnings.mpb: Added disabler for the
+          "warning C4996: 'std::_Copy_opt' was declared deprecated" warnings
+          emanating from Microsoft's STL. Added it for both the vc8 and
+          nmake types. Also, added a nmake specific option to disable
+          the inherits-via-dominance warning and removed that one from
+          the ACE vc8nmake.mpb.
+
+          Also moved the warning 4290 disabler (unimplemented exception
+          spec) from ACE's vc8nmake.mpb to here.
+
 Mon Mar 11 13:52:52 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/Bug_2800_Regression/server.cpp:
