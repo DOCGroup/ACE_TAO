@@ -1,3 +1,17 @@
+Mon Mar 12 13:12:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-vxworks6.3.h:
+        * ace/config-vxworks6.4.h:
+          Only when building a static rtp we enable aio by default. For
+          building shared we need an optional library, see the file below
+          how to enable this
+
+        * include/makeinclude/platform_vxworks6.3.GNU:
+          If you build rtp with shared library and want to use aio then you
+          need to build the custom AioPx library first, then add aio=1
+          to your platform_macros.GNU file to enable aio in ACE and link
+          the needed additonal library
+
 Mon Mar 12 12:35:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-vxworks6.3.h:
