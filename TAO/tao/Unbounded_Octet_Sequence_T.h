@@ -20,6 +20,7 @@
 #include "tao/Unbounded_Value_Allocation_Traits_T.h"
 #include "tao/Value_Traits_T.h"
 #include "tao/Range_Checking_T.h"
+#include "tao/checked_iterator.h"
 
 #include "tao/Basic_Types.h"
 #include "ace/Message_Block.h"
@@ -151,7 +152,9 @@ public:
             unbounded_value_sequence<CORBA::Octet> tmp(length);
             tmp.length_ = length;
             element_traits::copy_range(
-              buffer_, buffer_ + length, tmp.buffer_);
+              buffer_,
+              buffer_ + length,
+              TAO_checked_array_iterator (tmp.buffer_, tmp.length_));
             swap(tmp);
           }
         return;
@@ -160,7 +163,9 @@ public:
     unbounded_value_sequence<CORBA::Octet> tmp(length);
     tmp.length_ = length;
     element_traits::copy_range(
-        buffer_, buffer_ + length_, tmp.buffer_);
+      buffer_,
+      buffer_ + length_,
+      TAO_checked_array_iterator (tmp.buffer_, tmp.length_));
     element_traits::initialize_range(
         tmp.buffer_ + length_, tmp.buffer_ + length);
     swap(tmp);

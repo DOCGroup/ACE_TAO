@@ -57,6 +57,7 @@
  */
 
 #include "tao/Range_Checking_T.h"
+#include "tao/checked_iterator.h"
 
 #include <algorithm>
 
@@ -118,7 +119,9 @@ public:
     generic_sequence tmp(rhs.maximum_);
     tmp.length_ = rhs.length_;
     element_traits::copy_range(
-        rhs.buffer_, rhs.buffer_ + rhs.length_, tmp.buffer_);
+        rhs.buffer_,
+        rhs.buffer_ + rhs.length_,
+        TAO_checked_array_iterator (tmp.buffer_, tmp.length_));
     swap(tmp);
   }
 
@@ -181,7 +184,9 @@ public:
     generic_sequence tmp(length);
     tmp.length_ = length;
     element_traits::copy_range(
-        buffer_, buffer_ + length_, tmp.buffer_);
+      buffer_,
+      buffer_ + length_,
+      TAO_checked_array_iterator (tmp.buffer_, tmp.length_));
     element_traits::initialize_range(
         tmp.buffer_ + length_, tmp.buffer_ + length);
 

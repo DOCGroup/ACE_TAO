@@ -38,11 +38,21 @@ struct value_traits
     std::fill(begin, end, value_type ());
   }
 
+# ifndef ACE_LACKS_MEMBER_TEMPLATES
+  // Allow MSVC++ >= 8 checked iterators to be used.
+  template <typename iter>
   inline static void copy_range(
-      value_type * begin, value_type * end, value_type *dst)
+      value_type * begin, value_type * end, iter dst)
   {
     std::copy(begin, end, dst);
   }
+# else
+  inline static void copy_range(
+      value_type * begin, value_type * end, value_type * dst)
+  {
+    std::copy(begin, end, dst);
+  }
+# endif  /* !ACE_LACKS_MEMBER_TEMPLATES */
 };
 
 } // namespace details

@@ -287,6 +287,7 @@ project(TAO) : acelib, install, tao_output, taodefaults, pidl, extra_core, tao_v
     CDR.h
     CharSeqC.h
     CharSeqS.h
+    checked_iterator.h
     Cleanup_Func_Registry.h
     ClientRequestInterceptor_Adapter.h
     Client_Strategy_Factory.h
