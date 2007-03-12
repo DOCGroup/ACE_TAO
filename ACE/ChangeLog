@@ -103,7 +103,7 @@ Fri Mar 9 09:42:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
         * include/makeinclude/platform_vxworks6.3.GNU:
           No need to explicitly link dl when building shared
 
-Thu Mar  8 23:44:14 Pacific Standard Time 2007    <ossama_othman@symantec.com>
+Thu Mar  9 07:44:14 UTC 2007  Ossama Othman  <ossama_othman@symantec.com>
 
         * tests/Time_Value_Test.cpp (run_main):
 
