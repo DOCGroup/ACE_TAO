@@ -11,4 +11,25 @@ feature(vc8_avoid_dominance_warnings) {
   specific(vc8) {
     DisableSpecificWarnings += 4250
   }
+  specific(nmake) {
+    compile_flags += /wd4250
+  }
+}
+
+feature(vc8_avoid_stl_deprecated_warnings) {
+  specific(vc8) {
+    DisableSpecificWarnings += 4996
+  }
+  specific(nmake) {
+    compile_flags += /wd4996
+  }
+}
+
+feature(vc8_avoid_unimpl_exception_spec_warnings) {
+  specific(vc8) {
+    DisableSpecificWarnings += 4290
+  }
+  specific(nmake) {
+    compile_flags += /wd4290
+  }
 }
