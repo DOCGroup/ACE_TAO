@@ -105,9 +105,6 @@
 // There are too many instances of this warning to fix it right now.
 // Maybe in the future.
 
-// 'this' : used in base member initializer list
-#pragma warning(disable:4355)
-
 // Disable warning of using Microsoft Extension.
 # pragma warning(disable:4231)
 

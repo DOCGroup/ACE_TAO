@@ -1,3 +1,20 @@
+Mon Mar 12 17:38:26 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * bin/MakeProjectCreator/config/vc8_warnings.mpb:
+        * bin/MakeProjectCreator/config/vc8nmake.mpb:
+          Moved the _CRT_NONSTDC_NO_WARNINGS, _CRT_SECURE_NO_DEPRECATE, and
+          _SCL_SECURE_NO_WARNINGS defs from vc8nmake.mpb to vc8_warnings.mpb
+          so they're all in one place for easy maintenance and also can be
+          switched on and off via MPC features.
+
+          This effectively reverts the changes to vc8nmake.mpb since:
+          Fri Mar  9 21:04:22 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * ace/config-win32-msvc-8.h: Deleted the pragma disable for warning
+          4355 (this used in base member initializer list). Added it to
+          bin/MakeProjectCreator/config/vc8_warnings.mpb. This should both
+          unblock it for regular users and block it for the CIDLC build.
+
 Mon Mar 12 16:39:25 UTC 2007  Steve Huston  <shuston@riverace.com>
 
         * ACE-INSTALL.html: Note that LabVIEW RT targets may require
