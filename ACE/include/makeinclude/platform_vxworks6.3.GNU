@@ -62,9 +62,9 @@ ifeq ("$(WIND_HOST_TYPE)","x86-win32")
   TAO_IDL3_TO_IDL2 = $(HOST_ROOT)/bin/tao_idl3_to_idl2.exe
   CIDLC = $(HOST_ROOT)/TAO/CIAO/bin/cidlc.exe
 else
-  TAO_IDL = $(HOST_ROOT)/bin/tao_idl$(EXEEXT)
-  TAO_IDL3_TO_IDL2 = $(HOST_ROOT)/bin/tao_idl3_to_idl2$(EXEEXT)
-  CIDLC = $(HOST_ROOT)/TAO/CIAO/bin/cidlc$(EXEEXT)
+  TAO_IDL = $(HOST_ROOT)/bin/tao_idl
+  TAO_IDL3_TO_IDL2 = $(HOST_ROOT)/bin/tao_idl3_to_idl2
+  CIDLC = $(HOST_ROOT)/TAO/CIAO/bin/cidlc
 endif
 TAO_IDL_DEP = $(TAO_IDL)
 TAO_IDL3_TO_IDL2_DEP = $(TAO_IDL3_TO_IDL2)
