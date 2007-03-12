@@ -1,3 +1,11 @@
+Mon Mar 12 12:35:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-vxworks6.3.h:
+        * ace/config-vxworks6.4.h:
+          VxWorks 6.4 does deliver strings.h in kernel mode and strcasecmp/
+          strncasecmp can't be used in rtp mode, but can be used in kernel
+          mode
+
 Mon Mar 12 10:51:38 UTC 2007  Steve Huston  <shuston@riverace.com>
 
         * bin/MakeProjectCreator/config/vc8nmake.mpb: Added /D for
@@ -12,13 +20,13 @@ Mon Mar 12 01:31:16 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * examples/DLL/test_dll.cpp:
 
-          This example was not working under Windows XP when compiled with 
+          This example was not working under Windows XP when compiled with
           Visual Studio 2003.NET. The culprit was the following line of code:
 
           dll.open (ACE_TEXT("./") ACE_DLL_PREFIX ACE_TEXT("DLL_Today"));
 
           We don't need to supply "./" to the open method, since $ACE_ROOT/lib
-          is in DLL search path environment variable (PATH for Windows and 
+          is in DLL search path environment variable (PATH for Windows and
           LD_LIBRARY_PATH for unix-like systems).
 
 Fri Mar  9 21:04:22 UTC 2007  Steve Huston  <shuston@riverace.com>
