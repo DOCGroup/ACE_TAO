@@ -173,7 +173,9 @@
   #define ACE_HAS_VFWPRINTF
   #define ACE_SIZEOF_WCHAR 2
   #define ACE_HAS_SHM_OPEN
-  #define ACE_HAS_AIO_CALLS
+  #if defined (ACE_AS_STATIC_LIBS)
+  #  define ACE_HAS_AIO_CALLS
+  #endif
   #define ACE_LACKS_STRCASECMP
   // VxWorks seems to either not define this or define as zero up till now
   #if !defined (IOV_MAX) || (IOV_MAX == 0)

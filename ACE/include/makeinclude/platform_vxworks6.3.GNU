@@ -24,6 +24,7 @@ exceptions ?= 1
 rtp ?= 1
 pthread ?= 1
 xerces ?= 0
+aio ?= 0
 
 ifeq ($(static_libs),1)
   shared_libs = 0
@@ -180,6 +181,12 @@ ifeq ($(rtp),1)
   ifeq ("$(TOOL_FAMILY)","gnu")
     CPPFLAGS += -mrtp
     SOFLAGS += -mrtp
+  endif
+  ifeq ($(SHARED_LIBS), 1)
+    ifeq ($(aio),1)
+      CPPFLAGS += -DACE_HAS_AIO_CALLS
+      LIBS += AioPx
+    endif
   endif
   LDFLAGS := $(filter-out -X, $(LDFLAGS))
   LDFLAGS := $(filter-out -N, $(LDFLAGS))
