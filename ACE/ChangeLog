@@ -1,3 +1,10 @@
+Mon Mar 13 00:24:22 UTC 2007  Ossama Othman  <ossama_othman at symantec dot com>
+
+        * bin/MakeProjectCreator/config/vc8nmake.mpb:
+
+          Subtract /EHsc from the compiler flags instead of /EHs.  MPC now
+          uses /EHsc as the correct replacement for /GX.
+
 Mon Mar 12 23:44:25 UTC 2007  Ossama Othman  <ossama_othman at symantec dot com>
 
         * ace/checked_iterator.h (ACE_make_checked_array_iterator):
