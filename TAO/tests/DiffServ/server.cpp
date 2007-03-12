@@ -4,7 +4,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
 #include "tao/debug.h"
-#include "tao/DiffServPolicy/DiffServPolicyC.h"
+#include "tao/DiffServPolicy/DiffServPolicy.h"
 #include "tao/DiffServPolicy/Server_Network_Priority_Policy.h"
 #include "tao/DiffServPolicy/Client_Network_Priority_Policy.h"
 

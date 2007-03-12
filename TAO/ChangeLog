@@ -1,3 +1,10 @@
+Mon Mar 11 13:44:52 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/DiffServ/server.cpp:
+        * tests/DiffServ/client.cpp:
+          Include DiffservPolicy.h so that the static initializers to run
+          in a static build
+
 Sat Mar 10 22:49:01 UTC 2007  Steve Huston  <shuston@riverace.com>
 
         * MPC/config/tao_vc8warnings.mpb: New base containing features that
