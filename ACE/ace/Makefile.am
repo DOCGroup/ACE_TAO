@@ -1095,6 +1095,7 @@ nobase_include_HEADERS += \
   XTI_ATM_Mcast.inl \
   ace_wchar.h \
   ace_wchar.inl \
+  checked_iterator.h \
   config-WinCE.h \
   config-all.h \
   config-borland-common.h \

@@ -342,6 +342,7 @@ project(ACE_FOR_TAO) : acedefaults, install, svcconf, uuid, versioned_namespace,
     Value_Ptr.h
     Version.h
     ace_wchar.h
+    checked_iterator.h
     config-WinCE.h
     config-all.h
     config-borland-common.h

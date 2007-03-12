@@ -9,6 +9,8 @@
 # include "ace/Array_Map.inl"
 #endif  /* !__ACE_INLINE__ */
 
+#include "ace/checked_iterator.h"
+
 #include <algorithm>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -22,7 +24,10 @@ ACE_Array_Map<Key, Value, EqualTo>::ACE_Array_Map (InputIterator f,
   , capacity_ (size_)
   , nodes_ (size_ == 0 ? 0 : new value_type[size_])
 {
-  (void) std::copy (f, l, this->begin ());
+  (void) std::copy (f,
+                    l,
+                    ACE_make_checked_array_iterator (this->begin (),
+                                                     this->size_));
 
 //   iterator n = this->begin ();
 
@@ -38,7 +43,10 @@ ACE_Array_Map<Key, Value, EqualTo>::ACE_Array_Map (
   , capacity_ (size_)
   , nodes_ (size_ == 0 ? 0 : new value_type[size_])
 {
-  (void) std::copy (f, l, this->begin ());
+  (void) std::copy (f,
+                    l,
+                    ACE_make_checked_array_iterator (this->begin (),
+                                                     this->size_));
 
 //   iterator n = this->begin ();
 
@@ -54,7 +62,10 @@ ACE_Array_Map<Key, Value, EqualTo>::ACE_Array_Map (
   , capacity_ (map.size_)
   , nodes_ (size_ == 0 ? 0 : new value_type[size_])
 {
-  std::copy (map.begin (), map.end (), this->begin ());
+  std::copy (map.begin (),
+             map.end (),
+             ACE_make_checked_array_iterator (this->begin (),
+                                              this->size_));
 
 //   iterator f = map.begin ();
 //   iterator l = map.end ();
@@ -242,7 +253,10 @@ ACE_Array_Map<Key, Value, EqualTo>::grow (
 
       ACE_Array_Map<Key, Value, EqualTo> temp (this->size () + s);
 
-      std::copy (this->begin (), this->end (), temp.begin ());
+      std::copy (this->begin (),
+                 this->end (),
+                 ACE_make_checked_array_iterator (temp.begin (),
+                                                  temp.capacity_));
 
       size_type const n = this->size ();  // Do not swap out the size
                                           // since we bypassed the
@@ -265,7 +279,10 @@ operator== (ACE_Array_Map<Key, Value, EqualTo> const & lhs,
   // in this case.
 
   return (lhs.size () == rhs.size ()
-          && std::equal (lhs.begin (), lhs.end (), rhs.begin ()));
+          && std::equal (lhs.begin (),
+                         lhs.end (),
+                         ACE_make_checked_array_iterator (rhs.begin (),
+                                                          rhs.size ())));
 }
 
 template <typename Key, typename Value, class EqualTo>
