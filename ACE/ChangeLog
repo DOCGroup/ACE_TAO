@@ -1,3 +1,17 @@
+Mon Mar 12 21:15:46 UTC 2007  Carlos O'Ryan  <coryan@atdeesk.com>
+
+        * tests/Reactor_Notify_Test.cpp:
+          The test was verifying the behavior described in bug 2845.  I
+          neglected to fix the test when we fixed the bug.  Mostly because
+          I am stupid, but also because the test only worked as expected
+          in a limited number of builds.
+          This change should fix the test problems we are seeing on the
+          scoreboard, but the only thing I can say for sure is:
+          + I managed to reproduce the crash on my machine.
+          + I understand why the test was crashing.
+          + I believe the test was wrong and not the library.
+          + I fixed the test and now valgrind is happy with it.
+
 Mon Mar 12 17:55:18 UTC 2007  Steve Huston  <shuston@riverace.com>
 
         * ace/OS_NS_stdio.inl (vsnprintf): Back out the attempt to use the
