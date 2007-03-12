@@ -20,7 +20,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   ACE_DLL dll;
 
-  int retval = dll.open (ACE_TEXT("./") ACE_DLL_PREFIX ACE_TEXT("DLL_Today"));
+  int retval = dll.open (ACE_DLL_PREFIX ACE_TEXT("DLL_Today"));
 
   if (retval != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
