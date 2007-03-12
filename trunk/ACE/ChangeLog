@@ -1,3 +1,12 @@
+Mon Mar 12 23:44:25 UTC 2007  Ossama Othman  <ossama_othman at symantec dot com>
+
+        * ace/checked_iterator.h (ACE_make_checked_array_iterator):
+
+          Added documentation for this header.
+
+          Changed length type from ptrdiff_t to size_t.  The length refers
+          to the length of an array, not a pointer difference.
+
 Mon Mar 12 21:47:51 UTC 2007  Wallace Zhang  <zhang_w@ociweb.com>
 
         * ace/OS_NS_stdio.inl:
