@@ -20,11 +20,11 @@
 #include "tao/Unbounded_Value_Allocation_Traits_T.h"
 #include "tao/Value_Traits_T.h"
 #include "tao/Range_Checking_T.h"
-#include "tao/checked_iterator.h"
 
 #include "tao/Basic_Types.h"
 #include "ace/Message_Block.h"
 #include "ace/OS_Memory.h"
+#include "ace/checked_iterator.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -154,7 +154,7 @@ public:
             element_traits::copy_range(
               buffer_,
               buffer_ + length,
-              TAO_checked_array_iterator (tmp.buffer_, tmp.length_));
+              ACE_make_checked_array_iterator (tmp.buffer_, tmp.length_));
             swap(tmp);
           }
         return;
@@ -165,7 +165,7 @@ public:
     element_traits::copy_range(
       buffer_,
       buffer_ + length_,
-      TAO_checked_array_iterator (tmp.buffer_, tmp.length_));
+      ACE_make_checked_array_iterator (tmp.buffer_, tmp.length_));
     element_traits::initialize_range(
         tmp.buffer_ + length_, tmp.buffer_ + length);
     swap(tmp);
