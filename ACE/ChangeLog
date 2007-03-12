@@ -96,7 +96,7 @@ Thu Mar  9 09:44:14 UTC 2007  Ossama Othman  <ossama_othman at symantec dot com>
         * ace/Time_Value.cpp (operator *=):
 
           Reverted bulk of the changes.  New implementation will be
-          revisted as time permits.
+          revisited as time permits.
 
 Fri Mar 9 09:42:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
