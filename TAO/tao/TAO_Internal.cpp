@@ -67,7 +67,7 @@ namespace
    */
   int
   parse_global_args_i (int &argc,
-                       char **argv,
+                       ACE_TCHAR **argv,
                        CORBA::StringSeq &svc_config_argv,
                        bool apply_values);
 
@@ -83,7 +83,7 @@ namespace
    */
   int
   parse_svcconf_args_i (int &argc,
-                       char **argv,
+                       ACE_TCHAR **argv,
                        CORBA::StringSeq &svc_config_argv);
 
   /**
@@ -115,7 +115,7 @@ namespace
    */
   int
   parse_private_args_i (int &argc,
-                        char **argv,
+                        ACE_TCHAR **argv,
                         CORBA::StringSeq & svc_config_argv,
                         bool & skip_service_config_open);
 
@@ -635,7 +635,7 @@ namespace
 
   int
   parse_svcconf_args_i (int &argc,
-                        char **argv,
+                        ACE_TCHAR **argv,
                         CORBA::StringSeq &svc_config_argv)
   {
     // Extract the Service Configurator ORB options from the argument
@@ -698,7 +698,7 @@ namespace
 
   int
   parse_private_args_i (int &argc,
-                        char **argv,
+                        ACE_TCHAR **argv,
                         CORBA::StringSeq &svc_config_argv,
                         bool & skip_service_config_open)
   {
@@ -782,7 +782,7 @@ namespace
 
   int
   parse_global_args_i (int &argc,
-                       char **argv,
+                       ACE_TCHAR **argv,
                        CORBA::StringSeq &svc_config_argv,
                        bool apply_values)
   {
