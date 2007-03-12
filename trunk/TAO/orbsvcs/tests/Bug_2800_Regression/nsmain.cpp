@@ -178,7 +178,10 @@ int main(int argc, char* argv[])
 {
   // Start the Test task
   TestTask test_(argc, argv);
-  test_.activate();
+  if (test_.activate() == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, "Unable to start test task.\n"), -1);
+    }
 
   // Wait the Test task finish.
   test_.wait();

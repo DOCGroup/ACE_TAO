@@ -1,3 +1,9 @@
+Mon Mar 11 13:52:52 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/Bug_2800_Regression/server.cpp:
+        * orbsvcs/tests/Bug_2800_Regression/nsmain.cpp:
+          Exit with -1 when we can't activate the test tasks
+
 Mon Mar 11 13:44:52 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/DiffServ/server.cpp:
