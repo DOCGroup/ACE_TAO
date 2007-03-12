@@ -1491,7 +1491,7 @@ namespace
 
         Traversal::SingleUserData::belongs (u, belongs_);
 
-        os << "::_narrow (over_ridden_object);"
+        os << "::_narrow (over_ridden_object.in ());"
            << "}";
 
         os << "/// Simplex connect." << endl
