@@ -3,7 +3,7 @@
 #include "testC.h"
 #include "ace/Get_Opt.h"
 #include "tao/Policy_Manager.h"
-#include "tao/DiffServPolicy/DiffServPolicyC.h"
+#include "tao/DiffServPolicy/DiffServPolicy.h"
 #include "tao/DiffServPolicy/Client_Network_Priority_Policy.h"
 #include "tao/DiffServPolicy/Server_Network_Priority_Policy.h"
 
