@@ -1,3 +1,30 @@
+Mon Mar 12 22:29:32 UTC 2007  Ossama Othman  <ossama_othman at symantec dot com>
+
+        * tao/checked_iterator.h:
+
+          Moved to ACE.
+
+        * tao/Generic_Sequence_T.h: 
+        * tao/Unbounded_Octet_Sequence_T.h:
+
+          Updated include directives.  The checked_iterator.h header is
+          now in ACE.
+
+          Updated checked iterator factory function calls to use new name,
+          ACE_make_checked_array_iterator.
+
+        * tao/Object_Reference_Traits_T.h (copy_range):
+        * tao/String_Traits_T.h (copy_range):
+
+          Made this trait method a member template to simplify support for
+          checked destination iterators.
+
+        * tao/Makefile.am:
+        * tao/tao.mpc:
+
+          Removed tao/checked_iterator.h header from the appropriate
+          header lists.  It has been moved to ACE.
+
 Mon Mar 12 21:35:25 UTC 2007  Wallace Zhang  <zhang_w@ociweb.com>
 
         * tao/TAO_Internal.cpp:
