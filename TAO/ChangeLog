@@ -1,3 +1,10 @@
+Tue Mar 13 18:00:34 UTC 2007  Ossama Othman  <ossama_othman at symantec dot com>
+
+        * tao/Valuetype/Valuetype_Traits_T.h (copy_range):
+
+          Made this trait method a member template to provide support for
+          checked destination iterators.
+
 Tue Mar 13 14:17:52 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/Bug_2800_Regression/nsmain.cpp:
