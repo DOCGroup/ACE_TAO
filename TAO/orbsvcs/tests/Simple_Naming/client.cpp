@@ -98,7 +98,7 @@ CosNaming_Client::parse_args (void)
       case 's':
         if (this->test_ == 0)
           ACE_NEW_RETURN (this->test_,
-                          Simple_Test,
+                          Simple_Test (this->orbmgr_.root_poa ()),
                           -1);
         break;
       case 'm':
@@ -109,7 +109,9 @@ CosNaming_Client::parse_args (void)
               size = 10;
 
             ACE_NEW_RETURN (this->test_,
-                            MT_Test (this->orbmgr_.orb (), size),
+                            MT_Test (this->orbmgr_.orb (),
+                                     this->orbmgr_.root_poa (),
+                                     size),
                             -1);
           }
 
@@ -117,25 +119,25 @@ CosNaming_Client::parse_args (void)
       case 't':
         if (this->test_ == 0)
           ACE_NEW_RETURN (this->test_,
-                          Tree_Test,
+                          Tree_Test (this->orbmgr_.root_poa ()),
                           -1);
         break;
       case 'i':
         if (this->test_ == 0)
           ACE_NEW_RETURN (this->test_,
-                          Iterator_Test,
+                          Iterator_Test (this->orbmgr_.root_poa ()),
                           -1);
         break;
       case 'e':
         if (this->test_ == 0)
           ACE_NEW_RETURN (this->test_,
-                          Exceptions_Test,
+                          Exceptions_Test (this->orbmgr_.root_poa ()),
                           -1);
         break;
       case 'y':
         if (this->test_ == 0)
           ACE_NEW_RETURN (this->test_,
-                          Destroy_Test,
+                          Destroy_Test (this->orbmgr_.root_poa ()),
                           -1);
         break;
       case 'p':
@@ -151,6 +153,7 @@ CosNaming_Client::parse_args (void)
 
             ACE_NEW_RETURN (this->test_,
                             Persistent_Test_Begin (this->orbmgr_.orb (),
+                                                   this->orbmgr_.root_poa (),
                                                    ior_output_file),
                             -1);
           }
@@ -159,6 +162,7 @@ CosNaming_Client::parse_args (void)
         if (this->test_ == 0)
           ACE_NEW_RETURN (this->test_,
                           Persistent_Test_End (this->orbmgr_.orb (),
+                                               this->orbmgr_.root_poa (),
                                                get_opts.opt_arg ()),
                           -1);
         break;
@@ -175,7 +179,7 @@ CosNaming_Client::parse_args (void)
 
   if (this->test_ == 0)
     ACE_NEW_RETURN (this->test_,
-                    Simple_Test,
+                    Simple_Test (this->orbmgr_.root_poa ()),
                     -1);
 
   // Indicates successful parsing of command line.
@@ -225,9 +229,20 @@ CosNaming_Client::init (int argc, char **argv)
   return -1;
 }
 
+Naming_Test::Naming_Test (PortableServer::POA_ptr poa)
+ : poa_ (poa)
+{
+}
+
+Naming_Test::~Naming_Test (void)
+{
+}
+
 MT_Test::MT_Test (CORBA::ORB_ptr orb,
+                  PortableServer::POA_ptr poa,
                   int size)
-   :size_ (size),
+  : Naming_Test (poa),
+    size_ (size),
     orb_ (orb),
     name_service_ior_ (0)
 {
@@ -349,8 +364,13 @@ MT_Test::execute (TAO_Naming_Client &root_context)
 
   try
     {
+      PortableServer::ObjectId_var id_act =
+        this->poa_->activate_object (test_obj_impl);
+      
+      CORBA::Object_var object_act = this->poa_->id_to_reference (id_act.in ());
+      
       test_ref_ =
-        test_obj_impl->_this ();
+        Test_Object::_narrow (object_act.in ());
 
       test_obj_impl->_remove_ref ();
 
@@ -389,6 +409,11 @@ MT_Test::execute (TAO_Naming_Client &root_context)
   return status;
 }
 
+Simple_Test::Simple_Test(PortableServer::POA_ptr poa)
+ : Naming_Test (poa)
+{
+}
+
 int
 Simple_Test::execute (TAO_Naming_Client &root_context)
 {
@@ -396,8 +421,13 @@ Simple_Test::execute (TAO_Naming_Client &root_context)
     {
       // Dummy object instantiation.
       My_Test_Object *test_obj_impl = new My_Test_Object (CosNaming_Client::OBJ1_ID);
+      PortableServer::ObjectId_var id_act =
+        this->poa_->activate_object (test_obj_impl);
+
+      CORBA::Object_var object_act = this->poa_->id_to_reference (id_act.in ());
+
       Test_Object_var test_obj_ref =
-        test_obj_impl->_this ();
+        Test_Object::_narrow (object_act.in ());
 
       // Give ownership of this object to POA.
       test_obj_impl->_remove_ref ();
@@ -438,6 +468,11 @@ Simple_Test::execute (TAO_Naming_Client &root_context)
   return 0;
 }
 
+Tree_Test::Tree_Test(PortableServer::POA_ptr poa)
+ : Naming_Test (poa)
+{
+}
+
 int
 Tree_Test::execute (TAO_Naming_Client &root_context)
 {
@@ -460,7 +495,12 @@ Tree_Test::execute (TAO_Naming_Client &root_context)
       // Instantiate a dummy object and bind it under the new context.
       My_Test_Object *impl1 =
         new My_Test_Object (CosNaming_Client::OBJ1_ID);
-      Test_Object_var obj1 = impl1->_this ();
+      PortableServer::ObjectId_var id_act =
+        this->poa_->activate_object (impl1);
+
+      CORBA::Object_var object_act = this->poa_->id_to_reference (id_act.in ());
+
+      Test_Object_var obj1 = Test_Object::_narrow (object_act.in ());
       impl1->_remove_ref ();
 
       CosNaming::Name obj_name;
@@ -525,7 +565,11 @@ Tree_Test::execute (TAO_Naming_Client &root_context)
 
       My_Test_Object *impl2 =
         new My_Test_Object (CosNaming_Client::OBJ2_ID);
-      Test_Object_var obj2 = impl2->_this ();
+      id_act = this->poa_->activate_object (impl2);
+
+      object_act = this->poa_->id_to_reference (id_act.in ());
+
+      Test_Object_var obj2 = Test_Object::_narrow (object_act.in ());
 
       impl2->_remove_ref ();
 
@@ -556,6 +600,11 @@ Tree_Test::execute (TAO_Naming_Client &root_context)
   return 0;
 }
 
+Exceptions_Test::Exceptions_Test(PortableServer::POA_ptr poa)
+ : Naming_Test (poa)
+{
+}
+
 int
 Exceptions_Test::execute (TAO_Naming_Client &root_context)
 {
@@ -575,7 +624,12 @@ Exceptions_Test::execute (TAO_Naming_Client &root_context)
 
       // Bind a dummy object foo under each context.
       My_Test_Object *impl = new My_Test_Object;
-      Test_Object_var obj = impl->_this ();
+      PortableServer::ObjectId_var id_act =
+        this->poa_->activate_object (impl);
+
+      CORBA::Object_var object_act = this->poa_->id_to_reference (id_act.in ());
+
+      Test_Object_var obj = Test_Object::_narrow (object_act.in ());
       impl->_remove_ref ();
 
       CosNaming::Name object_name;
@@ -638,7 +692,12 @@ Exceptions_Test::already_bound_test (TAO_Naming_Client &root_context)
       test_name.length (1);
       test_name[0].id = CORBA::string_dup ("foo");
       My_Test_Object *impl = new My_Test_Object;
-      Test_Object_var obj = impl->_this ();
+      PortableServer::ObjectId_var id_act =
+        this->poa_->activate_object (impl);
+
+      CORBA::Object_var object_act = this->poa_->id_to_reference (id_act.in ());
+
+      Test_Object_var obj = Test_Object::_narrow (object_act.in ());
       impl->_remove_ref ();
 
       root_context->bind (test_name,
@@ -668,7 +727,12 @@ Exceptions_Test::already_bound_test2 (TAO_Naming_Client &root_context)
       test_name[0].id = CORBA::string_dup ("level1_context");
       test_name[1].id = CORBA::string_dup ("foo");
       My_Test_Object *impl = new My_Test_Object;
-      Test_Object_var obj = impl->_this ();
+      PortableServer::ObjectId_var id_act =
+        this->poa_->activate_object (impl);
+
+      CORBA::Object_var object_act = this->poa_->id_to_reference (id_act.in ());
+
+      Test_Object_var obj = Test_Object::_narrow (object_act.in ());
       impl->_remove_ref ();
 
       root_context->bind (test_name,
@@ -794,6 +858,11 @@ Exceptions_Test::not_found_test3 (TAO_Naming_Client &root_context)
     }
 }
 
+Iterator_Test::Iterator_Test(PortableServer::POA_ptr poa)
+ : Naming_Test (poa)
+{
+}
+
 int
 Iterator_Test::execute (TAO_Naming_Client &root_context)
 {
@@ -801,7 +870,12 @@ Iterator_Test::execute (TAO_Naming_Client &root_context)
     {
       // Instantiate four dummy objects.
       My_Test_Object *impl = new My_Test_Object;
-      Test_Object_var obj = impl->_this ();
+      PortableServer::ObjectId_var id_act =
+        this->poa_->activate_object (impl);
+
+      CORBA::Object_var object_act = this->poa_->id_to_reference (id_act.in ());
+
+      Test_Object_var obj = Test_Object::_narrow (object_act.in ());
       impl->_remove_ref ();
 
       // Bind objects to the naming context.
@@ -885,6 +959,11 @@ Iterator_Test::execute (TAO_Naming_Client &root_context)
   return 0;
 }
 
+Destroy_Test::Destroy_Test(PortableServer::POA_ptr poa)
+ : Naming_Test (poa)
+{
+}
+
 int
 Destroy_Test::execute (TAO_Naming_Client &root_context)
 {
@@ -897,7 +976,12 @@ Destroy_Test::execute (TAO_Naming_Client &root_context)
 
       // Bind a dummy object foo under my_context.
       My_Test_Object *impl = new My_Test_Object;
-      Test_Object_var obj = impl->_this ();
+      PortableServer::ObjectId_var id_act =
+        this->poa_->activate_object (impl);
+
+      CORBA::Object_var object_act = this->poa_->id_to_reference (id_act.in ());
+
+      Test_Object_var obj = Test_Object::_narrow (object_act.in ());
       impl->_remove_ref ();
 
       CosNaming::Name object_name;
@@ -956,8 +1040,10 @@ Destroy_Test::not_exist_test (CosNaming::NamingContext_var &ref)
 }
 
 Persistent_Test_Begin::Persistent_Test_Begin (CORBA::ORB_ptr orb,
+                                              PortableServer::POA_ptr poa,
                                               FILE * ior_output_file)
-  : orb_ (orb),
+  : Naming_Test (poa),
+    orb_ (orb),
     file_ (ior_output_file)
 {
 }
@@ -1007,8 +1093,10 @@ Persistent_Test_Begin::execute (TAO_Naming_Client &root_context)
 }
 
 Persistent_Test_End::Persistent_Test_End (CORBA::ORB_ptr orb,
+                                          PortableServer::POA_ptr poa,
                                           const char *ior)
-  : orb_ (orb),
+  : Naming_Test (poa),
+    orb_ (orb),
     ior_ (ior)
 {
 }
