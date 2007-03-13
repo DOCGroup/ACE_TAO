@@ -90,10 +90,6 @@ PLATFORM_TK_CPPFLAGS=
 PLATFORM_TK_LIBS=
 PLATFORM_TK_LDFLAGS=
 
-PLATFORM_SSL_CPPFLAGS=-I/usr/ssl/include
-PLATFORM_SSL_LIBS=
-PLATFORM_SSL_LDFLAGS=-L/usr/ssl/lib
-
 ifeq ($(threads),1)
   CFLAGS  += -mthreads
   SOFLAGS += -mthreads

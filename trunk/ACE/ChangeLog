@@ -1,3 +1,8 @@
+Tue Mar 13 13:21:49 UTC 2007  Olli Savia  <ops@iki.fi>
+
+        * include/makeinclude/platform_lynxos.GNU:
+          Removed unnecessary PLATFORM_SSL_* settings.
+
 Tue Mar 13 12:13:37 UTC 2007  Steve Huston  <shuston@riverace.com>
 
         * bin/MakeProjectCreator/config/vc8_warnings.mpb: For the
