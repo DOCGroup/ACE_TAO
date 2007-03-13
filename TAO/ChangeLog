@@ -1,3 +1,9 @@
+Tue Mar 13 12:19:58 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * MPC/config/tao_vc8warnings.mpb: Reversed the defaults for VC8
+          STL deprecated warnings since Ossama added the checked iterator
+          stuff.
+
 Tue Mar 13 09:55:52 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/DynUnion_Test/*:
