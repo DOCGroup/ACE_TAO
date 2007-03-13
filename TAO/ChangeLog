@@ -1,10 +1,17 @@
+Tue Mar 13 09:55:52 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/DynUnion_Test/*:
+          New DynUnion test, thanks to Khan Arshad <khan dot m dot arshad at gmail dot com>
+          for creating this test. According to the reporter this failed with 1.5
+          but it works on svn head without problems.
+
 Mon Mar 12 22:29:32 UTC 2007  Ossama Othman  <ossama_othman at symantec dot com>
 
         * tao/checked_iterator.h:
 
           Moved to ACE.
 
-        * tao/Generic_Sequence_T.h: 
+        * tao/Generic_Sequence_T.h:
         * tao/Unbounded_Octet_Sequence_T.h:
 
           Updated include directives.  The checked_iterator.h header is
