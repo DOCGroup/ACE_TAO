@@ -160,8 +160,19 @@ ST_AMH_Server::register_servant (ST_AMH_Servant *servant)
 {
   try
     {
+      CORBA::Object_var poa_object =
+        this->orb_->resolve_initial_references("RootPOA");
+
+      PortableServer::POA_var root_poa =    
+        PortableServer::POA::_narrow (poa_object.in ()); 
+
+      PortableServer::ObjectId_var id =
+        root_poa->activate_object (servant);
+
+      CORBA::Object_var object = root_poa->id_to_reference (id.in ());
+
       Test::Roundtrip_var roundtrip =
-        servant->_this ();
+        Test::Roundtrip::_narrow (object.in ());
 
       CORBA::String_var ior =
         this->orb_->object_to_string (roundtrip.in ());

@@ -55,8 +55,13 @@ main (int argc, char *argv[])
                       1);
       PortableServer::ServantBase_var owner_transfer(process_impl);
 
+      PortableServer::ObjectId_var id =
+        root_poa->activate_object (process_impl);
+
+      CORBA::Object_var object_act = root_poa->id_to_reference (id.in ());
+
       Test::Process_var process =
-        process_impl->_this ();
+        Test::Process::_narrow (object_act.in ());
 
       poa_manager->activate ();
 

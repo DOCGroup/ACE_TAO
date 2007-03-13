@@ -227,8 +227,14 @@ Initiator_Server::run (void)
                   "Initiator_Server::run: Trying to invoke "
                   "foo on Object A\n"));
 
+      PortableServer::POA_var root_poa = this->orb_manager_.root_poa ();
+      PortableServer::ObjectId_var id =
+        root_poa->activate_object (initiator_i_ptr_);
+
+      CORBA::Object_var object_act = root_poa->id_to_reference (id.in ());
+
       Initiator_var initiator =
-        this->initiator_i_ptr_->_this();
+        Initiator::_narrow (object_act.in ());
 
       this->object_A_var_->foo (initiator.in ());
       ACE_DEBUG ((LM_DEBUG,

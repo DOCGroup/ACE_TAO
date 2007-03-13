@@ -174,8 +174,13 @@ main (int argc, char *argv [])
 
       PortableServer::ServantBase_var owner_transfer(servant);
 
+      PortableServer::ObjectId_var id =
+        root_poa->activate_object (servant);
+
+      CORBA::Object_var object = root_poa->id_to_reference (id.in ());
+
       Server_var server =
-        servant->_this ();
+        Server::_narrow (object.in ());
 
       // Announce the server
       CORBA::String_var obj_ref =

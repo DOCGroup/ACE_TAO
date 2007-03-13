@@ -91,8 +91,13 @@ main (int argc, char *argv[])
                       1);
       PortableServer::ServantBase_var owner_transfer(impl);
 
+      PortableServer::ObjectId_var id =
+        root_poa->activate_object (impl);
+
+      CORBA::Object_var object_act = root_poa->id_to_reference (id.in ());
+
       Test::Peer_var peer =
-        impl->_this ();
+        Test::Peer::_narrow (object_act.in ());
 
       CORBA::String_var ior =
         orb->object_to_string (peer.in ());

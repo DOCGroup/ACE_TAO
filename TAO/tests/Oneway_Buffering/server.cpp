@@ -86,8 +86,13 @@ main (int argc, char *argv[])
                       1);
       PortableServer::ServantBase_var owner_transfer(oneway_buffering_impl);
 
+      PortableServer::ObjectId_var id =
+        root_poa->activate_object (oneway_buffering_impl);
+
+      CORBA::Object_var object = root_poa->id_to_reference (id.in ());
+
       Test::Oneway_Buffering_var oneway_buffering =
-        oneway_buffering_impl->_this ();
+        Test::Oneway_Buffering::_narrow (object.in ());
 
       CORBA::String_var ior =
         orb->object_to_string (oneway_buffering.in ());

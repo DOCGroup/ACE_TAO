@@ -95,8 +95,13 @@ main (int argc, char *argv[])
 
       PortableServer::ServantBase_var owner_transfer(middle_impl);
 
+      PortableServer::ObjectId_var id =
+        root_poa->activate_object (middle_impl);
+
+      CORBA::Object_var object_act = root_poa->id_to_reference (id.in ());
+
       Simple_Server_var middle =
-        middle_impl->_this ();
+        Simple_Server::_narrow (object_act.in ());
 
       CORBA::String_var ior =
         orb->object_to_string (middle.in ());

@@ -76,8 +76,13 @@ main (int argc, char *argv[])
       ChildHandler child_handler;
       NonRelatedChildHandler non_related_child_handler;
 
+      PortableServer::ObjectId_var id =
+        poa_var->activate_object (&child_handler);
+
+      CORBA::Object_var object = poa_var->id_to_reference (id.in ());
+
       ChildModule::AMI_ChildInterfaceHandler_var the_child_handler_var =
-        child_handler._this ();
+        ChildModule::AMI_ChildInterfaceHandler::_narrow (object.in ());
 
       const char * expectedid = "IDL:child.pragma.prefix/ChildModule/AMI_ChildInterfaceHandler:1.0";
       if (ACE_OS::strcmp (the_child_handler_var->_interface_repository_id (), expectedid) != 0)
@@ -89,8 +94,12 @@ main (int argc, char *argv[])
         }
 
       // This handler has no relationship with the above in IDL.
+      id = poa_var->activate_object (&non_related_child_handler);
+
+      object = poa_var->id_to_reference (id.in ());
+
       AMI_ChildInterfaceHandler_var the_non_related_child_handler_var =
-        non_related_child_handler._this ();
+        AMI_ChildInterfaceHandler::_narrow (object.in ());
 
       // Check that both handler objects narrow successfully to their parent
       // handler types...

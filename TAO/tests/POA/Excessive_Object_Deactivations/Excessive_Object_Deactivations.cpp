@@ -137,8 +137,10 @@ test_object_deactivation (PortableServer::POA_ptr poa,
 
   servant.id_ = id;
 
+  CORBA::Object_var object = poa->id_to_reference (id);
+
   test_var test =
-    servant._this ();
+    test::_narrow (object.in ());
 
   test->deactivate_self ();
 

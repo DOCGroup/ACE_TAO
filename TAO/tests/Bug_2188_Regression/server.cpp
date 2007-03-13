@@ -66,8 +66,13 @@ main (int argc, char *argv[])
 
       PortableServer::ServantBase_var owner_transfer(target_servant);
 
+      PortableServer::ObjectId_var id =
+        root_poa->activate_object (target_servant);
+
+      CORBA::Object_var object = root_poa->id_to_reference (id.in ());
+
       ArrayTest_var atobj =
-        target_servant->_this ();
+        ArrayTest::_narrow (object.in ());
 
       ServerAdmin_i *servant;
       ACE_NEW_RETURN (servant, ServerAdmin_i(atobj.in()),1);
@@ -75,8 +80,9 @@ main (int argc, char *argv[])
       // safely releases previous reference and takes ownership of this one.
       owner_transfer = servant;
 
-      ServerAdmin_var saobj =
-        servant->_this ();
+      id = root_poa->activate_object (servant);
+      object = root_poa->id_to_reference (id.in ());
+      ServerAdmin_var saobj = ServerAdmin::_narrow (object.in ());
 
       CORBA::String_var ior =
         orb->object_to_string (saobj.in ());

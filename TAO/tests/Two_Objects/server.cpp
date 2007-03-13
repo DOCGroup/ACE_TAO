@@ -96,8 +96,13 @@ main (int argc, char *argv[])
 
       // _this method registers the object withe the POA and returns
       // an object reference
+      PortableServer::ObjectId_var id =
+        root_poa->activate_object (factory_impl);
+
+      CORBA::Object_var object_act = root_poa->id_to_reference (id.in ());
+
       Two_Objects_Test::Object_Factory_var factory =
-        factory_impl->_this ();
+        Two_Objects_Test::Object_Factory::_narrow (object_act.in ());
 
       // Convert the object reference to a string so that it can
       // be saved in a file and used by clinet programs later

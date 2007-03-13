@@ -78,8 +78,13 @@ main (int argc, char *argv[])
 
       Timeout_i timeout_i (orb.in ());
 
+      PortableServer::ObjectId_var id =
+        root_poa->activate_object (&timeout_i);
+
+      CORBA::Object_var object = root_poa->id_to_reference (id.in ());
+
       TimeoutObj_var timeout_var =
-        timeout_i._this ();
+        TimeoutObj::_narrow (object.in ());
 
       CORBA::String_var ior =
         orb->object_to_string (timeout_var.in ());
@@ -104,8 +109,13 @@ main (int argc, char *argv[])
       // Instantiate reply handler
       TimeoutHandler_i timeoutHandler_i;
 
+      PortableServer::ObjectId_var idu =
+        root_poa->activate_object (&timeoutHandler_i);
+
+      CORBA::Object_var objectu = root_poa->id_to_reference (idu.in ());
+
       AMI_TimeoutObjHandler_var timeoutHandler_var =
-        timeoutHandler_i._this ();
+        AMI_TimeoutObjHandler::_narrow (objectu.in ());
 
       // Instantiate client
       /*

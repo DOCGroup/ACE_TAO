@@ -92,20 +92,24 @@ parse_args (int argc, char *argv[])
 
 int
 run_message_count (CORBA::ORB_ptr orb,
+                   PortableServer::POA_ptr root_poa,
                    Test::AMI_Buffering_ptr ami_buffering,
                    Test::AMI_Buffering_Admin_ptr ami_buffering_admin);
 int
 run_timeout (CORBA::ORB_ptr orb,
+             PortableServer::POA_ptr root_poa,
              Test::AMI_Buffering_ptr ami_buffering,
              Test::AMI_Buffering_Admin_ptr ami_buffering_admin);
 
 int
 run_timeout_reactive (CORBA::ORB_ptr orb,
+                      PortableServer::POA_ptr root_poa,
                       Test::AMI_Buffering_ptr oneway_buffering,
                       Test::AMI_Buffering_Admin_ptr oneway_buffering_admin);
 
 int
 run_buffer_size (CORBA::ORB_ptr orb,
+                 PortableServer::POA_ptr root_poa,
                  Test::AMI_Buffering_ptr ami_buffering,
                  Test::AMI_Buffering_Admin_ptr ami_buffering_admin);
 
@@ -177,6 +181,7 @@ main (int argc, char *argv[])
                       "Running message count flushing test\n"));
           test_failed =
             run_message_count (orb.in (),
+                               root_poa.in (),
                                ami_buffering.in (),
                                ami_buffering_admin.in ());
         }
@@ -186,6 +191,7 @@ main (int argc, char *argv[])
                       "Running timeout flushing test\n"));
           test_failed =
             run_timeout (orb.in (),
+                         root_poa.in (),
                          ami_buffering.in (),
                          ami_buffering_admin.in ());
         }
@@ -195,6 +201,7 @@ main (int argc, char *argv[])
                       "Running timeout (reactive) flushing test\n"));
           test_failed =
             run_timeout_reactive (orb.in (),
+                                  root_poa.in (),
                                   ami_buffering.in (),
                                   ami_buffering_admin.in ());
         }
@@ -204,6 +211,7 @@ main (int argc, char *argv[])
                       "Running buffer size flushing test\n"));
           test_failed =
             run_buffer_size (orb.in (),
+                             root_poa.in (),
                              ami_buffering.in (),
                              ami_buffering_admin.in ());
         }
@@ -374,6 +382,7 @@ run_liveness_test (CORBA::ORB_ptr orb,
 
 int
 run_message_count (CORBA::ORB_ptr orb,
+                   PortableServer::POA_ptr root_poa,
                    Test::AMI_Buffering_ptr ami_buffering,
                    Test::AMI_Buffering_Admin_ptr ami_buffering_admin)
 {
@@ -402,8 +411,13 @@ run_message_count (CORBA::ORB_ptr orb,
                   1);
   PortableServer::ServantBase_var owner_transfer(reply_handler_impl);
 
+  PortableServer::ObjectId_var id =
+    root_poa->activate_object (reply_handler_impl);
+
+  CORBA::Object_var object_act = root_poa->id_to_reference (id.in ());
+
   Test::AMI_AMI_BufferingHandler_var reply_handler =
-    reply_handler_impl->_this ();
+    Test::AMI_AMI_BufferingHandler::_narrow (object_act.in ());
 
   CORBA::ULong send_count = 0;
   for (int i = 0; i != iterations; ++i)
@@ -479,8 +493,9 @@ run_message_count (CORBA::ORB_ptr orb,
 
 int
 run_timeout (CORBA::ORB_ptr orb,
-              Test::AMI_Buffering_ptr ami_buffering,
-              Test::AMI_Buffering_Admin_ptr ami_buffering_admin)
+             PortableServer::POA_ptr root_poa,
+             Test::AMI_Buffering_ptr ami_buffering,
+             Test::AMI_Buffering_Admin_ptr ami_buffering_admin)
 {
   TAO::BufferingConstraint buffering_constraint;
   buffering_constraint.mode = TAO::BUFFER_TIMEOUT;
@@ -507,8 +522,13 @@ run_timeout (CORBA::ORB_ptr orb,
                   1);
   PortableServer::ServantBase_var owner_transfer(reply_handler_impl);
 
+  PortableServer::ObjectId_var id =
+    root_poa->activate_object (reply_handler_impl);
+
+  CORBA::Object_var object_act = root_poa->id_to_reference (id.in ());
+
   Test::AMI_AMI_BufferingHandler_var reply_handler =
-    reply_handler_impl->_this ();
+    Test::AMI_AMI_BufferingHandler::_narrow (object_act.in ());
 
   CORBA::ULong send_count = 0;
   for (int i = 0; i != iterations; ++i)
@@ -585,6 +605,7 @@ run_timeout (CORBA::ORB_ptr orb,
 
 int
 run_timeout_reactive (CORBA::ORB_ptr orb,
+                      PortableServer::POA_ptr root_poa,
                       Test::AMI_Buffering_ptr ami_buffering,
                       Test::AMI_Buffering_Admin_ptr ami_buffering_admin)
 {
@@ -613,8 +634,13 @@ run_timeout_reactive (CORBA::ORB_ptr orb,
                   1);
   PortableServer::ServantBase_var owner_transfer(reply_handler_impl);
 
+  PortableServer::ObjectId_var id =
+    root_poa->activate_object (reply_handler_impl);
+
+  CORBA::Object_var object_act = root_poa->id_to_reference (id.in ());
+
   Test::AMI_AMI_BufferingHandler_var reply_handler =
-    reply_handler_impl->_this ();
+    Test::AMI_AMI_BufferingHandler::_narrow (object_act.in ());
 
   CORBA::ULong send_count = 0;
   for (int i = 0; i != iterations; ++i)
@@ -695,6 +721,7 @@ run_timeout_reactive (CORBA::ORB_ptr orb,
 
 int
 run_buffer_size (CORBA::ORB_ptr orb,
+                 PortableServer::POA_ptr root_poa,
                  Test::AMI_Buffering_ptr ami_buffering,
                  Test::AMI_Buffering_Admin_ptr ami_buffering_admin)
 {
@@ -721,8 +748,13 @@ run_buffer_size (CORBA::ORB_ptr orb,
                   1);
   PortableServer::ServantBase_var owner_transfer(reply_handler_impl);
 
+  PortableServer::ObjectId_var id =
+    root_poa->activate_object (reply_handler_impl);
+
+  CORBA::Object_var object_act = root_poa->id_to_reference (id.in ());
+
   Test::AMI_AMI_BufferingHandler_var reply_handler =
-    reply_handler_impl->_this ();
+    Test::AMI_AMI_BufferingHandler::_narrow (object_act.in ());
 
   CORBA::ULong bytes_sent = 0;
   for (int i = 0; i != iterations; ++i)

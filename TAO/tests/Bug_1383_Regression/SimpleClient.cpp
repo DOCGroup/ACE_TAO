@@ -72,10 +72,16 @@ int main(int argc, char * argv[])
   CORBA::String_var name1_ior = orb->object_to_string(name1.in());
   CORBA::String_var name2_ior = orb->object_to_string(name2.in());
 
-	// create a callback object
-	Callee_i * callee_i = new Callee_i;
-	// get the CORBA reference
-	Callee_var callee = callee_i->_this();
+    // create a callback object
+    Callee_i * callee_i = new Callee_i;
+    // get the CORBA reference
+    PortableServer::ObjectId_var id =
+      poa->activate_object (callee_i);
+
+    CORBA::Object_var object_act = poa->id_to_reference (id.in ());
+
+    Callee_var callee = Callee::_narrow (object_act.in ());
+
   if (CORBA::is_nil(callee.in ())) {
     ACE_ERROR ((LM_ERROR, "could not get callback object\n"));
     return 1;

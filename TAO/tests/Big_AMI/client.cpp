@@ -158,8 +158,13 @@ main (int argc, char *argv[])
 
       // Instantiate the ReplyHandler and register that with the POA.
       Handler handler;
+      PortableServer::ObjectId_var id =
+        poa_var->activate_object (&handler);
+
+      CORBA::Object_var object = poa_var->id_to_reference (id.in ());
+
       A::AMI_AMI_TestHandler_var the_handler_var =
-        handler._this ();
+        A::AMI_AMI_TestHandler::_narrow (object.in ());
 
       CORBA::Long l = 931247;
       A::Payload payload (payload_size);

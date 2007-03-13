@@ -112,8 +112,13 @@ main (int argc, char *argv[])
 
       PortableServer::ServantBase_var owner_transfer (receiver);
 
+      PortableServer::ObjectId_var id =
+        root_poa->activate_object (receiver);
+
+      CORBA::Object_var object_act = root_poa->id_to_reference (id.in ());
+
       Receiver_var receiver_obj =
-        receiver->_this ();
+        Receiver::_narrow (object_act.in ());
 
       // Send the calback object to the server
       sender->receiver_object (receiver_obj.in ());

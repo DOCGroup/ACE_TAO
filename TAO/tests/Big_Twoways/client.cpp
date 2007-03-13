@@ -79,8 +79,13 @@ main (int argc, char *argv[])
                       1);
       PortableServer::ServantBase_var peer_owner_transfer(peer_impl);
 
+      PortableServer::ObjectId_var id =
+        root_poa->activate_object (peer_impl);
+
+      CORBA::Object_var object = root_poa->id_to_reference (id.in ());
+
       Test::Peer_var peer =
-        peer_impl->_this ();
+        Test::Peer::_narrow (object.in ());
 
       poa_manager->activate ();
 

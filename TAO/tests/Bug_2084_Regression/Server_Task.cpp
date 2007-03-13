@@ -45,7 +45,12 @@ Server_Task::svc (void)
 
      EventNode *evnode_impl = new EventNode(this->sorb_.in(),ACE_Thread::self());
      PortableServer::ServantBase_var owner_transfer(evnode_impl);
-     Test::EventNode_var evNode = evnode_impl->_this();
+     PortableServer::ObjectId_var id =
+       root_poa->activate_object (evnode_impl);
+
+     CORBA::Object_var object = root_poa->id_to_reference (id.in ());
+
+     Test::EventNode_var evNode = Test::EventNode::_narrow (object.in ());
 
      ACE_DEBUG((LM_DEBUG,"Server (%t) optimize_collocation_objects=%d use_global_collocation=%d\n",
                          sorb_->orb_core()->optimize_collocation_objects(),

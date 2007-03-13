@@ -231,9 +231,18 @@ main (int argc, char **argv)
       ACE_Auto_Event event2;
       test_i servant2 (event2);
 
-      test_var test_object1 = servant1._this ();
+      PortableServer::ObjectId_var id_act =
+        root_poa->activate_object (&servant1);
 
-      test_var test_object2 = servant2._this ();
+      CORBA::Object_var object_act = root_poa->id_to_reference (id_act.in ());
+
+      test_var test_object1 = test::_narrow (object_act.in ());
+
+      id_act = root_poa->activate_object (&servant2);
+
+      object_act = root_poa->id_to_reference (id_act.in ());
+
+      test_var test_object2 = test::_narrow (object_act.in ());
 
       PortableServer::ObjectId_var id1 =
         root_poa->reference_to_id (test_object1.in ());

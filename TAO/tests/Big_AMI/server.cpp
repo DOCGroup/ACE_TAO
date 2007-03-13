@@ -78,8 +78,13 @@ main (int argc, char *argv[])
 
       AMI_Test_i ami_test_i (orb.in ());
 
+      PortableServer::ObjectId_var id =
+        root_poa->activate_object (&ami_test_i);
+
+      CORBA::Object_var object = root_poa->id_to_reference (id.in ());
+
       A::AMI_Test_var ami_test_var =
-        ami_test_i._this ();
+        A::AMI_Test::_narrow (object.in ());
 
       CORBA::String_var ior =
         orb->object_to_string (ami_test_var.in ());

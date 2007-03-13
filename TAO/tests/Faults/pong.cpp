@@ -161,8 +161,13 @@ main (int argc, char *argv[])
       PingObject_i callback_impl (orb.in (),
                             persistent_poa.in ());
 
+      PortableServer::ObjectId_var id =
+        root_poa->activate_object (&callback_impl);
+
+      CORBA::Object_var object_act = root_poa->id_to_reference (id.in ());
+
       PingObject_var callback =
-        callback_impl._this ();
+        PingObject::_narrow (object_act.in ());
 
 
       // If the ior_output_file exists, output the ior to it

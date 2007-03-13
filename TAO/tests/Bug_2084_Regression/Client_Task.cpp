@@ -49,7 +49,12 @@ Client_Task::svc (void)
 
       PortableServer::ServantBase_var owner_transfer(hello_impl);
 
-      Test::Hello_var hello_servant = hello_impl->_this ();
+      PortableServer::ObjectId_var id =
+        root_poa->activate_object (hello_impl);
+
+      CORBA::Object_var object = root_poa->id_to_reference (id.in ());
+
+      Test::Hello_var hello_servant = Test::Hello::_narrow (object.in ());
       poa_manager->activate ();
 
       ACE_DEBUG((LM_DEBUG,"Client (%t) optimize_collocation_objects=%d use_global_collocation=%d\n",

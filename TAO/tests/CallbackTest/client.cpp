@@ -104,8 +104,13 @@ main (int argc, char *argv[])
                       1);
       PortableServer::ServantBase_var owner_transfer(callback_impl);
 
+      PortableServer::ObjectId_var id =
+        root_poa->activate_object (callback_impl);
+
+      CORBA::Object_var object = root_poa->id_to_reference (id.in ());
+
       Test::Callback_var callback =
-        callback_impl->_this ();
+        Test::Callback::_narrow (object.in ());
 
       poa_manager->activate ();
 

@@ -35,8 +35,19 @@ Client_Peer::callme(Test::Peer_ptr callback,
   // ACE_DEBUG ((LM_DEBUG, "Received call, depth = %d\n", max_depth));
   if (max_depth > 0)
   {
+    CORBA::Object_var poa_object =
+      this->orb_->resolve_initial_references("RootPOA");
+
+    PortableServer::POA_var root_poa =
+      PortableServer::POA::_narrow (poa_object.in ());
+
+    PortableServer::ObjectId_var id =
+      root_poa->activate_object (this);
+
+    CORBA::Object_var object = root_poa->id_to_reference (id.in ());
+
     Test::Peer_var me =
-      this->_this();
+      Test::Peer::_narrow (object.in ());
 
     Test::Payload return_data;
 

@@ -90,8 +90,13 @@ main (int argc, char *argv[])
 
       Stopwatch_imp server_impl (orb.in (), &timer);
 
+      PortableServer::ObjectId_var id =
+        root_poa->activate_object (&server_impl);
+
+      CORBA::Object_var object = root_poa->id_to_reference (id.in ());
+
       Stopwatch_var server =
-        server_impl._this ();
+        Stopwatch::_narrow (object.in ());
 
       CORBA::String_var ior =
         orb->object_to_string (server.in ());

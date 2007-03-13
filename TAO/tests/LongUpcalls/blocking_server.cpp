@@ -59,8 +59,13 @@ main (int argc, char *argv[])
 
       Manager manager_impl (orb.in ());
 
+      PortableServer::ObjectId_var id =
+        root_poa->activate_object (&manager_impl);
+
+      CORBA::Object_var object = root_poa->id_to_reference (id.in ());
+
       Test::Manager_var manager =
-        manager_impl._this ();
+        Test::Manager::_narrow (object.in ());
 
       CORBA::String_var ior =
         orb->object_to_string (manager.in ());

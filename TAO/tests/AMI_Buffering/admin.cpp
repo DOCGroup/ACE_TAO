@@ -65,8 +65,13 @@ main (int argc, char *argv[])
                       1);
       PortableServer::ServantBase_var owner_transfer(AMI_buffering_admin_impl);
 
+      PortableServer::ObjectId_var id =
+        root_poa->activate_object (AMI_buffering_admin_impl);
+
+      CORBA::Object_var object = root_poa->id_to_reference (id.in ());
+
       Test::AMI_Buffering_Admin_var AMI_buffering_admin =
-        AMI_buffering_admin_impl->_this ();
+        Test::AMI_Buffering_Admin::_narrow (object.in ());
 
       CORBA::String_var ior =
         orb->object_to_string (AMI_buffering_admin.in ());

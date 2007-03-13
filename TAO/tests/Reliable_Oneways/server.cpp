@@ -65,8 +65,13 @@ main (int argc, char *argv[])
                       1);
       PortableServer::ServantBase_var owner_transfer(oneway_receiver_impl);
 
+      PortableServer::ObjectId_var id =
+        root_poa->activate_object (oneway_receiver_impl);
+
+      CORBA::Object_var object = root_poa->id_to_reference (id.in ());
+
       Test::Oneway_Receiver_var oneway_receiver =
-        oneway_receiver_impl->_this ();
+        Test::Oneway_Receiver::_narrow (object.in ());
 
       CORBA::String_var ior =
         orb->object_to_string (oneway_receiver.in ());

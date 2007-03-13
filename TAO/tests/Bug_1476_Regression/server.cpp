@@ -69,8 +69,13 @@ main (int argc, char *argv[])
                       1);
       PortableServer::ServantBase_var receiver_owner_transfer(sender_impl);
 
+      PortableServer::ObjectId_var id =
+        root_poa->activate_object (sender_impl);
+
+      CORBA::Object_var object = root_poa->id_to_reference (id.in ());
+
       Test::Sender_var sender =
-        sender_impl->_this ();
+        Test::Sender::_narrow (object.in ());
 
       CORBA::String_var ior =
         orb->object_to_string (sender.in ());

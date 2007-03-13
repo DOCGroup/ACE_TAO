@@ -162,7 +162,12 @@ main (int argc, char *argv[])
   StateTransferImpl* impl = new StateTransferImpl (orb.in ());
   ServantBase_var impl_var (impl);
 
-  StateTransfer_var ref (impl->_this ());
+  PortableServer::ObjectId_var id_act =
+    root_poa->activate_object (impl);
+
+  CORBA::Object_var object = root_poa->id_to_reference (id_act.in ());
+
+  StateTransfer_var ref = StateTransfer::_narrow (object.in ());
   String_var ior (orb->object_to_string (ref.in ()));
 
   poa_manager->activate ();

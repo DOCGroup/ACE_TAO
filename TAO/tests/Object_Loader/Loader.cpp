@@ -31,6 +31,9 @@ Loader::create_object (CORBA::ORB_ptr orb,
       ACE_NEW_RETURN (test, Test_i (poa.in ()),
                       CORBA::Object::_nil ());
 
+      PortableServer::ObjectId_var id =
+        poa->activate_object (test);
+
       PortableServer::ServantBase_var tmp = test;
       obj = test->_this ();
 

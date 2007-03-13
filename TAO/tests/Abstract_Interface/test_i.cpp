@@ -43,14 +43,25 @@ foo_i::base_op (const char * inarg)
   return retval._retn ();
 }
 
+passer_i::passer_i (PortableServer::POA_ptr poa)
+ : poa_ (PortableServer::POA::_duplicate (poa))
+{
+}
+
 void
 passer_i::pass_ops (base_out outarg)
 {
   foo_i *servant = 0;
   ACE_NEW (servant,
            foo_i);
+
+  PortableServer::ObjectId_var id =
+    this->poa_->activate_object (servant);
+
+  CORBA::Object_var object = this->poa_->id_to_reference (id.in ());
+
   PortableServer::ServantBase_var safety (servant);
-  outarg = servant->_this ();
+  outarg = foo::_narrow (object.in ());
 }
 
 void

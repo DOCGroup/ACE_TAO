@@ -113,7 +113,12 @@ int main(int argc, char *argv[])
                       -1);
 
       // Create CORBA object for servant and REGISTER with POA
-      simple_var server = my_impl->_this ();
+      PortableServer::ObjectId_var id =
+        root_poa->activate_object (my_impl);
+
+      CORBA::Object_var object_act = root_poa->id_to_reference (id.in ());
+
+      simple_var server = simple::_narrow (object_act.in ());
 
       // Get the IOR for our object
       CORBA::String_var ior = orb->object_to_string (server.in ());
