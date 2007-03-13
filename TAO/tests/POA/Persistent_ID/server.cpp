@@ -133,8 +133,13 @@ test_i::create_POA (void)
                                                  servant);
     }
 
+  PortableServer::ObjectId_var id =
+    this->poa_->activate_object (servant);
+
+  CORBA::Object_var object = this->poa_->id_to_reference (id.in ());
+
   test_var test =
-    servant->_this ();
+    test::_narrow (object.in ());
 
   return test._retn ();
 }
@@ -228,8 +233,13 @@ main (int argc, char **argv)
       test_i servant (orb.in (),
                       root_poa.in ());
 
+      PortableServer::ObjectId_var id =
+        root_poa->activate_object (&servant);
+
+      CORBA::Object_var object = root_poa->id_to_reference (id.in ());
+
       test_var test =
-        servant._this ();
+        test::_narrow (object.in ());
 
       CORBA::String_var ior =
         orb->object_to_string (test.in ());

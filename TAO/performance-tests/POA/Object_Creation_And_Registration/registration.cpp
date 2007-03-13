@@ -377,7 +377,10 @@ main (int argc, char **argv)
 
         for (i = 0; i < iterations; i++)
           {
-            objects[i] = servants[i]._this ();
+            PortableServer::ObjectId_var id =
+              root_poa->activate_object (&servants[i]);
+            CORBA::Object_var object = root_poa->id_to_reference (id.in ());
+            objects[i] = test::_narrow (object.in ());
           }
       }
 

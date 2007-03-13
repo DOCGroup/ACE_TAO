@@ -33,6 +33,13 @@ main (int, char *[])
               Test_var test =
                 Test::_narrow (object.in ());
 
+              if (CORBA::is_nil (test.in ()))
+                {
+                  ACE_ERROR_RETURN ((LM_ERROR,
+                                     "Nil object reference.\n"),
+                                    1);
+                }
+
               CORBA::Long count =
                 test->instance_count ();
 

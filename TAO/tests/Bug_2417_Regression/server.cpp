@@ -31,7 +31,12 @@ main (int argc, char *argv[])
         root_poa->the_POAManager();
 
 		Publisher_impl publisher(orb.in ());
-		Publisher_var publisher_var = publisher._this();
+		PortableServer::ObjectId_var id =
+		  root_poa->activate_object (&publisher);
+
+		CORBA::Object_var object = root_poa->id_to_reference (id.in ());
+
+		Publisher_var publisher_var = Publisher::_narrow (object.in ());
 
 		CORBA::String_var ior = orb->object_to_string(publisher_var.in());
 		ACE_DEBUG ((LM_DEBUG, "Activated as <%s>\n", ior.in()));

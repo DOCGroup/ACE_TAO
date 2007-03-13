@@ -95,7 +95,13 @@ main (int argc, char *argv[])
                       1);
       PortableServer::ServantBase_var owner_transfer(servant);
 
-      Test::IORTable_Shutdown_Race_var target = servant->_this ();
+      PortableServer::ObjectId_var id =
+        root_poa->activate_object (servant);
+
+      CORBA::Object_var object = root_poa->id_to_reference (id.in ());
+
+      Test::IORTable_Shutdown_Race_var target =
+        Test::IORTable_Shutdown_Race::_narrow (object.in ());
 
       CORBA::String_var ior =
         orb->object_to_string (target.in ());

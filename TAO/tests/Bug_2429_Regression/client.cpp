@@ -135,8 +135,13 @@ main(int argc, char *argv[])
 
       Reply_Handler reply_handler_servant;
 
+      PortableServer::ObjectId_var id =
+        root_poa->activate_object (&reply_handler_servant);
+
+      CORBA::Object_var object_act = root_poa->id_to_reference (id.in ());
+
       AMI_ChildHandler_var reply_handler_object =
-         reply_handler_servant._this ();
+        AMI_ChildHandler::_narrow (object_act.in ());
 
       // Invoke the AMI parentMethod
       child->sendc_parentMethod (reply_handler_object.in ());

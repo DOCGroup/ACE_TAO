@@ -260,10 +260,18 @@ MT_Server::run_ORB_briefly (void)
                       "(%P|%t) MT_Server::run: "
                       "going to call distant MT Object\n"));
 
+          PortableServer::POA_var root_poa =
+            this->orb_manager_ptr_->root_poa ();
+
           for (unsigned int i = 0; i < this->iterations_; i++)
             {
+              PortableServer::ObjectId_var id =
+                root_poa->activate_object (&mT_Object_i_);
+
+              CORBA::Object_var object_act = root_poa->id_to_reference (id.in ());
+
               MT_Object_var tmp =
-                this->mT_Object_i_._this ();
+                MT_Object::_narrow (object_act.in ());
 
               this->mT_Object_var_->yadda (0,
                                            tmp.in ());

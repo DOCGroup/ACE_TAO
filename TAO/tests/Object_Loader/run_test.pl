@@ -10,11 +10,7 @@ use English;
 use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::Run_Test;
 
-if ($OSNAME eq "MSWin32") {
-   $ENV{'PATH'} .= ';'.$PerlACE::Process::ExeSubDir;
-} else {
-   $ENV{'PATH'} .= ':'.$PerlACE::Process::ExeSubDir;
-}
+PerlACE::add_lib_path ($PerlACE::Process::ExeSubDir);
 
 $T = new PerlACE::Process ("driver");
 

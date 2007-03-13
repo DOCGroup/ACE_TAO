@@ -59,8 +59,13 @@ main (int argc, char *argv[])
 
       server_i servant (orb.in ());
 
+      PortableServer::ObjectId_var id =
+        root_poa->activate_object (&servant);
+
+      CORBA::Object_var object = root_poa->id_to_reference (id.in ());
+
       server_var server_object =
-        servant._this ();
+        server::_narrow (object.in ());
 
       CORBA::String_var ior =
         orb->object_to_string (server_object.in ());

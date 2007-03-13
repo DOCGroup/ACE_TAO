@@ -189,8 +189,13 @@ vanilla_poa (CORBA::ORB_ptr orb,
 
   PortableServer::ServantBase_var safe_servant (servant);
 
+  PortableServer::ObjectId_var id_act =
+    root_poa->activate_object (servant);
+
+  CORBA::Object_var object = root_poa->id_to_reference (id_act.in ());
+
   test_var test =
-    servant->_this ();
+    test::_narrow (object.in ());
 
   write_iors_to_file (test.in (),
                       orb);
@@ -268,8 +273,13 @@ rt_poa (CORBA::ORB_ptr orb,
 
   PortableServer::ServantBase_var safe_servant (servant);
 
+  PortableServer::ObjectId_var id_act =
+    root_poa->activate_object (servant);
+
+  CORBA::Object_var object = root_poa->id_to_reference (id_act.in ());
+
   test_var test =
-    servant->_this ();
+    test::_narrow (object.in ());
 
   write_iors_to_file (test.in (),
                       orb);

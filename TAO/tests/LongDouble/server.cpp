@@ -67,8 +67,13 @@ main (int argc, char *argv[])
                       1);
       PortableServer::ServantBase_var owner_transfer (longDoubleTest_impl);
 
+      PortableServer::ObjectId_var id =
+        root_poa->activate_object (longDoubleTest_impl);
+
+      CORBA::Object_var object = root_poa->id_to_reference (id.in ());
+
       Test::LongDoubleTest_var longDoubleTest =
-        longDoubleTest_impl->_this ();
+        Test::LongDoubleTest::_narrow (object.in ());
 
       CORBA::String_var ior =
         orb->object_to_string (longDoubleTest.in ());

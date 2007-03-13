@@ -1,3 +1,245 @@
+Tue Mar 13 18:24:27 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * examples/PluggableUDP/tests/Basic/client.cpp:
+        * examples/PluggableUDP/tests/Basic/server.cpp:
+        * examples/Simple/grid/Grid_i.cpp:
+        * examples/Simple/time-date/Time_Date.cpp:
+        * performance-tests/Cubit/TAO/MT_Cubit/Cubit_Task.cpp:
+        * performance-tests/Latency/Single_Threaded/server.cpp:
+        * performance-tests/Latency/Thread_Per_Connection/server.cpp:
+        * performance-tests/Latency/Thread_Pool/server.cpp:
+        * performance-tests/POA/Object_Creation_And_Registration/registration.cpp:
+        * performance-tests/Sequence_Latency/Single_Threaded/server.cpp:
+        * performance-tests/Sequence_Latency/Thread_Per_Connection/server.cpp:
+        * performance-tests/Sequence_Latency/Thread_Pool/server.cpp:
+        * performance-tests/Throughput/Throughput.mpc:
+        * performance-tests/Throughput/server.cpp:
+        * tests/AMH_Exceptions/server.cpp:
+        * tests/AMH_Oneway/server.cpp:
+        * tests/AMI/server.cpp:
+        * tests/AMI/simple_client.cpp:
+        * tests/AMI_Buffering/admin.cpp:
+        * tests/AMI_Buffering/client.cpp:
+        * tests/AMI_Buffering/server.cpp:
+        * tests/AMI_Timeouts/client.cpp:
+        * tests/AMI_Timeouts/server.cpp:
+        * tests/Abstract_Interface/server.cpp:
+        * tests/Abstract_Interface/test_i.h:
+        * tests/Abstract_Interface/test_i.cpp:
+        * tests/Any/Recursive/server.cpp:
+        * tests/BiDirectional/client.cpp:
+        * tests/BiDirectional_DelayedUpcall/client.cpp:
+        * tests/BiDirectional_NestedUpcall/client.cpp:
+        * tests/Big_AMI/client.cpp:
+        * tests/Big_AMI/server.cpp:
+        * tests/Big_Oneways/client.cpp:
+        * tests/Big_Oneways/server.cpp:
+        * tests/Big_Reply/server.cpp:
+        * tests/Big_Request_Muxing/server.cpp:
+        * tests/Big_Twoways/client.cpp:
+        * tests/Big_Twoways/server.cpp:
+        * tests/Blocking_Sync_None/server.cpp:
+        * tests/Bug_1020_Basic_Regression/client.cpp:
+        * tests/Bug_1020_Basic_Regression/server.cpp:
+        * tests/Bug_1020_Regression/client.cpp:
+        * tests/Bug_1020_Regression/server.cpp:
+        * tests/Bug_1254_Regression/server.cpp:
+        * tests/Bug_1269_Regression/client.cpp:
+        * tests/Bug_1269_Regression/server.cpp:
+        * tests/Bug_1270_Regression/client.cpp:
+        * tests/Bug_1270_Regression/server.cpp:
+        * tests/Bug_1330_Regression/server.cpp:
+        * tests/Bug_1361_Regression/client.cpp:
+        * tests/Bug_1361_Regression/server.cpp:
+        * tests/Bug_1383_Regression/SimpleClient.cpp:
+        * tests/Bug_1383_Regression/SimpleServer.cpp:
+        * tests/Bug_1476_Regression/server.cpp:
+        * tests/Bug_1482_Regression/server.cpp:
+        * tests/Bug_1495_Regression/Server_Task.cpp:
+        * tests/Bug_1551_Regression/server.cpp:
+        * tests/Bug_1568_Regression/server.cpp:
+        * tests/Bug_1627_Regression/server.cpp:
+        * tests/Bug_1670_Regression/server.cpp:
+        * tests/Bug_1676_Regression/server.cpp:
+        * tests/Bug_2084_Regression/Client_Task.cpp:
+        * tests/Bug_2084_Regression/Server_Task.cpp:
+        * tests/Bug_2134_Regression/Hello.cpp:
+        * tests/Bug_2174_Regression/server.cpp:
+        * tests/Bug_2183_Regression/server.cpp:
+        * tests/Bug_2186_Regression/client.cpp:
+        * tests/Bug_2186_Regression/server.cpp:
+        * tests/Bug_2188_Regression/server.cpp:
+        * tests/Bug_2289_Regression/client.cpp:
+        * tests/Bug_2289_Regression/server.cpp:
+        * tests/Bug_2319_Regression/server.cpp:
+        * tests/Bug_2328_Regression/server.cpp:
+        * tests/Bug_2349_Regression/server.cpp:
+        * tests/Bug_2417_Regression/client.cpp:
+        * tests/Bug_2417_Regression/server.cpp:
+        * tests/Bug_2429_Regression/client.cpp:
+        * tests/Bug_2429_Regression/server.cpp:
+        * tests/Bug_2494_Regression/server.cpp:
+        * tests/Bug_2503_Regression/test_i.cpp:
+        * tests/Bug_2560_Regression/server.cpp:
+        * tests/Bug_2593_Regression/server.cpp:
+        * tests/Bug_2595_Regression/server.cpp:
+        * tests/Bug_2669_Regression/client.cpp:
+        * tests/Bug_2683_Regression/server.cpp:
+        * tests/COIOP/COIOP_Simple_Test.cpp:
+        * tests/COIOP/Server_Task.cpp:
+        * tests/CSD_Strategy_Tests/TP_Test_Dynamic/server.cpp:
+        * tests/Cache_Growth_Test/server.cpp:
+        * tests/CallbackTest/client.cpp:
+        * tests/CallbackTest/server.cpp:
+        * tests/Client_Leaks/Process_Factory.cpp:
+        * tests/Client_Leaks/child.cpp:
+        * tests/Client_Leaks/server.cpp:
+        * tests/CodeSets/simple/server.cpp:
+        * tests/Collocation_Exception_Test/Server_Task.cpp:
+        * tests/Collocation_Oneway_Tests/Server_Task.cpp:
+        * tests/Collocation_Opportunities/Collocation_Opportunities.cpp:
+        * tests/Collocation_Tests/Server_Task.cpp:
+        * tests/Connect_Strategy_Test/server.cpp:
+        * tests/Connection_Purging/server.cpp:
+        * tests/Crash_On_Write/server.cpp:
+        * tests/Crashed_Callback/client.cpp:
+        * tests/Crashed_Callback/server.cpp:
+        * tests/DII_Collocation_Tests/oneway/Server_Task.cpp:
+        * tests/DII_Collocation_Tests/twoway/Server_Task.cpp:
+        * tests/DLL_ORB/Test_Server_Module.cpp:
+        * tests/DSI_AMI_Gateway/server.cpp:
+        * tests/DSI_Gateway/server.cpp:
+        * tests/Explicit_Event_Loop/server.cpp:
+        * tests/FL_Cube/server.cpp:
+        * tests/Faults/client.cpp:
+        * tests/Faults/middle.cpp:
+        * tests/Faults/ping.cpp:
+        * tests/Faults/pong.cpp:
+        * tests/Faults/server.cpp:
+        * tests/File_IO/File_i.cpp:
+        * tests/Forwarding/server.cpp:
+        * tests/GIOP_Fragments/Java_Big_Request/server.cpp:
+        * tests/Hang_Shutdown/server.cpp:
+        * tests/Hello/server.cpp:
+        * tests/ICMG_Any_Bug/Hello.cpp:
+        * tests/ICMG_Any_Bug/server.cpp:
+        * tests/IOR_Endpoint_Hostnames/generate_ior.cpp:
+        * tests/IPV6/server.cpp:
+        * tests/Leader_Followers/server.cpp:
+        * tests/LongDouble/server.cpp:
+        * tests/LongUpcalls/AMI_Manager.cpp:
+        * tests/LongUpcalls/ami_client.cpp:
+        * tests/LongUpcalls/ami_server.cpp:
+        * tests/LongUpcalls/blocking_client.cpp:
+        * tests/LongUpcalls/blocking_server.cpp:
+        * tests/MProfile/server.cpp:
+        * tests/MProfile_Connection_Timeout/server.cpp:
+        * tests/MProfile_Forwarding/server.cpp:
+        * tests/MT_BiDir/client.cpp:
+        * tests/MT_Client/server.cpp:
+        * tests/MT_Server/server.cpp:
+        * tests/MT_Timeout/server.cpp:
+        * tests/Multiple/server.cpp:
+        * tests/Muxed_GIOP_Versions/server.cpp:
+        * tests/Muxing/server.cpp:
+        * tests/Native_Exceptions/server.cpp:
+        * tests/NestedUpcall/MT_Client_Test/local_server.cpp:
+        * tests/NestedUpcall/Simple/client.cpp:
+        * tests/NestedUpcall/Simple/server.cpp:
+        * tests/NestedUpcall/Simple/simple-client.cpp:
+        * tests/NestedUpcall/Triangle_Test/initiator.cpp:
+        * tests/Nested_Event_Loop/server.cpp:
+        * tests/Nested_Upcall_Crash/Client_Peer.cpp:
+        * tests/Nested_Upcall_Crash/Server_Peer.cpp:
+        * tests/Nested_Upcall_Crash/client.cpp:
+        * tests/Nested_Upcall_Crash/server.cpp:
+        * tests/No_Server_MT_Connect_Test/server.cpp:
+        * tests/OBV/Any/server.cpp:
+        * tests/OBV/Collocated/Forward/Server_Task.cpp:
+        * tests/OBV/Factory/server.cpp:
+        * tests/OBV/Forward/server.cpp:
+        * tests/OBV/TC_Alignment/server.cpp:
+        * tests/OBV/Truncatable/server.cpp:
+        * tests/OBV/ValueBox/server.cpp:
+        * tests/ORB_shutdown/server.cpp:
+        * tests/Object_Loader/Loader.cpp:
+        * tests/Objref_Sequence_Test/server.cpp:
+        * tests/OctetSeq/server.cpp:
+        * tests/Ondemand_Write/server.cpp:
+        * tests/Oneway_Buffering/admin.cpp:
+        * tests/Oneway_Buffering/server.cpp:
+        * tests/Oneways_Invoking_Twoways/client.cpp:
+        * tests/Oneways_Invoking_Twoways/server.cpp:
+        * tests/POA/Excessive_Object_Deactivations/Excessive_Object_Deactivations.cpp:
+        * tests/POA/Object_Reactivation/Object_Reactivation.cpp:
+        * tests/POA/POA_Destruction/POA_Destruction.cpp:
+        * tests/POA/Persistent_ID/server.cpp:
+        * tests/POA/Single_Threaded_POA/Single_Threaded_POA.cpp:
+        * tests/POA/wait_for_completion/wait_for_completion.cpp:
+        * tests/Parallel_Connect_Strategy/server.cpp:
+        * tests/Portable_Interceptors/AMI/server.cpp:
+        * tests/Portable_Interceptors/AdvSlot/server.cpp:
+        * tests/Portable_Interceptors/AdvSlotDblCpy/server.cpp:
+        * tests/Portable_Interceptors/AdvSlotExt/server.cpp:
+        * tests/Portable_Interceptors/ORB_Shutdown/server.cpp:
+        * tests/Portable_Interceptors/PICurrent/test_i.cpp:
+        * tests/Portable_Interceptors/Redirection/server.cpp:
+        * tests/Portable_Interceptors/Request_Interceptor_Flow/server.cpp:
+        * tests/QtTests/server.cpp:
+        * tests/RTCORBA/Dynamic_Thread_Pool/server.cpp:
+        * tests/RTCORBA/Linear_Priority/server.cpp:
+        * tests/RTCORBA/Policy_Combinations/server.cpp:
+        * tests/RTCORBA/Priority_Inversion_With_Bands/server.cpp:
+        * tests/RTCORBA/Profile_And_Endpoint_Selection/server.cpp:
+        * tests/RTCORBA/Thread_Pool/server.cpp:
+        * tests/Reliable_Oneways/server.cpp:
+        * tests/Server_Connection_Purging/server.cpp:
+        * tests/Server_Leaks/server.cpp:
+        * tests/Server_Port_Zero/server.cpp:
+        * tests/Single_Read/server.cpp:
+        * tests/Smart_Proxies/Benchmark/server.cpp:
+        * tests/Smart_Proxies/On_Demand/server.cpp:
+        * tests/Smart_Proxies/Policy/server.cpp:
+        * tests/Smart_Proxies/server.cpp:
+        * tests/Stack_Recursion/server.cpp:
+        * tests/Strategies/server.cpp:
+        * tests/Timed_Buffered_Oneways/server.cpp:
+        * tests/Timeout/server.cpp:
+        * tests/Two_Objects/Object_Factory_i.cpp:
+        * tests/Two_Objects/server.cpp:
+        * tests/Typedef_String_Array/server.cpp:
+        * tests/UNKNOWN_Exception/server.cpp:
+        * tests/Xt_Stopwatch/server.cpp:
+
+          Modified the majority of the TAO tests, performance-tests and
+          examples to use explicit activation to support CORBA e compact.
+
+        * tests/CORBA_e_Implicit_Activation:
+        * tests/CORBA_e_Implicit_Activation/CORBA_e_Implicit_Activation.mpc:
+        * tests/CORBA_e_Implicit_Activation/Hello.h:
+        * tests/CORBA_e_Implicit_Activation/Hello.cpp:
+        * tests/CORBA_e_Implicit_Activation/Test.idl:
+        * tests/CORBA_e_Implicit_Activation/run_test.pl:
+        * tests/CORBA_e_Implicit_Activation/server.cpp:
+
+          Added a new test to ensure that CORBA e compact builds throw the
+          correct exception when implicit activation is used.
+
+        * tests/Object_Loader/driver.cpp:
+
+          Check the object reference after the _narrow() to avoid a core
+          dump.
+
+        * tests/Object_Loader/run_test.pl:
+
+          Use the PerlACE::add_lib_path() function to add the library
+          directory instead of directly modifying the PATH environment
+          variable.
+
+        * tests/Nested_Event_Loop/test_i.cpp:
+
+          Fixed an exception message to match the right method name.
+
 Tue Mar 13 18:00:34 UTC 2007  Ossama Othman  <ossama_othman at symantec dot com>
 
         * tao/Valuetype/Valuetype_Traits_T.h (copy_range):

@@ -267,8 +267,13 @@ server::test_root_poa (void)
 
   PortableServer::ServantBase_var safe_servant (servant);
 
+  PortableServer::ObjectId_var id =
+    this->root_poa_->activate_object (servant);
+
+  CORBA::Object_var object_act = this->root_poa_->id_to_reference (id.in ());
+
   test_var test =
-    servant->_this ();
+    test::_narrow (object_act.in ());
 
   write_iors_to_file (test.in (),
                       this->orb_.in (),
@@ -298,8 +303,13 @@ server::test_child_poa (void)
 
   PortableServer::ServantBase_var safe_servant (servant);
 
+  PortableServer::ObjectId_var id =
+    poa->activate_object (servant);
+
+  CORBA::Object_var object_act = poa->id_to_reference (id.in ());
+
   test_var test =
-    servant->_this ();
+    test::_narrow (object_act.in ());
 
   write_iors_to_file (test.in (),
                       this->orb_.in (),

@@ -59,8 +59,13 @@ main (int argc, char *argv[])
 
       Controller controller_impl;
 
+      PortableServer::ObjectId_var id =
+        root_poa->activate_object (&controller_impl);
+
+      CORBA::Object_var object_act = root_poa->id_to_reference (id.in ());
+
       Test::Controller_var controller =
-        controller_impl._this ();
+        Test::Controller::_narrow (object_act.in ());
 
       object = orb->string_to_object (ior);
 

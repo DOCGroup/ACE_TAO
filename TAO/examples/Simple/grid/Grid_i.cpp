@@ -177,6 +177,17 @@ Grid_Factory_i::make_grid (CORBA::Short width,
                     CORBA::NO_MEMORY ());
 
   // Register the Grid pointer.
-  Grid_ptr gptr = grid_ptr->_this ();
+  CORBA::Object_var poa_object =
+    this->orb_->resolve_initial_references("RootPOA");
+
+  PortableServer::POA_var root_poa =
+    PortableServer::POA::_narrow (poa_object.in ());
+
+  PortableServer::ObjectId_var id =
+    root_poa->activate_object (grid_ptr);
+
+  CORBA::Object_var object = root_poa->id_to_reference (id.in ());
+
+  Grid_ptr gptr = Grid::_narrow (object.in ());
   return gptr;
 }

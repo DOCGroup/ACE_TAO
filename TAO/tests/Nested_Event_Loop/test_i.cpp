@@ -151,7 +151,7 @@ client_i::oneway_no_op (const act &act_for_iterations,
     }
   catch (const CORBA::Exception& ex)
     {
-      ex._tao_print_exception ("Exception caught in client_i::no_op:");
+      ex._tao_print_exception ("Exception caught in client_i::oneway_no_op:");
     }
 }
 

@@ -64,8 +64,13 @@ main (int argc, char *argv[])
         Database_i server_impl (orb.in (),
                                 128); // @@ TODO
 
+        PortableServer::ObjectId_var id =
+          root_poa->activate_object (&server_impl);
+
+        CORBA::Object_var object = root_poa->id_to_reference (id.in ());
+
         Test::Database_var server =
-          server_impl._this ();
+          Test::Database::_narrow (object.in ());
 
         CORBA::String_var ior =
           orb->object_to_string (server.in ());

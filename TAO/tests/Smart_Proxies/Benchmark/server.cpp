@@ -116,8 +116,13 @@ main (int argc, char *argv[])
       PortableServer::POAManager_var poa_manager =
         root_poa->the_POAManager ();
 
+      PortableServer::ObjectId_var id =
+        root_poa->activate_object (&servant);
+
+      CORBA::Object_var object_act = root_poa->id_to_reference (id.in ());
+
       Test_var Test_object =
-        servant._this ();
+        Test::_narrow (object_act.in ());
 
       CORBA::String_var ior =
         orb->object_to_string (Test_object.in ());

@@ -20,10 +20,12 @@ Hello::get_helloworld (void)
           HelloWorld,
 		    CORBA::NO_MEMORY ());
 
-  PortableServer::ObjectId_var oid =
-    poa_->activate_object (hello_world);
+  PortableServer::ObjectId_var id =
+    this->poa_->activate_object (hello_world);
 
-  Test::HelloWorld_var hw = hello_world->_this ();
+  CORBA::Object_var object = this->poa_->id_to_reference (id.in ());
+
+  Test::HelloWorld_var hw = Test::HelloWorld::_narrow (object.in ());
   return hw._retn ();
 }
 

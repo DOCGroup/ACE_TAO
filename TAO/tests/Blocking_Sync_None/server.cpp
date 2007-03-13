@@ -65,8 +65,13 @@ main (int argc, char *argv[])
                       1);
       PortableServer::ServantBase_var owner_transfer(blocking_sync_none_impl);
 
+      PortableServer::ObjectId_var id =
+        root_poa->activate_object (blocking_sync_none_impl);
+
+      CORBA::Object_var object = root_poa->id_to_reference (id.in ());
+
       Test::Blocking_Sync_None_var blocking_sync_none =
-        blocking_sync_none_impl->_this ();
+        Test::Blocking_Sync_None::_narrow (object.in ());
 
       CORBA::String_var ior =
         orb->object_to_string (blocking_sync_none.in ());
