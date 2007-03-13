@@ -183,8 +183,8 @@ int main(int argc, char* argv[])
       ACE_ERROR_RETURN ((LM_ERROR, "Unable to start test task.\n"), -1);
     }
 
-  // Wait the Test task finish.
-  test_.wait();
+  // Wait tasks finish.
+  test_.thr_mgr ()->wait();
 
   return 0;
 }
