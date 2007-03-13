@@ -1,3 +1,10 @@
+Tue Mar 13 18:42:44 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * performance-tests/Throughput/Receiver_Factory.cpp:
+
+          Modified this performance-test to use explicit activation to
+          support CORBA e compact.
+
 Tue Mar 13 18:24:27 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * examples/PluggableUDP/tests/Basic/client.cpp:
