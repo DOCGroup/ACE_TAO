@@ -1,3 +1,8 @@
+Tue Mar 13 22:04:35 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * tests/unload_libace.mpb: Squish the VC8 warning about deprecated
+          fopen().
+
 Tue Mar 13 19:36:09 UTC 2007  Steve Huston  <shuston@riverace.com>
 
         * ace/OS_NS_stdio.cpp (snprintf): Back off use of _vsnwprintf_s() in
