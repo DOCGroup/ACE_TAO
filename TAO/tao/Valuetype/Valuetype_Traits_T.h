@@ -41,11 +41,21 @@ struct valuetype_traits_decorator
     std::generate(begin, end, &derived::default_initializer);
   }
 
+# ifndef ACE_LACKS_MEMBER_TEMPLATES
+  // Allow MSVC++ >= 8 checked iterators to be used.
+  template <typename iter>
+  inline static void copy_range(
+      object_type ** begin, object_type ** end, iter dst)
+  {
+    std::transform(begin, end, dst, &derived::duplicate);
+  }
+#else
   inline static void copy_range(
       object_type ** begin, object_type ** end, object_type ** dst)
   {
     std::transform(begin, end, dst, &derived::duplicate);
   }
+#endif  /* ACE_LACKS_MEMBER_TEMPLATES */
 
   inline static void release_range(
       object_type ** begin, object_type ** end)
