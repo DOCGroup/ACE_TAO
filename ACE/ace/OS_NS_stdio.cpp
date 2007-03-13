@@ -332,8 +332,11 @@ ACE_OS::snprintf (wchar_t *buf, size_t maxlen, const wchar_t *format, ...)
   int result;
   va_list ap;
   va_start (ap, format);
-#  if defined (ACE_HAS_TR24731_2005_CRT)
-  result = _vsnwprintf_s (buf, maxlen + 1, _TRUNCATE, format, ap);
+#  if 0 /* defined (ACE_HAS_TR24731_2005_CRT) */
+  // _vsnwprintf_s() doesn't report the length needed when it truncates. This
+  // info is needed for the API contract return value, so don't use this.
+  // There's adequate protection via the maxlen.
+  result = _vsnwprintf_s (buf, maxlen, _TRUNCATE, format, ap);
 #  elif defined (ACE_WIN32)
   // Microsoft's vswprintf() doesn't have the maxlen argument that
   // XPG4/UNIX98 define. They do, however, recommend use of _vsnwprintf()
@@ -389,8 +392,9 @@ ACE_OS::sprintf (wchar_t *buf, const wchar_t *format, ...)
 
 # if (defined _XOPEN_SOURCE && (_XOPEN_SOURCE - 0) >= 500) || \
      (defined (sun) && !defined (_XPG4) || defined(_XPG5)) || \
-     (defined ACE_HAS_DINKUM_STL) || defined (__DMC__) || \
-      defined ACE_HAS_VSWPRINTF || defined (ACE_WIN32_VC8)
+      defined (ACE_HAS_DINKUM_STL) || defined (__DMC__) || \
+      defined (ACE_HAS_VSWPRINTF) || \
+     (defined (ACE_WIN32_VC8) && !defined (ACE_HAS_WINCE))
 
   // The XPG4/UNIX98/C99 signature of the wide-char sprintf has a
   // maxlen argument. Since this method doesn't supply one, pass in
