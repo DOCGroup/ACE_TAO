@@ -1,3 +1,9 @@
+Tue Mar 13 14:17:52 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/Bug_2800_Regression/nsmain.cpp:
+        * orbsvcs/tests/Bug_2800_Regression/server.cpp:
+          Wait on the thread manager until all tasks are ready
+
 Tue Mar 13 12:19:58 UTC 2007  Steve Huston  <shuston@riverace.com>
 
         * MPC/config/tao_vc8warnings.mpb: Reversed the defaults for VC8
