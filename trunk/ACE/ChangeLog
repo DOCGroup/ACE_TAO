@@ -1,4 +1,9 @@
-Mon Mar 13 00:24:22 UTC 2007  Ossama Othman  <ossama_othman at symantec dot com>
+Tue Mar 13 09:57:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+          Added new DynUnion_Test
+
+Tue Mar 13 00:24:22 UTC 2007  Ossama Othman  <ossama_othman at symantec dot com>
 
         * bin/MakeProjectCreator/config/vc8nmake.mpb:
 
