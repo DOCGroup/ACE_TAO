@@ -1,3 +1,10 @@
+Tue Mar 13 20:13:09 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * MPC/config/cidlc.mpb: Added C4996 (deprecated CRT function) to the
+          list of suppressed warnings. The warnings emanate from the
+          ACE_wrappers/contrib/utility area, in case anyone wants to
+          investigate the desireability of making a change.
+
 Mon Mar 11 07:12:19 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * CIDLC/ServantSourceGenerator.cpp:

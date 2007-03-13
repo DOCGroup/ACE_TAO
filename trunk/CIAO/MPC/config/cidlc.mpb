@@ -6,7 +6,7 @@ project: boost_filesystem, boost_regex, exceptions {
   libpaths += $(CIAO_ROOT)/CCF/CCF $(ACE_ROOT)/lib
 
   specific(nmake, vc71, vc8) {
-    compile_flags += /wd4290 /wd4800 /wd4250 /wd4355
+    compile_flags += /wd4290 /wd4800 /wd4250 /wd4355 /wd4996
   }
 
   verbatim(gnuace, top) {
