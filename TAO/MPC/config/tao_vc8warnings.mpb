@@ -16,7 +16,7 @@ feature(vc8_avoid_dominance_warnings) {
   }
 }
 
-feature(vc8_avoid_stl_deprecated_warnings) {
+feature(!vc8_stl_deprecated_warnings) {
   specific(vc8) {
     DisableSpecificWarnings += 4996
   }
