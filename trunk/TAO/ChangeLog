@@ -1,3 +1,11 @@
+Tue Mar 13 20:05:54 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/tests/Simple_Naming/client.h:
+        * orbsvcs/tests/Simple_Naming/client.cpp:
+
+          Modified this test to use explicit activation to support
+          CORBA e compact.                                    
+
 Tue Mar 13 18:42:44 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * performance-tests/Throughput/Receiver_Factory.cpp:

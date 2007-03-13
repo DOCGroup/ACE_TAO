@@ -36,10 +36,15 @@ class Naming_Test
   //    chosen at runtime.
 
 public:
-  virtual ~Naming_Test (void) {}
+  virtual ~Naming_Test (void);
   virtual int execute (TAO_Naming_Client &root_context) = 0;
   // Execute the test code.  <root_context> is the context to assume
   // as the root for all tests operations.
+
+protected:
+  Naming_Test (PortableServer::POA_ptr poa);
+
+  PortableServer::POA_var poa_;
 };
 
 class Simple_Test : public Naming_Test
@@ -51,6 +56,8 @@ class Simple_Test : public Naming_Test
   //    The test binds(), resolves(), and unbinds() an object
   //    reference from the given Naming Context.
 public:
+  Simple_Test (PortableServer::POA_ptr poa);
+
   virtual int execute (TAO_Naming_Client &root_context);
   // Execute the simple test code.
 };
@@ -68,6 +75,7 @@ public:
   // = Initialization and termination methods.
 
   MT_Test (CORBA::ORB_ptr orb,
+           PortableServer::POA_ptr poa,
            int size = 10);
   // Constructor.  Takes in an orb pointer and number of threads to spawn.
 
@@ -123,6 +131,7 @@ class Tree_Test : public Naming_Test
   //    Rebind() to have a different object under the name bar.
   //    Resolve (root/level1/level2/foo) to make sure correct reference is returned.
 public:
+  Tree_Test (PortableServer::POA_ptr poa);
   virtual int execute (TAO_Naming_Client &root_context);
   // Execute the tree test code.
 };
@@ -140,6 +149,7 @@ class Iterator_Test : public Naming_Test
   //    then invokes next_one(), next_n(2), next_one(), and destroy()
   //    on the iterator.
 public:
+  Iterator_Test (PortableServer::POA_ptr poa);
   virtual int execute (TAO_Naming_Client &root_context);
   // Execute the iterator test code.
 };
@@ -164,6 +174,7 @@ class Exceptions_Test : public Naming_Test
   //    Invoke unbind( level1/foo/foo) on root context - make sure we get NotFound exc.
   //    with why = not_context, rest_of_name = foo/foo.
 public:
+  Exceptions_Test (PortableServer::POA_ptr poa);
   virtual int execute (TAO_Naming_Client &root_context);
   // Execute the exceptions test code.
 
@@ -194,6 +205,7 @@ class Destroy_Test : public Naming_Test
   //    exception should be raised.
   //
 public:
+  Destroy_Test (PortableServer::POA_ptr poa);
   virtual int execute (TAO_Naming_Client &root_context);
   // Execute the destroy test code.
 
@@ -217,6 +229,7 @@ public:
   // = Initialization and termination methods.
 
   Persistent_Test_Begin (CORBA::ORB_ptr orb,
+                         PortableServer::POA_ptr poa,
                          FILE * ior_output_file);
   // Constructor.  Takes in an orb pointer.
 
@@ -251,6 +264,7 @@ public:
   // = Initialization and termination methods.
 
   Persistent_Test_End (CORBA::ORB_ptr orb,
+                       PortableServer::POA_ptr poa,
                        const char * ior);
   // Constructor.  Takes in an orb pointer and the ior received from
   // <Persistent_Test_Begin>.
