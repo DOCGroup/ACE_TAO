@@ -77,8 +77,13 @@ main (int argc, char *argv[])
                       1);
       PortableServer::ServantBase_var owner_transfer(echo_impl);
 
+      PortableServer::ObjectId_var id =
+        root_poa->activate_object (echo_impl);
+
+      CORBA::Object_var object = root_poa->id_to_reference (id.in ());
+
       Test::Echo_var echo =
-        echo_impl->_this ();
+        Test::Echo::_narrow (object.in ());
 
       CORBA::String_var ior =
         orb->object_to_string (echo.in ());

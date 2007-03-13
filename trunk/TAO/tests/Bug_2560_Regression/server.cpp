@@ -66,7 +66,13 @@ int main (int argc, char* argv[])
     Quoter_Stock_Factory_i stock_factory_i;
 
     // Activate it to obtain the object reference
-    Quoter::Stock_Factory_var stock_factory = stock_factory_i._this ();
+    PortableServer::ObjectId_var id =
+      root_poa->activate_object (&stock_factory_i);
+
+    CORBA::Object_var object_act = root_poa->id_to_reference (id.in ());
+
+    Quoter::Stock_Factory_var stock_factory =
+      Quoter::Stock_Factory::_narrow (object_act.in ());
 
     // Put the object reference as an IOR string
     CORBA::String_var ior = orb->object_to_string (stock_factory.in ());

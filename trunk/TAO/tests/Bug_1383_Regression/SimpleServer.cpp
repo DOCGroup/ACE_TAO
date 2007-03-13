@@ -44,7 +44,12 @@ int main(int argc, char * argv[])
       // it. It uses the "RootPOA" for dispatching its calls. There are
       // a number of ways this can be done different. Refer to "Advanced
       // CORBA Programming with C++" chapter 11 for more information.
-      Simple_var simpleRef = simple->_this();
+      PortableServer::ObjectId_var id =
+        poa->activate_object (simple);
+
+      CORBA::Object_var object_act = poa->id_to_reference (id.in ());
+
+      Simple_var simpleRef = Simple::_narrow (object_act.in ());
 
       advertise(orb.in(), simpleRef.in());
 

@@ -226,8 +226,13 @@ Task::svc (void)
 
       PortableServer::ServantBase_var safe_servant (servant);
 
+      PortableServer::ObjectId_var id =
+        root_poa->activate_object (servant);
+
+      CORBA::Object_var object_act = root_poa->id_to_reference (id.in ());
+
       test_var test =
-        servant->_this ();
+        test::_narrow (object_act.in ());
 
       write_iors_to_file (test.in (),
                           this->orb_.in (),

@@ -86,8 +86,19 @@ Worker::svc (void)
                                             &pending_requests),
                         -1);
 
+        CORBA::Object_var poa_object =
+          this->orb_->resolve_initial_references("RootPOA");
+
+        PortableServer::POA_var root_poa =
+          PortableServer::POA::_narrow (poa_object.in ());
+
+        PortableServer::ObjectId_var id =
+          root_poa->activate_object (handler_impl);
+
+        CORBA::Object_var object = root_poa->id_to_reference (id.in ());
+
         PortableServer::ServantBase_var auto_destroy (handler_impl);
-        handler = handler_impl->_this ();
+        handler = Test::AMI_ControllerHandler::_narrow (object.in ());
       }
 
       validate_connection(this->controller_.in());

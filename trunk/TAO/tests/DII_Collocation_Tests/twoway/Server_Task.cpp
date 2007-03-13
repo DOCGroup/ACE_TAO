@@ -51,8 +51,13 @@ Server_Task::svc (void)
 
      PortableServer::ServantBase_var owner_transfer(hello_impl);
 
+     PortableServer::ObjectId_var id =
+       root_poa->activate_object (hello_impl);
+
+     CORBA::Object_var object = root_poa->id_to_reference (id.in ());
+
      Test::Hello_var hello =
-       hello_impl->_this ();
+       Test::Hello::_narrow (object.in ());
 
      CORBA::String_var ior =
        this->sorb_->object_to_string (hello.in ());
@@ -76,8 +81,12 @@ Server_Task::svc (void)
 
      PortableServer::ServantBase_var owner_transfer_simple(simple_impl);
 
+     id = root_poa->activate_object (simple_impl);
+
+     object = root_poa->id_to_reference (id.in ());
+
      Test::Simple_Test_var simple_test =
-       simple_impl->_this ();
+       Test::Simple_Test::_narrow (object.in ());
 
      CORBA::String_var simple_test_ior =
        this->sorb_->object_to_string (simple_test.in ());

@@ -5,7 +5,7 @@
 #include "tao/Utils/Servant_Var.h"
 
 test_i::
-test_i(CORBA::ORB_ptr orb) 
+test_i(CORBA::ORB_ptr orb)
 {
  this->orb_ = CORBA::ORB::_duplicate (orb);
 }
@@ -24,7 +24,18 @@ create_and_activate_server()
   TAO::Utils::Servant_Var<test_i> impl(
       new test_i (this->orb_.in ()));
 
-  Test_var ref = impl->_this();
+  CORBA::Object_var poa_object =
+    this->orb_->resolve_initial_references("RootPOA");
+
+  PortableServer::POA_var root_poa =
+    PortableServer::POA::_narrow (poa_object.in ());
+
+  PortableServer::ObjectId_var id =
+    root_poa->activate_object (impl.in ());
+
+  CORBA::Object_var object = root_poa->id_to_reference (id.in ());
+
+  Test_var ref = Test::_narrow (object.in ());
 
   return this->orb_->object_to_string(ref.in());
 }

@@ -131,8 +131,19 @@ test_factory_i::create_test (void)
   PortableServer::ServantBase_var safe_servant (servant);
   ACE_UNUSED_ARG (safe_servant);
 
+  CORBA::Object_var poa_object =
+    this->orb_->resolve_initial_references("RootPOA");
+
+  PortableServer::POA_var root_poa =
+    PortableServer::POA::_narrow (poa_object.in ());
+
+  PortableServer::ObjectId_var id_act =
+    root_poa->activate_object (servant);
+
+  CORBA::Object_var object = root_poa->id_to_reference (id_act.in ());
+
   test_var test =
-    servant->_this ();
+    test::_narrow (object.in ());
 
   return test._retn ();
 }
@@ -200,8 +211,13 @@ main (int argc, char *argv[])
         PortableServer::ServantBase_var safe_servant (servant);
         ACE_UNUSED_ARG (safe_servant);
 
+        PortableServer::ObjectId_var id_act =
+          root_poa->activate_object (servant);
+
+        CORBA::Object_var object = root_poa->id_to_reference (id_act.in ());
+
         test_factory_var test_factory =
-          servant->_this ();
+          test_factory::_narrow (object.in ());
 
         CORBA::String_var ior =
           orb->object_to_string (test_factory.in ());

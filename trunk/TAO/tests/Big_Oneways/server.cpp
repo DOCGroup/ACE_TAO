@@ -89,8 +89,13 @@ main (int argc, char *argv[])
                       Coordinator (peer_count),
                       1);
 
+      PortableServer::ObjectId_var id =
+        root_poa->activate_object (coordinator_impl);
+
+      CORBA::Object_var object = root_poa->id_to_reference (id.in ());
+
       Test::Coordinator_var coordinator =
-        coordinator_impl->_this ();
+        Test::Coordinator::_narrow (object.in ());
 
       CORBA::String_var ior =
         orb->object_to_string (coordinator.in ());
@@ -131,8 +136,13 @@ main (int argc, char *argv[])
                       Session_Control (peer_count),
                       1);
 
+      PortableServer::ObjectId_var idu =
+        root_poa->activate_object (session_control_impl);
+
+      CORBA::Object_var objectu = root_poa->id_to_reference (idu.in ());
+
       Test::Session_Control_var session_control =
-        session_control_impl->_this ();
+        Test::Session_Control::_narrow (objectu.in ());
 
       Test::Session_List session_list;
       coordinator_impl->create_session_list (session_control.in (),

@@ -48,8 +48,19 @@ Server_Peer::callme(Test::Peer_ptr callback,
   }
   else if (max_depth > 0)
   {
+    CORBA::Object_var poa_object =
+      this->orb_->resolve_initial_references("RootPOA");
+
+    PortableServer::POA_var root_poa =
+      PortableServer::POA::_narrow (poa_object.in ());
+
+    PortableServer::ObjectId_var id =
+      root_poa->activate_object (this);
+
+    CORBA::Object_var object = root_poa->id_to_reference (id.in ());
+
     Test::Peer_var me =
-      this->_this();
+      Test::Peer::_narrow (object.in ());
 
     Test::Payload extra_data(this->payload_size_);
     extra_data.length(this->payload_size_);

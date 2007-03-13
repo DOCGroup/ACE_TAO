@@ -112,7 +112,10 @@ Test_Server_Module::init (int argc, ACE_TCHAR *argv[])
       if (::parse_args (new_argc, new_argv.get_buffer ()) != 0)
         return -1;
 
-      CORBA::Object_var obj = this->servant_._this ();
+      PortableServer::ObjectId_var id =
+        this->poa_->activate_object (&servant_);
+
+      CORBA::Object_var obj = this->poa_->id_to_reference (id.in ());
 
       CORBA::String_var ior =
         this->orb_->object_to_string (obj.in ());

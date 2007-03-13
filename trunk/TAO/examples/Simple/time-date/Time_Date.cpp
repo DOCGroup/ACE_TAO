@@ -186,8 +186,19 @@ Time_Date_Servant::init (int argc, char *argv[])
       Time_Date_i * servant = new Time_Date_i;
       PortableServer::ServantBase_var safe_servant = servant;
 
+      CORBA::Object_var poa_object =
+        orb->orb_->resolve_initial_references("RootPOA");
+
+      PortableServer::POA_var root_poa =
+        PortableServer::POA::_narrow (poa_object.in ());
+
+      PortableServer::ObjectId_var id =
+        root_poa->activate_object (servant);
+
+      CORBA::Object_var object = root_poa->id_to_reference (id.in ());
+
       CORBA::Object_var obj =
-        servant->_this ();
+        CORBA::Object::_narrow (object.in ());
 
       CORBA::String_var str =
         orb->orb_->object_to_string (obj.in ());

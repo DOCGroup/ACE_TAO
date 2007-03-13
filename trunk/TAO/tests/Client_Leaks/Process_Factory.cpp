@@ -29,8 +29,19 @@ Process_Factory::create_new_process (void)
 
   PortableServer::ServantBase_var owner_transfer(startup_callback_impl);
 
+  CORBA::Object_var poa_object =
+    this->orb_->resolve_initial_references("RootPOA");
+
+  PortableServer::POA_var root_poa =
+    PortableServer::POA::_narrow (poa_object.in ());
+
+  PortableServer::ObjectId_var id =
+    root_poa->activate_object (startup_callback_impl);
+
+  CORBA::Object_var object = root_poa->id_to_reference (id.in ());
+
   Test::Startup_Callback_var startup_callback =
-    startup_callback_impl->_this ();
+    Test::Startup_Callback::_narrow (object.in ());
 
   CORBA::String_var ior =
     this->orb_->object_to_string (startup_callback.in ());

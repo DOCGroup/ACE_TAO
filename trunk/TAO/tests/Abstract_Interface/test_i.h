@@ -14,9 +14,15 @@ class foo_i : public virtual POA_foo
 
 class passer_i : public virtual POA_passer
 {
+public:
+  passer_i (PortableServer::POA_ptr poa);
+
   virtual void pass_ops (base_out outarg);
 
   virtual void pass_state (base_out outarg);
+
+private:
+  PortableServer::POA_var poa_;
 };
 
 #endif /* TAO_TEST_I_H */

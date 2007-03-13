@@ -63,7 +63,12 @@ main (int argc, char **argv)
 
       test_i servant;
 
-      test_var test_object = servant._this ();
+      PortableServer::ObjectId_var id =
+        root_poa->activate_object (&servant);
+
+      CORBA::Object_var object_act = root_poa->id_to_reference (id.in ());
+
+      test_var test_object = test::_narrow (object_act.in ());
 
       test_object->destroy_poa ();
     }

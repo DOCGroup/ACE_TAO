@@ -135,8 +135,13 @@ main (int argc, char *argv[])
       TAO::Utils::Servant_Var<Simple_C> simple_c_impl(
           new Simple_C(orb.in()));
 
+      PortableServer::ObjectId_var id =
+        root_poa->activate_object (simple_c_impl.in ());
+
+      CORBA::Object_var object = root_poa->id_to_reference (id.in ());
+
       Baz::C_var simple_c =
-        simple_c_impl->_this ();
+        Baz::C::_narrow (object.in ());
 
       CORBA::String_var ior =
         orb->object_to_string (simple_c.in ());

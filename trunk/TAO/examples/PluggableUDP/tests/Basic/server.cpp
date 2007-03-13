@@ -150,8 +150,13 @@ main (int argc, char *argv[])
 
       udpHandler_i.orb (orb.in ());
 
+      PortableServer::ObjectId_var id_act =
+        persistent_poa->activate_object (&udpHandler_i);
+
+      CORBA::Object_var object_act = persistent_poa->id_to_reference (id_act.in ());
+
       UDP_var udpHandler_var =
-        udpHandler_i._this ();
+        UDP::_narrow (object_act.in ());
 
       // Instantiate client
       UDP_Client_i* client = new UDP_Client_i (orb,

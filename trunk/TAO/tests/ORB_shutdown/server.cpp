@@ -35,8 +35,13 @@ main (int argc, char *argv[])
                       Foo_Bar (orb.in ()),
                       1);
 
+      PortableServer::ObjectId_var id =
+        root_poa->activate_object (foobar_impl);
+
+      CORBA::Object_var object = root_poa->id_to_reference (id.in ());
+
       Test::Foo_var foo =
-        foobar_impl->_this ();
+        Test::Foo::_narrow (object.in ());
 
       poa_manager->activate ();
 

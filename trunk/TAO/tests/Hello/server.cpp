@@ -66,7 +66,12 @@ main (int argc, char *argv[])
                       1);
       PortableServer::ServantBase_var owner_transfer(hello_impl);
 
-      Test::Hello_var hello = hello_impl->_this ();
+      PortableServer::ObjectId_var id =
+        root_poa->activate_object (hello_impl);
+
+      CORBA::Object_var object = root_poa->id_to_reference (id.in ());
+
+      Test::Hello_var hello = Test::Hello::_narrow (object.in ());
 
       CORBA::String_var ior = orb->object_to_string (hello.in ());
 

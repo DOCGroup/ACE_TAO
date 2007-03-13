@@ -86,8 +86,13 @@ main (int argc, char *argv[])
       ACE_NEW_RETURN (test_impl, test_i (number, orb.in ()), 1);
       PortableServer::ServantBase_var owner_transfer (test_impl);
 
+      PortableServer::ObjectId_var id =
+        root_poa->activate_object (test_impl);
+
+      CORBA::Object_var object = root_poa->id_to_reference (id.in ());
+
       RedirectionTest::test_var test =
-        test_impl->_this ();
+        RedirectionTest::test::_narrow (object.in ());
 
       CORBA::String_var ior =
         orb->object_to_string (test.in ());

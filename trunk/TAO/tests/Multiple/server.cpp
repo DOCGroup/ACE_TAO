@@ -33,7 +33,13 @@ int main (int argc, char *argv[])
 
       // Create the CORBA Object that is incarnated by the
       // delegated servant.
-      Multiple::Bottom_var bottom = delegated_servant._this ();
+      PortableServer::ObjectId_var id =
+        poa->activate_object (&delegated_servant);
+
+      CORBA::Object_var object_act = poa->id_to_reference (id.in ());
+
+      Multiple::Bottom_var bottom =
+        Multiple::Bottom::_narrow (object_act.in ());
 
       // Now we stringfy the object reference.
       CORBA::String_var ior =

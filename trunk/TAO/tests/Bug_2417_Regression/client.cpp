@@ -30,9 +30,14 @@ main (int argc, char *argv[])
         root_poa->the_POAManager();
 
 		Subscriber_impl subscriber(orb.in ());
-		Subscriber_var subscriber_var = subscriber._this();
+		PortableServer::ObjectId_var id =
+		  root_poa->activate_object (&subscriber);
 
-		CORBA::Object_var object = orb->string_to_object("file://ior.out");
+		CORBA::Object_var object = root_poa->id_to_reference (id.in ());
+
+		Subscriber_var subscriber_var = Subscriber::_narrow (object.in ());
+
+		object = orb->string_to_object("file://ior.out");
 		Publisher_var publisher = Publisher::_narrow(object.in());
 
 		publisher->subscribe(subscriber_var.in());
