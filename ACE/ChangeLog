@@ -1,3 +1,11 @@
+Tue Mar 13 12:13:37 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * bin/MakeProjectCreator/config/vc8_warnings.mpb: For the
+          vc8_avoid_crt_secure_warnings feature, add /wd4996 to the nmake
+          case since it seems to not pay attention to _CRT_NONSTDC_NO_WARNINGS.
+          Also, reversed the default for VC8 SCL secure warnings - they're on
+          by default since Ossama implemented the checked STL iterator stuff.
+
 Tue Mar 13 09:57:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/tao_orb_tests.lst:
