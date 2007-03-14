@@ -21,7 +21,8 @@ else {
 
 $SV->Spawn ();
 
-$server = $SV->WaitKill ($PerlACE::wait_interval_for_process_creation);
+## Slower hardware can require much more time to complete.
+$server = $SV->WaitKill (90);
 
 if ($server != 0) {
     print STDERR "ERROR: server returned $server\n";

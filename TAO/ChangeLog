@@ -1,3 +1,10 @@
+Wed Mar 14 13:38:15 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tests/Servant_To_Reference_Test/run_test.pl:
+
+          Increase the timeout to allow slower hardware to complete the
+          test.
+
 Wed Mar 14 13:11:52 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * tests/File_IO/File_i.cpp:
