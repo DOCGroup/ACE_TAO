@@ -1,3 +1,8 @@
+Wed Mar 14 08:12:52 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/DynUnion_Test/DynUnionTest.cpp:
+          Fixed conversion warnings
+
 Tue Mar 14 05:32:38 UTC 2007  Ossama Othman  <ossama_othman at symantec dot com>
 
         * tao/Array_Traits_T.h (copy_range):
@@ -11,7 +16,7 @@ Tue Mar 13 20:05:54 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
         * orbsvcs/tests/Simple_Naming/client.cpp:
 
           Modified this test to use explicit activation to support
-          CORBA e compact.                                    
+          CORBA e compact.
 
 Tue Mar 13 18:42:44 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 

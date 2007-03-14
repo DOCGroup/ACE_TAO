@@ -13,7 +13,7 @@ int runStatic(CORBA::ORB_ptr orb)
           orb->resolve_initial_references("DynAnyFactory");
 
         DynamicAny::DynAnyFactory_var dfact =
-          DynamicAny::DynAnyFactory::_narrow(obj);
+          DynamicAny::DynAnyFactory::_narrow(obj.in ());
 
         if (CORBA::is_nil (dfact.in ()))
           {
@@ -26,12 +26,12 @@ int runStatic(CORBA::ORB_ptr orb)
            dfact->create_dyn_any_from_type_code(DynAnyTest::_tc_EventData);
 
         DynamicAny::DynUnion_var dunion =
-          DynamicAny::DynUnion::_narrow(dany);
+          DynamicAny::DynUnion::_narrow(dany.in ());
 
         DynamicAny::DynAny_var disc = dunion->get_discriminator();
 
         DynamicAny::DynEnum_var denum =
-          DynamicAny::DynEnum::_narrow(disc);
+          DynamicAny::DynEnum::_narrow(disc.in ());
 
         if (CORBA::is_nil (denum.in ()))
           {
@@ -95,7 +95,7 @@ int runDynamic(CORBA::ORB_ptr orb)
 
         eventDataTc = orb->create_union_tc("IDL:DynAnyTest/EventData:1.0",
                                            "EventData",
-                                           eventKindTc,
+                                           eventKindTc.in (),
                                            useq);
 
         // Now create DynUnion
@@ -113,15 +113,15 @@ int runDynamic(CORBA::ORB_ptr orb)
           }
 
         DynamicAny::DynAny_var dany =
-                    dfact->create_dyn_any_from_type_code(eventDataTc);
+                    dfact->create_dyn_any_from_type_code(eventDataTc.in ());
 
         DynamicAny::DynUnion_var dunion =
-          DynamicAny::DynUnion::_narrow(dany);
+          DynamicAny::DynUnion::_narrow(dany.in ());
 
         DynamicAny::DynAny_var disc = dunion->get_discriminator();
 
         DynamicAny::DynEnum_var denum =
-          DynamicAny::DynEnum::_narrow(disc);
+          DynamicAny::DynEnum::_narrow(disc.in ());
 
         // This fails. The type of discriminator is ulong
         if (CORBA::is_nil (denum.in ()))
