@@ -103,7 +103,7 @@ int runDynamic(CORBA::ORB_ptr orb)
         CORBA::Object_var obj = orb->resolve_initial_references("DynAnyFactory");
 
         DynamicAny::DynAnyFactory_var dfact =
-                    DynamicAny::DynAnyFactory::_narrow(obj);
+                    DynamicAny::DynAnyFactory::_narrow(obj.in ());
 
         if (CORBA::is_nil (dfact.in ()))
           {
