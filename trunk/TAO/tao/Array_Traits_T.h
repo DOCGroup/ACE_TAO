@@ -63,7 +63,18 @@ struct array_traits
     std::for_each(
         begin, end, &TAO::Array_Traits<forany_type>::zero);
   }
-
+# ifndef ACE_LACKS_MEMBER_TEMPLATES
+  // Allow MSVC++ >= 8 checked iterators to be used.
+  template <typename iter>
+  inline static void copy_range(
+      value_type * begin, value_type * end, iter dst)
+  {
+    for(value_type * i = begin; i != end; ++i, ++dst)
+    {
+      TAO::Array_Traits<forany_type>::copy(*dst, *i);
+    }
+  }
+#else
   inline static void copy_range(
       value_type * begin, value_type * end, value_type *dst)
   {
@@ -72,6 +83,7 @@ struct array_traits
       TAO::Array_Traits<forany_type>::copy(*dst, *i);
     }
   }
+# endif  /* !ACE_LACKS_MEMBER_TEMPLATES */
 };
 
 } // namespace details
