@@ -190,7 +190,6 @@
 // Preprocessor needs some help with data types
 #if defined (__LP64__)
 #  define ACE_SIZEOF_LONG 8
-#  define ACE_SIZEOF_FLOAT 8
 #else
 #  define ACE_SIZEOF_LONG 4
 #endif
