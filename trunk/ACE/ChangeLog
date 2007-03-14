@@ -1,3 +1,10 @@
+Wed Mar 14 12:32:36 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/tao_orb_tests.lst:
+
+          Silly me, I forgot the script name when I added the
+          CORBA_e_compact_Implicit_Activation test.
+
 Wed Mar 14 09:09:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-hpux-11.00.h:

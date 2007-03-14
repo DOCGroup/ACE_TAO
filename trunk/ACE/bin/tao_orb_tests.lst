@@ -25,7 +25,7 @@ TAO/tests/AMI/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO
 TAO/tests/AMI_Timeouts/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ST
 TAO/tests/AMH_Exceptions/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !DISABLE_ToFix_LynxOS_x86 !ACE_FOR_TAO
 TAO/tests/AMH_Oneway/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !DISABLE_ToFix_LynxOS_x86 !ACE_FOR_TAO
-TAO/tests/CORBA_e_Implicit_Activation: CORBA_E_COMPACT
+TAO/tests/CORBA_e_Implicit_Activation/run_test.pl: CORBA_E_COMPACT
 TAO/tests/Collocation/run_test.pl: !ACE_FOR_TAO
 TAO/tests/Collocation_Tests/run_test.pl: !ST
 TAO/tests/Collocation_Opportunities/run_test.pl: !ST
