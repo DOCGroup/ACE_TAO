@@ -133,8 +133,6 @@
 // Compiler doesn't handle 'signed char' correctly (used in ace/IOStream.h)
 #  define ACE_LACKS_SIGNED_CHAR
 
-#  define ACE_HAS_VSWPRINTF
-
 #endif /* __GNUG__, HP */
 
 //*********************************************************************
@@ -192,6 +190,7 @@
 // Preprocessor needs some help with data types
 #if defined (__LP64__)
 #  define ACE_SIZEOF_LONG 8
+#  define ACE_SIZEOF_FLOAT 8
 #else
 #  define ACE_SIZEOF_LONG 4
 #endif
@@ -234,6 +233,8 @@
 
 // Compiler/platform has Dirent iterator functions.
 #define ACE_HAS_DIRENT
+
+#define ACE_HAS_VSWPRINTF
 
 // Platform supports getpagesize() call
 #define ACE_HAS_GETPAGESIZE
