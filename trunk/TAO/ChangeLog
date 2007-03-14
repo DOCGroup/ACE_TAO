@@ -1,3 +1,21 @@
+Wed Mar 14 16:14:31 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/tests/Bug_2800_Regression/client.cpp:
+
+          Corrected debug message.
+
+        * performance-tests/Throughput/Throughput.mpc:
+
+          Reverted my change from Tue Mar 13 18:24:27 UTC 2007.  It should
+          not have been committed.
+
+        * examples/ior_corbaloc/server.cpp:
+        * tests/IDL_Test/main.cpp:
+        * tests/Multiple/server.cpp:
+
+          Modified these tests to use explicit activation to support
+          CORBA e compact.
+
 Wed Mar 14 13:38:15 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * tests/Servant_To_Reference_Test/run_test.pl:
