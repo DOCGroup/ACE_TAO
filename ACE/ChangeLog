@@ -1,3 +1,15 @@
+Wed Mar 14 09:09:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-hpux-11.00.h:
+          Set ACE_HAS_VSWPRINTF independent of the compiler used
+
+Wed Mar 14 08:09:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-linux-common.h:
+        * ace/config-lite.h:
+        * include/makeinclude/platform_linux_suncc.GNU:
+          Changes for the Sun Studio 12 Early Access compiler on linux
+
 Tue Mar 13 22:04:35 UTC 2007  Steve Huston  <shuston@riverace.com>
 
         * tests/unload_libace.mpb: Squish the VC8 warning about deprecated
