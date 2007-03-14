@@ -42,19 +42,7 @@ test_i::invoke_me (void)
 
   // By this point all of step 1 has occurred.  Step 2 will now
   // occur.
-  CORBA::Object_var poa_object =
-    this->orb_->resolve_initial_references("RootPOA");
-
-  PortableServer::POA_var root_poa =
-    PortableServer::POA::_narrow (poa_object.in ());
-
-  PortableServer::ObjectId_var id =
-    root_poa->activate_object (this);
-
-  CORBA::Object_var object = root_poa->id_to_reference (id.in ());
-
-  PICurrentTest::test_var my_ref =
-    PICurrentTest::test::_narrow (object.in ());
+  PICurrentTest::test_var my_ref = this->_this ();
 
   // ----------------------------------------------------
 

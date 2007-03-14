@@ -137,9 +137,9 @@ create_POA_and_register_servant (CORBA::Policy_ptr threadpool_policy,
   ACE_UNUSED_ARG (safe_servant);
 
   PortableServer::ObjectId_var id =
-    root_poa->activate_object (servant);
+    poa->activate_object (servant);
 
-  CORBA::Object_var object = root_poa->id_to_reference (id.in ());
+  CORBA::Object_var object = poa->id_to_reference (id.in ());
 
   test_var test =
     test::_narrow (object.in ());
