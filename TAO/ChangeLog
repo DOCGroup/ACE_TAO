@@ -1,3 +1,16 @@
+Wed Mar 14 17:24:57 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/tests/BiDir_CORBALOC/TimeServer.cpp:
+
+         Modified this test to use explicit activation to support
+         CORBA e compact.
+
+        * orbsvcs/tests/EC_Mcast/EC_Mcast.cpp:
+
+          Used explicit activation in one place, however there are more
+          places where implicit activation is used in this test and in the
+          Event core library.
+
 Wed Mar 14 16:14:31 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/tests/Bug_2800_Regression/client.cpp:

@@ -98,7 +98,8 @@ main(int argc, char * argv[])
                                     time_servant);
 
       // Get a reference after activating the object
-      TimeModule::Time_var tm = time_servant->_this();
+      CORBA::Object_var object = poa->id_to_reference (ServerId.in ());
+      TimeModule::Time_var tm = TimeModule::Time::_narrow (object.in ());
 
       // Get reference to initial naming context
       CORBA::Object_var name_obj =

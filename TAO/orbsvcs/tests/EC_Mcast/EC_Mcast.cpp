@@ -129,8 +129,13 @@ ECM_Driver::run (int argc, char* argv[])
       TAO_EC_Event_Channel ec_impl (attr);
 
       // Register Event_Service with the Naming Service.
+      PortableServer::ObjectId_var id =
+        root_poa->activate_object (&ec_impl);
+
+      CORBA::Object_var object = root_poa->id_to_reference (id.in ());
+
       RtecEventChannelAdmin::EventChannel_var ec =
-        ec_impl._this ();
+        RtecEventChannelAdmin::EventChannel::_narrow (object.in ());
 
       CORBA::String_var str =
         this->orb_->object_to_string (ec.in ());
