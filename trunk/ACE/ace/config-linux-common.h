@@ -183,6 +183,8 @@
 # undef ACE_LACKS_LLSEEK_PROTOTYPE
 # undef ACE_LACKS_LSEEK64_PROTOTYPE
 # include "ace/config-borland-common.h"
+#elif defined (__SUNCC_PRO)
+# include "ace/config-suncc-common.h"
 #elif defined (__PGI)
 // Portable group compiler
 # define ACE_HAS_CPLUSPLUS_HEADERS
