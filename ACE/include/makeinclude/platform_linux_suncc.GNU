@@ -103,6 +103,13 @@ ifeq ($(shared_libs), 1)
   endif
 endif
 
+ifeq ($(buildbits),32)
+  CFLAGS   += -m32
+  LDFLAGS  += -m32
+endif
+ifeq ($(buildbits),64)
+  CFLAGS   += -m64
+endif
 
 # Added line below to support "Executable Shared Object" files (as
 # needed by the service configurator).
