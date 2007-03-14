@@ -1,3 +1,23 @@
+Wed Mar 14 13:11:52 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tests/File_IO/File_i.cpp:
+        * tests/NestedUpcall/Triangle_Test/initiator.cpp:
+        * tests/Nested_Upcall_Crash/Client_Peer.cpp:
+        * tests/Nested_Upcall_Crash/Server_Peer.cpp:
+        * tests/Portable_Interceptors/PICurrent/test_i.cpp:
+
+          Reverted my changes from Tue Mar 13 18:24:27 UTC 2007.  They were
+          not correct.
+
+        * tests/RTCORBA/Dynamic_Thread_Pool/server.cpp:
+        * tests/RTCORBA/Linear_Priority/server.cpp:
+        * tests/RTCORBA/Priority_Inversion_With_Bands/server.cpp:
+        * tests/RTCORBA/Profile_And_Endpoint_Selection/server.cpp:
+        * tests/RTCORBA/Thread_Pool/server.cpp:
+
+          Modified my changes from Tue Mar 13 18:24:27 UTC 2007.  They were
+          also incorrect.
+
 Wed Mar 14 08:12:52 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/DynUnion_Test/DynUnionTest.cpp:
