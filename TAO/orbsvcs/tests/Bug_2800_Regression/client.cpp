@@ -86,7 +86,7 @@ main (int argc, char *argv[])
         }
       catch (const CosNaming::NamingContext::CannotProceed&)
         {
-          ACE_DEBUG ((LM_DEBUG, "Catched correct exception\n"));
+          ACE_DEBUG ((LM_DEBUG, "Caught correct exception\n"));
         }
 
       if (shutdown_nsmain)

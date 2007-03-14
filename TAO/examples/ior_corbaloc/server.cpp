@@ -39,8 +39,13 @@ int main (int argc, char* argv[])
       corbaloc_Status_i status_i;
       status_i.set_name (argv[1]);
       // Activate it to obtain the reference
+      PortableServer::ObjectId_var id =
+        poa->activate_object (&status_i);
+
+      CORBA::Object_var object = poa->id_to_reference (id.in ());
+
       corbaloc::Status_var status =
-        status_i._this ();
+        corbaloc::Status::_narrow (object.in ());
 
       // Get a reference to Naming Context
       CORBA::Object_var naming_context_object =

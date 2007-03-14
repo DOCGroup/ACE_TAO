@@ -1,14 +1,14 @@
 // -*- MPC -*-
 // $Id$
 
-project(*idl): taoidldefaults, avoids_corba_e_compact {
+project(*idl): taoidldefaults {
   IDL_Files {
     Test.idl
   }
   custom_only = 1
 }
 
-project(*server): taoserver, strategies, avoids_corba_e_compact {
+project(*server): taoserver, strategies {
   after += *idl
   Source_Files {
     TestC.cpp
@@ -21,7 +21,7 @@ project(*server): taoserver, strategies, avoids_corba_e_compact {
   }
 }
 
-project(*client): taoclient, strategies, avoids_corba_e_compact {
+project(*client): taoclient, strategies {
   after += *idl
   Source_Files {
     TestC.cpp
