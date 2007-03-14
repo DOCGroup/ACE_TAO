@@ -105,12 +105,7 @@ FileImpl::Descriptor::fd (void)
   //
 
   // Get a reference to myself
-  PortableServer::ObjectId_var id =
-    this->poa_->activate_object (this);
-
-  CORBA::Object_var object_act = this->poa_->id_to_reference (id.in ());
-
-  File::Descriptor_var me = File::Descriptor::_narrow (object_act.in ());
+  File::Descriptor_var me = this->_this ();
 
   // Get the ObjectId from the reference
   PortableServer::ObjectId_var oid1 =

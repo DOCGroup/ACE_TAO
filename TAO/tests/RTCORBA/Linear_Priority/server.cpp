@@ -227,9 +227,9 @@ Task::svc (void)
       PortableServer::ServantBase_var safe_servant (servant);
 
       PortableServer::ObjectId_var id =
-        root_poa->activate_object (servant);
+        poa->activate_object (servant);
 
-      CORBA::Object_var object_act = root_poa->id_to_reference (id.in ());
+      CORBA::Object_var object_act = poa->id_to_reference (id.in ());
 
       test_var test =
         test::_narrow (object_act.in ());
