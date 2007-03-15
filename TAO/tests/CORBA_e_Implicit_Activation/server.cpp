@@ -41,7 +41,7 @@ main (int argc, char *argv[])
       root_poa->destroy (1, 1);
       orb->destroy ();
     }
-  catch (const PortableServer::POA::ServantNotActive&)
+  catch (const CORBA::INV_POLICY&)
     {
       ACE_DEBUG ((LM_DEBUG, "This test passes.\n"));
       status = 0;
