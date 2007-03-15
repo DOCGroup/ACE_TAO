@@ -69,7 +69,6 @@ int NamingTask::svc()
       initialized_ = true;
       // Accept requests
       orb_->run();
-      orb_->destroy();
       return 0;
     }
     else
