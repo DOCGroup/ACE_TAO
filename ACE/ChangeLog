@@ -1,3 +1,11 @@
+Thu Mar 15 14:44:21 UTC 2007  Carlos O'Ryan  <coryan@atdesk.com>
+
+        * ace/Select_Reactor_Base.cpp:
+          The close() operation was trying to read from the notification
+          pipe event if the notification pipe was not open.  I did not
+          notice this could happen, but the reactor constructor has a flag
+          for it.
+
 Thu Mar 15 12:06:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         Reverted the change below, the test stats show that after adding

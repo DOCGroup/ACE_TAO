@@ -641,17 +641,21 @@ ACE_Select_Reactor_Notify::close (void)
 #if defined (ACE_HAS_REACTOR_NOTIFICATION_QUEUE)
   notification_queue_.reset();
 #else
-  // Please see Bug 2820, if we just close the pipe then we break the
-  // reference counting rules.  Basically, all the event handlers
-  // "stored" in the pipe had their reference counts increased.  We
-  // need to decrease them before closing the pipe....
-  ACE_Notification_Buffer b;
-  for (int r = read_notify_pipe(notification_pipe_.read_handle(), b);
-       r > 0;
-       r = read_notify_pipe(notification_pipe_.read_handle(), b))
+  if (this->notification_pipe_.read_handle() != ACE_INVALID_HANDLE)
     {
-      if (b.eh_ == 0) continue;
-      b.eh_->remove_reference();
+      // Please see Bug 2820, if we just close the pipe then we break
+      // the reference counting rules.  Basically, all the event
+      // handlers "stored" in the pipe had their reference counts
+      // increased.  We need to decrease them before closing the
+      // pipe....
+      ACE_Notification_Buffer b;
+      for (int r = read_notify_pipe(notification_pipe_.read_handle(), b);
+	   r > 0;
+	   r = read_notify_pipe(notification_pipe_.read_handle(), b))
+	{
+	  if (b.eh_ == 0) continue;
+	  b.eh_->remove_reference();
+	}
     }
 #endif /* ACE_HAS_REACTOR_NOTIFICATION_QUEUE */
 
