@@ -1,3 +1,8 @@
+Thu Mar 15 14:19:57 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/Bug_2800_Regression/NamingTask.cpp:
+          Fixed invalid read reported by valgrind
+
 Thu Mar 15 12:14:57 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/DynUnion_Test/DynUnionTest.cpp:
