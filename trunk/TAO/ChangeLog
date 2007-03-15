@@ -1,3 +1,8 @@
+Thu Mar 15 08:05:57 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/CORBA_e_Implicit_Activation/server.cpp:
+          Fixed variable not used warning
+
 Wed Mar 14 17:24:57 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/tests/BiDir_CORBALOC/TimeServer.cpp:
