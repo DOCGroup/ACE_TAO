@@ -1,4 +1,18 @@
-Thu Mar 15 12:20:31 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+Thu Mar 15 12:06:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        Reverted the change below, the test stats show that after adding
+        the functions the Atomic_Op test does fail when these optimized
+        functions are enabled.
+
+        Mon Mar 5 09:21:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+        * ace/Atomic_Op_Sparc.c:
+        * ace/Atomic_Op.{h,cpp}:
+          Added optimized functions for SunCC on x86. Thanks to
+          Dennis Chernoivanov <cdi at tbricks dot com> for reporting this.
+          If you want to enable these, add atomic_ops_sparc=1 to your
+          platform_macros.GNU file
+
+Thu Mar 15 11:20:31 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * tests/Reactor_Notify_Test.cpp:
 
