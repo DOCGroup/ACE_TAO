@@ -454,10 +454,6 @@ run_main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("Reactor_Notify_Test"));
 
-  // To automatically delete the ACE_Reactor instance at program
-  // termination:
-  auto_ptr<ACE_Reactor> r (ACE_Reactor::instance ());
-
   int test_result = 0;       // Innocent until proven guilty
 
   test_result = run_notify_purge_test ();

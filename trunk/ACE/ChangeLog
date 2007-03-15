@@ -1,7 +1,14 @@
+Thu Mar 15 12:20:31 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tests/Reactor_Notify_Test.cpp:
+
+          Removed the auto_ptr that deleted the Reactor instance.  It is
+          managed by the ACE library and doesn't need to be deleted.
+
 Wed Mar 14 21:34:03 UTC 2007  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * bin/ciao_tests.lst
-        
+
           Added requirement for the RT-CCM test called RT_CAPABLE, used to
           indicate systems which are able to successfully run a test
           involving RT policies.
