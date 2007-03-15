@@ -1,4 +1,9 @@
-Thu Mar 15 12:55:54 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+Thu Mar 15 12:14:57 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/DynUnion_Test/DynUnionTest.cpp:
+          Added include for static builds
+
+Thu Mar 15 11:55:54 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * tests/CORBA_e_Implicit_Activation/server.cpp:
 
