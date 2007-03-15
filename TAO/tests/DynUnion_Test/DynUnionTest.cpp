@@ -3,6 +3,7 @@
 #include "dynanyC.h"
 #include "tao/DynamicAny/DynamicAny.h"
 #include "tao/TypeCodeFactory/TypeCodeFactory_Loader.h"
+#include "tao/TypeCodeFactory/TypeCodeFactory_Adapter_Impl.h"
 
 // Creates DynUnion using typecodes generated through IDL compiler.
 int runStatic(CORBA::ORB_ptr orb)
