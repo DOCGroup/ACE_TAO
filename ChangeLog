@@ -1,3 +1,25 @@
+Fri Mar 16 22:56:39 UTC 2007  Nishanth Shankaran  <nshankar@nospam.com>
+
+        * Input_Adapters/SA_POP_Input_Adapter:
+        * Input_Adapters/SA_POP_Input_Adapter/SA_POP_Input_Adapter.cidl:
+        * Input_Adapters/SA_POP_Input_Adapter/SA_POP_Input_Adapter.idl:
+        * Input_Adapters/SA_POP_Input_Adapter/SA_POP_Input_Adapter.mpc:
+        * Input_Adapters/SA_POP_Input_Adapter/SA_POP_Input_Adapter_exec_export.h:
+        * Input_Adapters/SA_POP_Input_Adapter/SA_POP_Input_Adapter_stub_export.h:
+        * Input_Adapters/SA_POP_Input_Adapter/SA_POP_Input_Adapter_svnt_export.h:
+
+        Added a new SA_POP input adapter.
+
+        * common/Goal.idl:
+        * common/OpString.idl:
+        * common/QoS.idl:
+        * common/RACE_common.idl:
+        * common/RACE_common.mpc:
+        * common/Time.idl:
+
+        Updated the IDl files.
+
+
 Thu Mar  8 23:17:24 UTC 2007  Nishanth Shankaran  <nshankar@nospam.com>
 
         * common/Goal.idl:
