@@ -1,0 +1,64 @@
+#ifndef RACE_SA_POP_INPUT_ADAPTER_IDL
+#define RACE_SA_POP_INPUT_ADAPTER_IDL
+
+#include <Components.idl>
+#include "RACE/common/OpString.idl"
+module CIAO
+{
+  module RACE
+  {
+
+    /// Exception that will be thrown when the requested ID is not known.
+    exception UnknownID {
+
+      /// Unknown ID.
+      UUID ID;
+
+      string reason;
+    };
+
+    interface Admin
+    {
+      /// "Schedule" a string for future deployment.
+      boolean add_string (in OperationalString opstring,
+                          inout UUID ID);
+
+      /// Remove a string that was scheduled for deployment. Raises
+      /// UnknownID.
+      boolean delete_string (in UUID ID)
+        raises (UnknownID);
+
+      /// Deploy a string right away.
+      boolean deploy_string (in OperationalString opstring,
+                             inout UUID ID);
+
+      /// Deploy a string that was previously scheduled via
+      /// add_string. Raises UnknownID.
+      boolean deploy_string_with_id (in UUID ID)
+        raises (UnknownID);
+
+      /// Modify a previously scheduled/deployed string. Raises UnknownID.
+      boolean modify_string (in OperationalString opstring,
+                             in UUID ID)
+        raises (UnknownID);
+
+      /// Teardown a string. Raises UnknownID.
+      boolean tear_down_string (in UUID ID)
+        raises (UnknownID);
+
+    };
+
+    //    component Interactive_Input_Adapter : Input_Adapter
+    component SA_POP_Input_Adapter
+    {
+      provides Admin admin;
+
+    };
+
+    home SA_POP_Input_Adapter_Home manages SA_POP_Input_Adapter
+    {
+    };
+  };
+};
+
+#endif /* RACE_SA_POP_INPUT_ADAPTER_IDL */
