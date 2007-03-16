@@ -1,6 +1,7 @@
 #ifndef QOS_IDL
 #define QOS_IDL
 
+#include "RACE_common.idl"
 module CIAO
 {
   module RACE
@@ -27,13 +28,13 @@ module CIAO
       struct QoSSpecification
       {
         // Human-readable name (for debugging, not identification).
-        string name;
+        label name;
 
         // Type of QoS.
         QoSType type;
 
         // Specific type ID of component that monitors this QoS.
-        string MonitorID;
+        UUID MonitorID;
 
         // Comparison used for this QoS specification.
         QoSComparator comparator;

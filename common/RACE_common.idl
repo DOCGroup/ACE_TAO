@@ -1,41 +1,80 @@
 #ifndef RACE_COMMON_IDL
 #define RACE_COMMON_IDL
 
-#include "ciao/Deployment_Packaging_Data.idl"
-
 module CIAO
 {
   module RACE
     {
-      typedef string RACE_Classification;
-      typedef sequence <RACE_Classification> RACE_Classifications;
 
-      struct FlowItem
-      {
-        string planner;
-        RACE_Classification classification;
-      };
+      /// Create a UUID type.
+      typedef string UUID;
 
-      typedef sequence <FlowItem> PlannerFlow;
+      /// Creating a type for human readable name or ID.
+      typedef string label;
 
+      /// Describes what action to perform for the given operational
+      /// string.
       enum Action
       {
         TEARDOWN,
-        DEPLOY,
-        AUTO_TEARDOWN,
-        REPLAN_TEARDOWN,
-        REPLAN_DEPLOY,
-        REPLAN_AUTO_TEARDOWN
+        DEPLOY
       };
 
-      struct Plan_Action
-      {
-        Action command;
-        Deployment::DeploymentPlan plan;
-        Deployment::PackageConfiguration package;
-      };
+//       enum ConfiguratorType
+//       {
+//         APPLICATION,
+//         MIDDLEWARE,
+//         OS,
+//         OTHER
+//       };
 
-      typedef sequence<Plan_Action> Plan_Actions;
+
+
+      /// Sequence of configurator's ID.
+      //      typedef <UUID> Configurator_seq;
+
+      /// Sequence of allocator's ID.
+      //      typedef <UUID> Allocator_seq;
+
+      /// Defines (1) the allocator that is to be used for this operational
+      /// string and (2) the configurators that are to be employed for this
+      /// operational string.
+//       struct Composition
+//       {
+//         /// Sequence of configurators that are to be invoked for a given
+//         /// operational string.
+//         Configurator_seq configurators;
+
+//         ///
+//         Allocator_seq allocators;
+//       };
+
+//       struct Plan_Action
+//       {
+//         Action command;
+//         Deployment::DeploymentPlan plan;
+//         Deployment::PackageConfiguration package;
+//       };
+
+//       typedef string RACE_Classification;
+//       typedef sequence <RACE_Classification> RACE_Classifications;
+
+//       struct FlowItem
+//       {
+//         string planner;
+//         RACE_Classification classification;
+//       };
+
+//       typedef sequence <FlowItem> PlannerFlow;
+
+//       struct Plan_Action
+//       {
+//         Action command;
+//         Deployment::DeploymentPlan plan;
+//         Deployment::PackageConfiguration package;
+//       };
+
+//       typedef sequence<Plan_Action> Plan_Actions;
 
     };
 };

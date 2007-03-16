@@ -20,10 +20,10 @@ module CIAO
       struct TimeWindow
       {
         // Beginning of time window.
-        CIAO::RACE::TimeValue earliest;
+        TimeValue earliest;
 
         // End of time window.
-        CIAO::RACE::TimeValue latest;
+        TimeValue latest;
       };
 
   };

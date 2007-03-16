@@ -1,6 +1,7 @@
 #ifndef GOAL_IDL
 #define GOAL_IDL
 
+#include "RACE_common.idl"
 #include "QoS.idl"
 #include "Time.idl"
 
@@ -33,10 +34,10 @@ module CIAO
       struct GoalStructure
       {
         // Universally unique ID of goal.
-        string UUID;
+        UUID ID;
 
         // Human-readable name (for debugging, not identification).
-        string name;
+        label name;
 
         // Goal conditions with utility values.
         GoalConditions goalConds;

@@ -5,7 +5,7 @@
 #include "QoS.idl"
 #include "Time.idl"
 #include "Goal.idl"
-
+#include "RACE_common.idl"
 
 module CIAO
 {
@@ -16,10 +16,10 @@ module CIAO
       struct InstanceDescription
       {
         // Universally unique ID of the instance.
-        string UUID;
+        UUID ID;
 
         // Human-readable name (for debugging, not identification).
-        string name;
+        label name;
 
         // Node to which instance is deployed.
         string node;
@@ -31,13 +31,13 @@ module CIAO
         unsigned long implementationRef;
 
         // ID of task performed by instance (in Task Network).
-        string taskId;
+        UUID taskId;
 
         // Supported type ID of task (in Repository Manager).
-        string taskTypeId;
+        UUID taskTypeId;
 
         // Specific type ID of suggested component (in Repository Manager).
-        string suggestedImpl;
+        UUID suggestedImpl;
 
         // Initial values of component configuration parameters.
         ::Deployment::Properties configProperty;
@@ -71,7 +71,7 @@ module CIAO
       struct OrderLinkDescription
       {
         // Human-readable name (for debugging, not identification).
-        string name;
+        label name;
 
         // Type of link.
         ConnectionType type;
@@ -97,10 +97,10 @@ module CIAO
       {
         // Universally unique ID of opstring.
         // (Should correspond to goal UUID).
-        string UUID;
+        UUID ID;
 
         // Human-readable name (for debugging, not identification).
-        string label;
+        label name;
 
         // Goal achieved by this opstring.
         GoalStructure goal;
