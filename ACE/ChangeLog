@@ -1,3 +1,17 @@
+Sun Mar 18 02:09:31 UTC 2007  Krishnakumar B  <kitty@nospam.invalid.domain>
+
+        * ace/OS_NS_stdlib.cpp:  Fixed a race condition in
+          ACE_OS::mkstemp_emulation() where the value from
+          ACE_OS::gettimeofday() was truncated due to the use of
+          ACE_Time_Value::msec(void) as opposed to
+          ACE_Time_Value::msec(ACE_UINT64&) to convert it to milliseconds.
+          This resulted in seed value passed to ACE_OS::rand_r() returning
+          the same sequence of numbers when ACE_OS::mkstemp() was called
+          successively from the same process.  As a result, the filenames
+          returned from ACE_OS::mkstemp() ended up being the same, if the
+          template passed in was the same between multiple successive
+          calls to ACE_OS::mkstemp().
+
 Thu Mar 15 14:44:21 UTC 2007  Carlos O'Ryan  <coryan@atdesk.com>
 
         * ace/Select_Reactor_Base.cpp:
