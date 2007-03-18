@@ -1,0 +1,45 @@
+From: "Klaus Eichner" <klaus_gb@yahoo.com>
+Date: Sat, 26 Jul 2003 14:53:23 +0100
+Newsgroups: comp.lang.c++
+Subject: Re: enum count
+
+"Clive" <clive@clive.clive> wrote in message
+news:3f21e5cc$0$23611$5a62ac22@freenews.iinet.net.au...
+> If you have an enum, is there any way during execution to find the number
+of
+> values in the enum?
+> Say I have,
+>
+> enum great { five, ten, fifteen };
+>
+> How could I get the number 3 from that?
+
+You could get the number 3 from 'great' with your own, user-defined
+'Enum_Info' template:
+
+cout << "The number of values in enum great is "
+       << Enum_Info<great>::number_of_elements
+       << endl;
+
+The 'Enum_Info' template is defined as follows.
+Suppose you have the following enums:
+
+enum great { five, ten, fifteen };
+enum greater { none, one, fourtytwo, fourtythree, fourtyfour };
+enum even_greater { minusone, minustwo, minusthree, minusfour, minusfive,
+minussix, minusseven };
+
+You could build a template class 'Enum_Info' which uses specialisation to
+register the number of elements in each enum
+
+template <class T> class Enum_Info { };
+template <> class Enum_Info<great> { static const int number_of_elements =
+3; };
+template <> class Enum_Info<greater> { static const int number_of_elements =
+5; };
+template <> class Enum_Info<even_greater> { static const int
+number_of_elements = 7; };
+
+
+
+$Id$

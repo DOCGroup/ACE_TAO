@@ -1,0 +1,33 @@
+// $Id$
+
+/**
+ * @file BMClosedEDEI.idl
+ *
+ * Definition of the GPS component implementation.
+ *
+ * @author Nanbor Wang <nanbor@cs.wustl.edu>
+ */
+
+#ifndef CIAO_BMCLOSEDEDI_IDL
+#define CIAO_BMCLOSEDEDI_IDL
+
+#include "BMClosedEDE.idl"
+
+module BasicSP
+{
+  /**
+   * @interface BMClosedED_Exec
+   *
+   * The actually GPS executor inherits from both CCM_GPS and
+   * CCM_position interfaces as a monolithic implementation.
+   */
+  local interface BMClosedED_Exec :
+    CCM_BMClosedED,
+    CCM_ReadData,
+    Components::SessionComponent
+  {
+  };
+
+};
+
+#endif /* CIAO_BMCLOSEDEDI_IDL*/

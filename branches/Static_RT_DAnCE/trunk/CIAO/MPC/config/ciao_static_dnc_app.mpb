@@ -1,0 +1,5 @@
+// -*- MPC -*-
+// $Id$
+
+project : ciao_component_dnc, iortable, ciao_nodeapplicationmanager, ciao_nodemanager_svnt {
+}
