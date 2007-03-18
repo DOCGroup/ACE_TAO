@@ -686,13 +686,23 @@ ACE_OS::mkstemp_emulation (ACE_TCHAR * s)
   static unsigned int const NUM_RETRIES = 50;
   static unsigned int const NUM_CHARS   = 6;  // Do not change!
 
+  // Use ACE_Time_Value::msec(ACE_UINT64&) as opposed to
+  // ACE_Time_Value::msec(void) to avoid truncation.
+  ACE_UINT64 msec;
+
+  // Use a const ACE_Time_Value to resolve ambiguity between
+  // ACE_Time_Value::msec (long) and ACE_Time_Value::msec(ACE_UINT64&) const.
+  const ACE_Time_Value now = ACE_OS::gettimeofday();
+  now.msec (msec);
+
+  // Add the process and thread ids to ensure uniqueness.
+  msec += ACE_OS::getpid();
+  msec += (size_t) ACE_OS::thr_self();
+
   // ACE_thread_t may be a char* (returned by ACE_OS::thr_self()) so
   // we need to use a C-style cast as a catch-all in order to use a
   // static_cast<> to an integral type.
-  ACE_RANDR_TYPE seed =
-    static_cast<ACE_RANDR_TYPE> (ACE_OS::gettimeofday ().msec ())
-    + static_cast<ACE_RANDR_TYPE> (ACE_OS::getpid ())
-    + static_cast<ACE_RANDR_TYPE> ((size_t)ACE_OS::thr_self ());
+  ACE_RANDR_TYPE seed = static_cast<ACE_RANDR_TYPE> (msec);
 
   // We only care about UTF-8 / ASCII characters in generated
   // filenames.  A UTF-16 or UTF-32 character could potentially cause
@@ -732,8 +742,7 @@ ACE_OS::mkstemp_emulation (ACE_TCHAR * s)
           // selection to work for EBCDIC, as well.
           do
             {
-              r =
-                static_cast<ACE_TCHAR> (coefficient * ACE_OS::rand_r (seed));
+              r = static_cast<ACE_TCHAR> (coefficient * ACE_OS::rand_r (seed));
             }
           while (!ACE_OS::ace_isalnum (r));
 
