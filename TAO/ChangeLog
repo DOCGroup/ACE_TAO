@@ -1,3 +1,10 @@
+Mon Mar 19 19:22:36 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * NEWS:
+
+          Added an entry about the IDL compiler code generation for a
+          comma-separated list of sequence typedefs for Jeff Parsons.
+
 Mon Mar 19 19:13:59 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * tests/Bug_2654_Regression/server.cpp:
