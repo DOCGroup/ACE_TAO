@@ -1,3 +1,10 @@
+Mon Mar 19 19:13:59 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tests/Bug_2654_Regression/server.cpp:
+
+          Wait for threads started by the Hello implementation to avoid
+          access violations.
+
 Mon Mar 19 16:21:11 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/orbsvcs/Naming/Flat_File_Persistence.cpp:
