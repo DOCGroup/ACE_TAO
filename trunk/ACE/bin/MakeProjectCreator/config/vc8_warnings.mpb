@@ -10,24 +10,14 @@
 
 
 feature(vc8_avoid_crt_secure_warnings) {
-  specific(vc8) {
-    macros += _CRT_SECURE_NO_WARNINGS
-  }
-
-  // VC8 builds via nmake don't respect _CRT_NONSTDC_NO_WARNINGS that the
-  // IDE build does so disable it with /wd4996. It's a very large hammer,
-  // but nmake seems to leave little choice.
-  specific(nmake) {
-    compile_flags += /wd4996 /D _CRT_SECURE_NO_DEPRECATE
+  specific(vc8, nmake) {
+    macros += _CRT_SECURE_NO_WARNINGS _CRT_SECURE_NO_DEPRECATE _CRT_NONSTDC_NO_DEPRECATE
   }
 }
 
 feature(!vc8_scl_secure_warnings) {
-  specific(vc8) {
+  specific(vc8, nmake) {
     macros += _SCL_SECURE_NO_WARNINGS
-  }
-  specific(nmake) {
-    compile_flags += /D _SCL_SECURE_NO_WARNINGS
   }
 }
 
