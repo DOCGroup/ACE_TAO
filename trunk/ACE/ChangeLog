@@ -1,3 +1,16 @@
+Mon Mar 19 16:37:21 UTC 2007  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * docs/Download.html: Updated the comments about commercial
+          support so they point to www.dre.vanderbilt.edu/support.html.
+          Thanks to Hans van't Hag <hans dot vanthag at prismtech dot com>
+          for motivating this.
+
+Mon Mar 12 16:19:49 UTC 2007  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * tests/Future_Test.cpp: Updated this example to point to the
+          right Active Object location.  Thanks to Joe French <JFrench at
+          Soneticom dot com> for motivating this.
+  
 Mon Mar 19 07:53:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/config/vc8_warnings.mpb:
