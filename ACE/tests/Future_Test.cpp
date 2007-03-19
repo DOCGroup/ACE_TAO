@@ -10,9 +10,10 @@
 //
 // = DESCRIPTION
 //    This example tests the ACE Future and illustrates an
-//    implementation of the Active Object pattern, which is available
-//    at <http://www.cs.wustl.edu/~schmidt/Act-Obj.ps.gz>.  The
-//    Active Object itself is very simple -- it determines if numbers
+//    implementation of the Active Object pattern, which is described
+//    in the POSA2 book <www.cs.wustl.edu/~schmidt/POSA/> and in a
+//    paper at <www.cs.wustl.edu/~schmidt/PDF/Act-Obj.pdf>.  The
+//    Active Object example here is very simple -- it determines if numbers
 //    are prime.
 //
 // = AUTHOR
