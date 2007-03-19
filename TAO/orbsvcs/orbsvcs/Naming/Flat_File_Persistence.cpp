@@ -259,6 +259,7 @@ TAO_NS_FlatFileStream::operator >>(TAO_NS_Persistence_Record &record)
     }
   {
     ACE_Auto_Basic_Array_Ptr<char> the_id (new char[bufSize + 1]);
+    the_id[0] = '\0';
     if (ACE_OS::fgets (ACE_TEXT_CHAR_TO_TCHAR (the_id.get ()),
                        bufSize + 1,
                        fl_) == 0
@@ -290,6 +291,7 @@ TAO_NS_FlatFileStream::operator >>(TAO_NS_Persistence_Record &record)
 
   {
     ACE_Auto_Basic_Array_Ptr<char> the_kind (new char[bufSize + 1]);
+    the_kind[0] = '\0';
     if (ACE_OS::fgets (ACE_TEXT_CHAR_TO_TCHAR (the_kind.get ()),
                        bufSize + 1,
                        fl_) == 0
@@ -298,7 +300,6 @@ TAO_NS_FlatFileStream::operator >>(TAO_NS_Persistence_Record &record)
         this->setstate (badbit);
         return *this;
       }
-    the_kind[bufSize] = '\0';
     record.kind (ACE_CString (the_kind.get (), 0, false));
   }
 
@@ -322,6 +323,7 @@ TAO_NS_FlatFileStream::operator >>(TAO_NS_Persistence_Record &record)
 
   {
     ACE_Auto_Basic_Array_Ptr<char> the_ref (new char[bufSize + 1]);
+    the_ref[0] = '\0';
     if (ACE_OS::fgets (ACE_TEXT_CHAR_TO_TCHAR (the_ref.get ()),
                        bufSize + 1,
                        fl_) == 0
