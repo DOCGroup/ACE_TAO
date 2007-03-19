@@ -298,6 +298,7 @@ TAO_NS_FlatFileStream::operator >>(TAO_NS_Persistence_Record &record)
         this->setstate (badbit);
         return *this;
       }
+    the_kind[bufSize] = '\0';
     record.kind (ACE_CString (the_kind.get (), 0, false));
   }
 
