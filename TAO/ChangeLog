@@ -2840,7 +2840,7 @@ Wed Feb  7 23:12:03 UTC 2007  Wallace Zhang  <zhang_w@ociweb.com>
         * orbsvcs/orbsvcs/ETCL/ETCL_Constraint.cpp:
 
           Changed to use Any_Impl instead of Any to fix memory crash
-          problem since Any_Imply is refcounted. Refer to Bug 2798 or
+          problem since Any_Impl is refcounted. Refer to Bug 2798 or
           RT 9552 for more info.
 
         * orbsvcs/orbsvcs/Log/Log_Constraint_Visitors.cpp:
