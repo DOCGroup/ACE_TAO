@@ -65,7 +65,7 @@ TAO/orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/run_test.pl -p SCTP_SEQ: !
 TAO/orbsvcs/tests/AVStreams/Simple_Three_Stage/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ACE_FOR_TAO !DISABLE_ToFix_LynxOS_x86
 TAO/orbsvcs/tests/AVStreams/Asynch_Three_Stage/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ACE_FOR_TAO
 TAO/orbsvcs/tests/AVStreams/Component_Switching/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ACE_FOR_TAO
-TAO/orbsvcs/tests/Bug_1334_Regression/run_test.pl: !ACE_FOR_TAO
+TAO/orbsvcs/tests/Bug_1334_Regression/run_test.pl: !ACE_FOR_TAO !CORBA_E_MICRO
 TAO/orbsvcs/tests/Bug_1393_Regression/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NO_IFR !ACE_FOR_TAO
 TAO/orbsvcs/tests/Bug_1395_Regression/run_test.pl: !LynxOS !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NO_MESSAGING !ACE_FOR_TAO
 TAO/orbsvcs/tests/Bug_1436_Regression/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NO_IFR !ACE_FOR_TAO
@@ -81,11 +81,11 @@ TAO/orbsvcs/tests/Bug_2316_Regression/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CO
 TAO/orbsvcs/tests/Bug_2377_Regression/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !STATIC
 TAO/orbsvcs/tests/Bug_2615_Regression/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !DISABLE_INTERCEPTORS !ACE_FOR_TAO
 TAO/orbsvcs/tests/CosEvent/Basic/run_test.pl: !ST !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ACE_FOR_TAO
-TAO/orbsvcs/tests/Simple_Naming/run_test.pl: !ST !SUNCC5_1 !NO_MESSAGING !ACE_FOR_TAO !DISABLE_ToFix_LynxOS_x86 !DISABLE_ToFix_LynxOS_PPC
+TAO/orbsvcs/tests/Simple_Naming/run_test.pl: !ST !SUNCC5_1 !NO_MESSAGING !ACE_FOR_TAO !DISABLE_ToFix_LynxOS_x86 !DISABLE_ToFix_LynxOS_PPC !CORBA_E_MICRO
 TAO/orbsvcs/tests/Simple_Naming/run_test_ffp.pl: !ST !SUNCC5_1 !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NO_MESSAGING !ACE_FOR_TAO
 TAO/orbsvcs/tests/Redundant_Naming/run_test.pl: !ST !SUNCC5_1 !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ACE_FOR_TAO
 TAO/orbsvcs/tests/Trading/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !SUNCC5_1
-TAO/orbsvcs/tests/unit/Trading/Interpreter/run_test.pl:
+TAO/orbsvcs/tests/unit/Trading/Interpreter/run_test.pl: !CORBA_E_MICRO
 TAO/orbsvcs/tests/Event/Basic/run_test.pl: !ST !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ACE_FOR_TAO
 TAO/orbsvcs/tests/Event/Performance/run_test.pl: !ST !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ACE_FOR_TAO
 TAO/orbsvcs/tests/Event/UDP/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ACE_FOR_TAO !NO_DIOP
@@ -139,7 +139,7 @@ TAO/orbsvcs/tests/Notify/XML_Persistence/run_test.pl: !ST !NO_MESSAGING !MINIMUM
 TAO/orbsvcs/tests/EC_Mcast/run_test.pl: !NO_MCAST !NO_MESSAGING !DISABLE_ToFix_LynxOS_PPC !ACE_FOR_TAO
 # FAILS 'TAO/orbsvcs/tests/EC_Multiple/run_test.pl
 # NO REDIRECTION TAO/examples/Simple/echo/run_test.pl < Echo.idl
-TAO/orbsvcs/tests/Property/run_test.pl: !NO_MESSAGING !ACE_FOR_TAO
+TAO/orbsvcs/tests/Property/run_test.pl: !NO_MESSAGING !ACE_FOR_TAO !CORBA_E_MICRO
 #HANGS TAO/orbsvcs/tests/ImplRepo/run_test.pl airplane
 #HANGS'TAO/orbsvcs/tests/ImplRepo/run_test.pl airplane_ir
 TAO/orbsvcs/tests/Security/Secure_Invocation/run_test.pl: SSL !STATIC !DISABLE_INTERCEPTORS !ACE_FOR_TAO
@@ -159,12 +159,12 @@ TAO/orbsvcs/tests/LoadBalancing/LoadMonitor/CPU/run_test.pl: !MINIMUM !CORBA_E_C
 TAO/examples/RTCORBA/Activity/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ST !ACE_FOR_TAO
 TAO/examples/RTScheduling/Fixed_Priority_Scheduler/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !DISABLE_INTERCEPTORS  !STATIC !ST !ACE_FOR_TAO
 TAO/examples/RTScheduling/MIF_Scheduler/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !DISABLE_INTERCEPTORS !STATIC !ST !ACE_FOR_TAO
-TAO/examples/ior_corbaloc/run_test.pl: !NO_MESSAGING !ACE_FOR_TAO
-TAO/utils/nslist/run_test.pl: !ST !SUNCC5_1 !NO_MESSAGING !ACE_FOR_TAO
-TAO/orbsvcs/tests/BiDir_CORBALOC/run_test.pl: !NO_MESSAGING !ACE_FOR_TAO
+TAO/examples/ior_corbaloc/run_test.pl: !NO_MESSAGING !ACE_FOR_TAO !CORBA_E_MICRO
+TAO/utils/nslist/run_test.pl: !ST !SUNCC5_1 !NO_MESSAGING !ACE_FOR_TAO !CORBA_E_MICRO
+TAO/orbsvcs/tests/BiDir_CORBALOC/run_test.pl: !NO_MESSAGING !ACE_FOR_TAO !CORBA_E_MICRO
 TAO/orbsvcs/tests/IOR_MCast/run_test_ipv6.pl: IPV6 !NO_MCAST !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO
 TAO/orbsvcs/tests/Bug_2709_Regression/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ACE_FOR_TAO
-TAO/orbsvcs/tests/Bug_2800_Regression/run_test.pl: !ST
-TAO/orbsvcs/tests/Bug_2800_Regression/run_test_federated.pl: !ST
+TAO/orbsvcs/tests/Bug_2800_Regression/run_test.pl: !ST !CORBA_E_MICRO
+TAO/orbsvcs/tests/Bug_2800_Regression/run_test_federated.pl: !ST !CORBA_E_MICRO
 TAO/orbsvcs/examples/Notify/Filter/run_test.pl: !ST !NO_MESSAGING !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ACE_FOR_TAO
 TAO/orbsvcs/examples/Notify/Subscribe/run_test.pl: !ST !NO_MESSAGING !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ACE_FOR_TAO
