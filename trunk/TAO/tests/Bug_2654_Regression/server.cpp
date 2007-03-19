@@ -3,6 +3,7 @@
 #include "Hello.h"
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
+#include "ace/Thread_Manager.h"
 #include "tao/BiDir_GIOP/BiDirGIOP.h"
 
 ACE_RCSID (Hello,
@@ -120,6 +121,10 @@ main (int argc, char *argv[])
       orb->run ();
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) server - event loop finished\n"));
+
+      // Wait for threads that may have been started by the Hello
+      // implementation.
+      ACE_Thread_Manager::instance()->wait();
 
       root_poa->destroy (1, 1);
 
