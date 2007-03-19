@@ -1,3 +1,11 @@
+Mon Mar 19 16:21:11 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/orbsvcs/Naming/Flat_File_Persistence.cpp:
+
+          Added the code to set the null terminator on the "kind" read from
+          the persistence file.  It was accidentally removed in the Thu Mar
+          9 00:08:52 UTC 2007 commit.
+
 Thu Mar 15 14:19:57 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/Bug_2800_Regression/NamingTask.cpp:
