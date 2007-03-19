@@ -1,3 +1,8 @@
+Mon Mar 19 19:16:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_other_tests.lst:
+          Disabled several tests for CORBA/e micro
+
 Mon Mar 19 16:37:21 UTC 2007  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * docs/Download.html: Updated the comments about commercial
@@ -10,7 +15,7 @@ Mon Mar 12 16:19:49 UTC 2007  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
         * tests/Future_Test.cpp: Updated this example to point to the
           right Active Object location.  Thanks to Joe French <JFrench at
           Soneticom dot com> for motivating this.
-  
+
 Mon Mar 19 07:53:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/config/vc8_warnings.mpb:
