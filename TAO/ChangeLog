@@ -1,3 +1,19 @@
+Mon Mar 19 19:34:48 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/orbsvcs/Naming/Flat_File_Persistence.cpp:
+
+          The code to set the null terminator on the "kind" read from
+          the persistence file was purposely removed. However, the original
+          reason that it was there was that this string was the only string
+          that was often of length zero.  When fgets read nothing into the
+          string, it was then null terminated which yielded a string of zero
+          length.  Without it, the string was filled with garbage.
+
+          The correct modification was to initialize the string passed to
+          fgets to an empty string and then call fgets.  This handles cases
+          where nothing is read from the file.  I have made this change in
+          each place where fgets is called.
+
 Mon Mar 19 19:24:37 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * NEWS:
