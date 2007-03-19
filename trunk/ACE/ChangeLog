@@ -1579,7 +1579,7 @@ Wed Feb 21 19:27:14 UTC 2007  Ossama Othman  <ossama_othman at symantec dot com>
         * ace/Truncate.h (Truncate, truncate_cast):
 
           Deprecated ACE_Utils::Truncate() function name in favor of
-          ACE_Utils::truncate_cast().  The former better reflects what the
+          ACE_Utils::truncate_cast().  The latter better reflects what the
           function template actually does.
 
         * ace/Unbounded_Set.cpp:
