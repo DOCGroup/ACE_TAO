@@ -261,7 +261,7 @@ if ($#builds == -1 && $#dates >= 0)
         $dates[1] = strftime ("%Y_%m_%d", gmtime);
     }
 
-    foreach $build (@builds) {
+    foreach $build (sort @builds) {
         $files[0] = $files[1] = $build;
         differentiate (\@files, \@dates);
     }
