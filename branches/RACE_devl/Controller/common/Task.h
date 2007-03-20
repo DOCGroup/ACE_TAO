@@ -19,13 +19,16 @@ namespace CIAO
       std::string label;
 
       /// Minimum execution rate (in Hz).
-      size_t min_rate;
+      double min_rate;
 
       /// Maximum execution rate (in Hz).
-      size_t max_rate;
+      double max_rate;
 
       /// Current execution rate (in Hz).
-      size_t curr_rate;
+      double curr_rate;
+
+      /// Controller recommended modification to the rate.
+      double delta_rate;
 
       /// Current RT-CORBA priority.
       size_t priority;
