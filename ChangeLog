@@ -1,12 +1,7 @@
 Tue Mar 20 15:25:18 UTC 2007  Nishanth Shankaran  <nshankar@nospam.com>
 
-        * Controller/common/Task.h:
+        * Controller/common/Task.h: Updated the task structure.
 
-        * Input_Adapters/Base/Input_Adapter.idl:
-
-        * Input_Adapters/Interactive_Input_Adapter/Interactive_Input_Adapter.idl:
-
-        * Input_Adapters/SA_POP_Input_Adapter/SA_POP_Input_Adapter.idl:
 
 Fri Mar 16 22:56:39 UTC 2007  Nishanth Shankaran  <nshankar@nospam.com>
 
