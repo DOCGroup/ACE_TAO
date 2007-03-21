@@ -184,11 +184,9 @@ namespace CIAO
 
 
       this->mutex_.acquire ();
-
-      this->delays_.length (this->delays_.length () + 1);
-      this->delays_ [this->delays_.length () - 1] = time.msec ();
-
-      this->mutex_.release ();
+       this->delays_.length (this->delays_.length () + 1);
+       this->delays_ [this->delays_.length () - 1] = time.msec ();
+       this->mutex_.release ();
     }
 
     int

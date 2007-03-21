@@ -1,3 +1,8 @@
+Wed Mar 21 16:39:31 UTC 2007  Nishanth Shankaran  <nshankar@nospam.com>
+
+        * Monitor/Local_Monitor/Local_Monitor.h:
+        * Monitor/Local_Monitor/Local_Monitor.cpp: Updated the monitor.
+
 Tue Mar 20 15:25:18 UTC 2007  Nishanth Shankaran  <nshankar@nospam.com>
 
         * Controller/common/Task.h: Updated the task structure.
@@ -22,7 +27,7 @@ Fri Mar 16 22:56:39 UTC 2007  Nishanth Shankaran  <nshankar@nospam.com>
         * common/RACE_common.mpc:
         * common/Time.idl:
 
-        Updated the IDl files.
+        Updated these IDL files.
 
 
 Thu Mar  8 23:17:24 UTC 2007  Nishanth Shankaran  <nshankar@nospam.com>
