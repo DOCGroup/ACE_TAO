@@ -37,7 +37,7 @@ namespace CIAO
                      CORBA::ORB_ptr orb,
                      size_t period = 10,
                      size_t start_time = 10,
-                     bool dump_log = false);
+                     bool dump_log = true);
 
       // Descructor.
       virtual ~Local_Monitor ();
