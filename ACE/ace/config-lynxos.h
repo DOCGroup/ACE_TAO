@@ -18,7 +18,6 @@
 // Compile using multi-thread libraries.
 #if !defined (ACE_MT_SAFE)
 # define ACE_MT_SAFE 1
-# define _REENTRANT
 #endif
 
 #include "ace/config-posix.h"
@@ -38,6 +37,8 @@
 #define ACE_HAS_ALLOCA
 #define ACE_HAS_ALLOCA_H
 #define ACE_HAS_AUTOMATIC_INIT_FINI
+#define ACE_HAS_BROKEN_PREALLOCATED_OBJECTS_AFTER_FORK 1
+#define ACE_HAS_BROKEN_SIGEVENT_STRUCT
 #define ACE_HAS_CHARPTR_SHMAT
 #define ACE_HAS_CHARPTR_SHMDT
 #define ACE_HAS_CLOCK_GETTIME
@@ -75,6 +76,7 @@
 #define ACE_HAS_SYS_SOCKIO_H
 #define ACE_HAS_TERMIOS
 #define ACE_HAS_TIMEZONE_GETTIMEOFDAY
+#define ACE_LACKS_ALPHASORT_PROTOTYPE
 #define ACE_LACKS_CONST_TIMESPEC_PTR
 #define ACE_LACKS_GETPGID
 #define ACE_LACKS_MADVISE
@@ -96,8 +98,8 @@
 #define ACE_LACKS_VSNPRINTF
 #define ACE_LACKS_WCHAR_H
 #define ACE_MALLOC_ALIGN 8
-#define ACE_NEEDS_IPC_1C_H
 #define ACE_PAGE_SIZE 4096
+#define ACE_POSIX_SIG_PROACTOR
 #define ACE_SCANDIR_CMP_USES_CONST_VOIDPTR
 
 #if ACE_MT_SAFE == 1
@@ -111,16 +113,6 @@
 #   define ACE_LACKS_THREAD_STACK_ADDR
 # endif
 #endif /* ACE_MT_SAFE */
-
-#define ACE_POSIX_AIOCB_PROACTOR
-// AIOCB Proactor works on Lynx. But it is not multi-threaded.
-// Lynx OS 3.0.0 lacks POSIX call <pthread_sigmask>. So,we cannot use
-// SIG Proactor also, with multiple threads. So, let us use the AIOCB
-// Proactor. Once <pthreadd_sigmask> is available on Lynx, we can turn
-// on SIG Proactor for this platform.
-// #define ACE_POSIX_SIG_PROACTOR
-
-#define ACE_HAS_BROKEN_PREALLOCATED_OBJECTS_AFTER_FORK 1
 
 #if __GNUC__ < 3
 # define ACE_LACKS_NUMERIC_LIMITS

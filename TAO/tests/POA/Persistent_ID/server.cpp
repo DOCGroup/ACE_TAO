@@ -31,17 +31,13 @@ public:
   test_i (CORBA::ORB_ptr orb_ptr,
           PortableServer::POA_ptr poa);
 
-  void method (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void method (void);
 
-  void shutdown (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void shutdown (void);
 
-  test_ptr create_POA (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  test_ptr create_POA (void);
 
-  void destroy_POA (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void destroy_POA (void);
 
   PortableServer::POA_ptr _default_POA (void);
 
@@ -61,7 +57,6 @@ test_i::test_i (CORBA::ORB_ptr orb,
 
 void
 test_i::method (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::Object_var obj =
     this->orb_->resolve_initial_references ("POACurrent");
@@ -82,7 +77,6 @@ test_i::method (void)
 
 void
 test_i::shutdown (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown (0);
 }
@@ -95,7 +89,6 @@ test_i::_default_POA (void)
 
 test_ptr
 test_i::create_POA (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::PolicyList policies (2);
   policies.length (2);
@@ -140,15 +133,19 @@ test_i::create_POA (void)
                                                  servant);
     }
 
+  PortableServer::ObjectId_var id =
+    this->poa_->activate_object (servant);
+
+  CORBA::Object_var object = this->poa_->id_to_reference (id.in ());
+
   test_var test =
-    servant->_this ();
+    test::_narrow (object.in ());
 
   return test._retn ();
 }
 
 void
 test_i::destroy_POA (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->child_poa_->destroy (1, 0);
 }
@@ -236,8 +233,13 @@ main (int argc, char **argv)
       test_i servant (orb.in (),
                       root_poa.in ());
 
+      PortableServer::ObjectId_var id =
+        root_poa->activate_object (&servant);
+
+      CORBA::Object_var object = root_poa->id_to_reference (id.in ());
+
       test_var test =
-        servant._this ();
+        test::_narrow (object.in ());
 
       CORBA::String_var ior =
         orb->object_to_string (test.in ());

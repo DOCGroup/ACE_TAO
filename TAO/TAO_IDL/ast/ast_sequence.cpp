@@ -174,6 +174,7 @@ AST_Sequence::in_recursion (ACE_Unbounded_Queue<AST_Type *> &list)
 
   if (nt != AST_Decl::NT_struct
       && nt != AST_Decl::NT_union
+      && nt != AST_Decl::NT_valuetype
       && nt != AST_Decl::NT_sequence)
     {
       return false;

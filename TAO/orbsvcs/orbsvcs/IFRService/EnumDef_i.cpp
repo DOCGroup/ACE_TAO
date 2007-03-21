@@ -27,14 +27,12 @@ TAO_EnumDef_i::~TAO_EnumDef_i (void)
 
 CORBA::DefinitionKind
 TAO_EnumDef_i::def_kind (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::dk_Enum;
 }
 
 CORBA::TypeCode_ptr
 TAO_EnumDef_i::type (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (CORBA::TypeCode::_nil ());
 
@@ -45,7 +43,6 @@ TAO_EnumDef_i::type (void)
 
 CORBA::TypeCode_ptr
 TAO_EnumDef_i::type_i (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_TString id;
   this->repo_->config ()->get_string_value (this->section_key_,
@@ -66,7 +63,6 @@ TAO_EnumDef_i::type_i (void)
 
 CORBA::EnumMemberSeq *
 TAO_EnumDef_i::members (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (0);
 
@@ -77,7 +73,6 @@ TAO_EnumDef_i::members (void)
 
 CORBA::EnumMemberSeq *
 TAO_EnumDef_i::members_i (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   u_int count = 0;
   this->repo_->config ()->get_integer_value (this->section_key_,
@@ -113,7 +108,6 @@ TAO_EnumDef_i::members_i (void)
 
 void
 TAO_EnumDef_i::members (const CORBA::EnumMemberSeq &members)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD;
 
@@ -124,7 +118,6 @@ TAO_EnumDef_i::members (const CORBA::EnumMemberSeq &members)
 
 void
 TAO_EnumDef_i::members_i (const CORBA::EnumMemberSeq &members)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->repo_->config ()->remove_section (this->section_key_,
                                           "members",

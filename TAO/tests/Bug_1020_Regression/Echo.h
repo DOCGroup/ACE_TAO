@@ -15,8 +15,7 @@ class Echo : public POA_Test::Echo
 public:
   Echo(CORBA::ORB_ptr orb);
 
-  virtual Test::Payload * echo_payload (Test::Payload const & data)
-    ACE_THROW_SPEC((CORBA::SystemException));
+  virtual Test::Payload * echo_payload (Test::Payload const & data);
 
 private:
   CORBA::ORB_var orb_;

@@ -11,6 +11,7 @@
 #include "ModuleEmitter.hpp"
 #include "InterfaceEmitter.hpp"
 #include "Literals.hpp"
+#include "Upcase.hpp"
 
 #include <ostream>
 #include <sstream>
@@ -179,7 +180,7 @@ namespace
 
     // Overridden by facet and home operation emitters to do nothing.
     virtual void
-    gen_swap_related (Type& o)
+    gen_swap_related (Type&)
     {
       string swap_option = ctx.cl ().get_value ("custom-container", "");
       bool swapping = (swap_option == "upgradeable");
@@ -216,22 +217,8 @@ namespace
     }
 
     virtual void
-    raises_pre (Type&)
+    raises (Type&)
     {
-      os << STRS[EXCP_START] << " "
-         << STRS[EXCP_SYS] << "," << endl;
-    }
-
-    virtual void
-    raises_none (Type&)
-    {
-      os << STRS[EXCP_SNGL];
-    }
-
-    virtual void
-    raises_post (Type&)
-    {
-      os << "))";
     }
 
     virtual void
@@ -334,8 +321,7 @@ namespace
 
         Traversal::ReadWriteAttribute::belongs (a, write_belongs_);
 
-        os << " " << a.name () << endl
-           << ")" << endl;
+        os << " " << a.name () << ")" << endl;
       }
     };
 
@@ -376,8 +362,7 @@ namespace
       name (SemanticGraph::ReadWriteAttribute& a)
       {
         os << scope_.name () << "_Servant_T<T>::"
-           << a.name () << " (" << endl
-           << ")" << endl;
+           << a.name () << " ()" << endl;
       }
 
       // ReadAttribute
@@ -401,8 +386,7 @@ namespace
       name (SemanticGraph::ReadAttribute& a)
       {
         os << scope_.name () << "_Servant_T<T>::"
-           << a.name () << " (" << endl
-           << ")" << endl;
+           << a.name () << " ()" << endl;
       }
     };
 
@@ -461,10 +445,8 @@ namespace
 
         Traversal::Receives receives;
         Traversal::Belongs returns;
-        Traversal::Raises raises;
         operation_emitter.edge_traverser (receives);
         operation_emitter.edge_traverser (returns);
-        operation_emitter.edge_traverser (raises);
 
         ParameterEmitter<Traversal::InParameter> in_param (ctx);
         ParameterEmitter<Traversal::InOutParameter> inout_param (ctx);
@@ -476,7 +458,6 @@ namespace
         ReturnTypeNameEmitter return_type_emitter (ctx);
         FullTypeNameEmitter type_name_emitter (ctx);
         returns.node_traverser (return_type_emitter);
-        raises.node_traverser (type_name_emitter);
 
         Traversal::Belongs in_belongs, inout_belongs, out_belongs;
         in_param.edge_traverser (in_belongs);
@@ -496,31 +477,23 @@ namespace
 
       os << "template <typename T>" << endl
          << "::CORBA::Object_ptr" << endl
-         << i.name () << "_Servant_T<T>::_get_component (" << endl
-         << ")" << endl
-         << STRS[EXCP_SNGL] << endl
+         << i.name () << "_Servant_T<T>::_get_component ()" << endl
          << "{"
          << STRS[COMP_SC] << "_var sc =" << endl
-         << "  " << STRS[COMP_SC] << "::_narrow (" << endl
-         << "  this->ctx_.in ()" << endl
-         << "  " << ");"
+         << "  " << STRS[COMP_SC] << "::_narrow (this->ctx_.in ());"
          << endl
          << "if (! ::CORBA::is_nil (sc.in ()))" << endl
          << "{"
-         << "return sc->get_CCM_object (" << endl
-         << ");"
+         << "return sc->get_CCM_object ();"
          << "}"
          << "::Components::EntityContext_var ec =" << endl
-         << "::Components::EntityContext::_narrow (" << endl
-         << "this->ctx_.in ()" << endl
-         << ");"
+         << "  ::Components::EntityContext::_narrow (this->ctx_.in ());"
          << endl
          << "if (! ::CORBA::is_nil (ec.in ()))" << endl
          << "{"
-         << "return ec->get_CCM_object (" << endl
-         << ");"
+         << "return ec->get_CCM_object ();"
          << "}"
-         << STRS[ACE_TR] << " ( ::CORBA::INTERNAL (), 0);" << endl
+         << "throw ::CORBA::INTERNAL ();" << endl
          << "}" << endl;
 
       // Close the facet servant's namespace.
@@ -563,9 +536,7 @@ namespace
 
         os << "_ptr" << endl
            << scope_.name () << "_Context::get_connection_"
-           << u.name () << " (" << endl
-           << ")" << endl
-           << STRS[EXCP_SNGL] << endl
+           << u.name () << " ()" << endl
            << "{"
            << "return ";
 
@@ -583,10 +554,6 @@ namespace
         Traversal::SingleUserData::belongs (u, belongs_);
 
         os << "_ptr c)" << endl
-           << STRS[EXCP_START] << " "
-           << STRS[EXCP_SYS] << "," << endl
-           << STRS[EXCP_AC] << "," << endl
-           << STRS[EXCP_IC] << "))" << endl
            << "{"
            << "if (! ::CORBA::is_nil (this->ciao_uses_"
            << u.name () << "_.in ()))" << endl
@@ -610,19 +577,14 @@ namespace
         os << "_ptr" << endl
            << scope_.name () << "_Context::disconnect_"
            << u.name () << " ()" << endl
-           << STRS[EXCP_START] << " "
-           << STRS[EXCP_SYS] << "," << endl
-           << STRS[EXCP_NC] << "))" << endl
            << "{"
            << "if ( ::CORBA::is_nil (this->ciao_uses_"
            << u.name () << "_.in ()))" << endl
            << "{"
-           << STRS[ACE_TR] << " ( "
-           << STRS[EXCP_NC] << " ()," << endl;
+           << "throw "
+           << STRS[EXCP_NC] << " ();" << endl;
 
-        Traversal::SingleUserData::belongs (u, belongs_);
-
-        os << "::_nil ());" << endl
+        os << endl
            << "}"
            << "return this->ciao_uses_" << u.name ()
            << "_._retn ();" << endl
@@ -634,54 +596,51 @@ namespace
       {
         os << u.scoped_name () << "Connections *" << endl
            << scope_.name () << "_Context::get_connections_"
-           << u.name () << " (" << endl
-           << ")" << endl
-           << STRS[EXCP_SNGL] << endl
-           << "{"
-           << u.scoped_name () << "Connections *tmp_retv = 0;"
+           << u.name () << " ()" << endl
+           << "{";
+
+        bool static_cfg =
+          ctx.cl ().get_value ("static-config", false);
+
+        if (! static_cfg)
+        {
+          os << "ACE_READ_GUARD_RETURN ("
+            << "TAO_SYNCH_MUTEX," << endl
+            << "mon," << endl
+            << "this->" << u.name () << "_lock_," << endl
+            << "0);" << endl;
+        }
+
+        os << u.scoped_name () << "Connections *tmp_retv = 0;"
            << "ACE_NEW_THROW_EX ("
            << "tmp_retv," << endl
            << u.scoped_name () << "Connections (" << endl
            << "this->ciao_uses_"
-           << u.name () << "_.current_size ())," << endl
+           << u.name () << "_.size ())," << endl
            << "::CORBA::NO_MEMORY ());" << endl
            << u.scoped_name () << "Connections_var retv"
            << " = tmp_retv;" << endl
            << "retv->length (this->ciao_uses_" << u.name ()
-           << "_.current_size ());" << endl;
+           << "_.size ());" << endl;
 
         os << "::CORBA::ULong i = 0;" << endl;
 
-        os << "for (ACE_Active_Map_Manager< " << endl
-           << "  ";
+        string uc_port_name (u.name ().str ());
+        str_upcase (uc_port_name);
 
-        Traversal::MultiUserData::belongs (u, belongs_);
-
-        os << "_var>::iterator iter =" << endl
-           << "    this->ciao_uses_" << u.name () << "_.begin ();" << endl
+        os << "for (" << uc_port_name << "_TABLE::const_iterator iter ="
+           << endl
+           << "  this->ciao_uses_" << u.name () << "_.begin ();" << endl
            << "iter != this->ciao_uses_" << u.name () << "_.end ();"
            << endl
-           << "++iter)" << endl
+           << "++iter, ++i)" << endl
            << "{"
-           << "ACE_Active_Map_Manager< " << endl;
-
-        Traversal::MultiUserData::belongs (u, belongs_);
-
-        os << "_var>::ENTRY & entry = *iter;" << endl
-           << "retv[i].objref = ";
-
-        Traversal::MultiUserData::belongs (u, belongs_);
-
-        os << "::_narrow (" << endl
-           << "entry.int_id_.in ()" << endl
-           << ");"
-           << endl;
+           << "retv[i].objref = iter->second;" << endl;
 
         os << "ACE_NEW_THROW_EX ("
            << "retv[i].ck.inout ()," << endl
-           << "::CIAO::Map_Key_Cookie (entry.ext_id_)," << endl
-           << "::CORBA::NO_MEMORY ());" << endl
-           << "++i;" << endl
+           << "::CIAO::Cookie_Impl (iter->first)," << endl
+           << "::CORBA::NO_MEMORY ());"
            << "}";
 
         os << "return retv._retn ();" << endl
@@ -694,41 +653,50 @@ namespace
         Traversal::MultiUserData::belongs (u, belongs_);
 
         os << "_ptr c)" << endl
-           << STRS[EXCP_START] << " "
-           << STRS[EXCP_SYS] << "," << endl
-           << STRS[EXCP_ECL] << "," << endl
-           << STRS[EXCP_IC] << "))" << endl
            << "{"
            << "if ( ::CORBA::is_nil (c))" << endl
            << "{"
-           << STRS[ACE_TR] << " ( "
-           << STRS[EXCP_IC] << " (), 0);" << endl
+           << "throw "
+           << STRS[EXCP_IC] << " ();" << endl
            << "}";
 
+        os << "std::pair<" << uc_port_name
+           << "_TABLE::iterator, bool> result;"
+           << uc_port_name << "_TABLE::value_type entry;"
+           << "entry.first = c->_hash (ACE_UINT32_MAX);"
+           << "entry.second = ";
+
         Traversal::MultiUserData::belongs (u, belongs_);
 
-        os << "_var conn = ";
+        os << "::_duplicate (c);" << endl;
 
-        Traversal::MultiUserData::belongs (u, belongs_);
+        if (! static_cfg)
+        {
+          os << "{"
+             << "ACE_WRITE_GUARD_RETURN (TAO_SYNCH_MUTEX," << endl
+             << "mon," << endl
+             << "this->" << u.name () << "_lock_," << endl
+             << "0);" << endl;
+        }
 
-        os << "::_duplicate (c);"
-           << "ACE_Active_Map_Manager_Key key;" << endl;
+        os << "result = this->ciao_uses_" << u.name ()
+           << "_.insert (entry);";
 
-        os << "if (this->ciao_uses_" << u.name ()
-           << "_.bind (conn.in (), key) == -1)" << endl
+        if (! static_cfg)
+        {
+          os << "}";
+        }
+
+        os << "if (! result.second)" << endl
            << "{"
-           << STRS[ACE_TR] << " ( "
-           << STRS[EXCP_IC] << " (), 0);" << endl
+           << "throw "
+           << STRS[EXCP_IC] << " ();" << endl
            << "}";
-
-        os << "conn._retn ();" << endl;
 
         os << STRS[COMP_CK] << " * ck = 0;"
-           << "ACE_NEW_THROW_EX ("
-           << "ck," << endl
-           << "::CIAO::Map_Key_Cookie (key)," << endl
+           << "ACE_NEW_THROW_EX (ck," << endl
+           << "::CIAO::Cookie_Impl (entry.first)," << endl
            << "::CORBA::NO_MEMORY ());" << endl;
-
 
         os << "return ck;" << endl
            << "}";
@@ -739,36 +707,50 @@ namespace
            << scope_.name () << "_Context::disconnect_"
            << u.name () << " (" << endl
            << STRS[COMP_CK] << " * ck)" << endl
-           << STRS[EXCP_START] << " "
-           << STRS[EXCP_SYS] << "," << endl
-           << STRS[EXCP_IC] << "))" << endl
            << "{";
 
         Traversal::MultiUserData::belongs (u, belongs_);
 
         os << "_var retv;"
-           << "ACE_Active_Map_Manager_Key key;" << endl;
+           << "::CORBA::ULong key = 0UL;"
+           << uc_port_name << "_TABLE::size_type n = 0UL;" << endl;
 
-        os << "if (! CIAO::Map_Key_Cookie::extract (ck, key))"
+        os << "if (ck == 0 || ! ::CIAO::Cookie_Impl::extract (ck, key))"
            << endl
            << "{"
-           << STRS[ACE_TR] << " ( "
-           << STRS[EXCP_IC] << " ()," << endl;
-
-        Traversal::MultiUserData::belongs (u, belongs_);
-
-        os << "::_nil ());" << endl
+           << "throw " << STRS[EXCP_IC] << " ();"
            << "}";
 
-        os << "if (this->ciao_uses_" << u.name ()
-           << "_.unbind (key, retv) != 0)" << endl
+        if (! static_cfg)
+        {
+          os << "{"
+             << "ACE_WRITE_GUARD_RETURN (TAO_SYNCH_MUTEX," << endl
+             << "mon," << endl
+             << "this->" << u.name () << "_lock_," << endl;
+
+          Traversal::MultiUserData::belongs (u, belongs_);
+
+          os << "::_nil ());" << endl;
+        }
+
+        os << uc_port_name << "_TABLE::iterator iter =" << endl
+           << "  this->ciao_uses_" << u.name () << "_.find (key);" << endl
+           << "if (iter == this->ciao_uses_" << u.name ()
+           << "_.end ())" << endl
            << "{"
-           << STRS[ACE_TR] << " ( "
-           << STRS[EXCP_IC] << " ()," << endl;
+           << "throw " << STRS[EXCP_IC] << " ();"
+           << "}"
+           << "retv = iter->second;"
+           << "n = this->ciao_uses_" << u.name () << "_.erase (key);";
 
-        Traversal::MultiUserData::belongs (u, belongs_);
+        if (! static_cfg)
+        {
+          os << "}";
+        }
 
-        os << "::_nil ());" << endl
+        os << "if (n != 1UL)" << endl
+           << "{"
+           << "throw " << STRS[EXCP_IC] << " ();"
            << "}";
 
         os << "return retv._retn ();" << endl
@@ -784,48 +766,46 @@ namespace
 
         Traversal::PublisherData::belongs (p, belongs_);
 
-        os << " *ev" << endl
-           << ")" << endl
-           << STRS[EXCP_SNGL] << endl
-           << "{"
-           << "for (ACE_Active_Map_Manager< " << endl
-           << "  ";
+        os << " *ev)" << endl
+           << "{";
 
-        Traversal::PublisherData::belongs (p, belongs_);
+        if (! ctx.cl ().get_value ("static-config", false))
+        {
+          os << "ACE_READ_GUARD (TAO_SYNCH_MUTEX," << endl
+             << "mon," << endl
+             << "this->" << p.name () << "_lock_);" << endl;
+        }
 
-        os << "Consumer_var>::iterator iter =" << endl
-           << "    this->ciao_publishes_" << p.name ()
-           << "_map_.begin ();" << endl
+        string uc_port_name (p.name ().str ());
+        str_upcase (uc_port_name);
+
+        os << "for (" << uc_port_name
+           << "_TABLE::const_iterator iter =" << endl
+           << "  this->ciao_publishes_" << p.name ()
+           << "_.begin ();" << endl
            << "iter != this->ciao_publishes_" << p.name ()
-           << "_map_.end ();" << endl
+           << "_.end ();" << endl
            << "++iter)" << endl
            << "{"
-           << "(*iter).int_id_->push_";
+           << "iter->second->push_";
 
         Traversal::PublisherData::belongs (p, simple_belongs_);
 
-        os << " (" << endl
-           << "ev" << endl
-           << ");" << endl
+        os << " (ev);"
            << "}";
 
-        // @@ GD Modified Code Below
+        os << "ACE_CString source_id = this->_ciao_instance_id ();"
+           << "source_id += \"_" << p.name () << "\";" << endl;
 
-        os << endl;
-        os << "ACE_CString source_id = this->_ciao_instance_id ();";
-        os << "source_id += \"_\";" << endl;
-        os << "source_id += \"" << p.name () << "\";//port name" << endl << endl;
-
-        os << "for (ACE_Active_Map_Manager< " << endl
-           << "  " << STRS[COMP_ECB] << "_var>::iterator giter =" << endl
-           << "    this->ciao_publishes_" << p.name ()
-           << "_generic_map_.begin ();" << endl
+        os << "for (" << uc_port_name
+           << "_GENERIC_TABLE::const_iterator giter =" << endl
+           << "  this->ciao_publishes_" << p.name ()
+           << "_generic_.begin ();" << endl
            << "giter != this->ciao_publishes_" << p.name ()
-           << "_generic_map_.end ();" << endl
+           << "_generic_.end ();" << endl
            << "++giter)" << endl
            << "{"
-           << "(*giter).int_id_->ciao_push_event" << " (" << endl
-           << "ev," << endl
+           << "giter->second->ciao_push_event (ev," << endl
            << "source_id.c_str ()," << endl;
 
         Traversal::PublisherData::belongs (p, enclosing_belongs_);
@@ -834,8 +814,7 @@ namespace
 
         Traversal::PublisherData::belongs (p, simple_belongs_);
 
-        os << endl
-           << ");" << endl
+        os << ");"
            << "}"
            << "}";
 
@@ -846,60 +825,99 @@ namespace
         Traversal::PublisherData::belongs (p, belongs_);
 
         os << "Consumer_ptr c)" << endl
-           << STRS[EXCP_START] << " "
-           << STRS[EXCP_SYS] << "," << endl
-           << STRS[EXCP_ECL] << "))" << endl
            << "{"
            << "if ( ::CORBA::is_nil (c))" << endl
            << "{"
-           << STRS[ACE_TR] << " ( ::CORBA::BAD_PARAM (), 0);" << endl
+           << "throw ::CORBA::BAD_PARAM ();" << endl
            << "}";
 
+        os << "std::pair<" << uc_port_name
+           << "_TABLE::iterator, bool> result;"
+           << uc_port_name << "_TABLE::value_type entry;"
+           << "entry.first = c->_hash (ACE_UINT32_MAX);"
+           << "entry.second = ";
+
         Traversal::PublisherData::belongs (p, belongs_);
 
-        os << "Consumer_var sub =" << endl
-           << "  ";
+        os << "Consumer::_duplicate (c);" << endl;
 
-        Traversal::PublisherData::belongs (p, belongs_);
+        if (! ctx.cl ().get_value ("static-config", false))
+        {
+          os << "{"
+             << "ACE_WRITE_GUARD_RETURN (TAO_SYNCH_MUTEX," << endl
+             << "mon," << endl
+             << "this->" << p.name () << "_lock_," << endl
+             << "0);" << endl;
+        }
 
-        os << "Consumer::_duplicate (c);" << endl
-           << "ACE_Active_Map_Manager_Key key;"
-           << "this->ciao_publishes_" << p.name ()
-           << "_map_.bind (sub.in (), key);"
-           << "sub._retn ();" << endl
-           << STRS[COMP_CK] << " * retv = 0;"
-           << "ACE_NEW_THROW_EX ("
-           << "retv," << endl
-           << "::CIAO::Map_Key_Cookie (key)," << endl
-           << "::CORBA::NO_MEMORY ());" << endl
-           << "return retv;" << endl
+        os << "result = this->ciao_publishes_" << p.name ()
+           << "_.insert (entry);";
+
+        if (! ctx.cl ().get_value ("static-config", false))
+        {
+          os << "}";
+        }
+
+        os << "if (! result.second)" << endl
+           << "{"
+           << "/* Already subscribed, ignore & "
+           << "return new cookie with same key. */"
+           << "}";
+
+        os << STRS[COMP_CK] << " * retv = 0;"
+           << "ACE_NEW_THROW_EX (retv," << endl
+           << "::CIAO::Cookie_Impl (entry.first)," << endl
+           << "::CORBA::NO_MEMORY ());" << endl;
+
+        os << "return retv;"
            << "}";
 
         os << STRS[COMP_CK] << " *" << endl
            << scope_.name () << "_Context::subscribe_"
            << p.name () << "_generic (" << endl
-           << STRS[COMP_ECB] << "_ptr c)" << endl
-           << STRS[EXCP_START] << " "
-           << STRS[EXCP_SYS] << "," << endl
-           << STRS[EXCP_ECL] << "))" << endl
+           << "::Components::EventConsumerBase_ptr c)"
            << "{"
            << "if ( ::CORBA::is_nil (c))" << endl
            << "{"
-           << STRS[ACE_TR] << " ( ::CORBA::BAD_PARAM (), 0);" << endl
+           << "throw ::CORBA::BAD_PARAM ();" << endl
            << "}";
 
-        os << STRS[COMP_ECB] << "_var sub =" << endl
-           << "  " << STRS[COMP_ECB] << "::_duplicate (c);" << endl
-           << "ACE_Active_Map_Manager_Key key;"
-           << "this->ciao_publishes_" << p.name ()
-           << "_generic_map_.bind (sub.in (), key);"
-           << "sub._retn ();" << endl
-           << STRS[COMP_CK] << " * retv = 0;"
-           << "ACE_NEW_THROW_EX ("
-           << "retv," << endl
-           << "::CIAO::Map_Key_Cookie (key)," << endl
-           << "::CORBA::NO_MEMORY ());" << endl
-           << "return retv;" << endl
+        os << "std::pair<" << uc_port_name
+           << "_GENERIC_TABLE::iterator, bool> result;"
+           << uc_port_name << "_GENERIC_TABLE::value_type entry;"
+           << "entry.first = c->_hash (ACE_UINT32_MAX);"
+           << "entry.second = "
+           << "::Components::EventConsumerBase::_duplicate (c);" << endl;
+
+        if (! ctx.cl ().get_value ("static-config", false))
+        {
+          os << "{"
+             << "ACE_WRITE_GUARD_RETURN (TAO_SYNCH_MUTEX," << endl
+             << "mon," << endl
+             << "this->" << p.name () << "_lock_," << endl
+             << "0);" << endl;
+        }
+
+        os << "result = this->ciao_publishes_" << p.name ()
+           << "_generic_.insert (entry);";
+
+        if (! ctx.cl ().get_value ("static-config", false))
+        {
+          os << "}";
+        }
+
+        os << "if (! result.second)" << endl
+           << "{"
+           << "/* Already subscribed, ignore & "
+           << "return new cookie with same key. */"
+           << "}";
+
+        os << STRS[COMP_CK] << " * retv = 0;"
+           << "ACE_NEW_THROW_EX (retv," << endl
+           << "::CIAO::Cookie_Impl (entry.first)," << endl
+           << "::CORBA::NO_MEMORY ());" << endl;
+
+        os << "return retv;"
            << "}";
 
         Traversal::PublisherData::belongs (p, belongs_);
@@ -908,44 +926,74 @@ namespace
            << scope_.name () << "_Context::unsubscribe_"
            << p.name () << " (" << endl
            << STRS[COMP_CK] << " *ck)" << endl
-           << STRS[EXCP_START] << " "
-           << STRS[EXCP_SYS] << "," << endl
-           << STRS[EXCP_IC] << "))" << endl
            << "{"
-           << "ACE_Active_Map_Manager_Key key;" << endl
-           << "if (ck == 0 || ::CIAO::Map_Key_Cookie::extract (ck, key) == false)"
-           << endl
+           << "::CORBA::ULong key = 0UL;"
+           << uc_port_name << "_TABLE::size_type n = 0UL;" << endl;
+
+        os << "if (ck == 0 || ! ::CIAO::Cookie_Impl::"
+           << "extract (ck, key))" << endl
            << "{"
-           << STRS[ACE_TR] << " ( "
-           << STRS[EXCP_IC] << " ()," << endl;
-
-        Traversal::PublisherData::belongs (p, belongs_);
-
-        os << "Consumer::_nil ());" << endl
+           << "throw " << STRS[EXCP_IC] << " ();"
            << "}";
 
+        if (! ctx.cl ().get_value ("static-config", false))
+        {
+          os << "{"
+             << "ACE_WRITE_GUARD_RETURN (TAO_SYNCH_MUTEX," << endl
+             << "mon," << endl
+             << "this->" << p.name () << "_lock_," << endl;
+
+             Traversal::PublisherData::belongs (p, belongs_);
+
+          os << "Consumer::_nil ());" << endl;
+        }
+
+        os << uc_port_name << "_TABLE::iterator iter =" << endl
+           << "  this->ciao_publishes_"
+           << p.name () << "_.find (key);" << endl;
+
+        os << "if (iter != this->ciao_publishes_"
+           << p.name () << "_.end ())" << endl
+           << "{";
+
         Traversal::PublisherData::belongs (p, belongs_);
 
-        os << "Consumer_var retv;"
-           << "if (this->ciao_publishes_" << p.name ()
-           << "_map_.unbind (key, retv) == 0)" << endl
+        os << "Consumer_var retv = iter->second;"
+           << "n = this->ciao_publishes_"
+           << p.name () << "_.erase (key);" << endl;
+
+        os << "if (n == 1UL)" << endl
            << "{"
-           << "return retv._retn ();" << endl
-           << "}";
-
-        os << STRS[COMP_ECB] << "_var ecb;" << endl;
-
-        os << "if (this->ciao_publishes_" << p.name ()
-           << "_generic_map_.unbind (key, ecb) != 0)" << endl
-           << "{"
-           << STRS[ACE_TR] << " ( "
-           << STRS[EXCP_IC] << " ()," << endl;
-
-        Traversal::PublisherData::belongs (p, belongs_);
-
-        os << "Consumer::_nil ());" << endl
+           << "return retv._retn ();"
            << "}"
-           << "return ";
+           << "throw " << STRS[EXCP_IC] << " ();"
+           << "}";
+
+        os << uc_port_name << "_GENERIC_TABLE::iterator giter =" << endl
+           << "  this->ciao_publishes_" << p.name ()
+           << "_generic_.find (key);" << endl;
+
+        os << "if (giter == this->ciao_publishes_"
+           << p.name () << "_generic_.end ())" << endl
+           << "{"
+           << "throw "
+           << STRS[EXCP_IC] << " ();"
+           << "}";
+
+        os << "n = this->ciao_publishes_" << p.name ()
+           << "_generic_.erase (key);" << endl;
+
+        if (! ctx.cl ().get_value ("static-config", false))
+        {
+          os << "}";
+        }
+
+        os << "if (n != 1UL)" << endl
+           << "{"
+           << "throw " << STRS[EXCP_IC] << " ();"
+           << "}";
+
+        os << "return ";
 
         Traversal::PublisherData::belongs (p, belongs_);
 
@@ -962,18 +1010,18 @@ namespace
 
         Traversal::EmitterData::belongs (e, belongs_);
 
-        os << " *ev" << endl
-           << ")" << endl
-           << STRS[EXCP_SNGL] << endl
+        os << " *ev)" << endl
+           << "{"
+           << "if (! ::CORBA::is_nil (this->ciao_emits_"
+           << e.name () << "_consumer_.in ()))" << endl
            << "{"
            << "this->ciao_emits_" << e.name ()
            << "_consumer_->push_";
 
         Traversal::EmitterData::belongs (e, simple_belongs_);
 
-        os << " (" << endl
-           << "ev" << endl
-           << ");" << endl
+        os << " (ev);" << endl
+           << "}"
            << "}";
 
         os << "void" << endl
@@ -983,9 +1031,6 @@ namespace
         Traversal::EmitterData::belongs (e, belongs_);
 
         os << "Consumer_ptr c)" << endl
-           << STRS[EXCP_START] << " "
-           << STRS[EXCP_SYS] << "," << endl
-           << STRS[EXCP_AC] << "))" << endl
            << "{"
            << "if ( ::CORBA::is_nil (c))" << endl
            << "{"
@@ -1009,19 +1054,14 @@ namespace
         os << "Consumer_ptr" << endl
            << scope_.name () << "_Context::disconnect_"
            << e.name () << " ()" << endl
-           << STRS[EXCP_START] << " "
-           << STRS[EXCP_SYS] << "," << endl
-           << STRS[EXCP_NC] << "))" << endl
            << "{"
            << "if ( ::CORBA::is_nil (this->ciao_emits_" << e.name ()
            << "_consumer_.in ()))" << endl
            << "{"
-           << STRS[ACE_TR] << " ( "
-           << STRS[EXCP_NC] << " ()," << endl;
+           << "throw "
+           << STRS[EXCP_NC] << " ();" << endl;
 
-        Traversal::EmitterData::belongs (e, belongs_);
-
-        os << "Consumer::_nil ());" << endl
+        os << endl
            << "}"
            << "return this->ciao_emits_" << e.name ()
            << "_consumer_._retn ();" << endl
@@ -1052,67 +1092,49 @@ namespace
       virtual void
       traverse (SemanticGraph::Publisher& p)
       {
+        string uc_port_name (p.name ().str ());
+        str_upcase (uc_port_name);
+
         os << "if (ACE_OS::strcmp (publisher_name, \""
            << p.name ().unescaped_str () << "\") == 0)" << endl
            << "{"
            << "_ciao_size = this->ciao_publishes_" << p.name ()
-           << "_map_.current_size ();" << endl
-           << "ACE_NEW_THROW_EX ("
+           << "_.size ();" << endl;
+           
+        os << "ACE_NEW_THROW_EX ("
            << "tmp," << endl
            << STRS[COMP_CD] << " (_ciao_size)," << endl
            << "::CORBA::NO_MEMORY ());" << endl
            << "retval = tmp;"
-           << "retval->length (_ciao_size);" << endl
-           << "ACE_Active_Map_Manager<" << endl;
-
-        Traversal::PublisherData::belongs (p, belongs_);
-
-        os << "Consumer_var>::iterator end =" << endl
-           << "  this->ciao_publishes_" << p.name ()
-           << "_map_.end ();" << endl
-           << "for (ACE_Active_Map_Manager<" << endl
-           << "  ";
-
-        Traversal::PublisherData::belongs (p, belongs_);
-
-        os << "Consumer_var>::iterator iter =" << endl
-           << "    this->ciao_publishes_" << p.name ()
-           << "_map_.begin ();"
-           << "iter != end;"
-           << "++iter)" << endl
-           << "{"
-           << "ACE_Active_Map_Manager<" << endl;
-
-        Traversal::PublisherData::belongs (p, belongs_);
-
-        os << "Consumer_var>::entry &e = *iter;" << endl;
-
-        Traversal::PublisherData::belongs (p, belongs_);
-
-        os << "Consumer_var c =" << endl;
-
-        Traversal::PublisherData::belongs (p, belongs_);
-
-        os << "Consumer::_narrow (" << endl
-           << "e.int_id_.in ()" << endl
-           << ");"
+           << "retval->length (_ciao_size);" << endl;
+           
+        os << "for (" << uc_port_name << "_TABLE::const_iterator iter ="
            << endl
-           << "if ( ::CORBA::is_nil (c.in ()))"
+           << "  this->ciao_publishes_" << p.name () << "_.begin ();"
+           << endl
+           << "iter != this->ciao_publishes_" << p.name () << "_.end ();"
+           << endl
+           << "++iter, ++_ciao_index)" << endl
+           << "{"      
+           << "if ( ::CORBA::is_nil (iter->second.in ()))"
            << "{"
-           << STRS[ACE_TR] << " ( " << STRS[EXCP_IC] << " (), 0);"
-           << "}"
-           << "::Components::ConsumerDescription *cd = 0;"
+           << "throw " << STRS[EXCP_IC] << " ();"
+           << "}";
+           
+        os << "::Components::ConsumerDescription *cd = 0;"
            << "ACE_NEW_THROW_EX ("
            << "cd," << endl
            << "OBV_Components::ConsumerDescription ()," << endl
-           << "::CORBA::NO_MEMORY ());" << endl
-           << "::Components::ConsumerDescription_var safe = cd;"
+           << "::CORBA::NO_MEMORY ());" << endl;
+           
+        os << "::Components::ConsumerDescription_var safe = cd;"
            << "safe->name (\"\");"
            << "safe->type_id (\"\");"
-           << "safe->consumer (c.in ());" << endl
-           << "retval[_ciao_index++] = safe;"
-           << "}"
-           << "return retval._retn ();"
+           << "safe->consumer (iter->second.in ());"
+           << "retval[_ciao_index] = safe;"
+           << "}";
+           
+        os << "return retval._retn ();"
            << "}";
       }
 
@@ -1141,8 +1163,7 @@ namespace
          << "        " << t.scoped_name ().scope_name () << "::CCM_"
          << t.name () << "_Context," << endl
          << "        " << t.name () << "_Servant," << endl
-         << "        " << t.scoped_name () << "," << endl
-         << "        " << t.scoped_name () << "_var" << endl
+         << "        " << t.scoped_name () << endl
          << "      > (h, c, sv)";
 
       string swap_option = ctx.cl ().get_value ("custom-container", "");
@@ -1155,9 +1176,8 @@ namespace
              << "        " << t.scoped_name ().scope_name () << "::CCM_"
              << t.name () << "_Context," << endl
              << "        " << t.name () << "_Servant," << endl
-             << "        " << t.scoped_name () << "," << endl
-             << "        " << t.scoped_name () << "_var" << endl
-             << "      > (h, c, sv)" << endl;
+             << "        " << t.scoped_name () << endl
+             << "      > (h, c, sv)";
         }
       else
         {
@@ -1172,9 +1192,9 @@ namespace
          << "{"
          << "}";
 
-      os << "// Operations for " << t.name () << " receptacles"
+      os << "/// Operations for " << t.name () << " receptacles"
          << " and event sources," << endl
-         << "// defined in " << t.scoped_name ().scope_name () << "::CCM_"
+         << "/// defined in " << t.scoped_name ().scope_name () << "::CCM_"
          << t.name () << "_Context."
          << endl << endl;
 
@@ -1198,22 +1218,18 @@ namespace
       // Extra *_Context methods for swapping container.
       if (swapping)
       {
-        os << "// Operations defined in " << t.scoped_name ().scope_name ()
+        os << "/// Operations defined in " << t.scoped_name ().scope_name ()
            << "::CCM_" << t.name () << "_Context" << endl
-           << "// that enable component swapping in the container"
+           << "/// that enable component swapping in the container"
            << endl << endl;
 
         os << STRS[COMP_CD] << " *" << endl
            << t.name () << "_Context::get_registered_consumers (" << endl
            << "const char *publisher_name)" << endl
-           << STRS[EXCP_START] << " "
-           << STRS[EXCP_SYS] << "," << endl
-           << STRS[EXCP_IN] << "," << endl
-           << STRS[EXCP_IC] << "))" << endl
            << "{"
            << "if (publisher_name == 0)" << endl
            << "{"
-           << STRS[ACE_TR] << " ( " << STRS[EXCP_IN] << " (), 0);"
+           << "throw " << STRS[EXCP_IN] << " ();"
            << "}"
            << STRS[COMP_CD] << " *tmp = 0;"
            << STRS[COMP_CD] << "_var retval;"
@@ -1241,16 +1257,15 @@ namespace
           component_emitter.traverse (t);
         }
 
-        os << STRS[ACE_TR] << " ( " << STRS[EXCP_IN] << " (), 0);"
+        os << "throw " << STRS[EXCP_IN] << " ();"
            << "}";
       }
 
-      os << "// CIAO-specific." << endl << endl;
+      os << "/// CIAO-specific." << endl << endl;
 
       os << t.name () << "_Context *" << endl
          << t.name () << "_Context::_narrow (" << endl
-         << STRS[COMP_SC] << "_ptr p" << endl
-         << ")" << endl
+         << STRS[COMP_SC] << "_ptr p)" << endl
          << "{"
          << "return dynamic_cast<" << t.name () << "_Context *> (p);"
          << endl
@@ -1291,9 +1306,7 @@ namespace
 
         Traversal::EmitterData::belongs (t, belongs_);
 
-        os << "Consumer::_narrow (" << endl
-           << "  consumer" << endl
-           << "  " << ");" << endl
+        os << "Consumer::_narrow (consumer);" << endl
            << "if ( ::CORBA::is_nil (_ciao_consumer.in ()))" << endl
            << "{"
            << "throw " << STRS[EXCP_IC] << " ();"
@@ -1373,9 +1386,6 @@ namespace
         Traversal::PublisherData::belongs (p, belongs_);
 
         os << "Consumer_ptr c)" << endl
-           << STRS[EXCP_START] << " "
-           << STRS[EXCP_SYS] << "," << endl
-           << STRS[EXCP_ECL] << "))" << endl
            << "{";
 
         string swap_option = ctx.cl ().get_value ("custom-container", "");
@@ -1388,18 +1398,13 @@ namespace
           }
 
         os << "return this->context_->subscribe_" << p.name ()
-           << " (" << endl
-           << "c" << endl
-           << ");" << endl
+           << " (c);"
            << "}";
 
         os << STRS[COMP_CK] << " *" << endl
            << scope_.name ()
            << "_Servant::subscribe_" << p.name () << "_generic (" << endl
            << STRS[COMP_ECB] << "_ptr c)" << endl
-           << STRS[EXCP_START] << " "
-           << STRS[EXCP_SYS] << "," << endl
-           << STRS[EXCP_ECL] << "))" << endl
            << "{";
 
         if (swapping)
@@ -1409,9 +1414,7 @@ namespace
           }
 
         os << "return this->context_->subscribe_" << p.name ()
-           << "_generic (" << endl
-           << "c" << endl
-           << ");" << endl
+           << "_generic (c);"
            << "}";
 
         Traversal::PublisherData::belongs (p, belongs_);
@@ -1420,9 +1423,6 @@ namespace
            << scope_.name ()
            << "_Servant::unsubscribe_" << p.name () << " (" << endl
            << STRS[COMP_CK] << " *ck)" << endl
-           << STRS[EXCP_START] << " "
-           << STRS[EXCP_SYS] << "," << endl
-           << STRS[EXCP_IC] << "))" << endl
            << "{";
 
         if (swapping)
@@ -1432,9 +1432,7 @@ namespace
           }
 
         os << "return this->context_->unsubscribe_"
-           << p.name () << " (" << endl
-           << "ck" << endl
-           << ");" << endl
+           << p.name () << " (ck);"
            << "}";
       }
 
@@ -1464,23 +1462,40 @@ namespace
 
         Traversal::SingleUserData::belongs (u, belongs_);
 
-        os << "_var _ciao_conn =" << endl;
+        os << "_var _ciao_conn =" << endl
+           << "  ";
 
         Traversal::SingleUserData::belongs (u, belongs_);
 
-        os << "::_narrow (" << endl
-           << "connection" << endl
-           << ");"
-           << endl
+        os << "::_narrow (connection);" << endl
            << "if ( ::CORBA::is_nil (_ciao_conn.in ()))" << endl
            << "{"
-           << STRS[ACE_TR] << " ( " << STRS[EXCP_IC] << " (), 0);"
-           << endl
-           << "}"
-           << "// Simplex connect." << endl
-           << "this->connect_" << u.name () << " (" << endl
-           << "_ciao_conn.in ()" << endl
-           << ");"
+           << "throw " << STRS[EXCP_IC] << " ();" << endl
+           << "}";
+
+        os << "ACE_CString receptacle_name (\""
+           << u.name ().unescaped_str () << "\");"
+           << "receptacle_name += '_';"
+           << "receptacle_name += this->context_->_ciao_instance_id ();"
+           << "::CORBA::PolicyList policy_list =" << endl
+           << "  this->container_->get_receptacle_policy ("
+           << "receptacle_name.c_str ());" << endl;
+
+        os << "if (policy_list.length () != 0)" << endl
+           << "{"
+           << "::CORBA::Object_var over_ridden_object =" << endl
+           << "  _ciao_conn->_set_policy_overrides (policy_list," << endl
+           << "CORBA::SET_OVERRIDE);"
+           << "_ciao_conn =" << endl
+           << "  ";
+
+        Traversal::SingleUserData::belongs (u, belongs_);
+
+        os << "::_narrow (over_ridden_object.in ());"
+           << "}";
+
+        os << "/// Simplex connect." << endl
+           << "this->connect_" << u.name () << " (_ciao_conn.in ());"
            << endl
            << "return 0;" << endl
            << "}";
@@ -1505,13 +1520,11 @@ namespace
            << endl
            << "if ( ::CORBA::is_nil (_ciao_conn.in ()))" << endl
            << "{"
-           << STRS[ACE_TR] << " ( " << STRS[EXCP_IC] << " (), 0);"
+           << "throw " << STRS[EXCP_IC] << " ();"
            << endl
            << "}"
-           << "// Multiplex connect." << endl
-           << "return this->connect_" << u.name () << " (" << endl
-           << "_ciao_conn.in ()" << endl
-           << ");"
+           << "/// Multiplex connect." << endl
+           << "return this->connect_" << u.name () << " (_ciao_conn.in ());"
            << "}";
       }
 
@@ -1535,7 +1548,7 @@ namespace
         os << "if (ACE_OS::strcmp (name, \""
            << u.name ().unescaped_str () << "\") == 0)" << endl
            << "{"
-           << "// Simplex disconnect." << endl
+           << "/// Simplex disconnect." << endl
            << "return this->disconnect_" << u.name ()
            << " ();" << endl
            << "}";
@@ -1550,13 +1563,10 @@ namespace
            << "// Multiplex disconnect." << endl
            << "if (ck == 0)" << endl
            << "{"
-           << STRS[ACE_TR] << " ( "
-           << STRS[EXCP_CR] << " ()," << endl
-           << "::CORBA::Object::_nil ());" << endl
+           << "throw "
+           << STRS[EXCP_CR] << " ();" << endl
            << "}"
-           << "return this->disconnect_" << u.name () << " (" << endl
-           << "ck" << endl
-           << ");" << endl
+           << "return this->disconnect_" << u.name () << " (ck);" << endl
            << "}";
       }
     };
@@ -1583,15 +1593,8 @@ namespace
         Traversal::SingleUserData::belongs (u, belongs_);
 
         os << "_ptr c)" << endl
-           << STRS[EXCP_START] << " "
-           << STRS[EXCP_SYS] << "," << endl
-           << STRS[EXCP_AC] << "," << endl
-           << STRS[EXCP_IC] << "))" << endl
            << "{"
-           << "this->context_->connect_" << u.name () << " ("
-           << endl
-           << "c" << endl
-           << ");" << endl
+           << "this->context_->connect_" << u.name () << " (c);" << endl
            << "this->add_receptacle (\"" << u.name ().unescaped_str ()
            << "\", c, 0);" << endl
            << "}";
@@ -1601,13 +1604,9 @@ namespace
         os << "_ptr" << endl
            << scope_.name () << "_Servant::disconnect_"
            << u.name () << " ()" << endl
-           << STRS[EXCP_START] << " "
-           << STRS[EXCP_SYS] << "," << endl
-           << STRS[EXCP_NC] << "))" << endl
            << "{"
            << "return this->context_->disconnect_" << u.name ()
-           << " (" << endl
-           << ");" << endl
+           << " ();" << endl
            << "}";
 
         Traversal::SingleUserData::belongs (u, belongs_);
@@ -1615,13 +1614,10 @@ namespace
         os << "_ptr" << endl
            << scope_.name ()
            << "_Servant::get_connection_" << u.name ()
-           << " (" << endl
-           << ")" << endl
-           << STRS[EXCP_SNGL] << endl
+           << " ()" << endl
            << "{"
            << "return this->context_->get_connection_"
-           << u.name () << " (" << endl
-           << ");" << endl
+           << u.name () << " ();" << endl
            << "}";
       }
 
@@ -1635,16 +1631,9 @@ namespace
         Traversal::MultiUserData::belongs (u, belongs_);
 
         os << "_ptr c)" << endl
-           << STRS[EXCP_START] << " "
-           << STRS[EXCP_SYS] << "," << endl
-           << STRS[EXCP_ECL] << "," << endl
-           << STRS[EXCP_IC] << "))" << endl
            << "{"
-           << "::Components::Cookie * cookie = "
-          "this->context_->connect_" << u.name () << " ("
-           << endl
-           << "c" << endl
-           << ");" << endl
+           << "::Components::Cookie * cookie =" << endl
+           << "  this->context_->connect_" << u.name () << " (c);" << endl
            << "this->add_receptacle (\"" << u.name ().unescaped_str ()
            << "\", c, cookie);" << endl
            << "return cookie;" << endl
@@ -1656,26 +1645,17 @@ namespace
            << scope_.name () << "_Servant::disconnect_"
            << u.name () << " (" << endl
            << STRS[COMP_CK] << " * ck)" << endl
-           << STRS[EXCP_START] << " "
-           << STRS[EXCP_SYS] << "," << endl
-           << STRS[EXCP_IC] << "))" << endl
            << "{"
            << "return this->context_->disconnect_" << u.name ()
-           << " (" << endl
-           << "ck" << endl
-           << ");" << endl
+           << " (ck);" << endl
            << "}";
 
         os << u.scoped_name () << "Connections *" << endl
            << scope_.name ()
-           << "_Servant::get_connections_" << u.name ()
-           << " (" << endl
-           << ")" << endl
-           << STRS[EXCP_SNGL] << endl
+           << "_Servant::get_connections_" << u.name () << " ()" << endl
            << "{"
            << "return this->context_->get_connections_"
-           << u.name () << " (" << endl
-           << ");" << endl
+           << u.name () << " ();" << endl
            << "}";
       }
 
@@ -1709,10 +1689,7 @@ namespace
 
         Traversal::PublisherData::belongs (p, belongs_);
 
-        os << "Consumer::_narrow (" << endl
-           << "subscribe" << endl
-           << ");"
-           << endl;
+        os << "Consumer::_narrow (subscribe);" << endl;
 
         os << "if ( ::CORBA::is_nil (sub.in ()))" << endl
            << "{"
@@ -1722,26 +1699,23 @@ namespace
 
         Traversal::PublisherData::belongs (p, belongs_);
 
-        os << "::_tao_obv_static_repository_id ()" << endl
-           << "  " << ");"
+        os << "::_tao_obv_static_repository_id ());"
            << endl;
 
         os << "if (substitutable)" << endl
            << "{"
-           << "return this->subscribe_" << p.name () << "_generic (" << endl
-           << "subscribe" << endl
-           << ");" << endl
+           << "return this->subscribe_" << p.name ()
+           << "_generic (subscribe);" << endl
            << "}"
            << "else" << endl
            << "{"
-           << STRS[ACE_TR] << " ( " << STRS[EXCP_IC] << " (), 0);" << endl
+           << "throw " << STRS[EXCP_IC] << " ();" << endl
            << "}"
            << "}"
            << "else" << endl
            << "{"
-           << "return this->subscribe_" << p.name () << " (" << endl
-           << "sub.in ()" << endl
-           << ");" << endl
+           << "return this->subscribe_" << p.name ()
+           << " (sub.in ());" << endl
            << "}"
            << "}";
       }
@@ -1765,9 +1739,7 @@ namespace
            << p.name ().unescaped_str () << "\") == 0)" << endl
            << "{"
            << "return this->unsubscribe_" << p.name ()
-           << " (" << endl
-           << "ck" << endl
-           << ");" << endl
+           << " (ck);" << endl
            << "}";
       }
     };
@@ -1793,9 +1765,6 @@ namespace
         Traversal::EmitterData::belongs (e, belongs_);
 
         os << "Consumer_ptr c)" << endl
-           << STRS[EXCP_START] << " "
-           << STRS[EXCP_SYS] << "," << endl
-           << STRS[EXCP_AC] << "))" << endl
            << "{"
            << "this->context_->connect_" << e.name ()
            << " (" << endl
@@ -1808,9 +1777,6 @@ namespace
         os << "Consumer_ptr" << endl
            << scope_.name () << "_Servant::disconnect_"
            << e.name () << " ()" << endl
-           << STRS[EXCP_START] << " "
-           << STRS[EXCP_SYS] << "," << endl
-           << STRS[EXCP_NC] << "))" << endl
            << "{"
            << "return this->context_->disconnect_"
            << e.name () << " (" << endl
@@ -1870,9 +1836,7 @@ namespace
 
         os << "_ptr" << endl
            << scope_.name ()
-           << "_Servant::provide_" << p.name () << " (" << endl
-           << ")" << endl
-           << STRS[EXCP_SNGL] << endl
+           << "_Servant::provide_" << p.name () << " ()" << endl
            << "{";
 
         string swap_option = ctx.cl ().get_value ("custom-container", "");
@@ -1910,10 +1874,7 @@ namespace
 
         Traversal::ProviderData::belongs (p, belongs_);
 
-        os << "::_narrow ("
-           << "obj.in ()" << endl
-           << ");"
-           << endl
+        os << "::_narrow (obj.in ());" << endl
            << "this->provide_" << p.name () << "_ = fo;"
            << "return ";
 
@@ -1927,9 +1888,7 @@ namespace
 
         os << "::CORBA::Object_ptr" << endl
            << scope_.name ()
-           << "_Servant::provide_" << p.name () << "_i (" << endl
-           << ")" << endl
-           << STRS[EXCP_SNGL] << endl
+           << "_Servant::provide_" << p.name () << "_i ()" << endl
            << "{"
            << "::CORBA::Object_ptr ret =" << endl
            << "  this->lookup_facet (\""
@@ -1940,7 +1899,7 @@ namespace
            << "return ret;"
            << "}";
 
-        os << "::CIAO::Port_Activator_T<" << endl
+        os << "typedef ::CIAO::Port_Activator_T<" << endl
            << "    ::" << STRS[FACET_PREFIX];
 
         Traversal::ProviderData::belongs (p, facet_enclosing_belongs_);
@@ -1960,39 +1919,17 @@ namespace
 
         os << "," << endl
            << "    ::Components::CCMContext," << endl
-           << "    " << scope_.name () << "_Servant" << endl
-           << "  > *tmp = 0;" << endl
-           << "typedef ::CIAO::Port_Activator_T<" << endl
-           << "    ::" << STRS[FACET_PREFIX];
+           << "    " << scope_.name () << "_Servant>" << endl
+           << "  MACRO_MADNESS_TYPEDEF;" << endl;
 
-        Traversal::ProviderData::belongs (p, facet_enclosing_belongs_);
-
-        os << "::";
-
-        Traversal::ProviderData::belongs (p, servant_belongs_);
-
-        os << "," << endl
-           << "    ";
-
-        Traversal::ProviderData::belongs (p, enclosing_belongs_);
-
-        os << "::CCM_";
-
-        Traversal::ProviderData::belongs (p, simple_belongs_);
-
-        os << "," << endl
-           << "    ::Components::CCMContext," << endl
-           << "    " << scope_.name () << "_Servant" << endl
-           << "  >" << endl
-           << "MACRO_MADNESS_TYPEDEF;" << endl;
-
-        os << "ACE_CString obj_id (this->ins_name_);"
-           << "obj_id += \"_" << p.name ().unescaped_str () << "\";" << endl;
+        os << "MACRO_MADNESS_TYPEDEF *tmp = 0;"
+           << "ACE_CString obj_id (this->ins_name_);"
+           << "obj_id += \"_" << p.name ().unescaped_str ()
+           << "\";" << endl;
 
         os << "ACE_NEW_THROW_EX ("
            << "tmp," << endl
-           << "MACRO_MADNESS_TYPEDEF (" << endl
-           << "obj_id.c_str ()," << endl
+           << "MACRO_MADNESS_TYPEDEF (obj_id.c_str ()," << endl
            << "\"" << p.name ().unescaped_str () << "\"," << endl
            << "::CIAO::Port_Activator::Facet," << endl
            << "0," << endl
@@ -2019,14 +1956,10 @@ namespace
         Traversal::ProviderData::belongs (p, repo_id_belongs_);
 
         os << "," << endl
-           << "  ::CIAO::Container::Facet_Consumer" << endl
-           << "  " << ");"
-           << endl
+           << "  ::CIAO::Container::Facet_Consumer);" << endl
            << "this->add_facet (\""
            << p.name ().unescaped_str () << "\"," << endl
-           << "obj.in ()" << endl
-           << ");"
-           << endl;
+           << "obj.in ());" << endl;
 
         os << "return obj._retn ();" << endl
            << "}";
@@ -2113,9 +2046,7 @@ namespace
         Traversal::ConsumerData::belongs (c, simple_belongs_);
 
         os << "Consumer_" << c.name ()
-           << "_Servant::_get_component (" << endl
-           << ")" << endl
-           << STRS[EXCP_SNGL] << endl
+           << "_Servant::_get_component ()" << endl
            << "{"
            << "return this->ctx_->get_CCM_object "
            << "();" << endl
@@ -2135,17 +2066,13 @@ namespace
 
         Traversal::ConsumerData::belongs (c, belongs_);
 
-        os << " *evt" << endl
-           << ")" << endl
-           << STRS[EXCP_SNGL] << endl
+        os << " *evt)" << endl
            << "{"
            << "this->executor_->push_" << c.name ()
-           << " (" << endl
-           << "evt" << endl
-           << ");" << endl
+           << " (evt);" << endl
            << "}";
 
-        os << "// Inherited from " << STRS[COMP_ECB] << "." << endl
+        os << "/// Inherited from " << STRS[COMP_ECB] << "." << endl
            << "void" << endl
            << scope_.name  () << "_Servant::";
 
@@ -2154,9 +2081,6 @@ namespace
         os << "Consumer_" << c.name ()
            << "_Servant::push_event (" << endl
            << "::Components::EventBase *ev)" << endl
-           << STRS[EXCP_START] << " "
-           << STRS[EXCP_SYS] << "," << endl
-           << STRS[EXCP_BET] << "))" << endl
            << "{";
 
         Traversal::ConsumerData::belongs (c, belongs_);
@@ -2173,9 +2097,7 @@ namespace
 
         Traversal::ConsumerData::belongs (c, simple_belongs_);
 
-        os << " (" << endl
-           << "ev_type" << endl
-           << ");" << endl
+        os << " (ev_type);" << endl
            << "return;" << endl
            << "}"
            << "throw " << STRS[EXCP_BET] << " ();" << endl
@@ -2184,7 +2106,7 @@ namespace
         // GD Added below code
         // Begin
 
-        os << "// Inherited from " << STRS[COMP_ECB] << "." << endl
+        os << "/// Inherited from " << STRS[COMP_ECB] << "." << endl
            << "void" << endl
            << scope_.name  () << "_Servant::";
 
@@ -2195,9 +2117,6 @@ namespace
            << "::Components::EventBase *ev," << endl
            << "const char * /* source_id */," << endl
            << "::CORBA::TypeCode_ptr /* tc */)" << endl
-           << STRS[EXCP_START] << " "
-           << STRS[EXCP_SYS] << "," << endl
-           << STRS[EXCP_BET] << "))" << endl
            << "{"
            << "this->push_event (ev);" << endl
            << "}";
@@ -2211,38 +2130,28 @@ namespace
 
         os << "Consumer_" << c.name ()
            << "_Servant::ciao_is_substitutable (" << endl
-           << "const char * event_repo_id" << endl
-           << ")" << endl
-           << STRS[EXCP_SNGL] << endl
+           << "const char * event_repo_id)" << endl
            << "{"
            << "if (event_repo_id == 0)" << endl
            << "{"
-           << STRS[ACE_TR] << " ( ::CORBA::BAD_PARAM (), false);" << endl
+           << "throw ::CORBA::BAD_PARAM ();" << endl
            << "}"
            << scope_.name () << "_Context *ctx =" << endl
-           << "  " << scope_.name () << "_Context::_narrow (" << endl
-           << "  this->ctx_.in ()" << endl
-           << "  " << ");"
-           << endl;
+           << "  " << scope_.name ()
+           << "_Context::_narrow (this->ctx_.in ());" << endl;
 
         os << "CORBA::ORB_ptr orb = ctx->_ciao_the_Container ()->the_ORB ();"
            << endl;
 
         os << "CORBA::ValueFactory f =" << endl
-           << "  orb->lookup_value_factory (" << endl
-           << "  event_repo_id" << endl
-           << "  " << ");"
-           << endl;
+           << "  orb->lookup_value_factory (event_repo_id);" << endl;
 
         os << "if (f == 0)" << endl
            << "{"
            << "return false;" << endl
            << "}"
-           << "CORBA::ValueBase_var v =" << endl
-           << "  f->create_for_unmarshal ();"
-           << endl;
-
-        os << "f->_remove_ref ();" << endl;
+           << "CORBA::ValueBase_var v = f->create_for_unmarshal ();"
+           << "f->_remove_ref ();" << endl;
 
         os << "if (v.in () == 0)" << endl
            << "{"
@@ -2260,9 +2169,7 @@ namespace
 
         os << "Consumer_ptr" << endl
            << scope_.name  () << "_Servant::"
-           << "get_consumer_" << c.name () << " (" << endl
-           << ")" << endl
-           << STRS[EXCP_SNGL] << endl
+           << "get_consumer_" << c.name () << " ()" << endl
            << "{"
            << "if (! ::CORBA::is_nil (this->consumes_" << c.name ()
            << "_.in ()))" << endl
@@ -2276,9 +2183,7 @@ namespace
            << "}";
 
         os << "::Components::EventConsumerBase_var obj =" << endl
-           << "  this->get_consumer_" << c.name () << "_i (" << endl
-           << "  " << ");"
-           << endl;
+           << "  this->get_consumer_" << c.name () << "_i ();" << endl;
 
         Traversal::ConsumerData::belongs (c, belongs_);
 
@@ -2287,10 +2192,7 @@ namespace
 
         Traversal::ConsumerData::belongs (c, belongs_);
 
-        os << "Consumer::_narrow (" << endl
-           << "  obj.in ()" << endl
-           << "  " << ");"
-           << endl
+        os << "Consumer::_narrow (obj.in ());" << endl
            << "this->consumes_" << c.name () << "_ = eco;"
            << "return ";
 
@@ -2304,9 +2206,7 @@ namespace
 
         os << "::Components::EventConsumerBase_ptr" << endl
            << scope_.name  () << "_Servant::"
-           << "get_consumer_" << c.name () << "_i (" << endl
-           << ")" << endl
-           << STRS[EXCP_SNGL] << endl
+           << "get_consumer_" << c.name () << "_i ()" << endl
            << "{"
            << "::Components::EventConsumerBase_ptr ret =" << endl
            << "  this->lookup_consumer (\""
@@ -2317,49 +2217,29 @@ namespace
            << "return ret;"
            << "}";
 
-        os << "::CIAO::Port_Activator_T<" << endl;
+        os << "typedef  ::CIAO::Port_Activator_T<" << endl
+           << "    ";
 
         os << scope_.name  () << "_Servant::";
 
         Traversal::ConsumerData::belongs (c, simple_belongs_);
 
-        os << "Consumer_" << c.name ()
-           << "_Servant," << endl
-           << c.scoped_name ().scope_name ().scope_name ()
-           << "::CCM_"
-           << c.scoped_name ().scope_name ().simple_name ()
-           << "," << endl
-           << c.scoped_name ().scope_name ().scope_name () << "::CCM_"
-           << c.scoped_name ().scope_name ().simple_name ()
-           << "_Context," << endl
-           << scope_.name () << "_Servant"
-           << " > *tmp = 0;" << endl
-           << "typedef  CIAO::Port_Activator_T<" << endl;
-
-        os << "    " << scope_.name  () << "_Servant::";
-
-        Traversal::ConsumerData::belongs (c, simple_belongs_);
-
-        os << "Consumer_" << c.name ()
-           << "_Servant," << endl
+        os << "Consumer_" << c.name () << "_Servant," << endl
            << "    " << c.scoped_name ().scope_name ().scope_name ()
-           << "::CCM_"
-           << c.scoped_name ().scope_name ().simple_name ()
+           << "::CCM_" << c.scoped_name ().scope_name ().simple_name ()
            << "," << endl
-           << "    " << c.scoped_name ().scope_name ().scope_name () << "::CCM_"
-           << c.scoped_name ().scope_name ().simple_name ()
-           << "_Context, " << endl
-           << "    " << scope_.name () << "_Servant" << endl
-           << "  >" << endl
-           << "MACRO_MADNESS_TYPEDEF;" << endl;
+           << "    " << c.scoped_name ().scope_name ().scope_name ()
+           << "::CCM_" << c.scoped_name ().scope_name ().simple_name ()
+           << "_Context," << endl
+           << "    " << scope_.name () << "_Servant>" << endl
+           << "  MACRO_MADNESS_TYPEDEF;" << endl;
 
-        os << "ACE_CString obj_id (this->ins_name_);"
+        os << "MACRO_MADNESS_TYPEDEF  *tmp = 0;" << endl
+           << "ACE_CString obj_id (this->ins_name_);"
            << "obj_id += \"_" << c.name ().unescaped_str () << "\";" << endl;
 
-        os << "ACE_NEW_THROW_EX (" << endl
-           << "tmp," << endl
-           << "MACRO_MADNESS_TYPEDEF ("
-           << "obj_id.c_str ()," << endl
+        os << "ACE_NEW_THROW_EX (tmp," << endl
+           << "MACRO_MADNESS_TYPEDEF (obj_id.c_str ()," << endl
            << "\"" << c.name ().unescaped_str () << "\"," << endl
            << "::CIAO::Port_Activator::Sink," << endl
            << "this->executor_.in ()," << endl
@@ -2386,21 +2266,15 @@ namespace
         Traversal::ConsumerData::belongs (c, repo_id_belongs_);
 
         os << "," << endl
-           << "  ::CIAO::Container::Facet_Consumer" << endl
-           << "  " << ");"
-           << endl;
+           << "  ::CIAO::Container::Facet_Consumer);" << endl;
 
         os << "::Components::EventConsumerBase_var ecb =" << endl
-           << "  ::Components::EventConsumerBase::_narrow (" << endl
-           << "  obj.in ()" << endl
-           << "  " << ");"
+           << "  ::Components::EventConsumerBase::_narrow (obj.in ());"
            << endl;
 
         os << "this->add_consumer (\""
            << c.name ().unescaped_str () << "\"," << endl
-           << "ecb.in ()" << endl
-           << ");"
-           << endl;
+           << "ecb.in ());" << endl;
 
         os << "return ecb._retn ();" << endl
            << "}";
@@ -2613,9 +2487,8 @@ namespace
       virtual void
       traverse (SemanticGraph::Provider& p)
       {
-        os << "obj_var =" << endl
-           << "  this->provide_" << p.name () << "_i (" << endl
-           << "  " << ");" << endl;
+        os << "obj_var = this->provide_" << p.name ()
+           << "_i ();" << endl;
       }
 
       virtual void
@@ -2637,8 +2510,8 @@ namespace
       traverse (SemanticGraph::Consumer& p)
       {
         os << "ecb_var =" << endl
-           << "  this->get_consumer_" << p.name () << "_i (" << endl
-           <<  "  " << ");" << endl;
+           << "  this->get_consumer_" << p.name () << "_i ();"
+           << endl;
       }
     };
 
@@ -2727,6 +2600,17 @@ namespace
       virtual void
       traverse (SemanticGraph::MultiUser& u)
       {
+        bool static_cfg = ctx.cl ().get_value ("static-config", false);
+
+        if (! static_cfg)
+        {
+          os << "{"
+             << "ACE_READ_GUARD_RETURN (TAO_SYNCH_MUTEX," << endl
+             << "mon," << endl
+             << "this->context_->" << u.name () << "_lock_," << endl
+             << "0);" << endl;
+        }
+
         os << "::CIAO::Servant_Impl_Base::describe_multiplex_receptacle<"
            << endl
            << "    ";
@@ -2742,6 +2626,11 @@ namespace
            << "this->context_->ciao_uses_" << u.name () << "_," << endl
            << "safe_retval," << endl
            << slot_ << "UL);" << endl;
+
+        if (! static_cfg)
+        {
+          os << "}";
+        }
 
         ++slot_;
       }
@@ -2789,6 +2678,15 @@ namespace
       virtual void
       traverse (SemanticGraph::Publisher& p)
       {
+        if (! ctx.cl ().get_value ("static-config", false))
+        {
+          os << "{"
+             << "ACE_READ_GUARD_RETURN (TAO_SYNCH_MUTEX," << endl
+             << "mon," << endl
+             << "this->context_->" << p.name () << "_lock_," << endl
+             << "0);" << endl;
+        }
+
         os << "::CIAO::Servant_Impl_Base::describe_pub_event_source<"
            << endl
            << "    ";
@@ -2801,10 +2699,15 @@ namespace
         Traversal::PublisherData::belongs (p, repo_id_belongs_);
 
         os << "," << endl
-           << "this->context_->ciao_publishes_" << p.name ()
-           << "_map_," << endl
+           << "this->context_->ciao_publishes_" << p.name () << "_,"
+           << endl
            << "safe_retval," << endl
            << slot_ << "UL);" << endl;
+
+        if (! ctx.cl ().get_value ("static-config", false))
+        {
+          os << "}";
+        }
 
         ++slot_;
       }
@@ -2911,7 +2814,7 @@ namespace
          << "this->context_," << endl
          << t.name () << "_Context (h, c, this));" << endl;
 
-      os << "// Set the instance id of the component on the context" << endl
+      os << "/// Set the instance id of the component on the context" << endl
          << endl
          << "this->context_->_ciao_instance_id (this->ins_name_);" << endl;
 
@@ -2938,17 +2841,12 @@ namespace
       os << "try" << endl
          << "{"
          << "::Components::SessionComponent_var scom =" << endl
-         << "  ::Components::SessionComponent::_narrow (" << endl
-         << "  exe" << endl
-         << "  " << ");" << endl
+         << "  ::Components::SessionComponent::_narrow (exe);" << endl
          << "if (! ::CORBA::is_nil (scom.in ()))" << endl
          << "{"
-         << "scom->set_session_context (" << endl
-         << "this->context_" << endl
-         << ");"
+         << "scom->set_session_context (this->context_);"
          << "}"
-         << "this->populate_port_tables (" << endl
-         << ");"
+         << "this->populate_port_tables ();"
          << "}"
          << "catch (const CORBA::Exception&)" << endl
          << "{"
@@ -2965,8 +2863,7 @@ namespace
       // Override pure virtual set_attributes() operation.
       os << "void" << endl
          << t.name () << "_Servant::set_attributes (" << endl
-         << "const ::Components::ConfigValues &descr" << endl
-         << ")" << endl
+         << "const ::Components::ConfigValues &descr)" << endl
          << "{" << endl;
 
       string swap_option = ctx.cl ().get_value ("custom-container", "");
@@ -3059,16 +2956,8 @@ namespace
       }
 
       os << STRS[COMP_CK] << " *" << endl
-         << t.name () << "_Servant::connect (" << endl
-         << "const char *name," << endl
-         << "::CORBA::Object_ptr connection" << endl
-         << ")" << endl
-         << STRS[EXCP_START] << " "
-         << STRS[EXCP_SYS] << "," << endl
-         << STRS[EXCP_IN] << "," << endl
-         << STRS[EXCP_IC] << "," << endl
-         << STRS[EXCP_AC] << "," << endl
-         << STRS[EXCP_ECL] << "))" << endl
+         << t.name () << "_Servant::connect (const char *name," << endl
+         << "::CORBA::Object_ptr connection)" << endl
          << "{";
 
       if (swapping)
@@ -3077,12 +2966,12 @@ namespace
              << endl;
         }
 
-      os << "// If the component has no receptacles, this will be unused."
+      os << "/// If the component has no receptacles, this will be unused."
          << endl
          << STRS[ACE_UA] << " (connection);" << endl
          << "if (name == 0)" << endl
          << "{"
-         << STRS[ACE_TR] << " ( " << STRS[EXCP_IN] << " (), 0);" << endl
+         << "throw " << STRS[EXCP_IN] << " ();" << endl
          << "}";
 
       // Generate IF block in connect operation for each receptacle.
@@ -3102,20 +2991,13 @@ namespace
         component_emitter.traverse (t);
       }
 
-      os << STRS[ACE_TR] << " ( " << STRS[EXCP_IN] << " (), 0);" << endl
+      os << "throw " << STRS[EXCP_IN] << " ();" << endl
          << "}";
 
       os << "::CORBA::Object_ptr" << endl
-         << t.name () << "_Servant::disconnect (" << endl
-         << "const char *name," << endl
-         << STRS[COMP_CK] << " * ck" << endl
-         << ")" << endl
-         << STRS[EXCP_START] << " "
-         << STRS[EXCP_SYS] << "," << endl
-         << STRS[EXCP_IN] << "," << endl
-         << STRS[EXCP_IC] << "," << endl
-         << STRS[EXCP_CR] << "," << endl
-         << STRS[EXCP_NC] << "))" << endl
+         << t.name () << "_Servant::disconnect (const char *name,"
+         << endl
+         << STRS[COMP_CK] << " * ck)" << endl
          << "{"
          << STRS[ACE_UA] << " (ck);" << endl;
 
@@ -3127,9 +3009,8 @@ namespace
 
       os << "if (name == 0)" << endl
          << "{"
-         << STRS[ACE_TR] << " ( "
-         << STRS[EXCP_BP] << "," << endl
-         << "::CORBA::Object::_nil ());" << endl
+         << "throw "
+         << STRS[EXCP_BP] << " ();" << endl
          << "}";
 
       // Generate IF block in disconnect operation for each receptacle.
@@ -3149,15 +3030,12 @@ namespace
         component_emitter.traverse (t);
       }
 
-      os << STRS[ACE_TR] << " ( "
-         << STRS[EXCP_IN] << " ()," << endl
-         << "::CORBA::Object::_nil ());"
+      os << "throw "
+         << STRS[EXCP_IN] << " ();" << endl
          << "}";
 
       os << STRS[COMP_RD] << " *" << endl
-         << t.name () << "_Servant::get_all_receptacles (" << endl
-         << ")" << endl
-         << STRS[EXCP_SNGL] << endl
+         << t.name () << "_Servant::get_all_receptacles ()" << endl
          << "{"
          << STRS[COMP_RD] << " *retval = 0;"
          << "ACE_NEW_RETURN (retval," << endl
@@ -3227,13 +3105,7 @@ namespace
          << t.name () << "_Servant::connect_consumer ("
          << endl
          << "const char * emitter_name," << endl
-         << STRS[COMP_ECB] << "_ptr consumer" << endl
-         << ")" << endl
-         << STRS[EXCP_START] << " "
-         << STRS[EXCP_SYS] << "," << endl
-         << STRS[EXCP_IN] << "," << endl
-         << STRS[EXCP_AC] << "," << endl
-         << STRS[EXCP_IC] << "))" << endl
+         << STRS[COMP_ECB] << "_ptr consumer)" << endl
          << "{";
 
       if (swapping)
@@ -3244,7 +3116,7 @@ namespace
 
       os << "if (emitter_name == 0)" << endl
          << "{"
-         << "throw " << STRS[EXCP_BP] << ";" << endl
+         << "throw " << STRS[EXCP_BP] << " ();" << endl
          << "}";
 
       // Generate an IF block for each 'emits' declaration.
@@ -3270,13 +3142,9 @@ namespace
          << "}";
 
       os << STRS[COMP_ECB] << "_ptr" << endl
-         << t.name () << "_Servant::disconnect_consumer (" << endl
-         << "const char *source_name" << endl
-         << ")" << endl
-         << STRS[EXCP_START] << " "
-         << STRS[EXCP_SYS] << "," << endl
-         << STRS[EXCP_IN] << "," << endl
-         << STRS[EXCP_NC] << "))" << endl
+         << t.name ()
+         << "_Servant::disconnect_consumer (const char *source_name)"
+         << endl
          << "{";
 
       if (swapping)
@@ -3287,8 +3155,7 @@ namespace
 
       os << "if (source_name == 0)" << endl
          << "{"
-         << STRS[ACE_TR] << " ( " << STRS[EXCP_BP] << "," << endl
-         << STRS[COMP_ECB] << "::_nil ());" << endl
+         << "throw " << STRS[EXCP_BP] << " ();" << endl
          << "}";
 
       // Generate an IF block for each 'emits' declaration.
@@ -3308,15 +3175,12 @@ namespace
         component_emitter.traverse (t);
       }
 
-      os << STRS[ACE_TR] << " ( "
-         << STRS[EXCP_IN] << " ()," << endl
-         << STRS[COMP_ECB] << "::_nil ());" << endl
+      os << "throw "
+         << STRS[EXCP_IN] << " ();" << endl
          << "}";
 
       os << STRS[COMP_PD] << " *" << endl
-         << t.name () << "_Servant::get_all_publishers (" << endl
-         << ")" << endl
-         << STRS[EXCP_SNGL] << endl
+         << t.name () << "_Servant::get_all_publishers ()" << endl
          << "{"
          << STRS[COMP_PD] << " *retval = 0;"
          << "ACE_NEW_RETURN (retval," << endl
@@ -3364,9 +3228,7 @@ namespace
          << "}";
 
       os << STRS[COMP_ED] << " *" << endl
-         << t.name () << "_Servant::get_all_emitters (" << endl
-         << ")" << endl
-         << STRS[EXCP_SNGL] << endl
+         << t.name () << "_Servant::get_all_emitters ()" << endl
          << "{"
          << STRS[COMP_ED] << " *retval = 0;"
          << "ACE_NEW_RETURN (retval," << endl
@@ -3416,13 +3278,7 @@ namespace
       os << STRS[COMP_CK] << " *" << endl
          << t.name () << "_Servant::subscribe (" << endl
          << "const char *publisher_name," << endl
-         << STRS[COMP_ECB] << "_ptr subscribe" << endl
-         << ")" << endl
-         << STRS[EXCP_START] << " "
-         << STRS[EXCP_SYS] << "," << endl
-         << STRS[EXCP_IN] << "," << endl
-         << STRS[EXCP_IC] << "," << endl
-         << STRS[EXCP_ECL] << "))" << endl
+         << STRS[COMP_ECB] << "_ptr subscribe)" << endl
          << "{";
 
       if (swapping)
@@ -3431,12 +3287,11 @@ namespace
              << endl;
         }
 
-      os << "// Just in case there are no if blocks" << endl
+      os << "/// Just in case there are no if blocks" << endl
          << STRS[ACE_UA] << " (subscribe);" << endl
          << "if (publisher_name == 0)" << endl
          << "{"
-         << STRS[ACE_TR] << " ( " << STRS[EXCP_IN] << " (), 0);"
-         << endl
+         << "throw " << STRS[EXCP_IN] << " ();"<< endl
          << "}";
 
       // Generate an IF block in for each publisher in subscribe().
@@ -3456,19 +3311,14 @@ namespace
         component_emitter.traverse (t);
       }
 
-      os << STRS[ACE_TR] << " ( " << STRS[EXCP_IN] << " (), 0);" << endl
+      os << "throw " << STRS[EXCP_IN] << " ();" << endl
          << "}";
 
       os << STRS[COMP_ECB] << "_ptr" << endl
          << t.name () << "_Servant::unsubscribe ("
          << endl
          << "const char *publisher_name," << endl
-         << STRS[COMP_CK] << " *ck" << endl
-         << ")" << endl
-         << STRS[EXCP_START] << " "
-         << STRS[EXCP_SYS] << "," << endl
-         << STRS[EXCP_IN] << "," << endl
-         << STRS[EXCP_IC] << "))" << endl
+         << STRS[COMP_CK] << " *ck)" << endl
          << "{";
 
       if (swapping)
@@ -3477,13 +3327,12 @@ namespace
            << endl;
       }
 
-      os << "// Just in case there are no if blocks" << endl
+      os << "/// Just in case there are no if blocks" << endl
          << STRS[ACE_UA] << " (ck);" << endl
          << "if (publisher_name == 0)" << endl
          << "{"
-         << STRS[ACE_TR] << " ( "
-         << STRS[EXCP_IN] << " ()," << endl
-         << STRS[COMP_ECB] << "::_nil ());" << endl
+         << "throw "
+         << STRS[EXCP_IN] << " ();" << endl
          << "}";
 
       // Generate an IF block in for each publisher in unsubscribe().
@@ -3503,9 +3352,8 @@ namespace
         component_emitter.traverse (t);
       }
 
-      os << STRS[ACE_TR] << " ( "
-         << STRS[EXCP_IN] << " ()," << endl
-         << STRS[COMP_ECB] << "::_nil ());" << endl
+      os << "throw "
+         << STRS[EXCP_IN] << " ();" << endl
          << "}";
 
       // Generate connect() and disconnect() for each emits declaration.
@@ -3528,10 +3376,7 @@ namespace
       os << "::CORBA::Object_ptr" << endl
          << t.name ()
          << "_Servant::get_facet_executor (" << endl
-         << "const char *name" << endl
-         << ")" << endl
-         << STRS[EXCP_START] << " "
-         << STRS[EXCP_SYS] << "))" << endl
+         << "const char *name)" << endl
          << "{";
 
       if (swapping)
@@ -3542,8 +3387,7 @@ namespace
 
       os << "if (name == 0)" << endl
          << "{"
-         << STRS[ACE_TR] << " ( " << STRS[EXCP_BP] << "," << endl
-         << "::CORBA::Object::_nil ());" << endl
+         << "throw " << STRS[EXCP_BP] << " ();" << endl
          << "}";
 
 
@@ -3567,7 +3411,7 @@ namespace
       os << "return ::CORBA::Object::_nil ();"
          << "}";
 
-      os << "// Supported operations." << endl << endl;
+      os << "/// Supported operations." << endl << endl;
 
       // Generate operations for all supported interfaces.
       {
@@ -3597,10 +3441,8 @@ namespace
 
         Traversal::Receives receives;
         Traversal::Belongs returns;
-        Traversal::Raises raises;
         operation_emitter.edge_traverser (receives);
         operation_emitter.edge_traverser (returns);
-        operation_emitter.edge_traverser (raises);
 
         ParameterEmitter<Traversal::InParameter> in_param (ctx);
         ParameterEmitter<Traversal::InOutParameter> inout_param (ctx);
@@ -3612,7 +3454,6 @@ namespace
         ReturnTypeNameEmitter return_type_emitter (ctx);
         FullTypeNameEmitter type_name_emitter (ctx);
         returns.node_traverser (return_type_emitter);
-        raises.node_traverser (type_name_emitter);
 
         Traversal::Belongs in_belongs, inout_belongs, out_belongs;
         in_param.edge_traverser (in_belongs);
@@ -3630,7 +3471,7 @@ namespace
       }
 
       // Generate operations for component attributes.
-      os << "// Component attribute operations." << endl << endl;
+      os << "/// Component attribute operations." << endl << endl;
 
       {
         Traversal::Component component_emitter;
@@ -3648,15 +3489,12 @@ namespace
         component_emitter.traverse (t);
       }
 
-      os << "// Private method to populate the port tables."
+      os << "/// Private method to populate the port tables."
          << endl;
 
       os << "void" << endl
-         << t.name () << "_Servant::populate_port_tables (" << endl
-         << ")" << endl
-         << STRS[EXCP_SNGL] << endl
+         << t.name () << "_Servant::populate_port_tables ()" << endl
          << "{"
-         << ";"
          << "::CORBA::Object_var obj_var;"
          << "::Components::EventConsumerBase_var ecb_var;" << endl;
 
@@ -3798,22 +3636,8 @@ namespace
       }
 
       virtual void
-      raises_none (SemanticGraph::HomeFactory&)
+      raises (SemanticGraph::HomeFactory&)
       {
-        os << STRS[EXCP_SNGL];
-      }
-
-      virtual void
-      raises_pre (SemanticGraph::HomeFactory&)
-      {
-        os << STRS[EXCP_START] << " "
-           << STRS[EXCP_SYS] << "," << endl;
-      }
-
-      virtual void
-      raises_post (SemanticGraph::HomeFactory&)
-      {
-        os << "))";
       }
 
       virtual void
@@ -3937,33 +3761,15 @@ namespace
       }
 
       virtual void
-      raises_none (SemanticGraph::HomeFinder&)
+      raises (SemanticGraph::HomeFinder&)
       {
-        os << STRS[EXCP_SNGL];
       }
 
       virtual void
-      raises_pre (SemanticGraph::HomeFinder&)
-      {
-        os << STRS[EXCP_START] << " "
-           << STRS[EXCP_SYS] << "," << endl;
-      }
-
-      virtual void
-      raises_post (SemanticGraph::HomeFinder&)
-      {
-        os << "))";
-      }
-
-      virtual void
-      post (SemanticGraph::HomeFinder& hf)
+      post (SemanticGraph::HomeFinder&)
       {
         os << "{"
-           << STRS[ACE_TR] << " ( ::CORBA::NO_IMPLEMENT ()," << endl;
-
-        Traversal::HomeFinder::returns (hf, simple_returns_);
-
-        os << "::_nil ());"
+           << "throw ::CORBA::NO_IMPLEMENT ();" << endl
            << "}";
       }
 
@@ -4035,7 +3841,7 @@ namespace
          << "{"
          << "}";
 
-      os << "// Home operations." << endl << endl;
+      os << "/// Home operations." << endl << endl;
 
       {
         Traversal::Home home_emitter;
@@ -4052,10 +3858,8 @@ namespace
 
         Traversal::Receives receives;
         Traversal::Belongs returns;
-        Traversal::Raises raises;
         home_operation_emitter.edge_traverser (receives);
         home_operation_emitter.edge_traverser (returns);
-        home_operation_emitter.edge_traverser (raises);
 
         ParameterEmitter<Traversal::InParameter> in_param (ctx);
         ParameterEmitter<Traversal::InOutParameter> inout_param (ctx);
@@ -4067,7 +3871,6 @@ namespace
         ReturnTypeNameEmitter return_type_emitter (ctx);
         FullTypeNameEmitter type_name_emitter (ctx);
         returns.node_traverser (return_type_emitter);
-        raises.node_traverser (type_name_emitter);
 
         Traversal::Belongs in_belongs, inout_belongs, out_belongs;
         in_param.edge_traverser (in_belongs);
@@ -4084,7 +3887,7 @@ namespace
         home_emitter.traverse (t);
       }
 
-      os << "// Home supported interface operations." << endl << endl;
+      os << "/// Home supported interface operations." << endl << endl;
 
       {
         Traversal::Home home_emitter;
@@ -4113,10 +3916,8 @@ namespace
 
         Traversal::Receives receives;
         Traversal::Belongs returns;
-        Traversal::Raises raises;
         operation_emitter.edge_traverser (receives);
         operation_emitter.edge_traverser (returns);
-        operation_emitter.edge_traverser (raises);
 
         ParameterEmitter<Traversal::InParameter> in_param (ctx);
         ParameterEmitter<Traversal::InOutParameter> inout_param (ctx);
@@ -4128,7 +3929,6 @@ namespace
         ReturnTypeNameEmitter return_type_emitter (ctx);
         FullTypeNameEmitter type_name_emitter (ctx);
         returns.node_traverser (return_type_emitter);
-        raises.node_traverser (type_name_emitter);
 
         Traversal::Belongs in_belongs, inout_belongs, out_belongs;
         in_param.edge_traverser (in_belongs);
@@ -4145,7 +3945,7 @@ namespace
         home_emitter.traverse (t);
       }
 
-      os << "// Home factory and finder operations." << endl << endl;
+      os << "/// Home factory and finder operations." << endl << endl;
 
       {
         Traversal::Home home_emitter;
@@ -4164,13 +3964,10 @@ namespace
 
         Traversal::Receives receives;
         Traversal::Belongs returns;
-        Traversal::Raises raises;
         factory_operation_emitter.edge_traverser (receives);
         factory_operation_emitter.edge_traverser (returns);
-        factory_operation_emitter.edge_traverser (raises);
         finder_operation_emitter.edge_traverser (receives);
         finder_operation_emitter.edge_traverser (returns);
-        finder_operation_emitter.edge_traverser (raises);
 
         ParameterEmitter<Traversal::InParameter> in_param (ctx);
         ParameterEmitter<Traversal::InOutParameter> inout_param (ctx);
@@ -4182,7 +3979,6 @@ namespace
         ReturnTypeNameEmitter return_type_emitter (ctx);
         FullTypeNameEmitter type_name_emitter (ctx);
         returns.node_traverser (return_type_emitter);
-        raises.node_traverser (type_name_emitter);
 
         Traversal::Belongs in_belongs, inout_belongs, out_belongs;
         in_param.edge_traverser (in_belongs);
@@ -4200,7 +3996,7 @@ namespace
       }
 
       // Generate operations for component attributes.
-      os << "// Home attribute operations." << endl << endl;
+      os << "/// Home attribute operations." << endl << endl;
 
       {
         Traversal::Home home_emitter;
@@ -4238,8 +4034,7 @@ namespace
          << "create" << name << "_Servant (" << endl
          << "::Components::HomeExecutorBase_ptr p," << endl
          << "::CIAO::Session_Container *c," << endl
-         << "const char *ins_name" << endl
-         << ")" << endl
+         << "const char *ins_name)" << endl
          << "{"
          << "if (p == 0)" << endl
          << "{"
@@ -4248,18 +4043,12 @@ namespace
          << t.scoped_name ().scope_name () << "::CCM_"
          << t.name () << "_var x =" << endl
          << t.scoped_name ().scope_name () << "::CCM_" << t.name ()
-         << "::_narrow (" << endl
-         << "p" << endl
-         << ");"
-         << endl
+         << "::_narrow (p);" << endl
          << "if (::CORBA::is_nil (x.in ()))" << endl
          << "{"
          << "return 0;" << endl
          << "}"
-         << "return new" << endl;
-
-      os << t.name () << "_Servant (" << endl
-         << "x.in ()," << endl
+         << "return new " << t.name () << "_Servant (x.in ()," << endl
          << "ins_name," << endl
          << "c);" << endl
          << "}";
@@ -4390,6 +4179,7 @@ ServantSourceEmitter::pre (TranslationUnit&)
      << "#include \"ciao/Servant_Activator.h\"" << endl
      << (swapping ? "#include \"ciao/Dynamic_Component_Activator.h\"\n" : "")
      << "#include \"ciao/Port_Activator_T.h\"" << endl
+     << "#include \"tao/SystemException.h\"" << endl
      << "#include \"ace/SString.h\"" << endl << endl;
 }
 

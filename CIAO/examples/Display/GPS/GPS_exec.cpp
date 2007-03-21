@@ -10,14 +10,12 @@
 // Operations from HUDisplay::position
 CORBA::Long
 MyImpl::Position_Impl::posx ()
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return component_.posx();
 }
 
 CORBA::Long
 MyImpl::Position_Impl::posy ()
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return component_.posy();
 }
@@ -39,7 +37,6 @@ MyImpl::GPS_exec_i::~GPS_exec_i ()
 // Operations from HUDisplay::GPS
   HUDisplay::CCM_position_ptr
   MyImpl::GPS_exec_i::get_MyLocation ()
-    ACE_THROW_SPEC ((CORBA::SystemException))
   {
 //     ACE_DEBUG ((LM_DEBUG,
 //                 "GPS_exec::get_MyLocation called\n "));
@@ -48,7 +45,6 @@ MyImpl::GPS_exec_i::~GPS_exec_i ()
 
 void
 MyImpl::GPS_exec_i::push_Refresh (HUDisplay::tick *)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 //   ACE_DEBUG ((LM_DEBUG,
 // 	      ACE_TEXT ("GPS: Received Refresh Event\n")));
@@ -65,14 +61,12 @@ MyImpl::GPS_exec_i::push_Refresh (HUDisplay::tick *)
 
 CORBA::Long
 MyImpl::GPS_exec_i::posx ()
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->positionx_;
 }
 
 CORBA::Long
 MyImpl::GPS_exec_i::posy ()
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->positiony_;
 }
@@ -81,8 +75,6 @@ MyImpl::GPS_exec_i::posy ()
 // Operations from Components::SessionComponent
 void
 MyImpl::GPS_exec_i::set_session_context (Components::SessionContext_ptr ctx)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   Components::CCMException))
 {
   if (CIAO::debug_level () > 0)
     ACE_DEBUG ((LM_DEBUG, "MyImpl::GPS_exec_i::set_session_context\n"));
@@ -97,15 +89,11 @@ MyImpl::GPS_exec_i::set_session_context (Components::SessionContext_ptr ctx)
 
 void
 MyImpl::GPS_exec_i::ciao_preactivate ()
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   Components::CCMException))
 {
 }
 
 void
 MyImpl::GPS_exec_i::ccm_activate ()
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   Components::CCMException))
 {
   if (CIAO::debug_level () > 0)
     ACE_DEBUG ((LM_DEBUG, "MyImpl::GPS_exec_i::ccm_activate\n"));
@@ -113,15 +101,11 @@ MyImpl::GPS_exec_i::ccm_activate ()
 
 void
 MyImpl::GPS_exec_i::ciao_postactivate ()
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   Components::CCMException))
 {
 }
 
 void
 MyImpl::GPS_exec_i::ccm_passivate ()
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   Components::CCMException))
 {
   if (CIAO::debug_level () > 0)
     ACE_DEBUG ((LM_DEBUG, "MyImpl::GPS_exec_i::ccm_passivate\n"));
@@ -129,8 +113,6 @@ MyImpl::GPS_exec_i::ccm_passivate ()
 
 void
 MyImpl::GPS_exec_i::ccm_remove ()
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   Components::CCMException))
 {
   if (CIAO::debug_level () > 0)
     ACE_DEBUG ((LM_DEBUG, "MyImpl::GPS_exec_i::ccm_remove\n"));
@@ -152,8 +134,6 @@ MyImpl::GPSHome_exec_i::~GPSHome_exec_i ()
 
 ::Components::EnterpriseComponent_ptr
 MyImpl::GPSHome_exec_i::create ()
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   Components::CCMException))
 {
   return new MyImpl::GPS_exec_i;
 }

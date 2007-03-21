@@ -1,21 +1,18 @@
 // -*- C++ -*-
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO
-//
-// = FILENAME
-//    UTF16_BOM_Factory.h
-//
-// = DESCRIPTION
-//    Loader for an instance of the UTF16_BOM_Translator.
-//
-// = AUTHOR
-//    Phil Mesnier <mesnier_p@ociweb.com>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    UTF16_BOM_Factory.h
+ *
+ *  $Id$
+ *
+ *  Loader for an instance of the UTF16_BOM_Translator.
+ *
+ *
+ *  @author Phil Mesnier <mesnier_p@ociweb.com>
+ */
+//=============================================================================
+
 
 #ifndef UTF16_BOM_FACTORY_H
 #define UTF16_BOM_FACTORY_H

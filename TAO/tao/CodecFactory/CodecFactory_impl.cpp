@@ -9,6 +9,7 @@
 #include "tao/ORB_Core.h"
 #include "tao/Codeset_Manager.h"
 #include "ace/Codeset_Symbols.h"
+#include "ace/CORBA_macros.h"
 
 ACE_RCSID (CodecFactory_impl,
            CodecFactory,
@@ -22,11 +23,7 @@ TAO_CodecFactory::TAO_CodecFactory (TAO_ORB_Core * orb_core)
 }
 
 IOP::Codec_ptr
-TAO_CodecFactory::create_codec_with_codesets (const IOP::Encoding_1_2 & enc
-                                              )
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     IOP::CodecFactory::UnknownEncoding,
-                     IOP::CodecFactory::UnsupportedCodeset))
+TAO_CodecFactory::create_codec_with_codesets (const IOP::Encoding_1_2 & enc)
 {
   TAO_Codeset_Translator_Base *char_trans = 0;
   TAO_Codeset_Translator_Base *wchar_trans = 0;
@@ -44,48 +41,37 @@ TAO_CodecFactory::create_codec_with_codesets (const IOP::Encoding_1_2 & enc
   else
     {
       // No codeset manager, so also raise an unsupported codeset
-      ACE_THROW_RETURN (IOP::CodecFactory::UnsupportedCodeset (
-                          enc.wchar_codeset),
-                        IOP::Codec::_nil ());
+      throw IOP::CodecFactory::UnsupportedCodeset (enc.wchar_codeset);
     }
 
   if (wchar_trans == 0 &&
       enc.wchar_codeset != ACE_CODESET_ID_ISO_UTF_16 &&
       enc.wchar_codeset != ncsw)
     {
-      ACE_THROW_RETURN (IOP::CodecFactory::UnsupportedCodeset (
-                          enc.wchar_codeset),
-                        IOP::Codec::_nil ());
+      throw IOP::CodecFactory::UnsupportedCodeset (enc.wchar_codeset);
     }
 
   if (char_trans == 0 &&
       enc.char_codeset != ncsc)
     {
-      ACE_THROW_RETURN (IOP::CodecFactory::UnsupportedCodeset (
-                          enc.char_codeset),
-                        IOP::Codec::_nil ());
+      throw IOP::CodecFactory::UnsupportedCodeset (enc.char_codeset);
     }
 
   return this->create_codec_i (enc.major_version,
                                enc.minor_version,
                                enc.format,
                                char_trans,
-                               wchar_trans
-                              );
+                               wchar_trans);
 }
 
 IOP::Codec_ptr
-TAO_CodecFactory::create_codec (const IOP::Encoding & enc
-                                )
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   IOP::CodecFactory::UnknownEncoding))
+TAO_CodecFactory::create_codec (const IOP::Encoding & enc)
 {
   return this->create_codec_i (enc.major_version,
                                enc.minor_version,
                                enc.format,
                                0,
-                               0
-                              );
+                               0);
 }
 
 IOP::Codec_ptr
@@ -93,10 +79,7 @@ TAO_CodecFactory::create_codec_i (CORBA::Octet major,
                                   CORBA::Octet minor,
                                   IOP::EncodingFormat encoding_format,
                                   TAO_Codeset_Translator_Base * char_trans,
-                                  TAO_Codeset_Translator_Base * wchar_trans
-                                  )
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   IOP::CodecFactory::UnknownEncoding))
+                                  TAO_Codeset_Translator_Base * wchar_trans)
 {
   // @todo: Ideally we should have some sort of CodecFactory
   //        registry to make it possible to add factories
@@ -117,12 +100,11 @@ TAO_CodecFactory::create_codec_i (CORBA::Octet major,
       if (major < 1)
         {
           // There is no such thing as a "0.x" CDR encapsulation.
-          ACE_THROW_RETURN (CORBA::BAD_PARAM (
-                              CORBA::SystemException::_tao_minor_code (
-                                0,
-                                EINVAL),
-                              CORBA::COMPLETED_NO),
-                            IOP::Codec::_nil ());
+          throw ::CORBA::BAD_PARAM (
+            CORBA::SystemException::_tao_minor_code (
+              0,
+              EINVAL),
+            CORBA::COMPLETED_NO);
         }
 
       ACE_NEW_THROW_EX (codec,
@@ -139,8 +121,7 @@ TAO_CodecFactory::create_codec_i (CORBA::Octet major,
       break;
 
     default:
-      ACE_THROW_RETURN (IOP::CodecFactory::UnknownEncoding (),
-                        IOP::Codec::_nil ());
+      throw IOP::CodecFactory::UnknownEncoding ();
 
     }
 

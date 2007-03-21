@@ -174,10 +174,9 @@ TAO_RT_ORB_Loader::init (int argc, ACE_TCHAR* argv[])
       PortableInterceptor::ORBInitializer_var orb_initializer;
       orb_initializer = temp_orb_initializer;
 
-      PortableInterceptor::register_orb_initializer (orb_initializer.in ()
-                                                    );
+      PortableInterceptor::register_orb_initializer (orb_initializer.in ());
     }
-  catch ( ::CORBA::Exception& ex)
+  catch (const ::CORBA::Exception& ex)
     {
       ex._tao_print_exception (
         "Unexpected exception caught while "

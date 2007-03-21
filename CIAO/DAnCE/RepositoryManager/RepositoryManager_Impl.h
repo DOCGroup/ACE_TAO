@@ -63,22 +63,14 @@ public:
   virtual
   void shutdown (
 
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
+    );
 
   virtual
   void installPackage (
       const char * installationName,
       const char * location,
       ::CORBA::Boolean replace
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      ::Deployment::NameExists,
-      ::Deployment::PackageError
-    ));
+    );
 
   virtual
   void createPackage (
@@ -86,63 +78,37 @@ public:
       const ::Deployment::PackageConfiguration & package,
       const char * baseLocation,
       ::CORBA::Boolean replace
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      ::Deployment::NameExists,
-      ::Deployment::PackageError
-    ));
+    );
 
   virtual
   ::Deployment::PackageConfiguration * findPackageByName (
       const char * name
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      ::Deployment::NoSuchName
-    ));
+    );
 
   virtual
   ::Deployment::PackageConfiguration * findPackageByUUID (
       const char * UUID
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      ::Deployment::NoSuchName
-    ));
+    );
 
   virtual
   ::CORBA::StringSeq * findNamesByType (
       const char * type
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
+    );
 
   virtual
   ::CORBA::StringSeq * getAllNames (
 
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
+    );
 
   virtual
   ::CORBA::StringSeq * getAllTypes (
 
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
+    );
 
   virtual
   void deletePackage (
       const char * installationName
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      ::Deployment::NoSuchName
-    ));
+    );
 
 protected:
 
@@ -190,7 +156,7 @@ protected:
   /// @note extraction location is path/*archive_name*/
   /// @retval 1 on success
   /// @retval 0 on error
-  int remove_extracted_package (const char* package_path, const char* extraction_location);
+  int remove_extracted_package (const char* package_path);
 
   /// Function to extract the type of the component from
   /// the PackageConfiguration and update the interface map
@@ -208,6 +174,9 @@ protected:
 
   /// Function to dump the state of the RepositoryManager
   void dump (void);
+
+  /// Function to save the package info of the RepositoryManager
+  void save (void);
 
 private:
   /// Cached information about the installed PackageConfigurations

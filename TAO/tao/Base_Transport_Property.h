@@ -64,7 +64,6 @@ public:
 
   /// Generate hash value for our class
   virtual u_long hash (void) const;
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -188,8 +188,6 @@ extern "C"
 #define ACE_HAS_POWERPC_TIMER
 #endif
 
-typedef union sigval sigval_t;
-
 /* MIKEC Addtions */
 #define ACE_HAS_NONCONST_SELECT_TIMEVAL
 #include <sys/uio.h> // needed to define iovec

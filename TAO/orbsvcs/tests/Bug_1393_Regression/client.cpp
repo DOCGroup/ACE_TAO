@@ -9,7 +9,7 @@ int main(int argc, char** argv)
 {
   try
     {
-      CORBA::ORB_var orb_ = CORBA::ORB_init (argc, argv, 0);
+      CORBA::ORB_var orb_ = CORBA::ORB_init (argc, argv);
 
       CORBA::Object_var object =
         orb_->resolve_initial_references ("InterfaceRepository");

@@ -15,6 +15,10 @@ namespace CCF
     {
       struct HomeExecutor
       {
+        virtual ~HomeExecutor ()
+        {
+        }
+        
         virtual void
         begin (SimpleIdentifierPtr const& id) = 0;
 

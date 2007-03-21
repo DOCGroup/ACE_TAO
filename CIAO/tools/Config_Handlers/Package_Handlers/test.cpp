@@ -4,7 +4,7 @@
 
 #include "Deployment.hpp"
 #include "PCD_Handler.h"
-#include "ciao/Deployment_Packaging_DataC.h"
+#include "DAnCE/Deployment/Deployment_Packaging_DataC.h"
 #include "SID_Handler.h"
 #include "ace/Get_Opt.h"
 #include "Utils/XML_Helper.h"
@@ -55,7 +55,7 @@ int main (int argc, char *argv[])
         return 1;
 
       // Initialize an ORB so Any will work
-      CORBA::ORB_ptr orb = CORBA::ORB_init (argc, argv, "");
+      CORBA::ORB_ptr orb = CORBA::ORB_init (argc, argv);
       ACE_UNUSED_ARG (orb);
 
 

@@ -83,36 +83,31 @@ TAO::SSLIOP_Credentials::~SSLIOP_Credentials (void)
 
 char *
 TAO::SSLIOP_Credentials::creds_id (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup (this->id_.in ());
 }
 
 SecurityLevel3::CredentialsUsage
 TAO::SSLIOP_Credentials::creds_usage (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return SecurityLevel3::CU_Indefinite;
 }
 
 TimeBase::UtcT
 TAO::SSLIOP_Credentials::expiry_time (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->expiry_time_;
 }
 
 SecurityLevel3::CredentialsState
 TAO::SSLIOP_Credentials::creds_state (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   const ::X509 *x = this->x509_.in ();
 
   // The pointer to the underlying X509 structure should only be zero
   // if destroy() was called on this Credentials object.
   if (x == 0)
-    ACE_THROW_RETURN (CORBA::BAD_OPERATION (),
-                      SecurityLevel3::CS_Invalid);
+    throw CORBA::BAD_OPERATION ();
 
   if (this->creds_state_ == SecurityLevel3::CS_Valid)
     {
@@ -124,8 +119,7 @@ TAO::SSLIOP_Credentials::creds_state (void)
       if (after_status == 0)
         {
           // Error in certificate's "not after" field.
-          ACE_THROW_RETURN (CORBA::BAD_PARAM (),  // @@ Correct exception?
-                            SecurityLevel3::CS_Invalid);
+          throw CORBA::BAD_PARAM ();
         }
       else if (after_status > 0)     // Certificate has expired.
         this->creds_state_ = SecurityLevel3::CS_Expired;
@@ -140,8 +134,7 @@ TAO::SSLIOP_Credentials::creds_state (void)
       if (before_status == 0)
         {
           // Error in certificate's "not before" field.
-          ACE_THROW_RETURN (CORBA::BAD_PARAM (),  // @@ Correct exception?
-                            SecurityLevel3::CS_Invalid);
+          throw CORBA::BAD_PARAM ();
         }
       else if (before_status < 0)     // Certificate is now valid.
         this->creds_state_ = SecurityLevel3::CS_Valid;
@@ -153,14 +146,12 @@ TAO::SSLIOP_Credentials::creds_state (void)
 char *
 TAO::SSLIOP_Credentials::add_relinquished_listener (
     SecurityLevel3::RelinquishedCredentialsListener_ptr /* listener */)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
+  throw CORBA::NO_IMPLEMENT ();
 }
 
 void
 TAO::SSLIOP_Credentials::remove_relinquished_listener (const char * /* id */)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   throw CORBA::NO_IMPLEMENT ();
 }

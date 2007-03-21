@@ -30,8 +30,7 @@ public:
   client_i (server_ptr s);
   virtual ~client_i (void);
 
-  virtual void test_reply (const char *msg)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void test_reply (const char *msg);
 
 private:
 

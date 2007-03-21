@@ -30,6 +30,7 @@ libnetsvcs_la_SOURCES = \
   Name_Handler.cpp \
   Server_Logging_Handler.cpp \
   Server_Logging_Handler_T.cpp \
+  Time_Request_Reply.cpp \
   TS_Clerk_Handler.cpp \
   TS_Server_Handler.cpp \
   Token_Handler.cpp
@@ -42,6 +43,7 @@ noinst_HEADERS = \
   Server_Logging_Handler.h \
   Server_Logging_Handler_T.cpp \
   Server_Logging_Handler_T.h \
+  Time_Request_Reply.h \
   TS_Clerk_Handler.h \
   TS_Server_Handler.h \
   Token_Handler.h

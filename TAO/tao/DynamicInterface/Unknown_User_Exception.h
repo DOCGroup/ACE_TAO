@@ -79,15 +79,12 @@ namespace CORBA
     virtual void _raise (void) const;
 
     virtual CORBA::Exception *_tao_duplicate (void) const;
-    virtual void _tao_encode (TAO_OutputCDR &cdr
-                              ) const;
-    virtual void _tao_decode (TAO_InputCDR &cdr
-                             );
+    virtual void _tao_encode (TAO_OutputCDR &cdr) const;
+    virtual void _tao_decode (TAO_InputCDR &cdr);
 
     /// Narrow to an UnknowUserException.
     static UnknownUserException * _downcast (CORBA::Exception *ex);
-    static UnknownUserException const * _downcast (
-      CORBA::Exception const * ex);
+    static UnknownUserException const * _downcast (CORBA::Exception const * ex);
 
     // = TAO specific extension.
 

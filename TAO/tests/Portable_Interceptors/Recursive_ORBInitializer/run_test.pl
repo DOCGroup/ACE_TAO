@@ -16,7 +16,7 @@ else {
 }
 print STDERR "\n==== Running Recursive ORBInitializer test ====\n";
 
-$client = $CL->SpawnWaitKill (5);
+$client = $CL->SpawnWaitKill ($PerlACE::wait_interval_for_process_creation);
 
 if ($client != 0) {
     print STDERR "ERROR: client returned $client\n";

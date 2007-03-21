@@ -16,8 +16,7 @@ class CSD_TP_Foo_B_Export Callback_i
 
     virtual ~Callback_i();
 
-    virtual void test_method(void)
-      ACE_THROW_SPEC((CORBA::SystemException));
+    virtual void test_method(void);
 
     void gather_stats(Foo_B_Statistics& stats);
 

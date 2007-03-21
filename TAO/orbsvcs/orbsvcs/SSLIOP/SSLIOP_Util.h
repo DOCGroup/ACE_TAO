@@ -48,10 +48,8 @@ namespace TAO
     class Util
     {
     public:
-
       /// Access Current.
-      static TAO::SSLIOP::Current_ptr current (
-        TAO_ORB_Core *orb_core);
+      static TAO::SSLIOP::Current_ptr current (TAO_ORB_Core *orb_core);
 
     };
 

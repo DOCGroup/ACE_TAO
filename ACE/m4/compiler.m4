@@ -338,10 +338,10 @@ dnl @todo Clean up / consolidate these conditionals
      [
       case "${enableval}" in
        yes)
-	 ace_user_symbol_visibility=yes
+         ace_user_enable_symbol_visibility=yes
 	 ;;
        no)
-	 ace_user_symbol_visibility=no
+         ace_user_enable_symbol_visibility=no
 	 ;;
        *)
 	 AC_MSG_ERROR([bad value ${enableval} for --enable-symbol-visibility])
@@ -366,7 +366,7 @@ dnl @todo Clean up / consolidate these conditionals
 			])
    fi
  fi
- 
+
  dnl Additional flags
  if test "$GXX" = yes; then
    case `$CXX --version` in

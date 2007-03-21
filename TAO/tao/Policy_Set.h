@@ -54,8 +54,7 @@ public:
 
   /// Copy the state from @a source, it uses the copy() operator to
   /// obtain independent copies of all the policies.
-  void copy_from (TAO_Policy_Set* source
-                 );
+  void copy_from (TAO_Policy_Set* source);
 
   /**
    * Modify the list of policies to include @a policies.
@@ -65,18 +64,15 @@ public:
    * No attempt is made to validate the policies for consistency.
    */
   void set_policy_overrides (const CORBA::PolicyList & policies,
-                             CORBA::SetOverrideType set_add
-                            );
+                             CORBA::SetOverrideType set_add);
 
   /// Get the values (if any) for the policies in @a types, if @a
   /// types is an empty list the method returns *all* the current
   /// policies.
-  CORBA::PolicyList * get_policy_overrides (const CORBA::PolicyTypeSeq & types
-                                           );
+  CORBA::PolicyList * get_policy_overrides (const CORBA::PolicyTypeSeq & types);
 
   /// Obtain a single policy.
-  CORBA::Policy_ptr get_policy (CORBA::PolicyType policy
-                               );
+  CORBA::Policy_ptr get_policy (CORBA::PolicyType policy);
 
   /// Obtain a cached policy for speedy lookups.
   /**
@@ -90,12 +86,10 @@ public:
   CORBA::Policy_ptr get_cached_const_policy (TAO_Cached_Policy_Type type) const;
 
   /// Obtain a single cached policy.
-  CORBA::Policy_ptr get_cached_policy (TAO_Cached_Policy_Type type
-                                      );
+  CORBA::Policy_ptr get_cached_policy (TAO_Cached_Policy_Type type);
 
   /// Utility method to set a single policy.
-  void set_policy (const CORBA::Policy_ptr policy
-                  );
+  void set_policy (const CORBA::Policy_ptr policy);
 
   /// Returns the policy at the specified index.
   /// @c CORBA::Policy::_nil () is returned if the policy doesn't

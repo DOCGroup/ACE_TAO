@@ -45,13 +45,12 @@ extern "C"
 {
 #endif /* __cplusplus */
 
+   typedef u_int ACE_RANDR_TYPE;
 #if defined (ACE_HAS_BROKEN_RANDR)
    // The SunOS 5.4.X version of rand_r is inconsistent with the header
    // files...
-   typedef u_int ACE_RANDR_TYPE;
    int rand_r (ACE_RANDR_TYPE seed);
 #else
-   typedef u_int ACE_RANDR_TYPE;
 #endif /* ACE_HAS_BROKEN_RANDR */
 
 #if defined (DIGITAL_UNIX)

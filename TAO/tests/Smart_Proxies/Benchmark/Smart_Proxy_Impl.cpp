@@ -28,7 +28,6 @@ Smart_Test_Proxy::Smart_Test_Proxy (Test_ptr proxy)
 
 CORBA::Short
 Smart_Test_Proxy::box_prices (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (this->price_ == 0)
     {

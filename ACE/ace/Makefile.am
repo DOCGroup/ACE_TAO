@@ -166,6 +166,7 @@ libACE_la_SOURCES = \
   Naming_Context.cpp \
   Netlink_Addr.cpp \
   Notification_Strategy.cpp \
+  Notification_Queue.cpp \
   OS_Errno.cpp \
   OS_Log_Msg_Attributes.cpp \
   OS_NS_Thread.cpp \
@@ -307,7 +308,6 @@ libACE_la_SOURCES = \
   Thread_Manager.cpp \
   Thread_Mutex.cpp \
   Thread_Semaphore.cpp \
-  Time_Request_Reply.cpp \
   Time_Value.cpp \
   Timeprobe.cpp \
   Timer_Hash.cpp \
@@ -700,6 +700,8 @@ nobase_include_HEADERS += \
   Node.h \
   Notification_Strategy.h \
   Notification_Strategy.inl \
+  Notification_Queue.h \
+  Notification_Queue.inl \
   Null_Barrier.h \
   Null_Condition.h \
   Null_Mutex.h \
@@ -970,8 +972,6 @@ nobase_include_HEADERS += \
   Svc_Conf_Tokens.h \
   Svc_Handler.cpp \
   Svc_Handler.h \
-  Swap.h \
-  Swap.inl \
   Synch.h \
   Synch_Options.h \
   Synch_T.cpp \
@@ -1016,7 +1016,6 @@ nobase_include_HEADERS += \
   Thread_Mutex.inl \
   Thread_Semaphore.h \
   Thread_Semaphore.inl \
-  Time_Request_Reply.h \
   Time_Value.h \
   Time_Value.inl \
   Timeprobe.h \
@@ -1096,6 +1095,7 @@ nobase_include_HEADERS += \
   XTI_ATM_Mcast.inl \
   ace_wchar.h \
   ace_wchar.inl \
+  checked_iterator.h \
   config-WinCE.h \
   config-all.h \
   config-borland-common.h \

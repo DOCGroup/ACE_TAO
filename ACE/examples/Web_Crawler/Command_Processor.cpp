@@ -76,7 +76,6 @@ Command_Processor::destroy (void)
 {
   delete this;
   return 0;
-return 0;
 }
 
 int

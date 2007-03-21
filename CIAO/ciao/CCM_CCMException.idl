@@ -26,11 +26,10 @@ module Components
     DUPLICATE_KEY,
     FIND_ERROR,
     OBJECT_NOT_FOUND,
-    NO_SUCH_ENTITY
-    /* extended by QoS4CCM
+    NO_SUCH_ENTITY,
     QOS_ERROR,
     REGISTRATION_ERROR,
-    SERVICE_INSTALLATION_ERROR */
+    SERVICE_INSTALLATION_ERROR
   };
 
   exception CCMException

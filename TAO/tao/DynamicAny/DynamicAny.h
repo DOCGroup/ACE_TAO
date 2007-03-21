@@ -39,8 +39,7 @@ public:
   /// Creates a DynamicAny factory and returns it.
   virtual CORBA::Object_ptr create_object (CORBA::ORB_ptr orb,
                                            int argc,
-                                           ACE_TCHAR *argv [])
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                                           ACE_TCHAR *argv []);
 
   /// Used to force the initialization of the ORB code.
   static int Initializer (void);

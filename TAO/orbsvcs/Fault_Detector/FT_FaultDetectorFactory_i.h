@@ -156,16 +156,9 @@ namespace TAO
     // CORBA interface FaultDetectorFactory methods
     virtual void change_properties (
         const PortableGroup::Properties & property_set
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-        , PortableGroup::InvalidProperty
-      ));
+      );
 
-    virtual void shutdown (void)
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
+    virtual void shutdown (void);
 
     /////////////////////////////////////////
     // CORBA interface GenericFactory methods
@@ -173,29 +166,16 @@ namespace TAO
       const char * type_id,
       const PortableGroup::Criteria & the_criteria,
       PortableGroup::GenericFactory::FactoryCreationId_out factory_creation_id
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-      , PortableGroup::NoFactory
-      , PortableGroup::ObjectNotCreated
-      , PortableGroup::InvalidCriteria
-      , PortableGroup::InvalidProperty
-      , PortableGroup::CannotMeetCriteria
-    ));
+    );
 
     virtual void delete_object (
       const PortableGroup::GenericFactory::FactoryCreationId & factory_creation_id
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-      , PortableGroup::ObjectNotFound
-    ));
+    );
 
     //////////////////////////////////////////
     // CORBA interface PullMonitorable methods
 
-    virtual CORBA::Boolean is_alive (void)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+    virtual CORBA::Boolean is_alive (void);
 
     /////////////////////////
     // Implementation methods

@@ -41,6 +41,10 @@ ACE_DIR *
 ACE_OS::opendir_emulation (const ACE_TCHAR *filename)
 {
 #if defined (ACE_WIN32)
+#  if defined (ACE_HAS_WINCE) && !defined (INVALID_FILE_ATTRIBUTES)
+#    define INVALID_FILE_ATTRIBUTES 0xFFFFFFFF
+#  endif
+
   ACE_DIR *dir;
   ACE_TCHAR extra[3] = {0,0,0};
 

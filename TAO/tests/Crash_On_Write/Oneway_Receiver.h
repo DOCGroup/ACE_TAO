@@ -17,8 +17,7 @@ public:
   Oneway_Receiver (void);
 
   // = The skeleton methods
-  virtual void receive_oneway (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void receive_oneway (void);
 };
 
 #include /**/ "ace/post.h"

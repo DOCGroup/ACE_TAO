@@ -3563,6 +3563,7 @@ ACE_OS::sched_params (const ACE_Sched_Params &sched_params,
   if (sched_params.scope () == ACE_SCOPE_PROCESS)
     {
 # if defined(ACE_TANDEM_T1248_PTHREADS) || defined (ACE_HAS_PTHREAD_SCHEDPARAM)
+      ACE_UNUSED_ARG (id);
       ACE_NOTSUP_RETURN (-1);
 # else  /* ! ACE_TANDEM_T1248_PTHREADS */
       int result = ::sched_setscheduler (id == ACE_SELF ? 0 : id,
@@ -3617,8 +3618,10 @@ ACE_OS::sched_params (const ACE_Sched_Params &sched_params,
   if (id != ACE_SELF)
     ACE_NOTSUP_RETURN (-1);
 
+#   if !defined (ACE_PHARLAP_LABVIEW_RT)
   if (sched_params.quantum() != ACE_Time_Value::zero)
     EtsSetTimeSlice (sched_params.quantum().msec());
+#   endif
 
 # else
 
@@ -3637,7 +3640,9 @@ ACE_OS::sched_params (const ACE_Sched_Params &sched_params,
       // Setting the REALTIME_PRIORITY_CLASS on Windows is almost always
       // a VERY BAD THING. This include guard will allow people
       // to easily disable this feature in ACE.
-#ifndef ACE_DISABLE_WIN32_INCREASE_PRIORITY
+      // It won't work at all for Pharlap since there's no SetPriorityClass.
+#if !defined (ACE_HAS_PHARLAP) && \
+    !defined (ACE_DISABLE_WIN32_INCREASE_PRIORITY)
       // Set the priority class of this process to the REALTIME process class
       // _if_ the policy is ACE_SCHED_FIFO.  Otherwise, set to NORMAL.
       if (!::SetPriorityClass (::GetCurrentProcess (),
@@ -3661,9 +3666,10 @@ ACE_OS::sched_params (const ACE_Sched_Params &sched_params,
 # if defined (ACE_HAS_PHARLAP_RT)
       ACE_NOTSUP_RETURN (-1);
 # else
-      HANDLE hProcess = ::OpenProcess (PROCESS_SET_INFORMATION,
-                                       FALSE,
-                                       id);
+      HANDLE hProcess
+        = ::OpenProcess (PROCESS_SET_INFORMATION,
+                         FALSE,
+                         id == ACE_SELF ? ::GetCurrentProcessId() : id);
       if (!hProcess)
         {
           ACE_OS::set_errno_to_last_error();
@@ -4783,9 +4789,7 @@ ACE_OS::thr_get_affinity (ACE_hthread_t thr_id,
 {
 #if defined (ACE_HAS_PTHREAD_GETAFFINITY_NP)
   // Handle of the thread, which is NPTL thread-id, normally a big number
-  if (::pthread_getaffinity_np (thr_id,
-                                cpu_set_size,
-                                cpu_mask) != 0)
+  if (::pthread_getaffinity_np (thr_id, cpu_set_size, cpu_mask) != 0)
     {
       return -1;
     }
@@ -4796,8 +4800,7 @@ ACE_OS::thr_get_affinity (ACE_hthread_t thr_id,
   // If you are using this flag for NPTL-threads, however, please pass as a
   // thr_id process id obtained by ACE_OS::getpid ()
   ACE_UNUSED_ARG (cpu_set_size);
-  if (::sched_getaffinity(thr_id,
-                          cpu_mask) == -1)
+  if (::sched_getaffinity(thr_id, cpu_mask) == -1)
     {
       return -1;
     }
@@ -4807,9 +4810,7 @@ ACE_OS::thr_get_affinity (ACE_hthread_t thr_id,
   // linux-thread, thus making binding to cpu of that particular thread only.
   // If you are using this flag for NPTL-threads, however, please pass as a
   // thr_id process id obtained by ACE_OS::getpid ()
-  if (::sched_getaffinity(thr_id,
-                          cpu_set_size,
-                          cpu_mask) == -1)
+  if (::sched_getaffinity(thr_id, cpu_set_size, cpu_mask) == -1)
     {
       return -1;
     }
@@ -4828,9 +4829,7 @@ ACE_OS::thr_set_affinity (ACE_hthread_t thr_id,
                           const cpu_set_t * cpu_mask)
 {
 #if defined (ACE_HAS_PTHREAD_SETAFFINITY_NP)
-  if (::pthread_setaffinity_np (thr_id,
-                                cpu_set_size,
-                                cpu_mask) != 0)
+  if (::pthread_setaffinity_np (thr_id, cpu_set_size, cpu_mask) != 0)
     {
       return -1;
     }
@@ -4842,8 +4841,7 @@ ACE_OS::thr_set_affinity (ACE_hthread_t thr_id,
   // thr_id process id obtained by ACE_OS::getpid (), but whole process will bind your CPUs
   //
   ACE_UNUSED_ARG (cpu_set_size);
-  if (::sched_setaffinity (thr_id,
-                           cpu_mask) == -1)
+  if (::sched_setaffinity (thr_id, cpu_mask) == -1)
     {
       return -1;
     }
@@ -4854,9 +4852,7 @@ ACE_OS::thr_set_affinity (ACE_hthread_t thr_id,
   // If you are using this flag for NPTL-threads, however, please pass as a
   // thr_id process id obtained by ACE_OS::getpid (), but whole process will bind your CPUs
   //
-  if (::sched_setaffinity (thr_id,
-                           cpu_set_size,
-                           cpu_mask) == -1)
+  if (::sched_setaffinity (thr_id, cpu_set_size, cpu_mask) == -1)
     {
       return -1;
     }
@@ -5531,4 +5527,3 @@ vx_execae (FUNCPTR entry, char* arg, int prio, int opt, int stacksz, ...)
   return ret > 0 ? _vx_call_rc : 255;
 }
 #endif /* ACE_VXWORKS && !__RTP__ */
-

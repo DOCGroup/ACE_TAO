@@ -248,21 +248,18 @@ TAO_EC_Event_Channel_Base::disconnected (TAO_EC_ProxyPushSupplier* supplier)
 
 RtecEventChannelAdmin::ConsumerAdmin_ptr
 TAO_EC_Event_Channel_Base::for_consumers (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->consumer_admin_->_this ();
 }
 
 RtecEventChannelAdmin::SupplierAdmin_ptr
 TAO_EC_Event_Channel_Base::for_suppliers (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->supplier_admin_->_this ();
 }
 
 void
 TAO_EC_Event_Channel_Base::destroy (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->shutdown ();
 }
@@ -270,10 +267,6 @@ TAO_EC_Event_Channel_Base::destroy (void)
 RtecEventChannelAdmin::Observer_Handle
 TAO_EC_Event_Channel_Base::append_observer (
        RtecEventChannelAdmin::Observer_ptr observer)
-    ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR,
-        RtecEventChannelAdmin::EventChannel::CANT_APPEND_OBSERVER))
 {
   return this->observer_strategy_->append_observer (observer);
 }
@@ -281,10 +274,6 @@ TAO_EC_Event_Channel_Base::append_observer (
 void
 TAO_EC_Event_Channel_Base::remove_observer (
        RtecEventChannelAdmin::Observer_Handle handle)
-    ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR,
-        RtecEventChannelAdmin::EventChannel::CANT_REMOVE_OBSERVER))
 {
   this->observer_strategy_->remove_observer (handle);
 }
@@ -292,7 +281,6 @@ TAO_EC_Event_Channel_Base::remove_observer (
 void
 TAO_EC_Event_Channel_Base::for_each_consumer (
                     TAO_ESF_Worker<TAO_EC_ProxyPushSupplier> *worker)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->consumer_admin_->for_each (worker);
 }
@@ -300,7 +288,6 @@ TAO_EC_Event_Channel_Base::for_each_consumer (
 void
 TAO_EC_Event_Channel_Base::for_each_supplier (
                     TAO_ESF_Worker<TAO_EC_ProxyPushConsumer> *worker)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->supplier_admin_->for_each (worker);
 }

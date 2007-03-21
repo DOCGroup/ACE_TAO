@@ -32,8 +32,7 @@ class ST_AMH_Servant
       	ST_AMH_Servant (CORBA::ORB_ptr orb);
 
      	void test_method (Test::AMH_RoundtripResponseHandler_ptr _tao_rh,
-                        Test::Timestamp send_time)
-        ACE_THROW_SPEC ((CORBA::SystemException));
+                        Test::Timestamp send_time);
 
     protected:
       	CORBA::ORB_ptr orb_;
@@ -124,7 +123,6 @@ ST_AMH_Servant::ST_AMH_Servant (CORBA::ORB_ptr orb)
 void
 ST_AMH_Servant::test_method (Test::AMH_RoundtripResponseHandler_ptr _tao_rh,
                              Test::Timestamp send_time)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   	printf("Recieved Timestamp # %d \n", calls_received);
   	ACE_OS::sleep(1);
@@ -204,7 +202,18 @@ void ST_AMH_Server::register_servant (ST_AMH_Servant *servant)
 {
   try
     {
-      Test::Roundtrip_var roundtrip = servant->_this();
+      CORBA::Object_var poa_object =
+        this->orb_->resolve_initial_references("RootPOA");
+
+      PortableServer::POA_var root_poa =
+        PortableServer::POA::_narrow (poa_object.in ());
+
+      PortableServer::ObjectId_var id =
+        root_poa->activate_object (servant);
+
+      CORBA::Object_var object = root_poa->id_to_reference (id.in ());
+
+      Test::Roundtrip_var roundtrip = Test::Roundtrip::_narrow (object.in ());
 
       CORBA::String_var iorstr = this->orb_->object_to_string(roundtrip.in ());
 

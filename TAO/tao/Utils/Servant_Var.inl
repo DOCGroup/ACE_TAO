@@ -2,8 +2,7 @@
 //
 // $Id$
 
-#include "tao/Exception.h"
-#include "ace/Swap.h"
+#include <algorithm>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -28,9 +27,9 @@ TAO::Utils::Servant_Var<T>::_duplicate (T * p)
 
 template <class T>
 ACE_INLINE void
-TAO::Utils::Servant_Var<T>::swap (Servant_Var<T> & rhs) ACE_THROW_SPEC(())
+TAO::Utils::Servant_Var<T>::swap (Servant_Var<T> & rhs) throw ()
 {
-  ACE_Swap<T*>::swap (this->ptr_, rhs.ptr_);
+  std::swap (this->ptr_, rhs.ptr_);
 }
 
 template <class T>
@@ -74,23 +73,11 @@ TAO::Utils::Servant_Var<T>::operator= (T * p)
 }
 
 template <class T> ACE_INLINE
-TAO::Utils::Servant_Var<T>::~Servant_Var (void)
-  ACE_THROW_SPEC (())
+TAO::Utils::Servant_Var<T>::~Servant_Var (void) throw ()
 {
-  // Unfortunately, there is no throw spec on _remove_ref, so we
-  // can't assume that it will not throw.  If it does, then we are in
-  // trouble.  In any event, we can't let the exception escape our
-  // destructor.
-  try
+  if (ptr_ != 0)
     {
-      if (ptr_ != 0)
-        {
-          ptr_->_remove_ref ();
-        }
-    }
-  catch (...)
-    {
-      // Forget the exception..
+      ptr_->_remove_ref ();
     }
 }
 

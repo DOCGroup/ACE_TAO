@@ -19,12 +19,9 @@ public:
 
   void callme(Test::Peer_ptr callback,
               CORBA::ULong max_depth,
-              Test::Payload const &)
-    ACE_THROW_SPEC((CORBA::SystemException));
-  void crash(void)
-    ACE_THROW_SPEC((CORBA::SystemException));
-  void noop(void)
-    ACE_THROW_SPEC((CORBA::SystemException));
+              Test::Payload const &);
+  void crash(void);
+  void noop(void);
 
 private:
   CORBA::ORB_var orb_;

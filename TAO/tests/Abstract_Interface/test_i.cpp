@@ -11,10 +11,6 @@ ACE_RCSID (Abstract_Interface,
 
 char *
 foo_i::foo_op (const char * inarg)
-  ACE_THROW_SPEC ((
-    CORBA::SystemException,
-    BadInput
-  ))
 {
   CORBA::String_var retval = CORBA::string_dup ("bad");
 
@@ -24,8 +20,7 @@ foo_i::foo_op (const char * inarg)
     }
   else
     {
-      ACE_THROW_RETURN (BadInput ("expected \"foo_op\"\n"),
-                        retval._retn ());
+      throw BadInput ("expected \"foo_op\"\n");
     }
 
   return retval._retn ();
@@ -33,10 +28,6 @@ foo_i::foo_op (const char * inarg)
 
 char *
 foo_i::base_op (const char * inarg)
-    ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      BadInput
-    ))
 {
   CORBA::String_var retval = CORBA::string_dup ("bad");
 
@@ -46,31 +37,35 @@ foo_i::base_op (const char * inarg)
     }
   else
     {
-      ACE_THROW_RETURN (BadInput ("expected \"base_op\"\n"),
-                        retval._retn ());
+      throw BadInput ("expected \"base_op\"\n");
     }
 
   return retval._retn ();
 }
 
+passer_i::passer_i (PortableServer::POA_ptr poa)
+ : poa_ (PortableServer::POA::_duplicate (poa))
+{
+}
+
 void
 passer_i::pass_ops (base_out outarg)
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ))
 {
   foo_i *servant = 0;
   ACE_NEW (servant,
            foo_i);
+
+  PortableServer::ObjectId_var id =
+    this->poa_->activate_object (servant);
+
+  CORBA::Object_var object = this->poa_->id_to_reference (id.in ());
+
   PortableServer::ServantBase_var safety (servant);
-  outarg = servant->_this ();
+  outarg = foo::_narrow (object.in ());
 }
 
 void
 passer_i::pass_state (base_out outarg)
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ))
 {
   TreeController_var tc;
   ACE_NEW (tc.inout (),

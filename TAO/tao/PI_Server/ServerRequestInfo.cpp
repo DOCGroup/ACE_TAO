@@ -33,7 +33,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 CORBA::ULong
 TAO::ServerRequestInfo::request_id (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // The request ID returned by this method need not correspond to the
   // GIOP request ID sent with the client request.  The request ID
@@ -72,20 +71,16 @@ TAO::ServerRequestInfo::request_id (void)
 
 char *
 TAO::ServerRequestInfo::operation (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup (this->server_request_.operation ());
 }
 
 Dynamic::ParameterList *
 TAO::ServerRequestInfo::arguments (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (this->args_ == 0)
     {
-      ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14,
-                                              CORBA::COMPLETED_NO),
-                        0);
+      throw ::CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14, CORBA::COMPLETED_NO);
     }
 
   // Generate the argument list on demand.
@@ -120,13 +115,10 @@ TAO::ServerRequestInfo::arguments (void)
 
 Dynamic::ExceptionList *
 TAO::ServerRequestInfo::exceptions (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (this->args_ == 0)
     {
-      ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14,
-                                              CORBA::COMPLETED_NO),
-                        0);
+      throw ::CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14, CORBA::COMPLETED_NO);
     }
 
   // Generate the exception list on demand.
@@ -153,31 +145,22 @@ TAO::ServerRequestInfo::exceptions (void)
 
 Dynamic::ContextList *
 TAO::ServerRequestInfo::contexts (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14,
-                                          CORBA::COMPLETED_NO),
-                    0);
+  throw ::CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14, CORBA::COMPLETED_NO);
 }
 
 Dynamic::RequestContext *
 TAO::ServerRequestInfo::operation_context (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14,
-                                          CORBA::COMPLETED_NO),
-                    0);
+  throw ::CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14, CORBA::COMPLETED_NO);
 }
 
 CORBA::Any *
 TAO::ServerRequestInfo::result (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (this->args_ == 0)
     {
-      ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14,
-                                              CORBA::COMPLETED_NO),
-                        0);
+      throw ::CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14, CORBA::COMPLETED_NO);
     }
 
   // Generate the result on demand.
@@ -199,44 +182,34 @@ TAO::ServerRequestInfo::result (void)
 
 CORBA::Boolean
 TAO::ServerRequestInfo::response_expected (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->server_request_.response_expected ();
 }
 
 Messaging::SyncScope
 TAO::ServerRequestInfo::sync_scope (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (this->server_request_.sync_with_server ())
     return Messaging::SYNC_WITH_SERVER;
 
-  ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14,
-                                          CORBA::COMPLETED_NO),
-                    -1);
+  throw ::CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14, CORBA::COMPLETED_NO);
 }
 
 PortableInterceptor::ReplyStatus
 TAO::ServerRequestInfo::reply_status (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (this->server_request_.reply_status () == -1)
     // A reply hasn't been received yet.
-    ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14,
-                                            CORBA::COMPLETED_NO),
-                      -1);
+    throw ::CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14, CORBA::COMPLETED_NO);
 
   return this->server_request_.reply_status ();
 }
 
 CORBA::Object_ptr
 TAO::ServerRequestInfo::forward_reference (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (this->server_request_.reply_status () != PortableInterceptor::LOCATION_FORWARD)
-    ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14,
-                                            CORBA::COMPLETED_NO),
-                      CORBA::Object::_nil ());
+    throw ::CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14, CORBA::COMPLETED_NO);
 
   // TAO_ServerRequest::forward_location() already duplicates the
   // object reference.  There is no need to duplicate it here.
@@ -245,8 +218,6 @@ TAO::ServerRequestInfo::forward_reference (void)
 
 CORBA::Any *
 TAO::ServerRequestInfo::get_slot (PortableInterceptor::SlotId id)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableInterceptor::InvalidSlot))
 {
   // Retrieve the total number of assigned slots from the PICurrent.
   // No TSS access is incurred.
@@ -257,7 +228,7 @@ TAO::ServerRequestInfo::get_slot (PortableInterceptor::SlotId id)
     dynamic_cast <TAO::PICurrent*> (pi_current_obj);
 
   if (pi_current == 0)
-    ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
+    throw ::CORBA::INTERNAL ();
 
   pi_current->check_validity (id);
 
@@ -270,7 +241,6 @@ TAO::ServerRequestInfo::get_slot (PortableInterceptor::SlotId id)
 
 IOP::ServiceContext *
 TAO::ServerRequestInfo::get_request_service_context (IOP::ServiceId id)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_Service_Context &service_context_list =
     this->server_request_.request_service_context ();
@@ -280,7 +250,6 @@ TAO::ServerRequestInfo::get_request_service_context (IOP::ServiceId id)
 
 IOP::ServiceContext *
 TAO::ServerRequestInfo::get_reply_service_context (IOP::ServiceId id)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_Service_Context & service_context_list =
     this->server_request_.reply_service_context ();
@@ -291,9 +260,7 @@ TAO::ServerRequestInfo::get_reply_service_context (IOP::ServiceId id)
 IOP::ServiceContext *
 TAO::ServerRequestInfo::get_service_context_i (
     TAO_Service_Context & service_context_list,
-    IOP::ServiceId id
-    )
-  ACE_THROW_SPEC ((CORBA::SystemException))
+    IOP::ServiceId id)
 {
   IOP::ServiceContext_var service_context;
 
@@ -305,9 +272,7 @@ TAO::ServerRequestInfo::get_service_context_i (
   else
     {
       // Not found.
-      ACE_THROW_RETURN (CORBA::BAD_PARAM (CORBA::OMGVMCID | 26,
-                                          CORBA::COMPLETED_NO),
-                        0);
+      throw ::CORBA::BAD_PARAM (CORBA::OMGVMCID | 26, CORBA::COMPLETED_NO);
     }
 }
 
@@ -316,14 +281,11 @@ TAO::ServerRequestInfo::get_service_context_i (
 // with the spec.
 CORBA::Any *
 TAO::ServerRequestInfo::sending_exception (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (this->server_request_.reply_status () != PortableInterceptor::SYSTEM_EXCEPTION
       && this->server_request_.reply_status () != PortableInterceptor::USER_EXCEPTION)
     {
-      ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14,
-                                              CORBA::COMPLETED_NO),
-                        0);
+      throw ::CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14, CORBA::COMPLETED_NO);
     }
 
   // The spec says that if it is a user exception which cannot be
@@ -350,33 +312,26 @@ TAO::ServerRequestInfo::sending_exception (void)
 
 char *
 TAO::ServerRequestInfo::server_id (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (this->servant_upcall_ != 0)
     return
       CORBA::string_dup (this->server_request_.orb_core ()->server_id ());
 
-  ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14,
-                                          CORBA::COMPLETED_NO),
-                    0);
+  throw ::CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14, CORBA::COMPLETED_NO);
 }
 
 char *
 TAO::ServerRequestInfo::orb_id (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (this->servant_upcall_ != 0)
     return
       CORBA::string_dup (this->server_request_.orb_core ()->orbid ());
 
-  ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14,
-                                          CORBA::COMPLETED_NO),
-                    0);
+  throw ::CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14, CORBA::COMPLETED_NO);
 }
 
 PortableInterceptor::AdapterName *
 TAO::ServerRequestInfo::adapter_name (void)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // The adapter_name attribute defines a name for the object adapter
   // that services requests for the invoked object. In the case of the
@@ -387,14 +342,11 @@ TAO::ServerRequestInfo::adapter_name (void)
     return
       this->servant_upcall_->poa ().adapter_name ();
 
-  ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14,
-                                          CORBA::COMPLETED_NO),
-                    0);
+  throw ::CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14, CORBA::COMPLETED_NO);
 }
 
 PortableInterceptor::ObjectId *
 TAO::ServerRequestInfo::object_id (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (this->servant_upcall_ != 0)
     {
@@ -429,27 +381,20 @@ TAO::ServerRequestInfo::object_id (void)
       return obj_id._retn ();
     }
 
-  ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14,
-                                          CORBA::COMPLETED_NO),
-                    0);
+  throw ::CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14, CORBA::COMPLETED_NO);
 }
 
 CORBA::OctetSeq *
 TAO::ServerRequestInfo::adapter_id (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (this->servant_upcall_ != 0)
     return this->servant_upcall_->poa ().id ();
 
-  ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14,
-                                          CORBA::COMPLETED_NO),
-                    0);
+  throw ::CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14, CORBA::COMPLETED_NO);
 }
 
 char *
-TAO::ServerRequestInfo::target_most_derived_interface (
-    void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+TAO::ServerRequestInfo::target_most_derived_interface (void)
 {
   PortableServer::Servant const servant =
     (this->servant_upcall_ == 0
@@ -458,18 +403,14 @@ TAO::ServerRequestInfo::target_most_derived_interface (
 
   if (servant == 0)
     {
-      ACE_THROW_RETURN (CORBA::NO_RESOURCES (CORBA::OMGVMCID | 1,
-                                             CORBA::COMPLETED_NO),
-                        0);
+      throw ::CORBA::NO_RESOURCES (CORBA::OMGVMCID | 1, CORBA::COMPLETED_NO);
     }
 
   return CORBA::string_dup (servant->_interface_repository_id ());
 }
 
 CORBA::Policy_ptr
-TAO::ServerRequestInfo::get_server_policy (CORBA::PolicyType type
-                                           )
-  ACE_THROW_SPEC ((CORBA::SystemException))
+TAO::ServerRequestInfo::get_server_policy (CORBA::PolicyType type)
 {
   if (this->servant_upcall_ != 0)
     {
@@ -483,26 +424,19 @@ TAO::ServerRequestInfo::get_server_policy (CORBA::PolicyType type
       else
         {
           // No policy matching the given PolicyType was found.
-          ACE_THROW_RETURN (CORBA::INV_POLICY (CORBA::OMGVMCID | 3,
-                                               CORBA::COMPLETED_NO),
-                            CORBA::Policy::_nil ());
+          throw ::CORBA::INV_POLICY (CORBA::OMGVMCID | 3, CORBA::COMPLETED_NO);
         }
     }
 
   // @@ Technically, we shouldn't be throwing this exception since
   //    this method should be valid in all server side request
   //    interception points.
-  ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14,
-                                          CORBA::COMPLETED_NO),
-                    CORBA::Policy::_nil ());
+  throw ::CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14, CORBA::COMPLETED_NO);
 }
 
 void
 TAO::ServerRequestInfo::set_slot (PortableInterceptor::SlotId id,
-                                  const CORBA::Any &data
-                                  )
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableInterceptor::InvalidSlot))
+                                  const CORBA::Any &data)
 {
   // Retrieve the total number of assigned slots from the PICurrent
   // object.  No TSS access is incurred.
@@ -524,9 +458,7 @@ TAO::ServerRequestInfo::set_slot (PortableInterceptor::SlotId id,
 }
 
 CORBA::Boolean
-TAO::ServerRequestInfo::target_is_a (const char * id
-                                     )
-  ACE_THROW_SPEC ((CORBA::SystemException))
+TAO::ServerRequestInfo::target_is_a (const char * id)
 {
   // Implemented in the generated skeleton.
 
@@ -535,24 +467,18 @@ TAO::ServerRequestInfo::target_is_a (const char * id
      ? 0
      : this->servant_upcall_->servant ());
 
-
   if (servant == 0)
     {
-      ACE_THROW_RETURN (CORBA::NO_RESOURCES (CORBA::OMGVMCID | 1,
-                                             CORBA::COMPLETED_NO),
-                        0);
+      throw ::CORBA::NO_RESOURCES (CORBA::OMGVMCID | 1, CORBA::COMPLETED_NO);
     }
 
-  return servant->_is_a (id
-                        );
+  return servant->_is_a (id);
 }
 
 void
 TAO::ServerRequestInfo::add_reply_service_context (
     const IOP::ServiceContext & service_context,
-    CORBA::Boolean replace
-    )
-  ACE_THROW_SPEC ((CORBA::SystemException))
+    CORBA::Boolean replace)
 {
   // Get the service context from the list
   TAO_Service_Context &service_context_list =

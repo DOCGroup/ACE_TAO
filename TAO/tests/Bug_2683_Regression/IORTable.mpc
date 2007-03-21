@@ -24,7 +24,6 @@ project(*Server): taoserver, iortable {
 
 project(*Client): taoclient {
   after += *idl
-  after += *Server
   Source_Files {
     client.cpp
   }

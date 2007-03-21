@@ -389,7 +389,7 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::copy (size_t slot,
               && moved_node->get_timer_id () < (int) this->max_size_);
 
   // Update the corresponding slot in the parallel <timer_ids_> array.
-  this->timer_ids_[moved_node->get_timer_id ()] = slot;
+  this->timer_ids_[moved_node->get_timer_id ()] = static_cast<ssize_t> (slot);
 }
 
 // Remove the slot'th timer node from the heap, but do not reclaim its

@@ -15,7 +15,6 @@ Big_Reply_i::~Big_Reply_i (void)
 
 Test::Octet_Seq *
 Big_Reply_i::get_big_reply ( /**/)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   Test::Octet_Seq_var reply_mesg =
     new Test::Octet_Seq (this->length_);
@@ -27,13 +26,11 @@ Big_Reply_i::get_big_reply ( /**/)
 
 void
 Big_Reply_i::ping ( /**/)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
 Big_Reply_i::shutdown ( /**/)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown ();
 }

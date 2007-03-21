@@ -136,15 +136,11 @@ Database::Entry_ptr
 DatabaseImpl::Agent::create_entry (const char *key,
                                    const char *entry_type,
                                    const Database::NVPairSequence &initial_attributes)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   Database::Unknown_Type,
-                   Database::Duplicate_Key))
 {
   // Create a new entry in the database:
   if (ACE_OS::strcmp (entry_type, "Employee") != 0
       || initial_attributes.length () != 2)
-    ACE_THROW_RETURN (Database::Unknown_Type (),
-                      Database::Entry::_nil ());
+    throw Database::Unknown_Type ();
 
   const char *name = 0;
   CORBA::Long id = 0;
@@ -156,8 +152,7 @@ DatabaseImpl::Agent::create_entry (const char *key,
 
   if (ACE_OS::strcmp (first.name.in (), "name") != 0
       || ACE_OS::strcmp (second.name.in (), "id") != 0)
-    ACE_THROW_RETURN (Database::Unknown_Type (),
-                      Database::Entry::_nil ());
+    throw Database::Unknown_Type ();
 
   first.value >>= name;
   second.value >>= id;
@@ -199,14 +194,10 @@ DatabaseImpl::Agent::create_entry (const char *key,
 Database::Entry_ptr
 DatabaseImpl::Agent::find_entry (const char *key,
                                  const char *entry_type)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   Database::Unknown_Type,
-                   Database::Not_Found))
 {
   if (ACE_OS::strcmp (entry_type,
                       "Employee") != 0)
-    ACE_THROW_RETURN (Database::Unknown_Type (),
-                      Database::Entry::_nil ());
+    throw Database::Unknown_Type ();
 
   void *temp;
   Database::Entry_var entry;
@@ -239,8 +230,7 @@ DatabaseImpl::Agent::find_entry (const char *key,
                   "Employee with key = %s not found\n",
                   key));
 
-      ACE_THROW_RETURN (Database::Not_Found (),
-                        Database::Entry::_nil ());
+      throw Database::Not_Found ();
     }
 
   return entry._retn ();
@@ -249,9 +239,6 @@ DatabaseImpl::Agent::find_entry (const char *key,
 void
 DatabaseImpl::Agent::destroy_entry (const char *key,
                                     const char *entry_type)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   Database::Unknown_Type,
-                   Database::Unknown_Key))
 {
   if (ACE_OS::strcmp (entry_type, "Employee") != 0)
     throw Database::Unknown_Type ();
@@ -282,7 +269,6 @@ DatabaseImpl::Agent::destroy_entry (const char *key,
 
 void
 DatabaseImpl::Agent::shutdown (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown ();
 }
@@ -331,14 +317,12 @@ DatabaseImpl::Employee::~Employee (void)
 
 const char *
 DatabaseImpl::Employee::name (void) const
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->name_;
 }
 
 void
 DatabaseImpl::Employee::name (const char* name)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   DATABASE::instance ()->free (this->name_);
 
@@ -351,14 +335,12 @@ DatabaseImpl::Employee::name (const char* name)
 
 CORBA::Long
 DatabaseImpl::Employee::id (void) const
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->id_;
 }
 
 void
 DatabaseImpl::Employee::id (CORBA::Long id)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->id_ = id;
 }

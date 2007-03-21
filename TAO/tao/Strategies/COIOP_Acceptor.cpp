@@ -49,13 +49,9 @@ TAO_COIOP_Acceptor::create_profile (const TAO::ObjectKey & object_key,
   // Check if multiple endpoints should be put in one profile or if
   // they should be spread across multiple profiles.
   if (priority == TAO_INVALID_PRIORITY)
-    return this->create_new_profile (object_key,
-                                     mprofile,
-                                     priority);
+    return this->create_new_profile (object_key, mprofile, priority);
   else
-    return this->create_shared_profile (object_key,
-                                        mprofile,
-                                        priority);
+    return this->create_shared_profile (object_key, mprofile, priority);
 }
 
 int
@@ -244,8 +240,7 @@ TAO_COIOP_Acceptor::object_key (IOP::TaggedProfile &profile,
 
   // Read the version. We just read it here. We don't*do any*
   // processing.
-  if (!(cdr.read_octet (major)
-        && cdr.read_octet (minor)))
+  if (!(cdr.read_octet (major) && cdr.read_octet (minor)))
   {
     if (TAO_debug_level > 0)
       {
@@ -279,7 +274,6 @@ TAO_COIOP_Acceptor::object_key (IOP::TaggedProfile &profile,
 
   return 1;
 }
-
 
 int
 TAO_COIOP_Acceptor::parse_options (const char *str)

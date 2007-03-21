@@ -9,6 +9,7 @@
 
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_string.h"
+#include "ace/CORBA_macros.h"
 
 ACE_RCSID (tao,
            Adapter_Registry,
@@ -44,7 +45,7 @@ TAO_Adapter_Registry::close (int wait_for_completion)
           this->adapters_[i]->close (wait_for_completion);
         }
     }
-  catch (::CORBA::Exception&ex)
+  catch (const::CORBA::Exception &ex)
     {
       if (TAO_debug_level > 3)
         {

@@ -125,6 +125,7 @@ project(ACE) : acedefaults, install, other, codecs, token, svcconf, uuid, fileca
     Mutex.cpp
     Netlink_Addr.cpp
     Notification_Strategy.cpp
+    Notification_Queue.cpp
     Obchunk.cpp
     Object_Manager.cpp
     Object_Manager_Base.cpp
@@ -247,7 +248,6 @@ project(ACE) : acedefaults, install, other, codecs, token, svcconf, uuid, fileca
     Thread_Manager.cpp
     Thread_Mutex.cpp
     Thread_Semaphore.cpp
-    Time_Request_Reply.cpp
     Time_Value.cpp
     Timeprobe.cpp
     Timer_Hash.cpp
@@ -364,7 +364,6 @@ project(ACE) : acedefaults, install, other, codecs, token, svcconf, uuid, fileca
     Lock_Adapter_T.inl
     Refcounted_Auto_Ptr.inl
     Reverse_Lock_T.inl
-    Swap.inl
     TSS_T.inl
     ace_wchar.inl
     OS.inl
@@ -416,7 +415,6 @@ project(ACE) : acedefaults, install, other, codecs, token, svcconf, uuid, fileca
     String_Base_Const.h
     Svc_Conf.h
     Svc_Conf_Tokens.h
-    Swap.h
     Synch.h
     Synch_Traits.h
     TSS_T.h
@@ -427,6 +425,7 @@ project(ACE) : acedefaults, install, other, codecs, token, svcconf, uuid, fileca
     Version.h
     Versioned_Namespace.h
     ace_wchar.h
+    checked_iterator.h
     config-WinCE.h
     config-all.h
     config-borland-common.h

@@ -60,7 +60,7 @@ namespace ACE_Task_Flags
  *
  * This class factors out the non-template code in order to
  * reduce template bloat, as well as to make it possible for the
- * <ACE_Thread_Manager> to store <ACE_Task_Base> *'s
+ * <ACE_Thread_Manager> to store ACE_Task_Base *'s
  * polymorphically.
  */
 class ACE_Export ACE_Task_Base : public ACE_Service_Object
@@ -154,7 +154,7 @@ public:
    * EXTREMEMLY implementation-dependent, and are probably best
    * avoided.
    *
-   * If <thread_handles> != 0 it is assumed to be an array of <n>
+   * If <thread_handles> != 0 it is assumed to be an array of @a n
    * thread_handles that will be assigned the values of the thread
    * handles being spawned.  Returns -1 on failure (<errno> will
    * explain...), otherwise returns the group id of the threads.
@@ -168,10 +168,10 @@ public:
    * specified <task> value must therefore be manipulated thru
    * ACE_Thread_Manager directly.
    *
-   * If <stack> != 0 it is assumed to be an array of <n> pointers to
+   * If <stack> != 0 it is assumed to be an array of @a n pointers to
    * the base of the stacks to use for the threads being spawned.
    * Likewise, if <stack_size> != 0 it is assumed to be an array of
-   * <n> values indicating how big each of the corresponding <stack>s
+   * @a n values indicating how big each of the corresponding <stack>s
    * are.
    *
    *

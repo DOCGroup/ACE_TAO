@@ -7,6 +7,8 @@
 #include "ace/Get_Opt.h"
 #include "ace/Argv_Type_Converter.h"
 #include "tao/ORB_Core.h"
+// Ensure that the PI library is linked in when building statically
+#include "tao/PI/PI.h"
 #include "Server_Task.h"
 
 //////////////////////////////////////////////////////////////////////////

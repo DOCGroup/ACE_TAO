@@ -46,7 +46,7 @@ main (int argc, char *argv[])
   try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "");
+        CORBA::ORB_init (argc, argv);
 
       CORBA::Object_var poa_object =
         orb->resolve_initial_references("RootPOA");
@@ -86,8 +86,13 @@ main (int argc, char *argv[])
                       1);
       PortableServer::ServantBase_var owner_transfer(AMI_buffering_impl);
 
+      PortableServer::ObjectId_var id =
+        root_poa->activate_object (AMI_buffering_impl);
+
+      CORBA::Object_var object = root_poa->id_to_reference (id.in ());
+
       Test::AMI_Buffering_var AMI_buffering =
-        AMI_buffering_impl->_this ();
+        Test::AMI_Buffering::_narrow (object.in ());
 
       CORBA::String_var ior =
         orb->object_to_string (AMI_buffering.in ());

@@ -23,7 +23,6 @@ project(*Server): rt_server {
 
 project(*Client): rt_client {
   after += *idl
-  after += *Server
   Source_Files {
     client.cpp
   }

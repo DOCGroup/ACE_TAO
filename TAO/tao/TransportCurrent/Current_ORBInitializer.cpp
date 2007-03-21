@@ -27,9 +27,7 @@ namespace TAO
     template <typename Impl>
     TAO::Transport::Current_ptr
     Current_ORBInitializer<Impl>::make_current_instance (TAO_ORB_Core* core,
-                                                         size_t tss_slot_id
-                                                         )
-      ACE_THROW_SPEC ((CORBA::SystemException))
+                                                         size_t tss_slot_id)
       {
         // Create the Current
         Current_ptr tmp = 0;

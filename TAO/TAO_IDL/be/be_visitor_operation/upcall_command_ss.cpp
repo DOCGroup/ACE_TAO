@@ -97,6 +97,15 @@ be_visitor_operation_upcall_command_ss::visit (be_operation * node,
     ? be_interface::narrow_from_scope (this->ctx_->attribute ()->defined_in ())
     : be_interface::narrow_from_scope (node->defined_in ());
 
+  if (!intf)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_upcall_command_ss::"
+                         "visit - "
+                         "bad interface scope\n"),
+                        -1);
+    }
+
   be_module *module = 0;
 
   // Is our enclosing scope a module? We need this check because for
@@ -126,16 +135,8 @@ be_visitor_operation_upcall_command_ss::visit (be_operation * node,
   os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
-  // Generate the operation-specific TAO::Upcall_Command concrete class.
-
-  if (!intf)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_upcall_command_ss::"
-                         "visit - "
-                         "bad interface scope\n"),
-                        -1);
-    }
+  // Generate the operation-specific TAO::Upcall_Command concrete
+  // class.
 
   // Generate an operation-specific concrete TAO::Upcall_Command
   // class, an instance of which will be invoked by the

@@ -140,7 +140,7 @@ Process_Per_Connection_Logging_Server::run_master (int argc, char *argv[])
     if (handle_connections () == -1)
       return -1;
 
-  return 0;
+  ACE_NOTREACHED (return 0;)
 }
 
 int

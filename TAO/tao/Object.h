@@ -150,8 +150,7 @@ namespace CORBA
      * private state.  Since that changes easily (when different ORB
      * protocols are in use) there is no default implementation.
      */
-    virtual CORBA::Boolean _is_equivalent (CORBA::Object_ptr other_obj)
-      ACE_THROW_SPEC (());
+    virtual CORBA::Boolean _is_equivalent (CORBA::Object_ptr other_obj);
 
 #if (TAO_HAS_MINIMUM_CORBA == 0)
 
@@ -290,8 +289,7 @@ namespace CORBA
             TAO_Abstract_ServantBase *servant = 0,
             TAO_ORB_Core *orb_core = 0);
 
-    Object (IOP::IOR *ior,
-            TAO_ORB_Core *orb_core = 0);
+    Object (IOP::IOR *ior, TAO_ORB_Core *orb_core = 0);
 
     /// Get the underlying stub object.
     virtual TAO_Stub *_stubobj (void) const;

@@ -15,7 +15,6 @@ Test_i::~Test_i()
 
 void
 Test_i::test_method (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
    // Noop
 }

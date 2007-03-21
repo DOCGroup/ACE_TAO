@@ -50,11 +50,7 @@ public:
   virtual void init (TAO_Notify_ConsumerAdmin* consumer_admin);
 
   /// Connect
-  void connect (TAO_Notify_Consumer* consumer)
-    ACE_THROW_SPEC ((
-                     CORBA::SystemException
-                     , CosEventChannelAdmin::AlreadyConnected
-                     ));
+  void connect (TAO_Notify_Consumer* consumer);
   /// Disconnect
   void disconnect (void);
 

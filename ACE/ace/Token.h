@@ -108,7 +108,7 @@ public:
 
   /**
    * Acquire the token, sleeping until it is obtained or until the
-   * expiration of <timeout>, which is treated as "absolute" time.  If
+   * expiration of @a timeout, which is treated as "absolute" time.  If
    * some other thread currently holds the token then <sleep_hook> is
    * called before our thread goes to sleep.  This <sleep_hook> can be
    * used by the requesting thread to unblock a token-holder that is
@@ -116,7 +116,7 @@ public:
    * ACE_Reactor uses this functionality).  Return values: 0 if
    * acquires without calling <sleep_hook> 1 if <sleep_hook> is
    * called.  2 if the token is signaled.  -1 if failure or timeout
-   * occurs (if timeout occurs errno == ETIME) If <timeout> ==
+   * occurs (if timeout occurs errno == ETIME) If @a timeout ==
    * <&ACE_Time_Value::zero> then acquire has polling semantics (and
    * does *not* call <sleep_hook>).
    */
@@ -154,7 +154,7 @@ public:
    * thing to do (since it makes it possible for shared data to be
    * changed unexpectedly) so use with caution...  This method
    * maintians the original token priority.  As in <acquire>, the
-   * <timeout> value is an absolute time.
+   * @a timeout value is an absolute time.
    */
   int renew (int requeue_position = 0,
              ACE_Time_Value *timeout = 0);

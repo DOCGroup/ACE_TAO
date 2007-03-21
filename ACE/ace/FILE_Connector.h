@@ -48,7 +48,7 @@ public:
    * if things go well.  The <remote_sap> is the file that we are
    * trying to create/open.  If it's the default value of
    * <ACE_Addr::sap_any> then the user is letting the OS create the
-   * filename (via <ACE_OS::mkstemp>).  The <timeout> is the amount of
+   * filename (via <ACE_OS::mkstemp>).  The @a timeout is the amount of
    * time to wait to create/open the file.  If it's 0 then we block
    * indefinitely.  If *timeout == {0, 0} then the file is created
    * using non-blocking mode.  If *timeout > {0, 0} then this is the
@@ -70,7 +70,7 @@ public:
    * if things go well.  The <remote_sap> is the file that we are
    * trying to create/open.  If it's the default value of
    * <ACE_Addr::sap_any> then the user is letting the OS create the
-   * filename (via <ACE_OS::mkstemp>).  The <timeout> is the amount of
+   * filename (via <ACE_OS::mkstemp>).  The @a timeout is the amount of
    * time to wait to create/open the file.  If it's 0 then we block
    * indefinitely.  If *timeout == {0, 0} then the file is created
    * using non-blocking mode.  In this case, if the create/open can't

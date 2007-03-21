@@ -76,7 +76,15 @@ be_visitor_exception_cdr_op_cs::visit_exception (be_exception *node)
     {
       be_visitor_context new_ctx (*this->ctx_);
       be_visitor_cdr_op_field_decl field_decl (&new_ctx);
-      field_decl.visit_scope (node);
+
+      if (field_decl.visit_scope (node) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_exception_cdr_op_cs::"
+                             "visit_exception - "
+                             "codegen for field decl scope failed\n"), 
+                            -1);
+        }        
 
       // some members
       *os << "// First marshal the repository ID." << be_nl

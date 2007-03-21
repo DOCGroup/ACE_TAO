@@ -91,8 +91,7 @@ public:
    * pointer.  If <delete_reactor> != 0 then we'll delete the Reactor
    * at destruction time.
    */
-  static ACE_Reactor *instance (ACE_Reactor *,
-                                int delete_reactor = 0);
+  static ACE_Reactor *instance (ACE_Reactor *, int delete_reactor = 0);
 
   /// Delete the dynamically allocated Singleton
   static void close_singleton (void);
@@ -123,7 +122,7 @@ public:
   /**
    * Run the event loop until the <ACE_Reactor::handle_events> or
    * <ACE_Reactor::alertable_handle_events> methods returns -1, the
-   * <end_event_loop> method is invoked, or the <ACE_Time_Value>
+   * <end_event_loop> method is invoked, or the ACE_Time_Value
    * expires.  Note that this method can only be used by the singleton
    * <ACE_Reactor::instance>.  Thus, to run another reactor use
    * <ACE_Reactor::run_reactor_event_loop>.
@@ -187,7 +186,7 @@ public:
   /**
    * Run the event loop until the <ACE_Reactor::handle_events> or
    * <ACE_Reactor::alertable_handle_events> methods returns -1, the
-   * <end_reactor_event_loop> method is invoked, or the <ACE_Time_Value>
+   * <end_reactor_event_loop> method is invoked, or the ACE_Time_Value
    * expires.
    */
   virtual int run_reactor_event_loop (ACE_Time_Value &tv,
@@ -821,7 +820,7 @@ public:
 
   /**
    * Returns 0, if the size of the current message has been put in
-   * <size> returns -1, if not.  ACE_HANDLE allows the reactor to
+   * @a size returns -1, if not.  ACE_HANDLE allows the reactor to
    * check if the caller is valid.  Used for CLASSIX Reactor
    * implementation.
    */

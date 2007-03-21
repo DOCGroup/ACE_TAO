@@ -80,151 +80,66 @@ protected:
   obtain_notification_push_supplier_with_qos (CosNotifyChannelAdmin::ClientType ctype,
                                               CosNotifyChannelAdmin::ProxyID_out proxy_id,
                                               const CosNotification::QoSProperties & initial_qos
-                                              )
-    ACE_THROW_SPEC ((
-                     CORBA::SystemException
-                     , CosNotifyChannelAdmin::AdminLimitExceeded
-                     , CosNotification::UnsupportedQoS
-                     ));
+                                              );
 
   /// = CosNotifyChannelAdmin::ConsumerAdmin methods
-  virtual CosNotifyChannelAdmin::AdminID MyID (void)
-    ACE_THROW_SPEC ((
-                     CORBA::SystemException
-                     ));
+  virtual CosNotifyChannelAdmin::AdminID MyID (void);
 
   virtual ::CosNotifyChannelAdmin::EventChannel_ptr MyChannel (
 
-  )
-    ACE_THROW_SPEC ((
-                     CORBA::SystemException
-                     ));
+  );
 
-  virtual ::CosNotifyChannelAdmin::InterFilterGroupOperator MyOperator (void)
-    ACE_THROW_SPEC ((
-                     CORBA::SystemException
-                     ));
+  virtual ::CosNotifyChannelAdmin::InterFilterGroupOperator MyOperator (void);
 
   virtual ::CosNotifyFilter::MappingFilter_ptr priority_filter (
 
-  )
-    ACE_THROW_SPEC ((
-                     CORBA::SystemException
-                     ));
+  );
 
-  virtual void priority_filter (CosNotifyFilter::MappingFilter_ptr priority_filter)
-    ACE_THROW_SPEC ((
-                     CORBA::SystemException
-                     ));
+  virtual void priority_filter (CosNotifyFilter::MappingFilter_ptr priority_filter);
 
-  virtual ::CosNotifyFilter::MappingFilter_ptr lifetime_filter (void)
-    ACE_THROW_SPEC ((
-                     CORBA::SystemException
-                     ));
+  virtual ::CosNotifyFilter::MappingFilter_ptr lifetime_filter (void);
 
-  virtual void lifetime_filter (CosNotifyFilter::MappingFilter_ptr lifetime_filter)
-    ACE_THROW_SPEC ((
-                     CORBA::SystemException
-                     ));
+  virtual void lifetime_filter (CosNotifyFilter::MappingFilter_ptr lifetime_filter);
 
-  virtual ::CosNotifyChannelAdmin::ProxyIDSeq * pull_suppliers (void)
-    ACE_THROW_SPEC ((
-                     CORBA::SystemException
-                     ));
+  virtual ::CosNotifyChannelAdmin::ProxyIDSeq * pull_suppliers (void);
 
-  virtual ::CosNotifyChannelAdmin::ProxyIDSeq * push_suppliers (void)
-    ACE_THROW_SPEC ((
-                     CORBA::SystemException
-                     ));
+  virtual ::CosNotifyChannelAdmin::ProxyIDSeq * push_suppliers (void);
 
-  virtual ::CosNotifyChannelAdmin::ProxySupplier_ptr get_proxy_supplier (CosNotifyChannelAdmin::ProxyID proxy_id)
-    ACE_THROW_SPEC ((
-                     CORBA::SystemException
-                     , CosNotifyChannelAdmin::ProxyNotFound
-                     ));
+  virtual ::CosNotifyChannelAdmin::ProxySupplier_ptr get_proxy_supplier (CosNotifyChannelAdmin::ProxyID proxy_id);
 
   virtual ::CosNotifyChannelAdmin::ProxySupplier_ptr
   obtain_notification_pull_supplier (CosNotifyChannelAdmin::ClientType ctype,
-                                     CosNotifyChannelAdmin::ProxyID_out proxy_id)
-    ACE_THROW_SPEC ((
-                     CORBA::SystemException
-                     , CosNotifyChannelAdmin::AdminLimitExceeded
-                     ));
+                                     CosNotifyChannelAdmin::ProxyID_out proxy_id);
 
   virtual ::CosNotifyChannelAdmin::ProxySupplier_ptr
   obtain_notification_push_supplier (CosNotifyChannelAdmin::ClientType ctype,
-                                     CosNotifyChannelAdmin::ProxyID_out proxy_id)
-    ACE_THROW_SPEC ((
-                     CORBA::SystemException
-                     , CosNotifyChannelAdmin::AdminLimitExceeded
-                     ));
+                                     CosNotifyChannelAdmin::ProxyID_out proxy_id);
 
-  virtual void destroy (void)
-    ACE_THROW_SPEC ((
-                     CORBA::SystemException
-                     ));
+  virtual void destroy (void);
 
-  virtual ::CosNotification::QoSProperties * get_qos (void)
-    ACE_THROW_SPEC ((
-                     CORBA::SystemException
-                     ));
+  virtual ::CosNotification::QoSProperties * get_qos (void);
 
-  virtual void set_qos (const CosNotification::QoSProperties & qos)
-    ACE_THROW_SPEC ((
-                     CORBA::SystemException
-                     , CosNotification::UnsupportedQoS
-                     ));
+  virtual void set_qos (const CosNotification::QoSProperties & qos);
 
   virtual void validate_qos (const CosNotification::QoSProperties & required_qos,
-                             CosNotification::NamedPropertyRangeSeq_out available_qos)
-    ACE_THROW_SPEC ((
-                     CORBA::SystemException
-                     , CosNotification::UnsupportedQoS
-                     ));
+                             CosNotification::NamedPropertyRangeSeq_out available_qos);
 
   virtual void subscription_change (const CosNotification::EventTypeSeq & added,
-                                    const CosNotification::EventTypeSeq & removed)
-    ACE_THROW_SPEC ((
-                     CORBA::SystemException
-                     , CosNotifyComm::InvalidEventType
-                     ));
+                                    const CosNotification::EventTypeSeq & removed);
 
-  virtual CosNotifyFilter::FilterID add_filter (CosNotifyFilter::Filter_ptr new_filter)
-    ACE_THROW_SPEC ((
-                     CORBA::SystemException
-                     ));
+  virtual CosNotifyFilter::FilterID add_filter (CosNotifyFilter::Filter_ptr new_filter);
 
-  virtual void remove_filter (CosNotifyFilter::FilterID filter)
-    ACE_THROW_SPEC ((
-                     CORBA::SystemException
-                     , CosNotifyFilter::FilterNotFound
-                     ));
+  virtual void remove_filter (CosNotifyFilter::FilterID filter);
 
-  virtual ::CosNotifyFilter::Filter_ptr get_filter (CosNotifyFilter::FilterID filter)
-    ACE_THROW_SPEC ((
-                     CORBA::SystemException
-                     , CosNotifyFilter::FilterNotFound
-                     ));
+  virtual ::CosNotifyFilter::Filter_ptr get_filter (CosNotifyFilter::FilterID filter);
 
-  virtual ::CosNotifyFilter::FilterIDSeq * get_all_filters (void)
-    ACE_THROW_SPEC ((
-                     CORBA::SystemException
-                     ));
+  virtual ::CosNotifyFilter::FilterIDSeq * get_all_filters (void);
 
-  virtual void remove_all_filters (void)
-    ACE_THROW_SPEC ((
-                     CORBA::SystemException
-                     ));
+  virtual void remove_all_filters (void);
 
-  virtual ::CosEventChannelAdmin::ProxyPushSupplier_ptr obtain_push_supplier (void)
-    ACE_THROW_SPEC ((
-                     CORBA::SystemException
-                     ));
+  virtual ::CosEventChannelAdmin::ProxyPushSupplier_ptr obtain_push_supplier (void);
 
-  virtual ::CosEventChannelAdmin::ProxyPullSupplier_ptr obtain_pull_supplier (void)
-    ACE_THROW_SPEC ((
-                     CORBA::SystemException
-                     ));
+  virtual ::CosEventChannelAdmin::ProxyPullSupplier_ptr obtain_pull_supplier (void);
 
 private:
 

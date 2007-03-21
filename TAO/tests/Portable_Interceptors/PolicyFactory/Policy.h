@@ -36,17 +36,13 @@ public:
   Policy (CORBA::ULong val);
 
   /// Test method defined in test IDL.
-  virtual CORBA::ULong value (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::ULong value (void);
 
-  virtual CORBA::PolicyType policy_type (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::PolicyType policy_type (void);
 
-  virtual CORBA::Policy_ptr copy (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::Policy_ptr copy (void);
 
-  virtual void destroy (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void destroy (void);
 
 protected:
 

@@ -25,7 +25,7 @@
 
 #include /**/ "ace/OS.h"
 
-#if defined (ACE_WIN32)
+#if defined (ACE_WIN32) && !defined (ACE_LACKS_WIN32_SERVICES)
 
 #include /**/ "ace/NT_Service.h"
 #include /**/ "ace/Singleton.h"
@@ -73,7 +73,5 @@ private:
 
 typedef ACE_Singleton<TAO_NT_Notify_Service, TAO_NT_Notify_Service::MUTEX> SERVICE;
 
-#endif /* ACE_WIN32 */
+#endif /* ACE_WIN32 && !ACE_LACKS_WIN32_SERVICES */
 #endif /* TAO_NT_NOTIFY_SERVER_H */
-
-

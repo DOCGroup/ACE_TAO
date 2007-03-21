@@ -32,21 +32,18 @@ DT::resume (void)
 
 CORBA::Short
 Segment_Sched_Param_Policy::importance (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->importance_;
 }
 
 void
 Segment_Sched_Param_Policy::importance (CORBA::Short importance)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->importance_ = importance;
 }
 
 CORBA::Policy_ptr
 Segment_Sched_Param_Policy::copy (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   Segment_Sched_Param_Policy *copy = 0;
   ACE_NEW_THROW_EX (copy,
@@ -60,7 +57,6 @@ Segment_Sched_Param_Policy::copy (void)
 
 void
 Segment_Sched_Param_Policy::destroy (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
@@ -119,7 +115,6 @@ MIF_Scheduler::resume_main (void)
 
 MIF_Scheduling::SegmentSchedulingParameterPolicy_ptr
 MIF_Scheduler::create_segment_scheduling_parameter (CORBA::Short importance)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   MIF_Scheduling::SegmentSchedulingParameterPolicy_ptr segment_policy;
   ACE_NEW_THROW_EX (segment_policy,
@@ -141,8 +136,6 @@ MIF_Scheduler::begin_new_scheduling_segment (const RTScheduling::Current::IdType
                                              const char *,
                                              CORBA::Policy_ptr sched_policy,
                                              CORBA::Policy_ptr)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   RTScheduling::Current::UNSUPPORTED_SCHEDULING_DISCIPLINE))
 {
   size_t count = 0;
   ACE_OS::memcpy (&count,
@@ -183,8 +176,6 @@ MIF_Scheduler::begin_nested_scheduling_segment (const RTScheduling::Current::IdT
                                                            const char *name,
                                                            CORBA::Policy_ptr sched_param,
                                                            CORBA::Policy_ptr implicit_sched_param)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   RTScheduling::Current::UNSUPPORTED_SCHEDULING_DISCIPLINE))
 {
   this->begin_new_scheduling_segment (guid,
                                       name,
@@ -197,8 +188,6 @@ MIF_Scheduler::update_scheduling_segment (const RTScheduling::Current::IdType &/
                                           const char* /*name*/,
                                           CORBA::Policy_ptr sched_policy,
                                           CORBA::Policy_ptr /*implicit_sched_param*/)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   RTScheduling::Current::UNSUPPORTED_SCHEDULING_DISCIPLINE))
 {
   size_t count = 0;
   ACE_OS::memcpy (&count,
@@ -248,7 +237,6 @@ MIF_Scheduler::update_scheduling_segment (const RTScheduling::Current::IdType &/
 void
 MIF_Scheduler::end_scheduling_segment (const RTScheduling::Current::IdType &guid,
                                        const char *)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   size_t count = 0;
   ACE_OS::memcpy (&count,
@@ -275,14 +263,11 @@ void
 MIF_Scheduler::end_nested_scheduling_segment (const RTScheduling::Current::IdType &,
                                                          const char *,
                                                          CORBA::Policy_ptr)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
 MIF_Scheduler::send_request (PortableInterceptor::ClientRequestInfo_ptr request_info)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableInterceptor::ForwardRequest))
 {
   MIF_Scheduling::SegmentSchedulingParameterPolicy_var sched_param_var =
     MIF_Scheduling::SegmentSchedulingParameterPolicy::_narrow (current_->scheduling_parameter ());
@@ -364,8 +349,6 @@ MIF_Scheduler::receive_request (PortableInterceptor::ServerRequestInfo_ptr reque
                                 CORBA::String_out,
                                 CORBA::Policy_out sched_param_out,
                                 CORBA::Policy_out /*implicit_sched_param*/)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableInterceptor::ForwardRequest))
 {
 
   if (TAO_debug_level > 0)
@@ -435,7 +418,6 @@ MIF_Scheduler::receive_request (PortableInterceptor::ServerRequestInfo_ptr reque
 
 void
 MIF_Scheduler::send_reply (PortableInterceptor::ServerRequestInfo_ptr)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
 
   RTScheduling::Current::IdType* guid = current_->id ();
@@ -463,8 +445,6 @@ MIF_Scheduler::send_reply (PortableInterceptor::ServerRequestInfo_ptr)
 
 void
 MIF_Scheduler::send_exception (PortableInterceptor::ServerRequestInfo_ptr)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableInterceptor::ForwardRequest))
 {
   if (ready_que_.message_count () > 0)
     {
@@ -480,8 +460,6 @@ MIF_Scheduler::send_exception (PortableInterceptor::ServerRequestInfo_ptr)
 
 void
 MIF_Scheduler::send_other (PortableInterceptor::ServerRequestInfo_ptr)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableInterceptor::ForwardRequest))
 {
   if (TAO_debug_level > 0)
     {
@@ -512,14 +490,11 @@ MIF_Scheduler::send_other (PortableInterceptor::ServerRequestInfo_ptr)
 
 void
 MIF_Scheduler::send_poll (PortableInterceptor::ClientRequestInfo_ptr)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableInterceptor::ForwardRequest))
 {
 }
 
 void
 MIF_Scheduler::receive_reply (PortableInterceptor::ClientRequestInfo_ptr)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 
   MIF_Scheduling::SegmentSchedulingParameterPolicy_var sched_param_var =
@@ -567,8 +542,6 @@ MIF_Scheduler::receive_reply (PortableInterceptor::ClientRequestInfo_ptr)
 
 void
 MIF_Scheduler::receive_exception (PortableInterceptor::ClientRequestInfo_ptr)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableInterceptor::ForwardRequest))
 {
   MIF_Scheduling::SegmentSchedulingParameterPolicy_var sched_param_var =
     MIF_Scheduling::SegmentSchedulingParameterPolicy::_narrow (current_->scheduling_parameter ());
@@ -609,8 +582,6 @@ MIF_Scheduler::receive_exception (PortableInterceptor::ClientRequestInfo_ptr)
 
 void
 MIF_Scheduler::receive_other (PortableInterceptor::ClientRequestInfo_ptr)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableInterceptor::ForwardRequest))
 {
  MIF_Scheduling::SegmentSchedulingParameterPolicy_var sched_param_var =
     MIF_Scheduling::SegmentSchedulingParameterPolicy::_narrow (current_->scheduling_parameter ());
@@ -651,33 +622,28 @@ MIF_Scheduler::receive_other (PortableInterceptor::ClientRequestInfo_ptr)
 
 void
 MIF_Scheduler::cancel (const RTScheduling::Current::IdType &)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 CORBA::PolicyList*
 MIF_Scheduler::scheduling_policies (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return 0;
 }
 
 void
 MIF_Scheduler::scheduling_policies (const CORBA::PolicyList &)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 CORBA::PolicyList*
 MIF_Scheduler::poa_policies (void)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
         return 0;
 }
 
 char *
 MIF_Scheduler::scheduling_discipline_name (void)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
         return 0;
 }
@@ -685,7 +651,6 @@ MIF_Scheduler::scheduling_discipline_name (void)
 RTScheduling::ResourceManager_ptr
 MIF_Scheduler::create_resource_manager (const char *,
                                         CORBA::Policy_ptr)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
         return 0;
 }
@@ -694,6 +659,5 @@ void
 MIF_Scheduler::set_scheduling_parameter (PortableServer::Servant &,
                                          const char *,
                                          CORBA::Policy_ptr)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }

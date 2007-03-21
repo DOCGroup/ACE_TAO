@@ -1000,7 +1000,7 @@ ACE_Fixed_Set<T, ACE_SIZE>::insert (const T &item)
           return 1;
       }
     else
-      first_free = i;
+      first_free = static_cast<ssize_t> (i);
 
   // If we found a free spot let's reuse it.
 

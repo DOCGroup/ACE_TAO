@@ -200,7 +200,7 @@ TAO_IFR_Server::open_config (void)
 {
   if (OPTIONS::instance ()->using_registry ())
     {
-#if defined (ACE_WIN32)
+#if defined (ACE_WIN32) && !defined (ACE_LACKS_WIN32_REGISTRY)
       HKEY root =
         ACE_Configuration_Win32Registry::resolve_key (
             HKEY_LOCAL_MACHINE,
@@ -210,7 +210,7 @@ TAO_IFR_Server::open_config (void)
       ACE_NEW_THROW_EX (this->config_,
                         ACE_Configuration_Win32Registry (root),
                         CORBA::NO_MEMORY ());
-#endif /* ACE_WIN32 */
+#endif /* ACE_WIN32 && !ACE_LACKS_WIN32_REGISTRY */
 
       return 0;
     }
@@ -465,7 +465,6 @@ TAO_IFR_Service_Utils::valid_container (
     CORBA::DefinitionKind container_kind,
     CORBA::DefinitionKind contained_kind
   )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   int error_flag = 0;
 
@@ -550,7 +549,6 @@ TAO_IFR_Service_Utils::pre_exist (
 void
 TAO_IFR_Service_Utils::id_exists (const char *id,
                                   TAO_Repository_i *repo)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // The repo id must not already exist.
   ACE_TString holder;
@@ -570,7 +568,6 @@ TAO_IFR_Service_Utils::name_exists (
     TAO_Repository_i *repo,
     CORBA::DefinitionKind kind
   )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   int status = 0;
   ACE_TString section_name;
@@ -705,7 +702,6 @@ TAO_IFR_Service_Utils::check_subsection (
     ACE_Configuration *config,
     ACE_Configuration_Section_Key &key
   )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_Configuration_Section_Key sub_key;
   int status =
@@ -1315,8 +1311,7 @@ TAO_IFR_Service_Utils::create_objref (CORBA::DefinitionKind def_kind,
       repo_id += "CORBA/ComponentIR/UsesDef:";
       break;
     default:
-      ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (),
-                        CORBA::Object::_nil ());
+      throw CORBA::OBJECT_NOT_EXIST ();
   }
 
   repo_id += "1.0";

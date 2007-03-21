@@ -7,8 +7,8 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 
 use lib "$ENV{'ACE_ROOT'}/bin";
 use PerlACE::Run_Test;
-$CIAO_ROOT = "$ENV{'CIAO_ROOT'}";
-$DAnCE = "$ENV{'ACE_ROOT'}/TAO/CIAO/DAnCE";
+$CIAO_ROOT = $PerlACE::CIAO_ROOT;
+$DAnCE = "$CIAO_ROOT/DAnCE";
 
 $daemons_running = 0;
 $em_running = 0;
@@ -58,9 +58,9 @@ sub run_node_daemons {
       $port = $ports[$i];
 
       $iiop = "iiop://localhost:$port";
-      $node_app = "$DAnCE/NodeApplication/NodeApplication";
+      $node_app = "$CIAO_ROOT/bin/NodeApplication";
 
-      $d_cmd = "$DAnCE/NodeManager/NodeManager";
+      $d_cmd = "$CIAO_ROOT/bin/NodeManager";
 
       # NON-RT
 #      $d_param = "-ORBEndpoint $iiop -s $node_app -o $iorfile";
@@ -101,7 +101,7 @@ $ns_running = 1;
 
 # Invoke execution manager.
 print "Invoking execution manager\n";
-$EM = new PerlACE::Process ("$DAnCE/ExecutionManager/Execution_Manager",
+$EM = new PerlACE::Process ("$CIAO_ROOT/bin/Execution_Manager",
                             "-o EM.ior -i $dat_file");
 $EM->Spawn ();
 
@@ -118,7 +118,7 @@ $em_running = 1;
 # Invoke executor - start the application -.
 print "Invoking executor - start the application -\n";
 $E =
-  new PerlACE::Process ("$DAnCE/Plan_Launcher/plan_launcher",
+  new PerlACE::Process ("$CIAO_ROOT/bin/plan_launcher",
                         "-p rt-example.cdp -k file://EM.ior -o DAM.ior");
  
 $E->SpawnWaitKill (5000);
@@ -150,7 +150,7 @@ if ($result != 0) {
 # Invoke executor - stop the application -.
 print "Invoking executor - stop the application -\n";
 $E =
-  new PerlACE::Process ("$DAnCE/Plan_Launcher/plan_launcher",
+  new PerlACE::Process ("$CIAO_ROOT/bin/plan_launcher",
                         "-k file://EM.ior -i file://DAM.ior");
 $E->SpawnWaitKill (3000);
 

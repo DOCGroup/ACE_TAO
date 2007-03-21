@@ -358,6 +358,14 @@ be_visitor_amh_operation_ss::generate_shared_section (be_decl *node,
   be_interface *intf =
     be_interface::narrow_from_scope (node->defined_in ());
 
+  if (!intf)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) generate_shared_section - "
+                         "bad interface scope\n"),
+                        -1);
+    }
+
   // Create the response handler
   char *buf;
   intf->compute_full_name ("TAO_AMH_", "ResponseHandler", buf);

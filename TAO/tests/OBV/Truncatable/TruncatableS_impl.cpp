@@ -17,9 +17,6 @@ Test_impl::op1 (
     ::OBV_TruncatableTest::BaseValue_out ov,
     char *& desc
   )
-  ACE_THROW_SPEC ((
-    ::CORBA::SystemException
-  ))
 {
   if (TAO_debug_level > 0)
     ACE_DEBUG((LM_DEBUG,
@@ -45,9 +42,6 @@ Test_impl::op2 (
     ::OBV_TruncatableTest::TValue1_out ov,
     char *& desc
   )
-  ACE_THROW_SPEC ((
-    ::CORBA::SystemException
-  ))
 {
   if (TAO_debug_level > 0)
     ACE_DEBUG((LM_DEBUG,
@@ -73,9 +67,6 @@ Test_impl::op3 (
   ::OBV_TruncatableTest::TValue4_out ov,
   char *& desc
 )
-ACE_THROW_SPEC ((
-  ::CORBA::SystemException
-))
 {
   if (TAO_debug_level > 0)
     ACE_DEBUG((LM_DEBUG,
@@ -110,9 +101,6 @@ Test_impl::op4 (
   ::OBV_TruncatableTest::TValue1 * iv4,
   char *& desc
   )
-ACE_THROW_SPEC ((
-  ::CORBA::SystemException
-  ))
 {
   if (TAO_debug_level > 0)
   {
@@ -160,9 +148,6 @@ Test_impl::op5 (const CORBA::Any& val,
                 ::OBV_TruncatableTest::TValue1_out ov,
                 char *& desc
  )
-  ACE_THROW_SPEC ((
-    ::CORBA::SystemException
-  ))
 {
   ov = new ::OBV_OBV_TruncatableTest::TValue1();
   ::OBV_TruncatableTest::TValue1 *iv = 0;
@@ -195,7 +180,6 @@ Test_impl::op5 (const CORBA::Any& val,
 
 void
 Test_impl::shutdown (void)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown (0);
 }

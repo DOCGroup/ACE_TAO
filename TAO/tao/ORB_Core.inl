@@ -75,6 +75,12 @@ TAO_ORB_Core::get_protocols_hooks (void)
   return this->protocols_hooks_;
 }
 
+ACE_INLINE TAO_Network_Priority_Protocols_Hooks *
+TAO_ORB_Core::get_network_priority_protocols_hooks (void)
+{
+  return this->network_priority_protocols_hooks_;
+}
+
 ACE_INLINE CORBA::Boolean
 TAO_ORB_Core::service_profile_selection (const TAO_MProfile &mprofile,
                                          TAO_Profile  *&profile)
@@ -98,8 +104,7 @@ TAO_ORB_Core::object_is_nil (CORBA::Object_ptr obj)
   CORBA::Boolean retval = 0;
   if (this->ft_service_.service_callback ())
     {
-      retval =
-        this->ft_service_.service_callback ()->object_is_nil (obj);
+      retval = this->ft_service_.service_callback ()->object_is_nil (obj);
     }
   return retval;
 }
@@ -610,7 +615,7 @@ TAO_ORB_Core::is_permanent_forward_condition
   const TAO_Service_Callbacks *service_callback =
       this->fault_tolerance_service ().service_callback ();
 
-  const CORBA::Boolean permanent_forward_condition =
+  CORBA::Boolean const permanent_forward_condition =
       service_callback &&
       service_callback->is_permanent_forward_condition (obj,
                                                         service_context);

@@ -1,7 +1,8 @@
 // $Id$
 
 #include "ace/Log_Msg.h"
-#include "ciao/Deployment_DataC.h"
+#include "tao/SystemException.h"
+#include "DAnCE/Deployment/Deployment_DataC.h"
 #include "DnC_Dump.h"
 #include "DnC_Dump_T.h"
 #include <iostream>
@@ -23,7 +24,7 @@ namespace Deployment
             ACE_DEBUG ((LM_DEBUG, "%s%s %d: \n",
                         Dump_Obj::indent(), caption, i));
             ACE_DEBUG ((LM_DEBUG, "%s  %s: \n",
-                        Dump_Obj::indent(), str_seq[i]));
+                        Dump_Obj::indent(), str_seq[i].in ()));
           }
       }
   }
@@ -99,18 +100,22 @@ namespace Deployment
     dump ("name", node.name);
     dump ("label", node.label);
 
-#if (_MSC_VER > 1200)
+#if (_MSC_VER)
     dump_ref_seq<Deployment::Domain> (
                                       "sharedResourceRef",
-                                      node.sharedResourceRef, "Domain",
+                                      node.sharedResourceRef,
+                                      "Domain",
                                       &Domain::sharedResource);
+#endif
 
+#if (_MSC_VER)
     dump_ref_seq<Deployment::Domain> (
                                       "connectionRef",
                                       node.connectionRef,
                                       "Domain",
                                       &Domain::interconnect);
-#endif /* _MSC_VER */
+#endif
+
     dump_sequence ("resource",
                    node.resource);
 
@@ -123,20 +128,20 @@ namespace Deployment
     dump ("name", conn.name);
     dump ("label", conn.label);
 
-#if (_MSC_VER > 1200)
+#if (_MSC_VER)
     dump_ref_seq<Deployment::Domain> (
                                       "connectionRef",
                                       conn.connectionRef,
                                       "Domain",
                                       &Domain::bridge);
-
+#endif
+#if (_MSC_VER)
     dump_ref_seq<Deployment::Domain> (
                                       "connectRef",
                                       conn.connectRef,
                                       "Domain",
                                       &Domain::node);
-#endif /*_MSC_VER*/
-
+#endif
     dump_sequence ("resource",
                    conn.resource);
   }
@@ -148,14 +153,14 @@ namespace Deployment
     Dump_Obj dump_obj("Bridge");
     dump ("name", bridge.name);
     dump ("label", bridge.label);
-#if (_MSC_VER > 1200)
 
+#if (_MSC_VER)
     dump_ref_seq<Deployment::Domain> (
                                       "connectRef",
                                       bridge.connectRef,
                                       "Domain",
                                       &Domain::interconnect);
-#endif /*_MSC_VER*/
+#endif
 
     dump_sequence ("resource", bridge.resource);
   }
@@ -300,12 +305,12 @@ namespace Deployment
 
     dump ("name", mdd.name);
     dump ("source", mdd.source);
-#if (_MSC_VER > 1200)
 
+#if (_MSC_VER)
     dump_ref_seq<Deployment::DeploymentPlan> ("artifactRef", mdd.artifactRef,
                                               "DeploymentPlan",
                                               &DeploymentPlan::artifact);
-#endif /*_MSC_VER*/
+#endif
     dump_sequence ("execParameter", mdd.execParameter);
     dump_sequence ("deployRequirement", mdd.deployRequirement);
   }
@@ -347,12 +352,12 @@ namespace Deployment
     dump ("node", idd.node);
     dump ("source", idd.source);
 
-#if (_MSC_VER > 1200)
+#if (_MSC_VER)
     dump_ref<Deployment::DeploymentPlan> ("implementationRef",
                                           idd.implementationRef,
                                           "DeploymentPlan",
                                           &DeploymentPlan::implementation);
-#endif /*_MSC_VER*/
+#endif
     dump_sequence ("configProperty", idd.configProperty);
     dump_sequence ("deployedResource", idd.deployedResource);
     dump_sequence ("deployedSharedResource", idd.deployedSharedResource);
@@ -385,11 +390,11 @@ namespace Deployment
     case EventConsumer: ACE_DEBUG ((LM_DEBUG, "EventConsumer\n")); break;
     default: ACE_DEBUG ((LM_DEBUG, "Unknown port kind\n")); break;
     }
-#if (_MSC_VER > 1200)
+#if (_MSC_VER)
     dump_ref<Deployment::DeploymentPlan> ("instanceRef", pspe.instanceRef,
                                           "DeploymentPlan",
                                           &DeploymentPlan::instance);
-#endif /*_MSC_VER*/
+#endif
   }
 
   // ExternalReferenceEndpoint
@@ -437,11 +442,11 @@ namespace Deployment
 
     dump ("propertyName", pspr.propertyName);
 
-#if (_MSC_VER > 1200)
+#if (_MSC_VER)
     dump_ref<Deployment::DeploymentPlan> ("instanceRef", pspr.instanceRef,
                                           "DeploymentPlan",
                                           &DeploymentPlan::instance);
-#endif /*_MSC_VER*/
+#endif
   }
 
   // PlanPropertyMapping

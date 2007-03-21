@@ -65,7 +65,7 @@ main (int argc, char *argv[])
   try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "");
+        CORBA::ORB_init (argc, argv);
 
       CORBA::Object_var poa_object =
         orb->resolve_initial_references("RootPOA");
@@ -90,8 +90,13 @@ main (int argc, char *argv[])
                       1);
       PortableServer::ServantBase_var owner_transfer(roundtrip_impl);
 
+      PortableServer::ObjectId_var id =
+        root_poa->activate_object (roundtrip_impl);
+
+      CORBA::Object_var object = root_poa->id_to_reference (id.in ());
+
       Test::Roundtrip_var roundtrip =
-        roundtrip_impl->_this ();
+        Test::Roundtrip::_narrow (object.in ());
 
       CORBA::String_var ior =
         orb->object_to_string (roundtrip.in ());

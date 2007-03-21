@@ -25,7 +25,6 @@ project(*Server): taoserver, pi_server, interceptors {
 project(*Client): taoserver, pi, interceptors {
   exename = client
   after += *idl
-  after += *Server
   Source_Files {
     test_i.cpp
     testC.cpp

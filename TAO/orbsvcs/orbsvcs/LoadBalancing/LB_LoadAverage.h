@@ -69,34 +69,25 @@ public:
    * Methods required by the CosLoadBalancing::Strategy interface.
    */
   //@{
-  virtual char * name (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual char * name (void);
 
-  virtual CosLoadBalancing::Properties * get_properties ()
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CosLoadBalancing::Properties * get_properties ();
 
   virtual void push_loads (
       const PortableGroup::Location & the_location,
-      const CosLoadBalancing::LoadList & loads)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+      const CosLoadBalancing::LoadList & loads);
 
   virtual CosLoadBalancing::LoadList * get_loads (
       CosLoadBalancing::LoadManager_ptr load_manager,
-      const PortableGroup::Location & the_location)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     CosLoadBalancing::LocationNotFound));
+      const PortableGroup::Location & the_location);
 
   virtual CORBA::Object_ptr next_member (
       PortableGroup::ObjectGroup_ptr object_group,
-      CosLoadBalancing::LoadManager_ptr load_manager)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableGroup::ObjectGroupNotFound,
-                     PortableGroup::MemberNotFound));
+      CosLoadBalancing::LoadManager_ptr load_manager);
 
   virtual void analyze_loads (
       PortableGroup::ObjectGroup_ptr object_group,
-      CosLoadBalancing::LoadManager_ptr load_manager)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+      CosLoadBalancing::LoadManager_ptr load_manager);
   //@}
 
   /// Returns the default POA for this servant.

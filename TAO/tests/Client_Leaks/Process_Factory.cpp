@@ -21,7 +21,6 @@ Process_Factory::shutdown_received (void)
 
 Test::Process_ptr
 Process_Factory::create_new_process (void)
-  ACE_THROW_SPEC ((CORBA::SystemException,Test::Spawn_Failed))
 {
   Startup_Callback *startup_callback_impl;
   ACE_NEW_THROW_EX (startup_callback_impl,
@@ -30,8 +29,19 @@ Process_Factory::create_new_process (void)
 
   PortableServer::ServantBase_var owner_transfer(startup_callback_impl);
 
+  CORBA::Object_var poa_object =
+    this->orb_->resolve_initial_references("RootPOA");
+
+  PortableServer::POA_var root_poa =
+    PortableServer::POA::_narrow (poa_object.in ());
+
+  PortableServer::ObjectId_var id =
+    root_poa->activate_object (startup_callback_impl);
+
+  CORBA::Object_var object = root_poa->id_to_reference (id.in ());
+
   Test::Startup_Callback_var startup_callback =
-    startup_callback_impl->_this ();
+    Test::Startup_Callback::_narrow (object.in ());
 
   CORBA::String_var ior =
     this->orb_->object_to_string (startup_callback.in ());
@@ -57,7 +67,7 @@ Process_Factory::create_new_process (void)
                   "(%P|%t) Process_Factory::create_new_process, "
                   " spawn call failed (%d)\n",
                   errno));
-      ACE_THROW_RETURN (Test::Spawn_Failed (), Test::Process::_nil ());
+      throw Test::Spawn_Failed ();
     }
 
   int process_has_started = 0;
@@ -89,7 +99,7 @@ Process_Factory::create_new_process (void)
                   "(%P|%t) Process_Factory::create_new_process, "
                   " timeout while waiting for child\n"));
       (void) child_process.terminate ();
-      ACE_THROW_RETURN (Test::Spawn_Failed (), Test::Process::_nil ());
+      throw Test::Spawn_Failed ();
     }
 
   return the_process._retn ();
@@ -97,13 +107,11 @@ Process_Factory::create_new_process (void)
 
 void
 Process_Factory::noop (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
 Process_Factory::shutdown (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->shutdown_received_ = 1;
   this->orb_->shutdown (0);

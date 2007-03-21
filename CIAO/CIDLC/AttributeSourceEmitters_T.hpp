@@ -39,7 +39,7 @@ struct WriteAttributeSourceEmitter : Traversal::ReadWriteAttribute,
   virtual void
   gen_swapping_set ()
   {
-    os << "this->activate_component (" << ");"
+    os << "this->activate_component ();"
        << endl;
   }
 
@@ -54,14 +54,13 @@ struct WriteAttributeSourceEmitter : Traversal::ReadWriteAttribute,
   {
     os << scope_.name ()
        << (exec_src_ ? "_exec_i::" : "_Servant::")
-       << a.name () << " (" << endl;
+       << a.name () << " (";
 
     Traversal::ReadWriteAttribute::belongs (a, write_belongs_);
 
     os << (exec_src_ ? " /* " : " ")
        << a.name ()
-       << (exec_src_ ? " */" : "") << endl
-       << ")" << endl;
+       << (exec_src_ ? " */" : "") << ")" << endl;
   }
 
   virtual void
@@ -70,22 +69,8 @@ struct WriteAttributeSourceEmitter : Traversal::ReadWriteAttribute,
   }
 
   virtual void
-  set_raises_none (SemanticGraph::ReadWriteAttribute&)
+  set_raises (SemanticGraph::ReadWriteAttribute&)
   {
-    os << STRS[EXCP_SNGL];
-  }
-
-  virtual void
-  set_raises_pre (SemanticGraph::ReadWriteAttribute&)
-  {
-    os << STRS[EXCP_START] << " "
-       << STRS[EXCP_SYS] << "," << endl;
-  }
-
-  virtual void
-  set_raises_post (SemanticGraph::ReadWriteAttribute&)
-  {
-    os << "))" << endl;
   }
 
   virtual void
@@ -104,9 +89,8 @@ struct WriteAttributeSourceEmitter : Traversal::ReadWriteAttribute,
           this->gen_swapping_set ();
         }
 
-        os << "this->executor_->" << a.name () << " (" << endl
-           << a.name () << endl
-           << ");" << endl;
+        os << "this->executor_->" << a.name ()
+           << " (" << a.name () << ");" << endl;
       }
 
     os << "}";
@@ -188,27 +172,12 @@ struct AttributeSourceEmitter : Traversal::ReadAttribute,
   {
     os << scope_.name ()
        << (exec_src_ ? "_exec_i::" : "_Servant::")
-       << a.name () << " (" << endl
-       << ")" << endl;
+       << a.name () << " ()" << endl;
   }
 
   virtual void
-  get_raises_none (SemanticGraph::ReadWriteAttribute&)
+  get_raises (SemanticGraph::ReadWriteAttribute&)
   {
-    os << STRS[EXCP_SNGL] << endl;
-  }
-
-  virtual void
-  get_raises_pre (SemanticGraph::ReadWriteAttribute&)
-  {
-    os << STRS[EXCP_START] << " "
-       << STRS[EXCP_SYS] << "," << endl;
-  }
-
-  virtual void
-  get_raises_post (SemanticGraph::ReadWriteAttribute&)
-  {
-    os << "))" << endl;
   }
 
   virtual void
@@ -280,27 +249,12 @@ struct AttributeSourceEmitter : Traversal::ReadAttribute,
   {
     os << scope_.name ()
        << (exec_src_ ? "_exec_i::" : "_Servant::")
-       << a.name () << " (" << endl
-       << ")" << endl;
+       << a.name () << " ()" << endl;
   }
 
   virtual void
-  get_raises_none (SemanticGraph::ReadAttribute&)
+  get_raises (SemanticGraph::ReadAttribute&)
   {
-    os << STRS[EXCP_SNGL] << endl;
-  }
-
-  virtual void
-  get_raises_pre (SemanticGraph::ReadAttribute&)
-  {
-    os << STRS[EXCP_START] << " "
-       << STRS[EXCP_SYS] << "," << endl;
-  }
-
-  virtual void
-  get_raises_post (SemanticGraph::ReadAttribute&)
-  {
-    os << "))" << endl;
   }
 
   virtual void

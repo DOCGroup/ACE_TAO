@@ -33,12 +33,10 @@ public:
   virtual ~Receiver_i (void);
 
   // = The skeleton methods
-  virtual CORBA::Long receive_call (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::Long receive_call (void);
 
   /// Retun the number of calls that every thread would make...
-  virtual CORBA::Long get_call_count (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::Long get_call_count (void);
 
 private:
   /// Our Orb...

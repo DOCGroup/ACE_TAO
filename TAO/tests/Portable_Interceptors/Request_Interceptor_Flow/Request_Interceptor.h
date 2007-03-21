@@ -58,11 +58,9 @@ public:
    */
   //@{
   /// Return the name of this Requestinterceptor.
-  virtual char * name (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual char * name (void);
 
-  virtual void destroy (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void destroy (void);
   //@}
 
 protected:

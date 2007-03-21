@@ -54,7 +54,7 @@ ServerApp::run(int argc, char* argv[])
     {
       ACE_ERROR ((LM_ERROR,
                   " (%P|%t) Panic: nil PolicyManager\n"));
-      ACE_THROW_RETURN (TestException(), -1);
+      throw TestException();
     }
 
     CORBA::Any policy_value;
@@ -79,7 +79,7 @@ ServerApp::run(int argc, char* argv[])
     {
       ACE_ERROR((LM_ERROR,
                  "(%P|%t) Failed to resolve initial ref for 'RootPOA'.\n"));
-      ACE_THROW_RETURN (TestException(), -1);
+      throw TestException();
     }
 
   PortableServer::POA_var root_poa
@@ -89,7 +89,7 @@ ServerApp::run(int argc, char* argv[])
     {
       ACE_ERROR((LM_ERROR,
                  "(%P|%t) Failed to narrow obj ref to POA interface.\n"));
-      ACE_THROW_RETURN (TestException(), -1);
+      throw TestException();
     }
 
   PortableServer::POAManager_var poa_manager
@@ -109,7 +109,7 @@ ServerApp::run(int argc, char* argv[])
     {
       ACE_ERROR((LM_ERROR, "(%P|%t) ERROR [ServerApp::run()]: "
                  "Failed to create the ChildPoa_1.\n"));
-      ACE_THROW_RETURN (TestException(), -1);
+      throw TestException();
     }
 
   PortableServer::POA_var child_poa_2 = root_poa->create_POA("ChildPoa_2",
@@ -120,7 +120,7 @@ ServerApp::run(int argc, char* argv[])
     {
       ACE_ERROR((LM_ERROR, "(%P|%t) ERROR [ServerApp::run()]: "
                  "Failed to create the ChildPoa_2.\n"));
-      ACE_THROW_RETURN (TestException(), -1);
+      throw TestException();
     }
 
   policies[0]->destroy ();
@@ -139,7 +139,7 @@ ServerApp::run(int argc, char* argv[])
     {
       ACE_ERROR((LM_ERROR, "(%P|%t) ERROR [ServerApp::run()]: "
                  "Failed to apply custom dispatching strategy to child poa 1.\n"));
-      ACE_THROW_RETURN (TestException(), -1);
+      throw TestException();
     }
 
   Foo_var foo1 = this->create_foo(child_poa_1.in(),
@@ -170,7 +170,7 @@ ServerApp::run(int argc, char* argv[])
     {
       ACE_ERROR((LM_ERROR,
         "(%P|%t) Failed to open the collocated client1.\n"));
-      ACE_THROW_RETURN (TestException(), -1);
+      throw TestException();
     }
 
   ClientTask client2 (foo2.in (), callback2.in ());
@@ -178,7 +178,7 @@ ServerApp::run(int argc, char* argv[])
     {
       ACE_ERROR((LM_ERROR,
         "(%P|%t) Failed to open the collocated client2.\n"));
-      ACE_THROW_RETURN (TestException(), -1);
+      throw TestException();
     }
 
   // Run the ORB event loop.
@@ -270,7 +270,7 @@ ServerApp::create_foo (
       ACE_ERROR((LM_ERROR,
                   "(%P|%t) Failed to activate servant (%s).\n",
                   servant_name));
-      ACE_THROW_RETURN (TestException(), Foo::_nil ());
+      throw TestException();
     }
 
   Foo_var foo = Foo::_narrow (obj.in ());
@@ -298,7 +298,7 @@ ServerApp::create_callback(
     ACE_ERROR((LM_ERROR,
       "(%P|%t) Failed to activate servant (%s).\n",
       servant_name));
-    ACE_THROW_RETURN (TestException(), Callback::_nil ());
+    throw TestException();
   }
 
   Callback_var callback = Callback::_narrow (obj.in ());

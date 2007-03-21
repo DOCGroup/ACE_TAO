@@ -147,14 +147,12 @@ MyImpl::RateGen_exec_i::~RateGen_exec_i ()
 
 CORBA::Long
 MyImpl::RateGen_exec_i::hertz ()
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->hertz_;
 }
 
 void
 MyImpl::RateGen_exec_i::hertz (CORBA::Long hertz)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->hertz_ = hertz;
 }
@@ -163,7 +161,6 @@ MyImpl::RateGen_exec_i::hertz (CORBA::Long hertz)
 
 void
 MyImpl::RateGen_exec_i::start ()
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (this->hertz_ == 0 || this->pulser_.active())
     {
@@ -176,7 +173,6 @@ MyImpl::RateGen_exec_i::start ()
 
 void
 MyImpl::RateGen_exec_i::stop ()
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (! this->pulser_.active ())
     {
@@ -189,7 +185,6 @@ MyImpl::RateGen_exec_i::stop ()
 
 CORBA::Boolean
 MyImpl::RateGen_exec_i::active ()
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->pulser_.active ();
 }
@@ -200,8 +195,6 @@ void
 MyImpl::RateGen_exec_i::set_session_context (
     Components::SessionContext_ptr ctx
   )
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   Components::CCMException))
 {
   if (CIAO::debug_level () > 0)
     {
@@ -222,15 +215,11 @@ MyImpl::RateGen_exec_i::set_session_context (
 
 void
 MyImpl::RateGen_exec_i::ciao_preactivate ()
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   Components::CCMException))
 {
 }
 
 void
 MyImpl::RateGen_exec_i::ccm_activate ()
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   Components::CCMException))
 {
   if (CIAO::debug_level () > 0)
     {
@@ -243,15 +232,11 @@ MyImpl::RateGen_exec_i::ccm_activate ()
 
 void
 MyImpl::RateGen_exec_i::ciao_postactivate ()
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   Components::CCMException))
 {
 }
 
 void
 MyImpl::RateGen_exec_i::ccm_passivate ()
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   Components::CCMException))
 {
   if (CIAO::debug_level () > 0)
     {
@@ -264,8 +249,6 @@ MyImpl::RateGen_exec_i::ccm_passivate ()
 
 void
 MyImpl::RateGen_exec_i::ccm_remove ()
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   Components::CCMException))
 {
   if (CIAO::debug_level () > 0)
     {
@@ -306,7 +289,6 @@ MyImpl::RateGenHome_exec_i::~RateGenHome_exec_i ()
 
 ::Components::EnterpriseComponent_ptr
 MyImpl::RateGenHome_exec_i::new_RateGen (CORBA::Long /* hertz */)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   Components::EnterpriseComponent_ptr tmp = 0;
   ACE_NEW_THROW_EX (tmp,
@@ -318,8 +300,6 @@ MyImpl::RateGenHome_exec_i::new_RateGen (CORBA::Long /* hertz */)
 
 ::Components::EnterpriseComponent_ptr
 MyImpl::RateGenHome_exec_i::create ()
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   Components::CCMException))
 {
   return new MyImpl::RateGen_exec_i ();
 }

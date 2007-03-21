@@ -2,10 +2,13 @@
 
 #include "tao/PortableServer/Default_Servant_Dispatcher.h"
 #include "tao/PortableServer/Root_POA.h"
+#include "tao/PortableServer/Network_Priority_Hook.h"
 
 ACE_RCSID(PortableServer,
           Default_Servant_Dispatcher,
           "$Id$")
+
+#include "ace/CORBA_macros.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -40,11 +43,12 @@ TAO_Default_Servant_Dispatcher::create_Root_POA (const ACE_CString &name,
 
 void
 TAO_Default_Servant_Dispatcher::pre_invoke_remote_request (
-  TAO_Root_POA &,
+  TAO_Root_POA &poa,
   CORBA::Short,
-  TAO_ServerRequest &,
+  TAO_ServerRequest &req,
   TAO::Portable_Server::Servant_Upcall::Pre_Invoke_State &)
 {
+  poa.network_priority_hook ()-> set_dscp_codepoint (req, poa);
 }
 
 void

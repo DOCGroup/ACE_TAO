@@ -31,7 +31,7 @@ if ($sv != 0) {
    exit 1;
 }
 # We can wait on the IOR file
-if (PerlACE::waitforfile_timed( $server_ior_file, 10 ) == -1)
+if (PerlACE::waitforfile_timed( $server_ior_file, $PerlACE::wait_interval_for_process_creation) == -1)
 {
    print STDERR "ERROR: cannot find $server_ior_file\n";
    $SERVER->Kill();

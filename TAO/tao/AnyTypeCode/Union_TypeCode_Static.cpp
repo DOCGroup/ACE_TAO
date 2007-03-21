@@ -3,15 +3,14 @@
 #include "tao/AnyTypeCode/Union_TypeCode_Static.h"
 #include "tao/AnyTypeCode/TypeCode_Case_Base_T.h"
 #include "tao/AnyTypeCode/Any.h"
+#include "tao/SystemException.h"
 
 #ifndef __ACE_INLINE__
 # include "tao/AnyTypeCode/Union_TypeCode_Static.inl"
 #endif  /* !__ACE_INLINE__ */
 
-#include "tao/SystemException.h"
-
 #include "ace/Value_Ptr.h"
-
+#include "ace/CORBA_macros.h"
 
 ACE_RCSID (AnyTypeCode,
            Union_TypeCode_Static,
@@ -234,8 +233,7 @@ TAO::TypeCode::Union<char const *,
 
 //   if (adapter == 0)
 //     {
-//       ACE_THROW_RETURN (CORBA::INTERNAL (),
-//                         CORBA::TypeCode::_nil ());
+//       throw ::CORBA::INTERNAL ();
 //     }
 
 //   return
@@ -250,7 +248,7 @@ TAO::TypeCode::Union<char const *,
 //       Traits<char const *>::get_typecode (this->default_case_.type)
 //      );
 
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), CORBA::TypeCode::_nil ());
+  throw ::CORBA::NO_IMPLEMENT ();
 }
 
 char const *
@@ -271,8 +269,7 @@ TAO::TypeCode::Union<char const *,
                      CORBA::TypeCode_ptr const *,
                      TAO::TypeCode::Case<char const *,
                                          CORBA::TypeCode_ptr const *> const * const *,
-                     TAO::Null_RefCount_Policy>::name_i (
-  void) const
+                     TAO::Null_RefCount_Policy>::name_i (void) const
 {
   // Ownership is retained by the TypeCode, as required by the C++
   // mapping.
@@ -284,8 +281,7 @@ TAO::TypeCode::Union<char const *,
                      CORBA::TypeCode_ptr const *,
                      TAO::TypeCode::Case<char const *,
                                          CORBA::TypeCode_ptr const *> const * const *,
-                     TAO::Null_RefCount_Policy>::member_count_i (
-  void) const
+                     TAO::Null_RefCount_Policy>::member_count_i (void) const
 {
   return this->ncases_;
 }
@@ -296,13 +292,12 @@ TAO::TypeCode::Union<char const *,
                      TAO::TypeCode::Case<char const *,
                                          CORBA::TypeCode_ptr const *> const * const *,
                      TAO::Null_RefCount_Policy>::member_name_i (
-  CORBA::ULong index
-  ) const
+  CORBA::ULong index) const
 {
   // Ownership is retained by the TypeCode, as required by the C++
   // mapping.
   if (index >= this->ncases_)
-    ACE_THROW_RETURN (CORBA::TypeCode::Bounds (), 0);
+    throw ::CORBA::TypeCode::Bounds ();
 
   return this->cases_[index]->name ();
 }
@@ -316,8 +311,7 @@ TAO::TypeCode::Union<char const *,
   CORBA::ULong index) const
 {
   if (index >= this->ncases_)
-    ACE_THROW_RETURN (CORBA::TypeCode::Bounds (),
-                      CORBA::TypeCode::_nil ());
+    throw ::CORBA::TypeCode::Bounds ();
 
   return CORBA::TypeCode::_duplicate (this->cases_[index]->type ());
 }
@@ -331,8 +325,7 @@ TAO::TypeCode::Union<char const *,
   CORBA::ULong index) const
 {
   if (index >= this->ncases_)
-    ACE_THROW_RETURN (CORBA::TypeCode::Bounds (),
-                      0);
+    throw ::CORBA::TypeCode::Bounds ();
 
   // Default case.
   if (this->default_index_ > -1
@@ -363,8 +356,7 @@ TAO::TypeCode::Union<char const *,
                      CORBA::TypeCode_ptr const *,
                      TAO::TypeCode::Case<char const *,
                                          CORBA::TypeCode_ptr const *> const * const *,
-                     TAO::Null_RefCount_Policy>::discriminator_type_i (
-  void) const
+                     TAO::Null_RefCount_Policy>::discriminator_type_i (void) const
 {
   return
     CORBA::TypeCode::_duplicate (
@@ -376,8 +368,7 @@ TAO::TypeCode::Union<char const *,
                      CORBA::TypeCode_ptr const *,
                      TAO::TypeCode::Case<char const *,
                                          CORBA::TypeCode_ptr const *> const * const *,
-                     TAO::Null_RefCount_Policy>::default_index_i (
-  void) const
+                     TAO::Null_RefCount_Policy>::default_index_i (void) const
 {
   return this->default_index_;
 }

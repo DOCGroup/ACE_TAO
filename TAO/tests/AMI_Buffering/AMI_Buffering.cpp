@@ -30,7 +30,6 @@ AMI_Buffering::Nest_Guard::~Nest_Guard (void)
 
 void
 AMI_Buffering::receive_data (const Test::Payload &the_payload)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   try
     {
@@ -47,20 +46,17 @@ AMI_Buffering::receive_data (const Test::Payload &the_payload)
 
 void
 AMI_Buffering::flush (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
 AMI_Buffering::sync (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->admin_->flush ();
 }
 
 void
 AMI_Buffering::shutdown (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->must_shutdown_ = true;
   this->try_shutdown();

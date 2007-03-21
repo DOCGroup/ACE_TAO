@@ -230,7 +230,10 @@ ACE_Registry_ImpExp::export_config (const ACE_TCHAR* filename)
       result = this->export_section (config_.root_section (),
                                      ACE_LIB_TEXT (""),
                                      out);
-      ACE_OS::fclose (out);
+      // The data may have been buffered and will be flush on close,
+      // so we need to check that the close succeeds.
+      if (ACE_OS::fclose (out) < 0)
+        result = -7;
     }
   return result;
 }
@@ -512,7 +515,10 @@ ACE_Ini_ImpExp::export_config (const ACE_TCHAR* filename)
       result = this->export_section (config_.root_section (),
                                      ACE_LIB_TEXT (""),
                                      out);
-      ACE_OS::fclose (out);
+      // The data may have been buffered and will be flush on close,
+      // so we need to check that the close succeeds.
+      if (ACE_OS::fclose (out) < 0)
+        result = -7;
     }
   return result;
 }

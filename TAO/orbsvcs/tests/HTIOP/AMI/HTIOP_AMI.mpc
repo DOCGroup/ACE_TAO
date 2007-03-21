@@ -13,10 +13,10 @@ project(*Server): messaging, taoexe, portableserver, ami {
   after += *idl
   macros += TEST_OUTPUT_HAS_DLL=0
   Source_Files {
-    Test_Output.cpp
-    ami_test_i.cpp
     ami_testS.cpp
     ami_testC.cpp
+    Test_Output.cpp
+    ami_test_i.cpp
     server.cpp
   }
   IDL_Files {
@@ -27,10 +27,10 @@ project(*Client): messaging, taoexe, portableserver, ami {
   after += *idl
   macros += TEST_OUTPUT_HAS_DLL=0
   Source_Files {
-    Test_Output.cpp
-    client.cpp
     ami_testS.cpp
     ami_testC.cpp
+    Test_Output.cpp
+    client.cpp
   }
   IDL_Files {
   }
@@ -40,10 +40,10 @@ project(*Simple Client): messaging, taoexe, portableserver, ami {
   after += *idl
   macros += TEST_OUTPUT_HAS_DLL=0
   Source_Files {
-    Test_Output.cpp
-    simple_client.cpp
     ami_testS.cpp
     ami_testC.cpp
+    Test_Output.cpp
+    simple_client.cpp
   }
   IDL_Files {
   }

@@ -83,7 +83,6 @@ BE_GlobalData::BE_GlobalData (void)
     gen_assign_op_ (false),
     gen_thru_poa_collocation_ (true), // Default is thru_poa.
     gen_direct_collocation_ (false),
-    use_raw_throw_ (false),
     opt_tc_ (false),
     ami_call_back_ (false),
     gen_amh_classes_ (false),
@@ -1025,18 +1024,6 @@ BE_GlobalData::gen_direct_collocation (void) const
 }
 
 void
-BE_GlobalData::use_raw_throw (bool val)
-{
-  this->use_raw_throw_ = val;
-}
-
-bool
-BE_GlobalData::use_raw_throw (void) const
-{
-  return this->use_raw_throw_;
-}
-
-void
 BE_GlobalData::opt_tc (bool val)
 {
   this->opt_tc_ = val;
@@ -1784,7 +1771,7 @@ BE_GlobalData::parse_args (long &i, char **av)
         if (av[i][2] == '\0')
           {
             idl_global->append_idl_flag (av[i + 1]);
-            ACE_CString tmp (av[i + 1], 0, 0);
+            ACE_CString tmp (av[i + 1], 0, false);
 #if defined (ACE_WIN32)
             // WIN32's CreateProcess needs the full executable name
             // when the gperf path is modified, but not for the default
@@ -1951,15 +1938,6 @@ BE_GlobalData::parse_args (long &i, char **av)
             // Any operators into a separate set of files.
             be_global->gen_anyop_files (true);
           }
-        else if (av[i][2] == 'e')
-          {
-            idl_global->append_idl_flag (av[i + 1]);
-            int option = ACE_OS::atoi (av[i + 1]);
-
-            // Use of raw 'throw'.
-            be_global->use_raw_throw (option == 2);
-            ++i;
-          }
         else if (av[i][2] == 's')
           {
             if (av[i][3] == 'p')
@@ -2019,7 +1997,7 @@ BE_GlobalData::parse_args (long &i, char **av)
               {
                 if (av[i][4] == 'p' && av[i][5] =='s' && '\0' == av[i][6])
                   {
-                    // DDS DCSP type support.
+                    // DDS DCPS type support.
                     be_global->gen_dcps_type_support (true);
                   }
                 else
@@ -2554,8 +2532,7 @@ BE_GlobalData::usage (void) const
     ));
   ACE_DEBUG ((
       LM_DEBUG,
-      ACE_TEXT (" -Ge 2\t\t\tUse raw throw instead of ACE_THROW macro")
-      ACE_TEXT (" (disabled by default)\n")
+      ACE_TEXT (" -Gdcps \t\tGenerate code supporting DDS DCPS type definitions.\n")
     ));
   ACE_DEBUG ((
       LM_DEBUG,

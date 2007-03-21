@@ -33,9 +33,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-// Forward Decls
-class TAO_Pluggable_Messaging;
-
 // ****************************************************************
 
 /**
@@ -56,8 +53,7 @@ public:
   TAO_DIOP_Connection_Handler (ACE_Thread_Manager* t = 0);
 
   /// Constructor.
-  TAO_DIOP_Connection_Handler (TAO_ORB_Core *orb_core,
-                               CORBA::Boolean flag);
+  TAO_DIOP_Connection_Handler (TAO_ORB_Core *orb_core, CORBA::Boolean flag);
 
   /// Destructor.
   ~TAO_DIOP_Connection_Handler (void);
@@ -127,6 +123,7 @@ public:
 
   /// Set Diff-Serv codepoint on outgoing packets.
   int set_dscp_codepoint (CORBA::Boolean set_network_priority);
+  int set_dscp_codepoint (CORBA::Long dscp_codepoint);
 
 protected:
 
@@ -136,6 +133,9 @@ protected:
    */
   virtual int release_os_resources (void);
   //@}
+
+  /// Helper method used by the set_dscp_codepoint () methods
+  int set_tos (int tos);
 
   // DIOP Additions - Begin
   /**

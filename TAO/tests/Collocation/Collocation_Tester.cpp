@@ -31,7 +31,7 @@ int
 Collocation_Test::init (int argc, char *argv[])
 {
   // Initialize the ORB.
-  this->orb_ = CORBA::ORB_init (argc, argv, 0);
+  this->orb_ = CORBA::ORB_init (argc, argv);
 
   int result = this->parse_args (argc, argv);
   if (result != 0)

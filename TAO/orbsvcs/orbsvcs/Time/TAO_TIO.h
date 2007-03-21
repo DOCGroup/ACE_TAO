@@ -46,8 +46,7 @@ public:
   ~TAO_TIO (void);
 
   /// This is the get method for the attribute time interval.
-  virtual TimeBase::IntervalT  time_interval ()
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual TimeBase::IntervalT  time_interval ();
 
   /**
    * This operation returns a value of type OverlapType depending on
@@ -58,8 +57,7 @@ public:
    * intervals.
    */
   virtual CosTime::OverlapType spans (CosTime::UTO_ptr time,
-                                      CosTime::TIO_out overlap)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                                      CosTime::TIO_out overlap);
 
   /**
    * This operation returns a value of type OverlapType depending on
@@ -69,16 +67,14 @@ public:
    * out parameter contains the gap between the two intervals.
    */
   virtual CosTime::OverlapType overlaps (CosTime::TIO_ptr interval,
-                                         CosTime::TIO_out overlap)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                                         CosTime::TIO_out overlap);
 
   /**
    * Returns a UTO in which the inaccuracy interval is equal to the
    * time interval in the TIO and time value is the midpoint of the
    * interval.
    */
-  virtual CosTime::UTO_ptr time (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CosTime::UTO_ptr time (void);
 
 private:
   /// This attribute returns an IntervalT structure with the values of

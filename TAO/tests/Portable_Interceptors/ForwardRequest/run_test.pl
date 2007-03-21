@@ -20,7 +20,7 @@ if (PerlACE::is_vxworks_test()) {
     $SV = new PerlACE::ProcessVX ("server", "-o test1.ior -o test2.ior");
 }
 else {
-    $SV = new PerlACE::Process ("server", "-o $file1 -o $file2");    
+    $SV = new PerlACE::Process ("server", "-o $file1 -o $file2");
 }
 $CL = new PerlACE::Process ("client", "-k file://$file1 -k file://$file2");
 
@@ -30,13 +30,13 @@ print STDERR "\n\n==== Running PortableInterceptor::ForwardRequest test\n";
 
 $SV->Spawn ();
 
-if (PerlACE::waitforfile_timed ($file1, 15) == -1) {
+if (PerlACE::waitforfile_timed ($file1, $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: cannot find file <$file1>\n";
     $SV->Kill ();
     exit 1;
 }
 
-if (PerlACE::waitforfile_timed ($file2, 15) == -1) {
+if (PerlACE::waitforfile_timed ($file2, $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: cannot find file <$file2>\n";
     $SV->Kill ();
     exit 1;

@@ -13,7 +13,7 @@
 
 ACE_RCSID(blocking, SPIPE_acceptor, "$Id$")
 
-#if ((defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) || (defined (ACE_HAS_AIO_CALLS)))
+#if defined (ACE_HAS_WIN32_OVERLAPPED_IO) || defined (ACE_HAS_AIO_CALLS)
 
 Svc_Handler::Svc_Handler (void)
   : mb_ (BUFSIZ + 1)
@@ -188,16 +188,17 @@ IPC_Server::svc (void)
           // Run single-threaded.
           if (n_threads_ <= 1)
             run_reactor_event_loop (0);
-          else if (ACE_Thread_Manager::instance ()->spawn_n
+          else
+            {
+              if (ACE_Thread_Manager::instance ()->spawn_n
                    (n_threads_,
                     run_reactor_event_loop,
                     0,
                     THR_NEW_LWP) == -1)
-            {
-              ACE_ERROR_RETURN ((LM_ERROR,
-                                 ACE_TEXT ("%p\n"),
-                                 ACE_TEXT ("spawn_n")),
-                                1);
+                ACE_ERROR_RETURN ((LM_ERROR,
+                                   ACE_TEXT ("%p\n"),
+                                   ACE_TEXT ("spawn_n")),
+                                  1);
 
               ACE_Thread_Manager::instance ()->wait ();
             }
@@ -219,6 +220,6 @@ IPC_Server::svc (void)
   return 0;
 }
 
-#endif /* ACE_WIN32 || ACE_HAS_AIO_CALLS*/
+#endif /* ACE_HAS_WIN32_OVERLAPPED_IO || ACE_HAS_AIO_CALLS */
 #endif /* SPIPE_ACCEPTOR_C */
 

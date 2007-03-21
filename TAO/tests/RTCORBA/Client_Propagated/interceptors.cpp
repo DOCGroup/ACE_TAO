@@ -21,21 +21,18 @@ Client_Request_Interceptor::~Client_Request_Interceptor (void)
 
 char *
 Client_Request_Interceptor::name (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup (this->myname_);
 }
 
 void
 Client_Request_Interceptor::destroy (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
 Client_Request_Interceptor::send_poll (
     PortableInterceptor::ClientRequestInfo_ptr)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Do Nothing
 }
@@ -43,8 +40,6 @@ Client_Request_Interceptor::send_poll (
 void
 Client_Request_Interceptor::send_request (
     PortableInterceptor::ClientRequestInfo_ptr)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableInterceptor::ForwardRequest))
 {
   // Do Nothing
 }
@@ -52,7 +47,6 @@ Client_Request_Interceptor::send_request (
 void
 Client_Request_Interceptor::receive_reply (
     PortableInterceptor::ClientRequestInfo_ptr ri)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 
   try
@@ -76,16 +70,12 @@ Client_Request_Interceptor::receive_reply (
 void
 Client_Request_Interceptor::receive_other (
     PortableInterceptor::ClientRequestInfo_ptr)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableInterceptor::ForwardRequest))
 {
 }
 
 void
 Client_Request_Interceptor::receive_exception (
     PortableInterceptor::ClientRequestInfo_ptr ri)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableInterceptor::ForwardRequest))
 {
 
   if (CORBA::is_nil (this->orb_.in ()))

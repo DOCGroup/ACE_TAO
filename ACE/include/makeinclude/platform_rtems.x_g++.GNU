@@ -9,6 +9,7 @@ optimize ?= 1
 exceptions ?= 1
 rtti ?= 1
 threads ?= 1
+pipes ?= 1
 
 shared_libs =
 static_libs = 1
@@ -34,12 +35,13 @@ ifeq (no,$(RTEMS_HAS_NETWORKING))
  CCFLAGS += -DACE_LACKS_NETWORKING
 endif
 
-CFLAGS          += -specs bsp_specs -qrtems -D_REENTRANT -fasm -fno-builtin -fno-defer-pop -fvolatile $(PIPE_OPT) -W -Wall -DACE_HAS_RTEMS -B$(RTEMS_MAKEFILE_PATH)/lib
-CCFLAGS         += -specs bsp_specs -qrtems -D_REENTRANT -fasm -fno-builtin -fno-defer-pop -fvolatile $(PIPE_OPT) -W -Wall -DACE_HAS_RTEMS -B$(RTEMS_MAKEFILE_PATH)/lib
+CFLAGS          += -specs bsp_specs -qrtems -D_REENTRANT -fasm -fno-builtin -fno-defer-pop -fvolatile -W -Wall -DACE_HAS_RTEMS -B$(RTEMS_MAKEFILE_PATH)/lib
+CCFLAGS         += -specs bsp_specs -qrtems -D_REENTRANT -fasm -fno-builtin -fno-defer-pop -fvolatile -W -Wall -DACE_HAS_RTEMS -B$(RTEMS_MAKEFILE_PATH)/lib
 ifeq (0,$(rtti))
   CCFLAGS += -fno-rtti -DACE_LACKS_RTTI
 endif # rtti
 DCFLAGS         += -g
+DCCFLAGS        += -g
 DLD             = $(LD)
 INCLDIRS        +=
 

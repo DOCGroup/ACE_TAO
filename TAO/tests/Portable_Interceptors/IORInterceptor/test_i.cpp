@@ -13,7 +13,6 @@ test_i::test_i (CORBA::ORB_ptr orb)
 
 void
 test_i::shutdown (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
               "\"test_i\" is shutting down.\n"));

@@ -6,9 +6,6 @@ ACE_RCSID (Factory,
 
 OBV_FactoryTest::Value2*
 Value2_init_impl::create_default (CORBA::ULong id)
-  ACE_THROW_SPEC ((
-    CORBA::SystemException
-  ))
 {
   OBV_FactoryTest::Value2* ret_val = 0;
   ACE_NEW_RETURN (ret_val,
@@ -28,9 +25,6 @@ Value2_init_impl::create (
     CORBA::ULong id,
     const OBV_FactoryTest::BaseValue::BV_Data & data
   )
-  ACE_THROW_SPEC ((
-    CORBA::SystemException
-  ))
 {
   OBV_FactoryTest::Value2* ret_val = 0;
   ACE_NEW_RETURN (ret_val,

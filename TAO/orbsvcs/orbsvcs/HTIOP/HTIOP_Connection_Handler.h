@@ -115,6 +115,7 @@ namespace TAO
       ///Network Priority This method is a no-op, but implemented to
       ///satisfy the base class interface.
       int set_dscp_codepoint (CORBA::Boolean set_network_priority);
+      int set_dscp_codepoint (CORBA::Long dscp);
 
 
       //@{

@@ -135,8 +135,8 @@ public:
   int unmap (void *addr, ssize_t len);
 
   /**
-   * Sync <len> bytes of the memory region to the backing store
-   * starting at <base_addr_>.  If <len> == -1 then sync the whole
+   * Sync @a len bytes of the memory region to the backing store
+   * starting at <base_addr_>.  If @a len == -1 then sync the whole
    * region.
    */
   int sync (size_t len, int flags = MS_SYNC);
@@ -147,13 +147,13 @@ public:
    */
   int sync (int flags = MS_SYNC);
 
-  /// Sync <len> bytes of the memory region to the backing store
+  /// Sync @a len bytes of the memory region to the backing store
   /// starting at <addr_>.
   int sync (void *addr, size_t len, int flags = MS_SYNC);
 
   /**
    * Change the protection of the pages of the mapped region to <prot>
-   * starting at <base_addr_> up to <len> bytes.
+   * starting at <base_addr_> up to @a len bytes.
    */
   int protect (size_t len, int prot = PROT_RDWR);
 
@@ -164,7 +164,7 @@ public:
   int protect (int prot = PROT_RDWR);
 
   /// Change the protection of the pages of the mapped region to <prot>
-  /// starting at <addr> up to <len> bytes.
+  /// starting at <addr> up to @a len bytes.
   int protect (void *addr, size_t len, int prot = PROT_RDWR);
 
   /// Close and remove the file from the file system.

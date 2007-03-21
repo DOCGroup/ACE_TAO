@@ -92,6 +92,11 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 const size_t TAO_DEFAULT_ORB_TABLE_SIZE = 16;
 #endif  /* !TAO_DEFAULT_ORB_TABLE_SIZE */
 
+// The default size of TAO's adapter registry.
+#if !defined (TAO_DEFAULT_ADAPTER_REGISTRY_SIZE)
+const size_t TAO_DEFAULT_ADAPTER_REGISTRY_SIZE = 16;
+#endif  /* !TAO_DEFAULT_ORB_TABLE_SIZE */
+
 // The default size of the reply dispatcher table, ie. if the reply
 // dispatcher strategy needs a table to maintain association between
 // request id's and reply dispatchers
@@ -738,6 +743,12 @@ enum TAO_Cached_Policy_Type
 #endif /* TAO_HAS_CONNECTION_TIMEOUT_POLICY == 1 */
 
   TAO_CACHED_POLICY_BIDIRECTIONAL_GIOP,
+
+  TAO_CACHED_POLICY_SERVER_NETWORK_PRIORITY,
+
+  TAO_CACHED_POLICY_CLIENT_NETWORK_PRIORITY,
+
+  TAO_CACHED_POLICY_NETWORK_PRIORITY,
 
   TAO_CACHED_POLICY_ENDPOINT,
 

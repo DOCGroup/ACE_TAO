@@ -581,7 +581,7 @@ TAO_ECG_CDR_Message_Receiver::Mcast_Header::read (char *header,
           crcparts[cnt] = padding[cnt];
         }
 
-      this->crc = ntohl (this->crc);
+      this->crc = ACE_NTOHL (this->crc);
     }
 
   // Validate.

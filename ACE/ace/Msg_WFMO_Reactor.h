@@ -48,8 +48,8 @@ public:
                         ACE_Timer_Queue * = 0);
 
   /**
-   * Initialize <ACE_Msg_WFMO_Reactor> with size <size>.  Two slots will be
-   * added to the <size> parameter which will store handles used for
+   * Initialize <ACE_Msg_WFMO_Reactor> with size @a size.  Two slots will be
+   * added to the @a size parameter which will store handles used for
    * internal management purposes.
    */
   ACE_Msg_WFMO_Reactor (size_t size,

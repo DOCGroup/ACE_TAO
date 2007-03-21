@@ -24,7 +24,6 @@ namespace TAO
 
     CORBA::Policy_ptr
     ServantRetentionPolicy::copy (void)
-      ACE_THROW_SPEC ((CORBA::SystemException))
     {
       ServantRetentionPolicy *copy = 0;
       ACE_NEW_THROW_EX (copy,
@@ -36,20 +35,17 @@ namespace TAO
 
     void
     ServantRetentionPolicy::destroy (void)
-      ACE_THROW_SPEC ((CORBA::SystemException))
     {
     }
 
     ::PortableServer::ServantRetentionPolicyValue
     ServantRetentionPolicy::value (void)
-      ACE_THROW_SPEC ((CORBA::SystemException))
     {
       return this->value_;
     }
 
     CORBA::PolicyType
     ServantRetentionPolicy::policy_type (void)
-      ACE_THROW_SPEC ((CORBA::SystemException))
     {
       return ::PortableServer::SERVANT_RETENTION_POLICY_ID;
     }

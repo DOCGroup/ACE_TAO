@@ -76,6 +76,7 @@
 #define ACE_HAS_STRERROR
 #define ACE_HAS_THREADS
 #define ACE_HAS_SYSCTL
+#define ACE_LACKS_ALPHASORT
 #define ACE_LACKS_EXEC
 #define ACE_LACKS_FILELOCKS
 #define ACE_LACKS_FORK
@@ -103,7 +104,6 @@
 #define ACE_LACKS_RWLOCK_T
 #define ACE_LACKS_SBRK
 #define ACE_LACKS_SEEKDIR
-#define ACE_LACKS_SIGVAL_T
 #define ACE_LACKS_SEMBUF_T
 #define ACE_LACKS_SIGINFO_H
 #define ACE_LACKS_SI_ADDR
@@ -151,7 +151,6 @@
 #define ACE_LACKS_FCNTL
 
 // Some string things
-#define ACE_LACKS_STRCASECMP
 #define ACE_LACKS_ITOW
 #define ACE_LACKS_WCSDUP
 #define ACE_LACKS_WCSICMP
@@ -162,7 +161,9 @@
 
 #if defined __RTP__
   // We are building for RTP mode
-  #define ACE_HAS_SVR4_DYNAMIC_LINKING
+  #if !defined (ACE_AS_STATIC_LIBS)
+  #  define ACE_HAS_SVR4_DYNAMIC_LINKING
+  #endif
   #define ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R
   #define ACE_LACKS_REGEX_H
   #define ACE_LACKS_PUTENV
@@ -172,7 +173,10 @@
   #define ACE_HAS_VFWPRINTF
   #define ACE_SIZEOF_WCHAR 2
   #define ACE_HAS_SHM_OPEN
-  #define ACE_HAS_AIO_CALLS
+  #if defined (ACE_AS_STATIC_LIBS)
+  #  define ACE_HAS_AIO_CALLS
+  #endif
+  #define ACE_LACKS_STRCASECMP
   // VxWorks seems to either not define this or define as zero up till now
   #if !defined (IOV_MAX) || (IOV_MAX == 0)
     #define ACE_IOV_MAX 16
@@ -191,7 +195,6 @@
   #define ACE_LACKS_WAITPID
   #define ACE_LACKS_SYS_TIME_H
   #define ACE_LACKS_SYS_SELECT_H
-  #define ACE_LACKS_STRINGS_H
   #define ACE_MKDIR_LACKS_MODE
   #define ACE_HAS_SIZET_PTR_ASCTIME_R_AND_CTIME_R
   #define ACE_LACKS_SEARCH_H
@@ -294,3 +297,4 @@
 
 #include /**/ "ace/post.h"
 #endif /* ACE_CONFIG_H */
+

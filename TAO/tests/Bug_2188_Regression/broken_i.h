@@ -42,11 +42,9 @@ class ServerAdmin_i : public virtual POA_ServerAdmin
 public:
   ServerAdmin_i (ArrayTest_ptr target);
   virtual ~ServerAdmin_i (void);
-  ArrayTest_ptr target(void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  ArrayTest_ptr target(void);
 
-  void shutdown (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void shutdown (void);
 private:
   ArrayTest_var target_;
 
@@ -83,310 +81,199 @@ public:
       const ::LongArray p1,
       ::LongArray p2,
       ::LongArray_out p3
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
+    );
 
   virtual
   ::StringArray_slice * stringArrayOp (
       const ::StringArray p1,
       ::StringArray p2,
       ::StringArray_out p3
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
+    );
 
   virtual
   ::ShortArray_slice * shortArrayOp (
       const ::ShortArray p1,
       ::ShortArray p2,
       ::ShortArray_out p3
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
+    );
 
   virtual
   ::UShortArray_slice * ushortArrayOp (
       const ::UShortArray p1,
       ::UShortArray p2,
       ::UShortArray_out p3
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
+    );
 
   virtual
   ::CharArray_slice * charArrayOp (
       const ::CharArray p1,
       ::CharArray p2,
       ::CharArray_out p3
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
+    );
 
   virtual
   ::OctetArray_slice * octetArrayOp (
       const ::OctetArray p1,
       ::OctetArray p2,
       ::OctetArray_out p3
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
+    );
 
   virtual
   ::DoubleArray_slice * doubleArrayOp (
       const ::DoubleArray p1,
       ::DoubleArray p2,
       ::DoubleArray_out p3
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
+    );
 
   virtual
   ::LongArray_slice * a_longArray (
 
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
+    );
 
   virtual
   void a_longArray (
       const ::LongArray a_longArray
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
+    );
 
   virtual
   ::ULongArray_slice * a_ulongArray (
 
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
+    );
 
   virtual
   void a_ulongArray (
       const ::ULongArray a_ulongArray
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
+    );
 
   virtual
   ::StringArray_slice * a_stringArray (
 
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
+    );
 
   virtual
   void a_stringArray (
       const ::StringArray a_stringArray
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
+    );
 
   virtual
   ::ShortArray_slice * a_shortArray (
 
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
+    );
 
   virtual
   void a_shortArray (
       const ::ShortArray a_shortArray
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
+    );
 
   virtual
   ::UShortArray_slice * a_ushortArray (
 
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
+    );
 
   virtual
   void a_ushortArray (
       const ::UShortArray a_ushortArray
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
+    );
 
   virtual
   CORBA::Char a_char (
 
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
+    );
 
   virtual
   void a_char (
       ::CORBA::Char a_char
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
+    );
 
   virtual
   ::CharArray_slice * a_charArray (
 
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
+    );
 
   virtual
   void a_charArray (
       const ::CharArray a_charArray
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
+    );
 
   virtual
   ::OctetArray_slice * a_octetArray (
 
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
+    );
 
   virtual
   void a_octetArray (
       const ::OctetArray a_octetArray
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
+    );
 
   virtual
   ::DoubleArray_slice * a_doubleArray (
 
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
+    );
 
   virtual
   void a_doubleArray (
       const ::DoubleArray a_doubleArray
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
+    );
 
   virtual
   ::FloatArray_slice * a_floatArray (
 
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
+    );
 
   virtual
   void a_floatArray (
       const ::FloatArray a_floatArray
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
+    );
 
   virtual
   ::BucketArray_slice * a_bucketArray (
 
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
+    );
 
   virtual
   void a_bucketArray (
       const ::BucketArray a_bucketArray
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
+    );
 
   virtual
   ::AccountArray_slice * a_accountArray (
 
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
+    );
 
   virtual
   void a_accountArray (
       const ::AccountArray a_accountArray
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
+    );
 
   virtual
   ::BooleanArray_slice * a_booleanArray (
 
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
+    );
 
   virtual
   void a_booleanArray (
       const ::BooleanArray a_booleanArray
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
+    );
 
   virtual
   ::LongArrayArray_slice * a_longArrayArray (
 
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
+    );
 
   virtual
   void a_longArrayArray (
       const ::LongArrayArray a_longArrayArray
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
+    );
 
   virtual
   ::MyEnumArray_slice * a_myEnumArray (
 
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
+    );
 
   virtual
   void a_myEnumArray (
       const ::MyEnumArray a_myEnumArray
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
+    );
 };
 
 

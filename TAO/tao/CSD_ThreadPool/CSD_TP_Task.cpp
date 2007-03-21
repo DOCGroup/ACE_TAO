@@ -228,9 +228,6 @@ TAO::CSD::TP_Task::svc()
       // handle falls out of scope and its destructor performs the
       // _remove_ref() call on the underlying TP_Request object.
     }
-
-  // This will never get executed.
-  return 0;
 }
 
 
@@ -299,8 +296,7 @@ TAO::CSD::TP_Task::close(u_long flag)
 
 
 void
-TAO::CSD::TP_Task::cancel_servant (PortableServer::Servant servant
-                                   )
+TAO::CSD::TP_Task::cancel_servant (PortableServer::Servant servant)
 {
   GuardType guard(this->lock_);
 

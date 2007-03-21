@@ -27,7 +27,6 @@ project(*Server): strategies, rt_server {
 project(*Client): strategies, rt_server {
   exename = client
   after += *idl
-  after += *Server
   Source_Files {
     Policy_Tester.cpp
     Policy_Verifier.cpp

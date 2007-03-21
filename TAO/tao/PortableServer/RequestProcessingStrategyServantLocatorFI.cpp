@@ -58,8 +58,7 @@ namespace TAO
 
     void
     RequestProcessingStrategyServantLocatorFactoryImpl::destroy (
-      RequestProcessingStrategy *strategy
-      )
+      RequestProcessingStrategy *strategy)
     {
       strategy->strategy_cleanup ();
 

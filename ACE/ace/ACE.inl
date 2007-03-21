@@ -4,7 +4,7 @@
 
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_Thread.h"
-#include "ace/os_include/os_ctype.h"
+#include "ace/OS_NS_ctype.h"
 #include "ace/OS_NS_sys_socket.h"
 
 // Open versioned namespace, if enabled by the user.
@@ -324,9 +324,9 @@ ACE::nibble2hex (u_int n)
 ACE_INLINE u_char
 ACE::hex2byte (ACE_TCHAR c)
 {
-  if (isdigit (c))
+  if (ACE_OS::ace_isdigit (c))
     return (u_char) (c - ACE_LIB_TEXT ('0'));
-  else if (islower (c))
+  else if (ACE_OS::ace_islower (c))
     return (u_char) (10 + c - ACE_LIB_TEXT ('a'));
   else
     return (u_char) (10 + c - ACE_LIB_TEXT ('A'));

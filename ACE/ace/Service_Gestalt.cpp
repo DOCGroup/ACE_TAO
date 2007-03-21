@@ -456,41 +456,18 @@ ACE_Service_Gestalt::add_processed_static_svc
 }
 
 
-/// Queues static service object descriptor which, during open() will
-/// be given to process_directive() to create the Service
+/// Queues a static service object descriptor which, during open()
+/// will be given to process_directive() to create the Service
 /// Object. Normally, only called from static initializers, prior to
-/// calling open().
+/// calling open() but loading a service from a DLL can cause it too.
 
 int
 ACE_Service_Gestalt::insert (ACE_Static_Svc_Descriptor *stsd)
 {
-  if (ACE::debug ())
-    {
-      static int pid = ACE_OS::getpid ();
-
-      // If called during static initialization ACE_Log_Msg may not
-      // have been initialized yet, so use printf intead. Using a "//"
-      // prefix in case the executable is a C++ code generator and the
-      // output gets embedded in the generated code.
-      ACE_OS::fprintf (stderr,
-           "// (%d|0) SG::insert"
-           " repo=%p (opened=%d) - enqueue %s,"
-           " active=%d.\n",
-           pid,
-           this->repo_,
-           this->is_opened_,
-           stsd->name_,
-           stsd->active_);
-    }
-
   if (this->static_svcs_ == 0)
     ACE_NEW_RETURN (this->static_svcs_,
                     ACE_STATIC_SVCS,
                     -1);
-
-  // Inserting a service after the Gestalt has been opened makes it
-  // impossible to activate it later. Perhaps open came too soon?
-  //ACE_ASSERT (this->is_opened_ == 0);
 
   return this->static_svcs_->insert (stsd);
 }
@@ -499,7 +476,7 @@ ACE_Service_Gestalt::insert (ACE_Static_Svc_Descriptor *stsd)
 ACE_ALLOC_HOOK_DEFINE (ACE_Service_Gestalt)
 
 
-  void
+void
 ACE_Service_Gestalt::dump (void) const
 {
 #if defined (ACE_HAS_DUMP)
@@ -538,7 +515,7 @@ ACE_Service_Gestalt::initialize (const ACE_TCHAR *svc_name,
         ACE_Service_Config::global()->find_processed_static_svc(svc_name);
       if (assd != 0)
         {
-          this->process_directive_i(*assd,0);
+          this->process_directive_i(*assd, 0);
         }
       else
         {
@@ -792,7 +769,7 @@ int
 ACE_Service_Gestalt::process_directive (const ACE_Static_Svc_Descriptor &ssd,
                                         int force_replace)
 {
-  int result = process_directive_i(ssd,force_replace);
+  int const result = process_directive_i (ssd, force_replace);
   if (result == 0)
     {
       this->add_processed_static_svc(&ssd);
@@ -802,7 +779,7 @@ ACE_Service_Gestalt::process_directive (const ACE_Static_Svc_Descriptor &ssd,
 
 int
 ACE_Service_Gestalt::process_directive_i (const ACE_Static_Svc_Descriptor &ssd,
-                                        int force_replace)
+                                          int force_replace)
 {
   if (this->repo_ == 0)
     return -1;
@@ -829,8 +806,7 @@ ACE_Service_Gestalt::process_directive_i (const ACE_Static_Svc_Descriptor &ssd,
   if (stp == 0)
     return 0;
 
-
-  ACE_Service_Type *service_type;
+  ACE_Service_Type *service_type = 0;
 
   // This is just a temporary to force the compiler to use the right
   // constructor in ACE_Service_Type. Note that, in cases where we are
@@ -1299,8 +1275,7 @@ ACE_Service_Gestalt::close (void)
 {
   ACE_TRACE ("ACE_Service_Gestalt::close");
 
-  this->is_opened_--;
-  if (this->is_opened_ > 0)
+  if (!this->is_opened_ || --this->is_opened_ != 0)
     return 0;
 
   // Delete the list fo svc.conf files

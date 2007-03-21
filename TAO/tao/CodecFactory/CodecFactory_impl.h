@@ -52,17 +52,10 @@ public:
   TAO_CodecFactory (TAO_ORB_Core * orb_core);
 
   /// Create a Coder/Decoder for the given type of encoding.
-  virtual IOP::Codec_ptr create_codec (const IOP::Encoding & enc
-                                       )
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     IOP::CodecFactory::UnknownEncoding));
+  virtual IOP::Codec_ptr create_codec (const IOP::Encoding & enc);
 
   /// Create a Coder/Decoder for the given type of encoding and codesets.
-  virtual IOP::Codec_ptr create_codec_with_codesets (const IOP::Encoding_1_2 & enc
-                                                     )
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     IOP::CodecFactory::UnknownEncoding,
-                     IOP::CodecFactory::UnsupportedCodeset));
+  virtual IOP::Codec_ptr create_codec_with_codesets (const IOP::Encoding_1_2 & enc);
 
 private:
   /// Prevent copying through the copy constructor and the assignment
@@ -74,10 +67,7 @@ private:
                                  CORBA::Octet minor,
                                  IOP::EncodingFormat encoding_format,
                                  TAO_Codeset_Translator_Base * char_trans,
-                                 TAO_Codeset_Translator_Base * wchar_trans
-                                 )
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   IOP::CodecFactory::UnknownEncoding));
+                                 TAO_Codeset_Translator_Base * wchar_trans);
 private:
 
   /// Pointer to the ORB Core.

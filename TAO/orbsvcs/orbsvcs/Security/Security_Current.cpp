@@ -28,7 +28,6 @@ TAO_Security_Current::~TAO_Security_Current (void)
 Security::AttributeList *
 TAO_Security_Current::get_attributes (
     const Security::AttributeTypeList &attributes)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO::Security::Current_Impl *impl = this->implementation ();
 
@@ -36,14 +35,13 @@ TAO_Security_Current::get_attributes (
   // we're not in the middle of a request/upcall.  Throw an exception
   // to indicate that.
   if (impl == 0)
-    ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (), 0);
+    throw CORBA::BAD_INV_ORDER ();
 
   return impl->get_attributes (attributes);
 }
 
 SecurityLevel2::ReceivedCredentials_ptr
 TAO_Security_Current::received_credentials ()
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO::Security::Current_Impl *impl = this->implementation ();
 
@@ -51,7 +49,7 @@ TAO_Security_Current::received_credentials ()
   // we're not in the middle of a request/upcall.  Throw an exception
   // to indicate that.
   if (impl == 0)
-    ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (), 0);
+    throw CORBA::BAD_INV_ORDER ();
 
   return impl->received_credentials ();
 }

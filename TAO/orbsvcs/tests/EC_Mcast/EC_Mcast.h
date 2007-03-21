@@ -186,8 +186,7 @@ public:
   // Implement the callbacks for our consumer personality.
 
   // = The POA_RtecEventComm::PushSupplier methods.
-  virtual void disconnect_push_supplier (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void disconnect_push_supplier (void);
 
 private:
   ECM_Local_Federation* federation_;
@@ -234,10 +233,8 @@ public:
   // it.
 
   // = The POA_RtecEventComm::PushComsumer methods.
-  virtual void push (const RtecEventComm::EventSet& events)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual void disconnect_push_consumer (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void push (const RtecEventComm::EventSet& events);
+  virtual void disconnect_push_consumer (void);
 
 private:
   ECM_Local_Federation* federation_;

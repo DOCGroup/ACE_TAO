@@ -69,8 +69,7 @@ public:
    * has invoked the connect_xxx_yyy() method.
    * The default implementation is a no-op.
    */
-  virtual void peer_connected (PEER *peer)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void peer_connected (PEER *peer);
 
   /**
    * A <peer> has reconnected, i.e. its client has invoked the
@@ -78,16 +77,14 @@ public:
    * The default implementation delegates on the collection
    * <reconnected> method
    */
-  virtual void peer_reconnected (PEER *peer)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void peer_reconnected (PEER *peer);
 
   /**
    * A <peer> has been disconnected. The default implementation
    * removes the object from the collection and deactivates the
    * proxy.
    */
-  virtual void peer_disconnected (PEER *peer)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void peer_disconnected (PEER *peer);
 };
 
 // ****************************************************************

@@ -4,7 +4,7 @@
 
 #include /**/ "NT_Naming_Service.h"
 
-#if defined (ACE_WIN32)
+#if defined (ACE_WIN32) && !defined (ACE_LACKS_WIN32_SERVICES)
 
 #include /**/ "Naming_Service.h"
 #include "tao/ORB_Core.h"
@@ -188,4 +188,4 @@ TAO_NT_Naming_Service::svc (void)
   return 0;
 }
 
-#endif /* ACE_WIN32 */
+#endif /* ACE_WIN32 && !ACE_LACKS_WIN32_SERVICES */

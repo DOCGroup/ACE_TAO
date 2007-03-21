@@ -39,7 +39,6 @@ public:
   char * op1 (const char * name,
               const CORBA::Any & inany,
               CORBA::Any_out outany)
-    ACE_THROW_SPEC ((CORBA::SystemException))
   {
     ACE_DEBUG ((LM_DEBUG,
                 "Server: bare string: %s\n", name));
@@ -59,13 +58,11 @@ public:
   };
 
   ACE_CDR::WChar * op2 (const ACE_CDR::WChar *s1)
-    ACE_THROW_SPEC ((CORBA::SystemException))
   {
     return CORBA::wstring_dup (s1);
   };
 
   void shutdown (void)
-    ACE_THROW_SPEC ((CORBA::SystemException))
   {
     this->orb_->shutdown (0);
   };
@@ -116,7 +113,12 @@ int main(int argc, char *argv[])
                       -1);
 
       // Create CORBA object for servant and REGISTER with POA
-      simple_var server = my_impl->_this ();
+      PortableServer::ObjectId_var id =
+        root_poa->activate_object (my_impl);
+
+      CORBA::Object_var object_act = root_poa->id_to_reference (id.in ());
+
+      simple_var server = simple::_narrow (object_act.in ());
 
       // Get the IOR for our object
       CORBA::String_var ior = orb->object_to_string (server.in ());

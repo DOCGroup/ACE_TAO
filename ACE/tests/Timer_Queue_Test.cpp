@@ -568,7 +568,7 @@ run_main (int argc, ACE_TCHAR *argv[])
 {
   ACE_START_TEST (ACE_TEXT ("Timer_Queue_Test"));
 
-  ACE_OS::srand (ACE_OS::time (0L));
+  ACE_OS::srand ((u_int) ACE_OS::time (0L));
 
   if (argc > 1)
     max_iterations = ACE_OS::atoi (argv[1]);

@@ -611,7 +611,7 @@ interface_header :
                                               false,
                                               true),
                           1);
-                          
+
           if (0 != $2)
             {
               $2->destroy ();
@@ -642,7 +642,7 @@ interface_header :
                                               false,
                                               true),
                           1);
-                          
+
           if (0 != $3)
             {
               $3->destroy ();
@@ -673,7 +673,7 @@ interface_header :
                                               true,
                                               true),
                           1);
-                          
+
           if (0 != $3)
             {
               $3->destroy ();
@@ -886,14 +886,14 @@ value_header :
                                         $4,
                                         $2 ? $2->truncatable () : false),
                           1);
-                          
+
           if (0 != $4)
             {
               $4->destroy ();
               delete $4;
               $4 = 0;
             }
-                          
+
           if (0 != $2)
             {
               $2->destroy ();
@@ -965,7 +965,7 @@ value_forward_decl :
                                                             true);
               (void) s->fe_add_valuetype_fwd (f);
             }
-            
+
           $2->destroy ();
           delete $2;
           $2 = 0;
@@ -990,7 +990,7 @@ value_forward_decl :
                                                             false);
               (void) s->fe_add_valuetype_fwd (f);
             }
-            
+
           $1->destroy ();
           delete $1;
           $1 = 0;
@@ -1033,7 +1033,7 @@ value_box_decl
               else
                 {
                   AST_Decl::NodeType nt = tp->node_type ();
-                  
+
                   if (nt == AST_Decl::NT_valuetype
                       || nt == AST_Decl::NT_eventtype)
                     {
@@ -1055,7 +1055,7 @@ value_box_decl
                     }
                 }
             }
-              
+
           $1->destroy ();
           delete $1;
           $1 = 0;
@@ -1322,7 +1322,7 @@ interface_forward :
                                       );
               (void) s->add_predefined_type (pdt);
               s->add_to_scope (pdt);
-            
+
               $1->destroy ();
               delete $1;
               $1 = 0;
@@ -1344,7 +1344,7 @@ interface_forward :
                                                             0);
               (void) s->fe_add_interface_fwd (f);
             }
-            
+
           $1->destroy ();
           delete $1;
           $1 = 0;
@@ -1372,7 +1372,7 @@ interface_forward :
                                                             0);
               (void) s->fe_add_interface_fwd (f);
             }
-            
+
           $2->destroy ();
           delete $2;
           $2 = 0;
@@ -1400,7 +1400,7 @@ interface_forward :
                                                             1);
               (void) s->fe_add_interface_fwd (f);
             }
-            
+
           $2->destroy ();
           delete $2;
           $2 = 0;
@@ -1514,7 +1514,7 @@ const_type
           AST_Decl *d =
             s->lookup_by_name ($1,
                                true);
-                               
+
           $1->destroy ();
           delete $1;
           $1 = 0;
@@ -1764,7 +1764,7 @@ primary_expr
               $$ =
                 idl_global->gen ()->create_expr (c->constant_value (),
                                                  c->et ());
-              
+
               $1->destroy ();
               delete $1;
               $1 = 0;
@@ -1956,7 +1956,7 @@ type_dcl
                */
               (void) s->fe_add_native (node);
             }
-            
+
           $2->destroy ();
           delete $2;
           $2 = 0;
@@ -1980,6 +1980,7 @@ type_declarator :
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           FE_Declarator *d = 0;
           AST_Typedef *t = 0;
+          unsigned long index = 0UL;
           idl_global->set_parse_state (IDL_GlobalData::PS_DeclaratorsSeen);
 
           /*
@@ -2016,6 +2017,17 @@ type_declarator :
                                                           d->name (),
                                                           s->is_local (),
                                                           s->is_abstract ());
+
+                  // If the base type is a sequence or array, the typedef
+                  // constructor sets owns_base_type_ to true. But if
+                  // there is a comma-separated list of such typedefs,
+                  // the base type can be destroyed only once. In all
+                  // other cases, the line below has no effect.
+                  if (index++ > 0)
+                    {
+                      t->owns_base_type (false);
+                    }
+
                   (void) s->fe_add_typedef (t);
                 }
 
@@ -2397,7 +2409,7 @@ struct_type
            * Push the scope of the struct on the scopes stack.
            */
           idl_global->scopes ().push (d);
-            
+
           $1->destroy ();
           delete $1;
           $1 = 0;
@@ -2507,7 +2519,7 @@ member_i :
                   (void) s->fe_add_field (f);
                 }
             }
-            
+
           $3->destroy ();
           delete $3;
           $3 = 0;
@@ -2597,7 +2609,7 @@ union_type
            * Push the scope of the union on the scopes stack
            */
           idl_global->scopes ().push (u);
-            
+
           $1->destroy ();
           delete $1;
           $1 = 0;
@@ -2766,7 +2778,7 @@ switch_type_spec :
           if ($$ == 0)
             {
               idl_global->err ()->lookup_error ($1);
-            
+
               $1->destroy ();
               delete $1;
               $1 = 0;
@@ -2774,7 +2786,7 @@ switch_type_spec :
               /* If we don't return here, we'll crash later.*/
               return 1;
             }
-            
+
           $1->destroy ();
           delete $1;
           $1 = 0;
@@ -2822,7 +2834,7 @@ case_branch :
                                         f->name ()
                                       );
               (void) s->fe_add_union_branch (b);
-              
+
               // f has passed its field type to the union branch,
               // but the rest still needs to be cleaned up.
               f->AST_Decl::destroy ();
@@ -2965,7 +2977,7 @@ element_spec :
                                                $3->name ()
                                              );
                 }
-                
+
               $3->destroy ();
               delete $3;
               $3 = 0;
@@ -2990,7 +3002,7 @@ struct_forward_type
               d = idl_global->gen ()->create_structure_fwd (&n);
               (void) s->fe_add_structure_fwd (d);
             }
-            
+
           $1->destroy ();
           delete $1;
           $1 = 0;
@@ -3014,7 +3026,7 @@ union_forward_type
               u = idl_global->gen ()->create_union_fwd (&n);
               (void) s->fe_add_union_fwd (u);
             }
-            
+
           $1->destroy ();
           delete $1;
           $1 = 0;
@@ -3055,7 +3067,7 @@ enum_type :
            * Push the enum scope on the scopes stack.
            */
           idl_global->scopes ().push (e);
-            
+
           $3->destroy ();
           delete $3;
           $3 = 0;
@@ -3176,7 +3188,7 @@ sequence_type_spec
             {
               ev = $4->coerce (AST_Expression::EV_ulong);
             }
-            
+
           if (0 == $4 || 0 == ev)
             {
               idl_global->err ()->coercion_error ($4,
@@ -3211,7 +3223,7 @@ sequence_type_spec
                                           );
                 }
             }
-            
+
           delete ev;
           ev = 0;
         }
@@ -3313,12 +3325,12 @@ string_type_spec
            * Create a node representing a string.
            */
           AST_Expression::AST_ExprValue *ev = 0;
-          
+
           if ($4 != 0)
             {
               ev = $4->coerce (AST_Expression::EV_ulong);
             }
-            
+
           if (0 == $4 || 0 == ev)
             {
               idl_global->err ()->coercion_error ($4,
@@ -3337,7 +3349,7 @@ string_type_spec
                                                 )
                                             );
             }
-            
+
           delete ev;
           ev = 0;
         }
@@ -3466,11 +3478,11 @@ array_declarator :
                                         0,
                                         0
                                       );
-                                      
+
               $3->destroy ();
               delete $3;
               $3 = 0;
-              
+
               sn.destroy ();
             }
         }
@@ -3537,12 +3549,12 @@ array_dim :
            * positive integers.
            */
           AST_Expression::AST_ExprValue *ev = 0;
-           
+
           if ($3 != 0)
             {
               ev = $3->coerce (AST_Expression::EV_ulong);
             }
-           
+
           if (0 == $3 || 0 == ev)
             {
               idl_global->err ()->coercion_error ($3,
@@ -3553,7 +3565,7 @@ array_dim :
             {
               $$ = $3;
             }
-            
+
           delete ev;
           ev = 0;
         }
@@ -3632,7 +3644,7 @@ attribute_readonly :
                   if ($9 != 0)
                     {
                       (void) a->fe_add_get_exceptions ($9);
-          
+
                       $9->destroy ();
                       delete $9;
                       $9 = 0;
@@ -3641,7 +3653,7 @@ attribute_readonly :
                   (void) s->fe_add_attribute (a);
                 }
             }
-            
+
           $7->destroy ();
           delete $7;
           $7 = 0;
@@ -3716,7 +3728,7 @@ attribute_readwrite :
                   if ($7 != 0)
                     {
                       (void) a->fe_add_get_exceptions ($7);
-          
+
                       $7->destroy ();
                       delete $7;
                       $7 = 0;
@@ -3725,7 +3737,7 @@ attribute_readwrite :
                   if ($9 != 0)
                     {
                       (void) a->fe_add_set_exceptions ($9);
-          
+
                       $9->destroy ();
                       delete $9;
                       $9 = 0;
@@ -3734,7 +3746,7 @@ attribute_readwrite :
                   (void) s->fe_add_attribute (a);
                 }
             }
-            
+
           $5->destroy ();
           delete $5;
           $5 = 0;
@@ -3772,7 +3784,7 @@ exception :
            * Push the exception scope on the scope stack.
            */
           idl_global->scopes ().push (e);
-            
+
           $3->destroy ();
           delete $3;
           $3 = 0;
@@ -3953,14 +3965,14 @@ init_decl
                           ACE_TEXT ("factory construct.\n"),
                           idl_global->filename ()->get_string (),
                           idl_global->lineno ()));
-                          
+
               idl_global->set_err_count (idl_global->err_count () + 1);
             }
 
           Identifier id ($3);
           ACE::strdelete ($3);
           $3 = 0;
-          
+
           UTL_ScopedName n (&id,
                             0);
           AST_Factory *factory = 0;
@@ -4078,7 +4090,7 @@ in_parameter :
                   (void) s->fe_add_argument (a);
                 }
             }
-            
+
           $5->destroy ();
           delete $5;
           $5 = 0;
@@ -4168,7 +4180,7 @@ parameter :
                     }
                 }
             }
-            
+
           $5->destroy ();
           delete $5;
           $5 = 0;
@@ -4410,11 +4422,11 @@ typeid_dcl
                      $3->get_string ()
                    );
             }
-            
+
           $2->destroy ();
           delete $2;
           $2 = 0;
-            
+
           $3->destroy ();
           delete $3;
           $3 = 0;
@@ -4448,11 +4460,11 @@ typeprefix_dcl
                      $3->get_string ()
                    );
             }
-            
+
           $2->destroy ();
           delete $2;
           $2 = 0;
-            
+
           $3->destroy ();
           delete $3;
           $3 = 0;
@@ -4486,7 +4498,7 @@ component_forward_decl :
               f = idl_global->gen ()->create_component_fwd (&n);
               (void) s->fe_add_component_fwd (f);
             }
-            
+
           $2->destroy ();
           delete $2;
           $2 = 0;
@@ -4587,14 +4599,14 @@ component_header :
                                               $6,
                                               false),
                           1);
-                          
+
           if (0 != $6)
             {
               $6->destroy ();
               delete $6;
               $6 = 0;
             }
-                          
+
           if (0 != $4)
             {
               $4->destroy ();
@@ -4706,15 +4718,15 @@ provides_decl :
               if (0 == d)
                 {
                   idl_global->err ()->lookup_error ($2);
-                         
+
                   $2->destroy ();
                   delete $2;
                   $2 = 0;
-                  
+
                   $3->destroy ();
                   delete $3;
                   $3 = 0;
-                  
+
                   break;
                 }
               else if (d->node_type () != AST_Decl::NT_interface)
@@ -4726,19 +4738,19 @@ provides_decl :
                         != 0)
                     {
                       idl_global->err ()->interface_expected (d);
-                         
+
                       $2->destroy ();
                       delete $2;
                       $2 = 0;
-                  
+
                       $3->destroy ();
                       delete $3;
                       $3 = 0;
-                  
+
                       break;
                     }
                 }
-                
+
               AST_Type *interface_type =
                 AST_Type::narrow_from_decl (d);
 
@@ -4747,7 +4759,7 @@ provides_decl :
               pd.impl = interface_type;
               c->provides ().enqueue_tail (pd);
             }
-                         
+
           $2->destroy ();
           delete $2;
           $2 = 0;
@@ -4800,15 +4812,15 @@ uses_decl :
           if (0 == d)
             {
               idl_global->err ()->lookup_error ($3);
-                         
+
               $3->destroy ();
               delete $3;
               $3 = 0;
-          
+
               $4->destroy ();
               delete $4;
               $4 = 0;
-                  
+
               break;
             }
           else if (d->node_type () != AST_Decl::NT_interface)
@@ -4818,15 +4830,15 @@ uses_decl :
                     != 0)
                 {
                   idl_global->err ()->interface_expected (d);
-                         
+
                   $3->destroy ();
                   delete $3;
                   $3 = 0;
-              
+
                   $4->destroy ();
                   delete $4;
                   $4 = 0;
-                  
+
                   break;
                 }
             }
@@ -4852,7 +4864,7 @@ uses_decl :
                   idl_global->create_uses_multiple_stuff (c, ud);
                 }
             }
-                         
+
           $3->destroy ();
           delete $3;
           $3 = 0;
@@ -4885,29 +4897,29 @@ emits_decl :
           if (0 == d)
             {
               idl_global->err ()->lookup_error ($2);
-              
+
               $2->destroy ();
               delete $2;
               $2 = 0;
-              
+
               $3->destroy ();
               delete $3;
               $3 = 0;
-              
+
               break;
             }
           else if (d->node_type () != AST_Decl::NT_eventtype)
             {
               idl_global->err ()->eventtype_expected (d);
-              
+
               $2->destroy ();
               delete $2;
               $2 = 0;
-              
+
               $3->destroy ();
               delete $3;
               $3 = 0;
-              
+
               break;
             }
           else
@@ -4923,7 +4935,7 @@ emits_decl :
                   c->emits ().enqueue_tail (pd);
                 }
             }
-              
+
           $2->destroy ();
           delete $2;
           $2 = 0;
@@ -4943,29 +4955,29 @@ publishes_decl :
           if (0 == d)
             {
               idl_global->err ()->lookup_error ($2);
-              
+
               $2->destroy ();
               delete $2;
               $2 = 0;
-              
+
               $3->destroy ();
               delete $3;
               $3 = 0;
-              
+
               break;
             }
           else if (d->node_type () != AST_Decl::NT_eventtype)
             {
               idl_global->err ()->eventtype_expected (d);
-              
+
               $2->destroy ();
               delete $2;
               $2 = 0;
-              
+
               $3->destroy ();
               delete $3;
               $3 = 0;
-              
+
               break;
             }
           else
@@ -4981,7 +4993,7 @@ publishes_decl :
                   c->publishes ().enqueue_tail (pd);
                 }
             }
-              
+
           $2->destroy ();
           delete $2;
           $2 = 0;
@@ -5001,29 +5013,29 @@ consumes_decl :
           if (0 == d)
             {
               idl_global->err ()->lookup_error ($2);
-              
+
               $2->destroy ();
               delete $2;
               $2 = 0;
-              
+
               $3->destroy ();
               delete $3;
               $3 = 0;
-              
+
               break;
             }
           else if (d->node_type () != AST_Decl::NT_eventtype)
             {
               idl_global->err ()->eventtype_expected (d);
-              
+
               $2->destroy ();
               delete $2;
               $2 = 0;
-              
+
               $3->destroy ();
               delete $3;
               $3 = 0;
-              
+
               break;
             }
           else
@@ -5039,7 +5051,7 @@ consumes_decl :
                   c->consumes ().enqueue_tail (pd);
                 }
             }
-              
+
           $2->destroy ();
           delete $2;
           $2 = 0;
@@ -5146,25 +5158,25 @@ home_header :
                                          $11,
                                          $13),
                           1);
-                          
+
           $11->destroy ();
           delete $11;
           $11 = 0;
-          
+
           if (0 != $5)
             {
               $5->destroy ();
               delete $5;
               $5 = 0;
             }
-          
+
           if (0 != $13)
             {
               $13->destroy ();
               delete $13;
               $13 = 0;
             }
-          
+
           if (0 != $7)
             {
               $7->destroy ();
@@ -5352,7 +5364,7 @@ finder_decl :
               home->finders ().enqueue_tail (o);
             }
 
-          $2->destroy (); 
+          $2->destroy ();
           delete $2;
           $2 = 0;
 
@@ -5425,7 +5437,7 @@ event_concrete_forward_decl :
                                                             false);
               (void) s->fe_add_valuetype_fwd (f);
             }
-            
+
           $2->destroy ();
           delete $2;
           $2 = 0;
@@ -5454,7 +5466,7 @@ event_abs_forward_decl :
                                                             true);
               (void) s->fe_add_valuetype_fwd (f);
             }
-            
+
           $3->destroy ();
           delete $3;
           $3 = 0;
@@ -5503,7 +5515,7 @@ event_abs_decl :
            * Push it on the scope stack.
            */
           idl_global->scopes ().push (e);
-            
+
           $1->destroy ();
           delete $1;
           $1 = 0;
@@ -5586,19 +5598,19 @@ event_rest_of_header :
                               0,
                               $1,
                               $3,
-                              $1 
+                              $1
                                 ? $1->truncatable ()
                                 : false
                             ),
                           1);
-                          
+
           if (0 != $3)
             {
               $3->destroy ();
               delete $3;
               $3 = 0;
             }
-                          
+
           if (0 != $1)
             {
               $1->destroy ();
@@ -5651,7 +5663,7 @@ event_decl :
               $2->destroy ();
               delete $2;
               $2 = 0;
-              
+
               sn.destroy ();
             }
 

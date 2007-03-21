@@ -14,11 +14,9 @@ public:
           RTCORBA::PriorityBands &bands);
 
   void test_method (CORBA::Boolean client_propagated,
-                    CORBA::Short priority)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                    CORBA::Short priority);
 
-  void shutdown (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void shutdown (void);
 
 private:
   CORBA::ORB_var orb_;
@@ -43,7 +41,6 @@ Test_i::Test_i (CORBA::ORB_ptr orb,
 void
 Test_i::test_method (CORBA::Boolean client_propagated,
                      CORBA::Short client_priority)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Get the upcall thread's priority.
   CORBA::Short server_priority =
@@ -108,7 +105,6 @@ Test_i::test_method (CORBA::Boolean client_propagated,
 
 void
 Test_i::shutdown (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown (0);
 }

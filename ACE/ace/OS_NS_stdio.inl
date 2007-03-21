@@ -33,8 +33,9 @@ ACE_OS::flock_adjust_params (ACE_OS::ace_flock_t *lock,
       break;
     case SEEK_CUR:
       {
-# if defined (_FILE_OFFSET_BITS) && _FILE_OFFSET_BITS == 64
-        LARGE_INTEGER distance, offset;
+        LARGE_INTEGER offset;
+# if !defined (ACE_LACKS_WIN32_SETFILEPOINTEREX)
+        LARGE_INTEGER distance;
         distance.QuadPart = 0;
         if (!::SetFilePointerEx (lock->handle_,
                                  distance,
@@ -44,17 +45,24 @@ ACE_OS::flock_adjust_params (ACE_OS::ace_flock_t *lock,
             ACE_OS::set_errno_to_last_error ();
             return;
           }
-        start += offset.QuadPart;
 # else
-        DWORD const offset =
-          ::SetFilePointer (lock->handle_, 0, 0, FILE_CURRENT);
-        if (offset == INVALID_SET_FILE_POINTER)
+        offset.LowPart = ::SetFilePointer (lock->handle_,
+                                           0,
+                                           &offset.HighPart,
+                                           FILE_CURRENT);
+        if (offset.LowPart == INVALID_SET_FILE_POINTER &&
+            ::GetLastError() != NO_ERROR)
           {
             ACE_OS::set_errno_to_last_error ();
             return;
           }
-        start += static_cast<ACE_OFF_T> (offset);
-# endif  /* _FILE_OFFSET_BITS == 64 */
+# endif /* ACE_LACKS_WIN32_SETFILEPOINTEREX */
+
+# if defined (_FILE_OFFSET_BITS) && _FILE_OFFSET_BITS == 64
+        start += offset.QuadPart;
+# else
+        start += offset.LowPart;
+# endif /* _FILE_OFFSET_BITS == 64 */
       }
       break;
     case SEEK_END:
@@ -401,6 +409,14 @@ ACE_OS::cuserid (char *user, size_t maxlen)
   ACE_UNUSED_ARG (user);
   ACE_UNUSED_ARG (maxlen);
   ACE_NOTSUP_RETURN (0);
+#elif defined (ACE_HAS_PHARLAP)
+  ACE_UNUSED_ARG (user);
+  ACE_UNUSED_ARG (maxlen);
+  ACE_NOTSUP_RETURN (0);
+#elif defined (ACE_HAS_WINCE)
+  ACE_UNUSED_ARG (user);
+  ACE_UNUSED_ARG (maxlen);
+  ACE_NOTSUP_RETURN (0);
 #elif defined (ACE_WIN32)
   BOOL result = GetUserNameA (user, (u_long *) &maxlen);
   if (result == FALSE)
@@ -435,6 +451,12 @@ ACE_OS::cuserid (char *user, size_t maxlen)
 
   // Make sure the password file is closed.
   ::endpwent ();
+
+  if (pw == 0)
+    {
+      errno = ENOENT;
+      return 0;
+    }
 
   size_t max_length = 0;
   char *userid = 0;
@@ -482,7 +504,11 @@ ACE_OS::cuserid (char *user, size_t maxlen)
 ACE_INLINE wchar_t *
 ACE_OS::cuserid (wchar_t *user, size_t maxlen)
 {
-# if defined (ACE_WIN32)
+# if defined (ACE_HAS_WINCE)
+  ACE_UNUSED_ARG (user);
+  ACE_UNUSED_ARG (maxlen);
+  ACE_NOTSUP_RETURN (0);
+# elif defined (ACE_WIN32)
   BOOL result = GetUserNameW (user, (u_long *) &maxlen);
   if (result == FALSE)
     ACE_FAIL_RETURN (0);
@@ -545,11 +571,11 @@ ACE_OS::fdopen (ACE_HANDLE handle, const ACE_TCHAR *mode)
 
       if (!file)
         {
-#   if (defined(__BORLANDC__) && __BORLANDC__ >= 0x0530)
+#   if defined(__BORLANDC__)
           ::_rtl_close (crt_handle);
 #   else
           ::_close (crt_handle);
-#   endif /* (defined(__BORLANDC__) && __BORLANDC__ >= 0x0530) */
+#   endif /* defined(__BORLANDC__) */
         }
     }
 
@@ -923,7 +949,12 @@ ACE_OS::vsnprintf (char *buffer, size_t maxlen, const char *format, va_list ap)
 {
 #if !defined (ACE_LACKS_VSNPRINTF)
   int result;
-#  if !defined (ACE_WIN32)
+#  if 0 /* defined (ACE_HAS_TR24731_2005_CRT) */
+  // _vsnprintf_s() doesn't report the length needed when it truncates. This
+  // info is needed and relied on by others things in ACE+TAO, so don't use
+  // this. There's adequate protection via the maxlen.
+  result = _vsnprintf_s (buffer, maxlen, _TRUNCATE, format, ap);
+#  elif !defined (ACE_WIN32)
   result = ::vsnprintf (buffer, maxlen, format, ap);
 #  else
   result = ::_vsnprintf (buffer, maxlen, format, ap);
@@ -964,7 +995,8 @@ ACE_OS::vsprintf (wchar_t *buffer, const wchar_t *format, va_list argptr)
 {
 # if (defined _XOPEN_SOURCE && (_XOPEN_SOURCE - 0) >= 500) || \
      (defined (sun) && !(defined(_XOPEN_SOURCE) && (_XOPEN_VERSION-0==4))) || \
-     (defined (ACE_HAS_DINKUM_STL) || defined (__DMC__))
+     (defined (ACE_HAS_DINKUM_STL) || defined (__DMC__)) || \
+      defined (ACE_HAS_VSWPRINTF) || defined (ACE_WIN32_VC8) && !defined (ACE_HAS_WINCE)
 
   // The XPG4/UNIX98/C99 signature of the wide-char sprintf has a
   // maxlen argument. Since this method doesn't supply one, pass in
@@ -974,8 +1006,8 @@ ACE_OS::vsprintf (wchar_t *buffer, const wchar_t *format, va_list argptr)
   return vswprintf (buffer, 4096, format, argptr);
 
 # elif defined (ACE_WIN32)
-  // Windows has vswprintf, but the signature is from the older ISO C
-  // standard. Also see ACE_OS::snprintf() for more info on this.
+  // Windows has vswprintf, but the pre-VC8 signature is from the older
+  // ISO C standard. Also see ACE_OS::snprintf() for more info on this.
 
   return vswprintf (buffer, format, argptr);
 
@@ -995,16 +1027,21 @@ ACE_OS::vsnprintf (wchar_t *buffer, size_t maxlen, const wchar_t *format, va_lis
 {
 # if (defined _XOPEN_SOURCE && (_XOPEN_SOURCE - 0) >= 500) || \
      (defined (sun) && !(defined(_XOPEN_SOURCE) && (_XOPEN_VERSION-0==4))) || \
-     (defined (ACE_HAS_DINKUM_STL) || defined (__DMC__))
+     (defined (ACE_HAS_DINKUM_STL) || defined (__DMC__)) || \
+      defined (ACE_HAS_VSWPRINTF)
 
   return vswprintf (buffer, maxlen, format, ap);
+
+# elif defined (ACE_HAS_TR24731_2005_CRT)
+
+  return _vsnwprintf_s (buffer, maxlen, _TRUNCATE, format, ap);
 
 # elif defined (ACE_WIN32)
 
   int result = ::_vsnwprintf (buffer, maxlen, format, ap);
 
   // Win32 doesn't regard a full buffer with no 0-terminate as an
-  // overrun.
+// overrun.
   if (result == static_cast<int> (maxlen))
     result = -1;
 

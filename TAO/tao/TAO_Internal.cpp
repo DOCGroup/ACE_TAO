@@ -16,7 +16,6 @@
 #include "tao/Adapter_Factory.h"
 #include "tao/Default_Stub_Factory.h"
 #include "tao/Default_Endpoint_Selector_Factory.h"
-#include "tao/Default_Protocols_Hooks.h"
 #include "tao/Default_Thread_Lane_Resources_Manager.h"
 #include "tao/Default_Collocation_Resolver.h"
 #include "tao/Codeset_Manager_Factory_Base.h"
@@ -68,7 +67,7 @@ namespace
    */
   int
   parse_global_args_i (int &argc,
-                       char **argv,
+                       ACE_TCHAR **argv,
                        CORBA::StringSeq &svc_config_argv,
                        bool apply_values);
 
@@ -84,7 +83,7 @@ namespace
    */
   int
   parse_svcconf_args_i (int &argc,
-                       char **argv,
+                       ACE_TCHAR **argv,
                        CORBA::StringSeq &svc_config_argv);
 
   /**
@@ -116,7 +115,7 @@ namespace
    */
   int
   parse_private_args_i (int &argc,
-                        char **argv,
+                        ACE_TCHAR **argv,
                         CORBA::StringSeq & svc_config_argv,
                         bool & skip_service_config_open);
 
@@ -294,15 +293,15 @@ TAO::ORB::open_services (ACE_Service_Gestalt* pcfg,
 
       // Be certain to copy the program name so that service configurator
       // has something to skip!
-      ACE_CString argv0 ("");
+      ACE_CString gargv0 ("");
 
       if (argc > 0 && argv != 0)
         {
-          argv0 = ACE_TEXT_ALWAYS_CHAR (argv[0]);
+          gargv0 = ACE_TEXT_ALWAYS_CHAR (argv[0]);
         }
 
       global_svc_config_argv.length (1);
-      global_svc_config_argv[0] = argv0.c_str ();
+      global_svc_config_argv[0] = gargv0.c_str ();
 
       if (parse_global_args_i (argc, argv, global_svc_config_argv, true) == -1)
         {
@@ -336,7 +335,6 @@ TAO::ORB::open_services (ACE_Service_Gestalt* pcfg,
         }
 
       register_additional_services_i (theone);
-
 
       if (TAO_debug_level > 4)
         ACE_DEBUG ((LM_DEBUG,
@@ -538,7 +536,6 @@ namespace
     pcfg->process_directive (ace_svc_desc_TAO_Default_Stub_Factory);
     pcfg->process_directive (
       ace_svc_desc_TAO_Default_Endpoint_Selector_Factory);
-    pcfg->process_directive (ace_svc_desc_TAO_Default_Protocols_Hooks);
     pcfg->process_directive (
       ace_svc_desc_TAO_Default_Thread_Lane_Resources_Manager_Factory);
     pcfg->process_directive (ace_svc_desc_TAO_Default_Collocation_Resolver);
@@ -638,7 +635,7 @@ namespace
 
   int
   parse_svcconf_args_i (int &argc,
-                        char **argv,
+                        ACE_TCHAR **argv,
                         CORBA::StringSeq &svc_config_argv)
   {
     // Extract the Service Configurator ORB options from the argument
@@ -701,7 +698,7 @@ namespace
 
   int
   parse_private_args_i (int &argc,
-                        char **argv,
+                        ACE_TCHAR **argv,
                         CORBA::StringSeq &svc_config_argv,
                         bool & skip_service_config_open)
   {
@@ -761,12 +758,21 @@ namespace
               negotiate_codesets = (ACE_OS::atoi (current_arg));
             arg_shifter.ignore_arg();
           }
-        // Can't interpret this argument.
-        // Move on to the next argument.
+        else if (0 != (current_arg =
+                       arg_shifter.get_the_parameter
+                       (ACE_TEXT ("-ORBDebugLevel"))))
+          {
+            // Allowing different ORBs to change the global debug
+            // level may be unexpected, but since this
+            TAO_debug_level = ACE_OS::atoi (current_arg);
+
+            arg_shifter.consume_arg ();
+          }
         else
           {
-            // Any arguments that don't match are ignored so that
-            // the caller can still use them.
+            // Can't interpret this argument.  Move on to the next
+            // argument.  Any arguments that don't match are ignored
+            // so that the caller can still use them.
             arg_shifter.ignore_arg ();
           }
       }
@@ -776,7 +782,7 @@ namespace
 
   int
   parse_global_args_i (int &argc,
-                       char **argv,
+                       ACE_TCHAR **argv,
                        CORBA::StringSeq &svc_config_argv,
                        bool apply_values)
   {
@@ -807,7 +813,6 @@ namespace
       }
 #endif  /* TAO_DEBUG && !ACE_HAS_WINCE */
 
-
     // Extract the Service Configurator ORB options from the argument
     // vector.
     ACE_Arg_Shifter arg_shifter (argc, argv);
@@ -815,7 +820,6 @@ namespace
 
     while (arg_shifter.is_anything_left ())
       {
-        const ACE_TCHAR *current_arg = 0;
         if (0 == arg_shifter.cur_arg_strncasecmp (ACE_TEXT ("-ORBDebug")))
           {
             if (apply_values)
@@ -825,17 +829,6 @@ namespace
                 ACE::debug (1);
               }
 
-            arg_shifter.consume_arg ();
-          }
-        else if (0 != (current_arg =
-                       arg_shifter.get_the_parameter
-                       (ACE_TEXT ("-ORBDebugLevel"))))
-          {
-            if (apply_values)
-              {
-                TAO_debug_level =
-                  ACE_OS::atoi (current_arg);
-              }
             arg_shifter.consume_arg ();
           }
         else if (0 == arg_shifter.cur_arg_strncasecmp

@@ -49,7 +49,7 @@ for($i = 0; $i < $server_count; $i++) {
   $SV[$i] = new PerlACE::Process ("server", "$endpoint -o $iorfile.$i");
   $SV[$i]->Spawn ();
 
-  if (PerlACE::waitforfile_timed ("$iorfile.$i", 10) == -1) {
+  if (PerlACE::waitforfile_timed ("$iorfile.$i", $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: cannot find file <$iorfile.$i>\n";
     $SV[$i]->Kill (); $SV[$i]->TimedWait (1);
     exit 1;

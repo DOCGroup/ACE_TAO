@@ -166,15 +166,15 @@ public:
 
   /// Sync the memory region to the backing store starting at
   /// @c this->base_addr_.  Will sync as much as the backing file
-  /// allows. 
+  /// allows.
   virtual int sync (int flags = MS_SYNC);
-  
+
   /// Sync the memory region to the backing store starting at @a addr.
   virtual int sync (void *addr, size_t len, int flags = MS_SYNC);
 
   /**
    * Change the protection of the pages of the mapped region to <prot>
-   * starting at <this->base_addr_> up to <len> bytes.  If <len> == -1
+   * starting at <this->base_addr_> up to @a len bytes.  If @a len == -1
    * then change protection of all pages in the mapped region.
    */
   virtual int protect (size_t len, int prot = PROT_RDWR);

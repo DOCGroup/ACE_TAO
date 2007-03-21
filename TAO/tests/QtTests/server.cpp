@@ -60,7 +60,7 @@ main (int argc, char *argv[])
   try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "");
+        CORBA::ORB_init (argc, argv);
 
       CORBA::Object_var poa_object =
         orb->resolve_initial_references ("RootPOA");
@@ -80,8 +80,13 @@ main (int argc, char *argv[])
       // Instantiate the LCD_Display implementation class
       LCD_Display_imp display_impl (orb.in ());
 
+      PortableServer::ObjectId_var id =
+        root_poa->activate_object (&display_impl);
+
+      CORBA::Object_var object = root_poa->id_to_reference (id.in ());
+
       LCD_Display_var server =
-        display_impl._this ();
+        LCD_Display::_narrow (object.in ());
 
       // Create the LCD after the QVbox is created.
       QVBox box;

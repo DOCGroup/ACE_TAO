@@ -17,6 +17,7 @@
 #include "tao/Client_Strategy_Factory.h"
 
 #include "ace/Countdown_Time.h"
+#include "ace/CORBA_macros.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Profile_Transport_Resolver.inl"
@@ -78,18 +79,14 @@ namespace TAO
   void
   Profile_Transport_Resolver::resolve (ACE_Time_Value *max_time_val
                                        )
-    ACE_THROW_SPEC ((CORBA::SystemException))
   {
     ACE_Countdown_Time countdown (max_time_val);
 
     TAO_Invocation_Endpoint_Selector *es =
-      this->stub_->orb_core ()->endpoint_selector_factory ()->get_selector (
-          );
+      this->stub_->orb_core ()->endpoint_selector_factory ()->get_selector ();
 
     // Select the endpoint
-    es->select_endpoint (this,
-                         max_time_val
-                        );
+    es->select_endpoint (this, max_time_val);
 
     if (this->transport_.get () == 0)
       {
@@ -153,12 +150,11 @@ namespace TAO
 
     if (conn_reg == 0)
       {
-        ACE_THROW_RETURN (CORBA::INTERNAL (
-                            CORBA::SystemException::_tao_minor_code (
-                              0,
-                              EINVAL),
-                            CORBA::COMPLETED_NO),
-                          false);
+        throw ::CORBA::INTERNAL (
+          CORBA::SystemException::_tao_minor_code (
+            0,
+            EINVAL),
+          CORBA::COMPLETED_NO);
       }
 
     ACE_Time_Value connection_timeout;
@@ -200,12 +196,11 @@ namespace TAO
         has_con_timeout == false &&
         errno == ETIME)
       {
-        ACE_THROW_RETURN (CORBA::TIMEOUT (
-                            CORBA::SystemException::_tao_minor_code (
-                              TAO_TIMEOUT_CONNECT_MINOR_CODE,
-                              errno),
-                            CORBA::COMPLETED_NO),
-                          false);
+        throw ::CORBA::TIMEOUT (
+          CORBA::SystemException::_tao_minor_code (
+            TAO_TIMEOUT_CONNECT_MINOR_CODE,
+            errno),
+          CORBA::COMPLETED_NO);
       }
     else if (this->transport_.get () == 0)
       {
@@ -247,7 +242,6 @@ namespace TAO
   void
   Profile_Transport_Resolver::init_inconsistent_policies (
     void)
-    ACE_THROW_SPEC ((CORBA::SystemException))
   {
     ACE_NEW_THROW_EX (this->inconsistent_policies_,
                       CORBA::PolicyList (0),

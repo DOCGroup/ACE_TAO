@@ -17,10 +17,8 @@ public:
   // Constructor
 
   // = The skeleton methods
-  virtual void start_workers (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual void start_workers_excep (::Messaging::ExceptionHolder *holder)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void start_workers (void);
+  virtual void start_workers_excep (::Messaging::ExceptionHolder *holder);
 
 private:
   Test::Manager_var manager_;

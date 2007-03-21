@@ -17,8 +17,6 @@ CORBA::Policy_ptr
 TAO_RT_PolicyFactory::create_policy (
     CORBA::PolicyType type,
     const CORBA::Any &value)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   CORBA::PolicyError))
 {
   if (type == RTCORBA::PRIORITY_MODEL_POLICY_TYPE)
     return TAO_PriorityModelPolicy::create (value);
@@ -38,18 +36,13 @@ TAO_RT_PolicyFactory::create_policy (
   if (type == RTCORBA::PRIORITY_BANDED_CONNECTION_POLICY_TYPE)
     return TAO_PriorityBandedConnectionPolicy::create (value);
 
-  ACE_THROW_RETURN (CORBA::PolicyError (CORBA::BAD_POLICY_TYPE),
-                    CORBA::Policy::_nil ());
+  throw ::CORBA::PolicyError (CORBA::BAD_POLICY_TYPE);
 }
 
 CORBA::Policy_ptr
-TAO_RT_PolicyFactory::_create_policy (
-    CORBA::PolicyType type
-    )
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   CORBA::PolicyError))
+TAO_RT_PolicyFactory::_create_policy (CORBA::PolicyType type)
 {
-  CORBA::Policy_ptr policy = CORBA::Policy::_nil ();
+  CORBA::Policy_ptr policy = CORBA::Policy_ptr ();
 
   if (type == RTCORBA::PRIORITY_MODEL_POLICY_TYPE)
     {
@@ -90,8 +83,7 @@ TAO_RT_PolicyFactory::_create_policy (
       return policy;
     }
 
-  ACE_THROW_RETURN (CORBA::PolicyError (CORBA::BAD_POLICY_TYPE),
-                    CORBA::Policy::_nil ());
+  throw ::CORBA::PolicyError (CORBA::BAD_POLICY_TYPE);
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -15,7 +15,6 @@ Hello::Hello (CORBA::ORB_ptr orb)
 
 char *
 Hello::get_string (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (this->orb_->orb_core ()->lane_resources ().transport_cache ().current_size () > 1)
     {
@@ -28,7 +27,6 @@ Hello::get_string (void)
 
 void
 Hello::shutdown (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown (0);
 }

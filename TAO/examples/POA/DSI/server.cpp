@@ -84,7 +84,7 @@ main (int argc, char **argv)
   try
     {
       // Initialize the ORB
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, 0);
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
       int result = parse_args (argc, argv);
       if (result != 0)

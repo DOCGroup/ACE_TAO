@@ -38,7 +38,7 @@ ClientApp::run(int argc, char* argv[])
     {
       ACE_ERROR((LM_ERROR,
                  "(%P|%t) Failed to convert IOR string to obj ref.\n"));
-      ACE_THROW_RETURN (TestException(), -1);
+      throw TestException();
     }
 
   Foo_var foo = Foo::_narrow(obj.in());
@@ -47,7 +47,7 @@ ClientApp::run(int argc, char* argv[])
     {
       ACE_ERROR((LM_ERROR,
                  "(%P|%t) Failed to narrow obj ref to Foo interface.\n"));
-      ACE_THROW_RETURN (TestException(), -1);
+      throw TestException();
     }
 
   for (CORBA::Long i = 1; i <= 100; i++)

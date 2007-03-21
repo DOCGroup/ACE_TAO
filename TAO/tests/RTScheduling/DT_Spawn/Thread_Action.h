@@ -20,8 +20,7 @@ public RTScheduling::ThreadAction
  public:
   Test_Thread_Action (void);
 
-  virtual void _cxx_do (CORBA::VoidData data)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void _cxx_do (CORBA::VoidData data);
 };
 
 #endif /*Thread_Action_H*/
@@ -33,7 +32,6 @@ Test_Thread_Action::Test_Thread_Action (void)
 
 void
 Test_Thread_Action::_cxx_do (CORBA::VoidData data)
-     ACE_THROW_SPEC ((CORBA::SystemException))
 {
 
   Data* tmp = (Data*) data;

@@ -3,7 +3,7 @@
 // This test tries to install a set of components in 2 different containers, which
 // is hosted in the same NodeApplication.
 
-#include "Deployment_NodeApplicationC.h"
+#include "DAnCE/Deployment/Deployment_NodeApplicationC.h"
 #include "Client_init.h"
 #include "NodeAppTest_RoundTripC.h"
 #include "ace/Get_Opt.h"
@@ -61,7 +61,7 @@ main (int argc, char *argv[])
       ACE_DEBUG ((LM_DEBUG, "CompNum: %d\n",comp_num));
 
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "");
+        CORBA::ORB_init (argc, argv);
 
       CIAO::Client_init (orb.in ());
 

@@ -21,14 +21,13 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Environment.h"
-
-/* #include "tao/Policy_Current_Impl.h" */
+#include "tao/orbconf.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Forward declarations
 class TAO_Transport;
+class TAO_ORB_Core;
 
 namespace TAO
 {

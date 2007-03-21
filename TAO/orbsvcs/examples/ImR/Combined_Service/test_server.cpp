@@ -21,7 +21,8 @@ public:
   }
   virtual ~test_i (void) {
   }
-  virtual CORBA::Long get (void) ACE_THROW_SPEC ((CORBA::SystemException)) {
+  virtual CORBA::Long get (void)
+  {
     ACE_DEBUG((LM_DEBUG, "dynserver: get() %d\n", ++n_));
     return n_;
   }

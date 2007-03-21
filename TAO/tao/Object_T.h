@@ -24,7 +24,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include /**/ "tao/Versioned_Namespace.h"
-#include "ace/CORBA_macros.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -52,8 +51,7 @@ namespace TAO
                          Proxy_Broker_Factory);
 
     // Version used the operators.
-    static T_ptr unchecked_narrow (CORBA::Object_ptr,
-                                   Proxy_Broker_Factory);
+    static T_ptr unchecked_narrow (CORBA::Object_ptr, Proxy_Broker_Factory);
 
     static T_ptr unchecked_narrow (CORBA::Object_ptr,
                                    const char *repo_id,

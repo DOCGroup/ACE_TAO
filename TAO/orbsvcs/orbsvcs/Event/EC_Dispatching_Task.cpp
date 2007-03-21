@@ -143,13 +143,17 @@ TAO_EC_Dispatching_Task::push (TAO_EC_ProxyPushSupplier *proxy,
 {
   if (this->msg_queue()->is_full ())
     {
-      int action =
-        this->queue_full_service_object_->queue_full_action (this, proxy,
-                                                             consumer, event);
+      if (0 != this->queue_full_service_object_)
+        {
+          int action =
+            this->queue_full_service_object_->queue_full_action (this, proxy,
+                                                                 consumer, event);
 
-      if (action == TAO_EC_Queue_Full_Service_Object::SILENTLY_DISCARD)
-        return;
-      // if action == WAIT_TO_EMPTY then we just go ahead and queue it
+          if (action == TAO_EC_Queue_Full_Service_Object::SILENTLY_DISCARD)
+            return;
+          // if action == WAIT_TO_EMPTY then we just go ahead and queue it
+        }
+        // else go ahead and queue it
     }
 
   if (this->allocator_ == 0)

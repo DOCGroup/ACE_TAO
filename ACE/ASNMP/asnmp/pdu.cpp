@@ -98,6 +98,9 @@ Pdu::~Pdu()
 //=====================[ assignment to another Pdu object overloaded ]===
 Pdu& Pdu::operator=( const Pdu &pdu)
 {
+   if (this == &pdu)
+     return *this;
+
    int z;   // looping variable
 
    // Initialize all mv's

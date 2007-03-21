@@ -63,7 +63,7 @@ TAO_RT_Transport_Descriptor::duplicate (void)
       // Note that we cannot use <insert> because that will reverse the stack.
       if (new_descriptor->property_list_ == 0)
         new_descriptor->property_list_ = new_property;
-      else
+      else if (current_new_property != 0)
         current_new_property->next_ = new_property;
 
       current_new_property = new_property;

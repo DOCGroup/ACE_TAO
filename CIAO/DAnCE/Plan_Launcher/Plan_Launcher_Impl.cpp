@@ -12,8 +12,7 @@ namespace CIAO
     static CORBA::Object_ptr
     fetch_reference_naming (CORBA::ORB_ptr orb)
     {
-      CORBA::Object_var tmp =
-        orb->resolve_initial_references ("NameService");
+      CORBA::Object_var tmp = orb->resolve_initial_references ("NameService");
 
       CosNaming::NamingContext_var pns =
         CosNaming::NamingContext::_narrow (tmp.in ());
@@ -88,7 +87,6 @@ namespace CIAO
                                   const char *package_uri,
                                   bool use_package_name,
                                   bool use_repoman)
-      ACE_THROW_SPEC ((Plan_Launcher_i::Deployment_Failure))
     {
       if (CIAO::debug_level () > 9)
         {
@@ -97,8 +95,7 @@ namespace CIAO
 
       CIAO::Config_Handlers::XML_File_Intf intf (deployment_plan_uri);
 
-      ::Deployment::DeploymentPlan_var plan =
-          intf.get_plan ();
+      ::Deployment::DeploymentPlan_var plan = intf.get_plan ();
 
       // Use the package name(s) or type(s) to modify the location of all the
       // artifacts in DeploymentPlan.
@@ -118,7 +115,6 @@ namespace CIAO
 
     const char *
     Plan_Launcher_i::launch_plan (const ::Deployment::DeploymentPlan &plan)
-      ACE_THROW_SPEC ((Plan_Launcher_i::Deployment_Failure))
     {
       try
         {
@@ -166,10 +162,10 @@ namespace CIAO
               0);
 
           if (CIAO::debug_level ())
-          {
-            ACE_DEBUG ((LM_DEBUG,
-              "CIAO_PlanLauncher: start Launch application...\n"));
-          }
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                "CIAO_PlanLauncher: start Launch application...\n"));
+            }
 
           // Dont not start the Application immediately since it violates
           // the semantics of component activation sequence
@@ -373,12 +369,10 @@ namespace CIAO
                                      const char *package_uri,
                                      bool use_package_name,
                                      bool use_repoman)
-      ACE_THROW_SPEC ((Plan_Launcher_i::Deployment_Failure))
     {
       CIAO::Config_Handlers::XML_File_Intf intf (deployment_plan_uri);
 
-      ::Deployment::DeploymentPlan_var plan =
-          intf.get_plan ();
+      ::Deployment::DeploymentPlan_var plan = intf.get_plan ();
 
       // Use the package name(s) or type(s) to modify the location of all the
       // artifacts in DeploymentPlan.
@@ -393,7 +387,6 @@ namespace CIAO
 
     const char *
     Plan_Launcher_i::re_launch_plan (const ::Deployment::DeploymentPlan &plan)
-      ACE_THROW_SPEC ((Plan_Launcher_i::Deployment_Failure))
     {
 
       if (CORBA::is_nil (this->em_.in ()))

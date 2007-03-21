@@ -37,8 +37,6 @@ ServantLocator_i::preinvoke (const PortableServer::ObjectId &oid,
                              PortableServer::POA_ptr poa,
                              const char * /* operation */,
                              PortableServer::ServantLocator::Cookie &cookie)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableServer::ForwardRequest))
 {
   // Convert ObjectID to String.
 
@@ -60,8 +58,7 @@ ServantLocator_i::preinvoke (const PortableServer::ObjectId &oid,
       return servant;
     }
   else
-    ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (),
-                      0);
+    throw CORBA::OBJECT_NOT_EXIST ();
 }
 
 // Since the servant gets invoked per operation, the servant has to be
@@ -74,7 +71,6 @@ ServantLocator_i::postinvoke (const PortableServer::ObjectId &oid,
                               const char * /* operation */,
                               PortableServer::ServantLocator::Cookie cookie,
                               PortableServer::Servant servant)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Check the passed servant with the cookie.
 

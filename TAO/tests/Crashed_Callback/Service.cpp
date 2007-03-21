@@ -22,7 +22,6 @@ Service::dump_results (void)
 
 void
 Service::run_test (Test::Crashed_Callback_ptr callback)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   int pre_crash_exceptions =
     this->call_are_you_there (callback);
@@ -65,7 +64,6 @@ Service::run_test (Test::Crashed_Callback_ptr callback)
 
 int
 Service::call_are_you_there (Test::Crashed_Callback_ptr callback)
-  ACE_THROW_SPEC (())
 {
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) - Service, calling are_you_there\n"));
   const int iterations = 50;
@@ -87,7 +85,6 @@ Service::call_are_you_there (Test::Crashed_Callback_ptr callback)
 
 int
 Service::call_test_oneway (Test::Crashed_Callback_ptr callback)
-  ACE_THROW_SPEC (())
 {
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) - Service, calling test_oneway\n"));
   const int iterations = 50;

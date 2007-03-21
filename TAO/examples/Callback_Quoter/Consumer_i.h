@@ -39,12 +39,10 @@ public:
   ~Consumer_i (void);
   // Destructor.
 
-  void push (const Callback_Quoter::Info & data)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void push (const Callback_Quoter::Info & data);
   // Gets the stock information from the Notifier.
 
-  virtual void shutdown (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void shutdown (void);
   // Used to get the consumer to shut down.
 
   void orb (CORBA::ORB_ptr o);

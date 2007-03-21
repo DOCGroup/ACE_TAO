@@ -30,9 +30,6 @@ Smart_Diamond_Top_Proxy::Smart_Diamond_Top_Proxy (Diamond::Top_ptr proxy)
 
 char *
 Smart_Diamond_Top_Proxy::shape ()
-  ACE_THROW_SPEC ((
-                   CORBA::SystemException
-                   ))
 {
   ACE_DEBUG ((LM_DEBUG, "Smart_proxy: This is "));
 

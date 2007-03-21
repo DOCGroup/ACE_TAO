@@ -12,11 +12,9 @@ public:
    : orb_ (CORBA::ORB::_duplicate (orb)) {
   }
 
-  void shutdown ()
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void shutdown ();
 
-  void destroy ()
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void destroy ();
 
 private:
   CORBA::ORB_var orb_;
@@ -24,14 +22,12 @@ private:
 
 void
 foo_i::shutdown ()
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown ();
 }
 
 void
 foo_i::destroy ()
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   bool expected_exception_raised = false;
 
@@ -82,7 +78,12 @@ main (int argc, char** argv)
                       1);
       PortableServer::ServantBase_var owner_transfer(server_impl);
 
-      foo_var server = server_impl->_this ();
+      PortableServer::ObjectId_var id =
+        root_poa->activate_object (server_impl);
+
+      CORBA::Object_var object = root_poa->id_to_reference (id.in ());
+
+      foo_var server = foo::_narrow (object.in ());
 
       CORBA::String_var ior =
         orb->object_to_string (server.in ());

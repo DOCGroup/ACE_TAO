@@ -11,22 +11,18 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 char *
 TAO_LB_ClientRequestInterceptor::name ()
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup ("TAO_LB_ClientRequestInterceptor");
 }
 
 void
 TAO_LB_ClientRequestInterceptor::destroy (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
 TAO_LB_ClientRequestInterceptor::send_request (
     PortableInterceptor::ClientRequestInfo_ptr ri)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableInterceptor::ForwardRequest))
 {
   /*
   CORBA::Object_var t = ri->target ();
@@ -75,30 +71,24 @@ TAO_LB_ClientRequestInterceptor::send_request (
 void
 TAO_LB_ClientRequestInterceptor::send_poll (
     PortableInterceptor::ClientRequestInfo_ptr)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
 TAO_LB_ClientRequestInterceptor::receive_reply (
     PortableInterceptor::ClientRequestInfo_ptr)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
 TAO_LB_ClientRequestInterceptor::receive_exception (
     PortableInterceptor::ClientRequestInfo_ptr)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableInterceptor::ForwardRequest))
 {
 }
 
 void
 TAO_LB_ClientRequestInterceptor::receive_other (
     PortableInterceptor::ClientRequestInfo_ptr)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableInterceptor::ForwardRequest))
 {
 }
 

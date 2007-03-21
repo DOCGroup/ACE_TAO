@@ -27,6 +27,7 @@ ACE_RCSID (ace,
 # include "ace/OS_NS_fcntl.h"
 # include "ace/OS_NS_ctype.h"
 # include "ace/OS_NS_sys_time.h"
+# include "ace/OS_NS_Thread.h"
 # include "ace/Numeric_Limits.h"
 #endif  /* ACE_LACKS_MKSTEMP */
 
@@ -685,8 +686,23 @@ ACE_OS::mkstemp_emulation (ACE_TCHAR * s)
   static unsigned int const NUM_RETRIES = 50;
   static unsigned int const NUM_CHARS   = 6;  // Do not change!
 
-  ACE_RANDR_TYPE seed =
-    static_cast<ACE_RANDR_TYPE> (ACE_OS::gettimeofday ().msec ());
+  // Use ACE_Time_Value::msec(ACE_UINT64&) as opposed to
+  // ACE_Time_Value::msec(void) to avoid truncation.
+  ACE_UINT64 msec;
+
+  // Use a const ACE_Time_Value to resolve ambiguity between
+  // ACE_Time_Value::msec (long) and ACE_Time_Value::msec(ACE_UINT64&) const.
+  const ACE_Time_Value now = ACE_OS::gettimeofday();
+  now.msec (msec);
+
+  // Add the process and thread ids to ensure uniqueness.
+  msec += ACE_OS::getpid();
+  msec += (size_t) ACE_OS::thr_self();
+
+  // ACE_thread_t may be a char* (returned by ACE_OS::thr_self()) so
+  // we need to use a C-style cast as a catch-all in order to use a
+  // static_cast<> to an integral type.
+  ACE_RANDR_TYPE seed = static_cast<ACE_RANDR_TYPE> (msec);
 
   // We only care about UTF-8 / ASCII characters in generated
   // filenames.  A UTF-16 or UTF-32 character could potentially cause
@@ -694,7 +710,12 @@ ACE_OS::mkstemp_emulation (ACE_TCHAR * s)
   // greatly slowing down this mkstemp() implementation.  It is more
   // practical to limit the search space to UTF-8 / ASCII characters
   // (i.e. 127 characters).
-  static float const MAX_VAL =
+  //
+  // Note that we can't make this constant static since the compiler
+  // may not inline the return value of ACE_Numeric_Limits::max(),
+  // meaning multiple threads could potentially initialize this value
+  // in parallel.
+  float const MAX_VAL =
     static_cast<float> (ACE_Numeric_Limits<char>::max ());
 
   // Use high-order bits rather than low-order ones (e.g. rand() %
@@ -706,7 +727,7 @@ ACE_OS::mkstemp_emulation (ACE_TCHAR * s)
   // e.g.: MAX_VAL * rand() / (RAND_MAX + 1.0)
 
   // Factor out the constant coefficient.
-  static float const coefficient =
+  float const coefficient =
     static_cast<float> (MAX_VAL / (RAND_MAX + 1.0f));
 
   // @@ These nested loops may be ineffecient.  Improvements are
@@ -721,8 +742,7 @@ ACE_OS::mkstemp_emulation (ACE_TCHAR * s)
           // selection to work for EBCDIC, as well.
           do
             {
-              r =
-                static_cast<ACE_TCHAR> (coefficient * ACE_OS::rand_r (seed));
+              r = static_cast<ACE_TCHAR> (coefficient * ACE_OS::rand_r (seed));
             }
           while (!ACE_OS::ace_isalnum (r));
 

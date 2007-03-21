@@ -9,21 +9,18 @@ ACE_Atomic_Op<TAO_SYNCH_MUTEX, long> server_guid_counter;
 
 RTCORBA::Priority
 Segment_Sched_Param_Policy::value (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->value_;
 }
 
 void
 Segment_Sched_Param_Policy::value (RTCORBA::Priority value)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->value_ = value;
 }
 
 CORBA::Policy_ptr
 Segment_Sched_Param_Policy::copy (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   Segment_Sched_Param_Policy *copy = 0;
   ACE_NEW_THROW_EX (copy,
@@ -37,7 +34,6 @@ Segment_Sched_Param_Policy::copy (void)
 
 void
 Segment_Sched_Param_Policy::destroy (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
@@ -63,7 +59,6 @@ Fixed_Priority_Scheduler::~Fixed_Priority_Scheduler (void)
 
 FP_Scheduling::SegmentSchedulingParameterPolicy_ptr
 Fixed_Priority_Scheduler::create_segment_scheduling_parameter (RTCORBA::Priority segment_priority)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   FP_Scheduling::SegmentSchedulingParameterPolicy_ptr segment_policy;
   ACE_NEW_THROW_EX (segment_policy,
@@ -86,8 +81,6 @@ Fixed_Priority_Scheduler::begin_new_scheduling_segment (const RTScheduling::Curr
                                                         const char *,
                                                         CORBA::Policy_ptr /*sched_policy*/,
                                                         CORBA::Policy_ptr)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   RTScheduling::Current::UNSUPPORTED_SCHEDULING_DISCIPLINE))
 {
 }
 
@@ -96,8 +89,6 @@ Fixed_Priority_Scheduler::begin_nested_scheduling_segment (const RTScheduling::C
                                                            const char *name,
                                                            CORBA::Policy_ptr sched_param,
                                                            CORBA::Policy_ptr implicit_sched_param)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   RTScheduling::Current::UNSUPPORTED_SCHEDULING_DISCIPLINE))
 {
   this->begin_new_scheduling_segment (guid,
                                       name,
@@ -110,8 +101,6 @@ Fixed_Priority_Scheduler::update_scheduling_segment (const RTScheduling::Current
                                                      const char *name,
                                                      CORBA::Policy_ptr sched_param,
                                                      CORBA::Policy_ptr implicit_sched_param)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   RTScheduling::Current::UNSUPPORTED_SCHEDULING_DISCIPLINE))
 {
   this->begin_new_scheduling_segment (guid,
                                       name,
@@ -123,7 +112,6 @@ Fixed_Priority_Scheduler::update_scheduling_segment (const RTScheduling::Current
 void
 Fixed_Priority_Scheduler::end_scheduling_segment (const RTScheduling::Current::IdType &,
                                                   const char *)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
@@ -131,7 +119,6 @@ void
 Fixed_Priority_Scheduler::end_nested_scheduling_segment (const RTScheduling::Current::IdType &,
                                                          const char *,
                                                          CORBA::Policy_ptr)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 
 }
@@ -139,8 +126,6 @@ Fixed_Priority_Scheduler::end_nested_scheduling_segment (const RTScheduling::Cur
 
 void
 Fixed_Priority_Scheduler::send_request (PortableInterceptor::ClientRequestInfo_ptr request_info)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableInterceptor::ForwardRequest))
 {
 
   int priority;
@@ -172,8 +157,6 @@ Fixed_Priority_Scheduler::receive_request (PortableInterceptor::ServerRequestInf
                                            CORBA::String_out /*name*/,
                                            CORBA::Policy_out /*sched_param*/,
                                            CORBA::Policy_out /*implicit_sched_param*/)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableInterceptor::ForwardRequest))
 {
   IOP::ServiceContext* serv_cxt =
     request_info->get_request_service_context (Server_Interceptor::SchedulingInfo);
@@ -217,80 +200,63 @@ Fixed_Priority_Scheduler::receive_request (PortableInterceptor::ServerRequestInf
 
 void
 Fixed_Priority_Scheduler::send_reply (PortableInterceptor::ServerRequestInfo_ptr)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
 Fixed_Priority_Scheduler::send_exception (PortableInterceptor::ServerRequestInfo_ptr)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableInterceptor::ForwardRequest))
 {
 }
 
 void
 Fixed_Priority_Scheduler::send_other (PortableInterceptor::ServerRequestInfo_ptr)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableInterceptor::ForwardRequest))
 {
 }
 
 void
 Fixed_Priority_Scheduler::send_poll (PortableInterceptor::ClientRequestInfo_ptr)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableInterceptor::ForwardRequest))
 {
 }
 
 void
 Fixed_Priority_Scheduler::receive_reply (PortableInterceptor::ClientRequestInfo_ptr)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
 Fixed_Priority_Scheduler::receive_exception (PortableInterceptor::ClientRequestInfo_ptr)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableInterceptor::ForwardRequest))
 {
 }
 
 void
 Fixed_Priority_Scheduler::receive_other (PortableInterceptor::ClientRequestInfo_ptr)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableInterceptor::ForwardRequest))
 {
 }
 
 void
 Fixed_Priority_Scheduler::cancel (const RTScheduling::Current::IdType &)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 CORBA::PolicyList*
 Fixed_Priority_Scheduler::scheduling_policies (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return 0;
 }
 
 void
 Fixed_Priority_Scheduler::scheduling_policies (const CORBA::PolicyList &)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 CORBA::PolicyList*
 Fixed_Priority_Scheduler::poa_policies (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return 0;
 }
 
 char *
 Fixed_Priority_Scheduler::scheduling_discipline_name (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return 0;
 }
@@ -298,7 +264,6 @@ Fixed_Priority_Scheduler::scheduling_discipline_name (void)
 RTScheduling::ResourceManager_ptr
 Fixed_Priority_Scheduler::create_resource_manager (const char *,
                                                    CORBA::Policy_ptr)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return 0;
 }
@@ -307,6 +272,5 @@ void
 Fixed_Priority_Scheduler::set_scheduling_parameter (PortableServer::Servant &,
                                                     const char *,
                                                     CORBA::Policy_ptr)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }

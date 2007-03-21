@@ -68,24 +68,13 @@ public:
       PortableGroup::ObjectGroup_ptr object_group,
       const PortableGroup::Location & the_location,
       const char * type_id,
-      const PortableGroup::Criteria & the_criteria)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableGroup::ObjectGroupNotFound,
-                     PortableGroup::MemberAlreadyPresent,
-                     PortableGroup::NoFactory,
-                     PortableGroup::ObjectNotCreated,
-                     PortableGroup::InvalidCriteria,
-                     PortableGroup::CannotMeetCriteria));
+      const PortableGroup::Criteria & the_criteria);
 
   /// Add an existing object to the ObjectGroup.
   virtual PortableGroup::ObjectGroup_ptr add_member (
       PortableGroup::ObjectGroup_ptr object_group,
       const PortableGroup::Location & the_location,
-      CORBA::Object_ptr member)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableGroup::ObjectGroupNotFound,
-                     PortableGroup::MemberAlreadyPresent,
-                     PortableGroup::ObjectNotAdded));
+      CORBA::Object_ptr member);
 
   /**
    * Remove an object at a specific location from the given
@@ -96,54 +85,37 @@ public:
    */
   virtual PortableGroup::ObjectGroup_ptr remove_member (
       PortableGroup::ObjectGroup_ptr object_group,
-      const PortableGroup::Location & the_location)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableGroup::ObjectGroupNotFound,
-                     PortableGroup::MemberNotFound));
+      const PortableGroup::Location & the_location);
 
   /// Return the locations of the members in the given ObjectGroup.
   virtual PortableGroup::Locations * locations_of_members (
-      PortableGroup::ObjectGroup_ptr object_group)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableGroup::ObjectGroupNotFound));
+      PortableGroup::ObjectGroup_ptr object_group);
 
   /// Return the locations of the members in the given ObjectGroup.
   virtual PortableGroup::ObjectGroups * groups_at_location (
-      const PortableGroup::Location & the_location)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+      const PortableGroup::Location & the_location);
 
   /// Return the ObjectGroupId for the given ObjectGroup.
   /// @note Does this method make sense for load balanced objects?
   virtual PortableGroup::ObjectGroupId get_object_group_id (
-      PortableGroup::ObjectGroup_ptr object_group)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableGroup::ObjectGroupNotFound));
+      PortableGroup::ObjectGroup_ptr object_group);
 
   /// @note Does this method make sense for load balanced objects?
   virtual PortableGroup::ObjectGroup_ptr get_object_group_ref (
-      PortableGroup::ObjectGroup_ptr object_group)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableGroup::ObjectGroupNotFound));
+      PortableGroup::ObjectGroup_ptr object_group);
 
   /// Return the reference corresponding to the member of a given
   /// ObjectGroup at the given location.
   virtual CORBA::Object_ptr get_member_ref (
       PortableGroup::ObjectGroup_ptr object_group,
-      const PortableGroup::Location & loc)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableGroup::ObjectGroupNotFound,
-                     PortableGroup::MemberNotFound));
+      const PortableGroup::Location & loc);
   /**
    * TAO-specific extension.
    * Return the ObjectGroup reference for the given ObjectGroupId.
    */
    virtual PortableGroup::ObjectGroup_ptr get_object_group_ref_from_id (
         PortableGroup::ObjectGroupId group_id
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-        , PortableGroup::ObjectGroupNotFound
-      ));
+      );
 
   //@}
 
@@ -159,10 +131,7 @@ public:
       const PortableGroup::Location & the_location,
       CORBA::Object_ptr member,
       const char * type_id,
-      const CORBA::Boolean propagate_member_already_present)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableGroup::MemberAlreadyPresent,
-                     PortableGroup::NoFactory));
+      const CORBA::Boolean propagate_member_already_present);
 
   /// Create object group hash map entry that represents an actual
   /// ObjectGroup.
@@ -186,9 +155,7 @@ public:
   /// Return the properties set when the object group was created, and
   /// the dynamic properties that may have overridden them.
   PortableGroup::Properties * get_properties (
-      PortableGroup::ObjectGroup_ptr object_group)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableGroup::ObjectGroupNotFound));
+      PortableGroup::ObjectGroup_ptr object_group);
 
   /// Return the type_id for the given object group.
   char * type_id (PortableGroup::ObjectGroup_ptr object_group);
@@ -202,9 +169,7 @@ public:
     const PortableServer::ObjectId & oid);
 
   /// Return the number of members in the given object group.
-  CORBA::ULong member_count (PortableGroup::ObjectGroup_ptr group)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableGroup::ObjectGroupNotFound));
+  CORBA::ULong member_count (PortableGroup::ObjectGroup_ptr group);
 
   /// Set the POA to use when converting object group references to
   /// ObjectIds.
@@ -228,18 +193,12 @@ protected:
     PortableGroup::ObjectGroup_ptr object_group,
     const PortableGroup::Location & the_location,
     CORBA::Object_ptr member,
-    const CORBA::Boolean check_type_id)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableGroup::ObjectGroupNotFound,
-                   PortableGroup::MemberAlreadyPresent,
-                   PortableGroup::ObjectNotAdded));
+    const CORBA::Boolean check_type_id);
 
   /// Obtain the ObjectGroup hash map entry corresponding to the given
   /// ObjectGroup reference.
   TAO_PG_ObjectGroup_Map_Entry * get_group_entry (
-      PortableGroup::ObjectGroup_ptr object_group)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableGroup::ObjectGroupNotFound));
+      PortableGroup::ObjectGroup_ptr object_group);
 
 
   /// Check if a member resides at the location to which the group

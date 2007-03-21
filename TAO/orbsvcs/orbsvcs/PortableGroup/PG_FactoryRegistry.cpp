@@ -285,10 +285,6 @@ void TAO::PG_FactoryRegistry::register_factory (
     const char * type_id,
     const PortableGroup::FactoryInfo & factory_info
   )
-  ACE_THROW_SPEC ((
-      CORBA::SystemException
-      , PortableGroup::MemberAlreadyPresent
-      , PortableGroup::TypeConflict))
 {
   METHOD_ENTRY(TAO::PG_FactoryRegistry::register_factory);
 
@@ -357,7 +353,6 @@ void TAO::PG_FactoryRegistry::unregister_factory (
     const char * role,
     const PortableGroup::Location & location
   )
-  ACE_THROW_SPEC ((CORBA::SystemException, PortableGroup::MemberNotFound))
 {
   METHOD_ENTRY(TAO::PG_FactoryRegistry::unregister_factory);
 
@@ -446,7 +441,6 @@ void TAO::PG_FactoryRegistry::unregister_factory (
 void TAO::PG_FactoryRegistry::unregister_factory_by_role (
     const char * role
   )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   METHOD_ENTRY(TAO::PG_FactoryRegistry::unregister_factory_by_role);
 
@@ -492,7 +486,6 @@ void TAO::PG_FactoryRegistry::unregister_factory_by_role (
 void TAO::PG_FactoryRegistry::unregister_factory_by_location (
     const PortableGroup::Location & location
   )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   METHOD_ENTRY(TAO::PG_FactoryRegistry::unregister_factory_by_location);
 
@@ -606,7 +599,6 @@ void TAO::PG_FactoryRegistry::unregister_factory_by_location (
     const char * role,
     CORBA::String_out type_id
   )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   METHOD_ENTRY(TAO::PG_FactoryRegistry::list_factories_by_role);
 
@@ -637,7 +629,6 @@ void TAO::PG_FactoryRegistry::unregister_factory_by_location (
 ::PortableGroup::FactoryInfos * TAO::PG_FactoryRegistry::list_factories_by_location (
     const PortableGroup::Location & location
   )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   METHOD_ENTRY(TAO::PG_FactoryRegistry::list_factories_by_location);
   ::PortableGroup::FactoryInfos_var result;

@@ -22,7 +22,6 @@ Foo_i::~Foo_i()
 
 void
 Foo_i::op1(void)
-  ACE_THROW_SPEC((CORBA::SystemException))
 {
   ++this->count_op1_;
   // Sleep for 10 milliseconds (10,000 microseconds)
@@ -32,7 +31,6 @@ Foo_i::op1(void)
 
 void
 Foo_i::op2(CORBA::Long value)
-  ACE_THROW_SPEC((CORBA::SystemException))
 {
   ++this->count_op2_;
   this->value_ = value;
@@ -41,7 +39,6 @@ Foo_i::op2(CORBA::Long value)
 
 CORBA::Long
 Foo_i::op3(void)
-  ACE_THROW_SPEC((CORBA::SystemException))
 {
   ++this->count_op3_;
   return this->value_;
@@ -50,7 +47,6 @@ Foo_i::op3(void)
 
 void
 Foo_i::op4(CORBA::Long value)
-  ACE_THROW_SPEC((CORBA::SystemException))
 {
   ++this->count_op4_;
   this->value_ = value;
@@ -69,14 +65,12 @@ Foo_i::op4(CORBA::Long value)
 
 void
 Foo_i::op5(void)
-  ACE_THROW_SPEC((CORBA::SystemException, FooException))
 {
   ACE_DEBUG((LM_DEBUG, "(%P|%t) Foo_i::op5() - ENTER\n"));
   ACE_DEBUG((LM_DEBUG, "(%P|%t) Foo_i::op5() - Increment counter.\n"));
   unsigned newcount = ++this->count_op5_;
   ACE_DEBUG((LM_DEBUG, "(%P|%t) Foo_i::op5() - Counter is now %d.\n", newcount));
-  ACE_DEBUG((LM_DEBUG, "(%P|%t) Foo_i::op5() - EXIT - Raise a FooException.\n"));
-  ACE_THROW_SPEC (FooException());
+  ACE_DEBUG((LM_DEBUG, "(%P|%t) Foo_i::op5() - EXIT - Raise a FooException.\n"));;
 }
 
 
@@ -85,9 +79,6 @@ Foo_i::op6 (
   const char * user_name,
   char *& message
 )
-ACE_THROW_SPEC ((
-  CORBA::SystemException
-))
 {
   ACE_CString str(message);
   str += user_name;
@@ -101,9 +92,6 @@ void
 Foo_i::test_unbounded_string_arg (
   const char * message
 )
-ACE_THROW_SPEC ((
-CORBA::SystemException
-))
 {
   ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Foo_i::test_unbounded_string_arg ")
                        ACE_TEXT("got unbounded string %s\n"),
@@ -115,9 +103,6 @@ void
 Foo_i::test_bounded_string_arg (
   const char * message
 )
-ACE_THROW_SPEC ((
-CORBA::SystemException
-))
 {
   ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Foo_i::test_bounded_string_arg ")
                        ACE_TEXT("got bounded string %s\n"),
@@ -129,9 +114,6 @@ void
 Foo_i::test_fixed_array_arg (
   const ::Fixed_Array message
 )
-ACE_THROW_SPEC ((
-  CORBA::SystemException
-))
 {
   for (CORBA::ULong i = 0; i < 20; i++)
     {
@@ -146,9 +128,6 @@ void
 Foo_i::test_bounded_var_size_arg (
   const ::Bounded_Var_Size & message
 )
-ACE_THROW_SPEC ((
-  CORBA::SystemException
-))
 {
   ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Foo_i::test_bounded_var_size_arg ")
                        ACE_TEXT("got var array chars %s\n"),
@@ -160,9 +139,6 @@ void
 Foo_i::test_unbounded_var_size_arg (
   const ::Unbounded_Var_Size & message
 )
-ACE_THROW_SPEC ((
-  CORBA::SystemException
-))
 {
   ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Foo_i::test_unbounded_var_size_arg ")
                        ACE_TEXT("got var array chars %s\n"),
@@ -174,9 +150,6 @@ void
 Foo_i::test_fixed_size_arg (
   const ::TimeOfDay & t
 )
-ACE_THROW_SPEC ((
-  CORBA::SystemException
-))
 {
   ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Foo_i::test_fixed_size_arg ")
                        ACE_TEXT("got timeofday %d:%d:%d\n"),
@@ -187,9 +160,6 @@ void
 Foo_i::test_fixed_size_arg_two_way (
   const ::TimeOfDay & t
 )
-ACE_THROW_SPEC ((
-  CORBA::SystemException
-))
 {
   ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Foo_i::test_fixed_size_arg_two_way ")
                        ACE_TEXT("got timeofday %d:%d:%d\n"),
@@ -200,9 +170,6 @@ void
 Foo_i::test_var_array_arg (
   const ::Var_Array messages
 )
-ACE_THROW_SPEC ((
-  CORBA::SystemException
-))
 {
   ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Foo_i::test_var_array_arg ")
                        ACE_TEXT(" %s \n"), messages[0].in ()));
@@ -217,9 +184,6 @@ void
 Foo_i::test_special_basic_arg (
   ::CORBA::Boolean value
 )
-ACE_THROW_SPEC ((
-  CORBA::SystemException
-))
 {
   ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Foo_i::test_special_basic_arg ")
                        ACE_TEXT(" got special basic arg: %d \n"), value));
@@ -230,9 +194,6 @@ void
 Foo_i::test_objref_arg (
   ::Callback_ptr cb
 )
-ACE_THROW_SPEC ((
-  CORBA::SystemException
-))
 {
   this->callback_ = Callback::_duplicate (cb);
   ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Foo_i::test_objref_arg ")
@@ -244,9 +205,6 @@ void
 Foo_i::callback_object (
   ::Callback_ptr cb
 )
-ACE_THROW_SPEC ((
-  CORBA::SystemException
-))
 {
   this->callback_ = Callback::_duplicate (cb);
 }
@@ -254,9 +212,6 @@ ACE_THROW_SPEC ((
 void
 Foo_i::test_callback (
 )
-ACE_THROW_SPEC ((
-  CORBA::SystemException, FooException
-))
 {
   if (CORBA::is_nil (this->callback_.in ()))
     {
@@ -271,7 +226,6 @@ ACE_THROW_SPEC ((
 
 void
 Foo_i::done(void)
-  ACE_THROW_SPEC((CORBA::SystemException))
 {
   static ACE_Atomic_Op <ACE_SYNCH_MUTEX, unsigned> num_clients = 2;
 

@@ -54,6 +54,22 @@
 #  endif  /* __cplusplus */
 #endif /* ! __GNUG__ && ! ghs */
 
+// Needed include to get all VxWorks CPU types
+#include "types/vxCpu.h"
+#if defined __RTP__
+  #if defined (_VX_CPU) && (_VX_CPU == _VX_PENTIUM || _VX_CPU == _VX_PENTIUM2 || _VX_CPU == _VX_PENTIUM3 || _VX_CPU == _VX_PENTIUM4)
+    // If running an Intel Pentium the
+    // ACE_OS::gethrtime () can use the RDTSC instruction.
+    # define ACE_HAS_PENTIUM
+  #endif
+#else
+  #if defined (CPU) && (CPU == PENTIUM || CPU == PENTIUM2 || CPU == PENTIUM3 || CPU == PENTIUM4)
+   // If running an Intel Pentium the
+   // ACE_OS::gethrtime () can use the RDTSC instruction.
+    # define ACE_HAS_PENTIUM
+  #endif
+#endif
+
 // OS-specific configuration
 #define ACE_HAS_4_4BSD_SENDMSG_RECVMSG
 #define ACE_HAS_3_PARAM_READDIR_R
@@ -86,6 +102,7 @@
 #define ACE_HAS_STRERROR
 #define ACE_HAS_THREADS
 #define ACE_HAS_SYSCTL
+#define ACE_LACKS_ALPHASORT
 #define ACE_LACKS_EXEC
 #define ACE_LACKS_RLIMIT
 #define ACE_LACKS_FILELOCKS
@@ -113,7 +130,6 @@
 #define ACE_LACKS_SEEKDIR
 #define ACE_LACKS_SEMBUF_T
 #define ACE_LACKS_SIGINFO_H
-#define ACE_LACKS_SIGVAL_T
 #define ACE_LACKS_SI_ADDR
 #define ACE_LACKS_SOCKETPAIR
 #define ACE_LACKS_STRRECVFD
@@ -160,7 +176,6 @@
 #define ACE_LACKS_FCNTL
 
 // Some string things
-#define ACE_LACKS_STRCASECMP
 #define ACE_LACKS_ITOW
 #define ACE_LACKS_WCSDUP
 #define ACE_LACKS_WCSICMP
@@ -171,16 +186,25 @@
 
 #if defined __RTP__
   // We are building for RTP mode
-  #define ACE_HAS_SVR4_DYNAMIC_LINKING
+  #if !defined (ACE_AS_STATIC_LIBS)
+  #  define ACE_HAS_SVR4_DYNAMIC_LINKING
+  #endif
   #define ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R
   #define ACE_LACKS_REGEX_H
+  #if defined ACE_HAS_PENTIUM
+  // Bug to workaround VxWorks 6.4 x86
+  #  define ACE_LACKS_PUTENV
+  #endif
   #define ACE_HAS_SETENV
+  #define ACE_LACKS_STRCASECMP
   #define ACE_HAS_3_PARAM_WCSTOK
   #define ACE_HAS_WCHAR
   #define ACE_HAS_VFWPRINTF
   #define ACE_SIZEOF_WCHAR 2
   #define ACE_HAS_SHM_OPEN
-  #define ACE_HAS_AIO_CALLS
+  #if defined (ACE_AS_STATIC_LIBS)
+  #  define ACE_HAS_AIO_CALLS
+  #endif
   // VxWorks seems to either not define this or define as zero up till now
   #if !defined (IOV_MAX) || (IOV_MAX == 0)
     #define ACE_IOV_MAX 16
@@ -199,7 +223,6 @@
   #define ACE_LACKS_WAITPID
   #define ACE_LACKS_SYS_TIME_H
   #define ACE_LACKS_SYS_SELECT_H
-  #define ACE_LACKS_STRINGS_H
   #define ACE_MKDIR_LACKS_MODE
   #define ACE_HAS_SIZET_PTR_ASCTIME_R_AND_CTIME_R
   #define ACE_LACKS_SEARCH_H
@@ -270,22 +293,6 @@
 
 #if !defined (ACE_MT_SAFE)
 # define ACE_MT_SAFE 1
-#endif
-
-// Needed include to get all VxWorks CPU types
-#include "types/vxCpu.h"
-#if defined __RTP__
-  #if defined (_VX_CPU) && (_VX_CPU == _VX_PENTIUM || _VX_CPU == _VX_PENTIUM2 || _VX_CPU == _VX_PENTIUM3 || _VX_CPU == _VX_PENTIUM4)
-    // If running an Intel Pentium the
-    // ACE_OS::gethrtime () can use the RDTSC instruction.
-    # define ACE_HAS_PENTIUM
-  #endif
-#else
-  #if defined (CPU) && (CPU == PENTIUM || CPU == PENTIUM2 || CPU == PENTIUM3 || CPU == PENTIUM4)
-   // If running an Intel Pentium the
-   // ACE_OS::gethrtime () can use the RDTSC instruction.
-    # define ACE_HAS_PENTIUM
-  #endif
 #endif
 
 // VxWorks defines the CPU define MAP, undef it to prevent problems with

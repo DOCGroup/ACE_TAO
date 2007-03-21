@@ -62,8 +62,7 @@ namespace TAO
               CORBA::ULong nfields);
 
       /// Constructor used for recursive TypeCodes.
-      Struct (CORBA::TCKind kind,
-              char const * id);
+      Struct (CORBA::TCKind kind, char const * id);
 
       /**
        * @name TAO-specific @c CORBA::TypeCode Methods
@@ -91,19 +90,14 @@ namespace TAO
        * @see @c CORBA::TypeCode
        */
       //@{
-      virtual CORBA::Boolean equal_i (CORBA::TypeCode_ptr tc
-                                      ) const;
-      virtual CORBA::Boolean equivalent_i (CORBA::TypeCode_ptr tc
-                                           ) const;
-      virtual CORBA::TypeCode_ptr get_compact_typecode_i (
-        void) const;
+      virtual CORBA::Boolean equal_i (CORBA::TypeCode_ptr tc) const;
+      virtual CORBA::Boolean equivalent_i (CORBA::TypeCode_ptr tc) const;
+      virtual CORBA::TypeCode_ptr get_compact_typecode_i (void) const;
       virtual char const * id_i (void) const;
       virtual char const * name_i (void) const;
       virtual CORBA::ULong member_count_i (void) const;
-      virtual char const * member_name_i (CORBA::ULong index
-                                          ) const;
-      virtual CORBA::TypeCode_ptr member_type_i (CORBA::ULong index
-                                                 ) const;
+      virtual char const * member_name_i (CORBA::ULong index) const;
+      virtual CORBA::TypeCode_ptr member_type_i (CORBA::ULong index) const;
       //@}
 
     protected:

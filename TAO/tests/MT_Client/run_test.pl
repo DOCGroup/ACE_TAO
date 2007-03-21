@@ -35,14 +35,14 @@ if (PerlACE::is_vxworks_test()) {
 else {
     $SV = new PerlACE::Process ("server", "-ORBsvcconf $server_conf -ORBdebuglevel $debug_level -o $iorfile");
 }
-$CL = new PerlACE::Process ($client_process, 
+$CL = new PerlACE::Process ($client_process,
                             "-ORBdebuglevel $debug_level "
                             . "-k file://$iorfile "
                             . "-n $threads -i 1000 -x");
 
 $SV->Spawn ();
 
-if (PerlACE::waitforfile_timed ($iorfile, 30) == -1) {
+if (PerlACE::waitforfile_timed ($iorfile, $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: cannot find file <$iorfile>\n";
     $SV->Kill ();
     exit 1;

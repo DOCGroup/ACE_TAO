@@ -123,11 +123,9 @@ private:
     /// Event Channel Observer methods
     //@{
     virtual void update_consumer (
-        const RtecEventChannelAdmin::ConsumerQOS& sub)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+        const RtecEventChannelAdmin::ConsumerQOS& sub);
     virtual void update_supplier (
-        const RtecEventChannelAdmin::SupplierQOS& pub)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+        const RtecEventChannelAdmin::SupplierQOS& pub);
 
   private:
     /// Handler we notify of subscriptions changes.
@@ -144,8 +142,7 @@ private:
 
   /// The Observer method.  Subscribe/unsubscribe to multicast groups
   /// according to changes in consumer subscriptions.
-  void update_consumer (const RtecEventChannelAdmin::ConsumerQOS& sub)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+  void update_consumer (const RtecEventChannelAdmin::ConsumerQOS& sub);
 
 
   typedef ACE_Unbounded_Set<ACE_INET_Addr> Address_Set;
@@ -169,8 +166,7 @@ private:
    */
   void compute_required_subscriptions (
         const RtecEventChannelAdmin::ConsumerQOS& sub,
-              Address_Set& multicast_addresses)
-              ACE_THROW_SPEC ((CORBA::SystemException));
+              Address_Set& multicast_addresses);
 
   /// Unsubscribe from any multicast addresses we are currently
   /// subscribed to that are not in the \a multicast_addresses list.

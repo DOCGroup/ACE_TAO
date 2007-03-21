@@ -16,7 +16,7 @@
 
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"
-#include "ami_testS.h"
+#include "ami_test_i.h"
 
 ACE_RCSID (AMI,
            client,
@@ -27,16 +27,24 @@ int nthreads = 5;
 int niterations = 5;
 int debug = 0;
 int number_of_replies = 0;
+bool collocated = false;
+
+CORBA::Long in_number = 931232;
+const char * in_str = "Let's talk AMI.";
+int parameter_corruption = 0;
 
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "dk:n:i:");
+  ACE_Get_Opt get_opts (argc, argv, "cdk:n:i:");
   int c;
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
+      case 'c':
+        collocated = true;
+        break;
       case 'd':
         debug = 1;
         break;
@@ -54,6 +62,7 @@ parse_args (int argc, char *argv[])
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s "
                            "-d "
+                           "-c"
                            "-k <ior> "
                            "-n <nthreads> "
                            "-i <niterations> "
@@ -64,6 +73,7 @@ parse_args (int argc, char *argv[])
   // Indicates sucessful parsing of the command line
   return 0;
 }
+
 
 /**
  * @class Client
@@ -95,12 +105,19 @@ public:
 class Handler : public POA_A::AMI_AMI_TestHandler
 {
 public:
-  Handler (void) {};
+  Handler (void)
+  {
+  };
 
   void foo (CORBA::Long result,
             CORBA::Long out_l)
-      ACE_THROW_SPEC ((CORBA::SystemException))
     {
+      if (result == 0)
+        {
+          ACE_ERROR((LM_ERROR, "ERROR: Callback method detected parameter corruption."));
+          parameter_corruption = 1;
+        }
+
       if (debug)
         {
           ACE_DEBUG ((LM_DEBUG,
@@ -113,7 +130,6 @@ public:
     };
 
    void foo_excep (::Messaging::ExceptionHolder * excep_holder)
-      ACE_THROW_SPEC ((CORBA::SystemException))
     {
 
       ACE_DEBUG ((LM_DEBUG,
@@ -129,7 +145,6 @@ public:
     };
 
   void get_yadda (CORBA::Long result)
-      ACE_THROW_SPEC ((CORBA::SystemException))
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Callback method <get_yadda> called: result <%d>\n",
@@ -137,38 +152,33 @@ public:
     };
 
   void get_yadda_excep (::Messaging::ExceptionHolder *)
-      ACE_THROW_SPEC ((CORBA::SystemException))
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Callback method <get_yadda_excep> called: \n"));
     };
 
   void set_yadda (void)
-      ACE_THROW_SPEC ((CORBA::SystemException))
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Callback method <set_yadda> called: \n"));
     };
 
   void set_yadda_excep (::Messaging::ExceptionHolder *)
-      ACE_THROW_SPEC ((CORBA::SystemException))
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Callback method <set_yadda_excep> called: \n"));
     };
-  ~Handler (void) {};
+  ~Handler (void)
+  {
+  };
 
-  void inout_arg_test (
-      const char *
-      )
-    ACE_THROW_SPEC ((CORBA::SystemException))
+  void inout_arg_test (const char *)
   {
     ACE_DEBUG ((LM_DEBUG,
                 "Callback method <set_yadda_excep> called: \n"));
   }
 
   void inout_arg_test_excep (::Messaging::ExceptionHolder *)
-    ACE_THROW_SPEC ((CORBA::SystemException))
   {
   }
 };
@@ -182,16 +192,26 @@ main (int argc, char *argv[])
   try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "");
+        CORBA::ORB_init (argc, argv);
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
-      CORBA::Object_var object =
-        orb->string_to_object (ior);
+      A::AMI_Test_var server;
 
-      A::AMI_Test_var server =
-        A::AMI_Test::_narrow (object.in ());
+      if (!collocated)
+        {
+          CORBA::Object_var object =
+          orb->string_to_object (ior);
+
+          server =  A::AMI_Test::_narrow (object.in ());
+        }
+      else
+        {
+          AMI_Test_i * servant =
+            new AMI_Test_i(orb.in(), in_number, in_str, true);
+          server = servant->_this();
+        }
 
       if (CORBA::is_nil (server.in ()))
         {
@@ -243,8 +263,7 @@ main (int argc, char *argv[])
 
       while (number_of_replies > 0)
         {
-          CORBA::Boolean pending =
-            orb->work_pending();
+          CORBA::Boolean pending = orb->work_pending();
 
           if (pending)
             {
@@ -259,12 +278,9 @@ main (int argc, char *argv[])
                       (nthreads*niterations) - number_of_replies));
         }
 
-
       client.thr_mgr ()->wait ();
 
       ACE_DEBUG ((LM_DEBUG, "threads finished\n"));
-
-      //client.ami_test_var_->shutdown ();
 
       root_poa->destroy (1,  // ethernalize objects
                          0  // wait for completion
@@ -278,7 +294,7 @@ main (int argc, char *argv[])
       return 1;
     }
 
-  return 0;
+  return parameter_corruption;
 }
 
 // ****************************************************************
@@ -296,13 +312,9 @@ Client::svc (void)
 {
   try
     {
-      CORBA::Long number = 931232;
-
       for (int i = 0; i < this->niterations_; ++i)
         {
-          ami_test_var_->sendc_foo (the_handler_var_.in (),
-                                    number,
-                                    "Let's talk AMI.");
+          ami_test_var_->sendc_foo (the_handler_var_.in (), in_number, in_str);
         }
       if (debug)
         {

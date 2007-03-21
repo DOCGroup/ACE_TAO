@@ -19,18 +19,6 @@
 
 #  include "ace/config-g++-common.h"
 
-#  if __GLIBC__ >= 2
-     // glibc 2 and higher has wchar support
-#    define ACE_HAS_XPG4_MULTIBYTE_CHAR
-#  endif
-
-// gcc 2.95.2 supplies the ssize_t typedef.
-#  define ACE_HAS_SSIZE_T
-
-// gcc 3.0 claims to have wide character stuff, but (at least the version
-// built by HP) can't actually compile it. It refers to a wctype.h file
-// that's only available with aC++.
-
 #else
 
 // The following configuration section is designed to work for HP
@@ -100,9 +88,16 @@
 #      if defined (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB)
 #        undef ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB
 #      endif
-#      define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB 1
+#      if defined (RWSTD_NO_NAMESPACE)
+         namespace std {} using namespace std;
+#      else
+#        define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB 1
+#      endif /* RWSTD_NO_NAMESPACE */
 #    else
 #      define ACE_USES_OLD_IOSTREAMS
+       // There's no support in ACE's use of numeric_limits for those that
+       // aren't in std::
+#      define ACE_LACKS_NUMERIC_LIMITS
 #    endif /* _HP_NAMESPACE_STD */
 
 // Compiler implements templates that support typedefs inside of classes
@@ -133,13 +128,7 @@
 // Compiler supports template specialization.
 #    define ACE_HAS_TEMPLATE_SPECIALIZATION
 
-// Platform has XPG4 wide character support
-#    define ACE_HAS_XPG4_MULTIBYTE_CHAR
-
 #  endif /* __cplusplus < 199707L */
-
-// Compiler supports the ssize_t typedef.
-#  define ACE_HAS_SSIZE_T
 
 // Compiler doesn't handle 'signed char' correctly (used in ace/IOStream.h)
 #  define ACE_LACKS_SIGNED_CHAR
@@ -244,6 +233,8 @@
 // Compiler/platform has Dirent iterator functions.
 #define ACE_HAS_DIRENT
 
+#define ACE_HAS_VSWPRINTF
+
 // Platform supports getpagesize() call
 #define ACE_HAS_GETPAGESIZE
 // But we define this just to be safe
@@ -325,6 +316,8 @@
 // Platform's sigaction() function takes const sigaction* as 2nd parameter.
 #define ACE_HAS_SIGACTION_CONSTP2
 
+#define ACE_HAS_SSIZE_T
+
 // Platform supports SVR4 extended signals
 #define ACE_HAS_SIGINFO_T
 
@@ -336,6 +329,8 @@
 
 /* Platform provides socklen_t type, such as Linux with glibc2. */
 #define ACE_HAS_SOCKLEN_T 1
+
+#define ACE_HAS_XPG4_MULTIBYTE_CHAR
 
 /* Platform/compiler supports _sys_errlist symbol */
 #define ACE_HAS_SYS_ERRLIST 1

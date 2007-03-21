@@ -23,7 +23,6 @@ TAO_PublishesDef_i::~TAO_PublishesDef_i (void)
 
 CORBA::DefinitionKind
 TAO_PublishesDef_i::def_kind (void)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::dk_Publishes;
 }

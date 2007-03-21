@@ -15,10 +15,10 @@ project(*Server): taoserver, avoids_minimum_corba, avoids_corba_e_compact, avoid
   after += *idl
   exename = MessengerServer
   Source_Files {
+    MessengerC.cpp
+    MessengerS.cpp
     Messenger_i.cpp
     MessengerServer.cpp
-    MessengerS.cpp
-    MessengerC.cpp
   }
   IDL_Files {
   }

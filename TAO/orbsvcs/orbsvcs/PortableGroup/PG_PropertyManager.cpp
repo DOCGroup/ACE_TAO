@@ -28,9 +28,6 @@ TAO_PG_PropertyManager::TAO_PG_PropertyManager (
 void
 TAO_PG_PropertyManager::set_default_properties (
     const PortableGroup::Properties & props)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableGroup::InvalidProperty,
-                   PortableGroup::UnsupportedProperty))
 {
   // First verify that the "Factories" property is not in the
   // Properties sequence.  According to the spec, it is not allowed to
@@ -58,7 +55,6 @@ TAO_PG_PropertyManager::set_default_properties (
 
 PortableGroup::Properties *
 TAO_PG_PropertyManager::get_default_properties ()
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard, this->lock_, 0);
 
@@ -78,9 +74,6 @@ TAO_PG_PropertyManager::get_default_properties ()
 void
 TAO_PG_PropertyManager::remove_default_properties (
     const PortableGroup::Properties &props)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableGroup::InvalidProperty,
-                   PortableGroup::UnsupportedProperty))
 {
   if (props.length () == 0)
     return;  // @@ Throw CORBA::BAD_PARAM instead?
@@ -96,9 +89,6 @@ void
 TAO_PG_PropertyManager::set_type_properties (
     const char * type_id,
     const PortableGroup::Properties & overrides)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableGroup::InvalidProperty,
-                   PortableGroup::UnsupportedProperty))
 {
   this->property_validator_.validate_property (overrides);
 
@@ -121,7 +111,6 @@ TAO_PG_PropertyManager::set_type_properties (
 PortableGroup::Properties *
 TAO_PG_PropertyManager::get_type_properties (
     const char * type_id)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard, this->lock_, 0);
 
@@ -168,9 +157,6 @@ void
 TAO_PG_PropertyManager::remove_type_properties (
     const char * type_id,
     const PortableGroup::Properties & props)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableGroup::InvalidProperty,
-                   PortableGroup::UnsupportedProperty))
 {
   if (props.length () == 0)
     return;  // @@ Throw CORBA::BAD_PARAM instead?
@@ -192,10 +178,6 @@ void
 TAO_PG_PropertyManager::set_properties_dynamically (
     PortableGroup::ObjectGroup_ptr /* object_group */,
     const PortableGroup::Properties & /* overrides */)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableGroup::ObjectGroupNotFound,
-                   PortableGroup::InvalidProperty,
-                   PortableGroup::UnsupportedProperty))
 {
 #if 0
   // First verify that the "InitialNumberMembers" property is not in
@@ -227,8 +209,6 @@ TAO_PG_PropertyManager::set_properties_dynamically (
 PortableGroup::Properties *
 TAO_PG_PropertyManager::get_properties (
     PortableGroup::ObjectGroup_ptr object_group)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableGroup::ObjectGroupNotFound))
 {
   CORBA::ULong properties_len = 0;
 
@@ -296,9 +276,6 @@ void
 TAO_PG_PropertyManager::remove_properties (
     const PortableGroup::Properties & to_be_removed,
     PortableGroup::Properties &properties)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableGroup::InvalidProperty,
-                   PortableGroup::UnsupportedProperty))
 {
   const CORBA::ULong num_removed = to_be_removed.length ();
   if (num_removed == 0)

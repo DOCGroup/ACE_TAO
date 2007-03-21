@@ -19,14 +19,12 @@ void
 Server_ORBInitializer::pre_init (
     PortableInterceptor::ORBInitInfo_ptr /* info */
     )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
 Server_ORBInitializer::post_init (
     PortableInterceptor::ORBInitInfo_ptr info)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   PortableInterceptor::PolicyFactory_ptr p;
   ACE_NEW_THROW_EX (p,

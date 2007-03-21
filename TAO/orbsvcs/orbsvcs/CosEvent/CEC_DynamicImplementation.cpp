@@ -22,7 +22,6 @@ TAO_CEC_DynamicImplementationServer::~TAO_CEC_DynamicImplementationServer (void)
 // The DSI invoke request
 void
 TAO_CEC_DynamicImplementationServer::invoke (CORBA::ServerRequest_ptr request)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Trap the _is_a request
   if (ACE_OS::strcmp ("_is_a", request->operation () ) == 0)
@@ -67,7 +66,6 @@ TAO_CEC_DynamicImplementationServer::invoke (CORBA::ServerRequest_ptr request)
 CORBA::RepositoryId
 TAO_CEC_DynamicImplementationServer::_primary_interface (const PortableServer::ObjectId &,
                                                          PortableServer::POA_ptr)
-  ACE_THROW_SPEC (())
 {
   return CORBA::string_dup (repository_id_);
 }

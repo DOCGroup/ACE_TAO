@@ -22,7 +22,6 @@ TAO::SL3::ObjectCredentialsPolicy::~ObjectCredentialsPolicy (void)
 
 SecurityLevel3::OwnCredentialsList *
 TAO::SL3::ObjectCredentialsPolicy::creds_list (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   SecurityLevel3::OwnCredentialsList * creds = 0;
 
@@ -35,16 +34,14 @@ TAO::SL3::ObjectCredentialsPolicy::creds_list (void)
 
 CORBA::PolicyType
 TAO::SL3::ObjectCredentialsPolicy::policy_type ()
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return SecurityLevel3::ObjectCredentialsPolicyType;
 }
 
 CORBA::Policy_ptr
 TAO::SL3::ObjectCredentialsPolicy::copy (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  CORBA::Policy_ptr p = CORBA::Policy::_nil ();
+  CORBA::Policy_ptr p = CORBA::Policy_ptr ();
   ACE_NEW_THROW_EX (p,
                     TAO::SL3::ObjectCredentialsPolicy (this->creds_list_),
                     CORBA::NO_MEMORY ());
@@ -54,7 +51,6 @@ TAO::SL3::ObjectCredentialsPolicy::copy (void)
 
 void
 TAO::SL3::ObjectCredentialsPolicy::destroy (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->creds_list_.length (0);
 }

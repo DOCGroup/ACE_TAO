@@ -217,8 +217,13 @@ Cubit_Task::create_servants (void)
           // to stdout.  Someone will take that string and give it to
           // some client.  Then release the object.
 
+          PortableServer::ObjectId_var id_act =
+            poa->activate_object (this->servants_[i]);
+
+          CORBA::Object_var object_act = poa->id_to_reference (id_act.in ());
+
           Cubit_var cubit =
-            this->servants_[i]->_this ();
+            Cubit::_narrow (object_act.in ());
 
 
           CORBA::String_var str =

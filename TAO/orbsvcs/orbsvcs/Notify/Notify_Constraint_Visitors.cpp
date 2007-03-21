@@ -25,39 +25,39 @@ TAO_Notify_Constraint_Visitor::TAO_Notify_Constraint_Visitor (void)
 {
   (void) this->implicit_ids_.bind (ACE_CString ("filterable_data",
     0,
-    0),
+    false),
     FILTERABLE_DATA);
   (void) this->implicit_ids_.bind (ACE_CString ("header",
     0,
-    0),
+    false),
     HEADER);
   (void) this->implicit_ids_.bind (ACE_CString ("remainder_of_body",
     0,
-    0),
+    false),
     REMAINDER_OF_BODY);
   (void) this->implicit_ids_.bind (ACE_CString ("fixed_header",
     0,
-    0),
+    false),
     FIXED_HEADER);
   (void) this->implicit_ids_.bind (ACE_CString ("variable_header",
     0,
-    0),
+    false),
     VARIABLE_HEADER);
   (void) this->implicit_ids_.bind (ACE_CString ("event_name",
     0,
-    0),
+    false),
     EVENT_NAME);
   (void) this->implicit_ids_.bind (ACE_CString ("event_type",
     0,
-    0),
+    false),
     EVENT_TYPE);
   (void) this->implicit_ids_.bind (ACE_CString ("domain_name",
     0,
-    0),
+    false),
     DOMAIN_NAME);
   (void) this->implicit_ids_.bind (ACE_CString ("type_name",
     0,
-    0),
+    false),
     TYPE_NAME);
 }
 
@@ -72,7 +72,7 @@ TAO_Notify_Constraint_Visitor::bind_structured_event (const CosNotification::Str
 
   for (index = 0; index < length; ++index)
   {
-    ACE_CString name_str (s_event.filterable_data[index].name, 0, 0);
+    ACE_CString name_str (s_event.filterable_data[index].name, 0, false);
 
     int status =
       this->filterable_data_.bind (
@@ -88,7 +88,7 @@ TAO_Notify_Constraint_Visitor::bind_structured_event (const CosNotification::Str
 
   for (index = 0; index < length; ++index)
   {
-    ACE_CString name_str (s_event.header.variable_header[index].name, 0, 0);
+    ACE_CString name_str (s_event.header.variable_header[index].name, 0, false);
 
     int status =
       this->variable_header_.bind (
@@ -152,7 +152,7 @@ TAO_Notify_Constraint_Visitor::visit_identifier (TAO_ETCL_Identifier *ident)
 {
   int return_value = -1;
   const char *name = ident->value ();
-  ACE_CString key (name, 0, 0);
+  ACE_CString key (name, 0, false);
 
   CORBA::Any any;
 
@@ -414,7 +414,7 @@ TAO_Notify_Constraint_Visitor::visit_component_assoc (
   CORBA::Any any;
   ACE_CString name (assoc->identifier ()->value (),
     0,
-    0);
+    false);
 
   switch (this->implicit_id_)
   {
@@ -629,7 +629,7 @@ TAO_Notify_Constraint_Visitor::visit_component (
   TAO_ETCL_Identifier *identifier = component->identifier ();
   ACE_CString component_name (identifier->value (),
     0,
-    0);
+    false);
   CORBA::Any *any_ptr = 0;
 
   if (this->implicit_ids_.find (component_name, this->implicit_id_) != 0)
@@ -666,8 +666,10 @@ TAO_Notify_Constraint_Visitor::visit_component (
       TAO_ETCL_Literal_Constraint id;
       this->queue_.dequeue_head (id);
       ACE_NEW_RETURN (any_ptr,
-        CORBA::Any (*(const CORBA::Any *) id),
+        CORBA::Any (),
         -1);
+      any_ptr->replace (id);
+      any_ptr->impl ()->_add_ref ();
       this->current_value_ = any_ptr;
     }
   }
@@ -792,11 +794,11 @@ TAO_Notify_Constraint_Visitor::visit_exist (TAO_ETCL_Exist *exist)
     {
     case FILTERABLE_DATA:
       result =
-        (this->filterable_data_.find (ACE_CString (value, 0, 0)) == 0);
+        (this->filterable_data_.find (ACE_CString (value, 0, false)) == 0);
       break;
     case VARIABLE_HEADER:
       result =
-        (this->variable_header_.find (ACE_CString (value, 0, 0)) == 0);
+        (this->variable_header_.find (ACE_CString (value, 0, false)) == 0);
       break;
     case TYPE_NAME:
       result = (this->type_name_.in () != 0);
@@ -1087,7 +1089,9 @@ TAO_Notify_Constraint_Visitor::visit_in (TAO_ETCL_Binary_Expr *binary)
 
       if (bag.expr_type () == TAO_ETCL_COMPONENT)
       {
-        const CORBA::Any *component = (const CORBA::Any *) bag;
+        CORBA::Any_var component = new CORBA::Any ();
+        component->replace (bag);
+        component->impl ()->_add_ref ();
         CORBA::TCKind kind = CORBA::tk_null;
 
         try
@@ -1105,23 +1109,23 @@ TAO_Notify_Constraint_Visitor::visit_in (TAO_ETCL_Binary_Expr *binary)
         switch (kind)
         {
         case CORBA::tk_sequence:
-          result = this->sequence_does_contain (component,
+          result = this->sequence_does_contain (&component.in (),
             left);
           break;
         case CORBA::tk_array:
-          result = this->array_does_contain (component,
+          result = this->array_does_contain (&component.in (),
             left);
           break;
         case CORBA::tk_struct:
-          result = this->struct_does_contain (component,
+          result = this->struct_does_contain (&component.in (),
             left);
           break;
         case CORBA::tk_union:
-          result = this->union_does_contain (component,
+          result = this->union_does_contain (&component.in (),
             left);
           break;
         case CORBA::tk_any:
-          result = this->any_does_contain (component,
+          result = this->any_does_contain (&component.in (),
             left);
           break;
         default:

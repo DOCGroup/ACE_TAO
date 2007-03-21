@@ -30,7 +30,6 @@ Airplane_i::~Airplane_i (void)
 
 char *
 Airplane_i::get_plane (void)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (TAO_debug_level)
     ACE_DEBUG ((LM_DEBUG, "Airplane_i::get_plane\n"));

@@ -42,8 +42,7 @@ public:
 
   // = The CosEventComm::PushSupplier methods
 
-  virtual void disconnect_push_supplier (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void disconnect_push_supplier (void);
   // The skeleton methods.
 
 private:

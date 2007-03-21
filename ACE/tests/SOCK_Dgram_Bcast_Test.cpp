@@ -47,7 +47,7 @@ int send_datagram (ACE_SOCK_Dgram_Bcast &socket, int datagram_no)
 {
     static char dgram_buffer[BUFSIZ];
 
-    ACE_OS::snprintf (dgram_buffer, sizeof(dgram_buffer) - 1,
+    ACE_OS::snprintf (dgram_buffer, sizeof(dgram_buffer),
                       "Datagram %d", datagram_no);
     if (socket.send (dgram_buffer,
                      ACE_OS::strlen (dgram_buffer) + 1,

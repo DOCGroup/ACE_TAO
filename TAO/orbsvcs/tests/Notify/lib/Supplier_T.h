@@ -78,11 +78,7 @@ protected:
     virtual void subscription_change (
         const CosNotification::EventTypeSeq & added,
         const CosNotification::EventTypeSeq & removed
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        CosNotifyComm::InvalidEventType
-      ));
+      );
 };
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)

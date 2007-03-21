@@ -7,10 +7,9 @@
 #endif  /* TAO_HAS_MINIMUM_CORBA == 0 */
 
 #include "tao/Abstract_Servant_Base.h"
-#include "tao/SystemException.h"
 #include "tao/ORB_Constants.h"
 #include "tao/Object.h"
-#include "tao/Environment.h"
+#include "tao/SystemException.h"
 
 ACE_RCSID (PortableServer,
            Direct_Collocation_Upcall_Wrapper,
@@ -27,40 +26,30 @@ TAO::Direct_Collocation_Upcall_Wrapper::upcall (
   const char * op,
   size_t op_len,
   TAO::Collocation_Strategy strategy)
-    ACE_THROW_SPEC ((CORBA::Exception))
 {
   TAO_Abstract_ServantBase * const servant = obj->_servant ();
 
   TAO_Collocated_Skeleton collocated_skel;
-  int const status = servant->_find (op,
-                                     collocated_skel,
-                                     strategy,
-                                     op_len);
 
-  if (status == -1)
+  if (servant->_find (op, collocated_skel, strategy, op_len) == -1)
     {
       throw ::CORBA::BAD_OPERATION (CORBA::OMGVMCID | 2, CORBA::COMPLETED_NO);
     }
 
+#if (TAO_HAS_MINIMUM_CORBA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
   try
     {
-      collocated_skel (servant,
-                       args,
-                       num_args);
-    }
+#endif /* TAO_HAS_MINIMUM_CORBA && !CORBA_E_COMPACT && !CORBA_E_MICRO*/
+      collocated_skel (servant, args, num_args);
 #if (TAO_HAS_MINIMUM_CORBA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
+    }
   catch (const ::PortableServer::ForwardRequest& forward_request)
     {
       forward_obj =
         CORBA::Object::_duplicate (forward_request.forward_reference.in ());
-      return;
     }
 #else
-  catch (const ::CORBA::Exception&)
-    {
-      ACE_UNUSED_ARG (forward_obj);
-      throw;
-    }
+  ACE_UNUSED_ARG (forward_obj);
 #endif /* TAO_HAS_MINIMUM_CORBA && !CORBA_E_COMPACT && !CORBA_E_MICRO*/
 }
 

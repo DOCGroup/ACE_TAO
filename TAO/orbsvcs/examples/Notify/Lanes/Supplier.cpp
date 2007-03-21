@@ -139,10 +139,6 @@ void
 TAO_Notify_Lanes_Supplier::subscription_change (const CosNotification::EventTypeSeq & added,
                                       const CosNotification::EventTypeSeq & /*removed */
                                       )
-  ACE_THROW_SPEC ((
-                   CORBA::SystemException,
-                   CosNotifyComm::InvalidEventType
-                   ))
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, mon, this->lock_);
 
@@ -164,9 +160,6 @@ TAO_Notify_Lanes_Supplier::send_event (const CosNotification::StructuredEvent& e
 
 void
 TAO_Notify_Lanes_Supplier::disconnect_structured_push_supplier (void)
-  ACE_THROW_SPEC ((
-                   CORBA::SystemException
-                   ))
 {
   this->deactivate ();
 }

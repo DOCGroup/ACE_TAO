@@ -11,6 +11,7 @@
 #include "tao/ORB_Constants.h"
 #include "tao/StringSeqC.h"
 #include "tao/SystemException.h"
+#include "ace/CORBA_macros.h"
 
 ACE_RCSID (tao,
            RequestInfo_Util,
@@ -87,8 +88,7 @@ TAO_RequestInfo_Util::make_request_context (void)
 }
 
 CORBA::Any *
-TAO_RequestInfo_Util::make_any (CORBA::Boolean tk_void_any
-                                )
+TAO_RequestInfo_Util::make_any (CORBA::Boolean tk_void_any)
 {
   CORBA::Any *any = 0;
   ACE_NEW_THROW_EX (any,

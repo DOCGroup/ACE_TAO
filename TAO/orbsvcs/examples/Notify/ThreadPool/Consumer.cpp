@@ -124,10 +124,6 @@ void
 TAO_Notify_ThreadPool_Consumer::offer_change (const CosNotification::EventTypeSeq & /*added*/,
                                const CosNotification::EventTypeSeq & /*removed*/
                                )
-  ACE_THROW_SPEC ((
-                   CORBA::SystemException,
-                   CosNotifyComm::InvalidEventType
-                   ))
 {
   // No-Op.
 }
@@ -135,10 +131,6 @@ TAO_Notify_ThreadPool_Consumer::offer_change (const CosNotification::EventTypeSe
 void
 TAO_Notify_ThreadPool_Consumer::push_structured_event (const CosNotification::StructuredEvent & /*notification*/
                                             )
-  ACE_THROW_SPEC ((
-                   CORBA::SystemException,
-                   CosEventComm::Disconnected
-                   ))
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
 
@@ -195,9 +187,6 @@ TAO_Notify_ThreadPool_Consumer::deactivate (void)
 
 void
 TAO_Notify_ThreadPool_Consumer::disconnect_structured_push_consumer (void)
-  ACE_THROW_SPEC ((
-                   CORBA::SystemException
-                   ))
 {
   this->deactivate ();
 }

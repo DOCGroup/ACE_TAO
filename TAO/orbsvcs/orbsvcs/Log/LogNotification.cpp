@@ -20,7 +20,6 @@ TAO_LogNotification::~TAO_LogNotification (void)
 
 void
 TAO_LogNotification::object_creation (DsLogAdmin::LogId id)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 
   CORBA::Any any;
@@ -42,7 +41,6 @@ TAO_LogNotification::object_creation (DsLogAdmin::LogId id)
 
 void
 TAO_LogNotification::object_deletion (DsLogAdmin::LogId id)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::Any any;
   DsLogNotification::ObjectDeletion event;
@@ -64,7 +62,6 @@ TAO_LogNotification::object_deletion (DsLogAdmin::LogId id)
 void
 TAO_LogNotification::processing_error_alarm (CORBA::ULong error_num,
                                              const char* error_string)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::Any any;
   DsLogNotification::ProcessingErrorAlarm event;
@@ -83,7 +80,6 @@ TAO_LogNotification::attribute_value_change (DsLogAdmin::Log_ptr log,
                                              DsLogNotification::AttributeType type,
                                              CORBA::Any oldValue,
                                              CORBA::Any newValue)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::Any any;
   DsLogNotification::AttributeValueChange event;
@@ -113,7 +109,6 @@ TAO_LogNotification::capacity_alarm_threshold_value_change (
     DsLogAdmin::LogId id,
     const DsLogAdmin::CapacityAlarmThresholdList& oldValue,
     const DsLogAdmin::CapacityAlarmThresholdList& newValue)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::Any oldV, newV;
   oldV <<= oldValue;
@@ -131,7 +126,6 @@ TAO_LogNotification::log_full_action_value_change (DsLogAdmin::Log_ptr log,
                                                    DsLogAdmin::LogId id,
                                                    CORBA::ULong oldValue,
                                                    CORBA::ULong newValue)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::Any oldV, newV;
   oldV <<= oldValue;
@@ -149,7 +143,6 @@ TAO_LogNotification::max_log_size_value_change (DsLogAdmin::Log_ptr log,
                                                 DsLogAdmin::LogId id,
                                                 CORBA::ULongLong oldValue,
                                                 CORBA::ULongLong newValue)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::Any oldV, newV;
   oldV <<= oldValue;
@@ -167,7 +160,6 @@ TAO_LogNotification::start_time_value_change (DsLogAdmin::Log_ptr log,
                                               DsLogAdmin::LogId id,
                                               DsLogAdmin::TimeT oldValue,
                                               DsLogAdmin::TimeT newValue)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::Any oldV, newV;
   oldV <<= oldValue;
@@ -185,7 +177,6 @@ TAO_LogNotification::stop_time_value_change (DsLogAdmin::Log_ptr log,
                                              DsLogAdmin::LogId id,
                                              DsLogAdmin::TimeT oldValue,
                                              DsLogAdmin::TimeT newValue)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::Any oldV, newV;
   oldV <<= oldValue;
@@ -203,7 +194,6 @@ TAO_LogNotification::week_mask_value_change (DsLogAdmin::Log_ptr log,
                                              DsLogAdmin::LogId id,
                                              const DsLogAdmin::WeekMask& oldValue,
                                              const DsLogAdmin::WeekMask& newValue)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::Any oldV, newV;
   oldV <<= oldValue;
@@ -221,7 +211,6 @@ TAO_LogNotification::max_record_life_value_change (DsLogAdmin::Log_ptr log,
                                                    DsLogAdmin::LogId id,
                                                    CORBA::ULong oldValue,
                                                    CORBA::ULong newValue)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::Any oldV, newV;
   oldV <<= oldValue;
@@ -240,7 +229,6 @@ TAO_LogNotification::quality_of_service_value_change (
     DsLogAdmin::LogId id,
     const DsLogAdmin::QoSList& oldValue,
     const DsLogAdmin::QoSList& newValue)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::Any oldV, newV;
   oldV <<= oldValue;
@@ -258,7 +246,6 @@ TAO_LogNotification::state_change (DsLogAdmin::Log_ptr log,
                                    DsLogAdmin::LogId id,
                                    DsLogNotification::StateType type,
                                    CORBA::Any newValue)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::Any any;
   DsLogNotification::StateChange event;
@@ -286,7 +273,6 @@ TAO_LogNotification::administrative_state_change (
     DsLogAdmin::Log_ptr log,
     DsLogAdmin::LogId id,
     DsLogAdmin::AdministrativeState newValue)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::Any newV;
   newV <<= newValue;
@@ -302,7 +288,6 @@ TAO_LogNotification::operational_state_change (
     DsLogAdmin::Log_ptr log,
     DsLogAdmin::LogId id,
     DsLogAdmin::OperationalState newValue)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::Any newV;
   newV <<= newValue;
@@ -317,7 +302,6 @@ void
 TAO_LogNotification::forwarding_state_change (DsLogAdmin::Log_ptr log,
                                               DsLogAdmin::LogId id,
                                               DsLogAdmin::ForwardingState newValue)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::Any newV;
   newV <<= newValue;
@@ -335,7 +319,6 @@ TAO_LogNotification::threshold_alarm (
     DsLogAdmin::Threshold crossedValue,
     DsLogAdmin::Threshold observedValue,
     DsLogNotification::PerceivedSeverityType severity)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::Any any;
   DsLogNotification::ThresholdAlarm event;
@@ -359,7 +342,6 @@ TAO_LogNotification::threshold_alarm (
 
 void
 TAO_LogNotification::send_notification (const CORBA::Any & /* any */)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 

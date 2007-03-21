@@ -18,6 +18,12 @@ if(exists $ENV{TAO_ROOT}) {
 } else {
     $PerlACE::TAO_ROOT = "$PerlACE::ACE_ROOT/TAO";
 }
+$PerlACE::CIAO_ROOT;
+if(exists $ENV{CIAO_ROOT}) {
+    $PerlACE::CIAO_ROOT = $ENV{CIAO_ROOT};
+} else {
+    $PerlACE::CIAO_ROOT = "$PerlACE::TAO_ROOT/CIAO";
+}
 
 my $config = new PerlACE::ConfigList;
 $PerlACE::VxWorks_Test = $config->check_config("VxWorks");

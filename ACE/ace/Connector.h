@@ -349,7 +349,7 @@ protected:
   /// Calls <handle_close> to shutdown the Connector gracefully.
   virtual int fini (void);
 
-  /// Default version returns address info in <buf>.
+  /// Default version returns address info in @a buf.
   virtual int info (ACE_TCHAR **strp, size_t length) const;
 
   // = Service management hooks.

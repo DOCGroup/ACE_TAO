@@ -77,11 +77,7 @@ protected:
   // = NotifyPublish method
   virtual void offer_change (const CosNotification::EventTypeSeq & added,
         const CosNotification::EventTypeSeq & removed
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        CosNotifyComm::InvalidEventType
-      ));
+      );
 };
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)

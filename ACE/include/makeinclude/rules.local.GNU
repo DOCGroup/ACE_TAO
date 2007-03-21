@@ -32,6 +32,7 @@ ifdef sun
 endif
 
 vxworks_ntbuild ?= 0
+lacks_touch ?= 0
 
 #### TEMPLATE_REPOSITORY can be set in individual platform files
 #### to create template repository directories.  See
@@ -418,7 +419,7 @@ ORIGdepend.local: $(MAKEFILE)
 
 ifneq ($(MAKEFILE),$(DEPENDENCY_FILE))
 $(DEPENDENCY_FILE):
-ifeq ($(vxworks_ntbuild),1)
+ifeq ($(lacks_touch),1)
 	copy NUL "$(DEPENDENCY_FILE)"
 else
 	touch $(DEPENDENCY_FILE)
@@ -459,15 +460,6 @@ IDL_FILES ?=
 IDL_CLIENT_HDR_EXT ?=
 
 idl_stubs.local: $(foreach file, $(IDL_FILES), $(file)$(IDL_CLIENT_HDR_EXT))
-
-ifdef $(TAO_IDL_DEP)
-$(TAO_IDL_DEP):
-	@if test ! -s $(TAO_IDL_DEP); then \
-	  echo " ***"; \
-	  echo " *** ERROR: $(TAO_IDL_DEP) not found."; \
-	  echo " ***"; \
-	  echo; /bin/false; fi
-endif # TAO_IDL_DEP
 
 #----------------------------------------------------------------------------
 #       RCS info target

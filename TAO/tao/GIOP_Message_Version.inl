@@ -21,8 +21,7 @@ TAO_GIOP_Message_Version::TAO_GIOP_Message_Version (CORBA::Octet maj,
 }
 
 ACE_INLINE TAO_GIOP_Message_Version &
-TAO_GIOP_Message_Version::operator= (
-    const TAO_GIOP_Message_Version &src)
+TAO_GIOP_Message_Version::operator= (const TAO_GIOP_Message_Version &src)
 {
   if (this != &src)
     {
@@ -35,18 +34,16 @@ TAO_GIOP_Message_Version::operator= (
 
 
 ACE_INLINE void
-TAO_GIOP_Message_Version::set_version (CORBA::Octet maj,
-                                       CORBA::Octet min)
+TAO_GIOP_Message_Version::set_version (CORBA::Octet maj, CORBA::Octet min)
 {
   this->major = maj;
   this->minor = min;
 }
 
 ACE_INLINE bool
-TAO_GIOP_Message_Version::operator== (
-    const TAO_GIOP_Message_Version &src)
+TAO_GIOP_Message_Version::operator== (const TAO_GIOP_Message_Version &src)
 {
-  return this->major == src.major && this->minor == src.minor;
+  return this->minor == src.minor && this->major == src.major;
 }
 
 ACE_INLINE bool

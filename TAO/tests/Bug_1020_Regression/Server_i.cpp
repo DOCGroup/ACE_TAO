@@ -11,7 +11,6 @@ Server::Server(CORBA::ORB_ptr orb)
 
 void
 Server::start_task(Test::Echo_ptr client)
-  ACE_THROW_SPEC((CORBA::SystemException))
 {
   Server_Task * task =
     new Server_Task(client);

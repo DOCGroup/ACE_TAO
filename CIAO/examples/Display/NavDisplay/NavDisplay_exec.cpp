@@ -17,7 +17,6 @@ MyImpl::NavDisplay_exec_impl::~NavDisplay_exec_impl ()
 
 void
 MyImpl::NavDisplay_exec_impl::push_Refresh (HUDisplay::tick *ev)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_UNUSED_ARG (ev);
 
@@ -47,8 +46,6 @@ void
 MyImpl::NavDisplay_exec_impl::set_session_context (
     Components::SessionContext_ptr ctx
   )
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   Components::CCMException))
 {
   if (CIAO::debug_level () > 0)
     {
@@ -69,15 +66,11 @@ MyImpl::NavDisplay_exec_impl::set_session_context (
 void
 MyImpl::NavDisplay_exec_impl::ciao_preactivate (
   )
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   Components::CCMException))
 {
 }
 
 void
 MyImpl::NavDisplay_exec_impl::ccm_activate ()
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   Components::CCMException))
 {
   if (CIAO::debug_level () > 0)
     {
@@ -89,15 +82,11 @@ MyImpl::NavDisplay_exec_impl::ccm_activate ()
 void
 MyImpl::NavDisplay_exec_impl::ciao_postactivate (
   )
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   Components::CCMException))
 {
 }
 
 void
 MyImpl::NavDisplay_exec_impl::ccm_passivate ()
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   Components::CCMException))
 {
   if (CIAO::debug_level () > 0)
     {
@@ -108,8 +97,6 @@ MyImpl::NavDisplay_exec_impl::ccm_passivate ()
 
 void
 MyImpl::NavDisplay_exec_impl::ccm_remove ()
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   Components::CCMException))
 {
   if (CIAO::debug_level () > 0)
     {
@@ -134,8 +121,6 @@ MyImpl::NavDisplayHome_exec_impl::~NavDisplayHome_exec_impl ()
 
 ::Components::EnterpriseComponent_ptr
 MyImpl::NavDisplayHome_exec_impl::create ()
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   Components::CCMException))
 {
   return new MyImpl::NavDisplay_exec_impl;
 }

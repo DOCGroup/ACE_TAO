@@ -20,10 +20,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 PortableServer::ObjectId *
 TAO_GOA::create_id_for_reference (CORBA::Object_ptr the_ref)
-    ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      PortableGroup::NotAGroupObject
-    ))
 {
   // Get the RepositoryId from the Group reference so
   // we know what kind of reference to make.
@@ -45,10 +41,6 @@ TAO_GOA::create_id_for_reference (CORBA::Object_ptr the_ref)
 
 PortableGroup::IDs *
 TAO_GOA::reference_to_ids (CORBA::Object_ptr the_ref)
-    ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      PortableGroup::NotAGroupObject
-    ))
 {
   ACE_UNUSED_ARG (the_ref);
 
@@ -58,10 +50,6 @@ TAO_GOA::reference_to_ids (CORBA::Object_ptr the_ref)
 void
 TAO_GOA::associate_reference_with_id (CORBA::Object_ptr ref,
                                       const PortableServer::ObjectId & oid)
-    ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      PortableGroup::NotAGroupObject
-    ))
 {
   // Create a reference for the specified ObjectId, since
   // it is much easier to extract the object key from the
@@ -76,10 +64,6 @@ TAO_GOA::associate_reference_with_id (CORBA::Object_ptr ref,
 void
 TAO_GOA::disassociate_reference_with_id (CORBA::Object_ptr ref,
                                          const PortableServer::ObjectId & oid)
-    ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      PortableGroup::NotAGroupObject
-    ))
 {
   ACE_UNUSED_ARG (ref);
   ACE_UNUSED_ARG (oid);
@@ -140,9 +124,6 @@ PortableServer::POA_ptr
 TAO_GOA::create_POA (const char *adapter_name,
                         PortableServer::POAManager_ptr poa_manager,
                         const CORBA::PolicyList &policies)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableServer::POA::AdapterAlreadyExists,
-                   PortableServer::POA::InvalidPolicy))
 {
   PortableServer::POA_ptr poa = this->TAO_Regular_POA::create_POA (adapter_name,
                                                            poa_manager,
@@ -153,8 +134,6 @@ TAO_GOA::create_POA (const char *adapter_name,
 PortableServer::POA_ptr
 TAO_GOA::find_POA (const char *adapter_name,
                       CORBA::Boolean activate_it)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableServer::POA::AdapterNonExistent))
 {
   PortableServer::POA_ptr poa = this->TAO_Regular_POA::find_POA (adapter_name,
                                                          activate_it);
@@ -164,7 +143,6 @@ TAO_GOA::find_POA (const char *adapter_name,
 void
 TAO_GOA::destroy (CORBA::Boolean etherealize_objects,
                      CORBA::Boolean wait_for_completion)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->TAO_Regular_POA::destroy (etherealize_objects,
                           wait_for_completion);
@@ -175,7 +153,6 @@ TAO_GOA::destroy (CORBA::Boolean etherealize_objects,
 
 PortableServer::ThreadPolicy_ptr
 TAO_GOA::create_thread_policy (PortableServer::ThreadPolicyValue value)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   PortableServer::ThreadPolicy_ptr policy =
     this->TAO_Regular_POA::create_thread_policy (value);
@@ -186,7 +163,6 @@ TAO_GOA::create_thread_policy (PortableServer::ThreadPolicyValue value)
 
 PortableServer::LifespanPolicy_ptr
 TAO_GOA::create_lifespan_policy (PortableServer::LifespanPolicyValue value)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   PortableServer::LifespanPolicy_ptr policy =
     this->TAO_Regular_POA::create_lifespan_policy (value);
@@ -195,7 +171,6 @@ TAO_GOA::create_lifespan_policy (PortableServer::LifespanPolicyValue value)
 
 PortableServer::IdUniquenessPolicy_ptr
 TAO_GOA::create_id_uniqueness_policy (PortableServer::IdUniquenessPolicyValue value)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   PortableServer::IdUniquenessPolicy_ptr policy =
     this->TAO_Regular_POA::create_id_uniqueness_policy (value);
@@ -205,7 +180,6 @@ TAO_GOA::create_id_uniqueness_policy (PortableServer::IdUniquenessPolicyValue va
 
 PortableServer::IdAssignmentPolicy_ptr
 TAO_GOA::create_id_assignment_policy (PortableServer::IdAssignmentPolicyValue value)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   PortableServer::IdAssignmentPolicy_ptr policy =
     this->TAO_Regular_POA::create_id_assignment_policy (value);
@@ -217,7 +191,6 @@ TAO_GOA::create_id_assignment_policy (PortableServer::IdAssignmentPolicyValue va
 
 PortableServer::ImplicitActivationPolicy_ptr
 TAO_GOA::create_implicit_activation_policy (PortableServer::ImplicitActivationPolicyValue value)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   PortableServer::ImplicitActivationPolicy_ptr policy =
     this->TAO_Regular_POA::create_implicit_activation_policy (value);
@@ -226,7 +199,6 @@ TAO_GOA::create_implicit_activation_policy (PortableServer::ImplicitActivationPo
 
 PortableServer::ServantRetentionPolicy_ptr
 TAO_GOA::create_servant_retention_policy (PortableServer::ServantRetentionPolicyValue value)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   PortableServer::ServantRetentionPolicy_ptr policy =
     this->TAO_Regular_POA::create_servant_retention_policy (value);
@@ -236,7 +208,6 @@ TAO_GOA::create_servant_retention_policy (PortableServer::ServantRetentionPolicy
 
 PortableServer::RequestProcessingPolicy_ptr
 TAO_GOA::create_request_processing_policy (PortableServer::RequestProcessingPolicyValue value)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   PortableServer::RequestProcessingPolicy_ptr policy =
     this->TAO_Regular_POA::create_request_processing_policy (value);
@@ -248,7 +219,6 @@ TAO_GOA::create_request_processing_policy (PortableServer::RequestProcessingPoli
 
 char *
 TAO_GOA::the_name (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   char * name =
     this->TAO_Regular_POA::the_name ();
@@ -257,7 +227,6 @@ TAO_GOA::the_name (void)
 
 PortableServer::POA_ptr
 TAO_GOA::the_parent (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   PortableServer::POA_ptr parent =
     this->TAO_Regular_POA::the_parent ();
@@ -266,7 +235,6 @@ TAO_GOA::the_parent (void)
 
 PortableServer::POAList *
 TAO_GOA::the_children (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   PortableServer::POAList *children =
     this->TAO_Regular_POA::the_children ();
@@ -275,7 +243,6 @@ TAO_GOA::the_children (void)
 
 PortableServer::POAManager_ptr
 TAO_GOA::the_POAManager (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   PortableServer::POAManager_ptr poa_manager =
     this->TAO_Regular_POA::the_POAManager ();
@@ -287,7 +254,6 @@ TAO_GOA::the_POAManager (void)
 
 PortableServer::AdapterActivator_ptr
 TAO_GOA::the_activator (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   PortableServer::AdapterActivator_ptr activator =
     this->TAO_Regular_POA::the_activator ();
@@ -296,15 +262,12 @@ TAO_GOA::the_activator (void)
 
 void
 TAO_GOA::the_activator (PortableServer::AdapterActivator_ptr adapter_activator)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->TAO_Regular_POA::the_activator (adapter_activator);
 }
 
 PortableServer::ServantManager_ptr
 TAO_GOA::get_servant_manager (void)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableServer::POA::WrongPolicy))
 {
   PortableServer::ServantManager_ptr servant_manager =
     this->TAO_Regular_POA::get_servant_manager ();
@@ -313,17 +276,12 @@ TAO_GOA::get_servant_manager (void)
 
 void
 TAO_GOA::set_servant_manager (PortableServer::ServantManager_ptr imgr)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableServer::POA::WrongPolicy))
 {
   this->TAO_Regular_POA::set_servant_manager (imgr);
 }
 
 PortableServer::Servant
 TAO_GOA::get_servant (void)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableServer::POA::NoServant,
-                   PortableServer::POA::WrongPolicy))
 {
   PortableServer::Servant servant =
     this->TAO_Regular_POA::get_servant ();
@@ -332,8 +290,6 @@ TAO_GOA::get_servant (void)
 
 void
 TAO_GOA::set_servant (PortableServer::Servant servant)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableServer::POA::WrongPolicy))
 {
   this->TAO_Regular_POA::set_servant (servant);
 }
@@ -342,9 +298,6 @@ TAO_GOA::set_servant (PortableServer::Servant servant)
 
 PortableServer::ObjectId *
 TAO_GOA::activate_object (PortableServer::Servant p_servant)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableServer::POA::ServantAlreadyActive,
-                   PortableServer::POA::WrongPolicy))
 {
   PortableServer::ObjectId *object_id =
     this->TAO_Regular_POA::activate_object (p_servant);
@@ -354,10 +307,6 @@ TAO_GOA::activate_object (PortableServer::Servant p_servant)
 void
 TAO_GOA::activate_object_with_id (const PortableServer::ObjectId &id,
                                      PortableServer::Servant p_servant)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableServer::POA::ServantAlreadyActive,
-                   PortableServer::POA::ObjectAlreadyActive,
-                   PortableServer::POA::WrongPolicy))
 {
   this->TAO_Regular_POA::activate_object_with_id (id,
                                           p_servant);
@@ -365,17 +314,12 @@ TAO_GOA::activate_object_with_id (const PortableServer::ObjectId &id,
 
 void
 TAO_GOA::deactivate_object (const PortableServer::ObjectId &oid)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableServer::POA::ObjectNotActive,
-                   PortableServer::POA::WrongPolicy))
 {
   this->TAO_Regular_POA::deactivate_object (oid);
 }
 
 CORBA::Object_ptr
 TAO_GOA::create_reference (const char *intf)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableServer::POA::WrongPolicy))
 {
   CORBA::Object_ptr obj =
     this->TAO_Regular_POA::create_reference (intf);
@@ -385,7 +329,6 @@ TAO_GOA::create_reference (const char *intf)
 CORBA::Object_ptr
 TAO_GOA::create_reference_with_id (const PortableServer::ObjectId &oid,
                                    const char *intf)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::Object_ptr obj =
     this->TAO_Regular_POA::create_reference_with_id (oid,
@@ -395,9 +338,6 @@ TAO_GOA::create_reference_with_id (const PortableServer::ObjectId &oid,
 
 PortableServer::ObjectId *
 TAO_GOA::servant_to_id (PortableServer::Servant p_servant)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableServer::POA::ServantNotActive,
-                   PortableServer::POA::WrongPolicy))
 {
   PortableServer::ObjectId *object_id =
     this->TAO_Regular_POA::servant_to_id (p_servant);
@@ -406,9 +346,6 @@ TAO_GOA::servant_to_id (PortableServer::Servant p_servant)
 
 CORBA::Object_ptr
 TAO_GOA::servant_to_reference (PortableServer::Servant p_servant)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableServer::POA::ServantNotActive,
-                   PortableServer::POA::WrongPolicy))
 {
   CORBA::Object_ptr obj =
     this->TAO_Regular_POA::servant_to_reference (p_servant);
@@ -418,10 +355,6 @@ TAO_GOA::servant_to_reference (PortableServer::Servant p_servant)
 
 PortableServer::Servant
 TAO_GOA::reference_to_servant (CORBA::Object_ptr reference)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableServer::POA::ObjectNotActive,
-                   PortableServer::POA::WrongAdapter,
-                   PortableServer::POA::WrongPolicy))
 {
   PortableServer::Servant servant =
     this->TAO_Regular_POA::reference_to_servant (reference);
@@ -430,9 +363,6 @@ TAO_GOA::reference_to_servant (CORBA::Object_ptr reference)
 
 PortableServer::ObjectId *
 TAO_GOA::reference_to_id (CORBA::Object_ptr reference)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableServer::POA::WrongAdapter,
-                   PortableServer::POA::WrongPolicy))
 {
   PortableServer::ObjectId *object_id =
     this->TAO_Regular_POA::reference_to_id (reference);
@@ -441,9 +371,6 @@ TAO_GOA::reference_to_id (CORBA::Object_ptr reference)
 
 PortableServer::Servant
 TAO_GOA::id_to_servant (const PortableServer::ObjectId &oid)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableServer::POA::ObjectNotActive,
-                   PortableServer::POA::WrongPolicy))
 {
   PortableServer::Servant servant =
     this->TAO_Regular_POA::id_to_servant (oid);
@@ -452,9 +379,6 @@ TAO_GOA::id_to_servant (const PortableServer::ObjectId &oid)
 
 CORBA::Object_ptr
 TAO_GOA::id_to_reference (const PortableServer::ObjectId &oid)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableServer::POA::ObjectNotActive,
-                   PortableServer::POA::WrongPolicy))
 {
   CORBA::Object_ptr obj =
     this->TAO_Regular_POA::id_to_reference (oid);
@@ -463,7 +387,6 @@ TAO_GOA::id_to_reference (const PortableServer::ObjectId &oid)
 
 CORBA::OctetSeq *
 TAO_GOA::id (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->TAO_Regular_POA::id ();
 }
@@ -558,8 +481,6 @@ void
 TAO_GOA::associate_group_with_ref (
       CORBA::Object_ptr group_ref,
       CORBA::Object_ptr obj_ref)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableGroup::NotAGroupObject))
 {
   // Find the Group Component so that we can extract the Group ID.
   PortableGroup::TagGroupTaggedComponent *tmp_group_id;

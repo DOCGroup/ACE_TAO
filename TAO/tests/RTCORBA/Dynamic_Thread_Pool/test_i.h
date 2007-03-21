@@ -22,12 +22,10 @@ public:
   /// Test method.
   CORBA::Long method (CORBA::Long client_id,
                       CORBA::Long iteration,
-                      CORBA::Long_out thread_count)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                      CORBA::Long_out thread_count);
 
   /// Shutdown the server.
-  void shutdown (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void shutdown (void);
 
   /// Our POA.
   PortableServer::POA_ptr _default_POA (void);

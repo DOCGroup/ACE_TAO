@@ -28,8 +28,7 @@ public:
 
   virtual CORBA::Object_ptr create_object (CORBA::ORB_ptr orb,
                                            int argc,
-                                           ACE_TCHAR *argv[])
-     ACE_THROW_SPEC ((CORBA::SystemException));
+                                           ACE_TCHAR *argv[]);
 
  // Unlike other service objects, we have our own orb.
  int run(void);

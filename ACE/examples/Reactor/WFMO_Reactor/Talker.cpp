@@ -134,7 +134,7 @@
 
 #include "ace/OS_main.h"
 
-#if defined (ACE_WIN32)
+#if defined (ACE_HAS_WIN32_OVERLAPPED_IO)
 
 #include "ace/Reactor.h"
 #include "ace/Reactor_Notification_Strategy.h"
@@ -585,10 +585,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   return 0;
 }
-#else /* !ACE_WIN32 */
+#else /* !ACE_HAS_WIN32_OVERLAPPED_IO */
 int
 ACE_TMAIN (int , ACE_TCHAR *[])
 {
   return 0;
 }
-#endif /* ACE_WIN32 */
+#endif /* ACE_HAS_WIN32_OVERLAPPED_IO */

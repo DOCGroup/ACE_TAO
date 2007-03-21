@@ -66,7 +66,7 @@ TAO_Notify_EventTypeSeq::populate_no_special (CosNotification::EventTypeSeq& eve
 
   inherited::CONST_ITERATOR iter (*this);
 
-  TAO_Notify_EventType* event_type;
+  TAO_Notify_EventType* event_type = 0;
 
   CORBA::ULong i = 0;
   for (iter.first (); iter.next (event_type); iter.advance (), ++i)

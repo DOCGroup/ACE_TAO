@@ -710,7 +710,7 @@ DRV_check_for_include (const char* buf)
   if (*h == '\0')
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("IDL: No friggin' input files\n")));
+                  ACE_TEXT ("TAO_IDL: No input files\n")));
 
 
       idl_global->set_err_count (idl_global->err_count () + 1);
@@ -854,7 +854,7 @@ DRV_convert_includes (const char* buf)
   if (*r == '\0')
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("IDL: No friggin' input files\n")));
+                  ACE_TEXT ("TAO_IDL: No input files\n")));
 
 
       idl_global->set_err_count (idl_global->err_count () + 1);
@@ -1253,7 +1253,7 @@ DRV_pre_proc (const char *myfile)
       throw FE_Bailout ();
     }
 
-  FE_set_yyin (reinterpret_cast<File *> (yyin));
+  FE_set_yyin (yyin);
 
   if (idl_global->compile_flags () & IDL_CF_ONLY_PREPROC)
     {

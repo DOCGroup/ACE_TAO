@@ -52,9 +52,7 @@ int
 TAO_Server_Protocol_Acceptor_Filter::encode_endpoints (TAO_MProfile &mprofile)
 {
   // Encode endpoints.
-  for (CORBA::ULong i = 0;
-       i < mprofile.profile_count ();
-       ++i)
+  for (CORBA::ULong i = 0; i < mprofile.profile_count (); ++i)
     {
       TAO_Profile *profile = mprofile.get_profile (i);
       if (profile->encode_endpoints () == -1)

@@ -23,11 +23,9 @@ public:
 
   // = The skeleton methods
   virtual Test::Timestamp test_method (Test::Timestamp send_time,
-		                       Test::number cl_number)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+		                       Test::number cl_number);
 
-  virtual void shutdown (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void shutdown (void);
 
 private:
   /// Use an ORB reference to conver strings to objects and shutdown

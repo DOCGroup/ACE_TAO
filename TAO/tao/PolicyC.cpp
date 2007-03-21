@@ -162,7 +162,7 @@ CORBA::PolicyError::_tao_duplicate (void) const
 
 void CORBA::PolicyError::_raise (void) const
 {
-  TAO_RAISE (*this);
+  throw *this;
 }
 
 void CORBA::PolicyError::_tao_encode (
@@ -298,13 +298,10 @@ CORBA::InvalidPolicies::_tao_duplicate (void) const
 
 void CORBA::InvalidPolicies::_raise (void) const
 {
-  TAO_RAISE (*this);
+  throw *this;
 }
 
-void CORBA::InvalidPolicies::_tao_encode (
-    TAO_OutputCDR &cdr
-
-  ) const
+void CORBA::InvalidPolicies::_tao_encode (TAO_OutputCDR &cdr) const
 {
   if (cdr << *this)
     {
@@ -314,10 +311,7 @@ void CORBA::InvalidPolicies::_tao_encode (
   throw ::CORBA::MARSHAL ();
 }
 
-void CORBA::InvalidPolicies::_tao_decode (
-    TAO_InputCDR &cdr
-
-  )
+void CORBA::InvalidPolicies::_tao_decode (TAO_InputCDR &cdr)
 {
   if (cdr >> *this)
     {
@@ -410,9 +404,6 @@ TAO::Collocation_Proxy_Broker *
 CORBA::PolicyType CORBA::Policy::policy_type (
 
   )
-  ACE_THROW_SPEC ((
-    CORBA::SystemException
-  ))
 {
   if (!this->is_evaluated ())
     {
@@ -451,9 +442,6 @@ CORBA::PolicyType CORBA::Policy::policy_type (
 ::CORBA::Policy_ptr CORBA::Policy::copy (
 
   )
-  ACE_THROW_SPEC ((
-    CORBA::SystemException
-  ))
 {
   if (!this->is_evaluated ())
     {
@@ -492,9 +480,6 @@ CORBA::PolicyType CORBA::Policy::policy_type (
 void CORBA::Policy::destroy (
 
   )
-  ACE_THROW_SPEC ((
-    CORBA::SystemException
-  ))
 {
   if (!this->is_evaluated ())
     {

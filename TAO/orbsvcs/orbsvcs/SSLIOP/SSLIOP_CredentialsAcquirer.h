@@ -75,28 +75,21 @@ namespace TAO
        * interface.
        */
       //@{
-      virtual char * acquisition_method (void)
-        ACE_THROW_SPEC ((CORBA::SystemException));
+      virtual char * acquisition_method (void);
 
-      virtual SecurityLevel3::AcquisitionStatus current_status ()
-        ACE_THROW_SPEC ((CORBA::SystemException));
+      virtual SecurityLevel3::AcquisitionStatus current_status ();
 
-      virtual CORBA::ULong nth_iteration (void)
-        ACE_THROW_SPEC ((CORBA::SystemException));
+      virtual CORBA::ULong nth_iteration (void);
 
-      virtual CORBA::Any * get_continuation_data (void)
-        ACE_THROW_SPEC ((CORBA::SystemException));
+      virtual CORBA::Any * get_continuation_data (void);
 
       virtual SecurityLevel3::AcquisitionStatus continue_acquisition (
-          const CORBA::Any & acquisition_arguments)
-        ACE_THROW_SPEC ((CORBA::SystemException));
+          const CORBA::Any & acquisition_arguments);
 
       virtual SecurityLevel3::OwnCredentials_ptr get_credentials (
-          CORBA::Boolean on_list)
-        ACE_THROW_SPEC ((CORBA::SystemException));
+          CORBA::Boolean on_list);
 
-      virtual void destroy (void)
-        ACE_THROW_SPEC ((CORBA::SystemException));
+      virtual void destroy (void);
       //@}
 
     protected:

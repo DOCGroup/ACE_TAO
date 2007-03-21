@@ -67,11 +67,9 @@ public:
    const char* name,
    const char* cmdline,
    const char* dir,
-   const ImplementationRepository::EnvironmentList & env)
-   ACE_THROW_SPEC ((CORBA::SystemException, ImplementationRepository::CannotActivate));
+   const ImplementationRepository::EnvironmentList & env);
 
-  void shutdown(void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void shutdown(void);
 
   /// Initialize the Server state - parsing arguments and waiting.
   int init (Activator_Options& opts);

@@ -1,22 +1,19 @@
 // -*- C++ -*-
 
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/orbsvcs/orbsvcs/IFRService
-//
-// = FILENAME
-//    ValueBoxDef_i.h
-//
-// = DESCRIPTION
-//    ValueBoxDef servant class.
-//
-// = AUTHOR
-//    Jeff Parsons <parsons@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    ValueBoxDef_i.h
+ *
+ *  $Id$
+ *
+ *  ValueBoxDef servant class.
+ *
+ *
+ *  @author Jeff Parsons <parsons@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef TAO_VALUEBOXDEF_I_H
 #define TAO_VALUEBOXDEF_I_H
@@ -45,44 +42,37 @@ public:
   //    Represents an value box definition.
   //
 public:
+  /// Constructor
   TAO_ValueBoxDef_i (TAO_Repository_i *repo);
-  // Constructor
 
+  /// Destructor
   virtual ~TAO_ValueBoxDef_i (void);
-  // Destructor
 
+  /// Return our definition kind.
   virtual CORBA::DefinitionKind def_kind ()
+;
 
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  // Return our definition kind.
-
+  /// From IDLType_i's pure virtual function.
   virtual CORBA::TypeCode_ptr type ()
+;
 
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  // From IDLType_i's pure virtual function.
-
+  /// From IDLType_i's pure virtual function.
   virtual CORBA::TypeCode_ptr type_i ()
-
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  // From IDLType_i's pure virtual function.
+;
 
   virtual CORBA::IDLType_ptr original_type_def ()
-
-    ACE_THROW_SPEC ((CORBA::SystemException));
+;
 
   CORBA::IDLType_ptr original_type_def_i ()
-
-    ACE_THROW_SPEC ((CORBA::SystemException));
+;
 
   virtual void original_type_def (
       CORBA::IDLType_ptr original_type_def)
-
-    ACE_THROW_SPEC ((CORBA::SystemException));
+;
 
   void original_type_def_i (
       CORBA::IDLType_ptr original_type_def)
-
-    ACE_THROW_SPEC ((CORBA::SystemException));
+;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -121,12 +121,17 @@ ACE_OS::strerror (int errnum)
   errno = 0;
   char *errmsg;
 
-#if defined (ACE_WIN32)
-   if (errnum < 0 || errnum >= _sys_nerr)
-      errno = EINVAL;
+#if defined (ACE_HAS_TR24731_2005_CRT)
+  errmsg = ret_errortext;
+  ACE_SECURECRTCALL (strerror_s (ret_errortext, sizeof (ret_errortext), errno),
+                     char *, 0, errmsg);
+  return errmsg;
+#elif defined (ACE_WIN32)
+  if (errnum < 0 || errnum >= _sys_nerr)
+    errno = EINVAL;
 #endif /* ACE_WIN32 */
-   errmsg = ::strerror (errnum);
-
+  errmsg = ::strerror (errnum);
+ 
   if (errno == EINVAL || errmsg == 0 || errmsg[0] == 0)
     {
       ACE_OS::sprintf (ret_errortext, "Unknown error %d", errnum);
@@ -323,7 +328,8 @@ ACE_OS::strsncpy (ACE_WCHAR_T *dst, const ACE_WCHAR_T *src, size_t maxlen)
   return dst;
 }
 
-#if !defined (ACE_HAS_REENTRANT_FUNCTIONS) || defined (ACE_LACKS_STRTOK_R)
+#if (!defined (ACE_HAS_REENTRANT_FUNCTIONS) || defined (ACE_LACKS_STRTOK_R)) \
+    && !defined (ACE_HAS_TR24731_2005_CRT)
 char *
 ACE_OS::strtok_r_emulation (char *s, const char *tokens, char **lasts)
 {

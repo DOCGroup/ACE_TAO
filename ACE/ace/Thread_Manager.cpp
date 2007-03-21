@@ -990,7 +990,7 @@ int
 ACE_Thread_Manager::join_thr (ACE_Thread_Descriptor *td, int)
 {
   ACE_TRACE ("ACE_Thread_Manager::join_thr");
-  int result = ACE_Thread::join (td->thr_handle_);
+  int const result = ACE_Thread::join (td->thr_handle_);
   if (result != 0)
     {
       // Since the thread are being joined, we should

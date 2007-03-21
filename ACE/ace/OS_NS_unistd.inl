@@ -95,7 +95,7 @@ ACE_OS::getpagesize (void)
   SYSTEM_INFO sys_info;
   ::GetSystemInfo (&sys_info);
   return (long) sys_info.dwPageSize;
-#elif defined (_SC_PAGESIZE)
+#elif defined (_SC_PAGESIZE) && !defined (ACE_HAS_NOTSUP_SC_PAGESIZE)
   return ::sysconf (_SC_PAGESIZE);
 #elif defined (ACE_HAS_GETPAGESIZE)
   return ::getpagesize ();
@@ -142,7 +142,7 @@ ACE_OS::chdir (const char *path)
 ACE_INLINE int
 ACE_OS::chdir (const wchar_t *path)
 {
-#if defined (ACE_WIN32)
+#if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
   ACE_OSCALL_RETURN (::_wchdir (path), int, -1);
 #else /* ACE_WIN32 */
   return ACE_OS::chdir (ACE_Wide_To_Ascii (path).char_rep ());
@@ -355,7 +355,7 @@ ACE_OS::ftruncate (ACE_HANDLE handle, ACE_OFF_T offset)
 {
   ACE_OS_TRACE ("ACE_OS::ftruncate");
 #if defined (ACE_WIN32)
-#  if !defined (ACE_LACKS_SETFILEPOINTEREX)
+#  if !defined (ACE_LACKS_WIN32_SETFILEPOINTEREX)
   LARGE_INTEGER loff;
   loff.QuadPart = offset;
   if (::SetFilePointerEx (handle, loff, 0, FILE_BEGIN))
@@ -530,7 +530,7 @@ ACE_OS::hostname (char name[], size_t maxnamelen)
 #elif defined (ACE_VXWORKS) || defined (ACE_HAS_WINCE)
   ACE_OSCALL_RETURN (::gethostname (name, maxnamelen), int, -1);
 #elif defined (ACE_WIN32)
-  if (::gethostname (name, ACE_Utils::Truncate<int> (maxnamelen)) == 0)
+  if (::gethostname (name, ACE_Utils::truncate_cast<int> (maxnamelen)) == 0)
   {
     return 0;
   }
@@ -659,7 +659,7 @@ ACE_OS::llseek (ACE_HANDLE handle, ACE_LOFF_T offset, int whence)
   ACE_OSCALL_RETURN (::lseek64 (handle, offset, whence), ACE_LOFF_T, -1);
 #elif defined (ACE_HAS_LLSEEK)
 # if defined (ACE_WIN32)
-#  ifndef ACE_LACKS_SETFILEPOINTEREX
+#  ifndef ACE_LACKS_WIN32_SETFILEPOINTEREX
   LARGE_INTEGER distance, new_file_pointer;
 
   distance.QuadPart = offset;
@@ -669,19 +669,21 @@ ACE_OS::llseek (ACE_HANDLE handle, ACE_LOFF_T offset, int whence)
      ? new_file_pointer.QuadPart
      : static_cast<ACE_LOFF_T> (-1));
 #  else
-  LONG low_offset = ACE_LOW_PART(offset);
-  LONG high_offset = ACE_HIGH_PART(offset);
+  LARGE_INTEGER l_offset;
+  l_offset.QuadPart = offset;
+  LONG low_offset = l_offset.LowPart;
+  LONG high_offset = l_offset.HighPart;
 
-  ACE_OFF_T const result = ::SetFilePointer (handle,
-                                             low_offset,
-                                             &high_offset,
-                                             whence);
-
-  return
-    ((result != INVALID_SET_FILE_POINTER || GetLastError () == NO_ERROR)
-     ? result
-     : static_cast<ACE_LOFF_T> (-1));
-#  endif  /* ACE_LACKS_SETFILEPOINTEREX */
+  l_offset.LowPart = ::SetFilePointer (handle,
+                                       low_offset,
+                                       &high_offset,
+                                       whence);
+  if (l_offset.LowPart == INVALID_SET_FILE_POINTER &&
+      GetLastError () != NO_ERROR)
+    return static_cast<ACE_LOFF_T> (-1);
+  l_offset.HighPart = high_offset;
+  return l_offset.QuadPart;
+#  endif  /* ACE_LACKS_WIN32_SETFILEPOINTEREX */
 # else
     ACE_OSCALL_RETURN (::llseek (handle, offset, whence), ACE_LOFF_T, -1);
 # endif /* WIN32 */
@@ -783,7 +785,7 @@ ACE_OS::pipe (ACE_HANDLE fds[])
 }
 
 ACE_INLINE void *
-ACE_OS::sbrk (ptrdiff_t brk)
+ACE_OS::sbrk (intptr_t brk)
 {
 #if defined (ACE_LACKS_SBRK)
   ACE_UNUSED_ARG (brk);
@@ -1006,7 +1008,7 @@ ACE_OS::truncate (const ACE_TCHAR *filename,
                                     O_WRONLY,
                                     ACE_DEFAULT_FILE_PERMS);
 
-#  if !defined (ACE_LACKS_SETFILEPOINTEREX)
+#  if !defined (ACE_LACKS_WIN32_SETFILEPOINTEREX)
   LARGE_INTEGER loffset;
   loffset.QuadPart = offset;
 #else
@@ -1017,7 +1019,7 @@ ACE_OS::truncate (const ACE_TCHAR *filename,
   if (handle == ACE_INVALID_HANDLE)
     ACE_FAIL_RETURN (-1);
 
-#  if !defined (ACE_LACKS_SETFILEPOINTEREX)
+#  if !defined (ACE_LACKS_WIN32_SETFILEPOINTEREX)
   else if (::SetFilePointerEx (handle,
                                loffset,
                                0,
@@ -1028,7 +1030,7 @@ ACE_OS::truncate (const ACE_TCHAR *filename,
                              &high_offset,
                              FILE_BEGIN) != INVALID_SET_FILE_POINTER
            || GetLastError () == NO_ERROR)
-#  endif
+#  endif /* ACE_LACKS_WIN32_SETFILEPOINTEREX */
     {
       BOOL result = ::SetEndOfFile (handle);
       ::CloseHandle (handle);

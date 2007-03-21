@@ -12,7 +12,6 @@ ACE_RCSID(MT_Server, test_i, "$Id$")
 
 CORBA::Long
 Simple_Server_i::test_method (CORBA::Long x)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG, "Request in thread %t\n"));
@@ -23,7 +22,6 @@ Simple_Server_i::test_method (CORBA::Long x)
 
 void
 Simple_Server_i::shutdown (void)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown (0);
 }

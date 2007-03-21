@@ -161,7 +161,7 @@ main(int argc, char * argv[])
             ctrl = CCS::Controller::_narrow(obj.in());
         } catch (const CORBA::SystemException & se) {
 			std::cerr << "Cannot narrow controller reference: "
-                 //<< se 
+                 //<< se
                  << std::endl;
             throw 0;
         }
@@ -186,18 +186,18 @@ main(int argc, char * argv[])
 
         // Show details for each device.
         for (CORBA::ULong i = 0; i < list->length(); i++)
-			std::cout << list[i].in();
-		std::cout << std::endl;
+          std::cout << list[i].in();
+        std::cout << std::endl;
 
         // Change the location of first device in the list
         CCS::AssetType anum = list[(CORBA::ULong) 0]->asset_num();
-		std::cout << "Changing location of device "
-			<< anum << "." << std::endl;
+        std::cout << "Changing location of device "
+                  << anum << "." << std::endl;
         list[(CORBA::ULong) 0]->location("Earth");
         // Check that the location was updated
-		std::cout << "New details for device "
-			<< anum << " are:" << std::endl;
-		std::cout << list[(CORBA::ULong) 0] << std::endl;
+        std::cout << "New details for device "
+                  << anum << " are:" << std::endl;
+        std::cout << list[(CORBA::ULong) 0] << std::endl;
 
         // Find first thermostat in list.
         CCS::Thermostat_var tmstat;
@@ -257,8 +257,8 @@ main(int argc, char * argv[])
 			std::cerr << ec;                     // Overloaded <<
         }
     } catch (const CORBA::Exception & e) {
-		std::cerr << "Uncaught CORBA exception: " 
-             //<< e 
+		std::cerr << "Uncaught CORBA exception: "
+             //<< e
              << std::endl;
         return 1;
     } catch (...) {

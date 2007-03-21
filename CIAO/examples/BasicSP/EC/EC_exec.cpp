@@ -136,14 +136,12 @@ MyImpl::EC_exec_i::~EC_exec_i ()
 
 CORBA::Long
 MyImpl::EC_exec_i::hertz ()
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->hertz_;
 }
 
 void
 MyImpl::EC_exec_i::hertz (CORBA::Long hertz)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->hertz_ = hertz;
 }
@@ -152,7 +150,6 @@ MyImpl::EC_exec_i::hertz (CORBA::Long hertz)
 
 void
 MyImpl::EC_exec_i::start ()
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (this->hertz_ == 0 || this->pulser_.active())
     throw CORBA::BAD_INV_ORDER ();
@@ -163,7 +160,6 @@ MyImpl::EC_exec_i::start ()
 
 void
 MyImpl::EC_exec_i::stop ()
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (! this->pulser_.active ())
     throw CORBA::BAD_INV_ORDER ();
@@ -174,7 +170,6 @@ MyImpl::EC_exec_i::stop ()
 
 CORBA::Boolean
 MyImpl::EC_exec_i::active ()
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->pulser_.active ();
 }
@@ -183,8 +178,6 @@ MyImpl::EC_exec_i::active ()
 
 void
 MyImpl::EC_exec_i::set_session_context (Components::SessionContext_ptr ctx)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   Components::CCMException))
 {
   if (CIAO::debug_level () > 0)
     ACE_DEBUG ((LM_DEBUG, "MyImpl::EC_exec_i::set_session_context\n"));
@@ -200,15 +193,11 @@ MyImpl::EC_exec_i::set_session_context (Components::SessionContext_ptr ctx)
 
 void
 MyImpl::EC_exec_i::ciao_preactivate ()
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   Components::CCMException))
 {
 }
 
 void
 MyImpl::EC_exec_i::ccm_activate ()
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   Components::CCMException))
 {
   if (CIAO::debug_level () > 0)
     ACE_DEBUG ((LM_DEBUG, "MyImpl::EC_exec_i::ccm_activate\n"));
@@ -218,15 +207,11 @@ MyImpl::EC_exec_i::ccm_activate ()
 
 void
 MyImpl::EC_exec_i::ciao_postactivate ()
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   Components::CCMException))
 {
 }
 
 void
 MyImpl::EC_exec_i::ccm_passivate ()
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   Components::CCMException))
 {
   if (CIAO::debug_level () > 0)
     ACE_DEBUG ((LM_DEBUG, "MyImpl::EC_exec_i::ccm_passivate\n"));
@@ -235,8 +220,6 @@ MyImpl::EC_exec_i::ccm_passivate ()
 
 void
 MyImpl::EC_exec_i::ccm_remove ()
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   Components::CCMException))
 {
   if (CIAO::debug_level () > 0)
     ACE_DEBUG ((LM_DEBUG, "MyImpl::EC_exec_i::ccm_remove\n"));
@@ -272,15 +255,12 @@ MyImpl::ECHome_exec_i::~ECHome_exec_i ()
 
 ::Components::EnterpriseComponent_ptr
 MyImpl::ECHome_exec_i::new_EC (CORBA::Long hertz)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return new MyImpl::EC_exec_i (hertz);
 }
 
 ::Components::EnterpriseComponent_ptr
 MyImpl::ECHome_exec_i::create ()
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   Components::CCMException))
 {
   return new MyImpl::EC_exec_i ();
 }

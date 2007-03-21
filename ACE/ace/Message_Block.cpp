@@ -358,11 +358,25 @@ ACE_Data_Block::ACE_Data_Block (size_t size,
                    ACE_Allocator::instance ());
 
   if (msg_data == 0)
-    ACE_ALLOCATOR (this->base_,
-                   (char *) this->allocator_strategy_->malloc (size));
-    // ACE_ALLOCATOR returns on alloc failure...
+    {
+      ACE_ALLOCATOR (this->base_,
+                     (char *) this->allocator_strategy_->malloc (size));
+#if defined (ACE_INITIALIZE_MEMORY_BEFORE_USE)
+      (void) ACE_OS::memset (this->base_,
+                             '\0',
+                             size);
+#endif /* ACE_INITIALIZE_MEMORY_BEFORE_USE */
+    }
 
-  // The memory is legit, whether passed in or allocated, so set the size.
+  // ACE_ALLOCATOR returns on alloc failure but we cant throw, so setting
+  // the size to 0 (i.e. "bad bit") ...
+  if (this->base_ == 0)
+    {
+      size = 0;
+    }
+
+  // The memory is legit, whether passed in or allocated, so set
+  // the size.
   this->cur_size_ = this->max_size_ = size;
 }
 
@@ -716,14 +730,22 @@ ACE_Message_Block::init_i (size_t size,
                                              data_block_allocator),
                              -1);
       ACE_TIMEPROBE (ACE_MESSAGE_BLOCK_INIT_I_DB_CTOR);
+
+      // Message block initialization may fail, while the construction
+      // succeds.  Since ACE may throw no exceptions, we have to do a
+      // separate check and clean up, like this:
+      if (db != 0 && db->size () < size)
+        {
+          db->ACE_Data_Block::~ACE_Data_Block();  // placement destructor ...
+          data_block_allocator->free (db); // free ...
+          errno = ENOMEM;
+          return -1;
+        }
     }
 
   // Reset the data_block_ pointer.
   this->data_block (db);
-  // If the data alloc failed, the ACE_Data_Block ctor can't relay
-  // that directly. Therefore, need to check it explicitly.
-  if (db->size () < size)
-    return -1;
+
   return 0;
 }
 
@@ -1104,13 +1126,15 @@ ACE_Data_Block::clone_nocopy (ACE_Message_Block::Message_Flags mask,
   const ACE_Message_Block::Message_Flags always_clear =
     ACE_Message_Block::DONT_DELETE;
 
+  const size_t newsize =
+    max_size == 0 ? this->max_size_ : max_size;
+
   ACE_Data_Block *nb = 0;
 
   ACE_NEW_MALLOC_RETURN (nb,
                          static_cast<ACE_Data_Block*> (
                            this->data_block_allocator_->malloc (sizeof (ACE_Data_Block))),
-                         ACE_Data_Block (max_size == 0 ?
-                                           this->max_size_ : max_size, // size
+                         ACE_Data_Block (newsize, // size
                                          this->type_,     // type
                                          0,               // data
                                          this->allocator_strategy_, // allocator
@@ -1118,6 +1142,17 @@ ACE_Data_Block::clone_nocopy (ACE_Message_Block::Message_Flags mask,
                                          this->flags_,  // flags
                                          this->data_block_allocator_),
                          0);
+
+  // Message block initialization may fail while the construction
+  // succeds.  Since as a matter of policy, ACE may throw no
+  // exceptions, we have to do a separate check like this.
+  if (nb != 0 && nb->size () < newsize)
+    {
+      nb->ACE_Data_Block::~ACE_Data_Block();  // placement destructor ...
+      this->data_block_allocator_->free (nb); // free ...
+      errno = ENOMEM;
+      return 0;
+    }
 
 
   // Set new flags minus the mask...
@@ -1229,6 +1264,7 @@ ACE_Data_Block::base (char *msg_data,
   this->flags_ = msg_flags;
 }
 
+
 // ctor
 
 ACE_Dynamic_Message_Strategy::ACE_Dynamic_Message_Strategy (unsigned long static_bit_field_mask,
@@ -1250,6 +1286,52 @@ ACE_Dynamic_Message_Strategy::ACE_Dynamic_Message_Strategy (unsigned long static
 ACE_Dynamic_Message_Strategy::~ACE_Dynamic_Message_Strategy (void)
 {
 }
+
+ACE_Dynamic_Message_Strategy::Priority_Status
+ACE_Dynamic_Message_Strategy::priority_status (ACE_Message_Block & mb,
+                                               const ACE_Time_Value & tv)
+{
+  // default the message to have pending priority status
+  Priority_Status status = ACE_Dynamic_Message_Strategy::PENDING;
+
+  // start with the passed absolute time as the message's priority, then
+  // call the polymorphic hook method to (at least partially) convert
+  // the absolute time and message attributes into the message's priority
+  ACE_Time_Value priority (tv);
+  convert_priority (priority, mb);
+
+  // if the priority is negative, the message is pending
+  if (priority < ACE_Time_Value::zero)
+    {
+      // priority for pending messages must be shifted
+      // upward above the late priority range
+      priority += pending_shift_;
+      if (priority < min_pending_)
+        priority = min_pending_;
+    }
+  // otherwise, if the priority is greater than the maximum late
+  // priority value that can be represented, it is beyond late
+  else if (priority > max_late_)
+    {
+      // all messages that are beyond late are assigned lowest priority (zero)
+      mb.msg_priority (0);
+      return ACE_Dynamic_Message_Strategy::BEYOND_LATE;
+    }
+  // otherwise, the message is late, but its priority is correct
+  else
+    status = ACE_Dynamic_Message_Strategy::LATE;
+
+  // use (fast) bitwise operators to isolate and replace
+  // the dynamic portion of the message's priority
+  mb.msg_priority((mb.msg_priority() & static_bit_field_mask_) |
+                  ((priority.usec () +
+                    ACE_ONE_SECOND_IN_USECS * (suseconds_t)(priority.sec())) <<
+                   static_bit_field_shift_));
+
+  // returns the priority status of the message
+  return status;
+}
+
 
 // Dump the state of the strategy.
 
@@ -1284,7 +1366,7 @@ ACE_Dynamic_Message_Strategy::dump (void) const
 #endif /* ACE_HAS_DUMP */
 }
 
-ACE_Deadline_Message_Strategy:: ACE_Deadline_Message_Strategy (unsigned long static_bit_field_mask,
+ACE_Deadline_Message_Strategy::ACE_Deadline_Message_Strategy (unsigned long static_bit_field_mask,
                                                                unsigned long static_bit_field_shift,
                                                                unsigned long dynamic_priority_max,
                                                                unsigned long dynamic_priority_offset)

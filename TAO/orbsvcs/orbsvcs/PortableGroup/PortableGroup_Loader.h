@@ -47,8 +47,7 @@ public:
   TAO_PortableGroup_Loader (void);
 
   /// Initialize the PortableGroup loader hooks.
-  virtual int init (int argc,
-                    char *[]);
+  virtual int init (int argc, char *[]);
 
   /// Used to force the initialization of the ORB code.
   static int Initializer (void);

@@ -12,8 +12,8 @@ project(*client) : taoclient, anytypecode {
   after += *idl
   requires += corba_messaging
   source_files {
-    client.cpp
     timeC.cpp
+    client.cpp
   }
   IDL_Files {
   }
@@ -22,9 +22,9 @@ project(*client) : taoclient, anytypecode {
 project(*server) : taoserver {
   after += *idl
   source_files {
-    server.cpp
-    timeS.cpp
     timeC.cpp
+    timeS.cpp
+    server.cpp
   }
   IDL_Files {
   }

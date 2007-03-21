@@ -48,7 +48,7 @@ void Temperature_Monitor::record_failure (void)
 // Listing 41
 
 // Listing 42 code/ch21
-  int now = ACE_OS::time ();
+  int now = (int) ACE_OS::time ();
   int lastResetTime;
   if (lastReset.get ())
     {
@@ -128,6 +128,6 @@ void Temperature_Monitor::monitor (void)
       ACE_OS::sleep (this->opt_.poll_interval ());
     }
 
-  delete this->thermometer_;
+  ACE_NOTREACHED (delete this->thermometer_;)
 }
 // Listing 2

@@ -58,9 +58,6 @@ public:
   /// 0:false, 1:true
   virtual int is_amh_exception_holder (be_interface *node);
 
-  virtual int gen_throw_spec (be_operation *node);
-  // generate the throw specification
-
   virtual int gen_raise_exception (const char *exception_name,
                                    const char *exception_arguments);
   // helper that generates code for raising an exception

@@ -77,36 +77,36 @@ foreach $type (@types) {
     print STDERR "==== Testing $type === wait....\n";
 
     $server = $SV->Spawn ();
-    
+
     if ($server != 0) {
         print STDERR "ERROR: server returned $server\n";
         $status = 1;
     }
     else
     {
-        if (PerlACE::waitforfile_timed ($iorfile, 15) == -1) {
+        if (PerlACE::waitforfile_timed ($iorfile, $PerlACE::wait_interval_for_process_creation) == -1) {
             print STDERR "ERROR: cannot find file <$iorfile>\n";
-            $SV->Kill (); 
+            $SV->Kill ();
             exit 1;
         }
 
         $CL->Arguments ("$debug -f $iorfile  -i $invocation -t $type -n $num -x");
 
         $client = $CL->SpawnWaitKill (60);
-        
+
         if ($client != 0) {
             print STDERR "ERROR: client returned $client\n";
             $status = 1;
         }
 
         $server = $SV->WaitKill (10);
-    
+
         if ($server != 0) {
             print STDERR "ERROR: server returned $server\n";
             $status = 1;
         }
     }
-    
+
     unlink $iorfile;
 
     print STDERR "==== Test for $type finished ===\n";

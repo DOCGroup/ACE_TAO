@@ -137,7 +137,6 @@ TAO_ECG_UDP_Sender::reconnect (const RtecEventChannelAdmin::ConsumerQOS& sub)
 
 void
 TAO_ECG_UDP_Sender::disconnect_push_consumer (void)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Prevent attempts to disconnect.
   this->auto_proxy_disconnect_.disallow_command ();
@@ -162,7 +161,6 @@ TAO_ECG_UDP_Sender::shutdown (void)
 
 void
 TAO_ECG_UDP_Sender::push (const RtecEventComm::EventSet &events)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (events.length () == 0)
     {

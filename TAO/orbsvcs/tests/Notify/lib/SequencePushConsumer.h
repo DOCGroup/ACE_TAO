@@ -80,19 +80,12 @@ protected:
   virtual void disconnect_from_proxy (void);
 
   // = SequencePushConsumer methods
-  virtual void disconnect_sequence_push_consumer (void)
-    ACE_THROW_SPEC ((
-                     CORBA::SystemException
-                     ));
+  virtual void disconnect_sequence_push_consumer (void);
 
  /// Default does nothing.
   virtual void push_structured_events (
         const CosNotification::EventBatch & notifications
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        CosEventComm::Disconnected
-       ));
+      );
 };
 
 #if defined (__ACE_INLINE__)

@@ -40,7 +40,6 @@ set_state (CORBA::Any const& state)
 
 CORBA::Short
 RolyPoly_i::number (char *&str)
-  ACE_THROW_SPEC ((CORBA::SystemException, RolyPoly::E))
 {
   CORBA::string_free (str);
 
@@ -63,7 +62,6 @@ RolyPoly_i::number (char *&str)
 
 void
 RolyPoly_i::shutdown (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG, "Server is shutting down.\n"));
 

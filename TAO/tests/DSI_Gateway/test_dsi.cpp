@@ -12,7 +12,6 @@ ACE_RCSID(DSI_Gateway, test_dsi, "$Id$")
 
 void
 DSI_Simple_Server::invoke (CORBA::ServerRequest_ptr request)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::NVList_ptr list;
   this->orb_->create_list (0, list);
@@ -40,10 +39,8 @@ DSI_Simple_Server::invoke (CORBA::ServerRequest_ptr request)
       // Updates the byte order state, if necessary.
       target_request->invoke ();
     }
-  catch (const CORBA::UNKNOWN& ex)
+  catch (const CORBA::UNKNOWN&)
     {
-      ACE_UNUSED_ARG (ex);
-
       // Outgoing reply must have the same byte order as the incoming one.
       request->_tao_reply_byte_order (target_request->_tao_byte_order ());
 
@@ -64,7 +61,6 @@ DSI_Simple_Server::invoke (CORBA::ServerRequest_ptr request)
 CORBA::RepositoryId
 DSI_Simple_Server::_primary_interface (const PortableServer::ObjectId &,
                                        PortableServer::POA_ptr)
-    ACE_THROW_SPEC (())
 {
   return CORBA::string_dup ("IDL:Simple_Server:1.0");
 }

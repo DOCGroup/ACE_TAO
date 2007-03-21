@@ -23,7 +23,6 @@
 
 #include "tao/Compression/Compression.h"
 #include "tao/LocalObject.h"
-#include "ace/Synch_Traits.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -33,48 +32,30 @@ namespace TAO
     public virtual ::Compression::CompressorFactory,
     public virtual TAO_Local_RefCounted_Object
   {
-    public:
-      CompressorFactory (::Compression::CompressorId compressor_id);
+  public:
+    CompressorFactory (::Compression::CompressorId compressor_id);
 
-      virtual ::Compression::CompressorId compressor_id (void)
-        ACE_THROW_SPEC (( ::CORBA::SystemException));
+    virtual ::Compression::CompressorId compressor_id (void);
 
-      virtual ::CORBA::ULongLong compressed_bytes (void)
-        ACE_THROW_SPEC ((
-          ::CORBA::SystemException
-        ));
+    virtual ::CORBA::ULongLong compressed_bytes (void);
 
-      virtual ::CORBA::ULongLong uncompressed_bytes (void)
-        ACE_THROW_SPEC ((
-          ::CORBA::SystemException
-        ));
+    virtual ::CORBA::ULongLong uncompressed_bytes (void);
 
-      virtual ::CORBA::Double average_compression (void)
-        ACE_THROW_SPEC ((
-          ::CORBA::SystemException
-        ));
+    virtual ::CORBA::Double average_compression (void);
 
-      virtual ::Compression::Compressor_ptr get_compressor (
-          ::Compression::CompressionLevel compression_level
-        )
-        ACE_THROW_SPEC ((
-          ::CORBA::SystemException
-        )) = 0;
+    virtual ::Compression::Compressor_ptr get_compressor
+      (::Compression::CompressionLevel compression_level)
+      = 0;
 
-      virtual void add_sample (
-          ::CORBA::ULongLong compressed_bytes,
-          ::CORBA::ULongLong uncompressed_bytes
-        )
-        ACE_THROW_SPEC ((
-          ::CORBA::SystemException
-        ));
+    virtual void add_sample (::CORBA::ULongLong compressed_bytes,
+                             ::CORBA::ULongLong uncompressed_bytes);
 
-    private:
-      ACE_SYNCH_MUTEX mutex_;
-      ::Compression::CompressorId compressor_id_;
-      ::CORBA::ULongLong compressed_bytes_;
-      ::CORBA::ULongLong uncompressed_bytes_;
-    };
+  private:
+    TAO_SYNCH_MUTEX mutex_;
+    ::Compression::CompressorId const compressor_id_;
+    ::CORBA::ULongLong compressed_bytes_;
+    ::CORBA::ULongLong uncompressed_bytes_;
+  };
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -35,14 +35,7 @@ TAO_DynAnyFactory::TAO_DynAnyFactory (void)
 }
 
 DynamicAny::DynAny_ptr
-TAO_DynAnyFactory::create_dyn_any (
-      const CORBA::Any & value
-
-    )
-  ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      DynamicAny::DynAnyFactory::InconsistentTypeCode
-    ))
+TAO_DynAnyFactory::create_dyn_any (const CORBA::Any & value)
 {
   return
     TAO::MakeDynAnyUtils::make_dyn_any_t<const CORBA::Any&> (
@@ -51,14 +44,7 @@ TAO_DynAnyFactory::create_dyn_any (
 }
 
 DynamicAny::DynAny_ptr
-TAO_DynAnyFactory::create_dyn_any_from_type_code (
-      CORBA::TypeCode_ptr type
-
-    )
-  ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      DynamicAny::DynAnyFactory::InconsistentTypeCode
-    ))
+TAO_DynAnyFactory::create_dyn_any_from_type_code (CORBA::TypeCode_ptr type)
 {
   // Second arg is typed in the template parameter, repeating it
   // this way allows cleaner template code.
@@ -70,61 +56,38 @@ TAO_DynAnyFactory::create_dyn_any_from_type_code (
 
 DynamicAny::DynAny_ptr
 TAO_DynAnyFactory::create_dyn_any_without_truncation (
-    const CORBA::Any & /* value */
-
-  )
-  ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      DynamicAny::DynAnyFactory::InconsistentTypeCode,
-      DynamicAny::MustTruncate
-    ))
+    const CORBA::Any & /* value */)
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (),
-                    DynamicAny::DynAny::_nil ());
+  throw ::CORBA::NO_IMPLEMENT ();
 }
 
 DynamicAny::DynAnySeq *
 TAO_DynAnyFactory::create_multiple_dyn_anys (
     const DynamicAny::AnySeq & /* values */,
-    ::CORBA::Boolean /* allow_truncate */
-
-  )
-  ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      DynamicAny::DynAnyFactory::InconsistentTypeCode,
-      DynamicAny::MustTruncate
-    ))
+    ::CORBA::Boolean /* allow_truncate */)
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
+  throw ::CORBA::NO_IMPLEMENT ();
 }
 
 DynamicAny::AnySeq *
 TAO_DynAnyFactory::create_multiple_anys (
-    const DynamicAny::DynAnySeq & /* values */
-
-  )
-  ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ))
+    const DynamicAny::DynAnySeq & /* values */)
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
+  throw ::CORBA::NO_IMPLEMENT ();
 }
 
 // Utility function called by all the DynAny classes
 // to extract the TCKind of possibly aliased types.
 CORBA::TCKind
-TAO_DynAnyFactory::unalias (CORBA::TypeCode_ptr tc
-                            )
+TAO_DynAnyFactory::unalias (CORBA::TypeCode_ptr tc)
 {
   CORBA::TCKind tck = tc->kind ();
 
   while (tck == CORBA::tk_alias)
     {
-      CORBA::TypeCode_var temp =
-        tc->content_type ();
+      CORBA::TypeCode_var temp = tc->content_type ();
 
-      tck = TAO_DynAnyFactory::unalias (temp.in ()
-                                       );
+      tck = TAO_DynAnyFactory::unalias (temp.in ());
     }
 
   return tck;
@@ -132,8 +95,7 @@ TAO_DynAnyFactory::unalias (CORBA::TypeCode_ptr tc
 
 // Same as above, but returns the type code.
 CORBA::TypeCode_ptr
-TAO_DynAnyFactory::strip_alias (CORBA::TypeCode_ptr tc
-                                )
+TAO_DynAnyFactory::strip_alias (CORBA::TypeCode_ptr tc)
 {
   CORBA::TypeCode_var retval = CORBA::TypeCode::_duplicate (tc);
   CORBA::TCKind tck = retval->kind ();

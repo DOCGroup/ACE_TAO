@@ -1037,17 +1037,17 @@ public:
 
   // = Enqueue and dequeue methods.
 
-  // For the following enqueue and dequeue methods if <timeout> == 0,
+  // For the following enqueue and dequeue methods if @a timeout == 0,
   // the caller will block until action is possible, else will wait
-  // until the absolute time specified in *<timeout> elapses).  These
+  // until the absolute time specified in *@a timeout elapses).  These
   // calls will return, however, when queue is closed, deactivated,
   // when a signal occurs, or if the time specified in timeout
   // elapses, (in which case errno = EWOULDBLOCK).
 
   /**
    * Retrieve the first <ACE_MESSAGE_TYPE> without removing it.  Note
-   * that <timeout> uses <{absolute}> time rather than <{relative}>
-   * time.  If the <timeout> elapses without receiving a message -1 is
+   * that @a timeout uses <{absolute}> time rather than <{relative}>
+   * time.  If the @a timeout elapses without receiving a message -1 is
    * returned and <errno> is set to <EWOULDBLOCK>.  If the queue is
    * deactivated -1 is returned and <errno> is set to <ESHUTDOWN>.
    * Otherwise, returns -1 on failure, else the number of items still
@@ -1060,8 +1060,8 @@ public:
    * Enqueue an <ACE_MESSAGE_TYPE *> into the <Message_Queue> in
    * accordance with its <msg_priority> (0 is lowest priority).  FIFO
    * order is maintained when messages of the same priority are
-   * inserted consecutively.  Note that <timeout> uses <{absolute}>
-   * time rather than <{relative}> time.  If the <timeout> elapses
+   * inserted consecutively.  Note that @a timeout uses <{absolute}>
+   * time rather than <{relative}> time.  If the @a timeout elapses
    * without receiving a message -1 is returned and <errno> is set to
    * <EWOULDBLOCK>.  If the queue is deactivated -1 is returned and
    * <errno> is set to <ESHUTDOWN>.  Otherwise, returns -1 on failure,
@@ -1074,8 +1074,8 @@ public:
    * Enqueue an <ACE_MESSAGE_TYPE *> into the <Message_Queue> in
    * accordance with its <msg_deadline_time>.  FIFO
    * order is maintained when messages of the same deadline time are
-   * inserted consecutively.  Note that <timeout> uses <{absolute}>
-   * time rather than <{relative}> time.  If the <timeout> elapses
+   * inserted consecutively.  Note that @a timeout uses <{absolute}>
+   * time rather than <{relative}> time.  If the @a timeout elapses
    * without receiving a message -1 is returned and <errno> is set to
    * <EWOULDBLOCK>.  If the queue is deactivated -1 is returned and
    * <errno> is set to <ESHUTDOWN>.  Otherwise, returns -1 on failure,
@@ -1087,7 +1087,7 @@ public:
   /**
    * This is an alias for <enqueue_prio>.  It's only here for
    * backwards compatibility and will go away in a subsequent release.
-   * Please use <enqueue_prio> instead.  Note that <timeout> uses
+   * Please use <enqueue_prio> instead.  Note that @a timeout uses
    * <{absolute}> time rather than <{relative}> time.
    */
   virtual int enqueue (ACE_MESSAGE_TYPE *new_item,
@@ -1095,8 +1095,8 @@ public:
 
   /**
    * Enqueue an <ACE_MESSAGE_TYPE *> at the end of the queue.  Note
-   * that <timeout> uses <{absolute}> time rather than <{relative}>
-   * time.  If the <timeout> elapses without receiving a message -1 is
+   * that @a timeout uses <{absolute}> time rather than <{relative}>
+   * time.  If the @a timeout elapses without receiving a message -1 is
    * returned and <errno> is set to <EWOULDBLOCK>.  If the queue is
    * deactivated -1 is returned and <errno> is set to <ESHUTDOWN>.
    * Otherwise, returns -1 on failure, else the number of items still
@@ -1107,8 +1107,8 @@ public:
 
   /**
    * Enqueue an <ACE_MESSAGE_TYPE *> at the head of the queue.  Note
-   * that <timeout> uses <{absolute}> time rather than <{relative}>
-   * time.  If the <timeout> elapses without receiving a message -1 is
+   * that @a timeout uses <{absolute}> time rather than <{relative}>
+   * time.  If the @a timeout elapses without receiving a message -1 is
    * returned and <errno> is set to <EWOULDBLOCK>.  If the queue is
    * deactivated -1 is returned and <errno> is set to <ESHUTDOWN>.
    * Otherwise, returns -1 on failure, else the number of items still
@@ -1124,8 +1124,8 @@ public:
 
   /**
    * Dequeue and return the <ACE_MESSAGE_TYPE *> at the head of the
-   * queue.  Note that <timeout> uses <{absolute}> time rather than
-   * <{relative}> time.  If the <timeout> elapses without receiving a
+   * queue.  Note that @a timeout uses <{absolute}> time rather than
+   * <{relative}> time.  If the @a timeout elapses without receiving a
    * message -1 is returned and <errno> is set to <EWOULDBLOCK>.  If
    * the queue is deactivated -1 is returned and <errno> is set to
    * <ESHUTDOWN>.  Otherwise, returns -1 on failure, else the number
@@ -1136,8 +1136,8 @@ public:
 
   /**
    * Dequeue and return the <ACE_MESSAGE_TYPE *> that has the lowest
-   * priority.  Note that <timeout> uses <{absolute}> time rather than
-   * <{relative}> time.  If the <timeout> elapses without receiving a
+   * priority.  Note that @a timeout uses <{absolute}> time rather than
+   * <{relative}> time.  If the @a timeout elapses without receiving a
    * message -1 is returned and <errno> is set to <EWOULDBLOCK>.  If
    * the queue is deactivated -1 is returned and <errno> is set to
    * <ESHUTDOWN>.  Otherwise, returns -1 on failure, else the number
@@ -1148,8 +1148,8 @@ public:
 
   /**
    * Dequeue and return the <ACE_MESSAGE_TYPE *> at the tail of the
-   * queue.  Note that <timeout> uses <{absolute}> time rather than
-   * <{relative}> time.  If the <timeout> elapses without receiving a
+   * queue.  Note that @a timeout uses <{absolute}> time rather than
+   * <{relative}> time.  If the @a timeout elapses without receiving a
    * message -1 is returned and <errno> is set to <EWOULDBLOCK>.  If
    * the queue is deactivated -1 is returned and <errno> is set to
    * <ESHUTDOWN>.  Otherwise, returns -1 on failure, else the number
@@ -1160,8 +1160,8 @@ public:
 
   /**
    * Dequeue and return the <ACE_MESSAGE_TYPE *> with the lowest
-   * deadline time.  Note that <timeout> uses <{absolute}> time rather than
-   * <{relative}> time.  If the <timeout> elapses without receiving a
+   * deadline time.  Note that @a timeout uses <{absolute}> time rather than
+   * <{relative}> time.  If the @a timeout elapses without receiving a
    * message -1 is returned and <errno> is set to <EWOULDBLOCK>.  If
    * the queue is deactivated -1 is returned and <errno> is set to
    * <ESHUTDOWN>.  Otherwise, returns -1 on failure, else the number
@@ -1308,7 +1308,7 @@ protected:
  * version of the ACE_Message_Queue. If @c ACE_SYNCH_DECL is @c ACE_MT_SYNCH
  * then all operations are thread-safe. Otherwise, if it's @c ACE_NULL_SYNCH
  * then there's no locking overhead.
- * 
+ *
  * The @c ACE_MESSAGE_TYPE messages that are sent to this
  * queue can be chained. Messages are expected to have a
  * @c next method that returns the next message in the chain;

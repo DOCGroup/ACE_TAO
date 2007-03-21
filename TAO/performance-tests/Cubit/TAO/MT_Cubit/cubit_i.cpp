@@ -19,28 +19,24 @@ Cubit_i::~Cubit_i (void)
 
 CORBA::Octet
 Cubit_i::cube_octet (CORBA::Octet o)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return (CORBA::Octet) (o * o * o);
 }
 
 CORBA::Short
 Cubit_i::cube_short (CORBA::Short s)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return (CORBA::Short) (s * s * s);
 }
 
 CORBA::Long
 Cubit_i::cube_long (CORBA::Long l)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return (CORBA::Long) (l * l * l);
 }
 
 Cubit::Many
 Cubit_i::cube_struct (const Cubit::Many &values)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   Cubit::Many out_values;
 
@@ -53,13 +49,11 @@ Cubit_i::cube_struct (const Cubit::Many &values)
 
 void
 Cubit_i::noop (void)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // does nothing.
 }
 
 void Cubit_i::shutdown (void)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
               "(%t) Calling orb ()->shutdown ()\n"));

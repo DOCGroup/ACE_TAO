@@ -74,7 +74,7 @@ CORBA::Boolean
 TAO::Out_Var_Size_SArgument_T<S,Insert_Policy>::marshal (TAO_OutputCDR &cdr)
 {
   if (0 == this->x_.ptr())
-    ACE_THROW_RETURN (::CORBA::BAD_PARAM(0, CORBA::COMPLETED_MAYBE), false); 
+    throw ::CORBA::BAD_PARAM(0, CORBA::COMPLETED_MAYBE);
 
   return cdr << this->x_.in ();
 }

@@ -9,7 +9,9 @@
 #include "tao/operation_details.h"
 #include "tao/ORB_Core.h"
 #include "tao/Protocols_Hooks.h"
+#include "tao/Network_Priority_Protocols_Hooks.h"
 #include "tao/debug.h"
+#include "tao/SystemException.h"
 
 ACE_RCSID (tao,
            Remote_Invocation,
@@ -77,9 +79,7 @@ namespace TAO
       CORBA::ULong index = 0;
       IOP::IOR *ior_info = 0;
       int const retval =
-        this->resolver_.stub ()->create_ior_info (ior_info,
-                                                  index
-                                                 );
+        this->resolver_.stub ()->create_ior_info (ior_info, index);
 
       if (retval == -1)
         {
@@ -95,18 +95,14 @@ namespace TAO
           return;
         }
 
-      target_spec.target_specifier (*ior_info,
-                                    index);
+      target_spec.target_specifier (*ior_info, index);
       break;
     }
-
-
   }
 
   void
   Remote_Invocation::write_header (TAO_Target_Specification &spec,
-                                   TAO_OutputCDR &out_stream
-                                   )
+                                   TAO_OutputCDR &out_stream)
   {
     this->resolver_.transport ()->clear_translators (0, &out_stream);
 
@@ -129,8 +125,6 @@ namespace TAO
       {
         throw ::CORBA::MARSHAL ();
       }
-
-    return;
   }
 
   Invocation_Status
@@ -141,14 +135,44 @@ namespace TAO
     TAO_Protocols_Hooks *tph =
       this->resolver_.stub ()->orb_core ()->get_protocols_hooks ();
 
-    CORBA::Boolean set_client_network_priority =
-      tph->set_client_network_priority (this->resolver_.transport ()->tag (),
-                                        this->resolver_.stub ());
+    TAO_Network_Priority_Protocols_Hooks *nph =
+      this->resolver_.stub ()->orb_core ()->
+        get_network_priority_protocols_hooks ();
 
     TAO_Connection_Handler *connection_handler =
       this->resolver_.transport ()->connection_handler ();
 
-    connection_handler->set_dscp_codepoint (set_client_network_priority);
+    if (nph != 0)
+      {
+        // nph = 0, means DiffServ library is not used
+        // nph = 0, means DiffServ library is used, and 
+        // request DSCP and reply DSCP are set.
+        // Note that the application could still be using
+        // RTCORBA, but still setting DIffServ codepoints
+        // using the DiffServ library takes precedence.
+        //
+        CORBA::Long dscp = nph->get_dscp_codepoint (this->resolver_.stub (),
+          this->resolver_.object ());
+        connection_handler->set_dscp_codepoint (dscp);
+      }
+    else if (tph != 0)
+      {
+        // If we execute this code, DiffServ library is not used,
+        // but RTCORBA could be used.
+        // Which means that using the enable_network_priority flag,
+        // the application might want to set DiffServ codepoints.
+        // Check if that is the case.
+        //
+        CORBA::Boolean const set_client_network_priority =
+          tph->set_client_network_priority (
+            this->resolver_.transport ()->tag (),
+            this->resolver_.stub ());
+        connection_handler->set_dscp_codepoint (set_client_network_priority);
+      }
+
+    // Note that if noth nph and tph are 0, then we do not make any
+    // virtual calls any more, because we have removed the default
+    // implementations.
 
     int const retval =
       this->resolver_.transport ()->send_request (
@@ -164,16 +188,11 @@ namespace TAO
           {
             // We sent a message already and we haven't gotten a
             // reply.  Just throw TIMEOUT with *COMPLETED_MAYBE*.
-            ACE_THROW_RETURN (
-                CORBA::TIMEOUT (
-                    CORBA::SystemException::_tao_minor_code (
-                        TAO_TIMEOUT_SEND_MINOR_CODE,
-                        errno
-                        ),
-                    CORBA::COMPLETED_MAYBE
-                    ),
-                TAO_INVOKE_FAILURE
-                );
+            throw ::CORBA::TIMEOUT (
+              CORBA::SystemException::_tao_minor_code (
+                TAO_TIMEOUT_SEND_MINOR_CODE,
+                errno),
+              CORBA::COMPLETED_MAYBE);
           }
 
         if (TAO_debug_level > 2)

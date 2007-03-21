@@ -37,7 +37,6 @@ TAO_EC_TPC_ProxyPushConsumer::~TAO_EC_TPC_ProxyPushConsumer (void)
 
 void
 TAO_EC_TPC_ProxyPushConsumer::disconnect_push_consumer ()
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   RtecEventComm::PushConsumer_var emulated_exceptions_suck =
     this->_this ();

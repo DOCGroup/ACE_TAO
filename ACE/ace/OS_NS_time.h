@@ -77,17 +77,10 @@ struct tm {
  */
 inline long ace_timezone()
 {
-#if defined (ACE_HAS_WINCE)
+#if defined (ACE_HAS_WIN32)
   TIME_ZONE_INFORMATION tz;
   GetTimeZoneInformation (&tz);
   return tz.Bias * 60;
-#elif defined (ACE_WIN32) && !defined (ACE_HAS_DINKUM_STL)
-  return _timezone;  // For Win32.
-#elif defined (ACE_WIN32) && defined (ACE_HAS_DINKUM_STL)
-  time_t tod = time(0);   // get current time
-  time_t t1 = mktime(gmtime(&tod));   // convert without timezone
-  time_t t2 = mktime(localtime(&tod));   // convert with timezone
-  return difftime(t1, t2); // compute difference in seconds
 #elif defined (ACE_HAS_TIMEZONE)
   // The XPG/POSIX specification requires that tzset() be called to
   // set the global variable <timezone>.
@@ -148,11 +141,11 @@ typedef long long ACE_hrtime_t;
 #   endif /* ! ACE_HAS_HI_RES_TIMER  ||  ACE_LACKS_LONGLONG_T */
 # endif /* ACE_WIN32 */
 
-# if defined (ACE_HRTIME_T_IS_BASIC_TYPE)
-#   define ACE_HRTIME_CONVERSION(VAL) (VAL)
+# if defined (ACE_LACKS_UNSIGNEDLONGLONG_T)
+#   define ACE_HRTIME_CONVERSION(VAL) ACE_U64_TO_U32(VAL)
 #   define ACE_HRTIME_TO_U64(VAL) ACE_U_LongLong(VAL)
 # else
-#   define ACE_HRTIME_CONVERSION(VAL) ACE_U64_TO_U32(VAL)
+#   define ACE_HRTIME_CONVERSION(VAL) (VAL)
 #   define ACE_HRTIME_TO_U64(VAL) (VAL)
 # endif
 

@@ -78,9 +78,8 @@ CORBA::Object_ptr
 ImR_Activator_Loader::create_object (CORBA::ORB_ptr,
                                   int,
                                   ACE_TCHAR **)
-   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_THROW_RETURN(CORBA::NO_IMPLEMENT (), CORBA::Object::_nil ());
+  throw CORBA::NO_IMPLEMENT ();
 }
 
 int

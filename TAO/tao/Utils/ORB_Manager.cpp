@@ -16,7 +16,6 @@
 #include "tao/PortableServer/IdAssignmentPolicyC.h"
 #include "tao/PortableServer/LifespanPolicyC.h"
 
-#include "tao/Environment.h"
 #include "tao/ORBInitializer_Registry.h"
 
 #include "ace/Log_Msg.h"
@@ -322,7 +321,7 @@ TAO_ORB_Manager::~TAO_ORB_Manager (void)
                               );
         }
     }
-  catch ( ::CORBA::Exception&)
+  catch (const ::CORBA::Exception&)
     {
       // ignore any exceptions..
     }

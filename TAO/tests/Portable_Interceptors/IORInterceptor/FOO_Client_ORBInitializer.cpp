@@ -13,14 +13,12 @@ void
 FOO_Client_ORBInitializer::pre_init (
     PortableInterceptor::ORBInitInfo_ptr /* info */
     )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
 FOO_Client_ORBInitializer::post_init (
     PortableInterceptor::ORBInitInfo_ptr info)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   IOP::CodecFactory_var codec_factory =
     info->codec_factory ();

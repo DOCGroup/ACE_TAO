@@ -60,7 +60,6 @@ parse_args (int argc, char *argv[])
 TimeOfDay
 Time_impl::
 get_gmt ()
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   time_t time_now = time (0);
   struct tm *time_p = gmtime (&time_now);
@@ -114,7 +113,12 @@ main (int argc, char *argv[])
       Time_impl time_servant;
 
       // Write its stringified reference to stdout.
-      Time_var tm = time_servant._this ();
+      PortableServer::ObjectId_var id =
+        poa->activate_object (&time_servant);
+
+      CORBA::Object_var object = poa->id_to_reference (id.in ());
+
+      Time_var tm = Time::_narrow (object.in ());
 
       CORBA::String_var str = orb->object_to_string (tm.in ());
 

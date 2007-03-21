@@ -23,13 +23,11 @@
 
 #include "tao/Valuetype/Value_VarOut_T.h"
 
-#include "tao/Environment.h"
 #include "tao/Basic_Types.h"
 #include "tao/orbconf.h"
 #include "ace/Synch_Traits.h"
 #include "ace/Thread_Mutex.h"
 #include "ace/Null_Mutex.h"
-#include "ace/CORBA_macros.h"
 #include "ace/Atomic_Op.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

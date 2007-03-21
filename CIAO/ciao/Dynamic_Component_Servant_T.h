@@ -44,8 +44,7 @@ namespace CIAO
 
     virtual ~Dynamic_Component_Servant (void);
 
-    virtual PortableServer::Servant
-      create (PortableServer::ObjectId &oid);
+    virtual PortableServer::Servant create (PortableServer::ObjectId &oid);
 
     virtual void destroy (PortableServer::ObjectId &oid);
 

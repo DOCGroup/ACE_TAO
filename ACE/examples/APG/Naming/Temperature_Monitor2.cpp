@@ -89,7 +89,7 @@ void Temperature_Monitor2::record_failure (void)
   Name_Binding_Ptr lastReset (this->naming_context_.fetch ("lastReset"));
   Name_Binding_Ptr resetCount (this->naming_context_.fetch ("resetCount"));
 
-  int now = ACE_OS::time ();
+  int now = (int) ACE_OS::time ();
 
   int lastFailureTime;
   int lastResetTime = 0;
@@ -141,5 +141,5 @@ void Temperature_Monitor2::monitor (void)
       ACE_OS::sleep (this->opt_.poll_interval ());
     }
 
-  delete this->thermometer_;
+  ACE_NOTREACHED (delete this->thermometer_;)
 }

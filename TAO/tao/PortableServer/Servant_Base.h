@@ -67,33 +67,22 @@ public:
   virtual ~TAO_ServantBase (void);
 
   /// Returns the default POA for this servant.
-  virtual PortableServer::POA_ptr _default_POA (
-      void
-    );
+  virtual PortableServer::POA_ptr _default_POA (void);
 
   /// Local implementation of the CORBA::Object::_is_a method.
-  virtual CORBA::Boolean _is_a (const char *logical_type_id
-                                );
+  virtual CORBA::Boolean _is_a (const char *logical_type_id);
 
   /// Default _non_existent: always returns false.
-  virtual CORBA::Boolean _non_existent (
-      void
-    );
+  virtual CORBA::Boolean _non_existent (void);
 
   /// Query the Interface Repository for the interface definition.
-  virtual CORBA::InterfaceDef_ptr _get_interface (
-      void
-    );
+  virtual CORBA::InterfaceDef_ptr _get_interface (void);
 
   /// Default _get_component: always returns CORBA::Object::_nil().
-  virtual CORBA::Object_ptr _get_component (
-      void
-    );
+  virtual CORBA::Object_ptr _get_component (void);
 
   /// Get the repository id.
-  virtual char * _repository_id (
-      void
-    );
+  virtual char * _repository_id (void);
 
   /// This is an auxiliary method for _this() and _narrow().
   virtual TAO_Stub *_create_stub (void);
@@ -105,9 +94,7 @@ public:
    * results and out parameters (if any) or the exceptions thrown into
    * @a request.
    */
-  virtual void _dispatch (TAO_ServerRequest &request,
-                          void *servant_upcall
-                          ) = 0;
+  virtual void _dispatch (TAO_ServerRequest &request, void *servant_upcall) = 0;
 
   /// Please see documentation in tao/Abstract_Servant_Base.h for
   /// details.
@@ -156,13 +143,11 @@ protected:
 
   virtual void synchronous_upcall_dispatch (TAO_ServerRequest & req,
                                             void * servant_upcall,
-                                            void * derived_this
-                                           );
+                                            void * derived_this);
 
   virtual void asynchronous_upcall_dispatch (TAO_ServerRequest & req,
                                              void * servant_upcall,
-                                             void * derived_this
-                                            );
+                                             void * derived_this);
 
 protected:
   /// Reference counter.

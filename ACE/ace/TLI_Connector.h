@@ -42,7 +42,7 @@ public:
   /**
    * Actively connect and produce a <new_stream> if things go well.
    * The <remote_sap> is the address that we are trying to connect
-   * with.  The <timeout> is the amount of time to wait to connect.
+   * with.  The @a timeout is the amount of time to wait to connect.
    * If it's 0 then we block indefinitely.  If *timeout == {0, 0} then
    * the connection is done using non-blocking mode.  In this case, if
    * the connection can't be made immediately the value of -1 is
@@ -70,7 +70,7 @@ public:
   /**
    * Actively connect and produce a <new_stream> if things go well.
    * The <remote_sap> is the address that we are trying to connect
-   * with.  The <timeout> is the amount of time to wait to connect.
+   * with.  The @a timeout is the amount of time to wait to connect.
    * If it's 0 then we block indefinitely.  If *timeout == {0, 0} then
    * the connection is done using non-blocking mode.  In this case, if
    * the connection can't be made immediately the value of -1 is

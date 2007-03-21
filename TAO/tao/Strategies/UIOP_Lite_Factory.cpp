@@ -54,7 +54,7 @@ TAO_UIOP_Lite_Protocol_Factory::make_acceptor (void)
   TAO_Acceptor *acceptor = 0;
 
   // We are Lite factory
-  CORBA::Boolean lite_factory = 1;
+  CORBA::Boolean lite_factory = true;
   ACE_NEW_RETURN (acceptor,
                   TAO_UIOP_Acceptor (lite_factory),
                   0);
@@ -63,8 +63,7 @@ TAO_UIOP_Lite_Protocol_Factory::make_acceptor (void)
 }
 
 int
-TAO_UIOP_Lite_Protocol_Factory::init (int /* argc */,
-                                      ACE_TCHAR* /* argv */ [])
+TAO_UIOP_Lite_Protocol_Factory::init (int /* argc */, ACE_TCHAR* /* argv */ [])
 {
   return 0;
 }
@@ -75,7 +74,7 @@ TAO_UIOP_Lite_Protocol_Factory::make_connector (void)
   TAO_Connector *connector = 0;
 
   // We are a lite factory
-  CORBA::Boolean lite_factory = 1;
+  CORBA::Boolean lite_factory = true;
   ACE_NEW_RETURN (connector,
                   TAO_UIOP_Connector (lite_factory),
                   0);

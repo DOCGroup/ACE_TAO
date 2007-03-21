@@ -12,6 +12,112 @@ PLANNED CHANGES FOR "ACE-5.5.7"
 
 . (Riverace) Pharlap ETS 13 qualification.
 
+USER VISIBLE CHANGES BETWEEN ACE-5.5.6 and ACE-5.5.7
+====================================================
+
+. ACE 5.5 contained a set of pragmas which prevented Visual Studio 2005 (VC8)
+  from issuing warnings where C run-time functions are used but a more
+  secure alternative is available. For more information on the C run-time
+  issues and Microsoft's response, please see the following MSDN page:
+  http://msdn2.microsoft.com/en-us/library/8ef0s5kh(VS.80).aspx.
+  In this beta, the pragmas which prevented the warnings have been removed.
+  The ACE library has been reviewed and most of the use of "unsafe" functions
+  has been fixed where possible. Since not all of the warnings emanating from
+  ACE are situations that can or should be fixed, the ACE VC8 projects will
+  prevent the warnings while building the ACE kit and its contained examples,
+  tests, etc. The warnings are disabled by adding Microsoft-specified macros
+  to the compile line via MPC. If desired, the warnings can be re-enabled by
+  regenerating the project files with different MPC features. Note, however,
+  that while ACE without warnings caused by the new C run-time functions, your
+  application builds may trigger these warnings either by use of the "unsafe"
+  C run-time functions or via use of an inlined ACE_OS method which uses it.
+  If the warning is caused by an ACE_OS method, there is a more safe alternate
+  available, probably located by appending _r to the method name (e.g.,
+  instead of using ACE_OS::ctime(), use ACE_OS::ctime_r()).
+  There are other cases where the compiler may have issued warnings and ACE
+  prevented this via a #pragma. These #pragmas have been removed as well.
+  This may cause your application builds to trigger more warnings from VC8
+  than past ACE versions. You should review your code and either correct
+  the code or disable the warnings locally, as appropriate.
+
+. The "release" argument to a number of ACE_String_Base<> methods was changed
+  from int to bool to more accurately reflect its purpose. The following
+  methods were changed:
+
+            ACE_String_Base (const CHAR *s,
+                             ACE_Allocator *the_allocator = 0,
+                             int release = 1);
+          to
+            ACE_String_Base (const CHAR *s,
+                             ACE_Allocator *the_allocator = 0,
+                             bool release = true);
+
+            ACE_String_Base (const CHAR *s,
+                             size_type len,
+                             ACE_Allocator *the_allocator = 0,
+                             int release = 1);
+          to
+            ACE_String_Base (const CHAR *s,
+                             size_type len,
+                             ACE_Allocator *the_allocator = 0,
+                             bool release = true);
+
+            void set (const CHAR * s, int release = 1);
+          to
+            void set (const CHAR * s, bool release = true);
+
+            void set (const CHAR * s, size_type len, int release);
+          to
+            void set (const CHAR * s, size_type len, bool release);
+
+            void clear (int release = 0);
+          to
+            void clear (bool release = false);
+
+  Since ACE_String_Base forms the basis of the ACE_CString and ACE_TString
+  classes, this may ripple out to user application code. If you encounter
+  errors in this area while building your applications, replace the
+  int argument you are passing to the method now with either true or false.
+
+. Solutions for the eVC3/4 platform have been removed from this
+  release.  Note that we package WinCE projects/workspaces for use
+  with VC8.
+
+. There were 3 new ACE_Log_Msg logging format specifiers added to make logging
+  easier for types that may change sizes across platforms. These all take one
+  argument, and the new formats are:
+    %b - format a ssize_t value
+    %B - format a size_t value
+    %: - format a time_t value
+
+. The ace/Time_Request_Reply.h and ace/Time_Request_Reply.cpp files were
+  moved from $ACE_ROOT/ace to $ACE_ROOT/netsvcs/lib. The time arguments in
+  the public API to ACE_Time_Request were changed from ACE_UINT32 to time_t
+  and the portions of the on-wire protocol that contains time was changed from
+  ACE_UINT32 to ACE_UINT64. Thus, code that uses the ACE_Time_Request class
+  to transfer time information will not interoperate properly with prior
+  ACE versions. This will affect uses of the netsvcs time clerk/server.
+
+. The portion of the ACE_Name_Request class that carries the on-wire seconds
+  portion of a timeout value was changed from ACE_UINT32 to ACE_UINT64. This
+  means that Name server/clients at ACE 5.5.7 and higher will not interoperate
+  properly with previous ACE versions' name servers/clients.
+
+. In the ACE_Log_Record (ACE_Log_Priority, long, long) constructor, the
+  second argument, long time_stamp, was changed to be of type time_t. This
+  aligns the type with the expected value, a time stamp such as that returned
+  from ACE_OS::time().
+
+. Added support for VxWorks 6.x cross compilation using a Windows host
+  system
+
+. Added support for VxWorks 6.x using the diab compiler
+
+. The destructor of ACE_Event_Handler no longer calls
+  purge_pending_notifications().  Please see bugzilla #2845 for the full
+  rationale.
+  (http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=2845)
+
 USER VISIBLE CHANGES BETWEEN ACE-5.5.5 and ACE-5.5.6
 ====================================================
 

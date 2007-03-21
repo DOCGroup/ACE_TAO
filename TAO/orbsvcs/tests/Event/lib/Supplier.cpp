@@ -164,7 +164,6 @@ EC_Supplier::shutdown (void)
 
 void
 EC_Supplier::disconnect_push_supplier (void)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->driver_->supplier_disconnect (this->cookie_);
   this->consumer_proxy_ =

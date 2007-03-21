@@ -31,7 +31,7 @@ sub test($)
     chdir ($executable);
     my $t1 = new PerlACE::Process ("Test", ($arguments ? $arguments : ""));
     print STDERR "\nTest $executable is running ...\n";
-    my $status = $t1->SpawnWaitKill (10);
+    my $status = $t1->SpawnWaitKill ($PerlACE::wait_interval_for_process_creation);
     chdir ("..");
     if ($status != 0) {
         print STDERR "\nERROR: Test $executable failed, status=$status\n";

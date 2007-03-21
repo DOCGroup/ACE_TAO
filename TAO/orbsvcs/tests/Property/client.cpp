@@ -664,8 +664,7 @@ main (int argc, char **argv)
     {
       Client client;
 
-      if (client.init (argc,
-                       argv) == -1)
+      if (client.init (argc, argv) == -1)
         return 1;
 
       //  client.run ();

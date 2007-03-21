@@ -9,7 +9,6 @@ ACE_RCSID(Trading, Offer_Exporter, "$Id$")
 TAO_Offer_Exporter::
 TAO_Offer_Exporter (CosTrading::Lookup_ptr lookup_if,
                     CORBA::Boolean verbose)
-  ACE_THROW_SPEC ((CORBA::SystemException))
     : verbose_ (verbose)
 {
   // Initialize the offer sequences and structures.
@@ -32,16 +31,6 @@ TAO_Offer_Exporter::~TAO_Offer_Exporter (void)
 
 void
 TAO_Offer_Exporter::export_offers (void)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     CosTrading::Register::InvalidObjectRef,
-                     CosTrading::IllegalServiceType,
-                     CosTrading::UnknownServiceType,
-                     CosTrading::Register::InterfaceTypeMismatch,
-                     CosTrading::IllegalPropertyName,
-                     CosTrading::PropertyTypeMismatch,
-                     CosTrading::ReadonlyDynamicProperty,
-                     CosTrading::MissingMandatoryProperty,
-                     CosTrading::DuplicatePropertyName))
 {
   ACE_DEBUG ((LM_DEBUG, "*** TAO_Offer_Exporter::Exporting offers.\n"));
 
@@ -57,16 +46,6 @@ TAO_Offer_Exporter::export_offers (void)
 
 void
 TAO_Offer_Exporter::export_to (CosTrading::Register_ptr reg)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   CosTrading::Register::InvalidObjectRef,
-                   CosTrading::IllegalServiceType,
-                   CosTrading::UnknownServiceType,
-                   CosTrading::Register::InterfaceTypeMismatch,
-                   CosTrading::IllegalPropertyName,
-                   CosTrading::PropertyTypeMismatch,
-                   CosTrading::ReadonlyDynamicProperty,
-                   CosTrading::MissingMandatoryProperty,
-                   CosTrading::DuplicatePropertyName))
 {
   try
     {
@@ -117,16 +96,6 @@ TAO_Offer_Exporter::export_to (CosTrading::Register_ptr reg)
 
 void
 TAO_Offer_Exporter::export_offers_to_all (void)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   CosTrading::Register::InvalidObjectRef,
-                   CosTrading::IllegalServiceType,
-                   CosTrading::UnknownServiceType,
-                   CosTrading::Register::InterfaceTypeMismatch,
-                   CosTrading::IllegalPropertyName,
-                   CosTrading::PropertyTypeMismatch,
-                   CosTrading::ReadonlyDynamicProperty,
-                   CosTrading::MissingMandatoryProperty,
-                   CosTrading::DuplicatePropertyName))
 {
   ACE_DEBUG ((LM_DEBUG, "*** TAO_Offer_Exporter::Exporting to all.\n"));
 
@@ -189,10 +158,6 @@ TAO_Offer_Exporter::export_offers_to_all (void)
 
 void
 TAO_Offer_Exporter::withdraw_offers (void)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   CosTrading::IllegalOfferId,
-                   CosTrading::UnknownOfferId,
-                   CosTrading::Register::ProxyOfferId))
 {
   ACE_DEBUG ((LM_DEBUG, "*** TAO_Offer_Exporter::Withdrawing all offers.\n"));
 
@@ -221,10 +186,6 @@ TAO_Offer_Exporter::withdraw_offers (void)
 
 void
 TAO_Offer_Exporter::describe_offers (void)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   CosTrading::IllegalOfferId,
-                   CosTrading::UnknownOfferId,
-                   CosTrading::Register::ProxyOfferId))
 {
   ACE_DEBUG ((LM_DEBUG, "*** TAO_Offer_Exporter::Describing all offers.\n"));
 
@@ -265,18 +226,6 @@ TAO_Offer_Exporter::describe_offers (void)
 
 void
 TAO_Offer_Exporter::modify_offers (void)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   CosTrading::NotImplemented,
-                   CosTrading::IllegalOfferId,
-                   CosTrading::UnknownOfferId,
-                   CosTrading::Register::ProxyOfferId,
-                   CosTrading::IllegalPropertyName,
-                   CosTrading::Register::UnknownPropertyName,
-                   CosTrading::PropertyTypeMismatch,
-                   CosTrading::ReadonlyDynamicProperty,
-                   CosTrading::Register::MandatoryProperty,
-                   CosTrading::Register::ReadonlyProperty,
-                   CosTrading::DuplicatePropertyName))
 {
   ACE_DEBUG ((LM_DEBUG, "*** TAO_Offer_Exporter::Modifying all offers.\n"));
 
@@ -317,11 +266,6 @@ TAO_Offer_Exporter::modify_offers (void)
 void
 TAO_Offer_Exporter::
 withdraw_offers_using_constraints (void)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   CosTrading::IllegalServiceType,
-                   CosTrading::UnknownServiceType,
-                   CosTrading::IllegalConstraint,
-                   CosTrading::Register::NoMatchingOffers))
 {
   ACE_DEBUG ((LM_DEBUG, "*** TAO_Offer_Exporter::Withdrawing with constraint.\n"));
 
@@ -355,8 +299,6 @@ withdraw_offers_using_constraints (void)
 
 CosTrading::OfferIdSeq*
 TAO_Offer_Exporter::grab_offerids (void)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   CosTrading::NotImplemented))
 {
   if (this->verbose_)
     ACE_DEBUG ((LM_DEBUG, "TAO_Offer_Exporter::Grabbing all offer ids.\n"));

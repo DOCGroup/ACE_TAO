@@ -223,7 +223,7 @@ public:
 
   void tao_send_reply (void);
 
-  void tao_send_reply_exception (CORBA::Exception&);
+  void tao_send_reply_exception (const CORBA::Exception& ex);
 
   /// Set the boolean member to 1.
   void is_dsi (void);

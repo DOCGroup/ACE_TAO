@@ -227,8 +227,7 @@ Initiator_Server::run (void)
                   "Initiator_Server::run: Trying to invoke "
                   "foo on Object A\n"));
 
-      Initiator_var initiator =
-        this->initiator_i_ptr_->_this();
+      Initiator_var initiator = this->initiator_i_ptr_->_this ();
 
       this->object_A_var_->foo (initiator.in ());
       ACE_DEBUG ((LM_DEBUG,

@@ -62,12 +62,9 @@ public:
   // ctor
 
   // = The Simple_Server methods.
-  void set_x_angle (CORBA::Long x)
-     ACE_THROW_SPEC ((CORBA::SystemException));
-  void set_y_angle (CORBA::Long y)
-     ACE_THROW_SPEC ((CORBA::SystemException));
-  void shutdown (void)
-     ACE_THROW_SPEC ((CORBA::SystemException));
+  void set_x_angle (CORBA::Long x);
+  void set_y_angle (CORBA::Long y);
+  void shutdown (void);
 
 private:
   CORBA::ORB_var orb_;

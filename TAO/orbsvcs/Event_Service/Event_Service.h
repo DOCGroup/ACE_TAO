@@ -41,24 +41,13 @@ public:
 
   // = The RtecEventChannelAdmin::Event_Channel methods
   virtual RtecEventChannelAdmin::ConsumerAdmin_ptr
-    for_consumers (void)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+    for_consumers (void);
   virtual RtecEventChannelAdmin::SupplierAdmin_ptr
-    for_suppliers (void)
-      ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual void destroy (void)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+    for_suppliers (void);
+  virtual void destroy (void);
   virtual RtecEventChannelAdmin::Observer_Handle
-    append_observer (RtecEventChannelAdmin::Observer_ptr observer)
-      ACE_THROW_SPEC ((
-          CORBA::SystemException,
-          RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR,
-          RtecEventChannelAdmin::EventChannel::CANT_APPEND_OBSERVER));
-  virtual void remove_observer (RtecEventChannelAdmin::Observer_Handle)
-      ACE_THROW_SPEC ((
-          CORBA::SystemException,
-          RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR,
-          RtecEventChannelAdmin::EventChannel::CANT_REMOVE_OBSERVER));
+    append_observer (RtecEventChannelAdmin::Observer_ptr observer);
+  virtual void remove_observer (RtecEventChannelAdmin::Observer_Handle);
 
 private:
   /// Parse the command line args

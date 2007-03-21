@@ -68,7 +68,6 @@ ACE_Dynamic_Service_Base::find_i (const ACE_Service_Gestalt* &repo,
 
 
 // Get the instance using <name> for specific configuration repository.
-
 void *
 ACE_Dynamic_Service_Base::instance (const ACE_Service_Gestalt* repo,
                                     const ACE_TCHAR *name,
@@ -98,7 +97,8 @@ ACE_Dynamic_Service_Base::instance (const ACE_Service_Gestalt* repo,
                   repo->repo_, name, type, obj));
 
       if (repo->repo_ != repo_found->repo_)
-        ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT (" [in repo=%@]\n"),
+        ACE_DEBUG ((LM_DEBUG,
+                    ACE_LIB_TEXT (" [in repo=%@]\n"),
                     repo_found->repo_));
       else
         ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\n")));
@@ -114,7 +114,7 @@ void *
 ACE_Dynamic_Service_Base::instance (const ACE_Service_Gestalt* repo,
                                     const ACE_TCHAR *name)
 {
-  return instance(repo,name,false);
+  return instance (repo, name, false);
 }
 
 

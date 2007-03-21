@@ -12,8 +12,7 @@ ACE_RCSID (tao,
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 CORBA::Boolean
-TAO_Default_Collocation_Resolver::is_collocated (CORBA::Object_ptr object
-                                                 ) const
+TAO_Default_Collocation_Resolver::is_collocated (CORBA::Object_ptr object) const
 {
   return object->_is_collocated ();
 }

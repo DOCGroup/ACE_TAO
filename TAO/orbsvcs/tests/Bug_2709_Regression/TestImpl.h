@@ -10,11 +10,9 @@ public:
   TestImpl (CORBA::ORB_ptr orb);
 
   // = The skeleton methods
-  virtual void myMethod (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void myMethod (void);
 
-  virtual void shutdown (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void shutdown (void);
 
 private:
   CORBA::ORB_var orb_;

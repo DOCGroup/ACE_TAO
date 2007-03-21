@@ -42,7 +42,7 @@ namespace CIAO
 
     try
       {
-        this->container_->delete_servant_map (oid);
+        this->container_->delete_servant_from_map (oid);
       }
       catch (const CORBA::Exception& ex)
       {
@@ -68,8 +68,6 @@ namespace CIAO
                              COMP_SVNT>::remove_component (
       ::Components::CCMObject_ptr
     )
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     Components::RemoveFailure))
   {
     PortableServer::ObjectId_var oid =
       PortableServer::string_to_ObjectId (this->obj_id_);
@@ -92,8 +90,6 @@ namespace CIAO
                              EXEC,
                              COMP_SVNT>::create_component (
     )
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     Components::CreateFailure))
   {
     return this->create ();
   }
@@ -108,13 +104,10 @@ namespace CIAO
                              EXEC,
                              COMP_SVNT>::create (
     )
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     Components::CreateFailure))
   {
     if (this->executor_.in () == 0)
     {
-      ACE_THROW_RETURN (CORBA::INTERNAL (),
-                        COMP_SVNT::_stub_type::_nil ());
+      throw CORBA::INTERNAL ();
     }
 
 
@@ -135,7 +128,6 @@ namespace CIAO
                              COMP_SVNT>::_ciao_activate_component (
       ::Components::EnterpriseComponent_ptr ec
     )
-    ACE_THROW_SPEC ((CORBA::SystemException))
   {
     CORBA::Object_var hobj =
       this->container_->get_home_objref (this);
@@ -159,7 +151,7 @@ namespace CIAO
                                                 this,
                                                 this->container_);
 
-    this->container_->add_servant_map (oid, svt);
+    this->container_->add_servant_to_map (oid, svt);
 
     this->dynamic_servant_map_.bind (oid.in (), svt);
 
@@ -199,7 +191,6 @@ namespace CIAO
                              COMP_SVNT>::_ciao_passivate_component (
       typename COMP_SVNT::_stub_ptr_type comp
     )
-    ACE_THROW_SPEC ((CORBA::SystemException))
   {
     PortableServer::ObjectId_var oid;
 

@@ -93,7 +93,7 @@ ifneq ($(SONAME),)
 endif
 
 CCFLAGS         += $(CFLAGS) $(WARNING_FLAGS) $(TEMPLATES_FLAG)
-DCFLAGS         += -g -O0
+DCFLAGS         += -g1 -O0
 DLD             = $(CXX)
 LD              = $(CXX)
 #### The -hidden [...] -non_hidden business avoids multiply defined

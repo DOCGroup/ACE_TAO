@@ -15,14 +15,14 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_INLINE
 ACE_UNIX_Addr::ACE_UNIX_Addr (const wchar_t rendezvous_point[])
 {
-  this->set (ACE_TEXT_ALWAYS_CHAR (rendezvous_point));
+  this->set (ACE_Wide_To_Ascii (rendezvous_point).char_rep ());
 }
 
 /// Creates an ACE_UNIX_Addr from a string.
 ACE_INLINE int
 ACE_UNIX_Addr::set (const wchar_t rendezvous_point[])
 {
-  return this->set (ACE_TEXT_ALWAYS_CHAR (rendezvous_point));
+  return this->set (ACE_Wide_To_Ascii (rendezvous_point).char_rep ());
 }
 #endif /* ACE_HAS_WCHAR */
 

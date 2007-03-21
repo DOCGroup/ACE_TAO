@@ -97,9 +97,9 @@ FE_yyparse (void)
 }
 
 void
-FE_set_yyin (File *f)
+FE_set_yyin (FILE * f)
 {
-  tao_yyin = reinterpret_cast<FILE *> (f);
+  tao_yyin = f;
 }
 
 // Constructor interfaces.

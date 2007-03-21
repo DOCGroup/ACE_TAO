@@ -24,7 +24,6 @@ void
 Server_Peer::callme(Test::Peer_ptr callback,
                     CORBA::ULong max_depth,
                     Test::Payload const &)
-  ACE_THROW_SPEC((CORBA::SystemException))
 {
   int r = ACE_OS::rand_r(this->seed_) % 50;
 
@@ -49,8 +48,7 @@ Server_Peer::callme(Test::Peer_ptr callback,
   }
   else if (max_depth > 0)
   {
-    Test::Peer_var me =
-      this->_this();
+    Test::Peer_var me = this->_this ();
 
     Test::Payload extra_data(this->payload_size_);
     extra_data.length(this->payload_size_);
@@ -62,13 +60,11 @@ Server_Peer::callme(Test::Peer_ptr callback,
 
 void
 Server_Peer::crash(void)
-  ACE_THROW_SPEC((CORBA::SystemException))
 {
   throw CORBA::NO_IMPLEMENT ();
 }
 
 void
 Server_Peer::noop(void)
-  ACE_THROW_SPEC((CORBA::SystemException))
 {
 }

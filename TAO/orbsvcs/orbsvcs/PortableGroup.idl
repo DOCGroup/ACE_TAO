@@ -246,8 +246,8 @@ module PortableGroup
     /**
      * Remove the registration of a factory.
      * @param role the role played by the object formerly created by this factory.
-     * @param location where the factory formerly created objects.
-     * @throws MemberNotPresent if no factory is available for the given role at this location.
+     * @param the_location where the factory formerly created objects.
+     * @throws MemberNotFound if no factory is available for the given role at this location.
      */
     void unregister_factory(in RoleName role, in Location the_location)
       raises (MemberNotFound);

@@ -267,15 +267,66 @@ public:
 #    if   ACE_SIZEOF_LONG_DOUBLE == 16
        typedef long double      LongDouble;
 #      define   ACE_CDR_LONG_DOUBLE_INITIALIZER 0
+#      define   ACE_CDR_LONG_DOUBLE_ASSIGNMENT(LHS, RHS) LHS = RHS
 #    else
 #      define NONNATIVE_LONGDOUBLE
 #      define   ACE_CDR_LONG_DOUBLE_INITIALIZER {{0}}
+#      define   ACE_CDR_LONG_DOUBLE_ASSIGNMENT(LHS, RHS) LHS.assign (RHS)
        struct ACE_Export LongDouble
        {
+       // VxWorks' compiler (gcc 2.96) gets confused by the operator long
+       // double, so we avoid using long double as the NativeImpl.
+       // Linux's x86 long double format (12 or 16 bytes) is incompatible
+       // with Windows, Solaris, AIX, MacOS X and HP-UX (and probably others)
+       // long double format (8 or 16 bytes).  If you need 32-bit Linux to
+       // inter-operate with 64-bit Linux you will want to define this
+       // macro so that "long double" is used.  Otherwise, do not define
+       // this macro.
+#      if defined (ACE_IMPLEMENT_WITH_NATIVE_LONGDOUBLE) || \
+          (!defined (linux) && !defined (VXWORKS))
+         typedef long double NativeImpl;
+#      else
+         typedef double NativeImpl;
+#      endif /* ACE_IMPLEMENT_WITH_NATIVE_LONGDOUBLE || (!linux && !VXWORKS) */
+
          char ld[16];
+
+         LongDouble& assign (const NativeImpl& rhs);
+         LongDouble& assign (const LongDouble& rhs);
+
          bool operator== (const LongDouble &rhs) const;
          bool operator!= (const LongDouble &rhs) const;
-         // @@ also need other comparison operators.
+
+         LongDouble& operator*= (const NativeImpl rhs) {
+           return this->assign (static_cast<NativeImpl> (*this) * rhs);
+         }
+         LongDouble& operator/= (const NativeImpl rhs) {
+           return this->assign (static_cast<NativeImpl> (*this) / rhs);
+         }
+         LongDouble& operator+= (const NativeImpl rhs) {
+           return this->assign (static_cast<NativeImpl> (*this) + rhs);
+         }
+         LongDouble& operator-= (const NativeImpl rhs) {
+           return this->assign (static_cast<NativeImpl> (*this) - rhs);
+         }
+         LongDouble& operator++ () {
+           return this->assign (static_cast<NativeImpl> (*this) + 1);
+         }
+         LongDouble& operator-- () {
+           return this->assign (static_cast<NativeImpl> (*this) - 1);
+         }
+         LongDouble operator++ (int) {
+           LongDouble ldv = *this;
+           this->assign (static_cast<NativeImpl> (*this) + 1);
+           return ldv;
+         }
+         LongDouble operator-- (int) {
+           LongDouble ldv = *this;
+           this->assign (static_cast<NativeImpl> (*this) - 1);
+           return ldv;
+         }
+
+         operator NativeImpl () const;
        };
 #    endif /* ACE_SIZEOF_LONG_DOUBLE != 16 */
 

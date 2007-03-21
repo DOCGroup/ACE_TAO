@@ -15,21 +15,18 @@ FOO_IORInterceptor::FOO_IORInterceptor (IOP::Codec_ptr codec)
 
 char *
 FOO_IORInterceptor::name (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup ("FOO_IORInterceptor");
 }
 
 void
 FOO_IORInterceptor::destroy (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
 FOO_IORInterceptor::establish_components (
     PortableInterceptor::IORInfo_ptr info)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // According to the Portable Interceptors specification,
   // IORInterceptor::establish_components() must not throw an
@@ -101,7 +98,6 @@ FOO_IORInterceptor::establish_components (
 void
 FOO_IORInterceptor::components_established (
     PortableInterceptor::IORInfo_ptr info)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Construct a dummy tagged component.
   IOP::TaggedComponent component;
@@ -160,7 +156,6 @@ void
 FOO_IORInterceptor::adapter_manager_state_changed (
     const char *,
     PortableInterceptor::AdapterState)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
@@ -168,6 +163,5 @@ void
 FOO_IORInterceptor:: adapter_state_changed (
     const PortableInterceptor::ObjectReferenceTemplateSeq &,
     PortableInterceptor::AdapterState)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }

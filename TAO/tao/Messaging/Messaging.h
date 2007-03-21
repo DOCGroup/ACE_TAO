@@ -63,9 +63,7 @@ enum TAO_AMI_Reply_Status
 typedef void (*TAO_Reply_Handler_Skeleton)(
     TAO_InputCDR &,
     Messaging::ReplyHandler_ptr,
-    CORBA::ULong reply_status
-
-    );
+    CORBA::ULong reply_status);
 
 namespace TAO
 {
@@ -88,8 +86,7 @@ namespace TAO_Messaging_Helper
            CORBA::Octet *marshaled_data,
            CORBA::ULong marshaled_data_length,
            CORBA::Boolean byte_order,
-           CORBA::Boolean is_system_exception
-          );
+           CORBA::Boolean is_system_exception);
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

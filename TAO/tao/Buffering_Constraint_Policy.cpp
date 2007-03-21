@@ -6,6 +6,7 @@
 
 #include "tao/TAOC.h"
 #include "tao/SystemException.h"
+#include "ace/CORBA_macros.h"
 
 ACE_RCSID (tao,
            Buffering_Constraint_Policy,
@@ -40,7 +41,6 @@ TAO_Buffering_Constraint_Policy::TAO_Buffering_Constraint_Policy (const TAO_Buff
 
 CORBA::PolicyType
 TAO_Buffering_Constraint_Policy::policy_type (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return TAO::BUFFERING_CONSTRAINT_POLICY_TYPE;
 }
@@ -57,14 +57,12 @@ TAO_Buffering_Constraint_Policy::clone (void) const
 
 TAO::BufferingConstraint
 TAO_Buffering_Constraint_Policy::buffering_constraint (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->buffering_constraint_;
 }
 
 CORBA::Policy_ptr
 TAO_Buffering_Constraint_Policy::copy (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_Buffering_Constraint_Policy* servant = 0;
   ACE_NEW_THROW_EX (servant,
@@ -76,7 +74,6 @@ TAO_Buffering_Constraint_Policy::copy (void)
 
 void
 TAO_Buffering_Constraint_Policy::destroy (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 

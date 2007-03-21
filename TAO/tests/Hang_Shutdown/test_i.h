@@ -18,7 +18,6 @@ namespace Test
     // = The skeleton methods
     virtual void send_stuff (const char* str,
                              CORBA::Boolean flag)
-      ACE_THROW_SPEC ((CORBA::SystemException))
     {
       ACE_DEBUG ((LM_DEBUG,
                   "(%P|%t) - [%C]\n", str));

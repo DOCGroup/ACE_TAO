@@ -46,7 +46,6 @@ AccountManager_i::set_orb_manager (TAO_ORB_Manager *orb_manager)
 Bank::Account_ptr
 AccountManager_i::open (const char *name,
                         CORBA::Float initial_balance)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   Account_i *result = 0;
 
@@ -73,8 +72,7 @@ AccountManager_i::open (const char *name,
       if (hash_map_.bind (name, result) == -1)
         {
           delete result;
-          ACE_THROW_RETURN (CORBA::UNKNOWN (),
-                            Bank::Account::_nil ());
+          throw CORBA::UNKNOWN ();
         }
     }
   else if (TAO_debug_level > 0)
@@ -92,7 +90,6 @@ AccountManager_i::open (const char *name,
 
 void
 AccountManager_i::close (Bank::Account_ptr account)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   try
     {
@@ -119,7 +116,6 @@ AccountManager_i::close (Bank::Account_ptr account)
 
 void
 AccountManager_i::shutdown (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
               "\n[SERVER] Process/Thread Id : (%P/%t) %s\n",

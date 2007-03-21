@@ -11,10 +11,10 @@ project(*IDL): taoidldefaults {
 project(*server): namingexe, lifecycle, avoids_minimum_corba, utils, avoids_corba_e_micro {
   after += *IDL
   Source_Files {
+    QuoterC.cpp
+    QuoterS.cpp
     server.cpp
     Quoter_i.cpp
-    QuoterS.cpp
-    QuoterC.cpp
   }
   IDL_Files {
   }
@@ -23,8 +23,8 @@ project(*server): namingexe, lifecycle, avoids_minimum_corba, utils, avoids_corb
 project(*client): namingexe, lifecycle, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
   after += *IDL
   Source_Files {
-    client.cpp
     QuoterC.cpp
+    client.cpp
   }
   IDL_Files {
   }
@@ -33,10 +33,10 @@ project(*client): namingexe, lifecycle, avoids_minimum_corba, avoids_corba_e_com
 project(*Factory Finder): namingexe, lifecycle, avoids_minimum_corba, utils {
   after += *IDL
   Source_Files {
+    QuoterC.cpp
+    QuoterS.cpp
     Factory_Finder.cpp
     Factory_Finder_i.cpp
-    QuoterS.cpp
-    QuoterC.cpp
   }
   IDL_Files {
   }
@@ -45,10 +45,10 @@ project(*Factory Finder): namingexe, lifecycle, avoids_minimum_corba, utils {
 project(*Generic Factory): namingexe, lifecycle, avoids_minimum_corba, utils {
   after += *IDL
   Source_Files {
+    QuoterC.cpp
+    QuoterS.cpp
     Generic_Factory.cpp
     Generic_Factory_i.cpp
-    QuoterS.cpp
-    QuoterC.cpp
   }
   IDL_Files {
   }

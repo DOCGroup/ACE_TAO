@@ -19,11 +19,9 @@ ACE_RCSID (DynamicInterface,
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 CORBA::Boolean
-TAO_DynamicImplementation::_is_a (const char *logical_type_id
-                                  )
+TAO_DynamicImplementation::_is_a (const char *logical_type_id)
 {
-  CORBA::RepositoryId_var id =
-    this->get_id_from_primary_interface ();
+  CORBA::RepositoryId_var id = this->get_id_from_primary_interface ();
 
   return ACE_OS::strcmp (logical_type_id, id.in ()) == 0;
 }
@@ -38,7 +36,7 @@ TAO_DynamicImplementation::_this (void)
   TAO_Stub *stub = this->_create_stub ();
 
   // Create a object.
-  CORBA::Object_ptr retval = CORBA::Object::_nil ();
+  CORBA::Object_ptr retval = CORBA::Object_ptr ();
   ACE_NEW_RETURN (retval,
                   CORBA::Object (stub,
                                  1,
@@ -53,23 +51,18 @@ TAO_DynamicImplementation::_get_interface (void)
 {
   TAO_IFR_Client_Adapter *adapter =
     ACE_Dynamic_Service<TAO_IFR_Client_Adapter>::instance (
-        TAO_ORB_Core::ifr_client_adapter_name ()
-      );
+        TAO_ORB_Core::ifr_client_adapter_name ());
 
   if (adapter == 0)
     {
-      ACE_THROW_RETURN (CORBA::INTF_REPOS (),
-                        0);
+      throw ::CORBA::INTF_REPOS ();
     }
 
-  CORBA::RepositoryId_var id =
-    this->get_id_from_primary_interface ();
+  CORBA::RepositoryId_var id = this->get_id_from_primary_interface ();
 
   // This doesn't take multiple ORBs into account, but it's being
   // used only to resolve the IFR, so we should be ok.
-  return adapter->get_interface (TAO_ORB_Core_instance ()->orb (),
-                                 id.in ()
-                                );
+  return adapter->get_interface (TAO_ORB_Core_instance ()->orb (), id.in ());
 }
 
 const char *
@@ -80,10 +73,8 @@ TAO_DynamicImplementation::_interface_repository_id (void) const
 }
 
 void *
-TAO_DynamicImplementation::_downcast (const char *repository_id)
+TAO_DynamicImplementation::_downcast (const char *)
 {
-  ACE_UNUSED_ARG (repository_id);
-
   // Don't know enough to do better.
   return this;
 }
@@ -102,8 +93,7 @@ TAO_DynamicImplementation::_create_stub (void)
   if (poa_current_impl == 0
       || this != poa_current_impl->servant ())
     {
-      ACE_THROW_RETURN (PortableServer::POA::WrongPolicy (),
-                        0);
+      throw PortableServer::POA::WrongPolicy ();
     }
 
   PortableServer::POA_var poa =
@@ -111,25 +101,20 @@ TAO_DynamicImplementation::_create_stub (void)
 
   CORBA::PolicyList_var client_exposed_policies =
     poa_current_impl->poa ()->client_exposed_policies (
-        poa_current_impl->priority ()
-      );
+        poa_current_impl->priority ());
 
   CORBA::RepositoryId_var pinterface =
-    this->_primary_interface (poa_current_impl->object_id (),
-                              poa.in ()
-                             );
+    this->_primary_interface (poa_current_impl->object_id (), poa.in ());
 
   return
     poa_current_impl->poa ()->key_to_stub (poa_current_impl->object_key (),
                                            pinterface.in (),
-                                           poa_current_impl->priority ()
-                                          );
+                                           poa_current_impl->priority ());
 }
 
 void
 TAO_DynamicImplementation::_dispatch (TAO_ServerRequest &request,
-                                      void * /* context */
-                                      )
+                                      void * /* context */)
 {
   // No need to do any of this if the client isn't waiting.
   if (request.response_expected ())
@@ -160,8 +145,7 @@ TAO_DynamicImplementation::_dispatch (TAO_ServerRequest &request,
   try
     {
       // Delegate to user.
-      this->invoke (dsi_request
-                   );
+      this->invoke (dsi_request);
 
       // Only if the client is waiting.
       if (request.response_expected () && !request.sync_with_server ())
@@ -169,7 +153,7 @@ TAO_DynamicImplementation::_dispatch (TAO_ServerRequest &request,
           dsi_request->dsi_marshal ();
         }
     }
-  catch ( ::CORBA::Exception& ex)
+  catch (const ::CORBA::Exception& ex)
     {
       // Only if the client is waiting.
       if (request.response_expected () && !request.sync_with_server ())
@@ -182,9 +166,7 @@ TAO_DynamicImplementation::_dispatch (TAO_ServerRequest &request,
 }
 
 CORBA::RepositoryId
-TAO_DynamicImplementation::get_id_from_primary_interface (
-
-  )
+TAO_DynamicImplementation::get_id_from_primary_interface (void)
 {
   // If this method is called outside of the
   // context of a request invocation on a target object being served
@@ -197,16 +179,12 @@ TAO_DynamicImplementation::get_id_from_primary_interface (
   if (poa_current_impl == 0
       || this != poa_current_impl->servant ())
     {
-      ACE_THROW_RETURN (PortableServer::POA::WrongPolicy (),
-                        0);
+      throw PortableServer::POA::WrongPolicy ();
     }
 
-  PortableServer::POA_var poa =
-    poa_current_impl->get_POA ();
+  PortableServer::POA_var poa = poa_current_impl->get_POA ();
 
-  return this->_primary_interface (poa_current_impl->object_id (),
-                                   poa.in ()
-                                  );
+  return this->_primary_interface (poa_current_impl->object_id (), poa.in ());
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

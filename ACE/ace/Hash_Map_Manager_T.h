@@ -159,7 +159,7 @@ public:
   typedef value_type const *                 const_pointer;
 //   typedef ptrdiff_t                          difference_type;
   typedef size_t                             size_type;
-  
+
   // = Initialization and termination methods.
 
   /**
@@ -219,7 +219,7 @@ public:
   ~ACE_Hash_Map_Manager_Ex (void);
 
   /**
-   * Associate <ext_id> with <int_id>.  If <ext_id> is already in the
+   * Associate @a ext_id with @a int_id.  If @a ext_id is already in the
    * map then the <ACE_Hash_Map_Entry> is not changed.  Returns 0 if a
    * new entry is bound successfully, returns 1 if an attempt is made
    * to bind an existing entry, and returns -1 if failures occur.
@@ -237,8 +237,8 @@ public:
             ACE_Hash_Map_Entry<EXT_ID, INT_ID> *&entry);
 
   /**
-   * Associate <ext_id> with <int_id> if and only if <ext_id> is not
-   * in the map.  If <ext_id> is already in the map then the <int_id>
+   * Associate @a ext_id with @a int_id if and only if @a ext_id is not
+   * in the map.  If @a ext_id is already in the map then the @a int_id
    * parameter is assigned the existing value in the map.  Returns 0
    * if a new entry is bound successfully, returns 1 if an attempt is
    * made to bind an existing entry, and returns -1 if failures occur.
@@ -256,7 +256,7 @@ public:
                ACE_Hash_Map_Entry<EXT_ID, INT_ID> *&entry);
 
   /**
-   * Reassociate <ext_id> with <int_id>.  If <ext_id> is not in the
+   * Reassociate @a ext_id with @a int_id.  If @a ext_id is not in the
    * map then behaves just like <bind>.  Returns 0 if a new entry is
    * bound successfully, returns 1 if an existing entry was rebound,
    * and returns -1 if failures occur.
@@ -274,9 +274,9 @@ public:
               ACE_Hash_Map_Entry<EXT_ID, INT_ID> *&entry);
 
   /**
-   * Associate <ext_id> with <int_id>.  If <ext_id> is not in the map
+   * Associate @a ext_id with @a int_id.  If @a ext_id is not in the map
    * then behaves just like <bind>.  Otherwise, store the old value of
-   * <int_id> into the "out" parameter and rebind the new parameters.
+   * @a int_id into the "out" parameter and rebind the new parameters.
    * Returns 0 if a new entry is bound successfully, returns 1 if an
    * existing entry was rebound, and returns -1 if failures occur.
    */
@@ -295,9 +295,9 @@ public:
               ACE_Hash_Map_Entry<EXT_ID, INT_ID> *&entry);
 
   /**
-   * Associate <ext_id> with <int_id>.  If <ext_id> is not in the map
+   * Associate @a ext_id with @a int_id.  If @a ext_id is not in the map
    * then behaves just like <bind>.  Otherwise, store the old values
-   * of <ext_id> and <int_id> into the "out" parameters and rebind the
+   * of @a ext_id and @a int_id into the "out" parameters and rebind the
    * new parameters.  This is very useful if you need to have an
    * atomic way of updating <ACE_Hash_Map_Entrys> and you also need
    * full control over memory allocation.  Returns 0 if a new entry is
@@ -320,20 +320,20 @@ public:
               INT_ID &old_int_id,
               ACE_Hash_Map_Entry<EXT_ID, INT_ID> *&entry);
 
-  /// Locate <ext_id> and pass out parameter via <int_id>.
+  /// Locate @a ext_id and pass out parameter via @a int_id.
   /// Return 0 if found, returns -1 if not found.
   int find (const EXT_ID &ext_id,
             INT_ID &int_id) const;
 
-  /// Returns 0 if the <ext_id> is in the mapping, otherwise -1.
+  /// Returns 0 if the @a ext_id is in the mapping, otherwise -1.
   int find (const EXT_ID &ext_id) const;
 
-  /// Locate <ext_id> and pass out parameter via <entry>.  If found,
+  /// Locate @a ext_id and pass out parameter via <entry>.  If found,
   /// return 0, returns -1 if not found.
   int find (const EXT_ID &ext_id,
             ACE_Hash_Map_Entry<EXT_ID, INT_ID> *&entry) const;
 
-  /// Locate <ext_id> and pass out an iterator that points to its
+  /// Locate @a ext_id and pass out an iterator that points to its
   /// corresponding value.
   /**
    * @param pos @a pos will be set to @c end() if not found.
@@ -341,13 +341,13 @@ public:
   void find (EXT_ID const & ext_id, iterator & pos) const;
 
   /**
-   * Unbind (remove) the <ext_id> from the map.  Don't return the
-   * <int_id> to the caller (this is useful for collections where the
-   * <int_id>s are *not* dynamically allocated...)
+   * Unbind (remove) the @a ext_id from the map.  Don't return the
+   * @a int_id to the caller (this is useful for collections where the
+   * @a int_ids are *not* dynamically allocated...)
    */
   int unbind (const EXT_ID &ext_id);
 
-  /// Break any association of <ext_id>.  Returns the value of <int_id>
+  /// Break any association of @a ext_id.  Returns the value of @a int_id
   /// in case the caller needs to deallocate memory. Return 0 if the
   /// unbind was successfully, and returns -1 if failures occur.
   int unbind (const EXT_ID &ext_id,
@@ -372,7 +372,7 @@ public:
    *         occur.
    */
   int unbind (iterator pos);
-  
+
   /// Returns the current number of ACE_Hash_Map_Entry objects in the
   /// hash table.
   size_t current_size (void) const;
@@ -401,7 +401,7 @@ public:
   iterator end (void);
   const_iterator begin (void) const;
   const_iterator end (void) const;
-  
+
   /// Return reverse iterator.
   reverse_iterator rbegin (void);
   reverse_iterator rend (void);
@@ -415,7 +415,7 @@ protected:
   /// separate method to facilitate template specialization.
   int equal (const EXT_ID &id1, const EXT_ID &id2);
 
-  /// Compute the hash value of the <ext_id>.  This is defined as a
+  /// Compute the hash value of the @a ext_id.  This is defined as a
   /// separate method to facilitate template specialization.
   u_long hash (const EXT_ID &ext_id);
 
@@ -472,16 +472,16 @@ protected:
                 INT_ID &old_int_id,
                 ACE_Hash_Map_Entry<EXT_ID, INT_ID> *&entry);
 
-  /// Performs a find of <int_id> using <ext_id> as the key.  Must be
+  /// Performs a find of @a int_id using @a ext_id as the key.  Must be
   /// called with locks held.
   int find_i (const EXT_ID &ext_id,
               INT_ID &int_id);
 
-  /// Performs a find using <ext_id> as the key.  Must be called with
+  /// Performs a find using @a ext_id as the key.  Must be called with
   /// locks held.
   int find_i (const EXT_ID &ext_id);
 
-  /// Performs a find using <ext_id> as the key.  Must be called with
+  /// Performs a find using @a ext_id as the key.  Must be called with
   /// locks held.
   int find_i (const EXT_ID &ext_id,
               ACE_Hash_Map_Entry<EXT_ID, INT_ID> *&entry);
@@ -531,7 +531,7 @@ protected:
   COMPARE_KEYS compare_keys_;
 
 protected:
-  /// Returns the <ACE_Hash_Map_Entry> that corresponds to <ext_id>.
+  /// Returns the <ACE_Hash_Map_Entry> that corresponds to @a ext_id.
   int shared_find (const EXT_ID &ext_id,
                    ACE_Hash_Map_Entry<EXT_ID, INT_ID> *&entry,
                    size_t &loc);

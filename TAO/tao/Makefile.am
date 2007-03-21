@@ -764,7 +764,6 @@ libTAO_la_SOURCES = \
   DLL_Parser.cpp \
   Default_Collocation_Resolver.cpp \
   Default_Endpoint_Selector_Factory.cpp \
-  Default_Protocols_Hooks.cpp \
   Default_Stub_Factory.cpp \
   Default_Thread_Lane_Resources_Manager.cpp \
   DomainC.cpp \
@@ -844,6 +843,7 @@ libTAO_la_SOURCES = \
   Messaging_SyncScopeC.cpp \
   Muxed_TMS.cpp \
   NVList_Adapter.cpp \
+  Network_Priority_Protocols_Hooks.cpp \
   New_Leader_Generator.cpp \
   Null_Fragmentation_Strategy.cpp \
   ORB.cpp \
@@ -1065,7 +1065,6 @@ nobase_include_HEADERS = \
   DLL_Parser.h \
   Default_Collocation_Resolver.h \
   Default_Endpoint_Selector_Factory.h \
-  Default_Protocols_Hooks.h \
   Default_Stub_Factory.h \
   Default_Thread_Lane_Resources_Manager.h \
   Domain.pidl \
@@ -1223,6 +1222,7 @@ nobase_include_HEADERS = \
   Messaging_SyncScopeC.h \
   Muxed_TMS.h \
   NVList_Adapter.h \
+  Network_Priority_Protocols_Hooks.h \
   New_Leader_Generator.h \
   Null_Fragmentation_Strategy.h \
   ORB.h \
@@ -1253,6 +1253,7 @@ nobase_include_HEADERS = \
   Object_Ref_Table.h \
   Object_Ref_Table.inl \
   Object_Reference_Sequence_Element_T.h \
+  Object_Reference_Const_Sequence_Element_T.h \
   Object_Reference_Traits_Base_T.h \
   Object_Reference_Traits_T.h \
   Object_T.cpp \
@@ -2904,6 +2905,7 @@ libTAO_PortableServer_la_SOURCES = \
   PortableServer/LifespanStrategyTransient.cpp \
   PortableServer/LifespanStrategyTransientFactoryImpl.cpp \
   PortableServer/Local_Servant_Base.cpp \
+  PortableServer/Network_Priority_Hook.cpp \
   PortableServer/Non_Servant_Upcall.cpp \
   PortableServer/ORT_Adapter_Factory.cpp \
   PortableServer/Object_Adapter.cpp \
@@ -3077,6 +3079,7 @@ nobase_include_HEADERS += \
   PortableServer/LifespanStrategyTransientFactoryImpl.h \
   PortableServer/Local_Servant_Base.h \
   PortableServer/Local_Servant_Base.inl \
+  PortableServer/Network_Priority_Hook.h \
   PortableServer/Non_Servant_Upcall.h \
   PortableServer/Non_Servant_Upcall.inl \
   PortableServer/ORT_Adapter.h \
@@ -4223,12 +4226,14 @@ libTAO_DynamicInterface_la_CPPFLAGS = \
   -DTAO_DYNAMICINTERFACE_BUILD_DLL
 
 libTAO_DynamicInterface_la_SOURCES = \
+  DynamicInterface/AMH_DSI_Response_Handler.cpp \
   DynamicInterface/Context.cpp \
   DynamicInterface/DII_Arguments.cpp \
   DynamicInterface/DII_Arguments_Converter_Impl.cpp \
   DynamicInterface/DII_Invocation.cpp \
   DynamicInterface/DII_Invocation_Adapter.cpp \
   DynamicInterface/DII_Reply_Dispatcher.cpp \
+  DynamicInterface/DII_Reply_Handler.cpp \
   DynamicInterface/Dynamic_Adapter_Impl.cpp \
   DynamicInterface/Dynamic_Implementation.cpp \
   DynamicInterface/ExceptionList.cpp \
@@ -4250,6 +4255,8 @@ libTAO_DynamicInterface_la_LIBADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 nobase_include_HEADERS += \
+  DynamicInterface/AMH_DSI_Response_Handler.h \
+  DynamicInterface/AMH_DSI_Response_Handler.inl \
   DynamicInterface/Context.h \
   DynamicInterface/Context.inl \
   DynamicInterface/DII_Arguments.h \
@@ -4259,6 +4266,7 @@ nobase_include_HEADERS += \
   DynamicInterface/DII_Invocation.h \
   DynamicInterface/DII_Invocation_Adapter.h \
   DynamicInterface/DII_Reply_Dispatcher.h \
+  DynamicInterface/DII_Reply_Handler.h \
   DynamicInterface/Dynamic_Adapter_Impl.h \
   DynamicInterface/Dynamic_Implementation.h \
   DynamicInterface/ExceptionList.h \

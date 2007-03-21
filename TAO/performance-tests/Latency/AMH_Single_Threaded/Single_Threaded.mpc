@@ -11,9 +11,9 @@ project(*AMH_latency_idl): taoidldefaults, amh {
 project(*AMH latency server): taoserver, strategies, valuetype, amh {
   after += *AMH_latency_idl
   Source_Files {
-    Roundtrip.cpp
-    TestS.cpp
     TestC.cpp
+    TestS.cpp
+    Roundtrip.cpp
     server.cpp
   }
   IDL_Files {

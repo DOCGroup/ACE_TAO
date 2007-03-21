@@ -22,7 +22,7 @@ project(*Server): taoserver, ami {
 }
 
 project(*Client): taoserver, ami {
-  after += *Server
+  after += *idl
   exename = client
   Source_Files {
     timeout_i.cpp

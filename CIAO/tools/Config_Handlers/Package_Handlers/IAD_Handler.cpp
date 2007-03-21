@@ -81,7 +81,7 @@ namespace CIAO
         retval.UUID (src.UUID.in ());
 
         for (CORBA::ULong i = 0; i < src.location.length (); ++i)
-          retval.add_location (src.location[i]);
+          retval.add_location (src.location[i].in ());
 
         for (CORBA::ULong i = 0; i < src.dependsOn.length (); ++i)
           retval.add_dependsOn (NIA_Handler::get_nia (src.dependsOn[i]));

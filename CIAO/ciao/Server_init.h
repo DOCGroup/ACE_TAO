@@ -70,7 +70,7 @@ namespace CIAO
       /// reference 'obj'.
       static  void BindObjectPath (const CosNaming::NamingContextExt_ptr,
                                    const CosNaming::Name&,
-                                   const CORBA::Object_var);
+                                   const CORBA::Object_ptr);
 
       /// Get a list of all bindings under the given context, up to
       /// max_list_size.

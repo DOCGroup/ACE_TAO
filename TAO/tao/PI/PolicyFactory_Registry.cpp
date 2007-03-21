@@ -1,8 +1,8 @@
 #include "tao/PI/PolicyFactory_Registry.h"
 #include "tao/PI/PolicyFactoryC.h"
 #include "tao/ORB_Constants.h"
-#include "tao/SystemException.h"
 #include "tao/PolicyC.h"
+#include "tao/SystemException.h"
 
 ACE_RCSID (PI,
            PolicyFactory_Registry,
@@ -33,8 +33,7 @@ TAO_PolicyFactory_Registry::~TAO_PolicyFactory_Registry (void)
 void
 TAO_PolicyFactory_Registry::register_policy_factory (
   CORBA::PolicyType type,
-  PortableInterceptor::PolicyFactory_ptr policy_factory
-  )
+  PortableInterceptor::PolicyFactory_ptr policy_factory)
 {
   if (CORBA::is_nil (policy_factory))
     {
@@ -48,8 +47,7 @@ TAO_PolicyFactory_Registry::register_policy_factory (
   PortableInterceptor::PolicyFactory_ptr factory =
     PortableInterceptor::PolicyFactory::_duplicate (policy_factory);
 
-  const int result = this->factories_.bind (type,
-                                            factory);
+  const int result = this->factories_.bind (type, factory);
 
   if (result != 0)
     {
@@ -82,35 +80,26 @@ TAO_PolicyFactory_Registry::create_policy (CORBA::PolicyType type,
     {
       // Policy factory corresponding to given policy type does not
       // exist in policy factory map.
-      ACE_THROW_RETURN (
-         CORBA::PolicyError (CORBA::BAD_POLICY_TYPE),  // @@ Right exception?
-         CORBA::Policy::_nil ());
+      throw ::CORBA::PolicyError (CORBA::BAD_POLICY_TYPE);
     }
 
-  return policy_factory->create_policy (type,
-                                        value
-                                       );
+  return policy_factory->create_policy (type, value);
 }
 
 CORBA::Policy_ptr
-TAO_PolicyFactory_Registry::_create_policy (CORBA::PolicyType type
-                                            )
+TAO_PolicyFactory_Registry::_create_policy (CORBA::PolicyType type)
 {
   PortableInterceptor::PolicyFactory_ptr policy_factory =
     PortableInterceptor::PolicyFactory::_nil ();
 
-  if (this->factories_.find (type,
-                             policy_factory) == -1)
+  if (this->factories_.find (type, policy_factory) == -1)
     {
       // Policy factory corresponding to given policy type does not
       // exist in policy factory map.
-      ACE_THROW_RETURN (
-         CORBA::PolicyError (CORBA::BAD_POLICY_TYPE),  // @@ Right exception?
-         CORBA::Policy::_nil ());
+      throw ::CORBA::PolicyError (CORBA::BAD_POLICY_TYPE);
     }
 
-  return policy_factory->_create_policy (type
-                                        );
+  return policy_factory->_create_policy (type);
 }
 
 bool

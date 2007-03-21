@@ -23,29 +23,21 @@ class ObjectGroupManagerHandler
 public:
   ObjectGroupManagerHandler(ACE_Auto_Event& evt, int num_backups);
   virtual void start (CORBA::Boolean ami_return_val,
-                      const FTRT::Location & the_location)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                      const FTRT::Location & the_location);
 
-  virtual void start_excep (::Messaging::ExceptionHolder * excep_holder)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void start_excep (::Messaging::ExceptionHolder * excep_holder);
 
-  virtual void create_group (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void create_group (void);
 
-  virtual void create_group_excep (::Messaging::ExceptionHolder * excep_holder)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void create_group_excep (::Messaging::ExceptionHolder * excep_holder);
 
-  virtual void add_member (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void add_member (void);
 
-  virtual void add_member_excep (::Messaging::ExceptionHolder * excep_holder)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void add_member_excep (::Messaging::ExceptionHolder * excep_holder);
 
-  virtual void set_state (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void set_state (void);
 
-  virtual void set_state_excep (::Messaging::ExceptionHolder * excep_holder)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void set_state_excep (::Messaging::ExceptionHolder * excep_holder);
 private:
   ACE_Auto_Event& evt_;
   ACE_Atomic_Op< ACE_SYNCH_MUTEX, int > num_backups_;

@@ -18,9 +18,6 @@ PushConsumer_impl::PushConsumer_impl(CORBA::ORB_ptr orb)
 void
 PushConsumer_impl::push (const RtecEventComm::EventSet & event
              )
-             ACE_THROW_SPEC ((
-             CORBA::SystemException
-             ))
 {
   CORBA::ULong x;
   ACE_Time_Value time_val = ACE_OS::gettimeofday ();
@@ -36,9 +33,6 @@ PushConsumer_impl::push (const RtecEventComm::EventSet & event
 
 void
 PushConsumer_impl::disconnect_push_consumer (void)
-                       ACE_THROW_SPEC ((
-                       CORBA::SystemException
-                       ))
 {
   PortableServer::Current_var current =
     resolve_init<PortableServer::Current>(orb_.in(), "POACurrent");

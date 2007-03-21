@@ -2,8 +2,6 @@
 //
 // $Id$
 
-#include "tao/Environment.h"
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE CORBA::Boolean
@@ -73,27 +71,21 @@ CORBA::TypeCode::member_count (void) const
 }
 
 ACE_INLINE char const *
-CORBA::TypeCode::member_name (ULong index
-                              ) const
+CORBA::TypeCode::member_name (ULong index) const
 {
-  return this->member_name_i (index
-                             );
+  return this->member_name_i (index);
 }
 
 ACE_INLINE CORBA::TypeCode_ptr
-CORBA::TypeCode::member_type (ULong index
-                              ) const
+CORBA::TypeCode::member_type (ULong index) const
 {
-  return this->member_type_i (index
-                             );
+  return this->member_type_i (index);
 }
 
 ACE_INLINE CORBA::Any *
-CORBA::TypeCode::member_label (ULong index
-                               ) const
+CORBA::TypeCode::member_label (ULong index) const
 {
-  return this->member_label_i (index
-                              );
+  return this->member_label_i (index);
 }
 
 ACE_INLINE CORBA::TypeCode_ptr
@@ -133,11 +125,9 @@ CORBA::TypeCode::fixed_scale (void) const
 }
 
 ACE_INLINE CORBA::Visibility
-CORBA::TypeCode::member_visibility (ULong index
-                                    ) const
+CORBA::TypeCode::member_visibility (ULong index) const
 {
-  return this->member_visibility_i (index
-                                   );
+  return this->member_visibility_i (index);
 }
 
 ACE_INLINE CORBA::ValueModifier

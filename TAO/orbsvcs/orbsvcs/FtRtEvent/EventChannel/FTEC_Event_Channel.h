@@ -64,101 +64,73 @@ public:
   /// RtecEventChannelAdmin::EventChannel Interface
 
   virtual RtecEventChannelAdmin::ConsumerAdmin_ptr
-    for_consumers (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    for_consumers (void);
 
   virtual RtecEventChannelAdmin::SupplierAdmin_ptr
-    for_suppliers (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    for_suppliers (void);
 
-  virtual void destroy (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void destroy (void);
 
   virtual RtecEventChannelAdmin::Observer_Handle
-    append_observer (RtecEventChannelAdmin::Observer_ptr observer)
-    ACE_THROW_SPEC ((CORBA::SystemException, RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR,
-      RtecEventChannelAdmin::EventChannel::CANT_APPEND_OBSERVER));
+    append_observer (RtecEventChannelAdmin::Observer_ptr observer);
 
-  virtual void remove_observer (RtecEventChannelAdmin::Observer_Handle)
-    ACE_THROW_SPEC ((CORBA::SystemException,RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR,
-      RtecEventChannelAdmin::EventChannel::CANT_REMOVE_OBSERVER));
+  virtual void remove_observer (RtecEventChannelAdmin::Observer_Handle);
 
   /// EventChannelFacade Interface, used by FTEC gateway
 
-      virtual ::FtRtecEventChannelAdmin::ObjectId * connect_push_consumer (
-        RtecEventComm::PushConsumer_ptr push_consumer,
-        const RtecEventChannelAdmin::ConsumerQOS & qos)
-      ACE_THROW_SPEC (( CORBA::SystemException, RtecEventChannelAdmin::TypeError)) ;
+  virtual ::FtRtecEventChannelAdmin::ObjectId * connect_push_consumer (
+    RtecEventComm::PushConsumer_ptr push_consumer,
+    const RtecEventChannelAdmin::ConsumerQOS & qos);
 
+  virtual ::FtRtecEventChannelAdmin::ObjectId * connect_push_supplier (
+      RtecEventComm::PushSupplier_ptr push_supplier,
+      const RtecEventChannelAdmin::SupplierQOS & qos);
 
-    virtual ::FtRtecEventChannelAdmin::ObjectId * connect_push_supplier (
-        RtecEventComm::PushSupplier_ptr push_supplier,
-        const RtecEventChannelAdmin::SupplierQOS & qos)
-      ACE_THROW_SPEC ((CORBA::SystemException)) ;
+  virtual void disconnect_push_supplier (
+      const FtRtecEventChannelAdmin::ObjectId & oid);
 
-    virtual void disconnect_push_supplier (
-        const FtRtecEventChannelAdmin::ObjectId & oid)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void disconnect_push_consumer (
+      const FtRtecEventChannelAdmin::ObjectId & oid);
 
-    virtual void disconnect_push_consumer (
-        const FtRtecEventChannelAdmin::ObjectId & oid)
-      ACE_THROW_SPEC ((CORBA::SystemException)) ;
+  virtual void suspend_push_supplier (
+      const FtRtecEventChannelAdmin::ObjectId & oid);
 
-    virtual void suspend_push_supplier (
-        const FtRtecEventChannelAdmin::ObjectId & oid)
-      ACE_THROW_SPEC ((CORBA::SystemException, FtRtecEventComm::InvalidObjectID));
+  virtual void resume_push_supplier (
+      const FtRtecEventChannelAdmin::ObjectId & oid);
 
-    virtual void resume_push_supplier (
-        const FtRtecEventChannelAdmin::ObjectId & oid)
-      ACE_THROW_SPEC ((CORBA::SystemException, FtRtecEventComm::InvalidObjectID)) ;
-
-    virtual void push (
-        const FtRtecEventChannelAdmin::ObjectId & oid,
-        const RtecEventComm::EventSet & data)
-      ACE_THROW_SPEC ((CORBA::SystemException, FtRtecEventComm::InvalidObjectID));
+  virtual void push (
+      const FtRtecEventChannelAdmin::ObjectId & oid,
+      const RtecEventComm::EventSet & data);
 
   /// FTRT::GroupManager Interfaces
   /// These are used for inter-replica communications
 
-  void set_state (
-    const FTRT::State & s)
-    ACE_THROW_SPEC ((CORBA::SystemException, FTRT::InvalidState));
+  void set_state (const FTRT::State & s);
 
-  virtual void set_update (const FTRT::State & s)
-    ACE_THROW_SPEC ((CORBA::SystemException, FTRT::InvalidUpdate, FTRT::OutOfSequence));
+  virtual void set_update (const FTRT::State & s);
 
-  virtual void oneway_set_update (const FTRT::State & s)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void oneway_set_update (const FTRT::State & s);
 
 
   virtual CORBA::Boolean start (
         FTRT::FaultListener_ptr listener,
-        FTRT::Location_out cur)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+        FTRT::Location_out cur);
 
-    virtual void create_group (
-        const FTRT::ManagerInfoList & info_list,
-        CORBA::ULong object_group_ref_version)
-      ACE_THROW_SPEC ((CORBA::SystemException, FTRT::PredecessorUnreachable)) ;
+  virtual void create_group (
+      const FTRT::ManagerInfoList & info_list,
+      CORBA::ULong object_group_ref_version);
 
-    virtual void join_group (
-        const FTRT::ManagerInfo & info
-      )ACE_THROW_SPEC ((CORBA::SystemException)) ;
+  virtual void join_group (const FTRT::ManagerInfo & info);
 
-    virtual void add_member (
-        const FTRT::ManagerInfo & info,
-        CORBA::ULong object_group_ref_version)
-      ACE_THROW_SPEC ((CORBA::SystemException)) ;
+  virtual void add_member (
+      const FTRT::ManagerInfo & info,
+      CORBA::ULong object_group_ref_version);
 
-    virtual void remove_member (
-        const FTRT::Location & crashed_location,
-        CORBA::ULong object_group_ref_version)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void remove_member (
+      const FTRT::Location & crashed_location,
+      CORBA::ULong object_group_ref_version);
 
-    virtual void replica_crashed (
-        const FTRT::Location & location)
-      ACE_THROW_SPEC ((CORBA::SystemException)) ;
-
+  virtual void replica_crashed (const FTRT::Location & location);
 
 private:
   CORBA::ORB_var orb_;

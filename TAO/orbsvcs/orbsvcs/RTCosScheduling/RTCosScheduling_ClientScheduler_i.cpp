@@ -147,9 +147,6 @@ RTCosScheduling_ClientScheduler_i::~RTCosScheduling_ClientScheduler_i (void)
 
 void  RTCosScheduling_ClientScheduler_i::schedule_activity (
   const char * activity_name)
-  ACE_THROW_SPEC ((
-    CORBA::SystemException,
-    RTCosScheduling::UnknownName))
 {
   /// Look up the priority using the activity name in the activity map
   COS_SCHEDULER_ACTIVITY_VALUE priority = 0;
@@ -400,22 +397,18 @@ RTCosScheduling_ClientScheduler_Interceptor::RTCosScheduling_ClientScheduler_Int
 
 char *
 RTCosScheduling_ClientScheduler_Interceptor::name ()
-ACE_THROW_SPEC ((CORBA::SystemException))
 {
 return CORBA::string_dup(this->name_);
 }
 
 void
 RTCosScheduling_ClientScheduler_Interceptor::destroy ()
-ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
 RTCosScheduling_ClientScheduler_Interceptor::send_request (
     PortableInterceptor::ClientRequestInfo_ptr ri)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableInterceptor::ForwardRequest))
 {
   try
     {
@@ -448,30 +441,24 @@ RTCosScheduling_ClientScheduler_Interceptor::send_request (
 void
 RTCosScheduling_ClientScheduler_Interceptor::send_poll (
   PortableInterceptor::ClientRequestInfo_ptr)
-ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
 RTCosScheduling_ClientScheduler_Interceptor::receive_reply (
   PortableInterceptor::ClientRequestInfo_ptr)
-ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
 RTCosScheduling_ClientScheduler_Interceptor::receive_exception (
   PortableInterceptor::ClientRequestInfo_ptr)
-ACE_THROW_SPEC ((CORBA::SystemException,
-                 PortableInterceptor::ForwardRequest))
 {
 }
 
 void
 RTCosScheduling_ClientScheduler_Interceptor::receive_other (
   PortableInterceptor::ClientRequestInfo_ptr)
-ACE_THROW_SPEC ((CORBA::SystemException,
-                 PortableInterceptor::ForwardRequest))
 {
 }
 

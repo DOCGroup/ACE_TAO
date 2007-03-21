@@ -26,7 +26,7 @@ TAO::CSD::TP_Servant_State_Map::find(PortableServer::Servant servant)
 
   if (this->map_.find(key, value) != 0)
     {
-      ACE_THROW_RETURN (PortableServer::POA::ServantNotActive (), 0);
+      throw PortableServer::POA::ServantNotActive ();
     }
 
   return value._retn();
@@ -41,7 +41,7 @@ TAO::CSD::TP_Servant_State_Map::insert(PortableServer::Servant servant)
 
   TP_Servant_State::HandleType value = new TP_Servant_State ();
 
-  int result = this->map_.bind(key, value);
+  int const result = this->map_.bind(key, value);
 
   if (result == 1)
     {

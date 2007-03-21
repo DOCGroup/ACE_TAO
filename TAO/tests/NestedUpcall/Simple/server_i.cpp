@@ -12,7 +12,6 @@ server_i::server_i (int quiet,
 void
 server_i::start (client_ptr c,
                  CORBA::UShort time_to_live)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->client_ = client::_duplicate (c);
   this->ping (time_to_live);
@@ -22,7 +21,6 @@ server_i::start (client_ptr c,
 
 void
 server_i::ping (CORBA::UShort time_to_live)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (!this->quiet_)
     ACE_DEBUG ((LM_DEBUG,
@@ -39,7 +37,6 @@ server_i::ping (CORBA::UShort time_to_live)
 
 void
 server_i::shutdown (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown (0);
 }

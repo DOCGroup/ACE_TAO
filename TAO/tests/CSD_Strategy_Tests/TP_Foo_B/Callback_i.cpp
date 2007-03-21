@@ -14,7 +14,6 @@ Callback_i::~Callback_i ()
 
 void
 Callback_i::test_method(void)
-  ACE_THROW_SPEC((CORBA::SystemException))
 {
   this->num_callbacks_ ++;
 }

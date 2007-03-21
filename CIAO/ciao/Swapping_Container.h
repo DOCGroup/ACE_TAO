@@ -23,9 +23,7 @@
 #include "tao/ORB.h"
 #include "tao/PortableServer/PortableServer.h"
 #include "tao/PortableServer/Servant_Base.h"
-#include "ciao/CCM_ContainerC.h"
-#include "ciao/Container_Base.h"
-#include "ciao/Deployment_CoreC.h"
+#include "ciao/Session_Container.h"
 #include "ciao/Dynamic_Component_Activator.h"
 #include "ciao/CIAO_Server_Export.h"
 #include "ciao/Servant_Activator.h"
@@ -48,29 +46,23 @@ namespace CIAO
 
     /// Initialize the container with a name.
     virtual int init (const char *name = 0,
-                      const CORBA::PolicyList *more_policies = 0)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+                      const CORBA::PolicyList *more_policies = 0);
 
     virtual CORBA::Object_ptr install_servant (PortableServer::Servant p,
-                                               Container::OA_Type t)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+                                               Container::OA_Type t);
 
-    virtual CORBA::Object_ptr get_objref (PortableServer::Servant p)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+    virtual CORBA::Object_ptr get_objref (PortableServer::Servant p);
 
-    virtual void ciao_uninstall_home (Components::CCMHome_ptr homeref)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+    virtual void ciao_uninstall_home (Components::CCMHome_ptr homeref);
 
-    virtual CORBA::Object_ptr get_home_objref (PortableServer::Servant p)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+    virtual CORBA::Object_ptr get_home_objref (PortableServer::Servant p);
 
-    virtual void add_servant_map (PortableServer::ObjectId &oid,
+    virtual void add_servant_to_map (PortableServer::ObjectId &oid,
                                   Dynamic_Component_Servant_Base* servant);
 
-    virtual void delete_servant_map (PortableServer::ObjectId &oid);
+    virtual void delete_servant_from_map (PortableServer::ObjectId &oid);
 
-    virtual void deactivate_facet (const PortableServer::ObjectId &oid)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+    virtual void deactivate_facet (const PortableServer::ObjectId &oid);
 
     PortableServer::POA_ptr the_home_servant_POA (void) const;
 

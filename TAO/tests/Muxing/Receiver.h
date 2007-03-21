@@ -28,13 +28,10 @@ public:
   void dump_results (void);
 
   // = The skeleton methods
-  virtual void receive_data (const Test::Payload &payload)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual CORBA::Long get_event_count (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void receive_data (const Test::Payload &payload);
+  virtual CORBA::Long get_event_count (void);
 
-  virtual void shutdown (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void shutdown (void);
 
 private:
   ACE_SYNCH_MUTEX mutex_;

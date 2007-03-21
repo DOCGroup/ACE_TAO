@@ -32,8 +32,7 @@ public:
 
   virtual CORBA::Object_ptr create_object (CORBA::ORB_ptr orb,
                                            int argc,
-                                           char *argv [])
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                                           char *argv []);
   // Create a new instance
 };
 

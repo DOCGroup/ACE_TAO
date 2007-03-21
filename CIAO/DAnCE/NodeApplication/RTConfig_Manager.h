@@ -25,10 +25,12 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/RTCORBA/RTCORBA.h"
-#include "ciao/CIAO_ServerResourcesC.h"
+#include "DAnCE/Deployment/CIAO_ServerResourcesC.h"
 #include "ace/Null_Mutex.h"
 #include "ace/SString.h"
 #include "ace/Hash_Map_Manager_T.h"
+#include "Config_Manager.h"
+#include "RTNA_Configurator_Export.h"
 
 namespace CIAO
 {
@@ -47,39 +49,39 @@ namespace CIAO
    * Currently, the only resources supported (and managed) by this
    * class are Threadpool and Threadpool_with_Lanes.
    */
-  class RTResource_Config_Manager
+  class RTResource_Config_Manager : public Config_Manager
   {
   public:
     RTResource_Config_Manager (void);
     ~RTResource_Config_Manager (void);
 
-    void init (RTCORBA::RTORB_ptr rtorb);
+    virtual void init (CORBA::ORB_ptr orb);
+
+    virtual int pre_orb_initialize (void);
+
+    virtual int post_orb_initialize (CORBA::ORB_ptr o);
 
     /// Initializing the RTResource_Config_Manager
-    void init_resources (const CIAO::DAnCE::ServerResource &info)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+    virtual void init_resources (const CIAO::DAnCE::ServerResource &info);
 
     /// Finalizing the RTResource_Config_Manager and the resources it
     /// manages.
-    void fini ()
-      ACE_THROW_SPEC ((CORBA::SystemException));
+    void fini ();
 
     /// Query a policy set by name
-    CORBA::PolicyList *find_policies_by_name (const char *name)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+    virtual CORBA::PolicyList *find_policies_by_name (const char *name);
+
+    virtual bool policy_exists (const char *name);
 
   protected:
-    void print_resources (const CIAO::DAnCE::ServerResource &info)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+    void print_resources (const CIAO::DAnCE::ServerResource &info);
 
     /// Query a thread pool by name.
-    RTCORBA::ThreadpoolId find_threadpool_by_name (const char *name)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+    RTCORBA::ThreadpoolId find_threadpool_by_name (const char *name);
 
 
     /// Query a priority bands info by name.
-    RTCORBA::PriorityBands *find_priority_bands_by_name (const char *name)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+    RTCORBA::PriorityBands *find_priority_bands_by_name (const char *name);
 
   private:
     /// Cached an ORB reference.
@@ -109,8 +111,7 @@ namespace CIAO
 
     /// create a single policy
     CORBA::Policy_ptr create_single_policy
-    (const CIAO::DAnCE::PolicyDef &policy_def)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+    (const CIAO::DAnCE::PolicyDef &policy_def);
 
     /// Hash_Map stuff.
     typedef ACE_Hash_Map_Manager_Ex<ACE_CString,

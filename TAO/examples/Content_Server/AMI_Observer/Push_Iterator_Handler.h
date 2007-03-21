@@ -62,9 +62,7 @@ public:
 
   void run (int *request_count,
             const char *pathname,
-            Web_Server::Iterator_Factory_ptr factory)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     Web_Server::Error_Result));
+            Web_Server::Iterator_Factory_ptr factory);
   // Activate and run this Reply Handler.  The contents (not the
   // pointer itself) of the <request_count> parameter will be
   // incremented when file retrieval begins, and decremented when file
@@ -77,17 +75,15 @@ private:
   // on the heap).
 
   virtual void register_callback
-  (const Web_Server::Metadata_Type &metadata)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  (const Web_Server::Metadata_Type &metadata);
   // AMI callback that is invoked when a response from the
   // corresponding server method is received.
 
   virtual void register_callback_excep
   (::Messaging::ExceptionHolder *)
-    ACE_THROW_SPEC ((CORBA::SystemException)) {}
+    {}
 
-  void deactivate (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void deactivate (void);
   // Deactivate this handler.
 
 private:

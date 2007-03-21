@@ -38,20 +38,10 @@ namespace TAO
   {
     static void
     insert_value (const T &val,
-                  TAO_DynCommon *the_dynany)
-      ACE_THROW_SPEC ((
-          CORBA::SystemException,
-          DynamicAny::DynAny::TypeMismatch,
-          DynamicAny::DynAny::InvalidValue
-        ));
+                  TAO_DynCommon *the_dynany);
 
     static typename BasicTypeTraits<T>::return_type
-    get_value (TAO_DynCommon *the_dynany)
-      ACE_THROW_SPEC ((
-          CORBA::SystemException,
-          DynamicAny::DynAny::TypeMismatch,
-          DynamicAny::DynAny::InvalidValue
-        ));
+    get_value (TAO_DynCommon *the_dynany);
   };
 
   // Encapsulates code that would otherwise be repeated in
@@ -62,10 +52,7 @@ namespace TAO
   {
     static void
     set_flag_t (DynamicAny::DynAny_ptr component,
-                CORBA::Boolean destroying)
-      ACE_THROW_SPEC ((
-          CORBA::SystemException
-        ));
+                CORBA::Boolean destroying);
   };
 
   // Used by MakeDynAnyUtils below, parameterized on the type of

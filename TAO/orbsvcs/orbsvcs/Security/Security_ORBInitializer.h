@@ -1,19 +1,15 @@
 // -*- C++ -*-
-//
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//     TAO
-//
-// = FILENAME
-//     Security_ORBInitializer.h
-//
-// = AUTHOR
-//     Ossama Othman <ossama@uci.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file     Security_ORBInitializer.h
+ *
+ *  $Id$
+ *
+ *  @author  Ossama Othman <ossama@uci.edu>
+ */
+//=============================================================================
+
 
 #ifndef TAO_SECURITY_ORB_INITIALIZER_H
 #define TAO_SECURITY_ORB_INITIALIZER_H
@@ -69,11 +65,9 @@ namespace TAO
        * interface.
        */
       //@{
-      virtual void pre_init (PortableInterceptor::ORBInitInfo_ptr info)
-        ACE_THROW_SPEC ((CORBA::SystemException));
+      virtual void pre_init (PortableInterceptor::ORBInitInfo_ptr info);
 
-      virtual void post_init (PortableInterceptor::ORBInitInfo_ptr info)
-        ACE_THROW_SPEC ((CORBA::SystemException));
+      virtual void post_init (PortableInterceptor::ORBInitInfo_ptr info);
       //@}
 
     private:

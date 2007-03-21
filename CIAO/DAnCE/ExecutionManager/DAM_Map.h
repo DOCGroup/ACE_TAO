@@ -13,7 +13,7 @@
 #define CIAO_DAM_MAP_H
 #include /**/ "ace/pre.h"
 
-#include "ciao/Deployment_DomainApplicationManagerC.h"
+#include "DAnCE/Deployment/Deployment_DomainApplicationManagerC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -38,7 +38,7 @@ namespace CIAO
     public:
       DAM_Map (void);
 
-      bool is_plan_available (const ACE_CString &str);
+      bool is_plan_available (const ACE_CString &str) const;
 
       ::Deployment::DomainApplicationManager_ptr
       fetch_dam_reference (const ACE_CString &str);
@@ -47,12 +47,11 @@ namespace CIAO
         const ACE_CString &str,
         ::Deployment::DomainApplicationManager_ptr tmp);
 
-      Deployment::DomainApplicationManagers *
-      get_dams ();
+      Deployment::DomainApplicationManagers *get_dams ();
 
       bool unbind_dam (const ACE_CString &str);
 
-      size_t size (void);
+      size_t size (void) const;
 
     private:
       typedef

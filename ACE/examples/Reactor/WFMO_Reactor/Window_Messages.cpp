@@ -21,7 +21,7 @@
 
 #include "ace/OS_main.h"
 
-#if defined (ACE_WIN32)
+#if defined (ACE_WIN32) && !defined (ACE_LACKS_MSG_WFMO)
 
 #include "ace/Msg_WFMO_Reactor.h"
 #include "ace/Reactor.h"
@@ -97,4 +97,4 @@ ACE_TMAIN (int , ACE_TCHAR *[])
 {
   return 0;
 }
-#endif /* ACE_WIN32 */
+#endif /* ACE_WIN32 && !ACE_LACKS_MSG_WFMO */

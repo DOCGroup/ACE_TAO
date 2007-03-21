@@ -33,15 +33,12 @@ public:
   virtual int parse_args (int& argc, char **argv);
 
   // = The skeleton methods
-  virtual void start_test (Test::AMH_RoundtripResponseHandler_ptr _tao_rh)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void start_test (Test::AMH_RoundtripResponseHandler_ptr _tao_rh);
 
-  virtual void end_test (Test::AMH_RoundtripResponseHandler_ptr _tao_rh)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void end_test (Test::AMH_RoundtripResponseHandler_ptr _tao_rh);
 
   virtual void test_method (Test::AMH_RoundtripResponseHandler_ptr _tao_rh,
-                            Test::Timestamp send_time)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                            Test::Timestamp send_time);
 
 protected:
   ACE_Reactor *reactor_;

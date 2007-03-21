@@ -49,11 +49,9 @@ public:
    */
   //@{
 
-  virtual void pre_init (PortableInterceptor::ORBInitInfo_ptr info)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void pre_init (PortableInterceptor::ORBInitInfo_ptr info);
 
-  virtual void post_init (PortableInterceptor::ORBInitInfo_ptr info)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void post_init (PortableInterceptor::ORBInitInfo_ptr info);
 
   //@}
 

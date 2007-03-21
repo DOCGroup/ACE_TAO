@@ -32,12 +32,10 @@ public:
                         unsigned int expected,
                         Notify_Test_Client& client);
 
-  void _connect (CosNotifyChannelAdmin::ConsumerAdmin_ptr consumer_admin)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void _connect (CosNotifyChannelAdmin::ConsumerAdmin_ptr consumer_admin);
 
 protected:
-  void push_structured_event (const CosNotification::StructuredEvent&)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void push_structured_event (const CosNotification::StructuredEvent&);
 
   ACE_CString name_;
   TimeBase::TimeT blocking_timeout_;

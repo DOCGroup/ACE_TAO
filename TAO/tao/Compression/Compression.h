@@ -39,17 +39,16 @@ class TAO_Compression_Export TAO_Compression_Loader
 {
 public:
   /// Creates a Compression Manager and returns it.
-  virtual CORBA::Object_ptr create_object (CORBA::ORB_ptr orb,
-                                           int argc,
-                                           ACE_TCHAR *argv [])
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::Object_ptr create_object (CORBA::ORB_ptr orb, int argc,
+                                           ACE_TCHAR *argv []);
 
   /// Used to force the initialization of the ORB code.
   static int Initializer (void);
 };
 
 static int
-TAO_Requires_Compression_Initializer = TAO_Compression_Loader::Initializer ();
+  TAO_Requires_Compression_Initializer = TAO_Compression_Loader::Initializer
+  ();
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 

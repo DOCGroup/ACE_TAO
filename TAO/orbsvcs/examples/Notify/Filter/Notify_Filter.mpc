@@ -2,4 +2,5 @@
 // $Id$
 
 project : orbsvcsexe, notification, notification_skel, naming {
+  exename = Filter
 }

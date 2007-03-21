@@ -51,7 +51,7 @@ main (int argc, char *argv[])
   try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "");
+        CORBA::ORB_init (argc, argv);
 
       CORBA::Object_var poa_object =
         orb->resolve_initial_references("RootPOA");
@@ -77,8 +77,13 @@ main (int argc, char *argv[])
 
       PortableServer::ServantBase_var owner_transfer(test_impl);
 
+      PortableServer::ObjectId_var id =
+        root_poa->activate_object (test_impl);
+
+      CORBA::Object_var object = root_poa->id_to_reference (id.in ());
+
       MyInterface_var test_ref =
-        test_impl->_this ();
+        MyInterface::_narrow (object.in ());
 
       CORBA::String_var ior =
         orb->object_to_string (test_ref.in ());

@@ -79,20 +79,12 @@ void
 TAO_Notify_Lanes_Consumer::offer_change (const CosNotification::EventTypeSeq & /*added*/,
                                const CosNotification::EventTypeSeq & /*removed*/
                                )
-  ACE_THROW_SPEC ((
-                   CORBA::SystemException,
-                   CosNotifyComm::InvalidEventType
-                   ))
 {
   // No-Op.
 }
 
 void
 TAO_Notify_Lanes_Consumer::push_structured_event (const CosNotification::StructuredEvent & notification)
-  ACE_THROW_SPEC ((
-                   CORBA::SystemException,
-                   CosEventComm::Disconnected
-                   ))
 {
   try
     {
@@ -147,9 +139,6 @@ TAO_Notify_Lanes_Consumer::deactivate (void)
 
 void
 TAO_Notify_Lanes_Consumer::disconnect_structured_push_consumer (void)
-  ACE_THROW_SPEC ((
-                   CORBA::SystemException
-                   ))
 {
   this->deactivate ();
 }

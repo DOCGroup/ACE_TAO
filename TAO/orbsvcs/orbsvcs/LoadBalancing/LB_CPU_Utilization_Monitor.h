@@ -60,8 +60,7 @@ public:
   /**
    * The returned "Location" is a sequence of length 1.
    */
-  virtual CosLoadBalancing::Location * the_location ()
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CosLoadBalancing::Location * the_location ();
 
   /// Return the average CPU load at the location which this
   /// LoadMonitor resides.
@@ -70,8 +69,7 @@ public:
    *         equal to CosLoadBalancing::LoadAverage, and the average CPU
    *         load.
    */
-  virtual CosLoadBalancing::LoadList * loads ()
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CosLoadBalancing::LoadList * loads ();
 
   //@}
 

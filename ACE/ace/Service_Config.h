@@ -18,12 +18,12 @@
 #include /**/ "ace/config-all.h"
 #include "ace/Default_Constants.h"
 #include "ace/Service_Gestalt.h"
+#include "ace/TSS_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/SString.h"
 #include "ace/OS_NS_signal.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -209,53 +209,50 @@ protected:
    */
   virtual int parse_args_i (int argc, ACE_TCHAR *argv[]);
 
+  /**
+   * A Wrapper for the TSS-stored pointer to the "current"
+   * configuration Gestalt. Static initializers from any DLL loaded
+   * through the SC will find the SC instance through the TSS pointer,
+   * instead of the global singleton. This makes it possible to ensure
+   * that the new services are loaded in the correct Gestalt,
+   * independent of which thread is actually using the SC at the time
+   * to do so.
+   */
+  ACE_TSS <ACE_Service_Gestalt> tss_;
+
   /// = Static interfaces
 
-private:
-
-  /// A Wrapper for the TSS-stored pointer.
-  struct TSS_Resources {
-    TSS_Resources (void) : ptr_ (0) {}
-    ACE_Service_Gestalt *ptr_;
-  };
-
-  /// A type for the TSS-stored resources. The typedef helps to
-  /// abstract from the particularities of single-threaded vs
-  /// multi-threaded environments.
-  typedef ACE_TSS_TYPE (ACE_Service_Config::TSS_Resources) TSS_Service_Gestalt_Ptr;
-
-  /// Provides access to the static ptr, containing the TSS
-  /// accessor. Ensures the desired order of initialization, even when
-  /// other static initializers need the value.
-  static TSS_Service_Gestalt_Ptr * impl_ (void);
-
-protected:
-
-  /// Mutator to set the (TSS) global instance. Intended for use by helper
-  /// classes, like ACE_Service_Config_Guard which when instantiated on the
-  /// stack, can temporarily change which gestalt instance is viewed as
-  /// global from the point of view of the static initializers in DLLs.
+public:
+  /**
+   * Mutator to set the (TSS) global instance. Intended for use by
+   * helper classes like @see ACE_Service_Config_Guard. Stack-based
+   * instances of it can temporarily change which Gestalt is
+   * considered global by any static initializer (especially those in
+   * DLLs, loaded at run-time).
+   */
   static ACE_Service_Gestalt* current (ACE_Service_Gestalt*);
 
-public:
+  /**
+   * Returns a process-wide global singleton instance in contrast with
+   * current (), which may return a different instance at different
+   * times, dependent on the context. Use of this method is
+   * discouraged as it allows circumvention of the mechanism for
+   * dynamically loading services. Use with extreme caution!
+   */
+  static ACE_Service_Config* global (void);
 
-  /// If not yet initialized, creates a process-wide instance
-  /// global instance, which is registered with the ACE_Object_Manager,
-  /// via ACE_Singleton. Note that this is allways the same instance,
-  /// in contrast with current (), which may be different instance at
-  /// different times, dependent on the context.
-  static  ACE_Service_Gestalt* global (void);
-
-  /// Accessor for the "current" service repository through a pointer
-  /// held in TSS.
+  /// Accessor for the "current" service gestalt
   static ACE_Service_Gestalt* current (void);
 
-  /// This is what the static service initializators are hard-wired
-  /// to use, so in order to keep interface changes to a minimum this
-  /// method merely forwards to current(). Thus it is possible to
-  /// temporarily replace what those initializers think is the global
-  /// service repository, for instance when dynamically loading a
-  /// service from a DLL, which in turn, contains its own static services.
+  /**
+   * This is what the static service initializators are hard-wired to
+   * use, so in order to avoid interface changes this method merely
+   * forwards to @c ACE_Service_Config::current. This enables us to
+   * enforce which Service Gestalt is used for services registering
+   * through static initializers. Especially important for DLL-based
+   * dynamic services, which can contain their own static services and
+   * static initializers.
+   */
   static  ACE_Service_Gestalt* instance (void);
 
   /**

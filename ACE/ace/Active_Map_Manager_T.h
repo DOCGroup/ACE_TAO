@@ -56,7 +56,7 @@ public:
   /// Initialize a <Active_Map_Manager> with the <ACE_DEFAULT_MAP_SIZE>.
   ACE_Active_Map_Manager (ACE_Allocator *alloc = 0);
 
-  /// Initialize a <Active_Map_Manager> with <size> entries.
+  /// Initialize a <Active_Map_Manager> with @a size entries.
   ACE_Active_Map_Manager (size_t size,
                           ACE_Allocator *alloc = 0);
 
@@ -64,7 +64,7 @@ public:
   /// allocated resources.
   ~ACE_Active_Map_Manager (void);
 
-  /// Initialize a <Active_Map_Manager> with size <length>.
+  /// Initialize a <Active_Map_Manager> with size @a length.
   int open (size_t length = ACE_DEFAULT_MAP_SIZE,
             ACE_Allocator *alloc = 0);
 
@@ -72,18 +72,18 @@ public:
   /// allocated resources.
   int close (void);
 
-  /// Add <value> to the map, and the corresponding key produced by the
-  /// Active_Map_Manager is returned through <key>.
+  /// Add @a value to the map, and the corresponding key produced by the
+  /// Active_Map_Manager is returned through @a key.
   int bind (const T &value,
             ACE_Active_Map_Manager_Key &key);
 
-  /// Add <value> to the map.  The user does not care about the
+  /// Add @a value to the map.  The user does not care about the
   /// corresponding key produced by the Active_Map_Manager.
   int bind (const T &value);
 
   /**
    * Reserves a slot in the internal structure and returns the key and
-   * a pointer to the value.  User should place their <value> into
+   * a pointer to the value.  User should place their @a value into
    * <*internal_value>.  This method is useful in reducing the number
    * of copies required in some cases.  Note that <internal_value> is
    * only a temporary pointer and will change when the map resizes.
@@ -93,14 +93,14 @@ public:
   int bind (ACE_Active_Map_Manager_Key &key,
             T *&internal_value);
 
-  /// Reassociate <key> with <value>. The function fails if <key> is
+  /// Reassociate @a key with @a value. The function fails if @a key is
   /// not in the map.
   int rebind (const ACE_Active_Map_Manager_Key &key,
               const T &value);
 
   /**
-   * Reassociate <key> with <value>, storing the old value into the
-   * "out" parameter <old_value>.  The function fails if <key> is not
+   * Reassociate @a key with @a value, storing the old value into the
+   * "out" parameter @a old_value.  The function fails if @a key is not
    * in the map.
    */
   int rebind (const ACE_Active_Map_Manager_Key &key,
@@ -108,24 +108,24 @@ public:
               T &old_value);
 
   /**
-   * Reassociate <key> with <value>, storing the old key and value
-   * into the "out" parameter <old_key> and <old_value>.  The function
-   * fails if <key> is not in the map.
+   * Reassociate @a key with @a value, storing the old key and value
+   * into the "out" parameter @a old_key and @a old_value.  The function
+   * fails if @a key is not in the map.
    */
   int rebind (const ACE_Active_Map_Manager_Key &key,
               const T &value,
               ACE_Active_Map_Manager_Key &old_key,
               T &old_value);
 
-  /// Locate <value> associated with <key>.
+  /// Locate @a value associated with @a key.
   int find (const ACE_Active_Map_Manager_Key &key,
             T &value) const;
 
-  /// Is <key> in the map?
+  /// Is @a key in the map?
   int find (const ACE_Active_Map_Manager_Key &key) const;
 
   /**
-   * Locate <value> associated with <key>.  The value is returned via
+   * Locate @a value associated with @a key.  The value is returned via
    * <internal_value> and hence a copy is saved.  Note that
    * <internal_value> is only a temporary pointer and will change when
    * the map resizes.  Therefore, the user should use the pointer
@@ -134,20 +134,20 @@ public:
   int find (const ACE_Active_Map_Manager_Key &key,
             T *&internal_value) const;
 
-  // Creates a key.  User should place their <value> into
+  // Creates a key.  User should place their @a value into
   // <*internal_value>.  This method is useful in reducing the number
   // of copies required in some cases.
 
-  /// Remove <key> from the map.
+  /// Remove @a key from the map.
   int unbind (const ACE_Active_Map_Manager_Key &key);
 
-  /// Remove <key> from the map, and return the <value> associated with
-  /// <key>.
+  /// Remove @a key from the map, and return the @a value associated with
+  /// @a key.
   int unbind (const ACE_Active_Map_Manager_Key &key,
               T &value);
 
   /**
-   * Locate <value> associated with <key>.  The value is returned via
+   * Locate @a value associated with @a key.  The value is returned via
    * <internal_value> and hence a copy is saved.  Note that
    * <internal_value> is only a temporary pointer and will change when
    * the map resizes or when this slot is reused.  Therefore, the user

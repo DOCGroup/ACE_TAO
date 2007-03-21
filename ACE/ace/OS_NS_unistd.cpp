@@ -345,6 +345,12 @@ ACE_OS::num_processors (void)
     return num_processors;
   else
     return -1;
+#elif defined (__hpux)
+  struct pst_dynamic psd;
+  if (::pstat_getdynamic (&psd, sizeof (psd), (size_t) 1, 0) != -1)
+    return psd.psd_max_proc_cnt;
+  else
+    return -1;
 #else
   ACE_NOTSUP_RETURN (-1);
 #endif
@@ -594,8 +600,23 @@ ACE_OS::pwrite (ACE_HANDLE handle,
 
 #     else /* ACE_HAS_WIN32_OVERLAPPED_IO */
 
-  // Go to the correct position
-  if (! ::SetFilePointerEx (handle, loffset, 0, FILE_BEGIN))
+  // Go to the correct position; if this is a Windows variant without
+  // overlapped I/O, it probably doesn't have SetFilePointerEx either,
+  // so manage this with SetFilePointer, changing calls based on the use
+  // of 64 bit offsets.
+  DWORD newpos;
+#       if defined (_FILE_OFFSET_BITS) && _FILE_OFFSET_BITS == 64
+  newpos = ::SetFilePointer (handle,
+                             loffset.LowPart,
+                             &loffset.HighPart,
+                             FILE_BEGIN);
+#       else
+  newpos = ::SetFilePointer (handle,
+                             loffset.LowPart,
+                             0,
+                             FILE_BEGIN);
+#       endif /* 64-bit file offsets */
+  if (newpos == 0xFFFFFFFF && ::GetLastError () != NO_ERROR)
     {
       ACE_OS::set_errno_to_last_error ();
       return -1;

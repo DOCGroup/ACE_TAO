@@ -63,8 +63,7 @@ TAO_GIOP_Message_Generator_Parser_10::write_request_header (
       return false;
     }
 
-  msg.write_string (opdetails.opname_len (),
-                    opdetails.opname ());
+  msg.write_string (opdetails.opname_len (), opdetails.opname ());
 
   // Last element of request header is the principal; no portable way
   // to get it, we just pass empty principal (convention: indicates
@@ -149,7 +148,6 @@ TAO_GIOP_Message_Generator_Parser_10::write_reply_header (
     TAO_Pluggable_Reply_Params_Base &reply
 
   )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Write the service context list.
 #if (TAO_HAS_MINIMUM_CORBA == 1)
@@ -250,8 +248,7 @@ TAO_GIOP_Message_Generator_Parser_10::write_reply_header (
       else
         {
           // <target> can only have the values above
-          ACE_THROW_RETURN (CORBA::MARSHAL (),
-                            0);
+          throw ::CORBA::MARSHAL ();
         }
 
       output << CORBA::ULong (TAO_SVC_CONTEXT_ALIGN);
@@ -411,8 +408,7 @@ TAO_GIOP_Message_Generator_Parser_10::parse_request_header (
 
 int
 TAO_GIOP_Message_Generator_Parser_10::parse_locate_header (
-    TAO_GIOP_Locate_Request_Header &request
-  )
+    TAO_GIOP_Locate_Request_Header &request)
 {
   // Get the stream
   TAO_InputCDR &msg = request.incoming_stream ();
@@ -427,8 +423,7 @@ TAO_GIOP_Message_Generator_Parser_10::parse_locate_header (
   request.request_id (req_id);
 
   // Get the object key
-  hdr_status =
-    hdr_status && request.profile ().unmarshall_object_key (msg);
+  hdr_status = hdr_status && request.profile ().unmarshall_object_key (msg);
 
   return hdr_status ? 0 : -1;
 }
@@ -465,8 +460,7 @@ TAO_GIOP_Message_Generator_Parser_10::parse_reply (
 int
 TAO_GIOP_Message_Generator_Parser_10::parse_locate_reply (
     TAO_InputCDR &cdr,
-    TAO_Pluggable_Reply_Params &params
-  )
+    TAO_Pluggable_Reply_Params &params)
 {
   if (TAO_GIOP_Message_Generator_Parser::parse_locate_reply (cdr,
                                                              params) == -1)

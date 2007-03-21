@@ -1,6 +1,6 @@
 // $Id$
 
-#include "ciao/Deployment_NodeApplicationC.h"
+#include "DAnCE/Deployment/Deployment_NodeApplicationC.h"
 #include "ciao/Client_init.h"
 #include "NodeAppTest_RoundTripC.h"
 #include "ace/Get_Opt.h"
@@ -40,7 +40,7 @@ main (int argc, char *argv[])
   try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "");
+        CORBA::ORB_init (argc, argv);
 
       if (parse_args (argc, argv) != 0)
         return 1;

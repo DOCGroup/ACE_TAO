@@ -17,10 +17,6 @@ MultiTypes_PushConsumer::MultiTypes_PushConsumer (MultiTypes* client)
 void
 MultiTypes_PushConsumer::push (const CORBA::Any & /*data*/
                                )
-  ACE_THROW_SPEC ((
-                   CORBA::SystemException,
-                   CosEventComm::Disconnected
-                   ))
 {
   client_->on_received_event (this);
 }
@@ -35,10 +31,6 @@ MultiTypes_StructuredPushConsumer::MultiTypes_StructuredPushConsumer (MultiTypes
 void
 MultiTypes_StructuredPushConsumer::push_structured_event (const CosNotification::StructuredEvent & /*notification*/
                                       )
-    ACE_THROW_SPEC ((
-                     CORBA::SystemException,
-                     CosEventComm::Disconnected
-                     ))
 {
   client_->on_received_event (this);
 }
@@ -55,10 +47,6 @@ MultiTypes_SequencePushConsumer::MultiTypes_SequencePushConsumer (MultiTypes* cl
 void
 MultiTypes_SequencePushConsumer::push_structured_events (const CosNotification::EventBatch & /*notifications*/
                                                          )
-  ACE_THROW_SPEC ((
-                   CORBA::SystemException,
-                   CosEventComm::Disconnected
-                   ))
 {
   client_->on_received_event (this);
 }

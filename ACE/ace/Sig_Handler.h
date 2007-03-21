@@ -34,11 +34,11 @@ class ACE_Sig_Action;
  * objects to handle signals in a way that avoids the use of
  * global/static variables and functions.
  *
- * Using this class a program can register an <ACE_Event_Handler>
+ * Using this class a program can register an ACE_Event_Handler
  * with the <ACE_Sig_Handler> in order to handle a designated
- * <signum>.  When a signal occurs that corresponds to this
- * <signum>, the <handle_signal> method of the registered
- * <ACE_Event_Handler> is invoked automatically.
+ * @a signum.  When a signal occurs that corresponds to this
+ * @a signum, the <handle_signal> method of the registered
+ * ACE_Event_Handler is invoked automatically.
  */
 class ACE_Export ACE_Sig_Handler
 {
@@ -49,8 +49,8 @@ public:
 
   // = Registration and removal methods.
   /**
-   * Add a new <ACE_Event_Handler> and a new sigaction associated with
-   * <signum>.  Passes back the existing <ACE_Event_Handler> and its
+   * Add a new ACE_Event_Handler and a new sigaction associated with
+   * @a signum.  Passes back the existing ACE_Event_Handler and its
    * sigaction if pointers are non-zero.  Returns -1 on failure and >=
    * 0 on success.
    */
@@ -61,11 +61,11 @@ public:
                                 ACE_Sig_Action *old_disp = 0);
 
   /**
-   * Remove the <ACE_Event_Handler> currently associated with
-   * <signum>.  <sigkey> is ignored in this implementation since there
+   * Remove the ACE_Event_Handler currently associated with
+   * @a signum.  <sigkey> is ignored in this implementation since there
    * is only one instance of a signal handler.  Install the new
    * disposition (if given) and return the previous disposition (if
-   * desired by the caller).  Returns 0 on success and -1 if <signum>
+   * desired by the caller).  Returns 0 on success and -1 if @a signum
    * is invalid.
    */
   virtual int remove_handler (int signum,
@@ -82,10 +82,10 @@ public:
 
   // = Set/get the handler associated with a particular signal.
 
-  /// Return the <ACE_Sig_Handler> associated with <signum>.
+  /// Return the <ACE_Sig_Handler> associated with @a signum.
   virtual ACE_Event_Handler *handler (int signum);
 
-  /// Set a new <ACE_Event_Handler> that is associated with <signum>.
+  /// Set a new ACE_Event_Handler that is associated with @a signum.
   /// Return the existing handler.
   virtual ACE_Event_Handler *handler (int signum,
                                       ACE_Event_Handler *);
@@ -108,7 +108,7 @@ protected:
   // = These methods and data members are shared by derived classes.
 
   /**
-   * Set a new <ACE_Event_Handler> that is associated with <signum>.
+   * Set a new ACE_Event_Handler that is associated with @a signum.
    * Return the existing handler.  Does not acquire any locks so that
    * it can be called from a signal handler, such as <dispatch>.
    */
@@ -119,8 +119,8 @@ protected:
    * This implementation method is called by <register_handler> and
    * <dispatch>.  It doesn't do any locking so that it can be called
    * within a signal handler, such as <dispatch>.  It adds a new
-   * <ACE_Event_Handler> and a new sigaction associated with <signum>.
-   * Passes back the existing <ACE_Event_Handler> and its sigaction if
+   * ACE_Event_Handler and a new sigaction associated with @a signum.
+   * Passes back the existing ACE_Event_Handler and its sigaction if
    * pointers are non-zero.  Returns -1 on failure and >= 0 on
    * success.
    */
@@ -152,8 +152,8 @@ private:
  *
  * Using this class a program can register one or more
  * ACE_Event_Handler with the ACE_Sig_Handler in order to
- * handle a designated <signum>.  When a signal occurs that
- * corresponds to this <signum>, the <handle_signal> methods of
+ * handle a designated @a signum.  When a signal occurs that
+ * corresponds to this @a signum, the <handle_signal> methods of
  * all the registered ACE_Event_Handlers are invoked
  * automatically.
  */
@@ -163,7 +163,7 @@ public:
   // = Registration and removal methods.
   /**
    * Add a new ACE_Event_Handler and a new sigaction associated with
-   * <signum>.  Passes back the existing ACE_Event_Handler and its
+   * @a signum.  Passes back the existing ACE_Event_Handler and its
    * sigaction if pointers are non-zero.  Returns -1 on failure and
    * a <sigkey> that is >= 0 on success.
    */
@@ -174,12 +174,12 @@ public:
                                 ACE_Sig_Action *old_disp = 0);
 
   /**
-   * Remove an <ACE_Event_Handler> currently associated with <signum>.
+   * Remove an ACE_Event_Handler currently associated with @a signum.
    * We remove the handler if (1) its <sigkey> matches the <sigkey>
    * passed as a parameter or (2) if we've been told to remove all the
    * handlers, i.e., <sigkey> == -1.  If a new disposition is given it
    * is installed and the previous disposition is returned (if desired
-   * by the caller).  Returns 0 on success and -1 if <signum> is
+   * by the caller).  Returns 0 on success and -1 if @a signum is
    * invalid.
    */
   virtual int remove_handler (int signum,
@@ -194,7 +194,7 @@ public:
   virtual ACE_Event_Handler *handler (int signum);
 
   /**
-   * Set a new <ACE_Event_Handler> that is associated with SIGNUM at
+   * Set a new ACE_Event_Handler that is associated with SIGNUM at
    * the head of the list of signals.  Return the existing handler
    * that was at the head.
    */
@@ -204,7 +204,7 @@ public:
   /**
    * Callback routine registered with sigaction(2) that dispatches the
    * <handle_signal> method of all the pre-registered
-   * ACE_Event_Handlers for <signum>
+   * ACE_Event_Handlers for @a signum
    */
   static void dispatch (int signum, siginfo_t *, ucontext_t *);
 

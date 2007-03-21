@@ -16,14 +16,12 @@ class Reply_Handler
 
    virtual void
    childMethod (void)
-      ACE_THROW_SPEC ((CORBA::SystemException))
     {
     }
 
    virtual void
    childMethod_excep (Messaging::ExceptionHolder *
                          excep_holder)
-      ACE_THROW_SPEC ((CORBA::SystemException))
     {
       try
         {
@@ -37,7 +35,6 @@ class Reply_Handler
 
    virtual void
    parentMethod (void)
-      ACE_THROW_SPEC ((CORBA::SystemException))
     {
       ACE_DEBUG ((LM_DEBUG,
                   "client: parentMethod reply %d @ %T\n",
@@ -47,7 +44,6 @@ class Reply_Handler
 
    virtual void
    parentMethod_excep (Messaging::ExceptionHolder * excep_holder)
-   ACE_THROW_SPEC ((CORBA::SystemException))
    {
       try
         {
@@ -111,7 +107,7 @@ main(int argc, char *argv[])
   try
     {
       // Initialize the ORB.
-      orb = CORBA::ORB_init(argc, argv, 0);
+      orb = CORBA::ORB_init(argc, argv);
 
       // Initialize options based on command-line arguments.
       int parse_args_result = client_parse_args(argc, argv);
@@ -139,8 +135,13 @@ main(int argc, char *argv[])
 
       Reply_Handler reply_handler_servant;
 
+      PortableServer::ObjectId_var id =
+        root_poa->activate_object (&reply_handler_servant);
+
+      CORBA::Object_var object_act = root_poa->id_to_reference (id.in ());
+
       AMI_ChildHandler_var reply_handler_object =
-         reply_handler_servant._this ();
+        AMI_ChildHandler::_narrow (object_act.in ());
 
       // Invoke the AMI parentMethod
       child->sendc_parentMethod (reply_handler_object.in ());

@@ -94,8 +94,7 @@ public:
                    RtecEventComm::Event& event);
 
   // = The PushSupplier methods
-  virtual void disconnect_push_supplier (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void disconnect_push_supplier (void);
 
 private:
   /// Class we forward to.

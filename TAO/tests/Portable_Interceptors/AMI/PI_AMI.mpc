@@ -12,14 +12,12 @@ project(*Client) : taoserver, ami, pi, interceptors {
   exename = client
   after += *idl
   source_files {
+    TestC.cpp
+    TestS.cpp
     client.cpp
     Client_Interceptor.cpp
     Client_ORBInitializer.cpp
     Echo_Handler.cpp
-  }
-  source_files {
-    TestC.cpp
-    TestS.cpp
   }
   IDL_Files {
   }
@@ -30,14 +28,12 @@ project(*server) : taoserver, ami, pi_server, interceptors {
   after += *idl
   after += *Client
   source_files {
+    TestC.cpp
+    TestS.cpp
     server.cpp
     Server_Interceptor.cpp
     Server_ORBInitializer.cpp
     Echo.cpp
-  }
-  source_files {
-    TestC.cpp
-    TestS.cpp
   }
   IDL_Files {
   }

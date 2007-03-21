@@ -67,24 +67,20 @@ namespace TAO
 
       virtual PortableServer::ServantManager_ptr get_servant_manager (
         void)
-          ACE_THROW_SPEC ((CORBA::SystemException,
-                           PortableServer::POA::WrongPolicy)) = 0;
+          = 0;
 
       virtual void set_servant_manager (
         PortableServer::ServantManager_ptr imgr
         )
-          ACE_THROW_SPEC ((CORBA::SystemException,
-                           PortableServer::POA::WrongPolicy)) = 0;
+          = 0;
 
       virtual void set_servant (PortableServer::Servant servant )
-        ACE_THROW_SPEC ((CORBA::SystemException,
-                         PortableServer::POA::WrongPolicy)) = 0;
+        = 0;
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 
       virtual PortableServer::Servant get_servant (void)
-        ACE_THROW_SPEC ((CORBA::SystemException,
-                         PortableServer::POA::WrongPolicy)) = 0;
+        = 0;
 
       virtual TAO_SERVANT_LOCATION locate_servant (
         const PortableServer::ObjectId &system_id,
@@ -111,18 +107,14 @@ namespace TAO
       virtual PortableServer::Servant id_to_servant (
         const PortableServer::ObjectId &id
         )
-          ACE_THROW_SPEC ((CORBA::SystemException,
-                           PortableServer::POA::ObjectNotActive,
-                           PortableServer::POA::WrongPolicy)) = 0;
+          = 0;
 
       virtual void etherealize_objects (CORBA::Boolean etherealize_objects) = 0;
 
       virtual PortableServer::ObjectId *servant_to_id (
         PortableServer::Servant servant
         )
-          ACE_THROW_SPEC ((CORBA::SystemException,
-                           PortableServer::POA::ServantNotActive,
-                           PortableServer::POA::WrongPolicy)) = 0;
+          = 0;
 
       virtual void post_invoke_servant_cleanup(
         const PortableServer::ObjectId &system_id,

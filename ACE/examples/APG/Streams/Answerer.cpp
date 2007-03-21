@@ -399,5 +399,5 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     }
   // Listing 3
 
-  return 0;
+  ACE_NOTREACHED (return 0;)
 }

@@ -175,11 +175,7 @@ TAO::Collocation_Proxy_Broker *
 
 ::CORBA::Policy_ptr CORBA::DomainManager::get_domain_policy (
     ::CORBA::PolicyType policy_type
-
   )
-  ACE_THROW_SPEC ((
-    CORBA::SystemException
-  ))
 {
   if (!this->is_evaluated ())
     {
@@ -375,11 +371,7 @@ TAO::Collocation_Proxy_Broker *
 void CORBA::ConstructionPolicy::make_domain_manager (
     ::CORBA::InterfaceDef_ptr object_type,
     ::CORBA::Boolean constr_policy
-
   )
-  ACE_THROW_SPEC ((
-    CORBA::SystemException
-  ))
 {
   if (!this->is_evaluated ())
     {

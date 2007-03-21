@@ -122,7 +122,7 @@ public:
   virtual int protect (ssize_t len = -1, int prot = PROT_RDWR);
 
   /// Change the protection of the pages of the mapped region to <prot>
-  /// starting at <addr> up to <len> bytes.
+  /// starting at <addr> up to @a len bytes.
   virtual int protect (void *addr, size_t len, int prot = PROT_RDWR);
 
   /// Return the base address of this memory pool, 0 if base_addr

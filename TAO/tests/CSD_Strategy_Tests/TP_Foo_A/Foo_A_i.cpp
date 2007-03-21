@@ -19,7 +19,6 @@ Foo_A_i::~Foo_A_i()
 
 void
 Foo_A_i::op1(void)
-  ACE_THROW_SPEC((CORBA::SystemException))
 {
   this->op_count_[0] ++;
 }
@@ -27,7 +26,6 @@ Foo_A_i::op1(void)
 
 void
 Foo_A_i::op2(CORBA::Long value)
-  ACE_THROW_SPEC((CORBA::SystemException))
 {
   this->in_values_[1].push_back (value);
   this->op_count_[1] ++;
@@ -36,7 +34,6 @@ Foo_A_i::op2(CORBA::Long value)
 
 CORBA::Long
 Foo_A_i::op3(CORBA::Long value)
-  ACE_THROW_SPEC((CORBA::SystemException))
 {
   this->in_values_[2].push_back (value);
   this->op_count_[2] ++;
@@ -46,7 +43,6 @@ Foo_A_i::op3(CORBA::Long value)
 
 void
 Foo_A_i::op4(CORBA::Long value)
-  ACE_THROW_SPEC((CORBA::SystemException))
 {
   this->in_values_[3].push_back (value);
   this->op_count_[3] ++;
@@ -55,7 +51,6 @@ Foo_A_i::op4(CORBA::Long value)
 
 void
 Foo_A_i::op5(void)
-  ACE_THROW_SPEC((CORBA::SystemException, FooException))
 {
   this->op_count_[4] ++;
   throw FooException();
@@ -64,7 +59,6 @@ Foo_A_i::op5(void)
 
 void
 Foo_A_i::done(void)
-  ACE_THROW_SPEC((CORBA::SystemException))
 {
   TheAppShutdown->client_done();
 }

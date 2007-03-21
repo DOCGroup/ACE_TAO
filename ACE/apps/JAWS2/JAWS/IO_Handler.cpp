@@ -231,7 +231,7 @@ JAWS_IO_Handler::release (void)
 {
 }
 
-#if defined (ACE_WIN32) || defined (ACE_HAS_AIO_CALLS)
+#if defined (ACE_HAS_WIN32_OVERLAPPED_IO) || defined (ACE_HAS_AIO_CALLS)
 
 JAWS_Asynch_IO_Handler_Factory::~JAWS_Asynch_IO_Handler_Factory (void)
 {
@@ -498,5 +498,4 @@ JAWS_Asynch_Handler::handler (void)
   return this->ioh_;
 }
 
-#endif /* ACE_WIN32 */
-
+#endif /* ACE_HAS_WIN32_OVERLAPPED_IO || ACE_HAS_AIO_CALLS */

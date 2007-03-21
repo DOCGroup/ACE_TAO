@@ -15,9 +15,7 @@ namespace TAO
 {
   namespace Portable_Server
   {
-    POA_Guard::POA_Guard (::TAO_Root_POA &poa
-                          ,
-                          int check_for_destruction)
+    POA_Guard::POA_Guard (::TAO_Root_POA &poa, bool check_for_destruction)
       : guard_ (poa.lock ())
     {
       if (!this->guard_.locked ())
@@ -33,8 +31,7 @@ namespace TAO
       // course, the thread making the non-servant upcall is this thread.
       poa.object_adapter ().wait_for_non_servant_upcalls_to_complete ();
 
-      if (check_for_destruction &&
-          poa.cleanup_in_progress ())
+      if (check_for_destruction && poa.cleanup_in_progress ())
         throw
           CORBA::BAD_INV_ORDER (
             CORBA::SystemException::_tao_minor_code (

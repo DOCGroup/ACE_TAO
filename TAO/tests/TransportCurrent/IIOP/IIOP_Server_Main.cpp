@@ -10,8 +10,7 @@ int server_main (int argc,
                  Test::Server_Request_Interceptor *cri);
 
 int
-test_transport_current (CORBA::ORB_ptr orb)  ACE_THROW_SPEC ((CORBA::SystemException,
-                                                            CORBA::UserException));
+test_transport_current (CORBA::ORB_ptr orb);
 
 int
 ACE_TMAIN (int argc,

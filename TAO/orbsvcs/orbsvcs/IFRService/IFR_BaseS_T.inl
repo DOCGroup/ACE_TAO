@@ -129,9 +129,6 @@ POA_CORBA::IRObject_tie<T>::_default_POA (void)
 template <class T> ACE_INLINE
 ::CORBA::DefinitionKind POA_CORBA::IRObject_tie<T>::def_kind  (
   )
-  ACE_THROW_SPEC ((
-    ::CORBA::SystemException
-  ))
 {
   return this->ptr_->def_kind (
   );
@@ -143,9 +140,6 @@ template <class T> ACE_INLINE
 template <class T> ACE_INLINE
 void POA_CORBA::IRObject_tie<T>::destroy  (
   )
-  ACE_THROW_SPEC ((
-    ::CORBA::SystemException
-  ))
 {
   this->ptr_->destroy (
   );
@@ -250,9 +244,6 @@ POA_CORBA::Contained_tie<T>::_default_POA (void)
 template <class T> ACE_INLINE
 ::CORBA::DefinitionKind POA_CORBA::Contained_tie<T>::def_kind  (
   )
-  ACE_THROW_SPEC ((
-    ::CORBA::SystemException
-  ))
 {
   return this->ptr_->def_kind (
   );
@@ -264,9 +255,6 @@ template <class T> ACE_INLINE
 template <class T> ACE_INLINE
 void POA_CORBA::Contained_tie<T>::destroy  (
   )
-  ACE_THROW_SPEC ((
-    ::CORBA::SystemException
-  ))
 {
   this->ptr_->destroy (
   );
@@ -278,9 +266,6 @@ void POA_CORBA::Contained_tie<T>::destroy  (
 template <class T> ACE_INLINE
 char * POA_CORBA::Contained_tie<T>::id  (
   )
-  ACE_THROW_SPEC ((
-    ::CORBA::SystemException
-  ))
 {
   return this->ptr_->id (
   );
@@ -293,9 +278,6 @@ template <class T> ACE_INLINE
 void POA_CORBA::Contained_tie<T>::id  (
     const char * id
   )
-  ACE_THROW_SPEC ((
-    ::CORBA::SystemException
-  ))
 {
   this->ptr_->id (
     id
@@ -308,9 +290,6 @@ void POA_CORBA::Contained_tie<T>::id  (
 template <class T> ACE_INLINE
 char * POA_CORBA::Contained_tie<T>::name  (
   )
-  ACE_THROW_SPEC ((
-    ::CORBA::SystemException
-  ))
 {
   return this->ptr_->name (
   );
@@ -323,9 +302,6 @@ template <class T> ACE_INLINE
 void POA_CORBA::Contained_tie<T>::name  (
     const char * name
   )
-  ACE_THROW_SPEC ((
-    ::CORBA::SystemException
-  ))
 {
   this->ptr_->name (
     name
@@ -338,9 +314,6 @@ void POA_CORBA::Contained_tie<T>::name  (
 template <class T> ACE_INLINE
 char * POA_CORBA::Contained_tie<T>::version  (
   )
-  ACE_THROW_SPEC ((
-    ::CORBA::SystemException
-  ))
 {
   return this->ptr_->version (
   );
@@ -353,9 +326,6 @@ template <class T> ACE_INLINE
 void POA_CORBA::Contained_tie<T>::version  (
     const char * version
   )
-  ACE_THROW_SPEC ((
-    ::CORBA::SystemException
-  ))
 {
   this->ptr_->version (
     version
@@ -368,9 +338,6 @@ void POA_CORBA::Contained_tie<T>::version  (
 template <class T> ACE_INLINE
 ::CORBA::Container_ptr POA_CORBA::Contained_tie<T>::defined_in  (
   )
-  ACE_THROW_SPEC ((
-    ::CORBA::SystemException
-  ))
 {
   return this->ptr_->defined_in (
   );
@@ -382,9 +349,6 @@ template <class T> ACE_INLINE
 template <class T> ACE_INLINE
 char * POA_CORBA::Contained_tie<T>::absolute_name  (
   )
-  ACE_THROW_SPEC ((
-    ::CORBA::SystemException
-  ))
 {
   return this->ptr_->absolute_name (
   );
@@ -396,9 +360,6 @@ char * POA_CORBA::Contained_tie<T>::absolute_name  (
 template <class T> ACE_INLINE
 ::CORBA::Repository_ptr POA_CORBA::Contained_tie<T>::containing_repository  (
   )
-  ACE_THROW_SPEC ((
-    ::CORBA::SystemException
-  ))
 {
   return this->ptr_->containing_repository (
   );
@@ -410,9 +371,6 @@ template <class T> ACE_INLINE
 template <class T> ACE_INLINE
 ::CORBA::Contained::Description * POA_CORBA::Contained_tie<T>::describe  (
   )
-  ACE_THROW_SPEC ((
-    ::CORBA::SystemException
-  ))
 {
   return this->ptr_->describe (
   );
@@ -427,9 +385,6 @@ void POA_CORBA::Contained_tie<T>::move  (
     const char * new_name,
     const char * new_version
   )
-  ACE_THROW_SPEC ((
-    ::CORBA::SystemException
-  ))
 {
   this->ptr_->move (
     new_container,
@@ -537,9 +492,6 @@ POA_CORBA::Container_tie<T>::_default_POA (void)
 template <class T> ACE_INLINE
 ::CORBA::DefinitionKind POA_CORBA::Container_tie<T>::def_kind  (
   )
-  ACE_THROW_SPEC ((
-    ::CORBA::SystemException
-  ))
 {
   return this->ptr_->def_kind (
   );
@@ -551,9 +503,6 @@ template <class T> ACE_INLINE
 template <class T> ACE_INLINE
 void POA_CORBA::Container_tie<T>::destroy  (
   )
-  ACE_THROW_SPEC ((
-    ::CORBA::SystemException
-  ))
 {
   this->ptr_->destroy (
   );
@@ -566,9 +515,6 @@ template <class T> ACE_INLINE
 ::CORBA::Contained_ptr POA_CORBA::Container_tie<T>::lookup  (
     const char * search_name
   )
-  ACE_THROW_SPEC ((
-    ::CORBA::SystemException
-  ))
 {
   return this->ptr_->lookup (
     search_name
@@ -583,9 +529,6 @@ template <class T> ACE_INLINE
     ::CORBA::DefinitionKind limit_type,
     ::CORBA::Boolean exclude_inherited
   )
-  ACE_THROW_SPEC ((
-    ::CORBA::SystemException
-  ))
 {
   return this->ptr_->contents (
     limit_type,
@@ -603,9 +546,6 @@ template <class T> ACE_INLINE
     ::CORBA::DefinitionKind limit_type,
     ::CORBA::Boolean exclude_inherited
   )
-  ACE_THROW_SPEC ((
-    ::CORBA::SystemException
-  ))
 {
   return this->ptr_->lookup_name (
     search_name,
@@ -624,9 +564,6 @@ template <class T> ACE_INLINE
     ::CORBA::Boolean exclude_inherited,
     ::CORBA::Long max_returned_objs
   )
-  ACE_THROW_SPEC ((
-    ::CORBA::SystemException
-  ))
 {
   return this->ptr_->describe_contents (
     limit_type,
@@ -644,9 +581,6 @@ template <class T> ACE_INLINE
     const char * name,
     const char * version
   )
-  ACE_THROW_SPEC ((
-    ::CORBA::SystemException
-  ))
 {
   return this->ptr_->create_module (
     id,
@@ -666,9 +600,6 @@ template <class T> ACE_INLINE
     ::CORBA::IDLType_ptr type,
     const ::CORBA::Any & value
   )
-  ACE_THROW_SPEC ((
-    ::CORBA::SystemException
-  ))
 {
   return this->ptr_->create_constant (
     id,
@@ -689,9 +620,6 @@ template <class T> ACE_INLINE
     const char * version,
     const ::CORBA::StructMemberSeq & members
   )
-  ACE_THROW_SPEC ((
-    ::CORBA::SystemException
-  ))
 {
   return this->ptr_->create_struct (
     id,
@@ -712,9 +640,6 @@ template <class T> ACE_INLINE
     ::CORBA::IDLType_ptr discriminator_type,
     const ::CORBA::UnionMemberSeq & members
   )
-  ACE_THROW_SPEC ((
-    ::CORBA::SystemException
-  ))
 {
   return this->ptr_->create_union (
     id,
@@ -735,9 +660,6 @@ template <class T> ACE_INLINE
     const char * version,
     const ::CORBA::EnumMemberSeq & members
   )
-  ACE_THROW_SPEC ((
-    ::CORBA::SystemException
-  ))
 {
   return this->ptr_->create_enum (
     id,
@@ -757,9 +679,6 @@ template <class T> ACE_INLINE
     const char * version,
     ::CORBA::IDLType_ptr original_type
   )
-  ACE_THROW_SPEC ((
-    ::CORBA::SystemException
-  ))
 {
   return this->ptr_->create_alias (
     id,
@@ -779,9 +698,6 @@ template <class T> ACE_INLINE
     const char * version,
     const ::CORBA::InterfaceDefSeq & base_interfaces
   )
-  ACE_THROW_SPEC ((
-    ::CORBA::SystemException
-  ))
 {
   return this->ptr_->create_interface (
     id,
@@ -807,9 +723,6 @@ template <class T> ACE_INLINE
     const ::CORBA::InterfaceDefSeq & supported_interfaces,
     const ::CORBA::InitializerSeq & initializers
   )
-  ACE_THROW_SPEC ((
-    ::CORBA::SystemException
-  ))
 {
   return this->ptr_->create_value (
     id,
@@ -835,9 +748,6 @@ template <class T> ACE_INLINE
     const char * version,
     ::CORBA::IDLType_ptr original_type_def
   )
-  ACE_THROW_SPEC ((
-    ::CORBA::SystemException
-  ))
 {
   return this->ptr_->create_value_box (
     id,
@@ -857,9 +767,6 @@ template <class T> ACE_INLINE
     const char * version,
     const ::CORBA::StructMemberSeq & members
   )
-  ACE_THROW_SPEC ((
-    ::CORBA::SystemException
-  ))
 {
   return this->ptr_->create_exception (
     id,
@@ -878,9 +785,6 @@ template <class T> ACE_INLINE
     const char * name,
     const char * version
   )
-  ACE_THROW_SPEC ((
-    ::CORBA::SystemException
-  ))
 {
   return this->ptr_->create_native (
     id,
@@ -899,9 +803,6 @@ template <class T> ACE_INLINE
     const char * version,
     const ::CORBA::AbstractInterfaceDefSeq & base_interfaces
   )
-  ACE_THROW_SPEC ((
-    ::CORBA::SystemException
-  ))
 {
   return this->ptr_->create_abstract_interface (
     id,
@@ -921,9 +822,6 @@ template <class T> ACE_INLINE
     const char * version,
     const ::CORBA::InterfaceDefSeq & base_interfaces
   )
-  ACE_THROW_SPEC ((
-    ::CORBA::SystemException
-  ))
 {
   return this->ptr_->create_local_interface (
     id,
@@ -949,9 +847,6 @@ template <class T> ACE_INLINE
     const ::CORBA::InterfaceDefSeq & supported_interfaces,
     const ::CORBA::ExtInitializerSeq & initializers
   )
-  ACE_THROW_SPEC ((
-    ::CORBA::SystemException
-  ))
 {
   return this->ptr_->create_ext_value (
     id,
@@ -1066,9 +961,6 @@ POA_CORBA::IDLType_tie<T>::_default_POA (void)
 template <class T> ACE_INLINE
 ::CORBA::DefinitionKind POA_CORBA::IDLType_tie<T>::def_kind  (
   )
-  ACE_THROW_SPEC ((
-    ::CORBA::SystemException
-  ))
 {
   return this->ptr_->def_kind (
   );
@@ -1080,9 +972,6 @@ template <class T> ACE_INLINE
 template <class T> ACE_INLINE
 void POA_CORBA::IDLType_tie<T>::destroy  (
   )
-  ACE_THROW_SPEC ((
-    ::CORBA::SystemException
-  ))
 {
   this->ptr_->destroy (
   );
@@ -1094,9 +983,6 @@ void POA_CORBA::IDLType_tie<T>::destroy  (
 template <class T> ACE_INLINE
 ::CORBA::TypeCode_ptr POA_CORBA::IDLType_tie<T>::type  (
   )
-  ACE_THROW_SPEC ((
-    ::CORBA::SystemException
-  ))
 {
   return this->ptr_->type (
   );
@@ -1201,9 +1087,6 @@ POA_CORBA::TypedefDef_tie<T>::_default_POA (void)
 template <class T> ACE_INLINE
 ::CORBA::DefinitionKind POA_CORBA::TypedefDef_tie<T>::def_kind  (
   )
-  ACE_THROW_SPEC ((
-    ::CORBA::SystemException
-  ))
 {
   return this->ptr_->def_kind (
   );
@@ -1215,9 +1098,6 @@ template <class T> ACE_INLINE
 template <class T> ACE_INLINE
 void POA_CORBA::TypedefDef_tie<T>::destroy  (
   )
-  ACE_THROW_SPEC ((
-    ::CORBA::SystemException
-  ))
 {
   this->ptr_->destroy (
   );
@@ -1229,9 +1109,6 @@ void POA_CORBA::TypedefDef_tie<T>::destroy  (
 template <class T> ACE_INLINE
 char * POA_CORBA::TypedefDef_tie<T>::id  (
   )
-  ACE_THROW_SPEC ((
-    ::CORBA::SystemException
-  ))
 {
   return this->ptr_->id (
   );
@@ -1244,9 +1121,6 @@ template <class T> ACE_INLINE
 void POA_CORBA::TypedefDef_tie<T>::id  (
     const char * id
   )
-  ACE_THROW_SPEC ((
-    ::CORBA::SystemException
-  ))
 {
   this->ptr_->id (
     id
@@ -1259,9 +1133,6 @@ void POA_CORBA::TypedefDef_tie<T>::id  (
 template <class T> ACE_INLINE
 char * POA_CORBA::TypedefDef_tie<T>::name  (
   )
-  ACE_THROW_SPEC ((
-    ::CORBA::SystemException
-  ))
 {
   return this->ptr_->name (
   );
@@ -1274,9 +1145,6 @@ template <class T> ACE_INLINE
 void POA_CORBA::TypedefDef_tie<T>::name  (
     const char * name
   )
-  ACE_THROW_SPEC ((
-    ::CORBA::SystemException
-  ))
 {
   this->ptr_->name (
     name
@@ -1289,9 +1157,6 @@ void POA_CORBA::TypedefDef_tie<T>::name  (
 template <class T> ACE_INLINE
 char * POA_CORBA::TypedefDef_tie<T>::version  (
   )
-  ACE_THROW_SPEC ((
-    ::CORBA::SystemException
-  ))
 {
   return this->ptr_->version (
   );
@@ -1304,9 +1169,6 @@ template <class T> ACE_INLINE
 void POA_CORBA::TypedefDef_tie<T>::version  (
     const char * version
   )
-  ACE_THROW_SPEC ((
-    ::CORBA::SystemException
-  ))
 {
   this->ptr_->version (
     version
@@ -1319,9 +1181,6 @@ void POA_CORBA::TypedefDef_tie<T>::version  (
 template <class T> ACE_INLINE
 ::CORBA::Container_ptr POA_CORBA::TypedefDef_tie<T>::defined_in  (
   )
-  ACE_THROW_SPEC ((
-    ::CORBA::SystemException
-  ))
 {
   return this->ptr_->defined_in (
   );
@@ -1333,9 +1192,6 @@ template <class T> ACE_INLINE
 template <class T> ACE_INLINE
 char * POA_CORBA::TypedefDef_tie<T>::absolute_name  (
   )
-  ACE_THROW_SPEC ((
-    ::CORBA::SystemException
-  ))
 {
   return this->ptr_->absolute_name (
   );
@@ -1347,9 +1203,6 @@ char * POA_CORBA::TypedefDef_tie<T>::absolute_name  (
 template <class T> ACE_INLINE
 ::CORBA::Repository_ptr POA_CORBA::TypedefDef_tie<T>::containing_repository  (
   )
-  ACE_THROW_SPEC ((
-    ::CORBA::SystemException
-  ))
 {
   return this->ptr_->containing_repository (
   );
@@ -1361,9 +1214,6 @@ template <class T> ACE_INLINE
 template <class T> ACE_INLINE
 ::CORBA::Contained::Description * POA_CORBA::TypedefDef_tie<T>::describe  (
   )
-  ACE_THROW_SPEC ((
-    ::CORBA::SystemException
-  ))
 {
   return this->ptr_->describe (
   );
@@ -1378,9 +1228,6 @@ void POA_CORBA::TypedefDef_tie<T>::move  (
     const char * new_name,
     const char * new_version
   )
-  ACE_THROW_SPEC ((
-    ::CORBA::SystemException
-  ))
 {
   this->ptr_->move (
     new_container,
@@ -1395,9 +1242,6 @@ void POA_CORBA::TypedefDef_tie<T>::move  (
 template <class T> ACE_INLINE
 ::CORBA::TypeCode_ptr POA_CORBA::TypedefDef_tie<T>::type  (
   )
-  ACE_THROW_SPEC ((
-    ::CORBA::SystemException
-  ))
 {
   return this->ptr_->type (
   );

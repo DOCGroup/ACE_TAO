@@ -75,7 +75,6 @@ public:
 
   void foo (CORBA::Long ami_return_val,
             CORBA::Long out_l)
-      ACE_THROW_SPEC ((CORBA::SystemException))
     {
       if (debug)
         {
@@ -87,7 +86,6 @@ public:
     };
 
   void foo_excep (::Messaging::ExceptionHolder * excep_holder)
-      ACE_THROW_SPEC ((CORBA::SystemException))
     {
 
       ACE_DEBUG ((LM_DEBUG,
@@ -112,7 +110,6 @@ public:
 
 
   void get_yadda (CORBA::Long result)
-      ACE_THROW_SPEC ((CORBA::SystemException))
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Callback method <get_yadda> called: result <%d>\n",
@@ -120,21 +117,18 @@ public:
     };
 
   void get_yadda_excep (::Messaging::ExceptionHolder *)
-      ACE_THROW_SPEC ((CORBA::SystemException))
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Callback method <get_yadda_excep> called: \n"));
     };
 
   void set_yadda (void)
-      ACE_THROW_SPEC ((CORBA::SystemException))
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Callback method <set_yadda> called: \n"));
     };
 
   void set_yadda_excep (::Messaging::ExceptionHolder *)
-      ACE_THROW_SPEC ((CORBA::SystemException))
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Callback method <set_yadda_excep> called: \n"));
@@ -143,14 +137,12 @@ public:
   void inout_arg_test (
       const char *
       )
-    ACE_THROW_SPEC ((CORBA::SystemException))
   {
     ACE_DEBUG ((LM_DEBUG,
                 "Callback method <set_yadda_excep> called: \n"));
   }
 
   void inout_arg_test_excep (::Messaging::ExceptionHolder *)
-    ACE_THROW_SPEC ((CORBA::SystemException))
   {
   }
 };
@@ -163,7 +155,7 @@ main (int argc, char *argv[])
   try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "");
+        CORBA::ORB_init (argc, argv);
 
       CORBA::Object_var object_var =
         orb->resolve_initial_references ("RootPOA");
@@ -195,8 +187,13 @@ main (int argc, char *argv[])
 
       // Instantiate the ReplyHandler and register that with the POA.
       Handler handler;
+      PortableServer::ObjectId_var id =
+        poa_var->activate_object (&handler);
+
+      CORBA::Object_var object = poa_var->id_to_reference (id.in ());
+
       A::AMI_AMI_TestHandler_var the_handler_var =
-        handler._this ();
+        A::AMI_AMI_TestHandler::_narrow (object.in ());
 
       // Try out sending asynchronous messages without a reply handler
       // registered. Things fail if we get an exception.
@@ -230,8 +227,7 @@ main (int argc, char *argv[])
       // Begin test of attributes
       ami_test_var->sendc_get_yadda (the_handler_var.in ());
 
-      ami_test_var->sendc_set_yadda (the_handler_var.in (),
-                                     4711);
+      ami_test_var->sendc_set_yadda (the_handler_var.in (), 4711);
 
       ami_test_var->sendc_get_yadda (the_handler_var.in ());
 

@@ -42,17 +42,13 @@ public:
   virtual ~TAO_CEC_DynamicImplementationServer (void);
 
   // = The DynamicImplementation methods.
-  virtual void invoke (CORBA::ServerRequest_ptr request)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void invoke (CORBA::ServerRequest_ptr request);
 
   virtual CORBA::RepositoryId _primary_interface (
       const PortableServer::ObjectId &oid,
-      PortableServer::POA_ptr poa
-    )
-      ACE_THROW_SPEC (());
+      PortableServer::POA_ptr poa);
 
-  virtual PortableServer::POA_ptr _default_POA (
-    );
+  virtual PortableServer::POA_ptr _default_POA (void);
 
   // Handles the _is_a call
   virtual void is_a (CORBA::ServerRequest_ptr request);

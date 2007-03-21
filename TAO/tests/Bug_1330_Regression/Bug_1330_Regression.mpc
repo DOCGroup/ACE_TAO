@@ -22,7 +22,6 @@ project(*Server): taoserver, iortable {
 
 project(*Client): taoclient, anytypecode {
   after += *idl
-  after += *Server
   Source_Files {
     TestC.cpp
     client.cpp

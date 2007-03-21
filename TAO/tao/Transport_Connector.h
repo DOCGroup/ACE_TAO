@@ -17,14 +17,13 @@
 #define TAO_CONNECTOR_H
 
 #include /**/ "ace/pre.h"
-#include "ace/CORBA_macros.h"
+#include "tao/Basic_Types.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include /**/ "tao/TAO_Export.h"
-#include "tao/Basic_Types.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Time_Value;

@@ -17,6 +17,7 @@
 #include "tao/Endpoint.h"
 #include "tao/Profile_Transport_Resolver.h"
 #include "tao/ORB_Core.h"
+#include "tao/SystemException.h"
 
 ACE_RCSID (RTCORBA,
            RT_Invocation_Endpoint_Selectors,
@@ -111,10 +112,7 @@ TAO_RT_Invocation_Endpoint_Selector::select_endpoint_based_on_client_protocol_po
 
               r.profile (profile);
 
-              int const status =
-                this->endpoint_from_profile (r,
-                                             val
-                                            );
+              int const status = this->endpoint_from_profile (r, val);
 
               if (status == 1)
                 return;
@@ -129,8 +127,7 @@ TAO_RT_Invocation_Endpoint_Selector::select_endpoint_based_on_client_protocol_po
     {
       if (r.inconsistent_policies ())
         {
-          CORBA::PolicyList *p =
-            r.inconsistent_policies ();
+          CORBA::PolicyList *p = r.inconsistent_policies ();
 
           p->length (1);
           (*p)[0u] = CORBA::Policy::_duplicate (client_protocol_policy);
@@ -150,8 +147,10 @@ TAO_RT_Invocation_Endpoint_Selector::endpoint_from_profile (
     ACE_Time_Value *val)
 {
   // Narrow to the RT Stub.
-  TAO_RT_Stub *rt_stub =
-    dynamic_cast <TAO_RT_Stub *> (r.stub ());
+  TAO_RT_Stub *rt_stub = dynamic_cast <TAO_RT_Stub *> (r.stub ());
+
+  if (!rt_stub)
+    throw CORBA::INTERNAL ();
 
   // Get the priority model policy.
   CORBA::Policy_var priority_model_policy =
@@ -183,7 +182,7 @@ TAO_RT_Invocation_Endpoint_Selector::endpoint_from_profile (
               (*p)[0u] = CORBA::Policy::_duplicate (bands_policy.in ());
             }
           // Indicate error.
-          ACE_THROW_RETURN (CORBA::INV_POLICY (), 0);
+          throw ::CORBA::INV_POLICY ();
         }
 
       // No priority model policy (and no bands policy): all endpoints
@@ -197,77 +196,78 @@ TAO_RT_Invocation_Endpoint_Selector::endpoint_from_profile (
       TAO_Protocols_Hooks *protocol_hooks =
         r.stub ()->orb_core ()->get_protocols_hooks ();
 
-      CORBA::Short server_priority = 0;
-      CORBA::Boolean is_client_propagated = false;
-
-      // Check the priority model policy to see if it is client
-      // propagated.
-      protocol_hooks->get_selector_hook (priority_model_policy.in (),
-                                         is_client_propagated,
-                                         server_priority);
-
-      if (!is_client_propagated)
+      if (protocol_hooks != 0)
         {
-          // Server declared: all endpoints are fair game.
-          all_endpoints_are_valid = 1;
-        }
-      // Client propagated.
-      else
-        {
-          // Get client thread priority.
-          int status =
-            protocol_hooks->get_thread_CORBA_priority (
-              client_thread_priority  // side effect
-             );
-          if (status == -1)
-            {
-              ACE_THROW_RETURN (CORBA::DATA_CONVERSION (CORBA::OMGVMCID | 1,
-                                                        CORBA::COMPLETED_NO),
-                                0);
-            }
+          CORBA::Short server_priority = 0;
+          CORBA::Boolean is_client_propagated = false;
 
-          // If there are no bands.
-          if (bands_policy.ptr () == 0)
-            {
+          // Check the priority model policy to see if it is client
+          // propagated.
+          protocol_hooks->get_selector_hook (priority_model_policy.in (),
+                                             is_client_propagated,
+                                             server_priority);
 
-              // Match the priority of the client thread with the
-              // endpoint.
-              match_priority = 1;
+          if (!is_client_propagated)
+            {
+              // Server declared: all endpoints are fair game.
+              all_endpoints_are_valid = 1;
             }
-          // There are bands.
+          // Client propagated.
           else
             {
-
-              // Check which band range we fall in.
-              bool in_range = false;
-              protocol_hooks->get_selector_bands_policy_hook (
-                bands_policy.in (),
-                client_thread_priority,
-                min_priority,
-                max_priority,
-                in_range);
-
-              // If priority doesn't fall into any of the bands.
-              if (!in_range)
+              // Get client thread priority.
+              int status =
+                protocol_hooks->get_thread_CORBA_priority (
+                  client_thread_priority  // side effect
+                 );
+              if (status == -1)
                 {
-                  if (r.inconsistent_policies ())
-                    {
-
-                      CORBA::PolicyList *p = r.inconsistent_policies ();
-                      p->length (2);
-                      (*p)[0u] = CORBA::Policy::_duplicate (bands_policy.in ());
-                      (*p)[1u] =
-                        CORBA::Policy::_duplicate (
-                          priority_model_policy.in ());
-                    }
-
-                  // Indicate error.
-                  ACE_THROW_RETURN (CORBA::INV_POLICY (),
-                                    0);
+                  throw ::CORBA::DATA_CONVERSION (
+                    CORBA::OMGVMCID | 1,
+                    CORBA::COMPLETED_NO);
                 }
 
-              // Match the priority of the band with the endpoint.
-              match_bands = 1;
+              // If there are no bands.
+              if (bands_policy.ptr () == 0)
+                {
+
+                  // Match the priority of the client thread with the
+                  // endpoint.
+                  match_priority = 1;
+                }
+              // There are bands.
+              else
+                {
+                  // Check which band range we fall in.
+                  bool in_range = false;
+                  protocol_hooks->get_selector_bands_policy_hook (
+                    bands_policy.in (),
+                    client_thread_priority,
+                    min_priority,
+                    max_priority,
+                    in_range);
+
+                  // If priority doesn't fall into any of the bands.
+                  if (!in_range)
+                    {
+                      if (r.inconsistent_policies ())
+                        {
+
+                          CORBA::PolicyList *p = r.inconsistent_policies ();
+                          p->length (2);
+                          (*p)[0u] = CORBA::Policy::_duplicate (bands_policy.in ());
+                          (*p)[1u] =
+                            CORBA::Policy::_duplicate (
+                              priority_model_policy.in ());
+                        }
+
+                      // Indicate error.
+                      throw ::CORBA::INV_POLICY ();
+                    }
+
+                  // Match the priority of the band with the endpoint.
+                  match_bands = 1;
+                }
             }
         }
     }

@@ -46,7 +46,7 @@ main (int argc, char *argv[])
   try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "");
+        CORBA::ORB_init (argc, argv);
 
       CORBA::Object_var poa_object =
         orb->resolve_initial_references ("RootPOA");
@@ -76,8 +76,13 @@ main (int argc, char *argv[])
 
       PortableServer::ServantBase_var big_reply_owner_transfer(big_reply_gen);
 
+      PortableServer::ObjectId_var id =
+        root_poa->activate_object (big_reply_gen);
+
+      CORBA::Object_var object = root_poa->id_to_reference (id.in ());
+
       Test::Big_Reply_var big_reply =
-        big_reply_gen->_this ();
+        Test::Big_Reply::_narrow (object.in ());
 
       CORBA::String_var ior =
         orb->object_to_string (big_reply.in ());

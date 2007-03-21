@@ -61,7 +61,6 @@ TAO_LB_CPU_Load_Average_Monitor::~TAO_LB_CPU_Load_Average_Monitor (void)
 
 CosLoadBalancing::Location *
 TAO_LB_CPU_Load_Average_Monitor::the_location (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CosLoadBalancing::Location * location;
   ACE_NEW_THROW_EX (location,
@@ -77,7 +76,6 @@ TAO_LB_CPU_Load_Average_Monitor::the_location (void)
 
 CosLoadBalancing::LoadList *
 TAO_LB_CPU_Load_Average_Monitor::loads (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::Float load = 0;
 
@@ -120,12 +118,11 @@ TAO_LB_CPU_Load_Average_Monitor::loads (void)
   FILE * s = ::fopen ("/proc/loadavg", "r");
 
   if (s == 0)
-    ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (
-                        CORBA::SystemException::_tao_minor_code (
-                          TAO::VMCID,
-                          errno),
-                        CORBA::COMPLETED_NO),
-                      0);
+    throw CORBA::NO_IMPLEMENT (
+      CORBA::SystemException::_tao_minor_code (
+        TAO::VMCID,
+        errno),
+      CORBA::COMPLETED_NO);
 
   fscanf (s, "%f", &loadavg[0]);
 
@@ -158,10 +155,10 @@ TAO_LB_CPU_Load_Average_Monitor::loads (void)
       if (num_processors > 0)
         load = loadavg[0] / num_processors;
       else
-        ACE_THROW_RETURN (CORBA::TRANSIENT (), 0);  // Correct exception?
+        throw CORBA::TRANSIENT ();  // Correct exception?
     }
   else
-    ACE_THROW_RETURN (CORBA::TRANSIENT (), 0);  // Correct exception?
+    throw CORBA::TRANSIENT ();  // Correct exception?
 
 #elif defined (__NetBSD__) || defined (__APPLE__)
 
@@ -185,10 +182,10 @@ TAO_LB_CPU_Load_Average_Monitor::loads (void)
       if (num_processors > 0)
         load = loadavg[0] / num_processors;
       else
-        ACE_THROW_RETURN (CORBA::TRANSIENT (), 0);  // Correct exception?
+        throw CORBA::TRANSIENT ();  // Correct exception?
     }
   else
-    ACE_THROW_RETURN (CORBA::TRANSIENT (), 0);  // Correct exception?
+    throw CORBA::TRANSIENT ();  // Correct exception?
 
 #elif defined (__hpux)
 
@@ -203,10 +200,10 @@ TAO_LB_CPU_Load_Average_Monitor::loads (void)
       if (num_processors > 0)
         load = psd.psd_avg_1_min / num_processors;
       else
-        ACE_THROW_RETURN (CORBA::TRANSIENT (), 0);  // Correct exception?
+        throw CORBA::TRANSIENT ();  // Correct exception?
     }
   else
-    ACE_THROW_RETURN (CORBA::TRANSIENT (), 0);  // Correct exception?
+    throw CORBA::TRANSIENT ();  // Correct exception?
 
 #endif
 
@@ -233,7 +230,7 @@ TAO_LB_CPU_Load_Average_Monitor::loads (void)
 #else
 
   ACE_UNUSED_ARG (load);
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
+  throw CORBA::NO_IMPLEMENT ();
 
 #endif  /* linux || sun || __hpux  || __NetBSD__ || __APPLE__ */
 

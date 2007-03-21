@@ -30,11 +30,9 @@ public:
   test_i (CORBA::ORB_ptr orb,
           PortableServer::POA_ptr poa);
 
-  void method (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void method (void);
 
-  void shutdown (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void shutdown (void);
 
   PortableServer::POA_ptr _default_POA (void);
 
@@ -53,7 +51,6 @@ test_i::test_i (CORBA::ORB_ptr orb,
 
 void
 test_i::method (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Get the ORB_Core's TSS resources.
   TAO_ORB_Core_TSS_Resources *tss =
@@ -78,7 +75,6 @@ test_i::method (void)
 
 void
 test_i::shutdown (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (debug)
     ACE_DEBUG ((LM_DEBUG,
@@ -193,8 +189,13 @@ vanilla_poa (CORBA::ORB_ptr orb,
 
   PortableServer::ServantBase_var safe_servant (servant);
 
+  PortableServer::ObjectId_var id_act =
+    poa->activate_object (servant);
+
+  CORBA::Object_var object = poa->id_to_reference (id_act.in ());
+
   test_var test =
-    servant->_this ();
+    test::_narrow (object.in ());
 
   write_iors_to_file (test.in (),
                       orb);
@@ -272,8 +273,13 @@ rt_poa (CORBA::ORB_ptr orb,
 
   PortableServer::ServantBase_var safe_servant (servant);
 
+  PortableServer::ObjectId_var id_act =
+    poa->activate_object (servant);
+
+  CORBA::Object_var object = poa->id_to_reference (id_act.in ());
+
   test_var test =
-    servant->_this ();
+    test::_narrow (object.in ());
 
   write_iors_to_file (test.in (),
                       orb);

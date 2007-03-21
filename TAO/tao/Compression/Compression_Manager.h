@@ -23,7 +23,6 @@
 
 #include "tao/Compression/Compression.h"
 #include "tao/LocalObject.h"
-#include "ace/Synch_Traits.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -33,48 +32,24 @@ namespace TAO
     public virtual ::Compression::CompressionManager,
     public virtual TAO_Local_RefCounted_Object
   {
-    virtual void register_factory (
-        ::Compression::CompressorFactory_ptr compressor_factory
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException,
-        ::Compression::FactoryAlreadyRegistered
-      ));
+    virtual void register_factory (::Compression::CompressorFactory_ptr
+                                   compressor_factory);
 
-    virtual void unregister_factory (
-        ::Compression::CompressorId compressor_id
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException,
-        ::Compression::UnknownCompressorId
-      ));
+    virtual void unregister_factory (::Compression::CompressorId
+                                     compressor_id);
 
-    virtual ::Compression::CompressorFactory_ptr get_factory (
-        ::Compression::CompressorId compressor_id
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException,
-        ::Compression::UnknownCompressorId
-      ));
+    virtual ::Compression::CompressorFactory_ptr get_factory
+      (::Compression::CompressorId compressor_id);
 
-    virtual ::Compression::Compressor_ptr get_compressor (
-        ::Compression::CompressorId compressor_id,
-        ::Compression::CompressionLevel compression_level
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException,
-        ::Compression::UnknownCompressorId
-      ));
+    virtual ::Compression::Compressor_ptr get_compressor
+      (::Compression::CompressorId compressor_id,
+       ::Compression::CompressionLevel compression_level);
 
-    virtual ::Compression::CompressorFactorySeq * get_factories (
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+    virtual ::Compression::CompressorFactorySeq *get_factories (void);
 
-    private:
-      ACE_SYNCH_MUTEX mutex_;
-      ::Compression::CompressorFactorySeq factories_;
+  private:
+    TAO_SYNCH_MUTEX mutex_;
+    ::Compression::CompressorFactorySeq factories_;
   };
 }
 

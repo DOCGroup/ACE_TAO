@@ -2,7 +2,6 @@
 
 #include "tao/PI/ORBInitInfoC.h"
 #include "tao/PI/InterceptorC.h"
-#include "tao/SystemException.h"
 #include "tao/ORB_Constants.h"
 #include "tao/debug.h"
 
@@ -44,8 +43,7 @@ namespace TAO
   template <typename InterceptorType, typename DetailsType>
   void
   Interceptor_List<InterceptorType,DetailsType>::add_interceptor (
-    InterceptorType_ptr_type interceptor
-    )
+    InterceptorType_ptr_type interceptor)
   {
     if (!CORBA::is_nil (interceptor))
       {

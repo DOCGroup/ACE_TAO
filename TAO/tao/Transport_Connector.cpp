@@ -83,9 +83,7 @@ TAO_Connector::~TAO_Connector (void)
 }
 
 TAO_Profile *
-TAO_Connector::corbaloc_scan (const char *str,
-                              size_t &len
-                              )
+TAO_Connector::corbaloc_scan (const char *str, size_t &len)
 {
   if (this->check_prefix (str) != 0)
     return 0;
@@ -102,9 +100,7 @@ TAO_Connector::corbaloc_scan (const char *str,
 }
 
 int
-TAO_Connector::make_mprofile (const char *string,
-                              TAO_MProfile &mprofile
-                              )
+TAO_Connector::make_mprofile (const char *string, TAO_MProfile &mprofile)
 {
   // This method utilizes the "Template Method" design pattern to
   // parse the given URL style IOR for the protocol being used
@@ -117,12 +113,11 @@ TAO_Connector::make_mprofile (const char *string,
   // Check for a valid string
   if (!string || !*string)
     {
-      ACE_THROW_RETURN (CORBA::INV_OBJREF (
-                          CORBA::SystemException::_tao_minor_code (
-                            0,
-                            EINVAL),
-                          CORBA::COMPLETED_NO),
-                        -1);
+      throw ::CORBA::INV_OBJREF (
+        CORBA::SystemException::_tao_minor_code (
+          0,
+          EINVAL),
+        CORBA::COMPLETED_NO);
     }
 
   // Check for the proper prefix in the IOR.  If the proper prefix isn't
@@ -153,7 +148,7 @@ TAO_Connector::make_mprofile (const char *string,
 
   if (ior_index == ACE_CString::npos)
     {
-      ACE_THROW_RETURN (CORBA::INV_OBJREF (), -1);
+      throw ::CORBA::INV_OBJREF ();
       // No colon ':' in the IOR!
     }
   else
@@ -169,7 +164,7 @@ TAO_Connector::make_mprofile (const char *string,
 
   if (objkey_index == 0 || objkey_index == ACE_CString::npos)
     {
-      ACE_THROW_RETURN (CORBA::INV_OBJREF (), -1);
+      throw ::CORBA::INV_OBJREF ();
       // Failure: No endpoints specified or no object key specified.
     }
 
@@ -194,12 +189,11 @@ TAO_Connector::make_mprofile (const char *string,
   // MProfile::set(size) returns the number profiles it can hold.
   if (mprofile.set (profile_count) != static_cast<int> (profile_count))
     {
-      ACE_THROW_RETURN (CORBA::INV_OBJREF (
-                          CORBA::SystemException::_tao_minor_code (
-                            TAO_MPROFILE_CREATION_ERROR,
-                            0),
-                          CORBA::COMPLETED_NO),
-                        -1);
+      throw ::CORBA::INV_OBJREF (
+        CORBA::SystemException::_tao_minor_code (
+          TAO_MPROFILE_CREATION_ERROR,
+          0),
+        CORBA::COMPLETED_NO);
       // Error while setting the MProfile size!
     }
 
@@ -256,19 +250,18 @@ TAO_Connector::make_mprofile (const char *string,
             {
               profile->_decr_refcnt ();
 
-              ACE_THROW_RETURN (CORBA::INV_OBJREF (
-                                  CORBA::SystemException::_tao_minor_code (
-                                     TAO_MPROFILE_CREATION_ERROR,
-                                     0),
-                                  CORBA::COMPLETED_NO),
-                                -1);
+              throw ::CORBA::INV_OBJREF (
+                CORBA::SystemException::_tao_minor_code (
+                  TAO_MPROFILE_CREATION_ERROR,
+                  0),
+                CORBA::COMPLETED_NO);
               // Failure presumably only occurs when MProfile is full!
               // This should never happen.
             }
         }
       else
         {
-          ACE_THROW_RETURN (CORBA::INV_OBJREF (), -1);
+          throw ::CORBA::INV_OBJREF ();
           // Unable to seperate endpoints
         }
     }
@@ -294,8 +287,7 @@ TAO_Connector::make_parallel_connection (TAO::Profile_Transport_Resolver *,
 TAO_Transport*
 TAO_Connector::parallel_connect (TAO::Profile_Transport_Resolver *r,
                                  TAO_Transport_Descriptor_Interface *desc,
-                                 ACE_Time_Value *timeout
-                                 )
+                                 ACE_Time_Value *timeout)
 {
   if (this->supports_parallel_connects() == 0)
     {
@@ -357,8 +349,7 @@ TAO_Connector::parallel_connect (TAO::Profile_Transport_Resolver *r,
 TAO_Transport*
 TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
                         TAO_Transport_Descriptor_Interface *desc,
-                        ACE_Time_Value *timeout
-                        )
+                        ACE_Time_Value *timeout)
 {
   if (desc == 0 ||
       (this->set_validate_endpoint (desc->endpoint ()) == -1))
@@ -380,9 +371,7 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
       // Purge connections (if necessary)
       tcm.purge ();
 
-      TAO_Transport* t = this->make_connection (r,
-                                                *desc,
-                                                timeout);
+      TAO_Transport* t = this->make_connection (r, *desc, timeout);
 
       if (t == 0)
         return t;
@@ -404,10 +393,7 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
           (void) t->purge_entry ();
 
           // Call connect again
-          return this->connect (r,
-                                desc,
-                                timeout
-                               );
+          return this->connect (r, desc, timeout);
         }
 
       return t;
@@ -415,8 +401,7 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
 
   if (TAO_debug_level > 4)
     {
-      TAO::Connection_Role cr =
-        base_transport->opened_as ();
+      TAO::Connection_Role cr = base_transport->opened_as ();
 
       ACE_DEBUG ((LM_DEBUG,
                   "TAO (%P|%t) - Transport_Connector::connect, "
@@ -444,9 +429,7 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
   // handle the connection completion.
 
   TransportCleanupGuard tg(base_transport);
-  if (!this->wait_for_connection_completion (r,
-                                             base_transport,
-                                             timeout))
+  if (!this->wait_for_connection_completion (r, base_transport, timeout))
     {
       tg.awake();
 
@@ -747,8 +730,7 @@ TAO_Connector::check_connection_closure (
   int result = -1;
 
   // Check if the handler has been closed.
-  bool closed =
-    connection_handler->is_closed ();
+  bool closed = connection_handler->is_closed ();
 
   // In case of failures and close() has not be called.
   if (!closed)
@@ -765,7 +747,6 @@ TAO_Connector::check_connection_closure (
       // assured that the connector will no longer open/close this
       // handler.
       closed = connection_handler->is_closed ();
-
 
       // If closed, there is nothing to do here.  If not closed,
       // it was either opened or is still pending.

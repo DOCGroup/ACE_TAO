@@ -18,12 +18,12 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_AMH_Response_Handler::TAO_AMH_Response_Handler ()
-  : mesg_base_ (0)
+  : exception_type_ (TAO_GIOP_NO_EXCEPTION)
+  , mesg_base_ (0)
   , request_id_ (0)
   , transport_ (0)
   , orb_core_ (0)
   , argument_flag_ (1)
-  , exception_type_ (TAO_GIOP_NO_EXCEPTION)
   , reply_status_ (TAO_RS_UNINITIALIZED)
   , allocator_ (0)
 {
@@ -121,8 +121,7 @@ TAO_AMH_Response_Handler::_tao_rh_init_reply (void)
   {
     ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
 
-    this->mesg_base_->generate_reply_header (this->_tao_out,
-                                             reply_params);
+    this->mesg_base_->generate_reply_header (this->_tao_out, reply_params);
 
     // We are done initialising the reply
     this->reply_status_ = TAO_RS_INITIALIZED;
@@ -133,7 +132,6 @@ TAO_AMH_Response_Handler::_tao_rh_init_reply (void)
 void
 TAO_AMH_Response_Handler::_tao_rh_send_reply (void)
 {
-
   {
     ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
 
@@ -176,8 +174,7 @@ TAO_AMH_Response_Handler::_tao_rh_send_reply (void)
 }
 
 void
-TAO_AMH_Response_Handler::_tao_rh_send_exception (CORBA::Exception &ex
-                                                  )
+TAO_AMH_Response_Handler::_tao_rh_send_exception (const CORBA::Exception &ex)
 {
   {
     ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
@@ -248,9 +245,7 @@ TAO_AMH_Response_Handler::_remove_ref (void)
 namespace TAO
 {
   void
-  ARH_Refcount_Functor::operator () (
-      TAO_AMH_Response_Handler *arh)
-    ACE_THROW_SPEC (())
+  ARH_Refcount_Functor::operator () (TAO_AMH_Response_Handler *arh) throw ()
   {
     (void) arh->_remove_ref ();
   }

@@ -60,13 +60,13 @@ if ($server != 0) {
     exit 1;
 }
 
-if (PerlACE::waitforfile_timed ($iorfile_1, 15) == -1) {
+if (PerlACE::waitforfile_timed ($iorfile_1, $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: cannot find file <$iorfile_1>\n";
     $SV->Kill (); 
     exit 1;
 }
 
-if (PerlACE::waitforfile_timed ($iorfile_2, 15) == -1) {
+if (PerlACE::waitforfile_timed ($iorfile_2, $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: cannot find file <$iorfile_2>\n";
     $SV->Kill ();
     exit 1;

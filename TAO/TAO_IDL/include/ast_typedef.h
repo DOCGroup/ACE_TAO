@@ -98,9 +98,12 @@ public:
   // Recursively called on valuetype to check for legal use as
   // a primary key. Overridden for valuetype, struct, sequence,
   // union, array, typedef, and interface.
-  
+
   virtual bool is_local (void);
   // Override the base class method.
+
+  void owns_base_type (bool val);
+  // Sometimes this has to be managed from outside.
 
   // Narrowing.
   DEF_NARROW_METHODS1(AST_Typedef, AST_Type);
@@ -124,7 +127,7 @@ private:
 
   AST_Type *pd_base_type;
   // Typedef base type.
-  
+
   bool owns_base_type_;
   // If our base type is anonymous array or sequence, we're
   // responsible for destroying it.

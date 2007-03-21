@@ -52,10 +52,7 @@ namespace CIAO
   Home_Servant_Impl<BASE_SKEL,
                     EXEC,
                     COMP_SVNT>::remove_component (
-      ::Components::CCMObject_ptr comp
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     Components::RemoveFailure))
+      ::Components::CCMObject_ptr comp)
   {
     CIAO_TRACE ("Home_Servant_Impl<>::remove_component");
 
@@ -82,7 +79,7 @@ namespace CIAO
 
     if (CIAO::debug_level () > 3)
       {
-        ACE_DEBUG ((LM_DEBUG, "removed the component\n"));
+        ACE_DEBUG ((LM_DEBUG, "Removed the component\n"));
       }
   }
 
@@ -115,10 +112,7 @@ namespace CIAO
   Components::CCMObject_ptr
   Home_Servant_Impl<BASE_SKEL,
                     EXEC,
-                    COMP_SVNT>::create_component (
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     Components::CreateFailure))
+                    COMP_SVNT>::create_component (void)
   {
     CIAO_TRACE ("Home_Servant_Impl<>::create_component");
 
@@ -133,23 +127,19 @@ namespace CIAO
   typename COMP_SVNT::_stub_ptr_type
   Home_Servant_Impl<BASE_SKEL,
                     EXEC,
-                    COMP_SVNT>::create (
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     Components::CreateFailure))
+                    COMP_SVNT>::create (void)
   {
     CIAO_TRACE ("Home_Servant_Impl<>::create");
 
     if (this->executor_.in () == 0)
       {
-        ACE_THROW_RETURN (CORBA::INTERNAL (),
-                          COMP_SVNT::_stub_type::_nil ());
+        throw CORBA::INTERNAL ();
       }
 
     ::Components::EnterpriseComponent_var _ciao_ec =
       this->executor_->create ();
 
-	typedef typename COMP_SVNT::_exec_type exec_type;
+    typedef typename COMP_SVNT::_exec_type exec_type;
     typename COMP_SVNT::_exec_type::_var_type _ciao_comp =
       exec_type::_narrow (_ciao_ec.in ());
 
@@ -165,14 +155,11 @@ namespace CIAO
   Home_Servant_Impl<BASE_SKEL,
                     EXEC,
                     COMP_SVNT>::_ciao_activate_component (
-      typename COMP_SVNT::_exec_type::_ptr_type exe
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException))
+      typename COMP_SVNT::_exec_type::_ptr_type exe)
   {
     CIAO_TRACE ("Home_Servant_Impl<>::_ciao_activate_component");
 
-    CORBA::Object_var hobj =
-      this->container_->get_objref (this);
+    CORBA::Object_var hobj = this->container_->get_objref (this);
 
     Components::CCMHome_var home =
       Components::CCMHome::_narrow (hobj.in ());
@@ -191,12 +178,10 @@ namespace CIAO
     PortableServer::ObjectId_var oid;
 
     CORBA::Object_var objref =
-      this->container_->install_component (svt,
-                                           oid.out ());
+      this->container_->install_component (svt, oid.out ());
 
     typedef typename COMP_SVNT::_stub_type stub_type;
-    typename COMP_SVNT::_stub_var_type ho =
-      stub_type::_narrow (objref.in ());
+    typename COMP_SVNT::_stub_var_type ho = stub_type::_narrow (objref.in ());
 
     Components::CCMObject_var ccmobjref =
       Components::CCMObject::_narrow (objref.in ());
@@ -215,15 +200,12 @@ namespace CIAO
   Home_Servant_Impl<BASE_SKEL,
                     EXEC,
                     COMP_SVNT>::_ciao_passivate_component (
-      typename COMP_SVNT::_stub_ptr_type comp
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException))
+      typename COMP_SVNT::_stub_ptr_type comp)
   {
     CIAO_TRACE ("Home_Servant_Impl<>::_ciao_passivate_component");
 
     PortableServer::ObjectId_var oid;
-    this->container_->uninstall_component (comp,
-                                           oid.out ());
+    this->container_->uninstall_component (comp, oid.out ());
   }
 }
 

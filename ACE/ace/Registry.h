@@ -21,8 +21,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if defined (ACE_WIN32)
-// This only works on Win32 platforms
+#if defined (ACE_WIN32) && !defined (ACE_LACKS_WIN32_REGISTRY)
+// This only works on registry-capable Win32 platforms.
 
 #include "ace/Containers.h"
 #include "ace/SString.h"
@@ -193,7 +193,7 @@ public:
     /// Empty constructor: keys will be NULL
     Naming_Context (void);
 
-    /// Constructor: key_ will be set to <key>
+    /// Constructor: key_ will be set to @a key
     Naming_Context (const HKEY &key);
 
     /// Destructor will call <Naming_Context::close>.
@@ -460,7 +460,10 @@ public:
       {
       public:
         /// Constructor
-        Iteration_State (Binding_Iterator &iterator);
+        Iteration_State ();
+
+        /// Set the iterator reference.
+        void iterator (Binding_Iterator *iterator);
 
         /// Next <how_many> entries
         virtual int next_n (u_long how_many,
@@ -479,9 +482,6 @@ public:
   private:
     class ACE_Export Object_Iteration : public Iteration_State
       {
-      public:
-        Object_Iteration (Binding_Iterator &iterator);
-
         /// Next <how_many> entries
         int next_n (u_long how_many,
                     Binding_List &list);
@@ -490,8 +490,6 @@ public:
     class ACE_Export Context_Iteration : public Iteration_State
       {
       public:
-        Context_Iteration (Binding_Iterator &iterator);
-
         /// Next @a how_many entries
         int next_n (u_long how_many,
                     Binding_List &list);
@@ -500,8 +498,6 @@ public:
     class ACE_Export Iteration_Complete : public Iteration_State
       {
       public:
-        Iteration_Complete (Binding_Iterator &iterator);
-
         /// Next @a how_many entries
         int next_n (u_long how_many,
                     Binding_List &list);
@@ -558,6 +554,6 @@ private:
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#endif /* ACE_WIN32 */
+#endif /* ACE_WIN32 && !ACE_LACKS_WIN32_REGISTRY */
 #include /**/ "ace/post.h"
 #endif /* ACE_REGISTRY_H */

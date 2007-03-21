@@ -115,8 +115,7 @@ TAO_Naming_Server::init (CORBA::ORB_ptr orb,
         {
           // Try to find an existing Naming Service.
           CORBA::Object_var naming_obj =
-            orb->resolve_initial_references ("NameService",
-                                             timeout);
+            orb->resolve_initial_references ("NameService", timeout);
 
           if (!CORBA::is_nil (naming_obj.in ()))
             {
@@ -162,7 +161,11 @@ int
 TAO_Naming_Server::parse_args (int argc,
                                ACE_TCHAR *argv[])
 {
+#if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT)
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("b:do:p:s:f:m:u:r:z:"));
+#else
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("b:do:p:s:f:m:z:"));
+#endif /* TAO_HAS_MINIMUM_POA */
 
   int c;
   int size, result;
@@ -219,6 +222,7 @@ TAO_Naming_Server::parse_args (int argc,
         this->persistence_file_name_ = get_opts.opt_arg ();
         f_opt_used = 1;
         break;
+#if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT)
       case 'r':
         this->use_redundancy_ = 1;
         this->use_storable_context_ = 1;
@@ -230,12 +234,20 @@ TAO_Naming_Server::parse_args (int argc,
         this->persistence_file_name_ = get_opts.opt_arg ();
         u_opt_used = 1;
         break;
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
       case 'z':
         this->use_round_trip_timeout_ = 1;
         this->round_trip_timeout_ = (int)1.0e7 * ACE_OS::atoi (get_opts.opt_arg ());
         break;
       case '?':
       default:
+        const ACE_TCHAR *reqNonMinCorba=
+#if (TAO_HAS_MINIMUM_POA == 0)
+          ACE_TEXT ("  -u <storable_persistence_directory (not used with -f)> ")
+          ACE_TEXT ("  -r <redundant_persistence_directory> ");
+#else
+          ACE_TEXT ("");
+#endif /* TAO_HAS_MINIMUM_POA */
         ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("usage:  %s ")
                            ACE_TEXT ("-d ")
@@ -244,12 +256,10 @@ TAO_Naming_Server::parse_args (int argc,
                            ACE_TEXT ("-s <context_size> ")
                            ACE_TEXT ("-b <base_address> ")
                            ACE_TEXT ("-m <1=enable multicast, 0=disable multicast(default) ")
-                           ACE_TEXT ("-f <persistence_file_name> ")
-                           ACE_TEXT ("-u <storable_persistence_directory (not used with -f)> ")
-                           ACE_TEXT ("-r <redundant_persistence_directory> ")
+                           ACE_TEXT ("-f <persistence_file_name> %s")
                            ACE_TEXT ("-z <relative round trip timeout> ")
                            ACE_TEXT ("\n"),
-                           argv [0]),
+                           argv [0], reqNonMinCorba),
                           -1);
       }
 
@@ -659,7 +669,6 @@ TAO_Naming_Server::fini (void)
     {
       this->ns_poa_->destroy (1, 1);
 
-
       CORBA::Object_var table_object =
         this->orb_->resolve_initial_references ("IORTable");
 
@@ -678,7 +687,6 @@ TAO_Naming_Server::fini (void)
     {
       // Ignore
     }
-
 
   if (this->ior_multicast_ != 0)
     {

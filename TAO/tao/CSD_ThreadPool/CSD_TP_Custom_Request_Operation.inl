@@ -9,23 +9,13 @@ TAO::CSD::TP_Custom_Request_Operation::TP_Custom_Request_Operation
                                           (PortableServer::Servant servant)
 : servant_ (servant)
 {
-  // This try-catch block is not really necessary for current implementation
-  // since the _add_ref does not throw exception, but we have to add it to
-  // satisfy the non-exception builds. If _add_ref really throws an exception
-  // then this constructor needs deal with the exception.
-  try
-  {
-    this->servant_->_add_ref ();
-  }
-  catch (...)
-  {
-  }
+  this->servant_->_add_ref ();
 }
 
 
 ACE_INLINE
 void
-TAO::CSD::TP_Custom_Request_Operation::execute()
+TAO::CSD::TP_Custom_Request_Operation::execute (void)
 {
   this->execute_i();
 }

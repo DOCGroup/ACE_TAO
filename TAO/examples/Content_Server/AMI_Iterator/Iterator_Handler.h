@@ -53,25 +53,21 @@ public:
   // name of the file being retrieved from the web server.
 
   virtual void next_chunk (CORBA::Boolean pending_data,
-                   const Web_Server::Chunk_Type & chunk)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                   const Web_Server::Chunk_Type & chunk);
 
   virtual void next_chunk_excep (
       ::Messaging::ExceptionHolder *)
-    ACE_THROW_SPEC ((CORBA::SystemException)) {}
+    {}
 
-  virtual void destroy (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void destroy (void);
 
   virtual void destroy_excep (
       ::Messaging::ExceptionHolder *)
-    ACE_THROW_SPEC ((CORBA::SystemException)) {}
+    {}
 
   void run (int *request_count,
             const char *pathname,
-            Web_Server::Iterator_Factory_ptr factory)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     Web_Server::Error_Result));
+            Web_Server::Iterator_Factory_ptr factory);
   // Activate and run this Reply Handler.  The contents (not the
   // pointer itself) of the <request_count> parameter will be
   // incremented when file retrieval begins, and decremented when file
@@ -83,13 +79,10 @@ private:
   // on the heap).
 
   void initialize_content_iterator (const char *pathname,
-                                    Web_Server::Iterator_Factory_ptr factory)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     Web_Server::Error_Result));
+                                    Web_Server::Iterator_Factory_ptr factory);
   // Initialize the Content Iterator used to retrieve the file.
 
-  void deactivate (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void deactivate (void);
   // Deactivate this reply handler.
 
   int get_viewer (char *viewer, size_t length);

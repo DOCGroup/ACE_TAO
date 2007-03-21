@@ -53,25 +53,21 @@ namespace CIAO
       const char * launch_plan (const char *deployment_plan_uri,
                                 const char *package_uri = 0,
                                 bool use_package_name = true,
-                                bool use_repoman = false)
-        ACE_THROW_SPEC ((Deployment_Failure));
+                                bool use_repoman = false);
 
       const char * re_launch_plan (const char *deployment_plan_uri,
                                    const char *package_uri = 0,
                                    bool use_package_name = true,
-                                   bool use_repoman = false)
-        ACE_THROW_SPEC ((Deployment_Failure));
+                                   bool use_repoman = false);
 
       /**
        * @brief Launch a plan, given an IDL deployment plan
        * @param plan A valid IDL deployment plan
        * @returns a string containing the UUID of the plan. Null indicates failure.
        */
-      const char * launch_plan (const ::Deployment::DeploymentPlan &plan)
-        ACE_THROW_SPEC ((Deployment_Failure));
+      const char * launch_plan (const ::Deployment::DeploymentPlan &plan);
 
-      const char * re_launch_plan (const ::Deployment::DeploymentPlan &plan)
-        ACE_THROW_SPEC ((Deployment_Failure));
+      const char * re_launch_plan (const ::Deployment::DeploymentPlan &plan);
 
       /// Returns the DAM associated with a given plan URI
       ::Deployment::DomainApplicationManager_ptr get_dam (const char *uuid);

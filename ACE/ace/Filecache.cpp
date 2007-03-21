@@ -229,7 +229,7 @@ ACE_Filecache::instance (void)
 
 ACE_Filecache::ACE_Filecache (void)
   : size_ (ACE_DEFAULT_VIRTUAL_FILESYSTEM_TABLE_SIZE),
-    hash_ (this->size_)
+    hash_ (size_)
 {
 }
 
@@ -524,7 +524,7 @@ ACE_Filecache_Object::ACE_Filecache_Object (const ACE_TCHAR *filename,
       return;
     }
 
-  this->size_ = ACE_Utils::Truncate<ACE_OFF_T> (this->stat_.st_size);
+  this->size_ = ACE_Utils::truncate_cast<ACE_OFF_T> (this->stat_.st_size);
   this->tempname_ = this->filename_;
 
   // Can we open the file?

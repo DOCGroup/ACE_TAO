@@ -150,7 +150,12 @@ main (int argc,
       client_i client_servant (quiet,
                                server.in ());
 
-      client_var client_object = client_servant._this ();
+      PortableServer::ObjectId_var id =
+        root_poa->activate_object (&client_servant);
+
+      CORBA::Object_var object_act = root_poa->id_to_reference (id.in ());
+
+      client_var client_object = client::_narrow (object_act.in ());
 
       Client_Task client_tasks (client_object.in (),
                                 server.in ());

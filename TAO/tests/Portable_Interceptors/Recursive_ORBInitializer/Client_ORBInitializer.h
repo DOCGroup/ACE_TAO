@@ -31,11 +31,9 @@ public:
   /// Constructor
   Client_ORBInitializer (Client_ORBInitializer *second);
 
-  virtual void pre_init (PortableInterceptor::ORBInitInfo_ptr info)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void pre_init (PortableInterceptor::ORBInitInfo_ptr info);
 
-  virtual void post_init (PortableInterceptor::ORBInitInfo_ptr info)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void post_init (PortableInterceptor::ORBInitInfo_ptr info);
 
   int pre_init_called;
   int post_init_called;

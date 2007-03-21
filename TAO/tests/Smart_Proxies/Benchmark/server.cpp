@@ -29,14 +29,11 @@ class Test_i : public POA_Test
 public:
   Test_i (CORBA::ORB_ptr orb);
 
-  CORBA::Short box_prices  (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  CORBA::Short box_prices  (void);
 
-  CORBA::Long tickets  (CORBA::Short number)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  CORBA::Long tickets  (CORBA::Short number);
 
-  void shutdown  (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void shutdown  (void);
 
 private:
   CORBA::ORB_var orb_;
@@ -50,21 +47,18 @@ Test_i::Test_i (CORBA::ORB_ptr orb)
 
 CORBA::Short
 Test_i::box_prices (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return 125;
 }
 
 CORBA::Long
 Test_i::tickets (CORBA::Short number)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return 125 * number;
 }
 
 void
 Test_i::shutdown (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown (0);
 }
@@ -122,8 +116,13 @@ main (int argc, char *argv[])
       PortableServer::POAManager_var poa_manager =
         root_poa->the_POAManager ();
 
+      PortableServer::ObjectId_var id =
+        root_poa->activate_object (&servant);
+
+      CORBA::Object_var object_act = root_poa->id_to_reference (id.in ());
+
       Test_var Test_object =
-        servant._this ();
+        Test::_narrow (object_act.in ());
 
       CORBA::String_var ior =
         orb->object_to_string (Test_object.in ());

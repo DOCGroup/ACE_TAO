@@ -13,8 +13,7 @@ class test_i
 {
 public:
   // = The skeleton methods
-  virtual void send_stuff (const char* string)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void send_stuff (const char* string);
 
 private:
 };

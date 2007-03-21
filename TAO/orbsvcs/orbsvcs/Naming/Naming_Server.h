@@ -119,9 +119,7 @@ public:
 
   /// Initialize the Naming Service with the command line arguments and
   /// the ORB.
-  int init_with_orb (int argc,
-                     ACE_TCHAR *argv [],
-                     CORBA::ORB_ptr orb);
+  int init_with_orb (int argc, ACE_TCHAR *argv [], CORBA::ORB_ptr orb);
 
   /// Destroy the child POA created in <init_with_orb>
   int fini (void);

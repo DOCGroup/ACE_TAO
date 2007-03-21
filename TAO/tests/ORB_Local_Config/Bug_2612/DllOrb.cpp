@@ -83,7 +83,7 @@ int DllOrb::init (int argc, char *argv[])
       }
 
     // Initialize the ORB
-    mv_orb = CORBA::ORB_init(argc, argv, 0);
+    mv_orb = CORBA::ORB_init(argc, argv);
     if (CORBA::is_nil(mv_orb.in()))
       return -1;
 

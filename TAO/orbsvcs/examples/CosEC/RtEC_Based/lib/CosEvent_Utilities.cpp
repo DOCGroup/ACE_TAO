@@ -210,21 +210,18 @@ CosEC_ServantBase::deactivate_cosec (void)
 
 CosEventChannelAdmin::ConsumerAdmin_ptr
 CosEC_ServantBase::for_consumers (void)
-      ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->cosec_->for_consumers ();
 }
 
 CosEventChannelAdmin::SupplierAdmin_ptr
 CosEC_ServantBase::for_suppliers (void)
-      ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->cosec_->for_suppliers ();
 }
 
 void
 CosEC_ServantBase::destroy (void)
-      ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Deactivate all the contained servants and ourselves.
   // The poa will "destroy" the ref counted servants.

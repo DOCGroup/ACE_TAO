@@ -54,15 +54,12 @@ TAO_POA_Manager::~TAO_POA_Manager (void)
 
 char *
 TAO_POA_Manager::get_id (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup (this->id_.in ());
 }
 
 void
 TAO_POA_Manager::activate_i (void)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableServer::POAManager::AdapterInactive))
 {
   // This operation changes the state of the POA manager to active. If
   // issued while the POA manager is in the inactive state, the
@@ -87,21 +84,16 @@ TAO_POA_Manager::activate_i (void)
         }
     }
 
-  this->adapter_manager_state_changed (this->state_
-                                      );
+  this->adapter_manager_state_changed (this->state_);
 }
 
 void
 TAO_POA_Manager::deactivate_i (CORBA::Boolean etherealize_objects,
-                               CORBA::Boolean wait_for_completion
-                               )
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableServer::POAManager::AdapterInactive))
+                               CORBA::Boolean wait_for_completion)
 {
   // Is the <wait_for_completion> semantics for this thread correct?
   TAO_Root_POA::check_for_valid_wait_for_completions (this->object_adapter_.orb_core (),
-                                                      wait_for_completion
-                                                     );
+                                                      wait_for_completion);
 
   // This operation changes the state of the POA manager to
   // inactive. If issued while the POA manager is in the inactive
@@ -153,9 +145,7 @@ TAO_POA_Manager::deactivate_i (CORBA::Boolean etherealize_objects,
       // strategy to stop the dispatching threads.
       poa->poa_deactivated_hook ();
 
-      poa->deactivate_all_objects_i (etherealize_objects,
-                                     wait_for_completion
-                                    );
+      poa->deactivate_all_objects_i (etherealize_objects, wait_for_completion);
     }
 
   // If the ORB::shutdown operation is called, it makes a call on
@@ -163,15 +153,11 @@ TAO_POA_Manager::deactivate_i (CORBA::Boolean etherealize_objects,
   // manager known in the process; the wait_for_completion parameter
   // to deactivate will be the same as the similarly named parameter
   // of ORB::shutdown.
-
-  this->adapter_manager_state_changed (this->state_
-                                      );
+  this->adapter_manager_state_changed (this->state_);
 }
 
 void
-TAO_POA_Manager::adapter_manager_state_changed (PortableServer::POAManager::State state
-                                                )
-  ACE_THROW_SPEC ((CORBA::SystemException))
+TAO_POA_Manager::adapter_manager_state_changed (PortableServer::POAManager::State state)
 {
   PortableInterceptor::AdapterState adapter_state =
     static_cast<PortableInterceptor::AdapterState> (state);
@@ -182,23 +168,18 @@ TAO_POA_Manager::adapter_manager_state_changed (PortableServer::POAManager::Stat
   if (ior_adapter)
     {
       ior_adapter->adapter_manager_state_changed (this->id_.in (),
-                                                  adapter_state
-                                                 );
+                                                  adapter_state);
     }
 }
 
 #if (TAO_HAS_MINIMUM_POA == 0)
 
 void
-TAO_POA_Manager::hold_requests_i (CORBA::Boolean wait_for_completion
-                                  )
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableServer::POAManager::AdapterInactive))
+TAO_POA_Manager::hold_requests_i (CORBA::Boolean wait_for_completion)
 {
   // Is the <wait_for_completion> semantics for this thread correct?
   TAO_Root_POA::check_for_valid_wait_for_completions (this->object_adapter_.orb_core (),
-                                                      wait_for_completion
-                                                     );
+                                                      wait_for_completion);
 
   // This operation changes the state of the POA manager to
   // holding. If issued while the POA manager is in the inactive
@@ -237,25 +218,19 @@ TAO_POA_Manager::hold_requests_i (CORBA::Boolean wait_for_completion
            ++iterator)
         {
           TAO_Root_POA *poa = *iterator;
-          poa->wait_for_completions (wait_for_completion
-                                    );
+          poa->wait_for_completions (wait_for_completion);
         }
     }
 
-  this->adapter_manager_state_changed (this->state_
-                                      );
+  this->adapter_manager_state_changed (this->state_);
 }
 
 void
-TAO_POA_Manager::discard_requests_i (CORBA::Boolean wait_for_completion
-                                     )
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableServer::POAManager::AdapterInactive))
+TAO_POA_Manager::discard_requests_i (CORBA::Boolean wait_for_completion)
 {
   // Is the <wait_for_completion> semantics for this thread correct?
   TAO_Root_POA::check_for_valid_wait_for_completions (this->object_adapter_.orb_core (),
-                                                      wait_for_completion
-                                                     );
+                                                      wait_for_completion);
 
   // This operation changes the state of the POA manager to
   // discarding. If issued while the POA manager is in the inactive
@@ -296,13 +271,11 @@ TAO_POA_Manager::discard_requests_i (CORBA::Boolean wait_for_completion
            ++iterator)
         {
           TAO_Root_POA *poa = *iterator;
-          poa->wait_for_completions (wait_for_completion
-                                    );
+          poa->wait_for_completions (wait_for_completion);
         }
     }
 
-  this->adapter_manager_state_changed (this->state_
-                                      );
+  this->adapter_manager_state_changed (this->state_);
 }
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */

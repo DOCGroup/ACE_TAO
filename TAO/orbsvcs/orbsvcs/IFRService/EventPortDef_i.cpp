@@ -28,7 +28,6 @@ TAO_EventPortDef_i::~TAO_EventPortDef_i (void)
 CORBA::ComponentIR::EventDef_ptr
 TAO_EventPortDef_i::event (
   )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (CORBA::ComponentIR::EventDef::_nil ());
 
@@ -40,7 +39,6 @@ TAO_EventPortDef_i::event (
 CORBA::ComponentIR::EventDef_ptr
 TAO_EventPortDef_i::event_i (
   )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_TString holder;
   this->repo_->config ()->get_string_value (this->section_key_,
@@ -55,7 +53,6 @@ void
 TAO_EventPortDef_i::event (
     CORBA::ComponentIR::EventDef_ptr event
   )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD;
 
@@ -68,7 +65,6 @@ void
 TAO_EventPortDef_i::event_i (
     CORBA::ComponentIR::EventDef_ptr event
   )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->repo_->config ()->remove_value (this->section_key_,
                                         "base_type");
@@ -101,7 +97,6 @@ CORBA::Boolean
 TAO_EventPortDef_i::is_a (
     const char *event_id
   )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (0);
 
@@ -114,7 +109,6 @@ CORBA::Boolean
 TAO_EventPortDef_i::is_a_i (
     const char *event_id
   )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_TString holder;
   this->repo_->config ()->get_string_value (this->section_key_,
@@ -135,7 +129,6 @@ TAO_EventPortDef_i::is_a_i (
 
 CORBA::Contained::Description *
 TAO_EventPortDef_i::describe (void)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (0);
 
@@ -146,7 +139,6 @@ TAO_EventPortDef_i::describe (void)
 
 CORBA::Contained::Description *
 TAO_EventPortDef_i::describe_i (void)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::ComponentIR::EventPortDescription epd;
   TAO_IFR_Desc_Utils<CORBA::ComponentIR::EventPortDescription,
@@ -174,7 +166,6 @@ TAO_EventPortDef_i::describe_i (void)
 
 CORBA::DefinitionKind
 TAO_EventPortDef_i::def_kind (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::dk_none;
 }

@@ -17,33 +17,26 @@ TAO_POA_Policy_Set::get_policy_by_index (CORBA::ULong index)
 }
 
 ACE_INLINE CORBA::Policy_ptr
-TAO_POA_Policy_Set::get_cached_policy (TAO_Cached_Policy_Type type
-                                       )
+TAO_POA_Policy_Set::get_cached_policy (TAO_Cached_Policy_Type type)
 {
-  return this->impl_.get_cached_policy (type
-                                       );
+  return this->impl_.get_cached_policy (type);
 }
 
 ACE_INLINE void
-TAO_POA_Policy_Set::merge_policies (const CORBA::PolicyList &policies
-                                    )
+TAO_POA_Policy_Set::merge_policies (const CORBA::PolicyList &policies)
 {
   // Add the policies if they don't exist, override them if they do.
-  this->impl_.set_policy_overrides (policies,
-                                    CORBA::ADD_OVERRIDE
-                                   );
+  this->impl_.set_policy_overrides (policies, CORBA::ADD_OVERRIDE);
 }
 
 ACE_INLINE void
-TAO_POA_Policy_Set::merge_policy (const CORBA::Policy_ptr policy
-                                  )
+TAO_POA_Policy_Set::merge_policy (const CORBA::Policy_ptr policy)
 {
   this->impl_.set_policy (policy);
 }
 
 ACE_INLINE CORBA::Policy_ptr
-TAO_POA_Policy_Set::get_policy (CORBA::PolicyType policy
-                                )
+TAO_POA_Policy_Set::get_policy (CORBA::PolicyType policy)
 {
   return this->impl_.get_policy (policy);
 }

@@ -112,6 +112,7 @@
 #define ACE_HAS_STRERROR
 #define ACE_HAS_THREADS
 #define ACE_HAS_SYSCTL
+#define ACE_LACKS_ALPHASORT
 #define ACE_LACKS_EXEC
 #define ACE_LACKS_FILELOCKS
 #define ACE_LACKS_FORK
@@ -131,7 +132,6 @@
 #define ACE_LACKS_MPROTECT
 #define ACE_LACKS_MSYNC
 #define ACE_LACKS_NETDB_REENTRANT_FUNCTIONS
-#define ACE_LACKS_SIGVAL_T
 #define ACE_LACKS_SYS_PARAM_H
 #define ACE_LACKS_PWD_FUNCTIONS
 #define ACE_LACKS_READDIR_R
@@ -203,7 +203,9 @@
 
 #if defined __RTP__
   // We are building for RTP mode
-  #define ACE_HAS_SVR4_DYNAMIC_LINKING
+  #if !defined (ACE_AS_STATIC_LIBS)
+  #  define ACE_HAS_SVR4_DYNAMIC_LINKING
+  #endif
   #define ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R
   #define ACE_LACKS_REGEX_H
   #define ACE_LACKS_PUTENV

@@ -4,6 +4,8 @@
 
 #include "tao/PI/ProcessingModePolicy.h"
 #include "tao/ORB_Constants.h"
+#include "tao/SystemException.h"
+#include "ace/CORBA_macros.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -14,10 +16,7 @@ ACE_RCSID (tao,
 CORBA::Policy_ptr
 TAO_PI_PolicyFactory::create_policy (
     CORBA::PolicyType type,
-    const CORBA::Any &value
-    )
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   CORBA::PolicyError))
+    const CORBA::Any &value)
 {
   if (type == PortableInterceptor::PROCESSING_MODE_POLICY_TYPE)
     {
@@ -26,8 +25,7 @@ TAO_PI_PolicyFactory::create_policy (
 
       if ((value >>= policy_value) == 0)
         {
-          ACE_THROW_RETURN (CORBA::PolicyError (CORBA::BAD_POLICY_VALUE),
-                            CORBA::Policy::_nil ());
+          throw ::CORBA::PolicyError (CORBA::BAD_POLICY_VALUE);
         }
 
       ACE_NEW_THROW_EX (processing_mode_policy,
@@ -38,8 +36,7 @@ TAO_PI_PolicyFactory::create_policy (
       return processing_mode_policy;
     }
 
-  ACE_THROW_RETURN (CORBA::PolicyError (CORBA::BAD_POLICY_TYPE),
-                    CORBA::Policy::_nil ());
+  throw ::CORBA::PolicyError (CORBA::BAD_POLICY_TYPE);
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

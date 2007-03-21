@@ -546,27 +546,30 @@ ACE_DLL_Manager::open_dll (const ACE_TCHAR *dll_name,
                            ACE_SHLIB_HANDLE handle)
 {
   ACE_TRACE ("ACE_DLL_Manager::open_dll");
-  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, 0));
 
   ACE_DLL_Handle *temp_handle = 0;
-  ACE_DLL_Handle *dll_handle = this->find_dll (dll_name);
-  if (!dll_handle)
-    {
-      if (this->current_size_ < this->total_size_)
-        {
-          ACE_NEW_RETURN (temp_handle,
-                          ACE_DLL_Handle,
-                          0);
+  ACE_DLL_Handle *dll_handle = 0;
+  {
+    ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, 0));
+    dll_handle = this->find_dll (dll_name);
+    if (!dll_handle)
+      {
+        if (this->current_size_ < this->total_size_)
+          {
+            ACE_NEW_RETURN (temp_handle,
+                            ACE_DLL_Handle,
+                            0);
 
-          dll_handle = temp_handle;
-        }
-    }
+            dll_handle = temp_handle;
+          }
+      }
+  }
 
   if (dll_handle)
     {
       if (dll_handle->open (dll_name, open_mode, handle) != 0)
         {
-          // Error while openind dll. Free temp handle
+          // Error while opening dll. Free temp handle
           if (ACE::debug ())
             ACE_ERROR ((LM_ERROR,
                         ACE_LIB_TEXT ("ACE_DLL_Manager::open_dll: Could not ")
@@ -579,10 +582,11 @@ ACE_DLL_Manager::open_dll (const ACE_TCHAR *dll_name,
 
       // Add the handle to the vector only if the dll is successfully
       // opened.
-      if (temp_handle != NULL)
+      if (temp_handle != 0)
         {
+          ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, 0));
           this->handle_vector_[this->current_size_] = dll_handle;
-          this->current_size_++;
+          ++this->current_size_;
         }
     }
 
@@ -593,9 +597,13 @@ int
 ACE_DLL_Manager::close_dll (const ACE_TCHAR *dll_name)
 {
   ACE_TRACE ("ACE_DLL_Manager::close_dll");
-  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, 0));
+  ACE_DLL_Handle *handle = 0;
 
-  ACE_DLL_Handle *handle = this->find_dll (dll_name);
+  {
+    ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, 0));
+    handle = this->find_dll (dll_name);
+  }
+
   if (handle)
     {
       return this->unload_dll (handle, 0);
@@ -689,8 +697,7 @@ ACE_DLL_Manager::find_dll (const ACE_TCHAR *dll_name) const
 {
   ACE_TRACE ("ACE_DLL_Manager::find_dll");
 
-  int i;
-  for (i = 0; i < this->current_size_; i++)
+  for (int i = 0; i < this->current_size_; i++)
     if (this->handle_vector_[i] &&
         ACE_OS::strcmp (this->handle_vector_[i]->dll_name (), dll_name) == 0)
       {
@@ -721,13 +728,20 @@ ACE_DLL_Manager::unload_dll (ACE_DLL_Handle *dll_handle, int force_unload)
             {
               // Declare the type of the symbol:
               typedef int (*dll_unload_policy)(void);
-              dll_unload_policy the_policy = 0;
-              void *unload_policy_ptr =
+
+              void * const unload_policy_ptr =
                 dll_handle->symbol (ACE_LIB_TEXT ("_get_dll_unload_policy"), 1);
-              ptrdiff_t temp_p =
-                reinterpret_cast<ptrdiff_t> (unload_policy_ptr);
-              the_policy =
+#if defined (ACE_OPENVMS) && (!defined (__INITIAL_POINTER_SIZE) || (__INITIAL_POINTER_SIZE < 64))
+              int const temp_p =
+                reinterpret_cast<int> (unload_policy_ptr);
+#else
+              intptr_t const temp_p =
+                reinterpret_cast<intptr_t> (unload_policy_ptr);
+#endif
+
+              dll_unload_policy const the_policy =
                 reinterpret_cast<dll_unload_policy> (temp_p);
+
               if (the_policy != 0)
                 unload = ACE_BIT_DISABLED (the_policy (),
                                            ACE_DLL_UNLOAD_POLICY_LAZY);

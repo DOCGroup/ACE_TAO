@@ -41,7 +41,7 @@ TAO::SSLIOP::Accept_Strategy::accept_svc_handler (handler_type * svc_handler)
   // created handle. This is because the newly created handle will
   // inherit the properties of the listen handle, including its event
   // associations.
-  const int reset_new_handle = this->reactor_->uses_event_associations ();
+  int const reset_new_handle = this->reactor_->uses_event_associations ();
 
   if (this->peer_acceptor_.accept (svc_handler->peer (), // stream
                                    0,                // remote address

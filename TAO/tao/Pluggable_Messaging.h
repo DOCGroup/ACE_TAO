@@ -115,8 +115,7 @@ public:
   virtual int format_message (TAO_OutputCDR &cdr) = 0;
 
   /// Do any initialisations that may be needed.
-  virtual void init (CORBA::Octet major,
-                     CORBA::Octet minor) = 0;
+  virtual void init (CORBA::Octet major, CORBA::Octet minor) = 0;
 
   /// Parse the details of the next message from the @a incoming
   /// and initializes attributes of @a qd. Returns 0 if the message
@@ -152,12 +151,11 @@ public:
       TAO_Pluggable_Reply_Params &reply_info,
       TAO_Queued_Data *qd) = 0;
 
-
   /// Generate a reply message with the exception @a ex.
   virtual int generate_exception_reply (
       TAO_OutputCDR &cdr,
       TAO_Pluggable_Reply_Params_Base &params,
-      CORBA::Exception &ex) = 0;
+      const CORBA::Exception &ex) = 0;
 
   /// Is the messaging object ready for processing BiDirectional
   /// request/response?

@@ -12,7 +12,6 @@ Hello::Hello (CORBA::ORB_ptr orb)
 
 char *
 Hello::get_string (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) - Received call back !!!\n"));
   return CORBA::string_dup ("Hello there!");
@@ -20,14 +19,12 @@ Hello::get_string (void)
 
 void
 Hello::shutdown (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown (0);
 }
 
 void
 Hello::request_callback (Test::Hello_ptr call_me)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) - Making call back !!!\n"));
   try

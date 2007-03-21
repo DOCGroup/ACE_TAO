@@ -28,17 +28,13 @@ public:
   Simple_C (CORBA::ORB_ptr orb);
 
   void op1 (
-      Foo::Bar::AMH_AResponseHandler_ptr _tao_rh)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+      Foo::Bar::AMH_AResponseHandler_ptr _tao_rh);
   void op2 (
-      Foo::Bar::AMH_AResponseHandler_ptr _tao_rh)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+      Foo::Bar::AMH_AResponseHandler_ptr _tao_rh);
   void op3 (
-      Foo::Bar::AMH_BResponseHandler_ptr _tao_rh)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+      Foo::Bar::AMH_BResponseHandler_ptr _tao_rh);
   void op4 (
-      Baz::AMH_CResponseHandler_ptr _tao_rh)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+      Baz::AMH_CResponseHandler_ptr _tao_rh);
 
 protected:
   CORBA::ORB_ptr orb_;
@@ -56,7 +52,6 @@ Simple_C::Simple_C (CORBA::ORB_ptr orb)
 void
 Simple_C::op1(
     Foo::Bar::AMH_AResponseHandler_ptr _tao_rh)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   _tao_rh->op1(1);
 }
@@ -64,7 +59,6 @@ Simple_C::op1(
 void
 Simple_C::op2(
     Foo::Bar::AMH_AResponseHandler_ptr _tao_rh)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   _tao_rh->op2(2);
 }
@@ -72,7 +66,6 @@ Simple_C::op2(
 void
 Simple_C::op3(
     Foo::Bar::AMH_BResponseHandler_ptr _tao_rh)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   _tao_rh->op3(3);
 }
@@ -80,7 +73,6 @@ Simple_C::op3(
 void
 Simple_C::op4(
     Baz::AMH_CResponseHandler_ptr _tao_rh)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   _tao_rh->op4(4);
 }
@@ -121,7 +113,7 @@ main (int argc, char *argv[])
   try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "");
+        CORBA::ORB_init (argc, argv);
 
       CORBA::Object_var poa_object =
         orb->resolve_initial_references("RootPOA");
@@ -143,8 +135,13 @@ main (int argc, char *argv[])
       TAO::Utils::Servant_Var<Simple_C> simple_c_impl(
           new Simple_C(orb.in()));
 
+      PortableServer::ObjectId_var id =
+        root_poa->activate_object (simple_c_impl.in ());
+
+      CORBA::Object_var object = root_poa->id_to_reference (id.in ());
+
       Baz::C_var simple_c =
-        simple_c_impl->_this ();
+        Baz::C::_narrow (object.in ());
 
       CORBA::String_var ior =
         orb->object_to_string (simple_c.in ());

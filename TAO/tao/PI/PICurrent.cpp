@@ -15,7 +15,7 @@ ACE_RCSID (tao,
 #include "tao/ORB_Core.h"
 #include "tao/ORB_Core_TSS_Resources.h"
 #include "tao/TAO_Server_Request.h"
-#include "tao/SystemException.h"
+#include "ace/CORBA_macros.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -31,10 +31,7 @@ TAO::PICurrent::~PICurrent (void)
 }
 
 CORBA::Any *
-TAO::PICurrent::get_slot (PortableInterceptor::SlotId identifier
-                         )
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableInterceptor::InvalidSlot))
+TAO::PICurrent::get_slot (PortableInterceptor::SlotId identifier)
 {
   this->check_validity (identifier);
 
@@ -43,10 +40,7 @@ TAO::PICurrent::get_slot (PortableInterceptor::SlotId identifier
 
 void
 TAO::PICurrent::set_slot (PortableInterceptor::SlotId identifier,
-                         const CORBA::Any &data
-                         )
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableInterceptor::InvalidSlot))
+                         const CORBA::Any &data)
 {
   this->check_validity (identifier);
 
@@ -86,8 +80,7 @@ TAO::PICurrent::tsc (void)
 }
 
 void
-TAO::PICurrent::check_validity (const PortableInterceptor::SlotId &identifier
-                                )
+TAO::PICurrent::check_validity (const PortableInterceptor::SlotId &identifier)
 {
   // If the slot_count is zero, no initialization has been done (if there are
   // no slots, then the PICurrent_impl object is not created as there is no
@@ -108,8 +101,7 @@ TAO::PICurrent::_get_orb (void)
 }
 
 void
-TAO::PICurrent::initialize (PortableInterceptor::SlotId sc
-                            )
+TAO::PICurrent::initialize (PortableInterceptor::SlotId sc)
 {
   // Only allow a single initialization; sc is the number of
   // allocated PICurrent data slots the end user wants. If 0

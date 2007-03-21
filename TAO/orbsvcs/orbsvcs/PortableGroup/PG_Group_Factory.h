@@ -86,28 +86,17 @@ namespace TAO
     TAO::PG_Object_Group * create_group (
         const char * type_id,
         const PortableGroup::Criteria & the_criteria,
-        TAO::PG_Property_Set * typeid_properties)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       PortableGroup::NoFactory,
-                       PortableGroup::ObjectNotCreated,
-                       PortableGroup::InvalidCriteria,
-                       PortableGroup::InvalidProperty,
-                       PortableGroup::CannotMeetCriteria));
+        TAO::PG_Property_Set * typeid_properties);
 
 
-    void delete_group (PortableGroup::ObjectGroup_ptr object_group)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       PortableGroup::ObjectNotFound));
+    void delete_group (PortableGroup::ObjectGroup_ptr object_group);
 
 
-    void delete_group (PortableGroup::ObjectGroupId group_id)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       PortableGroup::ObjectNotFound));
+    void delete_group (PortableGroup::ObjectGroupId group_id);
 
     PortableGroup::ObjectGroups *
     groups_at_location (
-        const PortableGroup::Location & the_location)
-      ACE_THROW_SPEC ( (CORBA::SystemException));
+        const PortableGroup::Location & the_location);
 
 
 

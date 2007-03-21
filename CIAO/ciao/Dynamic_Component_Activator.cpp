@@ -21,9 +21,7 @@ namespace CIAO
 
   PortableServer::Servant
   Dynamic_Component_Activator::incarnate (const PortableServer::ObjectId &oid,
-                                PortableServer::POA_ptr)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableServer::ForwardRequest))
+                                          PortableServer::POA_ptr)
   {
     Dynamic_Component_Servant_Base* servant = 0;
     PortableServer::ObjectId new_oid (oid);
@@ -43,18 +41,17 @@ namespace CIAO
     PortableServer::Servant ,
     CORBA::Boolean ,
     CORBA::Boolean)
-    ACE_THROW_SPEC ((CORBA::SystemException))
   {
   }
 
-  void Dynamic_Component_Activator::add_servant_map
+  void Dynamic_Component_Activator::add_servant_to_map
     (PortableServer::ObjectId &oid,
      Dynamic_Component_Servant_Base* servant)
   {
     this->servant_map_.bind (oid, servant);
   }
 
-  void Dynamic_Component_Activator::delete_servant_map
+  void Dynamic_Component_Activator::delete_servant_from_map
     (PortableServer::ObjectId &oid)
   {
     Dynamic_Component_Servant_Base* servant = 0;

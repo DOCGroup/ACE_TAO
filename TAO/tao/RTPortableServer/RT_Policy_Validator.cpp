@@ -34,8 +34,7 @@ TAO_POA_RT_Policy_Validator::~TAO_POA_RT_Policy_Validator (void)
 }
 
 void
-TAO_POA_RT_Policy_Validator::validate_impl (TAO_Policy_Set &policies
-                                            )
+TAO_POA_RT_Policy_Validator::validate_impl (TAO_Policy_Set &policies)
 {
   this->validate_thread_pool (policies);
 
@@ -55,15 +54,13 @@ TAO_POA_RT_Policy_Validator::legal_policy_impl (CORBA::PolicyType type)
 }
 
 void
-TAO_POA_RT_Policy_Validator::validate_server_protocol (TAO_Policy_Set &policies
-                                                       )
+TAO_POA_RT_Policy_Validator::validate_server_protocol (TAO_Policy_Set &policies)
 {
   // Make sure we have an endpoint for at least one of the protocols
   // specified in the RTCORBA::ServerProtocolPolicy.  This ensure we
   // will be able to create non-nil object references.
   CORBA::Policy_var protocol =
-    policies.get_cached_policy (TAO_CACHED_POLICY_RT_SERVER_PROTOCOL
-                               );
+    policies.get_cached_policy (TAO_CACHED_POLICY_RT_SERVER_PROTOCOL);
 
   if (CORBA::is_nil (protocol.in ()))
     {
@@ -82,8 +79,7 @@ TAO_POA_RT_Policy_Validator::validate_server_protocol (TAO_Policy_Set &policies
     }
 
   RTCORBA::ServerProtocolPolicy_var server_protocol_policy =
-    RTCORBA::ServerProtocolPolicy::_narrow (protocol.in ()
-                                           );
+    RTCORBA::ServerProtocolPolicy::_narrow (protocol.in ());
 
   TAO_ServerProtocolPolicy *server_protocol =
     dynamic_cast <TAO_ServerProtocolPolicy *>
@@ -153,8 +149,7 @@ TAO_POA_RT_Policy_Validator::validate_server_protocol (TAO_Policy_Set &policies
 }
 
 void
-TAO_POA_RT_Policy_Validator::validate_priorities (TAO_Policy_Set &policies
-                                                  )
+TAO_POA_RT_Policy_Validator::validate_priorities (TAO_Policy_Set &policies)
 {
   // Initialize to the default priority/priority model.
   CORBA::Short priority =
@@ -167,8 +162,7 @@ TAO_POA_RT_Policy_Validator::validate_priorities (TAO_Policy_Set &policies
                                );
 
   RTCORBA::PriorityModelPolicy_var priority_model =
-    RTCORBA::PriorityModelPolicy::_narrow (policy.in ()
-                                          );
+    RTCORBA::PriorityModelPolicy::_narrow (policy.in ());
 
   if (!CORBA::is_nil (priority_model.in ()))
     {
@@ -361,8 +355,7 @@ TAO_POA_RT_Policy_Validator::validate_thread_pool (TAO_Policy_Set &policies
 }
 
 void
-TAO_POA_RT_Policy_Validator::merge_policies_impl (TAO_Policy_Set &policies
-                                                  )
+TAO_POA_RT_Policy_Validator::merge_policies_impl (TAO_Policy_Set &policies)
 {
   // Check if the user has specified the priority model policy.
   CORBA::Policy_var priority_model =
@@ -374,8 +367,7 @@ TAO_POA_RT_Policy_Validator::merge_policies_impl (TAO_Policy_Set &policies
       // If not, check if the priority model policy has been specified
       // at the ORB level.
       priority_model =
-        this->orb_core_.get_cached_policy (TAO_CACHED_POLICY_PRIORITY_MODEL
-                                          );
+        this->orb_core_.get_cached_policy (TAO_CACHED_POLICY_PRIORITY_MODEL);
 
       if (!CORBA::is_nil (priority_model.in ()))
         {
@@ -386,8 +378,7 @@ TAO_POA_RT_Policy_Validator::merge_policies_impl (TAO_Policy_Set &policies
 
   // Check if the user has specified the server protocol policy.
   CORBA::Policy_var server_protocol =
-    policies.get_cached_policy (TAO_CACHED_POLICY_RT_SERVER_PROTOCOL
-                               );
+    policies.get_cached_policy (TAO_CACHED_POLICY_RT_SERVER_PROTOCOL);
 
   if (CORBA::is_nil (server_protocol.in ()))
     {
@@ -407,8 +398,7 @@ TAO_POA_RT_Policy_Validator::merge_policies_impl (TAO_Policy_Set &policies
 
   // Check if the user has specified the thread pool policy.
   CORBA::Policy_var thread_pool =
-    policies.get_cached_policy (TAO_CACHED_POLICY_THREADPOOL
-                               );
+    policies.get_cached_policy (TAO_CACHED_POLICY_THREADPOOL);
 
   if (CORBA::is_nil (thread_pool.in ()))
     {
@@ -529,43 +519,37 @@ TAO_POA_RT_Policy_Validator::server_protocol_policy_from_acceptor_registry (RTCO
 /* static */
 TAO_Thread_Pool *
 TAO_POA_RT_Policy_Validator::extract_thread_pool (TAO_ORB_Core &orb_core,
-                                                  TAO_Policy_Set &policies
-                                                  )
+                                                  TAO_Policy_Set &policies)
 {
   CORBA::Policy_var policy =
-    policies.get_cached_policy (TAO_CACHED_POLICY_THREADPOOL
-                               );
+    policies.get_cached_policy (TAO_CACHED_POLICY_THREADPOOL);
 
   RTCORBA::ThreadpoolPolicy_var thread_pool_policy =
-    RTCORBA::ThreadpoolPolicy::_narrow (policy.in ()
-                                       );
+    RTCORBA::ThreadpoolPolicy::_narrow (policy.in ());
 
   if (CORBA::is_nil (thread_pool_policy.in ()))
     return 0;
 
-  RTCORBA::ThreadpoolId thread_pool_id =
-    thread_pool_policy->threadpool ();
+  RTCORBA::ThreadpoolId thread_pool_id = thread_pool_policy->threadpool ();
 
   // Get the RTORB.
-  CORBA::Object_var object =
-    orb_core.resolve_rt_orb ();
+  CORBA::Object_var object = orb_core.resolve_rt_orb ();
 
-  RTCORBA::RTORB_var rt_orb =
-    RTCORBA::RTORB::_narrow (object.in ()
-                            );
+  RTCORBA::RTORB_var rt_orb = RTCORBA::RTORB::_narrow (object.in ());
 
-  TAO_RT_ORB *tao_rt_orb =
+  TAO_RT_ORB * const tao_rt_orb =
     dynamic_cast <TAO_RT_ORB *> (rt_orb.in ());
 
-  TAO_Thread_Pool_Manager &tp_manager =
-    tao_rt_orb->tp_manager ();
+  if (!tao_rt_orb)
+    throw CORBA::INTERNAL ();
 
-  TAO_Thread_Pool *thread_pool =
+  TAO_Thread_Pool_Manager & tp_manager = tao_rt_orb->tp_manager ();
+
+  TAO_Thread_Pool * const thread_pool =
     tp_manager.get_threadpool (thread_pool_id);
 
   if (thread_pool == 0)
-    ACE_THROW_RETURN (PortableServer::POA::InvalidPolicy (),
-                      0);
+    throw PortableServer::POA::InvalidPolicy ();
 
   return thread_pool;
 }

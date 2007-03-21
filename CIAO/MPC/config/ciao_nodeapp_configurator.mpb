@@ -1,0 +1,7 @@
+// -*- MPC -*-
+// $Id$
+
+project : ciao_deployment_stub {
+  libs += CIAO_NodeApp_Configurator
+  after += NodeApp_Configurator
+}

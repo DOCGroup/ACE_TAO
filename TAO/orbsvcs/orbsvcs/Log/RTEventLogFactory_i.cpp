@@ -99,11 +99,6 @@ TAO_RTEventLogFactory_i::create (
         const DsLogAdmin::CapacityAlarmThresholdList & thresholds,
         DsLogAdmin::LogId_out id_out
       )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        DsLogAdmin::InvalidLogFullAction,
-        DsLogAdmin::InvalidThreshold
-      ))
 {
   this->create_i (full_action,
 		  max_size,
@@ -136,12 +131,6 @@ TAO_RTEventLogFactory_i::create_with_id (
         CORBA::ULongLong max_size,
         const DsLogAdmin::CapacityAlarmThresholdList & thresholds
       )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        DsLogAdmin::LogIdAlreadyExists,
-        DsLogAdmin::InvalidLogFullAction,
-        DsLogAdmin::InvalidThreshold
-      ))
 {
   this->create_with_id_i (id,
 			  full_action,
@@ -199,9 +188,6 @@ TAO_RTEventLogFactory_i::create_log_servant (DsLogAdmin::LogId id)
 RtecEventChannelAdmin::ProxyPushSupplier_ptr
 TAO_RTEventLogFactory_i::obtain_push_supplier (
       )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ))
 {
   return consumer_admin_->obtain_push_supplier();
 }

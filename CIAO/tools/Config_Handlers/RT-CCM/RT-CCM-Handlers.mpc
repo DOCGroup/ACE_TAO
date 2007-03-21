@@ -1,11 +1,31 @@
 //$Id$
 
-project (RT_CCM_Config_Handlers) : acelib, ciao_deployment_stub, ciao_xml_utils {
+project (RT_CCM_XML_Generation) : xscdefaults {
+   requires += xsc
+
+   xscflags += --cxx-banner-file $(CIAO_ROOT)/docs/schema/xsc-banner.cpp
+   xscflags += --cxx-header-banner-file $(CIAO_ROOT)/docs/schema/xsc-banner.h
+   xscflags += --cxx-export-symbol RT_CCM_Handlers_Export
+   xscflags += --cxx-namespace-regex  <%quote%>%.*vanderbilt.*%CIAO/Config_Handlers%<%quote%>
+   xscflags += --cxx-export-header RT_CCM_Handlers_Export.h
+   xscflags += --search-path "$(CIAO_ROOT)/docs/schema"
+   
+   custom_only = 1
+
+   XSC_Files {
+        gendir = .
+        $(CIAO_ROOT)/docs/schema/CIAOServerResources.xsd
+   }
+}
+
+project (RT_CCM_Config_Handlers) : acelib, ciao_deployment_stub, ciao_config_handlers_base {
   sharedname = RT_CCM_Config_Handlers
   dynamicflags   = RT_CCM_HANDLERS_BUILD_DLL
   macros   += XML_USE_PTHREADS
   includes += $(CIAO_ROOT)/tools/Config_Handlers
   includes += $(CIAO_ROOT)/ciao
+
+  after += RT_CCM_XML_Generation
 
   Source_Files {
         CIAOServerResources.cpp
@@ -14,6 +34,8 @@ project (RT_CCM_Config_Handlers) : acelib, ciao_deployment_stub, ciao_xml_utils 
         OR_Handler.cpp
         PM_Handler.cpp
         PS_Handler.cpp
+        CNPM_Handler.cpp
+        NPM_Handler.cpp
         SRD_Handler.cpp
         TP_Handler.cpp
         TPL_Handler.cpp

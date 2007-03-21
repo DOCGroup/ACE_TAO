@@ -18,7 +18,6 @@ Receiver::Receiver (void)
 
 void
 Receiver::receive_data (const Test::Message &the_message)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_hrtime_t now = ACE_OS::gethrtime ();
   if (this->message_count_ == 0)
@@ -45,7 +44,6 @@ Receiver::receive_data (const Test::Message &the_message)
 
 void
 Receiver::done (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (this->message_count_ == 0)
     {

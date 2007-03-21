@@ -137,8 +137,7 @@ namespace TAO
       void teardown (void);
 
       /// Setup the current.
-      void setup (::TAO_Root_POA *impl,
-                  const TAO::ObjectKey &key);
+      void setup (::TAO_Root_POA *impl, const TAO::ObjectKey &key);
 
     private:
 
@@ -174,7 +173,7 @@ namespace TAO
       POA_Current_Impl *previous_current_impl_;
 
       /// Is setup complete?
-      int setup_done_;
+      bool setup_done_;
 
       /// Pointer to tss resources.
       TAO_TSS_Resources *tss_resources_;

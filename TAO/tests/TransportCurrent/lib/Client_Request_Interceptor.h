@@ -68,25 +68,20 @@ namespace Test
      */
     //@{
     /// Return the name of this ClientRequestinterceptor.
-    virtual char * name (void) throw (CORBA::SystemException);
+    virtual char * name (void);
 
-    virtual void destroy (void) throw (CORBA::SystemException);
+    virtual void destroy (void);
 
-    virtual void send_request (PortableInterceptor::ClientRequestInfo_ptr ri)
-      throw (CORBA::SystemException, PortableInterceptor::ForwardRequest);
+    virtual void send_request (PortableInterceptor::ClientRequestInfo_ptr ri);
 
-    virtual void send_poll (PortableInterceptor::ClientRequestInfo_ptr ri)
-      throw (CORBA::SystemException);
+    virtual void send_poll (PortableInterceptor::ClientRequestInfo_ptr ri);
 
-    virtual void receive_reply (PortableInterceptor::ClientRequestInfo_ptr ri)
-      throw (CORBA::SystemException);
+    virtual void receive_reply (PortableInterceptor::ClientRequestInfo_ptr ri);
 
 
-    virtual void receive_exception (PortableInterceptor::ClientRequestInfo_ptr ri)
-      throw (CORBA::SystemException, PortableInterceptor::ForwardRequest);
+    virtual void receive_exception (PortableInterceptor::ClientRequestInfo_ptr ri);
 
-    virtual void receive_other (PortableInterceptor::ClientRequestInfo_ptr ri)
-      throw (CORBA::SystemException, PortableInterceptor::ForwardRequest);
+    virtual void receive_other (PortableInterceptor::ClientRequestInfo_ptr ri);
     //@}
 
     // Number of interceptions
@@ -95,8 +90,7 @@ namespace Test
   private:
     // Implementation method, every inteception point will have to
     // call it, supplying a name.
-    void test_transport_current (const ACE_TCHAR* amethod)
-      throw (CORBA::SystemException, CORBA::UserException);
+    void test_transport_current (const ACE_TCHAR* amethod);
 
   private:
     ///The ID of the ORB this interceptor is registered with.

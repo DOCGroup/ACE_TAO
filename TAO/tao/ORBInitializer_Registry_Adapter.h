@@ -22,9 +22,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/Basic_Types.h"
-#include "tao/SystemException.h"
 #include "ace/Service_Object.h"
-#include "ace/CORBA_macros.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -55,8 +53,7 @@ namespace TAO
       /// Register an ORBInitializer with the underlying ORBInitializer
       /// array.
       virtual void register_orb_initializer (
-        PortableInterceptor::ORBInitializer_ptr init
-        ) = 0;
+        PortableInterceptor::ORBInitializer_ptr init) = 0;
 
       /**
        * Begin initialization of all registered ORBInitializers before
@@ -70,8 +67,7 @@ namespace TAO
         TAO_ORB_Core *orb_core,
         int argc,
         char *argv[],
-        PortableInterceptor::SlotId &slotid
-        ) = 0;
+        PortableInterceptor::SlotId &slotid) = 0;
 
       /**
        * Complete initialization of all registered ORBInitializers after
@@ -92,8 +88,7 @@ namespace TAO
         TAO_ORB_Core *orb_core,
         int argc,
         char *argv[],
-        PortableInterceptor::SlotId slotid
-        ) = 0;
+        PortableInterceptor::SlotId slotid) = 0;
   };
 }
 

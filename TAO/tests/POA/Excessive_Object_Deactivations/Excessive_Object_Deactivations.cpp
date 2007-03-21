@@ -24,8 +24,7 @@
 class test_i : public POA_test
 {
 public:
-  void deactivate_self (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void deactivate_self (void);
 
   PortableServer::POA_ptr _default_POA (void);
 
@@ -42,7 +41,6 @@ test_i::_default_POA ( /**/)
 
 void
 test_i::deactivate_self (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->poa_->deactivate_object (this->id_);
 
@@ -139,8 +137,10 @@ test_object_deactivation (PortableServer::POA_ptr poa,
 
   servant.id_ = id;
 
+  CORBA::Object_var object = poa->id_to_reference (id);
+
   test_var test =
-    servant._this ();
+    test::_narrow (object.in ());
 
   test->deactivate_self ();
 

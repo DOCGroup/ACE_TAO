@@ -25,14 +25,12 @@ MyImpl::GPS_tracing_exec_i::~GPS_tracing_exec_i ()
 
 HUDisplay::CCM_position_ptr
 MyImpl::GPS_tracing_exec_i::get_MyLocation ()
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return HUDisplay::CCM_position::_duplicate (this);
 }
 
 void
 MyImpl::GPS_tracing_exec_i::push_Refresh (HUDisplay::tick *)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Refresh position
   if(this->positionx_ > 500) this->dx_ = -1;
@@ -53,14 +51,12 @@ MyImpl::GPS_tracing_exec_i::push_Refresh (HUDisplay::tick *)
 
 CORBA::Long
 MyImpl::GPS_tracing_exec_i::posx ()
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->positionx_;
 }
 
 CORBA::Long
 MyImpl::GPS_tracing_exec_i::posy ()
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->positiony_;
 }
@@ -69,8 +65,6 @@ MyImpl::GPS_tracing_exec_i::posy ()
 void
 MyImpl::GPS_tracing_exec_i::set_session_context (
     Components::SessionContext_ptr ctx)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   Components::CCMException))
 {
   if (CIAO::debug_level () > 0)
     ACE_DEBUG ((LM_DEBUG,
@@ -86,15 +80,11 @@ MyImpl::GPS_tracing_exec_i::set_session_context (
 
 void
 MyImpl::GPS_tracing_exec_i::ciao_preactivate ()
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   Components::CCMException))
 {
 }
 
 void
 MyImpl::GPS_tracing_exec_i::ccm_activate ()
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   Components::CCMException))
 {
   if (CIAO::debug_level () > 0)
     ACE_DEBUG ((LM_DEBUG, "MyImpl::GPS_tracing_exec_i::ccm_activate\n"));
@@ -102,15 +92,11 @@ MyImpl::GPS_tracing_exec_i::ccm_activate ()
 
 void
 MyImpl::GPS_tracing_exec_i::ciao_postactivate ()
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   Components::CCMException))
 {
 }
 
 void
 MyImpl::GPS_tracing_exec_i::ccm_passivate ()
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   Components::CCMException))
 {
   if (CIAO::debug_level () > 0)
     ACE_DEBUG ((LM_DEBUG, "MyImpl::GPS_tracing_exec_i::ccm_passivate\n"));
@@ -118,8 +104,6 @@ MyImpl::GPS_tracing_exec_i::ccm_passivate ()
 
 void
 MyImpl::GPS_tracing_exec_i::ccm_remove ()
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   Components::CCMException))
 {
   if (CIAO::debug_level () > 0)
     ACE_DEBUG ((LM_DEBUG, "MyImpl::GPS_tracing_exec_i::ccm_remove\n"));
@@ -141,8 +125,6 @@ MyImpl::GPSHome_tracing_exec_i::~GPSHome_tracing_exec_i ()
 
 ::Components::EnterpriseComponent_ptr
 MyImpl::GPSHome_tracing_exec_i::create ()
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   Components::CCMException))
 {
   return new MyImpl::GPS_tracing_exec_i;
 }

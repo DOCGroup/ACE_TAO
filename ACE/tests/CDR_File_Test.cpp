@@ -27,6 +27,7 @@
 #include "ace/Auto_Ptr.h"
 #include "ace/Get_Opt.h"
 #include "ace/ACE.h"
+#include "ace/Truncate.h"
 
 // FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
@@ -87,9 +88,11 @@ operator << (ostream &os,
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("\n"
                         "Char:               %c\n"
-      "Short:              %u\n"
+                        "Short:              %u\n"
                         "Long:               %d\n"),
-                    t.char_, t.word2_, t.word4_));
+              t.char_,
+              t.word2_,
+              t.word4_));
 
   ACE_CDR::ULongLong hi = (t.word8_ >> 32);
   ACE_CDR::ULongLong lo = (t.word8_ & 0xffffffff);
@@ -97,12 +100,13 @@ operator << (ostream &os,
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("\n"
                         "ULongLong 1st half: %x\n"
-      "ULongLong 2nd half: %x\n"
+                        "ULongLong 2nd half: %x\n"
                         "Float:              %f\n"
                         "Double:             %f\n"),
-                        ACE_U64_TO_U32(hi),
-                        ACE_U64_TO_U32(lo),
-                        t.fpoint_, t.dprec_));
+              ACE_Utils::truncate_cast<ACE_UINT32> (hi),
+              ACE_Utils::truncate_cast<ACE_UINT32> (lo),
+              t.fpoint_,
+              t.dprec_));
 #else
   os << "Char:              " << t.char_ << endl
      << "Short:             " << t.word2_ << endl
@@ -113,11 +117,11 @@ operator << (ostream &os,
 
   os << "ULongLong 1st half: "
      << hex
-     << ACE_U64_TO_U32 (hi)
+     << ACE_Utils::truncate_cast<ACE_UINT32> (hi)
      << dec << endl
      << "ULongLong 2nd half: "
      << hex
-     << ACE_U64_TO_U32 (lo)
+     << ACE_Utils::truncate_cast<ACE_UINT32> (lo)
      << dec << endl
      << "Float:             " << t.fpoint_ << endl
      << "Double:            " << t.dprec_ << endl;

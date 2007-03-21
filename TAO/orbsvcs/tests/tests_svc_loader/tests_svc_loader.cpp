@@ -43,7 +43,7 @@ int main (int argc, char *argv [])
     {
       // First initialize the ORB, that will remove some arguments...
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, 0);
+        CORBA::ORB_init (argc, argv);
 
       // There must be at least one argument, the file that has to be
       // retrieved

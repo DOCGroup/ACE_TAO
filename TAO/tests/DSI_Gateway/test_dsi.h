@@ -36,14 +36,12 @@ public:
   // ctor
 
   // = The DynamicImplementation methods.
-  virtual void invoke (CORBA::ServerRequest_ptr request)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void invoke (CORBA::ServerRequest_ptr request);
 
   virtual CORBA::RepositoryId _primary_interface (
       const PortableServer::ObjectId &oid,
       PortableServer::POA_ptr poa
-    )
-      ACE_THROW_SPEC (());
+    );
 
   virtual PortableServer::POA_ptr _default_POA (
     );

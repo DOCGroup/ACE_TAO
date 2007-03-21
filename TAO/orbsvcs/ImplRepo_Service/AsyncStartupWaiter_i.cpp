@@ -24,7 +24,7 @@ void AsyncStartupWaiter_i::debug (bool dbg)
 }
 
 void AsyncStartupWaiter_i::wait_for_startup (AMH_AsyncStartupWaiterResponseHandler_ptr rh,
-   const char* name) ACE_THROW_SPEC ((CORBA::SystemException))
+   const char* name)
 {
   PendingListPtr plst;
   pending_.find(name, plst);

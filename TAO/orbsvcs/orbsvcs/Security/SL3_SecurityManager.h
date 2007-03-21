@@ -60,12 +60,10 @@ namespace TAO
        * interface.
        */
       //@{
-      virtual SecurityLevel3::CredentialsCurator_ptr credentials_curator ()
-        ACE_THROW_SPEC ((CORBA::SystemException));
+      virtual SecurityLevel3::CredentialsCurator_ptr credentials_curator ();
 
       virtual SecurityLevel3::TargetCredentials_ptr get_target_credentials (
-          CORBA::Object_ptr the_object)
-        ACE_THROW_SPEC ((CORBA::SystemException));
+          CORBA::Object_ptr the_object);
 
       virtual SecurityLevel3::ContextEstablishmentPolicy_ptr
       create_context_estab_policy (
@@ -74,13 +72,11 @@ namespace TAO
           SecurityLevel3::FeatureDirective use_client_auth,
           SecurityLevel3::FeatureDirective use_target_auth,
           SecurityLevel3::FeatureDirective use_confidentiality,
-          SecurityLevel3::FeatureDirective use_integrity)
-        ACE_THROW_SPEC ((CORBA::SystemException));
+          SecurityLevel3::FeatureDirective use_integrity);
 
       virtual SecurityLevel3::ObjectCredentialsPolicy_ptr
       create_object_creds_policy (
-          const SecurityLevel3::OwnCredentialsList & cred_list)
-        ACE_THROW_SPEC ((CORBA::SystemException));
+          const SecurityLevel3::OwnCredentialsList & cred_list);
       //@}
 
     protected:

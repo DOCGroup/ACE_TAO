@@ -135,18 +135,12 @@ Publisher_impl::~Publisher_impl()
 
 void subscribe (
                 ::Subscriber_ptr subscriber
-                )
-  ACE_THROW_SPEC ((
-                   ::CORBA::SystemException
-                   ));
+                );
 
 void
 Publisher_impl::subscribe(
                           ::Subscriber_ptr subscriber
                           )
-  ACE_THROW_SPEC ((
-                   ::CORBA::SystemException
-                   ))
 {
   worker->addSubscriber(subscriber);
 }
@@ -154,9 +148,6 @@ Publisher_impl::subscribe(
 void
 Publisher_impl::shutdown (
                           )
-  ACE_THROW_SPEC ((
-                   ::CORBA::SystemException
-                   ))
 {
   this->orb_->shutdown (0);
   worker->terminate();

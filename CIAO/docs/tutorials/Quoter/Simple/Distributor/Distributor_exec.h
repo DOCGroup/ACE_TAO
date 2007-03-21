@@ -52,10 +52,7 @@ namespace CIDL_StockDistributor_Impl
 
     virtual ::Stock::StockInfo *
     get_stock_info (
-    const char * stock_name)
-    ACE_THROW_SPEC ((
-    ::CORBA::SystemException,
-    ::Stock::Invalid_Stock));
+    const char * stock_name);
 
     /// User defined
 
@@ -134,68 +131,45 @@ namespace CIDL_StockDistributor_Impl
     // Supported or inherited operations.
 
     virtual void
-    start ()
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    start ();
 
     virtual void
-    stop ()
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    stop ();
 
     // Attribute operations.
 
     virtual ::CORBA::Long
-    rate ()
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    rate ();
 
     virtual void
     rate (
-    ::CORBA::Long)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    ::CORBA::Long);
 
     // Port operations.
 
     virtual ::Stock::CCM_StockQuoter_ptr
-    get_push_quoter ()
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    get_push_quoter ();
 
     // Operations from Components::SessionComponent
 
     virtual void
     set_session_context (
-    ::Components::SessionContext_ptr ctx)
-    ACE_THROW_SPEC ((
-    ::CORBA::SystemException,
-    ::Components::CCMException));
+    ::Components::SessionContext_ptr ctx);
 
     virtual void
-    ciao_preactivate ()
-    ACE_THROW_SPEC ((
-    ::CORBA::SystemException,
-    ::Components::CCMException));
+    ciao_preactivate ();
 
     virtual void
-    ciao_postactivate ()
-    ACE_THROW_SPEC ((
-    ::CORBA::SystemException,
-    ::Components::CCMException));
+    ciao_postactivate ();
 
     virtual void
-    ccm_activate ()
-    ACE_THROW_SPEC ((
-    ::CORBA::SystemException,
-    ::Components::CCMException));
+    ccm_activate ();
 
     virtual void
-    ccm_passivate ()
-    ACE_THROW_SPEC ((
-    ::CORBA::SystemException,
-    ::Components::CCMException));
+    ccm_passivate ();
 
     virtual void
-    ccm_remove ()
-    ACE_THROW_SPEC ((
-    ::CORBA::SystemException,
-    ::Components::CCMException));
+    ccm_remove ();
 
     protected:
     StockDistributor_Context *context_;
@@ -204,10 +178,7 @@ namespace CIDL_StockDistributor_Impl
     public:
 
     /// push event to all subscribers
-    void push_notify_out ()
-    ACE_THROW_SPEC ((
-	::CORBA::SystemException
-    ));
+    void push_notify_out ();
 
     private:
     /// pulse generation rate
@@ -242,10 +213,7 @@ namespace CIDL_StockDistributor_Impl
     virtual ~StockDistributorHome_exec_i (void);
 
     virtual ::Components::EnterpriseComponent_ptr
-    create ()
-    ACE_THROW_SPEC ((
-    ::CORBA::SystemException,
-    ::Components::CCMException));
+    create ();
   };
 
   extern "C" DISTRIBUTOR_EXEC_Export ::Components::HomeExecutorBase_ptr

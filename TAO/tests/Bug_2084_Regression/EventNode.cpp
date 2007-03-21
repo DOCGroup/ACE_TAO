@@ -15,7 +15,6 @@ EventNode::EventNode (CORBA::ORB_ptr orb,
 }
 
 void EventNode::registerHello ( ::Test::Hello_ptr h )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) EventNode: registerHello will call get_string...\n"));
@@ -48,13 +47,15 @@ void EventNode::registerHello ( ::Test::Hello_ptr h )
         }
     }
 
-  CORBA::String_var str = h->get_string( (::CORBA::Long) ACE_Thread::self() );
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) - EventNode: string returned <%s>\n", str.in ()));
+  CORBA::String_var str =
+    h->get_string (static_cast<CORBA::Long> ((size_t)ACE_Thread::self ()));
+  ACE_DEBUG ((LM_DEBUG,
+              "(%P|%t) - EventNode: string returned <%s>\n",
+              str.in ()));
 }
 
 void
 EventNode::shutdown (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown (0);
 }

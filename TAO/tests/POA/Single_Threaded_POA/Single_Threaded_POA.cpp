@@ -28,8 +28,7 @@ class test_i : public virtual POA_test
 public:
   test_i (PortableServer::POA_ptr poa);
 
-  void method (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void method (void);
 
   PortableServer::POA_ptr _default_POA (void);
 
@@ -46,7 +45,6 @@ test_i::test_i (PortableServer::POA_ptr poa)
 
 void
 test_i::method (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
               "Entering Worker::svc from %t and sleeping....\n"));
@@ -63,7 +61,12 @@ test_i::method (void)
       ACE_DEBUG ((LM_DEBUG,
                   "Calling self from %t\n"));
 
-      test_var self = this->_this ();
+      PortableServer::ObjectId_var id =
+        this->poa_->activate_object (this);
+
+      CORBA::Object_var object = this->poa_->id_to_reference (id.in ());
+
+      test_var self = test::_narrow (object.in ());
 
       self->method ();
     }
@@ -156,9 +159,18 @@ main (int argc, char **argv)
       test_i servant1 (child_poa.in ());
       test_i servant2 (child_poa.in ());
 
-      test_var object1 = servant1._this ();
+      PortableServer::ObjectId_var id =
+        root_poa->activate_object (&servant1);
 
-      test_var object2 = servant2._this ();
+      CORBA::Object_var object_act = root_poa->id_to_reference (id.in ());
+
+      test_var object1 = test::_narrow (object_act.in ());
+
+      id = root_poa->activate_object (&servant2);
+
+      object_act = root_poa->id_to_reference (id.in ());
+
+      test_var object2 = test::_narrow (object_act.in ());
 
       Worker worker1 (object1.in ());
       Worker worker2 (object2.in ());

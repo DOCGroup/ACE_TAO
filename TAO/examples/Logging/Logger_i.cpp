@@ -20,7 +20,6 @@ Logger_Factory_i::~Logger_Factory_i (void)
 
 Logger_ptr
 Logger_Factory_i::make_logger (const char *name)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   Logger_i *result;
   // If name is already in the map, <find> will assign <result> to the
@@ -46,8 +45,7 @@ Logger_Factory_i::make_logger (const char *name)
   if (hash_map_.bind (name, result) == -1)
     {
       delete result;
-      ACE_THROW_RETURN (CORBA::UNKNOWN (),
-                        Logger::_nil ());
+      throw CORBA::UNKNOWN ();
     }
   else
     // Logger of name <name> already bound.  <result> is set
@@ -110,14 +108,12 @@ Logger_i::verbosity_conversion (Logger::Verbosity_Level verbosity_level)
 
 void
 Logger_i::log (const Logger::Log_Record &log_rec)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->logv (log_rec, verbosity_level_);
 }
 
 void
 Logger_i::log_twoway (const Logger::Log_Record &log_rec)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->logv (log_rec, verbosity_level_);
 }
@@ -125,7 +121,6 @@ Logger_i::log_twoway (const Logger::Log_Record &log_rec)
 void
 Logger_i::logv_twoway (const Logger::Log_Record &log_rec,
                        Logger::Verbosity_Level verbosity)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->logv (log_rec, verbosity);
 }
@@ -133,7 +128,6 @@ Logger_i::logv_twoway (const Logger::Log_Record &log_rec,
 void
 Logger_i::logv (const Logger::Log_Record &log_rec,
                Logger::Verbosity_Level verbosity)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Create an <ACE_Log_Record> to leverage existing logging
   // code. Since Logger::Log_Priority enum tags don't cleanly map to
@@ -181,7 +175,6 @@ Logger_i::logv (const Logger::Log_Record &log_rec,
 
 void
 Logger_i::verbosity (Logger::Verbosity_Level level)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->verbosity_level_ = level;
 }

@@ -9,15 +9,15 @@ ACE_RCSID(ace, Asynch_Pseudo_Task, "$Id$")
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-ACE_Asynch_Pseudo_Task::ACE_Asynch_Pseudo_Task()
+ACE_Asynch_Pseudo_Task::ACE_Asynch_Pseudo_Task ()
   : select_reactor_ (),               // should be initialized before reactor_
     reactor_ (&select_reactor_, 0)    // don't delete implementation
 {
 }
 
-ACE_Asynch_Pseudo_Task::~ACE_Asynch_Pseudo_Task()
+ACE_Asynch_Pseudo_Task::~ACE_Asynch_Pseudo_Task ()
 {
-  this->stop();
+  this->stop ();
 }
 
 int
@@ -63,7 +63,7 @@ ACE_Asynch_Pseudo_Task::svc (void)
                 ACE_LIB_TEXT ("pthread_sigmask")));
 #endif
 
-  reactor_.owner (ACE_Thread::self());
+  reactor_.owner (ACE_Thread::self ());
   reactor_.run_reactor_event_loop ();
 
   return 0;
@@ -92,8 +92,7 @@ ACE_Asynch_Pseudo_Task::register_io_handler (ACE_HANDLE handle,
         ((LM_ERROR,
           ACE_LIB_TEXT ("%N:%l:%p\n"),
           ACE_LIB_TEXT ("register_io_handler (suspended)")));
-      this->reactor_.remove_handler (handle,
-                                     ACE_Event_Handler::ALL_EVENTS_MASK
+      this->reactor_.remove_handler (handle, ACE_Event_Handler::ALL_EVENTS_MASK
                                      | ACE_Event_Handler::DONT_CALL);
       return -1;
     }
@@ -104,7 +103,7 @@ ACE_Asynch_Pseudo_Task::register_io_handler (ACE_HANDLE handle,
 int
 ACE_Asynch_Pseudo_Task::remove_io_handler (ACE_HANDLE handle)
 {
-  return this->reactor_.remove_handler (handle ,
+  return this->reactor_.remove_handler (handle,
                                         ACE_Event_Handler::ALL_EVENTS_MASK
                                         | ACE_Event_Handler::DONT_CALL);
 }
@@ -112,8 +111,7 @@ ACE_Asynch_Pseudo_Task::remove_io_handler (ACE_HANDLE handle)
 int
 ACE_Asynch_Pseudo_Task::remove_io_handler (ACE_Handle_Set &set)
 {
-  return this->reactor_.remove_handler (set,
-                                        ACE_Event_Handler::ALL_EVENTS_MASK
+  return this->reactor_.remove_handler (set, ACE_Event_Handler::ALL_EVENTS_MASK
                                         | ACE_Event_Handler::DONT_CALL);
 }
 

@@ -48,7 +48,7 @@ main (int argc, char* argv[])
 
       // Create the ORB, pass the argv list for parsing.
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "");
+        CORBA::ORB_init (argc, argv);
 
       // Parse the arguments, you usually want to do this after
       // invoking ORB_init() because ORB_init() will remove all the

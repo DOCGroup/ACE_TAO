@@ -17,11 +17,9 @@ class LatencyTest
   LatencyTest (CORBA::ORB_ptr orb);
 
   // = The skeleton methods
-  virtual CORBA::Long makeCall (CORBA::Long send_time)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::Long makeCall (CORBA::Long send_time);
 
-  virtual void shutdown ()
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void shutdown ();
 
  private:
   /// Use an ORB reference to conver strings to objects and shutdown

@@ -38,7 +38,6 @@ Supplier::timeout_occured (void)
 
 void
 Supplier::disconnect_push_supplier (void)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
@@ -49,7 +48,6 @@ Timeout_Consumer::Timeout_Consumer (Supplier* supplier)
 
 void
 Timeout_Consumer::push (const RtecEventComm::EventSet& events)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (events.length () == 0)
     {
@@ -64,7 +62,6 @@ Timeout_Consumer::push (const RtecEventComm::EventSet& events)
 
 void
 Timeout_Consumer::disconnect_push_consumer (void)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 

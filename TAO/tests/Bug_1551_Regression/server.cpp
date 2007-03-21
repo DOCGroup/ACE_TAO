@@ -55,7 +55,7 @@ main (int argc, char *argv[])
   try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "");
+        CORBA::ORB_init (argc, argv);
 
       CORBA::Object_var poa_object =
         orb->resolve_initial_references("RootPOA");
@@ -77,8 +77,13 @@ main (int argc, char *argv[])
       TAO::Utils::Servant_Var<Hello> hello_impl(
           new Hello(orb.in(), simulate_crashes));
 
+      PortableServer::ObjectId_var id =
+        root_poa->activate_object (hello_impl.in ());
+
+      CORBA::Object_var object = root_poa->id_to_reference (id.in ());
+
       Test::Hello_var hello =
-        hello_impl->_this ();
+        Test::Hello::_narrow (object.in ());
 
       CORBA::String_var ior =
         orb->object_to_string (hello.in ());

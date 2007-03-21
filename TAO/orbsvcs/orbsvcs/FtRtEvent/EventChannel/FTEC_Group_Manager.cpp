@@ -61,9 +61,6 @@ CORBA::Boolean TAO_FTEC_Group_Manager::start (
         FTRT::FaultListener_ptr listener,
         FTRT::Location_out cur
       )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ))
 {
   listener_ = listener;
   ACE_NEW_RETURN(cur , FTRT::Location(Fault_Detector::instance()->my_location()), false);

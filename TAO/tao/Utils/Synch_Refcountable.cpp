@@ -13,8 +13,7 @@ ACE_RCSID (Utils,
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Synch_Refcountable::TAO_Synch_Refcountable (ACE_Lock *lock,
-                                                int refcount)
+TAO_Synch_Refcountable::TAO_Synch_Refcountable (ACE_Lock *lock, int refcount)
   : ACE_Refcountable (refcount)
   , refcount_lock_ (lock)
 {

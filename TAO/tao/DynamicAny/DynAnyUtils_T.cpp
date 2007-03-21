@@ -34,11 +34,6 @@ namespace TAO
   void
   DynAnyBasicTypeUtils<T>::insert_value (const T &val,
                                          TAO_DynCommon *the_dynany)
-    ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        DynamicAny::DynAny::TypeMismatch,
-        DynamicAny::DynAny::InvalidValue
-      ))
   {
     if (the_dynany->destroyed ())
       {
@@ -64,16 +59,10 @@ namespace TAO
   template<typename T>
   typename BasicTypeTraits<T>::return_type
   DynAnyBasicTypeUtils<T>::get_value (TAO_DynCommon *the_dynany)
-    ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        DynamicAny::DynAny::TypeMismatch,
-        DynamicAny::DynAny::InvalidValue
-      ))
   {
     if (the_dynany->destroyed ())
       {
-        ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (),
-                          BasicTypeTraits<T>::return_type ());
+        throw ::CORBA::OBJECT_NOT_EXIST ();
       }
 
     if (the_dynany->has_components ())
@@ -92,8 +81,7 @@ namespace TAO
 
         if (!(my_any >>= extval))
           {
-            ACE_THROW_RETURN (DynamicAny::DynAny::TypeMismatch (),
-                              BasicTypeTraits<T>::return_type ());
+            throw DynamicAny::DynAny::TypeMismatch ();
           }
 
         return BasicTypeTraits<T>::convert (extval);
@@ -104,9 +92,6 @@ namespace TAO
   void
   DynAnyFlagUtils<T>::set_flag_t (DynamicAny::DynAny_ptr component,
                                   CORBA::Boolean destroying)
-    ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ))
   {
     T *tmp = T::_narrow (component);
 
@@ -208,11 +193,9 @@ namespace TAO
         case CORBA::tk_abstract_interface:
         case CORBA::tk_component:
         case CORBA::tk_home:
-          ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (),
-                            DynamicAny::DynAny::_nil ());
+          throw ::CORBA::NO_IMPLEMENT ();
         case CORBA::tk_native:
-          ACE_THROW_RETURN (DynamicAny::DynAnyFactory::InconsistentTypeCode (),
-                            DynamicAny::DynAny::_nil ());
+          throw DynamicAny::DynAnyFactory::InconsistentTypeCode ();
         default:
           break;
         }

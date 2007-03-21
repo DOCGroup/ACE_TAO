@@ -24,44 +24,37 @@
 namespace CIAO
 {
   /**
-   * @class Map_Key_Cookie
+   * @class Cookie_Impl
    *
-   * @brief A internal cookie valuetype implementation.
+   * @brief A cookie implementation using CORBA::ULong
    */
-  class CIAO_CONTAINER_Export Map_Key_Cookie
+  class CIAO_CONTAINER_Export Cookie_Impl
     : public virtual OBV_Components::Cookie
   {
   public:
-    Map_Key_Cookie (void);
+    Cookie_Impl (void);
+    virtual ~Cookie_Impl (void);
 
-    virtual ~Map_Key_Cookie (void);
+    /// Initialize a @c Cookie with a @c CORBA::ULong
+    Cookie_Impl (CORBA::ULong const &key);
 
-    /// Initialize a @c Cookie with an @c ACE_Active_Map_Manager_Key
-    Map_Key_Cookie (const ACE_Active_Map_Manager_Key &key);
-
-    /// Insert the @c ACE_Active_Map_Manager_Key
-    bool insert (ACE_Active_Map_Manager_Key &key);
-
-    /// Operation on the valuetype
-    CORBA::OctetSeq * get_cookie (void);
-
-    /// Extract the @c ACE_Active_Map_Manager_Key
-    static bool extract (::Components::Cookie *c,
-                         ACE_Active_Map_Manager_Key &key);
+    /// Extract the @c CORBA::ULong
+    static bool extract (Components::Cookie const * const c,
+                         CORBA::ULong &key);
   };
 
   /**
-   * @class Map_Key_Cookie_init
+   * @class Cookie_Impl_init
    *
-   * @brief Valuefactory implementation for Cookies.
+   * @brief Valuefactory implementation for Cookie_Impl.
    */
-  class CIAO_CONTAINER_Export Map_Key_Cookie_init :
-    public virtual ::Components::Cookie_init
+  class CIAO_CONTAINER_Export Cookie_Impl_init :
+    public virtual Components::Cookie_init
   {
   public:
-    virtual ~Map_Key_Cookie_init (void);
+    virtual ~Cookie_Impl_init (void);
 
-    virtual CORBA::ValueBase *create_for_unmarshal ();
+    virtual CORBA::ValueBase *create_for_unmarshal (void);
   };
 }
 

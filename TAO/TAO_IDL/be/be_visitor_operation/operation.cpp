@@ -41,8 +41,17 @@ be_visitor_operation::void_return_type (be_type *bt)
 {
   if (bt->node_type () == AST_Decl::NT_pre_defined)
     {
-      AST_PredefinedType::PredefinedType pdt =
-        be_predefined_type::narrow_from_decl (bt)->pt ();
+      be_predefined_type * const bpd =
+        be_predefined_type::narrow_from_decl (bt);
+
+      if (!bpd)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "TAO_IDL (%N:%l) "
+                           "be_predefined_type::narrow_from_decl "
+                           "failed\n"),
+                          0);
+
+      AST_PredefinedType::PredefinedType const pdt = bpd->pt ();
 
       if (pdt == AST_PredefinedType::PT_void)
         {
@@ -119,74 +128,6 @@ be_visitor_operation::is_amh_exception_holder (be_interface *node)
   return is_an_amh_exception_holder;
 }
 
-// Method to generate the throw specs for exceptions that are thrown by the
-// operation.
-int
-be_visitor_operation::gen_throw_spec (be_operation *node)
-{
-  TAO_OutStream *os = this->ctx_->stream (); // grab the out stream
-
-  const char *throw_spec_open = "throw (";
-  const char *throw_spec_close = ")";
-
-  if (!be_global->use_raw_throw ())
-    {
-      throw_spec_open = "ACE_THROW_SPEC ((";
-      throw_spec_close = "))";
-    }
-
-  UTL_Scope *scope = node->defined_in ();
-  be_interface *iface = be_interface::narrow_from_scope (scope);
-
-  /***************************************************************************/
-  // 2.6
-  // Generate the Right Throw Spec if it is an AMH ExceptionHolder
-  /***************************************************************************/
-  // Check if this is (IF and it's not VT) or (it is an AMH ExceptionHolder).
-  if (iface != 0)
-    {
-      int is_amh_exception_holder = this->is_amh_exception_holder (iface);
-      AST_Decl::NodeType nt = iface->node_type ();
-
-      if (nt != AST_Decl::NT_valuetype
-          && nt != AST_Decl::NT_eventtype
-          || is_amh_exception_holder)
-        {
-          *os << be_nl << throw_spec_open;
-          *os << be_idt_nl << "::CORBA::SystemException";
-
-          if (node->exceptions ())
-            {
-              // Initialize an iterator to iterate thru the exception list.
-              for (UTL_ExceptlistActiveIterator ei (node->exceptions ());
-                   !ei.is_done ();
-                   ei.next ())
-                {
-                  be_exception *excp =
-                    be_exception::narrow_from_decl (ei.item ());
-
-                  if (excp == 0)
-                    {
-                      ACE_ERROR_RETURN ((LM_ERROR,
-                                         "(%N:%l) be_visitor_operation"
-                                         "gen_throw_spec - "
-                                         "bad exception node\n"),
-                                        -1);
-
-                    }
-
-                  *os << "," << be_nl
-                      << "::" << excp->name ();
-                }
-            }
-
-          *os << be_uidt_nl << throw_spec_close << be_uidt;
-        }
-    }
-  /*******************************************************************************/
-  return 0;
-}
-
 int
 be_visitor_operation::gen_raise_exception (const char *exception_name,
                                            const char *exception_arguments)
@@ -212,8 +153,8 @@ be_visitor_operation::gen_stub_operation_body (
   if (!intf)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_operation_thru_poa_collocated_ss::"
-                         "visit_operation - "
+                         "(%N:%l) be_visitor_operation::"
+                         "gen_stub_operation_body - "
                          "bad interface scope\n"),
                         -1);
     }

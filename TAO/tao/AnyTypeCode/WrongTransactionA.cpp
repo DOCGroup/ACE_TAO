@@ -82,7 +82,7 @@ namespace TAO
       {
         this->value_->_tao_decode (cdr);
       }
-    catch ( ::CORBA::Exception&)
+    catch (const ::CORBA::Exception&)
       {
         return false;
       }

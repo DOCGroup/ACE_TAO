@@ -24,7 +24,6 @@ project(*Server): taoserver, iormanip {
 
 project(*Client): taoclient, iormanip {
   after += *idl
-  after += *Server
   Source_Files {
     client.cpp
   }

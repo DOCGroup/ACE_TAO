@@ -28,21 +28,15 @@ public:
 
   Visual_i (CORBA::ORB_ptr orb);
 
-  void normal (CORBA::Long arg)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void normal (CORBA::Long arg);
 
-  void nothing (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void nothing (void);
 
-  void user (void)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     Test_Interceptors::Silly));
+  void user (void);
 
-  void system (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void system (void);
 
-  void shutdown (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void shutdown (void);
 
 private:
 

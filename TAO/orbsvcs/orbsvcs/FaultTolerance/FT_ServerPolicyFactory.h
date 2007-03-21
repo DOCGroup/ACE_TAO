@@ -43,9 +43,7 @@ class TAO_FT_ServerPolicyFactory
 public:
 
   virtual CORBA::Policy_ptr create_policy (CORBA::PolicyType type,
-                                           const CORBA::Any &value)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     CORBA::PolicyError));
+                                           const CORBA::Any &value);
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

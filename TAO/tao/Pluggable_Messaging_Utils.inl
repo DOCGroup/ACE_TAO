@@ -18,8 +18,7 @@ TAO_Pluggable_Reply_Params_Base::TAO_Pluggable_Reply_Params_Base (void)
 
 ACE_INLINE void
 TAO_Pluggable_Reply_Params_Base::service_context_notowned (
-    IOP::ServiceContextList *svc
-  )
+    IOP::ServiceContextList *svc)
 {
   this->service_context_ = svc;
 }

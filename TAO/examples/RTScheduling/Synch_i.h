@@ -10,8 +10,7 @@ class SYNCH_Export Synch_i : public POA_Synch
  public:
 
   Synch_i (void);
-  virtual void go (CORBA::Long base_time)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void go (CORBA::Long base_time);
 
   int synched (void);
 

@@ -8,11 +8,11 @@
 
 #include "tao/ORB_Core.h"
 #include "tao/ORB_Constants.h"
-#include "tao/SystemException.h"
 
 #include "ace/Static_Object_Lock.h"
 #include "ace/Recursive_Thread_Mutex.h"
 #include "ace/Log_Msg.h"
+#include "ace/CORBA_macros.h"
 
 ACE_RCSID (PI,
            ORBInitializer_Registry,
@@ -59,7 +59,7 @@ TAO::ORBInitializer_Registry::init (int, ACE_TCHAR *[])
       this->register_orb_initializer (orb_initializer.in ()
                                                     );
     }
-  catch ( ::CORBA::Exception& ex)
+  catch (const ::CORBA::Exception& ex)
     {
       if (TAO_debug_level > 0)
         {
@@ -91,8 +91,7 @@ TAO::ORBInitializer_Registry::fini (void)
 
 void
 TAO::ORBInitializer_Registry::register_orb_initializer (
-  PortableInterceptor::ORBInitializer_ptr init
-  )
+  PortableInterceptor::ORBInitializer_ptr init)
 {
   if (!CORBA::is_nil (init))
     {
@@ -123,8 +122,7 @@ TAO::ORBInitializer_Registry::pre_init (
   TAO_ORB_Core *orb_core,
   int argc,
   char *argv[],
-  PortableInterceptor::SlotId &slotid
-  )
+  PortableInterceptor::SlotId &slotid)
 {
   ACE_GUARD_RETURN (TAO_SYNCH_RECURSIVE_MUTEX,
                     guard,
@@ -173,8 +171,7 @@ TAO::ORBInitializer_Registry::post_init (
   TAO_ORB_Core *orb_core,
   int argc,
   char *argv[],
-  PortableInterceptor::SlotId slotid
-  )
+  PortableInterceptor::SlotId slotid)
 {
   if (pre_init_count > 0)
     {
@@ -199,8 +196,7 @@ TAO::ORBInitializer_Registry::post_init (
 
       for (size_t i = 0; i < pre_init_count; ++i)
         {
-          this->initializers_[i]->post_init (orb_init_info_.in ()
-                                            );
+          this->initializers_[i]->post_init (orb_init_info_.in ());
         }
 
 #if TAO_HAS_INTERCEPTORS == 1

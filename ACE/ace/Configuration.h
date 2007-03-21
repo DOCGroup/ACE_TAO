@@ -349,7 +349,7 @@ public:
                             const ACE_TCHAR* name) = 0;
 
   /**
-   * Expands <path_in> to <key_out> from <key>.  If create is true,
+   * Expands <path_in> to <key_out> from @a key.  If create is true,
    * the subsections are created.  Returns 0 on success, non zero on
    * error The path consists of sections separated by the backslash
    * '\' or forward slash '/'.
@@ -429,7 +429,7 @@ protected:
   ACE_Configuration_Section_Key root_;
 };
 
-#if defined (ACE_WIN32)
+#if defined (ACE_WIN32) && !defined (ACE_LACKS_WIN32_REGISTRY)
 
 /**
  * @class ACE_Section_Key_Win32
@@ -554,7 +554,7 @@ protected:
   ACE_Configuration_Win32Registry (const ACE_Configuration_Win32Registry& rhs);
   ACE_Configuration_Win32Registry& operator= (const ACE_Configuration_Win32Registry& rhs);
 };
-#endif /* ACE_WIN32 */
+#endif /* ACE_WIN32 && !ACE_LACKS_WIN32_REGISTRY */
 
 // ACE_Allocator version
 
@@ -848,7 +848,7 @@ public:
                          const ACE_TCHAR* name,
                          VALUETYPE& type);
 
-  /// Removes the the value <name> from <key>.  returns non zero on error
+  /// Removes the the value <name> from @a key.  returns non zero on error
   virtual int remove_value (const ACE_Configuration_Section_Key& key,
                             const ACE_TCHAR* name);
 

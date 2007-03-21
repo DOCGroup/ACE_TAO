@@ -19,7 +19,6 @@ Server_ORBInitializer::Server_ORBInitializer (void)
 void
 Server_ORBInitializer::pre_init (
     PortableInterceptor::ORBInitInfo_ptr orbinitinfo)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   POA_TestModule::test* test = 0;
   ACE_NEW (test,
@@ -94,7 +93,6 @@ Server_ORBInitializer::pre_init (
 void
 Server_ORBInitializer::post_init (
     PortableInterceptor::ORBInitInfo_ptr)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 

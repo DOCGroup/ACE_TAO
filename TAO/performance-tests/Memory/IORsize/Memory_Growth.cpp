@@ -16,7 +16,6 @@ Memory_Growth::Memory_Growth (CORBA::ORB_ptr orb)
 void
 Memory_Growth::send_objref (const Test::PayLoad & /*p*/
                             )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_Manual_Event me;
 
@@ -32,7 +31,6 @@ Memory_Growth::send_objref (const Test::PayLoad & /*p*/
 
 void
 Memory_Growth::shutdown (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown (0);
 }

@@ -29,17 +29,12 @@ public:
   Quoter_Generic_Factory_i (int debug_level = 1);
   ~Quoter_Generic_Factory_i (void);
 
-  CORBA::Boolean supports (const CosLifeCycle::Key &factory_key)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+  CORBA::Boolean supports (const CosLifeCycle::Key &factory_key);
   // Returns true if the Generic Factory is able to forward a request
   // for creating an object described by the <factory_key>.
 
   CORBA::Object_ptr create_object (const CosLifeCycle::Key &factory_key,
-                                   const CosLifeCycle::Criteria &the_criteria)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       CosLifeCycle::NoFactory,
-                       CosLifeCycle::InvalidCriteria,
-                       CosLifeCycle::CannotMeetCriteria));
+                                   const CosLifeCycle::Criteria &the_criteria);
   // Returns an object reference to a newly created object, though the
   // Generic Factory itself cannot create objects, it will forward the
   // request to a more concrete Factory.

@@ -21,7 +21,6 @@ Peer::create_session (Test::Session_Control_ptr control,
                       CORBA::ULong thread_count,
                       CORBA::ULong message_count,
                       CORBA::ULong peer_count)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   Session *session_impl = 0;
   ACE_NEW_THROW_EX (session_impl,
@@ -38,7 +37,6 @@ Peer::create_session (Test::Session_Control_ptr control,
 
 void
 Peer::shutdown (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) Peer::shutdown, waiting for threads\n"));

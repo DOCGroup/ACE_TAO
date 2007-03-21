@@ -44,8 +44,6 @@ Servant_Locator::preinvoke (const PortableServer::ObjectId &oid,
                             PortableServer::POA_ptr /* poa_ptr */,
                             const char * /*operation*/,
                             PortableServer::ServantLocator::Cookie & /* cookie */)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableServer::ForwardRequest))
 {
 
   CORBA::String_var s = PortableServer::ObjectId_to_string (oid);
@@ -54,7 +52,7 @@ Servant_Locator::preinvoke (const PortableServer::ObjectId &oid,
               "The OID is <%s> \n", s.in ()));
   if (ACE_OS::strstr (s.in (), "Simple_Server") == 0)
     {
-      ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (), 0);
+      throw CORBA::OBJECT_NOT_EXIST ();
     }
 
   // Combined IOR stuff
@@ -67,9 +65,9 @@ Servant_Locator::preinvoke (const PortableServer::ObjectId &oid,
   ACE_DEBUG ((LM_DEBUG,
               "About to throw exception.. \n"));
 
-  ACE_THROW_RETURN (PortableServer::ForwardRequest (
-                                                    CORBA::Object::_duplicate (server.in ())),
-                    0);
+  throw PortableServer::ForwardRequest (
+    CORBA::Object::_duplicate (
+      server.in ()));
 
 }
 
@@ -79,7 +77,6 @@ Servant_Locator::postinvoke (const PortableServer::ObjectId &,
                              const char *,
                              PortableServer::ServantLocator::Cookie ,
                              PortableServer::Servant)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 

@@ -47,8 +47,7 @@ TAO::SSLIOP::Connection_Handler::Connection_Handler (
     TAO_Connection_Handler (orb_core),
     current_ ()
 {
-  this->current_ =
-    TAO::SSLIOP::Util::current (orb_core);
+  this->current_ = TAO::SSLIOP::Util::current (orb_core);
 
   TAO::SSLIOP::Transport* specific_transport = 0;
   ACE_NEW (specific_transport,
@@ -95,29 +94,27 @@ TAO::SSLIOP::Connection_Handler::open (void *)
   protocol_properties.no_delay_ =
     this->orb_core ()->orb_params ()->nodelay ();
 
-  TAO_Protocols_Hooks *tph =
-    this->orb_core ()->get_protocols_hooks ();
+  TAO_Protocols_Hooks *tph = this->orb_core ()->get_protocols_hooks ();
 
-  int client =
-    this->transport ()->opened_as () == TAO::TAO_CLIENT_ROLE;;
-
-
-  try
+  if (tph != 0)
     {
-      if (client)
+      try
         {
-          tph->client_protocol_properties_at_orb_level (
-            protocol_properties);
+          if (this->transport ()->opened_as () == TAO::TAO_CLIENT_ROLE)
+            {
+              tph->client_protocol_properties_at_orb_level (
+                protocol_properties);
+            }
+          else
+            {
+              tph->server_protocol_properties_at_orb_level (
+                protocol_properties);
+            }
         }
-      else
+      catch (const CORBA::Exception&)
         {
-          tph->server_protocol_properties_at_orb_level (
-            protocol_properties);
+          return -1;
         }
-    }
-  catch (const CORBA::Exception& ex)
-    {
-      return -1;
     }
 
   if (this->set_socket_option (this->peer (),
@@ -304,8 +301,7 @@ TAO::SSLIOP::Connection_Handler::handle_timeout (const ACE_Time_Value &,
 }
 
 int
-TAO::SSLIOP::Connection_Handler::handle_close (ACE_HANDLE,
-                                             ACE_Reactor_Mask)
+TAO::SSLIOP::Connection_Handler::handle_close (ACE_HANDLE, ACE_Reactor_Mask)
 {
   ACE_ASSERT (0);
   return 0;
@@ -367,8 +363,7 @@ TAO::SSLIOP::Connection_Handler::add_transport_to_cache (void)
     this->orb_core ()->lane_resources ().transport_cache ();
 
   // Add the handler to Cache
-  return cache.cache_idle_transport (&prop,
-                                     this->transport ());
+  return cache.cache_idle_transport (&prop, this->transport ());
 }
 
 int
@@ -457,8 +452,7 @@ TAO::SSLIOP::Connection_Handler::teardown_ssl_state (
   TAO::SSLIOP::Current_Impl *previous_current_impl,
   bool &setup_done)
 {
-  this->current_->teardown (previous_current_impl,
-                            setup_done);
+  this->current_->teardown (previous_current_impl, setup_done);
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

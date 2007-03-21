@@ -28,7 +28,6 @@ class Callback_i : public POA_Test::CallBack
 {
 public:
   void method2(void)
-    ACE_THROW_SPEC ((CORBA::SystemException))
   {
     ACE_DEBUG ((LM_DEBUG,"(%t) Callback_i::method2 called\n"));
   }

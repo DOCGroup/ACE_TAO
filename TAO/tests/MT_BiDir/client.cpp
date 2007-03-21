@@ -43,7 +43,7 @@ main (int argc, char *argv[])
   try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "");
+        CORBA::ORB_init (argc, argv);
 
       if (parse_args (argc, argv) != 0)
         return 1;
@@ -112,8 +112,13 @@ main (int argc, char *argv[])
 
       PortableServer::ServantBase_var owner_transfer (receiver);
 
+      PortableServer::ObjectId_var id =
+        root_poa->activate_object (receiver);
+
+      CORBA::Object_var object_act = root_poa->id_to_reference (id.in ());
+
       Receiver_var receiver_obj =
-        receiver->_this ();
+        Receiver::_narrow (object_act.in ());
 
       // Send the calback object to the server
       sender->receiver_object (receiver_obj.in ());
@@ -141,7 +146,7 @@ main (int argc, char *argv[])
     }
   catch (const CORBA::Exception& ex)
     {
-      ex._tao_print_exception ("Catched exception:");
+      ex._tao_print_exception ("Caught exception:");
       return 1;
     }
 

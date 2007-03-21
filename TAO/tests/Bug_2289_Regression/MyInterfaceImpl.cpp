@@ -13,7 +13,6 @@ MyInterfaceImpl::MyInterfaceImpl (CORBA::ORB_ptr orb)
 }
 CORBA::Boolean
 MyInterfaceImpl::myMethod (const char* mystring)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return mystring == my_string;
 }

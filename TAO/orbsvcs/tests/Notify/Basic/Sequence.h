@@ -36,11 +36,7 @@ public:
   // = SequencePushConsumer methods
   virtual void push_structured_events (
         const CosNotification::EventBatch & notifications
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        CosEventComm::Disconnected
-       ));
+      );
 
 protected:
   Sequence* test_client_;

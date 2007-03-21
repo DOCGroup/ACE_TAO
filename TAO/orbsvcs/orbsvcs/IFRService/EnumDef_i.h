@@ -1,22 +1,19 @@
 // -*- C++ -*-
 
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/orbsvcs/orbsvcs/IFRService
-//
-// = FILENAME
-//    EnumDef_i.h
-//
-// = DESCRIPTION
-//    EnumDef servant class.
-//
-// = AUTHOR
-//    Jeff Parsons <parsons@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    EnumDef_i.h
+ *
+ *  $Id$
+ *
+ *  EnumDef servant class.
+ *
+ *
+ *  @author Jeff Parsons <parsons@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef TAO_ENUMDEF_I_H
 #define TAO_ENUMDEF_I_H
@@ -45,44 +42,37 @@ public:
   //    Represents an OMG IDL enumeration definition.
   //
 public:
+  /// Constructor
   TAO_EnumDef_i (TAO_Repository_i *repoy);
-  // Constructor
 
+  /// Destructor
   virtual ~TAO_EnumDef_i (void);
-  // Destructor
 
+  /// Return our definition kind.
   virtual CORBA::DefinitionKind def_kind ()
+;
 
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  // Return our definition kind.
-
+  /// From IDLType_i's pure virtual function.
   virtual CORBA::TypeCode_ptr type ()
+;
 
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  // From IDLType_i's pure virtual function.
-
+  /// From IDLType_i's pure virtual function.
   virtual CORBA::TypeCode_ptr type_i ()
-
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  // From IDLType_i's pure virtual function.
+;
 
   virtual CORBA::EnumMemberSeq *members ()
-
-    ACE_THROW_SPEC ((CORBA::SystemException));
+;
 
   CORBA::EnumMemberSeq *members_i ()
-
-    ACE_THROW_SPEC ((CORBA::SystemException));
+;
 
   virtual void members (
       const CORBA::EnumMemberSeq &members)
-
-    ACE_THROW_SPEC ((CORBA::SystemException));
+;
 
   void members_i (
       const CORBA::EnumMemberSeq &members)
-
-    ACE_THROW_SPEC ((CORBA::SystemException));
+;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

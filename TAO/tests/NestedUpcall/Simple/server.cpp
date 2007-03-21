@@ -137,7 +137,12 @@ main (int argc,
       server_i server_servant (quiet,
                                orb.in ());
 
-      server_var server_object = server_servant._this ();
+      PortableServer::ObjectId_var id =
+        root_poa->activate_object (&server_servant);
+
+      CORBA::Object_var object_act = root_poa->id_to_reference (id.in ());
+
+      server_var server_object = server::_narrow (object_act.in ());
 
       CORBA::String_var ior = orb->object_to_string (server_object.in ());
 

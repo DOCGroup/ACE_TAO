@@ -56,19 +56,15 @@ public:
 
   // = The TAO::Buffering_Constraint_Policy methods
 
-  virtual TAO::BufferingConstraint buffering_constraint (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual TAO::BufferingConstraint buffering_constraint (void);
 
   void get_buffering_constraint (TAO::BufferingConstraint &) const;
 
-  virtual CORBA::PolicyType policy_type (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::PolicyType policy_type (void);
 
-  virtual CORBA::Policy_ptr copy (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::Policy_ptr copy (void);
 
-  virtual void destroy (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void destroy (void);
 
   // Return the cached policy type for this policy.
   virtual TAO_Cached_Policy_Type _tao_cached_type (void) const;

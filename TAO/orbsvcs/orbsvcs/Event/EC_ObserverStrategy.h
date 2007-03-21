@@ -65,17 +65,9 @@ public:
   /// The basic methods to support the EC strategies.
   virtual RtecEventChannelAdmin::Observer_Handle
       append_observer (RtecEventChannelAdmin::Observer_ptr)
-    ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR,
-        RtecEventChannelAdmin::EventChannel::CANT_APPEND_OBSERVER))
     = 0;
   virtual void remove_observer (
                         RtecEventChannelAdmin::Observer_Handle)
-    ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR,
-        RtecEventChannelAdmin::EventChannel::CANT_REMOVE_OBSERVER))
      = 0;
 
   /// Used by the EC to inform the ObserverStrategy that a Consumer has
@@ -107,17 +99,9 @@ public:
 
   // = The TAO_EC_ObserverStrategy methods.
   virtual RtecEventChannelAdmin::Observer_Handle
-      append_observer (RtecEventChannelAdmin::Observer_ptr)
-    ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR,
-        RtecEventChannelAdmin::EventChannel::CANT_APPEND_OBSERVER));
+      append_observer (RtecEventChannelAdmin::Observer_ptr);
   virtual void remove_observer (
-                        RtecEventChannelAdmin::Observer_Handle)
-    ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR,
-        RtecEventChannelAdmin::EventChannel::CANT_REMOVE_OBSERVER));
+                        RtecEventChannelAdmin::Observer_Handle);
   virtual void connected (TAO_EC_ProxyPushConsumer*);
   virtual void disconnected (TAO_EC_ProxyPushConsumer*);
   virtual void connected (TAO_EC_ProxyPushSupplier*);
@@ -154,17 +138,9 @@ public:
 
   // = The TAO_EC_ObserverStrategy methods.
   virtual RtecEventChannelAdmin::Observer_Handle
-      append_observer (RtecEventChannelAdmin::Observer_ptr)
-    ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR,
-        RtecEventChannelAdmin::EventChannel::CANT_APPEND_OBSERVER));
+      append_observer (RtecEventChannelAdmin::Observer_ptr);
   virtual void remove_observer (
-                        RtecEventChannelAdmin::Observer_Handle)
-    ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR,
-        RtecEventChannelAdmin::EventChannel::CANT_REMOVE_OBSERVER));
+                        RtecEventChannelAdmin::Observer_Handle);
   virtual void connected (TAO_EC_ProxyPushConsumer*);
   virtual void disconnected (TAO_EC_ProxyPushConsumer*);
   virtual void connected (TAO_EC_ProxyPushSupplier*);

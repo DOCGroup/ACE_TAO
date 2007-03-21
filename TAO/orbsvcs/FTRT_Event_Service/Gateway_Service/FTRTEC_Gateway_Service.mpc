@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(FTRTEC_Gateway_Service): orbsvcsexe, ftrteventclient, strategies {
+project(FTRTEC_Gateway_Service): orbsvcsexe, ftrteventclient, strategies, install {
   exename   = ftrtec_gateway_service
   includes += $(TAO_ROOT)/orbsvcs/FtRtEvent/Utils
 

@@ -28,14 +28,12 @@ TAO_ExceptionDef_i::~TAO_ExceptionDef_i (void)
 
 CORBA::DefinitionKind
 TAO_ExceptionDef_i::def_kind (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::dk_Exception;
 }
 
 void
 TAO_ExceptionDef_i::destroy (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD;
 
@@ -46,7 +44,6 @@ TAO_ExceptionDef_i::destroy (void)
 
 void
 TAO_ExceptionDef_i::destroy_i (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Destroy our members.
   TAO_Container_i::destroy_i ();
@@ -57,7 +54,6 @@ TAO_ExceptionDef_i::destroy_i (void)
 
 CORBA::Contained::Description *
 TAO_ExceptionDef_i::describe (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (0);
 
@@ -68,7 +64,6 @@ TAO_ExceptionDef_i::describe (void)
 
 CORBA::Contained::Description *
 TAO_ExceptionDef_i::describe_i (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::Contained::Description *desc_ptr = 0;
   ACE_NEW_THROW_EX (desc_ptr,
@@ -104,7 +99,6 @@ TAO_ExceptionDef_i::describe_i (void)
 
 CORBA::TypeCode_ptr
 TAO_ExceptionDef_i::type (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (CORBA::TypeCode::_nil ());
 
@@ -115,7 +109,6 @@ TAO_ExceptionDef_i::type (void)
 
 CORBA::TypeCode_ptr
 TAO_ExceptionDef_i::type_i (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_TString id;
   this->repo_->config ()->get_string_value (this->section_key_,
@@ -139,7 +132,6 @@ TAO_ExceptionDef_i::type_i (void)
 
 CORBA::StructMemberSeq *
 TAO_ExceptionDef_i::members (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (0);
 
@@ -150,7 +142,6 @@ TAO_ExceptionDef_i::members (void)
 
 CORBA::StructMemberSeq *
 TAO_ExceptionDef_i::members_i (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_Unbounded_Queue<CORBA::DefinitionKind> kind_queue;
   ACE_Unbounded_Queue<ACE_TString> path_queue;
@@ -261,7 +252,6 @@ TAO_ExceptionDef_i::members_i (void)
 
 void
 TAO_ExceptionDef_i::members (const CORBA::StructMemberSeq &members)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD;
 
@@ -272,7 +262,6 @@ TAO_ExceptionDef_i::members (const CORBA::StructMemberSeq &members)
 
 void
 TAO_ExceptionDef_i::members_i (const CORBA::StructMemberSeq &members)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Destroy our old members, both refs and defns.
   TAO_Container_i::destroy_i ();

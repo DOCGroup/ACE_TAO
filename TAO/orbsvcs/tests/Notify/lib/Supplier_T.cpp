@@ -85,10 +85,6 @@ TAO_Notify_Tests_Supplier_T<Supplier_Traits>::subscription_change (
                                                          const CosNotification::EventTypeSeq & /*added*/,
                                                          const CosNotification::EventTypeSeq & /*removed*/
         )
-  ACE_THROW_SPEC ((
-                   CORBA::SystemException,
-                   CosNotifyComm::InvalidEventType
-                   ))
 {
   // No op.
 }

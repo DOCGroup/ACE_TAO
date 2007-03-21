@@ -17,7 +17,6 @@ void
 TAO_EndpointPolicy_ORBInitializer::pre_init (
     PortableInterceptor::ORBInitInfo_ptr
     )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
@@ -25,7 +24,6 @@ void
 TAO_EndpointPolicy_ORBInitializer::post_init (
     PortableInterceptor::ORBInitInfo_ptr info
     )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->register_policy_factories (info
                                   );
@@ -37,6 +35,10 @@ TAO_EndpointPolicy_ORBInitializer::register_policy_factories (
   )
 {
   TAO_ORBInitInfo * local_info = dynamic_cast <TAO_ORBInitInfo *> (info);
+
+  if (!local_info)
+    throw CORBA::INTERNAL ();
+
   TAO_ORB_Core * the_orb_core = local_info->orb_core ();
 
   // Register the EndpointPolicy policy factories.
@@ -59,7 +61,7 @@ TAO_EndpointPolicy_ORBInitializer::register_policy_factories (
                                      policy_factory.in ()
                                     );
     }
-  catch ( ::CORBA::BAD_INV_ORDER& ex)
+  catch (const ::CORBA::BAD_INV_ORDER& ex)
     {
       if (ex.minor () == (CORBA::OMGVMCID | 16))
         {
@@ -69,11 +71,6 @@ TAO_EndpointPolicy_ORBInitializer::register_policy_factories (
           // should do no more work in this ORBInitializer.
           return;
         }
-      throw;
-    }
-  catch ( ::CORBA::Exception&)
-    {
-      // Rethrow any other exceptions...
       throw;
     }
 }

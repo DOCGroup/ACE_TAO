@@ -509,7 +509,7 @@ TAO_Profile::get_policies (CORBA::PolicyList& pl
                                     ACE_TEXT ("policies.\n")));
                     }
                 }
-              catch ( ::CORBA::Exception& ex)
+              catch (const ::CORBA::Exception& ex)
                 {
                   // This case should occur when in the IOR are
                   // embedded policies that TAO doesn't support, so as

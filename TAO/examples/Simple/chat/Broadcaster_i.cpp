@@ -44,10 +44,6 @@ Broadcaster_i::~Broadcaster_i (void)
 void
 Broadcaster_i::add (Receiver_ptr receiver,
                     const char *nickname)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      Broadcaster::CannotAdd
-    ))
 {
   Broadcaster_i::Receiver_Data receiver_data;
 
@@ -77,10 +73,6 @@ Broadcaster_i::add (Receiver_ptr receiver,
 
 void
 Broadcaster_i::remove (Receiver_ptr receiver)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException,
-      Broadcaster::CannotRemove
-    ))
 {
   Broadcaster_i::Receiver_Data receiver_data_to_remove;
 
@@ -117,9 +109,6 @@ Broadcaster_i::remove (Receiver_ptr receiver)
 void
 Broadcaster_i::say (Receiver_ptr receiver,
                     const char *text)
- ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ))
 {
   try
     {

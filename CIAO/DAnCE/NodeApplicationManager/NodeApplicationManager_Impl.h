@@ -29,8 +29,8 @@
 #include "ace/Hash_Map_Manager_T.h"
 #include "ace/OS_NS_sys_wait.h"
 #include "ace/Process_Manager.h"
-#include "ciao/NodeApp_CB_Impl.h"
-#include "ciao/Deployment_NodeApplicationManagerS.h"
+#include "DAnCE/Deployment/NodeApp_CB_Impl.h"
+#include "DAnCE/Deployment/Deployment_NodeApplicationManagerS.h"
 #include "ciao/CIAO_common.h"
 #include "CIAO_NAM_Export.h"
 #include "ImplementationInfo.h"
@@ -64,38 +64,22 @@ namespace CIAO
     virtual Deployment::Application_ptr
     startLaunch (const Deployment::Properties & configProperty,
                  Deployment::Connections_out providedReference,
-                 CORBA::Boolean start)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                              Deployment::ResourceNotAvailable,
-                              Deployment::StartError,
-                              Deployment::InvalidProperty));
+                 CORBA::Boolean start);
 
     //@@ Destroy the whole applicaton.
-    virtual void destroyApplication (Deployment::Application_ptr)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                              Deployment::StopError));
+    virtual void destroyApplication (Deployment::Application_ptr);
 
     virtual Deployment::Application_ptr
     perform_redeployment (const Deployment::Properties & configProperty,
                           Deployment::Connections_out providedReference,
                           CORBA::Boolean add_or_remove,
-                          CORBA::Boolean start)
-      ACE_THROW_SPEC ((::CORBA::SystemException,
-                       ::Deployment::PlanError,
-                       ::Deployment::InstallationFailure,
-                       ::Deployment::UnknownImplId,
-                       ::Deployment::ImplEntryPointNotFound,
-                       ::Deployment::InvalidConnection,
-                       ::Deployment::InvalidProperty,
-                       ::Components::RemoveFailure));
+                          CORBA::Boolean start);
 
     virtual void
-    reset_plan (const ::Deployment::DeploymentPlan & plan)
-      ACE_THROW_SPEC ((::CORBA::SystemException));
+    reset_plan (const ::Deployment::DeploymentPlan & plan);
 
     virtual void
-    set_shared_components (const Deployment::ComponentPlans & shared)
-      ACE_THROW_SPEC ((::CORBA::SystemException));
+    set_shared_components (const Deployment::ComponentPlans & shared);
 
     /**
      * A factory operation to create NodeApplicationManager interface, and return
@@ -135,8 +119,7 @@ namespace CIAO
           const Deployment::DeploymentPlan & plan,
           const PortableServer::POA_ptr callback_poa,
           NodeManager_Impl_Base * nm)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       Deployment::InvalidProperty))=0;
+      =0;
 
     /// @note This method doesn't do duplicate.
     Deployment::NodeApplicationManager_ptr get_nodeapp_manager (void);
@@ -144,8 +127,7 @@ namespace CIAO
     /// Set the priority of the NodeApplication process which this NAM manages
     virtual ::CORBA::Long set_priority (
         const char * cid,
-        const ::Deployment::Sched_Params & params)
-      ACE_THROW_SPEC ((CORBA::SystemException ));
+        const ::Deployment::Sched_Params & params);
 
   protected:
     /// Destructor
@@ -153,21 +135,11 @@ namespace CIAO
 
     /// Add new components
     virtual void
-    add_new_components (void)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                      ::Deployment::PlanError,
-                      ::Deployment::InstallationFailure,
-                      ::Deployment::UnknownImplId,
-                      ::Deployment::ImplEntryPointNotFound,
-                      ::Deployment::InvalidConnection,
-                      ::Deployment::InvalidProperty));
+    add_new_components (void);
 
     /// Remove existing components
     virtual void
-    remove_existing_components (void)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                   ::Deployment::PlanError,
-                   ::Components::RemoveFailure));
+    remove_existing_components (void);
 
     /// Determine whether a component is absent in the new_plan
     /// Return true if absent
@@ -176,27 +148,16 @@ namespace CIAO
 
     /// Internal help function to create new NodeApplicationProcess
     virtual Deployment::NodeApplication_ptr
-    create_node_application (const ACE_CString & options)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       Deployment::ResourceNotAvailable,
-                       Deployment::StartError,
-                       Deployment::InvalidProperty))=0;
+    create_node_application (const ACE_CString & options) = 0;
 
     /// Helper function to get the connection.
-    virtual Deployment::Connections *
-    create_connections ()
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       Deployment::ResourceNotAvailable,
-                       Deployment::StartError,
-                       Deployment::InvalidProperty));
+    virtual Deployment::Connections * create_connections ();
 
     /**
      * Find the configurations in the plan and prepare them to pass to the
      * NodeApplication, from command line probably.
      */
-    void parse_config_value (ACE_CString & str)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       Deployment::InvalidProperty));
+    void parse_config_value (ACE_CString & str);
 
     /// Helper function to check wheather a component instance
     /// is in the "shared components list".
@@ -322,9 +283,7 @@ namespace CIAO
           const CORBA::ULong delay,
           const Deployment::DeploymentPlan & plan,
           const PortableServer::POA_ptr callback_poa,
-          NodeManager_Impl_Base * nm)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       Deployment::InvalidProperty));
+          NodeManager_Impl_Base * nm);
 
   protected:
     /// Destructor
@@ -333,11 +292,7 @@ namespace CIAO
     // Internal help function to create new NodeApplicationProcess
     // Here we override it to create an in-process NodeApplication object
     virtual Deployment::NodeApplication_ptr
-    create_node_application (const ACE_CString & options)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       Deployment::ResourceNotAvailable,
-                       Deployment::StartError,
-                       Deployment::InvalidProperty));
+    create_node_application (const ACE_CString & options);
 
 
     /**
@@ -373,9 +328,7 @@ namespace CIAO
           const CORBA::ULong delay,
           const Deployment::DeploymentPlan & plan,
           const PortableServer::POA_ptr callback_poa,
-          NodeManager_Impl_Base * nm)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       Deployment::InvalidProperty));
+          NodeManager_Impl_Base * nm);
 
   protected:
     /// Destructor
@@ -384,15 +337,11 @@ namespace CIAO
     /// Internal help function to create new NodeApplicationProcess
     /// Here we override it to create an in-process NodeApplication object
     virtual Deployment::NodeApplication_ptr
-    create_node_application (const ACE_CString & options)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       Deployment::ResourceNotAvailable,
-                       Deployment::StartError,
-                       Deployment::InvalidProperty));
+    create_node_application (const ACE_CString & options);
 
     Static_Config_EntryPoints_Maps* static_config_entrypoints_maps_;
 
-    CIAO::NoOp_Configurator configurator_;
+    CIAO::NodeApp_Configurator configurator_;
   };
 }
 

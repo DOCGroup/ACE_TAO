@@ -40,22 +40,17 @@ public:
   //@{
   /** @name The Federated_Test::Peer methods
    */
-  virtual void shutdown (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void shutdown (void);
 
   virtual CORBA::Object_ptr
-      channel (void)
-        ACE_THROW_SPEC ((CORBA::SystemException));
+      channel (void);
 
-  virtual void connect (Federated_Test::Peer_ptr remote_peer)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void connect (Federated_Test::Peer_ptr remote_peer);
 
   Federated_Test::Loopback_ptr setup_loopback (CORBA::Long experiment_id,
-                                               CORBA::Long base_event_type)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                                               CORBA::Long base_event_type);
 
-  PortableServer::POA_ptr _default_POA (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  PortableServer::POA_ptr _default_POA (void);
   //@}
 
 protected:

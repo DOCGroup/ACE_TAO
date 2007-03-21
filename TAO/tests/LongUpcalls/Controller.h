@@ -16,10 +16,8 @@ public:
   // Print out the results and any errors
 
   // = The skeleton methods
-  virtual void worker_started (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual void worker_finished (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void worker_started (void);
+  virtual void worker_finished (void);
 
 private:
   TAO_SYNCH_MUTEX mutex_;

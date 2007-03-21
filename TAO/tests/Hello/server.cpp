@@ -42,7 +42,7 @@ main (int argc, char *argv[])
   try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "");
+        CORBA::ORB_init (argc, argv);
 
       CORBA::Object_var poa_object =
         orb->resolve_initial_references("RootPOA");
@@ -55,23 +55,25 @@ main (int argc, char *argv[])
                            " (%P|%t) Panic: nil RootPOA\n"),
                           1);
 
-      PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager ();
+      PortableServer::POAManager_var poa_manager = root_poa->the_POAManager ();
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
-      Hello *hello_impl;
+      Hello *hello_impl = 0;
       ACE_NEW_RETURN (hello_impl,
                       Hello (orb.in ()),
                       1);
       PortableServer::ServantBase_var owner_transfer(hello_impl);
 
-      Test::Hello_var hello =
-        hello_impl->_this ();
+      PortableServer::ObjectId_var id =
+        root_poa->activate_object (hello_impl);
 
-      CORBA::String_var ior =
-        orb->object_to_string (hello.in ());
+      CORBA::Object_var object = root_poa->id_to_reference (id.in ());
+
+      Test::Hello_var hello = Test::Hello::_narrow (object.in ());
+
+      CORBA::String_var ior = orb->object_to_string (hello.in ());
 
       // Output the IOR to the <ior_output_file>
       FILE *output_file= ACE_OS::fopen (ior_output_file, "w");

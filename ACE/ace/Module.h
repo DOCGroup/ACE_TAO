@@ -40,8 +40,8 @@ class ACE_Export ACE_Module_Base
 public:
   enum
   {
-    /// Indicates that <close> should not delete any Tasks.
-    M_DELETE_NONE = 0,
+    /// Indicates that the flags have not been set
+    M_FLAGS_NOT_SET = 0,
 
     /// Indicates that <close> should delete the writer Task.
     M_DELETE_READER = 1,
@@ -56,7 +56,10 @@ public:
      * The <M_DELETE_READER> and <M_DELETE_WRITER> flags may be or'ed
      * together.
      */
-    M_DELETE = 3
+    M_DELETE = 3,
+
+    /// Indicates that <close> should not delete any Tasks.
+    M_DELETE_NONE = 4
   };
 };
 
@@ -69,7 +72,7 @@ public:
  * which contains a pair of Tasks, one for handling upstream
  * processing, one for handling downstream processing.  In
  * general, you shouldn't subclass from this class, but instead
- * subclass from the <ACE_Task>.
+ * subclass from the ACE_Task.
  */
 template <ACE_SYNCH_DECL>
 class ACE_Module : public ACE_Module_Base

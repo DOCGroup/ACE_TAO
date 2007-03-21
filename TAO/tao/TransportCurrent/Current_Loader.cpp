@@ -54,8 +54,7 @@ namespace TAO
 
       PortableInterceptor::ORBInitializer_var initializer (tmp);
 
-      PortableInterceptor::register_orb_initializer (initializer.in ()
-                                                    );
+      PortableInterceptor::register_orb_initializer (initializer.in ());
 
       return 0;
     }
@@ -90,9 +89,6 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 
 #endif /* defined (TAO_AS_STATIC_LIBS) */
-
-
-
 
 ACE_STATIC_SVC_DEFINE (TAO_Transport_Current_Loader,
                        ACE_TEXT ("TAO_Transport_Current_Loader"),

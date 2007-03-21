@@ -1,22 +1,19 @@
 // -*- C++ -*-
 
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    DynamicInterface
-//
-// = FILENAME
-//    Dynamic_Adapter_Impl.h
-//
-// = DESCRIPTION
-//    Header file for class TAO_Dynamic_Adapter_Impl.
-//
-// = AUTHOR
-//     Jeff Parsons <parsons@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Dynamic_Adapter_Impl.h
+ *
+ *  $Id$
+ *
+ *  Header file for class TAO_Dynamic_Adapter_Impl.
+ *
+ *
+ *  @author  Jeff Parsons <parsons@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef TAO_DYNAMIC_ADAPTER_IMPL_H
 #define TAO_DYNAMIC_ADAPTER_IMPL_H
@@ -57,13 +54,11 @@ public:
                                CORBA::NamedValue_ptr result,
                                CORBA::ExceptionList_ptr exceptions,
                                CORBA::Request_ptr &request,
-                               CORBA::Flags req_flags
-                              );
+                               CORBA::Flags req_flags);
 
   virtual CORBA::Request_ptr request (CORBA::Object_ptr obj,
                                       CORBA::ORB_ptr orb,
-                                      const char *op
-                                     );
+                                      const char *op);
 
   // CORBA::is_nil and CORBA::release for Context, Request, and ServerRequest.
 
@@ -81,8 +76,7 @@ public:
 
   // CORBA::ORB::create_exception_list.
 
-  virtual void create_exception_list (CORBA::ExceptionList_ptr &list
-                                     );
+  virtual void create_exception_list (CORBA::ExceptionList_ptr &list);
 
   // Used to force the initialization of the ORB code.
   static int Initializer (void);

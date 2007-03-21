@@ -29,6 +29,11 @@ my($base) = 'GNUmakefile';
 # Subroutine Section
 # ************************************************************
 
+sub targets {
+  return 'clean depend idl_stubs realclean';
+}
+
+
 sub generate_implicit_project_dependencies {
   #my($self) = shift;
   return 1;

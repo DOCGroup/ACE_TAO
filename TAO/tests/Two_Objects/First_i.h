@@ -22,8 +22,7 @@ public:
   First_i (CORBA::ORB_ptr orb, ACE_Auto_Event &two_way_done);
 
   /// Interface methods..
-  void oneway_method (void)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+  void oneway_method (void);
 
 private:
 

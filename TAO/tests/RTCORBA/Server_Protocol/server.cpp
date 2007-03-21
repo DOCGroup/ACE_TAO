@@ -18,8 +18,7 @@ public:
   Test_i (CORBA::ORB_ptr orb);
   // ctor
 
-  void shutdown (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void shutdown (void);
 
 private:
   CORBA::ORB_var orb_;
@@ -33,7 +32,6 @@ Test_i::Test_i (CORBA::ORB_ptr orb)
 
 void
 Test_i::shutdown (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
               "Received request to shut down the ORB\n"));
@@ -229,7 +227,7 @@ main (int argc, char *argv[])
   try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "");
+        CORBA::ORB_init (argc, argv);
 
       if (parse_args (argc, argv) != 0)
         return -1;

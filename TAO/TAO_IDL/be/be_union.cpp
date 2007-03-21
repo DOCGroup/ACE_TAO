@@ -26,6 +26,7 @@
 #include "be_extern.h"
 
 #include "ast_union_branch.h"
+#include "ast_enum.h"
 #include "utl_identifier.h"
 #include "idl_defines.h"
 #include "global_extern.h"
@@ -124,7 +125,7 @@ be_union::destroy (void)
   this->be_scope::destroy ();
   this->be_type::destroy ();
   this->AST_Union::destroy ();
-  
+
 }
 
 // Visitor method.
@@ -146,9 +147,26 @@ be_union::gen_empty_default_label (void)
   AST_ConcreteType *disc = this->disc_type ();
   AST_Decl::NodeType nt = disc->node_type ();
 
+  unsigned long n_labels = this->nlabels ();
+
   if (nt == AST_Decl::NT_enum)
     {
-      return true;
+      AST_Enum *ast_enum = AST_Enum::narrow_from_decl (disc);
+      if (ast_enum == 0)
+        {
+          return true;
+        }
+
+      // If we have an enum and the number of labels if as big as the enum
+      // has members we don't have to generate a default label
+      if (n_labels == (unsigned long)ast_enum->member_count ())
+        {
+           return false;
+        }
+      else
+        {
+          return true;
+        }
     }
 
   AST_PredefinedType *pdt = AST_PredefinedType::narrow_from_decl (disc);
@@ -157,8 +175,6 @@ be_union::gen_empty_default_label (void)
     {
       return true;
     }
-
-  unsigned long n_labels = this->nlabels ();
 
   if (pdt->pt () == AST_PredefinedType::PT_boolean && n_labels == 2)
     {

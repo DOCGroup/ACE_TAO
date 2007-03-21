@@ -20,7 +20,6 @@ Client_ORBInitializer::Client_ORBInitializer (Client_ORBInitializer *second) :
 void
 Client_ORBInitializer::pre_init (
     PortableInterceptor::ORBInitInfo_ptr)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ++pre_init_called;
 
@@ -37,7 +36,6 @@ Client_ORBInitializer::pre_init (
 void
 Client_ORBInitializer::post_init (
     PortableInterceptor::ORBInitInfo_ptr)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ++post_init_called;
 }

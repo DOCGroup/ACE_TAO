@@ -44,7 +44,7 @@ main (int argc, char *argv[])
   try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "");
+        CORBA::ORB_init (argc, argv);
 
       // All factories are kindly provided by
       // compiler so we just to put everything in a right order.
@@ -105,7 +105,12 @@ main (int argc, char *argv[])
 
       PortableServer::ServantBase_var owner_transfer(test_impl);
 
-      Test_var test = test_impl->_this ();
+      PortableServer::ObjectId_var id =
+        root_poa->activate_object (test_impl);
+
+      CORBA::Object_var object = root_poa->id_to_reference (id.in ());
+
+      Test_var test = Test::_narrow (object.in ());
 
       CORBA::String_var ior =
         orb->object_to_string (test.in ());

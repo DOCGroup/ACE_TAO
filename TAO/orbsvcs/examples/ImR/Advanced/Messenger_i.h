@@ -24,10 +24,9 @@ public:
       ::CORBA::Long iter,
       ::CORBA::Long obj,
       ::CORBA::Long req
-   ) ACE_THROW_SPEC ((CORBA::SystemException));
+   );
 
-  virtual void shutdownOrb ()
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void shutdownOrb ();
 
   bool acknowledgeHit();
 

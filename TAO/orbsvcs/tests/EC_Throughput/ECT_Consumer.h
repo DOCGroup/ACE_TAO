@@ -39,7 +39,8 @@ class Test_Consumer : public POA_RtecEventComm::PushConsumer
 public:
   Test_Consumer (ECT_Driver* driver,
                  void* cookie,
-                 int n_suppliers);
+                 int n_suppliers,
+                 int stall_length = 0);
 
   void connect (RtecScheduler::Scheduler_ptr scheduler,
                 const char* name,
@@ -58,10 +59,8 @@ public:
   void accumulate (ACE_Throughput_Stats& stats) const;
   // Add our throughput and latency statistics to <stats>
 
-  virtual void push (const RtecEventComm::EventSet& events)
-      ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual void disconnect_push_consumer (void)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void push (const RtecEventComm::EventSet& events);
+  virtual void disconnect_push_consumer (void);
   // The skeleton methods.
 
 private:
@@ -89,6 +88,10 @@ private:
 
   int shutdown_count_;
   // How many shutdown events we have received.
+
+  int stall_length_;
+  // How long (in seconds) we wait to continue processing
+  // after receiving the first push.
 };
 
 #endif /* ECT_CONSUMER_H */

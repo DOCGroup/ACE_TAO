@@ -30,11 +30,6 @@ namespace CIAO
     Execution_Manager_Impl::preparePlan (
       const Deployment::DeploymentPlan &plan,
       CORBA::Boolean)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       Deployment::ResourceNotAvailable,
-                       Deployment::PlanError,
-                       Deployment::StartError
-                       ))
     {
       CIAO_TRACE("Execution_Manager::Execution_Manager_Impl::preparePlan");
 
@@ -111,8 +106,7 @@ namespace CIAO
       ACE_DEBUG ((LM_DEBUG, "CIAO (%P|%t) About to set uuid on DAM...\n"));
       dam_servant->set_uuid (plan.UUID.in ());
 
-      Deployment::DomainApplicationManager_var dam =
-        dam_servant->_this ();
+      Deployment::DomainApplicationManager_var dam = dam_servant->_this ();
 
       /// @@ TODO:Need to check the return value......
       ///
@@ -127,7 +121,6 @@ namespace CIAO
 
     Deployment::DomainApplicationManagers *
     Execution_Manager_Impl::getManagers ()
-      ACE_THROW_SPEC ((CORBA::SystemException))
     {
       CIAO_TRACE("Execution_Manager::Execution_Manager_Impl::getManagers");
 
@@ -138,7 +131,6 @@ namespace CIAO
 
     Deployment::DomainApplicationManager_ptr
     Execution_Manager_Impl::getManager (const char * plan_uuid)
-      ACE_THROW_SPEC ((CORBA::SystemException, Deployment::PlanNotExist))
     {
       return this->map_.fetch_dam_reference (plan_uuid);
     }
@@ -146,8 +138,6 @@ namespace CIAO
     void
     Execution_Manager_Impl::destroyManager (
       Deployment::DomainApplicationManager_ptr manager)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       Deployment::StopError))
     {
       CIAO_TRACE("Execution_Manager::Execution_Manager_Impl::destroyManagers");
       try
@@ -172,8 +162,7 @@ namespace CIAO
         }
       catch (const CORBA::Exception& ex)
         {
-          ex._tao_print_exception (
-            "Execution_Manager_Impl::destroyManager\t\n");
+          ex._tao_print_exception ("Execution_Manager_Impl::destroyManager\n");
           throw Deployment::StopError ();
         }
     }
@@ -182,8 +171,6 @@ namespace CIAO
     void
     Execution_Manager_Impl::destroyManagerByPlan (
       const char * plan_uuid)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       Deployment::StopError))
     {
       CIAO_TRACE("Execution_Manager::Execution_Manager_Impl::destroyManagerByPlan");
       try
@@ -227,16 +214,13 @@ namespace CIAO
         }
       catch (const CORBA::Exception& ex)
         {
-          ex._tao_print_exception (
-            "Execution_Manager_Impl::destroyManager\t\n");
+          ex._tao_print_exception ("Execution_Manager_Impl::destroyManager\n");
           throw Deployment::StopError ();
         }
     }
 
-
     void
     Execution_Manager_Impl::shutdown ()
-      ACE_THROW_SPEC ((CORBA::SystemException))
     {
       CIAO_TRACE("Execution_Manager::Execution_Manager_Impl::shutdown");
       // Shutdown the ORB on which it is runing
@@ -246,14 +230,6 @@ namespace CIAO
     void
     Execution_Manager_Impl::perform_redeployment (
       const Deployment::DeploymentPlan & plan)
-      ACE_THROW_SPEC ((::CORBA::SystemException,
-                       ::Deployment::PlanError,
-                       ::Deployment::InstallationFailure,
-                       ::Deployment::UnknownImplId,
-                       ::Deployment::ImplEntryPointNotFound,
-                       ::Deployment::InvalidConnection,
-                       ::Deployment::InvalidProperty,
-                       ::Components::RemoveFailure))
     {
       CIAO_TRACE ("CIAO::Execution_Manager_Impl::perform_redeployment");
 
@@ -287,14 +263,13 @@ namespace CIAO
       catch (const CORBA::Exception& ex)
         {
           ex._tao_print_exception (
-            "Execution_Manager_Impl::perform_redeployment\t\n");
+            "Execution_Manager_Impl::perform_redeployment\n");
           throw;
         }
     }
 
     Deployment::DeploymentPlan *
     Execution_Manager_Impl::getPlan (const char * plan_uuid)
-      ACE_THROW_SPEC ((::CORBA::SystemException))
     {
       Deployment::DomainApplicationManager_var dam;
 
@@ -317,7 +292,7 @@ namespace CIAO
         }
       catch (const CORBA::Exception& ex)
         {
-          ex._tao_print_exception ("Execution_Manager_Impl::getPlan\t\n");
+          ex._tao_print_exception ("Execution_Manager_Impl::getPlan\n");
           throw;
         }
     }
@@ -326,9 +301,6 @@ namespace CIAO
     Execution_Manager_Impl::finalize_global_binding (
           const Component_Binding_Info & binding,
           CORBA::Boolean add_or_remove)
-        ACE_THROW_SPEC ((
-          ::CORBA::SystemException,
-          ::Deployment::InvalidConnection))
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Execution_Manage::finalizing  global bindings.\n"));
@@ -361,7 +333,7 @@ namespace CIAO
       catch (const CORBA::Exception& ex)
         {
           ex._tao_print_exception (
-            "Execution_Manager_Impl::finalize_global_binding\t\n");
+            "Execution_Manager_Impl::finalize_global_binding\n");
           throw Deployment::InvalidConnection ();
         }
     }
@@ -369,9 +341,6 @@ namespace CIAO
     void
     Execution_Manager_Impl::passivate_shared_components (
           const Component_Binding_Info & binding)
-        ACE_THROW_SPEC ((
-          ::CORBA::SystemException,
-          Deployment::StartError))
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Execution_Manage::passivate shared components.\n"));
@@ -396,7 +365,7 @@ namespace CIAO
       catch (const CORBA::Exception& ex)
         {
           ex._tao_print_exception (
-            "Execution_Manager_Impl::passivate_shared_components\t\n");
+            "Execution_Manager_Impl::passivate_shared_components\n");
           throw Deployment::StartError ();
         }
     }
@@ -404,9 +373,6 @@ namespace CIAO
     void
     Execution_Manager_Impl::activate_shared_components (
           const Component_Binding_Info & binding)
-        ACE_THROW_SPEC ((
-          ::CORBA::SystemException,
-          Deployment::StartError))
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Execution_Manage::activate shared components.\n"));
@@ -431,19 +397,14 @@ namespace CIAO
       catch (const CORBA::Exception& ex)
         {
           ex._tao_print_exception (
-            "Execution_Manager_Impl::passivate_shared_components\t\n");
+            "Execution_Manager_Impl::passivate_shared_components\n");
           throw Deployment::StartError ();
         }
     }
 
-
     Deployment::NodeApplication_ptr
-
-    Execution_Manager_Impl::
-    find_node_application (const Component_Binding_Info & binding)
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException,
-        ::Deployment::InvalidConnection))
+    Execution_Manager_Impl::find_node_application (
+      const Component_Binding_Info & binding)
     {
       // Find the DAM based on plan_UUID
       Deployment::DomainApplicationManager_var dam;
@@ -463,8 +424,8 @@ namespace CIAO
 
       // Find the NA based on the NodeName field of the binding
       // This is a CORBA call on the DAM
-      Deployment::NodeApplication_var
-        node_app = dam->get_node_app (binding.node_.c_str ());
+      Deployment::NodeApplication_var node_app =
+        dam->get_node_app (binding.node_.c_str ());
 
       if (CORBA::is_nil (node_app.in ()))
         {
@@ -493,8 +454,8 @@ namespace CIAO
     }
 
     bool
-    Execution_Manager_Impl::
-    is_component_running (const char * name, const char * plan_uuid)
+    Execution_Manager_Impl::is_component_running (
+      const char * name, const char * plan_uuid)
     {
       for (ACE_Unbounded_Set<Component_Binding_Info>::iterator
            iter = this->shared_components_.begin ();

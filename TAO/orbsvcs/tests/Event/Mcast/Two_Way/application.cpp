@@ -71,12 +71,10 @@ public:
   /// PushConsumer methods.
   //@{
   /// Update our <heartbeats_> database to reflect newly received heartbeats.
-  virtual void push (const RtecEventComm::EventSet &events)
-    ACE_THROW_SPEC((CORBA::SystemException));
+  virtual void push (const RtecEventComm::EventSet &events);
 
   /// Initiate shutdown().
-  virtual void disconnect_push_consumer (void)
-    ACE_THROW_SPEC((CORBA::SystemException));
+  virtual void disconnect_push_consumer (void);
   //@}
 
 private:
@@ -401,7 +399,6 @@ Heartbeat_Application::handle_timeout (const ACE_Time_Value&,
 
 void
 Heartbeat_Application::push (const RtecEventComm::EventSet &events)
-  ACE_THROW_SPEC((CORBA::SystemException))
 {
   for (CORBA::ULong i = 0; i < events.length (); ++i)
     {
@@ -447,7 +444,6 @@ Heartbeat_Application::push (const RtecEventComm::EventSet &events)
 
 void
 Heartbeat_Application::disconnect_push_consumer (void)
-  ACE_THROW_SPEC((CORBA::SystemException))
 {
   this->shutdown ();
 }
@@ -579,7 +575,7 @@ main (int argc, char *argv[])
     {
       // Initialize ORB and POA, POA Manager, parse args.
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "");
+        CORBA::ORB_init (argc, argv);
 
       if (parse_args (argc, argv) == -1)
         return 1;

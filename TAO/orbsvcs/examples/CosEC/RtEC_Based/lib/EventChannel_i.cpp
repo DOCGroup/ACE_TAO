@@ -70,7 +70,6 @@ TAO_CosEC_EventChannel_i::init (const RtecEventChannelAdmin::ConsumerQOS &consum
 
 CosEventChannelAdmin::ConsumerAdmin_ptr
 TAO_CosEC_EventChannel_i::for_consumers (void)
-      ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // @@ Pradeep: you must make a copy here, because the caller is
   // responsible of removing this object.
@@ -80,7 +79,6 @@ TAO_CosEC_EventChannel_i::for_consumers (void)
 
 CosEventChannelAdmin::SupplierAdmin_ptr
 TAO_CosEC_EventChannel_i::for_suppliers (void)
-      ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // @@ Pradeep: you must make a copy here, because the caller is
   // responsible of removing this object, same here..
@@ -90,7 +88,6 @@ TAO_CosEC_EventChannel_i::for_suppliers (void)
 
 void
 TAO_CosEC_EventChannel_i::destroy (void)
-      ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Deactivate the CosEventChannel
   PortableServer::POA_var poa =

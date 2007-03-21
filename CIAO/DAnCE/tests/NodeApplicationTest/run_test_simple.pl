@@ -25,7 +25,7 @@ for ($iter = 0; $iter <= $#ARGV; $iter++) {
 unlink $iorfile;
 $CIAO_ROOT=$ENV{'CIAO_ROOT'};
 
-$SV = new PerlACE::Process ("../../NodeApplication/NodeApplication",
+$SV = new PerlACE::Process ("$CIAO_ROOT/bin/NodeApplication",
                             "-n -o $iorfile");
 
 $CL = new PerlACE::Process ("client_simple",

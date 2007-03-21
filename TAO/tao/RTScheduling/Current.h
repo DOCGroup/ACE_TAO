@@ -87,34 +87,26 @@ class TAO_RTScheduler_Export TAO_RTScheduler_Current
 
   void init (TAO_ORB_Core* orb);
 
-  virtual RTCORBA::Priority the_priority (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual RTCORBA::Priority the_priority (void);
 
-  virtual void the_priority (RTCORBA::Priority the_priority)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void the_priority (RTCORBA::Priority the_priority);
 
   void rt_current (RTCORBA::Current_ptr rt_current);
 
   virtual void begin_scheduling_segment
     (const char * name,
      CORBA::Policy_ptr sched_param,
-     CORBA::Policy_ptr implicit_sched_param)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     RTScheduling::Current::UNSUPPORTED_SCHEDULING_DISCIPLINE));
+     CORBA::Policy_ptr implicit_sched_param);
 
   virtual void update_scheduling_segment
     (const char * name,
      CORBA::Policy_ptr sched_param,
-     CORBA::Policy_ptr implicit_sched_param)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     RTScheduling::Current::UNSUPPORTED_SCHEDULING_DISCIPLINE));
+     CORBA::Policy_ptr implicit_sched_param);
 
-  virtual void end_scheduling_segment (const char * name)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void end_scheduling_segment (const char * name);
 
   virtual RTScheduling::DistributableThread_ptr
-    lookup(const RTScheduling::Current::IdType & id)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    lookup(const RTScheduling::Current::IdType & id);
 
   // returns a null reference if
   // the distributable thread is
@@ -127,21 +119,16 @@ class TAO_RTScheduler_Export TAO_RTScheduler_Current
            CORBA::Policy_ptr sched_param,
            CORBA::Policy_ptr implicit_sched_param,
            CORBA::ULong stack_size,
-           RTCORBA::Priority base_priority)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+           RTCORBA::Priority base_priority);
 
-  virtual ::RTScheduling::Current::IdType *id (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual ::RTScheduling::Current::IdType *id (void);
 
-  virtual ::CORBA::Policy_ptr scheduling_parameter (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual ::CORBA::Policy_ptr scheduling_parameter (void);
 
-  virtual ::CORBA::Policy_ptr implicit_scheduling_parameter (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual ::CORBA::Policy_ptr implicit_scheduling_parameter (void);
 
   virtual ::RTScheduling::Current::NameList *
-    current_scheduling_segment_names (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    current_scheduling_segment_names (void);
 
   TAO_RTScheduler_Current_i* implementation (void);
 
@@ -254,48 +241,37 @@ class TAO_RTScheduler_Export TAO_RTScheduler_Current_i
            CORBA::Policy_ptr sched_param,
            CORBA::Policy_ptr implicit_sched_param,
            CORBA::ULong stack_size,
-           RTCORBA::Priority base_priority)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+           RTCORBA::Priority base_priority);
 
   virtual void begin_scheduling_segment
     (const char * name,
      CORBA::Policy_ptr sched_param,
-     CORBA::Policy_ptr implicit_sched_param)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     RTScheduling::Current::UNSUPPORTED_SCHEDULING_DISCIPLINE));
+     CORBA::Policy_ptr implicit_sched_param);
 
   virtual void update_scheduling_segment
     (const char * name,
      CORBA::Policy_ptr sched_param,
-     CORBA::Policy_ptr implicit_sched_param)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     RTScheduling::Current::UNSUPPORTED_SCHEDULING_DISCIPLINE));
+     CORBA::Policy_ptr implicit_sched_param);
 
-  virtual void end_scheduling_segment (const char * name)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void end_scheduling_segment (const char * name);
 
-  virtual RTScheduling::Current::IdType *id (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual RTScheduling::Current::IdType *id (void);
 
 
   void id (RTScheduling::Current::IdType guid);
 
-  virtual CORBA::Policy_ptr scheduling_parameter (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::Policy_ptr scheduling_parameter (void);
 
-  virtual CORBA::Policy_ptr implicit_scheduling_parameter (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::Policy_ptr implicit_scheduling_parameter (void);
 
   void scheduling_parameter (CORBA::Policy_ptr);
 
   void implicit_scheduling_parameter (CORBA::Policy_ptr);
 
   virtual RTScheduling::Current::NameList *
-    current_scheduling_segment_names (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    current_scheduling_segment_names (void);
 
-  void cancel_thread (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void cancel_thread (void);
 
   void cleanup_DT (void);
 

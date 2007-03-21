@@ -6,6 +6,7 @@
 #include "ciao/Security.idl"
 #include "ciao/CCM_Transaction.idl"
 #include "ciao/CCM_Home.idl"
+#include "ciao/CCM_CCMException.idl"
 
 // *************** Basic Container interfaces ***************
 
@@ -35,10 +36,10 @@ module Components
       raises (IllegalState);
 
     /**
-     * @todo Add for QoS4CCM
-     * Object resolve_service_reference(in string service_id)
-     *    raises (CCMException);
+     * Added for QoS4CCM
      */
+    Object resolve_service_reference(in string service_id)
+      raises (CCMException);
   };
 };
 #endif /* CCM_CONTEXT_IDL */

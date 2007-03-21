@@ -4,6 +4,10 @@
 
 #include "ace/OS_Memory.h"
 
+#if defined (ACE_LACKS_ALPHASORT)
+# include "ace/OS_NS_string.h"
+#endif /* ACE_LACKS_ALPHASORT */
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE_OS
@@ -140,6 +144,25 @@ scandir (const ACE_TCHAR *dirname,
 #else /* ! defined ( ACE_HAS_SCANDIR) */
   return ACE_OS::scandir_emulation (dirname, namelist, selector, comparator);
 #endif /* ACE_HAS_SCANDIR */
+}
+
+ACE_INLINE int
+alphasort (const void *a, const void *b)
+{
+#if defined (ACE_LACKS_ALPHASORT)
+  return ACE_OS::strcmp ((*static_cast<const struct ACE_DIRENT * const *>(a))->d_name,
+			 (*static_cast<const struct ACE_DIRENT * const *>(b))->d_name);
+#else
+#  if defined (ACE_SCANDIR_CMP_USES_VOIDPTR)
+  return ::alphasort (const_cast<void *>(a),
+		      const_cast<void *>(b));
+#  elif defined (ACE_SCANDIR_CMP_USES_CONST_VOIDPTR)
+  return ::alphasort (a, b);
+#  else
+  return ::alphasort ((const struct ACE_DIRENT **)a,
+		      (const struct ACE_DIRENT **)b);
+#  endif
+#endif
 }
 
 ACE_INLINE void

@@ -17,6 +17,10 @@ namespace CCF
     {
       struct Operation
       {
+        virtual ~Operation ()
+        {
+        }
+        
         virtual void
         one_way () = 0;
 

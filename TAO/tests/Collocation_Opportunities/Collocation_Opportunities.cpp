@@ -18,8 +18,7 @@ public:
 
   void set_other (test_ptr test);
 
-  void method (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void method (void);
 
   PortableServer::POA_ptr _default_POA (void);
 
@@ -54,7 +53,6 @@ test_i::set_other (test_ptr test)
 
 void
 test_i::method (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (this->other_.in () != test::_nil ())
     {
@@ -176,8 +174,13 @@ main (int argc, char *argv[])
       child_poa->activate_object_with_id (base_oid.in (),
                                           base_servant);
 
+      PortableServer::ObjectId_var id_act =
+        root_poa->activate_object (base_servant);
+
+      CORBA::Object_var object_act = root_poa->id_to_reference (id_act.in ());
+
       test_var base_test =
-        base_servant->_this ();
+        test::_narrow (object_act.in ());
 
       test_i *first_servant =
         new test_i (orb.in (),
@@ -191,8 +194,13 @@ main (int argc, char *argv[])
       child_poa->activate_object_with_id (first_oid.in (),
                                           first_servant);
 
+      PortableServer::ObjectId_var id_actu =
+        root_poa->activate_object (first_servant);
+
+      object_act = root_poa->id_to_reference (id_actu.in ());
+
       test_var first_test =
-        first_servant->_this ();
+        test::_narrow (object_act.in ());
 
       base_servant->set_other (first_test.in ());
 

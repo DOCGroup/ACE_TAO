@@ -33,7 +33,10 @@ namespace TAO
         servant_retention_ (::PortableServer::RETAIN),
         request_processing_ (::PortableServer::USE_ACTIVE_OBJECT_MAP_ONLY),
         priority_model_ (Cached_Policies::NOT_SPECIFIED),
-        server_priority_ (TAO_INVALID_PRIORITY)
+        server_priority_ (TAO_INVALID_PRIORITY),
+        network_priority_model_ (Cached_Policies::NO_NETWORK_PRIORITY),
+        request_diffserv_codepoint_ (0),
+        reply_diffserv_codepoint_ (0)
     {
     }
 

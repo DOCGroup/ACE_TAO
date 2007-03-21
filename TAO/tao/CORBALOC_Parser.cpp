@@ -6,6 +6,7 @@
 #include "tao/Transport_Connector.h"
 #include "tao/Protocol_Factory.h"
 #include "tao/debug.h"
+#include "tao/SystemException.h"
 #include "ace/Vector_T.h"
 #include "ace/INET_Addr.h"
 #include "ace/OS_NS_string.h"
@@ -46,7 +47,6 @@ CORBA::Object_ptr
 TAO_CORBALOC_Parser::make_stub_from_mprofile (CORBA::ORB_ptr orb,
                                               TAO_MProfile &mprofile
                                               )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Create a TAO_Stub.
   TAO_Stub *data = orb->orb_core ()->create_stub ((const char *) 0,
@@ -75,7 +75,6 @@ CORBA::Object_ptr
 TAO_CORBALOC_Parser::parse_string_rir_helper (const char * ior,
                                               CORBA::ORB_ptr orb
                                               )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Pass the key string as an argument to resolve_initial_references.
   // NameService is the default if an empty key string is supplied.
@@ -96,7 +95,6 @@ CORBA::Object_ptr
 TAO_CORBALOC_Parser::parse_string (const char * ior,
                                    CORBA::ORB_ptr orb
                                    )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // The decomposition of a corbaloc string is in Section 13.6.10.
   //
@@ -176,9 +174,7 @@ TAO_CORBALOC_Parser::parse_string (const char * ior,
                       ACE_TEXT("(%P|%t) TAO_CORBALOC_Parser::parse_string ")
                       ACE_TEXT("could not parse from %s"),
                       ACE_TEXT_CHAR_TO_TCHAR(ior)));
-        ACE_THROW_RETURN (CORBA::BAD_PARAM (CORBA::OMGVMCID | 10,
-                                            CORBA::COMPLETED_NO),
-                          CORBA::Object::_nil ());
+        throw ::CORBA::BAD_PARAM (CORBA::OMGVMCID | 10, CORBA::COMPLETED_NO);
       }
     if (*ior == ',') // more endpoints follow
       {
@@ -208,9 +204,7 @@ TAO_CORBALOC_Parser::parse_string (const char * ior,
                   ACE_TEXT("(%P|%t) TAO_CORBALOC_Parser::parse_string ")
                   ACE_TEXT("could not parse from %s"),
                   ACE_TEXT_CHAR_TO_TCHAR(ior)));
-    ACE_THROW_RETURN (CORBA::BAD_PARAM (CORBA::OMGVMCID | 10,
-                                        CORBA::COMPLETED_NO),
-                      CORBA::Object::_nil ());
+    throw ::CORBA::BAD_PARAM (CORBA::OMGVMCID | 10, CORBA::COMPLETED_NO);
   } // end of while
 
   // At this point, ior points at the start of the object key
@@ -242,9 +236,7 @@ TAO_CORBALOC_Parser::parse_string (const char * ior,
                         ACE_TEXT("(%P|%t) TAO_CORBALOC_Parser::parse_string ")
                         ACE_TEXT("mprofile.give_profile failed for i = %d\n"),
                         i));
-          ACE_THROW_RETURN (CORBA::BAD_PARAM (CORBA::OMGVMCID | 10,
-                                              CORBA::COMPLETED_NO),
-                            CORBA::Object::_nil ());
+          throw ::CORBA::BAD_PARAM (CORBA::OMGVMCID | 10, CORBA::COMPLETED_NO);
         }
     }
 
@@ -262,7 +254,6 @@ TAO_CORBALOC_Parser::make_canonical (const char *ior,
                                      size_t prot_addr_len,
                                      ACE_CString &canonical_endpoint
                                      )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   const char *separator = ACE_OS::strchr (ior, ':');
 

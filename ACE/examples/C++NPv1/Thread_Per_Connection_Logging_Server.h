@@ -42,7 +42,7 @@ public:
         return -1;
     }
 
-    return 0;
+    ACE_NOTREACHED (return 0;)
   }
 };
 

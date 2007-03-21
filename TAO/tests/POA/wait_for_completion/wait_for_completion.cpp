@@ -21,8 +21,7 @@
 class test_i : public POA_test
 {
 public:
-  void destroy_poa (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void destroy_poa (void);
 
   void test_poa (PortableServer::POA_ptr poa);
 
@@ -37,7 +36,6 @@ test_i::test_poa (PortableServer::POA_ptr poa)
 
 void
 test_i::destroy_poa (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::Boolean etherealize_objects = 1;
   CORBA::Boolean wait_for_completion = 1;
@@ -90,7 +88,12 @@ main (int argc,
                   "second ORB");
 
       test_i servant;
-      test_var test_object = servant._this ();
+      PortableServer::ObjectId_var id =
+        first_poa->activate_object (&servant);
+
+      CORBA::Object_var object_act = first_poa->id_to_reference (id.in ());
+
+      test_var test_object = test::_narrow (object_act.in ());
 
       int expected_exception_raised = 0;
 

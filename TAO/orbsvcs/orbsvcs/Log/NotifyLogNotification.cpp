@@ -47,9 +47,6 @@ TAO_NotifyLogNotification::~TAO_NotifyLogNotification (void)
 
 void
 TAO_NotifyLogNotification::send_notification (const CORBA::Any& any)
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ))
 {
   this->proxy_consumer_->push (any);
 }
@@ -58,10 +55,6 @@ void
 TAO_NotifyLogNotification::subscription_change
    (const CosNotification::EventTypeSeq & /*added*/,
     const CosNotification::EventTypeSeq & /*removed */)
-  ACE_THROW_SPEC ((
-                   CORBA::SystemException,
-                   CosNotifyComm::InvalidEventType
-                   ))
 {
   //No-Op.
 }
@@ -69,9 +62,6 @@ TAO_NotifyLogNotification::subscription_change
 void
 TAO_NotifyLogNotification::disconnect_push_supplier
    (void)
-  ACE_THROW_SPEC ((
-                   CORBA::SystemException
-                   ))
 {
   ACE_ASSERT (!CORBA::is_nil (this->proxy_consumer_.in ()));
 

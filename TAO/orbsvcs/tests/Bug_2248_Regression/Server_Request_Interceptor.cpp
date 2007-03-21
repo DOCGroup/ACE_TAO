@@ -20,21 +20,18 @@ Server_Request_Interceptor::~Server_Request_Interceptor (void)
 void
 Server_Request_Interceptor::forward_reference (
   const char* iorstr)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->iorstr_ = CORBA::string_dup (iorstr);
 }
 
 char *
 Server_Request_Interceptor::name (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup ("Server_Request_Interceptor");
 }
 
 void
 Server_Request_Interceptor::destroy (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
@@ -42,8 +39,6 @@ void
 Server_Request_Interceptor::receive_request_service_contexts (
     PortableInterceptor::ServerRequestInfo_ptr //
     )
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableInterceptor::ForwardRequest))
 {
 
 }
@@ -51,8 +46,6 @@ Server_Request_Interceptor::receive_request_service_contexts (
 void
 Server_Request_Interceptor::receive_request (
     PortableInterceptor::ServerRequestInfo_ptr ri)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableInterceptor::ForwardRequest))
 {
   IOP::ServiceContext_var svc =
     ri->get_request_service_context (IOP::FT_GROUP_VERSION);
@@ -106,22 +99,17 @@ Server_Request_Interceptor::receive_request (
 void
 Server_Request_Interceptor::send_reply (
     PortableInterceptor::ServerRequestInfo_ptr)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
 Server_Request_Interceptor::send_exception (
     PortableInterceptor::ServerRequestInfo_ptr)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableInterceptor::ForwardRequest))
 {
 }
 
 void
 Server_Request_Interceptor::send_other (
     PortableInterceptor::ServerRequestInfo_ptr)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableInterceptor::ForwardRequest))
 {
 }

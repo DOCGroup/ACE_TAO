@@ -26,7 +26,6 @@ TAO_ConsumesDef_i::~TAO_ConsumesDef_i (void)
 
 CORBA::DefinitionKind
 TAO_ConsumesDef_i::def_kind (void)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::dk_Consumes;
 }

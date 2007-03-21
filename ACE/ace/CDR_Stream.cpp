@@ -188,6 +188,17 @@ ACE_OutputCDR::grow_and_adjust (size_t size,
                                          ACE_Time_Value::max_time,
                                          this->current_->data_block ()->data_block_allocator ()),
                       -1);
+
+      // Message block initialization may fail while the construction
+      // succeds.  Since as a matter of policy, ACE may throw no
+      // exceptions, we have to do a separate check like this.
+      if (tmp != 0 && tmp->size () < newsize)
+        {
+          delete tmp;
+          errno = ENOMEM;
+          return -1;
+        }
+
       this->good_bit_ = true;
 
 #if !defined (ACE_LACKS_CDR_ALIGNMENT)
@@ -677,7 +688,7 @@ ACE_OutputCDR::write_boolean_array (const ACE_CDR::Boolean* x,
   return this->good_bit ();
 }
 
- 
+
 int
 ACE_OutputCDR::consolidate (void)
 {
@@ -710,7 +721,7 @@ ACE_OutputCDR::consolidate (void)
         {
           this->start_.copy (i->rd_ptr (), i->length ());
         }
-      
+
       // Release the old blocks that were consolidated and reset the
       // current_ and current_is_writable_ to reflect the single used block.
       ACE_Message_Block::release (cont);
@@ -718,7 +729,7 @@ ACE_OutputCDR::consolidate (void)
       this->current_ = &this->start_;
       this->current_is_writable_ = true;
     }
-  
+
   return 0;
 }
 
@@ -1701,8 +1712,8 @@ ACE_InputCDR::clone_from (ACE_InputCDR &cdr)
       db =
         cdr.start_.data_block ()->clone_nocopy ();
 
-      if (db->size ((wr_bytes) +
-                    ACE_CDR::MAX_ALIGNMENT) == -1)
+      if (db == 0 || db->size ((wr_bytes) +
+                               ACE_CDR::MAX_ALIGNMENT) == -1)
         return 0;
 
       // Replace our data block by using the incoming CDR stream.

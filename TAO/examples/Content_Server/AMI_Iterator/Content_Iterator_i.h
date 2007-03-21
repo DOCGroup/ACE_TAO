@@ -52,13 +52,11 @@ public:
   // Destructor
 
   virtual CORBA::Boolean next_chunk (CORBA::ULongLong offset,
-                                     Web_Server::Chunk_Type_out chunk)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                                     Web_Server::Chunk_Type_out chunk);
   // This operation returns the next <chunk> of the file starting at
   // <offset>.  If there are no more bindings, false is returned.
 
-  virtual void destroy (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void destroy (void);
   // Destroy the iterator.
 
 private:

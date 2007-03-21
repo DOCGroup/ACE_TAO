@@ -84,14 +84,12 @@ TAO_ComponentDef_i::~TAO_ComponentDef_i (void)
 
 CORBA::DefinitionKind
 TAO_ComponentDef_i::def_kind (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::dk_Component;
 }
 
 void
 TAO_ComponentDef_i::destroy (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD;
 
@@ -102,7 +100,6 @@ TAO_ComponentDef_i::destroy (void)
 
 void
 TAO_ComponentDef_i::destroy_i (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Destroy our special subsections first, then call destroy_i
   // on our base class.
@@ -142,7 +139,6 @@ TAO_ComponentDef_i::destroy_i (void)
 
 CORBA::Contained::Description *
 TAO_ComponentDef_i::describe (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (0);
 
@@ -153,7 +149,6 @@ TAO_ComponentDef_i::describe (void)
 
 CORBA::Contained::Description *
 TAO_ComponentDef_i::describe_i (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::ComponentIR::ComponentDescription cd;
   TAO_IFR_Desc_Utils<CORBA::ComponentIR::ComponentDescription,
@@ -278,7 +273,6 @@ TAO_ComponentDef_i::describe_i (void)
 
 CORBA::TypeCode_ptr
 TAO_ComponentDef_i::type (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (CORBA::TypeCode::_nil ());
 
@@ -289,7 +283,6 @@ TAO_ComponentDef_i::type (void)
 
 CORBA::TypeCode_ptr
 TAO_ComponentDef_i::type_i (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_TString id;
   this->repo_->config ()->get_string_value (this->section_key_,
@@ -309,7 +302,6 @@ TAO_ComponentDef_i::type_i (void)
 
 CORBA::InterfaceDefSeq *
 TAO_ComponentDef_i::supported_interfaces (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (0);
 
@@ -320,7 +312,6 @@ TAO_ComponentDef_i::supported_interfaces (void)
 
 CORBA::InterfaceDefSeq *
 TAO_ComponentDef_i::supported_interfaces_i (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::InterfaceDefSeq *seq = 0;
   ACE_NEW_RETURN (seq,
@@ -368,7 +359,6 @@ void
 TAO_ComponentDef_i::supported_interfaces (
     const CORBA::InterfaceDefSeq &supported_interfaces
   )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD;
 
@@ -381,7 +371,6 @@ void
 TAO_ComponentDef_i::supported_interfaces_i (
     const CORBA::InterfaceDefSeq &supported_interfaces
   )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Remove the old supported interfaces.
   this->repo_->config ()->remove_section (this->section_key_,
@@ -427,7 +416,6 @@ TAO_ComponentDef_i::supported_interfaces_i (
 
 CORBA::ComponentIR::ComponentDef_ptr
 TAO_ComponentDef_i::base_component (void)
-   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (CORBA::ComponentIR::ComponentDef::_nil ());
 
@@ -438,7 +426,6 @@ TAO_ComponentDef_i::base_component (void)
 
 CORBA::ComponentIR::ComponentDef_ptr
 TAO_ComponentDef_i::base_component_i (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_TString base_id;
   int status =
@@ -460,7 +447,6 @@ void
 TAO_ComponentDef_i::base_component (
     CORBA::ComponentIR::ComponentDef_ptr base_component
   )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD;
 
@@ -473,7 +459,6 @@ void
 TAO_ComponentDef_i::base_component_i (
     CORBA::ComponentIR::ComponentDef_ptr base_component
   )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (CORBA::is_nil (base_component))
     {
@@ -513,7 +498,6 @@ TAO_ComponentDef_i::create_provides (
     const char *version,
     CORBA::InterfaceDef_ptr interface_type
   )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD_RETURN (CORBA::ComponentIR::ProvidesDef::_nil ());
 
@@ -532,7 +516,6 @@ TAO_ComponentDef_i::create_provides_i (
     const char *version,
     CORBA::InterfaceDef_ptr interface_type
   )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return
     TAO_Port_Utils<
@@ -554,7 +537,6 @@ TAO_ComponentDef_i::create_uses (const char *id,
                                  const char *version,
                                  CORBA::InterfaceDef_ptr interface_type,
                                  CORBA::Boolean is_multiple)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD_RETURN (CORBA::ComponentIR::UsesDef::_nil ());
 
@@ -573,7 +555,6 @@ TAO_ComponentDef_i::create_uses_i (const char *id,
                                    const char *version,
                                    CORBA::InterfaceDef_ptr interface_type,
                                    CORBA::Boolean is_multiple)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return
     TAO_Port_Utils<
@@ -594,7 +575,6 @@ TAO_ComponentDef_i::create_emits (const char *id,
                                   const char *name,
                                   const char *version,
                                   CORBA::ValueDef_ptr value)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD_RETURN (CORBA::ComponentIR::EmitsDef::_nil ());
 
@@ -611,7 +591,6 @@ TAO_ComponentDef_i::create_emits_i (const char *id,
                                     const char *name,
                                     const char *version,
                                     CORBA::ValueDef_ptr value)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return
     TAO_Port_Utils<
@@ -632,7 +611,6 @@ TAO_ComponentDef_i::create_publishes (const char *id,
                                       const char *name,
                                       const char *version,
                                       CORBA::ValueDef_ptr value)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD_RETURN (CORBA::ComponentIR::PublishesDef::_nil ());
 
@@ -649,7 +627,6 @@ TAO_ComponentDef_i::create_publishes_i (const char *id,
                                         const char *name,
                                         const char *version,
                                         CORBA::ValueDef_ptr value)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return
     TAO_Port_Utils<
@@ -670,7 +647,6 @@ TAO_ComponentDef_i::create_consumes (const char *id,
                                      const char *name,
                                      const char *version,
                                      CORBA::ValueDef_ptr value)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD_RETURN (CORBA::ComponentIR::ConsumesDef::_nil ());
 
@@ -687,7 +663,6 @@ TAO_ComponentDef_i::create_consumes_i (const char *id,
                                        const char *name,
                                        const char *version,
                                        CORBA::ValueDef_ptr value)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return
     TAO_Port_Utils<

@@ -31,13 +31,7 @@ public:
       const char * type_id,
       const PortableGroup::Criteria & the_criteria,
       PortableGroup::GenericFactory::FactoryCreationId_out
-        factory_creation_id)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableGroup::NoFactory,
-                     PortableGroup::ObjectNotCreated,
-                     PortableGroup::InvalidCriteria,
-                     PortableGroup::InvalidProperty,
-                     PortableGroup::CannotMeetCriteria));
+        factory_creation_id);
 
   /// The LoadManager is passed the FactoryCreationId, it received
   /// from the create_object () call.
@@ -45,9 +39,7 @@ public:
 
   virtual void delete_object (
       const PortableGroup::GenericFactory::FactoryCreationId &
-        factory_creation_id)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableGroup::ObjectNotFound));
+        factory_creation_id);
 private:
   /// The factory creation id.
   CORBA::ULong fcid_;

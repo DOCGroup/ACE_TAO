@@ -89,8 +89,7 @@ public:
   virtual CosNotification::EventTypeSeq* obtain_types (
       CosNotifyChannelAdmin::ObtainInfoMode mode,
       const TAO_Notify_EventTypeSeq& types
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    );
 
   /// Notification of subscriptions/offers set at the admin.
   virtual void admin_types_changed (const CosNotification::EventTypeSeq & added,

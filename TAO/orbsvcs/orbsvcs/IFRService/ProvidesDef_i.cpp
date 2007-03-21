@@ -28,14 +28,12 @@ TAO_ProvidesDef_i::~TAO_ProvidesDef_i (void)
 
 CORBA::DefinitionKind
 TAO_ProvidesDef_i::def_kind (void)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::dk_Provides;
 }
 
 CORBA::Contained::Description *
 TAO_ProvidesDef_i::describe (void)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (0);
 
@@ -46,7 +44,6 @@ TAO_ProvidesDef_i::describe (void)
 
 CORBA::Contained::Description *
 TAO_ProvidesDef_i::describe_i (void)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::ComponentIR::ProvidesDescription pd;
   TAO_IFR_Desc_Utils<CORBA::ComponentIR::ProvidesDescription,
@@ -74,7 +71,6 @@ TAO_ProvidesDef_i::describe_i (void)
 
 CORBA::InterfaceDef_ptr
 TAO_ProvidesDef_i::interface_type (void)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (CORBA::InterfaceDef::_nil ());
 
@@ -85,7 +81,6 @@ TAO_ProvidesDef_i::interface_type (void)
 
 CORBA::InterfaceDef_ptr
 TAO_ProvidesDef_i::interface_type_i (void)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_TString holder;
   this->repo_->config ()->get_string_value (this->section_key_,
@@ -105,7 +100,6 @@ void
 TAO_ProvidesDef_i::interface_type (
     CORBA::InterfaceDef_ptr interface_type
   )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD;
 
@@ -118,7 +112,6 @@ void
 TAO_ProvidesDef_i::interface_type_i (
     CORBA::InterfaceDef_ptr interface_type
   )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->repo_->config ()->remove_value (this->section_key_,
                                         "base_type");

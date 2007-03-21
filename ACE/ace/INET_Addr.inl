@@ -205,7 +205,8 @@ ACE_INET_Addr::is_loopback (void) const
       return IN6_IS_ADDR_LOOPBACK (&this->inet_addr_.in6_.sin6_addr);
 #endif /* ACE_HAS_IPV6 */
 
-  return (this->get_ip_address () == INADDR_LOOPBACK);
+  // RFC 3330 defines loopback as any address with 127.x.x.x
+  return ((this->get_ip_address () & 0XFF000000) == (INADDR_LOOPBACK & 0XFF000000));
 }
 
 // Return @c true if the IP address is IPv4/IPv6 multicast address.

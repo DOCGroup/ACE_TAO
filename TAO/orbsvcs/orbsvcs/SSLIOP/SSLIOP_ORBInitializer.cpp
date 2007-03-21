@@ -39,10 +39,8 @@ TAO::SSLIOP::ORBInitializer::ORBInitializer (
 void
 TAO::SSLIOP::ORBInitializer::pre_init (
     PortableInterceptor::ORBInitInfo_ptr info)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  TAO_ORBInitInfo_var tao_info =
-    TAO_ORBInitInfo::_narrow (info);
+  TAO_ORBInitInfo_var tao_info = TAO_ORBInitInfo::_narrow (info);
 
   if (CORBA::is_nil (tao_info.in ()))
     throw CORBA::INV_OBJREF ();
@@ -69,14 +67,12 @@ TAO::SSLIOP::ORBInitializer::pre_init (
   SSLIOP::Current_var ssliop_current = current;
 
   // Register the SSLIOP::Current object reference with the ORB.
-  info->register_initial_reference ("SSLIOPCurrent",
-                                    ssliop_current.in ());
+  info->register_initial_reference ("SSLIOPCurrent", ssliop_current.in ());
 }
 
 void
 TAO::SSLIOP::ORBInitializer::post_init (
     PortableInterceptor::ORBInitInfo_ptr info)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Note we do not store the SSLIOP::Current as a class member since
   // we need to avoid potential problems where the same
@@ -101,8 +97,7 @@ TAO::SSLIOP::ORBInitializer::post_init (
 
       if (tao_current != 0)
         {
-          const size_t slot =
-            this->get_tss_slot_id (info);
+          size_t const slot = this->get_tss_slot_id (info);
 
           tao_current->tss_slot (slot);
         }
@@ -179,8 +174,7 @@ TAO::SSLIOP::ORBInitializer::post_init (
 
   auto_ptr<TAO::SSLIOP::CredentialsAcquirerFactory> safe_factory;
 
-  tao_curator->register_acquirer_factory ("SL3TLS",
-                                          factory);
+  tao_curator->register_acquirer_factory ("SL3TLS", factory);
 
   (void) safe_factory.release ();  // CredentialsCurator now owns
                                    // CredentialsAcquirerFactory.
@@ -207,7 +201,7 @@ TAO::SSLIOP::ORBInitializer::get_tss_slot_id (
                   "Unable to obtain TSS slot ID from "
                   "\"SecurityCurrent\" object.\n"));
 
-      ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
+      throw CORBA::INTERNAL ();
     }
 
   return security_current->tss_slot ();

@@ -8,8 +8,7 @@ namespace TAO
 {
   ACE_INLINE void
   ARDB_Refcount_Functor::operator () (
-      TAO_Asynch_Reply_Dispatcher_Base *ardb)
-    ACE_THROW_SPEC (())
+      TAO_Asynch_Reply_Dispatcher_Base *ardb) throw ()
   {
     (void) ardb->decr_refcount ();
   }

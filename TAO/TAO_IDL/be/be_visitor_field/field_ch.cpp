@@ -325,26 +325,30 @@ be_visitor_field_ch::visit_sequence (be_sequence *node)
         be_field::narrow_from_decl (this->ctx_->node ());
       node->field_node (member_node);
 
-      be_visitor_context ctx (*this->ctx_);
-      ctx.node (node);
-
-      // First generate the sequence declaration.
-      be_visitor_sequence_ch visitor (&ctx);
-
-      if (node->accept (&visitor) == -1)
+      // This was already generated in the corresponding valuetype class.
+      if (this->ctx_->state () != TAO_CodeGen::TAO_VALUETYPE_OBV_CH)
         {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_field_ch::"
-                             "visit_sequence - "
-                             "codegen failed\n"),
-                            -1);
+          be_visitor_context ctx (*this->ctx_);
+          ctx.node (node);
+
+          // First generate the sequence declaration.
+          be_visitor_sequence_ch visitor (&ctx);
+
+          if (node->accept (&visitor) == -1)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                "(%N:%l) be_visitor_field_ch::"
+                                "visit_sequence - "
+                                "codegen failed\n"),
+                                -1);
+            }
         }
 
       // If we are being reused by valutype, this would get generated
       // in the private section of the OBV_xx class, so we must
       // generate the typedef for that case elsewhere.
       AST_Decl::NodeType snt = this->ctx_->scope ()->node_type ();
-      
+
       if (snt != AST_Decl::NT_valuetype && snt != AST_Decl::NT_eventtype)
         {
           // Generate the anonymous sequence member typedef.

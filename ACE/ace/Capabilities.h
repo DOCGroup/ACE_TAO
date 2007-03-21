@@ -27,6 +27,11 @@
 #include "ace/SString.h"
 #include "ace/Functor_String.h"
 
+#if defined (ACE_IS_SPLITTING)
+# include "ace/OS_NS_ctype.h"
+#endif  /* ACE_IS_SPLITTING */
+
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
@@ -190,7 +195,7 @@ private:
 int
 is_empty (const ACE_TCHAR *line)
 {
-  while (*line && isspace (*line))
+  while (*line && ACE_OS::ace_isspace (*line))
     ++line;
 
   return *line == ACE_LIB_TEXT ('\0') || *line == ACE_LIB_TEXT ('#');
@@ -199,7 +204,7 @@ is_empty (const ACE_TCHAR *line)
 int
 is_line (const ACE_TCHAR *line)
 {
-  while (*line && isspace (*line))
+  while (*line && ACE_OS::ace_isspace (*line))
     ++line;
 
   return *line != ACE_LIB_TEXT ('\0');

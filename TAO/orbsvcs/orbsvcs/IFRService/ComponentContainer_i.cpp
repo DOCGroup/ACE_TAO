@@ -35,7 +35,6 @@ TAO_ComponentContainer_i::create_component (
     CORBA::ComponentIR::ComponentDef_ptr base_component,
     const CORBA::InterfaceDefSeq &supports_interfaces
   )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD_RETURN (CORBA::ComponentIR::ComponentDef::_nil ());
 
@@ -56,7 +55,6 @@ TAO_ComponentContainer_i::create_component_i (
     CORBA::ComponentIR::ComponentDef_ptr base_component,
     const CORBA::InterfaceDefSeq &supports_interfaces
   )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_ComponentContainer_i::tmp_name_holder_ = name;
   ACE_Configuration_Section_Key new_key;
@@ -153,7 +151,6 @@ TAO_ComponentContainer_i::create_home (
     const CORBA::InterfaceDefSeq &supports_interfaces,
     CORBA::ValueDef_ptr primary_key
   )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD_RETURN (CORBA::ComponentIR::HomeDef::_nil ());
 
@@ -178,7 +175,6 @@ TAO_ComponentContainer_i::create_home_i (
     const CORBA::InterfaceDefSeq &supports_interfaces,
     CORBA::ValueDef_ptr primary_key
   )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_ComponentContainer_i::tmp_name_holder_ = name;
   ACE_Configuration_Section_Key new_key;
@@ -276,7 +272,6 @@ TAO_ComponentContainer_i::create_event (
     const CORBA::InterfaceDefSeq &supported_interfaces,
     const CORBA::ExtInitializerSeq &initializers
   )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD_RETURN (CORBA::ComponentIR::EventDef::_nil ());
 
@@ -307,7 +302,6 @@ TAO_ComponentContainer_i::create_event_i (
     const CORBA::InterfaceDefSeq &supported_interfaces,
     const CORBA::ExtInitializerSeq &initializers
   )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_ComponentContainer_i::tmp_name_holder_ = name;
   ACE_Configuration_Section_Key new_key;

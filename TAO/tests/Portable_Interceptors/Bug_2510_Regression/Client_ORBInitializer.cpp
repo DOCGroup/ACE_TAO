@@ -15,14 +15,12 @@ Client_ORBInitializer::Client_ORBInitializer (void)
 void
 Client_ORBInitializer::pre_init (
     PortableInterceptor::ORBInitInfo_ptr)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
 Client_ORBInitializer::post_init (
     PortableInterceptor::ORBInitInfo_ptr info)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   PortableInterceptor::SlotId slot_id = info->allocate_slot_id ();
 

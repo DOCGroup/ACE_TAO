@@ -23,9 +23,7 @@ TAO::CSD::Strategy_Base::~Strategy_Base()
 }
 
 CORBA::Boolean
-TAO::CSD::Strategy_Base::apply_to (PortableServer::POA_ptr poa
-                                   )
-  ACE_THROW_SPEC ((CORBA::SystemException))
+TAO::CSD::Strategy_Base::apply_to (PortableServer::POA_ptr poa)
 {
   if (CORBA::is_nil(poa))
     {
@@ -84,7 +82,7 @@ TAO::CSD::Strategy_Base::apply_to (PortableServer::POA_ptr poa
       poa_impl->set_csd_strategy (this);
       strategy_set = true;
     }
-  catch ( ::CORBA::Exception&)
+  catch (const ::CORBA::Exception&)
     {
     }
 
@@ -111,8 +109,7 @@ TAO::CSD::Strategy_Base::apply_to (PortableServer::POA_ptr poa
 void
 TAO::CSD::Strategy_Base::servant_activated_event_i
                                 (PortableServer::Servant ,
-                                 const PortableServer::ObjectId&
-                                 )
+                                 const PortableServer::ObjectId&)
 {
   // do nothing.
 }
@@ -121,8 +118,7 @@ TAO::CSD::Strategy_Base::servant_activated_event_i
 void
 TAO::CSD::Strategy_Base::servant_deactivated_event_i
                                 (PortableServer::Servant,
-                                 const PortableServer::ObjectId&
-                                 )
+                                 const PortableServer::ObjectId&)
 {
   // do nothing.
 }

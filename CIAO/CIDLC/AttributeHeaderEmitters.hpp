@@ -30,13 +30,7 @@ struct WriteAttributeHeaderEmitter : Traversal::ReadWriteAttribute,
   get_raises (SemanticGraph::ReadWriteAttribute&);
 
   virtual void
-  set_raises_none (SemanticGraph::ReadWriteAttribute&);
-
-  virtual void
-  set_raises_pre (SemanticGraph::ReadWriteAttribute&);
-
-  virtual void
-  set_raises_post (SemanticGraph::ReadWriteAttribute&);
+  set_raises (SemanticGraph::ReadWriteAttribute&);
 
   virtual void
   post (SemanticGraph::ReadWriteAttribute&);

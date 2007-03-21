@@ -29,14 +29,12 @@ TAO_ValueMemberDef_i::~TAO_ValueMemberDef_i (void)
 
 CORBA::DefinitionKind
 TAO_ValueMemberDef_i::def_kind (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::dk_ValueMember;
 }
 
 CORBA::Contained::Description *
 TAO_ValueMemberDef_i::describe (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (0);
 
@@ -47,7 +45,6 @@ TAO_ValueMemberDef_i::describe (void)
 
 CORBA::Contained::Description *
 TAO_ValueMemberDef_i::describe_i (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::ValueMember vm;
   TAO_IFR_Desc_Utils<CORBA::ValueMember,
@@ -87,7 +84,6 @@ TAO_ValueMemberDef_i::describe_i (void)
 
 CORBA::TypeCode_ptr
 TAO_ValueMemberDef_i::type (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (CORBA::TypeCode::_nil ());
 
@@ -98,7 +94,6 @@ TAO_ValueMemberDef_i::type (void)
 
 CORBA::TypeCode_ptr
 TAO_ValueMemberDef_i::type_i (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_TString holder;
   this->repo_->config ()->get_string_value (this->section_key_,
@@ -112,7 +107,6 @@ TAO_ValueMemberDef_i::type_i (void)
 
 CORBA::IDLType_ptr
 TAO_ValueMemberDef_i::type_def (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (CORBA::IDLType::_nil ());
 
@@ -123,7 +117,6 @@ TAO_ValueMemberDef_i::type_def (void)
 
 CORBA::IDLType_ptr
 TAO_ValueMemberDef_i::type_def_i (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_TString holder;
   this->repo_->config ()->get_string_value (this->section_key_,
@@ -138,7 +131,6 @@ TAO_ValueMemberDef_i::type_def_i (void)
 
 void
 TAO_ValueMemberDef_i::type_def (CORBA::IDLType_ptr type_def)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD;
 
@@ -149,7 +141,6 @@ TAO_ValueMemberDef_i::type_def (CORBA::IDLType_ptr type_def)
 
 void
 TAO_ValueMemberDef_i::type_def_i (CORBA::IDLType_ptr type_def)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   const char *path = TAO_IFR_Service_Utils::reference_to_path (type_def);
   this->repo_->config ()->set_string_value (this->section_key_,
@@ -159,7 +150,6 @@ TAO_ValueMemberDef_i::type_def_i (CORBA::IDLType_ptr type_def)
 
 CORBA::Visibility
 TAO_ValueMemberDef_i::access (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (0);
 
@@ -170,7 +160,6 @@ TAO_ValueMemberDef_i::access (void)
 
 CORBA::Visibility
 TAO_ValueMemberDef_i::access_i (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::ULong val = 0;
   this->repo_->config ()->get_integer_value (this->section_key_,
@@ -181,7 +170,6 @@ TAO_ValueMemberDef_i::access_i (void)
 
 void
 TAO_ValueMemberDef_i::access (CORBA::Visibility access)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD;
 
@@ -192,7 +180,6 @@ TAO_ValueMemberDef_i::access (CORBA::Visibility access)
 
 void
 TAO_ValueMemberDef_i::access_i (CORBA::Visibility access)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->repo_->config ()->set_integer_value (this->section_key_,
                                              "access",

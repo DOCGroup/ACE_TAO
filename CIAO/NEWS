@@ -1,3 +1,13 @@
+PLANNED MAJOR CHANGES FOR NEXT RELEASE (i.e., after 0.5.7)
+===========================================================================
+. Start update of IDL/semantics to conform to 06-04-01 specification.  
+  This will immediately break most CIAO specific extensions, such as shared
+  components and ReDaC.  
+
+. Expand support for complex types in deployment XML.
+
+. Enable use of CDR encoded deployment plans.
+
 PLANNED MAJOR CHANGES "SOMETIME IN THE FUTURE" (i.e., exact beta not known)
 ===========================================================================
 
@@ -61,8 +71,48 @@ PLANNED MAJOR CHANGES "SOMETIME IN THE FUTURE" (i.e., exact beta not known)
 . Implement a planner to query the TargetManager and RepositoryManager
   and generate deployment plans on the fly.
 
+USER VISIBLE CHANGES BETWEEN CIAO-0.5.6 and CIAO-0.5.7
+======================================================
+
+. Removed ACE_THROW_RETURN
+
+. Remove exception specifications from ORB mediated operations (C++
+  mapping requirement)
+
+. All DAnCE core idl files are moved to DAnCE/Deployment
+
+. QoS4CCM IDL files are moved to ciao/extension
+
+. RACE has been fully removed from the distribution, a new version
+  is work in progress and will be added again to the distribution
+  when it is ready
+
+. MPC base projects that contained _dnc_ have been renamed to not
+  include that string. 
+
+. DAnCE executables are now installed into $CIAO_ROOT/bin
+
+. Added a new TAO policy for specifying the DiffServ code points
+ (DSCP) to be added to request and reply IP packets of an
+ application. The policy can be added at the following levels: OBJECT,
+ THREAD, and ORB.
+
+. Extended the CIAOServerResources schema to allow the specification
+  of request and reply DSCPs to be added to the IP packets of an
+  application. Extended CIAO NodeApplication libraries, to read the
+  CIAOServerResources specification, to create DiffServ policies on the
+  objects, to allow automatic addition of DSCPs on the CCM port
+  objects.
+
+. Updated the Target Manager interface to comply with the latest OMG
+  specification. This includes the addition of a new entity,
+  ResourceCommitmentManager for the management of committed resources.
+
 USER VISIBLE CHANGES BETWEEN CIAO-0.5.5 and CIAO-0.5.6
 ======================================================
+. Updated the Target Manager interface to comply with the latest OMG
+  specification. This includes the addition of a new entity,
+  ResourceCommitmentManager for the management of committed resources.
 
 . Removed all exception environment macros except ACE_THROW_RETURN
   and ACE_THROW_SPEC

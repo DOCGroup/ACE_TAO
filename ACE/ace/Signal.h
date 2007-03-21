@@ -118,7 +118,7 @@ public:
 
   /**
    * Assigns the various fields of a <sigaction> struct and registers
-   * the <handler> to process signal <signum> via the <sigaction>
+   * the <handler> to process signal @a signum via the <sigaction>
    * function.
    */
   ACE_Sig_Action (ACE_SignalHandler handler,
@@ -128,7 +128,7 @@ public:
 
   /**
    * Assigns the various fields of a <sigaction> struct and registers
-   * the <handler> to process signal <signum> via the <sigaction>
+   * the <handler> to process signal @a signum via the <sigaction>
    * function.
    */
   ACE_Sig_Action (ACE_SignalHandler handler,

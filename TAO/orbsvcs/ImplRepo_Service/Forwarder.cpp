@@ -65,7 +65,6 @@ ImR_Forwarder::preinvoke (const PortableServer::ObjectId &,
                           PortableServer::POA_ptr poa,
                           const char *,
                           PortableServer::ServantLocator::Cookie &)
-    ACE_THROW_SPEC ((CORBA::SystemException, PortableServer::ForwardRequest))
 {
   ACE_ASSERT (! CORBA::is_nil(poa));
   CORBA::Object_var forward_obj;
@@ -140,12 +139,14 @@ ImR_Forwarder::preinvoke (const PortableServer::ObjectId &,
     }
 
   if (!CORBA::is_nil (forward_obj.in ()))
-    ACE_THROW_RETURN (PortableServer::ForwardRequest (forward_obj.in ()), 0);
+    throw PortableServer::ForwardRequest (forward_obj.in ());
 
   ACE_ERROR ((LM_ERROR, "Error: Forward_to reference is nil.\n"));
-  ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (
-    CORBA::SystemException::_tao_minor_code (TAO_IMPLREPO_MINOR_CODE, 0),
-    CORBA::COMPLETED_NO), 0);
+  throw CORBA::OBJECT_NOT_EXIST (
+    CORBA::SystemException::_tao_minor_code (
+      TAO_IMPLREPO_MINOR_CODE,
+      0),
+    CORBA::COMPLETED_NO);
 }
 
 void
@@ -153,8 +154,7 @@ ImR_Forwarder::postinvoke (const PortableServer::ObjectId &,
                            PortableServer::POA_ptr,
                            const char *,
                            PortableServer::ServantLocator::Cookie,
-                           PortableServer::Servant
-                           ) ACE_THROW_SPEC ((CORBA::SystemException))
+                           PortableServer::Servant)
 {
 }
 

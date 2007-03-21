@@ -42,7 +42,7 @@ Server_Task::svc (void)
      PortableServer::POAManager_var poa_manager =
        root_poa->the_POAManager ();
 
-     Hello *hello_impl;
+     Hello *hello_impl = 0;
      ACE_NEW_RETURN (hello_impl,
                      Hello (this->sorb_.in (),
                             ACE_Thread::self ()),
@@ -50,8 +50,13 @@ Server_Task::svc (void)
 
      PortableServer::ServantBase_var owner_transfer(hello_impl);
 
+     PortableServer::ObjectId_var id =
+       root_poa->activate_object (hello_impl);
+
+     CORBA::Object_var object = root_poa->id_to_reference (id.in ());
+
      Test::Hello_var hello =
-       hello_impl->_this ();
+       Test::Hello::_narrow (object.in ());
 
      CORBA::String_var ior =
        this->sorb_->object_to_string (hello.in ());

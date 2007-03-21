@@ -6,6 +6,7 @@
 #include "tao/PI/PI_ORBInitializer.h"
 #include "tao/ORBInitializer_Registry.h"
 #include "tao/ORB_Constants.h"
+#include "ace/CORBA_macros.h"
 
 ACE_RCSID (PI,
            PI,
@@ -52,7 +53,7 @@ TAO_PI_Init::Initializer (void)
       PortableInterceptor::register_orb_initializer (orb_initializer.in ()
                                                     );
     }
-  catch ( ::CORBA::Exception& ex)
+  catch (const ::CORBA::Exception& ex)
     {
       if (TAO_debug_level > 0)
         {

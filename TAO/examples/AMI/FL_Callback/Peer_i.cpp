@@ -12,7 +12,6 @@ Peer_Handler_i::Peer_Handler_i (Peer_i *peer)
 
 void
 Peer_Handler_i::request (CORBA::Long retval)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   static int i = 0;
   i++;
@@ -25,19 +24,16 @@ Peer_Handler_i::request (CORBA::Long retval)
 void
 Peer_Handler_i::request_excep (
     ::Messaging::ExceptionHolder *)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
 Peer_Handler_i::start (void)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
 Peer_Handler_i::shutdown (void)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 
 {
 }
@@ -55,7 +51,6 @@ void
 Peer_i::init (CORBA::ORB_ptr orb,
               Progress_ptr progress,
               const ACE_Time_Value &delay)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_ = CORBA::ORB::_duplicate (orb);
   this->progress_ = Progress::_duplicate (progress);
@@ -69,14 +64,12 @@ Peer_i::init (CORBA::ORB_ptr orb,
 
 void
 Peer_i::reply (CORBA::Long result)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->progress_->recv_reply (result);
 }
 
 CORBA::Long
 Peer_i::request (CORBA::Long id)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_Time_Value tv  = this->delay_;
   ACE_OS::sleep (tv);
@@ -87,7 +80,6 @@ Peer_i::request (CORBA::Long id)
 void
 Peer_i::start (const PeerSet &the_peers,
                CORBA::Long iterations)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   AMI_PeerHandler_var handler =
     this->reply_handler_._this ();
@@ -104,7 +96,6 @@ Peer_i::start (const PeerSet &the_peers,
 
 void
 Peer_i::shutdown (void)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown (0);
 }

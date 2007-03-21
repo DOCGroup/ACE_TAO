@@ -133,7 +133,7 @@ public:
   /**
    * Returns 1 if we're at the end of the <STREAM>, i.e., if the
    * connection has closed down or an error has occurred, else 0.
-   * Under the covers, <eof> calls the streambuf's <timeout> function
+   * Under the covers, <eof> calls the streambuf's @a timeout function
    * which will reset the timeout flag.  As as result, you should save
    * the return of <eof> and check it instead of calling <eof>
    * successively.

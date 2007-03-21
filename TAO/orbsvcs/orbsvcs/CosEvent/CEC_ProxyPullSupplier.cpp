@@ -44,7 +44,6 @@ TAO_CEC_ProxyPullSupplier::~TAO_CEC_ProxyPullSupplier (void)
 void
 TAO_CEC_ProxyPullSupplier::activate (
     CosEventChannelAdmin::ProxyPullSupplier_ptr &activated_proxy)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CosEventChannelAdmin::ProxyPullSupplier_var result;
   try
@@ -60,7 +59,6 @@ TAO_CEC_ProxyPullSupplier::activate (
 
 void
 TAO_CEC_ProxyPullSupplier::deactivate (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   try
     {
@@ -157,11 +155,9 @@ TAO_CEC_ProxyPullSupplier::push (const CORBA::Any &event)
 
 CORBA::Any *
 TAO_CEC_ProxyPullSupplier::pull (void)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       CosEventComm::Disconnected))
 {
   if (this->is_connected () == 0)
-    ACE_THROW_RETURN (CosEventComm::Disconnected (), 0);
+    throw CosEventComm::Disconnected ();
 
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, queue_lock_, 0);
   while (this->queue_.is_empty ())
@@ -171,18 +167,17 @@ TAO_CEC_ProxyPullSupplier::pull (void)
   CORBA::Any any;
   if (this->queue_.dequeue_head (any) != 0)
     {
-      ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
+      throw CORBA::INTERNAL ();
     }
   return new CORBA::Any (any);
 }
 
 CORBA::Any *
 TAO_CEC_ProxyPullSupplier::try_pull (CORBA::Boolean_out has_event)
-      ACE_THROW_SPEC ((CORBA::SystemException,CosEventComm::Disconnected))
 {
   has_event = 0;
   if (this->is_connected () == 0)
-    ACE_THROW_RETURN (CosEventComm::Disconnected (), 0);
+    throw CosEventComm::Disconnected ();
 
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, queue_lock_, 0);
   CORBA::Any any;
@@ -194,7 +189,7 @@ TAO_CEC_ProxyPullSupplier::try_pull (CORBA::Boolean_out has_event)
 
   if (this->queue_.dequeue_head (any) != 0)
     {
-      ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
+      throw CORBA::INTERNAL ();
     }
   has_event = 1;
   return new CORBA::Any (any);
@@ -233,8 +228,6 @@ TAO_CEC_ProxyPullSupplier::_decr_refcnt (void)
 void
 TAO_CEC_ProxyPullSupplier::connect_pull_consumer (
       CosEventComm::PullConsumer_ptr pull_consumer)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     CosEventChannelAdmin::AlreadyConnected))
 {
   {
     ACE_GUARD_THROW_EX (
@@ -304,7 +297,6 @@ TAO_CEC_ProxyPullSupplier::apply_policy (CosEventComm::PullConsumer_ptr pre)
 
 void
 TAO_CEC_ProxyPullSupplier::disconnect_pull_supplier ()
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CosEventComm::PullConsumer_var consumer;
 

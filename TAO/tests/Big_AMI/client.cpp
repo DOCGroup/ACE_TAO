@@ -85,7 +85,6 @@ public:
 
   void foo (CORBA::Long ami_return_val,
             CORBA::Long out_l)
-      ACE_THROW_SPEC ((CORBA::SystemException))
     {
       ++reply_count_;
       if (debug)
@@ -98,7 +97,6 @@ public:
     };
 
   void foo_excep (::Messaging::ExceptionHolder * excep_holder)
-      ACE_THROW_SPEC ((CORBA::SystemException))
     {
       ++reply_count_;
 
@@ -128,7 +126,7 @@ main (int argc, char *argv[])
   try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "");
+        CORBA::ORB_init (argc, argv);
 
       CORBA::Object_var object_var =
         orb->resolve_initial_references ("RootPOA");
@@ -160,8 +158,13 @@ main (int argc, char *argv[])
 
       // Instantiate the ReplyHandler and register that with the POA.
       Handler handler;
+      PortableServer::ObjectId_var id =
+        poa_var->activate_object (&handler);
+
+      CORBA::Object_var object = poa_var->id_to_reference (id.in ());
+
       A::AMI_AMI_TestHandler_var the_handler_var =
-        handler._this ();
+        A::AMI_AMI_TestHandler::_narrow (object.in ());
 
       CORBA::Long l = 931247;
       A::Payload payload (payload_size);

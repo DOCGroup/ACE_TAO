@@ -26,7 +26,6 @@ Push_Iterator_Handler::~Push_Iterator_Handler (void)
 void
 Push_Iterator_Handler::register_callback
   (const Web_Server::Metadata_Type &metadata)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->callback_servant_->metadata (metadata);
 
@@ -38,8 +37,6 @@ void
 Push_Iterator_Handler::run (int *request_count,
                             const char *pathname,
                             Web_Server::Iterator_Factory_ptr factory)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   Web_Server::Error_Result))
 {
   ACE_NEW_THROW_EX (this->callback_servant_,
                     Callback_i (request_count),
@@ -64,7 +61,6 @@ Push_Iterator_Handler::run (int *request_count,
 
 void
 Push_Iterator_Handler::deactivate (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Get the POA used when activating the Reply Handler object.
   PortableServer::POA_var poa = this->_default_POA ();

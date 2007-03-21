@@ -13,8 +13,7 @@ class MyInterfaceImpl
   static const char* my_string;
 
   // = The skeleton methods
-  virtual CORBA::Boolean myMethod (const char* stringParam)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::Boolean myMethod (const char* stringParam);
 
 private:
   CORBA::ORB_var orb_;

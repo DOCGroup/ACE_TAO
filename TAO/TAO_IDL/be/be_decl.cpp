@@ -186,7 +186,7 @@ be_decl::compute_full_name  (const char *prefix,
   else
     {
       // Get scope name.
-      be_decl *parent =
+      be_decl * const parent =
         be_scope::narrow_from_scope (this->defined_in ())->decl ();
 
       if (parent == 0)
@@ -195,6 +195,8 @@ be_decl::compute_full_name  (const char *prefix,
                       "(%N:%l) be_decl::"
                       "compute_full_name - "
                       "scope name is nil\n"));
+
+          return;
         }
 
       // Parent name.
@@ -251,7 +253,7 @@ be_decl::compute_flat_name  (const char *prefix,
   else
     {
       // Get scope name.
-      be_decl *parent =
+      be_decl * const parent =
         be_scope::narrow_from_scope (this->defined_in ())->decl ();
       if (parent == 0)
         {
@@ -259,6 +261,8 @@ be_decl::compute_flat_name  (const char *prefix,
                       "(%N:%l) be_decl::"
                       "compute_flat_name - "
                       "scope name is nil\n"));
+
+          return;
         }
 
       // Parent name.

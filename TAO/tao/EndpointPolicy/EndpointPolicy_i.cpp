@@ -1,13 +1,11 @@
 // $Id$
 
 #include "tao/EndpointPolicy/EndpointPolicy_i.h"
-
 #include "tao/SystemException.h"
 
 ACE_RCSID (EndpointPolicy,
            EndpointPolicy_i,
            "$Id$")
-
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -33,7 +31,6 @@ TAO_EndpointPolicy_i::~TAO_EndpointPolicy_i ()
 
 CORBA::PolicyType
 TAO_EndpointPolicy_i::policy_type (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return EndpointPolicy::ENDPOINT_POLICY_TYPE;
 }
@@ -50,7 +47,6 @@ TAO_EndpointPolicy_i::clone (void) const
 
 EndpointPolicy::EndpointList *
 TAO_EndpointPolicy_i::value (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   EndpointPolicy::EndpointList* list = 0;
   ACE_NEW_RETURN (list,
@@ -62,7 +58,6 @@ TAO_EndpointPolicy_i::value (void)
 
 CORBA::Policy_ptr
 TAO_EndpointPolicy_i::copy (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_EndpointPolicy_i* servant = 0;
   ACE_NEW_THROW_EX (servant,
@@ -74,7 +69,6 @@ TAO_EndpointPolicy_i::copy (void)
 
 void
 TAO_EndpointPolicy_i::destroy (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->value_.length (0);
 }

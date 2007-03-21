@@ -15,6 +15,10 @@ namespace CCF
     {
       struct Uses
       {
+        virtual ~Uses ()
+        {
+        }
+        
         virtual void
         multiple () = 0;
 

@@ -12,8 +12,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 void
 TAO_EC_Channel_Destroyer_Functor::operator() (
-                           TAO_EC_Event_Channel_Base * event_channel)
-  ACE_THROW_SPEC (())
+                           TAO_EC_Event_Channel_Base * event_channel) throw ()
 {
   try
     {

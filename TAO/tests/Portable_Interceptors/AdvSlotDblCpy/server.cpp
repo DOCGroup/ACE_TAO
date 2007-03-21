@@ -289,7 +289,12 @@ main (int argc, char *argv[])
   InvokeMeImpl* impl = new InvokeMeImpl (orb.in ());
   ServantBase_var impl_var (impl);
 
-  InvokeMe_var ref (impl->_this ());
+  PortableServer::ObjectId_var id_act =
+    root_poa->activate_object (impl);
+
+  CORBA::Object_var object = root_poa->id_to_reference (id_act.in ());
+
+  InvokeMe_var ref = InvokeMe::_narrow (object.in ());
   String_var ior (orb->object_to_string (ref.in ()));
 
   poa_manager->activate ();

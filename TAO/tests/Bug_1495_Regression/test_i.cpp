@@ -29,19 +29,13 @@ void
 Bug1495_i::get_thread_id (
     CORBA::Long_out thread_id
   )
-  ACE_THROW_SPEC ((
-    CORBA::SystemException
-  ))
 {
-    thread_id = (CORBA::Long)ACE_Thread::self();
+    thread_id = static_cast<CORBA::Long> ((size_t)ACE_Thread::self ());
 }
 
 void
 Bug1495_i::shutdown (
   )
-  ACE_THROW_SPEC ((
-    CORBA::SystemException
-  ))
 {
     ACE_DEBUG ((LM_INFO,
                 "Shutting down orb %i\n",

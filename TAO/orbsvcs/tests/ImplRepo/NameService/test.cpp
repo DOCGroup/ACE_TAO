@@ -10,7 +10,7 @@ int main (int argc, char *argv[])
 {
   try
     {
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, "");
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
       CORBA::Object_var ns_obj =
         orb->resolve_initial_references ("NameService");

@@ -36,6 +36,8 @@ Bug_2497_Regression_Test
 Bug_2540_Regression_Test
 Bug_2659_Regression_Test: !ST
 Bug_2653_Regression_Test: !ST
+Bug_2815_Regression_Test
+Bug_2820_Regression_Test
 CDR_Array_Test: !ACE_FOR_TAO
 CDR_File_Test: !ACE_FOR_TAO
 CDR_Test
@@ -70,7 +72,7 @@ INET_Addr_Test
 IOStream_Test
 Integer_Truncate_Test
 Lazy_Map_Manager_Test
-Log_Msg_Test: !LynxOS !ACE_FOR_TAO
+Log_Msg_Test: !ACE_FOR_TAO
 Logging_Strategy_Test: !DISABLE_ToFix_LynxOS_PPC !STATIC !ST
 Manual_Event_Test: !DISABLE_ToFix_LynxOS_PPC
 MEM_Stream_Test: !DISABLE_ToFix_LynxOS_PPC !DISABLE_ToFix_LynxOS_x86 !VxWorks !nsk !ACE_FOR_TAO
@@ -96,9 +98,11 @@ Naming_Test: !LynxOS !Unicos !VxWorks !nsk !ACE_FOR_TAO
 Network_Adapters_Test: !DISABLE_ToFix_LynxOS_PPC !DISABLE_ToFix_LynxOS_x86
 New_Fail_Test: ALL !DISABLED
 NonBlocking_Conn_Test
+Notification_Queue_Unit_Test
 Notify_Performance_Test: !nsk !ACE_FOR_TAO
 OS_Test
 Object_Manager_Test
+Object_Manager_Flipping_Test
 Obstack_Test
 OrdMultiSet_Test
 Pipe_Test: !VxWorks

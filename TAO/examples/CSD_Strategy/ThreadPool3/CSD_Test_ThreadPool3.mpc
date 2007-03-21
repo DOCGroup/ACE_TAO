@@ -13,8 +13,8 @@ project(*Server): csd_threadpool, taoserver, pi, avoids_corba_e_micro {
   after += *idl
 
   Source_Files {
-    FooS.cpp
     FooC.cpp
+    FooS.cpp
     Foo_i.cpp
     OrbTask.cpp
     ServerApp.cpp

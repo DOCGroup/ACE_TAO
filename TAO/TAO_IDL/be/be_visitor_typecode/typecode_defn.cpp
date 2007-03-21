@@ -745,8 +745,12 @@ be_visitor_typecode_defn::push (ACE_CDR::Long val)
     {
       return -1;
     }
+  else if (this->index_ < 0)  // (should only be -1)
+    this->index_ = 0;  // Empty.
 
-  this->scope_stack_ [++this->index_] = val;
+  this->scope_stack_ [this->index_++] = val;  // Must post-increment
+                                              // to avoid buffer
+                                              // overrun.
   return 0;
 }
 
@@ -758,7 +762,7 @@ be_visitor_typecode_defn::pop (ACE_CDR::Long &val)
       return -1;
     }
 
-  val = this->scope_stack_[this->index_--];
+  val = this->scope_stack_[this->index_--];  // Must post-increment!
   return 0;
 }
 

@@ -23,8 +23,7 @@ public:
 
   // = The skeleton methods
 
-  virtual void destroy (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void destroy (void);
 };
 
 #if defined(_MSC_VER)

@@ -68,21 +68,13 @@ public:
   DsLogAdmin::BasicLog_ptr
     create (DsLogAdmin::LogFullActionType full_action,
             CORBA::ULongLong max_size,
-            DsLogAdmin::LogId_out id)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     DsLogAdmin::InvalidLogFullAction
-                     ));
+            DsLogAdmin::LogId_out id);
 
   /// Same as create (), but allows clients to specify the id.
   DsLogAdmin::BasicLog_ptr
     create_with_id (DsLogAdmin::LogId id,
                     DsLogAdmin::LogFullActionType full_action,
-                    CORBA::ULongLong max_size)
-    ACE_THROW_SPEC ((
-                     CORBA::SystemException,
-                     DsLogAdmin::LogIdAlreadyExists,
-                     DsLogAdmin::InvalidLogFullAction
-                     ));
+                    CORBA::ULongLong max_size);
 
 protected:
   virtual CORBA::RepositoryId

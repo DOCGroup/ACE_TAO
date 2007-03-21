@@ -77,14 +77,14 @@ run_standalone (Options& opts)
   return 1;
 }
 
-#if defined (ACE_WIN32)
+#if defined (ACE_WIN32) && !defined (ACE_LACKS_WIN32_SERVICES)
 ACE_NT_SERVICE_DEFINE (service, Locator_NT_Service, IMR_LOCATOR_SERVICE_NAME);
-#endif /* ACE_WIN32 */
+#endif /* ACE_WIN32 && !ACE_LACKS_WIN32_SERVICES */
 
 int
 run_service (void)
 {
-#if defined (ACE_WIN32)
+#if defined (ACE_WIN32) && !defined (ACE_LACKS_WIN32_SERVICES)
 
   SERVICE::instance ()->name (IMR_LOCATOR_SERVICE_NAME, IMR_LOCATOR_DISPLAY_NAME);
 
@@ -96,7 +96,7 @@ run_service (void)
   return ret;
 #else /* ACE_WIN32 */
   return 1;
-#endif /* ACE_WIN32 */
+#endif /* ACE_WIN32 && !ACE_LACKS_WIN32_SERVICES */
 }
 
 /**
@@ -111,7 +111,7 @@ run_service_command (Options& opts)
   if (opts.service_command () == Options::SC_NONE)
     return 0;
 
-#if defined (ACE_WIN32)
+#if defined (ACE_WIN32) && !defined (ACE_LACKS_WIN32_SERVICES)
   SERVICE::instance()->name (IMR_LOCATOR_SERVICE_NAME, IMR_LOCATOR_DISPLAY_NAME);
 
   if (opts.service_command () == Options::SC_INSTALL)
@@ -163,7 +163,7 @@ run_service_command (Options& opts)
 #else /* ACE_WIN32 */
   ACE_ERROR ((LM_ERROR, "NT Service not supported on this platform"));
   return -1;
-#endif /* ACE_WIN32 */
+#endif /* ACE_WIN32 && !ACE_LACKS_WIN32_SERVICES */
 }
 
 int

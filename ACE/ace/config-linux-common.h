@@ -29,13 +29,6 @@
 #  define ACE_HAS_PTHREADS_UNIX98_EXT
 #endif /* _XOPEN_SOURCE - 0 >= 500 */
 
-#if (defined _POSIX_C_SOURCE && (_POSIX_C_SOURCE - 0) >= 199309L)
-#  if !defined (ACE_HAS_CLOCK_GETTIME)
-#    define ACE_HAS_CLOCK_GETTIME
-#    define ACE_HAS_CLOCK_SETTIME
-#  endif  /* !ACE_HAS_CLOCK_GETTIME */
-#endif  /* _POSIX_C_SOURCE >= 199309L */
-
 #if defined (ACE_HAS_LINUX_NPTL)
 # include "ace/config-posix.h"
 
@@ -190,6 +183,8 @@
 # undef ACE_LACKS_LLSEEK_PROTOTYPE
 # undef ACE_LACKS_LSEEK64_PROTOTYPE
 # include "ace/config-borland-common.h"
+#elif defined (__SUNCC_PRO)
+# include "ace/config-suncc-common.h"
 #elif defined (__PGI)
 // Portable group compiler
 # define ACE_HAS_CPLUSPLUS_HEADERS
@@ -198,7 +193,6 @@
 # define ACE_HAS_STANDARD_CPP_LIBRARY 1
 # define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB 1
 # define ACE_LACKS_SWAB
-# undef ACE_HAS_CLOCK_GETTIME
 #elif defined (__GNUC__)
 /**
  * GNU C compiler.

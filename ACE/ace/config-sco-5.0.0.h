@@ -25,9 +25,6 @@
 
 #define ACE_DEFAULT_CLOSE_ALL_HANDLES 0
 
-// Compiler doesn't support static data member templates.
-//#define ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES
-
 // Platform supports System V IPC (most versions of UNIX, but not Win32)
 #define ACE_HAS_SYSV_IPC
 #define ACE_HAS_NONCONST_MSGSND

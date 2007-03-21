@@ -28,16 +28,12 @@ TAO_Notify_ETCL_FilterFactory::create (PortableServer::POA_var& filter_poa)
 
 CosNotifyFilter::Filter_ptr
 TAO_Notify_ETCL_FilterFactory::create_filter (const char *constraint_grammar)
-  ACE_THROW_SPEC ((
-                   CORBA::SystemException,
-                   CosNotifyFilter::InvalidGrammar
-                   ))
 {
   // @@: change to "ExTCL" later.
   if (ACE_OS::strcmp (constraint_grammar, "TCL") != 0 &&
       ACE_OS::strcmp (constraint_grammar, "ETCL") != 0 &&
       ACE_OS::strcmp (constraint_grammar, "EXTENDED_TCL") != 0)
-    ACE_THROW_RETURN (CosNotifyFilter::InvalidGrammar (), 0);
+    throw CosNotifyFilter::InvalidGrammar ();
 
 
   // Create the RefCounted servant.
@@ -62,12 +58,8 @@ CosNotifyFilter::MappingFilter_ptr
 TAO_Notify_ETCL_FilterFactory::create_mapping_filter (const char * /*constraint_grammar*/,
                                                   const CORBA::Any & /*default_value*/
                                                   )
-  ACE_THROW_SPEC ((
-                   CORBA::SystemException,
-                   CosNotifyFilter::InvalidGrammar
-                   ))
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), CosNotifyFilter::MappingFilter::_nil ());
+  throw CORBA::NO_IMPLEMENT ();
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

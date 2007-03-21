@@ -57,14 +57,9 @@ module Components
     EventConsumerBase get_consumer (in FeatureName sink_name)
       raises (InvalidName);
 
-    /**
-     * @todo Mismatch with 06-04-01, AlreadyConnected is not listed in the
-     * spec with this operation.
-     */
     Cookie subscribe (in FeatureName publisher_name,
                       in EventConsumerBase subscriber)
       raises (InvalidName,
-              AlreadyConnected,
               InvalidConnection,
               ExceededConnectionLimit);
 

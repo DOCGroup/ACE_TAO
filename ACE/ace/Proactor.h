@@ -221,7 +221,7 @@ public:
   /**
    * Run the event loop until the <ACE_Proactor::handle_events> method
    * returns -1, the <end_event_loop> method is invoked, or the
-   * <ACE_Time_Value> expires, in which case 0 is returned.
+   * ACE_Time_Value expires, in which case 0 is returned.
    */
   static int run_event_loop (ACE_Time_Value &tv);
 
@@ -277,7 +277,7 @@ public:
    * Run the event loop until the <ACE_Proactor::handle_events>
    * method returns -1, the
    * <end_proactor_event_loop> method is invoked,
-   * or the <ACE_Time_Value>
+   * or the ACE_Time_Value
    * expires, in which case a 0 is returned.
    */
   int proactor_run_event_loop (ACE_Time_Value &tv,

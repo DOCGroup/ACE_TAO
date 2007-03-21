@@ -16,12 +16,13 @@ if (PerlACE::is_vxworks_test()) {
     $SV = new PerlACE::ProcessVX ("server", "-o server.ior");
 }
 else {
-    $SV = new PerlACE::Process ("server", "-o $iorfile");    
+    $SV = new PerlACE::Process ("server", "-o $iorfile");
 }
 
 $SV->Spawn ();
 
-$server = $SV->WaitKill (120);
+## Slower hardware can require much more time to complete.
+$server = $SV->WaitKill (90);
 
 if ($server != 0) {
     print STDERR "ERROR: server returned $server\n";

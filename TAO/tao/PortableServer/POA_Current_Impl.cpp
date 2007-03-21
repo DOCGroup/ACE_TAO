@@ -28,13 +28,12 @@ namespace TAO
         servant_ (0),
         priority_ (TAO_INVALID_PRIORITY),
         previous_current_impl_ (0),
-        setup_done_ (0)
+        setup_done_ (false)
     {
     }
 
     void
-    POA_Current_Impl::setup (::TAO_Root_POA *p,
-                             const TAO::ObjectKey &key)
+    POA_Current_Impl::setup (::TAO_Root_POA *p, const TAO::ObjectKey &key)
     {
       // Remember information about this upcall.
       this->poa_ = p;
@@ -49,7 +48,7 @@ namespace TAO
       this->tss_resources_->poa_current_impl_ = this;
 
       // Setup is complete.
-      this->setup_done_ = 1;
+      this->setup_done_ = true;
     }
 
     POA_Current_Impl *

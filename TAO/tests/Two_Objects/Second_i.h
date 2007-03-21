@@ -21,11 +21,9 @@ public:
              CORBA::ULong len, ACE_Auto_Event &two_way_done);
 
   Two_Objects_Test::Octet_Seq *
-    twoway_method (void)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+    twoway_method (void);
 
-  void shutdown (void)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+  void shutdown (void);
 
 private:
   /// Use an ORB reference to conver strings to objects and shutdown

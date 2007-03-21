@@ -196,10 +196,10 @@ module CosNaming
 
       // = Listing the naming context.
 
-      /// Returns at most the requested number of bindings <how_many>
-      /// in <bl>.  If the naming context contains additional bindings,
+      /// Returns at most the requested number of bindings @a how_many
+      /// in @a bl.  If the naming context contains additional bindings,
       /// they are returned with a BindingIterator.  In the naming
-      /// context does not contain any additional bindings <bi>
+      /// context does not contain any additional bindings @a bi
       /// returned as null.
       void list (in unsigned long how_many,
                  out BindingList bl,
@@ -233,10 +233,10 @@ module CosNaming
       /// Stringified form of a Name.
       typedef string StringName;
 
-      /// URL<address> such as myhost.xyz.com.
+      /// URL address such as myhost.xyz.com.
       typedef string Address;
 
-      /// Stringified form of a URL<address> componoent.
+      /// Stringified form of a URL address componoent.
       typedef string URLString;
 
       /// This operation accepts a Name and returns a stringified
@@ -252,7 +252,7 @@ module CosNaming
       Name to_name (in StringName sn)
         raises (InvalidName);
 
-      /// Indicates that the URL<address> is invalid.
+      /// Indicates that the URL address is invalid.
       exception InvalidAddress {
       };
 
@@ -263,7 +263,7 @@ module CosNaming
                         in StringName sn)
         raises (InvalidAddress, InvalidName);
 
-      /// This is similar to <resolve> as in the
+      /// This is similar to @c resolve as in the
       /// CosNaming::NamingContext interface, except that it accepts
       /// a stringified name as an argument instead of a Name.
       Object resolve_str (in StringName n)

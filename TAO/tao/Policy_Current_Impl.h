@@ -33,11 +33,6 @@
 #include "tao/LocalObject.h"
 #include "tao/Policy_Set.h"
 
-#if defined(_MSC_VER)
-#pragma warning(push)
-#pragma warning(disable:4250)
-#endif /* _MSC_VER */
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Policy_Current_Impl
@@ -47,19 +42,14 @@ public:
   TAO_Policy_Current_Impl (void);
 
   /// Obtain a single policy.
-  CORBA::Policy_ptr get_policy (CORBA::PolicyType policy
-                               );
+  CORBA::Policy_ptr get_policy (CORBA::PolicyType policy);
 
   /// Obtain a single cached policy.
-  CORBA::Policy_ptr get_cached_policy (TAO_Cached_Policy_Type type
-                                      );
+  CORBA::Policy_ptr get_cached_policy (TAO_Cached_Policy_Type type);
 
   // = The CORBA::PolicyManager operations
 
-  CORBA::PolicyList * get_policy_overrides (
-        const CORBA::PolicyTypeSeq & ts
-
-      );
+  CORBA::PolicyList * get_policy_overrides (const CORBA::PolicyTypeSeq & ts);
   void set_policy_overrides (const CORBA::PolicyList & policies,
                              CORBA::SetOverrideType set_add
                              );
@@ -70,10 +60,6 @@ private:
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
-
-#if defined(_MSC_VER)
-#pragma warning(pop)
-#endif /* _MSC_VER */
 
 #if defined (__ACE_INLINE__)
 # include "tao/Policy_Current_Impl.inl"

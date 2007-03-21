@@ -22,7 +22,7 @@
 
 #include "ace/OS.h"
 
-#if !defined (ACE_WIN32)
+#if !defined (ACE_WIN32) || defined (ACE_LACKS_WIN32_SERVICES)
 
 #include "ace/Log_Msg.h"
 
@@ -225,4 +225,4 @@ main (int argc, char *argv[])
   return OPTIONS::instance ()->run (argc, argv);
 }
 
-#endif /* ACE_WIN32 */
+#endif /* !ACE_WIN32 || ACE_LACKS_WIN32_SERVICES */

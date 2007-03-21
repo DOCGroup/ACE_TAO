@@ -1,19 +1,16 @@
 // -*- C++ -*-
 
-// $Id$
 
-// =========================================================================
-//
-// = LIBRARY
-//    TAO
-//
-// = FILENAME
-//    DynamicAny.h
-//
-// = AUTHOR
-//    Carlos O'Ryan <coryan@uci.edu>
-//
-// =========================================================================
+//=============================================================================
+/**
+ *  @file    IORManip_Loader.h
+ *
+ *  $Id$
+ *
+ *  @author Carlos O'Ryan <coryan@uci.edu>
+ */
+//=============================================================================
+
 
 #ifndef TAO_IORMANIP_LOADER_H
 #define TAO_IORMANIP_LOADER_H
@@ -38,9 +35,7 @@ public:
   /// Creates a IORManip factory and returns it.
   virtual CORBA::Object_ptr create_object (CORBA::ORB_ptr orb,
                                            int argc,
-                                           ACE_TCHAR *argv []
-                                           )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                                           ACE_TCHAR *argv []);
 
   /// Used to force the initialization of the ORB code.
   static int Initializer (void);

@@ -27,14 +27,12 @@ Identity_i::~Identity_i (void)
 
 void
 Identity_i::get_name (CORBA::String_out name)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   name = this->name_.in ();
 }
 
 PortableServer::POA_ptr
 Identity_i::_default_POA (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }

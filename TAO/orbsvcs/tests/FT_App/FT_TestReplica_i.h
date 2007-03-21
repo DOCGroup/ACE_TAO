@@ -96,47 +96,35 @@ public:
 private:
   ///////////////////////////
   // override Replica methods
-  virtual void set (CORBA::Long value)
-      ACE_THROW_SPEC (( CORBA::SystemException));
+  virtual void set (CORBA::Long value);
 
-  virtual CORBA::Long increment (CORBA::Long delta)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::Long increment (CORBA::Long delta);
 
-  virtual CORBA::Long get (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::Long get (void);
 
-  virtual CORBA::Long counter (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::Long counter (void);
 
-  virtual void counter (CORBA::Long counter)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void counter (CORBA::Long counter);
 
-  virtual void die (FT_TEST::TestReplica::Bane when)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void die (FT_TEST::TestReplica::Bane when);
 
-  virtual void shutdown (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void shutdown (void);
 
   ///////////////////////////
   // override PullMonitorable
 
-  virtual CORBA::Boolean is_alive (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::Boolean is_alive (void);
 
   ///////////////////////////
   // override Updatable
 
-  virtual ::FT::State * get_update (void)
-    ACE_THROW_SPEC ((CORBA::SystemException, FT::NoUpdateAvailable));
+  virtual ::FT::State * get_update (void);
 
-  virtual void set_update (const FT::State & s)
-    ACE_THROW_SPEC ((CORBA::SystemException, FT::InvalidUpdate));
+  virtual void set_update (const FT::State & s);
 
-  virtual ::FT::State * get_state (void)
-    ACE_THROW_SPEC ((CORBA::SystemException, FT::NoStateAvailable));
+  virtual ::FT::State * get_state (void);
 
-  virtual void set_state (const FT::State & s)
-    ACE_THROW_SPEC ((CORBA::SystemException, FT::InvalidState));
+  virtual void set_state (const FT::State & s);
 
   ////////////////
   // Implement TAO_UpdateObjectGroup
@@ -145,8 +133,7 @@ private:
       const char * iogr,
       PortableGroup::ObjectGroupRefVersion version,
       CORBA::Boolean is_primary
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    );
 
   /////////////////
   // implementation

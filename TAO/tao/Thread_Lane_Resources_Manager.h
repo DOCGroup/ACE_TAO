@@ -14,13 +14,11 @@
 #define TAO_THREAD_LANE_RESOURCES_MANAGER_H
 
 #include /**/ "ace/pre.h"
-#include "ace/CORBA_macros.h"
+#include "ace/Service_Object.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
-#include "ace/Service_Object.h"
 
 #include /**/ "tao/TAO_Export.h"
 #include /**/ "tao/Versioned_Namespace.h"

@@ -99,9 +99,7 @@ public:
    * i.e., a context with <poa_id>, <counter> and <hash_map> has just
    * been created, and is registering with us.
    */
-  int bind (const char *poa_id,
-            ACE_UINT32 *&counter,
-            CONTEXT *hash_map);
+  int bind (const char *poa_id, ACE_UINT32 *&counter, CONTEXT *hash_map);
 
   /// Remove an entry for the Persistent Naming Context with <poa_id>
   /// from <index_> (i.e., this context has just been destroyed).

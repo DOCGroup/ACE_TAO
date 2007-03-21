@@ -11,16 +11,13 @@ class Time_impl :
 {
 public:
   virtual TimeModule::TimeOfDay
-    get_gmt (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    get_gmt (void);
 
-  void Shutdown (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void Shutdown (void);
 };
 
 
 TimeModule::TimeOfDay Time_impl::get_gmt (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 
   time_t time_now   = time(0);
@@ -37,7 +34,6 @@ TimeModule::TimeOfDay Time_impl::get_gmt (void)
 
 void
 Time_impl::Shutdown (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   exit(0);
 }
@@ -102,7 +98,8 @@ main(int argc, char * argv[])
                                     time_servant);
 
       // Get a reference after activating the object
-      TimeModule::Time_var tm = time_servant->_this();
+      CORBA::Object_var object = poa->id_to_reference (ServerId.in ());
+      TimeModule::Time_var tm = TimeModule::Time::_narrow (object.in ());
 
       // Get reference to initial naming context
       CORBA::Object_var name_obj =

@@ -20,6 +20,7 @@
 #include "ace/OS_NS_time.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_stdlib.h"
+#include "ace/Truncate.h"
 
 ACE_RCSID(ace, High_Res_Timer, "$Id$")
 
@@ -195,7 +196,7 @@ ACE_High_Res_Timer::global_scale_factor (void)
      defined (ACE_HAS_PENTIUM) || defined (ACE_HAS_ALPHA_TIMER)) && \
     !defined (ACE_HAS_HI_RES_TIMER) && \
     ((defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) || \
-     defined (ghs) || defined (__GNUG__) || defined (__KCC) || \
+     defined (ghs) || defined (__GNUG__) || \
      defined (__INTEL_COMPILER))
   // Check if the global scale factor needs to be set, and do if so.
   if (ACE_High_Res_Timer::global_scale_factor_status_ == 0)
@@ -285,7 +286,7 @@ ACE_High_Res_Timer::calibrate (const ACE_UINT32 usec,
         ACE_OS::gettimeofday () - actual_start;
 
       // Store the sample.
-      delta_hrtime.sample (ACE_HRTIME_CONVERSION (stop - start));
+      delta_hrtime.sample (ACE_Utils::truncate_cast<ACE_INT32> (stop - start));
       actual_sleeps.sample (actual_delta.msec () * 100u);
     }
 
@@ -327,18 +328,18 @@ ACE_High_Res_Timer::dump (void) const
              start_incr_.hi (), start_incr_.lo ()));
 #else  /* ! ACE_LACKS_LONGLONG_T */
   ACE_DEBUG ((LM_DEBUG,
-             ACE_LIB_TEXT (":\nstart_.hi ():     %8x; start_.lo ():      %8x;\n")
-             ACE_LIB_TEXT ("end_.hi ():       %8x; end_.lo ():        %8x;\n")
-             ACE_LIB_TEXT ("total_.hi ():     %8x; total_.lo ():      %8x;\n")
-             ACE_LIB_TEXT ("start_incr_.hi () %8x; start_incr_.lo (): %8x;\n"),
-             ACE_CU64_TO_CU32 (start_ >> 32),
-             ACE_CU64_TO_CU32 (start_ & 0xfffffffful),
-             ACE_CU64_TO_CU32 (end_ >> 32),
-             ACE_CU64_TO_CU32 (end_ & 0xfffffffful),
-             ACE_CU64_TO_CU32 (total_ >> 32),
-             ACE_CU64_TO_CU32 (total_ & 0xfffffffful),
-             ACE_CU64_TO_CU32 (start_incr_ >> 32),
-             ACE_CU64_TO_CU32 (start_incr_ & 0xfffffffful)));
+              ACE_LIB_TEXT (":\nstart_.hi ():     %8x; start_.lo ():      %8x;\n")
+              ACE_LIB_TEXT ("end_.hi ():       %8x; end_.lo ():        %8x;\n")
+              ACE_LIB_TEXT ("total_.hi ():     %8x; total_.lo ():      %8x;\n")
+              ACE_LIB_TEXT ("start_incr_.hi () %8x; start_incr_.lo (): %8x;\n"),
+              static_cast<ACE_UINT32> (start_ >> 32),
+              static_cast<ACE_UINT32> (start_ & 0xfffffffful),
+              static_cast<ACE_UINT32> (end_ >> 32),
+              static_cast<ACE_UINT32> (end_ & 0xfffffffful),
+              static_cast<ACE_UINT32> (total_ >> 32),
+              static_cast<ACE_UINT32> (total_ & 0xfffffffful),
+              static_cast<ACE_UINT32> (start_incr_ >> 32),
+              static_cast<ACE_UINT32> (start_incr_ & 0xfffffffful)));
 #endif /* ! ACE_LACKS_LONGLONG_T */
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
@@ -405,13 +406,8 @@ ACE_High_Res_Timer::elapsed_time (ACE_hrtime_t &nanoseconds) const
   // designed and tested to avoid overflow on machines that don't have
   // native 64-bit ints. In particular, division can be a problem.
   // For more background on this, please see bugzilla #1024.
-#if defined (ACE_WIN32)
-  nanoseconds = ACE_High_Res_Timer::elapsed_hrtime (this->end_, this->start_)
-            * (1024000000u / ACE_High_Res_Timer::global_scale_factor());
-#else
   nanoseconds = ACE_High_Res_Timer::elapsed_hrtime (this->end_, this->start_)
             * (1024000u / ACE_High_Res_Timer::global_scale_factor ());
-#endif /* ACE_WIN32 */
   // Caution - Borland has a problem with >>=, so resist the temptation.
   nanoseconds = nanoseconds >> 10;
   // Right shift is implemented for non native 64-bit ints
@@ -422,13 +418,8 @@ void
 ACE_High_Res_Timer::elapsed_time_incr (ACE_hrtime_t &nanoseconds) const
 {
   // Same as above.
-#if defined (ACE_WIN32)
-  nanoseconds = this->total_
-            * (1024000000u / ACE_High_Res_Timer::global_scale_factor());
-#else
   nanoseconds = this->total_
             * (1024000u / ACE_High_Res_Timer::global_scale_factor ());
-#endif
   // Caution - Borland has a problem with >>=, so resist the temptation.
   nanoseconds = nanoseconds >> 10;
 }

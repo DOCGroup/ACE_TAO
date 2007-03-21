@@ -16,8 +16,7 @@ ACE_INLINE
 void
 TAO::CSD::Strategy_Base::dispatch_request
                          (TAO_ServerRequest& server_request,
-                          TAO::Portable_Server::Servant_Upcall& upcall
-                          )
+                          TAO::Portable_Server::Servant_Upcall& upcall)
 {
   DispatchResult result;
 
@@ -27,8 +26,7 @@ TAO::CSD::Strategy_Base::dispatch_request
                                                    upcall.user_id(),
                                                    this->poa_.in(),
                                                    server_request.operation(),
-                                                   upcall.servant()
-                                                  );
+                                                   upcall.servant());
     }
   else
     {
@@ -36,8 +34,7 @@ TAO::CSD::Strategy_Base::dispatch_request
                                                upcall.user_id(),
                                                this->poa_.in(),
                                                server_request.operation(),
-                                               upcall.servant()
-                                              );
+                                               upcall.servant());
     }
 
   switch (result)
@@ -69,9 +66,7 @@ TAO::CSD::Strategy_Base::dispatch_request
       case DISPATCH_DEFERRED:
         // Perform the "default" dispatching strategy logic for this request
         // right now, using the current thread.
-        upcall.servant()->_dispatch(server_request,
-                                    (void*)&upcall
-                                   );
+        upcall.servant()->_dispatch(server_request, (void*)&upcall);
         break;
 
       default:
@@ -120,8 +115,7 @@ ACE_INLINE
 void
 TAO::CSD::Strategy_Base::servant_activated_event
                                 (PortableServer::Servant servant,
-                                 const PortableServer::ObjectId& oid
-                                 )
+                                 const PortableServer::ObjectId& oid)
 {
   this->servant_activated_event_i(servant, oid);
 }
@@ -130,8 +124,7 @@ ACE_INLINE
 void
 TAO::CSD::Strategy_Base::servant_deactivated_event
                                 (PortableServer::Servant servant,
-                                 const PortableServer::ObjectId& oid
-                                 )
+                                 const PortableServer::ObjectId& oid)
 {
   this->servant_deactivated_event_i(servant, oid);
 }

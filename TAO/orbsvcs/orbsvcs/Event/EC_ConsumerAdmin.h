@@ -63,8 +63,7 @@ public:
 
   // = The RtecEventChannelAdmin::ConsumerAdmin methods...
   virtual RtecEventChannelAdmin::ProxyPushSupplier_ptr
-      obtain_push_supplier (void)
-          ACE_THROW_SPEC ((CORBA::SystemException));
+      obtain_push_supplier (void);
 
   // = The PortableServer::ServantBase methods
   virtual PortableServer::POA_ptr _default_POA (void);

@@ -2,7 +2,7 @@
 // $Id$
 
 // In the future, other ssl libraries could be supported
-// by creating a new xyzssl.mpb similar to openssl.mpb. 
+// by creating a new xyzssl.mpb similar to openssl.mpb.
 // You would then derive the following project from this base.
 project : acelib, ssl_full, ssl_for_tao, ace_openssl {
 

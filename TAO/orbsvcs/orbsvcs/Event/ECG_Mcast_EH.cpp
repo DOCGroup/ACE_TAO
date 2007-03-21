@@ -131,7 +131,6 @@ TAO_ECG_Mcast_EH::handle_input (ACE_HANDLE fd)
 void
 TAO_ECG_Mcast_EH::update_consumer (
          const RtecEventChannelAdmin::ConsumerQOS& sub)
-      ACE_THROW_SPEC ((CORBA::SystemException))
 {
   Address_Set multicast_addresses;
 
@@ -147,7 +146,6 @@ void
 TAO_ECG_Mcast_EH::compute_required_subscriptions (
     const RtecEventChannelAdmin::ConsumerQOS& sub,
     Address_Set& multicast_addresses)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::ULong count = sub.dependencies.length ();
   for (CORBA::ULong i = 0; i != count; ++i)
@@ -267,7 +265,6 @@ TAO_ECG_Mcast_EH::Observer::Observer (TAO_ECG_Mcast_EH* eh)
 void
 TAO_ECG_Mcast_EH::Observer::update_consumer (
     const RtecEventChannelAdmin::ConsumerQOS& sub)
-      ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (this->eh_)
     this->eh_->update_consumer (sub);
@@ -276,7 +273,6 @@ TAO_ECG_Mcast_EH::Observer::update_consumer (
 void
 TAO_ECG_Mcast_EH::Observer::update_supplier (
     const RtecEventChannelAdmin::SupplierQOS&)
-      ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 

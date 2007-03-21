@@ -43,35 +43,20 @@ public:
   ~Quoter_i (void);
   // Destructor
 
-  virtual CORBA::Long get_quote (const char *stock_name)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       Stock::Invalid_Stock,
-                       Stock::Invalid_Quoter));
+  virtual CORBA::Long get_quote (const char *stock_name);
   // Returns the current quote for the stock <stock_name>
 
   // = Lifecycle methods
 
   virtual CosLifeCycle::LifeCycleObject_ptr copy (CosLifeCycle::FactoryFinder_ptr there,
-                                                  const CosLifeCycle::Criteria &the_criteria)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       CosLifeCycle::NoFactory,
-                       CosLifeCycle::NotCopyable,
-                       CosLifeCycle::InvalidCriteria,
-                       CosLifeCycle::CannotMeetCriteria));
+                                                  const CosLifeCycle::Criteria &the_criteria);
   // Make a copy of this object
 
   virtual void move (CosLifeCycle::FactoryFinder_ptr there,
-                     const CosLifeCycle::Criteria &the_criteria)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       CosLifeCycle::NoFactory,
-                       CosLifeCycle::NotMovable,
-                       CosLifeCycle::InvalidCriteria,
-                       CosLifeCycle::CannotMeetCriteria));
+                     const CosLifeCycle::Criteria &the_criteria);
   // Move this object using <there>
 
-  virtual void remove (void)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       CosLifeCycle::NotRemovable));
+  virtual void remove (void);
   // Removes the object.
 
 private:
@@ -105,9 +90,7 @@ public:
   int init (void);
   // Initialize everything in the factory
 
-  virtual Stock::Quoter_ptr create_quoter (const char *name)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       Stock::Invalid_Quoter));
+  virtual Stock::Quoter_ptr create_quoter (const char *name);
   // Return the quoter by the id <name>.
 
 private:

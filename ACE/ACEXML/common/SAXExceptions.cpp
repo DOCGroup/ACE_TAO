@@ -72,7 +72,7 @@ ACEXML_SAXException::is_a (const ACEXML_Char *name)
 }
 
 void
-ACEXML_SAXException::print (void)
+ACEXML_SAXException::print (void) const
 {
   ACE_ERROR ((LM_ERROR,
               ACE_TEXT ("ACEXML: (%P|%t) %s: %s\n"),
@@ -130,7 +130,7 @@ ACEXML_SAXNotSupportedException::is_a (const ACEXML_Char *name)
 }
 
 void
-ACEXML_SAXNotSupportedException::print (void)
+ACEXML_SAXNotSupportedException::print (void) const
 {
   ACE_DEBUG ((LM_ERROR,
               ACE_TEXT ("ACEXML: (%P|%t) %s: %s\n"),
@@ -185,7 +185,7 @@ ACEXML_SAXNotRecognizedException::is_a (const ACEXML_Char *name)
 }
 
 void
-ACEXML_SAXNotRecognizedException::print (void)
+ACEXML_SAXNotRecognizedException::print (void) const
 {
   ACE_DEBUG ((LM_ERROR,
               ACE_TEXT ("ACEXML: (%P|%t) %s: %s\n"),
@@ -240,7 +240,7 @@ ACEXML_SAXParseException::is_a (const ACEXML_Char *name)
 }
 
 void
-ACEXML_SAXParseException::print (void)
+ACEXML_SAXParseException::print (void) const
 {
   ACE_ERROR ((LM_ERROR,
               ACE_TEXT ("ACEXML: (%P|%t) %s: %s\n"),

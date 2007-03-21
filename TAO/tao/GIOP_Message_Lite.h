@@ -24,7 +24,6 @@
 
 #include "tao/Pluggable_Messaging_Utils.h"
 #include "tao/GIOP_Utils.h"
-#include "tao/SystemException.h"
 #include "tao/CDR.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -141,7 +140,7 @@ public:
   virtual int generate_exception_reply (
       TAO_OutputCDR &cdr,
       TAO_Pluggable_Reply_Params_Base &params,
-      CORBA::Exception &x
+      const CORBA::Exception &x
     );
 
   /// Consolidate fragmented message with associated fragments, being
@@ -252,8 +251,7 @@ private:
   int write_reply_header (
       TAO_OutputCDR &output,
       TAO_Pluggable_Reply_Params_Base &reply
-      )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+      );
 
   /// Writes the locate _reply message in to the <output>
   int write_locate_reply_mesg (

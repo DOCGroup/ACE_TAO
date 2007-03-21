@@ -31,19 +31,12 @@ TAO_Notify_StructuredProxyPushConsumer::release (void)
 
 CosNotifyChannelAdmin::ProxyType
 TAO_Notify_StructuredProxyPushConsumer::MyType (void)
-  ACE_THROW_SPEC ((
-                   CORBA::SystemException
-                   ))
 {
   return CosNotifyChannelAdmin::PUSH_STRUCTURED;
 }
 
 void
 TAO_Notify_StructuredProxyPushConsumer::connect_structured_push_supplier (CosNotifyComm::StructuredPushSupplier_ptr push_supplier)
-  ACE_THROW_SPEC ((
-                   CORBA::SystemException
-                   , CosEventChannelAdmin::AlreadyConnected
-                   ))
 {
   // Convert Supplier to Base Type
   TAO_Notify_StructuredPushSupplier * supplier;
@@ -58,10 +51,6 @@ TAO_Notify_StructuredProxyPushConsumer::connect_structured_push_supplier (CosNot
 
 void
 TAO_Notify_StructuredProxyPushConsumer::push_structured_event (const CosNotification::StructuredEvent & notification)
-  ACE_THROW_SPEC ((
-                   CORBA::SystemException
-                   , CosEventComm::Disconnected
-                   ))
 {
   // Check if we should proceed at all.
   if (this->admin_properties().reject_new_events () == 1
@@ -79,9 +68,6 @@ TAO_Notify_StructuredProxyPushConsumer::push_structured_event (const CosNotifica
 
 void
 TAO_Notify_StructuredProxyPushConsumer::disconnect_structured_push_consumer (void)
-  ACE_THROW_SPEC ((
-                   CORBA::SystemException
-                   ))
 {
   TAO_Notify_StructuredProxyPushConsumer::Ptr guard( this );
   this->destroy ();

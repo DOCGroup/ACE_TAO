@@ -25,24 +25,19 @@ public:
   PortableServer::POA_ptr _default_POA (void);
   // Returns the Default POA of this servant
 
-  void method (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void method (void);
   // A twoway operation.
 
-  void oneway_method (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void oneway_method (void);
   // A oneway operation.
 
-  void timed_method (CORBA::ULong timeout)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void timed_method (CORBA::ULong timeout);
   // A timed twoway operation.
 
-  void timed_oneway_method (CORBA::ULong timeout)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void timed_oneway_method (CORBA::ULong timeout);
   // A timed twoway operation.
 
-  void shutdown (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void shutdown (void);
   // Shutdown the ORB
 
   void sleep (CORBA::ULong timeout,

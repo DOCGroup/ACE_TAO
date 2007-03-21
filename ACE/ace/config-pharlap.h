@@ -34,7 +34,10 @@
 #define ACE_LACKS_TCP_NODELAY
 #define ACE_LACKS_MSG_WFMO
 #define ACE_LACKS_WIN32_MOVEFILEEX
+#define ACE_LACKS_WIN32_REGISTRY
 #define ACE_LACKS_WIN32_SECURITY_DESCRIPTORS
+#define ACE_LACKS_WIN32_SERVICES
+#define ACE_LACKS_WIN32_SETFILEPOINTEREX
 
 // There's no host table, by default. So using "localhost" won't work.
 // If your system does have the ability to use "localhost" and you want to,
@@ -56,6 +59,8 @@
 // Let the config-win32.h file do its thing
 #undef ACE_CONFIG_H
 #include "ace/config-win32.h"
+// Now remove things that desktop/server Windows has but Pharlap ETS doesn't.
+#undef ACE_HAS_INTERLOCKED_EXCHANGEADD
 #undef ACE_HAS_WCHAR
 
 #include /**/ <embkern.h>
@@ -63,6 +68,13 @@
 # include /**/ <embtcpip.h>
 #define ACE_LACKS_IP_ADD_MEMBERSHIP
 #endif /* ACE_HAS_PHARLAP_RT */
+
+// Although IN_CLASSD is defined in both winsock.h and winsock2.h, it ends
+// up undefined for Pharlap ETS builds. If this is the case, set things up
+// so nothing looks like class D.
+#if !defined (IN_CLASSD)
+#  define IN_CLASSD(i) (0)
+#endif
 
 #include /**/ "ace/post.h"
 #endif /* ACE_CONFIG_PHARLAP_H */

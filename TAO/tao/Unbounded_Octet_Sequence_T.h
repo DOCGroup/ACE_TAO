@@ -24,6 +24,7 @@
 #include "tao/Basic_Types.h"
 #include "ace/Message_Block.h"
 #include "ace/OS_Memory.h"
+#include "ace/checked_iterator.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -151,7 +152,9 @@ public:
             unbounded_value_sequence<CORBA::Octet> tmp(length);
             tmp.length_ = length;
             element_traits::copy_range(
-              buffer_, buffer_ + length, tmp.buffer_);
+              buffer_,
+              buffer_ + length,
+              ACE_make_checked_array_iterator (tmp.buffer_, tmp.length_));
             swap(tmp);
           }
         return;
@@ -160,7 +163,9 @@ public:
     unbounded_value_sequence<CORBA::Octet> tmp(length);
     tmp.length_ = length;
     element_traits::copy_range(
-        buffer_, buffer_ + length_, tmp.buffer_);
+      buffer_,
+      buffer_ + length_,
+      ACE_make_checked_array_iterator (tmp.buffer_, tmp.length_));
     element_traits::initialize_range(
         tmp.buffer_ + length_, tmp.buffer_ + length);
     swap(tmp);

@@ -75,10 +75,14 @@ push (@file_list, "$opt_l");
 }
 
 if (scalar(@file_list) == 0) {
-push (@file_list, "/bin/ace_tests.lst");
-push (@file_list, "/bin/tao_orb_tests.lst") if -d "$ACE_ROOT/TAO";
-push (@file_list, "/bin/tao_other_tests.lst") if -d "$ACE_ROOT/TAO";
-push (@file_list, "/bin/ciao_tests.lst") if -d "$ACE_ROOT/TAO/CIAO";
+    push (@file_list, "/bin/ace_tests.lst");
+    if (-d $TAO_ROOT || -d "$ACE_ROOT/TAO") {
+        push (@file_list, "/bin/tao_orb_tests.lst");
+        push (@file_list, "/bin/tao_other_tests.lst");
+    }
+    if (-d $CIAO_ROOT || -d "$ACE_ROOT/TAO/CIAO") {
+        push (@file_list, "/bin/ciao_tests.lst");
+    }
 }
 
 $startdir = getcwd();
@@ -122,10 +126,14 @@ foreach my $test_lst (@file_list) {
         if ($directory =~ m:^TAO/(.*):) {
           $directory = $1;
         }
+        if ($directory =~ m:^CIAO/(.*):) {
+          $directory = $1;
+        }
 
         $status = undef;
         foreach my $path ($ACE_ROOT."/$directory",
                           $TAO_ROOT."/$directory",
+                          $CIAO_ROOT."/$directory",
                           $startdir."/$directory",
                           $startdir."/$orig_dir") {
           if (-d $path && ($status = chdir ($path))) {

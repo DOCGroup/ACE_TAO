@@ -23,23 +23,20 @@ public:
   void dump_results (void);
 
   // = The skeleton methods
-  virtual void run_test (Test::Crashed_Callback_ptr callback)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void run_test (Test::Crashed_Callback_ptr callback);
 
 private:
   /// Call the are_you_there callback multiple times.
   /**
    * @return Number of exceptions raised
    */
-  int call_are_you_there (Test::Crashed_Callback_ptr callback)
-    ACE_THROW_SPEC (());
+  int call_are_you_there (Test::Crashed_Callback_ptr callback);
 
   /// Call the test_oneway method mutiple times.
   /**
    * @return Number of exceptions raised
    */
-  int call_test_oneway (Test::Crashed_Callback_ptr callback)
-    ACE_THROW_SPEC (());
+  int call_test_oneway (Test::Crashed_Callback_ptr callback);
 
 private:
   /// Count the number of tests executed

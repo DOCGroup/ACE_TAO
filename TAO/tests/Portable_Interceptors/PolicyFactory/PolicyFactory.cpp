@@ -11,19 +11,15 @@ ACE_RCSID (PolicyFactory,
 CORBA::Policy_ptr
 PolicyFactory::create_policy (CORBA::PolicyType type,
                               const CORBA::Any & value)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   CORBA::PolicyError))
 {
   // Sanity check since this condition should be caught earlier by the
   // TAO_PolicyFactory_Registry.
   if (type != Test::POLICY_TYPE)
-      ACE_THROW_RETURN (CORBA::PolicyError (CORBA::BAD_POLICY_TYPE),
-                        CORBA::Policy::_nil ());
+      throw CORBA::PolicyError (CORBA::BAD_POLICY_TYPE);
 
   CORBA::ULong val;
   if (!(value >>= val))
-    ACE_THROW_RETURN (CORBA::INTERNAL (),
-                      CORBA::Policy::_nil ());
+    throw CORBA::INTERNAL ();
 
   Policy * p = 0;
   ACE_NEW_THROW_EX (p,

@@ -47,9 +47,7 @@ public:
 
   virtual void get_iterator (const char *pathname,
                              Web_Server::Content_Iterator_out contents,
-                             Web_Server::Metadata_Type_out metadata)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     Web_Server::Error_Result));
+                             Web_Server::Metadata_Type_out metadata);
   // This factory method returns a <Content_Iterator> that can be used
   // to read the <contents> associated with <pathname> one ``chunk''
   // at a time.  The <metadata> reports information about the

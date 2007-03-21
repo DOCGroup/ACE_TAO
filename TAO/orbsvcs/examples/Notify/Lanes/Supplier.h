@@ -64,17 +64,10 @@ protected:
   virtual void subscription_change (
         const CosNotification::EventTypeSeq & added,
         const CosNotification::EventTypeSeq & removed
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        CosNotifyComm::InvalidEventType
-      ));
+      );
 
   // = StructuredPushSupplier method
-  virtual void disconnect_structured_push_supplier (void)
-    ACE_THROW_SPEC ((
-                     CORBA::SystemException
-                     ));
+  virtual void disconnect_structured_push_supplier (void);
   /// = Data members
 
   /// ORB Objects.

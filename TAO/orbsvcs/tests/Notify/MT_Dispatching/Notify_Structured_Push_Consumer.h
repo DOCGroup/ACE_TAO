@@ -30,8 +30,7 @@ public:
                         unsigned int expected,
                         Notify_Test_Client& client);
 protected:
-  void push_structured_event (const CosNotification::StructuredEvent&)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void push_structured_event (const CosNotification::StructuredEvent&);
 
   ACE_CString name_;
   unsigned int expected_;

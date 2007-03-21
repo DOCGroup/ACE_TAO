@@ -34,12 +34,10 @@ public:
 
   /// Simple two-way operation used to excercise the ORB transport
   /// internals.
-  virtual void invoke_me (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void invoke_me (void);
 
   /// Shutdown the ORB.
-  virtual void shutdown (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void shutdown (void);
 
   /// Set the ORB to be shutdown by the shutdown() method in this
   /// class.

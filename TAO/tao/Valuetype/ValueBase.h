@@ -30,7 +30,6 @@
 #include "tao/Any_Insert_Policy_T.h"
 
 #include "ace/Basic_Types.h"
-#include "ace/CORBA_macros.h"
 #include "ace/Synch_Traits.h"
 #include "ace/Thread_Mutex.h"
 #include "ace/Atomic_Op.h"

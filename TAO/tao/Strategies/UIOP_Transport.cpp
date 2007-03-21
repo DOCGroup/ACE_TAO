@@ -80,10 +80,8 @@ TAO_UIOP_Transport::send (iovec *iov, int iovcnt,
                           size_t &bytes_transferred,
                           const ACE_Time_Value *max_wait_time)
 {
-  const ssize_t retval =
-    this->connection_handler_->peer ().sendv (iov,
-                                              iovcnt,
-                                              max_wait_time);
+  ssize_t const retval =
+    this->connection_handler_->peer ().sendv (iov, iovcnt, max_wait_time);
 
   if (retval > 0)
     bytes_transferred = retval;
@@ -136,15 +134,10 @@ TAO_UIOP_Transport::send_request (TAO_Stub *stub,
                                   int message_semantics,
                                   ACE_Time_Value *max_wait_time)
 {
-  if (this->ws_->sending_request (orb_core,
-                                  message_semantics) == -1)
+  if (this->ws_->sending_request (orb_core, message_semantics) == -1)
     return -1;
 
-  if (this->send_message (stream,
-                          stub,
-                          message_semantics,
-                          max_wait_time) == -1)
-
+  if (this->send_message (stream, stub, message_semantics, max_wait_time) == -1)
     return -1;
 
   this->first_request_sent();
@@ -190,8 +183,7 @@ int
 TAO_UIOP_Transport::messaging_init (CORBA::Octet major,
                                     CORBA::Octet minor)
 {
-  this->messaging_object_->init (major,
-                                 minor);
+  this->messaging_object_->init (major, minor);
   return 1;
 }
 

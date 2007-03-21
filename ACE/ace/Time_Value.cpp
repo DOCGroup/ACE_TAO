@@ -10,6 +10,7 @@ ACE_RCSID (ace,
 #endif /* __ACE_INLINE__ */
 
 #include "ace/Numeric_Limits.h"
+#include "ace/If_Then_Else.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -23,15 +24,8 @@ const ACE_Time_Value ACE_Time_Value::zero;
 // Its primary use is in time computations such as those used by the
 // dynamic subpriority strategies in the ACE_Dynamic_Message_Queue class.
 // Note: this object requires static construction.
-// Note: On Win64, time_t is 64 bits, yet the timeval members used
-// internally to ACE_Time_Value are still long. This makes time values
-// outside the LONG_MAX, LONG_MIN range very broken.
 const ACE_Time_Value ACE_Time_Value::max_time (
-#if !defined (ACE_WIN64)
   ACE_Numeric_Limits<time_t>::max (),
-#else
-  LONG_MAX,
-#endif
   ACE_ONE_SECOND_IN_USECS - 1);
 
 ACE_ALLOC_HOOK_DEFINE (ACE_Time_Value)
@@ -220,19 +214,29 @@ ACE_Time_Value::normalize (void)
 ACE_Time_Value &
 ACE_Time_Value::operator *= (double d)
 {
-  // double is long enough (16 digits) to not lose the accuracy.
-  double time_total =
+  // The floating type to be used in the computations.  It should be
+  // large enough to hold a time_t.  We actually want a floating type
+  // with enough digits in its mantissa to hold a time_t without
+  // losing precision.  For example, if FLT_RADIX is 2 and
+  // LDBL_MANT_DIG is 64, a long double has a 64 bit wide mantissa,
+  // which would be sufficient to hold a 64 bit time_t value without
+  // losing precision.
+  //
+  // For now we'll simply go with long double if it is larger than
+  // time_t.  We're hosed if long double isn't large enough.
+  typedef ACE::If_Then_Else<(sizeof (double) > sizeof (time_t)),
+                            double,
+                            long double>::result_type float_type;
+
+  float_type time_total =
     (this->sec ()
-     + static_cast<double> (this->usec ()) / ACE_ONE_SECOND_IN_USECS) * d;
+     + static_cast<float_type> (this->usec ()) / ACE_ONE_SECOND_IN_USECS) * d;
 
   // shall we saturate the result?
-#if !defined(ACE_LACKS_NUMERIC_LIMITS) && !defined (ACE_WIN64)
-  static const double max_int = std::numeric_limits<time_t>::max () + 0.999999;
-  static const double min_int = std::numeric_limits<time_t>::min () - 0.999999;
-#else
-  static const double max_int = LONG_MAX + 0.999999;
-  static const double min_int = LONG_MIN - 0.999999;
-#endif
+  static const float_type max_int =
+    ACE_Numeric_Limits<time_t>::max () + 0.999999;
+  static const float_type min_int =
+    ACE_Numeric_Limits<time_t>::min () - 0.999999;
 
   if (time_total > max_int)
     time_total = max_int;

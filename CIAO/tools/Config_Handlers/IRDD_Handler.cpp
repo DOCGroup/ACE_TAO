@@ -2,7 +2,7 @@
 
 #include "IRDD_Handler.h"
 #include "Basic_Deployment_Data.hpp"
-#include "ciao/Deployment_DataC.h"
+#include "DAnCE/Deployment/Deployment_DataC.h"
 #include "Property_Handler.h"
 #include "ciao/CIAO_common.h"
 
@@ -22,9 +22,8 @@ namespace CIAO
 
 
     void
-    IRDD_Handler::instance_resource_deployment_descr (
-                                                      const InstanceResourceDeploymentDescription& desc,
-                                                      Deployment::InstanceResourceDeploymentDescription& toconfig)
+    IRDD_Handler::handle_irdd (const InstanceResourceDeploymentDescription& desc,
+			       Deployment::InstanceResourceDeploymentDescription& toconfig)
       throw (Config_Error)
     {
       CIAO_TRACE("IRDD_Handler::instance_resource_deployment_descr");

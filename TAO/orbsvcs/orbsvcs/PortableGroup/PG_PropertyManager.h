@@ -65,30 +65,20 @@ public:
 
   /// Set the default properties to be used by all object groups.
   virtual void set_default_properties (
-      const PortableGroup::Properties & props)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableGroup::InvalidProperty,
-                     PortableGroup::UnsupportedProperty));
+      const PortableGroup::Properties & props);
 
   /// Get the default properties used by all object groups.
-  virtual PortableGroup::Properties * get_default_properties ()
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual PortableGroup::Properties * get_default_properties ();
 
   /// Remove default properties.
   virtual void remove_default_properties (
-      const PortableGroup::Properties & props)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableGroup::InvalidProperty,
-                     PortableGroup::UnsupportedProperty));
+      const PortableGroup::Properties & props);
 
   /// Set properties associated with a given Member type.  These
   /// properties override the default properties.
   virtual void set_type_properties (
       const char * type_id,
-      const PortableGroup::Properties & overrides)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableGroup::InvalidProperty,
-                     PortableGroup::UnsupportedProperty));
+      const PortableGroup::Properties & overrides);
 
   /**
    * Return the properties associated with a give Replica type.  These
@@ -96,16 +86,12 @@ public:
    * addition to the default properties that were not overridden.
    */
   virtual PortableGroup::Properties * get_type_properties (
-      const char * type_id)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+      const char * type_id);
 
   /// Remove the given properties associated with the Replica type ID.
   virtual void remove_type_properties (
       const char * type_id,
-      const PortableGroup::Properties & props)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableGroup::InvalidProperty,
-                     PortableGroup::UnsupportedProperty));
+      const PortableGroup::Properties & props);
 
   /**
    * Dynamically set the properties associated with a given object
@@ -115,11 +101,7 @@ public:
    */
   virtual void set_properties_dynamically (
       PortableGroup::ObjectGroup_ptr object_group,
-      const PortableGroup::Properties & overrides)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableGroup::ObjectGroupNotFound,
-                     PortableGroup::InvalidProperty,
-                     PortableGroup::UnsupportedProperty));
+      const PortableGroup::Properties & overrides);
 
   /**
    * Return the properties currently in use by the given object
@@ -129,9 +111,7 @@ public:
    * that weren't overridden.
    */
   virtual PortableGroup::Properties * get_properties (
-      PortableGroup::ObjectGroup_ptr object_group)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableGroup::ObjectGroupNotFound));
+      PortableGroup::ObjectGroup_ptr object_group);
 
   //@}
 
@@ -148,10 +128,7 @@ private:
   /// Remove properties "to_be_removed" from the given list of
   /// properties.
   void remove_properties (const PortableGroup::Properties & to_be_removed,
-                          PortableGroup::Properties &properties)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableGroup::InvalidProperty,
-                     PortableGroup::UnsupportedProperty));
+                          PortableGroup::Properties &properties);
 
 private:
 

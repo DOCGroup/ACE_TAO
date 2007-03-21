@@ -433,7 +433,14 @@ run_notify_purge_test (void)
                   status));
     // Fifth test:
     r->notify (n2);
-    // <ap> destructor should cause n2's notify to be cancelled.
+
+    // The destructor of the event handler no longer removes the
+    // notifications.  It is the application's responsability to do
+    // so.
+    r->purge_pending_notifications(n2,
+				   ACE_Event_Handler::ALL_EVENTS_MASK);
+    r->purge_pending_notifications(&n1,
+				   ACE_Event_Handler::ALL_EVENTS_MASK);
   }
 
   ACE_Time_Value t (1);
@@ -446,10 +453,6 @@ int
 run_main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("Reactor_Notify_Test"));
-
-  // To automatically delete the ACE_Reactor instance at program
-  // termination:
-  auto_ptr<ACE_Reactor> r (ACE_Reactor::instance ());
 
   int test_result = 0;       // Innocent until proven guilty
 

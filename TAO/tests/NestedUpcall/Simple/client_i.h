@@ -9,8 +9,7 @@ public:
             server_ptr s);
   // Constructor.
 
-  void ping (CORBA::UShort time_to_live)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void ping (CORBA::UShort time_to_live);
 
 private:
   int quiet_;

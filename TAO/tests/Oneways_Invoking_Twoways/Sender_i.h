@@ -33,14 +33,11 @@ public:
   virtual ~Sender_i (void);
 
   // = The skeleton methods
-  virtual void active_objects (CORBA::Short ao)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void active_objects (CORBA::Short ao);
 
-  virtual void send_ready_message (Test::Receiver_ptr receiver)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void send_ready_message (Test::Receiver_ptr receiver);
 
-  virtual void ping (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void ping (void);
 
 private:
   /// Our local ORB ptr

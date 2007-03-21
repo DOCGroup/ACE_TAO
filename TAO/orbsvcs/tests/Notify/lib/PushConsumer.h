@@ -80,19 +80,12 @@ protected:
   virtual void disconnect_from_proxy (void);
 
   // = PushConsumer methods
-  virtual void disconnect_push_consumer (void)
-    ACE_THROW_SPEC ((
-                     CORBA::SystemException
-                     ));
+  virtual void disconnect_push_consumer (void);
 
  /// Default does nothing.
     void push (
         const CORBA::Any & data
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        CosEventComm::Disconnected
-      ));
+      );
 };
 
 #if defined (__ACE_INLINE__)

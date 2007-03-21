@@ -1,23 +1,19 @@
 // -*- C++ -*-
-//
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    DynamicInterface
-//
-// = FILENAME
-//    ExceptionList.h
-//
-// = DESCRIPTION
-//    This file defines the ExceptionList datatype used in
-//    dynamic invocations.
-//
-// = AUTHOR
-//     Copyright 1994-1995 by Sun Microsystems Inc.
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    ExceptionList.h
+ *
+ *  $Id$
+ *
+ *  This file defines the ExceptionList datatype used in
+ *  dynamic invocations.
+ *
+ *
+ *  @author  Copyright 1994-1995 by Sun Microsystems Inc.
+ */
+//=============================================================================
+
 
 #ifndef TAO_CORBA_EXCEPTIONLIST_H
 #define TAO_CORBA_EXCEPTIONLIST_H
@@ -39,7 +35,6 @@
 
 #include "ace/Unbounded_Queue.h"
 #include "ace/Atomic_Op.h"
-#include "ace/CORBA_macros.h"
 #include "ace/Synch_Traits.h"
 
 #if defined (TAO_EXPORT_MACRO)
@@ -71,8 +66,7 @@ namespace CORBA
 
     /// Constructor - initialize given a length and an array of
     /// TypeCodes.
-    ExceptionList (CORBA::ULong len,
-                   CORBA::TypeCode_ptr *tc_list);
+    ExceptionList (CORBA::ULong len, CORBA::TypeCode_ptr *tc_list);
 
     /// Destructor.
     ~ExceptionList (void);

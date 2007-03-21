@@ -96,7 +96,7 @@ public:
   // = Initialization and termination methods.
 
   /// Initialize a <Cache_Map_Manager> with <caching_strategy> and
-  /// <size> entries.
+  /// @a size entries.
   ACE_Cache_Map_Manager (CACHING_STRATEGY &caching_strategy,
                          size_t size = ACE_DEFAULT_MAP_SIZE,
                          ACE_Allocator *alloc = 0);
@@ -105,7 +105,7 @@ public:
   /// resources.
   virtual ~ACE_Cache_Map_Manager (void);
 
-  /// Initialize a cache with size <length>.
+  /// Initialize a cache with size @a length.
   int open (size_t length = ACE_DEFAULT_MAP_SIZE,
             ACE_Allocator *alloc = 0);
 
@@ -113,7 +113,7 @@ public:
   int close (void);
 
   /**
-   * Associate <key> with <value>.  If <key> is already in the CMAP_TYPE
+   * Associate @a key with @a value.  If @a key is already in the CMAP_TYPE
    * then the ENTRY is not changed.  Returns 0 if a new entry is bound
    * successfully, returns 1 if an attempt is made to bind an existing
    * entry, and returns -1 if failures occur.
@@ -123,17 +123,17 @@ public:
 
   /**
    * Lookup entry<key,value> in the cache. If it is not found, returns -1.
-   * If the <key> is located in the CMAP_TYPE object, the CACHING_STRATEGY is
+   * If the @a key is located in the CMAP_TYPE object, the CACHING_STRATEGY is
    * notified of it via notify_find (int result, ATTRIBUTES &attribute).
    * If notify_find also returns 0 (success), then this function returns
-   * 0 (success) and sets the cached value in <value>.
+   * 0 (success) and sets the cached value in @a value.
    */
   int find (const KEY &key,
             VALUE &value);
 
   /**
    * Lookup entry<key,value> in the cache. If it is not found, returns -1.
-   * If the <key> is located in the CMAP_TYPE object, the CACHING_STRATEGY is
+   * If the @a key is located in the CMAP_TYPE object, the CACHING_STRATEGY is
    * notified of it via notify_find (int result, ATTRIBUTES &attribute).
    * If notify_find also returns 0 (success), then this function returns
    * 0 (success).
@@ -141,7 +141,7 @@ public:
   int find (const KEY &key);
 
   /**
-   * Reassociate the <key> with <value>. If the <key> already exists
+   * Reassociate the @a key with @a value. If the @a key already exists
    * in the cache then returns 1, on a new bind returns 0 and returns
    * -1 in case of any failures.
    */
@@ -149,23 +149,23 @@ public:
               const VALUE &value);
 
   /**
-   * Reassociate <key> with <value>, storing the old value into the
-   * "out" parameter <old_value>.  The function fails if <key> is not
+   * Reassociate @a key with @a value, storing the old value into the
+   * "out" parameter @a old_value.  The function fails if @a key is not
    * in the cache for caches that do not allow user specified keys.
    * However, for caches that allow user specified keys, if the key is
-   * not in the cache, a new <key>/<value> association is created.
+   * not in the cache, a new @a key / @a value association is created.
    */
   int rebind (const KEY &key,
               const VALUE &value,
               VALUE &old_value);
 
   /**
-   * Reassociate <key> with <value>, storing the old key and value
-   * into the "out" parameters <old_key> and <old_value>.  The
-   * function fails if <key> is not in the cache for caches that do
+   * Reassociate @a key with @a value, storing the old key and value
+   * into the "out" parameters @a old_key and @a old_value.  The
+   * function fails if @a key is not in the cache for caches that do
    * not allow user specified keys.  However, for caches that allow
    * user specified keys, if the key is not in the cache, a new
-   * <key>/<value> association is created.
+   * @a key / @a value association is created.
    */
   int rebind (const KEY &key,
               const VALUE &value,
@@ -173,21 +173,21 @@ public:
               VALUE &old_value);
 
   /**
-   * Associate <key> with <value> if and only if <key> is not in the
-   * cache.  If <key> is already in the cache, then the <value>
+   * Associate @a key with @a value if and only if @a key is not in the
+   * cache.  If @a key is already in the cache, then the @a value
    * parameter is overwritten with the existing value in the
-   * cache. Returns 0 if a new <key>/<value> association is created.
+   * cache. Returns 0 if a new @a key / @a value association is created.
    * Returns 1 if an attempt is made to bind an existing entry.  This
    * function fails for maps that do not allow user specified keys.
    */
   int trybind (const KEY &key,
                VALUE &value);
 
-  /// Remove <key> from the cache.
+  /// Remove @a key from the cache.
   int unbind (const KEY &key);
 
-  /// Remove <key> from the cache, and return the <value> associated with
-  /// <key>.
+  /// Remove @a key from the cache, and return the @a value associated with
+  /// @a key.
   int unbind (const KEY &key,
               VALUE &value);
 

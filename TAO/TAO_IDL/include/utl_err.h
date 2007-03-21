@@ -228,9 +228,6 @@ public:
   void supports_error (UTL_ScopedName *n,
                        AST_Decl *d);
 
-  // Report an attempt to have a derived component or home support something.
-  void derived_supports_error (UTL_ScopedName *n);
-
   // Report an attempt to illegally inherit from an abstract type.
   void abstract_inheritance_error (UTL_ScopedName *v,
                                    UTL_ScopedName *i);

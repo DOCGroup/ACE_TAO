@@ -22,16 +22,10 @@ public:
 
     virtual void push (
         const RtecEventComm::EventSet & data
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
+      );
 
     virtual void disconnect_push_consumer (
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
+      );
 private:
   CORBA::ORB_var orb_;
   PushConsumer_impl(const PushConsumer_impl&);

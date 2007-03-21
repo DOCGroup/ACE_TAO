@@ -52,16 +52,16 @@ print STDERR "\n********** RTCORBA SERVER_DECLARED Priority Unit Test\n\n";
 
 $SV->Spawn ();
 
-if (PerlACE::waitforfile_timed ($iorfile2, 10) == -1) 
+if (PerlACE::waitforfile_timed ($iorfile2, $PerlACE::wait_interval_for_process_creation) == -1)
 {
     $server = $SV->TimedWait (1);
-    if ($server == 2) 
+    if ($server == 2)
     {
         # Mark as no longer running to avoid errors on exit.
         $SV->{RUNNING} = 0;
         exit $status;
-    } 
-    else 
+    }
+    else
     {
         print STDERR "ERROR: cannot find file <$iorfile2>\n";
         $SV->Kill ();
@@ -71,7 +71,7 @@ if (PerlACE::waitforfile_timed ($iorfile2, 10) == -1)
 
 $client = $CL->SpawnWaitKill (60);
 
-if ($client != 0) 
+if ($client != 0)
 {
     print STDERR "ERROR: client returned $client\n";
     $status = 1;
@@ -79,7 +79,7 @@ if ($client != 0)
 
 $server = $SV->WaitKill (60);
 
-if ($server != 0) 
+if ($server != 0)
 {
     print STDERR "ERROR: server returned $server\n";
     $status = 1;

@@ -9,7 +9,7 @@
 
 #include "tao/debug.h"
 #include "tao/ORB_Core.h"
-#include "tao/Environment.h"
+#include "tao/SystemException.h"
 #include "tao/Base_Transport_Property.h"
 #include "tao/Protocols_Hooks.h"
 #include "ace/OS_NS_strings.h"

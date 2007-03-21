@@ -79,7 +79,6 @@ Supplier::disconnect (void)
 
 void
 Supplier::push (const RtecEventComm::EventSet &events)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // ACE_DEBUG ((LM_DEBUG, "Supplier pushing (%d,%d)\n",
   // events[0].header.type, events[0].header.source));
@@ -96,7 +95,6 @@ Supplier::push (const RtecEventComm::EventSet &events)
 
 void
 Supplier::disconnect_push_supplier (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
   this->proxy_consumer_ =
@@ -105,7 +103,6 @@ Supplier::disconnect_push_supplier (void)
 
 PortableServer::POA_ptr
 Supplier::_default_POA (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return PortableServer::POA::_duplicate (this->default_POA_.in ());
 }

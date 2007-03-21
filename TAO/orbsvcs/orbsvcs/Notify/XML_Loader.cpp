@@ -78,13 +78,14 @@ namespace TAO_Notify
     if (result)
     {
       this->live_ = false;
-      ACEXML_FileCharStream* fstm = new ACEXML_FileCharStream;
+      auto_ptr<ACEXML_FileCharStream> fstm (new ACEXML_FileCharStream);
       // xml input source will take ownership
 
       if (fstm->open (this->file_name_.c_str ()) == 0)
       {
         // InputSource takes ownership
-        ACEXML_InputSource input (fstm);
+        ACEXML_InputSource input (fstm.get ());
+        (void) fstm.release ();
 
         ACEXML_Parser parser;
         parser.setContentHandler (this);
@@ -92,19 +93,17 @@ namespace TAO_Notify
         parser.setErrorHandler (this);
         parser.setEntityResolver (this);
 
-        ACEXML_TRY_NEW_ENV
+        try
         {
-          parser.parse (&input ACEXML_ENV_ARG_PARAMETER);
-          ACEXML_TRY_CHECK;
+          parser.parse (&input);
         }
-        ACEXML_CATCH (ACEXML_Exception, ex)
+        catch (const ACEXML_Exception& ex)
         {
           // The only way to find out what it is, it to let it print itself, so...
           ACE_ERROR ((LM_ERROR, "Unable to load \"%s\".\n Will try backup file.\n", this->file_name_.c_str ()));
           ex.print ();
           result = false;
         }
-        ACEXML_ENDTRY;
       }
       else
       {
@@ -129,13 +128,14 @@ namespace TAO_Notify
     ACE_ASSERT (root != 0);
     this->live_ = true;
 
-    ACEXML_FileCharStream* fstm = new ACEXML_FileCharStream;
+    auto_ptr<ACEXML_FileCharStream> fstm (new ACEXML_FileCharStream);
     // xml input source will take ownership
 
     if (fstm->open (this->file_name_.c_str ()) == 0)
     {
       // InputSource takes ownership
-      ACEXML_InputSource input (fstm);
+      ACEXML_InputSource input (fstm.get ());
+      (void) fstm.release ();
 
       ACEXML_Parser parser;
       parser.setContentHandler (this);
@@ -143,7 +143,7 @@ namespace TAO_Notify
       parser.setErrorHandler (this);
       parser.setEntityResolver (this);
 
-      ACEXML_TRY_NEW_ENV
+      try
       {
         object_stack_.push (root);
         parser.parse (&input ACEXML_ENV_ARG_PARAMETER);
@@ -152,14 +152,13 @@ namespace TAO_Notify
         Topology_Object* cur;
         object_stack_.pop (cur);
       }
-      ACEXML_CATCH (ACEXML_Exception, ex)
+      catch (const ACEXML_Exception& ex)
       {
         // The only way to find out what it is, it to let it print itself, so...
         ACE_ERROR ((LM_ERROR, "Unable to load \"%s\".\n", this->file_name_.c_str ()));
         ex.print ();
         throw CORBA::INTERNAL();
       }
-      ACEXML_ENDTRY;
     }
     else
     {
@@ -172,8 +171,8 @@ namespace TAO_Notify
   XML_Loader::startElement (const ACEXML_Char*,
     const ACEXML_Char*,
     const ACEXML_Char* name,
-    ACEXML_Attributes* xml_attrs ACEXML_ENV_ARG_DECL)
-    ACE_THROW_SPEC ( (ACEXML_SAXException))
+    ACEXML_Attributes* xml_attrs)
+        throw (ACEXML_SAXException)
   {
     ACE_ASSERT (name != 0);
     ACE_ASSERT (xml_attrs != 0);
@@ -194,14 +193,13 @@ namespace TAO_Notify
             ));
 
           ACE_CString cname (name);
-          Topology_Object* next = cur->load_child (
-            cname, id, attrs);
+          Topology_Object* next = cur->load_child (cname, id, attrs);
           ACE_ASSERT(next != 0);
           object_stack_.push (next);
         }
         catch (const CORBA::Exception& ex)
         {
-          ACEXML_THROW (ACEXML_SAXException (ex._info ().c_str ()));
+          throw ACEXML_SAXException (ex._info ().c_str ());
         }
       }
     }
@@ -210,18 +208,20 @@ namespace TAO_Notify
   void
   XML_Loader::endElement (const ACEXML_Char*,
     const ACEXML_Char*,
-    const ACEXML_Char* name ACEXML_ENV_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ( (ACEXML_SAXException))
+    const ACEXML_Char* name)
+        throw (ACEXML_SAXException)
   {
     ACE_UNUSED_ARG (name);
     if (this->live_)
     {
       ACE_ASSERT (object_stack_.size () > 0);
-      if (DEBUG_LEVEL > 5) ACE_DEBUG ((LM_INFO,
-        ACE_TEXT("(%P|%t) XML_Loader: End Element %s\n"),
-        name
-        ));
-      Topology_Object* cur;
+      if (DEBUG_LEVEL > 5)
+        {
+          ACE_DEBUG ((LM_INFO,
+                      ACE_TEXT("(%P|%t) XML_Loader: End Element %s\n"),
+                      name));
+        }
+      Topology_Object* cur = 0;
       object_stack_.pop (cur);
     }
   }

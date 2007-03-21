@@ -217,7 +217,12 @@ namespace ACE_Utils
         // MSVC. It appears that most platforms support sscanf though
         // so we need to use it directly.
         const int nScanned =
-          ::sscanf(uuid_string.c_str(),
+#if defined (ACE_HAS_TR24731_2005_CRT)
+          sscanf_s (
+#else
+          ::sscanf(
+#endif
+                   uuid_string.c_str(),
                    "%8x-%4x-%4x-%2x%2x-%2x%2x%2x%2x%2x%2x",
                    &timeLow,
                    &timeMid,
@@ -243,6 +248,24 @@ namespace ACE_Utils
     else
       {
         const int nScanned =
+#if defined (ACE_HAS_TR24731_2005_CRT)
+          sscanf_s (uuid_string.c_str(),
+                    "%8x-%4x-%4x-%2x%2x-%2x%2x%2x%2x%2x%2x-%s",
+                    &timeLow,
+                    &timeMid,
+                    &timeHiAndVersion,
+                    &clockSeqHiAndReserved,
+                    &clockSeqLow,
+                    &node[0],
+                    &node[1],
+                    &node[2],
+                    &node[3],
+                    &node[4],
+                    &node[5],
+                    thr_pid_buf,
+                    BUFSIZ
+                    );
+#else
           ::sscanf (uuid_string.c_str(),
                     "%8x-%4x-%4x-%2x%2x-%2x%2x%2x%2x%2x%2x-%s",
                     &timeLow,
@@ -258,6 +281,7 @@ namespace ACE_Utils
                     &node[5],
                     thr_pid_buf
                     );
+#endif /* ACE_HAS_TR24731_2005_CRT */
 
         if (nScanned != 12)
           {
@@ -311,7 +335,7 @@ namespace ACE_Utils
             return;
           }
         ACE_CString thr_pid_str (thr_pid_buf);
-        ssize_t pos = thr_pid_str.find ('-');
+        ssize_t pos = static_cast<ssize_t> (thr_pid_str.find ('-'));
         if (pos == -1)
           ACE_DEBUG ((LM_DEBUG,
                       "ACE_UUID::from_string_i - "
@@ -469,7 +493,14 @@ namespace ACE_Utils
   void
   UUID_Generator::get_systemtime (UUID_time & timestamp)
   {
-    const UUID_time timeOffset = ACE_UINT64_LITERAL (0x1B21DD213814000);
+    const UUID_time timeOffset =
+#if defined (ACE_LACKS_UNSIGNEDLONGLONG_T)
+      ACE_U_LongLong (ACE_INT64_LITERAL (0x1B21DD213814000));
+#elif defined (ACE_LACKS_LONGLONG_T)
+      ACE_U_LongLong (0x13814000u, 0x1B21DD2u);
+#else
+      ACE_UINT64_LITERAL (0x1B21DD213814000);
+#endif  /* ACE_LACKS_UNSIGNEDLONGLONG_T */
 
     /// Get the time of day, convert to 100ns ticks then add the offset.
     ACE_Time_Value now = ACE_OS::gettimeofday();

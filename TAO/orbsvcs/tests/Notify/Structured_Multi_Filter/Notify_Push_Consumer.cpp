@@ -78,7 +78,6 @@ Notify_Push_Consumer::Notify_Push_Consumer (const char* name,
 void
 Notify_Push_Consumer::_connect (CosNotifyChannelAdmin::ConsumerAdmin_ptr consumer_admin,
                                 CosNotifyChannelAdmin::EventChannel_ptr notify_channel)
-                                ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CosNotifyComm::StructuredPushConsumer_var objref =
     this->_this ();
@@ -133,7 +132,6 @@ static void validate_expression(bool expr, const char* msg)
 void
 Notify_Push_Consumer::push_structured_event (
   const CosNotification::StructuredEvent& event)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG((LM_DEBUG, "-"));
   received_++;

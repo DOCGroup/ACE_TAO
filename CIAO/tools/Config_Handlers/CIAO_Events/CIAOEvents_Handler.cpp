@@ -2,7 +2,7 @@
 #include "Utils/XML_Helper.h"
 #include "CIAOEvents_Handler.h"
 #include "CIAOEvents.hpp"
-#include "ciao/Deployment_EventsC.h"
+#include "DAnCE/Deployment/Deployment_EventsC.h"
 
 namespace CIAO
 {

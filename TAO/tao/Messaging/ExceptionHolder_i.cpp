@@ -43,9 +43,7 @@ namespace TAO
     this->count_ = exceptions_count;
   }
 
-  void ExceptionHolder::raise_exception (
-        void
-    )
+  void ExceptionHolder::raise_exception (void)
     {
       TAO_Messaging_Helper::exception_holder_raise (
         this->data_,
@@ -53,13 +51,11 @@ namespace TAO
         this->marshaled_exception ().get_buffer (),
         this->marshaled_exception ().length (),
         this->byte_order (),
-        this->is_system_exception ()
-       );
+        this->is_system_exception ());
       }
 
   void ExceptionHolder::raise_exception_with_list (
-      const ::Dynamic::ExceptionList &
-    )
+      const ::Dynamic::ExceptionList &)
     {
       // todo convert exceptionlist to something we can really use.
       this->raise_exception ();
@@ -84,14 +80,12 @@ namespace TAO
   }
 
   CORBA::ValueBase *
-  ExceptionHolderFactory::create_for_unmarshal (
-    void)
+  ExceptionHolderFactory::create_for_unmarshal (void)
   {
     TAO::ExceptionHolder* ret_val = 0;
     ACE_NEW_THROW_EX (ret_val,
                       ExceptionHolder,
                       CORBA::NO_MEMORY ());
-
     return ret_val;
   }
 

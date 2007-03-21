@@ -30,22 +30,18 @@ namespace TAO
 
   char *
   FT_ServerRequest_Interceptor::name (void)
-    ACE_THROW_SPEC ((CORBA::SystemException))
   {
     return CORBA::string_dup ("TAO_FT_ServerRequest_Interceptor");
   }
 
   void
   FT_ServerRequest_Interceptor::destroy (void)
-    ACE_THROW_SPEC ((CORBA::SystemException))
   {
   }
 
   void
   FT_ServerRequest_Interceptor::receive_request_service_contexts (
       PortableInterceptor::ServerRequestInfo_ptr ri)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableInterceptor::ForwardRequest))
   {
     // Check for the group version service context
     try
@@ -70,8 +66,6 @@ namespace TAO
   void
   FT_ServerRequest_Interceptor::receive_request (
       PortableInterceptor::ServerRequestInfo_ptr ri)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableInterceptor::ForwardRequest))
   {
     // Check for the group version service context
     CORBA::String_var op =
@@ -89,31 +83,24 @@ namespace TAO
   void
   FT_ServerRequest_Interceptor::send_reply (
       PortableInterceptor::ServerRequestInfo_ptr)
-    ACE_THROW_SPEC ((CORBA::SystemException))
   {
   }
 
   void
   FT_ServerRequest_Interceptor::send_exception (
       PortableInterceptor::ServerRequestInfo_ptr)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableInterceptor::ForwardRequest))
   {
   }
 
   void
   FT_ServerRequest_Interceptor::send_other (
       PortableInterceptor::ServerRequestInfo_ptr)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableInterceptor::ForwardRequest))
   {
   }
 
   void
   FT_ServerRequest_Interceptor::check_iogr_version (
       const IOP::ServiceContext &svc)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableInterceptor::ForwardRequest))
   {
     TAO_InputCDR cdr (reinterpret_cast<const char*> (svc.context_data.get_buffer ()),
                       svc.context_data.length ());
@@ -165,7 +152,6 @@ namespace TAO
   void
   FT_ServerRequest_Interceptor::update_iogr (
       PortableInterceptor::ServerRequestInfo_ptr ri)
-    ACE_THROW_SPEC ((CORBA::SystemException))
   {
     if (this->orb_.in () == 0)
       {

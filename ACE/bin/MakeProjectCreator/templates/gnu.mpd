@@ -93,6 +93,15 @@ CIDLC_DEP = <%cidlc_dep%>$(EXEEXT)
 <%if(cidlc_flags)%>
 CIDLC_FLAGS = <%cidlc_flags%>
 <%endif%>
+<%if(xsc_bin)%>
+XSC_BIN = <%xsc_bin%>
+<%endif%>
+<%if(xsc_dep)%>
+XSC_DEP = <%xsc_dep%>$(EXEEXT)
+<%endif%>
+<%if(xsc_flags)%>
+XSC_FLAGS = <%xsc_flags%>
+<%endif%>
 <%if(tao_idl3_to_idl2)%>
 TAO_IDL3_TO_IDL2 = <%tao_idl3_to_idl2%>
 <%endif%>
@@ -146,20 +155,21 @@ VSHDIR = <%targetoutdir%>.shobj/
 
 <%endif%>
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
-## We don't need the ACELIB setting from wrapper_macros.GNU
-ACELIB =
+<%if(!dds && version)%>
+
+ifeq ($(versioned_so),1)
+  SOVERSION = .<%version%>
+endif # versioned_so
+
+<%endif%>
+<%if(dds)%>
+include $(DDS_ROOT)/rules.dds.GNU
+<%endif%>
 <%if(ciao)%>
 include $(CIAO_ROOT)/rules.ciao.GNU
 <%endif%>
 <%if(tao)%>
-tao_dont_use_idl_make_rule = 1
 include $(TAO_ROOT)/rules.tao.GNU
-<%endif%>
-<%if(version)%>
-
-ifeq ($(versioned_so),1)
-SOVERSION = .<%version%>
-endif
 <%endif%>
 
 <%if(resource_files)%>
@@ -419,9 +429,9 @@ endif
 <%endfor%>
 <%if(libpaths)%>
 ifeq ($(VXWORKSLINK),true)
-LDLIBPATH     =<%foreach(libpaths)%> <%if(targetoutdir)%>-L<%libpath%>/<%targetoutdir%> <%endif%>-L<%libpath%><%endfor%>
+LDLIBPATH     =<%foreach(libpaths)%> <%if(targetoutdir)%>-L<%libpath%>/<%targetoutdir%> <%endif%>-L<%libpath%><%endfor%><%if(linkflags)%> <%linkflags%><%endif%>
 else
-LDFLAGS      +=<%foreach(libpaths)%> <%if(targetoutdir)%>-L<%libpath%>/<%targetoutdir%> <%endif%>-L<%libpath%><%endfor%>
+LDFLAGS      +=<%foreach(libpaths)%> <%if(targetoutdir)%>-L<%libpath%>/<%targetoutdir%> <%endif%>-L<%libpath%><%endfor%><%if(linkflags)%> <%linkflags%><%endif%>
 endif
 <%endif%>
 <%if(includes)%>
@@ -429,6 +439,9 @@ CPPFLAGS     +=<%foreach(includes)%> -I<%include%><%endfor%>
 <%endif%>
 <%if(macros)%>
 CPPFLAGS     +=<%foreach(macros)%> -D<%macro%><%endfor%>
+<%endif%>
+<%if(compile_flags)%>
+CPPFLAGS     += <%compile_flags%>
 <%endif%>
 <%if(dynamicflags)%>
 ifeq ($(shared_libs),1)
@@ -440,6 +453,11 @@ endif
 <%if(staticflags)%>
 ifeq ($(static_libs),1)
   CPPFLAGS +=<%foreach(staticflags)%> -D<%staticflag%><%endfor%>
+<%if(exename && link_groups)%>
+  ifeq ($(notdir $(CXX)), g++)
+    LDLIBS := -Wl,--start-group $(LDLIBS) -Wl,--end-group
+  endif
+<%endif%>
 endif
 <%endif%>
 
@@ -597,7 +615,7 @@ idl_stubs: $(ADDITIONAL_IDL_TARGETS)
 
 # This assignment forces make to run the idl_stubs
 # target before building any of the source files.
-FORCED_IDL_STUBS = <%source_files%>
+FORCED_IDL_STUBS = <%source_files%>  <%if(pch_source)%>$(ACE_PCH_SOURCE)<%endif%>
 <%foreach(custom_types)%>
 <%foreach(custom_type->input_files)%>
 <%if(custom_type->input_file->source_output_files)%>

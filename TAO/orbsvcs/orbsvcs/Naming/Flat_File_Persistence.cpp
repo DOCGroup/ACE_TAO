@@ -6,6 +6,8 @@
 #include "orbsvcs/Naming/Flat_File_Persistence.h"
 
 #include "ace/Log_Msg.h"
+#include "ace/Numeric_Limits.h"
+#include "ace/Auto_Ptr.h"
 #include "ace/OS_NS_sys_stat.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_fcntl.h"
@@ -216,11 +218,10 @@ TAO_NS_FlatFileStream::operator <<(
 }
 
 TAO_Storable_Base &
-TAO_NS_FlatFileStream::operator >>(
-                       TAO_NS_Persistence_Record &record)
+TAO_NS_FlatFileStream::operator >>(TAO_NS_Persistence_Record &record)
 {
   ACE_TRACE("TAO_NS_FlatFileStream::operator >>");
-  TAO_NS_Persistence_Record::Record_Type type;
+
   int temp_type_in;
   switch (fscanf(fl_, "%d\n", &temp_type_in))
     {
@@ -231,10 +232,13 @@ TAO_NS_FlatFileStream::operator >>(
       this->setstate (eofbit);
       return *this;
     }
-  type = (TAO_NS_Persistence_Record::Record_Type) temp_type_in;
-  record.type(type);
+  TAO_NS_Persistence_Record::Record_Type type =
+    (TAO_NS_Persistence_Record::Record_Type) temp_type_in;
+  record.type (type);
 
   int bufSize = 0;
+  ACE_CString::size_type const max_buf_len =
+    ACE_Numeric_Limits<ACE_CString::size_type>::max ();
 
   //id
   switch (fscanf(fl_, "%d\n", &bufSize))
@@ -246,18 +250,26 @@ TAO_NS_FlatFileStream::operator >>(
       this->setstate (eofbit);
       return *this;
     }
-  char *id = new char[bufSize+1];
-  //char *id;
-  //ACE_NEW_RETURN (id, char[bufSize+1], 1);
-  if (ACE_OS::fgets(ACE_TEXT_CHAR_TO_TCHAR(id), bufSize+1, fl_) == 0 &&
-      bufSize != 0)
+
+  if (bufSize < 0
+      || static_cast<ACE_CString::size_type> (bufSize) >= max_buf_len)
     {
       this->setstate (badbit);
       return *this;
     }
-  ACE_CString newId(id);
-  record.id(newId);
-  delete [] id;
+  {
+    ACE_Auto_Basic_Array_Ptr<char> the_id (new char[bufSize + 1]);
+    the_id[0] = '\0';
+    if (ACE_OS::fgets (ACE_TEXT_CHAR_TO_TCHAR (the_id.get ()),
+                       bufSize + 1,
+                       fl_) == 0
+        && bufSize != 0)
+      {
+        this->setstate (badbit);
+        return *this;
+      }
+    record.id (ACE_CString (the_id.get (), 0, false));
+  }
 
   //kind
   switch (fscanf(fl_, "%d\n", &bufSize))
@@ -269,19 +281,27 @@ TAO_NS_FlatFileStream::operator >>(
       this->setstate (eofbit);
       return *this;
     }
-  char *kind = new char[bufSize+1];
-  //char *kind;
-  //ACE_NEW (kind, char[bufSize+1]);
-  if (ACE_OS::fgets(ACE_TEXT_CHAR_TO_TCHAR(kind), bufSize+1, fl_) == 0 &&
-      bufSize != 0)
+
+  if (bufSize < 0
+      || static_cast<ACE_CString::size_type> (bufSize) >= max_buf_len)
     {
       this->setstate (badbit);
       return *this;
     }
-  kind[bufSize] = '\0';
-  ACE_CString newKind(kind);
-  record.kind(newKind);
-  delete [] kind;
+
+  {
+    ACE_Auto_Basic_Array_Ptr<char> the_kind (new char[bufSize + 1]);
+    the_kind[0] = '\0';
+    if (ACE_OS::fgets (ACE_TEXT_CHAR_TO_TCHAR (the_kind.get ()),
+                       bufSize + 1,
+                       fl_) == 0
+        && bufSize != 0)
+      {
+        this->setstate (badbit);
+        return *this;
+      }
+    record.kind (ACE_CString (the_kind.get (), 0, false));
+  }
 
    //ref
   switch (fscanf(fl_, "%d\n", &bufSize))
@@ -293,18 +313,27 @@ TAO_NS_FlatFileStream::operator >>(
       this->setstate (eofbit);
       return *this;
     }
-  char *ref = new char[bufSize+1];
-  //char *ref;
-  //ACE_NEW(ref, char[bufSize+1]);
-  if (ACE_OS::fgets(ACE_TEXT_CHAR_TO_TCHAR(ref), bufSize+1, fl_) == 0 &&
-      bufSize != 0)
+
+  if (bufSize < 0
+      || static_cast<ACE_CString::size_type> (bufSize) >= max_buf_len)
     {
       this->setstate (badbit);
       return *this;
     }
-  ACE_CString newRef(ref);
-  record.ref(newRef);
-  delete [] ref;
+
+  {
+    ACE_Auto_Basic_Array_Ptr<char> the_ref (new char[bufSize + 1]);
+    the_ref[0] = '\0';
+    if (ACE_OS::fgets (ACE_TEXT_CHAR_TO_TCHAR (the_ref.get ()),
+                       bufSize + 1,
+                       fl_) == 0
+        && bufSize != 0)
+      {
+        this->setstate (badbit);
+        return *this;
+      }
+    record.ref (ACE_CString (the_ref.get (), 0, false));
+  }
 
   return *this;
 

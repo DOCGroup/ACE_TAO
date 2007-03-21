@@ -53,7 +53,7 @@
 #include "ace/Token.h"
 
 #if defined (ACE_HAS_REACTOR_NOTIFICATION_QUEUE)
-# include "ace/Unbounded_Queue.h"
+# include "ace/Notification_Queue.h"
 #endif /* ACE_HAS_REACTOR_NOTIFICATION_QUEUE */
 
 #if defined (ACE_HAS_DEV_POLL)
@@ -283,30 +283,17 @@ protected:
 
 #if defined (ACE_HAS_REACTOR_NOTIFICATION_QUEUE)
   /**
-   * @name Reactor Notification Attributes
+   * @brief A user-space queue to store the notifications.
    *
-   * This configuration queues up notifications in separate buffers
-   * that are in user-space, rather than stored in a pipe in the OS
-   * kernel.  The kernel-level notifications are used only to trigger
-   * the Reactor to check its notification queue.  This enables many
-   * more notifications to be stored than would otherwise be the
-   * case.
+   * The notification pipe has OS-specific size restrictions.  That
+   * is, no more than a certain number of bytes may be stored in the
+   * pipe without blocking.  This limit may be too small for certain
+   * applications.  In this case, ACE can be configured to store all
+   * the events in user-space.  The pipe is still needed to wake up
+   * the reactor thread, but only one event is sent through the pipe
+   * at a time.
    */
-  //@{
-
-  /// ACE_Notification_Buffers are allocated in chunks. Each time a chunk is
-  /// allocated, the chunk is added to alloc_queue_ so it can be freed later.
-  /// Each individual ACE_Notification_Buffer is added to the free_queue_
-  /// when it's free. Those in use for queued notifications are placed on the
-  /// notify_queue_.
-  ACE_Unbounded_Queue <ACE_Notification_Buffer *> alloc_queue_;
-  ACE_Unbounded_Queue <ACE_Notification_Buffer *> notify_queue_;
-  ACE_Unbounded_Queue <ACE_Notification_Buffer *> free_queue_;
-
-  /// Synchronization for handling of queues.
-  ACE_SYNCH_MUTEX notify_queue_lock_;
-
-  //@}
+  ACE_Notification_Queue notification_queue_;
 #endif /* ACE_HAS_REACTOR_NOTIFICATION_QUEUE */
 
 };
@@ -333,7 +320,7 @@ public:
   /// Constructor.
   ACE_Dev_Poll_Reactor_Handler_Repository (void);
 
-  /// Initialize a repository of the appropriate <size>.
+  /// Initialize a repository of the appropriate @a size.
   int open (size_t size);
 
   /// Close down the repository.
@@ -684,10 +671,10 @@ public:
                               ACE_Reactor_Mask mask);
 
   /**
-   * Remove the ACE_Event_Handler currently associated with <signum>.
+   * Remove the ACE_Event_Handler currently associated with @a signum.
    * Install the new disposition (if given) and return the previous
    * disposition (if desired by the caller).  Returns 0 on success and
-   * -1 if <signum> is invalid.
+   * -1 if @a signum is invalid.
    */
   virtual int remove_handler (int signum,
                               ACE_Sig_Action *new_disp,
@@ -811,10 +798,10 @@ public:
   // = Notification methods.
 
   /**
-   * Notify <event_handler> of <mask> event.  The <ACE_Time_Value>
-   * indicates how long to blocking trying to notify.  If <timeout> ==
+   * Notify <event_handler> of <mask> event.  The ACE_Time_Value
+   * indicates how long to blocking trying to notify.  If @a timeout ==
    * 0, the caller will block until action is possible, else will wait
-   * until the relative time specified in <timeout> elapses).
+   * until the relative time specified in @a timeout elapses).
    */
   virtual int notify (ACE_Event_Handler *event_handler = 0,
                       ACE_Reactor_Mask mask = ACE_Event_Handler::EXCEPT_MASK,
@@ -864,7 +851,7 @@ public:
                        ACE_Event_Handler **event_handler = 0);
 
   /**
-   * Check to see if <signum> is associated with a valid Event_Handler
+   * Check to see if @a signum is associated with a valid Event_Handler
    * bound to a signal.  Return the <event_handler> associated with
    * this <handler> if <event_handler> != 0.
    */
@@ -1171,7 +1158,7 @@ protected:
    * @brief A helper class that helps grabbing, releasing and waiting
    * on tokens for a thread that needs access to the reactor's token.
    */
-  class Token_Guard
+  class ACE_Export Token_Guard
   {
   public:
 

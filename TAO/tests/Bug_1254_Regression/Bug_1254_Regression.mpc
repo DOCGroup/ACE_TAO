@@ -24,7 +24,6 @@ project(*Server): taoserver {
 project(*Client): taoserver {
   exename = client
   after += *idl
-  after += *Server
   Source_Files {
     client.cpp
     testC.cpp

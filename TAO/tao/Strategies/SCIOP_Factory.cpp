@@ -56,8 +56,7 @@ TAO_SCIOP_Protocol_Factory::make_acceptor (void)
 }
 
 int
-TAO_SCIOP_Protocol_Factory::init (int /* argc */,
-                                 ACE_TCHAR* /* argv */ [])
+TAO_SCIOP_Protocol_Factory::init (int /* argc */, ACE_TCHAR* /* argv */ [])
 {
   return 0;
 }

@@ -20,7 +20,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/CDR.h"
-#include "tao/Environment.h"
 
 #include "ace/Hash_Map_Manager.h"
 #include "ace/INET_Addr.h"

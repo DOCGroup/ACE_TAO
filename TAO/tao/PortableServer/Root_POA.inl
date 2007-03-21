@@ -2,9 +2,6 @@
 //
 // $Id$
 
-// Exception macros
-#include "tao/Environment.h"
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE CORBA::Boolean
@@ -27,21 +24,18 @@ TAO_Root_POA::policies (void)
 
 ACE_INLINE PortableServer::POA_ptr
 TAO_Root_POA::the_parent (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return PortableServer::POA::_nil ();
 }
 
 ACE_INLINE PortableInterceptor::AdapterName *
 TAO_Root_POA::adapter_name (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->adapter_name_i ();
 }
 
 ACE_INLINE PortableInterceptor::ObjectReferenceTemplate *
 TAO_Root_POA::get_adapter_template (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO::ORT_Adapter *adapter = this->ORT_adapter ();
 
@@ -66,7 +60,6 @@ TAO_Root_POA::get_adapter_template_i ()
 
 ACE_INLINE PortableInterceptor::ObjectReferenceFactory *
 TAO_Root_POA::get_obj_ref_factory (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO::ORT_Adapter *adapter = this->ORT_adapter ();
 
@@ -98,7 +91,6 @@ TAO_Root_POA::name (void) const
 
 ACE_INLINE char *
 TAO_Root_POA::the_name (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup (this->name_.c_str ());
 }

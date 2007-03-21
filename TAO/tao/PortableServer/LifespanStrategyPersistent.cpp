@@ -21,9 +21,7 @@ namespace TAO
   namespace Portable_Server
   {
     void
-    LifespanStrategyPersistent::strategy_init (
-      TAO_Root_POA *poa
-      )
+    LifespanStrategyPersistent::strategy_init (TAO_Root_POA *poa)
     {
       LifespanStrategy::strategy_init (poa);
 

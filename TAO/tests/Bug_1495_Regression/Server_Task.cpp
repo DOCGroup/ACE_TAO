@@ -56,8 +56,13 @@ Server_Task::svc (void)
                       0);
       PortableServer::ServantBase_var owner_transfer (server_impl);
 
-      Bug1495_Regression::
-        Bug1495_var bug1495 = server_impl->_this();
+      PortableServer::ObjectId_var id =
+        root_poa->activate_object (server_impl);
+
+      CORBA::Object_var object = root_poa->id_to_reference (id.in ());
+
+      Bug1495_Regression::Bug1495_var bug1495 =
+        Bug1495_Regression::Bug1495::_narrow (object.in ());
 
       CORBA::String_var ior = sorb_->object_to_string (bug1495.in ());
 

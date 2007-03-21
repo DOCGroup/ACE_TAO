@@ -8,7 +8,6 @@
 #include "tao/debug.h"
 #include "tao/ORB_Core.h"
 #include "tao/Client_Strategy_Factory.h"
-#include "tao/Environment.h"
 #include "tao/Base_Transport_Property.h"
 #include "tao/Transport_Cache_Manager.h"
 #include "tao/Thread_Lane_Resources.h"
@@ -91,7 +90,7 @@ TAO::SSLIOP::Connector::connect (TAO::Profile_Transport_Resolver *resolver,
 {
   if (TAO_debug_level > 0)
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("TAO (%P|%t) - Connector::connect, ")
+                  ACE_TEXT ("TAO_SSLIOP (%P|%t) - Connector::connect, ")
                   ACE_TEXT ("looking for SSLIOP connection.\n")));
 
   TAO_Endpoint *endpoint = desc->endpoint ();
@@ -149,8 +148,7 @@ TAO::SSLIOP::Connector::connect (TAO::Profile_Transport_Resolver *resolver,
                       ACE_TEXT ("found in the IOR.\n")));
         }
 
-      ACE_THROW_RETURN (CORBA::INV_POLICY (),   // @@ Correct exception?
-                        0);
+      throw CORBA::INV_POLICY ();
     }
 
   // Check if the user overrode the default Quality-of-Protection for
@@ -184,16 +182,13 @@ TAO::SSLIOP::Connector::connect (TAO::Profile_Transport_Resolver *resolver,
                       ACE_TEXT ("found in the IOR.\n")));
         }
 
-      ACE_THROW_RETURN (CORBA::INV_POLICY (),   // @@ Correct exception?
-                        0);
+      throw CORBA::INV_POLICY ();
     }
 
   if ((!establish_trust && qop == ::Security::SecQOPNoProtection)
       || ssl_endpoint->ssl_component ().port == 0)
     {
-      return this->iiop_connect (ssl_endpoint,
-                                 resolver,
-                                 timeout);
+      return this->iiop_connect (ssl_endpoint, resolver, timeout);
     }
 
   return this->ssliop_connect (ssl_endpoint,
@@ -213,8 +208,7 @@ TAO::SSLIOP::Connector::create_profile (TAO_InputCDR& cdr)
                   TAO_SSLIOP_Profile (this->orb_core ()),
                   0);
 
-  const int r = pfile->decode (cdr);
-  if (r == -1)
+  if (pfile->decode (cdr) == -1)
     {
       pfile->_decr_refcnt ();
       pfile = 0;
@@ -269,8 +263,7 @@ TAO::SSLIOP::Connector::make_secure_profile (void)
 
 
 TAO_Profile *
-TAO::SSLIOP::Connector::corbaloc_scan (const char *endpoint,
-                                       size_t &len)
+TAO::SSLIOP::Connector::corbaloc_scan (const char *endpoint, size_t &len)
 {
    int ssl_only = 0;
    if (this->check_prefix (endpoint) == 0)
@@ -370,12 +363,11 @@ TAO::SSLIOP::Connector::iiop_connect (
   // connection, and subsequently the request, from completing.
   if (ACE_BIT_DISABLED (ssl_component.target_supports,
                         ::Security::NoProtection))
-    ACE_THROW_RETURN (CORBA::NO_PERMISSION (
-                        CORBA::SystemException::_tao_minor_code (
-                          TAO::VMCID,
-                          EPERM),
-                        CORBA::COMPLETED_NO),
-                      0);
+    throw CORBA::NO_PERMISSION (
+      CORBA::SystemException::_tao_minor_code (
+        TAO::VMCID,
+        EPERM),
+      CORBA::COMPLETED_NO);
 
   TAO_IIOP_Endpoint *iiop_endpoint = ssl_endpoint->iiop_endpoint ();
 
@@ -387,10 +379,7 @@ TAO::SSLIOP::Connector::iiop_connect (
 
   // Note that the IIOP-only transport descriptor is used!
   return
-    this->TAO::IIOP_SSL_Connector::connect (
-      resolver,
-      &iiop_desc,
-      timeout);
+    this->TAO::IIOP_SSL_Connector::connect (resolver, &iiop_desc, timeout);
 }
 
 TAO_Transport *
@@ -415,12 +404,11 @@ TAO::SSLIOP::Connector::ssliop_connect (
   // SSL connection from occuring.
   if (ACE_BIT_ENABLED (ssl_component.target_requires,
                        ::Security::NoProtection))
-    ACE_THROW_RETURN (CORBA::NO_PERMISSION (
-                        CORBA::SystemException::_tao_minor_code (
-                          TAO::VMCID,
-                          EPERM),
-                        CORBA::COMPLETED_NO),
-                      0);
+    throw CORBA::NO_PERMISSION (
+      CORBA::SystemException::_tao_minor_code (
+        TAO::VMCID,
+        EPERM),
+      CORBA::COMPLETED_NO);
 
   // If the invocation wants integrity without confidentiality but the
   // server does not support "no protection," then it won't be
@@ -432,10 +420,9 @@ TAO::SSLIOP::Connector::ssliop_connect (
   if (ACE_BIT_DISABLED (ssl_component.target_supports,
                         ::Security::NoProtection)
       && qop == ::Security::SecQOPIntegrity)
-    ACE_THROW_RETURN (CORBA::INV_POLICY (), 0);
+    throw CORBA::INV_POLICY ();
 
-  const ACE_INET_Addr &remote_address =
-    ssl_endpoint->object_addr ();
+  const ACE_INET_Addr &remote_address = ssl_endpoint->object_addr ();
 
   // Verify that the remote ACE_INET_Addr was initialized
   // properly.  Failure can occur if hostname lookup failed when
@@ -578,8 +565,7 @@ TAO::SSLIOP::Connector::ssliop_connect (
       // Trust in neither the client nor the target is explicitly
       // specified.  Use the default setting.
       else
-        verify_mode =
-          ACE_SSL_Context::instance ()->default_verify_mode ();
+        verify_mode = ACE_SSL_Context::instance ()->default_verify_mode ();
 
       ::SSL_set_verify (svc_handler->peer ().ssl (),
                         verify_mode,
@@ -601,7 +587,7 @@ TAO::SSLIOP::Connector::ssliop_connect (
                         ACE_TEXT ("(%P|%t) Unable to set eNULL ")
                         ACE_TEXT ("SSL cipher.\n")));
 
-          ACE_THROW_RETURN (CORBA::INV_POLICY (), 0);
+          throw CORBA::INV_POLICY ();
         }
 
       svc_handler = safe_handler.release ();
@@ -622,6 +608,12 @@ TAO::SSLIOP::Connector::ssliop_connect (
       result = this->base_connector_.connect (svc_handler,
                                               remote_address,
                                               synch_options);
+
+      // base_connector_.connect() will increment the handler's
+      // #REFCOUNT# once more. This is not required as we already hold
+      // a reference to the handler, so we discard this second
+      // reference.
+      svc_handler->remove_reference ();
 
       // There are three possibilities from calling connect(): (a)
       // connection succeeds immediately - in this case, the

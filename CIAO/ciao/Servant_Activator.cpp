@@ -39,7 +39,6 @@ namespace CIAO
   bool
   Servant_Activator::update_port_activator (
     const PortableServer::ObjectId &oid)
-  ACE_THROW_SPEC ((CORBA::SystemException))
   {
     CORBA::String_var str =
       PortableServer::ObjectId_to_string (oid);
@@ -66,8 +65,6 @@ namespace CIAO
   PortableServer::Servant
   Servant_Activator::incarnate (const PortableServer::ObjectId &oid,
                                 PortableServer::POA_ptr)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableServer::ForwardRequest))
   {
     CORBA::String_var str =
       PortableServer::ObjectId_to_string (oid);
@@ -91,8 +88,7 @@ namespace CIAO
       for (size_t t = 0; t != sz; ++t)
         {
           if (this->pa_.get (tmp, t) == -1)
-            ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (),
-                              0);
+            throw CORBA::OBJECT_NOT_EXIST ();
 
           if (tmp == 0)
             {
@@ -116,8 +112,7 @@ namespace CIAO
             }
         }
     }
-    ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (),
-                      0);
+    throw CORBA::OBJECT_NOT_EXIST ();
   }
 
   void
@@ -126,7 +121,6 @@ namespace CIAO
                                   PortableServer::Servant servant,
                                   CORBA::Boolean ,
                                   CORBA::Boolean)
-      ACE_THROW_SPEC ((CORBA::SystemException))
   {
     CORBA::String_var str =
       PortableServer::ObjectId_to_string (oid);

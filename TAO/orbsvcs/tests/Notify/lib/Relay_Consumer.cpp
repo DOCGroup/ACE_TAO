@@ -26,8 +26,6 @@ TAO_Notify_Tests_Relay_Consumer::connect (void)
 
 void
 TAO_Notify_Tests_Relay_Consumer::push_structured_event (const CosNotification::StructuredEvent &notification)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   CosEventComm::Disconnected))
 {
   // The Periodic Consumer will record the run statistics.
   //TAO_Notify_Tests_Periodic_Consumer::push_structured_event (notification);

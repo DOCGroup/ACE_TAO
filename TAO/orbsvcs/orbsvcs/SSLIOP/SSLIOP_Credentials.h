@@ -74,28 +74,22 @@ namespace TAO
        * interface.
        */
       //@{
-      virtual char * creds_id (void)
-        ACE_THROW_SPEC ((CORBA::SystemException));
+      virtual char * creds_id (void);
 
       virtual
       SecurityLevel3::CredentialsType creds_type (void)
-        ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
+        = 0;
 
-      virtual SecurityLevel3::CredentialsUsage creds_usage ()
-        ACE_THROW_SPEC ((CORBA::SystemException));
+      virtual SecurityLevel3::CredentialsUsage creds_usage ();
 
-      virtual TimeBase::UtcT expiry_time (void)
-        ACE_THROW_SPEC ((CORBA::SystemException));
+      virtual TimeBase::UtcT expiry_time (void);
 
-      virtual SecurityLevel3::CredentialsState creds_state ()
-        ACE_THROW_SPEC ((CORBA::SystemException));
+      virtual SecurityLevel3::CredentialsState creds_state ();
 
       virtual char * add_relinquished_listener (
-          SecurityLevel3::RelinquishedCredentialsListener_ptr listener)
-        ACE_THROW_SPEC ((CORBA::SystemException));
+          SecurityLevel3::RelinquishedCredentialsListener_ptr listener);
 
-      virtual void remove_relinquished_listener (const char * id)
-        ACE_THROW_SPEC ((CORBA::SystemException));
+      virtual void remove_relinquished_listener (const char * id);
       //@}
 
 

@@ -21,8 +21,8 @@ sub run_test
     else {
         $BT = new PerlACE::Process ("basic_test", "-t $type");
     }
-    my $basictest = $BT->SpawnWaitKill (10);
-    
+    my $basictest = $BT->SpawnWaitKill ($PerlACE::wait_interval_for_process_creation);
+
     if ($basictest != 0) {
         print STDERR "ERROR: basic test for ($type) returned $basictest\n";
         $status = 1;

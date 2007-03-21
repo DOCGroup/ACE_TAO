@@ -52,8 +52,7 @@ public:
   virtual int init (int argc,
                     ACE_TCHAR* []);
 
-  virtual void load_policy_validators (TAO_Policy_Validator &validator)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void load_policy_validators (TAO_Policy_Validator &validator);
 
   /// Used to force the initialization of the ORB code.
   static int Initializer (void);

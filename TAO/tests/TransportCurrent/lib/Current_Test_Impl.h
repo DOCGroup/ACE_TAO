@@ -37,19 +37,18 @@ public:
   ~Current_Test_Impl (void);
 
   /// Main servant test method.
-  virtual void invoked_by_client (void) throw (CORBA::SystemException);
+  virtual void invoked_by_client (void);
 
   /// No-op method used so that a client request interceptor will be
   /// invoked when invoking this method from the above invoke_me()
   /// method.  Say that 10 times fast. :-)
-  virtual void invoked_during_upcall (void)
-    throw (CORBA::SystemException);
+  virtual void invoked_during_upcall (void);
 
   /// Shutdown the ORB.
-  virtual void shutdown (void) throw (CORBA::SystemException);
+  virtual void shutdown (void);
 
   // A self-test for coherency
-  virtual ::CORBA::Long self_test (void) throw (CORBA::SystemException);
+  virtual ::CORBA::Long self_test (void);
 
 public:
   /// Reports if unexpected errors have been encountered for the
@@ -57,11 +56,10 @@ public:
   bool is_successful (void) const;
 
 private:
-  void test_transport_current (void) throw (CORBA::SystemException);
+  void test_transport_current (void);
 
   /// Main servant test method.
-  void invoked_by_client_i (void)
-    throw (CORBA::SystemException, TAO::Transport::NoContext);
+  void invoked_by_client_i (void);
 
 private:
   /// Pseudo-reference to the ORB.

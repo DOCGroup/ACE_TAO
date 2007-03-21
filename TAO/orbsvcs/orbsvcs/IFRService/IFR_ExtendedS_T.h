@@ -86,66 +86,45 @@ namespace POA_CORBA
     // be\be_visitor_operation/tie_sh.cpp:60
 
     ::CORBA::DefinitionKind def_kind (
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
 
     void destroy (
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
 
     ::CORBA::TypeCode_ptr type (
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
 
     ::CORBA::UShort digits (
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
 
     void digits (
         ::CORBA::UShort digits
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
 
     ::CORBA::Short scale (
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
 
     void scale (
         ::CORBA::Short scale
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
   private:
     T *ptr_;
@@ -200,112 +179,76 @@ namespace POA_CORBA
     // be\be_visitor_operation/tie_sh.cpp:60
 
     ::CORBA::DefinitionKind def_kind (
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
 
     void destroy (
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
 
     char * id (
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
 
     void id (
         const char * id
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
 
     char * name (
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
 
     void name (
         const char * name
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
 
     char * version (
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
 
     void version (
         const char * version
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
 
     ::CORBA::Container_ptr defined_in (
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
 
     char * absolute_name (
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
 
     ::CORBA::Repository_ptr containing_repository (
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
 
     ::CORBA::Contained::Description * describe (
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
@@ -314,57 +257,39 @@ namespace POA_CORBA
         ::CORBA::Container_ptr new_container,
         const char * new_name,
         const char * new_version
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
 
     ::CORBA::TypeCode_ptr type (
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
 
     ::CORBA::IDLType_ptr type_def (
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
 
     void type_def (
         ::CORBA::IDLType_ptr type_def
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
 
     ::CORBA::Visibility access (
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
 
     void access (
         ::CORBA::Visibility access
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
   private:
     T *ptr_;
@@ -419,29 +344,20 @@ namespace POA_CORBA
     // be\be_visitor_operation/tie_sh.cpp:60
 
     ::CORBA::DefinitionKind def_kind (
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
 
     void destroy (
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
 
     ::CORBA::Contained_ptr lookup (
         const char * search_name
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
@@ -449,10 +365,7 @@ namespace POA_CORBA
     ::CORBA::ContainedSeq * contents (
         ::CORBA::DefinitionKind limit_type,
         ::CORBA::Boolean exclude_inherited
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
@@ -462,10 +375,7 @@ namespace POA_CORBA
         ::CORBA::Long levels_to_search,
         ::CORBA::DefinitionKind limit_type,
         ::CORBA::Boolean exclude_inherited
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
@@ -474,10 +384,7 @@ namespace POA_CORBA
         ::CORBA::DefinitionKind limit_type,
         ::CORBA::Boolean exclude_inherited,
         ::CORBA::Long max_returned_objs
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
@@ -486,10 +393,7 @@ namespace POA_CORBA
         const char * id,
         const char * name,
         const char * version
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
@@ -500,10 +404,7 @@ namespace POA_CORBA
         const char * version,
         ::CORBA::IDLType_ptr type,
         const ::CORBA::Any & value
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
@@ -513,10 +414,7 @@ namespace POA_CORBA
         const char * name,
         const char * version,
         const ::CORBA::StructMemberSeq & members
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
@@ -527,10 +425,7 @@ namespace POA_CORBA
         const char * version,
         ::CORBA::IDLType_ptr discriminator_type,
         const ::CORBA::UnionMemberSeq & members
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
@@ -540,10 +435,7 @@ namespace POA_CORBA
         const char * name,
         const char * version,
         const ::CORBA::EnumMemberSeq & members
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
@@ -553,10 +445,7 @@ namespace POA_CORBA
         const char * name,
         const char * version,
         ::CORBA::IDLType_ptr original_type
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
@@ -566,10 +455,7 @@ namespace POA_CORBA
         const char * name,
         const char * version,
         const ::CORBA::InterfaceDefSeq & base_interfaces
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
@@ -585,10 +471,7 @@ namespace POA_CORBA
         const ::CORBA::ValueDefSeq & abstract_base_values,
         const ::CORBA::InterfaceDefSeq & supported_interfaces,
         const ::CORBA::InitializerSeq & initializers
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
@@ -598,10 +481,7 @@ namespace POA_CORBA
         const char * name,
         const char * version,
         ::CORBA::IDLType_ptr original_type_def
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
@@ -611,10 +491,7 @@ namespace POA_CORBA
         const char * name,
         const char * version,
         const ::CORBA::StructMemberSeq & members
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
@@ -623,10 +500,7 @@ namespace POA_CORBA
         const char * id,
         const char * name,
         const char * version
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
@@ -636,10 +510,7 @@ namespace POA_CORBA
         const char * name,
         const char * version,
         const ::CORBA::AbstractInterfaceDefSeq & base_interfaces
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
@@ -649,10 +520,7 @@ namespace POA_CORBA
         const char * name,
         const char * version,
         const ::CORBA::InterfaceDefSeq & base_interfaces
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
@@ -668,103 +536,70 @@ namespace POA_CORBA
         const ::CORBA::ValueDefSeq & abstract_base_values,
         const ::CORBA::InterfaceDefSeq & supported_interfaces,
         const ::CORBA::ExtInitializerSeq & initializers
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
 
     char * id (
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
 
     void id (
         const char * id
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
 
     char * name (
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
 
     void name (
         const char * name
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
 
     char * version (
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
 
     void version (
         const char * version
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
 
     ::CORBA::Container_ptr defined_in (
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
 
     char * absolute_name (
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
 
     ::CORBA::Repository_ptr containing_repository (
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
 
     ::CORBA::Contained::Description * describe (
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
@@ -773,171 +608,117 @@ namespace POA_CORBA
         ::CORBA::Container_ptr new_container,
         const char * new_name,
         const char * new_version
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
 
     ::CORBA::TypeCode_ptr type (
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
 
     ::CORBA::InterfaceDefSeq * supported_interfaces (
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
 
     void supported_interfaces (
         const ::CORBA::InterfaceDefSeq & supported_interfaces
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
 
     ::CORBA::InitializerSeq * initializers (
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
 
     void initializers (
         const ::CORBA::InitializerSeq & initializers
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
 
     ::CORBA::ValueDef_ptr base_value (
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
 
     void base_value (
         ::CORBA::ValueDef_ptr base_value
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
 
     ::CORBA::ValueDefSeq * abstract_base_values (
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
 
     void abstract_base_values (
         const ::CORBA::ValueDefSeq & abstract_base_values
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
 
     ::CORBA::Boolean is_abstract (
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
 
     void is_abstract (
         ::CORBA::Boolean is_abstract
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
 
     ::CORBA::Boolean is_custom (
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
 
     void is_custom (
         ::CORBA::Boolean is_custom
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
 
     ::CORBA::Boolean is_truncatable (
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
 
     void is_truncatable (
         ::CORBA::Boolean is_truncatable
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
 
     ::CORBA::Boolean is_a (
         const char * id
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
 
     ::CORBA::ValueDef::FullValueDescription * describe_value (
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
@@ -948,10 +729,7 @@ namespace POA_CORBA
         const char * version,
         ::CORBA::IDLType_ptr type,
         ::CORBA::Visibility access
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
@@ -962,10 +740,7 @@ namespace POA_CORBA
         const char * version,
         ::CORBA::IDLType_ptr type,
         ::CORBA::AttributeMode mode
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
@@ -979,10 +754,7 @@ namespace POA_CORBA
         const ::CORBA::ParDescriptionSeq & params,
         const ::CORBA::ExceptionDefSeq & exceptions,
         const ::CORBA::ContextIdSeq & contexts
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
   private:
     T *ptr_;
@@ -1037,29 +809,20 @@ namespace POA_CORBA
     // be\be_visitor_operation/tie_sh.cpp:60
 
     ::CORBA::DefinitionKind def_kind (
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
 
     void destroy (
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
 
     ::CORBA::Contained_ptr lookup (
         const char * search_name
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
@@ -1067,10 +830,7 @@ namespace POA_CORBA
     ::CORBA::ContainedSeq * contents (
         ::CORBA::DefinitionKind limit_type,
         ::CORBA::Boolean exclude_inherited
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
@@ -1080,10 +840,7 @@ namespace POA_CORBA
         ::CORBA::Long levels_to_search,
         ::CORBA::DefinitionKind limit_type,
         ::CORBA::Boolean exclude_inherited
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
@@ -1092,10 +849,7 @@ namespace POA_CORBA
         ::CORBA::DefinitionKind limit_type,
         ::CORBA::Boolean exclude_inherited,
         ::CORBA::Long max_returned_objs
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
@@ -1104,10 +858,7 @@ namespace POA_CORBA
         const char * id,
         const char * name,
         const char * version
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
@@ -1118,10 +869,7 @@ namespace POA_CORBA
         const char * version,
         ::CORBA::IDLType_ptr type,
         const ::CORBA::Any & value
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
@@ -1131,10 +879,7 @@ namespace POA_CORBA
         const char * name,
         const char * version,
         const ::CORBA::StructMemberSeq & members
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
@@ -1145,10 +890,7 @@ namespace POA_CORBA
         const char * version,
         ::CORBA::IDLType_ptr discriminator_type,
         const ::CORBA::UnionMemberSeq & members
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
@@ -1158,10 +900,7 @@ namespace POA_CORBA
         const char * name,
         const char * version,
         const ::CORBA::EnumMemberSeq & members
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
@@ -1171,10 +910,7 @@ namespace POA_CORBA
         const char * name,
         const char * version,
         ::CORBA::IDLType_ptr original_type
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
@@ -1184,10 +920,7 @@ namespace POA_CORBA
         const char * name,
         const char * version,
         const ::CORBA::InterfaceDefSeq & base_interfaces
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
@@ -1203,10 +936,7 @@ namespace POA_CORBA
         const ::CORBA::ValueDefSeq & abstract_base_values,
         const ::CORBA::InterfaceDefSeq & supported_interfaces,
         const ::CORBA::InitializerSeq & initializers
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
@@ -1216,10 +946,7 @@ namespace POA_CORBA
         const char * name,
         const char * version,
         ::CORBA::IDLType_ptr original_type_def
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
@@ -1229,10 +956,7 @@ namespace POA_CORBA
         const char * name,
         const char * version,
         const ::CORBA::StructMemberSeq & members
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
@@ -1241,10 +965,7 @@ namespace POA_CORBA
         const char * id,
         const char * name,
         const char * version
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
@@ -1254,10 +975,7 @@ namespace POA_CORBA
         const char * name,
         const char * version,
         const ::CORBA::AbstractInterfaceDefSeq & base_interfaces
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
@@ -1267,10 +985,7 @@ namespace POA_CORBA
         const char * name,
         const char * version,
         const ::CORBA::InterfaceDefSeq & base_interfaces
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
@@ -1286,103 +1001,70 @@ namespace POA_CORBA
         const ::CORBA::ValueDefSeq & abstract_base_values,
         const ::CORBA::InterfaceDefSeq & supported_interfaces,
         const ::CORBA::ExtInitializerSeq & initializers
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
 
     char * id (
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
 
     void id (
         const char * id
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
 
     char * name (
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
 
     void name (
         const char * name
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
 
     char * version (
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
 
     void version (
         const char * version
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
 
     ::CORBA::Container_ptr defined_in (
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
 
     char * absolute_name (
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
 
     ::CORBA::Repository_ptr containing_repository (
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
 
     ::CORBA::Contained::Description * describe (
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
@@ -1391,171 +1073,117 @@ namespace POA_CORBA
         ::CORBA::Container_ptr new_container,
         const char * new_name,
         const char * new_version
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
 
     ::CORBA::TypeCode_ptr type (
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
 
     ::CORBA::InterfaceDefSeq * supported_interfaces (
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
 
     void supported_interfaces (
         const ::CORBA::InterfaceDefSeq & supported_interfaces
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
 
     ::CORBA::InitializerSeq * initializers (
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
 
     void initializers (
         const ::CORBA::InitializerSeq & initializers
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
 
     ::CORBA::ValueDef_ptr base_value (
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
 
     void base_value (
         ::CORBA::ValueDef_ptr base_value
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
 
     ::CORBA::ValueDefSeq * abstract_base_values (
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
 
     void abstract_base_values (
         const ::CORBA::ValueDefSeq & abstract_base_values
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
 
     ::CORBA::Boolean is_abstract (
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
 
     void is_abstract (
         ::CORBA::Boolean is_abstract
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
 
     ::CORBA::Boolean is_custom (
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
 
     void is_custom (
         ::CORBA::Boolean is_custom
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
 
     ::CORBA::Boolean is_truncatable (
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
 
     void is_truncatable (
         ::CORBA::Boolean is_truncatable
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
 
     ::CORBA::Boolean is_a (
         const char * id
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
 
     ::CORBA::ValueDef::FullValueDescription * describe_value (
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
@@ -1566,10 +1194,7 @@ namespace POA_CORBA
         const char * version,
         ::CORBA::IDLType_ptr type,
         ::CORBA::Visibility access
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
@@ -1580,10 +1205,7 @@ namespace POA_CORBA
         const char * version,
         ::CORBA::IDLType_ptr type,
         ::CORBA::AttributeMode mode
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
@@ -1597,38 +1219,26 @@ namespace POA_CORBA
         const ::CORBA::ParDescriptionSeq & params,
         const ::CORBA::ExceptionDefSeq & exceptions,
         const ::CORBA::ContextIdSeq & contexts
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
 
     ::CORBA::ExtInitializerSeq * ext_initializers (
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
 
     void ext_initializers (
         const ::CORBA::ExtInitializerSeq & ext_initializers
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
 
     ::CORBA::ExtValueDef::ExtFullValueDescription * describe_ext_value (
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
@@ -1641,10 +1251,7 @@ namespace POA_CORBA
         ::CORBA::AttributeMode mode,
         const ::CORBA::ExceptionDefSeq & get_exceptions,
         const ::CORBA::ExceptionDefSeq & set_exceptions
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
   private:
     T *ptr_;
@@ -1699,112 +1306,76 @@ namespace POA_CORBA
     // be\be_visitor_operation/tie_sh.cpp:60
 
     ::CORBA::DefinitionKind def_kind (
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
 
     void destroy (
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
 
     char * id (
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
 
     void id (
         const char * id
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
 
     char * name (
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
 
     void name (
         const char * name
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
 
     char * version (
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
 
     void version (
         const char * version
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
 
     ::CORBA::Container_ptr defined_in (
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
 
     char * absolute_name (
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
 
     ::CORBA::Repository_ptr containing_repository (
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
 
     ::CORBA::Contained::Description * describe (
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
@@ -1813,38 +1384,26 @@ namespace POA_CORBA
         ::CORBA::Container_ptr new_container,
         const char * new_name,
         const char * new_version
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
 
     ::CORBA::TypeCode_ptr type (
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
 
     ::CORBA::IDLType_ptr original_type_def (
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
 
     void original_type_def (
         ::CORBA::IDLType_ptr original_type_def
-      )
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException
-      ));
+      );
 
   private:
     T *ptr_;

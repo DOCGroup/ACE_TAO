@@ -28,11 +28,10 @@ namespace TAO
       {
         if (this->x_ !=0 && this->x_->value ()->impl ())
           {
-            this->x_->value ()->impl ()->_tao_decode (cdr
-                                                     );
+            this->x_->value ()->impl ()->_tao_decode (cdr);
           }
       }
-    catch ( ::CORBA::Exception&)
+    catch (const ::CORBA::Exception&)
       {
         return false;
       }
@@ -55,11 +54,9 @@ namespace TAO
   {
     try
       {
-        this->x_->_tao_encode (cdr,
-                               CORBA::ARG_IN | CORBA::ARG_INOUT
-                              );
+        this->x_->_tao_encode (cdr, CORBA::ARG_IN | CORBA::ARG_INOUT);
       }
-    catch ( ::CORBA::Exception&)
+    catch (const ::CORBA::Exception&)
       {
         return false;
       }
@@ -82,10 +79,9 @@ namespace TAO
         this->x_->_tao_incoming_cdr (
             cdr,
             CORBA::ARG_OUT | CORBA::ARG_INOUT,
-            this->lazy_evaluation_
-           );
+            this->lazy_evaluation_);
       }
-    catch ( ::CORBA::Exception&)
+    catch (const ::CORBA::Exception&)
       {
         return false;
       }
@@ -104,8 +100,7 @@ namespace TAO
         if (!this->x_->item (i)->value ())
           return;
 
-        (*lst)[i].argument.replace (
-          this->x_->item (i)->value ()->impl ());
+        (*lst)[i].argument.replace (this->x_->item (i)->value ()->impl ());
 
         switch (this->x_->item (i)->flags ())
           {

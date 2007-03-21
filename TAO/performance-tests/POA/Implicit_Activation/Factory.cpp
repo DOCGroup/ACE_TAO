@@ -13,7 +13,6 @@ Factory::Factory (CORBA::ORB_ptr orb)
 
 Test::Simple_ptr
 Factory::create_simple_object (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   Simple *simple_impl;
   ACE_NEW_THROW_EX (simple_impl,
@@ -27,7 +26,6 @@ Factory::create_simple_object (void)
 
 void
 Factory::shutdown (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown (0);
 }

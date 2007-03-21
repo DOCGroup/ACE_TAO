@@ -22,7 +22,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ciao/CCM_ContainerC.h"
-#include "ciao/Deployment_CoreC.h"
 
 #include "tao/PortableServer/Key_Adapters.h"
 #include "tao/PortableServer/PortableServer.h"
@@ -65,21 +64,18 @@ namespace CIAO
      */
     PortableServer::Servant incarnate (
       const PortableServer::ObjectId &oid,
-      PortableServer::POA_ptr poa)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       PortableServer::ForwardRequest));
+      PortableServer::POA_ptr poa);
 
     void etherealize (const PortableServer::ObjectId &oid,
                       PortableServer::POA_ptr adapter,
                       PortableServer::Servant servant,
                       CORBA::Boolean cleanup_in_progress,
-                      CORBA::Boolean remaining_activations)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+                      CORBA::Boolean remaining_activations);
 
-    void add_servant_map (PortableServer::ObjectId &oid,
-                          Dynamic_Component_Servant_Base* servant);
+    void add_servant_to_map (PortableServer::ObjectId &oid,
+                             Dynamic_Component_Servant_Base* servant);
 
-    void delete_servant_map (PortableServer::ObjectId &oid);
+    void delete_servant_from_map (PortableServer::ObjectId &oid);
 
   private:
     /// Pointer to our ORB

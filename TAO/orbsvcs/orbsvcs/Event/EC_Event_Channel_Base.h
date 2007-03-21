@@ -123,12 +123,10 @@ public:
   virtual void shutdown (void);
 
   virtual void for_each_consumer (
-                    TAO_ESF_Worker<TAO_EC_ProxyPushSupplier> *worker)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                    TAO_ESF_Worker<TAO_EC_ProxyPushSupplier> *worker);
 
   virtual void for_each_supplier (
-                    TAO_ESF_Worker<TAO_EC_ProxyPushConsumer> *worker)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                    TAO_ESF_Worker<TAO_EC_ProxyPushConsumer> *worker);
 
   /// Access the dispatching module....
   TAO_EC_Dispatching* dispatching (void) const;
@@ -221,31 +219,20 @@ public:
   /// The default implementation is:
   ///    this->consumer_admin ()->_this ();
   virtual RtecEventChannelAdmin::ConsumerAdmin_ptr
-      for_consumers (void)
-        ACE_THROW_SPEC ((CORBA::SystemException));
+      for_consumers (void);
 
   /// The default implementation is:
   ///    this->supplier_admin ()->_this ();
   virtual RtecEventChannelAdmin::SupplierAdmin_ptr
-      for_suppliers (void)
-        ACE_THROW_SPEC ((CORBA::SystemException));
+      for_suppliers (void);
 
   /// Commit suicide.
-  virtual void destroy (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void destroy (void);
 
   virtual RtecEventChannelAdmin::Observer_Handle
-      append_observer (RtecEventChannelAdmin::Observer_ptr)
-      ACE_THROW_SPEC ((
-          CORBA::SystemException,
-          RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR,
-          RtecEventChannelAdmin::EventChannel::CANT_APPEND_OBSERVER));
+      append_observer (RtecEventChannelAdmin::Observer_ptr);
   virtual void
-      remove_observer (RtecEventChannelAdmin::Observer_Handle)
-      ACE_THROW_SPEC ((
-          CORBA::SystemException,
-          RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR,
-          RtecEventChannelAdmin::EventChannel::CANT_REMOVE_OBSERVER));
+      remove_observer (RtecEventChannelAdmin::Observer_Handle);
 
   /// Return 1 if the event channel is already destroyed.
   int destroyed (void);

@@ -53,7 +53,8 @@ Client_Task::svc (void)
                       "Remote thread ID was %i\n",
                       remote_thread_id));
 
-          CORBA::Long mythread_id = (CORBA::Long)ACE_Thread::self();
+          CORBA::Long mythread_id =
+            static_cast<CORBA::Long> ((size_t)ACE_Thread::self ());
           if (mythread_id != remote_thread_id)
             {
               ACE_ERROR ((LM_ERROR,

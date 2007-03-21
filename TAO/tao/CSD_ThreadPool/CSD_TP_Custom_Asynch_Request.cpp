@@ -24,7 +24,7 @@ TAO::CSD::TP_Custom_Asynch_Request::dispatch_i()
     {
       this->execute_op();
     }
-  catch ( ::CORBA::Exception&)
+  catch (const ::CORBA::Exception&)
     {
       // Eat these.  We probably should log these, but since we have already
       // unblocked the requesting thread there is no point in saving it or

@@ -4,6 +4,7 @@
 #include "tao/Valuetype/Valuetype_Adapter_Factory_Impl.h"
 
 #include "tao/ORB_Core.h"
+#include "tao/SystemException.h"
 
 ACE_RCSID (ValueType,
            Valuetype_Adapter_Factory_Impl,
@@ -17,7 +18,6 @@ TAO_Valuetype_Adapter_Factory_Impl::~TAO_Valuetype_Adapter_Factory_Impl (void)
 
 TAO_Valuetype_Adapter *
 TAO_Valuetype_Adapter_Factory_Impl::create (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_Valuetype_Adapter_Impl *nva = 0;
   ACE_NEW_THROW_EX (nva,

@@ -18,15 +18,12 @@ ACE_RCSID (MT_IIOP_SSL,
 
 void
 Simple_Server_i::ping (void)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return;
 }
 
 void
 Simple_Server_i::validate_protocol (void)
-  ACE_THROW_SPEC ((Simple_Server::WrongProtocolType,
-                   CORBA::SystemException))
 {
   if (this->validated_ == NOT_VALIDATED)
     {
@@ -74,7 +71,6 @@ Simple_Server_i::validate_protocol (void)
 
 CORBA::Long
 Simple_Server_i::test_method (CORBA::Long x)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG, "Request in thread [%t]\n"));
@@ -85,7 +81,6 @@ Simple_Server_i::test_method (CORBA::Long x)
 
 void
 Simple_Server_i::shutdown (void)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown (0);
 }

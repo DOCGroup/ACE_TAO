@@ -65,7 +65,7 @@ main (int argc, char *argv[])
   try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "");
+        CORBA::ORB_init (argc, argv);
 
       CORBA::Object_var poa_object =
         orb->resolve_initial_references("RootPOA");
@@ -150,8 +150,13 @@ main (int argc, char *argv[])
 
       udpHandler_i.orb (orb.in ());
 
+      PortableServer::ObjectId_var id_act =
+        persistent_poa->activate_object (&udpHandler_i);
+
+      CORBA::Object_var object_act = persistent_poa->id_to_reference (id_act.in ());
+
       UDP_var udpHandler_var =
-        udpHandler_i._this ();
+        UDP::_narrow (object_act.in ());
 
       // Instantiate client
       UDP_Client_i* client = new UDP_Client_i (orb,

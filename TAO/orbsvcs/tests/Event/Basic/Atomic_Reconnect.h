@@ -40,8 +40,7 @@ public:
 
   // = The RtecEventComm::PushConsumer methods
 
-  virtual void push (const RtecEventComm::EventSet& events)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void push (const RtecEventComm::EventSet& events);
 
   /// Number of events of type <event_base_type_> received.
   CORBA::ULong event_base_count;

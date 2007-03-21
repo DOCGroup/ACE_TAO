@@ -33,40 +33,29 @@ namespace CIAO
 {
   template <typename BASE_CTX,
             typename SVNT,
-            typename COMP,
-            typename COMP_VAR>
-  class Upgradeable_Context_Impl : public virtual Context_Impl<
-                                   BASE_CTX, SVNT, COMP, COMP_VAR>
+            typename COMP>
+  class Upgradeable_Context_Impl
+    : public virtual Context_Impl<BASE_CTX, SVNT, COMP>
   {
   public:
-    Upgradeable_Context_Impl (Components::CCMHome_ptr home,
+    Upgradeable_Context_Impl (Components::CCMHome_ptr the_home,
                               Session_Container *c,
                               SVNT *sv);
 
     virtual ~Upgradeable_Context_Impl (void);
 
     virtual void
-    deactivate_facet (const PortableServer::ObjectId &oid)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+    deactivate_facet (const PortableServer::ObjectId &oid);
 
     virtual void
-    update_port_activator (const PortableServer::ObjectId &oid)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    update_port_activator (const PortableServer::ObjectId &oid);
 
     virtual void
-    remove_facet (CORBA::Object_ptr reference)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    remove_facet (CORBA::Object_ptr reference);
 
     virtual ::Components::ConsumerDescriptions *
-    get_registered_consumers (const char *publisher_name)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       ::Components::InvalidName,
-                       ::Components::InvalidConnection)) = 0;
+    get_registered_consumers (const char *publisher_name) = 0;
 
-  protected:
-    SVNT *servant_;
-    COMP_VAR component_;
-    typedef Context_Impl<BASE_CTX, SVNT, COMP, COMP_VAR> session_context;
   private:
     /// Not to be used
     Upgradeable_Context_Impl (void);

@@ -71,37 +71,25 @@ public:
    */
   //@{
   /// Return the name of this IORInterceptor.
-  virtual char * name (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual char * name (void);
 
   /// Cleanup resources acquired by this IORInterceptor.
-  virtual void destroy (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void destroy (void);
 
   /// Add the tagged components to the IOR.
   virtual void establish_components (
-      PortableInterceptor::IORInfo_ptr info)
-    ACE_THROW_SPEC ((
-        CORBA::SystemException
-    ));
+      PortableInterceptor::IORInfo_ptr info);
 
   virtual void components_established (
-      PortableInterceptor::IORInfo_ptr info)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+      PortableInterceptor::IORInfo_ptr info);
 
   virtual void adapter_manager_state_changed (
       const char * id,
-      PortableInterceptor::AdapterState state)
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
+      PortableInterceptor::AdapterState state);
 
   virtual void adapter_state_changed (
       const PortableInterceptor::ObjectReferenceTemplateSeq & templates,
-      PortableInterceptor::AdapterState state)
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
+      PortableInterceptor::AdapterState state);
 
   //@}
 

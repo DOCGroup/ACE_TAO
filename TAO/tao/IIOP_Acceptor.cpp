@@ -91,13 +91,9 @@ TAO_IIOP_Acceptor::create_profile (const TAO::ObjectKey &object_key,
   // if they should be spread across multiple profiles.
   if (priority == TAO_INVALID_PRIORITY &&
       this->orb_core_->orb_params ()->shared_profile () == 0)
-    return this->create_new_profile (object_key,
-                                     mprofile,
-                                     priority);
+    return this->create_new_profile (object_key, mprofile, priority);
   else
-    return this->create_shared_profile (object_key,
-                                        mprofile,
-                                        priority);
+    return this->create_shared_profile (object_key, mprofile, priority);
 }
 
 int
@@ -681,7 +677,7 @@ TAO_IIOP_Acceptor::parse_address (const char *address,
     {
       // In this case we have to find the end of the numeric address and
       // start looking for the port separator from there.
-      const char *cp_pos = ACE_OS::strchr(address, ']');
+      char const * const cp_pos = ACE_OS::strchr (address, ']');
       if (cp_pos == 0)
         {
           // No valid IPv6 address specified.
@@ -693,6 +689,12 @@ TAO_IIOP_Acceptor::parse_address (const char *address,
         }
       else
         {
+          // Extract out just the host part of the address.
+          size_t const len = cp_pos - (address + 1);
+
+          if (len >= sizeof (tmp_host))
+            return -1;
+
           ipv6_in_host = true;
           host_defaulted = (cp_pos == address+1) ||
             (cp_pos == address+3 && address[1] == ':' && address[2] == ':');
@@ -702,8 +704,7 @@ TAO_IIOP_Acceptor::parse_address (const char *address,
             port_separator_loc = 0;
           if (def_type)
             *def_type = AF_INET6;
-          // Extract out just the host part of the address.
-          size_t const len = cp_pos - (address + 1);
+
           ACE_OS::memcpy (tmp_host, address + 1, len);
           tmp_host[len] = '\0';
         }
@@ -716,6 +717,10 @@ TAO_IIOP_Acceptor::parse_address (const char *address,
           {
             // Extract out just the host part of the address.
             size_t const len = port_separator_loc - address;
+
+            if (len >= sizeof (tmp_host))
+              return -1;
+
             ACE_OS::memcpy (tmp_host, address, len);
             tmp_host[len] = '\0';
           }
@@ -766,7 +771,11 @@ TAO_IIOP_Acceptor::parse_address (const char *address,
       if (tmp_host[0] == '\0')
         {
           // Extract out just the host part of the address.
-          const size_t len = port_separator_loc - address;
+          size_t const len = port_separator_loc - address;
+
+          if (len >= sizeof (tmp_host))
+            return -1;
+          
           ACE_OS::memcpy (tmp_host, address, len);
           tmp_host[len] = '\0';
         }

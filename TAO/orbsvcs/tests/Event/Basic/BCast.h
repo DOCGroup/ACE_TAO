@@ -73,8 +73,7 @@ public:
   Simple_Address_Server (const ACE_INET_Addr& address);
 
   virtual void get_addr (const RtecEventComm::EventHeader& header,
-                         RtecUDPAdmin::UDP_Addr& address)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                         RtecUDPAdmin::UDP_Addr& address);
 
 private:
   /// The UDP addres...

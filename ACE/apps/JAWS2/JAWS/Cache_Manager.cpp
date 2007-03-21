@@ -83,6 +83,9 @@ JAWS_Strdup_String::operator = (const char *s)
 void
 JAWS_Strdup_String::operator = (const JAWS_Strdup_String &s)
 {
+  if (this == &s)
+    return;
+
   if (this->c_ && --*(this->c_) == 0)
     {
       if (this->s_)

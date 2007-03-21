@@ -8,6 +8,8 @@
 
 #include "tao/RTCORBA/RT_Stub.h"
 
+#include "tao/SystemException.h"
+
 ACE_RCSID (RTCORBA,
            RT_Endpoint_Utils,
            "$Id$")
@@ -22,22 +24,24 @@ TAO_RT_Endpoint_Utils::policy (TAO_Cached_Policy_Type type,
 {
   CORBA::Policy *policy = CORBA::Policy::_nil ();
 
-  TAO_RT_Stub *rt_stub = dynamic_cast<TAO_RT_Stub *> (r.stub ());
+  TAO_RT_Stub * const rt_stub =
+    dynamic_cast<TAO_RT_Stub *> (r.stub ());
+
+  if (!rt_stub)
+    throw CORBA::INTERNAL ();
 
   try
     {
       policy =
-        rt_stub->get_cached_policy (type
-                                   );
+        rt_stub->get_cached_policy (type);
     }
-  catch ( ::CORBA::INV_POLICY&)
+  catch (const ::CORBA::INV_POLICY&)
     {
       if (r.inconsistent_policies ())
         {
           CORBA::PolicyList *p = r.inconsistent_policies ();
           p->length (1);
-          (*p)[0u] = rt_stub->TAO_Stub::get_cached_policy (type
-                                                          );
+          (*p)[0u] = rt_stub->TAO_Stub::get_cached_policy (type);
         }
 
       throw;

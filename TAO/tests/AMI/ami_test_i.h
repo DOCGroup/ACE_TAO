@@ -26,26 +26,22 @@ class AMI_Test_i : public POA_A::AMI_Test
 {
 public:
   /// ctor
-  AMI_Test_i (CORBA::ORB_ptr orb);
+  AMI_Test_i (CORBA::ORB_ptr orb,
+        CORBA::Long in_l = 0, const char * in_str = 0,
+	      bool check_params = false);
 
   // The AMI_Test methods.
   CORBA::Long foo (CORBA::Long_out out_l,
                    CORBA::Long in_l,
-                   const char* in_str)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     A::DidTheRightThing));
+                   const char* in_str);
 
-  void shutdown (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void shutdown (void);
 
-  CORBA::Long yadda (void)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+  CORBA::Long yadda (void);
 
-  void yadda (CORBA::Long yadda)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+  void yadda (CORBA::Long yadda);
 
-  void inout_arg_test (char *& str)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+  void inout_arg_test (char *& str);
 
 private:
   CORBA::ORB_var orb_;
@@ -53,7 +49,13 @@ private:
   CORBA::Long number_;
 
   CORBA::Long yadda_;
+
+  CORBA::Long in_l_;
+
+  CORBA::String_var in_str_;
+
+  bool check_params_;
 };
 
-
 #endif /* TAO_AMI_TEST_I_H */
+

@@ -25,12 +25,14 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ciao/Deployment_ContainerS.h"
-#include "ciao/Deployment_NodeApplicationC.h"
-#include "ciao/Container_Base.h"
+#include "DAnCE/Deployment/Deployment_ContainerS.h"
+#include "DAnCE/Deployment/Deployment_NodeApplicationC.h"
+#include "DAnCE/Deployment//DeploymentC.h"
+#include "ciao/Session_Container.h"
 #include "ace/SString.h"
 #include "ciao/Server_init.h"  // write_IOR function & NameUtility
 #include "ciao/CIAO_common.h" // CIAO::debug_level
+#include "NodeApp_Configurator.h"
 
 namespace CIAO
 {
@@ -53,6 +55,7 @@ namespace CIAO
     Container_Impl (CORBA::ORB_ptr o,
                     PortableServer::POA_ptr p,
                     ::Deployment::NodeApplication_ptr server,
+                    NodeApp_Configurator &c,
                     const Static_Config_EntryPoints_Maps* static_entrypts_maps =0);
 
     /// Destructor
@@ -62,32 +65,19 @@ namespace CIAO
     /*--------------------  IDL operations (idl) ------------------*/
 
     /// Initialize the container.
-    virtual CORBA::Long init (const CORBA::PolicyList *policies)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+    virtual CORBA::Long init (const CORBA::PolicyList *policies);
 
     /// Install all homes and components
     Deployment::ComponentInfos *
-      install (const ::Deployment::ContainerImplementationInfo & container_impl_info)
-        ACE_THROW_SPEC ((CORBA::SystemException,
-                         Deployment::UnknownImplId,
-                         Deployment::ImplEntryPointNotFound,
-                         Deployment::InstallationFailure,
-                         Components::InvalidConfiguration));
+      install (const ::Deployment::ContainerImplementationInfo & container_impl_info);
 
     /// Remove all homes and components
-    virtual void
-      remove ()
-        ACE_THROW_SPEC ((CORBA::SystemException,
-                         Components::RemoveFailure));
+    virtual void remove ();
 
     /// Deployment::Container interface defined attributes/operations.
-    virtual ::Deployment::Properties *
-      properties ()
-        ACE_THROW_SPEC ((CORBA::SystemException));
+    virtual ::Deployment::Properties *properties ();
 
-    virtual ::Deployment::NodeApplication_ptr
-      get_node_application ()
-        ACE_THROW_SPEC ((CORBA::SystemException));
+    virtual ::Deployment::NodeApplication_ptr get_node_application ();
 
     /*-------------------------------------------------------------*/
     /*-------------------  C++ help methods (c++) -----------------*/
@@ -96,15 +86,9 @@ namespace CIAO
     /// increase the reference count of the POA.
     virtual PortableServer::POA_ptr _default_POA (void);
 
-
     // Install the home of this particular component
     virtual ::Components::CCMHome_ptr
-      install_home (const ::Deployment::ComponentImplementationInfo & impl_info)
-        ACE_THROW_SPEC ((CORBA::SystemException,
-                         Deployment::UnknownImplId,
-                         Deployment::ImplEntryPointNotFound,
-                         Deployment::InstallationFailure,
-                         Components::InvalidConfiguration));
+      install_home (const ::Deployment::ComponentImplementationInfo & impl_info);
 
     /**
      * @@Note: I don't know how to remove a home right now.
@@ -118,10 +102,7 @@ namespace CIAO
      * the real thinking for easiness.
      */
     // Remove the home of this particular component
-    virtual void
-      remove_home (const char * comp_ins_name)
-        ACE_THROW_SPEC ((CORBA::SystemException,
-                         Components::RemoveFailure));
+    virtual void remove_home (const char * comp_ins_name);
 
     bool
     register_with_ns (const char * obj_name,
@@ -129,21 +110,15 @@ namespace CIAO
                       Components::CCMObject_ptr obj);
 
     bool
-    unregister_with_ns (const char * obj_name,
-                        CORBA::ORB_ptr orb);
-
+    unregister_with_ns (const char * obj_name, CORBA::ORB_ptr orb);
 
     // ------------------- CIAO Internal Operations ------------------------
     // These below two are helper methods to clean up components
     // should only be called when we are sure that there is no
     // active connection on this component.
-    virtual void remove_components ()
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       Components::RemoveFailure));
+    virtual void remove_components ();
 
-    virtual void remove_component (const char * comp_ins_name)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       Components::RemoveFailure));
+    virtual void remove_component (const char * comp_ins_name);
 
     /// Set the cached object reference.
     void set_objref (Deployment::Container_ptr o);
@@ -176,6 +151,8 @@ protected:
 
     /// Cached NodeApplication.
     Deployment::NodeApplication_var nodeapp_;
+
+    NodeApp_Configurator &configurator_;
 
     /// To store all created CCMHome object
     typedef ACE_Hash_Map_Manager_Ex<ACE_CString,

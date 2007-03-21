@@ -1154,7 +1154,7 @@ IDL_GlobalData::update_prefix (char *filename)
       return;
     }
 
-  ACE_CString tmp ("", 0, 0);
+  ACE_CString tmp ("", 0, false);
   char *main_filename = this->pd_main_filename->get_string ();
 
   char *prefix = 0;

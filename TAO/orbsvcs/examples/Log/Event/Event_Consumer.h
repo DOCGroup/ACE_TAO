@@ -42,11 +42,9 @@ public:
 
   // = The CosEventComm::PushConsumer methods
 
-  virtual void push (const CORBA::Any &event)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void push (const CORBA::Any &event);
 
-  virtual void disconnect_push_consumer (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void disconnect_push_consumer (void);
   // The skeleton methods.
 
 private:

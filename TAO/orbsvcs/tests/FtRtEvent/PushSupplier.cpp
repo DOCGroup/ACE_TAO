@@ -89,9 +89,6 @@ int PushSupplier_impl::init(RtecEventChannelAdmin::EventChannel_ptr channel)
 
 void  PushSupplier_impl::disconnect_push_supplier (
       )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ))
 {
 
   reactor_task_.reactor_->end_reactor_event_loop();

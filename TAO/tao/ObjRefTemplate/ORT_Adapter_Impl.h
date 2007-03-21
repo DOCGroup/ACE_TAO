@@ -65,14 +65,11 @@ namespace TAO
      * Methods
      */
     //@{
-    virtual char * tao_server_id (void)
-        ACE_THROW_SPEC ((CORBA::SystemException));
+    virtual char * tao_server_id (void);
 
-    virtual char * tao_orb_id (void)
-        ACE_THROW_SPEC ((CORBA::SystemException));
+    virtual char * tao_orb_id (void);
 
-    virtual PortableInterceptor::AdapterName * tao_adapter_name (void)
-        ACE_THROW_SPEC ((CORBA::SystemException));
+    virtual PortableInterceptor::AdapterName * tao_adapter_name (void);
     //@}
 
     /**
@@ -84,8 +81,7 @@ namespace TAO
     //@{
     virtual CORBA::Object_ptr make_object (
         const char * repository_id,
-        const PortableInterceptor::ObjectId & id)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+        const PortableInterceptor::ObjectId & id);
     //@}
 
   private:

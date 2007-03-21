@@ -15,6 +15,10 @@ namespace CCF
     {
       struct Include
       {
+        virtual ~Include ()
+        {
+        }
+        
         virtual void
         quote (StringLiteralPtr const& sl) = 0;
 

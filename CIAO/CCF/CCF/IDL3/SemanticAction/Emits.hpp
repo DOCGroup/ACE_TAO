@@ -15,6 +15,10 @@ namespace CCF
     {
       struct Emits
       {
+        virtual ~Emits ()
+        {
+        }
+        
         virtual void
         type (IdentifierPtr const& id) = 0;
 

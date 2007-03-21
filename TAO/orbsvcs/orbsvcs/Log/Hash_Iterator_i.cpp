@@ -37,8 +37,6 @@ TAO_Hash_Iterator_i::~TAO_Hash_Iterator_i (void)
 DsLogAdmin::RecordList*
 TAO_Hash_Iterator_i::get (CORBA::ULong position,
                           CORBA::ULong how_many)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   DsLogAdmin::InvalidParam))
 {
   ACE_READ_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
                            guard,
@@ -47,7 +45,7 @@ TAO_Hash_Iterator_i::get (CORBA::ULong position,
 
   if (position < current_position_)
     {
-      ACE_THROW_RETURN (DsLogAdmin::InvalidParam (), 0);
+      throw DsLogAdmin::InvalidParam ();
     }
 
   if (how_many == 0)

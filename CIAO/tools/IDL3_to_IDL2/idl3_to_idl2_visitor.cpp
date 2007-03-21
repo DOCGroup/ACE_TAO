@@ -1535,7 +1535,7 @@ idl3_to_idl2_visitor::create_scoped_name (const char *prefix,
 {
   ACE_CString local_string (prefix,
                             0,
-                            0);
+                            false);
   local_string += local_name;
   local_string += suffix;
   Identifier *local_id = 0;

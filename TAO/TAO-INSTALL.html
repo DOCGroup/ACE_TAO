@@ -219,21 +219,42 @@ href="../ACE-INSTALL.html#vxworks">$ACE_ROOT/ACE-INSTALL.html</a>.<p>
     <H4>Modifying the default location for the IDL compiler</H4>
 
     <P>By default TAO assumes that the IDL compiler is located in:
-      <CODE>$TAO_ROOT/bin/tao_idl</CODE> and that the GPERF tool
+      <CODE>$ACE_ROOT/bin/tao_idl</CODE> and that the GPERF tool
       is located in <CODE>$ACE_ROOT/bin/gperf</CODE>, this is fine for
       hosted builds, but not for cross-compilation.
       Unfortunately there is no good default for cross-compilation
       builds because different sites choose a different location for
       their tools.
     </P>
-    <P>You can override the default values by adding several new lines in your
-      platform_macros.GNU file assuming $(HOST_ROOT) is set to the location
-      of your host build where you have build gperf and tao_idl, as follows:
+    <P>
+      The location of the IDL compiler is set when the makefiles (whether
+      GNU, Visual Studio projects, or any other type) are generated using
+      MPC. If you are using GNU make for the target build, you can follow the
+      procedure below with no further steps. If, however, you are using
+      Visual Studio for the target build, you must generate the Visual Studio
+      projects with a specification of where the hosted IDL compiler is. One
+      common way to do this is to use the MPC <code>-value_template</code>
+      option to specify the path to the IDL compiler, either using a
+      fully specified path or an environment variable. For example, to specify
+      the location with the <code>HOST_TAO_IDL</code> environment variable,
+      generate your projects with the MPC command line option
+      <code>-value_template tao_idl=$(HOST_TAO_IDL)</code>. Then before
+      running Visual Studio to cross-build for the target, be sure that the
+      <code>HOST_TAO_IDL</code> environment variable is set to the location
+      of the host-built IDL compiler. Note that if the host-built IDL compiler
+      requires a PATH setting different from what's set in the Visual Studio
+      environment, you must set the PATH environment variable and specify the
+      <code>/USEENV</code> option to devenv.
+    </P>
+    <P>If your builds are using GNU make, you can override the default values
+      by adding several lines to your <code>platform_macros.GNU</code> file.
+      Assuming $(HOST_ROOT) is set to the location of your host build where
+      you previously built gperf and tao_idl, you can change the target
+      build by adding the following lines:
 <PRE>
-$ echo 'TAO_IDL := $(HOST_ROOT)/bin/tao_idl' \
-$ echo 'TAO_IDLFLAGS += -g $(HOST_ROOT)/bin/gperf' \
-$ echo 'TAO_IDL_DEP := $(HOST_ROOT)/bin/tao_idl$(EXEEXT)' \
-     >> platform_macros.GNU
+TAO_IDL := $(HOST_ROOT)/bin/tao_idl
+TAO_IDLFLAGS += -g $(HOST_ROOT)/bin/gperf
+TAO_IDL_DEP := $(HOST_ROOT)/bin/tao_idl$(EXEEXT)
 </PRE>
 
     <P>Obviously you must first build the tools for the host platform,

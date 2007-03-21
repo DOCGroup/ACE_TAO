@@ -11,7 +11,6 @@ test_i::test_i (CORBA::ORB_ptr orb)
 
 void
 test_i::method (CORBA::ULong request_number)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
               "server: Iteration %d @ %T\n",
@@ -20,7 +19,6 @@ test_i::method (CORBA::ULong request_number)
 
 void
 test_i::shutdown (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown (0);
 }

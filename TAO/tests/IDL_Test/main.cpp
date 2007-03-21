@@ -106,7 +106,9 @@ main (int argc , char *argv[])
       CORBA::Object_var obj;
 
       hello_i h;
-      obj = h._this ();
+      PortableServer::ObjectId_var id = root_poa->activate_object (&h);
+      obj = root_poa->id_to_reference (id.in ());
+      obj = hello::_narrow (obj.in ());
 
       if (ACE_OS::strcmp (obj->_interface_repository_id (),
                           "IDL:anvil.com/hello:1.0"))
@@ -117,7 +119,9 @@ main (int argc , char *argv[])
         }
 
       goodbye_i g;
-      obj = g._this ();
+      id = root_poa->activate_object (&g);
+      obj = root_poa->id_to_reference (id.in ());
+      obj = goodbye::_narrow (obj.in ());
 
       if (ACE_OS::strcmp (obj->_interface_repository_id (),
                           "IDL:anvil.com/goodbye:1.0"))
@@ -128,7 +132,9 @@ main (int argc , char *argv[])
         }
 
       sayonara_i s;
-      obj = s._this ();
+      id = root_poa->activate_object (&s);
+      obj = root_poa->id_to_reference (id.in ());
+      obj = salutation::sayonara::_narrow (obj.in ());
 
       if (ACE_OS::strcmp (obj->_interface_repository_id (),
                           "IDL:hammer.com/salutation/sayonara:1.0"))
@@ -139,7 +145,9 @@ main (int argc , char *argv[])
         }
 
       ciao_i c;
-      obj = c._this ();
+      id = root_poa->activate_object (&c);
+      obj = root_poa->id_to_reference (id.in ());
+      obj = ciao::_narrow (obj.in ());
 
       if (ACE_OS::strcmp (obj->_interface_repository_id (),
                           "IDL:anvil.com/ciao:1.0"))
@@ -150,7 +158,9 @@ main (int argc , char *argv[])
         }
 
       aloha_i a;
-      obj = a._this ();
+      id = root_poa->activate_object (&a);
+      obj = root_poa->id_to_reference (id.in ());
+      obj = aloha::_narrow (obj.in ());
 
       if (ACE_OS::strcmp (obj->_interface_repository_id (),
                           "IDL:anvil.com/aloha:1.0"))

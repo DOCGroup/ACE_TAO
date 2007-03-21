@@ -79,7 +79,7 @@ ACE_Log_Msg_UNIX_Syslog::close (void)
   return 0;
 }
 
-int
+ssize_t
 ACE_Log_Msg_UNIX_Syslog::log (ACE_Log_Record &log_record)
 {
   int syslog_priority = this->convert_log_priority (log_record.type ());

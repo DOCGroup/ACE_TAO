@@ -95,12 +95,10 @@ namespace TAO
     try
       {
         CORBA::Policy_var bcp_policy =
-          stub->get_cached_policy (TAO_CACHED_POLICY_BUFFERING_CONSTRAINT
-                                  );
+          stub->get_cached_policy (TAO_CACHED_POLICY_BUFFERING_CONSTRAINT);
 
         TAO::BufferingConstraintPolicy_var bcpv =
-          TAO::BufferingConstraintPolicy::_narrow (bcp_policy.in ()
-                                                  );
+          TAO::BufferingConstraintPolicy::_narrow (bcp_policy.in ());
 
         TAO_Buffering_Constraint_Policy* bcp =
           dynamic_cast<TAO_Buffering_Constraint_Policy *> (bcpv.in ());
@@ -110,7 +108,7 @@ namespace TAO
           }
         bcp->get_buffering_constraint (buffering_constraint);
       }
-    catch ( ::CORBA::Exception&)
+    catch (const ::CORBA::Exception&)
       {
         return true;
       }

@@ -9,6 +9,12 @@
  *             Will Otte <wotte@dre.vanderbilt.edu>
  */
 
+// Fix for Borland compilers, which seem to have a broken
+// <string> include.
+#ifdef __BORLANDC__
+# include <string.h>
+#endif
+
 #include "CIAOServerResources.hpp"
 
 namespace CIAO
@@ -16,12 +22,12 @@ namespace CIAO
   namespace Config_Handlers
   {
     // ServerResourcesDef
-    //
+    // 
 
     ServerResourcesDef::
     ServerResourcesDef (::CIAO::Config_Handlers::ORBConfigs const& orbConfigs__)
-    :
-    ::XSCRT::Type (),
+    : 
+    ::XSCRT::Type (), 
     orbConfigs_ (new ::CIAO::Config_Handlers::ORBConfigs (orbConfigs__)),
     regulator__ ()
     {
@@ -63,7 +69,7 @@ namespace CIAO
 
 
     // ServerResourcesDef
-    //
+    // 
     bool ServerResourcesDef::
     cmdline_p () const
     {
@@ -92,7 +98,7 @@ namespace CIAO
     }
 
     // ServerResourcesDef
-    //
+    // 
     bool ServerResourcesDef::
     svcconf_p () const
     {
@@ -121,7 +127,7 @@ namespace CIAO
     }
 
     // ServerResourcesDef
-    //
+    // 
     ::CIAO::Config_Handlers::ORBConfigs const& ServerResourcesDef::
     orbConfigs () const
     {
@@ -135,7 +141,7 @@ namespace CIAO
     }
 
     // ServerResourcesDef
-    //
+    // 
     bool ServerResourcesDef::
     id_p () const
     {
@@ -171,12 +177,12 @@ namespace CIAO
 
 
     // ServerCmdlineOptions
-    //
+    // 
 
     ServerCmdlineOptions::
     ServerCmdlineOptions ()
-    :
-    ::XSCRT::Type (),
+    : 
+    ::XSCRT::Type (), 
     regulator__ ()
     {
     }
@@ -205,7 +211,7 @@ namespace CIAO
 
 
     // ServerCmdlineOptions
-    //
+    // 
     ServerCmdlineOptions::arg_iterator ServerCmdlineOptions::
     begin_arg ()
     {
@@ -244,12 +250,12 @@ namespace CIAO
 
 
     // ACESvcConf
-    //
+    // 
 
     ACESvcConf::
     ACESvcConf ()
-    :
-    ::XSCRT::Type (),
+    : 
+    ::XSCRT::Type (), 
     regulator__ ()
     {
     }
@@ -275,7 +281,7 @@ namespace CIAO
 
 
     // ACESvcConf
-    //
+    // 
     bool ACESvcConf::
     uri_p () const
     {
@@ -305,12 +311,12 @@ namespace CIAO
 
 
     // ORBConfigs
-    //
+    // 
 
     ORBConfigs::
     ORBConfigs ()
-    :
-    ::XSCRT::Type (),
+    : 
+    ::XSCRT::Type (), 
     regulator__ ()
     {
     }
@@ -344,7 +350,7 @@ namespace CIAO
 
 
     // ORBConfigs
-    //
+    // 
     bool ORBConfigs::
     resources_p () const
     {
@@ -373,7 +379,7 @@ namespace CIAO
     }
 
     // ORBConfigs
-    //
+    // 
     ORBConfigs::policySet_iterator ORBConfigs::
     begin_policySet ()
     {
@@ -412,12 +418,12 @@ namespace CIAO
 
 
     // ORBResources
-    //
+    // 
 
     ORBResources::
     ORBResources ()
-    :
-    ::XSCRT::Type (),
+    : 
+    ::XSCRT::Type (), 
     regulator__ ()
     {
     }
@@ -464,7 +470,7 @@ namespace CIAO
 
 
     // ORBResources
-    //
+    // 
     ORBResources::threadpool_iterator ORBResources::
     begin_threadpool ()
     {
@@ -502,7 +508,7 @@ namespace CIAO
     }
 
     // ORBResources
-    //
+    // 
     ORBResources::threadpoolWithLanes_iterator ORBResources::
     begin_threadpoolWithLanes ()
     {
@@ -540,7 +546,7 @@ namespace CIAO
     }
 
     // ORBResources
-    //
+    // 
     ORBResources::connectionBands_iterator ORBResources::
     begin_connectionBands ()
     {
@@ -578,52 +584,23 @@ namespace CIAO
     }
 
 
-    // Priority
-    //
-
-    Priority::
-    Priority (::XMLSchema::int_ const& b__)
-    :
-    Base__ (b__),
-    regulator__ ()
-    {
-    }
-
-    Priority::
-    Priority (::CIAO::Config_Handlers::Priority const& s)
-    :
-    Base__ (s),
-    regulator__ ()
-    {
-    }
-
-    ::CIAO::Config_Handlers::Priority& Priority::
-    operator= (::CIAO::Config_Handlers::Priority const& s)
-    {
-      static_cast< Base__& > (*this) = static_cast< Base__ const& > (s);
-
-      return *this;
-    }
-
-
-
     // ThreadpoolDef
-    //
+    // 
 
     ThreadpoolDef::
     ThreadpoolDef (::XMLSchema::unsignedLong const& stacksize__,
                    ::XMLSchema::unsignedLong const& static_threads__,
                    ::XMLSchema::unsignedLong const& dynamic_threads__,
-                   ::CIAO::Config_Handlers::Priority const& default_priority__,
+                   ::XMLSchema::int_ const& default_priority__,
                    ::XMLSchema::boolean const& allow_request_buffering__,
                    ::XMLSchema::unsignedLong const& max_buffered_requests__,
                    ::XMLSchema::unsignedLong const& max_request_buffered_size__)
-    :
-    ::XSCRT::Type (),
+    : 
+    ::XSCRT::Type (), 
     stacksize_ (new ::XMLSchema::unsignedLong (stacksize__)),
     static_threads_ (new ::XMLSchema::unsignedLong (static_threads__)),
     dynamic_threads_ (new ::XMLSchema::unsignedLong (dynamic_threads__)),
-    default_priority_ (new ::CIAO::Config_Handlers::Priority (default_priority__)),
+    default_priority_ (new ::XMLSchema::int_ (default_priority__)),
     allow_request_buffering_ (new ::XMLSchema::boolean (allow_request_buffering__)),
     max_buffered_requests_ (new ::XMLSchema::unsignedLong (max_buffered_requests__)),
     max_request_buffered_size_ (new ::XMLSchema::unsignedLong (max_request_buffered_size__)),
@@ -645,7 +622,7 @@ namespace CIAO
     stacksize_ (new ::XMLSchema::unsignedLong (*s.stacksize_)),
     static_threads_ (new ::XMLSchema::unsignedLong (*s.static_threads_)),
     dynamic_threads_ (new ::XMLSchema::unsignedLong (*s.dynamic_threads_)),
-    default_priority_ (new ::CIAO::Config_Handlers::Priority (*s.default_priority_)),
+    default_priority_ (new ::XMLSchema::int_ (*s.default_priority_)),
     allow_request_buffering_ (new ::XMLSchema::boolean (*s.allow_request_buffering_)),
     max_buffered_requests_ (new ::XMLSchema::unsignedLong (*s.max_buffered_requests_)),
     max_request_buffered_size_ (new ::XMLSchema::unsignedLong (*s.max_request_buffered_size_)),
@@ -687,7 +664,7 @@ namespace CIAO
 
 
     // ThreadpoolDef
-    //
+    // 
     ::XMLSchema::unsignedLong const& ThreadpoolDef::
     stacksize () const
     {
@@ -701,7 +678,7 @@ namespace CIAO
     }
 
     // ThreadpoolDef
-    //
+    // 
     ::XMLSchema::unsignedLong const& ThreadpoolDef::
     static_threads () const
     {
@@ -715,7 +692,7 @@ namespace CIAO
     }
 
     // ThreadpoolDef
-    //
+    // 
     ::XMLSchema::unsignedLong const& ThreadpoolDef::
     dynamic_threads () const
     {
@@ -729,21 +706,21 @@ namespace CIAO
     }
 
     // ThreadpoolDef
-    //
-    ::CIAO::Config_Handlers::Priority const& ThreadpoolDef::
+    // 
+    ::XMLSchema::int_ const& ThreadpoolDef::
     default_priority () const
     {
       return *default_priority_;
     }
 
     void ThreadpoolDef::
-    default_priority (::CIAO::Config_Handlers::Priority const& e)
+    default_priority (::XMLSchema::int_ const& e)
     {
       *default_priority_ = e;
     }
 
     // ThreadpoolDef
-    //
+    // 
     ::XMLSchema::boolean const& ThreadpoolDef::
     allow_request_buffering () const
     {
@@ -757,7 +734,7 @@ namespace CIAO
     }
 
     // ThreadpoolDef
-    //
+    // 
     ::XMLSchema::unsignedLong const& ThreadpoolDef::
     max_buffered_requests () const
     {
@@ -771,7 +748,7 @@ namespace CIAO
     }
 
     // ThreadpoolDef
-    //
+    // 
     ::XMLSchema::unsignedLong const& ThreadpoolDef::
     max_request_buffered_size () const
     {
@@ -785,7 +762,7 @@ namespace CIAO
     }
 
     // ThreadpoolDef
-    //
+    // 
     bool ThreadpoolDef::
     id_p () const
     {
@@ -821,7 +798,7 @@ namespace CIAO
 
 
     // ThreadpoolWithLanesDef
-    //
+    // 
 
     ThreadpoolWithLanesDef::
     ThreadpoolWithLanesDef (::XMLSchema::unsignedLong const& stacksize__,
@@ -829,8 +806,8 @@ namespace CIAO
                             ::XMLSchema::boolean const& allow_request_buffering__,
                             ::XMLSchema::unsignedLong const& max_buffered_requests__,
                             ::XMLSchema::unsignedLong const& max_request_buffered_size__)
-    :
-    ::XSCRT::Type (),
+    : 
+    ::XSCRT::Type (), 
     stacksize_ (new ::XMLSchema::unsignedLong (stacksize__)),
     allow_borrowing_ (new ::XMLSchema::boolean (allow_borrowing__)),
     allow_request_buffering_ (new ::XMLSchema::boolean (allow_request_buffering__)),
@@ -895,7 +872,7 @@ namespace CIAO
 
 
     // ThreadpoolWithLanesDef
-    //
+    // 
     ThreadpoolWithLanesDef::threadpoolLane_iterator ThreadpoolWithLanesDef::
     begin_threadpoolLane ()
     {
@@ -933,7 +910,7 @@ namespace CIAO
     }
 
     // ThreadpoolWithLanesDef
-    //
+    // 
     ::XMLSchema::unsignedLong const& ThreadpoolWithLanesDef::
     stacksize () const
     {
@@ -947,7 +924,7 @@ namespace CIAO
     }
 
     // ThreadpoolWithLanesDef
-    //
+    // 
     ::XMLSchema::boolean const& ThreadpoolWithLanesDef::
     allow_borrowing () const
     {
@@ -961,7 +938,7 @@ namespace CIAO
     }
 
     // ThreadpoolWithLanesDef
-    //
+    // 
     ::XMLSchema::boolean const& ThreadpoolWithLanesDef::
     allow_request_buffering () const
     {
@@ -975,7 +952,7 @@ namespace CIAO
     }
 
     // ThreadpoolWithLanesDef
-    //
+    // 
     ::XMLSchema::unsignedLong const& ThreadpoolWithLanesDef::
     max_buffered_requests () const
     {
@@ -989,7 +966,7 @@ namespace CIAO
     }
 
     // ThreadpoolWithLanesDef
-    //
+    // 
     ::XMLSchema::unsignedLong const& ThreadpoolWithLanesDef::
     max_request_buffered_size () const
     {
@@ -1003,7 +980,7 @@ namespace CIAO
     }
 
     // ThreadpoolWithLanesDef
-    //
+    // 
     bool ThreadpoolWithLanesDef::
     id_p () const
     {
@@ -1039,17 +1016,17 @@ namespace CIAO
 
 
     // ThreadpoolLaneDef
-    //
+    // 
 
     ThreadpoolLaneDef::
     ThreadpoolLaneDef (::XMLSchema::unsignedLong const& static_threads__,
                        ::XMLSchema::unsignedLong const& dynamic_threads__,
-                       ::CIAO::Config_Handlers::Priority const& priority__)
-    :
-    ::XSCRT::Type (),
+                       ::XMLSchema::int_ const& priority__)
+    : 
+    ::XSCRT::Type (), 
     static_threads_ (new ::XMLSchema::unsignedLong (static_threads__)),
     dynamic_threads_ (new ::XMLSchema::unsignedLong (dynamic_threads__)),
-    priority_ (new ::CIAO::Config_Handlers::Priority (priority__)),
+    priority_ (new ::XMLSchema::int_ (priority__)),
     regulator__ ()
     {
       static_threads_->container (this);
@@ -1063,7 +1040,7 @@ namespace CIAO
     ::XSCRT::Type (),
     static_threads_ (new ::XMLSchema::unsignedLong (*s.static_threads_)),
     dynamic_threads_ (new ::XMLSchema::unsignedLong (*s.dynamic_threads_)),
-    priority_ (new ::CIAO::Config_Handlers::Priority (*s.priority_)),
+    priority_ (new ::XMLSchema::int_ (*s.priority_)),
     regulator__ ()
     {
       static_threads_->container (this);
@@ -1085,7 +1062,7 @@ namespace CIAO
 
 
     // ThreadpoolLaneDef
-    //
+    // 
     ::XMLSchema::unsignedLong const& ThreadpoolLaneDef::
     static_threads () const
     {
@@ -1099,7 +1076,7 @@ namespace CIAO
     }
 
     // ThreadpoolLaneDef
-    //
+    // 
     ::XMLSchema::unsignedLong const& ThreadpoolLaneDef::
     dynamic_threads () const
     {
@@ -1113,27 +1090,27 @@ namespace CIAO
     }
 
     // ThreadpoolLaneDef
-    //
-    ::CIAO::Config_Handlers::Priority const& ThreadpoolLaneDef::
+    // 
+    ::XMLSchema::int_ const& ThreadpoolLaneDef::
     priority () const
     {
       return *priority_;
     }
 
     void ThreadpoolLaneDef::
-    priority (::CIAO::Config_Handlers::Priority const& e)
+    priority (::XMLSchema::int_ const& e)
     {
       *priority_ = e;
     }
 
 
     // ConnectionBandsDef
-    //
+    // 
 
     ConnectionBandsDef::
     ConnectionBandsDef ()
-    :
-    ::XSCRT::Type (),
+    : 
+    ::XSCRT::Type (), 
     regulator__ ()
     {
     }
@@ -1168,7 +1145,7 @@ namespace CIAO
 
 
     // ConnectionBandsDef
-    //
+    // 
     ConnectionBandsDef::band_iterator ConnectionBandsDef::
     begin_band ()
     {
@@ -1206,7 +1183,7 @@ namespace CIAO
     }
 
     // ConnectionBandsDef
-    //
+    // 
     bool ConnectionBandsDef::
     id_p () const
     {
@@ -1242,13 +1219,13 @@ namespace CIAO
 
 
     // PriorityBandDef
-    //
+    // 
 
     PriorityBandDef::
     PriorityBandDef (::XMLSchema::int_ const& low__,
                      ::XMLSchema::int_ const& high__)
-    :
-    ::XSCRT::Type (),
+    : 
+    ::XSCRT::Type (), 
     low_ (new ::XMLSchema::int_ (low__)),
     high_ (new ::XMLSchema::int_ (high__)),
     regulator__ ()
@@ -1281,7 +1258,7 @@ namespace CIAO
 
 
     // PriorityBandDef
-    //
+    // 
     ::XMLSchema::int_ const& PriorityBandDef::
     low () const
     {
@@ -1295,7 +1272,7 @@ namespace CIAO
     }
 
     // PriorityBandDef
-    //
+    // 
     ::XMLSchema::int_ const& PriorityBandDef::
     high () const
     {
@@ -1310,12 +1287,12 @@ namespace CIAO
 
 
     // PolicySet
-    //
+    // 
 
     PolicySet::
     PolicySet ()
-    :
-    ::XSCRT::Type (),
+    : 
+    ::XSCRT::Type (), 
     regulator__ ()
     {
     }
@@ -1329,6 +1306,14 @@ namespace CIAO
     {
       {
         for (priorityModel_const_iterator i (s.priorityModel_.begin ());i != s.priorityModel_.end ();++i) add_priorityModel (*i);
+      }
+
+      {
+        for (nwpriorityModel_const_iterator i (s.nwpriorityModel_.begin ());i != s.nwpriorityModel_.end ();++i) add_nwpriorityModel (*i);
+      }
+
+      {
+        for (cnwpriorityModel_const_iterator i (s.cnwpriorityModel_.begin ());i != s.cnwpriorityModel_.end ();++i) add_cnwpriorityModel (*i);
       }
 
       {
@@ -1350,6 +1335,16 @@ namespace CIAO
         for (priorityModel_const_iterator i (s.priorityModel_.begin ());i != s.priorityModel_.end ();++i) add_priorityModel (*i);
       }
 
+      nwpriorityModel_.clear ();
+      {
+        for (nwpriorityModel_const_iterator i (s.nwpriorityModel_.begin ());i != s.nwpriorityModel_.end ();++i) add_nwpriorityModel (*i);
+      }
+
+      cnwpriorityModel_.clear ();
+      {
+        for (cnwpriorityModel_const_iterator i (s.cnwpriorityModel_.begin ());i != s.cnwpriorityModel_.end ();++i) add_cnwpriorityModel (*i);
+      }
+
       threadpool_.clear ();
       {
         for (threadpool_const_iterator i (s.threadpool_.begin ());i != s.threadpool_.end ();++i) add_threadpool (*i);
@@ -1368,7 +1363,7 @@ namespace CIAO
 
 
     // PolicySet
-    //
+    // 
     PolicySet::priorityModel_iterator PolicySet::
     begin_priorityModel ()
     {
@@ -1406,7 +1401,83 @@ namespace CIAO
     }
 
     // PolicySet
-    //
+    // 
+    PolicySet::nwpriorityModel_iterator PolicySet::
+    begin_nwpriorityModel ()
+    {
+      return nwpriorityModel_.begin ();
+    }
+
+    PolicySet::nwpriorityModel_iterator PolicySet::
+    end_nwpriorityModel ()
+    {
+      return nwpriorityModel_.end ();
+    }
+
+    PolicySet::nwpriorityModel_const_iterator PolicySet::
+    begin_nwpriorityModel () const
+    {
+      return nwpriorityModel_.begin ();
+    }
+
+    PolicySet::nwpriorityModel_const_iterator PolicySet::
+    end_nwpriorityModel () const
+    {
+      return nwpriorityModel_.end ();
+    }
+
+    void PolicySet::
+    add_nwpriorityModel (::CIAO::Config_Handlers::NWPriorityModelPolicyDef const& e)
+    {
+      nwpriorityModel_.push_back (e);
+    }
+
+    size_t PolicySet::
+    count_nwpriorityModel(void) const
+    {
+      return nwpriorityModel_.size ();
+    }
+
+    // PolicySet
+    // 
+    PolicySet::cnwpriorityModel_iterator PolicySet::
+    begin_cnwpriorityModel ()
+    {
+      return cnwpriorityModel_.begin ();
+    }
+
+    PolicySet::cnwpriorityModel_iterator PolicySet::
+    end_cnwpriorityModel ()
+    {
+      return cnwpriorityModel_.end ();
+    }
+
+    PolicySet::cnwpriorityModel_const_iterator PolicySet::
+    begin_cnwpriorityModel () const
+    {
+      return cnwpriorityModel_.begin ();
+    }
+
+    PolicySet::cnwpriorityModel_const_iterator PolicySet::
+    end_cnwpriorityModel () const
+    {
+      return cnwpriorityModel_.end ();
+    }
+
+    void PolicySet::
+    add_cnwpriorityModel (::CIAO::Config_Handlers::CNWPriorityModelPolicyDef const& e)
+    {
+      cnwpriorityModel_.push_back (e);
+    }
+
+    size_t PolicySet::
+    count_cnwpriorityModel(void) const
+    {
+      return cnwpriorityModel_.size ();
+    }
+
+    // PolicySet
+    // 
     PolicySet::threadpool_iterator PolicySet::
     begin_threadpool ()
     {
@@ -1444,7 +1515,7 @@ namespace CIAO
     }
 
     // PolicySet
-    //
+    // 
     PolicySet::priorityBandedConnection_iterator PolicySet::
     begin_priorityBandedConnection ()
     {
@@ -1482,7 +1553,7 @@ namespace CIAO
     }
 
     // PolicySet
-    //
+    // 
     bool PolicySet::
     id_p () const
     {
@@ -1518,7 +1589,7 @@ namespace CIAO
 
 
     // PriorityModel
-    //
+    // 
 
     PriorityModel::Value PriorityModel::
     integral () const
@@ -1544,13 +1615,40 @@ namespace CIAO
     {
     }
 
+    // NWPriorityModel
+    // 
+
+    NWPriorityModel::Value NWPriorityModel::
+    integral () const
+    {
+      return v_;
+    }
+
+    bool
+    operator== (::CIAO::Config_Handlers::NWPriorityModel const& a, ::CIAO::Config_Handlers::NWPriorityModel const& b)
+    {
+      return a.v_ == b.v_;
+    }
+
+    bool
+    operator!= (::CIAO::Config_Handlers::NWPriorityModel const& a, ::CIAO::Config_Handlers::NWPriorityModel const& b)
+    {
+      return a.v_ != b.v_;
+    }
+
+    NWPriorityModel::
+    NWPriorityModel (NWPriorityModel::Value v)
+    : v_ (v)
+    {
+    }
+
     // PriorityModelPolicyDef
-    //
+    // 
 
     PriorityModelPolicyDef::
     PriorityModelPolicyDef (::CIAO::Config_Handlers::PriorityModel const& priority_model__)
-    :
-    ::XSCRT::Type (),
+    : 
+    ::XSCRT::Type (), 
     priority_model_ (new ::CIAO::Config_Handlers::PriorityModel (priority_model__)),
     regulator__ ()
     {
@@ -1562,7 +1660,7 @@ namespace CIAO
     :
     ::XSCRT::Type (),
     priority_model_ (new ::CIAO::Config_Handlers::PriorityModel (*s.priority_model_)),
-    server_priority_ (s.server_priority_.get () ? new ::CIAO::Config_Handlers::Priority (*s.server_priority_) : 0),
+    server_priority_ (s.server_priority_.get () ? new ::XMLSchema::int_ (*s.server_priority_) : 0),
     regulator__ ()
     {
       priority_model_->container (this);
@@ -1575,14 +1673,14 @@ namespace CIAO
       priority_model (s.priority_model ());
 
       if (s.server_priority_.get ()) server_priority (*(s.server_priority_));
-      else server_priority_ = ::std::auto_ptr< ::CIAO::Config_Handlers::Priority > (0);
+      else server_priority_ = ::std::auto_ptr< ::XMLSchema::int_ > (0);
 
       return *this;
     }
 
 
     // PriorityModelPolicyDef
-    //
+    // 
     ::CIAO::Config_Handlers::PriorityModel const& PriorityModelPolicyDef::
     priority_model () const
     {
@@ -1596,27 +1694,27 @@ namespace CIAO
     }
 
     // PriorityModelPolicyDef
-    //
+    // 
     bool PriorityModelPolicyDef::
     server_priority_p () const
     {
       return server_priority_.get () != 0;
     }
 
-    ::CIAO::Config_Handlers::Priority const& PriorityModelPolicyDef::
+    ::XMLSchema::int_ const& PriorityModelPolicyDef::
     server_priority () const
     {
       return *server_priority_;
     }
 
-    ::CIAO::Config_Handlers::Priority& PriorityModelPolicyDef::
+    ::XMLSchema::int_& PriorityModelPolicyDef::
     server_priority ()
     {
       return *server_priority_;
     }
 
     void PriorityModelPolicyDef::
-    server_priority (::CIAO::Config_Handlers::Priority const& e)
+    server_priority (::XMLSchema::int_ const& e)
     {
       if (server_priority_.get ())
       {
@@ -1625,9 +1723,166 @@ namespace CIAO
 
       else
       {
-        server_priority_ = ::std::auto_ptr< ::CIAO::Config_Handlers::Priority > (new ::CIAO::Config_Handlers::Priority (e));
+        server_priority_ = ::std::auto_ptr< ::XMLSchema::int_ > (new ::XMLSchema::int_ (e));
         server_priority_->container (this);
       }
+    }
+
+
+    // NWPriorityModelPolicyDef
+    // 
+
+    NWPriorityModelPolicyDef::
+    NWPriorityModelPolicyDef (::CIAO::Config_Handlers::NWPriorityModel const& nw_priority_model__,
+                              ::XMLSchema::long_ const& request_dscp__,
+                              ::XMLSchema::long_ const& reply_dscp__)
+    : 
+    ::XSCRT::Type (), 
+    nw_priority_model_ (new ::CIAO::Config_Handlers::NWPriorityModel (nw_priority_model__)),
+    request_dscp_ (new ::XMLSchema::long_ (request_dscp__)),
+    reply_dscp_ (new ::XMLSchema::long_ (reply_dscp__)),
+    regulator__ ()
+    {
+      nw_priority_model_->container (this);
+      request_dscp_->container (this);
+      reply_dscp_->container (this);
+    }
+
+    NWPriorityModelPolicyDef::
+    NWPriorityModelPolicyDef (::CIAO::Config_Handlers::NWPriorityModelPolicyDef const& s)
+    :
+    ::XSCRT::Type (),
+    nw_priority_model_ (new ::CIAO::Config_Handlers::NWPriorityModel (*s.nw_priority_model_)),
+    request_dscp_ (new ::XMLSchema::long_ (*s.request_dscp_)),
+    reply_dscp_ (new ::XMLSchema::long_ (*s.reply_dscp_)),
+    regulator__ ()
+    {
+      nw_priority_model_->container (this);
+      request_dscp_->container (this);
+      reply_dscp_->container (this);
+    }
+
+    ::CIAO::Config_Handlers::NWPriorityModelPolicyDef& NWPriorityModelPolicyDef::
+    operator= (::CIAO::Config_Handlers::NWPriorityModelPolicyDef const& s)
+    {
+      nw_priority_model (s.nw_priority_model ());
+
+      request_dscp (s.request_dscp ());
+
+      reply_dscp (s.reply_dscp ());
+
+      return *this;
+    }
+
+
+    // NWPriorityModelPolicyDef
+    // 
+    ::CIAO::Config_Handlers::NWPriorityModel const& NWPriorityModelPolicyDef::
+    nw_priority_model () const
+    {
+      return *nw_priority_model_;
+    }
+
+    void NWPriorityModelPolicyDef::
+    nw_priority_model (::CIAO::Config_Handlers::NWPriorityModel const& e)
+    {
+      *nw_priority_model_ = e;
+    }
+
+    // NWPriorityModelPolicyDef
+    // 
+    ::XMLSchema::long_ const& NWPriorityModelPolicyDef::
+    request_dscp () const
+    {
+      return *request_dscp_;
+    }
+
+    void NWPriorityModelPolicyDef::
+    request_dscp (::XMLSchema::long_ const& e)
+    {
+      *request_dscp_ = e;
+    }
+
+    // NWPriorityModelPolicyDef
+    // 
+    ::XMLSchema::long_ const& NWPriorityModelPolicyDef::
+    reply_dscp () const
+    {
+      return *reply_dscp_;
+    }
+
+    void NWPriorityModelPolicyDef::
+    reply_dscp (::XMLSchema::long_ const& e)
+    {
+      *reply_dscp_ = e;
+    }
+
+
+    // CNWPriorityModelPolicyDef
+    // 
+
+    CNWPriorityModelPolicyDef::
+    CNWPriorityModelPolicyDef (::XMLSchema::long_ const& request_dscp__,
+                               ::XMLSchema::long_ const& reply_dscp__)
+    : 
+    ::XSCRT::Type (), 
+    request_dscp_ (new ::XMLSchema::long_ (request_dscp__)),
+    reply_dscp_ (new ::XMLSchema::long_ (reply_dscp__)),
+    regulator__ ()
+    {
+      request_dscp_->container (this);
+      reply_dscp_->container (this);
+    }
+
+    CNWPriorityModelPolicyDef::
+    CNWPriorityModelPolicyDef (::CIAO::Config_Handlers::CNWPriorityModelPolicyDef const& s)
+    :
+    ::XSCRT::Type (),
+    request_dscp_ (new ::XMLSchema::long_ (*s.request_dscp_)),
+    reply_dscp_ (new ::XMLSchema::long_ (*s.reply_dscp_)),
+    regulator__ ()
+    {
+      request_dscp_->container (this);
+      reply_dscp_->container (this);
+    }
+
+    ::CIAO::Config_Handlers::CNWPriorityModelPolicyDef& CNWPriorityModelPolicyDef::
+    operator= (::CIAO::Config_Handlers::CNWPriorityModelPolicyDef const& s)
+    {
+      request_dscp (s.request_dscp ());
+
+      reply_dscp (s.reply_dscp ());
+
+      return *this;
+    }
+
+
+    // CNWPriorityModelPolicyDef
+    // 
+    ::XMLSchema::long_ const& CNWPriorityModelPolicyDef::
+    request_dscp () const
+    {
+      return *request_dscp_;
+    }
+
+    void CNWPriorityModelPolicyDef::
+    request_dscp (::XMLSchema::long_ const& e)
+    {
+      *request_dscp_ = e;
+    }
+
+    // CNWPriorityModelPolicyDef
+    // 
+    ::XMLSchema::long_ const& CNWPriorityModelPolicyDef::
+    reply_dscp () const
+    {
+      return *reply_dscp_;
+    }
+
+    void CNWPriorityModelPolicyDef::
+    reply_dscp (::XMLSchema::long_ const& e)
+    {
+      *reply_dscp_ = e;
     }
   }
 }
@@ -1641,7 +1896,7 @@ namespace CIAO
 
     ServerResourcesDef::
     ServerResourcesDef (::XSCRT::XML::Element< ACE_TCHAR > const& e)
-    :Base__ (e), regulator__ ()
+    :Base (e), regulator__ ()
     {
 
       ::XSCRT::Parser< ACE_TCHAR > p (e);
@@ -1669,7 +1924,7 @@ namespace CIAO
           orbConfigs_->container (this);
         }
 
-        else
+        else 
         {
         }
       }
@@ -1684,7 +1939,7 @@ namespace CIAO
           id (t);
         }
 
-        else
+        else 
         {
         }
       }
@@ -1695,7 +1950,7 @@ namespace CIAO
 
     ServerCmdlineOptions::
     ServerCmdlineOptions (::XSCRT::XML::Element< ACE_TCHAR > const& e)
-    :Base__ (e), regulator__ ()
+    :Base (e), regulator__ ()
     {
 
       ::XSCRT::Parser< ACE_TCHAR > p (e);
@@ -1711,7 +1966,7 @@ namespace CIAO
           add_arg (t);
         }
 
-        else
+        else 
         {
         }
       }
@@ -1722,7 +1977,7 @@ namespace CIAO
 
     ACESvcConf::
     ACESvcConf (::XSCRT::XML::Element< ACE_TCHAR > const& e)
-    :Base__ (e), regulator__ ()
+    :Base (e), regulator__ ()
     {
 
       ::XSCRT::Parser< ACE_TCHAR > p (e);
@@ -1738,7 +1993,7 @@ namespace CIAO
           uri (t);
         }
 
-        else
+        else 
         {
         }
       }
@@ -1749,7 +2004,7 @@ namespace CIAO
 
     ORBConfigs::
     ORBConfigs (::XSCRT::XML::Element< ACE_TCHAR > const& e)
-    :Base__ (e), regulator__ ()
+    :Base (e), regulator__ ()
     {
 
       ::XSCRT::Parser< ACE_TCHAR > p (e);
@@ -1771,7 +2026,7 @@ namespace CIAO
           add_policySet (t);
         }
 
-        else
+        else 
         {
         }
       }
@@ -1782,7 +2037,7 @@ namespace CIAO
 
     ORBResources::
     ORBResources (::XSCRT::XML::Element< ACE_TCHAR > const& e)
-    :Base__ (e), regulator__ ()
+    :Base (e), regulator__ ()
     {
 
       ::XSCRT::Parser< ACE_TCHAR > p (e);
@@ -1810,27 +2065,10 @@ namespace CIAO
           add_connectionBands (t);
         }
 
-        else
+        else 
         {
         }
       }
-    }
-
-    // Priority
-    //
-
-    Priority::
-    Priority (::XSCRT::XML::Element< ACE_TCHAR > const& e)
-    :Base__ (e), regulator__ ()
-    {
-    }
-
-    Priority::
-    Priority (::XSCRT::XML::Attribute< ACE_TCHAR > const& a)
-    :
-    Base__ (a),
-    regulator__ ()
-    {
     }
 
     // ThreadpoolDef
@@ -1838,7 +2076,7 @@ namespace CIAO
 
     ThreadpoolDef::
     ThreadpoolDef (::XSCRT::XML::Element< ACE_TCHAR > const& e)
-    :Base__ (e), regulator__ ()
+    :Base (e), regulator__ ()
     {
 
       ::XSCRT::Parser< ACE_TCHAR > p (e);
@@ -1868,7 +2106,7 @@ namespace CIAO
 
         else if (n == "default_priority")
         {
-          default_priority_ = ::std::auto_ptr< ::CIAO::Config_Handlers::Priority > (new ::CIAO::Config_Handlers::Priority (e));
+          default_priority_ = ::std::auto_ptr< ::XMLSchema::int_ > (new ::XMLSchema::int_ (e));
           default_priority_->container (this);
         }
 
@@ -1890,7 +2128,7 @@ namespace CIAO
           max_request_buffered_size_->container (this);
         }
 
-        else
+        else 
         {
         }
       }
@@ -1905,7 +2143,7 @@ namespace CIAO
           id (t);
         }
 
-        else
+        else 
         {
         }
       }
@@ -1916,7 +2154,7 @@ namespace CIAO
 
     ThreadpoolWithLanesDef::
     ThreadpoolWithLanesDef (::XSCRT::XML::Element< ACE_TCHAR > const& e)
-    :Base__ (e), regulator__ ()
+    :Base (e), regulator__ ()
     {
 
       ::XSCRT::Parser< ACE_TCHAR > p (e);
@@ -1962,7 +2200,7 @@ namespace CIAO
           max_request_buffered_size_->container (this);
         }
 
-        else
+        else 
         {
         }
       }
@@ -1977,7 +2215,7 @@ namespace CIAO
           id (t);
         }
 
-        else
+        else 
         {
         }
       }
@@ -1988,7 +2226,7 @@ namespace CIAO
 
     ThreadpoolLaneDef::
     ThreadpoolLaneDef (::XSCRT::XML::Element< ACE_TCHAR > const& e)
-    :Base__ (e), regulator__ ()
+    :Base (e), regulator__ ()
     {
 
       ::XSCRT::Parser< ACE_TCHAR > p (e);
@@ -2012,11 +2250,11 @@ namespace CIAO
 
         else if (n == "priority")
         {
-          priority_ = ::std::auto_ptr< ::CIAO::Config_Handlers::Priority > (new ::CIAO::Config_Handlers::Priority (e));
+          priority_ = ::std::auto_ptr< ::XMLSchema::int_ > (new ::XMLSchema::int_ (e));
           priority_->container (this);
         }
 
-        else
+        else 
         {
         }
       }
@@ -2027,7 +2265,7 @@ namespace CIAO
 
     ConnectionBandsDef::
     ConnectionBandsDef (::XSCRT::XML::Element< ACE_TCHAR > const& e)
-    :Base__ (e), regulator__ ()
+    :Base (e), regulator__ ()
     {
 
       ::XSCRT::Parser< ACE_TCHAR > p (e);
@@ -2043,7 +2281,7 @@ namespace CIAO
           add_band (t);
         }
 
-        else
+        else 
         {
         }
       }
@@ -2058,7 +2296,7 @@ namespace CIAO
           id (t);
         }
 
-        else
+        else 
         {
         }
       }
@@ -2069,7 +2307,7 @@ namespace CIAO
 
     PriorityBandDef::
     PriorityBandDef (::XSCRT::XML::Element< ACE_TCHAR > const& e)
-    :Base__ (e), regulator__ ()
+    :Base (e), regulator__ ()
     {
 
       ::XSCRT::Parser< ACE_TCHAR > p (e);
@@ -2091,7 +2329,7 @@ namespace CIAO
           high_->container (this);
         }
 
-        else
+        else 
         {
         }
       }
@@ -2102,7 +2340,7 @@ namespace CIAO
 
     PolicySet::
     PolicySet (::XSCRT::XML::Element< ACE_TCHAR > const& e)
-    :Base__ (e), regulator__ ()
+    :Base (e), regulator__ ()
     {
 
       ::XSCRT::Parser< ACE_TCHAR > p (e);
@@ -2118,6 +2356,18 @@ namespace CIAO
           add_priorityModel (t);
         }
 
+        else if (n == "nwpriorityModel")
+        {
+          ::CIAO::Config_Handlers::NWPriorityModelPolicyDef t (e);
+          add_nwpriorityModel (t);
+        }
+
+        else if (n == "cnwpriorityModel")
+        {
+          ::CIAO::Config_Handlers::CNWPriorityModelPolicyDef t (e);
+          add_cnwpriorityModel (t);
+        }
+
         else if (n == "threadpool")
         {
           ::XMLSchema::IDREF< ACE_TCHAR > t (e);
@@ -2130,7 +2380,7 @@ namespace CIAO
           add_priorityBandedConnection (t);
         }
 
-        else
+        else 
         {
         }
       }
@@ -2145,7 +2395,7 @@ namespace CIAO
           id (t);
         }
 
-        else
+        else 
         {
         }
       }
@@ -2162,7 +2412,7 @@ namespace CIAO
 
       if (v == "SERVER_DECLARED") v_ = SERVER_DECLARED_l;
       else if (v == "CLIENT_PROPAGATED") v_ = CLIENT_PROPAGATED_l;
-      else
+      else 
       {
       }
     }
@@ -2175,7 +2425,7 @@ namespace CIAO
 
       if (v == "SERVER_DECLARED") v_ = SERVER_DECLARED_l;
       else if (v == "CLIENT_PROPAGATED") v_ = CLIENT_PROPAGATED_l;
-      else
+      else 
       {
       }
     }
@@ -2183,12 +2433,44 @@ namespace CIAO
     PriorityModel const PriorityModel::SERVER_DECLARED (PriorityModel::SERVER_DECLARED_l);
     PriorityModel const PriorityModel::CLIENT_PROPAGATED (PriorityModel::CLIENT_PROPAGATED_l);
 
+    // NWPriorityModel
+    //
+
+    NWPriorityModel::
+    NWPriorityModel (::XSCRT::XML::Element< ACE_TCHAR > const& e)
+    : ::XSCRT::Type (e)
+    {
+      ::std::basic_string< ACE_TCHAR > v (e.value ());
+
+      if (v == "SERVER_DECLARED_NWPRIORITY") v_ = SERVER_DECLARED_NWPRIORITY_l;
+      else if (v == "CLIENT_PROPAGATED_NWPRIORITY") v_ = CLIENT_PROPAGATED_NWPRIORITY_l;
+      else 
+      {
+      }
+    }
+
+    NWPriorityModel::
+    NWPriorityModel (::XSCRT::XML::Attribute< ACE_TCHAR > const& a)
+    : ::XSCRT::Type (a)
+    {
+      ::std::basic_string< ACE_TCHAR > v (a.value ());
+
+      if (v == "SERVER_DECLARED_NWPRIORITY") v_ = SERVER_DECLARED_NWPRIORITY_l;
+      else if (v == "CLIENT_PROPAGATED_NWPRIORITY") v_ = CLIENT_PROPAGATED_NWPRIORITY_l;
+      else 
+      {
+      }
+    }
+
+    NWPriorityModel const NWPriorityModel::SERVER_DECLARED_NWPRIORITY (NWPriorityModel::SERVER_DECLARED_NWPRIORITY_l);
+    NWPriorityModel const NWPriorityModel::CLIENT_PROPAGATED_NWPRIORITY (NWPriorityModel::CLIENT_PROPAGATED_NWPRIORITY_l);
+
     // PriorityModelPolicyDef
     //
 
     PriorityModelPolicyDef::
     PriorityModelPolicyDef (::XSCRT::XML::Element< ACE_TCHAR > const& e)
-    :Base__ (e), regulator__ ()
+    :Base (e), regulator__ ()
     {
 
       ::XSCRT::Parser< ACE_TCHAR > p (e);
@@ -2204,7 +2486,7 @@ namespace CIAO
           priority_model_->container (this);
         }
 
-        else
+        else 
         {
         }
       }
@@ -2215,11 +2497,83 @@ namespace CIAO
         ::std::basic_string< ACE_TCHAR > n (::XSCRT::XML::uq_name (a.name ()));
         if (n == "server_priority")
         {
-          ::CIAO::Config_Handlers::Priority t (a);
+          ::XMLSchema::int_ t (a);
           server_priority (t);
         }
 
-        else
+        else 
+        {
+        }
+      }
+    }
+
+    // NWPriorityModelPolicyDef
+    //
+
+    NWPriorityModelPolicyDef::
+    NWPriorityModelPolicyDef (::XSCRT::XML::Element< ACE_TCHAR > const& e)
+    :Base (e), regulator__ ()
+    {
+
+      ::XSCRT::Parser< ACE_TCHAR > p (e);
+
+      while (p.more_elements ())
+      {
+        ::XSCRT::XML::Element< ACE_TCHAR > e (p.next_element ());
+        ::std::basic_string< ACE_TCHAR > n (::XSCRT::XML::uq_name (e.name ()));
+
+        if (n == "nw_priority_model")
+        {
+          nw_priority_model_ = ::std::auto_ptr< ::CIAO::Config_Handlers::NWPriorityModel > (new ::CIAO::Config_Handlers::NWPriorityModel (e));
+          nw_priority_model_->container (this);
+        }
+
+        else if (n == "request_dscp")
+        {
+          request_dscp_ = ::std::auto_ptr< ::XMLSchema::long_ > (new ::XMLSchema::long_ (e));
+          request_dscp_->container (this);
+        }
+
+        else if (n == "reply_dscp")
+        {
+          reply_dscp_ = ::std::auto_ptr< ::XMLSchema::long_ > (new ::XMLSchema::long_ (e));
+          reply_dscp_->container (this);
+        }
+
+        else 
+        {
+        }
+      }
+    }
+
+    // CNWPriorityModelPolicyDef
+    //
+
+    CNWPriorityModelPolicyDef::
+    CNWPriorityModelPolicyDef (::XSCRT::XML::Element< ACE_TCHAR > const& e)
+    :Base (e), regulator__ ()
+    {
+
+      ::XSCRT::Parser< ACE_TCHAR > p (e);
+
+      while (p.more_elements ())
+      {
+        ::XSCRT::XML::Element< ACE_TCHAR > e (p.next_element ());
+        ::std::basic_string< ACE_TCHAR > n (::XSCRT::XML::uq_name (e.name ()));
+
+        if (n == "request_dscp")
+        {
+          request_dscp_ = ::std::auto_ptr< ::XMLSchema::long_ > (new ::XMLSchema::long_ (e));
+          request_dscp_->container (this);
+        }
+
+        else if (n == "reply_dscp")
+        {
+          reply_dscp_ = ::std::auto_ptr< ::XMLSchema::long_ > (new ::XMLSchema::long_ (e));
+          reply_dscp_->container (this);
+        }
+
+        else 
         {
         }
       }
@@ -2329,20 +2683,6 @@ namespace CIAO
 
       ORBResourcesTypeInfoInitializer ORBResourcesTypeInfoInitializer_;
 
-      struct PriorityTypeInfoInitializer
-      {
-        PriorityTypeInfoInitializer ()
-        {
-          ::XSCRT::TypeId id (typeid (Priority));
-          ::XSCRT::ExtendedTypeInfo nf (id);
-
-          nf.add_base (::XSCRT::ExtendedTypeInfo::Access::public_, false, typeid (::XMLSchema::int_));
-          ::XSCRT::extended_type_info_map ().insert (::std::make_pair (id, nf));
-        }
-      };
-
-      PriorityTypeInfoInitializer PriorityTypeInfoInitializer_;
-
       struct ThreadpoolDefTypeInfoInitializer
       {
         ThreadpoolDefTypeInfoInitializer ()
@@ -2442,6 +2782,21 @@ namespace CIAO
 
       PriorityModelTypeInfoInitializer PriorityModelTypeInfoInitializer_;
 
+      struct NWPriorityModelTypeInfoInitializer
+      {
+        NWPriorityModelTypeInfoInitializer ()
+        {
+          ::XSCRT::TypeId id (typeid (NWPriorityModel));
+          ::XSCRT::ExtendedTypeInfo nf (id);
+
+          nf.add_base (::XSCRT::ExtendedTypeInfo::Access::public_, false, typeid (::XSCRT::Type));
+
+          ::XSCRT::extended_type_info_map ().insert (::std::make_pair (id, nf));
+        }
+      };
+
+      NWPriorityModelTypeInfoInitializer NWPriorityModelTypeInfoInitializer_;
+
       struct PriorityModelPolicyDefTypeInfoInitializer
       {
         PriorityModelPolicyDefTypeInfoInitializer ()
@@ -2455,6 +2810,34 @@ namespace CIAO
       };
 
       PriorityModelPolicyDefTypeInfoInitializer PriorityModelPolicyDefTypeInfoInitializer_;
+
+      struct NWPriorityModelPolicyDefTypeInfoInitializer
+      {
+        NWPriorityModelPolicyDefTypeInfoInitializer ()
+        {
+          ::XSCRT::TypeId id (typeid (NWPriorityModelPolicyDef));
+          ::XSCRT::ExtendedTypeInfo nf (id);
+
+          nf.add_base (::XSCRT::ExtendedTypeInfo::Access::public_, false, typeid (::XSCRT::Type));
+          ::XSCRT::extended_type_info_map ().insert (::std::make_pair (id, nf));
+        }
+      };
+
+      NWPriorityModelPolicyDefTypeInfoInitializer NWPriorityModelPolicyDefTypeInfoInitializer_;
+
+      struct CNWPriorityModelPolicyDefTypeInfoInitializer
+      {
+        CNWPriorityModelPolicyDefTypeInfoInitializer ()
+        {
+          ::XSCRT::TypeId id (typeid (CNWPriorityModelPolicyDef));
+          ::XSCRT::ExtendedTypeInfo nf (id);
+
+          nf.add_base (::XSCRT::ExtendedTypeInfo::Access::public_, false, typeid (::XSCRT::Type));
+          ::XSCRT::extended_type_info_map ().insert (::std::make_pair (id, nf));
+        }
+      };
+
+      CNWPriorityModelPolicyDefTypeInfoInitializer CNWPriorityModelPolicyDefTypeInfoInitializer_;
     }
   }
 }
@@ -3201,44 +3584,6 @@ namespace CIAO
       {
       }
 
-      // Priority
-      //
-      //
-
-      void Priority::
-      traverse (Type& o)
-      {
-        pre (o);
-        post (o);
-      }
-
-      void Priority::
-      traverse (Type const& o)
-      {
-        pre (o);
-        post (o);
-      }
-
-      void Priority::
-      pre (Type&)
-      {
-      }
-
-      void Priority::
-      pre (Type const&)
-      {
-      }
-
-      void Priority::
-      post (Type&)
-      {
-      }
-
-      void Priority::
-      post (Type const&)
-      {
-      }
-
       // ThreadpoolDef
       //
       //
@@ -3898,6 +4243,8 @@ namespace CIAO
       {
         pre (o);
         priorityModel (o);
+        nwpriorityModel (o);
+        cnwpriorityModel (o);
         threadpool (o);
         priorityBandedConnection (o);
         if (o.id_p ()) id (o);
@@ -3910,6 +4257,8 @@ namespace CIAO
       {
         pre (o);
         priorityModel (o);
+        nwpriorityModel (o);
+        cnwpriorityModel (o);
         threadpool (o);
         priorityBandedConnection (o);
         if (o.id_p ()) id (o);
@@ -4008,6 +4357,174 @@ namespace CIAO
 
       void PolicySet::
       priorityModel_none (Type const&)
+      {
+      }
+
+      void PolicySet::
+      nwpriorityModel (Type& o)
+      {
+        // VC6 anathema strikes again
+        //
+        PolicySet::Type::nwpriorityModel_iterator b (o.begin_nwpriorityModel()), e (o.end_nwpriorityModel());
+
+        if (b != e)
+        {
+          nwpriorityModel_pre (o);
+          for (; b != e;)
+          {
+            dispatch (*b);
+            if (++b != e) nwpriorityModel_next (o);
+          }
+
+          nwpriorityModel_post (o);
+        }
+
+        else nwpriorityModel_none (o);
+      }
+
+      void PolicySet::
+      nwpriorityModel (Type const& o)
+      {
+        // VC6 anathema strikes again
+        //
+        PolicySet::Type::nwpriorityModel_const_iterator b (o.begin_nwpriorityModel()), e (o.end_nwpriorityModel());
+
+        if (b != e)
+        {
+          nwpriorityModel_pre (o);
+          for (; b != e;)
+          {
+            dispatch (*b);
+            if (++b != e) nwpriorityModel_next (o);
+          }
+
+          nwpriorityModel_post (o);
+        }
+
+        else nwpriorityModel_none (o);
+      }
+
+      void PolicySet::
+      nwpriorityModel_pre (Type&)
+      {
+      }
+
+      void PolicySet::
+      nwpriorityModel_pre (Type const&)
+      {
+      }
+
+      void PolicySet::
+      nwpriorityModel_next (Type&)
+      {
+      }
+
+      void PolicySet::
+      nwpriorityModel_next (Type const&)
+      {
+      }
+
+      void PolicySet::
+      nwpriorityModel_post (Type&)
+      {
+      }
+
+      void PolicySet::
+      nwpriorityModel_post (Type const&)
+      {
+      }
+
+      void PolicySet::
+      nwpriorityModel_none (Type&)
+      {
+      }
+
+      void PolicySet::
+      nwpriorityModel_none (Type const&)
+      {
+      }
+
+      void PolicySet::
+      cnwpriorityModel (Type& o)
+      {
+        // VC6 anathema strikes again
+        //
+        PolicySet::Type::cnwpriorityModel_iterator b (o.begin_cnwpriorityModel()), e (o.end_cnwpriorityModel());
+
+        if (b != e)
+        {
+          cnwpriorityModel_pre (o);
+          for (; b != e;)
+          {
+            dispatch (*b);
+            if (++b != e) cnwpriorityModel_next (o);
+          }
+
+          cnwpriorityModel_post (o);
+        }
+
+        else cnwpriorityModel_none (o);
+      }
+
+      void PolicySet::
+      cnwpriorityModel (Type const& o)
+      {
+        // VC6 anathema strikes again
+        //
+        PolicySet::Type::cnwpriorityModel_const_iterator b (o.begin_cnwpriorityModel()), e (o.end_cnwpriorityModel());
+
+        if (b != e)
+        {
+          cnwpriorityModel_pre (o);
+          for (; b != e;)
+          {
+            dispatch (*b);
+            if (++b != e) cnwpriorityModel_next (o);
+          }
+
+          cnwpriorityModel_post (o);
+        }
+
+        else cnwpriorityModel_none (o);
+      }
+
+      void PolicySet::
+      cnwpriorityModel_pre (Type&)
+      {
+      }
+
+      void PolicySet::
+      cnwpriorityModel_pre (Type const&)
+      {
+      }
+
+      void PolicySet::
+      cnwpriorityModel_next (Type&)
+      {
+      }
+
+      void PolicySet::
+      cnwpriorityModel_next (Type const&)
+      {
+      }
+
+      void PolicySet::
+      cnwpriorityModel_post (Type&)
+      {
+      }
+
+      void PolicySet::
+      cnwpriorityModel_post (Type const&)
+      {
+      }
+
+      void PolicySet::
+      cnwpriorityModel_none (Type&)
+      {
+      }
+
+      void PolicySet::
+      cnwpriorityModel_none (Type const&)
       {
       }
 
@@ -4288,6 +4805,152 @@ namespace CIAO
       post (Type const&)
       {
       }
+
+      // NWPriorityModelPolicyDef
+      //
+      //
+
+      void NWPriorityModelPolicyDef::
+      traverse (Type& o)
+      {
+        pre (o);
+        nw_priority_model (o);
+        request_dscp (o);
+        reply_dscp (o);
+        post (o);
+      }
+
+      void NWPriorityModelPolicyDef::
+      traverse (Type const& o)
+      {
+        pre (o);
+        nw_priority_model (o);
+        request_dscp (o);
+        reply_dscp (o);
+        post (o);
+      }
+
+      void NWPriorityModelPolicyDef::
+      pre (Type&)
+      {
+      }
+
+      void NWPriorityModelPolicyDef::
+      pre (Type const&)
+      {
+      }
+
+      void NWPriorityModelPolicyDef::
+      nw_priority_model (Type& o)
+      {
+        dispatch (o.nw_priority_model ());
+      }
+
+      void NWPriorityModelPolicyDef::
+      nw_priority_model (Type const& o)
+      {
+        dispatch (o.nw_priority_model ());
+      }
+
+      void NWPriorityModelPolicyDef::
+      request_dscp (Type& o)
+      {
+        dispatch (o.request_dscp ());
+      }
+
+      void NWPriorityModelPolicyDef::
+      request_dscp (Type const& o)
+      {
+        dispatch (o.request_dscp ());
+      }
+
+      void NWPriorityModelPolicyDef::
+      reply_dscp (Type& o)
+      {
+        dispatch (o.reply_dscp ());
+      }
+
+      void NWPriorityModelPolicyDef::
+      reply_dscp (Type const& o)
+      {
+        dispatch (o.reply_dscp ());
+      }
+
+      void NWPriorityModelPolicyDef::
+      post (Type&)
+      {
+      }
+
+      void NWPriorityModelPolicyDef::
+      post (Type const&)
+      {
+      }
+
+      // CNWPriorityModelPolicyDef
+      //
+      //
+
+      void CNWPriorityModelPolicyDef::
+      traverse (Type& o)
+      {
+        pre (o);
+        request_dscp (o);
+        reply_dscp (o);
+        post (o);
+      }
+
+      void CNWPriorityModelPolicyDef::
+      traverse (Type const& o)
+      {
+        pre (o);
+        request_dscp (o);
+        reply_dscp (o);
+        post (o);
+      }
+
+      void CNWPriorityModelPolicyDef::
+      pre (Type&)
+      {
+      }
+
+      void CNWPriorityModelPolicyDef::
+      pre (Type const&)
+      {
+      }
+
+      void CNWPriorityModelPolicyDef::
+      request_dscp (Type& o)
+      {
+        dispatch (o.request_dscp ());
+      }
+
+      void CNWPriorityModelPolicyDef::
+      request_dscp (Type const& o)
+      {
+        dispatch (o.request_dscp ());
+      }
+
+      void CNWPriorityModelPolicyDef::
+      reply_dscp (Type& o)
+      {
+        dispatch (o.reply_dscp ());
+      }
+
+      void CNWPriorityModelPolicyDef::
+      reply_dscp (Type const& o)
+      {
+        dispatch (o.reply_dscp ());
+      }
+
+      void CNWPriorityModelPolicyDef::
+      post (Type&)
+      {
+      }
+
+      void CNWPriorityModelPolicyDef::
+      post (Type const&)
+      {
+      }
     }
   }
 }
@@ -4545,27 +5208,6 @@ namespace CIAO
       connectionBands_post (Type const&)
       {
         pop_ ();
-      }
-
-      // Priority
-      //
-      //
-
-      Priority::
-      Priority (::XSCRT::XML::Element< ACE_TCHAR >& e)
-      : ::XSCRT::Writer< ACE_TCHAR > (e)
-      {
-      }
-
-      Priority::
-      Priority ()
-      {
-      }
-
-      void Priority::
-      traverse (Type const& o)
-      {
-        Traversal::Priority::traverse (o);
       }
 
       // ThreadpoolDef
@@ -4915,6 +5557,44 @@ namespace CIAO
       }
 
       void PolicySet::
+      nwpriorityModel_pre (Type const&)
+      {
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("nwpriorityModel", top_ ()));
+      }
+
+      void PolicySet::
+      nwpriorityModel_next (Type const& o)
+      {
+        nwpriorityModel_post (o);
+        nwpriorityModel_pre (o);
+      }
+
+      void PolicySet::
+      nwpriorityModel_post (Type const&)
+      {
+        pop_ ();
+      }
+
+      void PolicySet::
+      cnwpriorityModel_pre (Type const&)
+      {
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("cnwpriorityModel", top_ ()));
+      }
+
+      void PolicySet::
+      cnwpriorityModel_next (Type const& o)
+      {
+        cnwpriorityModel_post (o);
+        cnwpriorityModel_pre (o);
+      }
+
+      void PolicySet::
+      cnwpriorityModel_post (Type const&)
+      {
+        pop_ ();
+      }
+
+      void PolicySet::
       threadpool_pre (Type const&)
       {
         push_ (::XSCRT::XML::Element< ACE_TCHAR > ("threadpool", top_ ()));
@@ -4983,7 +5663,44 @@ namespace CIAO
 
         if (o == ::CIAO::Config_Handlers::PriorityModel::SERVER_DECLARED) s = "SERVER_DECLARED";
         else if (o == ::CIAO::Config_Handlers::PriorityModel::CLIENT_PROPAGATED) s = "CLIENT_PROPAGATED";
+        else 
+        {
+        }
+
+        if (::XSCRT::XML::Attribute< ACE_TCHAR >* a = attr_ ())
+        {
+          a->value (s);
+        }
+
         else
+        {
+          top_().value (s);
+        }
+      }
+
+      // NWPriorityModel
+      //
+      //
+
+      NWPriorityModel::
+      NWPriorityModel (::XSCRT::XML::Element< ACE_TCHAR >& e)
+      : ::XSCRT::Writer< ACE_TCHAR > (e)
+      {
+      }
+
+      NWPriorityModel::
+      NWPriorityModel ()
+      {
+      }
+
+      void NWPriorityModel::
+      traverse (Type const& o)
+      {
+        ::std::basic_string< ACE_TCHAR > s;
+
+        if (o == ::CIAO::Config_Handlers::NWPriorityModel::SERVER_DECLARED_NWPRIORITY) s = "SERVER_DECLARED_NWPRIORITY";
+        else if (o == ::CIAO::Config_Handlers::NWPriorityModel::CLIENT_PROPAGATED_NWPRIORITY) s = "CLIENT_PROPAGATED_NWPRIORITY";
+        else 
         {
         }
 
@@ -5035,6 +5752,88 @@ namespace CIAO
         Traversal::PriorityModelPolicyDef::server_priority (o);
         attr_ (0);
       }
+
+      // NWPriorityModelPolicyDef
+      //
+      //
+
+      NWPriorityModelPolicyDef::
+      NWPriorityModelPolicyDef (::XSCRT::XML::Element< ACE_TCHAR >& e)
+      : ::XSCRT::Writer< ACE_TCHAR > (e)
+      {
+      }
+
+      NWPriorityModelPolicyDef::
+      NWPriorityModelPolicyDef ()
+      {
+      }
+
+      void NWPriorityModelPolicyDef::
+      traverse (Type const& o)
+      {
+        Traversal::NWPriorityModelPolicyDef::traverse (o);
+      }
+
+      void NWPriorityModelPolicyDef::
+      nw_priority_model (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("nw_priority_model", top_ ()));
+        Traversal::NWPriorityModelPolicyDef::nw_priority_model (o);
+        pop_ ();
+      }
+
+      void NWPriorityModelPolicyDef::
+      request_dscp (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("request_dscp", top_ ()));
+        Traversal::NWPriorityModelPolicyDef::request_dscp (o);
+        pop_ ();
+      }
+
+      void NWPriorityModelPolicyDef::
+      reply_dscp (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("reply_dscp", top_ ()));
+        Traversal::NWPriorityModelPolicyDef::reply_dscp (o);
+        pop_ ();
+      }
+
+      // CNWPriorityModelPolicyDef
+      //
+      //
+
+      CNWPriorityModelPolicyDef::
+      CNWPriorityModelPolicyDef (::XSCRT::XML::Element< ACE_TCHAR >& e)
+      : ::XSCRT::Writer< ACE_TCHAR > (e)
+      {
+      }
+
+      CNWPriorityModelPolicyDef::
+      CNWPriorityModelPolicyDef ()
+      {
+      }
+
+      void CNWPriorityModelPolicyDef::
+      traverse (Type const& o)
+      {
+        Traversal::CNWPriorityModelPolicyDef::traverse (o);
+      }
+
+      void CNWPriorityModelPolicyDef::
+      request_dscp (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("request_dscp", top_ ()));
+        Traversal::CNWPriorityModelPolicyDef::request_dscp (o);
+        pop_ ();
+      }
+
+      void CNWPriorityModelPolicyDef::
+      reply_dscp (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("reply_dscp", top_ ()));
+        Traversal::CNWPriorityModelPolicyDef::reply_dscp (o);
+        pop_ ();
+      }
     }
   }
 }
@@ -5060,18 +5859,21 @@ namespace CIAO
       virtual ::CIAO::Config_Handlers::Writer::ORBResources,
       virtual ::CIAO::Config_Handlers::Writer::ThreadpoolDef,
       virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::unsignedLong, ACE_TCHAR >,
-      virtual ::CIAO::Config_Handlers::Writer::Priority,
+      virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::int_, ACE_TCHAR >,
       virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::boolean, ACE_TCHAR >,
       virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::ID< ACE_TCHAR >, ACE_TCHAR >,
       virtual ::CIAO::Config_Handlers::Writer::ThreadpoolWithLanesDef,
       virtual ::CIAO::Config_Handlers::Writer::ThreadpoolLaneDef,
       virtual ::CIAO::Config_Handlers::Writer::ConnectionBandsDef,
       virtual ::CIAO::Config_Handlers::Writer::PriorityBandDef,
-      virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::int_, ACE_TCHAR >,
       virtual ::CIAO::Config_Handlers::Writer::PolicySet,
       virtual ::CIAO::Config_Handlers::Writer::PriorityModelPolicyDef,
       virtual ::CIAO::Config_Handlers::Writer::PriorityModel,
-      virtual ::XMLSchema::Writer::IDREF< ACE_TCHAR >,
+      virtual ::CIAO::Config_Handlers::Writer::NWPriorityModelPolicyDef,
+      virtual ::CIAO::Config_Handlers::Writer::NWPriorityModel,
+      virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::long_, ACE_TCHAR >,
+      virtual ::CIAO::Config_Handlers::Writer::CNWPriorityModelPolicyDef,
+      virtual ::XMLSchema::Writer::IDREF< ACE_TCHAR >, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         W (::XSCRT::XML::Element< ACE_TCHAR >& e)

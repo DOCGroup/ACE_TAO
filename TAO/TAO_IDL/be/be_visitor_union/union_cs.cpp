@@ -137,6 +137,20 @@ int be_visitor_union_cs::visit_union (be_union *node)
 
   *os << ";";
 
+  if (dv.computed_ == 0)
+    {
+      *os << be_nl;
+      be_visitor_union_branch_public_constructor_cs const_visitor (this->ctx_);
+      if (ub->accept (&const_visitor) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_union_cs::"
+                             "visit union - "
+                             "codegen for constructor failed\n"),
+                            -1);
+        }
+    }
+
   *os << be_uidt_nl << "}" << be_nl << be_nl;
 
   this->ctx_->state (TAO_CodeGen::TAO_UNION_PUBLIC_ASSIGN_CS);

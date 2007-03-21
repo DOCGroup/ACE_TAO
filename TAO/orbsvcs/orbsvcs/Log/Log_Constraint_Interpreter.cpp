@@ -11,8 +11,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 TAO_Log_Constraint_Interpreter::TAO_Log_Constraint_Interpreter (
     const char *constraints
   )
-  ACE_THROW_SPEC ((DsLogAdmin::InvalidConstraint,
-                   CORBA::NO_MEMORY))
 {
   if (TAO_ETCL_Interpreter::is_empty_string (constraints))
     {

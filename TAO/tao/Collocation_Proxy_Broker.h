@@ -25,7 +25,6 @@
 #include "tao/Collocation_Strategy.h"
 #include /**/ "tao/Versioned_Namespace.h"
 
-#include "ace/CORBA_macros.h"
 #include "ace/os_include/os_stddef.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

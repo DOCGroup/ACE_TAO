@@ -50,8 +50,7 @@ public:
 
   virtual ~TAO_Regular_POA (void);
 
-  PortableServer::POA_ptr the_parent (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  PortableServer::POA_ptr the_parent (void);
 
 protected:
   virtual void remove_from_parent_i (void);

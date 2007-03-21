@@ -40,11 +40,7 @@ public:
 
   void push (
              const CORBA::Any & data
-             )
-    ACE_THROW_SPEC ((
-                     CORBA::SystemException,
-                     CosEventComm::Disconnected
-                     ));
+             );
 
 protected:
   MultiTypes* client_;
@@ -59,11 +55,7 @@ public:
 
   // = StructuredPushSupplier methods
   virtual void push_structured_event (const CosNotification::StructuredEvent & notification
-                                      )
-    ACE_THROW_SPEC ((
-                     CORBA::SystemException,
-                     CosEventComm::Disconnected
-                     ));
+                                      );
 
 protected:
   MultiTypes* client_;
@@ -77,11 +69,7 @@ public:
   // = SequencePushConsumer methods
   virtual void push_structured_events (
         const CosNotification::EventBatch & notifications
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        CosEventComm::Disconnected
-       ));
+      );
 
 protected:
   MultiTypes* client_;

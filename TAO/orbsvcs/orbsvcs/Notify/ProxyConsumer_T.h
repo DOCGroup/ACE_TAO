@@ -46,26 +46,16 @@ public:
   virtual void admin_types_changed (const CosNotification::EventTypeSeq & added,
                                     const CosNotification::EventTypeSeq & removed);
 
-  virtual CosNotifyChannelAdmin::SupplierAdmin_ptr MyAdmin (void)
-    ACE_THROW_SPEC ((
-                     CORBA::SystemException
-                     ));
+  virtual CosNotifyChannelAdmin::SupplierAdmin_ptr MyAdmin (void);
 
   virtual CosNotification::EventTypeSeq * obtain_subscription_types (
     CosNotifyChannelAdmin::ObtainInfoMode mode
-  )
-  ACE_THROW_SPEC ((
-    CORBA::SystemException
-  ));
+  );
 
   virtual void offer_change (
     const CosNotification::EventTypeSeq & added,
     const CosNotification::EventTypeSeq & removed
-  )
-  ACE_THROW_SPEC ((
-    CORBA::SystemException,
-    CosNotifyComm::InvalidEventType
-  ));
+  );
 
 };
 

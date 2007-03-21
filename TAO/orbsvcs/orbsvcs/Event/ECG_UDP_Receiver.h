@@ -171,8 +171,7 @@ public:
   /// The PushSupplier idl method.
   /// Invokes shutdown (), which may result in the object being deleted, if
   /// refcounting is used to manage its lifetime.
-  virtual void disconnect_push_supplier (void)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void disconnect_push_supplier (void);
 
   /// TAO_ECG_Dgram_Handler method.
   /**
@@ -187,7 +186,7 @@ protected:
 
   /// Constructor (protected).  Clients can create new
   /// TAO_ECG_UDP_Receiver objects using the static create() method.
-  TAO_ECG_UDP_Receiver (CORBA::Boolean perform_crc = 0);
+  TAO_ECG_UDP_Receiver (CORBA::Boolean perform_crc = false);
 
 private:
 

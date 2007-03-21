@@ -22,14 +22,12 @@ Server_Request_Interceptor::~Server_Request_Interceptor (void)
 
 char *
 Server_Request_Interceptor::name (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup ("Server_Request_Interceptor");
 }
 
 void
 Server_Request_Interceptor::destroy (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->destroy_called_ = true;
 }
@@ -37,8 +35,6 @@ Server_Request_Interceptor::destroy (void)
 void
 Server_Request_Interceptor::receive_request_service_contexts (
     PortableInterceptor::ServerRequestInfo_ptr)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableInterceptor::ForwardRequest))
 {
   // Interceptor::destroy() should not have been called yet.
   ACE_ASSERT (this->destroy_called_ == false);
@@ -47,8 +43,6 @@ Server_Request_Interceptor::receive_request_service_contexts (
 void
 Server_Request_Interceptor::receive_request (
     PortableInterceptor::ServerRequestInfo_ptr)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableInterceptor::ForwardRequest))
 
 {
   // Interceptor::destroy() should not have been called yet.
@@ -58,7 +52,6 @@ Server_Request_Interceptor::receive_request (
 void
 Server_Request_Interceptor::send_reply (
     PortableInterceptor::ServerRequestInfo_ptr)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Interceptor::destroy() should not have been called yet.
   ACE_ASSERT (this->destroy_called_ == false);
@@ -67,8 +60,6 @@ Server_Request_Interceptor::send_reply (
 void
 Server_Request_Interceptor::send_exception (
     PortableInterceptor::ServerRequestInfo_ptr)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableInterceptor::ForwardRequest))
 {
   // Interceptor::destroy() should not have been called yet.
   ACE_ASSERT (this->destroy_called_ == false);
@@ -77,8 +68,6 @@ Server_Request_Interceptor::send_exception (
 void
 Server_Request_Interceptor::send_other (
     PortableInterceptor::ServerRequestInfo_ptr)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableInterceptor::ForwardRequest))
 {
   // Interceptor::destroy() should not have been called yet.
   ACE_ASSERT (this->destroy_called_ == false);

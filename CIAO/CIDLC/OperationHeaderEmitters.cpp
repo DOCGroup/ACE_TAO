@@ -43,22 +43,8 @@ OperationEmitter::receives_post (Type&)
 }
 
 void
-OperationEmitter::raises_pre (Type&)
+OperationEmitter::raises (Type&)
 {
-  os << STRS[EXCP_START] << " "
-      << STRS[EXCP_SYS] << "," << endl;
-}
-
-void
-OperationEmitter::raises_none (Type&)
-{
-  os << STRS[EXCP_SNGL];
-}
-
-void
-OperationEmitter::raises_post (Type&)
-{
-  os << "))";
 }
 
 void
@@ -146,22 +132,8 @@ FactoryOperationEmitter::receives_post (SemanticGraph::HomeFactory&)
 }
 
 void
-FactoryOperationEmitter::raises_none (SemanticGraph::HomeFactory&)
+FactoryOperationEmitter::raises (SemanticGraph::HomeFactory&)
 {
-  os << STRS[EXCP_SNGL];
-}
-
-void
-FactoryOperationEmitter::raises_pre (SemanticGraph::HomeFactory&)
-{
-  os << STRS[EXCP_START] << " "
-     << STRS[EXCP_SYS] << "," << endl;
-}
-
-void
-FactoryOperationEmitter::raises_post (SemanticGraph::HomeFactory&)
-{
-  os << "))";
 }
 
 void
@@ -232,22 +204,8 @@ FinderOperationEmitter::receives_post (SemanticGraph::HomeFinder&)
 }
 
 void
-FinderOperationEmitter::raises_none (SemanticGraph::HomeFinder&)
+FinderOperationEmitter::raises (SemanticGraph::HomeFinder&)
 {
-  os << STRS[EXCP_SNGL];
-}
-
-void
-FinderOperationEmitter::raises_pre (SemanticGraph::HomeFinder&)
-{
-  os << STRS[EXCP_START] << " "
-     << STRS[EXCP_SYS] << "," << endl;
-}
-
-void
-FinderOperationEmitter::raises_post (SemanticGraph::HomeFinder&)
-{
-  os << "))";
 }
 
 void

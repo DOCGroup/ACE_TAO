@@ -5,6 +5,7 @@
 #include "ace/DLL.h"
 #include "tao/Utils/PolicyList_Destroyer.h"
 #include "ace/OS_NS_stdio.h"
+#include "DAnCE/Deployment//Deployment_CoreC.h"
 
 #if !defined (__ACE_INLINE__)
 # include "Swapping_Container.inl"
@@ -35,14 +36,12 @@ namespace CIAO
 
   CORBA::Object_ptr
   Swapping_Container::get_home_objref (PortableServer::Servant p)
-    ACE_THROW_SPEC ((CORBA::SystemException))
   {
     return this->the_home_servant_POA ()->servant_to_reference (p);
   }
 
   void
   Swapping_Container::deactivate_facet (const PortableServer::ObjectId &oid)
-    ACE_THROW_SPEC ((CORBA::SystemException))
   {
     this->the_facet_cons_POA ()->deactivate_object (oid);
   }
@@ -50,7 +49,6 @@ namespace CIAO
   int
   Swapping_Container::init (const char *name,
                             const CORBA::PolicyList *more_policies)
-    ACE_THROW_SPEC ((CORBA::SystemException))
   {
     char buffer[MAXPATHLEN];
 
@@ -73,12 +71,7 @@ namespace CIAO
     PortableServer::POA_var root_poa =
       PortableServer::POA::_narrow (poa_object.in ());
 
-
-    this->create_servant_POA (name,
-                              more_policies,
-                              root_poa.in ());
-
-
+    this->create_servant_POA (name, more_policies, root_poa.in ());
 
     this->create_home_servant_POA ("home servant POA",
                                    more_policies,
@@ -86,8 +79,7 @@ namespace CIAO
 
     this->create_connections_POA (root_poa.in ());
 
-    PortableServer::POAManager_var poa_manager =
-      root_poa->the_POAManager ();
+    PortableServer::POAManager_var poa_manager = root_poa->the_POAManager ();
 
     poa_manager->activate ();
 
@@ -95,18 +87,18 @@ namespace CIAO
   }
 
   void
-  Swapping_Container::add_servant_map
+  Swapping_Container::add_servant_to_map
     (PortableServer::ObjectId &oid,
      Dynamic_Component_Servant_Base* servant)
   {
-    this->dsa_->add_servant_map (oid, servant);
+    this->dsa_->add_servant_to_map (oid, servant);
   }
 
   void
-  Swapping_Container::delete_servant_map
+  Swapping_Container::delete_servant_from_map
     (PortableServer::ObjectId &oid)
   {
-    this->dsa_->delete_servant_map (oid);
+    this->dsa_->delete_servant_from_map (oid);
   }
 
   void
@@ -119,19 +111,15 @@ namespace CIAO
     if (p != 0)
       policies = *p;
 
-    PortableServer::POAManager_var poa_manager =
-      root->the_POAManager ();
+    PortableServer::POAManager_var poa_manager = root->the_POAManager ();
 
-
-    this->home_servant_poa_ =
-      root->create_POA (name,
+    this->home_servant_poa_ = root->create_POA (name,
                         poa_manager.in (),
                         policies);
   }
 
   void
-  Swapping_Container::create_connections_POA (
-      PortableServer::POA_ptr root)
+  Swapping_Container::create_connections_POA (PortableServer::POA_ptr root)
   {
     PortableServer::POAManager_var poa_manager =
       root->the_POAManager ();
@@ -160,9 +148,7 @@ namespace CIAO
                       Servant_Activator (this->orb_.in ()),
                       CORBA::NO_MEMORY ());
 
-    this->facet_cons_poa_->set_servant_manager (
-        this->sa_);
-
+    this->facet_cons_poa_->set_servant_manager (this->sa_);
   }
 
   void
@@ -197,23 +183,17 @@ namespace CIAO
     policies[policy_length] =
       root->create_servant_retention_policy (PortableServer::RETAIN);
 
-    this->component_poa_ =
-      root->create_POA (name,
-                        poa_manager.in (),
-                        policies);
+    this->component_poa_ = root->create_POA (name, poa_manager.in (), policies);
 
     ACE_NEW_THROW_EX (this->dsa_,
                       Dynamic_Component_Activator (this->orb_.in ()),
                       CORBA::NO_MEMORY ());
 
-    this->component_poa_->set_servant_manager (
-        this->dsa_);
-
+    this->component_poa_->set_servant_manager (this->dsa_);
   }
 
   void
   Swapping_Container::ciao_uninstall_home (Components::CCMHome_ptr homeref)
-    ACE_THROW_SPEC ((CORBA::SystemException))
   {
     PortableServer::POA_ptr tmp = this->home_servant_poa_.in ();
     PortableServer::ObjectId_var oid =
@@ -224,8 +204,7 @@ namespace CIAO
 
   CORBA::Object_ptr
   Swapping_Container::install_servant (PortableServer::Servant p,
-                                      Container::OA_Type t)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+                                       Container::OA_Type t)
   {
     PortableServer::POA_ptr tmp = 0;
 
@@ -234,13 +213,13 @@ namespace CIAO
         tmp = this->home_servant_poa_.in ();
       }
     else
-      tmp = this->facet_cons_poa_.in ();
+      {
+        tmp = this->facet_cons_poa_.in ();
+      }
 
-    PortableServer::ObjectId_var oid
-      = tmp->activate_object (p);
+    PortableServer::ObjectId_var oid = tmp->activate_object (p);
 
-    CORBA::Object_var objref
-      = tmp->id_to_reference (oid.in ());
+    CORBA::Object_var objref = tmp->id_to_reference (oid.in ());
 
     return objref._retn ();
   }

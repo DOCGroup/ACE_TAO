@@ -195,7 +195,7 @@ public:
    * the heap and does a copy of the data from the incoming message
    * block. As a final note, the alignment information is used to
    * align the data block if it is created afresh. If the incoming
-   * <mb> has a data block has a data block allocated from the heap,
+   * @a mb has a data block has a data block allocated from the heap,
    * then this constructor just duplicates (ie. a shallow copy) the
    * data block of the incoming @a mb.
    */
@@ -206,7 +206,7 @@ public:
    * Create a Message Block that assumes it has ownership of @a data,
    * but in reality it doesnt (i.e., cannot delete it since it didn't
    * malloc it!).  Note that the @c size of the Message_Block will
-   * be @a size, but the <length>  will be 0 until <wr_ptr> is set.
+   * be @a size, but the @a length  will be 0 until <wr_ptr> is set.
    */
   int init (const char *data,
             size_t size = 0);
@@ -220,8 +220,8 @@ public:
    * this object ceases to exist  (and don't delete it during
    * destruction).  If @a locking_strategy is non-0 then this is used
    * to protect regions of code that access shared state (e.g.,
-   * reference counting) from race conditions.  Note that the <size>
-   * of the <Message_Block> will be @a size, but the <length> will be 0
+   * reference counting) from race conditions.  Note that the @a size
+   * of the <Message_Block> will be @a size, but the @a length will be 0
    * until  <wr_ptr> is set. The @a data_block_allocator is use to
    * allocate the data blocks while the @a allocator_strategy is used
    * to allocate the buffers contained by those.
@@ -320,7 +320,7 @@ public:
   /**
    * Return a "shallow" copy that increments our reference count by 1.
    * This is similar to CORBA's <_duplicate> method, which is useful
-   * if you want to eliminate lots of checks for NULL <mb> pointers
+   * if you want to eliminate lots of checks for NULL @a mb pointers
    * before calling <_duplicate> on them.
    */
   static ACE_Message_Block *duplicate (const ACE_Message_Block *mb);
@@ -356,9 +356,9 @@ public:
 
   /**
    * This behaves like the non-static method <release>, except that it
-   * checks if <mb> is 0.  This is similar to <CORBA::release>, which
+   * checks if @a mb is 0.  This is similar to <CORBA::release>, which
    * is useful if you want to eliminate lots of checks for NULL
-   * pointers before calling <release> on them.  Returns <mb>.
+   * pointers before calling <release> on them.  Returns @a mb.
    */
   static ACE_Message_Block *release (ACE_Message_Block *mb);
 
@@ -468,7 +468,7 @@ public:
   /// Set the write pointer to @a ptr.
   void wr_ptr (char *ptr);
 
-  /// Set the write pointer ahead <n> bytes.  This is used to compute
+  /// Set the write pointer ahead @a n bytes.  This is used to compute
   /// the <length> of a message.
   void wr_ptr (size_t n);
 
@@ -756,7 +756,7 @@ public:
   /**
    * Decrease the shared reference count by 1.  If the reference count
    * is > 0 then return this; else if reference count == 0 then delete
-   * <this> and <mb> and return 0.  Behavior is undefined if reference
+   * <this> and @a mb and return 0.  Behavior is undefined if reference
    * count < 0.
    */
   ACE_Data_Block *release (ACE_Lock *lock = 0);
@@ -864,7 +864,7 @@ private:
  * @brief An abstract base class which provides dynamic priority
  * evaluation methods for use by the ACE_Dynamic_Message_Queue
  * class or any other class which needs to manage the priorities
- * of a collection of ACE_Message_Block's dynamically.
+ * of a collection of ACE_Message_Blocks dynamically.
  *
  * Methods for deadline and laxity based priority evaluation are
  * provided.  These methods assume a specific partitioning of

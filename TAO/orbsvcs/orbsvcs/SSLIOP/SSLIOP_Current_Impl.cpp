@@ -27,12 +27,10 @@ TAO::SSLIOP::Current_Impl::~Current_Impl (void)
 
 SecurityLevel3::ClientCredentials_ptr
 TAO::SSLIOP::Current_Impl::client_credentials ()
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO::SSLIOP::X509_var cert = ::SSL_get_peer_certificate (this->ssl_);
   if (cert.ptr () == 0)
-    ACE_THROW_RETURN (CORBA::BAD_OPERATION (),
-                      SecurityLevel3::ClientCredentials::_nil ());
+    throw CORBA::BAD_OPERATION ();
 
   SecurityLevel3::ClientCredentials_ptr creds;
   ACE_NEW_THROW_EX (creds,
@@ -50,9 +48,8 @@ TAO::SSLIOP::Current_Impl::client_credentials ()
 
 CORBA::Boolean
 TAO::SSLIOP::Current_Impl::request_is_local (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
+  throw CORBA::NO_IMPLEMENT ();
 }
 
 void
@@ -67,7 +64,7 @@ TAO::SSLIOP::Current_Impl::get_peer_certificate (
     return;
 
   // Get the size of the ASN.1 encoding.
-  const int cert_length = ::i2d_X509 (cert.in (), 0);
+  int const cert_length = ::i2d_X509 (cert.in (), 0);
   if (cert_length <= 0)
     return;
 

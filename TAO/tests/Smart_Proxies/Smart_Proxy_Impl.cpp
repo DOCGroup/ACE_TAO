@@ -46,8 +46,6 @@ Smart_Test_Proxy::convert_to_ior (bool,
 
 CORBA::Short
 Smart_Test_Proxy::method (CORBA::Short boo)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   Test::Oops))
 {
   ACE_DEBUG ((LM_DEBUG,
               "Yahoo, I am smart\n"));

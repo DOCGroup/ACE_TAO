@@ -12,7 +12,6 @@
 # define __ACE_INLINE__
 #endif /* ! __ACE_INLINE__ */
 
-#define ACE_LACKS_SIGVAL_T
 #define ACE_HAS_TEMPLATE_SPECIALIZATION
 
 // Optimize ACE_Handle_Set for select().

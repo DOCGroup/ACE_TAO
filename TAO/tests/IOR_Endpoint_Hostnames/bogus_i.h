@@ -15,8 +15,7 @@ public:
   bogus ();
   virtual ~bogus ();
 
-  virtual void noop (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void noop (void);
 };
 
 #include /**/ "ace/post.h"

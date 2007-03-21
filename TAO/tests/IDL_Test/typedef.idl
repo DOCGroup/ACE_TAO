@@ -9,7 +9,7 @@
 //    typedef.idl
 //
 // = DESCRIPTION
-//    This file contains examples of IDL code that has 
+//    This file contains examples of IDL code that has
 //    caused problems in the past for the TAO IDL
 //    compiler. This test is to make sure the problems
 //    stay fixed.
@@ -23,8 +23,8 @@
 // Must keep unaliasing until all levels of typedef
 // are removed.
 
-// This is also a test of arrays of arrays. Once 
-// upon a time, the generated CDR operators of such 
+// This is also a test of arrays of arrays. Once
+// upon a time, the generated CDR operators of such
 // animals wouldn't compile on all platforms.
 
 typedef char TAO_A5[5];
@@ -45,21 +45,21 @@ typedef TAO_V5 TAO_Z5[5];
 
 // Need to make sure that the arg traits specializations for each
 // typedef has a unique #ifndef guard.
-module TestModule 
+module TestModule
 {
- 	typedef string<32> typedef_1;	
-	typedef string<32> typedef_2;
+   typedef string<32> typedef_1;
+  typedef string<32> typedef_2;
 
-	interface TestInterface 
-	{		
-		void set_typedef_1 (in TestModule::typedef_1 typ1);
+  interface TestInterface
+  {
+    void set_typedef_1 (in TestModule::typedef_1 typ1);
     void set_typedef_2 (in TestModule::typedef_2 typ2);
-  };	
+  };
 };
 
 // Caught failure of arg traits generation for the 2nd typedef.
 module bug_2124
-{   
+{
    typedef string<10> MyString;
    typedef MyString OtherString;
 
@@ -112,6 +112,13 @@ module bug_2122
 module First
 {
   typedef string<32> FirstString;
+};
+
+// The anonymous base type is shared by these typedefs, but it
+// must be destroyed only once.
+module CommaList
+{
+  typedef sequence<double> Dubble, Dubbel, Toil, Trouble;
 };
 
 

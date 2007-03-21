@@ -39,7 +39,6 @@ namespace CIDL_Null_Component_Impl
 
   void
   Null_Interface_exec_i::null_operation ()
-  ACE_THROW_SPEC (( ::CORBA::SystemException))
   {
     // Your code here.
   }
@@ -64,7 +63,6 @@ namespace CIDL_Null_Component_Impl
 
   ::CCM_Null_Interface_ptr
   Null_Component_exec_i::get_null_facet ()
-  ACE_THROW_SPEC (( ::CORBA::SystemException))
   {
     // Your code here.
     return ::CCM_Null_Interface::_nil ();
@@ -75,8 +73,6 @@ namespace CIDL_Null_Component_Impl
   void
   Null_Component_exec_i::set_session_context (
     ::Components::SessionContext_ptr ctx)
-  ACE_THROW_SPEC (( ::CORBA::SystemException,
-                   ::Components::CCMException))
   {
     this->context_ =
       Null_Component_Context::_narrow (
@@ -90,40 +86,30 @@ namespace CIDL_Null_Component_Impl
 
   void
   Null_Component_exec_i::ciao_preactivate ()
-  ACE_THROW_SPEC (( ::CORBA::SystemException,
-                   ::Components::CCMException))
   {
     // Your code here.
   }
 
   void
   Null_Component_exec_i::ciao_postactivate ()
-  ACE_THROW_SPEC (( ::CORBA::SystemException,
-                   ::Components::CCMException))
   {
     // Your code here.
   }
 
   void
   Null_Component_exec_i::ccm_activate ()
-  ACE_THROW_SPEC (( ::CORBA::SystemException,
-                   ::Components::CCMException))
   {
     // Your code here.
   }
 
   void
   Null_Component_exec_i::ccm_passivate ()
-  ACE_THROW_SPEC (( ::CORBA::SystemException,
-                   ::Components::CCMException))
   {
     // Your code here.
   }
 
   void
   Null_Component_exec_i::ccm_remove ()
-  ACE_THROW_SPEC (( ::CORBA::SystemException,
-                   ::Components::CCMException))
   {
     // Your code here.
   }
@@ -152,8 +138,6 @@ namespace CIDL_Null_Component_Impl
 
   ::Components::EnterpriseComponent_ptr
   Null_Component_Home_exec_i::create ()
-  ACE_THROW_SPEC (( ::CORBA::SystemException,
-                   ::Components::CCMException))
   {
     ::Components::EnterpriseComponent_ptr retval =
       ::Components::EnterpriseComponent::_nil ();

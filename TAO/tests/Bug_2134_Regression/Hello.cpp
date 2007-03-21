@@ -14,8 +14,9 @@ namespace Test
 class Hello_impl: virtual public POA_Test::Hello
 {
 public:
-  void say_hello() ACE_THROW_SPEC ((CORBA::SystemException)) { };
-
+  void say_hello()
+  {
+  };
 };
 }
 
@@ -27,13 +28,22 @@ int main(int argc, char* argv[])
   try
     {
       // Initialize the ORB
-      orb =
-        CORBA::ORB_init (argc, argv, "");
+      orb = CORBA::ORB_init (argc, argv);
 
       // create Hello object
       Test::Hello_impl hello_i;
 
-      Test::Hello_var hello = hello_i._this ();
+      // Get the root POA
+      CORBA::Object_var obj_root = orb->resolve_initial_references ("RootPOA");
+
+      PortableServer::POA_var rootPOA = PortableServer::POA::_narrow (obj_root.in ());
+
+      PortableServer::ObjectId_var id =
+        rootPOA->activate_object (&hello_i);
+
+      CORBA::Object_var object = rootPOA->id_to_reference (id.in ());
+
+      Test::Hello_var hello = Test::Hello::_narrow (object.in ());
 
       // give our object a friendly name
       CORBA::Object_var iorTableObj =
@@ -47,11 +57,6 @@ int main(int argc, char* argv[])
       iorTable->bind("hello", ior_string.in ());
 
       ACE_DEBUG ((LM_DEBUG, "Created binding of name 'hello' in IOR table for IOR:\n%s\n", ior_string.in ()));
-
-      // Get the root POA
-      CORBA::Object_var obj_root = orb->resolve_initial_references ("RootPOA");
-
-      PortableServer::POA_var rootPOA = PortableServer::POA::_narrow (obj_root.in ());
 
       // Activate the POA manager
       PortableServer::POAManager_var poaManager = rootPOA->the_POAManager ();

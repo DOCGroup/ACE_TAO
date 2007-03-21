@@ -24,8 +24,7 @@ TAO_Naming_Client::get_context (void) const
 }
 
 int
-TAO_Naming_Client::init (CORBA::ORB_ptr orb,
-                         ACE_Time_Value *timeout)
+TAO_Naming_Client::init (CORBA::ORB_ptr orb, ACE_Time_Value *timeout)
 {
   try
     {

@@ -30,16 +30,13 @@ Sender_i::Sender_i (int no_clients,
 
 CORBA::Long
 Sender_i::receiver_object (Receiver_ptr recv)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   Sender::Table_Full))
 {
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX,
                     ace_mon,
                     this->mutex_,-1);
 
   if (this->no_clients_ == this->last_index_)
-    ACE_THROW_RETURN (Sender::Table_Full (),
-                      -1);
+    throw Sender::Table_Full ();
 
   this->receivers_[this->last_index_] =
     Receiver::_duplicate (recv);

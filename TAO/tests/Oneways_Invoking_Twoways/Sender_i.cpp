@@ -17,7 +17,6 @@ Sender_i::~Sender_i (void)
 void
 Sender_i::active_objects (CORBA::Short no_threads
  /* */ )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->active_objects_ = no_threads;
 }
@@ -25,7 +24,6 @@ Sender_i::active_objects (CORBA::Short no_threads
 
 void
 Sender_i::send_ready_message (Test::Receiver_ptr receiver)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
               "Received a call ...\n"));
@@ -44,7 +42,6 @@ Sender_i::send_ready_message (Test::Receiver_ptr receiver)
 
 void
 Sender_i::ping ( /**/)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return;
 }

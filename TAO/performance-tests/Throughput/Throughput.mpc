@@ -11,11 +11,11 @@ project(*idl): taoidldefaults {
 project(*server): taoserver, strategies {
   after += *idl
   Source_Files {
+    TestC.cpp
+    TestS.cpp
     Receiver_Factory.cpp
     Receiver.cpp
     server.cpp
-    TestS.cpp
-    TestC.cpp
   }
   IDL_Files {
   }

@@ -377,8 +377,6 @@ VAR             =
 VDIR          ?= .obj/
 VSHDIR        ?= .shobj/
 
-ACELIB ?= -lACE
-
 # NOTE: VLDLIBS is defined below, in case it is overridden for static-
 #       or shared-only builds.
 ifeq (default,$(origin YACC))
@@ -589,18 +587,18 @@ ifneq ($(gl),)
   ACE_MAKE_OPTIONS += gl
 endif # gl
 
-ssl ?=
+ssl ?= 0
 ifeq ($(ssl),0)
   override ssl =
 else
-  ifneq ($(SSL_ROOT),)
-    # Don't do a thing..
-  else
-    CPPFLAGS += $(PLATFORM_SSL_CPPFLAGS)
-    LDFLAGS  += $(PLATFORM_SSL_LDFLAGS)
-    LIBS     += $(PLATFORM_SSL_LIBS)
-    ACE_MAKE_OPTIONS += ssl
+  ifneq ($(SSL_ROOT), /usr)
+    ifneq ($(SSL_ROOT),)
+      PLATFORM_SSL_CPPFLAGS += -I$(SSL_ROOT)/include
+      PLATFORM_SSL_LDFLAGS  += -L$(SSL_ROOT)/lib
+    endif
   endif
+  PLATFORM_SSL_LIBS ?= -lssl -lcrypto
+  ACE_MAKE_OPTIONS  += ssl
 endif
 
 ## These are related to MPC.  When 'requires' is used in a project
@@ -705,7 +703,7 @@ else # ! shared_libs
   endif # static_libs
 endif # shared_libs
 
-VLDLIBS = $(LDLIBS) $(ACELIB) $(LIBS)
+VLDLIBS = $(LDLIBS) $(LIBS)
 
 probe ?=
 ifeq ($(probe),0)
@@ -781,6 +779,7 @@ pipes ?= 0
 # platform_macros.GNU file.
 ifeq ($(pipes),1)
    CFLAGS += -pipe
+   CCFLAGS += -pipe
 endif # pipes
 
 # RMCast is turned on by default

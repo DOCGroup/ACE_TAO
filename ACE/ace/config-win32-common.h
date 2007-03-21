@@ -342,9 +342,10 @@
 // No system support for replacing any previous mappings.
 #define ACE_LACKS_AUTO_MMAP_REPLACEMENT
 
-// If you want to use highres timers, ensure that
-// Build.Settings.C++.CodeGeneration.Processor is
-// set to Pentium !
+// ACE_HAS_PENTIUM is used to optimize some CDR operations; it's used for
+// some other time-related things using g++, but not for VC. Current VC
+// compilers set _M_IX86 > 400 by default so if you're not using a Pentium
+// class CPU, set the project code generation options appropriately.
 #if !defined(ACE_HAS_PENTIUM) && (_M_IX86 > 400)
 # define ACE_HAS_PENTIUM
 #endif
@@ -565,6 +566,7 @@
 #define ACE_LACKS_OPENDIR
 #define ACE_LACKS_CLOSEDIR
 #define ACE_LACKS_READDIR
+#define ACE_LACKS_ALPHASORT
 #define ACE_LACKS_MKSTEMP
 #define ACE_LACKS_LSTAT
 // Looks like Win32 has a non-const swab function

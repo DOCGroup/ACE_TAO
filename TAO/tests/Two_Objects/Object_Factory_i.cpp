@@ -19,7 +19,6 @@ Object_Factory_i::Object_Factory_i (CORBA::ORB_ptr orb, CORBA::ULong len)
 //factory method to create first object
 Two_Objects_Test::First_ptr
 Object_Factory_i::create_first (void)
-      ACE_THROW_SPEC ((CORBA::SystemException))
 {
   First_i *first_impl;
 
@@ -28,8 +27,19 @@ Object_Factory_i::create_first (void)
                     First_i (orb_.in(), two_way_done_ ),
                     CORBA::NO_MEMORY() );
 
+  CORBA::Object_var poa_object =
+    this->orb_->resolve_initial_references("RootPOA");
+
+  PortableServer::POA_var root_poa =    
+    PortableServer::POA::_narrow (poa_object.in ()); 
+
+  PortableServer::ObjectId_var id =
+    root_poa->activate_object (first_impl);
+
+  CORBA::Object_var object = root_poa->id_to_reference (id.in ());
+
   Two_Objects_Test::First_var first =
-    first_impl->_this ( );
+    Two_Objects_Test::First::_narrow (object.in ());
 
   return first._retn();
 }
@@ -37,7 +47,6 @@ Object_Factory_i::create_first (void)
 //factory method to create second object
 Two_Objects_Test::Second_ptr
 Object_Factory_i::create_second (void)
-      ACE_THROW_SPEC ((CORBA::SystemException))
 {
   Second_i *second_impl;
 
@@ -46,8 +55,19 @@ Object_Factory_i::create_second (void)
                               length_, two_way_done_),
                     CORBA::NO_MEMORY ());
 
+  CORBA::Object_var poa_object =
+    this->orb_->resolve_initial_references("RootPOA");
+
+  PortableServer::POA_var root_poa =    
+    PortableServer::POA::_narrow (poa_object.in ()); 
+
+  PortableServer::ObjectId_var id =
+    root_poa->activate_object (second_impl);
+
+  CORBA::Object_var object = root_poa->id_to_reference (id.in ());
+
   Two_Objects_Test::Second_var second =
-    second_impl->_this ();
+    Two_Objects_Test::Second::_narrow (object.in ());
 
   return second._retn();
 }

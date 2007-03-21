@@ -31,10 +31,8 @@ namespace StringLiterals
   char const* const STRS[LIT_SIZE] =
   {
     // Common CORBA and all Components exceptions.
-    "ACE_THROW_SPEC (( ::CORBA::SystemException))",       // EXCP_SNGL
-    "ACE_THROW_SPEC ((",                                  // EXCP_START
     "::CORBA::SystemException",                           // EXCP_SYS
-    "::CORBA::BAD_PARAM ()",                              // EXCP_BP
+    "::CORBA::BAD_PARAM",                                 // EXCP_BP
     "::Components::IllegalState",                         // EXCP_IS
     "::Components::AlreadyConnected",                     // EXCP_AC
     "::Components::InvalidConnection",                    // EXCP_IC
@@ -74,8 +72,7 @@ namespace StringLiterals
     "variable-size",                                      // VAR_SIZE
     "_ciao_extract_val",                                  // EXTRACT
     "_ciao_extract_tmp",                                  // EXTRACT_TMP
-    "ACE_UNUSED_ARG",                                     // ACE_UA
-    "ACE_THROW_RETURN"                                    // ACE_TR
+    "ACE_UNUSED_ARG"                                      // ACE_UA
   };
 }
 

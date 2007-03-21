@@ -480,10 +480,11 @@ be_interface::redefine (AST_Interface *from)
 void
 be_interface::gen_def_ctors (TAO_OutStream *os)
 {
-  (void) this->traverse_inheritance_graph (
-      be_interface::gen_def_ctors_helper,
-      os
-    );
+  if (this->traverse_inheritance_graph (be_interface::gen_def_ctors_helper,
+                                        os) == -1)
+    ACE_ERROR ((LM_ERROR,
+                "(%N:%l) be_interface::gen_def_ctors "
+                "error inheritance graph\n"));
 }
 
 
@@ -1287,7 +1288,7 @@ be_interface::gen_collocated_skel_body (be_interface *derived,
                                         AST_Decl *d,
                                         const char *prefix,
                                         bool /* direct */,
-                                        UTL_ExceptList *list,
+                                        UTL_ExceptList *,
                                         TAO_OutStream *os)
 {
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
@@ -1301,10 +1302,7 @@ be_interface::gen_collocated_skel_body (be_interface *derived,
       << be_idt << be_idt_nl
       << "TAO_Abstract_ServantBase *servant," << be_nl
       << "TAO::Argument ** args," << be_nl
-      << "int num_args" << be_uidt_nl
-      << ")";
-
-  be_interface::gen_throw_spec (list, os);
+      << "int num_args)" << be_uidt_nl;
 
   *os << be_uidt_nl
       << "{" << be_idt_nl
@@ -1313,11 +1311,9 @@ be_interface::gen_collocated_skel_body (be_interface *derived,
       << be_idt << be_idt_nl
       << "servant," << be_nl
       << "args," << be_nl
-      << "num_args" << be_uidt_nl
-      << ");" << be_uidt << be_uidt_nl
+      << "num_args);" << be_uidt
+      << be_uidt << be_uidt_nl
       << "}"<< be_nl;
-
-
 }
 
 void
@@ -2151,8 +2147,6 @@ be_interface::gen_colloc_op_decl_helper (be_interface *derived,
       return 0;
     }
 
-  UTL_ExceptList *list = 0;
-
   for (UTL_ScopeActiveIterator si (ancestor, UTL_Scope::IK_decls);
        !si.is_done ();
        si.next ())
@@ -2171,12 +2165,7 @@ be_interface::gen_colloc_op_decl_helper (be_interface *derived,
               << "TAO_Abstract_ServantBase *servant, " << be_nl
               << "TAO::Argument ** args," << be_nl
               << "int num_args" << be_uidt_nl
-              << ")";
-
-          list = be_operation::narrow_from_decl (d)->exceptions ();
-          be_interface::gen_throw_spec (list, os);
-
-          *os << ";";
+              << ");";
         }
       else if (d->node_type () == AST_Decl::NT_attr)
         {
@@ -2193,12 +2182,7 @@ be_interface::gen_colloc_op_decl_helper (be_interface *derived,
               << "TAO_Abstract_ServantBase *servant, " << be_nl
               << "TAO::Argument ** args," << be_nl
               << "int num_args" << be_uidt_nl
-              << ")";
-
-          list = attr->get_get_exceptions ();
-          be_interface::gen_throw_spec (list, os);
-
-          *os << ";";
+              << ");";
 
           if (!attr->readonly ())
             {
@@ -2212,12 +2196,7 @@ be_interface::gen_colloc_op_decl_helper (be_interface *derived,
                   << "TAO_Abstract_ServantBase *servant, " << be_nl
                   << "TAO::Argument ** args," << be_nl
                   << "int num_args" << be_uidt_nl
-                  << ")";
-
-              list = attr->get_set_exceptions ();
-              be_interface::gen_throw_spec (list, os);
-
-              *os << ";";
+                  << ");";
             }
         }
     }
@@ -2419,35 +2398,6 @@ be_interface::gen_abstract_init_helper (be_interface *node,
 
 
   return 0;
-}
-
-void
-be_interface::gen_throw_spec (UTL_ExceptList *list,
-                              TAO_OutStream *os)
-{
-  const char *throw_spec_open = "throw (";
-  const char *throw_spec_close = ")";
-
-  if (!be_global->use_raw_throw ())
-    {
-      throw_spec_open = "ACE_THROW_SPEC ((";
-      throw_spec_close = "))";
-    }
-
-  *os << be_nl << throw_spec_open;
-  *os << be_idt_nl << "::CORBA::SystemException";
-
-  // Initialize an iterator to iterate thru the exception list.
-  for (UTL_ExceptlistActiveIterator ei (list);
-       !ei.is_done ();
-       ei.next ())
-    {
-      *os << "," << be_nl
-          << "::" << ei.item ()->name ();
-    }
-
-  *os << be_uidt_nl
-      << throw_spec_close << be_uidt;
 }
 
 void

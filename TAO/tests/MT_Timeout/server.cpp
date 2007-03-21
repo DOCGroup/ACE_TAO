@@ -39,7 +39,7 @@ main (int argc, char *argv[])
   try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "");
+        CORBA::ORB_init (argc, argv);
 
       CORBA::Object_var poa_object =
         orb->resolve_initial_references("RootPOA");
@@ -64,8 +64,13 @@ main (int argc, char *argv[])
                       1);
       PortableServer::ServantBase_var owner_transfer(sleep_service_impl);
 
+      PortableServer::ObjectId_var id =
+        root_poa->activate_object (sleep_service_impl);
+
+      CORBA::Object_var object = root_poa->id_to_reference (id.in ());
+
       Test::Sleep_Service_var process =
-        sleep_service_impl->_this ();
+        Test::Sleep_Service::_narrow (object.in ());
 
       CORBA::String_var ior =
         orb->object_to_string (process.in ());

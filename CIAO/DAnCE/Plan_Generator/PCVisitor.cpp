@@ -23,7 +23,7 @@
  * structure of the DeploymentPlan.
  *
  * @author Stoyan Paunov <spaunov@isis.vanderbilt.edu>
- *         Shanshan Jiang <shanshan.jiang@vanderbilt.edu> 
+ *         Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
  */
 //========================================================================
 
@@ -131,7 +131,7 @@ void PCVisitor::Visit (Deployment::MonolithicImplementationDescription &mid)
   if (!modify_)
     {
       //increase the implementation length by one
-      size_t impl_len = plan_.implementation.length ();
+      size_t const impl_len = plan_.implementation.length ();
       last_impl_index_ = impl_len;
       plan_.implementation.length (impl_len + 1);
     }
@@ -146,16 +146,16 @@ void PCVisitor::Visit (Deployment::NamedImplementationArtifact &nia)
   if (!modify_)
     {
       //increase the artifact length by one
-      size_t arti_len = plan_.artifact.length ();
+      size_t const arti_len = plan_.artifact.length ();
       plan_.artifact.length (arti_len + 1);
 
       //set the name
       plan_.artifact[arti_len].name = nia.name;
 
-      //set the artifactRef of implementation
-      size_t last_mdd = plan_.implementation.length () - 1;
+      // Set the artifactRef of implementation
+      size_t const last_mdd = plan_.implementation.length () - 1;
       Deployment::MonolithicDeploymentDescription& mdd = plan_.implementation[last_mdd];
-      size_t ref_len = mdd.artifactRef.length ();
+      size_t const ref_len = mdd.artifactRef.length ();
       mdd.artifactRef.length (ref_len + 1);
       mdd.artifactRef[ref_len] = arti_len;
     }
@@ -174,7 +174,7 @@ void PCVisitor::Visit (Deployment::ImplementationArtifactDescription &iad)
 
       //set the location
       size_t plan_loc_len = add.location.length ();
-      size_t num_loc = iad.location.length ();
+      size_t const num_loc = iad.location.length ();
       for (size_t i = 0; i < num_loc; ++i)
       {
         add.location.length (plan_loc_len + 1);
@@ -188,7 +188,7 @@ void PCVisitor::Visit (Deployment::ImplementationArtifactDescription &iad)
 
   else
     {
-      size_t num_arti = plan_.artifact.length ();
+      size_t const num_arti = plan_.artifact.length ();
       for (size_t i = 0; i < num_arti; ++i)
         {
           if (ACE_OS::strstr (iad.location[0], plan_.artifact[i].location[0]))
@@ -259,7 +259,7 @@ void PCVisitor::
 update_execParameter (Deployment::ImplementationArtifactDescription& iad,
                       Deployment::ArtifactDeploymentDescription& add)
 {
-  size_t num_execP = iad.execParameter.length ();
+  size_t const num_execP = iad.execParameter.length ();
   size_t execP_len = add.execParameter.length ();
   for (size_t j = 0; j < num_execP; ++j)
   {

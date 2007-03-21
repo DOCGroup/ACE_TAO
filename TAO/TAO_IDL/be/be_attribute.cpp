@@ -77,11 +77,6 @@ be_attribute::be_attribute (bool ro,
            be_operation_default_strategy (0));
   this->set_strategy_ = bods;
 
-  // TAO_IDL generated attribute methods currently have an exception
-  // specification containing CORBA::SystemException.  Make sure we
-  // generate a "tao/SystemException.h" include directive.
-  idl_global->operation_seen_ = true;
-
   if (!this->imported () && !this->is_local ())
     {
       // For the return types of the two operations
@@ -147,14 +142,14 @@ be_attribute::destroy (void)
       delete this->get_strategy_;
       this->get_strategy_ = 0;
     }
-  
+
   if (0 != this->set_strategy_)
     {
       this->set_strategy_->destroy ();
       delete this->set_strategy_;
       this->set_strategy_ = 0;
     }
-  
+
   this->be_decl::destroy ();
   this->AST_Attribute::destroy ();
 }

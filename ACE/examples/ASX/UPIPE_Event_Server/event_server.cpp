@@ -69,7 +69,7 @@ consumer (void *)
 
   int verb = options.verbose ();
   int msiz = options.message_size ();
-  int secs, par1, par2;
+  time_t secs, par1, par2;
   time_t currsec;
 
   if (verb)
@@ -88,7 +88,7 @@ consumer (void *)
   int cnt = 0;
   ACE_OS::time (&currsec);
 
-  par1= (time_t) currsec;
+  par1 = currsec;
 
   while (done == 0
          && (c_stream.recv (mb_p) != -1))
@@ -109,15 +109,17 @@ consumer (void *)
       }
 
     ACE_OS::time (&currsec);
-    par2 = (time_t) currsec;
+    par2 = currsec;
 
     secs = par2 - par1;
 
     if (secs <= 0)
       secs=1;
 
-    cout << "consumer got " << cnt << " messages of size " << msiz
-         << "within " << secs << " seconds" << endl;
+    ACE_DEBUG ((LM_INFO,
+                ACE_TEXT ("consumer got %d messages of size %d ")
+                ACE_TEXT ("within %: seconds\n"),
+                cnt, msiz, secs));
 
     ACE_OS::sleep (2);
     cout << "consumer terminating " << endl;

@@ -65,7 +65,7 @@ main (int argc, char *argv[])
   try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "");
+        CORBA::ORB_init (argc, argv);
 
       if (parse_args (argc, argv) != 0)
         return 1;
@@ -105,8 +105,13 @@ main (int argc, char *argv[])
       // Instantiate reply handler
       TimeoutHandler_i timeoutHandler_i;
 
+      PortableServer::ObjectId_var id =
+        root_poa->activate_object (&timeoutHandler_i);
+
+      CORBA::Object_var object_act = root_poa->id_to_reference (id.in ());
+
       AMI_TimeoutObjHandler_var timeoutHandler_var =
-        timeoutHandler_i._this ();
+        AMI_TimeoutObjHandler::_narrow (object_act.in ());
 
       // Instantiate client
       TimeoutClient client (orb.in (),

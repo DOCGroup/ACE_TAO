@@ -111,7 +111,7 @@ ACE_SOCK_Dgram::recv (iovec *io_vec,
         }
       else
         {
-          io_vec->iov_len = ACE_Utils::Truncate<size_t> (rcv_len);
+          io_vec->iov_len = ACE_Utils::truncate_cast<size_t> (rcv_len);
           addr.set_size (addr_len);
         }
       return rcv_len;
@@ -350,9 +350,9 @@ ACE_SOCK_Dgram::send (const iovec iov[],
 
   // Determine the total length of all the buffers in <iov>.
   for (i = 0; i < n; i++)
-#if ! (defined(__BORLANDC__) && (__BORLANDC__ >= 0x0530))
-    // The iov_len is unsigned in Borland. If we go ahead and try the
-    // if, it will emit a warning.
+#if ! (defined(__BORLANDC__) || defined(linux) || defined(__RTEMS_MAJOR__))
+    // The iov_len is unsigned on Linux, RTEMS and with Borland. If we go
+    // ahead and try the if, it will emit a warning.
     if (iov[i].iov_len < 0)
       return -1;
     else
@@ -399,9 +399,9 @@ ACE_SOCK_Dgram::recv (iovec iov[],
   int i;
 
   for (i = 0; i < n; i++)
-#if ! (defined(__BORLANDC__) && (__BORLANDC__ >= 0x0530))
-    // The iov_len is unsigned in Borland. If we go ahead and try the
-    // if, it will emit a warning.
+#if ! (defined(__BORLANDC__) || defined(linux) || defined(__RTEMS_MAJOR__))
+    // The iov_len is unsigned on Linux, RTEMS and with Borland. If we go
+    // ahead and try the if, it will emit a warning.
     if (iov[i].iov_len < 0)
       return -1;
     else
@@ -729,6 +729,8 @@ ACE_SOCK_Dgram::make_multicast_ifaddr6 (ipv6_mreq *ret_mreq,
       delete[] buf; // clean up
     }
   else
+#else  /* ACE_WIN32 */
+    ACE_UNUSED_ARG(net_if);
 #endif /* ACE_WIN32 */
     lmreq.ipv6mr_interface = 0;
 

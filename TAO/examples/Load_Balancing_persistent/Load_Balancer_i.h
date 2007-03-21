@@ -61,56 +61,43 @@ public:
   // Destructor.
 
 
-  PortableServer::POA_ptr _default_POA (void)
-     ACE_THROW_SPEC ((CORBA::SystemException));
+  PortableServer::POA_ptr _default_POA (void);
   // Method for the POA that will return the persistent POA_ptr stored
   // in here..
 
   // = Load_Balancer::Object_Group_Factory idl methods.
 
-  Load_Balancer::Object_Group_ptr make_round_robin (const char * id)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     Load_Balancer::duplicate_group));
+  Load_Balancer::Object_Group_ptr make_round_robin (const char * id);
   // Creates an <Object_Group> that resolves requests for arbitrary
   // members in round robin order.  If an <Object_Group>, of any
   // type, with Group_ID <id> has already been created by this
   // factory, and hasn't been destroyed, a <duplicate_group>
   // exception is thrown.
 
-  void unbind_round_robin (const char *id)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     Load_Balancer::no_such_group));
+  void unbind_round_robin (const char *id);
 
 
-  Load_Balancer::Object_Group_ptr make_random (const char * id)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     Load_Balancer::duplicate_group));
+  Load_Balancer::Object_Group_ptr make_random (const char * id);
   // Creates an <Object_Group> that resolves requests for arbitrary
   // members in random order.  If an <Object_Group>, of any
   // type, with Group_ID <id> has already been created by this
   // factory, and hasn't been destroyed, a <duplicate_group>
   // exception is thrown.
 
-  void unbind_random (const char *id)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     Load_Balancer::no_such_group));
+  void unbind_random (const char *id);
 
-  Load_Balancer::Object_Group_ptr resolve (const char * id)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     Load_Balancer::no_such_group));
+  Load_Balancer::Object_Group_ptr resolve (const char * id);
   // Locates and returns an <Object_Group IOR> by its <Group_ID>.   If
   // no <Object_Group> has <Group_ID> of <id>, throw a
   // <no_such_group> exception.
 
-  Load_Balancer::Group_List * round_robin_groups (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  Load_Balancer::Group_List * round_robin_groups (void);
   // Lists all the round robin <Object_Group>s which were created
   // by this factory, and haven't been destroyed yet, i.e., return
   // a sequence of <Group_ID>s of all existing round robin
   // <Object_Group>s created by this factory.
 
-  Load_Balancer::Group_List * random_groups (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  Load_Balancer::Group_List * random_groups (void);
   // Lists all the random <Object_Group>s which were created
   // by this factory, and haven't been destroyed yet, i.e., return
   // a sequence of <Group_ID>s of all existing random
@@ -127,9 +114,7 @@ private:
   // = Helper methods.
 
   Load_Balancer::Object_Group_ptr make_group (int random,
-                                              const char * id)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     Load_Balancer::duplicate_group));
+                                              const char * id);
   // This function factors out common code in <make_round_robin> and
   // <make_random>.  Creates a random <Object_Group> if <random> parameter is
   // set to 1 and round robin <Object_Group> if it is 0.
@@ -198,51 +183,40 @@ public:
 
   // Persistent POA
   // Method for the POA
-  PortableServer::POA_ptr _default_POA (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  PortableServer::POA_ptr _default_POA (void);
 
   // = Load_Balancer::Object_Group idl methods.
 
-  char * id (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  char * id (void);
   // Get group's id.
 
-  void bind (const Load_Balancer::Member & member)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     Load_Balancer::duplicate_member));
+  void bind (const Load_Balancer::Member & member);
   // Adds a new <member> to the <Object_Group>.  Note that each
   // <Member_ID> in an <Object_Group> must be unique.  If the
   // group already contains a member with the same <Member_ID>, a
   // <duplicate_member> exceptions is thrown.
 
-  void unbind (const char * id)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     Load_Balancer::no_such_member));
+  void unbind (const char * id);
   // Removes a member with the specified <Member_ID> from the
   // <Object_Group>.  If none of the group's members have a
   // Member_ID of <id>, <no_such_member> exception is thrown.
 
   char * resolve (void)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     Load_Balancer::no_such_member)) = 0;
+    = 0;
   // Returns a member object from this <Object_Group> in accordance with
   // load balancing policy it implements, i.e., ``random'' or
   // ``round robin.''  If the group contains no members, <no_such_member>
   // exception is thrown.
 
-  char * resolve_with_id (const char * id)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     Load_Balancer::no_such_member));
+  char * resolve_with_id (const char * id);
   // Returns an object with the specified <Member_ID>.  If this
   // <Object_Group> contains no members with the specified
   // <Member_ID>, <no_such_member> exception is thrown.
 
-  Load_Balancer::Member_ID_List * members (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  Load_Balancer::Member_ID_List * members (void);
   // Return a sequence of <Member_ID>s of all of its members.
 
-  void destroy (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void destroy (void);
   // Cleanup the resources associated with this <Object_Group>.
   // Subsequent calls to this <Object_Group> should fail, and its
   // <id> should become available.  <Object_Group_Factory>
@@ -293,9 +267,7 @@ public:
                        PortableServer::POA_ptr poa);
   // Constructor.
 
-  char * resolve (void)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     Load_Balancer::no_such_member));
+  char * resolve (void);
   // Returns a member object from this <Object_Group> in accordance with
   // the "random" load balancing policy.
 
@@ -313,16 +285,12 @@ public:
                    PortableServer::POA_ptr poa);
   // Constructor.
 
-  void unbind (const char * id)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     Load_Balancer::no_such_member));
+  void unbind (const char * id);
   // We need to override the implementation of <unbind> from
   // Object_Group_i to make sure <resolve>
   // works correctly.
 
-  char * resolve (void)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     Load_Balancer::no_such_member));
+  char * resolve (void);
   // Returns a member object from this <Object_Group> in accordance with
   // the "round robin" load balancing policy.
 

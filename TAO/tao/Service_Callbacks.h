@@ -18,14 +18,14 @@
 #define TAO_SERVICE_CALLBACK_H
 
 #include /**/ "ace/pre.h"
-#include "ace/CORBA_macros.h"
+
+#include "tao/Basic_Types.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include /**/ "tao/TAO_Export.h"
-#include "tao/Basic_Types.h"
 #include "tao/Invocation_Utils.h"
 #include "tao/Object.h"
 #include "tao/Service_Context.h"

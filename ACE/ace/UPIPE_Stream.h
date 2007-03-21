@@ -85,7 +85,7 @@ public:
                   size_t n,
                   ACE_Time_Value *timeout = 0);
 
-  /// Recv a buffer of exactly <n> bytes from the message queue.
+  /// Recv a buffer of exactly @a n bytes from the message queue.
   /// Returns -1 on error, else the number of bytes read.
   ssize_t recv_n (char *buffer,
                   size_t n,

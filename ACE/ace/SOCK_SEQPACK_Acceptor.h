@@ -122,8 +122,8 @@ public:
 
   // = Passive connection <accept> methods.
   /**
-   * Accept a new <ACE_SOCK_SEQPACK_Association> connection.  A <timeout> of 0
-   * means block forever, a <timeout> of {0, 0} means poll.  <restart>
+   * Accept a new <ACE_SOCK_SEQPACK_Association> connection.  A @a timeout of 0
+   * means block forever, a @a timeout of {0, 0} means poll.  <restart>
    * == 1 means "restart if interrupted," i.e., if errno == EINTR.
    * Note that <new_association> inherits the "blocking mode" of <this>
    * <ACE_SOCK_SEQPACK_Acceptor>, i.e., if <this> acceptor factory is in

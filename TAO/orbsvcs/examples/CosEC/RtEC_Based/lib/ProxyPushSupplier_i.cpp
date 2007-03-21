@@ -30,12 +30,10 @@ public:
   ~TAO_CosEC_PushConsumerWrapper (void);
   // Destructor.
 
-  virtual void push (const RtecEventComm::EventSet & data)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void push (const RtecEventComm::EventSet & data);
   // This method is called by the RTEvent Channel to supply data.
 
-  virtual void disconnect_push_consumer (void)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void disconnect_push_consumer (void);
   // Disconnects the consumer from the event channel.
 
 private:
@@ -61,7 +59,6 @@ TAO_CosEC_PushConsumerWrapper::~TAO_CosEC_PushConsumerWrapper ()
 
 void
 TAO_CosEC_PushConsumerWrapper::push (const RtecEventComm::EventSet& set)
-      ACE_THROW_SPEC ((CORBA::SystemException))
 {
   for (CORBA::ULong i = 0;
        i < set.length ();
@@ -80,7 +77,6 @@ TAO_CosEC_PushConsumerWrapper::push (const RtecEventComm::EventSet& set)
 
 void
 TAO_CosEC_PushConsumerWrapper::disconnect_push_consumer (void)
-      ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Deactivate the supplier proxy.
   this->consumer_->disconnect_push_consumer ();
@@ -114,7 +110,6 @@ TAO_CosEC_ProxyPushSupplier_i::~TAO_CosEC_ProxyPushSupplier_i (void)
 
 void
 TAO_CosEC_ProxyPushSupplier_i::disconnect_push_supplier (void)
-      ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->pps_->disconnect_push_supplier ();
 
@@ -133,9 +128,6 @@ TAO_CosEC_ProxyPushSupplier_i::disconnect_push_supplier (void)
 
 void
 TAO_CosEC_ProxyPushSupplier_i::connect_push_consumer (CosEventComm::PushConsumer_ptr push_consumer)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       CosEventChannelAdmin::AlreadyConnected,
-                       CosEventChannelAdmin::TypeError))
 {
   if (this->connected ())
     throw CosEventChannelAdmin::AlreadyConnected ();

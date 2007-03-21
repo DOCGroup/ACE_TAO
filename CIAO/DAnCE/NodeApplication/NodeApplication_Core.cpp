@@ -1,6 +1,6 @@
 // $Id$
 
-#include "ciao/CIAO_NodeApplication_CallBackC.h"
+#include "DAnCE/Deployment/CIAO_NodeApplication_CallBackC.h"
 #include "ace/Sched_Params.h"
 #include "NodeApplication_Impl.h"
 #include "NodeApplication_Core.h"
@@ -179,6 +179,9 @@ CIAO::NodeApplication_Core::startup (int argc, char *argv[])
 
   // pre-init
   this->configurator_.reset (this->options_.create_nodeapp_configurator ());
+
+  if (this->configurator_->create_config_managers ())
+    return -1;
 
   if (this->configurator_->pre_orb_initialize ())
     return -1;

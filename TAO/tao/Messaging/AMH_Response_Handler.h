@@ -105,10 +105,7 @@ protected:
   void _tao_rh_send_reply (void);
 
   /// Send back an exception to the client.
-  void _tao_rh_send_exception (CORBA::Exception &ex
-                              );
-
-protected:
+  void _tao_rh_send_exception (const CORBA::Exception &ex);
 
   /// The outgoing CDR stream
   /**
@@ -119,13 +116,20 @@ protected:
    */
   TAO_OutputCDR _tao_out;
 
+  //  TAO_GIOP_ReplyStatusType exception_type_;
+  /// Exception type (will be NO_EXCEPTION in the majority of the
+  /// cases).
+  // @@ Mayur: I do not think we need this one, we can deduce the type
+  //    of reply depending on the _tao_rh_*() method called.
+  CORBA::ULong exception_type_;
+
+
 private:
 
   // Private and undefined, standard C++ idiom to prohibit copying.
   TAO_AMH_Response_Handler (const TAO_AMH_Response_Handler&);
   TAO_AMH_Response_Handler& operator= (const TAO_AMH_Response_Handler&);
 
-private:
   /// Pointer to the original message-base
   TAO_Pluggable_Messaging *mesg_base_;
 
@@ -153,13 +157,6 @@ private:
   //    those cases you cannot insert the padding.  We need the
   //    ResponseHandler to set this field correctly!
   CORBA::Boolean argument_flag_;
-
-  //  TAO_GIOP_ReplyStatusType exception_type_;
-  /// Exception type (will be NO_EXCEPTION in the majority of the
-  /// cases).
-  // @@ Mayur: I do not think we need this one, we can deduce the type
-  //    of reply depending on the _tao_rh_*() method called.
-  CORBA::ULong exception_type_;
 
   /**
    * Various states the ResponseHandler can be in.
@@ -211,8 +208,7 @@ namespace TAO
   class TAO_Messaging_Export ARH_Refcount_Functor
   {
   public:
-    void operator() (TAO_AMH_Response_Handler *arh)
-      ACE_THROW_SPEC (());
+    void operator() (TAO_AMH_Response_Handler *arh) throw ();
   };
 
 }

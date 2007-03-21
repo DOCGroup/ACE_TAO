@@ -76,25 +76,15 @@ public:
 
     virtual void push_structured_events (
         const CosNotification::EventBatch & notifications
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-        , CosEventComm::Disconnected
-      ));
+      );
 
     virtual void disconnect_sequence_push_consumer (
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
+      );
 
    virtual void offer_change (
         const CosNotification::EventTypeSeq & added,
         const CosNotification::EventTypeSeq & removed
-      )
-     ACE_THROW_SPEC ((
-       CORBA::SystemException, CosNotifyComm::InvalidEventType
-     ));
+      );
 
   ////////////////////
   // Forbidden methods

@@ -123,12 +123,12 @@ class ACE_Log_Record;
  *
  * This class is very flexible since it allows formatted error
  * messages to be printed in a thread-safe manner to various
- * locations, such as stdout, stderr, cerr, a distributed logger, etc.
- * The current message is also kept in a thread-specific storage
- * location (threads spawned using ACE_Thread_Manager automatically get
- * an ACE_Log_Msg object that inherits the spawning thread's settings), which
- * can be used to communicate errors between framework methods and
- * callers.  A message is logged by the log() method, only if the
+ * locations, such as stderr, cerr, a distributed logger, etc.  The
+ * current message is also kept in a thread-specific storage location
+ * (threads spawned using ACE_Thread_Manager automatically get an
+ * ACE_Log_Msg object that inherits the spawning thread's settings),
+ * which can be used to communicate errors between framework methods
+ * and callers.  A message is logged by the log() method, only if the
  * message priority is currently enabled.  Moreover, only the current
  * log message is stored here -- it will be overwritten by the
  * subsequent call to log().
@@ -472,6 +472,8 @@ public:
    *  - 'A': print an ACE_timer_t value (which could be either double
    *         or ACE_UINT32.)
    *  - 'a': abort the program at this point abruptly.
+   *  - 'b': print a ssize_t value
+   *  - 'B': print a size_t value
    *  - 'c': print a character
    *  - 'C': print a character string
    *  - 'i', 'd': print a decimal number
@@ -506,6 +508,7 @@ public:
    *  - 'X': print as a hex number
    *  - 'z': print an ACE_OS::WChar character
    *  - 'Z': print an ACE_OS::WChar character string
+   *  - ':': print a time_t value as an integral number
    *  - '%': print out a single percent sign, '%'
    */
   ssize_t log (ACE_Log_Priority priority, const ACE_TCHAR *format, ...);
@@ -647,7 +650,7 @@ private:
   static u_long flags_;
 
   /// Offset of msg_[].
-  static long msg_off_;
+  static ptrdiff_t msg_off_;
 
   /**
    * Number of existing ACE_Log_Msg instances; when 0, delete program/host

@@ -264,7 +264,7 @@ public:
   // = Initialization and termination methods.
   /**
    * Constructor initializes the <thr_mgr> and <mq> by passing them
-   * down to the <ACE_Task> base class.  The <reactor> is passed to
+   * down to the ACE_Task base class.  The <reactor> is passed to
    * the ACE_Event_Handler.  The <max_buffer_size> and
    * <relative_timeout> are used to determine at what point to flush
    * the <mq>.  By default, there's no buffering at all.  The
@@ -282,7 +282,7 @@ public:
 
   /**
    * Insert the ACE_Message_Block chain rooted at <message_block>
-   * into the ACE_Message_Queue with the designated <timeout>.  The
+   * into the ACE_Message_Queue with the designated @a timeout.  The
    * <flush> method will be called if this <put> causes the number of
    * bytes to exceed the maximum buffer size or if the timeout period
    * has elapsed.

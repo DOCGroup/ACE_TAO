@@ -22,12 +22,14 @@
 #include "tao/CDR.h"
 #include "tao/ORB_Core.h"
 #include "tao/MMAP_Allocator.h"
+#include "tao/SystemException.h"
 
 #include "ace/OS_NS_sys_time.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/Reactor.h"
 #include "ace/os_include/sys/os_uio.h"
 #include "ace/High_Res_Timer.h"
+#include "ace/CORBA_macros.h"
 
 /*
  * Specialization hook to add include files from
@@ -1068,7 +1070,7 @@ TAO_Transport::cleanup_queue_i ()
          this->id ()));
     }
 
-  int byte_count = 0;
+  size_t byte_count = 0;
   int msg_count = 0;
 
   // Cleanup all messages
@@ -1095,7 +1097,7 @@ TAO_Transport::cleanup_queue_i ()
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) - Transport[%d]::cleanup_queue_i, ")
-                  ACE_TEXT ("discarded %d messages, %d bytes.\n"),
+                  ACE_TEXT ("discarded %d messages, %u bytes.\n"),
                   this->id (), msg_count, byte_count));
     }
 }

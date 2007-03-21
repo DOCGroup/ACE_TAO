@@ -28,10 +28,6 @@ TAO_Event_LogConsumer::connect (CosEventChannelAdmin::ConsumerAdmin_ptr consumer
 
 void
 TAO_Event_LogConsumer::push (const CORBA::Any& data)
-ACE_THROW_SPEC ((
-                CORBA::SystemException,
-                CosEventComm::Disconnected
-        ))
 {
   // create a record list...
   DsLogAdmin::RecordList recList (1);
@@ -88,9 +84,6 @@ ACE_THROW_SPEC ((
 
 void
 TAO_Event_LogConsumer::disconnect_push_consumer (void)
-        ACE_THROW_SPEC ((
-                CORBA::SystemException
-        ))
 {
   this->supplier_proxy_->disconnect_push_supplier ();
 }

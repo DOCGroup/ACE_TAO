@@ -43,7 +43,7 @@ public:
   ACE_Priority_Reactor (ACE_Sig_Handler * = 0,
                         ACE_Timer_Queue * = 0);
 
-  /// Initialize <ACE_Priority_Reactor> with size <size>.
+  /// Initialize <ACE_Priority_Reactor> with size @a size.
   ACE_Priority_Reactor (size_t size,
                         int restart = 0,
                         ACE_Sig_Handler * = 0,

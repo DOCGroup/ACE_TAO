@@ -135,8 +135,7 @@ public:
                    CORBA::Short lane_priority,
                    CORBA::ULong static_threads,
                    CORBA::ULong dynamic_threads,
-                   ACE_Time_Value const &dynamic_thread_idle_timeout
-                  );
+                   ACE_Time_Value const &dynamic_thread_idle_timeout);
 
   /// Destructor.
   ~TAO_Thread_Lane (void);
@@ -269,8 +268,7 @@ public:
                    CORBA::Boolean allow_request_buffering,
                    CORBA::ULong max_buffered_requests,
                    CORBA::ULong max_request_buffer_size,
-                   ACE_Time_Value const &dynamic_thread_idle_timeout
-                  );
+                   ACE_Time_Value const &dynamic_thread_idle_timeout);
 
   /// Constructor (for pools with lanes).
   TAO_Thread_Pool (TAO_Thread_Pool_Manager &manager,
@@ -281,8 +279,7 @@ public:
                    CORBA::Boolean allow_request_buffering,
                    CORBA::ULong max_buffered_requests,
                    CORBA::ULong max_request_buffer_size,
-                   ACE_Time_Value const &dynamic_thread_idle_timeout
-                  );
+                   ACE_Time_Value const &dynamic_thread_idle_timeout);
 
   /// Destructor.
   ~TAO_Thread_Pool (void);
@@ -386,9 +383,7 @@ public:
                      CORBA::Boolean allow_request_buffering,
                      CORBA::ULong max_buffered_requests,
                      CORBA::ULong max_request_buffer_size,
-                     ACE_Time_Value const &dynamic_thread_idle_timeout
-                     )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                     ACE_Time_Value const &dynamic_thread_idle_timeout);
 
   /// Create a threadpool with lanes.
   RTCORBA::ThreadpoolId
@@ -399,14 +394,11 @@ public:
                                 CORBA::ULong max_buffered_requests,
                                 CORBA::ULong max_request_buffer_size,
                                 ACE_Time_Value const &dynamic_thread_idle_timeout
-                                )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                                );
 
   /// Destroy a threadpool.
   void destroy_threadpool (RTCORBA::ThreadpoolId threadpool
-                           )
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     RTCORBA::RTORB::InvalidThreadpool));
+                           );
 
   TAO_Thread_Pool *get_threadpool (RTCORBA::ThreadpoolId thread_pool_id);
 
@@ -433,9 +425,7 @@ private:
                        CORBA::Boolean allow_request_buffering,
                        CORBA::ULong max_buffered_requests,
                        CORBA::ULong max_request_buffer_size,
-                       ACE_Time_Value const &dynamic_thread_idle_timeout
-                       )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                       ACE_Time_Value const &dynamic_thread_idle_timeout);
 
   RTCORBA::ThreadpoolId
   create_threadpool_with_lanes_i (CORBA::ULong stacksize,
@@ -445,13 +435,10 @@ private:
                                   CORBA::ULong max_buffered_requests,
                                   CORBA::ULong max_request_buffer_size,
                                   ACE_Time_Value const &dynamic_thread_idle_timeout
-                                  )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                                  );
 
   RTCORBA::ThreadpoolId
-  create_threadpool_helper (TAO_Thread_Pool *thread_pool
-                            )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  create_threadpool_helper (TAO_Thread_Pool *thread_pool);
 
   // @}
 

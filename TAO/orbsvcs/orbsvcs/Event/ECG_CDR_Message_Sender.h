@@ -23,7 +23,6 @@
 #include /**/ "orbsvcs/Event/event_serv_export.h"
 
 #include "tao/SystemException.h"
-#include "tao/Environment.h"
 
 #include "ace/INET_Addr.h"
 
@@ -94,8 +93,7 @@ public:
    * sender is no longer needed.  If shutdown () is not called by the
    * user, cleanup activities will be performed by the destructor.
    */
-  void init (TAO_ECG_Refcounted_Endpoint endpoint_rptr)
-        ACE_THROW_SPEC ((CORBA::SystemException));
+  void init (TAO_ECG_Refcounted_Endpoint endpoint_rptr);
 
   // Shutdown this component.  Frees up the endpoint.
   void shutdown (void);
@@ -131,8 +129,7 @@ public:
    * to send later via the reactor.
    */
   void send_message (const TAO_OutputCDR &cdr,
-                     const ACE_INET_Addr &addr)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                     const ACE_INET_Addr &addr);
 
 private:
   /// Return the datagram...

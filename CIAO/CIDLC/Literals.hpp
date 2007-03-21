@@ -12,8 +12,6 @@ namespace StringLiterals
   // Index into the string array in Literals.cpp.
   enum
   {
-    EXCP_SNGL,
-    EXCP_START,
     EXCP_SYS,
     EXCP_BP,
     EXCP_IS,
@@ -48,7 +46,6 @@ namespace StringLiterals
     EXTRACT,
     EXTRACT_TMP,
     ACE_UA,
-    ACE_TR,
     LIT_SIZE
   };
 

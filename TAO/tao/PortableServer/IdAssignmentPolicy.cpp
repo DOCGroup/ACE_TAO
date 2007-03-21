@@ -5,6 +5,8 @@ ACE_RCSID (PortableServer,
            IdAssignmentPolicy,
            "$Id$")
 
+#include "ace/CORBA_macros.h"
+
 #if !defined (CORBA_E_MICRO)
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -21,7 +23,6 @@ namespace TAO
 
     CORBA::Policy_ptr
     IdAssignmentPolicy::copy (void)
-      ACE_THROW_SPEC ((CORBA::SystemException))
     {
       IdAssignmentPolicy *copy = 0;
       ACE_NEW_THROW_EX (copy,
@@ -33,20 +34,17 @@ namespace TAO
 
     void
     IdAssignmentPolicy::destroy (void)
-      ACE_THROW_SPEC ((CORBA::SystemException))
     {
     }
 
     ::PortableServer::IdAssignmentPolicyValue
     IdAssignmentPolicy::value (void)
-      ACE_THROW_SPEC ((CORBA::SystemException))
     {
       return value_;
     }
 
     CORBA::PolicyType
     IdAssignmentPolicy::policy_type (void)
-      ACE_THROW_SPEC ((CORBA::SystemException))
     {
       return ::PortableServer::ID_ASSIGNMENT_POLICY_ID;
     }

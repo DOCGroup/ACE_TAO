@@ -17,8 +17,7 @@ public:
   ~Top_i (void);
   // Ctor and dtor.
 
-  virtual char* shape (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual char* shape (void);
   // Return the shape of this object (interface.)
 };
 
@@ -29,12 +28,10 @@ public:
   ~Left_i (void);
   // Ctor, dtor.
 
-  virtual char * shape (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual char * shape (void);
   // Return the shape of this object (interface.)
 
-  virtual char * color (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual char * color (void);
   // Return the color of this object (interface.)
 };
 
@@ -45,16 +42,13 @@ public:
   ~Right_i (void);
   // Ctor, dtor.
 
-  virtual char * shape (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual char * shape (void);
   // Return the shape of this object (interface.)
 
-  virtual char * color (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual char * color (void);
   // Return the color of this object (interface.)
 
-  virtual CORBA::Long width (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::Long width (void);
   // Return the width of the stuff.
 };
 
@@ -65,20 +59,16 @@ public:
   ~Buttom_i (void);
   // Ctor, dtor.
 
-  virtual char * shape (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual char * shape (void);
   // Return the shape of this object (interface.)
 
-  virtual char * color (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual char * color (void);
   // Return the color of this object (interface.)
 
-  virtual CORBA::Long width (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::Long width (void);
   // Return the width of the stuff.
 
-  virtual char * name (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual char * name (void);
   // Return the name of the object.
 };
 

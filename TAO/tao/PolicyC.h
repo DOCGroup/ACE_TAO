@@ -42,7 +42,6 @@
 
 #include /**/ "tao/TAO_Export.h"
 #include "tao/ORB.h"
-#include "tao/SystemException.h"
 #include "tao/Environment.h"
 #include "tao/Object.h"
 #include "tao/Objref_VarOut_T.h"
@@ -284,30 +283,21 @@ namespace CORBA
 
     virtual CORBA::PolicyType policy_type (
         void
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
 
     virtual ::CORBA::Policy_ptr copy (
         void
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
 
     virtual void destroy (
         void
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
+      );
 
     // TAO_IDL - Generated from
     // be\be_visitor_interface/interface_ch.cpp:210
@@ -429,9 +419,7 @@ namespace CORBA
         const ::CORBA::PolicyTypeSeq & ts
 
       )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
+      = 0;
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
@@ -441,10 +429,7 @@ namespace CORBA
         ::CORBA::SetOverrideType set_add
 
       )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        ::CORBA::InvalidPolicies
-      )) = 0;
+      = 0;
 
     // TAO_IDL - Generated from
     // be\be_visitor_interface/interface_ch.cpp:210

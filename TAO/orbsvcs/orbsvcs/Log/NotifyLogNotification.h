@@ -68,24 +68,14 @@ protected:
   virtual void subscription_change (
         const CosNotification::EventTypeSeq & added,
         const CosNotification::EventTypeSeq & removed
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        CosNotifyComm::InvalidEventType
-      ));
+      );
 
   // = StructuredPushSupplier method
     virtual void disconnect_push_supplier (
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
+      );
 
   /// Send the event on the event channel.
-  virtual void send_notification (const CORBA::Any& any)
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
+  virtual void send_notification (const CORBA::Any& any);
 
 private:
   /// A reference to the ORB.

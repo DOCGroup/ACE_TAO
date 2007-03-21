@@ -11,7 +11,6 @@ ACE_RCSID(Reliable, test_i, "$Id$")
 
 void
 Test_i::oneway_work_test (CORBA::ULong work)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   for (CORBA::ULong i = 0; i < work; i++)
     {
@@ -24,13 +23,11 @@ Test_i::oneway_work_test (CORBA::ULong work)
 
 void
 Test_i::oneway_payload_test (const Test::data &)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void
 Test_i::twoway_work_test (CORBA::ULong work)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   for (CORBA::ULong i = 0; i < work; i++)
     {
@@ -43,7 +40,6 @@ Test_i::twoway_work_test (CORBA::ULong work)
 
 void
 Test_i::shutdown ()
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown (0);
 }

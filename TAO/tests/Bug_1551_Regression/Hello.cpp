@@ -16,7 +16,6 @@ Hello::Hello(
 
 void
 Hello::short_sleep (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   long count = atomic_counter_--;
 

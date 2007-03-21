@@ -15,6 +15,10 @@ namespace CCF
     {
       struct ValueTypeFactory
       {
+        virtual ~ValueTypeFactory ()
+        {
+        }
+        
         virtual void
         name (SimpleIdentifierPtr const& id) = 0;
 

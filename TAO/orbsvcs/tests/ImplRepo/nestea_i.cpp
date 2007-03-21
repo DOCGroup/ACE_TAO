@@ -35,7 +35,6 @@ Nestea_i::~Nestea_i (void)
 
 void
 Nestea_i::drink (CORBA::Long cans)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (TAO_debug_level)
     ACE_DEBUG ((LM_DEBUG, "Nestea_i::drink %d cans\n", cans));
@@ -50,7 +49,6 @@ Nestea_i::drink (CORBA::Long cans)
 
 void
 Nestea_i::crush (CORBA::Long cans)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (TAO_debug_level)
     ACE_DEBUG ((LM_DEBUG, "Nestea_i::crush %d cans\n", cans));
@@ -68,7 +66,6 @@ Nestea_i::crush (CORBA::Long cans)
 
 CORBA::Long
 Nestea_i::bookshelf_size (void)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (TAO_debug_level)
     ACE_DEBUG ((LM_DEBUG, "Nestea_i::bookshelf_size\n"));
@@ -80,7 +77,6 @@ Nestea_i::bookshelf_size (void)
 
 char *
 Nestea_i::get_praise (void)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (TAO_debug_level)
     ACE_DEBUG ((LM_DEBUG, "Nestea_i::get_praise\n"));
@@ -99,7 +95,6 @@ Nestea_i::get_praise (void)
 
 void
 Nestea_i::shutdown (void)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (TAO_debug_level)
     ACE_DEBUG ((LM_DEBUG, "Nestea_i::shutdown\n"));

@@ -204,7 +204,7 @@ public:
    * If <ipaddr_format> is non-0 this produces "ip-number:port-number"
    * (e.g., "128.252.166.57:1234"), whereas if <ipaddr_format> is 0
    * this produces "ip-name:port-number" (e.g.,
-   * "tango.cs.wustl.edu:1234").  Returns -1 if the <size> of the
+   * "tango.cs.wustl.edu:1234").  Returns -1 if the @a size of the
    * <buffer> is too small, else 0.
    */
   virtual int addr_to_string (ACE_TCHAR buffer[],
@@ -242,7 +242,7 @@ public:
    * <encode> is enabled then <ip_addr> is converted into network
    * byte order, otherwise it is assumed to be in network byte order
    * already and are passed straight through.  The size of the address
-   * is specified in the <len> parameter.
+   * is specified in the @a len parameter.
    * If <map> is non-zero, IPv6 support has been compiled in, and
    * <ip_addr> is an IPv4 address, then this address is set to the IPv4-mapped
    * IPv6 address of it.

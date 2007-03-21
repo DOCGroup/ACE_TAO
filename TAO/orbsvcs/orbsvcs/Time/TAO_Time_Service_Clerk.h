@@ -60,9 +60,7 @@ public:
 
   /// This operation returns the global time and an estimate of
   /// inaccuracy in a UTO.
-  virtual CosTime::UTO_ptr universal_time (void)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     CosTime::TimeUnavailable));
+  virtual CosTime::UTO_ptr universal_time (void);
 
   /**
    * This operation returns the global time in a UTO only if the time
@@ -70,24 +68,19 @@ public:
    * operation is not implemented and throws a CORBA::NO_IMPLEMENT
    * exception, if called.
    */
-  virtual CosTime::UTO_ptr secure_universal_time (void)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     CosTime::TimeUnavailable));
+  virtual CosTime::UTO_ptr secure_universal_time (void);
 
   /// This creates a new UTO based on the given parameters.
   virtual CosTime::UTO_ptr new_universal_time (TimeBase::TimeT time,
                                                TimeBase::InaccuracyT inaccuracy,
-                                               TimeBase::TdfT tdf)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                                               TimeBase::TdfT tdf);
 
   /// This creates a new UTO given a time in the UtcT form.
-  virtual CosTime::UTO_ptr uto_from_utc (const TimeBase::UtcT &utc)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CosTime::UTO_ptr uto_from_utc (const TimeBase::UtcT &utc);
 
   /// This creates a new TIO with the given parameters.
   virtual CosTime::TIO_ptr new_interval (TimeBase::TimeT lower,
-                                         TimeBase::TimeT upper)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                                         TimeBase::TimeT upper);
 
   /// Return the globally synchronized time.
   virtual CORBA::ULongLong get_time (void);

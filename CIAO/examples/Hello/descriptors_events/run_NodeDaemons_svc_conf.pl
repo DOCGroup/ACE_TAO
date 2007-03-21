@@ -30,10 +30,10 @@ unlink $iorfile2;
 
 $CIAO_ROOT=$ENV{'CIAO_ROOT'};
 
-$SV1 = new PerlACE::Process ("$CIAO_ROOT/DAnCE/NodeManager/NodeManager",
+$SV1 = new PerlACE::Process ("$CIAO_ROOT/bin/NodeManager",
                              "-ORBEndpoint iiop://localhost:60001 -s $CIAO_ROOT/DAnCE/NodeApplication/NodeApplication -c rtec.conf");
 
-$SV2 = new PerlACE::Process ("$CIAO_ROOT/DAnCE/NodeManager/NodeManager",
+$SV2 = new PerlACE::Process ("$CIAO_ROOT/bin/NodeManager",
                              "-ORBEndpoint iiop://localhost:60002 -s $CIAO_ROOT/DAnCE/NodeApplication/NodeApplication -c rtec.conf");
 
 $SV1->Spawn ();

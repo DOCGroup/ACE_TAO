@@ -34,11 +34,9 @@ public:
   virtual ~Object_A_i (void);
   // Destructor.
 
-  virtual void foo (Initiator_ptr theInitiator_ptr)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void foo (Initiator_ptr theInitiator_ptr);
 
-  virtual void finish (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void finish (void);
 
   unsigned long finish_two_way_call_;
 };

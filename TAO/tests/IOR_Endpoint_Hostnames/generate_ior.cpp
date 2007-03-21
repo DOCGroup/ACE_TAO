@@ -16,7 +16,7 @@ main (int argc, char *argv[])
 {
   try
     {
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, "");
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
       CORBA::Object_var poa_object =
         orb->resolve_initial_references ("RootPOA");
@@ -28,7 +28,12 @@ main (int argc, char *argv[])
 
       bogus* bogus_impl = new bogus();
       PortableServer::ServantBase_var owner_transfer(bogus_impl);
-      Test::bogus_var b = bogus_impl->_this();
+      PortableServer::ObjectId_var id =
+        rp->activate_object (bogus_impl);
+
+      CORBA::Object_var object = rp->id_to_reference (id.in ());
+
+      Test::bogus_var b = Test::bogus::_narrow (object.in ());
       CORBA::String_var ior =
         orb->object_to_string (b.in());
 

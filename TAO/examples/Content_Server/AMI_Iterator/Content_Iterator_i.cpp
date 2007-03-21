@@ -27,7 +27,6 @@ Content_Iterator_i::~Content_Iterator_i (void)
 CORBA::Boolean
 Content_Iterator_i::next_chunk (CORBA::ULongLong offset,
                                 Web_Server::Chunk_Type_out chunk)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Initialize/allocate the Chunk_Type sequence
   chunk = new Web_Server::Chunk_Type;
@@ -106,7 +105,6 @@ Content_Iterator_i::next_chunk (CORBA::ULongLong offset,
 
 void
 Content_Iterator_i::destroy (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   (void) this->file_io_.close ();
 

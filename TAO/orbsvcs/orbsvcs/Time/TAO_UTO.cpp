@@ -48,7 +48,6 @@ TAO_UTO::~TAO_UTO (void)
 
 TimeBase::TimeT
 TAO_UTO::time (void)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return attr_utc_time_.time;
 }
@@ -57,7 +56,6 @@ TAO_UTO::time (void)
 
 TimeBase::InaccuracyT
 TAO_UTO::inaccuracy (void)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Construct the Inaccuracy from the
   // inacchi and inacclo.
@@ -72,7 +70,6 @@ TAO_UTO::inaccuracy (void)
 
 TimeBase::TdfT
 TAO_UTO::tdf (void)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return attr_utc_time_.tdf;
 }
@@ -81,7 +78,6 @@ TAO_UTO::tdf (void)
 
 TimeBase::UtcT
 TAO_UTO::utc_time (void)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return attr_utc_time_;
 }
@@ -91,7 +87,6 @@ TAO_UTO::utc_time (void)
 
 CosTime::UTO_ptr
 TAO_UTO::absolute_time (void)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CosTime::UTO::_nil ();
 }
@@ -102,7 +97,6 @@ TAO_UTO::absolute_time (void)
 CosTime::TimeComparison
 TAO_UTO::compare_time (CosTime::ComparisonType comparison_type,
                        CosTime::UTO_ptr uto)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TimeBase::TimeT uto_time = uto->time ();
 
@@ -161,7 +155,6 @@ TAO_UTO::compare_time (CosTime::ComparisonType comparison_type,
 
 CosTime::TIO_ptr
 TAO_UTO::time_to_interval (CosTime::UTO_ptr uto)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_TIO *tio = 0;
 
@@ -200,7 +193,6 @@ TAO_UTO::time_to_interval (CosTime::UTO_ptr uto)
 
 CosTime::TIO_ptr
 TAO_UTO::interval (void)
-    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_TIO *tio = 0;
 

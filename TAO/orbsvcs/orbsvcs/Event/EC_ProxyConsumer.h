@@ -69,7 +69,7 @@ public:
   /// Activate in the POA
   virtual void activate (
           RtecEventChannelAdmin::ProxyPushConsumer_ptr &proxy)
-    ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
+    = 0;
 
   /// Deactivate from the POA
   virtual void deactivate (void);
@@ -168,7 +168,7 @@ private:
 
   virtual PortableServer::ObjectId
             object_id (void)
-    ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
+    = 0;
 };
 
 // ****************************************************************

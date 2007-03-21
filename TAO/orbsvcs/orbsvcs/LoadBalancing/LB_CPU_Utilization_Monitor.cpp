@@ -111,7 +111,6 @@ TAO_LB_CPU_Utilization_Monitor::~TAO_LB_CPU_Utilization_Monitor (void)
 
 CosLoadBalancing::Location *
 TAO_LB_CPU_Utilization_Monitor::the_location (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CosLoadBalancing::Location * location;
   ACE_NEW_THROW_EX (location,
@@ -127,7 +126,6 @@ TAO_LB_CPU_Utilization_Monitor::the_location (void)
 
 CosLoadBalancing::LoadList *
 TAO_LB_CPU_Utilization_Monitor::loads (void)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::Float load = 0;
 
@@ -159,7 +157,7 @@ TAO_LB_CPU_Utilization_Monitor::loads (void)
 #else
 
   ACE_UNUSED_ARG (load);
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
+  throw CORBA::NO_IMPLEMENT ();
 
 #endif  /* linux || sun */
 

@@ -34,13 +34,13 @@ project(*Main): taoserver, messaging {
   IDL_Files {
     idlflags += -GC -GH -Gd -GA -GT
     anonymous.idl
+    valuetype.idl
     constants.idl
     generic_object.idl
     keywords.idl
     pragma.idl
     repo_id_mod.idl
     typedef.idl
-    valuetype.idl
     array_only.idl
     typecode.idl
   }

@@ -281,7 +281,7 @@ ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::rend (void)
 template <class EXT_ID, class INT_ID, class ACE_LOCK> ACE_INLINE
 ACE_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>::ACE_Map_Iterator_Base (ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK> &mm)
   : map_man_ (&mm),
-    next_ (this->map_man_->occupied_list_id ())
+    next_ (map_man_->occupied_list_id ())
 {
 }
 

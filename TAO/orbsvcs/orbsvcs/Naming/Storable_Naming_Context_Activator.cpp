@@ -1,16 +1,13 @@
-// $Id$
-// ============================================================================
-//
-// = LIBRARY
-//    cos
-//
-// = FILENAME
-//   Storable_Naming_Context_Activator.h
-//
-// = AUTHOR
-//    Byron Harris <harris_b@ociweb.com>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file   Storable_Naming_Context_Activator.cpp
+ *
+ *  $Id$
+ *
+ *  @author Byron Harris <harris_b@ociweb.com>
+ */
+//=============================================================================
+
 
 #include "orbsvcs/Naming/Storable_Naming_Context_Activator.h"
 
@@ -43,8 +40,6 @@ PortableServer::Servant
 TAO_Storable_Naming_Context_Activator::incarnate (
     const PortableServer::ObjectId &oid,
     PortableServer::POA_ptr poa)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableServer::ForwardRequest))
 {
 
   // Make sure complete initialization has been done
@@ -64,8 +59,7 @@ TAO_Storable_Naming_Context_Activator::incarnate (
   file_name += ACE_TEXT_CHAR_TO_TCHAR(poa_id.in());
   TAO_Storable_Base * fl = factory_->create_stream(ACE_TEXT_ALWAYS_CHAR(file_name.c_str()), ACE_TEXT("rw"));
   if (!fl->exists()) {
-    ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (),
-                      0);
+    throw CORBA::OBJECT_NOT_EXIST ();
   }
 
   // Store the stub we will return here.
@@ -109,11 +103,11 @@ TAO_Storable_Naming_Context_Activator::etherealize (
     PortableServer::Servant servant,
     CORBA::Boolean /*cleanup_in_progress*/,
     CORBA::Boolean remaining_activations)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  if (!remaining_activations) {
-    delete servant;
-  }
+  if (!remaining_activations)
+    {
+      delete servant;
+    }
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

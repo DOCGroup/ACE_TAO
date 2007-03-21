@@ -6,6 +6,8 @@
 #include "ace/Read_Buffer.h"
 #include "tao/IORManipulation/IORManip_Loader.h"
 #include "tao/PortableServer/PortableServer.h"
+// Ensure that the PI library is linked in when building statically
+#include "tao/PI/PI.h"
 #include "orbsvcs/FaultTolerance/FT_Service_Activate.h"
 #include "orbsvcs/FaultTolerance/FT_IOGR_Property.h"
 #include "ace/OS_NS_stdio.h"

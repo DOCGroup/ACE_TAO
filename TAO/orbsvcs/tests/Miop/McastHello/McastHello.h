@@ -18,18 +18,15 @@ public:
               int instance);
 
   // = The skeleton methods
-  virtual void send_forty_two (CORBA::Long forty_two)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void send_forty_two (CORBA::Long forty_two);
 
-  virtual void shutdown (void)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void shutdown (void);
 
   /// Return whether all test requests have been received successfully.
   CORBA::Boolean get_status ();
 
   // Silence the builds
-  void send_large_octet_array (const Test::Octets &)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  void send_large_octet_array (const Test::Octets &);
 
 private:
   /// Use an ORB reference to convert strings to objects and shutdown

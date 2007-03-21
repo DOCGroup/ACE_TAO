@@ -41,7 +41,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * is not allocated new space.  Instead, its internal
  * representation is set equal to a global empty string.
  * CAUTION: in cases when ACE_String_Base is constructed from a
- * provided buffer with the release parameter set to 0,
+ * provided buffer with the release parameter set to false,
  * ACE_String_Base is not guaranteed to be '\0' terminated.
  *
  * \li Do not use a "@c -1" magic number to refer to the "no position"
@@ -72,43 +72,43 @@ public:
   /**
    * Constructor that copies @a s into dynamically allocated memory.
    *
-   * if release == 1 then a new buffer is allocated internally, and
+   * if release == true then a new buffer is allocated internally, and
    *   s is copied to the internal buffer.
-   * if release == 0 then the s buffer is used directly. If s == 0
+   * if release == false then the s buffer is used directly. If s == 0
    *   then it will _not_ be used, and instead the internal buffer
    *   is set to NULL_String_.
    *
    * @param s Zero terminated input string
    * @param the_allocator ACE_Allocator associated with string
-   * @param release Allocator responsible(1)/not reponsible(0) for
+   * @param release Allocator responsible(true)/not reponsible(false) for
    *    freeing memory.
    * @return ACE_String_Base containing const CHAR *s
    */
   ACE_String_Base (const CHAR *s,
                    ACE_Allocator *the_allocator = 0,
-                   int release = 1);
+                   bool release = true);
 
   /**
    * Constructor that copies @a len CHARs of @a s into dynamically
    * allocated memory (will zero terminate the result).
    *
-   * if release == 1 then a new buffer is allocated internally.
+   * if release == true then a new buffer is allocated internally.
    *   s is copied to the internal buffer.
-   * if release == 0 then the s buffer is used directly. If s == 0
+   * if release == false then the s buffer is used directly. If s == 0
    *   then it will _not_ be used, and instead the internal buffer
    *   is set to NULL_String_.
    *
    * @param s Non-zero terminated input string
    * @param len Length of non-zero terminated input string
    * @param the_allocator ACE_Allocator associated with string
-   * @param release Allocator responsible(1)/not reponsible(0) for
+   * @param release Allocator responsible(true)/not reponsible(false) for
    *    freeing memory.
    * @return ACE_String_Base containing const CHAR *s
    */
   ACE_String_Base (const CHAR *s,
                    size_type len,
                    ACE_Allocator *the_allocator = 0,
-                   int release = 1);
+                   bool release = true);
 
   /**
    *  Copy constructor.
@@ -194,68 +194,68 @@ public:
   /**
    * Copy @a s into this @a ACE_String_Base.
    *
-   * If release == 1 then a new buffer is allocated internally if the
+   * If release == true then a new buffer is allocated internally if the
    *   existing one is not big enough to hold s. If the existing
    *   buffer is big enough, then it will be used. This means that
    *   set(*, 1) can be illegal when the string is constructed with a
    *   const char*. (e.g. ACE_String_Base("test", 0, 0)).
    *
-   * if release == 0 then the s buffer is used directly, and any
+   * if release == false then the s buffer is used directly, and any
    *   existing buffer is destroyed. If s == 0 then it will _not_ be
    *   used, and instead the internal buffer is set to NULL_String_.
    *
    * @param s Null terminated input string
-   * @param release Allocator responsible(1)/not reponsible(0) for
+   * @param release Allocator responsible(true)/not reponsible(false) for
    *    freeing memory.
    */
-  void set (const CHAR * s, int release = 1);
+  void set (const CHAR * s, bool release = true);
 
   /**
    *  Copy @a len bytes of @a s (will zero terminate the result).
    *
-   * If release == 1 then a new buffer is allocated internally if the
+   * If release == true then a new buffer is allocated internally if the
    *   existing one is not big enough to hold s. If the existing
    *   buffer is big enough, then it will be used. This means that
    *   set(*, *, 1) is illegal when the string is constructed with a
    *   non-owned const char*. (e.g. ACE_String_Base("test", 0, 0))
    *
-   * If release == 0 then the s buffer is used directly, and any
+   * If release == false then the s buffer is used directly, and any
    *   existing buffer is destroyed. If s == 0 then it will _not_ be
    *   used, and instead the internal buffer is set to NULL_String_.
    *
    *  @param s Non-zero terminated input string
    *  @param len Length of input string 's'
-   *  @param release Allocator responsible(1)/not reponsible(0) for
+   *  @param release Allocator responsible(true)/not reponsible(false) for
    *    freeing memory.
    */
-  void set (const CHAR * s, size_type len, int release);
+  void set (const CHAR * s, size_type len, bool release);
 
   /**
-   * Clear this string. Memory is _not_ freed if <release> is 0.
+   * Clear this string. Memory is _not_ freed if @a release is false.
    *
    * Warning: This method was incorrectly documented in the past, but
    * the current implementation has been changed to match the documented
    * behavior.
    *
-   * Warning: clear(0) behaves like fast_clear() below.
+   * Warning: clear(false) behaves like fast_clear() below.
    *
-   * @param release Memory is freed if 1 or not if 0.
+   * @param release Memory is freed if true, and not freed if false.
    */
-  void clear (int release = 0);
+  void clear (bool release = false);
 
   /**
    * A more specialized version of clear(): "fast clear". fast_clear()
    * resets the string to 0 length. If the string owns the buffer
-   * (@arg release_== 1):
+   * (@arg release_== true):
    *  - the string buffer is not freed
    *  - the first character of the buffer is set to 0.
    *
-   * If @arg release_ is 0 (this object does not own the buffer):
+   * If @arg release_ is false (this object does not own the buffer):
    *  - the buffer pointer is reset to the NULL_String_ and does not
    *    maintain a pointer to the caller-supplied buffer on return
    *  - the maximum string length is reset to 0.
    *
-   * Warning : Calling clear(0) or fast_clear() can have unintended
+   * Warning : Calling clear(false) or fast_clear() can have unintended
    *   side-effects if the string was constructed (or set()) with an
    *   external buffer. The string will be disassociated with the buffer
    *   and the next append() or +=() will cause a new buffer to be
@@ -559,7 +559,7 @@ protected:
   /**
    *  Flag that indicates if we own the memory
    */
-  int release_;
+  bool release_;
 
   /**
    *  Represents the "NULL" string to simplify the internal logic.

@@ -23,7 +23,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/SystemException.h"
+#include "tao/orbconf.h"
+#include /**/ "tao/TAO_Export.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -53,8 +54,7 @@ public:
    * This method cannot throw any exception, but it can return a nil
    * object to indicate an error condition.
    */
-  virtual TAO_Service_Callbacks* activate_services (TAO_ORB_Core *orb)
-    ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
+  virtual TAO_Service_Callbacks* activate_services (TAO_ORB_Core *orb) = 0;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

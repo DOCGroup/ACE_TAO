@@ -28,7 +28,6 @@
 
 #include "tao/Exception.h"
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_OutputCDR;
@@ -85,6 +84,14 @@ namespace CORBA
   public:
 
     /// Copy constructor.
+    /**
+     * @note This constructor should be protected, but VC7.1 at
+     *       warning level 4 complains about the inaccessible copy
+     *       constructor preventing it from being caught.  However,
+     *       that probably isn't true for most cases since CORBA
+     *       exceptions are typically caught by reference, not by
+     *       copy.
+     */
     SystemException (const SystemException & src);
 
     /// Destructor.
@@ -120,15 +127,12 @@ namespace CORBA
     /// function is not CORBA compliant.
     virtual ACE_CString _info (void) const;
 
-    virtual void _tao_encode (TAO_OutputCDR &cdr
-                              ) const;
+    virtual void _tao_encode (TAO_OutputCDR &cdr) const;
 
-    virtual void _tao_decode (TAO_InputCDR &cdr
-                             );
+    virtual void _tao_decode (TAO_InputCDR &cdr);
 
     /// Helper to create a minor status value.
-    static CORBA::ULong _tao_minor_code (u_int location,
-                                         int errno_value);
+    static CORBA::ULong _tao_minor_code (u_int location, int errno_value);
 
     /// Helper to translate a platform-specific errno to a TAO errno
     /// value.
@@ -146,8 +150,7 @@ namespace CORBA
     SystemException & operator= (const SystemException &src);
 
     /// Constructor using a repository id.
-    SystemException (CORBA::ULong code,
-                     CORBA::CompletionStatus completed);
+    SystemException (CORBA::ULong code, CORBA::CompletionStatus completed);
 
     /// Constructor using a repository id.
     SystemException (const char *repository_id,
@@ -158,8 +161,7 @@ namespace CORBA
     /// Return the exception description associated with the given OMG
     /// minor code.
     static const char *_tao_get_omg_exception_description (
-      const CORBA::SystemException &exc,
-      CORBA::ULong minor_code);
+      const CORBA::SystemException &exc, CORBA::ULong minor_code);
 
   private:
     /// Minor code.
@@ -167,7 +169,6 @@ namespace CORBA
 
     /// Completion status.
     CORBA::CompletionStatus completed_;
-
   };
 
   // Declarations for all of the CORBA standard exceptions.

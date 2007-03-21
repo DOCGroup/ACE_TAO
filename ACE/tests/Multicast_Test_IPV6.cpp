@@ -897,8 +897,6 @@ int advance_addr (ACE_INET_Addr &addr)
                             -1);
 
         }
-
-      return 0;
     }
 #endif /* ACE_HAS_IPV6 */
 

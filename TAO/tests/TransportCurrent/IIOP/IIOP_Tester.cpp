@@ -3,6 +3,7 @@
 // $Id$
 
 #include "tao/TransportCurrent/IIOP_Transport_Current.h"
+#include "tao/SystemException.h"
 
 #if defined (TAO_AS_STATIC_LIBS)
 #include "tao/TransportCurrent/IIOP_Current_Loader.h"
@@ -14,7 +15,6 @@ ACE_STATIC_SVC_REQUIRE (TAO_Transport_Current_Loader)
 ACE_STATIC_SVC_REQUIRE (TAO_Transport_IIOP_Current_Loader)
 #endif /* TAO_AS_STATIC_LIBS */
 
-
 using namespace TAO;
 
 
@@ -23,13 +23,10 @@ using namespace TAO;
 
 int
 test_transport_current (CORBA::ORB_ptr orb)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   CORBA::UserException))
 {
   // Get the Current object.
   CORBA::Object_var tcobject =
     orb->resolve_initial_references (ACE_TEXT_ALWAYS_CHAR ("TAO::Transport::IIOP::Current"));
-
 
   if (TAO_debug_level >= 1)
     ACE_DEBUG ((LM_DEBUG,

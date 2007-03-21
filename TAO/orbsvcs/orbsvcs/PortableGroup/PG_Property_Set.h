@@ -70,8 +70,7 @@ namespace TAO
      * constructor
      * @param property_set the properties to be decoded
      */
-    PG_Property_Set (const PortableGroup::Properties & property_set)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+    PG_Property_Set (const PortableGroup::Properties & property_set);
 
     /**
      * constructor with defaults
@@ -79,8 +78,7 @@ namespace TAO
      * @param defaults a propert set decoder that supplies default values.
      */
     PG_Property_Set (const PortableGroup::Properties & property_set,
-                     PG_Property_Set * defaults)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+                     PG_Property_Set * defaults);
 
     /**
      * constructor with defaults, but no properties (yet)
@@ -110,8 +108,7 @@ namespace TAO
      * Duplicate values replace previous values.
      * @param property_set the properties to be decoded
      */
-    void decode (const PortableGroup::Properties & property_set)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+    void decode (const PortableGroup::Properties & property_set);
 
     /**
      * Clear properties
@@ -119,8 +116,7 @@ namespace TAO
      */
     void clear ();
 
-    void remove (const PortableGroup::Properties & property_set)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+    void remove (const PortableGroup::Properties & property_set);
 
     /**
      * set or replace a single property
