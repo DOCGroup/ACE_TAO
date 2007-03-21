@@ -1,0 +1,48 @@
+$Id$
+
+Smart Proxies Overview
+----------------------
+
+Smart Proxies are a TAO extension that helps applications create
+user-defined proxies that can be used to add custom client-side
+processing and security to the default stub proxy.
+
+For details on how TAO implements Smart Proxies please see:
+
+www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO/docs/Smart_Proxies.html
+
+Smart Proxy Example
+-------------------
+
+This directory contains a simple example that demostrats how the TAO
+Smart Proxy feature can be used.  In this example, just a single
+method has been "smartified" to illustrate how you just implement the
+methods you wish to customize since the rest will be taken care of the
+genearated Smart Proxy base class.
+
+All you need to define in the client application is a new factory that
+will produce the kind of proxy desired by the user.  This factory must
+be provided by the user and must derive from the generated
+TAO_Default_Proxy_Factory class.
+
+This is a benchmarking test for smart proxies and shows how effective it
+can be if used carefully.
+Results of this test were used for the following paper:
+http://www.cs.wustle.edu/~schmidt/PDF/COOTS-00.pdf
+
+For execution of the test:
+
+1) ./server -o test.ior
+
+2) ./client
+
+-n can be used for iterations
+-r can be used to toggle betn regsiteration and non-registeration
+of the smart proxy factory
+
+or simply use:
+
+run_test.pl
+
+Happy troubleshooting!
+

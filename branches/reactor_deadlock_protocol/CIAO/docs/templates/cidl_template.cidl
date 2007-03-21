@@ -1,0 +1,31 @@
+// $Id$   -*- C++ -*-
+
+/**
+ * @file cidl_template.cidl
+ *
+ * This file show an example cidl file.
+ */
+
+// @@ We do not support import (yet).
+//import [component module];
+
+// [idl-basename] contains the IDL3 definitions for component(s) and
+// home(s) and the interfaces that they need.
+
+#include "[idl-basename].idl"
+
+// We only support a simple session implementation definition, for
+// now.  @@ What is the relation of various names here and the
+// generated names we used in the glue code?
+composition session [composition name]
+{
+  home executor [home executor name]
+    {
+      implement [home name];
+      manages [component executor name];
+    };
+};
+
+
+// @@ We should also generate somet sort of implementaion template for
+// users.  E.g., a set of [idl-basename]_impl.* and the MPC files(?).

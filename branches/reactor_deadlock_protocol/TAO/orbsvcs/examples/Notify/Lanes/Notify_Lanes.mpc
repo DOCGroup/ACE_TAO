@@ -1,0 +1,22 @@
+// -*- MPC -*-
+// $Id$
+
+project(*Supplier): rtcorba, rtnotify, avoids_minimum_corba, naming {
+  exename = Supplier
+  Source_Files {
+    Supplier.cpp
+    Supplier_Client.cpp
+    ORB_Objects.cpp
+    ORB_Run_Task.cpp
+  }
+}
+
+project(*Consumer): notifytest, rtcorba, rtnotify, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
+  exename = Consumer
+  Source_Files {
+    Consumer.cpp
+    Consumer_Client.cpp
+    ORB_Objects.cpp
+    ORB_Run_Task.cpp
+  }
+}

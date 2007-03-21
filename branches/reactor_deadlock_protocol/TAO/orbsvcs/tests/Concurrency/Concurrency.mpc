@@ -1,0 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
+project(CC client) : orbsvcsexe, concurrency, naming, svc_utils, iortable, portableserver {
+  exename  = CC_client
+}
