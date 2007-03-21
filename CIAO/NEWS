@@ -92,8 +92,27 @@ USER VISIBLE CHANGES BETWEEN CIAO-0.5.6 and CIAO-0.5.7
 
 . DAnCE executables are now installed into $CIAO_ROOT/bin
 
+. Added a new TAO policy for specifying the DiffServ code points
+ (DSCP) to be added to request and reply IP packets of an
+ application. The policy can be added at the following levels: OBJECT,
+ THREAD, and ORB.
+
+. Extended the CIAOServerResources schema to allow the specification
+  of request and reply DSCPs to be added to the IP packets of an
+  application. Extended CIAO NodeApplication libraries, to read the
+  CIAOServerResources specification, to create DiffServ policies on the
+  objects, to allow automatic addition of DSCPs on the CCM port
+  objects.
+
+. Updated the Target Manager interface to comply with the latest OMG
+  specification. This includes the addition of a new entity,
+  ResourceCommitmentManager for the management of committed resources.
+
 USER VISIBLE CHANGES BETWEEN CIAO-0.5.5 and CIAO-0.5.6
 ======================================================
+. Updated the Target Manager interface to comply with the latest OMG
+  specification. This includes the addition of a new entity,
+  ResourceCommitmentManager for the management of committed resources.
 
 . Removed all exception environment macros except ACE_THROW_RETURN
   and ACE_THROW_SPEC
