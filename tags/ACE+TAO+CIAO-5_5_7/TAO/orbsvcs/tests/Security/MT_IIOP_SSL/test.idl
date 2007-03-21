@@ -1,0 +1,23 @@
+//
+// $Id$
+//
+
+interface Simple_Server
+{
+  exception WrongProtocolType {};
+
+  /// A ping call to set up connections
+  void ping ();
+
+  /** Validate the connection to see whether we have used the right
+   *  protocol type. A succesful validation would return nothing and
+   *  an unsuccessful validation would return an exception.
+   */
+  void validate_protocol ()
+    raises (WrongProtocolType);
+
+  /// A simple call
+  long test_method (in long x);
+
+  oneway void shutdown ();
+};
