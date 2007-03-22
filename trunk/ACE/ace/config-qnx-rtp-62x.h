@@ -29,6 +29,7 @@
 #define ACE_HAS_CONSISTENT_SIGNAL_PROTOTYPES
 #define ACE_HAS_DIRENT
 #define ACE_HAS_GETPAGESIZE
+#define ACE_HAS_GETIFADDRS
 // Enable gperf, this is a hosted configuration.
 #define ACE_HAS_GPERF
 #define ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT

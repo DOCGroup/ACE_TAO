@@ -317,7 +317,7 @@ ACE::nibble2hex (u_int n)
   static const ACE_TCHAR hex_chars[] = ACE_LIB_TEXT ("0123456789abcdef");
 #endif
 
-  // @@ UNICODE does this work?
+  // Yes, this works for UNICODE
   return hex_chars[n & 0x0f];
 }
 
