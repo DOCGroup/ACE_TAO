@@ -1,4 +1,15 @@
+Thu Mar 22 19:09:35 UTC 2007  Gan Deng  <gan.deng@vanderbilt.edu>
 
+        * DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.cpp
+
+          Reverted a change made from:
+        
+          Sun Apr  9 01:03:19 UTC 2006
+          <wotte@blade35.isislab.vanderbilt.edu>
+        
+          The old change accidentally checked in some wrong code,
+          which broke the ReDaC functionality when removing components.
+        
 Wed Mar 21 12:12:26 CDT 2007  Chad Elliott  <elliott_c@ociweb.com>
 
 	* CIAO version 0.5.7 released.
