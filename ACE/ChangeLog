@@ -1,7 +1,36 @@
+Thu Mar 22 14:51:46 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/make_release.py:
+
+          Fixed a bug where the input file for bzip2 and gzip was not
+          correct and the md5sum output file was missing a period.
+
+        * docs/bczar/bczar.html:
+
+          Updated the documentation and fixed some spelling mistakes.
+
+        * bin/depgen.pl:
+
+          Modified to use the dependency generator core that was moved into
+          MPC.
+
+        * bin/DependencyGenerator/DependencyEditor.pm:
+        * bin/DependencyGenerator/DependencyGenerator.pm:
+        * bin/DependencyGenerator/DependencyWriter.pm:
+        * bin/DependencyGenerator/DependencyWriterFactory.pm:
+        * bin/DependencyGenerator/MakeDependencyWriter.pm:
+        * bin/DependencyGenerator/MakeObjectGenerator.pm:
+        * bin/DependencyGenerator/NMakeDependencyWriter.pm:
+        * bin/DependencyGenerator/NMakeObjectGenerator.pm:
+        * bin/DependencyGenerator/ObjectGenerator.pm:
+        * bin/DependencyGenerator/ObjectGeneratorFactory.pm:
+        * bin/DependencyGenerator/Preprocessor.pm:
+
+          Removed these files.
 
 Wed Mar 21 12:12:26 CDT 2007  Chad Elliott  <elliott_c@ociweb.com>
 
-	* ACE version 5.5.7 released.
+        * ACE version 5.5.7 released.
 
 Tue Mar 20 12:42:13 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 

@@ -35,8 +35,8 @@
   problems.
 
   <li> Keep an eye on the <a href="http://www.dre.vanderbilt.edu/Stats">
-  footprint and performance </a> stats. Any obnormal changes needs to
-  be brought to the attention of the developer resposible for it
+  footprint and performance </a> stats. Any abnormal changes needs to
+  be brought to the attention of the developer responsible for it
   or to the <a href="mailto:devo-group@list.isis.vanderbilt.edu"> DEVO group </a>.
 
   <li> Keep the builds ticking. Any red on the "Last Finished" column
@@ -45,7 +45,7 @@
 
   <li> The builds don't cover all the possible configurations. If you
   get a bug report about a compile error in a particular
-  configuration, try setting up a build to make sure that it doesnt
+  configuration, try setting up a build to make sure that it doesn't
   show up again if it has been fixed.
 
   <li> Keep an eye on the <a
@@ -60,7 +60,7 @@
 the powers of a build Czar. </P>
 
 <P> The Build Czar has the power to set up more builds on his own for
-his convinience. This
+his convenience. This
 <a href="https://svn.dre.vanderbilt.edu/viewvc/ACE_autobuild/trunk/README?revision=HEAD">
 page </a> has a
 step by step instructions on how to do that. </P>
@@ -76,7 +76,7 @@ safe time because the repo stays stable.</p>
 <hr>
 <h2>Recipe for Cutting a Beta/Minor Kit</h2>
 
-<P> The build czar is also incharge for the release of the
+<P> The build czar is also in charge for the release of the
 beta. Cutting a beta is as simple as cutting butter if things go
 well. Here is the procedure followed while cutting a beta:
 
@@ -90,7 +90,7 @@ is interrupted, the cutting process can continue.
 <li> type <code>screen</code> to start screen.</li>
 <li> execute commands as normal.  Note that Ctrl-A is special in screen, so you
 need to type Ctrl-A-A to send a Ctrl-A to the shell</li>
-<li> should your sesssion be interrupted, reconnect and type <code>screen -x</code></li>
+<li> should your session be interrupted, reconnect and type <code>screen -x</code></li>
 <li> when finished, just type exit twice</li>
 </ul>
 <li>Prior to starting this, gather aggregate release notes from all
@@ -105,8 +105,8 @@ The best place to create the workspace is under /export/anduriltmp/bczar. Don't 
 the home directory itself, it is an NFS share and not really fast.
 </li>
 <li>Checkout like this:
-<ul><li>svn co https://svn.dre.vanderbilt.edu/DOC/Middleware/trunk DOC_ROOT</li>
-    <li>svn co https://svn.dre.vanderbilt.edu/DOC/MPC/trunk DOC_ROOT/ACE/MPC</li>
+<ul><li>svn co --username <your user id> https://svn.dre.vanderbilt.edu/DOC/Middleware/trunk DOC_ROOT</li>
+    <li>svn co --username <your user id> https://svn.dre.vanderbilt.edu/DOC/MPC/trunk DOC_ROOT/ACE/MPC</li>
 </ul>
 </ul>
 <li> Set $DOC_ROOT to point to the new
@@ -127,7 +127,7 @@ take a couple minutes to complete.</li>
 <li>The kits end up in <tt>/export/anduriltmp/bczar/packages</tt></li>
 </ul>
 <p>
-To summarise, the following is a transcript of the steps up to this point executing
+To summarize, the following is a transcript of the steps up to this point executing
 successfully: <p>
 <code>
 sm@beatrice ~<br>
@@ -163,7 +163,7 @@ TAO/tao/Version.h<br>
 ace/Version.h<br></code><p>
 In most cases, a <code>svn revert -R *</code> from DOC_ROOT will suffice.<br />
 The tag will also need to be removed: ACE+TAO+CIAO-X_Y_Z
-(wher X and Y are the minor and beta release numbers of the release that is to be restarted).<p>
+(where X and Y are the minor and beta release numbers of the release that is to be restarted).<p>
 E.g.:<br>
 <code>
 svn rm https://svn.dre.vanderbilt.edu/DOC/Middleware/tags/ACE+TAO+CIAO-X_Y_Z<br />
@@ -171,18 +171,16 @@ svn rm https://svn.dre.vanderbilt.edu/DOC/Middleware/tags/ACE+TAO+CIAO-X_Y_Z<br 
 
 Note that this <em>only</em> needs to be done if the <em>tagging</em> fails.  If kit creation
 fails, simply restart that process.
-<li>The packages and up by default under $DOC_ROOT/packages-PID, you can copy them to the webserver using the following commands. At the moment
+<li>You should copy the previous packages to the previous versions directory with the appropriate decorators.
+<ul>
+<li><code>cd /export/www/download.dre/previous_versions</code></li>
+<li>Modify the <code>copy_script</code> to use the correct version X.Y.Z and run it.
+</ul>
+<li>The packages end up by default under $DOC_ROOT/packages-PID, you can copy them to the webserver using the following commands. At the moment
 you execute these commands all users can download these packages.</li>
 <code>
 cp $DOC_ROOT/packages-PID/ACE* /export/www/download.dre/ACE+TAO-distribution<br>
 </code>
-<li>You shoulde also copy the packages wo the previous versions directory with the appropriate decorators.
-<ul>
-<li><code>cd $DOC_ROOT/packages-PID</code></li>
-<li><code>rename tar X.Y.Z.tar *</code> Where X, Y, and Z are the appropriate major, minor, and beta version numbers for ACE.</li>
-<li><code>rename zip X.Y.Z.zip *</code></li>
-<li><code>cp * /export/www/download.dre/previous_versions</code</li>
-</ul>
 <li>Once the distribution is ready, get ready for creating doxygen
 documentation. This is slightly complicated than it requires. We will
 address the complexity soon.</li>
@@ -221,13 +219,13 @@ these before you do anything with them.</li></ul>
 <li>now we have a bczar Bugzilla user with full privileges. This bczar Bugzilla account would point to bczar user at ISIS. For example, as a new build czar, you could update the .forward file on one of the ISIS hosts, say, naboo.dre.vanderbilt.edu with your build czar email.</li>
 <li>you should be able to send request through the bugzilla system to email you the password at any time to bczar@dre.vanderbilt.edu</li>
 <li>here is the description of how to add a new version through Bugzilla.</li>
-<li>go to any Bugzilla "Query" page, you should see a yellow box at the bottom. click "Log in" link to log in as bzar@dre.vanderbilt.edu.</li>
+<li>go to any Bugzilla "Query" page, you should see a yellow box at the bottom. click "Log in" link to log in as bczar@dre.vanderbilt.edu.</li>
 <li>look at the yellow box at bottom again. You will see several links following "Edit". Click on the "components" link.</li>
 <li>you are then at "Select product" page. You should see a list components, i.e., ACE CIAO TAO. Click on the product you want to edit.</li>
 <li>you are then at "Edit product" page. Scroll down a bit, you should see a list of all versions coming with this product. At the very beginning of the list, you should see "Edit versions" link. Click this link.</li>
 <li>you should see a "Add a new version" text box and a "Add" link just above the yellow box at the bottom. Click on this link</li>
 <li>you are then at "Add version of [Name of the product]" page.</li>
-<li>you are able to add the new verion now.</li>
+<li>you are able to add the new version now.</li>
 </ul>
 <li>Now update the documentation at
     www.dre.vanderbilt.edu/Doxygen.</li>
@@ -276,7 +274,7 @@ incarnation).<br>
 4. If a build hasn't run in a long time (symptoms are a "red" in the
 Last Run column of the build scoreboard), delete the .disable file in
 /path/to/build/directory/BUILD_NAME/ by hand.<br>
-5. Think of the group who wrote the scoreboard update script, everytime
+5. Think of the group who wrote the scoreboard update script, every time
 you catch an otherwise not so obvious error with the help of the
 scoreboard. Tell <a href="mailto:devo-group@list.isis.vanderbilt.edu"> DEVO group
 </a> about it.<br>
@@ -298,7 +296,7 @@ monitor improvement. Instead manually start the builds.<br>
 13. Maintain private up-to-date workspaces for problem platforms (read
 as Solaris).<br>
 14. Don't hesitate to ask for help.<br>
-15. When you get an account to acess the cvs repo, make sure you are added to the correct groups, for example, gid=100(users),5000(doc),5002(acetaodev),5003(cvs). Otherwise you will have problem to checkout various modules.<br>
+15. When you get an account to access the cvs repo, make sure you are added to the correct groups, for example, gid=100(users),5000(doc),5002(acetaodev),5003(cvs). Otherwise you will have problem to checkout various modules.<br>
 16. Install your public key to the different machines you have frequent access to avoid typing password.<br>
 17. Update this page if you have any more tips for future build czars :-). This
 page is <code>bugzilla@deuce.doc.wustl.edu:~/.www-docs/index.html</code><br>
