@@ -1,4 +1,9 @@
-Thu Mar 22 19:44:02 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+Thu Mar 22 19:25:02 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+          Added Abstract_Interface test
+
+Thu Mar 22 18:44:02 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * ace/ACE.inl:
 
