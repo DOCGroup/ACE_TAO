@@ -536,13 +536,13 @@ def move_packages (name, stage_dir, package_dir):
     shutil.copy (tar_file,
                  target_file)
     ex ("bzip2 " + target_file)
-    ex ("md5sum " + target_file + " > " + target_file + "bz2.md5")
+    ex ("md5sum " + target_file + ".bz2 > " + target_file + ".bz2.md5")
 
     print "\tgzip file....."
     shutil.copy (tar_file,
                  target_file)
     ex ("gzip " + target_file)
-    ex ("md5sum " + target_file + " > " + target_file + "gz.md5")
+    ex ("md5sum " + target_file + ".gz > " + target_file + ".gz.md5")
     
 def create_file_lists (base_dir, prefix, exclude):
     """ Creates two lists of files:  files that need CR->CRLF
