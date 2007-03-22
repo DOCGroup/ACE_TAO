@@ -1,3 +1,24 @@
+Thu Mar 22 19:29:26 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Portable_Interceptors/Dynamic/client_interceptor.cpp:
+        * tests/Portable_Interceptors/Dynamic/server_interceptor.cpp:
+          Extended for bugzilla bugs 2854 and 2852. This test will now fail,
+          the fixes will go in tomorrow, that way the scoreboard first shows
+          if the problems do exist on all platforms
+
+        * tests/UNKNOWN_Exception/client.cpp:
+          Layout change
+
+Thu Mar 22 19:15:26 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/implrepo.html:
+          Removed, just forwarding to a subdirectory
+
+        * docs/TAO-metrics.html:
+          Fixed wrong html usage
+
+        * docs/Tags.html:
+          Fixed incorrect link
 
 Wed Mar 21 12:12:26 CDT 2007  Chad Elliott  <elliott_c@ociweb.com>
 

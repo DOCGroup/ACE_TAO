@@ -44,6 +44,21 @@ void
 Echo_Server_Request_Interceptor::receive_request (
   PortableInterceptor::ServerRequestInfo_ptr ri)
 {
+  bool catched_exception = false;
+  try
+    {
+      PortableInterceptor::ReplyStatus rstatus = ri->reply_status ();
+    }
+  catch (const ::CORBA::BAD_INV_ORDER&)
+    {
+      catched_exception = true;
+    }
+
+  if (!catched_exception)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "(%P|%t) ERROR, no exception when getting reply status\n"));
+    }
 
   CORBA::String_var op = ri->operation ();
 
@@ -65,6 +80,15 @@ Echo_Server_Request_Interceptor::receive_request (
                   "The arg is %d\n",
                   param));
 
+      i = 1;
+      CORBA::TypeCode_var second_typecode = paramlist[i].argument.type ();
+      if (second_typecode->kind () != CORBA::tk_null)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "(%P|%t) ERROR in receive_request while checking "
+                      "the type of the extracted out"
+                      "argument\n"));
+        }
      }
 
   CORBA::String_var tmdi =
