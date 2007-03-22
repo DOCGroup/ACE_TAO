@@ -167,41 +167,28 @@ namespace CORBA
     ULong count (void) const;
 
     /// add an element and just initialize the flags
-    NamedValue_ptr add (Flags
-                        );
+    NamedValue_ptr add (Flags);
 
     /// add an element and initialize its name and flags
-    NamedValue_ptr add_item (const char *,
-                             Flags
-                             );
+    NamedValue_ptr add_item (const char *, Flags);
 
     /// initializes a value, name, and flags
-    NamedValue_ptr add_value (const char *,
-                              const Any &,
-                              Flags
-                              );
+    NamedValue_ptr add_value (const char *, const Any &, Flags);
 
     /// just like add_item. In addition, memory management of char *
     /// name is taken over by the NVList
-    NamedValue_ptr add_item_consume (char *,
-                                     Flags
-                                     );
+    NamedValue_ptr add_item_consume (char *, Flags);
 
     /// just like add_value. In addition, the NVList controls the
     /// memory management of the char *name and Any *value parameter
-    NamedValue_ptr add_value_consume (char *,
-                                      Any_ptr,
-                                      Flags
-                                      );
+    NamedValue_ptr add_value_consume (char *, Any_ptr, Flags);
 
     /// retrieve the item at the nth location. Raises Bounds
-    NamedValue_ptr item (ULong n
-                         );
+    NamedValue_ptr item (ULong n);
 
     //  CORBA::Status
     /// remove element at index n. Raises Bounds
-    void remove (ULong n
-                 );
+    void remove (ULong n);
 
     // The pseudo object static methods..
     static NVList * _duplicate (NVList *);
@@ -221,19 +208,14 @@ namespace CORBA
      */
     void _tao_incoming_cdr (TAO_InputCDR & cdr,
                             int flag,
-                            bool &lazy_evaluation
-                           );
+                            bool &lazy_evaluation);
 
     /// Encode the NVList into the CDR stream. @a flag masks the type of
     /// arguments (IN, OUT or INOUT) that are to be marshaled.
-    void _tao_encode (TAO_OutputCDR & cdr,
-                      int flag
-                      );
+    void _tao_encode (TAO_OutputCDR & cdr, int flag);
 
     /// Decode the NVList arguments from the @a cdr stream.
-    void _tao_decode (TAO_InputCDR & cdr,
-                      int flag
-                     );
+    void _tao_decode (TAO_InputCDR & cdr, int flag);
 
     /**
      * Return the required alignment to marshal the NVList without any
@@ -270,8 +252,7 @@ namespace CORBA
 
     /// Helper to increase the list size. This is used by all the add_
     /// methods of the NVList class
-    NamedValue_ptr add_element (Flags
-                               );
+    NamedValue_ptr add_element (Flags);
 
     /// Lazy evaluation routine to fill up the Anys in the NVList from
     /// the CDR stream.
