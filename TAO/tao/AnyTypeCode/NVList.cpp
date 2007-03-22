@@ -155,8 +155,7 @@ CORBA::NVList::add_item_consume (char *name, CORBA::Flags flags)
 {
 
   // call the helper to allocate a NamedValue element
-  CORBA::NamedValue_ptr nv = this->add_element (flags
-                                               );
+  CORBA::NamedValue_ptr nv = this->add_element (flags);
 
   if (nv)
     {
@@ -176,12 +175,10 @@ CORBA::NVList::add_item_consume (char *name, CORBA::Flags flags)
 CORBA::NamedValue_ptr
 CORBA::NVList::add_value_consume (char * name,
                                   CORBA::Any * value,
-                                  CORBA::Flags flags
-                                  )
+                                  CORBA::Flags flags)
 {
   // call the helper to allocate a NamedValue element
-  CORBA::NamedValue_ptr nv = this->add_element (flags
-                                               );
+  CORBA::NamedValue_ptr nv = this->add_element (flags);
 
   if (nv)
     {
@@ -203,8 +200,7 @@ CORBA::NVList::add_value_consume (char * name,
 
 //CORBA::Status
 void
-CORBA::NVList::remove (CORBA::ULong /* n */
-                       )
+CORBA::NVList::remove (CORBA::ULong /* n */)
 {
   // not implemented
   // @@ (ASG) - TODO
@@ -212,8 +208,7 @@ CORBA::NVList::remove (CORBA::ULong /* n */
 
 // Helper method
 CORBA::NamedValue_ptr
-CORBA::NVList::add_element (CORBA::Flags flags
-                            )
+CORBA::NVList::add_element (CORBA::Flags flags)
 {
   this->evaluate ();
 
@@ -245,8 +240,7 @@ CORBA::NVList::add_element (CORBA::Flags flags
 
 // return the item at location n
 CORBA::NamedValue_ptr
-CORBA::NVList::item (CORBA::ULong n
-                     )
+CORBA::NVList::item (CORBA::ULong n)
 {
   this->evaluate ();
 
@@ -264,8 +258,7 @@ CORBA::NVList::item (CORBA::ULong n
 void
 CORBA::NVList::_tao_incoming_cdr (TAO_InputCDR &cdr,
                                   int flag,
-                                  bool &lazy_evaluation
-                                  )
+                                  bool &lazy_evaluation)
 {
   // If the list is empty then using lazy evaluation is the only
   // choice.
@@ -279,9 +272,7 @@ CORBA::NVList::_tao_incoming_cdr (TAO_InputCDR &cdr,
 
   if (lazy_evaluation == false)
     {
-      this->_tao_decode (cdr,
-                         flag
-                        );
+      this->_tao_decode (cdr, flag);
       return;
     }
 
@@ -298,9 +289,7 @@ CORBA::NVList::_tao_incoming_cdr (TAO_InputCDR &cdr,
 }
 
 void
-CORBA::NVList::_tao_encode (TAO_OutputCDR &cdr,
-                            int flag
-                            )
+CORBA::NVList::_tao_encode (TAO_OutputCDR &cdr, int flag)
 {
   ACE_GUARD (TAO_SYNCH_MUTEX,
              ace_mon,
@@ -350,8 +339,7 @@ CORBA::NVList::_tao_encode (TAO_OutputCDR &cdr,
           CORBA::TypeCode_ptr tc = nv->value ()->_tao_get_typecode ();
           (void) TAO_Marshal_Object::perform_append (tc,
                                                      this->incoming_,
-                                                     &cdr
-                                                    );
+                                                     &cdr);
         }
 
       delete this->incoming_;
@@ -382,9 +370,7 @@ CORBA::NVList::_tao_encode (TAO_OutputCDR &cdr,
 }
 
 void
-CORBA::NVList::_tao_decode (TAO_InputCDR &incoming,
-                            int flag
-                            )
+CORBA::NVList::_tao_decode (TAO_InputCDR &incoming, int flag)
 {
   if (TAO_debug_level > 3)
     {
