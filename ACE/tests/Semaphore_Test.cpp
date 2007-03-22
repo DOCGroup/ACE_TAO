@@ -83,7 +83,15 @@ test_timeout (void)
   wait.sec (wait.sec () + wait_secs);
 
   if (s.acquire (wait) == -1)
-    ACE_ASSERT (errno == ETIME);
+    {
+      if (errno != ETIME)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("%p\n"),
+                      ACE_TEXT ("test_timeout should be ETIME but is")));
+          status = -1;
+        }
+    }
 
   ACE_Time_Value wait_diff = ACE_OS::gettimeofday () - begin;
 
@@ -93,12 +101,13 @@ test_timeout (void)
 
   if (msecs_diff > ACE_ALLOWED_SLACK)
     {
-      ACE_DEBUG ((LM_DEBUG,
+      ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("Timed wait fails length test\n")));
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("Value: %d ms, actual %d ms\n"),
-                  msecs_expected,
-                  msecs_waited));
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("Expected %d ms, actual %d ms; %d allowed\n"),
+                  (int)msecs_expected,
+                  (int)msecs_waited,
+                  (int)ACE_ALLOWED_SLACK));
       status = -1;
     }
 
@@ -158,19 +167,27 @@ worker (void *)
       if (s.acquire (tv) == -1)
       {
           // verify that we have ETIME
-          ACE_ASSERT(ACE_OS::last_error() == ETIME);
-          ++timeouts;
+          if (ACE_OS::last_error() != ETIME)
+            {
+              ACE_ERROR ((LM_ERROR,
+                          ACE_TEXT ("%p\n"),
+                          ACE_TEXT ("Worker should be ETIME but is")));
+            }
+          else
+            ++timeouts;
           ACE_Time_Value diff = ACE_OS::gettimeofday ();
           diff = diff - tv;       // tv should have been reset to time acquired
           long diff_msec = diff.msec ();
 
           if (diff_msec > ACE_ALLOWED_SLACK)
             {
-              ACE_DEBUG ((LM_DEBUG,
+              ACE_ERROR ((LM_ERROR,
                           ACE_TEXT ("Acquire fails time reset test\n")));
-              ACE_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("Diff btw now and returned time: %d ms\n"),
-                          diff.msec ()));
+              ACE_ERROR ((LM_ERROR,
+                          ACE_TEXT ("Diff btw now and returned time: %d ms; ")
+                          ACE_TEXT ("%d allowed\n"),
+                          (int)diff_msec,
+                          (int)ACE_ALLOWED_SLACK));
               test_result = 1;
             }
           // Hold the lock for a while.
@@ -230,10 +247,11 @@ int run_main (int argc, ACE_TCHAR *argv[])
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Worker threads timed out %d percent of the time\n"),
-              percent));
+              (int)percent));
 #  endif /* ACE_HAS_STHREADS && ACE_HAS_POSIX_SEM */
 
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Semaphore Test successful\n")));
+  if (test_result == 0)
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Semaphore Test successful\n")));
 #else
   ACE_UNUSED_ARG (argc);
   ACE_UNUSED_ARG (argv);

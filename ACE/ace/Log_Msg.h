@@ -499,7 +499,7 @@ public:
    *         to var-argument.
    *  - 's': print out a character string
    *  - 'T': print timestamp in hour:minute:sec:usec format.
-   *  - 'D': print timestamp in month/day/year hour:minute:sec:usec format.
+   *  - 'D': print timestamp as Weekday Month day year hour:minute:sec.usec
    *  - 't': print thread id (1 if single-threaded)
    *  - 'u': print as unsigned int
    *  - 'w': prints a wide character

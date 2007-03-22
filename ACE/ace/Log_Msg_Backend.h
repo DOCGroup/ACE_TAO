@@ -30,13 +30,13 @@ class ACE_Log_Record;
 /**
  * @class ACE_Log_Msg_Backend
  *
- * @brief Define the interface for ACE_Log_Msg backend strategies.
+ * @brief Defines the interface for ACE_Log_Msg back end processing.
  *
- * The ACE_Log_Msg class can log to multiple backend strategies, for
- * example, some send messages to a remote logger, others dump to a
- * file, or simply to stderr.  In the future we could define
- * interfaces that log to the syslog daemon (on UNIX), the Event log
- * (on NT) a temporary ring buffer, etc.
+ * The ACE_Log_Msg class uses ACE_Log_Msg_Backend as the target interface
+ * for back end log record procesing. In addition to the classes ACE
+ * derives from this (ACE_Log_Msg_NT_Event_Log, ACE_Log_Msg_UNIX_Syslog, and
+ * ACE_Log_Msg_IPC) users can derive classes from ACE_Log_Msg_Backend for
+ * use as a custom logger back end.
  */
 class ACE_Export ACE_Log_Msg_Backend
 {
@@ -44,23 +44,40 @@ public:
   /// No-op virtual destructor.
   virtual ~ACE_Log_Msg_Backend (void);
 
-  /// Open a new connection
+  /**
+   * Open the back end object. Perform any actions needed to prepare
+   * the object for later logging operations.
+   *
+   * @param logger_key  The character string passed to ACE_Log_Msg::open().
+   *                    If the @c LOGGER logging destination is not being
+   *                    used, any string can be passed through to the back end.
+   *
+   * @retval 0 for success; -1 for failure.
+   */
   virtual int open (const ACE_TCHAR *logger_key) = 0;
 
-  /*
-   * Reset the backend.  When changing the logging destination the
-   * backend may need to properly disconnect from the remote logging
-   * daemon and reclaim some local resources.  But we try to reduce
-   * the number of local allocations/deallocations.
+  /**
+   * Reset the backend.  If ACE_Log_Msg is reopened during execution, this
+   * hook will be called. This method should perform any needed cleanup
+   * activity (similar to close()) because this object won't be reopened
+   * if the new open call does not specify use of this back end being reset.
+   *
+   * @retval Currently ignored, but to be safe, return 0 for success;
+   *         -1 for failure.
    */
   virtual int reset (void) = 0;
 
   /// Close the backend completely.
   virtual int close (void) = 0;
 
-  /// Backend routine.  This is called when we want to log a message.
-  /// Since this routine is pure virtual, it must be implemented by the
-  /// subclass.
+  /**
+   * Process a log record.
+   *
+   * @param log_record   The ACE_Log_Record to process.
+   *
+   * @retval -1 for failure; else it is customarily the number of bytes
+   *         processed, but can also be 0 to signify success.
+   */
   virtual ssize_t log (ACE_Log_Record &log_record) = 0;
 };
 
