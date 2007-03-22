@@ -10,17 +10,19 @@
 
   Th main duties of the Build Czar are summarized as follows
 
-  <li> Monitor the builds using the <a
+  <li> Continuously monitor the builds using the <a
   href="http://www.dre.vanderbilt.edu/scoreboard"> Scoreboard </a> as
   one of the primary source of information.
 
   <li> Notify developers who broke compilation to fix the errors as
-  soon as possible. A red color in the "Compile" column is not at all
-  acceptable. Build Czar should ensure that. If possible, let the
-  developer know  what the source of problem could be. It is quite
-  possible that the developer who checked in the code or the user who
-  provided the patch may not have resources to investigate the
-  issues. Builds Czar's help is an absolute necessity then.
+  soon as possible, ideally by the next day. A red color in the
+  "Compile" column is not at all acceptable - the Build Czar needs to
+  ensure that these problems are identified and fixed in a timely
+  manner.  If possible, the Build Czar should let developers know what
+  the source of problems might be. It is quite possible that
+  developers who checked in the code or users who provided the patch
+  may not have resources to investigate the issues, so the Builds
+  Czar's help is essential to keep things moving ahead.
 
   <li> Keep an eye on the tests that are run in every build. Anything
   abnormal needs to be notified to the right developer. The Build Czar
@@ -30,18 +32,19 @@
 
   <li> Some tests fail in the daily builds for many reasons like known
   bugs, transient timeouts etc. Make sure that no new test failures
-  show up. This <a href="mailto:jwillemsen@remedy.nl"> guy </a> knows
+  show up. This <a href="mailto:jwillemsen@remedy.nl">guy</a> knows
   most of the information. Ask him to help you out with known
   problems.
 
-  <li> Keep an eye on the <a href="http://www.dre.vanderbilt.edu/Stats">
-  footprint and performance </a> stats. Any abnormal changes needs to
-  be brought to the attention of the developer responsible for it
-  or to the <a href="mailto:devo-group@list.isis.vanderbilt.edu"> DEVO group </a>.
+  <li> Keep an eye on the <a
+  href="http://www.dre.vanderbilt.edu/Stats">footprint and
+  performance</a> stats. Any abnormal changes should be brought to
+  the attention of the developer resposible for it or to the <a
+  href="mailto:devo-group@list.isis.vanderbilt.edu">devo group</a>.
 
   <li> Keep the builds ticking. Any red on the "Last Finished" column
-  in the Scoreboard needs to be attended to. The link to the "Build
-  Name" would indicate the machine where the build is being run.
+  in the Scoreboard should be fixed. The link to the "Build Name"
+  indicates the machine where the build is being run.
 
   <li> The builds don't cover all the possible configurations. If you
   get a bug report about a compile error in a particular
@@ -49,29 +52,30 @@
   show up again if it has been fixed.
 
   <li> Keep an eye on the <a
-  href="http://deuce.doc.wustl.edu/bugzilla/index.cgi">bugzilla
-  </a> entries that are registered by users and developers. Decide on
-  the bugs that need to be fixed for the beta and pain developers for
-  an ETA.
+  href="http://deuce.doc.wustl.edu/bugzilla/index.cgi">bugzilla </a>
+  entries that are registered by users and developers. Decide on the
+  bugs that need to be fixed for the beta and pain developers for an
+  ETA.
 
 </p>
 
 <P> The document <a href="./privileges.html"> here </a> talks about
 the powers of a build Czar. </P>
 
-<P> The Build Czar has the power to set up more builds on his own for
+<P> The Build Czar is empowered to set up more builds on his own for
 his convenience. This
-<a href="https://svn.dre.vanderbilt.edu/viewvc/ACE_autobuild/trunk/README?revision=HEAD">
+<a
+  href="https://svn.dre.vanderbilt.edu/viewvc/ACE_autobuild/trunk/README?revision=HEAD">
 page </a> has a
 step by step instructions on how to do that. </P>
 
 <P> The build czar can get the build configuration by looking at the
-config portion of the scoreboard </P>
+config portion of the scoreboard. </P>
 
-<p>Any pro-active involvement by the build czar is welcomed. Being
-a pro-active build czar will mean that you watch the subversion archive
-carefully and respond quickly to suspected changes. At the end it will
-safe time because the repo stays stable.</p>
+<p>Pro-active involvement by the build czar is necessary. Being
+a pro-active build czar requires monitoring the subversion
+archive carefully and responding quickly to suspected changes to keep
+  the repo stays stable.</p>
 
 <hr>
 <h2>Recipe for Cutting a Beta/Minor Kit</h2>
