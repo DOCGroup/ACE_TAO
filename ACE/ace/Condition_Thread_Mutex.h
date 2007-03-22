@@ -100,7 +100,7 @@ public:
 
   /**
    * Block on condition, or until absolute time-of-day has passed.  If
-   * abstime == 0 use "blocking" <wait> semantics.  Else, if <abstime>
+   * abstime == 0 use "blocking" <wait> semantics.  Else, if @a abstime
    * != 0 and the call times out before the condition is signaled
    * <wait> returns -1 and sets errno to ETIME.
    */
@@ -113,7 +113,7 @@ public:
    * Block on condition or until absolute time-of-day has passed.  If
    * abstime == 0 use "blocking" wait() semantics on the <mutex>
    * passed as a parameter (this is useful if you need to store the
-   * <Condition> in shared memory).  Else, if <abstime> != 0 and the
+   * <Condition> in shared memory).  Else, if @a abstime != 0 and the
    * call times out before the condition is signaled <wait> returns -1
    * and sets errno to ETIME.
    */
@@ -146,7 +146,7 @@ protected:
   /// destructor.  This flag isn't protected by a lock, so make sure
   /// that you don't have multiple threads simultaneously calling
   /// <remove> on the same object, which is a bad idea anyway...
-  int removed_;
+  bool removed_;
 
 private:
   // = Prevent assignment and initialization.

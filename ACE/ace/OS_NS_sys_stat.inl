@@ -166,10 +166,7 @@ namespace ACE_OS
   ACE_INLINE int
   mkdir (const char *path, mode_t mode)
   {
-#if defined (ACE_WIN32) && defined (__IBMCPP__) && (__IBMCPP__ >= 400)
-    ACE_UNUSED_ARG (mode);
-    ACE_OSCALL_RETURN (::_mkdir (const_cast <char *> (path)), int, -1);
-#elif defined (ACE_HAS_WINCE)
+#if defined (ACE_HAS_WINCE)
     ACE_UNUSED_ARG (mode);
     ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::CreateDirectory (ACE_TEXT_CHAR_TO_TCHAR (path), 0),
                                             ace_result_),

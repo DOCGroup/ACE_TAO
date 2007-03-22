@@ -33,46 +33,6 @@ ACE_MUTEX_LOCK_CLEANUP_ADAPTER_NAME (void *args)
 #if !defined(ACE_WIN32) && defined (__IBMCPP__) && (__IBMCPP__ >= 400)
 # define ACE_BEGINTHREADEX(STACK, STACKSIZE, ENTRY_POINT, ARGS, FLAGS, THR_ID) \
        (*THR_ID = ::_beginthreadex ((void(_Optlink*)(void*))ENTRY_POINT, STACK, STACKSIZE, ARGS), *THR_ID)
-#elif defined(ACE_WIN32) && defined (__IBMCPP__) && (__IBMCPP__ >= 400)
-
-struct __IBMCPP__thread_params {
-  __IBMCPP__thread_params(ACE_THR_C_FUNC e, LPVOID a)
-    :entry_point(e),args(a) {}
-  ACE_THR_C_FUNC entry_point;
-  LPVOID args;
-};
-
-# pragma handler(initThread)
-extern "C" DWORD __stdcall __IBMCPP__initThread(void *arg)
-{
-  // Must reset 387 since using CreateThread
-  _fpreset();
-
-  // Dispatch user function...
-  auto_ptr<__IBMCPP__thread_params> parms((__IBMCPP__thread_params *)arg);
-  (*parms->entry_point)(parms->args);
-  _endthread();
-  return 0;
-}
-
-HANDLE WINAPI __IBMCPP__beginthreadex(void *stack,
-                                      DWORD stacksize,
-                                      ACE_THR_C_FUNC entry_point,
-                                      LPVOID args,
-                                      DWORD flags,
-                                      LPDWORD thr_id)
-{
-  return  CreateThread(0,
-                       stacksize,
-                       (LPTHREAD_START_ROUTINE)__IBMCPP__initThread,
-                       new __IBMCPP__thread_params(entry_point, args),
-                       flags,
-                       thr_id);
-}
-
-# define ACE_BEGINTHREADEX(STACK, STACKSIZE, ENTRY_POINT, ARGS, FLAGS, THR_ID) \
-             __IBMCPP__beginthreadex(STACK, STACKSIZE, ENTRY_POINT, ARGS, FLAGS, THR_ID)
-
 #elif defined (ACE_HAS_WINCE) && defined (UNDER_CE) && (UNDER_CE >= 211)
 # define ACE_BEGINTHREADEX(STACK, STACKSIZE, ENTRY_POINT, ARGS, FLAGS, THR_ID) \
       CreateThread (0, STACKSIZE, (unsigned long (__stdcall *) (void *)) ENTRY_POINT, ARGS, (FLAGS) & CREATE_SUSPENDED, (unsigned long *) THR_ID)

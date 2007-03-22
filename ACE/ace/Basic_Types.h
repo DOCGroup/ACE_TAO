@@ -686,16 +686,13 @@ ACE_END_VERSIONED_NAMESPACE_DECL
       // some compilers happy until we have better support
 #   define ACE_INT64_LITERAL(n) n ## L
 # elif defined (ACE_WIN32)
-#  if defined (__IBMCPP__) && (__IBMCPP__ >= 400)
-#   define ACE_UINT64_LITERAL(n) n ## LL
-#   define ACE_INT64_LITERAL(n) n ## LL
-#  elif defined (__MINGW32__)
+#  if defined (__MINGW32__)
 #   define ACE_UINT64_LITERAL(n) n ## ull
 #   define ACE_INT64_LITERAL(n) n ## ll
 #  else
 #   define ACE_UINT64_LITERAL(n) n ## ui64
 #   define ACE_INT64_LITERAL(n) n ## i64
-#  endif /* defined (__IBMCPP__) && (__IBMCPP__ >= 400) */
+#  endif /* defined (__MINGW32__) */
 # elif defined (__TANDEM)
 #   define ACE_UINT64_LITERAL(n) n ## LL
 #   define ACE_INT64_LITERAL(n) n ## LL
