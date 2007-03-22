@@ -371,7 +371,7 @@ Deployment::Application_ptr
 CIAO::NodeApplicationManager_Impl_Base::
 perform_redeployment (const Deployment::Properties & configProperty,
                       Deployment::Connections_out providedReference,
-                      CORBA::Boolean /*add_or_remove*/, // true means "add" only
+                      CORBA::Boolean add_or_remove, // true means "add" only
                       CORBA::Boolean start)
 {
   // Prerequisite:
@@ -407,69 +407,24 @@ perform_redeployment (const Deployment::Properties & configProperty,
     {
       if (! CORBA::is_nil (this->nodeapp_.in ()))
         {
-          // We ignored those components that are already in the <component_map_>, for
-          // the rest ones, we pack them into NodeImplementationInfo.
-          Deployment::DeploymentPlan tmp_plan = this->plan_;
-          tmp_plan.instance.length (0);
-
-          CORBA::ULong const length = this->plan_.instance.length ();
-          for (CORBA::ULong i = 0; i <  length; ++i)
-            {
-              // add the new components into the tmp_plan
-              if (this->component_map_.find (this->plan_.instance[i].name.in ()) != 0)
-                {
-                  CORBA::ULong cur_len = tmp_plan.instance.length ();
-                  tmp_plan.instance.length (cur_len + 1);
-                  tmp_plan.instance[cur_len] = this->plan_.instance[i];
-                }
-            }
-
-          // package the components
-          NodeImplementationInfoHandler handler (tmp_plan,
-                                                 this->shared_components_);
-          Deployment::NodeImplementationInfo * node_info =
-            handler.node_impl_info ();
-
-          if (!node_info)
+          if (add_or_remove == true)
             {
               this->add_new_components ();
             }
-
-          // Install the components
-          // This is what we will get back, a sequence of compoent object refs.
-          Deployment::ComponentInfos_var comp_info;
-          comp_info = this->nodeapp_->install (*node_info);
-
-          // Now fill in the map we have for the components.
-          const CORBA::ULong comp_len = comp_info->length ();
-          for (CORBA::ULong len = 0;
-               len < comp_len;
-               ++len)
+          else
             {
-              //Since we know the type ahead of time...narrow is omitted here.
-              if (this->component_map_.
-                  bind (comp_info[len].component_instance_name.in(),
-                        Components::CCMObject::_duplicate
-                        (comp_info[len].component_ref.in())))
-                {
-                  ACE_CString error ("Duplicate component instance name ");
-                  error += comp_info[len].component_instance_name.in();
-
-                  throw
-                    (Deployment::PlanError
-                     ("NodeApplicationManager_Impl::startLaunch",
-                      error.c_str ()));
-                }
+              this->remove_existing_components ();
             }
 
           // NOTE: We are propogating back "all" the facets/consumers object
           // references to the DAM, including the previous existing ones.
           providedReference =
-            this->create_connections ();
+            this->create_connections (ACE_ENV_SINGLE_ARG_PARAMETER);
+          ACE_TRY_CHECK;
 
           if (providedReference == 0)
             {
-              throw
+              ACE_TRY_THROW
                 (Deployment::InstallationFailure
                   ("NodeApplicationManager_Impl::startLaunch",
                     "Error creating connections during startLaunch."));
@@ -480,7 +435,9 @@ perform_redeployment (const Deployment::Properties & configProperty,
         {
           this->startLaunch (configProperty,
                              providedReference,
-                             start);
+                             start
+                             ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
         }
     }
   catch (const Deployment::UnknownImplId& e)
