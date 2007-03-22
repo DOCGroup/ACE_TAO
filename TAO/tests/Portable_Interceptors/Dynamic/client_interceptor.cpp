@@ -46,6 +46,21 @@ void
 Echo_Client_Request_Interceptor::send_request (
     PortableInterceptor::ClientRequestInfo_ptr ri)
 {
+  bool catched_exception = false;
+  try
+    {
+      PortableInterceptor::ReplyStatus rstatus = ri->reply_status ();
+    }
+  catch (const ::CORBA::BAD_INV_ORDER&)
+    {
+      catched_exception = true;
+    }
+
+  if (!catched_exception)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "(%P|%t) ERROR, no exception when getting reply status\n"));
+    }
 
   CORBA::String_var op = ri->operation ();
 
@@ -84,9 +99,18 @@ Echo_Client_Request_Interceptor::send_request (
       if (param != 10)
         {
           ACE_ERROR ((LM_ERROR,
-                      "(%P|%t) ERROR in send_request while checking ",
-                      "the value of the extracted ",
+                      "(%P|%t) ERROR in send_request while checking "
+                      "the value of the extracted "
                       "arguments \n"));
+        }
+
+      CORBA::TypeCode_var second_typecode = paramlist[second].argument.type ();
+      if (second_typecode->kind () != CORBA::tk_null)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "(%P|%t) ERROR in send_request while checking "
+                      "the type of the extracted out"
+                      "argument\n"));
         }
     }
 }
@@ -108,7 +132,6 @@ void
 Echo_Client_Request_Interceptor::receive_reply (
     PortableInterceptor::ClientRequestInfo_ptr ri)
 {
-
   CORBA::String_var op = ri->operation ();
 
   ACE_DEBUG ((LM_DEBUG,
@@ -146,8 +169,8 @@ Echo_Client_Request_Interceptor::receive_reply (
       if (param != 10)
         {
           ACE_ERROR ((LM_ERROR,
-                      "(%P|%t) ERROR in send_request while checking ",
-                      "the value of the extracted ",
+                      "(%P|%t) ERROR in send_request while checking "
+                      "the value of the extracted "
                       "arguments \n"));
         }
 
@@ -161,8 +184,8 @@ Echo_Client_Request_Interceptor::receive_reply (
                           "DO_NOT_INSULT_MY_INTELLIGENCE") != 0)
         {
           ACE_ERROR ((LM_ERROR,
-                      "(%P|%t) ERROR in send_request while checking ",
-                      "the value of the extracted ",
+                      "(%P|%t) ERROR in send_request while checking "
+                      "the value of the extracted "
                       "out arguments \n"));
         }
     }
