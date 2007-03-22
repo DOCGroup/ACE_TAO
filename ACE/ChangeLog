@@ -1,3 +1,16 @@
+Thu Mar 22 18:33:19 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * ace/DLL_Manager.cpp (ACE_DLL_Handle::close()): When a DLL needs to
+          be closed, copy the handle value to a local variable and reset the
+          object's handle_, then release the lock_, then do the dlclose()
+          without holding the lock in case dlclose() causes a train of
+          closes to end up coming back through ACE_DLL_Handle::close().
+
+        * ace/Handle_Gobbler.{h inl}: Use ACE_Handle_Set instead of
+          ACE_Unbounded_Set to hold the gobbled-up handles. Cuts execution
+          time on AIX (at least my old-ish 5.2 box) from 7 minutes to a few
+          seconds, allowing tests that use this to complete.
+
 Thu Mar 22 18:25:01 UTC 2007  Steve Huston  <shuston@riverace.com>
 
         * ace/Log_Msg.{h cpp}: Corrected comments describing the format for
