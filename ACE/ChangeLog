@@ -1,3 +1,11 @@
+Thu Mar 22 16:29:16 UTC 2007  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * bin/MakeProjectCreator/modules/GNUAutobuildProjectCreator.pm
+        * bin/MakeProjectCreator/modules/GNUAutobuildWorkspaceCreator.pm
+        
+          Added autobuild workspace creator to collate build output
+          on a per makefile basis.
+
 Thu Mar 22 14:51:46 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/make_release.py:
