@@ -42,7 +42,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 typedef struct stati64 ACE_stat;
 #       define ACE_STAT_FUNC_NAME ::_stati64
 #       define ACE_WSTAT_FUNC_NAME ::_wstati64
-#   elif !defined (ACE_HAS_WINCE) && !defined(__IBMCPP__) && defined (_MSC_VER)
+#   elif !defined (ACE_HAS_WINCE) && defined (_MSC_VER)
 #     if _MSC_VER >= 1400
 //      For vc8 which has time_t as 64bit
 //      64-bit file offsets, 64-bit time_t
@@ -62,9 +62,7 @@ typedef struct stat ACE_stat;
 #   endif  /**/
 # else
 //  Default file offset case.
-#   if defined (ACE_WIN32) \
-       && !defined (ACE_HAS_WINCE) \
-       && !defined(__IBMCPP__)
+#   if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
 typedef struct _stat ACE_stat;
 #     define ACE_STAT_FUNC_NAME ::_stat
 #     define ACE_WSTAT_FUNC_NAME ::_wstat

@@ -29,9 +29,9 @@ ACE_Condition_Thread_Mutex::remove (void)
 
   int result = 0;
 
-  if (this->removed_ == 0)
+  if (!this->removed_)
     {
-      this->removed_ = 1;
+      this->removed_ = true;
 
       while ((result = ACE_OS::cond_destroy (&this->cond_)) == -1
              && errno == EBUSY)

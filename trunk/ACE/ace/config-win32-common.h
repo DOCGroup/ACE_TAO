@@ -103,7 +103,7 @@
 //  #endif
 
 // Define the special export macros needed to export symbols outside a dll
-#if !defined(__BORLANDC__) && !defined(__IBMCPP__)
+#if !defined(__BORLANDC__)
 #define ACE_HAS_CUSTOM_EXPORT_MACROS
 #define ACE_Proper_Export_Flag __declspec (dllexport)
 #define ACE_Proper_Import_Flag __declspec (dllimport)

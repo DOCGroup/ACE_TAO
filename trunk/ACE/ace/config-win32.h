@@ -35,8 +35,6 @@
 #    include "ace/config-win32-borland.h"
 #elif defined (_MSC_VER)
 #    include "ace/config-win32-msvc.h"
-#elif defined (__IBMCPP__)
-#    include "ace/config-win32-visualage.h"
 #elif defined (ghs)
 #    include "ace/config-win32-ghs.h"
 #elif defined (__MINGW32__)
