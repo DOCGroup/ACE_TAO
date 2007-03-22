@@ -238,54 +238,65 @@ int
 ACE_DLL_Handle::close (int unload)
 {
   ACE_TRACE ("ACE_DLL_Handle::close");
-  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, 0));
 
   int retval = 0;
+  ACE_SHLIB_HANDLE h = ACE_SHLIB_INVALID_HANDLE;
 
-  // Since we don't actually unload the dll as soon as the refcount
-  // reaches zero, we need to make sure we don't decrement it below
-  // zero.
-  if (this->refcount_ > 0)
-    --this->refcount_;
-  else
-    this->refcount_ = 0;
+  // Only hold the lock until it comes time to dlclose() the DLL. Closing
+  // the DLL can cause further shutdowns as DLLs and their dependents are
+  // unloaded.
+  {
+    ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, 0));
 
-  if (ACE::debug ())
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_LIB_TEXT ("ACE (%P|%t) DLL_Handle::close - ")
-                ACE_LIB_TEXT ("%s (handle=%d, refcount=%d)\n"),
-                this->dll_name_,
-                this->handle_,
-                this->refcount_));
+    // Since we don't actually unload the dll as soon as the refcount
+    // reaches zero, we need to make sure we don't decrement it below
+    // zero.
+    if (this->refcount_ > 0)
+      --this->refcount_;
+    else
+      this->refcount_ = 0;
 
-  if (this->refcount_ == 0 &&
-      this->handle_ != ACE_SHLIB_INVALID_HANDLE &&
-      unload == 1)
+    if (ACE::debug ())
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_LIB_TEXT ("ACE (%P|%t) DLL_Handle::close - ")
+                  ACE_LIB_TEXT ("%s (handle=%d, refcount=%d)\n"),
+                  this->dll_name_,
+                  this->handle_,
+                  this->refcount_));
+
+    if (this->refcount_ == 0 &&
+        this->handle_ != ACE_SHLIB_INVALID_HANDLE &&
+        unload == 1)
+      {
+        if (ACE::debug ())
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_LIB_TEXT ("ACE (%P|%t) DLL_Handle::close: ")
+                      ACE_LIB_TEXT ("Unloading %s (handle=%d)\n"),
+                      this->dll_name_,
+                      this->handle_));
+
+        // First remove any associated Framework Components.
+        ACE_Framework_Repository *frPtr= ACE_Framework_Repository::instance ();
+        if (frPtr)
+          {
+            frPtr->remove_dll_components (this->dll_name_);
+          }
+
+        h = this->handle_;
+        this->handle_ = ACE_SHLIB_INVALID_HANDLE;
+      }
+  } // Release lock_ here
+
+  if (h != ACE_SHLIB_INVALID_HANDLE)
     {
-      if (ACE::debug ())
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_LIB_TEXT ("ACE (%P|%t) DLL_Handle::close: ")
-                    ACE_LIB_TEXT ("Unloading %s (handle=%d)\n"),
-                    this->dll_name_,
-                    this->handle_));
-
-      // First remove any associated Framework Components.
-      ACE_Framework_Repository * frPtr= ACE_Framework_Repository::instance ();
-
-      if (frPtr)
-        {
-          frPtr->remove_dll_components (this->dll_name_);
-        }
-
       retval = ACE_OS::dlclose (this->handle_);
-      this->handle_ = ACE_SHLIB_INVALID_HANDLE;
-    }
 
-  if (retval != 0 && ACE::debug ())
-    ACE_ERROR ((LM_ERROR,
-                ACE_LIB_TEXT ("ACE (%P|%t) DLL_Handle::close - ")
-                ACE_LIB_TEXT ("Failed with: \"%s\".\n"),
-                this->error ()->c_str ()));
+      if (retval != 0 && ACE::debug ())
+        ACE_ERROR ((LM_ERROR,
+                    ACE_LIB_TEXT ("ACE (%P|%t) DLL_Handle::close - ")
+                    ACE_LIB_TEXT ("Failed with: \"%s\".\n"),
+                    this->error ()->c_str ()));
+    }
 
   return retval;
 }
