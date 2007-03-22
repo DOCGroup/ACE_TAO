@@ -20,4 +20,8 @@ use ProjectCreator;
 use vars qw(@ISA);
 @ISA = qw(GNUACEProjectCreator MakeProjectBase ProjectCreator);
 
+sub extractType {
+    return 'gnuace';
+}
+
 1;

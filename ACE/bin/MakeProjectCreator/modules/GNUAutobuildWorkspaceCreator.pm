@@ -31,6 +31,9 @@ my($base) = 'GNUmakefile';
 # ************************************************************
 # Subroutine Section
 # ************************************************************
+sub extractType {
+    return 'gnuace';
+}
   
 sub write_project_targets {
   my($self)   = shift;
