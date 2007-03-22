@@ -33,14 +33,9 @@ class TAO_AnyTypeCode_Export TAO_NVList_Adapter_Impl
   : public TAO_NVList_Adapter
 {
 public:
-  virtual void create_list (
-      CORBA::Long count,
-      CORBA::NVList_ptr &new_list
-     );
+  virtual void create_list (CORBA::Long count, CORBA::NVList_ptr &new_list);
 
-  virtual void create_named_value (
-      CORBA::NamedValue_ptr &nv
-     );
+  virtual void create_named_value (CORBA::NamedValue_ptr &nv);
 
   /// Used to force the initialization of the NVList adapter
   static int Initializer (void);
