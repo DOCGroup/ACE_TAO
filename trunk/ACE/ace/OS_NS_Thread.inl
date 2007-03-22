@@ -3475,7 +3475,16 @@ ACE_OS::thread_mutex_init (ACE_thread_mutex_t *m,
   ACE_UNUSED_ARG (lock_type);
   ACE_UNUSED_ARG (name);
   ACE_UNUSED_ARG (arg);
-  ::InitializeCriticalSection (m);
+
+  ACE_SEH_TRY
+    {
+      ::InitializeCriticalSection (m);
+    }
+  ACE_SEH_EXCEPT(EXCEPTION_EXECUTE_HANDLER)
+    {
+      errno = ENOMEM;
+      return -1;
+    }
   return 0;
 
 # elif defined (ACE_HAS_STHREADS) || defined (ACE_HAS_PTHREADS)
@@ -3509,7 +3518,16 @@ ACE_OS::thread_mutex_init (ACE_thread_mutex_t *m,
   ACE_UNUSED_ARG (lock_type);
   ACE_UNUSED_ARG (name);
   ACE_UNUSED_ARG (arg);
-  ::InitializeCriticalSection (m);
+
+  ACE_SEH_TRY
+    {
+      ::InitializeCriticalSection (m);
+    }
+  ACE_SEH_EXCEPT(EXCEPTION_EXECUTE_HANDLER)
+    {
+      errno = ENOMEM;
+      return -1;
+    }
   return 0;
 
 # elif defined (ACE_HAS_STHREADS) || defined (ACE_HAS_PTHREADS)

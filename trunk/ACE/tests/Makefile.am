@@ -1244,6 +1244,27 @@ Log_Msg_Test_LDADD = \
 
 endif !BUILD_ACE_FOR_TAO
 
+
+## Makefile.Log_Msg_Backend_Test.am
+
+if !BUILD_ACE_FOR_TAO
+
+noinst_PROGRAMS += Log_Msg_Backend_Test
+
+Log_Msg_Backend_Test_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
+
+Log_Msg_Backend_Test_SOURCES = \
+  $(ACE_ROOT)/tests/Main.cpp \
+  Log_Msg_Backend_Test.cpp
+
+Log_Msg_Backend_Test_LDADD = \
+  libTest_Output.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+endif !BUILD_ACE_FOR_TAO
+
 ## Makefile.Logging_Strategy_Test.am
 
 noinst_PROGRAMS += Logging_Strategy_Test
