@@ -1,3 +1,40 @@
+Thu Mar 22 18:25:01 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * ace/Log_Msg.{h cpp}: Corrected comments describing the format for
+          %D timestamp. Thanks to Stefan Naewe for reporting this.
+
+        * ace/OS_NS_Thread.inl (thread_mutex_init): On Windows, guard against
+          InitializeCriticalSection throwing an out-of-memory exception. Thanks
+          to Aleksandar Vukajlovic <vukajlo at finsoft dot co dot yu> for this.
+
+        * ace/Log_Msg_Backend.h: Doxygenized and expanded comments.
+        * ace/Log_Msg_IPC.h: Moved some comments re reset() from
+          Log_Msg_Backend to here because they discuss resetting the IPC.
+
+        * ace/Message_Queue_T.{h cpp}: Added an optional 'priority' argument
+          to ACE_Message_Queue_Ex::enqueue_prio. There was previously no way
+          to specify a priority for queueing; now there is. The priority
+          defaults to 0 (lowest priority).
+          Also fixed up the Doxygen stuff for ACE_Message_Queue_Ex.
+
+        * tests/Message_Queue_Test_Ex.{h cpp}:
+          Added a test for priority queueing.
+
+        * tests/Log_Msg_Backend_Test.cpp: New test to illustrate how to set
+          up a custom logging backend and test the hooks are called properly.
+
+        * tests/tests.mpc:
+        * tests/Makefile.am:
+        * tests/run_test.lst: Added Log_Msg_Backend_Test.
+
+        * tests/Auto_Event_Test.cpp:
+        * tests/Semaphore_Test.cpp: Replace ACE_ASSERTS with if/ACE_ERROR to
+          1) make sure it runs in Release mode, 2) not wipe out embedded
+          systems on failures, 3) record something useful in the log. Also,
+          changed error notices to LM_ERROR. When logging msecs (unsigned
+          long) cast it to int; ACE_Log_Msg doesn't have the 'l' modifier and
+          without it %d and long is a mismatch.
+
 Thu Mar 22 16:29:16 UTC 2007  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * bin/MakeProjectCreator/modules/GNUAutobuildProjectCreator.pm

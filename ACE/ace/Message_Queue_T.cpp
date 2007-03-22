@@ -157,7 +157,8 @@ ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::enqueue (ACE_MESSAGE_TYPE
 
 template <class ACE_MESSAGE_TYPE, ACE_SYNCH_DECL> int
 ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::enqueue_prio (ACE_MESSAGE_TYPE *new_item,
-                                                                     ACE_Time_Value *timeout)
+                                                                     ACE_Time_Value *timeout,
+                                                                     unsigned long priority)
 {
   ACE_TRACE ("ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::enqueue_prio");
 
@@ -166,7 +167,7 @@ ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::enqueue_prio (ACE_MESSAGE
   ACE_NEW_RETURN (mb,
                   ACE_Message_Block ((char *) new_item,
                                      sizeof (*new_item),
-                                     ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::DEFAULT_PRIORITY),
+                                     priority),
                   -1);
 
   int const result = this->queue_.enqueue_prio (mb, timeout);

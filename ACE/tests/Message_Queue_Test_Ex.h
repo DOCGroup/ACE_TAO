@@ -35,6 +35,11 @@ public:
 
   ~User_Class (void) { delete [] this->message_; }
 
+  const char *message (void) const
+  {
+    return this->message_;
+  }
+
   // This is for checking the ACE_Message_Queue_Ex_N
   User_Class *next () const
   {

@@ -27,6 +27,7 @@
 #include "test_config.h"
 #include "ace/Thread_Manager.h"
 
+#include "ace/Auto_Ptr.h"
 #include "ace/Message_Queue.h"
 #include "ace/Synch_Traits.h"
 #include "ace/Null_Mutex.h"
@@ -623,6 +624,100 @@ int basic_queue_test (ACE_Message_Queue_Ex<User_Class, ACE_SYNCH>& q)
     return status;
 }
 
+int queue_priority_test (ACE_Message_Queue_Ex<User_Class, ACE_SYNCH>& q)
+{
+  int status = 0;
+  if (!q.is_empty ())
+    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Prio test queue not empty\n")), 1);
+
+  // Set up a few objects with names for how they should come out of the queue.
+  auto_ptr<User_Class> b1, b2, b3, b4;
+  b1.reset (new User_Class ("first"));
+  b2.reset (new User_Class ("second"));
+  b3.reset (new User_Class ("third"));
+  b4.reset (new User_Class ("fourth"));
+  unsigned long prio =
+    ACE_Message_Queue_Ex<User_Class, ACE_SYNCH>::DEFAULT_PRIORITY;
+
+  prio += 1;
+  if (-1 == q.enqueue_prio (b2.get (), 0, prio))
+    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("b2")), 1);
+  if (-1 == q.enqueue_prio (b3.get (), 0, prio))
+    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("b3")), 1);
+  prio -= 1;
+  if (-1 == q.enqueue_prio (b4.get (), 0, prio))
+    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("b4")), 1);
+  prio += 5;
+  if (-1 == q.enqueue_prio (b1.get (), 0, prio))
+    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("b1")), 1);
+
+  User_Class *b = 0;
+  if (q.dequeue_head (b) == -1)
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("dequeue 1")));
+      ++status;
+    }
+  else
+    {
+      if (ACE_OS::strcmp (b->message (), "first") != 0)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("First dequeued was %C\n"),
+                      b->message ()));
+          ++status;
+        }
+    }
+  if (q.dequeue_head (b) == -1)
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("dequeue 2")));
+      ++status;
+    }
+  else
+    {
+      if (ACE_OS::strcmp (b->message (), "second") != 0)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("Second dequeued was %C\n"),
+                      b->message ()));
+          ++status;
+        }
+    }
+  if (q.dequeue_head (b) == -1)
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("dequeue 3")));
+      ++status;
+    }
+  else
+    {
+      if (ACE_OS::strcmp (b->message (), "third") != 0)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("Third dequeued was %C\n"),
+                      b->message ()));
+          ++status;
+        }
+    }
+  if (q.dequeue_head (b) == -1)
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("dequeue 4")));
+      ++status;
+    }
+  else
+    {
+      if (ACE_OS::strcmp (b->message (), "fourth") != 0)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("Fourth dequeued was %C\n"),
+                      b->message ()));
+          ++status;
+        }
+    }
+
+  if (status == 0)
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Priority queueing test: OK\n")));
+  return status;
+}
+
 int
 run_main (int argc, ACE_TCHAR *argv[])
 {
@@ -643,6 +738,12 @@ run_main (int argc, ACE_TCHAR *argv[])
   ACE_Message_Queue_Ex_N<User_Class, ACE_SYNCH> q2;
   if (0 != basic_queue_test (q1) ||
       0 != basic_queue_test (q2))
+    {
+      ++status;
+    }
+
+  // Check priority operations.
+  if (0 != queue_priority_test (q1))
     {
       ++status;
     }

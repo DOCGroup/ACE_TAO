@@ -95,6 +95,8 @@ run_main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("Bug_1890_Regression_Test"));
 
+  bool success = true;
+
   ACE_Reactor * reactor = ACE_Reactor::instance();
 
   // Create the timer, this is the main driver for the test
@@ -102,25 +104,26 @@ run_main (int, ACE_TCHAR *[])
 
   // Initialize the timer and register with the reactor
   if (-1 == timer->open(reactor))
-  {
-      ACE_ERROR_RETURN ((LM_ERROR, "Cannot initialize timer\n"), -1);
-  }
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("Cannot initialize timer")),
+                        -1);
+    }
 
   reactor->run_reactor_event_loop();
 
   // Verify that the results are what we expect
-  if (!timer->check_expected_results())
-  {
-      ACE_ERROR_RETURN ((LM_ERROR, "Test failed\n"), -1);
-  }
+  if (!(success = timer->check_expected_results ()))
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Test failed\n")));
 
   // Cleanup
-  timer->close();
+  timer->close ();
   delete timer;
 
   ACE_END_TEST;
 
-  return 0;
+  return success ? 0 : -1;
 }
 
 Handler::Handler()
@@ -129,41 +132,45 @@ Handler::Handler()
 {
 }
 
-int Handler::
-open(ACE_Reactor * r)
+int
+Handler::open (ACE_Reactor * r)
 {
-  if(-1 == the_pipe_.open(handles_))
+  if (-1 == the_pipe_.open (handles_))
     {
       return -1;
     }
-  if(-1 == r->register_handler(this, ACE_Event_Handler::READ_MASK))
+  if (-1 == r->register_handler (this, ACE_Event_Handler::READ_MASK))
     {
       return -1;
     }
   return 0;
 }
 
-size_t Handler::handle_input_count() const
+size_t
+Handler::handle_input_count() const
 {
-    return handle_input_count_;
+  return handle_input_count_;
 }
 
-void Handler::send_dummy_data()
+void
+Handler::send_dummy_data()
 {
-    char buf[] = "dummy";
-    (void) the_pipe_.send(buf, sizeof(buf));
+  char buf[] = "dummy";
+  (void) the_pipe_.send (buf, sizeof (buf));
 }
 
-ACE_HANDLE Handler::get_handle() const
+ACE_HANDLE
+Handler::get_handle() const
 {
-    return the_pipe_.read_handle();
+  return the_pipe_.read_handle ();
 }
 
-int Handler::handle_input(ACE_HANDLE)
+int
+Handler::handle_input(ACE_HANDLE)
 {
-    ++handle_input_count_;
-    // ACE_DEBUG((LM_DEBUG, "Handler::handle_input called for %d\n", h));
-    return 0;
+  ++handle_input_count_;
+  // ACE_DEBUG((LM_DEBUG, "Handler::handle_input called for %d\n", h));
+  return 0;
 }
 
 int const initial_iterations = 5;
@@ -177,109 +184,137 @@ Timer::Timer()
 {
 }
 
-int Timer::open(ACE_Reactor * r)
+int
+Timer::open (ACE_Reactor * r)
 {
-  this->reactor(r);
+  this->reactor (r);
 
   // Initialize both handles and register them with the reactor for reading.
-  for(int i = 0; i != nhandlers; ++i)
-  {
-      if (-1 == handler_[i].open(r))
-      {
-        ACE_ERROR_RETURN ((LM_ERROR, "Could not open dummy handler %d\n", i), -1);
-      }
-  }
+  for (int i = 0; i != nhandlers; ++i)
+    {
+      if (-1 == handler_[i].open (r))
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("Could not open dummy handler %d %p\n"),
+                             i,
+                             ACE_TEXT ("")),
+                            -1);
+        }
+    }
 
   ACE_Time_Value const interval(0, ACE_ONE_SECOND_IN_USECS / 10);
   ACE_Time_Value const startup (0, ACE_ONE_SECOND_IN_USECS / 20);
 
-  if ( -1 == r->schedule_timer(
-	   this, 0, startup, interval))
-  {
-      ACE_ERROR_RETURN((LM_ERROR, "Could not schedule timer\n"), -1);
-  }
+  if (-1 == r->schedule_timer (this, 0, startup, interval))
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("Could not schedule timer")),
+                        -1);
+    }
 
   return 0;
 }
 
-void Timer::close()
+void
+Timer::close()
 {
-  for(int i = 0; i != nhandlers; ++i)
-  {
-      reactor()->remove_handler(&handler_[i], ACE_Event_Handler::ALL_EVENTS_MASK);
-  }
-  reactor()->cancel_timer(this);
-}
-
-bool Timer::check_expected_results() const
-{
-    if(recorded_count_ < special_handler().handle_input_count())
+  for (int i = 0; i != nhandlers; ++i)
     {
-	return true;
+      this->reactor ()->remove_handler (&handler_[i],
+                                        ACE_Event_Handler::ALL_EVENTS_MASK |
+                                        ACE_Event_Handler::DONT_CALL);
     }
-    return false;
+  this->reactor ()->cancel_timer (this);
 }
 
-int Timer::handle_timeout(ACE_Time_Value const &, void const *)
+bool
+Timer::check_expected_results() const
 {
-    if (iteration_ == 0)
+  if (this->recorded_count_ < this->special_handler ().handle_input_count ())
+    {
+      return true;
+    }
+  ACE_ERROR ((LM_ERROR,
+              ACE_TEXT ("recorded_count %B, special_handler count %B\n"),
+              this->recorded_count_,
+              this->special_handler ().handle_input_count ()));
+  return false;
+}
+
+int
+Timer::handle_timeout(ACE_Time_Value const &, void const *)
+{
+  if (iteration_ == 0)
     {
       send_data_through_handlers();
     }
 
-    ++iteration_;
-    if (iteration_ < initial_iterations)
+  ++iteration_;
+  if (iteration_ < initial_iterations)
     {
       return 0;
     }
 
-    if (iteration_ == initial_iterations)
+  if (iteration_ == initial_iterations)
     {
       remove_some_handlers();
       recorded_count_  = special_handler().handle_input_count();
       return 0;
     }
 
-    if (iteration_ < total_iterations)
+  if (iteration_ < total_iterations)
     {
       return 0;
     }
 
-    reactor()->end_reactor_event_loop();
+  reactor()->end_reactor_event_loop();
 
-    return 0;
+  return 0;
 }
 
-void Timer::send_data_through_handlers()
+void
+Timer::send_data_through_handlers()
 {
-    for(int i = 0; i != nhandlers; ++i)
+  for (int i = 0; i != nhandlers; ++i)
     {
       handler_[i].send_dummy_data();
     }
 }
 
-void Timer::remove_some_handlers()
+void
+Timer::remove_some_handlers()
 {
-    for(int i = 0; i != nhandlers; ++i)
+  // The reactor may not get around to callbacks on deletion until the test
+  // is over.
+  ACE_Reactor_Mask mask =
+    ACE_Event_Handler::ALL_EVENTS_MASK | ACE_Event_Handler::DONT_CALL;
+  for (int i = 0; i != nhandlers; ++i)
     {
-	if (-1 == reactor()->remove_handler(&handler_[i], ACE_Event_Handler::ALL_EVENTS_MASK))
+      if (-1 == reactor()->remove_handler(&handler_[i], mask))
 	{
-	    ACE_ERROR((LM_ERROR, "Cannot remove handler %d in timeout\n", i));
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("Cannot remove handler %d in %p\n"),
+                      i,
+                      ACE_TEXT ("timeout")));
 	}
     }
 
-    if (-1 == reactor()->register_handler(&special_handler(), ACE_Event_Handler::ALL_EVENTS_MASK))
+  if (-1 == reactor()->register_handler(&special_handler(),
+                                        ACE_Event_Handler::ALL_EVENTS_MASK))
     {
-	ACE_ERROR((LM_ERROR, "Cannot add back special handler in timeout\n"));
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("Cannot add back special handler in %p\n"),
+                  ACE_TEXT ("timeout")));
     }
 }
 
 Handler & Timer::special_handler()
 {
-    return handler_[special_handler_index];
+  return handler_[special_handler_index];
 }
 
 Handler const & Timer::special_handler() const
 {
-    return handler_[special_handler_index];
+  return handler_[special_handler_index];
 }

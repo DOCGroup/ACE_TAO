@@ -1560,8 +1560,8 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                     break;
                   }
 
-                case 'D': // Format the timestamp in month/day/year
-                          // hour:minute:sec:usec format.
+                case 'D': // Format the timestamp in format:
+                          // Weekday Month day year hour:minute:sec.usec
                   {
                     ACE_TCHAR day_and_time[35];
                     ACE::timestamp (day_and_time,

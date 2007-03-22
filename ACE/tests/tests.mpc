@@ -488,6 +488,14 @@ project(Log Msg Test) : acetest {
   }
 }
 
+project(Log Msg Backend Test) : acetest {
+  avoids += ace_for_tao
+  exename = Log_Msg_Backend_Test
+  Source_Files {
+    Log_Msg_Backend_Test.cpp
+  }
+}
+
 project(Logging Strategy Test) : acetest {
   exename = Logging_Strategy_Test
   Source_Files {

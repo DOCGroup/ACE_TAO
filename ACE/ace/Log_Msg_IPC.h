@@ -57,7 +57,15 @@ public:
 
   /// Open a new connection
   virtual int open (const ACE_TCHAR *logger_key);
+
+  /**
+   * Reset the backend.  When changing the logging destination the
+   * backend may need to properly disconnect from the remote logging
+   * daemon and reclaim some local resources.  But we try to reduce
+   * the number of local allocations/deallocations.
+   */
   virtual int reset (void);
+
   virtual int close (void);
   virtual ssize_t log (ACE_Log_Record &log_record);
 
