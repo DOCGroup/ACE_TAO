@@ -124,17 +124,11 @@ ACE_OS::chdir (const char *path)
   ACE_OS_TRACE ("ACE_OS::chdir");
 #if defined (ACE_HAS_NONCONST_CHDIR)
   ACE_OSCALL_RETURN (::chdir (const_cast<char *> (path)), int, -1);
-
-#elif defined (ACE_WIN32) && defined (__IBMCPP__) && (__IBMCPP__ >= 400)
-  ACE_OSCALL_RETURN (::_chdir (const_cast<char *> (path)), int, -1);
-
 #elif defined (ACE_HAS_WINCE)
   ACE_UNUSED_ARG (path);
   ACE_NOTSUP_RETURN (-1);
-
 #else
   ACE_OSCALL_RETURN (::chdir (path), int, -1);
-
 #endif /* ACE_HAS_NONCONST_CHDIR */
 }
 
@@ -154,9 +148,7 @@ ACE_OS::chdir (const wchar_t *path)
 ACE_INLINE int
 ACE_OS::rmdir (const char *path)
 {
-#if defined (ACE_WIN32) && defined (__IBMCPP__) && (__IBMCPP__ >= 400)
-  ACE_OSCALL_RETURN (::_rmdir ((char *) path), int, -1);
-#elif defined (ACE_HAS_WINCE)
+#if defined (ACE_HAS_WINCE)
   ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::RemoveDirectory (ACE_TEXT_CHAR_TO_TCHAR (path)),
                                           ace_result_),
                         int, -1);

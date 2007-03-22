@@ -46,7 +46,7 @@ ACE_Condition_Thread_Mutex::ACE_Condition_Thread_Mutex (const ACE_Thread_Mutex &
                                                         const ACE_TCHAR *name,
                                                         void *arg)
   : mutex_ ((ACE_Thread_Mutex &) m),
-    removed_ (0)
+    removed_ (false)
 {
 // ACE_TRACE ("ACE_Condition_Thread_Mutex::ACE_Condition_Thread_Mutex");
   if (ACE_OS::cond_init (&this->cond_,
@@ -64,7 +64,7 @@ ACE_Condition_Thread_Mutex (const ACE_Thread_Mutex &m,
                             const ACE_TCHAR *name,
                             void *arg)
   : mutex_ ((ACE_Thread_Mutex &) m),
-    removed_ (0)
+    removed_ (false)
 {
 // ACE_TRACE ("ACE_Condition_Thread_Mutex::ACE_Condition_Thread_Mutex");
   if (ACE_OS::cond_init (&this->cond_, attributes.attributes_,
