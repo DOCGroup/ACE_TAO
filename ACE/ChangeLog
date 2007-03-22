@@ -1,3 +1,13 @@
+Thu Mar 22 19:44:02 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ace/ACE.inl:
+
+          Updated a comment about ACE::nibble2hex() working with UNICODE.
+
+        * ace/config-qnx-rtp-62x.h:
+
+          QNX has the getifaddrs interface.
+
 Thu Mar 22 18:33:19 UTC 2007  Steve Huston  <shuston@riverace.com>
 
         * ace/DLL_Manager.cpp (ACE_DLL_Handle::close()): When a DLL needs to
@@ -52,7 +62,7 @@ Thu Mar 22 16:29:16 UTC 2007  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * bin/MakeProjectCreator/modules/GNUAutobuildProjectCreator.pm
         * bin/MakeProjectCreator/modules/GNUAutobuildWorkspaceCreator.pm
-        
+
           Added autobuild workspace creator to collate build output
           on a per makefile basis.
 
