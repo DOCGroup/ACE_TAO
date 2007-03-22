@@ -10,6 +10,7 @@
 # NOTE: This file contains tests only for TAO's ORB. Please do not
 # include things like performance-tests, and examples here.
 
+TAO/tests/Abstract_Interface/run_test.pl:
 TAO/tests/Bug_2702_Regression/run_test.pl:
 TAO/tests/ORB_Local_Config/Bunch/run_test.pl:
 TAO/tests/ORB_Local_Config/Bug_1459/run_test.pl: SSL !STATIC !ACE_FOR_TAO
