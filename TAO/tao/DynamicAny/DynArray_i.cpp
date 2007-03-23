@@ -222,7 +222,7 @@ TAO_DynArray_i::set_elements (const DynamicAny::AnySeq & value)
       throw ::CORBA::OBJECT_NOT_EXIST ();
     }
 
-  CORBA::ULong length = value.length ();
+  CORBA::ULong const length = value.length ();
 
   if (length != this->da_members_.size ())
     {
@@ -230,8 +230,7 @@ TAO_DynArray_i::set_elements (const DynamicAny::AnySeq & value)
     }
 
   CORBA::TypeCode_var value_tc;
-  CORBA::TypeCode_var element_type =
-    this->get_element_type ();
+  CORBA::TypeCode_var element_type = this->get_element_type ();
 
   for (CORBA::ULong i = 0; i < length; i++)
     {

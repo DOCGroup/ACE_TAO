@@ -44,25 +44,18 @@ public:
 
   ~TAO_DynValue_i (void);
 
-  virtual char * current_member_name (
-      void);
+  virtual char * current_member_name (void);
 
-  virtual CORBA::TCKind current_member_kind (
-      void);
+  virtual CORBA::TCKind current_member_kind (void);
 
-  virtual DynamicAny::NameValuePairSeq * get_members (
-      void);
+  virtual DynamicAny::NameValuePairSeq * get_members (void);
 
-  virtual void set_members (
-      const DynamicAny::NameValuePairSeq & value
-      );
+  virtual void set_members (const DynamicAny::NameValuePairSeq & value);
 
-  virtual DynamicAny::NameDynAnyPairSeq * get_members_as_dyn_any (
-      void);
+  virtual DynamicAny::NameDynAnyPairSeq * get_members_as_dyn_any (void);
 
   virtual void set_members_as_dyn_any (
-      const DynamicAny::NameDynAnyPairSeq & value
-      );
+      const DynamicAny::NameDynAnyPairSeq & value);
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

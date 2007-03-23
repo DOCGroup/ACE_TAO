@@ -52,67 +52,42 @@ public:
   ~TAO_DynArray_i (void);
 
   /// Initialize using just a TypeCode.
-  void init (CORBA::TypeCode_ptr tc
-            );
+  void init (CORBA::TypeCode_ptr tc);
 
   /// Initialize using an Any.
-  void init (const CORBA::Any& any
-            );
+  void init (const CORBA::Any& any);
 
   // = LocalObject methods
-  static TAO_DynArray_i *_narrow (
-      CORBA::Object_ptr obj
-      );
+  static TAO_DynArray_i *_narrow (CORBA::Object_ptr obj);
 
   // = Functions specific to DynArray.
 
   virtual DynamicAny::AnySeq * get_elements (void);
 
-  virtual void set_elements (
-      const DynamicAny::AnySeq & value
-      )
-;
+  virtual void set_elements (const DynamicAny::AnySeq & value);
 
-  virtual DynamicAny::DynAnySeq * get_elements_as_dyn_any (
-      void)
-;
+  virtual DynamicAny::DynAnySeq * get_elements_as_dyn_any (void);
 
-  virtual void set_elements_as_dyn_any (
-      const DynamicAny::DynAnySeq & value
-      )
-;
+  virtual void set_elements_as_dyn_any (const DynamicAny::DynAnySeq & value);
 
   // = DynAny common functions not implemented in class TAO_DynCommon.
 
-  virtual void from_any (
-      const CORBA::Any & value
-      )
-;
+  virtual void from_any (const CORBA::Any & value);
 
-  virtual CORBA::Any * to_any (
-      void)
-;
+  virtual CORBA::Any * to_any (void);
 
-  virtual CORBA::Boolean equal (
-      DynamicAny::DynAny_ptr dyn_any
-      )
-;
+  virtual CORBA::Boolean equal (DynamicAny::DynAny_ptr dyn_any);
 
-  virtual void destroy (
-      void)
-;
+  virtual void destroy (void);
 
-  virtual DynamicAny::DynAny_ptr current_component (
-      void)
-;
+  virtual DynamicAny::DynAny_ptr current_component (void);
 
 private:
   /// Returns the type of elements contained in the array.
   CORBA::TypeCode_ptr get_element_type (void);
 
   /// Gets the length of the array from the typecode.
-  CORBA::ULong get_tc_length (CORBA::TypeCode_ptr tc
-                              );
+  CORBA::ULong get_tc_length (CORBA::TypeCode_ptr tc);
 
   /// Called by both versions of init().
   void init_common (void);

@@ -219,11 +219,7 @@ TAO_DynAny_i::from_any (const CORBA::Any &any)
 
   CORBA::TypeCode_var any_tc = any.type ();
 
-  CORBA::Boolean equiv =
-    this->type_->equivalent (any_tc.in ()
-                            );
-
-  if (!equiv)
+  if (!this->type_->equivalent (any_tc.in ()))
     {
       throw DynamicAny::DynAny::TypeMismatch ();
     }
@@ -267,9 +263,7 @@ TAO_DynAny_i::equal (DynamicAny::DynAny_ptr rhs)
       return false;
     }
 
-  CORBA::Boolean const equiv = this->type_->equivalent (rhs_n->type_.in ());
-
-  if (!equiv)
+  if (!this->type_->equivalent (rhs_n->type_.in ()))
     {
       return false;
     }
@@ -409,8 +403,7 @@ TAO_DynAny_i::equal (DynamicAny::DynAny_ptr rhs)
         CORBA::TypeCode_ptr lhs_v;
         this->any_ >>= lhs_v;
         // See CORBA 2.4.2 - must use equal() here.
-        return lhs_v->equal (lhs_v
-                            );
+        return lhs_v->equal (lhs_v);
       }
     case CORBA::tk_objref:
       {
@@ -418,8 +411,7 @@ TAO_DynAny_i::equal (DynamicAny::DynAny_ptr rhs)
         rhs_n->any_ >>= CORBA::Any::to_object (rhs_v);
         CORBA::Object_ptr lhs_v;
         this->any_ >>= CORBA::Any::to_object (lhs_v);
-        return lhs_v->_is_equivalent (lhs_v
-                                     );
+        return lhs_v->_is_equivalent (lhs_v);
       }
     case CORBA::tk_string:
       {
@@ -444,10 +436,8 @@ TAO_DynAny_i::equal (DynamicAny::DynAny_ptr rhs)
           }
         else
           {
-            rstatus = rhs_n->any_ >>= CORBA::Any::to_string (rhs_v,
-                                                             bound);
-            lstatus = this->any_ >>= CORBA::Any::to_string (lhs_v,
-                                                            bound);
+            rstatus = rhs_n->any_ >>= CORBA::Any::to_string (rhs_v, bound);
+            lstatus = this->any_ >>= CORBA::Any::to_string (lhs_v, bound);
 
             if ((rstatus && lstatus) == 0)
               {
@@ -460,8 +450,7 @@ TAO_DynAny_i::equal (DynamicAny::DynAny_ptr rhs)
     case CORBA::tk_wstring:
       {
         CORBA::TypeCode_var unaliased_tc =
-          TAO_DynAnyFactory::strip_alias (this->type_.in ()
-                                         );
+          TAO_DynAnyFactory::strip_alias (this->type_.in ());
 
         CORBA::ULong bound =
           unaliased_tc->length ();

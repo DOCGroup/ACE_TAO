@@ -17,35 +17,25 @@ TAO_DynValueBox_i::~TAO_DynValueBox_i (void)
 }
 
 CORBA::Any *
-TAO_DynValueBox_i::get_boxed_value (
-
-  )
+TAO_DynValueBox_i::get_boxed_value (void)
 {
   throw ::CORBA::NO_IMPLEMENT ();
 }
 
 void
-TAO_DynValueBox_i::set_boxed_value (
-    const CORBA::Any & /* boxed */
-
-  )
+TAO_DynValueBox_i::set_boxed_value (const CORBA::Any & /* boxed */)
 {
   throw ::CORBA::NO_IMPLEMENT ();
 }
 
 DynamicAny::DynAny_ptr
-TAO_DynValueBox_i::get_boxed_value_as_dyn_any (
-
-  )
+TAO_DynValueBox_i::get_boxed_value_as_dyn_any (void)
 {
   throw ::CORBA::NO_IMPLEMENT ();
 }
 
 void
-TAO_DynValueBox_i::set_boxed_value_as_dyn_any (
-    DynamicAny::DynAny_ptr /* boxed */
-
-  )
+TAO_DynValueBox_i::set_boxed_value_as_dyn_any (DynamicAny::DynAny_ptr /* boxed */)
 {
   throw ::CORBA::NO_IMPLEMENT ();
 }

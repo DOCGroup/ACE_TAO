@@ -213,8 +213,7 @@ namespace TAO
     PortableInterceptor::ReplyStatus
         handle_any_exception (CORBA::Exception * e);
 
-    PortableInterceptor::ReplyStatus
-        handle_all_exception (void);
+    PortableInterceptor::ReplyStatus handle_all_exception (void);
 
   protected:
     /// The client requestor adapter

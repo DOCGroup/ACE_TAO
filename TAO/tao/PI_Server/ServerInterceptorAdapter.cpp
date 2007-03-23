@@ -269,8 +269,7 @@ TAO::ServerRequestInterceptor_Adapter_Impl::receive_request (
 
           if (registered.details_.should_be_processed (is_remote_request))
             {
-              registered.interceptor_->
-                receive_request (&request_info);
+              registered.interceptor_->receive_request (&request_info);
             }
 
           // Note that no interceptors are pushed on to or popped off
@@ -299,13 +298,12 @@ TAO::ServerRequestInterceptor_Adapter_Impl::send_reply (
   size_t nargs,
   void * servant_upcall,
   CORBA::TypeCode_ptr const * exceptions,
-  CORBA::ULong nexceptions
-  )
+  CORBA::ULong nexceptions)
 {
   // This is an "ending" interception point so we only process the
   // interceptors pushed on to the flow stack.
 
-  bool is_remote_request = !server_request.collocated ();
+  bool const is_remote_request = !server_request.collocated ();
 
   // Notice that the interceptors are processed in the opposite order
   // they were pushed onto the stack since this is an "ending"

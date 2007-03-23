@@ -41,8 +41,7 @@ TAO_DynUnion_i::init (const CORBA::Any& any)
 {
   CORBA::TypeCode_var tc = any.type ();
 
-  CORBA::TCKind kind = TAO_DynAnyFactory::unalias (tc.in ()
-                                                  );
+  CORBA::TCKind kind = TAO_DynAnyFactory::unalias (tc.in ());
 
   if (kind != CORBA::tk_union)
     {
@@ -56,15 +55,13 @@ TAO_DynUnion_i::init (const CORBA::Any& any)
 
   // Set the from_factory arg to TRUE, so any problems will throw
   // InconsistentTypeCode.
-  this->set_from_any (any
-                     );
+  this->set_from_any (any);
 }
 
 void
 TAO_DynUnion_i::init (CORBA::TypeCode_ptr tc)
 {
-  CORBA::TCKind kind = TAO_DynAnyFactory::unalias (tc
-                                                  );
+  CORBA::TCKind kind = TAO_DynAnyFactory::unalias (tc);
 
   if (kind != CORBA::tk_union)
     {
@@ -143,8 +140,7 @@ TAO_DynUnion_i::set_from_any (const CORBA::Any & any)
   // only on unions, so strip the alias out of the type code
   //
   CORBA::TypeCode_var tc =
-   TAO_DynAnyFactory::strip_alias (any._tao_get_typecode ()
-                                  );
+   TAO_DynAnyFactory::strip_alias (any._tao_get_typecode ());
 
   CORBA::TypeCode_var disc_tc =
     tc->discriminator_type ();
@@ -194,16 +190,12 @@ TAO_DynUnion_i::set_from_any (const CORBA::Any & any)
       disc_any);
 
   // Move to the next field in the CDR stream.
-  (void) TAO_Marshal_Object::perform_skip (disc_tc.in (),
-                                           &in
-                                          );
+  (void) TAO_Marshal_Object::perform_skip (disc_tc.in (), &in);
 
   CORBA::TypeCode_var unaliased =
-    TAO_DynAnyFactory::strip_alias (tc.in ()
-                                   );
+    TAO_DynAnyFactory::strip_alias (tc.in ());
 
-  CORBA::ULong const count =
-    unaliased->member_count ();
+  CORBA::ULong const count = unaliased->member_count ();
 
   CORBA::Boolean match = false;
   CORBA::ULong i;
@@ -211,12 +203,9 @@ TAO_DynUnion_i::set_from_any (const CORBA::Any & any)
   // Get the index.
   for (i = 0; i < count; ++i)
     {
-      CORBA::Any_var label_any = tc->member_label (i
-                                                  );
+      CORBA::Any_var label_any = tc->member_label (i);
 
-      match = this->label_match (label_any.in (),
-                                 disc_any
-                                );
+      match = this->label_match (label_any.in (), disc_any);
 
       if (match)
         {
@@ -232,9 +221,7 @@ TAO_DynUnion_i::set_from_any (const CORBA::Any & any)
 
   if (match)
     {
-      CORBA::TypeCode_var member_tc =
-        tc->member_type (i
-                        );
+      CORBA::TypeCode_var member_tc = tc->member_type (i);
 
       CORBA::Any member_any;
       TAO::Unknown_IDL_Type *unk = 0;
@@ -257,8 +244,7 @@ TAO_DynUnion_i::set_from_any (const CORBA::Any & any)
 
       // default_index() does not work with aliased type codes.
       CORBA::TypeCode_var unaliased_tc =
-        TAO_DynAnyFactory::strip_alias (this->type_.in ()
-                                       );
+        TAO_DynAnyFactory::strip_alias (this->type_.in ());
 
       CORBA::Long default_index =
         unaliased_tc->default_index ();
@@ -304,9 +290,7 @@ TAO_DynUnion_i::get_discriminator (void)
 
   // A deep copy is made only by copy() (CORBA 2.4.2 section 9.2.3.6).
   // Set the flag so the caller can't destroy.
-  this->set_flag (this->discriminator_.in (),
-                  0
-                 );
+  this->set_flag (this->discriminator_.in (), 0);
 
   return DynamicAny::DynAny::_duplicate (this->discriminator_.in ());
 }
@@ -324,8 +308,7 @@ TAO_DynUnion_i::set_discriminator (DynamicAny::DynAny_ptr value)
   CORBA::TypeCode_var disc_tc =
     this->discriminator_->type ();
 
-  CORBA::Boolean equivalent = disc_tc->equivalent (tc.in ()
-                                                  );
+  CORBA::Boolean equivalent = disc_tc->equivalent (tc.in ());
 
   if (!equivalent)
     {
@@ -342,19 +325,15 @@ TAO_DynUnion_i::set_discriminator (DynamicAny::DynAny_ptr value)
 
   // member_label() does not work with aliased type codes.
   CORBA::TypeCode_var unaliased_tc =
-    TAO_DynAnyFactory::strip_alias (this->type_.in ()
-                                   );
+    TAO_DynAnyFactory::strip_alias (this->type_.in ());
 
   CORBA::Boolean match = 0;
 
   for (i = 0; i < length; ++i)
     {
-      label_any = unaliased_tc->member_label (i
-                                             );
+      label_any = unaliased_tc->member_label (i);
 
-      match = this->label_match (label_any.in (),
-                                 value_any.in ()
-                                );
+      match = this->label_match (label_any.in (), value_any.in ());
 
       if (match)
         {
@@ -387,14 +366,11 @@ TAO_DynUnion_i::set_discriminator (DynamicAny::DynAny_ptr value)
         }
       else
         {
-          this->discriminator_->from_any (label_any.in ()
-                                     );
+          this->discriminator_->from_any (label_any.in ());
         }
 
       // member_type() does not work with aliased type codes.
-      CORBA::TypeCode_var member_tc =
-        unaliased_tc->member_type (i
-                                  );
+      CORBA::TypeCode_var member_tc = unaliased_tc->member_type (i);
 
       this->member_->destroy ();
 
@@ -418,8 +394,7 @@ TAO_DynUnion_i::set_discriminator (DynamicAny::DynAny_ptr value)
     {
       // default_index() does not work with aliased type codes.
       CORBA::TypeCode_var unaliased_tc =
-        TAO_DynAnyFactory::strip_alias (this->type_.in ()
-                                       );
+        TAO_DynAnyFactory::strip_alias (this->type_.in ());
 
       // If no match, either the default member or no member is active.
       CORBA::Long default_index =
@@ -456,8 +431,7 @@ TAO_DynUnion_i::set_to_default_member (void)
 
   // default_index() does not work with aliased type codes.
   CORBA::TypeCode_var unaliased_tc =
-    TAO_DynAnyFactory::strip_alias (this->type_.in ()
-                                   );
+    TAO_DynAnyFactory::strip_alias (this->type_.in ());
 
   CORBA::Long default_index =
     unaliased_tc->default_index ();
@@ -472,8 +446,7 @@ TAO_DynUnion_i::set_to_default_member (void)
       CORBA::ULong index = static_cast<CORBA::ULong> (default_index);
 
       CORBA::TypeCode_var default_tc =
-        unaliased_tc->member_type (index
-                                  );
+        unaliased_tc->member_type (index);
 
       this->member_->destroy ();
 
@@ -500,8 +473,7 @@ TAO_DynUnion_i::set_to_no_active_member (void)
 
   // default_index() does not work with aliased type codes.
   CORBA::TypeCode_var unaliased_tc =
-    TAO_DynAnyFactory::strip_alias (this->type_.in ()
-                                   );
+    TAO_DynAnyFactory::strip_alias (this->type_.in ());
 
   CORBA::Long default_index =
     unaliased_tc->default_index ();
@@ -518,8 +490,7 @@ TAO_DynUnion_i::set_to_no_active_member (void)
         this->discriminator_->type ();
 
       CORBA::TCKind kind =
-        TAO_DynAnyFactory::unalias (disc_tc.in ()
-                                   );
+        TAO_DynAnyFactory::unalias (disc_tc.in ());
 
       if (kind == CORBA::tk_enum)
         {
@@ -550,8 +521,7 @@ TAO_DynUnion_i::has_no_active_member (void)
     }
 
   // No active member (CORBA 2.3.1).
-  return (this->current_position_ == 0
-          && this->component_count_ == 1);
+  return (this->current_position_ == 0 && this->component_count_ == 1);
 }
 
 CORBA::TCKind
@@ -565,10 +535,7 @@ TAO_DynUnion_i::discriminator_kind (void)
   CORBA::TypeCode_var tc =
     this->discriminator_->type ();
 
-  CORBA::TCKind retval = TAO_DynAnyFactory::unalias (tc.in ()
-                                                    );
-
-  return retval;
+  return TAO_DynAnyFactory::unalias (tc.in ());
 }
 
 DynamicAny::DynAny_ptr
@@ -612,8 +579,7 @@ TAO_DynUnion_i::member_name (void)
       throw DynamicAny::DynAny::InvalidValue ();
     }
 
-  const char *retval = this->type_->member_name (this->member_slot_
-                                                );
+  const char *retval = this->type_->member_name (this->member_slot_);
 
   return CORBA::string_dup (retval);
 }
@@ -634,13 +600,9 @@ TAO_DynUnion_i::member_kind (void)
       throw DynamicAny::DynAny::InvalidValue ();
     }
 
-  CORBA::TypeCode_var tc =
-    this->member_->type ();
+  CORBA::TypeCode_var tc = this->member_->type ();
 
-  CORBA::TCKind retval = TAO_DynAnyFactory::unalias (tc.in ()
-                                                    );
-
-  return retval;
+  return TAO_DynAnyFactory::unalias (tc.in ());
 }
 
 // ****************************************************************
@@ -655,8 +617,7 @@ TAO_DynUnion_i::from_any (const CORBA::Any& any)
 
   CORBA::TypeCode_var tc = any.type ();
   CORBA::Boolean equivalent =
-    this->type_.in ()->equivalent (tc.in ()
-                                  );
+    this->type_.in ()->equivalent (tc.in ());
 
   if (equivalent)
     {
@@ -718,8 +679,7 @@ TAO_DynUnion_i::to_any (void)
 
   (void) TAO_Marshal_Object::perform_append (disc_tc.in (),
                                              &disc_in_cdr,
-                                             &out_cdr
-                                            );
+                                             &out_cdr;
 
   // Add the member to the CDR stream unless it has no active member.
   if (this->has_no_active_member () == 0)
@@ -753,8 +713,7 @@ TAO_DynUnion_i::to_any (void)
 
       (void) TAO_Marshal_Object::perform_append (member_tc.in (),
                                                 &member_in_cdr,
-                                                &out_cdr
-                                               );
+                                                &out_cdr);
     }
 
   // Make the Any.
@@ -783,8 +742,7 @@ TAO_DynUnion_i::equal (DynamicAny::DynAny_ptr rhs)
       throw ::CORBA::OBJECT_NOT_EXIST ();
     }
 
-  TAO_DynUnion_i *impl = TAO_DynUnion_i::_narrow (rhs
-                                                 );
+  TAO_DynUnion_i *impl = TAO_DynUnion_i::_narrow (rhs);
 
   if (impl == 0)
     {
@@ -822,15 +780,11 @@ TAO_DynUnion_i::destroy (void)
     {
       // Free the two components.
 
-      this->set_flag (this->member_.in (),
-                      1
-                     );
+      this->set_flag (this->member_.in (), 1);
 
       this->member_->destroy ();
 
-      this->set_flag (this->discriminator_.in (),
-                      1
-                     );
+      this->set_flag (this->discriminator_.in (), 1);
 
       this->discriminator_->destroy ();
 
@@ -848,17 +802,13 @@ TAO_DynUnion_i::current_component (void)
 
   if (this->current_position_ == 1)
     {
-      this->set_flag (this->member_.in (),
-                      0
-                     );
+      this->set_flag (this->member_.in (), 0);
 
       return DynamicAny::DynAny::_duplicate (this->member_.in ());
     }
   else
     {
-      this->set_flag (this->discriminator_.in (),
-                      0
-                     );
+      this->set_flag (this->discriminator_.in (), 0);
 
       return DynamicAny::DynAny::_duplicate (this->discriminator_.in ());
     }
@@ -868,16 +818,14 @@ TAO_DynUnion_i::current_component (void)
 
 CORBA::Boolean
 TAO_DynUnion_i::label_match (const CORBA::Any &my_any,
-                             const CORBA::Any &other_any
-                             )
+                             const CORBA::Any &other_any)
 {
   // Use my_any so we can detect a default case label,
   // if we are iterating through the union type code's
   // member_label() calls.
   CORBA::TypeCode_var tc = my_any.type ();
 
-  CORBA::TCKind kind = TAO_DynAnyFactory::unalias (tc.in ()
-                                                  );
+  CORBA::TCKind kind = TAO_DynAnyFactory::unalias (tc.in ());
 
   // No need to do any type checking - it was done before this
   // call was made.

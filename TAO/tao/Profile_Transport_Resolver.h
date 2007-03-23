@@ -135,8 +135,7 @@ namespace TAO
     /// behavior, otherwise an ENOTSUP errno will be set and the
     /// method will return false.
     bool try_connect (TAO_Transport_Descriptor_Interface *desc,
-                      ACE_Time_Value *val
-                     );
+                      ACE_Time_Value *val);
 
     bool try_parallel_connect (TAO_Transport_Descriptor_Interface *desc,
                                ACE_Time_Value *val

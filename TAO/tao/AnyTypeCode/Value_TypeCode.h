@@ -100,25 +100,17 @@ namespace TAO
        * @see @c CORBA::TypeCode
        */
       //@{
-      virtual CORBA::Boolean equal_i (CORBA::TypeCode_ptr tc
-                                      ) const;
-      virtual CORBA::Boolean equivalent_i (CORBA::TypeCode_ptr tc
-                                           ) const;
-      virtual CORBA::TypeCode_ptr get_compact_typecode_i (
-        void) const;
+      virtual CORBA::Boolean equal_i (CORBA::TypeCode_ptr tc) const;
+      virtual CORBA::Boolean equivalent_i (CORBA::TypeCode_ptr tc) const;
+      virtual CORBA::TypeCode_ptr get_compact_typecode_i (void) const;
       virtual char const * id_i (void) const;
       virtual char const * name_i (void) const;
       virtual CORBA::ULong member_count_i (void) const;
-      virtual char const * member_name_i (CORBA::ULong index
-                                          ) const;
-      virtual CORBA::TypeCode_ptr member_type_i (CORBA::ULong index
-                                                 ) const;
-      virtual CORBA::Visibility member_visibility_i (CORBA::ULong index
-                                                     ) const;
-      virtual CORBA::ValueModifier type_modifier_i (
-        void) const;
-      virtual CORBA::TypeCode_ptr concrete_base_type_i (
-        void) const;
+      virtual char const * member_name_i (CORBA::ULong index) const;
+      virtual CORBA::TypeCode_ptr member_type_i (CORBA::ULong index) const;
+      virtual CORBA::Visibility member_visibility_i (CORBA::ULong index) const;
+      virtual CORBA::ValueModifier type_modifier_i (void) const;
+      virtual CORBA::TypeCode_ptr concrete_base_type_i (void) const;
       //@}
 
     protected:

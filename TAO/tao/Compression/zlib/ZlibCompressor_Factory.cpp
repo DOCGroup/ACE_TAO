@@ -18,8 +18,7 @@ Zlib_CompressorFactory::Zlib_CompressorFactory (void) :
 
 ::Compression::Compressor_ptr
 Zlib_CompressorFactory::get_compressor (
-    ::Compression::CompressionLevel compression_level
-  )
+    ::Compression::CompressionLevel compression_level)
 {
   // @todo, make a array based on compression level
   if (CORBA::is_nil (compressor_.in ()))

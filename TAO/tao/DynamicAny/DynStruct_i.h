@@ -52,79 +52,48 @@ public:
   ~TAO_DynStruct_i (void);
 
   /// Initialize using just a TypeCode.
-  void init (CORBA::TypeCode_ptr tc
-            );
+  void init (CORBA::TypeCode_ptr tc);
 
   /// Initialize using an Any.
-  void init (const CORBA::Any& any
-            );
+  void init (const CORBA::Any& any);
 
   // = LocalObject methods.
-  static TAO_DynStruct_i *_narrow (
-      CORBA::Object_ptr obj
-      );
+  static TAO_DynStruct_i *_narrow (CORBA::Object_ptr obj);
 
   // = Functions specific to DynStruct.
 
-  virtual DynamicAny::FieldName current_member_name (
-      void)
-;
+  virtual DynamicAny::FieldName current_member_name (void);
 
-  virtual CORBA::TCKind current_member_kind (
-      void)
-;
+  virtual CORBA::TCKind current_member_kind (void);
 
-  virtual DynamicAny::NameValuePairSeq *get_members (
-      void)
-;
+  virtual DynamicAny::NameValuePairSeq *get_members (void);
 
-  virtual void set_members (
-      const DynamicAny::NameValuePairSeq& value
-      )
-;
+  virtual void set_members (const DynamicAny::NameValuePairSeq& value);
 
-  virtual DynamicAny::NameDynAnyPairSeq * get_members_as_dyn_any (
-      void)
-;
+  virtual DynamicAny::NameDynAnyPairSeq * get_members_as_dyn_any (void);
 
   virtual void set_members_as_dyn_any (
-      const DynamicAny::NameDynAnyPairSeq & value
-      )
-;
+      const DynamicAny::NameDynAnyPairSeq & value);
 
   // = DynAny common functions not implemented in class TAO_DynCommon.
 
-  virtual void from_any (
-      const CORBA::Any & value
-      )
-;
+  virtual void from_any (const CORBA::Any & value);
 
-  virtual CORBA::Any * to_any (
-      void)
-;
+  virtual CORBA::Any * to_any (void);
 
-  virtual CORBA::Boolean equal (
-      DynamicAny::DynAny_ptr dyn_any
-      )
-;
+  virtual CORBA::Boolean equal (DynamicAny::DynAny_ptr dyn_any);
 
-  virtual void destroy (
-      void)
-;
+  virtual void destroy (void);
 
-  virtual DynamicAny::DynAny_ptr current_component (
-      void)
-;
+  virtual DynamicAny::DynAny_ptr current_component (void);
 
 private:
   /// Check if the typecode is acceptable.
-  void check_typecode (CORBA::TypeCode_ptr tc
-                      );
+  void check_typecode (CORBA::TypeCode_ptr tc);
 
   /// Code common to the constructor from an Any arg and the member
   /// function from_any().
-  void set_from_any (const CORBA::Any &any
-                    );
+  void set_from_any (const CORBA::Any &any);
 
   /// Called by both versions of init().
   void init_common (void);
