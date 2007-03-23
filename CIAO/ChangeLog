@@ -1,23 +1,36 @@
+Fri Mar 23 02:50:00 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * DAnCE/NodeApplication/Configurator_Factory.h:
+        * DAnCE/NodeApplication/Configurator_Factory.inl:
+        * DAnCE/NodeApplication/Configurator_Factory.cpp:
+
+        Fixed bugzilla 2860. All inlined implementations were moved to .inl file
+        to follow ACE/TAO/CIAO conventions.
+
+        Uncessary include files were removed.
+
+        ACE_DLL was commented out since it is not used anymore.
+
 Thu Mar 22 19:09:35 UTC 2007  Gan Deng  <gan.deng@vanderbilt.edu>
 
         * DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.cpp
 
           Reverted a change made from:
-        
+
           Sun Apr  9 01:03:19 UTC 2006
           <wotte@blade35.isislab.vanderbilt.edu>
-        
+
           The old change accidentally checked in some wrong code,
           which broke the ReDaC functionality when removing components.
-        
+
 Wed Mar 21 12:12:26 CDT 2007  Chad Elliott  <elliott_c@ociweb.com>
 
-	* CIAO version 0.5.7 released.
+        * CIAO version 0.5.7 released.
 
 Wed Mar 21 14:54:24 UTC 2007  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * NEWS
-        
+
           Latest NEWS items.
 
 Tue Mar 13 20:13:09 UTC 2007  Steve Huston  <shuston@riverace.com>
