@@ -50,6 +50,7 @@ Echo_Client_Request_Interceptor::send_request (
   try
     {
       PortableInterceptor::ReplyStatus rstatus = ri->reply_status ();
+      ACE_UNUSED_ARG (rstatus);
     }
   catch (const ::CORBA::BAD_INV_ORDER&)
     {
