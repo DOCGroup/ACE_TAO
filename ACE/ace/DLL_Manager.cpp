@@ -289,7 +289,7 @@ ACE_DLL_Handle::close (int unload)
 
   if (h != ACE_SHLIB_INVALID_HANDLE)
     {
-      retval = ACE_OS::dlclose (this->handle_);
+      retval = ACE_OS::dlclose (h);
 
       if (retval != 0 && ACE::debug ())
         ACE_ERROR ((LM_ERROR,

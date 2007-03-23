@@ -1,3 +1,9 @@
+Fri Mar 23 15:36:48 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * ace/DLL_Manager.cpp (close): After
+          Thu Mar 22 18:33:19 UTC 2007  Steve Huston  <shuston@riverace.com>
+          was closing the wrong handle value; fixed.
+
 Fri Mar 23 15:19:18 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/CDR_Stream.cpp:
