@@ -10,6 +10,7 @@
 #include "tao/Messaging/Messaging.h"
 #include "ace/Task.h"
 #include "ace/SString.h"
+#include "ace/OS_NS_unistd.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -32,14 +33,12 @@ public:
   int svc (void);
 
   bool done(void) const;
+  const char *ID (void) const;
 
 private:
   /// Make sure that all threads have connections available to
   /// workaround bug 189
   void validate_connection (void);
-
-  void do_invocations(Test::Payload& payload);
-  void do_sync_none_invocations(Test::Payload& payload);
 
 private:
   /// Reference to the test interface
