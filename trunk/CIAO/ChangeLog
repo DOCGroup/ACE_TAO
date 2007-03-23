@@ -4,12 +4,12 @@ Fri Mar 23 02:50:00 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
         * DAnCE/NodeApplication/Configurator_Factory.inl:
         * DAnCE/NodeApplication/Configurator_Factory.cpp:
 
-        Fixed bugzilla 2860. All inlined implementations were moved to .inl file
-        to follow ACE/TAO/CIAO conventions.
+          Fixed bugzilla 2860. All inlined implementations were
+          moved to .inl file to follow ACE/TAO/CIAO conventions.
 
-        Uncessary include files were removed.
+          Uncessary include files were removed.
 
-        ACE_DLL was commented out since it is not used anymore.
+          ACE_DLL was commented out since it is not used anymore.
 
 Thu Mar 22 19:09:35 UTC 2007  Gan Deng  <gan.deng@vanderbilt.edu>
 
