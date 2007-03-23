@@ -45,7 +45,7 @@ namespace CIAO
        *
        */
 
-      class Config_Handlers_Common_Export ERE_Handler
+  class Config_Handlers_Common_Export ERE_Handler
 	{
 	public:
 	  static void external_ref_endpoints (const PlanConnectionDescription &src,

@@ -171,9 +171,7 @@ namespace CIAO
                       Servant_Activator (this->orb_.in ()),
                       CORBA::NO_MEMORY ());
 
-    this->facet_cons_poa_->set_servant_manager (
-                                                this->sa_
-                                                );
+    this->facet_cons_poa_->set_servant_manager (this->sa_);
   }
 
   CORBA::Object_ptr
@@ -193,11 +191,9 @@ namespace CIAO
         tmp = this->facet_cons_poa_.in ();
       }
 
-    PortableServer::ObjectId_var oid =
-      tmp->activate_object (p);
+    PortableServer::ObjectId_var oid = tmp->activate_object (p);
 
-    CORBA::Object_var objref =
-      tmp->id_to_reference (oid.in ());
+    CORBA::Object_var objref = tmp->id_to_reference (oid.in ());
 
     return objref._retn ();
   }
@@ -407,8 +403,7 @@ namespace CIAO
     PortableServer::ServantBase_var safe (home_servant);
 
     CORBA::Object_var objref =
-      this->install_servant (home_servant,
-                             Container::Component);
+      this->install_servant (home_servant, Container::Component);
 
     Components::CCMHome_var homeref =
       Components::CCMHome::_narrow (objref.in ());
@@ -421,8 +416,7 @@ namespace CIAO
   {
     CIAO_TRACE ("Session_Container::ciao_uninstall_home");
 
-    this->uninstall (homeref,
-                     Container::Component);
+    this->uninstall (homeref, Container::Component);
   }
 
   void
@@ -530,8 +524,7 @@ namespace CIAO
     PortableServer::ObjectId_var oid =
       PortableServer::string_to_ObjectId (obj_id);
 
-    CORBA::String_var str =
-      PortableServer::ObjectId_to_string (oid.in ());
+    CORBA::String_var str = PortableServer::ObjectId_to_string (oid.in ());
 
     if (t == Container::Facet_Consumer)
       {
