@@ -395,8 +395,6 @@ perform_redeployment (const Deployment::Properties & configProperty,
   //        This capability is useful to install a set of new components into
   //        some totally new nodes.
 
-  ACE_UNUSED_ARG (configProperty);
-  ACE_UNUSED_ARG (start);
 
   CIAO_TRACE ("CIAO::NodeApplicationManager_Impl_Base::perform_redeployment");
 
@@ -419,15 +417,12 @@ perform_redeployment (const Deployment::Properties & configProperty,
           // NOTE: We are propogating back "all" the facets/consumers object
           // references to the DAM, including the previous existing ones.
           providedReference =
-            this->create_connections (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+            this->create_connections ();
 
           if (providedReference == 0)
             {
-              ACE_TRY_THROW
-                (Deployment::InstallationFailure
-                  ("NodeApplicationManager_Impl::startLaunch",
-                    "Error creating connections during startLaunch."));
+              throw Deployment::InstallationFailure ("NodeApplicationManager_Impl::startLaunch",
+                                                     "Error creating connections during startLaunch.");
             }
         }
       else // This is a new NodeApplication process, then we need to install
@@ -435,9 +430,7 @@ perform_redeployment (const Deployment::Properties & configProperty,
         {
           this->startLaunch (configProperty,
                              providedReference,
-                             start
-                             ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+                             start);
         }
     }
   catch (const Deployment::UnknownImplId& e)
