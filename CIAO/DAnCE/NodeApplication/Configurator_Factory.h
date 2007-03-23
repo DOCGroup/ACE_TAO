@@ -24,17 +24,13 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/ORB_Core.h"
-#include "tao/ORB.h"
-#include "ace/Task.h"
 #include "ace/SString.h"
-#include "ace/Auto_Ptr.h"
-#include "ace/DLL.h"
-#include "NodeApp_Configurator.h"
+//#include "ace/DLL.h"
 
 namespace CIAO
 {
-
+  //forward declaration
+  class NodeApp_Configurator;
 
   /**
    * @class NodeApplication_Options
@@ -54,25 +50,22 @@ namespace CIAO
   {
   public:
     // default ctor.
-    NodeApplication_Options () : use_callback_ (true), rt_support_ (false) {}
+    NodeApplication_Options ();
 
     /// extracting commandline arguments
     int parse_args (int &argc, char *argv[]);
 
     NodeApp_Configurator *create_nodeapp_configurator (void);
 
-    bool use_callback () {return this->use_callback_; }
+    bool use_callback ();
 
-    bool rt_support () {return this->rt_support_; }
+    bool rt_support ();
 
-    int write_ior_file ()
-    { return (this->ior_output_filename_.length () != 0); }
+    int write_ior_file ();
 
-    const char *ior_output_filename ()
-    { return this->ior_output_filename_.c_str (); }
+    const char *ior_output_filename ();
 
-    const char *callback_ior ()
-    { return this->callback_ior_.c_str (); }
+    const char *callback_ior ();
 
   private:
     /// The name of the file to write stringified IOR to.
@@ -93,11 +86,15 @@ namespace CIAO
     bool rt_support_;
 
     // For managing dynamically loaded configurator library
-    ACE_DLL config_dll_;
+    //ACE_DLL config_dll_;
   };
 
 }
 
+#if defined (__ACE_INLINE__)
+# include "Configurator_Factory.inl"
+#endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
 #endif /* CIAO_CONFIGURATOR_FACTORY_H */
+
