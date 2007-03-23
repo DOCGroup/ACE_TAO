@@ -137,9 +137,11 @@ TAO_SSLIOP_Profile::decode (TAO_InputCDR & cdr)
         {
           // IIOP profile - doesn't have ssl endpoints encoded.  We
           // must create 'dummy' ssl endpoint list anyways, in order to
-          // make iiop endpoints accessable and usable.
+          // make iiop endpoints accessable and usable. Since we've
+          // already got one ssliop endpoint, only add the extra
+          // endpoints (count_ - 1).
           for (size_t i = 0;
-               i < this->count_;
+               i < this->count_ -1;
                ++i)
             {
               TAO_SSLIOP_Endpoint *endpoint = 0;
