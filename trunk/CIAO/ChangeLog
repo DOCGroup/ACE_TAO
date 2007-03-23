@@ -1,3 +1,9 @@
+Fri Mar 23 06:45:51 UTC 2007  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/RepositoryManager/ZIP_Wrapper.h
+        
+          Addressed initialization warning.
+
 Fri Mar 23 03:13:40 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * DAnCE/NodeApplication/Config_Manager.h:
