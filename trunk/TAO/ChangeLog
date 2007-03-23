@@ -1,7 +1,21 @@
+Fri Mar 23 11:35:00 UTC 2007  Simon Massey  <sma@prismtech.com>
+
+        * tests/Big_Request_Muxing/client.cpp:
+        * tests/Big_Request_Muxing/Client_Task.cpp:
+        * tests/Big_Request_Muxing/Client_Task.h:
+        * tests/Big_Request_Muxing/Payload_Receiver.cpp:
+        * tests/Big_Request_Muxing/Payload_Receiver.h:
+        * tests/Big_Request_Muxing/run_test.pl:
+        * tests/Big_Request_Muxing/server.cpp:
+        * tests/Big_Request_Muxing/test.idl:
+
+          Stop erroring on lost message that may not be delivered.
+          Improved transient tollerance and debug output.
+
 Fri Mar 23 06:42:20 UTC 2007  William R. Otte  <wotte@dre.vanderbilt.edu>
 
-        * tests/Portable_Interceptors/Dynamic/server_interceptor.cpp
-        * tests/Portable_Interceptors/Dynamic/client_interceptor.cpp
+        * tests/Portable_Interceptors/Dynamic/server_interceptor.cpp:
+        * tests/Portable_Interceptors/Dynamic/client_interceptor.cpp:
         
           Unused argument warnings.
 

@@ -16,18 +16,17 @@ class Payload_Receiver
   : public virtual POA_Test::Payload_Receiver
 {
 public:
-  Payload_Receiver ();
+  Payload_Receiver (void);
 
   // = The skeleton methods
-  virtual void more_data (const Test::Payload &payload);
+  virtual void more_data (const Test::Payload &payload,
+                          CORBA::Boolean maybe_lost);
 
-  virtual void sync_none_more_data (const Test::Payload &payload);
-
-  int count(bool sync_none = false) const;
+  int count (bool maybe_lost = false) const;
 
 private:
   ACE_Atomic_Op<TAO_SYNCH_MUTEX, int> message_count_;
-  ACE_Atomic_Op<TAO_SYNCH_MUTEX, int> sync_none_message_count_;
+  ACE_Atomic_Op<TAO_SYNCH_MUTEX, int> maybe_lost_count_;
 };
 
 #include /**/ "ace/post.h"

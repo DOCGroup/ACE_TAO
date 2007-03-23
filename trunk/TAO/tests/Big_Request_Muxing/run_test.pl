@@ -11,17 +11,16 @@ use PerlACE::Run_Test;
 $iorfile = PerlACE::LocalFile ("server.ior");
 
 if (PerlACE::is_vxworks_test()) {
-    $SV = new PerlACE::ProcessVX ("server", "-o server.ior -e 800 -n 400");
+    $SV = new PerlACE::ProcessVX ("server", "-o server.ior -e 400 -l 800");
 }
 else {
-    $SV  = new PerlACE::Process ("server", "-o $iorfile -e 800 -n 400");
+    $SV  = new PerlACE::Process ("server", "-o $iorfile -e 400 -l 800");
 }
 $CL1 = new PerlACE::Process ("client", " -k file://$iorfile");
 $CL2 = new PerlACE::Process ("client", " -k file://$iorfile");
 
 for ($n = 0; $n < 10; ++$n) {
   print "=================================================================\n";
-  print "test run $n\n";
   unlink $iorfile;
 
   $SV->Spawn ();

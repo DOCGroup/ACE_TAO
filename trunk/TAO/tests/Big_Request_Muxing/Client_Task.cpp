@@ -7,6 +7,12 @@
 
 ACE_RCSID(Big_Request_Muxing, Client_Task, "$Id$")
 
+namespace
+{
+  const ACE_Time_Value TRANSIENT_HOLDOFF (0, 2000); // 2ms delay
+  const int TRANSIENT_LIMIT = 100;
+}
+
 Client_Task::Client_Task (ACE_Thread_Manager *thr_mgr,
                           Test::Payload_Receiver_ptr payload_receiver,
                           CORBA::Long event_count,
@@ -31,39 +37,26 @@ Client_Task::done(void) const
   return done_;
 }
 
-void
-Client_Task::do_invocations(Test::Payload& payload)
+const char *
+Client_Task::ID (void) const
 {
-  ACE_DEBUG((LM_DEBUG, "(%P|%t)Client_Task %s sending %d payloads.\n",
-             this->id_.c_str(), this->event_count_));
-
-  for (int i = 0; i != this->event_count_; ++i)
-    {
-      this->payload_receiver_->more_data (payload);
-    }
-}
-
-void
-Client_Task::do_sync_none_invocations(Test::Payload& payload)
-{
-  ACE_DEBUG((LM_DEBUG, "(%P|%t)Client_Task %s sending %d SYNC_NONE payloads.\n",
-             this->id_.c_str(), this->event_count_));
-
-  for (int i = 0; i != this->event_count_; ++i)
-    {
-      this->payload_receiver_->sync_none_more_data (payload);
-    }
+  return id_.c_str ();
 }
 
 int
 Client_Task::svc (void)
 {
-  ACE_DEBUG ((LM_DEBUG,"(%P|%t) Client_Task %s started\n",this->id_.c_str()));
+  if (TAO_debug_level > 0)
+    {
+      ACE_DEBUG ((LM_DEBUG,"(%P|%t) Client_Task %s started\n", this->ID ()));
+    }
   Test::Payload payload (this->event_size_);
   payload.length (this->event_size_);
 
   for (CORBA::ULong j = 0; j != payload.length (); ++j)
-    payload[j] = (j % 256);
+    {
+      payload[j] = (j % 256);
+    }
 
   try
     {
@@ -87,21 +80,56 @@ Client_Task::svc (void)
       policy_current->set_policy_overrides (policy_list,
                                             CORBA::ADD_OVERRIDE);
 
-      if (this->sync_scope_ == Messaging::SYNC_NONE)
-        this->do_sync_none_invocations(payload);
-      else
-        this->do_invocations(payload);
-
+      if (TAO_debug_level > 0)
+        {
+          ACE_DEBUG ((LM_DEBUG, "(%P|%t) Client_Task %s sending %d payloads.\n",
+                     this->ID (), this->event_count_));
+        }
+      int transient_count= 0;
+      for (int i = 0; i != this->event_count_; ++i)
+        {
+          try
+            {
+              this->payload_receiver_->more_data (payload, this->sync_scope_ != Messaging::SYNC_WITH_TARGET);
+              transient_count= 0;
+            }
+          catch (const CORBA::TRANSIENT &)
+            {
+              if (++transient_count < TRANSIENT_LIMIT)
+                {
+                  if (transient_count == TRANSIENT_LIMIT / 2)
+                    {
+                      ACE_DEBUG ((LM_DEBUG, "(%P|%t) Client_Task %s large TRANSIENTS encountered at payload %d/%d.\n",
+                                this->ID (), i+1, this->event_count_));
+                    }
+                  ACE_OS::sleep (TRANSIENT_HOLDOFF);
+                  --i; // Re-try the same message
+                }
+              else
+                {
+                  break; // Abort the message sending.
+                }
+            }
+        }
     }
   catch (const CORBA::Exception& ex)
     {
-      ACE_DEBUG((LM_DEBUG, "(%P|%t)Client_Task %s: ",
-                 this->id_.c_str()));
-      ex._tao_print_exception ("");
+      ACE_DEBUG ((LM_DEBUG, "(%P|%t) Client_Task %s: ", this->ID ()));
+      ex._tao_print_exception ("CORBA Exception caught:");
       done_ = true;
       return -1;
     }
-  ACE_DEBUG((LM_DEBUG, "(%P|%t)Client_Task %s finished.\n", this->id_.c_str()));
+  catch (...)
+    {
+      ACE_DEBUG ((LM_DEBUG, "(%P) Unknown exception caught\n"));
+      done_ = true;
+      return -1;
+    }
+
+  if (TAO_debug_level > 0)
+    {
+      ACE_DEBUG ((LM_DEBUG, "(%P|%t) Client_Task %s finished.\n", this->ID ()));
+    }
   done_ = true;
   return 0;
 }
@@ -111,11 +139,39 @@ Client_Task::validate_connection (void)
 {
   try
     {
+      int transient_count= 0;
       Test::Payload payload(0);
       for (int i = 0; i != 100; ++i)
         {
-          (void) this->payload_receiver_->more_data (payload);
+          try
+            {
+              this->payload_receiver_->more_data (
+                payload,
+                this->sync_scope_ != Messaging::SYNC_WITH_TARGET);
+              transient_count= 0;
+            }
+          catch (const CORBA::TRANSIENT &)
+            {
+              if (++transient_count < TRANSIENT_LIMIT)
+                {
+                  if (transient_count == TRANSIENT_LIMIT / 2)
+                    {
+                      ACE_DEBUG ((LM_DEBUG,
+                        "(%P|%t) Client Task %s large TRANSIENTS encountered at validation %d%%.\n",
+                        this->ID (), i+1));
+                    }
+                  ACE_OS::sleep (TRANSIENT_HOLDOFF);
+                  --i; // Re-try the same message
+                }
+              else
+                {
+                  break; // Abort the message sending.
+                }
+            }
         }
     }
-  catch (const CORBA::Exception&){}
+  catch (const CORBA::Exception &)
+    {
+      // Deliberatly ignores any other corba exceptions
+    }
 }
