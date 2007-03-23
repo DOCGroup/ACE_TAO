@@ -1,3 +1,10 @@
+Fri Mar 23 02:33:54 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * ace/ACE.cpp:
+
+         Don't use raw "naked" calls, use the ones provided by ACE_OS.
+         This fixes Bugzilla 2866.
+
 Thu Mar 22 19:59:17 UTC 2007  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * bin/MakeProjectCreator/modules/GNUAutobuildProjectCreator.pm
