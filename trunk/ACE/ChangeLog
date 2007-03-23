@@ -1,3 +1,10 @@
+Fri Mar 23 15:19:18 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/CDR_Stream.cpp:
+          Fixed compile error when ACE_LACKS_CDR_ALIGNMENT is defined.
+          Thanks to Aleksandar Vukajlovic <vukajlo at finsoft dot co dot yu>
+          for reporting this
+
 Fri Mar 23 13:11:18 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * bin/tao_other_tests.lst:
