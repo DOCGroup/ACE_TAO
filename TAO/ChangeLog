@@ -2,7 +2,7 @@ Fri Mar 23 16:27:39 UTC 2007  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * tests/TransportCurrent/IIOP/IIOP.mpc
         * tests/TransportCurrent/Framework/Framework.mpc
-        
+
           OS X Linker warnings.
 
 Fri Mar 23 13:02:40 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
@@ -27,6 +27,10 @@ Fri Mar 23 13:02:40 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
         * tao/Object_Reference_Sequence_Element_T.h:
         * tao/Profile.h:
         * tao/Profile.cpp:
+
+          Fix for bugzilla 2868, allowing SSLIOP, or other IIOP-derived
+          protocols to be used with the EndpointPolicy. Includes a new
+          test case.
 
 Fri Mar 23 02:44:53 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
 
