@@ -351,4 +351,58 @@ TAO_SSLIOP_Profile::parse_string (const char * ior)
    }
 }
 
+
+void
+TAO_SSLIOP_Profile::remove_endpoint (TAO_SSLIOP_Endpoint *endp)
+{
+  if (endp == 0)
+    return;
+
+  // special handling for the target matching the base endpoint
+  if (endp == &this->ssl_endpoint_)
+    {
+      if (--this->count_ > 0)
+        {
+          TAO_SSLIOP_Endpoint* ssl_n = this->ssl_endpoint_.next_;
+          this->ssl_endpoint_ = *ssl_n;
+          // since the assignment operator does not copy the next_
+          // pointer, we must do it by hand
+          this->ssl_endpoint_.next_ = ssl_n->next_;
+          delete ssl_n;
+          TAO_IIOP_Endpoint *n = this->endpoint_.next_;
+          this->endpoint_ = *n;
+          this->endpoint_.next_ = n->next_;
+          delete n;
+        }
+      return;
+    }
+
+  TAO_SSLIOP_Endpoint* last = &this->ssl_endpoint_;
+  TAO_SSLIOP_Endpoint* cur = this->ssl_endpoint_.next_;
+
+  while (cur != 0)
+  {
+    if (cur == endp)
+      break;
+    last = cur;
+    cur = cur->next_;
+  }
+
+  if (cur != 0)
+  {
+    TAO_IIOP_Endpoint *base = cur->iiop_endpoint();
+    last->iiop_endpoint(base->next_, true);
+    last->next_ = cur->next_;
+    cur->next_ = 0;
+    --this->count_;
+    delete cur;
+  }
+}
+
+void
+TAO_SSLIOP_Profile::remove_generic_endpoint (TAO_Endpoint *ep)
+{
+  this->remove_endpoint(dynamic_cast<TAO_SSLIOP_Endpoint *>(ep));
+}
+
 TAO_END_VERSIONED_NAMESPACE_DECL

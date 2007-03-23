@@ -375,6 +375,14 @@ TAO_IIOP_Profile::endpoint (void)
   return &this->endpoint_;
 }
 
+TAO_Endpoint *
+TAO_IIOP_Profile::base_endpoint (void)
+{
+  // do not call endpoint(), return the value directly. This is to
+  // avoid calling a derived implementation of endpoint().
+  return &this->endpoint_;
+}
+
 CORBA::ULong
 TAO_IIOP_Profile::endpoint_count (void) const
 {

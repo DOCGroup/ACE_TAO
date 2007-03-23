@@ -212,6 +212,19 @@ public:
    */
   virtual TAO_Endpoint *endpoint (void) = 0;
 
+
+  /**
+   * Return a pointer to this profile's endpoint.  If the most derived
+   * profile type uses an endpoint that is a type that does not derive
+   * from the endpoint type of the base profile, then this method returns
+   * the base type's endpoint. For example, SSLIOP_Profile derives from
+   * IIOP_Profile, but SSLIOP_Endpoint does not derive from IIOP_Endpoint.
+   * Because SSLIOP is tagged the same as IIOP, this method is required
+   * to facilitate the Endpoint Policy's filtering function.
+   * The default implementation of base_endpoint simply returns endpoint.
+   */
+  virtual TAO_Endpoint *base_endpoint (void);
+
   /// Return how many endpoints this profile contains.
   virtual CORBA::ULong endpoint_count (void) const = 0;
 
