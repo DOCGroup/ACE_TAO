@@ -345,8 +345,8 @@ namespace
       {
         os << endl
            << "// Multiplex " << u.name () << " connection." << endl
-           << "typedef ACE_Array_Map< ::CORBA::ULong," << endl
-           << "                       ";
+           << "typedef ACE_Array_Map<ptrdiff_t," << endl
+           << "                      ";
 
         Traversal::MultiUserData::belongs (u, belongs_);
 
@@ -370,8 +370,8 @@ namespace
       traverse (SemanticGraph::Publisher& p)
       {
         os << endl
-           << "typedef ACE_Array_Map< ::CORBA::ULong," << endl
-           << "                       ";
+           << "typedef ACE_Array_Map<ptrdiff_t," << endl
+           << "                      ";
 
         Traversal::PublisherData::belongs (p, belongs_);
 
@@ -391,8 +391,8 @@ namespace
         }
 
         os << endl
-           << "typedef ACE_Array_Map< ::CORBA::ULong," << endl
-           << "                       " << STRS[COMP_ECB]
+           << "typedef ACE_Array_Map<ptrdiff_t," << endl
+           << "                      " << STRS[COMP_ECB]
            << "_var>" << endl
            << "  " << uc_port_name << "_GENERIC_TABLE;"
            << uc_port_name << "_GENERIC_TABLE ciao_publishes_"
@@ -475,8 +475,7 @@ namespace
       os << "// CIAO-specific." << endl << endl;
 
       os << "static " << t.name () << "_Context *" << endl
-         << "_narrow (" << endl
-         << STRS[COMP_SC] << "_ptr p);" << endl;
+         << "_narrow ( " << STRS[COMP_SC] << "_ptr p);" << endl;
 
       os << "protected:" << endl
          << "// Methods that manage this component's connections"
@@ -563,8 +562,7 @@ namespace
         Traversal::ProviderData::belongs (p, belongs_);
 
         os << "_ptr" << endl
-           << "provide_" << p.name () << " (" << endl
-           << ");" << endl;
+           << "provide_" << p.name () << " ();" << endl;
       }
 
       virtual void
@@ -661,8 +659,7 @@ namespace
 
         Traversal::ConsumerData::belongs (c, belongs_);
 
-        os << " *evt" << endl
-           << ");" << endl;
+        os << " *evt);" << endl;
 
         os << "// Inherited from " << STRS[COMP_ECB] << "." << endl
            << "virtual void" << endl
@@ -678,14 +675,12 @@ namespace
 
         os << "// CIAO-specific in " << STRS[COMP_ECB] << "." << endl
            << "virtual CORBA::Boolean" << endl
-           << "ciao_is_substitutable (" << endl
-           << "const char *event_repo_id" << endl
-           << ");" << endl;
+           << "ciao_is_substitutable (const char *event_repo_id);"
+           << endl;
 
         os << "// Get component implementation." << endl
            << "virtual CORBA::Object_ptr" << endl
-           << "_get_component (" << endl
-           << ");" << endl;
+           << "_get_component ();" << endl;
 
         os << "protected:" << endl
            << c.scoped_name ().scope_name ().scope_name () << "::CCM_"
@@ -705,8 +700,7 @@ namespace
         Traversal::ConsumerData::belongs (c, belongs_);
 
         os << "Consumer_ptr" << endl
-           << "get_consumer_" << c.name () << " (" << endl
-           << ");" << endl;
+           << "get_consumer_" << c.name () << " ();" << endl;
       }
 
       virtual void
@@ -817,8 +811,7 @@ namespace
       traverse (SemanticGraph::Provider& p)
       {
         os << "::CORBA::Object_ptr" << endl
-           << "provide_" << p.name () << "_i (" << endl
-           << ");" << endl;
+           << "provide_" << p.name () << "_i ();" << endl;
       }
 
       virtual void
@@ -835,8 +828,7 @@ namespace
       traverse (SemanticGraph::Consumer& c)
       {
         os << "::Components::EventConsumerBase_ptr" << endl
-           << "get_consumer_" << c.name () << "_i (" << endl
-           << ");" << endl;
+           << "get_consumer_" << c.name () << "_i ();" << endl;
       }
 
       virtual void
@@ -890,8 +882,8 @@ namespace
       os << "virtual ~" << t.name () << "_Servant (void);" << endl;
 
       os << "virtual void" << endl
-         << "set_attributes (" << endl
-         << "const ::Components::ConfigValues &descr" << endl
+         << "set_attributes (const ::Components::ConfigValues &descr"
+         << endl
          << ");" << endl;
 
       os << "// Supported operations." << endl << endl;
@@ -999,13 +991,11 @@ namespace
       os << "// Operations for Receptacles interface." << endl << endl;
 
       os << "virtual " << STRS[COMP_CK] << " *" << endl
-         << "connect (" << endl
-         << "const char *name," << endl
+         << "connect (const char *name," << endl
          << "CORBA::Object_ptr connection);" << endl;
 
       os << "virtual CORBA::Object_ptr" << endl
-         << "disconnect (" << endl
-         << "const char *name," << endl
+         << "disconnect (const char *name," << endl
          << STRS[COMP_CK] << " *ck);" << endl;
 
       os << "virtual " << STRS[COMP_RD] << " *" << endl
@@ -1014,18 +1004,15 @@ namespace
       os << "// Operations for Events interface." << endl << endl;
 
       os << "virtual " << STRS[COMP_CK] << " *" << endl
-         << "subscribe (" << endl
-         << "const char *publisher_name," << endl
+         << "subscribe (const char *publisher_name," << endl
          << STRS[COMP_ECB] << "_ptr subscriber);" << endl;
 
       os << "virtual " << STRS[COMP_ECB] << "_ptr" << endl
-         << "unsubscribe (" << endl
-         << "const char *publisher_name," << endl
+         << "unsubscribe (const char *publisher_name," << endl
          << STRS[COMP_CK] << " *ck);" << endl;
 
       os << "virtual void" << endl
-         << "connect_consumer (" << endl
-         << "const char *emitter_name," << endl
+         << "connect_consumer (const char *emitter_name," << endl
          << STRS[COMP_ECB] << "_ptr consumer);" << endl;
 
       os << "virtual " << STRS[COMP_ECB] << "_ptr" << endl
