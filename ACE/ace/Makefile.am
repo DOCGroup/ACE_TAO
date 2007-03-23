@@ -1108,7 +1108,6 @@ nobase_include_HEADERS += \
   config-win32-msvc-7.h \
   config-win32-msvc-8.h \
   config-win32-msvc.h \
-  config-win32-visualage.h \
   config-win32.h \
   config.h \
   iosfwd.h \

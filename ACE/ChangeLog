@@ -1,7 +1,12 @@
+Fri Mar 23 12:42:02 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Makefile.am:
+          Removed config-win32-visualage.h
+
 Fri Mar 23 06:38:17 UTC 2007  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * tests/Log_Msg_Backend_Test.cpp
-        
+
           Unused argument warnings.
 
 Fri Mar 23 02:33:54 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
@@ -15,10 +20,10 @@ Thu Mar 22 19:59:17 UTC 2007  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * bin/MakeProjectCreator/modules/GNUAutobuildProjectCreator.pm
         * bin/MakeProjectCreator/modules/GNUAutobuildWorkspaceCreator.pm
-        
+
           Added logic to make this generator masquerade as the gnuace
           type for the purposes of specific/verbatim clauses.
-        
+
 Thu Mar 22 19:38:02 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Basic_Types.h:
