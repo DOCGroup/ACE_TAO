@@ -60,7 +60,7 @@ TAO_Endpoint_Acceptor_Filter::fill_profile (const TAO::ObjectKey &object_key,
        ++pfile_ndx)
     {
       TAO_Profile * const pfile = mprofile.get_profile (pfile_ndx);
-      TAO_Endpoint * ep_in_pfile = pfile->endpoint ();
+      TAO_Endpoint * ep_in_pfile = pfile->base_endpoint ();
 
       if (TAO_debug_level > 2)
         ACE_DEBUG ((LM_DEBUG,

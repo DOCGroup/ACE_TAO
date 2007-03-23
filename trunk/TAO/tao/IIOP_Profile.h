@@ -105,6 +105,13 @@ public:
   /// TAG_ALTERNATE_IIOP_ADDRESS components, one endpoint per component
   virtual int encode_alternate_endpoints (void);
   virtual TAO_Endpoint *endpoint (void);
+
+  /// Since SSLIOP_Profile derives from IIOP_Profile, but SSLIOP_Endpoint
+  /// does not derive from IIOP_Endpoint, it is necessary to have a way
+  /// of always getting the IIOP_Endpoint using a generic interface
+  /// regardless of the final type of the profile.
+  virtual TAO_Endpoint *base_endpoint (void);
+
   virtual CORBA::ULong endpoint_count (void) const;
   virtual CORBA::ULong hash (CORBA::ULong max
                             );

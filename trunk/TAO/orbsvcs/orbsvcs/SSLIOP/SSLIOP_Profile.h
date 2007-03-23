@@ -98,6 +98,14 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
        */
       void add_endpoint (TAO_SSLIOP_Endpoint * endp);
 
+
+      /**
+       * Remove @a endp from this profile's list of endpoints.
+       */
+      void remove_endpoint (TAO_SSLIOP_Endpoint * endp);
+
+      void remove_generic_endpoint (TAO_Endpoint *ep);
+
     protected:
 
       /// Destructor.

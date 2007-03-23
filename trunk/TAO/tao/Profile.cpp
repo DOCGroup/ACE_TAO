@@ -113,6 +113,13 @@ TAO_Profile::add_tagged_component (const IOP::TaggedComponent &component
   this->tagged_components_.set_component (component);
 }
 
+
+TAO_Endpoint *
+TAO_Profile::base_endpoint (void)
+{
+  return this->endpoint();
+}
+
 TAO::ObjectKey *
 TAO_Profile::_key (void) const
 {
