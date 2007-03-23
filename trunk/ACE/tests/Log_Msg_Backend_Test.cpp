@@ -69,7 +69,7 @@ Backend::close (void)
 }
 
 ssize_t
-Backend::log (ACE_Log_Record &log_record)
+Backend::log (ACE_Log_Record &)
 {
   ++this->log_count_;
   return 1;
@@ -93,7 +93,7 @@ Backend::hooks_ok (void) const
 // Main function.
 
 int
-run_main (int argc, ACE_TCHAR *argv[])
+run_main (int, ACE_TCHAR *[])
 {
   // Set up the backend prior to ACE_START_TEST so the initialization can
   // call the back end's reset().

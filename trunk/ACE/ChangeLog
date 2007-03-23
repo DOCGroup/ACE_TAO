@@ -1,3 +1,9 @@
+Fri Mar 23 06:38:17 UTC 2007  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * tests/Log_Msg_Backend_Test.cpp
+        
+          Unused argument warnings.
+
 Fri Mar 23 02:33:54 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * ace/ACE.cpp:
