@@ -16,7 +16,7 @@ namespace CIAO
   {
   }
 
-  StandardConfigurator_Impl::~StandardConfigurator_Impl ()
+  StandardConfigurator_Impl::~StandardConfigurator_Impl (void)
   {
   }
 

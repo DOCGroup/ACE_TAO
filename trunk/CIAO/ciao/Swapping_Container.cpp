@@ -113,9 +113,8 @@ namespace CIAO
 
     PortableServer::POAManager_var poa_manager = root->the_POAManager ();
 
-    this->home_servant_poa_ = root->create_POA (name,
-                        poa_manager.in (),
-                        policies);
+    this->home_servant_poa_ =
+      root->create_POA (name, poa_manager.in (), policies);
   }
 
   void
@@ -140,9 +139,7 @@ namespace CIAO
       root->create_servant_retention_policy (PortableServer::RETAIN);
 
     this->facet_cons_poa_ =
-      root->create_POA ("facet_consumer_poa",
-                        poa_manager.in (),
-                        policies);
+      root->create_POA ("facet_consumer_poa", poa_manager.in (), policies);
 
     ACE_NEW_THROW_EX (this->sa_,
                       Servant_Activator (this->orb_.in ()),
