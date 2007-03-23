@@ -77,7 +77,7 @@ public:
 
   ///zip_archive is the arcive to be uncompressed with full path.
   ///path is used for creating a directory with the name of zip archive.
-  static bool uncompress (char* zip_archive, char* path = "",
+  static bool uncompress (char* zip_archive, char* path = 0,
                           bool verbose = true);
 
   /// Get a list of the files in the archive
