@@ -1,3 +1,10 @@
+Fri Mar 23 16:27:39 UTC 2007  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * tests/TransportCurrent/IIOP/IIOP.mpc
+        * tests/TransportCurrent/Framework/Framework.mpc
+        
+          OS X Linker warnings.
+
 Fri Mar 23 13:02:40 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Endpoint.h:
