@@ -128,7 +128,7 @@ TAO_DynStruct_i::set_from_any (const CORBA::Any & any)
           field_any);
 
       // Move to the next field in the CDR stream.
-      (void) TAO_Marshal_Object::perform_skip (field_tc.in (), in);
+      (void) TAO_Marshal_Object::perform_skip (field_tc.in (), &in);
     }
 }
 
