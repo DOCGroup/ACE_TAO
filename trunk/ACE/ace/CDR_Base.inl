@@ -2,11 +2,20 @@
 //
 // $Id$
 
+#if defined (_MSC_VER) && (_MSC_VER >= 1300)
+// Take advantage of MSVC++ byte swapping compiler intrinsics (found
+// in <stdlib.h>).
+# pragma intrinsic (_byteswap_ushort, _byteswap_ulong, _byteswap_uint64)
+#endif  /* _MSC_VER >= 1300 */
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 //
 // The ACE_CDR::swap_X and ACE_CDR::swap_X_array routines are broken
-// in 4 cases for optimization:
+// in 5 cases for optimization:
+//
+// * MSVC++ 7.1 or better
+//   => Compiler intrinsics
 //
 // * AMD64 CPU + gnu g++
 //   => gcc amd64 inline assembly.
@@ -52,7 +61,12 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_INLINE void
 ACE_CDR::swap_2 (const char *orig, char* target)
 {
-#if (defined(ACE_HAS_PENTIUM) || defined (__amd64__)) && defined(__GNUG__)
+#if defined (_MSC_VER) && (_MSC_VER >= 1300)
+  // Take advantage of MSVC++ compiler intrinsic byte swapping
+  // function.
+  *reinterpret_cast<unsigned short *> (target) =
+    _byteswap_ushort (*reinterpret_cast<unsigned short const *> (orig));
+#elif (defined(ACE_HAS_PENTIUM) || defined (__amd64__)) && defined(__GNUG__)
   unsigned short a =
     *reinterpret_cast<const unsigned short*> (orig);
   asm( "rolw $8, %0" : "=r" (a) : "0" (a) );
@@ -75,7 +89,12 @@ ACE_CDR::swap_2 (const char *orig, char* target)
 ACE_INLINE void
 ACE_CDR::swap_4 (const char* orig, char* target)
 {
-#if (defined(ACE_HAS_PENTIUM) || defined (__amd64__)) && defined(__GNUG__)
+#if defined (_MSC_VER) && (_MSC_VER >= 1300)
+  // Take advantage of MSVC++ compiler intrinsic byte swapping
+  // function.
+  *reinterpret_cast<unsigned long *> (target) =
+    _byteswap_ulong (*reinterpret_cast<unsigned long const *> (orig));
+#elif (defined(ACE_HAS_PENTIUM) || defined (__amd64__)) && defined(__GNUG__)
   // We have ACE_HAS_PENTIUM, so we know the sizeof's.
   register unsigned int j =
     *reinterpret_cast<const unsigned int*> (orig);
@@ -99,7 +118,12 @@ ACE_CDR::swap_4 (const char* orig, char* target)
 ACE_INLINE void
 ACE_CDR::swap_8 (const char* orig, char* target)
 {
-#if defined(__amd64__) && defined(__GNUG__)
+#if defined (_MSC_VER) && (_MSC_VER >= 1300)
+  // Take advantage of MSVC++ compiler intrinsic byte swapping
+  // function.
+  *reinterpret_cast<unsigned __int64 *> (target) =
+    _byteswap_uint64 (*reinterpret_cast<unsigned __int64 const *> (orig));
+#elif defined(__amd64__) && defined(__GNUG__)
   register unsigned long x =
     * reinterpret_cast<const unsigned long*> (orig);
   asm ("bswapq %1" : "=r" (x) : "0" (x));
