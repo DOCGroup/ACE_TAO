@@ -1,3 +1,19 @@
+Fri Mar 23 02:44:53 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Profile.cpp:
+
+          Fix for off-by-one counting error processing multi-endpoint
+          insecure iiop endpoints.
+
+        * orbsvcs/tests/Security/InsecureReferences:
+        * orbsvcs/tests/Security/InsecureReferences/InsecureReferences.mpc:
+        * orbsvcs/tests/Security/InsecureReferences/README:
+        * orbsvcs/tests/Security/InsecureReferences/client.conf:
+        * orbsvcs/tests/Security/InsecureReferences/run_test.pl:
+        * orbsvcs/tests/Security/InsecureReferences/test.cpp:
+
+          A new test validating the fix.
+
 Fri Mar 23 12:08:00 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/tutorials/Quoter/AMI/Handler_i.cpp
@@ -111,7 +127,7 @@ Thu Mar 22 19:15:26 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Wed Mar 21 12:12:26 CDT 2007  Chad Elliott  <elliott_c@ociweb.com>
 
-	* TAO version 1.5.7 released.
+        * TAO version 1.5.7 released.
 
 Mon Mar 19 19:34:48 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
