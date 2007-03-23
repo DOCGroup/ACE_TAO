@@ -1,3 +1,11 @@
+Fri Mar 23 12:40:32 UTC 2007  Ossama Othman  <ossama_othman at symantec dot com>
+
+        * ace/CDR_Base.inl (swap_2, swap_4, swap_8):
+
+          Take advantage of MSVC++ compiler intrinsic byte swapping
+          functions to improve performance when demarshaling CDR streams
+          sent by a host with a different byte ordering.
+
 Fri Mar 23 15:48:42 UTC 2007  Steve Huston  <shuston@riverace.com>
 
         * ace/Handle_Gobbler.{h inl}: Removed left-over disabled code from
