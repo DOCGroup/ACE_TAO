@@ -3343,7 +3343,7 @@ ACE::strnew (const char *s)
     return 0;
   char *t = 0;
   ACE_NEW_RETURN (t,
-                  char [::strlen (s) + 1],
+                  char [ACE_OS::strlen (s) + 1],
                   0);
   if (t == 0)
     return 0;
