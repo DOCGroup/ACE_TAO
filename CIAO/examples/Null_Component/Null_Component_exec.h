@@ -62,14 +62,12 @@ namespace CIDL_Null_Component_Impl
 
     // Port operations.
 
-    virtual ::CCM_Null_Interface_ptr
-    get_null_facet ();
+    virtual ::CCM_Null_Interface_ptr get_null_facet ();
 
     // Operations from Components::SessionComponent
 
     virtual void
-    set_session_context (
-      ::Components::SessionContext_ptr ctx);
+    set_session_context (::Components::SessionContext_ptr ctx);
 
     virtual void
     ciao_preactivate ();
