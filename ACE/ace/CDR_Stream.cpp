@@ -97,7 +97,9 @@ ACE_OutputCDR::ACE_OutputCDR (ACE_Data_Block *data_block,
   :  start_ (data_block,
              ACE_Message_Block::DONT_DELETE,
              message_block_allocator),
+#if !defined (ACE_LACKS_CDR_ALIGNMENT)
      current_alignment_ (0),
+#endif /* ACE_LACKS_CDR_ALIGNMENT */
      current_is_writable_ (true),
      do_byte_swap_ (byte_order != ACE_CDR_BYTE_ORDER),
      good_bit_ (true),
