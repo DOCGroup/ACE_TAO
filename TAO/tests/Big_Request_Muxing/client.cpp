@@ -8,11 +8,14 @@ ACE_RCSID(Muxing, client, "$Id$")
 
 const char *ior = "file://test.ior";
 
-// 3 clients with 2 threads each send this many messages.
-// so the server should expect NUM_MSGS * 6 total.
-static const int NUM_MSGS = 100;
-static const int NUM_THRDS = 2;
-static const int MSG_SIZE = 4096;
+namespace
+{
+  // There are 3 clients so the server should expect:
+  // 3 * NUM_MSGS * NUM_THRDS total messages.
+  const int NUM_MSGS = 100;
+  const int NUM_THRDS = 2;
+  const int MSG_SIZE = 4096;
+}
 
 int
 parse_args (int argc, char *argv[])
@@ -51,7 +54,9 @@ main (int argc, char *argv[])
       CORBA::ORB_init (argc, argv);
 
     if (parse_args (argc, argv) != 0)
-      return 1;
+      {
+        return 1;
+      }
 
     CORBA::Object_var tmp =
       orb->string_to_object(ior);
@@ -62,7 +67,7 @@ main (int argc, char *argv[])
     if (CORBA::is_nil (payload_receiver.in ()))
     {
       ACE_ERROR_RETURN ((LM_DEBUG,
-        "Nil coordinator reference <%s>\n",
+        "(%P) Nil coordinator reference <%s>\n",
         ior),
         1);
     }
@@ -89,18 +94,21 @@ main (int argc, char *argv[])
       Messaging::SYNC_NONE,
       ACE_CString("Sync_None"));
 
-    ACE_DEBUG ((LM_DEBUG, "(%P) Activating threads in client\n"));
+    if (TAO_debug_level > 0)
+    {
+      ACE_DEBUG ((LM_DEBUG, "(%P) Client: Activating threads\n"));
+    }
     if (task0.activate (THR_NEW_LWP | THR_JOINABLE, NUM_THRDS, 1) == -1)
     {
-      ACE_ERROR ((LM_ERROR, "Error activating client task\n"));
+      ACE_ERROR ((LM_ERROR, "(%P) Client: Error activating %s task\n", task0.ID ()));
     }
     if (task1.activate (THR_NEW_LWP | THR_JOINABLE, NUM_THRDS, 1) == -1)
     {
-      ACE_ERROR ((LM_ERROR, "Error activating client task\n"));
+      ACE_ERROR ((LM_ERROR, "(%P) Client: Error activating %s task\n", task1.ID ()));
     }
     if (task2.activate (THR_NEW_LWP | THR_JOINABLE, NUM_THRDS, 1) == -1)
     {
-      ACE_ERROR ((LM_ERROR, "Error activating client task\n"));
+      ACE_ERROR ((LM_ERROR, "(%P) Client: Error activating %s task\n", task2.ID ()));
     }
 
     ACE_Time_Value end_time = ACE_OS::gettimeofday() + ACE_Time_Value(10);
@@ -113,7 +121,10 @@ main (int argc, char *argv[])
     }
 
     ACE_Thread_Manager::instance ()->wait ();
-    ACE_DEBUG ((LM_DEBUG, "(%P) Threads finished\n"));
+    if (TAO_debug_level > 0)
+      {
+        ACE_DEBUG ((LM_DEBUG, "(%P) Client: Threads finished posting\n"));
+      }
 
     while (orb->work_pending())
     {
@@ -121,15 +132,26 @@ main (int argc, char *argv[])
       orb->run(tv);
     }
 
+    if (TAO_debug_level > 0)
+      {
+        ACE_DEBUG ((LM_DEBUG, "(%P) Client: work finished\n"));
+      }
+    ACE_OS::sleep (1);
     orb->destroy ();
   }
   catch (const CORBA::Exception& ex)
   {
-    ex._tao_print_exception ("Exception caught:");
+    ACE_DEBUG ((LM_DEBUG, "(%P) Client: "));
+    ex._tao_print_exception ("CORBA Exception caught:");
+    return 1;
+  }
+  catch (...)
+  {
+    ACE_DEBUG ((LM_DEBUG, "(%P) Client caught unknown exception\n"));
     return 1;
   }
 
-  ACE_DEBUG ((LM_DEBUG, "(%P) Ending client\n"));
+  ACE_DEBUG ((LM_DEBUG, "(%P) Ending client (result 0)\n"));
 
   return 0;
 }
