@@ -57,86 +57,51 @@ public:
   void init (CORBA::TypeCode_ptr tc);
 
   // = LocalObject methods.
-  static TAO_DynUnion_i *_narrow (
-      CORBA::Object_ptr obj
-      );
+  static TAO_DynUnion_i *_narrow (CORBA::Object_ptr obj);
 
   // = Functions specific to DynUnion.
 
-  virtual DynamicAny::DynAny_ptr get_discriminator (
-      void)
-;
+  virtual DynamicAny::DynAny_ptr get_discriminator (void);
 
-  virtual void set_discriminator (
-      DynamicAny::DynAny_ptr d
-      )
-;
+  virtual void set_discriminator (DynamicAny::DynAny_ptr d);
 
-  virtual void set_to_default_member (
-      void)
-;
+  virtual void set_to_default_member (void);
 
-  virtual void set_to_no_active_member (
-      void)
-;
+  virtual void set_to_no_active_member (void);
 
-  virtual CORBA::Boolean has_no_active_member (
-      void)
-;
+  virtual CORBA::Boolean has_no_active_member (void);
 
-  virtual CORBA::TCKind discriminator_kind (
-      void)
-;
+  virtual CORBA::TCKind discriminator_kind (void);
 
-  virtual DynamicAny::DynAny_ptr member (
-      void)
-;
+  virtual DynamicAny::DynAny_ptr member (void);
 
-  virtual char * member_name (
-      void)
-;
+  virtual char * member_name (void);
 
-  virtual CORBA::TCKind member_kind (
-      void)
-;
+  virtual CORBA::TCKind member_kind (void);
 
   // = DynAny common functions not implemented in class TAO_DynCommon.
 
-  virtual void from_any (
-      const CORBA::Any & value
-      )
-;
+  virtual void from_any (const CORBA::Any & value);
 
-  virtual CORBA::Any * to_any (
-      void)
-;
+  virtual CORBA::Any * to_any (void);
 
-  virtual CORBA::Boolean equal (
-      DynamicAny::DynAny_ptr dyn_any
-      )
-;
+  virtual CORBA::Boolean equal (DynamicAny::DynAny_ptr dyn_any);
 
-  virtual void destroy (
-      void)
-;
+  virtual void destroy (void);
 
-  virtual DynamicAny::DynAny_ptr current_component (
-      void)
-;
+  virtual DynamicAny::DynAny_ptr current_component (void);
 
 private:
   /// Code common to the constructor from an Any arg and the member
   /// function from_any().
-  void set_from_any (const CORBA::Any &any
-                     );
+  void set_from_any (const CORBA::Any &any);
 
   /// Called by both versions of init().
   void init_common (void);
 
   /// Iterative check for label value match.
   CORBA::Boolean label_match (const CORBA::Any &my_any,
-                              const CORBA::Any &other_any
-                              );
+                              const CORBA::Any &other_any);
 
   /// Use copy() or assign() instead of these.
   TAO_DynUnion_i (const TAO_DynUnion_i &src);

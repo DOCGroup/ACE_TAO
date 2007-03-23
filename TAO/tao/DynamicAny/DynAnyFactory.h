@@ -47,41 +47,29 @@ public:
   TAO_DynAnyFactory (void);
 
   // = The DynamicAnyFactory methods.
-  virtual DynamicAny::DynAny_ptr create_dyn_any (
-      const CORBA::Any & value
-      );
+  virtual DynamicAny::DynAny_ptr create_dyn_any (const CORBA::Any & value);
 
   virtual DynamicAny::DynAny_ptr create_dyn_any_from_type_code (
-      CORBA::TypeCode_ptr type
-      )
-;
+      CORBA::TypeCode_ptr type);
 
   virtual DynamicAny::DynAny_ptr create_dyn_any_without_truncation (
-      const CORBA::Any & value
-
-    );
+      const CORBA::Any & value);
 
   virtual DynamicAny::DynAnySeq * create_multiple_dyn_anys (
       const DynamicAny::AnySeq & values,
-      ::CORBA::Boolean allow_truncate
-
-    );
+      ::CORBA::Boolean allow_truncate);
 
   virtual DynamicAny::AnySeq * create_multiple_anys (
-      const DynamicAny::DynAnySeq & values
-
-    );
+      const DynamicAny::DynAnySeq & values);
 
   /// TAO-specific methods.
 
   /// Obtain the kind of object, after all aliasing has been removed.
-  static CORBA::TCKind unalias (CORBA::TypeCode_ptr tc
-                               );
+  static CORBA::TCKind unalias (CORBA::TypeCode_ptr tc);
 
   /// Same as above, but returns type code instead of TCKind. Caller
   /// must release the return value.
-  static CORBA::TypeCode_ptr strip_alias (CORBA::TypeCode_ptr tc
-                                         );
+  static CORBA::TypeCode_ptr strip_alias (CORBA::TypeCode_ptr tc);
 
 private:
   // Not allowed.

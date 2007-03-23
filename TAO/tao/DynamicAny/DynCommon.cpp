@@ -946,22 +946,19 @@ TAO_DynCommon::get_abstract (void)
 void
 TAO_DynCommon::insert_boolean_seq (const CORBA::BooleanSeq &value)
 {
-  TAO::DynAnyBasicTypeUtils<CORBA::BooleanSeq>::insert_value (value,
-                                                              this);
+  TAO::DynAnyBasicTypeUtils<CORBA::BooleanSeq>::insert_value (value, this);
 }
 
 void
 TAO_DynCommon::insert_octet_seq (const CORBA::OctetSeq &value)
 {
-  TAO::DynAnyBasicTypeUtils<CORBA::OctetSeq>::insert_value (value,
-                                                            this);
+  TAO::DynAnyBasicTypeUtils<CORBA::OctetSeq>::insert_value (value, this);
 }
 
 void
 TAO_DynCommon::insert_char_seq (const CORBA::CharSeq &value)
 {
-  TAO::DynAnyBasicTypeUtils<CORBA::CharSeq>::insert_value (value,
-                                                           this);
+  TAO::DynAnyBasicTypeUtils<CORBA::CharSeq>::insert_value (value, this);
 }
 
 void
@@ -979,57 +976,49 @@ TAO_DynCommon::insert_ushort_seq (const CORBA::UShortSeq &value)
 void
 TAO_DynCommon::insert_long_seq (const CORBA::LongSeq &value)
 {
-  TAO::DynAnyBasicTypeUtils<CORBA::LongSeq>::insert_value (value,
-                                                           this);
+  TAO::DynAnyBasicTypeUtils<CORBA::LongSeq>::insert_value (value, this);
 }
 
 void
 TAO_DynCommon::insert_ulong_seq (const CORBA::ULongSeq &value)
 {
-  TAO::DynAnyBasicTypeUtils<CORBA::ULongSeq>::insert_value (value,
-                                                            this);
+  TAO::DynAnyBasicTypeUtils<CORBA::ULongSeq>::insert_value (value, this);
 }
 
 void
 TAO_DynCommon::insert_float_seq (const CORBA::FloatSeq &value)
 {
-  TAO::DynAnyBasicTypeUtils<CORBA::FloatSeq>::insert_value (value,
-                                                            this);
+  TAO::DynAnyBasicTypeUtils<CORBA::FloatSeq>::insert_value (value, this);
 }
 
 void
 TAO_DynCommon::insert_double_seq (const CORBA::DoubleSeq &value)
 {
-  TAO::DynAnyBasicTypeUtils<CORBA::DoubleSeq>::insert_value (value,
-                                                             this);
+  TAO::DynAnyBasicTypeUtils<CORBA::DoubleSeq>::insert_value (value, this);
 }
 
 void
 TAO_DynCommon::insert_longlong_seq (const CORBA::LongLongSeq &value)
 {
-  TAO::DynAnyBasicTypeUtils<CORBA::LongLongSeq>::insert_value (value,
-                                                               this);
+  TAO::DynAnyBasicTypeUtils<CORBA::LongLongSeq>::insert_value (value, this);
 }
 
 void
 TAO_DynCommon::insert_ulonglong_seq (const CORBA::ULongLongSeq &value)
 {
-  TAO::DynAnyBasicTypeUtils<CORBA::ULongLongSeq>::insert_value (value,
-                                                                this);
+  TAO::DynAnyBasicTypeUtils<CORBA::ULongLongSeq>::insert_value (value, this);
 }
 
 void
 TAO_DynCommon::insert_longdouble_seq (const CORBA::LongDoubleSeq &value)
 {
-  TAO::DynAnyBasicTypeUtils<CORBA::LongDoubleSeq>::insert_value (value,
-                                                                 this);
+  TAO::DynAnyBasicTypeUtils<CORBA::LongDoubleSeq>::insert_value (value, this);
 }
 
 void
 TAO_DynCommon::insert_wchar_seq (const CORBA::WCharSeq &value)
 {
-  TAO::DynAnyBasicTypeUtils<CORBA::WCharSeq>::insert_value (value,
-                                                            this);
+  TAO::DynAnyBasicTypeUtils<CORBA::WCharSeq>::insert_value (value, this);
 }
 
 // ****************************************************************
@@ -1290,8 +1279,7 @@ TAO_DynCommon::ref_to_component (CORBA::Boolean val)
 }
 
 CORBA::TypeCode_ptr
-TAO_DynCommon::check_type_and_unalias (CORBA::TypeCode_ptr tc
-                                       )
+TAO_DynCommon::check_type_and_unalias (CORBA::TypeCode_ptr tc)
 {
   this->check_type (tc);
 

@@ -92,7 +92,6 @@ TAO::ServerRequestInfo::arguments (void)
   // Return value is always generated as first TAO::Argument in
   // skeleton.  It shouldn't be included in the parameter list.
   // Skip it.
-
   TAO::Argument * const * const begin = this->args_ + 1;
   TAO::Argument * const * const end   = this->args_ + this->nargs_;
 
@@ -107,7 +106,14 @@ TAO::ServerRequestInfo::arguments (void)
       // Dynamic::ParameterList.
       Dynamic::Parameter& parameter = (*parameter_list)[p];
       parameter.mode = (*i)->mode ();
-      (*i)->interceptor_value (&parameter.argument);
+      // When we are in receive_request and have an out argument, then
+      // don't copy it, just let the any be empty with typecode tk_null
+      if ((this->server_request_.reply_status () != -1) ||
+          (this->server_request_.reply_status () == -1 &&
+           (*i)->mode () != CORBA::PARAM_OUT))
+        {
+          (*i)->interceptor_value (&parameter.argument);
+        }
     }
 
   return safe_parameter_list._retn ();
@@ -164,7 +170,6 @@ TAO::ServerRequestInfo::result (void)
     }
 
   // Generate the result on demand.
-
   static CORBA::Boolean const tk_void_any = true;
 
   CORBA::Any * result_any =

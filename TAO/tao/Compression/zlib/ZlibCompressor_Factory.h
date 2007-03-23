@@ -28,14 +28,14 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
-    class TAO_ZLIBCOMPRESSOR_Export Zlib_CompressorFactory : public ::TAO::CompressorFactory
+    class TAO_ZLIBCOMPRESSOR_Export Zlib_CompressorFactory :
+      public ::TAO::CompressorFactory
     {
       public:
         Zlib_CompressorFactory (void);
 
         virtual ::Compression::Compressor_ptr get_compressor (
-            ::Compression::CompressionLevel compression_level
-          );
+            ::Compression::CompressionLevel compression_level);
        private:
          ::Compression::Compressor_var compressor_;
     };

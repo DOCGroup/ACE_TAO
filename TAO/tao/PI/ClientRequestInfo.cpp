@@ -404,8 +404,7 @@ TAO_ClientRequestInfo::operation (void)
 {
   this->check_validity ();
 
-  return CORBA::string_dup (
-    this->invocation_->operation_details ().opname  ());
+  return CORBA::string_dup (this->invocation_->operation_details ().opname  ());
 }
 
 Dynamic::ParameterList *
@@ -423,14 +422,12 @@ TAO_ClientRequestInfo::arguments (void)
     throw ::CORBA::MARSHAL ();
 
   return safe_parameter_list._retn ();
-
-  //return this->invocation_->arguments ();
 }
 
 bool
 TAO_ClientRequestInfo::parameter_list (Dynamic::ParameterList &param_list)
 {
-  // Account for the return type that could be in the argument list.
+  // Account for the return type that is in the argument list.
   param_list.length (this->invocation_->operation_details ().args_num () - 1);
 
   for (CORBA::ULong i = 1; i != this->invocation_->operation_details ().args_num (); ++i)
@@ -439,7 +436,14 @@ TAO_ClientRequestInfo::parameter_list (Dynamic::ParameterList &param_list)
         this->invocation_->operation_details ().args ()[i];
       Dynamic::Parameter &p = param_list[i - 1];
       p.mode = argument->mode ();
-      argument->interceptor_value (&p.argument);
+      // When we are in send_request and have an out argument, then
+      // don't copy it, just let the any be empty with typecode tk_null
+      if ((this->invocation_->invoke_status () != TAO::TAO_INVOKE_START) ||
+          (this->invocation_->invoke_status () == TAO::TAO_INVOKE_START &&
+           argument->mode () != CORBA::PARAM_OUT))
+        {
+          argument->interceptor_value (&p.argument);
+        }
     }
 
   return true;
@@ -549,13 +553,15 @@ TAO_ClientRequestInfo::reply_status (void)
 {
   this->check_validity ();
 
-  if (this->invocation_->reply_status() == -1)
+  PortableInterceptor::ReplyStatus const status =
+    this->invocation_->reply_status();
+  if (status == -1 || status == PortableInterceptor::UNKNOWN)
     {
       // A reply hasn't been received yet.
       throw ::CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14, CORBA::COMPLETED_NO);
     }
 
-  return this->invocation_->reply_status();
+  return status;
 }
 
 CORBA::Object_ptr

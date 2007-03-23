@@ -38,13 +38,11 @@ namespace TAO
 
       virtual void compress (
           const ::CORBA::OctetSeq & source,
-          ::CORBA::OctetSeq & target
-        );
+          ::CORBA::OctetSeq & target);
 
       virtual void decompress (
           const ::CORBA::OctetSeq & source,
-          ::CORBA::OctetSeq & target
-        );
+          ::CORBA::OctetSeq & target);
   };
 }
 

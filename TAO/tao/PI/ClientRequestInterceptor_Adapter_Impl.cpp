@@ -87,10 +87,7 @@ namespace TAO
 
         if (registered.details_.should_be_processed (is_remote_request))
           {
-            registered.interceptor_->
-              receive_reply (
-                &ri
-               );
+            registered.interceptor_->receive_reply (&ri);
           }
       }
 
@@ -169,8 +166,7 @@ namespace TAO
 
   void
   ClientRequestInterceptor_Adapter_Impl::receive_other (
-      Invocation_Base &invocation
-      )
+      Invocation_Base &invocation)
   {
     // This is an "ending" interception point so we only process the
     // interceptors pushed on to the flow stack.

@@ -1,3 +1,41 @@
+Fri Mar 23 11:46:00 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/AnyTypeCode/Value_TypeCode.h:
+        * tao/AnyTypeCode/Value_TypeCode_Static.h:
+        * tao/Compression/zlib/ZlibCompressor.h:
+        * tao/Compression/zlib/ZlibCompressor_Factory.cpp:
+        * tao/Compression/zlib/ZlibCompressor_Factory.h:
+        * tao/DynamicAny/DynAny_i.cpp:
+        * tao/DynamicAny/DynAnyFactory.h:
+        * tao/DynamicAny/DynArray_i.cpp:
+        * tao/DynamicAny/DynArray_i.h:
+        * tao/DynamicAny/DynCommon.cpp:
+        * tao/DynamicAny/DynCommon.h:
+        * tao/DynamicAny/DynEnum_i.h:
+        * tao/DynamicAny/DynSequence_i.h:
+        * tao/DynamicAny/DynStruct_i.cpp:
+        * tao/DynamicAny/DynStruct_i.h:
+        * tao/DynamicAny/DynUnion_i.cpp:
+        * tao/DynamicAny/DynUnion_i.h:
+        * tao/DynamicAny/DynValue_i.cpp:
+        * tao/DynamicAny/DynValue_i.h:
+        * tao/DynamicAny/DynValueBox_i.cpp:
+        * tao/DynamicAny/DynValueBox_i.h:
+        * tao/Invocation_Base.h:
+        * tao/Object.cpp:
+        * tao/PI/ClientRequestInterceptor_Adapter_Impl.cpp:
+        * tao/PI/PI_Server/ServerInterceptorAdapter.cpp:
+        * tao/Profile_Transport_Resolver.h:
+          Layout changes
+
+        * tao/PI/ClientRequestInfo.cpp
+        * tao/PI_Server/ServerRequestInfo.cpp
+          Fixes for bugs 2854, retrieving the reply status
+          in send_request didn't gave an exception and bug 2852,
+          retrieving out arguments in send_request and receive_request
+          could lead to a crash, make sure we return an Any with
+          tk_null in those cases.
+
 Fri Mar 23 11:35:00 UTC 2007  Simon Massey  <sma@prismtech.com>
 
         * tests/Big_Request_Muxing/client.cpp:
@@ -16,7 +54,7 @@ Fri Mar 23 06:42:20 UTC 2007  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * tests/Portable_Interceptors/Dynamic/server_interceptor.cpp:
         * tests/Portable_Interceptors/Dynamic/client_interceptor.cpp:
-        
+
           Unused argument warnings.
 
 Thu Mar 22 19:52:26 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>

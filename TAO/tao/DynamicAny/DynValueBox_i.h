@@ -44,23 +44,13 @@ public:
 
   ~TAO_DynValueBox_i (void);
 
-  virtual CORBA::Any * get_boxed_value (
-      void
-    );
+  virtual CORBA::Any * get_boxed_value (void);
 
-  virtual void set_boxed_value (
-      const CORBA::Any & boxed
+  virtual void set_boxed_value (const CORBA::Any & boxed);
 
-    );
+  virtual DynamicAny::DynAny_ptr get_boxed_value_as_dyn_any (void);
 
-  virtual DynamicAny::DynAny_ptr get_boxed_value_as_dyn_any (
-      void
-    );
-
-  virtual void set_boxed_value_as_dyn_any (
-      DynamicAny::DynAny_ptr boxed
-
-    );
+  virtual void set_boxed_value_as_dyn_any (DynamicAny::DynAny_ptr boxed);
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
