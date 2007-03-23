@@ -21,13 +21,15 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "DAnCE/Deployment/Deployment_CoreC.h"
-#include "Config_Manager.h"
 #include "ace/DLL.h"
 #include "ace/Auto_Ptr.h"
 #include "NodeApp_Configurator_Export.h"
 
 namespace CIAO
 {
+  // forward declaration
+  class Config_Manager;
+
   /**
    *
    * @class NodeApp_Configurator
@@ -117,3 +119,4 @@ namespace CIAO
 
 #include /**/ "ace/post.h"
 #endif /* NODEAPP_CONFIGURATOR_H */
+

@@ -1,6 +1,7 @@
 // $Id$
 
 #include "NodeApp_Configurator.h"
+#include "Config_Manager.h"
 #include "ace/Log_Msg.h"
 
 CIAO::NodeApp_Configurator::NodeApp_Configurator (void)
