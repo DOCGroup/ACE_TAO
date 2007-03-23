@@ -4,42 +4,31 @@
 
 module Quoter
 {
+  /// Used to report an invalid stock name
   exception Invalid_Stock_Symbol {};
-  // Used to report an invalid stock name
 
-  // Forward declare the Stock interface
+  /// Forward declare the Stock interface
   interface Stock;
 
+  /// A factory class for the stock quoter interfaces
   interface Stock_Factory
   {
-    // = TITLE
-    //   A factory class for the stock quoter interfaces
-    //
-    // = DESCRIPTION
-    //   Return the Quoter interfaces based on their names
-    //
+    /// Return the Quoter interfaces based on their names
     Stock get_stock (in string stock_symbol)
       raises (Invalid_Stock_Symbol);
   };
 
+  /// A simple interface to query the name and price of stock
   interface Stock
   {
-    // = TITLE
-    //   A simple interface to query the name and price of stock
-    //
-    // = DESCRIPTION
-    //   Return the price and name of a single stock
-    //
-
+    /// Get the stock symbol.
     readonly attribute string symbol;
-    // Get the stock symbol.
 
+    /// Get the name.
     readonly attribute string full_name;
-    // Get the name.
 
+    /// Get the price
     double price ();
-    // Get the price
-
   };
 
   interface Single_Query_Stock : Stock {

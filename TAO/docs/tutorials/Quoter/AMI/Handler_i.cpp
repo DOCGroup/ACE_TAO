@@ -15,7 +15,6 @@ void
 Single_Query_Stock_Handler_i::get_price_and_names (CORBA::Double ami_return_val,
                                                   const char *symbol,
                                                   const char *full_name)
-  throw (CORBA::SystemException)
 {
   cout << "The price of one stock in \""
        << full_name << "\" (" << symbol << ") is "
@@ -26,7 +25,6 @@ Single_Query_Stock_Handler_i::get_price_and_names (CORBA::Double ami_return_val,
 void
 Single_Query_Stock_Handler_i::
     get_price_and_names_excep (::Messaging::ExceptionHolder *)
-  throw (CORBA::SystemException)
 {
   // We ignore the exception, but this counts as a reponse, otherwise
   // the application would not finish.
@@ -38,7 +36,6 @@ Single_Query_Stock_Handler_i::
 
 void
 Single_Query_Stock_Handler_i::get_symbol (const char *)
-  throw (CORBA::SystemException)
 {
   throw CORBA::NO_IMPLEMENT ();
 }
@@ -46,14 +43,12 @@ Single_Query_Stock_Handler_i::get_symbol (const char *)
 void
 Single_Query_Stock_Handler_i::
     get_symbol_excep (::Messaging::ExceptionHolder *)
-  throw (CORBA::SystemException)
 {
   throw CORBA::NO_IMPLEMENT ();
 }
 
 void
 Single_Query_Stock_Handler_i::get_full_name (const char *)
-  throw (CORBA::SystemException)
 {
     throw CORBA::NO_IMPLEMENT ();
 }
@@ -61,14 +56,12 @@ Single_Query_Stock_Handler_i::get_full_name (const char *)
 void
 Single_Query_Stock_Handler_i::
    get_full_name_excep (::Messaging::ExceptionHolder *)
-  throw (CORBA::SystemException)
 {
     throw CORBA::NO_IMPLEMENT ();
 }
 
 void
 Single_Query_Stock_Handler_i::price (double)
-  throw (CORBA::SystemException)
 {
   throw CORBA::NO_IMPLEMENT ();
 }
@@ -76,7 +69,6 @@ Single_Query_Stock_Handler_i::price (double)
 void
 Single_Query_Stock_Handler_i::
     price_excep (::Messaging::ExceptionHolder *)
-  throw (CORBA::SystemException)
 {
     throw CORBA::NO_IMPLEMENT ();
 }

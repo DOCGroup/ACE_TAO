@@ -15,26 +15,25 @@ Quoter_Stock_i::Quoter_Stock_i (const char *symbol,
 }
 
 char *
-Quoter_Stock_i::symbol () throw (CORBA::SystemException)
+Quoter_Stock_i::symbol ()
 {
   return CORBA::string_dup (this->data_.symbol.in ());
 }
 
 char *
-Quoter_Stock_i::full_name () throw (CORBA::SystemException)
+Quoter_Stock_i::full_name ()
 {
   return CORBA::string_dup (this->data_.full_name.in ());
 }
 
 CORBA::Double
-Quoter_Stock_i::price () throw (CORBA::SystemException)
+Quoter_Stock_i::price ()
 {
   return this->data_.price;
 }
 
 void
 Quoter_Stock_i::set_price (CORBA::Double new_price)
-  throw (CORBA::SystemException)
 {
   this->data_.price = new_price;
   if (CORBA::is_nil (this->consumer_proxy_.in ()))
@@ -47,7 +46,6 @@ Quoter_Stock_i::set_price (CORBA::Double new_price)
 
 void
 Quoter_Stock_i::disconnect_push_supplier (void)
-  throw (CORBA::SystemException)
 {
   // Forget about the consumer it is not there anymore
   this->consumer_proxy_ =

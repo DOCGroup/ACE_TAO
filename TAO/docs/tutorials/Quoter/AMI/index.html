@@ -67,10 +67,7 @@ $ $ACE_ROOT/TAO/TAO_IDL/tao_idl -GC Quoter.idl
 <PRE>
   virtual void sendc_get_price_and_names (
       AMI_Single_Query_StockHandler_ptr ami_handler
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
+    );
 </PRE>
     <P>This is the operation used to send a request asynchronously.  The 
       response is received in the handler object. This is a regular
@@ -108,7 +105,6 @@ public:
   void get_price_and_names (CORBA::Double ami_return_val,
                            const char *symbol,
                            const char *full_name)
-      throw (CORBA::SystemException)
   {
     std::cout << "The price of one stock in \""
               << full_name << "\" (" << symbol << ") is "
@@ -169,8 +165,7 @@ private:
     <P>You can use the following files to complete your implementation:
       the <A HREF="Quoter.idl">Quoter.idl</A>,
       <A HREF="Handler_i.h">Handler_i.h</A>, 
-      <A HREF="Handler_i.cpp">Handler_i.cpp</A>,
-      <A HREF="Makefile">Makefile</A>.
+      <A HREF="Handler_i.cpp">Handler_i.cpp</A>.
       Remember that the simple client main program
       (located
       <A HREF="../Simple/Client/client.cpp">here</A>)

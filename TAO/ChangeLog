@@ -1,3 +1,26 @@
+Fri Mar 23 12:08:00 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/tutorials/Quoter/AMI/Handler_i.cpp
+        * docs/tutorials/Quoter/AMI/Handler_i.h
+        * docs/tutorials/Quoter/AMI/index.html
+        * docs/tutorials/Quoter/AMI/Quoter.idl
+        * docs/tutorials/Quoter/AMI/Stock_Factory_i.cpp
+        * docs/tutorials/Quoter/AMI/Stock_Factory_i.h
+        * docs/tutorials/Quoter/AMI/Stock_i.cpp
+        * docs/tutorials/Quoter/AMI/Stock_i.h
+        * docs/tutorials/Quoter/Event_Service/index.html
+        * docs/tutorials/Quoter/Event_Service/Stock_Factory_i.cpp
+        * docs/tutorials/Quoter/Event_Service/Stock_Factory_i.h
+        * docs/tutorials/Quoter/Event_Service/Stock_i.cpp
+        * docs/tutorials/Quoter/Event_Service/Stock_i.h
+        * docs/tutorials/Quoter/On_Demand_Activation/index.html
+        * docs/tutorials/Quoter/RT_Event_Service/index.html
+        * docs/tutorials/Quoter/RTCORBA/docs/broker.html
+          Small updates related to old exception macros.
+
+        * docs/tutorials/Quoter/Simple/index.html:
+          Removed, not needed
+
 Fri Mar 23 11:46:00 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/AnyTypeCode/Value_TypeCode.h:

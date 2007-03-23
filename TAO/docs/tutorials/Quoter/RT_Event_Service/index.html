@@ -56,8 +56,8 @@ class Stock_Consumer : public POA_RtecEventComm::PushConsumer {
 public:
   Stock_Consumer ();
 
-  void push (const RtecEventComm::EventSet& data TAO_ENV_ARG_DECL_NOT_USED);
-  void disconnect_push_consumer (TAO_ENV_SINGLE_ARG_DECL_NOT_USED);
+  void push (const RtecEventComm::EventSet& data);
+  void disconnect_push_consumer (void);
 
   // details omitted
 };
@@ -69,8 +69,7 @@ public:
     </P>
 <PRE>
 void
-Stock_Consumer::push (const RtecEventComm::EventSet &data
-                      TAO_ENV_ARG_DECL_NOT_USED)
+Stock_Consumer::push (const RtecEventComm::EventSet &data)
 {
   for (CORBA::ULong i = 0; i != data.length (); ++i) {
     RtecEventComm::Event &e = data[i];
@@ -99,7 +98,7 @@ Stock_Consumer::push (const RtecEventComm::EventSet &data
     </P>
 <PRE>
 void
-Stock_Consumer::disconnect_push_consumer (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+Stock_Consumer::disconnect_push_consumer (void)
 {
   this->supplier_proxy_ = CosEventChannelAdmin::ProxyPushSupplier::_nil ();
 }
@@ -187,10 +186,9 @@ public:
                          const char *full_name,
                          CORBA::Double price);
 
-  void set_price (CORBA::Double new_price)
-    throw (CORBA::SystemException);
+  void set_price (CORBA::Double new_price);
 
-  void disconnect_push_supplier (TAO_ENV_SINGLE_ARG_DECL_NOT_USED);
+  void disconnect_push_supplier (void);
 
 private:
   Quoter::Event data_;
@@ -207,7 +205,6 @@ private:
 <PRE>
 void
 Quoter_Stock_i::set_price (CORBA::Double new_price)
-  throw (CORBA::SystemException)
 {
    this->data_.price = new_price;
 </PRE>
@@ -295,8 +292,7 @@ Quoter_Stock_i::set_price (CORBA::Double new_price)
     </P>
 <PRE>
 void
-Quoter_Stock_i::disconnect_push_supplier (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
-  throw (CORBA::SystemException)
+Quoter_Stock_i::disconnect_push_supplier (void)
 {
   // Forget about the consumer it is not there anymore
   this->consumer_proxy_ =
