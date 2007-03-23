@@ -1,3 +1,8 @@
+Fri Mar 23 13:11:18 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * bin/tao_other_tests.lst:
+          Added new SSLIOP tests to the script.
+
 Fri Mar 23 12:42:02 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Makefile.am:

@@ -151,6 +151,8 @@ TAO/orbsvcs/tests/Security/MT_IIOP_SSL/run_test.pl: !ST SSL !STATIC !DISABLE_INT
 #Bug 1647. run_test_harsh.pl takes 5 minutes; but there aren't many SSL builds
 TAO/orbsvcs/tests/Security/MT_SSLIOP/run_test_harsh.pl: !ST SSL !STATIC !DISABLE_INTERCEPTORS !ACE_FOR_TAO
 TAO/orbsvcs/tests/Security/Crash_Test/run_test.pl: SSL !STATIC !DISABLE_INTERCEPTORS !ACE_FOR_TAO
+TAO/orbsvcs/tests/Security/InsecureReferences/run_test.pl: SSL !STATIC !DISABLE_INTERCEPTORS !ACE_FOR_TAO
+TAO/orbsvcs/tests/Security/EndpointPolicy/run_test.pl: SSL !STATIC !DISABLE_INTERCEPTORS !ACE_FOR_TAO
 TAO/orbsvcs/tests/Miop/McastHello/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !STATIC !SUNCC5_1 !NO_MCAST
 # The following 2 tests use dynamic loading to change the default reactor on Windows
 TAO/orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !DISABLE_INTERCEPTORS !STATIC !ACE_FOR_TAO
