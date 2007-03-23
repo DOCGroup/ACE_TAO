@@ -1,7 +1,15 @@
 // -*- MPC -*-
 // $Id$
 
-project(NodeApp_Configurator): ciao_deployment_stub {
+project(Config_Manager) : ciao_deployment_stub {
+  sharedname   = CIAO_Config_Manager
+  dynamicflags = CONFIG_MANAGER_BUILD_DLL
+  Source_Files {
+    Config_Manager.cpp
+  }
+}
+
+project(NodeApp_Configurator): ciao_config_manager {
   sharedname   = CIAO_NodeApp_Configurator
   dynamicflags = NODEAPP_CONFIGURATOR_BUILD_DLL
   Source_Files {
@@ -9,7 +17,7 @@ project(NodeApp_Configurator): ciao_deployment_stub {
   }
 }
 
-project(NoOp_Configurator): ciao_deployment_stub, ciao_nodeapp_configurator {
+project(NoOp_Configurator): ciao_nodeapp_configurator {
   sharedname   = CIAO_NoOp_Configurator
   dynamicflags = NOOP_CONFIGURATOR_BUILD_DLL
   Source_Files {
@@ -17,7 +25,7 @@ project(NoOp_Configurator): ciao_deployment_stub, ciao_nodeapp_configurator {
   }
 }
 
-project(RTNA_Configurator): ciao_deployment_stub, rt_server, ciao_nodeapp_configurator {
+project(RTNA_Configurator): rt_server, ciao_nodeapp_configurator {
   sharedname   = CIAO_RTNA_Configurator
   dynamicflags = CIAO_RTNA_CONFIGURATOR_BUILD_DLL
   Source_Files {

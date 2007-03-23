@@ -15,24 +15,22 @@
 #include /**/ "ace/pre.h"
 
 #include "ace/config-all.h"
+#include "Config_Manager_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "DAnCE/Deployment/CIAO_ServerResourcesC.h"
-#include "ace/Null_Mutex.h"
-#include "ace/SString.h"
-#include "ace/Hash_Map_Manager_T.h"
 
 namespace CIAO
 {
   /**
    */
-  class Config_Manager
+  class Config_Manager_Export Config_Manager
   {
   public:
-    virtual ~Config_Manager (void) {}
+    virtual ~Config_Manager (void);
 
     virtual int pre_orb_initialize (void) = 0;
 

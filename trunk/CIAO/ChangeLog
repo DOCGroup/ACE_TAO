@@ -1,3 +1,33 @@
+Fri Mar 23 03:13:40 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * DAnCE/NodeApplication/Config_Manager.h:
+        * DAnCE/NodeApplication/Config_Manager.cpp:
+        * DAnCE/NodeApplication/Config_Manager_export.h:
+
+          Removed uncessary include files. Also, implementation of virtual
+          destructor should not be in header or inline file, it was moved
+          to a newly created cpp file and an export header was created.
+          This Fixes bugzilla 2858.
+
+        * DAnCE/NodeApplication/NodeApp_Configurator.h:
+        * DAnCE/NodeApplication/NodeApp_Configurator.cpp:
+
+          Don't include a header file if a forward declaration suffices. The
+          include of Config_Manager.h was moved from the header to the cpp file.
+
+        * DAnCE/NodeApplication/NodeApplication.mpc:
+
+          Added a new Config_Manager project. Also simplified this file to
+          utilize mpb base projects.
+
+        * MPC/config/ciao_config_manager.mpb:
+
+          New base project for Config_Manager.
+
+        * MPC/config/ciao_nodeapp_configurator.mpb:
+
+          This project now inherits from ciao_config_manager base project.
+
 Fri Mar 23 02:50:00 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * DAnCE/NodeApplication/Configurator_Factory.h:
