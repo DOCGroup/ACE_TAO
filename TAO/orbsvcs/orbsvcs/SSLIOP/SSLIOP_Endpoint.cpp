@@ -86,6 +86,22 @@ TAO_SSLIOP_Endpoint::TAO_SSLIOP_Endpoint (const ::SSLIOP::SSL *ssl_component,
   this->trust_.trust_in_client = 1;
 }
 
+
+TAO_SSLIOP_Endpoint &
+TAO_SSLIOP_Endpoint::operator= (const TAO_SSLIOP_Endpoint &other)
+{
+  this->object_addr_ = other.object_addr_;
+  this->qop_ = other.qop_;
+  this->trust_ = other.trust_;
+  this->ssl_component_ = other.ssl_component_;
+
+  this->next_ = 0; // do not copy list membership, since we are only cloning the values
+
+  this->iiop_endpoint(other.iiop_endpoint_,
+                      other.destroy_iiop_endpoint_);
+  return *this;
+}
+
 TAO_SSLIOP_Endpoint::~TAO_SSLIOP_Endpoint (void)
 {
   if (this->destroy_iiop_endpoint_)
@@ -96,7 +112,7 @@ TAO_SSLIOP_Endpoint::~TAO_SSLIOP_Endpoint (void)
 static void
 dump_endpoint (const char* msg, const TAO_Endpoint *other_endpoint)
 {
-  
+
   TAO_Endpoint *endpt = const_cast<TAO_Endpoint *> (other_endpoint);
 
   TAO_SSLIOP_Endpoint *endpoint =
@@ -107,22 +123,22 @@ dump_endpoint (const char* msg, const TAO_Endpoint *other_endpoint)
     ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) endpoint - %s: Unable to cast an endpoint to SSLIOP_Endpoint\n", msg));
     return;
   }
-  
+
   char hostaddr[MAXHOSTNAMELEN + 16];
   int gothost = endpoint->addr_to_string (hostaddr, sizeof hostaddr);
 
   ACE_DEBUG ((LM_INFO, "TAO (%P|%t) SSLIOPEndpoint %s - %@ {%s, ssl=%d, iiop=%d,"
-                " qop=%d, trst=(%d,%d), c=%@, crdh=0x%x}, h=0x%x\n", 
+                " qop=%d, trst=(%d,%d), c=%@, crdh=0x%x}, h=0x%x\n",
                 msg,
                 endpoint,
                 (gothost == 0 ? hostaddr : "*UNKNOWN*"),
-                endpoint->ssl_component ().port , 
+                endpoint->ssl_component ().port ,
                 endpoint->iiop_endpoint ()->port (),
-                endpoint->qop() , 
-                endpoint->trust().trust_in_target , 
+                endpoint->qop() ,
+                endpoint->trust().trust_in_target ,
                 endpoint->trust().trust_in_client ,
-                endpoint->credentials() , 
-                (endpoint->credentials_set () ? endpoint->credentials()->hash () : 0) , 
+                endpoint->credentials() ,
+                (endpoint->credentials_set () ? endpoint->credentials()->hash () : 0) ,
                 endpoint->hash ()));
 }
 #endif /* 0 */
@@ -186,7 +202,7 @@ TAO_SSLIOP_Endpoint::is_equivalent (const TAO_Endpoint *other_endpoint)
   if (this->iiop_endpoint() == 0 || endpoint->iiop_endpoint() == 0)
     return 0;
 
-  if ((ACE_OS::strcmp (this->iiop_endpoint()->host (), 
+  if ((ACE_OS::strcmp (this->iiop_endpoint()->host (),
                        endpoint->iiop_endpoint()->host ()) != 0))
     return 0;
 
@@ -337,7 +353,7 @@ TAO_SSLIOP_Synthetic_Endpoint::is_equivalent (const TAO_Endpoint *other_endpoint
 
   if (endpoint == 0)
     return 0;
-  
+
   if ((this->ssl_component ().port != 0
        && endpoint->ssl_component ().port != 0
        && this->ssl_component ().port != endpoint->ssl_component ().port)
@@ -353,7 +369,7 @@ TAO_SSLIOP_Synthetic_Endpoint::is_equivalent (const TAO_Endpoint *other_endpoint
   if (this->iiop_endpoint() == 0 || endpoint->iiop_endpoint() == 0)
     return 0;
 
-  if ((ACE_OS::strcmp (this->iiop_endpoint()->host (), 
+  if ((ACE_OS::strcmp (this->iiop_endpoint()->host (),
                        endpoint->iiop_endpoint()->host ()) != 0))
     return 0;
 

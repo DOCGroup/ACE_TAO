@@ -65,6 +65,12 @@ namespace TAO
       /// Destructor.
       virtual ~TAO_SSLIOP_Endpoint (void);
 
+
+      /// Need to have an assignment operator since the SSLIOP_Profile class
+      /// may have to reorder its list of endpoints based on filtering by
+      /// the EndpointPolicy.
+      TAO_SSLIOP_Endpoint & operator= (const TAO_SSLIOP_Endpoint& other);
+
       /**
        * @name TAO_Endpoint Methods
        *

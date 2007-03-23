@@ -1,3 +1,26 @@
+Fri Mar 23 13:02:40 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Endpoint.h:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Endpoint.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Profile.h:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Profile.cpp:
+
+        * orbsvcs/tests/Security/EndpointPolicy:
+
+        * orbsvcs/tests/Security/EndpointPolicy/EndpointPolicy.mpc:
+        * orbsvcs/tests/Security/EndpointPolicy/README:
+        * orbsvcs/tests/Security/EndpointPolicy/run_test.pl:
+        * orbsvcs/tests/Security/EndpointPolicy/svc.conf:
+        * orbsvcs/tests/Security/EndpointPolicy/test.cpp:
+
+        * tao/EndpointPolicy/Endpoint_Acceptor_Filter.cpp:
+
+        * tao/IIOP_Profile.h:
+        * tao/IIOP_Profile.cpp:
+        * tao/Object_Reference_Sequence_Element_T.h:
+        * tao/Profile.h:
+        * tao/Profile.cpp:
+
 Fri Mar 23 02:44:53 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Profile.cpp:
