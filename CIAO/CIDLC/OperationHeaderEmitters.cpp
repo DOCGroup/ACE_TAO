@@ -33,24 +33,13 @@ OperationEmitter::receives_pre (Type&)
 void
 OperationEmitter::receives_none (Type&)
 {
-  os << " ()" << endl;
+  os << " ();";
 }
 
 void
 OperationEmitter::receives_post (Type&)
 {
-  os << endl << ")" << endl;
-}
-
-void
-OperationEmitter::raises (Type&)
-{
-}
-
-void
-OperationEmitter::post (Type&)
-{
-  os << ";" << endl;
+  os << endl << ");";
 }
 
 void

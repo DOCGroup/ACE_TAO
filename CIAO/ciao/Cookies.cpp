@@ -11,12 +11,12 @@ ACE_RCSID (ciao,
 
 namespace CIAO
 {
-  Cookie_Impl::Cookie_Impl (CORBA::ULong const &key)
+  Cookie_Impl::Cookie_Impl (ptrdiff_t const &key)
   {
-    this->cookieValue ().length (sizeof (CORBA::ULong));
+    this->cookieValue ().length (sizeof (ptrdiff_t));
     ACE_OS::memcpy (this->cookieValue ().get_buffer (false),
                     &key,
-                    sizeof (CORBA::ULong));
+                    sizeof (ptrdiff_t));
   }
 
   Cookie_Impl::~Cookie_Impl (void)
@@ -25,7 +25,7 @@ namespace CIAO
 
   bool
   Cookie_Impl::extract (Components::Cookie const * const ck,
-                        CORBA::ULong &key)
+                        ptrdiff_t &key)
   {
     Cookie_Impl const * const c =
       dynamic_cast <Cookie_Impl const * const> (ck);
@@ -37,12 +37,12 @@ namespace CIAO
 
     CORBA::OctetSeq const &x = c->cookieValue ();
 
-    if (x.length () != sizeof (CORBA::ULong))
+    if (x.length () != sizeof (ptrdiff_t))
       {
         return false;
       }
 
-    key = *reinterpret_cast<const CORBA::ULong *> (x.get_buffer ());
+    key = *reinterpret_cast<const ptrdiff_t*> (x.get_buffer ());
 
     return true;
   }
