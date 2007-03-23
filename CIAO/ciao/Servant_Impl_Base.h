@@ -167,7 +167,7 @@ namespace CIAO
     static void describe_multiplex_receptacle (
         const char *port_name,
         const char *port_type_repo_id,
-        ACE_Array_Map<CORBA::ULong, T_var> &objrefs,
+        ACE_Array_Map<ptrdiff_t, T_var> &objrefs,
         ::Components::ReceptacleDescriptions_var &descriptions,
         CORBA::ULong slot
       );
@@ -176,7 +176,7 @@ namespace CIAO
     static void describe_pub_event_source (
         const char *port_name,
         const char *port_type_repo_id,
-        ACE_Array_Map<CORBA::ULong, T_var> &consumers,
+        ACE_Array_Map<ptrdiff_t, T_var> &consumers,
         ::Components::PublisherDescriptions_var &descriptions,
         CORBA::ULong slot
       );

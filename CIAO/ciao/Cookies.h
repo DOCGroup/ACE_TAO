@@ -26,7 +26,8 @@ namespace CIAO
   /**
    * @class Cookie_Impl
    *
-   * @brief A cookie implementation using CORBA::ULong
+   * @brief A cookie implementation using an unsigned integer
+   *  big enough to hold an address, even on a 64-bit machine.
    */
   class CIAO_CONTAINER_Export Cookie_Impl
     : public virtual OBV_Components::Cookie
@@ -35,12 +36,12 @@ namespace CIAO
     Cookie_Impl (void);
     virtual ~Cookie_Impl (void);
 
-    /// Initialize a @c Cookie with a @c CORBA::ULong
-    Cookie_Impl (CORBA::ULong const &key);
+    /// Initialize a @c Cookie with a @c ptrdiff_t
+    Cookie_Impl (ptrdiff_t const &key);
 
     /// Extract the @c CORBA::ULong
     static bool extract (Components::Cookie const * const c,
-                         CORBA::ULong &key);
+                         ptrdiff_t &key);
   };
 
   /**

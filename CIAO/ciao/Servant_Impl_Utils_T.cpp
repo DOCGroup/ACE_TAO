@@ -43,7 +43,7 @@ namespace CIAO
   Servant_Impl_Base::describe_multiplex_receptacle (
       const char *port_name,
       const char *port_type_repo_id,
-      ACE_Array_Map<CORBA::ULong, T_var> &objrefs,
+      ACE_Array_Map<ptrdiff_t, T_var> &objrefs,
       ::Components::ReceptacleDescriptions_var &descriptions,
       CORBA::ULong slot
     )
@@ -61,7 +61,7 @@ namespace CIAO
     CORBA::ULong seq_slot = 0UL;
     ::Components::ConnectionDescription *conn = 0;
 
-    typedef typename ACE_Array_Map<CORBA::ULong, T_var>::const_iterator
+    typedef typename ACE_Array_Map<ptrdiff_t, T_var>::const_iterator
       CONST_ITERATOR;
 
     for (CONST_ITERATOR iter = objrefs.begin ();
@@ -93,7 +93,7 @@ namespace CIAO
   Servant_Impl_Base::describe_pub_event_source (
       const char *port_name,
       const char *port_type_repo_id,
-      ACE_Array_Map<CORBA::ULong, T_var> &consumers,
+      ACE_Array_Map<ptrdiff_t, T_var> &consumers,
       ::Components::PublisherDescriptions_var &descriptions,
       CORBA::ULong slot
     )
@@ -107,10 +107,10 @@ namespace CIAO
     elem->type_id (port_type_repo_id);
     elem->consumer ().length (consumers.size ());
 
-    CORBA::ULong map_slot = 0UL;
+    ptrdiff_t map_slot = 0UL;
     ::Components::SubscriberDescription *sub = 0;
 
-    typedef typename ACE_Array_Map<CORBA::ULong, T_var>::const_iterator
+    typedef typename ACE_Array_Map<ptrdiff_t, T_var>::const_iterator
       CONST_ITERATOR;
 
     for (CONST_ITERATOR iter = consumers.begin ();

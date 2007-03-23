@@ -663,7 +663,7 @@ namespace
         os << "std::pair<" << uc_port_name
            << "_TABLE::iterator, bool> result;"
            << uc_port_name << "_TABLE::value_type entry;"
-           << "entry.first = c->_hash (ACE_UINT32_MAX);"
+           << "entry.first = reinterpret_cast<ptrdiff_t> (c);"
            << "entry.second = ";
 
         Traversal::MultiUserData::belongs (u, belongs_);
@@ -712,7 +712,7 @@ namespace
         Traversal::MultiUserData::belongs (u, belongs_);
 
         os << "_var retv;"
-           << "::CORBA::ULong key = 0UL;"
+           << "ptrdiff_t key = 0UL;"
            << uc_port_name << "_TABLE::size_type n = 0UL;" << endl;
 
         os << "if (ck == 0 || ! ::CIAO::Cookie_Impl::extract (ck, key))"
@@ -834,7 +834,7 @@ namespace
         os << "std::pair<" << uc_port_name
            << "_TABLE::iterator, bool> result;"
            << uc_port_name << "_TABLE::value_type entry;"
-           << "entry.first = c->_hash (ACE_UINT32_MAX);"
+           << "entry.first = reinterpret_cast<ptrdiff_t> (c);"
            << "entry.second = ";
 
         Traversal::PublisherData::belongs (p, belongs_);
@@ -860,8 +860,10 @@ namespace
 
         os << "if (! result.second)" << endl
            << "{"
-           << "/* Already subscribed, ignore & "
-           << "return new cookie with same key. */"
+           << "ACE_ERROR_RETURN ((LM_ERROR," << endl
+           << "\"subscribe on %s failed\\n\"," << endl
+           << "\"" << p.name () << "\")," << endl
+           << "0);"
            << "}";
 
         os << STRS[COMP_CK] << " * retv = 0;"
@@ -885,7 +887,7 @@ namespace
         os << "std::pair<" << uc_port_name
            << "_GENERIC_TABLE::iterator, bool> result;"
            << uc_port_name << "_GENERIC_TABLE::value_type entry;"
-           << "entry.first = c->_hash (ACE_UINT32_MAX);"
+           << "entry.first = reinterpret_cast<ptrdiff_t> (c);"
            << "entry.second = "
            << "::Components::EventConsumerBase::_duplicate (c);" << endl;
 
@@ -908,8 +910,10 @@ namespace
 
         os << "if (! result.second)" << endl
            << "{"
-           << "/* Already subscribed, ignore & "
-           << "return new cookie with same key. */"
+           << "ACE_ERROR_RETURN ((LM_ERROR," << endl
+           << "\"generic subscribe on %s failed\\n\"," << endl
+           << "\"" << p.name () << "\")," << endl
+           << "0);"
            << "}";
 
         os << STRS[COMP_CK] << " * retv = 0;"
@@ -927,7 +931,7 @@ namespace
            << p.name () << " (" << endl
            << STRS[COMP_CK] << " *ck)" << endl
            << "{"
-           << "::CORBA::ULong key = 0UL;"
+           << "ptrdiff_t key = 0UL;"
            << uc_port_name << "_TABLE::size_type n = 0UL;" << endl;
 
         os << "if (ck == 0 || ! ::CIAO::Cookie_Impl::"
@@ -1108,6 +1112,17 @@ namespace
            << "retval = tmp;"
            << "retval->length (_ciao_size);" << endl;
            
+        bool static_cfg = ctx.cl ().get_value ("static-config", false);
+
+        if (! static_cfg)
+        {
+          os << "{"
+             << "ACE_READ_GUARD_RETURN (TAO_SYNCH_MUTEX," << endl
+             << "mon," << endl
+             << "this->" << p.name () << "_lock_," << endl
+             << "0);" << endl;
+        }
+                   
         os << "for (" << uc_port_name << "_TABLE::const_iterator iter ="
            << endl
            << "  this->ciao_publishes_" << p.name () << "_.begin ();"
@@ -1133,6 +1148,11 @@ namespace
            << "safe->consumer (iter->second.in ());"
            << "retval[_ciao_index] = safe;"
            << "}";
+           
+        if (! static_cfg)
+        {
+          os << "}";
+        }
            
         os << "return retval._retn ();"
            << "}";
@@ -1264,7 +1284,7 @@ namespace
       os << "/// CIAO-specific." << endl << endl;
 
       os << t.name () << "_Context *" << endl
-         << t.name () << "_Context::_narrow (" << endl
+         << t.name () << "_Context::_narrow ( "
          << STRS[COMP_SC] << "_ptr p)" << endl
          << "{"
          << "return dynamic_cast<" << t.name () << "_Context *> (p);"
