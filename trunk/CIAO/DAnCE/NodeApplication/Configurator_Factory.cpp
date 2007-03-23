@@ -1,11 +1,19 @@
 // $Id$
 
 #include "Configurator_Factory.h"
-// #include "NoOp_Configurator.h"
 #include "NodeApp_Configurator.h"
-#include "ace/Null_Mutex.h"
 #include "ciao/CIAO_common.h"
 #include "ace/Arg_Shifter.h"
+
+#if !defined (__ACE_INLINE__)
+# include "Configurator_Factory.inl"
+#endif /* __ACE_INLINE__ */
+
+CIAO::NodeApplication_Options::NodeApplication_Options () : 
+   use_callback_ (true), 
+   rt_support_ (false)
+{
+}
 
 int
 CIAO::NodeApplication_Options::parse_args (int &argc, char *argv[])
@@ -151,3 +159,4 @@ CIAO::NodeApplication_Options::create_nodeapp_configurator (void)
   return ptr;
   */
 }
+
