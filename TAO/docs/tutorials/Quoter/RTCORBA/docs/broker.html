@@ -34,13 +34,11 @@ The main steps of this function are described as follows: <P>
 <PRE>
     Stock::StockName_init *stockname_factory = new Stock::StockName_init;
     orb->register_value_factory (stockname_factory->tao_repository_id (),
-                                 stockname_factory
-                                 ACE_ENV_ARG_PARAMETER);
+                                 stockname_factory);
 
     Stock::Cookie_init *cookie_factory = new Stock::Cookie_init;
     orb->register_value_factory (cookie_factory->tao_repository_id (),
-                                 cookie_factory
-                                 ACE_ENV_ARG_PARAMETER);
+                                 cookie_factory;
 
     Stock_PriorityMapping::register_mapping (orb);
 </PRE>

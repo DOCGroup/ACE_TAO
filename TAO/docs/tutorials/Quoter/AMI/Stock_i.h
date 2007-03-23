@@ -14,12 +14,11 @@ public:
                   const char *full_name,
                   CORBA::Double price);
 
-  char *symbol () throw (CORBA::SystemException);
-  char *full_name () throw (CORBA::SystemException);
-  CORBA::Double price () throw (CORBA::SystemException);
+  char *symbol ();
+  char *full_name ();
+  CORBA::Double price ();
   CORBA::Double get_price_and_names (CORBA::String_out symbol,
-                                     CORBA::String_out full_name)
-    throw (CORBA::SystemException);
+                                     CORBA::String_out full_name);
 
 private:
 #if defined (HPUX) && (ACE_HAS_STANDARD_CPP_LIBRARY == 0)

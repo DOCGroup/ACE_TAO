@@ -57,14 +57,13 @@ class Stock_Consumer : public POA_CosEventComm::PushConsumer {
 public:
   Stock_Consumer ();
 
-  void push (const CORBA::Any& data TAO_ENV_ARG_DECL);
-  void disconnect_push_consumer (TAO_ENV_SINGLE_ARG_DECL);
+  void push (const CORBA::Any& data);
+  void disconnect_push_consumer void);
 
   // details omitted
 };
 </PRE>
-    <P>Let us ignore the strange <CODE>TAO_ENV_ARG_DECL</CODE>
-      arguments and concentrate on the implementation.
+    <P>
       The <CODE>disconnect_push_consumer()</CODE> method is invoked by
       the Events Service when it is disconnecting,
       for example, because it was shut down before the Consumer got a
@@ -76,8 +75,7 @@ public:
     </P>
 <PRE>
 void
-Stock_Consumer::push (const CORBA::Any& data
-                      TAO_ENV_ARG_DECL_NOT_USED)
+Stock_Consumer::push (const CORBA::Any& data)
 {
   Quoter::Event *event;
   if ((data >>= event) == 0)
@@ -102,33 +100,13 @@ Stock_Consumer::push (const CORBA::Any& data
 }
 </PRE>
 
-    <P>So what was the <CODE>TAO_ENV_ARG_DECL</CODE> about? After
-      all it was not used.  TAO services must support platforms
-      without support for native C++ exceptions.  On those platforms
-      the CORBA specification defines an <EM>alternate mapping</EM>
-      where all the operations use an extra argument to return any
-      exceptions.
-      Notice that the TAO IDL compiler supports both mappings.  We have
-      been using the standard one so far!  It is only if your C++
-      compiler does not support exceptions that you need to use
-      the alternative mapping.
-    </P>
-    <P>Notice that on platforms with native C++ exception support we
-      can safely ignore the extra argument,
-      and use the usual mechanisms to catch and throw exceptions.
-      For more information on how to use the alternative mapping and
-      how to write portable code for both environments check
-      <A HREF="../../../../../docs/exceptions.html">Using 
-      ACE try macros for CORBA programming</A>.
-    </P>
-
     <P>Going back to our example,
       when the event channel disconnects we receive a callback, too.
       At that point we want to forget about the original connection:
     </P>
 <PRE>
 void
-Stock_Consumer::disconnect_push_consumer (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+Stock_Consumer::disconnect_push_consumer void)
 {
   this->supplier_proxy_ = CosEventChannelAdmin::ProxyPushSupplier::_nil ();
 }
@@ -204,8 +182,7 @@ public:
                          const char *full_name,
                          CORBA::Double price);
 
-  void set_price (CORBA::Double new_price)
-    throw (CORBA::SystemException);
+  void set_price (CORBA::Double new_price);
 
 private:
   Quoter::Event data_;
@@ -224,7 +201,6 @@ private:
 <PRE>
 void
 Quoter_Stock_i::set_price (CORBA::Double new_price)
-  throw (CORBA::SystemException)
 {
    this->data_.price = new_price;
 </PRE>
@@ -254,7 +230,7 @@ class Quoter_Stock_i : public POA_Quoter::Modify_Stock {
 public:
   // some details removed...
 
-  void disconnect_push_supplier (TAO_ENV_SINGLE_ARG_DECL_NOT_USED);
+  void disconnect_push_supplier (void);
 
 private:
   POA_CosEventComm::PushSupplier_tie < Quoter_Stock_i > supplier_personality_;
@@ -316,8 +292,7 @@ POA_CosEventComm::PushSupplier_tie < T >::disconnect_push_supplier ()
     </P>
 <PRE>
 void
-Quoter_Stock_i::disconnect_push_supplier (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
-  throw (CORBA::SystemException)
+Quoter_Stock_i::disconnect_push_supplier (void)
 {
   // Forget about the consumer.  It is not there anymore
   this->consumer_proxy_ =
