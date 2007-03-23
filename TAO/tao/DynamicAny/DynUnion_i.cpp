@@ -679,7 +679,7 @@ TAO_DynUnion_i::to_any (void)
 
   (void) TAO_Marshal_Object::perform_append (disc_tc.in (),
                                              &disc_in_cdr,
-                                             &out_cdr;
+                                             &out_cdr);
 
   // Add the member to the CDR stream unless it has no active member.
   if (this->has_no_active_member () == 0)
