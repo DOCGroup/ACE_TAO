@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(*test): taoserver, endpointpolicy, pi_server, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
+project(*test): taoserver, orbsvcslib, security, ssliop, pi_server, codecfactory, interceptors { 
   exename = test
   Source_Files {
     test.cpp
