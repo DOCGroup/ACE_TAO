@@ -1,3 +1,11 @@
+Sat Mar 24 23:40:17 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/tests/Security/EndpointPolicy/EndpointPolicy.mpc:
+        * orbsvcs/tests/Security/InsecureReferences/InsecureReferences.mpc:
+
+          The test projects did not have the correct base projects,
+          causing core dumps on exit on many platforms.
+
 Fri Mar 23 16:27:39 UTC 2007  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * tests/TransportCurrent/IIOP/IIOP.mpc
