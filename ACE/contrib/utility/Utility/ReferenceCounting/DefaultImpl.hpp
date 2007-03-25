@@ -28,6 +28,7 @@ namespace Utility
     {
     public:
       class InconsistentState_ {};
+
       typedef
       ExH::Compound<InconsistentState_, Exception>
       InconsistentState;

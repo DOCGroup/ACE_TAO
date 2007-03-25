@@ -39,6 +39,7 @@ namespace Utility
 
       inline DescriptiveException::
       DescriptiveException (DescriptiveException const& src) throw ()
+        : Base ()
       {
         init (src.what ());
       }

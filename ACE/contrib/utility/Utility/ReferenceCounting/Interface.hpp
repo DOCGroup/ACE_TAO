@@ -31,11 +31,8 @@ namespace Utility
       ExH::System::Exception
       SystemException;
 
-      class Exception_ {};
-      typedef
-      ExH::Compound<Exception_, ExH::Logic::DescriptiveException>
-      Exception;
-
+      typedef ExH::Logic::DescriptiveException Exception;
+      
     public:
       virtual void
       add_ref () const throw (Exception, SystemException) = 0;
