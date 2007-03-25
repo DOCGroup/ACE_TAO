@@ -1,3 +1,11 @@
+Sun Mar 25 23:26:11 UTC 2007  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * CCF/CCF/IDL2/Parsing/Recovery.hpp
+        * CCF/CCF/CodeGenerationKit/IndentationBuffer.hpp
+        
+          An attempt to deal with copious warnings from the CIDLC
+          build.
+
 Sun Mar 25 23:07:17 UTC 2007  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * CIDLC/OperationHeaderEmitters.cpp
