@@ -12,10 +12,12 @@ namespace Utility
 {
   namespace ExH
   {
-    template <typename Type, typename Base>
-    class Compound : public virtual Base
+    template <typename Type, typename _Base>
+    class Compound : public virtual _Base
     {
     public:
+      typedef _Base Base;
+      
       explicit
       Compound (char const* description) throw ();
 

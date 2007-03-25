@@ -1,3 +1,18 @@
+Sun Mar 25 23:22:22 UTC 2007  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * contrib/utility/Utility/ExH/System/DescriptiveException.hpp
+        * contrib/utility/Utility/ExH/System/DescriptiveException.ipp
+        * contrib/utility/Utility/ExH/Compound.tpp
+        * contrib/utility/Utility/ExH/Compound.hpp
+        * contrib/utility/Utility/ExH/Logic/Exception.hpp
+        * contrib/utility/Utility/ExH/Logic/DescriptiveException.hpp
+        * contrib/utility/Utility/ExH/Logic/DescriptiveException.ipp
+        * contrib/utility/Utility/ReferenceCounting/Interface.hpp
+        * contrib/utility/Utility/ReferenceCounting/DefaultImpl.hpp
+        
+          An attempt to deal with copious warnings eminating from this
+          in GCC CIDLC builds.
+        
 Fri Mar 23 12:40:32 UTC 2007  Ossama Othman  <ossama_othman at symantec dot com>
 
         * ace/CDR_Base.inl (swap_2, swap_4, swap_8):
