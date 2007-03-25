@@ -43,6 +43,11 @@ OperationEmitter::receives_post (Type&)
 }
 
 void
+OperationEmitter::raises (Type&)
+{
+}
+
+void
 OperationEmitter::comma (Type&)
 {
   os << "," << endl;
