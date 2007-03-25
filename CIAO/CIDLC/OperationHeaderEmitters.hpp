@@ -28,7 +28,9 @@ struct OperationEmitter : Traversal::Operation,
   virtual void receives_none (Type&);
 
   virtual void receives_post (Type&);
-
+  
+  virtual void raises (Type&);
+  
   virtual void comma (Type&);
 };
 
