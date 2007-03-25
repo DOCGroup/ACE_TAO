@@ -27,6 +27,8 @@ namespace Utility
       class Exception : public virtual System::Exception
       {
       public:
+        typedef System::Exception Base;
+        
         virtual
         ~Exception () throw ();
       };

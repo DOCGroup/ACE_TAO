@@ -36,6 +36,8 @@ namespace Utility
 
       inline DescriptiveException::
       DescriptiveException (DescriptiveException const& src) throw ()
+        : std::exception (),
+          Exception ()
       {
         init (src.what ());
       }

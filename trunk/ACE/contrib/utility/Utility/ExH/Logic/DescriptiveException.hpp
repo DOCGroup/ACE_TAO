@@ -21,6 +21,8 @@ namespace Utility
       class DescriptiveException : public virtual Exception
       {
       public:
+        typedef Exception Base; 
+        
         explicit
         DescriptiveException (char const* description) throw ();
 

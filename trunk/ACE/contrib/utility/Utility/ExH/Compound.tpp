@@ -47,6 +47,9 @@ namespace Utility
     template <typename Type, typename Base>
     Compound<Type, Base>::
     Compound (Compound const& src) throw ()
+          : Base::Base::Base (),
+            Base::Base (),
+            Base ()
     {
       Base::init (src.what ());
     }
