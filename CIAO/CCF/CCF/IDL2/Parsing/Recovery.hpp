@@ -154,11 +154,13 @@ namespace CCF
         }
 
         RecoveryDescriptor (RecoveryDescriptor const& rd)
-            : action_one_ (rd.action_one_.get () ? rd.action_one_->clone () : 0),
-              action_two_ (rd.action_two_.get () ? rd.action_two_->clone () : 0),
-              description_ (rd.description_),
-              recovery_ (rd.recovery_),
-              diagnostic_ (rd.diagnostic_)
+          : ReferenceCounting::Interface (),
+            ReferenceCounting::DefaultImpl<> (),
+            action_one_ (rd.action_one_.get () ? rd.action_one_->clone () : 0),
+            action_two_ (rd.action_two_.get () ? rd.action_two_->clone () : 0),
+            description_ (rd.description_),
+            recovery_ (rd.recovery_),
+            diagnostic_ (rd.diagnostic_)
         {
         }
 
