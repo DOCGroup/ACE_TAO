@@ -442,11 +442,21 @@ ACE_TP_Reactor::handle_socket_events (int &event_count,
   if (dispatch_info.event_handler_ != this->notify_handler_)
     if (this->suspend_i (dispatch_info.handle_) == -1)
       return 0;
-
+  //Begin added block for reactor dispatch protocol support
+  int resume_flag =	
+     dispatch_info.event_handler_->resume_handler ();
+  int reference_counting_required =
+  dispatch_info.event_handler_->reference_counting_policy ().value () ==
+      ACE_Event_Handler::Reference_Counting_Policy::ENABLED;	
+  //End added block for reactor dispatch protocol support
+   
   // Call add_reference() if needed.
   if (dispatch_info.reference_counting_required_)
     dispatch_info.event_handler_->add_reference ();
 
+  //Added for reactor dispatch protocol support
+  this->pre_upcall_hook (dispatch_info.handle_);
+  
   // Release the lock.  Others threads can start waiting.
   guard.release_token ();
 
@@ -459,6 +469,19 @@ ACE_TP_Reactor::handle_socket_events (int &event_count,
   // Dispatched an event
   if (this->dispatch_socket_event (dispatch_info) == 0)
     ++result;
+
+  //Begin added block for reactor dispatch protocol support	
+  if (dispatch_info.event_handler_ != this->notify_handler_ &&	
+      resume_flag == ACE_Event_Handler::ACE_REACTOR_RESUMES_HANDLER)	
+   this->resume_handler (dispatch_info.handle_);	
+
+  // Call remove_reference() if needed.
+  if (reference_counting_required)  
+  {	
+    dispatch_info.event_handler_->remove_reference();	
+  }	
+  this->post_upcall_hook (dispatch_info.handle_);	
+  //End added block for reactor dispatch protocol support
 
   return result;
 }

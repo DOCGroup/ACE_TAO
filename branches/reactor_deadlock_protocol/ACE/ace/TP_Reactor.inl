@@ -116,4 +116,16 @@ ACE_TP_Reactor::clear_dispatch_mask (ACE_HANDLE ,
   this->ready_set_.ex_mask_.reset ();
 }
 
+//Added for reactor dispatch protocol support
+ACE_INLINE void
+ACE_TP_Reactor::pre_upcall_hook (ACE_HANDLE upcall_handle)
+{
+}
+
+//Added for reactor dispatch protocol support
+ACE_INLINE void
+ACE_TP_Reactor::post_upcall_hook (ACE_HANDLE upcall_handle)
+{
+}
+
 ACE_END_VERSIONED_NAMESPACE_DECL
