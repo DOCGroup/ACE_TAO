@@ -1,3 +1,10 @@
+Mon Mar 26 20:46:34 UTC 2007  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * ASNMP/asnmp/asn1.cpp
+        * examples/Threads/thread_specific.cpp
+        
+          Fixes for string aliasing warnings.
+
 Mon Mar 26 15:56:19 UTC 2007  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * tests/Config_Test.cpp
