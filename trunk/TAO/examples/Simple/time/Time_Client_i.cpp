@@ -37,20 +37,21 @@ Time_Client_i::run (const char *name,
 #else
       CORBA::Long padding;
 #endif /* HPUX */
-      CORBA::Long timedate;
+      time_t timedate;
 
       ACE_UNUSED_ARG (padding);
 
       //Make the RMI.
-      timedate = client->current_time ();
+      timedate = static_cast <time_t> (client->current_time ());
 
       // Print out value
       // Use ACE_OS::ctime_r(), ctime() doesn't seem to work properly
       // under 64-bit solaris.
       ACE_TCHAR ascii_timedate[64] = "";
-      ACE_OS::ctime_r (reinterpret_cast<const time_t *> (&timedate),
-                       ascii_timedate, 64);
 
+      ACE_OS::ctime_r (&timedate,
+                       ascii_timedate, 64);
+      
       ACE_DEBUG ((LM_DEBUG,
                   "string time is %s\n",
                   ascii_timedate));

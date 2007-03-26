@@ -346,7 +346,7 @@ Client_i::activate_high_client (void)
       0,
       0,
       0,
-      (ACE_thread_t *) &this->task_id_) == -1)
+      &this->task_id_) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p; priority is %d\n",
                        "activate failed",
