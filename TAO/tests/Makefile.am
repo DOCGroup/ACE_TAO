@@ -109,6 +109,7 @@ SUBDIRS = \
         Crashed_Callback \
         DII_Collocation_Tests \
         DLL_ORB \
+        DIOP \
         DSI_Gateway \
         DynAny_Test \
         Explicit_Event_Loop \
