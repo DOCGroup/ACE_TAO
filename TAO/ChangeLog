@@ -1,3 +1,12 @@
+Mon Mar 26 14:47:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/PluggableUDP/tests/Basic/client.cpp:
+        * examples/PluggableUDP/tests/Basic/server.cpp:
+        * examples/PluggableUDP/tests/Basic/UDP_Client_i.cpp:
+        * examples/PluggableUDP/tests/Basic/UDP_i.cpp:
+        * examples/PluggableUDP/tests/Basic/UDP_i.h:
+          Small cleanup and simplifications
+
 Mon Mar 26 10:01:00 UTC 2007  Simon Massey  <sma@prismtech.com>
 
         * tests/Big_Request_Muxing/client.cpp:

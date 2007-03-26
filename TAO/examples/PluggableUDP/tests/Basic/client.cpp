@@ -115,10 +115,7 @@ main (int argc, char *argv[])
       poa_manager->activate ();
 
       // Instantiate reply handler
-      UDP_i udp_i;
-
-      // let it remember our ORB
-      udp_i.orb (orb.in ());
+      UDP_i udp_i (orb.in ());
 
       PortableServer::ObjectId_var id =
         root_poa->activate_object (&udp_i);

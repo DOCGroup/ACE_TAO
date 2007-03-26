@@ -38,7 +38,7 @@ class UDP_i: public POA_UDP
   //    arrived in order.
 public:
   // = Initialization and termination methods.
-  UDP_i (void);
+  UDP_i (CORBA::ORB_ptr o);
   // Constructor
 
   ~UDP_i (void);
@@ -49,11 +49,7 @@ public:
                        CORBA::Long request_id);
 
   virtual void shutdown (void);
-
   // Shutdown the server.
-
-  void orb (CORBA::ORB_ptr o);
-  // Set the ORB pointer.
 
 private:
   CORBA::ORB_var orb_;
