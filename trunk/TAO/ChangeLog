@@ -1,3 +1,9 @@
+Mon Mar 26 15:24:47 UTC 2007  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * tao/Compression/zlib/ZlibCompressor.cpp
+        
+          Addressed strict aliasing warning.
+
 Mon Mar 26 14:52:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/PluggableUDP/tests/Basic/*:
