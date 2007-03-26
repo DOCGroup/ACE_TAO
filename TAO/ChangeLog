@@ -1,3 +1,10 @@
+Mon Mar 26 10:01:00 UTC 2007  Simon Massey  <sma@prismtech.com>
+
+        * tests/Big_Request_Muxing/client.cpp:
+        * tests/Big_Request_Muxing/server.cpp:
+
+          Give very generous timeouts for very slow systems (lynxos).
+
 Sat Mar 24 23:40:17 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/tests/Security/EndpointPolicy/EndpointPolicy.mpc:

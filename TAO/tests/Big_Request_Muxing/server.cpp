@@ -113,7 +113,7 @@ main (int argc, char *argv[])
                  expected, maybe_lost));
 
       const ACE_Time_Value start_time = ACE_OS::gettimeofday ();
-      ACE_Time_Value end_time = start_time + ACE_Time_Value (9);
+      ACE_Time_Value end_time = start_time + ACE_Time_Value (27);
       ACE_Time_Value runtime;
       int count = 0;
       int maybe_lost_count = 0;
@@ -133,7 +133,7 @@ main (int argc, char *argv[])
             if (!stalled)
               {
                 stalled = true;
-                end_time += ACE_Time_Value (1);
+                end_time += ACE_Time_Value (3);
                 runtime = ACE_OS::gettimeofday () - start_time;
               }
             else if (ACE_OS::gettimeofday () > end_time)

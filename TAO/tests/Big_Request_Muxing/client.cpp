@@ -111,7 +111,7 @@ main (int argc, char *argv[])
       ACE_ERROR ((LM_ERROR, "(%P) Client: Error activating %s task\n", task2.ID ()));
     }
 
-    ACE_Time_Value end_time = ACE_OS::gettimeofday() + ACE_Time_Value(10);
+    ACE_Time_Value end_time = ACE_OS::gettimeofday() + ACE_Time_Value(30);
     while (ACE_OS::gettimeofday() < end_time)
     {
       ACE_Time_Value tv (0, 100 * 1000);
