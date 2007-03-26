@@ -23,11 +23,12 @@ ZlibCompressor::compress (
     ::CORBA::OctetSeq & target
   )
 {
-  ::CORBA::ULong max_length = static_cast <CORBA::ULong> (source.length () * 1.1) + 12;
-  target.length (max_length);
+  uLongf max_length = static_cast <uLongf> (source.length () * 1.1) + 12;
+
+  target.length (static_cast <CORBA::ULong> (max_length));
 
   int const retval = ::compress2 (reinterpret_cast <Bytef*>(target.get_buffer ()),
-                                  reinterpret_cast <uLongf *>(&max_length),
+                                  &max_length,
                                   reinterpret_cast <const Bytef*>(source.get_buffer ()),
                                   source.length (),
                                   this->compression_level ());
@@ -38,7 +39,7 @@ ZlibCompressor::compress (
     }
   else
     {
-      target.length (max_length);
+      target.length (static_cast <CORBA::ULong> (max_length));
     }
 }
 
@@ -47,9 +48,10 @@ ZlibCompressor::decompress (
   const ::CORBA::OctetSeq & source,
   ::CORBA::OctetSeq & target)
 {
-  CORBA::ULong max_length = target.length ();
+  uLongf max_length = static_cast <uLongf> (target.length ())
+;
   int const retval = uncompress (reinterpret_cast <Bytef*>(target.get_buffer ()),
-                                 reinterpret_cast <uLongf *>(&max_length),
+                                 &max_length,
                                  reinterpret_cast <const Bytef*>(source.get_buffer ()),
                                  source.length ());
 
@@ -59,7 +61,7 @@ ZlibCompressor::decompress (
     }
   else
     {
-      target.length (max_length);
+      target.length (static_cast  <CORBA::ULong> (max_length));
     }
 }
 }
