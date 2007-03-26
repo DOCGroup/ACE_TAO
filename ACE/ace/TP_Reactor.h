@@ -238,6 +238,12 @@ public:
   /// Return the current owner of the thread.
   virtual int owner (ACE_thread_t *t_id);
 
+  ///Added for reactor dispatch protocol support
+  virtual void pre_upcall_hook (ACE_HANDLE handle);
+  
+  ///Added for reactor dispatch protocol support
+  virtual void post_upcall_hook (ACE_HANDLE handle);
+
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
