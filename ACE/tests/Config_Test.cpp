@@ -101,16 +101,22 @@ test (ACE_Configuration *config,
     return -8;
   else if (intvalue != 42)
     return -9;
-
-  u_char *data_out = 0;
-  size_t length = 0;
-
-  if (config->get_binary_value (testsection,
-                                ACE_TEXT ("binvalue"),
-                                (void*&) data_out,
-                                length))
-    return -10;
-
+  
+  u_char *data_out (0);
+  
+  {
+    void *data_tmp = 0; // Workaround for GCC strict aliasing warning.
+    size_t length = 0;
+    
+    if (config->get_binary_value (testsection,
+                                  ACE_TEXT ("binvalue"),
+                                  data_tmp,
+                                  length))
+      return -10;
+  
+    data_out = reinterpret_cast <u_char *> (data_tmp);
+  }
+  
   // compare em
   for (int j = 0; j < 80; j++)
     if (data_out[j] != data[j])
