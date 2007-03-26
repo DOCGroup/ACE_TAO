@@ -1,3 +1,9 @@
+Mon Mar 26 15:42:35 UTC 2007  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * tests/TSS_Test.cpp
+        
+          Workaround for strict aliasing warning from GCC.
+
 Mon Mar 26 13:12:22 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/tao_orb_tests.lst:

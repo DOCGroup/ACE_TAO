@@ -134,12 +134,15 @@ worker (void *c)
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) in worker at location 1, ")
                             ACE_TEXT ("key = %d, ip = %x\n"),
                   key, ip));
-
-      if (ACE_Thread::setspecific (key, (void *) ip) == -1)
+      
+      // Needed to work around (possibly broken?) strict aliasing warning in GCC.
+      void *v_ip (reinterpret_cast <void *> (ip));
+      
+      if (ACE_Thread::setspecific (key, v_ip) == -1)
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t) %p\n"),
                     ACE_TEXT ("ACE_Thread::setspecific")));
 
-      if (ACE_Thread::getspecific (key, (void **) &ip) == -1)
+      if (ACE_Thread::getspecific (key, &v_ip) == -1)
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t) %p\n"),
                     ACE_TEXT ("ACE_Thread::getspecific")));
 
