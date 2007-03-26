@@ -19,18 +19,26 @@ Grid_i::Grid_i (CORBA::Short x,
                 CORBA::Short y,
                 pool_t *mem_pool)
   : width_ (x),
-    height_ (y)
+    height_ (y),
+    array_ (0)
 {
   // First try to locate the matrix in the pool. If it is there then
   // it has already been created. In such a case we just get that
   // memory and assign it to array_
-  if (mem_pool->find ("Array", (void *&) array_) == -1)
+  
+  void *tmp_array (0);
+  
+  if (mem_pool->find ("Array", tmp_array) != -1)
+    {
+      array_ = reinterpret_cast <CORBA::Long **> (tmp_array);
+    }
+  else
     {
       // Allocate memory for the matrix.
-       ACE_ALLOCATOR (array_,
-                      static_cast<CORBA::Long **> (mem_pool->malloc (y * sizeof (CORBA::Long *))));
+      ACE_ALLOCATOR (array_,
+                     static_cast<CORBA::Long **> (mem_pool->malloc (y * sizeof (CORBA::Long *))));
       //array_ = (CORBA::Long **) mem_pool->malloc (y * sizeof (CORBA::Long *));
-
+      
       if (array_ != 0)
         {
           for (int ctr = 0; ctr < y; ctr++)
@@ -46,6 +54,7 @@ Grid_i::Grid_i (CORBA::Short x,
           mem_pool->bind ("Array", array_);
         }
     }
+  
 }
 
 // Default destructor.
