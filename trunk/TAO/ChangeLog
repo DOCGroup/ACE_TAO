@@ -1,3 +1,16 @@
+Mon Mar 26 14:52:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/PluggableUDP/tests/Basic/*:
+        * tests/DIOP/*:
+          Moved this test from examples to tests, this is a DIOP regression
+          test that can be part of the orb test suite.
+
+        * examples/PluggableUDP/tests/Makefile.am:
+          Removed Basic directory
+
+        * tests/Makefile.am:
+          Added DIOP directory
+
 Mon Mar 26 14:47:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/PluggableUDP/tests/Basic/client.cpp:
