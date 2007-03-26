@@ -103,9 +103,7 @@ main (int argc, char *argv[])
       if (parse_args (argc, argv) != 0)
         return 1;
 
-      UDP_i udp_i;
-
-      udp_i.orb (orb.in ());
+      UDP_i udp_i (orb.in ());
 
       PortableServer::ObjectId_var id =
         PortableServer::string_to_ObjectId ("UDP_Object");
@@ -144,28 +142,6 @@ main (int argc, char *argv[])
 
       poa_manager->activate ();
 
-      /*
-      // Instantiate reply handler
-      UDP_i udpHandler_i;
-
-      udpHandler_i.orb (orb.in ());
-
-      PortableServer::ObjectId_var id_act =
-        persistent_poa->activate_object (&udpHandler_i);
-
-      CORBA::Object_var object_act = persistent_poa->id_to_reference (id_act.in ());
-
-      UDP_var udpHandler_var =
-        UDP::_narrow (object_act.in ());
-
-      // Instantiate client
-      UDP_Client_i* client = new UDP_Client_i (orb,
-                                               udp_var.in (),
-                                               udpHandler_var.in ());
-
-      client->activate ();
-      */
-
       orb->run ();
 
       ACE_DEBUG ((LM_DEBUG, "event loop finished\n"));
@@ -175,8 +151,6 @@ main (int argc, char *argv[])
                          );
 
       orb->destroy ();
-
-      //delete client;
     }
   catch (const CORBA::Exception& ex)
     {
