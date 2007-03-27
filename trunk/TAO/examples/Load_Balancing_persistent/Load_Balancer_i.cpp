@@ -48,9 +48,15 @@ Object_Group_Factory_i::_default_POA (void)
 Load_Balancer::Object_Group_ptr
 Object_Group_Factory_i::make_round_robin (const char * id)
 {
-
+  
+  void *tmp_rr (0);
+  
   if (this->mem_pool_->find (rr_name_bind,
-                             (void *&)this->rr_groups_) == -1)
+                             tmp_rr) == 0)
+    {
+      this->rr_groups_ = reinterpret_cast <HASH_MAP *> (tmp_rr);
+    }
+  else
     {
       void *hash_map = this->mem_pool_->malloc (sizeof (HASH_MAP));
       ACE_NEW_THROW_EX (this->rr_groups_,
@@ -76,9 +82,13 @@ Object_Group_Factory_i::unbind_round_robin (const char * id)
 {
   if (this->rr_groups_ == 0)
     {
+      void *tmp_rr (0);
+      
       if (this->mem_pool_->find (rr_name_bind,
-                                 (void *&)this->rr_groups_) == -1)
+                                 tmp_rr) == -1)
         throw Load_Balancer::no_such_group ();
+      
+      this->rr_groups_ = reinterpret_cast <HASH_MAP *> (tmp_rr);
     }
 
   char *int_id = 0;
@@ -99,9 +109,13 @@ Object_Group_Factory_i::unbind_round_robin (const char * id)
   // Change the FLAGS variable
   if (this->flags_ == 0)
     {
+      void *tmp_flags (0);
+      
       if (this->mem_pool_->find (flags_name_bind,
-                                 (void *&)this->flags_) == -1)
+                                 tmp_flags) == -1)
         return;
+      
+      this->flags_ = reinterpret_cast <CORBA::Short *> (tmp_flags);
     }
 
   // Bump down the flags value
@@ -112,8 +126,13 @@ Object_Group_Factory_i::unbind_round_robin (const char * id)
 Load_Balancer::Object_Group_ptr
 Object_Group_Factory_i::make_random (const char * id)
 {
-
-  if (this->mem_pool_->find (random_name_bind, (void * &)this->random_groups_) == -1)
+  void *tmp_random (0);
+  
+  if (this->mem_pool_->find (random_name_bind, tmp_random) == 0)
+    {
+      this->random_groups_ = reinterpret_cast <HASH_MAP *> (tmp_random);
+    }
+  else
     {
       void *hash_map = this->mem_pool_->malloc (sizeof (HASH_MAP));
 
@@ -141,9 +160,13 @@ Object_Group_Factory_i::unbind_random (const char * id)
 {
   if (this->random_groups_ == 0)
     {
+      void *tmp_random (0);
+      
       if (this->mem_pool_->find (random_name_bind,
-                                 (void *&)this->random_groups_) == -1)
+                                 tmp_random) == -1)
         throw Load_Balancer::no_such_group ();
+      
+      this->random_groups_ = reinterpret_cast <HASH_MAP *> (tmp_random);
     }
 
   char *int_id = 0;
@@ -164,9 +187,13 @@ Object_Group_Factory_i::unbind_random (const char * id)
   // Change the FLAGS variable
   if (this->flags_ == 0)
     {
+      void *tmp_flags (0);
+      
       if (this->mem_pool_->find (flags_name_bind,
-                                 (void *&)this->flags_) == -1)
+                                 tmp_flags) == -1)
         return;
+      
+      this->flags_ = reinterpret_cast <CORBA::Short *> (tmp_flags);
     }
 
   // Bump down the flags value
@@ -297,8 +324,14 @@ Object_Group_Factory_i::resolve (const char * id)
   // MMAP file for the relevant info..
   if (!this->rr_groups_)
     {
+      void *tmp_rr (0);
+      
       if (this->mem_pool_->find (rr_name_bind,
-                                 (void *&)this->rr_groups_) == -1)
+                                 tmp_rr) == 0)
+        {
+          this->rr_groups_ = reinterpret_cast <HASH_MAP *> (tmp_rr);
+        }
+      else
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT ("(%N|%l) The factory does not have any references ")
@@ -309,8 +342,14 @@ Object_Group_Factory_i::resolve (const char * id)
 
   if (!this->random_groups_)
     {
+      void *tmp_random (0);
+      
       if (this->mem_pool_->find (random_name_bind,
-                                 (void *&)this->random_groups_) == -1)
+                                 tmp_random) == 0)
+        {
+          this->random_groups_ = reinterpret_cast <HASH_MAP *> (tmp_random);
+        }
+      else
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT ("(%N|%l) The factory does not have any references ")
@@ -322,8 +361,12 @@ Object_Group_Factory_i::resolve (const char * id)
 
   if (!this->flags_)
     {
+      void *tmp_flags (0);
+      
       this->mem_pool_->find (flags_name_bind,
-                             (void *&)this->flags_);
+                             tmp_flags);
+      this->flags_ = reinterpret_cast <CORBA::Short *> (tmp_flags);
+      
       this->update_objects ();
     }
 
@@ -420,8 +463,14 @@ Object_Group_Factory_i::update_flags (int random)
   //First check whether we have memory for flags_
   if (!this->flags_)
     {
+      void *tmp_flags (0);
+      
       if (this->mem_pool_->find (flags_name_bind,
-                                 (void *&) this->flags_) == -1)
+                                 tmp_flags) == 0)
+        {
+          this->flags_ = reinterpret_cast <CORBA::Short *> (tmp_flags);
+        }
+      else
         {
           void *value =
             this->mem_pool_->malloc (sizeof (CORBA::Short));
@@ -558,8 +607,14 @@ Object_Group_i::bind (const Load_Balancer::Member & member)
       ACE_CString id = this->id ();
 
       id += server_id_name_bind;
-
-      if (this->allocator_->find (id.c_str (), (void *&)this->members_) == -1)
+      
+      void *tmp_members (0);
+      
+      if (this->allocator_->find (id.c_str (), tmp_members) == 0)
+        {
+          this->members_ = reinterpret_cast <HASH_MAP *> (tmp_members);
+        }
+      else
         {
           void *hash_map = this->allocator_->malloc (sizeof (HASH_MAP));
           ACE_NEW_THROW_EX (this->members_,
@@ -613,10 +668,16 @@ Object_Group_i::bind (const Load_Balancer::Member & member)
   ACE_CString id = dll_name_bind;
   id += this->id ();
 
-
+  
+  void *tmp_id_list (0);
+  
   if (this->allocator_->find (id.c_str (),
-                              (void *&)this->member_id_list_)
-      == -1)
+                              tmp_id_list)
+      == 0)
+    {
+      this->member_id_list_ = reinterpret_cast <LIST *> (tmp_id_list);
+    }
+  else
     {
       void *dll_list = this->allocator_->malloc (sizeof (LIST));
       ACE_NEW_THROW_EX (this->member_id_list_,
@@ -650,12 +711,16 @@ Object_Group_i::unbind (const char * id)
       ACE_CString id = this->id ();
 
       id += server_id_name_bind;
-
+      
+      void *tmp_members (0);
+      
       if (this->allocator_->find (id.c_str (),
-                                  (void *&)this->members_) == -1)
+                                  tmp_members) == -1)
         {
           throw Load_Balancer::no_such_member ();
         }
+      
+      this->members_ = reinterpret_cast <HASH_MAP *> (tmp_members);
     }
   // Check to make sure we have it.
   if (this->members_->find (const_cast<char *> (id),
@@ -670,12 +735,15 @@ Object_Group_i::unbind (const char * id)
     {
       ACE_CString id = dll_name_bind;
       id += this->id ();
-
+      
+      void *tmp_id_list (0);
+      
       if (this->allocator_->find (id.c_str (),
-                                  (void *&)this->member_id_list_)
+                                  tmp_id_list)
           == -1)
         throw Load_Balancer::no_such_member ();
-
+      
+      this->member_id_list_ = reinterpret_cast <LIST *> (tmp_id_list);
     }
 
 
@@ -759,9 +827,15 @@ Object_Group_i::read_from_memory (void)
   if (!this->members_)
     {
       id += server_id_name_bind;
-
+      
+      void *tmp_members (0);
+      
       if (this->allocator_->find (id.c_str (),
-                                  (void *&)this->members_) == -1)
+                                  tmp_members) == 0)
+        {
+          this->members_ = reinterpret_cast <HASH_MAP *> (tmp_members);
+        }
+      else
         {
           ACE_ERROR ((LM_ERROR,
                       "Unable to find tha HASH MAP  in the MMAP file \n"));
@@ -773,9 +847,15 @@ Object_Group_i::read_from_memory (void)
     {
       id = dll_name_bind;
       id += this->id ();
-
+      
+      void *tmp_id_list (0);
+      
       if (this->allocator_->find (id.c_str (),
-                                  (void *&)this->member_id_list_) == -1)
+                                  tmp_id_list) == 0)
+        {
+          this->member_id_list_ = reinterpret_cast <LIST *> (tmp_id_list);
+        }
+      else
         {
           ACE_ERROR ((LM_ERROR,
                       "Unable to find tha HASH MAP  in the MMAP file \n"));
@@ -870,12 +950,16 @@ RR_Object_Group::unbind (const char *id)
       ACE_CString id = this->id ();
 
       id += server_id_name_bind;
-
+      
+      void *tmp_members (0);
+      
       if (this->allocator_->find (id.c_str (),
-                                  (void *&)this->members_) == -1)
+                                  tmp_members) == -1)
         {
           throw Load_Balancer::no_such_member ();
         }
+      
+      this->members_ = reinterpret_cast <HASH_MAP *> (tmp_members);
     }
 
   // Check to make sure we have it.
@@ -893,12 +977,15 @@ RR_Object_Group::unbind (const char *id)
     {
       ACE_CString id = dll_name_bind;
       id += this->id ();
-
+      
+      void *tmp_id_list (0);
+      
       if (this->allocator_->find (id.c_str (),
-                                  (void *&)this->member_id_list_)
+                                  tmp_id_list)
           == -1)
         throw Load_Balancer::no_such_member ();
-
+      
+      this->member_id_list_ = reinterpret_cast <LIST *> (tmp_id_list);
     }
 
   size_t position = 0;
