@@ -1,16 +1,23 @@
+Tue Mar 27 07:32:40 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/QtResource/QtResource_Factory.h:
+          Use forward declaration of QApplication. Part of the patch of bugzilla
+          2870. Thanks to Roland Sun <rolandsun at gmail dot com> for
+          providing the patch
+
 Mon Mar 26 20:44:40 UTC 2007  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * performance-tests/Cubit/TAO/MT_Cubit/client.cpp
         * performance-tests/Cubit/TAO/MT_Cubit/client.h
         * examples/Simple/time/Time_Client_i.cpp
         * examples/Persistent_Grid/Grid_i.cpp
-        
+
           Fixes for strict aliasing warnings.
 
 Mon Mar 26 15:24:47 UTC 2007  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * tao/Compression/zlib/ZlibCompressor.cpp
-        
+
           Addressed strict aliasing warning.
 
 Mon Mar 26 14:52:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
