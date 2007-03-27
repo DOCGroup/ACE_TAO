@@ -1,3 +1,9 @@
+Tue Mar 27 18:00:26 UTC 2007  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * orbsvcs/examples/RtEC/Kokyu/Service.cpp
+        
+          Unused argument warning.
+
 Tue Mar 27 17:50:38 UTC 2007  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * examples/Load_Balancing_persistent/Load_Balancer_i.cpp
