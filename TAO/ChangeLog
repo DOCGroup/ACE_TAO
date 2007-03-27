@@ -1,3 +1,13 @@
+Tues Mar 27 09:35:00 UTC 2007  Simon Massey  <sma@prismtech.com>
+
+        * tests/Big_Request_Muxing/client.cpp:
+
+          Allow time for the server to process messages at the other end
+          of the tcpip link before the client destroies the sockets and
+          rips down any pending messages it may have still buffered up.
+          Note this is ONLY for the benifit of the SYNC_NONE and
+          SYNC_WITH_TRANSPORT messages to improve the stats a bit.
+
 Tues Mar 27 08:15:00 UTC 2007  Simon Massey  <sma@prismtech.com>
 
         * tests/Big_Request_Muxing/run_test.pl:
