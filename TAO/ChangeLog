@@ -1,17 +1,22 @@
+Tue Mar 27 19:36:40 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Abstract_Interface/run_test.pl:
+          Made this script working for VxWorks
+
 Tue Mar 27 18:00:26 UTC 2007  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * orbsvcs/examples/RtEC/Kokyu/Service.cpp
-        
+
           Unused argument warning.
 
 Tue Mar 27 17:50:38 UTC 2007  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * examples/Load_Balancing_persistent/Load_Balancer_i.cpp
-        
-          Fixes for strict aliasing warnings. 
-        
+
+          Fixes for strict aliasing warnings.
+
         * examples/Load_Balancing_persistent/Identity_Server.cpp
-        
+
           Added logic to bail if it gets invalid group references
           from the load balancing daemon.
 
