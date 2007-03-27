@@ -24,7 +24,7 @@ for ($n = 0; $n < 10; ++$n) {
   unlink $iorfile;
 
   $SV->Spawn ();
-  if (PerlACE::waitforfile_timed ($iorfile, 10) == -1) {
+  if (PerlACE::waitforfile_timed ($iorfile, 15) == -1) {
       print STDERR "ERROR: cannot find file <$iorfile>\n";
       $SV->Kill ();
       exit 1;
@@ -33,7 +33,7 @@ for ($n = 0; $n < 10; ++$n) {
   $CL1->Spawn();
   $CL2->Spawn();
 
-  $client1 = $CL1->WaitKill (30);
+  $client1 = $CL1->WaitKill (70);
   if ($client1 != 0) {
       print STDERR "ERROR: client 1 returned $client1\n";
       $CL2->Kill();
@@ -41,14 +41,14 @@ for ($n = 0; $n < 10; ++$n) {
       exit 1;
   }
 
-  $client2 = $CL2->WaitKill (30);
+  $client2 = $CL2->WaitKill (10);
   if ($client2 != 0) {
       print STDERR "ERROR: client 2 returned $client2\n";
       $SV->Kill();
       exit 1;
   }
 
-  $server = $SV->WaitKill (30);
+  $server = $SV->WaitKill (10);
   if ($server != 0) {
       print STDERR "ERROR: server returned $server\n";
       exit 1;
