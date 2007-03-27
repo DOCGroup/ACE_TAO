@@ -113,7 +113,7 @@ be_valuetype::be_valuetype (UTL_ScopedName *n,
                    truncatable,
                    custom),
     full_obv_skel_name_ (0),
-    supports_abstract_ (0),
+    supports_abstract_ (false),
     var_out_seq_decls_gen_ (0)
 {
   // Check that redefine() copies all members.
@@ -136,7 +136,7 @@ be_valuetype::be_valuetype (UTL_ScopedName *n,
       be_interface *intf =
         be_interface::narrow_from_decl (this->pd_supports[i]);
 
-      if (intf->has_mixed_parentage ())
+      if (intf->is_abstract () || intf->has_mixed_parentage ())
         {
           this->supports_abstract_ = true;
           break;
