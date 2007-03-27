@@ -20,9 +20,10 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include <qapplication.h>
 #include "ace/QtReactor/QtReactor.h"
 #include "tao/GUIResource_Factory.h"
+
+class QApplication;
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
