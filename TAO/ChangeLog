@@ -1,3 +1,10 @@
+Tue Mar 27 21:15:24 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_valuetype.cpp:
+        
+          Fixed a bug in the logic when determining if the valuetype
+          supports an abstract interface or not.
+
 Tue Mar 27 19:36:40 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Abstract_Interface/run_test.pl:
