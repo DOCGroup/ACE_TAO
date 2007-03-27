@@ -39,7 +39,7 @@ Messenger_i::send_message (const CORBA::OctetSeq & user_name)
       CORBA::Any_var user_name_as_any;
       user_name_as_any = codec->decode(user_name);
 
-      char * name = 0;
+      const char * name = 0;
       user_name_as_any >>= name;
       ACE_DEBUG ((LM_DEBUG,  "User's name: %s\n", name));
     }
