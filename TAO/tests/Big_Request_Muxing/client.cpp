@@ -136,7 +136,13 @@ main (int argc, char *argv[])
       {
         ACE_DEBUG ((LM_DEBUG, "(%P) Client: work finished\n"));
       }
-    ACE_OS::sleep (1);
+
+    // Allow time for the server to process messages at the other end
+    // of the tcpip link before we destroy the sockets and rip down
+    // any pending messages it may have buffered up. Note this is ONLY
+    // for the benifit of the SYNC_NONE and SYNC_WITH_TRANSPORT messages.
+    ACE_Time_Value tv (4, 0);
+    orb->run (tv);
     orb->destroy ();
   }
   catch (const CORBA::Exception& ex)
