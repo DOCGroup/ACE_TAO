@@ -1,3 +1,14 @@
+Tue Mar 27 17:50:38 UTC 2007  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * examples/Load_Balancing_persistent/Load_Balancer_i.cpp
+        
+          Fixes for strict aliasing warnings. 
+        
+        * examples/Load_Balancing_persistent/Identity_Server.cpp
+        
+          Added logic to bail if it gets invalid group references
+          from the load balancing daemon.
+
 Tue Mar 27 13:56:40 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_933_Regression/*:
