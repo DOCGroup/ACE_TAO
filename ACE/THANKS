@@ -2186,6 +2186,7 @@ Andres Hurtis <andrej100 at gmail dot com>
 Joe French <JFrench at Soneticom dot com>
 M. Arshad Khan <khan dot m dot arshad at gmail dot com>
 Hans van't Hag <hans dot vanthag at prismtech dot com>
+Roland Sun <rolandsun at gmail dot com>
 
 I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson in the early 1990's.  Paul devised the recursive Makefile
@@ -2197,7 +2198,7 @@ Finally, I'd also like to thank Todd L. Montgomery <tmont at cs.wvu.edu>,
 fellow heavy metal head, for fulfilling his quest to get ACE to
 compile with GCC!
 
-In conclusion, our goal is to see ACE+TAO continue to evolve and
+In conclusion, our goal is to see ACE+TAO+CIAO continue to evolve and
 become a more comprehensive, robust, and well-documented C++ class
 library that is freely available to researchers and developers.  If
 you have any improvements, suggestions, and or comments, we'd like to
@@ -2205,6 +2206,7 @@ hear about it.  Please see the instructions in
 
 $ACE_ROOT/PROBLEM-REPORT-FORM
 $TAO_ROOT/PROBLEM-REPORT-FORM
+$CIAO_ROOT/PROBLEM-REPORT-FORM
 
 for instructions on submitting suggestions or fixes.
 
