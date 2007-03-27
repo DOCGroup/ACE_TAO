@@ -43,6 +43,7 @@ TAO/tests/BiDirectional_DelayedUpcall/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CO
 TAO/tests/Leader_Followers/run_test.pl: !ST !ACE_FOR_TAO
 TAO/tests/Leader_Followers/run_test_mt.pl: !ST !ACE_FOR_TAO
 TAO/tests/Multiple_Inheritance/run_test.pl:
+TAO/tests/Bug_933_Regression/run_test.pl:
 TAO/tests/Bug_1269_Regression/run_test.pl: !Win32 !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO
 TAO/tests/Bug_1495_Regression/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ST !DISABLE_INTERCEPTORS
 TAO/tests/Bug_1568_Regression/run_test.pl: !NO_MESSAGING
