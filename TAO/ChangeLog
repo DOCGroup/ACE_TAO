@@ -1,3 +1,32 @@
+Wed Mar 28 16:44:35 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tao/HTTP_Parser.cpp:
+
+          The parse_string and match_prefix virtual methods take a const
+          char*.  They are converted to ACE_TCHAR* where necessary.
+
+        * tao/Load_Protocol_Factory_T.h:
+
+          Take a const char* in load_protocol_factory() and convert it in
+          the one place where ACE_TCHAR* is expected.
+
+        * tao/ORB.cpp:
+
+          Cast ACE::nibble2hex() result to char.  On narrow char builds,
+          it's already a char, but on wide char builds it's an ACE_TCHAR.
+
+        * tao/TAO_Internal.cpp:
+
+           Change open_private_services_i() to take char** instead of
+           ACE_TCHAR** and use ACE_Argv_Type_Converter to pass the right
+           types to ACE_Service_Gestalt::open().
+
+        * tao/Valuetype/AbstractBase.cpp:
+
+          Check the abstract base pointer from the factory before using it.
+          If it's zero, return false instead of dereferencing it and dumping
+          core.
+
 Wed Mar 28 09:21:40 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * performance-tests/Cubit/TAO/MT_Cubit/client.cpp:
@@ -129,17 +158,13 @@ Fri Mar 23 13:02:40 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
         * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Endpoint.cpp:
         * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Profile.h:
         * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Profile.cpp:
-
         * orbsvcs/tests/Security/EndpointPolicy:
-
         * orbsvcs/tests/Security/EndpointPolicy/EndpointPolicy.mpc:
         * orbsvcs/tests/Security/EndpointPolicy/README:
         * orbsvcs/tests/Security/EndpointPolicy/run_test.pl:
         * orbsvcs/tests/Security/EndpointPolicy/svc.conf:
         * orbsvcs/tests/Security/EndpointPolicy/test.cpp:
-
         * tao/EndpointPolicy/Endpoint_Acceptor_Filter.cpp:
-
         * tao/IIOP_Profile.h:
         * tao/IIOP_Profile.cpp:
         * tao/Object_Reference_Sequence_Element_T.h:
