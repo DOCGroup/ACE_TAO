@@ -24,12 +24,10 @@
 #include "ace/DLL.h"
 #include "ace/Auto_Ptr.h"
 #include "NodeApp_Configurator_Export.h"
+#include "Config_Manager.h"
 
 namespace CIAO
 {
-  // forward declaration
-  class Config_Manager;
-
   /**
    *
    * @class NodeApp_Configurator

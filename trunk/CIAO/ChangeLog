@@ -1,8 +1,16 @@
+Wed Mar 28 11:16:43 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * DAnCE/NodeApplication/NodeApp_Configurator.h:
+ 
+          Partially reverted changes made in Fri Mar 23 03:13:40 UTC 2007.
+          VS 7.1 didn't like it. Forward declaration to Config_Manager was
+          removed and its header file was included again.
+
 Sun Mar 25 23:26:11 UTC 2007  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * CCF/CCF/IDL2/Parsing/Recovery.hpp
         * CCF/CCF/CodeGenerationKit/IndentationBuffer.hpp
-        
+
           An attempt to deal with copious warnings from the CIDLC
           build.
 
@@ -10,7 +18,7 @@ Sun Mar 25 23:07:17 UTC 2007  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * CIDLC/OperationHeaderEmitters.cpp
         * CIDLC/OperationHeaderEmitters.hpp
-        
+
           Reverted part of previous commit which caused malformed output
           in components with supported interfaces with raises clauses.
 
@@ -24,16 +32,16 @@ Fri Mar 23 21:26:31 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
         * CIDLC/OperationHeaderEmitters.hpp:
         * CIDLC/ServantHeaderGenerator.cpp:
         * CIDLC/ServantSourceGenerator.cpp:
-        
+
           - changed key type of ACE_Array_Map added in
-          
+
             Tue Mar  6 20:21:45 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
-            
+
             to ptrdiff_t from CORBA::ULong, so it will be
             portable to 64-bit systems.
-            
+
           - fixed formatting errors in generated code
-            for facet servant operations, and removed 
+            for facet servant operations, and removed
             unused methods from the emitter class.
 
 Fri Mar 23 12:46:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
