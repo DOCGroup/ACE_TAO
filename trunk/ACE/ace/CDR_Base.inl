@@ -2,7 +2,7 @@
 //
 // $Id$
 
-#if defined (_MSC_VER) && (_MSC_VER >= 1300)
+#if defined (_MSC_VER) && (_MSC_VER >= 1300) && !(defined (__INTEL_COMPILER) && (__INTEL_COMPILER == 0x900))
 // Take advantage of MSVC++ byte swapping compiler intrinsics (found
 // in <stdlib.h>).
 # pragma intrinsic (_byteswap_ushort, _byteswap_ulong, _byteswap_uint64)
@@ -61,7 +61,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_INLINE void
 ACE_CDR::swap_2 (const char *orig, char* target)
 {
-#if defined (_MSC_VER) && (_MSC_VER >= 1300)
+#if defined (_MSC_VER) && (_MSC_VER >= 1300) && !(defined (__INTEL_COMPILER) && (__INTEL_COMPILER == 0x900))
   // Take advantage of MSVC++ compiler intrinsic byte swapping
   // function.
   *reinterpret_cast<unsigned short *> (target) =
@@ -89,7 +89,7 @@ ACE_CDR::swap_2 (const char *orig, char* target)
 ACE_INLINE void
 ACE_CDR::swap_4 (const char* orig, char* target)
 {
-#if defined (_MSC_VER) && (_MSC_VER >= 1300)
+#if defined (_MSC_VER) && (_MSC_VER >= 1300) && !(defined (__INTEL_COMPILER) && (__INTEL_COMPILER == 0x900))
   // Take advantage of MSVC++ compiler intrinsic byte swapping
   // function.
   *reinterpret_cast<unsigned long *> (target) =
@@ -118,7 +118,7 @@ ACE_CDR::swap_4 (const char* orig, char* target)
 ACE_INLINE void
 ACE_CDR::swap_8 (const char* orig, char* target)
 {
-#if defined (_MSC_VER) && (_MSC_VER >= 1300)
+#if defined (_MSC_VER) && (_MSC_VER >= 1300) && !(defined (__INTEL_COMPILER) && (__INTEL_COMPILER == 0x900))
   // Take advantage of MSVC++ compiler intrinsic byte swapping
   // function.
   *reinterpret_cast<unsigned __int64 *> (target) =

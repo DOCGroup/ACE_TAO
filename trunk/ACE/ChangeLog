@@ -1,3 +1,12 @@
+Wed Mar 28 09:05:22 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/CDR_Base.inl:
+          Intel 9.0 doesn't deliver the intrinsic byte swapping operations.
+          This has been checked with Intel, they confirm this issue but
+          also indicate they will not fix this anymore for Intel 9.0,
+          Intel 9.1 and 10.0 don't have this issue. So, disabled the
+          intrinsic byte swapping operations when Intel 9.0 is used
+
 Tue Mar 27 13:58:22 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/tao_orb_tests.lst:
