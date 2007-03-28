@@ -323,7 +323,7 @@ Client_i::activate_high_client (void)
                           0),
                   -1);
 
-#if defined (ACE_VXWORKS)
+#if defined (ACE_VXWORKS) && !defined (__RTP__) && !defined (ACE_HAS_PTHREADS)
   // Set a task_id string starting with "@", so we are able to
   // accurately count the number of context switches.
   ACE_OS::strcpy (this->task_id_,
@@ -388,7 +388,7 @@ Client_i::activate_low_client (void)
                               this->argv_,
                               i),
                       -1);
-#if defined (ACE_VXWORKS)
+#if defined (ACE_VXWORKS) && !defined (__RTP__) && !defined (ACE_HAS_PTHREADS)
       // Pace the connection establishment on VxWorks.
       const ACE_Time_Value delay (0L, 500000L);
       ACE_OS::sleep (delay);
@@ -636,10 +636,8 @@ int
 Client_i::do_priority_inversion_test (void)
 {
   this->timer_.start ();
-#if defined (ACE_VXWORKS)
-#  if !defined (__RTP__) && !defined (ACE_HAS_PTHREADS)
+#if defined (ACE_VXWORKS) && !defined (__RTP__) && !defined (ACE_HAS_PTHREADS)
   ctx = 0;
-#  endif
   ACE_NEW_RETURN (this->task_id_,
                   char[TASK_ID_LEN],
                   -1);
