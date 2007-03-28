@@ -16,15 +16,17 @@ ACE_Event::ACE_Event (int manual_reset,
                       int initial_state,
                       int type,
                       const ACE_TCHAR *name,
-                      void *arg)
-  : removed_ (0)
+                      void *arg,
+                      LPSECURITY_ATTRIBUTES sa)
+  : removed_ (false)
 {
   if (ACE_OS::event_init (&this->handle_,
                           manual_reset,
                           initial_state,
                           type,
                           name,
-                          arg) != 0)
+                          arg,
+                          sa) != 0)
     ACE_ERROR ((LM_ERROR,
                 ACE_LIB_TEXT ("%p\n"),
                 ACE_LIB_TEXT ("ACE_Event::ACE_Event")));
@@ -39,9 +41,9 @@ int
 ACE_Event::remove (void)
 {
   int result = 0;
-  if (this->removed_ == 0)
+  if (!this->removed_)
     {
-      this->removed_ = 1;
+      this->removed_ = true;
       result = ACE_OS::event_destroy (&this->handle_);
     }
   return result;
