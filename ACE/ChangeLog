@@ -1,3 +1,12 @@
+Wed Mar 28 10:45:22 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Event.{h,cpp}:
+          Extende constructor with LPSECURITY_ATTRIBUTES sa argument that
+          can be used to pass in the security attributes that are then
+          passes to event_init. Also made the removed_ member a real bool.
+          Thanks to Michael Graf <mg at leutek dot de> for proposing
+          this change
+
 Wed Mar 28 09:05:22 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/CDR_Base.inl:
