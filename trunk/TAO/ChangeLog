@@ -1,7 +1,12 @@
+Wed Mar 28 09:21:40 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * performance-tests/Cubit/TAO/MT_Cubit/client.cpp:
+          Fixed compile problem with VxWorks
+
 Tue Mar 27 21:15:24 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_valuetype.cpp:
-        
+
           Fixed a bug in the logic when determining if the valuetype
           supports an abstract interface or not.
 
