@@ -42,7 +42,7 @@ main( int argc, char *argv[] )
     CORBA::String_var user_name = CORBA::string_dup ("Ru");
 
     CORBA::Any user_name_as_any;
-    user_name_as_any <<= user_name;
+    user_name_as_any <<= user_name.in ();
 
     CORBA::OctetSeq_var client_user_name = codec->encode (user_name_as_any);
 
