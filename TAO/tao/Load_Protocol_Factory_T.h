@@ -30,7 +30,7 @@ namespace TAO
     template<typename T>
     int
     load_protocol_factory (TAO_ProtocolFactorySet &protocol_set,
-                           const ACE_TCHAR *name)
+                           const char *name)
     {
       TAO_Protocol_Factory *protocol_factory = 0;
       auto_ptr<TAO_Protocol_Factory> safe_protocol_factory;
@@ -43,7 +43,8 @@ namespace TAO
       bool transfer_ownership = false;
 
       protocol_factory =
-        ACE_Dynamic_Service<TAO_Protocol_Factory>::instance (name);
+        ACE_Dynamic_Service<TAO_Protocol_Factory>::instance (
+          ACE_TEXT_CHAR_TO_TCHAR (name));
 
       if (protocol_factory == 0)
         {

@@ -1387,8 +1387,8 @@ CORBA::ORB::object_to_string (CORBA::Object_ptr obj)
 
           while (len--)
             {
-              *cp++ = ACE::nibble2hex ((*bytes) >> 4);
-              *cp++ = ACE::nibble2hex (*bytes);
+              *cp++ = static_cast<char> (ACE::nibble2hex ((*bytes) >> 4));
+              *cp++ = static_cast<char> (ACE::nibble2hex (*bytes));
               ++bytes;
             }
         }

@@ -436,7 +436,7 @@ namespace
   int
   open_private_services_i (ACE_Service_Gestalt * pcfg,
                            int & argc,
-                           ACE_TCHAR ** argv,
+                           char ** argv,
                            bool skip_service_config_open,
                            bool ignore_default_svc_conf_file)
   {
@@ -450,8 +450,11 @@ namespace
     ignore_default_svc_conf_file = true;
 #endif /* TAO_PLATFORM_SVC_CONF_FILE_NOTSUP */
 
-    return pcfg->open (argc,
-                       argv,
+    // Copy command line parameter to allow conversion
+    ACE_Argv_Type_Converter command_line (argc, argv); 
+
+    return pcfg->open (command_line.get_argc (),
+                       command_line.get_TCHAR_argv (),
                        ACE_DEFAULT_LOGGER_KEY,
                        0, // Don't ignore static services.
                        ignore_default_svc_conf_file);
