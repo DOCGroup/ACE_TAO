@@ -17,7 +17,7 @@ ACE_RCSID (tao,
            HTTP_Parser,
            "$Id$")
 
-static const char file_prefix[] = "http:";
+static const ACE_TCHAR file_prefix[] = ACE_TEXT ("http:");
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -27,21 +27,22 @@ TAO_HTTP_Parser::~TAO_HTTP_Parser (void)
 
 
 bool
-TAO_HTTP_Parser::match_prefix (const char *ior_string) const
+TAO_HTTP_Parser::match_prefix (const char *nior_string) const
 {
+  const ACE_TCHAR *ior_string = ACE_TEXT_CHAR_TO_TCHAR (nior_string);
   return (ACE_OS::strncmp (ior_string,
                            ::file_prefix,
                            sizeof (::file_prefix) - 1) == 0);
 }
 
 CORBA::Object_ptr
-TAO_HTTP_Parser::parse_string (const char *ior,
-                               CORBA::ORB_ptr orb
-                               )
+TAO_HTTP_Parser::parse_string (const char *nior,
+                               CORBA::ORB_ptr orb)
 {
   // Skip the prefix, we know it is there because this method in only
   // called if <match_prefix> returns 1.
-  const char *http_url =
+  const ACE_TCHAR *ior = ACE_TEXT_CHAR_TO_TCHAR (nior);
+  const ACE_TCHAR *http_url =
     ior + sizeof (::file_prefix) + 1;
 
   ACE_TCHAR *hostname = 0;
@@ -55,21 +56,21 @@ TAO_HTTP_Parser::parse_string (const char *ior,
     }
   else
     {
-      ptr = ACE_OS::strstr (http_url, ":");
+      ptr = ACE_OS::strstr (http_url, ACE_TEXT (":"));
       if (ptr)
         port = ACE_OS::atoi (ptr + 1);
       else
-        ptr = ACE_OS::strstr (http_url, "/");
+        ptr = ACE_OS::strstr (http_url, ACE_TEXT ("/"));
 
     if(!ptr)
       return 0;
     else
     {
       size_t const host_len = ptr - http_url;
-      ACE_NEW_RETURN (hostname, char [host_len + 1], 0 );
+      ACE_NEW_RETURN (hostname, ACE_TCHAR [host_len + 1], 0 );
       ACE_OS::strncpy (hostname, http_url, host_len);
       hostname [host_len] = '\0';
-      ptr = ACE_OS::strstr (ptr, "/");
+      ptr = ACE_OS::strstr (ptr, ACE_TEXT ("/"));
       if (ptr)
       {
         filename = ACE_OS::strdup(ptr);
