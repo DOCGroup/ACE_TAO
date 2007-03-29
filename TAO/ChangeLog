@@ -1,3 +1,19 @@
+Thu Mar 29 13:40:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_codegen.cpp:
+          Use the safe include in the anyop header file, not in the source
+          file, makes it possible to use a safe include in the diffserv library.
+
+        * tao/DiffServPolicy.mpc:
+        * tao/DiffServPolicy/Client_Network_Priority_Policy.cpp:
+        * tao/DiffServPolicy/Client_Network_Priority_Policy.h:
+        * tao/DiffServPolicy/DiffServ_Network_Priority_Hook.cpp:
+        * tao/DiffServPolicy/DiffServPolicy_ORBInitializer.cpp:
+        * tao/DiffServPolicy/Server_Network_Priority_Policy.cpp:
+        * tao/DiffServPolicy/Server_Network_Priority_Policy.h:
+          Use the safe include feature to make sure people have to include
+          the correct file to use diffserv
+
 Thu Mar 29 12:14:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/IIOP_Profile.cpp:

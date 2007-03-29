@@ -1,7 +1,6 @@
 // $Id$
 
 #include "tao/DiffServPolicy/Server_Network_Priority_Policy.h"
-#include "tao/DiffServPolicy/DiffServPolicyC.h"
 #include "tao/SystemException.h"
 #include "tao/ORB_Constants.h"
 
