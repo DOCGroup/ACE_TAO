@@ -1,3 +1,10 @@
+Thu Mar 29 15:46:19 UTC 2007  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * examples/Misc/test_trace.cpp: Updated the documentation to
+          explain various techniques for adding tracing to applications.
+          Thanks to John McCabe <JGMCCABE at qinetiq dot com> and Steve
+          Huston for clarifying the rules. 
+
 Thu Mar 29 12:15:22 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/tao_orb_tests.lst:
