@@ -198,7 +198,7 @@ public:
    *   existing one is not big enough to hold s. If the existing
    *   buffer is big enough, then it will be used. This means that
    *   set(*, 1) can be illegal when the string is constructed with a
-   *   const char*. (e.g. ACE_String_Base("test", 0, 0)).
+   *   const char*. (e.g. ACE_String_Base("test", 0, false)).
    *
    * if release == false then the s buffer is used directly, and any
    *   existing buffer is destroyed. If s == 0 then it will _not_ be
