@@ -1,8 +1,8 @@
 PLANNED MAJOR CHANGES FOR NEXT RELEASE (i.e., after 0.5.7)
 ===========================================================================
-. Start update of IDL/semantics to conform to 06-04-01 specification.  
+. Start update of IDL/semantics to conform to 06-04-01 specification.
   This will immediately break most CIAO specific extensions, such as shared
-  components and ReDaC.  
+  components and ReDaC.
 
 . Expand support for complex types in deployment XML.
 
@@ -71,6 +71,9 @@ PLANNED MAJOR CHANGES "SOMETIME IN THE FUTURE" (i.e., exact beta not known)
 . Implement a planner to query the TargetManager and RepositoryManager
   and generate deployment plans on the fly.
 
+USER VISIBLE CHANGES BETWEEN CIAO-0.5.7 and CIAO-0.5.8
+======================================================
+
 USER VISIBLE CHANGES BETWEEN CIAO-0.5.6 and CIAO-0.5.7
 ======================================================
 
@@ -88,7 +91,7 @@ USER VISIBLE CHANGES BETWEEN CIAO-0.5.6 and CIAO-0.5.7
   when it is ready
 
 . MPC base projects that contained _dnc_ have been renamed to not
-  include that string. 
+  include that string.
 
 . DAnCE executables are now installed into $CIAO_ROOT/bin
 
