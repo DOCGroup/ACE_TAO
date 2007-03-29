@@ -1,3 +1,12 @@
+Thu Mar 29 12:14:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/IIOP_Profile.cpp:
+          Fixed bug 2869, handling an invalid endpoint string. Thanks to
+          Pierre Bisaillon <pierrebizz at hotmail dot com> for reporting this bug
+
+        * tests/Bug_2869_Regression/*:
+          New regression for bug 2869
+
 Thu Mar 29 11:13:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/MCast_Parser.{h,cpp,inl}:
