@@ -1,6 +1,7 @@
 // $Id$
 
 #include "Execution_Manager_Impl.h"
+#include "tao/RTCORBA/RTCORBA.h"
 #include "ciao/CIAO_common.h"
 #include "DomainApplicationManager/DomainApplicationManager_Impl.h"
 
@@ -32,6 +33,11 @@ namespace CIAO
       CORBA::Boolean)
     {
       CIAO_TRACE("Execution_Manager::Execution_Manager_Impl::preparePlan");
+
+      if (CIAO::debug_level () > 9)
+        ACE_DEBUG ((LM_DEBUG,
+                    "CIAO (%P|%t) Execution Manager Running on CORBA Priority <%d> \n",
+                    this->get_current_thread_priority ()));
 
       if (CIAO::debug_level () > 9)
         ACE_DEBUG ((LM_DEBUG,
@@ -437,6 +443,39 @@ namespace CIAO
         }
 
       return node_app._retn ();
+    }
+
+    CORBA::Short
+    Execution_Manager_Impl::
+    get_current_thread_priority ()
+      ACE_THROW_SPEC ((
+        ::CORBA::SystemException))
+    {
+      // Use RTCurrent to find out the CORBA priority of the current
+      // thread.
+
+      CORBA::Object_var obj =
+        this->orb_->resolve_initial_references ("RTCurrent" ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK;
+
+      RTCORBA::Current_var current =
+        RTCORBA::Current::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK;
+
+      if (CORBA::is_nil (obj.in ()))
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "DAnCE (%P|%t) ExecutionManager_Impl.cpp -"
+                      "CIAO::Execution_Manager_Impl::get_current_thread_priority -"
+                      "Unable to get current thread handld.\n"));
+          ACE_THROW (CORBA::INTERNAL ());
+        }
+
+      CORBA::Short servant_thread_priority =
+        current->the_priority (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK;
+
+      return servant_thread_priority;
     }
 
     void
