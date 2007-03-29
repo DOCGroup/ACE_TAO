@@ -860,9 +860,20 @@ TAO_CodeGen::start_anyop_header (const char *fname)
 
   // Generate the include statement for the client header. We just
   // need to put only the base names. Path info is not required.
-  *this->anyop_header_ << "\n#include \"" << tao_prefix
-                       << be_global->be_get_client_hdr_fname ()
-                       << "\"";
+  if (be_global->safe_include ())
+    {
+      // Generate the safe include if it is defined instead of the client header
+      // need to put only the base names. Path info is not required.
+      *this->anyop_header_ << "\n#include \""
+                           << be_global->safe_include ()
+                           << "\"";
+    }
+  else
+    {
+      *this->anyop_header_ << "\n#include \"" << tao_prefix
+                           << be_global->be_get_client_hdr_fname ()
+                           << "\"";
+    }
 
   // If we have not suppressed Any operator generation and also
   // are not generating the operators in a separate file, we
@@ -976,22 +987,11 @@ TAO_CodeGen::start_anyop_source (const char *fname)
                            << "\"";
     }
 
-  if (be_global->safe_include ())
-    {
-      // Generate the safe include if it is defined instead of the client header
-      // need to put only the base names. Path info is not required.
-      *this->anyop_source_ << "\n#include \""
-                           << be_global->safe_include ()
-                           << "\"";
-    }
-  else
-    {
-      // Generate the include statement for the client header. We just
-      // need to put only the base names. Path info is not required.
-      *this->anyop_source_ << "\n#include \""
-                           << be_global->be_get_anyop_header_fname (1)
-                           << "\"";
-    }
+  // Generate the include statement for the client header. We just
+  // need to put only the base names. Path info is not required.
+  *this->anyop_source_ << "\n#include \""
+                       << be_global->be_get_anyop_header_fname (1)
+                       << "\"";
 
   this->gen_typecode_includes (this->anyop_source_);
 

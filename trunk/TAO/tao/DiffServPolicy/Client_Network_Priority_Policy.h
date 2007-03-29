@@ -24,7 +24,7 @@
 
 #include "tao/LocalObject.h"
 #include "tao/Basic_Types.h"
-#include "tao/DiffServPolicy/DiffServPolicyC.h"
+#include "tao/DiffServPolicy/DiffServPolicy.h"
 
 #if defined(_MSC_VER)
 #pragma warning(push)

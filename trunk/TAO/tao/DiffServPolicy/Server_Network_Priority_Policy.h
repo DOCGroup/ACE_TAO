@@ -17,7 +17,7 @@
 #include /**/ "ace/pre.h"
 
 #include "tao/DiffServPolicy/DiffServPolicy_Export.h"
-#include "tao/DiffServPolicy/DiffServPolicyC.h"
+#include "tao/DiffServPolicy/DiffServPolicy.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
