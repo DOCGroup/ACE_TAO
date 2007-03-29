@@ -1,3 +1,8 @@
+Thu Mar 29 12:15:22 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+          Added Bug_2869_Regression
+
 Thu Mar 29 11:23:22 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-doxygen.h:
