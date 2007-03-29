@@ -127,8 +127,7 @@ TAO_IIOP_Profile::decode_profile (TAO_InputCDR& cdr)
 }
 
 void
-TAO_IIOP_Profile::parse_string_i (const char *ior
-                                  )
+TAO_IIOP_Profile::parse_string_i (const char *ior)
 {
   // Pull off the "hostname:port/" part of the objref
   // Copy the string because we are going to modify it...
@@ -212,14 +211,18 @@ TAO_IIOP_Profile::parse_string_i (const char *ior
       CORBA::ULong length_port = okd - cp_pos - 1;
       CORBA::String_var tmp = CORBA::string_alloc (length_port);
 
-      ACE_OS::strncpy (tmp.inout (), cp_pos + 1, length_port);
-      tmp[length_port] = '\0';
+      if (tmp.in() != 0)
+        {
+          ACE_OS::strncpy (tmp.inout (), cp_pos + 1, length_port);
+          tmp[length_port] = '\0';
+        }
+
       if (length_port == 0)
         {
           this->endpoint_.port_ = 2809; // default IIOP port for
           // parsing corbaloc strings
         }
-      else if (ACE_OS::strspn (tmp.in (), "1234567890") == length_port)
+      else if (tmp.in () != 0 && ACE_OS::strspn (tmp.in (), "1234567890") == length_port)
         {
           this->endpoint_.port_ =
             static_cast<CORBA::UShort> (ACE_OS::atoi (tmp.in ()));
@@ -227,7 +230,7 @@ TAO_IIOP_Profile::parse_string_i (const char *ior
       else
         {
           ACE_INET_Addr ia;
-          if (ia.string_to_addr (tmp.in ()) == -1)
+          if (tmp.in () == 0 || ia.string_to_addr (tmp.in ()) == -1)
             {
               throw ::CORBA::INV_OBJREF (
                              CORBA::SystemException::_tao_minor_code (
