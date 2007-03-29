@@ -1,7 +1,12 @@
+Thu Mar 29 19:09:43 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/NodeApplication/NAConfig_Manager.cpp:
+          Updated include of diffserv
+
 Wed Mar 28 11:16:43 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * DAnCE/NodeApplication/NodeApp_Configurator.h:
- 
+
           Partially reverted changes made in Fri Mar 23 03:13:40 UTC 2007.
           VS 7.1 didn't like it. Forward declaration to Config_Manager was
           removed and its header file was included again.
