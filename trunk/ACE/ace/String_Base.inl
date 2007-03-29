@@ -22,7 +22,7 @@ template <class CHAR> ACE_INLINE ACE_String_Base<CHAR> &
 ACE_String_Base<CHAR>::assign_nocopy (const ACE_String_Base<CHAR> &s)
 {
   ACE_TRACE ("ACE_String_Base<CHAR>::assign_nocopy");
-  this->set (s.rep_, s.len_, 0);
+  this->set (s.rep_, s.len_, false);
   return *this;
 }
 

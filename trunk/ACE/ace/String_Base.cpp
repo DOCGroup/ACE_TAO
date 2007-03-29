@@ -62,7 +62,7 @@ ACE_String_Base<CHAR>::ACE_String_Base (CHAR c,
 {
   ACE_TRACE ("ACE_String_Base<CHAR>::ACE_String_Base");
 
-  this->set (&c, 1, 1);
+  this->set (&c, 1, true);
 }
 
 // Constructor that actually copies memory.
@@ -96,7 +96,7 @@ ACE_String_Base<CHAR>::ACE_String_Base (const ACE_String_Base<CHAR> &s)
 {
   ACE_TRACE ("ACE_String_Base<CHAR>::ACE_String_Base");
 
-  this->set (s.rep_, s.len_, 1);
+  this->set (s.rep_, s.len_, true);
 }
 
 template <class CHAR>
@@ -318,7 +318,7 @@ ACE_String_Base<CHAR>::operator= (const CHAR *s)
 {
   ACE_TRACE ("ACE_String_Base<CHAR>::operator=");
   if (s != 0)
-    this->set (s, 1);
+    this->set (s, true);
   return *this;
 }
 
@@ -331,7 +331,7 @@ ACE_String_Base<CHAR>::operator= (const ACE_String_Base<CHAR> &s)
   // Check for self-assignment.
   if (this != &s)
     {
-      this->set (s.rep_, s.len_, 1);
+      this->set (s.rep_, s.len_, true);
     }
 
   return *this;
