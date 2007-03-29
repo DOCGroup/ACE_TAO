@@ -1,3 +1,10 @@
+Thu Mar 29 16:15:24 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * ace/String_Base.h: Corrected comment.
+        * ace/String_Base.{cpp inl}: Corrected calls to set() which specified
+          'release' as 1/0 instead of true/false. Thanks to Jeff Parsons for
+          pointing these out.
+
 Thu Mar 29 15:46:19 UTC 2007  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * examples/Misc/test_trace.cpp: Updated the documentation to
