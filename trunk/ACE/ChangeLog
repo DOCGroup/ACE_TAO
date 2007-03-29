@@ -1,3 +1,8 @@
+Thu Mar 29 11:23:22 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-doxygen.h:
+          Added ACE_HAS_IP_MULTICAST
+
 Thu Mar 29 09:11:22 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/CDR_Base.inl:

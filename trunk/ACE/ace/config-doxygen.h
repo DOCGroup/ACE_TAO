@@ -115,4 +115,6 @@
 /// Enable netlink socket support
 #define ACE_HAS_NETLINK
 
+#define ACE_HAS_IP_MULTICAST
+
 #endif /* ACE_CONFIG_DOXYGEN_H */
