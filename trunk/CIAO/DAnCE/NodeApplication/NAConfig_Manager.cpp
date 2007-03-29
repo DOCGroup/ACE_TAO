@@ -4,7 +4,7 @@
 #include "ciao/CIAO_common.h"
 #include "ace/SString.h"
 #include "tao/SystemException.h"
-#include "tao/DiffServPolicy/DiffServPolicyC.h"
+#include "tao/DiffServPolicy/DiffServPolicy.h"
 #include "tao/DiffServPolicy/Client_Network_Priority_Policy.h"
 #include "tao/DiffServPolicy/Server_Network_Priority_Policy.h"
 
