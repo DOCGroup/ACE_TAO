@@ -24,6 +24,8 @@
 #include "tao/CORBA_String.h"
 #include "tao/IOR_Parser.h"
 
+#if defined ACE_HAS_IP_MULTICAST
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
@@ -102,6 +104,8 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO, TAO_MCAST_Parser)
 ACE_FACTORY_DECLARE (TAO, TAO_MCAST_Parser)
+
+#endif /* ACE_HAS_IP_MULTICAST */
 
 #include /**/ "ace/post.h"
 #endif /* TAO_MCAST_PARSER_H */

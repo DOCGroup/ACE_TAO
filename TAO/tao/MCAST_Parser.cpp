@@ -1,4 +1,7 @@
 #include "tao/MCAST_Parser.h"
+
+#if defined ACE_HAS_IP_MULTICAST
+
 #include "tao/default_ports.h"
 #include "tao/ORB_Core.h"
 #include "tao/ORB.h"
@@ -498,3 +501,4 @@ ACE_STATIC_SVC_DEFINE (TAO_MCAST_Parser,
 
 ACE_FACTORY_DEFINE (TAO, TAO_MCAST_Parser)
 
+#endif /* ACE_HAS_IP_MULTICAST */

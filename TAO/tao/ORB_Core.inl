@@ -85,7 +85,7 @@ ACE_INLINE CORBA::Boolean
 TAO_ORB_Core::service_profile_selection (const TAO_MProfile &mprofile,
                                          TAO_Profile  *&profile)
 {
-  CORBA::Boolean retval = 0;
+  CORBA::Boolean retval = false;
   // @@ If different services have the same feature we may want to
   // prioritise them here. We need to decide here whose selection of
   // profile is more important.
@@ -101,7 +101,7 @@ TAO_ORB_Core::service_profile_selection (const TAO_MProfile &mprofile,
 ACE_INLINE CORBA::Boolean
 TAO_ORB_Core::object_is_nil (CORBA::Object_ptr obj)
 {
-  CORBA::Boolean retval = 0;
+  CORBA::Boolean retval = false;
   if (this->ft_service_.service_callback ())
     {
       retval = this->ft_service_.service_callback ()->object_is_nil (obj);
@@ -128,8 +128,7 @@ TAO_ORB_Core::is_profile_equivalent (const TAO_Profile *this_p,
 }
 
 ACE_INLINE CORBA::ULong
-TAO_ORB_Core::hash_service (TAO_Profile *p,
-                            CORBA::ULong m)
+TAO_ORB_Core::hash_service (TAO_Profile *p, CORBA::ULong m)
 {
   if (this->ft_service_.service_callback ())
     {

@@ -530,7 +530,9 @@ namespace
 #endif /* TAO_HAS_IIOP && TAO_HAS_IIOP != 0 */
 
     // add descriptor to list of static objects.
+#if defined (ACE_HAS_IP_MULTICAST)
     pcfg->process_directive (ace_svc_desc_TAO_MCAST_Parser);
+#endif /* ACE_HAS_IP_MULTICAST */
     pcfg->process_directive (ace_svc_desc_TAO_CORBANAME_Parser);
     pcfg->process_directive (ace_svc_desc_TAO_CORBALOC_Parser);
     pcfg->process_directive (ace_svc_desc_TAO_FILE_Parser);
