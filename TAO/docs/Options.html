@@ -252,10 +252,17 @@ passed to the Service Configurator. You can pass multiple of these
 options on the same command-line. </td>
       </tr>
       <tr>
-     <td><code>-ORBServiceConfigLoggerKey</CODE> <em>logger key</em></t
+     <td><code>-ORBServiceConfigLoggerKey</CODE> <em>logger key</em></td>
      <TD>Set the logger key in the <code>ACE_Service_Config</code>
       framework.  Equivalent to the <code>-k</code> option on the ACE
       service configurator class.
+     </td>
+      </tr>
+      <tr>
+     <td><code>-ORBSkipServiceConfigOpen</CODE> </td>
+     <TD>Do not process any <code>svc.conf</code> files, which has the
+     side-effect of not initializing the ACE Service Configurator
+     framework or registering the SIGHUP signal.
      </td>
     </tbody>
   </table>
