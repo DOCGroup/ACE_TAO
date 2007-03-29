@@ -598,7 +598,7 @@ fe_populate_idl_keywords (void)
   for (u_long i = 0; i < length; ++i)
     {
       ext_id.set (keywords[i],
-                  0);
+                  false);
       (void) map.bind (ext_id,
                        int_id);
     }

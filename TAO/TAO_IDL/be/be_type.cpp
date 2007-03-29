@@ -203,7 +203,7 @@ be_type::gen_fwd_helper_name (void)
   AST_Decl *parent = ScopeAsDecl (this->defined_in ());
   Identifier *segment = 0;
   char *tmp = 0;
-  this->fwd_helper_name_.clear (1);
+  this->fwd_helper_name_.clear (true);
 
   if (parent != 0 && parent->node_type () != AST_Decl::NT_root)
     {
