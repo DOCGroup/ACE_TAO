@@ -1,8 +1,11 @@
 // -*- MPC -*-
 // $Id$
 
-project(ExecutionManager): ciao_server_dnc, dance_extension_stub, ciao_domainapplicationmanager_dnc, ciao_executionmanager_stub, ciaoexe {
+project(ExecutionManager): ciao_server_dnc, dance_extension_stub, ciao_domainapplicationmanager_dnc, ciao_executionmanager_stub, rtcorba, rtportableserver, rt_server, ciaoexe {
   exename = Execution_Manager
+  
+  after += TAO_Strategies
+  libs += TAO_Strategies
 
   IDL_Files {
   }
