@@ -1,3 +1,22 @@
+Thu Mar 29 11:13:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/MCast_Parser.{h,cpp,inl}:
+        * tao/ORB.cpp:
+        * tao/TAO_Internal.cpp:
+        * tao/default_resource.cpp:
+          Only use the mcast parser when ACE_HAS_IP_MULTICAST is enabled,
+          mcast is not available when this define is not set, so no need
+          to build this parser when it can't be used. This fixes bugzilla
+          bug 2851.
+
+        * tao/ORB_Core.{h,cpp}:
+        * tao/Resource_Factory.cpp:
+        * tao/DynamicInterface/Request.cpp:
+          Layout changes
+
+        * tao/ORB_Core.inl:
+          Use false instead of 0 for a bool
+
 Wed Mar 28 16:44:35 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * tao/HTTP_Parser.cpp:

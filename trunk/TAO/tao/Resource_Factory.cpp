@@ -187,8 +187,7 @@ TAO_Resource_Factory::max_muxed_connections (void) const
 
 
 int
-TAO_Resource_Factory::get_parser_names (char **&,
-                                        int &)
+TAO_Resource_Factory::get_parser_names (char **&, int &)
 {
   return 0;
 }
