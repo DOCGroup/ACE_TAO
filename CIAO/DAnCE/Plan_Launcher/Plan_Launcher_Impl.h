@@ -15,6 +15,7 @@
 #include "DAnCE/Interfaces/ExecutionManagerDaemonC.h"
 #include "DAnCE/Plan_Generator/Plan_Generator_Impl.h"
 
+
 namespace CIAO
 {
   namespace Plan_Launcher
@@ -38,12 +39,13 @@ namespace CIAO
 
       Plan_Launcher_i ();
 
-
       bool init (const char *em_ior,
                  CORBA::ORB_ptr orb,
                  bool use_repoman = false,
                  bool rm_use_naming = false,
-                 const char *rm_name = 0);
+                 const char *rm_name = 0,
+                 CORBA::Short priority = 0,
+                 size_t niterations = 0);
 
       /**
        * @brief Launch a plan, given a deployment plan URI
@@ -65,9 +67,9 @@ namespace CIAO
        * @param plan A valid IDL deployment plan
        * @returns a string containing the UUID of the plan. Null indicates failure.
        */
-      const char * launch_plan (const ::Deployment::DeploymentPlan &plan);
+      virtual const char * launch_plan (const ::Deployment::DeploymentPlan &plan);
 
-      const char * re_launch_plan (const ::Deployment::DeploymentPlan &plan);
+      virtual const char * re_launch_plan (const ::Deployment::DeploymentPlan &plan);
 
       /// Returns the DAM associated with a given plan URI
       ::Deployment::DomainApplicationManager_ptr get_dam (const char *uuid);
@@ -81,13 +83,30 @@ namespace CIAO
 
       void destroy_dam_by_plan (const char * plan_uuid);
 
-    private:
+      // Change the priority of this thread
+      bool set_current_priority (CORBA::Short priority);
+
+    protected:
+      // Check that the object is configured with CLIENT_PROPAGATED
+      // PriorityModelPolicy.
+      bool is_client_propagated_model (void);
+
+      /// Cached ORB pointer
+      CORBA::ORB_var orb_;
+
+      /// Object reference of the ExecutionManager
       ::CIAO::ExecutionManagerDaemon_var em_;
 
       /// Local map for DAMs, to save expensive UUID lookups.
       Execution_Manager::DAM_Map map_;
 
       CIAO::Plan_Generator::Plan_Generator_i pg_;
+
+      /// Desired CORBA prioirty to be propagated to EM
+      CORBA::Short desired_priority_;
+
+      /// Number of iterations to run benchmarking, if specified
+      size_t niterations_;
     };
 
   }
