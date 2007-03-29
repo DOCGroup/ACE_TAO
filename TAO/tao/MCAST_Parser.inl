@@ -2,6 +2,8 @@
 //
 // $Id$
 
+#if defined ACE_HAS_IP_MULTICAST
+
 #include "tao/default_ports.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -17,3 +19,5 @@ TAO_MCAST_Parser::TAO_MCAST_Parser (void)
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
+
+#endif /* ACE_HAS_IP_MULTICAST */

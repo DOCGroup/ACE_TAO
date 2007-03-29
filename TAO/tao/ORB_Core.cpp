@@ -2669,8 +2669,7 @@ TAO_ORB_Core::set_endpoint_helper (const ACE_CString &lane,
 }
 
 CORBA::Object_ptr
-TAO_ORB_Core::resolve_rir (const char *name
-                           )
+TAO_ORB_Core::resolve_rir (const char *name)
 {
   // Get the table of initial references specified through
   // -ORBInitRef.
@@ -2720,8 +2719,7 @@ TAO_ORB_Core::resolve_rir (const char *name
 
       list_of_profiles += object_id;
 
-      return this->orb ()->string_to_object (list_of_profiles.c_str ()
-                                            );
+      return this->orb ()->string_to_object (list_of_profiles.c_str ());
     }
 
   return CORBA::Object::_nil ();

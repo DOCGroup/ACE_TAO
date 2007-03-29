@@ -295,9 +295,7 @@ CORBA::Request::_tao_reply_stub (TAO_InputCDR &_tao_in,
     case TAO_AMI_REPLY_USER_EXCEPTION:
     case TAO_AMI_REPLY_SYSTEM_EXCEPTION:
       {
-        reply_handler->handle_excep (_tao_in,
-                                     reply_status);
-
+        reply_handler->handle_excep (_tao_in, reply_status);
         break;
       }
     }

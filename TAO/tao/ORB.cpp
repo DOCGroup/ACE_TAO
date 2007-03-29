@@ -803,6 +803,7 @@ CORBA::ORB::resolve_policy_current (void)
 void
 CORBA::ORB::resolve_service (TAO::MCAST_SERVICEID mcast_service_id)
 {
+#if defined ACE_HAS_IP_MULTICAST
   static char const * const env_service_port[] =
   {
     "NameServicePort",
@@ -862,6 +863,9 @@ CORBA::ORB::resolve_service (TAO::MCAST_SERVICEID mcast_service_id)
 
       this->orb_core_->orb_params ()->default_init_ref (def_init_ref);
     }
+#else
+  ACE_UNUSED_ARG (mcast_service_id);
+#endif /* ACE_HAS_IP_MULTICAST */
 }
 
 CORBA::Object_ptr

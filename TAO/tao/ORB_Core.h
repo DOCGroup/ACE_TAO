@@ -343,7 +343,7 @@ public:
   TAO_Protocols_Hooks * get_protocols_hooks (void);
 
   /// Gets the value of TAO_ORB_Core::network_priority_protocols_hooks__
-  TAO_Network_Priority_Protocols_Hooks * 
+  TAO_Network_Priority_Protocols_Hooks *
     get_network_priority_protocols_hooks (void);
 
   /// Sets the value of TAO_ORB_Core::dynamic_adapter_name_.
@@ -1121,7 +1121,6 @@ protected:
 
   /// Default collocation policy.  This should never be ORB_CONTROL.
   CORBA::ULong collocation_strategy_;
-
 
 #if (TAO_HAS_CORBA_MESSAGING == 1)
 
