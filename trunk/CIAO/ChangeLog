@@ -1,12 +1,47 @@
-Thu Mar 29 19:09:43 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+Thu Mar 29 15:22:08 UTC 2007  Gan Deng  <gan.deng@vanderbilt.edu>
 
-        * DAnCE/NodeApplication/NAConfig_Manager.cpp:
-          Updated include of diffserv
+        * DAnCE/ExecutionManager/Execution_Manager.cpp
+        
+          Created a child POA which is configured with
+          Client_Propagated Priority Model.
+        
+        * DAnCE/ExecutionManager/Execution_Manager_Impl.cpp
+        * DAnCE/ExecutionManager/Execution_Manager_Impl.h
+        * DAnCE/ExecutionManager/ExecutionManager.mpc
+        
+          Added a get_current_thread_priority() to get the
+          priority of the current thread. Also added 
+          debug_level control so the thread priority could
+          be printed out.
+        
+        * DAnCE/Plan_Launcher/Plan_Launcher_Impl.cpp
+        * DAnCE/Plan_Launcher/Plan_Launcher_Impl.h
+        * DAnCE/Plan_Launcher/Plan_Launcher.mpc
+        
+          Added two new methods. 
+          The is_client_propagated_model() checks whether
+          the ExecutionManager exposes the CLIENT_PROPAGATED
+          priority model. The set_current_priority() method
+          will set the client thread priority if the priority
+          model is CLIENT_PROPAGATED on the EM side.
 
+        * DAnCE/Plan_Launcher/Plan_Launcher_Benchmark_Impl.h
+        * DAnCE/Plan_Launcher/Plan_Launcher_Benchmark_Impl.cpp
+        
+          Added two derived classes which collect benchmarking
+          results of DAnCE.
+        
+        * DAnCE/Plan_Launcher/Plan_Launcher.cpp
+
+          Added a command line argument "-z" to allow priority
+          to be specified on Plan_Launcher, and then propagated
+          to the Execution Manager.
+
+        
 Wed Mar 28 11:16:43 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
-
+        
         * DAnCE/NodeApplication/NodeApp_Configurator.h:
-
+ 
           Partially reverted changes made in Fri Mar 23 03:13:40 UTC 2007.
           VS 7.1 didn't like it. Forward declaration to Config_Manager was
           removed and its header file was included again.
