@@ -1,3 +1,9 @@
+Wed Mar 28 16:02:37 UTC 2007  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * docs/Options.html: Updated the documentation to explain what the
+          -ORBSkipServiceConfigOpen option does.  Thanks to Vance Maverick
+          <vmaverick at pgp dot com> for motivating.
+
 Thu Mar 29 13:40:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_codegen.cpp:
@@ -953,7 +959,6 @@ Thu Mar  8 17:49:52 UTC 2007  Trevor Fields  <fields_t@ociweb.com>
           fill the queue and therefore can succeed on systems
           where a filled queue can result in crash of the
           Event_Service.
-
 
 Thu Mar  8 15:56:40 UTC 2007  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
