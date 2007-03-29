@@ -1,7 +1,12 @@
+Thu Mar 29 09:11:22 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/CDR_Base.inl:
+          Corrected version check for Intel C++ 9.0
+
 Wed Mar 28 15:34:49 UTC 2007  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * examples/APG/Logging/Trace.h
-        
+
           Removed usage of variadic macros, they are not really necessary
           here.
 
