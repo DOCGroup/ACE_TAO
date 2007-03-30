@@ -1,10 +1,20 @@
+Fri Mar 30 14:51:19 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/svcconf-convert.pl:
+
+          Only print out the output file if -verbose was used.
+
+        * bin/tao_orb_tests.lst:
+
+          Added the Bug_2735_Regression test.
+
 Fri Mar 30 14:24:48 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * ace/Service_Gestalt.cpp:
 
           Added the word ERROR: on the three error messages that use
-          LM_ERROR.  Always set the errno to EINVAL if processing a 
-          directive fails.  Also, reformatted some of the code.    
+          LM_ERROR.  Always set the errno to EINVAL if processing a
+          directive fails.  Also, reformatted some of the code.
 
 Fri Mar 30 12:10:22 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
