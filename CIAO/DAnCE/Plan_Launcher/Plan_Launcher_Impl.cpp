@@ -443,10 +443,10 @@ namespace CIAO
       RTCORBA::PriorityMappingManager_var mapping_manager =
         RTCORBA::PriorityMappingManager::_narrow (object.in ());
 
-      RTCORBA::PriorityMapping *pm =
-        mapping_manager->mapping ();
-
-      int sched_policy =
+       RTCORBA::PriorityMapping *pm =
+         mapping_manager->mapping ();
+      
+       int sched_policy =
         this->orb_->orb_core ()->orb_params ()->ace_sched_policy ();
 
       int max_priority =
@@ -457,13 +457,11 @@ namespace CIAO
       CORBA::Short native_priority =
         (max_priority + min_priority) / 2;
 
-      // CORBA::Short desired_priority = 0;
-
-      //if (pm->to_CORBA (native_priority, desired_priority) == 0)
-      //  ACE_ERROR_RETURN ((LM_ERROR,
-      //                     "Cannot convert native priority %d to corba priority\n",
-      //                     native_priority),
-      //                     false);
+      if (pm->to_CORBA (native_priority, desired_priority) == 0)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "Cannot convert native priority %d to corba priority\n",
+                           native_priority),
+                           false);
 
       current->the_priority (desired_priority);
 
