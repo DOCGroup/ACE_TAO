@@ -10,10 +10,6 @@ namespace CIAO
 {
   namespace Plan_Launcher
   {
-    Plan_Launcher_Benchmark_i::~Plan_Launcher_Benchmark_i ()
-    {
-    }
-
     const char *
     Plan_Launcher_Benchmark_i::launch_plan (
         const ::Deployment::DeploymentPlan &plan)
