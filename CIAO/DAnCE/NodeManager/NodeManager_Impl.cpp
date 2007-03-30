@@ -70,7 +70,6 @@ CIAO::NodeManager_Impl_Base::joinDomain (const Deployment::Domain & domain,
                                          Deployment::TargetManager_ptr target,
                                          Deployment::Logger_ptr)
 {
-  //  ACE_THROW (CORBA::NO_IMPLEMENT ());
   // Here start the Monitor
   CIAO_TRACE("CIAO::NodeManager_Impl_Base::joinDomain");
 
