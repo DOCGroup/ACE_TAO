@@ -1,31 +1,40 @@
-// $Id$
-
 #ifndef RACE_DANCE_OUTPUT_ADAPTER_IDL
 #define RACE_DANCE_OUTPUT_ADAPTER_IDL
 
 #include <Components.idl>
-#include "RACE/Output_Adapters/Base/Output_Adapter.idl"
-#include "RACE/Controller/Component/Interface.idl"
+#include "RACE/common/OpString.idl"
+#include "RACE/common/RACE_common.idl"
+#include "DAnCE/Deployment/Deployment_DeploymentPlan.idl"
 
 module CIAO
 {
   module RACE
   {
-    interface Plan_Status
+    module DAnCE_OA
     {
-      boolean teardown (in string uuid);
-    };
+      interface Admin
+      {
+        /// Deploy the given plan right away.
+        boolean deploy_plan (in ::Deployment::DeploymentPlan plan);
 
-    component DAnCE_Output_Adapter : Output_Adapter
-    {
-      uses Descriptors control_output;
-      provides Plan_Status plan_status;
-    };
+        /// Convert the given operational string to a DeploymentPlan and
+        /// deploy it right away.
+        boolean deploy_string (in OperationalString opstring);
 
-    home DAnCE_Output_Adapter_Home manages DAnCE_Output_Adapter
-    {
+        /// Teardown a string. Raises UnknownID.
+        boolean tear_down_string (in UUID ID)
+          raises (UnknownID);
+      };
+
+      component DAnCE_OA_Component
+      {
+        provides Admin admin;
+      };
+
+      home DAnCE_OA_Component_Home manages DAnCE_OA_Component
+      {
+      };
     };
   };
 };
-
 #endif /* RACE_DANCE_OUTPUT_ADAPTER_IDL */

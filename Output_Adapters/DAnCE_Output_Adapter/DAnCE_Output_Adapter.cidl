@@ -7,15 +7,18 @@ module CIAO
 {
   module RACE
   {
-    composition session DAnCE_Output_Adapter_Impl
+    module DAnCE_OA
     {
-      home executor DAnCE_Output_Adapter_Home_Exec
+      composition session DAnCE_OA_Impl
       {
-          implements DAnCE_Output_Adapter_Home;
-          manages DAnCE_Output_Adapter_Exec;
-    };
+        home executor DAnCE_OA_Component_Home_Exec
+        {
+          implements DAnCE_OA_Component_Home;
+          manages DAnCE_OA_Component_Exec;
+        };
+      };
     };
   };
-};
 
+};
 #endif /* RACE_DANCE_OUTPUT_ADAPTER_CIDL */

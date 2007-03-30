@@ -1,3 +1,26 @@
+Fri Mar 30 22:01:45 UTC 2007  Nishanth Shankaran  <nshankar@nospam.com>
+
+        * Data_Base/Admin_exec.cpp: Made cosmetic changes.
+
+        * Input_Adapters/SA_POP_Input_Adapter/Admin_exec.h:
+        * Input_Adapters/SA_POP_Input_Adapter/Admin_exec.cpp:
+        * Input_Adapters/SA_POP_Input_Adapter/SA_POP_Input_Adapter.cidl:
+        * Input_Adapters/SA_POP_Input_Adapter/SA_POP_Input_Adapter.idl:
+        * Input_Adapters/SA_POP_Input_Adapter/SA_POP_Input_Adapter.mpc:
+        * Input_Adapters/SA_POP_Input_Adapter/SA_POP_Input_Adapter_exec.h:
+        * Input_Adapters/SA_POP_Input_Adapter/SA_POP_Input_Adapter_exec.cpp:
+
+        Updated it.
+
+        * Output_Adapters/DAnCE_Output_Adapter/DAnCE_Output_Adapter.cidl:
+        * Output_Adapters/DAnCE_Output_Adapter/DAnCE_Output_Adapter.idl:
+        * Output_Adapters/DAnCE_Output_Adapter/DAnCE_Output_Adapter.mpc:
+        * Output_Adapters/DAnCE_Output_Adapter/DAnCE_Output_Adapter_exec.h:
+        * Output_Adapters/DAnCE_Output_Adapter/DAnCE_Output_Adapter_exec.cpp:
+
+        Updated the output adapter to use the new operational string
+        structure.
+
 Fri Mar 30 19:56:52 UTC 2007  Nishanth Shankaran  <nshankar@nospam.com>
 
         * Data_Base:
