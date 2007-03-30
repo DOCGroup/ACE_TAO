@@ -12,10 +12,9 @@ namespace CIAO
   {
     const char *
     Plan_Launcher_Benchmark_i::launch_plan (
-        const ::Deployment::DeploymentPlan &plan ACE_ENV_ARG_DECL)
-      ACE_THROW_SPEC ((Plan_Launcher_i::Deployment_Failure))
+        const ::Deployment::DeploymentPlan &plan)
     {
-      ACE_TRY
+      try
         {
 
           ///// Start Test ////////////////////////////////////////////
@@ -183,7 +182,7 @@ namespace CIAO
                                                 stats.samples_count ());*/
 
         }
-      ACE_CATCH (Deployment::ResourceNotAvailable, ex)
+      catch (Deployment::ResourceNotAvailable, ex)
         {
           ACE_ERROR ((LM_ERROR,
                       "EXCEPTION: ResourceNotAvaiable exception caught: %s,\n"
@@ -196,47 +195,45 @@ namespace CIAO
                       ex.propertyName.in (),
                       ex.elementName.in (),
                       ex.resourceName.in ()));
-          ACE_THROW (Deployment_Failure (""));
+          throw (Deployment_Failure (""));
         }
-      ACE_CATCH (Deployment::StartError, ex)
+      catch (Deployment::StartError, ex)
         {
           ACE_ERROR ((LM_ERROR,
                       "EXCEPTION: StartError exception caught: %s, %s\n",
                       ex.name.in (),
                       ex.reason.in ()));
-          ACE_THROW (Deployment_Failure (""));
+          throw (Deployment_Failure (""));
         }
-      ACE_CATCH (Deployment::InvalidProperty, ex)
+      catch (Deployment::InvalidProperty, ex)
         {
           ACE_ERROR ((LM_ERROR,
                       "EXCEPTION: InvalidProperty exception caught: %s, %s\n",
                       ex.name.in (),
                       ex.reason.in ()));
-          ACE_THROW (Deployment_Failure (""));
+          throw (Deployment_Failure (""));
         }
-      ACE_CATCH (Deployment::InvalidConnection, ex)
+      catch (Deployment::InvalidConnection, ex)
         {
           ACE_ERROR ((LM_ERROR,
                       "EXCEPTION: InvalidConnection exception caught: %s, %s\n",
                       ex.name.in (),
                       ex.reason.in ()));
-          ACE_THROW (Deployment_Failure  (""));
+          throw (Deployment_Failure  (""));
         }
-      ACE_CATCHANY
+      catch (const CORBA::Exception& ex)
         {
           ACE_ERROR ((LM_ERROR,
                       "CORBA EXCEPTION: %s\n",
                       ACE_ANY_EXCEPTION._info().fast_rep()));
-          ACE_THROW (Deployment_Failure  (""));
+          throw (Deployment_Failure  (""));
         }
-      ACE_CATCHALL
+      catch (...)
         {
           ACE_ERROR ((LM_ERROR,
                       "EXCEPTION: non-CORBA exception\n"));
-          ACE_THROW (Deployment_Failure  (""));
+          throw (Deployment_Failure  (""));
         }
-      ACE_ENDTRY;
-      ACE_CHECK_RETURN (0);
 
       return CORBA::string_dup (plan.UUID.in ());
     }
