@@ -1,0 +1,70 @@
+project(Data_Base_stub): ciao_client_dnc {
+
+  sharedname = Data_Base_stub
+  after += OpString_stub
+
+  idlflags -= -GT
+  idlflags += -St \
+              -Wb,stub_export_macro=DATA_BASE_STUB_Export \
+              -Wb,stub_export_include=Data_Base_stub_export.h \
+              -Wb,skel_export_macro=DATA_BASE_SVNT_Export \
+              -Wb,skel_export_include=Data_Base_svnt_export.h
+
+  dynamicflags   = DATA_BASE_STUB_BUILD_DLL
+
+  libs += OpString_stub
+
+  IDL_Files {
+    Data_Base.idl
+  }
+
+  Source_Files {
+    Data_BaseC.cpp
+  }
+}
+
+project(Data_Base_svnt) : ciao_servant_dnc {
+  after      +=  Data_Base_stub
+  sharedname  = Data_Base_svnt
+  libs       += Data_Base_stub
+
+  idlflags -= -GT
+  idlflags += -St -SS \
+              -Wb,export_macro=DATA_BASE_SVNT_Export \
+              -Wb,export_include=Data_Base_svnt_export.h
+
+  dynamicflags = DATA_BASE_SVNT_BUILD_DLL
+
+  CIDL_Files {
+    Data_Base.cidl
+  }
+
+  IDL_Files {
+    Data_BaseE.idl
+  }
+
+  Source_Files {
+    Data_BaseEC.cpp
+    Data_BaseS.cpp
+    Data_Base_svnt.cpp
+  }
+}
+
+project(Data_Base_exec) : ciao_component_dnc {
+  after   += Data_Base_svnt
+  sharedname = Data_Base_exec
+  libs += Data_Base_stub Data_Base_svnt
+
+  dynamicflags   = DATA_BASE_EXEC_BUILD_DLL
+
+  IDL_Files {
+
+  }
+
+  Source_Files {
+
+    Data_Base_exec.cpp
+    Admin_exec.cpp
+    Query_exec.cpp
+  }
+}

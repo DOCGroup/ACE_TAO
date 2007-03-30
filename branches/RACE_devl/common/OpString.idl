@@ -102,6 +102,9 @@ module CIAO
         // Human-readable name (for debugging, not identification).
         label name;
 
+        // Indicates whether the string is currently executing or not.
+        boolean active;
+
         // Goal achieved by this opstring.
         GoalStructure goal;
 
@@ -137,6 +140,8 @@ module CIAO
         ::Deployment::ArtifactDeploymentDescriptions artifact;
 
       };
+
+      typedef sequence <OperationalString> OperationalStrings;
 
   };
 };

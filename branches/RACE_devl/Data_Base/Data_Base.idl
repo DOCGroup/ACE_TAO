@@ -1,0 +1,65 @@
+#ifndef RACE_DATA_BASE_IDL
+#define RACE_DATA_BASE_IDL
+
+#include <Components.idl>
+#include "RACE/common/OpString.idl"
+#include "RACE/common/Time.idl"
+
+module CIAO
+{
+  module RACE
+  {
+    module Data_Base
+    {
+      interface Admin
+      {
+        /// Add a string to the DB.
+        boolean add_string (in OperationalString opstring);
+
+        /// Remove a string from the DB. Raises UnknownID.
+        void remove_string (in UUID ID)
+          raises (UnknownID);
+
+        /// Modify a previously added string. Raises UnknownID.
+        void modify_string (in OperationalString opstring,
+                            in UUID ID)
+          raises (UnknownID);
+
+        /// Update the status of the sting (active/inactive) that is
+        /// currently in the DB. Raises UnknownID.
+        void update_string_status (in UUID ID, in boolean active)
+          raises (UnknownID);
+      };
+
+      interface Query
+      {
+        // Returns an operating sting that matches the given id. Raises
+        // UnknownID if no operational string exists for the given id.
+        OperationalString get_string_by_id (in UUID id)
+          raises (UnknownID);
+
+        // Returns the UUIDs of operational strings.
+        UUIDs get_all_id (in TimeValue tv);
+
+        // Returns the UUIDs of operational strings that are currently active.
+        UUIDs get_all_active_id (in TimeValue tv);
+
+        // Returns the UUIDs of operational strings that were recently
+        // modified.
+        UUIDs get_modified_id (in TimeValue tv);
+      };
+
+      component Data_Base_Component
+      {
+        provides Admin admin;
+
+        provides Query query;
+      };
+
+      home Data_Base_Component_Home manages Data_Base_Component
+      {
+      };
+    };
+  };
+};
+#endif /* RACE_DATA_BASE_IDL */
