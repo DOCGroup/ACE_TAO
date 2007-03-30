@@ -1,13 +1,14 @@
-project(DAnCE_Output_Adapter_stub): ciao_deployment_stub, ciao_race_component {
-  after += Output_Adapter_stub \
-           Controller_stub
+project(DAnCE_Output_Adapter_stub):  ciao_client_dnc {
+  after += OpString_stub Data_Base_stub
 
-  libs += Output_Adapter_stub  \
-          Controller_stub \
-          Output_Adapter_Interface_stub \
-          TargetManager_stub                   \
-          NodeManager_stub \
-          Monitor_stub
+  libs += OpString_stub Data_Base_stub
+
+//   libs += Output_Adapter_stub  \
+//           Controller_stub \
+//           Output_Adapter_Interface_stub \
+//           TargetManager_stub                   \
+//           NodeManager_stub \
+//           Monitor_stub
 
   sharedname = DAnCE_Output_Adapter_stub
   idlflags += -Wb,stub_export_macro=DANCE_OUTPUT_ADAPTER_STUB_Export \
@@ -26,24 +27,30 @@ project(DAnCE_Output_Adapter_stub): ciao_deployment_stub, ciao_race_component {
   }
 }
 
-project(DAnCE_Output_Adapter_svnt) : ciao_servant_dnc, ciao_race_component {
+project(DAnCE_Output_Adapter_svnt) : ciao_servant_dnc {
+
+//                                  , ciao_race_component {
   after +=  DAnCE_Output_Adapter_stub
   sharedname  = DAnCE_Output_Adapter_svnt
-  libs    += Output_Adapter_svnt \
-             Output_Adapter_stub \
-             Output_Adapter_Interface_stub \
-             DAnCE_Output_Adapter_stub  \
-             Output_Adapter_Interface_stub \
-             Output_Adapter_Interface_svnt \
-             Controller_stub \
-             TargetManager_stub \
-             NodeManager_stub \
-             Monitor_stub
+  libs    += DAnCE_Output_Adapter_stub
+
+            // Output_Adapter_svnt  \
+//              Output_Adapter_stub \
+//              Output_Adapter_Interface_stub \
+//              Output_Adapter_Interface_stub \
+//              Output_Adapter_Interface_svnt \
+//              Controller_stub \
+//              TargetManager_stub \
+//              NodeManager_stub \
+//              Monitor_stub
 
   idlflags  +=  -Wb,export_macro=DANCE_OUTPUT_ADAPTER_SVNT_Export \
                 -Wb,export_include=DAnCE_Output_Adapter_svnt_export.h
 
   dynamicflags = DANCE_OUTPUT_ADAPTER_SVNT_BUILD_DLL
+
+//   cidlflags -= --
+//   cidlflags += --gen-exec-impl --
 
   CIDL_Files {
     DAnCE_Output_Adapter.cidl
@@ -61,26 +68,27 @@ project(DAnCE_Output_Adapter_svnt) : ciao_servant_dnc, ciao_race_component {
 }
 
 
-project(DAnCE_Output_Adapter_exec) : ciao_component_dnc, ciao_race_component, ciao_config_handlers, ciao_plan_generator {
+project(DAnCE_Output_Adapter_exec) : ciao_component_dnc {
+  //  , ciao_race_component, ciao_config_handlers, ciao_plan_generator {
   after   += DAnCE_Output_Adapter_svnt
   sharedname = DAnCE_Output_Adapter_exec
 
   libs      += DAnCE_Output_Adapter_stub \
                DAnCE_Output_Adapter_svnt \
-               Plan_Launcher_Impl \
-               ExecutionManager_stub \
-               Output_Adapter_stub \
-               Output_Adapter_Interface_stub \
-               Output_Adapter_svnt \
-               Output_Adapter_stub \
-               Output_Adapter_Interface_stub \
-               DAnCE_Output_Adapter_stub  \
-               Output_Adapter_Interface_stub \
-               Output_Adapter_Interface_svnt \
-               Controller_stub \
-               TargetManager_stub \
-               NodeManager_stub \
-               Monitor_stub
+               Plan_Launcher_Impl
+//                ExecutionManager_stub \
+//                Output_Adapter_stub \
+//                Output_Adapter_Interface_stub \
+//                Output_Adapter_svnt \
+//                Output_Adapter_stub \
+//                Output_Adapter_Interface_stub \
+//                DAnCE_Output_Adapter_stub  \
+//                Output_Adapter_Interface_stub \
+//                Output_Adapter_Interface_svnt \
+//                Controller_stub \
+//                TargetManager_stub \
+//                NodeManager_stub \
+//                Monitor_stub
 
   dynamicflags   = DANCE_OUTPUT_ADAPTER_EXEC_BUILD_DLL
 

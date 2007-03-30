@@ -93,7 +93,6 @@ namespace CIAO
               throw ex;
             }
         }
-
       }
     }
   }
