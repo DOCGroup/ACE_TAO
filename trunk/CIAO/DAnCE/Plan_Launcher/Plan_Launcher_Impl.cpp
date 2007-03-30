@@ -39,6 +39,10 @@ namespace CIAO
     {
     }
 
+    Plan_Launcher_i::~Plan_Launcher_i ()
+    {
+    }
+
     bool
     Plan_Launcher_i::init (const char *em_ior,
                            CORBA::ORB_ptr orb,
