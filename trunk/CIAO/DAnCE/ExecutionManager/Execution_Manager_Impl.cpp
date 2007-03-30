@@ -448,19 +448,15 @@ namespace CIAO
     CORBA::Short
     Execution_Manager_Impl::
     get_current_thread_priority ()
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException))
     {
       // Use RTCurrent to find out the CORBA priority of the current
       // thread.
 
       CORBA::Object_var obj =
-        this->orb_->resolve_initial_references ("RTCurrent" ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+        this->orb_->resolve_initial_references ("RTCurrent");
 
       RTCORBA::Current_var current =
-        RTCORBA::Current::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+        RTCORBA::Current::_narrow (obj.in ());
 
       if (CORBA::is_nil (obj.in ()))
         {
@@ -468,12 +464,11 @@ namespace CIAO
                       "DAnCE (%P|%t) ExecutionManager_Impl.cpp -"
                       "CIAO::Execution_Manager_Impl::get_current_thread_priority -"
                       "Unable to get current thread handld.\n"));
-          ACE_THROW (CORBA::INTERNAL ());
+          throw (CORBA::INTERNAL ());
         }
 
       CORBA::Short servant_thread_priority =
-        current->the_priority (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+        current->the_priority ();
 
       return servant_thread_priority;
     }

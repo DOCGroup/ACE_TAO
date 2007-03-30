@@ -432,19 +432,13 @@ namespace CIAO
     Plan_Launcher_i::set_current_priority (CORBA::Short desired_priority)
     {
       CORBA::Object_var object =
-        this->orb_->resolve_initial_references ("RTCurrent" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        this->orb_->resolve_initial_references ("RTCurrent");
       RTCORBA::Current_var current =
-        RTCORBA::Current::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        RTCORBA::Current::_narrow (object.in ());
 
-      object = this->orb_->resolve_initial_references ("PriorityMappingManager"
-                                                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      object = this->orb_->resolve_initial_references ("PriorityMappingManager");
       RTCORBA::PriorityMappingManager_var mapping_manager =
-        RTCORBA::PriorityMappingManager::_narrow (object.in ()
-                                                  ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        RTCORBA::PriorityMappingManager::_narrow (object.in ());
 
       RTCORBA::PriorityMapping *pm =
         mapping_manager->mapping ();
@@ -468,12 +462,10 @@ namespace CIAO
       //                     native_priority),
       //                     false);
 
-      current->the_priority (desired_priority ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      current->the_priority (desired_priority);
 
       CORBA::Short priority =
-        current->the_priority (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        current->the_priority ();
 
       if (desired_priority != priority)
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -488,13 +480,10 @@ namespace CIAO
     Plan_Launcher_i::is_client_propagated_model ()
     {
       CORBA::Policy_var policy =
-        this->em_->_get_policy (RTCORBA::PRIORITY_MODEL_POLICY_TYPE
-                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        this->em_->_get_policy (RTCORBA::PRIORITY_MODEL_POLICY_TYPE);
 
       RTCORBA::PriorityModelPolicy_var priority_policy =
-        RTCORBA::PriorityModelPolicy::_narrow (policy.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        RTCORBA::PriorityModelPolicy::_narrow (policy.in ());
 
       if (CORBA::is_nil (priority_policy.in ()))
       {
@@ -505,8 +494,7 @@ namespace CIAO
       }
 
       RTCORBA::PriorityModel priority_model =
-        priority_policy->priority_model (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        priority_policy->priority_model ();
 
       if (priority_model != RTCORBA::CLIENT_PROPAGATED)
       {

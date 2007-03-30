@@ -772,7 +772,6 @@ handle_emitter_consumer_connection (
 //                  comp->disconnect_consumer (connection.portName.in (),
 //                                             0
 //);
-//                  ACE_TRY_CHECK;
 
       if (CIAO::debug_level () > 6)
         {
