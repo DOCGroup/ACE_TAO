@@ -876,14 +876,14 @@ public:
 
   // = Classic queue operations.
 
-  /// Adds <new_item> to the tail of the list. Returns the new item
+  /// Adds @a new_item to the tail of the list. Returns the new item
   /// that was inserted.
   /**
    * Provides constant time insertion at the end of the list structure.
    */
   T *insert_tail (T *new_item);
 
-  /// Adds <new_item> to the head of the list.Returns the new item that
+  /// Adds @a new_item to the head of the list.Returns the new item that
   /// was inserted.
   /**
    * Provides constant time insertion at the head of the list.
