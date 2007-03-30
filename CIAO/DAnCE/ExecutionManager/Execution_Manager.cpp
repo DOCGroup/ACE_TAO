@@ -190,9 +190,7 @@ namespace CIAO
               poa_policy_list.length (1);
               poa_policy_list[0] =
                 rt_orb->create_priority_model_policy (RTCORBA::CLIENT_PROPAGATED,
-                                                      0
-                                                      ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+                                                      0);
 
               child_poa =
                 root_poa->create_POA ("Child_POA",

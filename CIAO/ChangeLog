@@ -1,3 +1,16 @@
+Fri Mar 30 14:15:58 UTC 2007  Gan Deng  <gan.deng@vanderbilt.edu>
+
+        * DAnCE/ExecutionManager/Execution_Manager.cpp
+        * DAnCE/ExecutionManager/Execution_Manager_Impl.cpp
+        * DAnCE/NodeApplication/NodeApplication_Impl.cpp
+        * DAnCE/NodeManager/NodeManager_Impl.cpp
+        * DAnCE/Plan_Launcher/Plan_Launcher_Impl.cpp
+
+          Removed emulated exceptions since they are no
+          longer supported. Also removed the exception
+          specification in the c++ mapping of IDL operation
+          since they are obsolete.
+        
 Thu Mar 29 15:22:08 UTC 2007  Gan Deng  <gan.deng@vanderbilt.edu>
 
         * DAnCE/ExecutionManager/Execution_Manager.cpp
