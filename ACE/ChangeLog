@@ -1,3 +1,26 @@
+Fri Mar 30 12:10:22 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Containers.{h,inl}:
+          Changed the constructor of ACE_DLList_Node to accept a void* instead
+          of void *&, no need for passing it by reference. Thanks to
+          Wim van den Boogaard <wim dot van dot den dot boogaard at varianinc dot com>
+          for reporting this.
+
+        * ace/Containers_T.cpp:
+          ACE_DLList<T>::insert_head/insert_tail, removed the workaround
+          for the dereferencing warnings because the DLList_Node has been
+          changed.
+
+        * ace/Containers_T.h:
+          Doxygen improvements
+
+        * ace/Containers_T.cpp:
+          Use prefix increment/decrement, initialize pointers with 0,
+          simplified some methods, const improvements
+
+        * ace/INET_Addr.cpp:
+          Const improvement
+
 Thu Mar 29 16:15:24 UTC 2007  Steve Huston  <shuston@riverace.com>
 
         * ace/String_Base.h: Corrected comment.
@@ -10,7 +33,7 @@ Thu Mar 29 15:46:19 UTC 2007  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
         * examples/Misc/test_trace.cpp: Updated the documentation to
           explain various techniques for adding tracing to applications.
           Thanks to John McCabe <JGMCCABE at qinetiq dot com> and Steve
-          Huston for clarifying the rules. 
+          Huston for clarifying the rules.
 
 Thu Mar 29 12:15:22 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
