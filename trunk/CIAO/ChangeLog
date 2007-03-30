@@ -5,6 +5,7 @@ Fri Mar 30 14:15:58 UTC 2007  Gan Deng  <gan.deng@vanderbilt.edu>
         * DAnCE/NodeApplication/NodeApplication_Impl.cpp
         * DAnCE/NodeManager/NodeManager_Impl.cpp
         * DAnCE/Plan_Launcher/Plan_Launcher_Impl.cpp
+        * DAnCE/Plan_Launcher/Plan_Launcher_Impl.cpp
 
           Removed emulated exceptions since they are no
           longer supported. Also removed the exception

@@ -46,8 +46,7 @@ namespace CIAO
                            bool rm_use_naming,
                            const char *rm_name,
                            CORBA::Short priority,
-                           size_t niterations
-                           ACE_ENV_ARG_DECL)
+                           size_t niterations)
     {
       this->orb_ = CORBA::ORB::_duplicate  (orb);
       this->niterations_ = niterations;
