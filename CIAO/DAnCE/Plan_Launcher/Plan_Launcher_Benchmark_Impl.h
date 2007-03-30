@@ -32,7 +32,6 @@ namespace CIAO
        */
       virtual const char * launch_plan (const ::Deployment::DeploymentPlan &plan);
 
-      virtual ~Plan_Launcher_Benchmark_i ();
     protected:
 
     };
