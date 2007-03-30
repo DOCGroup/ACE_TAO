@@ -64,14 +64,6 @@ the <tt>*S.h</tt> file in your code. <P>
   <TH>Variable
   <TH>Usage
   <TR>
-    <TD>CPP_LOCATION
-    <TD>Deprecated in version 1.0.4 of TAO.  Please use TAO_IDL_PREPROCESSOR
-        instead.
-  <TR>
-    <TD>TAO_IDL_DEFAULT_CPP_FLAGS
-      <TD>Deprecated in version 1.0.4 of TAO.  Please use
-          TAO_IDL_PREPROCESSOR_ARGS instead.
-  <TR>
     <TD>TAO_IDL_PREPROCESSOR
     <TD>Used to override the program name of the preprocessor that TAO_IDL
             uses.
@@ -454,7 +446,7 @@ also receives other options that are specific to it.<p>
   <tr><a name="H perfect_hash">
     <td><tt>-H perfect_hash</tt></td>
 
-    <td>To specify the IDL compiler to generate skelton code that uses perfect
+    <td>To specify the IDL compiler to generate skeleton code that uses perfect
         hashed operation demuxing strategy, which is the default strategy. Perfect
         hashing uses <a href="http://www.cs.wustl.edu/~schmidt/PDF/gperf.pdf">gperf
         </a>program,
@@ -465,7 +457,7 @@ also receives other options that are specific to it.<p>
   <tr><a name="H dynamic_hash">
     <td><tt>-H dynamic_hash</tt></td>
 
-    <td>To specify the IDL compiler to generate skelton code that uses dynamic
+    <td>To specify the IDL compiler to generate skeleton code that uses dynamic
         hashed operation demuxing strategy.&nbsp;</td>
     <td>&nbsp;</td>
   </tr>
@@ -473,7 +465,7 @@ also receives other options that are specific to it.<p>
   <tr><a name="H binary_search">
     <td><tt>-H binary_search</tt></td>
 
-    <td>To specify the IDL compiler to generate skelton code that uses binary
+    <td>To specify the IDL compiler to generate skeleton code that uses binary
         search based operation demuxing strategy.&nbsp;</td>
     <td>&nbsp;</td>
   </tr>
@@ -481,7 +473,7 @@ also receives other options that are specific to it.<p>
   <tr><a name="H linear_search">
     <td><tt>-H linear_search</tt></td>
 
-    <td>To specify the IDL compiler to generate skelton code that uses linear
+    <td>To specify the IDL compiler to generate skeleton code that uses linear
         search based operation demuxing strategy.  Note that this option is for testing purposes only and should not be used for production code since it's inefficient.</td>
     <td>&nbsp;</td>
   </tr>
@@ -598,8 +590,7 @@ also receives other options that are specific to it.<p>
     <td>Temporary directory to be used by the IDL compiler.
     </td>
     <td>Unix: use environment variable TEMPDIR if defined, else use /tmp/.
-        Windows 95/98/Me: use environment variable TMP or TEMP if defined
-        and directory exists, else use current directory.  Windows NT/2000/XP:
+        Windows NT/2000/XP:
         use environment variable TMP or TEMP if defined, else use the
         Windows directory.
     </td>
@@ -628,8 +619,7 @@ also receives other options that are specific to it.<p>
   <tr><a name="GC flag">
     <td><tt>-GC </tt></td>
 
-    <td>Generate AMI stubs ("sendc_" methods, reply handler stubs,
-        exception holders, etc)</td>
+    <td>Generate AMI stubs ("sendc_" methods, reply handler stubs, etc)</td>
     <td>&nbsp;</td>
   </tr>
 

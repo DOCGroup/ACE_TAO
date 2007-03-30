@@ -1,8 +1,13 @@
+Fri Mar 30 12:22:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/compiler.html:
+          Removed deprecated flags, fixed typos and updated a few parts
+
 Thu Mar 29 16:50:15 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_type.cpp:
         * TAO_IDL/fe/fe_init.cpp:
-        
+
           Fixed calls to ACE_String_Base methods set (const char*, bool)
           and reset (bool) to pass a boolean instead of an integer.
 
