@@ -1,3 +1,9 @@
+Fri Mar 30 18:09:55 UTC 2007  Gan Deng  <gan.deng@vanderbilt.edu>
+
+        * DAnCE/ExecutionManager/ExecutionManager.mpc
+
+          Added "rtcorba" as base project dependency.
+
 Fri Mar 30 18:05:06 UTC 2007  Gan Deng  <gan.deng@vanderbilt.edu>
 
         * DAnCE/Plan_Launcher/Plan_Launcher_Benchmark_Impl.cpp
