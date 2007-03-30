@@ -180,10 +180,10 @@ namespace CIAO
           history_start_system.collect_basic_stats (stats_4);
           stats_4.dump_results ("TOTAL -- activateSystem", gsf);
 
-/*
+
           ACE_Throughput_Stats::dump_throughput ("Total", gsf,
                                                 test_end - test_start,
-                                                stats.samples_count ());*/
+                                                stats_1.samples_count ());
 
         }
       catch (Deployment::ResourceNotAvailable& ex)
