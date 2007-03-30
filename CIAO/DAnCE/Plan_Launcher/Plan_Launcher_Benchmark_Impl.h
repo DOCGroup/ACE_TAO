@@ -30,10 +30,7 @@ namespace CIAO
        * @param plan A valid IDL deployment plan
        * @returns a string containing the UUID of the plan. Null indicates failure.
        */
-      virtual const char * launch_plan (const ::Deployment::DeploymentPlan &plan
-                                ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-        ACE_THROW_SPEC ((Plan_Launcher_i::Deployment_Failure));
-
+      virtual const char * launch_plan (const ::Deployment::DeploymentPlan &plan);
     protected:
 
     };
