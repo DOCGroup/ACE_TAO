@@ -112,7 +112,7 @@ ACE_Service_Type_Dynamic_Guard::ACE_Service_Type_Dynamic_Guard
 
   ACE_ASSERT (this->dummy_ != 0); // No memory?
 
-  if(ACE::debug ())
+  if (ACE::debug ())
     ACE_DEBUG ((LM_DEBUG,
                 ACE_LIB_TEXT ("ACE (%P|%t) STDG::<ctor>, repo=%@ [%d], ")
                 ACE_LIB_TEXT ("name=%s, type=%@, impl=%@, object=%@, active=%d - inserting dummy forward\n"),
@@ -156,7 +156,7 @@ ACE_Service_Type_Dynamic_Guard::~ACE_Service_Type_Dynamic_Guard (void)
       // Something has registered a proper (non-forward-decl) service with
       // the same name as our dummy.
 
-      if(ACE::debug ())
+      if (ACE::debug ())
         ACE_DEBUG ((LM_DEBUG,
                     ACE_LIB_TEXT ("ACE (%P|%t) STDG::<dtor>, repo=%@, name=%s - updating [%d - %d]\n"),
                     &this->repo_,
@@ -175,7 +175,7 @@ ACE_Service_Type_Dynamic_Guard::~ACE_Service_Type_Dynamic_Guard (void)
       // we are hereby simply giving up ownership.
       this->dummy_ = 0;
 
-      if(ACE::debug ())
+      if (ACE::debug ())
         ACE_DEBUG ((LM_DEBUG,
                     ACE_LIB_TEXT ("ACE (%P|%t) STDG::<dtor>, repo=%@ [%d], ")
                     ACE_LIB_TEXT ("name=%s, type=%@, impl=%@, object=%@, active=%d - loaded\n"),
@@ -185,7 +185,7 @@ ACE_Service_Type_Dynamic_Guard::~ACE_Service_Type_Dynamic_Guard (void)
     }
   else
     {
-      if(ACE::debug ())
+      if (ACE::debug ())
         ACE_DEBUG ((LM_DEBUG,
                     ACE_LIB_TEXT ("ACE (%P|%t) STDG::<dtor>, repo=%@, ")
                     ACE_LIB_TEXT ("name=%s, type=%@, impl=%@, object=%@, active=%d - removing dummy forward\n"),
@@ -232,8 +232,7 @@ Processed_Static_Svc (const ACE_Static_Svc_Descriptor *assd)
   ACE_OS::strcpy(name_,assd->name_);
 }
 
-ACE_Service_Gestalt::Processed_Static_Svc::
-~Processed_Static_Svc (void)
+ACE_Service_Gestalt::Processed_Static_Svc::~Processed_Static_Svc (void)
 {
   delete [] name_;
 }
@@ -520,7 +519,7 @@ ACE_Service_Gestalt::initialize (const ACE_TCHAR *svc_name,
       else
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_LIB_TEXT ("ACE (%P|%t) SG::initialize - service \'%s\'")
+                             ACE_LIB_TEXT ("ACE (%P|%t) ERROR: SG::initialize - service \'%s\'")
                              ACE_LIB_TEXT (" was not located.\n"),
                              svc_name),
                             -1);
@@ -528,7 +527,7 @@ ACE_Service_Gestalt::initialize (const ACE_TCHAR *svc_name,
     }
   if (srp == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_LIB_TEXT ("ACE (%P|%t) SG::initialize - service \'%s\'")
+                       ACE_LIB_TEXT ("ACE (%P|%t) ERROR: SG::initialize - service \'%s\'")
                        ACE_LIB_TEXT (" was not located.\n"),
                        svc_name),
                       -1);
@@ -539,7 +538,7 @@ ACE_Service_Gestalt::initialize (const ACE_TCHAR *svc_name,
     {
       // ... report and remove this entry.
       ACE_ERROR ((LM_ERROR,
-                  ACE_LIB_TEXT ("ACE (%P|%t) SG::initialize - static init of \'%s\'")
+                  ACE_LIB_TEXT ("ACE (%P|%t) ERROR: SG::initialize - static init of \'%s\'")
                   ACE_LIB_TEXT (" failed (%p)\n"),
                   svc_name));
       this->repo_->remove (svc_name);
@@ -697,7 +696,7 @@ ACE_Service_Gestalt::initialize_i (const ACE_Service_Type *sr,
       // Not using LM_ERROR here to avoid confusing the test harness
       if (ACE::debug ())
         ACE_ERROR_RETURN ((LM_WARNING,
-                           ACE_LIB_TEXT ("ACE (%P|%t) SG - initialize_i ")
+                           ACE_LIB_TEXT ("ACE (%P|%t) SG::initialize_i ")
                            ACE_LIB_TEXT ("failed for %s: %m\n"),
                            sr->name ()),
                           -1);
@@ -871,9 +870,10 @@ ACE_Service_Gestalt::process_directives_i (ACE_Svc_Conf_Param *param)
   // This is a hack, better errors should be provided...
   if (param->yyerrno > 0)
     {
-      if (ACE_OS::last_error () == 0)
-        ACE_OS::last_error (EINVAL);
-
+      // Always set the last error if ace_yyparse() fails.
+      // Other code may use errno to determine the type
+      // of problem that occurred from processing directives.
+      ACE_OS::last_error (EINVAL);
       return param->yyerrno;
     }
   else
@@ -891,13 +891,12 @@ ACE_Service_Gestalt::get_xml_svc_conf (ACE_DLL &xmldll)
                        "ACE_Service_Config::get_xml_svc_conf"),
                       0);
 
-  void *foo;
-  foo = xmldll.symbol (ACE_LIB_TEXT ("_ACEXML_create_XML_Svc_Conf_Object"));
+  void *foo =
+        xmldll.symbol (ACE_LIB_TEXT ("_ACEXML_create_XML_Svc_Conf_Object"));
 
   // Cast the void* to long first.
-  long tmp = reinterpret_cast<long> (foo);
   ACE_XML_Svc_Conf::Factory factory =
-    reinterpret_cast<ACE_XML_Svc_Conf::Factory> (tmp);
+    reinterpret_cast<ACE_XML_Svc_Conf::Factory> (foo);
   if (factory == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_LIB_TEXT ("ACE (%P|%t) Unable to resolve factory: %p\n"),
@@ -1144,16 +1143,16 @@ ACE_Service_Gestalt::process_commandline_directives (void)
       for (ACE_SVC_QUEUE_ITERATOR iter (*this->svc_queue_);
            iter.next (sptr) != 0;
            iter.advance ())
-  {
-    // Process just a single directive.
-    if (this->process_directive ((sptr->fast_rep ())) != 0)
-      {
-        ACE_ERROR ((LM_ERROR,
-                    ACE_LIB_TEXT ("ACE (%P|%t) %p\n"),
-                    ACE_LIB_TEXT ("process_directive")));
-        result = -1;
-      }
-  }
+        {
+          // Process just a single directive.
+          if (this->process_directive ((sptr->fast_rep ())) != 0)
+            {
+              ACE_ERROR ((LM_ERROR,
+                          ACE_LIB_TEXT ("ACE (%P|%t) %p\n"),
+                          ACE_LIB_TEXT ("process_directive")));
+              result = -1;
+            }
+        }
 
       delete this->svc_queue_;
       this->svc_queue_ = 0;
