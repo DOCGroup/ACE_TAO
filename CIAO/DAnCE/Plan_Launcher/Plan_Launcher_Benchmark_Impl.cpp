@@ -10,6 +10,10 @@ namespace CIAO
 {
   namespace Plan_Launcher
   {
+    Plan_Launcher_Benchmark_i::~Plan_Launcher_Benchmark_i ()
+    {
+    }
+
     const char *
     Plan_Launcher_Benchmark_i::launch_plan (
         const ::Deployment::DeploymentPlan &plan)
@@ -182,7 +186,7 @@ namespace CIAO
                                                 stats.samples_count ());*/
 
         }
-      catch (Deployment::ResourceNotAvailable, ex)
+      catch (Deployment::ResourceNotAvailable& ex)
         {
           ACE_ERROR ((LM_ERROR,
                       "EXCEPTION: ResourceNotAvaiable exception caught: %s,\n"
@@ -197,7 +201,7 @@ namespace CIAO
                       ex.resourceName.in ()));
           throw (Deployment_Failure (""));
         }
-      catch (Deployment::StartError, ex)
+      catch (Deployment::StartError& ex)
         {
           ACE_ERROR ((LM_ERROR,
                       "EXCEPTION: StartError exception caught: %s, %s\n",
@@ -205,7 +209,7 @@ namespace CIAO
                       ex.reason.in ()));
           throw (Deployment_Failure (""));
         }
-      catch (Deployment::InvalidProperty, ex)
+      catch (Deployment::InvalidProperty ex)
         {
           ACE_ERROR ((LM_ERROR,
                       "EXCEPTION: InvalidProperty exception caught: %s, %s\n",
@@ -213,7 +217,7 @@ namespace CIAO
                       ex.reason.in ()));
           throw (Deployment_Failure (""));
         }
-      catch (Deployment::InvalidConnection, ex)
+      catch (Deployment::InvalidConnection& ex)
         {
           ACE_ERROR ((LM_ERROR,
                       "EXCEPTION: InvalidConnection exception caught: %s, %s\n",
