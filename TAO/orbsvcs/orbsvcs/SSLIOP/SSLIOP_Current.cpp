@@ -142,41 +142,31 @@ TAO::SSLIOP::Current::_interface_repository_id (void) const
 // ----------------------------------------------------------------
 
 TAO::SSLIOP::Current_ptr
-tao_TAO_SSLIOP_Current_duplicate (
-    TAO::SSLIOP::Current_ptr p
-  )
+tao_TAO_SSLIOP_Current_duplicate (TAO::SSLIOP::Current_ptr p)
 {
   return TAO::SSLIOP::Current::_duplicate (p);
 }
 
 void
-tao_TAO_SSLIOP_Current_release (
-    TAO::SSLIOP::Current_ptr p
-  )
+tao_TAO_SSLIOP_Current_release (TAO::SSLIOP::Current_ptr p)
 {
   CORBA::release (p);
 }
 
 TAO::SSLIOP::Current_ptr
-tao_TAO_SSLIOP_Current_nil (
-    void
-  )
+tao_TAO_SSLIOP_Current_nil (void)
 {
   return TAO::SSLIOP::Current::_nil ();
 }
 
 TAO::SSLIOP::Current_ptr
-tao_TAO_SSLIOP_Current_narrow (
-    CORBA::Object *p
-  )
+tao_TAO_SSLIOP_Current_narrow (CORBA::Object *p)
 {
   return TAO::SSLIOP::Current::_narrow (p);
 }
 
 CORBA::Object *
-tao_TAO_SSLIOP_Current_upcast (
-    void *src
-  )
+tao_TAO_SSLIOP_Current_upcast (void *src)
 {
   TAO::SSLIOP::Current **tmp =
     static_cast<TAO::SSLIOP::Current **> (src);

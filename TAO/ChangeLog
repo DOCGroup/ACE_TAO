@@ -1,3 +1,8 @@
+Fri Mar 30 12:25:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Current.cpp:
+          Layout changes
+
 Fri Mar 30 12:22:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/compiler.html:
