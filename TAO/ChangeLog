@@ -1,3 +1,12 @@
+Fri Mar 30 14:49:24 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tests/Bug_2735_Regression/Bug_2735_Regression.mpc:
+        * tests/Bug_2735_Regression/run_test.pl:
+        * tests/Bug_2735_Regression/server.cpp:
+
+          Added a regression test for Bug 2735 which involves the
+          -ORBSvcConfDirective option.
+
 Fri Mar 30 12:25:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Current.cpp:
