@@ -439,7 +439,7 @@ ACE_INET_Addr::set (const char port_name[],
 {
   ACE_TRACE ("ACE_INET_Addr::set");
 
-  int port_number = get_port_number_from_name (port_name, protocol);
+  int const port_number = get_port_number_from_name (port_name, protocol);
   if (port_number == -1)
     {
       ACE_UNUSED_ARG (inet_address);
