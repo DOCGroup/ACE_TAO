@@ -1,3 +1,22 @@
+Fri Mar 30 19:56:52 UTC 2007  Nishanth Shankaran  <nshankar@nospam.com>
+
+        * Data_Base:
+        * Data_Base/Admin_exec.h:
+        * Data_Base/Admin_exec.cpp:
+        * Data_Base/Data_Base.cidl:
+        * Data_Base/Data_Base.idl:
+        * Data_Base/Data_Base.mpc:
+        * Data_Base/Data_Base_exec.h:
+        * Data_Base/Data_Base_exec.cpp:
+        * Data_Base/Data_Base_exec_export.h:
+        * Data_Base/Data_Base_stub_export.h:
+        * Data_Base/Data_Base_svnt_export.h:
+        * Data_Base/Query_exec.h:
+        * Data_Base/Query_exec.cpp: Added the data base component.
+
+        * common/OpString.idl:
+        * common/RACE_common.idl: Updated these IDL structures.
+
 Wed Mar 21 16:39:31 UTC 2007  Nishanth Shankaran  <nshankar@nospam.com>
 
         * Monitor/Local_Monitor/Local_Monitor.h:

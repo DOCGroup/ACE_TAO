@@ -6,11 +6,15 @@ module CIAO
   module RACE
     {
 
-      /// Create a UUID type.
+      /// UUID type.
       typedef string UUID;
 
-      /// Creating a type for human readable name or ID.
+      /// Type for human readable name or ID.
       typedef string label;
+
+      typedef sequence <UUID> UUIDs;
+
+
 
       /// Describes what action to perform for the given operational
       /// string.
@@ -19,6 +23,17 @@ module CIAO
         TEARDOWN,
         DEPLOY
       };
+
+    /// Exception that will be thrown when the requested ID is not known.
+    exception UnknownID {
+
+      /// Unknown ID.
+      UUID ID;
+
+      /// Why and where the lookup of the ID failed.
+      string reason;
+    };
+
 
 //       enum ConfiguratorType
 //       {
