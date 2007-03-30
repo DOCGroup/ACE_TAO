@@ -209,7 +209,7 @@ namespace CIAO
                       ex.reason.in ()));
           throw (Deployment_Failure (""));
         }
-      catch (Deployment::InvalidProperty ex)
+      catch (Deployment::InvalidProperty& ex)
         {
           ACE_ERROR ((LM_ERROR,
                       "EXCEPTION: InvalidProperty exception caught: %s, %s\n",
