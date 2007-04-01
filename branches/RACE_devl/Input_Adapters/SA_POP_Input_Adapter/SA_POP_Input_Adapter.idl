@@ -23,7 +23,7 @@ module CIAO
       {
         /// "Schedule" a string for future deployment.
         boolean add_string (in OperationalString opstring,
-                            inout UUID ID);
+                            out UUID ID);
 
         /// Remove a string that was scheduled for deployment. Raises
         /// UnknownID.
@@ -32,7 +32,7 @@ module CIAO
 
         /// Deploy a string right away.
         boolean deploy_string (in OperationalString opstring,
-                               inout UUID ID);
+                               out UUID ID);
 
         /// Deploy a string that was previously scheduled via
         /// add_string. Raises UnknownID.

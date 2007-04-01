@@ -42,6 +42,10 @@ namespace CIAO
           update_string_status (const char * ID, ::CORBA::Boolean active)
             throw (UnknownID);
 
+          virtual ::CIAO::RACE::OperationalString *
+          get_string_by_id (const char * id)
+            throw (UnknownID);
+
           private:
 
           /// Pointer to the component executor object.

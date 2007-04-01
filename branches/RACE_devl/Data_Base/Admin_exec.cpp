@@ -93,6 +93,28 @@ namespace CIAO
               throw ex;
             }
         }
+
+        ::CIAO::RACE::OperationalString *
+        Admin_exec_i::get_string_by_id (const char * ID)
+          throw (UnknownID)
+        {
+          ::CIAO::RACE::OperationalString opstring;
+          int ret = this->db_executor_->data_base_.find (ID, opstring);
+
+          if (ret == 0)
+            {
+              ::CIAO::RACE::OperationalString_var ret_val =
+                new ::CIAO::RACE::OperationalString (opstring);
+              return ret_val._retn ();
+            }
+          else
+            {
+              UnknownID ex;
+              ex.ID = ID;
+              ex.reason = "The given ID has not been registered with the data base.";
+              throw ex;
+            }
+        }
       }
     }
   }
