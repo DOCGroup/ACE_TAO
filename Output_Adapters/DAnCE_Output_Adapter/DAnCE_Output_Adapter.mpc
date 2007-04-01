@@ -99,5 +99,6 @@ project(DAnCE_Output_Adapter_exec) : ciao_component_dnc {
   Source_Files {
 
     DAnCE_Output_Adapter_exec.cpp
+    Admin_exec.cpp
   }
 }

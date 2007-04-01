@@ -27,21 +27,24 @@ namespace CIAO
                         char *& ID);
 
           virtual ::CORBA::Boolean
-            delete_string (const char * ID);
+            delete_string (const char * ID)
+            throw (UnknownID);
 
           virtual ::CORBA::Boolean
             deploy_string (const ::CIAO::RACE::OperationalString & opstring,
                            char *& ID);
 
           virtual ::CORBA::Boolean
-            deploy_string_with_id (const char * ID);
+            deploy_string_with_id (const char * ID)
+            throw (UnknownID);
 
           virtual ::CORBA::Boolean
             modify_string (const ::CIAO::RACE::OperationalString & opstring,
-                           const char * ID);
+                           const char * ID)
+            throw (UnknownID);
 
-          virtual ::CORBA::Boolean
-            tear_down_string (const char * ID);
+          virtual ::CORBA::Boolean tear_down_string (const char * ID)
+            throw (UnknownID);
 
           private:
           /// Object reference of the data base admin object.

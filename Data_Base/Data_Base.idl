@@ -29,6 +29,12 @@ module CIAO
         /// currently in the DB. Raises UnknownID.
         void update_string_status (in UUID ID, in boolean active)
           raises (UnknownID);
+
+        // Returns an operating sting that matches the given id. Raises
+        // UnknownID if no operational string exists for the given id.
+        OperationalString get_string_by_id (in UUID id)
+          raises (UnknownID);
+
       };
 
       interface Query

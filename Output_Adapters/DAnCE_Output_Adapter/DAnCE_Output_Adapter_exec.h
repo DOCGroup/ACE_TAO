@@ -15,34 +15,6 @@ namespace CIAO
     {
       namespace CIDL_DAnCE_OA_Impl
       {
-        class DANCE_OUTPUT_ADAPTER_EXEC_Export Admin_exec_i
-          : public virtual ::CIAO::RACE::DAnCE_OA::CCM_Admin,
-            public virtual TAO_Local_RefCounted_Object
-        {
-          public:
-          Admin_exec_i (DAnCE_OA_Component_Context *context);
-
-          virtual ~Admin_exec_i (void);
-
-          virtual ::CORBA::Boolean deploy_plan
-            (const ::Deployment::DeploymentPlan & plan);
-
-          virtual ::CORBA::Boolean deploy_string
-            (const ::CIAO::RACE::OperationalString & opstring);
-
-          virtual ::CORBA::Boolean tear_down_string
-            (const char * ID);
-
-          private:
-
-          /// Pointer to the component's context object.
-          DAnCE_OA_Component_Context *context_;
-
-          /// PlanLauncher object.
-          Plan_Launcher::Plan_Launcher_i launcher_;
-        };
-
-
         class DANCE_OUTPUT_ADAPTER_EXEC_Export DAnCE_OA_Component_exec_i
           : public virtual DAnCE_OA_Component_Exec,
             public virtual TAO_Local_RefCounted_Object
