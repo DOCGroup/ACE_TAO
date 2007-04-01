@@ -16,9 +16,9 @@ my $class = (PerlACE::is_vxworks_test() ? 'PerlACE::ProcessVX' :
 
 ## First test that the -ORBSvcConfDirective works with good options.
 my $SV = $class->new('server',
-                     '-ORBSvcConfDirective \'static ' .
-                     'Server_Strategy_Factory "-ORBConcurrency ' .
-                     'thread-per-connection"\'');
+                     '-ORBSvcConfDirective "static ' .
+                     'Server_Strategy_Factory \'-ORBConcurrency ' .
+                     'thread-per-connection\'"');
 $SV->Spawn ();
 my $server = $SV->WaitKill(5);
 if ($server != 0) {
