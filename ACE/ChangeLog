@@ -1,3 +1,33 @@
+Mon Apr  2 15:02:26 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ace/Service_Object.cpp:
+
+          Removed an unnecessary const_cast of the ACE_DLL data member in
+          one of the constructors.
+
+        * ace/Service_Config.h:
+
+          Added an ACE_STATIC_SERVICE_DIRECTIVE similar to
+          ACE_DYNAMIC_SERVICE_DIRECTIVE to ease the testing of processing
+          single directives with the XML service configurator.
+
+        * ACEXML/apps/svcconf/Svcconf_Handler.cpp:
+        * ace/Service_Gestalt.h:
+        * ace/Service_Gestalt.inl:
+        * ace/Service_Gestalt.cpp:
+
+          Fixed Bug 2677 by moving the ACE_Service_Type_Dynamic_Guard out of
+          the Service_Gestalt.cpp and into the .h.  This guard is then used
+          in ACEXML_Svcconf_Handler::endElement before loading a shared
+          library which may insert an entity into the
+          ACE_Service_Repository.  Upon unloading the shared library,
+          objects will be destroyed in the proper order.  Thanks to Lothar
+          Werzinger <lothar at tradescape dot biz> for reporting this.
+
+        * bin/tao_orb_tests.lst:
+
+          Added Bug_2677_Regression to the list of tests.
+
 Fri Mar 30 14:51:19 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/svcconf-convert.pl:
