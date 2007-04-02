@@ -24,6 +24,8 @@ namespace CIAO
       : public Plan_Launcher_i
     {
     public:
+      
+      virtual ~Plan_Launcher_Benchmark_i  ();
 
       /**
        * @brief Launch a plan, given an IDL deployment plan
@@ -31,7 +33,7 @@ namespace CIAO
        * @returns a string containing the UUID of the plan. Null indicates failure.
        */
       virtual const char * launch_plan (const ::Deployment::DeploymentPlan &plan);
-
+      
     protected:
 
     };

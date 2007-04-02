@@ -114,9 +114,7 @@ namespace CIAO
       virtual Deployment::NodeApplication_ptr
         find_node_application (const Component_Binding_Info & binding);
 
-      CORBA::Short get_current_thread_priority (void)
-      ACE_THROW_SPEC ((
-        ::CORBA::SystemException));
+      CORBA::Short get_current_thread_priority (void);
 
     protected:
       /// Destructor.
