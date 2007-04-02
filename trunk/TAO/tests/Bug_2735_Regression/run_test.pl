@@ -15,10 +15,7 @@ my $class = (PerlACE::is_vxworks_test() ? 'PerlACE::ProcessVX' :
                                           'PerlACE::Process');
 
 ## First test that the -ORBSvcConfDirective works with good options.
-my $SV = $class->new('server',
-                     '-ORBSvcConfDirective "static ' .
-                     'Server_Strategy_Factory \'-ORBConcurrency ' .
-                     'thread-per-connection\'"');
+my $SV = $class->new('server', '-s');
 $SV->Spawn ();
 my $server = $SV->WaitKill(5);
 if ($server != 0) {
@@ -28,8 +25,7 @@ if ($server != 0) {
 
 ## Next, test that the -ORBSvcConfDirective gives an error with bad
 ## options.
-$SV = $class->new('server',
-                  '-ORBSvcConfDirective "static Foo_Strategy_Factory"');
+$SV = $class->new('server', '-f');
 
 ## Run the server, but redirect stdout and stderr to /dev/null
 ## so that the errors messages don't show up on the scoreboard
