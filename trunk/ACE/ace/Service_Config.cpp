@@ -20,6 +20,7 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/Get_Opt.h"
 #include "ace/ARGV.h"
+#include "ace/Log_Msg.h"
 
 ACE_RCSID (ace,
            Service_Config,
