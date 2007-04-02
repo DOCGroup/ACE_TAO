@@ -240,7 +240,7 @@ Options::print_usage (void) const
   ACE_ERROR ((LM_ERROR,
               "Usage:\n"
               "\n"
-              "ImR_Locator [-c cmd] [-d 0|1|2] [-m] [-o file]\n"
+              "ImplRepo_Service [-c cmd] [-d 0|1|2] [-m] [-o file]\n"
               " [-r|-p file|-x file] [-s] [-t secs] [-v secs]\n"
               "  -c command  Runs nt service commands ('install' or 'remove')\n"
               "  -d level    Sets the debug level (default 1)\n"
