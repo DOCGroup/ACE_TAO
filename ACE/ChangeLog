@@ -1,3 +1,10 @@
+Mon Apr  2 15:11:24 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ACEXML/apps/svcconf/Svcconf.cpp:
+
+          As part of the fixes for Bug 2735, we must set errno to EINVAL
+          when a directive fails to parse.
+
 Mon Apr  2 15:02:26 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * ace/Service_Object.cpp:
