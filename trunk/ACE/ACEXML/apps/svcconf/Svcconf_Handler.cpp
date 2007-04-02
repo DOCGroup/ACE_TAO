@@ -6,6 +6,7 @@
 #include "ace/Service_Config.h"
 #include "ace/Service_Types.h"
 #include "ace/Service_Repository.h"
+#include "ace/Service_Gestalt.h"
 #include "ace/DLL.h"
 #include "ace/ARGV.h"
 #include "ace/Module.h"
@@ -60,6 +61,13 @@ ACEXML_Svcconf_Handler::endElement (const ACEXML_Char *,
                                       &this->parsed_info_ :
                                       &this->stream_info_);
 
+      // We must allocate a string here to ensure that the
+      // name is still available by the time the
+      // ACE_Service_Type_Dynamic_Guard is destructed.
+      ACE_TString name = active_info->name ();
+      ACE_Service_Type_Dynamic_Guard dummy (
+        *ACE_Service_Config::current ()->current_service_repository (),
+        name.c_str ());
       ACE_DLL svc_dll;
 
       if (svc_dll.open (active_info->path ()) == -1)
@@ -147,11 +155,6 @@ ACEXML_Svcconf_Handler::endElement (const ACEXML_Char *,
                               mp->name ()));
                   mp->name (active_info->name ());
                 }
-              ACE_Service_Type *stype
-                = ACE_Service_Config::create_service_type (active_info->name (),
-                                                           stp,
-                                                           svc_dll,
-                                                           active_info->active ());
 
               if (mt->init (args.argc (), args.argv ()) == -1
                   || this->stream_->push (mt) == -1)

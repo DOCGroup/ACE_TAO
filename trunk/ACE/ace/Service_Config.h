@@ -40,6 +40,12 @@ class ACE_Thread_Manager;
 class ACE_DLL;
 
 #if (ACE_USES_CLASSIC_SVC_CONF == 1)
+#define ACE_STATIC_SERVICE_DIRECTIVE(ident, parameters) \
+  ACE_LIB_TEXT ("static ") \
+  ACE_LIB_TEXT (ident) \
+  ACE_LIB_TEXT (" \"") \
+  ACE_LIB_TEXT (parameters) \
+  ACE_LIB_TEXT ("\"")
 #define ACE_DYNAMIC_SERVICE_DIRECTIVE(ident, libpathname, objectclass, parameters) \
   ACE_LIB_TEXT ("dynamic ") \
   ACE_LIB_TEXT (ident) \
@@ -55,6 +61,12 @@ class ACE_DLL;
   ACE_LIB_TEXT (ident)
 class ACE_Svc_Conf_Param;
 #else
+#define ACE_STATIC_SERVICE_DIRECTIVE(ident, parameters) \
+  ACE_LIB_TEXT ("<ACE_Svc_Conf><static id=\"") \
+  ACE_LIB_TEXT (ident) \
+  ACE_LIB_TEXT ("\" params=\"") \
+  ACE_LIB_TEXT (parameters) \
+  ACE_LIB_TEXT ("\"/></ACE_Svc_Conf>")
 #define ACE_DYNAMIC_SERVICE_DIRECTIVE(ident, libpathname, objectclass, parameters) \
   ACE_LIB_TEXT ("<ACE_Svc_Conf><dynamic id=\"") \
   ACE_LIB_TEXT (ident) \
