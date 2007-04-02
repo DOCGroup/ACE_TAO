@@ -35,6 +35,7 @@ Airplane_Client_i::parse_args (void)
         this->loop_count_ = (u_int) ACE_OS::atoi (get_opts.opt_arg ());
         break;
       case 'k':  // ior provide on command line
+        delete [] this->server_key_;
         this->server_key_ = ACE::strnew (get_opts.opt_arg ());
         break;
       case '?':
