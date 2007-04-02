@@ -1,3 +1,16 @@
+Mon Apr  2 15:00:08 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tests/Bug_2677_Regression/Bug_2677_Regression.mpc:
+        * tests/Bug_2677_Regression/DllORB.h:
+        * tests/Bug_2677_Regression/DllORB.cpp:
+        * tests/Bug_2677_Regression/README:
+        * tests/Bug_2677_Regression/bug_2677_regression_export.h:
+        * tests/Bug_2677_Regression/run_test.pl:
+        * tests/Bug_2677_Regression/server.cpp:
+
+          Added a regression test for Bug 2677 provided by Lothar Wrzinger
+          <lothar at tradescape dot biz>.
+
 Mon Apr 2 14:06:12 UTC 2007  Martin Corino  <mcorino@remedy.nl>
 
         * TAO_IDL/include/idl_global.h:
