@@ -1,3 +1,12 @@
+Mon Apr  2 15:18:29 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * ace/Process.cpp: Add missing #include "ace/Auto_Ptr.h".
+        * ace/Service_Config.cpp: Add missong #include "ace/Log_Msg.h".
+          Thanks to Olof Granered <Olof dot Granered at mobitex dot com>
+          for reporting these.
+
+        * THANKS: Added Olof Granered to the Hall of Fame.
+
 Mon Apr  2 15:11:24 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * ACEXML/apps/svcconf/Svcconf.cpp:
