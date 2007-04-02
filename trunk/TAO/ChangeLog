@@ -1,3 +1,14 @@
+Mon Apr  2 17:52:41 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/INS_Locator.h:
+
+          Use a TAO_Local_RefCounted_Object instead of CORBA::LocalObject to
+          ensure that the INS_Locator is released in the end.
+
+        * orbsvcs/ImplRepo_Service/Locator_Options.cpp:
+
+          Use ImplRepo_Service in the usage instead of ImR_Locator.
+
 Mon Apr  2 15:24:46 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * tests/Bug_2735_Regression/run_test.pl:
