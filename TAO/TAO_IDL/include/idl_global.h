@@ -599,6 +599,10 @@ public:
   UTL_String *utl_string_factory (const char *str);
   // Utility function to create UTL_String classes on the FE heap.
 
+#if defined (ACE_OPENVMS)
+  static char* translateName(const char* name, char *name_buf);
+#endif
+
 private:
   // Data
   UTL_ScopeStack             pd_scopes;              // Store scopes stack

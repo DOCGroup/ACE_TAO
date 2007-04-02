@@ -93,12 +93,17 @@ ACE_RCSID (util,
 
 static long *pSeenOnce= 0;
 
-#if defined(ACE_OPENVMS)
+#if defined (ACE_OPENVMS)
 #include <unixlib.h>
-static char* translateName(const char* name)
+char* IDL_GlobalData::translateName(const char* name, char *name_buf)
 {
-  char* transName = (ACE_OS::strchr (name, '[') == 0
+  char* transName = (ACE_OS::strpbrk (name, ":[") == 0
                       ? (char*)name : ::decc$translate_vms (name));
+  if (transName)
+  {
+    ACE_OS::strcpy (name_buf, transName);
+    transName = name_buf;
+  }
   return (transName == 0 || ((int)transName) == -1 ) ? 0 : transName;
 }
 #endif
@@ -390,7 +395,6 @@ IDL_GlobalData::set_main_filename (UTL_String *n)
       delete this->pd_main_filename;
       this->pd_main_filename = 0;
     }
-
   this->pd_main_filename = n;
 }
 
@@ -734,24 +738,15 @@ IDL_GlobalData::validate_included_idl_files (void)
       // Check this name with the names list that we got from the
       // preprocessor.
       size_t valid_file = 0;
-#if defined (ACE_OPENVMS)
-      full_path = ACE_OS::realpath (translateName (pre_preproc_includes[j]),
-                                    pre_abspath);
-#else
       full_path = ACE_OS::realpath (pre_preproc_includes[j],
                                     pre_abspath);
-#endif
 
       if (full_path != 0)
         {
           for (size_t ni = 0; ni < n_post_preproc_includes; ++ni)
             {
               post_tmp = post_preproc_includes[ni]->get_string ();
-#if defined (ACE_OPENVMS)
-              full_path = ACE_OS::realpath (translateName (post_tmp), post_abspath);
-#else
               full_path = ACE_OS::realpath (post_tmp, post_abspath);
-#endif
               if (full_path != 0
                   && this->path_cmp (pre_abspath, post_abspath) == 0)
                 {
@@ -793,24 +788,15 @@ IDL_GlobalData::validate_included_idl_files (void)
 
               pre_partial += ACE_DIRECTORY_SEPARATOR_STR;
               pre_partial += pre_preproc_includes[j];
-#if defined (ACE_OPENVMS)
-              full_path =
-                ACE_OS::realpath (translateName (pre_partial.c_str ()), pre_abspath);
-#else
               full_path =
                 ACE_OS::realpath (pre_partial.c_str (), pre_abspath);
-#endif
 
               if (full_path != 0)
                 {
                   for (size_t m = 0; m < n_post_preproc_includes; ++m)
                     {
                       post_tmp = post_preproc_includes[m]->get_string ();
-#if defined (ACE_OPENVMS)
-                      full_path = ACE_OS::realpath (translateName (post_tmp), post_abspath);
-#else
                       full_path = ACE_OS::realpath (post_tmp, post_abspath);
-#endif
 
                       if (full_path != 0
                           && this->path_cmp (pre_abspath, post_abspath) == 0)
@@ -1327,35 +1313,6 @@ IDL_GlobalData::stripped_preproc_include (const char *name)
           return name + 2;
         }
     }
-
-#if defined(ACE_OPENVMS)
-  char* tmp;
-  char* tmpName = new char[strlen(name) + 1];
-  ACE_OS::strcpy (tmpName, name);
-  if ((tmp = ACE_OS::strrchr (tmpName, ';')) != 0)
-    *tmp = '\000';
-  if ((tmp = translateName (tmpName)) != 0)
-    name = tmp;
-  delete [] tmpName;
-
-  char home[PATH_MAX];
-  if (ACE_OS::getcwd (home, sizeof(home)) != NULL)
-    {
-      tmp = translateName (home);
-      if (tmp == 0)
-        tmp = home;
-      if (ACE_OS::strlen (tmp) < ACE_OS::strlen (name))
-        {
-          if (ACE_OS::strncasecmp (tmp, name, ACE_OS::strlen (tmp)) == 0)
-            {
-              const char* tmpC = name + ACE_OS::strlen (tmp);
-              if (*tmpC == '/')
-                ++tmpC;
-              return (char*)tmpC;
-            }
-        }
-    }
-#endif
 
   return name;
 }
