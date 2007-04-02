@@ -1,3 +1,14 @@
+Mon Apr 2 14:06:12 UTC 2007  Martin Corino  <mcorino@remedy.nl>
+
+        * TAO_IDL/include/idl_global.h:
+        * TAO_IDL/fe/lex.yy.cpp:
+        * TAO_IDL/fe/idl.ll:
+        * TAO_IDL/driver/drv_preproc.cpp:
+        * TAO_IDL/util/utl_global.cpp:
+
+          Platform specific changes to make IDL compiler run on both
+          OpenVMS Alpha and OpenVMS IA64.
+
 Sun Apr  1 04:03:06 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * tests/Bug_2735_Regression/run_test.pl:

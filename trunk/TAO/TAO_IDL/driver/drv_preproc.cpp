@@ -1084,7 +1084,19 @@ DRV_pre_proc (const char *myfile)
                   myfile);
   ACE_OS::fclose (file);
 
+#if defined (ACE_OPENVMS)
+  {
+    char main_abspath[MAXPATHLEN] = "";
+    char trans_path[MAXPATHLEN] = "";
+    char *main_fullpath = 
+      ACE_OS::realpath (IDL_GlobalData::translateName (myfile, trans_path),
+                        main_abspath);
+    idl_global->set_main_filename (
+                        idl_global->utl_string_factory (main_fullpath));
+  }
+#else
   idl_global->set_main_filename (idl_global->utl_string_factory (myfile));
+#endif
 
   ACE_Auto_String_Free safety (ACE_OS::strdup (myfile));
   UTL_String *tmp =
