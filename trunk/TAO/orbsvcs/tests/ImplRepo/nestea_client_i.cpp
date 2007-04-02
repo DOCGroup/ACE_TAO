@@ -32,6 +32,7 @@ Nestea_Client_i::parse_args (void)
         TAO_debug_level++;
         break;
       case 'k':  // ior provide on command line
+        delete [] this->server_key_;
         this->server_key_ = ACE::strnew (get_opts.opt_arg ());
         break;
       case 's': // shutdown server before exiting
