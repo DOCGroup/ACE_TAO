@@ -155,9 +155,12 @@ namespace TAO
       try
         {
           if (TAO_debug_level > 0)
-            ACE_DEBUG ((LM_DEBUG,
-                        "Notifying IMR of Shutdown server:%s\n",
-                        poa->the_name()));
+            {
+              CORBA::String_var poaname = poa->the_name ();
+              ACE_DEBUG ((LM_DEBUG,
+                          "Notifying IMR of Shutdown server:%s\n",
+                          poaname.in ()));
+            }
 
           // ATTENTION: Trick locking here, see class header for details
           TAO::Portable_Server::Non_Servant_Upcall non_servant_upcall (*poa);
