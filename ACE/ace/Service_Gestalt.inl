@@ -65,6 +65,10 @@ ACE_Service_Gestalt::find (const ACE_TCHAR name[],
   return 0;
 }
 
-
+ACE_INLINE ACE_Service_Repository*
+ACE_Service_Gestalt::current_service_repository (void)
+{
+  return this->repo_;
+}
 
 ACE_END_VERSIONED_NAMESPACE_DECL

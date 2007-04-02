@@ -35,49 +35,6 @@ ACE_RCSID (ace,
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-/// This is in the implementation file because it depends on the
-/// ACE_DLL type, which would be unnecessary to introduuce all over
-/// the place, had we declared this in the header file.
-
-/// @class ACE_Service_Type_Dynamic_Guard
-///
-/// @brief A forward service declaration guard.
-///
-/// Helps to resolve an issue with hybrid services, i.e. dynamic
-/// services, accompanied by static services in the same DLL.  Only
-/// automatic instances of SDG are supposed to exist. Those are
-/// created during (dynamic) service initialization and serve to:
-///
-/// (a) Ensure the service we are loading is ordered last in the
-/// repository, following any other services it may cause to register,
-/// as part of its own registration. This is a common case when
-/// loading dynamic services from DLLs - there are often static
-/// initializers, which register static services.
-///
-/// (b) The SDG instance destructor detects if the dynamic service
-/// initialized successfully and "fixes-up" all the newly registered
-/// static services to hold a reference to the DLL, from which they
-/// have originated.
-
-class ACE_Service_Type_Dynamic_Guard
-{
-public:
-  ACE_Service_Type_Dynamic_Guard (ACE_Service_Repository &r,
-                                  ACE_TCHAR const *name);
-
-  ~ACE_Service_Type_Dynamic_Guard (void);
-
-private:
-  const ACE_DLL dummy_dll_;
-  ACE_Service_Repository & repo_;
-  size_t repo_begin_;
-  ACE_TCHAR const * const name_;
-  ACE_Service_Type const * dummy_;
-# if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
-  ACE_Guard< ACE_Recursive_Thread_Mutex > repo_monitor_;
-#endif
-};
-
 ACE_Service_Type_Dynamic_Guard::ACE_Service_Type_Dynamic_Guard
   (ACE_Service_Repository &r, const ACE_TCHAR *name)
     : repo_ (r)
@@ -107,8 +64,8 @@ ACE_Service_Type_Dynamic_Guard::ACE_Service_Type_Dynamic_Guard
   ACE_NEW_NORETURN (this->dummy_, // Allocate the forward declaration ...
                     ACE_Service_Type (this->name_,  // ... use the same name
                                       0,            // ... inactive
-                                      this->dummy_dll_, // ... bogus ACE_DLL
-                                      0));              // ... no type_impl
+                                      ACE_DLL (),   // ... bogus ACE_DLL
+                                      0));          // ... no type_impl
 
   ACE_ASSERT (this->dummy_ != 0); // No memory?
 
