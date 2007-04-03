@@ -471,7 +471,7 @@ protected:
  * static services to hold a reference to the DLL, from which they
  * have originated.
  */
-class ACE_Service_Type_Dynamic_Guard
+class ACE_Export ACE_Service_Type_Dynamic_Guard
 {
 public:
   ACE_Service_Type_Dynamic_Guard (ACE_Service_Repository &r,
