@@ -2,7 +2,8 @@ Tue Apr  3 12:37:37 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * tests/Makefile.am:
 
-          Added Bug_2677_Regression to the list of sub-directories.
+          Added Bug_2677_Regression and Bug_2735_Regression to the list of
+          sub-directories.
 
 Tue Apr  3 12:09:43 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 

@@ -87,6 +87,7 @@ SUBDIRS = \
         Bug_2669_Regression \
         Bug_2677_Regression \
         Bug_2683_Regression \
+        Bug_2735_Regression \
 	Bug_2702_Regression \
         CDR \
         COIOP \
