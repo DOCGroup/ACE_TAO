@@ -61,8 +61,8 @@ public:
   TAO_GIOP_Message_Version &operator= (const TAO_GIOP_Message_Version &src);
 
   /// Equality operator
-  bool operator== (const TAO_GIOP_Message_Version &src);
-  bool operator!= (const TAO_GIOP_Message_Version &src);
+  bool operator== (const TAO_GIOP_Message_Version &src) const;
+  bool operator!= (const TAO_GIOP_Message_Version &src) const;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

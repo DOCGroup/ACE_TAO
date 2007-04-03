@@ -1,3 +1,11 @@
+Tue Apr  3 12:09:43 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tao/GIOP_Message_Version.h:
+        * tao/GIOP_Message_Version.inl:
+
+          Changed the equality and inequality operators to const (as they
+          should have originally been).
+
 Tue Apr  3 11:56:17 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * tests/Bug_2677_Regression/DllORB.cpp:
