@@ -229,7 +229,7 @@ namespace CIAO
         {
           ACE_ERROR ((LM_ERROR,
                       "CORBA EXCEPTION: %s\n",
-                      ACE_ANY_EXCEPTION._info().fast_rep()));
+                      ex._info().fast_rep()));
           throw (Deployment_Failure  (""));
         }
       catch (...)
