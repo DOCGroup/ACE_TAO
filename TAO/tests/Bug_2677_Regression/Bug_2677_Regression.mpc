@@ -6,7 +6,7 @@ project(*server): taoserver {
   }
 }
 
-project: taolib, portableserver {
+project: portableserver {
   sharedname = Bug_2677_Regression
   dynamicflags += BUG_2677_REGRESSION_BUILD_DLL
 
