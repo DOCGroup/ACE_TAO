@@ -137,7 +137,6 @@ DllORB::fini (void)
 {
   try
     {
-      mv_poaManager_->deactivate (1, 1);
       mv_poaManager_ = PortableServer::POAManager::_nil ();
 
       // attempt to protect against sporadic BAD_INV_ORDER exceptions
