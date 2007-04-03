@@ -1,3 +1,17 @@
+Tue Apr  3 18:59:38 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * CIAO_TAO_DAnCE.mwc:
+        * CIAO_TAO.mwc:
+        
+          In the list of directories eplaced ACE_ROOT/ace/ACEXML with
+          3 subdirectories, leaving out the tests and examples
+          subdirectories, which aren't needed. These included ACEXML
+          subdirectories are now the same as in TAO_ACE.mwc.
+          
+        * tests/CIDL/CodeGen/CodeGen.mpc:
+        
+          Cosmetic changes, shortened line lengths.
+
 Tue Apr  3 15:19:01 UTC 2007  Gan Deng  <gan.deng@vanderbilt.edu>
 
         * DAnCE/Plan_Launcher/Plan_Launcher_Benchmark_Impl.cpp
