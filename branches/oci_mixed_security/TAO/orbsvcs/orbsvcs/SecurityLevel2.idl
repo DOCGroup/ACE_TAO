@@ -271,4 +271,23 @@ module SecurityLevel2 {
 
 #pragma prefix ""
 
+module TAO {
+  module SL2 {
+    local interface AccessDecision : SecurityLevel2::AccessDecision
+    {
+      /*! Default value returned when a reference is not in the list. */
+      // Can't come up with a good name for this.
+      attribute boolean default_decision;
+
+      /*! Establish whether a particular object can be accessed via insecure
+	means. */
+      void add_object (in Object obj,
+		       in boolean allow_insecure_access);
+      void remove_object (in Object obj);
+
+      // Should there be some kind of "find" interface?
+    };
+  };
+};
+
 #endif /* _SECURITY_LEVEL_2_IDL_ */
