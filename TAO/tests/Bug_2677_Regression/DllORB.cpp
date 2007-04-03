@@ -1,6 +1,5 @@
 // $Id$
 #include "DllORB.h"
-#include "ace/Barrier.h"
 #include "ace/Arg_Shifter.h"
 #include "ace/Argv_Type_Converter.h"
 #include "ace/OS_NS_unistd.h"
@@ -9,7 +8,6 @@
 
 DllORB::DllORB (void)
  : failPrePostInit_ (3),
-   mp_barrier_ (0),
    mv_orb_ (),
    mv_rootPOA_ ()
 {
@@ -18,7 +16,6 @@ DllORB::DllORB (void)
 
 DllORB::~DllORB (void)
 {
-  delete mp_barrier_;
 }
 
 
@@ -123,11 +120,6 @@ DllORB::init (int argc, ACE_TCHAR *argv[])
     return -1;
   }
 
-  mp_barrier_ = new ACE_Thread_Barrier (threadCnt + 1);
-
-  this->activate (THR_NEW_LWP|THR_JOINABLE|THR_INHERIT_SCHED, threadCnt);
-  mp_barrier_->wait ();
-
   return 0;
 }
 
@@ -149,12 +141,6 @@ DllORB::fini (void)
       ACE_DEBUG ((LM_ERROR, ACE_TEXT ("ERROR: exception\n")));
       return -1;
     }
-
-  // wait for our threads to finish
-  this->wait ();
-
-  delete mp_barrier_;
-  mp_barrier_ = 0;
 
   try
     {
@@ -204,38 +190,6 @@ DllORB::fini (void)
     }
 
   return 0;
-}
-
-
-int DllORB::svc (void)
-{
-  mp_barrier_->wait ();
-
-  int result = 0;
-
-  try
-    {
-      try
-        {
-          mv_orb_->run ();
-        }
-      catch (const CORBA::BAD_INV_ORDER& ex)
-        {
-          const CORBA::ULong VMCID = ex.minor () & 0xFFFFF000U;
-          const CORBA::ULong minorCode = ex.minor () & 0xFFFU;
-          if (!(VMCID == CORBA::OMGVMCID && minorCode == 4))
-            {
-              throw;
-            }
-        }
-    }
-  catch (...)
-    {
-      ACE_DEBUG ((LM_ERROR, ACE_TEXT ("ERROR: exception\n")));
-      result = 1;
-    }
-
-  return result;
 }
 
 

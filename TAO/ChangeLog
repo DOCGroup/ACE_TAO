@@ -1,3 +1,15 @@
+Tue Apr  3 18:29:29 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tests/Bug_2677_Regression/Bug_2677_Regression.mpc:
+
+          Removed the redundant inheritance of taolib.
+
+        * tests/Bug_2677_Regression/DllORB.h:
+        * tests/Bug_2677_Regression/DllORB.cpp:
+
+          Removed the requirement of threads from this test.  It was not
+          necessary to exercise the fix for 2677.
+
 Tue Apr  3 16:10:10 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/orbsvcs/Notify/Notify_Constraint_Visitors.cpp:
