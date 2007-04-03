@@ -88,7 +88,7 @@ public:
                     ACE_hthread_t *t_handle = 0,
                     long priority = ACE_DEFAULT_THREAD_PRIORITY,
                     void *stack = 0,
-                    size_t stack_size = 0,
+                    size_t stack_size = ACE_DEFAULT_THREAD_STACKSIZE,
                     ACE_Thread_Adapter *thread_adapter = 0);
 
   /**

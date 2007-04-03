@@ -1560,7 +1560,7 @@ namespace ACE_OS {
                   ACE_hthread_t *t_handle = 0,
                   long priority = ACE_DEFAULT_THREAD_PRIORITY,
                   void *stack = 0,
-                  size_t stacksize = 0,
+                  size_t stacksize = ACE_DEFAULT_THREAD_STACKSIZE,
                   ACE_Base_Thread_Adapter *thread_adapter = 0);
 
   ACE_NAMESPACE_INLINE_FUNCTION

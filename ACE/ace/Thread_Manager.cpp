@@ -741,7 +741,7 @@ ACE_Thread_Manager::spawn_n (size_t n,
                          priority,
                          grp_id,
                          stack == 0 ? 0 : stack[i],
-                         stack_size == 0 ? 0 : stack_size[i],
+                         stack_size == 0 ? ACE_DEFAULT_THREAD_STACKSIZE : stack_size[i],
                          task) == -1)
         return -1;
     }
@@ -782,7 +782,7 @@ ACE_Thread_Manager::spawn_n (ACE_thread_t thread_ids[],
                          priority,
                          grp_id,
                          stack == 0 ? 0 : stack[i],
-                         stack_size == 0 ? 0 : stack_size[i],
+                         stack_size == 0 ? ACE_DEFAULT_THREAD_STACKSIZE : stack_size[i],
                          task) == -1)
         return -1;
     }
