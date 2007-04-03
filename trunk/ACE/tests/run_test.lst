@@ -25,7 +25,7 @@ Atomic_Op_Test
 Auto_Event_Test
 Auto_IncDec_Test: !DISABLE_ToFix_LynxOS_PPC
 Barrier_Test: !DISABLE_ToFix_LynxOS_PPC
-Based_Pointer_Test: !DISABLE_ToFix_LynxOS_PPC !STATIC !VxWorks !ACE_FOR_TAO
+Based_Pointer_Test: !DISABLE_ToFix_LynxOS_PPC !STATIC !VxWorks !ACE_FOR_TAO !PHARLAP
 Basic_Types_Test
 Bound_Ptr_Test: !DISABLE_ToFix_LynxOS_PPC !ACE_FOR_TAO
 Buffer_Stream_Test: !DISABLE_ToFix_LynxOS_PPC
@@ -42,9 +42,9 @@ CDR_Array_Test: !ACE_FOR_TAO
 CDR_File_Test: !ACE_FOR_TAO
 CDR_Test
 Cache_Map_Manager_Test
-Cached_Accept_Conn_Test: !VxWorks !ACE_FOR_TAO
+Cached_Accept_Conn_Test: !VxWorks !ACE_FOR_TAO !LabVIEW_RT
 Cached_Allocator_Test: !ACE_FOR_TAO
-Cached_Conn_Test: !VxWorks !ACE_FOR_TAO
+Cached_Conn_Test: !VxWorks !ACE_FOR_TAO !LabVIEW_RT
 Capabilities_Test: !DISABLE_ToFix_LynxOS_PPC !DISABLE_ToFix_LynxOS_x86 !ACE_FOR_TAO
 Codecs_Test: !DISABLE_ToFix_LynxOS_PPC !DISABLE_ToFix_LynxOS_x86 !ACE_FOR_TAO
 Collection_Test
@@ -76,14 +76,14 @@ Log_Msg_Test: !ACE_FOR_TAO
 Log_Msg_Backend_Test: !ACE_FOR_TAO
 Logging_Strategy_Test: !DISABLE_ToFix_LynxOS_PPC !STATIC !ST
 Manual_Event_Test: !DISABLE_ToFix_LynxOS_PPC
-MEM_Stream_Test: !DISABLE_ToFix_LynxOS_PPC !DISABLE_ToFix_LynxOS_x86 !VxWorks !nsk !ACE_FOR_TAO
+MEM_Stream_Test: !DISABLE_ToFix_LynxOS_PPC !DISABLE_ToFix_LynxOS_x86 !VxWorks !nsk !ACE_FOR_TAO !PHARLAP
 MM_Shared_Memory_Test: !Unicos !VxWorks !nsk !ACE_FOR_TAO
 MT_Reactor_Timer_Test: !DISABLE_ToFix_LynxOS_PPC !DISABLE_ToFix_LynxOS_x86
 MT_Reactor_Upcall_Test: !DISABLE_ToFix_LynxOS_PPC !nsk
 MT_Reference_Counted_Event_Handler_Test: !DISABLE_ToFix_LynxOS_PPC !DISABLE_ToFix_LynxOS_x86
 MT_Reference_Counted_Notify_Test: !DISABLE_ToFix_LynxOS_PPC
 MT_SOCK_Test: !DISABLE_ToFix_LynxOS_PPC !DISABLE_ToFix_LynxOS_x86
-Malloc_Test: !VxWorks !LynxOS !ACE_FOR_TAO
+Malloc_Test: !VxWorks !LynxOS !ACE_FOR_TAO !PHARLAP
 Map_Manager_Test: !ACE_FOR_TAO
 Map_Test: !ACE_FOR_TAO
 Max_Default_Port_Test: !DISABLE_ToFix_LynxOS_PPC !ST
@@ -95,7 +95,7 @@ Message_Queue_Test: !ACE_FOR_TAO
 Message_Queue_Test_Ex: !ACE_FOR_TAO
 Multicast_Test: !ST !NO_MCAST !nsk !LynxOS
 Multihomed_INET_Addr_Test: !ACE_FOR_TAO
-Naming_Test: !LynxOS !Unicos !VxWorks !nsk !ACE_FOR_TAO
+Naming_Test: !LynxOS !Unicos !VxWorks !nsk !ACE_FOR_TAO !PHARLAP
 Network_Adapters_Test: !DISABLE_ToFix_LynxOS_PPC !DISABLE_ToFix_LynxOS_x86
 New_Fail_Test: ALL !DISABLED
 NonBlocking_Conn_Test
@@ -106,17 +106,17 @@ Object_Manager_Test
 Object_Manager_Flipping_Test
 Obstack_Test
 OrdMultiSet_Test
-Pipe_Test: !VxWorks
+Pipe_Test: !VxWorks !PHARLAP
 Priority_Buffer_Test
 Priority_Reactor_Test: !DISABLE_ToFix_LynxOS_PPC !ACE_FOR_TAO
 Priority_Task_Test: !DISABLE_ToFix_LynxOS_PPC !Unicos
 Proactor_Scatter_Gather_Test: !VxWorks !nsk !ACE_FOR_TAO
 Proactor_Test: !VxWorks !LynxOS !nsk !ACE_FOR_TAO !BAD_AIO
 Proactor_Timer_Test: !VxWorks !nsk !ACE_FOR_TAO
-Process_Manager_Test: !VxWorks !ACE_FOR_TAO
-Process_Manual_Event_Test: !HPUX !VxWorks !ACE_FOR_TAO
-Process_Mutex_Test: !VxWorks !ACE_FOR_TAO
-Process_Semaphore_Test: !VxWorks !ACE_FOR_TAO
+Process_Manager_Test: !VxWorks !ACE_FOR_TAO !PHARLAP
+Process_Manual_Event_Test: !HPUX !VxWorks !ACE_FOR_TAO !PHARLAP
+Process_Mutex_Test: !VxWorks !ACE_FOR_TAO !PHARLAP
+Process_Semaphore_Test: !VxWorks !ACE_FOR_TAO !PHARLAP
 RB_Tree_Test
 Reactor_Dispatch_Order_Test
 Reactor_Exceptions_Test: !DISABLE_ToFix_LynxOS_PPC
@@ -180,7 +180,7 @@ SOCK_Dgram_Test
 SOCK_Dgram_Bcast_Test: !DISABLE_ToFix_LynxOS_PPC !DISABLE_ToFix_LynxOS_x86 !ACE_FOR_TAO
 SOCK_SEQPACK_SCTP_Test: !MSVC !nsk !ACE_FOR_TAO
 SOCK_Test_IPv6: !nsk
-Process_Strategy_Test: !VxWorks !LynxOS !ACE_FOR_TAO
+Process_Strategy_Test: !VxWorks !LynxOS !ACE_FOR_TAO !PHARLAP
 Recursive_Condition_Bug_Test: !DISABLE_ToFix_LynxOS_PPC !ST
 UnloadLibACE: !STATIC !WinCE
 UUIDTest: !ACE_FOR_TAO

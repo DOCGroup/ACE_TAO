@@ -1,3 +1,36 @@
+Tue Apr  3 22:29:41 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * ace/Default_Constants.h: Added ACE_DEFAULT_THREAD_STACKSIZE, which
+          defaults to 0. This can be used to change the default stack size
+          argument to ACE_OS::thr_create(). Useful when a platform's default
+          stack size is not appropriate for an ACE application.
+
+        * ace/OS_NS_Thread.{h cpp}:
+        * ace/Thread.{h cpp}:
+        * ace/Thread_Manager.{h cpp}: Changed the spawn[_n] stacksize default
+          from 0 to ACE_DEFAULT_THREAD_STACKSIZE. Allows the above config
+          setting to propagate through all thread-spawning methods.
+
+        * ace/config-pharlap.h: Default ACE_DEFAULT_THREAD_STACKSIZE to 1MB.
+
+        * ace/README: Added ACE_DEFAULT_THREAD_STACKSIZE.
+
+        * tests/CDR_File_Test.cpp: Added ACE_HAS_PHARLAP to the condition in
+          which the test file can't be pre-unlinked.
+
+        * tests/Bug_2653_Regression_Test.cpp:
+        * tests/CDR_File_Test.cpp:
+        * tests/Env_Value_Test.cpp:
+        * tests/MT_Reactor_Upcall_Test.cpp:
+        * tests/Reactor_Dispatch_Order_Test.cpp:
+        * tests/Reactor_Registration_Test.cpp:
+          Replace ACE_ASSERTs with ACE_ERROR.
+
+        * tests/Sendfile_Test.cpp: If client send fails, nothing will happen,
+          so close the stream and quit.
+
+        * tests/run_test.lst: Disabled unrunnable tests for Pharlap.
+
 Tue Apr  3 18:14:07 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * ace/Service_Gestalt.h:

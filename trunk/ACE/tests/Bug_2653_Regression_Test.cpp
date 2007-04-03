@@ -38,14 +38,18 @@ class Watchdog : public ACE_Task_Base
 {
 public:
   int svc (void);
+  int my_grp_;
 };
 
 int
 Watchdog::svc (void)
 {
   ACE_OS::sleep (5);
-  // If we make it through the sleep, that means the process is hung
-  ACE_ASSERT (0);
+  // If we make it through the sleep and haven't been canceled, that
+  // means the process is hung.
+  if (!this->thr_mgr ()->testcancel (ACE_Thread::self ()))
+    ACE_ERROR ((LM_ERROR,
+                ACE_TEXT ("Watchdog slept without cancel - we're hung\n")));
   return 0;
 }
 
@@ -100,7 +104,6 @@ Handler::Handler (ACE_Reactor &reactor, bool close_other)
         this->other_pipe_.close();
 
     }
-  ACE_ASSERT (ok);
 }
 
 Handler::~Handler (void)
@@ -131,13 +134,18 @@ Handler::handle_input (ACE_HANDLE fd)
   char buffer[BUFSIZ];
   ssize_t result = ACE::recv (fd, buffer, sizeof buffer);
 
-  ACE_ASSERT (result == ssize_t (ACE_OS::strlen (message)));
+  if (result != ssize_t (ACE_OS::strlen (message)))
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Handler recv'd %b bytes; expected %B\n"),
+                result, ACE_OS::strlen (message)));
   buffer[result] = '\0';
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Handler::handle_input: %C\n"), buffer));
 
-  ACE_ASSERT (ACE_OS::strcmp (buffer,
-                              message) == 0);
+  if (ACE_OS::strcmp (buffer, message) != 0)
+    ACE_ERROR ((LM_ERROR,
+                ACE_TEXT ("Handler text mismatch; received \"%C\"; ")
+                ACE_TEXT ("expected \"%C\"\n"),
+                buffer, message));
 
   this->reactor ()->end_reactor_event_loop ();
   return 0;
@@ -153,21 +161,25 @@ test_for_crash (ACE_Reactor &reactor)
     ACE::send_n (handler.pipe_.write_handle (),
                  message,
                  ACE_OS::strlen (message));
-  ACE_ASSERT (result == ssize_t (ACE_OS::strlen (message)));
+  if (result != ssize_t (ACE_OS::strlen (message)))
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Handler sent %b bytes; should be %B\n"),
+                result, ACE_OS::strlen (message)));
 
   reactor.run_reactor_event_loop ();
 
-  result =
-    reactor.remove_handler (handler.pipe_.read_handle (),
-                            ACE_Event_Handler::ALL_EVENTS_MASK |
-                            ACE_Event_Handler::DONT_CALL);
-  ACE_ASSERT (result == 0);
+  if (0 != reactor.remove_handler (handler.pipe_.read_handle (),
+                                   ACE_Event_Handler::ALL_EVENTS_MASK |
+                                   ACE_Event_Handler::DONT_CALL))
+    ACE_ERROR ((LM_ERROR,
+                ACE_TEXT ("%p\n"),
+                ACE_TEXT ("test_for_handler, remove pipe")));
 
-  result =
-    reactor.remove_handler (handler.other_pipe_.write_handle (),
-                            ACE_Event_Handler::ALL_EVENTS_MASK |
-                            ACE_Event_Handler::DONT_CALL);
-  ACE_ASSERT (result != 0);
+  if (0 == reactor.remove_handler (handler.other_pipe_.write_handle (),
+                                   ACE_Event_Handler::ALL_EVENTS_MASK |
+                                   ACE_Event_Handler::DONT_CALL))
+    ACE_ERROR ((LM_ERROR,
+                ACE_TEXT ("test_for_crash remove other_pipe succeeded ")
+                ACE_TEXT ("but shouldn't\n")));
 }
 
 static void
@@ -180,21 +192,25 @@ test_for_spin (ACE_Reactor &reactor)
     ACE::send_n (handler.pipe_.write_handle (),
                  message,
                  ACE_OS::strlen (message));
-  ACE_ASSERT (result == ssize_t (ACE_OS::strlen (message)));
+  if (result != ssize_t (ACE_OS::strlen (message)))
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Handler sent %b bytes; should be %B\n"),
+                result, ACE_OS::strlen (message)));
 
   reactor.run_reactor_event_loop ();
 
-  result =
-    reactor.remove_handler (handler.pipe_.read_handle (),
-                            ACE_Event_Handler::ALL_EVENTS_MASK |
-                            ACE_Event_Handler::DONT_CALL);
-  ACE_ASSERT (result == 0);
+  if (0 != reactor.remove_handler (handler.pipe_.read_handle (),
+                                   ACE_Event_Handler::ALL_EVENTS_MASK |
+                                   ACE_Event_Handler::DONT_CALL))
+    ACE_ERROR ((LM_ERROR,
+                ACE_TEXT ("%p\n"),
+                ACE_TEXT ("test_for_spin, remove pipe")));
 
-  result =
-    reactor.remove_handler (handler.other_pipe_.write_handle (),
-                            ACE_Event_Handler::ALL_EVENTS_MASK |
-                            ACE_Event_Handler::DONT_CALL);
-  ACE_ASSERT (result != 0);
+  if (0 == reactor.remove_handler (handler.other_pipe_.write_handle (),
+                                   ACE_Event_Handler::ALL_EVENTS_MASK |
+                                   ACE_Event_Handler::DONT_CALL))
+    ACE_ERROR ((LM_ERROR,
+                ACE_TEXT ("test_for_spin remove other_pipe succeeded ")
+                ACE_TEXT ("but shouldn't\n")));
 }
 
 int
@@ -208,9 +224,11 @@ run_main (int, ACE_TCHAR *[])
   test_for_crash (tp_reactor);
   // if that passes, start the watchdog. We don't need to wait
   Watchdog wd;
-  wd.activate (THR_DETACHED);
-  test_for_spin(tp_reactor);
+  wd.activate ();
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing for spin\n")));
+  test_for_spin(tp_reactor);
+  // If test_for_spin returns, all is well.
+  wd.thr_mgr ()->cancel_grp (wd.grp_id ());
   wd.wait ();
 
   ACE_END_TEST;

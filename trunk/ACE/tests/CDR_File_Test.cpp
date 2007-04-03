@@ -329,7 +329,8 @@ run_test (int write_file,
       *ace_file_stream::instance ()->output_file () << temp;
 #endif  // ACE_HAS_WINCE
 
-      ACE_ASSERT (temp == cdr_test);
+      if (!(temp == cdr_test))
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("Data mismatch across file\n")));
     }
 
   return 0;
@@ -410,7 +411,7 @@ run_main (int argc, ACE_TCHAR *argv[])
                        filename.get_path_name ()),
                       1);
 
-#if !defined (VXWORKS)
+#if !defined (VXWORKS) && !defined (ACE_HAS_PHARLAP)
 # define TEST_CAN_UNLINK_IN_ADVANCE
 #endif
 
@@ -421,7 +422,7 @@ run_main (int argc, ACE_TCHAR *argv[])
       // when the process exits.
       if (file.unlink () == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("unlink failed for %p\n"),
+                           ACE_TEXT ("pre-unlink failed for %p\n"),
                            filename.get_path_name ()),
                           1);
     }

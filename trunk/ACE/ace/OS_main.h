@@ -158,6 +158,8 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_Main_Base
 {
 public:
+  ACE_Main_Base ();
+  ~ACE_Main_Base ();
   int run (int, char *[]);
   virtual int run_i (int, char *[]) = 0;
 };
@@ -188,7 +190,7 @@ int \
 ACE_MAIN (int argc, char *argv[]) /* user's entry point, e.g., wmain */ \
 { \
   ACE_Main m; \
-  return ace_os_main_i (m, argc, argv);   /* what the user calls "main" */ \
+  return m.run (argc, argv); /*ace_os_main_i (m, argc, argv);   what the user calls "main" */ \
 } \
 int \
 ace_main_i
