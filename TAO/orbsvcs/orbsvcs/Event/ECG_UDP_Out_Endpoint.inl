@@ -8,7 +8,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
 TAO_ECG_UDP_Out_Endpoint::TAO_ECG_UDP_Out_Endpoint (void)
-  : request_id_generator_ (ACE_OS::time (0)),
+  : request_id_generator_ (static_cast<CORBA::ULong> (ACE_OS::time (0))),
     port_number_ (0),
     if_count_ (0),
     ifs_ (0)

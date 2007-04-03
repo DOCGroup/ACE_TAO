@@ -1,3 +1,9 @@
+Tue Apr  3 19:08:44 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/Event/ECG_UDP_Out_Endpoint.inl:
+        
+          Added static_cast to avoid conversion warning on MSVC8.
+
 Tue Apr  3 18:53:54 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Utils.mpc:
