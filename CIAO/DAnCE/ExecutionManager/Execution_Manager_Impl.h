@@ -45,7 +45,8 @@ namespace CIAO
       /// Constructor
       Execution_Manager_Impl (CORBA::ORB_ptr orb,
                               PortableServer::POA_ptr poa,
-                              const char * init_file);
+                              const char * init_file,
+                              bool is_using_ami);
 
       /// Template methods from ExecutionManagerDaemon, please see
       /// $CIAO_ROOT/DAnCE/Deployment/Deployment.idl for documentation
@@ -128,6 +129,9 @@ namespace CIAO
 
       /// Path to the initialization file
       ACE_CString const init_file_;
+
+      /// Whether we use AMI
+      bool is_using_ami_;
 
       /// A map which caches the DomainApplicationManager object ref.
       DAM_Map map_;
