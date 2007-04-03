@@ -28,11 +28,12 @@ namespace CIAO
     static bool register_with_ns_ = false;
     static bool write_to_ior_ = false;
     static bool rt_corba_enabled = false;
+    static bool is_using_ami = false;
 
     bool
     parse_args (int argc, char *argv[])
     {
-      ACE_Get_Opt get_opts (argc, argv, "o:i:nrp:");
+      ACE_Get_Opt get_opts (argc, argv, "o:i:anrp:");
       int c;
       while ((c = get_opts ()) != -1)
         switch (c)
@@ -52,6 +53,9 @@ namespace CIAO
             break;
           case 'p':
             pid_file_name_ = get_opts.opt_arg ();
+            break;
+          case 'a':
+            is_using_ami = true;
             break;
           case '?':  // display help for use of the server.
           default:
@@ -218,7 +222,8 @@ namespace CIAO
           ACE_NEW_RETURN (daemon_servant,
                           Execution_Manager_Impl(orb.in (),
                                                  child_poa.in (),
-                                                 init_file_name),
+                                                 init_file_name,
+                                                 is_using_ami),
                           -1);
 
           // Explicit activation through the child POA

@@ -3,7 +3,7 @@
 
 // MPC file for the Monitor
 
-project(*monitorlib): ciao_client_dnc, ciao_events_base_dnc {
+project(*monitorlib): ciao_deployment_stub, ciao_events_base_dnc {
   after += CIAO_TargetManager_stub
   includes += $(CIAO_ROOT)/DAnCE/TargetManager
   sharedname = ciaomonlib
