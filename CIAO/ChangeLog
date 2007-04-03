@@ -1,3 +1,9 @@
+Tue Apr  3 15:19:01 UTC 2007  Gan Deng  <gan.deng@vanderbilt.edu>
+
+        * DAnCE/Plan_Launcher/Plan_Launcher_Benchmark_Impl.cpp
+
+          Removed deprecated ACE exception macros.
+
 Mon Apr  2 16:38:24 UTC 2007  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/Plan_Launcher/Plan_Launcher_Impl.h
