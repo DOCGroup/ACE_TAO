@@ -4,7 +4,7 @@
 
 // Valuetype library must be linked for this project.
 // Please don't remove.
-project(Deployment_stub) : taolib_with_idl, valuetype, ifr_client, ciao_events_base_dnc, ciao_client_dnc {
+project(Deployment_stub) : taolib_with_idl, valuetype, ifr_client, ciao_events_base_dnc, ciao_client_dnc, messaging {
   sharedname   =  CIAO_Deployment_stub
 
   // This is necessary for MPC to pull in rules.ciao.GNU
@@ -33,6 +33,12 @@ project(Deployment_stub) : taolib_with_idl, valuetype, ifr_client, ciao_events_b
     Deployment_Events.idl
     CIAO_ServerResources.idl
   }
+  
+  IDL_Files {
+    idlflags += -GC
+    Deployment_ApplicationManager.idl
+    Deployment_NodeApplicationManager.idl
+  }
 
   IDL_Files {
     Deployment_ResourceCommitmentManager.idl
@@ -44,8 +50,6 @@ project(Deployment_stub) : taolib_with_idl, valuetype, ifr_client, ciao_events_b
     Deployment_Container.idl
     Deployment.idl
     Deployment_NodeManager.idl
-    Deployment_ApplicationManager.idl
-    Deployment_NodeApplicationManager.idl
     Deployment_DomainApplicationManager.idl
     Deployment_DomainApplication.idl
     Deployment_ExecutionManager.idl

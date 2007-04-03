@@ -4,6 +4,7 @@
 #include "tao/RTCORBA/RTCORBA.h"
 #include "ciao/CIAO_common.h"
 #include "DomainApplicationManager/DomainApplicationManager_Impl.h"
+#include "DomainApplicationManager/DomainApplicationManager_AMI_Impl.h"
 
 ACE_RCSID (ExecutionManager,
            Execution_Manager_Impl,
@@ -16,10 +17,12 @@ namespace CIAO
     Execution_Manager_Impl::Execution_Manager_Impl (
       CORBA::ORB_ptr orb,
       PortableServer::POA_ptr poa,
-      const char * init_file)
+      const char * init_file,
+      bool is_using_ami)
       : orb_ (CORBA::ORB::_duplicate  (orb))
       , poa_ (PortableServer::POA::_duplicate (poa))
       , init_file_ (init_file)
+      , is_using_ami_ (is_using_ami)
     {
     }
 
@@ -72,16 +75,34 @@ namespace CIAO
       // to be sent back to the Plan Launcher.
       //
       ACE_DEBUG ((LM_DEBUG, "CIAO (%P|%t) About to instantiate CIAO::DomainApplicationManager_Impl\n"));
-      ACE_NEW_THROW_EX (
-        dam_servant,
-        CIAO::DomainApplicationManager_Impl (
-          this->orb_.in (),
-          this->poa_.in (),
-          ::Deployment::TargetManager::_nil (),
-          this, // a plain C++ pointer
-          plan,
-          this->init_file_.c_str ()),
-          CORBA::NO_MEMORY ());
+
+      if (this->is_using_ami_)
+      {
+        ACE_NEW_THROW_EX (
+          dam_servant,
+          CIAO::DomainApplicationManager_AMI_Impl (
+            this->orb_.in (),
+            this->poa_.in (),
+            ::Deployment::TargetManager::_nil (),
+            this, // a plain C++ pointer
+            plan,
+            this->init_file_.c_str ()),
+            CORBA::NO_MEMORY ());
+      }
+      else
+      {
+        ACE_NEW_THROW_EX (
+          dam_servant,
+          CIAO::DomainApplicationManager_Impl (
+            this->orb_.in (),
+            this->poa_.in (),
+            ::Deployment::TargetManager::_nil (),
+            this, // a plain C++ pointer
+            plan,
+            this->init_file_.c_str ()),
+            CORBA::NO_MEMORY ());
+      }
+
       ACE_DEBUG ((LM_DEBUG, "CIAO (%P|%t) Instantiated CIAO::DomainApplicationManager_Impl\n"));
 
       // Sanity check for NULL pointer
