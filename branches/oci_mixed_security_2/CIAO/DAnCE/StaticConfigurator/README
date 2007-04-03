@@ -1,0 +1,29 @@
+Please see $CIAO_ROOT/docs/static_dance.html for details.
+
+To run the static version of Hello example, do the following,
+
+1. Build ACE+TAO+CIAO statically
+2. Build $CIAO_ROOT/examples/Hello
+3. Generate the static function entrypoints (plan.h)
+   > cd $CIAO_ROOT/examples/Hello/descriptors
+   > $CIAO_ROOT/DAnCE/StaticConfigurator/StaticDAnCEParser -p flattened_deploymentplan_without_ns.cdp
+   > cp plan.h $CIAO_ROOT/DAnCE/StaticConfigurator/
+4. Build the static NodeManager for Hello example
+   > cd $CIAO_ROOT/DAnCE/StaticConfigurator
+   > cp StaticDAnCEApp.cpp.tmpl StaticDAnCEApp.cpp
+   > cp StaticDAnCEApp.mpc.tmpl StaticDAnCEApp.mpc
+   > $ACE_ROOT/bin/mwc.pl
+   > make
+5. Run the static node managers. Note that the ORBEndpoint values should
+   correspond to the ones in  $CIAO_ROOT/examples/Hello/descriptors/TestNodeManagerMap.dat
+   > cd $CIAO_ROOT/DAnCE/StaticConfigurator
+   > ./StaticDAnCEApp -ORBEndpoint iiop://localhost:60001 &
+   > ./StaticDAnCEApp -ORBEndpoint iiop://localhost:60002 &
+6. Do the deployment. This is just the same as the non-static version of DAnCE
+   except that we have the NodeManagers already running and need not spawn node
+   managers. To accomplish this, change
+   $CIAO_ROOT/examples/Hello/descriptors/run_test_without_ns.pl
+   to *not* run the node manager daemons and do the following.
+   > cd $CIAO_ROOT/examples/Hello/descriptors
+   > ./run_test_without_ns.pl
+
