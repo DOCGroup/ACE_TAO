@@ -488,7 +488,7 @@ public:
              long priority = ACE_DEFAULT_THREAD_PRIORITY,
              int grp_id = -1,
              void *stack = 0,
-             size_t stack_size = 0);
+             size_t stack_size = ACE_DEFAULT_THREAD_STACKSIZE);
 
   /**
    * Spawn N new threads, which execute <func> with argument <arg>.

@@ -46,6 +46,12 @@
 # define ACE_LOCALHOST "127.0.0.1"
 #endif /* ACE_LOCALHOST */
 
+// The normal Windows default stack size doesn't hold for ETS. Set what you
+// want explicitly.
+#if !defined (ACE_DEFAULT_THREAD_STACKSIZE)
+#  define ACE_DEFAULT_THREAD_STACKSIZE (1024*1024)
+#endif /* ACE_DEFAULT_THREAD_STACKSIZE */
+
 // Don't know how to get the page size at execution time. This is most likely
 // the correct value.
 #define ACE_PAGE_SIZE 4096

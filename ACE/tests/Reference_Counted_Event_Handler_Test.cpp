@@ -995,7 +995,8 @@ run_main (int argc, ACE_TCHAR *argv[])
       ACE_UNUSED_ARG (test);
     }
 
-#if defined (ACE_WIN32)
+#if defined (ACE_WIN32) && \
+    (defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 == 0))
 
   if (test_wfmo_reactor)
     {
@@ -1006,7 +1007,7 @@ run_main (int argc, ACE_TCHAR *argv[])
       ACE_UNUSED_ARG (test);
     }
 
-#endif /* ACE_WIN32 */
+#endif /* ACE_WIN32 && ACE_HAS_WINSOCK2 */
 
   ACE_END_TEST;
 

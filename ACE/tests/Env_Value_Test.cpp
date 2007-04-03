@@ -30,7 +30,6 @@ do { \
                ACE_TEXT ("val %d does not match expected value of %d\n"), \
                (int) (type) val, (int) (expval))); \
   } \
-  ACE_ASSERT (val == (expval)); \
 } while (0)
 
 int
@@ -63,7 +62,8 @@ run_main (int argc, ACE_TCHAR * [], ACE_TCHAR *envp[])
       // No arguments means we're the initial test.
       ACE_Process_Options options (1);
       status = options.setenv (envp);
-      ACE_ASSERT (status == 0);
+      if (status != 0)
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("setenv(envp)")));
 
       options.command_line (ACE_TEXT (".") ACE_DIRECTORY_SEPARATOR_STR
                             ACE_TEXT ("Env_Value_Test run_as_test"));
@@ -71,16 +71,25 @@ run_main (int argc, ACE_TCHAR * [], ACE_TCHAR *envp[])
       status = options.setenv (ACE_TEXT ("TEST_VALUE_POSITIVE"),
                                ACE_TEXT ("%s"),
                                ACE_TEXT ("10.2"));
-      ACE_ASSERT (status == 0);
+      if (status != 0)
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT ("%p\n"),
+                    ACE_TEXT ("setenv(TEST_VALUE_POSITIVE)")));
+
       status = options.setenv (ACE_TEXT ("TEST_VALUE_NEGATIVE"),
                                ACE_TEXT ("%s"),
                                ACE_TEXT ("-10.2"));
-      ACE_ASSERT (status == 0);
+      if (status != 0)
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT ("%p\n"),
+                    ACE_TEXT ("setenv(TEST_VALUE_NEGATIVE)")));
 
       ACE_Process p;
       pid_t result = p.spawn (options);
-      ACE_ASSERT (result != -1);
-      p.wait ();
+      if (result == -1)
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("spawn")));
+      else
+        p.wait ();
     }
   else
 #endif /* ! ACE_HAS_NONSTATIC_OBJECT_MANAGER  &&  ! ACE_LACKS_FORK */
@@ -106,7 +115,10 @@ run_main (int argc, ACE_TCHAR * [], ACE_TCHAR *envp[])
       const ACE_TCHAR *defstr = ACE_TEXT ("Sarah Cleeland is Two!");
       ACE_Env_Value<const ACE_TCHAR *> sval (ACE_TEXT ("This_Shouldnt_Be_Set_Hopefully"),
                                   defstr);
-      ACE_ASSERT (ACE_OS::strcmp (sval, defstr) == 0);
+      if (ACE_OS::strcmp (sval, defstr) != 0)
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT ("Mismatch: %s should be %s\n"),
+                    sval, defstr));
       ACE_END_TEST;
     }
   return 0;

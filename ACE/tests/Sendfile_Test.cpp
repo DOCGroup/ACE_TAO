@@ -114,6 +114,7 @@ client (void *arg)
                   ACE_TEXT ("(%P|%t) %p\n"),
                   ACE_TEXT ("Test 1, sendfile failed")));
       Test_Result = 1;
+      goto cleanup;
     }
   else
     ACE_ASSERT (len == 255);
@@ -148,7 +149,7 @@ client (void *arg)
         Test_Result = 1;
       }
 
-
+cleanup:
   cli_stream.close ();
   (void) ACE_OS::close (in_fd);
 

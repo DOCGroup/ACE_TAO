@@ -37,7 +37,7 @@ ACE_Thread::spawn_n (size_t n,
                             0,
                             priority,
                             stack == 0 ? 0 : stack[i],
-                            stack_size == 0 ? 0 : stack_size[i],
+                            stack_size == 0 ? ACE_DEFAULT_THREAD_STACKSIZE : stack_size[i],
                             thread_adapter) != 0)
       break;
 
@@ -72,7 +72,7 @@ ACE_Thread::spawn_n (ACE_thread_t thread_ids[],
                             &t_handle,
                             priority,
                             stack == 0 ? 0 : stack[i],
-                            stack_size == 0 ? 0 : stack_size[i],
+                            stack_size == 0 ? ACE_DEFAULT_THREAD_STACKSIZE : stack_size[i],
                             thread_adapter);
 
       if (result == 0)

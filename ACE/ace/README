@@ -144,6 +144,9 @@ ACE_HAS_DINKUM_STL                      Using the Dinkum STL library
 ACE_DEFAULT_THREAD_KEYS                 Number of TSS keys, with
                                         ACE_HAS_TSS_EMULATION _only_.
                                         Defaults to 64.
+ACE_DEFAULT_THREAD_STACKSIZE            Default stack size specified for the
+                                        ACE thread spawning methods. Defaults
+                                        to 0, which defers to OS defaults.
 ACE_DEFAULT_LD_SEARCH_PATH              Specify the platform default search
                                         paths.  This macro should only be
                                         defined on platforms that don't

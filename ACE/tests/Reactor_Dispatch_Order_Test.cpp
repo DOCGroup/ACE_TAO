@@ -58,19 +58,17 @@ public:
   ACE_Pipe pipe_;
 
   int dispatch_order_;
+  bool ok_;           // Constructed and initialized ok
 };
 
 Handler::Handler (ACE_Reactor &reactor)
   : ACE_Event_Handler (&reactor),
-    dispatch_order_ (1)
+    dispatch_order_ (1),
+    ok_ (false)
 {
   // Create the pipe.
-  bool ok = true;
   if (0 != this->pipe_.open ())
-    {
-      ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("pipe")));
-      ok = false;
-    }
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("pipe")));
   else
     {
       // Register for all events.
@@ -78,12 +76,10 @@ Handler::Handler (ACE_Reactor &reactor)
                  (this->pipe_.read_handle (),
                   this,
                   ACE_Event_Handler::ALL_EVENTS_MASK))
-        {
-          ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("register")));
-          ok = false;
-        }
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("register")));
+      else
+        this->ok_ = true;
     }
-  ACE_ASSERT (ok);
 }
 
 Handler::~Handler (void)
@@ -139,14 +135,18 @@ Handler::handle_input (ACE_HANDLE fd)
 
   char buffer[BUFSIZ];
   ssize_t result = ACE::recv (fd, buffer, sizeof buffer);
-
-  ACE_ASSERT (result == ssize_t (ACE_OS::strlen (message)));
+  if (result != ssize_t (ACE_OS::strlen (message)))
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Handler recv'd %b bytes; expected %B\n"),
+                result, ACE_OS::strlen (message)));
   buffer[result] = '\0';
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Handler::handle_input: %C\n"), buffer));
 
-  ACE_ASSERT (ACE_OS::strcmp (buffer,
-                              message) == 0);
+  if (ACE_OS::strcmp (buffer, message) != 0)
+    ACE_ERROR ((LM_ERROR,
+                ACE_TEXT ("Handler text mismatch; received \"%C\"; ")
+                ACE_TEXT ("expected \"%C\"\n"),
+                buffer, message));
 
   this->reactor ()->end_reactor_event_loop ();
 
@@ -157,28 +157,44 @@ static void
 test_reactor_dispatch_order (ACE_Reactor &reactor)
 {
   Handler handler (reactor);
+  if (!handler.ok_)
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Error initializing test; abort.\n")));
+      return;
+    }
+
+  bool ok_to_go = true;
 
   // This should trigger a call to <handle_input>.
   ssize_t result =
     ACE::send_n (handler.pipe_.write_handle (),
                  message,
                  ACE_OS::strlen (message));
-  ACE_ASSERT (result == ssize_t (ACE_OS::strlen (message)));
+  if (result != ssize_t (ACE_OS::strlen (message)))
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Handler sent %b bytes; should be %B\n"),
+                  result, ACE_OS::strlen (message)));
+      ok_to_go = false;
+    }
 
   // This should trigger a call to <handle_timeout>.
-  long retn =
-    reactor.schedule_timer (&handler,
-                            0,
-                            ACE_Time_Value (0));
-  ACE_ASSERT (retn != -1);
+  if (-1 == reactor.schedule_timer (&handler,
+                                    0,
+                                    ACE_Time_Value (0)))
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("schedule_timer")));
+      ok_to_go = false;
+    }
 
-  reactor.run_reactor_event_loop ();
+  if (ok_to_go)
+    reactor.run_reactor_event_loop ();
 
-  result =
-    reactor.remove_handler (handler.pipe_.read_handle (),
-                            ACE_Event_Handler::ALL_EVENTS_MASK |
-                            ACE_Event_Handler::DONT_CALL);
-  ACE_ASSERT (result == 0);
+  if (0 != reactor.remove_handler (handler.pipe_.read_handle (),
+                                   ACE_Event_Handler::ALL_EVENTS_MASK |
+                                   ACE_Event_Handler::DONT_CALL))
+    ACE_ERROR ((LM_ERROR,
+                ACE_TEXT ("%p\n"),
+                ACE_TEXT ("remover_handler pipe")));
 }
 
 int
@@ -191,15 +207,16 @@ run_main (int, ACE_TCHAR *[])
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing ACE_Select_Reactor\n")));
   test_reactor_dispatch_order (select_reactor);
 
-  // WinCE can't do the necessary Winsock 2 things for WFMO_Reactor.
-#if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
+  // Winsock 2 things are needed for WFMO_Reactor.
+#if defined (ACE_WIN32) && \
+    (defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 == 0))
 
   ACE_WFMO_Reactor wfmo_reactor_impl;
   ACE_Reactor wfmo_reactor (&wfmo_reactor_impl);
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing ACE_WFMO_Reactor\n")));
   test_reactor_dispatch_order (wfmo_reactor);
 
-#endif /* ACE_WIN32 && !ACE_HAS_WINCE */
+#endif /* ACE_WIN32 && ACE_HAS_WINSOCK2 */
 
   ACE_END_TEST;
   return 0;
