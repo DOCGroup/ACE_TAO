@@ -1,3 +1,11 @@
+Tue Apr  3 18:53:54 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Utils.mpc:
+        
+          Changed project name from Utils to TAO_Utils to avoid namespace
+          pollution, since MPC doesn't accept duplicate project names
+          anywhere in the tree during generation.
+
 Tue Apr  3 18:29:29 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * tests/Bug_2677_Regression/Bug_2677_Regression.mpc:
