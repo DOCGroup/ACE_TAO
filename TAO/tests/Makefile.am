@@ -85,6 +85,7 @@ SUBDIRS = \
         Bug_2595_Regression \
         Bug_2654_Regression \
         Bug_2669_Regression \
+        Bug_2677_Regression \
         Bug_2683_Regression \
 	Bug_2702_Regression \
         CDR \
