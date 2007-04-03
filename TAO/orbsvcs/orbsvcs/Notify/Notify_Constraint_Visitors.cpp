@@ -786,9 +786,21 @@ TAO_Notify_Constraint_Visitor::visit_exist (TAO_ETCL_Exist *exist)
     if (this->implicit_id_ == FILTERABLE_DATA
       || this->implicit_id_ == VARIABLE_HEADER)
     {
-      TAO_ETCL_Literal_Constraint current (&this->current_value_.inout ());
-      value = CORBA::string_dup ((const char *) current);
+      this->current_value_ >>= value;
     }
+    // If the implicit id is empty, then we must default
+    // it to the filterable data and set up the value pointer
+    else if (this->implicit_id_ == EMPTY)
+      {
+        TAO_ETCL_Identifier* ident =
+          dynamic_cast<TAO_ETCL_Identifier*> (component);
+        if (ident != 0)
+          {
+            this->implicit_id_ = FILTERABLE_DATA;
+            value = ident->value ();
+        }
+      }
+
 
     switch (this->implicit_id_)
     {

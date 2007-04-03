@@ -1,3 +1,26 @@
+Tue Apr  3 16:10:10 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/orbsvcs/Notify/Notify_Constraint_Visitors.cpp:
+
+          Fixed a couple of filtering issues:
+
+          1) If exist was used in the form of "exist $.filterable_data(ident)",
+             memory would be leaked in the form of a CORBA::string_dup().
+          2) If exist was used in the form of "exist ident", it would never
+             match anything.  It now defaults to the looking at the
+             filterable data identifiers.
+
+          This fixes bug 1263.
+
+        * orbsvcs/tests/Notify/Structured_Filter/Structured_Consumer.cpp:
+
+          Modified this test to use both forms of exist in the filter.
+
+        * orbsvcs/tests/Notify/Structured_Filter/notify.conf.xml:
+
+          Converted notify.conf to XML for use with the XML service
+          configurator.
+
 Tue Apr  3 13:05:52 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * tests/Bug_2734_Regression/README:
