@@ -1,3 +1,10 @@
+Tue Apr  3 11:56:17 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tests/Bug_2677_Regression/DllORB.cpp:
+
+          Removed the call to POAManager::deativate(), it wasn't necessary
+          and caused problems for minimum CORBA and CORBA e compact.
+
 Mon Apr  2 18:14:07 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/tests/ImplRepo/airplane_client_i.cpp:
