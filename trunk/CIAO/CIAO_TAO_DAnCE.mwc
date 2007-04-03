@@ -5,7 +5,9 @@ workspace {
   $(ACE_ROOT)/ace
   $(ACE_ROOT)/apps/gperf/src
   $(ACE_ROOT)/contrib/minizip
-  $(ACE_ROOT)/ACEXML
+  $(ACE_ROOT)/ACEXML/common
+  $(ACE_ROOT)/ACEXML/parser/parser
+  $(ACE_ROOT)/ACEXML/apps/svcconf
   $(TAO_ROOT)/tao
   $(TAO_ROOT)/TAO_IDL
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNaming.mpc
