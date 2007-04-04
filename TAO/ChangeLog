@@ -1,13 +1,25 @@
+Wed Apr  4 11:36:10 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tests/Bug_2677_Regression/Makefile.am:
+        * tests/Bug_2735_Regression/Makefile.am:
+
+          Added missing automake makefiles.
+
+        * tests/Bug_2735_Regression/server.cpp:
+
+          Fixed a compilation error on HP-UX.  They have some pretty simple
+          macros defined (e.g., SERVER).
+
 Tue Apr  3 19:08:44 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/orbsvcs/Event/ECG_UDP_Out_Endpoint.inl:
-        
+
           Added static_cast to avoid conversion warning on MSVC8.
 
 Tue Apr  3 18:53:54 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Utils.mpc:
-        
+
           Changed project name from Utils to TAO_Utils to avoid namespace
           pollution, since MPC doesn't accept duplicate project names
           anywhere in the tree during generation.
