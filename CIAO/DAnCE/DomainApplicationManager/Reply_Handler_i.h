@@ -9,7 +9,7 @@
 #include "DAnCE/Deployment/Deployment_NodeApplicationManagerS.h"
 #include "DAnCE/Deployment/Deployment_NodeApplicationC.h"
 #include "DomainApplicationManager_Export.h"
-
+#include "ace/Thread_Mutex.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
