@@ -77,6 +77,16 @@ ACE_thread_key_t *log_msg_tss_key (void)
 }
 
 # endif /* ACE_HAS_THREAD_SPECIFIC_STORAGE || ACE_HAS_TSS_EMULATION */
+#else
+static ACE_Cleanup_Adapter<ACE_Log_Msg>* log_msg_cleanup = 0;
+class ACE_Msg_Log_Cleanup: public ACE_Cleanup_Adapter<ACE_Log_Msg>
+{
+public:
+  virtual ~ACE_Msg_Log_Cleanup (void) {
+    if (this == log_msg_cleanup)
+      log_msg_cleanup = 0;
+  }
+};
 #endif /* ACE_MT_SAFE */
 
 #if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE) && !defined (ACE_HAS_PHARLAP)
@@ -378,15 +388,15 @@ ACE_Log_Msg::instance (void)
     return 0;
 
   // Singleton implementation.
-  static ACE_Cleanup_Adapter<ACE_Log_Msg> *log_msg = 0;
-  if (log_msg == 0)
+
+  if (log_msg_cleanup == 0)
     {
-      ACE_NEW_RETURN (log_msg, ACE_Cleanup_Adapter<ACE_Log_Msg>, 0);
+      ACE_NEW_RETURN (log_msg_cleanup, ACE_Msg_Log_Cleanup, 0);
       // Register the instance for destruction at program termination.
-      ACE_Object_Manager::at_exit (log_msg);
+      ACE_Object_Manager::at_exit (log_msg_cleanup);
     }
 
-  return &log_msg->object ();
+  return &log_msg_cleanup->object ();
 #endif /* ! ACE_MT_SAFE */
 }
 
