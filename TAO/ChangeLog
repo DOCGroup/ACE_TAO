@@ -1,3 +1,28 @@
+Wed Apr  4 16:10:46 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/tests/Security/Bug_1107_Regression/Bug_1107_Regression.mpc:
+        * orbsvcs/tests/Security/Bug_1107_Regression/Foo.idl:
+        * orbsvcs/tests/Security/Bug_1107_Regression/Foo_i.h:
+        * orbsvcs/tests/Security/Bug_1107_Regression/Foo_i.cpp:
+        * orbsvcs/tests/Security/Bug_1107_Regression/Makefile.am:
+        * orbsvcs/tests/Security/Bug_1107_Regression/README:
+        * orbsvcs/tests/Security/Bug_1107_Regression/cacert.pem:
+        * orbsvcs/tests/Security/Bug_1107_Regression/client.conf:
+        * orbsvcs/tests/Security/Bug_1107_Regression/client.conf.xml:
+        * orbsvcs/tests/Security/Bug_1107_Regression/client.cpp:
+        * orbsvcs/tests/Security/Bug_1107_Regression/client_cert.pem:
+        * orbsvcs/tests/Security/Bug_1107_Regression/client_key.pem:
+        * orbsvcs/tests/Security/Bug_1107_Regression/run_test.pl:
+        * orbsvcs/tests/Security/Bug_1107_Regression/server.conf:
+        * orbsvcs/tests/Security/Bug_1107_Regression/server.conf.xml:
+        * orbsvcs/tests/Security/Bug_1107_Regression/server.cpp:
+        * orbsvcs/tests/Security/Bug_1107_Regression/server_cert.pem:
+        * orbsvcs/tests/Security/Bug_1107_Regression/server_key.pem:
+        * orbsvcs/tests/Security/Makefile.am:
+
+          Added a regression test based on the Secure_Invocation test for
+          bug 1107.
+
 Wed Apr  4 14:42:01 UTC 2007  Wallace Zhang  <zhang_w@ociweb.com>
 
         * tao/IFR_Client_Adapter.h:

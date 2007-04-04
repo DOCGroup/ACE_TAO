@@ -11,6 +11,7 @@
 SUBDIRS = \
         BiDirectional \
         Big_Request \
+        Bug_1107_Regression \
         Callback \
         Crash_Test \
         MT_IIOP_SSL \
