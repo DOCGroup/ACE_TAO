@@ -544,6 +544,8 @@
 #  define ACE_ENV_RAISE(ex) (ex)->_raise ()
 #endif /* ACE_USES_NATIVE_EXCEPTIONS */
 
+#endif /* !ACE_LACKS_DEPRECATED_MACROS */
+
 // ============================================================
 
 // Print out a TAO exception.  This is not CORBA compliant.
@@ -557,7 +559,7 @@
 #   define ACE_PRINT_EXCEPTION(EX,INFO) ACE_PRINT_TAO_EXCEPTION(EX,INFO)
 # endif /* ACE_PRINT_EXCEPTION */
 
-#endif /* !ACE_LACKS_DEPRECATED_MACROS */
+
 
 #include /**/ "ace/post.h"
 

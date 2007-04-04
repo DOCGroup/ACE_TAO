@@ -1,3 +1,12 @@
+Wed Apr  4 22:01:35 UTC 2007  Krishnakumar B  <kitty@nospam.invalid.domain>
+
+        * ace/CORBA_macros.h:  Restored  ACE_PRINT_EXCEPTION by removing
+          it from being undefined if ACE_LACKS_DEPRECATED_MACROS is
+          defined.
+
+        * ace/config-win32-msvc-8.h: Define ACE_NEW_THROWS_EXCEPTIONS and
+          ACE_HAS_NEW_NOTHROW for Visual C++ 8.0.
+
 Wed Apr  4 19:06:52 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/tao_other_tests.lst:
