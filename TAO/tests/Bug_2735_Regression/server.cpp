@@ -14,9 +14,9 @@ static const ACE_TCHAR* server_strat =
 static const ACE_TCHAR* foo_strat =
   ACE_STATIC_SERVICE_DIRECTIVE ("Foo_Strategy_Factory", "");
 
-enum Strategy { SERVER, FOO };
+enum Factory_Strategy { SERVER_STRATEGY, FOO_STRATEGY };
 
-static Strategy strategy = SERVER;
+static Factory_Strategy factory_strategy = SERVER_STRATEGY;
 
 static int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -28,10 +28,10 @@ parse_args (int argc, ACE_TCHAR *argv[])
     switch (c)
       {       
       case 'f':
-        strategy = FOO;
+        factory_strategy = FOO_STRATEGY;
         break;
       case 's':
-        strategy = SERVER;
+        factory_strategy = SERVER_STRATEGY;
         break;
       case '?':
       default:
@@ -57,12 +57,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       int targc = 3;
       char* targv[] = { "server", "-ORBSvcConfDirective", 0 };
-      switch (strategy)
+      switch (factory_strategy)
         {
-        case FOO:
+        case FOO_STRATEGY:
           targv[2] = const_cast<char*> (ACE_TEXT_ALWAYS_CHAR (foo_strat));
           break;
-        case SERVER:
+        case SERVER_STRATEGY:
           targv[2] = const_cast<char*> (ACE_TEXT_ALWAYS_CHAR (server_strat));
           break;
         }
