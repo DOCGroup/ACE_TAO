@@ -15,6 +15,7 @@
 #include "ace/Pipe.h"
 #include "ace/Event_Handler.h"
 #include "ace/Reactor.h"
+#include "ace/Select_Reactor.h"
 
 ACE_RCSID (tests,
            Bug_2540_Regression_Test,
@@ -99,27 +100,32 @@ run_main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("Bug_2540_Regression_Test"));
 
-  ACE_Reactor * reactor = ACE_Reactor::instance();
+  // Bug 2540 is all about ACE_Select_Reactor, so run it on that reactor
+  // regardless of platform. In particular, this test relies on a handler
+  // that doesn't consume ready-to-read data being called back - this won't
+  // happen with ACE_WFMO_Reactor.
+  ACE_Select_Reactor select_reactor;
+  ACE_Reactor reactor (&select_reactor);
 
   // Create the timer, this is the main driver for the test
   Timer * timer = new Timer;
 
   // Initialize the timer and register with the reactor
-  if (-1 == timer->open(reactor))
-  {
+  if (-1 == timer->open (&reactor))
+    {
       ACE_ERROR_RETURN ((LM_ERROR, "Cannot initialize timer\n"), -1);
-  }
+    }
 
-  reactor->run_reactor_event_loop();
+  reactor.run_reactor_event_loop ();
 
   // Verify that the results are what we expect
-  if (!timer->check_expected_results())
-  {
+  if (!timer->check_expected_results ())
+    {
       ACE_ERROR_RETURN ((LM_ERROR, "Test failed\n"), -1);
-  }
+    }
 
   // Cleanup
-  timer->close();
+  timer->close ();
   delete timer;
 
   ACE_END_TEST;

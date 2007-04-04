@@ -1,9 +1,10 @@
 Wed Apr  4 16:32:03 UTC 2007  Steve Huston  <shuston@riverace.com>
 
-        * tests/Bug_1890_Regression_Test.cpp: Since bug 1890 is all about
-          ACE_Select_Reactor, always run it on ACE_Select_Reactor. The
-          internal issues this test is checking for are different on
-          ACE_WFMO_Reactor, for example, and it falsely reports problems.
+        * tests/Bug_1890_Regression_Test.cpp:
+        * testsBug_2540_Regression_Test.cpp: Since these bugs are all about
+          ACE_Select_Reactor, always run them on ACE_Select_Reactor. The
+          tests rely on behavior that doesn't hold on ACE_WFMO_Reactor, so
+          shouldn't be tried on simply the platform's default reactor.
 
 Wed Apr  4 16:12:57 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
