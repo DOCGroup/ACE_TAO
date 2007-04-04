@@ -1,3 +1,8 @@
+Wed Apr  4 09:49:00 UTC 2007  Simon Massey  <sma@prismtech.com>
+
+        * include/makeinclude/platform_lynxos.GNU:
+          Minor warning elimination changes for ACE/TAO.
+
 Tue Apr  3 22:29:41 UTC 2007  Steve Huston  <shuston@riverace.com>
 
         * ace/Default_Constants.h: Added ACE_DEFAULT_THREAD_STACKSIZE, which
