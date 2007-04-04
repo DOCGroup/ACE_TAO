@@ -59,6 +59,16 @@ namespace CORBA
 class TAO_Export TAO_IFR_Client_Adapter : public ACE_Service_Object
 {
 public:
+    /// Destructor.
+    /**
+     * @note Even though this class only defines an interface, a
+     *       destructor is necessary to avoid dynamic_cast<> failures
+     *       when using g++ 4.x's -fvisibility-inlines-hidden command
+     *       line option.  Apparently the compiler generated
+     *       destructor is inlined.
+     */
+  virtual ~TAO_IFR_Client_Adapter ();
+
   virtual CORBA::Boolean interfacedef_cdr_insert (
       TAO_OutputCDR &cdr,
       CORBA::InterfaceDef_ptr object_type
