@@ -118,7 +118,7 @@ run_main (int argc, ACE_TCHAR * [], ACE_TCHAR *envp[])
       if (ACE_OS::strcmp (sval, defstr) != 0)
         ACE_ERROR ((LM_ERROR,
                     ACE_TEXT ("Mismatch: %s should be %s\n"),
-                    sval, defstr));
+                    (const ACE_TCHAR *)sval, defstr));
       ACE_END_TEST;
     }
   return 0;
