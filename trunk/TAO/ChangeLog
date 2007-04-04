@@ -1,3 +1,17 @@
+Wed Apr  4 19:04:51 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/tests/ImplRepo/Bug_689_Regression/Bug_689_Regression.mpc:
+        * orbsvcs/tests/ImplRepo/Bug_689_Regression/Makefile.am:
+        * orbsvcs/tests/ImplRepo/Bug_689_Regression/bug_689_regression.idl:
+        * orbsvcs/tests/ImplRepo/Bug_689_Regression/bug_689_regression_i.h:
+        * orbsvcs/tests/ImplRepo/Bug_689_Regression/bug_689_regression_i.cpp:
+        * orbsvcs/tests/ImplRepo/Bug_689_Regression/client.cpp:
+        * orbsvcs/tests/ImplRepo/Bug_689_Regression/run_test.pl:
+        * orbsvcs/tests/ImplRepo/Bug_689_Regression/server.cpp:
+        * orbsvcs/tests/ImplRepo/Makefile.am:
+
+          Added a regression test for bug 689.
+
 Wed Apr  4 16:10:46 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/tests/Security/Bug_1107_Regression/Bug_1107_Regression.mpc:
