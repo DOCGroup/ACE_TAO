@@ -11,8 +11,10 @@
 #ifndef CIAO_BMCLOSED_EXEC_H
 #define CIAO_BMCLOSED_EXEC_H
 
-#include "BMClosedEDEIC.h"
+#include "BMClosedEDEC.h"
 #include "tao/LocalObject.h"
+#include "BMClosedED_exec_export.h"
+#include "BasicSP_exec.h"
 
 // The namespace name for the actual implementation classes doesn't
 // really matter.  Since there may be several different
@@ -26,7 +28,7 @@ namespace MyImpl
    * An example RateGen executor implementation class.
    */
   class BMCLOSEDED_EXEC_Export BMClosedED_exec_i :
-    public virtual BasicSP::BMClosedED_Exec,
+    public virtual CIDL_BMClosedED_Impl::BMClosedED_Exec,
     // CIAO container implementation depends on correct reference
     // counting of local interfaces, so we take a short cut to
     public virtual TAO_Local_RefCounted_Object
@@ -45,10 +47,6 @@ namespace MyImpl
 
     virtual void
     push_in_avail (BasicSP::DataAvailable *ev);
-
-    // Operations from HUDisplay::position
-    virtual char *
-    get_data ();
 
     // Operations from Components::SessionComponent
 
@@ -73,6 +71,8 @@ namespace MyImpl
   protected:
     CORBA::String_var str_;
 
+    MyImpl::ReadData_Impl* dataout_;
+
     /// Copmponent specific context
     BasicSP::CCM_BMClosedED_Context_var context_;
   };
@@ -83,7 +83,7 @@ namespace MyImpl
    * BMClosedED home executor implementation class.
    */
   class BMCLOSEDED_EXEC_Export BMClosedEDHome_exec_i :
-    public virtual BasicSP::CCM_BMClosedEDHome,
+    public virtual CIDL_BMClosedED_Impl::BMClosedEDHome_Exec,
     public virtual TAO_Local_RefCounted_Object
   {
   public:
@@ -106,6 +106,6 @@ namespace MyImpl
 // Executor DLL entry point.  CIAO's deployment and assembly framework
 // invokes this function on the resulting DLL to get the home executor.
 extern "C" BMCLOSEDED_EXEC_Export ::Components::HomeExecutorBase_ptr
-createBMClosedEDHome_Impl (void);
+create_BasicSP_BMClosedEDHome_Impl (void);
 
 #endif /* CIAO_BMCLOSED_EXEC_H*/

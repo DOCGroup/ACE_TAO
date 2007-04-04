@@ -1,15 +1,14 @@
 // $Id$
-// This file is generated with "generate_component_mpc.pl -l .. -p HUDisplay -i BMClosedED"
-// This file has been manually modified to add a second component implementation.
 
-project(BMClosedED_DnC_stub): ciao_client_dnc {
-  avoids += ace_for_tao
-  after += BasicSP_DnC_stub
+project(BMClosedED_stub): ciao_client_dnc {
+  after += BasicSP_stub
   sharedname = BMClosedED_stub
+  includes += $(CIAO_ROOT)/examples/BasicSP
 
-  idlflags += -Wb,stub_export_macro=BMCLOSEDED_STUB_Export 
-  idlflags += -Wb,stub_export_include=BMClosedED_stub_export.h 
-  idlflags += -Wb,skel_export_macro=BMCLOSEDED_SVNT_Export 
+  idlflags += -I $(CIAO_ROOT)/examples/BasicSP
+  idlflags += -Wb,stub_export_macro=BMCLOSEDED_STUB_Export
+  idlflags += -Wb,stub_export_include=BMClosedED_stub_export.h
+  idlflags += -Wb,skel_export_macro=BMCLOSEDED_SVNT_Export
   idlflags += -Wb,skel_export_include=BMClosedED_svnt_export.h
 
   libs += BasicSP_stub
@@ -25,59 +24,73 @@ project(BMClosedED_DnC_stub): ciao_client_dnc {
   }
 }
 
-project(BMClosedED_DnC_svnt) : ciao_servant_dnc {
-  avoids += ace_for_tao
-  after += BasicSP_DnC_svnt BMClosedED_DnC_stub
+project(BMClosedED_lem_gen) : ciaocidldefaults, taoidldefaults {
+  after += BasicSP_lem_gen
+  custom_only = 1
+  cidlflags -= --
+  cidlflags += -I $(CIAO_ROOT)/examples/BasicSP --
 
-  sharedname = BMClosedED_svnt
-
-  libs    += BMClosedED_stub BasicSP_stub 
-  libs    += BasicSP_svnt
-
-  libpaths += ..
-
-  idlflags  +=  -Wb,export_macro=BMCLOSEDED_SVNT_Export 
-  idlflags  += -Wb,export_include=BMClosedED_svnt_export.h
-
-  dynamicflags = BMCLOSEDED_SVNT_BUILD_DLL
+  idlflags += -I $(CIAO_ROOT)/examples/BasicSP
+  idlflags  +=  -Wb,export_macro=BMCLOSEDED_EXEC_Export \
+                -Wb,export_include=BMClosedED_exec_export.h \
+                -SS
 
   CIDL_Files {
-    BMClosedED.cidl
+    BMClosedED.cidl >> BMClosedEDE.idl
   }
 
   IDL_Files {
     BMClosedEDE.idl
   }
 
-  Source_Files {
-    BMClosedEDEC.cpp
-    BMClosedEDS.cpp
-    BMClosedED_svnt.cpp
-  }
 }
 
-
-project(BMClosedED_DnC_exec) : ciao_component_dnc {
-  avoids += ace_for_tao
-  after      += BMClosedED_DnC_svnt
+project(BMClosedED_exec) : ciao_component_dnc {
+  after      += BMClosedED_stub BMClosedED_lem_gen
 
   sharedname = BMClosedED_exec
-
-  libs       += BMClosedED_stub BMClosedED_svnt 
-  libs       += BasicSP_stub BasicSP_svnt
-
-  libpaths   += ..
-  idlflags   += -Wb,export_macro=BMCLOSEDED_EXEC_Export 
-  idlflags   += -Wb,export_include=BMClosedED_exec_export.h
+  libs       += BMClosedED_stub BasicSP_stub
+  libs       += BasicSP_exec
+  includes += $(CIAO_ROOT)/examples/BasicSP
 
   dynamicflags   = BMCLOSEDED_EXEC_BUILD_DLL
 
   IDL_Files {
-    BMClosedEDEI.idl
+  }
+
+  Header_Files {
+    BMClosedED_exec.h
+    BMClosedED_exec_export.h
+    BMClosedEDEC.h
   }
 
   Source_Files {
-    BMClosedEDEIC.cpp
     BMClosedED_exec.cpp
+    BMClosedEDEC.cpp
+  }
+
+  Inline_Files {
+  }
+}
+
+project(BMClosedED_svnt) : ciao_servant_dnc {
+  after += BasicSP_svnt BMClosedED_exec
+  includes += $(CIAO_ROOT)/examples/BasicSP
+
+  sharedname = BMClosedED_svnt
+
+  libs    += BMClosedED_stub BMClosedED_exec
+  libs    += BasicSP_stub BasicSP_exec
+  dynamicflags = BMCLOSEDED_SVNT_BUILD_DLL
+
+  CIDL_Files {
+  }
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    BMClosedEDS.cpp
+    BMClosedED_svnt.cpp
   }
 }

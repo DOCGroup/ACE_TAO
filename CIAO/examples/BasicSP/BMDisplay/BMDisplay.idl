@@ -1,5 +1,9 @@
 //$Id$
-#include "../BasicSP.idl"
+
+#ifndef BMDISPLAY_IDL
+#define BMDISPLAY_IDL
+
+#include "BasicSP.idl"
 
 module BasicSP
 {
@@ -13,3 +17,5 @@ module BasicSP
     {
     };
 };
+
+#endif /* BMDISPLAY_IDL */

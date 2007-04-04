@@ -1,22 +1,22 @@
 // $Id$
 
+#include "ace/SString.h"
+#include "ace/OS_NS_string.h"
 #include "ciao/CIAO_common.h"
 #include "BMClosedED_exec.h"
-#include "ace/SString.h"
-
-#include "ace/OS_NS_string.h"
-
 
 #define DISPLACEMENT 256
 
 /// Default constructor.
 MyImpl::BMClosedED_exec_i::BMClosedED_exec_i ()
+  : dataout_ (new ReadData_Impl(""))
 {
 }
 
 /// Default destructor.
 MyImpl::BMClosedED_exec_i::~BMClosedED_exec_i ()
 {
+  delete this->dataout_;
 }
 
 // Operations from HUDisplay::BMClosedED
@@ -24,7 +24,7 @@ MyImpl::BMClosedED_exec_i::~BMClosedED_exec_i ()
 BasicSP::CCM_ReadData_ptr
 MyImpl::BMClosedED_exec_i::get_dataout ()
 {
-  return BasicSP::CCM_ReadData::_duplicate (this);
+  return BasicSP::CCM_ReadData::_duplicate (this->dataout_);
 }
 
 void
@@ -64,7 +64,7 @@ MyImpl::BMClosedED_exec_i::push_in_avail (BasicSP::DataAvailable *)
 
   if (ACE_OS::strcmp (str.in (), "BM DEVICE DATA") == 0)
     {
-      this->str_ = CORBA::string_dup ("BM CLOSED ED DATA");
+      this->dataout_->set_name ("BM CLOSED ED DATA");
     }
 
   // Notify others.
@@ -72,14 +72,6 @@ MyImpl::BMClosedED_exec_i::push_in_avail (BasicSP::DataAvailable *)
     new OBV_BasicSP::DataAvailable;
 
   this->context_->push_out_avail (event);
-}
-
-// Operations from HUDisplay::position
-
-char *
-MyImpl::BMClosedED_exec_i::get_data ()
-{
-  return CORBA::string_dup (this->str_.inout ());
 }
 
 // Operations from Components::SessionComponent
@@ -158,17 +150,27 @@ MyImpl::BMClosedEDHome_exec_i::~BMClosedEDHome_exec_i ()
 ::Components::EnterpriseComponent_ptr
 MyImpl::BMClosedEDHome_exec_i::create ()
 {
-  Components::EnterpriseComponent_ptr tmp =
-    Components::EnterpriseComponent::_nil ();
-  ACE_NEW_THROW_EX (tmp,
-		                MyImpl::BMClosedED_exec_i,
-		                CORBA::NO_MEMORY ());
-  return tmp;
+  ::Components::EnterpriseComponent_ptr retval =
+    ::Components::EnterpriseComponent::_nil ();
+
+  ACE_NEW_THROW_EX (
+                    retval,
+                    MyImpl::BMClosedED_exec_i,
+                    ::CORBA::NO_MEMORY ());
+
+  return retval;
 }
 
-
 extern "C" BMCLOSEDED_EXEC_Export ::Components::HomeExecutorBase_ptr
-createBMClosedEDHome_Impl (void)
+create_BasicSP_BMClosedEDHome_Impl (void)
 {
-  return new MyImpl::BMClosedEDHome_exec_i;
+  ::Components::HomeExecutorBase_ptr retval =
+    ::Components::HomeExecutorBase::_nil ();
+
+  ACE_NEW_RETURN (
+                  retval,
+                  MyImpl::BMClosedEDHome_exec_i,
+                  ::Components::HomeExecutorBase::_nil ());
+
+  return retval;
 }
