@@ -1,3 +1,9 @@
+Wed Apr  4 19:28:09 UTC 2007  Gan Deng  <gan.deng@vanderbilt.edu>
+
+        * DAnCE/DomainApplicationManager/Reply_Handler_i.h
+
+          Added header file for ACE_Thread_Mutex.
+
 Wed Apr  4 15:55:23 UTC 2007  Gan Deng  <gan.deng@vanderbilt.edu>
 
         * DAnCE/DomainApplicationManager/Reply_Handler_i.cpp
