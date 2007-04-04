@@ -19,7 +19,7 @@ project(Plan_Launcher_Impl) : ciao_servant_dnc, ciao_config_handlers, ciao_execu
   }
 }
 
-project(Plan_Launcher) : ciao_server_dnc, ciao_config_handlers, ciao_executionmanager_stub, ciao_plan_generator, ciaoexe  {
+project(Plan_Launcher) : ciao_server_dnc, ciao_config_handlers, ciao_executionmanager_stub, ciao_plan_generator, ciaoexe, rtcorba  {
   exename = plan_launcher
 
   after += Plan_Launcher_Impl
