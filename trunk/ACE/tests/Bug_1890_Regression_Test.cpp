@@ -15,6 +15,7 @@
 #include "ace/Pipe.h"
 #include "ace/Event_Handler.h"
 #include "ace/Reactor.h"
+#include "ace/Select_Reactor.h"
 
 ACE_RCSID (tests,
            Bug_1890_Regression_Test,
@@ -97,13 +98,16 @@ run_main (int, ACE_TCHAR *[])
 
   bool success = true;
 
-  ACE_Reactor * reactor = ACE_Reactor::instance();
+  // Bug 1890 is all about ACE_Select_Reactor, so run it on that reactor
+  // regardless of platform.
+  ACE_Select_Reactor select_reactor;
+  ACE_Reactor reactor (&select_reactor);
 
   // Create the timer, this is the main driver for the test
   Timer * timer = new Timer;
 
   // Initialize the timer and register with the reactor
-  if (-1 == timer->open(reactor))
+  if (-1 == timer->open (&reactor))
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("%p\n"),
@@ -111,7 +115,7 @@ run_main (int, ACE_TCHAR *[])
                         -1);
     }
 
-  reactor->run_reactor_event_loop();
+  reactor.run_reactor_event_loop ();
 
   // Verify that the results are what we expect
   if (!(success = timer->check_expected_results ()))
