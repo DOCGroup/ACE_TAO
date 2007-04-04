@@ -360,7 +360,7 @@ TAO_Notify_Service_Driver::parse_args (int &argc, ACE_TCHAR *argv[])
           if (this->ior_output_file_ == 0)
             ACE_ERROR_RETURN ((LM_ERROR,
                                "Unable to open %s for writing: %p\n",
-                               current_arg), -1);
+                               current_arg, "Notify_Service"), -1);
           arg_shifter.consume_arg ();
         }
       else if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-ChannelName"))))
