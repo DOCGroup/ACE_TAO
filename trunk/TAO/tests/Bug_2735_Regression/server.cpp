@@ -56,17 +56,17 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         return -1;
 
       int targc = 3;
-      char* targv[] = { "server", "-ORBSvcConfDirective", 0 };
+      const char* targv[] = { "server", "-ORBSvcConfDirective", 0 };
       switch (factory_strategy)
         {
         case FOO_STRATEGY:
-          targv[2] = const_cast<char*> (ACE_TEXT_ALWAYS_CHAR (foo_strat));
+          targv[2] = ACE_TEXT_ALWAYS_CHAR (foo_strat);
           break;
         case SERVER_STRATEGY:
-          targv[2] = const_cast<char*> (ACE_TEXT_ALWAYS_CHAR (server_strat));
+          targv[2] = ACE_TEXT_ALWAYS_CHAR (server_strat);
           break;
         }
-      CORBA::ORB_var orb = CORBA::ORB_init (targc, targv);
+      CORBA::ORB_var orb = CORBA::ORB_init (targc, const_cast<char**> (targv));
       orb->destroy ();
     }
   catch (const CORBA::Exception& ex)
