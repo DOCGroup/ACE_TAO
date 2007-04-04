@@ -1,3 +1,9 @@
+Wed Apr  4 13:04:25 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/Notify_Service/Notify_Service.cpp:
+
+          Added the missing parameter for %p in an ACE_ERROR_RETURN().
+
 Wed Apr  4 11:40:33 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * MPC/config/utils.mpb:
