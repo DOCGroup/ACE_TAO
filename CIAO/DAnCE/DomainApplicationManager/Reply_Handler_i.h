@@ -43,44 +43,34 @@ public:
       const ::Deployment::Connections & providedReference);
   
   virtual
-  void perform_redeployment_excep (
-      ::Messaging::ExceptionHolder * excep_holder);
+  void perform_redeployment_excep (::Messaging::ExceptionHolder *);
   
   virtual
-  void reset_plan (
-      void);
+  void reset_plan (void);
   
   virtual
-  void reset_plan_excep (
-      ::Messaging::ExceptionHolder * excep_holder);
+  void reset_plan_excep (::Messaging::ExceptionHolder *);
   
   virtual
-  void set_shared_components (
-      void);
+  void set_shared_components (void);
   
   virtual
-  void set_shared_components_excep (
-      ::Messaging::ExceptionHolder * excep_holder);
+  void set_shared_components_excep (::Messaging::ExceptionHolder *);
   
   virtual
-  void set_priority (
-      ::CORBA::Long ami_return_val);
+  void set_priority (::CORBA::Long);
   
   virtual
-  void set_priority_excep (
-      ::Messaging::ExceptionHolder * excep_holder);
+  void set_priority_excep (::Messaging::ExceptionHolder *);
    
   virtual
-  void startLaunch_excep (
-      ::Messaging::ExceptionHolder * excep_holder);
+  void startLaunch_excep (::Messaging::ExceptionHolder *);
   
   virtual
-  void destroyApplication (
-      void);
+  void destroyApplication (void);
   
   virtual
-  void destroyApplication_excep (
-      ::Messaging::ExceptionHolder * excep_holder);
+  void destroyApplication_excep (::Messaging::ExceptionHolder *);
 
 private:
   ::Deployment::NodeApplication_var retn_node_app_;
