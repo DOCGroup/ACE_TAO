@@ -14,10 +14,11 @@
 #ifndef EC_EXEC_H
 #define EC_EXEC_H
 
-#include "ECEIC.h"
+#include "ECEC.h"
 #include "tao/LocalObject.h"
 #include "ace/Thread_Manager.h"
 #include "ace/Task.h"
+#include "EC_exec_export.h"
 
 namespace MyImpl
 {
@@ -75,7 +76,7 @@ namespace MyImpl
    * EC executor implementation class.
    */
   class EC_EXEC_Export EC_exec_i :
-    public virtual BasicSP::EC_Exec,
+    public virtual CIDL_EC_Impl::EC_Exec,
     public virtual TAO_Local_RefCounted_Object
   {
   public:
@@ -138,7 +139,7 @@ namespace MyImpl
    * EC home executor implementation class.
    */
   class EC_EXEC_Export ECHome_exec_i :
-    public virtual BasicSP::CCM_ECHome,
+    public virtual CIDL_EC_Impl::ECHome_Exec,
     public virtual TAO_Local_RefCounted_Object
   {
   public:

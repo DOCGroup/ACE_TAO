@@ -1,5 +1,9 @@
 //$Id$
-#include "../BasicSP.idl"
+
+#ifndef BMCLOSEDED_IDL
+#define BMCLOSEDED_IDL
+
+#include "BasicSP.idl"
 
 module BasicSP
 {
@@ -15,3 +19,5 @@ module BasicSP
     {
     };
 };
+
+#endif /* BMCLOSEDED_IDL */

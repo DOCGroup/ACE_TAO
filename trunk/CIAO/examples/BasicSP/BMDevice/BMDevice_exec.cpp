@@ -7,7 +7,7 @@
 
 /// Default constructor.
 MyImpl::BMDevice_exec_i::BMDevice_exec_i (void)
-  : str_ ("BM DEVICE DATA")
+  : data_read_ (new ReadData_Impl("BM DEVICE DATA"))
 {
 
 }
@@ -15,18 +15,19 @@ MyImpl::BMDevice_exec_i::BMDevice_exec_i (void)
 /// Default destructor.
 MyImpl::BMDevice_exec_i::~BMDevice_exec_i ()
 {
+  delete this->data_read_;
 }
 
 BasicSP::CCM_ReadData_ptr
 MyImpl::BMDevice_exec_i::get_data_read ()
 {
-  return BasicSP::CCM_ReadData::_duplicate (this);
+  return BasicSP::CCM_ReadData::_duplicate (this->data_read_);
 }
 
 void
 MyImpl::BMDevice_exec_i::push_timeout (BasicSP::TimeOut *)
 {
-  // Nitify others
+  // Notify others
   BasicSP::DataAvailable_var event = new OBV_BasicSP::DataAvailable;
 
   if (CIAO::debug_level () > 0)
@@ -38,23 +39,9 @@ MyImpl::BMDevice_exec_i::push_timeout (BasicSP::TimeOut *)
   this->context_->push_data_available (event);
 }
 
-char *
-MyImpl::BMDevice_exec_i::data_read ()
-{
-  return CORBA::string_dup (this->str_);
-}
-
-char *
-MyImpl::BMDevice_exec_i::get_data ()
-{
-  return this->data_read ();
-}
-
 // Operations from Components::SessionComponent
 void
-MyImpl::BMDevice_exec_i::set_session_context (
-    Components::SessionContext_ptr ctx
-  )
+MyImpl::BMDevice_exec_i:: set_session_context (Components::SessionContext_ptr ctx)
 {
   if (CIAO::debug_level () > 0)
     {
@@ -130,17 +117,29 @@ MyImpl::BMDeviceHome_exec_i::~BMDeviceHome_exec_i ()
 ::Components::EnterpriseComponent_ptr
 MyImpl::BMDeviceHome_exec_i::create ()
 {
-  Components::EnterpriseComponent_ptr tmp= 0;
-  ACE_NEW_THROW_EX (tmp,
-                    MyImpl::BMDevice_exec_i,
-		                CORBA::NO_MEMORY ());
+  ::Components::EnterpriseComponent_ptr retval =
+    ::Components::EnterpriseComponent::_nil ();
 
-  return tmp;
+  ACE_NEW_THROW_EX (
+                    retval,
+                    MyImpl::BMDevice_exec_i,
+                    ::CORBA::NO_MEMORY ());
+
+  return retval;
 }
 
 
 extern "C" BMDEVICE_EXEC_Export ::Components::HomeExecutorBase_ptr
-createBMDeviceHome_Impl (void)
+create_BasicSP_BMDeviceHome_Impl (void)
 {
-  return new MyImpl::BMDeviceHome_exec_i;
+  ::Components::HomeExecutorBase_ptr retval =
+    ::Components::HomeExecutorBase::_nil ();
+
+  ACE_NEW_RETURN (
+                  retval,
+                  MyImpl::BMDeviceHome_exec_i,
+                  ::Components::HomeExecutorBase::_nil ());
+
+  return retval;
 }
+

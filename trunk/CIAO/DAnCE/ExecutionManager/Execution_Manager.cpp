@@ -38,36 +38,36 @@ namespace CIAO
       while ((c = get_opts ()) != -1)
         switch (c)
           {
-          case 'o':
-            write_to_ior_ = true;
-            ior_file_name_ = get_opts.opt_arg ();
-            break;
-          case 'i':
-            init_file_name = get_opts.opt_arg ();
-            break;
-          case 'n':
-            register_with_ns_ = true;
-            break;
-          case 'r':
-            rt_corba_enabled = true;
-            break;
-          case 'p':
-            pid_file_name_ = get_opts.opt_arg ();
-            break;
-          case 'a':
-            is_using_ami = true;
-            break;
-          case '?':  // display help for use of the server.
-          default:
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "usage:  %s\n"
-                               "-o <ior_output_file>\n"
-                               "-i <installation data filename>\n"
-                               "-n <use naming service>\n"
-                               "-p <filename to output the process id>\n"
-                               "\n",
-                               argv [0]),
-                              false);
+            case 'o':
+              write_to_ior_ = true;
+              ior_file_name_ = get_opts.opt_arg ();
+              break;
+            case 'i':
+              init_file_name = get_opts.opt_arg ();
+              break;
+            case 'n':
+              register_with_ns_ = true;
+              break;
+            case 'r':
+              rt_corba_enabled = true;
+              break;
+            case 'p':
+              pid_file_name_ = get_opts.opt_arg ();
+              break;
+            case 'a':
+              is_using_ami = true;
+              break;
+            case '?':  // display help for use of the server.
+            default:
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "usage:  %s\n"
+                                 "-o <ior_output_file>\n"
+                                 "-i <installation data filename>\n"
+                                 "-n <use naming service>\n"
+                                 "-p <filename to output the process id>\n"
+                                 "\n",
+                                 argv [0]),
+                                false);
           }
 
       return true;
@@ -88,27 +88,32 @@ namespace CIAO
           ACE_OS::fclose (ior_output_file_);
         }
       else
-        return false;
-
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "Unable to open ExecutionManager IOR output file %s : %m\n",
+                      ior_file_name_));
+          return false;
+        }
       return true;
     }
 
-    void
+    bool
     write_pid (void)
     {
-      if (pid_file_name_ == 0)
-        return;
 
       FILE* pid_file = ACE_OS::fopen (pid_file_name_, "w");
 
-      if (pid_file)
+      if (!pid_file)
         {
-          ACE_OS::fprintf (pid_file,
-                           "%i",
-                           ACE_OS::getpid ());
-          ACE_OS::fclose (pid_file);
+          ACE_ERROR ( (LM_ERROR, "Unable to open file %s to write the PID : %m",
+                       pid_file_name_));
+          return false;
         }
+      ACE_OS::fprintf (pid_file, "%i", ACE_OS::getpid ());
+      ACE_OS::fclose (pid_file);
+      return true;
     }
+
 
     bool
     register_with_ns (CORBA::ORB_ptr orb,
@@ -135,7 +140,8 @@ namespace CIAO
         }
       catch (const CosNaming::NamingContext::AlreadyBound &)
         {
-          ACE_DEBUG ((LM_DEBUG, "Execution_Manager.cpp: Name already bound, rebinding....\n"));
+          ACE_DEBUG ((LM_DEBUG,
+                      "Execution_Manager.cpp: Name already bound, rebinding\n"));
           naming_context->rebind (name, obj);
         }
 
@@ -149,7 +155,6 @@ namespace CIAO
       try
         {
           CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
-
           if (!parse_args (argc, argv))
             return -1;
 
@@ -162,7 +167,7 @@ namespace CIAO
             ACE_ERROR_RETURN ((LM_ERROR,
                                "(%P|%t) CIAO_ExecutionManager: "
                                "Nil RT_ORB panic error, returning \n"),
-                               -1);
+                              -1);
 
           // Get reference to Root POA.
           CORBA::Object_var obj = orb->resolve_initial_references ("RootPOA");
@@ -174,7 +179,7 @@ namespace CIAO
             ACE_ERROR_RETURN ((LM_ERROR,
                                "(%P|%t) CIAO_ExecutionManager: "
                                "Nil Root POA panic error, returning \n"),
-                               -1);
+                              -1);
 
           // POAManager.
           PortableServer::POAManager_var poa_manager =
@@ -184,7 +189,7 @@ namespace CIAO
             ACE_ERROR_RETURN ((LM_ERROR,
                                "(%P|%t) CIAO_ExecutionManager: "
                                "Nil POA Manager panic error, returning \n"),
-                               -1);
+                              -1);
 
           PortableServer::POA_var child_poa;
           if (rt_corba_enabled)
@@ -213,8 +218,8 @@ namespace CIAO
 
           if (CORBA::is_nil (child_poa.in ()))
             ACE_ERROR_RETURN ((LM_ERROR,
-                              "(%P|%t) CIAO_ExecutionManager: "
-                              "Nil Child POA panic error, returning \n"),
+                               "(%P|%t) CIAO_ExecutionManager: "
+                               "Nil Child POA panic error, returning \n"),
                               -1);
 
           // Create and install the CIAO Daemon servant on child POA
@@ -236,7 +241,7 @@ namespace CIAO
           CORBA::Object_var daemon_obj =
             child_poa->id_to_reference (id.in ());
 
-          CIAO::ExecutionManagerDaemon_var daemon = 
+          CIAO::ExecutionManagerDaemon_var daemon =
             CIAO::ExecutionManagerDaemon::_narrow (daemon_obj.in ());
 
           // Register to naming service
@@ -245,15 +250,17 @@ namespace CIAO
           if (register_with_ns_)
             {
               retval = register_with_ns (orb.in (), daemon.in ());
+              if (!retval)
+                return -1;
             }
+
 
           if (write_to_ior_)
             {
               retval = write_ior_file (orb.in (), daemon.in ());
+              if (!retval)
+                return -1;
             }
-
-          if (!retval)
-            return -1;
 
           // Activate POA manager
           PortableServer::POAManager_var mgr = root_poa->the_POAManager ();
@@ -270,14 +277,19 @@ namespace CIAO
           ACE_DEBUG ((LM_DEBUG,
                       "CIAO_ExecutionManager is running...\n"));
 
-          write_pid ();
+          if (pid_file_name_)
+            {
+              retval = write_pid ();
+              if (!retval)
+                return -1;
+            }
 
           // Run the main event loop for the ORB.
           orb->run ();
 
           // Forget the pointer. The POA will take care of it during
           // destroy.
-            (void) de.release ();
+          (void) de.release ();
 
           root_poa->destroy (1, 1);
 
