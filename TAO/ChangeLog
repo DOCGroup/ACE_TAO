@@ -1,3 +1,14 @@
+Wed Apr  4 14:42:01 UTC 2007  Wallace Zhang  <zhang_w@ociweb.com>
+
+        * tao/IFR_Client_Adapter.h:
+        * tao/IFR_Client_Adapter.cpp:
+
+          Fixed the dynamic_cast failure in the same way as Ossama and Chris did in
+          Wed May 18 16:23:01 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+          Mon Nov 21 13:21:03 2005  Chris Cleeland  <cleeland_c@ociweb.com>
+          In short, I have added an out-of-line virtual destructor to this class.
+          Thanks Ossama for his help on this issue.
+
 Wed Apr  4 13:04:25 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/Notify_Service/Notify_Service.cpp:
