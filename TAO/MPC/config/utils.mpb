@@ -2,6 +2,6 @@
 // $Id$
 
 project : portableserver, pi {
-  after += Utils
+  after += TAO_Utils
   libs  += TAO_Utils
 }

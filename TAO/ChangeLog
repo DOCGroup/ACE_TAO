@@ -1,3 +1,10 @@
+Wed Apr  4 11:40:33 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * MPC/config/utils.mpb:
+
+          Renamed the after setting from Utils to TAO_Utils to reflect the
+          change from Tue Apr  3 18:53:54 UTC 2007.
+
 Wed Apr  4 11:36:10 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * tests/Bug_2677_Regression/Makefile.am:
