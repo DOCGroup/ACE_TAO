@@ -19,6 +19,7 @@ TAO_ROOT = $(top_srcdir)
 SUBDIRS = \
         . \
         Bug_2604_Regression \
+        Bug_689_Regression \
         NameService \
         scale
 
