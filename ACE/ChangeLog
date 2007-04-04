@@ -1,3 +1,25 @@
+Wed Apr  4 11:57:48 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ace/Log_Msg.cpp:
+
+          When ACE::fini() is called, all of the exit hooks registered with
+          the ACE_Object_Manager are called.  In single threaded mode, one
+          of these is the cleanup adapter for the ACE_Log_Msg object
+          allocated into a static pointer variable in
+          ACE_Log_Msg::instance().
+
+          Calling ACE::init() after ACE::fini() would not re-initialize the
+          ACE_Log_Msg object and thus memory issues would arise as soon as
+          it is used.
+
+          I moved the static pointer variable to the file level and made a
+          new cleanup adapter that would reset the static pointer variable
+          when the ACE_Log_Msg object is deleted.  The next use of
+          ACE_Log_Msg::instance() would then result in the allocation of a
+          new ACE_Log_Msg object.
+
+          This fixes Bug 2874.
+
 Wed Apr  4 11:33:57 UTC 2007  Steve Huston  <shuston@riverace.com>
 
         * tests/Env_Value_Test.cpp: Cast ACE_Env_Value to ACE_TCHAR to print
