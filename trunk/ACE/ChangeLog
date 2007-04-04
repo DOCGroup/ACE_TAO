@@ -1,3 +1,8 @@
+Wed Apr  4 11:33:57 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * tests/Env_Value_Test.cpp: Cast ACE_Env_Value to ACE_TCHAR to print
+          its value.
+
 Wed Apr  4 09:49:00 UTC 2007  Simon Massey  <sma@prismtech.com>
 
         * include/makeinclude/platform_lynxos.GNU:
