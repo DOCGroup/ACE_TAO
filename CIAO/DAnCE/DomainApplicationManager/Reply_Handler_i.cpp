@@ -45,50 +45,48 @@ Deployment_AMI_NodeApplicationManagerHandler_i::get_connections ()
 }
 
 void Deployment_AMI_NodeApplicationManagerHandler_i::perform_redeployment (
-    ::Deployment::Application_ptr ami_return_val,
-    const ::Deployment::Connections & providedReference)
+    ::Deployment::Application_ptr,
+    const ::Deployment::Connections &)
 {
   // Add your implementation here
 }
 
 void Deployment_AMI_NodeApplicationManagerHandler_i::perform_redeployment_excep (
-    ::Messaging::ExceptionHolder * excep_holder)
+    ::Messaging::ExceptionHolder *)
 {
   // Add your implementation here
 }
 
-void Deployment_AMI_NodeApplicationManagerHandler_i::reset_plan (
-    void)
+void Deployment_AMI_NodeApplicationManagerHandler_i::reset_plan ()
 {
   // Add your implementation here
 }
 
 void Deployment_AMI_NodeApplicationManagerHandler_i::reset_plan_excep (
-    ::Messaging::ExceptionHolder * excep_holder)
+    ::Messaging::ExceptionHolder *)
 {
   // Add your implementation here
 }
 
-void Deployment_AMI_NodeApplicationManagerHandler_i::set_shared_components (
-    void)
+void Deployment_AMI_NodeApplicationManagerHandler_i::set_shared_components ()
 {
   // Add your implementation here
 }
 
 void Deployment_AMI_NodeApplicationManagerHandler_i::set_shared_components_excep (
-    ::Messaging::ExceptionHolder * excep_holder)
+    ::Messaging::ExceptionHolder *)
 {
   // Add your implementation here
 }
 
 void Deployment_AMI_NodeApplicationManagerHandler_i::set_priority (
-    ::CORBA::Long ami_return_val)
+    ::CORBA::Long)
 {
   // Add your implementation here
 }
 
 void Deployment_AMI_NodeApplicationManagerHandler_i::set_priority_excep (
-    ::Messaging::ExceptionHolder * excep_holder)
+    ::Messaging::ExceptionHolder *)
 {
   // Add your implementation here
 }
@@ -96,19 +94,18 @@ void Deployment_AMI_NodeApplicationManagerHandler_i::set_priority_excep (
 
 
 void Deployment_AMI_NodeApplicationManagerHandler_i::startLaunch_excep (
-    ::Messaging::ExceptionHolder * excep_holder)
+    ::Messaging::ExceptionHolder *)
 {
   // Add your implementation here
 }
 
-void Deployment_AMI_NodeApplicationManagerHandler_i::destroyApplication (
-    void)
+void Deployment_AMI_NodeApplicationManagerHandler_i::destroyApplication ()
 {
   // Add your implementation here
 }
 
 void Deployment_AMI_NodeApplicationManagerHandler_i::destroyApplication_excep (
-    ::Messaging::ExceptionHolder * excep_holder)
+    ::Messaging::ExceptionHolder *)
 {
   // Add your implementation here
 }
