@@ -1,0 +1,80 @@
+// $Id$
+// This file is generated with "generate_component_mpc.pl -p TargetManagerImpl TargetManagerExt_Impl"
+
+project(CIAO_TargetManager_Ext_stub): ciao_client_dnc {
+  after += TargetManagerImpl_stub
+  sharedname = TargetManagerExt_Impl_stub
+  
+  idlflags -= -GT
+  idlflags += -St \
+              -Wb,stub_export_macro=TARGETMANAGEREXT_IMPL_STUB_Export \
+              -Wb,stub_export_include=TargetManagerExt_Impl_stub_export.h \
+              -Wb,skel_export_macro=TARGETMANAGEREXT_IMPL_SVNT_Export \
+              -Wb,skel_export_include=TargetManagerExt_Impl_svnt_export.h
+
+  dynamicflags   = TARGETMANAGEREXT_IMPL_STUB_BUILD_DLL
+
+  includes += $CIAO_ROOT/DAnCE/TargetManager
+  
+  IDL_Files {
+    TargetManagerExt_Impl.idl
+    TargetManagerExt.idl
+  }
+
+  Source_Files {
+    TargetManagerExtC.cpp
+    TargetManagerExt_ImplC.cpp
+  }
+}
+
+project(CIAO_TargetManager_Ext_svnt) : ciao_servant_dnc {
+  after      += TargetManagerImpl_skel CIAO_TargetManager_Ext_stub
+  sharedname  = TargetManagerExt_Impl_svnt
+  libs       += TargetManagerExt_Impl_stub TargetManager_stub TargetManager_svnt
+   
+  idlflags -= -GT
+  idlflags += -St -SS \
+              -Wb,export_macro=TARGETMANAGEREXT_IMPL_SVNT_Export \
+              -Wb,export_include=TargetManagerExt_Impl_svnt_export.h
+
+  dynamicflags = TARGETMANAGEREXT_IMPL_SVNT_BUILD_DLL
+  
+  CIDL_Files {
+    TargetManagerExt_Impl.cidl
+  }
+
+  IDL_Files {
+    TargetManagerExt_ImplE.idl
+  }
+
+  Source_Files {
+    TargetManagerExtS.cpp
+    TargetManagerExt_ImplS.cpp
+    TargetManagerExt_Impl_svnt.cpp
+  }
+}
+
+project(TargetManagerImpl_TargetManagerExt_Impl_exec) : ciao_component_dnc, ciao_config_handlers, ciao_domainapplicationmanager_dnc {
+  after   += CIAO_TargetManager_Ext_svnt
+  sharedname = TargetManagerExt_Impl_exec
+  libs += TargetManagerExt_Impl_stub TargetManagerExt_Impl_svnt TargetManager_stub TargetManager_svnt
+   
+  dynamicflags   = TARGETMANAGEREXT_IMPL_EXEC_BUILD_DLL
+  
+  includes += $CIAO_ROOT/DAnCE/TargetManager
+
+  IDL_Files {
+    
+  }
+
+  Source_Files {
+    
+    TargetManagerExt_Impl_exec_i.cpp
+    $(CIAO_ROOT)/DAnCE/TargetManager/ResourceCommitmentManager.cpp
+    $(CIAO_ROOT)/DAnCE/TargetManager/DomainDataManager.cpp
+    DomainDataManager_Ext.cpp
+  }
+}
+
+
+

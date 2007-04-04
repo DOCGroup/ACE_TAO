@@ -1,0 +1,29 @@
+//$Id$
+
+/**
+ * @file TargetManagerExt_Impl.idl
+ * @brief TargetManagerExt Component defination
+ *
+ * @author Nilabja Roy nilabjar@dre.vanderbilt.edu
+ */
+
+#ifndef TARGETMANAGER_EXT__IDL
+#define TARGETMANAGER_EXT_IDL
+
+#include "DAnCE/TargetManager/TargetManagerImpl.idl"
+#include "TargetManagerExt.idl"
+
+module CIAO
+{
+  component TargetManagerExt_Impl : TargetManagerImpl
+  {
+    provides CIAO::TargetManagerExt targetMgr_ext;
+  };
+
+  
+  home TargetManagerExt_Home manages TargetManagerExt_Impl
+  {
+  };
+      
+};
+#endif
