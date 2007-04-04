@@ -1,0 +1,26 @@
+// $Id$
+
+// Client.mpc,v 1.6 2005/02/18 09:07:06 jwillemsen Exp
+
+project(TMClient_Ext): ciao_client_dnc,ciao_deployment_stub, ciao_config_handlers, ciao_events_dnc, ciao_targetmanager_stub {
+
+  after += CIAO_TargetManager_Ext_stub
+
+  libs += TargetManagerExt_Impl_stub
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    TM_client_Ext.cpp
+  }
+
+  Header_Files {
+  }
+
+  Inline_Files {
+  }
+
+  Template_Files {
+  }
+}

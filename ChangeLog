@@ -1,14 +1,41 @@
+Wed Apr  4 17:07:45 UTC 2007  Nilabja R  <nilabjar@dre.vanderbilt.edu>
+
+        * DAnCE/TargetManager/DomainDataManager.h:
+        * DAnCE/TargetManager/DomainDataManager.cpp:
+        * DAnCE/TargetManager/TargetManager.mpc:
+        * DAnCE/TargetManager/TargetManagerImpl.idl:
+
+          Changes made to accomodate CIAO-specific functions
+
+        * DAnCE/TargetManager_Ext:
+
+        * DAnCE/TargetManager_Ext/DomainDataManager_Ext.h:
+        * DAnCE/TargetManager_Ext/DomainDataManager_Ext.cpp:
+        * DAnCE/TargetManager_Ext/TM_Client_Ext.mpc:
+        * DAnCE/TargetManager_Ext/TM_client_Ext.cpp:
+        * DAnCE/TargetManager_Ext/TargetManagerExt.idl:
+        * DAnCE/TargetManager_Ext/TargetManagerExt_Impl.cidl:
+        * DAnCE/TargetManager_Ext/TargetManagerExt_Impl.idl:
+        * DAnCE/TargetManager_Ext/TargetManagerExt_Impl.mpc:
+        * DAnCE/TargetManager_Ext/TargetManagerExt_Impl_exec_export.h:
+        * DAnCE/TargetManager_Ext/TargetManagerExt_Impl_exec_i.h:
+        * DAnCE/TargetManager_Ext/TargetManagerExt_Impl_exec_i.cpp:
+        * DAnCE/TargetManager_Ext/TargetManagerExt_Impl_stub_export.h:
+        * DAnCE/TargetManager_Ext/TargetManagerExt_Impl_svnt_export.h:
+
+          Added to separate CIAO-specific functionalities of TM
+
 Fri Feb 23 04:08:04 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * CIDLC/ServantGenerator.cpp:
 
-          cidlc --help prints the following:     
-       
+          cidlc --help prints the following:
+
             [--svnt-export-macro macro]
             Replace default servant DLL export macro with provided ,acro.
 
-          Fixed the misspelling of macro in the cidlc help message. 
-        
+          Fixed the misspelling of macro in the cidlc help message.
+
 
 Thu Feb 22 22:59:01 UTC 2007  Jaiganesh B  <jai.dre.vanderbilt.edu>
 

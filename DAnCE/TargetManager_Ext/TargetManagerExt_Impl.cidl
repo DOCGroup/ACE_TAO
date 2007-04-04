@@ -1,0 +1,29 @@
+// $Id$
+
+/*
+ * @file TargetManager_Ext.cidl
+ * @brief The file contains the TargetManager Extension component
+ *   defination
+ */
+
+#ifndef TARGETMANAGER_EXT_CIDL
+#define TARGETMANAGER_EXT_CIDL
+
+#include "TargetManagerExt_Impl.idl"
+
+/*
+ * @composition TargetManager_Ext_i
+ */
+
+
+composition session TargetManager_Ext_i
+{
+  home executor TargetManagerExt_Home_Exec
+  {
+    implements CIAO::TargetManagerExt_Home;
+    manages  TargetManagerExt_Impl_Exec;
+  };
+};
+
+#endif
+

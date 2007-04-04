@@ -79,6 +79,20 @@ namespace CIAO
                                   );
 
       /**
+       * This function calls the constructor of the
+       * class Domain Data Manager. It is the same as the function above
+       * only the parameter TargetManagerExt_ptr is different
+       *
+       * @brief This function is called to create the Datamanager
+       * @param orb The orb pointer
+       * @param target The Target Manager Extension Object Reference
+       *
+       */
+//      static DomainDataManager * create (CORBA::ORB_ptr orb,
+//                                  ::Deployment::TargetManagerExt_ptr target
+//                                  );
+
+      /**
        * @brief Returns the static pointer to the
        *        data manager.
        * @return DomainDataManager*
@@ -134,7 +148,7 @@ namespace CIAO
        void releaseResourceAllocation (
            const ::Deployment::ResourceAllocations & resources);
 
-      private:
+      protected:
 
       /**
        * The constructor made protected so that no one can create
