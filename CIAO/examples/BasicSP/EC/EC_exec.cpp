@@ -77,7 +77,7 @@ MyImpl::timeout_Handler::active (void)
 
 int
 MyImpl::timeout_Handler::handle_close (ACE_HANDLE handle,
-                                     ACE_Reactor_Mask close_mask)
+                                       ACE_Reactor_Mask close_mask)
 {
   if (CIAO::debug_level () > 0)
     ACE_DEBUG ((LM_DEBUG,
@@ -91,15 +91,15 @@ MyImpl::timeout_Handler::handle_close (ACE_HANDLE handle,
 
 int
 MyImpl::timeout_Handler::handle_timeout (const ACE_Time_Value &,
-                                       const void *)
+                                         const void *)
 {
   this->pulse_callback_->pulse ();
 
-//   ACE_DEBUG ((LM_DEBUG,
-//               ACE_TEXT ("[%x] with count #%05d timed out at %d.%d!\n"),
-//               this,
-//               tv.sec (),
-//               tv.usec ()));
+  //   ACE_DEBUG ((LM_DEBUG,
+  //               ACE_TEXT ("[%x] with count #%05d timed out at %d.%d!\n"),
+  //               this,
+  //               tv.sec (),
+  //               tv.usec ()));
 
   return 0;
 }
@@ -238,9 +238,12 @@ MyImpl::EC_exec_i::pulse (void)
 
       this->context_->push_timeout (ev.in ());
     }
-  catch (const CORBA::Exception&)
+  catch (const CORBA::Exception& ex)
     {
-      // @@ do nothing?
+      ACE_PRINT_EXCEPTION (ex,
+                           "Caught exception while pushing BasicSP::TimeOut "
+                           "event to BMDevice");
+
     }
 
 }
@@ -256,18 +259,41 @@ MyImpl::ECHome_exec_i::~ECHome_exec_i ()
 ::Components::EnterpriseComponent_ptr
 MyImpl::ECHome_exec_i::new_EC (CORBA::Long hertz)
 {
-  return new MyImpl::EC_exec_i (hertz);
+  ::Components::EnterpriseComponent_ptr retval =
+    ::Components::EnterpriseComponent::_nil ();
+
+  ACE_NEW_THROW_EX (
+                    retval,
+                    MyImpl::EC_exec_i (hertz),
+                    ::CORBA::NO_MEMORY ());
+
+  return retval;
 }
 
 ::Components::EnterpriseComponent_ptr
 MyImpl::ECHome_exec_i::create ()
 {
-  return new MyImpl::EC_exec_i ();
+  ::Components::EnterpriseComponent_ptr retval =
+    ::Components::EnterpriseComponent::_nil ();
+
+  ACE_NEW_THROW_EX (
+                    retval,
+                    MyImpl::EC_exec_i,
+                    ::CORBA::NO_MEMORY ());
+
+  return retval;
 }
 
-
 extern "C" EC_EXEC_Export ::Components::HomeExecutorBase_ptr
-createECHome_Impl (void)
+create_BasicSP_ECHome_Impl (void)
 {
-  return new MyImpl::ECHome_exec_i ();
+  ::Components::HomeExecutorBase_ptr retval =
+    ::Components::HomeExecutorBase::_nil ();
+
+  ACE_NEW_RETURN (
+                  retval,
+                  MyImpl::ECHome_exec_i,
+                  ::Components::HomeExecutorBase::_nil ());
+
+  return retval;
 }

@@ -11,7 +11,7 @@
 #ifndef CIAO_BMDEVICE_IDL
 #define CIAO_BMDEVICE_IDL
 
-#include "../BasicSP.idl"
+#include "BasicSP.idl"
 
 module BasicSP
 {

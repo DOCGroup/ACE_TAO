@@ -1,13 +1,18 @@
 // $Id$
 
-project(BMDevice_DnC_stub): ciao_client_dnc {
-  avoids += ace_for_tao
-  after += BasicSP_DnC_stub
+project(BMDevice_stub): ciao_client_dnc {
+  after += BasicSP_stub
   sharedname = BMDevice_stub
+  includes += $(CIAO_ROOT)/examples/BasicSP
 
-  idlflags += -Wb,stub_export_macro=BMDEVICE_STUB_Export -Wb,stub_export_include=BMDevice_stub_export.h -Wb,skel_export_macro=BMDEVICE_SVNT_Export -Wb,skel_export_include=BMDevice_svnt_export.h
-  libpaths += ..
+  idlflags += -I $(CIAO_ROOT)/examples/BasicSP
+  idlflags += -Wb,stub_export_macro=BMDEVICE_STUB_Export
+  idlflags += -Wb,stub_export_include=BMDevice_stub_export.h
+  idlflags += -Wb,skel_export_macro=BMDEVICE_SVNT_Export
+  idlflags += -Wb,skel_export_include=BMDevice_svnt_export.h
+
   libs += BasicSP_stub
+
   dynamicflags   = BMDEVICE_STUB_BUILD_DLL
 
   IDL_Files {
@@ -19,48 +24,73 @@ project(BMDevice_DnC_stub): ciao_client_dnc {
   }
 }
 
-project(BMDevice_DnC_svnt) : ciao_servant_dnc {
-  avoids += ace_for_tao
-  after += BMDevice_DnC_stub BasicSP_DnC_stub
-  sharedname  = BMDevice_svnt
-  libs    += BMDevice_stub BasicSP_stub BasicSP_svnt
-  libpaths += ..
-  idlflags  +=  -Wb,export_macro=BMDEVICE_SVNT_Export -Wb,export_include=BMDevice_svnt_export.h
-  dynamicflags = BMDEVICE_SVNT_BUILD_DLL
+project(BMDevice_lem_gen) : ciaocidldefaults, taoidldefaults {
+  after += BasicSP_lem_gen
+  custom_only = 1
+  cidlflags -= --
+  cidlflags += -I $(CIAO_ROOT)/examples/BasicSP --
+
+  idlflags += -I $(CIAO_ROOT)/examples/BasicSP
+  idlflags  +=  -Wb,export_macro=BMDEVICE_EXEC_Export \
+                -Wb,export_include=BMDevice_exec_export.h \
+                -SS
 
   CIDL_Files {
-    BMDevice.cidl
+    BMDevice.cidl >> BMDeviceE.idl
   }
 
   IDL_Files {
     BMDeviceE.idl
   }
 
-  Source_Files {
-    BMDeviceEC.cpp
-    BMDeviceS.cpp
-    BMDevice_svnt.cpp
-  }
 }
 
+project(BMDevice_exec) : ciao_component_dnc {
+  after      += BMDevice_stub BMDevice_lem_gen
 
-project(BMDevice_DnC_exec) : ciao_component_dnc {
-  avoids += ace_for_tao
-  after += BMDevice_DnC_svnt
   sharedname = BMDevice_exec
-  libs      += BMDevice_stub BMDevice_svnt BasicSP_stub BasicSP_svnt
-  libpaths += ..
-  idlflags  +=  -Wb,export_macro=BMDEVICE_EXEC_Export -Wb,export_include=BMDevice_exec_export.h
+  libs       += BMDevice_stub BasicSP_stub
+  libs       += BasicSP_exec
+  includes += $(CIAO_ROOT)/examples/BasicSP
+
   dynamicflags   = BMDEVICE_EXEC_BUILD_DLL
 
   IDL_Files {
-    BMDeviceEI.idl
+  }
+
+  Header_Files {
+    BMDevice_exec.h
+    BMDevice_exec_export.h
+    BMDeviceEC.h
   }
 
   Source_Files {
-    BMDeviceES.cpp
-    BMDeviceEIC.cpp
-    BMDeviceEIS.cpp
     BMDevice_exec.cpp
+    BMDeviceEC.cpp
+  }
+
+  Inline_Files {
+  }
+}
+
+project(BMDevice_svnt) : ciao_servant_dnc {
+  after += BasicSP_svnt BMDevice_exec
+  includes += $(CIAO_ROOT)/examples/BasicSP
+
+  sharedname = BMDevice_svnt
+
+  libs    += BMDevice_stub BMDevice_exec
+  libs    += BasicSP_stub BasicSP_exec
+  dynamicflags = BMDEVICE_SVNT_BUILD_DLL
+
+  CIDL_Files {
+  }
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    BMDeviceS.cpp
+    BMDevice_svnt.cpp
   }
 }

@@ -4,19 +4,19 @@
 #include "BMDisplay_exec.h"
 
 /// Default constructor.
-MyImpl::BMDisplay_exec_impl::BMDisplay_exec_impl ()
+MyImpl::BMDisplay_exec_i::BMDisplay_exec_i ()
 {
 }
 
 /// Default destructor.
-MyImpl::BMDisplay_exec_impl::~BMDisplay_exec_impl ()
+MyImpl::BMDisplay_exec_i::~BMDisplay_exec_i ()
 {
 }
 
 // Operations from BasicSP::BMDisplay
 
 void
-MyImpl::BMDisplay_exec_impl::push_data_ready (
+MyImpl::BMDisplay_exec_i::push_data_ready (
     BasicSP::DataAvailable *ev
   )
 {
@@ -49,14 +49,14 @@ MyImpl::BMDisplay_exec_impl::push_data_ready (
 
 // Operations from Components::SessionComponent
 void
-MyImpl::BMDisplay_exec_impl::set_session_context (
+MyImpl::BMDisplay_exec_i::set_session_context (
     Components::SessionContext_ptr ctx
   )
 {
   if (CIAO::debug_level () > 0)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "MyImpl::BMDisplay_exec_impl::set_session_context\n"));
+                  "MyImpl::BMDisplay_exec_i::set_session_context\n"));
     }
 
   this->context_ =
@@ -68,46 +68,46 @@ MyImpl::BMDisplay_exec_impl::set_session_context (
 }
 
 void
-MyImpl::BMDisplay_exec_impl::ciao_preactivate (
+MyImpl::BMDisplay_exec_i::ciao_preactivate (
   )
 {
 }
 
 void
-MyImpl::BMDisplay_exec_impl::ccm_activate ()
+MyImpl::BMDisplay_exec_i::ccm_activate ()
 {
   if (CIAO::debug_level () > 0)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "MyImpl::BMDisplay_exec_impl::ccm_activate\n"));
+                  "MyImpl::BMDisplay_exec_i::ccm_activate\n"));
     }
 
 }
 
 void
-MyImpl::BMDisplay_exec_impl::ciao_postactivate (
+MyImpl::BMDisplay_exec_i::ciao_postactivate (
   )
 {
 }
 
 void
-MyImpl::BMDisplay_exec_impl::ccm_passivate (
+MyImpl::BMDisplay_exec_i::ccm_passivate (
   )
 {
   if (CIAO::debug_level () > 0)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "MyImpl::BMDisplay_exec_impl::ccm_passivate\n"));
+                  "MyImpl::BMDisplay_exec_i::ccm_passivate\n"));
     }
 }
 
 void
-MyImpl::BMDisplay_exec_impl::ccm_remove ()
+MyImpl::BMDisplay_exec_i::ccm_remove ()
 {
   if (CIAO::debug_level () > 0)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "MyImpl::BMDisplay_exec_impl::ccm_remove\n"));
+                  "MyImpl::BMDisplay_exec_i::ccm_remove\n"));
     }
 }
 
@@ -128,12 +128,27 @@ MyImpl::BMDisplayHome_exec_impl::~BMDisplayHome_exec_impl ()
 ::Components::EnterpriseComponent_ptr
 MyImpl::BMDisplayHome_exec_impl::create ()
 {
-  return new MyImpl::BMDisplay_exec_impl;
+  ::Components::EnterpriseComponent_ptr retval =
+    ::Components::EnterpriseComponent::_nil ();
+
+  ACE_NEW_THROW_EX (
+                    retval,
+                    MyImpl::BMDisplay_exec_i,
+                    ::CORBA::NO_MEMORY ());
+
+  return retval;
 }
 
-
 extern "C" BMDISPLAY_EXEC_Export ::Components::HomeExecutorBase_ptr
-createBMDisplayHome_Impl (void)
+create_BasicSP_BMDisplayHome_Impl (void)
 {
-  return new MyImpl::BMDisplayHome_exec_impl;
+  ::Components::HomeExecutorBase_ptr retval =
+    ::Components::HomeExecutorBase::_nil ();
+
+  ACE_NEW_RETURN (
+                  retval,
+                  MyImpl::BMDisplayHome_exec_impl,
+                  ::Components::HomeExecutorBase::_nil ());
+
+  return retval;
 }

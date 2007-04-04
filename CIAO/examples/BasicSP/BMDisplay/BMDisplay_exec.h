@@ -13,27 +13,27 @@
 #ifndef CIAO_BMDISPLAY_EXEC_H
 #define CIAO_BMDISPLAY_EXEC_H
 
-#include "BMDisplayEIC.h"
+#include "BMDisplayEC.h"
 #include "tao/LocalObject.h"
 #include "BMDisplay_exec_export.h"
 
 namespace MyImpl
 {
   /**
-   * @class BMDisplay_exec_impl
+   * @class BMDisplay_exec_i
    *
    * RateGen executor implementation class.
    */
-  class BMDISPLAY_EXEC_Export BMDisplay_exec_impl :
-    public virtual BasicSP::BMDisplay_Exec,
+  class BMDISPLAY_EXEC_Export BMDisplay_exec_i :
+    public virtual CIDL_BMDisplay_Impl::BMDisplay_Exec,
     public virtual TAO_Local_RefCounted_Object
   {
   public:
     /// Default constructor.
-    BMDisplay_exec_impl ();
+    BMDisplay_exec_i ();
 
     /// Default destructor.
-    ~BMDisplay_exec_impl ();
+    ~BMDisplay_exec_i ();
 
     // Operations from BasicSP::BMDisplay
 
@@ -70,7 +70,7 @@ namespace MyImpl
    * BMDisplay home executor implementation class.
    */
   class BMDISPLAY_EXEC_Export BMDisplayHome_exec_impl :
-    public virtual BasicSP::CCM_BMDisplayHome,
+    public virtual CIDL_BMDisplay_Impl::BMDisplayHome_Exec,
     public virtual TAO_Local_RefCounted_Object
   {
   public:

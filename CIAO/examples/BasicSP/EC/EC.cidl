@@ -3,6 +3,7 @@
 #ifndef EC_CIDL
 #define EC_CIDL
 
+#include "BasicSPE.idl"
 #include "EC.idl"
 
 composition session EC_Impl
@@ -15,7 +16,3 @@ composition session EC_Impl
 };
 
 #endif /* EC_CIDL */
-
-
-
-

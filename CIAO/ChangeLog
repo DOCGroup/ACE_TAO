@@ -1,7 +1,95 @@
+Wed Apr  4 21:55:58 UTC 2007  Krishnakumar B  <kitty@nospam.invalid.domain>
+
+        * DAnCE/Plan_Launcher/Plan_Launcher.cpp:
+        * DAnCE/ExecutionManager/Execution_Manager.cpp:
+
+          Improved the option handling of the Execution_Manager and
+          plan_launcher.  This includes printing meaningful usage
+          messages, and exiting with an error message when an error occurs
+          instead of silent termination etc. etc.
+
+        * examples/BasicSP/BMClosedED/BMClosedED.cidl:
+        * examples/BasicSP/BMClosedED/BMClosedED.idl:
+        * examples/BasicSP/BMClosedED/BMClosedED.mpc:
+        * examples/BasicSP/BMClosedED/BMClosedED_exec.h:
+        * examples/BasicSP/BMClosedED/BMClosedED_exec.cpp:
+        * examples/BasicSP/BMDevice/BMDevice.cidl:
+        * examples/BasicSP/BMDevice/BMDevice.idl:
+        * examples/BasicSP/BMDevice/BMDevice.mpc:
+        * examples/BasicSP/BMDevice/BMDevice_exec.h:
+        * examples/BasicSP/BMDevice/BMDevice_exec.cpp:
+        * examples/BasicSP/BMDisplay/BMDisplay.cidl:
+        * examples/BasicSP/BMDisplay/BMDisplay.idl:
+        * examples/BasicSP/BMDisplay/BMDisplay.mpc:
+        * examples/BasicSP/BMDisplay/BMDisplay_exec.h:
+        * examples/BasicSP/BMDisplay/BMDisplay_exec.cpp:
+        * examples/BasicSP/BasicSP.idl:
+        * examples/BasicSP/BasicSP.mpc:
+        * examples/BasicSP/BasicSP.mwc:
+        * examples/BasicSP/BasicSP_exec.h:
+        * examples/BasicSP/BasicSP_exec.cpp:
+        * examples/BasicSP/BasicSP_exec_export.h:
+        * examples/BasicSP/EC/EC.cidl:
+        * examples/BasicSP/EC/EC.idl:
+        * examples/BasicSP/EC/EC.mpc:
+        * examples/BasicSP/EC/EC_exec.h:
+        * examples/BasicSP/EC/EC_exec.cpp:
+        * examples/BasicSP/EC/client.cpp:
+        * examples/BasicSP/EC/controller.cpp:
+        * examples/BasicSP/descriptors/BasicSP.cdp:
+        * examples/BasicSP/descriptors/BasicSP.dat:
+        * examples/BasicSP/descriptors/run_test.pl:
+
+          Updated the example to use the latest and greatest CIAO features
+          include --lem-force-all which gives an example of how to share
+          the implementation of a facet among multiple components.  While
+          at it, make sure that the run_test.pl actually deploys and runs
+          the application.  Now the example can be turned on for nightly
+          builds.
+
+        * examples/BasicSP/descriptors/Airframe.ccd:
+        * examples/BasicSP/descriptors/Airframe.cid:
+        * examples/BasicSP/descriptors/Airframe.cpd:
+        * examples/BasicSP/descriptors/Airframe_Exec.iad:
+        * examples/BasicSP/descriptors/Airframe_Stub.iad:
+        * examples/BasicSP/descriptors/Airframe_Svnt.iad:
+        * examples/BasicSP/descriptors/DeploymentPlan.cdp:
+        * examples/BasicSP/descriptors/Domain.cdd:
+        * examples/BasicSP/descriptors/GPS.ccd:
+        * examples/BasicSP/descriptors/GPS.cid:
+        * examples/BasicSP/descriptors/GPS.cpd:
+        * examples/BasicSP/descriptors/GPS_Exec.iad:
+        * examples/BasicSP/descriptors/GPS_Stub.iad:
+        * examples/BasicSP/descriptors/GPS_Svnt.iad:
+        * examples/BasicSP/descriptors/HUDisplay.cid:
+        * examples/BasicSP/descriptors/HUDisplay.cpd:
+        * examples/BasicSP/descriptors/HUDisplay.pcd:
+        * examples/BasicSP/descriptors/Libraries.iad:
+        * examples/BasicSP/descriptors/NavDisplay.ccd:
+        * examples/BasicSP/descriptors/NavDisplay.cid:
+        * examples/BasicSP/descriptors/NavDisplay.cpd:
+        * examples/BasicSP/descriptors/NavDisplay_Exec.iad:
+        * examples/BasicSP/descriptors/NavDisplay_Stub.iad:
+        * examples/BasicSP/descriptors/NavDisplay_Svnt.iad:
+        * examples/BasicSP/descriptors/NodeManagerMap.dat:
+        * examples/BasicSP/descriptors/Timer.ccd:
+        * examples/BasicSP/descriptors/Timer.cid:
+        * examples/BasicSP/descriptors/Timer.cpd:
+        * examples/BasicSP/descriptors/Timer_Exec.iad:
+        * examples/BasicSP/descriptors/Timer_Stub.iad:
+        * examples/BasicSP/descriptors/Timer_Svnt.iad:
+        * examples/BasicSP/descriptors/XMI.xsd:
+        * examples/BasicSP/descriptors/basicNodeDaemon.pl:
+        * examples/BasicSP/descriptors/basicsp.dat:
+        * examples/BasicSP/descriptors/flattened_deploymentplan.cdp:
+        * examples/BasicSP/descriptors/package.tpd:
+
+          Removed these files.
+
 Wed Apr  4 22:04:11 UTC 2007  Gan Deng  <gan.deng@vanderbilt.edu>
 
         * DAnCE/Plan_Launcher/Plan_Launcher.mpc
-        
+
           Fixed static build errors.
 
 Wed Apr  4 19:28:09 UTC 2007  Gan Deng  <gan.deng@vanderbilt.edu>
@@ -16,21 +104,21 @@ Wed Apr  4 15:55:23 UTC 2007  Gan Deng  <gan.deng@vanderbilt.edu>
         * DAnCE/DomainApplicationManager/Reply_Handler_i.h
 
           Removed unused arguments.
-        
+
 Tue Apr  3 19:30:05 UTC 2007  Gan Deng  <gan.deng@vanderbilt.edu>
 
         * DAnCE/Deployment/DAnCE_Core.mpc
         * MPC/config/ciao_deployment_stub.mpb
-        
+
           Added "messaging.mpb" as base project for ciao_deployment_stub.
-        
+
         * DAnCE/ExecutionManager/Execution_Manager.cpp
         * DAnCE/ExecutionManager/Execution_Manager_Impl.cpp
         * DAnCE/ExecutionManager/Execution_Manager_Impl.h
 
           Modified to allow passing command line option to
           indicate whether to use AMI or not.
-        
+
         * DAnCE/DomainApplicationManager/DomainApplicationManager_AMI_Impl.cpp
         * DAnCE/DomainApplicationManager/DomainApplicationManager_AMI_Impl.h
         * DAnCE/DomainApplicationManager/Reply_Handler_i.cpp
@@ -44,19 +132,19 @@ Tue Apr  3 19:30:05 UTC 2007  Gan Deng  <gan.deng@vanderbilt.edu>
         * DAnCE/NodeManager/Monitor.mpc
 
           Modified to accomodate the above changes.
-        
+
 Tue Apr  3 18:59:38 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * CIAO_TAO_DAnCE.mwc:
         * CIAO_TAO.mwc:
-        
+
           In the list of directories eplaced ACE_ROOT/ace/ACEXML with
           3 subdirectories, leaving out the tests and examples
           subdirectories, which aren't needed. These included ACEXML
           subdirectories are now the same as in TAO_ACE.mwc.
-          
+
         * tests/CIDL/CodeGen/CodeGen.mpc:
-        
+
           Cosmetic changes, shortened line lengths.
 
 Tue Apr  3 15:19:01 UTC 2007  Gan Deng  <gan.deng@vanderbilt.edu>
@@ -70,18 +158,18 @@ Mon Apr  2 16:38:24 UTC 2007  William R. Otte  <wotte@dre.vanderbilt.edu>
         * DAnCE/Plan_Launcher/Plan_Launcher_Impl.h
         * DAnCE/Plan_Launcher/Plan_Launcher_Benchmark_Impl.cpp
         * DAnCE/Plan_Launcher/Plan_Launcher_Benchmark_Impl.h
-        
+
           Address virtual destructor warnings.
 
         * DAnCE/ExecutionManager/Execution_Manager_Impl.h
-        
+
           Address exception warnings.
-        
+
 Fri Mar 30 23:10:24 UTC 2007  Gan Deng  <gan.deng@vanderbilt.edu>
 
         * DAnCE/Plan_Launcher/Plan_Launcher_Benchmark_Impl.cpp:
         * DAnCE/Plan_Launcher/Plan_Launcher_Benchmark_Impl.h:
-        
+
           Removed the declaration and definition of the virtual
           destructor since a virtual destructor has been defined
           in the base class.
@@ -92,7 +180,7 @@ Fri Mar 30 18:23:43 UTC 2007  Gan Deng  <gan.deng@vanderbilt.edu>
         * DAnCE/Plan_Launcher/Plan_Launcher_Benchmark_Impl.cpp
 
           Silenced the "unused variables" warnings.
-        
+
 Fri Mar 30 18:09:55 UTC 2007  Gan Deng  <gan.deng@vanderbilt.edu>
 
         * DAnCE/ExecutionManager/ExecutionManager.mpc
@@ -105,7 +193,7 @@ Fri Mar 30 18:05:06 UTC 2007  Gan Deng  <gan.deng@vanderbilt.edu>
         * DAnCE/Plan_Launcher/Plan_Launcher_Benchmark_Impl.h:
         * DAnCE/Plan_Launcher/Plan_Launcher_Impl.cpp:
         * DAnCE/Plan_Launcher/Plan_Launcher_Impl.h:
-        
+
           Added virtual destructors into the class.
 
 Fri Mar 30 14:15:58 UTC 2007  Gan Deng  <gan.deng@vanderbilt.edu>
@@ -118,33 +206,33 @@ Fri Mar 30 14:15:58 UTC 2007  Gan Deng  <gan.deng@vanderbilt.edu>
         * DAnCE/Plan_Launcher/Plan_Launcher_Impl.cpp:
         * DAnCE/Plan_Launcher/Plan_Launcher_Benchmark_Impl.cpp:
         * DAnCE/Plan_Launcher/Plan_Launcher_Benchmark_Impl.cpp:
-        
+
           Removed emulated exceptions since they are no
           longer supported. Also removed the exception
           specification in the c++ mapping of IDL operation
           since they are obsolete.
-        
+
 Thu Mar 29 15:22:08 UTC 2007  Gan Deng  <gan.deng@vanderbilt.edu>
 
         * DAnCE/ExecutionManager/Execution_Manager.cpp:
-        
+
           Created a child POA which is configured with
           Client_Propagated Priority Model.
-        
+
         * DAnCE/ExecutionManager/Execution_Manager_Impl.cpp:
         * DAnCE/ExecutionManager/Execution_Manager_Impl.h:
         * DAnCE/ExecutionManager/ExecutionManager.mpc:
-        
+
           Added a get_current_thread_priority() to get the
-          priority of the current thread. Also added 
+          priority of the current thread. Also added
           debug_level control so the thread priority could
           be printed out.
-        
+
         * DAnCE/Plan_Launcher/Plan_Launcher_Impl.cpp:
         * DAnCE/Plan_Launcher/Plan_Launcher_Impl.h:
         * DAnCE/Plan_Launcher/Plan_Launcher.mpc:
-        
-          Added two new methods. 
+
+          Added two new methods.
           The is_client_propagated_model() checks whether
           the ExecutionManager exposes the CLIENT_PROPAGATED
           priority model. The set_current_priority() method
@@ -153,21 +241,21 @@ Thu Mar 29 15:22:08 UTC 2007  Gan Deng  <gan.deng@vanderbilt.edu>
 
         * DAnCE/Plan_Launcher/Plan_Launcher_Benchmark_Impl.h:
         * DAnCE/Plan_Launcher/Plan_Launcher_Benchmark_Impl.cpp:
-        
+
           Added two derived classes which collect benchmarking
           results of DAnCE.
-        
+
         * DAnCE/Plan_Launcher/Plan_Launcher.cpp:
 
           Added a command line argument "-z" to allow priority
           to be specified on Plan_Launcher, and then propagated
           to the Execution Manager.
 
-        
+
 Wed Mar 28 11:16:43 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
-        
+
         * DAnCE/NodeApplication/NodeApp_Configurator.h:
- 
+
           Partially reverted changes made in Fri Mar 23 03:13:40 UTC 2007.
           VS 7.1 didn't like it. Forward declaration to Config_Manager was
           removed and its header file was included again.

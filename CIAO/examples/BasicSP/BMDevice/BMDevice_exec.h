@@ -15,8 +15,10 @@
 #ifndef CIAO_BMDEVICE_EXEC_H
 #define CIAO_BMDEVICE_EXEC_H
 
-#include "BMDeviceEIC.h"
+#include "BMDevice_exec_export.h"
+#include "BMDeviceEC.h"
 #include "tao/LocalObject.h"
+#include "BasicSP_exec.h"
 
 namespace MyImpl
 {
@@ -26,7 +28,7 @@ namespace MyImpl
    * An example RateGen executor implementation class.
    */
   class BMDEVICE_EXEC_Export BMDevice_exec_i :
-    public virtual BasicSP::BMDevice_Exec,
+    public virtual CIDL_BMDevice_Impl::BMDevice_Exec,
     public virtual TAO_Local_RefCounted_Object
   {
   public:
@@ -43,14 +45,6 @@ namespace MyImpl
 
     virtual void
     push_timeout (BasicSP::TimeOut *ev);
-
-    // Operations from BasicSP::position
-
-    virtual char *
-    data_read ();
-
-    virtual char *
-    get_data ();
 
     // Operations from Components::SessionComponent
 
@@ -72,10 +66,12 @@ namespace MyImpl
     virtual void
     ccm_remove ();
   protected:
-    const char *str_;
 
    /// Copmponent specific context
     BasicSP::CCM_BMDevice_Context_var context_;
+
+    private:
+    MyImpl::ReadData_Impl* data_read_;
   };
 
   /**
@@ -84,7 +80,7 @@ namespace MyImpl
    * BMDevice home executor implementation class.
    */
   class BMDEVICE_EXEC_Export BMDeviceHome_exec_i :
-    public virtual BasicSP::CCM_BMDeviceHome,
+    public virtual CIDL_BMDevice_Impl::BMDeviceHome_Exec,
     public virtual TAO_Local_RefCounted_Object
   {
   public:

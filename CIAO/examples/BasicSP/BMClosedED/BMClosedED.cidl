@@ -3,7 +3,7 @@
 #ifndef BMCLOSEDED_CIDL
 #define BMCLOSEDED_CIDL
 
-#include "../BasicSP.idl"
+#include "BasicSPE.idl"
 #include "BMClosedED.idl"
 
 composition session BMClosedED_Impl
@@ -16,5 +16,3 @@ composition session BMClosedED_Impl
 };
 
 #endif /* BMCLOSEDED_CIDL */
-
-

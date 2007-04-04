@@ -12,7 +12,7 @@
 #ifndef CIAO_EC_IDL
 #define CIAO_EC_IDL
 
-#include "../BasicSP.idl"
+#include "BasicSP.idl"
 
 module BasicSP
 {

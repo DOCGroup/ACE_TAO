@@ -42,6 +42,7 @@ module BasicSP
    * @eventtype Events that represent data availability
    */
   eventtype DataAvailable {};
+
 };
 
 #endif /*CIAO_BASIC_SP_IDL*/

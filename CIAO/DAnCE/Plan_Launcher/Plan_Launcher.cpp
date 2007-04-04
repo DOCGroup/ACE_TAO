@@ -50,13 +50,13 @@ namespace CIAO
                   ACE_TEXT ("-a <PACKAGE_NAMES>\n")
                   ACE_TEXT ("-b <BENCHMARKING_ITERATIONS>\n")
                   ACE_TEXT ("-e <PACKAGE_TYPES>\n")
-                  ACE_TEXT ("-i <DOMAIN_APPLICATION_MANAGER_IOR_FOR_INPUT>\n")
+                  ACE_TEXT ("-i <DOMAIN_APPLICATION_MANAGER_IOR_FOR_INPUT>: Tear down the application launched by this Domain Application Manager\n")
                   ACE_TEXT ("-k <EXECUTION_MANAGER_IOR>")
                   ACE_TEXT (" : Default file://em.ior\n")
                   ACE_TEXT ("-l <REPOSITORY_MANAGER_IOR>")
                   ACE_TEXT (" : Default file://rm.ior\n")
-                  ACE_TEXT ("-n : Use naming service to fetch EM")
-                  ACE_TEXT ("-o <DOMAIN_APPLICATION_MANAGER_IOR_OUTPUT_FILE>\n")
+                  ACE_TEXT ("-n : Use naming service to fetch EM\n")
+                  ACE_TEXT ("-o <DOMAIN_APPLICATION_MANAGER_IOR_OUTPUT_FILE>: Use this option to dump out the IOR of the Domain Application Manager\n")
                   ACE_TEXT ("-p <DEPLOYMENT_PLAN_URL>\n")
                   ACE_TEXT ("-r <NEW_PLAN_DESCRIPTOR_FOR_REDEPLOYMENT>\n")
                   ACE_TEXT ("-t <PLAN_UUID>\n")
@@ -80,59 +80,59 @@ namespace CIAO
         {
           switch (c)
             {
-            case 'a':
-              package_names = get_opt.opt_arg ();
-              use_package_name = true;
-              break;
-            case 'b':
-              do_benchmarking = true;
-              niterations = ACE_OS::atoi (get_opt.opt_arg ());
-              break;
-            case 'e':
-              package_types = get_opt.opt_arg ();
-              use_package_name = false;
-              break;
-            case 'p':
-              deployment_plan_url = get_opt.opt_arg ();
-              break;
-            case 'n':
-              em_use_naming = true;
-              break;
-            case 'k':
-              em_ior_file = get_opt.opt_arg ();
-              break;
-            case 'l':
-              use_repoman = true;
-              rm_ior_file = get_opt.opt_arg ();
-              break;
-            case 'v':
-              use_repoman = true;
-              rm_use_naming = true;
-              repoman_name_ = get_opt.opt_arg ();
-              break;
-            case 'o':
-              dap_ior_filename = get_opt.opt_arg ();
-              mode = pl_mode_start;
-              break;
-            case 'i':
-              dap_ior = get_opt.opt_arg ();
-              mode = pl_mode_stop_by_dam;
-              break;
-            case 't':
-              plan_uuid = get_opt.opt_arg ();
-              mode = pl_mode_stop_by_uuid;
-              break;
-            case 'r':
-              new_deployment_plan_url = get_opt.opt_arg ();
-              mode = pl_mode_redeployment;
-              break;
-            case 'z':
-              priority = ACE_OS::atoi (get_opt.opt_arg ());
-              break;
-            case 'h':
-            default:
-              usage(argv[0]);
-              return false;
+              case 'a':
+                package_names = get_opt.opt_arg ();
+                use_package_name = true;
+                break;
+              case 'b':
+                do_benchmarking = true;
+                niterations = ACE_OS::atoi (get_opt.opt_arg ());
+                break;
+              case 'e':
+                package_types = get_opt.opt_arg ();
+                use_package_name = false;
+                break;
+              case 'p':
+                deployment_plan_url = get_opt.opt_arg ();
+                break;
+              case 'n':
+                em_use_naming = true;
+                break;
+              case 'k':
+                em_ior_file = get_opt.opt_arg ();
+                break;
+              case 'l':
+                use_repoman = true;
+                rm_ior_file = get_opt.opt_arg ();
+                break;
+              case 'v':
+                use_repoman = true;
+                rm_use_naming = true;
+                repoman_name_ = get_opt.opt_arg ();
+                break;
+              case 'o':
+                dap_ior_filename = get_opt.opt_arg ();
+                mode = pl_mode_start;
+                break;
+              case 'i':
+                dap_ior = get_opt.opt_arg ();
+                mode = pl_mode_stop_by_dam;
+                break;
+              case 't':
+                plan_uuid = get_opt.opt_arg ();
+                mode = pl_mode_stop_by_uuid;
+                break;
+              case 'r':
+                new_deployment_plan_url = get_opt.opt_arg ();
+                mode = pl_mode_redeployment;
+                break;
+              case 'z':
+                priority = ACE_OS::atoi (get_opt.opt_arg ());
+                break;
+              case 'h':
+              default:
+                usage(argv[0]);
+                return false;
             }
         }
 
@@ -173,8 +173,13 @@ namespace CIAO
 
           return 0;
         }
-
-      return -1;
+      else
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "Error in opening file %s to write DAM IOR: %m",
+                      dap_ior_filename));
+          return -1;
+        }
     }
 
     static int
@@ -241,13 +246,15 @@ namespace CIAO
                   return -1;
                 }
 
-              ACE_DEBUG ((LM_DEBUG, "Plan_Launcher returned UUID is %s\n", uuid.in ()));
+              ACE_DEBUG ((LM_DEBUG, "Plan_Launcher returned UUID is %s\n",
+                          uuid.in ()));
               dapp_mgr = launcher->get_dam (uuid.in ());
 
               // Write out DAM ior if requested
               if (mode == pl_mode_start)
                 {
-                  write_dap_ior (orb.in (), dapp_mgr.in ());
+                  if (write_dap_ior (orb.in (), dapp_mgr.in ()) != 0)
+                    return -1;
                 }
               else // if (pl_mode_interactive)
                 {
@@ -260,9 +267,9 @@ namespace CIAO
                   ACE_DEBUG ((LM_DEBUG,
                               "Plan_Launcher: destroy the application.....\n"));
                   if (! launcher->teardown_plan (uuid))
-                      ACE_DEBUG ((LM_DEBUG,
-                                  "(%P|%t) CIAO_PlanLauncher:tear down assembly failed: "
-                                  "unkonw plan uuid.\n"));
+                    ACE_DEBUG ((LM_DEBUG,
+                                "(%P|%t) CIAO_PlanLauncher:tear down assembly failed: "
+                                "unknown plan uuid.\n"));
                 }
             }
           else if (mode == pl_mode_redeployment && new_deployment_plan_url != 0) // do redeployment
