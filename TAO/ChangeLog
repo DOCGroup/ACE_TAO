@@ -1,9 +1,21 @@
+Thu Apr  5 13:45:52 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/tests/Notify/Structured_Multi_Filter/Notify_Push_Consumer.cpp:
+
+          Switch to ETCL and use a $prefix on the component name to test bug
+          1428.
+
+        * orbsvcs/tests/Notify/Structured_Multi_Filter/notify.conf.xml:
+
+          Converted notify.conf to XML for use with the XML service
+          configurator.
+
 Thu Apr  5 13:37:51 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/tests/Notify/Structured_Filter/Structured_Consumer.cpp:
 
           Change one of the constraint expressions to use a $ prefix on the
-          component name to ensure that this works (as shown in bug 1428).
+          component name to ensure that this works.
 
 Thu Apr  5 11:51:23 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
