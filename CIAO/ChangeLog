@@ -1,3 +1,20 @@
+Thu Apr  5 21:03:50 UTC 2007  Gan Deng  <gan.deng@vanderbilt.edu>
+
+        * DAnCE/Utils/DAnCE_Utils.mpc
+        * DAnCE/Utils/DAnCE_Utils_Export.h
+        * DAnCE/Utils/Plan_Handler.cpp
+        * DAnCE/Utils/Plan_Handler.h
+
+          Added the utility library to manipulate the deployment
+          plan, such as adding/removing instances, adding/removing
+          connections, and pretty print.
+        
+        * DAnCE/Plan_Launcher/Plan_Launcher.mpc
+        * DAnCE/Plan_Launcher/Plan_Launcher_Benchmark_Impl.cpp
+        
+          Modified to use the above utility class so we can
+          programatically scale up the deployment.
+
 Thu Apr  5 16:51:24 UTC 2007  Gan Deng  <gan.deng@vanderbilt.edu>
 
         * DAnCE/DomainApplicationManager/Reply_Handler_i.h
