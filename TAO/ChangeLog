@@ -1,3 +1,10 @@
+Thu Apr  5 13:37:51 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/tests/Notify/Structured_Filter/Structured_Consumer.cpp:
+
+          Change one of the constraint expressions to use a $ prefix on the
+          component name to ensure that this works (as shown in bug 1428).
+
 Thu Apr  5 11:51:23 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * MPC/config/link_codecfactory.mpb:
