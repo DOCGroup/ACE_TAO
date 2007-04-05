@@ -132,7 +132,7 @@ Recursive_Mutex_Test: !DISABLE_ToFix_LynxOS_PPC !ST
 Refcounted_Auto_Ptr_Test: !DISABLE_ToFix_LynxOS_PPC !ACE_FOR_TAO
 Reference_Counted_Event_Handler_Test
 Reverse_Lock_Test
-Sendfile_Test
+Sendfile_Test: !QNX
 Signal_Test
 SOCK_Connector_Test
 SOCK_Netlink_Test: !ACE_FOR_TAO

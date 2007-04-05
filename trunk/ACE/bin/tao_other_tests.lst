@@ -18,7 +18,7 @@ TAO/performance-tests/Latency/Thread_Per_Connection/run_test.pl -n 1000: !ST !Wi
 TAO/performance-tests/Latency/AMI/run_test.pl: !DISABLE_ToFix_LynxOS_PPC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ST !Win32 !ACE_FOR_TAO !OpenVMS
 TAO/performance-tests/Latency/DSI/run_test.pl: !DISABLE_ToFix_LynxOS_PPC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !Win32 !ACE_FOR_TAO !OpenVMS
 TAO/performance-tests/Latency/DII/run_test.pl: !DISABLE_ToFix_LynxOS_PPC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !Win32 !ACE_FOR_TAO !OpenVMS
-TAO/performance-tests/Latency/Deferred/run_test.pl: !DISABLE_ToFix_LynxOS_PPC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !Win32 !ACE_FOR_TAO !OpenVMS
+TAO/performance-tests/Latency/Deferred/run_test.pl: !QNX !DISABLE_ToFix_LynxOS_PPC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !Win32 !ACE_FOR_TAO !OpenVMS
 TAO/performance-tests/Sequence_Latency/Single_Threaded/run_test.pl: !Win32 !DISABLE_ToFix_LynxOS_PPC !ACE_FOR_TAO !OpenVMS
 TAO/performance-tests/Sequence_Latency/Thread_Pool/run_test.pl: !ST !Win32 !DISABLE_ToFix_LynxOS_PPC !ACE_FOR_TAO !OpenVMS
 TAO/performance-tests/Sequence_Latency/Thread_Per_Connection/run_test.pl: !ST !Win32 !DISABLE_ToFix_LynxOS_PPC !ACE_FOR_TAO !OpenVMS
@@ -49,7 +49,7 @@ TAO/examples/Simple/time-date/run_test.pl: !ST !STATIC !NO_MESSAGING !Win32
 TAO/examples/Simple/time/run_test.pl: !NO_MESSAGING !Win32
 TAO/examples/Quoter/run_test.pl: !DISABLE_ToFix_LynxOS_PPC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !Win32 !ACE_FOR_TAO
 TAO/examples/Load_Balancing/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !SUNCC5_1 !ACE_FOR_TAO
-TAO/examples/PluggableUDP/tests/SimplePerformance/run_test.pl: !NO_DIOP !ACE_FOR_TAO
+TAO/examples/PluggableUDP/tests/SimplePerformance/run_test.pl: !QNX !NO_DIOP !ACE_FOR_TAO
 TAO/examples/AMH/Sink_Server/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !Win32 !DISABLE_ToFix_LynxOS_PPC !DISABLE_ToFix_LynxOS_x86 !ACE_FOR_TAO
 TAO/orbsvcs/tests/AVStreams/Pluggable/run_test.pl -p TCP,UDP,RTP_UDP: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !DISABLE_ToFix_LynxOS_x86 !ACE_FOR_TAO
 TAO/orbsvcs/tests/AVStreams/Pluggable/run_test.pl -p SCTP_SEQ: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO SCTP !DISABLE_ToFix_LynxOS_x86 !ACE_FOR_TAO
