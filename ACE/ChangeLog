@@ -1,3 +1,19 @@
+Thu Apr  5 11:50:14 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/config/global.features:
+
+          Set the link_codecfactory feature to zero.  This feature
+          determines if the TAO_CodecFactory library is linked in if the TAO
+          library is linked into an executable or dynamic library.
+
+        * bin/tao_other_tests.lst:
+
+          Disable a couple of performance tests that crash our QNX machine.
+
+        * tests/run_test.lst:
+
+          Disable the Sendfile_Test.  QNX doesn't support that interface.
+
 Thu Apr  5 11:28:55 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * tests/Message_Queue_Test_Ex.cpp:
