@@ -1,3 +1,10 @@
+Thu Apr  5 11:28:55 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tests/Message_Queue_Test_Ex.cpp:
+
+          Changed to use ACE_Auto_Basic_Ptr instead of auto_ptr.  Some
+          implementations still don't have a reset() method.
+
 Thu Apr  5 08:00:00 UTC 2007  Martin Corino <mcorino@remedy.nl>
 
         * bin/ace_tests.lst:
