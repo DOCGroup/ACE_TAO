@@ -46,7 +46,7 @@ main( int argc, char *argv[] )
 
     CORBA::OctetSeq_var client_user_name = codec->encode (user_name_as_any);
 
-    messenger->send_message( client_user_name );
+    messenger->send_message (client_user_name.in ());
 
     messenger->shutdown ();
 
