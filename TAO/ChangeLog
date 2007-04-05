@@ -1,3 +1,9 @@
+Thu Apr  5 11:24:01 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tests/Bug_933_Regression/MessengerClient.cpp:
+
+          Changed to use .in() to avoid warnings from gcc.
+
 Thu Apr  5 11:20:52 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * examples/Load_Balancing_persistent/Identity_Server.cpp:
