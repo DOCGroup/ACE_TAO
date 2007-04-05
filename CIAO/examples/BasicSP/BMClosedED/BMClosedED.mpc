@@ -36,7 +36,7 @@ project(BMClosedED_lem_gen) : ciaocidldefaults, taoidldefaults {
                 -SS
 
   CIDL_Files {
-    BMClosedED.cidl >> BMClosedEDE.idl
+    BMClosedED.cidl
   }
 
   IDL_Files {
