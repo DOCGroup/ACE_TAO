@@ -1,3 +1,1 @@
-RACE      corbaloc:iiop:localhost:50000/NodeManager
-space     corbaloc:iiop:localhost:50001/NodeManager
-ground    corbaloc:iiop:localhost:50002/NodeManager
+RACE_Node      corbaloc:iiop:localhost:50000/NodeManager

@@ -1,6 +1,6 @@
 project(Data_Base_stub): ciao_client_dnc {
 
-  sharedname = Data_Base_stub
+  sharedname = Data_Base_Component_stub
   after += OpString_stub
 
   idlflags -= -GT
@@ -25,8 +25,8 @@ project(Data_Base_stub): ciao_client_dnc {
 
 project(Data_Base_svnt) : ciao_servant_dnc {
   after      +=  Data_Base_stub
-  sharedname  = Data_Base_svnt
-  libs       += Data_Base_stub
+  sharedname  = Data_Base_Component_svnt
+  libs       += Data_Base_Component_stub
 
   idlflags -= -GT
   idlflags += -St -SS \
@@ -52,8 +52,9 @@ project(Data_Base_svnt) : ciao_servant_dnc {
 
 project(Data_Base_exec) : ciao_component_dnc {
   after   += Data_Base_svnt
-  sharedname = Data_Base_exec
-  libs += Data_Base_stub Data_Base_svnt
+  sharedname = Data_Base_Component_exec
+  libs += Data_Base_Component_stub \
+          Data_Base_Component_svnt
 
   dynamicflags   = DATA_BASE_EXEC_BUILD_DLL
 

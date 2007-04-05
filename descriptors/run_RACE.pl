@@ -40,7 +40,7 @@ delete_ior_files ();
 
 # Invoke naming service
 
-$NS = new PerlACE::Process ("$TAO_ROOT/orbsvcs/Naming_Service/Naming_Service", "-m 0 -ORBEndpoint iiop://localhost:40003 -o ns.ior");
+$NS = new PerlACE::Process ("$TAO_ROOT/orbsvcs/Naming_Service/Naming_Service", "-m 0 -ORBEndpoint iiop://localhost:40000 -o ns.ior");
 
 $NS->Spawn ();
 
@@ -54,7 +54,7 @@ $NS->Spawn ();
  }
 
 # Set up NamingService environment
-$ENV{"NameServiceIOR"} = "corbaloc:iiop:localhost:40003/NameService";
+$ENV{"NameServiceIOR"} = "corbaloc:iiop:localhost:40000/NameService";
 
 $ns_running = 1;
 
