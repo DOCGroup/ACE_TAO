@@ -36,7 +36,7 @@ project(EC_lem_gen) : ciaocidldefaults, taoidldefaults {
                 -SS
 
   CIDL_Files {
-    EC.cidl >> ECE.idl
+    EC.cidl
   }
 
   IDL_Files {

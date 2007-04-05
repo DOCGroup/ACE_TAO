@@ -27,7 +27,7 @@ project(BasicSP_lem_gen) : ciaocidldefaults, taoidldefaults {
   cidlflags += --lem-force-all --
 
   CIDL_Files {
-    BasicSP.idl >> BasicSPE.idl
+    BasicSP.idl
   }
 
   IDL_Files {

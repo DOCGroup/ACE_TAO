@@ -1,3 +1,14 @@
+Thu Apr  5 21:32:57 UTC 2007  Krishnakumar B  <kitty@nospam.invalid.domain>
+
+        * examples/BasicSP/BMClosedED/BMClosedED.mpc:
+        * examples/BasicSP/BMDevice/BMDevice.mpc:
+        * examples/BasicSP/BMDisplay/BMDisplay.mpc:
+        * examples/BasicSP/BasicSP.mpc:
+        * examples/BasicSP/EC/EC.mpc:
+
+          Fixed errors in Linux builds due to a duplicate dependency rule
+          added to the MPC files between a .cidl file and a E.idl file.
+
 Thu Apr  5 21:03:50 UTC 2007  Gan Deng  <gan.deng@vanderbilt.edu>
 
         * DAnCE/Utils/DAnCE_Utils.mpc
@@ -8,22 +19,22 @@ Thu Apr  5 21:03:50 UTC 2007  Gan Deng  <gan.deng@vanderbilt.edu>
           Added the utility library to manipulate the deployment
           plan, such as adding/removing instances, adding/removing
           connections, and pretty print.
-        
+
         * DAnCE/Plan_Launcher/Plan_Launcher.mpc
         * DAnCE/Plan_Launcher/Plan_Launcher_Benchmark_Impl.cpp
-        
+
           Modified to use the above utility class so we can
           programatically scale up the deployment.
 
 Thu Apr  5 16:51:24 UTC 2007  Gan Deng  <gan.deng@vanderbilt.edu>
 
         * DAnCE/DomainApplicationManager/Reply_Handler_i.h
-        
+
           Changed ACE_Thread_Mutex to ACE_SYNCH_MUTEX to avoid errors
           in Single_Threaded build.
-        
+
         * DAnCE/Plan_Launcher/Plan_Launcher_Impl.cpp
-        
+
           Added exception catching blocks to re_launch_plan operation.
 
 Thu Apr  5 01:07:34 UTC 2007  Krishnakumar B  <kitty@nospam.invalid.domain>

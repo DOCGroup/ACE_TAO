@@ -36,7 +36,7 @@ project(BMDevice_lem_gen) : ciaocidldefaults, taoidldefaults {
                 -SS
 
   CIDL_Files {
-    BMDevice.cidl >> BMDeviceE.idl
+    BMDevice.cidl
   }
 
   IDL_Files {
