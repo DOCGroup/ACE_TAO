@@ -30,7 +30,7 @@ namespace CIAO
         ::CORBA::Boolean
         Admin_exec_i::add_string (
           const ::CIAO::RACE::OperationalString & opstring,
-          char *& ID)
+          ::CORBA::String_out ID)
         {
           try
             {
@@ -65,8 +65,9 @@ namespace CIAO
         }
 
         ::CORBA::Boolean
-        Admin_exec_i::deploy_string (const ::CIAO::RACE::OperationalString & opstring,
-          char *& ID)
+        Admin_exec_i::deploy_string (
+          const ::CIAO::RACE::OperationalString & opstring,
+          ::CORBA::String_out ID)
         {
           try
             {

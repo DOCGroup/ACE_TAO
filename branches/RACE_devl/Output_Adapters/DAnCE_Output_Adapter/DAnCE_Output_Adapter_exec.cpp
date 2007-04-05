@@ -13,6 +13,7 @@ namespace CIAO
       {
         DAnCE_OA_Component_exec_i::DAnCE_OA_Component_exec_i (void)
         {
+
         }
 
         DAnCE_OA_Component_exec_i::~DAnCE_OA_Component_exec_i (void)
@@ -23,8 +24,22 @@ namespace CIAO
         ::CIAO::RACE::DAnCE_OA::CCM_Admin_ptr
         DAnCE_OA_Component_exec_i::get_admin ()
         {
-          return (new Admin_exec_i (this->context_));
+          return (new Admin_exec_i (this->context_,
+                                    this->repoman_id_.in ()));
         }
+
+        void
+        DAnCE_OA_Component_exec_i::repoman_id (const char * id)
+        {
+          this->repoman_id_ = CORBA::string_dup (id);
+        }
+
+        char *
+        DAnCE_OA_Component_exec_i::repoman_id ()
+        {
+          return CORBA::string_dup (this->repoman_id_.in ());
+        }
+
 
         void
         DAnCE_OA_Component_exec_i::set_session_context (

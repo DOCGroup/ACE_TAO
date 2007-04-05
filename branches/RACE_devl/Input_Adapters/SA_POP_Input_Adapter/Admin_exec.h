@@ -24,7 +24,7 @@ namespace CIAO
 
           virtual ::CORBA::Boolean
             add_string (const ::CIAO::RACE::OperationalString & opstring,
-                        char *& ID);
+                        ::CORBA::String_out ID);
 
           virtual ::CORBA::Boolean
             delete_string (const char * ID)
@@ -32,7 +32,7 @@ namespace CIAO
 
           virtual ::CORBA::Boolean
             deploy_string (const ::CIAO::RACE::OperationalString & opstring,
-                           char *& ID);
+                            ::CORBA::String_out ID);
 
           virtual ::CORBA::Boolean
             deploy_string_with_id (const char * ID)

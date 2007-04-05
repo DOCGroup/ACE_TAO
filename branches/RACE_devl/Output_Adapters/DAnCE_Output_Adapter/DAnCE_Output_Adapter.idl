@@ -14,12 +14,19 @@ module CIAO
     {
       interface Admin
       {
-        /// Deploy the given plan right away.
+        /// Deploy the given plan.
         boolean deploy_plan (in ::Deployment::DeploymentPlan plan);
 
+        /// Re_deploy the given plan.
+        boolean redeploy_plan (in ::Deployment::DeploymentPlan plan);
+
         /// Convert the given operational string to a DeploymentPlan and
-        /// deploy it right away.
+        /// deploy it.
         boolean deploy_string (in OperationalString opstring);
+
+        /// Convert the given operational string to a DeploymentPlan and
+        /// redeploy it.
+        boolean redeploy_string (in OperationalString opstring);
 
         /// Teardown a string. Raises UnknownID.
         boolean tear_down_string (in UUID ID)
@@ -28,6 +35,8 @@ module CIAO
 
       component DAnCE_OA_Component
       {
+        attribute string repoman_id;
+
         provides Admin admin;
       };
 

@@ -1,10 +1,6 @@
 workspace {
-  Monitor
-  Planner_Manager
   common
-  Output_Adapters
-  Planners
-  Controller
-  Input_Adapters
-  Plan_Analyzer
+  Output_Adapters/DAnCE_Output_Adapter
+  Input_Adapters/SA_POP_Input_Adapter
+  Data_Base
 }
