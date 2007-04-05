@@ -1,3 +1,12 @@
+Thu Apr  5 01:07:34 UTC 2007  Krishnakumar B  <kitty@nospam.invalid.domain>
+
+        * examples/BasicSP/BMClosedED/BMClosedEDEI.idl:
+        * examples/BasicSP/BMDevice/BMDeviceEI.idl:
+        * examples/BasicSP/BMDisplay/BMDisplayEI.idl:
+        * examples/BasicSP/EC/ECEI.idl:
+
+          Removed these files.
+
 Wed Apr  4 21:55:58 UTC 2007  Krishnakumar B  <kitty@nospam.invalid.domain>
 
         * DAnCE/Plan_Launcher/Plan_Launcher.cpp:
