@@ -107,7 +107,7 @@ int main (int argc, char * argv[])
       constraint_list[0].constraint_expr =
         CORBA::string_dup ("exist group and "
                            "exist $.filterable_data(type) and "
-                           "type != 1 and group != 0");
+                           "$type != 1 and group != 0");
 
       filter->add_constraints (constraint_list);
 
