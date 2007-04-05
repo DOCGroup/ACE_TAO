@@ -1,125 +1,37 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <Deployment:deploymentPlan xmlns:Deployment="http://www.omg.org/Deployment" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.omg.org/Deployment Deployment.xsd">
 
-  <UUID>1D2C2C63-CE33-4088-9443-781D080D8857</UUID>
+  <UUID>4A2259C9-86F5-4B57-9ECD-9AB16F4137E0</UUID>
 
-  <implementation id="_7A233158-69BB-4382-BDE0-72432BF3D48E">
-    <name>RACE.ComponentImplementations.AnalyzerImplementation.AnalyzerMonolithicImpl</name>
+  <implementation id="_C172F928-5E78-4A07-B779-7B0788E26A07">
+    <name>RACE.ComponentImplementations.DAnCE_OA_ComponentImplementation.DAnCE_OA_ComponentMonolithicImpl</name>
     <source/>
-    <artifact>__315FC65C-0582-4E0E-BB8B-C23A1238C67F</artifact>
-    <artifact>__7AD332BC-90DC-4E7D-B026-8D5053F2552E</artifact>
-    <artifact>__84974D39-AE18-4C0A-B81A-B1EC349E93BB</artifact>
+    <artifact>_0F470DA1-946B-4284-A396-8EDF087CC11A</artifact>
+    <artifact>_8193532F-CA6C-4FDD-B55B-BF03C8A105C2</artifact>
+    <artifact>_AA04DED8-71DF-4988-862E-672402A7A192</artifact>
   </implementation>
 
-  <implementation id="_E4DC8736-E532-44DC-9C9B-789EBA3D6B27">
-    <name>RACE.ComponentImplementations.Input_AdapterImplementation.Input_AdapterMonolithicImpl</name>
+  <implementation id="_C2184658-1565-47F6-BC7F-5680794D193B">
+    <name>RACE.ComponentImplementations.Data_Base_ComponentImplementation.Data_Base_ComponentMonolithicImpl</name>
     <source/>
-    <artifact>__DC22BCBB-DB20-4072-AA64-161AFD7A9C10</artifact>
-    <artifact>__3E362049-0CF5-4F01-905F-67CAD769FFD5</artifact>
-    <artifact>__3B466B60-F8C2-4E48-A6E4-3D3D7EED9F03</artifact>
+    <artifact>_A7563DBF-07DA-4030-88A9-60B231D83996</artifact>
+    <artifact>_6A6102A0-7F7A-418F-8A30-7EF54CD719C7</artifact>
+    <artifact>_499F494A-6BB2-4C47-AA83-651D91BDE073</artifact>
   </implementation>
 
-  <implementation id="_73898E70-9FB1-4881-9313-A2DE181EE48E">
-    <name>RACE.ComponentImplementations.Interactive_Input_AdapterImplementation.Interactive_Input_AdapterMonolithicImpl</name>
+  <implementation id="_906BBE3F-8014-40DE-A26D-E7753D38BBC7">
+    <name>RACE.ComponentImplementations.SA_POP_IA_ComponentImplementation.SA_POP_IA_ComponentMonolithicImpl</name>
     <source/>
-    <artifact>__AD4B52E0-103C-49E2-BE47-29CAE978676F</artifact>
-    <artifact>__E4AF24BF-5A39-46B1-8217-6343D7D53298</artifact>
-    <artifact>__76A0CEFE-E2F7-4BF7-BB91-F309FB5AD33C</artifact>
+    <artifact>_7AA492F3-49EE-4C68-9A0D-D596206F0D65</artifact>
+    <artifact>_BE1FACCE-F02A-4283-9546-3CBBA56031BF</artifact>
+    <artifact>_B8698C58-5FAF-4A29-ADE4-EBB8904D9883</artifact>
   </implementation>
 
-  <implementation id="_796D9731-1CD9-4855-83F2-025AECB90C93">
-    <name>RACE.ComponentImplementations.Output_AdapterImplementation.Output_AdapterMonolithicImpl</name>
+  <instance id="RACE.ComponentImplementations.RACE.RACE.DAnCE_OA_Component">
+    <name>RACE.ComponentImplementations.RACE.RACE.DAnCE_OA_Component</name>
+    <node>RACE_Node</node>
     <source/>
-    <artifact>__864DB99C-C60B-4FDD-A47D-AFD5C1599892</artifact>
-    <artifact>__D6EB8E01-F794-4C43-AB14-A3AFB9767D01</artifact>
-    <artifact>__4C78C4F9-FEF4-45AA-84A4-FFB10255A1EC</artifact>
-  </implementation>
-
-  <implementation id="_A22015F9-9BC9-4767-A861-FAFF737E074B">
-    <name>RACE.ComponentImplementations.Output_ManagerImplementation.Output_ManagerMonolithicImpl</name>
-    <source/>
-    <artifact>__AB498B7F-A0E8-4F59-BF24-BBB9D125EED3</artifact>
-    <artifact>__1BB4CD4A-38A8-4BBA-9303-4A10F5B8BC57</artifact>
-    <artifact>__280E6118-F4C7-4DE4-A0A4-A50637282EAE</artifact>
-  </implementation>
-
-  <implementation id="_219DB379-DB2E-44D2-8308-D91FC5A42A9D">
-    <name>RACE.ComponentImplementations.DAnCE_Output_AdapterImplementation.DAnCE_Output_AdapterMonolithicImpl</name>
-    <source/>
-    <artifact>__A47095F9-2E08-485E-96B4-CC0829051DF3</artifact>
-    <artifact>__E54AE941-14CA-48FC-BAAA-1B93269EF79B</artifact>
-    <artifact>__ACA6BD67-D92A-4DBF-827A-7C0B15EA3F6D</artifact>
-  </implementation>
-
-  <implementation id="_571F6ECC-579F-4F69-88AB-EA1603B422E8">
-    <name>RACE.ComponentImplementations.PlannerImplementation.PlannerMonolithicImpl</name>
-    <source/>
-    <artifact>__B28C1F32-0231-4F7F-8FE2-164321942B87</artifact>
-    <artifact>__2021EE2F-3480-4BF9-9A3A-D146A99D251D</artifact>
-    <artifact>__D952F988-841F-43BA-9650-86846B08DF5F</artifact>
-  </implementation>
-
-  <implementation id="_38C5B64C-72FD-48FF-B095-260669E2A488">
-    <name>RACE.ComponentImplementations.StaticPlannerImplementation.StaticPlannerMonolithicImpl</name>
-    <source/>
-    <artifact>_5D271FCF-D9A6-4A29-9CE1-1E733DD9007C</artifact>
-    <artifact>_95FCD00B-F2C4-459F-BDE1-002D6FEF93DC</artifact>
-    <artifact>_567AEC14-708F-4249-AFB8-D7B0EB77FE7D</artifact>
-  </implementation>
-
-  <implementation id="_FD120510-765E-4B02-803D-7DADF3F5E4E6">
-    <name>RACE.ComponentImplementations.Planner_ManagerImplementation.Planner_ManagerMonolithicImpl</name>
-    <source/>
-    <artifact>__5B614077-C99E-428C-B8BE-252ADD7905B7</artifact>
-    <artifact>__0BEB188E-3967-4D91-A6A1-CDF08EF81718</artifact>
-    <artifact>__A65A1FA0-8F4D-4807-9AE9-90D344154D2C</artifact>
-  </implementation>
-
-  <implementation id="_5D6641D2-640C-4F80-B055-10DC69C7A636">
-    <name>RACE.ComponentImplementations.Plan_AnalyzerImplementation.Plan_AnalyzerMonolithicImpl</name>
-    <source/>
-    <artifact>__1CC443DF-7EE3-4130-8ACE-EE4181AC96CD</artifact>
-    <artifact>__57123764-8624-4D79-9C5B-7ADF929536E6</artifact>
-    <artifact>__CDC7061A-483C-447B-8151-E68250566E86</artifact>
-  </implementation>
-
-  <implementation id="_D98AF36F-11FA-43A4-8FAD-C14A461437FF">
-    <name>RACE.ComponentImplementations.ControllerImplementation.ControllerMonolithicImpl</name>
-    <source/>
-    <artifact>__BF4AE6A2-BE32-4B8E-9919-C812EC18BF00</artifact>
-    <artifact>__00B105AB-50F5-49B7-A822-9B267F2D8896</artifact>
-    <artifact>__032AE7B6-3ABD-478A-B0D7-56BC4AAEF0B7</artifact>
-  </implementation>
-
-  <implementation id="_CA363CD1-4E23-4A4B-B25B-C38B939E2B25">
-    <name>RACE.ComponentImplementations.TargetManagerImplImplementation.TargetManagerImplMonolithicImpl</name>
-    <source/>
-    <artifact>__0F176DA2-9953-482A-9268-7DA5E69A88FE</artifact>
-    <artifact>__9CB3A43B-397F-4FA9-97AA-EBFC3A22BFEC</artifact>
-    <artifact>__C22D0B06-6CDA-4652-B1CE-586E0C23251F</artifact>
-  </implementation>
-
-  <implementation id="_198AF36F-11FA-43A4-8FAD-C14A461437EE">
-    <name>RACE.ComponentImplementations.Central_MonitorImplementation.Central_MonitorMonolithicImpl</name>
-    <source/>
-    <artifact>__032AE7B6-3ABD-478A-B0D7-56BC4AAEF0B9</artifact>
-    <artifact>__00B105AB-50F5-49B7-A822-9B267F2D8898</artifact>
-    <artifact>__BF4AE6A2-BE32-4B8E-9919-C812EC16BF00</artifact>
-  </implementation>
-
-  <implementation id="_DF055B64-3713-4E0C-8CBB-7940347252CB">
-    <name>RACE.ComponentImplementations.XML_Output_AdapterImplementation.XML_Output_AdapterMonolithicImpl</name>
-    <source/>
-    <artifact>_51E98A22-D8B4-46FF-B531-9756A94B19B3</artifact>
-    <artifact>_BFEFFD00-977E-42C1-ACB4-873556C44F33</artifact>
-    <artifact>_A5A450AC-A314-45F4-9195-5A9EDFD8260F</artifact>
-  </implementation>
-
-  <instance id="RACE.ComponentImplementations.RACE.RACE.Interactive_Input_Adapter">
-    <name>RACE.ComponentImplementations.RACE.RACE.Interactive_Input_Adapter</name>
-    <node>RACE</node>
-    <source/>
-    <implementation>_73898E70-9FB1-4881-9313-A2DE181EE48E</implementation>
+    <implementation>_C172F928-5E78-4A07-B779-7B0788E26A07</implementation>
     <configProperty>
       <name>ComponentIOR</name>
       <value>
@@ -127,10 +39,17 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>Interactive_Input_Adapter.ior</string>
+          <string>DAnCE_OA_Component.ior</string>
         </value>
       </value>
     </configProperty>
+  </instance>
+
+  <instance id="RACE.ComponentImplementations.RACE.RACE.SA_POP_IA_Component">
+    <name>RACE.ComponentImplementations.RACE.RACE.SA_POP_IA_Component</name>
+    <node>RACE_Node</node>
+    <source/>
+    <implementation>_906BBE3F-8014-40DE-A26D-E7753D38BBC7</implementation>
     <configProperty>
       <name>ComponentIOR</name>
       <value>
@@ -138,28 +57,17 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>InteractiveAdapter.ior</string>
-        </value>
-      </value>
-    </configProperty>
-    <configProperty>
-      <name>RegisterNaming</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>RACE::InteractiveInput</string>
+          <string>SA_POP_IA_Component.ior</string>
         </value>
       </value>
     </configProperty>
   </instance>
 
-  <instance id="RACE.ComponentImplementations.RACE.RACE.Controller">
-    <name>RACE.ComponentImplementations.RACE.RACE.Controller</name>
-    <node>RACE</node>
+  <instance id="RACE.ComponentImplementations.RACE.RACE.Data_Base_Component">
+    <name>RACE.ComponentImplementations.RACE.RACE.Data_Base_Component</name>
+    <node>RACE_Node</node>
     <source/>
-    <implementation>_D98AF36F-11FA-43A4-8FAD-C14A461437FF</implementation>
+    <implementation>_C2184658-1565-47F6-BC7F-5680794D193B</implementation>
     <configProperty>
       <name>ComponentIOR</name>
       <value>
@@ -167,267 +75,52 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>Controller.ior</string>
+          <string>Data_Base_Component.ior</string>
         </value>
       </value>
     </configProperty>
   </instance>
 
-  <instance id="RACE.ComponentImplementations.RACE.RACE.TargetManagerImpl">
-    <name>RACE.ComponentImplementations.RACE.RACE.TargetManagerImpl</name>
-    <node>RACE</node>
-    <source/>
-    <implementation>_CA363CD1-4E23-4A4B-B25B-C38B939E2B25</implementation>
-    <configProperty>
-      <name>ComponentIOR</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>TargetManagerImpl.ior</string>
-        </value>
-      </value>
-    </configProperty>
-  </instance>
-
-  <instance id="RACE.ComponentImplementations.RACE.RACE.Central_Monitor">
-    <name>RACE.ComponentImplementations.RACE.RACE.Central_Monitor</name>
-    <node>RACE</node>
-    <source/>
-    <implementation>_198AF36F-11FA-43A4-8FAD-C14A461437EE</implementation>
-    <configProperty>
-      <name>ComponentIOR</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>Central_Monitor.ior</string>
-        </value>
-      </value>
-    </configProperty>
-    <configProperty>
-      <name>RegisterNaming</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>RACE_QoS_Monitor</string>
-        </value>
-      </value>
-    </configProperty>
-  </instance>
-
-  <instance id="RACE.ComponentImplementations.RACE.RACE.OutputManager.Output_Manager">
-    <name>RACE.ComponentImplementations.RACE.RACE.OutputManager.Output_Manager</name>
-    <node>RACE</node>
-    <source/>
-    <implementation>_A22015F9-9BC9-4767-A861-FAFF737E074B</implementation>
-  </instance>
-
-  <instance id="RACE.ComponentImplementations.RACE.RACE.OutputManager.DAnCE_Output_Adapter">
-    <name>RACE.ComponentImplementations.RACE.RACE.OutputManager.DAnCE_Output_Adapter</name>
-    <node>RACE</node>
-    <source/>
-    <implementation>_219DB379-DB2E-44D2-8308-D91FC5A42A9D</implementation>
-  </instance>
-
-  <instance id="RACE.ComponentImplementations.RACE.RACE.PlanAnalyzerAssembly.Plan_Analyzer">
-    <name>RACE.ComponentImplementations.RACE.RACE.PlanAnalyzerAssembly.Plan_Analyzer</name>
-    <node>RACE</node>
-    <source/>
-    <implementation>_5D6641D2-640C-4F80-B055-10DC69C7A636</implementation>
-  </instance>
-
-  <instance id="RACE.ComponentImplementations.RACE.RACE.AssemblyPlannerManager.Planner_ManagerImplementation">
-    <name>RACE.ComponentImplementations.RACE.RACE.AssemblyPlannerManager.Planner_ManagerImplementation</name>
-    <node>RACE</node>
-    <source/>
-    <implementation>_FD120510-765E-4B02-803D-7DADF3F5E4E6</implementation>
-  </instance>
-
-  <instance id="RACE.ComponentImplementations.RACE.RACE.AssemblyPlannerManager.StaticPlannerImplementation">
-    <name>RACE.ComponentImplementations.RACE.RACE.AssemblyPlannerManager.StaticPlannerImplementation</name>
-    <node>RACE</node>
-    <source/>
-    <implementation>_38C5B64C-72FD-48FF-B095-260669E2A488</implementation>
-  </instance>
-
-  <instance id="RACE.ComponentImplementations.RACE.RACE.OutputManager.XML_Output_Adapter">
-    <name>RACE.ComponentImplementations.RACE.RACE.OutputManager.XML_Output_Adapter</name>
-    <node>RACE</node>
-    <source/>
-    <implementation>_DF055B64-3713-4E0C-8CBB-7940347252CB</implementation>
-  </instance>
-
   <connection>
-    <name>ingress_plan_ingressRACE.ComponentImplementations.RACE.RACE.Interactive_Input_AdapterRACE.ComponentImplementations.RACE.RACE.PlanAnalyzerAssembly.Plan_Analyzer</name>
+    <name>DB_adminRACE.ComponentImplementations.RACE.RACE.SA_POP_IA_ComponentRACE.ComponentImplementations.RACE.RACE.Data_Base_Component</name>
     <internalEndpoint>
-      <portName>ingress</portName>
+      <portName>DB</portName>
       <kind>SimplexReceptacle</kind>
-      <instance>RACE.ComponentImplementations.RACE.RACE.Interactive_Input_Adapter</instance>
+      <instance>RACE.ComponentImplementations.RACE.RACE.SA_POP_IA_Component</instance>
     </internalEndpoint>
     <internalEndpoint>
-      <portName>plan_ingress</portName>
+      <portName>admin</portName>
       <kind>Facet</kind>
-      <instance>RACE.ComponentImplementations.RACE.RACE.PlanAnalyzerAssembly.Plan_Analyzer</instance>
+      <instance>RACE.ComponentImplementations.RACE.RACE.Data_Base_Component</instance>
     </internalEndpoint>
   </connection>
 
   <connection>
-    <name>planner_manager_i_planner_manager_iRACE.ComponentImplementations.RACE.RACE.PlanAnalyzerAssembly.Plan_AnalyzerRACE.ComponentImplementations.RACE.RACE.AssemblyPlannerManager.Planner_ManagerImplementation</name>
+    <name>OA_adminRACE.ComponentImplementations.RACE.RACE.SA_POP_IA_ComponentRACE.ComponentImplementations.RACE.RACE.DAnCE_OA_Component</name>
     <internalEndpoint>
-      <portName>planner_manager_i</portName>
+      <portName>OA</portName>
       <kind>SimplexReceptacle</kind>
-      <instance>RACE.ComponentImplementations.RACE.RACE.PlanAnalyzerAssembly.Plan_Analyzer</instance>
+      <instance>RACE.ComponentImplementations.RACE.RACE.SA_POP_IA_Component</instance>
     </internalEndpoint>
     <internalEndpoint>
-      <portName>planner_manager_i</portName>
+      <portName>admin</portName>
       <kind>Facet</kind>
-      <instance>RACE.ComponentImplementations.RACE.RACE.AssemblyPlannerManager.Planner_ManagerImplementation</instance>
+      <instance>RACE.ComponentImplementations.RACE.RACE.DAnCE_OA_Component</instance>
     </internalEndpoint>
   </connection>
 
-  <connection>
-    <name>outputs_outputRACE.ComponentImplementations.RACE.RACE.AssemblyPlannerManager.Planner_ManagerImplementationRACE.ComponentImplementations.RACE.RACE.OutputManager.Output_Manager</name>
-    <internalEndpoint>
-      <portName>outputs</portName>
-      <kind>SimplexReceptacle</kind>
-      <instance>RACE.ComponentImplementations.RACE.RACE.AssemblyPlannerManager.Planner_ManagerImplementation</instance>
-    </internalEndpoint>
-    <internalEndpoint>
-      <portName>output</portName>
-      <kind>Facet</kind>
-      <instance>RACE.ComponentImplementations.RACE.RACE.OutputManager.Output_Manager</instance>
-    </internalEndpoint>
-  </connection>
-
-  <connection>
-    <name>control_output_descriptorsRACE.ComponentImplementations.RACE.RACE.OutputManager.DAnCE_Output_AdapterRACE.ComponentImplementations.RACE.RACE.Controller</name>
-    <internalEndpoint>
-      <portName>control_output</portName>
-      <kind>SimplexReceptacle</kind>
-      <instance>RACE.ComponentImplementations.RACE.RACE.OutputManager.DAnCE_Output_Adapter</instance>
-    </internalEndpoint>
-    <internalEndpoint>
-      <portName>descriptors</portName>
-      <kind>Facet</kind>
-      <instance>RACE.ComponentImplementations.RACE.RACE.Controller</instance>
-    </internalEndpoint>
-  </connection>
-
-  <connection>
-    <name>target_mgr_targetMgrRACE.ComponentImplementations.RACE.RACE.AssemblyPlannerManager.StaticPlannerImplementationRACE.ComponentImplementations.RACE.RACE.TargetManagerImpl</name>
-    <internalEndpoint>
-      <portName>target_mgr</portName>
-      <kind>SimplexReceptacle</kind>
-      <instance>RACE.ComponentImplementations.RACE.RACE.AssemblyPlannerManager.StaticPlannerImplementation</instance>
-    </internalEndpoint>
-    <internalEndpoint>
-      <portName>targetMgr</portName>
-      <kind>Facet</kind>
-      <instance>RACE.ComponentImplementations.RACE.RACE.TargetManagerImpl</instance>
-    </internalEndpoint>
-  </connection>
-
-  <connection>
-    <name>target_mgr_ext_target_manager_extRACE.ComponentImplementations.RACE.RACE.ControllerRACE.ComponentImplementations.RACE.RACE.TargetManagerImpl</name>
-    <internalEndpoint>
-      <portName>target_mgr_ext</portName>
-      <kind>SimplexReceptacle</kind>
-      <instance>RACE.ComponentImplementations.RACE.RACE.Controller</instance>
-    </internalEndpoint>
-    <internalEndpoint>
-      <portName>target_manager_ext</portName>
-      <kind>Facet</kind>
-      <instance>RACE.ComponentImplementations.RACE.RACE.TargetManagerImpl</instance>
-    </internalEndpoint>
-  </connection>
-
-  <connection>
-    <name>target_mgr_targetMgrRACE.ComponentImplementations.RACE.RACE.ControllerRACE.ComponentImplementations.RACE.RACE.TargetManagerImpl</name>
-    <internalEndpoint>
-      <portName>target_mgr</portName>
-      <kind>SimplexReceptacle</kind>
-      <instance>RACE.ComponentImplementations.RACE.RACE.Controller</instance>
-    </internalEndpoint>
-    <internalEndpoint>
-      <portName>targetMgr</portName>
-      <kind>Facet</kind>
-      <instance>RACE.ComponentImplementations.RACE.RACE.TargetManagerImpl</instance>
-    </internalEndpoint>
-  </connection>
-
-  <connection>
-    <name>monitor_MonitorRACE.ComponentImplementations.RACE.RACE.ControllerRACE.ComponentImplementations.RACE.RACE.Central_Monitor</name>
-    <internalEndpoint>
-      <portName>monitor</portName>
-      <kind>SimplexReceptacle</kind>
-      <instance>RACE.ComponentImplementations.RACE.RACE.Controller</instance>
-    </internalEndpoint>
-    <internalEndpoint>
-      <portName>Monitor</portName>
-      <kind>Facet</kind>
-      <instance>RACE.ComponentImplementations.RACE.RACE.Central_Monitor</instance>
-    </internalEndpoint>
-  </connection>
-
-  <connection>
-    <name>adapters_plan_egressRACE.ComponentImplementations.RACE.RACE.OutputManager.Output_ManagerRACE.ComponentImplementations.RACE.RACE.OutputManager.DAnCE_Output_Adapter</name>
-    <internalEndpoint>
-      <portName>adapters</portName>
-      <kind>SimplexReceptacle</kind>
-      <instance>RACE.ComponentImplementations.RACE.RACE.OutputManager.Output_Manager</instance>
-    </internalEndpoint>
-    <internalEndpoint>
-      <portName>plan_egress</portName>
-      <kind>Facet</kind>
-      <instance>RACE.ComponentImplementations.RACE.RACE.OutputManager.DAnCE_Output_Adapter</instance>
-    </internalEndpoint>
-  </connection>
-
-  <connection>
-    <name>adapters_plan_egressRACE.ComponentImplementations.RACE.RACE.OutputManager.Output_ManagerRACE.ComponentImplementations.RACE.RACE.OutputManager.XML_Output_Adapter</name>
-    <internalEndpoint>
-      <portName>adapters</portName>
-      <kind>SimplexReceptacle</kind>
-      <instance>RACE.ComponentImplementations.RACE.RACE.OutputManager.Output_Manager</instance>
-    </internalEndpoint>
-    <internalEndpoint>
-      <portName>plan_egress</portName>
-      <kind>Facet</kind>
-      <instance>RACE.ComponentImplementations.RACE.RACE.OutputManager.XML_Output_Adapter</instance>
-    </internalEndpoint>
-  </connection>
-
-  <connection>
-    <name>planners_planner_iRACE.ComponentImplementations.RACE.RACE.AssemblyPlannerManager.Planner_ManagerImplementationRACE.ComponentImplementations.RACE.RACE.AssemblyPlannerManager.StaticPlannerImplementation</name>
-    <internalEndpoint>
-      <portName>planners</portName>
-      <kind>SimplexReceptacle</kind>
-      <instance>RACE.ComponentImplementations.RACE.RACE.AssemblyPlannerManager.Planner_ManagerImplementation</instance>
-    </internalEndpoint>
-    <internalEndpoint>
-      <portName>planner_i</portName>
-      <kind>Facet</kind>
-      <instance>RACE.ComponentImplementations.RACE.RACE.AssemblyPlannerManager.StaticPlannerImplementation</instance>
-    </internalEndpoint>
-  </connection>
-
-  <artifact id="__315FC65C-0582-4E0E-BB8B-C23A1238C67F">
-    <name>RACE.ImplementationArtifacts.AnalyzerArtifacts.Analyzer_stub</name>
+  <artifact id="_0F470DA1-946B-4284-A396-8EDF087CC11A">
+    <name>RACE.ImplementationArtifacts.DAnCE_OA_ComponentArtifacts.DAnCE_OA_Component_stub</name>
     <source/>
     <node/>
-    <location>Analyzer_stub</location>
+    <location>DAnCE_OA_Component_stub</location>
   </artifact>
 
-  <artifact id="__7AD332BC-90DC-4E7D-B026-8D5053F2552E">
-    <name>RACE.ImplementationArtifacts.AnalyzerArtifacts.Analyzer_svnt</name>
+  <artifact id="_8193532F-CA6C-4FDD-B55B-BF03C8A105C2">
+    <name>RACE.ImplementationArtifacts.DAnCE_OA_ComponentArtifacts.DAnCE_OA_Component_svnt</name>
     <source/>
     <node/>
-    <location>Analyzer_svnt</location>
+    <location>DAnCE_OA_Component_svnt</location>
     <execParameter>
       <name>entryPoint</name>
       <value>
@@ -435,17 +128,17 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_CIAO_RACE_Analyzer_Home_Servant</string>
+          <string>create_CIAO_RACE_DAnCE_OA_DAnCE_OA_Component_Home_Servant</string>
         </value>
       </value>
     </execParameter>
   </artifact>
 
-  <artifact id="__84974D39-AE18-4C0A-B81A-B1EC349E93BB">
-    <name>RACE.ImplementationArtifacts.AnalyzerArtifacts.Analyzer_exec</name>
+  <artifact id="_AA04DED8-71DF-4988-862E-672402A7A192">
+    <name>RACE.ImplementationArtifacts.DAnCE_OA_ComponentArtifacts.DAnCE_OA_Component_exec</name>
     <source/>
     <node/>
-    <location>Analyzer_exec</location>
+    <location>DAnCE_OA_Component_exec</location>
     <execParameter>
       <name>entryPoint</name>
       <value>
@@ -453,24 +146,24 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_CIAO_RACE_Analyzer_Home_Impl</string>
+          <string>create_CIAO_RACE_DAnCE_OA_DAnCE_OA_Component_Home_Impl</string>
         </value>
       </value>
     </execParameter>
   </artifact>
 
-  <artifact id="__DC22BCBB-DB20-4072-AA64-161AFD7A9C10">
-    <name>RACE.ImplementationArtifacts.Input_AdapterArtifacts.Input_Adapter_stub</name>
+  <artifact id="_A7563DBF-07DA-4030-88A9-60B231D83996">
+    <name>RACE.ImplementationArtifacts.Data_Base_ComponentArtifacts.Data_Base_Component_stub</name>
     <source/>
     <node/>
-    <location>Input_Adapter_stub</location>
+    <location>Data_Base_Component_stub</location>
   </artifact>
 
-  <artifact id="__3E362049-0CF5-4F01-905F-67CAD769FFD5">
-    <name>RACE.ImplementationArtifacts.Input_AdapterArtifacts.Input_Adapter_svnt</name>
+  <artifact id="_6A6102A0-7F7A-418F-8A30-7EF54CD719C7">
+    <name>RACE.ImplementationArtifacts.Data_Base_ComponentArtifacts.Data_Base_Component_svnt</name>
     <source/>
     <node/>
-    <location>Input_Adapter_svnt</location>
+    <location>Data_Base_Component_svnt</location>
     <execParameter>
       <name>entryPoint</name>
       <value>
@@ -478,17 +171,17 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_CIAO_RACE_Input_Adapter_Home_Servant</string>
+          <string>create_CIAO_RACE_Data_Base_Data_Base_Component_Home_Servant</string>
         </value>
       </value>
     </execParameter>
   </artifact>
 
-  <artifact id="__3B466B60-F8C2-4E48-A6E4-3D3D7EED9F03">
-    <name>RACE.ImplementationArtifacts.Input_AdapterArtifacts.Input_Adapter_exec</name>
+  <artifact id="_499F494A-6BB2-4C47-AA83-651D91BDE073">
+    <name>RACE.ImplementationArtifacts.Data_Base_ComponentArtifacts.Data_Base_Component_exec</name>
     <source/>
     <node/>
-    <location>Input_Adapter_exec</location>
+    <location>Data_Base_Component_exec</location>
     <execParameter>
       <name>entryPoint</name>
       <value>
@@ -496,24 +189,24 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_CIAO_RACE_Input_Adapter_Home_Impl</string>
+          <string>create_CIAO_RACE_Data_Base_Data_Base_Component_Home_Impl</string>
         </value>
       </value>
     </execParameter>
   </artifact>
 
-  <artifact id="__AD4B52E0-103C-49E2-BE47-29CAE978676F">
-    <name>RACE.ImplementationArtifacts.Interactive_Input_AdapterArtifacts.Interactive_Input_Adapter_stub</name>
+  <artifact id="_7AA492F3-49EE-4C68-9A0D-D596206F0D65">
+    <name>RACE.ImplementationArtifacts.SA_POP_IA_ComponentArtifacts.SA_POP_IA_Component_stub</name>
     <source/>
     <node/>
-    <location>Interactive_Input_Adapter_stub</location>
+    <location>SA_POP_IA_Component_stub</location>
   </artifact>
 
-  <artifact id="__E4AF24BF-5A39-46B1-8217-6343D7D53298">
-    <name>RACE.ImplementationArtifacts.Interactive_Input_AdapterArtifacts.Interactive_Input_Adapter_svnt</name>
+  <artifact id="_BE1FACCE-F02A-4283-9546-3CBBA56031BF">
+    <name>RACE.ImplementationArtifacts.SA_POP_IA_ComponentArtifacts.SA_POP_IA_Component_svnt</name>
     <source/>
     <node/>
-    <location>Interactive_Input_Adapter_svnt</location>
+    <location>SA_POP_IA_Component_svnt</location>
     <execParameter>
       <name>entryPoint</name>
       <value>
@@ -521,17 +214,17 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_CIAO_RACE_Interactive_Input_Adapter_Home_Servant</string>
+          <string>create_CIAO_RACE_SA_POP_IA_SA_POP_IA_Component_Home_Servant</string>
         </value>
       </value>
     </execParameter>
   </artifact>
 
-  <artifact id="__76A0CEFE-E2F7-4BF7-BB91-F309FB5AD33C">
-    <name>RACE.ImplementationArtifacts.Interactive_Input_AdapterArtifacts.Interactive_Input_Adapter_exec</name>
+  <artifact id="_B8698C58-5FAF-4A29-ADE4-EBB8904D9883">
+    <name>RACE.ImplementationArtifacts.SA_POP_IA_ComponentArtifacts.SA_POP_IA_Component_exec</name>
     <source/>
     <node/>
-    <location>Interactive_Input_Adapter_exec</location>
+    <location>SA_POP_IA_Component_exec</location>
     <execParameter>
       <name>entryPoint</name>
       <value>
@@ -539,480 +232,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_CIAO_RACE_Interactive_Input_Adapter_Home_Impl</string>
-        </value>
-      </value>
-    </execParameter>
-  </artifact>
-
-  <artifact id="__864DB99C-C60B-4FDD-A47D-AFD5C1599892">
-    <name>RACE.ImplementationArtifacts.Output_AdapterArtifacts.Output_Adapter_stub</name>
-    <source/>
-    <node/>
-    <location>Output_Adapter_stub</location>
-  </artifact>
-
-  <artifact id="__D6EB8E01-F794-4C43-AB14-A3AFB9767D01">
-    <name>RACE.ImplementationArtifacts.Output_AdapterArtifacts.Output_Adapter_svnt</name>
-    <source/>
-    <node/>
-    <location>Output_Adapter_svnt</location>
-    <execParameter>
-      <name>entryPoint</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>create_CIAO_RACE_Output_Adapter_Home_Servant</string>
-        </value>
-      </value>
-    </execParameter>
-  </artifact>
-
-  <artifact id="__4C78C4F9-FEF4-45AA-84A4-FFB10255A1EC">
-    <name>RACE.ImplementationArtifacts.Output_AdapterArtifacts.Output_Adapter_exec</name>
-    <source/>
-    <node/>
-    <location>Output_Adapter_exec</location>
-    <execParameter>
-      <name>entryPoint</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>create_CIAO_RACE_Output_Adapter_Home_Impl</string>
-        </value>
-      </value>
-    </execParameter>
-  </artifact>
-
-  <artifact id="__AB498B7F-A0E8-4F59-BF24-BBB9D125EED3">
-    <name>RACE.ImplementationArtifacts.Output_ManagerArtifacts.Output_Manager_stub</name>
-    <source/>
-    <node/>
-    <location>Output_Manager_stub</location>
-  </artifact>
-
-  <artifact id="__1BB4CD4A-38A8-4BBA-9303-4A10F5B8BC57">
-    <name>RACE.ImplementationArtifacts.Output_ManagerArtifacts.Output_Manager_svnt</name>
-    <source/>
-    <node/>
-    <location>Output_Manager_svnt</location>
-    <execParameter>
-      <name>entryPoint</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>create_CIAO_RACE_Output_Manager_Home_Servant</string>
-        </value>
-      </value>
-    </execParameter>
-  </artifact>
-
-  <artifact id="__280E6118-F4C7-4DE4-A0A4-A50637282EAE">
-    <name>RACE.ImplementationArtifacts.Output_ManagerArtifacts.Output_Manager_exec</name>
-    <source/>
-    <node/>
-    <location>Output_Manager_exec</location>
-    <execParameter>
-      <name>entryPoint</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>create_CIAO_RACE_Output_Manager_Home_Impl</string>
-        </value>
-      </value>
-    </execParameter>
-  </artifact>
-
-  <artifact id="__A47095F9-2E08-485E-96B4-CC0829051DF3">
-    <name>RACE.ImplementationArtifacts.DAnCE_Output_AdapterArtifacts.DAnCE_Output_Adapter_stub</name>
-    <source/>
-    <node/>
-    <location>DAnCE_Output_Adapter_stub</location>
-  </artifact>
-
-  <artifact id="__E54AE941-14CA-48FC-BAAA-1B93269EF79B">
-    <name>RACE.ImplementationArtifacts.DAnCE_Output_AdapterArtifacts.DAnCE_Output_Adapter_svnt</name>
-    <source/>
-    <node/>
-    <location>DAnCE_Output_Adapter_svnt</location>
-    <execParameter>
-      <name>entryPoint</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>create_CIAO_RACE_DAnCE_Output_Adapter_Home_Servant</string>
-        </value>
-      </value>
-    </execParameter>
-  </artifact>
-
-  <artifact id="__ACA6BD67-D92A-4DBF-827A-7C0B15EA3F6D">
-    <name>RACE.ImplementationArtifacts.DAnCE_Output_AdapterArtifacts.DAnCE_Output_Adapter_exec</name>
-    <source/>
-    <node/>
-    <location>DAnCE_Output_Adapter_exec</location>
-    <execParameter>
-      <name>entryPoint</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>create_CIAO_RACE_DAnCE_Output_Adapter_Home_Impl</string>
-        </value>
-      </value>
-    </execParameter>
-  </artifact>
-
-  <artifact id="__B28C1F32-0231-4F7F-8FE2-164321942B87">
-    <name>RACE.ImplementationArtifacts.PlannerArtifacts.Planner_stub</name>
-    <source/>
-    <node/>
-    <location>Planner_stub</location>
-  </artifact>
-
-  <artifact id="__2021EE2F-3480-4BF9-9A3A-D146A99D251D">
-    <name>RACE.ImplementationArtifacts.PlannerArtifacts.Planner_svnt</name>
-    <source/>
-    <node/>
-    <location>Planner_svnt</location>
-    <execParameter>
-      <name>entryPoint</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>create_CIAO_RACE_Planner_Home_Servant</string>
-        </value>
-      </value>
-    </execParameter>
-  </artifact>
-
-  <artifact id="__D952F988-841F-43BA-9650-86846B08DF5F">
-    <name>RACE.ImplementationArtifacts.PlannerArtifacts.Planner_exec</name>
-    <source/>
-    <node/>
-    <location>Planner_exec</location>
-    <execParameter>
-      <name>entryPoint</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>create_CIAO_RACE_Planner_Home_Impl</string>
-        </value>
-      </value>
-    </execParameter>
-  </artifact>
-
-  <artifact id="_5D271FCF-D9A6-4A29-9CE1-1E733DD9007C">
-    <name>RACE.ImplementationArtifacts.StaticPlannerArtifacts.StaticPlanner_stub</name>
-    <source/>
-    <node/>
-    <location>StaticPlanner_stub</location>
-  </artifact>
-
-  <artifact id="_95FCD00B-F2C4-459F-BDE1-002D6FEF93DC">
-    <name>RACE.ImplementationArtifacts.StaticPlannerArtifacts.StaticPlanner_svnt</name>
-    <source/>
-    <node/>
-    <location>StaticPlanner_svnt</location>
-    <execParameter>
-      <name>entryPoint</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>create_CIAO_RACE_StaticPlanner_Home_Servant</string>
-        </value>
-      </value>
-    </execParameter>
-  </artifact>
-
-  <artifact id="_567AEC14-708F-4249-AFB8-D7B0EB77FE7D">
-    <name>RACE.ImplementationArtifacts.StaticPlannerArtifacts.StaticPlanner_exec</name>
-    <source/>
-    <node/>
-    <location>StaticPlanner_exec</location>
-    <execParameter>
-      <name>entryPoint</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>create_CIAO_RACE_StaticPlanner_Home_Impl</string>
-        </value>
-      </value>
-    </execParameter>
-  </artifact>
-
-  <artifact id="__5B614077-C99E-428C-B8BE-252ADD7905B7">
-    <name>RACE.ImplementationArtifacts.Planner_ManagerArtifacts.Planner_Manager_stub</name>
-    <source/>
-    <node/>
-    <location>Planner_Manager_stub</location>
-  </artifact>
-
-  <artifact id="__0BEB188E-3967-4D91-A6A1-CDF08EF81718">
-    <name>RACE.ImplementationArtifacts.Planner_ManagerArtifacts.Planner_Manager_svnt</name>
-    <source/>
-    <node/>
-    <location>Planner_Manager_svnt</location>
-    <execParameter>
-      <name>entryPoint</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>create_CIAO_RACE_Planner_Manager_Home_Servant</string>
-        </value>
-      </value>
-    </execParameter>
-  </artifact>
-
-  <artifact id="__A65A1FA0-8F4D-4807-9AE9-90D344154D2C">
-    <name>RACE.ImplementationArtifacts.Planner_ManagerArtifacts.Planner_Manager_exec</name>
-    <source/>
-    <node/>
-    <location>Planner_Manager_exec</location>
-    <execParameter>
-      <name>entryPoint</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>create_CIAO_RACE_Planner_Manager_Home_Impl</string>
-        </value>
-      </value>
-    </execParameter>
-  </artifact>
-
-  <artifact id="__1CC443DF-7EE3-4130-8ACE-EE4181AC96CD">
-    <name>RACE.ImplementationArtifacts.Plan_AnalyzerArtifacts.Plan_Analyzer_stub</name>
-    <source/>
-    <node/>
-    <location>Plan_Analyzer_stub</location>
-  </artifact>
-
-  <artifact id="__57123764-8624-4D79-9C5B-7ADF929536E6">
-    <name>RACE.ImplementationArtifacts.Plan_AnalyzerArtifacts.Plan_Analyzer_svnt</name>
-    <source/>
-    <node/>
-    <location>Plan_Analyzer_svnt</location>
-    <execParameter>
-      <name>entryPoint</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>create_CIAO_RACE_Plan_Analyzer_Home_Servant</string>
-        </value>
-      </value>
-    </execParameter>
-  </artifact>
-
-  <artifact id="__CDC7061A-483C-447B-8151-E68250566E86">
-    <name>RACE.ImplementationArtifacts.Plan_AnalyzerArtifacts.Plan_Analyzer_exec</name>
-    <source/>
-    <node/>
-    <location>Plan_Analyzer_exec</location>
-    <execParameter>
-      <name>entryPoint</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>create_CIAO_RACE_Plan_Analyzer_Home_Impl</string>
-        </value>
-      </value>
-    </execParameter>
-  </artifact>
-
-  <artifact id="__00B105AB-50F5-49B7-A822-9B267F2D8896">
-    <name>RACE.ImplementationArtifacts.ControllerArtifacts.Controller_svnt</name>
-    <source/>
-    <node/>
-    <location>Controller_svnt</location>
-    <execParameter>
-      <name>entryPoint</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>create_CIAO_RACE_Controller_Home_Servant</string>
-        </value>
-      </value>
-    </execParameter>
-  </artifact>
-
-  <artifact id="__032AE7B6-3ABD-478A-B0D7-56BC4AAEF0B7">
-    <name>RACE.ImplementationArtifacts.ControllerArtifacts.Controller_stub</name>
-    <source/>
-    <node/>
-    <location>Controller_stub</location>
-  </artifact>
-
-  <artifact id="__BF4AE6A2-BE32-4B8E-9919-C812EC18BF00">
-    <name>RACE.ImplementationArtifacts.ControllerArtifacts.Controller_exec</name>
-    <source/>
-    <node/>
-    <location>Controller_exec</location>
-    <execParameter>
-      <name>entryPoint</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>create_CIAO_RACE_Controller_Home_Impl</string>
-        </value>
-      </value>
-    </execParameter>
-  </artifact>
-
-  <artifact id="__C22D0B06-6CDA-4652-B1CE-586E0C23251F">
-    <name>RACE.ImplementationArtifacts.TargetManagerImplArtifacts.TargetManager_stub</name>
-    <source/>
-    <node/>
-    <location>TargetManager_stub</location>
-  </artifact>
-
-  <artifact id="__9CB3A43B-397F-4FA9-97AA-EBFC3A22BFEC">
-    <name>RACE.ImplementationArtifacts.TargetManagerImplArtifacts.TargetManager_svnt</name>
-    <source/>
-    <node/>
-    <location>TargetManager_svnt</location>
-    <execParameter>
-      <name>entryPoint</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>create_CIAO_TargetManagerHome_Servant</string>
-        </value>
-      </value>
-    </execParameter>
-  </artifact>
-
-  <artifact id="__0F176DA2-9953-482A-9268-7DA5E69A88FE">
-    <name>RACE.ImplementationArtifacts.TargetManagerImplArtifacts.TargetManager_exec</name>
-    <source/>
-    <node/>
-    <location>TargetManager_exec</location>
-    <execParameter>
-      <name>entryPoint</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>create_CIAO_TargetManagerHome_Impl</string>
-        </value>
-      </value>
-    </execParameter>
-  </artifact>
-
-  <artifact id="__BF4AE6A2-BE32-4B8E-9919-C812EC16BF00">
-    <name>RACE.ImplementationArtifacts.Central_MonitorArtifacts.Central_Monitor_exec</name>
-    <source/>
-    <node/>
-    <location>Monitor_exec</location>
-    <execParameter>
-      <name>entryPoint</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>create_CIAO_RACE_Central_Monitor_Home_Impl</string>
-        </value>
-      </value>
-    </execParameter>
-  </artifact>
-
-  <artifact id="__032AE7B6-3ABD-478A-B0D7-56BC4AAEF0B9">
-    <name>RACE.ImplementationArtifacts.Central_MonitorArtifacts.Central_Monitor_stub</name>
-    <source/>
-    <node/>
-    <location>Monitor_stub</location>
-  </artifact>
-
-  <artifact id="__00B105AB-50F5-49B7-A822-9B267F2D8898">
-    <name>RACE.ImplementationArtifacts.Central_MonitorArtifacts.Central_Monitor_svnt</name>
-    <source/>
-    <node/>
-    <location>Monitor_svnt</location>
-    <execParameter>
-      <name>entryPoint</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>create_CIAO_RACE_Central_Monitor_Home_Servant</string>
-        </value>
-      </value>
-    </execParameter>
-  </artifact>
-
-  <artifact id="_BFEFFD00-977E-42C1-ACB4-873556C44F33">
-    <name>RACE.ImplementationArtifacts.XML_Output_AdapterArtifacts.XML_Output_Adapter_stub</name>
-    <source/>
-    <node/>
-    <location>XML_Output_Adapter_stub</location>
-  </artifact>
-
-  <artifact id="_A5A450AC-A314-45F4-9195-5A9EDFD8260F">
-    <name>RACE.ImplementationArtifacts.XML_Output_AdapterArtifacts.XML_Output_Adapter_svnt</name>
-    <source/>
-    <node/>
-    <location>XML_Output_Adapter_svnt</location>
-    <execParameter>
-      <name>entryPoint</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>create_CIAO_RACE_XML_Output_Adapter_Home_Servant</string>
-        </value>
-      </value>
-    </execParameter>
-  </artifact>
-
-  <artifact id="_51E98A22-D8B4-46FF-B531-9756A94B19B3">
-    <name>RACE.ImplementationArtifacts.XML_Output_AdapterArtifacts.XML_Output_Adapter_exec</name>
-    <source/>
-    <node/>
-    <location>XML_Output_Adapter_exec</location>
-    <execParameter>
-      <name>entryPoint</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>create_CIAO_RACE_XML_Output_Adapter_Home_Impl</string>
+          <string>create_CIAO_RACE_SA_POP_IA_SA_POP_IA_Component_Home_Impl</string>
         </value>
       </value>
     </execParameter>

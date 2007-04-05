@@ -1,3 +1,28 @@
+Thu Apr  5 20:38:24 UTC 2007  Nishanth Shankaran  <nshankar@nospam.com>
+
+        * Data_Base/Data_Base.mpc:
+        * Input_Adapters/SA_POP_Input_Adapter/SA_POP_Input_Adapter.mpc:
+        * Output_Adapters/DAnCE_Output_Adapter/DAnCE_Output_Adapter.mpc:
+          Updated the sharedname filed for all the projects.
+
+        * Input_Adapters/SA_POP_Input_Adapter/tester.cpp: Added a simple
+          client to test RACE. This client deploys a deployment plan
+          generated via PICML. NOTE: This does not use the repository
+          manager.
+
+        * descriptors/NodeDetails.dat:
+        * descriptors/RACE.cdp:
+        * descriptors/run_RACE.pl:
+
+        Added necessary "scripts" to deploy RACE.
+
+        * descriptors/Domain.cdd:
+        * descriptors/run_all.pl:
+        * descriptors/run_ground.pl:
+        * descriptors/run_space.pl:
+
+          Removed these files.
+
 Thu Apr  5 18:17:48 UTC 2007  Nishanth Shankaran  <nshankar@nospam.com>
 
         * Input_Adapters/SA_POP_Input_Adapter/Admin_exec.h:
