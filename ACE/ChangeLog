@@ -1,3 +1,11 @@
+Wed Apr  4 23:59:18 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * tests/Test_Output.cpp (close): Don't delete output_file_ during
+          close() - it prevents the output from being reset for another
+          round of logging as is done with Object_Manager_Flipping_Test.
+          The destructor will delete it (as the constructor allocated it)
+          when the component framework cleanup runs at process rundown.
+
 Wed Apr  4 22:01:35 UTC 2007  Krishnakumar B  <kitty@nospam.invalid.domain>
 
         * ace/CORBA_macros.h:  Restored  ACE_PRINT_EXCEPTION by removing

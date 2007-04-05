@@ -177,13 +177,12 @@ ACE_Test_Output::close (void)
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
     this->output_file_->flush ();
     this->output_file_->close ();
-    delete this->output_file_;
 #else
-  ACE_OS::fflush (this->output_file_);
-  ACE_OS::fclose (this->output_file_);
+    ACE_OS::fflush (this->output_file_);
+    ACE_OS::fclose (this->output_file_);
+    this->output_file_ = 0;
 #endif /* !ACE_LACKS_IOSTREAM_TOTALLY */
-    this->output_file_=0;
-    ACE_LOG_MSG->msg_ostream (this->output_file_, 0);
+    ACE_LOG_MSG->msg_ostream (0, 0);
   }
   // else something else changed the stream and hence should
   // have closed and deleted the output_file_
