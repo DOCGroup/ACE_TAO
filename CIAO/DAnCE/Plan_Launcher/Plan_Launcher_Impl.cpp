@@ -411,21 +411,77 @@ namespace CIAO
     const char *
     Plan_Launcher_i::re_launch_plan (const ::Deployment::DeploymentPlan &plan)
     {
+      try
+        {
+          if (CORBA::is_nil (this->em_.in ()))
+            {
+              ACE_ERROR ((LM_ERROR,
+                          ACE_TEXT ("CIAO::Plan_Launcher_i: ")
+                          ACE_TEXT ("re_launch_plan called witn an uninitialized EM.\n")));
+              return 0;
+            }
 
-      if (CORBA::is_nil (this->em_.in ()))
+          this->em_->perform_redeployment (plan);
+
+          if (CIAO::debug_level ())
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "CIAO_PlanLauncher: new plan redeployed ...\n"));
+            }
+
+          return CORBA::string_dup (plan.UUID.in ());
+        }
+      catch (const Deployment::ResourceNotAvailable& ex)
         {
           ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("CIAO::Plan_Launcher_i: ")
-                      ACE_TEXT ("re_launch_plan called witn an uninitialized EM.\n")));
-          return 0;
+                      "EXCEPTION: ResourceNotAvaiable exception caught: %s,\n"
+                      "Type: %s\n"
+                      "Property: %s\n"
+                      "Element: %s\n"
+                      "Resource: %s\n",
+                      ex.name.in (),
+                      ex.resourceType.in (),
+                      ex.propertyName.in (),
+                      ex.elementName.in (),
+                      ex.resourceName.in ()));
+          throw Deployment_Failure ("");
         }
-
-      this->em_->perform_redeployment (plan);
-
-      if (CIAO::debug_level ())
+      catch (const Deployment::StartError& ex)
         {
-          ACE_DEBUG ((LM_DEBUG,
-                      "CIAO_PlanLauncher: new plan redeployed ...\n"));
+          ACE_ERROR ((LM_ERROR,
+                      "EXCEPTION: StartError exception caught: %s, %s\n",
+                      ex.name.in (),
+                      ex.reason.in ()));
+          throw Deployment_Failure ("");
+        }
+      catch (const Deployment::InvalidProperty& ex)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "EXCEPTION: InvalidProperty exception caught: %s, %s\n",
+                      ex.name.in (),
+                      ex.reason.in ()));
+          throw Deployment_Failure ("");
+        }
+      catch (const Deployment::InvalidConnection& ex)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "EXCEPTION: InvalidConnection exception caught: %s, %s\n",
+                      ex.name.in (),
+                      ex.reason.in ()));
+          throw Deployment_Failure  ("");
+        }
+      catch (const CORBA::Exception& ex)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "CORBA EXCEPTION: %s\n",
+                      ex._info().fast_rep()));
+          throw Deployment_Failure  ("");
+        }
+      catch (...)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "EXCEPTION: non-CORBA exception\n"));
+          throw Deployment_Failure  ("");
         }
 
       return CORBA::string_dup (plan.UUID.in ());

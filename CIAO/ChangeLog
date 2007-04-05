@@ -1,3 +1,14 @@
+Thu Apr  5 16:51:24 UTC 2007  Gan Deng  <gan.deng@vanderbilt.edu>
+
+        * DAnCE/DomainApplicationManager/Reply_Handler_i.h
+        
+          Changed ACE_Thread_Mutex to ACE_SYNCH_MUTEX to avoid errors
+          in Single_Threaded build.
+        
+        * DAnCE/Plan_Launcher/Plan_Launcher_Impl.cpp
+        
+          Added exception catching blocks to re_launch_plan operation.
+
 Thu Apr  5 01:07:34 UTC 2007  Krishnakumar B  <kitty@nospam.invalid.domain>
 
         * examples/BasicSP/BMClosedED/BMClosedEDEI.idl:
