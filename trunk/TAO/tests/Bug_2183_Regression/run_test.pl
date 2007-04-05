@@ -57,7 +57,7 @@ $DUMMY_CLIENT->Spawn();
 $DUMMY_CLIENT->Wait (2);
 
 $CLIENT->Arguments("-k file://$server_ior_file");
-if ($CLIENT->SpawnWaitKill (10) != 0)
+if ($CLIENT->SpawnWaitKill (15) != 0)
 {
    print STDERR "ERROR: Bug #2183 Regression failed. Non zero result from client.\n";
    $SERVER->Kill();

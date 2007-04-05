@@ -41,7 +41,7 @@ if (PerlACE::waitforfile_timed ($server_ior_file, 10) == -1)
 }
 
 $CLIENT->Arguments("-f file://$server_ior_file");
-if ($CLIENT->SpawnWaitKill (10) != 0)
+if ($CLIENT->SpawnWaitKill (15) != 0)
 {
    print STDERR "ERROR: Regression - Non zero result from client or client timed out.\n";
    $SERVER->Kill();

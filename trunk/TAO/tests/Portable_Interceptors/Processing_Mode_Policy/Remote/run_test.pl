@@ -116,7 +116,7 @@ for ($testid = 1; $testid <= 9; ++$testid)
                                   "-p $client_mode " .
                                   "-ORBobjrefstyle url");
 
-  my $client_status = $CLIENT->SpawnWaitKill (5);
+  my $client_status = $CLIENT->SpawnWaitKill (15);
 
   if ($client_status != 0) {
       print STDERR "ERROR: PI_ProcMode_TestClient returned $client_status\n";
