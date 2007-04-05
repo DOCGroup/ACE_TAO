@@ -1,3 +1,9 @@
+Thu Apr  5 08:00:00 UTC 2007  Martin Corino <mcorino@remedy.nl>
+
+        * bin/ace_tests.lst:
+
+          Excluded RMCast tests for VxWorks.
+
 Wed Apr  4 23:59:18 UTC 2007  Steve Huston  <shuston@riverace.com>
 
         * tests/Test_Output.cpp (close): Don't delete output_file_ during
