@@ -1,3 +1,26 @@
+Thu Apr  5 18:17:48 UTC 2007  Nishanth Shankaran  <nshankar@nospam.com>
+
+        * Input_Adapters/SA_POP_Input_Adapter/Admin_exec.h:
+        * Input_Adapters/SA_POP_Input_Adapter/Admin_exec.cpp: Performed
+          cosmetic changes.
+
+        * Output_Adapters/DAnCE_Output_Adapter/Admin_exec.h:
+        * Output_Adapters/DAnCE_Output_Adapter/Admin_exec.cpp:
+
+        Factered-out the implementation of the admin facet to seperate
+        files.
+
+        * Output_Adapters/DAnCE_Output_Adapter/DAnCE_Output_Adapter.idl:
+        * Output_Adapters/DAnCE_Output_Adapter/DAnCE_Output_Adapter.mpc:
+        * Output_Adapters/DAnCE_Output_Adapter/DAnCE_Output_Adapter_exec.h:
+        * Output_Adapters/DAnCE_Output_Adapter/DAnCE_Output_Adapter_exec.cpp:
+
+        Updated these files to include redepoyment of
+        operational-strings/deployment-plans.
+
+        * RACE.mwc: Created a new solution file that builds the new RACE
+          entities.
+
 Sun Apr  1 22:35:12 UTC 2007  Nishanth Shankaran  <nshankar@nospam.com>
 
         * Data_Base/Admin_exec.h:

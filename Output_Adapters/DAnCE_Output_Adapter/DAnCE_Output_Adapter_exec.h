@@ -5,8 +5,6 @@
 #include "DAnCE_Output_Adapter_exec_export.h"
 #include "tao/LocalObject.h"
 
-#include "Plan_Launcher/Plan_Launcher_Impl.h"
-
 namespace CIAO
 {
   namespace RACE
@@ -27,6 +25,10 @@ namespace CIAO
 
           virtual ::CIAO::RACE::DAnCE_OA::CCM_Admin_ptr get_admin ();
 
+          virtual void repoman_id (const char * id);
+
+          virtual char * repoman_id ();
+
           virtual void set_session_context
             (::Components::SessionContext_ptr ctx);
 
@@ -42,6 +44,9 @@ namespace CIAO
 
           protected:
           DAnCE_OA_Component_Context *context_;
+
+          CORBA::String_var repoman_id_;
+
         };
 
         class DANCE_OUTPUT_ADAPTER_EXEC_Export DAnCE_OA_Component_Home_exec_i
