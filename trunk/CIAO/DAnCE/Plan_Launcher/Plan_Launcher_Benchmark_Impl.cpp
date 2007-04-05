@@ -5,6 +5,7 @@
 #include "ace/Sched_Params.h"
 #include "ace/Stats.h"
 #include "ace/Sample_History.h"
+#include "Utils/Plan_Handler.h"
 
 namespace CIAO
 {
@@ -20,6 +21,14 @@ namespace CIAO
     {
       try
         {
+          /*
+          DAnCE_Utils::add_instance (
+            const_cast<::Deployment::DeploymentPlan&> (plan), 
+            "Hello-Sender-idd-02", "SenderNode", "Hello-Sender-mdd");
+
+          DAnCE_Utils::print_instances (plan);
+          DAnCE_Utils::print_connections (plan);*/
+          
 
           ///// Start Test ////////////////////////////////////////////
           ACE_Sample_History history_prepare_plan (this->niterations_);
