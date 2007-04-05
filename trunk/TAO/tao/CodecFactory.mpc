@@ -1,5 +1,5 @@
 //$Id$
-project : taolib, install, core_anytypecode, tao_versioning_idl_defaults {
+project : taolib, install, core_anytypecode, tao_versioning_idl_defaults, nolink_codecfactory {
   sharedname    = TAO_CodecFactory
   dynamicflags  = TAO_CODECFACTORY_BUILD_DLL
 
