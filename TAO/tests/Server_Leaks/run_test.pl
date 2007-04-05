@@ -55,7 +55,7 @@ for ($i = 0; $i != $iterations; $i++) {
   }
   # Now wait for each one
   for ($j = 0; $j != $concurrent_clients; $j++) {
-    $client = $CL[$j]->WaitKill (5);
+    $client = $CL[$j]->WaitKill (20);
 
     if ($client != 0) {
       print STDERR "ERROR: client $j returned $client in iteration $i\n";
