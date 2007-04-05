@@ -19,15 +19,19 @@ Notify_Test_Client::Notify_Test_Client (void)
 
 Notify_Test_Client::~Notify_Test_Client ()
 {
-  try
-  {
-    root_poa_->destroy(1, 1);
-    orb_->destroy();
-  }
-  catch (const CORBA::Exception& e)
-  {
-    e._tao_print_exception ("\nError: ");
-  }
+  if (!CORBA::is_nil (root_poa_.in ()) &&
+      !CORBA::is_nil (orb_.in ()))
+    {
+      try
+      {
+        root_poa_->destroy(1, 1);
+        orb_->destroy();
+      }
+      catch (const CORBA::Exception& e)
+      {
+        e._tao_print_exception ("\nError: ");
+      }
+    }
 }
 
 int
