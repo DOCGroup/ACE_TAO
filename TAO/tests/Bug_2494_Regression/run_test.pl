@@ -42,7 +42,7 @@ print "***Client has been killed***\n";
 #Server should still be running at this point, now start the client that asks
 #the server to shut itself down
 
-$client = $CLS->SpawnWaitKill (5);
+$client = $CLS->SpawnWaitKill (15);
 if ($client != 0) {
     print STDERR "ERROR: client returned $client\n";
     $status = 1;

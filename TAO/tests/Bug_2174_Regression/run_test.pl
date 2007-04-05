@@ -34,7 +34,7 @@ if (PerlACE::waitforfile_timed ($iorfile, $PerlACE::wait_interval_for_process_cr
     exit 1;
 }
 
-$client = $CL->SpawnWaitKill (10);
+$client = $CL->SpawnWaitKill (15);
 $SV->Kill ();
 unlink $iorfile;
 if ($client != 2) {
@@ -59,7 +59,7 @@ if (PerlACE::waitforfile_timed ($iorfile, $PerlACE::wait_interval_for_process_cr
     exit 1;
 }
 
-$client = $CL->SpawnWaitKill (10);
+$client = $CL->SpawnWaitKill (15);
 $SV->Kill ();
 if ($client != 3) {
     print STDERR "ERROR: client returned $client in test B, expected 3\n";
@@ -73,7 +73,7 @@ if ($client != 3) {
 # This test was failing on win32 without this sleep.
 sleep 1;
 
-$client = $CL->SpawnWaitKill (10);
+$client = $CL->SpawnWaitKill (15);
 unlink $iorfile;
 if ($client != 5) {
     print STDERR "ERROR: client returned $client in test C, expected 5\n";
