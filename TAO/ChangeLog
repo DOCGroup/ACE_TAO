@@ -1,3 +1,25 @@
+Thu Apr  5 15:45:30 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/tests/Notify/Bug_2561_Regression/Bug_2561_Regression.mpc:
+        * orbsvcs/tests/Notify/Bug_2561_Regression/Consumer.cpp:
+        * orbsvcs/tests/Notify/Bug_2561_Regression/Makefile.am:
+        * orbsvcs/tests/Notify/Bug_2561_Regression/Notify_Push_Consumer.h:
+        * orbsvcs/tests/Notify/Bug_2561_Regression/Notify_Push_Consumer.cpp:
+        * orbsvcs/tests/Notify/Bug_2561_Regression/Supplier.cpp:
+        * orbsvcs/tests/Notify/Bug_2561_Regression/go.idl:
+        * orbsvcs/tests/Notify/Bug_2561_Regression/notify.conf:
+        * orbsvcs/tests/Notify/Bug_2561_Regression/notify.conf.xml:
+        * orbsvcs/tests/Notify/Bug_2561_Regression/run_test.pl:
+        * orbsvcs/tests/Notify/Makefile.am:
+
+          Added a regression test for bug 2561 where a pacing interval of
+          100 microseconds is used and two batch consumers are attached to
+          the Notify_Service.
+
+        * orbsvcs/tests/Notify/lib/Notify_Test_Client.cpp:
+
+          Avoid destroying the poa and the orb if they're nil.
+
 Thu Apr  5 14:25:10 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * tests/Bug_2174_Regression/run_test.pl:
