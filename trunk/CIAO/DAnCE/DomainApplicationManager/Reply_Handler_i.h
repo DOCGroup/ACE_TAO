@@ -77,7 +77,7 @@ private:
 
   ::Deployment::Connections retn_connections_;
 
-  ACE_Thread_Mutex lock_;
+  ACE_SYNCH_MUTEX lock_;
 
 };
 
