@@ -149,7 +149,7 @@ Identity_Server::register_groups (void)
   Load_Balancer::Object_Group_var random_group =
     factory->make_random ("Random group");
   
-  if (CORBA::is_nil (random_group))
+  if (CORBA::is_nil (random_group.in ()))
     {
       ACE_ERROR ((LM_ERROR, "Got nil random group from load balancer\n"));
       return -1;
@@ -158,7 +158,7 @@ Identity_Server::register_groups (void)
   Load_Balancer::Object_Group_var rr_group =
     factory->make_round_robin ("Round Robin group");
   
-  if (CORBA::is_nil (rr_group))
+  if (CORBA::is_nil (rr_group.in ()))
     {
       ACE_ERROR ((LM_ERROR, "Got nil round robin group from load balancer\n"));
       return -1;
