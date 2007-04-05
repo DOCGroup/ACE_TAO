@@ -631,7 +631,7 @@ int queue_priority_test (ACE_Message_Queue_Ex<User_Class, ACE_SYNCH>& q)
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Prio test queue not empty\n")), 1);
 
   // Set up a few objects with names for how they should come out of the queue.
-  auto_ptr<User_Class> b1, b2, b3, b4;
+  ACE_Auto_Basic_Ptr<User_Class> b1, b2, b3, b4;
   b1.reset (new User_Class ("first"));
   b2.reset (new User_Class ("second"));
   b3.reset (new User_Class ("third"));
