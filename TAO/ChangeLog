@@ -1,3 +1,27 @@
+Thu Apr  5 11:51:23 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * MPC/config/link_codecfactory.mpb:
+        * MPC/config/nolink_codecfactory.mpb:
+
+          Feature projects to link or not link the TAO_CodecFactory.
+
+        * MPC/config/taoexe.mpb:
+        * MPC/config/taolib.mpb:
+
+          Inherit from the link_codecfactory base project to allow the user
+          to determine if the TAO_CodecFactory will be linked into an
+          executable or library that uses TAO.  On QNX, the dynamic
+          unloading of the TAO_CodecFactory library at exit causes a core
+          dump.  If the library is linked in, the problem is eliminated.
+
+        * tao/AnyTypeCode.mpc:
+        * tao/CodecFactory.mpc:
+        * tao/Codeset.mpc:
+
+          Inherit from the nolink_codecfactory base project to ensure that
+          the TAO_CodecFactory library is not linked into these libraries.
+          This would cause a circular link dependency.
+
 Thu Apr  5 11:24:01 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * tests/Bug_933_Regression/MessengerClient.cpp:
