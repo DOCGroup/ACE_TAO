@@ -1,3 +1,11 @@
+Fri Apr  6 03:42:04 UTC 2007  Krishnakumar B  <kitty@nospam.invalid.domain>
+
+        * examples/BasicSP/descriptors/run_test.pl:  Updated the second
+          invocation of plan_launcher to pass in the previously generated
+          execution manager's IOR.  The test fails on Linux without this
+          flag.   Somehow it works on Windows without this flag; probably
+          due to some issue with case-sensitivity.
+
 Fri Apr  6 03:35:21 UTC 2007  Krishnakumar B  <kitty@nospam.invalid.domain>
 
         * examples/BasicSP/BMClosedED/BMClosedED.mpc:
