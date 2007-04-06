@@ -6,6 +6,12 @@ Fri Apr  6 03:42:04 UTC 2007  Krishnakumar B  <kitty@nospam.invalid.domain>
           flag.   Somehow it works on Windows without this flag; probably
           due to some issue with case-sensitivity.
 
+Fri Apr  6 01:15:00 UTC 2007  Gan Deng  <gan.deng@vanderbilt.edu>
+
+        * MPC/config/dance_utils.mpb
+
+          Added the base project for the DAnCE utility library.
+
 Fri Apr  6 03:35:21 UTC 2007  Krishnakumar B  <kitty@nospam.invalid.domain>
 
         * examples/BasicSP/BMClosedED/BMClosedED.mpc:
@@ -1431,8 +1437,6 @@ Tue Feb 20 16:17:46 UTC 2007  William R. Otte  <wotte@dre.vanderbilt.edu>
 
          Added DomainApplication interface, completely missing from our IDL.
 
-
->>>>>>> .r77261
 Tue Feb 20 14:15:14 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * CIDLC/OperationHeaderEmitters.cpp:
