@@ -523,26 +523,43 @@ ACE_OS::recursive_mutex_cond_unlock (ACE_recursive_thread_mutex_t *m,
   // the condition is signaled.
   //
   // For WinCE, the situation is a bit trickier. CE doesn't have
-  // RecursionCount, and LockCount is not an indicator of recursion on WinCE;
+  // RecursionCount, and LockCount has changed semantics over time.
+  // In CE 3 (and maybe 4?) LockCount is not an indicator of recursion;
   // instead, see when it's unlocked by watching the OwnerThread, which will
   // change to something other than the current thread when it's been
   // unlocked "enough" times. Note that checking for 0 (unlocked) is not
   // sufficient. Another thread may acquire the lock between our unlock and
   // checking the OwnerThread. So grab our thread ID value first, then
-  // compare to it in the loop condition.
-#      if defined (ACE_HAS_WINCE)
+  // compare to it in the loop condition. NOTE - the problem with this
+  // scheme is that we really want to unlock the mutex one _less_ times than
+  // required to release it for another thread to acquire. With CE 5 we
+  // can do this by watching LockCount alone. I _think_ it can be done by
+  // watching LockCount on CE 4 as well (though its meaning is different),
+  // but I'm leary of changing this code since a user reported success
+  // with it.
+  //
+  // We're using undocumented fields in the CRITICAL_SECTION structure
+  // and they've been known to change across Windows variants and versions./
+  // So be careful if you need to change these - there may be other
+  // Windows variants that depend on existing values and limits.
+#      if defined (ACE_HAS_WINCE) && (UNDER_CE < 500)
   ACE_thread_t me = ACE_OS::thr_self ();
-#      endif /* ACE_HAS_WINCE */
+#      endif /* ACE_HAS_WINCE && CE 4 or earlier */
 
   state.relock_count_ = 0;
-  while (m->LockCount > 0
-#      if defined (ACE_HAS_WINCE)
-         // Although this is a thread ID, OwnerThread's type is HANDLE.
-         // Not sure if this is a problem, but it appears to work.
-         && m->OwnerThread == (HANDLE)me
+  while (
+#      if !defined (ACE_HAS_WINCE)
+         m->LockCount > 0 && m->RecursionCount > 1
 #      else
-         && m->RecursionCount > 1
-#      endif
+         // WinCE doesn't have RecursionCount and the LockCount semantic
+         // has changed between versions; pre-Mobile 5 the LockCount
+         // was 0-indexed, and Mobile 5 has it 1-indexed.
+#        if (UNDER_CE < 500)
+         m->LockCount > 0 && m->OwnerThread == (HANDLE)me
+#        else
+         m->LockCount > 1
+#        endif /* UNDER_CE < 500 */
+#      endif /* ACE_HAS_WINCE */
          )
     {
       // This may fail if the current thread doesn't own the mutex. If it

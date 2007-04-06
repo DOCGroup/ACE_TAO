@@ -1,3 +1,9 @@
+Fri Apr  6 19:48:20 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * ace/OS_NS_Thread.inl (recursive_mutex_cond_unlock): Corrected for
+          Windows Mobile 5, where the CRITICAL_SECTION LockCount member was
+          changed from 0-base to 1-base.
+
 Fri Apr  6 14:27:20 UTC 2007  Steve Huston  <shuston@riverace.com>
 
         * ace/Asynch_IO.h: Improved comments for ACE_Asynch_Read_Stream.
