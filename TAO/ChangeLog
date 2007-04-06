@@ -1,3 +1,12 @@
+Fri Apr  6 12:09:37 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/tests/ImplRepo/Bug_689_Regression/Bug_689_Regression.mpc:
+        * orbsvcs/tests/ImplRepo/Bug_689_Regression/Makefile.am:
+        * orbsvcs/tests/ImplRepo/Bug_689_Regression/server.cpp:
+
+          Added the ImR_Client library so that this test will work on static
+          builds.
+
 Thu Apr  5 15:45:30 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/tests/Notify/Bug_2561_Regression/Bug_2561_Regression.mpc:
