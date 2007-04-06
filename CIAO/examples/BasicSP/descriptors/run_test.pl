@@ -210,7 +210,7 @@ if ($result != 0) {
 print "Invoking plan_launcher - tearing down the application\n";
 $PL2 =
   new PerlACE::Process ("$CIAO_ROOT/bin/plan_launcher",
-                        "-p $cdp_file -i file://$damior_file");
+                        "-k file://$emior_file -p $cdp_file -i file://$damior_file");
 $PL2->Spawn();
 
 $pl2_running = 1;
