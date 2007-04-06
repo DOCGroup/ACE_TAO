@@ -31,10 +31,6 @@
 class Manager
 {
 public:
-
-  Manager (void);
-  // Ctor
-
   void init (int argc,
              char *argv[]);
 
@@ -55,11 +51,14 @@ public:
   CORBA::ORB_ptr orb (void);
   // Return the pointer to the copy of our ORB
 private:
-  CORBA::ORB_var orb_;
-  // Our ORB
+  CORBA::Object_var object_primary_;
+  CORBA::Object_var object_secondary_;
 
   CORBA::Object_var merged_set_;
   // The merged IOR set
+
+  CORBA::ORB_var orb_;
+  // Our ORB
 };
 
 #endif /*TEST_FT_IOGR_MANAGER_H */

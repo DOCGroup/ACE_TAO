@@ -19,10 +19,6 @@ const char *first_ior = 0;
 const char *second_ior = 0;
 const char *ior_output_file = 0;
 
-// Objects
-CORBA::Object_var object_primary = 0;
-CORBA::Object_var object_secondary = 0;
-
 // Reference to the IOR manipulator
 TAO_IOP::TAO_IOR_Manipulation_var iorm = 0;
 
@@ -101,13 +97,6 @@ main (int argc,
   return 0;
 }
 
-Manager::Manager (void)
-  :orb_ (0),
-   merged_set_ (0)
-{
-  //no-op
-}
-
 void
 Manager::init (int argc,
                char *argv[])
@@ -135,11 +124,11 @@ int
 Manager::make_merged_iors (void)
 {
   // First  server
-  object_primary =
+  this->object_primary_ =
     this->orb_->string_to_object (first_ior);
 
   //Second server
-  object_secondary =
+  this->object_secondary_ =
     this->orb_->string_to_object (second_ior);
 
   // Get an object reference for the ORBs IORManipultion object!
@@ -154,8 +143,8 @@ Manager::make_merged_iors (void)
   // Create the list
   TAO_IOP::TAO_IOR_Manipulation::IORList iors (2);
   iors.length(2);
-  iors [0] = CORBA::Object::_duplicate (object_primary.in ());
-  iors [1] = CORBA::Object::_duplicate (object_secondary.in ());
+  iors [0] = CORBA::Object::_duplicate (this->object_primary_.in ());
+  iors [1] = CORBA::Object::_duplicate (this->object_secondary_.in ());
 
   // Create a merged set 1;
   merged_set_ =
@@ -199,7 +188,7 @@ Manager::set_properties (void)
   if (retval != 0)
     {
       retval = iorm->set_primary (&iogr_prop,
-                                  object_secondary.in (),
+                                  this->object_secondary_.in (),
                                   this->merged_set_.in ());
     }
 
