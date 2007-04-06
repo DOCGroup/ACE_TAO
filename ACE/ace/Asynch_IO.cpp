@@ -11,6 +11,7 @@ ACE_RCSID(ace, Asynch_IO, "$Id$")
 #include "ace/Message_Block.h"
 #include "ace/INET_Addr.h"
 #include "ace/Asynch_IO_Impl.h"
+#include "ace/os_include/OS_Errno.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -107,12 +108,22 @@ ACE_Asynch_Operation::open (ACE_Handler &handler,
 int
 ACE_Asynch_Operation::cancel (void)
 {
+  if (0 == this->implementation ())
+    {
+      errno = EFAULT;
+      return -1;
+    }
   return this->implementation ()->cancel ();
 }
 
 ACE_Proactor *
 ACE_Asynch_Operation::proactor (void) const
 {
+  if (0 == this->implementation ())
+    {
+      errno = EFAULT;
+      return 0;
+    }
   return this->implementation ()->proactor ();
 }
 
@@ -180,6 +191,11 @@ ACE_Asynch_Read_Stream::read (ACE_Message_Block &message_block,
                               int priority,
                               int signal_number)
 {
+  if (0 == this->implementation_)
+    {
+      errno = EFAULT;
+      return -1;
+    }
   return this->implementation_->read (message_block,
                                       bytes_to_read,
                                       act,
@@ -195,6 +211,11 @@ ACE_Asynch_Read_Stream::readv (ACE_Message_Block &message_block,
                                int priority,
                                int signal_number)
 {
+  if (0 == this->implementation_)
+    {
+      errno = EFAULT;
+      return -1;
+    }
   return this->implementation_->readv (message_block,
                                        bytes_to_read,
                                        act,
@@ -288,6 +309,11 @@ ACE_Asynch_Write_Stream::write (ACE_Message_Block &message_block,
                                 int priority,
                                 int signal_number)
 {
+  if (0 == this->implementation_)
+    {
+      errno = EFAULT;
+      return -1;
+    }
   return this->implementation_->write (message_block,
                                        bytes_to_write,
                                        act,
@@ -303,6 +329,11 @@ ACE_Asynch_Write_Stream::writev (ACE_Message_Block &message_block,
                                  int priority,
                                  int signal_number)
 {
+  if (0 == this->implementation_)
+    {
+      errno = EFAULT;
+      return -1;
+    }
   return this->implementation_->writev (message_block,
                                         bytes_to_write,
                                         act,
@@ -398,6 +429,11 @@ ACE_Asynch_Read_File::read (ACE_Message_Block &message_block,
                             int priority,
                             int signal_number)
 {
+  if (0 == this->implementation_)
+    {
+      errno = EFAULT;
+      return -1;
+    }
   return this->implementation_->read (message_block,
                                       bytes_to_read,
                                       offset,
@@ -417,6 +453,11 @@ ACE_Asynch_Read_File::readv (ACE_Message_Block &message_block,
                              int priority,
                              int signal_number)
 {
+  if (0 == this->implementation_)
+    {
+      errno = EFAULT;
+      return -1;
+    }
   return this->implementation_->readv (message_block,
                                        bytes_to_read,
                                        offset,
@@ -496,6 +537,11 @@ ACE_Asynch_Write_File::write (ACE_Message_Block &message_block,
                               int priority,
                               int signal_number)
 {
+  if (0 == this->implementation_)
+    {
+      errno = EFAULT;
+      return -1;
+    }
   return this->implementation_->write (message_block,
                                        bytes_to_write,
                                        offset,
@@ -515,6 +561,11 @@ ACE_Asynch_Write_File::writev (ACE_Message_Block &message_block,
                                int priority,
                                int signal_number)
 {
+  if (0 == this->implementation_)
+    {
+      errno = EFAULT;
+      return -1;
+    }
   return this->implementation_->writev (message_block,
                                         bytes_to_write,
                                         offset,
@@ -594,6 +645,11 @@ ACE_Asynch_Accept::accept (ACE_Message_Block &message_block,
                            int signal_number,
                            int addr_family)
 {
+  if (0 == this->implementation_)
+    {
+      errno = EFAULT;
+      return -1;
+    }
   return this->implementation_->accept (message_block,
                                         bytes_to_read,
                                         accept_handle,
@@ -698,6 +754,11 @@ ACE_Asynch_Connect::connect (ACE_HANDLE connect_handle,
                              int priority,
                              int signal_number)
 {
+  if (0 == this->implementation_)
+    {
+      errno = EFAULT;
+      return -1;
+    }
   return this->implementation_->connect (connect_handle,
                                          remote_sap,
                                          local_sap,
@@ -786,6 +847,11 @@ ACE_Asynch_Transmit_File::transmit_file (ACE_HANDLE file,
                                          int priority,
                                          int signal_number)
 {
+  if (0 == this->implementation_)
+    {
+      errno = EFAULT;
+      return -1;
+    }
   return this->implementation_->transmit_file (file,
                                                header_and_trailer,
                                                bytes_to_write,
@@ -1166,6 +1232,11 @@ ACE_Asynch_Read_Dgram::recv (ACE_Message_Block *message_block,
                              int priority,
                              int signal_number)
 {
+  if (0 == this->implementation_)
+    {
+      errno = EFAULT;
+      return -1;
+    }
   return this->implementation_->recv (message_block,
                                       number_of_bytes_recvd,
                                       flags,
@@ -1273,6 +1344,11 @@ ACE_Asynch_Write_Dgram::send (ACE_Message_Block *message_block,
                               int priority,
                               int signal_number)
 {
+  if (0 == this->implementation_)
+    {
+      errno = EFAULT;
+      return -1;
+    }
   return this->implementation_->send (message_block,
                                       number_of_bytes_sent,
                                       flags,

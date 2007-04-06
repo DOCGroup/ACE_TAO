@@ -318,18 +318,28 @@ public:
             ACE_Proactor *proactor = 0);
 
   /**
-   * This starts off an asynchronous read.  Upto {bytes_to_read} will
-   * be read and stored in the {message_block}. {message_block}'s
-   * {wr_ptr} will be updated to reflect the added bytes if the read
-   * operation is successful completed. Priority of the
-   * operation is specified by {priority}. On POSIX4-Unix, this is
-   * supported. Works like {nice} in Unix. Negative values are not
-   * allowed. 0 means priority of the operation same as the process
-   * priority. 1 means priority of the operation is one less than
-   * process. And so forth. On Win32, {priority} is a no-op.
-   * {signal_number} is the POSIX4 real-time signal number to be used
-   * for the operation. {signal_number} ranges from ACE_SIGRTMIN to
-   * ACE_SIGRTMAX. This argument is a no-op on non-POSIX4 systems.
+   * Initiate an asynchronous read operation.
+   *
+   * @arg message_block      The ACE_Message_Block to receive the data.
+   *                         Received bytes will be placed in the block
+   *                         beginning at its current write pointer.
+   *                         If data is read, the message block's write
+   *                         pointer will be advanced by the number of
+   *                         bytes read.
+   * @arg num_bytes_to_read  The maximum number of bytes to read.
+   * @arg act                Asynchronous Completion Token; passed through to
+   *                         the Result object corresponding to this operation.
+   * @arg priority           Priority of the operation. On POSIX4-Unix,
+   *                         this is supported. Works like @c nice in Unix.
+   *                         Negative values are not allowed. 0 means
+   *                         priority of the operation same as the process
+   *                         priority. 1 means priority of the operation is
+   *                         one less than process priority, etc.
+   *                         @param is ignored on Windows.
+   * @arg signal_number      The POSIX4 real-time signal number to be used
+   *                         to signal completion of the operation. Values
+   *                         range from ACE_SIGRTMIN to ACE_SIGRTMAX.
+   *                         This argument is ignored on non-POSIX4 systems.
    */
   int read (ACE_Message_Block &message_block,
             size_t num_bytes_to_read,
