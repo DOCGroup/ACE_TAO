@@ -1,3 +1,12 @@
+Fri Apr  6 14:27:20 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * ace/Asynch_IO.h: Improved comments for ACE_Asynch_Read_Stream.
+
+        * ace/Asynch_IO.cpp (read, write, cancel): If an operation is
+          attempted on an object that hasn't yet been opened, refuse it
+          with errno EFAULT. Thanks to Paul Daugherty <Paul at nextalk dot com>
+          for reporting this.
+
 Thu Apr  5 22:24:03 UTC 2007  Krishnakumar B  <kitty@nospam.invalid.domain>
 
         * ace/config-win32-msvc-8.h:  Removed the redundant define of
