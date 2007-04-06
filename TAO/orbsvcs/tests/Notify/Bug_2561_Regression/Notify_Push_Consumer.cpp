@@ -23,7 +23,8 @@ static const TimeBase::TimeT PACING = 1000;
 
 Notify_Sequence_Push_Consumer::Notify_Sequence_Push_Consumer (
   Notify_Test_Client& client)
-  : client_ (client)
+  : count_ (0),
+    client_ (client)
 {
   this->client_.consumer_start (this);
 }
