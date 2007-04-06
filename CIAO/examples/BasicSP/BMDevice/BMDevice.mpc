@@ -80,7 +80,7 @@ project(BMDevice_svnt) : ciao_servant_dnc {
   sharedname = BMDevice_svnt
 
   libs    += BMDevice_stub BMDevice_exec
-  libs    += BasicSP_stub BasicSP_exec
+  libs    += BasicSP_stub BasicSP_exec BasicSP_svnt
   dynamicflags = BMDEVICE_SVNT_BUILD_DLL
 
   CIDL_Files {
