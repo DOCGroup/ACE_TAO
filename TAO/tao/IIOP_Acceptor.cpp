@@ -875,6 +875,7 @@ TAO_IIOP_Acceptor::probe_interfaces (TAO_ORB_Core *orb_core, int def_type)
 #if defined (ACE_HAS_IPV6)
   size_t ipv4_cnt = 0;
   size_t ipv4_lo_cnt = 0;
+  size_t ipv6_ll = 0;
   bool ipv6_non_ll = false;
   // Scan for IPv4 interfaces since these should not be included
   // when IPv6-only is selected.
@@ -890,6 +891,11 @@ TAO_IIOP_Acceptor::probe_interfaces (TAO_ORB_Core *orb_core, int def_type)
              !if_addrs[j].is_loopback())
       {
         ipv6_non_ll = true; // we have at least 1 non-local IPv6 if
+      }
+    else if (!orb_core->orb_params ()->use_ipv6_link_local () &&
+             if_addrs[j].is_linklocal ())
+      {
+        ++ipv6_ll;  // count link local addrs to exclude them afterwards
       }
 #endif /* ACE_HAS_IPV6 */
 
@@ -941,9 +947,9 @@ TAO_IIOP_Acceptor::probe_interfaces (TAO_ORB_Core *orb_core, int def_type)
     lo_cnt = ipv4_lo_cnt;
 
   if (!ignore_lo)
-    this->endpoint_count_ = static_cast<CORBA::ULong> (if_ok_cnt);
+    this->endpoint_count_ = static_cast<CORBA::ULong> (if_ok_cnt - ipv6_ll);
   else
-    this->endpoint_count_ = static_cast<CORBA::ULong> (if_ok_cnt - lo_cnt);
+    this->endpoint_count_ = static_cast<CORBA::ULong> (if_ok_cnt - ipv6_ll - lo_cnt);
 #else /* ACE_HAS_IPV6 */
   // If the loopback interface is the only interface then include it
   // in the list of interfaces to query for a hostname, otherwise
@@ -1002,6 +1008,11 @@ TAO_IIOP_Acceptor::probe_interfaces (TAO_ORB_Core *orb_core, int def_type)
       if (ipv6_only &&
           (if_addrs[i].get_type () != AF_INET6 ||
            if_addrs[i].is_ipv4_mapped_ipv6 ()))
+        continue;
+
+      // Ignore all IPv6 link local interfaces when so required.
+      if (!orb_core->orb_params ()->use_ipv6_link_local () &&
+          if_addrs[i].is_linklocal ())
         continue;
 #else /* ACE_HAS_IPV6 */
       // Ignore any loopback interface if there are other

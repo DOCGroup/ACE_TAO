@@ -722,6 +722,17 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
 
           arg_shifter.consume_arg ();
         }
+      else if ((current_arg = arg_shifter.get_the_parameter
+                (ACE_TEXT("-ORBUseIPV6LinkLocal"))))
+        {
+          int use_ipv6_link_local = ACE_OS::atoi (current_arg);
+          if (use_ipv6_link_local)
+            this->orb_params ()->use_ipv6_link_local (true);
+          else
+            this->orb_params ()->use_ipv6_link_local (false);
+
+          arg_shifter.consume_arg ();
+        }
 #endif /* ACE_HAS_IPV6 */
       else if (0 != (current_arg = arg_shifter.get_the_parameter
                 (ACE_TEXT("-ORBCDRTradeoff"))))

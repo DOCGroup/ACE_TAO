@@ -1,3 +1,15 @@
+Fri Apr  6 14:36:25 UTC 2007  Vadym Ridosh <vridosh@prismtech.com>
+
+        * tao/ORB_Core.cpp:
+        * tao/IIOP_Acceptor.cpp:
+        * tao/params.h:
+        * tao/params.cpp:
+        * docs/Options.html:
+
+          Fix for bug 2871. It introduces a new option -ORBUseIPV6LinkLocal
+          which is false by default, i.e. no IPv6 link local addresses will
+          be used by server ORB.
+
 Fri Apr  6 12:09:37 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/tests/ImplRepo/Bug_689_Regression/Bug_689_Regression.mpc:

@@ -207,6 +207,9 @@ public:
 
   void connect_ipv6_only (bool p);
   bool connect_ipv6_only (void) const;
+
+  void use_ipv6_link_local (bool p);
+  bool use_ipv6_link_local (void) const;
 #endif /* ACE_HAS_IPV6 */
 
   void negotiate_codesets (bool c);
@@ -358,6 +361,9 @@ private:
    * IPv6 interfaces Yes or No.
    */
   bool connect_ipv6_only_;
+
+  /// Include Link Local IPv6 profiles to IOR Yes or No.
+  bool use_ipv6_link_local_;
 #endif /* ACE_HAS_IPV6 */
 
   /// Enable the use of codeset negotiation
