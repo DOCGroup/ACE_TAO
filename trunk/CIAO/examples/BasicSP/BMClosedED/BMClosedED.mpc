@@ -80,7 +80,7 @@ project(BMClosedED_svnt) : ciao_servant_dnc {
   sharedname = BMClosedED_svnt
 
   libs    += BMClosedED_stub BMClosedED_exec
-  libs    += BasicSP_stub BasicSP_exec
+  libs    += BasicSP_stub BasicSP_exec BasicSP_svnt
   dynamicflags = BMCLOSEDED_SVNT_BUILD_DLL
 
   CIDL_Files {
