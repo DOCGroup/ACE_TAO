@@ -2,6 +2,7 @@
 
 #include "tao/ORB.h"
 #include "tao/PortableServer/PortableServer.h"
+#include "tao/ImR_Client/ImR_Client.h"
 #include "ace/Get_Opt.h"
 #include "ace/Argv_Type_Converter.h"
 

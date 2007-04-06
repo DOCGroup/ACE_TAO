@@ -11,7 +11,7 @@ project(*idl): taoidldefaults, avoids_minimum_corba, avoids_corba_e_compact, avo
   }
 }
 
-project(*server): taoserver, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
+project(*server): taoserver, imr_client, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
   after += *idl
   Source_Files {
     bug_689_regressionC.cpp

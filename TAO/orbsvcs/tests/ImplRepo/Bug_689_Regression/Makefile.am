@@ -135,6 +135,7 @@ server_SOURCES = \
   bug_689_regression_i.h
 
 server_LDADD = \
+  $(TAO_BUILDDIR)/tao/libTAO_ImR_Client.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
