@@ -45,6 +45,7 @@ TAO_ORB_Parameters::TAO_ORB_Parameters (void)
 #if defined (ACE_HAS_IPV6)
   , prefer_ipv6_interfaces_ (false)
   , connect_ipv6_only_ (false)
+  , use_ipv6_link_local_ (false)
 #endif /* ACE_HAS_IPV6 */
   , negotiate_codesets_ (true)
 {
@@ -306,6 +307,18 @@ bool
 TAO_ORB_Parameters::connect_ipv6_only (void) const
 {
   return this->connect_ipv6_only_;
+}
+
+void
+TAO_ORB_Parameters::use_ipv6_link_local (bool p)
+{
+  this->use_ipv6_link_local_ = p;
+}
+
+bool
+TAO_ORB_Parameters::use_ipv6_link_local (void) const
+{
+  return this->use_ipv6_link_local_;
 }
 #endif /* ACE_HAS_IPV6 */
 
