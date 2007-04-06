@@ -497,6 +497,7 @@ if test $tao_build_tests = yes; then
     orbsvcs/tests/IOR_MCast/Makefile
     orbsvcs/tests/ImplRepo/Makefile
     orbsvcs/tests/ImplRepo/Bug_2604_Regression/Makefile
+    orbsvcs/tests/ImplRepo/Bug_689_Regression/Makefile
     orbsvcs/tests/ImplRepo/NameService/Makefile
     orbsvcs/tests/ImplRepo/scale/Makefile
     orbsvcs/tests/InterfaceRepo/Application_Test/Makefile
@@ -521,6 +522,7 @@ if test $tao_build_tests = yes; then
     orbsvcs/tests/Miop/McastHello/Makefile
     orbsvcs/tests/Notify/Basic/Makefile
     orbsvcs/tests/Notify/Blocking/Makefile
+    orbsvcs/tests/Notify/Bug_2561_Regression/Makefile
     orbsvcs/tests/Notify/Destroy/Makefile
     orbsvcs/tests/Notify/Discarding/Makefile
     orbsvcs/tests/Notify/Driver/Makefile
@@ -547,6 +549,7 @@ if test $tao_build_tests = yes; then
     orbsvcs/tests/Sched_Conf/Makefile
     orbsvcs/tests/Security/BiDirectional/Makefile
     orbsvcs/tests/Security/Big_Request/Makefile
+    orbsvcs/tests/Security/Bug_1107_Regression/Makefile
     orbsvcs/tests/Security/Callback/Makefile
     orbsvcs/tests/Security/Crash_Test/Makefile
     orbsvcs/tests/Security/MT_IIOP_SSL/Makefile
@@ -640,8 +643,10 @@ if test $tao_build_tests = yes; then
     tests/Bug_2595_Regression/Makefile
     tests/Bug_2654_Regression/Makefile
     tests/Bug_2669_Regression/Makefile
+    tests/Bug_2677_Regression/Makefile
     tests/Bug_2683_Regression/Makefile
     tests/Bug_2702_Regression/Makefile
+    tests/Bug_2735_Regression/Makefile
     tests/CDR/Makefile
     tests/COIOP/Makefile
     tests/CSD_Strategy_Tests/Broken/Makefile
