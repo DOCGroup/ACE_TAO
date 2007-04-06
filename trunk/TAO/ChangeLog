@@ -1,3 +1,12 @@
+Fri Apr  6 17:58:37 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/tests/FaultTolerance/IOGR/Manager.h:
+        * orbsvcs/tests/FaultTolerance/IOGR/Manager.cpp:
+
+          Moved file level statics into the Manager class.  They were being
+          destroyed in the wrong order with respect to the object manager
+          and the ORB.
+
 Fri Apr  6 14:34:21 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * configure.ac:
