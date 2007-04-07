@@ -11,7 +11,7 @@ ACE_RCSID(ace, Asynch_IO, "$Id$")
 #include "ace/Message_Block.h"
 #include "ace/INET_Addr.h"
 #include "ace/Asynch_IO_Impl.h"
-#include "ace/os_include/OS_Errno.h"
+#include "ace/os_include/os_errno.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
