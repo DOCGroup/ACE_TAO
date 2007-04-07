@@ -1,3 +1,10 @@
+Sat Apr  7 22:09:57 UTC 2007  Gan Deng  <gan.deng@vanderbilt.edu>
+
+        * DAnCE/DomainApplicationManager/Reply_Handler_i.cpp
+
+          Changed ACE_Thread_Mutex to ACE_SYNCH_MUTEX to fix
+          Singled Threaded build error.
+
 Fri Apr  6 03:42:04 UTC 2007  Krishnakumar B  <kitty@nospam.invalid.domain>
 
         * examples/BasicSP/descriptors/run_test.pl:  Updated the second
