@@ -21,7 +21,7 @@ void Deployment_AMI_NodeApplicationManagerHandler_i::startLaunch (
     const ::Deployment::Connections & providedReference)
 {
   // Add your implementation here
-  ACE_Guard<ACE_Thread_Mutex> guard (lock_);
+  ACE_Guard<ACE_SYNCH_MUTEX> guard (lock_);
 
   // Narrow down to NodeApplication object reference
   this->retn_node_app_ = 
