@@ -1,3 +1,7 @@
+Sat Apr  7 12:17:45 UTC 2007    <mesnier_p@ociweb.com>
+
+        * ace/Asynch_IO.cpp: fixed spelling error in include.
+
 Fri Apr  6 19:48:20 UTC 2007  Steve Huston  <shuston@riverace.com>
 
         * ace/OS_NS_Thread.inl (recursive_mutex_cond_unlock): Corrected for
