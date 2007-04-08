@@ -2,6 +2,11 @@ Sun Apr  8 15:46:17 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * tao/Utils/ORB_Manager.cpp:
 
+          duplicate object references passed in the constructor. This fixes
+          bugzilla 2887.
+
+          Layout enhancements.
+
 Fri Apr  6 17:58:37 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/tests/FaultTolerance/IOGR/Manager.h:
