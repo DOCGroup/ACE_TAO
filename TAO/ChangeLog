@@ -1,3 +1,58 @@
+Mon Apr  9 13:02:26 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/tests/ImplRepo/Bug_689_Regression/run_test.pl:
+
+          Modified the imr registration command line to take into account
+          the different executable locations for non-debug Windows builds.
+
+Mon Apr  9 11:50:35 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/tests/Bug_2248_Regression/Server_Request_Interceptor.cpp:
+
+          Put the ORB id into a CORBA::String_var to avoid memory leaks.
+
+        * orbsvcs/tests/Bug_2248_Regression/run_test.pl:
+
+          Removed an extra ./server in the command arguments.
+
+        * orbsvcs/tests/EC_Throughput/ECT_Supplier.cpp:
+
+          When disconnecting the consumer, ignore exceptions as the consumer
+          may already be gone by that time.
+
+        * orbsvcs/tests/FT_App/run_test_demo.pl:
+
+          This script defaults to "Release" executables on Windows, but
+          defaults to "Debug" on all other platforms.
+
+        * orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/Server_Request_Interceptor.cpp:
+
+          Changed the error message to start with ERROR: and to provide
+          useful information.
+
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/Basic.h:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/Basic.cpp:
+
+          Switched the location_ data member from const char* to
+          CORBA::String_var to avoid memory leaks.
+
+        * orbsvcs/tests/Redundant_Naming/run_test.pl:
+
+          Sleep one second before starting the client to allow the redundant
+          naming service to get into a usable state.
+
+        * orbsvcs/tests/Simple_Naming/client.h:
+        * orbsvcs/tests/Simple_Naming/client.cpp:
+
+          Change name_service_ior_ to a CORBA::String_var to avoid a memory
+          leak.
+
+        * tests/OBV/Collocated/Forward/Client_Task.cpp:
+
+          Even though bug 1390 is still reported as broken, the client now
+          shuts down the server so the run test script doesn't have to
+          time out.
+
 Mon Apr  9 11:29:26 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * configure.ac:
