@@ -84,34 +84,14 @@ TAO::SSLIOP::ORBInitializer::post_init (
   // object is registered for each ORB in this ORBInitializer's
   // pre_init() method.
 
-  CORBA::Object_var obj =
-    info->resolve_initial_references ("SSLIOPCurrent");
-
-  SSLIOP::Current_var ssliop_current =
-    SSLIOP::Current::_narrow (obj.in ());
-
-  if (!CORBA::is_nil (ssliop_current.in ()))
-    {
-      TAO::SSLIOP::Current *tao_current =
-        dynamic_cast<TAO::SSLIOP::Current *> (ssliop_current.in ());
-
-      if (tao_current != 0)
-        {
-          size_t const slot = this->get_tss_slot_id (info);
-
-          tao_current->tss_slot (slot);
-        }
-      else
-        throw CORBA::INTERNAL ();
-    }
-
   // Create the SSLIOP secure invocation server request interceptor.
   PortableInterceptor::ServerRequestInterceptor_ptr si =
     PortableInterceptor::ServerRequestInterceptor::_nil ();
   ACE_NEW_THROW_EX (si,
-                    TAO::SSLIOP::Server_Invocation_Interceptor (
-                      ssliop_current.in (),
-                      this->qop_),
+                    TAO::SSLIOP::Server_Invocation_Interceptor
+		      (info,
+		       this->qop_,
+		       this->get_tss_slot_id (info)),
                     CORBA::NO_MEMORY (
                       CORBA::SystemException::_tao_minor_code (
                         TAO::VMCID,
@@ -156,7 +136,8 @@ TAO::SSLIOP::ORBInitializer::post_init (
 
   // Register the SSLIOP-specific vault with the
   // PrincipalAuthenticator.
-  obj = info->resolve_initial_references ("SecurityLevel3:SecurityManager");
+  CORBA::Object_var obj =
+    info->resolve_initial_references ("SecurityLevel3:SecurityManager");
 
   SecurityLevel3::SecurityManager_var manager =
     SecurityLevel3::SecurityManager::_narrow (obj.in ());
