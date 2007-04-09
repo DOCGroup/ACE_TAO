@@ -17,6 +17,7 @@ Client_Task::Client_Task (const char *ior,
 int
 Client_Task::svc (void)
 {
+  int result = 0;
   try
     {
       // All factories are kindly provided by
@@ -148,9 +149,9 @@ Client_Task::svc (void)
 
       if (!is_equal_tree (tc.in (), tc_copy.in ()))
         {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "ERROR: tc != tc_copy\n"),
-                            1);
+          ACE_ERROR ((LM_ERROR,
+                      "ERROR: tc != tc_copy\n"));
+          result = 1;
         }
 
       TreeController_var tc_result =
@@ -159,15 +160,15 @@ Client_Task::svc (void)
       // The following two ifs will fail until bug 1390 is fixed.
       if (is_equal_tree (tc.in (), tc_result.in ()))
         {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "ERROR: tc == tc_result\n"),
-                            1);
+          ACE_ERROR ((LM_ERROR,
+                      "ERROR: tc == tc_result\n"));
+          result = 1;
         }
-      if (!is_equal_tree (tc.in (), tc_copy.in ()))
+      if (result == 0 && !is_equal_tree (tc.in (), tc_copy.in ()))
         {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "ERROR: tc != tc_copy\n"),
-                            1);
+          ACE_ERROR ((LM_ERROR,
+                      "ERROR: tc != tc_copy\n"));
+          result = 1;
         }
 
       test->shutdown ();
@@ -180,7 +181,7 @@ Client_Task::svc (void)
       return 1;
     }
 
-  return 0;
+  return result;
 
 }
 

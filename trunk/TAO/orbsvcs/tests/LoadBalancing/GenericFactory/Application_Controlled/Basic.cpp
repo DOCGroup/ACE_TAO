@@ -21,7 +21,7 @@ Basic::Basic (CORBA::Object_ptr object_group,
 char *
 Basic::get_string (void)
 {
-  return CORBA::string_dup (this->location_);
+  return CORBA::string_dup (this->location_.in ());
 }
 
 void
@@ -31,12 +31,12 @@ Basic::remove_member (void)
     {
       PortableGroup::Location location (1);
       location.length (1);
-      location[0].id = CORBA::string_dup (this->location_);
+      location[0].id = CORBA::string_dup (this->location_.in ());
       this->lm_->remove_member (this->object_group_.in (),
                                 location);
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) - Removed Member at Location <%s>\n",
-                      this->location_));
+                      this->location_.in ()));
 
     }
   catch (const PortableGroup::ObjectNotFound& ex)

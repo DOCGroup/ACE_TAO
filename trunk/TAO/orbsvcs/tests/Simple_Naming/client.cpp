@@ -244,7 +244,7 @@ MT_Test::MT_Test (CORBA::ORB_ptr orb,
   : Naming_Test (poa),
     size_ (size),
     orb_ (orb),
-    name_service_ior_ (0)
+    name_service_ior_ ()
 {
 }
 
@@ -258,7 +258,7 @@ MT_Test::svc (void)
   try
     {
       CORBA::Object_var name_service_obj =
-        orb_->string_to_object (name_service_ior_);
+        orb_->string_to_object (name_service_ior_.in ());
 
       name_service =
         CosNaming::NamingContext::_narrow (name_service_obj.in ());
