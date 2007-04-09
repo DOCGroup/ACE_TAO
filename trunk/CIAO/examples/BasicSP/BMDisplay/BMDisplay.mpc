@@ -1,26 +1,15 @@
 // $Id$
 
-project(BMDisplay_stub): ciao_client_dnc {
-  after += BasicSP_stub
-  sharedname = BMDisplay_stub
-  includes += $(CIAO_ROOT)/examples/BasicSP
-
+project(BMDisplay_stub_gen): taoidldefaults,anytypecode {
+  custom_only = 1
   idlflags += -I $(CIAO_ROOT)/examples/BasicSP
   idlflags += -Wb,stub_export_macro=BMDISPLAY_STUB_Export
   idlflags += -Wb,stub_export_include=BMDisplay_stub_export.h
   idlflags += -Wb,skel_export_macro=BMDISPLAY_SVNT_Export
   idlflags += -Wb,skel_export_include=BMDisplay_svnt_export.h
 
-  libs += BasicSP_stub
-
-  dynamicflags   = BMDISPLAY_STUB_BUILD_DLL
-
   IDL_Files {
     BMDisplay.idl
-  }
-
-  Source_Files {
-    BMDisplayC.cpp
   }
 }
 
@@ -44,18 +33,47 @@ project(BMDisplay_lem_gen) : ciaocidldefaults, taoidldefaults {
   }
 
 }
+project(BMDisplay_stub): ciao_client_dnc {
+  after += BasicSP_stub BMDisplay_stub_gen
+  sharedname = BMDisplay_stub
+  includes += $(CIAO_ROOT)/examples/BasicSP
+
+  libs += BasicSP_stub
+
+  dynamicflags   = BMDISPLAY_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Header_Files {
+    BMDisplayC.h
+    BMDisplay_stub_export.h
+  }
+
+  Source_Files {
+    BMDisplayC.cpp
+  }
+
+  Inline_Files {
+
+  }
+
+}
+
+
 
 project(BMDisplay_exec) : ciao_component_dnc {
   after      += BMDisplay_stub BMDisplay_lem_gen
 
   sharedname = BMDisplay_exec
-  libs       += BMDisplay_stub BasicSP_stub
-  libs       += BasicSP_exec
+  libs       += BMDisplay_stub
+  libs       += BasicSP_exec BasicSP_stub
   includes += $(CIAO_ROOT)/examples/BasicSP
 
   dynamicflags   = BMDISPLAY_EXEC_BUILD_DLL
 
   IDL_Files {
+
   }
 
   Header_Files {
@@ -70,7 +88,9 @@ project(BMDisplay_exec) : ciao_component_dnc {
   }
 
   Inline_Files {
+
   }
+
 }
 
 
@@ -94,4 +114,15 @@ project(BMDisplay_svnt) : ciao_servant_dnc {
     BMDisplayS.cpp
     BMDisplay_svnt.cpp
   }
+
+  Header_Files {
+    BMDisplayS.h
+    BMDisplay_svnt.h
+    BMDisplay_svnt_export.h
+  }
+
+  Inline_Files {
+
+  }
+
 }
