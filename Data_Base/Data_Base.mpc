@@ -12,7 +12,8 @@ project(Data_Base_stub): ciao_client_dnc {
 
   dynamicflags   = DATA_BASE_STUB_BUILD_DLL
 
-  libs += OpString_stub
+  libs +=	OpString_stub \
+			RACE_common_stub
 
   IDL_Files {
     Data_Base.idl
@@ -26,7 +27,9 @@ project(Data_Base_stub): ciao_client_dnc {
 project(Data_Base_svnt) : ciao_servant_dnc {
   after      +=  Data_Base_stub
   sharedname  = Data_Base_Component_svnt
-  libs       += Data_Base_Component_stub
+  libs       += Data_Base_Component_stub \
+				OpString_stub \
+				RACE_common_stub
 
   idlflags -= -GT
   idlflags += -St -SS \
@@ -53,8 +56,10 @@ project(Data_Base_svnt) : ciao_servant_dnc {
 project(Data_Base_exec) : ciao_component_dnc {
   after   += Data_Base_svnt
   sharedname = Data_Base_Component_exec
-  libs += Data_Base_Component_stub \
-          Data_Base_Component_svnt
+  libs +=	Data_Base_Component_stub \
+			Data_Base_Component_svnt \
+			OpString_stub \	
+			RACE_common_stub
 
   dynamicflags   = DATA_BASE_EXEC_BUILD_DLL
 

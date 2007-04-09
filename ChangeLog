@@ -1,3 +1,11 @@
+Mon Apr  9 22:36:12 UTC 2007  Nishanth Shankaran  <nshankar@nospam.com>
+
+        * Data_Base/Data_Base.mpc:
+        * Input_Adapters/SA_POP_Input_Adapter/SA_POP_Input_Adapter.mpc:
+        * Output_Adapters/DAnCE_Output_Adapter/DAnCE_Output_Adapter.mpc: 
+	
+	Fixed linking errors on windows.
+
 Thu Apr  5 20:38:24 UTC 2007  Nishanth Shankaran  <nshankar@nospam.com>
 
         * Data_Base/Data_Base.mpc:
