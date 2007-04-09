@@ -42,8 +42,10 @@ if (PerlACE::waitforfile_timed($actior, 5) == -1) {
   exit(1);
 }
 
+my $SV = new PerlACE::Process("server");
 $TAO_IMR->Arguments($initref .
-                    " add test_server -c \"server $initref -ORBUseIMR 1 " .
+                    " add test_server -c \"" . $SV->Executable() .
+                    " $initref -ORBUseIMR 1 " .
                     "-o $serverior\"");
 
 $result = $TAO_IMR->SpawnWaitKill(10);
