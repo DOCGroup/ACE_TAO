@@ -1,3 +1,14 @@
+Mon Apr  9 23:29:15 UTC 2007  Krishnakumar B  <kitty@nospam.invalid.domain>
+
+        * examples/BasicSP/BMClosedED/BMClosedED.mpc:
+        * examples/BasicSP/BMDevice/BMDevice.mpc:
+        * examples/BasicSP/BMDisplay/BMDisplay.mpc:
+        * examples/BasicSP/BasicSP.mpc:
+        * examples/BasicSP/EC/EC.mpc:
+
+          Updated MPC files to cleanup the generated skeleton files.
+          Thanks to Chad for this solution.
+
 Mon Apr  9 14:15:13 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * examples/BasicSP/BMClosedED/BMClosedED.mpc:
