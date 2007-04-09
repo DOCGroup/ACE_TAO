@@ -686,6 +686,7 @@ if test $tao_build_tests = yes; then
     tests/DII_Collocation_Tests/Makefile
     tests/DII_Collocation_Tests/oneway/Makefile
     tests/DII_Collocation_Tests/twoway/Makefile
+    tests/DIOP/Makefile
     tests/DLL_ORB/Makefile
     tests/DSI_Gateway/Makefile
     tests/DynAny_Test/Makefile
