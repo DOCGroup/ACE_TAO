@@ -7,7 +7,10 @@ ACE_RCSID (Security,
            "$Id$")
 
 
-// #include "Security_Current.h"
+#if 1
+#include "orbsvcs/Security/Security_Current.h"
+#include "orbsvcs/Security/SL2_SecurityManager.h"
+#endif
 #include "orbsvcs/Security/SL3_SecurityCurrent.h"
 #include "orbsvcs/Security/SL3_CredentialsCurator.h"
 #include "orbsvcs/Security/SL3_SecurityManager.h"
@@ -41,36 +44,57 @@ TAO::Security::ORBInitializer::pre_init (
       throw CORBA::INTERNAL ();
     }
 
-//   // Reserve a TSS slot in the ORB core internal TSS resources for the
-//   // thread-specific portion of Security::Current.
-//   size_t old_tss_slot = tao_info->allocate_tss_slot_id (0
-//);
-
-//   CORBA::String_var orb_id = info->orb_id ();
-
-//   // Create the SecurityLevel2::Current object.
-//   SecurityLevel2::Current_ptr current = SecurityLevel2::Current::_nil ();
-//   ACE_NEW_THROW_EX (current,
-//                     TAO_Security_Current (old_tss_slot, orb_id.in ()),
-//                     CORBA::NO_MEMORY (
-//                       CORBA::SystemException::_tao_minor_code (
-//                         TAO::VMCID,
-//                         ENOMEM),
-//                       CORBA::COMPLETED_NO));
-
-//   SecurityLevel2::Current_var security_current = current;
-
-//   // Register the SecurityLevel2::Current object reference with the
-//   // ORB.
-//   info->register_initial_reference ("SecurityCurrent",
-//                                     security_current.in ()
-//);
-
   // Reserve a TSS slot in the ORB core internal TSS resources for the
-  // thread-specific portion of SecurityLevel3::SecurityCurrent
-  // object.
-  size_t tss_slot = tao_info->allocate_tss_slot_id (0);
+  // thread-specific portion of Security::Current.
+  size_t tss_slot = tao_info->allocate_tss_slot_id (0 /* no cleanup function */);
 
+#if 1
+
+#if 0 // why am I getting a BAD_OPERATION from no SSL context?!
+  CORBA::String_var orb_id = info->orb_id ();
+
+  // Create the SecurityLevel2::Current object.
+  SecurityLevel2::Current_ptr current = SecurityLevel2::Current::_nil ();
+  ACE_NEW_THROW_EX (current,
+                    TAO_Security_Current (tss_slot, orb_id.in ()),
+                    CORBA::NO_MEMORY (
+                                      CORBA::SystemException::_tao_minor_code (
+                         TAO::VMCID,
+                         ENOMEM),
+                       CORBA::COMPLETED_NO));
+
+  SecurityLevel2::Current_var security_current = current;
+
+  // Register the SecurityLevel2::Current object reference with the
+  // ORB.
+  info->register_initial_reference ("SecurityCurrent",
+                                    security_current.in ());
+#endif
+  /*
+   * Instantiate and register the SecurityLevel2::SecurityManager
+   */
+  SecurityLevel2::SecurityManager_ptr manager2;
+  ACE_NEW_THROW_EX (manager2,
+                    TAO::Security::SecurityManager (/*need args*/),
+                    CORBA::NO_MEMORY (
+                      CORBA::SystemException::_tao_minor_code (
+                        TAO::VMCID,
+                        ENOMEM),
+                      CORBA::COMPLETED_NO));
+
+  SecurityLevel2::SecurityManager_var security_manager2 = manager2;
+
+  // Register the SecurityLevel2::SecurityManager object reference
+  // with the ORB.
+  info->register_initial_reference ("SecurityLevel2:SecurityManager",
+                                    security_manager2.in ());
+
+#endif
+
+  // Rather than reserve another TSS slot in the ORB core internal TSS
+  // resources for the thread-specific portion of
+  // SecurityLevel3::SecurityCurrent object, we will re-use the slot
+  // allocated earlier.
 
   // Create the SecurityLevel3::Current object.
   SecurityLevel3::SecurityCurrent_ptr current3;
