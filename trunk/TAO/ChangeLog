@@ -1,3 +1,9 @@
+Mon Apr  9 11:29:26 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * configure.ac:
+
+          Added the missing entry for tests/DIOP.
+
 Sun Apr  8 15:46:17 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * tao/Utils/ORB_Manager.cpp:
