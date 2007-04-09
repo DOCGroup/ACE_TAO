@@ -46,7 +46,7 @@ project(BMClosedED_lem_gen) : ciaocidldefaults, taoidldefaults {
 }
 
 project(BMClosedED_exec) : ciao_component_dnc {
-  after      += BMClosedED_stub BMClosedED_lem_gen
+  after      += BasicSP_exec BMClosedED_stub BMClosedED_lem_gen
 
   sharedname = BMClosedED_exec
   libs       += BMClosedED_stub BasicSP_stub
