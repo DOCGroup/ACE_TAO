@@ -78,7 +78,7 @@ unlink $iorfile1;
 $NS1->Spawn ();
 
 if (PerlACE::waitforfile_timed ($iorfile1, $sleeptime) == -1) {
-  print STDERR "ERROR: cannot find IOR file <$iorfile>\n";
+  print STDERR "ERROR: cannot find IOR file <$iorfile1>\n";
   $NS1->Kill ();
   exit 1;
 }
@@ -96,6 +96,11 @@ if (PerlACE::waitforfile_timed ($iorfile2, $sleeptime) == -1) {
   $NS2->Kill ();
   exit 1;
 }
+
+## Even though the ior file is present, the redundant naming service
+## isn't really ready to go (most of the time).  Sleeping 1 second
+## allows the redundant naming service to get to a usable state.
+sleep(1);
 
 my $args = "-p file://$iorfile1 -q file://$iorfile2";
 my $prog = "$startdir/client";

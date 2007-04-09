@@ -18,7 +18,7 @@ $output11ior = PerlACE::LocalFile ("iogr_11.ior");
 unlink $file1ior, $file2ior, $output10ior, $output11ior;
 
 $SERV1 = new PerlACE::Process ("server", "-o $file1ior -f file://$output11ior -k KEY1");
-$SERV2 = new PerlACE::Process ("server", "./server -o $file2ior -k KEY2");
+$SERV2 = new PerlACE::Process ("server", "-o $file2ior -k KEY2");
 $CLIENT = new PerlACE::Process ("client", "-a file://$file1ior -k KEY1 -b file://$file2ior -l KEY2 -g $output10ior -h $output11ior");
 
 # ---------------

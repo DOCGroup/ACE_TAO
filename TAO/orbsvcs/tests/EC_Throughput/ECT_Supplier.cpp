@@ -106,7 +106,15 @@ Test_Supplier::disconnect (void)
   if (CORBA::is_nil (this->consumer_proxy_.in ()))
     return;
 
-  this->consumer_proxy_->disconnect_push_consumer ();
+  try
+    {
+      this->consumer_proxy_->disconnect_push_consumer ();
+    }
+  catch (const CORBA::Exception&)
+    {
+      // The consumer may be gone already, so we
+      // will ignore this exception
+    }
 
   this->consumer_proxy_ =
     RtecEventChannelAdmin::ProxyPushConsumer::_nil ();

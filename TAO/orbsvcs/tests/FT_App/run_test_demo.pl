@@ -88,7 +88,7 @@ use PerlACE::Run_Test;
 #command line options
 #set defaults:
 my($verbose) = 0;         # 1: report perl actions before executing them
-my($debug_builds) = 0;    # 0: use exes from Release directories
+my($debug_builds) = ($^O eq 'MSWin32' ? 0 : 1);;    # 0: use exes from Release directories
 my($simulated) = 1;       # 1: use "client simulated" fault tolerance
 
 foreach $i (@ARGV) {
