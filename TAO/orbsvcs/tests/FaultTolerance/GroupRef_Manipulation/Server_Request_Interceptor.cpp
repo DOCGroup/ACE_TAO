@@ -11,6 +11,8 @@ ACE_RCSID (ForwardRequest,
            Server_Request_Interceptor,
            "$Id$")
 
+static const CORBA::ULong expected_version = 5;
+
 Server_Request_Interceptor::Server_Request_Interceptor (void)
   : request_count_ (0)
   , forward_request_thrown_ (false)
@@ -106,10 +108,13 @@ Server_Request_Interceptor::receive_request_service_contexts (
       //cdr >> group_component.object_group_id;
       cdr >> group_component.object_group_ref_version;
 
-      if (group_component.object_group_ref_version != 5)
+      if (group_component.object_group_ref_version != expected_version)
         {
           ACE_ERROR ((LM_ERROR,
-                      "(%P|%t) Error occurred \n"));
+                      "ERROR: (%P|%t) Version does not match the"
+                      "expected value (%u != %u)\n",
+                      group_component.object_group_ref_version,
+                      expected_version));
         }
 
     }
@@ -159,10 +164,13 @@ Server_Request_Interceptor::receive_request (
       //cdr >> group_component.object_group_id;
       cdr >> group_component.object_group_ref_version;
 
-      if (group_component.object_group_ref_version != 5)
+      if (group_component.object_group_ref_version != expected_version)
         {
           ACE_ERROR ((LM_ERROR,
-                      "(%P|%t) Error occurred \n"));
+                      "ERROR: (%P|%t) Version does not match the "
+                      "expected value (%u != %u)\n",
+                      group_component.object_group_ref_version,
+                      expected_version));
         }
 
     }

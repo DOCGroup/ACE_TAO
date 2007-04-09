@@ -92,7 +92,7 @@ private:
   CORBA::ORB_var orb_;
   // A pointer to our ORB.
 
-  char* name_service_ior_;
+  CORBA::String_var name_service_ior_;
   // IOR in the string format for Naming Service we are to deal with.
   // Each thread will use string_to_object() and this IOR to create
   // its own NamingContext stub for invoking operations on the

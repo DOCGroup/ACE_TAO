@@ -43,7 +43,7 @@ private:
   CosLoadBalancing::LoadManager_var lm_;
 
   /// location of the servant
-  const char *location_ ;
+  CORBA::String_var location_;
 
   /// Object Group reference.
   CORBA::Object_var object_group_;

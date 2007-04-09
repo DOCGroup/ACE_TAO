@@ -73,7 +73,8 @@ Server_Request_Interceptor::receive_request (
         {
           int argc = 0;
           char** argv = 0;
-          CORBA::ORB_var orb = CORBA::ORB_init(argc,argv,ri->orb_id());
+          CORBA::String_var orb_id = ri->orb_id ();
+          CORBA::ORB_var orb = CORBA::ORB_init(argc,argv,orb_id.in ());
 
           CORBA::Object_var obj = orb->string_to_object (iorstr_.in());
 
