@@ -240,12 +240,9 @@ MyImpl::EC_exec_i::pulse (void)
     }
   catch (const CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ex,
-                           "Caught exception while pushing BasicSP::TimeOut "
-                           "event to BMDevice");
-
+      ex._tao_print_exception ("Caught exception while pushing "
+                               "BasicSP::TimeOut event to BMDevice");
     }
-
 }
 
 MyImpl::ECHome_exec_i::ECHome_exec_i ()
