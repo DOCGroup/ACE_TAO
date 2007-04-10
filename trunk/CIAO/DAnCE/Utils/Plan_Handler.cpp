@@ -51,7 +51,7 @@ namespace CIAO
   /*
   void
   DAnCE_Utils::add_connection (::Deployment::DeploymentPlan_var &deployment_plan, const char *connection_name, const char *port_name, const char *facet_instance, const char *receptacle_instance)
-    ACE_THROW_SPEC ((InstanceNotFound))
+    throw (InstanceNotFound)
   {
     // Modifying the deployment plan in order to include the new connection ...
 
@@ -80,7 +80,7 @@ namespace CIAO
     if (i < instance.length())
       connection[connection.length()-1].internalEndpoint[0].instanceRef = i;
     else
-      ACE_THROW(InstanceNotFound());
+      throw InstanceNotFound();
 
     connection[connection.length()-1].internalEndpoint[1].portName = CORBA::string_dup(port_name);
     connection[connection.length()-1].internalEndpoint[1].provider = 0L;
@@ -95,7 +95,7 @@ namespace CIAO
     if (i < instance.length())
       connection[connection.length()-1].internalEndpoint[1].instanceRef = i;
     else
-      ACE_THROW(InstanceNotFound());
+      throw InstanceNotFound();
 
     // Re-assigning connection to deployment plan
 
@@ -104,7 +104,7 @@ namespace CIAO
 
   void
   DAnCE_Utils::remove_instance (::Deployment::DeploymentPlan_var &deployment_plan, const char *instance_name)
-    ACE_THROW_SPEC ((InstanceNotFound))
+    throw (InstanceNotFound)
   {
     // Modifying the deployment plan in order to remove the instance ...
 
@@ -123,7 +123,7 @@ namespace CIAO
       }
 
     if (i == instance.length())
-      ACE_THROW(InstanceNotFound());
+      throw InstanceNotFound();
 
     // First of all, we need to remove all connections of which this instance participates ...
 
@@ -229,7 +229,7 @@ namespace CIAO
         return;
       }
     // Throw exception if connection name not found ...
-    ACE_THROW(ConnectionNotFound());
+    throw ConnectionNotFound();
   }
 */
   void
