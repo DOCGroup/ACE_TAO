@@ -11,6 +11,7 @@
 ACE_RCSID(DII_Collocation_Tests, Client_Task, "$Id$")
 
 char TEST_STR[] = "This is a DII collocation test.";
+char NULL_STR[] = "";
 CORBA::Long TEST_BASIC_VALUE = 12345;
 CORBA::Char TEST_SPECIAL_VALUE = 'x';
 CORBA::Short TEST_HOUR = 12;
@@ -50,7 +51,7 @@ Client_Task::svc (void)
 
       if (CORBA::is_nil (simple_test_obj.in ()))
       {
-        ACE_ERROR_RETURN ((LM_DEBUG,
+        ACE_ERROR_RETURN ((LM_ERROR,
           "Nil Test::Simple_Test reference <%s>\n",
           simple_test_input_),
           1);
@@ -58,21 +59,88 @@ Client_Task::svc (void)
 
       Test::Simple_Test_var simple_test
         = Test::Simple_Test::_narrow (simple_test_obj.in ());
-CORBA::Long l = 200;
+      CORBA::Long l = 200;
       CORBA::Request_var req (obj->_request ("test_basic_arg"));
       req->add_in_arg ("basic") <<= TEST_BASIC_VALUE;
       req->add_out_arg ("x") <<= l;
       req->invoke ();
       if (req->response_received ())
       {
-
+        for (CORBA::ULong count=0; count<req->arguments ()->count () ;++count)
+        {
+            CORBA::NamedValue_ptr arg = req->arguments ()->item (count);
+            if (ACE_OS::strcmp (arg->name (), "x") == 0)
+            {
+              CORBA::Long y = 0;
+              if (*(arg->value()) >>= y)
+                {
+                  if (y != 10)
+                  {
+                    ++error_count_;
+                    ACE_ERROR_RETURN ((LM_ERROR, "Invalid out value, received %d\n", y), 1);
+                  }
+                }
+              else
+                {
+                  ++error_count_;
+                  ACE_ERROR_RETURN ((LM_ERROR, "Invalid typed value\n"), 1);
+                }
+            }
+        }
+      }
+      else
+      {
+        ++error_count_;
+        ACE_ERROR_RETURN ((LM_ERROR, "Response received not true\n"), 1);
       }
 
       req = obj->_request ("test_unbounded_string_arg");
 
       req->add_in_arg ("ub_string") <<= TEST_STR;
       req->invoke ();
+      if (req->response_received ())
+      {
+      }
+      else
+      {
+        ++error_count_;
+        ACE_ERROR_RETURN ((LM_ERROR, "Response received not true\n"), 1);
+      }
 
+      req = obj->_request ("test_unbounded_string_arg_out");
+
+      req->add_in_arg ("ub_string") <<= TEST_STR;
+      req->add_out_arg ("x") <<= NULL_STR;
+      req->invoke ();
+      if (req->response_received ())
+      {
+        for (CORBA::ULong count=0; count<req->arguments ()->count () ;++count)
+        {
+            CORBA::NamedValue_ptr arg = req->arguments ()->item (count);
+            if (ACE_OS::strcmp (arg->name (), "x") == 0)
+            {
+              const char * ystring = 0;
+              if (*(arg->value()) >>= ystring)
+                {
+                  if (ACE_OS::strcmp(ystring, TEST_STR) != 0)
+                  {
+                    ++error_count_;
+                    ACE_ERROR_RETURN ((LM_ERROR, "Invalid out value, received %s\n", ystring), 1);
+                  }
+                }
+              else
+                {
+                  ++error_count_;
+                  ACE_ERROR_RETURN ((LM_ERROR, "Invalid typed value\n"), 1);
+                }
+            }
+        }
+      }
+      else
+      {
+        ++error_count_;
+        ACE_ERROR_RETURN ((LM_ERROR, "Response received not true\n"), 1);
+      }
 
       req = obj->_request ("test_bounded_string_arg");
 
@@ -217,13 +285,13 @@ CORBA::Long l = 200;
     }
   catch (const CORBA::Exception& ex)
     {
-      error_count_ ++;
+      ++error_count_;
       ex._tao_print_exception ("Exception caught:");
       return 1;
     }
   catch (...)
     {
-      error_count_ ++;
+      ++error_count_;
       ACE_ERROR ((LM_ERROR, "(%P|%t)Client_Task::svc - caught unknown exception \n"));
       return 1;
     }
