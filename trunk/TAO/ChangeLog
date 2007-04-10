@@ -1,10 +1,19 @@
+Tue Apr 10 09:57:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/DII_Collocation_Tests/twoway/Client_Task.cpp:
+        * tests/DII_Collocation_Tests/twoway/Hello.cpp:
+        * tests/DII_Collocation_Tests/twoway/Hello.h:
+        * tests/DII_Collocation_Tests/twoway/Test.idl:
+          Extended this test to test the out arguments and response_received
+          method of the request. This test now fails, see bugzilla 2890
+
 Mon Apr  9 21:09:51 UTC 2007  Yan Dai  <dai_y@ociweb.com>
 
         * docs/transport_current/index.html:
 
-          Corrected the example of service configuration file for 
+          Corrected the example of service configuration file for
           dynamic loading TransportCurrent library.
-          
+
 Mon Apr  9 13:02:26 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/tests/ImplRepo/Bug_689_Regression/run_test.pl:

@@ -48,6 +48,12 @@ public:
     );
 
   virtual
+  void test_unbounded_string_arg_out (
+      const char * message,
+      ::CORBA::String_out out_message
+    );
+
+  virtual
   void test_bounded_string_arg (
       const char * message
     );

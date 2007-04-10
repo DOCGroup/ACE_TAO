@@ -33,6 +33,8 @@ module Test
 
      void test_unbounded_string_arg(in string message);
 
+     void test_unbounded_string_arg_out(in string message, out string out_message);
+
      void test_bounded_string_arg(in string<BOUNDED_STRING_SIZE> message);
 
      void test_fixed_array_arg(in Fixed_Array message);
@@ -50,23 +52,22 @@ module Test
      void test_objref_arg (in Simple_Test test);
 
      void test_object_arg (in Object o);
-    
-     void test_args_1 (in Object arg1, 
-                             in char arg2, 
-                             in Simple_Test arg3);
 
-     void test_args_2 (in string arg1, 
-                             in Fixed_Array arg2, 
-                             in TimeOfDay arg3);
+     void test_args_1 (in Object arg1,
+                       in char arg2,
+                       in Simple_Test arg3);
 
-     void test_args_3 (in string<BOUNDED_STRING_SIZE> arg1, 
-                             in Bounded_Var_Size_Arg arg2, 
+     void test_args_2 (in string arg1,
+                       in Fixed_Array arg2,
+                       in TimeOfDay arg3);
+
+     void test_args_3 (in string<BOUNDED_STRING_SIZE> arg1,
+                             in Bounded_Var_Size_Arg arg2,
                              in Unbounded_Var_Size_Arg arg3,
                              in Var_Array arg4);
-      
-    /// Return a simple string
+
     string get_string ();
-  
+
     /// A method to shutdown the ORB
     /**
      * This method is used to simplify the test shutdown process
