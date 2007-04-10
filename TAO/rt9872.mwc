@@ -1,0 +1,21 @@
+// -*- MPC -*-
+// $Id$
+
+workspace {
+  $(ACE_ROOT)/ace
+  $(ACE_ROOT)/apps/gperf/src
+  $(ACE_ROOT)/ACEXML/common
+  $(ACE_ROOT)/ACEXML/parser/parser
+  $(ACE_ROOT)/ACEXML/apps/svcconf
+  tao
+  TAO_IDL
+  utils
+  orbsvcs/orbsvcs/CosNaming.mpc
+  orbsvcs/orbsvcs/CosNaming_Serv.mpc
+  orbsvcs/orbsvcs/CosNaming_Skel.mpc
+  orbsvcs/orbsvcs/Svc_Utils.mpc
+  orbsvcs/orbsvcs/Security.mpc
+  orbsvcs/orbsvcs/SSLIOP.mpc
+  orbsvcs/tests/Security
+  orbsvcs/Naming_Service/Naming_Service.mpc
+}
