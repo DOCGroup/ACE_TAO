@@ -1,3 +1,9 @@
+Tue Apr 10 14:13:19 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * DAnCE/ExecutionManager/Execution_Manager_Impl.cpp:
+
+          Removed parenthesis around throw argument.
+
 Mon Apr  9 23:29:15 UTC 2007  Krishnakumar B  <kitty@nospam.invalid.domain>
 
         * examples/BasicSP/BMClosedED/BMClosedED.mpc:
