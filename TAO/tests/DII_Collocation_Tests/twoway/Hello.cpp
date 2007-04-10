@@ -73,6 +73,20 @@ Hello::test_unbounded_string_arg(const char* message)
   }
 }
 
+void
+Hello::test_unbounded_string_arg_out(const char* message, ::CORBA::String_out out_message)
+{
+  if (debug)
+    ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Hello::test_unbounded_string_arg_out ")
+                        ACE_TEXT("got unbounded string: %s\n"),
+                        message));
+  if (ACE_OS::strncmp (message, TEST_STR, strlen (TEST_STR) != 0))
+  {
+    ERROR_COUNT ("Hello::test_unbounded_string_arg_out")
+  }
+  out_message = CORBA::string_dup (message);
+}
+
 
 void
 Hello::test_bounded_string_arg(const char* message)
