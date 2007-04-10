@@ -1,3 +1,9 @@
+Tue Apr 10 20:27:07 UTC 2007  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * docs/Download.html: Updated the download page to clarify the
+          status of autoconf.  Thanks to Eric Hughes <eh at narthex dot us>
+          for clarifying this.        
+
 Tue Apr 10 17:20:46 UTC 2007  Krishnakumar B  <kitty@nospam.invalid.domain>
 
         * ace/CORBA_macros.h:  Reverted the change to exclude
