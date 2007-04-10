@@ -1,9 +1,17 @@
+Tue Apr 10 17:23:16 UTC 2007  Krishnakumar B  <kitty@nospam.invalid.domain>
+
+        * examples/BasicSP/BasicSP.mwc:  Added SVN Id tag to remove Fuzz
+          warning.  Thanks to Chad for pointing out the error.
+
+        * examples/BasicSP/EC/EC_exec.cpp: Removed use of
+          ACE_PRINT_EXCEPTION since it is deprecated.
+
 Tue Apr 10 15:37:24 UTC 2007  Gan Deng  <gan.deng@vanderbilt.edu>
 
         * DAnCE/ExecutionManager/ExecutionManager.mpc
-        
+
           Modified to inherit from the "strategies" base project.
-        
+
         * DAnCE/Utils/Plan_Handler.cpp
 
           Removed ACE exception macros.
