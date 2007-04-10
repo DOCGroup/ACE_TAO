@@ -1,4 +1,4 @@
-// $Id$
+\// $Id$
 
 #include "Execution_Manager_Impl.h"
 #include "tao/RTCORBA/RTCORBA.h"
@@ -485,7 +485,7 @@ namespace CIAO
                       "DAnCE (%P|%t) ExecutionManager_Impl.cpp -"
                       "CIAO::Execution_Manager_Impl::get_current_thread_priority -"
                       "Unable to get current thread handld.\n"));
-          throw (CORBA::INTERNAL ());
+          throw CORBA::INTERNAL ();
         }
 
       CORBA::Short servant_thread_priority =
