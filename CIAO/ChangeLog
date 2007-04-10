@@ -1,3 +1,13 @@
+Tue Apr 10 15:37:24 UTC 2007  Gan Deng  <gan.deng@vanderbilt.edu>
+
+        * DAnCE/ExecutionManager/ExecutionManager.mpc
+        
+          Modified to inherit from the "strategies" base project.
+        
+        * DAnCE/Utils/Plan_Handler.cpp
+
+          Removed ACE exception macros.
+
 Tue Apr 10 14:13:19 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * DAnCE/ExecutionManager/Execution_Manager_Impl.cpp:
