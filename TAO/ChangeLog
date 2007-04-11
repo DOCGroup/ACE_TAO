@@ -1,3 +1,10 @@
+Wed Apr 11 12:25:17 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/tests/Notify/Makefile.am:
+
+          Changed the build order to get Bug_2561_Regression to build after
+          TAO_NotifyTests.
+
 Wed Apr 11 10:14:51 UTC 2007  Vadym Ridosh <vridosh@prismtech.com>
 
         * tao/IIOP_Acceptor.cpp:
