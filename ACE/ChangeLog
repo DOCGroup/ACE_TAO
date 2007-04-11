@@ -1,3 +1,11 @@
+Wed Apr 11 11:37:42 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tests/Reactor_Notify_Test.cpp:
+        * tests/Time_Value_Test.cpp:
+
+          Added static_cast and changed types to time_t to avoid warnings
+          from gcc.
+
 Wed Apr 11 10:57:07 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-g++-common.h:
