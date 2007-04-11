@@ -1,3 +1,11 @@
+Wed Apr 11 18:31:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_2678_Regression/*:
+          New regression test, it needs a C# client as reproducer, that will
+          not work, so I am reusing parts of the PMB GIOP test to emulate
+          a client but this is not working 100% perfect. When it works perfect
+          I will enable the regression test in the test suite.
+
 Wed Apr 11 13:32:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/AMI/ami_test_i.cpp:
