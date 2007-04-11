@@ -59,8 +59,8 @@ AMI_Test_i::foo (CORBA::Long_out out_l,
           ACE_ERROR ((LM_ERROR,
                       "ERROR: Parameter corruption on in parameters: %d %d %s %s.\n",
                       in_l_, in_l, in_str_.in (), in_str));
+          return 0;
         }
-      return 0;
     }
 
   return 931234;
