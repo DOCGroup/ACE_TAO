@@ -1,3 +1,23 @@
+Wed Apr 11 17:53:07 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * ace/Process_Manager.{h cpp} (terminate): The terminate(pid_t) method
+          no longer removes the process from the process descriptor table;
+          the pid remains available to call wait() on. This allows the
+          Process_Manager_Spawn.cpp example from APG page 227 to work as
+          expected. Thanks to Zhenghao Shi <Zhenghao dot Shi at alcatel dot
+          com> for reporting this issue.
+
+          Also, changed the ACE_Process_Descriptor class to be a struct
+          (Process_Descriptor) inside ACE_Process_Manager. It's only used
+          internally to that class.
+
+          Also fixed the Doxygenization of ACE_Process_Manager quite a bit.
+
+        * tests/Process_Manager_Test.cpp: Added a test to verify that
+          ACE_Process_Manager::terminate() allows the process to wait()ed for.
+
+        * THANKS: Added Zhenghao Shi to the Hall of Fame.
+
 Wed Apr 11 14:02:37 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/CORBA_macros.h:

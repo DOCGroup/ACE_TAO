@@ -312,21 +312,60 @@ run_main (int argc, ACE_TCHAR *argv[])
                 result,
                 exitcode));
 
+  // Terminate a child process and make sure we can wait for it.
+  pid_t child6 = spawn_child (argv[0], mgr, 5);
+  ACE_exitcode status6;
+  if (-1 == mgr.terminate (child6))
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("terminate child6")));
+      test_status = 1;
+      mgr.wait (child6, &status6);  // Wait for child to exit just to clean up
+    }
+  else
+    {
+      if (-1 == mgr.wait (child6, &status6))
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("wait on child6 reported ACE_INVALID_PID\n")));
+          test_status = 1;
+        }
+      else
+        {
+          // Get the results of the termination.
+#if !defined(ACE_WIN32)
+          if (WIFSIGNALED (status6) != 0)
+            ACE_DEBUG ((LM_DEBUG,
+                        ACE_TEXT ("(%P) child6 died on signal %d - correct\n"),
+                        WTERMSIG (status6)));
+          else
+            ACE_ERROR ((LM_ERROR,
+                        ACE_TEXT ("child6 should have died on signal, ")
+                        ACE_TEXT ("but didn't; exit status %d\n"),
+                        WEXITSTATUS (status6)));
+#else
+          ACE_DEBUG
+            ((LM_DEBUG,
+              ACE_TEXT ("The process terminated with exit code %d\n"),
+              status6));
+#endif /*ACE_WIN32*/
+        }
+    }
+
 #if !defined (ACE_OPENVMS)
   // --------------------------------------------------
   // Finally, try the reactor stuff...
   mgr.open (ACE_Process_Manager::DEFAULT_SIZE,
             ACE_Reactor::instance ());
 
-  pid_t child6 = spawn_child (argv[0],
+  pid_t child7 = spawn_child (argv[0],
                               mgr,
                               5);
-  /* pid_t child7 = */ spawn_child (argv[0],
+  /* pid_t child8 = */ spawn_child (argv[0],
                                     mgr,
                                     6);
 
   mgr.register_handler (new Exit_Handler ("specific"),
-                        child6);
+                        child7);
 
   ACE_Time_Value how_long (10);
 
