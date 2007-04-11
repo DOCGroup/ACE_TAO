@@ -54,6 +54,7 @@ ACE_DLL::operator= (const ACE_DLL &rhs)
   ACE_TRACE ("ACE_DLL::operator= (const ACE_DLL &)");
 
   open_mode_ = 0;
+  delete [] dll_name_;
   dll_name_ = 0;
   close_handle_on_destruction_=0;
   dll_handle_=0;

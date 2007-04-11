@@ -314,7 +314,7 @@ int
 ACE_TP_Reactor::handle_timer_events (int & /*event_count*/,
                                      ACE_TP_Token_Guard &guard)
 {
-  if (this->timer_queue_->is_empty())
+  if (this->timer_queue_ == 0 || this->timer_queue_->is_empty())
     { // Empty timer queue so cannot have any expired timers.
       return 0;
     }

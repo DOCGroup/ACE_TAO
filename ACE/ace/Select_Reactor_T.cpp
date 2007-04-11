@@ -1084,6 +1084,9 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::wait_for_multiple_events
     {
       do
         {
+          if (this->timer_queue_ == 0)
+            return 0;
+
           this_timeout =
             this->timer_queue_->calculate_timeout (max_wait_time,
                                                    &timer_buf);

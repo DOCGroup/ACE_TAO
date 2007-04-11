@@ -38,11 +38,12 @@ ACEXML_SAXException::ACEXML_SAXException (const ACEXML_SAXException &ex)
 ACEXML_SAXException&
 ACEXML_SAXException::operator= (const ACEXML_SAXException& src)
 {
-  ACEXML_SAXException temp (src);
-  ACEXML_Char* message = this->message_;
-  this->exception_name_ = temp.exception_name_;
-  this->message_ = temp.message_;
-  temp.message_ = message;
+  if (this != &src)
+    {
+      ACE::strdelete (this->message_);
+      this->message_ = ACE::strnew (src.message_);
+    }
+
   return *this;
 }
 
@@ -54,6 +55,7 @@ ACEXML_SAXException::_downcast (ACEXML_Exception* ex)
 
 ACEXML_SAXException::~ACEXML_SAXException (void)
 {
+  ACE::strdelete (this->message_);
 }
 
 ACEXML_Exception *

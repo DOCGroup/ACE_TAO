@@ -121,6 +121,9 @@ ACEXML_Svcconf_Handler::endElement (const ACEXML_Char *,
             }
           else
             {
+              // We will not retain this stream
+              delete stp;
+
               // build the error message
               ACE_CString msg (ACE_TEXT ("Expecting Stream type in stream header"));
               msg += ACE_CString (ACE_TEXT (" for entity '"));
@@ -187,6 +190,10 @@ ACEXML_Svcconf_Handler::endElement (const ACEXML_Char *,
               if (ACE_Service_Config::initialize (stype,
                                                   active_info->init_params ()) == -1)
                 {
+                  // If it did not initialize correctly, the
+                  // ACE_Service_Config doesn't own this object
+                  delete stype;
+
                   // build the error message
                   ACE_CString msg (ACE_TEXT ("Failed to initialize dynamic service"));
                   msg += ACE_CString (ACE_TEXT (" for entity '"));

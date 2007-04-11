@@ -58,17 +58,14 @@ ACE_Test_Output::~ACE_Test_Output (void)
 
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY) && \
     (!defined (ACE_HAS_PHARLAP) || defined (ACE_PHARLAP_TESTLOG_TO_FILE))
-  if (this->output_file_ == log_msg_stream)
-    delete this->output_file_;
-  // else something else changed the stream and hence should
-  // have closed and deleted the output_file_
+  delete this->output_file_;
 #endif /* ! ACE_LACKS_IOSTREAM_TOTALLY */
 }
 
 OFSTREAM *
 ACE_Test_Output::output_file (void)
 {
-  // the output_file_ is given to ACE_LOG_MSG
+  // the output_file_ is loaned to ACE_LOG_MSG
   // and something else might destroy and/or change the stream
   // so return what ACE_LOG_MSG is using.
 #if defined (ACE_LACKS_IOSTREAM_TOTALLY)
@@ -159,7 +156,7 @@ ACE_Test_Output::set_output (const ACE_TCHAR *filename, int append)
   this->output_file_ = ACE_OS::fopen (temp, fmode);
 # endif /* ACE_LACKS_IOSTREAM_TOTALLY */
 
-  ACE_LOG_MSG->msg_ostream (this->output_file_);
+  ACE_LOG_MSG->msg_ostream (this->output_file_, 0);
 #endif /* ACE_HAS_PHARLAP && !ACE_PHARLAP_TESTLOG_TO_FILE */
 
   ACE_LOG_MSG->clr_flags (ACE_Log_Msg::STDERR | ACE_Log_Msg::LOGGER );
@@ -180,12 +177,11 @@ ACE_Test_Output::close (void)
 #else
     ACE_OS::fflush (this->output_file_);
     ACE_OS::fclose (this->output_file_);
-    this->output_file_ = 0;
 #endif /* !ACE_LACKS_IOSTREAM_TOTALLY */
     ACE_LOG_MSG->msg_ostream (0, 0);
   }
   // else something else changed the stream and hence should
-  // have closed and deleted the output_file_
+  // have closed the output_file_
 }
 
 ACE_Test_Output*
