@@ -1,3 +1,10 @@
+Wed Apr 11 14:02:37 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/CORBA_macros.h:
+          Added nothrow variant of ACE_NEW_THROW_EX. This fixes bugzilla
+          bug 2889. With Borland C++ this resulted in a slightly smaller
+          footprint
+
 Wed Apr 11 12:33:37 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * ace/OS_NS_sys_stat.inl:
