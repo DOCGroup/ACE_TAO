@@ -1219,9 +1219,8 @@ cat_security_association (const CORBA::UShort& a) {
   const AssociationOptions CompositeDelegation = 512;
 
 #define CHECK_PRINT(X) \
-  else if (a & X) ACE_DEBUG ((LM_DEBUG, "%I " #X "\n"))
+  if (a & X) ACE_DEBUG ((LM_DEBUG, "%I" #X "\n"))
 
-  if (0) ;
   CHECK_PRINT(NoProtection);
   CHECK_PRINT(Integrity);
   CHECK_PRINT(Confidentiality);
@@ -1237,7 +1236,7 @@ cat_security_association (const CORBA::UShort& a) {
 }
 
 CORBA::Boolean
-cat_tag_ssl_sec_trans (TAO_InputCDR& stream) {
+cat_tag_ssl_sec_trans (TAO_InputCDR& cdr) {
   /*
     Decode the following from the stream (copied from SSLIOP.idl)
 
@@ -1257,30 +1256,37 @@ cat_tag_ssl_sec_trans (TAO_InputCDR& stream) {
     utility to be dependent upon SSLIOP.
    */
 
+  CORBA::ULong length = 0;
+  if (cdr.read_ulong (length) == 0)
+    return false;
+
+  TAO_InputCDR stream (cdr, length);
+  cdr.skip_bytes(length);
+
   CORBA::UShort target_supports;
   CORBA::UShort target_requires;
   CORBA::UShort port;
 
   if (stream.read_ushort(target_supports) == 0)
-    return 1;
+    return false;
 
   if (stream.read_ushort(target_requires) == 0)
-    return 1;
+    return false;
 
   if (stream.read_ushort(port) == 0)
-    return 1;
+    return false;
 
-  ACE_DEBUG ((LM_DEBUG, "%I port = %d\n", port));
-  ACE_DEBUG ((LM_DEBUG, "%I target_supports = 0x%x\n", target_supports));
-  ACE_DEBUG ((LM_DEBUG, "%{%{"));
+  ACE_DEBUG ((LM_DEBUG, "%Iport = %d\n", port));
+  ACE_DEBUG ((LM_DEBUG, "%Itarget_supports = 0x%x\n", target_supports));
+  ACE_DEBUG ((LM_DEBUG, "%{"));
   cat_security_association(target_supports);
-  ACE_DEBUG ((LM_DEBUG, "%}%}"));
-  ACE_DEBUG ((LM_DEBUG, "%I target_requires = 0x%x\n", target_requires));
-  ACE_DEBUG ((LM_DEBUG, "%{%{"));
+  ACE_DEBUG ((LM_DEBUG, "%}"));
+  ACE_DEBUG ((LM_DEBUG, "%Itarget_requires = 0x%x\n", target_requires));
+  ACE_DEBUG ((LM_DEBUG, "%{"));
   cat_security_association(target_requires);
-  ACE_DEBUG ((LM_DEBUG, "%}%}"));
+  ACE_DEBUG ((LM_DEBUG, "%}"));
 
-  return 0;
+  return true;
 }
 
 CORBA::Boolean
@@ -1506,9 +1512,9 @@ cat_tagged_components (TAO_InputCDR& stream)
         ACE_DEBUG ((LM_DEBUG, "%}%}"));
       } else if (tag == 20U /* SSLIOP::TAG_SSL_SEC_TRANS */) {
 	ACE_DEBUG ((LM_DEBUG,"%d (TAG_SSL_SEC_TRANS)\n", tag));
-        ACE_DEBUG ((LM_DEBUG, "%{%{"));
-        cat_tag_ssl_sec_trans(stream);
-        ACE_DEBUG ((LM_DEBUG, "%}%}"));
+        ACE_DEBUG ((LM_DEBUG, "%{"));
+	cat_tag_ssl_sec_trans(stream);
+        ACE_DEBUG ((LM_DEBUG, "%}"));
       } else {
         ACE_DEBUG ((LM_DEBUG,"%d\n", tag));
         ACE_DEBUG ((LM_DEBUG, "%{%{"));
