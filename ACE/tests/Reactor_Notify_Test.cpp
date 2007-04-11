@@ -35,8 +35,8 @@ ACE_RCSID(tests, Reactor_Notify_Test, "$Id$")
 
 #if defined (ACE_HAS_THREADS)
 
-static const int LONG_TIMEOUT = 10;
-static const int SHORT_TIMEOUT = 2;
+static const time_t LONG_TIMEOUT = 10;
+static const time_t SHORT_TIMEOUT = 2;
 
 class Supplier_Task : public ACE_Task<ACE_MT_SYNCH>
 {
