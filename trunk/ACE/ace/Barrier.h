@@ -107,8 +107,9 @@ public:
   /// Block the caller until all @c count threads have called @c wait and
   /// then allow all the caller threads to continue in parallel.
   ///
-  /// @retval 0 after successfully waiting for all threads to wait. -1 if
-  /// an error occurs or the barrier is shut down (@sa shutdown ()).
+  /// @retval 0 after successfully waiting for all threads to wait.
+  /// @retval -1 if an error occurs or the barrier is shut
+  /// down (@sa shutdown ()).
   int wait (void);
 
   /// Shut the barrier down, aborting the wait of all waiting threads.

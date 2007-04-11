@@ -1339,7 +1339,7 @@ ACE_OS::cond_wait (ACE_cond_t *cv,
 # if defined (ACE_HAS_THREADS)
   // Prevent race conditions on the <waiters_> count.
   ACE_OS::thread_mutex_lock (&cv->waiters_lock_);
-  cv->waiters_++;
+  ++cv->waiters_;
   ACE_OS::thread_mutex_unlock (&cv->waiters_lock_);
 
   int result = 0;
@@ -1370,7 +1370,7 @@ ACE_OS::cond_wait (ACE_cond_t *cv,
   ACE_OS::thread_mutex_lock (&cv->waiters_lock_);
 
   // We're ready to return, so there's one less waiter.
-  cv->waiters_--;
+  --cv->waiters_;
 
   int last_waiter = cv->was_broadcast_ && cv->waiters_ == 0;
 

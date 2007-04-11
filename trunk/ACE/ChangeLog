@@ -1,8 +1,21 @@
+Wed Apr 11 10:57:07 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-g++-common.h:
+          Improved gcc 4 visibility support, thanks to Max Khon
+          <mkhon at swsoft dot com> for delivering the patch. This fixes
+          bugzilla 2881
+
+        * ace/Barrier.h:
+          Doxygen improvements
+
+        * ace/OS_NS_Thread.cpp:
+          Use prefix increment/decrement
+
 Tue Apr 10 20:27:07 UTC 2007  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * docs/Download.html: Updated the download page to clarify the
           status of autoconf.  Thanks to Eric Hughes <eh at narthex dot us>
-          for clarifying this.        
+          for clarifying this.
 
 Tue Apr 10 17:20:46 UTC 2007  Krishnakumar B  <kitty@nospam.invalid.domain>
 
