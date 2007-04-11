@@ -115,7 +115,8 @@ namespace ACE_OS
 # endif  /* _FILE_OFFSET_BITS == 64 */
 #else /* !ACE_WIN32 */
     ACE_stat sb;
-    return ACE_OS::fstat (handle, &sb) == -1 ? -1 : sb.st_size;
+    return ACE_OS::fstat (handle, &sb) == -1 ?
+                    static_cast<ACE_OFF_T> (-1) : sb.st_size;
 #endif
   }
 

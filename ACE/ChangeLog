@@ -1,3 +1,14 @@
+Wed Apr 11 12:33:37 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ace/OS_NS_sys_stat.inl:
+
+          Added a static_cast to avoid a warning from gcc.
+
+        * ace/SOCK_Dgram.cpp:
+
+          Fixed my RTEMS detection for checking to see if iov_len is less
+          than zero.
+
 Wed Apr 11 11:37:42 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * tests/Reactor_Notify_Test.cpp:
