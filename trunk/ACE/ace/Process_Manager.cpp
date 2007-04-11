@@ -61,15 +61,15 @@ ACE_Process_Manager *ACE_Process_Manager::instance_ = 0;
 // (we can only delete it safely if we created it!)
 int ACE_Process_Manager::delete_instance_ = 0;
 
-ACE_Process_Descriptor::~ACE_Process_Descriptor (void)
+ACE_Process_Manager::Process_Descriptor::~Process_Descriptor (void)
 {
 }
 
 void
-ACE_Process_Descriptor::dump (void) const
+ACE_Process_Manager::Process_Descriptor::dump (void) const
 {
 #if defined (ACE_HAS_DUMP)
-  ACE_TRACE ("ACE_Process_Descriptor::dump");
+  ACE_TRACE ("ACE_Process_Manager::Process_Descriptor::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
 
@@ -98,11 +98,11 @@ ACE_Process_Manager::dump (void) const
 #endif /* ACE_HAS_DUMP */
 }
 
-ACE_Process_Descriptor::ACE_Process_Descriptor (void)
+ACE_Process_Manager::Process_Descriptor::Process_Descriptor (void)
   : process_ (0),
     exit_notify_ (0)
 {
-  ACE_TRACE ("ACE_Process_Descriptor::ACE_Process_Descriptor");
+  ACE_TRACE ("ACE_Process_Manager::Process_Descriptor::Process_Descriptor");
 }
 
 ACE_Process_Manager *
@@ -196,10 +196,10 @@ ACE_Process_Manager::resize (size_t size)
   if (size <= this->max_process_table_size_)
     return 0;
 
-  ACE_Process_Descriptor *temp = 0;
+  Process_Descriptor *temp = 0;
 
   ACE_NEW_RETURN (temp,
-                  ACE_Process_Descriptor[size],
+                  Process_Descriptor[size],
                   -1);
 
   for (size_t i = 0;
@@ -408,7 +408,7 @@ ACE_Process_Manager::register_handler (ACE_Event_Handler *eh,
       return -1;
     }
 
-  ACE_Process_Descriptor &proc_desc = this->process_table_[i];
+  Process_Descriptor &proc_desc = this->process_table_[i];
 
   if (proc_desc.exit_notify_ != 0)
     proc_desc.exit_notify_->handle_close (ACE_INVALID_HANDLE, 0);
@@ -510,7 +510,7 @@ ACE_Process_Manager::append_proc (ACE_Process *proc,
         return -1;
     }
 
-  ACE_Process_Descriptor &proc_desc =
+  Process_Descriptor &proc_desc =
     this->process_table_[this->current_count_];
 
   proc_desc.process_ = proc;
@@ -620,22 +620,11 @@ ACE_Process_Manager::terminate (pid_t pid)
     // set "no such process" error
     return -1;
 
-  int const result = ACE::terminate_process (pid);
-
-  if (result != -1)
-    {
-      // Save/restore errno.
-      ACE_Errno_Guard error (errno);
-      this->remove_proc (i);
-      return 0;
-    }
-
-  return -1;
+  return ACE::terminate_process (pid);
 }
 
 int
-ACE_Process_Manager::terminate (pid_t pid,
-                                int sig)
+ACE_Process_Manager::terminate (pid_t pid, int sig)
 {
   ACE_TRACE ("ACE_Process_Manager::terminate");
 
@@ -1003,7 +992,7 @@ ACE_Process_Manager::notify_proc_handler (size_t i,
 {
   if (i < this->current_count_)
     {
-      ACE_Process_Descriptor &proc_desc =
+      Process_Descriptor &proc_desc =
         this->process_table_[i];
 
       proc_desc.process_->exit_code (exit_code);
