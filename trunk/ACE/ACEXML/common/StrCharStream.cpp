@@ -21,10 +21,14 @@ int
 ACEXML_StrCharStream::open (const ACEXML_Char *str, const ACEXML_Char* name)
 {
 
-  if (str != 0 && name != 0
-      && (this->start_ = ACE::strnew (str)) != 0
-      && (this->name_ = ACE::strnew (name)) != 0)
+  if (str != 0 && name != 0)
     {
+      delete [] this->start_;
+      if ((this->start_ = ACE::strnew (str)) == 0)
+        return -1;
+      delete [] this->name_;
+      if ((this->name_ = ACE::strnew (name)) == 0)
+        return -1;
       this->ptr_ = this->start_;
       this->end_ = this->start_ + ACE_OS::strlen (this->start_);
       return this->determine_encoding();
@@ -67,8 +71,7 @@ ACEXML_StrCharStream::determine_encoding (void)
     return -1;
   else
     {
-      if (this->encoding_)
-        delete [] this->encoding_;
+      delete [] this->encoding_;
       this->encoding_ = ACE::strnew (temp);
       // ACE_DEBUG ((LM_DEBUG, "String's encoding is %s\n", this->encoding_));
     }
