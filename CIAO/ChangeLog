@@ -1,3 +1,9 @@
+Wed Apr 11 11:48:32 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * DAnCE/ExecutionManager/Execution_Manager_Impl.cpp:
+
+          Removed the stray '\' I accidentally added yesterday.
+
 Tue Apr 10 17:23:16 UTC 2007  Krishnakumar B  <kitty@nospam.invalid.domain>
 
         * examples/BasicSP/BasicSP.mwc:  Added SVN Id tag to remove Fuzz
