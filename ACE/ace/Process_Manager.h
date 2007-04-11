@@ -34,92 +34,66 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Reactor;
 
 /**
- * @class ACE_Process_Descriptor
- *
- * @brief Information describing each process that's controlled by an
- * \<ACE_Process_Manager\>.
- */
-class ACE_Export ACE_Process_Descriptor
-{
-private:
-  friend class ACE_Process_Manager;
-
-  /// Default ctor/dtor.
-  ACE_Process_Descriptor (void);
-  ~ACE_Process_Descriptor (void);
-
-  /// Describes the process itself.
-  ACE_Process *process_;
-
-  /// function to call when process exits
-  ACE_Event_Handler *exit_notify_;
-
-  /// Dump the state of an object.
-  void dump (void) const;
-};
-
-/**
  * @class ACE_Process_Manager
  *
  * @brief Manages a group of processes.
  *
  * This class allows applications to control groups of processes,
- * similar to how the \<ACE_Thread_Manager\> controls groups of
+ * similar to how the ACE_Thread_Manager controls groups of
  * threads.  Naturally, it doesn't work at all on platforms, such
  * as VxWorks or pSoS, that don't support process.
- * There are two (main) ways of using \<ACE_Process_Manager\>,
+ * There are two main ways of using ACE_Process_Manager,
  * depending on how involved you wish to be with the termination
- * of managed <ACE_Process>es.  If you just want <Process>es to
- * go away when they're finished, simply register the
- * <Process_Manager> with an \<ACE_Reactor\>:
- * ACE_Process_Manager mgr( 100, some_reactor )
- * -or-
+ * of managed processes.  If you want processes to simply
+ * go away when they're finished, register the ACE_Process_Manager with
+ * an ACE_Reactor that can handle notifications of child process exit:
+ * @code
  * ACE_Process_Manager mgr;
- * ...
- * mgr.open( 100, some_reactor );
- * Then, the <Process_Manager> will clean up after any
- * <Process>es that it spawns.  (On Unix, this means executing a
- * wait(2) to collect the exit status -- and avoid zombie
+ * // ...
+ * mgr.open (100, ACE_Reactor::instance ());
+ * @endcode
+ * In this usage scenario, the ACE_Process_Manager will clean up after any
+ * processes that it spawns.  (On Unix, this means executing a
+ * wait(2) to collect the exit status and avoid zombie
  * processes; on Win32, it means closing the process and thread
  * HANDLEs that are created when CreateProcess is called.)
- * If, on the other hand (and for some inexplicable reason) you
- * want to explicitly invoke the terminated <Process> cleanup
- * code, then *don't* register the <Process_Manager> with a
- * Reactor, and be sure to call one of the
- * <Process_Manager::wait> functions whenever there might be
- * managed <Process>es that have exited.
- * Note that in either case, <Process_Manager> allows you to
- * register "<Event_Handlers>" to be called when a specific
- * <Process> exits, or when any <Process> without a specific
- * <Event_Handler> exits.  When a <Process> exits, the
- * appropriate <Event_Handler>'s <handle_input> is called; the
- * ACE_HANDLE passed is either the Process' HANDLE (on Win32),
- * or its pid cast to an ACE_HANDLE (on unix).
- * It is also possible to call the <Process_Manager::wait>
- * functions even though the <Process_Manager> is registered with
- * a <Reactor>.
- * Note also that the wait functions are "sloppy" on Unix,
+ *
+ * @note When you register a ACE_Process_Manager with a
+ * ACE_Reactor, the reactor's notification pipe is used to help reap the
+ * available process exit statuses.  Therefore, you must not use a
+ * reactor whose notify pipe has been disabled.  Here's the
+ * sequence of steps used to reap the exit statuses in this case:
+ * -# The ACE_Process_Manager registers a signal handler for
+ *    SIGCHLD.
+ * -# The SIGCHLD handler, when invoked, uses the ACE_Reactor's
+ *    notify() method to inform the ACE_Reactor to wake up.
+ * -# The ACE_Reactor calls the ACE_Process_Manager's
+ *    handle_input() method; this happens synchronously, not in
+ *    signal context.
+ * -# The handle_input() method collects all available exit
+ *    statuses.
+ *
+ * If, on the other hand you want to wait "in line" to handle the
+ * terminated process cleanup code, call one of the wait functions
+ * whenever there might be managed processes that have exited.
+ *
+ * Note that in either case, ACE_Process_Manager allows you to
+ * register an ACE_Event_Handler to be called when a specific
+ * spawned process exits, or when any process without a specific
+ * ACE_Event_Handler exits.  When a process exits, the
+ * appropriate ACE_Event_Handler's handle_input() method is called; the
+ * ACE_HANDLE passed is either the process's HANDLE (on Win32),
+ * or its pid cast to an ACE_HANDLE (on POSIX).
+ * It is also possible to call the wait() functions even when the
+ * ACE_Process_Manager is registered with a reactor.
+ *
+ * @note Be aware that the wait functions are "sloppy" on Unix,
  * because there's no good way to wait for a subset of the
  * children of a process.  The wait functions may end up
  * collecting the exit status of a process that's not managed by
- * the <Process_Manager> whose <wait> you invoked.  It's best to
- * only use a single <Process_Manager>, and to create all
- * subprocesses by calling that <Process_Manager>'s <spawn>
- * method.
- * Incidentally, when you register your <Process_Manager> with a
- * <Reactor> its notification pipe is used to help "reap" the
- * available exit statuses.  Therefore, you must not use a
- * <Reactor> whose notify pipe has been disabled.  Here's the
- * sequence of steps used to reap the exit statuses in this case:
- * + The <Process_Manager> registers a signal handler for
- *   SIGCHLD.
- * + The SIGCHLD handler, when invoked, uses the <Reactor>'s
- *   <notify> method to inform the <Reactor> to wake up.
- * + Next, the <Reactor> calls the <Process_Manager>'s
- *   <handle_input>, this happens synchronously, not in
- *   sighandler-space.
- * + The <handle_input> method collects all available exit
- *   statuses.
+ * the ACE_Process_Manager whose wait() you invoked.  It's best to
+ * only use a single ACE_Process_Manager, and to create all
+ * subprocesses by calling that manager's spawn() method.
  */
 class ACE_Export ACE_Process_Manager : protected ACE_Event_Handler
 {
@@ -131,11 +105,14 @@ public:
     DEFAULT_SIZE = 100
   };
 
-  // = Initialization and termination methods.
+  /**
+   * @name Initialization and termination methods
+   */
+  //@{
   /**
    * Initialize an ACE_Process_Manager with a table containing up to
    * @a size processes.  This table resizes itself automatically as
-   * needed.  If a non-NULL @a reactor is provided, this
+   * needed.  If a @a reactor is provided, this
    * ACE_Process_Manager uses it to notify an application when a
    * process it controls exits.  By default, however, we don't use an
    * ACE_Reactor.
@@ -146,7 +123,7 @@ public:
   /**
    * Initialize an ACE_Process_Manager with a table containing up to
    * @a size processes.  This table resizes itself automatically as
-   * needed.  If a non-NULL @a reactor is provided, this
+   * needed.  If a @a reactor is provided, this
    * ACE_Process_Manager uses it to notify an application when a
    * process it controls exits.  By default, however, we don't use an
    * ACE_Reactor.
@@ -161,7 +138,12 @@ public:
   /// to exit.
   virtual ~ACE_Process_Manager (void);
 
-  // = Singleton accessors.
+  //@}
+
+  /**
+   * @name Singleton access and control
+   */
+  //@{
   /// Get pointer to a process-wide ACE_Process_Manager.
   static ACE_Process_Manager *instance (void);
 
@@ -176,10 +158,14 @@ public:
   /// singleton.
   static void cleanup (void *instance, void *arg);
 
-  // = Process creation methods.
+  //@}
 
   /**
-   * Create a new process by passing @a options to <proc.spawn>.
+   * @name Process creation methods
+   */
+  //@{
+  /**
+   * Create a new process with specified @a options.
    * Register @a event_handler to be called back when the process exits.
    *
    * On success, returns the process id of the child that was created.
@@ -190,7 +176,7 @@ public:
                ACE_Event_Handler *event_handler = 0);
 
   /**
-   * Create a new process by passing @a options to <ACE_Process::spawn>.
+   * Create a new process with the specified @a options.
    * Register @a event_handler to be called back when the process exits.
    *
    * On success, returns the process id of the child that was created.
@@ -200,10 +186,10 @@ public:
 	       ACE_Event_Handler *event_handler = 0);
 
   /**
-   * Create @a n new processes by passing @a options to
-   * <ACE_Process::spawn>, which is called @a n times.  If <child_pids>
-   * is non-0 it is expected to be an array of @a n <pid_t>'s, which
-   * are filled in with the process ids of each newly created process.
+   * Create @a n new processes with the same @a options.
+   * If @a child_pids is non-0 it is expected to be an array of at least
+   * @a n pid_t, which are filled in with the process IDs of the spawned
+   * processes.
    * Register @a event_handler to be called back when each process exits.
    * Returns 0 on success and -1 on failure.
    */
@@ -211,48 +197,75 @@ public:
                ACE_Process_Options &options,
                pid_t *child_pids = 0,
 	       ACE_Event_Handler *event_Handler = 0);
+  //@}
 
-  // = Process synchronization operations.
+  /**
+   * @name Process synchronization operations
+   */
+  //@{
+  /**
+   * Abruptly terminate a single process with id @a pid using the
+   * ACE::terminate_process() method which works on both signal-capable
+   * systems and on Windows.
+   *
+   * @note This call is potentially dangerous to use since the process
+   * being terminated may not have a chance to cleanup before it shuts down.
+   *
+   * @retval 0 on success and -1 on failure.
+   */
+  int terminate (pid_t pid);
+
+  /**
+   * Sends the specified signal to the specified process.
+   *
+   * @note This only works on platforms that have signal capability. In
+   * particular, it doesn't work on Windows.
+   *
+   * @retval 0 on success and -1 on failure.
+   */
+  int terminate (pid_t pid,
+                 int sig);
 
   /**
    * Block until there are no more child processes running that were
-   * @c spawn()ed by this @c ACE_Process_Manager.  Unlike the @c wait
-   * call below, this method does not require a signal handler or
-   * @c ACE_OS::sigwait because it simply blocks synchronously waiting
-   * for all the children managed by this @c ACE_Process_Manager to
+   * spawned by this ACE_Process_Manager.  Unlike the wait() method
+   * below, this method does not require a signal handler or use of
+   * ACE_OS::sigwait() because it simply blocks synchronously waiting
+   * for all the children managed by this ACE_Process_Manager to
    * exit.  Note that this does not return any status information
    * about the success or failure of exiting child processes, although
-   * any registered exit_handlers are called.  Returns 0 on success
-   * (and @c remove()s the corresponding @c ACE_Process_Descriptor
-   * entries from the @c Process_Manager; otherwise, returns -1 on
-   * failure.
+   * any registered exit handlers are called.
    *
-   * @param timeout Relative time to wait for process to terminate
+   * @param timeout Relative time to wait for processes to terminate.
+   *
+   * @retval 0 on success; -1 on failure.
    */
   int wait (const ACE_Time_Value &timeout = ACE_Time_Value::max_time);
 
   /**
-   * Wait up to @a timeout for a single process to terminate.  If
-   * pid==0, waits for any of the managed <Process>es (but see the
-   * note in the class documentation above for caveats about this --
-   * "sloppy process cleanup on unix") If pid != 0, waits for that <Process>
-   * only.  Returns the pid of the Process whose exit was handled, 0
-   * if a timeout occurred, or ACE_INVALID_PID on error.
+   * Wait up to @a timeout for a single specified process to terminate.
+   * If @a pid is 0, this method waits for any of the managed processes
+   * (but see the note concerning "sloppy process cleanup on unix").
+   * If @a pid != 0, waits for that process only.
    *
    * @param pid     Process ID
    * @param timeout Relative time to wait for process to terminate
    * @param status  Exit status of terminated process
+   *
+   * @retval The pid of the process which exited, 0
+   * if a timeout occurred, or ACE_INVALID_PID on error.
    */
   pid_t wait (pid_t pid,
               const ACE_Time_Value &timeout,
               ACE_exitcode *status = 0);
 
   /**
-   * Wait indefinitely for a single process to terminate.  If pid==0,
-   * waits for any of the managed <Process>es (but see the note in
-   * the class documentation for caveats about this -- "sloppy Process
-   * cleanup on unix") If pid != 0, waits for that <Process> only.
-   * Returns the pid of the process whose exit was handled, or
+   * Wait indefinitely for a single, specified process to terminate.
+   * If @a pid is 0, waits for any of the managed processes (but see the
+   * note concerning "sloppy process cleanup on unix").
+   * If @a pid != 0, this method waits for that process only.
+   *
+   * @retval The pid of the process which exited, or
    * ACE_INVALID_PID on error.
    */
   pid_t wait (pid_t pid,
@@ -260,23 +273,26 @@ public:
 
   /**
    * @deprecated
-   * Reap the result of a single process by calling <ACE_OS::waitpid>,
-   * therefore, this method is not portable to Win32.  If the child is
-   * successfully reaped, <remove> is called automatically.  This
-   * method does the same thing that the <wait> method directly above
-   * it does -- It's just here for backwards compatibility.
+   * Reap the result of a single process by calling ACE_OS::waitpid(),
+   * therefore, this method is not portable to Windows.  If the child is
+   * successfully reaped, remove() is called automatically.
+   * Use one of the wait() methods instead of this method.
    */
   int reap (pid_t pid = -1,
             ACE_exitcode *stat_loc = 0,
             int options = WNOHANG);
+  //@}
 
-  // = Utility methods.
   /**
-   * Register an Event_Handler to be called back when the specified
-   * process exits.  If pid == ACE_INVALID_PID this handler is called
+   * @name Utility methods
+   */
+  //@{
+  /**
+   * Register an event handler to be called back when the specified
+   * process exits.  If @a pid == ACE_INVALID_PID this handler is called
    * when any process with no specific handler exits.
    *
-   * @note In multi-threaded applications, there is a race condition
+   * @warning In multithreaded applications, there is a race condition
    * if a process exits between the time it is spawned and when its
    * handler is registered.  To avoid this, register the handler at
    * the time the process is spawned.
@@ -285,44 +301,33 @@ public:
                         pid_t pid = ACE_INVALID_PID);
 
   /**
-   * Remove process <pid> from the table.  This is called
-   * automatically by the <reap> method after it successfully reaped a
-   * <SIGCHLD> signal.  It's also possible to call this method
-   * directly from a signal handler, but don't call both <reap> and
-   * <remove>!
+   * Remove process @a pid from the ACE_Process_Manager's internal records.
+   * This is called automatically by the reap() method after it successfully
+   * reaps a process.  It's also possible to call this method
+   * directly from a signal handler, but don't call both reap() and
+   * remove()!
    */
   int remove (pid_t pid);
 
-  /**
-   * Abruptly terminate a single process with id <pid> using the
-   * <ACE::terminate_process> method.  Note that this call is
-   * potentially dangerous to use since the process being terminated
-   * may not have a chance to cleanup before it shuts down.  Returns 0
-   * on success and -1 on failure.
-   */
-  int terminate (pid_t pid);
-
-  /// On OSs that support signals, send the signal to the specified
-  /// process.  Returns 0 on success and -1 on failure.
-  int terminate (pid_t pid,
-                 int sig);
-
-  /// Return the number of managed Processes.
+  /// Return the number of managed processes.
   size_t managed (void) const;
+
   /**
-   * Sets the scheduling parameters for the <Process> managed by
-   * <ACE_Process_Manager> identified by pid by passing <params>, <pid> to
-   * <ACE_OS::sched_params>. Returns 0 on success, -1 on failure, and
-   * ACE_INVALID_PID when given pid is not managed by
-   * <ACE_Process_Manager>.
+   * Sets the scheduling parameters for process identified by @a pid by
+   * passing @a params, @a pid to ACE_OS::sched_params().
+   *
+   * @retval 0 on success, -1 on failure, and ACE_INVALID_PID when the
+   * specified @a pid is not managed by this ACE_Process_Manager.
    */
   int set_scheduler (const ACE_Sched_Params &params,
-                          pid_t pid);
+                     pid_t pid);
 
   /**
-   * Sets the scheduling parameters for all the <Process>es managed by
-   * <ACE_Process_Manager> by passing <params> to
-   * <ACE_OS::sched_params>. Returns 0 on success, -1 on failure.
+   * Sets the scheduling parameters for all the processes managed by
+   * this ACE_Process_Manager by passing @a params to
+   * ACE_OS::sched_params().
+   *
+   * @retval 0 on success, -1 on failure.
    */
   int set_scheduler_all (const ACE_Sched_Params &);
 
@@ -331,6 +336,7 @@ public:
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
+  //@}
 
 protected:
   // = These methods allow a <Process_Manager> to be an <Event_Handler>.
@@ -375,6 +381,31 @@ protected:
                              ucontext_t * = 0);
 
 private:
+
+  /**
+   * @struct Process_Descriptor
+   *
+   * @internal This struct is for internal use only by ACE_Process_Manager.
+   *
+   * @brief Information describing each process that's controlled by an
+   * ACE_Process_Manager.
+   */
+  struct Process_Descriptor
+  {
+    /// Default ctor/dtor.
+    Process_Descriptor (void);
+    ~Process_Descriptor (void);
+
+    /// Describes the process itself.
+    ACE_Process *process_;
+
+    /// function to call when process exits
+    ACE_Event_Handler *exit_notify_;
+
+    /// Dump the state of an object.
+    void dump (void) const;
+  };
+
   /// Resize the pool of Process_Descriptors.
   int resize (size_t);
 
@@ -413,7 +444,7 @@ private:
                            ACE_exitcode status);
 
   /// Vector that describes process state within the Process_Manager.
-  ACE_Process_Descriptor *process_table_;
+  Process_Descriptor *process_table_;
 
   /// Maximum number of processes we can manage (should be dynamically
   /// allocated).
