@@ -937,6 +937,7 @@ TAO_IIOP_Acceptor::probe_interfaces (TAO_ORB_Core *orb_core, int def_type)
     {
       if_ok_cnt = ipv4_cnt;
       lo_cnt = ipv4_lo_cnt;
+      ipv6_ll = 0;
     }
 
   // In case there are no non-local IPv6 ifs in the list only exclude
