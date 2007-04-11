@@ -9,11 +9,11 @@
 ## ../bin/mwc.pl -type automake -noreldefs TAO.mwc
 
 SUBDIRS = \
-        Bug_2561_Regression \
         PluggableTopology \
         Test_Filter \
         XML_Persistence \
         lib \
+        Bug_2561_Regression \
         Structured_Multi_Filter \
         Structured_Filter \
         Sequence_Multi_Filter \
