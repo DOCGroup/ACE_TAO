@@ -1204,6 +1204,86 @@ cat_tag_policies (TAO_InputCDR& stream) {
 }
 
 CORBA::Boolean
+cat_security_association (const CORBA::UShort& a) {
+  // Copied from Security.idl
+  typedef CORBA::UShort AssociationOptions;
+  const AssociationOptions NoProtection = 1;
+  const AssociationOptions Integrity = 2;
+  const AssociationOptions Confidentiality = 4;
+  const AssociationOptions DetectReplay = 8;
+  const AssociationOptions DetectMisordering = 16;
+  const AssociationOptions EstablishTrustInTarget = 32;
+  const AssociationOptions EstablishTrustInClient = 64;
+  const AssociationOptions NoDelegation = 128;
+  const AssociationOptions SimpleDelegation = 256;
+  const AssociationOptions CompositeDelegation = 512;
+
+#define CHECK_PRINT(X) \
+  else if (a & X) ACE_DEBUG ((LM_DEBUG, "%I " #X "\n"))
+
+  if (0) ;
+  CHECK_PRINT(NoProtection);
+  CHECK_PRINT(Integrity);
+  CHECK_PRINT(Confidentiality);
+  CHECK_PRINT(DetectReplay);
+  CHECK_PRINT(DetectMisordering);
+  CHECK_PRINT(EstablishTrustInTarget);
+  CHECK_PRINT(EstablishTrustInClient);
+  CHECK_PRINT(NoDelegation);
+  CHECK_PRINT(SimpleDelegation);
+  CHECK_PRINT(CompositeDelegation);
+
+  return 0;
+}
+
+CORBA::Boolean
+cat_tag_ssl_sec_trans (TAO_InputCDR& stream) {
+  /*
+    Decode the following from the stream (copied from SSLIOP.idl)
+
+      module Security {
+        typedef unsigned short AssociationOptions;
+      };
+      ...
+      module SSLIOP {
+        struct SSL {
+          Security::AssociationOptions    target_supports;
+          Security::AssociationOptions    target_requires;
+          unsigned short        port;
+        };
+      };
+
+    We duplicate the code here because we do not want the catior
+    utility to be dependent upon SSLIOP.
+   */
+
+  CORBA::UShort target_supports;
+  CORBA::UShort target_requires;
+  CORBA::UShort port;
+
+  if (stream.read_ushort(target_supports) == 0)
+    return 1;
+
+  if (stream.read_ushort(target_requires) == 0)
+    return 1;
+
+  if (stream.read_ushort(port) == 0)
+    return 1;
+
+  ACE_DEBUG ((LM_DEBUG, "%I port = %d\n", port));
+  ACE_DEBUG ((LM_DEBUG, "%I target_supports = 0x%x\n", target_supports));
+  ACE_DEBUG ((LM_DEBUG, "%{%{"));
+  cat_security_association(target_supports);
+  ACE_DEBUG ((LM_DEBUG, "%}%}"));
+  ACE_DEBUG ((LM_DEBUG, "%I target_requires = 0x%x\n", target_requires));
+  ACE_DEBUG ((LM_DEBUG, "%{%{"));
+  cat_security_association(target_requires);
+  ACE_DEBUG ((LM_DEBUG, "%}%}"));
+
+  return 0;
+}
+
+CORBA::Boolean
 cat_octet_seq (const char *object_name,
                TAO_InputCDR& stream)
 {
@@ -1423,6 +1503,11 @@ cat_tagged_components (TAO_InputCDR& stream)
         ACE_DEBUG ((LM_DEBUG,"%d (TAG_POLICIES)\n", tag));
         ACE_DEBUG ((LM_DEBUG, "%{%{"));
         cat_tag_policies(stream);
+        ACE_DEBUG ((LM_DEBUG, "%}%}"));
+      } else if (tag == 20U /* SSLIOP::TAG_SSL_SEC_TRANS */) {
+	ACE_DEBUG ((LM_DEBUG,"%d (TAG_SSL_SEC_TRANS)\n", tag));
+        ACE_DEBUG ((LM_DEBUG, "%{%{"));
+        cat_tag_ssl_sec_trans(stream);
         ACE_DEBUG ((LM_DEBUG, "%}%}"));
       } else {
         ACE_DEBUG ((LM_DEBUG,"%d\n", tag));
