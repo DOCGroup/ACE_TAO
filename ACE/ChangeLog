@@ -1,3 +1,32 @@
+Wed Apr 11 18:16:29 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ACEXML/apps/svcconf/Svcconf_Handler.cpp:
+        * ACEXML/common/SAXExceptions.cpp:
+        * ACEXML/common/StrCharStream.cpp:
+
+          Fixed memory leaks.
+
+        * ace/DLL.cpp:
+
+          Delete dll_name_ before assigning to it.
+
+        * ace/Select_Reactor_T.cpp:
+        * ace/TP_Reactor.cpp:
+
+          Check the timer_queue_ pointer before using it.
+
+        * tests/Service_Config_DLL.cpp:
+
+          Changed from ACE::strnew to ACE_OS::strdup to be consistent with
+          what allocation method is expected (even though this code
+          shouldn't be called).
+
+        * tests/Test_Output.cpp:
+
+          Always retain ownership of the output_file_ pointer (instead of
+          giving it to ACE_Log_Msg).  This removes a memory leak (in certain
+          situations) and simplifies things a bit.
+
 Wed Apr 11 17:53:07 UTC 2007  Steve Huston  <shuston@riverace.com>
 
         * ace/Process_Manager.{h cpp} (terminate): The terminate(pid_t) method
