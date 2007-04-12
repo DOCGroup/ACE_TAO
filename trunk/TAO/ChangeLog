@@ -1,3 +1,20 @@
+Thu Apr 12 19:11:31 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/orbsvcs/Notify/EventType.h:
+        * orbsvcs/orbsvcs/Notify/EventType.inl:
+        * orbsvcs/orbsvcs/Notify/EventType.cpp:
+
+          Modified the equivalence operator to match wildcards on the
+          domain_name and event_type (instead of a straight string compare).
+
+        * orbsvcs/orbsvcs/Notify/Event_Map_T.inl:
+
+          Since an event type can be equivalent to another and not hash to
+          the same thing, we must iterate over the map if a find() on the
+          ACE_Hash_Map_Manager doesn't return an entry.
+
+          These changes fix bug 1385.
+
 Thu Apr 12 17:27:44 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/tests/Notify/Bug_1385_Regression/Notify_Structured_Push_Consumer.cpp:
