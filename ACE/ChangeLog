@@ -1,3 +1,10 @@
+Thu Apr 12 19:05:56 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/doxygen-convert-h.pl:
+
+          Fixed a typo in a variable name.  Using strict would have caught
+          this.
+
 Thu Apr 12 12:18:20 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/auto_run_tests.pl:

@@ -71,7 +71,7 @@ foreach $arg (@ARGV) {
                 push(@files, recursive_find($result));
             }
             else {
-                push(@files, $results);
+                push(@files, $result);
             }
         }
     }
