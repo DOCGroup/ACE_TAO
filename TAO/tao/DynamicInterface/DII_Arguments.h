@@ -86,7 +86,7 @@ namespace TAO
   private:
     CORBA::NVList_ptr x_;
 
-    bool const lazy_evaluation_;
+    bool lazy_evaluation_;
   };
 }
 
