@@ -114,6 +114,14 @@ public:
     CORBA::Long id (void) const;
     void id (CORBA::Long id);
 
+#if defined (ACE_HAS_NEW_NOTHROW)
+  /// Overloaded new operator, nothrow_t variant.
+   void *operator new (size_t bytes, const ACE_nothrow_t &nt);
+#if !defined (ACE_LACKS_PLACEMENT_OPERATOR_DELETE)
+   void operator delete (void *p, const ACE_nothrow_t&) throw ();
+#endif /* ACE_LACKS_PLACEMENT_OPERATOR_DELETE */
+#endif /* ACE_HAS_NEW_NOTHROW */
+
     void *operator new (size_t);
     void operator delete (void *pointer);
 

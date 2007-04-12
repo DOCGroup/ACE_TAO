@@ -357,6 +357,24 @@ DatabaseImpl::Employee::operator delete (void *pointer)
   DATABASE::instance ()->free (pointer);
 }
 
+#if defined (ACE_HAS_NEW_NOTHROW)
+  /// Overloaded new operator, nothrow_t variant.
+void *
+DatabaseImpl::Employee::operator new (size_t size, const ACE_nothrow_t &)
+{
+  return DATABASE::instance ()->malloc (size);
+}
+
+#if !defined (ACE_LACKS_PLACEMENT_OPERATOR_DELETE)
+void
+DatabaseImpl::Employee::operator delete (void *ptr, const ACE_nothrow_t&) throw ()
+{
+  DATABASE::instance ()->free (ptr);
+}
+#endif /* ACE_LACKS_PLACEMENT_OPERATOR_DELETE */
+
+#endif /* ACE_HAS_NEW_NOTHROW */
+
 #if defined (ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION)
 template ACE_Singleton<DatabaseImpl::Simpler_Database_Malloc, ACE_Null_Mutex> *ACE_Singleton<DatabaseImpl::Simpler_Database_Malloc, ACE_Null_Mutex>::singleton_;
 #endif /* ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION */
