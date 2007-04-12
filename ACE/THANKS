@@ -2193,6 +2193,8 @@ Andres Oportus <andres dot oportus at gmail dot com>
 Olof Granered <Olof dot Granered at mobitex dot com>
 Eric Hughes <eh at narthex dot us>
 Zhenghao Shi <Zhenghao dot Shi at alcatel dot com>
+Alexander Kornienko <alexfh at gmail dot com>
+Ben Mohlenhoff <Benjamin_A_Mohlenhoff at raytheon dot com>
 
 I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson in the early 1990's.  Paul devised the recursive Makefile
