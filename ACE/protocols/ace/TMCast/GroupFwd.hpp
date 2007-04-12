@@ -9,7 +9,7 @@
 
 namespace ACE_TMCast
 {
-  class ACE_TMCast_Export Group;
+  class Group;
 }
 
 #endif // TMCAST_GROUP_FWD_HPP
