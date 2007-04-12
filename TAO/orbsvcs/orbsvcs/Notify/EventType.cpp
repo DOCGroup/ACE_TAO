@@ -101,38 +101,27 @@ TAO_Notify_EventType::operator=(const TAO_Notify_EventType& event_type)
 bool
 TAO_Notify_EventType::operator==(const TAO_Notify_EventType& event_type) const
 {
-  if (this->hash () != event_type.hash ())
-    return false;
-  else // compare the strings
-    return (ACE_OS::strcmp (this->event_type_.type_name, event_type.event_type_.type_name) == 0  &&
-            ACE_OS::strcmp (this->event_type_.domain_name, event_type.event_type_.domain_name) == 0
-           );
+  return (ACE_OS::strcmp (this->event_type_.domain_name,
+                          event_type.event_type_.domain_name) == 0 ||
+          this->domain_is_wildcard (this->event_type_.domain_name) ||
+          this->domain_is_wildcard (event_type.event_type_.type_name)) &&
+         (ACE_OS::strcmp (this->event_type_.type_name,
+                          event_type.event_type_.type_name) == 0 ||
+          this->type_is_wildcard (this->event_type_.type_name)   ||
+          this->type_is_wildcard (event_type.event_type_.type_name));
 }
 
 bool
 TAO_Notify_EventType::operator!=(const TAO_Notify_EventType& event_type) const
 {
-  if (this->hash () != event_type.hash ())
-    return true;
-  else // compare the strings
-    return (ACE_OS::strcmp (this->event_type_.type_name, event_type.event_type_.type_name) != 0  ||
-            ACE_OS::strcmp (this->event_type_.domain_name, event_type.event_type_.domain_name) != 0
-           );
+  return !(*this == event_type);
 }
 
 CORBA::Boolean
 TAO_Notify_EventType::is_special (void) const
 {
-  if ((this->event_type_.domain_name == 0 ||
-             ACE_OS::strcmp (this->event_type_.domain_name, "") == 0 ||
-             ACE_OS::strcmp (this->event_type_.domain_name, "*") == 0) &&
-      (this->event_type_.type_name == 0 ||
-             ACE_OS::strcmp (this->event_type_.type_name, "") == 0 ||
-             ACE_OS::strcmp (this->event_type_.type_name, "*") == 0 ||
-             ACE_OS::strcmp (this->event_type_.type_name, "%ALL") == 0))
-    return true;
-  else
-    return false;
+  return (this->domain_is_wildcard (this->event_type_.domain_name) &&
+          this->type_is_wildcard (this->event_type_.type_name));
 }
 
 void
