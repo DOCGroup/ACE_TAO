@@ -88,6 +88,9 @@ protected:
   void recompute_hash (void);
   // Recompute the hash value.
 
+  bool domain_is_wildcard (const char* domain) const;
+  bool type_is_wildcard (const char* type) const;
+  
   // = Data Members
   CosNotification::EventType event_type_;
   // The event_type that we're decorating.
