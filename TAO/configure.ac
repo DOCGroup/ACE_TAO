@@ -522,6 +522,7 @@ if test $tao_build_tests = yes; then
     orbsvcs/tests/Miop/McastHello/Makefile
     orbsvcs/tests/Notify/Basic/Makefile
     orbsvcs/tests/Notify/Blocking/Makefile
+    orbsvcs/tests/Notify/Bug_1385_Regression/Makefile
     orbsvcs/tests/Notify/Bug_2561_Regression/Makefile
     orbsvcs/tests/Notify/Destroy/Makefile
     orbsvcs/tests/Notify/Discarding/Makefile
