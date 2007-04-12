@@ -96,8 +96,7 @@ TAO_Profile::_decr_refcnt (void)
 }
 
 void
-TAO_Profile::add_tagged_component (const IOP::TaggedComponent &component
-                                   )
+TAO_Profile::add_tagged_component (const IOP::TaggedComponent &component)
 {
   // Sanity checks.
   this->verify_orb_configuration ();
@@ -286,8 +285,7 @@ TAO_Profile::create_tagged_profile (void)
 #if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
       // Place the message block in to the Sequence of Octets that we
       // have
-      this->tagged_profile_->profile_data.replace (length,
-                                                   encap.begin ());
+      this->tagged_profile_->profile_data.replace (length, encap.begin ());
 #else
       this->tagged_profile_->profile_data.length (length);
       CORBA::Octet *buffer =
@@ -334,8 +332,7 @@ TAO_Profile::set_tagged_components (TAO_OutputCDR &out_cdr)
 
 
 void
-TAO_Profile::policies (CORBA::PolicyList *policy_list
-                       )
+TAO_Profile::policies (CORBA::PolicyList *policy_list)
 {
 #if (TAO_HAS_CORBA_MESSAGING == 1)
 
@@ -428,8 +425,7 @@ TAO_Profile::policies (CORBA::PolicyList *policy_list
 
 
 void
-TAO_Profile::get_policies (CORBA::PolicyList& pl
-                           )
+TAO_Profile::get_policies (CORBA::PolicyList& pl)
 {
 #if (TAO_HAS_CORBA_MESSAGING == 1) && !defined (CORBA_E_MICRO)
 
@@ -483,8 +479,7 @@ TAO_Profile::get_policies (CORBA::PolicyList& pl
                 {
                   policy =
                     this->orb_core_->orb ()->_create_policy (
-                      policy_value_seq[i].ptype
-                     );
+                      policy_value_seq[i].ptype);
 
                   if (!CORBA::is_nil (policy.in ()))
                     {
@@ -617,8 +612,7 @@ TAO_Profile::supports_non_blocking_oneways (void) const
 }
 
 void
-TAO_Profile::addressing_mode (CORBA::Short addr
-                              )
+TAO_Profile::addressing_mode (CORBA::Short addr)
 {
   // ** See race condition note about addressing mode in Profile.h **
   switch (addr)
@@ -639,8 +633,7 @@ TAO_Profile::addressing_mode (CORBA::Short addr
 }
 
 void
-TAO_Profile::parse_string (const char *ior
-                           )
+TAO_Profile::parse_string (const char *ior)
 {
   if (!ior || !*ior)
     {
@@ -809,15 +802,13 @@ TAO_Unknown_Profile::endpoint_count (void) const
 }
 
 void
-TAO_Unknown_Profile::parse_string (const char *
-                                   )
+TAO_Unknown_Profile::parse_string (const char *)
 {
   // @@ THROW something????
 }
 
 void
-TAO_Unknown_Profile::parse_string_i (const char *
-                                     )
+TAO_Unknown_Profile::parse_string_i (const char *)
 {
   // @@ THROW something????
 }
