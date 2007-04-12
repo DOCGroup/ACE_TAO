@@ -1,3 +1,10 @@
+Thu Apr 12 12:18:20 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/auto_run_tests.pl:
+
+          Remove intermediate '.' directories when printing the test name to
+          allow the scoreboard matrix to read test output correctly.
+
 Thu Apr 12 12:03:29 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * tests/Test_Output.cpp:
