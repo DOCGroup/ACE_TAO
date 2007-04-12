@@ -55,7 +55,7 @@ Notify_Structured_Push_Consumer::_connect (
   removed[0].domain_name = CORBA::string_dup ("*");
   removed[0].type_name = CORBA::string_dup ("*");
 
-  this->proxy_->subscription_change (added, removed);
+  this->subscription_change (added, removed);
 
   // give ownership to POA
   this->_remove_ref ();

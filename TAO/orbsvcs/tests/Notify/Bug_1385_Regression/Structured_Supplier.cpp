@@ -126,9 +126,8 @@ SendEvent (int id)
 {
   CosNotification::StructuredEvent event;
 
-  event.header.fixed_header.event_type.domain_name = CORBA::string_dup ("");
-  event.header.fixed_header.event_type.type_name = CORBA::string_dup ("");
-  event.header.fixed_header.event_name = CORBA::string_dup ("blocking-test");
+  event.header.fixed_header.event_type.domain_name = CORBA::string_dup ("DOC_TAO");
+  event.header.fixed_header.event_type.type_name = CORBA::string_dup ("examples");
 
   event.filterable_data.length (1);
   event.filterable_data[0].name = CORBA::string_dup ("id");

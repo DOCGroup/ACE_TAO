@@ -1,3 +1,14 @@
+Thu Apr 12 17:27:44 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/tests/Notify/Bug_1385_Regression/Notify_Structured_Push_Consumer.cpp:
+
+          Changed to use the subscription_change() method from the base
+          class instead of calling it directly on the proxy.
+
+        * orbsvcs/tests/Notify/Bug_1385_Regression/Structured_Supplier.cpp:
+
+          Fixed the domain_name and type_name on the event header.
+
 Thu Apr 12 15:09:49 UTC 2007  Wallace Zhang  <zhang_w@ociweb.com>
 
         * tao/DynamicInterface/DII_Arguments.h:
