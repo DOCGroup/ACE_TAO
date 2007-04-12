@@ -76,19 +76,15 @@ public:
    * policy type.  Returns the effective override for all other policy
    * types.
    */
-  virtual CORBA::Policy_ptr get_policy (CORBA::PolicyType type
-                                       );
+  virtual CORBA::Policy_ptr get_policy (CORBA::PolicyType type);
 
-  virtual CORBA::Policy_ptr get_cached_policy (TAO_Cached_Policy_Type type
-                                              );
+  virtual CORBA::Policy_ptr get_cached_policy (TAO_Cached_Policy_Type type);
 
   virtual TAO_Stub* set_policy_overrides (const CORBA::PolicyList & policies,
-                                          CORBA::SetOverrideType set_add
-                                         );
+                                          CORBA::SetOverrideType set_add);
 
   virtual CORBA::PolicyList *get_policy_overrides (
-    const CORBA::PolicyTypeSeq & types
-   );
+    const CORBA::PolicyTypeSeq & types);
 
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
@@ -106,8 +102,7 @@ public:
    * that refers/points to the same remote object (i.e. are
    * equivalent).
    */
-  CORBA::ULong hash (CORBA::ULong maximum
-                     );
+  CORBA::ULong hash (CORBA::ULong maximum);
 
   /// Implement the is_equivalent() method for the CORBA::Object
   CORBA::Boolean is_equivalent (CORBA::Object_ptr other_obj);

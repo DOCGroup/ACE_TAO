@@ -11,7 +11,7 @@ TAO_Pluggable_Reply_Params_Base::TAO_Pluggable_Reply_Params_Base (void)
     reply_status_ (0),
     is_dsi_ (0),
     dsi_nvlist_align_ (0),
-    argument_flag_ (0),
+    argument_flag_ (false),
     service_context_ (0)
 {
 }
