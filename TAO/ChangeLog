@@ -1,3 +1,8 @@
+Thu Apr 12 06:25:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_2678_Regression/client.cpp:
+          Fixed typo in include
+
 Wed Apr 11 18:31:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_2678_Regression/*:
