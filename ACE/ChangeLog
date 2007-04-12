@@ -1,3 +1,9 @@
+Thu Apr 12 19:14:00 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/tao_other_tests.lst:
+
+          Added the Bug_1385_Regression test.
+
 Thu Apr 12 19:05:56 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/doxygen-convert-h.pl:
