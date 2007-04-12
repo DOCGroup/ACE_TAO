@@ -1,3 +1,8 @@
+Thu Apr 12 11:50:37 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * protocols/ace/TMCast/GroupFwd.hpp:
+          Don't use export with a forward declaration
+
 Wed Apr 11 18:16:29 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * ACEXML/apps/svcconf/Svcconf_Handler.cpp:
