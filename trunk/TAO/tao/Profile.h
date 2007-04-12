@@ -93,8 +93,7 @@ public:
   TAO_Tagged_Components& tagged_components (void);
 
   /// Add the given tagged component to the profile.
-  void add_tagged_component (const IOP::TaggedComponent &component
-                            );
+  void add_tagged_component (const IOP::TaggedComponent &component);
 
   /**
    * Return the current addressing mode for this profile.
@@ -134,12 +133,10 @@ public:
 
   /// This method sets the client exposed policies, i.e., the ones
   /// propagated in the IOR, for this profile.
-  virtual void policies (CORBA::PolicyList *policy_list
-                        );
+  virtual void policies (CORBA::PolicyList *policy_list);
 
   /// Accessor for the client exposed policies of this profile.
-  virtual void  get_policies (CORBA::PolicyList &policy_list
-                             );
+  virtual void  get_policies (CORBA::PolicyList &policy_list);
 
   /// Returns true if this profile can specify multicast endpoints.
   virtual int supports_multicast (void) const;
@@ -174,16 +171,14 @@ public:
    * addressing mode.  Given that the addressing mode is checked in
    * the critical path, this decision seems like a good thing.
    */
-  virtual void addressing_mode (CORBA::Short addr_mode
-                               );
+  virtual void addressing_mode (CORBA::Short addr_mode);
 
   /// The object key delimiter.
   virtual char object_key_delimiter (void) const = 0;
 
   /// Initialize this object using the given input string.
   /// Supports URL style of object references
-  virtual void parse_string (const char *string
-                            );
+  virtual void parse_string (const char *string);
 
   /// Return a string representation for this profile.  Client must
   /// deallocate memory. Only one endpoint is included into the
@@ -274,8 +269,7 @@ public:
   CORBA::Boolean compare_key (const TAO_Profile *other) const;
 
   /// Return a hash value for this object.
-  virtual CORBA::ULong hash (CORBA::ULong max
-                             ) = 0;
+  virtual CORBA::ULong hash (CORBA::ULong max) = 0;
   //@}
 
   //@@ TAO_PROFILE_SPL_PUBLIC_METHODS_ADD_HOOK
@@ -304,8 +298,7 @@ protected:
   virtual int decode_endpoints (void) = 0;
 
   /// Protocol specific implementation of parse_string ()
-  virtual void parse_string_i (const char *string
-                               ) = 0;
+  virtual void parse_string_i (const char *string) = 0;
   //@}
 
   /// To be used by inherited classes
@@ -429,8 +422,7 @@ public:
                        TAO_ORB_Core *orb_core);
 
   // = The TAO_Profile methods look above
-  virtual void parse_string (const char *string
-                            );
+  virtual void parse_string (const char *string);
   virtual char object_key_delimiter (void) const;
   virtual char* to_string (void);
   virtual int decode (TAO_InputCDR& cdr);
@@ -440,8 +432,7 @@ public:
   virtual TAO::ObjectKey *_key (void) const;
   virtual TAO_Endpoint *endpoint (void);
   virtual CORBA::ULong endpoint_count (void) const;
-  virtual CORBA::ULong hash (CORBA::ULong max
-                            );
+  virtual CORBA::ULong hash (CORBA::ULong max);
 
   virtual int decode_profile (TAO_InputCDR &cdr);
   virtual int decode_endpoints (void);
@@ -455,8 +446,7 @@ protected:
 private:
   virtual void create_profile_body (TAO_OutputCDR &encap) const;
 
-  virtual void parse_string_i (const char *string
-                              );
+  virtual void parse_string_i (const char *string);
 private:
   TAO_opaque body_;
 };

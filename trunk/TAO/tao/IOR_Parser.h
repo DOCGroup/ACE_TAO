@@ -51,7 +51,7 @@ public:
   /// The destructor
   virtual ~TAO_IOR_Parser (void);
 
-  /// Return 1 if @a ior_string starts with a prefix known to this IOR
+  /// Return true if @a ior_string starts with a prefix known to this IOR
   /// parser
   virtual bool match_prefix (const char *ior_string) const = 0;
 

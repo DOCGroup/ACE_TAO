@@ -1464,7 +1464,7 @@ TAO_GIOP_Message_Base::send_reply_exception (
   reply_params.svc_ctx_.length (0);
 
   // We are going to send some data
-  reply_params.argument_flag_ = 1;
+  reply_params.argument_flag_ = true;
 
   // Send back the service context we received.  (RTCORBA relies on
   // this).
@@ -1477,16 +1477,12 @@ TAO_GIOP_Message_Base::send_reply_exception (
       reply_params.reply_status_ = TAO_GIOP_SYSTEM_EXCEPTION;
     }
 
-  if (this->generate_exception_reply (output,
-                                      reply_params,
-                                      *x) == -1)
+  if (this->generate_exception_reply (output, reply_params, *x) == -1)
     return -1;
 
   output.more_fragments (false);
 
-  return transport->send_message (output,
-                                  0,
-                                  TAO_Transport::TAO_REPLY);
+  return transport->send_message (output, 0, TAO_Transport::TAO_REPLY);
 }
 
 void
@@ -1591,7 +1587,7 @@ TAO_GIOP_Message_Base::is_ready_for_bidirectional (TAO_OutputCDR &msg)
   // Get a parser for us
   TAO_GIOP_Message_Generator_Parser *parser = 0;
 
-  CORBA::Octet major, minor = 0;
+  CORBA::Octet major = 0, minor = 0;
 
   msg.get_version (major, minor);
 
