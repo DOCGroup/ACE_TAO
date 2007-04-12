@@ -153,8 +153,7 @@ TAO_DII_Asynch_Reply_Dispatcher::~TAO_DII_Asynch_Reply_Dispatcher (void)
 
 int
 TAO_DII_Asynch_Reply_Dispatcher::dispatch_reply (
-    TAO_Pluggable_Reply_Params &params
-  )
+    TAO_Pluggable_Reply_Params &params)
 {
   this->reply_status_ = params.reply_status_;
 
