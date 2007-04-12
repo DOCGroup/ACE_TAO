@@ -48,8 +48,6 @@ ACE_Test_Output::ACE_Test_Output (void)
 ACE_Test_Output::~ACE_Test_Output (void)
 {
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY) && !defined (ACE_PSOS)
-  ACE_OSTREAM_TYPE *log_msg_stream =  ACE_LOG_MSG->msg_ostream ();
-
   ACE_LOG_MSG->msg_ostream (&cerr, 0);
 #endif /* ! ACE_LACKS_IOSTREAM_TOTALLY && ! ACE_PSOS */
 
