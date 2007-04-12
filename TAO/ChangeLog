@@ -1,3 +1,14 @@
+Thu Apr 12 15:09:49 UTC 2007  Wallace Zhang  <zhang_w@ociweb.com>
+
+        * tao/DynamicInterface/DII_Arguments.h:
+
+          Changed the lazy_evaluation_ data member back to non-const.
+          Because the CORBA::NVList::_tao_incoming_cdr(TAO_InputCDR&, int, bool&)
+          will need to modify its value.
+          This reverted: Thu Apr 12 10:52:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+          * tao/DynamicInterface/DII_Arguments.h:
+            Const improvement
+
 Thu Apr 12 13:53:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/DynamicInterface/DII_Reply_Dispatcher.cpp:
