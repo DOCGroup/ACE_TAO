@@ -13,6 +13,7 @@ SUBDIRS = \
         Test_Filter \
         XML_Persistence \
         lib \
+        Bug_1385_Regression \
         Bug_2561_Regression \
         Structured_Multi_Filter \
         Structured_Filter \

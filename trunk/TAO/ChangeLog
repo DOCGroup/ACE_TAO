@@ -1,3 +1,21 @@
+Thu Apr 12 13:44:12 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * configure.ac:
+        * orbsvcs/tests/Notify/Bug_1385_Regression/Bug_1385_Regression.mpc:
+        * orbsvcs/tests/Notify/Bug_1385_Regression/Makefile.am:
+        * orbsvcs/tests/Notify/Bug_1385_Regression/Notify_Structured_Push_Consumer.h:
+        * orbsvcs/tests/Notify/Bug_1385_Regression/Notify_Structured_Push_Consumer.cpp:
+        * orbsvcs/tests/Notify/Bug_1385_Regression/Structured_Consumer.cpp:
+        * orbsvcs/tests/Notify/Bug_1385_Regression/Structured_Supplier.cpp:
+        * orbsvcs/tests/Notify/Bug_1385_Regression/go.idl:
+        * orbsvcs/tests/Notify/Bug_1385_Regression/notify.conf:
+        * orbsvcs/tests/Notify/Bug_1385_Regression/notify.conf.xml:
+        * orbsvcs/tests/Notify/Bug_1385_Regression/run_test.pl:
+        * orbsvcs/tests/Notify/Makefile.am:
+
+          Added a new test to demonstrate the subscription_change() does not
+          work properly (bug 1385).
+
 Thu Apr 12 12:00:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/POA/DSI/Database_i.{h,cpp}:
