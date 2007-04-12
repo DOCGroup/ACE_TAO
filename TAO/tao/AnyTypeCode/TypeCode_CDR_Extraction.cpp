@@ -1301,9 +1301,29 @@ namespace
                                                     member_array_type>
                 recursive_typecode_type;
 
+              // Extract name and number of fields.
+              CORBA::String_var name;
+              CORBA::ULong nfields;
+
+              if (!(indir_stream >> TAO_InputCDR::to_string(name.out (), 0)
+                 && indir_stream >> nfields))
+                return false;
+
+              member_array_type fields (nfields);
+
+              for (CORBA::ULong i = 0; i < nfields; ++i)
+                {
+                  if (!(indir_stream >> TAO_InputCDR::to_string(fields[i].name.out (), 0)
+                    && tc_demarshal (indir_stream,fields[i].type.out (), infos)))
+                    return false;
+                }
+
               ACE_NEW_RETURN (tc,
                               recursive_typecode_type (kind,
-                                                       id.in ()),
+                                                       id.in (),
+                              name.in (),
+                              fields,     // Will be copied.
+                              nfields),
                               false);
             }
         }

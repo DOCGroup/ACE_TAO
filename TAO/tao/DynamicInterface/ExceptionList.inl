@@ -18,7 +18,7 @@ ACE_INLINE
 CORBA::Boolean
 CORBA::is_nil (CORBA::ExceptionList_ptr x)
 {
-  return (CORBA::Boolean) (x == 0);
+  return x == 0;
 }
 
 // ===================================================================
@@ -40,7 +40,7 @@ ACE_INLINE
 CORBA::ExceptionList_ptr
 CORBA::ExceptionList::_nil (void)
 {
-  return (CORBA::ExceptionList_ptr)0;
+  return static_cast<CORBA::ExceptionList_ptr>(0);
 }
 
 ACE_INLINE
