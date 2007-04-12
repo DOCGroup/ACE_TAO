@@ -37,6 +37,21 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+template<>
+class ACE_Export ACE_Hash<CORBA::Object_var>
+{
+public:
+  unsigned long operator() (const CORBA::Object_var&) const;
+};
+
+template<>
+class ACE_Export ACE_Equal_To<CORBA::Object_var>
+{
+public:
+  int operator () (const CORBA::Object_var& lhs,
+		   const CORBA::Object_var& rhs) const;
+};
+
 namespace TAO
 {
   // would prefer SL2, but all the other SL2 stuff is in the Security namespace
@@ -97,7 +112,7 @@ namespace TAO
       // map itself will be sufficient, but we'll model this after the
       // Active Object map in the POA...so whatever way that goes, so, too,
       // will this.
-      typedef CORBA::String_var OBJECT_KEY;
+      typedef CORBA::Object_var OBJECT_KEY;
       // This is typedef'd because we might try to do something fancier
       // where, rather than having just a string as the key, we have a
       // structure and the structure precomputes some of the information
@@ -105,11 +120,19 @@ namespace TAO
       // comparison functors so that they use the precomputed information
       // rather than computing it each time.  For now, though, I want to
       // make this easy to get things working.
+#if 0
       typedef ACE_Hash_Map_Manager_Ex<OBJECT_KEY,  // stringified IOR
 				      CORBA::Boolean, // access_allowed?
 				      ACE_Hash<const char*>,
 				      ACE_Equal_To<const char*>,
 				      ACE_Null_Mutex> // not sure this is right
+#else
+      typedef ACE_Hash_Map_Manager_Ex<OBJECT_KEY, // Object_var
+				      CORBA::Boolean, // access_allowed?
+				      ACE_Hash<CORBA::Object_var>,
+				      ACE_Equal_To<CORBA::Object_var>,
+				      ACE_Null_Mutex>
+#endif
       ACCESS_MAP_TYPE;
     
       ACCESS_MAP_TYPE access_map_;
