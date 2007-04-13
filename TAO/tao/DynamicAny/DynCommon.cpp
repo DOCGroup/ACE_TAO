@@ -772,9 +772,10 @@ TAO_DynCommon::next (void)
       throw ::CORBA::OBJECT_NOT_EXIST ();
     }
 
+  CORBA::Long component_count = static_cast<CORBA::Long> (this->component_count_);
+
   if (this->has_components_ == 0
-      || this->current_position_ + 1 >= static_cast<CORBA::Long> (this->component_count_
-                                          ))
+      || this->current_position_ + 1 >= component_count)
     {
       this->current_position_ = -1;
       return false;

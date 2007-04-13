@@ -108,7 +108,9 @@ TAO_DynEnum_i::_narrow (CORBA::Object_ptr _tao_objref)
 char *
 TAO_DynEnum_i::get_as_string (void)
 {
-  const char *retval = this->type_.in ()->member_name (this->value_);
+  CORBA::TypeCode_var ct = TAO_DynAnyFactory::strip_alias (this->type_);
+
+  const char *retval = ct.in ()->member_name (this->value_);
 
   return CORBA::string_dup (retval);
 }
@@ -116,14 +118,16 @@ TAO_DynEnum_i::get_as_string (void)
 void
 TAO_DynEnum_i::set_as_string (const char *value_as_string)
 {
-  CORBA::ULong count = this->type_.in ()->member_count ();
+  CORBA::TypeCode_var ct = TAO_DynAnyFactory::strip_alias (this->type_);
+
+  CORBA::ULong count = ct.in ()->member_count ();
 
   CORBA::ULong i;
   const char *temp = 0;
 
   for (i = 0; i < count; ++i)
     {
-      temp = this->type_.in ()->member_name (i);
+      temp = ct.in ()->member_name (i);
 
       if (!ACE_OS::strcmp (value_as_string, temp))
         {
@@ -150,7 +154,8 @@ TAO_DynEnum_i::get_as_ulong (void)
 void
 TAO_DynEnum_i::set_as_ulong (CORBA::ULong value_as_ulong)
 {
-  CORBA::ULong const max = this->type_.in ()->member_count ();
+  CORBA::TypeCode_var ct = TAO_DynAnyFactory::strip_alias (this->type_);
+  CORBA::ULong const max = ct.in ()->member_count ();
 
   if (value_as_ulong < max)
     {

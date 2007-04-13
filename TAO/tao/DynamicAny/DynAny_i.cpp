@@ -53,6 +53,7 @@ TAO_DynAny_i::check_typecode (CORBA::TypeCode_ptr tc)
     case CORBA::tk_objref:
     case CORBA::tk_string:
     case CORBA::tk_wstring:
+    case CORBA::tk_longdouble:
       break;
     case CORBA::tk_sequence:
       if (tc == CORBA::_tc_BooleanSeq

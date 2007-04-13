@@ -45,13 +45,6 @@ Test_DynAny::run_test (void)
 
   try
     {
-      ACE_DEBUG ((LM_DEBUG,
-                 "\t*=*=*=*= %s =*=*=*=*\n",
-                 data.labels[8]));
-
-      ACE_DEBUG ((LM_DEBUG,
-                 "testing: constructor(Any)/insert/get\n"));
-
       CORBA::Object_var factory_obj =
         this->orb_->resolve_initial_references ("DynAnyFactory");
 
@@ -68,52 +61,119 @@ Test_DynAny::run_test (void)
       DynAnyAnalyzer analyzer (this->orb_.in (),
                                dynany_factory.in (),
                                debug_);
+      {
+        ACE_DEBUG ((LM_DEBUG,
+                  "\t*=*=*=*= %s =*=*=*=*\n",
+                  data.labels[8]));
 
-      CORBA::Any in1;
-      in1 <<= data.m_double2;
-      DynamicAny::DynAny_var fa1 =
-        dynany_factory->create_dyn_any (in1);
+        ACE_DEBUG ((LM_DEBUG,
+                  "testing: constructor(Any)/insert/get\n"));
 
-      fa1->insert_double (data.m_double1);
+        CORBA::Any in1;
+        in1 <<= data.m_double2;
+        DynamicAny::DynAny_var fa1 =
+          dynany_factory->create_dyn_any (in1);
 
-      CORBA::Double d_out =
-        fa1->get_double ();
+        fa1->insert_double (data.m_double1);
 
-      if (d_out == data.m_double1)
+        CORBA::Double d_out =
+          fa1->get_double ();
+
+        if (d_out == data.m_double1)
+          {
+            ACE_DEBUG ((LM_DEBUG,
+                      "++ OK ++\n"));
+          }
+        else
+          {
+            ++this->error_count_;
+          }
+
+        ACE_DEBUG ((LM_DEBUG,
+                  "testing: constructor(TypeCode)/from_any/to_any\n"));
+
+        d_out = data.m_double2;
+        DynamicAny::DynAny_var ftc1 =
+          dynany_factory->create_dyn_any_from_type_code (CORBA::_tc_double);
+        CORBA::Any in_any1;
+        in_any1 <<= data.m_double1;
+        ftc1->from_any (in_any1);
+        analyzer.analyze (ftc1.in());
+        CORBA::Any_var out_any1 = ftc1->to_any ();
+        out_any1 >>= d_out;
+
+        if (d_out == data.m_double1)
+          {
+            ACE_DEBUG ((LM_DEBUG,
+                      "++ OK ++\n"));
+          }
+        else
+          {
+            ++this->error_count_;
+          }
+
+        fa1->destroy ();
+        ftc1->destroy ();
+      }
+
+      {
+        ACE_DEBUG ((LM_DEBUG,
+          "\t*=*=*=*= %s =*=*=*=*\n",
+          data.labels[17]));
+
+        ACE_DEBUG ((LM_DEBUG,
+          "testing: constructor(Any)/insert/get\n"));
+
+        CORBA::Any in1;
+        in1 <<= data.m_longdouble2;
+        DynamicAny::DynAny_var fa1 =
+          dynany_factory->create_dyn_any (in1);
+
+        fa1->insert_longdouble (data.m_longdouble1);
+
+        CORBA::LongDouble d_out = fa1->get_longdouble ();
+
+        if (d_out == data.m_longdouble1)
+          {
+            ACE_DEBUG ((LM_DEBUG,
+              "++ OK ++\n"));
+          }
+        else
+          {
+            ++this->error_count_;
+          }
+
+        ACE_DEBUG ((LM_DEBUG,
+          "testing: constructor(TypeCode)/from_any/to_any\n"));
+
+        d_out = data.m_longdouble2;
+        DynamicAny::DynAny_var ftc1 =
+          dynany_factory->create_dyn_any_from_type_code (CORBA::_tc_longdouble);
+
+        CORBA::Any in_any1;
+        in_any1 <<= data.m_longdouble1;
+        ftc1->from_any (in_any1);
+
+        analyzer.analyze(ftc1.in());
+        
+        CORBA::Any_var out_any1 = ftc1->to_any ();
+
+        out_any1.in() >>= d_out;
+
+        if (d_out == data.m_longdouble1)
         {
           ACE_DEBUG ((LM_DEBUG,
-                     "++ OK ++\n"));
+            "++ OK ++\n"));
         }
-      else
+        else
         {
           ++this->error_count_;
         }
 
-      ACE_DEBUG ((LM_DEBUG,
-                 "testing: constructor(TypeCode)/from_any/to_any\n"));
+        fa1->destroy ();
+        ftc1->destroy ();
+      }
 
-      d_out = data.m_double2;
-      DynamicAny::DynAny_var ftc1 =
-        dynany_factory->create_dyn_any_from_type_code (CORBA::_tc_double);
-      CORBA::Any in_any1;
-      in_any1 <<= data.m_double1;
-      ftc1->from_any (in_any1);
-      analyzer.analyze (ftc1.in());
-      CORBA::Any_var out_any1 = ftc1->to_any ();
-      out_any1 >>= d_out;
-
-      if (d_out == data.m_double1)
-        {
-          ACE_DEBUG ((LM_DEBUG,
-                     "++ OK ++\n"));
-        }
-      else
-        {
-          ++this->error_count_;
-        }
-
-      fa1->destroy ();
-      ftc1->destroy ();
 
       ACE_DEBUG ((LM_DEBUG,
                  "\t*=*=*=*= %s =*=*=*=*\n",

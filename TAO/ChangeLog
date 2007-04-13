@@ -1,3 +1,43 @@
+Fri Apr 13 19:47:56 UTC 2007 Yan Dai  <dai_y@ociweb.com>
+
+          Fixed several bugs in DynamicAny (See bugzilla #2896).
+
+        * tao/DynamicAny/DynAny_i.cpp:
+        * tao/DynamicAny/DynAnyFactory.cpp:
+
+          Added DynamicAny support for longdouble type. 
+
+        * tao/DynamicAny/DynUnion_i.cpp:
+
+          Fixed bug in destroy() that does not check if the member is nil
+          to destroy.  This causes crash when union has no active
+          member. 
+
+        * tao/DynamicAny/DynEnum_i.cpp:
+
+          Fixed bug in
+          get_as_string/set_as_string/get_as_ulong/set_as_ulong that do
+          not strip the alias to find the member information. This causes
+          the problem when calling these functions for typedefed enums
+          encapsulated in structs.
+
+        * tao/DynamicAny/DynCommon.cpp:
+
+          Moved out ACE_static_cast from "if" statement in next() method
+          to avoid strange problem "coredump from signal 10" on 
+          sunos58_gcc3.2.1_d0o1 build.
+
+        * tests/DynAny_Test/da_tests.idl:
+        * tests/DynAny_Test/data.cpp:
+        * tests/DynAny_Test/data.h:
+        * tests/DynAny_Test/DynAny_Test.mpc:
+        * tests/DynAny_Test/test_dynany.cpp:
+        * tests/DynAny_Test/test_dynenum.cpp:
+        * tests/DynAny_Test/test_dynstruct.cpp:
+        * tests/DynAny_Test/test_dynunion.cpp:
+
+          Added test cases for above bug fixes.
+          
 Fri Apr 13 16:38:36 UTC 2007  Wallace Zhang  <zhang_w@ociweb.com>
 
         * tao/ORB_Core.cpp:
