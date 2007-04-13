@@ -150,6 +150,10 @@ TAO_Profile::encode (TAO_OutputCDR &stream) const
                        this->orb_core ()->orb_params ()->cdr_memcpy_tradeoff (),
                        TAO_DEF_GIOP_MAJOR,
                        TAO_DEF_GIOP_MINOR);
+  // Support limited oref ACE_OS::strcmp
+  (void) ACE_OS::memset (encap.current()->wr_ptr (),
+			 0,
+			 encap.current()->space ());
 
   // Create the profile body
   this->create_profile_body (encap);
