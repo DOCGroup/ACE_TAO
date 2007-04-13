@@ -350,6 +350,30 @@ Test_DynStruct::run_test (void)
       ftc1->destroy ();
 
       sm->destroy ();
+
+      ACE_DEBUG ((LM_DEBUG,
+                "++ OK ++\n"));
+
+      ACE_DEBUG ((LM_DEBUG,
+                 "testing: struct_with_long_double destroy\n"));
+
+      // Test fix for bug on destroy when struct contains long_double value.
+      DynAnyTests::test_struct_with_long_double l_long_double_in_struct;
+
+      CORBA::Any corba_long_double;
+      corba_long_double <<= l_long_double_in_struct;
+
+      DynamicAny::DynAny_var l_dynany = dynany_factory->create_dyn_any (corba_long_double);
+      try 
+      {
+        l_dynany->destroy ();
+        ACE_DEBUG ((LM_DEBUG,
+          "++ OK ++\n"));
+      }
+      catch (...)
+      {
+        ++this->error_count_;
+      }
     }
   catch (const CORBA::Exception& ex)
     {

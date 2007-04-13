@@ -780,9 +780,12 @@ TAO_DynUnion_i::destroy (void)
     {
       // Free the two components.
 
-      this->set_flag (this->member_.in (), 1);
+      if (! CORBA::is_nil (this->member_.in ()))
+        {
+          this->set_flag (this->member_.in (), 1);
 
-      this->member_->destroy ();
+          this->member_->destroy ();
+        }
 
       this->set_flag (this->discriminator_.in (), 1);
 

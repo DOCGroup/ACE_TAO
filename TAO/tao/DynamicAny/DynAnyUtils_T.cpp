@@ -138,6 +138,7 @@ namespace TAO
           case CORBA::tk_double:
           case CORBA::tk_longlong:
           case CORBA::tk_ulonglong:
+          case CORBA::tk_longdouble:
           case CORBA::tk_boolean:
           case CORBA::tk_char:
           case CORBA::tk_wchar:
