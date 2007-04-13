@@ -691,8 +691,28 @@ ImR_Locator_i::start_server (Server_Info& info, bool manual_start,
         ACE_DEBUG ((LM_DEBUG, "ImR: Unexpected exception while starting <%s>.\n", info.name.c_str ()));
       if (debug_ > 1)
         ex._tao_print_exception ("");
-      ainfo->reset ();
       info.reset ();
+
+      // Before we reset the activator info, let's see if it's still
+      // there then let's keep it around for a while.
+      bool dead_activator = false;
+      try
+        {
+          dead_activator = ainfo->activator->_non_existent ();
+        }
+      catch (const CORBA::Exception&)
+        {
+          dead_activator = true;
+        }
+
+      if (dead_activator)
+        {
+          // Activator is damaged - reset our info.
+          // Client's trying to restart a server on this host will
+          // subsequently be told "no activator found for host ..." or
+          // some such.
+          ainfo->reset ();
+        }
     }
   return 0; // This is not a corba call, so a zero should be ok
 }
