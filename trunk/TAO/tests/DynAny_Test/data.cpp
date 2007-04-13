@@ -36,6 +36,8 @@ Data::Data (CORBA::ORB_var orb)
     m_wchar1 (666),                             m_wchar2 (0),
     orb_ (orb)
 {
+    ACE_CDR_LONG_DOUBLE_ASSIGNMENT (m_longdouble1, 88888888888.8888); 
+    ACE_CDR_LONG_DOUBLE_ASSIGNMENT (m_longdouble2, 99999999999.9999); 
 
   try
     {
@@ -61,6 +63,9 @@ Data::Data (CORBA::ORB_var orb)
       labels[14] = "type any";
       labels[15] = "type objref";
       labels[16] = "type short sequence";
+      labels[17] = "type longdouble";
+      labels[18] = "type enum";
+      labels[19] = "typedef'd enum in struct";
 
 
       // Getting the RootPOA so we can generate object references.

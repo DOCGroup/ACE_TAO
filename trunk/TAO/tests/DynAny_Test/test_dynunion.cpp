@@ -303,6 +303,30 @@ Test_DynUnion::run_test (void)
 
       DynamicAny::DynAny_var da_union =
         dynany_factory->create_dyn_any (any_union);
+      ACE_DEBUG ((LM_DEBUG,
+                  "++ OK ++\n"));
+
+      ACE_DEBUG ((LM_DEBUG,
+                 "testing: union_no_active_member destroy\n"));
+          
+      // Test fix for bug on destroy when there is no active member in union.
+      DynAnyTests::test_union_no_active_member l_union_value_no_active_member;
+
+      CORBA::Any corba_union;
+      corba_union <<= l_union_value_no_active_member;
+      
+      DynamicAny::DynAny_var l_dynany = dynany_factory->create_dyn_any (corba_union);
+      try
+      {
+        l_dynany->destroy ();
+        ACE_DEBUG ((LM_DEBUG,
+                    "++ OK ++\n"));
+      }
+      catch (...)
+      {
+        ++this->error_count_;
+      }
+      
 
       // if we get here the create_dyn_any worked.
     }
