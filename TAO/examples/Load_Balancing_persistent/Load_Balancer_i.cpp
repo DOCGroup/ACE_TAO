@@ -59,10 +59,12 @@ Object_Group_Factory_i::make_round_robin (const char * id)
   else
     {
       void *hash_map = this->mem_pool_->malloc (sizeof (HASH_MAP));
-      ACE_NEW_THROW_EX (this->rr_groups_,
-                        (hash_map) HASH_MAP (this->mem_pool_),
-                        CORBA::NO_MEMORY ());
-
+      
+      if (hash_map == 0)
+        throw CORBA::NO_MEMORY ();
+      
+      this->rr_groups_ = new (hash_map) HASH_MAP (this->mem_pool_);
+      
       // Bind it in the mem pool with a name
       if (this->mem_pool_->bind (rr_name_bind,
                                  (void *)this->rr_groups_) != 0)
@@ -135,11 +137,12 @@ Object_Group_Factory_i::make_random (const char * id)
   else
     {
       void *hash_map = this->mem_pool_->malloc (sizeof (HASH_MAP));
-
-      ACE_NEW_THROW_EX (this->random_groups_,
-                        (hash_map) HASH_MAP (this->mem_pool_),
-                        CORBA::NO_MEMORY ());
-
+      
+      if (hash_map == 0)
+        throw CORBA::NO_MEMORY ();
+      
+      this->random_groups_ = new (hash_map) HASH_MAP (this->mem_pool_);
+      
       // Bind it in the mem pool with a name
       if (this->mem_pool_->bind (random_name_bind,
                                  (void *)this->random_groups_) != 0)
@@ -474,10 +477,12 @@ Object_Group_Factory_i::update_flags (int random)
         {
           void *value =
             this->mem_pool_->malloc (sizeof (CORBA::Short));
-          ACE_NEW_THROW_EX (this->flags_,
-                            (value) CORBA::Short (0),
-                            CORBA::NO_MEMORY ());
-
+          
+          if (value == 0)
+            throw CORBA::NO_MEMORY ();
+          
+          this->flags_ = new (value) CORBA::Short (0);
+          
           // Initialize the variable
           this->mem_pool_->bind (flags_name_bind,
                                  (void *)this->flags_);
@@ -617,10 +622,12 @@ Object_Group_i::bind (const Load_Balancer::Member & member)
       else
         {
           void *hash_map = this->allocator_->malloc (sizeof (HASH_MAP));
-          ACE_NEW_THROW_EX (this->members_,
-                            (hash_map) HASH_MAP (this->allocator_),
-                            CORBA::NO_MEMORY ());
-
+          
+          if (hash_map == 0)
+            throw CORBA::NO_MEMORY ();
+          
+          this->members_ = new (hash_map) HASH_MAP (this->allocator_);
+          
           // Bind it in the mem pool with a name
           if (this->allocator_->bind (id.c_str (),
                                       (void *)this->members_) != 0)
@@ -680,10 +687,12 @@ Object_Group_i::bind (const Load_Balancer::Member & member)
   else
     {
       void *dll_list = this->allocator_->malloc (sizeof (LIST));
-      ACE_NEW_THROW_EX (this->member_id_list_,
-                        (dll_list) LIST (this->allocator_),
-                        CORBA::NO_MEMORY ());
-
+      
+      if (dll_list == 0)
+        throw CORBA::NO_MEMORY ();
+      
+      this->member_id_list_ = new (dll_list) LIST (this->allocator_);
+      
       // Bind it in the mem pool with a name
       if (this->allocator_->bind (id.c_str (),
                                  (void *)this->member_id_list_) != 0)

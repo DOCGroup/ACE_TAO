@@ -1,3 +1,10 @@
+Fri Apr 13 04:56:08 UTC 2007  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * examples/Load_Balancing_persistent/Load_Balancer_i.cpp
+        
+          Switch to using naked new instead of macro for placement new
+          operations.  
+
 Thu Apr 12 19:11:31 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/orbsvcs/Notify/EventType.h:
