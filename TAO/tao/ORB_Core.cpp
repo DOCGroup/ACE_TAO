@@ -164,7 +164,7 @@ TAO_ORB_Core_Static_Resources::TAO_ORB_Core_Static_Resources (void)
     ifr_client_adapter_name_ ("IFR_Client_Adapter"),
     typecodefactory_adapter_name_ ("TypeCodeFactory_Adapter"),
     iorinterceptor_adapter_factory_name_ ("IORInterceptor_Adapter_Factory"),
-    valuetype_adapter_factory_name_ ("Valuetype_Adapter_Factory"),
+    valuetype_adapter_factory_name_ ("Concrete_Valuetype_Adapter_Factory"),
     poa_factory_name_ ("TAO_Object_Adapter_Factory"),
     poa_factory_directive_
       (ACE_TEXT_ALWAYS_CHAR
