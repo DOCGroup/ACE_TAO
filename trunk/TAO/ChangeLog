@@ -1,3 +1,9 @@
+Fri Apr 13 16:29:47 UTC 2007  Wallace Zhang  <zhang_w@ociweb.com>
+
+        * tao/ORB_Core.cpp:
+
+          Corrected the valuetype_adapter_factory_name_.
+
 Fri Apr 13 12:35:40 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
