@@ -187,28 +187,26 @@ Test_DynEnum::run_test (void)
         DynAnyTests::StructTypedefEnum l_struct_typedef_enum;
         l_struct_typedef_enum.field_1 = DynAnyTests::TE_ZEROTH;
         l_struct_typedef_enum.field_2 = DynAnyTests::TE_FIRST;
-        l_struct_typedef_enum.field_3 = DynAnyTests::TE_SECOND;       
+        l_struct_typedef_enum.field_3 = DynAnyTests::TE_SECOND;
         CORBA::Any l_any_struct_typedef_enum;
         l_any_struct_typedef_enum <<= l_struct_typedef_enum;
-   
-        DynamicAny::DynAny_var da 
-          = dynany_factory->create_dyn_any (l_any_struct_typedef_enum
-                                           ACE_ENV_ARG_PARAMETER);
-        DynamicAny::DynStruct_var ds =
-          DynamicAny::DynStruct::_narrow (da.in ()
-                                          ACE_ENV_ARG_PARAMETER);
-        DynamicAny::DynAny_var cc    
-          = ds->current_component(ACE_ENV_SINGLE_ARG_PARAMETER);
 
-        DynamicAny::FieldName_var fn 
-          = ds->current_member_name(ACE_ENV_SINGLE_ARG_PARAMETER);
+        DynamicAny::DynAny_var da
+          = dynany_factory->create_dyn_any (l_any_struct_typedef_enum);
+        DynamicAny::DynStruct_var ds =
+          DynamicAny::DynStruct::_narrow (da.in ());
+        DynamicAny::DynAny_var cc
+          = ds->current_component();
+
+        DynamicAny::FieldName_var fn
+          = ds->current_member_name();
 
         DynamicAny::DynEnum_var member1
-           = DynamicAny::DynEnum::_narrow(cc.in () ACE_ENV_ARG_PARAMETER);
+           = DynamicAny::DynEnum::_narrow(cc.in ());
 
-        member1->set_as_string ("TE_FOURTH" ACE_ENV_ARG_PARAMETER);
+        member1->set_as_string ("TE_FOURTH");
 
-        CORBA::ULong ul_out1 = member1->get_as_ulong (ACE_ENV_SINGLE_ARG_PARAMETER);
+        CORBA::ULong ul_out1 = member1->get_as_ulong ();
 
         if (ul_out1 == 4)
           {
@@ -223,10 +221,9 @@ Test_DynEnum::run_test (void)
         ACE_DEBUG ((LM_DEBUG,
           "testing: set_as_ulong/get_as_string\n"));
 
-        member1->set_as_ulong (3
-                          ACE_ENV_ARG_PARAMETER);
+        member1->set_as_ulong (3);
 
-        CORBA::String_var s = member1->get_as_string (ACE_ENV_SINGLE_ARG_PARAMETER);
+        CORBA::String_var s = member1->get_as_string ();
 
         if (ACE_OS::strcmp (s.in (), "TE_THIRD") == 0)
           {
