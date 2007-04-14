@@ -1,3 +1,9 @@
+Sat Apr 14 20:22:13 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tests/DynAny_Test/test_dynenum.cpp:
+
+          Removed old exception macros.
+
 Sat Apr 14 19:00:56 UTC 2007 Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Any/Recursive/Test.idl:
@@ -58,7 +64,7 @@ Fri Apr 13 16:38:36 UTC 2007  Wallace Zhang  <zhang_w@ociweb.com>
 
           Reverted my change immediately because I am not quite sure about
           the name convention/usage here, need more research:
-					Fri Apr 13 16:29:47 UTC 2007  Wallace Zhang  <zhang_w@ociweb.com>
+                                        Fri Apr 13 16:29:47 UTC 2007  Wallace Zhang  <zhang_w@ociweb.com>
 
 Fri Apr 13 16:29:47 UTC 2007  Wallace Zhang  <zhang_w@ociweb.com>
 
