@@ -1,3 +1,9 @@
+Sat Apr 14 19:00:56 UTC 2007 Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Any/Recursive/Test.idl:
+        * tests/Any/Recursive/client.cpp:
+          Removed regression for bug 2804, this has now its own test program
+
 Sat Apr 14 18:57:56 UTC 2007 Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_2804_Regression/*:
