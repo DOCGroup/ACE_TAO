@@ -176,32 +176,6 @@ module Test
     OctetSeq octet_seq_val;
   };
 
-  enum ValueSort3 {
-    DOUBLE_TYPE,
-    SYMBOL_TYPE,
-    SYMBOL_SEQ_TYPE
-  };
-
-  typedef sequence<string> StringSeq;
-
-  struct Symbol3;
-  typedef sequence<Symbol3> SymbolSeq3;
-
-  struct Symbol3 {
-    StringSeq scope;
-    string name;
-    SymbolSeq3 args;
-  };
-
-  union NonRecursiveUnionWithStringStruct3 switch (ValueSort3) {
-  case DOUBLE_TYPE:
-    double double_val;
-  case SYMBOL_TYPE:
-    Symbol3 symbol_val;
-  case SYMBOL_SEQ_TYPE:
-    SymbolSeq3 symbol_seq_val;
-  };
-
   // --------------------------
 
   enum ValueSort2 {
