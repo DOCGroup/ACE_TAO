@@ -132,53 +132,24 @@ TAO::Unknown_IDL_Type::_tao_decode (TAO_InputCDR &cdr)
   // space in the message block.
   size_t const size = end - begin;
 
-   if(this->type_->kind() != CORBA::tk_struct)
+  ACE_Message_Block new_mb (size + 2 * ACE_CDR::MAX_ALIGNMENT);
+
+  ACE_CDR::mb_align (&new_mb);
+  ptrdiff_t offset = ptrdiff_t (begin) % ACE_CDR::MAX_ALIGNMENT;
+
+  if (offset < 0)
     {
-      ACE_Message_Block new_mb (size + 2 * ACE_CDR::MAX_ALIGNMENT);
-
-      ACE_CDR::mb_align (&new_mb);
-      ptrdiff_t offset = ptrdiff_t (begin) % ACE_CDR::MAX_ALIGNMENT;
-
-      if (offset < 0)
-        {
-          offset += ACE_CDR::MAX_ALIGNMENT;
-        }
-
-      new_mb.rd_ptr (offset);
-      new_mb.wr_ptr (offset + size);
-
-      ACE_OS::memcpy (new_mb.rd_ptr (), begin, size);
-
-      this->cdr_.reset (&new_mb, cdr.byte_order ());
-      this->cdr_.char_translator (cdr.char_translator ());
-      this->cdr_.wchar_translator (cdr.wchar_translator ());
+      offset += ACE_CDR::MAX_ALIGNMENT;
     }
-  else
-    {
-      ACE_Message_Block *mb = (ACE_Message_Block *)cdr.start ();
 
-      size_t const size = end - mb->base();
+  new_mb.rd_ptr (offset);
+  new_mb.wr_ptr (offset + size);
 
-      ptrdiff_t offset = begin - mb->base();
+  ACE_OS::memcpy (new_mb.rd_ptr (), begin, size);
 
-      ACE_Message_Block new_mb (size + 2 * ACE_CDR::MAX_ALIGNMENT);
-
-      new_mb.wr_ptr(size + 2 * ACE_CDR::MAX_ALIGNMENT);
-
-      this->cdr_.reset (&new_mb, cdr.byte_order ());
-      this->cdr_.char_translator (cdr.char_translator ());
-      this->cdr_.wchar_translator (cdr.wchar_translator ());
-
-      ACE_Message_Block *mb_ = (ACE_Message_Block *)cdr_.start();
-
-      ptrdiff_t align_ofs = (ptrdiff_t(mb->base() - mb_->base())
-        %ACE_CDR::MAX_ALIGNMENT + ACE_CDR::MAX_ALIGNMENT) % ACE_CDR::MAX_ALIGNMENT;
-
-      ACE_OS::memcpy (mb_->base() + align_ofs, mb->base(), size);
-
-      mb_->rd_ptr(mb_->base() + offset + align_ofs);
-      mb_->wr_ptr(mb_->base() + size + align_ofs);
-    }
+  this->cdr_.reset (&new_mb, cdr.byte_order ());
+  this->cdr_.char_translator (cdr.char_translator ());
+  this->cdr_.wchar_translator (cdr.wchar_translator ());
 
   // Take over the GIOP version, the input cdr can have a different
   // version then our current GIOP version.
