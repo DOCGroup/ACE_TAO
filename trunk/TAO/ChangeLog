@@ -1,3 +1,12 @@
+Sun Apr 15 06:18:56 UTC 2007 Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/AMI/client.cpp:
+        * tests/AMI/AMI.mpc:
+        * tests/AMI/run_test.pl:
+        * tests/Bug_2805_Regression/*:
+          Moved test for bug 2805 to its own regression, now the AMI
+          test should succeed again, but 2805 is failing
+
 Sun Apr 15 06:01:56 UTC 2007 Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Any/Recursive/Test.idl:
