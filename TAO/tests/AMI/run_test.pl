@@ -30,10 +30,10 @@ $iorfile = PerlACE::LocalFile ("server.ior");
 unlink $iorfile;
 
 if (PerlACE::is_vxworks_test()) {
-    $SV = new PerlACE::ProcessVX ("server", "-ORBdebuglevel $debug_level -d -o server.ior");
+    $SV = new PerlACE::ProcessVX ("server", "-ORBdebuglevel $debug_level -o server.ior");
 }
 else {
-    $SV = new PerlACE::Process ("server", "-ORBdebuglevel $debug_level -d -o $iorfile");
+    $SV = new PerlACE::Process ("server", "-ORBdebuglevel $debug_level -o $iorfile");
 }
 
 $SV->Spawn ();
@@ -62,14 +62,9 @@ $client2 = $CL2->SpawnWaitKill (60);
 
 $server = $SV->WaitKill (10);
 
-$CL3 = new PerlACE::Process ("client",
-                            "-c -ORBdebuglevel $debug_level");
-
-$client3 = $CL3->SpawnWaitKill (60);
-
 unlink $iorfile;
 
-if ($server != 0 || $client != 0 || $client2 != 0 || $client3 != 0) {
+if ($server != 0 || $client != 0 || $client2 != 0) {
     exit 1;
 }
 

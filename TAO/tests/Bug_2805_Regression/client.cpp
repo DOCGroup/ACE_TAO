@@ -58,7 +58,6 @@ parse_args (int argc, char *argv[])
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s "
                            "-d "
-                           "-c"
                            "-k <ior> "
                            "-n <nthreads> "
                            "-i <niterations> "
@@ -195,9 +194,9 @@ main (int argc, char *argv[])
 
       A::AMI_Test_var server;
 
-      CORBA::Object_var object =
-        orb->string_to_object (ior);
-      server =  A::AMI_Test::_narrow (object.in ());
+      AMI_Test_i * servant =
+        new AMI_Test_i(orb.in(), in_number, in_str, true);
+      server = servant->_this();
 
       if (CORBA::is_nil (server.in ()))
         {
