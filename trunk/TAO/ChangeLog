@@ -1,3 +1,19 @@
+Sun Apr 15 18:38:56 UTC 2007 Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        Reverted the change below, it does breaks support for
+        recursive structs when TAO is the client. With this change the Recursive
+        Any should succeed again.
+
+        Thu Apr 12 10:52:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+        * tao/AnyTypeCode/Any_Unknown_IDL_Type.cpp:
+        * tao/AnyTypeCode/TypeCode_CDR_Extraction.cpp:
+          Added patches for bug 2678, thanks to Alexander Kornienko
+          <alexfh at gmail dot com> for creating the patch and the
+          starter test program for this bug. Thanks to
+          Dale Boan <boan at sedsystems dot ca> for creating the initial
+          report and Ben Mohlenhoff <Benjamin_A_Mohlenhoff at raytheon dot com>
+          for letting us know that the patched also worked for their setup.
+
 Sun Apr 15 06:18:56 UTC 2007 Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/AMI/client.cpp:
