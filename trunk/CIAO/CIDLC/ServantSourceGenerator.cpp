@@ -1104,14 +1104,14 @@ namespace
            << "{"
            << "_ciao_size = this->ciao_publishes_" << p.name ()
            << "_.size ();" << endl;
-           
+
         os << "ACE_NEW_THROW_EX ("
            << "tmp," << endl
            << STRS[COMP_CD] << " (_ciao_size)," << endl
            << "::CORBA::NO_MEMORY ());" << endl
            << "retval = tmp;"
            << "retval->length (_ciao_size);" << endl;
-           
+
         bool static_cfg = ctx.cl ().get_value ("static-config", false);
 
         if (! static_cfg)
@@ -1122,7 +1122,7 @@ namespace
              << "this->" << p.name () << "_lock_," << endl
              << "0);" << endl;
         }
-                   
+
         os << "for (" << uc_port_name << "_TABLE::const_iterator iter ="
            << endl
            << "  this->ciao_publishes_" << p.name () << "_.begin ();"
@@ -1130,30 +1130,30 @@ namespace
            << "iter != this->ciao_publishes_" << p.name () << "_.end ();"
            << endl
            << "++iter, ++_ciao_index)" << endl
-           << "{"      
+           << "{"
            << "if ( ::CORBA::is_nil (iter->second.in ()))"
            << "{"
            << "throw " << STRS[EXCP_IC] << " ();"
            << "}";
-           
+
         os << "::Components::ConsumerDescription *cd = 0;"
            << "ACE_NEW_THROW_EX ("
            << "cd," << endl
            << "OBV_Components::ConsumerDescription ()," << endl
            << "::CORBA::NO_MEMORY ());" << endl;
-           
+
         os << "::Components::ConsumerDescription_var safe = cd;"
            << "safe->name (\"\");"
            << "safe->type_id (\"\");"
            << "safe->consumer (iter->second.in ());"
            << "retval[_ciao_index] = safe;"
            << "}";
-           
+
         if (! static_cfg)
         {
           os << "}";
         }
-           
+
         os << "return retval._retn ();"
            << "}";
       }
@@ -4056,10 +4056,6 @@ namespace
          << "::CIAO::Session_Container *c," << endl
          << "const char *ins_name)" << endl
          << "{"
-         << "if (p == 0)" << endl
-         << "{"
-         << "return 0;" << endl
-         << "}"
          << t.scoped_name ().scope_name () << "::CCM_"
          << t.name () << "_var x =" << endl
          << t.scoped_name ().scope_name () << "::CCM_" << t.name ()
@@ -4068,9 +4064,11 @@ namespace
          << "{"
          << "return 0;" << endl
          << "}"
-         << "return new " << t.name () << "_Servant (x.in ()," << endl
-         << "ins_name," << endl
-         << "c);" << endl
+         << "::PortableServer::Servant retval = 0;"
+         << "ACE_NEW_RETURN(retval, " << endl
+         << t.name () << "_Servant (x.in (), ins_name, c), " << endl
+         << "0);" << endl
+         << "return retval;" << endl
          << "}";
     }
 
@@ -4284,3 +4282,4 @@ ServantSourceEmitter::generate_facets (TranslationUnit& u, Context& c)
 
   unit.traverse (u);
 }
+
