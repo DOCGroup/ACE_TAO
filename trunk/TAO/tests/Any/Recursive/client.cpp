@@ -183,12 +183,6 @@ nested_recursive_struct_test (CORBA::ORB_ptr /* orb */,
   the_any <<= foo;
 
   ::perform_invocation<Test::NestedRecursiveStruct> (hello, the_any);
-
-  Test::NestedRecursiveStruct5 foo5;
-
-  the_any <<= foo5;
-
-  ::perform_invocation<Test::NestedRecursiveStruct5> (hello, the_any);
 }
 
 

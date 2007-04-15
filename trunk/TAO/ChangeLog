@@ -1,3 +1,10 @@
+Sun Apr 15 06:01:56 UTC 2007 Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Any/Recursive/Test.idl:
+        * tests/Any/Recursive/client.cpp:
+        * tests/Bug_2844_Regression/*:
+          Moved regression for bug 2844 to its own file
+
 Sat Apr 14 20:22:13 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * tests/DynAny_Test/test_dynenum.cpp:
