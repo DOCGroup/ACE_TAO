@@ -114,7 +114,7 @@ public:
     {
       if (result == 0)
         {
-          ACE_ERROR((LM_ERROR, "ERROR: Callback method detected parameter corruption."));
+          ACE_ERROR((LM_ERROR, "ERROR: Callback method detected parameter corruption.\n"));
           parameter_corruption = 1;
         }
 
