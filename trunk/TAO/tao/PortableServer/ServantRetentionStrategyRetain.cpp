@@ -616,6 +616,12 @@ namespace TAO
           return system_id._retn ();
         }
 
+#if defined (CORBA_E_COMPACT) || defined (CORBA_E_MICRO)
+      // CORBA e does not allow implicit activation.
+      // At this point we can throw the WrongPolicy exception.
+      throw PortableServer::POA::WrongPolicy ();
+#endif /* CORBA_E_COMPACT || CORBA_E_MICRO */
+
       // If the POA has the IMPLICIT_ACTIVATION policy and either the POA
       // has the MULTIPLE_ID policy or the specified servant is not
       // active, the servant is activated using a POA-generated Object Id
