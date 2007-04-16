@@ -15,12 +15,13 @@ unlink $iorfile;
 
 if (PerlACE::is_vxworks_test()) {
     $SV = new PerlACE::ProcessVX ("server", "-o test.ior");
+    $T = new PerlACE::ProcessVX ("OctetSeq", "-n 32 -l 8192 -h 8192 -s 1 -q");
 }
 else {
     $SV = new PerlACE::Process ("server", "-o $iorfile");
+    $T = new PerlACE::Process ("OctetSeq", "-n 32 -l 8192 -h 8192 -s 1 -q");
 }
 $CL = new PerlACE::Process ("client", "-i 5000 -k file://$iorfile");
-$T = new PerlACE::Process ("OctetSeq", "-n 32 -l 8192 -h 8192 -s 1 -q");
 
 print STDERR "\n\n==== Octet sequence passing test\n";
 
