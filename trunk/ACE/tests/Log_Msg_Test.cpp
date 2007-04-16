@@ -393,10 +393,10 @@ test_ostream (void)
 
   ACE_FILE_Connector connector;
   ACE_FILE_IO file;
+  ACE_FILE_Addr file_addr (filename);
 
   // Open up the file.
-  if (connector.connect (file,
-                         ACE_FILE_Addr (filename)) == -1)
+  if (connector.connect (file, file_addr) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("connect failed for %p\n"),
@@ -404,10 +404,16 @@ test_ostream (void)
                         1);
     }
 
+#if !defined (VXWORKS) && !defined (ACE_HAS_PHARLAP)
+# define TEST_CAN_UNLINK_IN_ADVANCE
+#endif
+
+#if defined (TEST_CAN_UNLINK_IN_ADVANCE)
   // Unlink this file right away so that it is automatically removed
   // when the process exits.Ignore error returns in case this operation
   // is not supported.
   ACE_OS::unlink(filename);
+#endif
 
   ACE_FILE_Info info;
   if (file.get_info (info) == -1)
@@ -444,6 +450,15 @@ test_ostream (void)
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("%C"),
               buffer));
+
+#if !defined (TEST_CAN_UNLINK_IN_ADVANCE)
+  file.close ();
+  if (file.unlink () == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("unlink failed for %p\n"),
+                       file_addr.get_path_name ()),
+                       1);
+#endif
 
 #endif /* ACE_LACKS_IOSTREAM_TOTALLY */
 
