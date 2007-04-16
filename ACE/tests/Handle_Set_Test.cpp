@@ -109,16 +109,9 @@ test_boundaries (void)
        (handle = i1 ()) != ACE_INVALID_HANDLE;
        )
     {
-#if defined (ACE_PSOS_DIAB)
-      // Workaround for some compiler confusion with strings in
-      // assertions.
-      const int SET_IS_EMPTY_SO_SHOULD_NOT_SEE_THIS = 1;
-      ACE_ASSERT (0 == SET_IS_EMPTY_SO_SHOULD_NOT_SEE_THIS);
-#else /* ! defined (ACE_PSOS_DIAB) */
       ACE_ASSERT (0 ==
                   ACE_TEXT ("this shouldn't get called since ")
                   ACE_TEXT ("the set is empty!\n"));
-#endif /* defined (ACE_PSOS_DIAB) */
     }
 
   ACE_DEBUG ((LM_DEBUG,

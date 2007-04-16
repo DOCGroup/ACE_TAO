@@ -375,7 +375,7 @@ run_main (int argc, ACE_TCHAR *argv[])
 
 #if defined (ACE_HAS_THREADS)
   ACE_Thread_Manager::instance ()->wait ();
-#elif !defined (ACE_WIN32) && !defined (VXWORKS) && !defined (ACE_PSOS)
+#elif !defined (ACE_WIN32) && !defined (VXWORKS)
   for (i = 0; i < opt_nchildren; ++i)
     {
       pid_t pid = ACE_OS::wait();
