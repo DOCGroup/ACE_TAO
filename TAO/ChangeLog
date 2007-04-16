@@ -1,3 +1,8 @@
+Mon Apr 16 11:12:56 UTC 2007 Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/OBV/Simple/run_test.pl:
+          Corrected this script for VxWorks cross host testing
+
 Sun Apr 15 18:38:56 UTC 2007 Johnny Willemsen  <jwillemsen@remedy.nl>
 
         Reverted the change below, it does breaks support for

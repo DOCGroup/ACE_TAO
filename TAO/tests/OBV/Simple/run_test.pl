@@ -15,7 +15,7 @@ $iorfile = PerlACE::LocalFile ("obv.ior");
 unlink $iorfile;
 
 if (PerlACE::is_vxworks_test()) {
-    $SV = new PerlACE::ProcessVX ("server", "-o server.ior");
+    $SV = new PerlACE::ProcessVX ("server", "-o obv.ior");
 }
 else {
     $SV = new PerlACE::Process ("server", "-o $iorfile");
@@ -24,20 +24,20 @@ $CL = new PerlACE::Process ("client", "-f $iorfile");
 
 $SV->Spawn ();
 
-if (PerlACE::waitforfile_timed ($iorfile, 15) == -1) {
+if (PerlACE::waitforfile_timed ($iorfile, $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: timed out waiting for file <$iorfile>\n";
     $SV->Kill ();
     exit 1;
 }
 
-$client = $CL->SpawnWaitKill (60);
+$client = $CL->SpawnWaitKill (300);
 
 if ($client != 0) {
     print STDERR "ERROR: the client returned $client\n";
     $status = 1;
 }
 
-$server = $SV->TerminateWaitKill (5);
+$server = $SV->TerminateWaitKill (10);
 
 if ($server != 0) {
     print STDERR "ERROR: server returned $server\n";
