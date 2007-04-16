@@ -2,6 +2,8 @@ Mon Apr 16 11:47:56 UTC 2007 Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Collocation_Exception_Test/run_test.pl:
         * tests/CollocationLockup/run_test.pl:
+        * tests/GIOP_Fragments/PMG_With_Fragments/run_test.pl:
+        * tests/Permanent_Forward/run_test.pl:
           Corrected these scripts for VxWorks cross host testing
 
 Mon Apr 16 11:27:56 UTC 2007 Johnny Willemsen  <jwillemsen@remedy.nl>
