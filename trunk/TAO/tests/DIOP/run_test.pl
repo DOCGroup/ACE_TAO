@@ -16,7 +16,7 @@ $iorfile = PerlACE::LocalFile ($iorbase);
 
 if (PerlACE::is_vxworks_test()) {
   $TARGETHOSTNAME = $ENV{'ACE_RUN_VX_TGT_HOST'};
-  $SV = new PerlACE::Process ("server", "-ORBEndpoint diop://$TARGETHOSTNAME:88888 -o $iorbase -ORBdebuglevel $ORBdebuglevel");
+  $SV = new PerlACE::ProcessVX ("server", "-ORBEndpoint diop://$TARGETHOSTNAME:88888 -o $iorbase -ORBdebuglevel $ORBdebuglevel");
 }
 else {
   $SV = new PerlACE::Process ("server", "-ORBEndpoint diop://:88888 -o $iorfile -ORBdebuglevel $ORBdebuglevel");

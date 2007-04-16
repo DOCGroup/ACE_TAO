@@ -8,7 +8,8 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::Run_Test;
 
-$iorfile = PerlACE::LocalFile ("server_on_localhost_1192.ior");
+$iorbase = "server_on_localhost_1192.ior";
+$iorfile = PerlACE::LocalFile ($iorbase);
 $status = 0;
 
 ## Get the perl interpreter that invoked us and remove any
@@ -17,7 +18,12 @@ my($perl) = $^X;
 $perl =~ s/\.exe$//i;
 
 $SV = new PerlACE::Process ($perl, "fakeserver2.pl");
+if (PerlACE::is_vxworks_test()) {
+$CL = new PerlACE::ProcessVX ("client", " -k file://$iorbase -ORBdebuglevel 1 -ORBlogfile client.log");
+}
+else {
 $CL = new PerlACE::Process ("client", " -k file://$iorfile -ORBdebuglevel 1 -ORBlogfile client.log");
+}
 unlink "client.log";
 
 $SV->IgnoreExeSubDir(1);
