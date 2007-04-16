@@ -1,3 +1,12 @@
+Mon Apr 16 13:01:00 UTC 2007 Simon Massey  <sma@prismtech.com>
+
+        * ace/config-win32-msvc-7.h:
+        * ace/config-win32-msvc-8.h:
+        * ace/README:
+
+          Add the new #define ACE_HAS_HEADER_ALLOCATED_CLASS_STATIC_CONST_INT_STOREAGE
+          to the known offending platforms (Microsoft VC7 and VC8).
+
 Mon Apr 16 11:01:12 UTC 2007 Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Log_Msg_Test.cpp:
