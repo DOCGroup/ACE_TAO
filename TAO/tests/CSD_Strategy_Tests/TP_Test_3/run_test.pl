@@ -159,19 +159,21 @@ for ($i = 0; $i < $num_remote_clients; $i++)
   $CLS[$i]->Spawn();
 }
 
+my $timeout = 60;
 for ($i = 0; $i < $num_remote_clients; $i++)
 {
-  $client = $CLS[$i]->WaitKill(60);
+  $client = $CLS[$i]->WaitKill($timeout);
 
   if ($client != 0)
   {
     print STDERR "ERROR: client $i returned $client\n";
+    $timeout = 1;
     $status = 1;
   }
 }
 
 
-$server = $SV->WaitKill(60);
+$server = $SV->WaitKill($timeout);
 
 if ($server != 0) {
     print STDERR "ERROR: server returned $server\n";
