@@ -1,3 +1,18 @@
+Mon Apr 16 12:04:56 UTC 2007 Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/DIOP/run_test.pl:
+          Updated for VxWorks cross host testing
+
+        * tests/Persistent_ID/run_test.pl:
+          Use PerlACE::LocalFile
+
+        * tests/OctetSeq/run_test.pl:
+          Run the performance test on the target system when using
+          VxWorks cross host testing
+
+        * tests/Abstract_Interface/client.cpp:
+          No need to pass in an empty orb name
+
 Mon Apr 16 11:47:56 UTC 2007 Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Collocation_Exception_Test/run_test.pl:

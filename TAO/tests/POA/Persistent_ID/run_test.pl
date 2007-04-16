@@ -9,7 +9,7 @@ use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::Run_Test;
 
 $status = 0;
-$iorfile = "server.ior";
+$iorfile = PerlACE::LocalFile ("server.ior");
 
 unlink $iorfile;
 
