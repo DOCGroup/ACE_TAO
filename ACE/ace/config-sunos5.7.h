@@ -12,6 +12,13 @@
 
 #include "ace/config-sunos5.6.h"
 
+// This may be true for earlier Solaris versions, but I can only verify
+// it for Solaris 7 and later.
+#define ACE_HAS_VFWPRINTF
+#if defined (ACE_HAS_SHM_OPEN)
+# define ACE_SHM_OPEN_REQUIRES_ONE_SLASH
+#endif
+
 // Sun began distributing <sys/loadavg.h> with SunOS 5.7
 #define ACE_HAS_SYS_LOADAVG_H
 
