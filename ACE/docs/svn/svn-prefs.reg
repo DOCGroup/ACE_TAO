@@ -86,3 +86,4 @@ REGEDIT4
 "*.doxygen"="svn:eol-style=native;svn:keywords=Author Date Id Revision"
 "*.rc"="svn:eol-style=native;svn:keywords=Author Date Id Revision"
 "Change?og*"="svn:eol-style=native;svn:keywords=Author Date Id Revision"
+"README"="svn:eol-style=native;svn:keywords=Author Date Id Revision"
