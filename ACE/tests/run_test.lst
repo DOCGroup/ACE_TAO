@@ -54,7 +54,7 @@ DLL_Test: !Unicos !STATIC !KCC_Linux
 DLList_Test: !ACE_FOR_TAO
 Date_Time_Test: !ACE_FOR_TAO
 Dev_Poll_Reactor_Test: !nsk
-Dirent_Test
+Dirent_Test: !VxWorks_RTP
 Dynamic_Priority_Test
 Enum_Interfaces_Test: !LynxOS
 Env_Value_Test: !WinCE
