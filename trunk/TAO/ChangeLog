@@ -1,10 +1,17 @@
+Mon Apr 16 11:27:56 UTC 2007 Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_1693_Test/run_test.pl:
+        * tests/Sequence_Unit_Tests/run_test.pl:
+        * tests/Big_Twoways/run_test.pl:
+          Corrected these scripts for VxWorks cross host testing
+
 Mon Apr 16 11:22:32 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/tests/ImplRepo/Bug_689_Regression/Bug_689_Regression.mpc:
 
           Set IDL_Flags to empty in client and server.  The idl was already
           processed in the *idl project and leaving them in caused problems
-          with parallel builds. 
+          with parallel builds.
 
 Mon Apr 16 11:12:56 UTC 2007 Johnny Willemsen  <jwillemsen@remedy.nl>
 
