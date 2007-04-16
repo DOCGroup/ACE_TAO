@@ -11,14 +11,21 @@ use PerlACE::Run_Test;
 $ORBdebuglevel = 0;
 
 $status = 0;
-$iorfile = PerlACE::LocalFile ("test.ior");
+$iorbase = "test.ior";
+$iorfile = PerlACE::LocalFile ($iorbase);
 
-$SV = new PerlACE::Process ("server", "-ORBEndpoint diop://:88888 -o $iorfile -ORBdebuglevel $ORBdebuglevel");
+if (PerlACE::is_vxworks_test()) {
+  $TARGETHOSTNAME = $ENV{'ACE_RUN_VX_TGT_HOST'};
+  $SV = new PerlACE::Process ("server", "-ORBEndpoint diop://$TARGETHOSTNAME:88888 -o $iorbase -ORBdebuglevel $ORBdebuglevel");
+}
+else {
+  $SV = new PerlACE::Process ("server", "-ORBEndpoint diop://:88888 -o $iorfile -ORBdebuglevel $ORBdebuglevel");
+}
 $CL = new PerlACE::Process ("client", "-k file://$iorfile -t 10 -i 10 -ORBdebuglevel $ORBdebuglevel");
 
 $SV->Spawn ();
 
-if (PerlACE::waitforfile_timed ($iorfile, 10) == -1) {
+if (PerlACE::waitforfile_timed ($iorfile, $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: could not find file <$iorfile>\n";
     $SV->Kill (); 
     exit 1;
