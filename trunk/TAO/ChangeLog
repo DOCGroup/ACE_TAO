@@ -1,3 +1,12 @@
+Mon Apr 16 13:05:59 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tests/CSD_Strategy_Tests/TP_Test_3/run_test.pl:
+
+          If a client fails, start wrapping up the test instead of waiting a
+          minute for each client to finish.  Otherwise, it could take quite 
+          a long time for the test to finish if all the clients are timing 
+          out.                                                            
+
 Mon Apr 16 13:01:00 UTC 2007 Simon Massey  <sma@prismtech.com>
 
         * tao_idl/be/be_visitor_constant/constant_cs.cpp:
