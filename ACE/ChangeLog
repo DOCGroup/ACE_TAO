@@ -1,3 +1,14 @@
+Mon Apr 16 08:41:56 UTC 2007 Martin Corino  <mcorino@remedy.nl>
+
+        * tests/run_test.lst:
+        * bin/tao_orb_tests.lst:
+
+          (Temporary) exclusion of some tests which tend to cause too
+          much trouble (spontaneous system reboots) on OpenVMS IA64
+          for the moment. The cause seems to be some vulnerabilities in
+          the OpenVMS IA64 threading library and that will take time
+          to be resolved.
+
 Sun Apr 15 06:04:56 UTC 2007 Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/tao_orb_tests.lst:
