@@ -15,6 +15,7 @@
 #define SANET_TYPES_H_
 
 #include <string>
+#include <sstream>
 #include <set>
 #include <list>
 #include <map>
@@ -106,13 +107,87 @@ namespace SANet {
     /// NULL time (for unknown or unconstrained times).
   #define NULL_TIME -1
 
+  inline std::string to_string(int x)
+  {
+    std::ostringstream o;
+    if (!(o << x))
+      throw "to_string(int) error writing to ostringstream";
+    return o.str();
+  };
+
+  inline std::string to_string(long x)
+  {
+    std::ostringstream o;
+    if (!(o << x))
+      throw "to_string(long) error writing to ostringstream";
+    return o.str();
+  };
+
+  inline std::string to_string(unsigned long x)
+  {
+    std::ostringstream o;
+    if (!(o << x))
+      throw "to_string(unsigned long) error writing to ostringstream";
+    return o.str();
+  };
+
+  inline std::string to_string(double x)
+  {
+    std::ostringstream o;
+    if (!(o << x))
+      throw "to_string(double) error writing to ostringstream";
+    return o.str();
+  };
+
+  inline std::string to_string(float x)
+  {
+    std::ostringstream o;
+    if (!(o << x))
+      throw "to_string(float) error writing to ostringstream";
+    return o.str();
+  };
+
+  inline std::string to_string(CondKind x)
+  {
+    std::ostringstream o;
+    std::string x_str = "";
+
+    switch (x) {
+      case SA_POP::DATA :
+        x_str = "DATA";
+        break;
+      case SA_POP::ENVIRON :
+        x_str = "ENVIRON";
+        break;
+      case SA_POP::SYSTEM :
+        x_str = "SYSTEM";
+        break;
+      default :
+        x_str = "UNKNOWN";
+        break;
+    }
+    if (!(o << x_str))
+      throw "to_string(float) error writing to ostringstream";
+    return o.str();
+  };
+
+  inline SANet::CondKind to_kind(std::string x)
+  {
+    if (x == "DATA")
+      return SA_POP::DATA;
+    else if (x == "ENVIRON")
+      return SA_POP::ENVIRON;
+    else if (x == "SYSTEM")
+      return SA_POP::SYSTEM;
+    throw "to_kind() error unknown condition kind";
+  };
+
 };  /* SANet namespace */
 
 #endif /* SANET_STANDALONE not defined */
 
 
 #if defined (SANET_STANDALONE)
-
 namespace SANet {
 
   /// Type of a node id (tasks and conditions).
@@ -202,6 +277,80 @@ namespace SANet {
   /// Type of a set of task ids.
   typedef std::set<TaskID> TaskSet;
 
+  inline std::string to_string(int x)
+  {
+    std::ostringstream o;
+    if (!(o << x))
+      throw "to_string(int) error writing to ostringstream";
+    return o.str();
+  };
+
+  inline std::string to_string(long x)
+  {
+    std::ostringstream o;
+    if (!(o << x))
+      throw "to_string(long) error writing to ostringstream";
+    return o.str();
+  };
+
+  inline std::string to_string(unsigned long x)
+  {
+    std::ostringstream o;
+    if (!(o << x))
+      throw "to_string(unsigned long) error writing to ostringstream";
+    return o.str();
+  };
+
+  inline std::string to_string(double x)
+  {
+    std::ostringstream o;
+    if (!(o << x))
+      throw "to_string(double) error writing to ostringstream";
+    return o.str();
+  };
+
+  inline std::string to_string(float x)
+  {
+    std::ostringstream o;
+    if (!(o << x))
+      throw "to_string(float) error writing to ostringstream";
+    return o.str();
+  };
+
+  inline std::string to_string(CondKind x)
+  {
+    std::ostringstream o;
+    std::string x_str = "";
+
+    switch (x) {
+      case SANet::DATA :
+        x_str = "DATA";
+        break;
+      case SANet::ENVIRON :
+        x_str = "ENVIRON";
+        break;
+      case SANet::SYSTEM :
+        x_str = "SYSTEM";
+        break;
+      default :
+        x_str = "UNKNOWN";
+        break;
+    }
+    if (!(o << x_str))
+      throw "to_string(float) error writing to ostringstream";
+    return o.str();
+  };
+
+  inline SANet::CondKind to_kind(std::string x)
+  {
+    if (x == "DATA")
+      return SANet::DATA;
+    else if (x == "ENVIRON")
+      return SANet::ENVIRON;
+    else if (x == "SYSTEM")
+      return SANet::SYSTEM;
+    throw "to_kind() error unknown condition kind";
+  };
 };  /* SANet namespace */
 #endif /* SANET_STANDALONE */
 

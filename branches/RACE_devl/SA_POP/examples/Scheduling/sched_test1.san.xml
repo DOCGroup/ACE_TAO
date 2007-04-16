@@ -1,0 +1,142 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<SANet:network xmlns:SANet="http://www.vanderbilt.edu/SANet" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.vanderbilt.edu/SANet SANet_Network.xsd" xmlns="http://www.vanderbilt.edu/SANet">
+  <defaultAttenFactor />
+  <defaultTaskCost />
+  <defaultCondUtil />
+  <defaultCondProbTrue />
+  <linkThresh />
+  <taskNode>
+    <nodeID>2221</nodeID>
+    <name>A1</name>
+    <priorProb>1</priorProb>
+    <attenFactor />
+    <cost />
+  </taskNode>
+  <taskNode>
+    <nodeID>2222</nodeID>
+    <name>A2</name>
+    <priorProb>1</priorProb>
+    <attenFactor />
+    <cost />
+  </taskNode>
+  <taskNode>
+    <nodeID>2223</nodeID>
+    <name>A3</name>
+    <priorProb>0.4</priorProb>
+    <attenFactor />
+    <cost />
+  </taskNode>
+  <taskNode>
+    <nodeID>2224</nodeID>
+    <name>A4</name>
+    <priorProb>1</priorProb>
+    <attenFactor />
+    <cost />
+  </taskNode>
+  <taskNode>
+    <nodeID>2225</nodeID>
+    <name>A5</name>
+    <priorProb>0.4</priorProb>
+    <attenFactor />
+    <cost />
+  </taskNode>
+  <condNode>
+    <nodeID>1111</nodeID>
+    <name>C1</name>
+    <probTrue>0</probTrue>
+    <utility>0</utility>
+    <kind>ENVIRON</kind>
+    <attenFactor />
+  </condNode>
+  <condNode>
+    <nodeID>1112</nodeID>
+    <name>C2</name>
+    <probTrue>0</probTrue>
+    <utility>0</utility>
+    <kind>SYSTEM</kind>
+    <attenFactor />
+  </condNode>
+  <condNode>
+    <nodeID>1113</nodeID>
+    <name>C3</name>
+    <probTrue>0</probTrue>
+    <utility>0</utility>
+    <kind>SYSTEM</kind>
+    <attenFactor />
+  </condNode>
+  <condNode>
+    <nodeID>1114</nodeID>
+    <name>C4</name>
+    <probTrue>0</probTrue>
+    <utility>0</utility>
+    <kind>ENVIRON</kind>
+    <attenFactor />
+  </condNode>
+  <condNode>
+    <nodeID>1115</nodeID>
+    <name>C5</name>
+    <probTrue>0</probTrue>
+    <utility>10</utility>
+    <kind>ENVIRON</kind>
+    <attenFactor />
+  </condNode>
+  <precondLink>
+    <condID>1111</condID>
+    <taskID>2223</taskID>
+    <portID>Port1In</portID>
+    <trueProb>0.8</trueProb>
+    <falseProb>0</falseProb>
+  </precondLink>
+  <precondLink>
+    <condID>1112</condID>
+    <taskID>2223</taskID>
+    <portID>Port2In</portID>
+    <trueProb>0.5</trueProb>
+    <falseProb>0</falseProb>
+  </precondLink>
+  <precondLink>
+    <condID>1114</condID>
+    <taskID>2225</taskID>
+    <portID>Port3In</portID>
+    <trueProb>0.8</trueProb>
+    <falseProb>0</falseProb>
+  </precondLink>
+  <precondLink>
+    <condID>1113</condID>
+    <taskID>2225</taskID>
+    <portID>Port4In</portID>
+    <trueProb>0.5</trueProb>
+    <falseProb>0</falseProb>
+  </precondLink>
+  <effectLink>
+    <taskID>2221</taskID>
+    <condID>1111</condID>
+    <portID>Port1Out</portID>
+    <weight>1</weight>
+  </effectLink>
+  <effectLink>
+    <taskID>2222</taskID>
+    <condID>1112</condID>
+    <portID>Port2Out</portID>
+    <weight>1</weight>
+  </effectLink>
+  <effectLink>
+    <taskID>2223</taskID>
+    <condID>1113</condID>
+    <portID>Port3Out</portID>
+    <weight>1</weight>
+  </effectLink>
+  <effectLink>
+    <taskID>2224</taskID>
+    <condID>1114</condID>
+    <portID>Port4Out</portID>
+    <weight>1</weight>
+  </effectLink>
+  <effectLink>
+    <taskID>2225</taskID>
+    <condID>1115</condID>
+    <portID>Port5Out</portID>
+    <weight>1</weight>
+  </effectLink>
+</SANet:network>

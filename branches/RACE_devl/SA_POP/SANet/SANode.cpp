@@ -237,10 +237,6 @@ bool TaskNode::update (void)
       // divide from probability, otherwise add it to the probability map.
       if (prev_prob_iter != true_prob_.common.end ())
       {
-#if defined (SANET_DEBUG)
-          std::cout << std::endl << "DEBUG in TaskNode::update()... (" << ID_ << ") Duplicate common probability found:" << std::endl;
-          std::cout << "Probability from " << prev_prob_iter->first << " = " << prev_prob_iter->second << std::endl << std::endl;
-#endif /* SANET_DEBUG */
         true_prob_.probability = true_prob_.probability / 
           prev_prob_iter->second;
       } else {
@@ -325,10 +321,6 @@ bool TaskNode::update (void)
         // goal to the utility map.
         if (prev_util_iter != pos_util_.common.end ())
         {
-#if defined (SANET_DEBUG)
-            std::cout << std::endl << "DEBUG in TaskNode::update()... (" << ID_ << ") Duplicate utility from goal found:" << std::endl;
-            std::cout << "Utility from " << prev_util_iter->first << " = " << prev_util_iter->second << std::endl << std::endl;
-#endif /* SANET_DEBUG */
           if (prev_util_iter->second < util_iter->second) {
             pos_util_.utility -= prev_util_iter->second;
           } else {
@@ -380,10 +372,6 @@ bool TaskNode::update (void)
 
   // If a loop was detected, add current probability to common probabilities.
   if (is_loop) {
-#if defined (SANET_DEBUG)
-    if (DEBUG) {
-      std::cout << std::endl << "DEBUG in TaskNode::update()... (" << ID_ << ") Loop detected, adding this node to common probabilities" << std::endl << std::endl;
-#endif /* SANET_DEBUG */
     // Update common probabilities for true probability.
     ProbabilityMap::iterator prob_iter = true_prob_.common.find (ID_);
     if (prob_iter != true_prob_.common.end ()) {
@@ -426,6 +414,111 @@ Utility TaskNode::get_utility (int step)
   utility += pos_util_.utility + neg_util_.utility - cost_;
 
   return utility;
+};
+
+void TaskNode::print_xml (std::basic_ostream<char, std::char_traits<char> >&
+                          strm)
+{
+  strm << "  <taskNode>" << std::endl;
+
+  strm << "    <nodeID>" << SANet::to_string (this->ID_);
+  strm << "</nodeID>" << std::endl;
+
+  strm << "    <name>" << this->name_;
+  strm << "</name>" << std::endl;
+
+  strm << "    <priorProb>" << SANet::to_string (this->prior_prob_);
+  strm << "</priorProb>" << std::endl;
+
+  strm << "    <attenFactor>" << SANet::to_string (this->atten_factor_);
+  strm << "</attenFactor>" << std::endl;
+
+  strm << "    <cost>" << SANet::to_string (this->cost_);
+  strm << "</cost>" << std::endl;
+
+  strm << "  </taskNode>" << std::endl;
+};
+
+// Print XML representation of node's precondition links to stream.
+void TaskNode::print_precond_links_xml (std::basic_ostream<char, std::char_traits<char> >&
+                                       strm)
+{
+  // Print all precondition links.
+  for (NodeMap::iterator node_iter = pre_nodes_.begin ();
+    node_iter != pre_nodes_.end (); node_iter++)
+  {
+    strm << "  <precondLink>" << std::endl;
+
+    // Print precondition ID.
+    strm << "    <condID>";
+    strm << SANet::to_string (node_iter->first);
+    strm << "</condID>" << std::endl;
+
+    // Print task ID.
+    strm << "    <taskID>";
+    strm << SANet::to_string (this->ID_);
+    strm << "</taskID>" << std::endl;
+
+//****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP
+    // Print port ID.
+    strm << "    <portID>";
+    strm << "portID";
+    strm << "</portID>" << std::endl;
+//****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP
+
+    // Print conditional probability for true condition value.
+    strm << "    <trueProb>";
+    strm << SANet::to_string (pre_true_probs_.find (node_iter->first)->second);
+    strm << "</trueProb>" << std::endl;
+
+    // Print conditional probability for false condition value.
+    strm << "    <falseProb>";
+    strm << SANet::to_string (pre_false_probs_.find (node_iter->first)->second);
+    strm << "</falseProb>" << std::endl;
+
+    strm << "  </precondLink>" << std::endl;
+  }
+};
+
+// Print XML representation of node's effect links to stream.
+void TaskNode::print_effect_links_xml (std::basic_ostream<char, std::char_traits<char> >&
+                                      strm)
+{
+  // Print all effect links.
+  for (NodeMap::iterator node_iter = post_nodes_.begin ();
+    node_iter != post_nodes_.end (); node_iter++)
+  {
+    strm << "  <effectLink>" << std::endl;
+
+    // Print task ID.
+    strm << "    <taskID>";
+    strm << SANet::to_string (this->ID_);
+    strm << "</taskID>" << std::endl;
+
+    // Print effect condition ID.
+    strm << "    <condID>";
+    strm << SANet::to_string (node_iter->first);
+    strm << "</condID>" << std::endl;
+
+//****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP
+    // Print port ID.
+    strm << "    <portID>";
+    strm << "portID";
+    strm << "</portID>" << std::endl;
+//****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP
+
+    // Print link weight.
+    LinkMap::iterator cur_link_iter = post_links_.find (node_iter->first);
+    strm << "    <weight>";
+    if (cur_link_iter == post_links_.end ()) {
+      strm << "ERROR: weight not found";
+    } else {
+      strm << SANet::to_string (cur_link_iter->second);
+    }
+    strm << "</weight>" << std::endl;
+
+    strm << "  </effectLink>" << std::endl;
+  }
 };
 
 void TaskNode::print (std::basic_ostream<char, std::char_traits<char> >&
@@ -644,6 +737,32 @@ void CondNode::set_init_prob (Probability init_true_prob)
   this->prob_changed_ = true;
 };
 
+void CondNode::print_xml (std::basic_ostream<char, std::char_traits<char> >&
+                         strm)
+{
+  strm << "  <condNode>" << std::endl;
+
+  strm << "    <nodeID>" << SANet::to_string (this->ID_);
+  strm << "</nodeID>" << std::endl;
+
+  strm << "    <name>" << this->name_;
+  strm << "</name>" << std::endl;
+
+  strm << "    <probTrue>" << SANet::to_string (this->init_true_prob_);
+  strm << "</probTrue>" << std::endl;
+
+  strm << "    <utility>" << SANet::to_string (this->goal_util_);
+  strm << "</utility>" << std::endl;
+
+  strm << "    <kind>" << SANet::to_string (this->cond_kind_);
+  strm << "</kind>" << std::endl;
+
+  strm << "    <attenFactor>" << SANet::to_string (this->atten_factor_);
+  strm << "</attenFactor>" << std::endl;
+
+  strm << "  </condNode>" << std::endl;
+};
+
 void CondNode::print (std::basic_ostream<char, std::char_traits<char> >&
                          strm, bool verbose)
 {
@@ -851,10 +970,6 @@ bool CondNode::update (void)
         // goal to the utility map.
         if (prev_util_iter != pos_util_.common.end ())
         {
-#if defined (SANET_DEBUG)
-            std::cout << std::endl << "DEBUG in CondNode::update()... (" << ID_ << ") Duplicate utility from goal found:" << std::endl;
-            std::cout << "Utility from " << prev_util_iter->first << " = " << prev_util_iter->second << std::endl << std::endl;
-#endif /* SANET_DEBUG */
           if (prev_util_iter->second < util_iter->second) {
             pos_util_.utility -= prev_util_iter->second;
           } else {
@@ -1005,9 +1120,6 @@ bool CondNode::update (void)
 
   // If a loop was detected, add current probability to common probabilities.
   if (is_loop) {
-#if defined (SANET_DEBUG)
-      std::cout << std::endl << "DEBUG in CondNode::update()... (" << ID_ << ") Loop detected, adding this node to common probabilities" << std::endl << std::endl;
-#endif /* SANET_DEBUG */
     // Update common probabilities for true probability.
     prob_iter = true_prob_.common.find (ID_);
     if (prob_iter != true_prob_.common.end ()) {
@@ -1046,5 +1158,5 @@ void CondNode::add_post_link (TaskID ID, TaskNode *node, LinkWeight weight)
 CondKind CondNode::get_cond_kind()
 {
   return this->cond_kind_;
-}
+};
 

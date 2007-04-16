@@ -149,6 +149,13 @@ namespace SANet {
     virtual void print (std::basic_ostream<char, std::char_traits<char> >& strm
       = std::cout, bool verbose = false) = 0;
 
+    /// Print XML representation of node to stream.
+    /**
+     * @param strm  Output stream on which to print node XML representation.
+     */
+    virtual void print_xml (std::basic_ostream<char, std::char_traits<char> >& strm) = 0;
+
+
   protected:
     /// Unique ID of node (for identification within network).
     NodeID ID_;
@@ -229,6 +236,24 @@ namespace SANet {
      */
     virtual void print (std::basic_ostream<char, std::char_traits<char> >& strm
       = std::cout, bool verbose = false);
+
+    /// Print XML representation of node to stream.
+    /**
+     * @param strm  Output stream on which to print node XML representation.
+     */
+    virtual void print_xml (std::basic_ostream<char, std::char_traits<char> >& strm);
+
+    /// Print XML representation of node's precondition links to stream.
+    /**
+     * @param strm  Output stream on which to print link XML representation.
+     */
+    virtual void print_precond_links_xml (std::basic_ostream<char, std::char_traits<char> >& strm);
+
+    /// Print XML representation of node's effect links to stream.
+    /**
+     * @param strm  Output stream on which to print link XML representation.
+     */
+    virtual void print_effect_links_xml (std::basic_ostream<char, std::char_traits<char> >& strm);
 
     /// Update node to next step.
     /**
@@ -342,6 +367,12 @@ namespace SANet {
      */
     virtual void print (std::basic_ostream<char, std::char_traits<char> >& strm
       = std::cout, bool verbose = false);
+
+    /// Print XML representation of node to stream.
+    /**
+     * @param strm  Output stream on which to print node XML representation.
+     */
+    virtual void print_xml (std::basic_ostream<char, std::char_traits<char> >& strm);
 
     /// Update node to next step.
     /**

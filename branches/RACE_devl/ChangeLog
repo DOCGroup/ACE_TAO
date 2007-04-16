@@ -1,10 +1,158 @@
+Mon Apr 16 23:33:09 UTC 2007  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
+
+        * SA_POP/Component:
+        * SA_POP/Component/Planning_exec.h:
+        * SA_POP/Component/Planning_exec.cpp:
+        * SA_POP/Component/SA_POP_Component.cidl:
+        * SA_POP/Component/SA_POP_Component.idl:
+        * SA_POP/Component/SA_POP_Component.mpc:
+        * SA_POP/Component/SA_POP_ComponentE.idl:
+        * SA_POP/Component/SA_POP_Component_exec.h:
+        * SA_POP/Component/SA_POP_Component_exec.cpp:
+        * SA_POP/Component/SA_POP_Component_exec_export.h:
+        * SA_POP/Component/SA_POP_Component_stub_export.h:
+        * SA_POP/Component/SA_POP_Component_svnt_export.h:
+
+        Added files for SA-POP component.
+
+
+        * SA_POP/SANet/SANet.h:
+        * SA_POP/SANet/SANet.cpp:
+        * SA_POP/SANet/SANetFileIn.h:
+        * SA_POP/SANet/SANetFileIn.cpp:
+        * SA_POP/SANet/SANet_Standalone.mpc:
+        * SA_POP/SANet/SANet_Types.h:
+        * SA_POP/SANet/SANet_UI.cpp:
+        * SA_POP/SANet/SANode.h:
+        * SA_POP/SANet/SANode.cpp:
+        * SA_POP/SANet/readme.txt:
+
+        Revised SANet to also allow standalone operation.
+
+
+        * SA_POP/SA_POP.mpc:
+        * SA_POP/SA_POP_for_RACE.mpc:
+        * SA_POP/SA_POP_Types.h:
+        * SA_POP/SANet_Network.xsd:
+        * SA_POP/Task_Map.xsd:
+        * SA_POP/Standalone:
+        * SA_POP/Standalone/SA_POP_Demo.cpp:
+        * SA_POP/Standalone/SA_POP_Demo.mpc:
+        * SA_POP/Standalone/UserInput.h:
+        * SA_POP/Standalone/UserInput.cpp:
+        * SA_POP/Standalone/readme.txt:
+
+        Revised SA-POP to allow operation with RACE or standalone.
+
+
+        * SA_POP/Standalone/XML_Utils:
+        * SA_POP/Standalone/XML_Utils/Utils:
+        * SA_POP/Standalone/XML_Utils/Utils/CIAO_XML_Utils_Export.h:
+        * SA_POP/Standalone/XML_Utils/Utils/Exceptions.h:
+        * SA_POP/Standalone/XML_Utils/Utils/Functors.h:
+        * SA_POP/Standalone/XML_Utils/Utils/Utils.mpc.old:
+        * SA_POP/Standalone/XML_Utils/Utils/XML_Error_Handler.h:
+        * SA_POP/Standalone/XML_Utils/Utils/XML_Error_Handler.cpp:
+        * SA_POP/Standalone/XML_Utils/Utils/XML_Helper.h:
+        * SA_POP/Standalone/XML_Utils/Utils/XML_Helper.cpp:
+        * SA_POP/Standalone/XML_Utils/Utils/XML_Schema_Resolver.h:
+        * SA_POP/Standalone/XML_Utils/Utils/XML_Schema_Resolver.cpp:
+        * SA_POP/Standalone/XML_Utils/Utils/XercesString.h:
+        * SA_POP/Standalone/XML_Utils/Utils/XercesString.cpp:
+        * SA_POP/Standalone/XML_Utils/XMLSchema:
+        * SA_POP/Standalone/XML_Utils/XMLSchema/Traversal.hpp:
+        * SA_POP/Standalone/XML_Utils/XMLSchema/Traversal.ipp:
+        * SA_POP/Standalone/XML_Utils/XMLSchema/Traversal.tpp:
+        * SA_POP/Standalone/XML_Utils/XMLSchema/TypeInfo.hpp:
+        * SA_POP/Standalone/XML_Utils/XMLSchema/TypeInfo.ipp:
+        * SA_POP/Standalone/XML_Utils/XMLSchema/TypeInfo.tpp:
+        * SA_POP/Standalone/XML_Utils/XMLSchema/Types.hpp:
+        * SA_POP/Standalone/XML_Utils/XMLSchema/Types.ipp:
+        * SA_POP/Standalone/XML_Utils/XMLSchema/Types.tpp:
+        * SA_POP/Standalone/XML_Utils/XMLSchema/Writer.hpp:
+        * SA_POP/Standalone/XML_Utils/XMLSchema/Writer.ipp:
+        * SA_POP/Standalone/XML_Utils/XMLSchema/Writer.tpp:
+        * SA_POP/Standalone/XML_Utils/XSCRT:
+        * SA_POP/Standalone/XML_Utils/XSCRT/Elements.hpp:
+        * SA_POP/Standalone/XML_Utils/XSCRT/Elements.ipp:
+        * SA_POP/Standalone/XML_Utils/XSCRT/Elements.tpp:
+        * SA_POP/Standalone/XML_Utils/XSCRT/ExtendedTypeInfo.hpp:
+        * SA_POP/Standalone/XML_Utils/XSCRT/ExtendedTypeInfo.ipp:
+        * SA_POP/Standalone/XML_Utils/XSCRT/Parser.hpp:
+        * SA_POP/Standalone/XML_Utils/XSCRT/Parser.ipp:
+        * SA_POP/Standalone/XML_Utils/XSCRT/Parser.tpp:
+        * SA_POP/Standalone/XML_Utils/XSCRT/Traversal.hpp:
+        * SA_POP/Standalone/XML_Utils/XSCRT/Traversal.ipp:
+        * SA_POP/Standalone/XML_Utils/XSCRT/Traversal.tpp:
+        * SA_POP/Standalone/XML_Utils/XSCRT/Writer.hpp:
+        * SA_POP/Standalone/XML_Utils/XSCRT/Writer.ipp:
+        * SA_POP/Standalone/XML_Utils/XSCRT/Writer.tpp:
+        * SA_POP/Standalone/XML_Utils/XSCRT/XML.hpp:
+        * SA_POP/Standalone/XML_Utils/XSCRT/XML.ipp:
+        * SA_POP/Standalone/XML_Utils/XSCRT/XML.tpp:
+        * SA_POP/Standalone/XML_Utils/XSCRT/XMLSchema.hpp:
+
+        Added a slightly modified copy of CIAO Config Handlers XML utilities for SA-POP standalone.
+
+
+        * SA_POP/examples:
+        * SA_POP/examples/Scheduling:
+        * SA_POP/examples/Scheduling/sched_main_test.san.xml:
+        * SA_POP/examples/Scheduling/sched_main_test.tm.xml:
+        * SA_POP/examples/Scheduling/sched_main_test1.san.xml:
+        * SA_POP/examples/Scheduling/sched_test1.san.xml:
+        * SA_POP/examples/Scheduling/sched_test1.tm.xml:
+        * SA_POP/examples/Scheduling/sched_test2.san.xml:
+        * SA_POP/examples/Scheduling/sched_test2.tm.xml:
+        * SA_POP/examples/Scheduling/sched_test4.san.xml:
+        * SA_POP/examples/Scheduling/sched_test4.tm.xml:
+        * SA_POP/examples/Scheduling/sched_test5.san.xml:
+        * SA_POP/examples/Scheduling/sched_test5.tm.xml:
+        * SA_POP/examples/Simple:
+        * SA_POP/examples/Simple/simple.san.xml:
+        * SA_POP/examples/Simple/simple.tm.xml:
+        * SA_POP/examples/Space:
+        * SA_POP/examples/Space/SPACE.san.xml:
+        * SA_POP/examples/Space/SPACE.tm.xml:
+        * SA_POP/examples/Space/SPACE_Goal1.san.xml:
+        * SA_POP/examples/Space/SPACE_Goal2.san.xml:
+
+        Added some SA-POP domain examples (task networks and task maps).
+
+
+        * SA_POP/experiments:
+        * SA_POP/experiments/EU_Test:
+        * SA_POP/experiments/EU_Test/EU_Test.mpc:
+        * SA_POP/experiments/EU_Test/EU_Test.cpp:
+        * SA_POP/experiments/EU_Test/Histogram.h:
+        * SA_POP/experiments/EU_Test/RandomGenerator.h:
+        * SA_POP/experiments/EU_Test/RandomGenerator.cpp:
+
+        Added skeleton of Expected Utility experiment.
+
+
+        * SA_POP/server/Driver.mpc:
+
+        Revised Driver for current RACE configuration (but will not compile until Interactive_Input_Adapters is updated).
+
+
+        * descriptors/RACE.cdp:
+
+        Revised RACE deployment plan to include SA-POP.
+
+
+        * descriptors/run_RACE.pl:
+
+        Revised run_RACE script with correct locations of DAnCE executables.
+
+
 Mon Apr  9 22:36:12 UTC 2007  Nishanth Shankaran  <nshankar@nospam.com>
 
         * Data_Base/Data_Base.mpc:
         * Input_Adapters/SA_POP_Input_Adapter/SA_POP_Input_Adapter.mpc:
-        * Output_Adapters/DAnCE_Output_Adapter/DAnCE_Output_Adapter.mpc: 
-	
-	Fixed linking errors on windows.
+        * Output_Adapters/DAnCE_Output_Adapter/DAnCE_Output_Adapter.mpc:
+
+        Fixed linking errors on windows.
 
 Thu Apr  5 20:38:24 UTC 2007  Nishanth Shankaran  <nshankar@nospam.com>
 

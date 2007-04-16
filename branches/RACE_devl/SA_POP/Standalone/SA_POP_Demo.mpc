@@ -1,0 +1,30 @@
+project(SA_POP_Demo) : xerces, aceexe {
+  exename = SA_POP_Demo
+
+  after += SA_POP
+
+  includes += $(SAPOP_ROOT) \
+              $(SAPOP_ROOT)/Standalone/XML_Utils
+
+  libs += SA_POP
+
+  dynamicflags = CIAO_XML_UTILS_BUILD_DLL
+
+  macros = SA_POP_HAS_ACE
+
+  Source_Files {
+    SA_POP_Demo.cpp
+    UserInput.cpp
+  }
+
+  Inline_Files {
+  }
+
+  Header_Files {
+    UserInput.h
+  }
+
+  Documentation_Files {
+    readme.txt
+  }
+}

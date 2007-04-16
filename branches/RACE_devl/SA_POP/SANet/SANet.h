@@ -135,6 +135,12 @@ namespace SANet {
     virtual void print (std::basic_ostream<char, std::char_traits<char> >& strm
       = std::cout, bool verbose = false);
 
+    /// Print XML network representation to stream.
+    /**
+     * @param strm  Output stream on which to print network representation.
+     */
+    virtual void print_xml (std::basic_ostream<char, std::char_traits<char> >& strm);
+
     /// Print links and ports.
     /**
      * @param strm  Output stream on which to print network representation.
