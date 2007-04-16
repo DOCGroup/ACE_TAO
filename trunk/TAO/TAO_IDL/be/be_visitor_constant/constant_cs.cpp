@@ -41,55 +41,66 @@ be_visitor_constant_cs::~be_visitor_constant_cs (void)
 int
 be_visitor_constant_cs::visit_constant (be_constant *node)
 {
-
   if (node->cli_stub_gen ()
-      || node->imported ())
+      || node->imported ()
+      || !node->is_nested ())
     {
       return 0;
     }
 
-  AST_Expression::ExprType etype = node->et ();
   AST_Decl::NodeType snt = node->defined_in ()->scope_node_type ();
+  bool in_class = (snt != AST_Decl::NT_root 
+                   && snt != AST_Decl::NT_module);
+  if (be_global->gen_inline_constants () && !in_class)
+    {
+      // No storeage is required in the source file for these
+      return 0;
+    }
 
-  // If this is true, can't generate inline constants.
-  bool forbidden_in_class = (snt != AST_Decl::NT_root
-                             && snt != AST_Decl::NT_module
+  AST_Expression::ExprType etype = node->et ();
+  bool forbidden_in_class = (in_class
                              && (etype == AST_Expression::EV_string
                                  || etype == AST_Expression::EV_wstring
                                  || etype == AST_Expression::EV_float
                                  || etype == AST_Expression::EV_double
                                  || etype == AST_Expression::EV_longdouble));
 
-  if (!node->is_nested ()
-      || (be_global->gen_inline_constants () && !forbidden_in_class))
-    {
-      return 0;
-    }
-
   TAO_OutStream *os = this->ctx_->stream ();
 
-  if (node->is_nested ())
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__;
+
+  *os << be_nl << be_nl;
+  if (be_global->gen_inline_constants () && !forbidden_in_class)
+    {
+      // Some compilers (especially Microsoft) always define storeage
+      // when the initialiser is given, therefore the header has already
+      // done this (which is non-C++ complient by the way).
+      *os << "#ifndef ACE_HAS_HEADER_ALLOCATED_CLASS_STATIC_CONST_INT_STOREAGE" << be_nl << "  ";
+    }
+  *os << "const ";
+  
+  if (node->et () == AST_Expression::EV_enum)
+    {
+      *os << node->enum_full_name ();
+    }
+  else
+    {
+      *os << node->exprtype_to_string ();
+    }
+
+  *os << " " << node->name ();
+  if (!be_global->gen_inline_constants () || forbidden_in_class)
     {
       // For those constants not defined in the outermost scope,
       // or in a module, they get assigned to their values in the source file.
-      *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-          << "// " << __FILE__ << ":" << __LINE__;
+      *os << " = " << node->constant_value ();
+    }
+  *os << ";";
 
-      *os << be_nl << be_nl
-          << "const ";
-
-      if (node->et () == AST_Expression::EV_enum)
-        {
-          *os << node->enum_full_name ();
-        }
-      else
-        {
-          *os << node->exprtype_to_string ();
-        }
-
-      *os << " "
-          << node->name () << " = " << node->constant_value ()
-          << ";";
+  if (be_global->gen_inline_constants () && !forbidden_in_class)
+    {
+      *os << be_nl << "#endif // ifndef ACE_HAS_HEADER_ALLOCATED_CLASS_STATIC_CONST_INT_STOREAGE";
     }
 
   node->cli_stub_gen (true);
