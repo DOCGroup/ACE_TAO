@@ -3,6 +3,13 @@ Mon Apr 16 23:00:16 UTC 2007  Steve Huston  <shuston@riverace.com>
         * ace/Timeprobe.h: Add #include "ace/config-lite.h" to pick up the
           config settings needed to do the right thing.
 
+        * tests/Message_Block_Test.cpp: The text queued in the test's blocks
+          are ACE_TCHAR, so don't try to change them into ACE_TCHAR for
+          passing to ACE_OS::atoi() - just cast the char* to ACE_TCHAR*.
+          Also, replaced ACE_ASSERTs with if/ACE_ERROR to allow the stuff to
+          run on Release builds and not wipe out single-process systems on
+          errors.
+
 Mon Apr 16 17:56:42 UTC 2007  Adam Mitz  <mitza@ociweb.com>
 
         * bin/generate_compile_stats.sh:
