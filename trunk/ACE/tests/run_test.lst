@@ -80,7 +80,7 @@ MEM_Stream_Test: !DISABLE_ToFix_LynxOS_PPC !DISABLE_ToFix_LynxOS_x86 !VxWorks !n
 MM_Shared_Memory_Test: !Unicos !VxWorks !nsk !ACE_FOR_TAO
 MT_Reactor_Timer_Test: !DISABLE_ToFix_LynxOS_PPC !DISABLE_ToFix_LynxOS_x86
 MT_Reactor_Upcall_Test: !DISABLE_ToFix_LynxOS_PPC !nsk
-MT_Reference_Counted_Event_Handler_Test: !DISABLE_ToFix_LynxOS_PPC !DISABLE_ToFix_LynxOS_x86
+MT_Reference_Counted_Event_Handler_Test: !DISABLE_ToFix_LynxOS_PPC !DISABLE_ToFix_LynxOS_x86 !OpenVMS_IA64Crash
 MT_Reference_Counted_Notify_Test: !DISABLE_ToFix_LynxOS_PPC
 MT_SOCK_Test: !DISABLE_ToFix_LynxOS_PPC !DISABLE_ToFix_LynxOS_x86
 Malloc_Test: !VxWorks !LynxOS !ACE_FOR_TAO !PHARLAP
