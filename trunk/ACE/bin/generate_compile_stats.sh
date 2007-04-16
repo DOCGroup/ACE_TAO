@@ -28,13 +28,13 @@
 ###############################################################################
 usage ()
 {
-  echo "Usage: `basename $0` [--base=<dir>] [--title=<name>] <input_file>"
+  echo "Usage: `basename $0` [--base=<dir>] [--name=<name>] <input_file>"
   echo "       <destination_directory> [target_file] [Footprint|Compilation]"
   echo "       [<date>] [<fudge_factor>]"
   echo ""
   echo "--base       This option can be used to set the base root directory to"
   echo "             something other than the default \$ACE_ROOT."
-  echo "--title      This option can be used to set the software title to something"
+  echo "--name       This option can be used to set the software title to something"
   echo "             other than the default ACE+TAO+CIAO."
   echo "input_file   This is the compilation log file."
   echo "destination_directory This designates the location of the generated html."
@@ -777,7 +777,7 @@ create_index_page ()
 
   echo '), and we use GCC '
 
-  /usr/bin/gcc -dumpversion > .metrics/gccversion.txt 2>&1
+  gcc -dumpversion > .metrics/gccversion.txt 2>&1
   cat .metrics/gccversion.txt
 
   echo ' to compile '$BASE_TITLE'. </P>'
@@ -822,7 +822,7 @@ create_index_page ()
   echo '</PRE></TD></TR><TR><TD>Compiler Version</TD><TD>gcc -v</TD></TR>'
   echo '<TR><TD colspan="2">'
 
-  /usr/bin/gcc -v > .metrics/gcc.txt 2>&1
+  gcc -v > .metrics/gcc.txt 2>&1
   cat .metrics/gcc.txt
 
   echo '</TD></TR><TR><TD>Library Version</TD><TD>/lib/libc.so.6</TD></TR>'
