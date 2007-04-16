@@ -14,13 +14,14 @@ $status = 0;
 
 if (PerlACE::is_vxworks_test()) {
     $SV = new PerlACE::ProcessVX ("Collocated_Test");
+    $SV->Arguments ("-o test.ior -k file://test.ior");
 }
 else {
     $SV = new PerlACE::Process ("Collocated_Test");
+    $SV->Arguments ("-o $iorfile -k file://$iorfile");
 }
 
 print STDERR "======== Running in Default Mode \n";
-$SV->Arguments ("-o $iorfile -k file://$iorfile");
 $sv = $SV->SpawnWaitKill ($PerlACE::wait_interval_for_process_creation);
 
 if ($sv != 0) {

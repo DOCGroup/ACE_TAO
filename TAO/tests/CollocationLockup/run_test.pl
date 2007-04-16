@@ -10,10 +10,6 @@ use PerlACE::Run_Test;
 
 use strict;
 
-# Amount of delay (in seconds) between starting a server and a client
-# to allow proper server initialization.
-my $sleeptime = 10;
-
 # Variables for command-line arguments to client and server
 # executables.
 my $iorbase = "SimpleNamingService.ior";
@@ -27,7 +23,8 @@ unlink $iorfile;
 
 $NS->Spawn ();
 
-if (PerlACE::waitforfile_timed ($iorfile, $sleeptime) == -1) {
+if (PerlACE::waitforfile_timed ($iorfile,
+        $PerlACE::wait_interval_for_process_creation) == -1) {
   print STDERR "ERROR: cannot find IOR file <$iorfile>\n";
   $NS->Kill ();
   exit 1;
