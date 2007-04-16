@@ -1,3 +1,10 @@
+Mon Apr 16 17:56:42 UTC 2007  Adam Mitz  <mitza@ociweb.com>
+
+        * bin/generate_compile_stats.sh:
+
+          Fixed usage statement to match actual argument parsing.
+          Assume gcc is on the PATH instead of hard-coding /usr/bin/gcc.
+
 Mon Apr 16 17:18:32 UTC 2007  Adam Mitz  <mitza@ociweb.com>
 
         * docs/svn/config:
