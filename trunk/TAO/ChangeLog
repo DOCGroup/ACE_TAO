@@ -1,3 +1,14 @@
+Mon Apr 16 18:41:16 UTC 2007  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * docs/tutorials/Quoter/Simple/Persistent/index.html: 
+        * docs/tutorials/Quoter/Simple/ImprovedServer/index.html:
+        * docs/tutorials/Quoter/Simple/Impl-Repo/index.html: 
+        * docs/tutorials/Quoter/Simple/Client/index.html: 
+        * docs/tutorials/Quoter/Simple/Server/index.html: Updated the
+          documentation to use MPC files rather than makefiles.  Thanks to
+          Bill Bruns <bruns dot bill at gmail dot com> for noticing this
+          and Johnny Willemsen for suggesting the MPC update.
+
 Mon Apr 16 18:03:55 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * tao/PortableServer/ServantRetentionStrategyRetain.cpp:
