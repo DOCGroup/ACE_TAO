@@ -1,0 +1,8 @@
+workspace {
+  common
+  Output_Adapters/DAnCE_Output_Adapter
+  Input_Adapters/SA_POP_Input_Adapter
+  Data_Base
+  SA_POP/SA_POP_for_RACE.mpc
+  SA_POP/Component/SA_POP_Component.mpc
+}

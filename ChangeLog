@@ -1,3 +1,10 @@
+Mon Apr 16 23:41:13 UTC 2007  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
+
+        * RACE_SAPOP.mwc:
+
+        Added workspace for building RACE and SA-POP.
+
+
 Mon Apr 16 23:33:09 UTC 2007  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
 
         * SA_POP/Component:
