@@ -34,7 +34,7 @@ struct Tester_Args
     n_iterations_ (i) {}
 
   ACE_Barrier &tester_barrier_;
-  // Reference to the tester barrier.  This controls each miteration
+  // Reference to the tester barrier.  This controls each iteration
   // of the tester function running in every thread.
 
   int n_iterations_;
