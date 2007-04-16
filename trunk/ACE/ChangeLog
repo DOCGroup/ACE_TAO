@@ -1,3 +1,8 @@
+Mon Apr 16 23:00:16 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * ace/Timeprobe.h: Add #include "ace/config-lite.h" to pick up the
+          config settings needed to do the right thing.
+
 Mon Apr 16 17:56:42 UTC 2007  Adam Mitz  <mitza@ociweb.com>
 
         * bin/generate_compile_stats.sh:
