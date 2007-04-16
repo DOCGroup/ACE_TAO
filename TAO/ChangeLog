@@ -1,3 +1,18 @@
+Mon Apr 16 13:01:00 UTC 2007 Simon Massey  <sma@prismtech.com>
+
+        * tao_idl/be/be_visitor_constant/constant_cs.cpp:
+
+          Add CORBA complient storeage emmition even when class
+          static const int are declared inline in the header class.
+          This fixes a CORBA non-complience however it uncovered
+          some platforms (noteably Microsoft) where the compiler
+          was non- C++ complient in that it always provides storeage
+          for such constants at the point they are seen at the
+          declaration (in the header). The standard C++ states that
+          if storage is required (and it doesn't have to be) it should
+          be defined (i.e. allocated) in the definition (i.e. the
+          .cpp file as well as declared in the header).
+
 Mon Apr 16 12:04:56 UTC 2007 Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/DIOP/run_test.pl:
