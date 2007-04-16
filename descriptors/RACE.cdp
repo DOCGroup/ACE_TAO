@@ -4,7 +4,7 @@
   <UUID>4A2259C9-86F5-4B57-9ECD-9AB16F4137E0</UUID>
 
   <implementation id="_C172F928-5E78-4A07-B779-7B0788E26A07">
-    <name>RACE.ComponentImplementations.DAnCE_OA_ComponentImplementation.DAnCE_OA_ComponentMonolithicImpl</name>
+    <name>RACE_SA_POP.ComponentImplementations.DAnCE_OA_ComponentImplementation.DAnCE_OA_ComponentMonolithicImpl</name>
     <source/>
     <artifact>_0F470DA1-946B-4284-A396-8EDF087CC11A</artifact>
     <artifact>_8193532F-CA6C-4FDD-B55B-BF03C8A105C2</artifact>
@@ -12,7 +12,7 @@
   </implementation>
 
   <implementation id="_C2184658-1565-47F6-BC7F-5680794D193B">
-    <name>RACE.ComponentImplementations.Data_Base_ComponentImplementation.Data_Base_ComponentMonolithicImpl</name>
+    <name>RACE_SA_POP.ComponentImplementations.Data_Base_ComponentImplementation.Data_Base_ComponentMonolithicImpl</name>
     <source/>
     <artifact>_A7563DBF-07DA-4030-88A9-60B231D83996</artifact>
     <artifact>_6A6102A0-7F7A-418F-8A30-7EF54CD719C7</artifact>
@@ -20,15 +20,23 @@
   </implementation>
 
   <implementation id="_906BBE3F-8014-40DE-A26D-E7753D38BBC7">
-    <name>RACE.ComponentImplementations.SA_POP_IA_ComponentImplementation.SA_POP_IA_ComponentMonolithicImpl</name>
+    <name>RACE_SA_POP.ComponentImplementations.SA_POP_IA_ComponentImplementation.SA_POP_IA_ComponentMonolithicImpl</name>
     <source/>
     <artifact>_7AA492F3-49EE-4C68-9A0D-D596206F0D65</artifact>
     <artifact>_BE1FACCE-F02A-4283-9546-3CBBA56031BF</artifact>
     <artifact>_B8698C58-5FAF-4A29-ADE4-EBB8904D9883</artifact>
   </implementation>
 
-  <instance id="RACE.ComponentImplementations.RACE.RACE.DAnCE_OA_Component">
-    <name>RACE.ComponentImplementations.RACE.RACE.DAnCE_OA_Component</name>
+  <implementation id="_CD107C67-F5D0-4221-8409-9D11FECC5E5E">
+    <name>RACE_SA_POP.ComponentImplementations.SA_POP_ComponentImplementation.SA_POP_ComponentMonolithicImpl</name>
+    <source/>
+    <artifact>_421F7782-85D1-42AE-9B86-41E11F818A04</artifact>
+    <artifact>_23E257D0-C7B8-46F5-B256-E0F4D7BC73BF</artifact>
+    <artifact>_643F26E1-75A9-4E55-B1C0-547F9C55B81D</artifact>
+  </implementation>
+
+  <instance id="RACE_SA_POP.ComponentImplementations.RACE.RACE.DAnCE_OA_Component">
+    <name>RACE_SA_POP.ComponentImplementations.RACE.RACE.DAnCE_OA_Component</name>
     <node>RACE_Node</node>
     <source/>
     <implementation>_C172F928-5E78-4A07-B779-7B0788E26A07</implementation>
@@ -45,8 +53,8 @@
     </configProperty>
   </instance>
 
-  <instance id="RACE.ComponentImplementations.RACE.RACE.SA_POP_IA_Component">
-    <name>RACE.ComponentImplementations.RACE.RACE.SA_POP_IA_Component</name>
+  <instance id="RACE_SA_POP.ComponentImplementations.RACE.RACE.SA_POP_IA_Component">
+    <name>RACE_SA_POP.ComponentImplementations.RACE.RACE.SA_POP_IA_Component</name>
     <node>RACE_Node</node>
     <source/>
     <implementation>_906BBE3F-8014-40DE-A26D-E7753D38BBC7</implementation>
@@ -63,8 +71,8 @@
     </configProperty>
   </instance>
 
-  <instance id="RACE.ComponentImplementations.RACE.RACE.Data_Base_Component">
-    <name>RACE.ComponentImplementations.RACE.RACE.Data_Base_Component</name>
+  <instance id="RACE_SA_POP.ComponentImplementations.RACE.RACE.Data_Base_Component">
+    <name>RACE_SA_POP.ComponentImplementations.RACE.RACE.Data_Base_Component</name>
     <node>RACE_Node</node>
     <source/>
     <implementation>_C2184658-1565-47F6-BC7F-5680794D193B</implementation>
@@ -81,43 +89,75 @@
     </configProperty>
   </instance>
 
+  <instance id="RACE_SA_POP.ComponentImplementations.RACE.RACE.SA_POP_Component">
+    <name>RACE_SA_POP.ComponentImplementations.RACE.RACE.SA_POP_Component</name>
+    <node>RACE_Node</node>
+    <source/>
+    <implementation>_CD107C67-F5D0-4221-8409-9D11FECC5E5E</implementation>
+    <configProperty>
+      <name>ComponentIOR</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>SA_POP_Component.ior</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+
   <connection>
-    <name>DB_adminRACE.ComponentImplementations.RACE.RACE.SA_POP_IA_ComponentRACE.ComponentImplementations.RACE.RACE.Data_Base_Component</name>
+    <name>DB_adminRACE_SA_POP.ComponentImplementations.RACE.RACE.SA_POP_IA_ComponentRACE_SA_POP.ComponentImplementations.RACE.RACE.Data_Base_Component</name>
     <internalEndpoint>
       <portName>DB</portName>
       <kind>SimplexReceptacle</kind>
-      <instance>RACE.ComponentImplementations.RACE.RACE.SA_POP_IA_Component</instance>
+      <instance>RACE_SA_POP.ComponentImplementations.RACE.RACE.SA_POP_IA_Component</instance>
     </internalEndpoint>
     <internalEndpoint>
       <portName>admin</portName>
       <kind>Facet</kind>
-      <instance>RACE.ComponentImplementations.RACE.RACE.Data_Base_Component</instance>
+      <instance>RACE_SA_POP.ComponentImplementations.RACE.RACE.Data_Base_Component</instance>
     </internalEndpoint>
   </connection>
 
   <connection>
-    <name>OA_adminRACE.ComponentImplementations.RACE.RACE.SA_POP_IA_ComponentRACE.ComponentImplementations.RACE.RACE.DAnCE_OA_Component</name>
+    <name>OA_adminRACE_SA_POP.ComponentImplementations.RACE.RACE.SA_POP_IA_ComponentRACE_SA_POP.ComponentImplementations.RACE.RACE.DAnCE_OA_Component</name>
     <internalEndpoint>
       <portName>OA</portName>
       <kind>SimplexReceptacle</kind>
-      <instance>RACE.ComponentImplementations.RACE.RACE.SA_POP_IA_Component</instance>
+      <instance>RACE_SA_POP.ComponentImplementations.RACE.RACE.SA_POP_IA_Component</instance>
     </internalEndpoint>
     <internalEndpoint>
       <portName>admin</portName>
       <kind>Facet</kind>
-      <instance>RACE.ComponentImplementations.RACE.RACE.DAnCE_OA_Component</instance>
+      <instance>RACE_SA_POP.ComponentImplementations.RACE.RACE.DAnCE_OA_Component</instance>
+    </internalEndpoint>
+  </connection>
+
+  <connection>
+    <name>DB_queryRACE_SA_POP.ComponentImplementations.RACE.RACE.SA_POP_ComponentRACE_SA_POP.ComponentImplementations.RACE.RACE.Data_Base_Component</name>
+    <internalEndpoint>
+      <portName>DB</portName>
+      <kind>SimplexReceptacle</kind>
+      <instance>RACE_SA_POP.ComponentImplementations.RACE.RACE.SA_POP_Component</instance>
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>query</portName>
+      <kind>Facet</kind>
+      <instance>RACE_SA_POP.ComponentImplementations.RACE.RACE.Data_Base_Component</instance>
     </internalEndpoint>
   </connection>
 
   <artifact id="_0F470DA1-946B-4284-A396-8EDF087CC11A">
-    <name>RACE.ImplementationArtifacts.DAnCE_OA_ComponentArtifacts.DAnCE_OA_Component_stub</name>
+    <name>RACE_SA_POP.ImplementationArtifacts.DAnCE_OA_ComponentArtifacts.DAnCE_OA_Component_stub</name>
     <source/>
     <node/>
     <location>DAnCE_OA_Component_stub</location>
   </artifact>
 
   <artifact id="_8193532F-CA6C-4FDD-B55B-BF03C8A105C2">
-    <name>RACE.ImplementationArtifacts.DAnCE_OA_ComponentArtifacts.DAnCE_OA_Component_svnt</name>
+    <name>RACE_SA_POP.ImplementationArtifacts.DAnCE_OA_ComponentArtifacts.DAnCE_OA_Component_svnt</name>
     <source/>
     <node/>
     <location>DAnCE_OA_Component_svnt</location>
@@ -135,7 +175,7 @@
   </artifact>
 
   <artifact id="_AA04DED8-71DF-4988-862E-672402A7A192">
-    <name>RACE.ImplementationArtifacts.DAnCE_OA_ComponentArtifacts.DAnCE_OA_Component_exec</name>
+    <name>RACE_SA_POP.ImplementationArtifacts.DAnCE_OA_ComponentArtifacts.DAnCE_OA_Component_exec</name>
     <source/>
     <node/>
     <location>DAnCE_OA_Component_exec</location>
@@ -153,14 +193,14 @@
   </artifact>
 
   <artifact id="_A7563DBF-07DA-4030-88A9-60B231D83996">
-    <name>RACE.ImplementationArtifacts.Data_Base_ComponentArtifacts.Data_Base_Component_stub</name>
+    <name>RACE_SA_POP.ImplementationArtifacts.Data_Base_ComponentArtifacts.Data_Base_Component_stub</name>
     <source/>
     <node/>
     <location>Data_Base_Component_stub</location>
   </artifact>
 
   <artifact id="_6A6102A0-7F7A-418F-8A30-7EF54CD719C7">
-    <name>RACE.ImplementationArtifacts.Data_Base_ComponentArtifacts.Data_Base_Component_svnt</name>
+    <name>RACE_SA_POP.ImplementationArtifacts.Data_Base_ComponentArtifacts.Data_Base_Component_svnt</name>
     <source/>
     <node/>
     <location>Data_Base_Component_svnt</location>
@@ -178,7 +218,7 @@
   </artifact>
 
   <artifact id="_499F494A-6BB2-4C47-AA83-651D91BDE073">
-    <name>RACE.ImplementationArtifacts.Data_Base_ComponentArtifacts.Data_Base_Component_exec</name>
+    <name>RACE_SA_POP.ImplementationArtifacts.Data_Base_ComponentArtifacts.Data_Base_Component_exec</name>
     <source/>
     <node/>
     <location>Data_Base_Component_exec</location>
@@ -196,14 +236,14 @@
   </artifact>
 
   <artifact id="_7AA492F3-49EE-4C68-9A0D-D596206F0D65">
-    <name>RACE.ImplementationArtifacts.SA_POP_IA_ComponentArtifacts.SA_POP_IA_Component_stub</name>
+    <name>RACE_SA_POP.ImplementationArtifacts.SA_POP_IA_ComponentArtifacts.SA_POP_IA_Component_stub</name>
     <source/>
     <node/>
     <location>SA_POP_IA_Component_stub</location>
   </artifact>
 
   <artifact id="_BE1FACCE-F02A-4283-9546-3CBBA56031BF">
-    <name>RACE.ImplementationArtifacts.SA_POP_IA_ComponentArtifacts.SA_POP_IA_Component_svnt</name>
+    <name>RACE_SA_POP.ImplementationArtifacts.SA_POP_IA_ComponentArtifacts.SA_POP_IA_Component_svnt</name>
     <source/>
     <node/>
     <location>SA_POP_IA_Component_svnt</location>
@@ -221,7 +261,7 @@
   </artifact>
 
   <artifact id="_B8698C58-5FAF-4A29-ADE4-EBB8904D9883">
-    <name>RACE.ImplementationArtifacts.SA_POP_IA_ComponentArtifacts.SA_POP_IA_Component_exec</name>
+    <name>RACE_SA_POP.ImplementationArtifacts.SA_POP_IA_ComponentArtifacts.SA_POP_IA_Component_exec</name>
     <source/>
     <node/>
     <location>SA_POP_IA_Component_exec</location>
@@ -233,6 +273,49 @@
         </type>
         <value>
           <string>create_CIAO_RACE_SA_POP_IA_SA_POP_IA_Component_Home_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+  </artifact>
+
+  <artifact id="_421F7782-85D1-42AE-9B86-41E11F818A04">
+    <name>RACE_SA_POP.ImplementationArtifacts.SA_POP_ComponentArtifacts.SA_POP_Component_stub</name>
+    <source/>
+    <node/>
+    <location>SA_POP_Component_stub</location>
+  </artifact>
+
+  <artifact id="_23E257D0-C7B8-46F5-B256-E0F4D7BC73BF">
+    <name>RACE_SA_POP.ImplementationArtifacts.SA_POP_ComponentArtifacts.SA_POP_Component_svnt</name>
+    <source/>
+    <node/>
+    <location>SA_POP_Component_svnt</location>
+    <execParameter>
+      <name>entryPoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_CIAO_RACE_SA_POP_SA_POP_Component_Home_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+  </artifact>
+
+  <artifact id="_643F26E1-75A9-4E55-B1C0-547F9C55B81D">
+    <name>RACE_SA_POP.ImplementationArtifacts.SA_POP_ComponentArtifacts.SA_POP_Component_exec</name>
+    <source/>
+    <node/>
+    <location>SA_POP_Component_exec</location>
+    <execParameter>
+      <name>entryPoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_CIAO_RACE_SA_POP_SA_POP_Component_Home_Impl</string>
         </value>
       </value>
     </execParameter>

@@ -1,4 +1,4 @@
-project(Driver_stub): ciao_deployment_stub, ciao_race_component{
+project(Driver_stub): ciao_client_dnc {
   sharedname = Driver_stub
   idlflags += -Wb,stub_export_macro=DRIVER_STUB_Export \
               -Wb,stub_export_include=Driver_stub_export.h \
@@ -18,7 +18,7 @@ project(Driver_stub): ciao_deployment_stub, ciao_race_component{
   }
 }
 
-project(Driver_svnt) : ciao_servant_dnc, ciao_race_component {
+project(Driver_svnt) : ciao_servant_dnc {
   after +=  Driver_stub
   sharedname  = Driver_svnt
   libs    += Driver_stub \
@@ -33,7 +33,7 @@ project(Driver_svnt) : ciao_servant_dnc, ciao_race_component {
   }
 }
 
-project(Server): ciao_component_dnc, ciao_race_component, ciao_config_handlers, ciao_plan_generator {
+project(Server): ciao_component_dnc, ciao_config_handlers, ciao_plan_generator {
 
   exename = server
 
@@ -64,7 +64,7 @@ project(Server): ciao_component_dnc, ciao_race_component, ciao_config_handlers, 
   }
 }
 
-project(client): taoclient, ciao_race_component, ciao_component_dnc, ciao_plan_generator {
+project(client): taoclient, ciao_component_dnc, ciao_plan_generator {
 
   exename = client
   after += Driver_stub SA_POP

@@ -59,8 +59,8 @@ $ENV{"NameServiceIOR"} = "corbaloc:iiop:localhost:40000/NameService";
 $ns_running = 1;
 
 $iiop = "iiop://localhost:50000";
-$node_app = "$DAnCE/NodeApplication/NodeApplication";
-$d_cmd = "$DAnCE/NodeManager/NodeManager";
+$node_app = "$CIAO_ROOT/bin/NodeApplication";
+$d_cmd = "$CIAO_ROOT/bin/NodeManager";
 $iorfile = "RACE.ior";
 $d_param = "-n -ORBEndpoint $iiop -s $node_app -o $iorfile -d 60";
 $space = new PerlACE::Process ($d_cmd, $d_param);
@@ -69,7 +69,7 @@ $space->Spawn ();
 
 # Invoke execution manager.
 print "Invoking execution manager\n";
- $EM = new PerlACE::Process ("$DAnCE/ExecutionManager/Execution_Manager",
+ $EM = new PerlACE::Process ("$CIAO_ROOT/bin/Execution_Manager",
                              " -n -o EM.ior -i $dat_file");
  $EM->Spawn ();
 
@@ -86,7 +86,7 @@ $em_running = 1;
 # print " Invoke executor - start the application -."
 print "Invoking executor - start the application -\n";
 $E =
-  new PerlACE::Process ("$DAnCE/Plan_Launcher/plan_launcher",
+  new PerlACE::Process ("$CIAO_ROOT/bin/plan_launcher",
                         "-p $cdp_file -k file://EM.ior");
 
 $E->SpawnWaitKill (5000);

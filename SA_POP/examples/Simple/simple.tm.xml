@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<SA-POP:taskMap
+  xmlns:SA-POP="http://www.vanderbilt.edu/SA-POP"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.vanderbilt.edu/SA-POP Task_Map.xsd"
+  xmlns="http://www.vanderbilt.edu/SA-POP">
+
+  <taskImpl>
+    <implID>2220_A0_1</implID>
+    <param>
+      <paramID>test_param1</paramID>
+      <kind>test_param_kind1</kind>
+      <value>test_param_value1</value>
+    </param>
+    <param>
+      <paramID>test_param2</paramID>
+      <kind>test_param_kind2</kind>
+      <value>2</value>
+    </param>
+  </taskImpl>
+  <taskImpl>
+    <implID>2221_A1_1</implID>
+    <param>
+      <paramID>test_param1</paramID>
+      <kind>test_param_kind1</kind>
+      <value>test_param_value1</value>
+    </param>
+    <param>
+      <paramID>test_param2</paramID>
+      <kind>test_param_kind2</kind>
+      <value>2</value>
+    </param>
+  </taskImpl>
+  <taskImpl>
+    <implID>2221_A1_2</implID>
+    <param>
+      <paramID>test_param1</paramID>
+      <kind>test_param_kind1</kind>
+      <value>test_param_value2</value>
+    </param>
+    <param>
+      <paramID>test_param2</paramID>
+      <kind>test_param_kind2</kind>
+      <value>3</value>
+    </param>
+  </taskImpl>
+  <taskImpl>
+    <implID>2222_A2_1</implID>
+    <param>
+      <paramID>test_param2</paramID>
+      <kind>test_param_kind2</kind>
+      <value>150</value>
+    </param>
+  </taskImpl>
+
+  <resource>
+    <resourceID>Memory</resourceID>
+    <kind>DISCRETE</kind>
+    <capacity>512</capacity>
+  </resource>
+  <resource>
+    <resourceID>CPU</resourceID>
+    <kind></kind>
+    <capacity></capacity>
+  </resource>
+
+  <taskToImpl>
+    <taskID>2220</taskID>
+    <implID>2220_A0_1</implID>
+    <duration>-1</duration>
+  </taskToImpl>
+  <taskToImpl>
+    <taskID>2221</taskID>
+    <implID>2221_A1_1</implID>
+    <duration>-1</duration>
+  </taskToImpl>
+  <taskToImpl>
+    <taskID>2221</taskID>
+    <implID>2221_A1_2</implID>
+    <duration />
+  </taskToImpl>
+  <taskToImpl>
+    <taskID>2222</taskID>
+    <implID>2222_A2_1</implID>
+    <duration>-1</duration>
+  </taskToImpl>
+
+  <implToResource>
+    <implID>2221_A1_1</implID>
+    <resourceID>CPU</resourceID>
+    <utilization>25</utilization>
+  </implToResource>
+  <implToResource>
+    <implID>2221_A1_1</implID>
+    <resourceID>Memory</resourceID>
+    <utilization>180</utilization>
+  </implToResource>
+  <implToResource>
+    <implID>2221_A1_2</implID>
+    <resourceID>CPU</resourceID>
+    <utilization>50</utilization>
+  </implToResource>
+  <implToResource>
+    <implID>2221_A1_2</implID>
+    <resourceID>Memory</resourceID>
+    <utilization>75</utilization>
+  </implToResource>
+  <implToResource>
+    <implID>2222_A2_1</implID>
+    <resourceID>Memory</resourceID>
+    <utilization>75</utilization>
+  </implToResource>
+
+</SA-POP:taskMap>

@@ -1,84 +1,99 @@
-project(SA_POP) : ciao_config_handlers, ciao_deployment_stub, xerces {
+project(SA_POP) : xerces, acelib {
 
-   after += XSC_Config_Handlers
-   sharedname   = SA_POP
+  sharedname   = SA_POP
 
-   includes += $(CIAO_ROOT)/tools/Config_Handlers \
-               $(CIAO_ROOT)/RACE/SA_POP
+  includes += $(SAPOP_ROOT) \
+              $(SAPOP_ROOT)/Standalone/XML_Utils
 
-   macros = SA_POP_HAS_ACE SA_POP_HAS_CIAO
+  dynamicflags   = CIAO_XML_UTILS_BUILD_DLL \
+                   SANETFILEIN_BUILD_DLL \
+                   TASKMAPFILEIN_BUILD_DLL \
+                   SA_BUILDER_BUILD_DLL \
+                   LOGSCREENOUT_BUILD_DLL
 
-   dynamicflags   = SANETFILEIN_BUILD_DLL \
-                    TASKMAPFILEIN_BUILD_DLL \
-                    SA_BUILDER_BUILD_DLL \
-                    LOGSCREENOUT_BUILD_DLL
+  macros = SA_POP_HAS_ACE
 
+  Source_Files {
+    SA_POP_Exceptions.cpp
 
-   IDL_Files {
-   }
+    SA_Builder.cpp
 
-   Header_Files {
-      SA_POP_Types.h
-      SA_POP_Exceptions.h
+    Planner.cpp
 
-      Builder.h
-      SA_Builder.h
+    TaskMap.cpp
+    TaskImpl.cpp
 
-      Planner.h
+    SA_WorkingPlan.cpp
 
-      TaskMap.h
-      TaskImpl.h
+    SA_SchedStrategy.cpp
 
-      WorkingPlan.h
-      SA_WorkingPlan.h
-      SchedStrategy.h
-      SA_SchedStrategy.h
-      PlanStrategy.h
-      SA_PlanStrategy.h
-      PlanHeuristics.h
-      SA_PlanHeuristics.h
-      PlanCommands.h
-      SA_PlanCommands.h
+    SA_PlanStrategy.cpp
 
-      SANet/SANet_Types.h
-      SANet/SANet.h
-      SANet/SANode.h
-      SANet/SANet_Exceptions.h
+    SA_PlanHeuristics.cpp
 
-      OutAdapter.h
-      LogScreenOut.h
-      LogFileOut.h
+    SA_PlanCommands.cpp
 
-      SANet/SANetFileIn.h
-      TaskMapFileIn.h
-   }
+    SANet/SANet.cpp
+    SANet/SANode.cpp
+    SANet/SANet_Exceptions.cpp
 
-   Source_Files {
-      SA_POP_Exceptions.cpp
+    LogScreenOut.cpp
+    LogFileOut.cpp
 
-      SA_Builder.cpp
+    SANet/SANetFileIn.cpp
+    SANet/XML_SANet.cpp
+    TaskMapFileIn.cpp
+    XML_TaskMap.cpp
+    Standalone/XML_Utils/Utils/XML_Helper.cpp
+    Standalone/XML_Utils/Utils/XML_Error_Handler.cpp
+    Standalone/XML_Utils/Utils/XML_Schema_Resolver.cpp
+    Standalone/XML_Utils/Utils/XercesString.cpp
+  }
 
-      Planner.cpp
+  Inline_Files {
 
-      TaskMap.cpp
-      TaskImpl.cpp
+  }
 
-      SA_WorkingPlan.cpp
-      SA_SchedStrategy.cpp
-      SA_PlanStrategy.cpp
-      SA_PlanHeuristics.cpp
-      SA_PlanCommands.cpp
+  Header_Files {
+    SA_POP_Types.h
+    SA_POP_Exceptions.h
 
-      SANet/SANet.cpp
-      SANet/SANode.cpp
-      SANet/SANet_Exceptions.cpp
+    Builder.h
+    SA_Builder.h
 
-      LogScreenOut.cpp
-      LogFileOut.cpp
+    Planner.h
 
-      SANet/SANetFileIn.cpp
-      SANet/XML_SANet.cpp
-      TaskMapFileIn.cpp
-      XML_TaskMap.cpp
-   }
+    TaskMap.h
+    TaskImpl.h
+
+    WorkingPlan.h
+    SA_WorkingPlan.h
+
+    SchedStrategy.h
+    SA_SchedStrategy.h
+
+    PlanStrategy.h
+    SA_PlanStrategy.h
+
+    PlanHeuristics.h
+    SA_PlanHeuristics.h
+
+    PlanCommands.h
+    SA_PlanCommands.h
+
+    SANet/SANet_Types.h
+    SANet/SANet.h
+    SANet/SANode.h
+    SANet/SANet_Exceptions.h
+
+    OutAdapter.h
+    LogScreenOut.h
+    LogFileOut.h
+
+    SANet/SANetFileIn.h
+    TaskMapFileIn.h
+  }
+
+  Documentation_Files {
+  }
 }

@@ -35,7 +35,6 @@ ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT("SA-POP: %s\n"), y));
 #define SA_POP_DEBUG_STR(x,y) \
 if (x > 0) \
 ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT("SA-POP: %s\n"), y.c_str ()));
-
 #else  /* SA_POP_HAS_ACE not defined */
 #include <iostream>
 #define SA_POP_DEBUG(x,y) \

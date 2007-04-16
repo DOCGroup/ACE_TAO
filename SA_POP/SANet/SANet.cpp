@@ -18,10 +18,6 @@
 #include "SANode.h"
 #include "SANet_Exceptions.h"
 
-#if !defined (SANET_STANDALONE)
-#include "SA_POP_Types.h"
-#endif  /* SANET_STANDALONE not defined */
-
 using namespace SANet;
 
 
@@ -154,6 +150,65 @@ void SANet::Network::add_effect_link (TaskID task_ID, CondID cond_ID,
     cond_ID), port_ID));
 };
 
+void SANet::Network::print_xml (std::basic_ostream<char, std::char_traits<char> >& strm)
+{
+  strm << "<?xml version=\"1.0\" encoding=\"utf-8\" ?>" << std::endl;
+  strm << "<SANet:network" << std::endl;
+  strm << "  xmlns:SANet=\"http://www.vanderbilt.edu/SANet\"" << std::endl;
+  strm << "  xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"" << std::endl;
+  strm << "  xsi:schemaLocation=\"http://www.vanderbilt.edu/SANet SANet_Network.xsd\"" << std::endl;
+  strm << "  xmlns=\"http://www.vanderbilt.edu/SANet\">" << std::endl;
+  strm << std::endl;
+  strm << "  <defaultAttenFactor />" << std::endl;
+  strm << "  <defaultTaskCost />" << std::endl;
+  strm << "  <defaultCondUtil />" << std::endl;
+  strm << "  <defaultCondProbTrue />" << std::endl;
+  strm << "  <linkThresh />" << std::endl;
+  strm << std::endl;
+
+  // Print all task nodes.
+  for (TaskNodeMap::iterator node_iter = task_nodes_.begin ();
+    node_iter != task_nodes_.end (); node_iter++)
+  {
+    node_iter->second->print_xml (strm);
+    strm << std::endl;
+  }
+  strm << std::endl;
+  strm << std::endl;
+
+  // Print all condition nodes.
+  for (CondNodeMap::iterator node_iter = cond_nodes_.begin ();
+    node_iter != cond_nodes_.end (); node_iter++)
+  {
+    node_iter->second->print_xml (strm);
+    strm << std::endl;
+  }
+  strm << std::endl;
+  strm << std::endl;
+
+  // Print all precondition links.
+  for (TaskNodeMap::iterator node_iter = task_nodes_.begin ();
+    node_iter != task_nodes_.end (); node_iter++)
+  {
+    node_iter->second->print_precond_links_xml (strm);
+    strm << std::endl;
+  }
+  strm << std::endl;
+  strm << std::endl;
+
+  // Print all effect links.
+  for (TaskNodeMap::iterator node_iter = task_nodes_.begin ();
+    node_iter != task_nodes_.end (); node_iter++)
+  {
+    node_iter->second->print_effect_links_xml (strm);
+    strm << std::endl;
+  }
+  strm << std::endl;
+  strm << std::endl;
+
+  strm << "  </SANet:network>" << std::endl;
+};
+
 void SANet::Network::print (std::basic_ostream<char, std::char_traits<char> >& strm,
                      bool verbose)
 {
@@ -183,7 +238,6 @@ void SANet::Network::print_link_ports (std::basic_ostream<char,
                                  std::char_traits<char> >& strm,
                                  bool verbose)
 {
-
   // Print all precondition links.
   strm << "Precondition Links: " << std::endl;
   for (PrecondLinkPortMap::iterator precond_iter = precond_links_.begin ();
@@ -222,9 +276,6 @@ void SANet::Network::update (int max_steps)
     // Reset net_changed flag.
     net_changed = false;
 
-#if defined (SANET_DEBUG)
-    std::cout << std::endl << "DEBUG in SANet::Network::update()... step_=" << step_ << std::endl << std::endl;
-#endif /* SANET_DEBUG */
     // Update all task nodes.
     for (TaskNodeMap::iterator node_iter = task_nodes_.begin ();
       node_iter != task_nodes_.end (); node_iter++)
@@ -268,7 +319,7 @@ void SANet::Network::update_cond_util (CondID cond_id, Utility utility)
 // Update all condition utilities based on new goal set.
 void SANet::Network::update_goals (GoalMap goals)
 {
-  SA_POP::GoalMap goal;
+  SANet::GoalMap goal;
 
   // Remove all old goals.
   for (GoalMap::iterator old_goal_iter = this->goals_.begin ();
@@ -406,13 +457,10 @@ CondSet SANet::Network::get_effects (TaskID task_id)
   {
     Condition cond;
     cond.id = iter->first;
-  // ****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP
-#if defined (SANET_STANDALONE)
-    cond.kind = SANet::DATA;
-#else  // SANET_STANDALONE not defined
-    cond.kind = SA_POP::DATA;
-#endif  /* SANET_STANDALONE */
-  // ****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP
+    CondNodeMap::iterator cond_map_iter = cond_nodes_.find (iter->first);
+    if (cond_map_iter == cond_nodes_.end ())
+      throw UnknownNode ();
+    cond.kind = cond_map_iter->second->get_cond_kind ();
     if (iter->second > 0)
       cond.value = true;
     else

@@ -84,12 +84,26 @@ Network *SANetFileIn::build_net (std::string filename)
 //    CondKind
     char name[SANet::SANetFileIn::STR_BUF_SIZE];
     wcstombs (name, (*iter).name ().c_str (), SANet::SANetFileIn::STR_BUF_SIZE);
+//****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP
 
 	SANet::XML::CondKind cond_kind = (*iter).kind();
-  ::SA_POP::CondKind cond;
-  if(cond_kind==cond_kind.ENVIRON) cond=::SA_POP::ENVIRON;
-  else if(cond_kind==cond_kind.SYSTEM) cond=::SA_POP::SYSTEM;
-  else cond=::SA_POP::DATA;
+  ::SANet::CondKind cond;
+#if defined (SANET_STANDALONE)
+  if (cond_kind == cond_kind.ENVIRON)
+    cond = ::SANet::ENVIRON;
+  else if (cond_kind == cond_kind.SYSTEM)
+    cond = ::SANet::SYSTEM;
+  else
+    cond = ::SANet::DATA;
+#else  // SANET_STANDALONE not defined
+  if (cond_kind == cond_kind.ENVIRON)
+    cond = ::SA_POP::ENVIRON;
+  else if (cond_kind == cond_kind.SYSTEM)
+    cond = ::SA_POP::SYSTEM;
+  else
+    cond = ::SA_POP::DATA;
+#endif  /* SANET_STANDALONE */
+
    
     net->add_cond (nodeID, name, attenFactor,
       probTrue, 1.0 - probTrue, utility, cond);
@@ -107,6 +121,7 @@ Network *SANetFileIn::build_net (std::string filename)
 //****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP
     char portID[SANet::SANetFileIn::STR_BUF_SIZE];
     wcstombs (portID, (*iter).portID ().c_str (), SANet::SANetFileIn::STR_BUF_SIZE);
+//****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP
 
     net->add_precond_link (condID, taskID, trueProb, falseProb);
   }
@@ -122,6 +137,7 @@ Network *SANetFileIn::build_net (std::string filename)
 //****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP
     char portID[SANet::SANetFileIn::STR_BUF_SIZE];
     wcstombs (portID, (*iter).portID ().c_str (), SANet::SANetFileIn::STR_BUF_SIZE);
+//****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP****TEMP
 
     net->add_effect_link (taskID, condID, weight);
   }

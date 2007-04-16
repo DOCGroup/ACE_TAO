@@ -1,0 +1,357 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<SANet:network
+  xmlns:SANet="http://www.vanderbilt.edu/SANet"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.vanderbilt.edu/SANet SANet_Network.xsd"
+  xmlns="http://www.vanderbilt.edu/SANet">
+
+  <defaultAttenFactor />
+  <defaultTaskCost />
+  <defaultCondUtil />
+  <defaultCondProbTrue />
+  <linkThresh />
+
+
+  <taskNode>
+    <nodeID>2221</nodeID>
+    <name>Gizmo1</name>
+    <priorProb>1.0</priorProb>
+    <attenFactor />
+    <cost />
+  </taskNode>
+  <taskNode>
+    <nodeID>2222</nodeID>
+    <name>Gizmo2</name>
+    <priorProb>1.0</priorProb>
+    <attenFactor />
+    <cost />
+  </taskNode>
+  <taskNode>
+    <nodeID>2223</nodeID>
+    <name>Gizmo3</name>
+    <priorProb>1.0</priorProb>
+    <attenFactor />
+    <cost />
+  </taskNode>
+  <taskNode>
+    <nodeID>2231</nodeID>
+    <name>Filter_G1</name>
+    <priorProb>0.5</priorProb>
+    <attenFactor />
+    <cost />
+  </taskNode>
+  <taskNode>
+    <nodeID>2232</nodeID>
+    <name>Filter_G2_G3</name>
+    <priorProb>0.25</priorProb>
+    <attenFactor />
+    <cost />
+  </taskNode>
+  <taskNode>
+    <nodeID>2233</nodeID>
+    <name>Compression_G1</name>
+    <priorProb>0.5</priorProb>
+    <attenFactor />
+    <cost />
+  </taskNode>
+  <taskNode>
+    <nodeID>2234</nodeID>
+    <name>Compression_G2_G3</name>
+    <priorProb>0.5</priorProb>
+    <attenFactor />
+    <cost />
+  </taskNode>
+  <taskNode>
+    <nodeID>2235</nodeID>
+    <name>Comm_Ex_G1</name>
+    <priorProb>0.25</priorProb>
+    <attenFactor />
+    <cost />
+  </taskNode>
+  <taskNode>
+    <nodeID>2236</nodeID>
+    <name>Comm_Ex_G2_G3</name>
+    <priorProb>0.25</priorProb>
+    <attenFactor />
+    <cost />
+  </taskNode>
+  <taskNode>
+    <nodeID>2237</nodeID>
+    <name>Exec</name>
+    <priorProb>1.0</priorProb>
+    <attenFactor />
+    <cost />
+  </taskNode>
+  <taskNode>
+    <nodeID>2241</nodeID>
+    <name>Ground_G1</name>
+    <priorProb>0.5</priorProb>
+    <attenFactor />
+    <cost />
+  </taskNode>
+  <taskNode>
+    <nodeID>2242</nodeID>
+    <name>Ground_G2_G3</name>
+    <priorProb>0.5</priorProb>
+    <attenFactor />
+    <cost />
+  </taskNode>
+
+
+
+
+  <condNode>
+    <nodeID>1121</nodeID>
+    <name>Gizmo1_Data</name>
+    <probTrue>0</probTrue>
+    <utility>0</utility>
+    <kind>DATA</kind>
+    <attenFactor />
+  </condNode>
+  <condNode>
+    <nodeID>1122</nodeID>
+    <name>Gizmo2_Data</name>
+    <probTrue>0</probTrue>
+    <utility>0</utility>
+    <kind>DATA</kind>
+    <attenFactor />
+  </condNode>
+  <condNode>
+    <nodeID>1123</nodeID>
+    <name>Gizmo3_Data</name>
+    <probTrue>0</probTrue>
+    <utility>0</utility>
+    <kind>DATA</kind>
+    <attenFactor />
+  </condNode>
+  <condNode>
+    <nodeID>1131</nodeID>
+    <name>G1_Filter_Data</name>
+    <probTrue>0</probTrue>
+    <utility>0</utility>
+    <kind>DATA</kind>
+    <attenFactor />
+  </condNode>
+  <condNode>
+    <nodeID>1132</nodeID>
+    <name>G2_G3_Filter_Data</name>
+    <probTrue>0</probTrue>
+    <utility>0</utility>
+    <kind>DATA</kind>
+    <attenFactor />
+  </condNode>
+  <condNode>
+    <nodeID>1133</nodeID>
+    <name>G1_Comp_Data</name>
+    <probTrue>0</probTrue>
+    <utility>0</utility>
+    <kind>DATA</kind>
+    <attenFactor />
+  </condNode>
+  <condNode>
+    <nodeID>1134</nodeID>
+    <name>G2_G3_Comp_Data</name>
+    <probTrue>0</probTrue>
+    <utility>0</utility>
+    <kind>DATA</kind>
+    <attenFactor />
+  </condNode>
+  <condNode>
+    <nodeID>1135</nodeID>
+    <name>G1_Comm_Data</name>
+    <probTrue>0</probTrue>
+    <utility>0</utility>
+    <kind>DATA</kind>
+    <attenFactor />
+  </condNode>
+  <condNode>
+    <nodeID>1136</nodeID>
+    <name>G2_G3_Comm_Data</name>
+    <probTrue>0</probTrue>
+    <utility>0</utility>
+    <kind>DATA</kind>
+    <attenFactor />
+  </condNode>
+  <condNode>
+    <nodeID>1137</nodeID>
+    <name>Exec_Data</name>
+    <probTrue>0</probTrue>
+    <utility>0</utility>
+    <kind>DATA</kind>
+    <attenFactor />
+  </condNode>
+  <condNode>
+    <nodeID>1141</nodeID>
+    <name>G1_Data_Recvd</name>
+    <probTrue>0</probTrue>
+    <utility>0</utility>
+    <kind />
+    <attenFactor />
+  </condNode>
+  <condNode>
+    <nodeID>1142</nodeID>
+    <name>G2_G3_Data_Recvd</name>
+    <probTrue>0</probTrue>
+    <utility>10</utility>
+    <kind />
+    <attenFactor />
+  </condNode>
+
+
+
+
+  <precondLink>
+    <condID>1121</condID>
+    <taskID>2231</taskID>
+    <portID>recv_data</portID>
+    <trueProb>1.0</trueProb>
+    <falseProb>0</falseProb>
+  </precondLink>
+  <precondLink>
+    <condID>1122</condID>
+    <taskID>2232</taskID>
+    <portID>recv_data</portID>
+    <trueProb>0.5</trueProb>
+    <falseProb>0</falseProb>
+  </precondLink>
+  <precondLink>
+    <condID>1123</condID>
+    <taskID>2232</taskID>
+    <portID>recv_data</portID>
+    <trueProb>0.5</trueProb>
+    <falseProb>0</falseProb>
+  </precondLink>
+  <precondLink>
+    <condID>1131</condID>
+    <taskID>2233</taskID>
+    <portID>recv_data</portID>
+    <trueProb>1.0</trueProb>
+    <falseProb>0</falseProb>
+  </precondLink>
+  <precondLink>
+    <condID>1132</condID>
+    <taskID>2234</taskID>
+    <portID>recv_data</portID>
+    <trueProb>1.0</trueProb>
+    <falseProb>0</falseProb>
+  </precondLink>
+  <precondLink>
+    <condID>1133</condID>
+    <taskID>2235</taskID>
+    <portID>science_data</portID>
+    <trueProb>0.5</trueProb>
+    <falseProb>0</falseProb>
+  </precondLink>
+  <precondLink>
+    <condID>1134</condID>
+    <taskID>2236</taskID>
+    <portID>science_data</portID>
+    <trueProb>0.5</trueProb>
+    <falseProb>0</falseProb>
+  </precondLink>
+  <precondLink>
+    <condID>1137</condID>
+    <taskID>2235</taskID>
+    <portID>recv_command</portID>
+    <trueProb>0.5</trueProb>
+    <falseProb>0</falseProb>
+  </precondLink>
+  <precondLink>
+    <condID>1137</condID>
+    <taskID>2236</taskID>
+    <portID>recv_command</portID>
+    <trueProb>0.5</trueProb>
+    <falseProb>0</falseProb>
+  </precondLink>
+  <precondLink>
+    <condID>1135</condID>
+    <taskID>2241</taskID>
+    <portID>recv_transmission</portID>
+    <trueProb>1.0</trueProb>
+    <falseProb>0</falseProb>
+  </precondLink>
+  <precondLink>
+    <condID>1136</condID>
+    <taskID>2242</taskID>
+    <portID>recv_transmission</portID>
+    <trueProb>1.0</trueProb>
+    <falseProb>0</falseProb>
+  </precondLink>
+
+
+
+
+  <effectLink>
+    <taskID>2221</taskID>
+    <condID>1121</condID>
+    <portID>observation_data</portID>
+    <weight>1.0</weight>
+  </effectLink>
+  <effectLink>
+    <taskID>2222</taskID>
+    <condID>1122</condID>
+    <portID>observation_data</portID>
+    <weight>1.0</weight>
+  </effectLink>
+  <effectLink>
+    <taskID>2223</taskID>
+    <condID>1123</condID>
+    <portID>observation_data</portID>
+    <weight>1.0</weight>
+  </effectLink>
+  <effectLink>
+    <taskID>2231</taskID>
+    <condID>1131</condID>
+    <portID>send_data</portID>
+    <weight>1.0</weight>
+  </effectLink>
+  <effectLink>
+    <taskID>2232</taskID>
+    <condID>1132</condID>
+    <portID>send_data</portID>
+    <weight>1.0</weight>
+  </effectLink>
+  <effectLink>
+    <taskID>2233</taskID>
+    <condID>1133</condID>
+    <portID>send_data</portID>
+    <weight>1.0</weight>
+  </effectLink>
+  <effectLink>
+    <taskID>2234</taskID>
+    <condID>1134</condID>
+    <portID>send_data</portID>
+    <weight>1.0</weight>
+  </effectLink>
+  <effectLink>
+    <taskID>2235</taskID>
+    <condID>1135</condID>
+    <portID>transmit_data</portID>
+    <weight>1.0</weight>
+  </effectLink>
+  <effectLink>
+    <taskID>2236</taskID>
+    <condID>1136</condID>
+    <portID>transmit_data</portID>
+    <weight>1.0</weight>
+  </effectLink>
+  <effectLink>
+    <taskID>2237</taskID>
+    <condID>1137</condID>
+    <portID>send_command</portID>
+    <weight>1.0</weight>
+  </effectLink>
+  <effectLink>
+    <taskID>2241</taskID>
+    <condID>1141</condID>
+    <portID>NONE</portID>
+    <weight>1.0</weight>
+  </effectLink>
+  <effectLink>
+    <taskID>2242</taskID>
+    <condID>1142</condID>
+    <portID>NONE</portID>
+    <weight>1.0</weight>
+  </effectLink>
+
+</SANet:network>
