@@ -1,3 +1,12 @@
+Mon Apr 16 18:03:55 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tao/PortableServer/ServantRetentionStrategyRetain.cpp:
+        * tests/CORBA_e_Implicit_Activation/server.cpp:
+
+          When attempting to implicitly activate an object, the
+          PortableServer::POA::WrongPolicy should be thrown.  This fixes bug
+          2853.
+
 Mon Apr 16 14:43:56 UTC 2007 Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_2702_Regression/run_test.pl:
