@@ -35,7 +35,7 @@ my @tests = qw(unbounded_value_sequence_ut
 
 foreach my $process (@tests) {
 
-    
+
   my $P = 0;
   if (PerlACE::is_vxworks_test()) {
       $P = new PerlACE::ProcessVX ($process,
@@ -64,7 +64,7 @@ foreach my $process (@tests) {
     $final_result = 1;
     next;
   }
-  $result = $P->WaitKill(10);
+  $result = $P->WaitKill($PerlACE::wait_interval_for_process_creation);
   if ($result != 0) {
     print "FAILED\n";
     $final_result = 1;

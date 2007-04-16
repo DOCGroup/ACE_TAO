@@ -17,7 +17,7 @@ else {
     $T = new PerlACE::Process ("client");
 }
 
-$test = $T->SpawnWaitKill (15);
+$test = $T->SpawnWaitKill ($PerlACE::wait_interval_for_process_creation);
 
 if ($test != 0) {
     print STDERR "ERROR: Bug 1693 test returned $test\n";
