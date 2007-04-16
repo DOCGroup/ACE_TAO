@@ -103,9 +103,10 @@ Worker_Task::svc (void)
     {
       ACE_Message_Block *mb = 0;
 
-      int dequeue_results = this->msg_queue ()->dequeue_head (mb);
-
-      ACE_ASSERT (dequeue_results != -1);
+      if (-1 == this->msg_queue ()->dequeue_head (mb))
+	ACE_ERROR_BREAK ((LM_ERROR,
+			  ACE_TEXT ("(%t) %p\n"),
+			  ACE_TEXT ("Worker_Task dequeue_head")));
 
       size_t length = mb->length ();
 
@@ -116,18 +117,24 @@ Worker_Task::svc (void)
       // of the header and reference counts the data.
       if (this->next () != 0)
         {
-          int duplicate_result = this->put_next (mb->duplicate ());
-        ACE_ASSERT (duplicate_result != -1);
+          if (-1 == this->put_next (mb->duplicate ()))
+	    ACE_ERROR_BREAK ((LM_ERROR,
+			      ACE_TEXT ("(%t) %p\n"),
+			      ACE_TEXT ("Worker_Task put_next")));
         }
 
       // If there's no next() Task to send to, then we'll consume the
       // message here.
       else if (length > 0)
         {
-          int current_count = ACE_OS::atoi (ACE_TEXT_CHAR_TO_TCHAR (mb->rd_ptr ()));
+          int current_count = ACE_OS::atoi ((ACE_TCHAR *)(mb->rd_ptr ()));
           int i;
 
-          ACE_ASSERT (count == current_count);
+          if (count != current_count)
+	    ACE_ERROR_BREAK ((LM_ERROR,
+			      ACE_TEXT ("(%t) count from block should be %d ")
+			      ACE_TEXT ("but is %d\n"),
+			      count, current_count));
 
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("(%t) enqueueing %d duplicates\n"),
@@ -154,7 +161,11 @@ Worker_Task::svc (void)
                            // Don't block indefinitely if we flow control...
                            (ACE_Time_Value *) &ACE_Time_Value::zero);
 
-              ACE_ASSERT (enqueue_prio_result != -1);
+              if (enqueue_prio_result == -1)
+		ACE_ERROR_BREAK ((LM_ERROR,
+				  ACE_TEXT ("(%t) Pass %d %p\n"),
+				  i,
+				  ACE_TEXT ("Worker_Task enqueue_prio")));
             }
 
           ACE_DEBUG ((LM_DEBUG,
@@ -164,11 +175,33 @@ Worker_Task::svc (void)
           // Dequeue the same <current_count> duplicates.
           for (i = current_count; i > 0; i--)
             {
-              int deqresult = this->msg_queue ()->dequeue_head (dup);
-              ACE_ASSERT (deqresult != -1);
-              ACE_ASSERT (count == ACE_OS::atoi (ACE_TEXT_CHAR_TO_TCHAR (dup->rd_ptr ())));
-              ACE_ASSERT (ACE_OS::strcmp (mb->rd_ptr (), dup->rd_ptr ()) == 0);
-              ACE_ASSERT (dup->msg_priority () == ACE_DEFAULT_MESSAGE_BLOCK_PRIORITY + 1);
+              if (-1 == this->msg_queue ()->dequeue_head (dup))
+		ACE_ERROR_BREAK ((LM_ERROR,
+				  ACE_TEXT ("(%t) Dup %d, %p\n"),
+				  i,
+				  ACE_TEXT ("Worker_Task dequeue dups")));
+	      if (count != ACE_OS::atoi ((ACE_TCHAR *)(dup->rd_ptr ())))
+		ACE_ERROR ((LM_ERROR,
+			    ACE_TEXT ("(%t) line %l, Dup %d, block's count ")
+			    ACE_TEXT ("is %d but should be %d\n"),
+			    i,
+			    ACE_OS::atoi ((ACE_TCHAR *)(dup->rd_ptr ())),
+			    count));
+	      if (0 != ACE_OS::strcmp ((ACE_TCHAR *)mb->rd_ptr (),
+				       (ACE_TCHAR *)dup->rd_ptr ()))
+		ACE_ERROR ((LM_ERROR,
+			    ACE_TEXT ("(%t) Dup %d text is %s; ")
+			    ACE_TEXT ("should be %s\n"),
+			    i,
+			    dup->rd_ptr (),
+			    mb->rd_ptr ()));
+	      if (dup->msg_priority () != ACE_DEFAULT_MESSAGE_BLOCK_PRIORITY + 1)
+		ACE_ERROR ((LM_ERROR,
+			    ACE_TEXT ("(%t) Dup %d block priority is %u; ")
+			    ACE_TEXT ("should be %u\n"),
+			    i,
+			    (unsigned int)dup->msg_priority (),
+			    (unsigned int)(ACE_DEFAULT_MESSAGE_BLOCK_PRIORITY + 1)));
               dup->release ();
             }
 
