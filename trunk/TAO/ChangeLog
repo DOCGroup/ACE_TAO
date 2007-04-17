@@ -1,3 +1,8 @@
+Tue Apr 17 08:16:12 UTC 2007 Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/ImplRepo/Bug_689_Regression/Bug_689_Regression.mpc:
+          Added missing after
+
 Tue Apr 17 08:14:12 UTC 2007 Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_2678_Regression/run_test.pl:
