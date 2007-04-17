@@ -1,3 +1,10 @@
+Tue Apr 17 13:41:49 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * performance-tests/Cubit/TAO/MT_Cubit/Globals.cpp:
+
+          Use ACE_SCOPE_THREAD on BSD instead of ACE_SCOPE_PROCESS. It's
+          not supported.
+
 Tue Apr 17 13:20:14 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/tests/ImplRepo/Bug_689_Regression/run_test.pl:
