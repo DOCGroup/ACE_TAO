@@ -14,12 +14,12 @@ if (PerlACE::is_vxworks_test()) {
     $SV = new PerlACE::ProcessVX ("client");
 }
 else {
-    $SV = new PerlACE::Process ("client");    
+    $SV = new PerlACE::Process ("client");
 }
 
 $SV->Spawn ();
 
-$server = $SV->WaitKill (10);
+$server = $SV->WaitKill ($PerlACE::wait_interval_for_process_creation);
 
 if ($server != 0) {
     print STDERR "ERROR: client returned $server\n";

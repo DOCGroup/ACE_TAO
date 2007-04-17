@@ -8,16 +8,23 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::Run_Test;
 
-$iorfile = PerlACE::LocalFile ("server.ior");
+$baseior = "server.ior"
+$iorfile = PerlACE::LocalFile ($baseior);
 unlink $iorfile;
 
-$SV  = new PerlACE::Process ("server", "-o $iorfile");
-$CL1 = new PerlACE::Process ("client", "-k file://$iorfile");
+if (PerlACE::is_vxworks_test()) {
+    $SV = new PerlACE::ProcessVX ("server", "-o $baseior");
+}
+else {
+    $SV  = new PerlACE::Process ("server", "-o $iorfile");
+}
 
+$CL1 = new PerlACE::Process ("client", "-k file://$iorfile");
 
 $SV->Spawn ();
 
-if (PerlACE::waitforfile_timed ($iorfile, 15) == -1) {
+if (PerlACE::waitforfile_timed ($iorfile,
+                    $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: cannot find file <$iorfile>\n";
     $SV->Kill (); $SV->TimedWait (1);
     exit 1;
