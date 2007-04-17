@@ -72,9 +72,6 @@
 #define ACE_TEMPLATES_REQUIRE_SOURCE
 #define ACE_HAS_TEMPLATE_SPECIALIZATION
 
-#define ACE_INT64_FORMAT_SPECIFIER ACE_LIB_TEXT ("%I64d")
-#define ACE_UINT64_FORMAT_SPECIFIER ACE_LIB_TEXT ("%I64u")
-
 // Platform provides ACE_TLI function prototypes.
 // For Win32, this is not really true, but saves a lot of hassle!
 #define ACE_HAS_TLI_PROTOTYPES

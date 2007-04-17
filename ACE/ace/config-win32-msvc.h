@@ -130,7 +130,12 @@
 #define ACE_LACKS_NETINET_TCP_H
 #define ACE_LACKS_TERMIOS_H
 #define ACE_LACKS_REGEX_H
+#define ACE_HAS_INTRIN_H
 
+#define ACE_HAS_INTRINSIC_INTERLOCKED
+
+#define ACE_INT64_FORMAT_SPECIFIER ACE_LIB_TEXT ("%I64d")
+#define ACE_UINT64_FORMAT_SPECIFIER ACE_LIB_TEXT ("%I64u")
 
 // Turn off warnings for /W4
 // To resume any of these warning: #pragma warning(default: 4xxx)
