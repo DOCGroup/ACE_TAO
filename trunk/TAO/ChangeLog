@@ -1,3 +1,9 @@
+Tue Apr 17 07:25:12 UTC 2007 Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_2201_Regression/run_test.pl:
+        * tests/Bug_2289_Regression/run_test.pl:
+          Corrected these scripts for VxWorks cross host testing
+
 Tue Apr 17 07:06:12 UTC 2007 Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/ServantRetentionStrategyRetain.cpp:
@@ -20,8 +26,8 @@ Mon Apr 16 18:03:55 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
         * tests/CORBA_e_Implicit_Activation/server.cpp:
 
           When attempting to implicitly activate an object, the
-          PortableServer::POA::WrongPolicy should be thrown when using CORBA
-          e.  This fixes bug 2853.
+          PortableServer::POA::WrongPolicy should be thrown when using CORBA/e
+          This fixes bug 2853.
 
 Mon Apr 16 14:43:56 UTC 2007 Johnny Willemsen  <jwillemsen@remedy.nl>
 
