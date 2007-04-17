@@ -1,9 +1,14 @@
+Tue Apr 17 07:06:12 UTC 2007 Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/ServantRetentionStrategyRetain.cpp:
+          Removed not needed check for CORBA/e
+
 Mon Apr 16 18:41:16 UTC 2007  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
-        * docs/tutorials/Quoter/Simple/Persistent/index.html: 
+        * docs/tutorials/Quoter/Simple/Persistent/index.html:
         * docs/tutorials/Quoter/Simple/ImprovedServer/index.html:
-        * docs/tutorials/Quoter/Simple/Impl-Repo/index.html: 
-        * docs/tutorials/Quoter/Simple/Client/index.html: 
+        * docs/tutorials/Quoter/Simple/Impl-Repo/index.html:
+        * docs/tutorials/Quoter/Simple/Client/index.html:
         * docs/tutorials/Quoter/Simple/Server/index.html: Updated the
           documentation to use MPC files rather than makefiles.  Thanks to
           Bill Bruns <bruns dot bill at gmail dot com> for noticing this
