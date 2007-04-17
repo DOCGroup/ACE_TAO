@@ -108,7 +108,7 @@ TAO_DynEnum_i::_narrow (CORBA::Object_ptr _tao_objref)
 char *
 TAO_DynEnum_i::get_as_string (void)
 {
-  CORBA::TypeCode_var ct = TAO_DynAnyFactory::strip_alias (this->type_);
+  CORBA::TypeCode_var ct = TAO_DynAnyFactory::strip_alias (this->type_.in ());
 
   const char *retval = ct.in ()->member_name (this->value_);
 
@@ -118,7 +118,7 @@ TAO_DynEnum_i::get_as_string (void)
 void
 TAO_DynEnum_i::set_as_string (const char *value_as_string)
 {
-  CORBA::TypeCode_var ct = TAO_DynAnyFactory::strip_alias (this->type_);
+  CORBA::TypeCode_var ct = TAO_DynAnyFactory::strip_alias (this->type_.in ());
 
   CORBA::ULong count = ct.in ()->member_count ();
 
@@ -154,7 +154,7 @@ TAO_DynEnum_i::get_as_ulong (void)
 void
 TAO_DynEnum_i::set_as_ulong (CORBA::ULong value_as_ulong)
 {
-  CORBA::TypeCode_var ct = TAO_DynAnyFactory::strip_alias (this->type_);
+  CORBA::TypeCode_var ct = TAO_DynAnyFactory::strip_alias (this->type_.in ());
   CORBA::ULong const max = ct.in ()->member_count ();
 
   if (value_as_ulong < max)
