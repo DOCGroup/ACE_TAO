@@ -23,7 +23,7 @@ else {
 $server = $SV->SpawnWaitKill ($PerlACE::wait_interval_for_process_creation);
 
 if ($server != 0) {
-    print STDERR "ERROR: Collocation returned $server \n";
+    print STDERR "ERROR: Collocation returned $server\n";
     $status = 1;
 }
 
