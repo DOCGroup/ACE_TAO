@@ -1,3 +1,10 @@
+Tue Apr 17 14:36:00 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/tao_orb_tests.lst:
+
+          Neither 2804 nor 2844 will run in a minimum corba or corba e
+          build.
+
 Tue Apr 17 14:25:35 UTC 2007  Adam Mitz  <mitza@ociweb.com>
 
         * bin/generate_compile_stats.sh:
