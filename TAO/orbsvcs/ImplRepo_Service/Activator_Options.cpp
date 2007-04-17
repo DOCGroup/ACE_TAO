@@ -29,6 +29,7 @@ Activator_Options::Activator_Options ()
 , service_ (false)
 , notify_imr_ (false)
 , service_command_(SC_NONE)
+, env_buf_len_ (Activator_Options::ENVIRONMENT_BUFFER)
 {
 }
 
@@ -86,6 +87,21 @@ Activator_Options::parse_args (int &argc, char *argv[])
             }
 
           this->debug_ = ACE_OS::atoi (shifter.get_current ());
+        }
+      else if (ACE_OS::strcasecmp (shifter.get_current (),
+                                   ACE_TEXT ("-e")) == 0)
+        {
+          shifter.consume_arg ();
+
+          if (!shifter.is_anything_left () || shifter.get_current ()[0] == '-')
+            {
+              ACE_ERROR ((LM_ERROR, "Error: -e option needs "
+                                    "an environment buffer length\n"));
+              this->print_usage ();
+              return -1;
+            }
+
+          this->env_buf_len_ = ACE_OS::atoi (shifter.get_current ());
         }
       else if (ACE_OS::strcasecmp (shifter.get_current (),
                                    ACE_TEXT ("-o")) == 0)
@@ -174,11 +190,12 @@ Activator_Options::print_usage (void) const
   ACE_ERROR ((LM_ERROR,
               "Usage:\n"
               "\n"
-              "ImR_Activator [-c cmd] [-d 0|1|2] [-o file] [-l] [-n name]\n"
+              "ImR_Activator [-c cmd] [-d 0|1|2] [-e buflen] [-o file] [-l] [-n name]\n"
               "\n"
               "  -c command  Runs service commands \n"
               "              ('install' or 'remove' or 'install_no_imr')\n"
               "  -d level    Sets the debug level\n"
+              "  -e buflen   Set the environment buffer length for activated servants\n"
               "  -o file     Outputs the ImR's IOR to a file\n"
               "  -l          Notify the ImR when a process exits\n"
               "  -n name     Specify a name for the Activator\n")
@@ -345,4 +362,10 @@ const ACE_CString&
 Activator_Options::name (void) const
 {
   return this->name_;
+}
+
+int
+Activator_Options::env_buf_len (void) const
+{
+  return this->env_buf_len_;
 }
