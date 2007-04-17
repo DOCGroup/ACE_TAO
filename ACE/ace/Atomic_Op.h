@@ -29,6 +29,9 @@
 // available on this platform.
 #if defined (ACE_HAS_THREADS)
 # if defined (WIN32)
+#  if defined (ACE_HAS_INTRINSIC_INTERLOCKED)
+#   define ACE_HAS_BUILTIN_ATOMIC_OP
+#  endif /* ACE_HAS_INTRINSIC_INTERLOCKED */
 #  if defined (ACE_HAS_INTERLOCKED_EXCHANGEADD)
 #   define ACE_HAS_BUILTIN_ATOMIC_OP
 #  else /* ACE_HAS_INTERLOCKED_EXCHANGEADD */
