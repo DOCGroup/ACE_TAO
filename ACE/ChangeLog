@@ -1,3 +1,8 @@
+Tue Apr 17 10:03:12 UTC 2007 Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Atomic_Op.inl:
+          Added missing pragma intrinsic
+
 Tue Apr 17 09:55:12 UTC 2007 Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-icc-common.h:
