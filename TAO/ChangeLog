@@ -1,3 +1,16 @@
+Tue Apr 17 13:17:12 UTC 2007 Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_2768_Regression/server.cpp:
+          Use orb->run
+
+        * tao/LocateRequest_Invocation.h:
+          Use public inheritance
+
+        * tao/LocateRequest_Invocation_Adapter.{h,cpp}:
+          Fixed handling of a location forward. This fixes bugzilla
+          2768. Thanks to Markus Henschel <m dot henschel at bally-wulff dot de>
+          for reporting this problem
+
 Tue Apr 17 13:05:52 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/tests/ImplRepo/run_test.pl:
@@ -9,7 +22,7 @@ Tue Apr 17 12:09:12 UTC 2007 Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_2768_Regression/*:
           New regression which is failing at this moment, thanks to
-          Markus Henschel <m.henschel@bally-wulff.de> for making this
+          Markus Henschel <m dot henschel at bally-wulff dot de> for making this
           regression.
 
         * tests/Big_Oneways/run_test.pl:

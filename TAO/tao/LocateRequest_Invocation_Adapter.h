@@ -20,6 +20,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/Pseudo_VarOut_T.h"
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Time_Value;
 ACE_END_VERSIONED_NAMESPACE_DECL
@@ -30,7 +32,10 @@ namespace CORBA
 {
   class Object;
   typedef Object *Object_ptr;
+  typedef TAO_Pseudo_Var_T<Object> Object_var;
 }
+
+class TAO_Stub;
 
 namespace TAO
 {
@@ -64,6 +69,12 @@ namespace TAO
   private:
 
     bool get_timeout (ACE_Time_Value &val);
+
+    /// Helper method that takes care of setting the profiles within
+    /// the stub object if the target gets forwarded
+    void object_forwarded (CORBA::Object_var &effective_target,
+                           TAO_Stub *stub,
+                           CORBA::Boolean permanent_forward);
 
   private:
     CORBA::Object_ptr target_;

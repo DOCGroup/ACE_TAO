@@ -4,6 +4,7 @@
 #include "tao/LocateRequest_Invocation.h"
 #include "tao/Transport.h"
 #include "tao/Transport_Mux_Strategy.h"
+#include "tao/GIOP_Utils.h"
 #include "tao/ORB_Core.h"
 #include "tao/Stub.h"
 #include "tao/SystemException.h"
@@ -18,7 +19,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace TAO
 {
   LocateRequest_Invocation_Adapter::LocateRequest_Invocation_Adapter (
-    CORBA::Object *target)
+    CORBA::Object_ptr target)
     : target_ (target)
     , list_ (0)
   {
@@ -27,7 +28,8 @@ namespace TAO
   void
   LocateRequest_Invocation_Adapter::invoke (void)
   {
-    CORBA::Object * const effective_target = this->target_;
+    CORBA::Object_var effective_target =
+      CORBA::Object::_duplicate (this->target_);
 
     TAO_Stub * const stub =
       this->target_->_stubobj ();
@@ -48,9 +50,7 @@ namespace TAO
     ACE_Time_Value tmp_wait_time;
     ACE_Time_Value *max_wait_time = 0;
 
-    bool const is_timeout = this->get_timeout (tmp_wait_time);
-
-    if (is_timeout)
+    if (this->get_timeout (tmp_wait_time))
       max_wait_time = &tmp_wait_time;
 
     Invocation_Status s = TAO_INVOKE_START;
@@ -58,9 +58,7 @@ namespace TAO
     while (s == TAO_INVOKE_START ||
            s == TAO_INVOKE_RESTART)
       {
-        Profile_Transport_Resolver resolver (effective_target,
-                                             stub,
-                                             true);
+        Profile_Transport_Resolver resolver (effective_target, stub, true);
 
         try
           {
@@ -76,11 +74,24 @@ namespace TAO
             TAO::LocateRequest_Invocation synch (this->target_, resolver, op);
 
             s = synch.invoke (max_wait_time);
+            if (s == TAO_INVOKE_RESTART && synch.is_forwarded ())
+              {
+                effective_target = synch.steal_forwarded_reference ();
+
+#if TAO_HAS_INTERCEPTORS == 1
+                CORBA::Boolean const is_permanent_forward =
+                  (synch.reply_status() == TAO_GIOP_LOCATION_FORWARD_PERM);
+#else
+                CORBA::Boolean const is_permanent_forward = false;
+#endif
+                this->object_forwarded (effective_target,
+                                        resolver.stub (),
+                                        is_permanent_forward);
+              }
           }
         catch (const ::CORBA::INV_POLICY&)
           {
-            this->list_ =
-              resolver.steal_inconsistent_policies ();
+            this->list_ = resolver.steal_inconsistent_policies ();
             throw;
           }
       }
@@ -104,6 +115,37 @@ namespace TAO
 
     return has_timeout;
   }
+
+  void
+  LocateRequest_Invocation_Adapter::object_forwarded (
+    CORBA::Object_var &effective_target,
+    TAO_Stub *stub,
+    CORBA::Boolean permanent_forward)
+  {
+    // The object pointer has to be changed to a TAO_Stub pointer
+    // in order to obtain the profiles.
+    TAO_Stub *stubobj = effective_target->_stubobj ();
+
+    if (stubobj == 0)
+      throw ::CORBA::INTERNAL (
+        CORBA::SystemException::_tao_minor_code (
+          TAO_INVOCATION_LOCATION_FORWARD_MINOR_CODE,
+          errno),
+        CORBA::COMPLETED_NO);
+
+    // Reset the profile in the stubs
+    stub->add_forward_profiles (stubobj->base_profiles (), permanent_forward);
+
+    if (stub->next_profile () == 0)
+      throw ::CORBA::TRANSIENT (
+        CORBA::SystemException::_tao_minor_code (
+          TAO_INVOCATION_LOCATION_FORWARD_MINOR_CODE,
+          errno),
+        CORBA::COMPLETED_NO);
+
+    return;
+  }
+
 } // End namespace TAO
 
 TAO_END_VERSIONED_NAMESPACE_DECL
