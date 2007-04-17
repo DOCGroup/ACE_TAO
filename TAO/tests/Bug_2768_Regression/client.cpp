@@ -36,7 +36,7 @@ int main(int argc, char* argv[])
 {
   try
   {
-		//init the orb
+    //init the orb
     CORBA::ORB_var orb = CORBA::ORB_init(argc, argv);
 
     if (parse_args (argc, argv) != 0)
@@ -48,13 +48,12 @@ int main(int argc, char* argv[])
     SimpleMessenger::Messenger_var messenger =
       SimpleMessenger::Messenger::_unchecked_narrow( object_temp.in ());
 
-		CORBA::PolicyList_var unused;
-		messenger->_validate_connection(unused);
+    CORBA::PolicyList_var unused;
+    messenger->_validate_connection(unused);
 
     messenger->send();
 
-		orb->destroy();
-
+    orb->destroy();
   }
   catch (const CORBA::Exception& ex)
     {
