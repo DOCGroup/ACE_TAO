@@ -17,7 +17,7 @@ else {
 
 $SV->Spawn ();
 
-$server = $SV->WaitKill (10);
+$server = $SV->WaitKill ($PerlACE::wait_interval_for_process_creation);
 
 if ($server != 0) {
     print STDERR "ERROR: server returned $server\n";
