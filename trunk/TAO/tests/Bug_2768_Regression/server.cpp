@@ -45,12 +45,13 @@ int main(int argc, char * argv[])
     ACE_OS::fprintf (output_file, "%s", messenger_ior_string.in ());
     ACE_OS::fclose (output_file);
 
-		while (true)
-		{
-			orb->perform_work();
-		}
+    orb->run ();
 
+    ACE_DEBUG ((LM_DEBUG, "(%P|%t) server - event loop finished\n"));
 
+    poa->destroy (1, 1);
+
+    orb->destroy ();
   }
   catch (const CORBA::Exception& ex)
     {
