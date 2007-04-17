@@ -16,6 +16,7 @@ $status = 0;
 ## executable extension (if there is one).
 my($perl) = $^X;
 $perl =~ s/\.exe$//i;
+$perl =~ s/000000\///g if ($^O eq 'VMS');
 
 $SV = new PerlACE::Process ($perl, "fakeserver2.pl");
 if (PerlACE::is_vxworks_test()) {
