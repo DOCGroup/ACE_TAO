@@ -1,3 +1,10 @@
+Tue Apr 17 14:25:35 UTC 2007  Adam Mitz  <mitza@ociweb.com>
+
+        * bin/generate_compile_stats.sh:
+
+          Don't error out if the destination directory doesn't exist yet, the
+          script will attempt to create it before using it.
+
 Tue Apr 17 12:11:12 UTC 2007 Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/tao_orb_tests.lst:
