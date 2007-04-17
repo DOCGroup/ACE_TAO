@@ -30,14 +30,14 @@ $TAO_IMR->IgnoreExeSubDir(1);
 unlink($locior, $actior, $serverior);
 
 my $result = $IMR_LOCATOR->Spawn();
-if (PerlACE::waitforfile_timed($locior, 10) == -1) {
+if (PerlACE::waitforfile_timed($locior, 15) == -1) {
   print STDERR "ERROR: IMR Locator returned $result\n";
   $IMR_LOCATOR->Kill();
   exit(1);
 }
 
 $result = $IMR_ACTIVATOR->Spawn();
-if (PerlACE::waitforfile_timed($actior, 10) == -1) {
+if (PerlACE::waitforfile_timed($actior, 15) == -1) {
   print STDERR "ERROR: IMR Activator returned $result\n";
   $IMR_ACTIVATOR->Kill();
   $IMR_LOCATOR->Kill();
@@ -50,7 +50,7 @@ $TAO_IMR->Arguments($initref .
                     " $initref -ORBUseIMR 1 " .
                     "-o $serverior\"");
 
-$result = $TAO_IMR->SpawnWaitKill(10);
+$result = $TAO_IMR->SpawnWaitKill(15);
 if ($result != 0) {
   print STDERR "ERROR: TAO IMR returned $result\n";
   $IMR_ACTIVATOR->Kill();
@@ -60,7 +60,7 @@ if ($result != 0) {
 
 $TAO_IMR->Arguments($initref . ' start test_server');
 
-$result = $TAO_IMR->SpawnWaitKill(10);
+$result = $TAO_IMR->SpawnWaitKill(15);
 if ($result != 0) {
   print STDERR "ERROR: TAO IMR returned $result\n";
   $IMR_ACTIVATOR->Kill();
@@ -68,7 +68,7 @@ if ($result != 0) {
   exit(1);
 }
 
-$result = $CL->SpawnWaitKill(10);
+$result = $CL->SpawnWaitKill(15);
 if ($result != 0) {
   print STDERR "ERROR: client returned $result\n";
   $IMR_ACTIVATOR->Kill();
