@@ -6,6 +6,8 @@
 
 #if defined (ACE_HAS_INTRINSIC_INTERLOCKED)
 #  include "ace/os_include/os_intrin.h"
+
+#pragma intrinsic (_InterlockedExchange, _InterlockedExchangeAdd, _InterlockedIncrement, _InterlockedDecrement)
 #endif /* ACE_HAS_INTRINSIC_INTERLOCKED */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
