@@ -1,3 +1,11 @@
+Tue Apr 17 22:11:11 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * netsvcs/lib/Server_Logging_Handler_T.cpp (parse_args): When calling
+          ACE_LOG_MSG->open(), get the existing logging flags and pass them
+          to open() in order to preserve any previously set flags, such as
+          SYSLOG, etc. Thanks to Hubert Talbot <Hubert dot Talbot at criq
+          dot qc dot ca> for this fix.
+
 Tue Apr 17 14:36:00 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/tao_orb_tests.lst:

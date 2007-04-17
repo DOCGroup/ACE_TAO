@@ -345,7 +345,7 @@ ACE_Server_Logging_Acceptor_T<SLH, LMR, SST>::parse_args (int argc, ACE_TCHAR *a
 
   int service_port = ACE_DEFAULT_SERVER_PORT;
 
-  ACE_LOG_MSG->open (ACE_TEXT ("Logging Service"));
+  ACE_LOG_MSG->open (ACE_TEXT ("Logging Service"), ACE_LOG_MSG->flags ());
 
   ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("p:"), 0);
 
