@@ -1,3 +1,16 @@
+Tue Apr 17 07:46:12 UTC 2007 Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_1476_Regression/run_test.pl:
+        * tests/Bug_2084_Regression/run_test.pl:
+        * tests/Bug_2494_Regression/run_test.pl:
+        * tests/Collocation/run_test.pl:
+        * tests/IORManipulation/run_test.pl:
+        * tests/Native_Exceptions/run_test.pl:
+        * tests/Optimized_Connection/run_test.pl:
+        * tests/Queued_Message_Test/run_test.pl:
+        * tests/Stack_Recursion/run_test.pl:
+          Corrected these scripts for VxWorks cross host testing
+
 Tue Apr 17 07:33:12 UTC 2007 Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_1476_Regression/run_test.pl:
