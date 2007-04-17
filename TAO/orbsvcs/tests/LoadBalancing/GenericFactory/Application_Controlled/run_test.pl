@@ -47,7 +47,7 @@ $LM->Spawn ();
 
 if (PerlACE::waitforfile_timed ("lm.ior", 5) == -1) {
     print STDERR "ERROR: cannot find file LoadManager IOR: lm.ior\n";
-    $SV->Kill (); $SV->TimedWait (1);
+    $LM->Kill (); $LM->TimedWait (1);
     exit 1;
 }
 
@@ -55,6 +55,7 @@ $SV->Spawn ();
 
 if (PerlACE::waitforfile_timed ($iorfile, 10) == -1) {
     print STDERR "ERROR: cannot find server file <$iorfile>\n";
+    $LM->Kill ();
     $SV->Kill (); $SV->TimedWait (1);
     exit 1;
 }

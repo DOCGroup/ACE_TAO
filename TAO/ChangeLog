@@ -1,3 +1,11 @@
+Tue Apr 17 13:20:14 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/tests/ImplRepo/Bug_689_Regression/run_test.pl:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/run_test.pl:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Infrastructure_Controlled/run_test.pl:
+
+          Added missing kill's for when things go wrong.
+
 Tue Apr 17 13:17:12 UTC 2007 Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_2768_Regression/server.cpp:
