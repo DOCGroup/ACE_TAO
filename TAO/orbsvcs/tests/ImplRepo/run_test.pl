@@ -287,19 +287,20 @@ sub airplane_ir_test
     if (PerlACE::waitforfile_timed ($imr_activator_ior, 5) == -1) {
         print STDERR "ERROR: cannot find $imr_activator_ior\n";
         $IMR_ACTIVATOR->Kill ();
+        $IMR_LOCATOR->Kill ();
         return 1;
     }
 
     # No need to specify imr_initref or -orbuseimr 1 for servers spawned by activator
     # Can use update to add servers.
     $TAO_IMR->Arguments ("$imr_initref update airplane_server -c \""
-			 . $A_SVR->Executable ()
+                         . $A_SVR->Executable ()
       . " -o $airplane_ior \"");
 
     $result = $TAO_IMR->SpawnWaitKill (5);
     if ($result != 0) {
         print STDERR "ERROR: tao_imr returned $result\n";
-	$IMR_ACTIVATOR->Kill ();
+        $IMR_ACTIVATOR->Kill ();
         $IMR_LOCATOR->Kill ();
         return 1;
     }
@@ -310,7 +311,7 @@ sub airplane_ir_test
     if (PerlACE::waitforfile_timed ($airplane_ior, 10) == -1) {
         print STDERR "ERROR: cannot find $airplane_ior\n";
         $IMR_ACTIVATOR->Kill ();
-	$IMR_LOCATOR->Kill ();
+        $IMR_LOCATOR->Kill ();
         $A_SVR->Kill ();
         return 1;
     }
@@ -387,7 +388,7 @@ sub nestea_ir_test
     if (PerlACE::waitforfile_timed ($imr_activator_ior, 30) == -1) {
         print STDERR "ERROR: cannot find $imr_activator_ior\n";
         $IMR_ACTIVATOR->Kill ();
-	$IMR_LOCATOR->Kill ();
+        $IMR_LOCATOR->Kill ();
         return 1;
     }
 
@@ -699,7 +700,7 @@ sub persistent_ir_test
     if (PerlACE::waitforfile_timed ($imr_activator_ior, 10) == -1) {
         print STDERR "ERROR: cannot find $imr_activator_ior\n";
         $IMR_ACTIVATOR->Kill ();
-	      $IMR_LOCATOR->Kill ();
+        $IMR_LOCATOR->Kill ();
         return 1;
     }
 
@@ -858,7 +859,7 @@ sub both_ir_test
 
     if (PerlACE::waitforfile_timed ($imr_activator_ior, 10) == -1) {
         print STDERR "ERROR: cannot find $imr_activator_ior\n";
-	$IMR_ACTIVATOR->Kill ();
+        $IMR_ACTIVATOR->Kill ();
         $IMR_LOCATOR->Kill ();
         return 1;
     }
@@ -869,13 +870,13 @@ sub both_ir_test
     ## may attempt to use a partially written file.
     # No need to specify imr_initref or -orbuseimr 1 for servers spawned by activator
     $TAO_IMR->Arguments ("$imr_initref add nestea_server -c \""
-			 . $N_SVR->Executable ()
+                         . $N_SVR->Executable ()
       . " $refstyle\"");
     $TAO_IMR->SpawnWaitKill (10);
 
     # No need to specify imr_initref or -orbuseimr 1 for servers spawned by activator
     $TAO_IMR->Arguments ("$imr_initref add airplane_server -c \""
-			 . $A_SVR->Executable ()
+                         . $A_SVR->Executable ()
        . " $refstyle\"");
     $TAO_IMR->SpawnWaitKill (10);
 
@@ -883,7 +884,7 @@ sub both_ir_test
     $N_SVR->Spawn ();
     if (PerlACE::waitforfile_timed ($nestea_ior, 10) == -1) {
         print STDERR "ERROR: cannot find $nestea_ior\n";
-	$IMR_ACTIVATOR->Kill ();
+        $IMR_ACTIVATOR->Kill ();
         $IMR_LOCATOR->Kill ();
         $A_SVR->Kill ();
         $N_SVR->Kill ();
@@ -895,7 +896,7 @@ sub both_ir_test
     if (PerlACE::waitforfile_timed ($airplane_ior, 10) == -1) {
         print STDERR "ERROR: cannot find $airplane_ior\n";
         $IMR_ACTIVATOR->Kill ();
-	$IMR_LOCATOR->Kill ();
+        $IMR_LOCATOR->Kill ();
         $A_SVR->Kill ();
         $N_SVR->Kill ();
         return 1;

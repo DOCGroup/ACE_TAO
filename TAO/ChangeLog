@@ -1,3 +1,10 @@
+Tue Apr 17 13:05:52 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/tests/ImplRepo/run_test.pl:
+
+          Added a missing kill of the ImplRepo_Service for the airplane_ir
+          test when the ImR_Activator fails to start.
+
 Tue Apr 17 12:09:12 UTC 2007 Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_2768_Regression/*:
