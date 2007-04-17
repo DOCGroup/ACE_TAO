@@ -27,6 +27,14 @@
 # include /**/ <intrin.h>
 #endif /* !ACE_HAS_INTRIN_H */
 
+#if defined (ACE_HAS_IA64INTRIN_H)
+# include /**/ <ia64intrin.h>
+#endif /* !ACE_HAS_IA64INTRIN_H */
+
+#if defined (ACE_HAS_IA32INTRIN_H)
+# include /**/ <ia32intrin.h>
+#endif /* !ACE_HAS_IA32INTRIN_H */
+
 // Place all additions (especially function declarations) within extern "C" {}
 #ifdef __cplusplus
 extern "C"

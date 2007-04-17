@@ -1,3 +1,9 @@
+Tue Apr 17 09:41:12 UTC 2007 Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/os_include/os_intrin.h:
+          Added ACE_HAS_IA64INTRIN_H and ACE_HAS_IA32INTRIN_H for supporting
+          the Intel C++ intrinsic header files
+
 Tue Apr 17 09:13:12 UTC 2007 Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/os_include/os_intrin.h:
