@@ -170,14 +170,6 @@ parse ()
       echo "input_file $INFILE does not exist."
       usage
     fi
-    if ! [ -d "$DEST" ]; then
-      echo "destination_directory $DEST does not exist."
-      usage
-    fi
-    if ! [ -w "$DEST" ]; then
-      echo "destination_directory $DEST is not writable."
-      usage
-    fi
   else
     usage
   fi
