@@ -1,3 +1,8 @@
+Tue Apr 17 12:11:12 UTC 2007 Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+          Added Bug_2768_Regression
+
 Tue Apr 17 11:32:12 UTC 2007 Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-win32-msvc-8.h:
