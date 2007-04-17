@@ -30,14 +30,16 @@ $TAO_IMR->IgnoreExeSubDir(1);
 unlink($locior, $actior, $serverior);
 
 my $result = $IMR_LOCATOR->Spawn();
-if (PerlACE::waitforfile_timed($locior, 5) == -1) {
+if (PerlACE::waitforfile_timed($locior, 10) == -1) {
   print STDERR "ERROR: IMR Locator returned $result\n";
+  $IMR_LOCATOR->Kill();
   exit(1);
 }
 
 $result = $IMR_ACTIVATOR->Spawn();
-if (PerlACE::waitforfile_timed($actior, 5) == -1) {
+if (PerlACE::waitforfile_timed($actior, 10) == -1) {
   print STDERR "ERROR: IMR Activator returned $result\n";
+  $IMR_ACTIVATOR->Kill();
   $IMR_LOCATOR->Kill();
   exit(1);
 }
