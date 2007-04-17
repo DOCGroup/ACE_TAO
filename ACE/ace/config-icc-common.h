@@ -66,5 +66,12 @@
 # define ACE_EXPLICIT_TEMPLATE_DESTRUCTOR_TAKES_ARGS
 #endif
 
+#if defined (__ia64)
+# define ACE_HAS_IA64INTRIN_H
+# define ACE_HAS_INTRINSIC_INTERLOCKED
+#else
+# define ACE_HAS_IA32INTRIN_H
+#endif
+
 #include /**/ "ace/post.h"
 #endif /* ACE_LINUX_ICC_COMMON_H */
