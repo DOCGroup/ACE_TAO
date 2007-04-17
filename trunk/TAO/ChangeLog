@@ -1,9 +1,19 @@
+Tue Apr 17 12:09:12 UTC 2007 Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_2768_Regression/*:
+          New regression which is failing at this moment, thanks to
+          Markus Henschel <m.henschel@bally-wulff.de> for making this
+          regression.
+
+        * tests/Big_Oneways/run_test.pl:
+          Corrected these scripts for VxWorks cross host testing
+
 Tue Apr 17 12:01:56 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/Event_Service/Event_Service.cpp:
 
-          Added an option, -a, to use the thread-per-consumer dispatching   
-          strategy instead of the default dispatching strategy.          
+          Added an option, -a, to use the thread-per-consumer dispatching
+          strategy instead of the default dispatching strategy.
 
         * orbsvcs/ImplRepo_Service/Activator_Options.h:
         * orbsvcs/ImplRepo_Service/Activator_Options.cpp:
@@ -11,8 +21,8 @@ Tue Apr 17 12:01:56 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
         * orbsvcs/ImplRepo_Service/ImR_Activator_i.cpp:
 
           Added a new option, -e, to the ImR_Activator to set the
-          environment buffer length for activated servants.  The default     
-          value, 16kb, is based on the ACE_Process_Options default value.  
+          environment buffer length for activated servants.  The default
+          value, 16kb, is based on the ACE_Process_Options default value.
 
         * orbsvcs/tests/ImplRepo/run_test.pl:
 
