@@ -21,7 +21,7 @@ else {
 
 print STDERR "======== Running in Default Mode \n";
 $SV->Arguments ("-o $iorfile -k file://$iorfile");
-$sv = $SV->SpawnWaitKill (30);
+$sv = $SV->SpawnWaitKill ($PerlACE::wait_interval_for_process_creation);
 
 if ($sv != 0) {
     print STDERR "ERROR in Collocated_Test\n";
@@ -31,7 +31,7 @@ unlink $iorfile;
 
 print STDERR "======== Running with per-orb \n";
 $SV->Arguments ("-o $iorfile -k file://$iorfile -ORBCollocation per-orb");
-$sv = $SV->SpawnWaitKill (30);
+$sv = $SV->SpawnWaitKill ($PerlACE::wait_interval_for_process_creation);
 
 if ($sv != 0) {
     print STDERR "ERROR in server\n";
@@ -41,7 +41,7 @@ unlink $iorfile;
 
 print STDERR "======== Running with no collocation \n";
 $SV->Arguments ("-o $iorfile -k file://$iorfile -ORBCollocation no");
-$sv = $SV->SpawnWaitKill (30);
+$sv = $SV->SpawnWaitKill ($PerlACE::wait_interval_for_process_creation);
 
 if ($sv != 0) {
     print STDERR "ERROR in server\n";
@@ -51,7 +51,7 @@ unlink $iorfile;
 
 print STDERR "======== Running in default mode and two ORBS \n";
 $SV->Arguments ("-o $iorfile -k file://$iorfile -n ");
-$sv = $SV->SpawnWaitKill (30);
+$sv = $SV->SpawnWaitKill ($PerlACE::wait_interval_for_process_creation);
 
 if ($sv != 0) {
     print STDERR "ERROR in server\n";
@@ -61,7 +61,7 @@ unlink $iorfile;
 
 print STDERR "======== Running in per-orb mode and two ORBS \n";
 $SV->Arguments ("-o $iorfile -k file://$iorfile -n -ORBCollocation per-orb");
-$sv = $SV->SpawnWaitKill (30);
+$sv = $SV->SpawnWaitKill ($PerlACE::wait_interval_for_process_creation);
 
 if ($sv != 0) {
     print STDERR "ERROR in server\n";
@@ -71,7 +71,7 @@ unlink $iorfile;
 
 print STDERR "======== Running in no collocation mode and two ORBS \n";
 $SV->Arguments ("-o $iorfile -k file://$iorfile -n -ORBCollocation per-orb");
-$sv = $SV->SpawnWaitKill (30);
+$sv = $SV->SpawnWaitKill ($PerlACE::wait_interval_for_process_creation);
 
 if ($sv != 0) {
     print STDERR "ERROR in server\n";

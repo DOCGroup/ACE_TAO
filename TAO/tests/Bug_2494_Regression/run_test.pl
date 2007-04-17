@@ -11,7 +11,7 @@ use PerlACE::Run_Test;
 $status = 0;
 $srv_threads = '4';
 $cli_threads = '30';
-$baseior = "test.ior"
+$baseior = "test.ior";
 $iorfile = PerlACE::LocalFile ($baseior);
 $srvdownfile = PerlACE::LocalFile ("server_terminated");
 
