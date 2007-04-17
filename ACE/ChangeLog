@@ -1,3 +1,10 @@
+Tue Apr 17 09:55:12 UTC 2007 Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-icc-common.h:
+          Make use of the Intel C++ intrinsic interlocked functions on
+          IA64 Linux. Intel support has promised Intel will deliver these
+          functions in the near feature also for IA32/EM64T.
+
 Tue Apr 17 09:41:12 UTC 2007 Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/os_include/os_intrin.h:
