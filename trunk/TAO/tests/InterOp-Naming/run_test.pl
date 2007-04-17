@@ -19,7 +19,7 @@ print STDERR "\n\n==== InitRef test\n";
 
 unlink $file;
 if (PerlACE::is_vxworks_test()) {
-    $TARGETHOSTNAME = $ENV{'ACE_RUN_VX_TGT_HOST'};
+    $TARGETHOSTNAME = $ENV{'ACE_RUN_VX_TGTHOST'};
     $SV = new PerlACE::ProcessVX ("INS_test_server",
                         "-ORBEndpoint iiop://1.0@"."$TARGETHOSTNAME:$port "
                         . " -i object_name -o test.ior -ORBDottedDecimalAddresses 1");
@@ -34,7 +34,7 @@ $SV->Spawn ();
 
 if (PerlACE::waitforfile_timed ($file, 10) == -1) {
     print STDERR "ERROR: cannot find file <$file>\n";
-    $SV->Kill (); 
+    $SV->Kill ();
     exit 1;
 }
 

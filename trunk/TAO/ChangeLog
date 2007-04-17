@@ -1,3 +1,12 @@
+Tue Apr 17 08:14:12 UTC 2007 Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_2678_Regression/run_test.pl:
+        * tests/Bug_2683_Regression/run_test.pl:
+        * tests/DIOP/run_test.pl:
+        * tests/GIOP_Fragments/PMB_With_Fragments/run_test.pl:
+        * tests/InterOp-Naming/run_test.pl:
+          Fixed variable to be used for VxWorks target name
+
 Tue Apr 17 07:46:12 UTC 2007 Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_1476_Regression/run_test.pl:
