@@ -1,3 +1,9 @@
+Tue Apr 17 13:53:03 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tests/Bug_2702_Regression/run_test.pl:
+
+          Remove a portion of the path to perl when running on VMS.
+
 Tue Apr 17 13:41:49 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * performance-tests/Cubit/TAO/MT_Cubit/Globals.cpp:
