@@ -584,14 +584,6 @@ namespace TAO
       PortableServer::Servant servant,
       CORBA::Short &priority)
     {
-#if defined (CORBA_E_COMPACT) || defined (CORBA_E_MICRO)
-      if (this->poa_->allow_multiple_activations () ||
-            this->poa_->allow_implicit_activation ())
-        {
-          throw PortableServer::POA::WrongPolicy ();
-        }
-
-#else
       // This operation requires the RETAIN and either the UNIQUE_ID or
       // IMPLICIT_ACTIVATION policies; if not present, the WrongPolicy
       // exception is raised.
@@ -600,7 +592,6 @@ namespace TAO
         {
           throw PortableServer::POA::WrongPolicy ();
         }
-#endif
 
       // This operation has three possible behaviors.
 
