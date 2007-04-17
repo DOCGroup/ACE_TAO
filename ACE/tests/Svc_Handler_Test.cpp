@@ -101,10 +101,6 @@ run_main (int argc, ACE_TCHAR *argv[])
                          file.get_path_name ()),
                         1);
 
-#if !defined (VXWORKS)
-# define TEST_CAN_UNLINK_IN_ADVANCE
-#endif
-
     // Create the service handler and assign it <file_io> as its data
     // sink.
     SVC_HANDLER svc_handler (0,
