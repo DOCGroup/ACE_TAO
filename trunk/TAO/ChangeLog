@@ -1,3 +1,9 @@
+Tue Apr 17 14:29:52 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/tests/ImplRepo/Bug_689_Regression/run_test.pl:
+
+          Increased the timeouts for slower machines.
+
 Tue Apr 17 13:53:03 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * tests/Bug_2702_Regression/run_test.pl:
