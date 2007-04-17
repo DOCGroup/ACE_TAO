@@ -853,7 +853,7 @@ sub both_ir_test
         return 1;
     }
 
-    $IMR_ACTIVATOR->Arguments ("-o $imr_activator_ior $imr_initref $refstyle -d 2");
+    $IMR_ACTIVATOR->Arguments ("-e 16384 -o $imr_activator_ior $imr_initref $refstyle -d 2");
     $IMR_ACTIVATOR->Spawn ();
 
     if (PerlACE::waitforfile_timed ($imr_activator_ior, 10) == -1) {
