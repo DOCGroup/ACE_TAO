@@ -1,3 +1,13 @@
+Tue Apr 17 06:51:12 UTC 2007 Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/CDR_File_Test.cpp:
+        * tests/Log_Msg_Test.cpp:
+          VxWorks 6.4 fixes the problem that we can't unlink in advance
+          on a NFS share
+
+        * tests/Svc_Handler_Test.cpp:
+          Removed define for unlink in advance, not used
+
 Mon Apr 16 23:00:16 UTC 2007  Steve Huston  <shuston@riverace.com>
 
         * ace/Timeprobe.h: Add #include "ace/config-lite.h" to pick up the
@@ -33,6 +43,12 @@ Mon Apr 16 15:41:39 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
           Moved the setting of ACE_HAS_VFWPRINTF and
           ACE_SHM_OPEN_REQUIRES_ONE_SLASH to config-sunos5.7.h.  They are
           valid for this platform as well as SunOS 5.8.
+
+Mon Apr 16 14:17:12 UTC 2007 Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/run_test.lst:
+          Disable for the moment Dirent_Test on VxWorks RTP, it causes
+          a crash of the target.
 
 Mon Apr 16 13:01:00 UTC 2007 Simon Massey  <sma@prismtech.com>
 
