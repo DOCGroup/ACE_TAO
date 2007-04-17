@@ -1,3 +1,9 @@
+Tue Apr 17 11:32:12 UTC 2007 Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-win32-msvc-8.h:
+        * ace/config-win32-msvc.h:
+          Only msvc8 has intrin.h
+
 Tue Apr 17 10:03:12 UTC 2007 Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Atomic_Op.inl:
