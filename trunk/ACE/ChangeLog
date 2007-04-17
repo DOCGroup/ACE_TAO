@@ -1,3 +1,21 @@
+Tue Apr 17 09:13:12 UTC 2007 Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/os_include/os_intrin.h:
+          New wrapper file for intrin.h
+
+        * ace/config-win32-msvc-7.h:
+        * ace/config-win32-msvc-8.h:
+        * ace/config-win32-msvc.h:
+          Added ACE_HAS_INTRIN_H, moved some generic defines to the msvc.h
+          file
+
+        * ace/Atomic_Op.{h,inl}:
+          Use the intrinsic Interlocked functions to increase the performance
+          on Windows with the Microsoft compiler. See also
+          http://msdn2.microsoft.com/en-us/library/f24ya7ct(VS.71).aspx.
+          This fixes bugzilla bug 2891, thanks to Aleksandar Vukajlovic
+          <vukajlo at finsoft dot co dot yu> for suggesting these changes.
+
 Tue Apr 17 08:12:12 UTC 2007 Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/run_test.txt:
