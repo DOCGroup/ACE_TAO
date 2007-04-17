@@ -24,6 +24,7 @@ ImR_Activator_i::ImR_Activator_i (void)
 , debug_(0)
 , notify_imr_ (false)
 , name_ (getHostName ())
+, env_buf_len_ (Activator_Options::ENVIRONMENT_BUFFER)
 {
 }
 
@@ -101,6 +102,7 @@ ImR_Activator_i::init_with_orb (CORBA::ORB_ptr orb, const Activator_Options& opt
   orb_ = CORBA::ORB::_duplicate (orb);
   debug_ = opts.debug ();
   notify_imr_ = opts.notify_imr ();
+  env_buf_len_ = opts.env_buf_len ();
   if (opts.name ().length () > 0)
     {
       name_ = opts.name();
@@ -277,7 +279,10 @@ ImR_Activator_i::start_server(const char* name,
   if (debug_ > 1)
     ACE_DEBUG((LM_DEBUG, "\tcommand line : <%s>\n\tdirectory : <%s>\n", cmdline, dir));
 
-  ACE_Process_Options proc_opts;
+  ACE_Process_Options proc_opts (
+                        1,
+                        ACE_Process_Options::DEFAULT_COMMAND_LINE_BUF_LEN,
+                        this->env_buf_len_);
   proc_opts.command_line (cmdline);
   proc_opts.working_directory (dir);
   // Win32 does not support the CLOSE_ON_EXEC semantics for sockets

@@ -12,6 +12,7 @@
 #include "orbsvcs/Sched/Config_Scheduler.h"
 
 #include "orbsvcs/Event/EC_Default_Factory.h"
+#include "orbsvcs/Event/EC_TPC_Factory.h"
 #include "orbsvcs/Event/EC_Event_Channel.h"
 
 #include "tao/BiDir_GIOP/BiDirGIOP.h"
@@ -23,7 +24,19 @@ ACE_RCSID (Event_Service,
 
 int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 {
-  TAO_EC_Default_Factory::init_svcs ();
+  bool use_thread_per_consumer = false;
+  for(int i = 0; i < argc; i++)
+    {
+      if (ACE_OS::strcmp (argv[i], ACE_TEXT ("-a")) == 0)
+        {
+          use_thread_per_consumer = true;
+          break;
+        }
+    }
+  if (use_thread_per_consumer)
+    TAO_EC_TPC_Factory::init_svcs ();
+  else
+    TAO_EC_Default_Factory::init_svcs ();
 
   Event_Service event_service;
   return event_service.run (argc, argv);
@@ -306,13 +319,16 @@ Event_Service::parse_args (int argc, ACE_TCHAR* argv [])
   // default values...
   this->service_name_ = "EventService";
 
-  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("n:o:p:s:q:bx"));
+  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("an:o:p:s:q:bx"));
   int opt;
 
   while ((opt = get_opt ()) != EOF)
     {
       switch (opt)
         {
+        case 'a':
+          // This is processed in main()
+          break;
         case 'n':
           this->service_name_ = ACE_TEXT_ALWAYS_CHAR(get_opt.opt_arg ());
           break;
@@ -368,6 +384,7 @@ Event_Service::parse_args (int argc, ACE_TCHAR* argv [])
         default:
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT("Usage: %s ")
+                      ACE_TEXT("-a ")
                       ACE_TEXT("-n service_name ")
                       ACE_TEXT("-o ior_file_name ")
                       ACE_TEXT("-p pid_file_name ")

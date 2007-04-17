@@ -40,6 +40,13 @@ public:
     SC_INSTALL_NO_LOCATOR
   };
 
+  // This default is based on the value from ACE_Process_Options
+  // however, the real value is protected -- CAE 4/16/2007
+  enum ACTIVATOR_PROCESS
+  {
+    ENVIRONMENT_BUFFER = 16 * 1024
+  };
+
   Activator_Options ();
 
   /// Parse the command-line arguments and initialize the options.
@@ -69,6 +76,8 @@ public:
   const char* cmdline(void) const;
 
   const ACE_CString& name(void) const;
+
+  int env_buf_len (void) const;
 
 private:
   /// Parses and pulls out arguments for the ImR
@@ -100,6 +109,9 @@ private:
   SERVICE_COMMAND service_command_;
 
   ACE_CString name_;
+
+  /// The default environment buffer length
+  int env_buf_len_;
 };
 
 #endif

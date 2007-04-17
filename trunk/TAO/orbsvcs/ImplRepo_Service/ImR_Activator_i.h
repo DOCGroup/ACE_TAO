@@ -121,6 +121,9 @@ private:
   ACE_CString name_;
 
   ProcessMap process_map_;
+
+  /// The default environment buffer length
+  int env_buf_len_;
 };
 
 #endif /* IMR_ACTIVATOR_I_H */
