@@ -273,6 +273,8 @@ int MyHandler::handle_close (ACE_HANDLE handle,
 <tr>
 <td align=right valign=top>
 	<b>solution</b>
+</td>
+<td align=left valign=top>
   <ul>
     <li>Use reference counted event handlers.  The reactor and the application
       cooperate to remove the event handler when the last reference goes away.

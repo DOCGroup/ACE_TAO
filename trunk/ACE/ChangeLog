@@ -1,3 +1,11 @@
+Tue Apr 17 08:12:12 UTC 2007 Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/run_test.txt:
+          Corrected variable that is used for VxWorks target
+
+        * docs/ACE-FMM.html:
+          Fixed html tag
+
 Tue Apr 17 06:51:12 UTC 2007 Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/CDR_File_Test.cpp:
