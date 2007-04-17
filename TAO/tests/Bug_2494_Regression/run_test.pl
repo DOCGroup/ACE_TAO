@@ -11,13 +11,19 @@ use PerlACE::Run_Test;
 $status = 0;
 $srv_threads = '4';
 $cli_threads = '30';
-$iorfile = PerlACE::LocalFile ("test.ior");
+$baseior = "test.ior"
+$iorfile = PerlACE::LocalFile ($baseior);
 $srvdownfile = PerlACE::LocalFile ("server_terminated");
 
 unlink $iorfile;
 unlink $srvdownfile;
 
-$SV = new PerlACE::Process ("server", "-o $iorfile -n $srv_threads");
+if (PerlACE::is_vxworks_test()) {
+  $SV = new PerlACE::ProcessVX ("server", "-o $baseior -n $srv_threads");
+}
+else {
+  $SV = new PerlACE::Process ("server", "-o $iorfile -n $srv_threads");
+}
 $CL = new PerlACE::Process ("client", "-k file://$iorfile -n $cli_threads");
 $CLS = new PerlACE::Process ("client", "-k file://$iorfile -x");
 
@@ -48,7 +54,7 @@ if ($client != 0) {
     $status = 1;
 }
 
-#Server should now be shut down
+#Server should now be shutdown
 if (PerlACE::waitforfile_timed ($srvdownfile,
                         $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: cannot find file <$srvdownfile>".
