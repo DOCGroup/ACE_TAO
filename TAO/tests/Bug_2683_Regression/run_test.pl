@@ -21,7 +21,7 @@ unlink $iorfile;
 $TARGETHOSTNAME = "localhost";
 
 if (PerlACE::is_vxworks_test()) {
-    $TARGETHOSTNAME = $ENV{'ACE_RUN_VX_TGT_HOST'};
+    $TARGETHOSTNAME = $ENV{'ACE_RUN_VX_TGTHOST'};
     $SV = new PerlACE::ProcessVX ("server", "-ORBEndpoint iiop://$TARGETHOSTNAME:43210");
 }
 else {
