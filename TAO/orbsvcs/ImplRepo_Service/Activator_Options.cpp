@@ -195,7 +195,7 @@ Activator_Options::print_usage (void) const
               "  -c command  Runs service commands \n"
               "              ('install' or 'remove' or 'install_no_imr')\n"
               "  -d level    Sets the debug level\n"
-              "  -e buflen   Set the environment buffer length for activated servants\n"
+              "  -e buflen   Set the environment buffer length in bytes for activated servants\n"
               "  -o file     Outputs the ImR's IOR to a file\n"
               "  -l          Notify the ImR when a process exits\n"
               "  -n name     Specify a name for the Activator\n")
