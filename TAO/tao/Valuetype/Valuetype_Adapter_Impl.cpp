@@ -4,6 +4,7 @@
 #include "tao/Valuetype/AbstractBase.h"
 #include "tao/Valuetype/ValueBase.h"
 #include "tao/Valuetype/ValueFactory_Map.h"
+#include "tao/Valuetype/ValueFactory.h"
 
 #include "tao/ORB_Core.h"
 
@@ -84,8 +85,14 @@ int
 TAO_Valuetype_Adapter_Impl::vf_map_unbind (const char *repo_id)
 
 {
-  CORBA::ValueFactory fac;
-  return map_.unbind (repo_id, fac);
+  CORBA::ValueFactory factory = 0;
+  int result = map_.unbind (repo_id, factory);
+  if (! result)
+    {
+      factory->_remove_ref ();
+    }
+
+  return result;
 }
 
 CORBA::ValueFactory

@@ -1,3 +1,12 @@
+Wed Apr 18 10:23:00 UTC 2007  Ian Roberts  <ir@prismtech.com>
+
+        * tao/Valuetype/Valuetype_Adapter_Impl:
+          Fix for Bug 2791, resolving a memory leak when
+          unregistering a value factory.
+        
+        * tests/Bug_2791_Regression/*:
+          New regression test to cover Bug 2791.
+        
 Wed Apr 18 10:20:12 UTC 2007 Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/FoxResource.mpc:
