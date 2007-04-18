@@ -1,3 +1,11 @@
+Wed Apr 18 10:42:39 UTC 2007  Olli Savia  <ops@iki.fi>
+
+        * include/makeinclude/platform_lynxos.GNU:
+          Updated TCL/TK settings.
+
+        * tests/TkReactor_Test.cpp:
+          Fixed compile error on LynxOS.
+
 Wed Apr 18 10:17:12 UTC 2007 Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/config/ace_fox.mpb:
