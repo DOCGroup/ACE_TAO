@@ -1,3 +1,19 @@
+Wed Apr 18 12:10:12 UTC 2007 Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/OctetSeq/run_test.pl:
+          Increased timeout for vxworks
+
+        * tests/POA/Non_Servant_Upcalls/Non_Servant_Upcalls.cpp:
+          Layout changes and removed msvc specific warning disabling
+
+        * tests/POA/Object_Reactivation/Object_Reactivation.cpp:
+        * tests/POA/Persistent_ID/server.cpp:
+        * tests/POA/POA_Destruction/POA_Destruction.cpp:
+          Layout changes, no need to pass in empty orb name
+
+        * tests/Policies/Manipulation.cpp:
+          Layout changes
+
 Wed Apr 18 11:39:12 UTC 2007 Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_2791_Regression/run_test.pl:
