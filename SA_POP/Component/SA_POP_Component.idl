@@ -14,6 +14,9 @@ module CIAO
     {
       interface Planning
       {
+        /// Initialize SA-POP with a task network and task map.
+        boolean init (in string task_net_file, in string task_map_file);
+
         /// Plan for a goal.
         boolean generate_opstring (in GoalStructure goal, out OperationalString opstring);
       };

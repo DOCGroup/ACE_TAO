@@ -1,5 +1,4 @@
 // $Id$
-// This file is generated with "generate_component_mpc.pl SA_POP_Component"
 
 project(SA_POP_Component_stub): ciao_client_dnc {
   

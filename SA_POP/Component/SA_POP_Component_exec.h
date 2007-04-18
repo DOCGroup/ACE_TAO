@@ -52,6 +52,11 @@ namespace CIAO
           // Operations from ::CIAO::RACE::SA_POP::Planning
 
           virtual ::CORBA::Boolean
+          init (
+            const char * task_net_file,
+            const char * task_map_file
+          );
+          virtual ::CORBA::Boolean
           generate_opstring (
             const ::CIAO::RACE::GoalStructure & goal,
             ::CIAO::RACE::OperationalString_out opstring
