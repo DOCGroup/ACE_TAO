@@ -25,11 +25,20 @@
 #include "ace/Select_Reactor.h"
 #include "ace/Map_Manager.h"
 
+#include "qglobal.h"
+
 // QT toolkit specific includes.
+#if QT_VERSION >= 0x040000
+#include /**/ <QtGui/QApplication>
+#include /**/ <QtCore/QObject>
+#include /**/ <QtCore/QSocketNotifier.h>
+#include /**/ <QtCore/QTimer.h>
+#else
 #include /**/ <qapplication.h>
 #include /**/ <qobject.h>
 #include /**/ <qsocketnotifier.h>
 #include /**/ <qtimer.h>
+#endif
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
