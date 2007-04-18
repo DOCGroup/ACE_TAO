@@ -1,3 +1,11 @@
+Wed Apr 18 19:55:11 UTC 2007  Yan Dai  <dai_y@ociweb.com>
+
+        * TAO_IDL/be/be_visitor_structure/serializer_op_ch.cpp:
+          
+          Fixed a bug that does not generate the correct key 
+          comparison for DCPS KeyLessThan when there are multiple 
+          DCPS keys. 
+
 Wed Apr 18 19:15:12 UTC 2007 Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/AMI/run_test.pl:
