@@ -1,12 +1,20 @@
+Wed Apr 18 11:39:12 UTC 2007 Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_2791_Regression/run_test.pl:
+          Updated to run under VxWorks
+
+        * tests/Bug_2289_Regression/run_test.pl:
+          Don't use LocalFile for the executables
+
 Wed Apr 18 10:23:00 UTC 2007  Ian Roberts  <ir@prismtech.com>
 
         * tao/Valuetype/Valuetype_Adapter_Impl:
           Fix for Bug 2791, resolving a memory leak when
           unregistering a value factory.
-        
+
         * tests/Bug_2791_Regression/*:
           New regression test to cover Bug 2791.
-        
+
 Wed Apr 18 10:20:12 UTC 2007 Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/FoxResource.mpc:
