@@ -1,8 +1,16 @@
+Wed Apr 18 10:20:12 UTC 2007 Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/FoxResource.mpc:
+        * tao/FoxResource/*:
+          New Fox Toolkit support library. Thanks to
+          Dmitriy Nikitinskiy <nick at bel dot ru> for providing these
+          files. This fixes bugzilla 1400.
+
 Tue Apr 17 16:05:50 UTC 2007 Yan Dai  <dai_y@ociweb.com>
 
         * tao/DynamicAny/DynEnum_i.cpp:
-         
-          Use .in() on the var to avoid warnings from some 
+
+          Use .in() on the var to avoid warnings from some
           platforms.
 
 Tue Apr 17 14:29:52 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
