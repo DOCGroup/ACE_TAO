@@ -1,7 +1,12 @@
+Wed Apr 18 09:45:12 UTC 2007 Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/config/vcl.mpb:
+          Updated bds to bds4
+
 Wed Apr 18 09:30:00 UTC 2007 Simon Massey  <sma@prismtech.com>
 
         * ace/SSL/SSL_Asynch_Stream.cpp:
-        * ace/SSL/SSL_Context..cpp:
+        * ace/SSL/SSL_Context.cpp:
 
           Change variable name and comments so that compiler warnings
           don't trigger error indication on the scoreboard.
