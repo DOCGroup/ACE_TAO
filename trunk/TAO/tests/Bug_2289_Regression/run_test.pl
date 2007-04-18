@@ -17,12 +17,12 @@ unlink $client_ior_file;
 
 # The client and server processes
 if (PerlACE::is_vxworks_test()) {
-    $SERVER     = new PerlACE::ProcessVX(PerlACE::LocalFile("server"));
+    $SERVER     = new PerlACE::ProcessVX("server");
 }
 else {
-    $SERVER     = new PerlACE::Process(PerlACE::LocalFile("server"));
+    $SERVER     = new PerlACE::Process("server");
 }
-$CLIENT     = new PerlACE::Process(PerlACE::LocalFile("client"));
+$CLIENT     = new PerlACE::Process("client");
 
 # We want the server to run on a fixed port
 $port = PerlACE::uniqueid () + 10001;  # This can't be 10000 for Chorus 4.0
