@@ -1,3 +1,8 @@
+Wed Apr 18 13:01:12 UTC 2007 Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_2791_Regression/MessageFactory.h:
+          Fixed fuzz error
+
 Wed Apr 18 12:59:12 UTC 2007 Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Collocation_Opportunities/Collocation_Opportunities.cpp:
