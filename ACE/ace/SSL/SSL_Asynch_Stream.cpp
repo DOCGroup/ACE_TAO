@@ -951,7 +951,7 @@ ACE_SSL_Asynch_Stream::handle_write_stream (
   size_t len       = bytes_req - bytes_trn;
 
   if (errval != 0)                    // error ?
-    this->bio_out_errno_ = errval;    // save error code
+    this->bio_out_errno_ = errval;    // save err code
   else if (len > 0)                   // TCP/IP overloaded ?
     {                                 // continue, rd_ptr at right place
       if (this->bio_ostream_.write (
@@ -992,7 +992,7 @@ ACE_SSL_Asynch_Stream::handle_read_stream (
   u_long errval    = result.error ();
 
   if (errval != 0)                     // error ?
-     this->bio_inp_errno_ = errval;    // save error code
+     this->bio_inp_errno_ = errval;    // save err code
   else if (bytes_trn == 0)             // end of stream ?
      this->bio_inp_flag_ |= BF_EOS;    // set flag EOS
 
