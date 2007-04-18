@@ -16,7 +16,9 @@ Wed Apr 18 09:29:12 UTC 2007 Johnny Willemsen  <jwillemsen@remedy.nl>
         * ace/QtReactor/QtReactor.{h,cpp}:
           Applied changes to work with Qt4. Thanks to Roland Sun
           <rolandsun at gmail dot com> for delivering the patches.
-          This is part of bugzilla 2870
+          This is part of bugzilla 2870. Also thanks to
+          Ian Zagorskih <ianzag at megasignal dot com> for his report
+          in bugzilla 2413.
 
 Wed Apr 18 09:06:12 UTC 2007 Johnny Willemsen  <jwillemsen@remedy.nl>
 
