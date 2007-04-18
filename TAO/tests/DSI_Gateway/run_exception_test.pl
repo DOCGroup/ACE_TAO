@@ -22,7 +22,7 @@ $CL = new PerlACE::Process ("client", "-k file://$gwfile -u");
 
 $SV->Spawn ();
 
-if (PerlACE::waitforfile_timed ($svfile, 5) == -1) {
+if (PerlACE::waitforfile_timed ($svfile, $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: cannot find file <$svfile>\n";
     $SV->Kill ();
     exit 1;
@@ -30,10 +30,10 @@ if (PerlACE::waitforfile_timed ($svfile, 5) == -1) {
 
 $GW->Spawn ();
 
-if (PerlACE::waitforfile_timed ($gwfile, 5) == -1) {
+if (PerlACE::waitforfile_timed ($gwfile, $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: cannot find file <$gwfile>\n";
     $SV->Kill ();
-    $GW->Kill (); 
+    $GW->Kill ();
     exit 1;
 }
 

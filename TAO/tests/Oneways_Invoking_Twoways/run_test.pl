@@ -38,7 +38,7 @@ if ($client1 != 0) {
     $status = 1;
 }
 
-$server = $SV->TerminateWaitKill (5);
+$server = $SV->TerminateWaitKill (15);
 
 if ($server != 0) {
     print STDERR "ERROR: server returned $server\n";

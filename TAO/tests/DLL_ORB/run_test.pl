@@ -21,7 +21,7 @@ print STDERR "\n\n==== Running DLL ORB test\n";
 
 $SV->Spawn ();
 
-if (PerlACE::waitforfile_timed ($file, 15) == -1) {
+if (PerlACE::waitforfile_timed ($file, $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: cannot find file <$file>\n";
     $SV->Kill (); 
     exit 1;

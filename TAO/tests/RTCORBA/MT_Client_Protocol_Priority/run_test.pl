@@ -81,24 +81,24 @@ $fh = \*OLDERR;
 # Run server and client.
 $SV->Spawn ();
 
-if (PerlACE::waitforfile_timed ($iorfile, 10) == -1) 
+if (PerlACE::waitforfile_timed ($iorfile, $PerlACE::wait_interval_for_process_creation) == -1)
 {
     $server = $SV->TimedWait (1);
-    if ($server == 2) 
+    if ($server == 2)
     {
         # Could not change priority levels so exit.
-        
+
         # redirect STDOUT away from $data_file and set back to normal
         close (STDERR);
         close (STDOUT);
         open (STDOUT, ">&OLDOUT");
         open (STDERR, ">&OLDERR");
-        
+
         # Mark as no longer running to avoid errors on exit.
         $SV->{RUNNING} = 0;
         exit $status;
-    } 
-    else 
+    }
+    else
     {
         print STDERR "ERROR: cannot find file <$iorfile>\n";
         $SV->Kill ();
@@ -107,8 +107,8 @@ if (PerlACE::waitforfile_timed ($iorfile, 10) == -1)
 }
 
 $client = $CL->SpawnWaitKill (60);
-  
-if ($client != 0) 
+
+if ($client != 0)
 {
     print STDERR "ERROR: client returned $client\n";
     $status = 1;
@@ -116,7 +116,7 @@ if ($client != 0)
 
 $server = $SV->WaitKill (60);
 
-if ($server != 0) 
+if ($server != 0)
 {
     print STDERR "ERROR: server returned $server\n";
     $status = 1;
@@ -134,20 +134,20 @@ print STDERR "\n********** Processing test output\n\n";
 
 $errors = system ("perl process-output.pl $data_file $iterations $priority1 $priority2") >> 8;
 
-if ($errors > 0) 
+if ($errors > 0)
 {
     $status = 1;
-    
+
     if (!$quiet) {
         print STDERR "Errors Detected, printing output\n";
-        if (open (DATA, "<$data_file")) 
+        if (open (DATA, "<$data_file"))
         {
             print STDERR "================================= Begin\n";
             print STDERR <DATA>;
             print STDERR "================================= End\n";
             close (DATA);
         }
-        else 
+        else
         {
             print STDERR "ERROR: Could not open $data_file\n";
         }

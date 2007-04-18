@@ -14,12 +14,12 @@ if (PerlACE::is_vxworks_test()) {
     $SV = new PerlACE::ProcessVX ("bug_1535_regression");
 }
 else {
-    $SV = new PerlACE::Process ("bug_1535_regression");    
+    $SV = new PerlACE::Process ("bug_1535_regression");
 }
 
 $SV->Spawn ();
 
-$server = $SV->WaitKill (10);
+$server = $SV->WaitKill ($PerlACE::wait_interval_for_process_creation);
 
 if ($server != 0) {
     print STDERR "ERROR: server returned $server\n";

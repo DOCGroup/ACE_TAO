@@ -32,7 +32,7 @@ else {
 
 $SV->Spawn ();
 
-if (PerlACE::waitforfile_timed ($file, 10) == -1) {
+if (PerlACE::waitforfile_timed ($file, $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: cannot find file <$file>\n";
     $SV->Kill ();
     exit 1;

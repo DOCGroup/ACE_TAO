@@ -12,9 +12,9 @@ $base_ior_file = PerlACE::LocalFile ("default.ior");
 $overridden_ior_file = PerlACE::LocalFile ("overridden.ior");
 
 if (PerlACE::is_vxworks_test()) {
-    $SV = new PerlACE::ProcessVX ("server", 
+    $SV = new PerlACE::ProcessVX ("server",
                                 " -POAConfigFile POA.cfg" .
-                                " -ObjectConfigFile Object.cfg" . 
+                                " -ObjectConfigFile Object.cfg" .
                                 " -BaseObjectIOR default.ior" .
                                 " -OverriddenIOR overridden.ior");
 }
@@ -27,9 +27,9 @@ else {
     $poa_file = PerlACE::LocalFile ("POA.cfg");
     $obj_file = PerlACE::LocalFile ("Object.cfg");
   }
-  $SV = new PerlACE::Process ("server", 
+  $SV = new PerlACE::Process ("server",
                               " -POAConfigFile $poa_file" .
-                              " -ObjectConfigFile $obj_file" . 
+                              " -ObjectConfigFile $obj_file" .
                               " -BaseObjectIOR $base_ior_file" .
                               " -OverriddenIOR $overridden_ior_file");
 }
@@ -45,7 +45,7 @@ unlink($base_ior_file);
 unlink($overridden_ior_file);
 $SV->Spawn ();
 
-if (PerlACE::waitforfile_timed ($base_ior_file, 15) == -1) {
+if (PerlACE::waitforfile_timed ($base_ior_file, $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: cannot find file <$base_ior_file>\n";
     $SV->Kill ();
     exit 1;

@@ -27,7 +27,7 @@ print STDERR "===== Base test, no crashes\n";
 unlink $iorfile;
 $SV->Spawn ();
 
-if (PerlACE::waitforfile_timed ($iorfile, 15) == -1) {
+if (PerlACE::waitforfile_timed ($iorfile, $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: cannot find file <$iorfile>\n";
     $SV->Kill ();
     exit 1;
@@ -91,9 +91,9 @@ print STDERR "===== Server crash during upcall\n";
 unlink $iorfile;
 $SV->Spawn ();
 
-if (PerlACE::waitforfile_timed ($iorfile, 15) == -1) {
+if (PerlACE::waitforfile_timed ($iorfile, $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: cannot find file <$iorfile>\n";
-    $SV->Kill (); 
+    $SV->Kill ();
     exit 1;
 }
 
@@ -119,18 +119,18 @@ print STDERR "===== Three-way test, client crashes and server detects\n";
 unlink $iorfile;
 $SV->Spawn ();
 
-if (PerlACE::waitforfile_timed ($iorfile, 15) == -1) {
+if (PerlACE::waitforfile_timed ($iorfile, $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: cannot find file <$iorfile>\n";
-    $SV->Kill (); 
+    $SV->Kill ();
     exit 1;
 }
 
 unlink $middlefile;
 $MD->Spawn ();
 
-if (PerlACE::waitforfile_timed ($middlefile, 15) == -1) {
+if (PerlACE::waitforfile_timed ($middlefile, $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: cannot find file <$middlefile>\n";
-    $MD->Kill (); 
+    $MD->Kill ();
     exit 1;
 }
 
@@ -172,7 +172,7 @@ print STDERR "===== Ping-pong test, server crashes but client continues\n";
 unlink $iorfile;
 $PI->Spawn ();
 
-if (PerlACE::waitforfile_timed ($iorfile, 15) == -1) {
+if (PerlACE::waitforfile_timed ($iorfile, $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: cannot find file <$iorfile>\n";
     $SV->Kill ();
     exit 1;
@@ -195,7 +195,7 @@ print STDERR "===== Base test, no crashes\n";
 unlink $iorfile;
 $SV1->Spawn ();
 
-if (PerlACE::waitforfile_timed ($iorfile, 15) == -1) {
+if (PerlACE::waitforfile_timed ($iorfile, $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: cannot find file <$iorfile>\n";
     $SV->Kill ();
     exit 1;
@@ -259,9 +259,9 @@ print STDERR "===== Server crash during upcall\n";
 unlink $iorfile;
 $SV1->Spawn ();
 
-if (PerlACE::waitforfile_timed ($iorfile, 15) == -1) {
+if (PerlACE::waitforfile_timed ($iorfile, $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: cannot find file <$iorfile>\n";
-    $SV1->Kill (); 
+    $SV1->Kill ();
     exit 1;
 }
 
@@ -287,18 +287,18 @@ print STDERR "===== Three-way test, client crashes and server detects\n";
 unlink $iorfile;
 $SV1->Spawn ();
 
-if (PerlACE::waitforfile_timed ($iorfile, 15) == -1) {
+if (PerlACE::waitforfile_timed ($iorfile, $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: cannot find file <$iorfile>\n";
-    $SV1->Kill (); 
+    $SV1->Kill ();
     exit 1;
 }
 
 unlink $middlefile;
 $MD->Spawn ();
 
-if (PerlACE::waitforfile_timed ($middlefile, 15) == -1) {
+if (PerlACE::waitforfile_timed ($middlefile, $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: cannot find file <$middlefile>\n";
-    $MD->Kill (); 
+    $MD->Kill ();
     exit 1;
 }
 
@@ -340,7 +340,7 @@ print STDERR "===== Ping-pong test, server crashes but client continues\n";
 unlink $iorfile;
 $PI->Spawn ();
 
-if (PerlACE::waitforfile_timed ($iorfile, 15) == -1) {
+if (PerlACE::waitforfile_timed ($iorfile, $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: cannot find file <$iorfile>\n";
     $SV1->Kill ();
     exit 1;

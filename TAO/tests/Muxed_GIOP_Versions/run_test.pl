@@ -55,7 +55,7 @@ print STDERR "***** Start the server*** \n" if $verbose;
 
 $SV->Spawn ();
 
-if (PerlACE::waitforfile_timed ($iorfile, 50) == -1) {
+if (PerlACE::waitforfile_timed ($iorfile, $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: cannot find file <$iorfile>\n";
     $SV->Kill ();
     exit 1;
