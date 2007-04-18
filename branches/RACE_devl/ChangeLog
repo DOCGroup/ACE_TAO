@@ -1,3 +1,20 @@
+Wed Apr 18 06:35:44 UTC 2007  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
+
+        * SA_POP/Component/Planning_exec.h:
+        * SA_POP/Component/Planning_exec.cpp:
+        * SA_POP/Component/SA_POP_Component.idl:
+        * SA_POP/Component/SA_POP_Component.mpc:
+        * SA_POP/Component/SA_POP_Component_exec.h:
+        * SA_POP/Component/SA_POP_Component_exec.cpp:
+
+        Updated SA-POP component with internal SA-POP planner.
+
+
+        * descriptors/SPACE.san:
+        * descriptors/SPACE.tm:
+
+        Added SPACE example task network and task map to descriptors directory.
+
 Mon Apr 16 23:41:13 UTC 2007  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
 
         * RACE_SAPOP.mwc:

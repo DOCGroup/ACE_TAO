@@ -45,6 +45,16 @@ namespace CIAO
         // Operations from ::CIAO::RACE::SA_POP::Planning
 
         ::CORBA::Boolean
+        Planning_exec_i::init (
+          const char * ,
+          const char * 
+        )
+        {
+          // Your code here.
+          return false;
+        }
+
+        ::CORBA::Boolean
         Planning_exec_i::generate_opstring (
           const ::CIAO::RACE::GoalStructure & ,
           ::CIAO::RACE::OperationalString_out 
