@@ -124,7 +124,7 @@ client (void *)
 // Callback for "Press Me" button.
 
 static int
-inc_count (ClientData client_data, Tcl_Interp *interp,int, const char **)
+inc_count (ClientData client_data, Tcl_Interp *interp,int, char **)
 {
   ACE_DEBUG ((LM_DEBUG,"inc_count "));
   char new_string[80];
