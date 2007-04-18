@@ -11,15 +11,26 @@ use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::Run_Test;
 
 # The server IOR file
-$server_ior_file = PerlACE::LocalFile ("server.ior");
+$iorbase = "server.ior";
 
 # The client and server processes
-$SERVER     = new PerlACE::Process(PerlACE::LocalFile("server"));
-$CLIENT     = new PerlACE::Process(PerlACE::LocalFile("client"));
+if (PerlACE::is_vxworks_test()) {
+  $SERVER     = new PerlACE::ProcessVX("server");
+  $server_ior_file = $iorbase;
+  $TARGETHOSTNAME = $ENV{'ACE_RUN_VX_TGTHOST'};
+}
+else {
+  $SERVER     = new PerlACE::Process("server");
+  $server_ior_file = PerlACE::LocalFile ($iorbase);
+  $TARGETHOSTNAME = "localhost";
+}
+unlink $server_ior_file;
+
+$CLIENT     = new PerlACE::Process("client");
 
 # We want the server to run on a fixed port
 $port = PerlACE::uniqueid () + 10001;  # This can't be 10000 for Chorus 4.0
-$SERVER->Arguments("-ORBEndpoint iiop://localhost:$port");
+$SERVER->Arguments("-ORBEndpoint iiop://:$port");
 
 # Fire up the server
 $SERVER->Spawn();
@@ -34,7 +45,7 @@ if (PerlACE::waitforfile_timed ($server_ior_file, $PerlACE::wait_interval_for_pr
 
 # Try the corbaloc URL with incorrect '\' escaping of hex characters
 # We expect this to 'fail'
-$CLIENT->Arguments("-k corbaloc:iiop:localhost:$port/Name\\2dwith\\2dhyphens");
+$CLIENT->Arguments("-k corbaloc:iiop:$TARGETHOSTNAME:$port/Name\\2dwith\\2dhyphens");
 if ($CLIENT->SpawnWaitKill (30) == 0)
 {
    print STDERR "ERROR: Bug 1330 Regression failed. Incorrect escape characters accepted\n";
@@ -44,7 +55,7 @@ if ($CLIENT->SpawnWaitKill (30) == 0)
 
 # Try the corbaloc URL with the correct '%' escaping of hex characters
 # We expect success
-$CLIENT->Arguments("-k corbaloc:iiop:localhost:$port/Name%2dwith%2dhyphens");
+$CLIENT->Arguments("-k corbaloc:iiop:$TARGETHOSTNAME:$port/Name%2dwith%2dhyphens");
 if ($CLIENT->SpawnWaitKill (30) != 0)
 {
    print STDERR "ERROR: Bug 1330 Regression failed. Correct escape characters rejected\n";
