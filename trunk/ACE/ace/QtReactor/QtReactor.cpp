@@ -495,7 +495,12 @@ ACE_QtReactor::reset_timeout (void)
                       this,
                       SLOT (timeout_event ()));
 
+#if QT_VERSION >= 0x040000
+    qtime_->setSingleShot (1);
+    qtime_->start(max_wait_time->msec());
+#else
     qtime_->start(max_wait_time->msec(), 1);
+#endif
   }
 
 }
@@ -565,7 +570,7 @@ ACE_QtReactor::QtWaitForMultipleEvents (int width,
                                         ACE_Select_Reactor_Handle_Set &wait_set,
                                         ACE_Time_Value * /*max_wait_time*/)
 {
-  // Keep a copy of the wait set in case the wait_set be changed 
+  // Keep a copy of the wait set in case the wait_set be changed
   // between the two select calls in this function. It could happen
   // while waiting for an event, another event is handled and dispatched
   // which changes the dispatch_set_/wait_set.
@@ -582,7 +587,11 @@ ACE_QtReactor::QtWaitForMultipleEvents (int width,
     return -1; // Bad file arguments...
 
   // Qt processing.
+#if QT_VERSION >= 0x040000
+  this->qapp_->processEvents();
+#else
   this->qapp_->processOneEvent ();
+#endif
 
   // Reset the width, in case it changed during the upcalls.
   width = handler_rep_.max_handlep1 ();
