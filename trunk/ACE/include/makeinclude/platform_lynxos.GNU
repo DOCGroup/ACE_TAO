@@ -17,6 +17,10 @@
 
 ifeq ($(shell uname -s),LynxOS)
   export VERSION=$(shell uname -r)
+
+  # LynxOS's mkdir needs -f option to prevent it returning error
+  # if directory already exists.
+  ACE_MKDIR=mkdir -pf
 else
   CROSS-COMPILE = 1
 
