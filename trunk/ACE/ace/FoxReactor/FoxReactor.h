@@ -17,7 +17,7 @@
 
 #ifndef ACE_FOXREACTOR_H
 #define ACE_FOXREACTOR_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/config-all.h"
 
@@ -110,6 +110,6 @@ private:
 
 #endif /* ACE_HAS_FL */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_FOXREACTOR_H */
 
