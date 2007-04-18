@@ -201,9 +201,7 @@ main (int argc, char **argv)
   try
     {
       // Initialize the ORB first.
-      CORBA::ORB_var orb = CORBA::ORB_init (argc,
-                                            argv,
-                                            0);
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
       int parse_args_result =
         parse_args (argc, argv);

@@ -21,12 +21,6 @@
 
 #include "testS.h"
 
-// This is to remove "inherits via dominance" warnings from MSVC.
-// MSVC is being a little too paranoid.
-#if defined (_MSC_VER)
-# pragma warning (disable : 4250)
-#endif /* _MSC_VER */
-
 class test_i :
   public virtual POA_test
 {
@@ -72,9 +66,7 @@ main (int argc, char **argv)
   try
     {
       // Initialize the ORB first.
-      CORBA::ORB_var orb = CORBA::ORB_init (argc,
-                                            argv,
-                                            0);
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
       // Obtain the RootPOA.
       CORBA::Object_var obj =
@@ -107,8 +99,7 @@ main (int argc, char **argv)
 
       root_poa->deactivate_object (id2.in ());
 
-      root_poa->destroy (1,
-                         1);
+      root_poa->destroy (1, 1);
     }
   catch (const CORBA::Exception& ex)
     {
