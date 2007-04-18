@@ -75,6 +75,8 @@ tk            = 0
 fl            = 0
 // 1 - Qt libraries are avalaible
 qt            = 0
+// 1 - Fox libraries are avalaible
+fox           = 0
 // 1 - OpenGL libraries are avalaible
 gl            = 1
 

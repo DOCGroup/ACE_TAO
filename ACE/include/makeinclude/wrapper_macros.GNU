@@ -546,6 +546,19 @@ ifneq ($(gtk_reactor),)
   ACE_MAKE_OPTIONS += gtk_reactor
 endif # gtk_reactor
 
+ifeq ($(fox_reactor),0)
+  override fox_reactor =
+endif # fox_reactor
+
+ifneq ($(fox_reactor),)
+  override ace_with_x11=1
+  override ace_with_gl=1
+  CPPFLAGS += -DACE_HAS_FOX $(PLATFORM_FOX_CPPFLAGS)
+  LIBS += $(PLATFORM_FOX_LIBS)
+  LDFLAGS += $(PLATFORM_FOX_LDFLAGS)
+  ACE_MAKE_OPTIONS += fox_reactor
+endif # fox_reactor
+
 QTDIR ?=
 ifneq ($(QTDIR),)
   MOC = ${QTDIR}/bin/moc
