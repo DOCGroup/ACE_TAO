@@ -94,9 +94,9 @@ main (int argc, char *argv[])
         orb->string_to_object ("corbaloc:iiop:localhost:12345/FakeIOR");
 
       Test_var test =
-	TAO::Narrow_Utils<Test>::unchecked_narrow (
-	   object.in (),
-	   _TAO_Test_Proxy_Broker_Factory_function_pointer);
+        TAO::Narrow_Utils<Test>::unchecked_narrow (
+          object.in (),
+          _TAO_Test_Proxy_Broker_Factory_function_pointer);
 
       if (CORBA::is_nil (test.in ()))
         {
