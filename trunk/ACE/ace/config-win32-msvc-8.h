@@ -63,7 +63,10 @@
 
 #define ACE_HAS_STRERROR
 #define ACE_LACKS_STRPTIME
-#define ACE_HAS_INTRIN_H
+
+#if !defined (ACE_HAS_WINCE)
+#  define ACE_HAS_INTRIN_H
+#endif
 
 #define ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES
 #define ACE_LACKS_STRRECVFD

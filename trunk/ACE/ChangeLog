@@ -1,3 +1,8 @@
+Wed Apr 18 09:06:12 UTC 2007 Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-win32-msvc-8.h:
+          WinCE doesn't have intrin.h
+
 Tue Apr 17 22:11:11 UTC 2007  Steve Huston  <shuston@riverace.com>
 
         * netsvcs/lib/Server_Logging_Handler_T.cpp (parse_args): When calling
