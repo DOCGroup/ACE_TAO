@@ -85,11 +85,25 @@ be_visitor_structure_serializer_op_ch::visit_structure (be_structure *node)
           *os << "return ";
           IDL_GlobalData::DCPS_Data_Type_Info_Iter iter (info->key_list_);
 
+          IDL_GlobalData::DCPS_Data_Type_Info_Iter begin = iter;
+
           for (ACE_CString *kp = 0;
                iter.next (kp) != 0;
                )
             {
+              *os << "(";
+              IDL_GlobalData::DCPS_Data_Type_Info_Iter prev = begin;
+              for (ACE_TString *p = 0;
+               prev.next (p) != 0 && p != kp;
+               )
+              {
+                *os << "v1." << p->c_str () << " == " << "v2." << p->c_str () << " && ";
+                prev.advance ();
+              }
+
               *os << "v1." << kp->c_str () << " < " << "v2." << kp->c_str ();
+              *os << ")";
+
               iter.advance ();
               if (iter.done ()) 
                 *os << ";" << be_uidt_nl;
