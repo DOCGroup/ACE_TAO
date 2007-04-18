@@ -1,3 +1,8 @@
+Wed Apr 18 10:52:00 UTC 2007  Ian Roberts  <ir@prismtech.com>
+        
+        * bin/tao_orb_tests.lst:
+          Added Bug_2791_Regression.
+
 Wed Apr 18 10:42:39 UTC 2007  Olli Savia  <ops@iki.fi>
 
         * include/makeinclude/platform_lynxos.GNU:
