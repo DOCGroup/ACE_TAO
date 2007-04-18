@@ -90,7 +90,7 @@ sub test_buffering
     if ($SRV->Spawn() != 0) {
         return 1;
     }
-    if (PerlACE::waitforfile_timed ($srv_ior, 15) != 0) {
+    if (PerlACE::waitforfile_timed ($srv_ior, $PerlACE::wait_interval_for_process_creation) != 0) {
         print STDERR "Error: IOR not found.\n";
         return 1;
     }
@@ -110,7 +110,7 @@ sub test_buffering
     if ($SRV->Spawn() != 0) {
         return 1;
     }
-    if (PerlACE::waitforfile_timed ($srv_ior, 15) != 0) {
+    if (PerlACE::waitforfile_timed ($srv_ior, $PerlACE::wait_interval_for_process_creation) != 0) {
         print STDERR "Error: IOR not found.\n";
         return 1;
     }
@@ -132,7 +132,7 @@ sub test_buffering
     if ($SRV->Spawn() != 0) {
         return 1;
     }
-    if (PerlACE::waitforfile_timed ($srv_ior, 15) != 0) {
+    if (PerlACE::waitforfile_timed ($srv_ior, $PerlACE::wait_interval_for_process_creation) != 0) {
         print STDERR "Error: IOR not found.\n";
         return 1;
     }
@@ -154,7 +154,7 @@ sub test_buffering
     if ($SRV->Spawn() != 0) {
         return 1;
     }
-    if (PerlACE::waitforfile_timed ($srv_ior, 15) != 0) {
+    if (PerlACE::waitforfile_timed ($srv_ior, $PerlACE::wait_interval_for_process_creation) != 0) {
         print STDERR "Error: IOR not found.\n";
         return 1;
     }
@@ -176,7 +176,7 @@ sub test_buffering
     if ($SRV->Spawn() != 0) {
         return 1;
     }
-    if (PerlACE::waitforfile_timed ($srv_ior, 15) != 0) {
+    if (PerlACE::waitforfile_timed ($srv_ior, $PerlACE::wait_interval_for_process_creation) != 0) {
         print STDERR "Error: IOR not found.\n";
         return 1;
     }
@@ -197,7 +197,7 @@ sub test_buffering
     if ($SRV->Spawn() != 0) {
         return 1;
     }
-    if (PerlACE::waitforfile_timed ($srv_ior, 15) != 0) {
+    if (PerlACE::waitforfile_timed ($srv_ior, $PerlACE::wait_interval_for_process_creation) != 0) {
         print STDERR "Error: IOR not found.\n";
         return 1;
     }
@@ -224,7 +224,7 @@ sub test_buffer_count_timeout
     if ($SRV->Spawn() != 0) {
         return 1;
     }
-    if (PerlACE::waitforfile_timed ($srv_ior, 15) != 0) {
+    if (PerlACE::waitforfile_timed ($srv_ior, $PerlACE::wait_interval_for_process_creation) != 0) {
         print STDERR "Error: IOR not found.\n";
         return 1;
     }
@@ -249,7 +249,7 @@ sub test_buffer_bytes_timeout
     if ($SRV->Spawn() != 0) {
         return 1;
     }
-    if (PerlACE::waitforfile_timed ($srv_ior, 15) != 0) {
+    if (PerlACE::waitforfile_timed ($srv_ior, $PerlACE::wait_interval_for_process_creation) != 0) {
         print STDERR "Error: IOR not found.\n";
         return 1;
     }
@@ -274,7 +274,7 @@ sub test_buffer_timeout
     if ($SRV->Spawn() != 0) {
         return 1;
     }
-    if (PerlACE::waitforfile_timed ($srv_ior, 15) != 0) {
+    if (PerlACE::waitforfile_timed ($srv_ior, $PerlACE::wait_interval_for_process_creation) != 0) {
         print STDERR "Error: IOR not found.\n";
         return 1;
     }
@@ -298,7 +298,7 @@ sub test_buffer_timeout
     if ($SRV->Spawn() != 0) {
         return 1;
     }
-    if (PerlACE::waitforfile_timed ($srv_ior, 15) != 0) {
+    if (PerlACE::waitforfile_timed ($srv_ior, $PerlACE::wait_interval_for_process_creation) != 0) {
         print STDERR "Error: IOR not found.\n";
         return 1;
     }
@@ -321,7 +321,7 @@ sub test_buffer_timeout
     if ($SRV->Spawn() != 0) {
         return 1;
     }
-    if (PerlACE::waitforfile_timed ($srv_ior, 15) != 0) {
+    if (PerlACE::waitforfile_timed ($srv_ior, $PerlACE::wait_interval_for_process_creation) != 0) {
         print STDERR "Error: IOR not found.\n";
         return 1;
     }
@@ -349,7 +349,7 @@ sub test_one_request
     if ($SRV->Spawn() != 0) {
         return 1;
     }
-    if (PerlACE::waitforfile_timed ($srv_ior, 15) != 0) {
+    if (PerlACE::waitforfile_timed ($srv_ior, $PerlACE::wait_interval_for_process_creation) != 0) {
         print STDERR "Error: IOR not found.\n";
         return 1;
     }

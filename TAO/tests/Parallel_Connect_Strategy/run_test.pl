@@ -8,8 +8,7 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::Run_Test;
 
-$iorfile = PerlACE::LocalFile ("altiiop.ior");
-unlink $iorfile;
+$iorbase = "altiiop.ior";
 $status = 0;
 @bogus_eps = ("-orbendpoint iiop://localhost:10200/hostname_in_ior=126.0.0.123",
               "-orbendpoint iiop://localhost:10202/hostname_in_ior=126.0.0.124");
@@ -17,7 +16,15 @@ $valid_ep = "-orbendpoint iiop://localhost:10201";
 
 $corbaloc = "corbaloc::126.0.0.123:10200,:localhost:10201,:126.0.0.124:10202/pcs_test";
 
-$SV_ALT_IIOP = new PerlACE::Process ("server", "-ORBUseSharedProfile 1 -o $iorfile $bogus_eps[0] $valid_ep $bogus_eps[1]");
+if (PerlACE::is_vxworks_test()) {
+  $iorfile = $iorbase;
+  $SV_ALT_IIOP = new PerlACE::ProcessVX ("server", "-ORBUseSharedProfile 1 -o $iorfile $bogus_eps[0] $valid_ep $bogus_eps[1]");
+}
+else {
+  $iorfile = PerlACE::LocalFile ($iorbase);
+  $SV_ALT_IIOP = new PerlACE::Process ("server", "-ORBUseSharedProfile 1 -o $iorfile $bogus_eps[0] $valid_ep $bogus_eps[1]");
+}
+unlink $iorfile;
 
 $CL_LF = new PerlACE::Process ("client", "-ORBuseParallelConnects 1 -k file://$iorfile");
 $CL_CORBALOC = new PerlACE::Process ("client", "-ORBUseSharedProfile 1 -ORBuseParallelConnects 1 -k $corbaloc");

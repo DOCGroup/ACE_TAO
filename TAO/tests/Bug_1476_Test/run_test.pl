@@ -16,16 +16,12 @@ foreach $i (@ARGV) {
         $debug_level = '10';
     }
 }
-
-$iorfile = PerlACE::LocalFile ("test.ior");
-
-#The below hack is required for proper PerlACE initialization
-$dum = new PerlACE::Process ("client");
-
-if (PerlACE::waitforfile_timed ($iorfile,
-                        $PerlACE::wait_interval_for_process_creation) == -1) {
-    print STDERR "ERROR: cannot find file <$iorfile>\n";
-    exit 1;
+$iorbase = "test.ior";
+if (PerlACE::is_vxworks_test()) {
+  $iorfile = $iorbase;
+}
+else {
+  $iorfile = PerlACE::LocalFile ("test.ior");
 }
 
 @synchs = ("none","delayed");
@@ -39,7 +35,12 @@ for ($s = 0; $s < @synchs; $s++)
     {
 	$level = $levels[$l];
 
-	$CL = new PerlACE::Process ("client", "-ORBDebuglevel $debug_level -k file://$iorfile -s$synch -l$level");
+    if (PerlACE::is_vxworks_test()) {
+      $CL = new PerlACE::ProcessVX ("client", "-ORBDebuglevel $debug_level -k file://$iorfile -s$synch -l$level");
+    }
+    else {
+      $CL = new PerlACE::Process ("client", "-ORBDebuglevel $debug_level -k file://$iorfile -s$synch -l$level");
+    }
 
 	$client = $CL->SpawnWaitKill (300);
 

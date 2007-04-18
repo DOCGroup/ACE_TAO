@@ -24,7 +24,7 @@ for ($n = 0; $n < 10; ++$n) {
   unlink $iorfile;
 
   $SV->Spawn ();
-  if (PerlACE::waitforfile_timed ($iorfile, 15) == -1) {
+  if (PerlACE::waitforfile_timed ($iorfile, $PerlACE::wait_interval_for_process_creation) == -1) {
       print STDERR "ERROR: cannot find file <$iorfile>\n";
       $SV->Kill ();
       exit 1;

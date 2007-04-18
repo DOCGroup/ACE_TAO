@@ -11,50 +11,50 @@ use PerlACE::Run_Test;
 $status = 0;
 $iorfile = PerlACE::LocalFile("ior");
 
-@configurations = 
+@configurations =
     (
      {
-         server => "-b empty_file -l empty_file", 
+         server => "-b empty_file -l empty_file",
          client => "-b empty_file -p empty_file -x",
      },
      {
-         server => "-b bands -l empty_file", 
+         server => "-b bands -l empty_file",
          client => "-b empty_file -p empty_file -x",
      },
      {
-         server => "-b empty_file -l lanes", 
+         server => "-b empty_file -l lanes",
          client => "-b empty_file -p empty_file -x",
      },
      {
-         server => "-b bands -l lanes", 
+         server => "-b bands -l lanes",
          client => "-b empty_file -p empty_file -x",
      },
      {
-         server => "-b empty_file -l empty_file", 
+         server => "-b empty_file -l empty_file",
          client => "-b bands -p empty_file -x",
      },
      {
-         server => "-b empty_file -l lanes", 
+         server => "-b empty_file -l lanes",
          client => "-b bands -p empty_file -x",
      },
      {
-         server => "-b empty_file -l empty_file", 
+         server => "-b empty_file -l empty_file",
          client => "-b empty_file -p invocation_priorities -x",
      },
      {
-         server => "-b bands -l empty_file", 
+         server => "-b bands -l empty_file",
          client => "-b empty_file -p invocation_priorities -x",
      },
      {
-         server => "-b bands -l lanes", 
+         server => "-b bands -l lanes",
          client => "-b empty_file -p invocation_priorities -x",
      },
      {
-         server => "-b empty_file -l empty_file", 
+         server => "-b empty_file -l empty_file",
          client => "-b bands -p invocation_priorities -x",
      },
      {
-         server => "-b empty_file -l lanes", 
+         server => "-b empty_file -l lanes",
          client => "-b bands -p invocation_priorities -x",
      },
      );
@@ -65,10 +65,10 @@ sub run_client
     $CL = new PerlACE::Process ("client", "-k file://$iorfile " . $arg);
 
     $CL->Spawn ();
-    
+
     $client = $CL->WaitKill (120);
 
-    if ($client != 0) 
+    if ($client != 0)
     {
         print STDERR "ERROR: client returned $client\n";
         $status = 1;
@@ -76,7 +76,7 @@ sub run_client
     }
 }
 
-sub run_server 
+sub run_server
 {
     if (PerlACE::is_vxworks_test()) {
         $SV = new PerlACE::ProcessVX ("server", @_);
@@ -88,7 +88,7 @@ sub run_server
     exit 1;
     }
 
-    if (PerlACE::waitforfile_timed ($iorfile, 10) == -1)
+    if (PerlACE::waitforfile_timed ($iorfile, $PerlACE::wait_interval_for_process_creation) == -1)
     {
         check_supported_priorities ($SV);
 	print STDERR "ERROR: cannot find ior file: $iorfile\n";
@@ -100,8 +100,8 @@ sub run_server
 sub zap_server
 {
     $server = $SV->WaitKill (5);
-    
-    if ($server != 0) 
+
+    if ($server != 0)
     {
         print STDERR "ERROR: server returned $server\n";
         $status = 1;
@@ -135,7 +135,7 @@ for $test (@configurations)
     run_server ($test->{server});
 
     run_client ($test->{client});
-    
+
     zap_server (0);
 }
 

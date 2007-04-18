@@ -29,9 +29,9 @@ $CL = new PerlACE::Process ("initiator", "-f $ior1file -g $ior2file");
 $SV1->Spawn ();
 $SV2->Spawn ();
 
-if (PerlACE::waitforfile_timed ($ior1file, 15) == -1) {
+if (PerlACE::waitforfile_timed ($ior1file, $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: cannot find file <$ior1file>\n";
-    $SV1->Kill (); 
+    $SV1->Kill ();
     $SV2->Kill ();
     exit 1;
 }
@@ -39,8 +39,8 @@ if (PerlACE::waitforfile_timed ($ior1file, 15) == -1) {
 if (PerlACE::waitforfile_timed ($ior2file,
                         $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: cannot find file <$ior2file>\n";
-    $SV2->Kill (); 
-    $SV1->Kill (); 
+    $SV2->Kill ();
+    $SV1->Kill ();
     exit 1;
 }
 

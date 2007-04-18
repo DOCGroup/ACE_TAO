@@ -30,7 +30,7 @@ my $CL = new PerlACE::Process ("client",
 
 $AD->Spawn ();
 
-if (PerlACE::waitforfile_timed ($admin_iorfile, 10) == -1) {
+if (PerlACE::waitforfile_timed ($admin_iorfile, $PerlACE::wait_interval_for_process_creation) == -1) {
   print STDERR "ERROR: cannot find file <$admin_iorfile>\n";
   $AD->Kill (); $AD->TimedWait (1);
   exit 1;
@@ -38,7 +38,7 @@ if (PerlACE::waitforfile_timed ($admin_iorfile, 10) == -1) {
 
 $SV->Spawn ();
 
-if (PerlACE::waitforfile_timed ($server_iorfile, 10) == -1) {
+if (PerlACE::waitforfile_timed ($server_iorfile, $PerlACE::wait_interval_for_process_creation) == -1) {
   print STDERR "ERROR: cannot find file <$server_iorfile>\n";
   $AD->Kill (); $AD->TimedWait (1);
   $SV->Kill (); $SV->TimedWait (1);
