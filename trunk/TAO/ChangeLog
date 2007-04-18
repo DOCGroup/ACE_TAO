@@ -1,3 +1,48 @@
+Wed Apr 18 19:15:12 UTC 2007 Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/AMI/run_test.pl:
+        * tests/AMI_Buffering/run_buffer_size.pl:
+        * tests/AMI_Buffering/run_message_count.pl:
+        * tests/AMI_Buffering/run_test.pl:
+        * tests/AMI_Buffering/run_timeout.pl:
+        * tests/AMI_Buffering/run_timeout_reactive.pl:
+        * tests/BiDirectional/run_test_ipv6.pl:
+        * tests/Big_Request_Muxing/run_test.pl:
+        * tests/Blocking_Sync_None/run_test.pl:
+        * tests/Bug_1476_Test/run_test.pl:
+        * tests/Bug_1535_Regression/run_test.pl:
+        * tests/Bug_2183_Regression/run_test.pl:
+        * tests/Bug_2429_Regression/run_test.pl:
+        * tests/Bug_2678_Regression/run_test.pl:
+        * tests/Client_Leaks/run_test.pl:
+        * tests/DLL_ORB/run_test.pl:
+        * tests/DSI_AMI_Gateway/run_exception_test.pl:
+        * tests/DSI_Gateway/run_exception_test.pl:
+        * tests/Exposed_Policies/run_test.pl:
+        * tests/Faults/run_test.pl:
+        * tests/GIOP_Fragments/Java_Big_Reply/run_test.pl:
+        * tests/GIOP_Fragments/Java_Big_Request/run_test.pl:
+        * tests/InterOp-Naming/run_test.pl:
+        * tests/MT_BiDir/run_test.pl:
+        * tests/MT_Timeout/run_test.pl:
+        * tests/Muxed_GIOP_Versions/run_test.pl:
+        * tests/NestedUpcall/Triangle_Test/run_test.pl:
+        * tests/Oneway_Buffering/run_buffer_size.pl:
+        * tests/Oneway_Buffering/run_message_count.pl:
+        * tests/Oneway_Buffering/run_test.pl:
+        * tests/Oneway_Buffering/run_timeout.pl:
+        * tests/Oneway_Buffering/run_timeout_reactive.pl:
+        * tests/Oneway_Timeouts/run_test.pl:
+        * tests/Oneways_Invoking_Twoways/run_test.pl:
+        * tests/Parallel_Connect_Strategy/run_test.pl:
+        * tests/RTCORBA/Dynamic_Thread_Pool/run_test.pl:
+        * tests/RTCORBA/Linear_Priority/run_test.pl:
+        * tests/RTCORBA/MT_Client_Protocol_Priority/run_test.pl:
+        * tests/RTCORBA/Private_Connection/run_test.pl:
+        * tests/Typedef_String_Array/run_test.pl:
+          Improvements for vxworks cross platform testing and for
+          slower test systems like OpenVMS
+
 Wed Apr 18 15:37:09 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/ImplRepo_Service/Activator_Options.cpp:
