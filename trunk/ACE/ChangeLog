@@ -1,3 +1,15 @@
+Wed Apr 18 10:17:12 UTC 2007 Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/config/ace_fox.mpb:
+        * bin/MakeProjectCreator/config/global.features:
+        * ace/ace_foxreactor.mpc:
+        * ace/FoxReactor/*:
+        * include/makeinclude/platform_linux.GNU:
+        * include/makeinclude/wrapper_macros.GNU:
+          Added FoxReactor to integrate with the fox toolkit. Thanks to
+          Dmitriy Nikitinskiy <nick at bel dot ru> for providing these
+          files. This fixes bugzilla 1400
+
 Wed Apr 18 09:45:12 UTC 2007 Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/config/vcl.mpb:
