@@ -1,3 +1,8 @@
+Wed Apr 18 12:50:12 UTC 2007 Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_1330_Regression/run_test.pl:
+          Improvements for vxworks cross platform testing
+
 Wed Apr 18 12:38:12 UTC 2007 Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_2084_Regression/run_test.pl:
