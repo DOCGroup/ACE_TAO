@@ -1,10 +1,15 @@
+Wed Apr 18 11:51:12 UTC 2007 Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+          The DIOP test can run in a static build
+
 Wed Apr 18 11:01:56 UTC 2007 Martin Corino  <mcorino@remedy.nl>
 
         * include/makeinclude/rules.lib.GNU:
           Change to enable building static libs on OpenVMS.
 
 Wed Apr 18 10:52:00 UTC 2007  Ian Roberts  <ir@prismtech.com>
-        
+
         * bin/tao_orb_tests.lst:
           Added Bug_2791_Regression.
 
