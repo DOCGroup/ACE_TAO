@@ -1,3 +1,8 @@
+Wed Apr 18 12:11:12 UTC 2007 Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/config/ace_foxreactor.mpb:
+          Added new base project
+
 Wed Apr 18 11:51:12 UTC 2007 Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/tao_orb_tests.lst:
