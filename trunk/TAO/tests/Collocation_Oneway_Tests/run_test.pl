@@ -8,16 +8,18 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::Run_Test;
 
-$iorfile = PerlACE::LocalFile ("test.ior");
-unlink $iorfile;
 $status = 0;
+$iorbase = "test.ior";
 
 if (PerlACE::is_vxworks_test()) {
     $SV = new PerlACE::ProcessVX ("Collocated_Test");
+    $iorfile = $iorbase;
 }
 else {
     $SV = new PerlACE::Process ("Collocated_Test");
+    $iorfile = PerlACE::LocalFile ($iorbase);
 }
+unlink $iorfile;
 
 print STDERR "======== Running in Default Mode \n";
 $SV->Arguments ("-o $iorfile -k file://$iorfile -m none ");

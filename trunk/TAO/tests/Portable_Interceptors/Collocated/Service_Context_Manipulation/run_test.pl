@@ -16,12 +16,11 @@ if (PerlACE::is_vxworks_test()) {
     $SV = new PerlACE::ProcessVX ("collocated");
 }
 else {
-    $SV = new PerlACE::Process ("collocated");    
+    $SV = new PerlACE::Process ("collocated");
 }
 
 print STDERR "======== Running in default mode \n";
-# $SV->Arguments ("-o $iorfile -k file://$iorfile");
-$sv = $SV->SpawnWaitKill (60);
+$sv = $SV->SpawnWaitKill ($PerlACE::wait_interval_for_process_creation);
 
 if ($sv != 0) {
     print STDERR "ERROR in Collocated_Test\n";
@@ -31,7 +30,7 @@ unlink $iorfile;
 
 print STDERR "======== Running with per-orb \n";
 $SV->Arguments ("-ORBCollocation per-orb");
-$sv = $SV->SpawnWaitKill (60);
+$sv = $SV->SpawnWaitKill ($PerlACE::wait_interval_for_process_creation);
 
 if ($sv != 0) {
     print STDERR "ERROR in Collocated_Test\n";
@@ -41,7 +40,7 @@ unlink $iorfile;
 
 print STDERR "======== Running with no collocation \n";
 $SV->Arguments ("-ORBCollocation no");
-$sv = $SV->SpawnWaitKill (60);
+$sv = $SV->SpawnWaitKill ($PerlACE::wait_interval_for_process_creation);
 
 if ($sv != 0) {
     print STDERR "ERROR in Collocated_Test\n";
@@ -51,7 +50,7 @@ unlink $iorfile;
 
 print STDERR "======== Running in default mode and two ORBS \n";
 $SV->Arguments ("-n");
-$sv = $SV->SpawnWaitKill (60);
+$sv = $SV->SpawnWaitKill ($PerlACE::wait_interval_for_process_creation);
 
 if ($sv != 0) {
     print STDERR "ERROR in Collocated_Test\n";
@@ -61,7 +60,7 @@ unlink $iorfile;
 
 print STDERR "======== Running in per-orb mode and two ORBS \n";
 $SV->Arguments ("-n -ORBCollocation per-orb");
-$sv = $SV->SpawnWaitKill (60);
+$sv = $SV->SpawnWaitKill ($PerlACE::wait_interval_for_process_creation);
 
 if ($sv != 0) {
     print STDERR "ERROR in Collocated_Test\n";
@@ -71,7 +70,7 @@ unlink $iorfile;
 
 print STDERR "======== Running in no collocation mode and two ORBS \n";
 $SV->Arguments ("-n -ORBCollocation per-orb");
-$sv = $SV->SpawnWaitKill (60);
+$sv = $SV->SpawnWaitKill ($PerlACE::wait_interval_for_process_creation);
 
 if ($sv != 0) {
     print STDERR "ERROR in Collocated_Test\n";
