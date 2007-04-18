@@ -8,23 +8,25 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::Run_Test;
 
-$iorfile = PerlACE::LocalFile ("test.ior");
-unlink $iorfile;
 $status = 0;
+$iorbase = "test.ior";
 
 if (PerlACE::is_vxworks_test()) {
     $SV = new PerlACE::ProcessVX ("server");
+    $iorfile = $iorbase;
 }
 else {
     $SV = new PerlACE::Process ("server");
+    $iorfile = PerlACE::LocalFile ($iorbase);
 }
+unlink $iorfile;
 
 print STDERR "======== Running in Default Mode \n";
 $SV->Arguments ("-o $iorfile -k file://$iorfile");
 $sv = $SV->SpawnWaitKill ($PerlACE::wait_interval_for_process_creation);
 
 if ($sv != 0) {
-    print STDERR "ERROR in Collocated_Test\n";
+    print STDERR "ERROR in Bug_2084_Regression\n";
     $status = 1;
 }
 unlink $iorfile;
@@ -34,7 +36,7 @@ $SV->Arguments ("-o $iorfile -k file://$iorfile -ORBCollocation per-orb");
 $sv = $SV->SpawnWaitKill ($PerlACE::wait_interval_for_process_creation);
 
 if ($sv != 0) {
-    print STDERR "ERROR in server\n";
+    print STDERR "ERROR in Bug_2084_Regression\n";
     $status = 1;
 }
 unlink $iorfile;
@@ -44,7 +46,7 @@ $SV->Arguments ("-o $iorfile -k file://$iorfile -ORBCollocation no");
 $sv = $SV->SpawnWaitKill ($PerlACE::wait_interval_for_process_creation);
 
 if ($sv != 0) {
-    print STDERR "ERROR in server\n";
+    print STDERR "ERROR in Bug_2084_Regression\n";
     $status = 1;
 }
 unlink $iorfile;
@@ -54,7 +56,7 @@ $SV->Arguments ("-o $iorfile -k file://$iorfile -n ");
 $sv = $SV->SpawnWaitKill ($PerlACE::wait_interval_for_process_creation);
 
 if ($sv != 0) {
-    print STDERR "ERROR in server\n";
+    print STDERR "ERROR in Bug_2084_Regression\n";
     $status = 1;
 }
 unlink $iorfile;
@@ -64,7 +66,7 @@ $SV->Arguments ("-o $iorfile -k file://$iorfile -n -ORBCollocation per-orb");
 $sv = $SV->SpawnWaitKill ($PerlACE::wait_interval_for_process_creation);
 
 if ($sv != 0) {
-    print STDERR "ERROR in server\n";
+    print STDERR "ERROR in Bug_2084_Regression\n";
     $status = 1;
 }
 unlink $iorfile;
@@ -74,7 +76,7 @@ $SV->Arguments ("-o $iorfile -k file://$iorfile -n -ORBCollocation per-orb");
 $sv = $SV->SpawnWaitKill ($PerlACE::wait_interval_for_process_creation);
 
 if ($sv != 0) {
-    print STDERR "ERROR in server\n";
+    print STDERR "ERROR in Bug_2084_Regression\n";
     $status = 1;
 }
 unlink $iorfile;

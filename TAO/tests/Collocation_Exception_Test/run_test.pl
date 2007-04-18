@@ -8,18 +8,19 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::Run_Test;
 
-$iorfile = PerlACE::LocalFile ("test.ior");
-unlink $iorfile;
+$iorbase = "test.ior";
 $status = 0;
 
 if (PerlACE::is_vxworks_test()) {
     $SV = new PerlACE::ProcessVX ("Collocated_Test");
-    $SV->Arguments ("-o test.ior -k file://test.ior");
+    $iorfile = $iorbase;
 }
 else {
     $SV = new PerlACE::Process ("Collocated_Test");
-    $SV->Arguments ("-o $iorfile -k file://$iorfile");
+    $iorfile = PerlACE::LocalFile ("test.ior");
 }
+unlink $iorfile;
+$SV->Arguments ("-o $iorfile -k file://$iorfile");
 
 print STDERR "======== Running in Default Mode \n";
 $sv = $SV->SpawnWaitKill ($PerlACE::wait_interval_for_process_creation);

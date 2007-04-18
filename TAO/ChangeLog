@@ -1,3 +1,15 @@
+Wed Apr 18 12:38:12 UTC 2007 Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_2084_Regression/run_test.pl:
+        * tests/COIOP/run_test.pl:
+        * tests/Collocation_Exception_Test/run_test.pl:
+        * tests/Collocation_Oneway_Tests/run_test.pl:
+        * tests/Collocation_Tests/run_test.pl:
+        * tests/DII_Collocation_Tests/oneway/run_test.pl:
+        * tests/DII_Collocation_Tests/twoway/run_test.pl:
+        * tests/Portable_Interceptors/Collocated/Service_Context_Manipulation/run_test.pl:
+          Improvements for vxworks cross platform testing
+
 Wed Apr 18 12:10:12 UTC 2007 Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/OctetSeq/run_test.pl:
