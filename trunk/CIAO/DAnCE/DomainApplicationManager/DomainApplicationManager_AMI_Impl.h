@@ -22,6 +22,10 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "DomainApplicationManager_Impl.h"
+#include "ace/Value_Ptr.h"
+#include "Reply_Handler_i.h"
+#include "DAnCE/Deployment/Deployment_NodeApplicationManagerC.h"
+#include "DAnCE/Deployment/Deployment_ApplicationC.h"
 
 namespace CIAO
 {
@@ -47,8 +51,30 @@ namespace CIAO
       startLaunch (const ::Deployment::Properties & configProperty,
                    ::CORBA::Boolean start);
 
-  private:
+    void decrease_start_launch_reply_count (void);
 
+  private:
+    typedef struct
+    {
+      ACE::Value_Ptr <Deployment_AMI_NodeApplicationManagerHandler_i> servant_;
+      ::Deployment::AMI_NodeApplicationManagerHandler_var obj_ref_;
+    } AMI_NAM_Handler;
+
+    typedef ACE_Hash_Map_Manager_Ex<ACE_CString,
+                                    AMI_NAM_Handler,
+                                    ACE_Hash<ACE_CString>,
+                                    ACE_Equal_To<ACE_CString>,
+                                    ACE_Null_Mutex> AMI_NAM_Handler_Table;
+    typedef AMI_NAM_Handler_Table::iterator AMI_NAM_Handler_Table_Iterator;
+
+    /// A table to trace the AMI reply handler
+    AMI_NAM_Handler_Table ami_nam_handler_table_;
+
+    /// Disable copy assignment
+    DomainApplicationManager_AMI_Impl (const DomainApplicationManager_AMI_Impl&);
+
+    /// AMI reply count
+    volatile int start_launch_reply_count_;
   };
 }
 

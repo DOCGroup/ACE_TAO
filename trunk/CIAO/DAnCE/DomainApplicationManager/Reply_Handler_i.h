@@ -9,20 +9,24 @@
 #include "DAnCE/Deployment/Deployment_NodeApplicationManagerS.h"
 #include "DAnCE/Deployment/Deployment_NodeApplicationC.h"
 #include "DomainApplicationManager_Export.h"
+#include "DomainApplicationManager_Impl.h"
 #include "ace/Thread_Mutex.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-
 class DomainApplicationManager_Export Deployment_AMI_NodeApplicationManagerHandler_i
   : public virtual POA_Deployment::AMI_NodeApplicationManagerHandler
 {
 public:
   /// Constructor 
-  Deployment_AMI_NodeApplicationManagerHandler_i (void);
-  
+  Deployment_AMI_NodeApplicationManagerHandler_i (CIAO::DomainApplicationManager_Impl *dam);
+
+  /// Copy constructor
+  Deployment_AMI_NodeApplicationManagerHandler_i (
+    const Deployment_AMI_NodeApplicationManagerHandler_i & o);  
+
   /// Destructor 
   virtual ~Deployment_AMI_NodeApplicationManagerHandler_i (void);
 
@@ -79,6 +83,7 @@ private:
 
   ACE_SYNCH_MUTEX lock_;
 
+  ::CIAO::DomainApplicationManager_Impl * dam_;
 };
 
 
