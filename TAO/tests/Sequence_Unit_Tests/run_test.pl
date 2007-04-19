@@ -9,6 +9,14 @@ use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::Run_Test;
 use strict;
 
+if ($ARGV[0] =~ /^-h/i || $ARGV[0] =~ /^-\?/i) {
+  print "Usage: run_test.pl [-boost|-noboost]\n".
+      "\tDefault is to run all tests, specifying -boost or -noboost will\n".
+      "\teither run the tests that require the boost unit test library or\n".
+      "\tthe other tests, respectively.\n";
+  exit 0;
+}
+
 my $final_result = 0;
 
 my @tests = qw(unbounded_value_sequence_ut
@@ -26,6 +34,9 @@ my @tests = qw(unbounded_value_sequence_ut
                bounded_object_reference_sequence_ut
                bounded_sequence_cdr_ut
                unbounded_sequence_cdr_ut
+              );
+
+my @testsNoBoost = qw(
                Unbounded_Octet
                Unbounded_Simple_Types
                Bounded_Simple_Types
@@ -33,7 +44,14 @@ my @tests = qw(unbounded_value_sequence_ut
                Bounded_String
               );
 
-foreach my $process (@tests) {
+my @testsToRun = qw();
+  
+push(@testsToRun, @tests) if ($#ARGV < 0 || $ARGV[0] eq '-boost');
+push(@testsToRun, @testsNoBoost) if ($#ARGV < 0 || $ARGV[0] eq '-noboost');
+
+
+foreach my $process (@testsToRun) {
+
 
 
   my $P = 0;
