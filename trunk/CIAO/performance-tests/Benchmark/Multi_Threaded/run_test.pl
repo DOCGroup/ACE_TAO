@@ -38,7 +38,7 @@ $DS = new PerlACE::Process ("$CIAO_ROOT/tools/Daemon/CIAO_Daemon",
 
 ## Starting up the CIAO daemon
 $DS->Spawn ();
-if (PerlACE::waitforfile_timed ($daemon_ior, 15) == -1) {
+if (PerlACE::waitforfile_timed ($daemon_ior, $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: Could not find daemon ior file <$daemon_ior>\n";
     $DS->Kill ();
     exit 1;
@@ -50,7 +50,7 @@ $DS2 = new PerlACE::Process ("$CIAO_ROOT/tools/Daemon/CIAO_Daemon",
 
 ## Starting up the CIAO daemon
 $DS2->Spawn ();
-if (PerlACE::waitforfile_timed ($daemon_ior, 15) == -1) {
+if (PerlACE::waitforfile_timed ($daemon_ior, $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: Could not find daemon ior file <$daemon_ior>\n";
     $DS->Kill ();
     exit 1;
@@ -59,7 +59,7 @@ if (PerlACE::waitforfile_timed ($daemon_ior, 15) == -1) {
 $AM = new PerlACE::Process("$CIAO_ROOT/tools/Assembly_Deployer/Assembly_Manager",
                            $assembly_manager_args);
 $AM->Spawn ();
-if (PerlACE::waitforfile_timed ($am_ior, 15) == -1) {
+if (PerlACE::waitforfile_timed ($am_ior, $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: Could not find assembly ior file <$am_ior>\n";
     $AM->Kill ();
     exit 1;

@@ -1,3 +1,16 @@
+Thu Apr 19 18:29:12 UTC 2007 Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/tests/NodeApplicationTest/run_test.pl:
+        * DAnCE/tests/NodeApplicationTest/run_test_ex.pl:
+        * DAnCE/tests/NodeApplicationTest/run_test_simple.pl:
+        * examples/BasicSP/descriptors/run_test.pl:
+        * examples/Hello/descriptors/run_test.pl:
+        * performance-tests/Benchmark/Multi_Threaded/run_test.pl:
+        * performance-tests/Benchmark/RoundTrip/run_test.pl:
+        * performance-tests/Benchmark/RoundTripClient/run_test.pl:
+        * performance-tests/Benchmark/RoundTripClient/run_test_ior_cad.pl:
+          Use $PerlACE::wait_interval_for_process_creation
+
 Sun Apr 15 19:20:32 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * CIDLC/ServantSourceGenerator.cpp:
