@@ -1,3 +1,8 @@
+Thu Apr 19 12:30:12 UTC 2007 Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * utils/nslist/run_test.pl:
+          Use $PerlACE::wait_interval_for_process_creation
+
 Thu Apr 19 12:28:12 UTC 2007 Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * performance-tests/Callback/run_test.pl:
