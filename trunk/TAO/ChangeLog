@@ -1,3 +1,8 @@
+Thu Apr 19 13:49:12 UTC 2007 Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/AMI_Timeouts/run_test.pl:
+          Use $PerlACE::wait_interval_for_process_creation
+
 Thu Apr 19 12:43:12 UTC 2007 Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/examples/CosEC/Simple/run_test.pl:
