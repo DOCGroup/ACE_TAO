@@ -18,7 +18,7 @@ $CL = new PerlACE::Process ("client", "-k file://$iorfile -ORBEndpoint diop://:1
 
 $SV->Spawn ();
 
-if (PerlACE::waitforfile_timed ($iorfile, 10) == -1) {
+if (PerlACE::waitforfile_timed ($iorfile, $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: could not find file <$iorfile>\n";
     $SV->Kill ();
     exit 1;
