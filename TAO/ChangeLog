@@ -1,10 +1,32 @@
+Thu Apr 19 05:24:12 UTC 2007 Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/AlternateIIOP/run_test.pl:
+          Improved for vxworks testing
+
+        * tests/Bug_1476_Test/client.cpp:
+          Layout changes
+
+        * tests/CollocationLockup/CollocationLockup.mpc:
+          Removed not needed after
+
+        * tests/CollocationLockup/run_test.pl:
+        * tests/MT_Server/run_test.pl:
+          Added check whether spawn did work, if not, exit directly instead of
+          waiting for an IOR file
+
+        * tests/Native_Exceptions/run_test.pl:
+        * tests/NestedUpcall/Simple/run_test.pl:
+        * tests/Server_Leaks/run_test.pl:
+          Use a perl variable for the base ior filename so that we only define
+          it once
+
 Wed Apr 18 19:55:11 UTC 2007  Yan Dai  <dai_y@ociweb.com>
 
         * TAO_IDL/be/be_visitor_structure/serializer_op_ch.cpp:
-          
-          Fixed a bug that does not generate the correct key 
-          comparison for DCPS KeyLessThan when there are multiple 
-          DCPS keys. 
+
+          Fixed a bug that does not generate the correct key
+          comparison for DCPS KeyLessThan when there are multiple
+          DCPS keys.
 
 Wed Apr 18 19:15:12 UTC 2007 Johnny Willemsen  <jwillemsen@remedy.nl>
 

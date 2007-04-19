@@ -26,7 +26,11 @@ $CL2 = new PerlACE::Process ("client", "-k file://$iorfile -i 100");
 $CL3 = new PerlACE::Process ("client", "-k file://$iorfile -i 100");
 $CLS = new PerlACE::Process ("client", "-k file://$iorfile -i 100 -x ");
 
-$SV->Spawn ();
+$server = $SV->Spawn ();
+if ($server != 0) {
+    print STDERR "ERROR: server returned $server\n";
+    exit 1;
+}
 
 if (PerlACE::waitforfile_timed ($iorfile,
                         $PerlACE::wait_interval_for_process_creation) == -1) {

@@ -13,7 +13,6 @@ project: taoserver {
   exename = CollocationLockup
 
   after += *idl
-  after += *SimpleNamingService
 
   Source_Files {
     CollocationLockup.cpp
