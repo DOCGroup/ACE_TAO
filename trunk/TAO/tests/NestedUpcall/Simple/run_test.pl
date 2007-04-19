@@ -9,12 +9,13 @@ use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::Run_Test;
 
 $status = 0;
-$iorfile = PerlACE::LocalFile ("test.ior");
+$baseior = "test.ior";
+$iorfile = PerlACE::LocalFile ($baseior);
 
 unlink $iorfile;
 
 if (PerlACE::is_vxworks_test()) {
-    $SV = new PerlACE::ProcessVX ("server", "-f test.ior");
+    $SV = new PerlACE::ProcessVX ("server", "-f $baseior");
 }
 else {
     $SV = new PerlACE::Process ("server", "-f $iorfile");
@@ -49,7 +50,7 @@ if ($server != 0) {
 unlink $iorfile;
 
 if (PerlACE::is_vxworks_test()) {
-    $SV->Arguments ("-f test.ior -t 3");
+    $SV->Arguments ("-f $baseior -t 3");
 }
 else {
     $SV->Arguments ("-f $iorfile -t 3");
@@ -63,7 +64,7 @@ $SV->Spawn ();
 if (PerlACE::waitforfile_timed ($iorfile,
                         $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: cannot find file <$iorfile>\n";
-    $SV->Kill (); 
+    $SV->Kill ();
     exit 1;
 }
 

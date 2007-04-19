@@ -97,7 +97,7 @@ main (int argc, char *argv[])
       CORBA::Object_var tmp = orb->string_to_object(ior);
 
       if (CORBA::is_nil (tmp.in ())) {
-  ACE_ERROR_RETURN ((LM_ERROR, "Invalid IOR.\n")
+        ACE_ERROR_RETURN ((LM_ERROR, "Invalid IOR.\n")
         ,1);
       }
 
@@ -152,14 +152,14 @@ main (int argc, char *argv[])
     tmp = tmp->_set_policy_overrides (policies, CORBA::SET_OVERRIDE);
   }
 
-  policies[0]->destroy ();
+        policies[0]->destroy ();
       }
 
       Test::Hello_var hello =
         Test::Hello::_narrow(tmp.in ());
 
       if (CORBA::is_nil (hello.in ())) {
-  ACE_ERROR_RETURN ((LM_ERROR,
+        ACE_ERROR_RETURN ((LM_ERROR,
          "Nil Test::Hello reference <%s>\n",
          ior),
         1);
@@ -172,31 +172,31 @@ main (int argc, char *argv[])
       hello->get_string ();
 
       TAO::Transport_Cache_Manager &tcm =
-  hello->orb_core ()->lane_resources ().transport_cache ();
+        hello->orb_core ()->lane_resources ().transport_cache ();
 
-      TAO_Transport *transport = NULL;
+      TAO_Transport *transport = 0;
       TAO_Base_Transport_Property desc (hello->_stubobj ()->profile_in_use()->endpoint ());
 
       if (tcm.current_size() == 0) {
-  ACE_ERROR_RETURN ((LM_ERROR,
+        ACE_ERROR_RETURN ((LM_ERROR,
          "The Transport Cache shouldn't be empty here.\n"),
         1);
       }
 
       if (tcm.find_transport (&desc, transport) != 0) {
-  ACE_ERROR_RETURN ((LM_ERROR,
+        ACE_ERROR_RETURN ((LM_ERROR,
          "The cache should have returned the just created transport.\n"),
         1);
       }
 
       if (transport->is_connected()) {
-  ACE_ERROR_RETURN ((LM_ERROR,
+        ACE_ERROR_RETURN ((LM_ERROR,
          "This cannot happen. No server to connect to."),
         1);
       }
 
-      if (transport != NULL) {
-  ACE_DEBUG ((LM_DEBUG, "Transport is %s\n", (transport->is_connected()?"connected":"not connected")));
+      if (transport != 0) {
+        ACE_DEBUG ((LM_DEBUG, "Transport is %s\n", (transport->is_connected()?"connected":"not connected")));
       }
 
       orb->destroy ();
