@@ -57,7 +57,7 @@ $SV1->Spawn ();
 
 print "waiting for replica 1's IOR\n" if ($verbose);
 
-if (PerlACE::waitforfile_timed ($replica1_ior, 5) == -1) {
+if (PerlACE::waitforfile_timed ($replica1_ior, $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "TEST ERROR: cannot find replica 1 file <$replica1_ior>\n";
     $SV1->Kill (); $SV1->TimedWait (1);
     exit 1;
@@ -67,7 +67,7 @@ print "\nTest: Starting replica 2 " . $SV2->CommandLine . "\n" if ($verbose);
 $SV2->Spawn ();
 
 print "waiting for replica 2's IOR\n" if ($verbose);
-if (PerlACE::waitforfile_timed ($replica2_ior, 5) == -1) {
+if (PerlACE::waitforfile_timed ($replica2_ior, $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "TEST ERROR: cannot find replica 2 file <$replica2_ior>\n";
     $SV1->Kill (); $SV1->TimedWait (1);
     $SV2->Kill (); $SV2->TimedWait (1);

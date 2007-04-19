@@ -37,7 +37,7 @@ $S = new PerlACE::Process ("Supplier", "-ORBInitRef NameService=file://$nsiorfil
 
 $IF->Spawn ();
 
-if (PerlACE::waitforfile_timed ($ifriorfile, 15) == -1) {
+if (PerlACE::waitforfile_timed ($ifriorfile, $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: cannot find file <$ifriorfile>\n";
     $IF->Kill ();
     exit 1;
@@ -47,7 +47,7 @@ $TI->SpawnWaitKill (60);
 
 $NS->Spawn ();
 
-if (PerlACE::waitforfile_timed ($nsiorfile, 15) == -1) {
+if (PerlACE::waitforfile_timed ($nsiorfile, $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: cannot find file <$nsiorfile>\n";
     $IF->Kill ();
     $NS->Kill ();
@@ -56,7 +56,7 @@ if (PerlACE::waitforfile_timed ($nsiorfile, 15) == -1) {
 
 $CE->Spawn ();
 
-if (PerlACE::waitforfile_timed ($eciorfile, 15) == -1) {
+if (PerlACE::waitforfile_timed ($eciorfile, $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: cannot find file <$eciorfile>\n";
     $IF->Kill ();
     $NS->Kill ();
@@ -66,7 +66,7 @@ if (PerlACE::waitforfile_timed ($eciorfile, 15) == -1) {
 
 $C->Spawn ();
 
-if (PerlACE::waitforfile_timed ($consiorfile, 15) == -1) {
+if (PerlACE::waitforfile_timed ($consiorfile, $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: cannot find file <$consiorfile>\n";
     $IF->Kill ();
     $NS->Kill ();

@@ -34,7 +34,7 @@ sub test_body
    $IFRSERVICE->Arguments("-o $ifr_ior_file ");
    $IFRSERVICE->Spawn ();
 
-   if (PerlACE::waitforfile_timed ($ifr_ior_file, 10) == -1)
+   if (PerlACE::waitforfile_timed ($ifr_ior_file, $PerlACE::wait_interval_for_process_creation) == -1)
    {
       print STDERR "ERROR: cannot find $ifr_ior_file\n";
       $IFRSERVICE->Kill ();

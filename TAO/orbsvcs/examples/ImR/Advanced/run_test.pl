@@ -130,7 +130,7 @@ sub start_imr
     unlink "manager.ior";
     $MGR = new PerlACE::Process("manager_main", "-r $TestParams{activate_retry}");
     $MGR->Spawn();
-    PerlACE::waitforfile_timed("manager.ior", 10);
+    PerlACE::waitforfile_timed("manager.ior", $PerlACE::wait_interval_for_process_creation);
 
     if ($TestParams{imr_on} eq "1")
     {
@@ -140,7 +140,7 @@ sub start_imr
                     "$PerlACE::TAO_ROOT/orbsvcs/ImplRepo_Service/ImplRepo_Service", 
                     $IMR_CMD);
         $IMPL->Spawn();
-        PerlACE::waitforfile_timed("implrepo.ior", 10);
+        PerlACE::waitforfile_timed("implrepo.ior", $PerlACE::wait_interval_for_process_creation);
     }
 }
 
@@ -202,7 +202,7 @@ sub write_iors
         # Run a single fake server for all POAs
         my $TEMP_SERV = new PerlACE::Process("server_main", "$IOR_CMD -d 1 -p $TestParams{server_poas}");
         $TEMP_SERV->SpawnWaitKill(5);
-        PerlACE::waitforfile_timed("imr_test.ior", 10);
+        PerlACE::waitforfile_timed("imr_test.ior", $PerlACE::wait_interval_for_process_creation);
         print "* IORs Written\n"; 
     }
     else
@@ -223,7 +223,7 @@ sub start_activator
                 "$PerlACE::TAO_ROOT/orbsvcs/ImplRepo_Service/ImR_Activator", 
                 $ACT_CMD);
         $ACT->Spawn();
-        PerlACE::waitforfile_timed("activator.ior", 5);
+        PerlACE::waitforfile_timed("activator.ior", $PerlACE::wait_interval_for_process_creation);
     }
 }
 
@@ -324,7 +324,7 @@ sub start_server()
         generateCommands();
         $SERVER = new PerlACE::Process("server_main", "$SERVER_CMD -d 1 -o 1 -p $TestParams{server_poas}");
         $SERVER->Spawn();
-        PerlACE::waitforfile_timed("imr_test.ior", 10);
+        PerlACE::waitforfile_timed("imr_test.ior", $PerlACE::wait_interval_for_process_creation);
     }
     elsif ($TestParams{activate_mode} eq "manual")
     {

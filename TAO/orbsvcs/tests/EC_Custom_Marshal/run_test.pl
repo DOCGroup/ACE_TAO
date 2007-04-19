@@ -25,7 +25,7 @@ $S  = new PerlACE::Process ("ECM_Supplier",
 
 $NS->Spawn ();
 
-if (PerlACE::waitforfile_timed ($NS_ior, 10) == -1) {
+if (PerlACE::waitforfile_timed ($NS_ior, $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: waiting for naming service IOR file\n";
     $NS->Kill (); 
     exit 1;

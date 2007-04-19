@@ -81,7 +81,7 @@ if ($NS->Spawn() == -1) {
 }
 
 # the ior file is only used to wait for the service to start
-if (PerlACE::waitforfile_timed ($notify_ior, 10) == -1) {
+if (PerlACE::waitforfile_timed ($notify_ior, $PerlACE::wait_interval_for_process_creation) == -1) {
    print STDERR "ERROR: Timed out waiting for $notify_ior\n";
    $NS->Kill ();
    exit 1;
@@ -101,7 +101,7 @@ print $CON->CommandLine ();
 $CON->Spawn();
 
 # wait for the channel number file
-if (PerlACE::waitforfile_timed ($channel_id, 10) == -1) {
+if (PerlACE::waitforfile_timed ($channel_id, $PerlACE::wait_interval_for_process_creation) == -1) {
    print STDERR "ERROR: Timed out waiting for Consumer to write $channel_id\n";
    $NS->Kill ();
    $CON->Kill ();
@@ -145,7 +145,7 @@ print "TEST SCRIPT: ****Passed: Supplier reconnect test.\n";
 if ($verbose eq "-v") {print "TEST SCRIPT: " . $CON->CommandLine . "\n";}
 $CON->Spawn();
 # wait for the channel number file
-if (PerlACE::waitforfile_timed ($channel_id, 10) == -1) {
+if (PerlACE::waitforfile_timed ($channel_id, $PerlACE::wait_interval_for_process_creation) == -1) {
    print STDERR "ERROR: Timed out waiting for Consumer to write $channel_id\n";
    $NS->Kill ();
    $CON->Kill ();
@@ -192,7 +192,7 @@ if ($verbose eq "-v") {print "TEST SCRIPT: " . $NS->CommandLine . "\n";}
 $NS->Spawn();
 
 # the ior file is only used to wait for the service to start
-if (PerlACE::waitforfile_timed ($notify_ior, 10) == -1) {
+if (PerlACE::waitforfile_timed ($notify_ior, $PerlACE::wait_interval_for_process_creation) == -1) {
    print STDERR "ERROR: Timed out waiting for $notify_ior\n";
    $NS->Kill ();
    exit 1;
@@ -205,7 +205,7 @@ unlink $channel_id;
 if ($verbose eq "-v") {print "TEST SCRIPT: " . $CON->CommandLine . "\n";}
 $CON->Spawn();
 # wait for the channel number file
-if (PerlACE::waitforfile_timed ($channel_id, 10) == -1) {
+if (PerlACE::waitforfile_timed ($channel_id, $PerlACE::wait_interval_for_process_creation) == -1) {
    print STDERR "ERROR: Timed out waiting for Consumer to write $channel_id\n";
    $NS->Kill ();
    $CON->Kill ();
@@ -245,7 +245,7 @@ unlink $channel_id;
 if ($verbose eq "-v") {print "TEST SCRIPT: " . $CON->CommandLine . "\n";}
 $CON->Spawn();
 # wait for the channel number file
-if (PerlACE::waitforfile_timed ($channel_id, 10) == -1) {
+if (PerlACE::waitforfile_timed ($channel_id, $PerlACE::wait_interval_for_process_creation) == -1) {
    print STDERR "ERROR: Timed out waiting for Consumer to write $channel_id\n";
    $NS->Kill ();
    $CON->Kill ();
@@ -333,7 +333,7 @@ if ($verbose eq "-v") {print "TEST SCRIPT: " . $NS->CommandLine . "\n";}
 $NS->Spawn();
 
 # the ior file is only used to wait for the service to start
-if (PerlACE::waitforfile_timed ($notify_ior, 20) == -1) {
+if (PerlACE::waitforfile_timed ($notify_ior, $PerlACE::wait_interval_for_process_creation) == -1) {
    print STDERR "ERROR: Timed out waiting for $notify_ior\n";
    $NS->Kill ();
    exit 1;
@@ -348,7 +348,7 @@ if ($verbose eq "-v") {print "TEST SCRIPT: " . $CON->CommandLine . "\n";}
 $CON->Spawn();
 
 # wait for the channel number file
-if (PerlACE::waitforfile_timed ($channel_id, 10) == -1) {
+if (PerlACE::waitforfile_timed ($channel_id, $PerlACE::wait_interval_for_process_creation) == -1) {
    print STDERR "ERROR: Timed out waiting for Consumer to write $channel_id\n";
    $NS->Kill ();
    $CON->Kill ();

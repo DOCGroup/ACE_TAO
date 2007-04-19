@@ -23,7 +23,7 @@ $CL = new PerlACE::Process ("client", "-f $clerk_ior");
 
 $SV->Spawn ();
 
-if (PerlACE::waitforfile_timed ($server_ior, 15) == -1) {
+if (PerlACE::waitforfile_timed ($server_ior, $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: cannot find file <$server_ior>\n";
     $SV->Kill ();
     exit 1;
@@ -31,7 +31,7 @@ if (PerlACE::waitforfile_timed ($server_ior, 15) == -1) {
 
 $CK->Spawn ();
 
-if (PerlACE::waitforfile_timed ($clerk_ior, 15) == -1) {
+if (PerlACE::waitforfile_timed ($clerk_ior, $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: cannot find file <$clerk_ior>\n";
     $SV->Kill ();
     $CK->Kill ();

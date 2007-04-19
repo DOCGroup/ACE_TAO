@@ -28,7 +28,7 @@ print STDERR "Starting ABORT test\n";
 
 print STDERR "Starting Server 1\n";
 $SERV1->Spawn ();
-if (PerlACE::waitforfile_timed ($file1ior, 20) == -1) {
+if (PerlACE::waitforfile_timed ($file1ior, $PerlACE::wait_interval_for_process_creation) == -1) {
 	print STDERR "ERROR: cannot find file <$file1ior>\n";
 	$SERV1->Kill ();
 	exit 1;
@@ -52,7 +52,7 @@ print STDERR "Starting SHUTDOWN test\n";
 
 print STDERR "Starting Server 1\n";
 $SERV1->Spawn ();
-if (PerlACE::waitforfile_timed ($file1ior, 20) == -1) {
+if (PerlACE::waitforfile_timed ($file1ior, $PerlACE::wait_interval_for_process_creation) == -1) {
 	print STDERR "ERROR: cannot find file <$file1ior>\n";
 	$SERV1->Kill ();
 	exit 1;
@@ -76,7 +76,7 @@ print STDERR "Starting MERGED ABORT test\n";
 
 print STDERR "Starting Server 1\n";
 $SERV1->Spawn ();
-if (PerlACE::waitforfile_timed ($file1ior, 20) == -1) {
+if (PerlACE::waitforfile_timed ($file1ior, $PerlACE::wait_interval_for_process_creation) == -1) {
 	print STDERR "ERROR: cannot find file <$file1ior>\n";
 	$SERV1->Kill ();
 	exit 1;
@@ -84,7 +84,7 @@ if (PerlACE::waitforfile_timed ($file1ior, 20) == -1) {
 
 print STDERR "Starting Server 2\n";
 $SERV2->Spawn ();
-if (PerlACE::waitforfile_timed ($file2ior, 20) == -1) {
+if (PerlACE::waitforfile_timed ($file2ior, $PerlACE::wait_interval_for_process_creation) == -1) {
 	print STDERR "ERROR: cannot find file <$file2ior>\n";
 	$SERV1->Kill ();
 	$SERV2->Kill ();
@@ -110,7 +110,7 @@ print STDERR "Starting MERGED SHUTDOWN test\n";
 
 print STDERR "Starting Server 1\n";
 $SERV1->Spawn ();
-if (PerlACE::waitforfile_timed ($file1ior, 20) == -1) {
+if (PerlACE::waitforfile_timed ($file1ior, $PerlACE::wait_interval_for_process_creation) == -1) {
 	print STDERR "ERROR: cannot find file <$file1ior>\n";
 	$SERV1->Kill ();
 	exit 1;
@@ -118,7 +118,7 @@ if (PerlACE::waitforfile_timed ($file1ior, 20) == -1) {
 
 print STDERR "Starting Server 2\n";
 $SERV2->Spawn ();
-if (PerlACE::waitforfile_timed ($file2ior, 20) == -1) {
+if (PerlACE::waitforfile_timed ($file2ior, $PerlACE::wait_interval_for_process_creation) == -1) {
 	print STDERR "ERROR: cannot find file <$file2ior>\n";
 	$SERV1->Kill ();
 	$SERV2->Kill ();
