@@ -77,7 +77,7 @@ struct tm {
  */
 inline long ace_timezone()
 {
-#if defined (ACE_HAS_WIN32)
+#if defined (ACE_WIN32)
   TIME_ZONE_INFORMATION tz;
   GetTimeZoneInformation (&tz);
   return tz.Bias * 60;
