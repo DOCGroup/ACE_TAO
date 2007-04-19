@@ -110,7 +110,7 @@ ACE_SSL_SOCK_Stream::sendv (const iovec iov[],
           // This avoids a subtle problem where "holes" in the data
           // stream would occur if partial sends of a given buffer in
           // the iovec array occured.
-          if (static_cast<size_t> (result) < iov[i].iov_len)
+          if (static_cast<size_t> (result) < static_cast<size_t> (iov[i].iov_len))
             break;
         }
 
