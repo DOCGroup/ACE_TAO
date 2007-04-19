@@ -1,8 +1,13 @@
+Thu Apr 19 13:29:12 UTC 2007 Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-win32-msvc.h:
+          Don't set ACE_HAS_INTRINSIC_INTERLOCKED on WinCE
+
 Thu Apr 19 11:01:49 UTC 2007  Olli Savia  <ops@iki.fi>
 
         * ace/SSL/SSL_SOCK_Stream.cpp:
           Added static_cast to silence compiler warning on LynxOS.
-        
+
         * include/makeinclude/platform_lynxos.GNU:
           Added PLATFORM_X11_LIBS to PLATFORM_TK_LIBS to fix
           linking error on LynxOS.
