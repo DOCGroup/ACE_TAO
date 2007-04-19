@@ -3,11 +3,22 @@
 // $Id$
 
 #include "Reply_Handler_i.h"
+#include "DomainApplicationManager_AMI_Impl.h"
 
 // Implementation skeleton constructor
-Deployment_AMI_NodeApplicationManagerHandler_i::Deployment_AMI_NodeApplicationManagerHandler_i (void)
+Deployment_AMI_NodeApplicationManagerHandler_i::
+Deployment_AMI_NodeApplicationManagerHandler_i (CIAO::DomainApplicationManager_Impl *dam)
 : retn_node_app_ (0),
-  retn_connections_ (0)
+  retn_connections_ (0),
+  dam_ (dam)
+{
+}
+
+// Copy constructor
+Deployment_AMI_NodeApplicationManagerHandler_i::Deployment_AMI_NodeApplicationManagerHandler_i (
+    const Deployment_AMI_NodeApplicationManagerHandler_i &o)
+: retn_node_app_ (o.retn_node_app_),
+  retn_connections_ (o.retn_connections_)
 {
 }
 
@@ -22,6 +33,12 @@ void Deployment_AMI_NodeApplicationManagerHandler_i::startLaunch (
 {
   // Add your implementation here
   ACE_Guard<ACE_SYNCH_MUTEX> guard (lock_);
+
+  ACE_DEBUG ((LM_ERROR, "################################ AMI startLaunch() called\n"));
+
+  CIAO::DomainApplicationManager_AMI_Impl * ami_dam = 
+    static_cast<CIAO::DomainApplicationManager_AMI_Impl*> (dam_);
+  ami_dam->decrease_start_launch_reply_count ();
 
   // Narrow down to NodeApplication object reference
   this->retn_node_app_ = 
