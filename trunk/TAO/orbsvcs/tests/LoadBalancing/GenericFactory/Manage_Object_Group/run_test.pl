@@ -34,7 +34,7 @@ print STDERR "\n";
 
 $LM->Spawn ();
 
-if (PerlACE::waitforfile_timed ("lm.ior", 5) == -1) {
+if (PerlACE::waitforfile_timed ("lm.ior", $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: cannot find file LoadManager IOR: lm.ior\n";
     $SV->Kill (); $SV->TimedWait (1);
     exit 1;

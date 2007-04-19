@@ -62,7 +62,7 @@ unlink $ec2iorfile;
 $NameService = "$ENV{TAO_ROOT}/orbsvcs/Naming_Service/Naming_Service";
 $NS = new PerlACE::Process($NameService, "$flags -o $nsiorfile $end_point:$ns_port");
 $NS->Spawn();
-if (PerlACE::waitforfile_timed ($nsiorfile, 5) == -1) {
+if (PerlACE::waitforfile_timed ($nsiorfile, $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: cannot find file <$nsiorfile>\n";
     $NS->Kill();
     exit 1;
@@ -98,7 +98,7 @@ if ($udp) {
 $S2 = new PerlACE::Process("EchoEventSupplier", $args2);
 $S2->Spawn();
 
-if ((PerlACE::waitforfile_timed ($ec1iorfile, 10) == -1) ||
+if ((PerlACE::waitforfile_timed ($ec1iorfile, $PerlACE::wait_interval_for_process_creation) == -1) ||
     (PerlACE::waitforfile_timed ($ec2iorfile, 2) == -1)) {
     print STDERR "ERROR: cannot find files <$ec1iorfile> and <$ec2iorfile>\n";
     $NS->Kill();

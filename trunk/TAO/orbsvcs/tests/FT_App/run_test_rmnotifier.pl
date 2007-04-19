@@ -162,7 +162,7 @@ print "\nTEST: starting ReplicationManager " . $RM->CommandLine . "\n" if ($verb
 $RM->Spawn ();
 
 print "TEST: waiting for registry's IOR\n" if ($verbose);
-if (PerlACE::waitforfile_timed ($rm_ior, 5) == -1) {
+if (PerlACE::waitforfile_timed ($rm_ior, $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "TEST ERROR: cannot find file <$rm_ior>\n";
     $RM->Kill (); $RM->TimedWait (1);
     exit 1;
@@ -174,7 +174,7 @@ print "\nTEST: starting notifier " . $NOT->CommandLine . "\n" if ($verbose);
 $NOT->Spawn ();
 
 print "TEST: waiting for notifier's IOR\n" if ($verbose);
-if (PerlACE::waitforfile_timed ($notifier_ior, 5) == -1) {
+if (PerlACE::waitforfile_timed ($notifier_ior, $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "TEST ERROR: cannot find file <$notifier_ior>\n";
     $RM->Kill (); $RM->TimedWait (1);
     $NOT->Kill (); $NOT->TimedWait(1);
@@ -187,7 +187,7 @@ print "\nTEST: starting detector factory " . $DET->CommandLine . "\n" if ($verbo
 $DET->Spawn ();
 
 print "TEST: waiting for detector's IOR\n" if ($verbose);
-if (PerlACE::waitforfile_timed ($detector_ior, 20) == -1) {
+if (PerlACE::waitforfile_timed ($detector_ior, $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "TEST ERROR: cannot find file <$detector_ior>\n";
     $RM->Kill (); $RM->TimedWait (1);
     $NOT->Kill (); $NOT->TimedWait(1);
@@ -201,7 +201,7 @@ print "\nTEST: starting replica1 " . $REP1->CommandLine . "\n" if ($verbose);
 $REP1->Spawn ();
 
 print "TEST: waiting for replica 1's IOR\n" if ($verbose);
-if (PerlACE::waitforfile_timed ($replica1_ior, 5) == -1) {
+if (PerlACE::waitforfile_timed ($replica1_ior, $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "TEST ERROR: cannot find file <$replica1_ior>\n";
     $RM->Kill (); $RM->TimedWait (1);
     $NOT->Kill (); $NOT->TimedWait(1);
@@ -216,7 +216,7 @@ print "\nTEST: starting replica2 " . $REP2->CommandLine . "\n" if ($verbose);
 $REP2->Spawn ();
 
 print "TEST: waiting for replica 2's IOR\n" if ($verbose);
-if (PerlACE::waitforfile_timed ($replica2_ior, 5) == -1) {
+if (PerlACE::waitforfile_timed ($replica2_ior, $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "TEST ERROR: cannot find file <$replica2_ior>\n";
     $RM->Kill (); $RM->TimedWait (1);
     $NOT->Kill (); $NOT->TimedWait(1);
@@ -232,7 +232,7 @@ print "\nTEST: starting analyzer " . $ANA->CommandLine . "\n" if ($verbose);
 $ANA->Spawn ();
 
 print "TEST: waiting for READY.FILE from analyzer\n" if ($verbose);
-if (PerlACE::waitforfile_timed ($ready_file, 5) == -1) {
+if (PerlACE::waitforfile_timed ($ready_file, $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "TEST ERROR: cannot find file <$ready_file>\n";
     $RM->Kill (); $RM->TimedWait (1);
     $NOT->Kill (); $NOT->TimedWait(1);

@@ -57,7 +57,7 @@ $client_args = "-ORBInitRef NameService=iioploc://localhost:" .
                "$port/NameService";
 $NS->Spawn ();
 
-if (PerlACE::waitforfile_timed ($namingior, 5) == -1) {
+if (PerlACE::waitforfile_timed ($namingior, $PerlACE::wait_interval_for_process_creation) == -1) {
       print STDERR "ERROR: waiting for the naming service to start\n";
       $NS->Kill ();
       exit 1;
@@ -65,7 +65,7 @@ if (PerlACE::waitforfile_timed ($namingior, 5) == -1) {
 
 $TS->Spawn ();
 
-if (PerlACE::waitforfile_timed ($notifyior, 5) == -1) {
+if (PerlACE::waitforfile_timed ($notifyior, $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: waiting for the notify service to start\n";
     $TS->Kill ();
     $NS->Kill ();
@@ -87,7 +87,7 @@ for($i = 0; $i <= $#policies; $i++) {
   $STS->Arguments($STS->Arguments() . $server_opts[$i]);
   $STS->Spawn ();
 
-  if (PerlACE::waitforfile_timed ($ior, 5) == -1) {
+  if (PerlACE::waitforfile_timed ($ior, $PerlACE::wait_interval_for_process_creation) == -1) {
       print STDERR "ERROR: waiting for the supplier to start\n";
       $STS->Kill ();
       $TS->Kill ();
@@ -119,7 +119,7 @@ if ($status == 0) {
     $STS->Arguments($STS->Arguments() . $server_opts[$i]);
     $STS->Spawn ();
 
-    if (PerlACE::waitforfile_timed ($ior, 5) == -1) {
+    if (PerlACE::waitforfile_timed ($ior, $PerlACE::wait_interval_for_process_creation) == -1) {
         print STDERR "ERROR: waiting for the supplier to start\n";
         $STS->Kill ();
         $TS->Kill ();
@@ -152,7 +152,7 @@ if ($status == 0) {
     $SES->Arguments($SES->Arguments() . $server_opts[$i]);
     $SES->Spawn ();
 
-    if (PerlACE::waitforfile_timed ($ior, 5) == -1) {
+    if (PerlACE::waitforfile_timed ($ior, $PerlACE::wait_interval_for_process_creation) == -1) {
         print STDERR "ERROR: waiting for the supplier to start\n";
         $SES->Kill ();
         $TS->Kill ();
@@ -185,7 +185,7 @@ if ($status == 0) {
     $SES->Arguments($SES->Arguments() . $server_opts[$i]);
     $SES->Spawn ();
 
-    if (PerlACE::waitforfile_timed ($ior, 5) == -1) {
+    if (PerlACE::waitforfile_timed ($ior, $PerlACE::wait_interval_for_process_creation) == -1) {
         print STDERR "ERROR: waiting for the supplier to start\n";
         $SES->Kill ();
         $TS->Kill ();

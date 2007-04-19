@@ -21,7 +21,7 @@ unlink $esiorfile;
 $NameService = "$PerlACE::TAO_ROOT/orbsvcs/Naming_Service/Naming_Service";
 $NS = new PerlACE::Process($NameService, "-o $nsiorfile");
 $NS->Spawn();
-if (PerlACE::waitforfile_timed ($nsiorfile, 5) == -1) {
+if (PerlACE::waitforfile_timed ($nsiorfile, $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: cannot find file <$nsiorfile>\n";
     $NS->Kill();
     exit 1;
@@ -32,7 +32,7 @@ $EventService = "$PerlACE::TAO_ROOT/orbsvcs/CosEvent_Service/CosEvent_Service";
 $ES = new PerlACE::Process($EventService, "-ORBSvcConf cosevent.conf "
                                           ."-b -o $esiorfile $arg_ns_ref");
 $ES->Spawn();
-if (PerlACE::waitforfile_timed ($esiorfile, 5) == -1) {
+if (PerlACE::waitforfile_timed ($esiorfile, $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: cannot find file <$esiorfile>\n";
     $ES->Kill();
     unlink $nsiorfile;

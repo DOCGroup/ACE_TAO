@@ -30,7 +30,7 @@ if ($PING_result != 0) {
     exit 1;
 }
 
-if (PerlACE::waitforfile_timed ($pingior, 20) == -1) {
+if (PerlACE::waitforfile_timed ($pingior, $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: cannot find file <$pingior>\n";
     $PING->Kill (); 
     exit 1;
@@ -39,7 +39,7 @@ if (PerlACE::waitforfile_timed ($pingior, 20) == -1) {
 print STDERR "Starting Pong\n";
 
 $PONG->Spawn ();
-if (PerlACE::waitforfile_timed ($pongior, 20) == -1) {
+if (PerlACE::waitforfile_timed ($pongior, $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: cannot find file <$pongior>\n";
     $PING->Kill ();
     $PONG->Kill (); 

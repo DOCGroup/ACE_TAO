@@ -35,7 +35,7 @@ $NS->Spawn ();
 
 unlink $notifyior;
 $TS->Spawn ();
-if (PerlACE::waitforfile_timed ($notifyior, 20) == -1) {
+if (PerlACE::waitforfile_timed ($notifyior, $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: waiting for the notify service to start\n";
     $TS->Kill ();
     $NS->Kill ();
@@ -58,7 +58,7 @@ foreach $constraintString (@constraintList) {
 
   unlink $ior;
   $SES->Spawn ();
-  if (PerlACE::waitforfile_timed ($ior, 20) == -1) {
+  if (PerlACE::waitforfile_timed ($ior, $PerlACE::wait_interval_for_process_creation) == -1) {
       print STDERR "ERROR: waiting for the supplier to start\n";
       $SES->Kill ();
       $TS->Kill ();

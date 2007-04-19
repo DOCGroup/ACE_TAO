@@ -36,7 +36,7 @@ unlink $pfile;
 $IMR_LOCATOR->Arguments ("-p $pfile -o $imr_locator_ior -d 2");
 $IMR_LOCATOR->Spawn ();
 
-if (PerlACE::waitforfile_timed ($imr_locator_ior, 20) == -1) {
+if (PerlACE::waitforfile_timed ($imr_locator_ior, $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: waiting for $imr_locator_ior\n";
     $IMR_LOCATOR->Kill ();
     exit 1;
@@ -112,7 +112,7 @@ unlink $imr_locator_ior;
 $IMR_LOCATOR->Arguments ("-l -p $pfile -o $imr_locator_ior -d 2");
 $IMR_LOCATOR->Spawn ();
 
-if (PerlACE::waitforfile_timed ($imr_locator_ior, 10) == -1) {
+if (PerlACE::waitforfile_timed ($imr_locator_ior, $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: waiting for $imr_locator_ior\n";
     $IMR_LOCATOR->Kill ();
     exit 1;

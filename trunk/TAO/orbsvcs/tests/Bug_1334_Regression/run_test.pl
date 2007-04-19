@@ -24,7 +24,7 @@ $CLIENT     = new PerlACE::Process(PerlACE::LocalFile("client"));
 $NS   = new PerlACE::Process ("../../Naming_Service/Naming_Service", "-o $nsiorfile");
 $NS->Spawn ();
 
-if (PerlACE::waitforfile_timed ($nsiorfile, 10) == -1)
+if (PerlACE::waitforfile_timed ($nsiorfile, $PerlACE::wait_interval_for_process_creation) == -1)
 {
    print STDERR "ERROR: cannot find Name Service IOR file <$nsiorfile>\n";
    $NS->Kill (); $NS->TimedWait (1);

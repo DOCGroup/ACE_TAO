@@ -30,7 +30,7 @@ print STDERR "Starting Naming Service\n";
 
 $NS->Spawn ();
 
-if (PerlACE::waitforfile_timed ($nsior, 5) == -1) {
+if (PerlACE::waitforfile_timed ($nsior, $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: cannot find naming service IOR file\n";
     $NS->Kill ();
     exit 1;

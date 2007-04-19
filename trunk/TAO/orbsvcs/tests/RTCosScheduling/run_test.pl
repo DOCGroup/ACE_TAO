@@ -71,7 +71,7 @@ sub spawn_server
 {
   local ( $param_1 ) = @_ ;
   $param_1->Spawn ();
-  if (PerlACE::waitforfile_timed ($file, 15) == -1) {
+  if (PerlACE::waitforfile_timed ($file, $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: cannot find file <$file>\n";
     $param_1->Kill ();
     exit 1;

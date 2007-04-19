@@ -37,14 +37,14 @@ my $STC = new PerlACE::Process("Structured_Consumer",
 unlink($ior, $notifyior, $namingior);
 
 $NS->Spawn();
-if (PerlACE::waitforfile_timed($namingior, 20) == -1) {
+if (PerlACE::waitforfile_timed($namingior, $PerlACE::wait_interval_for_process_creation) == -1) {
   print STDERR "ERROR: waiting for the naming service to start\n";
   $NS->Kill();
   exit(1);
 }
 
 $TS->Spawn();
-if (PerlACE::waitforfile_timed($notifyior, 20) == -1) {
+if (PerlACE::waitforfile_timed($notifyior, $PerlACE::wait_interval_for_process_creation) == -1) {
   print STDERR "ERROR: waiting for the notify service to start\n";
   $TS->Kill();
   $NS->Kill();
@@ -54,7 +54,7 @@ if (PerlACE::waitforfile_timed($notifyior, 20) == -1) {
 unlink $ior;
 $STS->Arguments($STS->Arguments());
 $STS->Spawn();
-if (PerlACE::waitforfile_timed($ior, 5) == -1) {
+if (PerlACE::waitforfile_timed($ior, $PerlACE::wait_interval_for_process_creation) == -1) {
   print STDERR "ERROR: waiting for the supplier to start\n";
   $STS->Kill();
   $TS->Kill();

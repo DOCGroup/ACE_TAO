@@ -203,7 +203,7 @@ print "\nTEST: Starting ReplicationManager " . $RM->CommandLine . "\n" if ($verb
 $RM->Spawn ();
 
 print "TEST: waiting for registry's IOR\n" if ($verbose);
-if (PerlACE::waitforfile_timed ($rm_ior, 5) == -1) {
+if (PerlACE::waitforfile_timed ($rm_ior, $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "TEST ERROR: cannot find file <$rm_ior>\n";
     $RM->Kill (); $RM->TimedWait (1);
     exit 1;
@@ -215,7 +215,7 @@ print "\nTEST: Starting FaultNotifier " . $NOT->CommandLine . "\n" if ($verbose)
 $NOT->Spawn ();
 
 print "TEST: waiting for FaultNotifier's IOR\n" if ($verbose);
-if (PerlACE::waitforfile_timed ($notifier_ior, 5) == -1) {
+if (PerlACE::waitforfile_timed ($notifier_ior, $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "TEST ERROR: cannot find file <$notifier_ior>\n";
     $RM->Kill (); $RM->TimedWait (1);
     $NOT->Kill (); $NOT->TimedWait (1);
@@ -229,7 +229,7 @@ print "\nTEST: Starting FaultDetectorFactory at $location1 " . $DET1->CommandLin
 $DET1->Spawn ();
 
 print "TEST: waiting for FaultDetector's IOR\n" if ($verbose);
-if (PerlACE::waitforfile_timed ($detector1_ior, 5) == -1) {
+if (PerlACE::waitforfile_timed ($detector1_ior, $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "TEST ERROR: cannot find file <$detector1_ior>\n";
     $RM->Kill (); $RM->TimedWait (1);
     $NOT->Kill (); $NOT->TimedWait (1);
@@ -243,7 +243,7 @@ print "\nTEST: Starting FaultDetectorFactory at $location2 " . $DET2->CommandLin
 $DET2->Spawn ();
 
 print "TEST: waiting for FaultDetector's IOR\n" if ($verbose);
-if (PerlACE::waitforfile_timed ($detector2_ior, 5) == -1) {
+if (PerlACE::waitforfile_timed ($detector2_ior, $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "TEST ERROR: cannot find file <$detector2_ior>\n";
     $RM->Kill (); $RM->TimedWait (1);
     $NOT->Kill (); $NOT->TimedWait (1);
@@ -260,7 +260,7 @@ print "\nTEST: Starting replica factory at $location1 " . $FAC1->CommandLine . "
 $FAC1->Spawn ();
 
 print "TEST: waiting for factory 1's IOR\n" if ($verbose);
-if (PerlACE::waitforfile_timed ($factory1_ior, 5) == -1) {
+if (PerlACE::waitforfile_timed ($factory1_ior, $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "TEST ERROR: cannot find file <$factory1_ior>\n";
     $RM->Kill (); $RM->TimedWait (1);
     $NOT->Kill (); $NOT->TimedWait (1);
@@ -274,7 +274,7 @@ print "\nTEST: Starting replica factory at $location2 " . $FAC2->CommandLine . "
 $FAC2->Spawn ();
 
 print "TEST: waiting for factory 2's IOR\n" if ($verbose);
-if (PerlACE::waitforfile_timed ($factory2_ior, 5) == -1) {
+if (PerlACE::waitforfile_timed ($factory2_ior, $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "TEST ERROR: cannot find file <$factory2_ior>\n";
     $RM->Kill (); $RM->TimedWait (1);
     $NOT->Kill (); $NOT->TimedWait (1);
@@ -289,7 +289,7 @@ print "\nTEST: Starting replica factory at $location3 " . $FAC3->CommandLine . "
 $FAC3->Spawn ();
 
 print "TEST: waiting for factory 3's IOR\n" if ($verbose);
-if (PerlACE::waitforfile_timed ($factory3_ior, 5) == -1) {
+if (PerlACE::waitforfile_timed ($factory3_ior, $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "TEST ERROR: cannot find file <$factory3_ior>\n";
     $RM->Kill (); $RM->TimedWait (1);
     $NOT->Kill (); $NOT->TimedWait (1);

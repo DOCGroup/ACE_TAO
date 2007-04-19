@@ -44,7 +44,7 @@ unlink $activator_ior;
 $IMR->Arguments ("-o $imr_ior -d 2");
 $IMR->Spawn ();
 
-if (PerlACE::waitforfile_timed ($imr_ior, 10) == -1) {
+if (PerlACE::waitforfile_timed ($imr_ior, $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: waiting for $imr_ior\n";
     $IMR->Kill ();
     exit 1;
@@ -53,7 +53,7 @@ if (PerlACE::waitforfile_timed ($imr_ior, 10) == -1) {
 $ACTIVATOR->Arguments("-d 1 -o $activator_ior $imr_init_ref");
 $ACTIVATOR->Spawn();
 
-if (PerlACE::waitforfile_timed ($activator_ior, 10) == -1) {
+if (PerlACE::waitforfile_timed ($activator_ior, $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: waiting for $activator_ior\n";
     $IMR->Kill ();
     $ACTIVATOR->Kill();
