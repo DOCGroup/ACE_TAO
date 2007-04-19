@@ -55,7 +55,7 @@ $CL = new PerlACE::Process ("../RoundTrip/client",
 
 ## Starting up the CIAO daemon
 $DS->Spawn ();
-if (PerlACE::waitforfile_timed ($daemon_ior, 15) == -1) {
+if (PerlACE::waitforfile_timed ($daemon_ior, $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: Could not find daemon ior file <$daemon_ior>\n";
     $DS->Kill ();
     exit 1;
@@ -66,7 +66,7 @@ $DC = new PerlACE::Process ("$controller",
                             "$common_args $start_args");
 
 $DC->SpawnWaitKill (60);
-if (PerlACE::waitforfile_timed ($home_ior, 15) == -1) {
+if (PerlACE::waitforfile_timed ($home_ior, $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: Could not find home ior file <$home_ior>\n";
     $DS->Kill ();
     exit 1;
