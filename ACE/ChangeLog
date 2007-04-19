@@ -1,3 +1,10 @@
+Thu Apr 19 14:10:18 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * ace/config-doxygen.h: Turn on ACE_Dev_Poll_Reactor doc generation
+          using ACE_HAS_DEV_POLL instead of ACE_HAS_EVENT_POLL. The latter
+          will be automatatically turned off on systems w/o epoll and the
+          docs get lost.
+
 Thu Apr 19 13:59:06 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * ace/Obstack_T.cpp:

@@ -91,7 +91,7 @@
 #define ACE_HAS_XTI_ATM
 
 /// Generate ACE_Dev_Poll_Reactor documentation
-#define ACE_HAS_EVENT_POLL
+#define ACE_HAS_DEV_POLL
 
 /// Generate ACE_Event_Handler_T documentation
 #define ACE_HAS_TEMPLATE_TYPEDEFS
