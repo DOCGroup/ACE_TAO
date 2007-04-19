@@ -1,3 +1,10 @@
+Thu Apr 19 16:47:46 UTC 2007  Adam Mitz  <mitza@ociweb.com>
+
+        * bin/tao_orb_tests.lst:
+
+          Use the -boost option for TAO/tests/Sequence_Unit_Tests when Config
+          BOOST is present.
+
 Thu Apr 19 14:25:39 UTC 2007  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * ace/OS_NS_time.h (ace_timezone): Changed ACE_HAS_WIN32 to
