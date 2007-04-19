@@ -33,7 +33,7 @@ $CR = new PerlACE::Process ("client", $init_client_ref_backup);
 
 $LM->Spawn ();
 
-if (PerlACE::waitforfile_timed ("lm.ior", 5) == -1) {
+if (PerlACE::waitforfile_timed ("lm.ior", $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: cannot find file LoadManager IOR: lm.ior\n";
     $SV->Kill (); $SV->TimedWait (1);
     exit 1;
@@ -41,7 +41,7 @@ if (PerlACE::waitforfile_timed ("lm.ior", 5) == -1) {
 
 $NS->Spawn ();
 
-if (PerlACE::waitforfile_timed ("ns.ior", 5) == -1) {
+if (PerlACE::waitforfile_timed ("ns.ior", $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: cannot find file NameService IOR: ns.ior\n";
     $NS->Kill (); $NS->TimedWait (1);
     exit 1;
@@ -49,7 +49,7 @@ if (PerlACE::waitforfile_timed ("ns.ior", 5) == -1) {
 
 $SV->Spawn ();
 
-if (PerlACE::waitforfile_timed ($iorfile, 10) == -1) {
+if (PerlACE::waitforfile_timed ($iorfile, $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: cannot find server file <$iorfile>\n";
     $SV->Kill (); $SV->TimedWait (1);
     exit 1;
@@ -57,7 +57,7 @@ if (PerlACE::waitforfile_timed ($iorfile, 10) == -1) {
 
 $SR->Spawn ();
 
-if (PerlACE::waitforfile_timed ($iorfile, 10) == -1) {
+if (PerlACE::waitforfile_timed ($iorfile, $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: cannot find server file <$iorfile>\n";
     $SR->Kill (); $SR->TimedWait (1);
     exit 1;

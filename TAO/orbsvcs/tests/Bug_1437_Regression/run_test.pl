@@ -39,7 +39,7 @@ sub test_body
    $LOCATOR->Arguments("-o $imr_ior_file -ORBEndpoint iiop://:$port");
    $LOCATOR->Spawn ();
 
-   if (PerlACE::waitforfile_timed ($imr_ior_file, 10) == -1)
+   if (PerlACE::waitforfile_timed ($imr_ior_file, $PerlACE::wait_interval_for_process_creation) == -1)
    {
       print STDERR "ERROR: cannot find $imr_ior_file\n";
       $LOCATOR->Kill ();
@@ -53,7 +53,7 @@ sub test_body
    $ACTIVATOR->Arguments ($activator_arguments);
    $ACTIVATOR->Spawn ();
 
-   if (PerlACE::waitforfile_timed ($activator_ior_file, 10) == -1)
+   if (PerlACE::waitforfile_timed ($activator_ior_file, $PerlACE::wait_interval_for_process_creation) == -1)
    {
       print STDERR "ERROR: cannot find $activator_ior_file\n";
       $ACTIVATOR->Kill ();

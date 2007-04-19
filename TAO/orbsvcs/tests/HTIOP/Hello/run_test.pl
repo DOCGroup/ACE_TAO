@@ -42,7 +42,7 @@ $NS =
 $NS->IgnoreExeSubDir ();
 $NS->Spawn ();
 print "Waiting for Name Service to start\n";
-if (PerlACE::waitforfile_timed ($nsiorfile, 5) == -1) {
+if (PerlACE::waitforfile_timed ($nsiorfile, $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: nameserver not started\n";
     $NS->Kill (); $NS->TimedWait (1);
     exit 1;
@@ -59,7 +59,7 @@ $CL = new PerlACE::Process ("client", " -k $ior");
 
 $SV->Spawn ();
 print "Waiting for server to start\n";
-if (PerlACE::waitforfile_timed ($iorfile, 5) == -1) {
+if (PerlACE::waitforfile_timed ($iorfile, $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: cannot find file <$iorfile>\n";
     $SV->Kill (); $SV->TimedWait (1);
     exit 1;

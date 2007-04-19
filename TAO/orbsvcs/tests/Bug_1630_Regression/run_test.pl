@@ -24,7 +24,7 @@ $CLIENT     = new PerlACE::Process(PerlACE::LocalFile("testclient"));
 $IFR   = new PerlACE::Process ("../../IFR_Service/IFR_Service", "-o $ifriorfile");
 $IFR->Spawn ();
 
-if (PerlACE::waitforfile_timed ($ifriorfile, 10) == -1)
+if (PerlACE::waitforfile_timed ($ifriorfile, $PerlACE::wait_interval_for_process_creation) == -1)
 {
    print STDERR "ERROR: cannot find IFR Service IOR file <$ifriorfile>\n";
    $IFR->Kill (); $IFR->TimedWait (1);

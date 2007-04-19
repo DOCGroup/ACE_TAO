@@ -73,7 +73,7 @@ $IFR_SERVICE = new PerlACE::Process("$ifr_service_bin/IFR_Service");
 $IFR_SERVICE->Arguments("-o $ifr_service_ior_file");
 $IFR_SERVICE->Spawn();
 
-if (PerlACE::waitforfile_timed ($ifr_service_ior_file, 10) == -1) 
+if (PerlACE::waitforfile_timed ($ifr_service_ior_file, $PerlACE::wait_interval_for_process_creation) == -1) 
 {
    print STDERR "ERROR: cannot find $ifr_service_ior_file\n";
    $IFR_SERVICE->Kill ();

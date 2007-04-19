@@ -88,7 +88,7 @@ sub airplane_test
     $A_SVR->Arguments ("-o $airplane_ior $refstyle");
     $A_SVR->Spawn ();
 
-    if (PerlACE::waitforfile_timed ($airplane_ior, 10) == -1) {
+    if (PerlACE::waitforfile_timed ($airplane_ior, $PerlACE::wait_interval_for_process_creation) == -1) {
         print STDERR "ERROR: cannot find $airplane_ior\n";
         $A_SVR->Kill ();
         return 1;
@@ -120,7 +120,7 @@ sub nestea_test
     $N_SVR->Arguments ("-o $nestea_ior $refstyle");
     $N_SVR->Spawn ();
 
-    if (PerlACE::waitforfile_timed ($nestea_ior, 10) == -1) {
+    if (PerlACE::waitforfile_timed ($nestea_ior, $PerlACE::wait_interval_for_process_creation) == -1) {
         print STDERR "ERROR: cannot find $nestea_ior\n";
         $N_SVR->Kill ();
         return 1;
@@ -192,7 +192,7 @@ sub nt_service_test_i
         print STDERR "ERROR: tao_imr ior airplane_server returned $result\n";
         return 1;
     }
-    if (PerlACE::waitforfile_timed ($airplane_ior, 10) == -1) {
+    if (PerlACE::waitforfile_timed ($airplane_ior, $PerlACE::wait_interval_for_process_creation) == -1) {
         print STDERR "ERROR: cannot find $airplane_ior\n";
         $A_SVR->Kill ();
         return 1;
@@ -275,7 +275,7 @@ sub airplane_ir_test
     $IMR_LOCATOR->Arguments ("-d 2 -o $imr_locator_ior $refstyle");
     $IMR_LOCATOR->Spawn ();
 
-    if (PerlACE::waitforfile_timed ($imr_locator_ior, 5) == -1) {
+    if (PerlACE::waitforfile_timed ($imr_locator_ior, $PerlACE::wait_interval_for_process_creation) == -1) {
         print STDERR "ERROR: cannot find $imr_locator_ior\n";
         $IMR_LOCATOR->Kill ();
         return 1;
@@ -284,7 +284,7 @@ sub airplane_ir_test
     $IMR_ACTIVATOR->Arguments ("-d 2 -o $imr_activator_ior $imr_initref");
     $IMR_ACTIVATOR->Spawn ();
 
-    if (PerlACE::waitforfile_timed ($imr_activator_ior, 5) == -1) {
+    if (PerlACE::waitforfile_timed ($imr_activator_ior, $PerlACE::wait_interval_for_process_creation) == -1) {
         print STDERR "ERROR: cannot find $imr_activator_ior\n";
         $IMR_ACTIVATOR->Kill ();
         $IMR_LOCATOR->Kill ();
@@ -308,7 +308,7 @@ sub airplane_ir_test
     $A_SVR->Arguments ("-ORBUseIMR 1 -o $airplane_ior $imr_initref");
     $A_SVR->Spawn ();
 
-    if (PerlACE::waitforfile_timed ($airplane_ior, 10) == -1) {
+    if (PerlACE::waitforfile_timed ($airplane_ior, $PerlACE::wait_interval_for_process_creation) == -1) {
         print STDERR "ERROR: cannot find $airplane_ior\n";
         $IMR_ACTIVATOR->Kill ();
         $IMR_LOCATOR->Kill ();
@@ -376,7 +376,7 @@ sub nestea_ir_test
     $IMR_LOCATOR->Arguments ("-d 2 -o $imr_locator_ior $refstyle");
     $IMR_LOCATOR->Spawn ();
 
-    if (PerlACE::waitforfile_timed ($imr_locator_ior, 10) == -1) {
+    if (PerlACE::waitforfile_timed ($imr_locator_ior, $PerlACE::wait_interval_for_process_creation) == -1) {
       print STDERR "ERROR: cannot find $imr_locator_ior\n";
       $IMR_LOCATOR->Kill ();
       return 1;
@@ -395,7 +395,7 @@ sub nestea_ir_test
     $N_SVR->Arguments ("-ORBUseIMR 1 -o $nestea_ior $imr_initref");
     $N_SVR->Spawn ();
 
-    if (PerlACE::waitforfile_timed ($nestea_ior, 10) == -1) {
+    if (PerlACE::waitforfile_timed ($nestea_ior, $PerlACE::wait_interval_for_process_creation) == -1) {
         print STDERR "ERROR: cannot find $nestea_ior\n";
         $N_SVR->Kill ();
         $IMR_ACTIVATOR->Kill ();
@@ -514,7 +514,7 @@ sub perclient
     $IMR_LOCATOR->Arguments ("-d 2 -orbendpoint iiop://:8888 -o $imr_locator_ior $refstyle");
     $IMR_LOCATOR->Spawn ();
 
-    if (PerlACE::waitforfile_timed ($imr_locator_ior, 10) == -1) {
+    if (PerlACE::waitforfile_timed ($imr_locator_ior, $PerlACE::wait_interval_for_process_creation) == -1) {
       print STDERR "ERROR: cannot find $imr_locator_ior\n";
       $IMR_LOCATOR->Kill ();
       return 1;
@@ -550,7 +550,7 @@ sub perclient
         print STDERR "ERROR: nestea client 1 returned $result\n";
         $status = 1;
     }
-    if (PerlACE::waitforfile_timed ($nestea_ior, 10) == -1) {
+    if (PerlACE::waitforfile_timed ($nestea_ior, $PerlACE::wait_interval_for_process_creation) == -1) {
         print STDERR "ERROR: cannot find $nestea_ior\n";
         $IMR_ACTIVATOR->Kill ();
         $IMR_LOCATOR->Kill ();
@@ -567,7 +567,7 @@ sub perclient
         print STDERR "ERROR: nestea client 2 returned $result\n";
         $status = 1;
     }
-    if (PerlACE::waitforfile_timed ($nestea_ior, 10) == -1) {
+    if (PerlACE::waitforfile_timed ($nestea_ior, $PerlACE::wait_interval_for_process_creation) == -1) {
         print STDERR "ERROR: cannot find $nestea_ior\n";
         $IMR_ACTIVATOR->Kill ();
         $IMR_LOCATOR->Kill ();
@@ -610,7 +610,7 @@ sub shutdown_repo
 
     unlink $imr_locator_ior;
     $IMR_LOCATOR->Spawn ();
-    if (PerlACE::waitforfile_timed ($imr_locator_ior, 10) == -1) {
+    if (PerlACE::waitforfile_timed ($imr_locator_ior, $PerlACE::wait_interval_for_process_creation) == -1) {
       print STDERR "ERROR: cannot find $imr_locator_ior\n";
       $IMR_LOCATOR->Kill ();
       return 1;
@@ -643,7 +643,7 @@ sub shutdown_repo
 
     unlink $imr_locator_ior;
     $IMR_LOCATOR->Spawn ();
-    if (PerlACE::waitforfile_timed ($imr_locator_ior, 10) == -1) {
+    if (PerlACE::waitforfile_timed ($imr_locator_ior, $PerlACE::wait_interval_for_process_creation) == -1) {
       print STDERR "ERROR: cannot find $imr_locator_ior\n";
       $IMR_LOCATOR->Kill ();
       return 1;
@@ -688,7 +688,7 @@ sub persistent_ir_test
     ## remain valid even if the ImR restarts.
     $IMR_LOCATOR->Arguments ("-orbendpoint iiop://:8888 -x $backing_store -d 2 -o $imr_locator_ior $refstyle");
     $IMR_LOCATOR->Spawn ();
-    if (PerlACE::waitforfile_timed ($imr_locator_ior, 10) == -1) {
+    if (PerlACE::waitforfile_timed ($imr_locator_ior, $PerlACE::wait_interval_for_process_creation) == -1) {
       print STDERR "ERROR: cannot find $imr_locator_ior\n";
       $IMR_LOCATOR->Kill ();
       return 1;
@@ -697,7 +697,7 @@ sub persistent_ir_test
     unlink $imr_activator_ior;
     $IMR_ACTIVATOR->Arguments ("-d 2 -o $imr_activator_ior $imr_initref");
     $IMR_ACTIVATOR->Spawn ();
-    if (PerlACE::waitforfile_timed ($imr_activator_ior, 10) == -1) {
+    if (PerlACE::waitforfile_timed ($imr_activator_ior, $PerlACE::wait_interval_for_process_creation) == -1) {
         print STDERR "ERROR: cannot find $imr_activator_ior\n";
         $IMR_ACTIVATOR->Kill ();
         $IMR_LOCATOR->Kill ();
@@ -728,7 +728,7 @@ sub persistent_ir_test
     ## the ImR on a consistent endpoint.
     $A_SVR->Arguments ("-o $airplane_ior -ORBUseIMR 1 $refstyle $imr_initref");
     $A_SVR->Spawn ();
-    if (PerlACE::waitforfile_timed ($airplane_ior, 10) == -1) {
+    if (PerlACE::waitforfile_timed ($airplane_ior, $PerlACE::wait_interval_for_process_creation) == -1) {
         print STDERR "ERROR: cannot find $airplane_ior\n";
         $IMR_LOCATOR->Kill ();
         $IMR_ACTIVATOR->Kill ();
@@ -792,7 +792,7 @@ sub persistent_ir_test
     unlink $imr_locator_ior;
     print "Restarting Implementation Repository.\n";
     $IMR_LOCATOR->Spawn ();
-    if (PerlACE::waitforfile_timed ($imr_locator_ior, 10) == -1) {
+    if (PerlACE::waitforfile_timed ($imr_locator_ior, $PerlACE::wait_interval_for_process_creation) == -1) {
       print STDERR "ERROR: cannot find $imr_locator_ior\n";
       $IMR_LOCATOR->Kill ();
       return 1;
@@ -848,7 +848,7 @@ sub both_ir_test
     $IMR_LOCATOR->Arguments ("-d 2 -t 5 -o $imr_locator_ior $refstyle");
     $IMR_LOCATOR->Spawn ();
 
-    if (PerlACE::waitforfile_timed ($imr_locator_ior, 10) == -1) {
+    if (PerlACE::waitforfile_timed ($imr_locator_ior, $PerlACE::wait_interval_for_process_creation) == -1) {
         print STDERR "ERROR: cannot find $imr_locator_ior\n";
         $IMR_LOCATOR->Kill ();
         return 1;
@@ -857,7 +857,7 @@ sub both_ir_test
     $IMR_ACTIVATOR->Arguments ("-e 16384 -o $imr_activator_ior $imr_initref $refstyle -d 2");
     $IMR_ACTIVATOR->Spawn ();
 
-    if (PerlACE::waitforfile_timed ($imr_activator_ior, 10) == -1) {
+    if (PerlACE::waitforfile_timed ($imr_activator_ior, $PerlACE::wait_interval_for_process_creation) == -1) {
         print STDERR "ERROR: cannot find $imr_activator_ior\n";
         $IMR_ACTIVATOR->Kill ();
         $IMR_LOCATOR->Kill ();
@@ -882,7 +882,7 @@ sub both_ir_test
 
     $N_SVR->Arguments (" -o $nestea_ior -ORBUseIMR 1 $imr_initref $refstyle");
     $N_SVR->Spawn ();
-    if (PerlACE::waitforfile_timed ($nestea_ior, 10) == -1) {
+    if (PerlACE::waitforfile_timed ($nestea_ior, $PerlACE::wait_interval_for_process_creation) == -1) {
         print STDERR "ERROR: cannot find $nestea_ior\n";
         $IMR_ACTIVATOR->Kill ();
         $IMR_LOCATOR->Kill ();
@@ -893,7 +893,7 @@ sub both_ir_test
 
     $A_SVR->Arguments (" -o $airplane_ior -ORBUseIMR 1 $imr_initref $refstyle");
     $A_SVR->Spawn ();
-    if (PerlACE::waitforfile_timed ($airplane_ior, 10) == -1) {
+    if (PerlACE::waitforfile_timed ($airplane_ior, $PerlACE::wait_interval_for_process_creation) == -1) {
         print STDERR "ERROR: cannot find $airplane_ior\n";
         $IMR_ACTIVATOR->Kill ();
         $IMR_LOCATOR->Kill ();

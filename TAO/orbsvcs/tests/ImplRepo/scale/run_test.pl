@@ -56,7 +56,7 @@ sub scale_test
 
     $IMR_LOCATOR->Arguments ("-d 1 -o $imr_locator_ior -orbendpoint iiop://:9876");
     $IMR_LOCATOR->Spawn ();
-    if (PerlACE::waitforfile_timed ($imr_locator_ior, 5) == -1) {
+    if (PerlACE::waitforfile_timed ($imr_locator_ior, $PerlACE::wait_interval_for_process_creation) == -1) {
         print STDERR "ERROR: cannot find $imr_locator_ior\n";
         $IMR_LOCATOR->Kill ();
         return 1;
@@ -66,7 +66,7 @@ sub scale_test
     
         $IMR_ACTIVATOR->Arguments ("-d 1 -o $imr_activator_ior $imr_initref");
         $IMR_ACTIVATOR->Spawn ();
-        if (PerlACE::waitforfile_timed ($imr_activator_ior, 5) == -1) {
+        if (PerlACE::waitforfile_timed ($imr_activator_ior, $PerlACE::wait_interval_for_process_creation) == -1) {
             print STDERR "ERROR: cannot find $imr_activator_ior\n";
             $IMR_ACTIVATOR->Kill ();
             return 1;
@@ -106,7 +106,7 @@ sub scale_test
         if (! $use_activator) {
             $SVR->Arguments ("-ORBUseIMR 1 -p $objprefix" . '_' . "$i -c $obj_count $imr_initref");
             $SVR->Spawn ();
-            if (PerlACE::waitforfile_timed ($server_start_file, 10) == -1) {
+            if (PerlACE::waitforfile_timed ($server_start_file, $PerlACE::wait_interval_for_process_creation) == -1) {
                 print STDERR "ERROR: cannot find $server_start_file\n";
                 $IMR_ACTIVATOR->Kill ();
                 $IMR_LOCATOR->Kill ();

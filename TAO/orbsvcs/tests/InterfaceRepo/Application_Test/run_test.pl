@@ -45,7 +45,7 @@ unlink $svr_iorfile;
 
 $IFR->Spawn ();
 
-if (PerlACE::waitforfile_timed ($ifr_iorfile, 15) == -1) {
+if (PerlACE::waitforfile_timed ($ifr_iorfile, $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: cannot find file <$ifr_iorfile>\n";
     $IFR->Kill ();
     exit 1;
@@ -53,7 +53,7 @@ if (PerlACE::waitforfile_timed ($ifr_iorfile, 15) == -1) {
 
 $SV->Spawn ();
 
-if (PerlACE::waitforfile_timed ($svr_iorfile, 15) == -1) {
+if (PerlACE::waitforfile_timed ($svr_iorfile, $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: cannot find file <$svr_iorfile>\n";
     $IFR->Kill ();
     $SV->Kill ();

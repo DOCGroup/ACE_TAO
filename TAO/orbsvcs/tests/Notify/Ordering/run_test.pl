@@ -53,14 +53,14 @@ unlink $notifyior;
 unlink $naming_ior;
                
 $NS->Spawn ();
-if (PerlACE::waitforfile_timed ($naming_ior, 20) == -1) {
+if (PerlACE::waitforfile_timed ($naming_ior, $PerlACE::wait_interval_for_process_creation) == -1) {
   print STDERR "ERROR: waiting for the naming service to start\n";
   $NS->Kill ();
   exit 1;
 }
 
 $TS->Spawn ();
-if (PerlACE::waitforfile_timed ($notifyior, 20) == -1) {
+if (PerlACE::waitforfile_timed ($notifyior, $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: waiting for the notify service to start\n";
     $TS->Kill ();
     $NS->Kill ();
@@ -81,7 +81,7 @@ print "**** Structured Supplier (fifo) -> Structured Consumer (none) *****\n";
 unlink $ior;
 $STS->Arguments($STS->Arguments() . " -d fifo");
 $STS->Spawn ();
-if (PerlACE::waitforfile_timed ($ior, 20) == -1) {
+if (PerlACE::waitforfile_timed ($ior, $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: waiting for the supplier to start\n";
     $STS->Kill ();
     $TS->Kill ();
@@ -108,7 +108,7 @@ print "**** Structured Supplier (fifo) -> Structured Consumer (priority) *****\n
 unlink $ior;
 $STS->Arguments($STS->Arguments() . " -d fifo");
 $STS->Spawn ();
-if (PerlACE::waitforfile_timed ($ior, 20) == -1) {
+if (PerlACE::waitforfile_timed ($ior, $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: waiting for the supplier to start\n";
     $STS->Kill ();
     $TS->Kill ();
@@ -135,7 +135,7 @@ print "**** Structured Supplier (fifo) -> Sequence Consumer (priority) *****\n";
 unlink $ior;
 $STS->Arguments($STS->Arguments() . " -d fifo");
 $STS->Spawn ();
-if (PerlACE::waitforfile_timed ($ior, 20) == -1) {
+if (PerlACE::waitforfile_timed ($ior, $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: waiting for the supplier to start\n";
     $STS->Kill ();
     $TS->Kill ();
@@ -162,7 +162,7 @@ print "**** Sequence Supplier (fifo) -> Structured Consumer (priority) *****\n";
 unlink $ior;
 $SES->Arguments($SES->Arguments() . " -d fifo");
 $SES->Spawn ();
-if (PerlACE::waitforfile_timed ($ior, 20) == -1) {
+if (PerlACE::waitforfile_timed ($ior, $PerlACE::wait_interval_for_process_creation) == -1) {
     $SES->Kill ();
     $TS->Kill ();
     $NS->Kill ();
@@ -188,7 +188,7 @@ print "**** Sequence Supplier (fifo) -> Sequence Consumer (priority) *****\n";
 unlink $ior;
 $SES->Arguments($SES->Arguments() . " -d fifo");
 $SES->Spawn ();
-if (PerlACE::waitforfile_timed ($ior, 20) == -1) {
+if (PerlACE::waitforfile_timed ($ior, $PerlACE::wait_interval_for_process_creation) == -1) {
     $SES->Kill ();
     $TS->Kill ();
     $NS->Kill ();

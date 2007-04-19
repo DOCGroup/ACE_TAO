@@ -39,14 +39,14 @@ unlink $notifyior;
 unlink $namingior;
 
 $NS->Spawn ();
-if (PerlACE::waitforfile_timed ($namingior, 20) == -1) {
+if (PerlACE::waitforfile_timed ($namingior, $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: waiting for the naming service to start\n";
     $NS->Kill ();
     exit 1;
 }
 
 $TS->Spawn ();
-if (PerlACE::waitforfile_timed ($notifyior, 20) == -1) {
+if (PerlACE::waitforfile_timed ($notifyior, $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: waiting for the notify service to start\n";
     $TS->Kill ();
     $NS->Kill ();
@@ -57,7 +57,7 @@ print "\n**** Testing with no filtering ****\n";
 
 $STS->Arguments($args);
 $STS->Spawn ();
-if (PerlACE::waitforfile_timed ($ior, 20) == -1) {
+if (PerlACE::waitforfile_timed ($ior, $PerlACE::wait_interval_for_process_creation) == -1) {
   print STDERR "ERROR: waiting for the supplier to start\n";
   $STS->Kill ();
   $TS->Kill ();
@@ -86,7 +86,7 @@ print "\n**** Testing with filtering ****\n";
 
 $STS->Arguments($args);
 $STS->Spawn ();
-if (PerlACE::waitforfile_timed ($ior, 20) == -1) {
+if (PerlACE::waitforfile_timed ($ior, $PerlACE::wait_interval_for_process_creation) == -1) {
   print STDERR "ERROR: waiting for the supplier to start\n";
   $STS->Kill ();
   $TS->Kill ();
