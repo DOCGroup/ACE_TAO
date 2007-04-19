@@ -8,6 +8,7 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::Run_Test;
 
+$iorbase = "altiiop.ior";
 $iorfile = PerlACE::LocalFile ("altiiop.ior");
 unlink $iorfile;
 $status = 0;
@@ -15,8 +16,14 @@ $status = 0;
               "-orbendpoint iiop://localhost:10212/hostname_in_ior=bogus.com");
 $valid_ep = "-orbendpoint iiop://localhost:10211";
 
+if (PerlACE::is_vxworks_test()) {
+$SV_ALT_IIOP = new PerlACE::ProcessVX ("../Hello/server", "-o $iorbase -ORBUseSharedProfile 1 ",
+                                       "$bogus_eps[0] $valid_ep $bogus_eps[1]");
+}
+else {
 $SV_ALT_IIOP = new PerlACE::Process ("../Hello/server", "-o $iorfile -ORBUseSharedProfile 1 ",
                                      "$bogus_eps[0] $valid_ep $bogus_eps[1]");
+}
 $CL_ALT_IIOP = new PerlACE::Process ("../Hello/client", " -k file://$iorfile");
 $SV_ALT_IIOP->Spawn ();
 
