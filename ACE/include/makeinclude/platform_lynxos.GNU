@@ -91,7 +91,7 @@ PLATFORM_TCL_LIBS=-ltcl
 PLATFORM_TCL_LDFLAGS=
 
 PLATFORM_TK_CPPFLAGS=$(shell . /usr/lib/tkConfig.sh && echo -n $$TK_INC_DIR $$TK_DEFS)
-PLATFORM_TK_LIBS=-ltk
+PLATFORM_TK_LIBS=-ltk $(PLATFORM_X11_LIBS)
 PLATFORM_TK_LDFLAGS=
 
 ifeq ($(threads),1)
