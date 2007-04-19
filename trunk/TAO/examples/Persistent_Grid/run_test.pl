@@ -18,7 +18,7 @@ $PCL = new PerlACE::Process ("persistent_client", "-k file://$iorfile -w 10 -h 1
 
 $SV->Spawn ();
 
-if (PerlACE::waitforfile_timed ($iorfile, 10) == -1) {
+if (PerlACE::waitforfile_timed ($iorfile, $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: Could not find file <$iorfile>\n";
     $SV->Kill (); 
     exit 1;
@@ -42,7 +42,7 @@ unlink $iorfile;
 
 $SV->Spawn ();
 
-if (PerlACE::waitforfile_timed ($iorfile, 10) == -1) {
+if (PerlACE::waitforfile_timed ($iorfile, $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: Could not find file <$iorfile>\n";
     $server->Kill (); 
     exit 1;
