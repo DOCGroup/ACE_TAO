@@ -124,7 +124,9 @@ template <class CHAR>
 ACE_Obstack_T<CHAR>::ACE_Obstack_T (size_t size,
                                     ACE_Allocator *allocator_strategy)
   : allocator_strategy_ (allocator_strategy),
-    size_ (size)
+    size_ (size),
+    head_ (0),
+    curr_ (0)
 {
   ACE_TRACE ("ACE_Obstack_T<CHAR>::ACE_Obstack");
 
