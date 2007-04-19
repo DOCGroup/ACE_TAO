@@ -1,3 +1,9 @@
+Thu Apr 19 14:25:39 UTC 2007  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/OS_NS_time.h (ace_timezone): Changed ACE_HAS_WIN32 to
+          ACE_WIN32 to fix a bug on Windows. Thanks to Jan Kalin <jan dot
+          kalin at zag dot si> for this fix.
+
 Thu Apr 19 14:10:18 UTC 2007  Steve Huston  <shuston@riverace.com>
 
         * ace/config-doxygen.h: Turn on ACE_Dev_Poll_Reactor doc generation
