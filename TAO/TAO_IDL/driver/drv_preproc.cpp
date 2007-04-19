@@ -384,6 +384,8 @@ DRV_sweep_dirs (const char *rel_path,
   bname += (bname.length () > 0 ? "/" : "");
   bname += rel_path;
   bool include_added = false;
+  char abspath[MAXPATHLEN] = "";
+  char *full_path = 0;
 
   for (dirent *dir_entry; (dir_entry = dir.read ()) != 0;)
     {
@@ -419,6 +421,13 @@ DRV_sweep_dirs (const char *rel_path,
                   ACE_CString incl_arg ("-I");
                   incl_arg += bname;
                   DRV_cpp_putarg (incl_arg.c_str ());
+                  full_path = ACE_OS::realpath ("", abspath);
+                  
+                  if (full_path != 0)
+                    {
+                      idl_global->add_include_path (full_path);
+                    }
+                    
                   include_added = true;
                 }
 
