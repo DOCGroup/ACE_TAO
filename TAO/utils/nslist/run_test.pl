@@ -43,7 +43,7 @@ sub name_server
         exit 1;
     }
 
-    if (PerlACE::waitforfile_timed ($iorfile, 5) == -1) {
+    if (PerlACE::waitforfile_timed ($iorfile, $PerlACE::wait_interval_for_process_creation) == -1) {
         print STDERR "ERROR: cannot find IOR file <$iorfile>\n";
         $NS->Kill ();
         exit 1;
