@@ -58,7 +58,7 @@ namespace TAO
     while (s == TAO_INVOKE_START ||
            s == TAO_INVOKE_RESTART)
       {
-        Profile_Transport_Resolver resolver (effective_target, stub, true);
+        Profile_Transport_Resolver resolver (effective_target.in (), stub, true);
 
         try
           {
