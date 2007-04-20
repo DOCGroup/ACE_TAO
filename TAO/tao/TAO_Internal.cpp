@@ -235,7 +235,7 @@ TAO::ORB::open_services (ACE_Service_Gestalt* pcfg,
                       (service_open_count == 0) ? "" : "not "));
       }
 
-    service_open_count++;
+    ++service_open_count;
   }
 
   // Construct an argument vector specific to the Service
