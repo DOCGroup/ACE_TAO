@@ -327,7 +327,7 @@ TAO_Connector::parallel_connect (TAO::Profile_Transport_Resolver *r,
           if (TAO_debug_level)
             {
               ACE_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("TAO (%P|%t) TAO_Connector::parallel_connect: ")
+                          ACE_TEXT ("TAO (%P|%t) - TAO_Connector::parallel_connect: ")
                           ACE_TEXT ("found a transport [%d]\n"),
                           base_transport->id ()));
             }
@@ -602,7 +602,7 @@ TAO_Connector::wait_for_connection_completion (
   if (TAO_debug_level > 2)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT("TAO (%P|%t) Transport_Connector::")
+                  ACE_TEXT("TAO (%P|%t) - Transport_Connector::")
                   ACE_TEXT("wait_for_connection_completion, ")
                   ACE_TEXT("waiting for connection completion on ")
                   ACE_TEXT("%d transports, ["),
@@ -630,7 +630,7 @@ TAO_Connector::wait_for_connection_completion (
       if (TAO_debug_level > 2)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("TAO (%P|%t) Transport_Connector::")
+                      ACE_TEXT ("TAO (%P|%t) - Transport_Connector::")
                       ACE_TEXT ("wait_for_connection_completion, ")
                       ACE_TEXT ("transport [%d]\n"),
                       the_winner->id ()));
@@ -670,7 +670,7 @@ TAO_Connector::wait_for_connection_completion (
       if (TAO_debug_level > 2)
         {
           ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("TAO (%P|%t) Transport_Connector::")
+                      ACE_TEXT ("TAO (%P|%t) - Transport_Connector::")
                       ACE_TEXT ("wait_for_connection_completion, failed\n")
                       ));
         }

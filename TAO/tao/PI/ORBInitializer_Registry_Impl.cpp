@@ -150,8 +150,7 @@ TAO::ORBInitializer_Registry::pre_init (
 
       for (size_t i = 0; i < initializer_count; ++i)
         {
-          this->initializers_[i]->pre_init (orb_init_info_.in ()
-                                           );
+          this->initializers_[i]->pre_init (orb_init_info_.in ());
         }
 
       slotid = orb_init_info_temp->slot_count ();

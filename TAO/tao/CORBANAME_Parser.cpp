@@ -60,9 +60,7 @@ parse_string_dynamic_request_helper (CORBA::Object_ptr naming_context,
 }
 
 CORBA::Object_ptr
-TAO_CORBANAME_Parser::parse_string (const char *ior,
-                                    CORBA::ORB_ptr orb
-                                    )
+TAO_CORBANAME_Parser::parse_string (const char *ior, CORBA::ORB_ptr orb)
 {
 
   // Skip the prefix, we know it is there because this method in only
@@ -110,8 +108,7 @@ TAO_CORBANAME_Parser::parse_string (const char *ior,
                           0);
 
       CORBA::Boolean is_a =
-        name_context->_is_a ("IDL:omg.org/CosNaming/NamingContextExt:1.0"
-                             );
+        name_context->_is_a ("IDL:omg.org/CosNaming/NamingContextExt:1.0");
 
       if (!is_a)
         {
@@ -126,8 +123,7 @@ TAO_CORBANAME_Parser::parse_string (const char *ior,
 
           // Make a dynamic request for resolve_str in this naming context
           obj = this->parse_string_dynamic_request_helper (name_context.in (),
-                                                           key_string
-                                                       );
+                                                           key_string);
         }
       else
         { // There was no key string which implies that the caller wants
