@@ -266,6 +266,14 @@
 #define ACE_HAS_GETRUSAGE
 #define ACE_HAS_GETRUSAGE_PROTOTYPE
 
+#define ACE_HAS_BYTESWAP_H
+#define ACE_HAS_BSWAP_16
+#define ACE_HAS_BSWAP_32
+
+#if defined __GNUC__ && __GNUC__ >= 2
+# define ACE_HAS_BSWAP_64
+#endif
+
 #define ACE_HAS_CONSISTENT_SIGNAL_PROTOTYPES
 
 // Optimize ACE_Handle_Set for select().
