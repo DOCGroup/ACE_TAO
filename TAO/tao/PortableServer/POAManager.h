@@ -68,8 +68,7 @@ public:
 
   void hold_requests (CORBA::Boolean wait_for_completion);
 
-  void discard_requests (CORBA::Boolean wait_for_completion
-                         );
+  void discard_requests (CORBA::Boolean wait_for_completion);
 
   void deactivate (CORBA::Boolean etherealize_objects,
                    CORBA::Boolean wait_for_completion);

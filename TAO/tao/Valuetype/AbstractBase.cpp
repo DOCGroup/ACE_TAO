@@ -295,7 +295,7 @@ operator>> (TAO_InputCDR &strm, CORBA::AbstractBase_ptr &abs)
 
   if (strm >> tb)
     {
-      if (discriminator == 0)
+      if (!discriminator)
         {
           CORBA::ULong value_tag;
 

@@ -367,6 +367,16 @@ strategy, your interfaces must be compiled with the <code><a
  href="compiler.html">compiler option</a>. </td>
       </tr>
       <tr>
+        <td><code>-ORBAMICollocation</code> <em>1|0</em>
+        </td>
+        <td>Specifies what happens when making collocated AMI invocations.
+        When 1 (default) an AMI call will be done on a collocated
+        servant and the client thread will be used to invoke the
+        servant, when 0 the collocated call will be converted
+        to a remote call so that a different thread could be used
+        to execute the servant.</td>
+      </tr>
+      <tr>
         <td><code>-ORBNodelay</code> <em>boolean (0|1)</em></td>
         <td><a name="-ORBNodelay"></a>Enable or disable the <code>TCP_NODELAY</code>
 option (Nagle's algorithm). By default, <code>TCP_NODELAY</code> is
@@ -1106,7 +1116,7 @@ until all the data is sent.
         <td><a name="-ORBZeroCopyWrite"></a> Use a zero copy write
         protocol, which at this moment the only option is sendfile.
         If your platform does support sendfile but you don't want
-	that TAO uses it you can disable 
+	that TAO uses it you can disable
 	sendfile in TAO by add the define <code>TAO_HAS_SENDFILE 0</code>
 	to your config.h file.
         </td>

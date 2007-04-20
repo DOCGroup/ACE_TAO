@@ -2865,7 +2865,7 @@ libTAO_PortableServer_la_SOURCES = \
   PortableServer/Adapter_Activator.cpp \
   PortableServer/Collocated_Object_Proxy_Broker.cpp \
   PortableServer/Creation_Time.cpp \
-  PortableServer/DII_Arguments_Converter.cpp \
+  PortableServer/Collocated_Arguments_Converter.cpp \
   PortableServer/Default_Acceptor_Filter.cpp \
   PortableServer/Default_Policy_Validator.cpp \
   PortableServer/Default_Servant_Dispatcher.cpp \
@@ -3012,7 +3012,7 @@ nobase_include_HEADERS += \
   PortableServer/Collocated_Object_Proxy_Broker.h \
   PortableServer/Creation_Time.h \
   PortableServer/Creation_Time.inl \
-  PortableServer/DII_Arguments_Converter.h \
+  PortableServer/Collocated_Arguments_Converter.h \
   PortableServer/Default_Acceptor_Filter.h \
   PortableServer/Default_Policy_Validator.h \
   PortableServer/Default_Servant_Dispatcher.h \
@@ -4110,6 +4110,7 @@ libTAO_Messaging_la_SOURCES = \
   Messaging/Asynch_Invocation_Adapter.cpp \
   Messaging/Asynch_Reply_Dispatcher.cpp \
   Messaging/Asynch_Timeout_Handler.cpp \
+  Messaging/AMI_Arguments_Converter_Impl.cpp \
   Messaging/Connection_Timeout_Policy_i.cpp \
   Messaging/ExceptionHolderA.cpp \
   Messaging/ExceptionHolderC.cpp \
@@ -4151,6 +4152,7 @@ nobase_include_HEADERS += \
   Messaging/Asynch_Invocation_Adapter.h \
   Messaging/Asynch_Reply_Dispatcher.h \
   Messaging/Asynch_Timeout_Handler.h \
+  Messaging/AMI_Arguments_Converter_Impl.h \
   Messaging/Connection_Timeout_Policy_i.h \
   Messaging/ExceptionHolder.pidl \
   Messaging/ExceptionHolderA.h \

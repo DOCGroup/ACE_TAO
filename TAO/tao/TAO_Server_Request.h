@@ -299,7 +299,6 @@ private:
 
   /// Incoming stream.
   TAO_InputCDR *incoming_;
-
   /// Outgoing stream.
   TAO_OutputCDR *outgoing_;
 

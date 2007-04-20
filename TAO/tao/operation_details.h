@@ -35,6 +35,7 @@ namespace Dynamic
 namespace TAO
 {
   class Argument;
+  class Collocated_Arguments_Converter;
   struct Exception_Data;
 }
 
@@ -73,8 +74,7 @@ public:
                          TAO::Argument **args = 0,
                          CORBA::ULong num_args = 0,
                          TAO::Exception_Data *ex_data = 0,
-                         CORBA::ULong ex_count = 0,
-                         CORBA::Boolean is_dii_request = false);
+                         CORBA::ULong ex_count = 0);
 
   /// Operation name
   const char* opname (void) const;
@@ -129,7 +129,7 @@ public:
    * is not found in the list of exceptions specified by the operation
    * this call would raise an UNKNOWN exception.
    */
-  CORBA::Exception *corba_exception (const char *ex);
+  CORBA::Exception *corba_exception (const char *ex) const;
 
   /// Check whether exception @a ex is in the signature of this operation
   bool has_exception (::CORBA::Exception& ex) const;
@@ -165,8 +165,9 @@ public:
   CORBA::Long ft_retention_id (void) const;
 #endif /*TAO_HAS_INTERCEPTORS == 1*/
 
-  /// Accessor for is_dii_request_ flag.
-  CORBA::Boolean is_dii_request (void) const;
+  /// Accessor for cac_ pointer.
+  TAO::Collocated_Arguments_Converter *cac (void) const;
+  void cac (TAO::Collocated_Arguments_Converter *cac);
 
 private:
 
@@ -220,8 +221,8 @@ private:
   CORBA::Long ft_retention_id_;
 #endif /*TAO_HAS_INTERCEPTORS == 1*/
 
-  /// The dii request flag.
-  CORBA::Boolean is_dii_request_;
+  /// The optional collocated arguments converter
+  TAO::Collocated_Arguments_Converter *cac_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

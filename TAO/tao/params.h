@@ -181,7 +181,7 @@ public:
 
   /// Want to use parallel connection attempts when profiles have multiple
   /// endpoints.
-  bool  use_parallel_connects(void) const;
+  bool use_parallel_connects(void) const;
   void use_parallel_connects (bool x);
 
   /// The milliseconds delay used to stagger individual connection starts
@@ -214,6 +214,9 @@ public:
 
   void negotiate_codesets (bool c);
   bool negotiate_codesets (void) const;
+
+  void ami_collication (bool opt);
+  bool ami_collication (void) const;
 
 private:
   // Each "endpoint" is of the form:
@@ -368,6 +371,9 @@ private:
 
   /// Enable the use of codeset negotiation
   bool negotiate_codesets_;
+
+  /// Do we make collocated ami calls
+  bool ami_collication_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -226,7 +226,7 @@ public:
   /**
    * Return the first endpoint in the list that matches some filtering
    * constraint, such as IPv6 compatibility for IIOP endpoints. This
-   * method is implemented in terms of TAO_Endpoint;:next_filtered().
+   * method is implemented in terms of TAO_Endpoint::next_filtered().
    */
   TAO_Endpoint *first_filtered_endpoint (void);
 

@@ -45,8 +45,7 @@ namespace TAO
                                       this->args_,
                                       this->number_args_,
                                       ex_data,
-                                      ex_count,
-                                      this->is_dii_request_);
+                                      ex_count);
 
     this->invoke_i (stub, op_details);
   }
@@ -125,9 +124,7 @@ namespace TAO
   Invocation_Adapter::get_timeout (TAO_Stub *stub, ACE_Time_Value &timeout)
   {
     bool has_timeout = false;
-    this->target_->orb_core ()->call_timeout_hook (stub,
-                                                   has_timeout,
-                                                   timeout);
+    this->target_->orb_core ()->call_timeout_hook (stub, has_timeout, timeout);
 
     return has_timeout;
   }
@@ -135,8 +132,7 @@ namespace TAO
   TAO_Stub *
   Invocation_Adapter::get_stub (void) const
   {
-    TAO_Stub * const stub =
-      this->target_->_stubobj ();
+    TAO_Stub * const stub = this->target_->_stubobj ();
 
     if (stub == 0)
       throw ::CORBA::INTERNAL (
@@ -177,15 +173,15 @@ namespace TAO
         effective_target = coll_inv.steal_forwarded_reference ();
 
 #if TAO_HAS_INTERCEPTORS == 1
-        const bool is_permanent_forward =
+        CORBA::Boolean const is_permanent_forward =
             (coll_inv.reply_status() == TAO_GIOP_LOCATION_FORWARD_PERM);
 #else
-        const bool is_permanent_forward = false;
+        CORBA::Boolean const is_permanent_forward = false;
 #endif
 
-        (void) this->object_forwarded (effective_target,
-                                       stub,
-                                       is_permanent_forward);
+        this->object_forwarded (effective_target,
+                                stub,
+                                is_permanent_forward);
       }
 
     return status;
@@ -313,10 +309,10 @@ namespace TAO
         effective_target = synch.steal_forwarded_reference ();
 
 #if TAO_HAS_INTERCEPTORS == 1
-        const bool is_permanent_forward =
+        CORBA::Boolean const is_permanent_forward =
             (synch.reply_status() == TAO_GIOP_LOCATION_FORWARD_PERM);
 #else
-        const bool is_permanent_forward = false;
+        CORBA::Boolean const is_permanent_forward = false;
 #endif
 
         this->object_forwarded (effective_target,
@@ -342,10 +338,10 @@ namespace TAO
         effective_target = synch.steal_forwarded_reference ();
 
 #if TAO_HAS_INTERCEPTORS == 1
-        const bool is_permanent_forward =
+        CORBA::Boolean const is_permanent_forward =
             (synch.reply_status() == TAO_GIOP_LOCATION_FORWARD_PERM);
 #else
-        const bool is_permanent_forward = false;
+        CORBA::Boolean const is_permanent_forward = false;
 #endif
         this->object_forwarded (effective_target,
                                 r.stub (),

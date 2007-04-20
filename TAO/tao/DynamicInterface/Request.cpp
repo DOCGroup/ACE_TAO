@@ -72,8 +72,7 @@ CORBA::Request::Request (CORBA::Object_ptr obj,
                          CORBA::NVList_ptr args,
                          CORBA::NamedValue_ptr result,
                          CORBA::Flags flags,
-                         CORBA::ExceptionList_ptr exceptions
-                         )
+                         CORBA::ExceptionList_ptr exceptions)
   : target_ (CORBA::Object::_duplicate (obj)),
     orb_ (CORBA::ORB::_duplicate (orb)),
     opname_ (CORBA::string_dup (op)),
@@ -86,7 +85,7 @@ CORBA::Request::Request (CORBA::Object_ptr obj,
     ctx_ (CORBA::Context::_nil ()),
     refcount_ (1),
     lazy_evaluation_ (false),
-    response_received_ (0),
+    response_received_ (false),
     byte_order_ (TAO_ENCAP_BYTE_ORDER)
 {
   if (this->exceptions_.in () == 0)
@@ -101,8 +100,7 @@ CORBA::Request::Request (CORBA::Object_ptr obj,
 
 CORBA::Request::Request (CORBA::Object_ptr obj,
                          CORBA::ORB_ptr orb,
-                         const CORBA::Char *op
-                         )
+                         const CORBA::Char *op)
   : target_ (CORBA::Object::_duplicate (obj)),
     orb_ (CORBA::ORB::_duplicate (orb)),
     opname_ (CORBA::string_dup (op)),
@@ -112,7 +110,7 @@ CORBA::Request::Request (CORBA::Object_ptr obj,
     ctx_ (CORBA::Context::_nil ()),
     refcount_ (1),
     lazy_evaluation_ (false),
-    response_received_ (0),
+    response_received_ (false),
     byte_order_ (TAO_ENCAP_BYTE_ORDER)
 {
   CORBA::ExceptionList *tmp = 0;
@@ -190,16 +188,13 @@ CORBA::Request::send_oneway (void)
     &_tao_in_list
   };
 
-  TAO::Invocation_Adapter _tao_call (
+  TAO::DII_Oneway_Invocation_Adapter _tao_call (
       this->target_,
       _tao_arg_list,
       sizeof( _tao_arg_list ) / sizeof( TAO::Argument* ),
       this->opname_,
       static_cast<CORBA::ULong> (ACE_OS::strlen (this->opname_)),
-      0,
-      TAO::TAO_ONEWAY_INVOCATION,
-      TAO::TAO_SYNCHRONOUS_INVOCATION,
-      true); // is_dii_request
+      TAO::TAO_SYNCHRONOUS_INVOCATION);
 
   _tao_call.invoke (0, 0);
 }
@@ -266,12 +261,10 @@ CORBA::Request::sendc (CORBA::Object_ptr handler)
        sizeof( _tao_arg_list ) / sizeof( TAO::Argument* ),
        const_cast<char *> (this->opname_),
        static_cast<CORBA::ULong> (ACE_OS::strlen (this->opname_)),
-       0 // collocation proxy broker
-       );
+       0); // collocation proxy broker
 
   _tao_call.invoke (dynamic_cast<Messaging::ReplyHandler_ptr>(handler),
                     &CORBA::Request::_tao_reply_stub);
-
 }
 
 void

@@ -21,7 +21,7 @@ ACE_RCSID (tao,
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 CORBA::Exception *
-TAO_Operation_Details::corba_exception (const char *id)
+TAO_Operation_Details::corba_exception (const char *id) const
 {
   for (CORBA::ULong i = 0; i != this->ex_count_; ++i)
     {

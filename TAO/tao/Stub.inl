@@ -109,10 +109,10 @@ TAO_Stub::next_profile_i (void)
       // We may have been forwarded to / from a collocated situation
       // Check for this and apply / remove optimisation if required.
       this->orb_core_->reinitialize_object (this);
-                
+
 	  return pfile_next;
 	}
-  else 
+  else
     {
       if (this->forward_profiles_) // Now do the common operation
         {
