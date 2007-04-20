@@ -10355,7 +10355,7 @@ Wed Apr 26 16:42:45 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
           impact on a busy server if more than one of the available
           endpoints is reachable. Also, because this feature only focuses
           on one profile at a time, the server must be run with
-          -ORBUseSharedProfiles enabled (it is disabled by default).
+          -ORBUseSharedProfile enabled (it is disabled by default).
 
         * tests/Parallel_Connect_Strategy/Parallel_Connect_Strategy.mpc:
         * tests/Parallel_Connect_Strategy/README:
