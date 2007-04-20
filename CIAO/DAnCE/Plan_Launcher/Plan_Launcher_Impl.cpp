@@ -546,7 +546,8 @@ namespace CIAO
       {
         ACE_DEBUG ((LM_DEBUG,
           ACE_TEXT ("CIAO::Plan_Launcher_i: " )
-          ACE_TEXT ("In ExecutionManager, the Priority Model Policy not exposed!\n")));
+          ACE_TEXT ("In ExecutionManager, the Priority Model Policy is not exposed. ")
+          ACE_TEXT ("Use non-RT mode.\n")));
         return false;
       }
 
@@ -557,7 +558,8 @@ namespace CIAO
       {
         ACE_DEBUG ((LM_DEBUG,
           ACE_TEXT ("CIAO::Plan_Launcher_i: " )
-          ACE_TEXT ("The Priority Model of ExecutionManager is not CLIENT_PROPAGATED !\n")));
+          ACE_TEXT ("The Priority Model of ExecutionManager is not CLIENT_PROPAGATED! ")
+          ACE_TEXT ("Use non-RT mode instead.\n")));
         return false;
       }
        
