@@ -15,7 +15,7 @@ if (PerlACE::is_vxworks_test()) {
 }
 else {
     $CL = new PerlACE::Process ("client", "");
-#}
+}
 
 $client = $CL->SpawnWaitKill ($PerlACE::wait_interval_for_process_creation);
 
