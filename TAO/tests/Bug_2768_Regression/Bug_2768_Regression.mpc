@@ -22,7 +22,7 @@ project(*Server): taoserver, iortable {
   }
 }
 
-project(*Client): taoclient {
+project(*Client): taoclient, corba_messaging {
   after += *idl
   Source_Files {
     client.cpp
