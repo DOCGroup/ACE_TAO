@@ -48,6 +48,7 @@ TAO_ORB_Parameters::TAO_ORB_Parameters (void)
   , use_ipv6_link_local_ (false)
 #endif /* ACE_HAS_IPV6 */
   , negotiate_codesets_ (true)
+  , ami_collication_ (true)
 {
   for (int i = 0; i != TAO_NO_OF_MCAST_SERVICES; ++i)
     {

@@ -2,6 +2,7 @@
 #include "tao/Messaging/Asynch_Invocation_Adapter.h"
 #include "tao/Messaging/Asynch_Reply_Dispatcher.h"
 #include "tao/Messaging/Asynch_Invocation.h"
+#include "tao/Messaging/AMI_Arguments_Converter_Impl.h"
 
 #include "tao/Profile_Transport_Resolver.h"
 #include "tao/operation_details.h"
@@ -120,17 +121,32 @@ namespace TAO
     TAO_Stub *stub,
     TAO_Operation_Details &details,
     CORBA::Object_var &effective_target,
-    Collocation_Strategy strat
-    )
+    Collocation_Strategy strat)
   {
-    // When doing a collocation asynch invocation we shouldn't use the
-    // stub args but use the skel args
-    details.use_stub_args (false);
+    if (stub->orb_core ()->orb_params ()->ami_collication ())
+      {
+        // When doing a collocation asynch invocation we shouldn't use the
+        // stub args but use the skel args
+        details.use_stub_args (false);
 
-    return Invocation_Adapter::invoke_collocated_i (stub,
+        TAO_AMI_Arguments_Converter_Impl* ami_arguments_converter
+          = ACE_Dynamic_Service<TAO_AMI_Arguments_Converter_Impl>::instance (
+            "AMI_Arguments_Converter");
+        details.cac (ami_arguments_converter);
+
+        return Invocation_Adapter::invoke_collocated_i (stub,
+                                                        details,
+                                                        effective_target,
+                                                        strat);
+      }
+    else
+      {
+        ACE_Time_Value *max_wait_time = 0;
+        return Invocation_Adapter::invoke_remote_i (stub,
                                                     details,
                                                     effective_target,
-                                                    strat);
+                                                    max_wait_time);
+      }
   }
 
   Invocation_Status
@@ -163,8 +179,7 @@ namespace TAO
           {
             this->safe_rd_->schedule_timer (
                 op.request_id (),
-                *max_wait_time
-               );
+                *max_wait_time);
           }
       }
 

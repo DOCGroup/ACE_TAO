@@ -59,7 +59,7 @@ namespace TAO
     public Invocation_Adapter
   {
   public:
-    /// The only constructor used by the IDL compiler and onlly way to
+    /// The only constructor used by the IDL compiler and only way to
     /// create this adapter.
     /**
      *
@@ -75,7 +75,7 @@ namespace TAO
      *
      * @param operation The name of the operation being invoked.
      *
-     * @param ope_len Number of charecters in the operation name. This
+     * @param op_len Number of characters in the operation name. This
      * is an optimization which helps us to avoid calling strlen ()
      * while creating a message format.
      *
@@ -100,6 +100,12 @@ namespace TAO
         CORBA::Object_var &effective_target,
         Profile_Transport_Resolver &r,
         ACE_Time_Value *&max_wait_time);
+
+    virtual Invocation_Status invoke_collocated_i (
+        TAO_Stub *stub,
+        TAO_Operation_Details &details,
+        CORBA::Object_var &effective_target,
+        Collocation_Strategy strat);
 
   private:
 
@@ -138,13 +144,18 @@ namespace TAO
     /// Invoke the target
     virtual void invoke (TAO::Exception_Data *ex, unsigned long ex_count);
 
-
   protected:
     virtual Invocation_Status invoke_twoway (
         TAO_Operation_Details &op,
         CORBA::Object_var &effective_target,
         Profile_Transport_Resolver &r,
         ACE_Time_Value *&max_wait_time);
+
+    virtual Invocation_Status invoke_collocated_i (
+        TAO_Stub *stub,
+        TAO_Operation_Details &details,
+        CORBA::Object_var &effective_target,
+        Collocation_Strategy strat);
 
   private:
     CORBA::Request *request_;
@@ -178,22 +189,39 @@ namespace TAO
     /// Invoke the target
     void invoke_reply_handler (Messaging::ReplyHandler_ptr reply_handler_ptr);
 
-
   protected:
     virtual Invocation_Status invoke_twoway (
                 TAO_Operation_Details &op,
                 CORBA::Object_var &effective_target,
                 Profile_Transport_Resolver &r,
                 ACE_Time_Value *&max_wait_time);
-
-  private:
-    /// Reply dispatcher for the current Invocation.
-    TAO_DII_Asynch_Reply_Dispatcher *rd_;
-
-    /// Cache the orb_core
-    TAO_ORB_Core *orb_core_;
   };
 #endif /* TAO_HAS_AMI */
+
+  /**
+   * @class  DII_Oneway_Invocation_Adapter
+   *
+   * @brief This class is for oneway DII invocation.
+   */
+  class TAO_DynamicInterface_Export DII_Oneway_Invocation_Adapter
+    : public Invocation_Adapter
+  {
+  public:
+    DII_Oneway_Invocation_Adapter (
+       CORBA::Object *target,
+       Argument **args,
+       int arg_number,
+       const char *operation,
+       int op_len,
+       TAO::Invocation_Mode mode = TAO_SYNCHRONOUS_INVOCATION);
+
+  protected:
+    virtual Invocation_Status invoke_collocated_i (
+        TAO_Stub *stub,
+        TAO_Operation_Details &details,
+        CORBA::Object_var &effective_target,
+        Collocation_Strategy strat);
+  };
 } // End namespace TAO
 
 TAO_END_VERSIONED_NAMESPACE_DECL

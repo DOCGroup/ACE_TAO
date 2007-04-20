@@ -188,7 +188,7 @@ CORBA::Request::response_received (void)
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
 		    ace_mon,
 		    this->lock_,
-		    0);
+		    false);
 
   return this->response_received_;
 }

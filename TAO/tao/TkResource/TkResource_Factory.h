@@ -49,12 +49,8 @@ namespace TAO
     virtual ACE_Reactor_Impl *reactor_impl (void);
 
   private:
-
     /// Reactor created by this factory.
     ACE_TkReactor *reactor_impl_;
-
-    /// for internal locking.
-    TAO_SYNCH_MUTEX lock_;
   };
 }
 

@@ -103,9 +103,6 @@ namespace TAO
      *
      * @param mode Invocation mode. This information is also available
      * in the IDL file and in the generated code.
-     *
-     * @param is_dii_request DII request flag. This flag defaults to false,
-     *  it's set to be true when invoking via DynamicInterface.
      */
     Invocation_Adapter (CORBA::Object_ptr target,
                         Argument **args,
@@ -114,8 +111,7 @@ namespace TAO
                         size_t op_len,
                         Collocation_Proxy_Broker *cpb,
                         TAO::Invocation_Type type = TAO_TWOWAY_INVOCATION,
-                        TAO::Invocation_Mode mode = TAO_SYNCHRONOUS_INVOCATION,
-                        CORBA::Boolean is_dii_request = false);
+                        TAO::Invocation_Mode mode = TAO_SYNCHRONOUS_INVOCATION);
 
     virtual ~Invocation_Adapter (void);
 
@@ -129,9 +125,7 @@ namespace TAO
      *
      * @param ex_count Number of elements in the array.
      */
-    virtual void invoke (TAO::Exception_Data *ex,
-                         unsigned long ex_count
-                        );
+    virtual void invoke (TAO::Exception_Data *ex, unsigned long ex_count);
   protected:
     /**
      * The stub pointer passed to this call has all the details about
@@ -141,9 +135,7 @@ namespace TAO
      * forwarding information or if the first invocation fails
      * for some reason, like a loss of connection during send () etc.
      */
-    virtual void invoke_i (TAO_Stub *stub,
-                           TAO_Operation_Details &details
-                          );
+    virtual void invoke_i (TAO_Stub *stub, TAO_Operation_Details &details);
 
     /**
      * @name Helper methods for making different types of invocations.
@@ -173,8 +165,7 @@ namespace TAO
         TAO_Stub *stub,
         TAO_Operation_Details &details,
         CORBA::Object_var &effective_target,
-        ACE_Time_Value *&max_wait_time
-       );
+        ACE_Time_Value *&max_wait_time);
 
     /// Make a collocated call.
     /**
@@ -191,8 +182,7 @@ namespace TAO
         TAO_Stub *stub,
         TAO_Operation_Details &details,
         CORBA::Object_var &effective_target,
-        Collocation_Strategy strat
-       );
+        Collocation_Strategy strat);
 
     /// Helper method to make a two way invocation.
     /**
@@ -205,8 +195,7 @@ namespace TAO
         TAO_Operation_Details &details,
         CORBA::Object_var &effective_target,
         Profile_Transport_Resolver &r,
-        ACE_Time_Value *&max_wait_time
-       );
+        ACE_Time_Value *&max_wait_time);
 
     /// Helper method to make a one way invocation.
     /**
@@ -219,14 +208,12 @@ namespace TAO
         TAO_Operation_Details &details,
         CORBA::Object_var &effective_target,
         Profile_Transport_Resolver &r,
-        ACE_Time_Value *&max_wait_time
-       );
+        ACE_Time_Value *&max_wait_time);
     //@}
 
     /// Helper function that extracts the roundtrip timeout policies
     /// set in the ORB.
-    bool get_timeout (TAO_Stub *stub,
-                      ACE_Time_Value &val);
+    bool get_timeout (TAO_Stub *stub, ACE_Time_Value &val);
 
     /// Helper method that extracts TAO_Stub from the target object.
     TAO_Stub *get_stub (void) const;
@@ -235,8 +222,7 @@ namespace TAO
     /// the stub object if the target gets forwarded
     void object_forwarded (CORBA::Object_var &effective_target,
                            TAO_Stub *stub,
-                           CORBA::Boolean permanent_forward
-                          );
+                           CORBA::Boolean permanent_forward);
 
     /// Helper method to set the response flags within @a details
     void set_response_flags (TAO_Stub *stub,
@@ -278,9 +264,6 @@ namespace TAO
 
     /// The invocation mode
     Invocation_Mode const mode_;
-
-    /// Flag that indicates a dii request.
-    CORBA::Boolean  is_dii_request_;
   };
 } // End namespace TAO
 

@@ -2,6 +2,8 @@
 #include "tao/DynamicInterface/DII_Invocation_Adapter.h"
 #include "tao/DynamicInterface/DII_Invocation.h"
 #include "tao/DynamicInterface/DII_Reply_Dispatcher.h"
+#include "tao/DynamicInterface/DII_Arguments_Converter_Impl.h"
+#include "tao/DynamicInterface/Request.h"
 
 #include "tao/Exception.h"
 #include "tao/ORB_Constants.h"
@@ -10,7 +12,7 @@
 #include "tao/Transport.h"
 #include "tao/Pluggable_Messaging.h"
 #include "tao/SystemException.h"
-#include "tao/DynamicInterface/Request.h"
+#include "tao/operation_details.h"
 
 #include "ace/os_include/os_errno.h"
 
@@ -39,8 +41,7 @@ namespace TAO
                           op_len,
                           0, // Collocation Proxy broker pointer
                           TAO_TWOWAY_INVOCATION,
-                          mode,
-                          true) // is a dii request
+                          mode)
       , exception_list_ (excp)
       , request_ (r)
   {
@@ -51,12 +52,29 @@ namespace TAO
   }
 
   Invocation_Status
+  DII_Invocation_Adapter::invoke_collocated_i (
+    TAO_Stub *stub,
+    TAO_Operation_Details &details,
+    CORBA::Object_var &effective_target,
+    Collocation_Strategy strat)
+  {
+    TAO_DII_Arguments_Converter_Impl* dii_arguments_converter
+      = ACE_Dynamic_Service<TAO_DII_Arguments_Converter_Impl>::instance (
+        "DII_Arguments_Converter");
+    details.cac (dii_arguments_converter);
+
+    return Invocation_Adapter::invoke_collocated_i (stub,
+                                                    details,
+                                                    effective_target,
+                                                    strat);
+  }
+
+  Invocation_Status
   DII_Invocation_Adapter::invoke_twoway (
         TAO_Operation_Details &op,
         CORBA::Object_var &effective_target,
         Profile_Transport_Resolver &r,
-        ACE_Time_Value *&max_wait_time
-        )
+        ACE_Time_Value *&max_wait_time)
   {
     // Simple sanity check
     if (this->mode_ != TAO_DII_INVOCATION ||
@@ -69,7 +87,8 @@ namespace TAO
           CORBA::COMPLETED_NO);
       }
 
-    r.transport ()->messaging_object ()->out_stream ().reset_byte_order (request_->_tao_byte_order ());
+    r.transport ()->messaging_object ()->out_stream ().reset_byte_order (
+        request_->_tao_byte_order ());
 
     TAO::DII_Invocation synch (this->target_,
                                r,
@@ -85,10 +104,10 @@ namespace TAO
         effective_target = synch.steal_forwarded_reference ();
 
 #if TAO_HAS_INTERCEPTORS == 1
-        const CORBA::Boolean permanent_forward =
+        CORBA::Boolean const permanent_forward =
             (synch.reply_status() == TAO_PLUGGABLE_MESSAGE_LOCATION_FORWARD_PERM);
 #else
-        const CORBA::Boolean permanent_forward = false;
+        CORBA::Boolean const permanent_forward = false;
 #endif
         this->object_forwarded (effective_target,
                                 r.stub (),
@@ -115,8 +134,7 @@ namespace TAO
                           op_len,
                           b,
                           TAO_TWOWAY_INVOCATION,
-                          mode,
-                          true) // is a dii request
+                          mode)
       , request_ (req)
       , rd_ (0)
       , orb_core_ (oc)
@@ -129,7 +147,7 @@ namespace TAO
       unsigned long ex_count)
   {
     // New reply dispatcher on the heap, because we will go out of
-    // scope and hand over the  reply dispatcher to the ORB.
+    // scope and hand over the reply dispatcher to the ORB.
     // So this->rd_ is 0, because we do not need to
     // hold a pointer to it.
     ACE_NEW_THROW_EX (this->rd_,
@@ -138,6 +156,24 @@ namespace TAO
                       CORBA::NO_MEMORY ());
 
     Invocation_Adapter::invoke (ex, ex_count);
+  }
+
+  Invocation_Status
+  DII_Deferred_Invocation_Adapter::invoke_collocated_i (
+    TAO_Stub *stub,
+    TAO_Operation_Details &details,
+    CORBA::Object_var &effective_target,
+    Collocation_Strategy strat)
+  {
+    TAO_DII_Arguments_Converter_Impl* dii_arguments_converter
+      = ACE_Dynamic_Service<TAO_DII_Arguments_Converter_Impl>::instance (
+        "DII_Arguments_Converter");
+    details.cac (dii_arguments_converter);
+
+    return Invocation_Adapter::invoke_collocated_i (stub,
+                                                    details,
+                                                    effective_target,
+                                                    strat);
   }
 
   Invocation_Status
@@ -197,11 +233,6 @@ namespace TAO
   {
   }
 
-  void
-  DII_Asynch_Invocation_Adapter::invoke_reply_handler (Messaging::ReplyHandler_ptr)
-  {
-  }
-
   Invocation_Status
   DII_Asynch_Invocation_Adapter::invoke_twoway (
         TAO_Operation_Details &,
@@ -211,6 +242,43 @@ namespace TAO
   {
     return TAO_INVOKE_FAILURE;
   }
+
+  DII_Oneway_Invocation_Adapter::DII_Oneway_Invocation_Adapter (
+      CORBA::Object *target,
+      Argument **args,
+      int arg_count,
+      const char *operation,
+      int op_len,
+      TAO::Invocation_Mode mode)
+    : Invocation_Adapter (target,
+                          args,
+                          arg_count,
+                          operation,
+                          op_len,
+                          0,
+                          TAO_ONEWAY_INVOCATION,
+                          mode)
+  {
+  }
+
+  Invocation_Status
+  DII_Oneway_Invocation_Adapter::invoke_collocated_i (
+    TAO_Stub *stub,
+    TAO_Operation_Details &details,
+    CORBA::Object_var &effective_target,
+    Collocation_Strategy strat)
+  {
+    TAO_DII_Arguments_Converter_Impl* dii_arguments_converter
+      = ACE_Dynamic_Service<TAO_DII_Arguments_Converter_Impl>::instance (
+        "DII_Arguments_Converter");
+    details.cac (dii_arguments_converter);
+
+    return Invocation_Adapter::invoke_collocated_i (stub,
+                                                    details,
+                                                    effective_target,
+                                                    strat);
+  }
+
 
 } // End namespace TAO
 TAO_END_VERSIONED_NAMESPACE_DECL

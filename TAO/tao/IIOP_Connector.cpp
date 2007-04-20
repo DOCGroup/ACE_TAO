@@ -204,7 +204,7 @@ TAO_IIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
       if (TAO_debug_level > 1)
         {
           ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("(%P|%t) IIOP_Connector::make_connection, ")
+                      ACE_TEXT ("TAO (%P|%t) IIOP_Connector::make_connection, ")
                       ACE_TEXT("connection to <%s:%d> failed (%p)\n"),
                       ACE_TEXT_CHAR_TO_TCHAR (iiop_endpoint->host ()),
                       iiop_endpoint->port (),

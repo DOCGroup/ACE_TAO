@@ -1,3 +1,113 @@
+Fri Apr 20 08:05:12 UTC 2007 Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/Collocated_Arguments_Converter.cpp:
+        * tao/PortableServer/Collocated_Arguments_Converter.h:
+        * tao/PortableServer/DII_Arguments_Converter.cpp:
+        * tao/PortableServer/DII_Arguments_Converter.h:
+          Refactored the DII argument to a generic collocated argument
+          converter. The issue that was solved for DII is also valid
+          for AMI. Also made a method for converting the request and
+          one for the reply, converting the reply is now not done yet but
+          we do know that also fails.
+
+        * tao/PortableServer/Upcall_Wrapper.cpp:
+          Changed how the argument converter is retrieved. Instead of retrieving
+          it using service configurator we put a pointer in the operation details
+          which is set or not.
+
+        * tao/DynamicInterface/DII_Arguments_Converter_Impl.cpp:
+        * tao/DynamicInterface/DII_Arguments_Converter_Impl.h:
+          Updated because the DII base class is renamed:
+
+        * tao/DynamicInterface/DII_Invocation_Adapter.cpp:
+        * tao/DynamicInterface/DII_Invocation_Adapter.h:
+          Added new adapter for oneway DII calls so that this adapter can
+          set the DII Argument Converter for DII oneway calls.
+
+        * tao/DynamicInterface/Request.cpp:
+          Use false instead of 0, layout changes, use new DII Oneway adapter.
+
+        * tao/DynamicInterface/Request.h:
+        * tao/Protocol_Factory.cpp:
+        * tao/IIOP_Profile.cpp:
+        * tao/PI/PolicyFactoryC.cpp:
+          Layout changes
+
+        * tao/DynamicInterface/Request.inl:
+          Use false instead of 0
+
+        * tao/DynamicInterface/Server_Request.inl:
+          Use static_cast instead of c-style cast
+
+        * tao/IIOP_Connector.cpp:
+          Fixed an inconsistent debug statement
+
+        * tao/Invocation_Adapter.cpp:
+        * tao/Invocation_Adapter.h:
+        * tao/Invocation_Adapter.inl:
+          Layout changes and no need to have a member whether we are
+          a DII invocation or not
+
+        * tao/Makefile.am:
+          Updated for new files
+
+        * tao/Messaging/AMI_Arguments_Converter_Impl.cpp:
+        * tao/Messaging/AMI_Arguments_Converter_Impl.h:
+          New AMI argument converter
+
+        * tao/Messaging/Asynch_Invocation_Adapter.cpp:
+          Use the new AMI argument converter which fixes bugzilla 2805. Also
+          use the
+
+        * tao/Messaging/Messaging_Loader.cpp:
+          Added include of the AMI Argument converter
+
+        * tao/operation_details.cpp:
+        * tao/operation_details.h:
+        * tao/operation_details.inl:
+          Instead of storing whether we have a DII call or not, we store
+          a pointer to a collocated argument converter that is set or not set
+
+        * tao/ORB_Core.cpp:
+        * tao/ORB_Core.h:
+        * tao/params.cpp:
+        * tao/params.h:
+        * tao/params.inl:
+          Added a new -ORBAMICollication which is default yes. If this is no,
+          then when a collocated AMI invocation is made, the call is converted
+          to a remote call so that another thread can handle the servant. Also
+          the problems with argument corruption are then gone. This is for
+          bugzilla 2351.
+
+        * tao/Profile.h:
+          Documentation fix
+
+        * tao/Profile_Transport_Resolver.cpp:
+        * tao/Profile_Transport_Resolver.h:
+        * tao/PortableServer/POAManager.h:
+        * tao/PortableServer/POAManagerFactory.cpp:
+          Layout changes
+
+        * tao/Stub.inl:
+        * tao/TAO_Server_Request.cpp:
+        * tao/TAO_Server_Request.h:
+        * tao/TAO_Server_Request.inl:
+          Bool changes
+
+        * tao/TkResource/TkResource_Factory.h:
+        * tao/QtResource/QtResource_Factory.h:
+          Removed not used mutex
+
+        * tao/Valuetype/AbstractBase.cpp:
+          Bool change
+
+        * docs/Options.html:
+          Document new ORBAMICollocation option, this is default yes which
+          means that when a collocated AMI call is made the servant is invoked
+          using the client thread. When this option is no, when a collocated AMI
+          call is made, this is converted to a remote call so that a different
+          thread can be used to invoke the servant.
+
 Thu Apr 19 18:24:45 UTC 2007  Wallace Zhang  <zhang_w@ociweb.com>
 
         * orbsvcs/tests/Bug_2248_Regression/Bug_2248_Regression.mpc:

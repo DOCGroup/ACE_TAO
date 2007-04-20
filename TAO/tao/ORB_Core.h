@@ -242,8 +242,7 @@ public:
    * No-Collocation is a special case of collocation.
    */
   static
-  TAO::Collocation_Strategy collocation_strategy (CORBA::Object_ptr object
-                                                 );
+  TAO::Collocation_Strategy collocation_strategy (CORBA::Object_ptr object);
   //@}
 
   /// Set/get the collocation flags
@@ -375,7 +374,6 @@ public:
 
   /// Gets the value of TAO_ORB_Core::valuetype_adapter_factory_name.
   static const char *valuetype_adapter_factory_name (void);
-
 
   /// See if we have a collocated address, if yes, return the POA
   /// associated with the address.

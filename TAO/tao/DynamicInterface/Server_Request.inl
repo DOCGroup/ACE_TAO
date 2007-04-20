@@ -37,7 +37,7 @@ CORBA::ServerRequest::_duplicate (CORBA::ServerRequest_ptr x)
 ACE_INLINE CORBA::ServerRequest_ptr
 CORBA::ServerRequest::_nil (void)
 {
-  return (CORBA::ServerRequest_ptr)0;
+  return static_cast <CORBA::ServerRequest_ptr>(0);
 }
 
 ACE_INLINE CORBA::Context_ptr

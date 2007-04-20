@@ -105,7 +105,7 @@ TAO_POAManager_Factory::list (void)
 }
 
 ::PortableServer::POAManager_ptr
-TAO_POAManager_Factory::find (const char * id )
+TAO_POAManager_Factory::find (const char * id)
 {
   ::PortableServer::POAManager_ptr poamanager =
     ::PortableServer::POAManager::_nil();
