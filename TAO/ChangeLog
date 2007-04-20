@@ -1,3 +1,8 @@
+Fri Apr 20 11:38:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Messaging/AMI_Arguments_Converter_Impl.cpp:
+          Fixed compile error
+
 Fri Apr 20 10:00:00 UTC 2007  Simon Massey  <sma@prismtech.com>
 
         * tests/Oneway_Buffering/test.idl:
@@ -7,7 +12,7 @@ Fri Apr 20 10:00:00 UTC 2007  Simon Massey  <sma@prismtech.com>
 
           On slower (long time sliced multi-threaded) systems, the
           old test assumed that all communications between the
-          three processes were "instantainious", which allowed the 
+          three processes were "instantainious", which allowed the
           client to miss the syncronization with previous attempts,
           which caused it to issue lost message debug. Then the
           lost message was immediatly found on the next itteration
