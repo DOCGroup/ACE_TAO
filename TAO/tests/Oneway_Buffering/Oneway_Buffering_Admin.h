@@ -17,9 +17,9 @@ public:
   Oneway_Buffering_Admin (CORBA::ORB_ptr orb);
 
   // = The skeleton methods
-  virtual CORBA::ULong request_count (void);
+  virtual CORBA::ULong request_count (CORBA::ULong expected_request_count);
 
-  virtual CORBA::ULong bytes_received_count (void);
+  virtual CORBA::ULong bytes_received_count (CORBA::ULong expected_bytes_received_count);
 
   virtual void request_received (CORBA::ULong payload_length);
 
