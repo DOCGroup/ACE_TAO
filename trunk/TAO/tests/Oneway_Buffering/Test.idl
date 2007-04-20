@@ -34,10 +34,10 @@ module Test
   interface Oneway_Buffering_Admin
   {
     /// Number of oneway requests received
-    unsigned long request_count ();
+    unsigned long request_count (in unsigned long expected_count);
 
     /// Number of bytes received
-    unsigned long bytes_received_count ();
+    unsigned long bytes_received_count (in unsigned long expected_count);
 
     /// The Oneway_Buffering interface uses this method to report any
     /// request received.

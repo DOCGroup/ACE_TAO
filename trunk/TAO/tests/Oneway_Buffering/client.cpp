@@ -35,6 +35,9 @@ const int LIVENESS_MAX_DEPTH = 256;
 /// Factor in GIOP overhead in the buffer size test
 const double GIOP_OVERHEAD = 0.9;
 
+const ACE_Time_Value TRANSIENT_HOLDOFF (0, 500); // 0.5ms delay
+const int TRANSIENT_LIMIT = 10;
+
 int
 parse_args (int argc, char *argv[])
 {
@@ -191,14 +194,19 @@ main (int argc, char *argv[])
         }
 
       oneway_buffering->shutdown ();
-      ACE_OS::sleep(1);
       oneway_buffering_admin->shutdown ();
-
+      ACE_OS::sleep(1);
       orb->destroy ();
     }
   catch (const CORBA::Exception& ex)
     {
-      ex._tao_print_exception ("Exception caught in client:");
+      ACE_DEBUG ((LM_DEBUG, "(%P) Client: "));
+      ex._tao_print_exception ("CORBA Exception caught:");
+      return 1;
+    }
+  catch (...)
+    {
+      ACE_DEBUG ((LM_DEBUG, "(%P) Client caught unknown exception\n"));
       return 1;
     }
 
@@ -269,8 +277,156 @@ void
 sync_server (Test::Oneway_Buffering_ptr flusher)
 {
   // Get back in sync with the server...
-  flusher->flush ();
-  flusher->sync ();
+  int transient_count= 0;
+  while (true)
+    {
+      try
+        {
+          flusher->flush ();
+          break;
+        }
+      catch (const CORBA::TRANSIENT &)
+        {
+          if (++transient_count < TRANSIENT_LIMIT)
+            {
+              if (transient_count == TRANSIENT_LIMIT / 2)
+                {
+                  ACE_DEBUG ((LM_DEBUG,
+                    "(%P) Client large TRANSIENTS encountered calling flush().\n"));
+                }
+              ACE_OS::sleep (TRANSIENT_HOLDOFF);
+            }
+          else
+            {
+              throw; // Abort the message sending.
+            }
+        }
+    }
+  while (true)
+    {
+      try
+        {
+          flusher->sync ();
+          break;
+        }
+      catch (const CORBA::TRANSIENT &)
+        {
+          if (++transient_count < TRANSIENT_LIMIT)
+            {
+              if (transient_count == TRANSIENT_LIMIT / 2)
+                {
+                  ACE_DEBUG ((LM_DEBUG,
+                    "(%P) Client large TRANSIENTS encountered calling sync().\n"));
+                }
+              ACE_OS::sleep (TRANSIENT_HOLDOFF);
+            }
+          else
+            {
+              throw; // Abort the message sending.
+            }
+        }
+    }
+}
+
+CORBA::ULong
+request_count (
+  const Test::Oneway_Buffering_Admin_ptr oneway_buffering_admin,
+  const CORBA::ULong expected_request_count= static_cast<CORBA::ULong>(0))
+{
+  CORBA::ULong count;
+  int transient_count= 0;
+  while (true)
+    {
+      try
+        {
+          count= oneway_buffering_admin->request_count (expected_request_count);
+          break;
+        }
+      catch (const CORBA::TRANSIENT &)
+        {
+          if (++transient_count < TRANSIENT_LIMIT)
+            {
+              if (transient_count == TRANSIENT_LIMIT / 2)
+                {
+                  ACE_DEBUG ((LM_DEBUG,
+                    "(%P) Client large TRANSIENTS encountered calling request_count().\n"));
+                }
+              ACE_OS::sleep (TRANSIENT_HOLDOFF);
+            }
+          else
+            {
+              throw; // Abort the message sending.
+            }
+        }
+    }
+
+  return count;
+}
+
+void
+receive_data (
+  const Test::Oneway_Buffering_ptr oneway_buffering,
+  const Test::Payload &payload)
+{
+  int transient_count= 0;
+  while (true)
+    {
+      try
+        {
+          return oneway_buffering->receive_data (payload);
+        }
+      catch (const CORBA::TRANSIENT &)
+        {
+          if (++transient_count < TRANSIENT_LIMIT)
+            {
+              if (transient_count == TRANSIENT_LIMIT / 2)
+                {
+                  ACE_DEBUG ((LM_DEBUG,
+                    "(%P) Client large TRANSIENTS encountered calling receive_data().\n"));
+                }
+              ACE_OS::sleep (TRANSIENT_HOLDOFF);
+            }
+          else
+            {
+              throw; // Abort the message sending.
+            }
+        }
+    }
+}
+
+CORBA::ULong
+bytes_received_count (
+  const Test::Oneway_Buffering_Admin_ptr oneway_buffering_admin,
+  const CORBA::ULong expected_bytes_received_count= static_cast<CORBA::ULong>(0))
+{
+  CORBA::ULong count;
+  int transient_count= 0;
+  while (true)
+    {
+      try
+        {
+          count= oneway_buffering_admin->bytes_received_count (expected_bytes_received_count);
+          break;
+        }
+      catch (const CORBA::TRANSIENT &)
+        {
+          if (++transient_count < TRANSIENT_LIMIT)
+            {
+              if (transient_count == TRANSIENT_LIMIT / 2)
+                {
+                  ACE_DEBUG ((LM_DEBUG,
+                    "(%P) Client large TRANSIENTS encountered calling bytes_received_count().\n"));
+                }
+              ACE_OS::sleep (TRANSIENT_HOLDOFF);
+            }
+          else
+            {
+              throw; // Abort the message sending.
+            }
+        }
+    }
+
+  return count;
 }
 
 int
@@ -285,9 +441,9 @@ run_liveness_test (CORBA::ORB_ptr orb,
   sync_server (flusher);
 
   CORBA::ULong send_count =
-    oneway_buffering_admin->request_count ();
+    request_count (oneway_buffering_admin);
 
-  int liveness_test_iterations = int(send_count);
+  int liveness_test_iterations = static_cast<int> (send_count);
 
   Test::Payload payload (PAYLOAD_LENGTH);
   payload.length (PAYLOAD_LENGTH);
@@ -297,14 +453,14 @@ run_liveness_test (CORBA::ORB_ptr orb,
   int depth = 0;
   for (int i = 0; i != liveness_test_iterations; ++i)
     {
-      oneway_buffering->receive_data (payload);
-      send_count++;
+      receive_data (oneway_buffering, payload);
+      ++send_count;
+
+      ACE_Time_Value tv (0, 1000);
+      orb->run (tv);
 
       CORBA::ULong receive_count =
-        oneway_buffering_admin->request_count ();
-
-      ACE_Time_Value tv (0, 10 * 1000);
-      orb->run (tv);
+        request_count (oneway_buffering_admin);
 
       // Once the system has sent enough messages we don't
       // expect it to fall too far behind, i.e. at least 90% of the
@@ -366,7 +522,7 @@ run_message_count (CORBA::ORB_ptr orb,
       sync_server (flusher.in ());
 
       CORBA::ULong initial_receive_count =
-        oneway_buffering_admin->request_count ();
+        request_count (oneway_buffering_admin, send_count);
 
       if (initial_receive_count != send_count)
         {
@@ -378,20 +534,29 @@ run_message_count (CORBA::ORB_ptr orb,
 
       while (1)
         {
-          oneway_buffering->receive_data (payload);
-          send_count++;
+          receive_data (oneway_buffering, payload);
+          ++send_count;
 
-          CORBA::ULong receive_count =
-            oneway_buffering_admin->request_count ();
-
-          ACE_Time_Value tv (0, 10 * 1000);
+          ACE_Time_Value tv (0, 1000);
           orb->run (tv);
 
           CORBA::ULong iteration_count =
             send_count - initial_receive_count;
+
+          const bool
+            too_few= (iteration_count < static_cast<CORBA::ULong> (BUFFERED_MESSAGES_COUNT));
+
+          CORBA::ULong receive_count =
+            request_count (
+              oneway_buffering_admin,
+              static_cast<CORBA::ULong> (too_few ?
+                                         initial_receive_count
+                                         : (initial_receive_count
+                                            + static_cast<CORBA::ULong> (BUFFERED_MESSAGES_COUNT))));
+
           if (receive_count != initial_receive_count)
             {
-              if (iteration_count < CORBA::ULong(BUFFERED_MESSAGES_COUNT))
+              if (too_few)
                 {
                   test_failed = 1;
                   ACE_DEBUG ((LM_DEBUG,
@@ -460,7 +625,7 @@ run_timeout (CORBA::ORB_ptr orb,
       sync_server (flusher.in ());
 
       CORBA::ULong initial_receive_count =
-        oneway_buffering_admin->request_count ();
+        request_count (oneway_buffering_admin, send_count);
 
       if (initial_receive_count != send_count)
         {
@@ -473,14 +638,14 @@ run_timeout (CORBA::ORB_ptr orb,
       ACE_Time_Value start = ACE_OS::gettimeofday ();
       while (1)
         {
-          oneway_buffering->receive_data (payload);
-          send_count++;
+          receive_data (oneway_buffering, payload);
+          ++send_count;
+
+          ACE_Time_Value tv (0, 1000);
+          orb->run (tv);
 
           CORBA::ULong receive_count =
-            oneway_buffering_admin->request_count ();
-
-          ACE_Time_Value tv (0, 10 * 1000);
-          orb->run (tv);
+            request_count (oneway_buffering_admin);
 
           ACE_Time_Value elapsed = ACE_OS::gettimeofday () - start;
           if (receive_count != initial_receive_count)
@@ -555,7 +720,7 @@ run_timeout_reactive (CORBA::ORB_ptr orb,
       sync_server (flusher.in ());
 
       CORBA::ULong initial_receive_count =
-        oneway_buffering_admin->request_count ();
+        request_count (oneway_buffering_admin, send_count);
 
       if (initial_receive_count != send_count)
         {
@@ -568,17 +733,20 @@ run_timeout_reactive (CORBA::ORB_ptr orb,
       ACE_Time_Value start = ACE_OS::gettimeofday ();
       for (int j = 0; j != 20; ++j)
         {
-          oneway_buffering->receive_data (payload);
-          send_count++;
+          receive_data (oneway_buffering, payload);
+          ++send_count;
         }
+
+      ACE_Time_Value tv (0, 1000);
+      orb->run (tv);
+
       while (1)
         {
           CORBA::ULong receive_count =
-            oneway_buffering_admin->request_count ();
+            request_count (oneway_buffering_admin);
 
-          ACE_Time_Value tv (0, 10 * 1000);
-          orb->run (tv);
-
+          ACE_Time_Value sleep (0, 10000);
+          orb->run (sleep);
 
           ACE_Time_Value elapsed = ACE_OS::gettimeofday () - start;
           if (receive_count != initial_receive_count)
@@ -648,12 +816,15 @@ run_buffer_size (CORBA::ORB_ptr orb,
     payload[j] = CORBA::Octet(j % 256);
 
   CORBA::ULong bytes_sent = 0;
+  const CORBA::ULong
+    expected_size= static_cast<CORBA::ULong>(GIOP_OVERHEAD * BUFFER_SIZE);
+
   for (int i = 0; i != iterations; ++i)
     {
       sync_server (flusher.in ());
 
       CORBA::ULong initial_bytes_received =
-        oneway_buffering_admin->bytes_received_count ();
+        bytes_received_count (oneway_buffering_admin, bytes_sent);
 
       if (initial_bytes_received != bytes_sent)
         {
@@ -665,17 +836,18 @@ run_buffer_size (CORBA::ORB_ptr orb,
 
       while (1)
         {
-          oneway_buffering->receive_data (payload);
+          receive_data (oneway_buffering, payload);
           bytes_sent += PAYLOAD_LENGTH;
 
-          CORBA::ULong bytes_received =
-            oneway_buffering_admin->bytes_received_count ();
-
-          ACE_Time_Value tv (0, 10 * 1000);
+          ACE_Time_Value tv (0, 1000);
           orb->run (tv);
 
           CORBA::ULong payload_delta =
             bytes_sent - initial_bytes_received;
+
+          CORBA::ULong bytes_received =
+            bytes_received_count (oneway_buffering_admin);
+
           if (bytes_received != initial_bytes_received)
             {
               // The queue has been flushed, check that enough data
@@ -683,7 +855,7 @@ run_buffer_size (CORBA::ORB_ptr orb,
               // the ORB counts the GIOP message overhead, in this
               // test we assume the overhead to be less than 10%
 
-              if (payload_delta < CORBA::ULong (GIOP_OVERHEAD * BUFFER_SIZE))
+              if (payload_delta < expected_size)
                 {
                   test_failed = 1;
                   ACE_DEBUG ((LM_DEBUG,

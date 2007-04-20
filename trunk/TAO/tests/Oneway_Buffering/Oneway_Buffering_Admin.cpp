@@ -2,6 +2,12 @@
 // $Id$
 //
 #include "Oneway_Buffering_Admin.h"
+#include "ace/OS_NS_unistd.h"
+
+namespace
+{
+  const unsigned int timeout_in_sec= 2u;
+}
 
 ACE_RCSID(Oneway_Buffering, Oneway_Buffering_Admin, "$Id$")
 
@@ -13,14 +19,26 @@ Oneway_Buffering_Admin::Oneway_Buffering_Admin (CORBA::ORB_ptr orb)
 }
 
 CORBA::ULong
-Oneway_Buffering_Admin::request_count (void)
+Oneway_Buffering_Admin::request_count (const CORBA::ULong expected_request_count)
 {
+  ACE_Time_Value timeout (timeout_in_sec);
+  while ( (this->request_count_ < expected_request_count)
+        && (ACE_Time_Value::zero < timeout) )
+    {
+      orb_->perform_work (timeout); // Do some work, decreases timeout for amount done.
+    }
   return this->request_count_;
 }
 
 CORBA::ULong
-Oneway_Buffering_Admin::bytes_received_count (void)
+Oneway_Buffering_Admin::bytes_received_count (const CORBA::ULong expected_bytes_received_count)
 {
+  ACE_Time_Value timeout (timeout_in_sec);
+  while ( (this->bytes_received_count_ < expected_bytes_received_count)
+        && (ACE_Time_Value::zero < timeout) )
+    {
+      orb_->perform_work (timeout); // Do some work, decreases timeout for amount done.
+    }
   return this->bytes_received_count_;
 }
 
