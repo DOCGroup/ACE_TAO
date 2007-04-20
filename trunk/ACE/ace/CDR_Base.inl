@@ -8,6 +8,10 @@
 # pragma intrinsic (_byteswap_ushort, _byteswap_ulong, _byteswap_uint64)
 #endif  /* _MSC_VER >= 1300 */
 
+#if defined (ACE_HAS_BSWAP_16) || defined (ACE_HAS_BSWAP_32) || defined (ACE_HAS_BSWAP_32)
+# include "ace/os_include/os_byteswap.h"
+#endif
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 //
@@ -66,6 +70,9 @@ ACE_CDR::swap_2 (const char *orig, char* target)
   // function.
   *reinterpret_cast<unsigned short *> (target) =
     _byteswap_ushort (*reinterpret_cast<unsigned short const *> (orig));
+#elif defined (ACE_HAS_BSWAP_16)
+  *reinterpret_cast<unsigned short *> (target) =
+    bswap_16 (*reinterpret_cast<unsigned short const *> (orig));
 #elif (defined(ACE_HAS_PENTIUM) || defined (__amd64__)) && defined(__GNUG__)
   unsigned short a =
     *reinterpret_cast<const unsigned short*> (orig);
@@ -94,6 +101,9 @@ ACE_CDR::swap_4 (const char* orig, char* target)
   // function.
   *reinterpret_cast<unsigned long *> (target) =
     _byteswap_ulong (*reinterpret_cast<unsigned long const *> (orig));
+#elif defined (ACE_HAS_BSWAP_32)
+  *reinterpret_cast<unsigned short *> (target) =
+    bswap_32 (*reinterpret_cast<unsigned short const *> (orig));
 #elif (defined(ACE_HAS_PENTIUM) || defined (__amd64__)) && defined(__GNUG__)
   // We have ACE_HAS_PENTIUM, so we know the sizeof's.
   register unsigned int j =
@@ -123,6 +133,9 @@ ACE_CDR::swap_8 (const char* orig, char* target)
   // function.
   *reinterpret_cast<unsigned __int64 *> (target) =
     _byteswap_uint64 (*reinterpret_cast<unsigned __int64 const *> (orig));
+#elif defined (ACE_HAS_BSWAP_64)
+  *reinterpret_cast<unsigned short *> (target) =
+    bswap_64 (*reinterpret_cast<unsigned short const *> (orig));
 #elif defined(__amd64__) && defined(__GNUG__)
   register unsigned long x =
     * reinterpret_cast<const unsigned long*> (orig);
