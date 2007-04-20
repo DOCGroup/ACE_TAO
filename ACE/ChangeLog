@@ -1,3 +1,14 @@
+Fri Apr 20 11:35:12 UTC 2007 Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/CDR_Base.inl:
+          Added ACE_HAS_BSWAP_16, ACE_HAS_BSWAP_32, and ACE_HAS_BSWAP_64.
+          When one of the defines is set, we include os_byteswap.h and
+          then use bswap_16, bswap_32, and bswap_64.
+
+        * ace/config-linux-common.h:
+          Added ACE_HAS_BYTESWAP_H, ACE_HAS_BSWAP_16, ACE_HAS_BSWAP_32, and
+          ACE_HAS_BSWAP_64. This fixes bugzilla bug 2901.
+
 Fri Apr 20 08:29:12 UTC 2007 Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/PerlACE/ProcessVX_Unix.pm:
