@@ -66,6 +66,11 @@ sub new
     if (!defined $self->{REBOOT_TIME}) {
         $self->{REBOOT_TIME} = 90;
     }
+    if ($PerlACE::VxWorks_RTP_Test) {
+        $self->{EXE_EXT} = '.vxe';
+    } else {
+        $self->{EXE_EXT} = '.out';
+    }
 
     bless ($self, $class);
     return $self;
@@ -88,16 +93,17 @@ sub DESTROY
 
 sub Normalize_Executable_Name
 {
+    my $self = shift;
     my $executable = shift;
 
     my $basename = basename ($executable);
     my $dirname = dirname ($executable). '/';
 
-    $executable = $dirname.$PerlACE::ProcessVX::ExeSubDir.$basename.".vxe";
+    $executable = $dirname.$PerlACE::ProcessVX::ExeSubDir.$basename.$self->{EXE_EXT};
 
     ## Installed executables do not conform to the ExeSubDir
-    if (! -e $executable && -e $dirname.$basename.'.vxe') {
-      $executable = $dirname.$basename.'.vxe';
+    if (! -e $executable && -e $dirname.$basename.$self->{EXE_EXT}) {
+      $executable = $dirname.$basename.$self->{EXE_EXT};
     }
 
     return $executable;
@@ -115,10 +121,10 @@ sub Executable
     my $executable = $self->{EXECUTABLE};
 
     if ($self->{IGNOREEXESUBDIR} == 0) {
-      $executable = PerlACE::ProcessVX::Normalize_Executable_Name ($executable);
+      $executable = $self->Normalize_Executable_Name ($executable);
     }
     else {
-      $executable = $executable.".vxe";
+      $executable = $executable.$self->{EXE_EXT};
     }
 
     return $executable;
@@ -237,33 +243,53 @@ sub Spawn ()
     else {
         $cwdrel = File::Spec->abs2rel( $cwdrel, $ENV{"ACE_ROOT"} );
     }
-    $program = basename($program, ".vxe");
-
-    unlink "run_test.vxs";
-    my $oh = new FileHandle();
-    if (!open($oh, ">run_test.vxs")) {
-        print STDERR "ERROR: Unable to write to run_test.vxs\n";
-        exit -1;
-    }
+    $program = basename($program, $self->{EXE_EXT});
 
     my @cmds;
     my $cmdnr = 0;
+    my $arguments = "";
+    my $prompt = '';
 
-    @cmds[$cmdnr++] = 'cmd';
-    if ( defined $ENV{"ACE_RUN_VX_TGTSVR_DEFGW"} && $set_vx_defgw ) {
-        @cmds[$cmdnr++] = "C mRouteAdd(\"0.0.0.0\", \"" . $ENV{"ACE_RUN_VX_TGTSVR_DEFGW"} . "\", 0,0,0)";
-        $set_vx_defgw = 0;
+    if ($PerlACE::VxWorks_RTP_Test) {
+        @cmds[$cmdnr++] = 'cmd';
+        if ( defined $ENV{"ACE_RUN_VX_TGTSVR_DEFGW"} && $set_vx_defgw ) {
+            @cmds[$cmdnr++] = "C mRouteAdd(\"0.0.0.0\", \"" . $ENV{"ACE_RUN_VX_TGTSVR_DEFGW"} . "\", 0,0,0)";
+            $set_vx_defgw = 0;
+        }
+
+        @cmds[$cmdnr++] = 'cd "' . $ENV{'ACE_RUN_VX_TGTSVR_ROOT'} . "/" . $cwdrel . '"';
+        @cmds[$cmdnr++] = 'C putenv("TMPDIR=' . $ENV{"ACE_RUN_VX_TGTSVR_ROOT"} . "/" . $cwdrel . '")';
+
+        if (defined $ENV{'ACE_RUN_VX_CHECK_RESOURCES'}) {
+            @cmds[$cmdnr++] = 'C memShow()';
+        }
+
+        $cmdline = $program . $self->{EXE_EXT} . ' ' . $self->{ARGUMENTS};
+        @cmds[$cmdnr++] = $cmdline;
+        $prompt = '/\[vxWorks \*]# $/';
+    } else {
+        if ( defined $ENV{"ACE_RUN_VX_TGTSVR_DEFGW"} && $set_vx_defgw ) {
+            @cmds[$cmdnr++] = "mRouteAdd(\"0.0.0.0\", \"" . $ENV{"ACE_RUN_VX_TGTSVR_DEFGW"} . "\", 0,0,0)";
+            $set_vx_defgw = 0;
+        }
+
+        @cmds[$cmdnr++] = 'cd "' . $ENV{'ACE_RUN_VX_TGTSVR_ROOT'} . "/" . $cwdrel . '"';
+        @cmds[$cmdnr++] = 'putenv("TMPDIR=' . $ENV{"ACE_RUN_VX_TGTSVR_ROOT"} . "/" . $cwdrel . '")';
+
+        if (defined $ENV{'ACE_RUN_VX_CHECK_RESOURCES'}) {
+            @cmds[$cmdnr++] = 'memShow()';
+        }
+
+        @cmds[$cmdnr++] = 'ld <'. $program . $self->{EXE_EXT};
+        $cmdline = $program . $self->{EXE_EXT} . ' ' . $self->{ARGUMENTS};
+        if (defined $self->{ARGUMENTS}) {
+            ($arguments = $self->{ARGUMENTS})=~ s/\"/\\\"/g;
+            $arguments = ",\"" . $arguments . "\"";
+        }
+        @cmds[$cmdnr++] = 'ace_vx_rc = vx_execae(ace_main' . $arguments . ')';
+        @cmds[$cmdnr++] = 'unld "'. $program . $self->{EXE_EXT} . '"';
+        $prompt = '/-> $/';
     }
-
-    @cmds[$cmdnr++] = 'cd "' . $ENV{'ACE_RUN_VX_TGTSVR_ROOT'} . "/" . $cwdrel . '"';
-    @cmds[$cmdnr++] = 'C putenv("TMPDIR=' . $ENV{"ACE_RUN_VX_TGTSVR_ROOT"} . "/" . $cwdrel . '")';
-
-    if (defined $ENV{'ACE_RUN_VX_CHECK_RESOURCES'}) {
-        @cmds[$cmdnr++] = 'C memShow()';
-    }
-
-    $cmdline = $program . '.vxe ' . $self->{ARGUMENTS};
-    @cmds[$cmdnr++] = $cmdline;
 
     FORK:
     {
@@ -282,7 +308,7 @@ sub Spawn ()
             $t->print("");
             $ok = $t->waitfor('/-> $/');
             if ($ok) {
-              $t->prompt ('/\[vxWorks \*]# $/');
+              $t->prompt ($prompt);
               my $i = 0;
               my @lines;
               while($i < $cmdnr) {
@@ -297,6 +323,7 @@ sub Spawn ()
               die "ERROR: exec failed for <" . $cmdline . ">";
             }
             $t->close();
+            sleep(2);
             exit;
         }
         elsif ($! =~ /No more process/) {
@@ -447,7 +474,9 @@ sub TimedWait ($)
     my $self = shift;
     my $timeout = shift;
 
-    $timeout *= $PerlACE::Process::WAIT_DELAY_FACTOR;
+    if ($PerlACE::Process::WAIT_DELAY_FACTOR > 0) {
+      $timeout *= $PerlACE::Process::WAIT_DELAY_FACTOR;
+    }
 
     while ($timeout-- != 0) {
         my $pid = waitpid ($self->{PROCESS}, &WNOHANG);

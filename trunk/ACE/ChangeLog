@@ -1,3 +1,9 @@
+Fri Apr 20 08:29:12 UTC 2007 Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/PerlACE/ProcessVX_Unix.pm:
+          Updated to also run automatic regression tests with VxWorks 6.x
+          in kernel mode.
+
 Thu Apr 19 18:24:12 UTC 2007 Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/os_include/os_byteswap.h:
