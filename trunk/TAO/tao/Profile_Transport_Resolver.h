@@ -85,8 +85,7 @@ namespace TAO
      * the ORB_Core to decide on the strategy to be used for selecting
      * the profile.
      */
-    void resolve (ACE_Time_Value *val
-                  );
+    void resolve (ACE_Time_Value *val);
 
     //@{
     /**
@@ -138,8 +137,7 @@ namespace TAO
                       ACE_Time_Value *val);
 
     bool try_parallel_connect (TAO_Transport_Descriptor_Interface *desc,
-                               ACE_Time_Value *val
-                              );
+                               ACE_Time_Value *val);
 
     /// This method wraps a call to the orb core to see if parallel
     /// connection attempts are even desired. This is controlled by
@@ -162,8 +160,7 @@ namespace TAO
   private:
     bool try_connect_i (TAO_Transport_Descriptor_Interface *desc,
                         ACE_Time_Value *val,
-                        bool parallel
-                       );
+                        bool parallel);
 
     /// Target object
     mutable CORBA::Object *obj_;

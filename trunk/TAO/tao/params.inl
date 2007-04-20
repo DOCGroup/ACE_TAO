@@ -291,4 +291,16 @@ TAO_ORB_Parameters::negotiate_codesets (bool x)
   this->negotiate_codesets_ = x;
 }
 
+ACE_INLINE bool
+TAO_ORB_Parameters::ami_collication (void) const
+{
+  return this->ami_collication_;
+}
+
+ACE_INLINE void
+TAO_ORB_Parameters::ami_collication (bool x)
+{
+  this->ami_collication_ = x;
+}
+
 TAO_END_VERSIONED_NAMESPACE_DECL

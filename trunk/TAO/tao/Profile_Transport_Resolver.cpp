@@ -77,8 +77,7 @@ namespace TAO
 
 
   void
-  Profile_Transport_Resolver::resolve (ACE_Time_Value *max_time_val
-                                       )
+  Profile_Transport_Resolver::resolve (ACE_Time_Value *max_time_val)
   {
     ACE_Countdown_Time countdown (max_time_val);
 
@@ -118,21 +117,17 @@ namespace TAO
   bool
   Profile_Transport_Resolver::try_connect (
       TAO_Transport_Descriptor_Interface *desc,
-       ACE_Time_Value *timeout
-
-     )
+      ACE_Time_Value *timeout)
   {
-    return this->try_connect_i (desc, timeout, 0);
+    return this->try_connect_i (desc, timeout, false);
   }
 
   bool
   Profile_Transport_Resolver::try_parallel_connect (
        TAO_Transport_Descriptor_Interface *desc,
-       ACE_Time_Value *timeout
-
-     )
+       ACE_Time_Value *timeout)
   {
-    return this->try_connect_i (desc, timeout, 1);
+    return this->try_connect_i (desc, timeout, true);
   }
 
 
@@ -140,13 +135,10 @@ namespace TAO
   Profile_Transport_Resolver::try_connect_i (
        TAO_Transport_Descriptor_Interface *desc,
        ACE_Time_Value *timeout,
-       bool parallel
-
-     )
+       bool parallel)
   {
     TAO_Connector_Registry *conn_reg =
-      this->stub_->orb_core ()->connector_registry (
-        );
+      this->stub_->orb_core ()->connector_registry ();
 
     if (conn_reg == 0)
       {
@@ -180,13 +172,11 @@ namespace TAO
     ACE_ASSERT(con != 0);
     if (parallel)
       {
-        this->transport_.set (con->parallel_connect (this, desc, timeout
-                                                    ));
+        this->transport_.set (con->parallel_connect (this, desc, timeout));
       }
     else
       {
-        this->transport_.set (con->connect (this, desc, timeout
-                                           ));
+        this->transport_.set (con->connect (this, desc, timeout));
       }
     // A timeout error occurred.
     // If the user has set a roundtrip timeout policy, throw a timeout
@@ -240,8 +230,7 @@ namespace TAO
 
 
   void
-  Profile_Transport_Resolver::init_inconsistent_policies (
-    void)
+  Profile_Transport_Resolver::init_inconsistent_policies (void)
   {
     ACE_NEW_THROW_EX (this->inconsistent_policies_,
                       CORBA::PolicyList (0),

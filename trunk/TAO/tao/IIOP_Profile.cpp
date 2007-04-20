@@ -343,8 +343,7 @@ TAO_IIOP_Profile::do_is_equivalent (const TAO_Profile *other_profile)
 }
 
 CORBA::ULong
-TAO_IIOP_Profile::hash (CORBA::ULong max
-                        )
+TAO_IIOP_Profile::hash (CORBA::ULong max)
 {
   // Get the hash value for all endpoints.
   CORBA::ULong hashval = 0;

@@ -89,7 +89,6 @@ PortableInterceptor::PolicyFactory::~PolicyFactory (void)
 PortableInterceptor::PolicyFactory_ptr
 PortableInterceptor::PolicyFactory::_narrow (
     ::CORBA::Object_ptr _tao_objref
-
   )
 {
   return PolicyFactory::_duplicate (
@@ -100,7 +99,6 @@ PortableInterceptor::PolicyFactory::_narrow (
 PortableInterceptor::PolicyFactory_ptr
 PortableInterceptor::PolicyFactory::_unchecked_narrow (
     ::CORBA::Object_ptr _tao_objref
-
   )
 {
   return PolicyFactory::_duplicate (
@@ -126,10 +124,7 @@ PortableInterceptor::PolicyFactory::_tao_release (PolicyFactory_ptr obj)
 }
 
 ::CORBA::Boolean
-PortableInterceptor::PolicyFactory::_is_a (
-    const char *value
-
-  )
+PortableInterceptor::PolicyFactory::_is_a (const char *value)
 {
   if (
       !ACE_OS::strcmp (
@@ -167,8 +162,7 @@ PortableInterceptor::PolicyFactory::marshal (TAO_OutputCDR &)
 
 // Hand-crafted.
 ::CORBA::Policy_ptr
-PortableInterceptor::PolicyFactory::_create_policy (CORBA::PolicyType
-                                                    )
+PortableInterceptor::PolicyFactory::_create_policy (CORBA::PolicyType)
 {
   throw ::CORBA::PolicyError (CORBA::BAD_POLICY_TYPE);
 }

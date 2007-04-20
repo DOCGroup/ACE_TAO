@@ -13,7 +13,7 @@ ACE_RCSID (DynamicInterface,
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 void
-TAO_DII_Arguments_Converter_Impl::convert (
+TAO_DII_Arguments_Converter_Impl::convert_request (
     TAO_ServerRequest & server_request,
     TAO::Argument * const args[],
     size_t nargs)
@@ -74,6 +74,14 @@ TAO_DII_Arguments_Converter_Impl::convert (
   details->use_stub_args (false);
 }
 
+void
+TAO_DII_Arguments_Converter_Impl::convert_reply (
+    TAO_ServerRequest & /*server_request*/,
+    TAO::Argument * const /*args*/[],
+    size_t /*nargs*/)
+{
+  // TODO
+}
 
 // *********************************************************************
 

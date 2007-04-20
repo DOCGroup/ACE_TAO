@@ -74,7 +74,7 @@ TAO_ServerRequest::TAO_ServerRequest (TAO_Pluggable_Messaging *mesg_base,
     requesting_principal_ (0),
     dsi_nvlist_align_ (0),
     operation_details_ (0),
-    argument_flag_ (1)
+    argument_flag_ (true)
 #if TAO_HAS_INTERCEPTORS == 1
     , interceptor_count_ (0)
     , rs_pi_current_ (0)
@@ -285,8 +285,7 @@ TAO_ServerRequest::init_reply (void)
                                        0);
 
   // Construct a REPLY header.
-  this->mesg_base_->generate_reply_header (*this->outgoing_,
-                                           reply_params);
+  this->mesg_base_->generate_reply_header (*this->outgoing_, reply_params);
 
   // Finish the GIOP Reply header, then marshal the exception.
   if (reply_params.reply_status_ == TAO_PLUGGABLE_MESSAGE_LOCATION_FORWARD ||
@@ -325,7 +324,7 @@ TAO_ServerRequest::send_no_exception_reply (void)
   reply_params.reply_status_ = TAO_GIOP_NO_EXCEPTION;
 
   // No data anyway.
-  reply_params.argument_flag_ = 0;
+  reply_params.argument_flag_ = false;
 
   this->outgoing_->message_attributes (this->request_id_,
                                        0,
@@ -333,8 +332,7 @@ TAO_ServerRequest::send_no_exception_reply (void)
                                        0);
 
   // Construct a REPLY header.
-  this->mesg_base_->generate_reply_header (*this->outgoing_,
-                                           reply_params);
+  this->mesg_base_->generate_reply_header (*this->outgoing_, reply_params);
 
   this->outgoing_->more_fragments (false);
 
@@ -397,7 +395,7 @@ TAO_ServerRequest::tao_send_reply_exception (const CORBA::Exception &ex)
       reply_params.service_context_notowned (&this->reply_service_info ());
 
       // We are going to send some data
-      reply_params.argument_flag_ = 1;
+      reply_params.argument_flag_ = true;
 
       // Make a default reply status
       reply_params.reply_status_ = TAO_GIOP_USER_EXCEPTION;
@@ -472,7 +470,7 @@ TAO_ServerRequest::tao_send_reply_exception (const CORBA::Exception &ex)
 void
 TAO_ServerRequest::send_cached_reply (CORBA::OctetSeq &s)
 {
-  #if defined(ACE_HAS_PURIFY)
+#if defined(ACE_HAS_PURIFY)
       // Only inititialize the buffer if we're compiling with Purify.
       // Otherwise, there is no real need to do so, especially since
       // we can avoid the initialization overhead at runtime if we
@@ -506,7 +504,7 @@ TAO_ServerRequest::send_cached_reply (CORBA::OctetSeq &s)
   reply_params.service_context_notowned (&this->reply_service_info ());
 
   // We are going to send some data
-  reply_params.argument_flag_ = 1;
+  reply_params.argument_flag_ = true;
 
   // Make a default reply status
   reply_params.reply_status_ = TAO_GIOP_NO_EXCEPTION;

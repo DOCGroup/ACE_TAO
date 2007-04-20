@@ -212,13 +212,11 @@ namespace CORBA
              CORBA::NVList_ptr args,
              CORBA::NamedValue_ptr result,
              CORBA::Flags flags,
-             CORBA::ExceptionList_ptr exceptions
-             );
+             CORBA::ExceptionList_ptr exceptions);
 
     Request (CORBA::Object_ptr obj,
              CORBA::ORB_ptr orb,
-             const CORBA::Char *op
-             );
+             const CORBA::Char *op);
 
     ~Request (void);
 
