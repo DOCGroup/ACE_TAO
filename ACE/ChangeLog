@@ -1,3 +1,26 @@
+Fri Apr 20 14:31:26 UTC 2007  Adam Mitz  <mitza@ociweb.com>
+
+        * bin/MakeProjectCreator/config/htbp.mpb:
+
+          Added a 'requires' for ace_uuid.
+
+        * examples/APG/Naming/naming.mpc:
+
+          Added a 'requires' for ace_other (ACE naming services are within the
+          ace_other MPC feature) to each project.
+
+        * examples/Naming/Naming.mpc:
+
+          Added a 'requires' for ace_other to each project.
+
+        * performance-tests/Misc/Misc.mpc:
+
+          Added a 'requires' for ace_other to the Misc_test_naming project.
+
+        * bin/tao_orb_tests.lst:
+
+          Only run Bug_2768_Regression when CORBA messaging is enabled.
+
 Fri Apr 20 12:10:12 UTC 2007 Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-win32-msvc-7.h:

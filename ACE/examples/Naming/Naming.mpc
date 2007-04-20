@@ -3,6 +3,7 @@
 
 project(*multiple_contexts) : aceexe {
   avoids += ace_for_tao
+  requires += ace_other
   exename = multiple_contexts
   Source_Files {
     test_multiple_contexts.cpp
@@ -11,6 +12,7 @@ project(*multiple_contexts) : aceexe {
 
 project(*non_existent) : aceexe {
   avoids += ace_for_tao
+  requires += ace_other
   exename = non_existent
   Source_Files {
     test_non_existent.cpp
@@ -19,6 +21,7 @@ project(*non_existent) : aceexe {
 
 project(*writers) : aceexe {
   avoids += ace_for_tao
+  requires += ace_other
   exename = writers
   Source_Files {
     test_writers.cpp
@@ -27,6 +30,7 @@ project(*writers) : aceexe {
 
 project(*open) : aceexe {
   avoids += ace_for_tao
+  requires += ace_other
   exename = open
   Source_Files {
     test_open.cpp
