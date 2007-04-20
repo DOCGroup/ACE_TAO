@@ -1,3 +1,8 @@
+Fri Apr 20 11:44:12 UTC 2007 Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+          Added Bug_1330_Regression
+
 Fri Apr 20 11:35:12 UTC 2007 Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/CDR_Base.inl:
