@@ -69,6 +69,11 @@
 // Platform support linebuffered streaming is broken
 #define ACE_LACKS_LINEBUFFERED_STREAMBUF
 
+#if !defined (ACE_HAS_WINCE) && !(defined (__INTEL_COMPILER) && (__INTEL_COMPILER == 900))
+# define ACE_HAS_INTRIN_H
+# define ACE_HAS_INTRINSIC_INTERLOCKED
+#endif
+
 #if defined (ACE_HAS_STANDARD_CPP_LIBRARY) && (ACE_HAS_STANDARD_CPP_LIBRARY != 0)
 
 // Platform has its Standard C++ library in the namespace std
