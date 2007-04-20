@@ -1,3 +1,16 @@
+Fri Apr 20 13:42:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/CORBALOC_Parser.cpp:
+        * tao/CORBANAME_Parser.cpp:
+        * tao/PI/ORBInitializer_Registry_Impl.cpp:
+          Layout changes
+
+        * tao/TAO_Internal.cpp:
+          Use prefix increment
+
+        * tao/Transport_Connector.cpp:
+          Made debug statements consistent
+
 Fri Apr 20 13:37:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/CollocationLockup/run_test.pl:

@@ -45,8 +45,7 @@ TAO_CORBALOC_Parser::match_prefix (const char *ior_string) const
 
 CORBA::Object_ptr
 TAO_CORBALOC_Parser::make_stub_from_mprofile (CORBA::ORB_ptr orb,
-                                              TAO_MProfile &mprofile
-                                              )
+                                              TAO_MProfile &mprofile)
 {
   // Create a TAO_Stub.
   TAO_Stub *data = orb->orb_core ()->create_stub ((const char *) 0,
@@ -73,8 +72,7 @@ TAO_CORBALOC_Parser::make_stub_from_mprofile (CORBA::ORB_ptr orb,
 
 CORBA::Object_ptr
 TAO_CORBALOC_Parser::parse_string_rir_helper (const char * ior,
-                                              CORBA::ORB_ptr orb
-                                              )
+                                              CORBA::ORB_ptr orb)
 {
   // Pass the key string as an argument to resolve_initial_references.
   // NameService is the default if an empty key string is supplied.
@@ -84,17 +82,13 @@ TAO_CORBALOC_Parser::parse_string_rir_helper (const char * ior,
     objkey++;
 
   CORBA::Object_var rir_obj =
-    orb->resolve_initial_references (*objkey == '\0' ? "NameService" :
-                                     objkey
-                                    );
+    orb->resolve_initial_references (*objkey == '\0' ? "NameService" : objkey);
 
   return rir_obj._retn ();
 }
 
 CORBA::Object_ptr
-TAO_CORBALOC_Parser::parse_string (const char * ior,
-                                   CORBA::ORB_ptr orb
-                                   )
+TAO_CORBALOC_Parser::parse_string (const char * ior, CORBA::ORB_ptr orb)
 {
   // The decomposition of a corbaloc string is in Section 13.6.10.
   //
@@ -121,8 +115,7 @@ TAO_CORBALOC_Parser::parse_string (const char * ior,
 
   //  First check for rir
   if (ACE_OS::strncmp (ior,rir_token,rir_token_len) == 0)
-    return this->parse_string_rir_helper (ior,orb
-                                         );
+    return this->parse_string_rir_helper (ior,orb);
 
   // set up space for parsed endpoints. there will be at least 1, and
   // most likely commas will separate endpoints, although they could be
@@ -131,7 +124,7 @@ TAO_CORBALOC_Parser::parse_string (const char * ior,
   for (const char *comma = ACE_OS::strchr (ior,',');
        comma;
        comma = ACE_OS::strchr (comma+1,','))
-    max_endpoint_count++;
+    ++max_endpoint_count;
 
   ACE_Array<parsed_endpoint> endpoints(max_endpoint_count);
   endpoints.size (0);
@@ -152,16 +145,14 @@ TAO_CORBALOC_Parser::parse_string (const char * ior,
          conn_iter ++)
       {
         endpoints[ndx].profile_ =
-          (*conn_iter)->corbaloc_scan(ior,len
-                                     );
+          (*conn_iter)->corbaloc_scan(ior,len);
 
         if (endpoints[ndx].profile_)
           {
             endpoints[ndx].obj_key_sep_ =
               (*conn_iter)->object_key_delimiter();
             uiop_compatible = (endpoints[ndx].obj_key_sep_ == '|');
-            this->make_canonical (ior,len,endpoints[ndx].prot_addr_
-                                 );
+            this->make_canonical (ior,len,endpoints[ndx].prot_addr_);
             ior += len;
             break;
           }
@@ -240,20 +231,14 @@ TAO_CORBALOC_Parser::parse_string (const char * ior,
         }
     }
 
-  CORBA::Object_ptr object = CORBA::Object::_nil ();
   // Get an object stub out.
-  object = this->make_stub_from_mprofile (orb,
-                                          mprofile
-                                         );
-
-  return object;
+  return this->make_stub_from_mprofile (orb, mprofile);
 }
 
 void
 TAO_CORBALOC_Parser::make_canonical (const char *ior,
                                      size_t prot_addr_len,
-                                     ACE_CString &canonical_endpoint
-                                     )
+                                     ACE_CString &canonical_endpoint)
 {
   const char *separator = ACE_OS::strchr (ior, ':');
 
