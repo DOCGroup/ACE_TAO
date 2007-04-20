@@ -70,7 +70,6 @@
 #define ACE_LACKS_LINEBUFFERED_STREAMBUF
 
 #if !defined (ACE_HAS_WINCE) && !(defined (__INTEL_COMPILER) && (__INTEL_COMPILER == 900))
-# define ACE_HAS_INTRIN_H
 # define ACE_HAS_INTRINSIC_INTERLOCKED
 #endif
 
