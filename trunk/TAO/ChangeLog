@@ -1,3 +1,8 @@
+Fri Apr 20 11:43:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_1330_Regression/run_test.pl:
+          Corrected this script
+
 Fri Apr 20 11:38:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Messaging/AMI_Arguments_Converter_Impl.cpp:
