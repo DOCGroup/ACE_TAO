@@ -21,7 +21,7 @@ my $NS = new PerlACE::Process ("SimpleNamingService");
 
 unlink $iorfile;
 
-$nsresult = $NS->Spawn ();
+my $nsresult = $NS->Spawn ();
 if ($nsresult != 0) {
   print STDERR "ERROR: SimpleNamingService returned $nsresult\n";
   exit 1;
