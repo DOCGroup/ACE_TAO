@@ -1,3 +1,10 @@
+Fri Apr 20 12:10:12 UTC 2007 Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-win32-msvc-7.h:
+        * ace/config-win32-msvc-8.h:
+        * ace/config-win32-msvc.h:
+          Intel C++ 9.0 doesn't have the interlocked functions
+
 Fri Apr 20 11:44:12 UTC 2007 Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/tao_orb_tests.lst:
