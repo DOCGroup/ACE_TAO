@@ -1,3 +1,10 @@
+Fri Apr 20 14:27:45 UTC 2007  Adam Mitz  <mitza@ociweb.com>
+
+        * tests/Bug_2768_Regression/Bug_2768_Regression.mpc:
+
+          Added the 'corba_messaging' base project since this test uses CORBA
+          messaging features.
+
 Fri Apr 20 13:42:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/CORBALOC_Parser.cpp:
@@ -39,7 +46,7 @@ Fri Apr 20 10:00:00 UTC 2007  Simon Massey  <sma@prismtech.com>
           client to miss the syncronization with previous attempts,
           which caused it to issue lost message debug. Then the
           lost message was immediatly found on the next itteration
-          of the test which caused it to think the policy it was
+          of the test which caused it to think the policy it wasr
           testing had failed. Basically this modification allows for
           slight delays (only if necessary) when we are expecting the
           various communications to have been sent.
