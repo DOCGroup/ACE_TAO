@@ -1,3 +1,8 @@
+Fri Apr 20 13:37:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/CollocationLockup/run_test.pl:
+          Fixed error in this script
+
 Fri Apr 20 11:43:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_1330_Regression/run_test.pl:
