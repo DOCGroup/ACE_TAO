@@ -65,7 +65,7 @@ TAO_AMI_Arguments_Converter_Impl::convert_reply (
   TAO_InputCDR input (output);
   for (CORBA::ULong i = 1; i < nrarg; ++i)
     {
-    if (!(server_request.operation_details ()->args()[i])->demarshal (output))
+    if (!(server_request.operation_details ()->args()[i])->demarshal (input))
         {
           throw ::CORBA::BAD_PARAM ();
         }
