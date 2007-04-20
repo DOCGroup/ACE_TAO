@@ -46,9 +46,9 @@ if (PerlACE::waitforfile_timed ($server_ior_file, $PerlACE::wait_interval_for_pr
 # Try the corbaloc URL with incorrect '\' escaping of hex characters
 # We expect this to 'fail'
 $CLIENT->Arguments("-k corbaloc:iiop:$TARGETHOSTNAME:$port/Name\\2dwith\\2dhyphens");
-if ($CLIENT->SpawnWaitKill (30) == 0)
+if ($CLIENT->SpawnWaitKill (30) != 0)
 {
-   print STDERR "ERROR: Bug 1330 Regression failed. Incorrect escape characters accepted\n";
+   print STDERR "ERROR: Bug 1330 Regression failed. Correct escape characters accepted\n";
    $SERVER->Kill();
    exit 1;
 }
