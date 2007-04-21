@@ -1,3 +1,24 @@
+Sat Apr 21 21:26:30 UTC 2007  Gan Deng  <gan.deng@vanderbilt.edu>
+
+        * DAnCE/DomainApplicationManager/DomainApplicationManager_AMI_Impl.cpp:
+        * DAnCE/DomainApplicationManager/DomainApplicationManager_AMI_Impl.h:
+        
+          Used raw pointer to cache the servant since no copy constructor
+          is defined for the Value_Ptr in ACE.
+        
+        * DAnCE/DomainApplicationManager/Reply_Handler_i.cpp
+        * DAnCE/DomainApplicationManager/Reply_Handler_i.h
+        
+          Get rid of the unnecessary copy constructor.
+          
+        * DAnCE/NodeApplication/Container_Impl.cpp:
+        * DAnCE/NodeApplication/Container_Impl.h
+        * DAnCE/NodeApplication/Container_Impl.inl:
+        
+          Modified to use Auto_Ptr to cache the container pointer.
+          Return a duplicate pointer instead of returning a pointer
+          within the object.
+        
 Fri Apr 20 19:08:43 UTC 2007  Gan Deng  <gan.deng@vanderbilt.edu>
 
         * DAnCE/Plan_Launcher/Plan_Launcher_Impl.cpp
