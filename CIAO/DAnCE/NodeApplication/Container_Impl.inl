@@ -35,5 +35,5 @@ CIAO::Container_Impl::get_objref ()
     {
       this->objref_ = this->_this ();
     }
-  return this->objref_.in ();
+  return Deployment::Container::_duplicate (this->objref_.in ());
 }

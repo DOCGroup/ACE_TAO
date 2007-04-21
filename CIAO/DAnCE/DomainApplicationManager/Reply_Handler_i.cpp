@@ -14,14 +14,6 @@ Deployment_AMI_NodeApplicationManagerHandler_i (CIAO::DomainApplicationManager_I
 {
 }
 
-// Copy constructor
-Deployment_AMI_NodeApplicationManagerHandler_i::Deployment_AMI_NodeApplicationManagerHandler_i (
-    const Deployment_AMI_NodeApplicationManagerHandler_i &o)
-: retn_node_app_ (o.retn_node_app_),
-  retn_connections_ (o.retn_connections_)
-{
-}
-
 // Implementation skeleton destructor
 Deployment_AMI_NodeApplicationManagerHandler_i::~Deployment_AMI_NodeApplicationManagerHandler_i (void)
 {

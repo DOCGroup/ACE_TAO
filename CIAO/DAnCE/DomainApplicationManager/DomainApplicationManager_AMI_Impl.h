@@ -22,7 +22,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "DomainApplicationManager_Impl.h"
-#include "ace/Value_Ptr.h"
 #include "Reply_Handler_i.h"
 #include "DAnCE/Deployment/Deployment_NodeApplicationManagerC.h"
 #include "DAnCE/Deployment/Deployment_ApplicationC.h"
@@ -56,7 +55,7 @@ namespace CIAO
   private:
     typedef struct
     {
-      ACE::Value_Ptr <Deployment_AMI_NodeApplicationManagerHandler_i> servant_;
+      Deployment_AMI_NodeApplicationManagerHandler_i * servant_;
       ::Deployment::AMI_NodeApplicationManagerHandler_var obj_ref_;
     } AMI_NAM_Handler;
 

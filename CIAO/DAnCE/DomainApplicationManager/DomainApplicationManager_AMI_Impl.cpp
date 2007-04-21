@@ -20,7 +20,7 @@ void
 CIAO::DomainApplicationManager_AMI_Impl::
 decrease_start_launch_reply_count ()
 {
-  -- this->start_launch_reply_count_;
+  --this->start_launch_reply_count_;
 }
 
 void
@@ -92,11 +92,11 @@ startLaunch (const ::Deployment::Properties & configProperty,
           // Create a reply-handler servant
           AMI_NAM_Handler ami_nam_handler;
 
-          ACE::Value_Ptr <Deployment_AMI_NodeApplicationManagerHandler_i> 
-            handler_ptr (new Deployment_AMI_NodeApplicationManagerHandler_i (this));
+          ACE_NEW (ami_nam_handler.servant_,
+                   Deployment_AMI_NodeApplicationManagerHandler_i (this));
 
           PortableServer::ObjectId_var oid = 
-            this->poa_->activate_object (&(*handler_ptr));
+            this->poa_->activate_object (ami_nam_handler.servant_);
 
           CORBA::Object_var handler_obj = poa_->id_to_reference (oid.in ());
           
@@ -111,15 +111,8 @@ startLaunch (const ::Deployment::Properties & configProperty,
                                      configProperty, 0);
         }
 
-      ACE_DEBUG ((LM_ERROR, "******************Step 1\n"));
-      //while (start_launch_reply_count_ > 0)
       while (true)
         {
-         //ACE_DEBUG ((LM_ERROR, "**********************Step 1.1\n"));
-
-         //ACE_DEBUG ((LM_ERROR, "**********************Count = [%d]\n", 
-         //            this->start_launch_reply_count_));
-
           // Check whether the reply has been returned
           if (this->orb_->work_pending ())
             {
@@ -128,21 +121,12 @@ startLaunch (const ::Deployment::Properties & configProperty,
               if (this->start_launch_reply_count_ == 0)
                 break;
             }
-
-         //ACE_DEBUG ((LM_ERROR, "**********************Step 1.2\n"));
-          //  ACE_OS::sleep (5);
         }
 
-      ACE_DEBUG ((LM_ERROR, "******************Step 2\n"));
       for (AMI_NAM_Handler_Table_Iterator iter (this->ami_nam_handler_table_.begin ());
            iter != this->ami_nam_handler_table_.end ();
            ++iter)
       {
-         ACE_DEBUG ((LM_ERROR, "**********************Map size [%d]\n", 
-                     this->ami_nam_handler_table_.current_size ()));    
-
-         ACE_DEBUG ((LM_ERROR, "**********************Step 2.1\n"));
-
         // Cache the returned set of connections into the list.
         this->add_connections (iter->int_id_.servant_->get_connections ());
 
@@ -152,19 +136,15 @@ startLaunch (const ::Deployment::Properties & configProperty,
           <ACE_CString,
           Chained_Artifacts> *entry = 0;
 
-         ACE_DEBUG ((LM_ERROR, "**********************Step 2.2\n"));
         this->artifact_map_.find (iter->ext_id_, // node name
                                   entry);
 
-         ACE_DEBUG ((LM_ERROR, "**********************Step 2.3\n"));
         (entry->int_id_).node_application_ = 
           Deployment::NodeApplication::_duplicate (
             iter->int_id_.servant_->get_node_app ());
 
-         ACE_DEBUG ((LM_ERROR, "**********************Step 2.4\n"));
+        delete iter->int_id_.servant_;
       }
-
-      ACE_DEBUG ((LM_ERROR, "******************Step 3\n"));
     }
   catch (const Deployment::StartError& ex)
     {
