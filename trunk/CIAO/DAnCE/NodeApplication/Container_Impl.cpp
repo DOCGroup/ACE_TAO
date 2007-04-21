@@ -12,8 +12,6 @@
 
 CIAO::Container_Impl::~Container_Impl ()
 {
-  // @@ remove all components and home?
-  delete this->container_;
 }
 
 PortableServer::POA_ptr
@@ -41,16 +39,14 @@ CIAO::Container_Impl::init (const CORBA::PolicyList *policies)
 
   if (this->static_entrypts_maps_ == 0)
     {
-      ACE_NEW_THROW_EX (this->container_,
-                        CIAO::Session_Container (this->orb_.in (), this),
-                        CORBA::NO_MEMORY ());
+      this->container_.reset (new CIAO::Session_Container (this->orb_.in (), this));
     }
   else
     {
-      ACE_NEW_THROW_EX (this->container_,
-                        CIAO::Session_Container (this->orb_.in (), this, 1,
-                                                 this->static_entrypts_maps_),
-                        CORBA::NO_MEMORY ());
+      this->container_.reset (new CIAO::Session_Container (this->orb_.in (), 
+                                                           this,
+                                                           1,
+                                                           this->static_entrypts_maps_));
     }
 
   return this->container_->init (0, policies);

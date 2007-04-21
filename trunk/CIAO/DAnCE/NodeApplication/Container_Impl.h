@@ -28,10 +28,11 @@
 #include "DAnCE/Deployment/Deployment_ContainerS.h"
 #include "DAnCE/Deployment/Deployment_NodeApplicationC.h"
 #include "DAnCE/Deployment//DeploymentC.h"
-#include "ciao/Session_Container.h"
 #include "ace/SString.h"
+#include "ace/Auto_Ptr.h"
 #include "ciao/Server_init.h"  // write_IOR function & NameUtility
 #include "ciao/CIAO_common.h" // CIAO::debug_level
+#include "ciao/Session_Container.h"
 #include "NodeApp_Configurator.h"
 
 namespace CIAO
@@ -127,9 +128,6 @@ namespace CIAO
     /// _this if there's no cached reference available.  Notice that
     /// this method does *NOT* increase the reference count of the
     /// cached reference.
-    /// @@ Gan, caller should own memory. In this case you shoudl
-    /// return a duplicate OR add a const to the operation
-    /// signature. This is simply bad programming.
     Deployment::Container_ptr get_objref ();
 
 protected:
@@ -141,7 +139,8 @@ protected:
 
     /// Internal container implementation.
     // @@ Gan/Jai, heard of auto_ptr <>?
-    CIAO::Container *container_;
+    //CIAO::Container *container_;
+    ACE_Auto_Ptr<CIAO::Container> container_;
 
     /// Cached ConfigValues.
     Deployment::Properties properties_;
