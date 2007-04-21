@@ -23,10 +23,6 @@ public:
   /// Constructor 
   Deployment_AMI_NodeApplicationManagerHandler_i (CIAO::DomainApplicationManager_Impl *dam);
 
-  /// Copy constructor
-  Deployment_AMI_NodeApplicationManagerHandler_i (
-    const Deployment_AMI_NodeApplicationManagerHandler_i & o);  
-
   /// Destructor 
   virtual ~Deployment_AMI_NodeApplicationManagerHandler_i (void);
 
