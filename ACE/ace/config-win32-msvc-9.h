@@ -10,6 +10,7 @@
  *  This file is the ACE configuration file for Microsoft Visual C++ version 9.
  *
  *  @note Do not include this file directly, include config-win32.h instead.
+ */
 //=============================================================================
 
 #ifndef ACE_CONFIG_WIN32_MSVC_9_H
