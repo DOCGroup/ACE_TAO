@@ -1,3 +1,8 @@
+Mon Apr 23 12:03:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_operation/ami_handler_reply_stub_operation_ch.cpp:
+          Improved layout of generated code
+
 Mon Apr 23 11:16:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Big_Oneways/run_test.pl:
