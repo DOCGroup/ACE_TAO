@@ -29,14 +29,17 @@ $iorfile = PerlACE::LocalFile ("server.ior");
 $status = 0;
 unlink $iorfile;
 if (PerlACE::is_vxworks_test()) {
-    $SV = new PerlACE::ProcessVX ("server", "-o server.ior $server_args");
+    $SV = new PerlACE::ProcessVX ("server", "-o server.ior $server_args -ORBDottedDecimalAddresses 1");
+    $CL1 = new PerlACE::Process ("client", " -k file://$iorfile -ORBDottedDecimalAddresses 1");
+    $CL2 = new PerlACE::Process ("client", " -k file://$iorfile -ORBDottedDecimalAddresses 1");
+    $CL3 = new PerlACE::Process ("client", " -k file://$iorfile -ORBDottedDecimalAddresses 1");
 }
 else {
     $SV = new PerlACE::Process ("server", "-o $iorfile $server_args");
+    $CL1 = new PerlACE::Process ("client", " -k file://$iorfile");
+    $CL2 = new PerlACE::Process ("client", " -k file://$iorfile");
+    $CL3 = new PerlACE::Process ("client", " -k file://$iorfile");
 }
-$CL1 = new PerlACE::Process ("client", " -k file://$iorfile");
-$CL2 = new PerlACE::Process ("client", " -k file://$iorfile");
-$CL3 = new PerlACE::Process ("client", " -k file://$iorfile");
 
 $server = $SV->Spawn ();
 
@@ -76,7 +79,7 @@ if ($client3 != 0) {
   $status = 1;
 }
 
-$server = $SV->WaitKill (5);
+$server = $SV->WaitKill (15);
 
 if ($server != 0) {
   print STDERR "ERROR: server returned $server\n";

@@ -15,12 +15,13 @@ $iorfile = PerlACE::LocalFile ($baseior);
 unlink $iorfile;
 
 if (PerlACE::is_vxworks_test()) {
-    $SV = new PerlACE::ProcessVX ("server", "-f $baseior");
+    $SV = new PerlACE::ProcessVX ("server", "-f $baseior -ORBDottedDecimalAddresses 1");
+    $CL = new PerlACE::Process ("client", "-k file://$iorfile -x -ORBDottedDecimalAddresses 1");
 }
 else {
     $SV = new PerlACE::Process ("server", "-f $iorfile");
+    $CL = new PerlACE::Process ("client", "-k file://$iorfile -x");
 }
-$CL = new PerlACE::Process ("client", "-k file://$iorfile -x");
 
 print STDERR "\nrunning ST version of the client and the server\n\n";
 
