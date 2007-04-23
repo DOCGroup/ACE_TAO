@@ -1,3 +1,18 @@
+Mon Apr 23 11:16:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Big_Oneways/run_test.pl:
+        * tests/Big_Twoways/run_test.pl:
+        * tests/Bug_2349_Regression/run_test.pl:
+        * tests/Bug_2494_Regression/run_test.pl:
+        * tests/Bug_2683_Regression/run_test.pl:
+        * tests/MT_Server/run_test.pl:
+        * tests/Native_Exceptions/run_test.pl:
+        * tests/Nested_Event_Loop/run_test.pl:
+        * tests/NestedUpcall/Simple/run_test.pl:
+        * tests/Parallel_Connect_Strategy/run_test.pl:
+        * tests/POA/Persistent_ID/run_test.pl:
+          Improved for vxworks testing
+
 Fri Apr 20 14:27:45 UTC 2007  Adam Mitz  <mitza@ociweb.com>
 
         * tests/Bug_2768_Regression/Bug_2768_Regression.mpc:

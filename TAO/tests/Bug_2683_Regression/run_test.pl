@@ -51,7 +51,7 @@ if ($client != 0) {
     $status = 1;
 }
 
-$server = $SV->WaitKill (5);
+$server = $SV->WaitKill (15);
 
 if ($server != 0) {
     print STDERR "ERROR: server returned $server\n";

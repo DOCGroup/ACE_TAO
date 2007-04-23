@@ -24,20 +24,25 @@ if (defined $opt_b) {
     $server_args .= " -b ".$opt_b;
 }
 
-$iorfile = PerlACE::LocalFile ("server.ior");
+$baseior = "server.ior";
+$iorfile = PerlACE::LocalFile ($baseior);
 
 $status = 0;
 unlink $iorfile;
 if (PerlACE::is_vxworks_test()) {
-    $SV = new PerlACE::ProcessVX ("server", "-o server.ior $server_args");
+    $SV = new PerlACE::ProcessVX ("server", "-o $baseior $server_args -ORBDottedDecimalAddresses 1");
+    $CL1 = new PerlACE::Process ("client", " -k file://$iorfile -ORBDottedDecimalAddresses 1");
+    $CL2 = new PerlACE::Process ("client", " -k file://$iorfile -ORBDottedDecimalAddresses 1");
+    $CL3 = new PerlACE::Process ("client", " -k file://$iorfile -ORBDottedDecimalAddresses 1");
+    $CL4 = new PerlACE::Process ("client", " -k file://$iorfile -ORBDottedDecimalAddresses 1");
 }
 else {
     $SV = new PerlACE::Process ("server", "-o $iorfile $server_args");
+    $CL1 = new PerlACE::Process ("client", " -k file://$iorfile");
+    $CL2 = new PerlACE::Process ("client", " -k file://$iorfile");
+    $CL3 = new PerlACE::Process ("client", " -k file://$iorfile");
+    $CL4 = new PerlACE::Process ("client", " -k file://$iorfile");
 }
-$CL1 = new PerlACE::Process ("client", " -k file://$iorfile");
-$CL2 = new PerlACE::Process ("client", " -k file://$iorfile");
-$CL3 = new PerlACE::Process ("client", " -k file://$iorfile");
-$CL4 = new PerlACE::Process ("client", " -k file://$iorfile");
 
 $SV->Spawn ();
 
@@ -80,7 +85,7 @@ if ($client4 != 0) {
   $status = 1;
 }
 
-$server = $SV->WaitKill (5);
+$server = $SV->WaitKill (15);
 
 if ($server != 0) {
   print STDERR "ERROR: server returned $server\n";
