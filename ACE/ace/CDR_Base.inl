@@ -134,8 +134,8 @@ ACE_CDR::swap_8 (const char* orig, char* target)
   *reinterpret_cast<unsigned __int64 *> (target) =
     _byteswap_uint64 (*reinterpret_cast<unsigned __int64 const *> (orig));
 #elif defined (ACE_HAS_BSWAP_64)
-  *reinterpret_cast<unsigned long *> (target) =
-    bswap_64 (*reinterpret_cast<unsigned long const *> (orig));
+  *reinterpret_cast<unsigned long long *> (target) =
+    bswap_64 (*reinterpret_cast<unsigned long long const *> (orig));
 #elif defined(__amd64__) && defined(__GNUG__)
   register unsigned long x =
     * reinterpret_cast<const unsigned long*> (orig);
