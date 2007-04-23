@@ -57,7 +57,9 @@
 #  define ACE_ENDTHREADEX(STATUS) ::_endthreadex ((DWORD) STATUS)
 #endif /* _WIN32_WCE */
 
-#if (_MSC_VER >= 1400)
+#if (_MSC_VER >= 1500)
+# include "ace/config-win32-msvc-9.h"
+#elif (_MSC_VER >= 1400)
 # include "ace/config-win32-msvc-8.h"
 #elif (_MSC_VER >= 1310)
 # include "ace/config-win32-msvc-7.h"
