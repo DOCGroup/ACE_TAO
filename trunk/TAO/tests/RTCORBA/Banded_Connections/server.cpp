@@ -539,8 +539,11 @@ main (int argc, char *argv[])
             }
         }
       else
-        // Unexpected error.
-        ACE_ASSERT (0);
+        {
+          exception._tao_print_exception (
+            "Unexpected exception caught in Banded_Connections test server:");
+          return -1;
+        }
     }
   catch (const CORBA::Exception& ex)
     {
