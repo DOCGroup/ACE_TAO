@@ -1,3 +1,8 @@
+Mon Apr 23 13:09:12 UTC 2007 Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Task.cpp:
+          Fixed compile error with msvc9 beta
+
 Mon Apr 23 12:19:12 UTC 2007 Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-win32-msvc.h:
