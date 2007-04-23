@@ -37,6 +37,11 @@ void Deployment_AMI_NodeApplicationManagerHandler_i::startLaunch (
     ::Deployment::NodeApplication::_narrow (ami_return_val);
 
   this->retn_connections_ = providedReference;
+
+  // Below operation will be called only once, i.e., when the reply count
+  // drops to zero
+  if (ami_dam->start_launch_reply_count () == 0)
+    ami_dam->post_startLaunch ();
 }
 
 ::Deployment::NodeApplication_ptr

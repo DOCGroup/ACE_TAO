@@ -47,10 +47,18 @@ namespace CIAO
                                        const char * deployment_file);
 
     virtual void
-      startLaunch (const ::Deployment::Properties & configProperty,
+      startLaunch (Deployment::AMH_DomainApplicationManagerResponseHandler_ptr _tao_rh,
+                   const ::Deployment::Properties & configProperty,
                    ::CORBA::Boolean start);
 
+    /// This operation will be called after *all* the AMI callbacks
+    /// are received
+    void
+    post_startLaunch (void);
+
     void decrease_start_launch_reply_count (void);
+
+    int start_launch_reply_count (void);
 
   private:
     typedef struct
@@ -74,6 +82,9 @@ namespace CIAO
 
     /// AMI reply count
     volatile int start_launch_reply_count_;
+
+    /// 
+    Deployment::AMH_DomainApplicationManagerResponseHandler_var amh_response_handler_;
   };
 }
 
