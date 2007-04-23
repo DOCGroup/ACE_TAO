@@ -1,3 +1,21 @@
+Mon Apr 23 23:02:25 UTC 2007  Gan Deng  <gan.deng@vanderbilt.edu>
+
+        * DAnCE/Deployment/DAnCE_Core.mpc
+        
+          Modified the IDL flag by passing -GH to generate AMH code
+          for Deployment_DomainApplicationManager.idl.
+        
+        * DAnCE/DomainApplicationManager/DomainApplicationManager_AMI_Impl.cpp
+        * DAnCE/DomainApplicationManager/DomainApplicationManager_AMI_Impl.h
+        
+          Added functionality to use AMH to handle StartLaunch request 
+          processing.
+        
+        * DAnCE/DomainApplicationManager/Reply_Handler_i.cpp
+
+          Modified to notify the DAM servant object once all the
+          AMI callbacks are received.
+        
 Sat Apr 21 21:26:30 UTC 2007  Gan Deng  <gan.deng@vanderbilt.edu>
 
         * DAnCE/DomainApplicationManager/DomainApplicationManager_AMI_Impl.cpp:
