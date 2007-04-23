@@ -23,13 +23,24 @@ decrease_start_launch_reply_count ()
   --this->start_launch_reply_count_;
 }
 
+int
+CIAO::DomainApplicationManager_AMI_Impl::
+start_launch_reply_count ()
+{
+  return this->start_launch_reply_count_;
+}
+
 void
 CIAO::DomainApplicationManager_AMI_Impl::
-startLaunch (const ::Deployment::Properties & configProperty,
+startLaunch (Deployment::AMH_DomainApplicationManagerResponseHandler_ptr _tao_rh,
+             const ::Deployment::Properties & configProperty,
              ::CORBA::Boolean start)
 {
   CIAO_TRACE("CIAO::DomainApplicationManager_AMI_Impl::startLaunch");
   ACE_UNUSED_ARG (start);
+
+  this->amh_response_handler_ = 
+    Deployment::AMH_DomainApplicationManagerResponseHandler::_duplicate (_tao_rh);
 
   try
     {
@@ -118,33 +129,11 @@ startLaunch (const ::Deployment::Properties & configProperty,
             {
               this->orb_->perform_work ();
 
-              if (this->start_launch_reply_count_ == 0)
-                break;
+             // if (this->start_launch_reply_count_ == 0)
+             //   break;
             }
         }
 
-      for (AMI_NAM_Handler_Table_Iterator iter (this->ami_nam_handler_table_.begin ());
-           iter != this->ami_nam_handler_table_.end ();
-           ++iter)
-      {
-        // Cache the returned set of connections into the list.
-        this->add_connections (iter->int_id_.servant_->get_connections ());
-
-        // Cache the returned NodeApplication object reference into
-        // the chained artifact table.
-        ACE_Hash_Map_Entry
-          <ACE_CString,
-          Chained_Artifacts> *entry = 0;
-
-        this->artifact_map_.find (iter->ext_id_, // node name
-                                  entry);
-
-        (entry->int_id_).node_application_ = 
-          Deployment::NodeApplication::_duplicate (
-            iter->int_id_.servant_->get_node_app ());
-
-        delete iter->int_id_.servant_;
-      }
     }
   catch (const Deployment::StartError& ex)
     {
@@ -159,4 +148,37 @@ startLaunch (const ::Deployment::Properties & configProperty,
       throw;
     }
 
+}
+
+
+void
+CIAO::DomainApplicationManager_AMI_Impl::
+post_startLaunch ()
+{
+  CIAO_TRACE("CIAO::DomainApplicationManager_AMI_Impl::post_startLaunch");
+
+  for (AMI_NAM_Handler_Table_Iterator iter (this->ami_nam_handler_table_.begin ());
+        iter != this->ami_nam_handler_table_.end ();
+        ++iter)
+  {
+    // Cache the returned set of connections into the list.
+    this->add_connections (iter->int_id_.servant_->get_connections ());
+
+    // Cache the returned NodeApplication object reference into
+    // the chained artifact table.
+    ACE_Hash_Map_Entry
+      <ACE_CString,
+      Chained_Artifacts> *entry = 0;
+
+    this->artifact_map_.find (iter->ext_id_, // node name
+                              entry);
+
+    (entry->int_id_).node_application_ = 
+      Deployment::NodeApplication::_duplicate (
+        iter->int_id_.servant_->get_node_app ());
+
+    delete iter->int_id_.servant_;
+
+    this->amh_response_handler_->startLaunch ();
+  }
 }
