@@ -18,6 +18,8 @@ $corbaloc = "corbaloc::126.0.0.123:10200,:localhost:10201,:126.0.0.124:10202/pcs
 
 if (PerlACE::is_vxworks_test()) {
   $iorfile = $iorbase;
+  $valid_ep = "-orbendpoint iiop://".$ENV{'ACE_RUN_VX_TGTHOST'}.":10201";
+  $corbaloc = "corbaloc::126.0.0.123:10200,:".$ENV{'ACE_RUN_VX_TGTHOST'}.":10201,:126.0.0.124:10202/pcs_test";
   $SV_ALT_IIOP = new PerlACE::ProcessVX ("server", "-ORBUseSharedProfile 1 -o $iorfile $bogus_eps[0] $valid_ep $bogus_eps[1]");
 }
 else {

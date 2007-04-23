@@ -63,7 +63,7 @@ if (PerlACE::waitforfile_timed ($srvdownfile,
     exit 1;
 }
 
-$server = $SV->WaitKill (1);
+$server = $SV->WaitKill (15);
 
 if ($server != 0) {
     print STDERR "ERROR: server returned $server\n";

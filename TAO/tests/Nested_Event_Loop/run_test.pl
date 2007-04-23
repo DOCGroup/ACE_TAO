@@ -9,17 +9,19 @@ use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::Run_Test;
 
 $status = 0;
-$iorfile = PerlACE::LocalFile ("test.ior");
+$baseior = "test.ior";
+$iorfile = PerlACE::LocalFile ($baseior);
 
 unlink $iorfile;
 
 if (PerlACE::is_vxworks_test()) {
-    $SV = new PerlACE::ProcessVX ("server", "-o test.ior");
+    $SV = new PerlACE::ProcessVX ("server", "-o $baseior -ORBDottedDecimalAddresses 1");
+    $CL = new PerlACE::Process ("client", "-k file://$iorfile -x -ORBDottedDecimalAddresses 1");
 }
 else {
     $SV = new PerlACE::Process ("server", "-o $iorfile");
+    $CL = new PerlACE::Process ("client", "-k file://$iorfile -x");
 }
-$CL = new PerlACE::Process ("client", "-k file://$iorfile -x");
 
 $SV->Spawn ();
 

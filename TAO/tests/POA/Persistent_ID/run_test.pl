@@ -9,12 +9,13 @@ use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::Run_Test;
 
 $status = 0;
-$iorfile = PerlACE::LocalFile ("server.ior");
+$baseior = "server.ior";
+$iorfile = PerlACE::LocalFile ($baseior);
 
 unlink $iorfile;
 
 if (PerlACE::is_vxworks_test()) {
-    $SV = new PerlACE::ProcessVX ("server", "-f server.ior");
+    $SV = new PerlACE::ProcessVX ("server", "-f $baseior");
 }
 else {
     $SV = new PerlACE::Process ("server", "-f $iorfile");
@@ -30,7 +31,7 @@ if (PerlACE::waitforfile_timed ($iorfile, $PerlACE::wait_interval_for_process_cr
 }
 
 $client = $CL->SpawnWaitKill (60);
-$server = $SV->WaitKill (5);
+$server = $SV->WaitKill (15);
 
 unlink $iorfile;
 
