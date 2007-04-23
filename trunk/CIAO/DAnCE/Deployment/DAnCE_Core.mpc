@@ -39,6 +39,11 @@ project(Deployment_stub) : taolib_with_idl, valuetype, ifr_client, ciao_events_b
     Deployment_ApplicationManager.idl
     Deployment_NodeApplicationManager.idl
   }
+  
+  IDL_Files {
+    idlflags += -GH
+    Deployment_DomainApplicationManager.idl
+  }  
 
   IDL_Files {
     Deployment_ResourceCommitmentManager.idl
@@ -50,7 +55,6 @@ project(Deployment_stub) : taolib_with_idl, valuetype, ifr_client, ciao_events_b
     Deployment_Container.idl
     Deployment.idl
     Deployment_NodeManager.idl
-    Deployment_DomainApplicationManager.idl
     Deployment_DomainApplication.idl
     Deployment_ExecutionManager.idl
     Deployment_RepositoryManager.idl
