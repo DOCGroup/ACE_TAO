@@ -1,3 +1,8 @@
+Mon Apr 23 15:05:31 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * tests/SOCK_Dgram_Test.cpp: Added additional tests to verify data
+          and peer addresses from recv(). Also fixed errors in use of %p.
+
 Mon Apr 23 13:39:12 UTC 2007 Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/CDR_Base.inl:
