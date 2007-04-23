@@ -1,3 +1,8 @@
+Mon Apr 23 13:39:12 UTC 2007 Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/CDR_Base.inl:
+          Fixed copy/paste bug in swap_4 and swap_8
+
 Mon Apr 23 13:09:12 UTC 2007 Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Task.cpp:
