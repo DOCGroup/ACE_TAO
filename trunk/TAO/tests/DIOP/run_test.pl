@@ -16,12 +16,13 @@ $iorfile = PerlACE::LocalFile ($iorbase);
 
 if (PerlACE::is_vxworks_test()) {
   $TARGETHOSTNAME = $ENV{'ACE_RUN_VX_TGTHOST'};
-  $SV = new PerlACE::ProcessVX ("server", "-ORBEndpoint diop://$TARGETHOSTNAME:88888 -o $iorbase -ORBdebuglevel $ORBdebuglevel");
+  $SV = new PerlACE::ProcessVX ("server", "-ORBEndpoint diop://$TARGETHOSTNAME:88888 -o $iorbase -ORBdebuglevel $ORBdebuglevel -ORBDottedDecimalAddresses 1");
+  $CL = new PerlACE::Process ("client", "-k file://$iorfile -t 10 -i 10 -ORBdebuglevel $ORBdebuglevel -ORBDottedDecimalAddresses 1");
 }
 else {
   $SV = new PerlACE::Process ("server", "-ORBEndpoint diop://:88888 -o $iorfile -ORBdebuglevel $ORBdebuglevel");
+  $CL = new PerlACE::Process ("client", "-k file://$iorfile -t 10 -i 10 -ORBdebuglevel $ORBdebuglevel");
 }
-$CL = new PerlACE::Process ("client", "-k file://$iorfile -t 10 -i 10 -ORBdebuglevel $ORBdebuglevel");
 
 $SV->Spawn ();
 

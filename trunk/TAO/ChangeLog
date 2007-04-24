@@ -1,3 +1,13 @@
+Tue Apr 24 07:50:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/DIOP/run_test.pl:
+          Improved for cross host testing
+
+        * tests/Bug_2805_Regression/client.cpp:
+          Added some more debug statements and made the reply count
+          an atomic op because it is updated by multiple threads and
+          could lead to invalid results
+
 Mon Apr 23 14:16:00 UTC 2007  Simon Massey  <sma@prismtech.com>
 
         * tests/RTCORBA/Banded_Connections/server.cpp:

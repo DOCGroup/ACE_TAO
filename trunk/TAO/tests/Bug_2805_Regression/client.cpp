@@ -16,6 +16,8 @@
 
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"
+#include "ace/Atomic_Op.h"
+#include "ace/Synch_Traits.h"
 #include "ami_test_i.h"
 
 ACE_RCSID (AMI,
@@ -26,7 +28,7 @@ const char *ior = "file://test.ior";
 int nthreads = 5;
 int niterations = 5;
 int debug = 0;
-int number_of_replies = 0;
+ACE_Atomic_Op<ACE_SYNCH_MUTEX, int> number_of_replies = 0;
 
 CORBA::Long in_number = 931232;
 const char * in_str = "Let's talk AMI.";
@@ -113,15 +115,17 @@ public:
           parameter_corruption = 1;
         }
 
+      int const reply = --number_of_replies;
+
       if (debug)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "(%P | %t) : Callback method called: result <%d>, out_arg <%d>\n",
+                      "(%P | %t) : Callback method %d called: result <%d>, out_arg <%d>\n",
+                      (nthreads * niterations) - reply,
                       result,
                       out_l));
         }
-
-      --number_of_replies;
+      ACE_UNUSED_ARG (reply);
     };
 
    void foo_excep (::Messaging::ExceptionHolder * excep_holder)
@@ -224,6 +228,10 @@ main (int argc, char *argv[])
 
       poa_manager->activate ();
 
+      // Main thread collects replies. It needs to collect
+      // <nthreads*niterations> replies.
+      number_of_replies = nthreads * niterations;
+
       // Let the client perform the test in a separate thread
 
       Client client (server.in (), niterations);
@@ -233,15 +241,11 @@ main (int argc, char *argv[])
                            "Cannot activate client threads\n"),
                           1);
 
-      // Main thread collects replies. It needs to collect
-      // <nthreads*niterations> replies.
-      number_of_replies = nthreads *niterations;
-
       if (debug)
         {
           ACE_DEBUG ((LM_DEBUG,
                       "(%P|%t) : Entering perform_work loop to receive <%d> replies\n",
-                      number_of_replies));
+                      number_of_replies.value ()));
         }
 
       // ORB loop.
@@ -260,7 +264,7 @@ main (int argc, char *argv[])
         {
           ACE_DEBUG ((LM_DEBUG,
                       "(%P|%t) : Exited perform_work loop Received <%d> replies\n",
-                      (nthreads*niterations) - number_of_replies));
+                      (nthreads*niterations) - number_of_replies.value ()));
         }
 
       client.thr_mgr ()->wait ();
