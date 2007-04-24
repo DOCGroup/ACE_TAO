@@ -145,9 +145,7 @@ TAO_GIOP_Message_Generator_Parser_10::write_locate_request_header (
 bool
 TAO_GIOP_Message_Generator_Parser_10::write_reply_header (
     TAO_OutputCDR &output,
-    TAO_Pluggable_Reply_Params_Base &reply
-
-  )
+    TAO_Pluggable_Reply_Params_Base &reply)
 {
   // Write the service context list.
 #if (TAO_HAS_MINIMUM_CORBA == 1)
@@ -276,8 +274,7 @@ bool
 TAO_GIOP_Message_Generator_Parser_10::write_locate_reply_mesg (
     TAO_OutputCDR &output,
     CORBA::ULong request_id,
-    TAO_GIOP_Locate_Status_Msg &status_info
-  )
+    TAO_GIOP_Locate_Status_Msg &status_info)
 {
   // Make the header for the locate request
   output.write_ulong (request_id);
@@ -434,7 +431,6 @@ int
 TAO_GIOP_Message_Generator_Parser_10::parse_reply (
     TAO_InputCDR &cdr,
     TAO_Pluggable_Reply_Params &params)
-
 {
   // Read the service context list first
   if ( ! (cdr >> params.svc_ctx_))

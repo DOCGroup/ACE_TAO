@@ -38,11 +38,10 @@ class TAO_Asynch_Reply_Dispatcher
 public:
   /// Constructor.
   TAO_Asynch_Reply_Dispatcher (
-      const TAO_Reply_Handler_Skeleton &reply_handler_skel,
+      const TAO_Reply_Handler_Stub &reply_handler_stub,
       Messaging::ReplyHandler_ptr reply_handler_ptr,
       TAO_ORB_Core *orb_core,
-      ACE_Allocator *allocator
-    );
+      ACE_Allocator *allocator);
 
   /// Destructor.
   virtual ~TAO_Asynch_Reply_Dispatcher (void);
@@ -62,8 +61,8 @@ public:
                        const ACE_Time_Value &max_wait_time);
 
 private:
-  /// Skeleton for the call back method in the Reply Handler.
-  const TAO_Reply_Handler_Skeleton reply_handler_skel_;
+  /// Stub for the call back method in the Reply Handler.
+  const TAO_Reply_Handler_Stub reply_handler_stub_;
 
   /// Reply Handler passed in the Asynchronous Invocation.
   Messaging::ReplyHandler_var reply_handler_;

@@ -60,7 +60,7 @@ enum TAO_AMI_Reply_Status
 };
 
 
-typedef void (*TAO_Reply_Handler_Skeleton)(
+typedef void (*TAO_Reply_Handler_Stub)(
     TAO_InputCDR &,
     Messaging::ReplyHandler_ptr,
     CORBA::ULong reply_status);

@@ -300,7 +300,7 @@ void TAO_ServantBase::asynchronous_upcall_dispatch (TAO_ServerRequest & req,
       // exception.
 
     }
-  catch ( ::CORBA::Exception& ex)
+  catch (const ::CORBA::Exception& ex)
     {
       // If an exception was raised we should marshal it and send
       // the appropriate reply to the client

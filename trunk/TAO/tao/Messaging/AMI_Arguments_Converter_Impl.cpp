@@ -2,6 +2,8 @@
 #include "tao/Messaging/AMI_Arguments_Converter_Impl.h"
 #include "tao/operation_details.h"
 #include "tao/SystemException.h"
+#include "tao/Pluggable_Messaging_Utils.h"
+#include "tao/Reply_Dispatcher.h"
 
 ACE_RCSID (Messaging,
            AMI_Arguments_Converter_Impl,
@@ -37,7 +39,7 @@ TAO_AMI_Arguments_Converter_Impl::convert_request (
     {
       if (!(args[j]->demarshal (input)))
         {
-          throw ::CORBA::BAD_PARAM ();
+          TAO_InputCDR::throw_skel_exception (errno);
         }
     }
 
@@ -53,22 +55,22 @@ TAO_AMI_Arguments_Converter_Impl::convert_reply (
     TAO::Argument * const args[],
     size_t nargs)
 {
-  TAO_OutputCDR output;
-  for (CORBA::ULong j = 1; j < nargs; ++j)
+    if (server_request.operation_details ()->reply_dispatcher ())
     {
-      if (!(args[j]->marshal (output)))
+      TAO_OutputCDR output;
+      for (CORBA::ULong j = 0; j < nargs; ++j)
         {
-          throw ::CORBA::BAD_PARAM ();
+          if (!(args[j]->marshal (output)))
+            {
+              TAO_OutputCDR::throw_skel_exception (errno);
+            }
         }
-    }
-  CORBA::ULong const nrarg = server_request.operation_details ()->args_num ();
-  TAO_InputCDR input (output);
-  for (CORBA::ULong i = 1; i < nrarg; ++i)
-    {
-    if (!(server_request.operation_details ()->args()[i])->demarshal (input))
-        {
-          throw ::CORBA::BAD_PARAM ();
-        }
+      TAO_Pluggable_Reply_Params params (0);
+      TAO_InputCDR input (output);
+      params.input_cdr_ = &input;
+      params.reply_status_ = TAO_PLUGGABLE_MESSAGE_NO_EXCEPTION;
+      server_request.operation_details ()->
+        reply_dispatcher ()->dispatch_reply (params);
     }
 }
 

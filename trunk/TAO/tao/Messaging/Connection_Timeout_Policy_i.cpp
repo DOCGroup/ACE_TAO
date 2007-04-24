@@ -73,7 +73,7 @@ TAO_ConnectionTimeoutPolicy::hook (TAO_ORB_Core *orb_core,
 
       if (CORBA::is_nil (policy.in ()))
         {
-          has_timeout = 0;
+          has_timeout = false;
           return;
         }
 
@@ -87,7 +87,7 @@ TAO_ConnectionTimeoutPolicy::hook (TAO_ORB_Core *orb_core,
                       ACE_U64_TO_U32 (microseconds));
 
       // Set the flag once all operations complete successfully
-      has_timeout = 1;
+      has_timeout = true;
 
       if (TAO_debug_level > 0)
         {
