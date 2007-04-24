@@ -102,7 +102,7 @@
 
   <instance id="Hello-Receiver-idd">
     <name>Hello-Receiver-idd</name>
-    <node>SenderNode</node>
+    <node>ReceiverNode</node>
     <source><!-- @@ What goes here --></source>
     <implementation>Hello-Receiver-mdd</implementation>
     <configProperty>
