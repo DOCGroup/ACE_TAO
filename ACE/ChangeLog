@@ -1,3 +1,8 @@
+Tue Apr 24 10:20:58 UTC 2007  Olli Savia  <ops@iki.fi>
+
+        * include/makeinclude/platform_lynxos.GNU:
+          Fixed run-time linking error with GCC 3.2.2.
+
 Tue Apr 24 09:10:12 UTC 2007 Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/run_test.lst:

@@ -71,13 +71,6 @@ endif # ! LynxOS
 LYNXOS_MAJOR = $(shell echo $(VERSION) | awk -F. '{print $$1;}')
 LYNXOS_MINOR = $(shell echo $(VERSION) | awk -F. '{print $$2;}')
 
-shared_libs ?= 1
-optimize ?= 1
-debug ?= 1
-pipes ?= 1
-threads ?= 1
-exceptions ?= 1
-
 PLATFORM_XT_CPPFLAGS=
 PLATFORM_XT_LIBS=-lXm -lXt
 PLATFORM_XT_LDFLAGS=
@@ -94,6 +87,13 @@ PLATFORM_TK_CPPFLAGS=$(shell . /usr/lib/tkConfig.sh && echo -n $$TK_INC_DIR $$TK
 PLATFORM_TK_LIBS=-ltk $(PLATFORM_X11_LIBS)
 PLATFORM_TK_LDFLAGS=
 
+shared_libs ?= 1
+optimize ?= 1
+debug ?= 1
+pipes ?= 1
+threads ?= 1
+exceptions ?= 1
+
 ifeq ($(threads),1)
   CFLAGS  += -mthreads
   SOFLAGS += -mthreads
@@ -103,9 +103,9 @@ ifeq ($(shared_libs),1)
   CPPFLAGS += -DACE_HAS_SVR4_DYNAMIC_LINKING
   CFLAGS   += -mshared
   SOFLAGS  += -mshared
-  LIBS    += -ldl
+  LIBS     += -ldl
 else
-  LIBS    += -lnetinet -lnsl
+  LIBS     += -lnetinet -lnsl
 endif
 
 CC              = gcc
@@ -131,6 +131,10 @@ PRELIB          = @true
 include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
 
 CCFLAGS         += $(CFLAGS) $(TEMPLATES_FLAG)
+
+ifeq ($(CXX_MAJOR_VERSION), 3)
+  LDFLAGS       += -L/usr/lib/thread
+endif
 
 # To save much disk space, strip all executables.  Comment the
 # following line out if you want to debug.  Or, add "POSTLINK="
