@@ -1,3 +1,8 @@
+Tue Apr 24 11:54:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_2678_Regression/Bug_2678_Regression.mpc:
+          Don't build server when using CORBA/e micro
+
 Tue Apr 24 09:22:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Messaging/AMI_Arguments_Converter_Impl.cpp:
