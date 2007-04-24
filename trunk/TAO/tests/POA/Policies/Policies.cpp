@@ -32,10 +32,7 @@ main (int argc, char **argv)
   try
     {
       // Initialize the ORB first.
-      CORBA::ORB_var orb =
-        CORBA::ORB_init (argc,
-                         argv,
-                         0);
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
       // Obtain the RootPOA.
       CORBA::Object_var obj =
@@ -178,10 +175,11 @@ main (int argc, char **argv)
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 
+      orb->destroy ();
+
       ACE_DEBUG ((LM_DEBUG,
                   "%s successful\n",
                   argv[0]));
-
     }
   catch (const CORBA::Exception& ex)
     {
