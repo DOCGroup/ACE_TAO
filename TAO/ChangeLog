@@ -1,12 +1,17 @@
+Tue Apr 24 13:17:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_2201_Regression/tests.cpp:
+          Added orb->destroy(), then the test exists on VxWorks
+
 Tue Apr 24 13:05:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/POA/Policies/Policies.cpp:
-          Added orb->destroy(), then the test exists perfect on VxWorks
+          Added orb->destroy(), then the test exists on VxWorks
 
 Tue Apr 24 13:05:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/POA/Current/Current.cpp:
-          Added orb->destroy(), then the test exists perfect on VxWorks
+          Added orb->destroy(), then the test exists on VxWorks
 
 Tue Apr 24 12:06:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
