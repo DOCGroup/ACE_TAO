@@ -1081,6 +1081,12 @@ get_ip_interfaces_aix (size_t &count,
   size_t num_ifs = 0;
   struct ifconf ifc;
 
+  if (handle == ACE_INVALID_HANDLE)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_LIB_TEXT ("%p\n"),
+                       ACE_LIB_TEXT ("ACE::get_ip_interfaces_aix:")),
+                      -1);
+
   if (ACE_OS::ioctl (handle,
                      SIOCGSIZIFCONF,
                      (caddr_t)&ifc.ifc_len) == -1)
@@ -1105,6 +1111,8 @@ get_ip_interfaces_aix (size_t &count,
                         ACE_LIB_TEXT ("get ifconf")),
                        -1);
   }
+
+  ACE_OS::close (handle);
 
   char *buf_start = safe_buf.get();
   char *buf_end = buf_start + ifc.ifc_len;
