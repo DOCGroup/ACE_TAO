@@ -11,7 +11,7 @@ namespace TAO
 {
 
 Zlib_CompressorFactory::Zlib_CompressorFactory (void) :
-  ::TAO::CompressorFactory (4),
+  ::TAO::CompressorFactory (::Compression::ZLIB),
   compressor_ (::Compression::Compressor::_nil ())
 {
 }

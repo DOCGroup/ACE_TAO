@@ -41,7 +41,11 @@ module Compression
     /**
      * CompressorId type.
      */
-    typedef unsigned long CompressorId;
+    typedef unsigned short CompressorId;
+    const CompressorId GZIP = 1;
+    const CompressorId PKZIP = 2;
+    const CompressorId BZIP2 = 3;
+    const CompressorId ZLIB = 4;
 
     /**
      * CompressionLevel type.
