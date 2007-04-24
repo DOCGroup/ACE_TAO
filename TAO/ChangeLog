@@ -1,3 +1,12 @@
+Tue Apr 24 12:06:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Compression/Compression.pidl:
+        * tao/Compression/zlib/ZlibCompressor_Factory.cpp:
+        * tests/Compression/server.cpp:
+          Made the CompressorId an unsigned short and define constants
+          for the predefined compressor ids. Thanks to Ossama for proposing
+          this change. This fixed bugzilla bug 2910.
+
 Tue Apr 24 11:54:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_2678_Regression/Bug_2678_Regression.mpc:
