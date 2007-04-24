@@ -1,3 +1,7 @@
+Tue Apr 24 13:37:42 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * tests/SOCK_Dgram_Test.cpp: Add missing #include "ace/OS_NS_string.h"
+
 Tue Apr 24 11:46:12 UTC 2007 Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Sock_Connect.cpp (get_ip_interfaces_aix):
