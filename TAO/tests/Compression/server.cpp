@@ -140,7 +140,7 @@ main (int argc, char *argv[])
           mytest[j] = 'a';
         }
 
-      Compression::Compressor_var compressor = manager->get_compressor (::Compression::ZLIB, 6);
+      Compression::Compressor_var compressor = manager->get_compressor (::Compression::COMPRESSORID_ZLIB, 6);
 
       CORBA::OctetSeq myout;
       myout.length ((CORBA::ULong)(mytest.length() * 1.1));
