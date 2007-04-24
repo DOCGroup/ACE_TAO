@@ -47,6 +47,7 @@ main (int argc, char **argv)
                   "%s successful\n",
                   argv[0]));
 
+      orb->destroy ();
     }
   catch (const CORBA::Exception& ex)
     {
