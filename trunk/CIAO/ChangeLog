@@ -1,3 +1,20 @@
+Tue Apr 24 17:44:22 UTC 2007  Gan Deng  <gan.deng@vanderbilt.edu>
+
+        * DAnCE/ExecutionManager/Execution_Manager_Impl.cpp
+
+          Modified the debug output information to make it
+          better describe the program behavior.
+        
+        * examples/Hello/descriptors/run_NodeDaemons.pl
+        
+          Increased the spawn latency delay so it can handle
+          deployment with a large number of components, i.e.,
+          more than one thousand.
+        
+        * examples/Hello/descriptors/svc_em.conf
+
+          Service configuration file for ExecutionManager.
+
 Tue Apr 24 14:58:58 UTC 2007  Gan Deng  <gan.deng@vanderbilt.edu>
 
         * DAnCE/DomainApplicationManager/DomainApplicationManager_AMI_Impl.cpp:
