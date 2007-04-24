@@ -434,8 +434,7 @@ TAO_IIOP_Acceptor::open_default (TAO_ORB_Core *orb_core,
   if (addr.set (this->default_address_) != 0)
     return -1;
 
-  return this->open_i (addr,
-                       reactor);
+  return this->open_i (addr, reactor);
 }
 
 int

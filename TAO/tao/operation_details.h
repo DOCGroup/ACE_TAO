@@ -47,6 +47,8 @@ namespace TAO
   }
 }
 
+class TAO_Reply_Dispatcher;
+
 /**
  * @class TAO_Operation_Details
  *
@@ -169,6 +171,9 @@ public:
   TAO::Collocated_Arguments_Converter *cac (void) const;
   void cac (TAO::Collocated_Arguments_Converter *cac);
 
+  TAO_Reply_Dispatcher *reply_dispatcher (void) const;
+  void reply_dispatcher (TAO_Reply_Dispatcher *rd);
+
 private:
 
   /// Name of the operation being invoked.
@@ -223,6 +228,9 @@ private:
 
   /// The optional collocated arguments converter
   TAO::Collocated_Arguments_Converter *cac_;
+
+  /// The optional reply dispatcher
+  TAO_Reply_Dispatcher *reply_dispatcher_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

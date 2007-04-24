@@ -194,7 +194,7 @@ TAO_ServerRequest::exception_type (CORBA::ULong except_type)
 ACE_INLINE void
 TAO_ServerRequest::is_dsi (void)
 {
-  this->is_dsi_ = 1;
+  this->is_dsi_ = true;
 }
 
 ACE_INLINE TAO_Operation_Details const *

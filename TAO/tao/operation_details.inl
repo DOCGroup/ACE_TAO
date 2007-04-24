@@ -26,6 +26,7 @@ TAO_Operation_Details::TAO_Operation_Details (const char *name,
     , ft_retention_id_ (0)
 #endif /*TAO_HAS_INTERCEPTORS == 1*/
     , cac_ (0)
+    , reply_dispatcher_ (0)
 {
 }
 
@@ -220,5 +221,18 @@ TAO_Operation_Details::cac (TAO::Collocated_Arguments_Converter *cac)
 {
   this->cac_ = cac;
 }
+
+ACE_INLINE TAO_Reply_Dispatcher *
+TAO_Operation_Details::reply_dispatcher (void) const
+{
+  return this->reply_dispatcher_;
+}
+
+ACE_INLINE void
+TAO_Operation_Details::reply_dispatcher (TAO_Reply_Dispatcher *rd)
+{
+  this->reply_dispatcher_ = rd;
+}
+
 
 TAO_END_VERSIONED_NAMESPACE_DECL

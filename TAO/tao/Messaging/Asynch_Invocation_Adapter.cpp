@@ -48,7 +48,7 @@ namespace TAO
   void
   Asynch_Invocation_Adapter::invoke (
     Messaging::ReplyHandler_ptr reply_handler_ptr,
-    const TAO_Reply_Handler_Skeleton &reply_handler_skel)
+    const TAO_Reply_Handler_Stub &reply_handler_stub)
   {
     TAO_Stub * stub =
       this->get_stub ();
@@ -82,7 +82,7 @@ namespace TAO
               rd,
               static_cast<TAO_Asynch_Reply_Dispatcher *> (
                 ami_allocator->malloc (sizeof (TAO_Asynch_Reply_Dispatcher))),
-              TAO_Asynch_Reply_Dispatcher (reply_handler_skel,
+              TAO_Asynch_Reply_Dispatcher (reply_handler_stub,
                                            reply_handler_ptr,
                                            stub->orb_core (),
                                            ami_allocator));
@@ -90,7 +90,7 @@ namespace TAO
         else
           {
             ACE_NEW (rd,
-                     TAO_Asynch_Reply_Dispatcher (reply_handler_skel,
+                     TAO_Asynch_Reply_Dispatcher (reply_handler_stub,
                                                   reply_handler_ptr,
                                                   stub->orb_core (),
                                                   0));
@@ -133,6 +133,9 @@ namespace TAO
           = ACE_Dynamic_Service<TAO_AMI_Arguments_Converter_Impl>::instance (
             "AMI_Arguments_Converter");
         details.cac (ami_arguments_converter);
+
+        // Release the owner ship of the reply dispatcher
+        details.reply_dispatcher ( this->safe_rd_.release ());
 
         return Invocation_Adapter::invoke_collocated_i (stub,
                                                         details,

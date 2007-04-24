@@ -167,8 +167,7 @@ namespace TAO
 
     status = coll_inv.invoke (this->cpb_, strat);
 
-    if (status == TAO_INVOKE_RESTART &&
-        coll_inv.is_forwarded ())
+    if (status == TAO_INVOKE_RESTART && coll_inv.is_forwarded ())
       {
         effective_target = coll_inv.steal_forwarded_reference ();
 
@@ -179,9 +178,7 @@ namespace TAO
         CORBA::Boolean const is_permanent_forward = false;
 #endif
 
-        this->object_forwarded (effective_target,
-                                stub,
-                                is_permanent_forward);
+        this->object_forwarded (effective_target, stub, is_permanent_forward);
       }
 
     return status;

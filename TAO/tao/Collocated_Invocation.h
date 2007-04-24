@@ -84,8 +84,7 @@ namespace TAO
      *
      */
     Invocation_Status invoke (Collocation_Proxy_Broker *cpb,
-                              Collocation_Strategy strat
-                             );
+                              Collocation_Strategy strat);
 
   private:
 
