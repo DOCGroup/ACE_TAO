@@ -1,3 +1,8 @@
+Tue Apr 24 13:05:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/POA/Current/Current.cpp:
+          Added orb->destroy(), then the test exists perfect on VxWorks
+
 Tue Apr 24 12:06:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Compression/Compression.pidl:
