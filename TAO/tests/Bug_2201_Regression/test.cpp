@@ -28,5 +28,7 @@ main (int argc, char *argv[])
     retval = 1;
   }
 
+  orb->destroy ();
+
   return retval;
 }
