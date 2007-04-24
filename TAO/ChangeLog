@@ -1,3 +1,52 @@
+Tue Apr 24 09:22:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Messaging/AMI_Arguments_Converter_Impl.cpp:
+          Implemented the convert_reply. When there is a reply
+          dispatcher (set in the collocated case), we do invoke the
+          reply dispatcher to call the reply handler. This fixes
+          bugzilla 2806
+
+        * tao/Messaging/Asynch_Invocation_Adapter.cpp:
+          In case doing a collocated AMI call set the reply
+          dispatcher in the operation details. This is needed to
+          call the reply dispatcher after the servant has been
+          invoked.
+
+        * tao/operation_details.h:
+        * tao/operation_details.inl:
+          Added reply dispatcher as optional member with get/set
+          methods
+
+        * tao/CDR.cpp:
+        * tao/Collocated_Invocation.h:
+        * tao/Endpoint_Selector_Factory.h:
+        * tao/GIOP_Message_Generator_Parser_10.cpp:
+        * tao/IIOP_Acceptor.cpp:
+        * tao/Invocation_Adapter.cpp:
+        * tao/Messaging/ExceptionHolder_i.h
+          Layout change
+
+        * tao/DynamicInterface/DII_Reply_Dispatcher.h:
+          Fixed typo in comment
+
+        * tao/Messaging/Connection_Timeout_Policy_i.cpp:
+        * tao/TAO_Server_Request.inl:
+          Use true/false
+
+        * tao/Messaging/Messaging.h:
+        * tao/Messaging/Asynch_Invocation_Adapter.cpp:
+        * tao/Messaging/Asynch_Reply_Dispatcher.cpp:
+        * tao/Messaging/Asynch_Reply_Dispatcher.h:
+        * tao/Messaging/Asynch_Invocation_Adapter.h:
+          We do call the reply handler stub instead of skeleton, so did
+          some rename actions
+
+        * tao/PortableServer/Servant_Base.cpp:
+          Catch const exception
+
+        * tao/TAO_Server_Request.h:
+          Documentation update
+
 Tue Apr 24 07:50:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/DIOP/run_test.pl:

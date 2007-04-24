@@ -305,20 +305,20 @@ private:
   /// Transport class.
   TAO_Transport *transport_;
 
-  /// 0: oneway (SYNC_NONE or SYNC_WITH_TRANSPORT)
-  /// 1: twoway, or oneway (SYNC_WITH_SERVER or SYNC_WITH_TARGET)
+  /// false: oneway (SYNC_NONE or SYNC_WITH_TRANSPORT)
+  /// true: twoway, or oneway (SYNC_WITH_SERVER or SYNC_WITH_TARGET)
   CORBA::Boolean response_expected_;
 
   /**
-   * 0: Reply would be sent by the object of this class which is the
+   * false: Reply would be sent by the object of this class which is the
    *    default.
-   * 1: Reply would not be prepared by this class and it would be
+   * true: Reply would not be prepared by this class and it would be
    *    deferred for somebody.
    */
   CORBA::Boolean deferred_reply_;
 
-  /// 1: oneway (SYNC_WITH_SERVER)
-  /// 0: anything else
+  /// true: oneway (SYNC_WITH_SERVER)
+  /// false: anything else
   CORBA::Boolean sync_with_server_;
 
   /// Did we get passed to a CORBA::ServerRequest?

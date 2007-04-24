@@ -14,13 +14,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Constructor.
 TAO_Asynch_Reply_Dispatcher::TAO_Asynch_Reply_Dispatcher (
-    const TAO_Reply_Handler_Skeleton &reply_handler_skel,
+    const TAO_Reply_Handler_Stub &reply_handler_stub,
     Messaging::ReplyHandler_ptr reply_handler,
     TAO_ORB_Core *orb_core,
     ACE_Allocator *allocator
   )
   :TAO_Asynch_Reply_Dispatcher_Base (orb_core, allocator)
-  , reply_handler_skel_ (reply_handler_skel)
+  , reply_handler_stub_ (reply_handler_stub)
   , reply_handler_ (Messaging::ReplyHandler::_duplicate (reply_handler))
   , timeout_handler_ (0)
 {
@@ -118,8 +118,8 @@ TAO_Asynch_Reply_Dispatcher::dispatch_reply (TAO_Pluggable_Reply_Params &params)
     {
       try
         {
-          // Call the Reply Handler's skeleton.
-          reply_handler_skel_ (this->reply_cdr_,
+          // Call the Reply Handler's stub.
+          reply_handler_stub_ (this->reply_cdr_,
                                this->reply_handler_.in (),
                                reply_error);
         }
@@ -164,7 +164,7 @@ TAO_Asynch_Reply_Dispatcher::connection_closed (void)
 
       if (!CORBA::is_nil (this->reply_handler_.in ()))
         {
-          this->reply_handler_skel_ (cdr,
+          this->reply_handler_stub_ (cdr,
                                      this->reply_handler_.in (),
                                      TAO_AMI_REPLY_SYSTEM_EXCEPTION);
         }
@@ -221,7 +221,7 @@ TAO_Asynch_Reply_Dispatcher::reply_timed_out (void)
 
       if (!CORBA::is_nil (this->reply_handler_.in ()))
         {
-          this->reply_handler_skel_ (cdr,
+          this->reply_handler_stub_ (cdr,
                                      this->reply_handler_.in (),
                                      TAO_AMI_REPLY_SYSTEM_EXCEPTION);
         }
@@ -255,7 +255,7 @@ TAO_Asynch_Reply_Dispatcher::schedule_timer (CORBA::ULong request_id,
   return this->timeout_handler_->schedule_timer (
       this->transport_->tms (),
       request_id,
-      max_wait_time);
+      max_wait_time);                   
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

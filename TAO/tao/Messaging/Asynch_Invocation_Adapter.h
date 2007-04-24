@@ -71,7 +71,7 @@ namespace TAO
         TAO::Invocation_Mode mode = TAO_ASYNCHRONOUS_CALLBACK_INVOCATION);
 
     void invoke (Messaging::ReplyHandler_ptr reply_handler_ptr,
-                 const TAO_Reply_Handler_Skeleton &reply_handler_skel);
+                 const TAO_Reply_Handler_Stub &reply_handler_stub);
 
     virtual void invoke (TAO::Exception_Data *ex, unsigned long ex_count);
   protected:

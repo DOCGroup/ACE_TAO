@@ -71,10 +71,8 @@ namespace TAO
     virtual ~ExceptionHolder (void);
 
   private:
-
     TAO::Exception_Data* data_;
     CORBA::ULong count_;
-
   };
 
   /**

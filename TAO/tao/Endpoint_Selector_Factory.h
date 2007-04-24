@@ -65,8 +65,7 @@ public:
 
   /// Get an Invocation's endpoint selection strategy and
   /// initialize the endpoint selection state instance.
-  virtual TAO_Invocation_Endpoint_Selector *get_selector (
-              void) = 0;
+  virtual TAO_Invocation_Endpoint_Selector *get_selector (void) = 0;
 
 
 };

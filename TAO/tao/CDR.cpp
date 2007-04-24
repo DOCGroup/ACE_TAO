@@ -181,7 +181,7 @@ TAO_OutputCDR::TAO_OutputCDR (ACE_Data_Block *data_block,
 }
 
 void
-TAO_OutputCDR::throw_stub_exception (int error_num )
+TAO_OutputCDR::throw_stub_exception (int error_num)
 {
   switch (error_num)
     {
