@@ -115,7 +115,7 @@ ACE_Arg_Shifter_T<CHAR_TYPE>::get_the_parameter (const CHAR_TYPE *flag)
           return 0;
         }
     }
-  // the paramter is in the middle somewhere...
+  // the parameter is in the middle somewhere...
   return this->temp_[current_index_] + offset;
 }
 

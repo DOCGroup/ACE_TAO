@@ -27,9 +27,10 @@ ACE_ALLOC_HOOK_DEFINE(ACE_Addr)
 // Initializes instance variables.  Note that 0 is an unspecified
 // protocol family type...
 
-ACE_Addr::ACE_Addr (int type, int size)
+ACE_Addr::ACE_Addr (int type, int size) :
+  addr_type_ (type),
+  addr_size_ (size)
 {
-  this->base_set (type, size);
 }
 
 ACE_Addr::~ACE_Addr (void)
