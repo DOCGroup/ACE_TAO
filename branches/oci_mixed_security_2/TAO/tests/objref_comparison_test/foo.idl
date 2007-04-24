@@ -1,0 +1,3 @@
+interface foo {
+  boolean match_references ();
+};
