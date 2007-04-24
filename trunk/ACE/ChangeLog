@@ -1,3 +1,15 @@
+Tue Apr 24 09:10:12 UTC 2007 Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/run_test.lst:
+          Enabled Dirent test again for VxWorks RTP
+
+        * ace/Addr.cpp:
+          Initialise members in the constructor directly instead of
+          calling a seperate method
+
+        * ace/Arg_Shifter.cpp:
+          Fixed typo in comment
+
 Mon Apr 23 15:05:31 UTC 2007  Steve Huston  <shuston@riverace.com>
 
         * tests/SOCK_Dgram_Test.cpp: Added additional tests to verify data
