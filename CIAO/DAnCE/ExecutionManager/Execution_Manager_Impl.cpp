@@ -88,6 +88,10 @@ namespace CIAO
             plan,
             this->init_file_.c_str ()),
             CORBA::NO_MEMORY ());
+
+        ACE_DEBUG ((LM_DEBUG, 
+          "CIAO (%P|%t) Instantiated CIAO::DomainApplicationManager_AMI_Impl\n"));
+
       }
       else
       {
@@ -101,9 +105,11 @@ namespace CIAO
             plan,
             this->init_file_.c_str ()),
             CORBA::NO_MEMORY ());
+
+        ACE_DEBUG ((LM_DEBUG, 
+          "CIAO (%P|%t) Instantiated CIAO::DomainApplicationManager_Impl\n"));
       }
 
-      ACE_DEBUG ((LM_DEBUG, "CIAO (%P|%t) Instantiated CIAO::DomainApplicationManager_Impl\n"));
 
       // Sanity check for NULL pointer
       // Should we throw an exception here?
