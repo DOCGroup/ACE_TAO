@@ -460,7 +460,7 @@ namespace CIAO
 }
 
 #if defined (__ACE_INLINE__)
-# include "DomainApplicationManager_Impl.inl"
+# include "DomainApplicationManager_AMH_Impl.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
