@@ -379,7 +379,10 @@ TAO_ORB_Core::~TAO_ORB_Core (void)
   delete this->config_;
   this->config_ = 0;
 
-  this->tss_cleanup_funcs_.cleanup(tss_resources_->ts_objects_);
+  TAO_ORB_Core_TSS_Resources *tss_resources =
+    this->get_tss_resources ();
+
+  this->tss_cleanup_funcs_.cleanup(tss_resources->ts_objects_);
 }
 
 int
