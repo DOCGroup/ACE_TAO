@@ -56,8 +56,7 @@ protected:
   /// corresponding thread specific object in the ORB Core TSS
   /// resources.  The slot_id is returned via the second reference
   /// argument.  This method returns 0 on failure, and -1 on failure.
-  int register_cleanup_function (ACE_CLEANUP_FUNC func,
-                                 size_t &slot_id);
+  int register_cleanup_function (ACE_CLEANUP_FUNC func, size_t &slot_id);
 
   /// Invoke the corresponding cleanup function on each
   /// thread-specific object.
