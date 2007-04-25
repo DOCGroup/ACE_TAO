@@ -1,3 +1,8 @@
+Wed Apr 25 08:45:00 UTC 2007  Simon Massey  <sma@prismtech.com>
+
+        * ace/config-lynxos.h:
+          LynxOS4.2 does not seem to have thread process scoping.
+
 Wed Apr 25 07:09:12 UTC 2007 Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/tao_orb_tests.lst:
