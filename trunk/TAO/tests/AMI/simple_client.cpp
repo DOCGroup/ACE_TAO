@@ -27,6 +27,7 @@ const char *ior = "file://test.ior";
 int niterations = 5;
 int shutdown_flag = 0;
 int debug = 0;
+int result = 0;
 
 int
 parse_args (int argc, char *argv[])
@@ -83,6 +84,20 @@ public:
                       ami_return_val,
                       out_l));
         }
+      if (out_l != 931233)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "ERROR: out_l not 931233: %d\n",
+                      out_l));
+          result = 1;
+        }
+      if (ami_return_val != 931234)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "ERROR: ami_return_val not 931234: %d\n",
+                      ami_return_val));
+          result = 1;
+        }
     };
 
   void foo_excep (::Messaging::ExceptionHolder * excep_holder)
@@ -95,10 +110,24 @@ public:
         {
           excep_holder->raise_exception ();
         }
-      catch (const A::DidTheRightThing& )
+      catch (const A::DidTheRightThing& ex)
         {
           ACE_DEBUG ((LM_DEBUG,
                       "... exception received successfully\n"));
+          if (ex.id != 42)
+            {
+              ACE_ERROR ((LM_ERROR,
+                          "ERROR: ex.id not 42: %d\n",
+                          ex.id));
+              result = 1;
+            }
+          if (ACE_OS::strcmp (ex.whatDidTheRightThing.in (), "Hello world") != 0)
+            {
+              ACE_ERROR ((LM_ERROR,
+                          "ERROR: ex.whatDidTheRightThing not ok: <%s>\n",
+                          ex.whatDidTheRightThing.in ()));
+              result = 1;
+            }
         }
       catch (const CORBA::Exception& ex)
         {
@@ -278,5 +307,5 @@ main (int argc, char *argv[])
       return 1;
     }
 
-  return 0;
+  return result;
 }

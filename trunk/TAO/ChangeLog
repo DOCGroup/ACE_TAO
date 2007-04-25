@@ -1,3 +1,16 @@
+Wed Apr 25 07:19:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/AMI/ami_test_i.cpp:
+          When throwing the exception explicitly pass in an id and string
+
+        * tests/AMI/simple_client.cpp:
+          Check all values in the reply handler, if they have an unexpected
+          result log an error.
+
+        * tests/Nested_Event_Loop/server.cpp:
+          No need to pass in empty orb name and destroy the ORB when
+          ready.
+
 Wed Apr 25 07:07:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_2356_Regression/*:

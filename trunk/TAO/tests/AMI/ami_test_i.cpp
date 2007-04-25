@@ -49,7 +49,7 @@ AMI_Test_i::foo (CORBA::Long_out out_l,
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Throwing Exception: A::DidTheRightThing\n"));
-      throw A::DidTheRightThing();
+      throw A::DidTheRightThing(42, "Hello world");
     }
 
   if (check_params_)
