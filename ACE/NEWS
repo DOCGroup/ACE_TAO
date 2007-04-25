@@ -22,6 +22,9 @@ USER VISIBLE CHANGES BETWEEN ACE-5.5.7 and ACE-5.5.8
 
 . Added support to integrate with the FOX Toolkit (www.fox-toolkit.org)
 
+. Added support for Microsoft Visual Studio Code Name "Orcas", which is
+  the msvc9 beta
+
 USER VISIBLE CHANGES BETWEEN ACE-5.5.6 and ACE-5.5.7
 ====================================================
 
