@@ -21,7 +21,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "DomainApplicationManager_Impl.h"
+#include "DomainApplicationManager_AMH_Impl.h"
 #include "Reply_Handler_i.h"
 #include "DAnCE/Deployment/Deployment_NodeApplicationManagerC.h"
 #include "DAnCE/Deployment/Deployment_ApplicationC.h"
@@ -35,7 +35,7 @@ namespace CIAO
    * which uses AMI mechanism to handle deployment.
    */
   class DomainApplicationManager_Export DomainApplicationManager_AMI_Impl
-    : public DomainApplicationManager_Impl
+    : public DomainApplicationManager_AMH_Impl
   {
   public:
     /// Constructor
@@ -54,7 +54,7 @@ namespace CIAO
     /// This operation will be called after *all* the AMI callbacks
     /// are received
     void
-    post_startLaunch (void);
+    post_ami_startLaunch (void);
 
     void decrease_start_launch_reply_count (void);
 
@@ -83,8 +83,12 @@ namespace CIAO
     /// AMI reply count
     volatile int start_launch_reply_count_;
 
-    /// 
+    /// Object reference of the AMH response handler
     Deployment::AMH_DomainApplicationManagerResponseHandler_var amh_response_handler_;
+
+    /// Object ID of the AMH response handler
+    //PortableServer::ObjectId_var rh_oid_;
+    ACE_Vector<PortableServer::ObjectId_var> rh_oid_;
   };
 }
 
