@@ -1,3 +1,10 @@
+Wed Apr 25 09:40:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/Security/Bug_2908_Regression/*:
+          Integrated regression for bug 2908. Thanks to Ravi Kanth
+          <kanth dot ravi at wipro dot com> for reporting this issue
+          and delivering the regression test.
+
 Wed Apr 25 08:52:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/ORB_Core.cpp:
