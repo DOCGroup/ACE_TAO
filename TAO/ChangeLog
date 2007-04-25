@@ -1,3 +1,28 @@
+Wed Apr 25 07:39:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/GIOP_Message_Base.cpp (process_reply_message):
+          Also copy the char/wchar translators
+
+        * tao/Messaging/Asynch_Reply_Dispatcher.cpp:
+          Layout change
+
+        * tao/Messaging/ExceptionHolder_i.{h,cpp}:
+        * tao/Messaging/Messaging.cpp:
+        * tao/Messaging/Messaging.h:
+          Added char/wchar translator which are then used when demarshaling the
+          exception. This fixes bugzilla bug 2356, when throwing an exception
+          with AMI that does contain a wstring the demarshaling of the wstring
+          resulted in an incorrect wstring because the wchar translator was not
+          used. Thanks to Alan Stokes <alan at alanstokes dot org dot uk> for
+          reporting this issue.
+
+        * TAO_IDL/be/be_visitor_operation/ami_handler_reply_stub_operation_cs.cpp:
+          When creating the exception holder we now have to pass in the
+          char and wchar translators
+
+        * tao/AnyTypeCode/Union_TypeCode.cpp:
+          Layout changes
+
 Wed Apr 25 07:19:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/AMI/ami_test_i.cpp:

@@ -86,7 +86,9 @@ namespace TAO_Messaging_Helper
            CORBA::Octet *marshaled_data,
            CORBA::ULong marshaled_data_length,
            CORBA::Boolean byte_order,
-           CORBA::Boolean is_system_exception);
+           CORBA::Boolean is_system_exception,
+           ACE_Char_Codeset_Translator *char_translator,
+           ACE_WChar_Codeset_Translator *wchar_translator);
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

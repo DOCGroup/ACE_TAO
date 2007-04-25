@@ -799,6 +799,7 @@ TAO_GIOP_Message_Base::process_reply_message (
     return retval;
 
   params.input_cdr_ = &input_cdr;
+  params.transport_->assign_translators (params.input_cdr_, 0);
 
   retval = params.transport_->tms ()->dispatch_reply (params);
 
