@@ -1,6 +1,6 @@
 // $Id$
 
-#include "DomainApplicationManager_Impl.h"
+#include "DomainApplicationManager_AMH_Impl.h"
 #include "ExecutionManager/Execution_Manager_Impl.h"
 #include "DAnCE/Deployment/Deployment_NodeApplicationManagerC.h"
 #include "ace/Null_Mutex.h"
@@ -9,11 +9,11 @@
 #include "ace/Assert.h"
 
 #if !defined (__ACE_INLINE__)
-# include "DomainApplicationManager_Impl.inl"
+# include "DomainApplicationManager_AMH_Impl.inl"
 #endif /* __ACE_INLINE__ */
 
-CIAO::DomainApplicationManager_Impl::
-DomainApplicationManager_Impl (CORBA::ORB_ptr orb,
+CIAO::DomainApplicationManager_AMH_Impl::
+DomainApplicationManager_AMH_Impl (CORBA::ORB_ptr orb,
                                PortableServer::POA_ptr poa,
                                Deployment::TargetManager_ptr manager,
                                Execution_Manager::Execution_Manager_Impl * em,
@@ -67,7 +67,7 @@ DomainApplicationManager_Impl (CORBA::ORB_ptr orb,
   this->init ();
 }
 
-CIAO::DomainApplicationManager_Impl::~DomainApplicationManager_Impl ()
+CIAO::DomainApplicationManager_AMH_Impl::~DomainApplicationManager_AMH_Impl ()
 {
   if (CIAO::debug_level () > 1)
     {
@@ -75,8 +75,10 @@ CIAO::DomainApplicationManager_Impl::~DomainApplicationManager_Impl ()
     }
 }
 
-Deployment::NodeApplication_ptr
-CIAO::DomainApplicationManager_Impl::get_node_app (const char * node_name)
+void
+CIAO::DomainApplicationManager_AMH_Impl::get_node_app (
+  Deployment::AMH_DomainApplicationManagerResponseHandler_ptr _tao_rh,
+  const char * node_name)
 {
   // Get the NodeApplication object reference.
   ACE_Hash_Map_Entry <ACE_CString, Chained_Artifacts> *entry = 0;
@@ -84,57 +86,32 @@ CIAO::DomainApplicationManager_Impl::get_node_app (const char * node_name)
   if (this->artifact_map_.find (node_name, entry) != 0)
     {
       ACE_ERROR ((LM_ERROR,
-                  "DAnCE (%P|%t) DomainApplicationManager_Impl.cpp -"
-                  "CIAO::DomainApplicationManager_Impl::get_node_app -"
+                  "DAnCE (%P|%t) DomainApplicationManager_AMH_Impl.cpp -"
+                  "CIAO::DomainApplicationManager_AMH_Impl::get_node_app -"
                   "ERROR while finding the node application "
                   "for the node [%s] \n",
                   node_name));
       throw Deployment::NoSuchName ();
     }
 
-  return
+  _tao_rh->get_node_app (
     Deployment::NodeApplication::_duplicate (
-      entry->int_id_.node_application_.in ());
+      entry->int_id_.node_application_.in ()));
 }
 
 void
-CIAO::DomainApplicationManager_Impl::init ()
+CIAO::DomainApplicationManager_AMH_Impl::init ()
 {
   try
     {
-
-      //Deployment::DnC_Dump::dump (this->plan_);
-      /*
-      //======================================
-      // Dump the contents of infoProperty to a XML file
-      if (CIAO::debug_level () > 1)
-      {
-        CIAO::DAnCE::ServerResource *sr = 0;
-        this->plan_.infoProperty[0].value >>= sr;
-
-        Config_Handlers::SRD_Handler reverse_handler (sr);
-
-        Config_Handlers::XML_Helper the_helper;
-        xercesc::DOMDocument *the_xsc
-              (the_helper.create_dom ("CIAO:ServerResources",
-               "http://www.dre.vanderbilt.edu/ServerResources"));
-
-        ServerResources (*reverse_handler.srd_xsc (), the_xsc);
-
-        // write out the result
-        the_helper.write_DOM (the_xsc, "output.srd");
-      }
-      */
-      //======================================
-
       // (1) Call get_plan_info() method to get the total number
       //     of child plans and list of NodeManager names, and
       // (2) Check the validity of the global deployment plan.
       if (! this->get_plan_info ())
         {
           ACE_ERROR ((LM_ERROR,
-                      "DAnCE (%P|%t) DomainApplicationManager_Impl.cpp -"
-                      "CIAO::DomainApplicationManager_Impl::init -"
+                      "DAnCE (%P|%t) DomainApplicationManager_AMH_Impl.cpp -"
+                      "CIAO::DomainApplicationManager_AMH_Impl::init -"
                       "ERROR while calling get_plan_info () \n"));
           throw Deployment::PlanError ();
         }
@@ -143,8 +120,8 @@ CIAO::DomainApplicationManager_Impl::init ()
       if (! this->split_plan ())
         {
           ACE_ERROR ((LM_ERROR,
-                      "DAnCE (%P|%t) DomainApplicationManager_Impl.cpp -"
-                      "CIAO::DomainApplicationManager_Impl::init -"
+                      "DAnCE (%P|%t) DomainApplicationManager_AMH_Impl.cpp -"
+                      "CIAO::DomainApplicationManager_AMH_Impl::init -"
                       "ERROR while calling split_plan () \n"));
           throw Deployment::PlanError ();
         }
@@ -164,8 +141,8 @@ CIAO::DomainApplicationManager_Impl::init ()
                                         entry) != 0)
             {
               ACE_ERROR ((LM_ERROR,
-                          "DAnCE (%P|%t) DomainApplicationManager_Impl.cpp -"
-                          "CIAO::DomainApplicationManager_Impl::init -"
+                          "DAnCE (%P|%t) DomainApplicationManager_AMH_Impl.cpp -"
+                          "CIAO::DomainApplicationManager_AMH_Impl::init -"
                           "ERROR while finding the node specific plan "
                           "for the node [%s] \n",
                           this->node_manager_names_[i].c_str ()));
@@ -187,8 +164,8 @@ CIAO::DomainApplicationManager_Impl::init ()
           if (CORBA::is_nil (app_manager.in ()))
             {
               ACE_ERROR ((LM_ERROR,
-                          "DAnCE (%P|%t) DomainApplicationManager_Impl.cpp -"
-                          "CIAO::DomainApplicationManager_Impl::init -"
+                          "DAnCE (%P|%t) DomainApplicationManager_AMH_Impl.cpp -"
+                          "CIAO::DomainApplicationManager_AMH_Impl::init -"
                           "ERROR while narroing the NAM "
                           "for the node [%s] \n",
                           this->node_manager_names_[i].c_str ()));
@@ -198,7 +175,7 @@ CIAO::DomainApplicationManager_Impl::init ()
 
               ACE_DEBUG ((LM_DEBUG, error.c_str ()));
               throw
-                 (Deployment::StartError ("DomainApplicationManager_Impl:init",
+                 (Deployment::StartError ("DomainApplicationManager_AMH_Impl:init",
                                           error.c_str ()));
             }
 
@@ -208,15 +185,15 @@ CIAO::DomainApplicationManager_Impl::init ()
     }
   catch (const CORBA::Exception& ex)
     {
-      ex._tao_print_exception ("DomainApplicationManager_Impl::init\t\n");
+      ex._tao_print_exception ("DomainApplicationManager_AMH_Impl::init\t\n");
       throw;
     }
 }
 
 bool
-CIAO::DomainApplicationManager_Impl::get_plan_info (void)
+CIAO::DomainApplicationManager_AMH_Impl::get_plan_info (void)
 {
-  CIAO_TRACE("CIAO::DomainApplicationManager_Impl::get_plan_info");
+  CIAO_TRACE("CIAO::DomainApplicationManager_AMH_Impl::get_plan_info");
 
   // Read the deployment.dat file and get to know the different nodes
   // that are present in the deployment domain.
@@ -226,8 +203,8 @@ CIAO::DomainApplicationManager_Impl::get_plan_info (void)
   if ( this->deployment_config_.init (this->deployment_file_) == -1 )
     {
       ACE_ERROR ((LM_ERROR,
-                  "DAnCE (%P|%t) DomainApplicationManager_Impl.cpp -"
-                  "CIAO::DomainApplicationManager_Impl::get_plan_info -"
+                  "DAnCE (%P|%t) DomainApplicationManager_AMH_Impl.cpp -"
+                  "CIAO::DomainApplicationManager_AMH_Impl::get_plan_info -"
                   "ERROR while trying to initialize after reading "
                   "deployment DAT file \n"));
       return 0;
@@ -240,8 +217,8 @@ CIAO::DomainApplicationManager_Impl::get_plan_info (void)
   if (length == 0)
     {
       ACE_ERROR ((LM_ERROR,
-                  "DAnCE (%P|%t) DomainApplicationManager_Impl.cpp -"
-                  "CIAO::DomainApplicationManager_Impl::get_plan_info -"
+                  "DAnCE (%P|%t) DomainApplicationManager_AMH_Impl.cpp -"
+                  "CIAO::DomainApplicationManager_AMH_Impl::get_plan_info -"
                   "ERROR while trying to get the total instances to "
                   "be deployed \n"));
       return false;
@@ -309,9 +286,9 @@ CIAO::DomainApplicationManager_Impl::get_plan_info (void)
 //@@ We should ask those spec writers to look at the code below, hopefully
 //   They will realize some thing.
 int
-CIAO::DomainApplicationManager_Impl::split_plan (void)
+CIAO::DomainApplicationManager_AMH_Impl::split_plan (void)
 {
-  CIAO_TRACE("CIAO::DomainApplicationManager_Impl::split_plan");
+  CIAO_TRACE("CIAO::DomainApplicationManager_AMH_Impl::split_plan");
 
   // Initialize the total number of child deployment plans specified
   // by the global plan.
@@ -468,10 +445,10 @@ CIAO::DomainApplicationManager_Impl::split_plan (void)
 }
 
 void
-CIAO::DomainApplicationManager_Impl::
+CIAO::DomainApplicationManager_AMH_Impl::
 add_connections (const Deployment::Connections & incoming_conn)
 {
-  CIAO_TRACE("CIAO::DomainApplicationManager_Impl::add_connections");
+  CIAO_TRACE("CIAO::DomainApplicationManager_AMH_Impl::add_connections");
 
   CORBA::ULong const old_len = this->all_connections_->length ();
 
@@ -487,11 +464,12 @@ add_connections (const Deployment::Connections & incoming_conn)
 }
 
 void
-CIAO::DomainApplicationManager_Impl::
-startLaunch (const ::Deployment::Properties & configProperty,
+CIAO::DomainApplicationManager_AMH_Impl::
+startLaunch (Deployment::AMH_DomainApplicationManagerResponseHandler_ptr _tao_rh,
+             const ::Deployment::Properties & configProperty,
              ::CORBA::Boolean start)
 {
-  CIAO_TRACE("CIAO::DomainApplicationManager_Impl::startLaunch");
+  CIAO_TRACE("CIAO::DomainApplicationManager_AMH_Impl::startLaunch");
   ACE_UNUSED_ARG (start);
 
   try
@@ -511,8 +489,8 @@ startLaunch (const ::Deployment::Properties & configProperty,
                                         entry) != 0)
             {
               ACE_ERROR ((LM_ERROR,
-                          "DAnCE (%P|%t) DomainApplicationManager_Impl.cpp -"
-                          "CIAO::DomainApplicationManager_Impl::startLaunch -"
+                          "DAnCE (%P|%t) DomainApplicationManager_AMH_Impl.cpp -"
+                          "CIAO::DomainApplicationManager_AMH_Impl::startLaunch -"
                           "ERROR while finding the node specific plan "
                           "for the node [%s] \n",
                           this->node_manager_names_[i].c_str ()));
@@ -523,7 +501,7 @@ startLaunch (const ::Deployment::Properties & configProperty,
 
               throw
                  (Deployment::StartError
-                    ("DomainApplicationManager_Impl:startLaunch",
+                    ("DomainApplicationManager_AMH_Impl:startLaunch",
                      error.c_str ()));
             }
 
@@ -533,8 +511,8 @@ startLaunch (const ::Deployment::Properties & configProperty,
           if (CORBA::is_nil (my_nam))
             {
               ACE_ERROR ((LM_ERROR,
-                          "DAnCE (%P|%t) DomainApplicationManager_Impl.cpp -"
-                          "CIAO::DomainApplicationManager_Impl::startLaunch -"
+                          "DAnCE (%P|%t) DomainApplicationManager_AMH_Impl.cpp -"
+                          "CIAO::DomainApplicationManager_AMH_Impl::startLaunch -"
                           "ERROR while narrowing the NAM "
                           "for the node [%s] \n",
                           this->node_manager_names_[i].c_str ()));
@@ -546,7 +524,7 @@ startLaunch (const ::Deployment::Properties & configProperty,
 
               throw
                 (Deployment::StartError
-                   ("DomainApplicationManager_Impl::startLaunch",
+                   ("DomainApplicationManager_AMH_Impl::startLaunch",
                      error.c_str ()));
             }
 
@@ -585,8 +563,8 @@ startLaunch (const ::Deployment::Properties & configProperty,
           if (CORBA::is_nil (my_na.in ()))
             {
               ACE_ERROR ((LM_ERROR,
-                          "DAnCE (%P|%t) DomainApplicationManager_Impl.cpp -"
-                          "CIAO::DomainApplicationManager_Impl::startLaunch -"
+                          "DAnCE (%P|%t) DomainApplicationManager_AMH_Impl.cpp -"
+                          "CIAO::DomainApplicationManager_AMH_Impl::startLaunch -"
                           "ERROR while narrowing the NAM "
                           "for the node [%s] \n",
                           this->node_manager_names_[i].c_str ()));
@@ -599,7 +577,7 @@ startLaunch (const ::Deployment::Properties & configProperty,
 
               throw
                 (Deployment::StartError
-                   ("DomainApplicationManager_Impl::startLaunch",
+                   ("DomainApplicationManager_AMH_Impl::startLaunch",
                      error.c_str ()));
             }
 
@@ -622,15 +600,17 @@ startLaunch (const ::Deployment::Properties & configProperty,
   catch (const CORBA::Exception& ex)
     {
       ex._tao_print_exception (
-        "DomainApplicationManager_Impl::startLaunch\t\n");
+        "DomainApplicationManager_AMH_Impl::startLaunch\t\n");
       throw;
     }
+
+  _tao_rh->startLaunch ();
 
 }
 
 
 void
-CIAO::DomainApplicationManager_Impl::install_all_es (void)
+CIAO::DomainApplicationManager_AMH_Impl::install_all_es (void)
 {
   try
     {
@@ -643,8 +623,8 @@ CIAO::DomainApplicationManager_Impl::install_all_es (void)
                                         entry) != 0)
             {
               ACE_ERROR ((LM_ERROR,
-                          "DAnCE (%P|%t) DomainApplicationManager_Impl.cpp -"
-                          "CIAO::DomainApplicationManager_Impl::install_all_es -"
+                          "DAnCE (%P|%t) DomainApplicationManager_AMH_Impl.cpp -"
+                          "CIAO::DomainApplicationManager_AMH_Impl::install_all_es -"
                           "ERROR while finding the node specific plan "
                           "for the node [%s] \n",
                            this->esd_[j].node.in ()));
@@ -655,7 +635,7 @@ CIAO::DomainApplicationManager_Impl::install_all_es (void)
 
               throw
                 (Deployment::StartError
-                  ("DomainApplicationManager_Impl::install_all_es",
+                  ("DomainApplicationManager_AMH_Impl::install_all_es",
                     error.c_str ()));
             }
 
@@ -673,14 +653,14 @@ CIAO::DomainApplicationManager_Impl::install_all_es (void)
   catch (const CORBA::Exception& ex)
     {
       ex._tao_print_exception (
-        "DomainApplicationManager_Impl::install_all_es.\n");
+        "DomainApplicationManager_AMH_Impl::install_all_es.\n");
       throw;
     }
 
 }
 
 void
-CIAO::DomainApplicationManager_Impl::
+CIAO::DomainApplicationManager_AMH_Impl::
 add_es_to_map (const char * node_name,
                CIAO::CIAO_Event_Service * ciao_es)
 {
@@ -693,18 +673,19 @@ add_es_to_map (const char * node_name,
   catch (const CORBA::Exception& ex)
     {
       ex._tao_print_exception (
-        "DomainApplicationManager_Impl::add_es_to_map.\n");
+        "DomainApplicationManager_AMH_Impl::add_es_to_map.\n");
       throw;
     }
 
 }
 
 void
-CIAO::DomainApplicationManager_Impl::
-finishLaunch (CORBA::Boolean start,
+CIAO::DomainApplicationManager_AMH_Impl::
+finishLaunch (Deployment::AMH_DomainApplicationManagerResponseHandler_ptr _tao_rh,
+              CORBA::Boolean start,
               CORBA::Boolean is_ReDaC)
 {
-  CIAO_TRACE("CIAO::DomainApplicationManager_Impl::finishLaunch");
+  CIAO_TRACE("CIAO::DomainApplicationManager_AMH_Impl::finishLaunch");
   try
     {
       // Install all the CIAO_Event_Services within the Deployment Plan
@@ -724,8 +705,8 @@ finishLaunch (CORBA::Boolean start,
                                         entry) != 0)
             {
               ACE_ERROR ((LM_ERROR,
-                          "DAnCE (%P|%t) DomainApplicationManager_Impl.cpp -"
-                          "CIAO::DomainApplicationManager_Impl::finishLaunch -"
+                          "DAnCE (%P|%t) DomainApplicationManager_AMH_Impl.cpp -"
+                          "CIAO::DomainApplicationManager_AMH_Impl::finishLaunch -"
                           "ERROR while finding the node specific plan "
                           "for the node [%s] \n",
                           this->node_manager_names_[i].c_str ()));
@@ -736,7 +717,7 @@ finishLaunch (CORBA::Boolean start,
 
               throw
                 (Deployment::StartError
-                   ("DomainApplicationManager_Impl::finishLaunch",
+                   ("DomainApplicationManager_AMH_Impl::finishLaunch",
                      error.c_str ()));
             }
 
@@ -762,20 +743,20 @@ finishLaunch (CORBA::Boolean start,
               (entry->int_id_).child_plan_.in (),
               !is_ReDaC,
               true,  // we search *new* plan
-              DomainApplicationManager_Impl::Internal_Connections);
+              DomainApplicationManager_AMH_Impl::Internal_Connections);
 
           if (my_connections == 0)
             {
               ACE_ERROR ((LM_ERROR,
-                          "DAnCE (%P|%t) DomainApplicationManager_Impl.cpp -"
-                          "CIAO::DomainApplicationManager_Impl::finishLaunch -"
+                          "DAnCE (%P|%t) DomainApplicationManager_AMH_Impl.cpp -"
+                          "CIAO::DomainApplicationManager_AMH_Impl::finishLaunch -"
                           "ERROR while getting the outgoing connections "
                           "for the node [%s] \n",
                           this->node_manager_names_[i].c_str ()));
 
               throw
                 (Deployment::StartError
-                  ("DomainApplicationManager_Impl::finish_launch",
+                  ("DomainApplicationManager_AMH_Impl::finish_launch",
                     "There was some error establishing connections."));
             }
 
@@ -818,7 +799,7 @@ finishLaunch (CORBA::Boolean start,
                         (entry->int_id_).old_child_plan_.in (),
                         true, // yes, get *all* the connections
                         false, // search in the *old* plan
-                        DomainApplicationManager_Impl::Internal_Connections);
+                        DomainApplicationManager_AMH_Impl::Internal_Connections);
 
               // Pass in the "false" parameter to get *all* the connections in
               // the new deployment plan, regardless those in old plan
@@ -827,7 +808,7 @@ finishLaunch (CORBA::Boolean start,
                         (entry->int_id_).child_plan_.in (),
                         true, // yes, get *all* the connections
                         true,  // search in the *new* plan
-                        DomainApplicationManager_Impl::Internal_Connections);
+                        DomainApplicationManager_AMH_Impl::Internal_Connections);
 
               Deployment::Connections * unnecessary_connections =
                 this->subtract_connections (*connections_in_old_plan,
@@ -893,7 +874,7 @@ finishLaunch (CORBA::Boolean start,
   catch (const CORBA::Exception& ex)
     {
       ex._tao_print_exception (
-        "DomainApplicationManager_Impl::finishLaunch: ""Killing NodeApplications.\n");
+        "DomainApplicationManager_AMH_Impl::finishLaunch: ""Killing NodeApplications.\n");
 
       // Invoke destroyManager() operation on each cached
       // NodeManager object.
@@ -915,10 +896,11 @@ finishLaunch (CORBA::Boolean start,
       throw;
     }
 
+  _tao_rh->finishLaunch ();
 }
 
 void
-CIAO::DomainApplicationManager_Impl::
+CIAO::DomainApplicationManager_AMH_Impl::
 post_finishLaunch (void)
 {
   try
@@ -943,14 +925,14 @@ post_finishLaunch (void)
   catch (const CORBA::Exception& ex)
     {
       ex._tao_print_exception (
-        "DomainApplicationManager_Impl::post_finishLaunch.\n");
+        "DomainApplicationManager_AMH_Impl::post_finishLaunch.\n");
       throw;
     }
 
 }
 
 CIAO::Component_Binding_Info *
-CIAO::DomainApplicationManager_Impl::
+CIAO::DomainApplicationManager_AMH_Impl::
 populate_binding_info (const ACE_CString& name,
                        const ACE_CString& child_uuid)
 {
@@ -990,7 +972,7 @@ populate_binding_info (const ACE_CString& name,
 }
 
 CIAO::Component_Binding_Info *
-CIAO::DomainApplicationManager_Impl::
+CIAO::DomainApplicationManager_AMH_Impl::
 populate_binding_info (const ACE_CString& name)
 {
   CIAO::Component_Binding_Info * retv;
@@ -1014,7 +996,7 @@ populate_binding_info (const ACE_CString& name)
 }
 
 void
-CIAO::DomainApplicationManager_Impl::
+CIAO::DomainApplicationManager_AMH_Impl::
 add_shared_components (const Deployment::ComponentPlans & shared)
 {
   for (CORBA::ULong i = 0; i < shared.length (); ++i)
@@ -1026,7 +1008,7 @@ add_shared_components (const Deployment::ComponentPlans & shared)
 }
 
 bool
-CIAO::DomainApplicationManager_Impl::
+CIAO::DomainApplicationManager_AMH_Impl::
 is_shared_component (const char * name)
 {
   for (CORBA::ULong i = 0; i < this->shared_->length (); ++i)
@@ -1040,7 +1022,7 @@ is_shared_component (const char * name)
 }
 
 void
-CIAO::DomainApplicationManager_Impl::
+CIAO::DomainApplicationManager_AMH_Impl::
 synchronize_shared_components_with_node_managers (void)
 {
   for (CORBA::ULong i = 0; i < this->num_child_plans_; ++i)
@@ -1054,8 +1036,8 @@ synchronize_shared_components_with_node_managers (void)
                                     entry) != 0)
         {
           ACE_ERROR ((LM_ERROR,
-                      "DAnCE (%P|%t) DomainApplicationManager_Impl.cpp -"
-                      "CIAO::DomainApplicationManager_Impl::startLaunch -"
+                      "DAnCE (%P|%t) DomainApplicationManager_AMH_Impl.cpp -"
+                      "CIAO::DomainApplicationManager_AMH_Impl::startLaunch -"
                       "ERROR while finding the node specific plan "
                       "for the node [%s] \n",
                       this->node_manager_names_[i].c_str ()));
@@ -1066,7 +1048,7 @@ synchronize_shared_components_with_node_managers (void)
 
           throw
               (Deployment::StartError
-                ("DomainApplicationManager_Impl:startLaunch",
+                ("DomainApplicationManager_AMH_Impl:startLaunch",
                   error.c_str ()));
         }
 
@@ -1083,13 +1065,13 @@ synchronize_shared_components_with_node_managers (void)
 
 
 Deployment::Connections *
-CIAO::DomainApplicationManager_Impl::
+CIAO::DomainApplicationManager_AMH_Impl::
 get_outgoing_connections (const Deployment::DeploymentPlan &plan,
                           bool is_getting_all_connections,
                           bool is_search_new_plan,
                           Connection_Search_Type t)
 {
-  CIAO_TRACE("CIAO::DomainApplicationManager_Impl::get_outgoing_connections");
+  CIAO_TRACE("CIAO::DomainApplicationManager_AMH_Impl::get_outgoing_connections");
   Deployment::Connections_var connections;
   ACE_NEW_RETURN (connections,
                   Deployment::Connections,
@@ -1117,13 +1099,13 @@ get_outgoing_connections (const Deployment::DeploymentPlan &plan,
 
 // Get outgoing connections for particular instance
 bool
-CIAO::DomainApplicationManager_Impl::
+CIAO::DomainApplicationManager_AMH_Impl::
 get_outgoing_connections_i (const char * instname,
                             Deployment::Connections & retv,
                             bool is_getting_all_connections,
                             bool is_search_new_plan)
 {
-  CIAO_TRACE("CIAO::DomainApplicationManager_Impl::get_outoing_connections_i");
+  CIAO_TRACE("CIAO::DomainApplicationManager_AMH_Impl::get_outoing_connections_i");
 
   Deployment::DeploymentPlan tmp_plan;
   if (is_search_new_plan)
@@ -1156,7 +1138,7 @@ get_outgoing_connections_i (const char * instname,
 // Search the current binding to see whether a connection of this
 // component needs to be populated
 bool
-CIAO::DomainApplicationManager_Impl::
+CIAO::DomainApplicationManager_AMH_Impl::
 populate_connection_for_binding (
      const char * instname,
      const Deployment::PlanConnectionDescription & binding,
@@ -1186,7 +1168,7 @@ populate_connection_for_binding (
 }
 
 bool
-CIAO::DomainApplicationManager_Impl::
+CIAO::DomainApplicationManager_AMH_Impl::
 handle_es_connection (
      const char * instname,
      const Deployment::PlanConnectionDescription & binding,
@@ -1208,8 +1190,8 @@ handle_es_connection (
   if (binding.externalReference.length () != 1)
     {
       ACE_ERROR ((LM_ERROR,
-                  "DAnCE (%P|%t) DomainApplicationManager_Impl.cpp -"
-                  "CIAO::DomainApplicationManager_Impl::"
+                  "DAnCE (%P|%t) DomainApplicationManager_AMH_Impl.cpp -"
+                  "CIAO::DomainApplicationManager_AMH_Impl::"
                   "handle_publisher_es_connection -"
                   "externalReference must have length of 1.\n"));
       return false;
@@ -1243,7 +1225,7 @@ handle_es_connection (
       error += ": unable to find object reference for connection ";
       error += binding.name.in ();
       throw Deployment::StartError(
-        "DomainApplicationManager_Impl::create_connections_i",
+        "DomainApplicationManager_AMH_Impl::create_connections_i",
         error.c_str ());
     }
 
@@ -1281,7 +1263,7 @@ handle_es_connection (
           error += ": unable to find object reference for connection ";
           error += binding.name.in ();
           throw Deployment::StartError(
-            "DomainApplicationManager_Impl::handle_es_connection",
+            "DomainApplicationManager_AMH_Impl::handle_es_connection",
             error.c_str ());
         }
     }
@@ -1290,7 +1272,7 @@ handle_es_connection (
 }
 
 bool
-CIAO::DomainApplicationManager_Impl::
+CIAO::DomainApplicationManager_AMH_Impl::
 handle_direct_connection (
      const char * instname,
      const Deployment::PlanConnectionDescription & binding,
@@ -1370,7 +1352,7 @@ handle_direct_connection (
               error += ": unable to find object reference for connection ";
               error += binding.name.in ();
               throw Deployment::StartError(
-                "DomainApplicationManager_Impl::create_connections_i",
+                "DomainApplicationManager_AMH_Impl::create_connections_i",
                 error.c_str ());
             }
           break;
@@ -1380,10 +1362,11 @@ handle_direct_connection (
 }
 
 void
-CIAO::DomainApplicationManager_Impl::
-start ()
+CIAO::DomainApplicationManager_AMH_Impl::
+start (
+   Deployment::AMH_DomainApplicationManagerResponseHandler_ptr _tao_rh)
 {
-  CIAO_TRACE("CIAO::DomainApplicationManager_Impl::start");
+  CIAO_TRACE("CIAO::DomainApplicationManager_AMH_Impl::start");
 
   try
     {
@@ -1398,8 +1381,8 @@ start ()
                                         entry) != 0)
             {
               ACE_ERROR ((LM_ERROR,
-                          "DAnCE (%P|%t) DomainApplicationManager_Impl.cpp -"
-                          "CIAO::DomainApplicationManager_Impl::start -"
+                          "DAnCE (%P|%t) DomainApplicationManager_AMH_Impl.cpp -"
+                          "CIAO::DomainApplicationManager_AMH_Impl::start -"
                           "ERROR while finding the node specific plan "
                           "for the node [%s] \n",
                           this->node_manager_names_[i].c_str ()));
@@ -1409,7 +1392,7 @@ start ()
               error += this->node_manager_names_[i];
 
               throw Deployment::StartError(
-                "DomainApplicationManager_Impl:startLaunch",
+                "DomainApplicationManager_AMH_Impl:startLaunch",
                 error.c_str ());
             }
 
@@ -1429,8 +1412,8 @@ start ()
                                         entry) != 0)
             {
               ACE_ERROR ((LM_ERROR,
-                          "DAnCE (%P|%t) DomainApplicationManager_Impl.cpp -"
-                          "CIAO::DomainApplicationManager_Impl::start -"
+                          "DAnCE (%P|%t) DomainApplicationManager_AMH_Impl.cpp -"
+                          "CIAO::DomainApplicationManager_AMH_Impl::start -"
                           "ERROR while finding the node specific plan "
                           "for the node [%s] \n",
                           this->node_manager_names_[i].c_str ()));
@@ -1456,8 +1439,8 @@ start ()
                                         entry) != 0)
             {
               ACE_ERROR ((LM_ERROR,
-                          "DAnCE (%P|%t) DomainApplicationManager_Impl.cpp -"
-                          "CIAO::DomainApplicationManager_Impl::start -"
+                          "DAnCE (%P|%t) DomainApplicationManager_AMH_Impl.cpp -"
+                          "CIAO::DomainApplicationManager_AMH_Impl::start -"
                           "ERROR while finding the node specific plan "
                           "for the node [%s] \n",
                           this->node_manager_names_[i].c_str ()));
@@ -1467,7 +1450,7 @@ start ()
               error += this->node_manager_names_[i];
 
               throw Deployment::StartError(
-                "DomainApplicationManager_Impl:startLaunch",
+                "DomainApplicationManager_AMH_Impl:startLaunch",
                 error.c_str ());
             }
 
@@ -1479,17 +1462,19 @@ start ()
     }
   catch (const CORBA::Exception& ex)
     {
-      ex._tao_print_exception ("DomainApplicationManager_Impl::start\t\n");
+      ex._tao_print_exception ("DomainApplicationManager_AMH_Impl::start\t\n");
       throw;
     }
 
+  _tao_rh->start ();
 }
 
 void
-CIAO::DomainApplicationManager_Impl::
-destroyApplication ()
+CIAO::DomainApplicationManager_AMH_Impl::
+destroyApplication (
+  Deployment::AMH_DomainApplicationManagerResponseHandler_ptr _tao_rh)
 {
-  CIAO_TRACE("CIAO::DomainApplicationManager_Impl::destroyApplication");
+  CIAO_TRACE("CIAO::DomainApplicationManager_AMH_Impl::destroyApplication");
   try
     {
       // Passivate shared components also, which should delegate to EM to handle
@@ -1504,8 +1489,8 @@ destroyApplication ()
                                         entry) != 0)
             {
               ACE_ERROR ((LM_ERROR,
-                          "DAnCE (%P|%t) DomainApplicationManager_Impl.cpp -"
-                          "CIAO::DomainApplicationManager_Impl::destroyApplication -"
+                          "DAnCE (%P|%t) DomainApplicationManager_AMH_Impl.cpp -"
+                          "CIAO::DomainApplicationManager_AMH_Impl::destroyApplication -"
                           "ERROR while finding the node specific plan "
                           "for the node [%s] \n",
                           this->node_manager_names_[i].c_str ()));
@@ -1516,7 +1501,7 @@ destroyApplication ()
 
               throw
                 (Deployment::StopError
-                   ("DomainApplicationManager_Impl::destroyApplication",
+                   ("DomainApplicationManager_AMH_Impl::destroyApplication",
                      error.c_str ()));
             }
       ACE_DEBUG ((LM_DEBUG, "DAM_Impl: Invoking passivate on %s\n",
@@ -1541,7 +1526,7 @@ destroyApplication ()
               (entry->int_id_).child_plan_.in (),
               true,  // yes, get *all* the connections
               true,  // yes, we search the current plan
-              DomainApplicationManager_Impl::External_Connections);
+              DomainApplicationManager_AMH_Impl::External_Connections);
 
           // Invoke finishLaunch() on NodeApplication to remove bindings.
           // If this NodeApplication is not within the control of this DAM,
@@ -1609,17 +1594,19 @@ destroyApplication ()
   catch (const CORBA::Exception& ex)
     {
       ex._tao_print_exception (
-        "DomainApplicationManager_Impl::destroyApplication\t\n");
+        "DomainApplicationManager_AMH_Impl::destroyApplication\t\n");
       throw;
     }
 
+  _tao_rh->destroyApplication ();
 }
 
 void
-CIAO::DomainApplicationManager_Impl::
-destroyManager ()
+CIAO::DomainApplicationManager_AMH_Impl::
+destroyManager (
+  Deployment::AMH_DomainApplicationManagerResponseHandler_ptr _tao_rh)
 {
-  CIAO_TRACE("CIAO::DomainApplicationManager_Impl::destroyManager");
+  CIAO_TRACE("CIAO::DomainApplicationManager_AMH_Impl::destroyManager");
   try
     {
       for (CORBA::ULong i = 0; i < this->num_child_plans_; ++i)
@@ -1645,15 +1632,16 @@ destroyManager ()
   catch (const CORBA::Exception& ex)
     {
       ex._tao_print_exception (
-        "DomainApplicationManager_Impl::destroyManager\t\n");
+        "DomainApplicationManager_AMH_Impl::destroyManager\t\n");
       throw;
     }
-
+  _tao_rh->destroyManager ();
 }
 
 void
-CIAO::DomainApplicationManager_Impl::
+CIAO::DomainApplicationManager_AMH_Impl::
 perform_redeployment (
+  Deployment::AMH_DomainApplicationManagerResponseHandler_ptr _tao_rh,
   const Deployment::DeploymentPlan & plan)
 {
   // Currently we could dynamically update the NodeManagerMap topology,
@@ -1680,49 +1668,49 @@ perform_redeployment (
       ACE_NEW (properties,
                Deployment::Properties);
 
-      this->startLaunch (properties.in (), false);
+      this->startLaunch (_tao_rh, properties.in (), false);
 
       // finishLaunch will (1) establish new connections, and (2)
       // get rid of those non-existing connections. As we know, in the
       // node level, the connections are cached within the NodeApplication *and*
       // Container, then we should modify the implementation of the
       // <finishLaunch> on the NodeApplication to accomplish this.
-      this->finishLaunch (true, true);  // true means start activation also.
+      this->finishLaunch (_tao_rh, true, true);  // true means start activation also.
                                         // ture means "ReDaC" is desired
 
-      this->start ();
+      this->start (_tao_rh);
+
+      _tao_rh->perform_redeployment ();
     }
   catch (const CORBA::Exception& ex)
     {
       ex._tao_print_exception (
-        "DomainApplicationManager_Impl::perform_redeployment\t\n");
+        "DomainApplicationManager_AMH_Impl::perform_redeployment\t\n");
       this->plan_ = this->old_plan_;
       throw;
     }
 }
 
 
-// Returns the DeploymentPlan associated with this ApplicationManager.
-::Deployment::DeploymentPlan *
-CIAO::DomainApplicationManager_Impl::
-getPlan ()
+void
+CIAO::DomainApplicationManager_AMH_Impl::
+getPlan (Deployment::AMH_DomainApplicationManagerResponseHandler_ptr _tao_rh)
 {
-  CIAO_TRACE("CIAO::DomainApplicationManager_Impl::getPlan");
+  CIAO_TRACE("CIAO::DomainApplicationManager_AMH_Impl::getPlan");
   Deployment::DeploymentPlan_var plan = 0;
   // Make a deep copy of the Plan
   ACE_NEW_THROW_EX (plan,
                     Deployment::DeploymentPlan (this->plan_),
                     CORBA::NO_MEMORY ());
 
-  // Transfer ownership
-  return plan._retn ();
+  _tao_rh->getPlan (plan.in ());
 }
 
 void
-CIAO::DomainApplicationManager_Impl::
+CIAO::DomainApplicationManager_AMH_Impl::
 dump_connections (const ::Deployment::Connections & connections)
 {
-  CIAO_TRACE("CIAO::DomainApplicationManager_Impl::dump_connections");
+  CIAO_TRACE("CIAO::DomainApplicationManager_AMH_Impl::dump_connections");
   const CORBA::ULong conn_len = connections.length ();
   for (CORBA::ULong i = 0; i < conn_len; ++i)
     {
@@ -1781,7 +1769,7 @@ dump_connections (const ::Deployment::Connections & connections)
 }
 
 bool
-CIAO::DomainApplicationManager_Impl::
+CIAO::DomainApplicationManager_AMH_Impl::
 already_exists (const Deployment::PlanConnectionDescription & conn)
 {
   const CORBA::ULong conn_len = this->old_plan_.connection.length();
@@ -1796,7 +1784,7 @@ already_exists (const Deployment::PlanConnectionDescription & conn)
 }
 
 Deployment::Connections *
-CIAO::DomainApplicationManager_Impl::
+CIAO::DomainApplicationManager_AMH_Impl::
 subtract_connections (const Deployment::Connections & left,
                       const Deployment::Connections & right)
 {
@@ -1835,7 +1823,7 @@ subtract_connections (const Deployment::Connections & left,
 }
 
 void
-CIAO::DomainApplicationManager_Impl::
+CIAO::DomainApplicationManager_AMH_Impl::
 passivate_shared_components (void)
 {
   try
@@ -1860,14 +1848,14 @@ passivate_shared_components (void)
   catch (const CORBA::Exception& ex)
     {
       ex._tao_print_exception (
-        "DomainApplicationManager_Impl::passivate_shared_components.\n");
+        "DomainApplicationManager_AMH_Impl::passivate_shared_components.\n");
       throw;
     }
 
 }
 
 void
-CIAO::DomainApplicationManager_Impl::
+CIAO::DomainApplicationManager_AMH_Impl::
 activate_shared_components (void)
 {
   try
@@ -1892,14 +1880,14 @@ activate_shared_components (void)
   catch (const CORBA::Exception& ex)
     {
       ex._tao_print_exception (
-        "DomainApplicationManager_Impl::activate_shared_components.\n");
+        "DomainApplicationManager_AMH_Impl::activate_shared_components.\n");
       throw;
     }
 
 }
 
 void
-CIAO::DomainApplicationManager_Impl::
+CIAO::DomainApplicationManager_AMH_Impl::
 purge_connections (Deployment::Connections_var & connections,
                    const char * inst)
 {
@@ -1929,7 +1917,7 @@ purge_connections (Deployment::Connections_var & connections,
 }
 
 const Deployment::Properties *
-CIAO::DomainApplicationManager_Impl::
+CIAO::DomainApplicationManager_AMH_Impl::
 get_connection_QoS_configuration (const Deployment::Requirement & requirement)
 {
   // Get the name/identifier of the filter associated with
@@ -1950,7 +1938,7 @@ get_connection_QoS_configuration (const Deployment::Requirement & requirement)
 
           if ((requirement.property[i].value >>= filter_name) == false)
             ACE_ERROR ((LM_ERROR,
-                        "ERROR: DomainApplicationManager_Impl::"
+                        "ERROR: DomainApplicationManager_AMH_Impl::"
                         "get_connection_QoS_configuration unable to "
                         "extract event filter information\n"));
         }

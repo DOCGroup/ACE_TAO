@@ -11,7 +11,7 @@ DomainApplicationManager_AMI_Impl (
   Execution_Manager::Execution_Manager_Impl *em,
   const Deployment::DeploymentPlan &plan,
   const char * deployment_file)
-  : DomainApplicationManager_Impl (orb, poa, manager, em, plan, deployment_file),
+  : DomainApplicationManager_AMH_Impl (orb, poa, manager, em, plan, deployment_file),
   start_launch_reply_count_ (0)
 {
 }
@@ -38,6 +38,8 @@ startLaunch (Deployment::AMH_DomainApplicationManagerResponseHandler_ptr _tao_rh
 {
   CIAO_TRACE("CIAO::DomainApplicationManager_AMI_Impl::startLaunch");
   ACE_UNUSED_ARG (start);
+
+  ACE_DEBUG ((LM_ERROR, "Enter CIAO::DomainApplicationManager_AMI_Impl::startLaunch\n"));
 
   this->amh_response_handler_ = 
     Deployment::AMH_DomainApplicationManagerResponseHandler::_duplicate (_tao_rh);
@@ -100,14 +102,21 @@ startLaunch (Deployment::AMH_DomainApplicationManagerResponseHandler_ptr _tao_rh
                      error.c_str ()));
             }
 
-          // Create a reply-handler servant
+          // Create a reply handler struct
           AMI_NAM_Handler ami_nam_handler;
 
+          // Instantiate an reply handler servant object
           ACE_NEW (ami_nam_handler.servant_,
                    Deployment_AMI_NodeApplicationManagerHandler_i (this));
 
+  ACE_DEBUG ((LM_ERROR, "Step 1\n"));
+
           PortableServer::ObjectId_var oid = 
             this->poa_->activate_object (ami_nam_handler.servant_);
+
+  ACE_DEBUG ((LM_ERROR, "Step 2\n"));
+
+          this->rh_oid_.push_back (oid.in ());
 
           CORBA::Object_var handler_obj = poa_->id_to_reference (oid.in ());
           
@@ -121,7 +130,7 @@ startLaunch (Deployment::AMH_DomainApplicationManagerResponseHandler_ptr _tao_rh
           my_nam->sendc_startLaunch (ami_nam_handler.obj_ref_.in (), 
                                      configProperty, 0);
         }
-
+/*
       while (true)
         {
           // Check whether the reply has been returned
@@ -133,7 +142,7 @@ startLaunch (Deployment::AMH_DomainApplicationManagerResponseHandler_ptr _tao_rh
              //   break;
             }
         }
-
+*/
     }
   catch (const Deployment::StartError& ex)
     {
@@ -147,15 +156,20 @@ startLaunch (Deployment::AMH_DomainApplicationManagerResponseHandler_ptr _tao_rh
         "DomainApplicationManager_Impl::startLaunch\t\n");
       throw;
     }
-
+  ACE_DEBUG ((LM_ERROR, "Exit CIAO::DomainApplicationManager_AMI_Impl::startLaunch\n"));
 }
 
 
 void
 CIAO::DomainApplicationManager_AMI_Impl::
-post_startLaunch ()
+post_ami_startLaunch ()
 {
-  CIAO_TRACE("CIAO::DomainApplicationManager_AMI_Impl::post_startLaunch");
+  CIAO_TRACE("CIAO::DomainApplicationManager_AMI_Impl::post_ami_startLaunch");
+
+  if (CIAO::debug_level () > 9)
+    ACE_DEBUG ((LM_ERROR, 
+               "CIAO (%P|%t):DomainApplicationManager_AMI_Impl::post_ami_startLaunch called\n"));
+
 
   for (AMI_NAM_Handler_Table_Iterator iter (this->ami_nam_handler_table_.begin ());
         iter != this->ami_nam_handler_table_.end ();
@@ -176,9 +190,12 @@ post_startLaunch ()
     (entry->int_id_).node_application_ = 
       Deployment::NodeApplication::_duplicate (
         iter->int_id_.servant_->get_node_app ());
-
-    delete iter->int_id_.servant_;
-
-    this->amh_response_handler_->startLaunch ();
   }
+  
+  this->amh_response_handler_->startLaunch ();
+
+  for (size_t i = 0; i < this->rh_oid_.size (); ++i)
+    this->poa_->deactivate_object (this->rh_oid_[i].in ());
+
+  this->rh_oid_.clear ();
 }

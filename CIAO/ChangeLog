@@ -1,3 +1,41 @@
+Wed Apr 25 19:27:28 UTC 2007  Gan Deng  <gan.deng@vanderbilt.edu>
+
+        * DAnCE/DomainApplicationManager/DomainApplicationManager_AMH_Impl.cpp
+        * DAnCE/DomainApplicationManager/DomainApplicationManager_AMH_Impl.h
+        * DAnCE/DomainApplicationManager/DomainApplicationManager_AMH_Impl.inl
+        
+          An AMH-based implementation of DomainApplicationManager. This
+          class duplicates *most* of code with the non-AMH based
+          DomainApplicationManager implementation, eventually we should
+          either remove one version completely or find a way to minimize
+          the duplicate code. The public interfaces of these two classes are 
+          quite different.
+
+        * DAnCE/DomainApplicationManager/DomainApplicationManager_AMI_Impl.cpp
+        * DAnCE/DomainApplicationManager/DomainApplicationManager_AMI_Impl.h
+
+          Modified to use AMH-based DomainApplicationManager in
+          conjunction with the AMI.
+
+        * DAnCE/DomainApplicationManager/Reply_Handler_i.cpp
+        * DAnCE/DomainApplicationManager/Reply_Handler_i.h
+
+          The AMI callback reply handler should work with the
+          AMH-based DomainApplicationManager instead of the non-AMH based
+          version.
+        
+        * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp
+        
+          Modified to make the construction process of the
+          DomainApplicationManager to be more self-contained and atomic.
+
+        * DAnCE/ExecutionManager/Execution_Manager_Impl.cpp
+
+          Modified the instantation of the DomainApplicationManager
+          servant so we can mix between the AMH/AMI based
+          DomainApplicationManager servant and the synchronous based
+          DomainApplicationManager servant based on the command input.
+        
 Tue Apr 24 17:44:22 UTC 2007  Gan Deng  <gan.deng@vanderbilt.edu>
 
         * DAnCE/ExecutionManager/Execution_Manager_Impl.cpp
