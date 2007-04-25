@@ -255,7 +255,7 @@ TAO_Asynch_Reply_Dispatcher::schedule_timer (CORBA::ULong request_id,
   return this->timeout_handler_->schedule_timer (
       this->transport_->tms (),
       request_id,
-      max_wait_time);                   
+      max_wait_time);
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

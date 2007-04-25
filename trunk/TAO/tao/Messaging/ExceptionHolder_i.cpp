@@ -15,7 +15,9 @@ namespace TAO
 {
   ExceptionHolder::ExceptionHolder (void) :
     data_ (0),
-    count_ (0)
+    count_ (0),
+    char_translator_ (0),
+    wchar_translator_ (0)
   {
   }
 
@@ -24,10 +26,14 @@ namespace TAO
       ::CORBA::Boolean byte_order,
       const ::CORBA::OctetSeq &marshaled_exception,
       ::TAO::Exception_Data* data,
-      ::CORBA::ULong exceptions_count) :
+      ::CORBA::ULong exceptions_count,
+      ACE_Char_Codeset_Translator *char_translator,
+      ACE_WChar_Codeset_Translator *wchar_translator) :
         ::OBV_Messaging::ExceptionHolder (is_system_exception, byte_order, marshaled_exception),
         data_ (data),
-        count_ (exceptions_count)
+        count_ (exceptions_count),
+        char_translator_ (char_translator),
+        wchar_translator_ (wchar_translator)
   {
   }
 
@@ -51,7 +57,9 @@ namespace TAO
         this->marshaled_exception ().get_buffer (),
         this->marshaled_exception ().length (),
         this->byte_order (),
-        this->is_system_exception ());
+        this->is_system_exception (),
+        this->char_translator_,
+        this->wchar_translator_);
       }
 
   void ExceptionHolder::raise_exception_with_list (

@@ -54,7 +54,9 @@ namespace TAO
       ::CORBA::Boolean byte_order,
       const ::CORBA::OctetSeq &marshaled_exception,
       ::TAO::Exception_Data* data,
-      ::CORBA::ULong exceptions_count);
+      ::CORBA::ULong exceptions_count,
+      ACE_Char_Codeset_Translator *char_translator,
+      ACE_WChar_Codeset_Translator *wchar_translator);
 
     void set_exception_data (::TAO::Exception_Data* data,
                              ::CORBA::ULong exceptions_count);
@@ -73,6 +75,8 @@ namespace TAO
   private:
     TAO::Exception_Data* data_;
     CORBA::ULong count_;
+    ACE_Char_Codeset_Translator *char_translator_;
+    ACE_WChar_Codeset_Translator *wchar_translator_;
   };
 
   /**
