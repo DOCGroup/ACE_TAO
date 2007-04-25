@@ -2196,6 +2196,7 @@ Alexander Kornienko <alexfh at gmail dot com>
 Ben Mohlenhoff <Benjamin_A_Mohlenhoff at raytheon dot com>
 Bill Bruns <bruns dot bill at gmail dot com>
 Dmitriy Nikitinskiy <nick at bel dot ru>
+Ravi Kanth <kanth dot ravi at wipro dot com>
 
 I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson in the early 1990's.  Paul devised the recursive Makefile
