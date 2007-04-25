@@ -1,3 +1,8 @@
+Wed Apr 25 18:29:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/ORB_Core.cpp:
+          Fixed compile problem in single threaded builds
+
 Wed Apr 25 09:40:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/Security/Bug_2908_Regression/*:
