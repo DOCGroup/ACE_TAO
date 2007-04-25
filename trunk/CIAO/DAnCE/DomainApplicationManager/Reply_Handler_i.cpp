@@ -7,7 +7,7 @@
 
 // Implementation skeleton constructor
 Deployment_AMI_NodeApplicationManagerHandler_i::
-Deployment_AMI_NodeApplicationManagerHandler_i (CIAO::DomainApplicationManager_Impl *dam)
+Deployment_AMI_NodeApplicationManagerHandler_i (CIAO::DomainApplicationManager_AMH_Impl *dam)
 : retn_node_app_ (0),
   retn_connections_ (0),
   dam_ (dam)
@@ -23,10 +23,12 @@ void Deployment_AMI_NodeApplicationManagerHandler_i::startLaunch (
     ::Deployment::Application_ptr ami_return_val,
     const ::Deployment::Connections & providedReference)
 {
+  if (CIAO::debug_level () > 9)
+    ACE_DEBUG ((LM_ERROR, 
+               "CIAO (%P|%t): Reply_Handler_i.cpp::AMI startLaunch() returned\n"));
+
   // Add your implementation here
   ACE_Guard<ACE_SYNCH_MUTEX> guard (lock_);
-
-  ACE_DEBUG ((LM_ERROR, "################################ AMI startLaunch() called\n"));
 
   CIAO::DomainApplicationManager_AMI_Impl * ami_dam = 
     static_cast<CIAO::DomainApplicationManager_AMI_Impl*> (dam_);
@@ -41,7 +43,7 @@ void Deployment_AMI_NodeApplicationManagerHandler_i::startLaunch (
   // Below operation will be called only once, i.e., when the reply count
   // drops to zero
   if (ami_dam->start_launch_reply_count () == 0)
-    ami_dam->post_startLaunch ();
+    ami_dam->post_ami_startLaunch ();
 }
 
 ::Deployment::NodeApplication_ptr
