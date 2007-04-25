@@ -1,3 +1,15 @@
+Wed Apr 25 07:07:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_2356_Regression/*:
+          New regression for bug 2356
+
+Tue Apr 24 18:35:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Compression/Compression.pidl:
+        * tao/Compression/zlib/ZlibCompressor_Factory.cpp:
+        * tests/Compression/server.cpp:
+          Added COMPRESSORID_ for all id constants to make them more unique
+
 Tue Apr 24 13:17:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_2201_Regression/tests.cpp:
