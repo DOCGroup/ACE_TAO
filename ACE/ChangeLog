@@ -1,3 +1,12 @@
+Wed Apr 25 11:56:06 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * docs/bczar/bczar.html:
+
+          Modified the step to copy the packages to the previous_versions
+          directory to be similar to what it previously was (before I
+          mistakenly changed it) and updated it to include the use of a
+          script to avoid manually running multiple commands.
+
 Wed Apr 25 09:44:12 UTC 2007 Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/tao_other_tests.lst:

@@ -175,16 +175,16 @@ svn rm https://svn.dre.vanderbilt.edu/DOC/Middleware/tags/ACE+TAO+CIAO-X_Y_Z<br 
 
 Note that this <em>only</em> needs to be done if the <em>tagging</em> fails.  If kit creation
 fails, simply restart that process.
-<li>You should copy the previous packages to the previous versions directory with the appropriate decorators.
-<ul>
-<li><code>cd /export/www/download.dre/previous_versions</code></li>
-<li>Modify the <code>copy_script</code> to use the correct version X.Y.Z and run it.
-</ul>
 <li>The packages end up by default under $DOC_ROOT/packages-PID, you can copy them to the webserver using the following commands. At the moment
 you execute these commands all users can download these packages.</li>
 <code>
 cp $DOC_ROOT/packages-PID/ACE* /export/www/download.dre/ACE+TAO-distribution<br>
 </code>
+<li>You should also copy the packages to the previous versions directory with the appropriate decorators.
+<ul>
+<li><code>cd $DOC_ROOT/packages-PID</code></li>
+<li>Modify <code>/export/anduriltmp/bczar/copy_script</code> to use the correct version X.Y.Z and run it.
+</ul>
 <li>Once the distribution is ready, get ready for creating doxygen
 documentation. This is slightly complicated than it requires. We will
 address the complexity soon.</li>
