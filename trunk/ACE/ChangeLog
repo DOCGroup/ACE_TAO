@@ -1,3 +1,8 @@
+Wed Apr 25 09:44:12 UTC 2007 Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_other_tests.lst:
+          Added Bug_2908_Regression
+
 Wed Apr 25 08:45:00 UTC 2007  Simon Massey  <sma@prismtech.com>
 
         * ace/config-lynxos.h:
