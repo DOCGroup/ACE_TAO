@@ -364,8 +364,7 @@ namespace ACE_Utils
   UUID_Generator::init (void)
   {
     ACE_OS::macaddr_node_t macaddress;
-    int result =
-      ACE_OS::getmacaddress (&macaddress);
+    int result = ACE_OS::getmacaddress (&macaddress);
 
     UUID_node::NodeID nodeID;
     if (result != -1)
