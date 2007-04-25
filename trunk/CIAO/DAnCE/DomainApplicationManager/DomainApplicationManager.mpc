@@ -10,6 +10,7 @@ project (DomainApplicationManager): ciao_deployment_svnt, naming  {
   Source_Files {
     DomainApplicationManager_Impl.cpp
     DomainApplicationManager_AMI_Impl.cpp
+    DomainApplicationManager_AMH_Impl.cpp
     Deployment_Configuration.cpp
     Reply_Handler_i.cpp
   }
@@ -17,6 +18,7 @@ project (DomainApplicationManager): ciao_deployment_svnt, naming  {
   Header_Files {
     DomainApplicationManager_Impl.h
     DomainApplicationManager_AMI_Impl.h
+    DomainApplicationManager_AMH_Impl.h    
     Deployment_Configuration.h
     DomainApplicationManager_Export.h
     Reply_Handler_i.h
