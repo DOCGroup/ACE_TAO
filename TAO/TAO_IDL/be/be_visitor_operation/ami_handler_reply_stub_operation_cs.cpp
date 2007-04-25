@@ -263,7 +263,9 @@ be_visitor_operation_ami_handler_reply_stub_operation_cs::visit_operation (
       << "_tao_in.byte_order ()," << be_nl
       << "_tao_marshaled_exception," << be_nl
       << exception_data_arg << "," << be_nl
-      << exception_count_arg << ")" << be_uidt_nl
+      << exception_count_arg  << "," << be_nl
+      << "_tao_in.char_translator ()," << be_nl
+      << "_tao_in.wchar_translator ()" << ")" << be_uidt_nl
       << ");" << be_uidt_nl << be_uidt_nl;
 
   *os << "::Messaging::ExceptionHolder_var exception_holder_var = "

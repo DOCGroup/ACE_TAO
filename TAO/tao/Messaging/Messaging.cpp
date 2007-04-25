@@ -32,12 +32,16 @@ exception_holder_raise (TAO::Exception_Data *exception_data,
                         CORBA::Octet *marshaled_data,
                         CORBA::ULong marshaled_data_length,
                         CORBA::Boolean byte_order,
-                        CORBA::Boolean is_system_exception
-                        )
+                        CORBA::Boolean is_system_exception,
+                        ACE_Char_Codeset_Translator *char_translator,
+                        ACE_WChar_Codeset_Translator *wchar_translator)
 {
   TAO_InputCDR _tao_in ((const char*) marshaled_data,
                         marshaled_data_length,
                         byte_order);
+
+  _tao_in.char_translator (char_translator);
+  _tao_in.wchar_translator (wchar_translator);
 
   CORBA::String_var type_id;
 

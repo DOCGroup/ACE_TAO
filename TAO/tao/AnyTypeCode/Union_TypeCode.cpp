@@ -108,9 +108,7 @@ CORBA::Boolean
 TAO::TypeCode::Union<StringType,
                      TypeCodeType,
                      CaseArrayType,
-                     RefCountPolicy>::equal_i (
-  CORBA::TypeCode_ptr tc
-  ) const
+                     RefCountPolicy>::equal_i (CORBA::TypeCode_ptr tc) const
 {
   // These calls shouldn't throw since CORBA::TypeCode::equal()
   // verified that the TCKind is the same as our's prior to invoking
@@ -167,9 +165,7 @@ CORBA::Boolean
 TAO::TypeCode::Union<StringType,
                      TypeCodeType,
                      CaseArrayType,
-                     RefCountPolicy>::equivalent_i (
-  CORBA::TypeCode_ptr tc
-  ) const
+                     RefCountPolicy>::equivalent_i (CORBA::TypeCode_ptr tc) const
 {
   // Perform a structural comparison, excluding the name() and
   // member_name() operations.
@@ -224,8 +220,7 @@ CORBA::TypeCode_ptr
 TAO::TypeCode::Union<StringType,
                      TypeCodeType,
                      CaseArrayType,
-                     RefCountPolicy>::get_compact_typecode_i (
-  void) const
+                     RefCountPolicy>::get_compact_typecode_i (void) const
 {
 //   typedef ACE::Value_Ptr<TAO::TypeCode::Case<CORBA::String_var,
 //                                              CORBA::TypeCode_var> > elem_type;
@@ -315,8 +310,7 @@ CORBA::ULong
 TAO::TypeCode::Union<StringType,
                      TypeCodeType,
                       CaseArrayType,
-                      RefCountPolicy>::member_count_i (
-  void) const
+                      RefCountPolicy>::member_count_i (void) const
 {
   return this->ncases_;
 }
@@ -363,8 +357,7 @@ CORBA::Any *
 TAO::TypeCode::Union<StringType,
                      TypeCodeType,
                      CaseArrayType,
-                     RefCountPolicy>::member_label_i (CORBA::ULong index
-                                                      ) const
+                     RefCountPolicy>::member_label_i (CORBA::ULong index) const
 {
   if (index >= this->ncases_)
     throw ::CORBA::TypeCode::Bounds ();
