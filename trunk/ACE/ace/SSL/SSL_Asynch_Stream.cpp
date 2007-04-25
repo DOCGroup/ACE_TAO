@@ -550,11 +550,13 @@ ACE_SSL_Asynch_Stream::do_SSL_read (void)
   ACE_Message_Block & mb = this->ext_read_result_->message_block ();
   size_t bytes_req = this->ext_read_result_->bytes_to_read ();
 
+  ERR_clear_error();
+
   const int bytes_trn = ::SSL_read (this->ssl_,
                                     mb.wr_ptr (),
                                     bytes_req);
 
-  int status = ::SSL_get_error (this->ssl_, bytes_trn);
+  int const status = ::SSL_get_error (this->ssl_, bytes_trn);
 
   switch (status)
     {
