@@ -1,3 +1,8 @@
+Wed Apr 25 13:11:00 UTC 2007  Simon Massey  <sma@prismtech.com>
+
+        * ace/config-lynxos.h:
+          Also needs ACE_HAS_SIGTIMEDWAIT.
+
 Wed Apr 25 11:56:06 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * docs/bczar/bczar.html:
@@ -7,7 +12,7 @@ Wed Apr 25 11:56:06 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
           mistakenly changed it) and updated it to include the use of a
           script to avoid manually running multiple commands.
 
-Wed Apr 25 09:44:12 UTC 2007 Johnny Willemsen  <jwillemsen@remedy.nl>
+Wed Apr 25 09:44:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/tao_other_tests.lst:
           Added Bug_2908_Regression
