@@ -69,7 +69,7 @@ namespace CIAO
       // Create a DAM servant, which will be populated
       // to be sent back to the PlanLauncher.
       //
-      CIAO::DomainApplicationManager_Impl *dam_servant = 0;
+      PortableServer::ServantBase_var dam_servant;
 
       // Create a new Domain Application Manager servant
       // to be sent back to the Plan Launcher.
@@ -115,31 +115,19 @@ namespace CIAO
       // Should we throw an exception here?
       // We have exceptions like PlanError or StartError at
       // our disposal already in this function.
-      // Why did the creation of DAM fail in the first place?
-      //
-
-      // Standard owner transfer mechanisms.
-      //
-      PortableServer::ServantBase_var safe_daemon (dam_servant);
 
       // Calling the init function on the DAM.
       // This function will split the plan into node specific
       // plans, so that those plans can be sent off to individual
       // Node Application Managers.
       //
-      ACE_DEBUG ((LM_DEBUG, "CIAO (%P|%t) About to init...\n"));
-      dam_servant->init ();
 
-      // This is a wrong exception to be thrown here.
-      // We already had a DAM servant, the DAM servant is
-      // not NIL any more.
-      // We need to throw the right exception here.
-      //
+      PortableServer::ObjectId_var oid = poa_->activate_object(dam_servant.in());
 
-      ACE_DEBUG ((LM_DEBUG, "CIAO (%P|%t) About to set uuid on DAM...\n"));
-      dam_servant->set_uuid (plan.UUID.in ());
+      CORBA::Object_var obj = poa_->id_to_reference( oid.in() );
 
-      Deployment::DomainApplicationManager_var dam = dam_servant->_this ();
+      Deployment::DomainApplicationManager_var dam = 
+        Deployment::DomainApplicationManager::_narrow (obj.in ());
 
       /// @@ TODO:Need to check the return value......
       ///
