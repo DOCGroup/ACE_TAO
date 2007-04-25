@@ -1427,3 +1427,11 @@ project(Bug_2659_Regression_Test) : acetest {
     Bug_2659_Regression_Test.cpp
   }
 }
+
+project(Bug_2912_Regression_Test) : acetest, ssl {
+  exename = Bug_2912_Regression_Test
+  Source_Files {
+    Bug_2912_Regression_Test.cpp
+  }
+}
+
