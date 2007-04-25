@@ -49,6 +49,18 @@ namespace CIAO
         const char *ns_name = 0)
       throw (ImplementationNotFound);
 
+    /// Add a certain number of instances
+    /// The name of the instances will be "instance_name_X" where
+    /// <X> is a positive integer number starting from 1 to <num>.
+    static void add_instances (
+	int num,
+        ::Deployment::DeploymentPlan &deployment_plan, 
+        const char *instance_name, 
+        const char *node_name, 
+        const char *impl_name, 
+        const char *ns_name = 0)
+      throw (ImplementationNotFound);
+
     static void add_connection (
         ::Deployment::DeploymentPlan &deployment_plan, 
         const char *connection_name, 

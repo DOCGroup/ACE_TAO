@@ -1,6 +1,7 @@
 // $Id$
 
 #include "Plan_Handler.h"
+#include "ace/OS_NS_stdlib.h"
 
 namespace CIAO
 {
@@ -47,6 +48,38 @@ namespace CIAO
     // Re-assigning instances to deployment plan ...
     deployment_plan.instance = instance;
   }
+
+
+  void
+  DAnCE_Utils::add_instances (
+      int num,
+      ::Deployment::DeploymentPlan &deployment_plan, 
+      const char *instance_name, 
+      const char *node_name, 
+      const char *impl_name, 
+      const char *ns_name)
+    throw (ImplementationNotFound)
+  {
+    for (int i = 1; i <= num; ++i)
+      {
+	ACE_CString inst_name (instance_name);
+	//ACE_CString naming (ns_name);
+
+	const int BUF_SIZE = 256;
+	char buf[BUF_SIZE];
+	ACE_OS::itoa (i, buf, 10);
+	inst_name += buf;
+	//naming += buf;
+	
+	DAnCE_Utils::add_instance (deployment_plan,
+				   inst_name.c_str (),
+				   node_name,
+				   impl_name,
+				   ns_name);
+      }
+  }
+
+
 
   /*
   void

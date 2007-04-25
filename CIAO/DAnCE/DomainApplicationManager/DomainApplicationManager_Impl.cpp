@@ -24,7 +24,6 @@ DomainApplicationManager_Impl (CORBA::ORB_ptr orb,
     execution_manager_ (em), // a plain C++ pointer
     target_manager_ (Deployment::TargetManager::_duplicate (manager)), // object ref
     plan_ (plan),
-    uuid_ (plan.UUID),
     num_child_plans_ (0),
   // @@ (OO) The default size for an ACE_Hash_Map_Mapanger is quiet
   //         large.  The maximum size of an ACE_Hash_Map_Manager is
@@ -37,6 +36,7 @@ DomainApplicationManager_Impl (CORBA::ORB_ptr orb,
   //
     deployment_file_ (CORBA::string_dup (deployment_file)),
     deployment_config_ (orb),
+    uuid_ (plan.UUID),
     is_redeployment_ (false),
     esd_ (0)
 {
