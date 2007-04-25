@@ -1,3 +1,14 @@
+Wed Apr 25 08:52:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/ORB_Core.cpp:
+          Cleanup TSS resources in the destructor. This fixes bugzilla bug 2533.
+          Thanks to Martin Cornelius <Martin dot Cornelius at smiths-heimann dot com>
+          for reporting this.
+
+        * tao/Cleanup_Func_Registry.h:
+        * tao/PI/ORBInitInfo.cpp:
+          Layout changes
+
 Wed Apr 25 07:39:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/GIOP_Message_Base.cpp (process_reply_message):

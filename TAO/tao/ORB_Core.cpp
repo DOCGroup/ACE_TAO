@@ -378,6 +378,8 @@ TAO_ORB_Core::~TAO_ORB_Core (void)
 
   delete this->config_;
   this->config_ = 0;
+
+  this->tss_cleanup_funcs_.cleanup(tss_resources_->ts_objects_);
 }
 
 int
@@ -3013,8 +3015,7 @@ TAO_ORB_Core::set_sync_scope_hook (Sync_Scope_Hook hook)
 }
 
 int
-TAO_ORB_Core::add_tss_cleanup_func (ACE_CLEANUP_FUNC cleanup,
-                                    size_t &slot_id)
+TAO_ORB_Core::add_tss_cleanup_func (ACE_CLEANUP_FUNC cleanup, size_t &slot_id)
 {
   return this->tss_cleanup_funcs_.register_cleanup_function (cleanup, slot_id);
 }
