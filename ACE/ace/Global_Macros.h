@@ -121,7 +121,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #else
 #  if defined (ACE_HAS_EXCEPTIONS)
 #    if defined (ACE_WIN32) && defined (_MSC_VER) && \
-        (_MSC_VER >= 1400) && (_MSC_VER < 1500)
+        (_MSC_VER >= 1400) && (_MSC_VER <= 1500)
 #      define ACE_THROW_SPEC(X) throw(...)
 #    else
 #      define ACE_THROW_SPEC(X) throw X

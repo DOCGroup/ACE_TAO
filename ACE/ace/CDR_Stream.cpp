@@ -1746,6 +1746,10 @@ ACE_InputCDR::clone_from (ACE_InputCDR &cdr)
   this->major_version_ = cdr.major_version_;
   this->minor_version_ = cdr.minor_version_;
 
+  // Copy the char/wchar translators
+  this->char_translator_ = cdr.char_translator_;
+  this->wchar_translator_ = cdr.wchar_translator_;
+
   return db;
 }
 

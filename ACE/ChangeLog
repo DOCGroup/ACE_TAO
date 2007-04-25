@@ -1,3 +1,14 @@
+Wed Apr 25 07:00:12 UTC 2007 Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Global_Macros.h:
+          Also with msvc9 expand ACE_THROW_SPEC to throw (...)
+
+        * ace/CDR_Stream.cpp (clone_from):
+          Also copy the char and wchar translators
+
+        * ace/UUID.cpp:
+          Layout change
+
 Tue Apr 24 13:37:42 UTC 2007  Steve Huston  <shuston@riverace.com>
 
         * tests/SOCK_Dgram_Test.cpp: Add missing #include "ace/OS_NS_string.h"
