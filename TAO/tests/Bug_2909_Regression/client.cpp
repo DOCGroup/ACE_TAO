@@ -25,7 +25,7 @@ ACE_RCSID (AMI,
 
 const char *ior = "file://test.ior";
 int nthreads = 1;
-int niterations = 1;
+int niterations = 2;
 int debug = 0;
 ACE_Atomic_Op<ACE_SYNCH_MUTEX, int> number_of_replies = 0;
 
@@ -119,6 +119,7 @@ public:
 
    void foo_excep (::Messaging::ExceptionHolder * excep_holder)
     {
+      int const reply = --number_of_replies;
       ACE_DEBUG ((LM_DEBUG,
                   "Callback method <foo_excep> called: \n"));
       try
@@ -280,7 +281,7 @@ Client::svc (void)
     {
       for (int i = 0; i < this->niterations_; ++i)
         {
-          ami_test_var_->sendc_foo (the_handler_var_.in (), 0);
+          ami_test_var_->sendc_foo (the_handler_var_.in (), i);
         }
       if (debug)
         {
