@@ -154,6 +154,16 @@ TAO_Offer_Importer::perform_queries_with_policies (
           CosTrading::OfferIterator_var offer_iterator (offer_iterator_ptr);
           CosTrading::PolicyNameSeq_var limits_applied (limits_applied_ptr);
 
+          CORBA::ULong total = (offer_seq_ptr == 0 ? 0 :
+                                offer_seq_ptr->length ()) +
+                               (offer_iterator == 0 ? 0 :
+                                offer_iterator->max_left ());
+          CORBA::ULong expected = ACE_OS::atoi (TT_Info::QUERIES[i][3]);
+          if (total != expected)
+            ACE_ERROR ((LM_ERROR,
+                        "ERROR: Expected %d for query %d, but got %d\n",
+                        expected, i, total));
+
           if (this->verbose_)
             {
               ACE_DEBUG ((LM_DEBUG, "*** Results:\n\n"));

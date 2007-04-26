@@ -729,7 +729,7 @@ operator () (TAO_DynSequence_i& dyn_any,
   int return_value = 0;
   try
     {
-      CORBA::Double value = dyn_any.get_short ();
+      CORBA::Double value = dyn_any.get_double ();
       return_value = (value == element);
     }
   catch (const CORBA::Exception&){}
