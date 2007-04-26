@@ -1,3 +1,8 @@
+Thu Apr 26 12:19:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_2768_Regression/Bug_2768_Regression.mpc:
+          Don't build the server with CORBA/e micro
+
 Thu Apr 26 11:52:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/AMH_Oneway/server.cpp:
