@@ -1429,6 +1429,7 @@ project(Bug_2659_Regression_Test) : acetest {
 }
 
 project(Bug_2912_Regression_Test) : acetest, ssl {
+  avoids += ace_for_tao
   exename = Bug_2912_Regression_Test
   Source_Files {
     Bug_2912_Regression_Test.cpp
