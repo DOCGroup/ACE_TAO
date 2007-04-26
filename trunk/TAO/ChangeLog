@@ -2,7 +2,9 @@ Thu Apr 26 13:22:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_2909_Regression/*:
           New regression for bug 2909. This bug is not fixed yet, just adding
-          the test to the repo
+          the test to the repo. This test works perfect with collocation
+          disabled (using -ORBCollocation no or -ORBAMICollocation no) but
+          fails when using a collocated AMI call
 
 Thu Apr 26 12:19:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
