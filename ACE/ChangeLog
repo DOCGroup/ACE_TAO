@@ -1,3 +1,9 @@
+Thu Apr 26 10:53:12 UTC 2007 Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/SSL/SSL_Asynch_Stream.cpp (do_SSL_read):
+          Also added ERR_clear_error before doing a SSL_write, belongs to
+          bugzilla 2912
+
 Wed Apr 25 13:11:00 UTC 2007  Simon Massey  <sma@prismtech.com>
 
         * ace/config-lynxos.h:
