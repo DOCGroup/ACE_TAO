@@ -21,19 +21,21 @@ Client_Task::Client_Task (
 int
 Client_Task::svc (void)
 {
-    try
-      {
-        // call message
-        messenger_->call_message("user");
-      }
-    catch(const CORBA::NO_PERMISSION ex)
-      {
-        result_ = 1;
-        ex._tao_print_exception ("ERROR: Caught CORBA::NO_PERMISSION exception");
-      }
-    catch(const CORBA::Exception &ex)
-      {
-        result_ = 1;
-        ex._tao_print_exception ("Caught exception:");
-      }
+  try
+    {
+      // call message
+      messenger_->call_message("user");
+    }
+  catch(const CORBA::NO_PERMISSION ex)
+    {
+      result_ = 1;
+      ex._tao_print_exception ("ERROR: Caught CORBA::NO_PERMISSION exception");
+    }
+  catch(const CORBA::Exception &ex)
+    {
+      result_ = 1;
+      ex._tao_print_exception ("Caught exception:");
+    }
+
+  return 0;
 }
