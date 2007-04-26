@@ -57,15 +57,12 @@ ST_AMH_Servant::ST_AMH_Servant (CORBA::ORB_ptr orb)
 }
 
 void
-ST_AMH_Servant::test_method (Test::AMH_RoundtripResponseHandler_ptr _tao_rh,
-                             Test::Timestamp send_time)
+ST_AMH_Servant::test_method (Test::AMH_RoundtripResponseHandler_ptr,
+                             Test::Timestamp)
 {
   ACE_OS::sleep (1);
-  ACE_DEBUG ((LM_DEBUG, "Recieved Timestamp # %d \n", calls_received));
+  ACE_DEBUG ((LM_DEBUG, "Received Timestamp # %d on %T\n", calls_received));
   calls_received++;
-
-  ACE_UNUSED_ARG (send_time);
-  ACE_UNUSED_ARG (_tao_rh);
 
   // When _tao_rh destructor is called, it shouldn't send anything to
   // the client as well
@@ -217,14 +214,14 @@ ST_AMH_Server::run_event_loop ()
 {
   try
     {
-      ACE_Time_Value period (0, 11000);
       while (1)
         {
-              this->orb_->perform_work (&period);
+          ACE_Time_Value period (0, 11000);
+          this->orb_->perform_work (&period);
 
-              // when all calls from client have been recieved, exit
-              if (calls_received == num_calls )
-                return;
+          // when all calls from client have been recieved, exit
+          if (calls_received == num_calls )
+            return;
         }
     }
   catch (const CORBA::Exception&)

@@ -1,3 +1,9 @@
+Thu Apr 26 11:52:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/AMH_Oneway/server.cpp:
+          Added timestamp to the received message so that we get some more
+          info why this test timeouts on one of the solaris test hosts
+
 Thu Apr 26 05:48:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         Reverted the change below, this breaks the Portable_Interceptors/Slot
