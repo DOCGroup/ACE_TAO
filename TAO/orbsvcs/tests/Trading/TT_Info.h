@@ -173,7 +173,7 @@ public:
   // = Query info
 
   static const int NUM_QUERIES;
-  static const char* QUERIES[][3];
+  static const char* QUERIES[][4];
 };
 
 class TAO_TTest_Export TT_Parse_Args

@@ -1,3 +1,22 @@
+Thu Apr 26 19:06:19 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/orbsvcs/Trader/Constraint_Nodes.cpp:
+
+          Fixed a bug introduced by my CORBA::LongLong support changes.  The
+          use of CORBA::Long was inadvertently broken.
+
+        * orbsvcs/orbsvcs/Trader/Constraint_Visitors.cpp:
+
+          Call get_double() on the dynamic any sequence in the
+          TAO_Element_Equal<CORBA::Double> specialization.
+
+        * orbsvcs/tests/Trading/Offer_Importer.cpp:
+        * orbsvcs/tests/Trading/TT_Info.h:
+        * orbsvcs/tests/Trading/TT_Info.cpp:
+
+          Modified this test to ensure that the queries return the expected
+          number of elements or an error is printed.
+
 Thu Apr 26 14:37:16 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * NEWS:
