@@ -332,6 +332,12 @@ TAO_Literal_Constraint (CORBA::Any* any)
           any_ref >>= sh;
           this->op_.integer_ = static_cast<CORBA::LongLong> (sh);
         }
+      else if (corba_type == CORBA::tk_long)
+        {
+          CORBA::Long sh;
+          any_ref >>= sh;
+          this->op_.integer_ = static_cast<CORBA::LongLong> (sh);
+        }
       else
         any_ref >>= this->op_.integer_;
       break;
@@ -340,6 +346,12 @@ TAO_Literal_Constraint (CORBA::Any* any)
       if (corba_type == CORBA::tk_ushort)
         {
           CORBA::UShort sh;
+          any_ref >>= sh;
+          this->op_.uinteger_ = static_cast<CORBA::ULongLong> (sh);
+        }
+      else if (corba_type == CORBA::tk_ulong)
+        {
+          CORBA::ULong sh;
           any_ref >>= sh;
           this->op_.uinteger_ = static_cast<CORBA::ULongLong> (sh);
         }
