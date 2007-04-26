@@ -8,6 +8,7 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::Run_Test;
 
+$status = 0;
 $client_conf = PerlACE::LocalFile ("muxed$PerlACE::svcconf_ext");
 
 $debug_level = '0';
@@ -37,13 +38,18 @@ $CL = new PerlACE::Process ("client",
 
 $client = $CL->SpawnWaitKill (60);
 
-$server = $SV->WaitKill (10);
+if ($client != 0) {
+    print STDERR "ERROR: client returned $client\n";
+    $status = 1;
+}
+
+$server = $SV->WaitKill (15);
+
+if ($server != 0) {
+    print STDERR "ERROR: server returned $server\n";
+    $status = 1;
+}
 
 unlink $iorfile;
 
-if ($server != 0 || $client != 0) {
-    exit 1;
-}
-
-exit 0;
-
+exit $status;
