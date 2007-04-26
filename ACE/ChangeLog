@@ -1,3 +1,8 @@
+Thu Apr 26 12:19:12 UTC 2007 Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+          Exclude several tests with CORBA/e micro enabled
+
 Thu Apr 26 13:23:12 UTC 2007 Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/tao_orb_tests.lst:
