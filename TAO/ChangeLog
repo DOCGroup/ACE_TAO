@@ -1,3 +1,14 @@
+Thu Apr 26 05:48:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        Reverted the change below, this breaks the Portable_Interceptors/Slot
+        and Portable_Interceptors/Bug_2510_Regression tests on linux
+
+        Wed Apr 25 08:52:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+        * tao/ORB_Core.cpp:
+          Cleanup TSS resources in the destructor. This fixes bugzilla bug 2533.
+          Thanks to Martin Cornelius <Martin dot Cornelius at smiths-heimann dot com>
+          for reporting this.
+
 Wed Apr 25 18:29:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/ORB_Core.cpp:
