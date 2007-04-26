@@ -1,3 +1,10 @@
+Thu Apr 26 15:01:17 UTC 2007  Gan Deng  <gan.deng@vanderbilt.edu>
+
+        * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp
+
+          Fixed warning on GCC with constructor initialization list
+          sequence.
+
 Wed Apr 25 20:22:44 UTC 2007    <dengg@blade22.isislab.vanderbilt.edu>
 
         * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp
