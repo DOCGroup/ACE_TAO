@@ -609,11 +609,13 @@ ACE_SSL_Asynch_Stream::do_SSL_write (void)
   ACE_Message_Block & mb = this->ext_write_result_->message_block ();
   size_t       bytes_req = this->ext_write_result_->bytes_to_write ();
 
+  ERR_clear_error();
+
   const int bytes_trn = ::SSL_write (this->ssl_,
                                      mb.rd_ptr (),
                                      bytes_req);
 
-  int status = ::SSL_get_error (this->ssl_, bytes_trn);
+  int const status = ::SSL_get_error (this->ssl_, bytes_trn);
 
   switch (status)
     {
