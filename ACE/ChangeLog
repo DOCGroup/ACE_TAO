@@ -1,3 +1,10 @@
+Fri Apr 27 12:33:31 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tests/Bug_2912_Regression_Test.cpp:
+
+          Don't compile the bulk of the code if the proactor is not
+          supported.
+
 Fri Apr 27 08:17:12 UTC 2007 Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/tao_orb_tests.lst:
