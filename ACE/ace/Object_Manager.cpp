@@ -811,9 +811,10 @@ ACE_Static_Object_Lock::instance (void)
           {
             return 0;
           }
-        ACE_NEW_RETURN (ACE_Static_Object_Lock_lock,
-                        (buffer) ACE_Static_Object_Lock_Type (),
-                        0);
+        // do not use ACE_NEW macros for placement new
+        ACE_Static_Object_Lock_lock = new (buffer)
+                        ACE_Static_Object_Lock_Type ();
+
 #       else   /* ! ACE_SHOULD_MALLOC_STATIC_OBJECT_LOCK */
         ACE_NEW_RETURN (ACE_Static_Object_Lock_lock,
                         ACE_Cleanup_Adapter<ACE_Recursive_Thread_Mutex>,

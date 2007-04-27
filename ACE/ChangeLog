@@ -1,3 +1,9 @@
+Fri Apr 27 13:37:13 UTC 2007  Dale Wilson  <wilsond@ociweb.com>
+
+        * ace/Object_Manager.cpp:
+          Replace ACE_NEW_RETURN with simple C++ new because
+          placement new is incompatable with ACE_NEW_RETURN macro.
+
 Fri Apr 27 12:33:31 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * tests/Bug_2912_Regression_Test.cpp:
