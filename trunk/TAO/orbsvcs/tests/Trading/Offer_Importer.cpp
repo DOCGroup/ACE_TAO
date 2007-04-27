@@ -156,8 +156,8 @@ TAO_Offer_Importer::perform_queries_with_policies (
 
           CORBA::ULong total = (offer_seq_ptr == 0 ? 0 :
                                 offer_seq_ptr->length ()) +
-                               (offer_iterator == 0 ? 0 :
-                                offer_iterator->max_left ());
+                               (offer_iterator_ptr == 0 ? 0 :
+                                offer_iterator_ptr->max_left ());
           CORBA::ULong expected = ACE_OS::atoi (TT_Info::QUERIES[i][3]);
           if (total != expected)
             ACE_ERROR ((LM_ERROR,
