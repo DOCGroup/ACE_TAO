@@ -28,7 +28,7 @@ Thu Apr 26 13:22:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
         * tests/Bug_2909_Regression/*:
           New regression for bug 2909. This bug is not fixed yet, just adding
           the test to the repo. This test works perfect with collocation
-          disabled (using -ORBCollocation no or -ORBAMICollocation no) but
+          disabled (using -ORBCollocation no or -ORBAMICollocation 0) but
           fails when using a collocated AMI call
 
 Thu Apr 26 12:19:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
@@ -367,7 +367,7 @@ Fri Apr 20 08:05:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
         * tao/params.cpp:
         * tao/params.h:
         * tao/params.inl:
-          Added a new -ORBAMICollication which is default yes. If this is no,
+          Added a new -ORBAMICollication which is default 1. If this is 0,
           then when a collocated AMI invocation is made, the call is converted
           to a remote call so that another thread can handle the servant. Also
           the problems with argument corruption are then gone. This is for
@@ -396,7 +396,7 @@ Fri Apr 20 08:05:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
           Bool change
 
         * docs/Options.html:
-          Document new ORBAMICollocation option, this is default yes which
+          Document new ORBAMICollocation option, this is default 1 which
           means that when a collocated AMI call is made the servant is invoked
           using the client thread. When this option is no, when a collocated AMI
           call is made, this is converted to a remote call so that a different
