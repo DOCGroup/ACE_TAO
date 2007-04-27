@@ -1,7 +1,6 @@
 // $Id$
 
 #include "Messenger_i.h"
-#include "orbsvcs/CosNamingC.h"
 
 const char *ior_output_file = "server.ior";
 
