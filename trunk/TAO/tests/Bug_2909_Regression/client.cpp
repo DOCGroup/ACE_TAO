@@ -120,8 +120,13 @@ public:
    void foo_excep (::Messaging::ExceptionHolder * excep_holder)
     {
       int const reply = --number_of_replies;
-      ACE_DEBUG ((LM_DEBUG,
-                  "Callback method <foo_excep> called: \n"));
+      if (debug)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "(%P | %t) : Callback excep method %d called\n",
+                      (nthreads * niterations) - reply));
+        }
+      ACE_UNUSED_ARG (reply);
       try
         {
           excep_holder->raise_exception ();
