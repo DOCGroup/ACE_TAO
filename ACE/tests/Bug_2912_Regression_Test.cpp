@@ -41,7 +41,8 @@ ACE_RCSID (tests,
            Bug_2912_Regression_Test,
            "$Id$")
 
-#if defined (ACE_HAS_THREADS)
+#if defined (ACE_HAS_THREADS) && \
+    (defined (ACE_HAS_WIN32_OVERLAPPED_IO) || defined (ACE_HAS_AIO_CALLS))
 
 /**
  * Data payload sent between client and server.  Test is not dependent
@@ -1218,9 +1219,9 @@ run_main (int, ACE_TCHAR *[])
   ACE_START_TEST (ACE_TEXT ("Bug_2912_Regression_Test"));
 
   ACE_ERROR ((LM_INFO,
-              "threads not supported on this platform\n"));
+              "threads or proactor not supported on this platform\n"));
 
   ACE_END_TEST;
   return 0;
 }
-#endif /* ACE_HAS_THREADS */
+#endif /* ACE_HAS_THREADS && (ACE_HAS_WIN32_OVERLAPPED_IO || ACE_HAS_AIO_CALLS) */
