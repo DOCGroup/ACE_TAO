@@ -1,3 +1,9 @@
+Mon Apr 30 12:24:05 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * NEWS:
+
+          Added user visible changes for 5.5.8 based on ChangeLog entries.
+
 Mon Apr 30 11:36:51 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * tests/Bug_2912_Regression_Test.cpp:
