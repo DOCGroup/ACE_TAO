@@ -1,0 +1,43 @@
+#!/bin/sh
+#
+# $Id$
+#
+
+HP_CONSUMERS="1 5 10 20"
+# The number of high priority consumers.
+
+HP_SUPPLIERS="1 2 10"
+# The number of high priority suppliers
+
+for s in $HP_SUPPLIERS; do
+  for c in $HP_CONSUMERS; do
+    grep TOTAL THR.LCL.S${s}.C${c}.*.log |
+      sed -e "s/THR.LCL.S${s}.C${c}.I//" -e 's/\.log:Time\[TOTAL\]://' |
+      nawk -v f=$s '{print 1000000 / $1, $2 * f / 500 / $1}' |
+      sort -n > THR.LCL.S${s}.C${c}.data
+  done
+done
+
+cat >/tmp/genthr.$$ <<EOF
+set grid xtics ytics
+set ylabel "Effective/Expected Event Rate"
+set xlabel "Event Rate (Hz)"
+set output "THR.LCL.eps"
+set terminal postscript eps color
+plot 1
+EOF
+for s in $HP_SUPPLIERS; do
+  for c in $HP_CONSUMERS; do
+    cat >>/tmp/genthr.$$ <<EOF
+replot 'THR.LCL.S${s}.C${c}.data' title "$s supp. $c cons." w l
+EOF
+  done
+done
+
+gnuplot < /tmp/genthr.$$
+
+for i in THR.*.eps; do
+  b=`basename $i .eps`
+  gs -sDEVICE=jpeg -g640x480 -r110x110 -sNOPAUSE \
+      -sOutputFile="${b}.jpg" ${b}.eps quit.ps
+done

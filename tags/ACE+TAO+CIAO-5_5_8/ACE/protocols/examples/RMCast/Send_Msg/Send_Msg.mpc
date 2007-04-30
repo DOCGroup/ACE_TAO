@@ -1,0 +1,17 @@
+// -*- MPC -*-
+// $Id$
+
+project(*Sender) : aceexe, exceptions, rmcast {
+  avoids = ace_for_tao
+  exename = sender
+  Source_Files {
+    Sender.cpp
+  }
+}
+project(*Receiver) : aceexe, exceptions, rmcast {
+  avoids = ace_for_tao
+  exename = receiver
+  Source_Files {
+    Receiver.cpp
+  }
+}

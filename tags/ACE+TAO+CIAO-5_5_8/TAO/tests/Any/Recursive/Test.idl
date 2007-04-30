@@ -1,0 +1,208 @@
+//
+// $Id$
+//
+
+#include "tao/OctetSeq.pidl"
+#include "tao/StringSeq.pidl"
+
+/// Put the interfaces in a module, to avoid global namespace pollution
+module Test
+{
+  exception Recursive_Type_In_Any_Test_Failed {};
+  exception Demarshaling_From_Any_Failed {};
+
+  struct RecursiveStruct;
+  typedef sequence<RecursiveStruct> RecursiveStructSeq;
+
+  struct RecursiveStruct
+  {
+    RecursiveStructSeq recursive_structs;
+    long i;
+    RecursiveStructSeq recursive_structs_second;
+  };
+
+  struct NestedRecursiveStruct;
+  typedef sequence<NestedRecursiveStruct> NestedRecursiveStructSeq;
+
+  struct NestedRecursiveStruct
+  {
+    struct InnerStruct
+    {
+      NestedRecursiveStructSeq recursive_structs;
+    }    ins;
+    long i;
+  };
+
+  // --------------------------
+
+  union RecursiveUnion;
+  typedef sequence<RecursiveUnion> RecursiveUnionSeq;
+
+  union RecursiveUnion switch (short)
+  {
+  case 0:
+    RecursiveUnionSeq recursive_unions;
+  case 1:
+    short a;
+  case 2:
+    RecursiveUnionSeq recursive_unions_second;
+  default:
+    long i;
+  };
+
+  union RecursiveUnion2;
+  typedef sequence<RecursiveUnion2> RecursiveUnionSeq2;
+
+  union RecursiveUnion2 switch (short)
+  {
+  case 0:
+    struct Innerstruct3a
+    {
+      RecursiveUnionSeq2 recursive_unions;
+    } insb;
+  case 1:
+    short a;
+  case 2:
+    struct Innerstruct3b
+    {
+      RecursiveUnionSeq2 recursive_unions_second;
+    } insa;
+  default:
+    long i;
+  };
+
+  union RecursiveUnionNoDefault;
+  typedef sequence<RecursiveUnionNoDefault> RecursiveUnionSeqNoDefault;
+
+  union RecursiveUnionNoDefault switch (short)
+  {
+  case 0:
+    RecursiveUnionSeqNoDefault recursive_unions;
+  case 1:
+    short a;
+  case 2:
+    RecursiveUnionSeqNoDefault recursive_unions_second;
+  };
+
+  // --------------------------
+
+  // --------------------------
+
+  enum VSort {
+    UNKNOWN_TYPE,
+    RECURSIVE_TYPE,
+    LONG_STYPE,
+    BOOL_STYPE
+  };
+
+  union VSortRecursiveUnion;
+  typedef sequence<VSortRecursiveUnion> VSortRecursiveUnionSeq;
+  union VSortRecursiveUnion switch (VSort)
+  {
+  case RECURSIVE_TYPE:
+    VSortRecursiveUnionSeq recursive_unions;
+  case LONG_STYPE:
+    long i;
+  };
+
+  // --------------------------
+
+  union EnumUnion switch (VSort)
+  {
+  case BOOL_STYPE:
+    boolean a;
+  case LONG_STYPE:
+    long i;
+  };
+
+  // --------------------------
+
+  valuetype IndirectlyRecursiveValuetype;
+  typedef sequence<IndirectlyRecursiveValuetype>
+    IndirectlyRecursiveValuetypeSeq;
+
+  valuetype IndirectlyRecursiveValuetype
+  {
+    public IndirectlyRecursiveValuetypeSeq recursive_valuetypes;
+  };
+
+  // --------------------------
+
+  valuetype DirectlyRecursiveValuetype
+  {
+    public DirectlyRecursiveValuetype recursive_valuetype;
+    public DirectlyRecursiveValuetype recursive_valuetype_second;
+  };
+
+  // --------------------------
+
+  enum PositionEnum { unknownpos };
+
+  struct Position {
+    PositionEnum type;
+  };
+  typedef CORBA::OctetSeq OctetSeq;
+
+  enum ValueSort {
+    POSITION_TYPE,
+    OCTET_SEQ_TYPE
+  };
+
+  union NonRecursiveUnionWithEnum switch (ValueSort) {
+  case POSITION_TYPE:
+    Position position_val;
+  case OCTET_SEQ_TYPE:
+    OctetSeq octet_seq_val;
+  };
+
+  // --------------------------
+
+  enum ValueSort2 {
+    SYMBOL_TYPE2
+  };
+
+  struct Symbol2 {
+    string name;
+  };
+
+  union NonRecursiveUnionWithStringStruct switch (ValueSort2) {
+  case SYMBOL_TYPE2:
+    Symbol2 symbol_val;
+  };
+
+  /// Simple test interface.
+  interface Hello
+  {
+    /// Return the any provided as the "in" argument.
+    any get_any (in any the_any);
+
+    /// Shutdown the server ORB.
+    oneway void shutdown ();
+  };
+
+  valuetype Recursive2;
+  typedef sequence<Recursive2> Recursive2Seq2;
+
+  valuetype Recursive2
+  {
+    public struct Innerstruct3a
+    {
+      Recursive2Seq2 recursive_unions;
+    } insa;
+    public short a;
+    public struct Innerstruct3b
+    {
+      Recursive2Seq2 recursive_second;
+    } insb;
+  };
+
+  valuetype Recursive3;
+  typedef sequence<Recursive3> RecursiveSeq3;
+
+  valuetype Recursive3
+  {
+    public RecursiveSeq3 seq1;
+    public short a;
+    public RecursiveSeq3 seq2;
+  };
+};
