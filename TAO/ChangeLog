@@ -1,3 +1,9 @@
+Mon Apr 30 12:57:32 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * NEWS:
+
+          Added user visible changes for 1.5.8 based on ChangeLog entries.
+
 Fri Apr 27 08:19:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/Trading/Offer_Importer.cpp:
