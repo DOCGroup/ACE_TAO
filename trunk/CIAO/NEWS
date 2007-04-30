@@ -74,6 +74,11 @@ PLANNED MAJOR CHANGES "SOMETIME IN THE FUTURE" (i.e., exact beta not known)
 USER VISIBLE CHANGES BETWEEN CIAO-0.5.7 and CIAO-0.5.8
 ======================================================
 
+. Improved the option handling of the Execution_Manager and plan_launcher.
+
+. Added a utility library to manipulate the deployment plan, such as
+  adding/removing instances, adding/removing connections, and pretty print.
+
 USER VISIBLE CHANGES BETWEEN CIAO-0.5.6 and CIAO-0.5.7
 ======================================================
 
