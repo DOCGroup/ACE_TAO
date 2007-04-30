@@ -1,0 +1,245 @@
+// Event_Types.idl
+// Simple demonstration of typed events in a distributed system.
+//
+// Author:
+//   Torsten Kuepper
+//
+
+// $Id$
+
+// Event inheritance hierarchy  ===========================
+
+// Base class  --------------------------------------------
+
+valuetype Event
+{
+  void do_print ();
+
+  // An operation. In some implementations (e.g. operator terminal)
+  // the event should visualize itself. That is of no use at the
+  // event producing sensor. So, the declaration of do_print ()
+  // could be deferred to the implementation classes, but then you need
+  // to downcast from the pointer to the event valuetype to your
+  // implementation. Another solution is perhaps to inherit do_print ()
+  // through an additional abstract valuetype base only in that
+  // IDL that a visualizing implementation sees. But this would change
+  // the type and this is a bad thing. The cleanest thing to do may be
+  // to apply the visitor pattern. Event::accept (visitor) would be
+  // implemented as null-op in the measurement device, if you take this
+  // example.
+
+
+  public long time_;
+
+  // A state member. Don't confuse with attributes, which are
+  // ok here too, but they do only map to a pair of local operations,
+  // in opposite to (public/private) state members they haven't got no
+  // implementation for the state data and finally they are not transmitted
+  // over the wire.
+
+
+  public unsigned long origin_id_;
+
+  // This id should identify the origin (e.g. sensor) in the system.
+  // This makes an id-space beside the object references which has to be
+  // maintained. It would be useful to implement some consistency check
+  // protocol (as CORBA interfaces) to verify that the suppliers and
+  // consumers are connected (through some event channel) in the
+  // right way.
+
+};
+
+
+// Derived Events  ----------------------------------------
+
+
+valuetype Temperature : Event
+{
+  // do_print () is overridden in the implementation. We can't
+  // tell this in IDL, because operations can't be declared again.
+  // They are implicit assumed to be polymorph.
+
+  public float temperature_;
+  // Extends Event with the state member for the temperature.
+};
+
+
+typedef float Point[3];
+// (anonymous arrays are not yet working in this OBV ...%!)
+// (( BTW %! <- no emoticon, this is my to do mark))
+
+valuetype Position : Event
+{
+  attribute float x, y, z;
+  // The Position can be accessed both through the coordinates ...
+
+  public Point xyz;
+  // ... or as a whole array, which is a state member.
+};
+
+
+valuetype Log_Msg : Event
+{
+  public short  urgency;
+  public string message;
+};
+
+// (Valuetypes which hold other types as shown are not yet tested %!)
+
+// You may extend the system with aggregated events, such the status
+// message of a boiler, which has temperature and a pressure valuetype
+// as state member (recall: unshared valuetypes are well at this time.
+// But a shared valuetype splits at the receiving end of an invocation
+// in two or more instances, dependend on the number of references on it
+// (in the argument list plus in the members of compound types). This
+// misbehaviour will go away once valuetype sharing is implemented %!
+// But to do this in an efficient and thread safe manner seems a little tricky)
+
+
+// Passing back the critical events in a list  ----------------------------
+
+// This is the link, that is used internally -----
+// (should come after Event_List, but forward decl. is not yet complete %!)
+
+valuetype Event_List_Link
+{
+  Event get_event ();
+  // get the event
+
+  Event_List_Link get_next_link ();
+  // get the event
+
+  void attach_next_link (in Event_List_Link chain);
+  // Link a chain at the end.
+
+  private Event my_event;
+  // event which is held
+
+  private Event_List_Link next;
+  // link to the next event container
+};
+
+// 'private' state member are mapped to 'protected' in C++, so
+// they can be accessed from the implementation class, which should
+// be derived from OBV_Event_chain.
+
+
+// The event list uses links as declared above. But its implementation
+// could be changed 'under the hood' to use e.g. a CORBA sequence.
+// (This doesn't go yet, because valuetype is only allowed
+// as an operation argument for now. Just impl. the visitors in tao_idl %!)
+
+valuetype Event_List
+{
+  void store_event (in Event e);
+  // Attach an event at the lists's end.
+
+  public Event_List_Link first_link;
+  // Should better be private, but then the iterator can't access it.
+};
+
+
+// Interface to access the "event server" ------------------
+
+// A client (e.g. sensor) delivers the events via put_event ().
+// The server checks against alarm conditions and memorizes
+// critical events, which can be passed back
+// to a client (e.g. operator terminal) with get_critical_events ().
+
+interface Checkpoint
+{
+  void  put_event (in Event e);
+  // Put event in the server. If it exceeds an alarm criterion
+  // it will be stored.
+
+  Event_List  get_critical_events ();
+  // Ask for a list of critical events.
+
+  oneway void shutdown ();
+  // This operation will shutdown the server.
+};
+
+
+// Checkpoint server side --------------------------------------------
+// The Checkpoint should compare the incoming event against a
+// criterion for the specific event type. My approach is the following
+// (to facilitate separation of application logic and event specific
+// code): An abstract valuetype Criterion provides is_critical () to check
+// against a boundary. Concrete alarm boundaries for any existing
+// event derive from this class and perform the check. Thats's it for
+// the event type maintainer --- the customs that use this 'framework'.
+
+// The concrete criterions inherit from Event too. I wanted to reuse
+// the list which works on events. The wrapper Criterion_List makes it safe
+// that only criterions are accepted to this list. Templates would be fine,
+// but currently I have no idea how to apply them to a valuetype. Perhaps
+// there is no way to get around custom marshalling [n.y.avail.%!] in the
+// area of containers.
+// Finally the concrete criterions must have a suitable implementation for
+// is_critical ().
+
+// Now the internals of the server which shouldn't need to be touched by
+// the final implementer: The above mentioned wrapper Criterion_List
+// uses an Event_List to compare an incoming event against the
+// boundaries. In this simple example it will just apply the event to
+// is_critical () of any criterion, which origin id matches.
+// The criterion checks with
+// valuetype's _downcast () if the event matches its event type and then
+// performs the alarm check. A real world approach with many event types
+// and criterions could better use a hash map for the criterions. The
+// external map index would be the repository id of the event.
+
+abstract valuetype Criterion
+{
+  boolean is_critical (in Event e);
+  // Check against alarm boundaries.
+};
+
+
+// The specialized criterions. Note: A valuetype can only inherit
+// from one non-abstract other valuetype (which then must be the first
+// one listed). Further Criterions may only be abstract valuetypes
+// without the ability to contain state members. (The support of
+// a CORBA interface is not yet supported.)
+// P.S. Please don't bother about the class hierarchy
+// (Criterion inherits from Event _and_ has some Events as boundary values
+// aggregated). I just wanted to reuse the code for the list of events.
+// Certainly not an example of good OO design.
+
+
+valuetype Temperature_Criterion : Event, Criterion
+{
+  private Temperature meltingpoint;
+  // The boundary is stored in a state member.
+};
+
+
+valuetype Position_Criterion : Event, Criterion
+{
+  private Position leftbottom, topright;
+  // Any position should be contained in a box.
+};
+
+
+valuetype Log_Msg_Criterion : Event, Criterion
+{
+  // No state member. All Log_Msg which have urgency
+  // greater zero meet the criterion.
+};
+
+
+
+// The Criterion_List  ===========================================
+
+valuetype Criterion_List
+{
+  void store_criterion (in Criterion c);
+  // Attach an criterion at the lists's end.
+
+  boolean is_critical (in Event e);
+  // Check with the listmembers if e should raise an alarm.
+
+  public Event_List my_list;
+  // Used in the implementation. Is public for allowing
+  // access to the iterator.
+};

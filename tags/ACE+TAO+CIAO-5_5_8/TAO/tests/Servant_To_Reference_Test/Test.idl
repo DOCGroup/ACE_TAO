@@ -1,0 +1,24 @@
+//
+// $Id$
+//
+
+/// Put the interfaces in a module, to avoid global namespace pollution
+module Test
+{
+  /// A very simple interface
+  interface One
+  {
+    /// Return a simple string
+    string get_string ();
+  };
+
+  interface Two
+    {
+      string get_string ();
+    };
+
+    interface Three
+    {
+      string get_string ();
+    };
+};

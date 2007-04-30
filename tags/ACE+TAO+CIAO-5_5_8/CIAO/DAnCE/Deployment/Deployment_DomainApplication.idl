@@ -1,0 +1,19 @@
+// $Id$
+
+#ifndef DEPLOYMENT_DOMAINAPPLICATION_IDL
+#define DEPLOYMENT_DOMAINAPPLICATION_IDL
+
+#include "Deployment_Application.idl"
+#include "Deployment_Core.idl"
+
+module Deployment
+{
+  // @@added
+  interface DomainApplication : 
+    Application
+  {
+  };
+};
+
+
+#endif

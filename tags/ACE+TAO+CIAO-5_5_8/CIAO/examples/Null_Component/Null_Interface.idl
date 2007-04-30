@@ -1,0 +1,22 @@
+/**
+ * @file Null_Interface.idl
+ *
+ * @author Abdul Sowayan <abdullah.sowayan@lmco.com>
+ *
+ * $Id$
+ */
+
+#ifndef NULL_INTERFACE_IDL
+#define NULL_INTERFACE_IDL
+
+/**
+ * @interface Null_Interface
+ *
+ * @brief
+ */
+interface Null_Interface
+{
+  void null_operation();
+};
+
+#endif /* NULL_INTERFACE_IDL */
