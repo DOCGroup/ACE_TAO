@@ -254,8 +254,10 @@ Server_Service_Handler::open (ACE_HANDLE h, ACE_Message_Block&)
 
   if (this->ssl_stream_.open (*this, h, 0, this->proactor ()) != 0)
   {
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT("Server_Service_Handler::open: "
-      "ACE_SSL_Asynch_Stream::open failed, %d\n"), (int)errno));
+    ACE_DEBUG ((LM_DEBUG,
+                ACE_TEXT("Server_Service_Handler::open: ")
+                ACE_TEXT("ACE_SSL_Asynch_Stream::open failed, %d\n"),
+                (int)errno));
     this->cancel_and_close ();
   }
   else
