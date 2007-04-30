@@ -301,7 +301,6 @@ if test $tao_build_examples = yes; then
     examples/POA/TIE/Makefile
     examples/Persistent_Grid/Makefile
     examples/PluggableUDP/Makefile
-    examples/PluggableUDP/tests/Basic/Makefile
     examples/PluggableUDP/tests/Makefile
     examples/PluggableUDP/tests/Performance/Makefile
     examples/PluggableUDP/tests/SimplePerformance/Makefile
