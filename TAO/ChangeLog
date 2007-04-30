@@ -1,7 +1,13 @@
 
 Mon Apr 30 08:59:37 CDT 2007  Chad Elliott  <elliott_c@ociweb.com>
 
-	* TAO version 1.5.8 released.
+        * TAO version 1.5.8 released.
+
+Mon Apr 30 17:47:32 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * configure.ac:
+
+          Removed a non-existent entry.
 
 Mon Apr 30 12:57:32 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
