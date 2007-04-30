@@ -1,3 +1,10 @@
+Mon Apr 30 04:03:16 UTC 2007  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * bin/make_release.py
+        
+          Fixed problem causing TAO/CIAO to be included in ACE and/or
+          ACE+TAO only packages. 
+
 Fri Apr 27 13:37:13 UTC 2007  Dale Wilson  <wilsond@ociweb.com>
 
         * ace/Object_Manager.cpp:

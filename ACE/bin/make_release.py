@@ -568,7 +568,7 @@ def create_file_lists (base_dir, prefix, exclude):
             
             fullitem = os.path.join (relroot, item)
             if fullitem in exclude:
-                pass
+                continue
 
             if bin_regex.search (fullitem) is not None:
                 bin_files.append (os.path.join (prefix, fullitem))
