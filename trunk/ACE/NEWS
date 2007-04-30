@@ -25,6 +25,18 @@ USER VISIBLE CHANGES BETWEEN ACE-5.5.7 and ACE-5.5.8
 . Added support for Microsoft Visual Studio Code Name "Orcas", which is
   the msvc9 beta
 
+. Added ability to provide an optional priority when calling
+  ACE_Message_Queue_Ex::enqueue_prio(). There was previously no way
+  to specify a priority for queueing.
+
+. Removed support for Visual Age on Windows.
+
+. ACE will compile once again with ACE_LACKS_CDR_ALIGNMENT #defined.
+
+. ACE_Process_Manager::terminate() no longer removes the process from the
+  process descriptor table; the pid remains available in order to call
+  ACE_Process_Manager::wait().
+
 USER VISIBLE CHANGES BETWEEN ACE-5.5.6 and ACE-5.5.7
 ====================================================
 
