@@ -1,3 +1,9 @@
+Mon Apr 30 13:21:23 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * NEWS:
+
+          Added user visible changes for 0.5.8 based on ChangeLog entries.
+
 Thu Apr 26 15:01:17 UTC 2007  Gan Deng  <gan.deng@vanderbilt.edu>
 
         * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp
@@ -11,7 +17,7 @@ Wed Apr 25 20:22:44 UTC 2007    <dengg@blade22.isislab.vanderbilt.edu>
 
           Fixed warning on GCC with constructor initialization list
           sequence.
-        
+
         * DAnCE/Utils/Plan_Handler.cpp
         * DAnCE/Utils/Plan_Handler.h
 
@@ -22,12 +28,12 @@ Wed Apr 25 19:27:28 UTC 2007  Gan Deng  <gan.deng@vanderbilt.edu>
         * DAnCE/DomainApplicationManager/DomainApplicationManager_AMH_Impl.cpp
         * DAnCE/DomainApplicationManager/DomainApplicationManager_AMH_Impl.h
         * DAnCE/DomainApplicationManager/DomainApplicationManager_AMH_Impl.inl
-        
+
           An AMH-based implementation of DomainApplicationManager. This
           class duplicates *most* of code with the non-AMH based
           DomainApplicationManager implementation, eventually we should
           either remove one version completely or find a way to minimize
-          the duplicate code. The public interfaces of these two classes are 
+          the duplicate code. The public interfaces of these two classes are
           quite different.
 
         * DAnCE/DomainApplicationManager/DomainApplicationManager_AMI_Impl.cpp
@@ -42,9 +48,9 @@ Wed Apr 25 19:27:28 UTC 2007  Gan Deng  <gan.deng@vanderbilt.edu>
           The AMI callback reply handler should work with the
           AMH-based DomainApplicationManager instead of the non-AMH based
           version.
-        
+
         * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp
-        
+
           Modified to make the construction process of the
           DomainApplicationManager to be more self-contained and atomic.
 
@@ -58,20 +64,20 @@ Wed Apr 25 19:27:28 UTC 2007  Gan Deng  <gan.deng@vanderbilt.edu>
         * DAnCE/DomainApplicationManager/DomainApplicationManager.mpc
 
           Added the AMH-based DAM servant into the project.
-        
+
 Tue Apr 24 17:44:22 UTC 2007  Gan Deng  <gan.deng@vanderbilt.edu>
 
         * DAnCE/ExecutionManager/Execution_Manager_Impl.cpp
 
           Modified the debug output information to make it
           better describe the program behavior.
-        
+
         * examples/Hello/descriptors/run_NodeDaemons.pl
-        
+
           Increased the spawn latency delay so it can handle
           deployment with a large number of components, i.e.,
           more than one thousand.
-        
+
         * examples/Hello/descriptors/svc_em.conf
 
           Service configuration file for ExecutionManager.
@@ -79,73 +85,73 @@ Tue Apr 24 17:44:22 UTC 2007  Gan Deng  <gan.deng@vanderbilt.edu>
 Tue Apr 24 14:58:58 UTC 2007  Gan Deng  <gan.deng@vanderbilt.edu>
 
         * DAnCE/DomainApplicationManager/DomainApplicationManager_AMI_Impl.cpp:
-        
+
           Added a newline to the end of the file.
 
 Mon Apr 23 23:02:25 UTC 2007  Gan Deng  <gan.deng@vanderbilt.edu>
 
         * DAnCE/Deployment/DAnCE_Core.mpc
-        
+
           Modified the IDL flag by passing -GH to generate AMH code
           for Deployment_DomainApplicationManager.idl.
-        
+
         * DAnCE/DomainApplicationManager/DomainApplicationManager_AMI_Impl.cpp
         * DAnCE/DomainApplicationManager/DomainApplicationManager_AMI_Impl.h
-        
-          Added functionality to use AMH to handle StartLaunch request 
+
+          Added functionality to use AMH to handle StartLaunch request
           processing.
-        
+
         * DAnCE/DomainApplicationManager/Reply_Handler_i.cpp
 
           Modified to notify the DAM servant object once all the
           AMI callbacks are received.
-        
+
 Sat Apr 21 21:26:30 UTC 2007  Gan Deng  <gan.deng@vanderbilt.edu>
 
         * DAnCE/DomainApplicationManager/DomainApplicationManager_AMI_Impl.cpp:
         * DAnCE/DomainApplicationManager/DomainApplicationManager_AMI_Impl.h:
-        
+
           Used raw pointer to cache the servant since no copy constructor
           is defined for the Value_Ptr in ACE.
-        
+
         * DAnCE/DomainApplicationManager/Reply_Handler_i.cpp
         * DAnCE/DomainApplicationManager/Reply_Handler_i.h
-        
+
           Get rid of the unnecessary copy constructor.
-          
+
         * DAnCE/NodeApplication/Container_Impl.cpp:
         * DAnCE/NodeApplication/Container_Impl.h
         * DAnCE/NodeApplication/Container_Impl.inl:
-        
+
           Modified to use Auto_Ptr to cache the container pointer.
           Return a duplicate pointer instead of returning a pointer
           within the object.
-        
+
 Fri Apr 20 19:08:43 UTC 2007  Gan Deng  <gan.deng@vanderbilt.edu>
 
         * DAnCE/Plan_Launcher/Plan_Launcher_Impl.cpp
-        
+
           Modified to make the debug message more informative.
-        
+
 Thu Apr 19 23:15:10 UTC 2007  Gan Deng  <gan.deng@vanderbilt.edu>
 
         * DAnCE/DomainApplicationManager/DomainApplicationManager_AMI_Impl.cpp
         * DAnCE/DomainApplicationManager/DomainApplicationManager_AMI_Impl.h
-        
+
           Added a centrallized map to track the status of the AMI callback
           return status.
-        
+
         * DAnCE/DomainApplicationManager/Reply_Handler_i.cpp
         * DAnCE/DomainApplicationManager/Reply_Handler_i.h
 
           Added a DomainApplicationManager_AMI_Impl object as a member
           variable for callback purpose, i.e., notifiying this object
           as soon as a AMI call returns.
-        
+
         * DAnCE/ExecutionManager/Execution_Manager.cpp
 
           Added usage info printout about using AMI.
-        
+
 Thu Apr 19 18:29:12 UTC 2007 Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/tests/NodeApplicationTest/run_test.pl:
