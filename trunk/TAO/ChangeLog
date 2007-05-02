@@ -1,3 +1,19 @@
+Wed May  2 14:05:37 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_2918_Regression/*:
+          New test for bug 2918, at this moment it works, but the test will
+          be extended to detect whether the size of the marshalled any is
+          too big or not.
+
+        * tests/Bug_2289_Regression/server.cpp:
+          Initialise pointer with 0
+
+        * tests/IDL_Test/struct.idl:
+          Added some more test cases
+
+        * tests/OBV/Simple/run_test.pl:
+          Extended wait time for slower systems
+
 Wed May  2 14:02:37 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Messaging/ExceptionHolder_i.cpp:
