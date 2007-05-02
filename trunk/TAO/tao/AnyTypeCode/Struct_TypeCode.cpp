@@ -195,8 +195,7 @@ CORBA::TypeCode_ptr
 TAO::TypeCode::Struct<StringType,
                       TypeCodeType,
                       FieldArrayType,
-                      RefCountPolicy>::get_compact_typecode_i (
-  void) const
+                      RefCountPolicy>::get_compact_typecode_i (void) const
 {
   ACE_Array_Base<Struct_Field<CORBA::String_var,
                               CORBA::TypeCode_var> >
