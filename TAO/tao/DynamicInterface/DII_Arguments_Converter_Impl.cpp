@@ -76,11 +76,18 @@ TAO_DII_Arguments_Converter_Impl::convert_request (
 
 void
 TAO_DII_Arguments_Converter_Impl::convert_reply (
-    TAO_ServerRequest & /*server_request*/,
+    TAO_ServerRequest & /* server_request */,
     TAO::Argument * const /*args*/[],
     size_t /*nargs*/)
 {
-  // TODO
+}
+
+void
+TAO_DII_Arguments_Converter_Impl::handle_corba_exception (
+  TAO_ServerRequest & /*server_request*/,
+  CORBA::Exception *exception)
+{
+  exception->_raise ();
 }
 
 // *********************************************************************

@@ -8,6 +8,7 @@ ACE_RCSID (Messaging,
            "$Id$")
 
 #include "tao/Messaging/Messaging.h"
+#include "tao/Exception_Data.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -51,16 +52,79 @@ namespace TAO
 
   void ExceptionHolder::raise_exception (void)
     {
-      TAO_Messaging_Helper::exception_holder_raise (
-        this->data_,
-        this->count_,
-        this->marshaled_exception ().get_buffer (),
-        this->marshaled_exception ().length (),
-        this->byte_order (),
-        this->is_system_exception (),
-        this->char_translator_,
-        this->wchar_translator_);
-      }
+      TAO_InputCDR _tao_in ((const char*) this->marshaled_exception ().get_buffer (),
+                            this->marshaled_exception ().length (),
+                            this->byte_order ());
+
+      _tao_in.char_translator (this->char_translator_);
+      _tao_in.wchar_translator (this->wchar_translator_);
+
+      CORBA::String_var type_id;
+
+      if ((_tao_in >> type_id.inout ()) == 0)
+        {
+          // Could not demarshal the exception id, raise a local
+          // CORBA::MARSHAL
+          throw ::CORBA::MARSHAL (TAO::VMCID, CORBA::COMPLETED_YES);
+        }
+
+      if (this->is_system_exception ())
+        {
+          CORBA::ULong minor = 0;
+          CORBA::ULong completion = 0;
+          if ((_tao_in >> minor) == 0 ||
+              (_tao_in >> completion) == 0)
+            throw ::CORBA::MARSHAL (TAO::VMCID, CORBA::COMPLETED_MAYBE);
+
+          CORBA::SystemException* exception =
+            TAO::create_system_exception (type_id.in ());
+
+          if (exception == 0)
+            {
+              // @@ We should raise a CORBA::NO_MEMORY, but we ran out
+              //    of memory already. We need a pre-allocated, TSS,
+              //    CORBA::NO_MEMORY instance
+              ACE_NEW (exception, CORBA::UNKNOWN);
+            }
+          exception->minor (minor);
+          exception->completed (CORBA::CompletionStatus (completion));
+
+          // Raise the exception.
+          ACE_Auto_Basic_Ptr<CORBA::SystemException> e_ptr(exception);
+          exception->_raise ();
+
+          return;
+        }
+
+      // Match the exception interface repository id with the
+      // exception in the exception list.
+      // This is important to decode the exception.
+      for (CORBA::ULong i = 0; i != this->count_; ++i)
+        {
+          if (ACE_OS::strcmp (type_id.in (), this->data_[i].id) != 0)
+            continue;
+
+          CORBA::Exception * const exception = this->data_[i].alloc ();
+
+          if (exception == 0)
+            throw ::CORBA::NO_MEMORY (TAO::VMCID, CORBA::COMPLETED_YES);
+          exception->_tao_decode (_tao_in);
+
+          // Raise the exception.
+          ACE_Auto_Basic_Ptr<CORBA::Exception> e_ptr (exception);
+          exception->_raise ();
+
+          return;
+        }
+
+      // If we couldn't find the right exception, report it as
+      // CORBA::UNKNOWN.
+
+      // @@ It would seem like if the remote exception is a
+      //    UserException we can assume that the request was
+      //    completed.
+      throw ::CORBA::UNKNOWN (TAO::VMCID, CORBA::COMPLETED_YES);
+    }
 
   void ExceptionHolder::raise_exception_with_list (
       const ::Dynamic::ExceptionList &)
