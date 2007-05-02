@@ -440,6 +440,12 @@ public:
   /// Destroys all nodes and sets the root pointer null.
   void clear (void);
 
+  /**
+   * Returns a pointer to the current root of the tree.  Being a balanaced tree,
+   * there is no guarentee that this node will remain as the root after a rebalance operation
+   */
+  ACE_RB_Tree_Node<EXT_ID, INT_ID>* get_root() const;
+
 protected:
   /// Reinitialize constructor.
   /**
@@ -459,10 +465,10 @@ protected:
                               int measured_black_height);
 
   /// Method for right rotation of the tree about a given node.
-  void RB_rotate_right (ACE_RB_Tree_Node<EXT_ID, INT_ID> * x);
+  virtual void RB_rotate_right (ACE_RB_Tree_Node<EXT_ID, INT_ID> * x);
 
   /// Method for left rotation of the tree about a given node.
-  void RB_rotate_left (ACE_RB_Tree_Node<EXT_ID, INT_ID> * x);
+  virtual void RB_rotate_left (ACE_RB_Tree_Node<EXT_ID, INT_ID> * x);
 
   /// Method for restoring Red-Black properties after deletion.
   void RB_delete_fixup (ACE_RB_Tree_Node<EXT_ID, INT_ID> * x,

@@ -10,23 +10,7 @@ ACE_INLINE
 DA_Strategy_Base<AnnotationId>::~DA_Strategy_Base()
 {
 }
-/*
-template <typename AnnotationId>
-ACE_INLINE
-int 
-DA_Strategy_Base<AnnotationId>::get_max_available_threads()
-{
-  return this->num_avail_threads_;
-}
 
-template <typename AnnotationId>
-ACE_INLINE void
-DA_Strategy_Base<AnnotationId>::set_max_available_threads (int num_threads)
-{
-  this->num_avail_threads_ = num_threads;
-  printf("num_avail_threads = %d\n", num_threads);
-}
-*/
 template <typename AnnotationId>
 ACE_INLINE int 
 DA_Strategy_Base<AnnotationId>::get_annotation (AnnotationId id)
@@ -40,17 +24,9 @@ DA_Strategy_Base<AnnotationId>::get_annotation (AnnotationId id)
 template <typename AnnotationId>
 ACE_INLINE int 
 DA_Strategy_Base<AnnotationId>::set_annotations_table (
-        const ACE_Hash_Map_Reverse_Iterator_Ex<AnnotationId,
-                                               int,
-                                               ACE_Hash<AnnotationId>,
-                                               ACE_Equal_To<AnnotationId>,
-                                               ACE_Thread_Mutex>& table)
+        const HASH_ANNOTATIONS_REVERSE_ITER& table)
 {
-  ACE_Hash_Map_Const_Iterator_Ex<AnnotationId,
-                                 int,
-                                 ACE_Hash<AnnotationId>,
-                                 ACE_Equal_To<AnnotationId>,
-                                 ACE_Thread_Mutex>  iter(table);
+  HASH_ANNOTATIONS_CONST_ITER iter(table);
   int rc=0;
   
   for (;!(iter.done()); iter++)
@@ -77,6 +53,17 @@ DA_Strategy_Base<AnnotationId>::add_annotation (AnnotationId id, int annotation)
     }
   */
   return rc;
+}
+
+template <typename AnnotationId>
+ACE_INLINE ACE_Hash_Map_Const_Iterator_Ex<AnnotationId,
+                                       int,
+                                       ACE_Hash<AnnotationId>,
+                                       ACE_Equal_To<AnnotationId>,
+                                       ACE_Thread_Mutex>
+DA_Strategy_Base<AnnotationId>::get_annotations_iter() 
+{
+  return annotations_repo_.begin();
 }
 
 template <typename AnnotationId>

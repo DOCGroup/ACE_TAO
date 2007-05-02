@@ -29,11 +29,13 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+class ACE_Event_Handler;
+
 template <typename AnnotationId>
 class DA_Strategy_Base {
 
   //The annotations consist of an identifier and a resource cost value
-/*typedef ACE_Hash_Map_Entry<ACE_Event_Handler *, int> HASH_EH_ENTRY;
+typedef ACE_Hash_Map_Entry<ACE_Event_Handler *, int> HASH_EH_ENTRY;
 
 
 typedef ACE_Hash_Map_Manager_Ex<AnnotationId,
@@ -61,35 +63,23 @@ typedef ACE_Hash_Map_Reverse_Iterator_Ex<AnnotationId,
                                          ACE_Thread_Mutex> HASH_ANNOTATIONS_REVERSE_ITER;
 
 typedef HASH_ANNOTATIONS_MAP Annotations_Table;
-*/
+
 public:
     DA_Strategy_Base(int maxThreads);
     virtual ~DA_Strategy_Base();
-
-    /*  TBD - not sure of the implications of changing the number of threads available.
-    virtual int get_max_available_threads();
-    virtual void set_max_available_threads(int newMax);
-    */
-  
+ 
     virtual bool is_deadlock_potential(AnnotationId handle)=0;
     virtual void grant(AnnotationId handle)=0;
     virtual void release(AnnotationId upcall_handle)=0;
-    int getMaxThreads() { return num_avail_threads_};
+    int get_max_threads() { return num_avail_threads_};
+    HASH_ANNOTATIONS_CONST_ITER get_annotations_iter();
     virtual int get_annotation (AnnotationId handle);
     virtual int add_annotation (AnnotationId handle, int annotation);
     virtual int remove_annotation (AnnotationId handle);
-    virtual int set_annotations_table (const ACE_Hash_Map_Reverse_Iterator_Ex<AnnotationId,
-                                         int,
-                                         ACE_Hash<AnnotationId>,
-                                         ACE_Equal_To<AnnotationId>,
-                                         ACE_Thread_Mutex> & table);
+    virtual int set_annotations_table (const HASH_ANNOTATIONS_REVERSE_ITER& table);
 
 private:
-  ACE_Hash_Map_Manager_Ex<AnnotationId,
-                          int,
-                          ACE_Hash<AnnotationId>,
-                          ACE_Equal_To<AnnotationId>,
-                          ACE_Thread_Mutex> annotations_repo_;
+  HASH_ANNOTATIONS_MAP annotations_repo_;
   ACE_RW_Thread_Mutex lock_;
   ACE_Atomic_Op<ACE_Thread_Mutex, long> num_avail_threads_;
 
