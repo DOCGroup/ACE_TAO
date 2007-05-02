@@ -23,6 +23,7 @@
 
 #include /**/ "ace/pre.h"
 
+#include "tao/LocalObject.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -30,7 +31,6 @@
 
 #include "BasicSPEC.h"
 #include "BasicSP_exec_export.h"
-#include "tao/LocalObject.h"
 
 namespace MyImpl
 {
