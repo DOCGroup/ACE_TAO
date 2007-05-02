@@ -7,10 +7,10 @@
 
 #if TAO_HAS_INTERCEPTORS == 1
 # include "tao/ServerRequestInterceptor_Adapter.h"
-# include "tao/PortableInterceptorC.h"
 # include "tao/ORB_Core.h"
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
+#include "tao/PortableInterceptorC.h"
 #include "tao/PortableInterceptor.h"
 
 #include "tao/TAO_Server_Request.h"
@@ -79,10 +79,12 @@ TAO::Upcall_Wrapper::upcall (TAO_ServerRequest & server_request,
 
   TAO::ServerRequestInterceptor_Adapter *interceptor_adapter =
     server_request.orb_core ()->serverrequestinterceptor_adapter ();
+#endif /* TAO_HAS_INTERCEPTORS */
 
   try
     {
       {
+#if TAO_HAS_INTERCEPTORS == 1
         if (interceptor_adapter != 0)
           {
             // Invoke intermediate server side interception points.
@@ -111,8 +113,9 @@ TAO::Upcall_Wrapper::upcall (TAO_ServerRequest & server_request,
               }
 #if TAO_HAS_INTERCEPTORS == 1
           }
+#endif /* TAO_HAS_INTERCEPTORS */
       }
-
+#if TAO_HAS_INTERCEPTORS == 1
       if (interceptor_adapter == 0)
         {
           server_request.reply_status (PortableInterceptor::SUCCESSFUL);
@@ -142,6 +145,7 @@ TAO::Upcall_Wrapper::upcall (TAO_ServerRequest & server_request,
                                                nexceptions);
             }
         }
+#endif /* TAO_HAS_INTERCEPTORS */
     }
   catch ( ::CORBA::Exception& ex)
     {
@@ -152,6 +156,7 @@ TAO::Upcall_Wrapper::upcall (TAO_ServerRequest & server_request,
       PortableInterceptor::ReplyStatus status =
         PortableInterceptor::SYSTEM_EXCEPTION;
 
+#if TAO_HAS_INTERCEPTORS == 1
       server_request.caught_exception (&ex);
 
       if (interceptor_adapter != 0)
@@ -165,14 +170,26 @@ TAO::Upcall_Wrapper::upcall (TAO_ServerRequest & server_request,
 
           status = server_request.reply_status ();
         }
+#endif /* TAO_HAS_INTERCEPTORS */
 
       if (status == PortableInterceptor::SYSTEM_EXCEPTION
           || status == PortableInterceptor::USER_EXCEPTION)
         {
-          throw;
+          if (server_request.collocated ()
+               && server_request.operation_details ()->cac () != 0)
+            {
+              // If we have a cac it will handle the exception and no
+              // need to do any further processing
+              server_request.operation_details ()->cac ()->handle_corba_exception (
+                server_request, &ex);
+              return;
+            }
+          else
+            {
+              throw;
+            }
         }
     }
-#endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
   if (server_request.response_expected ()
       && !server_request.sync_with_server ())
@@ -212,8 +229,6 @@ TAO::Upcall_Wrapper::pre_upcall (TAO_InputCDR & cdr,
   //        always the first element in the array, regardless of
   //        whether or not the return type is void.
 
-  ACE_ASSERT (nargs != 0);
-
   TAO::Argument * const * const begin = args + 1;  // Skip the return value.
   TAO::Argument * const * const end   = args + nargs;
 
@@ -245,7 +260,7 @@ TAO::Upcall_Wrapper::post_upcall (TAO_OutputCDR & cdr,
         }
     }
 
- // Reply body marshaling completed.  No other fragments to send.
+  // Reply body marshaling completed.  No other fragments to send.
   cdr.more_fragments (false);
 }
 

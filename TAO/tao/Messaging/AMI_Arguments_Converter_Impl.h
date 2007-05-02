@@ -50,6 +50,9 @@ public:
                               TAO::Argument * const args[],
                               size_t nargs);
 
+  virtual void handle_corba_exception (TAO_ServerRequest & server_request,
+                                       CORBA::Exception *exception);
+
   // Used to force the initialization of the ORB code.
   static int Initializer (void);
 };

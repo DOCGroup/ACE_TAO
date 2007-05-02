@@ -276,7 +276,6 @@ public:
 
   /// Get the status of the received reply.
   PortableInterceptor::ReplyStatus reply_status (void);
-
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
 private:
