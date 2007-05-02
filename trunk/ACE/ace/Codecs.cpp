@@ -60,7 +60,7 @@ ACE_Base64::encode (const ACE_Byte* input,
   for (size_t i = 0; i < input_len; ++i)
     {
       bits += input[i];
-      char_count++;
+      ++char_count;
 
       if (char_count == 3)
         {
@@ -115,7 +115,7 @@ ACE_Base64::length (const ACE_Byte* input)
   while (*ptr != 0 &&
          (member_[*(ptr)] == 1 || *ptr == pad
           || ACE_OS::ace_isspace (*ptr)))
-    ptr++;
+    ++ptr;
   size_t len = ptr - input;
   len = ((len + 3) / 4) * 3 + 1 ;
   return len;
@@ -138,7 +138,7 @@ ACE_Base64::decode (const ACE_Byte* input, size_t* output_len)
   while (*ptr != 0 &&
          (member_[*(ptr)] == 1 || *ptr == pad
           || ACE_OS::ace_isspace (*ptr)))
-    ptr++;
+    ++ptr;
   size_t input_len = ptr - input;
 
   int char_count = 0;
@@ -153,7 +153,7 @@ ACE_Base64::decode (const ACE_Byte* input, size_t* output_len)
       if (!ACE_Base64::member_[input[i]])
         continue;
       bits += decoder_[input[i]];
-      char_count++;
+      ++char_count;
 
       if (char_count == 4)
         {
@@ -177,7 +177,7 @@ ACE_Base64::decode (const ACE_Byte* input, size_t* output_len)
           ACE_ERROR ((LM_ERROR,
                       ACE_LIB_TEXT ("Decoding incomplete: atleast %d bits truncated\n"),
                       (4 - char_count) * 6));
-          errors++;
+          ++errors;
         }
     }
   else
@@ -187,7 +187,7 @@ ACE_Base64::decode (const ACE_Byte* input, size_t* output_len)
         case 1:
           ACE_ERROR ((LM_ERROR,
                       ACE_LIB_TEXT ("Decoding incomplete: atleast 2 bits missing\n")));
-          errors++;
+          ++errors;
           break;
         case 2:
           result[pos++] = static_cast<ACE_Byte> (bits >> 10);

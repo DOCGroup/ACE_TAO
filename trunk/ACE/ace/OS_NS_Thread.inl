@@ -1986,7 +1986,7 @@ ACE_OS::sema_trywait (ACE_sema_t *s)
   return result;
 #   elif defined (ACE_HAS_WTHREADS)
 #     if !defined (ACE_USES_WINCE_SEMA_SIMULATION)
-  int result = ::WaitForSingleObject (*s, 0);
+  DWORD result = ::WaitForSingleObject (*s, 0);
 
   if (result == WAIT_OBJECT_0)
     return 0;
@@ -2003,7 +2003,7 @@ ACE_OS::sema_trywait (ACE_sema_t *s)
   // Check the status of semaphore first.  Return immediately
   // if the semaphore is not available and avoid grabing the
   // lock.
-  int result = ::WaitForSingleObject (s->count_nonzero_, 0);
+  DWORD result = ::WaitForSingleObject (s->count_nonzero_, 0);
 
   if (result == WAIT_OBJECT_0)  // Proceed when it is available.
     {

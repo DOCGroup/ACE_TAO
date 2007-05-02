@@ -232,7 +232,7 @@ ACE_ARGV_T<CHAR_TYPE>::add (const CHAR_TYPE *next_arg, bool quote_arg)
                        ACE_LIB_TEXT ("Can't add more to ARGV queue")),
                       -1);
 
-  this->argc_++;
+  ++this->argc_;
 
   // Wipe argv_ and buf_ away so that they will be recreated if the
   // user calls argv () or buf ().

@@ -52,7 +52,8 @@ public:
    *                    If the @c LOGGER logging destination is not being
    *                    used, any string can be passed through to the back end.
    *
-   * @retval 0 for success; -1 for failure.
+   * @retval 0 for success.
+   * @retval -1 for failure.
    */
   virtual int open (const ACE_TCHAR *logger_key) = 0;
 

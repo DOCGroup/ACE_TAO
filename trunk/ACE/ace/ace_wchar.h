@@ -81,6 +81,13 @@
 # endif /* ACE_HAS_STANDARD_CPP_LIBRARY */
 #endif /* ACE_HAS_WCHAR */
 
+#if defined (ACE_HAS_ICONV)
+#  include /**/ <iconv.h>
+#  if !defined (ACE_MAX_ICONV_BUFFER)
+#    define ACE_MAX_ICONV_BUFFER   16*1024
+#  endif
+#endif /* ACE_HAS_ICONV */
+
 #if defined (ACE_USES_STD_NAMESPACE_FOR_STDC_LIB) && \
             (ACE_USES_STD_NAMESPACE_FOR_STDC_LIB != 0)
 using std::size_t;
@@ -193,6 +200,10 @@ private:
   /// Internal pointer to the converted string.
   char *s_;
 
+#if defined (ACE_HAS_ICONV)
+  static iconv_t ACE_Wide_To_Ascii_iconv_env;
+#endif /* ACE_HAS_ICONV */
+
   /// Disallow these operation.
   ACE_Wide_To_Ascii (void);
   ACE_Wide_To_Ascii (ACE_Wide_To_Ascii &);
@@ -226,6 +237,10 @@ public:
 private:
   /// Internal pointer to the converted string.
   wchar_t *s_;
+
+#if defined (ACE_HAS_ICONV)
+  static iconv_t ACE_Ascii_To_Wide_iconv_env;
+#endif /* ACE_HAS_ICONV */
 
   /// Disallow these operation.
   ACE_Ascii_To_Wide (void);

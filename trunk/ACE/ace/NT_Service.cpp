@@ -182,7 +182,8 @@ ACE_NT_Service::insert (DWORD start_type,
                         LPDWORD tag_id,
                         const ACE_TCHAR *dependencies,
                         const ACE_TCHAR *account_name,
-                        const ACE_TCHAR *password)
+                        const ACE_TCHAR *password,
+                        DWORD desired_access)
 {
   ACE_TCHAR this_exe[MAXPATHLEN + 2];
 
@@ -208,7 +209,7 @@ ACE_NT_Service::insert (DWORD start_type,
   SC_HANDLE sh = ACE_TEXT_CreateService (sc_mgr,
                                          this->name (),
                                          this->desc (),
-                                         SERVICE_ALL_ACCESS,
+                                         desired_access,
                                          this->svc_status_.dwServiceType,
                                          start_type,
                                          error_control,
