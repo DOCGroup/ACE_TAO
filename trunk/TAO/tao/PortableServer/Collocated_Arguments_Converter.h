@@ -51,6 +51,9 @@ public:
   virtual void convert_reply (TAO_ServerRequest & server_request,
                               TAO::Argument * const args[],
                               size_t nargs) = 0;
+
+  virtual void handle_corba_exception (TAO_ServerRequest & server_request,
+                                       CORBA::Exception *exception) = 0;
 };
 }
 TAO_END_VERSIONED_NAMESPACE_DECL

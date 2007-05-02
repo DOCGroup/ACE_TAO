@@ -65,32 +65,6 @@ typedef void (*TAO_Reply_Handler_Stub)(
     Messaging::ReplyHandler_ptr,
     CORBA::ULong reply_status);
 
-namespace TAO
-{
-  struct Exception_Data;
-}
-
-/**
- * @namespace TAO_Messaging_Helper
- *
- * @brief Define helper functions for the CORBA Messaging
- * implementation in TAO.
- */
-namespace TAO_Messaging_Helper
-{
-  /// Implement the code shared by all the ExceptionHolder::raise_*()
-  /// operations
-  void TAO_Messaging_Export exception_holder_raise (
-           TAO::Exception_Data *exception_data,
-           CORBA::ULong exception_count,
-           CORBA::Octet *marshaled_data,
-           CORBA::ULong marshaled_data_length,
-           CORBA::Boolean byte_order,
-           CORBA::Boolean is_system_exception,
-           ACE_Char_Codeset_Translator *char_translator,
-           ACE_WChar_Codeset_Translator *wchar_translator);
-}
-
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"

@@ -1,3 +1,35 @@
+Wed May  2 14:02:37 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Messaging/ExceptionHolder_i.cpp:
+        * tao/Messaging/Messaging.cpp:
+        * tao/Messaging/Messaging.h:
+          Moved the exception_holder_raise from Messaging_Helper
+          to the exception holder. No need anymore to have this as
+          seperate helper method
+
+        * tao/PortableServer/Upcall_Wrapper.cpp:
+          Reworked the upcall wrapper to always do a try/catch and when
+          an exception has occured, invoke the collocated argument
+          converter when one is set, this will then handle the exception,
+          if it is not set, we raise it as normally. With this change
+          when using collocated AMI, the exception is passed to the
+          reply handler instead of passed back to the caller. This fixes
+          bugzilla 2909.
+
+        * tao/DynamicInterface/DII_Arguments_Converter_Impl.cpp:
+          Implement handle_corba_exception to raise the exception is there
+          is one available in the request. Needed because of the changes
+          in the upcall wrapper above.
+
+        * tao/Messaging/AMI_Arguments_Converter_Impl.{h,cpp}:
+          Implemented handle_corba_exception
+
+        * tao/PortableServer/Collocated_Arguments_Converter.h:
+          Added method to handle exceptions
+
+        * tao/PortableServer/Upcall_Wrapper.h:
+          Doxygen fix
+
 Wed May  2 13:26:37 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/AnyTypeCode/Enum_TypeCode.h:

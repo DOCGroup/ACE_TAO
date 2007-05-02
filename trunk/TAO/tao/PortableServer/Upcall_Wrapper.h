@@ -71,7 +71,6 @@ namespace TAO
      *
      * @param servant_upcall Object containing information for POA
      *                       that dispatched the servant.
-     * @param servant        The servant handling the upcall.
      * @param exceptions     Array of user exceptions the operation
      *                       may raise.
      * @param nexceptions    The number of exceptions in the operation
