@@ -1,3 +1,9 @@
+Wed May  2 18:43:37 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/bczar/bczar.html:
+          Updated to mention the update of release.xml in the autobuild archive
+          for the integrated build/test scoreboard
+
 Wed May  2 16:04:21 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/depgen.pl:
