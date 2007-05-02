@@ -82,7 +82,7 @@ ACE_Dev_Poll_Reactor_Notify::open (ACE_Reactor_Impl *r,
 #endif /* F_SETFD */
 
 #if defined (ACE_HAS_REACTOR_NOTIFICATION_QUEUE)
-      if (notification_queue_.open() == -1)
+      if (notification_queue_.open () == -1)
 	{
 	  return -1;
 	}
@@ -109,7 +109,7 @@ ACE_Dev_Poll_Reactor_Notify::close (void)
   ACE_TRACE ("ACE_Dev_Poll_Reactor_Notify::close");
 
 #if defined (ACE_HAS_REACTOR_NOTIFICATION_QUEUE)
-  notification_queue_.reset();
+  notification_queue_.reset ();
 #endif /* ACE_HAS_REACTOR_NOTIFICATION_QUEUE */
 
   return this->notification_pipe_.close ();
@@ -133,7 +133,7 @@ ACE_Dev_Poll_Reactor_Notify::notify (ACE_Event_Handler *eh,
   ACE_Dev_Poll_Handler_Guard eh_guard (eh);
 
   int notification_required = 
-    notification_queue_.push_new_notification(buffer);
+    notification_queue_.push_new_notification (buffer);
 
   if (notification_required == -1)
   {
@@ -151,7 +151,7 @@ ACE_Dev_Poll_Reactor_Notify::notify (ACE_Event_Handler *eh,
   // the send fails due to a full pipe, don't fail - assume the already-sent
   // pipe bytes will cause the entire notification queue to be processed.
   ssize_t n = ACE::send (this->notification_pipe_.write_handle (),
-                         (char *) &buffer,
+ (char *) &buffer,
                          1,             // Only need one byte to pop the pipe
                          timeout);
   if (n == -1 && (errno != ETIME && errno != EAGAIN))
@@ -168,7 +168,7 @@ ACE_Dev_Poll_Reactor_Notify::notify (ACE_Event_Handler *eh,
   ACE_Dev_Poll_Handler_Guard eh_guard (eh);
 
   ssize_t n = ACE::send (this->notification_pipe_.write_handle (),
-                         (char *) &buffer,
+ (char *) &buffer,
                          sizeof buffer,
                          timeout);
   if (n == -1)
@@ -217,7 +217,7 @@ ACE_Dev_Poll_Reactor_Notify::read_notify_pipe (ACE_HANDLE handle,
 
 #if defined (ACE_HAS_REACTOR_NOTIFICATION_QUEUE)
   // For the queued case, we'll try to read one byte (since that's what
-  // the notify() tried to put in) but we don't need it - notifications can
+  // the notify () tried to put in) but we don't need it - notifications can
   // be queued even if the pipe fills, so there may be more notifications
   // queued than there are bytes in the pipe.
   char b;
@@ -230,25 +230,23 @@ ACE_Dev_Poll_Reactor_Notify::read_notify_pipe (ACE_HANDLE handle,
   bool more_messages_queued = false;
   ACE_Notification_Buffer next;
 
-  int result = notification_queue_.pop_next_notification(
-	     buffer, more_messages_queued, next);
+  int result = notification_queue_.pop_next_notification (buffer, 
+                                                          more_messages_queued, 
+                                                          next);
 
   if (result == 0)
     {
+      // remove the notification byte from the pipe, avoiding notification loop
+      ACE::recv (handle, read_p, to_read);
       return 0;
     }
   
   if (result == -1)
-    {
-      return -1;
-    }
+    return -1;
 
-  if(more_messages_queued)
-    {
-      (void) ACE::send(this->notification_pipe_.write_handle(),
-		       (char *)&next, 1 /* one byte is enough */);
-    }
-
+  if (more_messages_queued)
+ (void) ACE::send (this->notification_pipe_.write_handle (),
+ (char *)&next, 1 /* one byte is enough */);
 #else
   to_read = sizeof buffer;
   read_p = (char *)&buffer;
@@ -259,7 +257,7 @@ ACE_Dev_Poll_Reactor_Notify::read_notify_pipe (ACE_HANDLE handle,
   if (n > 0)
     {
       // Check to see if we've got a short read.
-      if (static_cast<size_t>(n) != to_read)
+      if (static_cast<size_t> (n) != to_read)
         {
           size_t remainder = to_read - n;
 
@@ -417,7 +415,7 @@ ACE_Dev_Poll_Reactor_Notify::purge_pending_notifications (
 
 #if defined (ACE_HAS_REACTOR_NOTIFICATION_QUEUE)
 
-  return notification_queue_.purge_pending_notifications(eh, mask);
+  return notification_queue_.purge_pending_notifications (eh, mask);
 
 #else /* defined (ACE_HAS_REACTOR_NOTIFICATION_QUEUE) */
   ACE_UNUSED_ARG (eh);
@@ -691,7 +689,7 @@ ACE_Dev_Poll_Reactor::~ACE_Dev_Poll_Reactor (void)
 {
   ACE_TRACE ("ACE_Dev_Poll_Reactor::~ACE_Dev_Poll_Reactor");
 
-  (void) this->close ();
+ (void) this->close ();
 }
 
 int
@@ -803,7 +801,7 @@ ACE_Dev_Poll_Reactor::open (size_t size,
     this->initialized_ = true;
   else
     // This will close down all the allocated resources properly.
-    (void) this->close ();
+ (void) this->close ();
 
   return result;
 }
@@ -879,7 +877,7 @@ ACE_Dev_Poll_Reactor::close (void)
       this->delete_signal_handler_ = 0;
     }
 
-  (void) this->handler_rep_.close ();
+ (void) this->handler_rep_.close ();
 
   if (this->delete_timer_queue_)
     {
@@ -951,7 +949,7 @@ ACE_Dev_Poll_Reactor::work_pending_i (ACE_Time_Value * max_wait_time)
 #else
   if (this->start_pfds_ != this->end_pfds_)
 #endif /* ACE_HAS_EVENT_POLL */
-    return 1;  // We still have work_pending(). Do not poll for
+    return 1;  // We still have work_pending (). Do not poll for
                // additional events.
 
   ACE_Time_Value timer_buf (0);
@@ -962,12 +960,12 @@ ACE_Dev_Poll_Reactor::work_pending_i (ACE_Time_Value * max_wait_time)
 
   // Check if we have timers to fire.
   const int timers_pending =
-    ((this_timeout != 0 && max_wait_time == 0)
+ ((this_timeout != 0 && max_wait_time == 0)
      || (this_timeout != 0 && max_wait_time != 0
          && *this_timeout != *max_wait_time) ? 1 : 0);
 
   const long timeout =
-    (this_timeout == 0
+ (this_timeout == 0
      ? -1 /* Infinity */
      : static_cast<long> (this_timeout->msec ()));
 
@@ -1049,14 +1047,14 @@ ACE_Dev_Poll_Reactor::handle_events_i (ACE_Time_Value *max_wait_time,
 
   // Poll for events
   //
-  // If the underlying ioctl() call was interrupted via the interrupt
+  // If the underlying ioctl () call was interrupted via the interrupt
   // signal (i.e. returned -1 with errno == EINTR) then the loop will
   // be restarted if so desired.
   do
     {
       result = this->work_pending_i (max_wait_time);
       if (result == -1)
-	ACE_ERROR((LM_ERROR, "%t: %p\n", "work_pending_i"));
+	ACE_ERROR ((LM_ERROR, "%t: %p\n", "work_pending_i"));
     }
   while (result == -1 && this->restart_ != 0 && errno == EINTR);
 
@@ -1114,7 +1112,7 @@ ACE_Dev_Poll_Reactor::dispatch (Token_Guard &guard)
 int
 ACE_Dev_Poll_Reactor::dispatch_timer_handler (Token_Guard &guard)
 {
-  if (this->timer_queue_->is_empty())
+  if (this->timer_queue_->is_empty ())
     return 0;       // Empty timer queue so cannot have any expired timers.
 
   // Get the current time
@@ -1200,7 +1198,7 @@ ACE_Dev_Poll_Reactor::dispatch_io_event (Token_Guard &guard)
 
   // Dispatch the events.
   //
-  // Select the first available handle with event(s) pending. Check for
+  // Select the first available handle with event (s) pending. Check for
   // event type in defined order of dispatch: output, exception, input.
   // When an event is located, clear its bit in the dispatch set. If there
   // are no more events for the handle, also increment the pfds pointer
@@ -1256,7 +1254,7 @@ ACE_Dev_Poll_Reactor::dispatch_io_event (Token_Guard &guard)
         }
       else
         {
-          ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t) dispatch_io h %d unknown events 0x%x\n"), handle, revents));
+          ACE_ERROR ((LM_ERROR, ACE_TEXT (" (%t) dispatch_io h %d unknown events 0x%x\n"), handle, revents));
           // ACE_ASSERT (0);
         }
 
@@ -1293,7 +1291,7 @@ ACE_Dev_Poll_Reactor::dispatch_io_event (Token_Guard &guard)
                 this->upcall (eh, &ACE_Event_Handler::handle_output, handle);
 
               if (status < 0)
-                // Note that the token is reacquired in remove_handler().
+                // Note that the token is reacquired in remove_handler ().
                 this->remove_handler (handle, ACE_Event_Handler::WRITE_MASK);
               return 1;
             }
@@ -1304,7 +1302,7 @@ ACE_Dev_Poll_Reactor::dispatch_io_event (Token_Guard &guard)
                 this->upcall (eh, &ACE_Event_Handler::handle_exception, handle);
 
               if (status < 0)
-                // Note that the token is reacquired in remove_handler().
+                // Note that the token is reacquired in remove_handler ().
                 this->remove_handler (handle, ACE_Event_Handler::EXCEPT_MASK);
               return 1;
             }
@@ -1315,7 +1313,7 @@ ACE_Dev_Poll_Reactor::dispatch_io_event (Token_Guard &guard)
                 this->upcall (eh, &ACE_Event_Handler::handle_input, handle);
 
               if (status < 0)
-                // Note that the token is reacquired in remove_handler().
+                // Note that the token is reacquired in remove_handler ().
                 this->remove_handler (handle, ACE_Event_Handler::READ_MASK);
               return 1;
             }
@@ -1421,7 +1419,7 @@ ACE_Dev_Poll_Reactor::register_handler_i (ACE_HANDLE handle,
      if (::epoll_ctl (this->poll_fd_, op, handle, &epev) == -1)
        {
          ACE_ERROR ((LM_ERROR, "%p\n", "epoll_ctl"));
-         (void) this->handler_rep_.unbind (handle);
+ (void) this->handler_rep_.unbind (handle);
          return -1;
        }
 
@@ -1447,14 +1445,14 @@ ACE_Dev_Poll_Reactor::register_handler_i (ACE_HANDLE handle,
   // Add file descriptor to the "interest set."
   if (ACE_OS::write (this->poll_fd_, &pfd, sizeof (pfd)) != sizeof (pfd))
     {
-      (void) this->handler_rep_.unbind (handle);
+ (void) this->handler_rep_.unbind (handle);
       return -1;
     }
 #endif /*ACE_HAS_EVENT_POLL*/
 
   // Note the fact that we've changed the state of the wait_set_,
   // which is used by the dispatching loop to determine whether it can
-  // keep going or if it needs to reconsult select().
+  // keep going or if it needs to reconsult select ().
   // this->state_changed_ = 1;
 
   return 0;
@@ -1482,8 +1480,8 @@ ACE_Dev_Poll_Reactor::register_handler (const ACE_Handle_Set &handle_set,
   ACE_MT (ACE_GUARD_RETURN (ACE_Dev_Poll_Reactor_Token, mon, this->token_, -1));
 
   // @@ It might be more efficient to construct a pollfd array and
-  //    pass it to the write() call in register_handler_i() only once,
-  //    instead of calling write() (a system call) once for each file
+  //    pass it to the write () call in register_handler_i () only once,
+  //    instead of calling write () (a system call) once for each file
   //    descriptor.
 
   for (ACE_HANDLE h = handle_iter ();
@@ -1574,13 +1572,13 @@ ACE_Dev_Poll_Reactor::remove_handler_i (ACE_HANDLE handle,
       this->mask_ops_i (handle, mask, ACE_Reactor::CLR_MASK) == -1)
     return -1;
 
-  // Check for ref counting now - handle_close() may delete eh.
+  // Check for ref counting now - handle_close () may delete eh.
   int requires_reference_counting =
     eh->reference_counting_policy ().value () ==
     ACE_Event_Handler::Reference_Counting_Policy::ENABLED;
 
   if (ACE_BIT_DISABLED (mask, ACE_Event_Handler::DONT_CALL))
-    (void) eh->handle_close (handle, mask);
+ (void) eh->handle_close (handle, mask);
 
   // If there are no longer any outstanding events on the given handle
   // then remove it from the handler repository.
@@ -1607,8 +1605,8 @@ ACE_Dev_Poll_Reactor::remove_handler (const ACE_Handle_Set &handle_set,
   ACE_MT (ACE_GUARD_RETURN (ACE_Dev_Poll_Reactor_Token, mon, this->token_, -1));
 
   // @@ It might be more efficient to construct a pollfd array and
-  //    pass it to the write() call in register_handler_i() only once,
-  //    instead of calling write() (a system call) once for each file
+  //    pass it to the write () call in register_handler_i () only once,
+  //    instead of calling write () (a system call) once for each file
   //    descriptor.
 
   for (ACE_HANDLE h = handle_iter ();
@@ -1904,7 +1902,7 @@ ACE_Dev_Poll_Reactor::schedule_timer (ACE_Event_Handler *event_handler,
 
   if (0 != this->timer_queue_)
     return this->timer_queue_->schedule
-      (event_handler,
+ (event_handler,
        arg,
        this->timer_queue_->gettimeofday () + delay,
        interval);
@@ -2127,7 +2125,7 @@ ACE_Dev_Poll_Reactor::wakeup_all_threads (void)
   // it.
   this->notify (0,
                 ACE_Event_Handler::NULL_MASK,
-                (ACE_Time_Value *) &ACE_Time_Value::zero);
+ (ACE_Time_Value *) &ACE_Time_Value::zero);
 }
 
 int
@@ -2237,7 +2235,7 @@ ACE_Dev_Poll_Reactor::mask_ops_i (ACE_HANDLE handle,
   // ADD = 3, Bitwise "or" the value into the mask (only changes
   //          enabled bits)
   // CLR = 4  Bitwise "and" the negation of the value out of the mask
-  //          (only changes enabled bits)
+  // (only changes enabled bits)
   //
   // Returns the original mask.
 
