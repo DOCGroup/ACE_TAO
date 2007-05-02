@@ -48,7 +48,7 @@ public:
   Name_Binding *fetch (const char *name)
   {
     ACE_NS_WString value;
-    char *type;
+    char *type = 0;
 
     if (this->resolve (name, value, type) != 0 ||
         value.length () < 1)
@@ -60,6 +60,8 @@ public:
       new Name_Binding (ACE_NS_WString (name),
                         value,
                         type);
+    delete [] type;
+
     return rval;
   }
 // Listing 2

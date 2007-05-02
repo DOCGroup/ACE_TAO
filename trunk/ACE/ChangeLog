@@ -1,3 +1,9 @@
+Wed May  2 14:12:37 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/APG/Naming/Naming_Context.h:
+          Fixed memory leak, thanks to <propar at gmail dot com> for reporting
+          this.
+
 Wed May  2 12:49:37 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/ACE.cpp:
