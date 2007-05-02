@@ -1,20 +1,14 @@
-//
 // $Id$
-//
 
-#include "MyInterfaceImpl.h"
-#include "TestS.h"
+#include "Hello.h"
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
-#include "tao/IORTable/IORTable.h"
 
 ACE_RCSID (Hello,
            server,
-           "server.cpp,v 1.6 2003/11/01 11:15:11 dhinton Exp")
+           "$Id$")
 
-const char *ior_output_file = "server.ior";
-
-const char *client_ior = "file://client.ior";
+const char *ior_output_file = "test.ior";
 
 int
 parse_args (int argc, char *argv[])
@@ -25,9 +19,6 @@ parse_args (int argc, char *argv[])
   while ((c = get_opts ()) != -1)
     switch (c)
       {
-      case 'k':
-        client_ior = get_opts.opt_arg ();
-        break;
       case 'o':
         ior_output_file = get_opts.opt_arg ();
         break;
@@ -70,48 +61,34 @@ main (int argc, char *argv[])
       if (parse_args (argc, argv) != 0)
         return 1;
 
-      MyInterfaceImpl *test_impl = 0;
-      ACE_NEW_RETURN (test_impl,
-                      MyInterfaceImpl (orb.in ()),
+      Hello *hello_impl;
+      ACE_NEW_RETURN (hello_impl,
+                      Hello (orb.in ()),
                       1);
-
-      PortableServer::ServantBase_var owner_transfer(test_impl);
+      PortableServer::ServantBase_var owner_transfer(hello_impl);
 
       PortableServer::ObjectId_var id =
-        root_poa->activate_object (test_impl);
+        root_poa->activate_object (hello_impl);
 
       CORBA::Object_var object = root_poa->id_to_reference (id.in ());
 
-      MyInterface_var test_ref =
-        MyInterface::_narrow (object.in ());
+      Test::Hello_var hello =
+        Test::Hello::_narrow (object.in ());
 
       CORBA::String_var ior =
-        orb->object_to_string (test_ref.in ());
+        orb->object_to_string (hello.in ());
 
       // Output the IOR to the <ior_output_file>
       FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
-      if (output_file != 0)
-        {
-          ACE_OS::fprintf (output_file, "%s", ior.in ());
-          ACE_OS::fclose (output_file);
-        }
+      if (output_file == 0)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "Cannot open output file for writing IOR: %s",
+                           ior_output_file),
+                              1);
+      ACE_OS::fprintf (output_file, "%s", ior.in ());
+      ACE_OS::fclose (output_file);
 
       poa_manager->activate ();
-
-      CORBA::Object_var table_object =
-        orb->resolve_initial_references ("IORTable");
-
-      IORTable::Table_var adapter =
-        IORTable::Table::_narrow (table_object.in ());
-
-      if (CORBA::is_nil (adapter.in ()))
-        {
-          ACE_ERROR ((LM_ERROR, "Nil IORTable\n"));
-        }
-      else
-        {
-          adapter->bind ("collocated_ior_bound_in_remote_iortable", client_ior);
-        }
 
       orb->run ();
 
