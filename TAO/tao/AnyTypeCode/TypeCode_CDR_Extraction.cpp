@@ -1402,8 +1402,7 @@ namespace
 // ----------------------------------------------------------------
 
 CORBA::Boolean
-operator>> (TAO_InputCDR & cdr,
-            CORBA::TypeCode_ptr & tc)
+operator>> (TAO_InputCDR & cdr, CORBA::TypeCode_ptr & tc)
 {
   TAO::TypeCodeFactory::TC_Info_List infos;
 

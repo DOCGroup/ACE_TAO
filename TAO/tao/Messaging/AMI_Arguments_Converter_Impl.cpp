@@ -56,22 +56,37 @@ TAO_AMI_Arguments_Converter_Impl::convert_reply (
     size_t nargs)
 {
     if (server_request.operation_details ()->reply_dispatcher ())
-    {
-      TAO_OutputCDR output;
-      for (CORBA::ULong j = 0; j < nargs; ++j)
-        {
-          if (!(args[j]->marshal (output)))
-            {
-              TAO_OutputCDR::throw_skel_exception (errno);
-            }
-        }
-      TAO_Pluggable_Reply_Params params (0);
-      TAO_InputCDR input (output);
-      params.input_cdr_ = &input;
-      params.reply_status_ = TAO_PLUGGABLE_MESSAGE_NO_EXCEPTION;
-      server_request.operation_details ()->
-        reply_dispatcher ()->dispatch_reply (params);
-    }
+      {
+        TAO_OutputCDR output;
+        TAO_Pluggable_Reply_Params params (0);
+        if (server_request.caught_exception () == 0)
+          {
+            params.reply_status_ = TAO_PLUGGABLE_MESSAGE_NO_EXCEPTION;
+            for (CORBA::ULong j = 0; j < nargs; ++j)
+              {
+                if (!(args[j]->marshal (output)))
+                  {
+                    TAO_OutputCDR::throw_skel_exception (errno);
+                  }
+              }
+          }
+        else
+          {
+            server_request.caught_exception ()->_tao_encode (output);
+            if (CORBA::SystemException::_downcast (server_request.caught_exception ()) != 0)
+              {
+                params.reply_status_ = TAO_PLUGGABLE_MESSAGE_SYSTEM_EXCEPTION;
+              }
+            else
+             {
+                params.reply_status_ = TAO_PLUGGABLE_MESSAGE_USER_EXCEPTION;
+              }
+          }
+        TAO_InputCDR input (output);
+        params.input_cdr_ = &input;
+        server_request.operation_details ()->
+          reply_dispatcher ()->dispatch_reply (params);
+      }
 }
 
 // *********************************************************************

@@ -64,8 +64,7 @@ namespace TAO
        * @see @c CORBA::TypeCode
        */
       //@{
-      virtual bool tao_marshal (TAO_OutputCDR & cdr,
-                                CORBA::ULong offset) const;
+      virtual bool tao_marshal (TAO_OutputCDR & cdr, CORBA::ULong offset) const;
       virtual void tao_duplicate (void);
       virtual void tao_release (void);
       //@}
