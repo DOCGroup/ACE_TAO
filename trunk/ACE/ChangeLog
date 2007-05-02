@@ -1,3 +1,14 @@
+Wed May  2 16:04:21 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/depgen.pl:
+
+          Fixed a bug where the Depgen modules wouldn't be found unless
+          MPC_ROOT was set.
+
+        * docs/bczar/bczar.html:
+
+          Changed a couple of < > to &lt; &gt;.
+
 Wed May  2 14:39:59 UTC 2007  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * ace/Dev_Poll_Reactor.cpp: Always remove the notification byte
@@ -58,7 +69,7 @@ Wed May  2 12:49:37 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Mon Apr 30 08:59:37 CDT 2007  Chad Elliott  <elliott_c@ociweb.com>
 
-	* ACE version 5.5.8 released.
+        * ACE version 5.5.8 released.
 
 Mon Apr 30 12:24:05 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 

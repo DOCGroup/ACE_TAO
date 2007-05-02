@@ -27,7 +27,7 @@ unshift(@INC, $basePath . '/DependencyGenerator');
 
 my($mpcroot) = $ENV{MPC_ROOT};
 my($mpcpath) = (defined $mpcroot ? $mpcroot :
-                                   dirname(dirname($basePath)) . '/MPC');
+                                   dirname($basePath) . '/MPC');
 unshift(@INC, $mpcpath . '/modules/Depgen');
 
 if (! -d "$mpcpath/modules/Depgen") {
