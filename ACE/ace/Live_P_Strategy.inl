@@ -1,5 +1,5 @@
 #include <climits>
-
+#include "ace/RB_Tree.h"
 /*
    Much of this is credited to "Efficient Distrubuted Deadlock
    Avoidance with Liveness Guarentees" by Sanchez, Sipma, and Manna,
@@ -19,16 +19,17 @@ struct AnnotationNode {
   int larger_right;
 };
 
-class Live_P_Tree : public ACE_RB_Tree<int, AnnotationNode, ACE_Equal_To<int>, ACE_ThreadMutex> {
+class Live_P_Tree : public ACE_RB_Tree<int, AnnotationNode, ACE_Equal_To<int>, ACE_Thread_Mutex> {
 
 public:
    Live_P_Tree(int maxThreads);
    virtual ~Live_P_Tree();
-   int bind(const int& ext_id, 
-            const AnnotationNode& int_id, 
-            ACE_RB_Tree_Node<int, AnnotationNode>*& entry);
-   int unbind (const EXT_ID &ext_id);
+   int bind(const int& ext_id);
+   int unbind (const int &ext_id);
    int calc_max() const;
+protected:
+   void RB_rotate_right(ACE_RB_Tree_Node<int, AnnotationNode> *x);
+   void RB_rotate_left(ACE_RB_Tree_Node<int, AnnotationNode> *x);
 private:
    void recalculate_augmentation(ACE_RB_Tree_Node<int, AnnotationNode>* nodePtr);
    void recalculate_augmentation_up(ACE_RB_Tree_Node<int, AnnotationNode>* x);
@@ -41,7 +42,7 @@ private:
 };
 
 ACE_INLINE
-Live_P_Tree::Live_P_Tree(int maxThreads) 
+Live_P_Tree::Live_P_Tree(int maxThreads, int k) 
 :ACE_RB_Tree(),
  T_(maxThreads) {
 
@@ -52,33 +53,53 @@ Live_P_Tree::~Live_P_Tree() {
 }
 
 ACE_INLINE 
+int
 Live_P_Tree::bind(const int& ext_id) 
 {
   ACE_RB_Tree_Node<int, AnnotationNode>* entry = 0;
+  int returnVal = -1;  //return error unless we return
+                       //something else from the parent unbind
   RB_SearchResult result = LEFT;
   entry = find_node (ext_id, result);
   // If there is a matching node, don't add a new one, just mod the existing one
-  if (entry && result == EXACT) {
-    entry->item.count++;
+  if (entry && result == EXACT) {    
+    entry->item().count++;    
   } else {
-    RB_Tree::bind(ext_id, AnnotationNode(), entry);
+    returnVal = ACE_RB_Tree::bind(ext_id, AnnotationNode(), entry);
   }
   recalculate_augmentation_up(entry);
+  return returnVal;
+}
+
+void 	
+Live_P_Tree::RB_rotate_right (ACE_RB_Tree_Node<int, AnnotationNode> *x)
+{
+  ACE_RB_Tree::RB_rotate_right(x);
+  recalculate_augmentation_up(x);
 
 }
 
+void 	
+Live_P_Tree::RB_rotate_left (ACE_RB_Tree_Node<int, AnnotationNode> *x)
+{
+  ACE_RB_Tree::RB_rotate_left(x);
+  recalculate_augmentation_up(x);
+}
+
 ACE_INLINE 
+int
 Live_P_Tree::unbind(const int& ext_id) 
 {
   ACE_RB_Tree_Node<int, AnnotationNode>* entry = 0;
   RB_SearchResult result = LEFT;
+  int returnVal = -1;  //return error unless we return
+                       //something else from the parent unbind
   entry = find_node (ext_id, result);
   // If there is a matching node, don't add a new one, just mod the existing one
-  if (entry && result == EXACT) {
-    entry->item.count--;
-    if (count == 0) {
-      entry = entry->parent;
-      RB_Tree::unbind(ext_id);
+  if (entry && result == EXACT) {    
+    if (--(entry->item().count) == 0) {
+      entry = entry->parent();
+      returnVal = ACE_RB_Tree::unbind(ext_id);
     }
   } else {
     //exception?  probably bad if we try to unbind something not in the tree 
@@ -86,38 +107,38 @@ Live_P_Tree::unbind(const int& ext_id)
   if (entry) {
     recalculate_augmentation_up(entry);
   }
-
+  return returnVal;
 }
 
 
 ACE_INLINE  void
 Live_P_Tree::recalculate_augmentation(ACE_RB_Tree_Node<int, AnnotationNode>* nodePtr) {
 
-  AnnotationNode& node = n->item;
-  AnnotationNode& left =  nodePtr->left ? AnnotationNode() : nodePtr->left->item;
-  AnnotationNode& right = nodePtr->right ? AnnotationNode() : nodePtr->right->item;
+  AnnotationNode& node = nodePtr->item();
+  AnnotationNode& left =  nodePtr->left() ? AnnotationNode() : nodePtr->left()->item();
+  AnnotationNode& right = nodePtr->right() ? AnnotationNode() : nodePtr->right()->item();
 
   // (1) size
   node.size = left.size + right.size + node.count;
 
   // (2) larger_me                                            
-  node.larger_me = ProcessCount(T_) - (node.count + right.size/* + node.alpha*/);
-                                                              //^^^^^^^^^^^^^ not sure what this is for
+  node.larger_me = T_ - (node.count + right.size + nodePtr->key());
+                                                              
   // (3) larger_right
-  Node.larger_right = right.larger;
+  node.larger_right = right.larger;
 
   // (4) larger_left
-  Node.larger_left = left.larger - (right.size  + node.count);
+  node.larger_left = left.larger - (right.size  + node.count);
 
   //(5) larger
-  Node.larger = MIN_THREE(x.larger_me, x.larger_left, x.larger_right);
+  node.larger = MIN_THREE(node.larger_me, node.larger_left, node.larger_right);
 }
 
 ACE_INLINE void
 Live_P_Tree::recalculate_augmentation_up(ACE_RB_Tree_Node<int, AnnotationNode>* x) {
   while (x) {
     recalculate_augmentation(x);
-    x = x->parent;
+    x = x->parent();
   }
 }
 
@@ -129,12 +150,12 @@ Live_P_Tree::calc_max() const {
 
 ACE_INLINE  int
 Live_P_Tree::calc_max_i(ACE_RB_Tree_Node<int, AnnotationNode>* nodePtr, int extra) const {
-  AnnotationNode n = nodePtr->item;
+  AnnotationNode& n = nodePtr->item();
 
   if ( n.larger_left - extra==0) { 
-      return calc_max_i(nodePtr->left, extra + nodePtr->right->item.size + n.count); }
-  else if (n->larger_me   - extra==0) { return (nodePtr->key); }
-  else if (n->larger_right - extra==0) { return calc_max_i(nodePtr->right, extra); }
+      return calc_max_i(nodePtr->left(), extra + nodePtr->right()->item().size + n.count); }
+  else if (n.larger_me   - extra==0) { return (nodePtr->key()); }
+  else if (n.larger_right - extra==0) { return calc_max_i(nodePtr->right(), extra); }
   else {   return T_; }
 }
 

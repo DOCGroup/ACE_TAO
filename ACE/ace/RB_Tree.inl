@@ -712,6 +712,15 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::clear ()
   this->close_i ();
 }
 
+// Returns a pointer to the current root of the tree. 
+template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK>
+ACE_INLINE
+ACE_RB_Tree_Node<EXT_ID, INT_ID>* 
+ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::get_root() const
+{
+  return root_;
+}
+
 // Returns the current number of nodes in the tree.
 
 template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK>
