@@ -533,9 +533,7 @@ TAO_Marshal_Union::skip (CORBA::TypeCode_ptr  tc, TAO_InputCDR *src)
           // Good, use the default to append...
           CORBA::TypeCode_var member_tc =
             tc->member_type (default_member);
-          return TAO_Marshal_Object::perform_skip (member_tc.in (),
-                                                   src
-                                                  );
+          return TAO_Marshal_Object::perform_skip (member_tc.in (), src);
         }
 
       // If we're here, we have an implicit default case, and we
@@ -548,9 +546,7 @@ TAO_Marshal_Union::skip (CORBA::TypeCode_ptr  tc, TAO_InputCDR *src)
   CORBA::TypeCode_var member_tc =
     tc->member_type (current_member);
 
-  return TAO_Marshal_Object::perform_skip (member_tc.in (),
-                                           src
-                                          );
+  return TAO_Marshal_Object::perform_skip (member_tc.in (), src);
 }
 
 TAO::traverse_status
@@ -609,7 +605,7 @@ TAO_Marshal_Sequence::skip (CORBA::TypeCode_ptr tc, TAO_InputCDR *stream)
   // For CORBA basic types, the skip can be optimized
   CORBA::TCKind const kind = tc2->kind ();
 
-  char *dummy;
+  char *dummy = 0;
   switch (kind)
     {
     case CORBA::tk_octet:
@@ -660,9 +656,7 @@ TAO_Marshal_Sequence::skip (CORBA::TypeCode_ptr tc, TAO_InputCDR *stream)
       while (bounds-- && continue_skipping)
         {
           continue_skipping =
-            TAO_Marshal_Object::perform_skip (tc2.in (),
-                                              stream
-                                             );
+            TAO_Marshal_Object::perform_skip (tc2.in (), stream);
         }
       break;
     }// end of switch
@@ -679,9 +673,7 @@ TAO_Marshal_Sequence::skip (CORBA::TypeCode_ptr tc, TAO_InputCDR *stream)
 }
 
 TAO::traverse_status
-TAO_Marshal_Array::skip (CORBA::TypeCode_ptr  tc,
-                         TAO_InputCDR *stream
-                         )
+TAO_Marshal_Array::skip (CORBA::TypeCode_ptr tc, TAO_InputCDR *stream)
 {
   CORBA::Boolean continue_skipping = true;
 
@@ -746,9 +738,7 @@ TAO_Marshal_Array::skip (CORBA::TypeCode_ptr  tc,
       while (bounds-- && continue_skipping)
         {
           int stop =
-            TAO_Marshal_Object::perform_skip (tc2.in (),
-                                              stream
-                                             );
+            TAO_Marshal_Object::perform_skip (tc2.in (), stream);
           if (stop == TAO::TRAVERSE_STOP)
             continue_skipping = false;
         }
@@ -767,9 +757,7 @@ TAO_Marshal_Array::skip (CORBA::TypeCode_ptr  tc,
 }
 
 TAO::traverse_status
-TAO_Marshal_Alias::skip (CORBA::TypeCode_ptr  tc,
-                         TAO_InputCDR *stream
-                         )
+TAO_Marshal_Alias::skip (CORBA::TypeCode_ptr  tc, TAO_InputCDR *stream)
 {
   // Typecode of the aliased type.
   CORBA::TypeCode_var tc2;
@@ -781,9 +769,7 @@ TAO_Marshal_Alias::skip (CORBA::TypeCode_ptr  tc,
 
   tc2 = tc->content_type ();
 
-  retval = TAO_Marshal_Object::perform_skip (tc2.in (),
-                                             stream
-                                            );
+  retval = TAO_Marshal_Object::perform_skip (tc2.in (), stream);
 
   //  tc2->_decr_refcnt ();
   if (retval == TAO::TRAVERSE_CONTINUE
@@ -805,9 +791,7 @@ TAO_Marshal_Alias::skip (CORBA::TypeCode_ptr  tc,
 //
 // NOTE: This is asymmetric with respect to encoding exceptions.
 TAO::traverse_status
-TAO_Marshal_Except::skip (CORBA::TypeCode_ptr  tc,
-                          TAO_InputCDR *stream
-                          )
+TAO_Marshal_Except::skip (CORBA::TypeCode_ptr tc, TAO_InputCDR *stream)
 {
   TAO::traverse_status retval =
     TAO::TRAVERSE_CONTINUE;
@@ -827,9 +811,7 @@ TAO_Marshal_Except::skip (CORBA::TypeCode_ptr  tc,
     {
       param = tc->member_type (i);
 
-      retval = TAO_Marshal_Object::perform_skip (param.in (),
-                                                 stream
-                                                );
+      retval = TAO_Marshal_Object::perform_skip (param.in (), stream);
     }
 
   if (retval == TAO::TRAVERSE_CONTINUE)
@@ -844,9 +826,7 @@ TAO_Marshal_Except::skip (CORBA::TypeCode_ptr  tc,
 
 // decode wstring
 TAO::traverse_status
-TAO_Marshal_WString::skip (CORBA::TypeCode_ptr,
-                           TAO_InputCDR *stream
-                           )
+TAO_Marshal_WString::skip (CORBA::TypeCode_ptr, TAO_InputCDR *stream)
 {
   CORBA::Boolean continue_skipping = true;
 
@@ -872,9 +852,7 @@ TAO_Marshal_WString::skip (CORBA::TypeCode_ptr,
 }
 
 TAO::traverse_status
-TAO_Marshal_Value::skip (CORBA::TypeCode_ptr  tc,
-                         TAO_InputCDR *stream
-                         )
+TAO_Marshal_Value::skip (CORBA::TypeCode_ptr tc, TAO_InputCDR *stream)
 {
   TAO::traverse_status retval = TAO::TRAVERSE_CONTINUE;
   CORBA::TypeCode_var param;
@@ -983,9 +961,7 @@ TAO_Marshal_Value::skip (CORBA::TypeCode_ptr  tc,
     {
       param = tc->member_type (i);
 
-      retval = TAO_Marshal_Object::perform_skip (param.in (),
-                                                 stream
-                                                );
+      retval = TAO_Marshal_Object::perform_skip (param.in (), stream);
     }
 
   if (retval == TAO::TRAVERSE_CONTINUE)

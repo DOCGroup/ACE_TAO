@@ -1,3 +1,19 @@
+Wed May  2 13:26:37 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/AnyTypeCode/Enum_TypeCode.h:
+        * tao/AnyTypeCode/skip.cpp:
+        * tao/AnyTypeCode/Struct_TypeCode.cpp:
+        * tao/AnyTypeCode/Struct_TypeCode.h:
+        * tao/AnyTypeCode/TypeCode_CDR_Extraction.cpp:
+        * tao/IORInterceptor/IORInfo.cpp:
+        * tao/IORInterceptor/IORInterceptor_Adapter_Impl.cpp:
+          Layout changes
+
+        * tao/Messaging/AMI_Arguments_Converter_Impl.cpp:
+          Extended to also handle exceptions in the server request
+
+        * tao/PortableServer/Root_POA.cpp:
+          Layout changes and zapped some intermediate variables
 
 Mon Apr 30 08:59:37 CDT 2007  Chad Elliott  <elliott_c@ociweb.com>
 

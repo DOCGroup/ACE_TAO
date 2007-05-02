@@ -27,8 +27,7 @@ TAO_IORInfo::~TAO_IORInfo (void)
 }
 
 CORBA::Policy_ptr
-TAO_IORInfo::get_effective_policy (CORBA::PolicyType type
-                                   )
+TAO_IORInfo::get_effective_policy (CORBA::PolicyType type)
 {
   this->check_validity ();
 
@@ -48,8 +47,7 @@ TAO_IORInfo::get_effective_policy (CORBA::PolicyType type
 }
 
 void
-TAO_IORInfo::add_ior_component (const IOP::TaggedComponent &component
-                                )
+TAO_IORInfo::add_ior_component (const IOP::TaggedComponent &component)
 {
   this->check_validity ();
 
@@ -57,24 +55,20 @@ TAO_IORInfo::add_ior_component (const IOP::TaggedComponent &component
     throw ::CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14, CORBA::COMPLETED_NO);
 
   // Add the given tagged component to all profiles.
-  this->poa_->save_ior_component (component
-                                 );
+  this->poa_->save_ior_component (component);
 }
 
 void
 TAO_IORInfo::add_ior_component_to_profile (
     const IOP::TaggedComponent &component,
-    IOP::ProfileId profile_id
-    )
+    IOP::ProfileId profile_id)
 {
   this->check_validity ();
 
   if (this->components_established_)
     throw ::CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14, CORBA::COMPLETED_NO);
 
-  this->poa_->save_ior_component_and_profile_id (component,
-                                                 profile_id
-                                                );
+  this->poa_->save_ior_component_and_profile_id (component, profile_id);
 }
 
 char *
@@ -138,13 +132,11 @@ TAO_IORInfo::current_factory (void)
 
 void
 TAO_IORInfo::current_factory (
-    PortableInterceptor::ObjectReferenceFactory * current_factory
-    )
+    PortableInterceptor::ObjectReferenceFactory * current_factory)
 {
   this->check_validity ();
 
-  this->poa_->set_obj_ref_factory (current_factory
-                                  );
+  this->poa_->set_obj_ref_factory (current_factory);
 }
 
 void

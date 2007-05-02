@@ -481,10 +481,8 @@ TAO_Root_POA::create_POA_i (const TAO_Root_POA::String &adapter_name,
   // with the same parent POA. If the target POA already has a child
   // POA with the specified name, the AdapterAlreadyExists exception
   // is raised.
-  int result = this->children_.find (adapter_name);
-
   // Child was found
-  if (result != -1)
+  if (this->children_.find (adapter_name) != -1)
     {
       throw PortableServer::POA::AdapterAlreadyExists ();
     }
@@ -515,9 +513,7 @@ TAO_Root_POA::create_POA_i (const TAO_Root_POA::String &adapter_name,
   // Check for exception in construction of the POA.
 
   // Add to children map
-  result = this->children_.bind (adapter_name,
-                                 poa);
-  if (result != 0)
+  if (this->children_.bind (adapter_name, poa) != 0)
     {
       throw ::CORBA::OBJ_ADAPTER ();
     }
@@ -570,8 +566,7 @@ TAO_Root_POA::find_POA_i (const ACE_CString &child_name,
                           CORBA::Boolean activate_it)
 {
   TAO_Root_POA *child = 0;
-  int result = this->children_.find (child_name,
-                                     child);
+  int result = this->children_.find (child_name, child);
 
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT)
 
@@ -657,9 +652,7 @@ TAO_Root_POA::create_POA (const char *adapter_name,
   // Lock access for the duration of this transaction.
   TAO_POA_GUARD_RETURN (0);
 
-  return this->create_POA_i (adapter_name,
-                             poa_manager,
-                             policies);
+  return this->create_POA_i (adapter_name, poa_manager, policies);
 }
 #endif
 
