@@ -2341,7 +2341,7 @@ ACE::format_hexdump (const char *buffer,
                        textver);
 
       while (*obuf != '\0')
-        obuf++;
+        ++obuf;
     }
 
   if (size % 16)
@@ -2371,7 +2371,7 @@ ACE::format_hexdump (const char *buffer,
             {
               ACE_OS::sprintf (obuf,
                                ACE_LIB_TEXT (" "));
-              obuf++;
+              ++obuf;
             }
           textver[i] = ' ';
         }

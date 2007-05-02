@@ -682,7 +682,7 @@ ACE_Select_Reactor_Notify::notify (ACE_Event_Handler *event_handler,
   ACE_Notification_Buffer buffer (event_handler, mask);
 
 #if defined (ACE_HAS_REACTOR_NOTIFICATION_QUEUE)
-  int notification_required = 
+  int notification_required =
     notification_queue_.push_new_notification(buffer);
 
   if (notification_required == -1)
@@ -758,12 +758,15 @@ ACE_Select_Reactor_Notify::is_dispatchable (ACE_Notification_Buffer &buffer)
   // appropriate handle_* method on the <ACE_Event_Handler>
   // pointer we've been passed.
   if (buffer.eh_ != 0)
-    return 1;
-
+    {
+      return 1;
+    }
+  else
+    {
+      // has no dispatchable buffer
+      return 0;
+    }
 #endif /*ACE_HAS_REACTOR_NOTIFICATION_QUEUE */
-
-  // has no dispatchable buffer
-  return 0;
 }
 
 int

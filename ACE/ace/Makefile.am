@@ -39,6 +39,7 @@ libACE_la_SOURCES = \
   ACE.cpp \
   ACE_crc32.cpp \
   ACE_crc_ccitt.cpp \
+  ace_wchar.cpp \
   ATM_Acceptor.cpp \
   ATM_Addr.cpp \
   ATM_Connector.cpp \

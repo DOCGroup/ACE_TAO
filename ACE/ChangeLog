@@ -1,3 +1,48 @@
+Wed May  2 12:49:37 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/ACE.cpp:
+        * ace/ARGV.cpp:
+        * ace/Basic_Types.cpp:
+        * ace/CDR_Base.cpp:
+        * ace/Codecs.cpp:
+        * ace/Configuration.cpp:
+        * ace/Configuration_Import_Export.cpp:
+        * ace/OS_NS_string.cpp:
+          Use prefix increment instead of postfix
+
+        * ace/ace_wchar.cpp:
+        * ace/ace_wchar.h:
+        * ace/ace_wchar.inl:
+          Added support for integration with iconv, this can be enabled
+          by defining ACE_HAS_ICONV. This fixes bugzilla 2453, thanks to
+          Olivier Brunet <o dot brunet at free dot fr> for reporting this.
+
+        * ace/Makefile.am:
+        * ace/ace.mpc:
+          Added new ace_wchar.cpp:
+
+        * ace/config-hpux-11.00.h:
+          HP aCC 3.55 and newer do support declspec export/import
+
+        * ace/DLL.cpp (operator=):
+          Check for self assignment
+
+        * ace/Log_Msg_Backend.h:
+          Doxygen improvement
+
+        * ace/NT_Service.{h,cpp} (insert):
+          Added DWORD argument to pass in desired access. Fixes bugzilla
+          475. Thanks to Craig Perras <cperras at watchguard dot com>
+          for reporting this.
+
+        * ace/OS_NS_Thread.inl:
+          WaitForSingleObject returns a DWORD, updated type of local variable
+
+        * ace/Select_Reactor_Base.cpp:
+          Fixed not reachable code warning from the HP compiler
+
+        * ace/Svc_Handler.{h,cpp}:
+          Changed closing_ to a real bool
 
 Mon Apr 30 08:59:37 CDT 2007  Chad Elliott  <elliott_c@ociweb.com>
 

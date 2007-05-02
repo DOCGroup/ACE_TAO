@@ -192,7 +192,8 @@ public:
               LPDWORD tag_id = 0,
               const ACE_TCHAR *dependencies = 0,
               const ACE_TCHAR *account_name = 0,
-              const ACE_TCHAR *password = 0);
+              const ACE_TCHAR *password = 0,
+              DWORD desired_access = SERVICE_ALL_ACCESS);
 
   /**
    * Remove the service from the NT Service Control Manager.  Returns -1 on
