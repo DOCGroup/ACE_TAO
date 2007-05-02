@@ -653,13 +653,13 @@ ACE_CDR::LongDouble::assign (const ACE_CDR::LongDouble::NativeImpl& rhs)
             {
               this->ld[li] |= ((rhs_ptr[ri] << 4) & 0xf0);
               direction = false;
-              ri++;
+              ++ri;
             }
           else
             {
               this->ld[li] |= ((rhs_ptr[ri] >> 4) & 0xf);
               direction = true;
-              li++;
+              ++li;
             }
         }
 #if defined (ACE_LITTLE_ENDIAN)
@@ -745,13 +745,13 @@ ACE_CDR::LongDouble::operator ACE_CDR::LongDouble::NativeImpl () const
           {
             lhs_ptr[li] |= ((copy[ri] >> 4) & 0xf);
             direction = false;
-            li++;
+            ++li;
           }
         else
           {
             lhs_ptr[li] |= ((copy[ri] & 0xf) << 4);
             direction = true;
-            ri++;
+            ++ri;
           }
       }
 

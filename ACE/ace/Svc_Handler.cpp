@@ -112,7 +112,7 @@ ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::destroy (void)
 
   // Only delete ourselves if we're not owned by a module and have
   // been allocated dynamically.
-  if (this->mod_ == 0 && this->dynamic_ && this->closing_ == 0)
+  if (this->mod_ == 0 && this->dynamic_ && this->closing_ == false)
     // Will call the destructor, which automatically calls <shutdown>.
     // Note that if we are *not* allocated dynamically then the
     // destructor will call <shutdown> automatically when it gets run
@@ -137,7 +137,7 @@ ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::ACE_Svc_Handler (ACE_Thread_Manager *tm
                                                           ACE_Message_Queue<ACE_SYNCH_USE> *mq,
                                                           ACE_Reactor *reactor)
   : ACE_Task<ACE_SYNCH_USE> (tm, mq),
-    closing_ (0),
+    closing_ (false),
     recycler_ (0),
     recycling_act_ (0)
 {
@@ -287,12 +287,12 @@ ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::~ACE_Svc_Handler (void)
 {
   ACE_TRACE ("ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::~ACE_Svc_Handler");
 
-  if (this->closing_ == 0)
+  if (this->closing_ == false)
     {
       // We're closing down now, so make sure not to call ourselves
       // recursively via other calls to handle_close() (e.g., from the
       // Timer_Queue).
-      this->closing_ = 1;
+      this->closing_ = true;
 
       this->shutdown ();
     }

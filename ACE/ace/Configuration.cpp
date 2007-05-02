@@ -385,7 +385,7 @@ ACE_Configuration::operator== (const ACE_Configuration& rhs) const
 
         }// end else if sections match.
 
-      sectionIndex++;
+      ++sectionIndex;
 
     }// end section while loop
 

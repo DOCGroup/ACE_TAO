@@ -11,6 +11,7 @@ project(ACE) : acedefaults, install, other, codecs, token, svcconf, uuid, fileca
     ACE.cpp
     ACE_crc_ccitt.cpp
     ACE_crc32.cpp
+    ace_wchar.cpp
     Activation_Queue.cpp
     Active_Map_Manager.cpp
     Addr.cpp

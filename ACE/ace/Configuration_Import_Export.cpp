@@ -328,7 +328,7 @@ ACE_Registry_ImpExp::export_section (const ACE_Configuration_Section_Key& sectio
           line += ACE_LIB_TEXT ("\n");
           if (ACE_OS::fputs (line.fast_rep (), out) < 0)
             return -4;
-          index++;
+          ++index;
         }
     }
   // Export all sub sections
@@ -346,7 +346,7 @@ ACE_Registry_ImpExp::export_section (const ACE_Configuration_Section_Key& sectio
         return -5;
       if (export_section (sub_key, sub_section.fast_rep (), out))
         return -6;
-      index++;
+      ++index;
     }
   return 0;
 }
@@ -369,7 +369,7 @@ ACE_Registry_ImpExp::process_previous_line_format (ACE_TCHAR* buffer,
     {
       // null terminate the name
       *end = 0;
-      end++;
+      ++end;
       // determine the type
       if (*end == '\"')
         {
@@ -475,7 +475,7 @@ ACE_Ini_ImpExp::import_config (const ACE_TCHAR* filename)
             {
               // Strip quotes off both ends.
               value[value_len - 1] = '\0';
-              value++;
+              ++value;
             }
         }
 
@@ -613,7 +613,7 @@ ACE_Ini_ImpExp::export_section (const ACE_Configuration_Section_Key& section,
           line += ACE_LIB_TEXT ("\n");
           if (ACE_OS::fputs (line.fast_rep (), out) < 0)
             return -4;
-          index++;
+          ++index;
         }// end while enumerating values
     }
   // Export all sub sections
@@ -631,7 +631,7 @@ ACE_Ini_ImpExp::export_section (const ACE_Configuration_Section_Key& section,
         return -5;
       if (export_section (sub_key, sub_section.fast_rep (), out))
         return -6;
-      index++;
+      ++index;
     }
   return 0;
 

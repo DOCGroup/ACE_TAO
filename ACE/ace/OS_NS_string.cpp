@@ -33,7 +33,7 @@ ACE_OS::memchr_emulation (const void *s, int c, size_t len)
     if (((int) *t) == c)
       return t;
     else
-      t++;
+      ++t;
 
   return 0;
 }
@@ -131,7 +131,7 @@ ACE_OS::strerror (int errnum)
     errno = EINVAL;
 #endif /* ACE_WIN32 */
   errmsg = ::strerror (errnum);
- 
+
   if (errno == EINVAL || errmsg == 0 || errmsg[0] == 0)
     {
       ACE_OS::sprintf (ret_errortext, "Unknown error %d", errnum);
