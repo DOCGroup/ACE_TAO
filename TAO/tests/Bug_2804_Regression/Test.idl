@@ -24,8 +24,6 @@ module Test
   };
 
   union NonRecursiveUnionWithStringStruct3 switch (ValueSort3) {
-  case DOUBLE_TYPE:
-    double double_val;
   case SYMBOL_TYPE:
     Symbol symbol_val;
   case SYMBOL_SEQ_TYPE:

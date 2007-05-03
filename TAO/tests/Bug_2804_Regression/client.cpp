@@ -91,8 +91,6 @@ recursive_union_test (CORBA::ORB_ptr /* orb */,
 
   // new variant
   Test::NonRecursiveUnionWithStringStruct3 val3;
-  Test::Symbol sym;
-  val3.double_val (5.0);
   the_any <<= val3;
 
   ::perform_invocation<Test::NonRecursiveUnionWithStringStruct3> (hello,
