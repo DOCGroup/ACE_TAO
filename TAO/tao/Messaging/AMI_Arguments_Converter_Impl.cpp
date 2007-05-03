@@ -55,23 +55,23 @@ TAO_AMI_Arguments_Converter_Impl::convert_reply (
     TAO::Argument * const args[],
     size_t nargs)
 {
-    if (server_request.operation_details ()->reply_dispatcher ())
-      {
-        TAO_OutputCDR output;
-        TAO_Pluggable_Reply_Params params (0);
-        params.reply_status_ = TAO_PLUGGABLE_MESSAGE_NO_EXCEPTION;
-        for (CORBA::ULong j = 0; j < nargs; ++j)
-          {
-            if (!(args[j]->marshal (output)))
-              {
-                TAO_OutputCDR::throw_skel_exception (errno);
-              }
-          }
-        TAO_InputCDR input (output);
-        params.input_cdr_ = &input;
-        server_request.operation_details ()->
-          reply_dispatcher ()->dispatch_reply (params);
-      }
+  if (server_request.operation_details ()->reply_dispatcher ())
+    {
+      TAO_OutputCDR output;
+      TAO_Pluggable_Reply_Params params (0);
+      params.reply_status_ = TAO_PLUGGABLE_MESSAGE_NO_EXCEPTION;
+      for (CORBA::ULong j = 0; j < nargs; ++j)
+        {
+          if (!(args[j]->marshal (output)))
+            {
+              TAO_OutputCDR::throw_skel_exception (errno);
+            }
+        }
+      TAO_InputCDR input (output);
+      params.input_cdr_ = &input;
+      server_request.operation_details ()->
+        reply_dispatcher ()->dispatch_reply (params);
+    }
 }
 
 void

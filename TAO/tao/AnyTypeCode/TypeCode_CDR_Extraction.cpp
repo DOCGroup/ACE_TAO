@@ -1243,11 +1243,13 @@ namespace
         // Indirected TypeCode must point to top-level TypeCode.
         || static_cast<CORBA::ULong> (kind) == TYPECODE_INDIRECTION
 
-        // Only struct, union and valuetype TypeCodes may be recursive.
+        // Only struct, union, event, alias and valuetype TypeCodes may be
+        // recursive.
         || !(kind == CORBA::tk_struct
              || kind == CORBA::tk_union
              || kind == CORBA::tk_value
-             || kind == CORBA::tk_event)
+             || kind == CORBA::tk_event
+             || kind == CORBA::tk_alias)
 
         // Currently all recursive TypeCodes have complex parameter
         // lists, meaning they are encoded as CDR encapsulations.
@@ -1273,6 +1275,38 @@ namespace
 
     switch (kind)
       {
+      case CORBA::tk_alias:
+        {
+          // Check if we already have a tc for this type, if yes, use that
+          TAO::TypeCodeFactory::TC_Info_List recursive_tc;
+          if (find_recursive_tc (id.in (), recursive_tc, infos))
+            {
+              tc = recursive_tc[0].type;
+            }
+          else
+            {
+              new_tc = true;
+
+              CORBA::String_var name;
+              CORBA::TypeCode_var content_type;
+              if (!(indir_stream >> TAO_InputCDR::to_string (name.out (), 0)
+                  && tc_demarshal (indir_stream, content_type.out (), infos)))
+                 return false;
+
+              typedef TAO::TypeCode::Alias<
+                               CORBA::String_var,
+                               CORBA::TypeCode_var,
+                               TAO::True_RefCount_Policy> typecode_type;
+
+              ACE_NEW_RETURN (tc,
+                  typecode_type (kind,
+                                 id.in (),
+                                 name.in (),
+                                 content_type),
+                  false);
+            }
+        }
+        break;
       case CORBA::tk_struct:
         {
           // Check if we already have a tc for this type, if yes, use that

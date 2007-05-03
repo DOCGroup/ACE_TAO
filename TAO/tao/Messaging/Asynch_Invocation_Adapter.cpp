@@ -135,7 +135,7 @@ namespace TAO
         details.cac (ami_arguments_converter);
 
         // Release the owner ship of the reply dispatcher
-        details.reply_dispatcher ( this->safe_rd_.release ());
+        details.reply_dispatcher (this->safe_rd_.release ());
 
         return Invocation_Adapter::invoke_collocated_i (stub,
                                                         details,
