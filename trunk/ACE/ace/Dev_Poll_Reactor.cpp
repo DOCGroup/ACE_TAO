@@ -132,7 +132,7 @@ ACE_Dev_Poll_Reactor_Notify::notify (ACE_Event_Handler *eh,
 #if defined (ACE_HAS_REACTOR_NOTIFICATION_QUEUE)
   ACE_Dev_Poll_Handler_Guard eh_guard (eh);
 
-  int notification_required = 
+  int notification_required =
     notification_queue_.push_new_notification (buffer);
 
   if (notification_required == -1)
@@ -230,8 +230,8 @@ ACE_Dev_Poll_Reactor_Notify::read_notify_pipe (ACE_HANDLE handle,
   bool more_messages_queued = false;
   ACE_Notification_Buffer next;
 
-  int result = notification_queue_.pop_next_notification (buffer, 
-                                                          more_messages_queued, 
+  int result = notification_queue_.pop_next_notification (buffer,
+                                                          more_messages_queued,
                                                           next);
 
   if (result == 0)
@@ -240,7 +240,7 @@ ACE_Dev_Poll_Reactor_Notify::read_notify_pipe (ACE_HANDLE handle,
       ACE::recv (handle, read_p, to_read);
       return 0;
     }
-  
+
   if (result == -1)
     return -1;
 
@@ -1573,7 +1573,7 @@ ACE_Dev_Poll_Reactor::remove_handler_i (ACE_HANDLE handle,
     return -1;
 
   // Check for ref counting now - handle_close () may delete eh.
-  int requires_reference_counting =
+  bool const requires_reference_counting =
     eh->reference_counting_policy ().value () ==
     ACE_Event_Handler::Reference_Counting_Policy::ENABLED;
 

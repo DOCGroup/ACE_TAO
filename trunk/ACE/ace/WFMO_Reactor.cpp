@@ -772,7 +772,7 @@ ACE_WFMO_Reactor_Handler_Repository::make_changes_in_current_infos (void)
           // the upcall.
           if (event_handler != 0)
             {
-              int requires_reference_counting =
+              bool const requires_reference_counting =
                 event_handler->reference_counting_policy ().value () ==
                 ACE_Event_Handler::Reference_Counting_Policy::ENABLED;
 

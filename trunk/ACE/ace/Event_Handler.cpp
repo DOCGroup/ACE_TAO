@@ -184,7 +184,7 @@ ACE_Event_Handler::reactor_timer_interface (void) const
 ACE_Event_Handler::Reference_Count
 ACE_Event_Handler::add_reference (void)
 {
-  int reference_counting_required =
+  bool const reference_counting_required =
     this->reference_counting_policy ().value () ==
     ACE_Event_Handler::Reference_Counting_Policy::ENABLED;
 
@@ -197,7 +197,7 @@ ACE_Event_Handler::add_reference (void)
 ACE_Event_Handler::Reference_Count
 ACE_Event_Handler::remove_reference (void)
 {
-  int reference_counting_required =
+  bool const reference_counting_required =
     this->reference_counting_policy ().value () ==
     ACE_Event_Handler::Reference_Counting_Policy::ENABLED;
 
