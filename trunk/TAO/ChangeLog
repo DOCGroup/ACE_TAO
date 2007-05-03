@@ -1,3 +1,17 @@
+Thu May  3 10:09:37 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/AnyTypeCode/TypeCode_CDR_Extraction.cpp:
+          Fixed interoperability problems with TAO 1.3.x and the current
+          version as reported in bugzilla 2918. The IDL compiler still
+          needs to be done to also generate repeated typecodes for the
+          given test case. Thanks to Patrick Spiering <pspiering at aweta dot nl>
+          for delivering the patch
+
+        * tao/DynamicInterface/Request.h:
+        * tao/Messaging/AMI_Arguments_Converter_Impl.cpp:
+        * tao/Messaging/Asynch_Invocation_Adapter.cpp:
+          Layout changes
+
 Wed May  2 14:05:37 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_2918_Regression/*:

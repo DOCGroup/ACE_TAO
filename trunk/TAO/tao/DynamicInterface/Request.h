@@ -190,7 +190,6 @@ namespace CORBA
     /// Accessor for the input stream containing the exception.
     ACE_CString &raw_user_exception (void);
 
-
     /// Proprietary method to check whether a response has been
     /// received.
     CORBA::Boolean response_received (void);
@@ -261,7 +260,7 @@ namespace CORBA
     /// If not zero then the NVList is not evaluated by default.
     bool lazy_evaluation_;
 
-    /// Set to TRUE upon completion of invoke() or handle_response().
+    /// Set to true upon completion of invoke() or handle_response().
     CORBA::Boolean response_received_;
 
     /// Can be reset by a gateway when passing along a request.
