@@ -3,7 +3,6 @@
 //
 
 #include "tao/OctetSeq.pidl"
-#include "tao/StringSeq.pidl"
 
 /// Put the interfaces in a module, to avoid global namespace pollution
 module Test
@@ -17,14 +16,10 @@ module Test
     SYMBOL_SEQ_TYPE
   };
 
-  typedef sequence<string> StringSeq;
-
   struct Symbol;
   typedef sequence<Symbol> SymbolSeq;
 
   struct Symbol {
-    StringSeq scope;
-    string name;
     SymbolSeq args;
   };
 
