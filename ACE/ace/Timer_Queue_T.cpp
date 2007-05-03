@@ -363,7 +363,7 @@ ACE_Event_Handler_Handle_Timeout_Upcall<ACE_LOCK>::preinvoke (TIMER_QUEUE & /* t
                                                               const ACE_Time_Value & /* cur_time */,
                                                               const void *&upcall_act)
 {
-  int requires_reference_counting =
+  bool const requires_reference_counting =
     event_handler->reference_counting_policy ().value () ==
     ACE_Event_Handler::Reference_Counting_Policy::ENABLED;
 

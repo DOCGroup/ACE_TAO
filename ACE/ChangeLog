@@ -1,3 +1,24 @@
+Thu May  3 08:37:37 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/run_test.lst:
+        * tests/Bug_2609_Regression_Test.cpp:
+        * ace/Svc_Handler.cpp:
+        * tests/tests.mpc:
+          Fixed bug 2609, take into account reference counted svc handlers.
+          Thanks to Milan Cvetkovic <milan dot cvetkovic at mpathix dot com>
+          for reporting this, providing the patch and the regression test
+
+        * ace/config-hpux-11.00.h:
+          dllexport with template specializations doesn't work for HP aCC
+          3.x which runs on PARISC. Reported this to HP and for the moment
+          disable dllexport usage on PARISC totally
+
+        * ace/Dev_Poll_Reactor.cpp:
+        * ace/Event_Handler.cpp:
+        * ace/Timer_Queue_T.cpp:
+        * ace/WFMO_Reactor.cpp:
+          Use bool when possible
+
 Wed May  2 18:43:37 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/bczar/bczar.html:
