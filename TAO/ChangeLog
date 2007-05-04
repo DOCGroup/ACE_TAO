@@ -1,3 +1,12 @@
+Fri May  4 09:12:37 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/AnyTypeCode/Any.cpp:
+        * tao/AnyTypeCode/Sequence_TypeCode.h:
+        * tao/AnyTypeCode/TypeCode_Case_Base_T.h:
+        * tao/AnyTypeCode/Union_TypeCode.h:
+        * tao/TypeCodeFactory/TypeCodeFactory_i.cpp:
+          Layout changes
+
 Thu May  3 13:08:37 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_2804_Regression/Test.idl:

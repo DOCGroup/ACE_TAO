@@ -61,8 +61,7 @@ namespace TAO
       /**
        * Constructor used when creating static @c union @c TypeCodes.
        */
-      Case (char const * name,
-            TypeCodeType tc);
+      Case (char const * name, TypeCodeType tc);
 
       /// Constructor.
       /**
@@ -102,22 +101,17 @@ namespace TAO
 
       /// Marshal this IDL @c union member into the given output CDR
       /// stream.
-      bool marshal (TAO_OutputCDR & cdr,
-                    CORBA::ULong offset) const;
+      bool marshal (TAO_OutputCDR & cdr, CORBA::ULong offset) const;
 
       /// Check for equality of the @c case attributes contained by this
       /// class and the corresponding member attributes at index "@a
       /// index" in the given @c TypeCode @a tc.
-      bool equal (CORBA::ULong index,
-                  CORBA::TypeCode_ptr tc
-                  ) const;
+      bool equal (CORBA::ULong index, CORBA::TypeCode_ptr tc) const;
 
       /// Check for equivalence of the @c case attributes contained by
       /// this class and the corresponding member attributes at index
       /// "@a index" in the given @c TypeCode @a tc.
-      bool equivalent (CORBA::ULong index,
-                       CORBA::TypeCode_ptr tc
-                       ) const;
+      bool equivalent (CORBA::ULong index, CORBA::TypeCode_ptr tc) const;
 
     protected:
 
@@ -140,8 +134,7 @@ namespace TAO
        *              being tested.
        */
       virtual bool equal_label (CORBA::ULong index,
-                                CORBA::TypeCode_ptr tc
-                                ) const = 0;
+                                CORBA::TypeCode_ptr tc) const = 0;
 
     private:
 
