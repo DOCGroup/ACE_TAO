@@ -280,8 +280,7 @@ operator>> (TAO_InputCDR &cdr, CORBA::Any &any)
                       false);
 
       any.replace (impl);
-      impl->_tao_decode (cdr
-                        );
+      impl->_tao_decode (cdr);
     }
   catch (const ::CORBA::Exception&)
     {
