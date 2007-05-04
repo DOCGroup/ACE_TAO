@@ -1,3 +1,8 @@
+Fri May  4 12:39:37 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Env_Value_Test.cpp:
+          Reverted accidential commit
+
 Fri May  4 07:50:37 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Svc_Handler.cpp:
