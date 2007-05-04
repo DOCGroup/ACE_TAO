@@ -1,3 +1,8 @@
+Fri May  4 14:06:39 UTC 2007  Ciju John  <johnc at ociweb dot com>
+
+        * tao/Transport_Connector.cpp:
+	  Made TransportCleanupGuard exception safe.
+
 Fri May  4 09:12:37 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/AnyTypeCode/Any.cpp:
@@ -6669,4 +6674,3 @@ mode: change-log
 add-log-time-format: (lambda () (progn (setq tz (getenv "TZ")) (set-time-zone-rule "UTC") (setq time (format-time-string "%a %b %e %H:%M:%S %Z %Y" (current-time))) (set-time-zone-rule tz) time))
 indent-tabs-mode: nil
 End:
-
