@@ -33,9 +33,9 @@ namespace
   {
   public:
 
-    TransportCleanupGuard (TAO_Transport *tp, bool awake=false)
+    TransportCleanupGuard (TAO_Transport *tp)
       : tp_ (tp)
-      , awake_ (awake)
+      , awake_ (true)
     {
     }
 
@@ -54,9 +54,10 @@ namespace
         }
     }
 
-    void awake ()
+    /// Turn off the guard.
+    void down ()
     {
-      this->awake_ = true;
+      this->awake_ = false;
     }
 
   private:
@@ -431,8 +432,6 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
   TransportCleanupGuard tg(base_transport);
   if (!this->wait_for_connection_completion (r, base_transport, timeout))
     {
-      tg.awake();
-
       if (TAO_debug_level > 2)
         {
           ACE_ERROR ((LM_ERROR,
@@ -447,8 +446,6 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
       base_transport->wait_strategy ()->register_handler () == -1)
     {
       // Registration failures.
-      tg.awake();
-
       if (TAO_debug_level > 0)
         {
           ACE_ERROR ((LM_ERROR,
@@ -460,6 +457,7 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
       return 0;
     }
 
+  tg.down ();
   return base_transport;
 }
 
