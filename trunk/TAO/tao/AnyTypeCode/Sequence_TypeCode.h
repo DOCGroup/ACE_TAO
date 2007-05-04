@@ -67,8 +67,7 @@ namespace TAO
        * @see @c CORBA::TypeCode
        */
       //@{
-      virtual bool tao_marshal (TAO_OutputCDR & cdr,
-                                CORBA::ULong offset) const;
+      virtual bool tao_marshal (TAO_OutputCDR & cdr, CORBA::ULong offset) const;
       virtual void tao_duplicate (void);
       virtual void tao_release (void);
       //@}
@@ -84,15 +83,11 @@ namespace TAO
        * @see @c CORBA::TypeCode
        */
       //@{
-      virtual CORBA::Boolean equal_i (CORBA::TypeCode_ptr tc
-                                      ) const;
-      virtual CORBA::Boolean equivalent_i (CORBA::TypeCode_ptr tc
-                                           ) const;
-      virtual CORBA::TypeCode_ptr get_compact_typecode_i (
-        void) const;
+      virtual CORBA::Boolean equal_i (CORBA::TypeCode_ptr tc) const;
+      virtual CORBA::Boolean equivalent_i (CORBA::TypeCode_ptr tc) const;
+      virtual CORBA::TypeCode_ptr get_compact_typecode_i (void) const;
       virtual CORBA::ULong length_i (void) const;
-      virtual CORBA::TypeCode_ptr content_type_i (
-        void) const;
+      virtual CORBA::TypeCode_ptr content_type_i (void) const;
 
     private:
 

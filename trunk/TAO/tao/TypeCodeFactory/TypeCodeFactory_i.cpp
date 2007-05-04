@@ -774,8 +774,7 @@ TAO_TypeCodeFactory_i::create_value_box_tc (
   return this->alias_value_box_tc_common (id,
                                           name,
                                           boxed_type,
-                                          CORBA::tk_value_box
-                                         );
+                                          CORBA::tk_value_box);
 }
 
 CORBA::TypeCode_ptr
@@ -786,8 +785,7 @@ TAO_TypeCodeFactory_i::create_native_tc (
 {
   return this->create_tc_common (id,
                                  name,
-                                 CORBA::tk_native
-                                );
+                                 CORBA::tk_native);
 }
 
 CORBA::TypeCode_ptr
@@ -1177,15 +1175,12 @@ CORBA::TypeCode_ptr
 TAO_TypeCodeFactory_i::sequence_array_tc_common (
     CORBA::ULong bound,
     CORBA::TypeCode_ptr element_type,
-    CORBA::TCKind kind
-
-  )
+    CORBA::TCKind kind)
 {
   CORBA::TypeCode_ptr tc = CORBA::TypeCode_ptr ();
 
   CORBA::Boolean const valid_element =
-    this->valid_content_type (element_type
-                             );
+    this->valid_content_type (element_type);
 
   if (!valid_element)
     {

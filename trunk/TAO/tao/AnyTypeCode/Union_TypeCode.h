@@ -70,8 +70,7 @@ namespace TAO
              CORBA::Long default_index);
 
       /// Constructor used for recursive TypeCodes.
-      Union (CORBA::TCKind kind,
-             char const * id);
+      Union (CORBA::TCKind kind, char const * id);
 
       /**
        * @name TAO-specific @c CORBA::TypeCode Methods
@@ -98,8 +97,7 @@ namespace TAO
        * @see @c CORBA::TypeCode
        */
       //@{
-      virtual CORBA::Boolean equal_i (CORBA::TypeCode_ptr tc
-                                      ) const;
+      virtual CORBA::Boolean equal_i (CORBA::TypeCode_ptr tc) const;
       virtual CORBA::Boolean equivalent_i (CORBA::TypeCode_ptr tc
                                            ) const;
       virtual CORBA::TypeCode_ptr get_compact_typecode_i (
