@@ -148,7 +148,7 @@ sub run_program ($)
         print STDERR "Error: $program FAILED with exit status $status\n";
     }
 
-    print "\nauto_run_tests_finished: test/$program Time:$time"."s Result:$status\n";
+    print "\nauto_run_tests_finished: tests/$program Time:$time"."s Result:$status\n";
 
     check_log ($program);
 
