@@ -703,16 +703,16 @@ TAO_Trader_Factory::manufacture_trader (void)
   TAO_Support_Attributes_i &support_attributes =
     return_value->support_attributes ();
 
-  import_attributes.def_search_card (this->def_search_card_);
   import_attributes.max_search_card (this->max_search_card_);
-  import_attributes.def_match_card (this->def_match_card_);
+  import_attributes.def_search_card (this->def_search_card_);
   import_attributes.max_match_card (this->max_match_card_);
-  import_attributes.def_return_card (this->def_return_card_);
+  import_attributes.def_match_card (this->def_match_card_);
   import_attributes.max_return_card (this->max_return_card_);
-  import_attributes.def_hop_count (this->def_hop_count_);
+  import_attributes.def_return_card (this->def_return_card_);
   import_attributes.max_hop_count (this->max_hop_count_);
-  import_attributes.def_follow_policy (this->def_follow_policy_);
+  import_attributes.def_hop_count (this->def_hop_count_);
   import_attributes.max_follow_policy (this->max_follow_policy_);
+  import_attributes.def_follow_policy (this->def_follow_policy_);
   support_attributes.supports_modifiable_properties (this->supports_modifiable_properties_);
   support_attributes.supports_dynamic_properties (this->supports_dynamic_properties_);
 
