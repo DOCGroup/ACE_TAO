@@ -51,6 +51,9 @@ run_main (int argc, ACE_TCHAR* [])
 #  else
   ACE_OS::putenv ("TEST_VALUE_POSITIVE=10.2");
   ACE_OS::putenv ("TEST_VALUE_NEGATIVE=-10.2");
+  ACE_OS::putenv ("TMPDIR=MyString");
+  char* tmp_dir = ACE::getenv ("TMPDIR");
+  ACE_DEBUG ((LM_DEBUG, "tmp dir %s\n", tmp_dir));
 #  endif /* ACE_WIN32 */
 #else  /* ! ACE_HAS_NONSTATIC_OBJECT_MANAGER  &&  ! ACE_LACKS_FORK */
 run_main (int argc, ACE_TCHAR * [], ACE_TCHAR *envp[])
