@@ -1,3 +1,13 @@
+Fri May  4 07:50:37 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Svc_Handler.cpp:
+          Applied new patch to fix bugzilla 2609. Thanks to Milan Cvetkovic
+          <milan dot cvetkovic at mpathix dot com> for this new patch
+
+        * tests/run_test.lst:
+        * tests/tests.mpc:
+          Don't build and run Bug_2609_Regression when ACE_FOR_TAO is enabled
+
 Thu May  3 09:54:37 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         Reverted the change below, it breaks the gcc builds
