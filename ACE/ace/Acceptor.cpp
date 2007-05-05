@@ -388,6 +388,7 @@ ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::handle_input (ACE_HANDLE listene
                         ACE_LIB_TEXT ("make_svc_handler")));
           return 0;
         }
+      // Accept connection into the Svc_Handler.
       else if (this->accept_svc_handler (svc_handler) == -1)
         {
           // Note that <accept_svc_handler> closes the <svc_handler>
