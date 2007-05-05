@@ -1,3 +1,12 @@
+Sat May  5 05:00:37 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        Reverted the change below, it breaks TAO, maybe TAO has coded against
+        this issue in acceptor or the test has wrong assumptions, not clear
+        at this moment, so just revert the change
+
+        Fri May  4 18:46:37 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+        * ace/Acceptor.cpp:
+
 Fri May  4 18:46:37 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/run_test.lst:
