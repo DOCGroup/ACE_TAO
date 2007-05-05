@@ -388,10 +388,7 @@ ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::handle_input (ACE_HANDLE listene
                         ACE_LIB_TEXT ("make_svc_handler")));
           return 0;
         }
-
-      // Accept connection into the Svc_Handler.
-      ACE_Event_Handler_var safe_handler (svc_handler);
-      if (this->accept_svc_handler (svc_handler) == -1)
+      else if (this->accept_svc_handler (svc_handler) == -1)
         {
           // Note that <accept_svc_handler> closes the <svc_handler>
           // on failure.
@@ -401,12 +398,11 @@ ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::handle_input (ACE_HANDLE listene
                         ACE_LIB_TEXT ("accept_svc_handler")));
           return 0;
         }
-
       // Activate the <svc_handler> using the designated concurrency
       // strategy (note that this method becomes responsible for
       // handling errors and freeing up the memory if things go
       // awry...).
-      if (this->activate_svc_handler (svc_handler) == -1)
+      else if (this->activate_svc_handler (svc_handler) == -1)
         {
           // Note that <activate_svc_handler> closes the <svc_handler>
           // on failure.
