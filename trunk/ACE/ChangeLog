@@ -1,6 +1,5 @@
 Sat May  5 05:34:37 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-
         * ace/Svc_Handler.cpp:
           Reverted last change again, with 2610 in mind this could maybe
           result in leaks with TAO and I have no time to sort that out
