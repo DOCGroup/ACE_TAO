@@ -35,7 +35,7 @@ Bug_2368_Regression_Test
 Bug_2497_Regression_Test
 Bug_2540_Regression_Test
 Bug_2609_Regression_Test: !ST !ACE_FOR_TAO
-Bug_2610_Regression_Test: !ST
+Bug_2610_Regression_Test: !ST !ACE_FOR_TAO
 Bug_2659_Regression_Test: !ST
 Bug_2653_Regression_Test: !ST
 Bug_2815_Regression_Test
