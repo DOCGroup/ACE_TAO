@@ -25,6 +25,8 @@ ACE_RCSID (tests,
 #include "ace/SOCK_Connector.h"
 #include "ace/Thread_Semaphore.h"
 
+#if defined (ACE_HAS_THREADS)
+
 # define TRACE(X) ACE_Trace ____ (ACE_LIB_TEXT (X), __LINE__, ACE_LIB_TEXT (__FILE__))
 
 int g_svc_handlers_leaked = 0;
@@ -125,10 +127,14 @@ struct Timer_Handler : public ACE_Event_Handler
    }
 };
 
+#endif
+
 int
 run_main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("Bug_2610_Regression_Test"));
+
+#if defined (ACE_HAS_THREADS)
 
   My_Acceptor acceptor;
   Timer_Handler timer_handler;
@@ -182,6 +188,11 @@ run_main (int, ACE_TCHAR *[])
            ACE_TEXT("Svc_Handler leakage detected, %d objects\n")),
            g_svc_handlers_leaked);
     }
+#else
+  ACE_ERROR ((LM_INFO,
+              ACE_TEXT ("threads not supported on this platform\n")));
+#endif
+
   ACE_END_TEST;
 
   return 0;
