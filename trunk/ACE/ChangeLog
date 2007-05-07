@@ -1,3 +1,21 @@
+Mon May  7 22:18:55 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * ace/config-win32-msvc-7.h:
+        * ace/config-win32-msvc-8.h:
+        * ace/config-win32-msvc-9.h:
+          Added ACE_HAS_INTRINSIC_BYTESWAP for all except WinCE 4.
+          For config-win32-msvc-9.h, comment the #if block around
+          ACE_HAS_INTRINSIC_INTERLOCKED; if a build with this compiler and
+          WinCE shows it needs to be uncommented (as for previous MSVC
+          versions) it can be changed then.
+
+        * ace/CDR_Base.inl: Replace complicated #if around the byteswap
+          usage with #if defined (ACE_HAS_INTRINSIC_BYTESWAP).
+
+          This fixes Bugzilla #2922. Thanks to Xu Liang for reporting it.
+
+        * THANKS: Added Xu Liang.
+
 Mon May  7 11:48:46 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/tao_orb_tests.lst:
