@@ -1,3 +1,23 @@
+Mon May  7 11:46:47 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tao/IORManipulation/IORManip_Filter.h:
+        * tao/IORManipulation/IORManip_Filter.cpp:
+        * tao/IORManipulation/IORManip_IIOP_Filter.h:
+        * tao/IORManipulation/IORManip_IIOP_Filter.cpp:
+
+          Added a filter class that allows users to create new object
+          references based on existing multi-profile object references by
+          filtering out profiles using user defined criteria.  The use of
+          -ORBUseSharedProfile 0 is required for this to function.       
+
+        * tests/IORManipulation/filter/IORManip_Filter_Test.mpc:
+        * tests/IORManipulation/filter/Test.idl:
+        * tests/IORManipulation/filter/run_test.pl:
+        * tests/IORManipulation/filter/server.cpp:
+
+          Added a test to demonstrate the functionality of the filtering
+          ability.                                                      
+
 Fri May  4 14:43:37 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Trader/Trader.cpp:
@@ -8,7 +28,7 @@ Fri May  4 14:43:37 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 Fri May  4 14:06:39 UTC 2007  Ciju John  <johnc at ociweb dot com>
 
         * tao/Transport_Connector.cpp:
-	  Made TransportCleanupGuard exception safe.
+          Made TransportCleanupGuard exception safe.
 
 Fri May  4 09:12:37 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
