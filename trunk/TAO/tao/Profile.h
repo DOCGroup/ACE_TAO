@@ -368,6 +368,9 @@ protected:
   /// Our tagged profile
   IOP::TaggedProfile *tagged_profile_;
 
+  /// A lock that protects creation of the tagged profile
+  TAO_SYNCH_MUTEX tagged_profile_lock_;
+
   /// object_key associated with this profile.
   TAO::Refcounted_ObjectKey *ref_object_key_;
 

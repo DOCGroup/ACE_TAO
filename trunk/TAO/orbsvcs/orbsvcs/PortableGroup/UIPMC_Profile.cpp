@@ -16,7 +16,7 @@ ACE_RCSID (PortableGroup,
            UIPMC_Profile,
            "$Id$")
 
-static const char the_prefix[] = "uipmc";
+static const char the_prefix[] = "miop";
 
 // UIPMC doesn't support object keys, so send profiles by default in the GIOP 1.2 target
 // specification.
@@ -38,7 +38,6 @@ TAO_UIPMC_Profile::TAO_UIPMC_Profile (TAO_ORB_Core *orb_core)
                  orb_core,
                  TAO_GIOP_Message_Version (TAO_DEF_GIOP_MAJOR, TAO_DEF_GIOP_MINOR)),
     endpoint_ (),
-    count_ (1),
     tagged_profile_ ()
 {
     addressing_mode_ = default_addressing_mode_;
@@ -50,7 +49,6 @@ TAO_UIPMC_Profile::TAO_UIPMC_Profile (const ACE_INET_Addr &addr,
                  orb_core,
                  TAO_GIOP_Message_Version (TAO_DEF_GIOP_MAJOR, TAO_DEF_GIOP_MINOR)),
     endpoint_ (addr),
-    count_ (1),
     tagged_profile_ ()
 {
     addressing_mode_ = default_addressing_mode_;
@@ -63,7 +61,6 @@ TAO_UIPMC_Profile::TAO_UIPMC_Profile (const CORBA::Octet class_d_address[4],
                  orb_core,
                  TAO_GIOP_Message_Version (TAO_DEF_GIOP_MAJOR, TAO_DEF_GIOP_MINOR)),
     endpoint_ (class_d_address, port),
-    count_ (1),
     tagged_profile_ ()
 {
     addressing_mode_ = default_addressing_mode_;
@@ -77,7 +74,6 @@ TAO_UIPMC_Profile::TAO_UIPMC_Profile (const char *string,
                  orb_core,
                  TAO_GIOP_Message_Version (TAO_DEF_GIOP_MAJOR, TAO_DEF_GIOP_MINOR)),
     endpoint_ (),
-    count_ (1),
     tagged_profile_ ()
 {
   this->add_group_component ();
@@ -85,16 +81,6 @@ TAO_UIPMC_Profile::TAO_UIPMC_Profile (const char *string,
   addressing_mode_ = default_addressing_mode_;
 }
 
-TAO_UIPMC_Profile::TAO_UIPMC_Profile (TAO_ORB_Core *orb_core)
-  : TAO_Profile (TAO_TAG_UIPMC_PROFILE,
-                 orb_core,
-                 TAO_GIOP_Message_Version (TAO_DEF_GIOP_MAJOR, TAO_DEF_GIOP_MINOR)),
-    endpoint_ (),
-    count_ (1),
-    tagged_profile_ ()
-{
-  addressing_mode_ = default_addressing_mode_;
-}
 */
 
 TAO_UIPMC_Profile::~TAO_UIPMC_Profile (void)
@@ -118,7 +104,7 @@ TAO_UIPMC_Profile::decode (TAO_InputCDR& cdr)
       if (TAO_debug_level > 0)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("TAO (%P|%t) - Profile::decode - v%d.%d\n"),
+                      ACE_TEXT ("TAO (%P|%t) - UIPMC_Profile::decode - v%d.%d\n"),
                       this->version_.major,
                       this->version_.minor));
         }
@@ -170,7 +156,7 @@ TAO_UIPMC_Profile::decode_profile (TAO_InputCDR& cdr)
     {
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("TAO (%P|%t) UIPMC_Profile::decode - ")
+                    ACE_TEXT ("TAO (%P|%t) - UIPMC_Profile::decode - ")
                     ACE_TEXT ("Couldn't unmarshal address and port!\n")));
       return -1;
     }
@@ -265,13 +251,10 @@ TAO_UIPMC_Profile::parse_string_i (const char *string)
   // Parse the group_domain_id.
   // The Domain ID is terminated with a '-'.
 
-  // Wrap the string in a ACE_CString
-  ACE_CString ace_str (string, 0, false);
-
   // Look for the group domain delimitor.
-  ACE_CString::size_type pos = ace_str.find ('-');
+  const char *pos = ACE_OS::strchr (string, '-');
 
-  if (pos == ACE_CString::npos)
+  if (pos == 0)
     {
       // The group_domain_id is mandatory, so throw an
       // exception if it isn't found.
@@ -283,18 +266,18 @@ TAO_UIPMC_Profile::parse_string_i (const char *string)
     }
 
   // Save the group_domain_id.
-  ACE_CString group_domain_id = ace_str.substring (0, pos);
+  ACE_CString group_domain_id (string, pos - string);
 
   // Parse the group_id.
   // The group_id is terminated with a '-' or a '/'.
 
   // Skip past the last '-'.
-  ++pos;
-  ACE_CString::size_type end_pos = ace_str.find ('-',pos);
+  string = pos + 1;
+  pos = ACE_OS::strchr (string, '-');
 
   CORBA::Boolean parse_group_ref_version_flag = 0;
 
-  if (end_pos != ACE_CString::npos)
+  if (pos != 0)
     {
       // String was terminated by a '-', so there's a group
       // reference version to be parsed.
@@ -303,9 +286,9 @@ TAO_UIPMC_Profile::parse_string_i (const char *string)
   else
     {
       // Look for a slash as the separator.
-      end_pos = ace_str.find ('/', pos);
+      pos = ACE_OS::strchr (string, '/');
 
-      if (end_pos == ACE_CString::npos)
+      if (pos == 0)
         {
           // The Group ID is mandatory, so throw an exception.
           throw CORBA::INV_OBJREF (
@@ -316,22 +299,37 @@ TAO_UIPMC_Profile::parse_string_i (const char *string)
         }
     }
 
-  // Get the domain_id.
-  ACE_CString str_domain_id = ace_str.substring (pos, end_pos - pos);
+  const char* str_check;
+  for (str_check = string; str_check < pos; str_check++)
+    {
+      if (!isdigit (str_check[0]))
+        {
+          // Throw an exception if it's not a proper number
+          throw CORBA::INV_OBJREF (
+            CORBA::SystemException::_tao_minor_code (
+              TAO::VMCID,
+              EINVAL),
+            CORBA::COMPLETED_NO);
+        }
+    }
+
+  // Get the group_id.
+  ACE_CString str_group_id (string, pos - string);
 
   // Convert the domain_id into numerical form.
   // @@ group_id is actually 64 bits, but strtoul only can parse 32 bits.
   // @@ Need a 64 bit strtoul...
   PortableGroup::ObjectGroupId group_id =
-    ACE_OS::strtoul (str_domain_id.c_str (), 0, 10);
+    ACE_OS::strtoul (str_group_id.c_str (), 0, 10);
 
+  this->has_ref_version_ = false;
   PortableGroup::ObjectGroupRefVersion ref_version = 0;
   if (parse_group_ref_version_flag)
     {
       // Try to find the group version.  It is terminated by a '/'.
-      pos = end_pos + 1;
-      end_pos = ace_str.find ('/', pos);
-      if (end_pos == ACE_CString::npos)
+      string = pos + 1;
+      pos = ACE_OS::strchr (string, '/');
+      if (pos == 0)
         {
           // The group version was expected but not found,
           // so throw an exception.
@@ -342,18 +340,32 @@ TAO_UIPMC_Profile::parse_string_i (const char *string)
             CORBA::COMPLETED_NO);
         }
 
-      ACE_CString str_group_ref_ver = ace_str.substring (pos, end_pos - pos);
+      for (str_check = string; str_check < pos; str_check++)
+        {
+          if (!isdigit (str_check[0]))
+            {
+              // Throw an exception if it's not a proper number
+              throw CORBA::INV_OBJREF (
+                CORBA::SystemException::_tao_minor_code (
+                  TAO::VMCID,
+                  EINVAL),
+               CORBA::COMPLETED_NO);
+            }
+        }
+
+      ACE_CString str_group_ref_ver (string, pos - string);
 
       ref_version =
         ACE_OS::strtoul (str_group_ref_ver.c_str (), 0, 10);
+      this->has_ref_version_ = true;
     }
 
   // Parse the group multicast address.
   // The multicast address is terminated by a ':'.
-  pos = end_pos + 1;
-  end_pos = ace_str.find (':', pos);
+  string = pos + 1;
+  pos = ACE_OS::strchr (string, ':');
 
-  if (end_pos == ACE_CString::npos)
+  if (pos == 0)
     {
       // The multicast address is mandatory, so throw an exception,
       // since it wasn't found.
@@ -364,13 +376,26 @@ TAO_UIPMC_Profile::parse_string_i (const char *string)
         CORBA::COMPLETED_NO);
     }
 
-  ACE_CString mcast_addr = ace_str.substring (pos, end_pos - pos);
+  for (str_check = string; str_check < pos; str_check++)
+    {
+      if (!isdigit (str_check[0]) && str_check[0] != '.')
+        {
+          // Throw an exception if it's not a proper IPv4 address
+          throw CORBA::INV_OBJREF (
+            CORBA::SystemException::_tao_minor_code (
+              TAO::VMCID,
+              EINVAL),
+            CORBA::COMPLETED_NO);
+        }
+    }
+
+  ACE_CString mcast_addr (string, pos - string);
+  string = pos + 1;
 
   // Parse the multicast port number.
 
   // First check that there's something left in the string.
-  pos = end_pos + 1;
-  if (ace_str[pos] == '\0')
+  if (string[0] == '\0')
     {
       // The multicast port is mandatory, so throw an exception,
       // since it wasn't found.
@@ -381,8 +406,21 @@ TAO_UIPMC_Profile::parse_string_i (const char *string)
         CORBA::COMPLETED_NO);
     }
 
+  for (str_check = string; str_check[0] != '\0'; str_check++)
+    {
+      if (!isdigit (str_check[0]))
+        {
+          // Throw an exception if it's not a proper number
+          throw CORBA::INV_OBJREF (
+            CORBA::SystemException::_tao_minor_code (
+              TAO::VMCID,
+              EINVAL),
+            CORBA::COMPLETED_NO);
+        }
+    }
+
   CORBA::UShort mcast_port =
-      static_cast<CORBA::UShort> (ACE_OS::strtoul (ace_str.c_str () + pos, 0, 10));
+      static_cast<CORBA::UShort> (ACE_OS::strtoul (string, 0, 10));
 
   //
   // Finally, set all of the fields of the profile.
@@ -394,7 +432,6 @@ TAO_UIPMC_Profile::parse_string_i (const char *string)
   this->set_group_info (group_domain_id.c_str (),
                         group_id,
                         ref_version);
-
 }
 
 CORBA::Boolean
@@ -442,27 +479,56 @@ TAO_UIPMC_Profile::endpoint_count (void) const
 char *
 TAO_UIPMC_Profile::to_string (void)
 {
-  // @@ Frank: Update to pull out GroupID information...
+  // corbaloc:miop:1.2@1.0-group_id-1-1/host:port
 
-  size_t buflen = (ACE_OS::strlen (::the_prefix) +
-                   3 /* "loc" */ +
+  size_t buflen = (8 /* "corbaloc" */ +
                    1 /* colon separator */ +
-                   2 /* double-slash separator */ +
+                   ACE_OS::strlen (::the_prefix) + /* "miop" */
+                   1 /* colon separator */ +
                    1 /* major version */ +
                    1 /* decimal point */ +
                    1 /* minor version */ +
                    1 /* `@' character */ +
-                   15 /* dotted decimal IPv4 address */ +
+                   1 /* component major version */ +
+                   1 /* decimal point */ +
+                   1 /* component minor version */ +
+                   1 /* `-' character */ +
+                   this->group_domain_id_.length () + /* domain id */
+                   1 /* `-' character */ +
+                   20 /* group id */ +
+                   1 /* `-' character */ +
+                   10 /* group reference version */ +
+                   1 /* `/' character */ +
+                   15 /* IPv4 address */ +
                    1 /* colon separator */ +
                    5 /* port number */);
+
+  static const char digits [] = "0123456789";
 
   char * buf = CORBA::string_alloc (static_cast<CORBA::ULong> (buflen));
 
   ACE_OS::sprintf (buf,
-                   "corbaloc:%s://1.0@%s:%d",
+                   "corbaloc:%s:%c.%c@%c.%c-%s-%llu",
                    ::the_prefix,
+                   digits [this->version_.major],
+                   digits [this->version_.minor],
+                   digits [TAO_DEF_MIOP_MAJOR],
+                   digits [TAO_DEF_MIOP_MINOR],
+                   this->group_domain_id_.c_str (),
+                   this->group_id_);
+
+  if (this->has_ref_version_)
+    {
+      ACE_OS::sprintf (&buf[ACE_OS::strlen (buf)],
+                       "-%lu",
+                       this->ref_version_);
+    }
+
+  ACE_OS::sprintf (&buf[ACE_OS::strlen (buf)],
+                   "/%s:%d",
                    this->endpoint_.get_host_addr (),
                    this->endpoint_.port ());
+
   return buf;
 }
 
@@ -739,7 +805,7 @@ TAO_UIPMC_Profile::extract_group_component (const IOP::TaggedProfile &profile,
     if (TAO_debug_level > 0)
       {
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("TAO (%P|%t) UIPMC_Profile::extract_group_component - v%d.%d\n"),
+                    ACE_TEXT ("TAO (%P|%t) - UIPMC_Profile::extract_group_component - v%d.%d\n"),
                     major,
                     minor));
       }
@@ -755,7 +821,7 @@ TAO_UIPMC_Profile::extract_group_component (const IOP::TaggedProfile &profile,
     {
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("TAO (%P|%t) UIPMC_Profile::extract_group_component - Couldn't unmarshal address and port!\n")));
+                    ACE_TEXT ("TAO (%P|%t) - UIPMC_Profile::extract_group_component - Couldn't unmarshal address and port!\n")));
       return -1;
     }
 
