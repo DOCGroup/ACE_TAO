@@ -134,9 +134,6 @@ protected:
    */
   TAO_UIPMC_Endpoint endpoint_;
 
-  /// Number of endpoints in the list headed by <endpoint_>.
-  CORBA::ULong count_;
-
 private:
 
   /// Cached version of our tagged profile.
@@ -151,6 +148,8 @@ private:
   /// The group reference's version.
   PortableGroup::ObjectGroupRefVersion ref_version_;
 
+  /// A sign whether ref_version is really present
+  bool has_ref_version_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -105,7 +105,7 @@ TAO_UIPMC_Acceptor::open (TAO_ORB_Core *orb_core,
   if (address == 0)
     return -1;
 
-  if (major >=0 && minor >= 0)
+  if (major >= 0 && minor >= 0)
     this->version_.set_version (static_cast<CORBA::Octet> (major),
                                 static_cast<CORBA::Octet> (minor));
   // Parse options
@@ -202,7 +202,7 @@ TAO_UIPMC_Acceptor::open_i (const ACE_INET_Addr& addr,
       for (size_t i = 0; i < this->endpoint_count_; ++i)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("\nTAO (%P|%t) UIPMC_Acceptor::open_i - ")
+                      ACE_TEXT ("TAO (%P|%t) - UIPMC_Acceptor::open_i ")
                       ACE_TEXT ("listening on: <%s:%u>\n"),
                       this->hosts_[i],
                       this->addrs_[i].get_port_number ()));

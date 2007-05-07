@@ -7,6 +7,7 @@
 #include "tao/ORB_Core.h"
 #include "tao/Base_Transport_Property.h"
 #include "tao/Protocols_Hooks.h"
+#include "tao/Thread_Lane_Resources.h"
 
 #include "ace/Connector.h"
 #include "ace/OS_NS_strings.h"
@@ -42,14 +43,6 @@ TAO_UIPMC_Connector::open (TAO_ORB_Core *orb_core)
 int
 TAO_UIPMC_Connector::close (void)
 {
-  SvcHandlerIterator iter (svc_handler_table_);
-
-  while (!iter.done ())
-    {
-      (*iter).int_id_->remove_reference ();
-      iter++;
-    }
-
   return 0;
 }
 
@@ -60,7 +53,7 @@ TAO_UIPMC_Connector::set_validate_endpoint (TAO_Endpoint *endpoint)
     return -1;
 
   TAO_UIPMC_Endpoint *uipmc_endpoint =
-    dynamic_cast<TAO_UIPMC_Endpoint *> (endpoint );
+    dynamic_cast<TAO_UIPMC_Endpoint *> (endpoint);
 
   if (uipmc_endpoint == 0)
     return -1;
@@ -104,33 +97,78 @@ TAO_UIPMC_Connector::make_connection (TAO::Profile_Transport_Resolver *,
 
   TAO_UIPMC_Connection_Handler *svc_handler = 0;
 
-  if (this->svc_handler_table_.find (remote_address, svc_handler) == -1)
+  ACE_NEW_RETURN (svc_handler,
+                  TAO_UIPMC_Connection_Handler (this->orb_core ()),
+                  0);
+
+  u_short port = 0;
+  const ACE_UINT32 ia_any = INADDR_ANY;
+  ACE_INET_Addr local_addr(port, ia_any);
+
+  svc_handler->local_addr (local_addr);
+  svc_handler->addr (remote_address);
+
+  int retval = svc_handler->open (0);
+
+  // Failure to open a connection.
+  if (retval != 0)
     {
-      TAO_UIPMC_Connection_Handler *svc_handler_i = 0;
-      ACE_NEW_RETURN (svc_handler_i,
-                      TAO_UIPMC_Connection_Handler (this->orb_core ()),
-                      0);
+      if (TAO_debug_level > 0)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "TAO (%P|%t) - UIPMC_Connector::make_connection, "
+                      "could not make a new connection\n"));
+        }
 
-      svc_handler_i->local_addr (ACE_sap_any_cast (ACE_INET_Addr &));
-      svc_handler_i->addr (remote_address);
+      return 0;
+    }
 
-      svc_handler_i->open (0);
+  if (TAO_debug_level > 2)
+    ACE_DEBUG ((LM_DEBUG,
+                ACE_TEXT ("TAO (%P|%t) - UIPMC_Connector::make_connection, ")
+                ACE_TEXT ("new connection on HANDLE %d\n"),
+                svc_handler->get_handle ()));
 
-      svc_handler_table_.bind (remote_address,
-                               svc_handler_i);
-      svc_handler = svc_handler_i;
+  TAO_UIPMC_Transport *transport =
+    dynamic_cast<TAO_UIPMC_Transport *> (svc_handler->transport ());
 
-      if (TAO_debug_level > 2)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("(%P|%t) UIPMC_Connector::make_connection, ")
-                    ACE_TEXT ("new connection on HANDLE %d\n"),
-                    svc_handler->get_handle ()));
-   }
+  // In case of errors transport is zero
+  if (transport == 0)
+    {
+      // Give users a clue to the problem.
+      if (TAO_debug_level > 3)
+          ACE_ERROR ((LM_ERROR,
+                      "TAO (%P|%t) - UIPMC_Connector::make_connection, "
+                      "connection to <%s:%u> failed (%p)\n",
+                      ACE_TEXT_CHAR_TO_TCHAR (uipmc_endpoint->get_host_addr ()),
+                      uipmc_endpoint->port (),
+                      ACE_TEXT ("errno")));
 
-  // @@ Michael: We do not use traditional connection management.
-  svc_handler->add_reference ();
+      return 0;
+    }
 
-  return svc_handler->transport ();
+  // Add the handler to Cache
+  retval =
+    this->orb_core ()->lane_resources ().transport_cache ().cache_transport (&desc,
+                                                                             transport);
+
+  // Failure in adding to cache.
+  if (retval != 0)
+    {
+      // Close the handler.
+      svc_handler->close ();
+
+      if (TAO_debug_level > 0)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "TAO (%P|%t) - UIPMC_Connector::make_connection, "
+                      "could not add the new connection to cache\n"));
+        }
+
+      return 0;
+    }
+
+  return transport;
 }
 
 
