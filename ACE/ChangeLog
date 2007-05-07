@@ -1,3 +1,9 @@
+Mon May  7 11:48:46 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/tao_orb_tests.lst:
+
+          Added the new IORManipulation/filter test.
+
 Sat May  5 05:34:37 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Svc_Handler.cpp:
