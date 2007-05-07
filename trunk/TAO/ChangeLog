@@ -1,3 +1,10 @@
+Mon May  7 18:43:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Makefile.am:
+          Added missing String_Const_Sequence_Element_T.h. Thanks to
+          Thomas Lockhart <Thomas dot Lockhart at jpl dot nasa dot gov>
+          for reporting this issue
+
 Mon May  7 16:08:17 UTC 2007  Vadym Ridosh  <vr@prismtech.com>
 
         * orbsvcs/orbsvcs/PortableGroup/UIPMC_Connector.h:
@@ -36,7 +43,7 @@ Mon May  7 11:46:47 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
           Added a filter class that allows users to create new object
           references based on existing multi-profile object references by
           filtering out profiles using user defined criteria.  The use of
-          -ORBUseSharedProfile 0 is required for this to function.       
+          -ORBUseSharedProfile 0 is required for this to function.
 
         * tests/IORManipulation/filter/IORManip_Filter_Test.mpc:
         * tests/IORManipulation/filter/Test.idl:
@@ -44,7 +51,7 @@ Mon May  7 11:46:47 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
         * tests/IORManipulation/filter/server.cpp:
 
           Added a test to demonstrate the functionality of the filtering
-          ability.                                                      
+          ability.
 
 Fri May  4 14:43:37 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
