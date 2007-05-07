@@ -62,9 +62,14 @@
 #define ACE_HAS_STRERROR
 #define ACE_LACKS_STRPTIME
 
-#if !defined (ACE_HAS_WINCE)
+// Evaluate this with a WinCE build; maybe things have improved since VC8.
+//#if !defined (ACE_HAS_WINCE)
 # define ACE_HAS_INTRIN_H
 # define ACE_HAS_INTRINSIC_INTERLOCKED
+//#endif
+
+#if !defined (_WIN32_WCE) || (_WIN32_WCE >= 0x501)
+#  define ACE_HAS_INTRINSIC_BYTESWAP
 #endif
 
 #define ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES
