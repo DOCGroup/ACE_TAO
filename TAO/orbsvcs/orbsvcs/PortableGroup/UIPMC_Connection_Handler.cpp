@@ -75,8 +75,8 @@ TAO_UIPMC_Connection_Handler::~TAO_UIPMC_Connection_Handler (void)
   if (result == -1 && TAO_debug_level)
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT("TAO (%P|%t) - UMPIC_Connection_Handler::")
-                  ACE_TEXT("~UMPIC_Connection_Handler, ")
+                  ACE_TEXT("TAO (%P|%t) - UIPMC_Connection_Handler::")
+                  ACE_TEXT("~UIPMC_Connection_Handler, ")
                   ACE_TEXT("release_os_resources() failed %m\n")));
     }
 }
@@ -142,10 +142,10 @@ TAO_UIPMC_Connection_Handler::open (void*)
 {
   this->udp_socket_.open (this->local_addr_);
 
-  if(TAO_debug_level > 5)
+  if (TAO_debug_level > 5)
   {
      ACE_DEBUG ((LM_DEBUG,
-                 ACE_TEXT("TAO (%P|%t) TAO_UIPMC_Connection_Handler::open, ")
+                 ACE_TEXT("TAO (%P|%t) - UIPMC_Connection_Handler::open, ")
                  ACE_TEXT("listening on: <%s:%u>\n"),
                  this->local_addr_.get_host_addr (),
                  this->local_addr_.get_port_number ()));
@@ -158,7 +158,9 @@ TAO_UIPMC_Connection_Handler::open (void*)
   // compilers
   if (!this->transport ()->post_open ((size_t) this->udp_socket_.get_handle ()))
     return -1;
-
+  this->state_changed (TAO_LF_Event::LFS_SUCCESS,
+                       this->orb_core ()->leader_follower ());
+                         
   return 0;
 }
 
@@ -166,10 +168,10 @@ int
 TAO_UIPMC_Connection_Handler::open_server (void)
 {
   this->mcast_socket_.join (this->local_addr_);
-  if( TAO_debug_level > 5)
+  if (TAO_debug_level > 5)
   {
      ACE_DEBUG ((LM_DEBUG,
-                 ACE_TEXT("TAO (%P|%t) TAO_UIPMC_Connection_Handler::open_server, ")
+                 ACE_TEXT("TAO (%P|%t) - UIPMC_Connection_Handler::open_server, ")
                  ACE_TEXT("subcribed to multicast group at %s:%d\n"),
                  this->local_addr_.get_host_addr (),
                  this->local_addr_.get_port_number ()
@@ -253,10 +255,7 @@ TAO_UIPMC_Connection_Handler::handle_close (ACE_HANDLE,
 int
 TAO_UIPMC_Connection_Handler::close (u_long)
 {
-  this->state_changed (TAO_LF_Event::LFS_CONNECTION_CLOSED,
-           this->orb_core ()->leader_follower ());
-  this->transport ()->remove_reference ();
-  return 0;
+  return this->close_handler ();
 }
 
 int

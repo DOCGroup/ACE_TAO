@@ -207,8 +207,8 @@ TAO_UIPMC_Transport::send (iovec *iov, int iovcnt,
               if (TAO_debug_level > 0)
                 {
                   ACE_DEBUG ((LM_DEBUG,
-                              ACE_TEXT ("\n\nTAO (%P|%t) ")
-                              ACE_TEXT ("UIPMC_Transport::send_i ")
+                              ACE_TEXT ("\n\nTAO (%P|%t) - ")
+                              ACE_TEXT ("UIPMC_Transport::send ")
                               ACE_TEXT ("Message of size %d needs too many MIOP fragments (max is %d).\n")
                               ACE_TEXT ("You may be able to increase ACE_MAX_DGRAM_SIZE.\n"),
                               bytes_to_send,
@@ -291,7 +291,7 @@ TAO_UIPMC_Transport::send (iovec *iov, int iovcnt,
           if (TAO_debug_level > 0)
             {
               ACE_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("\n\nTAO (%P|%t) ")
+                          ACE_TEXT ("\n\nTAO (%P|%t) - ")
                           ACE_TEXT ("UIPMC_Transport::send")
                           ACE_TEXT (" %p\n\n"),
                           ACE_TEXT ("Error returned from transport:")));
@@ -309,7 +309,7 @@ TAO_UIPMC_Transport::send (iovec *iov, int iovcnt,
       if (TAO_debug_level > 0)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "TAO_UIPMC_Transport::send_i: sent %d bytes to %s:%d\n",
+                      "TAO_UIPMC_Transport::send: sent %d bytes to %s:%d\n",
                       rc,
                       addr.get_host_addr (),
                       addr.get_port_number ()));
@@ -339,7 +339,7 @@ TAO_UIPMC_Transport::recv (char *buf,
   if (TAO_debug_level > 5)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "TAO_UIPMC_Transport::recv_i: received %d bytes from %s:%d\n",
+                  "TAO_UIPMC_Transport::recv: received %d bytes from %s:%d\n",
                   n,
                   from_addr.get_host_addr (),
                   from_addr.get_port_number ()));
@@ -351,7 +351,7 @@ TAO_UIPMC_Transport::recv (char *buf,
       if (TAO_debug_level > 0)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "TAO_UIPMC_Transport::recv_i: packet of size %d is too small from %s:%d\n",
+                      "TAO_UIPMC_Transport::recv: packet of size %d is too small from %s:%d\n",
                       n,
                       from_addr.get_host_addr (),
                       from_addr.get_port_number ()));
@@ -368,7 +368,7 @@ TAO_UIPMC_Transport::recv (char *buf,
       if (TAO_debug_level > 0)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "TAO_UIPMC_Transport::recv_i: UIPMC packet didn't contain magic bytes.\n"));
+                      "TAO_UIPMC_Transport::recv: UIPMC packet didn't contain magic bytes.\n"));
         }
 
       return 0;
@@ -404,7 +404,7 @@ TAO_UIPMC_Transport::recv (char *buf,
       if (TAO_debug_level > 0)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "TAO_UIPMC_Transport::recv_i: Invalid ID length.\n"));
+                      "TAO_UIPMC_Transport::recv: Invalid ID length.\n"));
         }
 
       return 0;
@@ -417,7 +417,7 @@ TAO_UIPMC_Transport::recv (char *buf,
       if (TAO_debug_level > 0)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "TAO_UIPMC_Transport::recv_i: MIOP packet not large enough for padding.\n"));
+                      "TAO_UIPMC_Transport::recv: MIOP packet not large enough for padding.\n"));
         }
 
       return 0;
@@ -480,7 +480,7 @@ TAO_UIPMC_Transport::handle_input (TAO_Resume_Handle &rh,
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("TAO: (%P|%t|%N|%l) recv returned error on transport %d after fault %p\n"),
                       this->id (),
-                      ACE_TEXT ("handle_input_i ()\n")));
+                      ACE_TEXT ("handle_input ()\n")));
         }
 
       if (n == -1)
@@ -591,7 +591,7 @@ TAO_UIPMC_Transport::send_message (TAO_OutputCDR &stream,
     {
       if (TAO_debug_level)
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("TAO: (%P|%t|%N|%l) closing transport %d after fault %p\n"),
+                    ACE_TEXT ("TAO: (%P|%t|%N|%l) closing transport %d after fault %m\n"),
                     this->id (),
                     ACE_TEXT ("send_message ()\n")));
 

@@ -1,3 +1,31 @@
+Mon May  7 16:08:17 UTC 2007  Vadym Ridosh  <vr@prismtech.com>
+
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Connector.h:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Acceptor.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Connector.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Transport.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Connection_Handler.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Endpoint.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Profile.h:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Profile.cpp:
+          Fix for Bug 2377. It introduces same connection management
+          as in other protocols (IIOP, etc) which actually fixed the problem.
+
+        * orbsvcs/tests/Bug_2377_Regression/Hello.cpp:
+        * orbsvcs/tests/Bug_2377_Regression/Hello_Impl.cpp:
+        * orbsvcs/tests/Bug_2377_Regression/Hello.idl:
+        * orbsvcs/tests/Bug_2377_Regression/Hello_Impl.h:
+        * orbsvcs/tests/Bug_2377_Regression/Bug_2377_Regression.mpc:
+        * orbsvcs/tests/Bug_2377_Regression/run_test.pl:
+        * orbsvcs/tests/Bug_2377_Regression/uipmc_test.cpp:
+          The test was updated.
+
+        * tao/Profile.cpp:
+        * tao/Profile.h:
+          Fix for a race condition in TAO_Profile::create_tagged_profile()
+          use of which is triggered by UIPMC addressing mode. This is
+          discussed in context of Bug 2377.
+
 Mon May  7 11:46:47 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * tao/IORManipulation/IORManip_Filter.h:

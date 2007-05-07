@@ -8,11 +8,9 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::Run_Test;
 
-$dum_core = PerlACE::LocalFile ("core");
 $status = 0;
-unlink $dum_core;
 
-$HELLO = new PerlACE::Process ("uipmc_test", "");
+$HELLO = new PerlACE::Process ("uipmc_test", "-u corbaloc:miop:1.0\@1.0-cdmwftdomain-1/225.1.1.8:5555");
 
 $prog = $HELLO->SpawnWaitKill (20);
 
@@ -21,12 +19,4 @@ if ($prog != 0) {
     $status = 1;
 }
 
-if (-e $dum_core) {
-    print STDERR "ERROR: uipmc_test core dumped\n";
-    $status = 1;
-}
-
-unlink $dum_core;
-
 exit $status;
-
