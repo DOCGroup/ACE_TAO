@@ -1358,6 +1358,7 @@ nobase_include_HEADERS = \
   StringSeqS.h \
   String_Alloc.h \
   String_Manager_T.h \
+  String_Const_Sequence_Element_T.h \
   String_Sequence_Element_T.h \
   String_Traits_Base_T.h \
   String_Traits_T.h \
