@@ -2,11 +2,11 @@
 //
 // $Id$
 
-#if defined (_MSC_VER) && (_MSC_VER >= 1300) && !(defined (__INTEL_COMPILER) && (__INTEL_COMPILER == 900))
+#if defined (ACE_HAS_INTRINSIC_BYTESWAP)
 // Take advantage of MSVC++ byte swapping compiler intrinsics (found
 // in <stdlib.h>).
 # pragma intrinsic (_byteswap_ushort, _byteswap_ulong, _byteswap_uint64)
-#endif  /* _MSC_VER >= 1300 */
+#endif  /* ACE_HAS_INTRINSIC_BYTESWAP */
 
 #if defined (ACE_HAS_BSWAP_16) || defined (ACE_HAS_BSWAP_32) || defined (ACE_HAS_BSWAP_32)
 # include "ace/os_include/os_byteswap.h"
@@ -65,7 +65,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_INLINE void
 ACE_CDR::swap_2 (const char *orig, char* target)
 {
-#if defined (_MSC_VER) && (_MSC_VER >= 1300) && !(defined (__INTEL_COMPILER) && (__INTEL_COMPILER == 900))
+#if defined (ACE_HAS_INTRINSIC_BYTESWAP)
   // Take advantage of MSVC++ compiler intrinsic byte swapping
   // function.
   *reinterpret_cast<unsigned short *> (target) =
@@ -96,7 +96,7 @@ ACE_CDR::swap_2 (const char *orig, char* target)
 ACE_INLINE void
 ACE_CDR::swap_4 (const char* orig, char* target)
 {
-#if defined (_MSC_VER) && (_MSC_VER >= 1300) && !(defined (__INTEL_COMPILER) && (__INTEL_COMPILER == 900))
+#if defined (ACE_HAS_INTRINSIC_BYTESWAP)
   // Take advantage of MSVC++ compiler intrinsic byte swapping
   // function.
   *reinterpret_cast<unsigned long *> (target) =
@@ -122,13 +122,13 @@ ACE_CDR::swap_4 (const char* orig, char* target)
   register ACE_UINT32 x = * reinterpret_cast<const ACE_UINT32*> (orig);
   x = (x << 24) | ((x & 0xff00) << 8) | ((x & 0xff0000) >> 8) | (x >> 24);
   * reinterpret_cast<ACE_UINT32*> (target) = x;
-#endif
+#endif /* ACE_HAS_INTRINSIC_BYTESWAP */
 }
 
 ACE_INLINE void
 ACE_CDR::swap_8 (const char* orig, char* target)
 {
-#if defined (_MSC_VER) && (_MSC_VER >= 1300) && !(defined (__INTEL_COMPILER) && (__INTEL_COMPILER == 900))
+#if defined (ACE_HAS_INTRINSIC_BYTESWAP)
   // Take advantage of MSVC++ compiler intrinsic byte swapping
   // function.
   *reinterpret_cast<unsigned __int64 *> (target) =
@@ -181,7 +181,7 @@ ACE_CDR::swap_8 (const char* orig, char* target)
   y = (y << 24) | ((y & 0xff00) << 8) | ((y & 0xff0000) >> 8) | (y >> 24);
   * reinterpret_cast<ACE_UINT32*> (target) = y;
   * reinterpret_cast<ACE_UINT32*> (target + 4) = x;
-#endif
+#endif /* ACE_HAS_INTRINSIC_BYTESWAP */
 }
 
 ACE_INLINE void
