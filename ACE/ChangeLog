@@ -1,3 +1,9 @@
+Tue May  8 07:51:55 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Malloc_T.cpp (ACE_Dynamic_Cached_Allocator):
+          Fixed use of chunk_size, thanks to Leo Lei <nsinit at 163 dot com>
+          for reporting this
+
 Mon May  7 22:18:55 UTC 2007  Steve Huston  <shuston@riverace.com>
 
         * ace/config-win32-msvc-7.h:
