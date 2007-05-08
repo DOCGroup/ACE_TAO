@@ -245,6 +245,7 @@ produce (Worker_Task &worker_task,
          ACE_Allocator *alloc_strategy)
 {
   ACE_Message_Block *mb;
+  int status;
 
   // Send <n_iteration> messages through the pipeline.
   for (size_t count = 0; count < n_iterations; count++)
@@ -265,9 +266,36 @@ produce (Worker_Task &worker_task,
                                          ACE_DEFAULT_MESSAGE_BLOCK_PRIORITY), // priority
                       -1);
 
+      // Try once to copy in more than the block will hold; should yield an
+      // error with ENOSPC.
+      if (count == 0)
+        {
+          status = mb->copy ((char *) buf, n + 1);
+          if (status != -1)
+            ACE_ERROR ((LM_ERROR,
+                        ACE_TEXT (" (%t) Copy %B bytes into %B byte block ")
+                        ACE_TEXT ("should fail but didn't\n"),
+                        n + 1,
+                        n));
+          else if (errno != ENOSPC)
+            {
+              ACE_ERROR ((LM_ERROR,
+                          ACE_TEXT (" (%t) Copy into too-small block failed ")
+                          ACE_TEXT ("but with %p; should be ENOSPC\n"),
+                          ACE_TEXT ("wrong error")));
+            }
+          else
+            ACE_DEBUG ((LM_INFO,
+                        ACE_TEXT (" (%t) Copy too-long test succeeded\n")));
+        }
       // Copy buf into the Message_Block and update the wr_ptr ().
-      mb->copy ((char *) buf, n);
-
+      status = mb->copy ((char *) buf, n);
+      if (status != 0)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT (" (%t) Copy to block should be good but %p\n"),
+                      ACE_TEXT ("failed")));
+        }
       // Pass the message to the Worker_Task.
       if (worker_task.put (mb,
                            // Don't block indefinitely if we flow control...
@@ -279,7 +307,7 @@ produce (Worker_Task &worker_task,
 
   // Send a shutdown message to the waiting threads and exit.
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("\n(%t) sending shutdown message\n")));
+              ACE_TEXT (" (%t) sending shutdown message\n")));
 
   ACE_NEW_RETURN (mb,
                   ACE_Message_Block (0,
@@ -296,7 +324,7 @@ produce (Worker_Task &worker_task,
                 ACE_TEXT ("put")));
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("\n(%t) end producer\n")));
+              ACE_TEXT (" (%t) end producer\n")));
   return 0;
 }
 
