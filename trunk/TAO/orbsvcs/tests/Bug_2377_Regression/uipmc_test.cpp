@@ -11,7 +11,7 @@
 #include "tao/Policy_Manager.h"
 
 #define CLIENT_SLEEP_TIME       1000     /* in microseconds */
-#define CLIENT_THREAD_NUMBER    1
+#define CLIENT_THREAD_NUMBER    32
 #define HELLO_CALL_NUMBER       100
 
 const char *uipmc_url = 0;
