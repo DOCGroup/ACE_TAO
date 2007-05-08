@@ -1,3 +1,11 @@
+Tue May  8 20:50:34 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * ace/Malloc_T.cpp (ACE_Dyanmic_Cached_Allocator):
+          Reverted this change:
+          Tue May  8 07:51:55 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+          It broke Hash_Map_Manager_Test which checks for a failed allocation
+          when using a too-small pool.
+
 Tue May  8 20:20:22 UTC 2007  Steve Huston  <shuston@riverace.com>
 
         * ace/Message_Block.cpp (copy): If there's insufficient space to copy
