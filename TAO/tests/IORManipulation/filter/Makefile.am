@@ -13,25 +13,23 @@ ACE_ROOT = $(top_srcdir)/..
 TAO_BUILDDIR = $(top_builddir)
 TAO_ROOT = $(top_srcdir)
 
-SUBDIRS = \
-        filter
 
-## Makefile.IORManipulation_IORTest.am
+## Makefile.IORManip_Filter_Test_Server.am
 
 if BUILD_EXCEPTIONS
 
-noinst_PROGRAMS = IORTest
+noinst_PROGRAMS = server
 
-IORTest_CPPFLAGS = \
+server_CPPFLAGS = \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR)
 
-IORTest_SOURCES = \
-  IORTest.cpp
+server_SOURCES = \
+  server.cpp
 
-IORTest_LDADD = \
+server_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_IORManip.la \
   $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \

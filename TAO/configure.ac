@@ -705,6 +705,7 @@ if test $tao_build_tests = yes; then
     tests/ICMG_Any_Bug/Makefile
     tests/IDL_Test/Makefile
     tests/IORManipulation/Makefile
+    tests/IORManipulation/filter/Makefile
     tests/IOR_Endpoint_Hostnames/Makefile
     tests/IPV6/Makefile
     tests/InterOp-Naming/Makefile
