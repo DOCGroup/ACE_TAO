@@ -84,7 +84,10 @@ ACE_Message_Block::copy (const char *buf, size_t n)
   size_t len = this->space ();
 
   if (len < n)
-    return -1;
+    {
+      errno = ENOSPC;
+      return -1;
+    }
   else
     {
       (void) ACE_OS::memcpy (this->wr_ptr (),
@@ -107,7 +110,10 @@ ACE_Message_Block::copy (const char *buf)
   size_t buflen = ACE_OS::strlen (buf) + 1;
 
   if (len < buflen)
-    return -1;
+    {
+      errno = ENOSPC;
+      return -1;
+    }
   else
     {
       (void) ACE_OS::memcpy (this->wr_ptr (),

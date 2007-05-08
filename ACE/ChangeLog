@@ -1,3 +1,14 @@
+Tue May  8 20:20:22 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * ace/Message_Block.cpp (copy): If there's insufficient space to copy
+          data into the block, set errno to ENOSPC before returning -1.
+          Thanks to Duane Beck <duance.beck@lmco.com> for this suggestion.
+
+        * THANKS: Added Duane Beck to the Hall of Fame.
+
+        * tests/Message_Block_Test.cpp: Added case to check for block copy of
+          a too-long data area.
+
 Tue May  8 07:51:55 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Malloc_T.cpp (ACE_Dynamic_Cached_Allocator):
