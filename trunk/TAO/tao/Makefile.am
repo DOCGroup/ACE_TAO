@@ -4709,6 +4709,8 @@ libTAO_IORManip_la_CPPFLAGS = \
 
 libTAO_IORManip_la_SOURCES = \
   IORManipulation/IORC.cpp \
+  IORManipulation/IORManip_Filter.cpp \
+  IORManipulation/IORManip_IIOP_Filter.cpp \
   IORManipulation/IORManip_Loader.cpp \
   IORManipulation/IORManipulation.cpp
 
@@ -4725,6 +4727,8 @@ nobase_include_HEADERS += \
   IORManipulation/IOR.pidl \
   IORManipulation/IORA.h \
   IORManipulation/IORC.h \
+  IORManipulation/IORManip_Filter.h \
+  IORManipulation/IORManip_IIOP_Filter.h \
   IORManipulation/IORManip_Loader.h \
   IORManipulation/IORManipulation.h \
   IORManipulation/IORS.h \
