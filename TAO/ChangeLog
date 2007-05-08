@@ -1,3 +1,14 @@
+Tue May  8 11:15:00 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tao/IORManipulation/IORManip_IIOP_Filter.h:
+        * tao/IORManipulation/IORManip_IIOP_Filter.cpp:
+
+          Added missing checks for TAO_HAS_IIOP.
+
+        * tao/Makefile.am:
+
+          Added the new IORManip*Filter.{h,cpp} files.
+
 Tue May  8 09:31:35 UTC 2007  Vadym Ridosh <vr@prismtech.com>
 
         * orbsvcs/tests/Bug_2377_Regression/Hello_Impl.cpp:
