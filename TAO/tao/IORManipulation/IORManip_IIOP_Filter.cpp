@@ -1,6 +1,9 @@
 // $Id$
 
 #include "tao/IORManipulation/IORManip_IIOP_Filter.h"
+
+#if defined (TAO_HAS_IIOP) && (TAO_HAS_IIOP != 0)
+
 #include "tao/IORManipulation/IORManip_Loader.h"
 #include "tao/IIOP_Profile.h"
 #include "tao/MProfile.h"
@@ -245,3 +248,5 @@ TAO_IORManip_IIOP_Filter::create_profile (TAO_Profile* profile)
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
+
+#endif /* TAO_HAS_IIOP && TAO_HAS_IIOP != 0 */
