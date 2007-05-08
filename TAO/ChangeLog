@@ -1,3 +1,10 @@
+Tue May  8 09:31:35 UTC 2007  Vadym Ridosh <vr@prismtech.com>
+
+        * orbsvcs/tests/Bug_2377_Regression/Hello_Impl.cpp:
+        * orbsvcs/tests/Bug_2377_Regression/uipmc_test.cpp:
+          Changed number of client threads in the test from 1 to 32
+          and made output a bit nicer.
+
 Mon May  7 18:43:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Makefile.am:

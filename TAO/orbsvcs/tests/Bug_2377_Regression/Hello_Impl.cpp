@@ -68,7 +68,7 @@ MessageLog::register_message_send (int message_num)
   if (!this->supress_)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "%02d>>;",
+                  "%02d>>; ",
                   message_num));
     }
 }
@@ -89,7 +89,7 @@ MessageLog::register_message_recv (int message_num)
   if (!this->supress_)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "%02d<<;",
+                  "%02d<<; ",
                   message_num));
     }
 }
