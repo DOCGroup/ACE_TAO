@@ -41,8 +41,7 @@ public:
   /// The virtual destructor
   virtual ~TAO_BiDir_Adapter (void);
 
-  virtual void load_policy_validators (TAO_Policy_Validator &validator)
-    = 0;
+  virtual void load_policy_validators (TAO_Policy_Validator &validator) = 0;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
