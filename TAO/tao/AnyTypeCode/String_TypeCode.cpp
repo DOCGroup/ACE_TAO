@@ -60,14 +60,12 @@ TAO::TypeCode::String<RefCountPolicy>::equivalent_i (CORBA::TypeCode_ptr tc
   // Since TCKind comparisons must be performed before equal_i() is
   // called, we can also call it to determine equivalence of
   // tk_string-based TypeCodes.
-  return this->equal_i (tc
-                       );
+  return this->equal_i (tc);
 }
 
 template <class RefCountPolicy>
 CORBA::TypeCode_ptr
-TAO::TypeCode::String<RefCountPolicy>::get_compact_typecode_i (
-  void) const
+TAO::TypeCode::String<RefCountPolicy>::get_compact_typecode_i (void) const
 {
   // Already compact since tk_string and tk_wstring TypeCodes have no
   // name or member names, meaning that we can simply call
@@ -81,8 +79,7 @@ TAO::TypeCode::String<RefCountPolicy>::get_compact_typecode_i (
 
 template <class RefCountPolicy>
 CORBA::ULong
-TAO::TypeCode::String<RefCountPolicy>::length_i (
-  void) const
+TAO::TypeCode::String<RefCountPolicy>::length_i (void) const
 {
   return this->length_;
 }

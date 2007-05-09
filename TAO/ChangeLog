@@ -1,3 +1,13 @@
+Wed May  9 19:19:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/AnyTypeCode/String_TypeCode.cpp:
+        * tao/BiDir_Adapter.h:
+        * tao/BiDir_GIOP/BiDir_ORBInitializer.cpp:
+        * tao/BiDir_GIOP/BiDirPolicy_Validator.cpp:
+        * tao/PortableServer/Servant_Upcall.h:
+        * tao/TypeCodeFactory/TypeCodeFactory_i.cpp:
+          Layout changes
+
 Wed May  9 11:29:42 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * tests/IORManipulation/filter/Makefile.am:
