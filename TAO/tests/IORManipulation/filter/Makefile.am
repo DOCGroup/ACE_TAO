@@ -18,6 +18,29 @@ TAO_ROOT = $(top_srcdir)
 
 if BUILD_EXCEPTIONS
 
+BUILT_SOURCES = \
+  TestC.cpp \
+  TestC.h \
+  TestC.inl \
+  TestS.cpp \
+  TestS.h \
+  TestS.inl
+
+CLEANFILES = \
+  Test-stamp \
+  TestC.cpp \
+  TestC.h \
+  TestC.inl \
+  TestS.cpp \
+  TestS.h \
+  TestS.inl
+
+TestC.cpp TestC.h TestC.inl TestS.cpp TestS.h TestS.inl: Test-stamp
+
+Test-stamp: $(srcdir)/Test.idl $(ACE_ROOT)/bin/tao_idl
+	$(ACE_ROOT)/bin/tao_idl -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) $(srcdir)/Test.idl
+	@touch "$@"
+
 noinst_PROGRAMS = server
 
 server_CPPFLAGS = \
@@ -27,7 +50,11 @@ server_CPPFLAGS = \
   -I$(TAO_BUILDDIR)
 
 server_SOURCES = \
-  server.cpp
+  TestC.cpp \
+  TestS.cpp \
+  server.cpp \
+  TestC.h \
+  TestS.h
 
 server_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_IORManip.la \
