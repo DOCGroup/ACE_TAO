@@ -1,3 +1,11 @@
+Wed May  9 18:59:26 UTC 2007  James H. Hill  <hillj@isis.vanderbilt.edu>
+
+        * docs/ace_guidelines.vsmacros:
+
+          Improved the macros such that it will convert tabs to 2 spaces
+          for all files excepts those on the exception list. Currently,
+          only MPC template files are on this list.
+
 Wed May  9 18:50:29 UTC 2007  James H. Hill  <hillj@isis.vanderbilt.edu>
 
         * docs/ace_guidelines.vsmacros:
