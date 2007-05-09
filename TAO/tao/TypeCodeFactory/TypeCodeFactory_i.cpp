@@ -1788,10 +1788,7 @@ TAO_TypeCodeFactory_i::check_recursion (CORBA::TCKind kind,
 
                         if (CORBA::is_nil (recursive_tc))
                           {
-                            recursive_tc =
-                              this->make_recursive_tc (kind,
-                                                       id
-                                                      );
+                            recursive_tc = this->make_recursive_tc (kind, id);
                           }
 
                         // Set the actual recursive TypeCode.
@@ -1860,10 +1857,7 @@ TAO_TypeCodeFactory_i::check_recursion (CORBA::TCKind kind,
 
                 if (CORBA::is_nil (recursive_tc))
                   {
-                    recursive_tc =
-                      this->make_recursive_tc (kind,
-                                               id
-                                              );
+                    recursive_tc = this->make_recursive_tc (kind, id);
                   }
 
                 // Set the actual recursive TypeCode.
@@ -1878,8 +1872,7 @@ TAO_TypeCodeFactory_i::check_recursion (CORBA::TCKind kind,
         return this->check_recursion (kind,
                                       id,
                                       content_tc.in (),
-                                      recursive_tc
-                                     );
+                                      recursive_tc);
       }
 
     default:
