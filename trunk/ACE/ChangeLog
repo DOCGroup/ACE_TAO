@@ -1,6 +1,13 @@
+Wed May  9 18:50:29 UTC 2007  James H. Hill  <hillj@isis.vanderbilt.edu>
+
+        * docs/ace_guidelines.vsmacros:
+
+          By default, the ace_guideline macros does not convert tabs to
+          spaces. Instead, this has to be set under Tools | Options...
+
 Tue May  8 20:50:34 UTC 2007  Steve Huston  <shuston@riverace.com>
 
-        * ace/Malloc_T.cpp (ACE_Dyanmic_Cached_Allocator):
+        * ace/Malloc_T.cpp (ACE_Dynamic_Cached_Allocator):
           Reverted this change:
           Tue May  8 07:51:55 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
           It broke Hash_Map_Manager_Test which checks for a failed allocation
