@@ -11,6 +11,9 @@
 ACE_BUILDDIR = $(top_builddir)/..
 ACE_ROOT = $(top_srcdir)/..
 TAO_BUILDDIR = $(top_builddir)
+TAO_IDL = ACE_ROOT=$(ACE_ROOT) TAO_ROOT=$(TAO_ROOT) $(TAO_BUILDDIR)/TAO_IDL/tao_idl
+TAO_IDL_DEP = $(TAO_BUILDDIR)/TAO_IDL/tao_idl
+TAO_IDLFLAGS = -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf
 TAO_ROOT = $(top_srcdir)
 
 
@@ -38,7 +41,7 @@ CLEANFILES = \
 TestC.cpp TestC.h TestC.inl TestS.cpp TestS.h TestS.inl: Test-stamp
 
 Test-stamp: $(srcdir)/Test.idl $(ACE_ROOT)/bin/tao_idl
-	$(ACE_ROOT)/bin/tao_idl -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) $(srcdir)/Test.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/Test.idl
 	@touch "$@"
 
 noinst_PROGRAMS = server

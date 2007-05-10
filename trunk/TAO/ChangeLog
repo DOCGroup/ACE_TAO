@@ -1,3 +1,9 @@
+Thu May 10 17:40:58 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tests/IORManipulation/filter/Makefile.am:
+
+          Another attempt at fixing the idl processing rules.
+
 Wed May  9 19:19:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/AnyTypeCode/String_TypeCode.cpp:
