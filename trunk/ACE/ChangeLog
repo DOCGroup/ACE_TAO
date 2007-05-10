@@ -1,3 +1,8 @@
+Thu May 10 15:20:52 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * ace/ace_wchar.h: Add #include "ace/config-macros.h" so the proper
+          setting of ACE_LACKS_PRAGMA_ONCE is known before it's needed.
+
 Thu May 10 15:17:55 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Reactor/Dgram/CODgram.cpp:

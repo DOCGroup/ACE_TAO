@@ -2,8 +2,8 @@
 //
 // $Id$
 
-#include "ace/ace_wchar.h"
 #include "ace/config-macros.h"
+#include "ace/ace_wchar.h"
 
 ACE_RCSID(ace, ace_wchar, "$Id$")
 
