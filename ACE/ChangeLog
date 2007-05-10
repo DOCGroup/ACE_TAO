@@ -1,3 +1,11 @@
+Thu May 10 16:17:55 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_hpux_aCC.GNU:
+          Disable W3390 with HP aCC 06.13
+
+        * include/makeinclude/platform_rtems.x_g++.GNU:
+          When HOST_ROOT is set then set the dependent variables
+
 Thu May 10 15:20:52 UTC 2007  Steve Huston  <shuston@riverace.com>
 
         * ace/ace_wchar.h: Add #include "ace/config-macros.h" so the proper
