@@ -109,6 +109,13 @@ ifeq (05,$(CXXMAJORVERS))
   CCFLAGS += +W1016,1031
 endif
 
+ifeq (06,$(CXXMAJORVERS))
+  ifeq (13,$(CXXMINORVERS))
+    # Warnings dllexport/dllimport conflict with "x" (declared at line y); dllexport assumed
+    CCFLAGS += +W3390
+  endif
+endif
+
 CPPFLAGS        += $(THR_DEFS) -D_HPUX_SOURCE -DHPUX_VERS=$(HPUX_VERS) -DACE_LACKS_PRAGMA_ONCE
 CCFLAGS         += $(CC_THR_DEFS)
 
