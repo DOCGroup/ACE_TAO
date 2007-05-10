@@ -1,3 +1,9 @@
+Thu May 10 15:17:55 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Reactor/Dgram/CODgram.cpp:
+        * examples/Reactor/Dgram/Dgram.cpp:
+          Fixed compile errors with WinCE
+
 Wed May  9 18:59:26 UTC 2007  James H. Hill  <hillj@isis.vanderbilt.edu>
 
         * docs/ace_guidelines.vsmacros:

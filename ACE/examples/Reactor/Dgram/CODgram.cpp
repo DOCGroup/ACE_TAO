@@ -215,7 +215,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                   port2));
 
       ACE_Process_Options options;
-      options.command_line ("%s %d %s %d %c",
+      options.command_line (ACE_TEXT("%s %d %s %d %c"),
                             argv[0],
                             port1,
                             remotehost,
