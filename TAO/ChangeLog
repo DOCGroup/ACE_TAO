@@ -1,5 +1,10 @@
 Fri May 11 14:32:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
+        * examples/PluggableUDP/DIOP/README:
+          Small updates to reflect current location of DIOP
+
+Fri May 11 14:32:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
         * interop-tests/wchar/client.cpp:
         * interop-tests/wchar/server.cpp:
           Layout changes
