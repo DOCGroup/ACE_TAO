@@ -30,14 +30,7 @@ Notes on the DIOP implementation:
   TAO Connector.  It installs a connection handler on the first
   invocation on a remote CORBA object.
 
-DIOP Installation (this will be simplified when DIOP is integrated in the 
-$TAO_ROOT/tao/Strategies/ directory):
-
-- Compile TAO/examples/PluggableUDP/DIOP to create the DIOP library.
-
-- Uncomment the following line in TAO/tao/corbafwd.h:
-
-  #define TAO_TAG_DIOP_PROFILE    0x54414f04U /* UDP */
+DIOP Installation 
 
 - The application using DIOP should have a svc.conf file with the
   following entry:
@@ -85,7 +78,7 @@ Disclaimer:
     Even if it would be less reliable you can manage it by using
     one-way request operations and one-way response operations in
     combination with application level timeouts.
-  
+
   - TCP is inappropriate due to its sluggish on sudden disconnections,
     e.g., it must be possible to "plug & play" CPU cards without
     impacting any ORB communicating to a CPU.  This is the main reason
