@@ -2267,6 +2267,22 @@ Reactor_Registration_Test_LDADD = \
   libTest_Output.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
+## Makefile.Reactor_Remove_Resume_Test.am
+
+noinst_PROGRAMS += Reactor_Remove_Resume_Test
+
+Reactor_Remove_Resume_Test_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
+
+Reactor_Remove_Resume_Test_SOURCES = \
+  $(ACE_ROOT)/tests/Main.cpp \
+  Reactor_Remove_Resume_Test.cpp
+
+Reactor_Remove_Resume_Test_LDADD = \
+  libTest_Output.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
+
 ## Makefile.Reactor_Timer_Test.am
 
 if !BUILD_ACE_FOR_TAO

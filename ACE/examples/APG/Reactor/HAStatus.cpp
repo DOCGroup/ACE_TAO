@@ -194,7 +194,7 @@ ClientService::handle_output (ACE_HANDLE)
 {
   ACE_Message_Block *mb;
   ACE_Time_Value nowait (ACE_OS::gettimeofday ());
-  while (0 == this->output_queue_.dequeue_head
+  while (0 <= this->output_queue_.dequeue_head
                                     (mb, &nowait))
     {
       ssize_t send_cnt =
