@@ -26,7 +26,7 @@ ACE_RCSID (tests,
 
 #if defined (ACE_HAS_THREADS)
 
-# define TRACE(X) ACE_Trace ____ (ACE_LIB_TEXT (X), __LINE__, ACE_LIB_TEXT (__FILE__))
+# define TEST_TRACE(X) ACE_Trace ____ (ACE_LIB_TEXT (X), __LINE__, ACE_LIB_TEXT (__FILE__))
 
 bool g_handler_deleted = false;
 // use semaphore for synchronization
@@ -39,7 +39,7 @@ public:
   typedef ACE_Svc_Handler<ACE_SOCK_STREAM,ACE_NULL_SYNCH> super;
   My_Svc_Handler()
   {
-    TRACE ("My_Svc_Handler:My_Svc_Handler");
+    TEST_TRACE ("My_Svc_Handler:My_Svc_Handler");
     g_handler_deleted = false;
     reference_counting_policy().value(
       Reference_Counting_Policy::ENABLED);
@@ -47,20 +47,20 @@ public:
 
   ~My_Svc_Handler()
   {
-    TRACE ("My_Svc_Handler::~My_Svc_Handler");
+    TEST_TRACE ("My_Svc_Handler::~My_Svc_Handler");
     g_handler_deleted = true;
   }
 
   int open (void* pv)
   {
-    TRACE ("open");
+    TEST_TRACE ("open");
     g_semaphore.release(); // signal open completed
     return super::open (pv);
   }
 
   int handle_close (ACE_HANDLE fd, ACE_Reactor_Mask mask)
   {
-    TRACE ("handle_close");
+    TEST_TRACE ("handle_close");
     super::handle_close (fd, mask);
     if (g_handler_deleted)
     {
@@ -77,7 +77,7 @@ struct My_Task : public ACE_Task_Base
 {
    int svc()
    {
-     TRACE ("My_Task::svc");
+     TEST_TRACE ("My_Task::svc");
      ACE_Reactor::instance()->owner(ACE_OS::thr_self());
      int rv = ACE_Reactor::instance()->run_reactor_event_loop();
      if (rv < 0)
