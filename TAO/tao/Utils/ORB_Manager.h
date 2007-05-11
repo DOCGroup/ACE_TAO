@@ -55,20 +55,10 @@ public:
    *                     If pointer is 0, a new POAManager is created
    *                     internally in the init() call.
    */
-  TAO_ORB_Manager (CORBA::ORB_ptr orb = 0,
-                   PortableServer::POA_ptr poa = 0,
-                   PortableServer::POAManager_ptr poa_manager = 0);
-
-  /**
-   * Initialize the ORB/root POA, using the supplied command line
-   * arguments or the default ORB components.
-   *
-   * @retval -1 Failure
-   * @retval 0 Success
-   */
-  int init (int &argc,
-            char *argv[]
-            );
+  TAO_ORB_Manager (CORBA::ORB_ptr orb = CORBA::ORB::_nil(),
+                   PortableServer::POA_ptr poa = PortableServer::POA::_nil(),
+                   PortableServer::POAManager_ptr poa_manager = 
+                      PortableServer::POAManager::_nil());
 
   /**
    * Initialize the ORB/root POA, using the supplied command line
@@ -79,8 +69,7 @@ public:
    */
   int init (int &argc,
             char *argv[],
-            const char *orb_name
-            );
+            const char *orb_name = 0);
 
 #if !defined (CORBA_E_MICRO)
   /**
@@ -94,8 +83,7 @@ public:
   int init_child_poa (int &argc,
                       char *argv[],
                       const char *poa_name,
-                      const char *orb_name = 0
-                      );
+                      const char *orb_name = 0);
 #endif /* CORBA_E_MICRO */
 
   /**
@@ -131,16 +119,14 @@ public:
    *         successful.  Caller of this method is responsible for
    *         memory deallocation of the string.
    */
-  char *activate (PortableServer::Servant servant
-                  );
+  char *activate (PortableServer::Servant servant);
 
   /** Deactivate object in RootPOA.
    *
    *  @param id  A string representation of the Object ID
    *             of the servant to deactivate in the POA
    */
-  void deactivate (const char *id
-                   );
+  void deactivate (const char *id);
 
 #if !defined (CORBA_E_MICRO)
   /**
@@ -158,8 +144,7 @@ public:
    *           memory deallocation of the string.
    */
   char *activate_under_child_poa (const char *object_name,
-                                  PortableServer::Servant servant
-                                  );
+                                  PortableServer::Servant servant);
 
   /**
    * Deactivate object in child POA.
@@ -167,8 +152,7 @@ public:
    * @param id  string representation of the object ID, which represents
    *            the object to deactivate in the POA
    */
-  void deactivate_under_child_poa (const char *id
-                                   );
+  void deactivate_under_child_poa (const char *id);
 #endif /* CORBA_E_MICRO */
 
   /**
@@ -178,8 +162,7 @@ public:
    * @retval -1 Failure
    * @retval 0 Success
    */
-  int run (ACE_Time_Value &tv
-           );
+  int run (ACE_Time_Value &tv);
 
   /**
    * Run the ORB event loop.
