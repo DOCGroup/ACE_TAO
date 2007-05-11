@@ -83,16 +83,14 @@ namespace TAO
     IOP::TaggedComponent_var tp;
     try
       {
-        tp =
-          ri->get_effective_component (IOP::TAG_FT_GROUP);
+        tp = ri->get_effective_component (IOP::TAG_FT_GROUP);
       }
     catch (const CORBA::Exception&)
       {
         return;
       }
 
-    this->group_version_context (ri,
-                                 tp);
+    this->group_version_context (ri, tp);
 
     this->request_service_context (ri);
   }
@@ -384,7 +382,7 @@ namespace TAO
           {
             ACE_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("TAO_FT (%P|%t) - Using default value")
-			ACE_TEXT ("of 1.5 seconds\n")));
+                        ACE_TEXT ("of 1.5 seconds\n")));
           }
         t = 15 * 1000000;
       }

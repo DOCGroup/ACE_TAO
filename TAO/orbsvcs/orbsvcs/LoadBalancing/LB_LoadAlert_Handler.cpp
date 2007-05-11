@@ -34,8 +34,7 @@ TAO_LB_LoadAlert_Handler::disable_alert (void)
 }
 
 void
-TAO_LB_LoadAlert_Handler::disable_alert_excep (
-    ::Messaging::ExceptionHolder *)
+TAO_LB_LoadAlert_Handler::disable_alert_excep (::Messaging::ExceptionHolder *)
 {
   if (TAO_debug_level > 0)
     ACE_ERROR ((LM_ERROR,

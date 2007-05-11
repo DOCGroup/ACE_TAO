@@ -648,6 +648,7 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
       }
 #else
   ACE_UNUSED_ARG (use_round_trip_timeout);
+  ACE_UNUSED_ARG (round_trip_timeout);
 #endif /* TAO_HAS_CORBA_MESSAGING */
     }
   catch (const CORBA::Exception& ex)

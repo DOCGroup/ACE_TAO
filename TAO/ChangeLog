@@ -1,3 +1,30 @@
+Fri May 11 14:26:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Naming/Naming_Server.cpp:
+          Fixed argument not used warning when messaging is disabled
+
+        * orbsvcs/orbsvcs/LoadBalancing/LB_LoadAlert_Handler.cpp:
+        * orbsvcs/orbsvcs/LoadBalancing/LB_ClientRequestInterceptor.cpp:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_ClientRequest_Interceptor.cpp:
+          Layout change
+
+        * orbsvcs/orbsvcs/LoadBalancing/LB_LeastLoaded.cpp:
+          Initialise pointer with 0
+
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Current.cpp:
+          bool and layout changes
+
+        * orbsvcs/tests/HTIOP/AMI/Test_Output.cpp:
+        * orbsvcs/tests/HTIOP/BiDirectional/Test_Output.cpp:
+        * orbsvcs/tests/HTIOP/Hello/Test_Output.cpp:
+          Removed check for psos
+
+Fri May 11 14:16:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_typecode/enum_typecode.cpp:
+        * TAO_IDL/be/be_visitor_typecode/struct_typecode.cpp:
+          Removed not needed includes
+
 Fri May 11 14:15:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/GIOP_Message_Generator_Parser_12.h:
