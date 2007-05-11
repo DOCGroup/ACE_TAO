@@ -1,3 +1,8 @@
+Fri May 11 20:37:07 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * docs/ACE-configuration.txt: Removed this file. The information it
+          contained has migrated to ACE-INSTALL.html.
+
 Fri May 11 19:16:55 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Global_Macros.h:
