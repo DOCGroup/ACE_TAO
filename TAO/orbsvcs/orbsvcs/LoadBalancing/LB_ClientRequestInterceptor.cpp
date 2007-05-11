@@ -64,8 +64,7 @@ TAO_LB_ClientRequestInterceptor::send_request (
   */
 
   const CORBA::Boolean replace = 0;
-  ri->add_request_service_context (service_context,
-                                   replace);
+  ri->add_request_service_context (service_context, replace);
 }
 
 void
