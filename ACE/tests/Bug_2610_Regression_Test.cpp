@@ -27,7 +27,7 @@ ACE_RCSID (tests,
 
 #if defined (ACE_HAS_THREADS)
 
-# define TRACE(X) ACE_Trace ____ (ACE_LIB_TEXT (X), __LINE__, ACE_LIB_TEXT (__FILE__))
+# define TEST_TRACE(X) ACE_Trace ____ (ACE_LIB_TEXT (X), __LINE__, ACE_LIB_TEXT (__FILE__))
 
 int g_svc_handlers_leaked = 0;
 // use semaphore for synchronization
@@ -40,7 +40,7 @@ public:
   typedef ACE_Svc_Handler<ACE_SOCK_STREAM,ACE_NULL_SYNCH> super;
   My_Svc_Handler()
   {
-    TRACE ("My_Svc_Handler:My_Svc_Handler");
+    TEST_TRACE ("My_Svc_Handler:My_Svc_Handler");
     ++g_svc_handlers_leaked;
     reference_counting_policy().value(
       Reference_Counting_Policy::ENABLED);
@@ -48,13 +48,13 @@ public:
 
   ~My_Svc_Handler()
   {
-    TRACE ("My_Svc_Handler::~My_Svc_Handler");
+    TEST_TRACE ("My_Svc_Handler::~My_Svc_Handler");
     --g_svc_handlers_leaked;
   }
 
   int handle_close (ACE_HANDLE /*fd*/, ACE_Reactor_Mask /*mask*/)
   {
-    TRACE ("handle_close");
+    TEST_TRACE ("handle_close");
     g_semaphore.release();
     return 0;
   }
@@ -71,7 +71,7 @@ public:
 protected:
   int accept_svc_handler (My_Svc_Handler *svc_handler)
   {
-    TRACE ("accept_svc_handler");
+    TEST_TRACE ("accept_svc_handler");
     int rv = super::accept_svc_handler(svc_handler);
     if (g_acceptor_accept_fails)
       {
@@ -82,7 +82,7 @@ protected:
   }
   int activate_svc_handler (My_Svc_Handler* /*svc_handler*/)
   {
-    TRACE ("My_Acceptor::activate_svc_handler");
+    TEST_TRACE ("My_Acceptor::activate_svc_handler");
     g_semaphore.release();
     return -1;
   }
@@ -95,7 +95,7 @@ public:
 protected:
   int activate_svc_handler (My_Svc_Handler* /*svc_handler*/)
   {
-    TRACE ("My_Connector::activate_svc_handler");
+    TEST_TRACE ("My_Connector::activate_svc_handler");
     g_semaphore.release();
     return -1;
   }
@@ -105,7 +105,7 @@ struct My_Task : public ACE_Task_Base
 {
    int svc()
    {
-     TRACE ("My_Task::svc");
+     TEST_TRACE ("My_Task::svc");
      ACE_Reactor::instance()->owner(ACE_OS::thr_self());
      int rv = ACE_Reactor::instance()->run_reactor_event_loop();
      if (rv < 0)
