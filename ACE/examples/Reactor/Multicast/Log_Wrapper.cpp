@@ -7,6 +7,7 @@
 #include "ace/OS_NS_sys_utsname.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_netdb.h"
+#include "ace/OS_NS_stdio.h"
 
 ACE_RCSID(Multicast, Log_Wrapper, "$Id$")
 
@@ -47,7 +48,7 @@ Log_Wrapper::open (const int port, const char *mcast_addr)
   server_ = ACE_INET_Addr (port, mcast_addr);
 
   if (logger_.subscribe (server_) == -1)
-      perror("can't subscribe to multicast group"), exit(1);
+      ACE_OS::perror("can't subscribe to multicast group"), exit(1);
 
   // success.
   return 0;
