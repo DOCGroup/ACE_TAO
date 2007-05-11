@@ -9,16 +9,33 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 require POSIX;
 require File::Path;
 
+use Cwd;
+use Env qw(ACE_ROOT TAO_ROOT CIAO_ROOT DDS_ROOT);
+
 # Configuration and default values
+
+if (!defined $TAO_ROOT) {
+    $TAO_ROOT = "$ACE_ROOT/TAO";
+}
+if (!defined $CIAO_ROOT) {
+    $CIAO_ROOT = "$TAO_ROOT/CIAO";
+}
 
 $is_release = 0;
 $exclude_ace = 0;
-$exclude_tao = 0;
-$exclude_ciao = 0;
+$exclude_tao = !-r "$TAO_ROOT/VERSION";
+$exclude_ciao = !-r "$CIAO_ROOT/VERSION";
 $verbose = 0;
 $perl_path = '/usr/bin/perl';
-$dot_path = '/usr/local/bin';
 $html_output_dir = '.';
+
+$dds = 0;
+$dds_path = Cwd::abs_path($DDS_ROOT);
+$cwd_path = Cwd::abs_path(getcwd());
+if ($dds_path eq $cwd_path) {
+    $dds = $exclude_ace = $exclude_tao = $exclude_ciao = 1;
+}
+
 @ACE_DOCS = ('ace',
              'ace_man',
              'ace_rmcast',
@@ -61,16 +78,21 @@ $html_output_dir = '.';
 # Modify defaults using the command line arguments
 &parse_args ();
 
-open(CONFIG_H, ">ace/config.h")
-  || die "Cannot create config file\n";
-print CONFIG_H "#include \"ace/config-doxygen.h\"\n";
-close (CONFIG_H);
+$wrote_configh = 0;
+if (!-r "$ACE_ROOT/ace/config.h") {
+    open(CONFIG_H, ">$ACE_ROOT/ace/config.h")
+        || die "Cannot create config file\n";
+    print CONFIG_H "#include \"ace/config-doxygen.h\"\n";
+    close(CONFIG_H);
+    $wrote_configh = 1;
+}
 
-&generate_doxy_files ('ACE',          'VERSION', @ACE_DOCS) if (!$exclude_ace);
-&generate_doxy_files ('TAO',      'TAO/VERSION', @TAO_DOCS) if (!$exclude_tao);
-&generate_doxy_files ('CIAO','TAO/CIAO/VERSION', @CIAO_DOCS) if (!$exclude_ciao);
+&generate_doxy_files ('ACE',  "$ACE_ROOT/VERSION", @ACE_DOCS) if (!$exclude_ace);
+&generate_doxy_files ('TAO',  "$TAO_ROOT/VERSION", @TAO_DOCS) if (!$exclude_tao);
+&generate_doxy_files ('CIAO',"$CIAO_ROOT/VERSION", @CIAO_DOCS) if (!$exclude_ciao);
+&generate_doxy_files ('DDS',  "$DDS_ROOT/VERSION", ('dds')) if $dds;
 
-unlink "ace/config.h";
+unlink "$ACE_ROOT/ace/config.h" if $wrote_configh;
 
 exit 0;
 
@@ -87,13 +109,12 @@ sub parse_args {
       $exclude_tao = 1;
     } elsif ($ARGV[0] eq "-exclude_ciao") {
       $exclude_ciao = 1;
+    } elsif ($ARGV[0] eq "-include_dds") {
+      $dds = 1;
     } elsif ($ARGV[0] eq "-verbose") {
       $verbose = 1;
     } elsif ($ARGV[0] eq "-perl_path" && $#ARGV >= 1) {
       $perl_path = $ARGV[1];
-      shift;
-    } elsif ($ARGV[0] eq "-dot_path" && $#ARGV >= 1) {
-      $dot_path = $ARGV[1];
       shift;
     } elsif ($ARGV[0] eq "-html_output" && $#ARGV >= 1) {
       $html_output_dir = $ARGV[1];
@@ -141,9 +162,6 @@ sub generate_doxy_files {
       } elsif (/^PERL_PATH /) {
 	print DOXYOUTPUT "PERL_PATH = $perl_path\n";
 	next;
-      } elsif (/^DOT_PATH /) {
-	print DOXYOUTPUT "DOT_PATH = $dot_path\n";
-	next;
       } elsif (/^QUIET / && $verbose) {
 	print DOXYOUTPUT "QUIET = NO\n";
 	next;
@@ -156,12 +174,6 @@ sub generate_doxy_files {
       } elsif (/^VERBATIM_HEADERS/ && $is_release) {
 	print DOXYOUTPUT "VERBATIM_HEADERS = NO\n";
 	next;
-#      } elsif (/^INCLUDE_GRAPH/ && $is_release) {
-#	print DOXYOUTPUT "INCLUDE_GRAPH = NO\n";
-#	next;
-#      } elsif (/^INCLUDED_BY_GRAPH/ && $is_release) {
-#	print DOXYOUTPUT "INCLUDED_BY_GRAPH = NO\n";
-#	next;
       } elsif (/^GENERATE_MAN/ && /= YES/) {
         $generate_man = 1;
       } elsif (/^GENERATE_HTML/ && /= YES/) {
