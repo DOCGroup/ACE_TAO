@@ -1,3 +1,8 @@
+Fri May 11 21:09:18 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * tests/Bug_2912_Regression_Test.cpp: Mask off the RT signals so the
+          test doesn't get immediately killed.
+
 Fri May 11 20:37:07 UTC 2007  Steve Huston  <shuston@riverace.com>
 
         * docs/ACE-configuration.txt: Removed this file. The information it
