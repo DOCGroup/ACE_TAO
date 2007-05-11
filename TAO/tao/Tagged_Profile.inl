@@ -19,7 +19,7 @@ TAO_Tagged_Profile::TAO_Tagged_Profile (TAO_ORB_Core *orb_core)
 ACE_INLINE TAO::ObjectKey &
 TAO_Tagged_Profile::object_key (void)
 {
-  if (this->object_key_extracted_ == 0)
+  if (!this->object_key_extracted_)
     this->object_key_extracted_ = this->extract_object_key (this->profile_);
 
   return this->object_key_;
@@ -31,7 +31,7 @@ TAO_Tagged_Profile::object_key (TAO::ObjectKey &object_key)
   this->object_key_.replace (object_key.length (),
                              object_key.length (),
                              object_key.get_buffer ());
-  this->object_key_extracted_ = 1;
+  this->object_key_extracted_ = true;
 }
 
 ACE_INLINE const TAO::ObjectKey &
