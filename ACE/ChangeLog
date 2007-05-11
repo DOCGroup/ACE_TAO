@@ -1,3 +1,8 @@
+Fri May 11 10:20:00 UTC 2007  Simon Massey  <sma@prismtech.com>
+
+        * ace/config-lynxos.h:
+          ACE_LACKS_PRAGMA_ONCE
+
 Fri May 11 08:22:55 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-vxworks6.2.h:
