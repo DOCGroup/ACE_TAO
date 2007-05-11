@@ -1,3 +1,12 @@
+Fri May 11 17:53:46 UTC 2007  Adam Mitz  <mitza@ociweb.com>
+
+        * bin/generate_doxygen.pl:
+
+          This script will now use $TAO_ROOT and $CIAO_ROOT to locate TAO and
+          CIAO.  Also, DDS support has been added, config.h will only be
+          written if it doesn't exist, and the -dot_path argument is ignored --
+          the graphviz binary 'dot' is assumed to be on the PATH.
+
 Fri May 11 16:12:55 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Reactor/Multicast/Log_Wrapper.cpp:
