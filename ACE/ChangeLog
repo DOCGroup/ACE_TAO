@@ -1,3 +1,12 @@
+Fri May 11 18:35:55 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_stdio.inl:
+        * ace/config-WinCE.h:
+          Introduced ACE_LACKS_PERROR and set that in the wince file. Also
+          refactored several methods that check for ACE_LACKS_FILELOCKS to
+          first check this define, then ACE_WIN32, that way we don't need an
+          explicit check for WinCE
+
 Fri May 11 18:19:08 UTC 2007  Ciju John  <johnc at ociweb dot com>
 
         * bin/tao_orb_tests.lst:
