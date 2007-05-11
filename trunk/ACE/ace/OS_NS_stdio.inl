@@ -124,7 +124,13 @@ ACE_OS::flock_unlock (ACE_OS::ace_flock_t *lock,
                       ACE_OFF_T len)
 {
   ACE_OS_TRACE ("ACE_OS::flock_unlock");
-#if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
+#if defined (ACE_LACKS_FILELOCKS)
+  ACE_UNUSED_ARG (lock);
+  ACE_UNUSED_ARG (whence);
+  ACE_UNUSED_ARG (start);
+  ACE_UNUSED_ARG (len);
+  ACE_NOTSUP_RETURN (-1);
+#elif defined (ACE_WIN32)
   ACE_OS::flock_adjust_params (lock, whence, start, len);
   DWORD low_len = ACE_LOW_PART (len);
   DWORD high_len = ACE_HIGH_PART (len);
@@ -135,12 +141,6 @@ ACE_OS::flock_unlock (ACE_OS::ace_flock_t *lock,
                                     low_len,
                                     high_len),
                       ace_result_), int, -1);
-#elif defined (ACE_LACKS_FILELOCKS)
-  ACE_UNUSED_ARG (lock);
-  ACE_UNUSED_ARG (whence);
-  ACE_UNUSED_ARG (start);
-  ACE_UNUSED_ARG (len);
-  ACE_NOTSUP_RETURN (-1);
 #else
   lock->lock_.l_whence = whence;
   lock->lock_.l_start = start;
@@ -184,7 +184,13 @@ ACE_OS::flock_rdlock (ACE_OS::ace_flock_t *lock,
                       ACE_OFF_T len)
 {
   ACE_OS_TRACE ("ACE_OS::flock_rdlock");
-#if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
+#if defined (ACE_LACKS_FILELOCKS)
+  ACE_UNUSED_ARG (lock);
+  ACE_UNUSED_ARG (whence);
+  ACE_UNUSED_ARG (start);
+  ACE_UNUSED_ARG (len);
+  ACE_NOTSUP_RETURN (-1);
+#elif defined (ACE_WIN32)
   ACE_OS::flock_adjust_params (lock, whence, start, len);
   DWORD low_len = ACE_LOW_PART (len);
   DWORD high_len = ACE_HIGH_PART (len);
@@ -205,12 +211,6 @@ ACE_OS::flock_rdlock (ACE_OS::ace_flock_t *lock,
                                   high_len),
                       ace_result_), int, -1);
 #  endif /* ACE_HAS_WINNT4 && (ACE_HAS_WINNT4 != 0) */
-#elif defined (ACE_LACKS_FILELOCKS)
-  ACE_UNUSED_ARG (lock);
-  ACE_UNUSED_ARG (whence);
-  ACE_UNUSED_ARG (start);
-  ACE_UNUSED_ARG (len);
-  ACE_NOTSUP_RETURN (-1);
 #else
   lock->lock_.l_whence = whence;
   lock->lock_.l_start = start;
@@ -230,7 +230,13 @@ ACE_OS::flock_tryrdlock (ACE_OS::ace_flock_t *lock,
                          ACE_OFF_T len)
 {
   ACE_OS_TRACE ("ACE_OS::ace_flock_tryrdlock");
-#if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
+#if defined (ACE_LACKS_FILELOCKS)
+  ACE_UNUSED_ARG (lock);
+  ACE_UNUSED_ARG (whence);
+  ACE_UNUSED_ARG (start);
+  ACE_UNUSED_ARG (len);
+  ACE_NOTSUP_RETURN (-1);
+#elif defined (ACE_WIN32)
 #  if defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0)
   ACE_OS::flock_adjust_params (lock, whence, start, len);
   DWORD low_len = ACE_LOW_PART (len);
@@ -250,12 +256,6 @@ ACE_OS::flock_tryrdlock (ACE_OS::ace_flock_t *lock,
   ACE_UNUSED_ARG (len);
   ACE_NOTSUP_RETURN (-1);
 #  endif /* ACE_HAS_WINNT4 && (ACE_HAS_WINNT4 != 0) */
-#elif defined (ACE_LACKS_FILELOCKS)
-  ACE_UNUSED_ARG (lock);
-  ACE_UNUSED_ARG (whence);
-  ACE_UNUSED_ARG (start);
-  ACE_UNUSED_ARG (len);
-  ACE_NOTSUP_RETURN (-1);
 #else
   lock->lock_.l_whence = whence;
   lock->lock_.l_start = start;
@@ -282,7 +282,13 @@ ACE_OS::flock_trywrlock (ACE_OS::ace_flock_t *lock,
                          ACE_OFF_T len)
 {
   ACE_OS_TRACE ("ACE_OS::ace_flock_trywrlock");
-#if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
+#if defined (ACE_LACKS_FILELOCKS)
+  ACE_UNUSED_ARG (lock);
+  ACE_UNUSED_ARG (whence);
+  ACE_UNUSED_ARG (start);
+  ACE_UNUSED_ARG (len);
+  ACE_NOTSUP_RETURN (-1);
+#elif defined (ACE_WIN32)
 #  if defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0)
   ACE_OS::flock_adjust_params (lock, whence, start, len);
   DWORD low_len = ACE_LOW_PART (len);
@@ -302,12 +308,6 @@ ACE_OS::flock_trywrlock (ACE_OS::ace_flock_t *lock,
   ACE_UNUSED_ARG (len);
   ACE_NOTSUP_RETURN (-1);
 #  endif /* ACE_HAS_WINNT4 && (ACE_HAS_WINNT4 != 0) */
-#elif defined (ACE_LACKS_FILELOCKS)
-  ACE_UNUSED_ARG (lock);
-  ACE_UNUSED_ARG (whence);
-  ACE_UNUSED_ARG (start);
-  ACE_UNUSED_ARG (len);
-  ACE_NOTSUP_RETURN (-1);
 #else
   lock->lock_.l_whence = whence;
   lock->lock_.l_start = start;
@@ -335,7 +335,13 @@ ACE_OS::flock_wrlock (ACE_OS::ace_flock_t *lock,
                       ACE_OFF_T len)
 {
   ACE_OS_TRACE ("ACE_OS::flock_wrlock");
-#if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
+#if defined (ACE_LACKS_FILELOCKS)
+  ACE_UNUSED_ARG (lock);
+  ACE_UNUSED_ARG (whence);
+  ACE_UNUSED_ARG (start);
+  ACE_UNUSED_ARG (len);
+  ACE_NOTSUP_RETURN (-1);
+#elif defined (ACE_WIN32)
   ACE_OS::flock_adjust_params (lock, whence, start, len);
   DWORD low_len = ACE_LOW_PART (len);
   DWORD high_len = ACE_HIGH_PART (len);
@@ -357,12 +363,6 @@ ACE_OS::flock_wrlock (ACE_OS::ace_flock_t *lock,
                                   high_len),
                       ace_result_), int, -1);
 #  endif /* ACE_HAS_WINNT4 && (ACE_HAS_WINNT4 != 0) */
-#elif defined (ACE_LACKS_FILELOCKS)
-  ACE_UNUSED_ARG (lock);
-  ACE_UNUSED_ARG (whence);
-  ACE_UNUSED_ARG (start);
-  ACE_UNUSED_ARG (len);
-  ACE_NOTSUP_RETURN (-1);
 #else
   lock->lock_.l_whence = whence;
   lock->lock_.l_start = start;
@@ -405,15 +405,7 @@ ACE_OS::cuserid (char *user, size_t maxlen)
       ::remCurIdGet (user, 0);
       return user;
     }
-#elif defined (__QNXNTO__)
-  ACE_UNUSED_ARG (user);
-  ACE_UNUSED_ARG (maxlen);
-  ACE_NOTSUP_RETURN (0);
-#elif defined (ACE_HAS_PHARLAP)
-  ACE_UNUSED_ARG (user);
-  ACE_UNUSED_ARG (maxlen);
-  ACE_NOTSUP_RETURN (0);
-#elif defined (ACE_HAS_WINCE)
+#elif defined (__QNXNTO__) || defined (ACE_HAS_PHARLAP) || defined (ACE_HAS_WINCE)
   ACE_UNUSED_ARG (user);
   ACE_UNUSED_ARG (maxlen);
   ACE_NOTSUP_RETURN (0);
@@ -756,8 +748,7 @@ ACE_INLINE void
 ACE_OS::perror (const char *s)
 {
   ACE_OS_TRACE ("ACE_OS::perror");
-#if defined (ACE_HAS_WINCE)
-  // @@ WINCE: How should this be handled
+#if defined (ACE_LACKS_PERROR)
   ACE_UNUSED_ARG (s);
 #else
   ::perror (s);
@@ -769,8 +760,7 @@ ACE_INLINE void
 ACE_OS::perror (const wchar_t *s)
 {
   ACE_OS_TRACE ("ACE_OS::perror");
-#if defined (ACE_HAS_WINCE)
-  // @@ WINCE: How should this be handled
+#if defined (ACE_LACKS_PERROR)
   ACE_UNUSED_ARG (s);
 #elif defined (ACE_WIN32)
   ::_wperror (s);
