@@ -1,3 +1,8 @@
+Fri May 11 19:16:55 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Global_Macros.h:
+          Removed commented out code
+
 Fri May 11 18:35:55 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_stdio.inl:
