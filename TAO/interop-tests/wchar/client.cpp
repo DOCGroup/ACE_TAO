@@ -212,8 +212,7 @@ run_one_test (interop::WChar_Passer_ptr server,
         return server->wstructseq_to_server(wsList.in(), data_set);
       }
     case NUL_WSTRING_TO_SERVER:
-      return server->wstring_to_server (L"",
-                                        -1);
+      return server->wstring_to_server (L"", -1);
     default:
       break;
     }
