@@ -1,3 +1,13 @@
+Fri May 11 11:36:25 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * tao/Utils/ORB_Manager.h:
+        * tao/Utils/ORB_Manager.cpp:
+
+          Layout Changes.
+          Use PolicyList_Destroyer to destroy Policy object even in exceptional cases.
+          Removed redundant method.
+          Use ::_nil() instead of 0 (NULL pointer).
+
 Thu May 10 17:40:58 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * tests/IORManipulation/filter/Makefile.am:
