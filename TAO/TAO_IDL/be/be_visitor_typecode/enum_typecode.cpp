@@ -15,9 +15,6 @@
 
 #include "utl_scope.h"
 
-#include <string>
-
-
 TAO::be_visitor_enum_typecode::be_visitor_enum_typecode (
   be_visitor_context * ctx)
   : be_visitor_typecode_defn (ctx)
