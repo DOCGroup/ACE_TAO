@@ -11,6 +11,9 @@ PLANNED MAJOR CHANGES "SOMETIME IN THE FUTURE" (i.e., exact beta not known)
 USER VISIBLE CHANGES BETWEEN TAO-1.5.8 and TAO-1.5.9
 ====================================================
 
+. When using AMI collocated in case of exceptions they are deliverd
+  to the reply handler instead of passed back to the caller
+
 USER VISIBLE CHANGES BETWEEN TAO-1.5.7 and TAO-1.5.8
 ====================================================
 
