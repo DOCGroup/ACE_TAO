@@ -59,7 +59,7 @@ Date_Time_Test: !ACE_FOR_TAO
 Dev_Poll_Reactor_Test: !nsk
 Dirent_Test
 Dynamic_Priority_Test
-Enum_Interfaces_Test: !LynxOS
+Enum_Interfaces_Test: !LynxOS !NO_NETWORK
 Env_Value_Test: !WinCE
 FIFO_Test: !ACE_FOR_TAO
 Framework_Component_Test: !STATIC !nsk
@@ -71,7 +71,7 @@ Hash_Map_Bucket_Iterator_Test
 Hash_Map_Manager_Test
 Hash_Multi_Map_Manager_Test
 High_Res_Timer_Test: !ACE_FOR_TAO
-INET_Addr_Test
+INET_Addr_Test: !NO_NETWORK
 IOStream_Test
 Integer_Truncate_Test
 Lazy_Map_Manager_Test
@@ -135,12 +135,12 @@ Recursive_Mutex_Test: !DISABLE_ToFix_LynxOS_PPC !ST
 Refcounted_Auto_Ptr_Test: !DISABLE_ToFix_LynxOS_PPC !ACE_FOR_TAO
 Reference_Counted_Event_Handler_Test
 Reverse_Lock_Test
-Sendfile_Test: !QNX
+Sendfile_Test: !QNX !NO_NETWORK
 Signal_Test
-SOCK_Connector_Test
+SOCK_Connector_Test: !NO_NETWORK
 SOCK_Netlink_Test: !ACE_FOR_TAO
-SOCK_Send_Recv_Test
-SOCK_Test
+SOCK_Send_Recv_Test: !NO_NETWORK
+SOCK_Test: !NO_NETWORK
 SPIPE_Test: !VxWorks !nsk !ACE_FOR_TAO
 SString_Test: !ACE_FOR_TAO
 SV_Shared_Memory_Test: !DISABLE_ToFix_LynxOS_PPC !DISABLE_ToFix_LynxOS_x86 !MSVC !Unicos !VxWorks !RH_7.1 !nsk !ACE_FOR_TAO
@@ -179,7 +179,7 @@ Multicast_Test_IPV6: !NO_MCAST !nsk
 Multihomed_INET_Addr_Test_IPV6: !nsk !ACE_FOR_TAO
 Proactor_Test_IPV6: !nsk !ACE_FOR_TAO !BAD_AIO
 SOCK_Send_Recv_Test_IPV6
-SOCK_Dgram_Test
+SOCK_Dgram_Test: !NO_NETWORK
 SOCK_Dgram_Bcast_Test: !DISABLE_ToFix_LynxOS_PPC !DISABLE_ToFix_LynxOS_x86 !ACE_FOR_TAO
 SOCK_SEQPACK_SCTP_Test: !MSVC !nsk !ACE_FOR_TAO
 SOCK_Test_IPv6: !nsk

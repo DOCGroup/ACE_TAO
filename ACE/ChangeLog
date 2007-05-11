@@ -1,3 +1,9 @@
+Fri May 11 15:06:55 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/run_test.lst:
+          Added !NO_NETWORK to some tests that we know don't work when ACE
+          has been build without network support
+
 Fri May 11 14:45:43 UTC 2007  Steve Huston  <shuston@riverace.com>
 
         * tests/run_test.lst: Disable Bug_2368_Regression_Test. Per agreement
