@@ -82,8 +82,7 @@ TAO_Tagged_Profile::unmarshall_target_address (TAO_InputCDR &cdr)
 }
 
 CORBA::Boolean
-TAO_Tagged_Profile::unmarshall_object_key (
-    TAO_InputCDR &input)
+TAO_Tagged_Profile::unmarshall_object_key (TAO_InputCDR &input)
 {
   this->discriminator_ = TAO_Target_Specification::Key_Addr;
 
@@ -92,11 +91,9 @@ TAO_Tagged_Profile::unmarshall_object_key (
 
 
 CORBA::Boolean
-TAO_Tagged_Profile::unmarshall_object_key_i (
-    TAO_InputCDR &input)
+TAO_Tagged_Profile::unmarshall_object_key_i (TAO_InputCDR &input)
 {
-  CORBA::Boolean hdr_status =
-    (CORBA::Boolean) input.good_bit ();
+  CORBA::Boolean hdr_status = (CORBA::Boolean) input.good_bit ();
 
   CORBA::Long key_length = 0;
   hdr_status = hdr_status && input.read_long (key_length);
@@ -109,7 +106,7 @@ TAO_Tagged_Profile::unmarshall_object_key_i (
                                  0);
       input.skip_bytes (key_length);
 
-      this->object_key_extracted_ = 1;
+      this->object_key_extracted_ = true;
     }
 
   return hdr_status;
@@ -117,8 +114,7 @@ TAO_Tagged_Profile::unmarshall_object_key_i (
 
 
 CORBA::Boolean
-TAO_Tagged_Profile::unmarshall_iop_profile_i (
-    TAO_InputCDR &input)
+TAO_Tagged_Profile::unmarshall_iop_profile_i (TAO_InputCDR &input)
 {
   CORBA::Boolean hdr_status = (CORBA::Boolean) input.good_bit ();
 
@@ -129,8 +125,7 @@ TAO_Tagged_Profile::unmarshall_iop_profile_i (
 }
 
 CORBA::Boolean
-TAO_Tagged_Profile::unmarshall_ref_addr_i (
-    TAO_InputCDR &input)
+TAO_Tagged_Profile::unmarshall_ref_addr_i (TAO_InputCDR &input)
 {
   CORBA::Boolean hdr_status = (CORBA::Boolean) input.good_bit ();
 
