@@ -1,3 +1,13 @@
+Fri May 11 21:18:45 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * examples/APG/Reactor/HAStatus.cpp (handle_output): Do the 'while'
+          loop as long as dequeue() returns >= 0, not == 0. Thanks to
+          Jules d'Entremont for reporting this.
+
+        * THANKS: Added Jules d'Entremont.
+
+        * tests/Makefile.am: Added Reactor_Remove_Resume_Test.
+
 Fri May 11 21:49:01 UTC 2007  Ossama Othman  <ossama_othman at symantec dot com>
 
         * ace/TP_Reactor.cpp (dispatch_i):
