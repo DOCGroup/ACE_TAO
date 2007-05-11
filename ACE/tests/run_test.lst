@@ -49,7 +49,7 @@ Cached_Accept_Conn_Test: !VxWorks !ACE_FOR_TAO !LabVIEW_RT
 Cached_Allocator_Test: !ACE_FOR_TAO
 Cached_Conn_Test: !VxWorks !ACE_FOR_TAO !LabVIEW_RT
 Capabilities_Test: !DISABLE_ToFix_LynxOS_PPC !DISABLE_ToFix_LynxOS_x86 !ACE_FOR_TAO
-Codecs_Test: !DISABLE_ToFix_LynxOS_PPC !DISABLE_ToFix_LynxOS_x86 !ACE_FOR_TAO
+Codecs_Test: !NO_CODECS !DISABLE_ToFix_LynxOS_PPC !DISABLE_ToFix_LynxOS_x86 !ACE_FOR_TAO
 Collection_Test
 Config_Test: !LynxOS !VxWorks !ACE_FOR_TAO
 Conn_Test: !DISABLE_ToFix_LynxOS_PPC !DISABLE_ToFix_LynxOS_x86 !ACE_FOR_TAO
@@ -98,7 +98,7 @@ Message_Queue_Test: !ACE_FOR_TAO
 Message_Queue_Test_Ex: !ACE_FOR_TAO
 Multicast_Test: !ST !NO_MCAST !nsk !LynxOS
 Multihomed_INET_Addr_Test: !ACE_FOR_TAO
-Naming_Test: !LynxOS !Unicos !VxWorks !nsk !ACE_FOR_TAO !PHARLAP
+Naming_Test: !NO_OTHER !LynxOS !Unicos !VxWorks !nsk !ACE_FOR_TAO !PHARLAP
 Network_Adapters_Test: !DISABLE_ToFix_LynxOS_PPC !DISABLE_ToFix_LynxOS_x86
 New_Fail_Test: ALL !DISABLED
 NonBlocking_Conn_Test
@@ -156,8 +156,8 @@ Task_Test: !DISABLE_ToFix_LynxOS_PPC
 Task_Ex_Test: !DISABLE_ToFix_LynxOS_PPC
 Thread_Manager_Test: !DISABLE_ToFix_LynxOS_PPC !Unicos
 Thread_Mutex_Test: !DISABLE_ToFix_LynxOS_PPC
-Thread_Pool_Reactor_Resume_Test: !DISABLE_ToFix_LynxOS_PPC !ST
-Thread_Pool_Reactor_Test: !DISABLE_ToFix_LynxOS_PPC
+Thread_Pool_Reactor_Resume_Test: !NO_OTHER !DISABLE_ToFix_LynxOS_PPC !ST
+Thread_Pool_Reactor_Test: !NO_OTHER !DISABLE_ToFix_LynxOS_PPC
 Thread_Pool_Test: !DISABLE_ToFix_LynxOS_PPC
 Thread_Creation_Threshold_Test
 Time_Service_Test: !STATIC !DISABLED !missing_netsvcs TOKEN !Unicos
@@ -186,4 +186,4 @@ SOCK_Test_IPv6: !nsk
 Process_Strategy_Test: !VxWorks !LynxOS !ACE_FOR_TAO !PHARLAP
 Recursive_Condition_Bug_Test: !DISABLE_ToFix_LynxOS_PPC !ST
 UnloadLibACE: !STATIC !WinCE
-UUIDTest: !ACE_FOR_TAO
+UUIDTest: !NO_UUID !ACE_FOR_TAO
