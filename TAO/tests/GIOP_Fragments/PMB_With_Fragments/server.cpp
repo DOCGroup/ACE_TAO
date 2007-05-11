@@ -70,7 +70,6 @@ main (int argc, char *argv[])
                               policy_list);
       lifespan->destroy ();
 
-
       Payload_Receiver *payload_receiver_impl = 0;
       ACE_NEW_RETURN (payload_receiver_impl,
                       Payload_Receiver (orb.in ()),
