@@ -1,3 +1,12 @@
+Fri May 11 18:19:08 UTC 2007  Ciju John  <johnc at ociweb dot com>
+
+        * bin/tao_orb_tests.lst:
+          Disable test run if messaging not built.
+
+        * tests/run_test.lst:
+          Create a few new flags to more granularily control automated
+          test runs.
+
 Fri May 11 17:53:46 UTC 2007  Adam Mitz  <mitza@ociweb.com>
 
         * bin/generate_doxygen.pl:
