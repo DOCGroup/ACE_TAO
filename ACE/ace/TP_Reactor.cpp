@@ -256,7 +256,7 @@ ACE_TP_Reactor::dispatch_i (ACE_Time_Value *max_wait_time,
       this->state_changed_ = true;
     }
 
-  return 0;
+  return result;
 }
 
 
@@ -619,17 +619,30 @@ ACE_TP_Reactor::post_process_socket_event (ACE_EH_Dispatch_Info &dispatch_info,
       if (!guard.is_owner ())
         return result;
 
-      if (status < 0)
-        {
-          result =
-            this->remove_handler_i (dispatch_info.handle_, dispatch_info.mask_);
-        }
+      // A different event handler may have been registered during the
+      // upcall if the handle was closed and then reopened, for
+      // example.  Make sure we're removing and/or resuming the event
+      // handler used during the upcall.
+      ACE_Event_Handler const * const eh =
+        this->handler_rep_.find (dispatch_info.handle_);
 
-      // Resume handler if required.
-      if (dispatch_info.event_handler_ != this->notify_handler_ &&
-          dispatch_info.resume_flag_ ==
-            ACE_Event_Handler::ACE_REACTOR_RESUMES_HANDLER)
-        this->resume_i (dispatch_info.handle_);
+      // Only remove or resume the event handler used during the
+      // upcall.
+      if (eh == dispatch_info.event_handler_)
+        {      
+          if (status < 0)
+            {
+              result =
+                this->remove_handler_i (dispatch_info.handle_,
+                                        dispatch_info.mask_);
+            }
+
+          // Resume handler if required.
+          if (dispatch_info.event_handler_ != this->notify_handler_ &&
+              dispatch_info.resume_flag_ ==
+              ACE_Event_Handler::ACE_REACTOR_RESUMES_HANDLER)
+            this->resume_i (dispatch_info.handle_);
+        }
     }
 
   // Call remove_reference() if needed.

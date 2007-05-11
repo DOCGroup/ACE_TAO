@@ -1,3 +1,30 @@
+Fri May 11 21:49:01 UTC 2007  Ossama Othman  <ossama_othman at symantec dot com>
+
+        * ace/TP_Reactor.cpp (dispatch_i):
+
+          Return the number of event handlers dispatched (typically 1).
+          Previously zero was returned regardless of whether or not
+          socket/IO event handlers were dispatched.
+
+          (post_process_socket_event):
+
+          Only remove or resume the event handler used during the upcall.
+          A different event handler may have been registered during the
+          upcall if the handle was closed and then reopened, for example.
+          Make sure we're removing and/or resuming the event handler
+          used during the upcall.
+
+        * tests/Reactor_Remove_Resume_Test.cpp:
+
+          New test that verifies reactors only remove and/or resume the
+          event handler used during the upcall.  It is generally only
+          relevant for thread pool based reactors.
+
+        * tests/run_test.lst:
+        * tests/tests.mpc:
+
+          Added new Reactor_Remove_Resume_Test.
+
 Fri May 11 21:09:18 UTC 2007  Steve Huston  <shuston@riverace.com>
 
         * tests/Bug_2912_Regression_Test.cpp: Mask off the RT signals so the

@@ -846,6 +846,13 @@ project(Reactor Performance Test) : acetest {
   }
 }
 
+project(Reactor Remove Resume Test) : acetest {
+  exename = Reactor_Remove_Resume_Test
+  Source_Files {
+    Reactor_Remove_Resume_Test.cpp
+  }
+}
+
 project(Reactor Timer Test) : acetest {
   avoids += ace_for_tao
   exename = Reactor_Timer_Test
