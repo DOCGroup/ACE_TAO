@@ -186,6 +186,35 @@ init_ssl (void)
 }
 
 
+// Function to remove signals from the signal mask.
+static int
+disable_signal (int sigmin, int sigmax)
+{
+#ifndef ACE_WIN32
+
+  sigset_t signal_set;
+  if (sigemptyset (&signal_set) == - 1)
+    ACE_ERROR ((LM_ERROR,
+                ACE_TEXT ("Error: (%P|%t):%p\n"),
+                ACE_TEXT ("sigemptyset failed")));
+
+  for (int i = sigmin; i <= sigmax; i++)
+    sigaddset (&signal_set, i);
+
+  //  Put the <signal_set>.
+  if (ACE_OS::pthread_sigmask (SIG_BLOCK, &signal_set, 0) != 0)
+    ACE_ERROR ((LM_ERROR,
+                ACE_TEXT ("Error: (%P|%t):%p\n"),
+                ACE_TEXT ("pthread_sigmask failed")));
+#else
+  ACE_UNUSED_ARG (sigmin);
+  ACE_UNUSED_ARG (sigmax);
+#endif /* ACE_WIN32 */
+
+  return 1;
+}
+
+
 /**
  * Server's ACE_Service_Handler
  */
@@ -1080,6 +1109,9 @@ run_main (int, ACE_TCHAR *[])
 
   // SSL_CTX_set_cipher_list, etc.
   init_ssl ();
+
+  // Keep RT signals on POSIX from killing us.
+  disable_signal (ACE_SIGRTMIN, ACE_SIGRTMAX);
 
   int ret = 0;
   Client_Service_Handler client_handler;
