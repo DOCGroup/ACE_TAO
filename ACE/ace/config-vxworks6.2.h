@@ -17,13 +17,15 @@
 # define ACE_VXWORKS 0x620
 #endif /* ! ACE_VXWORKS */
 
-// Fix for wrong typedef of suseconds_t
-// *and* for including right typedef for pid_t in VxTypes.h (int)
-// before wrong typedef in unistd.h (unsigned short)
-#include <vxWorksCommon.h>
+#if defined __RTP__
+  // Fix wrong typedef in unistd.h (unsigned short)
+  #define _SUSECONDS_T
+  typedef long suseconds_t;
+#endif
 #include <unistd.h>
-#define suseconds_t long
-// END Fix
+
+// Fix for including right typedef for pid_t in VxTypes.h (int)
+#include <vxWorksCommon.h>
 
 #if ! defined (__ACE_INLINE__)
 # define __ACE_INLINE__
@@ -216,6 +218,7 @@
   #define ACE_SIZEOF_WCHAR 2
 #else
   // We are building for kernel mode
+  #define ACE_LACKS_INTPTR_T
   #define ACE_LACKS_SUSECONDS_T
   #define ACE_LACKS_INTTYPES_H
   #define ACE_LACKS_STDINT_H
