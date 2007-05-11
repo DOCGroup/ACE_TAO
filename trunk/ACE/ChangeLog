@@ -1,3 +1,8 @@
+Fri May 11 08:06:55 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_vxworks6.3.GNU:
+          Small improvements
+
 Fri May 11 07:57:55 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_hpux_aCC.GNU:

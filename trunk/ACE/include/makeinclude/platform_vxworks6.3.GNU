@@ -22,7 +22,11 @@ rtti ?= 1
 threads ?= 1
 exceptions ?= 1
 rtp ?= 1
-pthread ?= 1
+ifeq ($(rtp),0)
+  pthread ?= 0
+else
+  pthread ?= 1
+endif
 xerces ?= 0
 aio ?= 0
 
