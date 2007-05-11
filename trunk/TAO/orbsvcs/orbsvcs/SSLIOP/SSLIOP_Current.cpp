@@ -86,7 +86,7 @@ TAO::SSLIOP::Current::get_peer_certificate_chain ()
 CORBA::Boolean
 TAO::SSLIOP::Current::no_context (void)
 {
-  return (this->implementation () == 0 ? 1 : 0);
+  return (this->implementation () == 0 ? true : false);
 }
 
 void
@@ -117,8 +117,7 @@ TAO::SSLIOP::Current::teardown (TAO::SSLIOP::Current_Impl *prev_impl,
 }
 
 TAO::SSLIOP::Current_ptr
-TAO::SSLIOP::Current::_narrow (
-  CORBA::Object_ptr obj)
+TAO::SSLIOP::Current::_narrow (CORBA::Object_ptr obj)
 {
   return  TAO::SSLIOP::Current::_duplicate (
               dynamic_cast<TAO::SSLIOP::Current *> (obj));
