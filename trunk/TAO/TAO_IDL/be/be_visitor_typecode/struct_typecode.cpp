@@ -12,10 +12,6 @@
  */
 //=============================================================================
 
-
-#include <string>
-
-
 TAO::be_visitor_struct_typecode::be_visitor_struct_typecode (
   be_visitor_context * ctx)
   : be_visitor_typecode_defn (ctx)
@@ -72,7 +68,6 @@ TAO::be_visitor_struct_typecode::visit_exception (be_exception * node)
 
   // No need to check for recursion since exceptions are never
   // recursive.
-
   static bool const is_exception = true;
   return this->visit (node, is_exception);
 }
