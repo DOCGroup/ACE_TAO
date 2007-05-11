@@ -1,3 +1,9 @@
+Fri May 11 14:32:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * interop-tests/wchar/client.cpp:
+        * interop-tests/wchar/server.cpp:
+          Layout changes
+
 Fri May 11 14:26:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Naming/Naming_Server.cpp:
