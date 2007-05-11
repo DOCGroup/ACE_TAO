@@ -1,3 +1,8 @@
+Fri May 11 14:07:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Tagged_Profile.{h,cpp,inl}:
+          Doxygen fixes, bool changes and layout changes
+
 Fri May 11 11:36:25 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * tao/Utils/ORB_Manager.h:
