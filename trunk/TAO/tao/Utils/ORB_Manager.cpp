@@ -11,10 +11,12 @@
 // ============================================================================
 
 #include "tao/Utils/ORB_Manager.h"
+#include "tao/Utils/PolicyList_Destroyer.h"
 
 #include "tao/PortableServer/POAManagerC.h"
 #include "tao/PortableServer/IdAssignmentPolicyC.h"
 #include "tao/PortableServer/LifespanPolicyC.h"
+
 
 #include "tao/ORBInitializer_Registry.h"
 
@@ -33,17 +35,8 @@ TAO_ORB_Manager::TAO_ORB_Manager (CORBA::ORB_ptr orb,
                                   PortableServer::POAManager_ptr poa_manager)
   : orb_ (CORBA::ORB::_duplicate(orb)),
     poa_ (PortableServer::POA::_duplicate(poa)),
-	poa_manager_ (PortableServer::POAManager::_duplicate(poa_manager))
+	  poa_manager_ (PortableServer::POAManager::_duplicate(poa_manager))
 {
-}
-
-int
-TAO_ORB_Manager::init (int &argc,
-                       char **argv)
-{
-  return this->init (argc,
-                     argv,
-                     0);
 }
 
 int
@@ -103,7 +96,7 @@ TAO_ORB_Manager::init_child_poa (int& argc,
 
   // Create the default policies - user-supplied ID, and persistent
   // objects.
-  CORBA::PolicyList policies (2);
+  TAO::Utils::PolicyList_Destroyer policies (2);
   policies.length (2);
 
   // Id Assignment policy
@@ -121,18 +114,6 @@ TAO_ORB_Manager::init_child_poa (int& argc,
     this->poa_->create_POA (poa_name,
                             this->poa_manager_.in (),
                             policies);
-
-  // Warning!  If create_POA fails, then the policies won't be
-  // destroyed and there will be hell to pay in memory leaks!
-
-  // Creation of the new POAs over, so destroy the Policy_ptr's.
-  for (CORBA::ULong i = 0;
-       i < policies.length ();
-       ++i)
-    {
-      CORBA::Policy_ptr policy = policies[i];
-      policy->destroy ();
-    }
 
   return 0;
 }
@@ -197,11 +178,10 @@ TAO_ORB_Manager::activate_under_child_poa (const char *object_name,
   CORBA::Object_var obj =
     this->child_poa_->id_to_reference (id.in ());
 
-  char * str =
+  CORBA::String_var str =
     this->orb_->object_to_string (obj.in ());
 
-
-  return str;
+  return str._retn();
 }
 
 void
@@ -234,11 +214,14 @@ TAO_ORB_Manager::fini (void)
 {
   this->poa_->destroy (1, 1);
 
-  this->poa_ = 0;
+  this->child_poa_   = PortableServer::POA::_nil();
+  this->poa_         = PortableServer::POA::_nil();
+  this->poa_manager_ = PortableServer::POAManager::_nil();
 
   this->orb_->destroy ();
 
-  this->orb_ = 0;
+  this->orb_ = CORBA::ORB::_nil();
+
   return 0;
 }
 
