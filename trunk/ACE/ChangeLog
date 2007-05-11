@@ -1,3 +1,8 @@
+Fri May 11 07:57:55 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_hpux_aCC.GNU:
+          Improved aCC version detection check
+
 Thu May 10 16:17:55 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_hpux_aCC.GNU:

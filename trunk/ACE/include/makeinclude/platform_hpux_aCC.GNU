@@ -29,8 +29,14 @@ CXX             = aCC
 
 # Determine compiler version
 CXXVERS_WORDS := $(subst ., , $(shell $(CXX) -V 2>&1))
-CXXMINORVERS := $(word 8, $(CXXVERS_WORDS))
-CXXMAJORVERS := $(word 7, $(CXXVERS_WORDS))
+CXXINFO := $(word 3, $(CXXVERS_WORDS))
+ifeq (aC++/ANSI, $(CXXINFO))
+  CXXMINORVERS := $(word 8, $(CXXVERS_WORDS))
+  CXXMAJORVERS := $(word 7, $(CXXVERS_WORDS))
+else
+  CXXMINORVERS := $(word 7, $(CXXVERS_WORDS))
+  CXXMAJORVERS := $(word 6, $(CXXVERS_WORDS))
+endif
 
 ifeq (1,$(stdcpplib))
   CCFLAGS += -AA
