@@ -374,7 +374,7 @@ tp_reactor_factory (void)
               ACE_TEXT ("Creating ACE_TP_Reactor.\n")));
 
   return std::auto_ptr<ACE_Reactor_Impl> (new ACE_TP_Reactor);
-};
+}
 
 #if defined (ACE_HAS_EVENT_POLL) || defined (ACE_HAS_DEV_POLL)
 std::auto_ptr<ACE_Reactor_Impl>
@@ -384,7 +384,7 @@ dev_poll_reactor_factory (void)
               ACE_TEXT ("Creating ACE_Dev_Poll_Reactor.\n")));
 
   return std::auto_ptr<ACE_Reactor_Impl> (new ACE_Dev_Poll_Reactor);
-};
+}
 
 #endif  /* ACE_HAS_EVENT_POLL || ACE_HAS_DEV_POLL */
 
