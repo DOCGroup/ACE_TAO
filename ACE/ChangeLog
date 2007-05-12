@@ -1,3 +1,9 @@
+Sat May 12 08:37:01 UTC 2007  Ossama Othman  <ossama_othman at symantec dot com>
+
+        * tests/Reactor_Remove_Resume_Test.cpp (handle_close):
+
+          Fixed unused argument warning.
+
 Fri May 11 21:18:45 UTC 2007  Steve Huston  <shuston@riverace.com>
 
         * examples/APG/Reactor/HAStatus.cpp (handle_output): Do the 'while'
