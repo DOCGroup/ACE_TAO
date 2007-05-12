@@ -227,7 +227,7 @@ Bad_Handler::handle_input (ACE_HANDLE handle)
 }
 
 int
-Bad_Handler::handle_close (ACE_HANDLE handle,
+Bad_Handler::handle_close (ACE_HANDLE,
                            ACE_Reactor_Mask)
 {
   if (this->handle_close_called_)
