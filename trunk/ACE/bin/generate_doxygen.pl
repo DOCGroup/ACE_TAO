@@ -30,10 +30,12 @@ $perl_path = '/usr/bin/perl';
 $html_output_dir = '.';
 
 $dds = 0;
-$dds_path = Cwd::abs_path($DDS_ROOT);
-$cwd_path = Cwd::abs_path(getcwd());
-if ($dds_path eq $cwd_path) {
-    $dds = $exclude_ace = $exclude_tao = $exclude_ciao = 1;
+if (defined $DDS_ROOT && -r "$DDS_ROOT/VERSION") {
+    $dds_path = Cwd::abs_path($DDS_ROOT);
+    $cwd_path = Cwd::abs_path(getcwd());
+    if ($dds_path eq $cwd_path) {
+        $dds = $exclude_ace = $exclude_tao = $exclude_ciao = 1;
+    }
 }
 
 @ACE_DOCS = ('ace',
