@@ -1,3 +1,9 @@
+Sun May 13 11:55:32 UTC 2007  Adam Mitz  <mitza@ociweb.com>
+
+        * bin/generate_doxygen.pl:
+
+          Fixed a logic error in the script when $DDS_ROOT is undefined.
+
 Sun May 13 09:29:55 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/run_test.lst:
