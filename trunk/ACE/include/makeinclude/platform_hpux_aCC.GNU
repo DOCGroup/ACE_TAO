@@ -118,7 +118,7 @@ endif
 ifeq (06,$(CXXMAJORVERS))
   ifeq (13,$(CXXMINORVERS))
     # Warnings dllexport/dllimport conflict with "x" (declared at line y); dllexport assumed
-    CCFLAGS += +W3390
+    CCFLAGS += +W3390,3397
   endif
 endif
 
