@@ -1,7 +1,12 @@
+Sun May 13 09:29:55 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/run_test.lst:
+          Don't run Dirent_Test with VxWorks rtp, it hangs the target
+
 Sat May 12 12:03:44 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * tests/Reactor_Remove_Resume_Test.cpp:
-          
+
           Fixed a compile-time error. Removed an extra ";" from the end of
           function definitions.
 
