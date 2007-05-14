@@ -1,0 +1,20 @@
+// $Id$
+
+This is a simple test for testing the multicast ior parser with format
+mcast://multicast_address:port:nicaddress:ttl
+
+The Client requests for the IOR of a service that is multicasted. 
+The Server helps get this ior with the use of the TAO_IOR_Multicast
+class in the libTAO_Svc_Utils library.
+
+It should test the nic address and ttl parts too of the mcast format.
+
+You can run the test as:
+
+% ./server -a 224.0.1.27:12345 -ORBEndpoint iiop://doc.ece.uci.edu:23456
+
+	The '-a' option is to give the multicast address to which the
+requests to the server should be directed to.
+
+% ./client -ORBInitRef MCASTServer=mcast://224.0.1.27:12345:eth0:2/MCASTServer
+

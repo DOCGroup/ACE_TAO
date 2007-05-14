@@ -1,0 +1,13 @@
+//
+// $Id$
+//
+
+interface Simple_Server
+{
+  long test_method (in long x);
+
+  exception Failure {};
+  long test_raise (in long x) raises (Failure);
+
+  oneway void shutdown ();
+};
