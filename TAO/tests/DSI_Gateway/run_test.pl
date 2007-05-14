@@ -49,14 +49,14 @@ if ($client != 0) {
     $status = 1;
 }
 
-$server = $SV->WaitKill (5);
+$server = $SV->WaitKill (15);
 
 if ($server != 0) {
     print STDERR "ERROR: server returned $server\n";
     $status = 1;
 }
 
-$gateway = $GW->WaitKill (5);
+$gateway = $GW->WaitKill (15);
 
 if ($gateway != 0) {
     print STDERR "ERROR: gateway returned $gateway\n";

@@ -1,3 +1,8 @@
+Mon May 14 13:02:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/DSI_Gateway/run_test.pl:
+          Extended timeouts for slower systems
+
 Mon May 14 11:39:08 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * tests/IORManipulation/filter/Makefile.am:
