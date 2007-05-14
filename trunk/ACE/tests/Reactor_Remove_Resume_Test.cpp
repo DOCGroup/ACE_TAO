@@ -464,7 +464,7 @@ run_main (int, ACE_TCHAR *[])
     {
       tp_reactor_factory
 #if defined (ACE_HAS_EVENT_POLL) || defined (ACE_HAS_DEV_POLL)
-      , dev_poll_factory
+      , dev_poll_reactor_factory
 #endif  /* ACE_HAS_EVENT_POLL || ACE_HAS_DEV_POLL */
     };
 
