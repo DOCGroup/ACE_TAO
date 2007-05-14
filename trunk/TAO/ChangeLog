@@ -1,3 +1,11 @@
+Mon May 14 16:32:59 UTC 2007  Vadym Ridosh <vridosh@prismtech.com>
+
+        * tao/Profile.cpp:
+        * tao/Profile.h:
+          Proper fix for the race condition in
+          TAO_Profile::create_tagged_profile that was discussed
+          in bug#2377.
+
 Mon May 14 13:02:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/DSI_Gateway/run_test.pl:
