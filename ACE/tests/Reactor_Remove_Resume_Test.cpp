@@ -21,6 +21,7 @@
 #include "ace/TP_Reactor.h"
 #include "ace/Dev_Poll_Reactor.h"
 #include "ace/Pipe.h"
+#include "ace/Auto_Ptr.h"
 
 #include <algorithm>
 #include <functional>
@@ -365,25 +366,25 @@ handle_events (ACE_Reactor & reactor,
 
 // ------------------------------------------------------------
 
-typedef std::auto_ptr<ACE_Reactor_Impl> (*reactor_factory_type) (void);
+typedef auto_ptr<ACE_Reactor_Impl> (*reactor_factory_type) (void);
 
-std::auto_ptr<ACE_Reactor_Impl>
+auto_ptr<ACE_Reactor_Impl>
 tp_reactor_factory (void)
 {
   ACE_DEBUG ((LM_INFO,
               ACE_TEXT ("Creating ACE_TP_Reactor.\n")));
 
-  return std::auto_ptr<ACE_Reactor_Impl> (new ACE_TP_Reactor);
+  return auto_ptr<ACE_Reactor_Impl> (new ACE_TP_Reactor);
 }
 
 #if defined (ACE_HAS_EVENT_POLL) || defined (ACE_HAS_DEV_POLL)
-std::auto_ptr<ACE_Reactor_Impl>
+auto_ptr<ACE_Reactor_Impl>
 dev_poll_reactor_factory (void)
 {
   ACE_DEBUG ((LM_INFO,
               ACE_TEXT ("Creating ACE_Dev_Poll_Reactor.\n")));
 
-  return std::auto_ptr<ACE_Reactor_Impl> (new ACE_Dev_Poll_Reactor);
+  return auto_ptr<ACE_Reactor_Impl> (new ACE_Dev_Poll_Reactor);
 }
 
 #endif  /* ACE_HAS_EVENT_POLL || ACE_HAS_DEV_POLL */
@@ -427,7 +428,7 @@ struct Run_Test : public std::unary_function<reactor_factory_type, void>
                         ACE_TEXT ("** Running removal test **\n")));
           }
 
-        std::auto_ptr<ACE_Reactor_Impl> the_factory (factory ());
+        auto_ptr<ACE_Reactor_Impl> the_factory (factory ());
         ACE_Reactor reactor (the_factory.get ());
 
         // In this test, it's only okay to close the Bogus_Handler

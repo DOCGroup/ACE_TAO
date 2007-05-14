@@ -1,3 +1,12 @@
+Mon May 14 03:11:13 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * tests/Reactor_Remove_Resume_Test.cpp:
+
+          Added a missing include "ace/Auto_Ptr.h"
+          ace/Auto_Ptr.h introduces auto_ptr<T> into the global namespace,
+          don't prefix reference to std:: to auto_ptr<T>, that causes
+          build failures on some platforms.
+
 Mon May 14 02:59:28 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * tests/Reactor_Remove_Resume_Test.cpp:
