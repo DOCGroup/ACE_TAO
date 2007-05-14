@@ -40,7 +40,7 @@ CLEANFILES = \
 
 TestC.cpp TestC.h TestC.inl TestS.cpp TestS.h TestS.inl: Test-stamp
 
-Test-stamp: $(srcdir)/Test.idl $(ACE_ROOT)/bin/tao_idl
+Test-stamp: $(srcdir)/Test.idl $(TAO_IDL)
 	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/Test.idl
 	@touch "$@"
 
