@@ -1,5 +1,5 @@
 /**
- * @file  Reactor_Remove_Resume_Test
+ * @file  Reactor_Remove_Resume_Test.cpp
  *
  * $Id$
  *
