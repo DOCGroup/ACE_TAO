@@ -37,13 +37,14 @@ TAO_Profile::TAO_Profile (CORBA::ULong tag,
     , are_policies_parsed_ (false)
     , addressing_mode_ (0)
     , tagged_profile_ (0)
-    , tagged_profile_lock_ ()
     , ref_object_key_ (0)
     , tag_ (tag)
     , orb_core_ (orb_core)
     , forward_to_ (0)
     , refcount_ (this->orb_core_->
                    client_factory ()->create_profile_refcount ())
+    , tagged_profile_lock_ ()
+    , tagged_profile_created_ (false)
 {
   (void) this->orb_core_->object_key_table ().bind (obj_key,
                                                     this->ref_object_key_);
@@ -56,13 +57,14 @@ TAO_Profile::TAO_Profile (CORBA::ULong tag,
     , are_policies_parsed_ (false)
     , addressing_mode_ (0)
     , tagged_profile_ (0)
-    , tagged_profile_lock_ ()
     , ref_object_key_ (0)
     , tag_ (tag)
     , orb_core_ (orb_core)
     , forward_to_ (0)
     , refcount_ (this->orb_core_->
                    client_factory ()->create_profile_refcount ())
+    , tagged_profile_lock_ ()
+    , tagged_profile_created_ (false)
 {
 }
 
@@ -259,7 +261,7 @@ TAO_Profile::decode (TAO_InputCDR& cdr)
 IOP::TaggedProfile *
 TAO_Profile::create_tagged_profile (void)
 {
-  if (this->tagged_profile_ != 0)
+  if (this->tagged_profile_created_)
     return this->tagged_profile_;
 
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
@@ -268,7 +270,7 @@ TAO_Profile::create_tagged_profile (void)
                     this->tagged_profile_);
 
   // .. DCL
-  if (this->tagged_profile_ == 0)
+  if (!this->tagged_profile_created_)
     {
       ACE_NEW_RETURN (this->tagged_profile_,
                       IOP::TaggedProfile,
@@ -310,6 +312,8 @@ TAO_Profile::create_tagged_profile (void)
           buffer += i->length ();
         }
 #endif /* TAO_NO_COPY_OCTET_SEQUENCES == 1 */
+
+      this->tagged_profile_created_ = true;
     }
 
   return this->tagged_profile_;
