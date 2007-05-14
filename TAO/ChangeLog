@@ -1,3 +1,10 @@
+Mon May 14 11:39:08 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tests/IORManipulation/filter/Makefile.am:
+
+          Use $(TAO_IDL) instead of $(ACE_ROOT)/bin/tao_idl for the
+          dependency.
+
 Mon May 14 10:21:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/PortableGroup/UIPMC_Acceptor.cpp:
