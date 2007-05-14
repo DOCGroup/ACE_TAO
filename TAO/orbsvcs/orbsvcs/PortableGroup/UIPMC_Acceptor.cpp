@@ -323,6 +323,8 @@ TAO_UIPMC_Acceptor::parse_options (const char *str)
           ACE_CString name = opt.substring (0, slot);
           ACE_CString value = opt.substring (slot + 1);
 
+          begin = end + 1;
+
           if (name.length () == 0)
             ACE_ERROR_RETURN ((LM_ERROR,
                                ACE_TEXT ("TAO (%P|%t) Zero length UIPMC ")
@@ -343,7 +345,6 @@ TAO_UIPMC_Acceptor::parse_options (const char *str)
                                name.c_str ()),
                               -1);
 
-          begin = end + 1;
         }
       else
         break;  // No other options.

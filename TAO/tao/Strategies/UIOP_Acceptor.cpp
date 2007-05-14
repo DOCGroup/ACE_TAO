@@ -454,6 +454,8 @@ TAO_UIOP_Acceptor::parse_options (const char *str)
           const ACE_CString name (opt.substring (0, slot));
           ACE_CString value = opt.substring (slot + 1);
 
+          begin = end + 1;
+
           if (name.length () == 0)
             ACE_ERROR_RETURN ((LM_ERROR,
                                "TAO (%P|%t) Zero length UIOP "
@@ -472,8 +474,6 @@ TAO_UIOP_Acceptor::parse_options (const char *str)
                                "TAO (%P|%t) Invalid UIOP option: <%s>\n",
                                name.c_str ()),
                               -1);
-
-          begin = end + 1;
         }
       else
         break;  // No other options.
