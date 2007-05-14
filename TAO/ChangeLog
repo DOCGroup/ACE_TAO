@@ -1,3 +1,13 @@
+Mon May 14 10:21:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Acceptor.cpp:
+        * tao/Strategies/COIOP_Acceptor.cpp:
+        * tao/Strategies/DIOP_Acceptor.cpp:
+        * tao/Strategies/SHMIOP_Acceptor.cpp:
+        * tao/Strategies/UIOP_Acceptor.cpp:
+          Fixed unreachable code warnings, fixes bugzilla 2929, thanks
+          to Ossama for delivering the patch
+
 Fri May 11 14:32:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/PluggableUDP/DIOP/README:
