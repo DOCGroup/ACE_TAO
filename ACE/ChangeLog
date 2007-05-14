@@ -1,3 +1,10 @@
+Mon May 14 02:59:28 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * tests/Reactor_Remove_Resume_Test.cpp:
+
+          Fixed another compile-time error. An identifier's name was misspelled,
+          causing a compile-time error in some builds.
+
 Sun May 13 11:55:32 UTC 2007  Adam Mitz  <mitza@ociweb.com>
 
         * bin/generate_doxygen.pl:
