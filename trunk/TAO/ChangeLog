@@ -1,3 +1,14 @@
+Tue May 15 06:28:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Big_Oneways/run_test.pl:
+        * tests/CSD_Strategy_Tests/TP_Test_1/run_test.pl:
+        * tests/DSI_AMH/run_test.pl:
+        * tests/LongUpcalls/run_test.pl:
+        * tests/Multiple/run_test.pl:
+        * tests/ORT/run_test.pl:
+        * tests/Server_Connection_Purging/run_test.pl:
+          Improvements for VxWorks cross platform testing
+
 Mon May 14 16:32:59 UTC 2007  Vadym Ridosh <vridosh@prismtech.com>
 
         * tao/Profile.cpp:

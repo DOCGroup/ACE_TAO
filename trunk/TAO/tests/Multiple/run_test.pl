@@ -19,7 +19,13 @@ $iorfile = "s.ior";
 
 unlink $iorfile;
 
+if (PerlACE::is_vxworks_test()) {
+$SV = new PerlACE::ProcessVX ("server");
+}
+else {
 $SV = new PerlACE::Process ("server");
+}
+
 $CL = new PerlACE::Process ("client");
 
 #
@@ -31,7 +37,7 @@ $SV->Spawn ();
 if (PerlACE::waitforfile_timed ($iorfile,
                         $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: cannot find file <$iorfile>\n";
-    $SV->Kill (); 
+    $SV->Kill ();
     exit 1;
 }
 
@@ -57,7 +63,7 @@ $SV->Spawn ();
 if (PerlACE::waitforfile_timed ($iorfile,
                         $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: cannot find file <$iorfile>\n";
-    $SV->Kill (); 
+    $SV->Kill ();
     exit 1;
 }
 
@@ -83,7 +89,7 @@ $SV->Spawn ();
 if (PerlACE::waitforfile_timed ($iorfile,
                         $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: cannot find file <$iorfile>\n";
-    $SV->Kill (); 
+    $SV->Kill ();
     exit 1;
 }
 

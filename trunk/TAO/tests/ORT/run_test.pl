@@ -24,11 +24,11 @@ print STDERR "\n\n==== Running ORT (Object Reference Template) test\n";
 
 $SV->Spawn ();
 
-if (PerlACE::waitforfile_timed ($iorfile, 7) == -1) {
+if (PerlACE::waitforfile_timed ($iorfile, $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: cannot find file <$iorfile>\n";
     $SV->Kill (); $SV->TimedWait (1);
     exit 1;
-} 
+}
 
 $client = $CL->SpawnWaitKill (300);
 
@@ -37,7 +37,7 @@ if ($client != 0) {
     $status = 1;
 }
 
-$server = $SV->WaitKill (10);
+$server = $SV->WaitKill (15);
 
 if ($server != 0) {
     print STDERR "ERROR: server returned $server\n";
