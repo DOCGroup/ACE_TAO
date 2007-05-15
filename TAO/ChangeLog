@@ -1,3 +1,21 @@
+Tue May 15 07:57:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/BiDirectional/run_test.pl:
+        * tests/Bug_2654_Regression/run_test.pl:
+        * tests/Bug_2734_Regression/run_test.pl:
+        * tests/CallbackTest/run_test.pl:
+        * tests/MT_BiDir/run_test.pl:
+        * tests/Muxed_GIOP_Versions/run_test.pl:
+        * tests/POA/EndpointPolicy/run_test.pl:
+        * tests/Smart_Proxies/run_test.pl:
+        * tests/Stack_Recursion/run_test.pl:
+          Improved for vxworks testing
+
+        * tests/Bug_2356_Regression/Bug_2356_Regression.mpc:
+        * tests/Bug_2356_Regression/client.cpp:
+        * tests/Bug_2356_Regression/server.cpp:
+          Explicitly link in the codeset library
+
 Tue May 15 07:36:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Param_Test/client.h:

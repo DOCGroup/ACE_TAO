@@ -17,6 +17,7 @@
 #include "ace/Task.h"
 
 #include "ami_testS.h"
+#include "tao/Codeset/Codeset.h"
 
 ACE_RCSID (AMI,
            simple_client,

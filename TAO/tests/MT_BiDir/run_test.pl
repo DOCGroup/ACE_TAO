@@ -19,9 +19,9 @@ if (PerlACE::is_vxworks_test()) {
 else {
     $SV = new PerlACE::Process ("server", "-ORBSvcConf server$PerlACE::svcconf_ext -o $iorfile -c 3 -i 100");
 }
-$CL1 = new PerlACE::Process ("client", "-k file://$iorfile");
-$CL2 = new PerlACE::Process ("client", "-k file://$iorfile");
-$CL3 = new PerlACE::Process ("client", "-k file://$iorfile");
+$CL1 = new PerlACE::Process ("client", "-k file://$iorfile -ORBDottedDecimalAddresses 1");
+$CL2 = new PerlACE::Process ("client", "-k file://$iorfile -ORBDottedDecimalAddresses 1");
+$CL3 = new PerlACE::Process ("client", "-k file://$iorfile -ORBDottedDecimalAddresses 1");
 
 $SV->Spawn ();
 

@@ -39,7 +39,12 @@ $serverargs = "-ORBCollocation no -ORBdebuglevel 10 -ORBLogFile $logfile " .
               "-i $serveriterations -n $serverthreads -c $selfabusethreads " .
               "-l $corbaloc_str";
 
-$SV = new PerlACE::Process ("server", $serverargs);
+if (PerlACE::is_vxworks_test()) {
+  $SV = new PerlACE::ProcessVX ("server", $serverargs);
+}
+else {
+  $SV = new PerlACE::Process ("server", $serverargs);
+}
 
 $clientargs = "-ORBdebuglevel 10 -ORBLogFile $logfile -l $corbaloc_str -k file://$iorfile -n $clientthreads -i $clientiterations";
 
