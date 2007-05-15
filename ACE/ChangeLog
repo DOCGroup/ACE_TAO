@@ -1,3 +1,8 @@
+Tue May 15 18:43:55 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_Thread.cpp:
+          VxWorks only supports PTHREAD_SCOPE_SYSTEM
+
 Tue May 15 12:46:18 UTC 2007  Vadym Ridosh <vridosh@prismtech.com>
 
         * bin/tao_other_tests.lst:
@@ -20,12 +25,12 @@ Mon May 14 11:11:32 UTC 2007  Olli Savia  <ops@iki.fi>
                 ACE_LACKS_PRAGMA_ONCE
 
           Setting of ACE_LACKS_PRAGMA_ONCE was already fixed by
-        
+
           Thu May 10 15:20:52 UTC 2007  Steve Huston  <shuston@riverace.com>
 
               * ace/ace_wchar.h: Add #include "ace/config-macros.h" so the proper
                 setting of ACE_LACKS_PRAGMA_ONCE is known before it's needed.
-        
+
 Mon May 14 03:11:13 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * tests/Reactor_Remove_Resume_Test.cpp:
