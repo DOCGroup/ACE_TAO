@@ -8,7 +8,7 @@ project(*idl): taoidldefaults, ami {
   custom_only = 1
 }
 
-project(*Server): taoserver, messaging, ami {
+project(*Server): taoserver, codeset, messaging, ami {
   after += *idl
   Source_Files {
     ami_test_i.cpp
@@ -20,7 +20,7 @@ project(*Server): taoserver, messaging, ami {
   }
 }
 
-project(*Simple Client): taoclient, messaging, portableserver, ami {
+project(*Simple Client): taoclient, codeset, messaging, portableserver, ami {
   after += *idl
   Source_Files {
     client.cpp

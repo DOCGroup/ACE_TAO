@@ -14,6 +14,7 @@
 
 
 #include "ami_test_i.h"
+#include "tao/Codeset/Codeset.h"
 #include "tao/debug.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/Get_Opt.h"

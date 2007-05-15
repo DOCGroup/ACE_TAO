@@ -9,12 +9,13 @@ use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::Run_Test;
 
 $status = 0;
-$iorfile = PerlACE::LocalFile ("test.ior");
+$baseior = "test.ior";
+$iorfile = PerlACE::LocalFile ("$baseior");
 
 unlink $iorfile;
 
 if (PerlACE::is_vxworks_test()) {
-    $SV = new PerlACE::ProcessVX ("server", "-o test.ior");
+    $SV = new PerlACE::ProcessVX ("server", "-o $baseior");
 }
 else {
     $SV = new PerlACE::Process ("server", "-o $iorfile");

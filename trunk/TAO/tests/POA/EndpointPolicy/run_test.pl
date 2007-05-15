@@ -41,7 +41,7 @@ $sharedSV->Spawn ();
 if (PerlACE::waitforfile_timed ($goodiorfile,
                         $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: cannot find file <$goodiorfile>\n";
-    $SV->Kill (); $SV->TimedWait (1);
+    $sharedSV->Kill (); $sharedSV->TimedWait (1);
     exit 1;
 }
 
@@ -59,7 +59,7 @@ if ($client != 0) {
     $status = 1;
 }
 
-$server = $sharedSV->WaitKill (10);
+$server = $sharedSV->WaitKill (15);
 
 if ($server != 0) {
     print STDERR "ERROR: server [single profile per IOR] returned $server\n";
