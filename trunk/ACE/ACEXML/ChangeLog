@@ -1,3 +1,9 @@
+Tue May 15 17:36:23 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * parser/parser/ParserInternals.h:
+          Removed msg_ member, it is not used at all. Thanks to Rajiv K. Shukla
+          <rajiv_shukla at yahoo dot com> for reporting this
+
 Tue Feb 27 21:15:23 UTC 2007  Ossama Othman  <ossama_othman at symantec dot com>
 
         * common/FileCharStream.cpp (open):
