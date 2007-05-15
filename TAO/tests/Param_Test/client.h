@@ -21,6 +21,7 @@
 #define PARAM_TEST_CLIENT_H
 
 #include "tao/DynamicInterface/Request.h"
+#include "tao/Codeset/Codeset.h"
 #include "param_testC.h"
 #include "results.h"
 

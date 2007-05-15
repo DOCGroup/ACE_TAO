@@ -14,6 +14,7 @@
 // ============================================================================
 
 #include "param_test_i.h"
+#include "tao/Codeset/Codeset.h"
 #include "tao/debug.h"
 #include "ace/Get_Opt.h"
 #include "ace/Log_Msg.h"

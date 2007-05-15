@@ -1,3 +1,13 @@
+Tue May 15 07:36:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Param_Test/client.h:
+        * tests/Param_Test/Makefile.am:
+        * tests/Param_Test/Param_Test.mpc:
+        * tests/Param_Test/server.cpp:
+          Use the codeset library, we do experience crashes when doing
+          interoperability tests between linux and vxworks where both
+          are linked statically and then can't load the library on demand
+
 Tue May 15 06:28:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Big_Oneways/run_test.pl:

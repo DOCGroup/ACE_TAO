@@ -9,7 +9,7 @@ project(*idl): taoidldefaults {
   custom_only = 1
 }
 
-project(*Server): taoserver, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
+project(*Server): taoserver, codeset, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
   after  += *idl
   Source_Files {
     param_testS.cpp
@@ -21,8 +21,7 @@ project(*Server): taoserver, avoids_minimum_corba, avoids_corba_e_compact, avoid
   }
 }
 
-project(*Client): taoserver, avoids_minimum_corba, dynamicinterface {
-  avoids += ace_for_tao
+project(*Client): taoserver, codeset, avoids_minimum_corba, avoids_ace_for_tao, dynamicinterface {
   exename = client
   after  += *idl
 
@@ -74,7 +73,7 @@ project(*Client): taoserver, avoids_minimum_corba, dynamicinterface {
   }
 }
 
-project(*Anyop): taoserver, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
+project(*Anyop): taoserver, codeset, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
   exename = anyop
   after  += *idl
 
