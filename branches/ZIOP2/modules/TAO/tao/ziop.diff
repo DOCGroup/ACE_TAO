@@ -963,37 +963,4 @@ Index: Synch_Invocation.cpp
 
          ACE_DEBUG ((LM_DEBUG,
                      "TAO (%P|%t) - Synch_Twoway_Invocation::wait_for_reply, "
-Index: IOP_IOR.pidl
-===================================================================
---- IOP_IOR.pidl	(revision 73868)
-+++ IOP_IOR.pidl	(working copy)
-@@ -107,6 +107,8 @@
-   const ProfileId TAG_UIPMC = 3;
-   const ComponentId TAG_GROUP = 39;
-   const ComponentId TAG_GROUP_IIOP = 40;
-+
-+  const ComponentId TAG_ZIOP_COMPONENT = 1056;
- };
 
- #pragma prefix ""
-Index: TAO_Internal.cpp
-===================================================================
---- TAO_Internal.cpp	(revision 73868)
-+++ TAO_Internal.cpp	(working copy)
-@@ -632,6 +632,16 @@
-         rtscheduler_loader->init (0, 0);
-       }
-
-+    ACE_Service_Object * const ziop_loader =
-+      ACE_Dynamic_Service<ACE_Service_Object>::instance (
-+        pcfg,
-+        "ZIOP_Loader");
-+
-+    if (ziop_loader != 0)
-+      {
-+        ziop_loader->init (0, 0);
-+      }
-+
-   } /* register_additional_services_i */
-
-   int

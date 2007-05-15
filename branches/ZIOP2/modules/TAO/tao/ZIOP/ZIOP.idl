@@ -1,11 +1,8 @@
+module ZIOP
+{
     //
     // IOR Component for ZIOP
     //
-
-    /**
-     * The ZIOP IOR Component Tag Id
-     */
-    const IOP::ComponentId TAG_IONA_ZIOP_COMPONENT = 0x49545F46;
 
     /**
      * The ZIOP IOR Component. Has an CompressorId attribute indicating the

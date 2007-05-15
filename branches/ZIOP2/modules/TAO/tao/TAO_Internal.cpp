@@ -451,7 +451,7 @@ namespace
 #endif /* TAO_PLATFORM_SVC_CONF_FILE_NOTSUP */
 
     // Copy command line parameter to allow conversion
-    ACE_Argv_Type_Converter command_line (argc, argv); 
+    ACE_Argv_Type_Converter command_line (argc, argv);
 
     return pcfg->open (command_line.get_argc (),
                        command_line.get_TCHAR_argv (),
@@ -635,6 +635,16 @@ namespace
     if (rtscheduler_loader != 0)
       {
         rtscheduler_loader->init (0, 0);
+      }
+
+    ACE_Service_Object * const ziop_loader =
+      ACE_Dynamic_Service<ACE_Service_Object>::instance (
+        pcfg,
+        "ZIOP_Loader");
+
+    if (ziop_loader != 0)
+      {
+        ziop_loader->init (0, 0);
       }
   } /* register_additional_services_i */
 

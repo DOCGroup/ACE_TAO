@@ -105,6 +105,8 @@ module IOP
 
   const ServiceId REP_NWPRIORITY = 0x54410005;
 
+  const ComponentId TAG_ZIOP_COMPONENT = 0x54410555;
+
   // The following are defined in 03-01-11
   const ProfileId TAG_UIPMC = 3;
   const ComponentId TAG_GROUP = 39;
