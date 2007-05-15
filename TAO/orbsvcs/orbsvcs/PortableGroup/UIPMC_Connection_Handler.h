@@ -93,6 +93,10 @@ public:
   /// Add ourselves to Cache.
   int add_transport_to_cache (void);
 
+  /// Set Diff-Serv codepoint on outgoing packets.
+  int set_dscp_codepoint (CORBA::Boolean set_network_priority);
+  int set_dscp_codepoint (CORBA::Long dscp_codepoint);
+
   // UIPMC Additions - Begin
   ACE_HANDLE get_handle (void) const;
 
@@ -141,6 +145,14 @@ protected:
   virtual int release_os_resources (void);
   //@}
 
+  // helper function used by the set_dscp_codepoint () methods to
+  // set the TOS field in the IP packets.
+  int set_tos (int tos);
+
+private:
+
+  /// Stores the type of service value.
+  int dscp_codepoint_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
