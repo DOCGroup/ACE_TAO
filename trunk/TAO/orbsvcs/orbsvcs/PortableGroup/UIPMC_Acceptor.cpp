@@ -118,7 +118,56 @@ TAO_UIPMC_Acceptor::open (TAO_ORB_Core *orb_core,
   const char *specified_hostname = 0;
   char tmp_host[MAXHOSTNAMELEN + 1];
 
+#if defined (ACE_HAS_IPV6)
+  // IPv6 numeric address in host string?
+  bool ipv6_in_host = false;
+
+  // Check if this is a (possibly) IPv6 supporting profile containing a
+  // numeric IPv6 address representation.
+  if ((this->version_.major > TAO_MIN_IPV6_IIOP_MAJOR ||
+        this->version_.minor >= TAO_MIN_IPV6_IIOP_MINOR) &&
+      address[0] == '[')
+    {
+      // In this case we have to find the end of the numeric address and
+      // start looking for the port separator from there.
+      const char *cp_pos = ACE_OS::strchr(address, ']');
+      if (cp_pos == 0)
+        {
+          // No valid IPv6 address specified.
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("TAO (%P|%t) - ")
+                             ACE_TEXT ("UIPMC_Acceptor::open, ")
+                             ACE_TEXT ("Invalid IPv6 decimal address specified\n\n")),
+                            -1);
+        }
+      else
+        {
+          if (cp_pos[1] == ':')    // Look for a port
+            port_separator_loc = cp_pos + 1;
+          else
+            port_separator_loc = 0;
+          // Extract out just the host part of the address.
+          const size_t len = cp_pos - (address + 1);
+          ACE_OS::memcpy (tmp_host, address + 1, len);
+          tmp_host[len] = '\0';
+          ipv6_in_host = true; // host string contains full IPv6 numeric address
+        }
+    }
+#endif /* ACE_HAS_IPV6 */
+
   // Both host and port have to be specified.
+#if defined (ACE_HAS_IPV6)
+  if (ipv6_in_host)
+    {
+      u_short port =
+        static_cast<u_short> (ACE_OS::atoi (port_separator_loc + sizeof (':')));
+
+      if (addr.set (port, tmp_host) != 0)
+        return -1;
+    }
+  else
+    {
+#endif /* ACE_HAS_IPV6 */
   if (addr.set (address) != 0)
     return -1;
 
@@ -126,8 +175,25 @@ TAO_UIPMC_Acceptor::open (TAO_ORB_Core *orb_core,
   size_t len = port_separator_loc - address;
   ACE_OS::memcpy (tmp_host, address, len);
   tmp_host[len] = '\0';
+#if defined (ACE_HAS_IPV6)
+    }
+#endif /* ACE_HAS_IPV6 */
 
   specified_hostname = tmp_host;
+
+#if defined (ACE_HAS_IPV6)
+  // Check for violation of ORBConnectIPV6Only option
+  if (this->orb_core_->orb_params ()->connect_ipv6_only () &&
+      addr.is_ipv4_mapped_ipv6 ())
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("TAO (%P|%t) - ")
+                         ACE_TEXT ("UIPMC_Acceptor::open, ")
+                         ACE_TEXT ("non-IPv6 endpoints not allowed when ")
+                         ACE_TEXT ("connect_ipv6_only is set\n\n")),
+                        -1);
+    }
+#endif /* ACE_HAS_IPV6 */
 
   this->endpoint_count_ = 1;  // Only one hostname to store
 

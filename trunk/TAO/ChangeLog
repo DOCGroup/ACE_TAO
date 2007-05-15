@@ -1,3 +1,24 @@
+Tue May 15 11:36:07 UTC 2007  Vadym Ridosh <vridosh@prismtech.com>
+
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Acceptor.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Connection_Handler.h:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Connector.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Connection_Handler.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Endpoint.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Profile.cpp:
+          Implementation of IPv6 and dscp in MIOP. Fix for bug#2925.
+
+        * orbsvcs/tests/Bug_2925_Regression/client.cpp:
+        * orbsvcs/tests/Bug_2925_Regression/svc.conf:
+        * orbsvcs/tests/Bug_2925_Regression/run_test_ipv6.pl:
+        * orbsvcs/tests/Bug_2925_Regression/Hello_Impl.cpp:
+        * orbsvcs/tests/Bug_2925_Regression/server.cpp:
+        * orbsvcs/tests/Bug_2925_Regression/Hello.idl:
+        * orbsvcs/tests/Bug_2925_Regression/Hello_Impl.h:
+        * orbsvcs/tests/Bug_2925_Regression/Bug_2925_Regression.mpc:
+        * orbsvcs/tests/Bug_2925_Regression/run_test.pl:
+          Adding test for bug#2925.
+
 Tue May 15 07:57:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/BiDirectional/run_test.pl:

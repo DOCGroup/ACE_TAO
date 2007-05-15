@@ -376,11 +376,56 @@ TAO_UIPMC_Profile::parse_string_i (const char *string)
         CORBA::COMPLETED_NO);
     }
 
-  for (str_check = string; str_check < pos; str_check++)
+  ACE_CString mcast_addr;
+
+#if defined (ACE_HAS_IPV6)
+  // Check if this is a (possibly) IPv6 supporting profile containing a
+  // decimal IPv6 address representation.
+  if ((this->version ().major > TAO_MIN_IPV6_IIOP_MAJOR ||
+        this->version ().minor >= TAO_MIN_IPV6_IIOP_MINOR) &&
+      string[0] == '[')
     {
-      if (!isdigit (str_check[0]) && str_check[0] != '.')
+      // In this case we have to find the end of the numeric address and
+      // start looking for the port separator from there.
+      pos = ACE_OS::strchr (string, ']');
+      if (pos == 0)
         {
-          // Throw an exception if it's not a proper IPv4 address
+          // No valid IPv6 address specified.
+          if (TAO_debug_level > 0)
+            {
+              ACE_ERROR ((LM_ERROR,
+                          ACE_TEXT ("\nTAO (%P|%t) - UIPMC_Profile: ")
+                          ACE_TEXT ("Invalid IPv6 decimal address specified.\n")));
+            }
+
+          ACE_THROW (CORBA::INV_OBJREF (
+                       CORBA::SystemException::_tao_minor_code (
+                         0,
+                         EINVAL),
+                       CORBA::COMPLETED_NO));
+        }
+      else
+        {
+          ++string;
+          mcast_addr = ACE_CString (string, pos - string);
+          string = pos + 2;
+        }
+    }
+  else
+    {
+#endif /* ACE_HAS_IPV6 */
+  mcast_addr = ACE_CString (string, pos - string);
+  string = pos + 1;
+#if defined (ACE_HAS_IPV6)
+    }
+#endif /* ACE_HAS_IPV6 */
+
+  for (str_check = mcast_addr.c_str (); str_check[0] != '\0'; str_check++)
+    {
+      if (!isdigit (str_check[0]) && !isxdigit (str_check[0]) &&
+          str_check[0] != ':' && str_check[0] != '.')
+        {
+          // Throw an exception if it's not a proper IPv4/IPv6 address
           throw CORBA::INV_OBJREF (
             CORBA::SystemException::_tao_minor_code (
               TAO::VMCID,
@@ -388,9 +433,6 @@ TAO_UIPMC_Profile::parse_string_i (const char *string)
             CORBA::COMPLETED_NO);
         }
     }
-
-  ACE_CString mcast_addr (string, pos - string);
-  string = pos + 1;
 
   // Parse the multicast port number.
 
@@ -499,9 +541,13 @@ TAO_UIPMC_Profile::to_string (void)
                    1 /* `-' character */ +
                    10 /* group reference version */ +
                    1 /* `/' character */ +
-                   15 /* IPv4 address */ +
+                   39 /* IPv4/IPv6 address */ +
                    1 /* colon separator */ +
                    5 /* port number */);
+#if defined (ACE_HAS_IPV6)
+  if (this->endpoint_.object_addr ().get_type () == AF_INET6)
+    buflen += 2; // room for '[' and ']'
+#endif /* ACE_HAS_IPV6 */
 
   static const char digits [] = "0123456789";
 
@@ -524,6 +570,16 @@ TAO_UIPMC_Profile::to_string (void)
                        this->ref_version_);
     }
 
+#if defined (ACE_HAS_IPV6)
+  if (this->endpoint_.object_addr ().get_type () == AF_INET6)
+    {
+      ACE_OS::sprintf (&buf[ACE_OS::strlen (buf)],
+                       "/[%s]:%d",
+                       this->endpoint_.get_host_addr (),
+                       this->endpoint_.port ());
+    }
+  else
+#endif /* ACE_HAS_IPV6 */
   ACE_OS::sprintf (&buf[ACE_OS::strlen (buf)],
                    "/%s:%d",
                    this->endpoint_.get_host_addr (),

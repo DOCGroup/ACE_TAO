@@ -80,9 +80,21 @@ TAO_UIPMC_Endpoint::addr_to_string (char *buffer, size_t length)
     + 5                          // max port
     + sizeof ('\0');
 
+#if defined (ACE_HAS_IPV6)
+  if (this->object_addr_.get_type () == AF_INET6)
+    actual_len += 2; // '[' + ']'
+#endif /* ACE_HAS_IPV6 */
+
   if (length < actual_len)
     return -1;
 
+#if defined (ACE_HAS_IPV6)
+  if (this->object_addr_.get_type () == AF_INET6)
+    ACE_OS::sprintf (buffer, "[%s]:%d",
+                     this->object_addr_.get_host_addr (),
+                     this->port_);
+  else
+#endif /* ACE_HAS_IPV6 */
   ACE_OS::sprintf (buffer, "%s:%d",
                    this->object_addr_.get_host_addr (),
                    this->port_);

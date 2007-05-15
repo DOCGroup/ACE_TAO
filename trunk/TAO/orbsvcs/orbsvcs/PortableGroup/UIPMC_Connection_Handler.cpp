@@ -17,6 +17,7 @@
 #include "tao/Thread_Lane_Resources.h"
 #include "tao/Base_Transport_Property.h"
 #include "tao/Resume_Handle.h"
+#include "tao/Protocols_Hooks.h"
 
 
 ACE_RCSID(PortableGroup,
@@ -30,7 +31,8 @@ TAO_UIPMC_Connection_Handler::TAO_UIPMC_Connection_Handler (ACE_Thread_Manager *
     TAO_Connection_Handler (0),
     udp_socket_ (ACE_sap_any_cast (ACE_INET_Addr &)),
     mcast_socket_ (),
-    using_mcast_ (0)
+    using_mcast_ (0),
+    dscp_codepoint_ (IPDSFIELD_DSCP_DEFAULT << 2)
 {
   // This constructor should *never* get called, it is just here to
   // make the compiler happy: the default implementation of the
@@ -46,7 +48,8 @@ TAO_UIPMC_Connection_Handler::TAO_UIPMC_Connection_Handler (TAO_ORB_Core *orb_co
     TAO_Connection_Handler (orb_core),
     udp_socket_ (ACE_sap_any_cast (ACE_INET_Addr &)),
     mcast_socket_ (),
-    using_mcast_ (0)
+    using_mcast_ (0),
+    dscp_codepoint_ (IPDSFIELD_DSCP_DEFAULT << 2)
 {
   TAO_UIPMC_Transport* specific_transport = 0;
   ACE_NEW(specific_transport,
@@ -284,6 +287,100 @@ TAO_UIPMC_Connection_Handler::add_transport_to_cache (void)
   return this->orb_core ()->lane_resources ()
           .transport_cache ().cache_transport (&prop,
                                                this->transport ());
+}
+
+int
+TAO_UIPMC_Connection_Handler::set_tos (int tos)
+{
+  // Since only client can send data over MIOP
+  // then dscp is only applicable to client socket.
+  if (tos != this->dscp_codepoint_)
+    {
+      int result = 0;
+#if defined (ACE_HAS_IPV6)
+      ACE_INET_Addr local_addr;
+      if (!this->using_mcast_ && this->udp_socket_.get_local_addr (local_addr) == -1)
+        return -1;
+      else if (local_addr.get_type () == AF_INET6)
+# if !defined (IPV6_TCLASS)
+      // IPv6 defines option IPV6_TCLASS for specifying traffic class/priority
+      // but not many implementations yet (very new;-).
+        {
+          if (TAO_debug_level)
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "TAO (%P|%t) - UIPMC_Connection_Handler::"
+                          "set_dscp_codepoint -> IPV6_TCLASS not supported yet\n"));
+            }
+          return 0;
+        }
+# else /* !IPV6_TCLASS */
+        result = this->udp_socket_.set_option (IPPROTO_IPV6,
+                                               IPV6_TCLASS,
+                                               (int *) &tos,
+                                               (int) sizeof (tos));
+      else
+# endif /* IPV6_TCLASS */
+#endif /* ACE_HAS_IPV6 */
+      result = this->udp_socket_.set_option (IPPROTO_IP,
+                                             IP_TOS,
+                                             (int *) &tos,
+                                             (int) sizeof (tos));
+
+      if (TAO_debug_level)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "TAO (%P|%t) - UIPMC_Connection_Handler::"
+                      "set_dscp_codepoint -> dscp: %x; result: %d; %s\n",
+                      tos,
+                      result,
+                      result == -1 ? "try running as superuser" : ""));
+        }
+
+      // On successful setting of TOS field.
+      if (result == 0)
+        this->dscp_codepoint_ = tos;
+
+    }
+
+  return 0;
+}
+
+int
+TAO_UIPMC_Connection_Handler::set_dscp_codepoint (CORBA::Long dscp_codepoint)
+{
+  int tos = IPDSFIELD_DSCP_DEFAULT << 2;
+
+  CORBA::Long codepoint = dscp_codepoint;
+
+  tos = static_cast<int> (codepoint) << 2;
+
+  this->set_tos (tos);
+
+  return 0;
+}
+
+int
+TAO_UIPMC_Connection_Handler::set_dscp_codepoint (CORBA::Boolean set_network_priority)
+{
+  int tos = IPDSFIELD_DSCP_DEFAULT << 2;
+
+  if (set_network_priority)
+    {
+      TAO_Protocols_Hooks *tph =
+        this->orb_core ()->get_protocols_hooks ();
+
+      if (tph != 0 )
+        {
+          CORBA::Long codepoint =
+            tph->get_dscp_codepoint ();
+
+          tos = static_cast<int> (codepoint) << 2;
+          this->set_tos (tos);
+        }
+    }
+
+  return 0;
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

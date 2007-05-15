@@ -64,7 +64,12 @@ TAO_UIPMC_Connector::set_validate_endpoint (TAO_Endpoint *endpoint)
   // Verify that the remote ACE_INET_Addr was initialized properly.
   // Failure can occur if hostname lookup failed when initializing the
   // remote ACE_INET_Addr.
+#if defined (ACE_HAS_IPV6)
+  if (remote_address.get_type () != AF_INET &&
+      remote_address.get_type () != AF_INET6)
+#else /* ACE_HAS_IPV6 */
   if (remote_address.get_type () != AF_INET)
+#endif /* !ACE_HAS_IPV6 */
     {
       if (TAO_debug_level > 0)
         {
@@ -95,6 +100,28 @@ TAO_UIPMC_Connector::make_connection (TAO::Profile_Transport_Resolver *,
   const ACE_INET_Addr &remote_address =
     uipmc_endpoint->object_addr ();
 
+#if defined (ACE_HAS_IPV6) && !defined (ACE_HAS_IPV6_V6ONLY)
+  // Check if we need to invalidate accepted connections
+  // from IPv4 mapped IPv6 addresses
+  if (this->orb_core ()->orb_params ()->connect_ipv6_only () &&
+      remote_address.is_ipv4_mapped_ipv6 ())
+    {
+      if (TAO_debug_level > 0)
+        {
+          ACE_TCHAR remote_as_string[MAXHOSTNAMELEN + 16];
+
+          (void) remote_address.addr_to_string (remote_as_string,
+                                                sizeof remote_as_string);
+
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT("TAO (%P|%t) - UIPMC_Connection_Handler::open, ")
+                      ACE_TEXT("invalid connection to IPv4 mapped IPv6 interface <%s>!\n"),
+                      remote_as_string));
+        }
+      return 0;
+    }
+#endif /* ACE_HAS_IPV6 && ACE_HAS_IPV6_V6ONLY */
+
   TAO_UIPMC_Connection_Handler *svc_handler = 0;
 
   ACE_NEW_RETURN (svc_handler,
@@ -104,6 +131,12 @@ TAO_UIPMC_Connector::make_connection (TAO::Profile_Transport_Resolver *,
   u_short port = 0;
   const ACE_UINT32 ia_any = INADDR_ANY;
   ACE_INET_Addr local_addr(port, ia_any);
+
+#if defined (ACE_HAS_IPV6)
+  if (remote_address.get_type () == AF_INET6)
+    local_addr.set (port,
+                    ACE_IPV6_ANY);
+#endif /* ACE_HAS_IPV6 */
 
   svc_handler->local_addr (local_addr);
   svc_handler->addr (remote_address);
