@@ -1645,7 +1645,7 @@ ACE_OS::sema_init (ACE_sema_t *s,
           return (-1);
     }
 
-  // In the case of processscope semaphores we can already unlink the FIFO now that
+  // In the case of process scope semaphores we can already unlink the FIFO now that
   // we completely set it up (the opened handles will keep it active until we close
   // thos down). This way we're protected against unexpected crashes as far as removal
   // is concerned.
