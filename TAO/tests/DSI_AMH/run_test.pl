@@ -16,7 +16,7 @@ print STDERR "================ DSI+AMH test\n";
 unlink $iorfile;
 
 if (PerlACE::is_vxworks_test()) {
-  $SV = new PerlACE::Process ("server",
+  $SV = new PerlACE::ProcessVX ("server",
                               "-o test.ior");
 }
 else {

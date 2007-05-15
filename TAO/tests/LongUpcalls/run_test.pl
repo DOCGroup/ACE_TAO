@@ -13,8 +13,15 @@ $status = 0;
 $iorfile = PerlACE::LocalFile ("test.ior");
 $svcfile = PerlACE::LocalFile ("svc$PerlACE::svcconf_ext");
 
-$BSV = new PerlACE::Process ("blocking_server",
+if (PerlACE::is_vxworks_test()) {
+$BSV = new PerlACE::ProcessVX ("blocking_server",
 			     "-ORBSvcConf $svcfile -o $iorfile");
+}
+else {
+$BSV = new PerlACE::Process ("blocking_server",
+                 "-ORBSvcConf $svcfile -o $iorfile");
+}
+
 $ASV = new PerlACE::Process ("ami_server",
 			     "-ORBSvcConf $svcfile -o $iorfile");
 $BCL = new PerlACE::Process ("blocking_client",
@@ -28,7 +35,7 @@ unlink $iorfile;
 
 $BSV->Spawn ();
 
-if (PerlACE::waitforfile_timed ($iorfile, 30) == -1) {
+if (PerlACE::waitforfile_timed ($iorfile, $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: cannot find file <$iorfile>\n";
     $BSV->Kill ();
     exit 1;
@@ -53,7 +60,7 @@ print STDERR "==== Server upcall waits for AMI operations on other threads\n";
 unlink $iorfile;
 $ASV->Spawn ();
 
-if (PerlACE::waitforfile_timed ($iorfile, 30) == -1) {
+if (PerlACE::waitforfile_timed ($iorfile, $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: cannot find file <$iorfile>\n";
     $ASV->Kill ();
     exit 1;
@@ -103,7 +110,7 @@ print STDERR "==== AMI Client, Server upcall waits AMI operations\n";
 unlink $iorfile;
 $ASV->Spawn ();
 
-if (PerlACE::waitforfile_timed ($iorfile, 30) == -1) {
+if (PerlACE::waitforfile_timed ($iorfile, $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: cannot find file <$iorfile>\n";
     $ASV->Kill ();
     exit 1;
