@@ -65,14 +65,14 @@ if ($client1 != 0) {
   $status = 1;
 }
 
-$client2 = $CL2->WaitKill (5);
+$client2 = $CL2->WaitKill (15);
 
 if ($client2 != 0) {
   print STDERR "ERROR: client 2 returned $client2\n";
   $status = 1;
 }
 
-$client3 = $CL3->WaitKill (5);
+$client3 = $CL3->WaitKill (15);
 
 if ($client3 != 0) {
   print STDERR "ERROR: client 3 returned $client3\n";

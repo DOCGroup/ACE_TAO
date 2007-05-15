@@ -13,8 +13,18 @@ $orbport = 10000 + PerlACE::uniqueid ();
 unlink $iorfile;
 $status = 0;
 
-$SV = new PerlACE::Process ("server", "-ORBEndpoint iiop://localhost:$orbport");
-$CL = new PerlACE::Process ("client", "-h localhost -p $orbport");
+$endpoint = "-ORBEndpoint iiop://localhost:$orbport";
+$clientarg = "-h localhost -p $orbport";
+if (PerlACE::is_vxworks_test()) {
+$endpoint = "-ORBEndpoint iiop://".$ENV{'ACE_RUN_VX_TGTHOST'}.":$orbport";
+$clientarg = "-h ".$ENV{'ACE_RUN_VX_TGTHOST'}." -p $orbport";
+$SV = new PerlACE::ProcessVX ("server", "$endpoint");
+}
+else {
+$SV = new PerlACE::Process ("server", "$endpoint");
+}
+
+$CL = new PerlACE::Process ("client", "$clientarg");
 
 print STDERR $CL->CommandLine(), "\n" ;
 $SV->Spawn ();
@@ -24,7 +34,7 @@ if (PerlACE::waitforfile_timed ($iorfile,
     print STDERR "ERROR: cannot find file <$iorfile>\n";
     $SV->Kill (); $SV->TimedWait (1);
     exit 1;
-} 
+}
 
 $client = $CL->SpawnWaitKill (300);
 
