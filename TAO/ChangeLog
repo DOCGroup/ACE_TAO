@@ -1,3 +1,8 @@
+Tue May 15 12:46:18 UTC 2007  Vadym Ridosh <vridosh@prismtech.com>
+
+        * orbsvcs/tests/Bug_2377_Regression/run_test_ipv6.pl:
+          Added IPv6 test to MIOP test for bug#2377.
+
 Tue May 15 11:36:07 UTC 2007  Vadym Ridosh <vridosh@prismtech.com>
 
         * orbsvcs/orbsvcs/PortableGroup/UIPMC_Acceptor.cpp:
