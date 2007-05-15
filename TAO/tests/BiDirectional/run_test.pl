@@ -9,23 +9,24 @@ use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::Run_Test;
 
 $status = 0;
-$iorfile = PerlACE::LocalFile ("test.ior");
+$iorbase = "test.ior";
+$iorfile = PerlACE::LocalFile ("$iorbase");
 
 unlink $iorfile;
 
 if (PerlACE::is_vxworks_test()) {
-    $SV = new PerlACE::ProcessVX ("server", "-o test.ior -i 100");
+    $SV = new PerlACE::ProcessVX ("server", "-o $iorbase -i 100");
 }
 else {
     $SV = new PerlACE::Process ("server", "-o $iorfile -i 100");
 }
-$CL = new PerlACE::Process ("client", "-k file://$iorfile");
+$CL = new PerlACE::Process ("client", "-k file://$iorfile -ORBDottedDecimalAddresses 1");
 
 $SV->Spawn ();
 
 if (PerlACE::waitforfile_timed ($iorfile, $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: cannot find file <$iorfile>\n";
-    $SV->Kill (); 
+    $SV->Kill ();
     exit 1;
 }
 
