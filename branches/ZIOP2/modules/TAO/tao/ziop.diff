@@ -487,176 +487,6 @@ Index: GIOP_Message_Generator_Parser_12.h
  };
 
  TAO_END_VERSIONED_NAMESPACE_DECL
-Index: ZIOP/Compression_Manager.h
-===================================================================
---- ZIOP/Compression_Manager.h	(revision 0)
-+++ ZIOP/Compression_Manager.h	(revision 76020)
-@@ -0,0 +1,53 @@
-+#include "tao/ZIOP/ZIOP.h"
-+#include "ace/Synch_Traits.h"
-+
-+namespace TAO
-+{
-+  namespace ZIOP
-+  {
-+      class CompressionManager : public ::ZIOP::CompressionManager
-+      {
-+        virtual void register_factory (
-+            ::ZIOP::CompressorFactory_ptr compressor_factory
-+          )
-+          ACE_THROW_SPEC ((
-+            ::CORBA::SystemException,
-+            ::ZIOP::FactoryAlreadyRegistered
-+          ));
-+
-+        virtual void unregister_factory (
-+            ::ZIOP::CompressorId compressor_id
-+          )
-+          ACE_THROW_SPEC ((
-+            ::CORBA::SystemException,
-+            ::ZIOP::UnknownCompressorId
-+          ));
-+
-+        virtual ::ZIOP::CompressorFactory_ptr get_factory (
-+            ::ZIOP::CompressorId compressor_id
-+          )
-+          ACE_THROW_SPEC ((
-+            ::CORBA::SystemException,
-+            ::ZIOP::UnknownCompressorId
-+          ));
-+
-+        virtual ::ZIOP::Compressor_ptr get_compressor (
-+            ::ZIOP::CompressorId compressor_id,
-+            ::ZIOP::CompressionLevel compression_level
-+          )
-+          ACE_THROW_SPEC ((
-+            ::CORBA::SystemException,
-+            ::ZIOP::UnknownCompressorId
-+          ));
-+
-+        virtual ::ZIOP::CompressorFactorySeq * get_factories (
-+          )
-+          ACE_THROW_SPEC ((
-+            ::CORBA::SystemException
-+          ));
-+
-+        private:
-+          ::ZIOP::CompressorFactorySeq factories_;
-+    };
-+  }
-+}
-
-Property changes on: ZIOP\Compression_Manager.h
-___________________________________________________________________
-Name: svn:keywords
-   + Author Date Id Revision
-Name: svn:eol-style
-   + native
-
-Index: ZIOP/Compressor.h
-===================================================================
---- ZIOP/Compressor.h	(revision 0)
-+++ ZIOP/Compressor.h	(revision 75994)
-@@ -0,0 +1,48 @@
-+#include "tao/ZIOP/ZIOP.h"
-+#include "ace/Synch_Traits.h"
-+
-+namespace TAO
-+{
-+  namespace ZIOP
-+  {
-+    class BaseCompressor : public ::ZIOP::Compressor
-+    {
-+      public:
-+      BaseCompressor (::ZIOP::CompressionLevel compression_level,
-+                      ::ZIOP::CompressorFactory_ptr compressor_factory);
-+
-+      virtual void compress (
-+          const ::CORBA::OctetSeq & source,
-+          ::CORBA::OctetSeq & target
-+        )
-+        ACE_THROW_SPEC ((
-+          ::CORBA::SystemException,
-+          ::ZIOP::CompressionException
-+        )) = 0;
-+
-+      virtual void decompress (
-+          const ::CORBA::OctetSeq & source,
-+          ::CORBA::OctetSeq & target
-+        )
-+        ACE_THROW_SPEC ((
-+          ::CORBA::SystemException,
-+          ::ZIOP::CompressionException
-+        )) = 0;
-+
-+      virtual ::ZIOP::CompressorFactory_ptr compressor_factory (void)
-+        ACE_THROW_SPEC ((
-+          ::CORBA::SystemException
-+        ));
-+
-+      virtual ::ZIOP::CompressionLevel compression_level (void)
-+        ACE_THROW_SPEC ((
-+          ::CORBA::SystemException
-+        ));
-+
-+      private:
-+        ::ZIOP::CompressionLevel compression_level_;
-+        ::ZIOP::CompressorFactory_var compressor_factory_;
-+
-+    };
-+  }
-+}
-
-Property changes on: ZIOP\Compressor.h
-___________________________________________________________________
-Name: svn:keywords
-   + Author Date Id Revision
-Name: svn:eol-style
-   + native
-
-Index: ZIOP/TAO_ZIOP.rc
-===================================================================
---- ZIOP/TAO_ZIOP.rc	(revision 0)
-+++ ZIOP/TAO_ZIOP.rc	(revision 75432)
-@@ -0,0 +1,30 @@
-+#include "..\Version.h"
-+
-+1 VERSIONINFO
-+ FILEVERSION TAO_MAJOR_VERSION,TAO_MINOR_VERSION,TAO_BETA_VERSION,0
-+ PRODUCTVERSION TAO_MAJOR_VERSION,TAO_MINOR_VERSION,TAO_BETA_VERSION,0
-+ FILEFLAGSMASK 0x3fL
-+ FILEFLAGS 0x0L
-+ FILEOS 0x4L
-+ FILETYPE 0x1L
-+ FILESUBTYPE 0x0L
-+BEGIN
-+    BLOCK "StringFileInfo"
-+    BEGIN
-+        BLOCK "040904B0"
-+        BEGIN
-+            VALUE "FileDescription", "ZIOP\0"
-+            VALUE "FileVersion", TAO_VERSION "\0"
-+            VALUE "InternalName", "TAO_ZIOPDLL\0"
-+            VALUE "LegalCopyright", "\0"
-+            VALUE "LegalTrademarks", "\0"
-+            VALUE "OriginalFilename", "TAO_ZIOP.DLL\0"
-+            VALUE "ProductName", "TAO\0"
-+            VALUE "ProductVersion", TAO_VERSION "\0"
-+        END
-+    END
-+    BLOCK "VarFileInfo"
-+    BEGIN
-+        VALUE "Translation", 0x409, 1200
-+    END
-+END
-
-Property changes on: ZIOP\TAO_ZIOP.rc
-___________________________________________________________________
-Name: svn:keywords
-   + Author Date Id Revision
-Name: svn:eol-style
-   + native
-
 Index: ZIOP/ZIOP_Policy_i.cpp
 ===================================================================
 --- ZIOP/ZIOP_Policy_i.cpp	(revision 0)
@@ -848,30 +678,6 @@ Name: svn:keywords
 Name: svn:eol-style
    + native
 
-Index: ZIOP/TAO_ZIOP.pc.in
-===================================================================
---- ZIOP/TAO_ZIOP.pc.in	(revision 0)
-+++ ZIOP/TAO_ZIOP.pc.in	(revision 75432)
-@@ -0,0 +1,11 @@
-+prefix=@prefix@
-+exec_prefix=@exec_prefix@
-+libdir=@libdir@
-+includedir=@includedir@
-+
-+Name: TAO_ZIOP
-+Description: TAO ZIOP Library
-+Requires: TAO_PI, TAO_CodecFactory, TAO_AnyTypeCode, TAO
-+Version: @VERSION@
-+Libs: -L${libdir} -lTAO_ZIOP
-+Cflags: -I${includedir}
-
-Property changes on: ZIOP\TAO_ZIOP.pc.in
-___________________________________________________________________
-Name: svn:keywords
-   + Author Date Id Revision
-Name: svn:eol-style
-   + native
-
 Index: ZIOP/ZIOP_Policy_i.h
 ===================================================================
 --- ZIOP/ZIOP_Policy_i.h	(revision 0)
@@ -1017,156 +823,6 @@ Name: svn:keywords
 Name: svn:eol-style
    + native
 
-Index: ZIOP/zlib/TAO_ZlibCompressor.rc
-===================================================================
---- ZIOP/zlib/TAO_ZlibCompressor.rc	(revision 0)
-+++ ZIOP/zlib/TAO_ZlibCompressor.rc	(revision 0)
-@@ -0,0 +1,30 @@
-+#include "..\Version.h"
-+
-+1 VERSIONINFO
-+ FILEVERSION TAO_MAJOR_VERSION,TAO_MINOR_VERSION,TAO_BETA_VERSION,0
-+ PRODUCTVERSION TAO_MAJOR_VERSION,TAO_MINOR_VERSION,TAO_BETA_VERSION,0
-+ FILEFLAGSMASK 0x3fL
-+ FILEFLAGS 0x0L
-+ FILEOS 0x4L
-+ FILETYPE 0x1L
-+ FILESUBTYPE 0x0L
-+BEGIN
-+    BLOCK "StringFileInfo"
-+    BEGIN
-+        BLOCK "040904B0"
-+        BEGIN
-+            VALUE "FileDescription", "ZIOP\0"
-+            VALUE "FileVersion", TAO_VERSION "\0"
-+            VALUE "InternalName", "TAO_ZIOPDLL\0"
-+            VALUE "LegalCopyright", "\0"
-+            VALUE "LegalTrademarks", "\0"
-+            VALUE "OriginalFilename", "TAO_ZIOP.DLL\0"
-+            VALUE "ProductName", "TAO\0"
-+            VALUE "ProductVersion", TAO_VERSION "\0"
-+        END
-+    END
-+    BLOCK "VarFileInfo"
-+    BEGIN
-+        VALUE "Translation", 0x409, 1200
-+    END
-+END
-Index: ZIOP/zlib/ZlibCompressor.h
-===================================================================
---- ZIOP/zlib/ZlibCompressor.h	(revision 0)
-+++ ZIOP/zlib/ZlibCompressor.h	(revision 0)
-@@ -0,0 +1,33 @@
-+#include "tao/ZIOP/ZIOP.h"
-+#include "tao/ZIOP/zlib/ZlibCompressor_Export.h"
-+
-+namespace TAO
-+{
-+  namespace ZIOP
-+  {
-+    class TAO_ZLIBCOMPRESSOR_Export ZlibCompressor : public BaseCompressor
-+    {
-+      public:
-+      ZlibCompression (::ZIOP::CompressionLevel compression_level,
-+                      ::ZIOP::CompressorFactory_ptr compressor_factory);
-+
-+      virtual void compress (
-+          const ::CORBA::OctetSeq & source,
-+          ::CORBA::OctetSeq & target
-+        )
-+        ACE_THROW_SPEC ((
-+          ::CORBA::SystemException,
-+          ::ZIOP::CompressionException
-+        )) = 0;
-+
-+      virtual void decompress (
-+          const ::CORBA::OctetSeq & source,
-+          ::CORBA::OctetSeq & target
-+        )
-+        ACE_THROW_SPEC ((
-+          ::CORBA::SystemException,
-+          ::ZIOP::CompressionException
-+        )) = 0;
-+    };
-+  }
-+}
-
-Property changes on: ZIOP\zlib\ZlibCompressor.h
-___________________________________________________________________
-Name: svn:keywords
-   + Author Date Id Revision
-Name: svn:eol-style
-   + native
-
-Index: ZIOP/zlib/ZlibCompressor_export.h
-===================================================================
---- ZIOP/zlib/ZlibCompressor_export.h	(revision 0)
-+++ ZIOP/zlib/ZlibCompressor_export.h	(revision 0)
-@@ -0,0 +1,40 @@
-+
-+// -*- C++ -*-
-+// $Id$
-+// Definition for Win32 Export directives.
-+// This file is generated automatically by generate_export_file.pl
-+// ------------------------------
-+#ifndef TAO_ZLIBCOMPRESSOR_EXPORT_H
-+#define TAO_ZLIBCOMPRESSOR_EXPORT_H
-+
-+#include "ace/config-all.h"
-+
-+#if defined (TAO_AS_STATIC_LIBS)
-+#  if !defined (TAO_ZLIBCOMPRESSOR_HAS_DLL)
-+#    define TAO_ZLIBCOMPRESSOR_HAS_DLL 0
-+#  endif /* ! TAO_ZLIBCOMPRESSOR_HAS_DLL */
-+#else
-+#  if !defined (TAO_ZLIBCOMPRESSOR_HAS_DLL)
-+#    define TAO_ZLIBCOMPRESSOR_HAS_DLL 1
-+#  endif /* ! TAO_ZLIBCOMPRESSOR_HAS_DLL */
-+#endif
-+
-+#if defined (TAO_ZLIBCOMPRESSOR_HAS_DLL) && (TAO_ZLIBCOMPRESSOR_HAS_DLL == 1)
-+#  if defined (TAO_ZLIBCOMPRESSOR_BUILD_DLL)
-+#    define TAO_ZLIBCOMPRESSOR_Export ACE_Proper_Export_Flag
-+#    define TAO_ZLIBCOMPRESSOR_SINGLETON_DECLARATION(T) ACE_EXPORT_SINGLETON_DECLARATION (T)
-+#    define TAO_ZLIBCOMPRESSOR_SINGLETON_DECLARE(SINGLETON_TYPE, CLASS, LOCK) ACE_EXPORT_SINGLETON_DECLARE(SINGLETON_TYPE, CLASS, LOCK)
-+#  else /* TAO_ZLIBCOMPRESSOR_BUILD_DLL */
-+#    define TAO_ZLIBCOMPRESSOR_Export ACE_Proper_Import_Flag
-+#    define TAO_ZLIBCOMPRESSOR_SINGLETON_DECLARATION(T) ACE_IMPORT_SINGLETON_DECLARATION (T)
-+#    define TAO_ZLIBCOMPRESSOR_SINGLETON_DECLARE(SINGLETON_TYPE, CLASS, LOCK) ACE_IMPORT_SINGLETON_DECLARE(SINGLETON_TYPE, CLASS, LOCK)
-+#  endif /* TAO_ZLIBCOMPRESSOR_BUILD_DLL */
-+#else /* TAO_ZLIBCOMPRESSOR_HAS_DLL == 1 */
-+#  define TAO_ZLIBCOMPRESSOR_Export
-+#  define TAO_ZLIBCOMPRESSOR_SINGLETON_DECLARATION(T)
-+#  define TAO_ZLIBCOMPRESSOR_SINGLETON_DECLARE(SINGLETON_TYPE, CLASS, LOCK)
-+#endif /* TAO_ZLIBCOMPRESSOR_HAS_DLL == 1 */
-+
-+#endif /* TAO_ZLIBCOMPRESSOR_EXPORT_H */
-+
-+// End of auto generated file.
-
-Property changes on: ZIOP\zlib\ZlibCompressor_export.h
-___________________________________________________________________
-Name: svn:keywords
-   + Author Date Id Revision
-Name: svn:eol-style
-   + native
-
-Index: ZIOP/zlib/TAO_ZlibCompressor.in
-===================================================================
---- ZIOP/zlib/TAO_ZlibCompressor.in	(revision 0)
-+++ ZIOP/zlib/TAO_ZlibCompressor.in	(revision 0)
-@@ -0,0 +1,11 @@
-+prefix=@prefix@
-+exec_prefix=@exec_prefix@
-+libdir=@libdir@
-+includedir=@includedir@
-+
-+Name: TAO_ZIOP
-+Description: TAO Zlib Compression Library
-+Requires: TAO_PI, TAO_CodecFactory, TAO_AnyTypeCode, TAO
-+Version: @VERSION@
-+Libs: -L${libdir} -lTAO_ZIOP
-+Cflags: -I${includedir}
 Index: ZIOP/zlib/ZlibCompressor.cpp
 ===================================================================
 --- ZIOP/zlib/ZlibCompressor.cpp	(revision 0)
@@ -1666,54 +1322,6 @@ Index: ZIOP/ziop_export.h
 --- ZIOP/ziop_export.h	(revision 0)
 +++ ZIOP/ziop_export.h	(revision 75432)
 @@ -0,0 +1,40 @@
-+
-+// -*- C++ -*-
-+// $Id$
-+// Definition for Win32 Export directives.
-+// This file is generated automatically by generate_export_file.pl
-+// ------------------------------
-+#ifndef TAO_ZIOP_EXPORT_H
-+#define TAO_ZIOP_EXPORT_H
-+
-+#include "ace/config-all.h"
-+
-+#if defined (TAO_AS_STATIC_LIBS)
-+#  if !defined (TAO_ZIOP_HAS_DLL)
-+#    define TAO_ZIOP_HAS_DLL 0
-+#  endif /* ! TAO_ZIOP_HAS_DLL */
-+#else
-+#  if !defined (TAO_ZIOP_HAS_DLL)
-+#    define TAO_ZIOP_HAS_DLL 1
-+#  endif /* ! TAO_ZIOP_HAS_DLL */
-+#endif
-+
-+#if defined (TAO_ZIOP_HAS_DLL) && (TAO_ZIOP_HAS_DLL == 1)
-+#  if defined (TAO_ZIOP_BUILD_DLL)
-+#    define TAO_ZIOP_Export ACE_Proper_Export_Flag
-+#    define TAO_ZIOP_SINGLETON_DECLARATION(T) ACE_EXPORT_SINGLETON_DECLARATION (T)
-+#    define TAO_ZIOP_SINGLETON_DECLARE(SINGLETON_TYPE, CLASS, LOCK) ACE_EXPORT_SINGLETON_DECLARE(SINGLETON_TYPE, CLASS, LOCK)
-+#  else /* TAO_ZIOP_BUILD_DLL */
-+#    define TAO_ZIOP_Export ACE_Proper_Import_Flag
-+#    define TAO_ZIOP_SINGLETON_DECLARATION(T) ACE_IMPORT_SINGLETON_DECLARATION (T)
-+#    define TAO_ZIOP_SINGLETON_DECLARE(SINGLETON_TYPE, CLASS, LOCK) ACE_IMPORT_SINGLETON_DECLARE(SINGLETON_TYPE, CLASS, LOCK)
-+#  endif /* TAO_ZIOP_BUILD_DLL */
-+#else /* TAO_ZIOP_HAS_DLL == 1 */
-+#  define TAO_ZIOP_Export
-+#  define TAO_ZIOP_SINGLETON_DECLARATION(T)
-+#  define TAO_ZIOP_SINGLETON_DECLARE(SINGLETON_TYPE, CLASS, LOCK)
-+#endif /* TAO_ZIOP_HAS_DLL == 1 */
-+
-+#endif /* TAO_ZIOP_EXPORT_H */
-+
-+// End of auto generated file.
-
-Property changes on: ZIOP\ziop_export.h
-___________________________________________________________________
-Name: svn:keywords
-   + Author Date Id Revision
-Name: svn:eol-style
-   + native
-
 Index: ZIOP/ZIOP.pidl
 ===================================================================
 --- ZIOP/ZIOP.pidl	(revision 0)
@@ -2435,7 +2043,7 @@ Index: operation_details.h
 @@ -162,6 +162,12 @@
    void ft_retention_id (CORBA::Long request_id);
    CORBA::Long ft_retention_id (void) const;
- 
+
 +  void compressed (CORBA::Boolean compressed);
 +  CORBA::Boolean compressed (void) const;
 +
@@ -2443,10 +2051,10 @@ Index: operation_details.h
 +  CORBA::ULong uncompressed_size_;
 +
  private:
- 
+
    /// Name of the operation being invoked.
 @@ -207,6 +213,9 @@
- 
+
    /// Count of the exceptions that operations can throw.
    CORBA::ULong ex_count_;
 +
@@ -2462,7 +2070,7 @@ Index: Remote_Invocation.cpp
 @@ -149,7 +149,7 @@
      TAO_Protocols_Hooks *tph =
        this->resolver_.stub ()->orb_core ()->get_protocols_hooks ();
- 
+
 -    CORBA::Boolean set_client_network_priority =
 +    CORBA::Boolean const set_client_network_priority =
        tph->set_client_network_priority (this->resolver_.transport ()->tag (),
@@ -2485,15 +2093,15 @@ Index: IIOP_Transport.cpp
 +      )
      {
        this->set_bidir_context_info (opdetails);
- 
+
 Index: GIOP_Message_Generator_Parser_12.cpp
 ===================================================================
 --- GIOP_Message_Generator_Parser_12.cpp	(revision 73868)
 +++ GIOP_Message_Generator_Parser_12.cpp	(working copy)
 @@ -35,7 +35,6 @@
- 
+
    const CORBA::Octet response_flags = opdetails.response_flags ();
- 
+
 -
    // Here are the Octet values for different policies
    // '00000000' for SYNC_NONE
@@ -2501,7 +2109,7 @@ Index: GIOP_Message_Generator_Parser_12.cpp
 @@ -328,6 +327,10 @@
    if (request.orb_core ()->bidir_giop_policy ())
      this->check_bidirectional_context (request);
- 
+
 +  // Check an process if compression contexts are available
 +  if (request.orb_core ()->compression_enabled ())
 +    this->check_compression_context (request);
@@ -2512,15 +2120,15 @@ Index: GIOP_Message_Generator_Parser_12.cpp
 @@ -346,7 +349,7 @@
    // Get the stream .
    TAO_InputCDR &msg = request.incoming_stream ();
- 
+
 -  CORBA::Boolean hdr_status = 1;
 +  CORBA::Boolean hdr_status = true;
- 
+
    // Get the request id.
    CORBA::ULong req_id = 0;
 @@ -554,6 +557,25 @@
  }
- 
+
  int
 +TAO_GIOP_Message_Generator_Parser_12::check_compression_context (
 +    TAO_ServerRequest &request)
@@ -2547,7 +2155,7 @@ Index: GIOP_Message_Generator_Parser_12.cpp
 @@ -574,6 +596,45 @@
    return transport->tear_listen_point_list (cdr);
  }
- 
+
 +int
 +TAO_GIOP_Message_Generator_Parser_12::process_compression_context (
 +	TAO_ServerRequest &request,
@@ -2601,11 +2209,11 @@ Index: GIOP_Message_State.inl
 -  CORBA::ULong len =
 +  CORBA::ULong const len =
      this->message_size_ + TAO_GIOP_MESSAGE_HEADER_LEN;
- 
--  return len; 
+
+-  return len;
 +  return len;
  }
- 
+
  ACE_INLINE CORBA::ULong
 @@ -31,6 +31,7 @@
    this->message_type_ = 0;
@@ -2614,7 +2222,7 @@ Index: GIOP_Message_State.inl
 +  this->compressed_ = 0;
    this->missing_data_ = 0;
  }
- 
+
 Index: Synch_Invocation.cpp
 ===================================================================
 --- Synch_Invocation.cpp	(revision 73868)
@@ -2622,7 +2230,7 @@ Index: Synch_Invocation.cpp
 @@ -23,6 +23,10 @@
  #include "ace/OS_NS_string.h"
  #include "ace/Countdown_Time.h"
- 
+
 +#if !defined (__BORLANDC__)
 +#include "zlib.h"
 +#endif
@@ -2633,7 +2241,7 @@ Index: Synch_Invocation.cpp
 @@ -87,14 +91,50 @@
                                  TAO_Transport::TAO_TWOWAY_REQUEST,
                                  max_wait_time);
- 
+
 -        this->write_header (tspec,
 +        // If the ORB has compression enabled and we do have arguments
 +	//	if (false)
@@ -2675,7 +2283,7 @@ Index: Synch_Invocation.cpp
                              ACE_ENV_ARG_PARAMETER);
 -        ACE_TRY_CHECK;
 +            ACE_TRY_CHECK;
- 
+
 -        this->marshal_data (cdr
 -                            ACE_ENV_ARG_PARAMETER);
 -        ACE_TRY_CHECK;
@@ -2683,13 +2291,13 @@ Index: Synch_Invocation.cpp
 +                                ACE_ENV_ARG_PARAMETER);
 +            ACE_TRY_CHECK;
 +          }
- 
+
          // Register a reply dispatcher for this invocation. Use the
          // preallocated reply dispatcher.
 @@ -280,12 +320,12 @@
       * exception. Success alone is returned through the return value.
       */
- 
+
 -    const int reply_error =
 +    int const reply_error =
        this->resolver_.transport ()->wait_strategy ()->wait (max_wait_time,
@@ -2698,7 +2306,7 @@ Index: Synch_Invocation.cpp
        {
 -        const CORBA::ULong msecs = max_wait_time->msec ();
 +        CORBA::ULong const msecs = max_wait_time->msec ();
- 
+
          ACE_DEBUG ((LM_DEBUG,
                      "TAO (%P|%t) - Synch_Twoway_Invocation::wait_for_reply, "
 Index: ZIOP.mpc
@@ -2706,57 +2314,6 @@ Index: ZIOP.mpc
 --- ZIOP.mpc	(revision 0)
 +++ ZIOP.mpc	(revision 74068)
 @@ -0,0 +1,43 @@
-+//$Id$
-+project : taolib, core, pi, tao_versioning_idl_defaults {
-+  sharedname   = TAO_ZIOP
-+  dynamicflags = TAO_ZIOP_BUILD_DLL
-+
-+  Source_Files {
-+    ZIOP
-+  }
-+
-+  Header_Files {
-+    ZIOP
-+  }
-+
-+  Inline_Files {
-+    ZIOP
-+  }
-+
-+  Template_Files {
-+    ZIOP
-+  }
-+
-+  Resource_Files {
-+    ZIOP
-+  }
-+
-+  PIDL_Files {
-+    ZIOP
-+  }
-+
-+  IDL_Files {
-+    idlflags += -Gp -Gd -Ge 1 -Sci -SS -Sorb -Sa -St \
-+                -Wb,export_macro=TAO_ZIOP_Export \
-+                -Wb,export_include=tao/ZIOP/ziop_export.h \
-+                -Wb,include_guard=TAO_ZIOP_SAFE_INCLUDE \
-+                -Wb,safe_include=tao/ZIOP/ZIOP.h \
-+                -o ZIOP
-+    ZIOP/ZIOP.pidl
-+  }
-+
-+  Pkgconfig_Files {
-+    ZIOP/TAO_ZIOP.pc.in
-+  }
-+}
-
-Property changes on: ZIOP.mpc
-___________________________________________________________________
-Name: svn:keywords
-   + 
-Name: svn:eol-style
-   + native
-
 Index: IOP_IOR.pidl
 ===================================================================
 --- IOP_IOR.pidl	(revision 73868)
@@ -2768,7 +2325,7 @@ Index: IOP_IOR.pidl
 +
 +  const ComponentId TAG_ZIOP_COMPONENT = 1056;
  };
- 
+
  #pragma prefix ""
 Index: TAO_Internal.cpp
 ===================================================================
@@ -2777,7 +2334,7 @@ Index: TAO_Internal.cpp
 @@ -632,6 +632,16 @@
          rtscheduler_loader->init (0, 0);
        }
- 
+
 +    ACE_Service_Object * const ziop_loader =
 +      ACE_Dynamic_Service<ACE_Service_Object>::instance (
 +        pcfg,
@@ -2789,5 +2346,5 @@ Index: TAO_Internal.cpp
 +      }
 +
    } /* register_additional_services_i */
- 
+
    int
