@@ -1,3 +1,9 @@
+Wed May 16 16:26:32 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tests/IORManipulation/filter/Makefile.am:
+
+          Hopefully my last attempt to correct this file.
+
 Wed May 16 09:33:38 UTC 2007  Vadym Ridosh <vridosh@prismtech.com>
 
         * orbsvcs/orbsvcs/PortableGroup/UIPMC_Connector.cpp:
