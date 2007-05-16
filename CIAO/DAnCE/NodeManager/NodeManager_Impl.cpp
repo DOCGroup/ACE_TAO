@@ -594,14 +594,18 @@ CIAO::NodeManager_Impl::~NodeManager_Impl ()
 {
 }
 
+/////////////////////////////////////////////////////////////////////
+
 CIAO::NodeManager_Impl::
 NodeManager_Impl (const char *name,
                   CORBA::ORB_ptr orb,
                   PortableServer::POA_ptr poa,
                   const char * nodeapp_loc,
                   const char * nodeapp_options,
-                  int spawn_delay)
+                  int spawn_delay,
+                  bool is_multi_threaded)
   : NodeManager_Impl_Base (name, orb, poa, nodeapp_loc, nodeapp_options, spawn_delay)
+    , is_multi_threaded_ (is_multi_threaded)
 {}
 
 
@@ -613,7 +617,8 @@ create_node_app_manager (CORBA::ORB_ptr orb,
   CIAO::NodeApplicationManager_Impl_Base *app_mgr = 0;
   ACE_NEW_THROW_EX (app_mgr,
                     CIAO::NodeApplicationManager_Impl (orb,
-                                                       poa),
+                                                       poa,
+                                                       this->is_multi_threaded_),
                     CORBA::NO_MEMORY ());
   return app_mgr;
 }
