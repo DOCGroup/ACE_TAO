@@ -40,9 +40,9 @@ ACE_INET_Addr::addr_to_string (ACE_TCHAR s[],
 
   bool result = false;
   if (ipaddr_format == 0)
-    result = (this->get_host_name (hoststr,MAXHOSTNAMELEN+1) == 0);
+    result = (this->get_host_name (hoststr, MAXHOSTNAMELEN+1) == 0);
   else
-    result = (this->get_host_addr (hoststr,MAXHOSTNAMELEN+1) != 0);
+    result = (this->get_host_addr (hoststr, MAXHOSTNAMELEN+1) != 0);
 
   if (!result)
     return -1;
@@ -52,12 +52,20 @@ ACE_INET_Addr::addr_to_string (ACE_TCHAR s[],
     + 5 // ACE_OS::strlen ("65535"), Assuming the max port number.
     + 1 // sizeof (':'), addr/port sep
     + 1; // sizeof ('\0'), terminating NUL
+#if !defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
+  ACE_TCHAR const *format = ACE_LIB_TEXT("%ls:%d");
+#else
   ACE_TCHAR const *format = ACE_LIB_TEXT("%s:%d");
+#endif /* !ACE_WIN32 && ACE_USES_WCHAR */
 #if defined (ACE_HAS_IPV6)
-  if (ACE_OS::strchr(hoststr,':') != 0)
+  if (ACE_OS::strchr (hoststr, ACE_LIB_TEXT (':')) != 0)
     {
       total_len += 2; // ACE_OS::strlen ("[]") IPv6 addr frames
+#  if !defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
+      format = ACE_LIB_TEXT("[%ls]:%d");
+#  else
       format = ACE_LIB_TEXT("[%s]:%d");
+#  endif /* !ACE_WIN32 && ACE_USES_WCHAR */
     }
 #endif // ACE_HAS_IPV6
 
@@ -65,7 +73,8 @@ ACE_INET_Addr::addr_to_string (ACE_TCHAR s[],
     return -1;
   else
       ACE_OS::sprintf (s, format,
-                       ACE_TEXT_CHAR_TO_TCHAR (hoststr), this->get_port_number ());
+                       ACE_TEXT_CHAR_TO_TCHAR (hoststr),
+                       this->get_port_number ());
   return 0;
 }
 
