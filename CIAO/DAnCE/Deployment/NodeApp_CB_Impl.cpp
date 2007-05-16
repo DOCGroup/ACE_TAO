@@ -5,10 +5,15 @@ CIAO::NodeApplication_Callback_Impl::
 NodeApplication_Callback_Impl  (CORBA::ORB_ptr o,
                                 PortableServer::POA_ptr p,
                                 Deployment::NodeApplicationManager_ptr s,
-                                const Deployment::Properties &properties)
-  : orb_ (CORBA::ORB::_duplicate (o)),
+                                const Deployment::Properties &properties,
+                                ACE_Condition<ACE_SYNCH_MUTEX> &wait,
+                                ACE_SYNCH_MUTEX& mutex)
+  : is_callback_completed_ (false),
+    orb_ (CORBA::ORB::_duplicate (o)),
     poa_ (PortableServer::POA::_duplicate (p)),
-    nam_ (Deployment::NodeApplicationManager::_duplicate (s))
+    nam_ (Deployment::NodeApplicationManager::_duplicate (s)),
+    waitCond_ (wait),
+    mutex_ (mutex)
 {
   try
   {
@@ -42,9 +47,12 @@ CIAO::NodeApplication_Callback_Impl::register_node_application (
     Deployment::NodeApplication_ptr na,
     Deployment::Properties_out properties)
 {
+  this->is_callback_completed_ = true;
   properties = this->properties_._retn ();
 
   this->nodeapp_ = Deployment::NodeApplication::_duplicate (na);
+
+  this->waitCond_.signal ();
   return Deployment::NodeApplicationManager::_duplicate (this->nam_.in ());
 }
 
@@ -59,4 +67,10 @@ CIAO::NodeApplication_Callback_Impl::get_nodeapp_ref (void)
   // Relinquish the ownership of the nodeapplication reference.
   //This method should only be called from the NodeApplicationManager.
   return Deployment::NodeApplication::_duplicate (this->nodeapp_.in ());
+}
+
+bool
+CIAO::NodeApplication_Callback_Impl::is_callback_completed ()
+{
+  return this->is_callback_completed_;
 }

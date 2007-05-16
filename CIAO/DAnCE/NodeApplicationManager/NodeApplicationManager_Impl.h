@@ -29,6 +29,7 @@
 #include "ace/Hash_Map_Manager_T.h"
 #include "ace/OS_NS_sys_wait.h"
 #include "ace/Process_Manager.h"
+#include "ace/Synch.h"
 #include "DAnCE/Deployment/NodeApp_CB_Impl.h"
 #include "DAnCE/Deployment/Deployment_NodeApplicationManagerS.h"
 #include "ciao/CIAO_common.h"
@@ -231,6 +232,10 @@ namespace CIAO
 
     // this is UNIX specific .... not portable
     pid_t process_id_;
+
+    /// For synchronization between multiple threads
+    ACE_Condition<ACE_Thread_Mutex> waitCond_;
+    ACE_Thread_Mutex mutex_;
   };
 
 
@@ -275,7 +280,8 @@ namespace CIAO
   public:
     /// Constructor
     NodeApplicationManager_Impl (CORBA::ORB_ptr o,
-                                 PortableServer::POA_ptr p);
+                                 PortableServer::POA_ptr p,
+                                 bool is_multi_threaded);
 
     virtual PortableServer::ObjectId
     init (const char *nodeapp_location,
@@ -294,6 +300,22 @@ namespace CIAO
     virtual Deployment::NodeApplication_ptr
     create_node_application (const ACE_CString & options);
 
+    /// This method is only applicable when our program is configured as
+    /// singled threaded . Internally it uses a <perform_work> blocking
+    /// call to wait for NA object to call back
+    Deployment::NodeApplication_ptr 
+    single_threaded_wait_for_callback (
+      CIAO::NodeApplication_Callback_Impl* cb_servant,
+      ACE_Time_Value &timeout);
+
+    /// This method is only applicable when our program is configured as
+    /// multiple threaded. Internally it waits on a conditional variable
+    /// that could be modified by the callback servant which runs in 
+    /// another thread
+    Deployment::NodeApplication_ptr
+    multi_threaded_wait_for_callback (
+      CIAO::NodeApplication_Callback_Impl* cb_servant,
+      ACE_Time_Value &timeout);
 
     /**
      * @operation push_component_info
@@ -305,6 +327,11 @@ namespace CIAO
 
     /// The signal handler
     NAM_Handler child_handler_;
+
+  private:
+    /// Whether we run ourselves in multi threaded configuration or not
+    /// By default, we run in single threaded configuration.
+    bool is_multi_threaded_;
   };
 
 

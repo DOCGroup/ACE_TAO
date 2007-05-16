@@ -8,10 +8,10 @@
   <UUID>Hello_Plan_UUID_0001</UUID>
   <!-- Could be ZERO  -->
   <realizes>
-    <label>BasicSP-realizes-cid</label>
+    <label>Hello-realizes-ccd</label>
     <UUID>c0965470-7b83-11d9-9669-0800200c9a66</UUID>
     <specificType><!-- @@ What does here? --></specificType>
-    <supportedType>IDL:BasicSP/EC:1.0</supportedType> 
+    <supportedType>IDL:Hello/Receiver:1.0</supportedType> 
     <port>
       <name>read_message</name>
       <specificType>IDL:Hello/ReadMessage:1.0</specificType>

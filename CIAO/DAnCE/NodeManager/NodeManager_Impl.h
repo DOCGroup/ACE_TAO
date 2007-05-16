@@ -255,7 +255,8 @@ namespace CIAO
                      PortableServer::POA_ptr p,
                      const char * nodeapp_loc,
                      const char * nodeapp_options,
-                     int spawn_delay);
+                     int spawn_delay,
+                     bool is_multi_threaded);
 
   protected:
     /// Since this class is reference counted, making this
@@ -268,6 +269,9 @@ namespace CIAO
     virtual ::CIAO::NodeApplicationManager_Impl_Base *
     create_node_app_manager (CORBA::ORB_ptr orb,
                              PortableServer::POA_ptr poa);
+
+  private:
+    bool is_multi_threaded_;
   };
 
   class NodeApplicationManager_Impl;
