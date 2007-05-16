@@ -111,6 +111,8 @@ ifeq (1,$(fast))
   DCCFLAGS =
   LDFLAGS += -fast
 endif # fast
+# Make sure we resolve all symbols at link time, see bugzilla 2710
+LDFLAGS         += -z now
 
 ifeq (Compilers 4.2,$(findstring Compilers 4.2,$(CC_VERSION)))
   #### CC 4.2, only, supports -features=castop
