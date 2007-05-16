@@ -1,3 +1,39 @@
+Wed May 16 14:35:58 UTC 2007  Gan Deng  <gan.deng@vanderbilt.edu>
+
+        * DAnCE/Deployment/NodeApp_CB_Impl.cpp:
+        * DAnCE/Deployment/NodeApp_CB_Impl.h:
+        
+          Implemented a NA component server callback wait strategy in
+          NAM, which uses conditional variable to signal the NA call
+          back so it can work with multi-threaded configuration, such
+          as thread-per-connection mode. The original implementation
+          uses the main thread to run the ORB event loop, which will
+          not work for multi-threaded environment.
+        
+        * DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.cpp:
+        * DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.h:
+        * DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.inl:
+        
+          Implemented the single_threaded_wait_for_callback() and
+          multi_threaded_wait_for_callback() methods which uses
+          perform_work() and conditional variable technique 
+          respectively.
+        
+        * DAnCE/NodeManager/Node_Manager.cpp:
+        * DAnCE/NodeManager/NodeManager_Impl.cpp:
+        * DAnCE/NodeManager/NodeManager_Impl.h:
+        
+          Modified the Node_Manager command line option so the
+          user can control whether to use single threaded or
+          multi-threaded mode with command line option.
+        
+        * examples/Hello/descriptors/flattened_deploymentplan.cdp:
+        * examples/Hello/descriptors/flattened_deploymentplan_without_ns.cdp:
+
+          Modified the <realizes> tag so the interface of the assembly 
+          corresponds to some concrete ports of the components. Thanks
+          Santos <sanntosn AT lycos.com> for reporting this issue.
+
 Wed May  2 14:09:37 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/BasicSP/BasicSP_exec.h:
