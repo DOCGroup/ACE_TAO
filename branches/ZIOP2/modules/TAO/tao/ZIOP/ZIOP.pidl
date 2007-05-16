@@ -1,3 +1,6 @@
+#include "tao/Policy.pidl"
+#include "tao/Compression/Compression_include.pidl"
+
 module ZIOP
 {
     //
@@ -8,20 +11,20 @@ module ZIOP
      * The ZIOP IOR Component. Has an CompressorId attribute indicating the
      * compression algorithm supported by the server side.
      */
-    local interface CompressionComponent : IT_IOR::Component
-    {
-        readonly attribute CompressorId compressor_id;
-    };
+//    local interface CompressionComponent : IT_IOR::Component
+//    {
+//        readonly attribute CompressorId compressor_id;
+//    };
 
     /**
      * Factory for ZIOP IOR Components
      */
-    local interface CompressionComponentFactory : IT_IOR::ComponentFactory
-    {
-        CompressionComponent get_compression_component(
-            in CompressorId compressor_id
-        );
-    };
+//    local interface CompressionComponentFactory : IT_IOR::ComponentFactory
+//    {
+//        CompressionComponent get_compression_component(
+//            in CompressorId compressor_id
+//        );
+//    };
 
     //
     // ORB Policies for ZIOP
@@ -30,14 +33,12 @@ module ZIOP
     /**
      * Tag Id for CompressionEnablingPolicy
      */
-    const CORBA::PolicyType COMPRESSION_ENABLING_POLICY_ID =
-            IT_PolicyBase::IONA_POLICY_ID + 0x46;
+    const CORBA::PolicyType COMPRESSION_ENABLING_POLICY_ID = 5555;
 
     /**
      * Tag Id for CompressorIdPolicy
      */
-    const CORBA::PolicyType COMPRESSOR_ID_POLICY_ID =
-            IT_PolicyBase::IONA_POLICY_ID + 0x47;
+    const CORBA::PolicyType COMPRESSOR_ID_POLICY_ID = 5556;
 
     /**
      * The ZIOP CompressionEnablingPolicy. Has an boolean attribute indicating
@@ -54,6 +55,6 @@ module ZIOP
      */
     local interface CompressorIdPolicy : CORBA::Policy
     {
-        readonly attribute CompressorId compressor_id;
+        readonly attribute Compression::CompressorId compressor_id;
     };
 };
