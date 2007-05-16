@@ -11,6 +11,7 @@
 
 #include "ace/Connector.h"
 #include "ace/OS_NS_strings.h"
+#include "ace/os_include/os_netdb.h"
 
 ACE_RCSID (PortableGroup,
            UIPMC_Connector, "$Id$")

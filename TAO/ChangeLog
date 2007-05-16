@@ -1,3 +1,13 @@
+Wed May 16 09:33:38 UTC 2007  Vadym Ridosh <vridosh@prismtech.com>
+
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Connector.cpp:
+          There was a compile error on SunOS introduced with the
+          fix for bug#2925. Fixed it.
+
+        * tao/Profile.h:
+          Fix for compile warnings generated because of improper
+          class member initialization.
+
 Wed May 16 07:30:55 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/Bug_2248_Regression/Bug_2248_Regression.mpc:
