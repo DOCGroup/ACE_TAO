@@ -1,3 +1,8 @@
+Wed May 16 06:46:55 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/run_test.lst:
+          Don't run 2912 when ACE_FOR_TAO is enabled
+
 Wed May 16 18:41:11 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * tests/Unload_libACE.cpp:
