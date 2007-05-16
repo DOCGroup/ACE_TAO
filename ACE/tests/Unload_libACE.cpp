@@ -158,6 +158,8 @@ main (int, char **)
 #endif /* ACE_LIB_NAME */
 #if defined (__hpux) && !(defined (__ia64) && (__ia64 == 1))
           strcat (buf, ".sl");
+#elif defined (__APPLE__)
+          strcat (buf, ".dylib");
 #else
           strcat (buf, ".so");
 #endif /* (__hpux) */
