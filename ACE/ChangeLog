@@ -1,3 +1,13 @@
+Wed May 16 16:14:21 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * ace/INET_Addr.cpp (addr_to_string): Adjust sprintf() format string to
+          use %ls for strings when ACE_USES_WCHAR and not on Windows. Avoids
+          chopping off all but the first char of the host address.
+
+        * tests/SOCK_Dgram_Test.cpp: When 0-terminating the received data,
+          use the string-length index, not the byte-count index. The latter
+          overwrites other things on the stack.
+
 Wed May 16 07:30:55 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_sunos5_sunc++.GNU:
