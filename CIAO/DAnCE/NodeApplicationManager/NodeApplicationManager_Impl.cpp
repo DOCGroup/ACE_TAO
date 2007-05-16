@@ -879,8 +879,6 @@ create_node_application (const ACE_CString & options)
 
       // wait for nodeApp to pass back its object reference. with a
       // timeout value. using perform_work and stuff.
-      bool looping = true;
-
       ACE_Time_Value timeout (this->spawn_delay_, 0);
 
       if (this->is_multi_threaded_)
@@ -966,7 +964,7 @@ multi_threaded_wait_for_callback (
   // Wait for a conditional variable
   this->mutex_.acquire ();
   while (! cb_servant->is_callback_completed ())
-    this->waitCond_.wait ();
+    this->waitCond_.wait (&timeout);
   retv = cb_servant->get_nodeapp_ref ();
   this->mutex_.release ();
 
