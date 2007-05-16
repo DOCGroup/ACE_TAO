@@ -1,3 +1,8 @@
+Wed May 16 07:30:55 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/Bug_2248_Regression/Bug_2248_Regression.mpc:
+          Removed -z now for suncc, we do that in generic for sun now
+
 Tue May 15 12:46:18 UTC 2007  Vadym Ridosh <vridosh@prismtech.com>
 
         * orbsvcs/tests/Bug_2377_Regression/run_test_ipv6.pl:
