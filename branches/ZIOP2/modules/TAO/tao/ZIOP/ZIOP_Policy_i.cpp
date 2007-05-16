@@ -15,7 +15,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace TAO
 {
 CompressorIdPolicy::CompressorIdPolicy (
-    const ::ZIOP::CompressorId val)
+    const ::Compression::CompressorId val)
   : ::CORBA::Object ()
   , ::CORBA::Policy ()
   , ::ZIOP::CompressorIdPolicy ()
@@ -36,8 +36,7 @@ CompressorIdPolicy::CompressorIdPolicy (const CompressorIdPolicy &rhs)
 }
 
 CORBA::PolicyType
-CompressorIdPolicy::policy_type (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+CompressorIdPolicy::policy_type (void)
 {
   // Future policy implementors: notice how this minimizes the
   // footprint of the class.
@@ -56,11 +55,8 @@ CompressorIdPolicy::clone (void) const
 }
 
 CORBA::Policy_ptr
-CompressorIdPolicy::copy (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+CompressorIdPolicy::copy (void)
 {
-  // Future policy implementors: notice how the following code is
-  // exception safe!
   CompressorIdPolicy* tmp = 0;
   ACE_NEW_THROW_EX (tmp, CompressorIdPolicy (*this),
                     CORBA::NO_MEMORY (TAO::VMCID,
@@ -71,16 +67,12 @@ CompressorIdPolicy::copy (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-CompressorIdPolicy::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+CompressorIdPolicy::destroy (void)
 {
 }
 
-::ZIOP::CompressorId
-CompressorIdPolicy::compressor_id (
-    ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException))
+::Compression::CompressorId
+CompressorIdPolicy::compressor_id (void)
 {
   return this->value_;
 }
@@ -116,8 +108,7 @@ CompressionEnablingPolicy::CompressionEnablingPolicy (const CompressionEnablingP
 }
 
 CORBA::PolicyType
-CompressionEnablingPolicy::policy_type (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+CompressionEnablingPolicy::policy_type (void)
 {
   // Future policy implementors: notice how this minimizes the
   // footprint of the class.
@@ -152,16 +143,12 @@ CompressionEnablingPolicy::copy (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-CompressionEnablingPolicy::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+CompressionEnablingPolicy::destroy (void)
 {
 }
 
 ::CORBA::Boolean
-CompressionEnablingPolicy::compression_enabled (
-    ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((
-      CORBA::SystemException))
+CompressionEnablingPolicy::compression_enabled (void)
 {
   return this->value_;
 }

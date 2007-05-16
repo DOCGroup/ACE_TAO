@@ -3,7 +3,6 @@
 #include "tao/ZIOP/ZIOP_ORBInitializer.h"
 
 #include "tao/ZIOP/ZIOP.h"
-#include "tao/ZIOP/Compression_Manager.h"
 #include "tao/ZIOP/ZIOP_PolicyFactory.h"
 #include "tao/ORB_Core.h"
 #include "tao/PI/ORBInitInfo.h"
@@ -16,40 +15,21 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 void
 TAO_ZIOP_ORBInitializer::pre_init (
-    PortableInterceptor::ORBInitInfo_ptr
-    ACE_ENV_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+    PortableInterceptor::ORBInitInfo_ptr)
 {
 }
 
 void
 TAO_ZIOP_ORBInitializer::post_init (
-    PortableInterceptor::ORBInitInfo_ptr info
-    ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+    PortableInterceptor::ORBInitInfo_ptr info)
 {
-  this->register_policy_factories (info
-                                   ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  this->register_policy_factories (info);
 }
 
 void
 TAO_ZIOP_ORBInitializer::register_policy_factories (
-  PortableInterceptor::ORBInitInfo_ptr info
- ACE_ENV_ARG_DECL)
+  PortableInterceptor::ORBInitInfo_ptr info)
 {
-  ::ZIOP::CompressionManager_ptr compression_manager_ptr;
-  ACE_NEW_THROW_EX (compression_manager_ptr,
-                    ::TAO::ZIOP::CompressionManager,
-                    CORBA::NO_MEMORY (
-                      CORBA::SystemException::_tao_minor_code (
-                        TAO::VMCID,
-                        ENOMEM),
-                      CORBA::COMPLETED_NO));
-
-  ::ZIOP::CompressionManager_var manager = compression_manager_ptr;
-  info->register_initial_reference ("CompressionManager", manager.in ());
-
   // Register the ZIOP policy factories.
   PortableInterceptor::PolicyFactory_ptr policy_factory_ptr;
   ACE_NEW_THROW_EX (policy_factory_ptr,
@@ -59,7 +39,6 @@ TAO_ZIOP_ORBInitializer::register_policy_factories (
                         TAO::VMCID,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
-  ACE_CHECK;
 
 
   PortableInterceptor::PolicyFactory_var policy_factory =

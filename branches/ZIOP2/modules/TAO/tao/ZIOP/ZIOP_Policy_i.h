@@ -43,7 +43,7 @@ class CompressorIdPolicy
 public:
 
   /// Constructor.
-  CompressorIdPolicy (const ::ZIOP::CompressorId val);
+  CompressorIdPolicy (const ::Compression::CompressorId val);
 
   /// Copy constructor.
   CompressorIdPolicy (const CompressorIdPolicy &rhs);
@@ -52,27 +52,20 @@ public:
   virtual CompressorIdPolicy *clone (void) const;
 
   /// = The ZIOP::BidirectionalPolicy methods
-  virtual ::ZIOP::CompressorId compressor_id (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
+  virtual ::Compression::CompressorId compressor_id ();
 
-  virtual CORBA::PolicyType policy_type (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::PolicyType policy_type (void);
 
-  virtual CORBA::Policy_ptr copy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::Policy_ptr copy (void);
 
-  virtual void destroy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void destroy (void);
 
   virtual TAO_Cached_Policy_Type _tao_cached_type (void) const;
 
 private:
 
   /// The attribute
-  ::ZIOP::CompressorId value_;
+  ::Compression::CompressorId value_;
 
 };
 

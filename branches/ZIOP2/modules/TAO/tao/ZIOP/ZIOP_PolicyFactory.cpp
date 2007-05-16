@@ -44,7 +44,7 @@ TAO_ZIOP_PolicyFactory::create_policy (
       return policy;
     }
   else if (type == ZIOP::COMPRESSOR_ID_POLICY_ID) {
-      ::ZIOP::CompressorId val;
+      ::Compression::CompressorId val;
 
       // Extract the value from the any.
       if ((value >>= val) == 0)
