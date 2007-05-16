@@ -4,12 +4,13 @@
 ACE_INLINE
 CIAO::NodeApplicationManager_Impl_Base::
 NodeApplicationManager_Impl_Base (CORBA::ORB_ptr o,
-                             PortableServer::POA_ptr p)
+                                  PortableServer::POA_ptr p)
   : orb_ (CORBA::ORB::_duplicate (o)),
     poa_ (PortableServer::POA::_duplicate (p)),
     callback_poa_ (PortableServer::POA::_nil ()),
     nodeapp_ (Deployment::NodeApplication::_nil ()),
-    spawn_delay_ (5)
+    spawn_delay_ (5),
+    waitCond_ (this->mutex_)
   // @@ (OO) The default size for an ACE_Hash_Map_Mapanger is quiet
   //         large.  The maximum size of an ACE_Hash_Map_Manager is
   //         also fixed, i.e. it does not grow dynamically on demand.

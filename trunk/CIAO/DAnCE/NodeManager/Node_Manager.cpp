@@ -19,13 +19,14 @@ bool write_to_ior_ = false;
 bool register_with_ns_ = false;
 int nodeapp_loc_ = 0;
 int spawn_delay = 1;
+bool is_multi_threaded = false;
 
 ACE_CString nodeapp_options_;
 
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "o:c:m:s:d:na:p:z:");
+  ACE_Get_Opt get_opts (argc, argv, "o:c:ms:d:na:p:z:");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -68,6 +69,10 @@ parse_args (int argc, char *argv[])
             pid_file_name_ = get_opts.opt_arg ();
             break;
 
+          case 'm':
+            is_multi_threaded = true;
+            break;
+
           case '?':  // Display help for use of the server.
           default:
             ACE_ERROR_RETURN ((LM_ERROR,
@@ -79,6 +84,7 @@ parse_args (int argc, char *argv[])
                                "-a <arguments to NodeApplication>\n"
                                "-d <spawn delay for nodeapplication>\n"
                                "-p <pid file>\n"
+                               "-m <running in multi-threaded mode>\n"
                                "\n",
                                argv [0]),
                               -1);
@@ -207,7 +213,8 @@ main (int argc, char *argv[])
                                              poa.in (),
                                              nodeapp_location_,
                                              nodeapp_options_.c_str (),
-                                             spawn_delay),
+                                             spawn_delay,
+                                             is_multi_threaded),
                       -1);
 
       PortableServer::ServantBase_var safe_daemon (node_manager_servant);

@@ -21,6 +21,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "CIAO_NodeApplication_CallBackS.h"
+#include "ace/Synch.h"
 
 namespace CIAO
 {
@@ -41,7 +42,9 @@ namespace CIAO
     NodeApplication_Callback_Impl (CORBA::ORB_ptr o,
                                    PortableServer::POA_ptr p,
                                    Deployment::NodeApplicationManager_ptr s,
-                                   const Deployment::Properties &properties);
+                                   const Deployment::Properties &properties,
+                                   ACE_Condition<ACE_SYNCH_MUTEX> &wait,
+                                   ACE_SYNCH_MUTEX& mutex);
 
     /// Get the containing POA.  This operation does *not* increase
     /// the reference count of the POA.
@@ -56,9 +59,13 @@ namespace CIAO
 
     Deployment::NodeApplication_ptr get_nodeapp_ref (void);
 
+    bool is_callback_completed (void);
+
   protected:
     /// Destructor.
     ~NodeApplication_Callback_Impl ();
+
+    bool is_callback_completed_;
 
     CORBA::ORB_var orb_;
 
@@ -69,6 +76,10 @@ namespace CIAO
     Deployment::NodeApplication_var nodeapp_;
 
     Deployment::Properties_var properties_;
+
+    ACE_Condition<ACE_SYNCH_MUTEX> &waitCond_;
+
+    ACE_SYNCH_MUTEX &mutex_;
   };
 }
 

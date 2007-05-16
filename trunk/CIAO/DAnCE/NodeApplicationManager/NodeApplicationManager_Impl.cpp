@@ -52,7 +52,7 @@ Deployment::Connections *
 CIAO::NodeApplicationManager_Impl_Base::
 create_connections ()
 {
-  CIAO_TRACE("CIAO::NodeApplicationManager_Impl::create_connections");
+  CIAO_TRACE("CIAO::NodeApplicationManager_Impl_Base::create_connections");
   Deployment::Connections_var retv;
 
   ACE_NEW_THROW_EX (retv,
@@ -712,6 +712,7 @@ CIAO::NodeApplicationManager_Impl_Base::set_priority (
   return 1;
 }
 
+///////////////////////////////////////////////////////////////////////
 
 CIAO::NodeApplicationManager_Impl::~NodeApplicationManager_Impl (void)
 {
@@ -719,8 +720,10 @@ CIAO::NodeApplicationManager_Impl::~NodeApplicationManager_Impl (void)
 
 CIAO::NodeApplicationManager_Impl::
 NodeApplicationManager_Impl (CORBA::ORB_ptr o,
-                             PortableServer::POA_ptr p)
+                             PortableServer::POA_ptr p,
+                             bool is_multi_threaded)
   : NodeApplicationManager_Impl_Base (o, p)
+    , is_multi_threaded_ (is_multi_threaded)
 {
 }
 
@@ -820,7 +823,9 @@ create_node_application (const ACE_CString & options)
                     CIAO::NodeApplication_Callback_Impl (this->orb_.in (),
                                                          this->callback_poa_.in (),
                                                          this->objref_.in (),
-                                                         prop.in ()),
+                                                         prop.in (),
+                                                         this->waitCond_,
+                                                         this->mutex_),
                     CORBA::NO_MEMORY ());
 
   PortableServer::ServantBase_var servant_var (callback_servant);
@@ -878,15 +883,10 @@ create_node_application (const ACE_CString & options)
 
       ACE_Time_Value timeout (this->spawn_delay_, 0);
 
-      while (looping)
-        {
-          this->orb_->perform_work (timeout);
-
-          retval = callback_servant->get_nodeapp_ref ();
-
-          if (timeout == ACE_Time_Value::zero || !CORBA::is_nil (retval.in ()))
-            looping = false;
-        }
+      if (this->is_multi_threaded_)
+        retval = multi_threaded_wait_for_callback (callback_servant, timeout);
+      else
+        retval = single_threaded_wait_for_callback (callback_servant, timeout);
 
       if (CORBA::is_nil (retval.in ()))
         {
@@ -929,6 +929,51 @@ create_node_application (const ACE_CString & options)
 }
 
 
+Deployment::NodeApplication_ptr
+CIAO::NodeApplicationManager_Impl::
+single_threaded_wait_for_callback (
+  CIAO::NodeApplication_Callback_Impl * cb_servant,
+  ACE_Time_Value &timeout)
+{
+  // Below code is broken for thread-per-connection concurrency model,
+  // since the main thread is running ORB event loop and will spawn
+  // a different thread to handle the call <register_node_application>,
+  // the <perform_work> operation will not be invoked and finally
+  // a timeout will occur. For a similar reason, it won't work
+  // for thread-pool concurrency model.
+  Deployment::NodeApplication_var retv;
+  while (true)
+    {
+      this->orb_->perform_work (timeout);
+
+      retv = cb_servant->get_nodeapp_ref ();
+
+      if ((timeout == ACE_Time_Value::zero) || !CORBA::is_nil (retv.in ()))
+        break;
+    }
+
+  return retv._retn ();
+}
+
+Deployment::NodeApplication_ptr
+CIAO::NodeApplicationManager_Impl::
+multi_threaded_wait_for_callback (
+   CIAO::NodeApplication_Callback_Impl* cb_servant,
+   ACE_Time_Value &timeout)
+{
+  Deployment::NodeApplication_var retv;
+
+  // Wait for a conditional variable
+  this->mutex_.acquire ();
+  while (! cb_servant->is_callback_completed ())
+    this->waitCond_.wait ();
+  retv = cb_servant->get_nodeapp_ref ();
+  this->mutex_.release ();
+
+  return retv._retn ();
+}
+
+
 void
 CIAO::NodeApplicationManager_Impl::
 push_component_info (pid_t process_id)
@@ -950,6 +995,7 @@ push_component_info (pid_t process_id)
   node_manager_->push_component_id_info (comp);
 }
 
+/////////////////////////////////////////////////////////////////////////
 
 CIAO::Static_NodeApplicationManager_Impl::~Static_NodeApplicationManager_Impl (void)
 {
