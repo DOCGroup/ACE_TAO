@@ -5,6 +5,7 @@
 #include "ciao/CIAO_common.h"
 #include "DomainApplicationManager/DomainApplicationManager_Impl.h"
 #include "DomainApplicationManager/DomainApplicationManager_AMI_Impl.h"
+#include "DomainApplicationManager/DomainApplicationManager_ActiveObject_Impl.h"
 
 ACE_RCSID (ExecutionManager,
            Execution_Manager_Impl,
@@ -18,11 +19,13 @@ namespace CIAO
       CORBA::ORB_ptr orb,
       PortableServer::POA_ptr poa,
       const char * init_file,
-      bool is_using_ami)
+      bool is_using_ami,
+      bool is_using_active_object)
       : orb_ (CORBA::ORB::_duplicate  (orb))
       , poa_ (PortableServer::POA::_duplicate (poa))
       , init_file_ (init_file)
       , is_using_ami_ (is_using_ami)
+      , is_using_active_object_ (is_using_active_object)
     {
     }
 
@@ -92,6 +95,22 @@ namespace CIAO
         ACE_DEBUG ((LM_DEBUG, 
           "CIAO (%P|%t) Instantiated CIAO::DomainApplicationManager_AMI_Impl\n"));
 
+      }
+      else if (this->is_using_active_object_)
+      {
+        ACE_NEW_THROW_EX (
+          dam_servant,
+          CIAO::DomainApplicationManager_ActiveObject_Impl (
+            this->orb_.in (),
+            this->poa_.in (),
+            ::Deployment::TargetManager::_nil (),
+            this, // a plain C++ pointer
+            plan,
+            this->init_file_.c_str ()),
+            CORBA::NO_MEMORY ());
+
+        ACE_DEBUG ((LM_DEBUG, 
+          "CIAO (%P|%t) Instantiated CIAO::DomainApplicationManager_ActiveObject_Impl\n"));
       }
       else
       {

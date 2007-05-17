@@ -29,11 +29,12 @@ namespace CIAO
     static bool write_to_ior_ = false;
     static bool rt_corba_enabled = false;
     static bool is_using_ami = false;
+    static bool is_using_active_object = false;
 
     bool
     parse_args (int argc, char *argv[])
     {
-      ACE_Get_Opt get_opts (argc, argv, "o:i:anrp:");
+      ACE_Get_Opt get_opts (argc, argv, "o:i:abnrp:");
       int c;
       while ((c = get_opts ()) != -1)
         switch (c)
@@ -57,11 +58,15 @@ namespace CIAO
             case 'a':
               is_using_ami = true;
               break;
+            case 'b':
+              is_using_active_object = true;
+              break;
             case '?':  // display help for use of the server.
             default:
               ACE_ERROR_RETURN ((LM_ERROR,
                                  "usage:  %s\n"
                                  "-a : Using Asyncronous Deployment\n"
+                                 "-b : Using Acitve Object based deployment \n"
                                  "-o <ior_output_file>\n"
                                  "-i <installation data filename>\n"
                                  "-n <use naming service>\n"
@@ -229,7 +234,8 @@ namespace CIAO
                           Execution_Manager_Impl(orb.in (),
                                                  child_poa.in (),
                                                  init_file_name,
-                                                 is_using_ami),
+                                                 is_using_ami,
+                                                 is_using_active_object),
                           -1);
 
           // Explicit activation through the child POA

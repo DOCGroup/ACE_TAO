@@ -46,7 +46,8 @@ namespace CIAO
       Execution_Manager_Impl (CORBA::ORB_ptr orb,
                               PortableServer::POA_ptr poa,
                               const char * init_file,
-                              bool is_using_ami);
+                              bool is_using_ami,
+                              bool is_using_active_object);
 
       /// Template methods from ExecutionManagerDaemon, please see
       /// $CIAO_ROOT/DAnCE/Deployment/Deployment.idl for documentation
@@ -132,6 +133,9 @@ namespace CIAO
 
       /// Whether we use AMI
       bool is_using_ami_;
+
+      /// Whether we use active object based deployment
+      bool is_using_active_object_;
 
       /// A map which caches the DomainApplicationManager object ref.
       DAM_Map map_;
