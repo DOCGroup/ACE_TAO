@@ -919,13 +919,6 @@ ACE_InputCDR::read_longdouble_array (ACE_CDR::LongDouble* x,
 }
 
 ACE_INLINE ACE_CDR::Boolean
-ACE_InputCDR::skip_char (void)
-{
-  ACE_CDR::Octet x;    // sizeof (Octet) == sizeof (Char)
-  return this->read_1 (&x);
-}
-
-ACE_INLINE ACE_CDR::Boolean
 ACE_InputCDR::skip_octet (void)
 {
   ACE_CDR::Octet x;
@@ -933,17 +926,15 @@ ACE_InputCDR::skip_octet (void)
 }
 
 ACE_INLINE ACE_CDR::Boolean
-ACE_InputCDR::skip_boolean (void)
+ACE_InputCDR::skip_char (void)
 {
-  ACE_CDR::Octet tmp;
-  return this->read_octet (tmp) && this->good_bit_;
+  return this->skip_octet ();  // sizeof (Char) == sizeof (Octet)
 }
 
 ACE_INLINE ACE_CDR::Boolean
-ACE_InputCDR::skip_short (void)
+ACE_InputCDR::skip_boolean (void)
 {
-  ACE_CDR::UShort x;  // sizeof (Short) == sizeof (UShort)
-  return this->read_2 (&x);
+  return this->skip_octet () && this->good_bit_;
 }
 
 ACE_INLINE ACE_CDR::Boolean
@@ -954,10 +945,9 @@ ACE_InputCDR::skip_ushort (void)
 }
 
 ACE_INLINE ACE_CDR::Boolean
-ACE_InputCDR::skip_long (void)
+ACE_InputCDR::skip_short (void)
 {
-  ACE_CDR::ULong x;  // sizeof (Long) == sizeof (ULong)
-  return this->read_4 (&x);
+  return this->skip_ushort ();
 }
 
 ACE_INLINE ACE_CDR::Boolean
@@ -968,10 +958,9 @@ ACE_InputCDR::skip_ulong (void)
 }
 
 ACE_INLINE ACE_CDR::Boolean
-ACE_InputCDR::skip_longlong (void)
+ACE_InputCDR::skip_long (void)
 {
-  ACE_CDR::ULongLong x;  // sizeof (LongLong) == sizeof (ULongLong)
-  return this->read_8 (&x);
+  return this->skip_ulong ();  // sizeof (Long) == sizeof (ULong)
 }
 
 ACE_INLINE ACE_CDR::Boolean
@@ -982,17 +971,21 @@ ACE_InputCDR::skip_ulonglong (void)
 }
 
 ACE_INLINE ACE_CDR::Boolean
+ACE_InputCDR::skip_longlong (void)
+{
+  return this->skip_ulong ();  // sizeof (LongLong) == sizeof (ULongLong)
+}
+
+ACE_INLINE ACE_CDR::Boolean
 ACE_InputCDR::skip_float (void)
 {
-  ACE_CDR::ULong x;  // sizeof(Float) == sizeof (ULong)
-  return this->read_4 (&x);
+  return this->skip_ulong ();  // sizeof(Float) == sizeof (ULong)
 }
 
 ACE_INLINE ACE_CDR::Boolean
 ACE_InputCDR::skip_double (void)
 {
-  ACE_CDR::ULongLong x;  // sizeof(Double) == sizeof (ULongLong)
-  return this->read_8 (&x);
+  return this->skip_ulonglong ();  // sizeof(Double) == sizeof (ULongLong)
 }
 
 ACE_INLINE ACE_CDR::Boolean
