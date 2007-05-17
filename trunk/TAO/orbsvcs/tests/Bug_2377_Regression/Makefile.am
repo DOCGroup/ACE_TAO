@@ -56,13 +56,15 @@ uipmc_test_CPPFLAGS = \
   -I$(TAO_BUILDDIR)/orbsvcs
 
 uipmc_test_SOURCES = \
-  Hello.cpp \
   HelloC.cpp \
   HelloS.cpp \
+  Hello_Impl.cpp \
+  uipmc_test.cpp \
   HelloC.h \
   HelloC.inl \
   HelloS.h \
-  HelloS.inl
+  HelloS.inl \
+  Hello_Impl.h
 
 uipmc_test_LDADD = \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_PortableGroup.la \

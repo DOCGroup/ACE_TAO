@@ -1,3 +1,11 @@
+Thu May 17 12:08:15 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/tests/Bug_2377_Regression/Makefile.am:
+
+          The source files were changed in the change from
+          Mon May  7 16:08:17 UTC 2007.  The Makefile.am needs to be
+          manually updated.
+
 Thu May 17 12:02:12 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * tests/IORManipulation/filter/Makefile.am:
