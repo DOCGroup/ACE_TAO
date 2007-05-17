@@ -1,3 +1,12 @@
+Thu May 17 22:35:37 UTC 2007  Ossama Othman  <ossama_othman at symantec dot com>
+
+        * ace/CDR_Stream.inl (skip_char, skip_boolean, skip_short):
+          (skip_long, skip_float, skip_double):
+
+          Further simplified these methods by implementing them in terms
+          of their same size skip_octet(), skip_u{short,long,longlong}()
+          counterparts.
+
 Thu May 17 22:13:32 UTC 2007  Ossama Othman  <ossama_othman at symantec dot com>
 
         * ace/Acceptor.cpp:
