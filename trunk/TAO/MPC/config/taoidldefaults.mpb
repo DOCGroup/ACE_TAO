@@ -2,8 +2,10 @@
 // $Id$
 
 project {
-  // Set the idl compiler and flags as template values
-  specific {
+  // Set the idl compiler and flags as template values, except for
+  // automake.  It has it's own settings in AutomakeWorkspaceHelper.pm and
+  // expects to see $(TAO_IDL) in the generated Makefile.am
+  specific(!automake) {
     tao_idl      = $(ACE_ROOT)/bin/tao_idl
     tao_idl_dep  = $(ACE_ROOT)/bin/tao_idl
     tao_idlflags = -Wb,pre_include=ace/pre.h \
