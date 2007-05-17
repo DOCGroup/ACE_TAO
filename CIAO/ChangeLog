@@ -1,3 +1,32 @@
+Thu May 17 19:53:02 UTC 2007  Gan Deng  <gan.deng@vanderbilt.edu>
+
+        * DAnCE/DomainApplicationManager/Task_StartLaunch.cpp:
+        * DAnCE/DomainApplicationManager/Task_StartLaunch.h:
+
+          Added this new class which serves as an active object when
+          performing startLaunch.
+
+        * DAnCE/DomainApplicationManager/DomainApplicationManager_ActiveObject_Impl.cpp:
+        * DAnCE/DomainApplicationManager/DomainApplicationManager_ActiveObject_Impl.h:
+        
+          This implementation of DomainApplicationManager is a subclass
+          of standard implementation of DomainaApplicationManager but
+          uses an active object based approach to handle deployment,
+          which essentially spawns a number of threads wich each 
+          correponds to one node.
+        
+        * DAnCE/DomainApplicationManager/DomainApplicationManager.mpc:
+
+          Added the above new classes into the project file
+        
+        * DAnCE/ExecutionManager/Execution_Manager.cpp:
+        * DAnCE/ExecutionManager/Execution_Manager_Impl.cpp:
+        * DAnCE/ExecutionManager/Execution_Manager_Impl.h:
+        
+          Modified to allow a new command line option "-b", which
+          will make the DomainApplicationManager to take an active
+          object based approach to handle deployment
+
 Thu May 17 19:02:09 UTC 2007  Gan Deng  <gan.deng@vanderbilt.edu>
 
         * DAnCE/Deployment/NodeApp_CB_Impl.h:
