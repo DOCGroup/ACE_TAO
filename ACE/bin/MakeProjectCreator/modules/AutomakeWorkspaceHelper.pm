@@ -12,6 +12,7 @@ package AutomakeWorkspaceHelper;
 
 use strict;
 use FileHandle;
+use File::Basename;
 
 use WorkspaceHelper;
 
@@ -32,6 +33,7 @@ my(%vals)  = ('ACE_ROOT'      => '$(top_srcdir)',
 				 'TAO_IDL_DEP = $(TAO_BUILDDIR)/TAO_IDL/tao_idl' . "\n" .
                                  'TAO_IDLFLAGS = -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf',
              );
+
 my(%addon) = ('ACE_ROOT'     => {'CIAO_ROOT'     => '/../..',
                                  'TAO_ROOT'      => '/..',
                                  'CIAO_BUILDDIR' => '/../..',
@@ -45,6 +47,16 @@ my(%addon) = ('ACE_ROOT'     => {'CIAO_ROOT'     => '/../..',
               'TAO_BUILDDIR' => {'CIAO_ROOT'     => '/..',
                                  'CIAO_BUILDDIR' => '/..'},
              );
+
+## These are required when processing the TAO workspace
+my(%libdirs) = ('libACE_SSL.la'       => 'ace/SSL',
+                'libACEXML.la'        => 'ACEXML/common',
+                'libACEXML_Parser.la' => 'ACEXML/parser/parser',
+                'libACE_TMCast.la'    => 'protocols/ace/TMCast',
+                'libACE_RMCast.la'    => 'protocols/ace/RMCast',
+                'libACE_HTBP.la'      => 'protocols/ace/HTBP',
+                'libKokyu.la'         => 'Kokyu',
+               );
 
 # ************************************************************
 # Subroutine Section
@@ -60,8 +72,37 @@ sub modify_value {
     ## remove the TAO/orbsvcs part and if that doesn't work try
     ## removing the TAO part.  The ACE related values don't need
     ## any modification.
-    if (!($value =~ s/^\/TAO\/orbsvcs//)) {
-      $value =~ s/^\/TAO//;
+    if (!($value =~ s/^\/orbsvcs\/orbsvcs$/\/orbsvcs/)) {
+      if (!($value =~ s/^\/TAO\/orbsvcs//)) {
+        if (!($value =~ s/^\/TAO//)) {
+          ## These ACE related libraries need fixing too.
+          $value =~ s/^\/protocols(\/ace)/$1/;
+        }
+      }
+    }
+  }
+  elsif ($name eq 'amflags') {
+    if (basename(Cwd::getcwd()) eq 'TAO') {
+      $value .= ' -I ../m4';
+    }
+  }
+  elsif ($name eq 'extra') {
+    if (basename(Cwd::getcwd()) eq 'TAO') {
+      $value .= "EXTRA_DIST =  \\\n" .
+                "  PROBLEM-REPORT-FORM \\\n" .
+                "  VERSION \\\n" .
+                "  COPYING.sun \\\n" .
+                "  LICENSE.sun \\\n" .
+                "  README.sun\n\n" .
+                "release:\n" .
+                "\t\$(MAKE) dist\n\n".
+                "TAO_EXTRA_DIST = docs\n\n" .
+                "dist-hook:\n" .
+                "\t(cd \$(top_srcdir); tar cf - \$(TAO_EXTRA_DIST)) | (cd \$(distdir); \\\n" .
+                "\t  tar xfBp -)\n" .
+                "\tlist=`find \$(distdir) -type d -name .svn -print`; for p in \$\$list; do \\\n" .
+                "\t  rm -rf \$\$p; \\\n" .
+                "\tdone\n";
     }
   }
 
@@ -74,19 +115,31 @@ sub modify_libpath {
   my($reldir)  = shift;
   my($libname) = shift;
 
-  if ($libname =~ /libace/i) {
+  if ($libname =~ /^lib(ace|kokyu)/i) {
+    if (!defined $reldir) {
+      if (defined $libdirs{$libname}) {
+        $reldir = $libdirs{$libname};
+      }
+      else {
+        $reldir = 'ace';
+      }
+    }
     $str =~ s!$libname!\$(ACE_BUILDDIR)/$reldir/$libname!;
     return $str;
   }
-  elsif ($libname =~ /libtao/i) {
-    $reldir =~ s!TAO/!!;
-    $str =~ s!$libname!\$(TAO_BUILDDIR)/$reldir/$libname!;
-    return $str;
+  elsif ($libname =~ /^libtao/i) {
+    if (defined $reldir) {
+      $reldir =~ s!TAO/!!;
+      $str =~ s!$libname!\$(TAO_BUILDDIR)/$reldir/$libname!;
+      return $str;
+    }
   }
-  elsif ($libname =~ /libciao/i) {
-    $reldir =~ s!TAO/CIAO/!!;
-    $str =~ s!$libname!\$(CIAO_BUILDDIR)/$reldir/$libname!;
-    return $str;
+  elsif ($libname =~ /^libciao/i) {
+    if (defined $reldir) {
+      $reldir =~ s!TAO/CIAO/!!;
+      $str =~ s!$libname!\$(CIAO_BUILDDIR)/$reldir/$libname!;
+      return $str;
+    }
   }
 
   return undef;
