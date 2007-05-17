@@ -23,7 +23,7 @@ Thu May 17 22:13:32 UTC 2007  Ossama Othman  <ossama_othman at symantec dot com>
           Removed unnecessary assignment to a void* and reinterpret_cast<>
           back to original type.
 
-          (write_char, write_short, write_long, write_longlong):
+          (write_char, write_short, write_long):
 
           Simplified code by dropping assignment to void* and
           reinterpret_cast<> to unsigned type counterpart in favor of a
