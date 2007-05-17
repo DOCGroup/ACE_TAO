@@ -58,6 +58,7 @@ Thu May 17 22:13:32 UTC 2007  Ossama Othman  <ossama_othman at symantec dot com>
           calls.
 
           Various const and boolean correctness improvements.
+
           (handle_error):
 
           Assign errno to a temporary to avoid multiple TSS accesses.
