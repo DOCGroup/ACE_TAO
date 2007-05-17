@@ -25,18 +25,20 @@ int main (int argc, char* argv[])
   SA_POP::SA_Builder builder;
   SANet::SANetFileIn sanet_in;
   SA_POP::TaskMapFileIn tm_in;
+  std::string sanet_filename = "";
+  std::string tm_filename = "";
 
   // Get filenames from user.
   std::cout << "Task Network file: ";
-  std::string sanet_filename = "../examples/output1.xml";
-//  std::string sanet_filename = "../examples/SPACE.san.xml";
-//  std::string sanet_filename = "examples/test_graph1.san.xml";
-//  std::cin >> sanet_filename;
+//  sanet_filename = "../examples/output1.xml";
+//  sanet_filename = "../examples/SPACE.san.xml";
+//  sanet_filename = "../examples/test_graph1.san.xml";
+  std::cin >> sanet_filename;
 
   std::cout << "Task Map file: ";
-  std::string tm_filename = "../examples/SPACE.tm.xml";
-//  std::string tm_filename = "examples/test_graph.tm.xml";
-//  std::cin >> tm_filename;
+//  tm_filename = "../examples/SPACE.tm.xml";
+//  tm_filename = "../examples/test_graph.tm.xml";
+  std::cin >> tm_filename;
 
   SA_POP::Goal goal;
   goal.goal_id = "UserSpecifiedGoal ID";

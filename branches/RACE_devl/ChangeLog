@@ -1,3 +1,10 @@
+Thu May 17 17:49:57 UTC 2007  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
+
+        * SA_POP/SA_POP_Standalone.mwc:
+        * SA_POP/Standalone/SA_POP_Demo.cpp:
+
+        Updated standalone (command line) version of SA-POP.
+
 Wed Apr 18 06:35:44 UTC 2007  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
 
         * SA_POP/Component/Planning_exec.h:

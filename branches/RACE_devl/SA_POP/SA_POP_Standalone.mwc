@@ -1,0 +1,4 @@
+workspace {
+  SA_POP_for_RACE.mpc
+  Standalone/SA_POP_Demo.mpc
+}
