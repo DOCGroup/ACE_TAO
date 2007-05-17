@@ -1,3 +1,10 @@
+Thu May 17 12:02:12 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tests/IORManipulation/filter/Makefile.am:
+
+          It wasn't my last attempt.  I'm adding the TAO_PortableServer
+          library to the link list.
+
 Wed May 16 16:26:32 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * tests/IORManipulation/filter/Makefile.am:
