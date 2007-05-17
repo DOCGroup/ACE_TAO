@@ -113,7 +113,7 @@ Thu May 17 22:13:32 UTC 2007  Ossama Othman  <ossama_othman at symantec dot com>
 Thu May 17 19:29:30 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * contrib/minizip/minizip.mpc:
-        
+
           Added vc8_warnings to the base project list, to avoid the
           warning caused by vc8-deprecated use of 'fopen'.
 
