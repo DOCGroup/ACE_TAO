@@ -1,3 +1,20 @@
+Thu May 17 16:35:40 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/config/automake.features:
+
+          Setting qos=1 was not correct.  It causes issues when generating
+          TAO related Makefile.am's.
+
+        * bin/MakeProjectCreator/modules/AutomakeWorkspaceHelper.pm:
+
+          Fix the following issues:
+
+          1) Relative paths for ACE related libraries when processing
+             TAO.mwc
+          2) Fixed includedir settings for
+             $TAO_ROOT/orbsvcs/orbsvcs/Makefile.am
+          3) Added custom rules in $TAO_ROOT/Makefile.am
+
 Thu May 17 14:04:51 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * ACE.mwc:
