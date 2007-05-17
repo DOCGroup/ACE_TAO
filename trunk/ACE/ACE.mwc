@@ -1,14 +1,10 @@
 // $Id$
 workspace {
+  exclude(automake) {
+    build
+    Kokyu
+  }
   exclude {
     TAO
-    bin
-    docs
-    etc
-    html
-    include
-    lib
-    m4
-    man
   }
 }

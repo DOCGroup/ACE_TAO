@@ -6,7 +6,7 @@
 
 automake=1
 ssl=1
-qos=0
+qos=1
 
 gl=1
 x11=1
