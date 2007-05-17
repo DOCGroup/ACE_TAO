@@ -1,3 +1,41 @@
+Thu May 17 14:04:51 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ACE.mwc:
+
+          Provide an exclude for automake only of build and Kokyu.  Also,
+          only exclude TAO for all project types.  The other directories
+          previously listed do not need to be explicitly excluded.
+
+        * ace/ace.mpc:
+        * ace/ace_for_tao.mpc:
+
+          Removed references to config-win32-visualage.h.
+
+        * apps/gperf/tests/gperf_test.mpb:
+
+          Mapped the GPERF command setting to 'gperf_cmd' and then set
+          'gperf_cmd' to ../src/gperf in a specific section for automake.
+
+        * bin/MakeProjectCreator/config/ace_zzip.mpb:
+
+          Provide a new base project to deal with the strangeness of
+          automake.  It inherits from zzip (which in turn inherits from
+          zlib).  For automake only, it removes everything added by those
+          base projects and sets flags specific for automake.
+
+        * bin/MakeProjectCreator/config/acexml.mpb:
+
+          Use ace_zzip instead of zzip and zlib.
+
+        * bin/MakeProjectCreator/config/automake.features:
+
+          Set qos to 1 so that the configure script can determine if QoS is
+          built.
+
+        * netsvcs/servers/servers.mpc:
+
+          To help the automake generator, add ace_for_tao to avoids.
+
 Wed May 16 06:46:55 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/run_test.lst:
