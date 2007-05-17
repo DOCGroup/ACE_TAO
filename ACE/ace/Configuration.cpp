@@ -850,10 +850,11 @@ ACE_Configuration_Win32Registry::get_integer_value (const ACE_Configuration_Sect
 }
 
 int
-ACE_Configuration_Win32Registry::get_binary_value (const ACE_Configuration_Section_Key &key,
-                                                   const ACE_TCHAR *name,
-                                                   void *&data,
-                                                   size_t &length)
+ACE_Configuration_Win32Registry::get_binary_value (
+  const ACE_Configuration_Section_Key &key,
+  const ACE_TCHAR *name,
+  void *&data,
+  size_t &length)
 {
   const ACE_TCHAR *t_name = temp_name (name);
   if (validate_value_name (t_name))
@@ -886,20 +887,23 @@ ACE_Configuration_Win32Registry::get_binary_value (const ACE_Configuration_Secti
 
   length = buffer_length;
 
-  ACE_NEW_RETURN (data, BYTE[length], -1);
+  BYTE * the_data = 0;
+  ACE_NEW_RETURN (the_data, BYTE[length], -1);
+  ACE_Auto_Basic_Array_Ptr<BYTE> safe_data (the_data);
 
   if ((errnum = ACE_TEXT_RegQueryValueEx (base_key,
                                           t_name,
                                           0,
                                           &type,
-                                          (BYTE *) data,
+                                          the_data,
                                           &buffer_length)) != ERROR_SUCCESS)
     {
-      delete [] (BYTE *) data;
       data = 0;
       errno = errnum;
       return -1;
     }
+
+  data = safe_data.release ();
 
   return 0;
 }
@@ -2033,10 +2037,11 @@ ACE_Configuration_Heap::get_integer_value (const ACE_Configuration_Section_Key& 
 }
 
 int
-ACE_Configuration_Heap::get_binary_value (const ACE_Configuration_Section_Key& key,
-                                          const ACE_TCHAR* name,
-                                          void*& data,
-                                          size_t& length)
+ACE_Configuration_Heap::get_binary_value (
+  const ACE_Configuration_Section_Key& key,
+  const ACE_TCHAR* name,
+  void*& data,
+  size_t& length)
 {
   ACE_ASSERT (this->allocator_);
   const ACE_TCHAR *t_name = name ? name : &this->NULL_String_;

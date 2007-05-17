@@ -1,3 +1,114 @@
+Thu May 17 22:13:32 UTC 2007  Ossama Othman  <ossama_othman at symantec dot com>
+
+        * ace/Acceptor.cpp:
+
+          Silence Coverity error related to lack of a return value check
+          by explicitly casting the return value to void.  We don't care
+          about the return value in this case.
+
+        * ace/CDR_Stream.inl (write_octet, write_ushort, write_ulong):
+          (write_ulonglong, write_longdouble):
+          (read_ushort, read_ulong, read_ulonglong, read_longdouble):
+          (skip_ushort, skip_ulong, skip_ulonglong, skip_longdouble):
+
+          Removed unnecessary assignment to a void* and reinterpret_cast<>
+          back to original type.
+
+          (write_char, write_short, write_long, write_longlong):
+
+          Simplified code by dropping assignment to void* and
+          reinterpret_cast<> to unsigned type counterpart in favor of a
+          direct static_cast<> to the unsigned type.
+
+          (skip_char, skip_short, skip_long, skip_longlong, skip_float):
+          (skip_double):
+
+          Replaced temporary variable and assignment to void* with
+          unsigned integer CDR type of same size since the value read
+          from the CDR stream is ignored.  Simplifies the code.
+
+        * ace/CORBA_macros.h (ACE_NEW_THROW_EX):
+
+          Don't bother setting errno to ENOMEM if allocation fails since
+          the caller should be handling the exception thrown upon failure,
+          not checking errno.
+
+        * ace/Configuration.cpp (get_binary_value):
+
+          Improved exception safety.
+
+        * ace/OS_Memory.h (ACE_align_binary, ACE_ptr_align_binary):
+
+          Re-implemented as inlined functions instead of macros.  The
+          new code is much easier to read.
+
+          Corrected pointer-integer type.  s/ptrdiff_t/uintptr_t/g.
+
+        * ace/OS_NS_Thread.cpp (TSS_Cleanup_Instance):
+
+          Replaced use of "NULL" constant with zero to comply with ACE
+          coding guidelines.
+
+        * ace/Select_Reactor_T.cpp:
+
+          Replaced boolean value assignments with true and false instead
+          of 1 and 0, respectively.
+
+          Removed redundant zero pointer checks prior to operator delete()
+          calls.
+
+          Various const and boolean correctness improvements.
+          (handle_error):
+
+          Assign errno to a temporary to avoid multiple TSS accesses.
+
+        * ace/config-g++-common.h:
+
+          Define ACE_HAS_NEW_NOTHROW for g++ >= 3.3.  Older versions of
+          g++ had buggy operator new(nothrow)() support.
+
+        * ace/config-irix6.x-common.h:
+
+          IRIX lacks the suseconds_t typedef.
+
+        * ace/config-sunos5.8.h (ACE_HAS_X86_STAT_MACROS):
+
+          No need to define this preprocessor symbol for Solaris 8 and
+          onwards.
+
+        * ace/config-win32-common.h (ACE_HAS_CUSTOM_EXPORT_MACROS):
+
+          Define the value to 1 instead of just defining without a value.
+          Some preprocessor conditional tests depend on a value being
+          set.
+
+        From Russell Mora:
+        * ace/OS_main.h:
+
+	  Fixed ACE main macro - on Tru64 this was complaining because:
+
+            int
+            main (int argc, char *argv[])
+
+          Was becoming:
+
+            int
+            namespace v4
+            {
+            ace_os_main_i (int, char *[])
+            /* ... */
+
+          I.e. it didn't like the 'int' appearing before the namespace.  I
+          added a forward declaration of main() to gobble this up - the
+          code now expands to:
+
+            int
+            main (int, char *[]);
+            namespace v4
+            {
+            int ace_os_main_i (int, char *[])
+            /* ... */
+
 Thu May 17 19:29:30 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * contrib/minizip/minizip.mpc:

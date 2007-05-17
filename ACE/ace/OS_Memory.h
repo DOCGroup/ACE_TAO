@@ -23,6 +23,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/OS_Errno.h"
+#include "ace/Basic_Types.h"
 #include "ace/os_include/os_stddef.h"
 
 // Allow an installation to replace the lowest-level allocation
@@ -236,6 +237,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_NEW_THROWS_EXCEPTIONS */
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 //@{
 /**
  * @name Efficiently compute aligned pointers to powers of 2 boundaries.
@@ -276,13 +278,31 @@ ACE_END_VERSIONED_NAMESPACE_DECL
  * @param ptr the base pointer
  * @param alignment the required alignment
  */
-#define ACE_align_binary(ptr, alignment) \
-    ((ptr + ((ptrdiff_t)((alignment)-1))) & (~((ptrdiff_t)((alignment)-1))))
+inline uintptr_t
+ACE_align_binary (uintptr_t ptr, uintptr_t alignment)
+{
+  uintptr_t const tmp = alignment - 1;
+  return (ptr + tmp) & (~tmp);
+}
 
 /// Return the next address aligned to a required boundary
-#define ACE_ptr_align_binary(ptr, alignment) \
-        ((char *) ACE_align_binary (((ptrdiff_t) (ptr)), (alignment)))
+inline char *
+ACE_ptr_align_binary (char const * ptr, uintptr_t alignment)
+{
+  return
+    reinterpret_cast<char *> (
+      ACE_align_binary (reinterpret_cast<uintptr_t const> (ptr), alignment));
+}
+
+/// Return the next address aligned to a required boundary
+inline char *
+ACE_ptr_align_binary (unsigned char const * ptr, uintptr_t alignment)
+{
+  return
+    ACE_ptr_align_binary (reinterpret_cast<char const *> (ptr), alignment);
+}
 //@}
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #include "ace/OS_NS_stdlib.h"
 
