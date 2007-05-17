@@ -77,7 +77,8 @@ TAO_GIOP_Message_Base::generate_request_header (
   // Get a parser for us
   TAO_GIOP_Message_Generator_Parser *generator_parser = 0;
 
-  CORBA::Octet major, minor;
+  CORBA::Octet major = 0;
+  CORBA::Octet minor = 0;
 
   cdr.get_version (major, minor);
 
@@ -329,7 +330,7 @@ TAO_GIOP_Message_Base::message_type (
     default:
         if (TAO_debug_level > 0)
           {
-        ACE_ERROR ((LM_ERROR,
+            ACE_ERROR ((LM_ERROR,
                     ACE_TEXT ("TAO (%P|%t) %N:%l        message_type : ")
                     ACE_TEXT ("wrong message.\n")));
            }
@@ -366,7 +367,7 @@ TAO_GIOP_Message_Base::parse_next_message (ACE_Message_Block &incoming,
           return -1;
         }
 
-      const size_t message_size = state.message_size (); /* Header + Payload */
+      size_t const message_size = state.message_size (); /* Header + Payload */
 
       if (message_size > incoming.length ())
         {
@@ -865,7 +866,7 @@ TAO_GIOP_Message_Base::write_protocol_header (TAO_GIOP_Message_Type type,
       0x50  // 'P'
     };
 
-  CORBA::Octet major, minor = 0;
+  CORBA::Octet major = 0, minor = 0;
 
   (void) msg.get_version (major, minor);
 
@@ -905,12 +906,10 @@ TAO_GIOP_Message_Base::process_request (
 
   CORBA::ULong request_id = 0;
   CORBA::Boolean response_required = false;
-  int parse_error = 0;
 
   try
     {
-      parse_error =
-        parser->parse_request_header (request);
+      int parse_error = parser->parse_request_header (request);
 
       // Throw an exception if the
       if (parse_error != 0)
@@ -1593,9 +1592,7 @@ TAO_GIOP_Message_Base::is_ready_for_bidirectional (TAO_OutputCDR &msg)
   msg.get_version (major, minor);
 
   // Get the state information that we need to use
-  this->set_state (major,
-                   minor,
-                   parser);
+  this->set_state (major, minor, parser);
 
   // We dont really know.. So ask the generator and parser objects that
   // we know.

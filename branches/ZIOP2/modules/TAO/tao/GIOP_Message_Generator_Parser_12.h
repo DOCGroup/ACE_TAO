@@ -34,7 +34,7 @@ class TAO_Transport;
  *
  */
 
-class TAO_Export TAO_GIOP_Message_Generator_Parser_12:
+class TAO_Export TAO_GIOP_Message_Generator_Parser_12 :
   public TAO_GIOP_Message_Generator_Parser
 {
 public:
@@ -43,29 +43,24 @@ public:
   virtual bool write_request_header (
       const TAO_Operation_Details &opdetails,
       TAO_Target_Specification &spec,
-      TAO_OutputCDR &msg
-    );
+      TAO_OutputCDR &msg);
 
   /// Write the LocateRequest header
   virtual bool write_locate_request_header (
       CORBA::ULong request_id,
       TAO_Target_Specification &spec,
-      TAO_OutputCDR &msg
-    );
+      TAO_OutputCDR &msg);
 
   /// Write the reply header in to @a output
   virtual bool write_reply_header (
       TAO_OutputCDR &output,
-      TAO_Pluggable_Reply_Params_Base &reply
-
-    );
+      TAO_Pluggable_Reply_Params_Base &reply);
 
   /// Writes the locate _reply message in to the @a output
   virtual bool write_locate_reply_mesg (
       TAO_OutputCDR &output,
       CORBA::ULong request_id,
-      TAO_GIOP_Locate_Status_Msg &status
-    );
+      TAO_GIOP_Locate_Status_Msg &status);
 
   virtual bool write_fragment_header (TAO_OutputCDR & cdr,
                                       CORBA::ULong request_id);
@@ -76,9 +71,7 @@ public:
 
   /// Parse the LocateRequest Header from the incoming stream. This will do a
   /// version specific parsing of the incoming Request header
-  virtual int parse_locate_header (
-      TAO_GIOP_Locate_Request_Header &
-    );
+  virtual int parse_locate_header (TAO_GIOP_Locate_Request_Header &);
 
   /// Parse the reply message
   virtual int parse_reply (TAO_InputCDR &input,
@@ -102,22 +95,26 @@ public:
 private:
 
   /// Marshall the TargetSpecification
-
   /// This method may be required for other GIOP versiona coming out
   /// later than 1.2. We need to share this method
   bool marshall_target_spec (TAO_Target_Specification &spec,
                              TAO_OutputCDR &msg);
 
   /// Check whether we have BiDirContext info available. If available
-  /// delegate  the responsibility on to the TAO_Transport classes to
+  /// delegate the responsibility on to the TAO_Transport classes to
   /// initiate action.
   /// @note At somepoint this may be needed for future versions of
   /// GIOP and we may have to share this
   bool check_bidirectional_context (TAO_ServerRequest &request);
 
   /// Process the BiDirContext info that we have received.
-  bool process_bidir_context (TAO_Service_Context &,
+  bool process_bidir_context (TAO_Service_Context &service_context,
                               TAO_Transport *transport);
+
+  bool check_compression_context (TAO_ServerRequest &request);
+
+  bool process_compression_context (TAO_Service_Context &service_context,
+                                    TAO_Transport *transport);
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -346,24 +346,6 @@ Index: Transport.cpp
    if (this->messaging_object ()->generate_request_header (opdetails,
                                                            spec,
                                                            output) == -1)
-@@ -2240,7 +2259,7 @@
-
-             }
-
--          const int retval = this->notify_reactor ();
-+          int const retval = this->notify_reactor ();
-
-           if (retval == 1)
-             {
-@@ -2296,7 +2315,7 @@
-
-
-   // Send a notification to the reactor...
--  const int retval = reactor->notify (eh,
-+  int const retval = reactor->notify (eh,
-                                       ACE_Event_Handler::READ_MASK);
-
-   if (retval < 0 && TAO_debug_level > 2)
 Index: GIOP_Message_State.cpp
 ===================================================================
 --- GIOP_Message_State.cpp	(revision 73868)

@@ -398,7 +398,7 @@ TAO_Transport::generate_request_header (
     TAO_Target_Specification &spec,
     TAO_OutputCDR &output)
 {
-  // codeset service context is only supposed to be sent in the first request
+  // Codeset service context is only supposed to be sent in the first request
   // on a particular connection.
   if (this->first_request_)
     {
@@ -413,9 +413,9 @@ TAO_Transport::generate_request_header (
     {
       if (TAO_debug_level > 0)
         {
-        ACE_DEBUG ((LM_DEBUG,
-                   ACE_TEXT ("(%P|%t) - Transport[%d]::generate_request_header, ")
-                   ACE_TEXT ("error while marshalling the Request header\n"),
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("(%P|%t) - Transport[%d]::generate_request_header, ")
+                      ACE_TEXT ("error while marshalling the Request header\n"),
                       this->id()));
         }
 
@@ -434,8 +434,7 @@ TAO_Transport::recache_transport (TAO_Transport_Descriptor_Interface *desc)
   this->purge_entry ();
 
   // Then add ourselves to the cache
-  return this->transport_cache_manager ().cache_transport (desc,
-                                                           this);
+  return this->transport_cache_manager ().cache_transport (desc, this);
 }
 
 int
@@ -464,9 +463,7 @@ TAO_Transport::update_transport (void)
 }
 
 /*
- *
  *  Methods called and used in the output path of the ORB.
- *
  */
 int
 TAO_Transport::handle_output (void)
@@ -523,16 +520,15 @@ TAO_Transport::send_message_block_chain_i (const ACE_Message_Block *mb,
                                            size_t &bytes_transferred,
                                            ACE_Time_Value *)
 {
-  const size_t total_length = mb->total_length ();
+  size_t const total_length = mb->total_length ();
 
   // We are going to block, so there is no need to clone
   // the message block.
-  TAO_Synch_Queued_Message synch_message (mb,
-                                          this->orb_core_);
+  TAO_Synch_Queued_Message synch_message (mb, this->orb_core_);
 
   synch_message.push_back (this->head_, this->tail_);
 
-  const int n = this->drain_queue_i ();
+  int const n = this->drain_queue_i ();
 
   if (n == -1)
     {
@@ -548,8 +544,7 @@ TAO_Transport::send_message_block_chain_i (const ACE_Message_Block *mb,
   // Remove the temporary message from the queue...
   synch_message.remove_from_list (this->head_, this->tail_);
 
-  bytes_transferred =
-    total_length - synch_message.message_length ();
+  bytes_transferred = total_length - synch_message.message_length ();
 
   return 0;
 }
@@ -2158,7 +2153,7 @@ TAO_Transport::handle_input_parse_data  (TAO_Resume_Handle &rh,
 
                 }
 
-              const int retval = this->notify_reactor ();
+              int const retval = this->notify_reactor ();
 
               if (retval == 1)
                 {
@@ -2177,8 +2172,7 @@ TAO_Transport::handle_input_parse_data  (TAO_Resume_Handle &rh,
             }
 
           // PRE: incoming_message_queue is empty
-          if (this->process_parsed_messages (&qd,
-                                             rh) == -1)
+          if (this->process_parsed_messages (&qd, rh) == -1)
             {
               return -1;
             }
@@ -2225,97 +2219,100 @@ TAO_Transport::process_parsed_messages (TAO_Queued_Data *qd,
          this->id(), qd->missing_data_));
     }
 
-  // Get the <message_type> that we have received
-  const TAO_Pluggable_Message_Type t = qd->msg_type_;
-
 #if TAO_HAS_TRANSPORT_CURRENT == 1
   // Update stats, if any
   if (this->stats_ != 0)
     this->stats_->messages_received (qd->msg_block_->length ());
 #endif /* TAO_HAS_TRANSPORT_CURRENT == 1 */
 
-  if (t == TAO_PLUGGABLE_MESSAGE_CLOSECONNECTION)
+  switch (qd->msg_type_)
     {
-      if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
-           ACE_TEXT ("TAO (%P|%t) - Transport[%d]::process_parsed_messages, ")
-           ACE_TEXT ("received CloseConnection message - %m\n"),
-           this->id()));
-
-      // Return a "-1" so that the next stage can take care of
-      // closing connection and the necessary memory management.
-      return -1;
-    }
-  else if (t == TAO_PLUGGABLE_MESSAGE_REQUEST ||
-           t == TAO_PLUGGABLE_MESSAGE_LOCATEREQUEST)
-    {
-      // Let us resume the handle before we go ahead to process the
-      // request. This will open up the handle for other threads.
-      rh.resume_handle ();
-
-      if (this->messaging_object ()->process_request_message (
-            this,
-            qd) == -1)
-        {
-          // Return a "-1" so that the next stage can take care of
-          // closing connection and the necessary memory management.
-          return -1;
-        }
-    }
-  else if (t == TAO_PLUGGABLE_MESSAGE_REPLY ||
-           t == TAO_PLUGGABLE_MESSAGE_LOCATEREPLY)
-    {
-      rh.resume_handle ();
-
-      TAO_Pluggable_Reply_Params params (this);
-
-      if (this->messaging_object ()->process_reply_message (params,
-                                                            qd) == -1)
+      case TAO_PLUGGABLE_MESSAGE_CLOSECONNECTION :
         {
           if (TAO_debug_level > 0)
             ACE_DEBUG ((LM_DEBUG,
                ACE_TEXT ("TAO (%P|%t) - Transport[%d]::process_parsed_messages, ")
-               ACE_TEXT ("error in process_reply_message - %m\n"),
-               this->id ()));
+               ACE_TEXT ("received CloseConnection message - %m\n"),
+               this->id()));
 
+          // Return a "-1" so that the next stage can take care of
+          // closing connection and the necessary memory management.
           return -1;
         }
+        break;
+      case TAO_PLUGGABLE_MESSAGE_REQUEST :
+      case TAO_PLUGGABLE_MESSAGE_LOCATEREQUEST :
+        {
+          // Let us resume the handle before we go ahead to process the
+          // request. This will open up the handle for other threads.
+          rh.resume_handle ();
 
-    }
-  else if (t == TAO_PLUGGABLE_MESSAGE_CANCELREQUEST)
-    {
-      // The associated request might be incomplpete residing
-      // fragmented in messaging object. We must make sure the
-      // resources allocated by fragments are released.
+          if (this->messaging_object ()->process_request_message (this, qd) == -1)
+            {
+              // Return a "-1" so that the next stage can take care of
+              // closing connection and the necessary memory management.
+              return -1;
+            }
+        }
+        break;
+      case TAO_PLUGGABLE_MESSAGE_REPLY :
+      case TAO_PLUGGABLE_MESSAGE_LOCATEREPLY :
+        {
+          rh.resume_handle ();
 
-      if (this->messaging_object ()->discard_fragmented_message (qd) == -1)
+          TAO_Pluggable_Reply_Params params (this);
+
+          if (this->messaging_object ()->process_reply_message (params,
+                                                                qd) == -1)
+            {
+              if (TAO_debug_level > 0)
+                ACE_ERROR ((LM_ERROR,
+                   ACE_TEXT ("TAO (%P|%t) - Transport[%d]::process_parsed_messages, ")
+                   ACE_TEXT ("error in process_reply_message - %m\n"),
+                   this->id ()));
+
+              return -1;
+            }
+
+        }
+        break;
+      case TAO_PLUGGABLE_MESSAGE_CANCELREQUEST :
+        {
+          // The associated request might be incomplpete residing
+          // fragmented in messaging object. We must make sure the
+          // resources allocated by fragments are released.
+
+          if (this->messaging_object ()->discard_fragmented_message (qd) == -1)
+            {
+              if (TAO_debug_level > 0)
+                {
+                  ACE_ERROR ((LM_ERROR,
+                     ACE_TEXT ("TAO (%P|%t) - Transport[%d]::process_parsed_messages, ")
+                     ACE_TEXT ("error processing CancelRequest\n"),
+                     this->id ()));
+                }
+            }
+
+          // We are not able to cancel requests being processed already;
+          // this is declared as optional feature by CORBA, and TAO does
+          // not support this currently.
+
+          // Just continue processing, CancelRequest does not mean to cut
+          // off the connection.
+        }
+        break;
+      case TAO_PLUGGABLE_MESSAGE_MESSAGERROR :
         {
           if (TAO_debug_level > 0)
             {
               ACE_ERROR ((LM_ERROR,
                  ACE_TEXT ("TAO (%P|%t) - Transport[%d]::process_parsed_messages, ")
-                 ACE_TEXT ("error processing CancelRequest\n"),
+                 ACE_TEXT ("received MessageError, closing connection\n"),
                  this->id ()));
             }
+          return -1;
         }
-
-      // We are not able to cancel requests being processed already;
-      // this is declared as optional feature by CORBA, and TAO does
-      // not support this currently.
-
-      // Just continue processing, CancelRequest does not mean to cut
-      // off the connection.
-    }
-  else if (t == TAO_PLUGGABLE_MESSAGE_MESSAGERROR)
-    {
-      if (TAO_debug_level > 0)
-        {
-          ACE_ERROR ((LM_ERROR,
-             ACE_TEXT ("TAO (%P|%t) - Transport[%d]::process_parsed_messages, ")
-             ACE_TEXT ("received MessageError, closing connection\n"),
-             this->id ()));
-        }
-      return -1;
+        break;
     }
 
   // If not, just return back..
@@ -2360,7 +2357,7 @@ TAO_Transport::process_queue_head (TAO_Resume_Handle &rh)
 
             }
 
-          const int retval = this->notify_reactor ();
+          int const retval = this->notify_reactor ();
 
           if (retval == 1)
             {
