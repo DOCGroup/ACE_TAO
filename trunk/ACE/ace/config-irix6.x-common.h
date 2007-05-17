@@ -60,6 +60,8 @@
 #define ACE_LACKS_CONDATTR_PSHARED
 #define ACE_LACKS_MUTEXATTR_PSHARED
 
+#define ACE_LACKS_SUSECONDS_T
+
 // Platform/compiler has the sigwait(2) prototype
 #define ACE_HAS_SIGWAIT
 #define ACE_HAS_SIGTIMEDWAIT

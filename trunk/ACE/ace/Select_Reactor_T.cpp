@@ -449,10 +449,10 @@ template <class ACE_SELECT_REACTOR_TOKEN> int
 ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::set_sig_handler
   (ACE_Sig_Handler *signal_handler)
 {
-  if (this->signal_handler_ != 0 && this->delete_signal_handler_ != 0)
+  if (this->delete_signal_handler_)
     delete this->signal_handler_;
   this->signal_handler_ = signal_handler;
-  this->delete_signal_handler_ = 0;
+  this->delete_signal_handler_ = false;
   return 0;
 }
 
@@ -466,7 +466,7 @@ template <class ACE_SELECT_REACTOR_TOKEN> int
 ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::timer_queue
   (ACE_Timer_Queue *tq)
 {
-  if (this->timer_queue_ != 0 && this->delete_timer_queue_)
+  if (this->delete_timer_queue_)
     delete this->timer_queue_;
   this->timer_queue_ = tq;
   this->delete_timer_queue_ = false;
@@ -568,7 +568,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::close (void)
     {
       delete this->signal_handler_;
       this->signal_handler_ = 0;
-      this->delete_signal_handler_ = 0;
+      this->delete_signal_handler_ = false;
     }
 
   this->handler_rep_.close ();
@@ -769,7 +769,8 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::handle_error (void)
 {
   ACE_TRACE ("ACE_Select_Reactor_T::handle_error");
 #if defined (linux) && defined (ERESTARTNOHAND)
-  if (errno == EINTR || errno == ERESTARTNOHAND)
+  int const error = errno; // Avoid multiple TSS accesses.
+  if (error == EINTR || error == ERESTARTNOHAND)
     return this->restart_;
 #else
   if (errno == EINTR)
@@ -1036,16 +1037,15 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::work_pending
     this->timer_queue_->calculate_timeout (&mwt, &timer_buf);
 
   // Check if we have timers to fire.
-  int const timers_pending =
-    (this_timeout != 0 && *this_timeout != mwt ? 1 : 0);
+  bool const timers_pending =
+    (this_timeout != 0 && *this_timeout != mwt ? true : false);
 
 #ifdef ACE_WIN32
   // This arg is ignored on Windows and causes pointer truncation
   // warnings on 64-bit compiles.
   int const width = 0;
 #else
-  int const width =
-    this->handler_rep_.max_handlep1 ();
+  int const width = this->handler_rep_.max_handlep1 ();
 #endif  /* ACE_WIN32 */
 
   ACE_Select_Reactor_Handle_Set fd_set;
@@ -1053,15 +1053,15 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::work_pending
   fd_set.wr_mask_ = this->wait_set_.wr_mask_;
   fd_set.ex_mask_ = this->wait_set_.ex_mask_;
 
-  int nfds = ACE_OS::select (width,
-                             fd_set.rd_mask_,
-                             fd_set.wr_mask_,
-                             fd_set.ex_mask_,
-                             this_timeout);
+  int const nfds = ACE_OS::select (width,
+                                   fd_set.rd_mask_,
+                                   fd_set.wr_mask_,
+                                   fd_set.ex_mask_,
+                                   this_timeout);
 
   // If timers are pending, override any timeout from the select()
   // call.
-  return (nfds == 0 && timers_pending != 0 ? 1 : nfds);
+  return (nfds == 0 && timers_pending ? 1 : nfds);
 }
 
 // Must be called with lock held.
@@ -1162,7 +1162,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::dispatch_notification_handlers
   // ACE_Select_Reactor_T's internal tables or the notify pipe is
   // enabled.  We'll handle all these threads and notifications, and
   // then break out to continue the event loop.
-  int n =
+  int const n =
     this->notify_handler_->dispatch_notifications (number_of_active_handles,
                                                    dispatch_set.rd_mask_);
 
