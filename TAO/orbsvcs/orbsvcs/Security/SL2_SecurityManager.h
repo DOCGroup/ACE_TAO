@@ -25,6 +25,7 @@
 #include "orbsvcs/SecurityLevel2C.h"
 
 #include "tao/LocalObject.h"
+#include "tao/PortableServer/PS_ForwardC.h"
 
 #include "ace/Hash_Map_Manager_T.h"
 #include "ace/Null_Mutex.h"
@@ -36,21 +37,6 @@
 
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
-template<>
-class ACE_Export ACE_Hash<CORBA::Object_var>
-{
-public:
-  unsigned long operator() (const CORBA::Object_var&) const;
-};
-
-template<>
-class ACE_Export ACE_Equal_To<CORBA::Object_var>
-{
-public:
-  int operator () (const CORBA::Object_var& lhs,
-		   const CORBA::Object_var& rhs) const;
-};
 
 namespace TAO
 {
@@ -78,19 +64,14 @@ namespace TAO
         ::CORBA::Object_ptr target,
         const char * operation_name,
         const char * target_interface_name
-      )
-	ACE_THROW_SPEC ((::CORBA::SystemException));
+					       );
 
-      virtual ::CORBA::Boolean default_decision (void)
-	ACE_THROW_SPEC ((::CORBA::SystemException));
-      virtual void default_decision (::CORBA::Boolean d)
-	ACE_THROW_SPEC ((::CORBA::SystemException));
+      virtual ::CORBA::Boolean default_decision (void);
+      virtual void default_decision (::CORBA::Boolean d);
 
       virtual void add_object (::CORBA::Object_ptr obj,
-			       ::CORBA::Boolean allow_insecure_access)
-	ACE_THROW_SPEC ((::CORBA::SystemException));
-      virtual void remove_object (::CORBA::Object_ptr obj)
-	ACE_THROW_SPEC ((::CORBA::SystemException));
+			       ::CORBA::Boolean allow_insecure_access);
+      virtual void remove_object (::CORBA::Object_ptr obj);
 
     private:
       /*!
@@ -112,7 +93,21 @@ namespace TAO
       // map itself will be sufficient, but we'll model this after the
       // Active Object map in the POA...so whatever way that goes, so, too,
       // will this.
-      typedef CORBA::Object_var OBJECT_KEY;
+      struct ReferenceKeyType
+      {
+	PortableServer::ObjectId_var oid_;
+	CORBA::OctetSeq_var adapter_id_;
+	CORBA::String_var orbid_;
+
+	// operations/methods necessary for functors in HashMap; might
+	// need to add operator< if we decide to use an RB_Tree
+	bool operator== (const ReferenceKeyType& other) const;
+	CORBA::ULong hash() const;
+
+	// operator kind of like a "toString()" for debug statements
+	operator const char* () const;
+      };
+      typedef ReferenceKeyType OBJECT_KEY;
       // This is typedef'd because we might try to do something fancier
       // where, rather than having just a string as the key, we have a
       // structure and the structure precomputes some of the information
@@ -120,19 +115,11 @@ namespace TAO
       // comparison functors so that they use the precomputed information
       // rather than computing it each time.  For now, though, I want to
       // make this easy to get things working.
-#if 0
-      typedef ACE_Hash_Map_Manager_Ex<OBJECT_KEY,  // stringified IOR
+      typedef ACE_Hash_Map_Manager_Ex<OBJECT_KEY,
 				      CORBA::Boolean, // access_allowed?
-				      ACE_Hash<const char*>,
-				      ACE_Equal_To<const char*>,
+				      ACE_Hash<OBJECT_KEY>,
+				      ACE_Equal_To<OBJECT_KEY>,
 				      ACE_Null_Mutex> // not sure this is right
-#else
-      typedef ACE_Hash_Map_Manager_Ex<OBJECT_KEY, // Object_var
-				      CORBA::Boolean, // access_allowed?
-				      ACE_Hash<CORBA::Object_var>,
-				      ACE_Equal_To<CORBA::Object_var>,
-				      ACE_Null_Mutex>
-#endif
       ACCESS_MAP_TYPE;
     
       ACCESS_MAP_TYPE access_map_;
@@ -174,24 +161,15 @@ namespace TAO
        * interface.
        */
       //@{
-      virtual ::Security::MechandOptionsList* supported_mechanisms ()
-        ACE_THROW_SPEC ((CORBA::SystemException));
-      virtual SecurityLevel2::CredentialsList* own_credentials ()
-        ACE_THROW_SPEC ((CORBA::SystemException));
-      virtual SecurityLevel2::RequiredRights_ptr required_rights_object ()
-        ACE_THROW_SPEC ((CORBA::SystemException));
-      virtual SecurityLevel2::PrincipalAuthenticator_ptr principal_authenticator ()
-        ACE_THROW_SPEC ((CORBA::SystemException));
-      virtual SecurityLevel2::AccessDecision_ptr access_decision ()
-        ACE_THROW_SPEC ((CORBA::SystemException));
-      virtual SecurityLevel2::AuditDecision_ptr audit_decision ()
-        ACE_THROW_SPEC ((CORBA::SystemException));
-      virtual SecurityLevel2::TargetCredentials_ptr get_target_credentials (CORBA::Object_ptr o)
-        ACE_THROW_SPEC ((CORBA::SystemException));
-      virtual void remove_own_credentials (SecurityLevel2::Credentials_ptr creds)
-        ACE_THROW_SPEC ((CORBA::SystemException));
-      virtual CORBA::Policy_ptr get_security_policy (CORBA::PolicyType policy_type)
-        ACE_THROW_SPEC ((CORBA::SystemException));
+      virtual ::Security::MechandOptionsList* supported_mechanisms ();
+      virtual SecurityLevel2::CredentialsList* own_credentials ();
+      virtual SecurityLevel2::RequiredRights_ptr required_rights_object ();
+      virtual SecurityLevel2::PrincipalAuthenticator_ptr principal_authenticator ();
+      virtual SecurityLevel2::AccessDecision_ptr access_decision ();
+      virtual SecurityLevel2::AuditDecision_ptr audit_decision ();
+      virtual SecurityLevel2::TargetCredentials_ptr get_target_credentials (CORBA::Object_ptr o);
+      virtual void remove_own_credentials (SecurityLevel2::Credentials_ptr creds);
+      virtual CORBA::Policy_ptr get_security_policy (CORBA::PolicyType policy_type);
       //@}
 
     protected:

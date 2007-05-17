@@ -158,7 +158,6 @@ TAO::Security::AccessDecision::access_allowed (
   const char * operation_name,
   const char * target_interface_name
 					       )
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // @@ I still don't know what we do with the cred_list in here...
   // Do we inspect it?
