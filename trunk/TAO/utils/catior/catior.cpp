@@ -1472,7 +1472,7 @@ cat_profile_helper (TAO_InputCDR& stream,
          && iiop_version_minor <= 2))
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "%I detected new v%d.%d %s profile that catior cannot decode",
+                  "%I detected new v%d.%d %s profile that catior cannot decode\n",
                   iiop_version_major,
                   iiop_version_minor,
                   protocol));
