@@ -361,8 +361,7 @@ TAO_GIOP_Message_Generator_Parser_12::parse_locate_header (
   request.request_id (req_id);
 
   // Unmarshal the target address field.
-  hdr_status =
-    hdr_status && request.profile ().unmarshall_target_address(msg);
+  hdr_status = hdr_status && request.profile ().unmarshall_target_address(msg);
 
   // Reset the pointer to an 8-byte bouns]dary
   msg.align_read_ptr (TAO_GIOP_MESSAGE_ALIGN_PTR);

@@ -9,7 +9,6 @@
 *  Header file for CORBA's Server Skeleton Interface's
 *  "Server Request" type.
 *
-*
 * @author Copyright 1994-1995 by Sun Microsystems Inc.
 * @author Chris Cleeland
 * @author Aniruddha Gokhale
@@ -223,13 +222,13 @@ public:
 
   void tao_send_reply_exception (const CORBA::Exception& ex);
 
-  /// Set the boolean member to 1.
+  /// Set the boolean member to true.
   void is_dsi (void);
 
   /// Set the member.
   void dsi_nvlist_align (ptrdiff_t alignment);
 
-  // Get the operation details for the current request.
+  /// Get the operation details for the current request.
   TAO_Operation_Details const * operation_details (void) const;
 
   /// Set the argument_flag

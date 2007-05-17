@@ -42,28 +42,6 @@ Index: CDR.cpp
    , request_id_ (0)
    , stub_ (0)
    , message_semantics_ (-1)
-Index: Tagged_Profile.inl
-===================================================================
---- Tagged_Profile.inl	(revision 73868)
-+++ Tagged_Profile.inl	(working copy)
-@@ -19,7 +19,7 @@
- ACE_INLINE TAO::ObjectKey &
- TAO_Tagged_Profile::object_key (void)
- {
--  if (this->object_key_extracted_ == 0)
-+  if (this->object_key_extracted_ == false)
-     this->object_key_extracted_ = this->extract_object_key (this->profile_);
-
-   return this->object_key_;
-@@ -31,7 +31,7 @@
-   this->object_key_.replace (object_key.length (),
-                              object_key.length (),
-                              object_key.get_buffer ());
--  this->object_key_extracted_ = 1;
-+  this->object_key_extracted_ = true;
- }
-
- ACE_INLINE const TAO::ObjectKey &
 Index: ORB_Core.cpp
 ===================================================================
 --- ORB_Core.cpp	(revision 73868)
@@ -178,19 +156,6 @@ Index: GIOP_Message_Base.cpp
  }
 
  TAO_END_VERSIONED_NAMESPACE_DECL
-Index: Tagged_Profile.h
-===================================================================
---- Tagged_Profile.h	(revision 73868)
-+++ Tagged_Profile.h	(working copy)
-@@ -74,7 +74,7 @@
-
-   /// Get the profile index, that needs to be used in the
-   /// sequnce of TaggedProfiles contained  IOP::IOR that is
--  /// receivedfrom the client.
-+  /// received from the client.
-   CORBA::ULong profile_index (void) const;
-
-   /// Accessor to the type_id contained in the IOP::IOR received from
 Index: operation_details.inl
 ===================================================================
 --- operation_details.inl	(revision 73868)
@@ -699,19 +664,6 @@ Index: operation_details.h
  #if TAO_HAS_INTERCEPTORS == 1
    /// FT request expiration time (absolute gregorian)
    TimeBase::TimeT ft_expiration_time_;
-Index: Remote_Invocation.cpp
-===================================================================
---- Remote_Invocation.cpp	(revision 73868)
-+++ Remote_Invocation.cpp	(working copy)
-@@ -149,7 +149,7 @@
-     TAO_Protocols_Hooks *tph =
-       this->resolver_.stub ()->orb_core ()->get_protocols_hooks ();
-
--    CORBA::Boolean set_client_network_priority =
-+    CORBA::Boolean const set_client_network_priority =
-       tph->set_client_network_priority (this->resolver_.transport ()->tag (),
-                                         this->resolver_.stub ()
-                                         ACE_ENV_ARG_PARAMETER);
 Index: IIOP_Transport.cpp
 ===================================================================
 --- IIOP_Transport.cpp	(revision 73868)
@@ -753,15 +705,6 @@ Index: GIOP_Message_Generator_Parser_12.cpp
    if (input.length () > 0)
      {
        // Reset the read_ptr to an 8-byte boundary.
-@@ -346,7 +349,7 @@
-   // Get the stream .
-   TAO_InputCDR &msg = request.incoming_stream ();
-
--  CORBA::Boolean hdr_status = 1;
-+  CORBA::Boolean hdr_status = true;
-
-   // Get the request id.
-   CORBA::ULong req_id = 0;
 @@ -554,6 +557,25 @@
  }
 
@@ -838,19 +781,6 @@ Index: GIOP_Message_State.inl
 ===================================================================
 --- GIOP_Message_State.inl	(revision 73868)
 +++ GIOP_Message_State.inl	(working copy)
-@@ -7,10 +7,10 @@
- ACE_INLINE CORBA::ULong
- TAO_GIOP_Message_State::message_size (void) const
- {
--  CORBA::ULong len =
-+  CORBA::ULong const len =
-     this->message_size_ + TAO_GIOP_MESSAGE_HEADER_LEN;
-
--  return len;
-+  return len;
- }
-
- ACE_INLINE CORBA::ULong
 @@ -31,6 +31,7 @@
    this->message_type_ = 0;
    this->message_size_ = 0;

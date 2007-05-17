@@ -7,10 +7,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_INLINE CORBA::ULong
 TAO_GIOP_Message_State::message_size (void) const
 {
-  CORBA::ULong len =
-    this->message_size_ + TAO_GIOP_MESSAGE_HEADER_LEN;
-
-  return len;
+  return this->message_size_ + TAO_GIOP_MESSAGE_HEADER_LEN;
 }
 
 ACE_INLINE CORBA::ULong
