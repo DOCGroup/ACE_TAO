@@ -565,8 +565,7 @@ TAO_GIOP_Message_Generator_Parser_12::check_compression_context (
   // the ServiceContextList
   if (service_context.is_service_id (IOP::TAG_ZIOP_COMPONENT))
     {
-      return this->process_compression_context (service_context,
-                                                request.transport ());
+      return this->process_compression_context (service_context, request);
     }
 
   return false;
@@ -597,7 +596,7 @@ TAO_GIOP_Message_Generator_Parser_12::process_bidir_context (
 bool
 TAO_GIOP_Message_Generator_Parser_12::process_compression_context (
     TAO_Service_Context &service_context,
-    TAO_Transport *transport)
+    TAO_ServerRequest &request)
 {
   // Get the context info
   IOP::ServiceContext context;
@@ -607,14 +606,25 @@ TAO_GIOP_Message_Generator_Parser_12::process_compression_context (
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("(%P|%t) Context info not found \n")),
                         false);
+
   TAO_InputCDR cdr (reinterpret_cast<const char*> (
                       context.context_data.get_buffer ()),
                       context.context_data.length ());
 
-  // Context contains the compressor id and original message length, extract
-  // that info
-//
-//  return transport->tear_listen_point_list (cdr);
+  CORBA::Boolean byte_order;
+  if ((cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
+    return false;
+
+  cdr.reset_byte_order (static_cast<int> (byte_order));
+
+  CORBA::ULong message_length = 0;
+  if (!(cdr >> message_length))
+    return false;
+
+//+  request.compressed_ = true;
+//+  request.original_message_length_ = message_length;
+//+
+
   return true;
 }
 

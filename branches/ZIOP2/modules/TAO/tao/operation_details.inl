@@ -20,6 +20,7 @@ TAO_Operation_Details::TAO_Operation_Details (const char *name,
     , num_args_ (num)
     , ex_data_ (data)
     , ex_count_ (count)
+    , compressed_ (false)
     , use_stub_args_ (args ? true : false)
 #if TAO_HAS_INTERCEPTORS == 1
     , ft_expiration_time_ (0)
@@ -234,5 +235,16 @@ TAO_Operation_Details::reply_dispatcher (TAO_Reply_Dispatcher *rd)
   this->reply_dispatcher_ = rd;
 }
 
+ACE_INLINE void
+TAO_Operation_Details::compressed (CORBA::Boolean compressed)
+{
+  this->compressed_ = compressed;
+}
+
+ACE_INLINE CORBA::Boolean
+TAO_Operation_Details::compressed (void) const
+{
+  return this->compressed_;
+}
 
 TAO_END_VERSIONED_NAMESPACE_DECL

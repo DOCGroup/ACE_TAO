@@ -114,7 +114,7 @@ private:
   bool check_compression_context (TAO_ServerRequest &request);
 
   bool process_compression_context (TAO_Service_Context &service_context,
-                                    TAO_Transport *transport);
+                                    TAO_ServerRequest &request);
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -23,6 +23,7 @@
 #include "tao/ORB_Core.h"
 #include "tao/MMAP_Allocator.h"
 #include "tao/SystemException.h"
+#include "tao/Operation_Details.h"
 
 #include "ace/OS_NS_sys_time.h"
 #include "ace/OS_NS_stdio.h"
@@ -405,6 +406,22 @@ TAO_Transport::generate_request_header (
       TAO_Codeset_Manager * const csm = this->orb_core ()->codeset_manager ();
       if (csm)
         csm->generate_service_context (opdetails,*this);
+    }
+
+  // Check whether we have Compression set
+  if (opdetails.compressed ())
+    {
+      TAO_OutputCDR cdr;
+
+      // Add the original message length to the service contenxt
+      CORBA::ULong length = opdetails.uncompressed_size_;
+      if ((cdr << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER) == 0)
+          || (cdr << length) == 0)
+        return -1;
+
+      // Add this info in to the svc_list
+      opdetails.request_service_context ().set_context (IOP::TAG_ZIOP_COMPONENT,
+                                                        cdr);
     }
 
   if (this->messaging_object ()->generate_request_header (opdetails,
