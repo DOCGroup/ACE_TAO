@@ -727,7 +727,7 @@ TSS_Cleanup_Instance::~TSS_Cleanup_Instance (void)
           {
             ACE_ASSERT (reference_count_ > 0);
             --reference_count_;
-            if (reference_count_ == 0 && instance_ == NULL)
+            if (reference_count_ == 0 && instance_ == 0)
               condition_->signal ();
           }
       }
@@ -745,7 +745,7 @@ bool
 TSS_Cleanup_Instance::valid()
 {
   ACE_SET_BITS(flags_, FLAG_VALID_CHECKED);
-  return (this->instance_ != NULL);
+  return (this->instance_ != 0);
 }
 
 ACE_TSS_Cleanup *

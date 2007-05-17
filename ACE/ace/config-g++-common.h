@@ -43,6 +43,10 @@
 
 #if defined (ACE_HAS_EXCEPTIONS)
 #  define ACE_NEW_THROWS_EXCEPTIONS
+#  if (__GNUC__ >= 4 || (__GNUC__ == 3 && __GNUC_MINOR__ >= 3))
+// Versions of g++ prior to 3.3 had a buggy operator // new(nothrow)[]().
+#    define ACE_HAS_NEW_NOTHROW
+#  endif /* __GNUC__ >= 3.3 */
 #endif /* ACE_HAS_EXCEPTIONS */
 
 #if (defined (i386) || defined (__i386__)) && !defined (ACE_SIZEOF_LONG_DOUBLE)

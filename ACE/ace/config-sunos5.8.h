@@ -30,4 +30,7 @@
 #  endif /* ACE_LACKS_RWLOCK_T */
 # endif /* _POSIX_PTHREAD_SEMANTICS */
 
+// This is no longer the case for Sun 5.9 onwards
+# undef ACE_HAS_X86_STAT_MACROS
+
 #endif /* ACE_CONFIG_H */
