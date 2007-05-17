@@ -75,9 +75,7 @@ TAO_IIOP_Transport::send (iovec *iov, int iovcnt,
                           const ACE_Time_Value *max_wait_time)
 {
   ssize_t const retval =
-    this->connection_handler_->peer ().sendv (iov,
-                                              iovcnt,
-                                              max_wait_time);
+    this->connection_handler_->peer ().sendv (iov, iovcnt, max_wait_time);
 
   if (retval > 0)
     bytes_transferred = retval;
@@ -307,9 +305,9 @@ TAO_IIOP_Transport::generate_request_header (TAO_Operation_Details &opdetails,
   // messaging objects are ready to handle bidirectional connections
   // and also make sure that we have not recd. or sent any information
   // regarding this before...
-  if (this->orb_core ()->bidir_giop_policy () &&
-      this->messaging_object_->is_ready_for_bidirectional (msg) &&
-      this->bidirectional_flag () < 0)
+  if (this->bidirectional_flag () < 0 &&
+      this->orb_core ()->bidir_giop_policy () &&
+      this->messaging_object_->is_ready_for_bidirectional (msg))
     {
       this->set_bidir_context_info (opdetails);
 
@@ -324,14 +322,11 @@ TAO_IIOP_Transport::generate_request_header (TAO_Operation_Details &opdetails,
       opdetails.request_id (this->tms ()->request_id ());
     }
 
-  return TAO_Transport::generate_request_header (opdetails,
-                                                 spec,
-                                                 msg);
+  return TAO_Transport::generate_request_header (opdetails, spec, msg);
 }
 
 int
-TAO_IIOP_Transport::messaging_init (CORBA::Octet major,
-                                    CORBA::Octet minor)
+TAO_IIOP_Transport::messaging_init (CORBA::Octet major, CORBA::Octet minor)
 {
   this->messaging_object_->init (major, minor);
 
@@ -409,8 +404,7 @@ TAO_IIOP_Transport::set_bidir_context_info (TAO_Operation_Details &opdetails)
     return;
 
   // Add this info in to the svc_list
-  opdetails.request_service_context ().set_context (IOP::BI_DIR_IIOP,
-                                                    cdr);
+  opdetails.request_service_context ().set_context (IOP::BI_DIR_IIOP, cdr);
 
   return;
 }
@@ -427,18 +421,15 @@ TAO_IIOP_Transport::get_listen_point (
     return -1;
 
   // Get the array of endpoints serviced by TAO_IIOP_Acceptor
-  const ACE_INET_Addr *endpoint_addr =
-    iiop_acceptor->endpoints ();
+  const ACE_INET_Addr *endpoint_addr = iiop_acceptor->endpoints ();
 
   // Get the endpoint count
-  size_t const count =
-    iiop_acceptor->endpoint_count ();
+  size_t const count = iiop_acceptor->endpoint_count ();
 
   // Get the local address of the connection
   ACE_INET_Addr local_addr;
 
-  if (this->connection_handler_->peer ().get_local_addr (local_addr)
-      == -1)
+  if (this->connection_handler_->peer ().get_local_addr (local_addr) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("TAO (%P|%t) - IIOP_Transport::get_listen_point, ")
