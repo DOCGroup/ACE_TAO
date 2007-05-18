@@ -1,3 +1,14 @@
+Fri May 18 03:46:15 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * ASNMP/agent/snmp_agent.cpp:
+        * Kokyu/DSRT_Sched_Queue_T.cpp:
+
+          More fixes to eliminate "staement is uncreachable" warning.
+
+        * ASNMP/agent/snmp_agent.cpp:
+
+          Replaced tabs with spaces.
+
 Fri May 18 02:12:34 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * examples/Connection/blocking/SPIPE-acceptor.cpp:
@@ -6,13 +17,13 @@ Fri May 18 02:12:34 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
         * examples/Reactor/Misc/test_demuxing.cpp:
         * examples/Web_Crawler/Mem_Map_Stream.cpp:
 
-          It makes no sense to have code after a return statement 
+          It makes no sense to have code after a return statement
           (such as ACE_ERROR_RETURN). It causes some builds to have
           "statement is unreachable" warning.
 
         * examples/Connection/blocking/SPIPE-acceptor.cpp:
-          
-          Replaced tabs with spaces. 
+
+          Replaced tabs with spaces.
 
 Thu May 17 22:35:37 UTC 2007  Ossama Othman  <ossama_othman at symantec dot com>
 
@@ -111,7 +122,7 @@ Thu May 17 22:13:32 UTC 2007  Ossama Othman  <ossama_othman at symantec dot com>
         From Russell Mora:
         * ace/OS_main.h:
 
-	  Fixed ACE main macro - on Tru64 this was complaining because:
+          Fixed ACE main macro - on Tru64 this was complaining because:
 
             int
             main (int argc, char *argv[])
