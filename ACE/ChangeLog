@@ -1,3 +1,8 @@
+Fri May 18 10:51:26 UTC 2007  Olli Savia  <ops@iki.fi>
+
+        * ace/Sig_Handler.cpp:
+          Removed unnecessary LynxOS specific code.
+
 Fri May 18 06:15:30 UTC 2007  Olli Savia  <ops@iki.fi>
 
         * tests/TkReactor_Test.cpp:
