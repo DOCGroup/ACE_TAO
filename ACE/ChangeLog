@@ -1,3 +1,9 @@
+Fri May 18 22:43:40 UTC 2007  Ossama Othman  <ossama_othman at symantec dot com>
+
+        * ace/CDR_Stream.inl (skip_longlong):
+
+          Fixed typo.  Call skip_ulonglong(), not skip_ulong().
+
 Fri May 18 17:34:57 UTC 2007  Sumant Tambe  <sutambe@nospam>
 
         * docs/svn/config:

@@ -973,7 +973,7 @@ ACE_InputCDR::skip_ulonglong (void)
 ACE_INLINE ACE_CDR::Boolean
 ACE_InputCDR::skip_longlong (void)
 {
-  return this->skip_ulong ();  // sizeof (LongLong) == sizeof (ULongLong)
+  return this->skip_ulonglong ();  // sizeof (LongLong) == sizeof (ULongLong)
 }
 
 ACE_INLINE ACE_CDR::Boolean
