@@ -15,6 +15,7 @@
 #include "tao/ORB_Core.h"
 #include "tao/Service_Context.h"
 #include "tao/SystemException.h"
+#include "tao/ZIOP_Adapter.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
 # include "tao/PortableInterceptorC.h"
@@ -84,9 +85,15 @@ namespace TAO
                                 TAO_Transport::TAO_TWOWAY_REQUEST,
                                 max_wait_time);
 
+        TAO_OutputCDR second;
+        this->orb_core()->ziop_adapter ()->compress (*this->orb_core(), this->details_, second);
+
         this->write_header (tspec, cdr);
 
-        this->marshal_data (cdr);
+//        this->marshal_data (cdr);
+        //ACE_CDR::consolidate (&cdr, &second);
+        cdr.write_char_array (second.buffer (), second.total_length ());
+        //cdr.
 
         // Register a reply dispatcher for this invocation. Use the
         // preallocated reply dispatcher.
@@ -644,9 +651,11 @@ namespace TAO
                                 TAO_Transport::TAO_ONEWAY_REQUEST,
                                 max_wait_time);
 
+        this->orb_core()->ziop_adapter ()->compress (*this->orb_core(), this->details_, cdr);
+
         this->write_header (tspec, cdr);
 
-        this->marshal_data (cdr);
+        //this->marshal_data (cdr);
 
         countdown.update ();
 

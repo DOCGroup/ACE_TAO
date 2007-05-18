@@ -245,52 +245,6 @@ Index: ORB_Core.h
  };
 
  // ****************************************************************
-Index: GIOP_Message_State.cpp
-===================================================================
---- GIOP_Message_State.cpp	(revision 73868)
-+++ GIOP_Message_State.cpp	(working copy)
-@@ -23,6 +23,7 @@
-     message_type_ (0),
-     message_size_ (0),
-     more_fragments_ (0),
-+    compressed_ (0),
-     missing_data_ (0)
- {
- }
-@@ -204,12 +205,17 @@
-       this->more_fragments_ =
-         (CORBA::Octet) (buf[TAO_GIOP_MESSAGE_FLAGS_OFFSET]& 0x02);
-
--      if ((buf[TAO_GIOP_MESSAGE_FLAGS_OFFSET] & ~0x3) != 0)
-+      // Read the compression bit
-+      this->compressed_ =
-+        (CORBA::Octet) (buf[TAO_GIOP_MESSAGE_FLAGS_OFFSET]& 0x04);
-+
-+      if ((buf[TAO_GIOP_MESSAGE_FLAGS_OFFSET] & ~0x7) != 0)
-         {
-           if (TAO_debug_level > 2)
-             {
-               ACE_DEBUG ((LM_DEBUG,
--                          ACE_TEXT ("TAO (%P|%t) - invalid flags for <%d> ")
-+                          ACE_TEXT ("TAO (%P|%t) - GIOP_Message_State::get_byte_order_info, ")
-+                          ACE_TEXT ("invalid flags for <%d> ")
-                           ACE_TEXT ("for version <%d %d> \n"),
-                           buf[TAO_GIOP_MESSAGE_FLAGS_OFFSET],
-                           this->giop_version_.major,
-Index: GIOP_Message_State.h
-===================================================================
---- GIOP_Message_State.h	(revision 73868)
-+++ GIOP_Message_State.h	(working copy)
-@@ -114,6 +114,9 @@
-   /// fragments.
-   CORBA::Octet more_fragments_;
-
-+  /// Do we have compressed data or not
-+  CORBA::Octet compressed_;
-+
-   /// Missing data
-   CORBA::ULong missing_data_;
- };
 Index: CDR.h
 ===================================================================
 --- CDR.h	(revision 73868)
@@ -666,18 +620,6 @@ Index: GIOP_Message_Generator_Parser_12.cpp
  size_t
  TAO_GIOP_Message_Generator_Parser_12::fragment_header_length (void) const
  {
-Index: GIOP_Message_State.inl
-===================================================================
---- GIOP_Message_State.inl	(revision 73868)
-+++ GIOP_Message_State.inl	(working copy)
-@@ -31,6 +31,7 @@
-   this->message_type_ = 0;
-   this->message_size_ = 0;
-   this->more_fragments_ = 0;
-+  this->compressed_ = 0;
-   this->missing_data_ = 0;
- }
-
 Index: Synch_Invocation.cpp
 ===================================================================
 --- Synch_Invocation.cpp	(revision 73868)

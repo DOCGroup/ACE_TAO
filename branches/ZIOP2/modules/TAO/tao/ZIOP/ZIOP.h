@@ -24,7 +24,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/PI/PI.h"
-#include "tao/BiDir_Adapter.h"
+#include "tao/ZIOP_Adapter.h"
 #include "ace/Service_Config.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -35,7 +35,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  * @brief Class that loads the BiDir library.
  */
 
-class TAO_ZIOP_Export TAO_ZIOP_Loader : public TAO_BiDir_Adapter
+class TAO_ZIOP_Export TAO_ZIOP_Loader : public TAO_ZIOP_Adapter
 {
 public:
 
@@ -44,6 +44,10 @@ public:
 
   /// Destructor
   virtual ~TAO_ZIOP_Loader (void);
+
+  virtual bool decompress (TAO_ServerRequest& server_request);
+
+  virtual bool compress (TAO_ORB_Core& core, TAO_Operation_Details &detail, TAO_OutputCDR &out_stream);
 
   /// Initialize the BiDIR loader hooks.
   virtual int init (int argc,

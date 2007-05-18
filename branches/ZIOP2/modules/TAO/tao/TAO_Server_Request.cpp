@@ -83,6 +83,7 @@ TAO_ServerRequest::TAO_ServerRequest (TAO_Pluggable_Messaging *mesg_base,
     , reply_status_ (-1)
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
     , transport_selection_guard_ (transport)
+    , original_message_length_ (0)
 {
   ACE_FUNCTION_TIMEPROBE (TAO_SERVER_REQUEST_START);
   // No-op.

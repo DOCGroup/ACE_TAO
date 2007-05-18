@@ -12,6 +12,7 @@
 #include "tao/Request_Dispatcher.h"
 #include "tao/Codeset_Manager.h"
 #include "tao/SystemException.h"
+#include "tao/ZIOP_Adapter.h"
 #include "ace/Min_Max.h"
 
 /*
@@ -119,7 +120,7 @@ TAO_GIOP_Message_Base::generate_locate_request_header (
   // Get a parser for us
   TAO_GIOP_Message_Generator_Parser *generator_parser = 0;
 
-  CORBA::Octet major, minor;
+  CORBA::Octet major = 0, minor = 0;
 
   cdr.get_version (major, minor);
 
@@ -160,7 +161,7 @@ TAO_GIOP_Message_Base::generate_reply_header (
   // Get a parser for us
   TAO_GIOP_Message_Generator_Parser *generator_parser = 0;
 
-  CORBA::Octet major, minor;
+  CORBA::Octet major = 0, minor = 0;
 
   cdr.get_version (major, minor);
 
@@ -180,10 +181,7 @@ TAO_GIOP_Message_Base::generate_reply_header (
   try
     {
       // Now call the implementation for the rest of the header
-      int const result =
-        generator_parser->write_reply_header (cdr, params);
-
-      if (!result)
+      if (!generator_parser->write_reply_header (cdr, params))
         {
           if (TAO_debug_level > 4)
             ACE_ERROR ((LM_ERROR,
@@ -212,7 +210,7 @@ TAO_GIOP_Message_Base::generate_fragment_header (TAO_OutputCDR & cdr,
   // Get a parser for us
   TAO_GIOP_Message_Generator_Parser *generator_parser = 0;
 
-  CORBA::Octet major, minor;
+  CORBA::Octet major = 0, minor = 0;
 
   cdr.get_version (major, minor);
 
@@ -909,10 +907,8 @@ TAO_GIOP_Message_Base::process_request (
 
   try
     {
-      int parse_error = parser->parse_request_header (request);
-
-      // Throw an exception if the
-      if (parse_error != 0)
+      // Throw an exception if the parsing of the header failed
+      if (parser->parse_request_header (request) != 0)
         throw ::CORBA::MARSHAL (0, CORBA::COMPLETED_NO);
 
       TAO_Codeset_Manager *csm = request.orb_core ()->codeset_manager ();
@@ -927,6 +923,24 @@ TAO_GIOP_Message_Base::process_request (
       response_required = request.response_expected ();
 
       CORBA::Object_var forward_to;
+
+if (request.original_message_length_ > 0)
+{
+  this->orb_core_->ziop_adapter ()->decompress (request);
+//+#if !defined (__BORLANDC__)
+//+            Bytef* LargBuffer = new Bytef [request.original_message_length_ * 2];
+//+     uLongf length = request.original_message_length_ * 2;
+//+            int retval = uncompress (LargBuffer,   &length,
+//+       (const Bytef*)cdr.rd_ptr(), cdr.length ());
+//+                          //       reinterpret_cast <const Bytef*>(compression_stream.buffer ()), compression_stream.total_length ());
+//+     char* buf = (char*)LargBuffer;
+
+//+TAO_InputCDR* newstream = new TAO_InputCDR (buf, (size_t)length);
+//+request.incoming_ = newstream;
+//+#endif
+//+
+//+ // do decompression
+}
 
       /*
        * Hook to specialize request processing within TAO
@@ -1235,13 +1249,10 @@ TAO_GIOP_Message_Base::make_send_locate_reply (TAO_Transport *transport,
   // Note here we are making the Locate reply header which is *QUITE*
   // different from the reply header made by the make_reply () call..
   // Make the GIOP message header
-  this->write_protocol_header (TAO_GIOP_LOCATEREPLY,
-                               output);
+  this->write_protocol_header (TAO_GIOP_LOCATEREPLY, output);
 
   // This writes the header & body
-  parser->write_locate_reply_mesg (output,
-                                   request.request_id (),
-                                   status_info);
+  parser->write_locate_reply_mesg (output, request.request_id (), status_info);
 
   output.more_fragments (false);
 
@@ -1611,8 +1622,7 @@ TAO_GIOP_Message_Base::make_queued_data (size_t sz)
   // bytes. As we may not know how many bytes will be lost, we will
   // allocate ACE_CDR::MAX_ALIGNMENT extra.
   ACE_Data_Block *db =
-    this->orb_core_->create_input_cdr_data_block (sz +
-                                                  ACE_CDR::MAX_ALIGNMENT);
+    this->orb_core_->create_input_cdr_data_block (sz + ACE_CDR::MAX_ALIGNMENT);
 
   TAO_Queued_Data *qd =
     TAO_Queued_Data::make_queued_data (
@@ -1698,8 +1708,7 @@ TAO_GIOP_Message_Base::parse_request_id (const TAO_Queued_Data *qd,
   // Get the flag in the message block
   flg = qd->msg_block_->self_flags ();
 
-  if (ACE_BIT_ENABLED (flg,
-                       ACE_Message_Block::DONT_DELETE))
+  if (ACE_BIT_ENABLED (flg, ACE_Message_Block::DONT_DELETE))
     {
       // Use the same datablock
       db = qd->msg_block_->data_block ();

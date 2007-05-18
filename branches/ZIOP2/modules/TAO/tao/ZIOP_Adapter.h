@@ -2,15 +2,15 @@
 
 //=============================================================================
 /**
- *  @file    Compression_Adapter.h
+ *  @file    ZIOP_Adapter.h
  *
  *  $Id$
  *
  *  @author  Johnny Willemsen  <jwillemsen@remedy.nl>
  */
 //=============================================================================
-#ifndef TAO_COMPRESSION_ADAPTER_H
-#define TAO_COMPRESSION_ADAPTER_H
+#ifndef TAO_ZIOP_ADAPTER_H
+#define TAO_ZIOP_ADAPTER_H
 
 #include /**/ "ace/pre.h"
 #include "ace/Service_Object.h"
@@ -21,27 +21,35 @@
 
 #include "tao/TAO_Export.h"
 #include "tao/orbconf.h"
+#include "tao/TAO_Server_Request.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+class TAO_Policy_Validator;
+
 /**
- * @class TAO_Compression_Adapter
+ * @class TAO_ZIOP_Adapter
  *
- * @brief TAO_Compression_Adapter.
+ * @brief TAO_ZIOP_Adapter.
  *
  * Class that offers an interface to the ORB to load and manipulate
- * Compression library.
+ * ZIOP library.
  */
-class TAO_Export TAO_Compression_Adapter : public ACE_Service_Object
+class TAO_Export TAO_ZIOP_Adapter : public ACE_Service_Object
 {
 public:
+  virtual bool decompress (TAO_ServerRequest& server_request) = 0;
+
+  virtual bool compress (TAO_ORB_Core& core, TAO_Operation_Details &detail, TAO_OutputCDR &out_stream) = 0;
+
+  virtual void load_policy_validators (TAO_Policy_Validator &validator) = 0;
 
   /// The virtual destructor
-  virtual ~TAO_Compression_Adapter (void);
+  virtual ~TAO_ZIOP_Adapter (void);
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 
-#endif /* TAO_COMPRESSION_ADAPTER_H */
+#endif /* TAO_ZIOP_ADAPTER_H */

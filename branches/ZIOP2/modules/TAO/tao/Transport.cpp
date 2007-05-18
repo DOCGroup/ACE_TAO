@@ -409,20 +409,20 @@ TAO_Transport::generate_request_header (
     }
 
   // Check whether we have Compression set
-  if (opdetails.compressed ())
-    {
-      TAO_OutputCDR cdr;
-
-      // Add the original message length to the service contenxt
-      CORBA::ULong length = opdetails.uncompressed_size_;
-      if ((cdr << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER) == 0)
-          || (cdr << length) == 0)
-        return -1;
-
-      // Add this info in to the svc_list
-      opdetails.request_service_context ().set_context (IOP::TAG_ZIOP_COMPONENT,
-                                                        cdr);
-    }
+//  if (opdetails.compressed ())
+//    {
+//      TAO_OutputCDR cdr;
+//
+//      // Add the original message length to the service contenxt
+//      CORBA::ULong length = opdetails.uncompressed_size_;
+//      if ((cdr << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER) == 0)
+//          || (cdr << length) == 0)
+//        return -1;
+//
+//      // Add this info in to the svc_list
+//      opdetails.request_service_context ().set_context (IOP::TAG_ZIOP_COMPONENT,
+//                                                        cdr);
+//    }
 
   if (this->messaging_object ()->generate_request_header (opdetails,
                                                           spec,

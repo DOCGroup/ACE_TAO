@@ -621,6 +621,7 @@ TAO_GIOP_Message_Generator_Parser_12::process_compression_context (
   if (!(cdr >> message_length))
     return false;
 
+   request.original_message_length_ = message_length;
 //+  request.compressed_ = true;
 //+  request.original_message_length_ = message_length;
 //+
