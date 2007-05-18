@@ -3,6 +3,8 @@
 #include "Hello.h"
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
+#include "tao/ZIOP/ZIOP.h"
+#include "tao/Compression/zlib/ZlibCompressor_Factory.h"
 
 ACE_RCSID (Hello,
            server,
@@ -46,6 +48,25 @@ main (int argc, char *argv[])
 
       CORBA::Object_var poa_object =
         orb->resolve_initial_references("RootPOA");
+
+      CORBA::Object_var compression_manager =
+        orb->resolve_initial_references("CompressionManager");
+
+      Compression::CompressionManager_var manager =
+        Compression::CompressionManager::_narrow (compression_manager.in ());
+
+      if (CORBA::is_nil(manager.in ()))
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           " (%P|%t) Panic: nil compression manager\n"),
+                          1);
+
+      Compression::CompressorFactory_ptr compressor_factory;
+
+      ACE_NEW_RETURN (compressor_factory, TAO::Zlib_CompressorFactory (), 1);
+
+      Compression::CompressorFactory_var compr_fact = compressor_factory;
+      manager->register_factory(compr_fact.in ());
+
 
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (poa_object.in ());

@@ -11,7 +11,7 @@ Hello::Hello (CORBA::ORB_ptr orb)
 }
 
 char *
-Hello::get_string (void)
+Hello::get_string (const char * mystring)
 {
   return CORBA::string_dup ("Hello there!");
 }

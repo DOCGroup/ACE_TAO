@@ -8,7 +8,7 @@ project(*idl): taoidldefaults {
   custom_only = 1
 }
 
-project(*Server): taoserver {
+project(*Server): taoserver, compression, ziop, codecfactory, zlibcompressor {
   after += *idl
   Source_Files {
     Hello.cpp
@@ -22,7 +22,7 @@ project(*Server): taoserver {
   }
 }
 
-project(*Client): taoclient {
+project(*Client): taoclient, compression, ziop, codecfactory, zlibcompressor {
   after += *idl
   Source_Files {
     client.cpp

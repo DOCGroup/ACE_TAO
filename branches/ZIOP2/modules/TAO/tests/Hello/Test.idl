@@ -9,7 +9,7 @@ module Test
   interface Hello
   {
     /// Return a simple string
-    string get_string ();
+    string get_string (in string mystring);
 
     /// A method to shutdown the ORB
     /**

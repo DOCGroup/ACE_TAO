@@ -17,7 +17,7 @@ public:
   Hello (CORBA::ORB_ptr orb);
 
   // = The skeleton methods
-  virtual char * get_string (void);
+  virtual char * get_string (const char * mystring);
 
   virtual void shutdown (void);
 
