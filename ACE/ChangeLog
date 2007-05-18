@@ -1,3 +1,11 @@
+Thu May 18 05:20:17 UTC 2007  Ossama Othman  <ossama_othman at symantec dot com>
+
+        * ace/OS_main.h (main):
+
+          Removed newly added ACE_MAIN forward declaration for the VxWorks
+          case.  The preprocessed code apparently has a syntax error.  To
+          be revisited as time permits.
+
 Fri May 18 03:46:15 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * ASNMP/agent/snmp_agent.cpp:

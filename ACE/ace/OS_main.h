@@ -74,7 +74,6 @@ typedef int (*ace_main_proc_ptr)(int, char *[]);
 extern ace_main_proc_ptr vx_ace_main_i_ptr;
 
 #     define main \
-ACE_MAIN (int, char *[]); /* forward decl to gobble up the 'int' if there is one */ \
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL \
 ace_os_main_i (int, char *[]); \
 ACE_END_VERSIONED_NAMESPACE_DECL \
