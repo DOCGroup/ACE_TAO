@@ -87,12 +87,8 @@ find (Guid_t guid,
     {
       return -1;
     }
-  else
-    {
-      found_item = rb_tree_node->item ();
-      return 0;
-    }
 
+  found_item = rb_tree_node->item ();
   return 0;
 }
 
