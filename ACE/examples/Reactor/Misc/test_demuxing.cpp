@@ -152,9 +152,9 @@ Sig_Handler::handle_signal (int signum, siginfo_t *, ucontext_t *)
       break;
     default:
       ACE_ERROR_RETURN ((LM_ERROR, "invalid signal"), -1);
-      break;
       /* NOTREACHED */
     }
+
   return 0;
 }
 

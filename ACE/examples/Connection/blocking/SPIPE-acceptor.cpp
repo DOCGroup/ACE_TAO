@@ -31,7 +31,7 @@ Svc_Handler::open (void *)
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("client connected on handle %d\n"),
-	      this->peer ().get_handle ()));
+              this->peer ().get_handle ()));
   if (this->ar_.open (*this,
                       this->peer ().get_handle ()) == -1)
     return -1;
@@ -128,28 +128,27 @@ IPC_Server::parse_args (int argc, ACE_TCHAR *argv[])
   for (int c; (c = get_opt ()) != -1; )
     {
       switch (c)
-	{
-	case 'r':
-	  ACE_OS::strncpy (rendezvous_,
-			   get_opt.opt_arg (),
-			   sizeof (rendezvous_) / sizeof (ACE_TCHAR));
-	  break;
-	case 't':
-	  n_threads_ = ACE_OS::atoi (get_opt.opt_arg ());
-	  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%s == %d.\n"),
-		      get_opt.opt_arg (),
-		      n_threads_));
-	  ACE_Proactor::instance (2 * n_threads_);
-	  // This is a lame way to tell the proactor how many threads
-	  // we'll be using.
-	  break;
-	case 'u':
-	default:
-	  ACE_ERROR_RETURN ((LM_ERROR,
-			     ACE_TEXT ("usage: %n -t <threads>\n")
-			     ACE_TEXT (" -r <rendezvous>\n")), -1);
-	  break;
-	}
+        {
+        case 'r':
+          ACE_OS::strncpy (rendezvous_,
+                           get_opt.opt_arg (),
+                           sizeof (rendezvous_) / sizeof (ACE_TCHAR));
+          break;
+        case 't':
+          n_threads_ = ACE_OS::atoi (get_opt.opt_arg ());
+                                     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%s == %d.\n"),
+                                     get_opt.opt_arg (),
+                                     n_threads_));
+          ACE_Proactor::instance (2 * n_threads_);
+          // This is a lame way to tell the proactor how many threads
+          // we'll be using.
+          break;
+        case 'u':
+        default:
+          ACE_ERROR_RETURN ((LM_ERROR,
+                            ACE_TEXT ("usage: %n -t <threads>\n")
+                            ACE_TEXT (" -r <rendezvous>\n")), -1);
+        }
     }
 
   return 0;
