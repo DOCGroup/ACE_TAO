@@ -291,7 +291,7 @@ ACE_ptr_align_binary (char const * ptr, uintptr_t alignment)
 {
   return
     reinterpret_cast<char *> (
-      ACE_align_binary (reinterpret_cast<uintptr_t const> (ptr), alignment));
+      ACE_align_binary (reinterpret_cast<uintptr_t> (ptr), alignment));
 }
 
 /// Return the next address aligned to a required boundary
