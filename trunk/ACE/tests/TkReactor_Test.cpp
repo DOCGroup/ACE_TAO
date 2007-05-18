@@ -124,7 +124,11 @@ client (void *)
 // Callback for "Press Me" button.
 
 static int
+#if TK_MAJOR_VERSION == 8 && TK_MINOR_VERSION > 3
+inc_count (ClientData client_data, Tcl_Interp *interp,int, const char **)
+#else
 inc_count (ClientData client_data, Tcl_Interp *interp,int, char **)
+#endif
 {
   ACE_DEBUG ((LM_DEBUG,"inc_count "));
   char new_string[80];

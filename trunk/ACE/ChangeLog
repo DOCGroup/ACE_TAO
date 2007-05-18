@@ -1,3 +1,8 @@
+Fri May 18 06:15:30 UTC 2007  Olli Savia  <ops@iki.fi>
+
+        * tests/TkReactor_Test.cpp:
+          Fixed compile error with Tk 8.4.
+
 Fri May 18 04:38:29 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * ace/OS_Memory.h:
