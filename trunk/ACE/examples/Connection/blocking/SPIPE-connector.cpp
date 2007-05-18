@@ -207,7 +207,6 @@ IPC_Client::parse_args (int argc, ACE_TCHAR *argv[])
                              ACE_TEXT ("usage: %n -i <iterations>\n")
                              ACE_TEXT ("-r <rendezvous>\n")),
                             -1);
-          break;
         }
     }
 

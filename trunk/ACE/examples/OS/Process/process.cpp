@@ -109,7 +109,6 @@ parse_args (int argc, ACE_TCHAR **argv)
                            ACE_TEXT ("-w test wait functions\n")
                            ACE_TEXT ("-a run all (d,l,e \"running\")\n")),
                           -1);
-        break;
       }
     }
 
