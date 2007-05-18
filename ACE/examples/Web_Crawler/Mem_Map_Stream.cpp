@@ -114,7 +114,6 @@ Mem_Map_Stream::seek (ACE_OFF_T offset, int whence)
         this->end_of_mapping_plus1_ + offset;
       // @@ Not sure how to implement this (yet).
       ACE_NOTSUP_RETURN (-1);
-      break;
     }
 
   // Make sure that the backing store will cover this.

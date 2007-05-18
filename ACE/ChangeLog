@@ -1,3 +1,19 @@
+Fri May 18 02:12:34 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * examples/Connection/blocking/SPIPE-acceptor.cpp:
+        * examples/Connection/blocking/SPIPE-connector.cpp:
+        * examples/OS/Process/process.cpp:
+        * examples/Reactor/Misc/test_demuxing.cpp:
+        * examples/Web_Crawler/Mem_Map_Stream.cpp:
+
+          It makes no sense to have code after a return statement 
+          (such as ACE_ERROR_RETURN). It causes some builds to have
+          "statement is unreachable" warning.
+
+        * examples/Connection/blocking/SPIPE-acceptor.cpp:
+          
+          Replaced tabs with spaces. 
+
 Thu May 17 22:35:37 UTC 2007  Ossama Othman  <ossama_othman at symantec dot com>
 
         * ace/CDR_Stream.inl (skip_char, skip_boolean, skip_short):
