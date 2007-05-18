@@ -1,3 +1,12 @@
+Fri May 18 04:38:29 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * ace/OS_Memory.h:
+
+          Thu May 17 22:35:37 UTC 2007  Ossama Othman  <ossama_othman at symantec dot com>
+          For OS_Memory.h causes ~800 compile-time warnings for the
+          VxWorks6.4_PPC603_Diab_Release. Trying to eliminate the warnings. Hopefully,
+          this will do the trick.
+           
 Thu May 18 05:20:17 UTC 2007  Ossama Othman  <ossama_othman at symantec dot com>
 
         * ace/OS_main.h (main):
