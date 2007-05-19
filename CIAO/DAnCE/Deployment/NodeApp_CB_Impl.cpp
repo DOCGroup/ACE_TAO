@@ -1,5 +1,7 @@
 // $Id$
 
+#include "ace/config-all.h"
+
 #if defined (ACE_HAS_THREADS)
 #include "NodeApp_CB_Impl.h"
 
