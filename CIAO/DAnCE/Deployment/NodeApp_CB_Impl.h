@@ -14,10 +14,6 @@
 #define NODEAPPLICATION_CALLBACK_IMPL_H
 #include /**/ "ace/pre.h"
 
-#include "ace/config-all.h"
-
-#if defined (ACE_HAS_THREADS)
-
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -84,8 +80,6 @@ namespace CIAO
     ACE_SYNCH_MUTEX &mutex_;
   };
 }
-
-#endif /* ACE_HAS_THREADS */
 
 #include /**/ "ace/post.h"
 #endif /* NODEAPPLICATION_CALLBACK_IMPL_H */
