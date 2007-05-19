@@ -51,7 +51,6 @@ Dispatcher_Task::initialize ()
 
     default:
       return -1;
-      break;
     }
 
   if (this->the_queue_ != 0)
