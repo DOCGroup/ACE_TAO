@@ -1,3 +1,11 @@
+Sun May 20 20:03:55 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_linux.GNU:
+          TAO with GCC 4.0.2 on Linux with -O3 seems to cause runtime issues,
+          for example the PI ForwardRequest is failing, with -O2 the runtime
+          problems are gone, so for GCC 4.0.2 we default OCFLAGS to -O2, for
+          other GCC versions we default to -O3
+
 Sun May 20 17:50:55 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-hpux-11.00.h:
