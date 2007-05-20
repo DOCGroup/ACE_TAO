@@ -39,21 +39,69 @@
 #endif
 #define ACE_EXPORT_MACRO ACE_Export
 
-/**
- * On some platforms clearerr is a macro. Defining ACE_OS::clearerr()
- * becomes really hard, as there is no way to save the macro
- * definition using the pre-processor.
+/*
+ * We inline and undef some functions that may be implemented
+ * as macros on some platforms. This way macro definitions will
+ * be usable later as there is no way to save the macro definition
+ * using the pre-processor.
+ *
  */
 # if !defined (ACE_LACKS_CLEARERR)
 #   if defined (clearerr)
-#     define __ace_clearerr_hack
-inline void __ace_clearerr(FILE *stream)
+#     define ACE_CLEARERR_MACRO_INLINED
+inline void ace_clearerr_macro_inlined (FILE *stream)
 {
-  clearerr(stream);
+  clearerr (stream);
 }
 #     undef clearerr
 #   endif /* defined (clearerr) */
 # endif /* !ACE_LACKS_CLEARERR */
+
+#if defined (fgetc)
+#  define ACE_FGETC_MACRO_INLINED
+inline int ace_fgetc_macro_inlined (FILE *fp)
+{
+  return fgetc (fp);
+}
+#  undef fgetc
+#endif /* defined (fgetc) */
+
+#if defined (fputc)
+#  define ACE_FPUTC_MACRO_INLINED
+inline int ace_fputc_macro_inlined (int ch, FILE *fp)
+{
+  return fputc (ch, fp);
+}
+#  undef fputc
+#endif /* defined (fputc) */
+
+#if defined (getc)
+#  define ACE_GETC_MACRO_INLINED
+inline int ace_getc_macro_inlined (FILE *fp)
+{
+  return getc (fp);
+}
+#  undef getc
+#endif /* defined (getc) */
+
+#if defined (putc)
+#  define ACE_PUTC_MACRO_INLINED
+inline int ace_putc_macro_inlined (int ch, FILE *fp)
+{
+  return putc (ch, fp);
+}
+#  undef putc
+#endif /* defined (putc) */
+
+#if defined (ungetc)
+#  define ACE_UNGETC_MACRO_INLINED
+inline int ace_ungetc_macro_inlined (int ch, FILE *fp)
+{
+  return ungetc (ch, fp);
+}
+#  undef ungetc
+#endif /* defined (ungetc) */
+
 
 #if !defined (ACE_LACKS_CUSERID) && !defined(ACE_HAS_ALT_CUSERID) \
     && !defined(ACE_WIN32) && !defined (ACE_VXWORKS)
@@ -169,6 +217,9 @@ namespace ACE_OS {
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int fgetc (FILE* fp);
+
+  ACE_NAMESPACE_INLINE_FUNCTION
+  int getc (FILE* fp);
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int fgetpos (FILE* fp, fpos_t* pos);
@@ -289,6 +340,18 @@ namespace ACE_OS {
   extern ACE_Export
   int fprintf (FILE *fp, const wchar_t *format, ...);
 # endif /* ACE_HAS_WCHAR */
+
+  ACE_NAMESPACE_INLINE_FUNCTION
+  int ungetc (int c,
+              FILE *fp);
+
+  ACE_NAMESPACE_INLINE_FUNCTION
+  int fputc (int c,
+             FILE *fp);
+
+  ACE_NAMESPACE_INLINE_FUNCTION
+  int putc (int c,
+            FILE *fp);
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int fputs (const char *s,

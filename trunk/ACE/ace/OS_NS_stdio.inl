@@ -379,11 +379,11 @@ ACE_OS::flock_wrlock (ACE_OS::ace_flock_t *lock,
 ACE_INLINE void
 ACE_OS::clearerr (FILE* fp)
 {
-#if defined (__ace_clearerr_hack)
-  __ace_clearerr(fp);
+#if defined (ACE_CLEARERR_MACRO_INLINED)
+  ace_clearerr_macro_inlined (fp);
 #else
-   ::clearerr(fp);
-#endif /* __ace_clearerr_hack */
+  ::clearerr (fp);
+#endif /* ACE_CLEARERR_MACRO_INLINED */
 }
 #endif /* !ACE_LACKS_CLEARERR */
 
@@ -600,7 +600,21 @@ ACE_OS::fflush (FILE *fp)
 ACE_INLINE int
 ACE_OS::fgetc (FILE* fp)
 {
-  ACE_OSCALL_RETURN (ACE_STD_NAMESPACE::fgetc (fp), int, -1);
+#if defined (ACE_FGETC_MACRO_INLINED)
+  return ace_fgetc_macro_inlined (fp);
+#else
+  return ::fgetc (fp);
+#endif /* ACE_FGETC_MACRO_INLINED */
+}
+
+ACE_INLINE int
+ACE_OS::getc (FILE* fp)
+{
+#if defined (ACE_GETC_MACRO_INLINED)
+  return ace_getc_macro_inlined (fp);
+#else
+  return ::getc (fp);
+#endif /* ACE_GETC_MACRO_INLINED */
 }
 
 ACE_INLINE int
@@ -653,6 +667,36 @@ ACE_OS::fopen (const wchar_t *filename, const ACE_TCHAR *mode)
 #endif /* ACE_HAS_WCHAR */
 
 #endif /* ACE_WIN32 */
+
+ACE_INLINE int
+ACE_OS::ungetc (int c, FILE *fp)
+{
+#if defined (ACE_UNGETC_MACRO_INLINED)
+  return ace_ungetc_macro_inlined (c, fp);
+#else
+  return ::ungetc (c, fp);
+#endif /* ACE_UNGETC_MACRO_INLINED */
+}
+
+ACE_INLINE int
+ACE_OS::fputc (int c, FILE *fp)
+{
+#if defined (ACE_FPUTC_MACRO_INLINED)
+  return ace_fputc_macro_inlined (c, fp);
+#else
+  return ::fputc (c, fp);
+#endif /* ACE_FPUTC_MACRO_INLINED */
+}
+
+ACE_INLINE int
+ACE_OS::putc (int c, FILE *fp)
+{
+#if defined (ACE_PUTC_MACRO_INLINED)
+  return ace_putc_macro_inlined (c, fp);
+#else
+  return ::putc (c, fp);
+#endif /* ACE_PUTC_MACRO_INLINED */
+}
 
 ACE_INLINE int
 ACE_OS::fputs (const char *s, FILE *stream)

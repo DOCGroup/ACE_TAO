@@ -14,6 +14,9 @@ USER VISIBLE CHANGES BETWEEN ACE-5.5.8 and ACE-5.5.9
 
 . Use Intel C++ specific optimizations for Linux on IA64
 
+. Improved support for ACE_OS::fgetc. Added support for ACE_OS::fputc,
+  ACE_OS::getc, ACE_OS::putc and ACE_OS::ungetc.
+
 USER VISIBLE CHANGES BETWEEN ACE-5.5.7 and ACE-5.5.8
 ====================================================
 
