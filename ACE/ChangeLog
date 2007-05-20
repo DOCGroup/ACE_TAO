@@ -1,3 +1,16 @@
+Sun May 20 17:50:55 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-hpux-11.00.h:
+          Removed usage of declspec export/import for HP aCC, it only gives
+          problems and just doesn't work because of several bugs in the
+          compiler.
+
+        * ace/FILE_Connector.cpp:
+          Removed first line, no need to specify twice the filename
+
+        * ace/Handle_Ops.cpp:
+          Layout and const changes
+
 Sun May 20 17:08:51 UTC 2007  Olli Savia  <ops@iki.fi>
 
         * ace/OS_NS_stdio.inl:
