@@ -603,7 +603,7 @@ ACE_OS::fgetc (FILE* fp)
 #if defined (ACE_FGETC_MACRO_INLINED)
   return ace_fgetc_macro_inlined (fp);
 #else
-  return ::fgetc (fp);
+  return ACE_STD_NAMESPACE::fgetc (fp);
 #endif /* ACE_FGETC_MACRO_INLINED */
 }
 
@@ -684,7 +684,7 @@ ACE_OS::fputc (int c, FILE *fp)
 #if defined (ACE_FPUTC_MACRO_INLINED)
   return ace_fputc_macro_inlined (c, fp);
 #else
-  return ::fputc (c, fp);
+  return ACE_STD_NAMESPACE::fputc (c, fp);
 #endif /* ACE_FPUTC_MACRO_INLINED */
 }
 
