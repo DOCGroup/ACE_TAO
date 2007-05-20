@@ -1,3 +1,9 @@
+Sun May 20 17:08:51 UTC 2007  Olli Savia  <ops@iki.fi>
+
+        * ace/OS_NS_stdio.inl:
+          Added ACE_STD_NAMESPACE to fgetc and fputc calls. This hopefully
+          makes BCB6 happy.
+
 Sun May 20 09:16:26 UTC 2007  Olli Savia  <ops@iki.fi>
 
         * ace/OS_NS_stdio.h:
@@ -8,7 +14,7 @@ Sun May 20 09:16:26 UTC 2007  Olli Savia  <ops@iki.fi>
 
         * NEWS:
           Document changes above.
-        
+
         * ace/Read_Buffer.cpp:
           Use ACE_OS::getc and ACE_OS::ungetc instead of getc and ungetc.
           Thanks to Abdullah Sowayan <abdullah dot sowayan at lmco dot com>
