@@ -120,7 +120,6 @@ PLATFORM_QT_CPPFLAGS ?= -I$(QTDIR)/include
 PLATFORM_QT_LIBS ?= -lqt-mt
 PLATFORM_QT_LDFLAGS ?= -L$(QTDIR)/lib
 
-OCFLAGS ?= -O3
 PIC     = -fPIC
 AR      = ar
 ARFLAGS = rsuv
@@ -134,6 +133,14 @@ PRELIB  = @true
 # add -E to LDFLAGS if using GNU ld
 #
 include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
+
+# TAO with GCC 4.0.2 and -O3 seems to result in runtime issues, for example
+# the ForwardRequest PI test will fail. For GCC 4.0.2 we default to -O2
+ifeq ($(CXX_VERSION),4.0.2)
+  OCFLAGS ?= -O2
+else
+  OCFLAGS ?= -O3
+endif
 
 CCFLAGS += $(CFLAGS) $(TEMPLATES_FLAG)
 
