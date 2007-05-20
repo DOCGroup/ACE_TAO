@@ -1,4 +1,3 @@
-// FILE_Connector.cpp
 // $Id$
 
 #include "ace/FILE_Connector.h"
