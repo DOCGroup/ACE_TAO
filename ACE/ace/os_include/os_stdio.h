@@ -42,14 +42,6 @@
 #  endif
 #endif /* ACE_VXWORKS */
 
-// Undefine "functions" that may be implemented as macros.
-#ifdef fgetc
-#undef fgetc
-#endif
-#ifdef fputc
-#undef fputc
-#endif
-
 // Place all additions (especially function declarations) within extern "C" {}
 #ifdef __cplusplus
 extern "C"

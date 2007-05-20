@@ -1,7 +1,23 @@
+Sun May 20 09:16:26 UTC 2007  Olli Savia  <ops@iki.fi>
+
+        * ace/OS_NS_stdio.h:
+        * ace/OS_NS_stdio.inl:
+        * ace/os_include/os_stdio.h:
+          Improved support for ACE_OS::fgetc. Added support for ACE_OS::fputc,
+          ACE_OS::getc, ACE_OS::putc and ACE_OS::ungetc.
+
+        * NEWS:
+          Document changes above.
+        
+        * ace/Read_Buffer.cpp:
+          Use ACE_OS::getc and ACE_OS::ungetc instead of getc and ungetc.
+          Thanks to Abdullah Sowayan <abdullah dot sowayan at lmco dot com>
+          for motivating all changes above. This fixes Bugzilla #2919.
+
 Sat May 19 14:53:44 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * Kokyu/Dispatcher_Task.cpp:
-       
+
           More fixes to eliminate "staement is uncreachable" warning.
 
 Fri May 18 22:43:40 UTC 2007  Ossama Othman  <ossama_othman at symantec dot com>

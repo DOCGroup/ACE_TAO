@@ -107,12 +107,12 @@ ACE_Read_Buffer::rec_read (int term, int search, int replace)
   // Read in the file char by char
   while (slot < BUFSIZ)
     {
-      c = getc (this->stream_);
+      c = ACE_OS::getc (this->stream_);
 
       // Don't insert EOF into the buffer...
       if (c == EOF)
         {
-          ungetc (c, this->stream_);
+          ACE_OS::ungetc (c, this->stream_);
           break;
         }
       else if (c == term)
