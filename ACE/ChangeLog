@@ -1,3 +1,16 @@
+Mon May 21 10:32:02 UTC 2007  Ossama Othman  <ossama_othman at symantec dot com>
+
+        * ace/OS_NS_math.h (ace_log2_helper):
+
+          Fixed compile-time errors on Windows introduced by Olli's
+          improvements described below.  VC8 doesn't support log2().
+          Generate a quiet NaN value for now.
+
+        * ace/OS_Memory.h (ACE_align_binary, ACE_ptr_align_binary):
+
+          Handle OpenVMS's strange multiple size pointer model.  Addresses
+          build warnings.
+
 Mon May 21 13:37:55 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/Download.html:
