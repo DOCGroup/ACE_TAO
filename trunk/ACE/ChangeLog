@@ -1,3 +1,17 @@
+Mon May 21 13:04:04 UTC 2007  Olli Savia  <ops@iki.fi>
+
+        * ace/ACE.h:
+        * ace/OS_NS_math.h:
+        * ace/OS_NS_math.inl:
+          Added support for ACE_OS::log2(double) and improved support for
+          ACE::log2(u_long).
+
+        * NEWS:
+          Document changes above.
+        
+        * tests/OS_Test.cpp:
+          Added test for ACE_OS::log2(double).
+
 Mon May 21 06:07:59 UTC 2007  Olli Savia  <ops@iki.fi>
 
         * ace/Sig_Handler.cpp:

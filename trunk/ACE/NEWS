@@ -17,6 +17,9 @@ USER VISIBLE CHANGES BETWEEN ACE-5.5.8 and ACE-5.5.9
 . Improved support for ACE_OS::fgetc. Added support for ACE_OS::fputc,
   ACE_OS::getc, ACE_OS::putc and ACE_OS::ungetc.
 
+. Added support for ACE_OS::log2(double) and improved support for
+  ACE::log2(u_long).
+
 USER VISIBLE CHANGES BETWEEN ACE-5.5.7 and ACE-5.5.8
 ====================================================
 
