@@ -14,6 +14,7 @@
 // ============================================================================
 
 #include "test_config.h"
+#include "ace/OS_NS_math.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_strings.h"
 #include "ace/OS_NS_stdlib.h"
@@ -916,6 +917,29 @@ pagesize_test (void)
   return 0;
 }
 
+int
+log2_test (void)
+{
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("Testing log2 method\n")));
+
+  double values[] = {1.0, 2.0, 4.0, 8.0, 1048576.0};
+  int results[] = {0, 1, 2, 3, 20};
+  int result = 0;
+  int error_count = 0;
+
+  for (size_t i = 0 ; i < sizeof (values) / sizeof (double) ; i++)
+    {
+      result = static_cast<int> (ACE_OS::floor (ACE_OS::log2 (values [i])));
+      if (result != results [i])
+        {
+          ACE_ERROR ((LM_ERROR, ACE_TEXT ("Log2 error: input %.1F, output %d, expected %d\n"), values [i], result, results [i]));
+          error_count++;
+        }
+    }
+
+  return error_count;
+}
 
 int
 run_main (int, ACE_TCHAR *[])
@@ -949,6 +973,9 @@ run_main (int, ACE_TCHAR *[])
       status = result;
 
   if ((result = pagesize_test ()) != 0)
+      status = result;
+
+  if ((result = log2_test ()) != 0)
       status = result;
 
   ACE_END_TEST;
