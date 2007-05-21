@@ -1,3 +1,10 @@
+Mon May 21 06:07:59 UTC 2007  Olli Savia  <ops@iki.fi>
+
+        * ace/Sig_Handler.cpp:
+
+        Reverted change:
+             Fri May 18 10:51:26 UTC 2007  Olli Savia  <ops@iki.fi>
+
 Mon May 21 05:57:58 UTC 2007  Olli Savia  <ops@iki.fi>
 
         * ace/OS_NS_stdio.h:
