@@ -1,3 +1,10 @@
+Mon May 21 13:37:55 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/Download.html:
+          Mention also that the full packages do contain the generated files
+          for GNU autoconf support. Thanks to Vikram Karandikar
+          <softking at gmail dot com> for bringing this to our attention.
+
 Mon May 21 13:04:04 UTC 2007  Olli Savia  <ops@iki.fi>
 
         * ace/ACE.h:
@@ -8,7 +15,7 @@ Mon May 21 13:04:04 UTC 2007  Olli Savia  <ops@iki.fi>
 
         * NEWS:
           Document changes above.
-        
+
         * tests/OS_Test.cpp:
           Added test for ACE_OS::log2(double).
 
