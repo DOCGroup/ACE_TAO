@@ -1,3 +1,13 @@
+Mon May 21 12:36:55 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/AMI_Buffering/run_timeout_reactive.pl:
+        * tests/Bug_2735_Regression/run_test.pl:
+        * tests/Crash_On_Write/run_test.pl:
+        * tests/Faults/run_test.pl:
+        * tests/Portable_Interceptors/Redirection/run_test.pl:
+        * tests/Smart_Proxies/Policy/run_test.pl:
+          Improved for VxWorks cross platform testing
+
 Mon May 21 12:01:30 UTC 2007  Vadym Ridosh <vridosh@prismtech.com>
 
         * orbsvcs/tests/Bug_2925_Regression/run_test_ipv6.pl:

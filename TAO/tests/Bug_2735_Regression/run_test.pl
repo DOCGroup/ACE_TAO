@@ -17,7 +17,7 @@ my $class = (PerlACE::is_vxworks_test() ? 'PerlACE::ProcessVX' :
 ## First test that the -ORBSvcConfDirective works with good options.
 my $SV = $class->new('server', '-s');
 $SV->Spawn ();
-my $server = $SV->WaitKill(5);
+my $server = $SV->WaitKill($PerlACE::wait_interval_for_process_creation);
 if ($server != 0) {
   print STDERR "ERROR: server returned $server\n";
   exit(1);
