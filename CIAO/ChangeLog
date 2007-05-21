@@ -1,3 +1,10 @@
+Mon May 21 15:46:23 UTC 2007  Gan Deng  <gan.deng@vanderbilt.edu>
+
+        * DAnCE/DomainApplicationManager/Task_StartLaunch.h:
+
+          Included ACE configuration header file to fix the warnigns
+          on the VxWorks5.5.1_x86_GCC2.96_Exceptions build.
+
 Sat May 19 15:59:08 UTC 2007  Gan Deng  <gan.deng@vanderbilt.edu>
 
         * DAnCE/Deployment/NodeApp_CB_Impl.cpp:
