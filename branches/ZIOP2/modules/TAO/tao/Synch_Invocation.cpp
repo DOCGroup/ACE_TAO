@@ -92,7 +92,8 @@ namespace TAO
 
 //        this->marshal_data (cdr);
         //ACE_CDR::consolidate (&cdr, &second);
-        cdr.write_char_array (second.buffer (), second.total_length ());
+        cdr.write_octet_array_mb (second.begin ());
+        //cdr.current ()->next (second.
         //cdr.
 
         // Register a reply dispatcher for this invocation. Use the

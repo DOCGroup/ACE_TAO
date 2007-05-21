@@ -175,7 +175,8 @@ TAO_ZIOP_Loader::compress (TAO_ORB_Core& core, TAO_Operation_Details &details, T
   if (!CORBA::is_nil(manager.in ()))
   {
 
-  Compression::Compressor_var compressor = manager->get_compressor (::Compression::COMPRESSORID_ZLIB, 6);
+    Compression::CompressorId compressor_id = Compression::COMPRESSORID_ZLIB;
+  Compression::Compressor_var compressor = manager->get_compressor (compressor_id, 6);
 
       CORBA::OctetSeq myout;
       myout.length ((CORBA::ULong)(compression_stream.length() * 1.1));
@@ -193,12 +194,13 @@ out_stream.write_octet_array(myout.get_buffer (), myout.length());
       // Add the original message length to the service contenxt
       CORBA::ULong length = compression_stream.total_length();
       if ((cdr << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER) == 0)
-          || (cdr << length) == 0)
+          || (cdr << length) == 0
+          || (cdr << compressor_id) == 0)
         return false;
 
       // Add this info in to the svc_list
       details.request_service_context ().set_context (IOP::TAG_ZIOP_COMPONENT,
-                                                        cdr);
+                                                      cdr);
 
   }
 

@@ -621,7 +621,13 @@ TAO_GIOP_Message_Generator_Parser_12::process_compression_context (
   if (!(cdr >> message_length))
     return false;
 
+    // @TODO use real typedef
+  CORBA::UShort compressorid = 0;
+  if (!(cdr >> compressorid))
+    return false;
+
    request.original_message_length_ = message_length;
+ACE_DEBUG ((LM_DEBUG, "Received compressor %d\n", compressorid));
 //+  request.compressed_ = true;
 //+  request.original_message_length_ = message_length;
 //+
