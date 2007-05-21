@@ -166,7 +166,9 @@ ACE_Sig_Handler::register_handler_i (int signum,
         new_disp = &sa;
 
       new_disp->handler (ace_signal_handler_dispatcher);
+#if !defined (ACE_HAS_LYNXOS_SIGNALS)
       new_disp->flags (new_disp->flags () | SA_SIGINFO);
+#endif /* ACE_HAS_LYNXOS_SIGNALS */
       return new_disp->register_action (signum, old_disp);
     }
   else
