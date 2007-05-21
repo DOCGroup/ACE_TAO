@@ -30,6 +30,12 @@ namespace ACE_OS {
       return static_cast<long> (x) + 1;
   }
 
+  ACE_INLINE double
+  log2 (double x)
+  {
+    return ace_log2_helper (x);
+  }
+
 } // ACE_OS namespace
 
 ACE_END_VERSIONED_NAMESPACE_DECL
