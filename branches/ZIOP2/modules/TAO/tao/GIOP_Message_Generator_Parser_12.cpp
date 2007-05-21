@@ -80,7 +80,8 @@ TAO_GIOP_Message_Generator_Parser_12::write_request_header (
 // TODO
 
   // Write the service context list
-  msg << opdetails.request_service_info ();
+  if (!(msg << opdetails.request_service_info ()))
+    return false;
 
   // We align the pointer only if the operation has arguments.
   if (opdetails.argument_flag ()
@@ -117,7 +118,7 @@ TAO_GIOP_Message_Generator_Parser_12::write_locate_request_header (
   msg << request_id;
 
   // Write the target address
-  if (this->marshall_target_spec (spec, msg) == false)
+  if (!(this->marshall_target_spec (spec, msg)))
     return false;
 
   // I dont think we need to align the pointer to an 8 byte boundary
@@ -154,28 +155,8 @@ TAO_GIOP_Message_Generator_Parser_12::write_reply_header (
       this->marshal_reply_status (output, reply);
     }
 
-#if (TAO_HAS_MINIMUM_CORBA == 1)
-  output << reply.service_context_notowned ();
-#else
-  if (reply.is_dsi_ == false)
-    {
-      output << reply.service_context_notowned ();
-    }
-  else
-    {
-      IOP::ServiceContextList &svc_ctx = reply.service_context_notowned ();
-      CORBA::ULong const l = svc_ctx.length ();
-
-      // Now marshal the rest of the service context objects
-      output << l;
-
-      for (CORBA::ULong i = 0; i != l; ++i)
-        {
-          output << svc_ctx[i];
-        }
-
-    }
-#endif /*TAO_HAS_MINIMUM_CORBA */
+  if (!(output << reply.service_context_notowned ()))
+    return false;
 
   if (reply.argument_flag_)
     {
@@ -330,7 +311,6 @@ TAO_GIOP_Message_Generator_Parser_12::parse_request_header (
     {
       this->check_bidirectional_context (request);
     }
-
 
   this->check_compression_context (request);
 
@@ -504,7 +484,7 @@ TAO_GIOP_Message_Generator_Parser_12::marshall_target_spec (
 
         // Get the IOR
         IOP::IOR *ior = 0;
-        CORBA::ULong index = spec.iop_ior (ior);
+        CORBA::ULong const index = spec.iop_ior (ior);
 
         if (ior)
           {

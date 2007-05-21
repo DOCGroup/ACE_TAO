@@ -263,8 +263,7 @@ TAO_GIOP_Message_Generator_Parser_10::write_reply_header (
   output.write_ulong (reply.request_id_);
 
   // Write the reply status
-  this->marshal_reply_status (output,
-                              reply);
+  this->marshal_reply_status (output, reply);
 
   return true;
 }
@@ -282,10 +281,9 @@ TAO_GIOP_Message_Generator_Parser_10::write_locate_reply_mesg (
 
   if (status_info.status == TAO_GIOP_OBJECT_FORWARD)
     {
-      CORBA::Object_ptr object_ptr =
-        status_info.forward_location_var.in ();
+      CORBA::Object_ptr object_ptr = status_info.forward_location_var.in ();
 
-      if ((output << object_ptr) == false)
+      if (!(output << object_ptr))
         {
           if (TAO_debug_level > 0)
             {
@@ -396,7 +394,6 @@ TAO_GIOP_Message_Generator_Parser_10::parse_request_header (
       request.requesting_principal (oct_seq);
       hdr_status = (CORBA::Boolean) input.good_bit ();
     }
-
 
   return hdr_status ? 0 : -1;
 }
