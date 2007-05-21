@@ -102,8 +102,7 @@ public:
       {
         // As we are in CORBA mode, all the data blocks would be aligned
         // on an 8 byte boundary
-        ACE_Message_Block msgb (*mb,
-                                ACE_CDR::MAX_ALIGNMENT);
+        ACE_Message_Block msgb (*mb, ACE_CDR::MAX_ALIGNMENT);
 
         // Get the base pointer of the incoming message block
         char *start = ACE_ptr_align_binary (mb->base (),

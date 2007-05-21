@@ -123,9 +123,9 @@ TAO_ZIOP_Loader::decompress (TAO_ServerRequest& server_request)
       CORBA::OctetSeq myout;
       myout.length ((CORBA::ULong)server_request.original_message_length_);
 
-      CORBA::OctetSeq input ((CORBA::ULong)(server_request.incoming()->length(),server_request.incoming()->rd_ptr()));
+      CORBA::OctetSeq input ((CORBA::ULong)(server_request.incoming()->length()),server_request.incoming()->start());
       compressor->decompress (input, myout);
-      TAO_InputCDR* newstream = new TAO_InputCDR ((char*)myout.get_buffer(), (size_t)server_request.original_message_length_);
+      TAO_InputCDR* newstream = new TAO_InputCDR ((char*)myout.get_buffer(true), (size_t)server_request.original_message_length_);
       server_request.incoming()->steal_from (*newstream);
   }
 //  TAO_InputCDR cdr (reinterpret_cast<const char*> (
