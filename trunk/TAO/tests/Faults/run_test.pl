@@ -13,7 +13,12 @@ $middlefile = PerlACE::LocalFile ("middle.ior");
 $dum_core = PerlACE::LocalFile ("core");
 $status = 0;
 
-$SV = new PerlACE::Process ("server", "-o $iorfile");
+if (PerlACE::is_vxworks_test()) {
+    $SV = new PerlACE::ProcessVX ("server", "-o test.ior");
+}
+else {
+    $SV = new PerlACE::Process ("server", "-o $iorfile");
+}
 $SV1 = new PerlACE::Process ("server", "-ORBSvcConf server.conf -o $iorfile");
 $CL = new PerlACE::Process ("client", "");
 $MD = new PerlACE::Process ("middle", "-o $middlefile -k file://$iorfile");

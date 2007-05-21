@@ -51,14 +51,14 @@ if ($client != 0) {
   $status = 1;
 }
 
-$server = $SV->WaitKill (10);
+$server = $SV->WaitKill (15);
 
 if ($server != 0) {
   print STDERR "ERROR: server returned $server\n";
   $status = 1;
 }
 
-$admin = $AD->WaitKill (10);
+$admin = $AD->WaitKill (15);
 
 if ($admin != 0) {
   print STDERR "ERROR: admin returned $admin\n";
