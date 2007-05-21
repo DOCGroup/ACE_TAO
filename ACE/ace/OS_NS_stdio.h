@@ -46,61 +46,67 @@
  * using the pre-processor.
  *
  */
-# if !defined (ACE_LACKS_CLEARERR)
-#   if defined (clearerr)
-#     define ACE_CLEARERR_MACRO_INLINED
-inline void ace_clearerr_macro_inlined (FILE *stream)
+#if !defined (ACE_LACKS_CLEARERR)
+inline void ace_clearerr_helper (FILE *stream)
 {
+#  if defined (clearerr)
   clearerr (stream);
+#  undef clearerr
+#  else
+  ACE_STD_NAMESPACE::clearerr (stream);
+#  endif /* defined (clearerr) */
 }
-#     undef clearerr
-#   endif /* defined (clearerr) */
-# endif /* !ACE_LACKS_CLEARERR */
+#endif /* !ACE_LACKS_CLEARERR */
 
+inline int ace_fgetc_helper (FILE *fp)
+{
 #if defined (fgetc)
-#  define ACE_FGETC_MACRO_INLINED
-inline int ace_fgetc_macro_inlined (FILE *fp)
-{
   return fgetc (fp);
-}
-#  undef fgetc
+#undef fgetc
+#else
+  return ACE_STD_NAMESPACE::fgetc (fp);
 #endif /* defined (fgetc) */
+}
 
+inline int ace_fputc_helper (int ch, FILE *fp)
+{
 #if defined (fputc)
-#  define ACE_FPUTC_MACRO_INLINED
-inline int ace_fputc_macro_inlined (int ch, FILE *fp)
-{
   return fputc (ch, fp);
-}
-#  undef fputc
+#undef fputc
+#else
+  return ACE_STD_NAMESPACE::fputc (ch, fp);
 #endif /* defined (fputc) */
+}
 
+inline int ace_getc_helper (FILE *fp)
+{
 #if defined (getc)
-#  define ACE_GETC_MACRO_INLINED
-inline int ace_getc_macro_inlined (FILE *fp)
-{
   return getc (fp);
-}
-#  undef getc
+#undef getc
+#else
+  return ACE_STD_NAMESPACE::getc (fp);
 #endif /* defined (getc) */
+}
 
+inline int ace_putc_helper (int ch, FILE *fp)
+{
 #if defined (putc)
-#  define ACE_PUTC_MACRO_INLINED
-inline int ace_putc_macro_inlined (int ch, FILE *fp)
-{
   return putc (ch, fp);
-}
-#  undef putc
+#undef putc
+#else
+  return ACE_STD_NAMESPACE::putc (ch, fp);
 #endif /* defined (putc) */
-
-#if defined (ungetc)
-#  define ACE_UNGETC_MACRO_INLINED
-inline int ace_ungetc_macro_inlined (int ch, FILE *fp)
-{
-  return ungetc (ch, fp);
 }
-#  undef ungetc
+
+inline int ace_ungetc_helper (int ch, FILE *fp)
+{
+#if defined (ungetc)
+  return ungetc (ch, fp);
+#undef ungetc
+#else
+  return ACE_STD_NAMESPACE::ungetc (ch, fp);
 #endif /* defined (ungetc) */
+}
 
 
 #if !defined (ACE_LACKS_CUSERID) && !defined(ACE_HAS_ALT_CUSERID) \
