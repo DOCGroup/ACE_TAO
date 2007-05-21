@@ -47,7 +47,18 @@ inline double ace_log2_helper (double x)
   return log2 (x);
 #undef log2
 #else
+#  if defined (_MSC_VER) && (_MSC_VER <= 1400)
+  // VC++ doesn't support log2() in the standard SDK.  It is
+  // apparently available in the DirectX SDK, however.  Generate an
+  // NaN for now.  Note that VC++ doesn't appear to define a NaN
+  // constant.
+  ACE_UNUSED_ARG (x);
+  unsigned long const NaN[2]= { 0xffffffff, 0x7fffffff };
+  return *reinterpret_cast<double const *> (NaN);
+  
+#  else
   return ACE_STD_NAMESPACE::log2 (x);
+#endif  /* _MSC_VER <= 1400 */
 #endif /* defined (log2) */
 }
 
