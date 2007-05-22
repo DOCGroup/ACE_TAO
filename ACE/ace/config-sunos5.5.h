@@ -18,6 +18,9 @@
 // system libraries or with multiple threads. So it's mostly useless.
 #define ACE_LACKS_ALPHASORT
 
+// Solaris doesn't support log2()
+#define ACE_LACKS_LOG2
+
 // SunOS 5.5 does not provide getloadavg()
 #define ACE_LACKS_GETLOADAVG
 
