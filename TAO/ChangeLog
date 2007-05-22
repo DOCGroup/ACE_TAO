@@ -1,3 +1,13 @@
+Tue May 22 12:40:55 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/GIOP_Message_Generator_Parser.cpp (write_reply_header):
+          The service context can just be marshaled with the regular <<
+          operator in all cases and added a check whether this succeeded
+          or not
+
+        * tao/RTCORBA/Thread_Pool.cpp:
+          Layout changes
+
 Mon May 21 12:36:55 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/AMI_Buffering/run_timeout_reactive.pl:
