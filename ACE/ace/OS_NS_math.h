@@ -41,24 +41,20 @@
  * using the pre-processor.
  *
  */
+
 inline double ace_log2_helper (double x)
 {
 #if defined (log2)
   return log2 (x);
 #undef log2
 #else
-#  if defined (_MSC_VER) && (_MSC_VER <= 1400)
-  // VC++ doesn't support log2() in the standard SDK.  It is
-  // apparently available in the DirectX SDK, however.  Generate an
-  // NaN for now.  Note that VC++ doesn't appear to define a NaN
-  // constant.
-  ACE_UNUSED_ARG (x);
-  unsigned long const NaN[2]= { 0xffffffff, 0x7fffffff };
-  return *reinterpret_cast<double const *> (NaN);
-  
-#  else
+#  if !defined (ACE_LACKS_LOG2)
   return ACE_STD_NAMESPACE::log2 (x);
-#endif  /* _MSC_VER <= 1400 */
+#  else
+  ACE_UNUSED_ARG (x);
+  unsigned long const ACE_NaN[2]= { 0xffffffff, 0x7fffffff };
+  return *reinterpret_cast<double const *> (ACE_NaN);
+#  endif /* !ACE_LACKS_LOG2 */
 #endif /* defined (log2) */
 }
 
@@ -66,7 +62,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE_OS
 {
-
   /// This method computes the largest integral value not greater than x.
   ACE_NAMESPACE_INLINE_FUNCTION
   double floor (double x);
@@ -75,9 +70,11 @@ namespace ACE_OS
   ACE_NAMESPACE_INLINE_FUNCTION
   double ceil (double x);
 
+#if !defined (ACE_LACKS_LOG2)
   /// This method computes base-2 logarithm of x
   ACE_NAMESPACE_INLINE_FUNCTION
   double log2 (double x);
+#endif /* !ACE_LACKS_LOG2 */
 
 } /* namespace ACE_OS */
 

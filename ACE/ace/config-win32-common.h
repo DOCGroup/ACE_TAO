@@ -264,6 +264,7 @@
 #define ACE_LACKS_UNAME
 #define ACE_LACKS_WAIT
 #define ACE_LACKS_IOVEC
+#define ACE_LACKS_LOG2
 
 #define ACE_HAS_VFWPRINTF
 
