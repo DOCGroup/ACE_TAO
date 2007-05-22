@@ -66,6 +66,13 @@ namespace TAO
         const char * target_interface_name
 					       );
 
+      virtual ::CORBA::Boolean access_allowed_ex (
+          const char * orb_id,
+          const ::CORBA::OctetSeq & adapter_id,
+          const ::CORBA::OctetSeq & object_id,
+          const ::SecurityLevel2::CredentialsList & cred_list,
+          const char * operation_name);
+
       virtual ::CORBA::Boolean default_decision (void);
       virtual void default_decision (::CORBA::Boolean d);
 

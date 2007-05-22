@@ -11,19 +11,6 @@ ACE_RCSID (Security,
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-unsigned long
-ACE_Hash<CORBA::Object_var>::operator() (const CORBA::Object_var& o) const
-{
-  return o->_hash ((CORBA::ULong)-1);
-}
-
-int
-ACE_Equal_To<CORBA::Object_var>::operator () (const CORBA::Object_var& lhs,
-					      const CORBA::Object_var& rhs) const
-{
-  return lhs->_is_equivalent (rhs.in ());
-}
-
 TAO::Security::SecurityManager::SecurityManager (/* unknown */)
   : principal_authenticator_ (SecurityLevel2::PrincipalAuthenticator::_nil ())
 {
@@ -46,28 +33,24 @@ TAO::Security::SecurityManager::~SecurityManager (void)
 
 Security::MechandOptionsList*
 TAO::Security::SecurityManager::supported_mechanisms ()
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   throw CORBA::NO_IMPLEMENT ();
 }
 
 SecurityLevel2::CredentialsList*
 TAO::Security::SecurityManager::own_credentials ()
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   throw CORBA::NO_IMPLEMENT ();
 }
 
 SecurityLevel2::RequiredRights_ptr
 TAO::Security::SecurityManager::required_rights_object ()
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   throw CORBA::NO_IMPLEMENT ();
 }
 
 SecurityLevel2::PrincipalAuthenticator_ptr
 TAO::Security::SecurityManager::principal_authenticator ()
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return SecurityLevel2::PrincipalAuthenticator::_duplicate
     (this->principal_authenticator_.in () );
@@ -75,21 +58,18 @@ TAO::Security::SecurityManager::principal_authenticator ()
 
 SecurityLevel2::AccessDecision_ptr
 TAO::Security::SecurityManager::access_decision ()
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return SecurityLevel2::AccessDecision::_duplicate (this->access_decision_.in () );
 }
 
 SecurityLevel2::AuditDecision_ptr
 TAO::Security::SecurityManager::audit_decision ()
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   throw CORBA::NO_IMPLEMENT ();
 }
 
 SecurityLevel2::TargetCredentials_ptr
 TAO::Security::SecurityManager::get_target_credentials (CORBA::Object_ptr /*o*/)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   throw CORBA::NO_IMPLEMENT ();
 }
@@ -97,14 +77,12 @@ TAO::Security::SecurityManager::get_target_credentials (CORBA::Object_ptr /*o*/)
 void
 TAO::Security::SecurityManager::remove_own_credentials (
   SecurityLevel2::Credentials_ptr creds)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   throw CORBA::NO_IMPLEMENT ();
 }
                      
 CORBA::Policy_ptr
 TAO::Security::SecurityManager::get_security_policy (CORBA::PolicyType policy_type)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   throw CORBA::NO_IMPLEMENT ();
 }
@@ -112,6 +90,29 @@ TAO::Security::SecurityManager::get_security_policy (CORBA::PolicyType policy_ty
 /*
  * AccessDecision stuff below here
  */
+
+bool
+TAO::Security::AccessDecision::ReferenceKeyType::operator== (const ReferenceKeyType& other) const
+{
+  if (this->oid_ == other.oid_
+      && this->adapter_id_ == other.adapter_id_
+      && (ACE_OS_String::strcmp (this->orbid_.in(), other.orbid_.in()) == 0) )
+    return true;
+  else
+    return false;
+}
+
+CORBA::ULong
+TAO::Security::AccessDecision::ReferenceKeyType::hash () const
+{
+  return 0;
+}
+
+const char*
+TAO::Security::AccessDecision::ReferenceKeyType::operator const char* () const
+{
+  return "<hardcoded refkey>";
+}
 
 TAO::Security::AccessDecision::AccessDecision ()
   : default_allowance_decision_ (false)
@@ -125,30 +126,21 @@ TAO::Security::AccessDecision::~AccessDecision ()
 TAO::Security::AccessDecision::OBJECT_KEY
 TAO::Security::AccessDecision::map_key_from_objref (CORBA::Object_ptr obj)
 {
-#if 0
-  // Originally this lived in access_allowed, but it was needed
-  // in add_object and remove_object, too, so it's been factored out.
-  //
-  // We need an ORB reference here.  Where do we get it?
-  //
-  // The primary place we need this facility is in access_allowed.
-  // Unfortunately, the interface for access_allowed is cast in
-  // dormant OMG spec stone, so that can't change.  We could pass in a
-  // reference as an argument to the constructor and store it, but
-  // what do we do, then, if the same interceptor is registered with
-  // multiple ORBs (is that possible?!?!)?  Then we could end up using
-  // a different ORB to stringify, which could end up giving us a
-  // different string, which means they won't compare propertly.
-  //
-  // As a hack, we could realize that TAO's CORBA::Object implementation
-  // has a reference to its associated ORB, and just dip in there
-  // to get access to it.  Ugly, but at least it should probably work.
-  CORBA::ORB_var orb = obj->_get_orb ();
-  CORBA::String_var ior = orb->object_to_string (obj);
-  return ior;
-#else
-  return CORBA::Object::_duplicate(obj);
-#endif
+  OBJECT_KEY key;
+
+  return key;
+}
+
+CORBA::Boolean
+TAO::Security::AccessDecision::access_allowed_ex (
+          const char * orb_id,
+          const ::CORBA::OctetSeq & adapter_id,
+          const ::CORBA::OctetSeq & object_id,
+          const ::SecurityLevel2::CredentialsList & cred_list,
+          const char * operation_name)
+{
+  // Obviously this is an incorrect trivial implementation ;)
+  return true;
 }
 
 CORBA::Boolean
@@ -169,7 +161,7 @@ TAO::Security::AccessDecision::access_allowed (
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard, this->map_lock_,
 		    this->default_allowance_decision_);
 
-  ACE_Hash<CORBA::Object_var> hash;
+  ACE_Hash<OBJECT_KEY> hash;
 
   // Look up the target in access_map_; if there, return the value,
   // otherwise return the default value.
@@ -201,7 +193,6 @@ TAO::Security::AccessDecision::access_allowed (
 void
 TAO::Security::AccessDecision::add_object (CORBA::Object_ptr obj,
 					   CORBA::Boolean allow_insecure_access)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // make a key from 'obj'
   OBJECT_KEY key = this->map_key_from_objref (obj);
@@ -210,7 +201,7 @@ TAO::Security::AccessDecision::add_object (CORBA::Object_ptr obj,
   // LOCK THE MAP!
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->map_lock_);
 
-  ACE_Hash<CORBA::Object_var> hash;
+  ACE_Hash<OBJECT_KEY> hash;
 
   // Since we want to replace any existing entry in the map, we just
   // use rebind.
@@ -246,12 +237,11 @@ TAO::Security::AccessDecision::add_object (CORBA::Object_ptr obj,
 
 void
 TAO::Security::AccessDecision::remove_object (CORBA::Object_ptr obj)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // make a key from 'obj'
   OBJECT_KEY key = this->map_key_from_objref (obj);
 
-  ACE_Hash<CORBA::Object_var> hash;
+  ACE_Hash<OBJECT_KEY> hash;
 
   // unbind it from access_map_, no matter if it's not in there...
   // LOCK THE MAP!
@@ -288,14 +278,12 @@ TAO::Security::AccessDecision::remove_object (CORBA::Object_ptr obj)
 
 CORBA::Boolean
 TAO::Security::AccessDecision::default_decision (void)
-  ACE_THROW_SPEC ((::CORBA::SystemException))
 {
   return this->default_allowance_decision_;
 }
 
 void
 TAO::Security::AccessDecision::default_decision (CORBA::Boolean d)
-  ACE_THROW_SPEC ((::CORBA::SystemException))
 {
   this->default_allowance_decision_ = d;
 }

@@ -57,11 +57,16 @@ TAO::SSLIOP::Server_Invocation_Interceptor::Server_Invocation_Interceptor
 
   if (! CORBA::is_nil (this->sec2manager_.in ()))
     {
-      // set the slot id?
+      // set the slot id?  things seem to work without doing this
     }
 
+#if 0
+  // Don't need this now that we're not using access_allowed(), but
+  // I'm leaving the code here just in case it would become convenient
+  // for some other use.
   obj = info->resolve_initial_references ("POACurrent");
   this->poa_current_ = PortableServer::Current::_narrow (obj.in ());
+#endif
 }
 
 TAO::SSLIOP::Server_Invocation_Interceptor::~Server_Invocation_Interceptor (
@@ -84,87 +89,6 @@ void
 TAO::SSLIOP::Server_Invocation_Interceptor::receive_request_service_contexts (
                                               PortableInterceptor::ServerRequestInfo_ptr /*ri*/)
 {
-  // The current upcall is not being performed through an SSL
-  // connection.  If server is configured to disallow insecure
-  // invocations then throw a CORBA::NO_PERMISSION exception.
-  // @@ TODO: Once the SecurityManager is implemented, query it
-  //          for the current object's
-  //          SecureInvocationPolicy of type
-  //          SecTargetSecureInvocationPolicy so that we can
-  //          accept or reject requests on a per-object basis
-  //          instead on a per-endpoint basis.
-#if 0
-  CORBA::Boolean const no_ssl = this->ssliop_current_->no_context ();
-
-  if (TAO_debug_level >= 3)
-    ACE_DEBUG ((LM_DEBUG, "SSLIOP (%P|%t) Interceptor (context), ssl=%d\n", !(no_ssl)));
-
-  if (no_ssl && this->qop_ != ::Security::SecQOPNoProtection)
-    throw CORBA::NO_PERMISSION ();
-#endif
-#if defined(SSLIOP_DEBUG_PEER_CERTIFICATE)
-  try
-    {
-      // If the request was not made through an SSL connection, then
-      // this method will throw the SSLIOP::Current::NoContext
-      // exception. Otherwise, it will return a DER encoded X509
-      // certificate.
-      ::SSLIOP::ASN_1_Cert_var cert =
-        this->ssliop_current_->get_peer_certificate ();
-
-      // @@ The following debugging code works but I don't think that
-      //    we should include it since it dumps alot of information,
-      //    i.e. prints two lines of information per request.
-      if (TAO_debug_level > 1)
-        {
-          const CORBA::Octet *der_cert = cert->get_buffer ();
-
-          ::X509 *peer = ::d2i_X509 (0, &der_cert, cert->length ());
-          if (peer != 0)
-            {
-              char buf[BUFSIZ] = { 0 };
-
-              ::X509_NAME_oneline (::X509_get_subject_name (peer),
-                                   buf,
-                                   BUFSIZ);
-
-              ACE_DEBUG ((LM_DEBUG,
-                          "(%P|%t) Certificate subject: %s\n",
-                          buf));
-
-              ::X509_NAME_oneline (::X509_get_issuer_name (peer),
-                                   buf,
-                                   BUFSIZ);
-
-              ACE_DEBUG ((LM_DEBUG,
-                          "(%P|%t) Certificate issuer: %s\n",
-                          buf));
-
-
-              ::X509_free (peer);
-            }
-          else
-            {
-              ACE_DEBUG ((LM_DEBUG,
-                          "(%P|%t) No certificate info\n"));
-            }
-        }
-    }
-  catch (const ::SSLIOP::Current::NoContext& )
-    {
-      // The current upcall is not being performed through an SSL
-      // connection.  If server is configured to disallow insecure
-      // invocations then throw a CORBA::NO_PERMISSION exception.
-      // @@ TODO: Once the SecurityManager is implemented, query it
-      //          for the current object's
-      //          SecureInvocationPolicy of type
-      //          SecTargetSecureInvocationPolicy so that we can
-      //          accept or reject requests on a per-object basis
-      //          instead on a per-endpoint basis.
-      if (this->qop_ != ::Security::SecQOPNoProtection)
-        throw CORBA::NO_PERMISSION ();
-    }
-#endif /* SSLIOP_DEBUG_PEER_CERTIFICATE */
 }
 
 
@@ -172,9 +96,10 @@ void
 TAO::SSLIOP::Server_Invocation_Interceptor::receive_request (
     PortableInterceptor::ServerRequestInfo_ptr ri )
 {
-  SecurityLevel2::AccessDecision_var ad =
+  SecurityLevel2::AccessDecision_var ad_tmp =
     this->sec2manager_->access_decision ();
-
+  TAO::SL2::AccessDecision_var ad =
+    TAO::SL2::AccessDecision::_narrow (ad_tmp.in ());
   
   CORBA::Boolean const no_ssl =
     this->ssliop_current_->no_context ();
@@ -221,21 +146,22 @@ TAO::SSLIOP::Server_Invocation_Interceptor::receive_request (
       }
 #endif
 
-      /* Get the target object */
-      CORBA::Object_var target = CORBA::Object::_nil ();
-
-      target = this->poa_current_->get_reference ();
+      /* Gather the elements that uniquely identify the target object */
+      CORBA::ORBid_var orb_id = ri->orbid ();
+      CORBA::OctetSeq_var adapter_id = ri->adapter_id ();
+      CORBA::OctetSeq_var object_id = ri->object_id ();
 
       CORBA::String_var operation_name = ri->operation ();
-      CORBA::String_var target_interface_name = ri->target_most_derived_interface(); // is this the repository ID?
 
       CORBA::Boolean it_should_happen = false;
-      it_should_happen = ad->access_allowed (cred_list,
-					     target.in(),
-					     operation_name.in(),
-					     target_interface_name.in());
+      it_should_happen = ad->access_allowed_ex (orb_id.in (),
+						adapter_id.in (),
+						object_id.in (),
+						cred_list.in (),
+						operation_name.in());
       if (TAO_debug_level >= 3)
-	ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) SL2::access_allowed returned %s\n",
+	ACE_DEBUG ((LM_DEBUG,
+		    "TAO (%P|%t) SL2::access_allowed_ex returned %s\n",
 		    it_should_happen ? "true" : "false"));
 
       if (! it_should_happen)
