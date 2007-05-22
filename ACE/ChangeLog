@@ -1,3 +1,9 @@
+Tue May 22 10:03:26 UTC 2007  Olli Savia  <ops@iki.fi>
+
+        * ace/config-sunos5.10.h:
+          It seems that Solaris 10 supports log2 so we can undefine
+          ACE_LACKS_LOG2. 
+
 Tue May 22 09:56:40 UTC 2007  Olli Savia  <ops@iki.fi>
 
         * ace/config-sunos5.5.h:
