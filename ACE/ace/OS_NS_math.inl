@@ -30,13 +30,11 @@ namespace ACE_OS {
       return static_cast<long> (x) + 1;
   }
 
-#if !defined (ACE_LACKS_LOG2)
   ACE_INLINE double
   log2 (double x)
   {
     return ace_log2_helper (x);
   }
-#endif /* !ACE_LACKS_LOG2 */
 
 } // ACE_OS namespace
 
