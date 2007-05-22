@@ -404,7 +404,7 @@ test_ostream (void)
                         1);
     }
 
-#if !defined (ACE_VXWORKS) && !defined (ACE_HAS_PHARLAP) || (defined(ACE_VXWORKS) && (ACE_VXWORKS >= 0x640))
+#if !defined (ACE_VXWORKS) && !defined (ACE_HAS_PHARLAP) || (defined(ACE_VXWORKS) && (ACE_VXWORKS >= 0x650))
 # define TEST_CAN_UNLINK_IN_ADVANCE
 #endif
 

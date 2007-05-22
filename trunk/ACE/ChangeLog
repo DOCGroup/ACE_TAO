@@ -1,9 +1,14 @@
+Tue May 22 12:12:55 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Log_Msg_Test.cpp:
+          Can't unlink on advance with VxWorks 6.4 (at least on NFS)
+
 Tue May 22 11:10:30 UTC 2007  Olli Savia  <ops@iki.fi>
 
         * ace/OS_NS_math.h:
         * ace/OS_NS_math.inl:
           Added log2() emulation.
-        
+
         * tests/OS_Test.cpp:
           Simplified log2 test.
 
