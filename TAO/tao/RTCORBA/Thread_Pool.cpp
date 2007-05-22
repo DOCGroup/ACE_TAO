@@ -286,8 +286,7 @@ TAO_Thread_Lane::open (void)
   bool ignore_address;
 
   // Get the endpoints for this lane.
-  params->get_endpoint_set (pool_lane_id,
-                            endpoint_set);
+  params->get_endpoint_set (pool_lane_id, endpoint_set);
 
   if (endpoint_set.is_empty ())
     {
@@ -308,9 +307,7 @@ TAO_Thread_Lane::open (void)
 
   // Open the acceptor registry.
   int const result =
-    this->resources_.open_acceptor_registry (endpoint_set,
-                                             ignore_address
-                                            );
+    this->resources_.open_acceptor_registry (endpoint_set, ignore_address);
 
   if (result == -1)
     throw ::CORBA::INTERNAL (
@@ -861,8 +858,7 @@ TAO_Thread_Pool_Manager::create_threadpool_helper (TAO_Thread_Pool *thread_pool)
   thread_pool->open ();
 
   // Create the static threads.
-  int result =
-    thread_pool->create_static_threads ();
+  int result = thread_pool->create_static_threads ();
 
   // Throw exception in case of errors.
   if (result != 0)

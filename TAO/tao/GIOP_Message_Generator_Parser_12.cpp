@@ -138,33 +138,11 @@ TAO_GIOP_Message_Generator_Parser_12::write_reply_header (
     }
   else
     {
-      this->marshal_reply_status (output,
-                                  reply);
+      this->marshal_reply_status (output, reply);
     }
 
-#if (TAO_HAS_MINIMUM_CORBA == 1)
-  output << reply.service_context_notowned ();
-#else
-  if (reply.is_dsi_ == false)
-    {
-      output << reply.service_context_notowned ();
-    }
-  else
-    {
-      IOP::ServiceContextList &svc_ctx =
-        reply.service_context_notowned ();
-      CORBA::ULong const l = svc_ctx.length ();
-
-      // Now marshal the rest of the service context objects
-      output << l;
-
-      for (CORBA::ULong i = 0; i != l; ++i)
-        {
-          output << svc_ctx[i];
-        }
-
-    }
-#endif /*TAO_HAS_MINIMUM_CORBA */
+  if (!(output << reply.service_context_notowned ()))
+    return false;
 
   if (reply.argument_flag_)
     {
