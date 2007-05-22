@@ -51,9 +51,7 @@ inline double ace_log2_helper (double x)
 #  if !defined (ACE_LACKS_LOG2)
   return ACE_STD_NAMESPACE::log2 (x);
 #  else
-  ACE_UNUSED_ARG (x);
-  unsigned long const ACE_NaN[2]= { 0xffffffff, 0x7fffffff };
-  return *reinterpret_cast<double const *> (ACE_NaN);
+  return log (x) / log (2.0);
 #  endif /* !ACE_LACKS_LOG2 */
 #endif /* defined (log2) */
 }
@@ -70,11 +68,9 @@ namespace ACE_OS
   ACE_NAMESPACE_INLINE_FUNCTION
   double ceil (double x);
 
-#if !defined (ACE_LACKS_LOG2)
   /// This method computes base-2 logarithm of x
   ACE_NAMESPACE_INLINE_FUNCTION
   double log2 (double x);
-#endif /* !ACE_LACKS_LOG2 */
 
 } /* namespace ACE_OS */
 
