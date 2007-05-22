@@ -19,4 +19,9 @@
 #  undef ACE_LACKS_ALPHASORT
 #endif
 
+// Solaris 10 offers a useable log2() unlike previous Solaris versions.
+#if defined (ACE_LACKS_LOG2)
+#  undef ACE_LACKS_LOG2
+#endif
+
 #endif /* ACE_CONFIG_H */
