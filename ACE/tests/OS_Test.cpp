@@ -917,7 +917,6 @@ pagesize_test (void)
   return 0;
 }
 
-#if !defined (ACE_LACKS_LOG2)
 int
 log2_test (void)
 {
@@ -931,7 +930,7 @@ log2_test (void)
 
   for (size_t i = 0 ; i < sizeof (values) / sizeof (double) ; i++)
     {
-      result = static_cast<int> (ACE_OS::floor (ACE_OS::log2 (values [i])));
+      result = static_cast<int> (ACE_OS::log2 (values [i]) + 0.5);
       if (result != results [i])
         {
           ACE_ERROR ((LM_ERROR, ACE_TEXT ("Log2 error: input %.1F, output %d, expected %d\n"), values [i], result, results [i]));
@@ -941,7 +940,6 @@ log2_test (void)
 
   return error_count;
 }
-#endif /* !ACE_LACKS_LOG2 */
 
 int
 run_main (int, ACE_TCHAR *[])
@@ -977,10 +975,8 @@ run_main (int, ACE_TCHAR *[])
   if ((result = pagesize_test ()) != 0)
       status = result;
 
-#if !defined (ACE_LACKS_LOG2)
   if ((result = log2_test ()) != 0)
       status = result;
-#endif /* !ACE_LACKS_LOG2 */
 
   ACE_END_TEST;
   return status;
