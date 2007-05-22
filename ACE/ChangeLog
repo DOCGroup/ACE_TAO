@@ -1,3 +1,11 @@
+Tue May 22 06:43:55 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-vxworks6.2:
+        * ace/config-vxworks6.3:
+        * ace/config-vxworks6.4:
+          VxWorks also seems to have problems with log2, so disable it for the
+          moment to get the builds running again
+
 Tue May 22 06:11:34 UTC 2007  Olli Savia  <ops@iki.fi>
 
         * ace/OS_NS_math.h:
@@ -6,7 +14,7 @@ Tue May 22 06:11:34 UTC 2007  Olli Savia  <ops@iki.fi>
           Hide ACE_OS::log2 method if platform doesn't support it
           natively. This is temporary fix just to keep things going
           until we have made decicion what is the best solution here.
-        
+
 Tue May 22 01:14:31 UTC 2007  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * THANKS: Vikram Karandikar <softking at gmail dot com> is the 2200th
