@@ -917,6 +917,7 @@ pagesize_test (void)
   return 0;
 }
 
+#if !defined (ACE_LACKS_LOG2)
 int
 log2_test (void)
 {
@@ -940,6 +941,7 @@ log2_test (void)
 
   return error_count;
 }
+#endif /* !ACE_LACKS_LOG2 */
 
 int
 run_main (int, ACE_TCHAR *[])
@@ -975,8 +977,10 @@ run_main (int, ACE_TCHAR *[])
   if ((result = pagesize_test ()) != 0)
       status = result;
 
+#if !defined (ACE_LACKS_LOG2)
   if ((result = log2_test ()) != 0)
       status = result;
+#endif /* !ACE_LACKS_LOG2 */
 
   ACE_END_TEST;
   return status;
