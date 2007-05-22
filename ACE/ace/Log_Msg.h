@@ -147,7 +147,6 @@ class ACE_Log_Record;
  */
 class ACE_Export ACE_Log_Msg
 {
-
 public:
   // Logger Flags.
   enum
