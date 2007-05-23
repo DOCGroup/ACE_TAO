@@ -78,7 +78,6 @@ TAO_ServerRequest::TAO_ServerRequest (TAO_Pluggable_Messaging *mesg_base,
 #if TAO_HAS_INTERCEPTORS == 1
     , interceptor_count_ (0)
     , rs_pi_current_ (0)
-    , result_seq_ (0)
     , caught_exception_ (0)
     , reply_status_ (-1)
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
@@ -123,7 +122,6 @@ TAO_ServerRequest::TAO_ServerRequest (TAO_Pluggable_Messaging *mesg_base,
 #if TAO_HAS_INTERCEPTORS == 1
   , interceptor_count_ (0)
   , rs_pi_current_ (0)
-  , result_seq_ (0)
   , caught_exception_ (0)
   , reply_status_ (-1)
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
@@ -161,7 +159,6 @@ TAO_ServerRequest::TAO_ServerRequest (TAO_ORB_Core * orb_core,
 #if TAO_HAS_INTERCEPTORS == 1
   , interceptor_count_ (0)
   , rs_pi_current_ (0)
-  , result_seq_ (0)
   , caught_exception_ (0)
   , reply_status_ (-1)
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */

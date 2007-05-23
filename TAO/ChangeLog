@@ -1,3 +1,19 @@
+Wed May 23 12:41:55 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PI/ClientRequestInterceptor_Adapter_Impl.{h,cpp}:
+          Made the exception argument of process_forward_request const
+
+        * tao/TAO_Server_Request.{h,cpp,inl}:
+          Removed result_seq_ member and associated methods, I did a
+          search through the code and couldn't fine a place where these
+          are used, so removed them. If this causes errors on the
+          scoreboard I will readd them, but so far as I can tell that will
+          not be needed. This will reduce footprint and increase
+          performance
+
+        * tao/AnyTypeCode/Union_TypeCode.cpp:
+          Addressed code not reached warning
+
 Wed May 23 12:37:55 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/LongUpcalls/run_test.pl:
