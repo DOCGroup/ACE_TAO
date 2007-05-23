@@ -46,23 +46,9 @@
 #   endif
 # endif /* (__GNUC__ > 3 || (__GNUC__ == 3 && __GNUC_MINOR__ >= 3)) */
 
-#elif defined (ghs)
-  // Processor type, if necessary.  Green Hills defines "ppc".
-# if defined (ppc)
-#   define ACE_HAS_POWERPC_TIMER
-#   define ACE_LACKS_CLEARERR
-# endif /* ppc */
-
-# define ACE_CONFIG_INCLUDE_GHS_COMMON
-# include "ace/config-ghs-common.h"
-
-# define ACE_LACKS_UNISTD_H
-# define ACE_LACKS_IOSTREAM_TOTALLY
-
-// Short-circuit the include of <arpa/inet.h>
-// Green Hills has a problem with multiply defined functions
-// with different parameters.
-# define __INCineth
+# if defined __RTP__
+#  define ACE_LACKS_LOG2
+# endif
 
 #elif defined (__DCPLUSPLUS__) || defined (__DCC__)
   // Diab 4.2a or later.
@@ -123,7 +109,6 @@
 #define ACE_LACKS_GETPROTOBYNAME
 #define ACE_LACKS_GETPROTOBYNUMBER
 #define ACE_LACKS_KEY_T
-#define ACE_LACKS_LOG2
 #define ACE_LACKS_LSTAT
 #define ACE_LACKS_MADVISE
 #define ACE_LACKS_MALLOC_H

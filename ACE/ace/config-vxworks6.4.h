@@ -25,7 +25,6 @@
   #endif
 #endif
 
-
 #if ! defined (__ACE_INLINE__)
 # define __ACE_INLINE__
 #endif /* ! __ACE_INLINE__ */
@@ -44,6 +43,10 @@
 #     define _GLIBCPP_USE_LONG_LONG
 #   endif
 # endif /* (__GNUC__ > 3 || (__GNUC__ == 3 && __GNUC_MINOR__ >= 3)) */
+
+# if defined __RTP__
+#  define ACE_LACKS_LOG2
+# endif
 
 #elif defined (__DCC__)
 # define ACE_HAS_STANDARD_CPP_LIBRARY 1
@@ -113,7 +116,6 @@
 #define ACE_LACKS_GETPROTOBYNUMBER
 #define ACE_LACKS_GETIPNODEBYADDR
 #define ACE_LACKS_GETIPNODEBYNAME_IPV6
-#define ACE_LACKS_LOG2
 #define ACE_LACKS_LSTAT
 #define ACE_LACKS_MADVISE
 #define ACE_LACKS_MALLOC_H
