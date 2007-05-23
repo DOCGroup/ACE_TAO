@@ -88,3 +88,4 @@ namespace CIAO
 #endif /* NODEAPPLICATION_CALLBACK_IMPL_H */
 
 #endif /* ACE_HAS_THREADS */
+
