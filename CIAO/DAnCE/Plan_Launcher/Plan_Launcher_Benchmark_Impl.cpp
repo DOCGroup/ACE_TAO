@@ -5,7 +5,7 @@
 #include "ace/Sched_Params.h"
 #include "ace/Stats.h"
 #include "ace/Sample_History.h"
-#include "Utils/Plan_Handler.h"
+#include "DAnCE/Utils/Plan_Handler.h"
 
 namespace CIAO
 {
@@ -21,13 +21,13 @@ namespace CIAO
     {
       try
         {
-          /*
+          
           DAnCE_Utils::add_instance (
             const_cast<::Deployment::DeploymentPlan&> (plan), 
             "Hello-Sender-idd-02", "SenderNode", "Hello-Sender-mdd");
 
           DAnCE_Utils::print_instances (plan);
-          DAnCE_Utils::print_connections (plan);*/
+          DAnCE_Utils::print_connections (plan);
           
 
           ///// Start Test ////////////////////////////////////////////
@@ -123,7 +123,6 @@ namespace CIAO
             call_end = ACE_OS::gethrtime ();
             history_finish_launch.sample (call_end - call_start);
 
-
             if (CIAO::debug_level ())
               ACE_DEBUG ((LM_DEBUG, "[success]\n"));
 
@@ -132,7 +131,7 @@ namespace CIAO
               ACE_DEBUG ((LM_DEBUG,
                           "CIAO_PlanLauncher: start activating components...\n"));
 
-            //////// Measure the latency for finishLaunch()  ////////////////
+            //////// Measure the latency for start()  ////////////////
             call_start = ACE_OS::gethrtime ();
             dam->start ();
             call_end = ACE_OS::gethrtime ();
