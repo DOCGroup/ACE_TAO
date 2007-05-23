@@ -44,7 +44,7 @@ struct cancel_state
  * This class provides a common interface that is mapped onto
  * POSIX Pthreads, Solaris threads, Win32 threads, VxWorks
  * threads, or pSoS threads.  Note, however, that it is
- * generally a better idea to use the <ACE_Thread_Manager>
+ * generally a better idea to use the ACE_Thread_Manager
  * programming API rather than the <ACE_Thread> API since the
  * thread manager is more powerful.
  */
@@ -127,7 +127,7 @@ public:
    * it is assumed to be an array of @a n thread_handles that will be
    * assigned the values of the thread handles being spawned.  Returns
    * the number of threads actually spawned (if this doesn't equal the
-   * number requested then something has gone wrong and <errno> will
+   * number requested then something has gone wrong and @c errno will
    * explain...).
    *
    * @see spawn()

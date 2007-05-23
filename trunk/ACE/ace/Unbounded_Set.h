@@ -65,7 +65,7 @@ public:
   /// Prefix advance.
   ACE_Unbounded_Set_Iterator<T>& operator++ (void);
 
-  /// Returns a reference to the internal element <this> is pointing to.
+  /// Returns a reference to the internal element @c this is pointing to.
   T& operator* (void);
 
   /// Check if two iterators point to the same position
@@ -125,7 +125,7 @@ public:
   /// Prefix advance.
   ACE_Unbounded_Set_Const_Iterator<T>& operator++ (void);
 
-  /// Returns a reference to the internal element <this> is pointing to.
+  /// Returns a reference to the internal element @c this is pointing to.
   T& operator* (void);
 
   /// Check if two iterators point to the same position

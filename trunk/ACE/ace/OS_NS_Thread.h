@@ -1303,7 +1303,7 @@ namespace ACE_OS {
    * If <timeout> == 0, calls <ACE_OS::mutex_lock(m)>.  Otherwise,
    * this method attempts to acquire a lock, but gives up if the lock
    * has not been acquired by the given time, in which case it returns
-   * -1 with an <ETIME> errno on platforms that actually support timed
+   * -1 with an @c ETIME errno on platforms that actually support timed
    * mutexes.  The timeout should be an absolute time.  Note that the
    * mutex should not be a recursive one, i.e., it should only be a
    * standard mutex or an error checking mutex since some

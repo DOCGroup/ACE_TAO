@@ -175,7 +175,7 @@ public:
   ~ACE_Sig_Action (void);
 
   // = Signal action management.
-  /// Register <this> as the current disposition and store old
+  /// Register @c this as the current disposition and store old
   /// disposition into <oaction> if it is non-NULL.
   int register_action (int signum,
                        ACE_Sig_Action *oaction = 0);

@@ -612,10 +612,10 @@ public:
   /// Returns 1 when all items have been seen, else 0.
   int done (void) const;
 
-  /// Returns a reference to the interal element <this> is pointing to.
+  /// Returns a reference to the interal element @c this is pointing to.
   ACE_Hash_Map_Entry<EXT_ID, INT_ID>& operator* (void) const;
 
-  /// Returns a pointer to the interal element <this> is pointing to.
+  /// Returns a pointer to the interal element @c this is pointing to.
   ACE_Hash_Map_Entry<EXT_ID, INT_ID>* operator-> (void) const;
 
   /// Returns reference the Hash_Map_Manager_Ex that is being iterated
@@ -679,10 +679,10 @@ public:
   /// Returns 1 when all items have been seen, else 0.
   int done (void) const;
 
-  /// Returns a reference to the interal element <this> is pointing to.
+  /// Returns a reference to the interal element @c this is pointing to.
   ACE_Hash_Map_Entry<EXT_ID, INT_ID>& operator* (void) const;
 
-  /// Returns a pointer to the interal element <this> is pointing to.
+  /// Returns a pointer to the interal element @c this is pointing to.
   ACE_Hash_Map_Entry<EXT_ID, INT_ID>* operator-> (void) const;
 
   /// Returns reference the Hash_Map_Manager_Ex that is being iterated
@@ -866,10 +866,10 @@ public:
   /// Postfix reverse.
   ACE_Hash_Map_Bucket_Iterator<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> operator-- (int);
 
-  /// Returns a reference to the interal element <this> is pointing to.
+  /// Returns a reference to the interal element @c this is pointing to.
   ACE_Hash_Map_Entry<EXT_ID, INT_ID>& operator* (void) const;
 
-  /// Returns a pointer to the interal element <this> is pointing to.
+  /// Returns a pointer to the interal element @c this is pointing to.
   ACE_Hash_Map_Entry<EXT_ID, INT_ID>* operator-> (void) const;
 
   /// Returns reference the Hash_Map_Manager_Ex that is being iterated

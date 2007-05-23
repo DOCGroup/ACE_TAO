@@ -110,7 +110,7 @@ protected:
   /// the ACE_Refcounted_Auto_Ptr_Rep
   typedef ACE_Refcounted_Auto_Ptr_Rep<X, ACE_LOCK> AUTO_REFCOUNTED_PTR_REP;
 
-  /// Protect operations on the <ACE_Refcounted_Auto_Ptr>.
+  /// Protect operations on the ACE_Refcounted_Auto_Ptr.
   AUTO_REFCOUNTED_PTR_REP *rep_;
 };
 

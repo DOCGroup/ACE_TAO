@@ -55,7 +55,7 @@ namespace ACE_OS {
 /**
  * @class ACE_CE_Errno
  *
- * Some versions of CE don't support <errno> and some versions'
+ * Some versions of CE don't support @c errno and some versions'
  * implementations are busted.  So we implement our own.
  * Our implementation takes up one Tls key, however, it does not
  * allocate memory fromt the heap so there's no problem with cleanin

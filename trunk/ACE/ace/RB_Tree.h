@@ -570,7 +570,7 @@ private:
 
   // = Private members.
 
-  /// Synchronization variable for the MT_SAFE <ACE_RB_Tree>.
+  /// Synchronization variable for the MT_SAFE ACE_RB_Tree.
   ACE_LOCK lock_;
 
   /// The root of the tree.

@@ -34,11 +34,11 @@ class ACE_Time_Value;
 /**
  * @class ACE_SOCK_SEQPACK_Acceptor
  *
- * @brief Defines a factory that creates new <ACE_Association>s passively.
+ * @brief Defines a factory that creates new ACE_Associations passively.
  *
  * The <ACE_SOCK_SEQPACK_Acceptor> has its own "passive-mode" socket.
  * This serves as a factory to create so-called "data-mode"
- * sockets, which are what the <ACE_SOCK_SEQPACK_Association> encapsulates.
+ * sockets, which are what the ACE_SOCK_SEQPACK_Association encapsulates.
  * Therefore, by inheriting from <ACE_SOCK>, <ACE_SOCK_SEQPACK_Acceptor>
  * gets its very own socket.
  */
@@ -122,11 +122,11 @@ public:
 
   // = Passive connection <accept> methods.
   /**
-   * Accept a new <ACE_SOCK_SEQPACK_Association> connection.  A @a timeout of 0
+   * Accept a new ACE_SOCK_SEQPACK_Association connection.  A @a timeout of 0
    * means block forever, a @a timeout of {0, 0} means poll.  <restart>
    * == 1 means "restart if interrupted," i.e., if errno == EINTR.
-   * Note that <new_association> inherits the "blocking mode" of <this>
-   * <ACE_SOCK_SEQPACK_Acceptor>, i.e., if <this> acceptor factory is in
+   * Note that <new_association> inherits the "blocking mode" of @c this
+   * <ACE_SOCK_SEQPACK_Acceptor>, i.e., if @c this acceptor factory is in
    * non-blocking mode, the <net_association> will be in non-blocking mode
    * and vice versa.
    */

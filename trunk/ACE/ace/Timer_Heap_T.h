@@ -204,7 +204,7 @@ protected:
                            const ACE_Time_Value &future_time,
                            const ACE_Time_Value &interval);
 
-  /// Reschedule an "interval" <ACE_Timer_Node>.
+  /// Reschedule an "interval" ACE_Timer_Node.
   virtual void reschedule (ACE_Timer_Node_T<TYPE> *);
 
   /// Factory method that allocates a new node (uses operator new if
@@ -219,7 +219,7 @@ protected:
   virtual void free_node (ACE_Timer_Node_T<TYPE> *);
 
 private:
-  /// Remove and return the <slot>th <ACE_Timer_Node> and restore the
+  /// Remove and return the <slot>th ACE_Timer_Node and restore the
   /// heap property.
   ACE_Timer_Node_T<TYPE> *remove (size_t slot);
 
@@ -276,16 +276,16 @@ private:
 
   /**
    * Current contents of the Heap, which is organized as a "heap" of
-   * <ACE_Timer_Node> *'s.  In this context, a heap is a "partially
+   * ACE_Timer_Node *'s.  In this context, a heap is a "partially
    * ordered, almost complete" binary tree, which is stored in an
    * array.
    */
   ACE_Timer_Node_T<TYPE> **heap_;
 
   /**
-   * An array of "pointers" that allows each <ACE_Timer_Node> in the
+   * An array of "pointers" that allows each ACE_Timer_Node in the
    * <heap_> to be located in O(1) time.  Basically, <timer_id_[i]>
-   * contains the slot in the <heap_> array where an <ACE_Timer_Node>
+   * contains the slot in the <heap_> array where an ACE_Timer_Node
    * * with timer id \<i\> resides.  Thus, the timer id passed back from
    * <schedule> is really a slot into the <timer_ids> array.  The
    * <timer_ids_> array serves two purposes: negative values are
@@ -305,7 +305,7 @@ private:
 
   /**
    * If this is non-0, then we preallocate <max_size_> number of
-   * <ACE_Timer_Node> objects in order to reduce dynamic allocation
+   * ACE_Timer_Node objects in order to reduce dynamic allocation
    * costs.  In auto-growing implementation, this points to the
    * last array of nodes allocated.
    */

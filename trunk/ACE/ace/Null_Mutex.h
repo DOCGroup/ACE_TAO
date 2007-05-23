@@ -54,10 +54,10 @@ public:
   /// Return 0.
   int acquire (void) {return 0;}
 
-  /// Return -1 with <errno> == <ETIME>.
+  /// Return -1 with @c errno == @c ETIME.
   int acquire (ACE_Time_Value &) {errno = ETIME; return -1;}
 
-  /// Return -1 with <errno> == <ETIME>.
+  /// Return -1 with @c errno == @c ETIME.
   int acquire (ACE_Time_Value *) {errno = ETIME; return -1;}
 
   /// Return 0.

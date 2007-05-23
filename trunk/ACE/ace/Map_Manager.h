@@ -411,7 +411,7 @@ protected:
   /// Synchronization variable for the MT_SAFE ACE_Map_Manager.
   mutable ACE_LOCK lock_;
 
-  /// Implement the Map as a resizeable array of <ACE_Map_Entry>.
+  /// Implement the Map as a resizeable array of ACE_Map_Entry.
   ACE_Map_Entry<EXT_ID, INT_ID> *search_structure_;
 
   /// Total number of elements in this->search_structure_.
@@ -467,7 +467,7 @@ public:
   /// Returns 1 when all items have been seen, else 0.
   int done (void) const;
 
-  /// Returns a reference to the interal element <this> is pointing to.
+  /// Returns a reference to the interal element @c this is pointing to.
   ACE_Map_Entry<EXT_ID, INT_ID>& operator* (void) const;
 
   /// Returns reference the Map_Manager that is being iterated
@@ -526,7 +526,7 @@ public:
   /// Returns 1 when all items have been seen, else 0.
   int done (void) const;
 
-  /// Returns a reference to the interal element <this> is pointing to.
+  /// Returns a reference to the interal element @c this is pointing to.
   ACE_Map_Entry<EXT_ID, INT_ID>& operator* (void) const;
 
   /// Returns reference the Map_Manager that is being iterated

@@ -385,7 +385,7 @@ public:
 
 protected:
   /// Returns 1 if <d> is a delimiter, 0 otherwise.  If <d> should be
-  /// replaced with <r>, <replace> is set to 1, otherwise 0.
+  /// replaced with @a r, <replace> is set to 1, otherwise 0.
   int is_delimiter (ACE_TCHAR d, int &replace, ACE_TCHAR &r);
 
   /**

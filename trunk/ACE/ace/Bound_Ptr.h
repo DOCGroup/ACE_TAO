@@ -120,13 +120,13 @@ public:
   /// ownership of an object from an auto_ptr.
   explicit ACE_Strong_Bound_Ptr (auto_ptr<X> p);
 
-  /// Copy constructor binds <this> and <r> to the same object.
+  /// Copy constructor binds @c this and @a r to the same object.
   ACE_Strong_Bound_Ptr (const ACE_Strong_Bound_Ptr<X, ACE_LOCK> &r);
 
-  /// Constructor binds <this> and <r> to the same object.
+  /// Constructor binds @c this and @a r to the same object.
   ACE_Strong_Bound_Ptr (const ACE_Weak_Bound_Ptr<X, ACE_LOCK> &r);
 
-  /// Copy constructor binds <this> and <r> to the same object if
+  /// Copy constructor binds @c this and @a r to the same object if
   /// Y* can be implicitly converted to X*.
   template <class Y>
   ACE_Strong_Bound_Ptr (const ACE_Strong_Bound_Ptr<Y, ACE_LOCK> &r)
@@ -142,13 +142,13 @@ public:
   /// Destructor.
   ~ACE_Strong_Bound_Ptr (void);
 
-  /// Assignment operator that binds <this> and <r> to the same object.
+  /// Assignment operator that binds @c this and @a r to the same object.
   void operator = (const ACE_Strong_Bound_Ptr<X, ACE_LOCK> &r);
 
-  /// Assignment operator that binds <this> and <r> to the same object.
+  /// Assignment operator that binds @c this and @a r to the same object.
   void operator = (const ACE_Weak_Bound_Ptr<X, ACE_LOCK> &r);
 
-  /// Assignment operator that binds <this> and <r> to the same object
+  /// Assignment operator that binds @c this and @a r to the same object
   /// if Y* can be implicitly converted to X*.
   template <class Y>
   ACE_Weak_Bound_Ptr<X, ACE_LOCK>&
@@ -270,19 +270,19 @@ public:
   /// the object \<p\> immediately.
   explicit ACE_Weak_Bound_Ptr (X *p = 0);
 
-  /// Copy constructor binds <this> and <r> to the same object.
+  /// Copy constructor binds @c this and @a r to the same object.
   ACE_Weak_Bound_Ptr (const ACE_Weak_Bound_Ptr<X, ACE_LOCK> &r);
 
-  /// Constructor binds <this> and <r> to the same object.
+  /// Constructor binds @c this and @a r to the same object.
   ACE_Weak_Bound_Ptr (const ACE_Strong_Bound_Ptr<X, ACE_LOCK> &r);
 
   /// Destructor.
   ~ACE_Weak_Bound_Ptr (void);
 
-  /// Assignment operator that binds <this> and <r> to the same object.
+  /// Assignment operator that binds @c this and @a r to the same object.
   void operator = (const ACE_Weak_Bound_Ptr<X, ACE_LOCK> &r);
 
-  /// Assignment operator that binds <this> and <r> to the same object.
+  /// Assignment operator that binds @c this and @a r to the same object.
   void operator = (const ACE_Strong_Bound_Ptr<X, ACE_LOCK> &r);
 
   /// Equality operator that returns @c true if both

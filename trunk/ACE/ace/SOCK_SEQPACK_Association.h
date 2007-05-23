@@ -37,7 +37,7 @@ class ACE_Message_Block;
 /**
  * @class ACE_SOCK_SEQPACK_Association
  *
- * @brief Defines the methods in the <ACE_SOCK_SEQPACK_Association> abstraction.
+ * @brief Defines the methods in the ACE_SOCK_SEQPACK_Association abstraction.
  *
  * This adds additional wrapper methods atop the <ACE_SOCK_IO>
  * class.
