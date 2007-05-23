@@ -4,8 +4,6 @@
 #include "DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.h"
 #include "ace/Log_Msg.h"
 
-#if defined (ACE_HAS_THREADS)
-
 CIAO::NodeManager_Impl_Base::NodeManager_Impl_Base (const char *name,
                                                     CORBA::ORB_ptr orb,
                                                     PortableServer::POA_ptr poa,
@@ -679,5 +677,3 @@ CIAO::Static_NodeManager_Impl::destroyManager
     }
 
 }
-
-#endif /* ACE_HAS_THREADS */

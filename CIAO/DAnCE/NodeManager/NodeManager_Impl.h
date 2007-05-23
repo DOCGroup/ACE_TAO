@@ -22,8 +22,6 @@
 #define CIAO_NODEMANAGER_IMPL_H
 #include /**/ "ace/pre.h"
 
-#if defined (ACE_HAS_THREADS)
-
 #include "Interfaces/NodeManagerDaemonS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -324,5 +322,3 @@ namespace CIAO
 
 #include /**/ "ace/post.h"
 #endif /* CIAO_NODEMANAGER_IMPL_H */
-
-#endif /* ACE_HAS_THREADS */

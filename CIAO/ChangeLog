@@ -1,3 +1,15 @@
+Wed May 23 18:36:35 UTC 2007  Gan Deng  <gan.deng@vanderbilt.edu>
+
+        * MPC/config/ciao_deployment_stub.mpb:
+        
+          Added "requires += threads" to disable single threaded build.
+        
+        * DAnCE/NodeManager/Node_Manager.cpp
+        * DAnCE/NodeManager/NodeManager_Impl.cpp
+        * DAnCE/NodeManager/NodeManager_Impl.h
+        
+          Removed ACE_HAS_THREADS guards.
+
 Wed May 23 02:21:30 UTC 2007  Gan Deng  <gan.deng@vanderbilt.edu>
 
         * DAnCE/Deployment/NodeApp_CB_Impl.h:
