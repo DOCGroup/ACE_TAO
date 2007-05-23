@@ -34,24 +34,29 @@ $client = PerlACE::LocalFile ("client");
 
 $mode = shift (@ARGV);
 if ( $mode =~ /-dynamic/) {
-    $client_conf_file = PerlACE::LocalFile ("client_dynamic.conf");
-    $server_conf_file = PerlACE::LocalFile ("server_dynamic.conf");
+    $base_client_conf = "client_dynamic.conf";
+    $base_server_conf = "server_dynamic.conf";
+    $client_conf_file = PerlACE::LocalFile ("$base_client_conf");
+    $server_conf_file = PerlACE::LocalFile ("$base_server_conf");
 }
 elsif  ( $mode =~ /-static/) {
-    $client_conf_file = PerlACE::LocalFile ("client_static.conf");
-    $server_conf_file = PerlACE::LocalFile ("server_static.conf");
+    $base_client_conf = "client_static.conf";
+    $base_server_conf = "server_static.conf";
+    $client_conf_file = PerlACE::LocalFile ("$base_client_conf");
+    $server_conf_file = PerlACE::LocalFile ("$base_server_conf");
 }
 else {
     print STDERR "Unknown $mode. Specify -static or -dynamic\n";
     exit 1;
 }
 
-$iorfile = PerlACE::LocalFile ("server.ior");
+$baseiorfile = "server.ior";
+$iorfile = PerlACE::LocalFile ("$baseiorfile");
 unlink $iorfile;
 
 if (PerlACE::is_vxworks_test()) {
     $SV = new PerlACE::ProcessVX ("server",
-                                  "@ARGV -c 0 -ORBSvcConf $server_conf_file -o server.ior");
+                                  "@ARGV -c 0 -ORBSvcConf $base_server_conf -o $baseiorfile");
 }
 else {
     $SV = new PerlACE::Process ("server",
@@ -79,7 +84,7 @@ if ($client != 0) {
     $status = 1;
 }
 
-$server = $SV->WaitKill (10);
+$server = $SV->WaitKill (15);
 
 if ($server != 0) {
     print STDERR "$0: ERROR: server returned $server\n";
