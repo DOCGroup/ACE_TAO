@@ -268,8 +268,6 @@ TAO::TypeCode::Union<StringType,
 //      );
 
   throw ::CORBA::NO_IMPLEMENT ();
-
-  ACE_NOTREACHED (return CORBA::TypeCode::_nil ());
 }
 
 template <typename StringType,

@@ -248,13 +248,6 @@ public:
   /// this request is a duplicate
   void send_cached_reply (CORBA::OctetSeq &ocs);
 
-  /// Return the octet sequence pointer through which the FTORB would
-  /// send the reply back.
-  void result_seq (CORBA::OctetSeq &ocs);
-
-  /// Check whether we got the result.
-  int got_result (void);
-
   /// Return a reference to the number of interceptors pushed on to
   /// the current interceptor flow stack.
   /**
@@ -364,9 +357,6 @@ private:
   /// The "Request Scope Current" (RSC) object, as required by
   /// Portable Interceptors.
   TAO::PICurrent_Impl *rs_pi_current_;
-
-  /// Used by the FTORB
-  CORBA::OctetSeq_var result_seq_;
 
   /// Pointer to the caught exception.
   CORBA::Exception * caught_exception_;

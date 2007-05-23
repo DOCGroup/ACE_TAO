@@ -23,8 +23,7 @@ namespace TAO
 {
   void
   ClientRequestInterceptor_Adapter_Impl::send_request (
-      Invocation_Base &invocation
-      )
+      Invocation_Base &invocation)
   {
     // This method implements one of the "starting" client side
     // interception point.
@@ -50,7 +49,7 @@ namespace TAO
             ++invocation.stack_size ();
           }
       }
-    catch ( ::PortableInterceptor::ForwardRequest& exc)
+    catch (const ::PortableInterceptor::ForwardRequest& exc)
       {
         this->process_forward_request (invocation, exc);
       }
@@ -132,7 +131,7 @@ namespace TAO
               }
           }
       }
-    catch ( ::PortableInterceptor::ForwardRequest& exc)
+    catch (const ::PortableInterceptor::ForwardRequest& exc)
       {
         this->process_forward_request (invocation, exc);
       }
@@ -201,7 +200,7 @@ namespace TAO
             }
         }
       }
-    catch ( ::PortableInterceptor::ForwardRequest& exc)
+    catch (const ::PortableInterceptor::ForwardRequest& exc)
       {
         this->process_forward_request (invocation, exc);
       }
@@ -236,7 +235,7 @@ namespace TAO
   void
   ClientRequestInterceptor_Adapter_Impl::process_forward_request (
       Invocation_Base &invocation,
-      PortableInterceptor::ForwardRequest &exc)
+      const PortableInterceptor::ForwardRequest &exc)
   {
     invocation.forwarded_reference (exc.forward.in ());
 
