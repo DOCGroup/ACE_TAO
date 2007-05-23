@@ -178,8 +178,9 @@ run_main (int, ACE_TCHAR *[])
   // First memory map the test file
   if (mmap.map (test_file) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%n: %p\n%a"),
-                       ACE_TEXT ("mmap ace_mem_map_test")),
+                       ACE_TEXT ("%n: %p %s\n%a"),
+                       ACE_TEXT ("mmap"),
+                       test_file),
                       -1);
 
   // Now create a temporary file for intermediate processing
@@ -216,8 +217,9 @@ run_main (int, ACE_TCHAR *[])
   // Now memory map the temporary file
   if (temp_mmap.map (temp_file1) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%n: %p\n%a"),
-                       ACE_TEXT ("mmap ace_mem_map_temp_")),
+                       ACE_TEXT ("%n: %p %s\n%a"),
+                       ACE_TEXT ("mmap"),
+                       temp_file1),
                       -1);
 #if defined (__QNXNTO__)
   mmap_4_open.open(temp_file2,
@@ -249,8 +251,9 @@ run_main (int, ACE_TCHAR *[])
 
   if (temp_mmap2.map (temp_file2) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%n: %p\n%a"),
-                       ACE_TEXT ("mmap ace_mem_map_temp_")),
+                       ACE_TEXT ("%n: %p %s\n%a"),
+                       ACE_TEXT ("mmap"),
+                       temp_file2),
                       -1);
 
   // Now do a memcmp -- the orig file and the second temporary file
