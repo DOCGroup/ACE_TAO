@@ -1,4 +1,10 @@
-Tue May 23 05:12:04 2007  Ossama Othman  <ossama othman at symantec dot com>
+Wed May 23 07:17:55 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Mem_Map_Test.cpp:
+          Added filenames to the mmap error messages so that we can see which
+          mmap failed
+
+Wed May 23 05:12:04 2007  Ossama Othman  <ossama othman at symantec dot com>
 
 	* ace/OS_NS_math.h (ace_log2_helper):
 
