@@ -1,3 +1,9 @@
+Wed May 23 19:42:50 UTC 2007  Gan Deng  <gan.deng@vanderbilt.edu>
+
+        * bin/ciao_tests.lst
+
+          Disabled CIAO tests on single_threaded setting.
+
 Wed May 23 15:32:55 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Active_Map_Manager_T.h:
