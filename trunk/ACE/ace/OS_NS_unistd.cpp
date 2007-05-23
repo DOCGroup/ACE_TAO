@@ -396,14 +396,14 @@ ACE_OS::read_n (ACE_HANDLE handle,
 {
   size_t temp;
   size_t &bytes_transferred = bt == 0 ? temp : *bt;
-  ssize_t n;
+  ssize_t n = 0;
 
   for (bytes_transferred = 0;
        bytes_transferred < len;
        bytes_transferred += n)
     {
       n = ACE_OS::read (handle,
- (char *) buf + bytes_transferred,
+                        (char *) buf + bytes_transferred,
                         len - bytes_transferred);
 
       if (n == -1 || n == 0)
@@ -520,16 +520,12 @@ ACE_OS::pread (ACE_HANDLE handle,
     return -1;
 
   // Go to the correct position
-  ACE_OFF_T altered_position = ACE_OS::lseek (handle,
-                                              offset,
-                                              SEEK_SET);
+  ACE_OFF_T altered_position = ACE_OS::lseek (handle, offset, SEEK_SET);
 
   if (altered_position == -1)
     return -1;
 
-  ssize_t const bytes_read = ACE_OS::read (handle,
-                                           buf,
-                                           nbytes);
+  ssize_t const bytes_read = ACE_OS::read (handle, buf, nbytes);
 
   if (bytes_read == -1)
     return -1;
@@ -676,7 +672,7 @@ ACE_OS::pwrite (ACE_HANDLE handle,
     return -1;
 
   return bytes_written;
-# endif /* ACE_HAD_P_READ_WRITE */
+# endif /* ACE_HAS_P_READ_WRITE */
 }
 
 int
