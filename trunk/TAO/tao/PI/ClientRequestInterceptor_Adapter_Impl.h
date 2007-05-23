@@ -113,7 +113,7 @@ namespace TAO
     /// i.e. invoke the receive_other() interception point, in addition
     /// to notifying the Invocation object of the LOCATION_FORWARD.
     void process_forward_request (Invocation_Base &invocation,
-                                  PortableInterceptor::ForwardRequest &exc);
+                                  const PortableInterceptor::ForwardRequest &exc);
 
   private:
 
