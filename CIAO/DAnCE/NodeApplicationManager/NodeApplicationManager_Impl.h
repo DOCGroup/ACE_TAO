@@ -20,6 +20,7 @@
 #include /**/ "ace/pre.h"
 
 #include "ace/config-all.h"
+#if defined (ACE_HAS_THREADS)
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -378,3 +379,5 @@ namespace CIAO
 
 #include /**/ "ace/post.h"
 #endif /* CIAO_NODEAPPLICATIONMANAGER_IMPL_H */
+
+#endif /* ACE_HAS_THREADS */
