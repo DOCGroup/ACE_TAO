@@ -225,7 +225,7 @@ ACE_Token_Name::name (const ACE_TCHAR *new_name)
   if (new_name == 0)
     new_name = ACE_LIB_TEXT ("no name");
 
-  int n = ACE_OS::strlen (new_name) + 1;
+  size_t n = ACE_OS::strlen (new_name) + 1;
 
   if (n >= ACE_MAXTOKENNAMELEN)
     n = ACE_MAXTOKENNAMELEN - 1;
