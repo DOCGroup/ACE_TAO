@@ -96,8 +96,8 @@ public:
    * Retrieve the first ACE_Message_Block without removing it.  Note
    * that @a timeout uses <{absolute}> time rather than <{relative}>
    * time.  If the @a timeout elapses without receiving a message -1 is
-   * returned and <errno> is set to <EWOULDBLOCK>.  If the queue is
-   * deactivated -1 is returned and <errno> is set to <ESHUTDOWN>.
+   * returned and @c errno is set to @c EWOULDBLOCK.  If the queue is
+   * deactivated -1 is returned and @c errno is set to <ESHUTDOWN>.
    * Otherwise, returns -1 on failure, else the number of items still
    * on the queue.
    */
@@ -108,10 +108,10 @@ public:
    * Enqueue a <ACE_Message_Block *> into the tail of the queue.
    * Returns number of items in queue if the call succeeds or -1
    * otherwise.  These calls return -1 when queue is closed,
-   * deactivated (in which case <errno> == <ESHUTDOWN>), when a signal
-   * occurs (in which case <errno> == <EINTR>, or if the time
-   * specified in timeout elapses (in which case <errno> ==
-   * <EWOULDBLOCK>).
+   * deactivated (in which case @c errno == <ESHUTDOWN>), when a signal
+   * occurs (in which case @c errno == <EINTR>, or if the time
+   * specified in timeout elapses (in which case @c errno ==
+   * @c EWOULDBLOCK).
    */
   virtual int enqueue_tail (ACE_Message_Block *new_item,
                             ACE_Time_Value *timeout = 0) = 0;
@@ -122,10 +122,10 @@ public:
    * Dequeue and return the <ACE_Message_Block *> at the head of the
    * queue.  Returns number of items in queue if the call succeeds or
    * -1 otherwise.  These calls return -1 when queue is closed,
-   * deactivated (in which case <errno> == <ESHUTDOWN>), when a signal
-   * occurs (in which case <errno> == <EINTR>, or if the time
-   * specified in timeout elapses (in which case <errno> ==
-   * <EWOULDBLOCK>).
+   * deactivated (in which case @c errno == <ESHUTDOWN>), when a signal
+   * occurs (in which case @c errno == <EINTR>, or if the time
+   * specified in timeout elapses (in which case @c errno ==
+   * @c EWOULDBLOCK).
    */
   virtual int dequeue_head (ACE_Message_Block *&first_item,
                             ACE_Time_Value *timeout = 0) = 0;

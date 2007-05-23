@@ -418,7 +418,7 @@ protected:
                            const ACE_Time_Value &future_time,
                            const ACE_Time_Value &interval) = 0;
 
-  /// Reschedule an "interval" <ACE_Timer_Node>.
+  /// Reschedule an "interval" ACE_Timer_Node.
   virtual void reschedule (ACE_Timer_Node_T<TYPE> *) = 0;
 
   /// Factory method that allocates a new node.

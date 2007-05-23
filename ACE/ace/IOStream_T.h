@@ -92,7 +92,7 @@ protected:
  * can use it anywhere you would have used your original
  * <STREAM> class.
  * To create an iostream for your favorite ACE IPC class (e.g.,
- * <ACE_SOCK_Stream>), feed that class to this template's
+ * ACE_SOCK_Stream), feed that class to this template's
  * <STREAM> parameter, e.g.,
  * typedef ACE_Svc_Handler<ACE_SOCK_iostream,
  * ACE_INET_Addr, ACE_NULL_SYNCH>

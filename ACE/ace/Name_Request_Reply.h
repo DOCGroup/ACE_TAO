@@ -249,7 +249,7 @@ private:
     ACE_INT32 type_;
 
     /// Indicates why error occurred if <this->type_> == failure (-1).
-    /// Typical reasons include: <ETIME> (if the client timed out after
+    /// Typical reasons include: @c ETIME (if the client timed out after
     /// waiting for the name).
     ACE_UINT32 errno_;
   };

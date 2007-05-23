@@ -160,14 +160,14 @@ public:
   /**
    * Conditionally acquire a lock (i.e., won't block).  Returns -1 on
    * failure.  If we "failed" because someone else already had the
-   * lock, <errno> is set to <EBUSY>.
+   * lock, @c errno is set to @c EBUSY.
    */
   int tryacquire_read (void);
 
   /**
    * Conditionally acquire a lock (i.e., won't block).  Returns -1 on
    * failure.  If we "failed" because someone else already had the
-   * lock, <errno> is set to <EBUSY>.
+   * lock, @c errno is set to @c EBUSY.
    */
   int tryacquire_write (void);
 

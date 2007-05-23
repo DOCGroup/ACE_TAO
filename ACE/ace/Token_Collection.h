@@ -76,7 +76,7 @@ public:
    * operations performed on the collection will also be performed on
    * the new_proxy until it is removed.  Note that no operations
    * performed prior to the insertion will be performed.  Returns: 0
-   * on success, -1 on failure with <errno> == problem.  If a token
+   * on success, -1 on failure with @c errno == problem.  If a token
    * proxy already exists in the collection with the same name, the
    * insertion will fail.  Also, <token> is copied.  Note that during
    * the copy, client_id's are *not* inherited.  The client ID of the
@@ -121,7 +121,7 @@ public:
    * Acquire "atomically" all resources in the collection.  This is
    * only successfull if all tokens in the collection could be
    * acquired.  options contains the blocking semantics, timeout
-   * value, etc.  Returns: 0 on success, -1 on failure with <errno> ==
+   * value, etc.  Returns: 0 on success, -1 on failure with @c errno ==
    * problem.  If and error or deadlock occurs for one of the tokens,
    * all the tokens will be released and the method will return -1.
    * Note that returning on detection of deadlock prevents livelock
@@ -155,7 +155,7 @@ public:
    * Renews "atomically" all resources in the collection.  This is
    * only successfull if all tokens in the collection could be
    * renewed.  options contains the blocking semantics, timeout
-   * value, etc.  Returns: 0 on success, -1 on failure with <errno> ==
+   * value, etc.  Returns: 0 on success, -1 on failure with @c errno ==
    * problem.
    */
   virtual int renew (int requeue_position = 0,
@@ -174,7 +174,7 @@ public:
    * Releases "atomically" all resources in the collection.  This is
    * only successfull if all tokens in the collection could be
    * released.  options contains the blocking semantics, timeout
-   * value, etc.  Returns: 0 on success, -1 on failure with <errno> ==
+   * value, etc.  Returns: 0 on success, -1 on failure with @c errno ==
    * problem.
    */
   virtual int release (ACE_Synch_Options &options =

@@ -96,7 +96,7 @@ public:
    * <tryacquire> and is only here to make the <ACE_Process_Semaphore>
    * interface consistent with the other synchronization APIs.
    * Returns -1 on failure.  If we "failed" because someone else
-   * already had the lock, <errno> is set to <EBUSY>.
+   * already had the lock, @c errno is set to @c EBUSY.
    */
   int tryacquire_read (void);
 
@@ -105,7 +105,7 @@ public:
    * <tryacquire> and is only here to make the ACE_Process_Semaphore
    * interface consistent with the other synchronization APIs.
    * Returns -1 on failure.  If we "failed" because someone else
-   * already had the lock, <errno> is set to <EBUSY>.
+   * already had the lock, @c errno is set to @c EBUSY.
    */
   int tryacquire_write (void);
 

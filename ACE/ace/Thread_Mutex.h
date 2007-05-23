@@ -70,7 +70,7 @@ public:
 
   /**
    * Block the thread until we acquire the mutex or until @a tv times
-   * out, in which case -1 is returned with <errno> == <ETIME>.  Note
+   * out, in which case -1 is returned with @c errno == @c ETIME.  Note
    * that @a tv is assumed to be in "absolute" rather than "relative"
    * time.  The value of @a tv is updated upon return to show the
    * actual (absolute) acquisition time.
@@ -80,7 +80,7 @@ public:
   /**
    * If @a tv == 0 the call <acquire()> directly.  Otherwise, Block the
    * thread until we acquire the mutex or until @a tv times out, in
-   * which case -1 is returned with <errno> == <ETIME>.  Note that
+   * which case -1 is returned with @c errno == @c ETIME.  Note that
    * <*tv> is assumed to be in "absolute" rather than "relative" time.
    * The value of <*tv> is updated upon return to show the actual
    * (absolute) acquisition time.
@@ -90,7 +90,7 @@ public:
   /**
    * Conditionally acquire lock (i.e., don't wait on queue).  Returns
    * -1 on failure.  If we "failed" because someone else already had
-   * the lock, <errno> is set to <EBUSY>.
+   * the lock, @c errno is set to @c EBUSY.
    */
   int tryacquire (void);
 
@@ -116,7 +116,7 @@ public:
    * <tryacquire> and is only here to make the ACE_Thread_Mutex
    * interface consistent with the other synchronization APIs.
    * Returns -1 on failure.  If we "failed" because someone else
-   * already had the lock, <errno> is set to <EBUSY>.
+   * already had the lock, @c errno is set to @c EBUSY.
    */
   int tryacquire_read (void);
 
@@ -125,7 +125,7 @@ public:
    * <tryacquire> and is only here to make the ACE_Thread_Mutex
    * interface consistent with the other synchronization APIs.
    * Returns -1 on failure.  If we "failed" because someone else
-   * already had the lock, <errno> is set to <EBUSY>.
+   * already had the lock, @c errno is set to @c EBUSY.
    */
   int tryacquire_write (void);
 

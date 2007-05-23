@@ -60,7 +60,7 @@ public:
 
   /**
    * Execute the <user_func_> with the <arg>.  This function deletes
-   * <this>, thereby rendering the object useless after the call
+   * @c this, thereby rendering the object useless after the call
    * returns.
    */
   virtual ACE_THR_FUNC_RETURN invoke (void);

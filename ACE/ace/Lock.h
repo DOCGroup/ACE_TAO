@@ -63,7 +63,7 @@ public:
   /**
    * Conditionally acquire the lock (i.e., won't block).  Returns -1
    * on failure.  If we "failed" because someone else already had the
-   * lock, <errno> is set to <EBUSY>.
+   * lock, @c errno is set to @c EBUSY.
    */
   virtual int tryacquire (void) = 0;
 
@@ -88,7 +88,7 @@ public:
    * Conditionally acquire a read lock.  If the locking mechanism
    * doesn't support read locks then this just calls <acquire>.
    * Returns -1 on failure.  If we "failed" because someone else
-   * already had the lock, <errno> is set to <EBUSY>.
+   * already had the lock, @c errno is set to @c EBUSY.
    */
   virtual int tryacquire_read (void) = 0;
 
@@ -96,7 +96,7 @@ public:
    * Conditionally acquire a write lock.  If the locking mechanism
    * doesn't support read locks then this just calls <acquire>.
    * Returns -1 on failure.  If we "failed" because someone else
-   * already had the lock, <errno> is set to <EBUSY>.
+   * already had the lock, @c errno is set to @c EBUSY.
    */
   virtual int tryacquire_write (void) = 0;
 

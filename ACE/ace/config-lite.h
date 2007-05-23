@@ -58,7 +58,7 @@ extern "C"
 }
 
 // Signature for registering a cleanup function that is used by the
-// ACE_Object_Manager and the <ACE_Thread_Manager>.
+// ACE_Object_Manager and the ACE_Thread_Manager.
 # if defined (ACE_HAS_SIG_C_FUNC)
 extern "C" {
 # endif /* ACE_HAS_SIG_C_FUNC */

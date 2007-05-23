@@ -756,7 +756,7 @@ public:
   /**
    * Decrease the shared reference count by 1.  If the reference count
    * is > 0 then return this; else if reference count == 0 then delete
-   * <this> and @a mb and return 0.  Behavior is undefined if reference
+   * @c this and @a mb and return 0.  Behavior is undefined if reference
    * count < 0.
    */
   ACE_Data_Block *release (ACE_Lock *lock = 0);

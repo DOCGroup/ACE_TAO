@@ -30,7 +30,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * @class ACE_SOCK
  *
  * @brief An abstract class that forms the basis for more specific
- * classes, such as ACE_SOCK_Acceptor and <ACE_SOCK_Stream>.
+ * classes, such as ACE_SOCK_Acceptor and ACE_SOCK_Stream.
  * Do not instantiate this class.
  *
  * This class provides functions that are common to all of the

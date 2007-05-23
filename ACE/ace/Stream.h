@@ -41,7 +41,7 @@ class ACE_Time_Value;
  * contains two <ACE_Tasks>.  Even though the methods in this
  * class are virtual, this class isn't really intended for
  * subclassing unless you know what you are doing.  In
- * particular, the <ACE_Stream> destructor calls <close>, which
+ * particular, the ACE_Stream destructor calls <close>, which
  * won't be overridden properly unless you call it in a subclass
  * destructor.
  */
@@ -195,7 +195,7 @@ private:
 /**
  * @class ACE_Stream_Iterator
  *
- * @brief Iterate through an <ACE_Stream>.
+ * @brief Iterate through an ACE_Stream.
  */
 template <ACE_SYNCH_DECL>
 class ACE_Stream_Iterator

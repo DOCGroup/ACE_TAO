@@ -45,7 +45,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * This class uses the new/delete operators to allocate and free up
  * memory.  Please note that the only methods that are supported are
  * <malloc>, <calloc>, and <free>. All other methods are no-ops that
- * return -1 and set <errno> to <ENOTSUP>.  If you require this
+ * return -1 and set @c errno to <ENOTSUP>.  If you require this
  * functionality, please use: ACE_Allocator_Adapter <ACE_Malloc
  * <ACE_LOCAL_MEMORY_POOL, MUTEX> >, which will allow you to use the
  * added functionality of bind/find/etc. while using the new/delete

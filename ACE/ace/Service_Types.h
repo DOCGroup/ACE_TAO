@@ -162,7 +162,7 @@ class ACE_Export ACE_Stream_Type : public ACE_Service_Type_Impl
 {
 public:
   // = Initialization method.
-  ACE_Stream_Type (void *s, // Really an <ACE_Stream> *.
+  ACE_Stream_Type (void *s, // Really an ACE_Stream *.
                    const ACE_TCHAR *identifier,
                    u_int flags = 0);
 
