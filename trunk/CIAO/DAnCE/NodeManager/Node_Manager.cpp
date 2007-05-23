@@ -12,6 +12,8 @@
 #include "ciao/Server_init.h"
 #include "ciao/CIAO_common.h"
 
+#if defined (ACE_HAS_THREADS)
+
 const char *ior_file_name_ = "nodedaemon.ior";
 char *nodeapp_location_ = 0;
 const char *pid_file_name_ = 0;
@@ -293,3 +295,6 @@ main (int argc, char *argv[])
               "CIAO_NodeManager has closed\n"));
   return 0;
 }
+
+#endif /* ACE_HAS_THREADS */
+
