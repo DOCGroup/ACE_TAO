@@ -2,8 +2,6 @@
 
 #include "NodeApplicationManager_Impl.h"
 
-#if defined (ACE_HAS_THREADS)
-
 #include "ace/Process.h"
 #include "ace/Process_Manager.h"
 #include "ace/Reactor.h"
@@ -1102,6 +1100,3 @@ create_node_application (const ACE_CString & options)
 CIAO::NodeApplicationManager_Impl_Base::~NodeApplicationManager_Impl_Base (void)
 {
 }
-
-#endif /* ACE_HAS_THREADS */
-
