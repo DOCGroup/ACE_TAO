@@ -22,6 +22,8 @@
 #define CIAO_NODEMANAGER_IMPL_H
 #include /**/ "ace/pre.h"
 
+#include "ace/config-all.h"
+
 #include "Interfaces/NodeManagerDaemonS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
