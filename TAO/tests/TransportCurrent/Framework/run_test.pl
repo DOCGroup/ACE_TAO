@@ -42,14 +42,16 @@ else {
     exit 1;
 }
 
-my $iorfile = PerlACE::LocalFile ("server.ior");
-my $confserver = PerlACE::LocalFile ("server$confmod.conf");
+my $iorbasefile = "server.ior";
+my $iorfile = PerlACE::LocalFile ("$iorbasefile");
+my $confserverbase = "server$confmod.conf";
+my $confserver = PerlACE::LocalFile ("$confserverbase");
 my $confclient = PerlACE::LocalFile ("client$confmod.conf");
 unlink $iorfile;
 
 if (PerlACE::is_vxworks_test()) {
     $SV = new PerlACE::ProcessVX ("server",
-                                  "@ARGV -ORBSvcConf server.conf -o server.ior");
+                                  "@ARGV -ORBSvcConf $confserverbase -o $iorbasefile");
 }
 else {
     $SV = new PerlACE::Process ("server",
@@ -77,7 +79,7 @@ if ($client != 0) {
     $status = 1;
 }
 
-$server = $SV->WaitKill (10);
+$server = $SV->WaitKill (15);
 
 if ($server != 0) {
     print STDERR "$0: ERROR: server returned $server\n";
