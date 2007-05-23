@@ -95,7 +95,7 @@ ACE_Mem_Map::map_it (ACE_HANDLE handle,
     // Set length to file_request or size_t max.
     this->length_ = ACE_Utils::truncate_cast<size_t> (current_file_length - offset);
   else
-    { 
+    {
       // Make sure that we have not been asked to do the impossible.
       if (static_cast<ACE_UINT64> (length_request)
           + static_cast<ACE_UINT64> (offset)
@@ -161,7 +161,7 @@ ACE_Mem_Map::open (const ACE_TCHAR *file_name,
 {
   ACE_TRACE ("ACE_Mem_Map::open");
 
-#if defined(INTEGRITY)  || defined (__QNXNTO__)
+#if defined (INTEGRITY)  || defined (__QNXNTO__) || defined (ACE_VXWORKS)
   this->handle_ = ACE_OS::shm_open (file_name, flags, mode, sa);
 #elif defined (ACE_OPENVMS)
   ACE_OSCALL (::open (file_name, flags, mode, "shr=get,put,upd"), ACE_HANDLE, -1, this->handle_);
@@ -298,7 +298,7 @@ ACE_Mem_Map::remove (void)
   this->close ();
 
   if (this->filename_[0] != '\0')
-#if defined (__QNXNTO__)
+#if defined (INTEGRITY) || defined (__QNXNTO__) || defined (ACE_VXWORKS)
   return ACE_OS::shm_unlink (this->filename_);
 #else
   return ACE_OS::unlink (this->filename_);
