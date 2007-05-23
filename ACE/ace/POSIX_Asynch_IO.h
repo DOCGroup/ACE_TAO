@@ -101,7 +101,7 @@ public:
    */
   int signal_number (void) const;
 
-  /// Post <this> to the Proactor.
+  /// Post @c this to the Proactor.
   int post_completion (ACE_Proactor_Impl *proactor);
 
   /// Destructor.

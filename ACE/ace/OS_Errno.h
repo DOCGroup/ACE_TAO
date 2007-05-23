@@ -51,11 +51,11 @@ public:
   ACE_Errno_Guard (ACE_ERRNO_TYPE &errno_ref,
                    int error);
 
-  ///  Stash the value of <errno> into <error_> and initialize the
+  ///  Stash the value of @c errno into <error_> and initialize the
   ///  <errno_ptr_> to the address of <errno_ref>.
   ACE_Errno_Guard (ACE_ERRNO_TYPE &errno_ref);
 
-  /// Reset the value of <errno> to <error>.
+  /// Reset the value of @c errno to <error>.
   ~ACE_Errno_Guard (void);
 
 #if defined (ACE_HAS_WINCE_BROKEN_ERRNO)

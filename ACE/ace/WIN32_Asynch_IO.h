@@ -105,7 +105,7 @@ public:
   /// Returns 0.
   int signal_number (void) const;
 
-  /// Post <this> to the Proactor's completion port.
+  /// Post @c this to the Proactor's completion port.
   int post_completion (ACE_Proactor_Impl *proactor);
 
   /// Destructor.
@@ -263,7 +263,7 @@ public:
   /// No-op. Returns 0.
   int signal_number (void) const;
 
-  /// Post <this> to the Proactor's completion port.
+  /// Post @c this to the Proactor's completion port.
   int post_completion (ACE_Proactor_Impl *proactor);
 
   /// Accessor for the scatter read flag
@@ -440,7 +440,7 @@ public:
   /// No-op. Returns 0.
   int signal_number (void) const;
 
-  /// Post <this> to the Proactor's completion port.
+  /// Post @c this to the Proactor's completion port.
   int post_completion (ACE_Proactor_Impl *proactor);
 
   /// Accessor for the gather write flag
@@ -625,7 +625,7 @@ public:
   /// I/O handle used for reading.
   ACE_HANDLE handle (void) const;
 
-  /// Post <this> to the Proactor's completion port.
+  /// Post @c this to the Proactor's completion port.
   int post_completion (ACE_Proactor_Impl *proactor);
 
 protected:
@@ -836,7 +836,7 @@ public:
   /// I/O handle used for writing.
   ACE_HANDLE handle (void) const;
 
-  /// Post <this> to the Proactor's completion port.
+  /// Post @c this to the Proactor's completion port.
   int post_completion (ACE_Proactor_Impl *proactor);
 
 protected:
@@ -1033,7 +1033,7 @@ public:
   /// No-op. Returns 0.
   int signal_number (void) const;
 
-  /// Post <this> to the Proactor's completion port.
+  /// Post @c this to the Proactor's completion port.
   int post_completion (ACE_Proactor_Impl *proactor);
 
 protected:
@@ -1424,7 +1424,7 @@ public:
   /// No-op. Returns 0.
   int signal_number (void) const;
 
-  /// Post <this> to the Proactor's completion port.
+  /// Post @c this to the Proactor's completion port.
   int post_completion (ACE_Proactor_Impl *proactor);
 
 protected:
@@ -1623,7 +1623,7 @@ public:
   /// No-op. Returns 0.
   int signal_number (void) const;
 
-  /// Post <this> to the Proactor's completion port.
+  /// Post @c this to the Proactor's completion port.
   int post_completion (ACE_Proactor_Impl *proactor);
 
 protected:
@@ -1812,7 +1812,7 @@ public:
   /// No-op. Returns 0.
   int signal_number (void) const;
 
-  /// Post <this> to the Proactor's completion port.
+  /// Post @c this to the Proactor's completion port.
   int post_completion (ACE_Proactor_Impl *proactor);
 
 protected:

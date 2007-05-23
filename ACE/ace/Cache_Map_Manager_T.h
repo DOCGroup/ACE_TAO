@@ -278,7 +278,7 @@ public:
   bool operator== (const ACE_Cache_Map_Iterator<KEY, VALUE, IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES> &rhs) const;
   bool operator!= (const ACE_Cache_Map_Iterator<KEY, VALUE, IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES> &rhs) const;
 
-  /// Returns a reference to the internal element <this> is pointing
+  /// Returns a reference to the internal element @c this is pointing
   /// to.
   ACE_Reference_Pair<KEY, VALUE> operator* (void) const;
 
@@ -352,7 +352,7 @@ public:
   bool operator== (const ACE_Cache_Map_Reverse_Iterator<KEY, VALUE, REVERSE_IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES> &rhs) const;
   bool operator!= (const ACE_Cache_Map_Reverse_Iterator<KEY, VALUE, REVERSE_IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES> &rhs) const;
 
-  /// Returns a reference to the internal element <this> is pointing
+  /// Returns a reference to the internal element @c this is pointing
   /// to.
   ACE_Reference_Pair<KEY, VALUE> operator* (void) const;
 

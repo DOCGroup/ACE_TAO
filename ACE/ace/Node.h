@@ -64,7 +64,7 @@ private:
   void operator= (const ACE_Node<T> &);
 
 private:
-  /// Pointer to next element in the list of <ACE_Node>s.
+  /// Pointer to next element in the list of ACE_Nodes.
   ACE_Node<T> *next_;
 
   /// Current value of the item in this node.

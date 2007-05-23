@@ -1,3 +1,65 @@
+Wed May 23 15:32:55 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Active_Map_Manager_T.h:
+        * ace/Asynch_IO_Impl.h:
+        * ace/Bound_Ptr.h:
+        * ace/Cache_Map_Manager_T.h:
+        * ace/config-lite.h:
+        * ace/Dump_T.h:
+        * ace/File_Lock.h:
+        * ace/Framework_Component.h:
+        * ace/Hash_Map_Manager_T.h:
+        * ace/IOStream_T.h:
+        * ace/Lock.h:
+        * ace/Malloc_Allocator.h:
+        * ace/Map_Manager.h:
+        * ace/Map_T.h:
+        * ace/Message_Block.h:
+        * ace/Message_Queue.h:
+        * ace/Message_Queue_T.h:
+        * ace/Name_Request_Reply.h:
+        * ace/Node.h:
+        * ace/Null_Condition.h:
+        * ace/Null_Mutex.h:
+        * ace/Null_Semaphore.h:
+        * ace/OS_Errno.h:
+        * ace/OS_NS_errno.h:
+        * ace/OS_NS_Thread.h:
+        * ace/POSIX_Asynch_IO.h:
+        * ace/Process_Mutex.h:
+        * ace/Process_Semaphore.h:
+        * ace/RB_Tree.h:
+        * ace/Recursive_Thread_Mutex.h:
+        * ace/Refcounted_Auto_Ptr.h:
+        * ace/Registry.h:
+        * ace/Remote_Tokens.h:
+        * ace/RW_Mutex.h:
+        * ace/RW_Process_Mutex.h:
+        * ace/RW_Thread_Mutex.h:
+        * ace/Semaphore.h:
+        * ace/Service_Types.h:
+        * ace/Signal.h:
+        * ace/SOCK.h:
+        * ace/SOCK_Acceptor.h:
+        * ace/SOCK_SEQPACK_Acceptor.h:
+        * ace/SOCK_SEQPACK_Association.h:
+        * ace/SString.h:
+        * ace/Stream.h:
+        * ace/Task.h:
+        * ace/Thread.h:
+        * ace/Thread_Adapter.h:
+        * ace/Thread_Exit.h:
+        * ace/Thread_Manager.h:
+        * ace/Thread_Mutex.h:
+        * ace/Timer_Hash_T.h:
+        * ace/Timer_Heap_T.h:
+        * ace/Timer_Queue_T.h:
+        * ace/Token_Collection.h:
+        * ace/Token_Request_Reply.h:
+        * ace/Unbounded_Set.h:
+        * ace/WIN32_Asynch_IO.h:
+          Fixed some doxygen warnings
+
 Wed May 23 13:19:55 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Process_Manager_Test.cpp:

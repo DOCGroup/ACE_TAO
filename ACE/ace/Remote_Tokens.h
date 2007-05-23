@@ -79,7 +79,7 @@ public:
    * token is already held, the owner is notified.  options contains
    * the timeout value for the acquire call.  The timer is kept at the
    * token server.  Asynchronous operations are not supported.
-   * Returns 0 on success, -1 on failure with <errno> == problem.
+   * Returns 0 on success, -1 on failure with @c errno == problem.
    */
   virtual int acquire (int notify = 0,
                        void (*sleep_hook)(void *) = 0,
@@ -114,7 +114,7 @@ public:
   /**
    * Release the distributed token. Similar to ACE_Local_Mutex, if the
    * caller is not the owner, it is removed from the waiter list (if
-   * applicable.) Returns 0 on success, -1 on failure with <errno> ==
+   * applicable.) Returns 0 on success, -1 on failure with @c errno ==
    * problem.
    */
   virtual int release (ACE_Synch_Options &options =

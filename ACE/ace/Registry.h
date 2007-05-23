@@ -226,36 +226,36 @@ public:
               const Object &object);
 
     /**
-     * Insert or update <object> with <name> into <this> context
+     * Insert or update <object> with <name> into @c this context
      * This will not fail if <name> already exists
      * (String version)
      */
     int bind (const ACE_TString &name,
               const Object &object);
 
-    /// Update <object> with <name> in <this> context
+    /// Update <object> with <name> in @c this context
     /// (Name version)
     int rebind (const Name &name,
                 const Object &object);
 
-    /// Update <object> with <name> in <this> context
+    /// Update <object> with <name> in @c this context
     int rebind (const ACE_TString &name,
                 const Object &object);
 
-    /// Find <object> with <name> in <this> context
+    /// Find <object> with <name> in @c this context
     /// (Name version)
     int resolve (const Name &name,
                  Object &object);
 
-    /// Find <object> with <name> in <this> context
+    /// Find <object> with <name> in @c this context
     int resolve (const ACE_TString &name,
                  Object &object);
 
-    /// Delete object with <name> in <this> context
+    /// Delete object with <name> in @c this context
     /// (Name version)
     int unbind (const Name &name);
 
-    /// Delete object with <name> in <this> context
+    /// Delete object with <name> in @c this context
     int unbind (const ACE_TString &name);
 
 
@@ -265,7 +265,7 @@ public:
     int new_context (Naming_Context &naming_context);
 
     /**
-     * Insert <naming_context> with <name> relative to <this> context
+     * Insert <naming_context> with <name> relative to @c this context
      * This will fail if <name> already exists
      * (Name version)
      */
@@ -275,7 +275,7 @@ public:
                           u_long security_access = KEY_ALL_ACCESS,
                           LPSECURITY_ATTRIBUTES security_attributes = 0);
 
-    /// Insert <naming_context> with <name> relative to <this> context
+    /// Insert <naming_context> with <name> relative to @c this context
     /// This will fail if <name> already exists
     int bind_new_context (const ACE_TString &name,
                           Naming_Context &naming_context,
@@ -284,7 +284,7 @@ public:
                           LPSECURITY_ATTRIBUTES security_attributes = 0);
 
     /**
-     * Insert or update <naming_context> with <name> relative to <this> context
+     * Insert or update <naming_context> with <name> relative to @c this context
      * This will not fail if <name> already exists
      * (Name version)
      */
@@ -294,7 +294,7 @@ public:
                       u_long security_access = KEY_ALL_ACCESS,
                       LPSECURITY_ATTRIBUTES security_attributes = 0);
 
-    /// Insert or update <naming_context> with <name> relative to <this> context
+    /// Insert or update <naming_context> with <name> relative to @c this context
     /// This will not fail if <name> already exists
     int bind_context (const ACE_TString &name,
                       /* const */ Naming_Context &naming_context,
@@ -311,31 +311,31 @@ public:
     int rebind_context (const ACE_TString &name,
                         /* const */ Naming_Context &naming_context);
 
-    /// Find <naming_context> with <name> in <this> context
+    /// Find <naming_context> with <name> in @c this context
     /// (Name version)
     int resolve_context (const Name &name,
                          Naming_Context &naming_context,
                          u_long security_access = KEY_ALL_ACCESS);
 
-    /// Find <naming_context> with <name> in <this> context
+    /// Find <naming_context> with <name> in @c this context
     int resolve_context (const ACE_TString &name,
                          Naming_Context &naming_context,
                          u_long security_access = KEY_ALL_ACCESS);
 
-    /// Remove naming_context with <name> from <this> context
+    /// Remove naming_context with <name> from @c this context
     /// (Name version)
     int unbind_context (const Name &name);
 
-    /// Remove naming_context with <name> from <this> context
+    /// Remove naming_context with <name> from @c this context
     int unbind_context (const ACE_TString &name);
 
-    /// Same as <unbind_context> with <this> as naming_context
+    /// Same as <unbind_context> with @c this as naming_context
     int destroy (void);
 
     /**
      * listing function: iterator creator
      * This is useful when there are many objects and contexts
-     * in <this> context and you only want to look at a few entries
+     * in @c this context and you only want to look at a few entries
      * at a time
      */
     int list (u_long how_many,
@@ -343,7 +343,7 @@ public:
               Binding_Iterator &iterator);
 
     /// listing function: iterator creator
-    /// This gives back a listing of all entries in <this> context.
+    /// This gives back a listing of all entries in @c this context.
     int list (Binding_List &list);
 
     // Some other necessary functions which are

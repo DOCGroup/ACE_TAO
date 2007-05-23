@@ -120,7 +120,7 @@ public:
   /// resources, also called by dtor.
   int close (void);
 
-  /// Get pointer to a process-wide <ACE_Framework_Repository>.
+  /// Get pointer to a process-wide ACE_Framework_Repository.
   static ACE_Framework_Repository *instance
     (int size = ACE_Framework_Repository::DEFAULT_SIZE);
 

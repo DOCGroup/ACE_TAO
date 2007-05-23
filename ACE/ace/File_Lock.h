@@ -78,8 +78,8 @@ public:
    * Note, for interface uniformity with other synchronization
    * wrappers we include the <tryacquire> method.  This is implemented
    * as a write-lock to be on the safe-side...  Returns -1 on failure.
-   * If we "failed" because someone else already had the lock, <errno>
-   * is set to <EBUSY>.
+   * If we "failed" because someone else already had the lock, @c errno
+   * is set to @c EBUSY.
    */
   int tryacquire (short whence = 0, ACE_OFF_T start = 0, ACE_OFF_T len = 1);
 
@@ -93,14 +93,14 @@ public:
   /**
    * Conditionally acquire a write lock (i.e., won't block).  Returns
    * -1 on failure.  If we "failed" because someone else already had
-   * the lock, <errno> is set to <EBUSY>.
+   * the lock, @c errno is set to @c EBUSY.
    */
   int tryacquire_write (short whence = 0, ACE_OFF_T start = 0, ACE_OFF_T len = 1);
 
   /**
    * Conditionally upgrade to a write lock (i.e., won't block).  Returns
    * -1 on failure.  If we "failed" because someone else already had
-   * the lock, <errno> is set to <EBUSY>.
+   * the lock, @c errno is set to @c EBUSY.
    */
   int tryacquire_write_upgrade (short whence = 0,
                                 ACE_OFF_T start = 0,
@@ -109,14 +109,14 @@ public:
   /**
    * Acquire a read lock, but block if a writer hold the lock.
    * Returns -1 on failure.  If we "failed" because someone else
-   * already had the lock, <errno> is set to <EBUSY>.
+   * already had the lock, @c errno is set to @c EBUSY.
    */
   int acquire_read (short whence = 0, ACE_OFF_T start = 0, ACE_OFF_T len = 1);
 
   /**
    * Conditionally acquire a read lock (i.e., won't block).  Returns
    * -1 on failure.  If we "failed" because someone else already had
-   * the lock, <errno> is set to <EBUSY>.
+   * the lock, @c errno is set to @c EBUSY.
    */
   int tryacquire_read (short whence = 0, ACE_OFF_T start = 0, ACE_OFF_T len = 1);
 

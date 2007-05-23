@@ -61,7 +61,7 @@ public:
   /**
    * Block the thread until the semaphore count becomes greater than 0
    * (at which point it is decremented) or until @a tv times out (in
-   * which case -1 is returned and <errno> == <ETIME>).  Note that @a tv
+   * which case -1 is returned and @c errno == @c ETIME).  Note that @a tv
    * is assumed to be in "absolute" rather than "relative" time.  The
    * value of @a tv is updated upon return to show the actual
    * (absolute) acquisition time.
@@ -79,7 +79,7 @@ public:
    * If @a tv == 0 then call <acquire()> directly.  Otherwise, Block
    * the thread until the semaphore count becomes greater than 0
    * (at which point it is decremented) or until @a tv times out (in
-   * which case -1 is returned and <errno> == <ETIME>).  Note that
+   * which case -1 is returned and @c errno == @c ETIME).  Note that
    * <*tv> is assumed to be in "absolute" rather than "relative" time.
    * The value of <*tv> is updated upon return to show the actual
    * (absolute) acquisition time.
@@ -95,8 +95,8 @@ public:
   /**
    * Conditionally decrement the semaphore if count is greater than 0
    * (i.e., won't block).  Returns -1 on failure.  If we "failed"
-   * because someone else already had the lock, <errno> is set to
-   * <EBUSY>.
+   * because someone else already had the lock, @c errno is set to
+   * @c EBUSY.
    */
   int tryacquire (void);
 
@@ -127,7 +127,7 @@ public:
    * <tryacquire> and is only here to make the ACE_Semaphore
    * interface consistent with the other synchronization APIs.
    * Returns -1 on failure.  If we "failed" because someone else
-   * already had the lock, <errno> is set to <EBUSY>.
+   * already had the lock, @c errno is set to @c EBUSY.
    */
   int tryacquire_read (void);
 
@@ -136,7 +136,7 @@ public:
    * <tryacquire> and is only here to make the ACE_Semaphore
    * interface consistent with the other synchronization APIs.
    * Returns -1 on failure.  If we "failed" because someone else
-   * already had the lock, <errno> is set to <EBUSY>.
+   * already had the lock, @c errno is set to @c EBUSY.
    */
   int tryacquire_write (void);
 

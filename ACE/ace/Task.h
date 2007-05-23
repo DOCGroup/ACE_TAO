@@ -60,7 +60,7 @@ namespace ACE_Task_Flags
  *
  * This class factors out the non-template code in order to
  * reduce template bloat, as well as to make it possible for the
- * <ACE_Thread_Manager> to store ACE_Task_Base *'s
+ * ACE_Thread_Manager to store ACE_Task_Base *'s
  * polymorphically.
  */
 class ACE_Export ACE_Task_Base : public ACE_Service_Object
@@ -156,14 +156,14 @@ public:
    *
    * If <thread_handles> != 0 it is assumed to be an array of @a n
    * thread_handles that will be assigned the values of the thread
-   * handles being spawned.  Returns -1 on failure (<errno> will
+   * handles being spawned.  Returns -1 on failure (@c errno will
    * explain...), otherwise returns the group id of the threads.
    *
    * Assigning <task> allows you to associate the newly spawned
    * threads with an instance of ACE_Task_Base.  If <task> == 0, then
-   * the new threads are associated automatically with <this>
+   * the new threads are associated automatically with @c this
    * ACE_Task_Base.  Setting the <task> argument to value other than
-   * <this> makes the thread manipulating methods, such as wait(),
+   * @c this makes the thread manipulating methods, such as wait(),
    * suspend(), resume(), useless.  Threads spawned with user
    * specified <task> value must therefore be manipulated thru
    * ACE_Thread_Manager directly.

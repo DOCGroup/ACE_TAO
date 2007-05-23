@@ -97,20 +97,20 @@ public:
   /// The destructor
   virtual ~ACE_At_Thread_Exit (void);
 
-  /// <At_Thread_Exit> has the ownership?
+  /// At_Thread_Exit has the ownership?
   int is_owner (void) const;
 
-  /// Set the ownership of the <At_Thread_Exit>.
+  /// Set the ownership of the At_Thread_Exit.
   int is_owner (int owner);
 
-  /// This <At_Thread_Exit> was applied?
+  /// This At_Thread_Exit was applied?
   int was_applied (void) const;
 
-  /// Set applied state of <At_Thread_Exit>.
+  /// Set applied state of At_Thread_Exit.
   int was_applied (int applied);
 
 protected:
-  /// The next <At_Thread_Exit> hook in the list.
+  /// The next At_Thread_Exit hook in the list.
   ACE_At_Thread_Exit *next_;
 
   /// Do the apply if necessary
@@ -438,10 +438,10 @@ public:
   ~ACE_Thread_Manager (void);
 
 #if ! defined (ACE_THREAD_MANAGER_LACKS_STATICS)
-  /// Get pointer to a process-wide <ACE_Thread_Manager>.
+  /// Get pointer to a process-wide ACE_Thread_Manager.
   static ACE_Thread_Manager *instance (void);
 
-  /// Set pointer to a process-wide <ACE_Thread_Manager> and return
+  /// Set pointer to a process-wide ACE_Thread_Manager and return
   /// existing pointer.
   static ACE_Thread_Manager *instance (ACE_Thread_Manager *);
 
@@ -514,9 +514,9 @@ public:
    *
    * The argument <task> is usually assigned by
    * <ACE_Task_Base::activate>.  It associates the newly spawned
-   * threads with an ACE_Task instance, which defaults to <this>.
+   * threads with an ACE_Task instance, which defaults to @c this.
    *
-   * @retval -1 on failure (<errno> will explain...), otherwise returns the
+   * @retval -1 on failure (@c errno will explain...), otherwise returns the
    * group id of the threads.
    */
   int spawn_n (size_t n,
@@ -554,9 +554,9 @@ public:
    *
    * The argument <task> is usually assigned by
    * <ACE_Task_Base::activate>.  It associates the newly spawned
-   * threads with an ACE_Task instance, which defaults to <this>.
+   * threads with an ACE_Task instance, which defaults to @c this.
    *
-   * @retval -1 on failure (<errno> will explain...), otherwise returns the
+   * @retval -1 on failure (@c errno will explain...), otherwise returns the
    * group id of the threads.
    */
   int spawn_n (ACE_thread_t thread_ids[],
@@ -1118,7 +1118,7 @@ protected:
 
 private:
 #if ! defined (ACE_THREAD_MANAGER_LACKS_STATICS)
-  /// Pointer to a process-wide <ACE_Thread_Manager>.
+  /// Pointer to a process-wide ACE_Thread_Manager.
   static ACE_Thread_Manager *thr_mgr_;
 
   /// Must delete the <thr_mgr_> if non-0.

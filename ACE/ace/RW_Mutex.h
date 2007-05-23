@@ -66,7 +66,7 @@ public:
   /**
    * Conditionally acquire a read lock (i.e., won't block).  Returns
    * -1 on failure.  If we "failed" because someone else already had
-   * the lock, <errno> is set to <EBUSY>.
+   * the lock, @c errno is set to @c EBUSY.
    */
   int tryacquire_read (void);
 
@@ -77,7 +77,7 @@ public:
    * Conditionally upgrade a read lock to a write lock.  This only
    * works if there are no other readers present, in which case the
    * method returns 0.  Otherwise, the method returns -1 and sets
-   * <errno> to <EBUSY>.  Note that the caller of this method *must*
+   * @c errno to @c EBUSY.  Note that the caller of this method *must*
    * already possess this lock as a read lock (but this condition is
    * not checked by the current implementation).
    */
@@ -94,8 +94,8 @@ public:
    * Note, for interface uniformity with other synchronization
    * wrappers we include the <tryacquire> method.  This is implemented
    * as a write-lock to be safe...  Returns -1 on failure.  If we
-   * "failed" because someone else already had the lock, <errno> is
-   * set to <EBUSY>.
+   * "failed" because someone else already had the lock, @c errno is
+   * set to @c EBUSY.
    */
   int tryacquire (void);
 

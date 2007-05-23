@@ -28,7 +28,7 @@ class ACE_Accept_QoS_Params;
 /**
  * @class ACE_SOCK_Acceptor
  *
- * @brief Defines a factory that creates new <ACE_Stream>s passively.
+ * @brief Defines a factory that creates new ACE_Streams passively.
  *
  * The ACE_SOCK_Acceptor has its own "passive-mode" socket.
  * This serves as a factory to create so-called "data-mode"
@@ -98,11 +98,11 @@ public:
 
   // = Passive connection <accept> methods.
   /**
-   * Accept a new <ACE_SOCK_Stream> connection.  A @a timeout of 0
+   * Accept a new ACE_SOCK_Stream connection.  A @a timeout of 0
    * means block forever, a @a timeout of {0, 0} means poll.  <restart>
    * == 1 means "restart if interrupted," i.e., if errno == EINTR.
-   * Note that <new_stream> inherits the "blocking mode" of <this>
-   * ACE_SOCK_Acceptor, i.e., if <this> acceptor factory is in
+   * Note that <new_stream> inherits the "blocking mode" of @c this
+   * ACE_SOCK_Acceptor, i.e., if @c this acceptor factory is in
    * non-blocking mode, the <net_stream> will be in non-blocking mode
    * and vice versa.
    */
@@ -114,12 +114,12 @@ public:
 
 #if !defined (ACE_HAS_WINCE)
   /**
-   * Accept a new <ACE_SOCK_Stream> connection using the QoS
+   * Accept a new ACE_SOCK_Stream connection using the QoS
    * information in <qos_params>.  A @a timeout of 0 means block
    * forever, a @a timeout of {0, 0} means poll.  <restart> == 1 means
    * "restart if interrupted," i.e., if errno == EINTR.  Note that
-   * <new_stream> inherits the "blocking mode" of <this>
-   * ACE_SOCK_Acceptor, i.e., if <this> acceptor factory is in
+   * <new_stream> inherits the "blocking mode" of @c this
+   * ACE_SOCK_Acceptor, i.e., if @c this acceptor factory is in
    * non-blocking mode, the <net_stream> will be in non-blocking mode
    * and vice versa.
    */

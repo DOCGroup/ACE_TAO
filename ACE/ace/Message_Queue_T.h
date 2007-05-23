@@ -414,7 +414,7 @@ public:
    * Deactivate the queue and wakeup all threads waiting on the queue
    * so they can continue.  No messages are removed from the queue,
    * however.  Any other operations called until the queue is
-   * activated again will immediately return -1 with <errno> ==
+   * activated again will immediately return -1 with @c errno ==
    * ESHUTDOWN.  Returns WAS_INACTIVE if queue was inactive before the
    * call and WAS_ACTIVE if queue was active before the call.
    */
@@ -1293,7 +1293,7 @@ public:
    * Deactivate the queue and wakeup all threads waiting on the queue
    * so they can continue.  No messages are removed from the queue,
    * however.  Any other operations called until the queue is
-   * activated again will immediately return -1 with <errno> ==
+   * activated again will immediately return -1 with @c errno ==
    * ESHUTDOWN.  Returns WAS_INACTIVE if queue was inactive before the
    * call and WAS_ACTIVE if queue was active before the call.
    */

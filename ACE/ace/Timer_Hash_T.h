@@ -279,7 +279,7 @@ private:
   virtual int dispatch_info_i (const ACE_Time_Value &current_time,
                                ACE_Timer_Node_Dispatch_Info_T<TYPE> &info);
 
-  /// Reschedule an "interval" <ACE_Timer_Node>.
+  /// Reschedule an "interval" ACE_Timer_Node.
   virtual void reschedule (ACE_Timer_Node_T<TYPE> *);
 
   /// Finds the earliest node

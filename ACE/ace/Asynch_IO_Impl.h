@@ -97,7 +97,7 @@ public:
                          const void *completion_key,
                          u_long error = 0) = 0;
 
-  /// Post <this> to the Proactor's completion port.
+  /// Post @c this to the Proactor's completion port.
   virtual int post_completion (ACE_Proactor_Impl *proactor) = 0;
 
 protected:

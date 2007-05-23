@@ -558,7 +558,7 @@ public:
           implementation;
 
   // = Initialization and termination methods.
-  /// Initialize with the <ACE_DEFAULT_MAP_SIZE>.
+  /// Initialize with the ACE_DEFAULT_MAP_SIZE.
   ACE_Map_Impl (ACE_Allocator *alloc = 0);
 
   /// Initialize with @a size entries.  The @a size parameter is ignored
@@ -840,7 +840,7 @@ public:
           implementation;
 
   // = Initialization and termination methods.
-  /// Initialize with the <ACE_DEFAULT_MAP_SIZE>.
+  /// Initialize with the ACE_DEFAULT_MAP_SIZE.
   ACE_Active_Map_Manager_Adapter (ACE_Allocator *alloc = 0);
 
   /// Initialize with @a size entries.  The @a size parameter is ignored
@@ -1134,7 +1134,7 @@ public:
           implementation;
 
   // = Initialization and termination methods.
-  /// Initialize with the <ACE_DEFAULT_MAP_SIZE>.
+  /// Initialize with the ACE_DEFAULT_MAP_SIZE.
   ACE_Hash_Map_Manager_Ex_Adapter (ACE_Allocator *alloc = 0);
 
   /// Initialize with @a size entries.  The @a size parameter is ignored
@@ -1420,7 +1420,7 @@ public:
           implementation;
 
   // = Initialization and termination methods.
-  /// Initialize with the <ACE_DEFAULT_MAP_SIZE>.
+  /// Initialize with the ACE_DEFAULT_MAP_SIZE.
   ACE_Map_Manager_Adapter (ACE_Allocator *alloc = 0);
 
   /// Initialize with @a size entries.  The @a size parameter is ignored
