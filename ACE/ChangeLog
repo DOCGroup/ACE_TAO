@@ -1,3 +1,9 @@
+Wed May 23 11:31:55 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/generate_rel_manpages:
+        * etc/*.doxygen:
+          Updated for the upgrade to doxygen 1.5.2-2
+
 Wed May 23 09:40:55 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Mem_Map.cpp:
