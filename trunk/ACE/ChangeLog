@@ -1,3 +1,11 @@
+Wed May 23 09:40:55 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Mem_Map.cpp:
+          Use shm_open/shm_unlink on VxWorks. This doesn't fix the failing of
+          the tests using mmap on our targets because they are using a NFS file
+          system and we have identified several problems with that which have
+          been reported to WindRiver.
+
 Wed May 23 07:17:55 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Mem_Map_Test.cpp:
