@@ -1,8 +1,5 @@
 // $Id$
 
-#include "ace/config-all.h"
-
-#if defined (ACE_HAS_THREADS)
 #include "NodeApp_CB_Impl.h"
 
 CIAO::NodeApplication_Callback_Impl::
@@ -78,5 +75,3 @@ CIAO::NodeApplication_Callback_Impl::is_callback_completed ()
 {
   return this->is_callback_completed_;
 }
-
-#endif /* ACE_HAS_THREADS */
