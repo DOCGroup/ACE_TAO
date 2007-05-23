@@ -190,11 +190,11 @@ run_main (int argc, ACE_TCHAR *argv[])
   if (result != child1)
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("Error: expected to reap child1 (%d); got %d\n"),
+                  ACE_TEXT ("(%P) Error: expected to reap child1 (%d); got %d\n"),
                   child1,
                   result));
       if (result == ACE_INVALID_PID)
-        ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("error")));
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P) %p\n"), ACE_TEXT ("error")));
       test_status = 1;
     }
   else
@@ -217,11 +217,11 @@ run_main (int argc, ACE_TCHAR *argv[])
   if (result != child3)
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("Error: expected to reap child3 (%d); got %d\n"),
+                  ACE_TEXT ("(%P) Error: expected to reap child3 (%d); got %d\n"),
                   child3,
                   result));
       if (result == ACE_INVALID_PID)
-        ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("error")));
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P) %p\n"), ACE_TEXT ("error")));
       test_status = 1;
     }
   else
@@ -237,11 +237,11 @@ run_main (int argc, ACE_TCHAR *argv[])
   if (result != child2)
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("Error: expected to reap child2 (%d); got %d\n"),
+                  ACE_TEXT ("(%P) Error: expected to reap child2 (%d); got %d\n"),
                   child2,
                   result));
       if (result == ACE_INVALID_PID)
-        ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("error")));
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P) %p\n"), ACE_TEXT ("error")));
       test_status = 1;
     }
   else
@@ -262,11 +262,11 @@ run_main (int argc, ACE_TCHAR *argv[])
   if (result != child4)
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("Error: expected to reap child4 (%d); got %d\n"),
+                  ACE_TEXT ("(%P) Error: expected to reap child4 (%d); got %d\n"),
                   child4,
                   result));
       if (result == ACE_INVALID_PID)
-        ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("error")));
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P) %p\n"), ACE_TEXT ("error")));
       test_status = 1;
     }
   else
@@ -283,10 +283,10 @@ run_main (int argc, ACE_TCHAR *argv[])
   if (result != 0)
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("Error: expected wait to time out; got %d\n"),
+                  ACE_TEXT ("(%P) Error: expected wait to time out; got %d\n"),
                   result));
       if (result == ACE_INVALID_PID)
-        ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("error")));
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P) %p\n"), ACE_TEXT ("error")));
       test_status = 1;
     }
   else
@@ -303,7 +303,7 @@ run_main (int argc, ACE_TCHAR *argv[])
                   child5,
                   result));
       if (result == ACE_INVALID_PID)
-        ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("error")));
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P) %p\n"), ACE_TEXT ("error")));
       test_status = 1;
     }
   else
@@ -317,7 +317,7 @@ run_main (int argc, ACE_TCHAR *argv[])
   ACE_exitcode status6;
   if (-1 == mgr.terminate (child6))
     {
-      ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("terminate child6")));
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P) %p\n"), ACE_TEXT ("terminate child6")));
       test_status = 1;
       mgr.wait (child6, &status6);  // Wait for child to exit just to clean up
     }
@@ -326,7 +326,7 @@ run_main (int argc, ACE_TCHAR *argv[])
       if (-1 == mgr.wait (child6, &status6))
         {
           ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("wait on child6 reported ACE_INVALID_PID\n")));
+                      ACE_TEXT ("(%P) wait on child6 reported ACE_INVALID_PID\n")));
           test_status = 1;
         }
       else
@@ -339,13 +339,13 @@ run_main (int argc, ACE_TCHAR *argv[])
                         WTERMSIG (status6)));
           else
             ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT ("child6 should have died on signal, ")
+                        ACE_TEXT ("(%P) child6 should have died on signal, ")
                         ACE_TEXT ("but didn't; exit status %d\n"),
                         WEXITSTATUS (status6)));
 #else
           ACE_DEBUG
             ((LM_DEBUG,
-              ACE_TEXT ("The process terminated with exit code %d\n"),
+              ACE_TEXT ("(%P) The process terminated with exit code %d\n"),
               status6));
 #endif /*ACE_WIN32*/
         }
