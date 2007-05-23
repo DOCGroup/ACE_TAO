@@ -85,7 +85,7 @@ public:
       CORBA::Boolean release = false) {
     impl_.replace(MAX, length, data, release);
   }
-  /// @copydoc details::generic_sequence::get_buffer(CORBA::Boolean)
+  /// @copydoc TAO::details::generic_sequence::get_buffer(CORBA::Boolean)
   inline value_type * get_buffer(CORBA::Boolean orphan = false) {
     return impl_.get_buffer(orphan);
   }
