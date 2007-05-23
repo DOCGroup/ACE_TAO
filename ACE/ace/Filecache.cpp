@@ -313,7 +313,7 @@ ACE_Filecache::remove (const ACE_TCHAR *filename)
 {
   ACE_Filecache_Object *handle = 0;
 
-  u_long loc = ACE::hash_pjw (filename) % this->size_;
+  ACE_OFF_T loc = ACE::hash_pjw (filename) % this->size_;
   ACE_SYNCH_RW_MUTEX &hashlock = this->hash_lock_[loc];
   // ACE_SYNCH_RW_MUTEX &filelock = this->file_lock_[loc];
 
@@ -336,7 +336,7 @@ ACE_Filecache::fetch (const ACE_TCHAR *filename, int mapit)
 {
   ACE_Filecache_Object *handle = 0;
 
-  u_long loc = ACE::hash_pjw (filename) % this->size_;
+  ACE_OFF_T loc = ACE::hash_pjw (filename) % this->size_;
   ACE_SYNCH_RW_MUTEX &hashlock = this->hash_lock_[loc];
   ACE_SYNCH_RW_MUTEX &filelock = this->file_lock_[loc];
 
@@ -384,7 +384,7 @@ ACE_Filecache::create (const ACE_TCHAR *filename, int size)
 {
   ACE_Filecache_Object *handle = 0;
 
-  u_long loc = ACE::hash_pjw (filename) % this->size_;
+  ACE_OFF_T loc = ACE::hash_pjw (filename) % this->size_;
   ACE_SYNCH_RW_MUTEX &filelock = this->file_lock_[loc];
 
   ACE_NEW_RETURN (handle,
@@ -401,7 +401,7 @@ ACE_Filecache::finish (ACE_Filecache_Object *&file)
   if (file == 0)
     return file;
 
-  u_long loc = ACE::hash_pjw (file->filename_) % this->size_;
+  ACE_OFF_T loc = ACE::hash_pjw (file->filename_) % this->size_;
   ACE_SYNCH_RW_MUTEX &hashlock = this->hash_lock_[loc];
 
   if (file != 0)

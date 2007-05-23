@@ -1,3 +1,21 @@
+Wed May 23 22:00:32 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * ace/Pipe.cpp (send, recv):
+        * ace/SOCK_IO.cpp (send, recv): Use ACE_Utils::truncate_cast properly
+          to get an int, not a size_t, for the iovec count. Fixes Win64
+          compile warnings.
+
+        * ace/Log_Msg_IPC.cpp (log): Truncate the payload length down to an
+          ACE_CDR::ULong to resolve 64-bit warnings. If we desire logging
+          payloads larger than 4GB, this will need to be changed.
+
+        * ace/Local_Tokens.inl (ACE_Token_Name::name): Use size_t for a string
+          length, not int.
+
+        * ace/Filecache.cpp: When doing calculations based on
+          ACE_Filecache::size_ use its type, ACE_OFF_T, rather than u_long.
+          Keeps types consistent across platforms.
+
 Wed May 23 19:42:50 UTC 2007  Gan Deng  <gan.deng@vanderbilt.edu>
 
         * bin/ciao_tests.lst

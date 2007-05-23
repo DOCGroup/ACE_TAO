@@ -3,6 +3,7 @@
 #include "ace/Log_Msg_IPC.h"
 #include "ace/Log_Record.h"
 #include "ace/CDR_Stream.h"
+#include "ace/Truncate.h"
 
 ACE_RCSID(ace, Log_Msg_IPC, "$Id$")
 
@@ -61,8 +62,11 @@ ACE_Log_Msg_IPC::log (ACE_Log_Record &log_record)
   ACE_OutputCDR payload (max_payload_size);
   payload << log_record;
 
-  // Get the number of bytes used by the CDR stream.
-  ACE_CDR::ULong length = payload.total_length ();
+  // Get the number of bytes used by the CDR stream. If it becomes desireable
+  // to support payloads more than 4GB, this field will need to be changed
+  // to a 64-bit value.
+  ACE_CDR::ULong length =
+    ACE_Utils::truncate_cast<ACE_CDR::ULong> (payload.total_length ());
 
   // Send a header so the receiver can determine the byte order and
   // size of the incoming CDR stream.
