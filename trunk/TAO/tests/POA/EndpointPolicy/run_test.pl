@@ -10,22 +10,24 @@ use PerlACE::Run_Test;
 
 $status = 0;
 
-$goodiorfile = PerlACE::LocalFile ("good.ior");
-$badiorfile =  PerlACE::LocalFile ("bad.ior");
+$goodiorbase = "good.ior";
+$badiorbase = "bad.ior";
+$goodiorfile = PerlACE::LocalFile ("$goodiorbase");
+$badiorfile =  PerlACE::LocalFile ("$badiorbase");
 unlink $goodiorfile;
 unlink $badiorfile;
 
 $port = 12345;
 
 if (PerlACE::is_vxworks_test()) {
-    $sharedSV = new PerlACE::ProcessVX ("server", "-ORBDottedDecimalAddresses 0 -ORBUseSharedProfile 1 -g $goodiorfile -b $badiorfile -p $port");
+    $sharedSV = new PerlACE::ProcessVX ("server", "-ORBDottedDecimalAddresses 0 -ORBUseSharedProfile 1 -g $goodiorbase -b $badiorbasee -p $port");
 }
 else {
     $sharedSV = new PerlACE::Process ("server", "-ORBDottedDecimalAddresses 0 -ORBUseSharedProfile 1 -g $goodiorfile -b $badiorfile -p $port");
 }
 
 if (PerlACE::is_vxworks_test()) {
-    $multiSV = new PerlACE::ProcessVX ("server", "-ORBDottedDecimalAddresses 0 -ORBUseSharedProfile 0 -g $goodiorfile -b $badiorfile -p $port");
+    $multiSV = new PerlACE::ProcessVX ("server", "-ORBDottedDecimalAddresses 0 -ORBUseSharedProfile 0 -g $goodiorbase -b $badiorbase -p $port");
 }
 else {
     $multiSV = new PerlACE::Process ("server", "-ORBDottedDecimalAddresses 0 -ORBUseSharedProfile 0 -g $goodiorfile -b $badiorfile -p $port");
@@ -94,7 +96,7 @@ if ($client != 0) {
     $status = 1;
 }
 
-$server = $multiSV->WaitKill (10);
+$server = $multiSV->WaitKill (15);
 
 if ($server != 0) {
     print STDERR "ERROR: server [multiple profiles per IOR] returned $server\n";
