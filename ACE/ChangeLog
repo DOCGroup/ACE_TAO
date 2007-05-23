@@ -1,3 +1,17 @@
+Wed May 23 13:00:55 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-vxworks6.2:
+        * ace/config-vxworks6.3:
+        * ace/config-vxworks6.4:
+          log2 is only not available in rtp mode with the gnu compiler.
+
+        * ace/config-vxworks6.2:
+          Removed part for the ghs compiler, that is really not tested and
+          just a left over of the vxworks 5.5.x support
+
+        * ace/OS_NS_unistd.cpp:
+          Initialize local variable with 0, layout changes
+
 Wed May 23 11:31:55 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/generate_rel_manpages:
