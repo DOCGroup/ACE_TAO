@@ -1,0 +1,6 @@
+// $Id$
+
+project : namingexe, rtcorba, install, messaging {
+  exename   = catior
+  install   = $(ACE_ROOT)/bin
+}
