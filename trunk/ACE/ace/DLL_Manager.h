@@ -255,7 +255,7 @@ private:
   /// Unload strategy.
   u_long unload_policy_;
 
-  /// Pointer to a process-wide <ACE_DLL_Manager>.
+  /// Pointer to a process-wide ACE_DLL_Manager.
   static ACE_DLL_Manager *instance_;
 
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)

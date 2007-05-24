@@ -29,7 +29,7 @@ class ACE_Timer_Wheel_T;
 /**
  * @class ACE_Timer_Wheel_Iterator_T
  *
- * @brief Iterates over an <ACE_Timer_Wheel>.
+ * @brief Iterates over an ACE_Timer_Wheel.
  *
  * This is a generic iterator that can be used to visit every
  * node of a timer queue.  Be aware that it doesn't traverse
@@ -117,7 +117,7 @@ public:
   /// True if queue is empty, else false.
   virtual int is_empty (void) const;
 
-  /// Returns the time of the earlier node in the <ACE_Timer_Wheel>.
+  /// Returns the time of the earlier node in the ACE_Timer_Wheel.
   /// Must be called on a non-empty queue.
   virtual const ACE_Time_Value& earliest_time (void) const;
 

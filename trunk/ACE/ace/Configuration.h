@@ -405,7 +405,7 @@ protected:
     (const ACE_Configuration_Section_Key& key);
 
   /**
-   * Tests to see if <name> is valid.  <name> must be < 255 characters
+   * Tests to see if @a name is valid.  @a name must be < 255 characters
    * and not contain the path separator '\', brackets [] or = (maybe
    * just restrict to alphanumeric?) returns non zero if name is not
    * valid.  The path separator is allowed, except for the first character,
@@ -414,9 +414,9 @@ protected:
   int validate_name (const ACE_TCHAR* name, int allow_path = 0);
 
   /**
-   * Test to see if <name> is valid.  The default value for a key can be
-   * unnamed, which means either <name> is == 0 or <name> == '\0` is
-   * valid.  Otherwise, it calls validate_name() to test <name> for the
+   * Test to see if @a name is valid.  The default value for a key can be
+   * unnamed, which means either @a name is == 0 or @a name == '\0` is
+   * valid.  Otherwise, it calls validate_name() to test @a name for the
    * same rules that apply to keys.
    */
   int validate_value_name (const ACE_TCHAR* name);
@@ -848,7 +848,7 @@ public:
                          const ACE_TCHAR* name,
                          VALUETYPE& type);
 
-  /// Removes the the value <name> from @a key.  returns non zero on error
+  /// Removes the the value @a name from @a key.  returns non zero on error
   virtual int remove_value (const ACE_Configuration_Section_Key& key,
                             const ACE_TCHAR* name);
 

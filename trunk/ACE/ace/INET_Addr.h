@@ -160,7 +160,7 @@ public:
            const char protocol[] = "tcp");
 
   /**
-   * Initializes an ACE_INET_Addr from the <addr>, which can be
+   * Initializes an ACE_INET_Addr from the @a addr, which can be
    * "ip-number:port-number" (e.g., "tango.cs.wustl.edu:1234" or
    * "128.252.166.57:1234").  If there is no ':' in the <address> it
    * is assumed to be a port number, with the IP address being
@@ -290,7 +290,7 @@ public:
 
   /**
    * Return the "dotted decimal" Internet address representation of
-   * the hostname storing it in the <addr> (which is assumed to be
+   * the hostname storing it in the @a addr (which is assumed to be
    * <addr_size> bytes long).  This version is reentrant.
    */
   const char *get_host_addr (char *addr, int addr_size) const;

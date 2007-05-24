@@ -350,7 +350,7 @@ protected:
   int unbind_and_return_index (const EXT_ID &ext_id,
                                ACE_UINT32 &slot);
 
-  /// Unbind <slot>.
+  /// Unbind @a slot.
   void unbind_slot (ACE_UINT32 slot);
 
   /// Resize the map.  Must be called with locks held.

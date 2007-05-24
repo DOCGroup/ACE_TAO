@@ -84,7 +84,7 @@ public:
   virtual int sync (void *addr, size_t len, int flags = MS_SYNC);
 
   /**
-   * Change the protection of the pages of the mapped region to <prot>
+   * Change the protection of the pages of the mapped region to @a prot
    * starting at @c this->base_addr_ up to @a len bytes.  If @a len == -1
    * then change protection of all pages in the mapped region.
    */

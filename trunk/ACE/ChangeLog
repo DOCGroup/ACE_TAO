@@ -1,3 +1,41 @@
+Thu May 24 07:54:55 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Array_Base.h:
+        * ace/ATM_Addr.h:
+        * ace/Barrier.h:
+        * ace/Based_Pointer_Repository.h:
+        * ace/Configuration.h:
+        * ace/DLL_Manager.h:
+        * ace/FILE.h:
+        * ace/Free_List.h:
+        * ace/INET_Addr.h:
+        * ace/IO_SAP.h:
+        * ace/Local_Memory_Pool.h:
+        * ace/Log_Record.h:
+        * ace/Malloc_Base.h:
+        * ace/Map_Manager.h:
+        * ace/Mem_Map.h:
+        * ace/Message_Queue_T.h:
+        * ace/MMAP_Memory_Pool.h:
+        * ace/Pagefile_Memory_Pool.h:
+        * ace/QoS/SOCK_Dgram_Mcast_QoS.h:
+        * ace/Reactor_Impl.h:
+        * ace/Registry.h:
+        * ace/Remote_Tokens.h:
+        * ace/RW_Process_Mutex.h:
+        * ace/Sbrk_Memory_Pool.h:
+        * ace/Service_Gestalt.h:
+        * ace/Shared_Memory_Pool.h:
+        * ace/Signal.h:
+        * ace/SOCK_Dgram.h:
+        * ace/SPIPE_Connector.h:
+        * ace/SPIPE_Stream.h:
+        * ace/Timer_Heap_T.h:
+        * ace/Timer_Wheel_T.h:
+        * ace/Unbounded_Set.h:
+        * ace/WFMO_Reactor.h:
+          Doxygen improvements
+
 Thu May 24 05:43:03 UTC 2007  Olli Savia  <ops@iki.fi>
 
         * configure.ac:
@@ -6,11 +44,11 @@ Thu May 24 05:43:03 UTC 2007  Olli Savia  <ops@iki.fi>
 Thu May 24 05:13:46 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * ace/Pipe.cpp:
-          
+
           Wed May 23 22:00:32 UTC 2007  Steve Huston  <shuston...>
           Due the changelog above, changed the type of index in the for
           loop from size_t to int to eliminate compiler warnings about
-          signed/unsigned comparison. 
+          signed/unsigned comparison.
 
 Thu May 24 04:58:14 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 

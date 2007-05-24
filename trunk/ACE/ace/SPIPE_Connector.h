@@ -27,7 +27,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 /**
  * @class ACE_SPIPE_Connector
  *
- * @brief Defines an active connection factory for <ACE_SPIPE_Stream>.
+ * @brief Defines an active connection factory for ACE_SPIPE_Stream.
  * On Windows this is mapped to Named Pipes, whereas on UNIX it is
  * mapped to STREAM pipes.
  */

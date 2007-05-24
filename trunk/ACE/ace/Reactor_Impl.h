@@ -41,7 +41,7 @@ class ACE_Sig_Set;
  *
  * @internal This class is for ACE internal use only.
  *
- * @brief Abstract class for unblocking an <ACE_Reactor_Impl> from its
+ * @brief Abstract class for unblocking an ACE_Reactor_Impl from its
  * event loop.
  */
 class ACE_Export ACE_Reactor_Notify : public ACE_Event_Handler

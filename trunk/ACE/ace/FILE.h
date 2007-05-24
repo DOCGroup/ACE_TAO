@@ -77,7 +77,7 @@ public:
   /// Get information on this ACE_FILE.
   int get_info (ACE_FILE_Info *finfo);
 
-  /// Get information on this <ACE_FILE>.
+  /// Get information on this ACE_FILE.
   int get_info (ACE_FILE_Info &finfo);
 
   /// Set filesize to length byte.
