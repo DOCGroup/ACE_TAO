@@ -9,9 +9,15 @@ use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::Run_Test;
 
 $status = 0;
-$iorfile = PerlACE::LocalFile ("test.ior");
+$iorbasefile = "test.ior";
+$iorfile = PerlACE::LocalFile ("$iorbasefile");
 
-$TARGETHOSTNAME = "localhost";
+if (PerlACE::is_vxworks_test()) {
+  $TARGETHOSTNAME = $ENV{'ACE_RUN_VX_TGTHOST'};
+}
+else {
+  $TARGETHOSTNAME = "localhost";
+}
 $orb_port=12000 + PerlACE::uniqueid ();
 $logfile = PerlACE::LocalFile("orb.$orb_port.log");
 unlink $iorfile;
@@ -34,15 +40,19 @@ $corbaloc_str = "corbaloc:iiop:1.0\@$TARGETHOSTNAME:$orb_port/SomeObjectNameThat
 
 # ORBDebugLevel 10 seems to encourage the problem
 # -ORBCollocation no  is required for server to produce the problem
+
+if (PerlACE::is_vxworks_test()) {
+$serverargs = "-ORBCollocation no -ORBdebuglevel 10 -ORBLogFile $logfile " .
+              "-ORBEndpoint iiop://$TARGETHOSTNAME:$orb_port -o $iorbasefile " .
+              "-i $serveriterations -n $serverthreads -c $selfabusethreads " .
+              "-l $corbaloc_str";
+  $SV = new PerlACE::ProcessVX ("server", $serverargs);
+}
+else {
 $serverargs = "-ORBCollocation no -ORBdebuglevel 10 -ORBLogFile $logfile " .
               "-ORBEndpoint iiop://$TARGETHOSTNAME:$orb_port -o $iorfile " .
               "-i $serveriterations -n $serverthreads -c $selfabusethreads " .
               "-l $corbaloc_str";
-
-if (PerlACE::is_vxworks_test()) {
-  $SV = new PerlACE::ProcessVX ("server", $serverargs);
-}
-else {
   $SV = new PerlACE::Process ("server", $serverargs);
 }
 
@@ -90,7 +100,7 @@ if ($clients > 0) {
 }
 
 if ($clients > 1) {
-  $client = $CL2->WaitKill (5);
+  $client = $CL2->WaitKill (15);
 
   if ($client != 0) {
     print STDERR "ERROR: client 2 returned $client\n";
@@ -99,7 +109,7 @@ if ($clients > 1) {
 }
 
 if ($clients > 2) {
-  $client = $CL3->WaitKill (5);
+  $client = $CL3->WaitKill (15);
 
   if ($client != 0) {
     print STDERR "ERROR: client 3 returned $client\n";
