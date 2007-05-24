@@ -1,11 +1,15 @@
+Thu May 24 05:13:46 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * ace/Pipe.cpp:
+
 Thu May 24 04:58:14 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * ace/Pipe.cpp:
 
-          ACE_Utils::truncate_cast requires including Truncate.h. Added missing 
+          ACE_Utils::truncate_cast requires including Truncate.h. Added missing
           include file.
 
-          Use preincrement instead of postincrement operator. 
+          Use preincrement instead of postincrement operator.
 
 Wed May 23 22:00:32 UTC 2007  Steve Huston  <shuston@riverace.com>
 
