@@ -51,7 +51,7 @@ public:
   /// Returns the current size of the free list.
   virtual size_t size (void) = 0;
 
-  /// Resizes the free list to <newsize>.
+  /// Resizes the free list to @a newsize.
   virtual void resize (size_t newsize) = 0;
 };
 

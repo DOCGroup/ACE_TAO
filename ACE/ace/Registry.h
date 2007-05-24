@@ -226,36 +226,36 @@ public:
               const Object &object);
 
     /**
-     * Insert or update <object> with <name> into @c this context
-     * This will not fail if <name> already exists
+     * Insert or update <object> with @a name into @c this context
+     * This will not fail if @a name already exists
      * (String version)
      */
     int bind (const ACE_TString &name,
               const Object &object);
 
-    /// Update <object> with <name> in @c this context
+    /// Update <object> with @a name in @c this context
     /// (Name version)
     int rebind (const Name &name,
                 const Object &object);
 
-    /// Update <object> with <name> in @c this context
+    /// Update <object> with @a name in @c this context
     int rebind (const ACE_TString &name,
                 const Object &object);
 
-    /// Find <object> with <name> in @c this context
+    /// Find <object> with @a name in @c this context
     /// (Name version)
     int resolve (const Name &name,
                  Object &object);
 
-    /// Find <object> with <name> in @c this context
+    /// Find <object> with @a name in @c this context
     int resolve (const ACE_TString &name,
                  Object &object);
 
-    /// Delete object with <name> in @c this context
+    /// Delete object with @a name in @c this context
     /// (Name version)
     int unbind (const Name &name);
 
-    /// Delete object with <name> in @c this context
+    /// Delete object with @a name in @c this context
     int unbind (const ACE_TString &name);
 
 
@@ -265,8 +265,8 @@ public:
     int new_context (Naming_Context &naming_context);
 
     /**
-     * Insert <naming_context> with <name> relative to @c this context
-     * This will fail if <name> already exists
+     * Insert <naming_context> with @a name relative to @c this context
+     * This will fail if @a name already exists
      * (Name version)
      */
     int bind_new_context (const Name &name,
@@ -275,8 +275,8 @@ public:
                           u_long security_access = KEY_ALL_ACCESS,
                           LPSECURITY_ATTRIBUTES security_attributes = 0);
 
-    /// Insert <naming_context> with <name> relative to @c this context
-    /// This will fail if <name> already exists
+    /// Insert <naming_context> with @a name relative to @c this context
+    /// This will fail if @a name already exists
     int bind_new_context (const ACE_TString &name,
                           Naming_Context &naming_context,
                           u_long persistence = REG_OPTION_NON_VOLATILE,
@@ -284,8 +284,8 @@ public:
                           LPSECURITY_ATTRIBUTES security_attributes = 0);
 
     /**
-     * Insert or update <naming_context> with <name> relative to @c this context
-     * This will not fail if <name> already exists
+     * Insert or update <naming_context> with @a name relative to @c this context
+     * This will not fail if @a name already exists
      * (Name version)
      */
     int bind_context (const Name &name,
@@ -294,39 +294,39 @@ public:
                       u_long security_access = KEY_ALL_ACCESS,
                       LPSECURITY_ATTRIBUTES security_attributes = 0);
 
-    /// Insert or update <naming_context> with <name> relative to @c this context
-    /// This will not fail if <name> already exists
+    /// Insert or update <naming_context> with @a name relative to @c this context
+    /// This will not fail if @a name already exists
     int bind_context (const ACE_TString &name,
                       /* const */ Naming_Context &naming_context,
                       u_long persistence = REG_OPTION_NON_VOLATILE,
                       u_long security_access = KEY_ALL_ACCESS,
                       LPSECURITY_ATTRIBUTES security_attributes = 0);
 
-    /// Rename <naming_context> to <name>
+    /// Rename <naming_context> to @a name
     /// (Name version)
     int rebind_context (const Name &name,
                         /* const */ Naming_Context &naming_context);
 
-    /// Rename <naming_context> to <name>
+    /// Rename <naming_context> to @a name
     int rebind_context (const ACE_TString &name,
                         /* const */ Naming_Context &naming_context);
 
-    /// Find <naming_context> with <name> in @c this context
+    /// Find <naming_context> with @a name in @c this context
     /// (Name version)
     int resolve_context (const Name &name,
                          Naming_Context &naming_context,
                          u_long security_access = KEY_ALL_ACCESS);
 
-    /// Find <naming_context> with <name> in @c this context
+    /// Find <naming_context> with @a name in @c this context
     int resolve_context (const ACE_TString &name,
                          Naming_Context &naming_context,
                          u_long security_access = KEY_ALL_ACCESS);
 
-    /// Remove naming_context with <name> from @c this context
+    /// Remove naming_context with @a name from @c this context
     /// (Name version)
     int unbind_context (const Name &name);
 
-    /// Remove naming_context with <name> from @c this context
+    /// Remove naming_context with @a name from @c this context
     int unbind_context (const ACE_TString &name);
 
     /// Same as <unbind_context> with @c this as naming_context

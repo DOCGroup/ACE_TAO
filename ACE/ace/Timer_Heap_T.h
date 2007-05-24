@@ -32,7 +32,7 @@ class ACE_Timer_Heap_T;
 /**
  * @class ACE_Timer_Heap_Iterator_T
  *
- * @brief Iterates over an <ACE_Timer_Heap_T>.
+ * @brief Iterates over an ACE_Timer_Heap_T.
  *
  * This is a generic iterator that can be used to visit every
  * node of a timer queue.  Be aware that it doesn't transverse
@@ -219,7 +219,7 @@ protected:
   virtual void free_node (ACE_Timer_Node_T<TYPE> *);
 
 private:
-  /// Remove and return the <slot>th ACE_Timer_Node and restore the
+  /// Remove and return the @a slotth ACE_Timer_Node and restore the
   /// heap property.
   ACE_Timer_Node_T<TYPE> *remove (size_t slot);
 
@@ -233,18 +233,18 @@ private:
    */
   void grow_heap (void);
 
-  /// Restore the heap property, starting at <slot>.
+  /// Restore the heap property, starting at @a slot.
   void reheap_up (ACE_Timer_Node_T<TYPE> *new_node,
                   size_t slot,
                   size_t parent);
 
-  /// Restore the heap property, starting at <slot>.
+  /// Restore the heap property, starting at @a slot.
   void reheap_down (ACE_Timer_Node_T<TYPE> *moved_node,
                     size_t slot,
                     size_t child);
 
-  /// Copy <moved_node> into the <slot> slot of <heap_> and move
-  /// <slot> into the corresponding slot in the <timer_id_> array.
+  /// Copy <moved_node> into the @a slot slot of <heap_> and move
+  /// @a slot into the corresponding slot in the <timer_id_> array.
   void copy (size_t slot, ACE_Timer_Node_T<TYPE> *moved_node);
 
   /**

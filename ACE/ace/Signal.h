@@ -66,13 +66,13 @@ public:
   /// Create a set that includes all signals defined by the system.
   int fill_set (void);
 
-  /// Adds the individual signal specified by <signo> to the set.
+  /// Adds the individual signal specified by @a signo to the set.
   int sig_add (int signo);
 
-  /// Deletes the individual signal specified by <signo> from the set.
+  /// Deletes the individual signal specified by @a signo from the set.
   int sig_del (int signo);
 
-  /// Checks whether the signal specified by <signo> is in the set.
+  /// Checks whether the signal specified by @a signo is in the set.
   int is_member (int signo) const;
 
   /// Returns a pointer to the underlying <sigset_t>.
@@ -104,21 +104,21 @@ public:
   /// Default constructor.  Initializes everything to 0.
   ACE_Sig_Action (void);
 
-  /// Assigns the various fields of a <sigaction> struct but doesn't
-  /// register for signal handling via the <sigaction> function.
+  /// Assigns the various fields of a @c sigaction struct but doesn't
+  /// register for signal handling via the @c sigaction function.
   ACE_Sig_Action (ACE_SignalHandler handler,
                   sigset_t *sigmask = 0,
                   int flags = 0);
 
-  /// Assigns the various fields of a <sigaction> struct but doesn't
-  /// register for signal handling via the <sigaction> function.
+  /// Assigns the various fields of a @c sigaction struct but doesn't
+  /// register for signal handling via the @c sigaction function.
   ACE_Sig_Action (ACE_SignalHandler handler,
                   const ACE_Sig_Set &sigmask,
                   int flags = 0);
 
   /**
-   * Assigns the various fields of a <sigaction> struct and registers
-   * the <handler> to process signal @a signum via the <sigaction>
+   * Assigns the various fields of a @c sigaction struct and registers
+   * the <handler> to process signal @a signum via the @c sigaction
    * function.
    */
   ACE_Sig_Action (ACE_SignalHandler handler,
@@ -127,8 +127,8 @@ public:
                   int flags = 0);
 
   /**
-   * Assigns the various fields of a <sigaction> struct and registers
-   * the <handler> to process signal @a signum via the <sigaction>
+   * Assigns the various fields of a @c sigaction struct and registers
+   * the <handler> to process signal @a signum via the @c sigaction
    * function.
    */
   ACE_Sig_Action (ACE_SignalHandler handler,
@@ -149,8 +149,8 @@ public:
   // that would cause a problem with something else - Bala <bala@cs>
 
   /**
-   * Assigns the various fields of a <sigaction> struct and registers
-   * the <handler> to process all <signals> via the <sigaction>
+   * Assigns the various fields of a @c sigaction struct and registers
+   * the <handler> to process all @a signalss via the @c sigaction
    * function.
    */
   ACE_Sig_Action (const ACE_Sig_Set &signalss,
@@ -159,8 +159,8 @@ public:
                   int flags = 0);
 
   /**
-   * Assigns the various fields of a <sigaction> struct and registers
-   * the <handler> to process all <signals> via the <sigaction>
+   * Assigns the various fields of a @c sigaction struct and registers
+   * the <handler> to process all @a signalss via the @c sigaction
    * function.
    */
   ACE_Sig_Action (const ACE_Sig_Set &signalss,
@@ -176,7 +176,7 @@ public:
 
   // = Signal action management.
   /// Register @c this as the current disposition and store old
-  /// disposition into <oaction> if it is non-NULL.
+  /// disposition into @a oaction if it is non-NULL.
   int register_action (int signum,
                        ACE_Sig_Action *oaction = 0);
 

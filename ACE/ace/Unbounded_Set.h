@@ -272,7 +272,7 @@ public:
   /// Dump the state of an object.
   void dump (void) const;
 
-  /// Reset the <ACE_Unbounded_Set> to be empty.
+  /// Reset the ACE_Unbounded_Set to be empty.
   /**
    * Delete the nodes of the set.
    */

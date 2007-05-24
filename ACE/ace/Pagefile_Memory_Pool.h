@@ -72,7 +72,7 @@ public:
                       size_t &rounded_bytes,
                       int &first_time);
 
-  /// Acquire at least <nbytes> from the memory pool.  <rounded_bytes>
+  /// Acquire at least @a nbytes from the memory pool.  <rounded_bytes>
   /// is the actual number of bytes allocated.
   void *acquire (size_t nbytes,
                  size_t &rounded_bytes);
@@ -88,7 +88,7 @@ public:
   virtual int seh_selector (void *);
 
   /**
-   * Try to extend the virtual address space so that <addr> is now
+   * Try to extend the virtual address space so that @a addr is now
    * covered by the address mapping.  The method succeeds and returns
    * 0 if the backing store has adequate memory to cover this address.
    * Otherwise, it returns -1.  This method is typically called by an

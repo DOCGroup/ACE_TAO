@@ -1346,7 +1346,7 @@ public:
   virtual void notification_strategy (ACE_Notification_Strategy *s);
   //@}
 
-  /// Returns a reference to the lock used by the <ACE_Message_Queue_Ex>.
+  /// Returns a reference to the lock used by the ACE_Message_Queue_Ex.
   virtual ACE_SYNCH_MUTEX_T &lock (void);
 
   /// Dump the state of an object.

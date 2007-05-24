@@ -55,7 +55,7 @@ public:
   virtual ~ACE_Remote_Token_Proxy (void);
 
   /**
-   * Same as Token_Proxy. <name> is the string uniquely identifying
+   * Same as Token_Proxy. @a name is the string uniquely identifying
    * the token.  <ignore_deadlock> can be 1 to disable deadlock
    * notifications.  <debug> prints debug messages.
    */

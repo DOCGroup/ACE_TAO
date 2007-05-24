@@ -168,7 +168,7 @@ private:
 class ACE_Export ACE_Process_Barrier : public ACE_Barrier
 {
 public:
-  /// Create a Process_Barrier, passing in the optional <name>.
+  /// Create a Process_Barrier, passing in the optional @a name.
   ACE_Process_Barrier (unsigned int count, const ACE_TCHAR *name = 0);
 
   /// Dump the state of an object.
