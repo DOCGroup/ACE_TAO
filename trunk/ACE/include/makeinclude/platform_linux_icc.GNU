@@ -7,6 +7,8 @@ debug ?= 1
 optimize ?= 1
 threads ?= 1
 no_hidden_visibility ?= 1
+fast ?= 0
+ipo ?= 0
 
 PLATFORM_XT_CPPFLAGS=
 PLATFORM_XT_LIBS=-lXt
@@ -76,6 +78,14 @@ endif
 
 ifeq ($(inline),0)
   CPPFLAGS += -fno-inline
+endif
+
+ifeq ($(fast),1)
+  CPPFLAGS += -fast
+endif
+
+ifeq ($(ipo),1)
+  CPPFLAGS += -ipo
 endif
 
 CFLAGS  += -w1
