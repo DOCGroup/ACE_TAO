@@ -58,6 +58,7 @@ ifeq ("$(WIND_HOST_TYPE)","x86-win32")
   ACE_ROOT:=$(subst \,/,$(ACE_ROOT))
   TAO_ROOT:=$(subst \,/,$(TAO_ROOT))
   CIAO_ROOT:=$(subst \,/,$(CIAO_ROOT))
+  override RM=rm -f
 endif # x86-win32
 
 ifneq (,$(HOST_ROOT))
@@ -222,9 +223,6 @@ else
   LDFLAGS += -Xdynamic
 endif
 endif
-
-## make sure we don't use that stupid, crippled vxrm.bat script.
-override RM=rm -f
 
 ifeq ("$(VXWORKSLINK)","true")
   # prevent possible clash with static LIB rules
