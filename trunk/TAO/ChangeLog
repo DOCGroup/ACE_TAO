@@ -1,3 +1,9 @@
+Thu May 24 12:02:55 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Muxed_GIOP_Versions/run_test.pl:
+        * tests/POA/Bug_1592_Regression/run_test.pl:
+          Updated for cross platform testing
+
 Thu May 24 08:00:55 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Connection_Purging/run_test.pl:
