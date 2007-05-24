@@ -1,3 +1,8 @@
+Thu May 24 08:16:55 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_vxworks6.5.GNU:
+          New file upcoming VxWorks 6.5
+
 Thu May 24 07:54:55 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Array_Base.h:
