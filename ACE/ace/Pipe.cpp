@@ -6,6 +6,7 @@
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_sys_socket.h"
 #include "ace/OS_Memory.h"
+#include "ace/Truncate.h"
 
 #if defined (ACE_HAS_STREAM_PIPES) || defined (__QNX__)
 #  include "ace/OS_NS_unistd.h"
@@ -272,7 +273,7 @@ ACE_Pipe::send (size_t n, ...) const
 
   va_start (argp, n);
 
-  for (size_t i = 0; i < total_tuples; i++)
+  for (size_t i = 0; i < total_tuples; ++i)
     {
       iovp[i].iov_base = va_arg (argp, char *);
       iovp[i].iov_len  = va_arg (argp, int);
@@ -318,7 +319,7 @@ ACE_Pipe::recv (size_t n, ...) const
 
   va_start (argp, n);
 
-  for (size_t i = 0; i < total_tuples; i++)
+  for (size_t i = 0; i < total_tuples; ++i)
     {
       iovp[i].iov_base = va_arg (argp, char *);
       iovp[i].iov_len  = va_arg (argp, int);

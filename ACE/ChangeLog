@@ -1,3 +1,12 @@
+Thu May 24 04:58:14 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * ace/Pipe.cpp:
+
+          ACE_Utils::truncate_cast requires including Truncate.h. Added missing 
+          include file.
+
+          Use preincrement instead of postincrement operator. 
+
 Wed May 23 22:00:32 UTC 2007  Steve Huston  <shuston@riverace.com>
 
         * ace/Pipe.cpp (send, recv):
@@ -126,13 +135,13 @@ Wed May 23 07:17:55 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Wed May 23 05:12:04 2007  Ossama Othman  <ossama othman at symantec dot com>
 
-	* ace/OS_NS_math.h (ace_log2_helper):
+        * ace/OS_NS_math.h (ace_log2_helper):
 
-	  Added comments about what the ACE_LACKS_LOG2 case actually
-	  does.
+          Added comments about what the ACE_LACKS_LOG2 case actually
+          does.
 
-	  Store precomputed value of 1/log(2.0) to save an expensive
-	  division and computing log(2.0) in each call.
+          Store precomputed value of 1/log(2.0) to save an expensive
+          division and computing log(2.0) in each call.
 
 Tue May 22 17:41:20 UTC 2007  Olli Savia  <ops@iki.fi>
 
