@@ -1,9 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project(*Client): taoclient {
-  Source_Files {
-    client.cpp
-  }
-}
-

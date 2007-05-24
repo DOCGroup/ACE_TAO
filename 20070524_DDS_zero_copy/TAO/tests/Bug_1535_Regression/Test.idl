@@ -1,6 +1,0 @@
-// $Id$
-
-interface Test
-{
-  void print_hello_world();
-};

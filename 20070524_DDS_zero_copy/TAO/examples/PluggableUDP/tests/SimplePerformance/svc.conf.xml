@@ -1,5 +1,0 @@
-<?xml version='1.0'?>
-<!-- Converted from ./examples/PluggableUDP/tests/SimplePerformance/svc.conf by svcconf-convert.pl -->
-<ACE_Svc_Conf>
- <static id="Advanced_Resource_Factory" params="-ORBProtocolFactory DIOP_Factory -ORBReactorType tp"/>
-</ACE_Svc_Conf>
