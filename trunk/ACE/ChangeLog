@@ -1,6 +1,11 @@
 Thu May 24 05:13:46 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * ace/Pipe.cpp:
+          
+          Wed May 23 22:00:32 UTC 2007  Steve Huston  <shuston...>
+          Due the changelog above, changed the type of index in the for
+          loop from size_t to int to eliminate compiler warnings about
+          signed/unsigned comparison. 
 
 Thu May 24 04:58:14 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
