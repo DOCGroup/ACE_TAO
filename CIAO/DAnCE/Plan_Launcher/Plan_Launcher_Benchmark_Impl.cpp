@@ -21,15 +21,6 @@ namespace CIAO
     {
       try
         {
-          
-          DAnCE_Utils::add_instance (
-            const_cast<::Deployment::DeploymentPlan&> (plan), 
-            "Hello-Sender-idd-02", "SenderNode", "Hello-Sender-mdd");
-
-          DAnCE_Utils::print_instances (plan);
-          DAnCE_Utils::print_connections (plan);
-          
-
           ///// Start Test ////////////////////////////////////////////
           ACE_Sample_History history_prepare_plan (this->niterations_);
           ACE_Sample_History history_start_launch (this->niterations_);
