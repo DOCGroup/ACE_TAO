@@ -1,0 +1,56 @@
+// $Id$
+
+Description
+-----------
+
+This directory contains a simple three stage AV test:
+a. Sender
+b. Distributer
+c. Receiver
+
+The sender reads data read from a file and sends it to the distributer
+process. The distributer acts as a conduit. It receives data from the
+sender and sends it immediately to the receiver process.
+
+The sender and receiver register their references with the Naming
+Service.  The distributer gets the sender and receiver references from
+the Naming Service.  It then binds to the receiver and sender. When
+the connection between the distributer and sender is set up the sender
+starts sending to the distributer which in turn sends data to the
+receiver. When the sender has finished reading the file it tells the
+ditributer which in turn tells the recveiver to destroy the streams
+set up.
+
+
+Running the test
+----------------
+
+Start the Naming Service
+
+Start the following processes in the same order.
+
+sender
+------
+
+sender [-f <filename>] [-r <data_rate>]
+
+-f filename  --> The name of the file from which data needs to be sent
+
+-r data_rate --> The rate at which the data needs to be paced.
+
+
+receiver
+--------
+
+receiver [-f <filename>]
+
+-f filename --> File into which the data received from the distributer is stored.
+
+
+distributer:
+-----------
+
+distributer (no args)
+
+Please see run_test.pl script for the detail of a test run.
+

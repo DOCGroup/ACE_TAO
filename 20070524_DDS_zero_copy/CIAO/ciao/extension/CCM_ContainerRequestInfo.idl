@@ -1,0 +1,22 @@
+// $Id$
+
+#if !defined (CCM_CONTAINERREQUESTINFO_IDL)
+#define CCM_CONTAINERREQUESTINFO_IDL
+
+#include "ciao/CCM_Navigation.idl"
+#include "tao/OctetSeq.pidl"
+
+module Components
+{
+  module ContainerPortableInterceptor
+  {
+    local interface ContainerRequestInfo
+    {
+      readonly attribute CORBA::OctetSeq origin_id;
+      readonly attribute CORBA::OctetSeq target_id;
+      readonly attribute FeatureName name;
+    };
+  };
+};
+
+#endif /* CCM_CONTAINERREQUESTINFO_IDL */
