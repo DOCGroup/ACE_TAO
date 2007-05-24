@@ -29,7 +29,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 /**
  * @class ACE_SPIPE_Stream
  *
- * @brief Defines the methods in the <ACE_SPIPE_Stream> abstraction.
+ * @brief Defines the methods in the ACE_SPIPE_Stream abstraction.
  *
  * @a buf is the buffer to write from or receive into.
  * @a len is the number of bytes to transfer.

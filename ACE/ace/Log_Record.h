@@ -100,7 +100,7 @@ public:
    */
   static const ACE_TCHAR *priority_name (ACE_Log_Priority p);
 
-  // IMPORTANT: <name> must be a statically allocated const ACE_TCHAR*
+  // IMPORTANT: @a name must be a statically allocated const ACE_TCHAR*
   static void priority_name (ACE_Log_Priority p,
                              const ACE_TCHAR *name);
 
@@ -136,7 +136,7 @@ public:
   /// power of 2, as defined by the enums in <ACE_Log_Priority>).
   void priority (u_long num);
 
-  /// Get the total length of the <Log_Record>, which includes the 
+  /// Get the total length of the <Log_Record>, which includes the
   /// size of the various data member fields.
   long length (void) const;
 

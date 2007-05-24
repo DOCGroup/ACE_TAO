@@ -94,21 +94,21 @@ public:
 
   // = Set/get methods.
 
-  /// Set item in the array at location <slot>.  Doesn't
+  /// Set item in the array at location @a slot.  Doesn't
   /// perform range checking.
   T & operator[] (size_type slot);
 
-  /// Get item in the array at location <slot>.  Doesn't
+  /// Get item in the array at location @a slot.  Doesn't
   /// perform range checking.
   T const & operator[] (size_type slot) const;
 
-  /// Set an item in the array at location <slot>.  Returns
-  /// -1 if <slot> is not in range, else returns 0.
+  /// Set an item in the array at location @a slot.  Returns
+  /// -1 if @a slot is not in range, else returns 0.
   int set (T const & new_item, size_type slot);
 
   /**
-   * Get an item in the array at location <slot>.  Returns -1 if
-   * <slot> is not in range, else returns 0.  Note that this function
+   * Get an item in the array at location @a slot.  Returns -1 if
+   * @a slot is not in range, else returns 0.  Note that this function
    * copies the item.  If you want to avoid the copy, you can use
    * the const operator [], but then you'll be responsible for range checking.
    */
@@ -146,7 +146,7 @@ public:
   const_iterator begin (void) const;
   const_iterator end   (void) const;
   //@}
- 
+
   /**
    * @name Reverse Iterator Accessors
    *
@@ -158,14 +158,14 @@ public:
   const_reverse_iterator rbegin (void) const;
   const_reverse_iterator rend   (void) const;
   //@}
- 
+
   /// Swap the contents of this array with the given @a array in
   /// an exception-safe manner.
   void swap (ACE_Array_Base<T> & array);
 
 protected:
 
-  /// Returns 1 if <slot> is within range, i.e., 0 >= <slot> <
+  /// Returns 1 if @a slot is within range, i.e., 0 >= @a slot <
   /// <cur_size_>, else returns 0.
   bool in_range (size_type slot) const;
 

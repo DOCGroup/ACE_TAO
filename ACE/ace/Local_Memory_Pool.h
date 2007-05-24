@@ -81,14 +81,14 @@ public:
   virtual int sync (void *addr, size_t len, int flags = MS_SYNC);
 
   /**
-   * Change the protection of the pages of the mapped region to <prot>
+   * Change the protection of the pages of the mapped region to @a prot
    * starting at <this->base_addr_> up to @a len bytes.  If @a len == -1
    * then change protection of all pages in the mapped region.
    */
   virtual int protect (ssize_t len = -1, int prot = PROT_RDWR);
 
-  /// Change the protection of the pages of the mapped region to <prot>
-  /// starting at <addr> up to @a len bytes.
+  /// Change the protection of the pages of the mapped region to @a prot
+  /// starting at @a addr up to @a len bytes.
   virtual int protect (void *addr, size_t len, int prot = PROT_RDWR);
 
 #if defined (ACE_WIN32)
@@ -101,7 +101,7 @@ public:
 #endif /* ACE_WIN32 */
 
   /**
-   * Try to extend the virtual address space so that <addr> is now
+   * Try to extend the virtual address space so that @a addr is now
    * covered by the address mapping.  Always returns 0 since we can't
    * remap a local memory pool.
    */

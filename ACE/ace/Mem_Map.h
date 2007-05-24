@@ -152,19 +152,19 @@ public:
   int sync (void *addr, size_t len, int flags = MS_SYNC);
 
   /**
-   * Change the protection of the pages of the mapped region to <prot>
+   * Change the protection of the pages of the mapped region to @a prot
    * starting at <base_addr_> up to @a len bytes.
    */
   int protect (size_t len, int prot = PROT_RDWR);
 
   /**
-   * Change the protection of all the pages of the mapped region to <prot>
+   * Change the protection of all the pages of the mapped region to @a prot
    * starting at <base_addr_>.
    */
   int protect (int prot = PROT_RDWR);
 
-  /// Change the protection of the pages of the mapped region to <prot>
-  /// starting at <addr> up to @a len bytes.
+  /// Change the protection of the pages of the mapped region to @a prot
+  /// starting at @a addr up to @a len bytes.
   int protect (void *addr, size_t len, int prot = PROT_RDWR);
 
   /// Close and remove the file from the file system.

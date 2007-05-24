@@ -61,14 +61,14 @@ public:
   /// Virtual destructor
   virtual ~ACE_Allocator (void);
 
-  /// Allocate <nbytes>, but don't give them any initial value.
+  /// Allocate @a nbytes, but don't give them any initial value.
   virtual void *malloc (size_type nbytes) = 0;
 
-  /// Allocate <nbytes>, giving them <initial_value>.
+  /// Allocate @a nbytes, giving them @a initial_value.
   virtual void *calloc (size_type nbytes, char initial_value = '\0') = 0;
 
-  /// Allocate <n_elem> each of size <elem_size>, giving them
-  /// <initial_value>.
+  /// Allocate <n_elem> each of size @a elem_size, giving them
+  /// @a initial_value.
   virtual void *calloc (size_type n_elem,
                         size_type elem_size,
                         char initial_value = '\0') = 0;
@@ -82,29 +82,29 @@ public:
   // = Map manager like functions
 
   /**
-   * Associate <name> with <pointer>.  If <duplicates> == 0 then do
-   * not allow duplicate <name>/<pointer> associations, else if
-   * <duplicates> != 0 then allow duplicate <name>/<pointer>
+   * Associate @a name with @a pointer.  If @a duplicates == 0 then do
+   * not allow duplicate @a name/@a pointer associations, else if
+   * @a duplicates != 0 then allow duplicate @a name/@a pointer
    * assocations.  Returns 0 if successfully binds (1) a previously
-   * unbound <name> or (2) <duplicates> != 0, returns 1 if trying to
-   * bind a previously bound <name> and <duplicates> == 0, else
+   * unbound @a name or (2) @a duplicates != 0, returns 1 if trying to
+   * bind a previously bound @a name and @a duplicates == 0, else
    * returns -1 if a resource failure occurs.
    */
   virtual int bind (const char *name, void *pointer, int duplicates = 0) = 0;
 
   /**
-   * Associate <name> with <pointer>.  Does not allow duplicate
-   * <name>/<pointer> associations.  Returns 0 if successfully binds
-   * (1) a previously unbound <name>, 1 if trying to bind a previously
-   * bound <name>, or returns -1 if a resource failure occurs.  When
-   * this call returns <pointer>'s value will always reference the
-   * void * that <name> is associated with.  Thus, if the caller needs
-   * to use <pointer> (e.g., to free it) a copy must be maintained by
+   * Associate @a name with @a pointer.  Does not allow duplicate
+   * @a name/@a pointer associations.  Returns 0 if successfully binds
+   * (1) a previously unbound @a name, 1 if trying to bind a previously
+   * bound @a name, or returns -1 if a resource failure occurs.  When
+   * this call returns @a pointer's value will always reference the
+   * void * that @a name is associated with.  Thus, if the caller needs
+   * to use @a pointer (e.g., to free it) a copy must be maintained by
    * the caller.
    */
   virtual int trybind (const char *name, void *&pointer) = 0;
 
-  /// Locate <name> and pass out parameter via pointer.  If found,
+  /// Locate @a name and pass out parameter via pointer.  If found,
   /// return 0, returns -1 if failure occurs.
   virtual int find (const char *name, void *&pointer) = 0;
 
@@ -134,14 +134,14 @@ public:
   virtual int sync (void *addr, size_type len, int flags = MS_SYNC) = 0;
 
   /**
-   * Change the protection of the pages of the mapped region to <prot>
+   * Change the protection of the pages of the mapped region to @a prot
    * starting at <this->base_addr_> up to @a len bytes.  If @a len == -1
    * then change protection of all pages in the mapped region.
    */
   virtual int protect (ssize_t len = -1, int prot = PROT_RDWR) = 0;
 
-  /// Change the protection of the pages of the mapped region to <prot>
-  /// starting at <addr> up to @a len bytes.
+  /// Change the protection of the pages of the mapped region to @a prot
+  /// starting at @a addr up to @a len bytes.
   virtual int protect (void *addr, size_type len, int prot = PROT_RDWR) = 0;
 
 #if defined (ACE_HAS_MALLOC_STATS)

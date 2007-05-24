@@ -202,11 +202,11 @@ public:
   int process_file (const ACE_TCHAR file[]);
 
   /**
-   * Locate an entry with <name> in the table.  If <ignore_suspended>
+   * Locate an entry with @a name in the table.  If <ignore_suspended>
    * is set then only consider services marked as resumed.  If the
    * caller wants the located entry, pass back a pointer to the
-   * located entry via <srp>.  If <name> is not found, -1 is returned.
-   * If <name> is found, but it is suspended and the caller wants to
+   * located entry via <srp>.  If @a name is not found, -1 is returned.
+   * If @a name is found, but it is suspended and the caller wants to
    * ignore suspended services a -2 is returned.
    */
   int find (const ACE_TCHAR name[],

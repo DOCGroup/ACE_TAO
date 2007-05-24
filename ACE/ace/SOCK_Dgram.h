@@ -154,7 +154,7 @@ public:
                 int flags,
                 const ACE_Time_Value *timeout) const;
 
-  /// Send <buffer_count> worth of <buffers> to <addr> using overlapped
+  /// Send <buffer_count> worth of @a buffers to @a addr using overlapped
   /// I/O (uses <WSASendTo>).  Returns 0 on success.
   ssize_t send (const iovec buffers[],
                 int buffer_count,
@@ -164,7 +164,7 @@ public:
                 ACE_OVERLAPPED *overlapped,
                 ACE_OVERLAPPED_COMPLETION_FUNC func) const;
 
-  /// Recv <buffer_count> worth of <buffers> from <addr> using
+  /// Recv <buffer_count> worth of @a buffers from @a addr using
   /// overlapped I/O (uses <WSARecvFrom>).  Returns 0 on success.
   ssize_t recv (iovec buffers[],
                 int buffer_count,

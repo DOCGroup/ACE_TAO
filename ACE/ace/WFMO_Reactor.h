@@ -358,7 +358,7 @@ public:
   /// Make changes to the handle set
   virtual int make_changes (void);
 
-  /// Check to see if <slot> has been scheduled for deletion
+  /// Check to see if @a slot has been scheduled for deletion
   int scheduled_for_deletion (size_t slot) const;
 
   /**
@@ -399,15 +399,15 @@ public:
   /// current_suspended_info_ from to_be_added_info_
   int make_changes_in_to_be_added_infos (void);
 
-  /// Removes the ACE_Event_Handler at <slot> from the table.
+  /// Removes the ACE_Event_Handler at @a slot from the table.
   int remove_handler_i (size_t slot,
                         ACE_Reactor_Mask mask);
 
-  /// Removes the ACE_Event_Handler at <slot> from the table.
+  /// Removes the ACE_Event_Handler at @a slot from the table.
   int remove_suspended_handler_i (size_t slot,
                                   ACE_Reactor_Mask mask);
 
-  /// Removes the ACE_Event_Handler at <slot> from the table.
+  /// Removes the ACE_Event_Handler at @a slot from the table.
   int remove_to_be_added_handler_i (size_t slot,
                                     ACE_Reactor_Mask to_be_removed_masks);
 
@@ -1215,7 +1215,7 @@ protected:
   virtual int safe_dispatch (DWORD wait_status);
 
   /**
-   * Dispatches any active handles from handles_[<slot>] to
+   * Dispatches any active handles from handles_[@a slot] to
    * handles_[active_handles_] using <WaitForMultipleObjects> to poll
    * through our handle set looking for active handles.
    */

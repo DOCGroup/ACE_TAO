@@ -43,7 +43,7 @@ class ACE_Export ACE_RW_Process_Mutex
 {
 public:
   /// Create a readers/writer <Process_Mutex>, passing in the optional
-  /// <name>, <flags> and <mode> \sa ACE_File_Lock.
+  /// @a name, <flags> and <mode> \sa ACE_File_Lock.
   ///  If not specified, a name is generated and flags and mode are set
   ///  to default platform values.
 #if defined (ACE_WIN32)
