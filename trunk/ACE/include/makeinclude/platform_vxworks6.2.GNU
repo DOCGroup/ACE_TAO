@@ -52,11 +52,12 @@ ifeq (,$(WIND_HOST_TYPE))
 endif # WIND_HOST_TYPE
 
 ifeq ("$(WIND_HOST_TYPE)","x86-win32")
-ifneq ($(MAKE_MODE), unix)
-vxworks_ntbuild ?= 1
-MKDIR_NTSTYLE ?= 1
-lacks_touch ?= 1
-endif
+  ifneq ($(MAKE_MODE), unix)
+    vxworks_ntbuild ?= 1
+    MKDIR_NTSTYLE ?= 1
+    lacks_touch ?= 1
+  endif
+override RM=rm -f
 endif
 
 HOST_DIR = $(WIND_BASE)/host/$(WIND_HOST_TYPE)
@@ -175,9 +176,6 @@ else
   include $(TGT_DIR)/h/make/defs.$(PRJ_TYPE)
   include $(TGT_DIR)/h/tool/$(TOOL_FAMILY)/make.$(CPU)$(TOOL)
 endif
-
-## make sure we don't use that stupid, crippled vxrm.bat script.
-override RM=rm -f
 
 ifeq ("$(VXWORKSLINK)","true")
   # prevent possible clash with static LIB rules
