@@ -7,8 +7,6 @@ PLANNED MAJOR CHANGES "SOMETIME IN THE FUTURE" (i.e., exact beta not known)
 
 . (OO) Various other fixes that have been piling up.
 
-. (Riverace) Pharlap ETS 13 qualification.
-
 . (Remedy) VxWorks 6.5 support
 
 . (Remedy) Intel C++ 10.0 support
@@ -23,6 +21,9 @@ USER VISIBLE CHANGES BETWEEN ACE-5.5.8 and ACE-5.5.9
 
 . Added support for ACE_OS::log2(double) and improved support for
   ACE::log2(u_long).
+
+. Shared library builds on AIX now produce a libxxx.so file instead of the
+  previous practice of producing libxxx.a(shr.o).
 
 USER VISIBLE CHANGES BETWEEN ACE-5.5.7 and ACE-5.5.8
 ====================================================

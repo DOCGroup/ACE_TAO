@@ -2404,114 +2404,115 @@ ACE_OS::event_destroy (ACE_event_t *event)
   ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::CloseHandle (*event), ace_result_), int, -1);
 #elif defined (ACE_HAS_THREADS)
   if (event->eventdata_)
-{
+    {
       // mutex_destroy()/cond_destroy() are called in a loop if the object
       // is BUSY.  This avoids conditions where we fail to destroy these
       // objects because at time of destroy they were just being used in
       // another thread possibly causing deadlocks later on if they keep
       // being used after we're gone.
 
-  if (event->eventdata_->type_ == USYNC_PROCESS)
-  {
-    if (event->name_)
-    {
-      // Only destroy the event data if we're the ones who initialized
-      // it.
+      if (event->eventdata_->type_ == USYNC_PROCESS)
+        {
+          if (event->name_)
+            {
+              // Only destroy the event data if we're the ones who initialized
+              // it.
 
-      int r1, r2;
+              int r1, r2;
 # if (defined (ACE_HAS_PTHREADS) && defined (_POSIX_THREAD_PROCESS_SHARED) && \
         (!defined (ACE_LACKS_MUTEXATTR_PSHARED) || !defined (ACE_LACKS_CONDATTR_PSHARED))) || \
      (!defined (ACE_USES_FIFO_SEM) && \
         (!defined (ACE_HAS_POSIX_SEM) || !defined (ACE_HAS_POSIX_TIMEOUT) || defined (ACE_LACKS_NAMED_POSIX_SEM)))
-      // first destroy the mutex so locking after this will return errors
-      while ((r1 = ACE_OS::mutex_destroy (&event->eventdata_->lock_)) == -1
-              && errno == EBUSY)
-      {
-        ACE_OS::thr_yield ();
-      }
+              // First destroy the mutex so locking after this will return
+              // errors.
+              while ((r1 = ACE_OS::mutex_destroy (&event->eventdata_->lock_)) == -1
+                     && errno == EBUSY)
+                {
+                  ACE_OS::thr_yield ();
+                }
 # else
-      r1 = ACE_OS::sema_destroy(&event->lock_);
+              r1 = ACE_OS::sema_destroy(&event->lock_);
 # endif
 
 # if (defined (ACE_HAS_PTHREADS) && defined (_POSIX_THREAD_PROCESS_SHARED) && !defined (ACE_LACKS_CONDATTR_PSHARED)) || \
     (!defined (ACE_USES_FIFO_SEM) && \
       (!defined (ACE_HAS_POSIX_SEM) || !defined (ACE_HAS_POSIX_SEM_TIMEOUT) || defined (ACE_LACKS_NAMED_POSIX_SEM)))
-      // now fix event to manual reset, raise signal and broadcast until is's
-      // possible to destroy the condition
-      event->eventdata_->manual_reset_ = 1;
-      while ((r2 = ACE_OS::cond_destroy (&event->eventdata_->condition_)) == -1
-              && errno == EBUSY)
-      {
-        event->eventdata_->is_signaled_ = 1;
-        ACE_OS::cond_broadcast (&event->eventdata_->condition_);
-        ACE_OS::thr_yield ();
-      }
+              // Now fix event to manual reset, raise signal and broadcast
+              // until is's possible to destroy the condition.
+              event->eventdata_->manual_reset_ = 1;
+              while ((r2 = ACE_OS::cond_destroy (&event->eventdata_->condition_)) == -1
+                     && errno == EBUSY)
+                {
+                  event->eventdata_->is_signaled_ = 1;
+                  ACE_OS::cond_broadcast (&event->eventdata_->condition_);
+                  ACE_OS::thr_yield ();
+                }
 # else
-      r2 = ACE_OS::sema_destroy(&event->semaphore_);
+              r2 = ACE_OS::sema_destroy(&event->semaphore_);
 # endif
-      ACE_OS::munmap (event->eventdata_,
-                      sizeof (ACE_eventdata_t));
-      ACE_OS::shm_unlink (ACE_TEXT_CHAR_TO_TCHAR(event->name_));
-      ACE_OS::free (event->name_);
-      return r1 != 0 || r2 != 0 ? -1 : 0;
-    }
-    else
-    {
-      ACE_OS::munmap (event->eventdata_,
-                      sizeof (ACE_eventdata_t));
+              ACE_OS::munmap (event->eventdata_,
+                              sizeof (ACE_eventdata_t));
+              ACE_OS::shm_unlink (ACE_TEXT_CHAR_TO_TCHAR(event->name_));
+              ACE_OS::free (event->name_);
+              return r1 != 0 || r2 != 0 ? -1 : 0;
+            }
+          else
+            {
+              ACE_OS::munmap (event->eventdata_,
+                              sizeof (ACE_eventdata_t));
 # if (!defined (ACE_HAS_PTHREADS) || !defined (_POSIX_THREAD_PROCESS_SHARED) || \
         (defined (ACE_LACKS_MUTEXATTR_PSHARED) && defined (ACE_LACKS_CONDATTR_PSHARED))) && \
      (defined (ACE_USES_FIFO_SEM) || \
         (defined (ACE_HAS_POSIX_SEM) && defined (ACE_HAS_POSIX_TIMEOUT) && defined (ACE_LACKS_NAMED_POSIX_SEM)))
-      ACE_OS::sema_destroy(&event->lock_);
+              ACE_OS::sema_destroy(&event->lock_);
 # endif
 # if (defined (ACE_HAS_PTHREADS) && defined (_POSIX_THREAD_PROCESS_SHARED) && !defined (ACE_LACKS_CONDATTR_PSHARED)) || \
     (!defined (ACE_USES_FIFO_SEM) && \
       (!defined (ACE_HAS_POSIX_SEM) || !defined (ACE_HAS_POSIX_SEM_TIMEOUT) || defined (ACE_LACKS_NAMED_POSIX_SEM)))
-      return 0;
+              return 0;
 # else
-      return ACE_OS::sema_destroy(&event->semaphore_);
+              return ACE_OS::sema_destroy(&event->semaphore_);
 # endif
-    }
-  }
-  else
-  {
-    int r1, r2;
-    // first destroy the mutex so locking after this will return errors
+            }
+        }
+      else
+        {
+          int r1, r2;
+          // First destroy the mutex so locking after this will return errors.
 # if (defined (ACE_HAS_PTHREADS) && defined (_POSIX_THREAD_PROCESS_SHARED) && \
         (!defined (ACE_LACKS_MUTEXATTR_PSHARED) || !defined (ACE_LACKS_CONDATTR_PSHARED))) || \
      (!defined (ACE_USES_FIFO_SEM) && \
         (!defined (ACE_HAS_POSIX_SEM) || !defined (ACE_HAS_POSIX_TIMEOUT) || defined (ACE_LACKS_NAMED_POSIX_SEM)))
       // first destroy the mutex so locking after this will return errors
-      while ((r1 = ACE_OS::mutex_destroy (&event->eventdata_->lock_)) == -1
-              && errno == EBUSY)
-      {
-        ACE_OS::thr_yield ();
-      }
+          while ((r1 = ACE_OS::mutex_destroy (&event->eventdata_->lock_)) == -1
+                 && errno == EBUSY)
+            {
+              ACE_OS::thr_yield ();
+            }
 # else
-      r1 = ACE_OS::sema_destroy(&event->lock_);
+          r1 = ACE_OS::sema_destroy(&event->lock_);
 # endif
 
 # if (defined (ACE_HAS_PTHREADS) && defined (_POSIX_THREAD_PROCESS_SHARED) && !defined (ACE_LACKS_CONDATTR_PSHARED)) || \
     (!defined (ACE_USES_FIFO_SEM) && \
       (!defined (ACE_HAS_POSIX_SEM) || !defined (ACE_HAS_POSIX_SEM_TIMEOUT) || defined (ACE_LACKS_NAMED_POSIX_SEM)))
-    // now fix event to manual reset, raise signal and broadcast until is's
-    // possible to destroy the condition
-    event->eventdata_->manual_reset_ = 1;
-    while ((r2 = ACE_OS::cond_destroy (&event->eventdata_->condition_)) == -1
-            && errno == EBUSY)
-    {
-      event->eventdata_->is_signaled_ = 1;
-      ACE_OS::cond_broadcast (&event->eventdata_->condition_);
-      ACE_OS::thr_yield ();
-    }
+          // Now fix event to manual reset, raise signal and broadcast until
+          // it's possible to destroy the condition.
+          event->eventdata_->manual_reset_ = 1;
+          while ((r2 = ACE_OS::cond_destroy (&event->eventdata_->condition_)) == -1
+                 && errno == EBUSY)
+            {
+              event->eventdata_->is_signaled_ = 1;
+              ACE_OS::cond_broadcast (&event->eventdata_->condition_);
+              ACE_OS::thr_yield ();
+            }
 # else
-    r2 = ACE_OS::sema_destroy(&event->semaphore_);
+          r2 = ACE_OS::sema_destroy(&event->semaphore_);
 # endif
-    delete event->eventdata_;
-    return r1 != 0 || r2 != 0 ? -1 : 0;
-  }
-}
+          delete event->eventdata_;
+          return r1 != 0 || r2 != 0 ? -1 : 0;
+        }
+    }
 
   return 0;
 #else
