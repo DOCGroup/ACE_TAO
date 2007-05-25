@@ -1,3 +1,8 @@
+Fri May 25 15:39:59 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * tests/Bug_2610_Regression_Test.cpp: Rearrange order of #includes so
+          Visual Age C++ 6 can find what it needs.
+
 Fri May 25 12:54:55 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Active_Map_Manager.h:
