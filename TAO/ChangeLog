@@ -1,3 +1,17 @@
+Fri May 25 18:49:12 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/ast/ast_expression.cpp:
+        
+          Fixed a bug in parsing of octet constants where the rhs
+          has an infix operator. Thanks to Lother Werzinger
+          <lothar at tradescape dot biz> for reporting the
+          problem. This fix closes [BUGID:2944].
+          
+        * tests/IDL_Test/constants.idl:
+        
+          Added some of items in the example IDL submitted by
+          Lothar to our test suite of problem IDL declarations.
+
 Fri May 25 18:02:30 UTC 2007  Scott Harris  <harris_s@ociweb.com>
 
         * TAO_IDL/include/idl_global.h:
