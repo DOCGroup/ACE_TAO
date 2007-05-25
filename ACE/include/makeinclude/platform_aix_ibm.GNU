@@ -47,14 +47,9 @@ AIX_VERS := $(AIX_MAJOR_VERS)0$(AIX_MINOR_VERS)
 # both compilers.
 exceptions=1
 
-# Yes, believe it or not...
-# The way to make a shared lib on AIX is to make a shared object file and
-# then put that in an archive.
-# Non-shared archives are named lib<x>ns.a - ns = non-shared.
-SOEXT       = a
-# aix_build turns on the funky shared library building code in
-# rules.lib.GNU
-aix_build = 1
+SOEXT = so
+SOFLAGS += -G
+LDFLAGS += -brtl
 #SHR_FILTER=$(ACE_ROOT)/bin/aix_shr
 
 ifeq ($(threads),1)

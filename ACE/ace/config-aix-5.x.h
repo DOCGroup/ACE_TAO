@@ -145,7 +145,7 @@
 #if defined (ACE_DLL_SUFFIX)
 #  undef ACE_DLL_SUFFIX
 #endif
-#define ACE_DLL_SUFFIX ".a"
+#define ACE_DLL_SUFFIX ".so"
 
 #define ACE_DEFAULT_BASE_ADDR ((char *) 0x80000000)
 
