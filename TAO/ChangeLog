@@ -1,3 +1,13 @@
+Fri May 25 18:02:30 UTC 2007  Scott Harris  <harris_s@ociweb.com>
+
+        * TAO_IDL/include/idl_global.h:
+        * TAO_IDL/be/be_visitor_native/native_ch.cpp:
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/fe/fe_lookup.cpp:
+        * TAO_IDL/fe/lex.yy.cpp:
+        * TAO_IDL/util/utl_global.cpp:
+          Provide support for TAO DDS zero-copy read native types.
+
 Thu May 24 12:02:55 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Muxed_GIOP_Versions/run_test.pl:
