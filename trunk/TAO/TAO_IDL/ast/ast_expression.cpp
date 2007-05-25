@@ -2065,7 +2065,7 @@ AST_Expression::eval_bit_op (AST_Expression::EvalKind ek)
       retval->et = EV_ulonglong;
 
       switch (this->pd_ec)
-  {
+      {
         case EC_or:
           retval->u.ullval =
             this->pd_v1->ev ()->u.ullval | this->pd_v2->ev ()->u.ullval;
@@ -2088,7 +2088,7 @@ AST_Expression::eval_bit_op (AST_Expression::EvalKind ek)
           break;
         default:
           return 0;
-  }
+      }
     }
   else if (ek == EK_longlong)
     {
@@ -2097,30 +2097,30 @@ AST_Expression::eval_bit_op (AST_Expression::EvalKind ek)
       retval->et = EV_longlong;
 
       switch (this->pd_ec)
-        {
-          case EC_or:
-            retval->u.llval =
-              this->pd_v1->ev ()->u.llval | this->pd_v2->ev ()->u.llval;
-            break;
-          case EC_xor:
-            retval->u.llval =
-              this->pd_v1->ev ()->u.llval ^ this->pd_v2->ev ()->u.llval;
-            break;
-          case EC_and:
-            retval->u.llval =
-              this->pd_v1->ev ()->u.llval & this->pd_v2->ev ()->u.llval;
-            break;
-          case EC_left:
-            retval->u.llval =
-              this->pd_v1->ev ()->u.llval << this->pd_v2->ev ()->u.llval;
-            break;
-          case EC_right:
-            retval->u.llval =
-              this->pd_v1->ev ()->u.llval >> this->pd_v2->ev ()->u.llval;
-            break;
-          default:
-            return 0;
-        }
+      {
+        case EC_or:
+          retval->u.llval =
+            this->pd_v1->ev ()->u.llval | this->pd_v2->ev ()->u.llval;
+          break;
+        case EC_xor:
+          retval->u.llval =
+            this->pd_v1->ev ()->u.llval ^ this->pd_v2->ev ()->u.llval;
+          break;
+        case EC_and:
+          retval->u.llval =
+            this->pd_v1->ev ()->u.llval & this->pd_v2->ev ()->u.llval;
+          break;
+        case EC_left:
+          retval->u.llval =
+            this->pd_v1->ev ()->u.llval << this->pd_v2->ev ()->u.llval;
+          break;
+        case EC_right:
+          retval->u.llval =
+            this->pd_v1->ev ()->u.llval >> this->pd_v2->ev ()->u.llval;
+          break;
+        default:
+          return 0;
+      }
     }
   else
 #endif
@@ -2131,7 +2131,7 @@ AST_Expression::eval_bit_op (AST_Expression::EvalKind ek)
       retval->et = EV_ulong;
 
       switch (this->pd_ec)
-  {
+      {
         case EC_or:
           retval->u.ulval =
             this->pd_v1->ev ()->u.ulval | this->pd_v2->ev ()->u.ulval;
@@ -2154,7 +2154,7 @@ AST_Expression::eval_bit_op (AST_Expression::EvalKind ek)
           break;
         default:
           return 0;
-  }
+      }
     }
   else if (ek == EK_long)
     {
@@ -2163,7 +2163,7 @@ AST_Expression::eval_bit_op (AST_Expression::EvalKind ek)
       retval->et = EV_long;
 
       switch (this->pd_ec)
-  {
+      {
         case EC_or:
           retval->u.lval =
             this->pd_v1->ev ()->u.lval | this->pd_v2->ev ()->u.lval;
@@ -2186,7 +2186,7 @@ AST_Expression::eval_bit_op (AST_Expression::EvalKind ek)
           break;
         default:
           return 0;
-  }
+      } 
     }
   else if (ek == EK_bool)
     {
@@ -2214,6 +2214,42 @@ AST_Expression::eval_bit_op (AST_Expression::EvalKind ek)
           break;
         case EC_right:
           retval->u.bval =
+            this->pd_v1->ev ()->u.ulval >> this->pd_v2->ev ()->u.ulval;
+          break;
+        default:
+          return 0;
+      }
+    }
+  else if (ek == EK_octet)
+    {
+      this->pd_v1->set_ev (this->pd_v1->coerce (EV_octet));
+      this->pd_v2->set_ev (this->pd_v2->coerce (EV_octet));
+      retval->et = EV_octet;
+
+      switch (this->pd_ec)
+      {
+        case EC_or:
+          retval->u.oval =
+            this->pd_v1->ev ()->u.oval | this->pd_v2->ev ()->u.oval;
+          break;
+        case EC_xor:
+          retval->u.oval =
+            this->pd_v1->ev ()->u.oval ^ this->pd_v2->ev ()->u.oval;
+          break;
+        case EC_and:
+          retval->u.oval =
+            this->pd_v1->ev ()->u.oval & this->pd_v2->ev ()->u.oval;
+          break;
+        case EC_left:
+          // This is the only operation that can cause overflow even if
+          // both operands are in range, so we set the ExprType to a
+          // large type and catch the octet overflow, if any, later.
+          retval->et = EV_ulong;
+          retval->u.ulval =
+            this->pd_v1->ev ()->u.ulval << this->pd_v2->ev ()->u.ulval;
+          break;
+        case EC_right:
+          retval->u.ulval =
             this->pd_v1->ev ()->u.ulval >> this->pd_v2->ev ()->u.ulval;
           break;
         default:
@@ -2605,13 +2641,6 @@ AST_Expression::eval_internal (AST_Expression::EvalKind ek)
     {
       return eval_kind (this->pd_ev,
                         ek);
-    }
-
-  if (ek == EK_bool || ek == EK_octet)
-    {
-      // Operators may be used only with integer or floating point types.
-      idl_global->err ()->illegal_infix ();
-      return 0;
     }
 
   //  OK, must evaluate operator.
