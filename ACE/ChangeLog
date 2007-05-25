@@ -1,3 +1,10 @@
+Fri May 25 18:55:55 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_sys_mman.inl (shm_open, shm_unlink):
+          With VxWorks the filename passed to shm_open and shm_unlink may
+          only contain a starting /, no other slashes, if multiple slashes
+          do exist, replace them with _.
+
 Fri May 25 15:44:13 UTC 2007  Steve Huston  <shuston@riverace.com>
 
         * ace/config-aix-5.x.h:
