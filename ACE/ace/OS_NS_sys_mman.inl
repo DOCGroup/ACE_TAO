@@ -238,27 +238,59 @@ ACE_OS::shm_open (const ACE_TCHAR *filename,
                   LPSECURITY_ATTRIBUTES sa)
 {
   ACE_OS_TRACE ("ACE_OS::shm_open");
-# if defined (ACE_HAS_SHM_OPEN)
+#if defined (ACE_HAS_SHM_OPEN)
   ACE_UNUSED_ARG (sa);
+#if defined (ACE_VXWORKS) && (ACE_VXWORKS <= 0x640)
+  // With VxWorks the file should just start with / and no other
+  // slashes, so replace all other / by _
+  ACE_TCHAR buf [MAXPATHLEN + 1];
+  ACE_OS::sprintf (buf,
+                   ACE_LIB_TEXT ("%s"),
+                   filename);
+  for (size_t i = 1; i < MAXPATHLEN + 1; i++)
+    {
+      if (buf[i] == '/')
+        {
+          buf[i] = '_';
+        }
+    }
+  filename = buf;
+#endif
   ACE_OSCALL_RETURN (::shm_open (ACE_TEXT_ALWAYS_CHAR(filename), mode, perms), ACE_HANDLE, ACE_INVALID_HANDLE);
-# elif defined (ACE_OPENVMS)
+#elif defined (ACE_OPENVMS)
   ACE_OSCALL_RETURN (::open (filename, mode, perms, ACE_TEXT("shr=get,put,upd")), ACE_HANDLE, ACE_INVALID_HANDLE);
-# else  /* ! ACE_HAS_SHM_OPEN */
+#else  /* ! ACE_HAS_SHM_OPEN */
   // Just use ::open.
   return ACE_OS::open (filename, mode, perms, sa);
-# endif /* ACE_HAS_SHM_OPEN */
+#endif /* ACE_HAS_SHM_OPEN */
 }
 
 ACE_INLINE int
 ACE_OS::shm_unlink (const ACE_TCHAR *path)
 {
   ACE_OS_TRACE ("ACE_OS::shm_unlink");
-# if defined (ACE_HAS_SHM_OPEN)
+#if defined (ACE_HAS_SHM_OPEN)
+#if defined (ACE_VXWORKS) && (ACE_VXWORKS <= 0x640)
+  // With VxWorks the file should just start with / and no other
+  // slashes, so replace all other / by _
+  ACE_TCHAR buf [MAXPATHLEN + 1];
+  ACE_OS::sprintf (buf,
+                   ACE_LIB_TEXT ("%s"),
+                   filename);
+  for (size_t i = 1; i < MAXPATHLEN + 1; i++)
+    {
+      if (buf[i] == '/')
+        {
+          buf[i] = '_';
+        }
+    }
+  filename = buf;
+#endif
   ACE_OSCALL_RETURN (::shm_unlink (ACE_TEXT_ALWAYS_CHAR(path)), int, -1);
-# else  /* ! ACE_HAS_SHM_OPEN */
+#else  /* ! ACE_HAS_SHM_OPEN */
   // Just use ::unlink.
   return ACE_OS::unlink (path);
-# endif /* ACE_HAS_SHM_OPEN */
+#endif /* ACE_HAS_SHM_OPEN */
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL
