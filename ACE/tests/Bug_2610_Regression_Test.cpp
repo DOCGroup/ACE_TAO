@@ -15,14 +15,14 @@ ACE_RCSID (tests,
            Bug_2610_Regression_Test,
            "$Id$")
 
+#include "ace/INET_Addr.h"
+#include "ace/SOCK_Stream.h"
+#include "ace/SOCK_Acceptor.h"
+#include "ace/SOCK_Connector.h"
 #include "ace/Svc_Handler.h"
 #include "ace/Acceptor.h"
 #include "ace/Connector.h"
-#include "ace/SOCK_Stream.h"
-#include "ace/SOCK_Acceptor.h"
-#include "ace/INET_Addr.h"
 #include "ace/Trace.h"
-#include "ace/SOCK_Connector.h"
 #include "ace/Thread_Semaphore.h"
 
 #if defined (ACE_HAS_THREADS)
