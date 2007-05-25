@@ -19,6 +19,7 @@
 // ============================================================================
 
 #include "be_visitor_typecode/typecode_decl.h"
+#include "global_extern.h"
 
 ACE_RCSID (be_visitor_native,
            native_ch,
@@ -58,6 +59,41 @@ be_visitor_native_ch::visit_native (be_native *node)
     *os << "typedef void *Cookie;" << be_nl;
   else if (ACE_OS::strcmp (node_name, "CORBA::VoidData") == 0)
     *os << "typedef void *VoidData;" << be_nl;
+  else if (idl_global->dcps_support_zero_copy_read ()
+           && 0 == ACE_OS::strcmp (node->full_name (),"DDS::SampleInfoSeq"))
+    {
+      // DDS/DCPS zero-copy read sequence type support.
+      *os << be_nl << be_nl
+          << "typedef ::TAO::DCPS::ZeroCopyInfoSeq< "
+          << "SampleInfo" 
+          << ", DCPS_ZERO_COPY_SEQ_DEFAULT_SIZE> " 
+          << "SampleInfo" 
+          << "Seq;" << be_nl;
+    }
+  else if (idl_global->dcps_support_zero_copy_read ()
+      && ACE_OS::strlen (node_name) > 3
+      && 0 == ACE_OS::strcmp (node_name + ACE_OS::strlen (node_name)-3, "Seq") )
+    {
+      // DDS/DCPS zero-copy read sequence type support.
+
+      // strip  the "Seq" ending to get the sample's name
+      const int max_name_length = 2000;
+      if (ACE_OS::strlen (node_name)-3 >= max_name_length)
+        {
+          return -1;
+        }
+      char sample_name[max_name_length];
+      ACE_OS::strncpy (sample_name, node_name, ACE_OS::strlen (node_name)-3);
+      sample_name[ACE_OS::strlen (node_name)-3] = '\0';
+
+      *os << be_nl << be_nl
+          << "typedef ::TAO::DCPS::ZeroCopyDataSeq< "
+          << sample_name 
+          << ", DCPS_ZERO_COPY_SEQ_DEFAULT_SIZE> " 
+          << node->local_name () 
+          << ";" << be_nl;
+    }
+
 
   node->cli_hdr_gen (true);
   return 0;

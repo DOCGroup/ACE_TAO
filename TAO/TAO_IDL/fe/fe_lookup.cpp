@@ -4,7 +4,7 @@
 #include "ace/OS_NS_string.h"
 
 /* C++ code produced by gperf version 2.8 (ACE version) */
-/* Command-line: /build/isisbuilds/Core/ACE_wrappers/bin/gperf -M -J -c -C -D -E -T -f 0 -a -o -t -p -K keyword_ -L C++ -Z TAO_IDL_CPP_Keyword_Table -N lookup -k1,2,$ fe/keywords.dat  */
+/* Command-line: /tao_builds/harris_s/DOC_TAO_zero_copy/ACE/bin/gperf -M -J -c -C -D -E -T -f 0 -a -o -t -p -K keyword_ -L C++ -Z TAO_IDL_CPP_Keyword_Table -N lookup -k1,2,$ fe/keywords.dat  */
 unsigned int
 TAO_IDL_CPP_Keyword_Table::hash (const char *str, unsigned int len)
 {
@@ -56,7 +56,7 @@ TAO_IDL_CPP_Keyword_Table::hash (const char *str, unsigned int len)
   return len + asso_values[(int) str[1]] + asso_values[(int) str[0]] + asso_values[(int) str[len - 1]];
 }
 
-const TAO_IDL_CPP_Keyword_Entry *
+const struct TAO_IDL_CPP_Keyword_Entry *
 TAO_IDL_CPP_Keyword_Table::lookup (const char *str, unsigned int len)
 {
   enum
