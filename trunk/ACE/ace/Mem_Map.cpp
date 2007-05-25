@@ -79,10 +79,8 @@ ACE_Mem_Map::map_it (ACE_HANDLE handle,
   this->base_addr_ = addr;
   this->handle_ = handle;
 
-  ACE_OFF_T const result = ACE_OS::filesize (this->handle_);
-
-  // At this point we know <result> is not negative...
-  ACE_OFF_T const current_file_length = result;
+  // Get the current filesize
+  ACE_OFF_T const current_file_length = ACE_OS::filesize (this->handle_);
 
   // Flag to indicate if we need to extend the back store
   bool extend_backing_store = false;
