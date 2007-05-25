@@ -1,3 +1,8 @@
+Fri May 25 19:09:55 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Mem_Map.cpp:
+          Removed intermediate result variable, has no need anymore
+
 Fri May 25 18:55:55 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_sys_mman.inl (shm_open, shm_unlink):
