@@ -1643,6 +1643,23 @@ TAO_CodeGen::gen_stub_hdr_includes (void)
       this->client_header_
     );
 
+  // DDS/DCPS zero-copy read sequence type support.
+  if (idl_global->dcps_support_zero_copy_read ())
+    {
+      // include needed for sample info template instantiation.
+      this->gen_cond_file_include (
+          true, // for Infrastructure.idl as well as Foo types
+          "dds/DCPS/ZeroCopyInfoSeq_T.h",
+          this->client_header_
+        );
+      // include needed for type specific sample sequence template instantitation.
+      this->gen_cond_file_include (
+          idl_global->dcps_gen_zero_copy_read (),
+          "dds/DCPS/ZeroCopySeq_T.h",
+          this->client_header_
+        );
+    }
+
   // Non-abstract interface or keyword 'Object'.
   this->gen_cond_file_include (
       idl_global->non_local_iface_seen_

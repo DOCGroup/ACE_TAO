@@ -145,6 +145,8 @@ IDL_GlobalData::IDL_GlobalData (void)
     pass_orb_idl_ (false),
     using_ifr_backend_ (false),
     ignore_idl3_ (false),
+    dcps_support_zero_copy_read_ (false),
+    dcps_gen_zero_copy_read_ (false),
     recursion_start_ (0)  // Not used by all backends.
 {
   // Path for the perfect hash generator(gperf) program.
@@ -1385,6 +1387,30 @@ void
 IDL_GlobalData::ignore_idl3 (bool val)
 {
   this->ignore_idl3_ = val;
+}
+
+bool
+IDL_GlobalData::dcps_support_zero_copy_read (void) const
+{
+  return this->dcps_support_zero_copy_read_;
+}
+
+void
+IDL_GlobalData::dcps_support_zero_copy_read (bool val)
+{
+  this->dcps_support_zero_copy_read_ = val;
+}
+
+bool
+IDL_GlobalData::dcps_gen_zero_copy_read (void) const
+{
+  return this->dcps_gen_zero_copy_read_;
+}
+
+void
+IDL_GlobalData::dcps_gen_zero_copy_read (bool val)
+{
+  this->dcps_gen_zero_copy_read_ = val;
 }
 
 // Return 0 on success, -1 failure. The <errno> corresponding to the

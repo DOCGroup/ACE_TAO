@@ -401,7 +401,7 @@ public:
 
   virtual void             reset_flag_seen (void);
 
-  // = Methods supporting DDS DCPS data type/key definition (from #pragma)
+  // = Types & methods supporting DDS DCPS data type/key definition (from #pragma)
   typedef ACE_Unbounded_Queue<ACE_TString> DCPS_Key_List;
   struct DCPS_Data_Type_Info {
     UTL_ScopedName *name_;
@@ -416,11 +416,19 @@ public:
                                    ACE_Null_Mutex>        DCPS_Type_Info_Map ;
 
   // FE calls when #pragma DCPS_DATA_TYPE is processed
-  virtual void add_dcps_data_type(const char* id);
+  virtual void add_dcps_data_type (const char* id);
   // FE calls when #pragma DCPS_DATA_KEY is processed
-  virtual bool add_dcps_data_key(const char* id, const char* key);
+  virtual bool add_dcps_data_key (const char* id, const char* key);
   // returns null if not matching; otherwise pointer to the info
-  virtual DCPS_Data_Type_Info* is_dcps_type(UTL_ScopedName* target);
+  virtual DCPS_Data_Type_Info* is_dcps_type (UTL_ScopedName* target);
+  // FE calls when #pragma DCPS_SUPPORT_ZERO_COPY_READ is processed
+  virtual void dcps_support_zero_copy_read (bool value);
+  // BE calls to check the status of zero-copy read support
+  virtual bool dcps_support_zero_copy_read (void) const;
+  // FE calls when #pragma DCPS_GEN_ZERO_COPY_READ is processed
+  virtual void dcps_gen_zero_copy_read (bool value);
+  // BE calls to check the status of zero-copy read support
+  virtual bool dcps_gen_zero_copy_read (void) const;
 
   // = Access methods to deal with other IDL files included in the main
   //   IDL file. These IDL files are exactly the same strings that are
@@ -695,6 +703,14 @@ private:
   // we don't want to try to generate another event consumer.
   DCPS_Type_Info_Map dcps_type_info_map_ ;
   // Map of #pragma DCPS_DATA_TYPE and DCPS_DATA_KEY infomation.
+
+  bool dcps_support_zero_copy_read_; 
+  // Are we enabled to support DCPS zero-copy read.
+  // Need this flag to avoid generating wrong code for pre v0.12 DDS
+  // with new TAO_IDL compiler.
+
+  bool dcps_gen_zero_copy_read_;
+  // Are we generating code insupport of DCPS zero-copy read data sequences?
 
   ACE_Unbounded_Queue<AST_ValueType *>primary_keys_;
   // List of valuetypes used as a primary key.
