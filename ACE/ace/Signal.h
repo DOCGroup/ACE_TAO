@@ -75,10 +75,10 @@ public:
   /// Checks whether the signal specified by @a signo is in the set.
   int is_member (int signo) const;
 
-  /// Returns a pointer to the underlying <sigset_t>.
+  /// Returns a pointer to the underlying @c sigset_t.
   operator sigset_t *();
 
-  /// Returns a copy of the underlying <sigset_t>.
+  /// Returns a copy of the underlying @c sigset_t.
   sigset_t sigset (void) const;
 
   /// Dump the state of an object.

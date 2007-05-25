@@ -1,3 +1,10 @@
+Fri May 25 12:54:55 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Active_Map_Manager.h:
+        * ace/Priority_Reactor.h:
+        * ace/Signal.h:
+          Doxygen changes
+
 Thu May 24 13:37:55 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_vxworks6.2.GNU:
