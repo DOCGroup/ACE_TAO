@@ -1,3 +1,10 @@
+Sat May 26 03:09:27 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * tao/ORB_Core.cpp:
+
+          Addressed the "assignment within conditional expression" warning
+          on the WinXP_VC71_WarningLevel4 build. 
+
 Sat May 26 00:30:18 UTC 2007  Scott Harris  <harris_s@ociweb.com>
 
         * TAO_IDL/fe/fe_lookup.cpp:
@@ -6,14 +13,14 @@ Sat May 26 00:30:18 UTC 2007  Scott Harris  <harris_s@ociweb.com>
 Fri May 25 18:49:12 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/ast/ast_expression.cpp:
-        
+
           Fixed a bug in parsing of octet constants where the rhs
           has an infix operator. Thanks to Lother Werzinger
           <lothar at tradescape dot biz> for reporting the
           problem. This fix closes [BUGID:2944].
-          
+
         * tests/IDL_Test/constants.idl:
-        
+
           Added some of items in the example IDL submitted by
           Lothar to our test suite of problem IDL declarations.
 

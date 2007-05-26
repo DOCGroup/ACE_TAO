@@ -700,7 +700,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
           arg_shifter.consume_arg ();
         }
 #if defined (ACE_HAS_IPV6)
-      else if ((current_arg = arg_shifter.get_the_parameter
+      else if (0 != (current_arg = arg_shifter.get_the_parameter
                 (ACE_TEXT("-ORBPreferIPV6Interfaces"))))
         {
           int prefer_ipv6_interfaces = ACE_OS::atoi (current_arg);
@@ -711,7 +711,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
 
           arg_shifter.consume_arg ();
         }
-      else if ((current_arg = arg_shifter.get_the_parameter
+      else if (0 != (current_arg = arg_shifter.get_the_parameter
                 (ACE_TEXT("-ORBConnectIPV6Only"))))
         {
           int connect_ipv6_only = ACE_OS::atoi (current_arg);
@@ -796,7 +796,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
             ACE_OS::atoi (current_arg);
           arg_shifter.consume_arg ();
         }
-      else if ((current_arg = arg_shifter.get_the_parameter
+      else if (0 != (current_arg = arg_shifter.get_the_parameter
                 (ACE_TEXT("-ORBAMICollocation"))))
         {
           int ami_collocation = ACE_OS::atoi (current_arg);
@@ -1040,13 +1040,13 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
 
            arg_shifter.consume_arg ();
          }
-       else if ((current_arg = arg_shifter.get_the_parameter
+       else if (0 != (current_arg = arg_shifter.get_the_parameter
                  (ACE_LIB_TEXT("-ORBUseParallelConnects"))))
          {
            use_parallel_connects = ACE_OS::atoi (current_arg);
            arg_shifter.consume_arg ();
          }
-       else if ((current_arg = arg_shifter.get_the_parameter
+       else if (0 != (current_arg = arg_shifter.get_the_parameter
                  (ACE_LIB_TEXT("-ORBParallelConnectDelay"))))
          {
            this->orb_params ()->parallel_connect_delay
