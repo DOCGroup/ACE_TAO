@@ -276,7 +276,7 @@ ACE_OS::shm_unlink (const ACE_TCHAR *path)
   ACE_TCHAR buf [MAXPATHLEN + 1];
   ACE_OS::sprintf (buf,
                    ACE_LIB_TEXT ("%s"),
-                   filename);
+                   path);
   for (size_t i = 1; i < MAXPATHLEN + 1; i++)
     {
       if (buf[i] == '/')
@@ -284,7 +284,7 @@ ACE_OS::shm_unlink (const ACE_TCHAR *path)
           buf[i] = '_';
         }
     }
-  filename = buf;
+  path = buf;
 #endif
   ACE_OSCALL_RETURN (::shm_unlink (ACE_TEXT_ALWAYS_CHAR(path)), int, -1);
 #else  /* ! ACE_HAS_SHM_OPEN */
