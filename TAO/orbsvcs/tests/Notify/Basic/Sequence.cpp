@@ -137,31 +137,31 @@ Sequence::parse_args (int argc,
 
     while (arg_shifter.is_anything_left ())
     {
-      if ((current_arg = arg_shifter.get_the_parameter ("-events")))
+      if (0 != (current_arg = arg_shifter.get_the_parameter ("-events")))
         {
           this->event_count_ = ACE_OS::atoi (current_arg); // The number of events to send/receive.
 
           arg_shifter.consume_arg ();
         }
-      else if ((current_arg = arg_shifter.get_the_parameter ("-SupplierBatchSize")))
+      else if (0 != (current_arg = arg_shifter.get_the_parameter ("-SupplierBatchSize")))
         {
           this->supplier_batch_size_ = ACE_OS::atoi (current_arg); // Supplier batch size
 
           arg_shifter.consume_arg ();
         }
-      else if ((current_arg = arg_shifter.get_the_parameter ("-ConsumerBatchSize")))
+      else if (0 != (current_arg = arg_shifter.get_the_parameter ("-ConsumerBatchSize")))
         {
           this->consumer_batch_size_ = ACE_OS::atoi (current_arg); // Consumer batch size
 
           arg_shifter.consume_arg ();
         }
-      else if ((current_arg = arg_shifter.get_the_parameter ("-ConsumerDelay")))
+      else if (0 != (current_arg = arg_shifter.get_the_parameter ("-ConsumerDelay")))
         {
           this->consumer_delay_ = ACE_Time_Value (ACE_OS::atoi (current_arg), 0); // Consumer delay in secs.
 
           arg_shifter.consume_arg ();
         }
-      else if ((current_arg = arg_shifter.get_the_parameter ("-Pacing"))) // in seconds
+      else if (0 != (current_arg = arg_shifter.get_the_parameter ("-Pacing"))) // in seconds
         {
           this->pacing_ = (TimeBase::TimeT) ACE_OS::atoi (current_arg);
 

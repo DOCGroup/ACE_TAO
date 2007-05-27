@@ -111,7 +111,7 @@ Simple_Test::parse_args (int argc,
 
     while (arg_shifter.is_anything_left ())
     {
-      if ((current_arg = arg_shifter.get_the_parameter ("-events")))
+      if (0 != (current_arg = arg_shifter.get_the_parameter ("-events")))
         {
           this->event_count_ = ACE_OS::atoi (current_arg);
           // The number of events to send/receive.

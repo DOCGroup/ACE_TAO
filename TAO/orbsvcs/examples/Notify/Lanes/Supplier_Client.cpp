@@ -33,7 +33,7 @@ TAO_Notify_Lanes_Supplier_Client::parse_args (int argc, char *argv[])
 
   while (arg_shifter.is_anything_left ())
     {
-      if ((current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-Consumers")))) // Number of consumers that we need to send an event to.
+      if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-Consumers")))) // Number of consumers that we need to send an event to.
         {
           if (current_arg != 0)
             {
@@ -42,7 +42,7 @@ TAO_Notify_Lanes_Supplier_Client::parse_args (int argc, char *argv[])
 
           arg_shifter.consume_arg ();
         }
-      else if ((current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-IORoutput")))) // The file to output the supplier ior to.
+      else if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-IORoutput")))) // The file to output the supplier ior to.
         {
           if (current_arg != 0)
             {

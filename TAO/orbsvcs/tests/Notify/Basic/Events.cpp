@@ -135,7 +135,7 @@ Events::parse_args (int argc,
           arg_shifter.consume_arg ();
 
         }
-      else if ((current_arg = arg_shifter.get_the_parameter ("-events")))
+      else if (0 != (current_arg = arg_shifter.get_the_parameter ("-events")))
         {
           this->event_count_ = ACE_OS::atoi (current_arg);
           // The number of events to send/receive.

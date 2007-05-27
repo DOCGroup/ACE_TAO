@@ -34,19 +34,20 @@ TAO_Notify_ThreadPool_Consumer_Client::parse_args (int argc, char *argv[])
 
   while (arg_shifter.is_anything_left ())
     {
-      if ((current_arg = arg_shifter.get_the_parameter(ACE_TEXT("-ProxySupplier_ThreadPool")))) // Specify a threadpool.
+      if (0 != (current_arg = 
+                arg_shifter.get_the_parameter(ACE_TEXT("-ProxySupplier_ThreadPool")))) // Specify a threadpool.
         {
           this->proxy_supplier_thread_count_ = ACE_OS::atoi (arg_shifter.get_current ());
 
           arg_shifter.consume_arg ();
         }
-      else if ((current_arg = arg_shifter.get_the_parameter(ACE_TEXT("-MaxEvents")))) // Max Events
+      else if (0 != (current_arg = arg_shifter.get_the_parameter(ACE_TEXT("-MaxEvents")))) // Max Events
         {
           this->max_events_ = ACE_OS::atoi (arg_shifter.get_current ());
 
           arg_shifter.consume_arg ();
         }
-      else if ((current_arg = arg_shifter.get_the_parameter(ACE_TEXT("-Delay")))) // seconds wait in consumer per push.
+      else if (0 != (current_arg = arg_shifter.get_the_parameter(ACE_TEXT("-Delay")))) // seconds wait in consumer per push.
         {
           this->delay_ = ACE_OS::atoi (current_arg);
 

@@ -141,17 +141,17 @@ ConnectDisconnect::parse_args(int argc, char *argv[])
 
     while (arg_shifter.is_anything_left ())
     {
-      if ((current_arg = arg_shifter.get_the_parameter ("-count")))
+      if (0 != (current_arg = arg_shifter.get_the_parameter ("-count")))
         {
           this->count_ = ACE_OS::atoi (current_arg);
           arg_shifter.consume_arg ();
         }
-      else if ((current_arg = arg_shifter.get_the_parameter ("-consumers")))
+      else if (0 != (current_arg = arg_shifter.get_the_parameter ("-consumers")))
         {
           this->consumers_ = ACE_OS::atoi (current_arg);
           arg_shifter.consume_arg ();
         }
-      else if ((current_arg = arg_shifter.get_the_parameter ("-suppliers")))
+      else if (0 != (current_arg = arg_shifter.get_the_parameter ("-suppliers")))
         {
           this->suppliers_ = ACE_OS::atoi (current_arg);
           arg_shifter.consume_arg ();
