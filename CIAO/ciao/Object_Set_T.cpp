@@ -86,16 +86,15 @@ CIAO::Object_Set<T, T_var>::remove_all (void)
 template <class T, class T_var> void
 CIAO::Object_Set<T, T_var>::grow (void)
 {
-  this->capacity_ += this->step_;
-
-  T_var *newbuf = new T_var [this->capacity_];
+  CORBA::ULong new_capacity = this->capacity_ + this->step_;    
+  T_var *newbuf = new T_var [new_capacity];
+  this->capacity_ = new_capacity;
 
   CORBA::ULong i = 0;
   for (; i < this->size_; ++i)
     newbuf[i] = this->buffer_[i]; // this will hijack the object ownership
 
   delete[] this->buffer_;
-
   this->buffer_ = newbuf;
 }
 
