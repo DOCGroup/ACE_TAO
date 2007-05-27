@@ -202,7 +202,7 @@ Client_Test::handle_input (ACE_HANDLE)
       ACE_OS::fgets (input, sizeof input, stdin);
 
       // get the key
-      if ((temp_buf = ACE_OS::strtok (input, " ")))
+      if (0 != (temp_buf = ACE_OS::strtok (input, " ")))
         {
           ACE_OS::strcpy (buf1, temp_buf);
 

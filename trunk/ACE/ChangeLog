@@ -1,3 +1,10 @@
+Sun May 27 14:09:54 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * netsvcs/clients/Naming/Client/Client_Test.cpp:
+
+          Addressed the "assignment within conditional expression" warning
+          on the WinXP_VC71_WarningLevel4 build.
+
 Fri May 25 19:09:55 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Mem_Map.cpp:
