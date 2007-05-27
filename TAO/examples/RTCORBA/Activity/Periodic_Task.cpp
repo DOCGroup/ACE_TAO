@@ -31,32 +31,32 @@ Periodic_Task::init_task (ACE_Arg_Shifter& arg_shifter)
 
   while (arg_shifter.is_anything_left ())
     {
-      if ((current_arg = arg_shifter.get_the_parameter ("-JobName")))
+      if (0 != (current_arg = arg_shifter.get_the_parameter ("-JobName")))
         {
           name_ = current_arg;
           arg_shifter.consume_arg ();
         }
-      else if ((current_arg = arg_shifter.get_the_parameter ("-Priority")))
+      else if (0 != (current_arg = arg_shifter.get_the_parameter ("-Priority")))
         {
           task_priority_ = ACE_OS::atoi (current_arg);
           arg_shifter.consume_arg ();
         }
-      else if ((current_arg = arg_shifter.get_the_parameter ("-Period")))
+      else if (0 != (current_arg = arg_shifter.get_the_parameter ("-Period")))
         {
           period_ = ACE_OS::atoi (current_arg);
           arg_shifter.consume_arg ();
         }
-      else if ((current_arg = arg_shifter.get_the_parameter ("-ExecTime")))
+      else if (0 != (current_arg = arg_shifter.get_the_parameter ("-ExecTime")))
         {
           exec_time_ = ACE_OS::atoi (current_arg);
           arg_shifter.consume_arg ();
         }
-      else if ((current_arg = arg_shifter.get_the_parameter ("-Phase")))
+      else if (0 != (current_arg = arg_shifter.get_the_parameter ("-Phase")))
         {
           phase_ = ACE_OS::atoi (current_arg);
           arg_shifter.consume_arg ();
         }
-      else if ((current_arg = arg_shifter.get_the_parameter ("-Iter")))
+      else if (0 != (current_arg = arg_shifter.get_the_parameter ("-Iter")))
         {
           iter_ = ACE_OS::atoi (current_arg);
           arg_shifter.consume_arg ();
@@ -67,7 +67,7 @@ Periodic_Task::init_task (ACE_Arg_Shifter& arg_shifter)
           if (task_stats_->init () == -1)
             return -1;
         }
-      else if ((current_arg = arg_shifter.get_the_parameter ("-Load")))
+      else if (0 != (current_arg = arg_shifter.get_the_parameter ("-Load")))
         {
           load_ = ACE_OS::atoi (current_arg);
           arg_shifter.consume_arg ();
