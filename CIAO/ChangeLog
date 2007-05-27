@@ -1,7 +1,14 @@
+Sun May 27 16:20:10 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * ciao/Object_Set_T.cpp:
+
+          Enhanced exception safety of this class. Look at BUG ID 2725 for
+          details.
+
 Thu May 24 14:52:18 UTC 2007    <dengg@blade23.isislab.vanderbilt.edu>
 
         * DAnCE/Plan_Launcher/Plan_Launcher_Benchmark_Impl.cpp
-        
+
           Reverted a change which was accidentally checked in.
 
 Wed May 23 20:01:49 UTC 2007  Gan Deng  <gan.deng@vanderbilt.edu>
@@ -10,26 +17,26 @@ Wed May 23 20:01:49 UTC 2007  Gan Deng  <gan.deng@vanderbilt.edu>
         * DAnCE/Deployment/NodeApp_CB_Impl.h:
         * DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.cpp:
         * DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.h:
-        
+
           Removed ACE_HAS_THREADS guards.
 
 Wed May 23 18:36:35 UTC 2007  Gan Deng  <gan.deng@vanderbilt.edu>
 
         * MPC/config/ciao_deployment_stub.mpb:
-        
+
           Added "requires += threads" to disable single threaded build.
-        
+
         * DAnCE/NodeManager/Node_Manager.cpp
         * DAnCE/NodeManager/NodeManager_Impl.cpp
         * DAnCE/NodeManager/NodeManager_Impl.h
-        
+
           Removed ACE_HAS_THREADS guards.
 
 Wed May 23 02:21:30 UTC 2007  Gan Deng  <gan.deng@vanderbilt.edu>
 
         * DAnCE/Deployment/NodeApp_CB_Impl.h:
-        
-          Added back #if defined (ACE_HAS_THREADS) macro to 
+
+          Added back #if defined (ACE_HAS_THREADS) macro to
           fix error in single_threaded build.
 
 Mon May 21 15:46:23 UTC 2007  Gan Deng  <gan.deng@vanderbilt.edu>
@@ -43,8 +50,8 @@ Sat May 19 15:59:08 UTC 2007  Gan Deng  <gan.deng@vanderbilt.edu>
 
         * DAnCE/Deployment/NodeApp_CB_Impl.cpp:
         * DAnCE/Deployment/NodeApp_CB_Impl.h:
-        
-          Moved #include "ace/config-all.h" from .h file to 
+
+          Moved #include "ace/config-all.h" from .h file to
           the .cpp file since otherwise the #if defined (ACE_HAS_THREADS)
           cannot be evaluated properly.
 
@@ -65,21 +72,21 @@ Thu May 17 19:53:02 UTC 2007  Gan Deng  <gan.deng@vanderbilt.edu>
 
         * DAnCE/DomainApplicationManager/DomainApplicationManager_ActiveObject_Impl.cpp:
         * DAnCE/DomainApplicationManager/DomainApplicationManager_ActiveObject_Impl.h:
-        
+
           This implementation of DomainApplicationManager is a subclass
           of standard implementation of DomainaApplicationManager but
           uses an active object based approach to handle deployment,
-          which essentially spawns a number of threads wich each 
+          which essentially spawns a number of threads wich each
           correponds to one node.
-        
+
         * DAnCE/DomainApplicationManager/DomainApplicationManager.mpc:
 
           Added the above new classes into the project file
-        
+
         * DAnCE/ExecutionManager/Execution_Manager.cpp:
         * DAnCE/ExecutionManager/Execution_Manager_Impl.cpp:
         * DAnCE/ExecutionManager/Execution_Manager_Impl.h:
-        
+
           Modified to allow a new command line option "-b", which
           will make the DomainApplicationManager to take an active
           object based approach to handle deployment
@@ -90,46 +97,46 @@ Thu May 17 19:02:09 UTC 2007  Gan Deng  <gan.deng@vanderbilt.edu>
 
           Added #if defined (ACE_HAS_THREADS) to prevent build error
           of single_threaded build.
-         
+
 Wed May 16 17:51:57 UTC 2007  Gan Deng  <gan.deng@vanderbilt.edu>
 
         * DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.cpp:
-        
+
           Fixed unused variable warnings on GCC Linux build.
 
 Wed May 16 14:35:58 UTC 2007  Gan Deng  <gan.deng@vanderbilt.edu>
 
         * DAnCE/Deployment/NodeApp_CB_Impl.cpp:
         * DAnCE/Deployment/NodeApp_CB_Impl.h:
-        
+
           Implemented a NA component server callback wait strategy in
           NAM, which uses conditional variable to signal the NA call
           back so it can work with multi-threaded configuration, such
           as thread-per-connection mode. The original implementation
           uses the main thread to run the ORB event loop, which will
           not work for multi-threaded environment.
-        
+
         * DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.cpp:
         * DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.h:
         * DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.inl:
-        
+
           Implemented the single_threaded_wait_for_callback() and
           multi_threaded_wait_for_callback() methods which uses
-          perform_work() and conditional variable technique 
+          perform_work() and conditional variable technique
           respectively.
-        
+
         * DAnCE/NodeManager/Node_Manager.cpp:
         * DAnCE/NodeManager/NodeManager_Impl.cpp:
         * DAnCE/NodeManager/NodeManager_Impl.h:
-        
+
           Modified the Node_Manager command line option so the
           user can control whether to use single threaded or
           multi-threaded mode with command line option.
-        
+
         * examples/Hello/descriptors/flattened_deploymentplan.cdp:
         * examples/Hello/descriptors/flattened_deploymentplan_without_ns.cdp:
 
-          Modified the <realizes> tag so the interface of the assembly 
+          Modified the <realizes> tag so the interface of the assembly
           corresponds to some concrete ports of the components. Thanks
           Santos <sanntosn AT lycos.com> for reporting this issue.
 
@@ -140,7 +147,7 @@ Wed May  2 14:09:37 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Mon Apr 30 08:59:37 CDT 2007  Chad Elliott  <elliott_c@ociweb.com>
 
-	* CIAO version 0.5.8 released.
+        * CIAO version 0.5.8 released.
 
 Mon Apr 30 13:21:23 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
