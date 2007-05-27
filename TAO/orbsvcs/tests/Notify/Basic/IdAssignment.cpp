@@ -33,23 +33,23 @@ IdAssignment::parse_args (int argc,
 
     while (arg_shifter.is_anything_left ())
     {
-      if ((current_arg = arg_shifter.get_the_parameter ("-iter")))
+      if (0 != (current_arg = arg_shifter.get_the_parameter ("-iter")))
         {
           this->iter_ = ACE_OS::atoi (current_arg);
           // The number of times to repeat the test.
           arg_shifter.consume_arg ();
         }
-      if ((current_arg = arg_shifter.get_the_parameter ("-ec_count")))
+      if (0 != (current_arg = arg_shifter.get_the_parameter ("-ec_count")))
         {
           this->ec_count_ = ACE_OS::atoi (current_arg);
           arg_shifter.consume_arg ();
         }
-      if ((current_arg = arg_shifter.get_the_parameter ("-ca_count")))
+      if (0 != (current_arg = arg_shifter.get_the_parameter ("-ca_count")))
         {
           this->consumer_admin_count_ = ACE_OS::atoi (current_arg);
           arg_shifter.consume_arg ();
         }
-      if ((current_arg = arg_shifter.get_the_parameter ("-sa_count")))
+      if (0 != (current_arg = arg_shifter.get_the_parameter ("-sa_count")))
         {
           this->supplier_admin_count_ = ACE_OS::atoi (current_arg);
           arg_shifter.consume_arg ();

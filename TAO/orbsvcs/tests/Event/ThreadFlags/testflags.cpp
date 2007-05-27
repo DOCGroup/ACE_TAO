@@ -164,7 +164,7 @@ main (int argc, char* argv[])
   if (argc > 1)
     {
       char* which_test;
-      while ((which_test = *++argv))
+      while (0 != (which_test = *++argv))
         {
           size_t testnum = ACE_OS_String::strtol (which_test, 0, 0);
           if (testnum < numtests)

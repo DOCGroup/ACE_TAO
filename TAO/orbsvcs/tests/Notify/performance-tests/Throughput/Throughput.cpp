@@ -313,37 +313,37 @@ Notify_Throughput::parse_args(int argc, char *argv[])
           this->collocated_ec_ = 1;
           arg_shifter.consume_arg ();
         }
-      else if ((current_arg = arg_shifter.get_the_parameter ("-consumers")))
+      else if (0 != (current_arg = arg_shifter.get_the_parameter ("-consumers")))
         {
           this->consumer_count_ = ACE_OS::atoi (current_arg);
           // The number of events to send/receive.
           arg_shifter.consume_arg ();
         }
-      else if ((current_arg = arg_shifter.get_the_parameter ("-suppliers")))
+      else if (0 != (current_arg = arg_shifter.get_the_parameter ("-suppliers")))
         {
           this->supplier_count_ = ACE_OS::atoi (current_arg);
           // The number of events to send/receive.
           arg_shifter.consume_arg ();
         }
-      else if ((current_arg = arg_shifter.get_the_parameter ("-burst_size")))
+      else if (0 != (current_arg = arg_shifter.get_the_parameter ("-burst_size")))
         {
           this->burst_size_ = ACE_OS::atoi (current_arg);
           // The number of events to send/receive.
           arg_shifter.consume_arg ();
         }
-      else if ((current_arg = arg_shifter.get_the_parameter ("-burst_count")))
+      else if (0 != (current_arg = arg_shifter.get_the_parameter ("-burst_count")))
         {
           this->burst_count_ = ACE_OS::atoi (current_arg);
           //
           arg_shifter.consume_arg ();
         }
-      else if ((current_arg = arg_shifter.get_the_parameter ("-burst_pause")))
+      else if (0 != (current_arg = arg_shifter.get_the_parameter ("-burst_pause")))
         {
           this->burst_pause_ = ACE_OS::atoi (current_arg);
           //
           arg_shifter.consume_arg ();
         }
-      else if ((current_arg = arg_shifter.get_the_parameter ("-payload")))
+      else if (0 != (current_arg = arg_shifter.get_the_parameter ("-payload")))
         {
           this->payload_size_ = ACE_OS::atoi (current_arg);
           ACE_NEW_RETURN (this->payload_,
@@ -352,13 +352,13 @@ Notify_Throughput::parse_args(int argc, char *argv[])
           //
           arg_shifter.consume_arg ();
         }
-      else if ((current_arg = arg_shifter.get_the_parameter ("-EC")))
+      else if (0 != (current_arg = arg_shifter.get_the_parameter ("-EC")))
         {
           this->ec_name_ = current_arg;
           //
           arg_shifter.consume_arg ();
         }
-      else if ((current_arg =
+      else if (0 != (current_arg =
                 arg_shifter.get_the_parameter ("-ExpectedCount")))
         {
           this->perconsumer_count_ = ACE_OS::atoi (current_arg);

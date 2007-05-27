@@ -30,7 +30,7 @@ DllORB::init (int argc, ACE_TCHAR *argv[])
       const ACE_TCHAR *currentArg = 0;
       while (as.is_anything_left ())
         {
-          if ((currentArg = as.get_the_parameter (ACE_TEXT ("-NumThreads"))))
+          if (0 != (currentArg = as.get_the_parameter (ACE_TEXT ("-NumThreads"))))
             {
               int num = ACE_OS::atoi (currentArg);
               if (num >= 1)
