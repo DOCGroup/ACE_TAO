@@ -65,17 +65,17 @@ Policy_Tester::init (int argc,
     {
       const char *arg = 0;
       // IOR File Name Option.
-      if ((arg = arg_shifter.get_the_parameter ("-POAConfigFile")))
+      if (0 != (arg = arg_shifter.get_the_parameter ("-POAConfigFile")))
         {
           this->rt_poa_properties_ =
             RT_Properties::read_from (arg);
         }
-      else if ((arg = arg_shifter.get_the_parameter ("-ObjectConfigFile")))
+      else if (0 != (arg = arg_shifter.get_the_parameter ("-ObjectConfigFile")))
         {
           this->rt_object_properties_ =
             RT_Properties::read_from (arg);
         }
-      else if ((arg = arg_shifter.get_the_parameter ("-BaseObjectIOR")))
+      else if (0 != (arg = arg_shifter.get_the_parameter ("-BaseObjectIOR")))
         {
           if (this->rt_poa_properties_ == 0)
             {
@@ -86,7 +86,7 @@ Policy_Tester::init (int argc,
             }
           this->rt_poa_properties_->ior_source (arg);
         }
-      else if ((arg = arg_shifter.get_the_parameter ("-OverriddenIOR")))
+      else if (0 != (arg = arg_shifter.get_the_parameter ("-OverriddenIOR")))
         {
           if (this->rt_object_properties_ == 0)
             {

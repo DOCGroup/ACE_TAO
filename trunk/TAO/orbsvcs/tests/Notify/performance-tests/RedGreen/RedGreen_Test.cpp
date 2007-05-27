@@ -35,7 +35,7 @@ RedGreen_Test::parse_args (int argc,
 
     while (arg_shifter.is_anything_left ())
     {
-      if ((current_arg = arg_shifter.get_the_parameter ("-burst_size")))
+      if (0 != (current_arg = arg_shifter.get_the_parameter ("-burst_size")))
         {
           this->burst_size_ = ACE_OS::atoi (current_arg);
           ACE_DEBUG ((LM_DEBUG,

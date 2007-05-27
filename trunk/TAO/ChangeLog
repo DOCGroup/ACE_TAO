@@ -1,3 +1,29 @@
+Sun May 27 15:35:46 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * orbsvcs/examples/Notify/Lanes/Consumer_Client.cpp:
+        * orbsvcs/examples/Notify/Lanes/Supplier_Client.cpp:
+        * orbsvcs/examples/Notify/ThreadPool/Consumer_Client.cpp:
+        * orbsvcs/examples/Notify/ThreadPool/Supplier_Client.cpp:
+        * orbsvcs/tests/Event/ThreadFlags/testflags.cpp:
+        * orbsvcs/tests/Notify/Basic/AdminProperties.cpp:
+        * orbsvcs/tests/Notify/Basic/ConnectDisconnect.cpp:
+        * orbsvcs/tests/Notify/Basic/Events.cpp:
+        * orbsvcs/tests/Notify/Basic/IdAssignment.cpp:
+        * orbsvcs/tests/Notify/Basic/LifeCycle.cpp:
+        * orbsvcs/tests/Notify/Basic/Sequence.cpp:
+        * orbsvcs/tests/Notify/Basic/Simple.cpp:
+        * orbsvcs/tests/Notify/RT_lib/RT_POA_Command.cpp:
+        * orbsvcs/tests/Notify/performance-tests/RedGreen/RedGreen_Test.cpp:
+        * orbsvcs/tests/Notify/performance-tests/Throughput/Throughput.cpp:
+        * tests/Bug_2234_Regression/client.cpp:
+        * tests/Bug_2677_Regression/DllORB.cpp:
+        * tests/Exposed_Policies/Policy_Tester.cpp:
+        * tests/Exposed_Policies/Policy_Verifier.cpp:
+        * tests/ORB_Local_Config/Bug_2612/DllOrb.cpp:
+
+          Addressed the "assignment within conditional expression" warning
+          on the WinXP_VC71_WarningLevel4 build.
+
 Sun May 27 14:03:18 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * examples/RTCORBA/Activity/Activity.cpp:
