@@ -1,9 +1,21 @@
+Sun May 27 14:03:18 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * examples/RTCORBA/Activity/Activity.cpp:
+        * examples/RTCORBA/Activity/Builder.cpp:
+        * examples/RTCORBA/Activity/POA_Holder.cpp:
+        * examples/RTCORBA/Activity/Periodic_Task.cpp:
+        * examples/RTScheduling/DT_Creator.cpp:
+        * examples/RTScheduling/POA_Holder.cpp:
+
+          Addressed the "assignment within conditional expression" warning
+          on the WinXP_VC71_WarningLevel4 build.
+
 Sat May 26 03:09:27 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * tao/ORB_Core.cpp:
 
           Addressed the "assignment within conditional expression" warning
-          on the WinXP_VC71_WarningLevel4 build. 
+          on the WinXP_VC71_WarningLevel4 build.
 
 Sat May 26 00:30:18 UTC 2007  Scott Harris  <harris_s@ociweb.com>
 
