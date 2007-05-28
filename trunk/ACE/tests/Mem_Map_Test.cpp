@@ -105,8 +105,8 @@ create_test_file (ACE_TCHAR *filename, int line_length, int num_lines)
         {
           delete [] mybuf;
           ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT ("write to file failed: %p (%d)\n"),
-                             errno,
+                             ACE_TEXT ("%p (%d)\n"),
+                             ACE_TEXT ("Write to file failed:"),
                              errno),
                             -1);
         }
