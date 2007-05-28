@@ -1,3 +1,15 @@
+Mon May 28 19:35:55 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+         * ace/OS_NS_unistd.cpp:
+           Const and layout change
+
+        * ace/OS_NS_unistd.h:
+          Layout change
+
+        * ace/map_errno.{cpp,inl}:
+          The full switch is only required for windows and moved to an
+          inline method, on linux it is just a return
+
 Mon May 28 18:50:55 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Mem_Map_Test.cpp:

@@ -2928,20 +2928,6 @@ ACE::set_handle_limit (int new_limit,
   return 0;
 }
 
-int
-ACE::map_errno (int error)
-{
-  switch (error)
-    {
-#if defined (ACE_WIN32)
-    case WSAEWOULDBLOCK:
-      return EAGAIN; // Same as UNIX errno EWOULDBLOCK.
-#endif /* ACE_WIN32 */
-    }
-
-  return error;
-}
-
 // Euclid's greatest common divisor algorithm.
 u_long
 ACE::gcd (u_long x, u_long y)
