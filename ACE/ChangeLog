@@ -1,7 +1,18 @@
+Mon May 28 19:42:14 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * netsvcs/lib/Server_Logging_Handler_T.cpp:
+
+          Replaced tabs with spaces.
+
+        * tests/Upgradable_RW_Test.cpp:
+
+          Addressed the "assignment within conditional expression" warning
+          on the WinXP_VC71_WarningLevel4 build.
+
 Mon May 28 19:35:55 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-         * ace/OS_NS_unistd.cpp:
-           Const and layout change
+        * ace/OS_NS_unistd.cpp:
+          Const and layout change
 
         * ace/OS_NS_unistd.h:
           Layout change
