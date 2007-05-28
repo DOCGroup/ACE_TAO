@@ -186,7 +186,7 @@ TAO_Notify_Tests_Driver::parse_args (int argc, char *argv[])
 
   while (arg_shifter.is_anything_left ())
     {
-      if ((current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-Timeout")))) // -Timeout timeout_period_S
+      if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-Timeout")))) // -Timeout timeout_period_S
         {
           if (current_arg != 0)
             {
@@ -195,7 +195,7 @@ TAO_Notify_Tests_Driver::parse_args (int argc, char *argv[])
 
           arg_shifter.consume_arg ();
         }
-      else if ((current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-IORoutput")))) // -IORoutput file_name
+      else if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-IORoutput")))) // -IORoutput file_name
         {
           if (this->activation_manager_->ior_output_file (current_arg) == -1)
             ACE_ERROR_RETURN ((LM_ERROR,
@@ -204,7 +204,7 @@ TAO_Notify_Tests_Driver::parse_args (int argc, char *argv[])
 
           arg_shifter.consume_arg ();
         }
-      else if ((current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-IORinput")))) // -IORinput file_name
+      else if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-IORinput")))) // -IORinput file_name
         {
           if (this->activation_manager_->ior_input_file (current_arg) == -1)
             ACE_ERROR_RETURN ((LM_ERROR,
