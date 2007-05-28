@@ -1,3 +1,12 @@
+Mon May 28 12:29:13 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * orbsvcs/tests/Notify/lib/Driver.cpp:
+        * orbsvcs/tests/Notify/lib/Periodic_Consumer.cpp:
+        * orbsvcs/tests/Notify/lib/Periodic_Supplier.cpp:
+
+          Addressed the "assignment within conditional expression" warning
+          on the WinXP_VC71_WarningLevel4 build.
+
 Mon May 28 05:06:55 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/RTCORBA/Explicit_Binding/run_test.pl:
