@@ -141,8 +141,7 @@ namespace ACE_OS
   int fsync (ACE_HANDLE handle);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  int ftruncate (ACE_HANDLE,
-                 ACE_OFF_T);
+  int ftruncate (ACE_HANDLE handle, ACE_OFF_T offset);
 
   ACE_NAMESPACE_INLINE_FUNCTION
   char *getcwd (char *, size_t);

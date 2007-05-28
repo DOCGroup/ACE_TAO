@@ -660,9 +660,9 @@ ACE_OS::pwrite (ACE_HANDLE handle,
   if (altered_position == -1)
     return -1;
 
-  ssize_t bytes_written = ACE_OS::write (handle,
-                                         buf,
-                                         nbytes);
+  ssize_t const bytes_written = ACE_OS::write (handle,
+                                               buf,
+                                               nbytes);
   if (bytes_written == -1)
     return -1;
 
@@ -827,7 +827,7 @@ ACE_OS::write_n (ACE_HANDLE handle,
        bytes_transferred += n)
     {
       n = ACE_OS::write (handle,
- (char *) buf + bytes_transferred,
+                         (char *) buf + bytes_transferred,
                          len - bytes_transferred);
 
       if (n == -1 || n == 0)
