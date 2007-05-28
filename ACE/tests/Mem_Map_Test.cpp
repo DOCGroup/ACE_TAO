@@ -85,7 +85,8 @@ create_test_file (ACE_TCHAR *filename, int line_length, int num_lines)
     {
       delete [] mybuf;
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("Open failed\n")),
+                         ACE_TEXT ("Open failed for %s\n"),
+                         filename),
                         -1);
     }
 
@@ -105,9 +106,10 @@ create_test_file (ACE_TCHAR *filename, int line_length, int num_lines)
         {
           delete [] mybuf;
           ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT ("%p (%d)\n"),
+                             ACE_TEXT ("%p (%d) <%s>\n"),
                              ACE_TEXT ("Write to file failed:"),
-                             errno),
+                             errno,
+                             filename),
                             -1);
         }
 
@@ -115,7 +117,8 @@ create_test_file (ACE_TCHAR *filename, int line_length, int num_lines)
         {
           delete [] mybuf;
           ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT ("write to file failed\n")),
+                             ACE_TEXT ("write to file %s failed\n"),
+                             filename),
                             -1);
         }
     }
