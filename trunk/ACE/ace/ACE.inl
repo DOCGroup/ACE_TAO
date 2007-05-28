@@ -321,6 +321,20 @@ ACE::nibble2hex (u_int n)
   return hex_chars[n & 0x0f];
 }
 
+ACE_INLINE int
+ACE::map_errno (int error)
+{
+#if defined (ACE_WIN32)
+  switch (error)
+    {
+    case WSAEWOULDBLOCK:
+      return EAGAIN; // Same as UNIX errno EWOULDBLOCK.
+    }
+#endif /* ACE_WIN32 */
+
+  return error;
+}
+
 ACE_INLINE u_char
 ACE::hex2byte (ACE_TCHAR c)
 {
