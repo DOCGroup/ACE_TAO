@@ -6,7 +6,7 @@ Mon May 28 19:35:55 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
         * ace/OS_NS_unistd.h:
           Layout change
 
-        * ace/map_errno.{cpp,inl}:
+        * ace/ACE.{cpp,inl} (map_errno):
           The full switch is only required for windows and moved to an
           inline method, on linux it is just a return
 
