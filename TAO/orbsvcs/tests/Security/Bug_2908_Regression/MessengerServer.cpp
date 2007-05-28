@@ -44,7 +44,7 @@ main(int argc, char *argv[])
     orb->run();
     orb->destroy();
   }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
   {
     ACE_ERROR((LM_ERROR, "Caught a CORBA exception: "));
     return 1;
