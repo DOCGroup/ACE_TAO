@@ -9,14 +9,20 @@ use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::Run_Test;
 
 $status = 0;
-$iorfile = PerlACE::LocalFile ("test.ior");
+$iorbase = "test.ior";
+$iorfile = PerlACE::LocalFile ("$iorbase");
 
 unlink $iorfile;
 
 print STDERR "\n********** RTCORBA Explicit Binding Unit Test\n\n";
 
 
+if (PerlACE::is_vxworks_test()) {
+$SV = new PerlACE::ProcessVX ("server", "-o $iorbase -ORBendpoint iiop:// -ORBendpoint shmiop://");
+}
+else {
 $SV = new PerlACE::Process ("server", "-o $iorfile -ORBendpoint iiop:// -ORBendpoint shmiop://");
+}
 $CL = new PerlACE::Process ("client", "-o file://$iorfile -ORBdebuglevel 1");
 
 $SV->Spawn ();
