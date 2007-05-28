@@ -88,14 +88,14 @@ main (int argc, char *argv[])
               do
                 {
                   server->send_line ("some data");
-
                 }
               while (i == 0);
             }
-          catch (const CORBA::COMM_FAILURE& ex)
+          catch (const CORBA::COMM_FAILURE&)
             {
               // If this happens second time then we are done.
-              if (i != 0) throw;
+              if (i != 0) 
+                throw;
 
               // Waiting for server to come back
               ACE_DEBUG ((LM_DEBUG,

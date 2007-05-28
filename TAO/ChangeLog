@@ -1,3 +1,11 @@
+Mon May 28 01:01:09 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * orbsvcs/tests/Security/Bug_2908_Regression/MessengerServer.cpp:
+        * orbsvcs/tests/Security/Crash_Test/client.cpp:
+
+          Addressed "unreferenced local variable" warning on the
+          WinXP_VC8_Versioned_Namespace build.
+
 Sun May 27 15:35:46 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * orbsvcs/examples/Notify/Lanes/Consumer_Client.cpp:
