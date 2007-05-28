@@ -79,8 +79,8 @@ ACE_Server_Logging_Handler_T<ACE_PEER_STREAM_2, COUNTER, ACE_SYNCH_USE, LMR>::ha
   ACE_CDR::ULong length;
 
   ssize_t count = ACE::recv_n (this->peer ().get_handle (), 
-			       header->wr_ptr (),
-			       8);
+                               header->wr_ptr (),
+                               8);
   switch (count)
     {
       // Handle shutdown and error cases.
@@ -143,14 +143,13 @@ ACE_Server_Logging_Handler_T<ACE_PEER_STREAM_2, COUNTER, ACE_SYNCH_USE, LMR>::ha
   log_record.length (length);
 
   // Send the log record to the log message receiver for processing.
-  if (ACE_BIT_ENABLED (ACE_Log_Msg::instance ()->flags (),
-		       ACE_Log_Msg::STDERR))
-    receiver ().log_record (this->host_name (),
-			    log_record);
+  if (ACE_BIT_ENABLED (ACE_Log_Msg::instance ()->flags (), ACE_Log_Msg::STDERR))
+    receiver ().log_record (this->host_name (), log_record);
+
   ostream *orig_ostream = ACE_Log_Msg::instance ()->msg_ostream ();
   receiver ().log_output (this->host_name (),
-			  log_record,
-			  orig_ostream);
+                          log_record,
+                          orig_ostream);
   return 0;
 
 #if 0
@@ -236,7 +235,7 @@ ACE_Server_Logging_Handler_T<ACE_PEER_STREAM_2, COUNTER, ACE_SYNCH_USE, LMR>::ha
 #endif 
 
   ACE_NOTREACHED (return -1;)
-    }
+}
 
 // Hook called by Server_Logging_Acceptor when connection is
 // established.
