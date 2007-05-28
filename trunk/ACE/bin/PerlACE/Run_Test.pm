@@ -174,6 +174,11 @@ sub is_vxworks_test()
     return ($PerlACE::VxWorks_Test || $PerlACE::VxWorks_RTP_Test);
 }
 
+sub is_vxworks_rtp_test()
+{
+    return ($PerlACE::VxWorks_RTP_Test);
+}
+
 sub add_path {
   my $name   = shift;
   my $value  = shift;

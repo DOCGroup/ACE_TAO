@@ -1,3 +1,11 @@
+Mon May 28 18:06:55 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/PerlACE/Run_Test.pm:
+          Added is_vxworks_rtp_test method
+
+        * tests/Mem_Map_Test.cpp:
+          VxWorks only allows to use mmap with a special shared memory file
+
 Sun May 27 14:09:54 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * netsvcs/clients/Naming/Client/Client_Test.cpp:
