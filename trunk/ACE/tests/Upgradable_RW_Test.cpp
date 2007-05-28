@@ -455,7 +455,7 @@ run_main (int argc, ACE_TCHAR *argv[])
        i < n_entries;
        i++)
     {
-      if ((element_ptr = linked_list_ptr->delete_head ()))
+      if (0 != (element_ptr = linked_list_ptr->delete_head ()))
         {
           cString_ptr = element_ptr->value ();
           delete cString_ptr;
