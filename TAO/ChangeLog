@@ -1,3 +1,10 @@
+Mon May 28 05:06:55 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/RTCORBA/Explicit_Binding/run_test.pl:
+        * tests/RTCORBA/Server_Protocol/run_test.pl:
+        * tests/Two_Objects/run_test.pl:
+          Updated for cross host testing
+
 Mon May 28 01:01:09 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * orbsvcs/tests/Security/Bug_2908_Regression/MessengerServer.cpp:

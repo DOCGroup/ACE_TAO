@@ -63,9 +63,13 @@ print STDERR "********** RTCORBA Server Protocol Policy Unit Test\n";
 
 $test_number = 0;
 
-$SV = new PerlACE::Process ("server");
+if (PerlACE::is_vxworks_test()) {
+    $SV = new PerlACE::ProcessVX ("server");
+}
+else {
+    $SV = new PerlACE::Process ("server");
+}
 $CL = new PerlACE::Process ("client");
-
 
 foreach $o (@server_opts) {
     print STDERR "\n\n----------------------------------\n";
