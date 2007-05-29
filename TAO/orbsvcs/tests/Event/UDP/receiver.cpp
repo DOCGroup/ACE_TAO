@@ -139,12 +139,8 @@ main (int argc, char* argv[])
       ACE_DEBUG ((LM_DEBUG,
                   "udp mcast address is: %s\n",
                   udp_mcast_address));
-      RtecUDPAdmin::UDP_Addr addr;
-      addr.ipaddr = udp_addr.get_ip_address ();
-      addr.port   = udp_addr.get_port_number ();
-
       // Now we create and activate the servant
-      AddrServer as_impl (addr);
+      AddrServer as_impl (udp_addr);
       RtecUDPAdmin::AddrServer_var address_server =
         as_impl._this ();
 
@@ -333,4 +329,3 @@ int parse_args (int argc, char *argv[])
   // Indicates sucessful parsing of the command line
   return 0;
 }
-

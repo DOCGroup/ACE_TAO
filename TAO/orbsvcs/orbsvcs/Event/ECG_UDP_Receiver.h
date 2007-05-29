@@ -164,9 +164,14 @@ public:
 
   /// Accessor.
   /// Call the RtecUDPAdmin::AddrServer::get_addr.  Throws exception
-  /// if nill Address Server was specified in init ().
+  /// if nil Address Server was specified in init ().
   void get_addr (const RtecEventComm::EventHeader& header,
                  RtecUDPAdmin::UDP_Addr_out addr);
+
+  /// Call the RtecUDPAdmin::AddrServer::get_address.  Throws exception
+  /// if nil Address Server was specified in init ().
+  void get_address (const RtecEventComm::EventHeader& header,
+                    RtecUDPAdmin::UDP_Address_out addr);
 
   /// The PushSupplier idl method.
   /// Invokes shutdown (), which may result in the object being deleted, if

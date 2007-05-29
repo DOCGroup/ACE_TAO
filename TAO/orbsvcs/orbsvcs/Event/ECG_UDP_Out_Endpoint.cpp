@@ -3,6 +3,7 @@
 #include "orbsvcs/Event/ECG_UDP_Out_Endpoint.h"
 #include "ace/INET_Addr.h"
 #include "ace/Sock_Connect.h"
+#include "ace/OS_NS_string.h"
 
 #if !defined(__ACE_INLINE__)
 #include "orbsvcs/Event/ECG_UDP_Out_Endpoint.inl"
@@ -46,7 +47,10 @@ TAO_ECG_UDP_Out_Endpoint::is_loopback (const ACE_INET_Addr& from)
        i != this->ifs_ + this->if_count_;
        ++i)
     {
-      if ((*i).get_ip_address () == from.get_ip_address ())
+      if (i->get_addr_size() == from.get_addr_size() &&
+          ACE_OS::memcmp( i->get_addr(),
+                          from.get_addr(),
+                          from.get_addr_size()))
         return true;
     }
   return false;

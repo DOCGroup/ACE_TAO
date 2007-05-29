@@ -45,6 +45,8 @@ public:
   // = The RtecUDPAdmin::AddrServer methods
   virtual void get_addr (const RtecEventComm::EventHeader& header,
                          RtecUDPAdmin::UDP_Addr_out addr);
+  virtual void get_address (const RtecEventComm::EventHeader& header,
+                            RtecUDPAdmin::UDP_Address_out addr6);
 
 protected:
 

@@ -156,11 +156,38 @@ TAO_ECG_Mcast_EH::compute_required_subscriptions (
         {
           continue;
         }
-      RtecUDPAdmin::UDP_Addr addr;
 
-      this->receiver_->get_addr (header, addr);
+      ACE_INET_Addr inet_addr;
+      try
+        {
+          // Grab the right mcast group for this event...
+          RtecUDPAdmin::UDP_Address_var udp_addr;
 
-      ACE_INET_Addr inet_addr (addr.port, addr.ipaddr);
+          this->receiver_->get_address (header, udp_addr.out());
+          switch (udp_addr->_d())
+            {
+            case RtecUDPAdmin::INET:
+              inet_addr.set(udp_addr->v4_addr().port,
+                            udp_addr->v4_addr().ipaddr);
+              break;
+            case RtecUDPAdmin::INET6:
+#if defined (ACE_HAS_IPV6)
+              inet_addr.set_type(PF_INET6);
+#endif
+              inet_addr.set_address(udp_addr->v6_addr().ipaddr,16,0);
+              inet_addr.set_port_number(udp_addr->v6_addr().port);
+              break;
+            }
+        }
+      catch (const ::CORBA::BAD_OPERATION &)
+        {
+          // server only supports IPv4
+           // Grab the right mcast group for this event...
+          RtecUDPAdmin::UDP_Addr udp_addr;
+          this->receiver_->get_addr (header, udp_addr);
+          inet_addr.set (udp_addr.port, udp_addr.ipaddr);
+        }
+
       // Ignore errors, if the element is in the set we simply ignore
       // the problem...
       (void) multicast_addresses.insert (inet_addr);

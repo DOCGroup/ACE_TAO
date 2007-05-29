@@ -199,12 +199,36 @@ TAO_ECG_UDP_Sender::push (const RtecEventComm::EventSet &events)
           || !(cdr << e.data))
         throw CORBA::MARSHAL ();
 
-      // Grab the right mcast group for this event...
-      RtecUDPAdmin::UDP_Addr udp_addr;
-      this->addr_server_->get_addr (header, udp_addr);
+      ACE_INET_Addr inet_addr;
+      try
+        {
+          // Grab the right mcast group for this event...
+          RtecUDPAdmin::UDP_Address_var udp_addr;
 
-      ACE_INET_Addr inet_addr (udp_addr.port,
-                               udp_addr.ipaddr);
+          this->addr_server_->get_address (header, udp_addr.out());
+          switch (udp_addr->_d())
+            {
+            case RtecUDPAdmin::INET:
+              inet_addr.set(udp_addr->v4_addr().port,
+                            udp_addr->v4_addr().ipaddr);
+              break;
+            case RtecUDPAdmin::INET6:
+#if defined (ACE_HAS_IPV6)
+              inet_addr.set_type(PF_INET6);
+#endif
+              inet_addr.set_address(udp_addr->v6_addr().ipaddr,16,0);
+              inet_addr.set_port_number(udp_addr->v6_addr().port);
+              break;
+            }
+        }
+      catch (const ::CORBA::BAD_OPERATION &)
+        {
+          // server only supports IPv4
+           // Grab the right mcast group for this event...
+          RtecUDPAdmin::UDP_Addr udp_addr;
+          this->addr_server_->get_addr (header, udp_addr);
+          inet_addr.set (udp_addr.port, udp_addr.ipaddr);
+        }
 
       this->cdr_sender_.send_message (cdr, inet_addr);
     }

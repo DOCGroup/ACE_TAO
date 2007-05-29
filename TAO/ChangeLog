@@ -1,3 +1,76 @@
+Tue May 29 14:11:17 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/examples/RtEC/MCast/AddrServer.h:
+        * orbsvcs/examples/RtEC/MCast/AddrServer.cpp:
+
+          Added changes required by new interface.
+
+        * orbsvcs/orbsvcs/Event/ECG_Adapters.h:
+        * orbsvcs/orbsvcs/Event/ECG_Complex_Address_Server.h:
+        * orbsvcs/orbsvcs/Event/ECG_Complex_Address_Server.cpp:
+        * orbsvcs/orbsvcs/Event/ECG_Mcast_EH.cpp:
+        * orbsvcs/orbsvcs/Event/ECG_Simple_Address_Server.h:
+        * orbsvcs/orbsvcs/Event/ECG_Simple_Address_Server.cpp:
+        * orbsvcs/orbsvcs/Event/ECG_UDP_Out_Endpoint.cpp:
+        * orbsvcs/orbsvcs/Event/ECG_UDP_Receiver.h:
+        * orbsvcs/orbsvcs/Event/ECG_UDP_Receiver.inl:
+        * orbsvcs/orbsvcs/Event/ECG_UDP_Sender.cpp:
+        * orbsvcs/orbsvcs/Event/EC_UDP_Admin.h:
+        * orbsvcs/orbsvcs/Event/EC_UDP_Admin.cpp:
+
+        * orbsvcs/orbsvcs/RtecUDPAdmin.idl:
+
+          Support for IPv6 addresses used to federate event channels via
+          multicast. The AddressServer interface is extended to support
+          either IPv4 or IPv6 addresses, retaining backwards
+          compatibility. The interface differs from the solution
+          originally coded for TAO 1.4a, as that solution does not support
+          a single address server shared by many event channels in a mixed
+          host environment. Support for the 1.4a variant is not provided
+          at this time, but could be added in the future if necessary.
+          Given the nature of the bug and the lack of complaint from any
+          1.4a users (including the original funder) it seems unlikely
+          that this lack of support will cause a problem.
+
+        * orbsvcs/tests/Event/Basic/BCast.h:
+        * orbsvcs/tests/Event/Basic/BCast.cpp:
+
+          Removed redundant address server implementation.
+
+        * orbsvcs/tests/Event/Mcast/AddrServer:
+
+          This is a new test added to validate the sharing of an address
+          server in a mixed host environment. In this case, mixed host
+          means different OSes and byte orders, which impacts the encoding
+          of address data.
+
+        * orbsvcs/tests/Event/Mcast/RTEC_MCast_Federated/AddrServerMain.cpp:
+        * orbsvcs/tests/Event/Mcast/RTEC_MCast_Federated/Barrier.idl:
+        * orbsvcs/tests/Event/Mcast/RTEC_MCast_Federated/EchoEventConsumer_i.cpp:
+        * orbsvcs/tests/Event/Mcast/RTEC_MCast_Federated/EchoEventSupplierMain.cpp:
+        * orbsvcs/tests/Event/Mcast/RTEC_MCast_Federated/README:
+        * orbsvcs/tests/Event/Mcast/RTEC_MCast_Federated/RTEC_MCast_Federated.mpc:
+        * orbsvcs/tests/Event/Mcast/RTEC_MCast_Federated/SimpleAddressServer.h:
+        * orbsvcs/tests/Event/Mcast/RTEC_MCast_Federated/SimpleAddressServer.cpp:
+        * orbsvcs/tests/Event/Mcast/RTEC_MCast_Federated/run_test.pl:
+
+          Modified the test to support IPv6 federation. Use run_test.pl
+          -ipv6 to test. Also extended the test suite to enable running a
+          distributed test across many hosts. A new executable,
+          AddrServer, is generated that registers with the naming
+          service. The AddrServer also acts as a synchronization point,
+          supporting a new Barrier interface. This allows the test to be
+          manually started on many hosts, with each supplier instance
+          starting only when all expected suppliers have contacted the
+          barrier.
+
+        * orbsvcs/tests/Event/UDP/AddrServer.h:
+        * orbsvcs/tests/Event/UDP/AddrServer.cpp:
+        * orbsvcs/tests/Event/UDP/receiver.cpp:
+        * orbsvcs/tests/Event/UDP/sender.cpp:
+
+          Cleaned up the code to build with the new address server interface.
+
 Tue May 29 09:39:55 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/MT_BiDir/run_test.pl:
