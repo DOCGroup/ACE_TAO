@@ -1,3 +1,9 @@
+Tue May 29 10:19:59 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * netsvcs/lib/Client_Logging_Handler.cpp:
+
+          Replaced tabs with spaces.
+
 Tue May 29 09:20:55 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-vxworks6.2.h:
