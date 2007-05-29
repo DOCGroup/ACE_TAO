@@ -7,8 +7,8 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 
 use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::Run_Test;
-
-$iorfile = PerlACE::LocalFile ("test.ior");
+$iorfilebase = "test.ior";
+$iorfile = PerlACE::LocalFile ("$iorfilebase");
 
 unlink $iorfile;
 $status = 0;
@@ -75,7 +75,12 @@ foreach $o (@server_opts) {
     print STDERR "\n\n----------------------------------\n";
     print STDERR "        ".$comments[$test_number];
 
-    my $args = "$o -o $iorfile";
+    if (PerlACE::is_vxworks_test()) {
+      my $args = "$o -o $iorfilebase";
+    }
+    else {
+      my $args = "$o -o $iorfile";
+    }
 
     unlink $iorfile;
 

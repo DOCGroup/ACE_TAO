@@ -1,3 +1,11 @@
+Tue May 29 09:39:55 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/MT_BiDir/run_test.pl:
+        * tests/Oneway_Timeouts/run_test.pl:
+        * tests/RTCORBA/Server_Protocol/run_test.pl:
+        * tests/Servant_To_Reference_Test/run_test.pl:
+          Updated for vxworks testing
+
 Tue May 29 09:25:55 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/RTCORBA/Banded_Connections/run_test.pl:
