@@ -9,12 +9,13 @@ use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::Run_Test;
 
 $status = 0;
-$iorfile = PerlACE::LocalFile ("test.ior");
+$iorfilebase = "test.ior";
+$iorfile = PerlACE::LocalFile ("$iorfilebase");
 
 unlink $iorfile;
 
 if (PerlACE::is_vxworks_test()) {
-    $SV = new PerlACE::ProcessVX ("server", "-ORBsvcconf server$PerlACE::svcconf_ext -o test.ior -c 3 -i 100");
+    $SV = new PerlACE::ProcessVX ("server", "-ORBsvcconf server$PerlACE::svcconf_ext -o $iorfilebase -c 3 -i 100");
 }
 else {
     $SV = new PerlACE::Process ("server", "-ORBSvcConf server$PerlACE::svcconf_ext -o $iorfile -c 3 -i 100");
