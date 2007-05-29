@@ -46,14 +46,14 @@ public:
   // = Initialization and termination methods.
   ACE_Shared_Memory_SV (void);
   ACE_Shared_Memory_SV (key_t id,
-                        int length,
+                        size_t length,
                         int create = ACE_Shared_Memory_SV::ACE_OPEN,
                         int perms = ACE_DEFAULT_FILE_PERMS,
                         void *addr = 0,
                         int flags = 0);
 
   int open (key_t id,
-            int length,
+            size_t length,
             int create = ACE_Shared_Memory_SV::ACE_OPEN,
             int perms = ACE_DEFAULT_FILE_PERMS,
             void *addr = 0,
@@ -73,7 +73,7 @@ public:
   virtual int free (void *p);
 
   /// Return the size of the shared memory segment.
-  virtual int get_segment_size (void) const;
+  virtual size_t get_segment_size (void) const;
 
   /// Return the ID of the shared memory segment (i.e., a System V
   /// shared memory internal id).

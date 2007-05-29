@@ -1,4 +1,3 @@
-// FILE.cpp
 // $Id$
 
 /* Defines the member functions for the base class of the ACE_IO_SAP

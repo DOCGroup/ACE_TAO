@@ -32,7 +32,7 @@ ACE_Semaphore::ACE_Semaphore (unsigned int count,
                               const ACE_TCHAR *name,
                               void *arg,
                               int max)
-  : removed_ (0)
+  : removed_ (false)
 {
 // ACE_TRACE ("ACE_Semaphore::ACE_Semaphore");
 #if defined(ACE_LACKS_UNNAMED_SEMAPHORE)

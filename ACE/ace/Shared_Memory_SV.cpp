@@ -25,7 +25,7 @@ ACE_Shared_Memory_SV::dump (void) const
 }
 
 ACE_Shared_Memory_SV::ACE_Shared_Memory_SV (key_t id,
-                                            int length,
+                                            size_t length,
                                             int create,
                                             int perms,
                                             void *addr,
@@ -37,13 +37,13 @@ ACE_Shared_Memory_SV::ACE_Shared_Memory_SV (key_t id,
 
 // The overall size of the segment.
 
-int
+size_t
 ACE_Shared_Memory_SV::get_segment_size (void) const
 {
   ACE_TRACE ("ACE_Shared_Memory_SV::get_segment_size");
   // This cast is ok since the 'open' method for this class allows only
   // an 'int' size. Therefore, this case should not lose information.
-  return static_cast<int> (this->shared_memory_.get_segment_size ());
+  return this->shared_memory_.get_segment_size ();
 }
 
 // Removes the shared memory segment.
