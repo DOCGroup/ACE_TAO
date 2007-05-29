@@ -1,3 +1,9 @@
+Tue May 29 00:15:35 UTC 2007  Scott Harris  <harris_s@ociweb.com>
+
+        * TAO_IDL/be/be_visitor_native/native_ch.cpp:
+
+          Fix a warning.
+
 Mon May 28 12:29:13 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * orbsvcs/tests/Notify/lib/Driver.cpp:
