@@ -1,3 +1,12 @@
+Tue May 29 08:48:55 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_Thread.h:
+          Doxygen changes
+
+        * ace/POSIX_CB_Proactor.cpp:
+          Store errno in a local variable, and then check this against multiple
+          values, reduces number of TSS access
+
 Tue May 29 07:07:55 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/FILE.cpp:

@@ -131,8 +131,9 @@ ACE_POSIX_CB_Proactor::handle_events_i (u_long milli_seconds)
   // we should check "post_completed" queue
   if (result_wait == -1)
     {
-      if (errno != ETIME &&   // timeout
-          errno != EINTR )    // interrupted system call
+      int const lerror = errno;
+      if (lerror != ETIME &&   // timeout
+          lerror != EINTR )    // interrupted system call
         ACE_ERROR ((LM_ERROR,
                     "%N:%l:(%P | %t)::%p\n",
                     "ACE_POSIX_CB_Proactor::handle_events:"
