@@ -21,7 +21,12 @@ use strict;
 
 my $srv_ior = PerlACE::LocalFile ("server.ior");
 my $CLI = new PerlACE::Process ("client");
-my $SRV = new PerlACE::Process ("server");
+if (PerlACE::is_vxworks_test()) {
+  my $SRV = new PerlACE::Process ("server");
+}
+else {
+  my $SRV = new PerlACE::ProcessVX ("server");
+}
 my $SRV_PORT = PerlACE::random_port();
 my $SRV_ARGS = "-orbendpoint iiop://:$SRV_PORT";
 
