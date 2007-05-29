@@ -124,7 +124,23 @@ SimpleAddressServer.{h,cpp}
   to listen to based on consumer subscriptions.  This simple
   implementation always returns the same address.
 
+-------------------------------------------------------------------------
 
+AddrServerMain.cpp
+
+  A main wrapper for running a stand-alone SimpleAddressServer instance.
+  This is used to support a test that spans multiple hosts to insure
+  proper functionality of the address server.
+
+-------------------------------------------------------------------------
+
+Barrier.idl
+
+  This idl file defines a simple interface that presents a barrier for
+  synchronizing multiple senders. The implementation is in the stand
+  alone address server, which must be told how many clients to expect.
+  It then starts that number of threads plus an additional thread so
+  that an ACE_Barrier may be used to implement the waiting.
 
 Exeuction via Perl Script
 -------------------------

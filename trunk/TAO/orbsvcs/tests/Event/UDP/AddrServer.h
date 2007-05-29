@@ -19,6 +19,7 @@
 #include /**/ "ace/pre.h"
 
 #include "orbsvcs/RtecUDPAdminS.h"
+#include "ace/INET_Addr.h"
 
 class AddrServer : public POA_RtecUDPAdmin::AddrServer
 {
@@ -35,15 +36,19 @@ class AddrServer : public POA_RtecUDPAdmin::AddrServer
   //   provided at initialization time.
   //
 public:
-  AddrServer (const RtecUDPAdmin::UDP_Addr& addr);
+  AddrServer (const ACE_INET_Addr& addr);
   // Constructor
 
   // = The RtecUDPAdmin::AddrServer methods
   virtual void get_addr (const RtecEventComm::EventHeader& header,
                          RtecUDPAdmin::UDP_Addr_out addr);
 
+  virtual void get_address (const RtecEventComm::EventHeader& header,
+                            RtecUDPAdmin::UDP_Address_out addr6);
+
+
 private:
-  RtecUDPAdmin::UDP_Addr addr_;
+  ACE_INET_Addr addr_;
   // The address
 };
 

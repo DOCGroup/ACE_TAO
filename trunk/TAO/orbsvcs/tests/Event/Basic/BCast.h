@@ -14,11 +14,6 @@
 #define EC_BCAST_H
 
 #include "Driver.h"
-#include "orbsvcs/RtecUDPAdminS.h"
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-class ACE_INET_Addr;
-ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -57,27 +52,6 @@ private:
 
   /// The port used to send and receive bcast messages...
   u_short bcast_port_;
-};
-
-// ****************************************************************
-
-/**
- * @class Simple_Address_Server
- *
- * A fixed address server
- */
-class Simple_Address_Server : public POA_RtecUDPAdmin::AddrServer
-{
-public:
-  /// constructo
-  Simple_Address_Server (const ACE_INET_Addr& address);
-
-  virtual void get_addr (const RtecEventComm::EventHeader& header,
-                         RtecUDPAdmin::UDP_Addr& address);
-
-private:
-  /// The UDP addres...
-  RtecUDPAdmin::UDP_Addr address_;
 };
 
 #endif /* EC_BCAST_H */

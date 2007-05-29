@@ -133,19 +133,3 @@ EC_BCast::dump_results (void)
 {
   this->EC_Driver::dump_results ();
 }
-
-// ****************************************************************
-
-Simple_Address_Server::
-Simple_Address_Server (const ACE_INET_Addr& address)
-{
-  this->address_.ipaddr = address.get_ip_address ();
-  this->address_.port   = address.get_port_number ();
-}
-
-void
-Simple_Address_Server::get_addr (const RtecEventComm::EventHeader&,
-                                 RtecUDPAdmin::UDP_Addr& address)
-{
-  address = this->address_;
-}

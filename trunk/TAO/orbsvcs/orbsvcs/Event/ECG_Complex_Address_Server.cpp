@@ -136,15 +136,57 @@ TAO_ECG_Complex_Address_Server::get_addr (
   if (this->mcast_mapping_.find (key, mapping_entry) == -1)
     {
       // Key was not found in the mapping.  Use default.
+#if defined (ACE_HAS_IPV6)
+      if (this->default_addr_.get_type() == PF_INET6)
+        throw CORBA::DATA_CONVERSION(0, CORBA::COMPLETED_YES);
+#endif /* ACE_HAS_IPV6 */
       addr.ipaddr = this->default_addr_.get_ip_address ();
       addr.port = this->default_addr_.get_port_number ();
     }
   else
     {
+#if defined (ACE_HAS_IPV6)
+      if (mapping_entry->int_id_.get_type() == PF_INET6)
+        throw CORBA::DATA_CONVERSION(0, CORBA::COMPLETED_YES);
+#endif /* ACE_HAS_IPV6 */
       addr.ipaddr = mapping_entry->int_id_.get_ip_address ();
       addr.port = mapping_entry->int_id_.get_port_number ();
     }
 }
+
+void
+TAO_ECG_Complex_Address_Server::get_address (
+                         const RtecEventComm::EventHeader& header,
+                         RtecUDPAdmin::UDP_Address_out addr)
+{
+  CORBA::Long key;
+  if (this->is_source_mapping_)
+    key = header.source;
+  else
+    key = header.type;
+
+  MAP::ENTRY * mapping_entry = 0;
+  ACE_INET_Addr &src_addr =
+    (this->mcast_mapping_.find (key, mapping_entry) == -1) ?
+    this->default_addr_ : mapping_entry->int_id_;
+#if defined (ACE_HAS_IPV6)
+  if (src_addr.get_type() == PF_INET6)
+    {
+      RtecUDPAdmin::UDP_Addr_v6 v6;
+      sockaddr_in6 *in6 =
+        reinterpret_cast<sockaddr_in6 *>(src_addr.get_addr());
+      ACE_OS::memcpy (v6.ipaddr,&in6->sin6_addr,16);
+      v6.port = src_addr.get_port_number();
+      addr.v6_addr (v6);
+      return;
+    }
+#endif /* ACE_HAS_IPV6 */
+  RtecUDPAdmin::UDP_Addr v4;
+  v4.ipaddr = src_addr.get_ip_address();
+  v4.port = src_addr.get_port_number();
+  addr.v4_addr (v4);
+}
+
 
 void
 TAO_ECG_Complex_Address_Server::dump_content (void)

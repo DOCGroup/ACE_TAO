@@ -5,6 +5,7 @@
 
 #include "EchoEventSupplier_i.h"
 #include "SimpleAddressServer.h"
+#include "BarrierC.h"
 
 #include "orbsvcs/RtecEventCommC.h"
 #include "orbsvcs/RtecEventChannelAdminC.h"
@@ -29,6 +30,8 @@ const RtecEventComm::EventType     MY_EVENT_TYPE = ACE_ES_EVENT_UNDEFINED + 1;
 
 const int EVENT_DELAY_MS = 10;
 
+// Initialize the ORB.
+
 int main (int argc, char* argv[])
 {
   try
@@ -44,54 +47,53 @@ int main (int argc, char* argv[])
     const char* iorfile = 0;
     u_short port = 12345;
     u_short listenport = 12345;
+
     int mcast = 1;
 
-    for (int i = 0; argv[i] != 0; i++) {
-      if (strcmp(argv[i], "-ecname") == 0) {
-        if (argv[i+1] != 0) {
-          i++;
-          ecname = argv[i];
-        } else {
-    ACE_ERROR ((LM_ERROR,
-          "Missing Event channel name\n"));
-        }
-      } else if (strcmp(argv[i], "-address") == 0) {
-        if (argv[i+1] != 0) {
-          i++;
-          address = argv[i];
-        } else {
-    ACE_ERROR ((LM_ERROR,
-          "Missing address\n"));
-        }
-      } else if (strcmp(argv[i], "-port") == 0) {
-        if (argv[i+1] != 0) {
-          i++;
-          port = ACE_OS::atoi(argv[i]);
-        } else {
-    ACE_ERROR ((LM_ERROR,
-          "Missing port\n"));
-        }
-      } else if (strcmp(argv[i], "-listenport") == 0) {
-        if (argv[i+1] != 0) {
-          i++;
-          listenport = ACE_OS::atoi(argv[i]);
-        } else {
-    ACE_ERROR ((LM_ERROR,
-          "Missing port\n"));
-        }
-      } else if (strcmp(argv[i], "-iorfile") == 0) {
-        if (argv[i+1] != 0) {
-          i++;
-          iorfile = argv[i];
-        }
-      } else if (strcmp(argv[i], "-udp") == 0) {
-        mcast = 0;
+    for (int i = 0; argv[i] != 0; i++)
+      {
+        if (strcasecmp(argv[i], "-ecname") == 0)
+          {
+            if (argv[i+1] != 0)
+                ecname = argv[++i];
+            else
+              ACE_ERROR_RETURN ((LM_ERROR,  "Missing Event channel name\n"),0);
+          }
+        else if (strcasecmp(argv[i], "-address") == 0)
+          {
+            if (argv[i+1] != 0)
+              address = argv[++i];
+            else
+              ACE_ERROR_RETURN ((LM_ERROR, "Missing address\n"),0);
+          }
+        else if (strcasecmp(argv[i], "-port") == 0)
+          {
+            if (argv[i+1] != 0)
+              port = ACE_OS::atoi(argv[++i]);
+            else
+              ACE_ERROR_RETURN ((LM_ERROR, "Missing port\n"),0);
+          }
+        else if (strcasecmp(argv[i], "-listenport") == 0)
+          {
+            if (argv[i+1] != 0)
+              listenport = ACE_OS::atoi(argv[++i]);
+            else
+              ACE_ERROR_RETURN ((LM_ERROR, "Missing port\n"), 0);
+          }
+        else if (strcmp(argv[i], "-iorfile") == 0)
+          {
+            if (argv[i+1] != 0)
+              iorfile = argv[++i];
+             else
+              ACE_ERROR_RETURN ((LM_ERROR, "Missing ior file\n"), 0);
+          }
+        else if (strcmp(argv[i], "-udp") == 0)
+          mcast = 0;
       }
-    }
 
     // Get the POA
-    CORBA::Object_var object = orb->resolve_initial_references ("RootPOA");
-    PortableServer::POA_var poa = PortableServer::POA::_narrow (object.in ());
+    CORBA::Object_var tmpobj = orb->resolve_initial_references ("RootPOA");
+    PortableServer::POA_var poa = PortableServer::POA::_narrow (tmpobj.in ());
     PortableServer::POAManager_var poa_manager = poa->the_POAManager ();
     poa_manager->activate ();
 
@@ -100,13 +102,14 @@ int main (int argc, char* argv[])
     TAO_EC_Event_Channel ec_impl (attributes);
     ec_impl.activate ();
     PortableServer::ObjectId_var oid = poa->activate_object(&ec_impl);
-    CORBA::Object_var ec_obj = poa->id_to_reference(oid.in());
+    tmpobj = poa->id_to_reference(oid.in());
     RtecEventChannelAdmin::EventChannel_var ec =
-      RtecEventChannelAdmin::EventChannel::_narrow(ec_obj.in());
+      RtecEventChannelAdmin::EventChannel::_narrow(tmpobj.in());
 
     // Find the Naming Service.
-    CORBA::Object_var obj = orb->resolve_initial_references("NameService");
-    CosNaming::NamingContextExt_var root_context = CosNaming::NamingContextExt::_narrow(obj.in());
+    tmpobj = orb->resolve_initial_references("NameService");
+    CosNaming::NamingContextExt_var root_context =
+      CosNaming::NamingContextExt::_narrow(tmpobj.in());
 
     // Bind the Event Channel using Naming Services
     CosNaming::Name_var name = root_context->to_name(ecname);
@@ -122,26 +125,37 @@ int main (int argc, char* argv[])
 
     // Register it with the RootPOA.
     oid = poa->activate_object(&servant);
-    CORBA::Object_var supplier_obj = poa->id_to_reference(oid.in());
+    tmpobj = poa->id_to_reference(oid.in());
     RtecEventComm::PushSupplier_var supplier =
-      RtecEventComm::PushSupplier::_narrow(supplier_obj.in());
+      RtecEventComm::PushSupplier::_narrow(tmpobj.in());
 
     // Connect to the EC.
     ACE_SupplierQOS_Factory qos;
     qos.insert (MY_SOURCE_ID, MY_EVENT_TYPE, 0, 1);
     consumer->connect_push_supplier (supplier.in (), qos.get_SupplierQOS ());
 
-    // Initialize the address server with the desired address.
-    // This will be used by the sender object and the multicast
-    // receiver.
+    // Initialize the address server with the desired address. This will
+    // be used by the sender object and the multicast receiver only if
+    // one is not otherwise available via the naming service.
     ACE_INET_Addr send_addr (port, address);
     SimpleAddressServer addr_srv_impl (send_addr);
 
-    PortableServer::ObjectId_var addr_srv_oid =
-      poa->activate_object(&addr_srv_impl);
-    CORBA::Object_var addr_srv_obj = poa->id_to_reference(addr_srv_oid.in());
+    try
+      {
+        tmpobj = root_context->resolve_str ("Echo_address");
+      }
+    catch (const ::CosNaming::NamingContext::NotFound &)
+      {
+        // Create an instance of the addr server for local use
+
+        PortableServer::ObjectId_var addr_srv_oid =
+          poa->activate_object(&addr_srv_impl);
+        tmpobj =
+          poa->id_to_reference(addr_srv_oid.in());
+      }
+
     RtecUDPAdmin::AddrServer_var addr_srv =
-      RtecUDPAdmin::AddrServer::_narrow(addr_srv_obj.in());
+      RtecUDPAdmin::AddrServer::_narrow(tmpobj.in());
 
     // Create and initialize the sender object
     TAO_EC_Servant_Var<TAO_ECG_UDP_Sender> sender =
@@ -153,7 +167,7 @@ int main (int argc, char* argv[])
       1);
     }
 
-    // TAO_ECG_UDP_Sender::init() takes a TAO_ECG_Refcounted_Endpoint.
+   // TAO_ECG_UDP_Sender::init() takes a TAO_ECG_Refcounted_Endpoint.
     // If we don't clone our endpoint and pass &endpoint, the sender will
     // attempt to delete endpoint during shutdown.
     TAO_ECG_UDP_Out_Endpoint* clone;
@@ -199,13 +213,26 @@ int main (int argc, char* argv[])
       auto_ptr<TAO_ECG_UDP_EH> udp_eh (new TAO_ECG_UDP_EH (receiver.in()));
       udp_eh->reactor (orb->orb_core ()->reactor ());
       ACE_INET_Addr local_addr (listenport);
-      if (udp_eh->open (local_addr) == -1) {
-  ACE_ERROR ((LM_ERROR,
-        "Cannot open EH\n"));
-      }
+      if (udp_eh->open (local_addr) == -1)
+        ACE_ERROR ((LM_ERROR,"Cannot open EH\n"));
+
       ACE_AUTO_PTR_RESET(eh,udp_eh.release(),ACE_Event_Handler);
       //eh.reset(udp_eh.release());
     }
+
+    // Check to see if there is a Barrier server available and if so,
+    // wait for it.
+     try
+      {
+        tmpobj = root_context->resolve_str ("Echo_barrier");
+        Barrier_var barrier = Barrier::_narrow (tmpobj.in());
+        if (!CORBA::is_nil(barrier.in()))
+            barrier->wait();
+      }
+    catch (const ::CORBA::Exception &)
+      {
+        // no worries, just keep going.
+      }
 
     // Create an event (just a string in this case).
     const CORBA::String_var eventData = CORBA::string_dup(ecname);

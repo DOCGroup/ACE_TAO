@@ -16,6 +16,7 @@
 #define TAO_RTEC_UDP_ADMIN_IDL
 
 #include "RtecEventComm.idl"
+#include "tao/OctetSeq.pidl"
 
 /**
  * @namespace RtecUDPAdmin
@@ -39,6 +40,46 @@ module RtecUDPAdmin
   };
 
   /**
+   * @struct UDP_Addr_v6
+   *
+   * @brief Represent a UDP SAP sufficient to hold an IPv6 address.
+   */
+
+  struct UDP_Addr_v6
+  {
+    char ipaddr[16]; // used to match with ACE_INET_Addr::set_address
+    unsigned short port;
+  };
+
+  /**
+   * @enum Address_Family
+   *
+   * @brief Defines the address family identifiers. The more familiar
+   *  AF_INET, AF_INET6 are not used to avoid potential confusion.
+   *
+   */
+  enum Address_Family
+  {
+    INET,
+    INET6
+  };
+
+  /**
+   * @union UDP_Address
+   *
+   * @brief Holds either an IPv4 or IPv6 address and used for the
+   *  return value from get_address below.
+   *
+   */
+  union UDP_Address switch (Address_Family)
+  {
+  case INET:
+    UDP_Addr v4_addr;
+  case INET6:
+    UDP_Addr_v6 v6_addr;
+  };
+
+  /**
    * @interface AddrServer
    *
    * @brief Defines a interface to configure the mapping between
@@ -47,14 +88,26 @@ module RtecUDPAdmin
    */
   interface AddrServer
   {
-    /// Get the UDP address give the event header
+    /// Get the UDP address given the event header
     /**
+     * @deprecated, applications should use get_ip_address, which
+     *   supports both IPv4 and IPv6 addresses.
      * @param header The event header, used to fetch the type and
      *   source of the event
      * @param addr Return the address used for the given event type
      */
     void get_addr (in RtecEventComm::EventHeader header,
                    out UDP_Addr addr);
+
+    /// Get the UDP address given the event header, supports either
+    /// IPv4 or IPv6
+    /**
+     * @param header The event header, used to fetch the type and
+     *   source of the event
+     * @param addr Return the address used for the given event type
+     */
+    void get_address (in RtecEventComm::EventHeader header,
+                      out UDP_Address addr);
   };
 };
 
