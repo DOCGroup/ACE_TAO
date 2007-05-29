@@ -279,7 +279,7 @@ typedef HANDLE ACE_sema_t;
 class ACE_Export ACE_sema_t
 {
 public:
-  /// Serializes access to <count_>.
+  /// Serializes access to @c count_.
   ACE_thread_mutex_t lock_;
 
   /// This event is signaled whenever the count becomes non-zero.
@@ -1845,8 +1845,8 @@ extern "C"
      * The semantics of auto events forces us to introduce this extra
      * variable to ensure that the thread is not woken up
      * spuriously. Please see event_wait and event_timedwait () to see
-     * how this is used for auto_events. Theoretically this is a hack
-     * that needs revisiting after x.4
+     * how this is used for auto_events.
+     * @todo This is a hack that needs revisiting after x.4
      */
     bool auto_event_signaled_;
 
