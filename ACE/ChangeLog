@@ -1,3 +1,11 @@
+Tue May 29 09:20:55 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-vxworks6.2.h:
+        * ace/config-vxworks6.3.h:
+        * ace/config-vxworks6.4.h:
+          Instead of ACE_LACKS_LOG2, define _C99, with this define log2 is
+          available. Reported to WindRiver as TSR560446
+
 Tue May 29 08:48:55 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_Thread.h:
