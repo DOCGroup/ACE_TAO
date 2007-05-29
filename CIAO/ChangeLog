@@ -1,3 +1,10 @@
+Tue May 29 21:02:08 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * ciaosvcs/Events/CIAO_RTEC/SimpleAddressServer.h:
+        * ciaosvcs/Events/CIAO_RTEC/SimpleAddressServer.cpp:
+
+          Added code to support the new IPv4/IPv6 capable address server.
+
 Sun May 27 16:20:10 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * ciao/Object_Set_T.cpp:
