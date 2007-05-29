@@ -47,7 +47,9 @@
 # endif /* (__GNUC__ > 3 || (__GNUC__ == 3 && __GNUC_MINOR__ >= 3)) */
 
 # if defined __RTP__
-#  define ACE_LACKS_LOG2
+// Workaround for the fact that under RTP the log2 method can't be used
+// without this define set, see TSR560446
+#  define _C99
 # endif
 
 #elif defined (__DCPLUSPLUS__) || defined (__DCC__)
