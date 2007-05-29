@@ -14,7 +14,7 @@ ACE_Shared_Memory_MM::filename (void) const
 
 ACE_INLINE int
 ACE_Shared_Memory_MM::open (ACE_HANDLE handle,
-                            int length,
+                            size_t length,
                             int prot,
                             int share,
                             char *addr,
@@ -26,7 +26,7 @@ ACE_Shared_Memory_MM::open (ACE_HANDLE handle,
 
 ACE_INLINE int
 ACE_Shared_Memory_MM::open (const ACE_TCHAR *file_name,
-                            int len,
+                            size_t len,
                             int flags,
                             int mode,
                             int prot,

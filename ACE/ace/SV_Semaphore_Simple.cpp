@@ -229,7 +229,7 @@ int
 ACE_SV_Semaphore_Simple::remove (void) const
 {
   ACE_TRACE ("ACE_SV_Semaphore_Simple::remove");
-  int result = this->control (IPC_RMID);
+  int const result = this->control (IPC_RMID);
   ((ACE_SV_Semaphore_Simple *) this)->init ();
   return result;
 }

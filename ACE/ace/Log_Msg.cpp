@@ -1267,8 +1267,7 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                 case 'p':             // <errno> string, ala perror()
                   {
                     errno = 0;
-                    char *msg = 0;
-                    msg = ACE_OS::strerror (ACE::map_errno (this->errnum ()));
+                    char *msg = ACE_OS::strerror (ACE::map_errno (this->errnum ()));
                     // Windows can try to translate the errnum using
                     // system calls if strerror() doesn't get anything useful.
 #if defined (ACE_WIN32)

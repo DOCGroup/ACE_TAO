@@ -90,8 +90,10 @@ ACE_Mem_Map::map_it (ACE_HANDLE handle,
 
   // Check <length_request>
   if (length_request == static_cast<size_t> (-1))
-    // Set length to file_request or size_t max.
-    this->length_ = ACE_Utils::truncate_cast<size_t> (current_file_length - offset);
+    {
+      // Set length to file_request or size_t max.
+      this->length_ = ACE_Utils::truncate_cast<size_t> (current_file_length - offset);
+    }
   else
     {
       // Make sure that we have not been asked to do the impossible.
@@ -124,13 +126,12 @@ ACE_Mem_Map::map_it (ACE_HANDLE handle,
   if (extend_backing_store)
     {
       // Remember than write increases the size by one.
-      ACE_OFF_T null_byte_position;
+      ACE_OFF_T null_byte_position = 0;
       if (requested_file_length > 0)
-        // This will make the file size <requested_file_length>
-        null_byte_position = requested_file_length - 1;
-      else
-        // This will make the file size 1
-        null_byte_position = 0;
+        {
+          // This will make the file size <requested_file_length>
+          null_byte_position = requested_file_length - 1;
+        }
 
       if (ACE_OS::pwrite (this->handle_,
                           "",
