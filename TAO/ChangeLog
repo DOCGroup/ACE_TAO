@@ -1,3 +1,12 @@
+Tue May 29 09:25:55 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/RTCORBA/Banded_Connections/run_test.pl:
+        * tests/RTCORBA/Client_Propagated/run_test.pl:
+        * tests/RTCORBA/Client_Protocol/run_test.pl:
+          Updated for vxworks rtp, the RTCorba tests do require that the
+          client also can use priorities, so when we have vxworks rtp,
+          run also the client on the target
+
 Tue May 29 00:15:35 UTC 2007  Scott Harris  <harris_s@ociweb.com>
 
         * TAO_IDL/be/be_visitor_native/native_ch.cpp:

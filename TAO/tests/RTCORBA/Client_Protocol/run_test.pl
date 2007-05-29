@@ -9,9 +9,10 @@ use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::Run_Test;
 
 $status = 0;
-
-$iorfile1 = PerlACE::LocalFile ("test1.ior");
-$iorfile2 = PerlACE::LocalFile ("test2.ior");
+$iorfile1base = "test1.ior";
+$iorfile2base = "test2.ior";
+$iorfile1 = PerlACE::LocalFile ("$iorfile1base");
+$iorfile2 = PerlACE::LocalFile ("$iorfile2base");
 
 unlink $iorfile1;
 unlink $iorfile2;
@@ -39,7 +40,7 @@ $client_args =
 
 # Start server.
 if (PerlACE::is_vxworks_test()) {
-    $SV = new PerlACE::ProcessVX ("server", "-s test1.ior -c test2.ior $server_args");
+    $SV = new PerlACE::ProcessVX ("server", "-s $iorfile1base -c $iorfile2base $server_args");
 }
 else {
     $SV = new PerlACE::Process ("server", "-s $iorfile1 -c $iorfile2 $server_args");
