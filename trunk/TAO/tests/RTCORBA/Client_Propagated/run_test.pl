@@ -9,20 +9,25 @@ use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::Run_Test;
 
 $status = 0;
-
-$iorfile = PerlACE::LocalFile ("test.ior");
+$iorfilebase = "test.ior";
+$iorfile = PerlACE::LocalFile ("$iorfilebase");
 
 unlink $iorfile;
 
 print STDERR "\n            RTCORBA CLIENT_PROPAGATED Priority Unit Test\n\n";
 
 if (PerlACE::is_vxworks_test()) {
-    $SV = new PerlACE::ProcessVX ("server", , "-o test.ior");
+    $SV = new PerlACE::ProcessVX ("server", , "-o $iorfilebase");
 }
 else {
     $SV = new PerlACE::Process ("server", , "-o $iorfile");
 }
-$CL = new PerlACE::Process ("client", "-k file://$iorfile");
+if (PerlACE::is_vxworks_rtp_test()) {
+    $CL = new PerlACE::ProcessVX ("client", "-k file://$iorfilebase");
+}
+else {
+    $CL = new PerlACE::Process ("client", "-k file://$iorfile");
+}
 
 $SV->Spawn ();
 
