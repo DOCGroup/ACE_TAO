@@ -25,14 +25,13 @@ public:
                          RtecUDPAdmin::UDP_Addr& address)
     throw (CORBA::SystemException);
 
-
-/*
-  virtual void get_ip_address (const RtecEventComm::EventHeader& header,
-                               RtecUDPAdmin::UDP_IP_Address_out address)
+  virtual void get_address (const RtecEventComm::EventHeader& header,
+                            RtecUDPAdmin::UDP_Address_out address)
     throw (CORBA::SystemException);
-*/
+
 private:
-  RtecUDPAdmin::UDP_Addr address_;
+  RtecUDPAdmin::UDP_Address address_;
+
 };
 
 #endif
