@@ -65,8 +65,15 @@ public:
 
   virtual int handle_input (ACE_SOCK_Dgram& dgram) = 0;
 
+  /// Call the RtecUDPAdmin::AddrServer::get_addr.  Throws exception
+  /// if nil Address Server was specified in init ().
   virtual void get_addr (const RtecEventComm::EventHeader& header,
-                         RtecUDPAdmin::UDP_Addr_out addr) = 0;
+                 RtecUDPAdmin::UDP_Addr_out addr) = 0;
+
+  /// Call the RtecUDPAdmin::AddrServer::get_address.  Throws exception
+  /// if nil Address Server was specified in init ().
+  virtual void get_address (const RtecEventComm::EventHeader& header,
+                               RtecUDPAdmin::UDP_Address_out addr) = 0;
 };
 
 typedef ACE_Refcounted_Auto_Ptr<TAO_ECG_Handler_Shutdown,

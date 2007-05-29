@@ -14,6 +14,7 @@ sub usage() {
   print "  run_test [-h] [-debug]\n\n";
   print "    -udp          -- Federate using udp\n";
   print "    -mcast        -- Federate using multicast (the default)\n";
+  print "    -ipv6         -- Use an IPv6 mcast addr for federating\n";
   print "    -h            -- Prints this information\n";
   print "    -debug        -- Sets the debug flag for the test\n";
   exit;
@@ -21,6 +22,8 @@ sub usage() {
 
 my $udp = 0;
 my $i = 0;
+my $mcast_addr = "224.9.9.2";
+
 my $flags = "";
 while ($i <= $#ARGV) {
   if ($ARGV[$i] eq "-h" || $ARGV[$i] eq "-help" ||
@@ -32,6 +35,8 @@ while ($i <= $#ARGV) {
     $udp = 1;
   } elsif ($ARGV[$i] eq "-mcast") {
     $udp = 0;
+  } elsif ($ARGV[$i] eq "-ipv6") {
+    $mcast_addr = "FF01::255";
   } else {
     print "ERROR: Unknown Option: ".$ARGV[$i]."\n\n";
     usage ();
@@ -84,8 +89,11 @@ $args1 = "$flags $arg_ns_ref -ORBSvcConf $supplier_conf_file $end_point -iorfile
 if ($udp) {
   $args1 .= " -udp -ecname ec1 -port $port1 -listenport $port2 ";
 } else {
-  $args1 .= " -ecname ec1 -address 224.9.9.2 -port $mport ";
+  $args1 .= " -ecname ec1 -address $mcast_addr -port $mport ";
 }
+
+print "starting first supplier with args $args1\n";
+
 $S1 = new PerlACE::Process("EchoEventSupplier", $args1);
 $S1->Spawn();
 
@@ -93,8 +101,12 @@ $args2 = "$flags $arg_ns_ref -ORBSvcConf $supplier_conf_file $end_point -iorfile
 if ($udp) {
   $args2 .= " -udp -ecname ec2 -port $port2 -listenport $port1 ";
 } else {
-  $args2 .= " -ecname ec2 -address 224.9.9.2 -port $mport ";
+  $args2 .= " -ecname ec2 -address $mcast_addr -port $mport ";
 }
+
+print "starting second supplier with args $args2\n";
+
+
 $S2 = new PerlACE::Process("EchoEventSupplier", $args2);
 $S2->Spawn();
 
