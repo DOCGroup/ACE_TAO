@@ -16,9 +16,9 @@ ACE_Semaphore::remove (void)
 {
 // ACE_TRACE ("ACE_Semaphore::remove");
   int result = 0;
-  if (this->removed_ == 0)
+  if (!this->removed_)
     {
-      this->removed_ = 1;
+      this->removed_ = true;
       result = ACE_OS::sema_destroy (&this->semaphore_);
     }
   return result;

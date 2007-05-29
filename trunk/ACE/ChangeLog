@@ -1,3 +1,30 @@
+Tue May 29 07:07:55 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/FILE.cpp:
+          Removed first line
+
+        * ace/Log_Msg.cpp:
+          Declare and initialize a variable in one step
+
+        * ace/Mem_Map.cpp:
+          Small simplification
+
+        * ace/Semaphore.{h,cpp,inl}:
+          Made removed_ a real bool
+
+        * ace/Shared_Memory.h:
+          Changed get_segment_size to return size_t
+
+        * ace/Shared_Memory_MM.{h,cpp,inl}:
+        * ace/Shared_Memory_SV.{h,cpp,inl}:
+          Changed get_segment_size and length to size_t
+
+        * ace/SV_Semaphore_Simple.cpp:
+          Const improvement
+
+        * ace/SV_Shared_Memory.{h,inl}:
+          Layout changes
+
 Mon May 28 19:42:14 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * netsvcs/lib/Server_Logging_Handler_T.cpp:
