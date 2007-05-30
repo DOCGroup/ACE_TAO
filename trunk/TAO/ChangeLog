@@ -1,3 +1,11 @@
+Wed May 30 03:28:13 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * orbsvcs/tests/Event/Mcast/RTEC_MCast_Federated/AddrServerMain.cpp:
+        * orbsvcs/tests/Event/Mcast/RTEC_MCast_Federated/EchoEventSupplierMain.cpp:
+
+          Added missing "ace/OS_NS_strings.h" include and used
+          ACE_OS::strcasecmp instead of raw strcasecmp call.
+
 Wed May 30 03:17:16 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * orbsvcs/tests/Event/Mcast/AddrServer/Client.cpp:

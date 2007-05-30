@@ -21,6 +21,7 @@
 #include "orbsvcs/Event/ECG_UDP_EH.h"
 
 #include "tao/ORB_Core.h"
+#include "ace/OS_NS_strings.h"
 
 #include "ace/Auto_Ptr.h"
 #include <fstream>
@@ -52,28 +53,28 @@ int main (int argc, char* argv[])
 
     for (int i = 0; argv[i] != 0; i++)
       {
-        if (strcasecmp(argv[i], "-ecname") == 0)
+        if (ACE_OS::strcasecmp(argv[i], "-ecname") == 0)
           {
             if (argv[i+1] != 0)
                 ecname = argv[++i];
             else
               ACE_ERROR_RETURN ((LM_ERROR,  "Missing Event channel name\n"),0);
           }
-        else if (strcasecmp(argv[i], "-address") == 0)
+        else if (ACE_OS::strcasecmp(argv[i], "-address") == 0)
           {
             if (argv[i+1] != 0)
               address = argv[++i];
             else
               ACE_ERROR_RETURN ((LM_ERROR, "Missing address\n"),0);
           }
-        else if (strcasecmp(argv[i], "-port") == 0)
+        else if (ACE_OS::strcasecmp(argv[i], "-port") == 0)
           {
             if (argv[i+1] != 0)
               port = ACE_OS::atoi(argv[++i]);
             else
               ACE_ERROR_RETURN ((LM_ERROR, "Missing port\n"),0);
           }
-        else if (strcasecmp(argv[i], "-listenport") == 0)
+        else if (ACE_OS::strcasecmp(argv[i], "-listenport") == 0)
           {
             if (argv[i+1] != 0)
               listenport = ACE_OS::atoi(argv[++i]);
