@@ -92,6 +92,14 @@ be_visitor_sequence_serializer_op_cs::visit_sequence (be_sequence *node)
         }
     }
 
+
+  if (be_global->gen_dcps_type_support_only ())
+    {
+      *os << be_nl << be_nl 
+          << "#endif /* end of disabling TAO specific code */" 
+          << be_nl << be_nl;
+    }
+
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
     << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
@@ -987,8 +995,9 @@ switch (this->ctx_->sub_state ())
           break;
         case AST_Decl::NT_string:
         case AST_Decl::NT_wstring:
-          *os << "the_length += _dcps_max_marshaled_size_ulong () + "
-              << "ACE_OS::strlen (_tao_sequence[i]);" << be_uidt_nl;
+          *os << "the_length += _dcps_max_marshaled_size_ulong () " << be_nl
+            << "+ (_tao_sequence[i] == 0 ? 0 : ACE_OS::strlen (_tao_sequence[i]));" 
+            << be_uidt_nl;
           break;
         case AST_Decl::NT_interface:
           *os << "//DCPS - Sequence of interfaces is not supported" << be_nl;

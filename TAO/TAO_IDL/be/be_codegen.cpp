@@ -142,21 +142,67 @@ TAO_CodeGen::start_client_header (const char *fname)
   bool const got_pidl =
     (pidl_checker.substr (pidl_checker.length () - 5) == ".pidl");
 
-  if (!got_pidl)
+  if (be_global->gen_dcps_type_support_only ())
     {
-      // Generate the #ifndef clause.
-      this->gen_ifndef_string (fname,
-                               this->client_header_,
-                               "_TAO_IDL_",
-                               "_H_");
+      if (!got_pidl)
+        {
+          // Generate #ifndef string which is different from
+          // no dcps type support.
+          this->gen_ifndef_string (fname,
+                                  this->client_header_,
+                                  "_TAO_IDL_DDS_",
+                                  "_H_");
+        }
+      else
+        {
+          // Generate the #ifndef clause.
+          this->gen_ifndef_string (fname,
+                                  this->client_header_,
+                                  "_TAO_PIDL_DDS_",
+                                  "_H_");
+        }
+
+      if (be_global->stub_export_include () != 0)
+        {
+          *this->client_header_ << "\n#include /**/ \""
+                                << be_global->stub_export_include ()
+                                << "\"";
+        }
+
+      // DDS/DCPS marshaling.
+      this->gen_cond_file_include (
+          true,
+          "dds/DCPS/Serializer.h",
+          this->client_header_
+        );
+     
+      // Generate the includes of tao version sequence header.
+      this->client_header_->print ("\n#include \"tao/%s\"",
+                                          fname);
+
+      // Add #if 0 to disable TAO specific code
+      *this->client_header_ << be_nl << be_nl 
+        << "#if 0 // disable TAO specific code"
+        << be_nl << be_nl;
     }
   else
     {
-      // Generate the #ifndef clause.
-      this->gen_ifndef_string (fname,
-                               this->client_header_,
-                               "_TAO_PIDL_",
-                               "_H_");
+      if (!got_pidl)
+        {
+          // Generate the #ifndef clause.
+          this->gen_ifndef_string (fname,
+                                  this->client_header_,
+                                  "_TAO_IDL_",
+                                  "_H_");
+        }
+      else
+        {
+          // Generate the #ifndef clause.
+          this->gen_ifndef_string (fname,
+                                  this->client_header_,
+                                  "_TAO_PIDL_",
+                                  "_H_");
+        }
     }
 
   if (be_global->pre_include () != 0)
@@ -234,6 +280,20 @@ TAO_CodeGen::start_client_header (const char *fname)
       for (size_t j = 0; j < nfiles; ++j)
         {
           char* idl_name = idl_global->included_idl_files ()[j];
+
+          if (be_global->gen_dcps_type_support ())
+            {
+              // When -Gdcps is enabled, if the "tao/*Seq.pidl" is 
+              // included in a DDS idl file then the generated code
+              // will include the dds version idl generated code.
+              if (ACE_OS::strstr (idl_name, "tao/") == idl_name 
+                && ACE_OS::strstr (idl_name, "Seq.pidl"))
+                {
+                  idl_name[0] = 'd';
+                  idl_name[1] = 'd';
+                  idl_name[2] = 's';
+                }
+            }
 
           // Make a String out of it.
           UTL_String idl_name_str = idl_name;
@@ -420,11 +480,22 @@ TAO_CodeGen::start_server_header (const char *fname)
   // Generate the ident string, if any.
   this->gen_ident_string (this->server_header_);
 
-  // Generate the #ifndef clause.
-  this->gen_ifndef_string (fname,
-                           this->server_header_,
-                           "_TAO_IDL_",
-                           "_H_");
+  if (be_global->gen_dcps_type_support_only ())
+    {
+      // Generate the #ifndef clause.
+      this->gen_ifndef_string (fname,
+                               this->server_header_,
+                               "_TAO_IDL_DDS_",
+                               "_H_");
+    }
+  else
+    {
+      // Generate the #ifndef clause.
+      this->gen_ifndef_string (fname,
+                              this->server_header_,
+                              "_TAO_IDL_",
+                              "_H_");
+    }
 
   if (be_global->pre_include () != 0)
     {
@@ -1161,6 +1232,13 @@ TAO_CodeGen::end_client_header (void)
                             << "\"\n\n";
     }
 
+  if (be_global->gen_dcps_type_support_only ())
+    {
+      *this->client_header_ << be_nl << be_nl  
+        << "#endif /* end of disabling TAO specific code */" 
+        << be_nl << be_nl;
+    }
+
   *this->client_header_ << "#endif /* ifndef */" << be_nl << be_nl;
 
   return 0;
@@ -1820,6 +1898,12 @@ TAO_CodeGen::gen_stub_src_includes (void)
       this->gen_typecode_includes (this->client_stubs_);
     }
 
+  if (be_global->gen_dcps_type_support_only ())
+    {
+      *this->client_stubs_ << "\n\n#if 0 // disable TAO specific code " 
+                           << be_nl << be_nl;
+    }
+    
   // Always generated.
   this->gen_standard_include (this->client_stubs_,
                               "tao/CDR.h");
