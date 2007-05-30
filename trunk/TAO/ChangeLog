@@ -1,3 +1,12 @@
+Wed May 30 20:06:04 UTC 2007  Adam Mitz  <mitza@ociweb.com>
+
+        * TAO_IDL/be/be_visitor_root.cpp:
+        * TAO_IDL/be/be_visitor_root/root.cpp:
+        * TAO_IDL/be_include/be_visitor_root/root.h:
+
+          Added support for "native" at the root level (outside of a module or
+          interface).
+
 Wed May 30 12:44:07 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/tests/Event/Mcast/AddrServer/Server.cpp:
