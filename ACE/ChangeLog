@@ -1,3 +1,12 @@
+Wed May 30 00:17:35 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * ace/config-macros.h:
+
+          ACE_NOTREACHED macro now expands to nothing (empty space). We need
+          to monitor the scoreboard to verify that this doesn't cause problems.
+          If it doesn't, we will zap ACE_NOTREACHED from the codebase. For
+          details, check Bigzilla# 2948.
+
 Tue May 29 14:55:04 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * bin/tao_other_tests.lst: Added IPv6 RTEC federation test to list.
