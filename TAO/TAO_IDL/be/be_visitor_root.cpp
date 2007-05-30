@@ -38,6 +38,7 @@
 #include "be_home.h"
 #include "be_helper.h"
 #include "be_extern.h"
+#include "be_native.h"
 
 #include "be_visitor_root.h"
 #include "be_visitor_constant.h"
@@ -61,6 +62,7 @@
 #include "be_visitor_arg_traits.h"
 #include "be_visitor_template_export.h"
 #include "be_visitor_context.h"
+#include "be_visitor_native.h"
 
 #include "be_visitor_root/root.cpp"
 #include "be_visitor_root/root_ch.cpp"

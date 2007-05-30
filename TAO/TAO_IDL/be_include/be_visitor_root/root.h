@@ -102,6 +102,8 @@ public:
   virtual int visit_typedef (be_typedef *node);
   // visit the typedef node
 
+  virtual int visit_native (be_native *node);
+
   // =helper. This is used by derived clases to set the right context
 
   virtual int init (void);
