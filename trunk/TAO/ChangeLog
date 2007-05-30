@@ -1,3 +1,9 @@
+Wed May 30 12:44:07 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/tests/Event/Mcast/AddrServer/Server.cpp:
+
+          Added missing ACE_OS:: prefix for strcasecmp.
+
 Wed May 30 03:28:13 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * orbsvcs/tests/Event/Mcast/RTEC_MCast_Federated/AddrServerMain.cpp:
