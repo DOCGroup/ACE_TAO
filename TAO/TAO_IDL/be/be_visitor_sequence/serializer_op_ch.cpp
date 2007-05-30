@@ -67,6 +67,12 @@ be_visitor_sequence_serializer_op_ch::visit_sequence (be_sequence *node)
   be_type *bt = be_type::narrow_from_decl (node);
   be_typedef *tdef = be_typedef::narrow_from_decl (bt);
 
+  if (be_global->gen_dcps_type_support_only ())
+    {
+      *os << "\n#endif /* end of disabling TAO specific code */"
+          << be_nl << be_nl;
+    }
+
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
 
@@ -112,6 +118,11 @@ be_visitor_sequence_serializer_op_ch::visit_sequence (be_sequence *node)
           << node->flat_name () << "_H_ */";
     }
 
+  if (be_global->gen_dcps_type_support_only ())
+    {
+      *os << be_nl  << be_nl << "#if 0 // disable TAO specific code" 
+          << be_nl << be_nl;
+    }
   node->cli_hdr_serializer_op_gen (1);
   return 0;
 }

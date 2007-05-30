@@ -90,6 +90,7 @@ BE_GlobalData::BE_GlobalData (void)
     gen_smart_proxies_ (false),
     gen_inline_constants_ (true),
     gen_dcps_type_support_ (false),
+    gen_dcps_type_support_only_ (false),
     gen_orb_h_include_ (true),
     gen_empty_anyop_header_ (false),
     lookup_strategy_ (TAO_PERFECT_HASH),
@@ -1108,6 +1109,19 @@ BE_GlobalData::gen_dcps_type_support (void) const
 }
 
 void
+BE_GlobalData::gen_dcps_type_support_only (bool val)
+{
+  this->gen_dcps_type_support_only_ = val;
+}
+
+bool
+BE_GlobalData::gen_dcps_type_support_only (void) const
+{
+  return this->gen_dcps_type_support_only_;
+}
+
+
+void
 BE_GlobalData::gen_orb_h_include (bool val)
 {
   this->gen_orb_h_include_ = val;
@@ -1995,10 +2009,29 @@ BE_GlobalData::parse_args (long &i, char **av)
           {
             if (av[i][3] == 'c')
               {
-                if (av[i][4] == 'p' && av[i][5] =='s' && '\0' == av[i][6])
+                if (av[i][4] == 'p' && av[i][5] =='s')
                   {
-                    // DDS DCPS type support.
-                    be_global->gen_dcps_type_support (true);
+                    if ('\0' == av[i][6])
+                      {
+                        // DDS DCPS type support.
+                        be_global->gen_dcps_type_support (true);
+                      }
+                    else if (av[i][6] == 'o' && av[i][7] == 'n'
+                      && av[i][8] == 'l' && av[i][9] == 'y' && '\0' == av[i][10])
+                      {
+                        // DDS DCPS type only support
+                        be_global->gen_dcps_type_support (true);
+                        be_global->gen_dcps_type_support_only (true);
+                      }
+                    else
+                      {
+                        ACE_ERROR ((
+                            LM_ERROR,
+                            ACE_TEXT ("IDL: I don't understand ")
+                            ACE_TEXT ("the '%s' option\n"),
+                            av[i]
+                          ));
+                      }
                   }
                 else
                   {
@@ -2533,6 +2566,10 @@ BE_GlobalData::usage (void) const
   ACE_DEBUG ((
       LM_DEBUG,
       ACE_TEXT (" -Gdcps \t\tGenerate code supporting DDS DCPS type definitions.\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -Gdcpsonly \t\t\tGenerate code only supporting DDS DCPS type serializer definitions.\n")
     ));
   ACE_DEBUG ((
       LM_DEBUG,
