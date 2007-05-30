@@ -1,3 +1,10 @@
+Wed May 30 23:10:45 UTC 2007  Scott Harris  <harris_s@ociweb.com>
+
+        * TAO_IDL/fe/idl.ll:
+
+          This should have been part of the Fri May 25 18:02:30 UTC 2007
+          commit.
+
 Wed May 30 20:18:11 UTC 2007  Yan Dai  <dai_y@ociweb.com>
 
         These changes support built in sequences in DDS.
