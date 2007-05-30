@@ -1035,8 +1035,8 @@ be_visitor_union_branch_serializer_op_cs::visit_string (be_string *node)
       break;
     case TAO_CodeGen::TAO_FIND_SIZE:
       *os << "result += _dcps_max_marshaled_size_ulong() + " << be_idt_nl
-          << "ACE_OS::strlen(_tao_union."
-          << f->local_name () << " ());" << be_uidt_nl;
+          << "(_tao_union." << f->local_name () << " () ? ACE_OS::strlen(_tao_union."
+          << f->local_name () << " ()) : 0);" << be_uidt_nl;
       break;
     case TAO_CodeGen::TAO_CDR_INPUT:
       if (node->width () == (long) sizeof (char))

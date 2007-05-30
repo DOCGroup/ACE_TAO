@@ -468,6 +468,12 @@ public:
   bool gen_dcps_type_support (void) const;
   // Return the flag.
 
+  void gen_dcps_type_support_only (bool value);
+  // Set the flag.
+
+  bool gen_dcps_type_support_only (void) const;
+  // Return the flag.
+
   void gen_orb_h_include (bool value);
   // Set the flag.
 
@@ -718,6 +724,10 @@ private:
   bool gen_dcps_type_support_;
   // Flag to indicate whether we are supporting DDS DCPS type definitions.
   // Includes Serializer operators (like TAO_Input/OutuptCDR).
+
+  bool gen_dcps_type_support_only_;
+  // Flag to indicate whether we are supporting DDS DCPS type only definitions.
+  // Only generate DDS Serializer operators for tao/*Seq.pidl.
 
   bool gen_orb_h_include_;
   // Flag to indicate whether ORB.h include should be generated, needed for
