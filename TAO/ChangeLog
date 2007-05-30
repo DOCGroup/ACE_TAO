@@ -1,3 +1,15 @@
+Wed May 30 03:17:16 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * orbsvcs/tests/Event/Mcast/AddrServer/Client.cpp:
+
+          Added missing "ace/OS_NS_strings.h" include and used
+          ACE_OS::strcasecmp instead of raw strcasecmp call.
+
+        * orbsvcs/tests/Event/Mcast/AddrServer/TestAddrServer.h:
+        * orbsvcs/tests/Event/Mcast/AddrServer/TestAddrServer.cpp:
+
+          Fixed fuzz error, ACE_THROW_SEPC is deprecated now.
+
 Wed May 30 02:05:51 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/tests/EC_MT_Mcast/AddrServer.h:
