@@ -1,3 +1,11 @@
+Wed May 30 02:05:51 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/tests/EC_MT_Mcast/AddrServer.h:
+        * orbsvcs/tests/EC_MT_Mcast/AddrServer.cpp:
+        * orbsvcs/tests/EC_MT_Mcast/MCast.cpp:
+
+          Fixed yet another implementation of a simple address server.
+
 Tue May 29 14:11:17 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/examples/RtEC/MCast/AddrServer.h:
