@@ -6,6 +6,7 @@
 
 #include "TestAddrServer.h"
 #include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_strings.h"
 
 int main (int argc, char* argv[])
 {
@@ -22,7 +23,7 @@ int main (int argc, char* argv[])
 
       for (int i = 0; argv[i] != 0; i++)
         {
-          if (strcasecmp(argv[i], "-o") == 0)
+          if (ACE_OS::strcasecmp(argv[i], "-o") == 0)
             {
               if (argv[i+1] != 0)
                 ior_file_name = argv[++i];
