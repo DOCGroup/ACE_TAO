@@ -14,17 +14,14 @@ public:
                     const ACE_INET_Addr& addr6);
 
   virtual void get_addr (const RtecEventComm::EventHeader& header,
-                         RtecUDPAdmin::UDP_Addr& address)
-  ACE_THROW_SPEC ((CORBA::SystemException));
+                         RtecUDPAdmin::UDP_Addr& address);
 
   virtual void get_address (const RtecEventComm::EventHeader& header,
-                               RtecUDPAdmin::UDP_Address_out addr6)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                               RtecUDPAdmin::UDP_Address_out addr6);
 
 private:
   ACE_INET_Addr addr_;
   ACE_INET_Addr addr6_;
-
 };
 
 #endif

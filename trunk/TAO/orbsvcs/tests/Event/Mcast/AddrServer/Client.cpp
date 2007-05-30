@@ -3,6 +3,7 @@
 #include "ace/INET_Addr.h"
 #include "orbsvcs/RtecUDPAdminC.h"
 #include "orbsvcs/RtecEventCommC.h"
+#include "ace/OS_NS_strings.h"
 
 ACE_RCSID(Hello, client, "$Id$")
 
@@ -18,7 +19,7 @@ main (int argc, char *argv[])
 
       for (int i = 1; i < argc; i++)
         {
-          if (strcasecmp(argv[i], "-k") == 0)
+          if (ACE_OS::strcasecmp(argv[i], "-k") == 0)
             {
               if (argv[i+1] != 0)
                 ior = argv[++i];

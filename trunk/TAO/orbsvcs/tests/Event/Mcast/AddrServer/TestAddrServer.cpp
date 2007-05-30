@@ -19,13 +19,11 @@ TestAddrServer_i::TestAddrServer_i (const ACE_INET_Addr& addr,
   addr6_.addr_to_string (abuf,256);
 
   ACE_DEBUG ((LM_DEBUG,"Test Addr (v6) = %s\n",abuf));
-
 }
 
 void
 TestAddrServer_i::get_addr (const RtecEventComm::EventHeader& h,
                                RtecUDPAdmin::UDP_Addr& address)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_INET_Addr &addr = (h.type == 0) ? this->addr_ : this->addr6_;
 
@@ -41,7 +39,6 @@ TestAddrServer_i::get_addr (const RtecEventComm::EventHeader& h,
 void
 TestAddrServer_i::get_address (const RtecEventComm::EventHeader& h,
                                RtecUDPAdmin::UDP_Address_out outaddr)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_INET_Addr &addr = (h.type == 0) ? this->addr_ : this->addr6_;
   char abuf[256];
@@ -65,5 +62,4 @@ TestAddrServer_i::get_address (const RtecEventComm::EventHeader& h,
   v4.ipaddr = addr.get_ip_address ();
   v4.port = addr.get_port_number ();
   outaddr.v4_addr (v4);
-
 }
