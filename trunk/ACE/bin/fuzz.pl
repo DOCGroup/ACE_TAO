@@ -287,6 +287,34 @@ sub check_for_noncvs_files ()
     }
 }
 
+# This test checks for the use of tabs, spaces should be used instead of tabs
+sub check_for_tab ()
+{
+    print "Running tabs check\n";
+    foreach $file (@files_cpp, @files_inl, @files_h, @files_idl) {
+        if (open (FILE, $file)) {
+            my $disable = 0;
+            print "Looking at file $file\n" if $opt_d;
+            while (<FILE>) {
+                ++$line;
+                if (/FUZZ\: disable check_for_tab/) {
+                    $disable = 1;
+                }
+                if (/FUZZ\: enable check_for_tab/) {
+                    $disable = 0;
+                }
+                if ($disable == 0 and m/^\s*\t/) {
+                    print_error ("$file:$.: tab found");
+                }
+            }
+            close (FILE);
+        }
+        else {
+            print STDERR "Error: Could not open $file\n";
+        }
+    }
+}
+
 
 # This test checks for the use of "inline" instead of ACE_INLINE
 sub check_for_inline ()
@@ -1264,6 +1292,7 @@ if (!getopts ('cdhl:t:mv') || $opt_h) {
            check_for_inline_in_cpp
            check_for_id_string
            check_for_newline
+           check_for_tab
            check_for_inline
            check_for_math_include
            check_for_line_length
@@ -1320,6 +1349,7 @@ check_for_makefile_variable () if ($opt_l >= 1);
 check_for_inline_in_cpp () if ($opt_l >= 2);
 check_for_id_string () if ($opt_l >= 1);
 check_for_newline () if ($opt_l >= 1);
+check_for_tab() if ($opt_l >= 1);
 check_for_inline () if ($opt_l >= 2);
 check_for_math_include () if ($opt_l >= 3);
 check_for_synch_include () if ($opt_l >= 6);
