@@ -403,11 +403,11 @@
 # define ACE_UNUSED_ARG(a) (a)
 #endif /* ghs || __GNUC__ || ..... */
 
-//#if defined (__sgi) || defined (ghs) || defined (__DECCXX) || defined(__BORLANDC__) || defined (ACE_RM544) || defined (__USLC__) || defined (__DCC__) || defined (__PGI) || defined (__TANDEM) || (defined (__HP_aCC) && (__HP_aCC >= 60500))
+#if defined (_MSC_VER) || defined(__sgi) || defined (ghs) || defined (__DECCXX) || defined(__BORLANDC__) || defined (ACE_RM544) || defined (__USLC__) || defined (__DCC__) || defined (__PGI) || defined (__TANDEM) || (defined (__HP_aCC) && (__HP_aCC >= 60500))
 # define ACE_NOTREACHED(a)
-//#else  /* __sgi || ghs || ..... */
-//# define ACE_NOTREACHED(a) a
-//#endif /* __sgi || ghs || ..... */
+#else  /* __sgi || ghs || ..... */
+# define ACE_NOTREACHED(a) a
+#endif /* __sgi || ghs || ..... */
 
 // ============================================================================
 // ACE_ALLOC_HOOK* macros
