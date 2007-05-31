@@ -1,8 +1,20 @@
+Thu May 31 03:16:53 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * ace/config-macros.h:
+
+          Reverted changes from:
+          Wed May 30 00:17:35 UTC 2007  Abdullah Sowayan  <abdul...@lmco.com>
+          It introduced around 10 new warnings for ACE/TAO/CIAO under GCC
+          Compilers. We'll try to address/fix those after the beta is out.
+
+          ACE_NOTREACHED macro now expands to nothing for Visual Studio 
+          Compilers.
+
 Thu May 31 03:12:50 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * bin/fuzz.pl:
 
-          Tabs shouldn't be used as per ACE/TAO/CIAO coding guidlines. 
+          Tabs shouldn't be used as per ACE/TAO/CIAO coding guidlines.
           Extended fuzz to detect tabs in the source code.
 
 Wed May 30 00:17:35 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
