@@ -256,7 +256,7 @@ TAO_GIOP_Message_Base::format_message (TAO_OutputCDR &stream)
   // this particular environment and that isn't handled by the
   // networking infrastructure (e.g., IPSEC).
 
-  CORBA::ULong const bodylen = static_cast <CORBA::ULong>
+  CORBA::ULong bodylen = static_cast <CORBA::ULong>
                            (total_len - TAO_GIOP_MESSAGE_HEADER_LEN);
 
 #if !defined (ACE_ENABLE_SWAP_ON_WRITE)

@@ -1,3 +1,11 @@
+Thu May 31 13:17:00 UTC 2007  Simon Massey  <sma@prismtech.com>
+
+        * tao/GIOP_Message_Base.cpp:
+
+          Change the constness of the bodylen local variable to allow
+          for the defined (ACE_ENABLE_SWAP_ON_WRITE) code path to actually
+          compile.
+
 Wed May 30 23:10:45 UTC 2007  Scott Harris  <harris_s@ociweb.com>
 
         * TAO_IDL/fe/idl.ll:
