@@ -2,6 +2,7 @@
 // Reused from: $TAO_ROOT/orbsvcs/examples/RtEC/MCast
 
 #include "AddrServer.h"
+#include "ace/INET_Addr.h"
 
 ACE_RCSID(EC_MT_Mcast,
           AddrServer,

@@ -1,17 +1,21 @@
 // -*- MPC -*-
 // $Id$
 
+project(*idl): taoidldefaults {
+  IDL_Files {
+    Barrier.idl
+  }
+  custom_only = 1
+}
+
 project(*Supplier): namingexe, rteventexe, rtevent_serv {
+  after += *idl
   exename   = EchoEventSupplier
 
   specific(automake) {
     includes += $(srcdir)/../Common
   } else {
     includes += ../Common
-  }
-
-  IDL_Files {
-    Barrier.idl
   }
 
   Source_Files {
@@ -23,6 +27,7 @@ project(*Supplier): namingexe, rteventexe, rtevent_serv {
 }
 
 project(*Consumer): namingexe, rteventexe,  {
+  after += *idl
   exename   = EchoEventConsumer
 
   specific(automake) {
@@ -38,16 +43,13 @@ project(*Consumer): namingexe, rteventexe,  {
 }
 
 project(*AddrServer): namingexe, rtevent_serv {
+  after += *idl
   exename = AddrServer
 
   specific(automake) {
     includes += $(srcdir)/../Common
   } else {
     includes += ../Common
-  }
-
-  IDL_Files {
-    Barrier.idl
   }
 
   Source_Files {

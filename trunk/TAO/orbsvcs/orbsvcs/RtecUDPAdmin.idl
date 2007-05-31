@@ -90,7 +90,7 @@ module RtecUDPAdmin
   {
     /// Get the UDP address given the event header
     /**
-     * @deprecated, applications should use get_ip_address, which
+     * @deprecated, applications should use get_address, which
      *   supports both IPv4 and IPv6 addresses.
      * @param header The event header, used to fetch the type and
      *   source of the event

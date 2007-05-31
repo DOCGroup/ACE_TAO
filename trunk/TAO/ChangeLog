@@ -1,3 +1,16 @@
+Thu May 31 19:13:32 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/orbsvcs/RtecUDPAdmin.idl:
+          Clean up typo in comment.
+
+        * orbsvcs/tests/EC_MT_Mcast/AddrServer.h:
+        * orbsvcs/tests/EC_MT_Mcast/AddrServer.cpp:
+          Move the dependency on ace/INET_Addr.h into the cpp.
+
+        * orbsvcs/tests/Event/Mcast/RTEC_MCast_Federated/Makefile.am:
+        * orbsvcs/tests/Event/Mcast/RTEC_MCast_Federated/RTEC_MCast_Federated.mpc:
+          regenerated Makefile.am to get automake builds working.
+
 Thu May 31 13:17:00 UTC 2007  Simon Massey  <sma@prismtech.com>
 
         * tao/GIOP_Message_Base.cpp:
@@ -21,12 +34,12 @@ Wed May 30 20:18:11 UTC 2007  Yan Dai  <dai_y@ociweb.com>
         tao/*Seq.pidl will generate code to include the DDS version
         of the generated code instead of TAO version sequence code
         so it supports DDS serialization.
-        
+
         * TAO_IDL/be/be_global.cpp:
         * TAO_IDL/be_include/be_global.h:
 
           Added gen_dcps_type_support_only flag.
-          
+
         * TAO_IDL/be/be_codegen.cpp:
         * TAO_IDL/be/be_visitor_sequence/serializer_op_ch.cpp:
         * TAO_IDL/be/be_visitor_sequence/serializer_op_cs.cpp:
@@ -34,11 +47,11 @@ Wed May 30 20:18:11 UTC 2007  Yan Dai  <dai_y@ociweb.com>
           Generated code similar to before with -Gdcps except using #if 0
           to disable TAO specific code when -Gdcpsonly is given.
           The DDS CORBA::*Seq generated code will include the
-          TAO CORBA::*Seq generated code so both TAO and DDS 
+          TAO CORBA::*Seq generated code so both TAO and DDS
           functions will be available.
 
         * TAO_IDL/be/be_visitor_union_branch/serializer_op_cs.cpp:
-        
+
           Fixed bugs that call strlen() without check if it's nil string.
 
 Wed May 30 20:06:04 UTC 2007  Adam Mitz  <mitza@ociweb.com>
