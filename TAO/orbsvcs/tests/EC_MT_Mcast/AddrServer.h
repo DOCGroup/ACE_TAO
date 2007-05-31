@@ -1,3 +1,4 @@
+// -*- C++ -*-
 // $Id$
 // Reused from: $TAO_ROOT/orbsvcs/examples/RtEC/MCast
 
@@ -6,7 +7,10 @@
 #include /**/ "ace/pre.h"
 
 #include "orbsvcs/RtecUDPAdminS.h"
-#include "ace/INET_Addr.h"
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+class ACE_INET_Addr;
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 class AddrServer : public POA_RtecUDPAdmin::AddrServer
 {
