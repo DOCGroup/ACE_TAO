@@ -1,9 +1,0 @@
-// $Id$
-
-/// A simple way to have a distributed synchronization point for a specific
-/// number of participants.
-interface Barrier {
-  /// Wait until the implementation specified number of participants have
-  /// called, then simply return.
-  void wait ();
-};
