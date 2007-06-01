@@ -1,3 +1,10 @@
+Fri Jun  1 19:03:46 UTC 2007  Ciju John  <johnc at ociweb dot com>
+
+        * TAO_IDL/fe/lex.yy.cpp:
+          Minor change to update timestamp of this file. This is a
+          generated file and therefore needs to have an later timestamp
+          than the generator input (idl.ll).
+
 Fri Jun 01 10:08:00 UTC 2007  Simon Massey  <sma@prismtech.com>
 
         * tests/CodeSets/libs/UCS4_UTF16/WUCS4_UTF16.cpp:
