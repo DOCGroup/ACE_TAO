@@ -3326,7 +3326,7 @@ idl_valid_version (char *s)
         }
     }
 
-  // Major and minor version numbers must be unsigned shorts.
+  // Major and minor version numbers must be unsigned shorts..
   if (ACE_OS::atoi (minor + 1) > ACE_UINT16_MAX
       || ACE_OS::atoi (s) > ACE_UINT16_MAX)
     {
