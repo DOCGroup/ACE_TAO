@@ -118,6 +118,31 @@ ACE_INET_Addr::operator == (const ACE_INET_Addr &sap) const
                           this->get_size ()) == 0);
 }
 
+bool
+ACE_INET_Addr::is_ip_equal (const ACE_INET_Addr &sap) const
+{
+    if (this->get_type () != sap.get_type ()
+      || this->get_size () != sap.get_size ())
+    return false;
+
+#if defined (ACE_HAS_IPV6)
+  if (this->get_type () == PF_INET6)
+    {
+      const unsigned int *addr =
+        reinterpret_cast<const unsigned int*>(this->ip_addr_pointer());
+      const unsigned int *saddr =
+        reinterpret_cast<const unsigned int*>(sap.ip_addr_pointer());
+      return (addr[0] == saddr[0] &&
+              addr[1] == saddr[1] &&
+              addr[2] == saddr[2] &&
+              addr[3] == saddr[3]);
+    }
+  else
+#endif /* ACE_HAS_IPV6 */
+  return this->get_ip_address () == sap.get_ip_address();
+}
+
+
 u_long
 ACE_INET_Addr::hash (void) const
 {
