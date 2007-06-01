@@ -17,6 +17,11 @@ Fri Jun  1 22:32:52 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
           validation of the address server there is now a separate test
           case.
 
+        * orbsvcs/tests/Event/Mcast/RTEC_MCast_Federated/run_test.pl:
+
+          Fixed the representative IPv6 address to allow proper sharing
+          across multiple interfaces.
+
         * orbsvcs/tests/Event/Mcast/RTEC_MCast_Federated/supplier.conf:
 
           Added a ConsumerControl specification so that a manually run
