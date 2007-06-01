@@ -582,7 +582,7 @@ WUCS4_UTF16::write_measured_wchar_array (ACE_OutputCDR & cdr,
       // and we don't want to allocate a new array
       for (size_t i = 0; i < sbpos; i++)
         {
-          char * pchar = static_cast<char *> (&sb[i]);
+          char * pchar = reinterpret_cast<char *> (&sb[i]);
           // ACE_CDR::swap_2 (pchar, pchar);
           // can't use swap_2 because inplace swaps are not safe
           // and work-arounds like copying to another buffer lose
