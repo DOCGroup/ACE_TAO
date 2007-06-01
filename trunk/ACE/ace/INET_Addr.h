@@ -344,6 +344,10 @@ public:
   /// Compare two addresses for inequality.
   bool operator != (const ACE_INET_Addr &SAP) const;
 
+  /// A variation of the equality operator, this method only compares the
+  /// IP address and ignores the port number.
+  bool is_ip_equal (const ACE_INET_Addr &SAP) const;
+
   /// Computes and returns hash value.
   virtual u_long hash (void) const;
 

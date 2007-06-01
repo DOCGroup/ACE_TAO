@@ -1,3 +1,19 @@
+Fri Jun  1 22:26:39 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * ace/INET_Addr.h:
+        * ace/INET_Addr.cpp:
+
+          Added a new helper method, is_ip_equal() that compares only the
+          IP address of the object and the argument. This should be used
+          in place of comparing get_ip_address() values particularly when
+          IPv6 may be used. This new method is weaker than the equality
+          operator since that also compares port numbers. This new method
+          was motivated by a need to compare the address of a recieved
+          dgram to the interface addresses obtained via get_ip_interfaces.
+
+        * bin/tao_other_tests.lst:
+          Added IPv6 RTEC federation test to list.
+
 Fri Jun  1 20:51:57 UTC 2007  ciju john  <john_c@ociweb.com>
 
         * include/makeinclude/platform_hpux_aCC.GNU:
@@ -31,10 +47,6 @@ Wed May 30 00:17:35 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
           to monitor the scoreboard to verify that this doesn't cause problems.
           If it doesn't, we will zap ACE_NOTREACHED from the codebase. For
           details, check Bigzilla# 2948.
-
-Tue May 29 14:55:04 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
-
-        * bin/tao_other_tests.lst: Added IPv6 RTEC federation test to list.
 
 Tue May 29 10:19:59 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
