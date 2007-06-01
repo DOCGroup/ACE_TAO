@@ -5,7 +5,6 @@
 
 #include "EchoEventSupplier_i.h"
 #include "SimpleAddressServer.h"
-#include "BarrierC.h"
 
 #include "orbsvcs/RtecEventCommC.h"
 #include "orbsvcs/RtecEventChannelAdminC.h"
@@ -28,8 +27,6 @@
 
 const RtecEventComm::EventSourceID MY_SOURCE_ID  = ACE_ES_EVENT_SOURCE_ANY + 1;
 const RtecEventComm::EventType     MY_EVENT_TYPE = ACE_ES_EVENT_UNDEFINED + 1;
-
-const int EVENT_DELAY_MS = 10;
 
 // Initialize the ORB.
 
@@ -141,19 +138,12 @@ int main (int argc, char* argv[])
     ACE_INET_Addr send_addr (port, address);
     SimpleAddressServer addr_srv_impl (send_addr);
 
-    try
-      {
-        tmpobj = root_context->resolve_str ("Echo_address");
-      }
-    catch (const ::CosNaming::NamingContext::NotFound &)
-      {
-        // Create an instance of the addr server for local use
+    // Create an instance of the addr server for local use
 
-        PortableServer::ObjectId_var addr_srv_oid =
-          poa->activate_object(&addr_srv_impl);
-        tmpobj =
-          poa->id_to_reference(addr_srv_oid.in());
-      }
+    PortableServer::ObjectId_var addr_srv_oid =
+      poa->activate_object(&addr_srv_impl);
+    tmpobj =
+      poa->id_to_reference(addr_srv_oid.in());
 
     RtecUDPAdmin::AddrServer_var addr_srv =
       RtecUDPAdmin::AddrServer::_narrow(tmpobj.in());
@@ -162,11 +152,17 @@ int main (int argc, char* argv[])
     TAO_EC_Servant_Var<TAO_ECG_UDP_Sender> sender =
                                 TAO_ECG_UDP_Sender::create();
     TAO_ECG_UDP_Out_Endpoint endpoint;
-    if (endpoint.dgram ().open (ACE_Addr::sap_any) == -1) {
-      ACE_ERROR_RETURN ((LM_ERROR,
-       "Cannot open send endpoint\n"),
-      1);
-    }
+    // need to be explicit about the address type when built with
+    // IPv6 support, otherwise SOCK_DGram::open defaults to ipv6 when
+    // given a sap_any address. This causes trouble on at least solaris
+    // and windows, or at most on not-linux.
+    if (endpoint.dgram ().open (ACE_Addr::sap_any,
+                                send_addr.get_type()) == -1)
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "Cannot open send endpoint\n"),
+                          1);
+      }
 
    // TAO_ECG_UDP_Sender::init() takes a TAO_ECG_Refcounted_Endpoint.
     // If we don't clone our endpoint and pass &endpoint, the sender will
@@ -221,20 +217,6 @@ int main (int argc, char* argv[])
       //eh.reset(udp_eh.release());
     }
 
-    // Check to see if there is a Barrier server available and if so,
-    // wait for it.
-     try
-      {
-        tmpobj = root_context->resolve_str ("Echo_barrier");
-        Barrier_var barrier = Barrier::_narrow (tmpobj.in());
-        if (!CORBA::is_nil(barrier.in()))
-            barrier->wait();
-      }
-    catch (const ::CORBA::Exception &)
-      {
-        // no worries, just keep going.
-      }
-
     // Create an event (just a string in this case).
     const CORBA::String_var eventData = CORBA::string_dup(ecname);
 
@@ -259,7 +241,7 @@ int main (int argc, char* argv[])
     ACE_DEBUG ((LM_DEBUG,
     "Starting main loop\n"));
 
-    const int EVENT_DELAY_MS = 10;
+    const int EVENT_DELAY_MS = 1000;
 
     while (1) {
       consumer->push (event);

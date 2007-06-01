@@ -11,157 +11,14 @@
 ACE_BUILDDIR = $(top_builddir)/..
 ACE_ROOT = $(top_srcdir)/..
 TAO_BUILDDIR = $(top_builddir)
-TAO_IDL = ACE_ROOT=$(ACE_ROOT) TAO_ROOT=$(TAO_ROOT) $(TAO_BUILDDIR)/TAO_IDL/tao_idl
-TAO_IDL_DEP = $(TAO_BUILDDIR)/TAO_IDL/tao_idl
-TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf
 TAO_ROOT = $(top_srcdir)
 
 noinst_PROGRAMS =
 
-## Makefile.RTEC_MCast_Federated_Idl.am
-
-BUILT_SOURCES = \
-  BarrierC.cpp \
-  BarrierC.h \
-  BarrierC.inl \
-  BarrierS.cpp \
-  BarrierS.h \
-  BarrierS.inl \
-  BarrierS_T.cpp \
-  BarrierS_T.h \
-  BarrierS_T.inl
-
-CLEANFILES = \
-  Barrier-stamp \
-  BarrierC.cpp \
-  BarrierC.h \
-  BarrierC.inl \
-  BarrierS.cpp \
-  BarrierS.h \
-  BarrierS.inl \
-  BarrierS_T.cpp \
-  BarrierS_T.h \
-  BarrierS_T.inl
-
-BarrierC.cpp BarrierC.h BarrierC.inl BarrierS.cpp BarrierS.h BarrierS.inl BarrierS_T.cpp BarrierS_T.h BarrierS_T.inl: Barrier-stamp
-
-Barrier-stamp: $(srcdir)/Barrier.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/Barrier.idl
-	@touch "$@"
-
-
-noinst_HEADERS = \
-  Barrier.idl
-
-## Makefile.RTEC_MCast_Federated_AddrServer.am
-
-if BUILD_CORBA_MESSAGING
-if !BUILD_ACE_FOR_TAO
-
-BUILT_SOURCES += \
-  BarrierC.cpp \
-  BarrierC.h \
-  BarrierC.inl \
-  BarrierS.cpp \
-  BarrierS.h \
-  BarrierS.inl \
-  BarrierS_T.cpp \
-  BarrierS_T.h \
-  BarrierS_T.inl
-
-CLEANFILES += \
-  Barrier-stamp \
-  BarrierC.cpp \
-  BarrierC.h \
-  BarrierC.inl \
-  BarrierS.cpp \
-  BarrierS.h \
-  BarrierS.inl \
-  BarrierS_T.cpp \
-  BarrierS_T.h \
-  BarrierS_T.inl
-
-BarrierC.cpp BarrierC.h BarrierC.inl BarrierS.cpp BarrierS.h BarrierS.inl BarrierS_T.cpp BarrierS_T.h BarrierS_T.inl: Barrier-stamp
-
-Barrier-stamp: $(srcdir)/Barrier.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs $(srcdir)/Barrier.idl
-	@touch "$@"
-
-noinst_PROGRAMS += AddrServer
-
-AddrServer_CPPFLAGS = \
-  -I$(ACE_ROOT) \
-  -I$(ACE_BUILDDIR) \
-  -I$(TAO_ROOT) \
-  -I$(TAO_BUILDDIR) \
-  -I$(TAO_ROOT)/orbsvcs \
-  -I$(TAO_BUILDDIR)/orbsvcs \
-  -I$(srcdir)/../Common \
-  -DACE_HAS_IPV6
-
-AddrServer_SOURCES = \
-  AddrServerMain.cpp \
-  BarrierC.cpp \
-  BarrierS.cpp \
-  SimpleAddressServer.cpp \
-  BarrierC.h \
-  BarrierC.inl \
-  BarrierS.h \
-  BarrierS.inl \
-  BarrierS_T.h \
-  BarrierS_T.inl \
-  SimpleAddressServer.h
-
-AddrServer_LDADD = \
-  libTAO_RTEvent_Serv.la \
-  libTAO_RTEvent_Skel.la \
-  libTAO_RTEvent.la \
-  libTAO_Svc_Utils.la \
-  libTAO_Messaging.la \
-  libTAO_PI.la \
-  libTAO_CodecFactory.la \
-  libTAO_PortableServer.la \
-  libTAO_Valuetype.la \
-  libTAO_CosNaming.la \
-  libTAO_AnyTypeCode.la \
-  libTAO.la \
-  libACE.la
-
-endif !BUILD_ACE_FOR_TAO
-endif BUILD_CORBA_MESSAGING
-
 ## Makefile.RTEC_MCast_Federated_Consumer.am
 
 if BUILD_CORBA_MESSAGING
-
-BUILT_SOURCES += \
-  BarrierC.cpp \
-  BarrierC.h \
-  BarrierC.inl \
-  BarrierS.cpp \
-  BarrierS.h \
-  BarrierS.inl \
-  BarrierS_T.cpp \
-  BarrierS_T.h \
-  BarrierS_T.inl
-
-CLEANFILES += \
-  Barrier-stamp \
-  BarrierC.cpp \
-  BarrierC.h \
-  BarrierC.inl \
-  BarrierS.cpp \
-  BarrierS.h \
-  BarrierS.inl \
-  BarrierS_T.cpp \
-  BarrierS_T.h \
-  BarrierS_T.inl
-
-BarrierC.cpp BarrierC.h BarrierC.inl BarrierS.cpp BarrierS.h BarrierS.inl BarrierS_T.cpp BarrierS_T.h BarrierS_T.inl: Barrier-stamp
-
-Barrier-stamp: $(srcdir)/Barrier.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs $(srcdir)/Barrier.idl
-	@touch "$@"
+if BUILD_EXCEPTIONS
 
 noinst_PROGRAMS += EchoEventConsumer
 
@@ -172,69 +29,35 @@ EchoEventConsumer_CPPFLAGS = \
   -I$(TAO_BUILDDIR) \
   -I$(TAO_ROOT)/orbsvcs \
   -I$(TAO_BUILDDIR)/orbsvcs \
-  -I$(srcdir)/../Common \
-  -DACE_HAS_IPV6
+  -I$(srcdir)/../Common
 
 EchoEventConsumer_SOURCES = \
-  BarrierC.cpp \
-  BarrierS.cpp \
   EchoEventConsumerMain.cpp \
   EchoEventConsumer_i.cpp \
-  BarrierC.h \
-  BarrierC.inl \
-  BarrierS.h \
-  BarrierS.inl \
-  BarrierS_T.h \
-  BarrierS_T.inl \
   EchoEventConsumer_i.h
 
 EchoEventConsumer_LDADD = \
-  libTAO_RTEvent_Skel.la \
-  libTAO_RTEvent.la \
-  libTAO_Svc_Utils.la \
-  libTAO_Messaging.la \
-  libTAO_PI.la \
-  libTAO_CodecFactory.la \
-  libTAO_PortableServer.la \
-  libTAO_Valuetype.la \
-  libTAO_CosNaming.la \
-  libTAO_AnyTypeCode.la \
-  libTAO.la \
-  libACE.la
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_RTEvent_Skel.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_RTEvent.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_Svc_Utils.la \
+  $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PI.la \
+  $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
+  $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
+  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
+  $(TAO_BUILDDIR)/tao/libTAO.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
 
+endif BUILD_EXCEPTIONS
 endif BUILD_CORBA_MESSAGING
 
 ## Makefile.RTEC_MCast_Federated_Supplier.am
 
 if BUILD_CORBA_MESSAGING
+if BUILD_EXCEPTIONS
 if !BUILD_ACE_FOR_TAO
-
-BUILT_SOURCES += \
-  BarrierC.cpp \
-  BarrierC.h \
-  BarrierC.inl \
-  BarrierS.h \
-  BarrierS.inl \
-  BarrierS_T.cpp \
-  BarrierS_T.h \
-  BarrierS_T.inl
-
-CLEANFILES += \
-  Barrier-stamp \
-  BarrierC.cpp \
-  BarrierC.h \
-  BarrierC.inl \
-  BarrierS.h \
-  BarrierS.inl \
-  BarrierS_T.cpp \
-  BarrierS_T.h \
-  BarrierS_T.inl
-
-BarrierC.cpp BarrierC.h BarrierC.inl BarrierS.h BarrierS.inl BarrierS_T.cpp BarrierS_T.h BarrierS_T.inl: Barrier-stamp
-
-Barrier-stamp: $(srcdir)/Barrier.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs $(srcdir)/Barrier.idl
-	@touch "$@"
 
 noinst_PROGRAMS += EchoEventSupplier
 
@@ -245,45 +68,33 @@ EchoEventSupplier_CPPFLAGS = \
   -I$(TAO_BUILDDIR) \
   -I$(TAO_ROOT)/orbsvcs \
   -I$(TAO_BUILDDIR)/orbsvcs \
-  -I$(srcdir)/../Common \
-  -DACE_HAS_IPV6
+  -I$(srcdir)/../Common
 
 EchoEventSupplier_SOURCES = \
-  BarrierC.cpp \
   EchoEventSupplierMain.cpp \
   EchoEventSupplier_i.cpp \
   SimpleAddressServer.cpp \
-  BarrierC.h \
-  BarrierC.inl \
-  BarrierS.h \
-  BarrierS.inl \
-  BarrierS_T.h \
-  BarrierS_T.inl \
   EchoEventSupplier_i.h \
   SimpleAddressServer.h
 
 EchoEventSupplier_LDADD = \
-  libTAO_RTEvent_Serv.la \
-  libTAO_RTEvent_Skel.la \
-  libTAO_RTEvent.la \
-  libTAO_Svc_Utils.la \
-  libTAO_Messaging.la \
-  libTAO_PI.la \
-  libTAO_CodecFactory.la \
-  libTAO_PortableServer.la \
-  libTAO_Valuetype.la \
-  libTAO_CosNaming.la \
-  libTAO_AnyTypeCode.la \
-  libTAO.la \
-  libACE.la
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_RTEvent_Serv.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_RTEvent_Skel.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_RTEvent.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_Svc_Utils.la \
+  $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PI.la \
+  $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
+  $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
+  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
+  $(TAO_BUILDDIR)/tao/libTAO.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
 
 endif !BUILD_ACE_FOR_TAO
+endif BUILD_EXCEPTIONS
 endif BUILD_CORBA_MESSAGING
-
-
-ACLOCAL = @ACLOCAL@
-ACLOCAL_AMFLAGS = -I m4
-AUTOMAKE_OPTIONS = foreign
 
 ## Clean up template repositories, etc.
 clean-local:
