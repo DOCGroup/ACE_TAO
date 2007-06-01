@@ -36,7 +36,7 @@ while ($i <= $#ARGV) {
   } elsif ($ARGV[$i] eq "-mcast") {
     $udp = 0;
   } elsif ($ARGV[$i] eq "-ipv6") {
-    $mcast_addr = "FF01::255";
+    $mcast_addr = "FF35::255";
   } else {
     print "ERROR: Unknown Option: ".$ARGV[$i]."\n\n";
     usage ();
