@@ -1,3 +1,9 @@
+Fri Jun  1 20:51:57 UTC 2007  ciju john  <john_c@ociweb.com>
+
+        * include/makeinclude/platform_hpux_aCC.GNU:
+          Adding on Johnny's behalf:
+           Disable W3397 with HP aCC 06.13
+
 Thu May 31 03:16:53 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * ace/config-macros.h:
@@ -7,7 +13,7 @@ Thu May 31 03:16:53 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
           It introduced around 10 new warnings for ACE/TAO/CIAO under GCC
           Compilers. We'll try to address/fix those after the beta is out.
 
-          ACE_NOTREACHED macro now expands to nothing for Visual Studio 
+          ACE_NOTREACHED macro now expands to nothing for Visual Studio
           Compilers.
 
 Thu May 31 03:12:50 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
