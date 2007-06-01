@@ -1,3 +1,11 @@
+Fri Jun 01 10:08:00 UTC 2007  Simon Massey  <sma@prismtech.com>
+
+        * tests/CodeSets/libs/UCS4_UTF16/WUCS4_UTF16.cpp:
+
+          Change the static_cast to a reinterprest_cast for the
+          defined (ACE_ENABLE_SWAP_ON_WRITE) code path to actually
+          compile.
+
 Thu May 31 19:13:32 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/orbsvcs/RtecUDPAdmin.idl:
