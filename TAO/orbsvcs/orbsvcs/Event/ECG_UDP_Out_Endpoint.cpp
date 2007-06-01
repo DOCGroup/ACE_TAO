@@ -47,10 +47,7 @@ TAO_ECG_UDP_Out_Endpoint::is_loopback (const ACE_INET_Addr& from)
        i != this->ifs_ + this->if_count_;
        ++i)
     {
-      if (i->get_addr_size() == from.get_addr_size() &&
-          ACE_OS::memcmp( i->get_addr(),
-                          from.get_addr(),
-                          from.get_addr_size()))
+      if (i->is_ip_equal(from))
         return true;
     }
   return false;

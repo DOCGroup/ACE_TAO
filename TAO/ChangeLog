@@ -1,3 +1,32 @@
+Fri Jun  1 22:32:52 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * NEWS:
+
+          Added a comment regarding IPv6 Mcast federation support.
+
+        * orbsvcs/orbsvcs/Event/ECG_UDP_Out_Endpoint.cpp:
+
+          Make use of new ip address equality test in ACE_INET_Addr.
+
+        * orbsvcs/tests/Event/Mcast/RTEC_MCast_Federated/EchoEventSupplierMain.cpp:
+        * orbsvcs/tests/Event/Mcast/RTEC_MCast_Federated/Makefile.am:
+        * orbsvcs/tests/Event/Mcast/RTEC_MCast_Federated/README:
+        * orbsvcs/tests/Event/Mcast/RTEC_MCast_Federated/RTEC_MCast_Federated.mpc:
+          Removed references to the barrier and the distributed address
+          server, they were not needed for the test. For cross platform
+          validation of the address server there is now a separate test
+          case.
+
+        * orbsvcs/tests/Event/Mcast/RTEC_MCast_Federated/supplier.conf:
+
+          Added a ConsumerControl specification so that a manually run
+          supplier doesn't start spinning when the consumer goes away.
+
+        * orbsvcs/tests/Event/Mcast/RTEC_MCast_Federated/AddrServerMain.cpp:
+        * orbsvcs/tests/Event/Mcast/RTEC_MCast_Federated/Barrier.idl:
+
+          Removed these files, they were proved to be useless.
+
 Fri Jun  1 19:03:46 UTC 2007  Ciju John  <johnc at ociweb dot com>
 
         * TAO_IDL/fe/lex.yy.cpp:

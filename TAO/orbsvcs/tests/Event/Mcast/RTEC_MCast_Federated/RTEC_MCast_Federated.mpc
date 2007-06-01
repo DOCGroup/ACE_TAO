@@ -1,15 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(*idl): taoidldefaults {
-  IDL_Files {
-    Barrier.idl
-  }
-  custom_only = 1
-}
-
 project(*Supplier): namingexe, rteventexe, rtevent_serv {
-  after += *idl
   exename   = EchoEventSupplier
 
   specific(automake) {
@@ -20,14 +12,12 @@ project(*Supplier): namingexe, rteventexe, rtevent_serv {
 
   Source_Files {
     SimpleAddressServer.cpp
-    BarrierC.cpp
     EchoEventSupplierMain.cpp
     EchoEventSupplier_i.cpp
   }
 }
 
 project(*Consumer): namingexe, rteventexe,  {
-  after += *idl
   exename   = EchoEventConsumer
 
   specific(automake) {
@@ -40,23 +30,4 @@ project(*Consumer): namingexe, rteventexe,  {
     EchoEventConsumerMain.cpp
     EchoEventConsumer_i.cpp
   }
-}
-
-project(*AddrServer): namingexe, rtevent_serv {
-  after += *idl
-  exename = AddrServer
-
-  specific(automake) {
-    includes += $(srcdir)/../Common
-  } else {
-    includes += ../Common
-  }
-
-  Source_Files {
-    BarrierC.cpp
-    BarrierS.cpp
-    AddrServerMain.cpp
-    SimpleAddressServer.cpp
-  }
-
 }
