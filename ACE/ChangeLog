@@ -27,10 +27,10 @@ Thu May 31 03:16:53 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
           Reverted changes from:
           Wed May 30 00:17:35 UTC 2007  Abdullah Sowayan  <abdul...@lmco.com>
           It introduced around 10 new warnings for ACE/TAO/CIAO under GCC
-          Compilers. We'll try to address/fix those after the beta is out.
+          Compilers.
 
           ACE_NOTREACHED macro now expands to nothing for Visual Studio
-          Compilers.
+          Compilers. This fixes Bugzilla 2948.
 
 Thu May 31 03:12:50 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
