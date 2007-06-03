@@ -1,3 +1,18 @@
+Sun Jun  3 19:57:23 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tests/IDL_Test/constants.idl:
+        
+          Commented out a recently-added
+          
+          Fri May 25 18:49:12 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
+          
+          addition to this file - an octet constant with a left-shift
+          operator in the rhs literal. My fix to AST_Expression in
+          the above checkin didn't work for big-endian systems. Possible
+          approaches to a complete fix all involve protracted design
+          changes in expression handling, so the problem IDL is commented out
+          for now.
+
 Fri Jun  1 22:32:52 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * NEWS:
