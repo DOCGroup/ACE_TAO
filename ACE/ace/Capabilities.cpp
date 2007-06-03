@@ -238,7 +238,7 @@ ACE_Capabilities::getline (FILE *fp, ACE_TString &line)
 
   line.set (0, 0);
 
-  while ((ch = fgetc (fp)) != EOF && ch != ACE_LIB_TEXT ('\n'))
+  while ((ch = ACE_OS::fgetc (fp)) != EOF && ch != ACE_LIB_TEXT ('\n'))
     line += (ACE_TCHAR) ch;
 
   if (ch == EOF && line.length () == 0)

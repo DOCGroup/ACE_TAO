@@ -77,8 +77,8 @@ Stdio_Test::run_test (int iterations,
     {
       int c;
 
-      while ((c = getc (input_fp)) != EOF)
-        putc (c, output_fp);
+      while ((c = ACE_OS::getc (input_fp)) != EOF)
+        ACE_OS::putc (c, output_fp);
 
       ACE_OS::rewind (input_fp);
       ACE_OS::rewind (output_fp);

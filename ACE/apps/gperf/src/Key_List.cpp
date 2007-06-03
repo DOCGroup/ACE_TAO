@@ -153,7 +153,7 @@ Key_List::save_include_src (void)
   int c = getchar ();
 
   if (c != '%')
-    ungetc (c, stdin);
+    ACE_OS::ungetc (c, stdin);
   else if ((c = getchar ()) != '{')
     ACE_ERROR_RETURN ((LM_ERROR,
                        "internal error, %c != '{' on line %l in file %N",

@@ -1,3 +1,11 @@
+Sun Jun  3 20:05:36 UTC 2007  Olli Savia  <ops@iki.fi>
+
+        * ace/Capabilities.cpp:
+        * apps/Gateway/Gateway/File_Parser.cpp:
+        * apps/gperf/src/Key_List.cpp:
+        * examples/Mem_Map/IO-tests/IO_Test.cpp:
+          Added ACE_OS:: prefix to some plain function calls.
+
 Fri Jun  1 22:26:39 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * ace/INET_Addr.h:
