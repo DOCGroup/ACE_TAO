@@ -1,14 +1,19 @@
+Sun Jun  3 20:02:32 UTC 2007  Olli Savia  <ops@iki.fi>
+
+        * common/FileCharStream.cpp:
+          Replaced ungetc with ACE_OS::ungetc.
+
 Fri May 18 02:50:42 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * common/Mem_Map_Stream.cpp:
 
-          It makes no sense to have code after a return statement 
+          It makes no sense to have code after a return statement
           (such as ACE_ERROR_RETURN). It causes some builds to have
           "statement is unreachable" warning.
 
         * examples/SAXPrint/main.cpp:
 
-          Enhanced the "#ifndef" macros used to avoid "statement is 
+          Enhanced the "#ifndef" macros used to avoid "statement is
           unreachable" warning.
 
 Tue May 15 17:36:23 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
