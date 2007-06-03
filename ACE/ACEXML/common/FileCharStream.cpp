@@ -82,7 +82,7 @@ ACEXML_FileCharStream::determine_encoding (void)
         continue;
       else
         {
-          ungetc (ch, this->infile_);
+          ACE_OS::ungetc (ch, this->infile_);
           break;
         }
     }
@@ -168,7 +168,7 @@ ACEXML_FileCharStream::peek (void)
 #else
 
   ACEXML_Char ch = static_cast<ACEXML_Char> (ACE_OS::fgetc (this->infile_));
-  ::ungetc (ch, this->infile_);
+  ACE_OS::ungetc (ch, this->infile_);
   return ch;
 #endif /* ACE_USES_WCHAR */
 }
@@ -214,7 +214,7 @@ ACEXML_FileCharStream::peek_i (void)
   if (ACE_OS::strcmp (this->encoding_, ACE_TEXT ("UTF-8")) == 0)
     {
       ACEXML_Char ch = (ACEXML_Char) ACE_OS::fgetc (this->infile_);
-      ::ungetc (ch, this->infile_);
+      ACE_OS::ungetc (ch, this->infile_);
       return ch;
     }
 
