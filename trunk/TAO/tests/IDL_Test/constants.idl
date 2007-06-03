@@ -81,7 +81,9 @@ const unsigned long day = ~0;
 const unsigned long drink = 1000000000 << 2;
 const unsigned long c_l1 = (1 << 1);
 const octet c_o11 = 10 + c_l1;
-const octet c_o3 = (1 << 3);
+// @@ (JP 06/03/07) Seems it is still broken for big-endian systems,
+// at least. Rather than hold up a beta release with a redesign...
+//const octet c_o3 = (1 << 3);
 
 // An enum of one type cannot be assigned to an constant of another
 // enum type, but it's ok if one is a typedef of the other.
