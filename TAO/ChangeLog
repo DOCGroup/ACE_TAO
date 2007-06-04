@@ -1,11 +1,32 @@
+Mon Jun  4 02:56:02 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/tests/EC_MT_Mcast/MCast.cpp:
+        * orbsvcs/tests/EC_Mcast/EC_Mcast.cpp:
+        * orbsvcs/tests/Event/UDP/sender.cpp:
+
+          Each of these test drivers use sap_any when opening a datagram
+          socket, which on an IPv6 enabled platform causes the socket to
+          only allow IPv6 target addresses when sending datagrams. Thus
+          the test fails when using an IPv4 target address, reporting:
+             Send of mcast fragment blocked (bad address).
+          However this is not detected as an error. I have added the local
+          endpoint's address family as a parameter to the datagram open
+          method so that when the test is configured for IPv4 or IPv6, the
+          local socket is set up correctly.
+
+          This condition is written up in Bugzilla #2950. Ultimately I'd
+          like to see a solution that is encapsulated in the
+          ACE_SOCK_Dgram class so that applications such as these don't
+          have to be modified. I'm not sure the best way to do that.
+
 Sun Jun  3 19:57:23 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tests/IDL_Test/constants.idl:
-        
+
           Commented out a recently-added
-          
+
           Fri May 25 18:49:12 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
-          
+
           addition to this file - an octet constant with a left-shift
           operator in the rhs literal. My fix to AST_Expression in
           the above checkin didn't work for big-endian systems. Possible
