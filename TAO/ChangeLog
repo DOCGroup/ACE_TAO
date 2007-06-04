@@ -1,3 +1,10 @@
+Mon Jun  4 11:37:42 UTC 2007  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * docs/ORBEndpoint.html: Updated the files to use
+          ORBListenEndpoint rather than ORBEndpoint.  Thanks to Vikram
+          Karandikar" <softking at gmail dot com> for motivating this
+          change.
+
 Mon Jun  4 02:56:02 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/tests/EC_MT_Mcast/MCast.cpp:
