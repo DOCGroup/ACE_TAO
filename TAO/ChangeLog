@@ -1,3 +1,8 @@
+Mon Jun  4 19:14:02 UTC 2007  Ciju John  <johnc at ociweb dot com>
+
+        * tests/Oneway_Timeouts/run_test.pl:
+          Fixed test script. Had minor syntactic and control structures.
+
 Mon Jun  4 11:37:42 UTC 2007  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * docs/ORBEndpoint.html: Updated the files to use
