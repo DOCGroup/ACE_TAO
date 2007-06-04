@@ -135,7 +135,8 @@ main (int argc, char* argv[])
       // We need a local socket to send the data, open it and check
       // that everything is OK:
       TAO_ECG_Refcounted_Endpoint endpoint(new TAO_ECG_UDP_Out_Endpoint);
-      if (endpoint->dgram ().open (ACE_Addr::sap_any) == -1)
+      if (endpoint->dgram ().open (ACE_Addr::sap_any,
+                                   udp_addr.get_type()) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR, "Cannot open send endpoint\n"),
                             1);

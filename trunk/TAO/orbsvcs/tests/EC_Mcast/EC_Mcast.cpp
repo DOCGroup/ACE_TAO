@@ -235,14 +235,16 @@ ECM_Driver::close_federations (void)
 void
 ECM_Driver::open_senders (RtecEventChannelAdmin::EventChannel_ptr ec)
 {
-  if (this->endpoint_.dgram ().open (ACE_Addr::sap_any) == -1)
+  ACE_INET_Addr ignore_from;
+  this->endpoint_.dgram ().get_local_addr (ignore_from);
+
+  if (this->endpoint_.dgram ().open (ACE_Addr::sap_any,
+                                     ignore_from.get_type()) == -1)
     {
       // @@ TODO throw an application specific exception.
       throw CORBA::COMM_FAILURE ();
     }
 
-  ACE_INET_Addr ignore_from;
-  this->endpoint_.dgram ().get_local_addr (ignore_from);
   ACE_TCHAR buffer[256];
   ignore_from.addr_to_string (buffer,256);
   ACE_DEBUG ((LM_DEBUG, "(%P) ECM_Driver::open_senders - "
