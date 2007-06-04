@@ -1,3 +1,9 @@
+Mon Jun  4 22:40:13 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/tests/Event/Mcast/RTEC_MCast_Federated/run_test.pl:
+          One more change to the ipv6 test address to use a spec-complient
+          form of the test mcast address.
+
 Mon Jun  4 19:14:02 UTC 2007  Ciju John  <johnc at ociweb dot com>
 
         * tests/Oneway_Timeouts/run_test.pl:
