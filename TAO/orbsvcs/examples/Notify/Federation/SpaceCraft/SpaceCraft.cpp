@@ -2,8 +2,6 @@
 // author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
 // cvs-id    : $Id$
 
-#include <iostream>
-#include <sstream>
 
 #include "ace/OS.h"
 
@@ -22,6 +20,9 @@
 
 
 #include "Gate/Gate.h"
+
+#include <iostream>
+#include <sstream>
 
 using std::cerr;
 using std::endl;
