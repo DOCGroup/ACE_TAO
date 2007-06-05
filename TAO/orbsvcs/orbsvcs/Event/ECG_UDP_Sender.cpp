@@ -208,11 +208,11 @@ TAO_ECG_UDP_Sender::push (const RtecEventComm::EventSet &events)
           this->addr_server_->get_address (header, udp_addr.out());
           switch (udp_addr->_d())
             {
-            case RtecUDPAdmin::INET:
+            case RtecUDPAdmin::Rtec_inet:
               inet_addr.set(udp_addr->v4_addr().port,
                             udp_addr->v4_addr().ipaddr);
               break;
-            case RtecUDPAdmin::INET6:
+            case RtecUDPAdmin::Rtec_inet6:
 #if defined (ACE_HAS_IPV6)
               inet_addr.set_type(PF_INET6);
 #endif

@@ -32,7 +32,7 @@ void
 AddrServer::get_addr (const RtecEventComm::EventHeader&,
                       RtecUDPAdmin::UDP_Addr& addr)
 {
-  if (this->addr_._d() == RtecUDPAdmin::INET6)
+  if (this->addr_._d() == RtecUDPAdmin::Rtec_inet6)
     throw CORBA::DATA_CONVERSION(0, CORBA::COMPLETED_YES);
   addr = this->addr_.v4_addr();
 }
