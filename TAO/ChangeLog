@@ -1,3 +1,10 @@
+Tue Jun  5 13:23:04 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tests/IDL_Test/nested_scope.idl:
+        
+          Commented out a line that has been determined by Simon Massey
+          <simon dot massey at prismtech dot com> to be melformed IDL.
+
 Mon Jun  4 22:40:13 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/tests/Event/Mcast/RTEC_MCast_Federated/run_test.pl:

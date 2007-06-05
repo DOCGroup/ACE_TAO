@@ -168,7 +168,13 @@ module Wow
   {
     interface MyInterface
     {
-      void op1 (in bug_2125::Bar::Stuff fbs);
+// @@ (JP 06/04/07) I'm commenting out the line below, since
+// according to IDL scoping rules (CORBA 3.0.3, sections
+// 3.20.1 and 3.20.2), the module Wow::bug_2125 hides the
+// global module bug_2125 and so the lookup should fail.
+// Not removing the line completely in case someday we
+// extend IDL_Test to check for rejection of illegal IDL.
+//      void op1 (in bug_2125::Bar::Stuff fbs);
       void op2 (in ::bug_2125::Bar::Stuff fbs);
     };
   };
