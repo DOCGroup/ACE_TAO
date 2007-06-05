@@ -1,3 +1,11 @@
+Tue Jun  5 21:10:24 UTC 2007  Ciju John  <johnc at ociweb dot com>
+
+        * orbsvcs/examples/Notify/Federation/SpaceCraft/SpaceCraft.cpp:
+        * orbsvcs/orbsvcs/Trader/Constraint_y.cpp:
+        * tests/Bug_2560_Regression/Stock_Factory_i.cpp:
+          Corrected header includes order. This fixes log2 API not being
+          found errors on VxWorks6.4 RTI builds.
+
 Tue Jun  5 18:56:16 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/orbsvcs/Event/ECG_Mcast_EH.cpp:

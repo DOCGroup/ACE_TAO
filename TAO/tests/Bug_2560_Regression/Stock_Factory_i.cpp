@@ -2,8 +2,9 @@
 // $Id$
 //
 
-#include <iostream>
 #include "Stock_Factory_i.h"
+
+#include <iostream>
 
 Quoter_Stock_Factory_i::Quoter_Stock_Factory_i ()
 {
