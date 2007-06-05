@@ -1,7 +1,20 @@
+Tue Jun  5 18:56:16 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/orbsvcs/Event/ECG_Mcast_EH.cpp:
+        * orbsvcs/orbsvcs/Event/ECG_UDP_Sender.cpp:
+        * orbsvcs/orbsvcs/RtecUDPAdmin.idl:
+        * orbsvcs/tests/EC_MT_Mcast/AddrServer.cpp:
+
+          The enum added to RtecUDPAdmin.idl contained "INET" which
+          apparently collided with a '#define INET' on some VxWorks build
+          environments. To avoid this collision, the enum values have been
+          renamed. Thanks to Martin Corino for finding the cause of this
+          build problem on VxWorks.
+
 Tue Jun  5 13:23:04 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tests/IDL_Test/nested_scope.idl:
-        
+
           Commented out a line that has been determined by Simon Massey
           <simon dot massey at prismtech dot com> to be melformed IDL.
 

@@ -60,8 +60,8 @@ module RtecUDPAdmin
    */
   enum Address_Family
   {
-    INET,
-    INET6
+    Rtec_inet,
+    Rtec_inet6
   };
 
   /**
@@ -73,9 +73,9 @@ module RtecUDPAdmin
    */
   union UDP_Address switch (Address_Family)
   {
-  case INET:
+  case Rtec_inet:
     UDP_Addr v4_addr;
-  case INET6:
+  case Rtec_inet6:
     UDP_Addr_v6 v6_addr;
   };
 
