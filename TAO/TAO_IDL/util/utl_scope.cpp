@@ -1595,11 +1595,6 @@ UTL_Scope::lookup_by_name_local (Identifier *e,
                                  long index,
                                  bool full_def_only)
 {
-  if (index > 0 && index == (long) this->nmembers ())
-    {
-      return 0;
-    }
-    
   AST_Type *t = 0;
 
   // Will catch Object, TypeCode, ValueBase and AbstractBase.
@@ -1686,7 +1681,7 @@ UTL_Scope::lookup_by_name_local (Identifier *e,
           // see if there's another matching identifier to the 'head' of
           // the scoped name we're working with.
             {
-              index--;
+              --index;
               continue;
             }
         }
@@ -1696,7 +1691,7 @@ UTL_Scope::lookup_by_name_local (Identifier *e,
   // look in previous openings, if any.
   AST_Decl *last_chance = ScopeAsDecl (this);
 
-  if (last_chance->node_type () == AST_Decl::NT_module)
+  if (0 == index && last_chance->node_type () == AST_Decl::NT_module)
     {
       // Check the result using the full_def_only constraint.
       AST_Module *m = AST_Module::narrow_from_decl (last_chance);
@@ -1781,14 +1776,14 @@ UTL_Scope::lookup_by_name (UTL_ScopedName *e,
   // The name does not start with "::"
   // Is name defined here?
   long index = 0;
-
+  AST_Decl *first_one_found= 0;
   while (true)
     {
       d = this->lookup_by_name_local (e->head (),
                                       index,
                                       full_def_only);
 
-      if (0 == d)
+      if (0 == d) // Root of identifier not found in our local scope
         {
           // A no-op unless d can inherit.
           d = look_in_inherited (e, treat_as_ref);
@@ -1799,20 +1794,16 @@ UTL_Scope::lookup_by_name (UTL_ScopedName *e,
               d = look_in_supported (e, treat_as_ref);
             }
             
-          if (0 == d && this->pd_scope_node_type == AST_Decl::NT_module)
+          if ((0 == d) && in_parent)
             {
-              // Check this result using the full_def_only constraint.
-              d = this->look_in_previous (e->head (), true);
-              t = (0 == d ? 0 : AST_Type::narrow_from_decl (d));
-            
-              if (0 != t && full_def_only && !t->is_defined ())
+              if (full_def_only && (0 != first_one_found))
                 {
-                  d = 0;
-                }
-            }
+                  // We don't need any diagnostic messages and we will
+                  // not be following down the parent scope chain.
 
-          if ((0 == d) && in_parent && idl_global->err_count () == 0)
-            {
+                  return 0;
+                }
+
               // OK, not found. Go down parent scope chain.
               d = ScopeAsDecl (this);
 
@@ -1831,6 +1822,66 @@ UTL_Scope::lookup_by_name (UTL_ScopedName *e,
                                              in_parent,
                                              full_def_only);
                     }
+                }
+
+              if (0 != first_one_found)
+                {
+                  // Since we have actually seen a match in local scope (even though that
+                  // went nowhere) the full identifier is actually undefined as we are not
+                  // allowed to follow down the parent scope chain. (The above is still
+                  // useful to identify possiable user scoping mistakes however for the
+                  // following diagnostic.)
+
+                  if (0 != d)
+                    {
+                      ACE_ERROR (( LM_ERROR,
+                        ACE_TEXT ("%s: \"%s\", line %d: Did you mean \"::%s\"\n")
+                        ACE_TEXT ("   declared at "),
+                        idl_global->prog_name (),
+                        idl_global->filename ()->get_string (),
+                        idl_global->lineno (),
+                        d->full_name () ));
+                      const bool same_file=
+                        (0 == ACE_OS::strcmp (
+                                idl_global->filename ()->get_string (),
+                                d->file_name ().c_str ()) );
+                      if (!same_file)
+                        {
+                          ACE_ERROR ((LM_ERROR,
+                            ACE_TEXT ("%s "),
+                            d->file_name ().c_str () ));
+                        }
+                      ACE_ERROR ((LM_ERROR,
+                        ACE_TEXT ("line %d but hidden by local \""),
+                        d->line () ));
+                      if (ScopeAsDecl (this)->full_name ()[0])
+                        {
+                          ACE_ERROR ((LM_ERROR, ACE_TEXT ("::%s"),
+                            ScopeAsDecl (this)->full_name () ));
+                        }
+                      ACE_ERROR ((LM_ERROR,
+                        ACE_TEXT ("::%s\""),
+                        e->head ()->get_string () ));
+                      const bool same_file_again=
+                        (same_file &&
+                         0 == ACE_OS::strcmp (
+                                idl_global->filename ()->get_string (),
+                                first_one_found->file_name ().c_str ()) );
+                      if (!same_file_again)
+                        {
+                          ACE_ERROR ((LM_ERROR,
+                            ACE_TEXT ("\n")
+                            ACE_TEXT ("   declared at %s "),
+                            first_one_found->file_name ().c_str () ));
+                        }
+                      else
+                        {
+                          ACE_ERROR ((LM_ERROR, ACE_TEXT (" at ") ));
+                        }
+                      ACE_ERROR ((LM_ERROR, ACE_TEXT ("line %d ?\n"),
+                        first_one_found->line () ));
+                    }
+                  return 0;
                 }
             }
 
@@ -1878,6 +1929,9 @@ UTL_Scope::lookup_by_name (UTL_ScopedName *e,
           return d;
         }
 
+      // We have found the root of the identifier in our local scope.
+      first_one_found= d;
+
       // For the possible call to look_in_inherited() below.
       s = DeclAsScope (d);
 
@@ -1903,23 +1957,21 @@ UTL_Scope::lookup_by_name (UTL_ScopedName *e,
           d = s->look_in_inherited (sn, treat_as_ref);
         }
 
-      // If treat_as_ref is true and d is not 0, add d to
-      // set of nodes referenced here.
-      if (treat_as_ref && d != 0)
-        {
-          add_to_referenced (d,
-                             false,
-                             0);
-        }
-
       // All OK, name fully resolved.
       if (d != 0)
         {
+          // If treat_as_ref is true and d is not 0, add d to
+          // set of nodes referenced here.
+          if (treat_as_ref)
+            {
+              add_to_referenced (d, false, 0);
+            }
+
           return d;
         }
       else
         {
-          index++;
+          ++index;
         }
     }
 }
