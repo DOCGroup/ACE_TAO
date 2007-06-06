@@ -132,9 +132,6 @@ AST_Type::size_type (void)
 void
 AST_Type::size_type (AST_Type::SIZE_TYPE st)
 {
-  // Precondition - you cannot set somebody's sizetype to unknown.
-  ACE_ASSERT (st != AST_Type::SIZE_UNKNOWN);
-
   // Size type can be VARIABLE or FIXED.
   if (this->size_type_ == AST_Type::SIZE_UNKNOWN) // not set yet
     {

@@ -1,3 +1,11 @@
+Wed Jun 06 16:07:00 UTC 2007  Simon Massey  <sma@prismtech.com>
+
+        * TAO_IDL/ast/ast_type.cpp:
+
+          Remove an assert (that can get treiggered legaly during
+          idl compilation when errors have been seen, and we are
+          only checking code further down).
+
 Wed Jun  6 12:05:22 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/tests/Event/Mcast/AddrServer/Client.cpp:
