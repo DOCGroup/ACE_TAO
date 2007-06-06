@@ -1,3 +1,9 @@
+Wed Jun  6 02:04:42 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * ciaosvcs/Events/CIAO_RTEC/SimpleAddressServer.cpp:
+
+          Update the name of the test enum value to match the idl.
+
 Tue May 29 21:02:08 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * ciaosvcs/Events/CIAO_RTEC/SimpleAddressServer.h:
