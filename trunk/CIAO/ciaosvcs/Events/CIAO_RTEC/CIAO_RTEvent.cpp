@@ -507,7 +507,7 @@ namespace CIAO
         ACE_DEBUG ((LM_DEBUG, "CIAO::RTEventServiceConsumer_impl::push\n"));
       }
 
-    for (size_t i = 0; i < events.length (); ++i)
+    for (CORBA::ULong i = 0; i < events.length (); ++i)
       {
         std::ostringstream out;
         out << "Received event,"
