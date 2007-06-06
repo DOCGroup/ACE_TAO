@@ -60,11 +60,11 @@ main (int argc, char *argv[])
           as->get_address (header, udp_addr.out());
           switch (udp_addr->_d())
             {
-            case RtecUDPAdmin::INET:
+            case RtecUDPAdmin::Rtec_inet:
               inet_addr.set(udp_addr->v4_addr().port,
                             udp_addr->v4_addr().ipaddr);
               break;
-            case RtecUDPAdmin::INET6:
+            case RtecUDPAdmin::Rtec_inet6:
               inet_addr.set_type(PF_INET6);
               inet_addr.set_address(udp_addr->v6_addr().ipaddr,16,0);
               inet_addr.set_port_number(udp_addr->v6_addr().port);
@@ -92,11 +92,11 @@ main (int argc, char *argv[])
           as->get_address (header, udp_addr.out());
           switch (udp_addr->_d())
             {
-            case RtecUDPAdmin::INET:
+            case RtecUDPAdmin::Rtec_inet:
               inet_addr.set(udp_addr->v4_addr().port,
                             udp_addr->v4_addr().ipaddr);
               break;
-            case RtecUDPAdmin::INET6:
+            case RtecUDPAdmin::Rtec_inet6:
               inet_addr.set_type(PF_INET6);
               inet_addr.set_address(udp_addr->v6_addr().ipaddr,16,0);
               inet_addr.set_port_number(udp_addr->v6_addr().port);

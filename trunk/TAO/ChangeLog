@@ -1,3 +1,9 @@
+Wed Jun  6 12:05:22 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/tests/Event/Mcast/AddrServer/Client.cpp:
+
+          Fixed old reference to RtecUDPAdmin::INET that was overlooked
+          yesterday.
 Wed Jun 06 09:39:00 UTC 2007  Simon Massey  <sma@prismtech.com>
 
         * TAO_IDL/util/utl_scope.cpp:
