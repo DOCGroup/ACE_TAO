@@ -34,7 +34,7 @@ SimpleAddressServer::get_addr (const RtecEventComm::EventHeader&,
                                RtecUDPAdmin::UDP_Addr& address)
     throw (CORBA::SystemException)
 {
-  if (this->address_._d() == RtecUDPAdmin::INET6)
+  if (this->address_._d() == RtecUDPAdmin::Rtec_inet6)
     throw CORBA::DATA_CONVERSION(0, CORBA::COMPLETED_YES);
   address = this->address_.v4_addr();
 }
