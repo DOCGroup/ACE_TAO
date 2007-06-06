@@ -1,3 +1,10 @@
+Wed Jun  6 16:52:46 UTC 2007  Gan Deng  <gan.deng@vanderbilt.edu>
+
+        * ciaosvcs/Events/CIAO_RTEC/CIAO_RTEvent.cpp
+
+          Fixed a type conversion warning on the
+          WinXP_VC71_NET_Dynamic_Debug build.
+        
 Wed Jun  6 02:04:42 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * ciaosvcs/Events/CIAO_RTEC/SimpleAddressServer.cpp:
