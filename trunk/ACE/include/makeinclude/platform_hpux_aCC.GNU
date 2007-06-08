@@ -30,12 +30,20 @@ CXX             = aCC
 # Determine compiler version
 CXXVERS_WORDS := $(subst ., , $(shell $(CXX) -V 2>&1))
 CXXINFO := $(word 3, $(CXXVERS_WORDS))
-ifeq (aC++/ANSI, $(CXXINFO))
+# aCC++ 3.67 gives "aCC: HP ANSI C++ B3910B A.03.67"
+# aCC++ 3.73 gives "aCC: HP ANSI C++ B3910B A.03.73"
+#
+ifeq (ANSI, $(CXXINFO))
   CXXMINORVERS := $(word 8, $(CXXVERS_WORDS))
   CXXMAJORVERS := $(word 7, $(CXXVERS_WORDS))
 else
-  CXXMINORVERS := $(word 7, $(CXXVERS_WORDS))
-  CXXMAJORVERS := $(word 6, $(CXXVERS_WORDS))
+  ifeq (aC++/ANSI, $(CXXINFO))
+    CXXMINORVERS := $(word 8, $(CXXVERS_WORDS))
+    CXXMAJORVERS := $(word 7, $(CXXVERS_WORDS))
+  else
+    CXXMINORVERS := $(word 7, $(CXXVERS_WORDS))
+    CXXMAJORVERS := $(word 6, $(CXXVERS_WORDS))
+  endif
 endif
 
 ifeq (1,$(stdcpplib))
