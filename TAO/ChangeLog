@@ -1,3 +1,11 @@
+Fri Jun 08 10:20:00 UTC 2007  Simon Massey  <sma@prismtech.com>
+
+        * TAO/orbsvcs/orbsvcs/SSLIOP/params_dup.c:
+
+          Due to Window's MFC compatiable builds objecting to this
+          c file, it has been renamed to .cpp and extern "C" statements
+          included with the two functions that require C linkage.
+
 Wed Jun 06 16:07:00 UTC 2007  Simon Massey  <sma@prismtech.com>
 
         * TAO_IDL/ast/ast_type.cpp:
