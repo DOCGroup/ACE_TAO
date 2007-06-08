@@ -43,10 +43,10 @@ struct Tester
 
       BOOST_CHECK_EQUAL(CORBA::ULong(0), x.maximum());
       BOOST_CHECK_EQUAL(CORBA::ULong(0), x.length());
-      BOOST_CHECK_EQUAL(true, x.release());
+      BOOST_CHECK_EQUAL(false, x.release());
     }
     BOOST_CHECK_MESSAGE(a.expect(0), a);
-    BOOST_CHECK_MESSAGE(f.expect(1), f);
+    BOOST_CHECK_MESSAGE(f.expect(0), f);
     BOOST_CHECK_MESSAGE(i.expect(0), i);
   }
 

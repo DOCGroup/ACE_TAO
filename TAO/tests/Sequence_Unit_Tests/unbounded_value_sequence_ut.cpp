@@ -70,7 +70,7 @@ struct Tester
 
       y = x;
       BOOST_CHECK_MESSAGE(a.expect(1), a);
-      BOOST_CHECK_MESSAGE(f.expect(1), f);
+      BOOST_CHECK_MESSAGE(f.expect(0), f);
       BOOST_CHECK_EQUAL(CORBA::ULong(16), y.maximum());
       BOOST_CHECK_EQUAL(CORBA::ULong(8), y.length());
       BOOST_CHECK_EQUAL(true, y.release());
@@ -151,7 +151,7 @@ struct Tester
       BOOST_CHECK_THROW(x.length(8), testing_exception);
       BOOST_CHECK_MESSAGE(a.expect(1), a);
     }
-    BOOST_CHECK_MESSAGE(f.expect(1), f);
+    BOOST_CHECK_MESSAGE(f.expect(0), f);
   }
 
   value_type * alloc_and_init_buffer()
@@ -262,7 +262,7 @@ struct Tester
       tested_sequence a;
       a.replace(8, 4, buffer);
       BOOST_CHECK_MESSAGE(c.expect(0), c);
-      BOOST_CHECK_MESSAGE(f.expect(1), f);
+      BOOST_CHECK_MESSAGE(f.expect(0), f);
 
       BOOST_CHECK_EQUAL(CORBA::ULong(8), a.maximum());
       BOOST_CHECK_EQUAL(CORBA::ULong(4), a.length());
@@ -288,7 +288,7 @@ struct Tester
       tested_sequence a;
       a.replace(8, 4, buffer, false);
       BOOST_CHECK_MESSAGE(c.expect(0), c);
-      BOOST_CHECK_MESSAGE(f.expect(1), f);
+      BOOST_CHECK_MESSAGE(f.expect(0), f);
 
       BOOST_CHECK_EQUAL(CORBA::ULong(8), a.maximum());
       BOOST_CHECK_EQUAL(CORBA::ULong(4), a.length());
@@ -314,7 +314,7 @@ struct Tester
       tested_sequence a;
       a.replace(8, 4, buffer, true);
       BOOST_CHECK_MESSAGE(c.expect(0), c);
-      BOOST_CHECK_MESSAGE(f.expect(1), f);
+      BOOST_CHECK_MESSAGE(f.expect(0), f);
 
       BOOST_CHECK_EQUAL(CORBA::ULong(8), a.maximum());
       BOOST_CHECK_EQUAL(CORBA::ULong(4), a.length());

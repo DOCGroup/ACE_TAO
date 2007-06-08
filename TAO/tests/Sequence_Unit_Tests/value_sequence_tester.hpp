@@ -35,10 +35,10 @@ struct value_sequence_tester
           CORBA::ULong(tested_allocation_traits::default_maximum()),
           x.maximum());
       BOOST_CHECK_EQUAL(CORBA::ULong(0), x.length());
-      BOOST_CHECK_EQUAL(true, x.release());
+      BOOST_CHECK_EQUAL(bounded_, x.release());
     }
     BOOST_CHECK_MESSAGE(a.expect(0), a);
-    BOOST_CHECK_MESSAGE(f.expect(1), f);
+    BOOST_CHECK_MESSAGE(f.expect(bounded_ ? 1 : 0), f);
   }
 
 
@@ -53,15 +53,15 @@ struct value_sequence_tester
           CORBA::ULong(tested_allocation_traits::default_maximum()),
           x.maximum());
       BOOST_CHECK_EQUAL(CORBA::ULong(0), x.length());
-      BOOST_CHECK_EQUAL(true, x.release());
+      BOOST_CHECK_EQUAL(bounded_, x.release());
 
       tested_sequence y(x);
-      BOOST_CHECK_MESSAGE(a.expect(1), a);
+      BOOST_CHECK_MESSAGE(a.expect(bounded_ ? 1 : 0), a);
       BOOST_CHECK_EQUAL(x.maximum(), y.maximum());
       BOOST_CHECK_EQUAL(x.length(), y.length());
       BOOST_CHECK_EQUAL(x.release(), y.release());
     }
-    BOOST_CHECK_MESSAGE(f.expect(2), f);
+    BOOST_CHECK_MESSAGE(f.expect(bounded_ ? 2 : 0), f);
   }
 
   void test_index_accessor()
@@ -125,19 +125,19 @@ struct value_sequence_tester
           CORBA::ULong(tested_allocation_traits::default_maximum()),
           x.maximum());
       BOOST_CHECK_EQUAL(CORBA::ULong(0), x.length());
-      BOOST_CHECK_EQUAL(true, x.release());
+      BOOST_CHECK_EQUAL(bounded_, x.release());
 
       tested_sequence y;
       BOOST_CHECK_MESSAGE(a.expect(0), a);
 
       y = x;
-      BOOST_CHECK_MESSAGE(a.expect(1), a);
-      BOOST_CHECK_MESSAGE(f.expect(1), f);
+      BOOST_CHECK_MESSAGE(a.expect(bounded_ ? 1 : 0), a);
+      BOOST_CHECK_MESSAGE(f.expect(bounded_ ? 1 : 0), f);
       BOOST_CHECK_EQUAL(x.maximum(), y.maximum());
       BOOST_CHECK_EQUAL(x.length(), y.length());
       BOOST_CHECK_EQUAL(x.release(), y.release());
     }
-    BOOST_CHECK_MESSAGE(f.expect(2), f);
+    BOOST_CHECK_MESSAGE(f.expect(bounded_ ? 2 : 0), f);
   }
 
   void test_assignment_values()
@@ -250,18 +250,21 @@ struct value_sequence_tester
                 shared_this));
   }
 
-  static boost::shared_ptr<value_sequence_tester> allocate()
+  static boost::shared_ptr<value_sequence_tester> allocate(bool bounded = false)
   {
     boost::shared_ptr<value_sequence_tester> ptr(
-        new value_sequence_tester);
+        new value_sequence_tester(bounded));
     ptr->self_ = ptr;
 
     return ptr;
   }
 
 private:
-  value_sequence_tester() {}
+  value_sequence_tester(bool bounded)
+    : bounded_ (bounded)
+  {}
 
+  bool bounded_;
   boost::weak_ptr<value_sequence_tester> self_;
 };
 
