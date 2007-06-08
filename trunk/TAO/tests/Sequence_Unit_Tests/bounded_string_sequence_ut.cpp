@@ -304,7 +304,7 @@ struct Tester
   void add_all(test_suite * ts)
   {
     typedef string_sequence_tester<tested_sequence> common;
-    boost::shared_ptr<common> tester(common::allocate());
+    boost::shared_ptr<common> tester(common::allocate(true));
     tester->add_all(ts);
 
     boost::shared_ptr<Tester> shared_this(self_);

@@ -351,7 +351,7 @@ init_unit_test_suite(int, char*[])
 
   {
     typedef value_sequence_tester<tested_sequence,tested_allocation_traits> common;
-    boost::shared_ptr<common> tester(common::allocate());
+    boost::shared_ptr<common> tester(common::allocate(true));
     tester->add_all(ts);
   }
 
