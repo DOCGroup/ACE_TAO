@@ -84,7 +84,7 @@ public:
     : maximum_(allocation_traits::default_maximum())
     , length_(0)
     , buffer_(allocation_traits::default_buffer_allocation())
-    , release_(true)
+    , release_(buffer_ != 0)
   {
   }
 
@@ -116,6 +116,7 @@ public:
     , buffer_(0)
     , release_(false)
   {
+    if (rhs.maximum_ == 0) return;
     generic_sequence tmp(rhs.maximum_);
     tmp.length_ = rhs.length_;
     element_traits::copy_range(
@@ -233,6 +234,7 @@ public:
     if (buffer_ == 0)
     {
       buffer_ = allocbuf(maximum_);
+      release_ = true;
     }
     return buffer_;
   }
@@ -274,6 +276,10 @@ public:
     if (buffer_ == 0)
     {
       buffer_ = allocbuf(maximum_);
+      if (!orphan) 
+        {
+          release_ = true;
+        }
     }
     if (!orphan)
     {
@@ -314,7 +320,7 @@ private:
   mutable value_type * buffer_;
   /// If true then the sequence should release the buffer when it is
   /// destroyed.
-  CORBA::Boolean release_;
+  mutable CORBA::Boolean release_;
 };
 
 } // namespace details

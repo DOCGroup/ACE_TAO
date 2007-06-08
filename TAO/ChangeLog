@@ -1,3 +1,23 @@
+Fri Jun  8 19:23:45 UTC 2007  Adam Mitz  <mitza@ociweb.com>
+
+        * tao/Generic_Sequence_T.h:
+
+          A default-constructed unbounded sequence has no buffer allocated, so
+          "release" should be false.  This restores the behavior of sequences
+          before the recent re-write.
+
+        * tests/Sequence_Unit_Tests/bounded_string_sequence_ut.cpp:
+        * tests/Sequence_Unit_Tests/bounded_value_sequence_ut.cpp:
+        * tests/Sequence_Unit_Tests/string_sequence_tester.hpp:
+        * tests/Sequence_Unit_Tests/unbounded_fwd_object_reference_sequence_ut.cpp:
+        * tests/Sequence_Unit_Tests/unbounded_object_reference_sequence_ut.cpp:
+        * tests/Sequence_Unit_Tests/unbounded_octet_sequence_ut.cpp:
+        * tests/Sequence_Unit_Tests/unbounded_string_sequence_ut.cpp:
+        * tests/Sequence_Unit_Tests/unbounded_value_sequence_ut.cpp:
+        * tests/Sequence_Unit_Tests/value_sequence_tester.hpp:
+
+          Updated unit tests to take this into account.
+
 Fri Jun 08 10:20:00 UTC 2007  Simon Massey  <sma@prismtech.com>
 
         * TAO/orbsvcs/orbsvcs/SSLIOP/params_dup.c:
