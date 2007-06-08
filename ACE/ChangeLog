@@ -1,3 +1,14 @@
+Fri Jun 08 08:38:00 UTC 2007  Simon Massey  <sma@prismtech.com>
+
+        * include/makeinclude/platform_hpux_aCC.GNU:
+
+          Problem with Change log of "Fri May 11 07:57:55 UTC 2007"
+          by Johnny Willemsen <jwillemsen@remedy.nl> for
+          "Improved aCC version detection check". This seems to be
+          incorrect as the warning disable of 361 for aCC 3.xx at
+          line 98 is now being ignored. Suspect spelling mistake of
+          aC++/ANSI at line 33
+
 Sun Jun  3 20:05:36 UTC 2007  Olli Savia  <ops@iki.fi>
 
         * ace/Capabilities.cpp:
