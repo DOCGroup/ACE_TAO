@@ -210,6 +210,9 @@ ACE_MMAP_Memory_Pool::commit_backing_store_name (size_t rounded_bytes,
 {
   ACE_TRACE ("ACE_MMAP_Memory_Pool::commit_backing_store_name");
 
+#if defined (__Lynx__)
+  map_size = rounded_bytes;
+#else
   size_t seek_len;
 
   if (this->write_each_page_)
@@ -250,7 +253,7 @@ ACE_MMAP_Memory_Pool::commit_backing_store_name (size_t rounded_bytes,
 
   // Increment by one to put us at the beginning of the next chunk...
   ++map_size;
-
+#endif /* __Lynx__ */
   return 0;
 }
 

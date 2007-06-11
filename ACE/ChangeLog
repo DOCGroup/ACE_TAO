@@ -1,3 +1,10 @@
+Mon Jun 11 12:40:00 UTC 2007  Simon Massey  <sma@prismtech.com>
+
+        * ace/MMAP_Memory_Pool.cpp:
+        * tests/run_test.lst:
+
+          Fix problem in Lynxos and re-enable Test.
+
 Fri Jun 08 08:38:00 UTC 2007  Simon Massey  <sma@prismtech.com>
 
         * include/makeinclude/platform_hpux_aCC.GNU:

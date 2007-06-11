@@ -25,7 +25,7 @@ Atomic_Op_Test
 Auto_Event_Test
 Auto_IncDec_Test: !DISABLE_ToFix_LynxOS_PPC
 Barrier_Test: !DISABLE_ToFix_LynxOS_PPC
-Based_Pointer_Test: !DISABLE_ToFix_LynxOS_PPC !STATIC !VxWorks !ACE_FOR_TAO !PHARLAP
+Based_Pointer_Test: !STATIC !VxWorks !ACE_FOR_TAO !PHARLAP
 Basic_Types_Test
 Bound_Ptr_Test: !DISABLE_ToFix_LynxOS_PPC !ACE_FOR_TAO
 Buffer_Stream_Test: !DISABLE_ToFix_LynxOS_PPC
