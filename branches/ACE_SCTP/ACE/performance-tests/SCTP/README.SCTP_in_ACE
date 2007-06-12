@@ -1,0 +1,269 @@
+Release 1.1 - June 2003
+
+Overview of SCTP sockets
+------------------------
+
+In order to support multiple implementations of SCTP, we had to standardize 
+on a set of semantics.  
+
+The IETF sockets draft states that service type SOCK_SEQPACKET indicates a UDP
+style socket (i.e. connection-less), while service type SOCK_STREAM indicates
+a TCP style socket.  However, this conflicts with the POSIX definition for 
+SOCK_SEQPACKET as connection-oriented. 
+
+In ACE we choose to support the standard POSIX definition. In doing so, certain 
+socket semantics will be guaranteed regardless of implementation.   
+ 
+	[1] SOCK_SEQPACKET sockets will always be message-based, 
+            connection-oriented, and reliable.
+
+	[2] SOCK_STREAM sockets will be message-based or byte-stream based,
+            connection-oriented, and reliable.  
+	
+
+SCTP Features Accessible Within ACE
+-----------------------------------
+
+ * SOCK_STREAM (byte stream oriented or msg oriented) data transport service
+
+ * SOCK_SEQPACKET (message oriented) data transport service (this is
+   the service used by TAO's SCIOP pluggable protocol)
+
+ * Explicit control of binding network interfaces (all, one, or any
+   subset) to server-side passive- and active- mode sockets on
+   multi-homed machines. (for SOCK_SEQPACKET service only.  The
+   SOCK_STREAM service may only bind one or all interfaces because we
+   avoided changing the interface of ACE_SOCK_Acceptor.)
+
+ * Setting and getting of all parameters exposed by SCTP 
+   (e.g. retransmission timeout (RTO)) via ACE_SOCK::set_option(...)
+   and ACE_SOCK::get_option(...) for both SOCK_STREAM and
+   SOCK_SEQPACKET sockets.  You must set the socket level appropriately.  
+
+ * Multiplexing of lightweight "SCTP Streams" (over the SOCK_STREAM
+   and SOCK_SEQPACKET services) via ACE_SOCK::set_option(...)
+
+ * Network path multiplexing (provided opaquely by the protocol---no
+   explicit support required in ACE other than the ability to
+   configure various parameters and the set of interfaces as described
+   above)
+
+
+Supported SCTP Implementations
+------------------------------
+
+ * OpenSS7's Linux Implementation (Berkeley UNIX Network API) 
+   Linux 2.4.18 patch available at: http://www.openss7.org/linux-sctp-0.2.14.tgz
+   (as of April 2003)
+
+ * The LKSCTP Linux Kernel Implementation (IETF Sockets Draft API compliant)
+   Available in the Linux 2.5 kernels (http://www.kernel.org/)
+   Tools/Libs available at http://lksctp.sourceforge.net/
+     (All socket interfaces are message-based -- please see README.LKSCTP)
+
+
+BUGS
+----
+
+ * OpenSS7 BUGS 
+
+    - protocol crashes when transmitting message sizes greater than
+      PATH MTU in the presence of network failures (message size
+      includes SCTP and IP headers and data.)
+
+ * LKSCTP BUGS
+
+    - certain combinations of SCTP parameters will cause a kernel panic
+      (ie. setting rto_initial, rto_max, or rto_min to 0)
+
+
+TO-DO
+----
+
+ * Provide explicit control of binding network interfaces to
+   client-side active-mode sockets on multi-homed machines. Current
+   implementation supports all interfaces but not restriction to one
+   or to an arbitrary subset. (This will be done for SOCK_SEQPACKET
+   service only. We want to avoid changing the existing interfaces for
+   the SOCK_STREAM service).
+
+ * Integrate management and use of "SCTP Streams" into the
+   ACE_SOCK_SEQPACK_* wrapper-facade. (currently they can only be
+   accessed indirectly through ACE_SOCK::set_option(...))
+
+ * Support SOCK_RDM service (connection-less) within ACE for OpenSS7.
+
+ * Convert ATL's histogram utility (located under
+   performance-tests/SCTP) into a ACE utility and integrate with other
+   ACE provided statistics classes.
+
+ * Support Draft API msg notifications via sendmsg() and recvmsg().  
+
+
+USAGE
+-----
+
+ SOCK_STREAM - Use the ACE_SOCK_Connector, ACE_SOCK_Stream and
+               ACE_SOCK_Acceptor classes. In ACE_SOCK_Connector pass
+               the value IPPROTO_SCTP for the protocol parameter in
+               either the constructor or the connect(...) method
+               as shown in SOCK_STREAM_clt.cpp. In ACE_SOCK_Acceptor
+               pass the value IPPROTO_SCTP for the protocol parameter
+               in either the constructor or the open(...) method
+               as shown in SOCK_STREAM_srv.cpp.
+
+               You must include the file sctp.h in order for
+               IPPROTO_SCTP to be defined.  This file should be under
+               /usr/include/netinet
+
+               Aside from these changes, the classes can be used as
+               they are under TCP (the protocol they use by
+               default). Be cautious to use SCTP protocol options when
+               setting socket options on SCTP sockets (e.g., use
+               SCTP_NODELAY, not TCP_NODELAY, to disable Nagle's
+               algorithm on an SCTP socket.)
+
+ SOCK_SEQPACKET - Use the ACE_SOCK_SEQPACK_Connector,
+                  ACE_SOCK_SEQPACK_Association, and
+                  ACE_SOCK_SEQPACK_Acceptor classes, which parallel
+                  the familiar ACE_SOCK_Connector, ACE_SOCK_Stream,
+                  and ACE_SOCK_Acceptor classes, respectively.  Please
+                  see SOCK_SEQPACK_clt.cpp and SOCK_SEQPACK_srv.cpp for
+                  more details.
+
+                  In the special case where you want to specify a set
+                  of interfaces---other than one or all
+                  interfaces---for an ACE_SOCK_SEQPACK_Acceptor, use
+                  an ACE_Multihomed_INET_Addr in place of the familiar
+                  ACE_INET_Addr.  (See SOCK_SEQPACK_srv.cpp for an
+                  example.)
+
+                  SCTP associations may have more than one local and
+                  more than one remote address bound to them.
+                  Accordingly, ACE_SOCK_SEQPACK_Association provides
+                  methods get_local_addrs(...) and
+                  get_remote_addrs(...). These methods return the list
+                  of local and remote addresses bound to an active
+                  mode SCTP socket. Alternately, the familiar
+                  ACE_SOCK::get_local_addr(...)  and
+                  ACE_SOCK::get_remote_addr(...) methods will work
+                  properly with an active mode SCTP socket, but each
+                  will only return a single address. These functions
+                  are only NOT available on ACE_SOCK_SEQPACK_Acceptor
+                  even though that is an SCTP socket as well. This is
+                  because the functions getpeername() and
+                  getsockname() called on a passive SCTP acceptor
+                  socket returns the same values as a TCP socket. As
+                  such, the current ACE methods get_local_addr() and
+                  get_remote_addr() defined in ACE_SOCK are sufficient.
+
+
+DESIGN
+------
+
+SCTP supports two types of network service: SOCK_STREAM and
+SOCK_SEQPACKET.  To integrate SCTP's SOCK_STREAM service into ACE we
+had to make a small modification to the current SOCK_STREAM wrapper
+facade. We had to add a protocol parameter to one constructor and one
+connect method of the ACE_SOCK_Connector class. After this
+modification the ACE SOCK_STREAM wrapper facade worked properly over
+both TCP and SCTP.
+
+To integrate SCTP's SOCK_SEQPACKET service into ACE we had to create a
+new wrapper facade, which we refer to as SOCK_SEQPACK. We closely
+emulated the current SOCK_STREAM wrapper facade to develop our new
+SOCK_SEQPACK wrapper facade. SOCK_SEQPACK_wrapper_facade.jpg depicts
+the classes that implement this new wrapper facade. Also indicated are
+those methods that have a substantial change from their SOCK_STREAM
+wrapper façade counterparts. Not depicted in the figure but noteworthy
+is the removal of the QoS enabled constructor and accept method that
+were imported to SOCK_SEQPACK_Acceptor from SOCK_Acceptor and the
+removal of the QoS enabled constructor and connect method that were
+imported into SOCK_SEQPACK_Connector from SOCK_Connector. SOCK_SEQPACK
+association provides two methods to get the list of secondary
+addresses associated with the local and remote socket (explained in
+more detail in the usage section above).
+
+
+To enable the user to fully exploit the network path multiplexing
+features of SCTP we created a new subclass of ACE_INET_Addr called
+ACE_INET_Multihomed_Addr. This class enables applications to specify
+restricted subsets of network interfaces for inclusion on SCTP
+associations on the client and server side. Multihomed_INET_Addr
+provides a subset of the ACE_INET_Addr API with the addition of
+optional parameters for lists of secondary addresses or hostnames.  If
+just a primary address or hostname is provided
+ACE_Multihomed_INET_Addr behaves as an ACE_INET_Addr (in fact it just
+populates the base ACE_INET_Addr) This is also depicted in
+SOCK_SEQPACK_wrapper_facade.jpg. Multihomed_INET_Addr is only used by
+the SOCK_SEQPACK wrapper facade.
+
+
+All SCTP socket options can be read and written from the current
+socket options methods provided by ACE_SOCK. 
+
+Finally, our SOCK_SEQPACK wrapper facade does not yet support SCTP
+stream multiplexing.
+
+Here are the files under $(ACE_ROOT) that were either modified or
+added. NO files were removed.
+
+$(ACE_ROOT)/ace/ace_dll.dsp                                MODIFIED
+$(ACE_ROOT)/ace/OS.h                                       MODIFIED
+$(ACE_ROOT)/ace/Makefile.ace                               MODIFIED
+$(ACE_ROOT)/ace/SOCK_Connector.h                           MODIFIED
+$(ACE_ROOT)/ace/SOCK_Connector.cpp                         MODIFIED
+
+$(ACE_ROOT)/ace/SOCK_SEQPACK_Acceptor.h                    ADDED
+$(ACE_ROOT)/ace/SOCK_SEQPACK_Acceptor.i                    ADDED
+$(ACE_ROOT)/ace/SOCK_SEQPACK_Acceptor.cpp                  ADDED
+
+$(ACE_ROOT)/ace/SOCK_SEQPACK_Connector.h                   ADDED
+$(ACE_ROOT)/ace/SOCK_SEQPACK_Connector.i                   ADDED
+$(ACE_ROOT)/ace/SOCK_SEQPACK_Connector.cpp                 ADDED
+
+$(ACE_ROOT)/ace/SOCK_SEQPACK_Association.h                 ADDED
+$(ACE_ROOT)/ace/SOCK_SEQPACK_Association.i                 ADDED
+$(ACE_ROOT)/ace/SOCK_SEQPACK_Association.cpp               ADDED
+
+$(ACE_ROOT)/ace/Multihomed_INET_Addr.h                     ADDED
+$(ACE_ROOT)/ace/Multihomed_INET_Addr.i                     ADDED
+$(ACE_ROOT)/ace/Multihomed_INET_Addr.cpp                   ADDED
+
+$(ACE_ROOT)/bin/PerlACE/Process_Unix.pm                    MODIFIED
+$(ACE_ROOT)/bin/PerlACE/Process_Win32.pm                   MODIFIED
+
+$(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU         MODIFIED
+$(ACE_ROOT)/include/makeinclude/platform_linux.GNU         MODIFIED
+
+$(ACE_ROOT)/tests/Makefile                                 MODIFIED
+$(ACE_ROOT)/tests/Multihomed_INET_Addr_Test.cpp            ADDED
+$(ACE_ROOT)/tests/Multihomed_INET_Addr_Test.dsp            ADDED
+$(ACE_ROOT)/tests/SOCK_SEQPACK_Association_Test.cpp        ADDED
+$(ACE_ROOT)/tests/SOCK_SEQPACK_Association_Test.dsp        ADDED
+$(ACE_ROOT)/tests/run_test.lst                             MODIFIED
+$(ACE_ROOT)/tests/run_tests.bat                            MODIFIED
+$(ACE_ROOT)/tests/tests.dsw                                MODIFIED
+
+$(ACE_ROOT)/performance-tests/SCTP/THANKS                  ADDED
+$(ACE_ROOT)/performance-tests/SCTP/README                  ADDED
+$(ACE_ROOT)/performance-tests/SCTP/README.SCTP             ADDED
+$(ACE_ROOT)/performance-tests/SCTP/README.SCTP_in_ACE      ADDED
+$(ACE_ROOT)/performance-tests/SCTP/README.SCTP_PERF_TEST   ADDED
+$(ACE_ROOT)/performance-tests/SCTP/README.OpenSS7          ADDED
+$(ACE_ROOT)/performance-tests/SCTP/README.LKSCTP           ADDED
+
+$(ACE_ROOT)/performance-tests/SCTP/Makefile                ADDED
+$(ACE_ROOT)/performance-tests/SCTP/run_spectrum.pl         ADDED
+
+$(ACE_ROOT)/performance-tests/SCTP/hist.h                  ADDED
+$(ACE_ROOT)/performance-tests/SCTP/hist.cpp                ADDED
+
+$(ACE_ROOT)/performance-tests/SCTP/Options_Manager.h       ADDED
+$(ACE_ROOT)/performance-tests/SCTP/Options_Manager.cpp     ADDED
+
+$(ACE_ROOT)/performance-tests/SCTP/SOCK_STREAM_clt.cpp     ADDED
+$(ACE_ROOT)/performance-tests/SCTP/SOCK_STREAM_srv.cpp     ADDED
+
+$(ACE_ROOT)/performance-tests/SCTP/SOCK_SEQPACK_clt.cpp    ADDED
+$(ACE_ROOT)/performance-tests/SCTP/SOCK_SEQPACK_srv.cpp    ADDED

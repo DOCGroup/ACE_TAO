@@ -1,0 +1,14 @@
+The service is registered with the naming service with the name
+"EventLogFactory" .  
+
+To run the Event Logging Service:
+------------------------
+1. you should have a running Naming Service.
+   if not, start one at $TAO_ROOT/orbsvcs/Naming_Service/Naming_Service
+
+2. execute the Event_Logging_Service
+   at $TAO_ROOT/orbsvcs/Logging_Service/Event_Logging_Service/Event_Logging_Service
+
+
+The idl spec is $TAO_ROOT/orbsvcs/orbsvcs/DsEventLogAdmin.idl
+see also $TAO_ROOT/orbsvcs/orbsvcs/DsLogNotification.idl

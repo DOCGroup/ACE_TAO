@@ -1,0 +1,10 @@
+// $Id$
+workspace {
+  exclude(automake) {
+    build
+    Kokyu
+  }
+  exclude {
+    TAO
+  }
+}
