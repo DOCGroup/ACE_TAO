@@ -25,6 +25,11 @@ USER VISIBLE CHANGES BETWEEN ACE-5.5.8 and ACE-5.5.9
 . Shared library builds on AIX now produce a libxxx.so file instead of the
   previous practice of producing libxxx.a(shr.o).
 
+. GCC 4.1.2 that comes with Fedora 7 seems to have a fix for the visibility
+  attribute we use for the singletons. F7 users will therefore need to
+  define the following in your config.h file.
+  ACE_GCC_HAS_TEMPLATE_INSTANTIATION_VISIBILITY_ATTRS 1
+
 USER VISIBLE CHANGES BETWEEN ACE-5.5.7 and ACE-5.5.8
 ====================================================
 
