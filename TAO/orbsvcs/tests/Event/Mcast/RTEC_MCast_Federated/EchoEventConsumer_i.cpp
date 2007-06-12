@@ -27,8 +27,11 @@ void EchoEventConsumer_i::push(const RtecEventComm::EventSet& events)
     // Extract event data from the any.
     const char* eventData;
     std::ostringstream out;
-    out << "[" << getpid() << "] Received event,"
-         << "  type: "   << events[i].header.type
+#ifndef ACE_LACKS_GETPID
+    out << "[" << getpid();
+#endif
+    out << "] Received event,"
+        << "  type: "   << events[i].header.type
          << "  source: " << events[i].header.source;
     if (events[i].data.any_value >>= eventData) {
       out << "  text: "   << eventData;
