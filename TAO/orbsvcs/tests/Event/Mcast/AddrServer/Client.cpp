@@ -65,9 +65,11 @@ main (int argc, char *argv[])
                             udp_addr->v4_addr().ipaddr);
               break;
             case RtecUDPAdmin::Rtec_inet6:
+#if defined (ACE_HAS_IPV6)
               inet_addr.set_type(PF_INET6);
               inet_addr.set_address(udp_addr->v6_addr().ipaddr,16,0);
               inet_addr.set_port_number(udp_addr->v6_addr().port);
+#endif /* ACE_HAS_IPV6 */
               break;
             }
         }
@@ -97,9 +99,11 @@ main (int argc, char *argv[])
                             udp_addr->v4_addr().ipaddr);
               break;
             case RtecUDPAdmin::Rtec_inet6:
+#if defined (ACE_HAS_IPV6)
               inet_addr.set_type(PF_INET6);
               inet_addr.set_address(udp_addr->v6_addr().ipaddr,16,0);
               inet_addr.set_port_number(udp_addr->v6_addr().port);
+#endif /* ACE_HAS_IPV6 */
               break;
             }
         }

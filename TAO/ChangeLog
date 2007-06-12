@@ -1,3 +1,11 @@
+Tue Jun 12 15:52:09 UTC 2007  Ciju John  <johnc at ociweb dot com>
+
+        * orbsvcs/tests/Event/Mcast/AddrServer/Client.cpp:
+          IPV6 dependent code enclosed within 'ACE_HAS_IPV6'
+
+        * orbsvcs/tests/Event/Mcast/RTEC_MCast_Federated/EchoEventConsumer_i.cpp:
+          Fix for platforms which don't support 'getpid' API.
+
 Fri Jun  8 19:23:45 UTC 2007  Adam Mitz  <mitza@ociweb.com>
 
         * tao/Generic_Sequence_T.h:
