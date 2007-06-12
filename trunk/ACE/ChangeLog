@@ -1,3 +1,9 @@
+Tue Jun 12 20:11:59 UTC 2007  Ciju John  <johnc at ociweb dot com>
+
+        * NEWS:
+          Add note regards Fedora 7 GCC 4.1.2 fix for visibility attribute
+          used for singletons.
+
 Mon Jun 11 12:40:00 UTC 2007  Simon Massey  <sma@prismtech.com>
 
         * ace/MMAP_Memory_Pool.cpp:
