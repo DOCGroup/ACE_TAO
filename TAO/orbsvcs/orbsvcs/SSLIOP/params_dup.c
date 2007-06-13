@@ -5,13 +5,13 @@
 #include <openssl/asn1.h>
 
 
-extern "C" DSA *
+DSA *
 DSAPARAMS_DUP_WRAPPER_NAME (DSA * dsa)
 {
   return DSAparams_dup (dsa);
 }
 
-extern "C" DH *
+DH *
 DHPARAMS_DUP_WRAPPER_NAME (DH * dh)
 {
   return DHparams_dup (dh);

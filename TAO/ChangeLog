@@ -1,3 +1,15 @@
+Wed Jun 13 12:40:00 UTC 2007  Simon Massey  <sma@prismtech.com>
+
+        * orbsvcs/orbsvcs/SSLIOP.mpc:
+        * orbsvcs/orbsvcs/SSLIOP/params_dup.c:
+        * orbsvcs/orbsvcs/SSLIOP/params_dup.cpp:
+
+          Annoying conflict of interest, having to revert the
+          params_dup.c change/rename and put in another params_dup.cpp
+          (that simply extern "C" block #includes paramer_dup.c)
+          making which file is build conditional within the controlling
+          mpc file.
+
 Tue Jun 12 15:52:09 UTC 2007  Ciju John  <johnc at ociweb dot com>
 
         * orbsvcs/tests/Event/Mcast/AddrServer/Client.cpp:
