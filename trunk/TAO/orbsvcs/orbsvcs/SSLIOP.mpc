@@ -16,7 +16,38 @@ project(SSLIOP) : orbsvcslib, install, security, ssl, pi_server, interceptors, t
 
   Source_Files(ORBSVCS_COMPONENTS) {
     SSLIOP {
-      SSLIOP
+      ./SSLIOP/IIOP_SSL_Acceptor.cpp
+      ./SSLIOP/IIOP_SSL_Connection_Handler.cpp
+      ./SSLIOP/IIOP_SSL_Connector.cpp
+      ./SSLIOP/IIOP_SSL_Transport.cpp
+      ./SSLIOP/ssl_endpointsC.cpp
+      ./SSLIOP/SSLIOP_Accept_Strategy.cpp
+      ./SSLIOP/SSLIOP_Acceptor.cpp
+      ./SSLIOP/SSLIOP_ClientCredentials.cpp
+      ./SSLIOP/SSLIOP_Connection_Handler.cpp
+      ./SSLIOP/SSLIOP_Connector.cpp
+      ./SSLIOP/SSLIOP_Credentials.cpp
+      ./SSLIOP/SSLIOP_CredentialsAcquirer.cpp
+      ./SSLIOP/SSLIOP_CredentialsAcquirerFactory.cpp
+      ./SSLIOP/SSLIOP_Current.cpp
+      ./SSLIOP/SSLIOP_Current_Impl.cpp
+      ./SSLIOP/SSLIOP_Endpoint.cpp
+      ./SSLIOP/SSLIOP_EVP_PKEY.cpp
+      ./SSLIOP/SSLIOP_Factory.cpp
+      ./SSLIOP/SSLIOP_Invocation_Interceptor.cpp
+      ./SSLIOP/SSLIOP_OpenSSL_st_T.cpp
+      ./SSLIOP/SSLIOP_ORBInitializer.cpp
+      ./SSLIOP/SSLIOP_OwnCredentials.cpp
+      ./SSLIOP/SSLIOP_Profile.cpp
+      ./SSLIOP/SSLIOP_TargetCredentials.cpp
+      ./SSLIOP/SSLIOP_Transport.cpp
+      ./SSLIOP/SSLIOP_Util.cpp
+      SSLIOPC.cpp
+      conditional(vc71, vc8) {
+        ./SSLIOP/params_dup.cpp
+      } else {
+        ./SSLIOP/params_dup.c
+      }
     }
   }
 
