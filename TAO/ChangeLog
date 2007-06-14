@@ -1,3 +1,12 @@
+Thu Jun 14 10:28:00 UTC 2007  Simon Massey  <sma@prismtech.com>
+
+        * orbsvcs/orbsvcs/SSLIOP/params_dup.cpp:
+
+          Now the windows files are objecting to C linkage of
+          the included c file. Having to backstep the cpp file
+          to my original mods style once again which we know
+          works on the windows platforms.
+
 Wed Jun 13 12:40:00 UTC 2007  Simon Massey  <sma@prismtech.com>
 
         * orbsvcs/orbsvcs/SSLIOP.mpc:
