@@ -220,6 +220,7 @@ project(ACE) : acedefaults, install, other, codecs, token, svcconf, uuid, fileca
     SOCK_Dgram_Mcast.cpp
     SOCK_IO.cpp
     SOCK_Netlink.cpp
+    SOCK_SCTP_SEQPACK.cpp
     SOCK_SEQPACK_Acceptor.cpp
     SOCK_SEQPACK_Association.cpp
     SOCK_SEQPACK_Connector.cpp
