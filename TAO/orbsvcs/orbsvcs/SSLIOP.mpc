@@ -35,7 +35,6 @@ project(SSLIOP) : orbsvcslib, install, security, ssl, pi_server, interceptors, t
       ./SSLIOP/SSLIOP_EVP_PKEY.cpp
       ./SSLIOP/SSLIOP_Factory.cpp
       ./SSLIOP/SSLIOP_Invocation_Interceptor.cpp
-      ./SSLIOP/SSLIOP_OpenSSL_st_T.cpp
       ./SSLIOP/SSLIOP_ORBInitializer.cpp
       ./SSLIOP/SSLIOP_OwnCredentials.cpp
       ./SSLIOP/SSLIOP_Profile.cpp
@@ -49,6 +48,10 @@ project(SSLIOP) : orbsvcslib, install, security, ssl, pi_server, interceptors, t
         ./SSLIOP/params_dup.c
       }
     }
+  }
+
+  Template_Files {
+    ./SSLIOP/SSLIOP_OpenSSL_st_T.cpp
   }
 
   IDL_Files {
