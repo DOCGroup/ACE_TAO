@@ -3,6 +3,11 @@
 #include "orbsvcs/Security/SL2_SecurityManager.h"
 
 #include "tao/ORB_Constants.h"
+#include "ace/Functor.h"
+#include "tao/Object_KeyC.h"
+#include "tao/PortableServer/Root_POA.h"
+#include "tao/PortableServer/Object_Adapter.h"
+#include "tao/PortableServer/Creation_Time.h"
 
 ACE_RCSID (Security,
            SL2_SecurityManager,
@@ -75,14 +80,15 @@ TAO::Security::SecurityManager::get_target_credentials (CORBA::Object_ptr /*o*/)
 }
 
 void
-TAO::Security::SecurityManager::remove_own_credentials (
-  SecurityLevel2::Credentials_ptr creds)
+TAO::Security::SecurityManager::remove_own_credentials
+  (SecurityLevel2::Credentials_ptr /*creds*/)
 {
   throw CORBA::NO_IMPLEMENT ();
 }
-                     
+
 CORBA::Policy_ptr
-TAO::Security::SecurityManager::get_security_policy (CORBA::PolicyType policy_type)
+TAO::Security::SecurityManager::get_security_policy
+(CORBA::PolicyType /*policy_type */)
 {
   throw CORBA::NO_IMPLEMENT ();
 }
@@ -92,14 +98,20 @@ TAO::Security::SecurityManager::get_security_policy (CORBA::PolicyType policy_ty
  */
 
 bool
-TAO::Security::AccessDecision::ReferenceKeyType::operator== (const ReferenceKeyType& other) const
+TAO::Security::AccessDecision::ReferenceKeyType::operator==
+  (const ReferenceKeyType& other) const
 {
-  if (this->oid_ == other.oid_
-      && this->adapter_id_ == other.adapter_id_
-      && (ACE_OS_String::strcmp (this->orbid_.in(), other.orbid_.in()) == 0) )
-    return true;
-  else
-    return false;
+  ::CORBA::ULong olen = this->oid_->length();
+  ::CORBA::ULong alen = this->adapter_id_->length();
+
+  if (olen == other.oid_->length() &&
+      alen == other.adapter_id_->length())
+    return (ACE_OS::memcmp (this->oid_->get_buffer(),
+                            other.oid_->get_buffer(),olen) == 0 &&
+            ACE_OS::memcmp (this->adapter_id_->get_buffer(),
+                            other.adapter_id_->get_buffer(),alen) == 0 &&
+            ACE_OS_String::strcmp (this->orbid_.in(), other.orbid_.in()) == 0);
+  return false;
 }
 
 CORBA::ULong
@@ -108,7 +120,6 @@ TAO::Security::AccessDecision::ReferenceKeyType::hash () const
   return 0;
 }
 
-const char*
 TAO::Security::AccessDecision::ReferenceKeyType::operator const char* () const
 {
   return "<hardcoded refkey>";
@@ -124,39 +135,19 @@ TAO::Security::AccessDecision::~AccessDecision ()
 }
 
 TAO::Security::AccessDecision::OBJECT_KEY
-TAO::Security::AccessDecision::map_key_from_objref (CORBA::Object_ptr obj)
+TAO::Security::AccessDecision::map_key_from_objref (CORBA::Object_ptr /*obj */)
 {
-  OBJECT_KEY key;
+  ACE_ERROR ((LM_ERROR,"map_key_from_objref is currently not implemented\n"));
+  throw CORBA::NO_IMPLEMENT();
 
+  OBJECT_KEY key;
   return key;
 }
 
 CORBA::Boolean
-TAO::Security::AccessDecision::access_allowed_ex (
-          const char * orb_id,
-          const ::CORBA::OctetSeq & adapter_id,
-          const ::CORBA::OctetSeq & object_id,
-          const ::SecurityLevel2::CredentialsList & cred_list,
-          const char * operation_name)
+TAO::Security::AccessDecision::access_allowed_i (OBJECT_KEY &key,
+                                                 const char *operation_name)
 {
-  // Obviously this is an incorrect trivial implementation ;)
-  return true;
-}
-
-CORBA::Boolean
-TAO::Security::AccessDecision::access_allowed (
-  const ::SecurityLevel2::CredentialsList & cred_list,
-  ::CORBA::Object_ptr target,
-  const char * operation_name,
-  const char * target_interface_name
-					       )
-{
-  // @@ I still don't know what we do with the cred_list in here...
-  // Do we inspect it?
-
-  // Turn the target into what we'll use as a key into the map.
-  OBJECT_KEY key = this->map_key_from_objref (target);
-
   // LOCK THE MAP!
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard, this->map_lock_,
 		    this->default_allowance_decision_);
@@ -188,14 +179,52 @@ TAO::Security::AccessDecision::access_allowed (
 
   // For now we just return the default.
   return access_decision;
+
+}
+
+CORBA::Boolean
+TAO::Security::AccessDecision::access_allowed_ex (
+          const char * orb_id,
+          const ::CORBA::OctetSeq & adapter_id,
+          const ::CORBA::OctetSeq & object_id,
+          const ::SecurityLevel2::CredentialsList & /*cred_list */,
+          const char * operation_name)
+{
+  OBJECT_KEY key;
+  key.orbid_ = orb_id;
+  key.adapter_id_ = adapter_id;
+  key.oid_ = object_id;
+
+  return this->access_allowed_i (key, operation_name);
+}
+
+CORBA::Boolean
+TAO::Security::AccessDecision::access_allowed
+  (const ::SecurityLevel2::CredentialsList & /*cred_list */,
+   ::CORBA::Object_ptr target,
+   const char * operation_name,
+   const char * /*target_interface_name */)
+{
+  // @@ I still don't know what we do with the cred_list in here...
+  // Do we inspect it?
+
+  // Turn the target into what we'll use as a key into the map.
+  OBJECT_KEY key = this->map_key_from_objref (target);
+  return this->access_allowed_i (key, operation_name);
 }
 
 void
-TAO::Security::AccessDecision::add_object (CORBA::Object_ptr obj,
-					   CORBA::Boolean allow_insecure_access)
+TAO::Security::AccessDecision::add_object
+  (const char * orb_id,
+   const ::CORBA::OctetSeq & adapter_id,
+   const ::CORBA::OctetSeq & object_id,
+   CORBA::Boolean allow_insecure_access)
 {
   // make a key from 'obj'
-  OBJECT_KEY key = this->map_key_from_objref (obj);
+  OBJECT_KEY key;
+  key.orbid_ = orb_id;
+  key.adapter_id_ = adapter_id;
+  key.oid_ = object_id;
 
   // bind it into the access_map_, replacing anything that's there.
   // LOCK THE MAP!
@@ -236,10 +265,15 @@ TAO::Security::AccessDecision::add_object (CORBA::Object_ptr obj,
 }
 
 void
-TAO::Security::AccessDecision::remove_object (CORBA::Object_ptr obj)
+TAO::Security::AccessDecision::remove_object
+  (const char * orb_id,
+   const ::CORBA::OctetSeq & adapter_id,
+   const ::CORBA::OctetSeq & object_id)
 {
-  // make a key from 'obj'
-  OBJECT_KEY key = this->map_key_from_objref (obj);
+  OBJECT_KEY key;
+  key.orbid_ = orb_id;
+  key.adapter_id_ = adapter_id;
+  key.oid_ = object_id;
 
   ACE_Hash<OBJECT_KEY> hash;
 

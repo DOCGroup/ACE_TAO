@@ -73,7 +73,7 @@ init_and_setup (int& argc,
   orb = CORBA::ORB_init (argc, argv);
   rootpoa = rir<PortableServer::POA> (orb, "RootPOA");
   poamgr = rootpoa->the_POAManager();
-  
+
   sl3current =
     rir<SecurityLevel3::SecurityCurrent>(orb, "SecurityLevel3:SecurityCurrent");
 
@@ -157,12 +157,16 @@ main (int argc, char *argv[])
 
       // 3. Create servant #2 of Foo_i, and its associated Object
       ACE_NEW_RETURN (server2, Foo_i (orb.in(), sl3current.in()), 1);
-      Foo::Bar_var server2_obj = server2->_this ();
+
+      Foo::Bar_var server2_obj = server2->_this();
       ACE_DEBUG ((LM_DEBUG, "mixed_security/server: "
 		  "created servant/object #2\n"));
 
       // 4. add servant #2's Object reference to the "permitted" list.
-      sl2ad->add_object (server2_obj.in(), true);
+      PortableServer::ObjectId_var oid = rootpoa->servant_to_id (server2);
+      CORBA::OctetSeq_var poaid = rootpoa->id();
+      CORBA::String_var orbid = orb->id();
+      sl2ad->add_object (orbid.in(), poaid.in(), oid.in(), true);
       ACE_DEBUG ((LM_DEBUG, "mixed_security/server: "
 		  "added object #2 as a permitted reference for "
 		  "non-secure invocations\n"));
@@ -177,7 +181,7 @@ main (int argc, char *argv[])
 
       // 6. activate the POA manager
       poamgr->activate ();
- 
+
       // 7. run the orb.
       ACE_DEBUG ((LM_DEBUG, "mixed_security/server: "
 		  "running the orb\n"));

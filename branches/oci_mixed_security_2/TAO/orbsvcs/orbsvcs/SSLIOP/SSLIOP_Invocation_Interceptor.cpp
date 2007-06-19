@@ -100,7 +100,7 @@ TAO::SSLIOP::Server_Invocation_Interceptor::receive_request (
     this->sec2manager_->access_decision ();
   TAO::SL2::AccessDecision_var ad =
     TAO::SL2::AccessDecision::_narrow (ad_tmp.in ());
-  
+
   CORBA::Boolean const no_ssl =
     this->ssliop_current_->no_context ();
 
@@ -119,7 +119,7 @@ TAO::SSLIOP::Server_Invocation_Interceptor::receive_request (
        * Set up all the arguments needed by the call
        * to AccessDecision::access_allowed()
        */
-      
+
       /* Get the credentials from SSLIOP */
       SecurityLevel2::CredentialsList cred_list; // initial empty?
 #if 0
@@ -134,7 +134,7 @@ TAO::SSLIOP::Server_Invocation_Interceptor::receive_request (
         // the conversion at this level?  I probably ought to do it as
         // a real sec2_current with the conversion from sec3->sec2
         // happening at a lower level.
-        
+
 	cred_list.length(1);
 	cred_list[0] = rcvd_creds.in ();
 	/*
@@ -147,7 +147,7 @@ TAO::SSLIOP::Server_Invocation_Interceptor::receive_request (
 #endif
 
       /* Gather the elements that uniquely identify the target object */
-      CORBA::ORBid_var orb_id = ri->orbid ();
+      CORBA::ORBid_var orb_id = ri->orb_id ();
       CORBA::OctetSeq_var adapter_id = ri->adapter_id ();
       CORBA::OctetSeq_var object_id = ri->object_id ();
 
@@ -157,7 +157,7 @@ TAO::SSLIOP::Server_Invocation_Interceptor::receive_request (
       it_should_happen = ad->access_allowed_ex (orb_id.in (),
 						adapter_id.in (),
 						object_id.in (),
-						cred_list.in (),
+						cred_list,
 						operation_name.in());
       if (TAO_debug_level >= 3)
 	ACE_DEBUG ((LM_DEBUG,
