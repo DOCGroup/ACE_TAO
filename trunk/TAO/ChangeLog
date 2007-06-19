@@ -1,3 +1,8 @@
+Tue Jun 19 15:37:16 UTC 2007  Ciju John  <johnc at ociweb dot com>
+
+        * orbsvcs/orbsvcs/SSLIOP.mpc:
+          The template file shouldn't be listed under "Source_Files".
+
 Tue Jun 19 13:36:33 UTC 2007  Ciju John  <johnc at ociweb dot com>
 
         * tests/Oneway_Timeouts/run_test.pl:
