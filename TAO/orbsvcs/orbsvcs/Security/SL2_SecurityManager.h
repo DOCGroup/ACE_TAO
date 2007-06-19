@@ -58,7 +58,7 @@ namespace TAO
       /*! Constructor */
       AccessDecision (/* not yet known */);
       ~AccessDecision (void);
-      
+
       virtual ::CORBA::Boolean access_allowed (
         const ::SecurityLevel2::CredentialsList & cred_list,
         ::CORBA::Object_ptr target,
@@ -76,9 +76,14 @@ namespace TAO
       virtual ::CORBA::Boolean default_decision (void);
       virtual void default_decision (::CORBA::Boolean d);
 
-      virtual void add_object (::CORBA::Object_ptr obj,
-			       ::CORBA::Boolean allow_insecure_access);
-      virtual void remove_object (::CORBA::Object_ptr obj);
+      virtual void add_object (const char * orbid,
+                               const ::CORBA::OctetSeq & adapter_id,
+                               const ::CORBA::OctetSeq & object_id,
+                               ::CORBA::Boolean allow_insecure_access);
+
+      virtual void remove_object (const char * orbid,
+                                  const ::CORBA::OctetSeq & adapter_id,
+                                  const ::CORBA::OctetSeq & object_id);
 
     private:
       /*!
@@ -112,7 +117,7 @@ namespace TAO
 	CORBA::ULong hash() const;
 
 	// operator kind of like a "toString()" for debug statements
-	operator const char* () const;
+	operator const char * () const;
       };
       typedef ReferenceKeyType OBJECT_KEY;
       // This is typedef'd because we might try to do something fancier
@@ -128,7 +133,7 @@ namespace TAO
 				      ACE_Equal_To<OBJECT_KEY>,
 				      ACE_Null_Mutex> // not sure this is right
       ACCESS_MAP_TYPE;
-    
+
       ACCESS_MAP_TYPE access_map_;
 
       // Lock for accessing the map.  It may be possible to get away with
@@ -139,11 +144,18 @@ namespace TAO
     private:
       /*!
        * @brief Encapsulates a TAO-specific way to do object_to_string() without having an ORB reference handy.
-       * 
+       *
        * @note If OBJECT_KEY changes as described above, this should change
        * so that it generates an OBJECT_KEY.
        */
       OBJECT_KEY map_key_from_objref (CORBA::Object_ptr obj);
+
+      //
+      // This is the private implementation that is common to both
+      // access_allowed and access_allowed_ex.
+      ::CORBA::Boolean access_allowed_i (OBJECT_KEY& key,
+                                         const char *operation_name);
+
     };
 
     /**

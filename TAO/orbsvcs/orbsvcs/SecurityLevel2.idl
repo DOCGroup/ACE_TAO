@@ -291,9 +291,13 @@ module TAO {
 
       /*! Establish whether a particular object can be accessed via insecure
 	means. */
-      void add_object (in Object obj,
-		       in boolean allow_insecure_access);
-      void remove_object (in Object obj);
+      void add_object (in ::CORBA::ORBid orb_id,
+                       in ::CORBA::OctetSeq adapter_id,
+                       in ::CORBA::OctetSeq object_id,
+                       in boolean allow_insecure_access);
+      void remove_object (in ::CORBA::ORBid orb_id,
+                          in ::CORBA::OctetSeq adapter_id,
+                          in ::CORBA::OctetSeq object_id);
 
       // Should there be some kind of "find" interface?
     };
