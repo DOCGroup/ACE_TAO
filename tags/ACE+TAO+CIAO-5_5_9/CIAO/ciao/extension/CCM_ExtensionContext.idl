@@ -1,0 +1,37 @@
+// $Id$
+
+#if !defined (CCM_EXTENSIONCONTEXT_IDL)
+#define CCM_EXTENSIONCONTEXT_IDL
+
+#include "ciao/CCM_Context.idl"
+#include "ciao/CCM_ClientContainerInterceptorRegistration.idl"
+#include "ciao/CCM_ServerContainerInterceptorRegistration.idl"
+#include "ciao/CCM_StubContainerInterceptorRegistration.idl"
+#include "ciao/CCM_ServantContainerInterceptorRegistration.idl"
+#include "ciao/CCM_CCMException.idl"
+
+module Components
+{
+  local interface ExtensionContext : CCMContext
+  {
+    Components::ContainerPortableInterceptor::ClientContainerInterceptorRegistration
+      get_client_interceptor_registration ()
+        raises (CCMException);
+    Components::ContainerPortableInterceptor::ServerContainerInterceptorRegistration
+      get_server_interceptor_registration ()
+        raises (CCMException);
+    Components::ContainerPortableInterceptor::StubContainerInterceptorRegistration
+      get_stub_interceptor_registration()
+        raises (CCMException);
+    Components::ContainerPortableInterceptor::ServantContainerInterceptorRegistration
+      get_servant_interceptor_registration()
+        raises (CCMException);
+
+    Cookie install_service_reference(in string service_id, in Object objref)
+      raises (CCMException);
+    Object uninstall_service_reference(in Cookie ck)
+      raises (CCMException);
+  };
+};
+
+#endif /* CCM_EXTENSIONCONTEXT_IDL */

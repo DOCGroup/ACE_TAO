@@ -1,0 +1,20 @@
+// $Id$
+
+#if !defined (CCM_CONTAINERSERVERREQUESTINFO_IDL)
+#define CCM_CONTAINERSERVERREQUESTINFO_IDL
+
+#include "ciao/CCM_ContainerRequestInfo.idl"
+#include "tao/PI_Server/ServerRequestInfo.pidl"
+
+module Components
+{
+  module ContainerPortableInterceptor
+  {
+    local interface ContainerServerRequestInfo : ContainerRequestInfo
+    {
+      PortableInterceptor::ServerRequestInfo request_info();
+    };
+  };
+};
+
+#endif /* CCM_CONTAINERSERVERREQUESTINFO_IDL */
