@@ -324,8 +324,7 @@ def create_changelog (component):
     global comp_versions, opts
 
     # generate our changelog entry
-    changelog_entry = """
-%s  %s  <%s>
+    changelog_entry = """%s  %s  <%s>
 
 \t* %s version %d.%d.%d released.
 
@@ -562,18 +561,21 @@ def create_file_lists (base_dir, prefix, exclude):
         for item in dirs:
             # Remove our excludes
             if (item) in exclude:
+                print "Removing " + item + " from consideration...."
                 dirs.remove (item)
                 
         for item in files:
             
             fullitem = os.path.join (relroot, item)
             if fullitem in exclude:
+                print "Removing " + fullitem + " from consideration...."
+                files.remove (item)
                 continue
-
-            if bin_regex.search (fullitem) is not None:
-                bin_files.append (os.path.join (prefix, fullitem))
             else:
-                text_files.append (os.path.join (prefix, fullitem))
+                if bin_regex.search (fullitem) is not None:
+                    bin_files.append (os.path.join (prefix, fullitem))
+                else:
+                    text_files.append (os.path.join (prefix, fullitem))
 
     return (text_files, bin_files)
 
