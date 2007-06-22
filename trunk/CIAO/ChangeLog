@@ -1,7 +1,10 @@
+Fri Jun 22 14:58:53 UTC 2007  Ciju John  <johnc at ociweb dot com>
 
-Thu Jun 21 13:20:20 CDT 2007  Ciju John  <johnc@ociweb.com>
-
-	* CIAO version 0.5.9 released.
+        * ChangeLog:
+        * PROBLEM-REPORT-FORM:
+        * VERSION:
+        * ciao/Version.h:
+	  Revert to x.5.8 status.
 
 Wed Jun  6 20:00:19 UTC 2007  Gan Deng  <gan.deng@vanderbilt.edu>
 
@@ -16,7 +19,7 @@ Wed Jun  6 16:52:46 UTC 2007  Gan Deng  <gan.deng@vanderbilt.edu>
 
           Fixed a type conversion warning on the
           WinXP_VC71_NET_Dynamic_Debug build.
-        
+
 Wed Jun  6 02:04:42 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * ciaosvcs/Events/CIAO_RTEC/SimpleAddressServer.cpp:
