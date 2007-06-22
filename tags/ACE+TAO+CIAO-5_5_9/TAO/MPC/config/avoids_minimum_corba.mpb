@@ -1,6 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-feature(minimum_corba) {
-  avoids += minimum_corba
-}
