@@ -1,0 +1,18 @@
+# file      : BuildRules/Documentation.pre.rules
+# author    : Boris Kolpackov <boris@kolpackov.net>
+# copyright : Copyright (c) 2002-2003 Boris Kolpackov
+# license   : http://kolpackov.net/license.html
+
+# Forces make to delete targets whos rebuild commands failed but
+# updated the target.
+.DELETE_ON_ERROR:
+
+# Empties the suffix list for which old-fassion implicit rules would
+# be used. The net effect is that all predefined implicit rules are
+# disabled now.
+.SUFFIXES:
+
+DOC       ?= cpp_to_html
+CXX_FLAGS :=
+
+# $Id$

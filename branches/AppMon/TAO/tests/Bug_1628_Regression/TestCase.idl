@@ -1,0 +1,16 @@
+//
+// $Id$
+//
+
+#include "TestType.idl"
+
+//module Test {
+//module Test2 {
+
+
+
+    typedef HashedMD5SimpleSecret Body;
+
+
+//};
+//};

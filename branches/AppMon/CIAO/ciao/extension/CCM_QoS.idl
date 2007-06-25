@@ -1,0 +1,31 @@
+// $Id$
+
+#if !defined (CCM_QOS_IDL)
+#define CCM_QOS_IDL
+
+#include "ciao/CCM_Cookie.idl"
+#include "ciao/CCM_CCMException.idl"
+
+module Components
+{
+  module QoS {
+    struct QoSInstance {
+      string dimension;
+      any value;
+    };
+    typedef sequence<QoSInstance> QoSInstances;
+    struct QoSConstraint {
+      string characteristic;
+      QoSInstances instances;
+    };
+    typedef sequence<QoSConstraint> QoSConstraints;
+    interface Negotiation
+    {
+      Components::Cookie require_qos(in QoSConstraint requirements, in string client_id)
+        raises (CCMException);
+      void release_qos (in Components::Cookie ck);
+    };
+  };
+};
+
+#endif /* CCM_QOS_IDL */
