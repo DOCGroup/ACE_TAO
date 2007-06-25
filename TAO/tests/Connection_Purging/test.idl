@@ -1,8 +1,0 @@
-// $Id$
-
-interface test
-{
-    void send_stuff(in string foo);
-
-//    oneway void shutdown ();
-};
