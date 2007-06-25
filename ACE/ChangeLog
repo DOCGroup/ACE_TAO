@@ -1,7 +1,12 @@
+Mon Jun 25 16:03:37 UTC 2007  Ciju John  <johnc at ociweb dot com>
+
+        * NEWS:
+          Adding NEWS summaries on Ossama's behalf.
+
 Fri Jun 22 15:56:12 UTC 2007  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * bin/make_release.py:
-        
+
           Updates to fix ChangeLog entry creation and superflous packaging
           of extra binary files in ACE+TAO and ACE+TAO+CIAO packages.
 
