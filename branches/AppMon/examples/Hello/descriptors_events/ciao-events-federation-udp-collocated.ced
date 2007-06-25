@@ -1,0 +1,47 @@
+<!-- $ID$ -->
+
+<CIAO:CIAOEvents
+ xmlns:CIAO="http://www.dre.vanderbilt.edu/CIAOEvents"
+ xmlns:xmi="http://www.omg.org/XMI"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="http://www.dre.vanderbilt.edu/CIAOEvents CIAOEvents.xsd">
+
+  <eventServiceConfiguration id="es_configuration-01">
+    <name>ES_01</name>
+    <node>SenderNode</node>
+    <type>RTEC</type>
+    <svc_cfg_file>dummy.conf</svc_cfg_file>
+       
+    <!-- The remote EC's host name and port # -->
+    <addr_serv>
+      <name>addr_serv_0</name>
+      <port>1234</port>
+      <address>localhost</address>
+    </addr_serv>
+    
+    <udp_sender>
+      <name>upd_sender_1</name>
+      <addr_serv_id>addr_serv_0</addr_serv_id>
+    </udp_sender> 
+  </eventServiceConfiguration>
+
+  <eventServiceConfiguration id="es_configuration-02">
+    <name>ES_02</name>
+    <node>SenderNode</node>
+    <type>RTEC</type>
+    <svc_cfg_file>dummy.conf</svc_cfg_file>
+    
+    <addr_serv>
+      <name>addr_serv_1</name>
+      <port>1234</port>
+      <address>localhost</address>
+    </addr_serv>    
+    <udp_receiver>
+      <name>upd_receiver_1</name>
+      <addr_serv_id>addr_serv_1</addr_serv_id>  
+      <is_multicast>false</is_multicast>
+      <listen_port>1234</listen_port>
+    </udp_receiver>
+  </eventServiceConfiguration>  
+
+</CIAO:CIAOEvents>  
