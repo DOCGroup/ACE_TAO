@@ -1,0 +1,51 @@
+// -*- IDL -*-
+//
+// $Id$
+
+// ============================================================================
+//
+// = LIBRARY
+//    TAO/tests/Portable_Interceptors
+//
+// = FILENAME
+//    test.idl
+//
+// = DESCRIPTION
+//   Simple IDL file to test portable interceptor support.
+//
+// = AUTHORS
+//   Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+// ============================================================================
+
+module Test_Interceptors
+{
+  exception Invalid {};
+
+  interface Secure_Vault
+  {
+    // = TITLE
+    //   A test idl for checking interceptor with the aim of
+    //   performing benchmarks.
+    //
+    // = DESCRIPTION
+    //   A secure vault into which one can store transaction details.
+
+    struct Record
+    {
+      long check_num;
+      long amount;
+    };
+
+    short ready ();
+    // No args/exceptions operation.
+
+    void authenticate (in string user) raises (Invalid);
+    // throws a user exception.
+
+    long update_records (in long id, in Record val);
+    // Normal operation with a return val.
+
+    oneway void shutdown ();
+    // shutdown the ORB
+  };
+};

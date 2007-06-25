@@ -1,0 +1,30 @@
+// -*- MPC -*-
+// $Id$
+
+project(*server): taoserver, tao_qtresource  {
+
+  MOC_Files {
+    test_i.h
+  }
+
+  Source_Files {
+    test_i.cpp
+    test_i_moc.cpp
+    server.cpp
+  }
+}
+
+project(*client): taoclient, anytypecode, tao_qtresource {
+  after += *server
+
+  MOC_Files {
+    client.h
+  }
+
+  Source_Files {
+    testC.cpp
+    client_moc.cpp
+    client.cpp
+  }
+}
+

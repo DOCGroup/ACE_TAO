@@ -1,0 +1,26 @@
+// $Id$
+
+#if !defined (CCM_STUBCONTAINERINTERCEPTOR_IDL)
+#define CCM_STUBCONTAINERINTERCEPTOR_IDL
+
+#include "ciao/CCM_ContainerInterceptor.idl"
+#include "ciao/CCM_ContainerStubRequestInfo.idl"
+#include "tao/PI/PIForwardRequest.pidl"
+
+module Components
+{
+  module ContainerPortableInterceptor
+  {
+    local interface StubContainerInterceptor : ContainerInterceptor
+    {
+      void stub_send_request (in ContainerStubRequestInfo info, out boolean con)
+        raises (PortableInterceptor::ForwardRequest);
+      void stub_receive_reply (in ContainerStubRequestInfo info, out boolean con);
+      void stub_receive_exception (in ContainerStubRequestInfo info, out boolean con)
+        raises(PortableInterceptor::ForwardRequest);
+      void stub_receive_other (in ContainerStubRequestInfo info)
+        raises(PortableInterceptor::ForwardRequest);
+    };
+  };
+};
+#endif /* CCM_STUBCONTAINERINTERCEPTOR_IDL */

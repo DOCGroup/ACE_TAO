@@ -1,0 +1,48 @@
+#
+# Invocation Tests
+#
+
+# Default test
+begin
+run use_invocation
+
+# Default IOR Table
+begin
+server_ior_table=1
+run use_invocation
+
+# Default Activator
+begin
+activate_mode=normal
+run use_invocation
+
+# Default Activator IOR Table
+begin
+server_ior_table=1
+activate_mode=normal
+run use_invocation
+
+# Default Activator Per Client
+begin
+activate_mode=per_client
+run use_invocation
+
+# Default Activator Per Client IOR Table
+begin
+server_ior_table=1
+activate_mode=per_client
+run use_invocation
+
+# Default Activator Manual
+begin
+activate_mode=manual
+run use_invocation
+
+# Default Activator Manual IOR Table
+begin
+server_ior_table=1
+activate_mode=manual
+run use_invocation
+
+- activate_mode=auto_start is tested in persistence.txt
+
