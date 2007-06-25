@@ -30,6 +30,12 @@ USER VISIBLE CHANGES BETWEEN ACE-5.5.8 and ACE-5.5.9
   define the following in your config.h file.
   ACE_GCC_HAS_TEMPLATE_INSTANTIATION_VISIBILITY_ATTRS 1
 
+. Fixed (rare) problem in TP_Reactor where incorrect event handler was
+  resumed.
+
+. Reduced footprint on some platforms, particularly those that use
+  g++ >= 3.3.
+
 USER VISIBLE CHANGES BETWEEN ACE-5.5.7 and ACE-5.5.8
 ====================================================
 

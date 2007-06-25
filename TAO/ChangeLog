@@ -1,7 +1,22 @@
-
-Thu Jun 21 13:20:20 CDT 2007  Ciju John  <johnc@ociweb.com>
+Mon Jun 25 11:34:36 CDT 2007  Ciju John  <johnc@ociweb.com>
 
 	* TAO version 1.5.9 released.
+
+Mon Jun 25 16:11:55 UTC 2007  Ciju John  <johnc at ociweb dot com>
+
+        * ChangeLog:
+          cosmetic change.
+
+        * NEWS:
+          Add NEWS summary updates.
+
+Fri Jun 22 14:56:03 UTC 2007  Ciju John  <johnc at ociweb dot com>
+
+        * ChangeLog:
+        * PROBLEM-REPORT-FORM:
+        * VERSION:
+        * tao/Version.h:
+	  Revert to x.5.8 status.
 
 Tue Jun 19 15:37:16 UTC 2007  Ciju John  <johnc at ociweb dot com>
 
@@ -84,6 +99,7 @@ Wed Jun  6 12:05:22 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
 
           Fixed old reference to RtecUDPAdmin::INET that was overlooked
           yesterday.
+
 Wed Jun 06 09:39:00 UTC 2007  Simon Massey  <sma@prismtech.com>
 
         * TAO_IDL/util/utl_scope.cpp:
