@@ -71,6 +71,23 @@ PLANNED MAJOR CHANGES "SOMETIME IN THE FUTURE" (i.e., exact beta not known)
 . Implement a planner to query the TargetManager and RepositoryManager
   and generate deployment plans on the fly.
 
+USER VISIBLE CHANGES BETWEEN CIAO-0.5.8 and CIAO-0.5.9
+======================================================
+
+. Added a new deployment algorithm to DAnCE for optimization of large
+  scale deployment. In this algorithm, the number of threads spawned is
+  based on the deployment plan, i.e, by parsing the deployment plan
+  information, DAnCE decides how many threads to spawn (one thread per
+  node). This algorithm knows how to "initialize" each thread since
+  each thread will have different execution context, i.e., which
+  components to deploy to which node, component configuration, etc.
+
+. Added a NA component server callback wait strategy in NAM, which uses
+  conditional variable to signal the NA call back so it can work with
+  multi-threaded configuration, such as thread-per-connection mode. The
+  original implementation uses the main thread to run the ORB event
+  loop, which will not work for multi-threaded environment.
+
 USER VISIBLE CHANGES BETWEEN CIAO-0.5.7 and CIAO-0.5.8
 ======================================================
 
