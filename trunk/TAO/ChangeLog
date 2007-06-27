@@ -1,3 +1,8 @@
+Wed Jun 27 06:12:39 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_2966_Regression/*:
+          New test, will fail at this moment until the fix is ready
+
 Wed Jun 27 03:23:14 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * orbsvcs/Naming_Service/Naming_Service.h:
