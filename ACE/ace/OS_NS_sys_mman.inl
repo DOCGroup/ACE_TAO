@@ -240,7 +240,7 @@ ACE_OS::shm_open (const ACE_TCHAR *filename,
   ACE_OS_TRACE ("ACE_OS::shm_open");
 #if defined (ACE_HAS_SHM_OPEN)
   ACE_UNUSED_ARG (sa);
-#if defined (ACE_VXWORKS) && (ACE_VXWORKS <= 0x640)
+#if defined (ACE_VXWORKS) && (ACE_VXWORKS <= 0x650)
   // With VxWorks the file should just start with / and no other
   // slashes, so replace all other / by _
   ACE_TCHAR buf [MAXPATHLEN + 1];
@@ -270,7 +270,7 @@ ACE_OS::shm_unlink (const ACE_TCHAR *path)
 {
   ACE_OS_TRACE ("ACE_OS::shm_unlink");
 #if defined (ACE_HAS_SHM_OPEN)
-#if defined (ACE_VXWORKS) && (ACE_VXWORKS <= 0x640)
+#if defined (ACE_VXWORKS) && (ACE_VXWORKS <= 0x650)
   // With VxWorks the file should just start with / and no other
   // slashes, so replace all other / by _
   ACE_TCHAR buf [MAXPATHLEN + 1];

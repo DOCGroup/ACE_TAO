@@ -51,12 +51,6 @@ extern "C"
 #  endif /* ! NFDBITS */
 #endif /* ACE_WIN32 */
 
-#if defined (ACE_SELECT_USES_INT)
-   typedef int ACE_FD_SET_TYPE;
-#else
-   typedef fd_set ACE_FD_SET_TYPE;
-#endif /* ACE_SELECT_USES_INT */
-
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */

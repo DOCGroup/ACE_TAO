@@ -21,8 +21,7 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <PR_ST_1, ACE_SYNCH_DECL> void *
-ACE_Svc_Handler<PR_ST_2,  ACE_SYNCH_USE>::operator new (size_t,
-                                                        void *p)
+ACE_Svc_Handler<PR_ST_2,  ACE_SYNCH_USE>::operator new (size_t, void *p)
 {
   ACE_TRACE ("ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::operator new (NOOP, 2 parameters)");
   return p;
@@ -30,8 +29,7 @@ ACE_Svc_Handler<PR_ST_2,  ACE_SYNCH_USE>::operator new (size_t,
 
 #if !defined (ACE_LACKS_PLACEMENT_OPERATOR_DELETE)
 template <PR_ST_1, ACE_SYNCH_DECL> void
-ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::operator delete (void *,
-                                                          void *)
+ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::operator delete (void *, void *)
 {
   ACE_TRACE ("ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::operator delete (NOOP, 2 parameters)");
   return;
@@ -154,7 +152,7 @@ ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::ACE_Svc_Handler (ACE_Thread_Manager *tm
   // class.
   this->dynamic_ = ACE_Dynamic::instance ()->is_dynamic ();
 
-  if (this->dynamic_ != 0)
+  if (this->dynamic_)
     // Make sure to reset the flag.
     ACE_Dynamic::instance ()->reset ();
 }

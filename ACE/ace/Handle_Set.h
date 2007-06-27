@@ -68,10 +68,8 @@ public:
 
   /**
    * Constructor, initializes the handle set from a given mask.
-   * <ACE_FD_SET_TYPE> is a <typedef> based on the platform's native
-   * type used for masks passed to <select>.
    */
-  ACE_Handle_Set (const ACE_FD_SET_TYPE &mask);
+  ACE_Handle_Set (const fd_set &mask);
 
   // = Methods for manipulating bitsets.
   /// Initialize the bitmask to all 0s and reset the associated fields.

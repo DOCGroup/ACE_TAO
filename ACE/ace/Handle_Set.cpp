@@ -101,7 +101,7 @@ ACE_Handle_Set::ACE_Handle_Set (void)
   this->reset ();
 }
 
-ACE_Handle_Set::ACE_Handle_Set (const ACE_FD_SET_TYPE &fd_mask)
+ACE_Handle_Set::ACE_Handle_Set (const fd_set &fd_mask)
 {
   ACE_TRACE ("ACE_Handle_Set::ACE_Handle_Set");
   this->reset ();
