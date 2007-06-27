@@ -68,8 +68,18 @@ TAO_ArrayDef_i::type (void)
 CORBA::TypeCode_ptr
 TAO_ArrayDef_i::type_i (void)
 {
+  // Store the current array's section key.
+  ACE_Configuration_Section_Key
+    key_holder = this->section_key_;
+
   CORBA::TypeCode_var element_typecode =
     this->element_type_i ();
+
+  // If this array contains another nested array (an array of an array
+  // or an array of a struct that has a member array etc.) at some
+  // level, the above call will have changed the array section key so
+  // we have to replace it with the original value we stored above.
+  this->section_key (key_holder);
 
   CORBA::ULong length = this->length_i ();
 
