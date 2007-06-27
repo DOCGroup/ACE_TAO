@@ -1,3 +1,49 @@
+Wed Jun 27 13:54:35 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * ace/OS_NS_Thread.inl (sema_wait): Allow a 0 time value to indicate
+          "poll" semantics on the semaphore in the WinCE case, as it does in
+          the other Windows cases. Thanks to Shaolong Xiang for this fix.
+
+        * ace/Malloc_T.h: Improved the documentation for ACE_Malloc_T
+          regarding what pools to use with it and what the requirements are
+          for a pool that's used with ACE_Malloc_T.
+
+        * netsvcs/clients/Naming/Dump_Restore/Dump_Restore.mpc: Removed the
+          Netsvcs_Dump_Restore_Lib project, which built only one file into
+          a DLL to link with the main program from Netsvcs_Dump_Restore. Add
+          that one file, Dump_Restore.cpp, to the main Netsvcs_Dump_Restore
+          project. Also renamed the resultant executable dump_restore.
+          This split was a hold-over from the pre-MPC days when it was hard
+          to build an exe from more than one file.
+
+        * netsvcs/clients/Naming/Dump_Restore/Dump_Restore.h: No need to
+          declare Dump_Restore exported any longer; it's not built into a DLL.
+
+        * netsvcs/clients/Naming/Dump_Restore/Dump_Restore.cpp: This doesn't
+          need to include "ace/Service_Config.h" any longer.
+
+        * netsvcs/clients/Naming/Client/Client.mpc: Removed the
+          Netsvcs_Client_Test_Lib project, which built only one file into
+          a DLL to link with the main program from Netsvcs_Client_Test. Add
+          that one file, Client_Test.cpp, to the main Netsvcs_Client_Test
+          project. Also renamed the resultant executable client_test.
+          This split was a hold-over from the pre-MPC days when it was hard
+          to build an exe from more than one file.
+
+        * netsvcs/clients/Naming/Client/Client_Test.{h cpp}:
+        * netsvcs/clients/Naming/Client/main.cpp:
+        * netsvcs/clients/Naming/Client/svc.conf:
+        * netsvcs/clients/Naming/Client/svc2.conf: The Client_Test is no longer
+          dynamically loaded; it's linked in static. Also fixed some remaining
+          use of the deprecated method ACE_Reactor::run_event_loop().
+
+        * netsvcs/lib/TS_Clerk_Handler.cpp (ACE_TS_Clerk_Processor::alloc):
+          Always set the system_time_ pointers, even if the memory need not
+          be newly allocated. Avoids bad pointer dereferences. Fixes Bugzilla
+          #784. Thanks to James Marsh for this fix.
+
+        * THANKS: Added James Marsh and Shaolong Xiang to the Hall of Fame.
+
 Wed Jun 27 13:55:39 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/CDR_Stream.h:

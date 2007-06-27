@@ -204,7 +204,7 @@ private:
 /**
  * @class ACE_Allocator_Adapter
  *
- * @brief This class is an Adapter that allows the ACE_Allocator to
+ * @brief This class is an adapter that allows the ACE_Allocator to
  * use the ACE_Malloc class below.
  */
 template <class MALLOC>
@@ -412,22 +412,42 @@ class ACE_Malloc_FIFO_Iterator_T;
 /**
  * @class ACE_Malloc_T
  *
- * @brief Define a C++ class that uses parameterized types to provide
- * an extensible mechanism for encapsulating various of dynamic
+ * @brief A class template that uses parameterized types to provide
+ * an extensible mechanism for encapsulating various dynamic
  * memory management strategies.
  *
  * This class can be configured flexibly with different
  * MEMORY_POOL strategies and different types of ACE_LOCK
- * strategies that support the @a ACE_Thread_Mutex and @a
- * ACE_Process_Mutex constructor API.
+ * strategies that support the ACE_Thread_Mutex and ACE_Process_Mutex
+ * constructor API.
  *
- * Note that the @a bind() and @a find() methods use linear search, so
+ * Common MEMORY_POOL strategies to use with this class are:
+ *   - ACE_Local_Memory_Pool
+ *   - ACE_MMAP_Memory_Pool
+ *   - ACE_Pagefile_Memory_Pool
+ *   - ACE_Shared_Memory_Pool
+ *   - ACE_Sbrk_Memory_Pool
+ *
+ * The MEMORY_POOL class must provide the following methods:
+ *   - constructor (const ACE_TCHAR *pool_name)
+ *   - constructor (const ACE_TCHAR *pool_name, const MEMORY_POOL_OPTIONS *options)
+ *   - void dump (void) const (needed if ACE is built with ACE_HAS_DUMP defined)
+ *   - void *init_acquire (size_t nbytes, size_t &rounded_bytes, int &first_time);
+ *   - int release (void)
+ *   - void *acquire (size_t nbytes, size_t &rounded_bytes)
+ *   - void *base_addr (void)
+ *   - seh_selector() (only needed on Windows)
+ *
+ * Note that the ACE_Allocator_Adapter class can be used to integrate allocator
+ * classes which do not meet the interface requirements of ACE_Malloc_T.
+ *
+ * @Note The bind() and find() methods use linear search, so
  * it's not a good idea to use them for managing a large number of
  * entities.  If you need to manage a large number of entities, it's
- * recommended that you @a bind() an @ ACE_Hash_Map_Manager that
- * resides in shared memory, use @a find() to locate it, and then
+ * recommended that you bind() an ACE_Hash_Map_Manager that
+ * resides in shared memory, use find() to locate it, and then
  * store/retrieve the entities in the hash map.
- * */
+ */
 template <ACE_MEM_POOL_1, class ACE_LOCK, class ACE_CB>
 class ACE_Malloc_T
 {

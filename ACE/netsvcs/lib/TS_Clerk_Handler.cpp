@@ -334,24 +334,27 @@ ACE_TS_Clerk_Processor::alloc (void)
   ACE_TRACE (ACE_TEXT ("ACE_TS_Clerk_Processor::alloc"));
   ACE_NEW (this->shmem_, ALLOCATOR (this->poolname_));
 
+  void *temp = 0;
+
   // Only create the state if it doesn't already exist.
-  if (this->shmem_->find (ACE_DEFAULT_TIME_SERVER_STR) ==  -1)
+  if (this->shmem_->find (ACE_DEFAULT_TIME_SERVER_STR, temp) ==  -1)
     {
       // Allocate the space out of shared memory for the system time entry
-      time_t *temp = (time_t *)(this->shmem_->malloc (2 * sizeof (time_t)));
+      temp = (this->shmem_->malloc (2 * sizeof (time_t)));
 
       // Give it a name binding
       this->shmem_->bind (ACE_DEFAULT_TIME_SERVER_STR, temp);
-
-      // Set up pointers. Note that we add one to get to the second
-      // field in the structure
-      this->system_time_.delta_time_ = temp;
-      this->system_time_.last_local_time_ = temp + 1;
-
-      // Initialize
-      *(this->system_time_.delta_time_) = 0;
-      *(this->system_time_.last_local_time_) = ACE_OS::time (0);
     }
+
+  // Set up pointers. Note that we add one to get to the second
+  // field in the structure
+  time_t *time_p = (time_t *)temp;
+  this->system_time_.delta_time_ = time_p;
+  this->system_time_.last_local_time_ = time_p + 1;
+
+  // Initialize
+  *(this->system_time_.delta_time_) = 0;
+  *(this->system_time_.last_local_time_) = ACE_OS::time (0);
 }
 
 // Query the servers for the latest time

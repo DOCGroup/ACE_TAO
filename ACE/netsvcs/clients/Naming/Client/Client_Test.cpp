@@ -1,12 +1,9 @@
 // $Id$
 
-#define ACE_BUILD_SVC_DLL
-
 #include "ace/Service_Config.h"
 #include "ace/Naming_Context.h"
 #include "ace/Dynamic_Service.h"
 #include "ace/Thread_Manager.h"
-#include "Client_Test.h"
 #include "ace/Reactor.h"
 #include "ace/os_include/os_ctype.h"
 #include "ace/OS_NS_signal.h"
@@ -15,94 +12,11 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/os_include/os_assert.h"
 
+#include "Client_Test.h"
+
 ACE_RCSID (Client,
            Client_Test,
            "$Id$")
-
-class ACE_Svc_Export Client_Test : public ACE_Service_Object
-{
-public:
-  Client_Test (void);
-
-  int open (void);
-  // Cache reactor and then register self with reactor
-
-  int close (void);
-  // Close things down and free up resources.
-
-  virtual int handle_input (ACE_HANDLE handle);
-  // Handle user entered commands
-
-  virtual int init (int argc, ACE_TCHAR *argv[]);
-  // Initialize name options and naming context when dynamically
-  // linked.
-
-  virtual int fini (void);
-  // Close down the test when dynamically unlinked.
-
-  void list_options (void);
-  // Print name options
-
-  int bind (const char *key,
-            const char *value,
-            const char *type = "");
-  // Bind a key to a value
-
-  int unbind (const char *key);
-  // Unbind a name binding
-
-  int rebind (const char *key,
-              const char *value,
-              const char *type = "");
-  // Rebind a name binding
-
-  int find (const char *key);
-  // Find the value associated with a key
-
-  int list_names (const char *pattern);
-  // Find all names that match pattern
-
-  int list_values (const char *pattern);
-  // Find all values that match pattern
-
-  int list_types (const char *pattern);
-  // Find all types that match pattern
-
-  int list_name_entries (const char *pattern);
-  // Find all names that match pattern
-
-  int list_value_entries (const char *pattern);
-  // Find all values that match pattern
-
-  int list_type_entries (const char *pattern);
-  // Find all types that match pattern
-
-private:
-  ACE_Name_Options *name_options_;
-  // Name Options associated with the Naming Context
-
-  void display_menu (void);
-  // Display user menu
-
-  int set_proc_local (void);
-  // Set options to use PROC_LOCAL naming context
-
-  int set_node_local (void);
-  // Set options to use NODE_LOCAL naming context
-
-  int set_host (const char *hostname, int port);
-  // Set options to use NET_LOCAL naming context specifying host name
-  // and port number
-
-  int quit (void);
-  // Gracefully exit
-};
-
-// The following Factory is used by the ACE_Service_Config and
-// svc.conf file to dynamically initialize the state of the client
-// test.
-
-ACE_SVC_FACTORY_DEFINE (Client_Test)
 
 // Get the instance of Name_Service using Dynamic_Service
 
@@ -122,19 +36,11 @@ Client_Test::Client_Test (void)
 }
 
 int
-Client_Test::init (int /* argc */,
-                   ACE_TCHAR * /* argv */ [])
-{
-  ACE_DEBUG ((LM_DEBUG, "Client_Test::init\n"));
-
-  // Cache the name options.
-  this->name_options_ = NAMING_CONTEXT ()->name_options ();
-  return this->open ();
-}
-
-int
 Client_Test::open (void)
 {
+  // Cache the name options.
+  this->name_options_ = NAMING_CONTEXT ()->name_options ();
+
   this->display_menu ();
 
   if (ACE_Event_Handler::register_stdin_handler (this,
@@ -155,14 +61,6 @@ Client_Test::close (void)
   return ACE_Reactor::instance ()->remove_handler
     (ACE_STDIN,
      ACE_Event_Handler::DONT_CALL | ACE_Event_Handler::READ_MASK);
-}
-
-int
-Client_Test::fini (void)
-{
-  ACE_DEBUG ((LM_DEBUG,
-              "Client_Test::fini\n"));
-  return this->close ();
 }
 
 int
@@ -314,14 +212,17 @@ Client_Test::handle_input (ACE_HANDLE)
         result = this->list_type_entries (buf1);
       break;
     case 'q' :
-      result = this->quit ();
+      result = -1;
       break;
     default :
       ACE_DEBUG ((LM_DEBUG,
                   "Unrecognized command.\n"));
     }
 
-  this->display_menu ();
+  if (result == -1)
+    ACE_Reactor::instance ()->end_reactor_event_loop ();
+  else
+    this->display_menu ();
   return result;
 }
 
@@ -411,13 +312,6 @@ Client_Test::set_host (const char *hostname, int port)
   this->name_options_->nameserver_port (port);
 
   return NAMING_CONTEXT ()->open (ACE_Naming_Context::NET_LOCAL);
-}
-
-int
-Client_Test::quit (void)
-{
-  // Send ourselves a SIGINT!
-  return ACE_OS::kill (ACE_OS::getpid (), SIGINT);
 }
 
 int
