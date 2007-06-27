@@ -1,3 +1,20 @@
+Wed Jun 27 08:05:39 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Capabilities_Test.cpp:
+          Const changes
+
+        * tests/Dynamic_Test.cpp:
+          New test for ACE_Dynamic, this failed with x.5 but works
+          perfect on head, just adding it to make sure this keeps working
+          on all platforms. Belongs to bugzilla 2960.
+
+        * tests/run_test.lst:
+        * tests/tests.mpc:
+          Added Dynamic_Test
+
+        * tests/Svc_Handler_Test.cpp:
+          Intialise some pointers with 0
+
 Wed Jun 27 06:14:39 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/tao_orb_tests.lst:

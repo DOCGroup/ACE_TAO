@@ -378,6 +378,13 @@ project(DLL Test) : acetest, dll_test_parent_lib {
   }
 }
 
+project(Dynamic Test) : acetest {
+  exename = Dynamic_Test
+  Source_Files {
+    Dynamic_Test.cpp
+  }
+}
+
 project(Enum Interfaces Test) : acetest {
   exename = Enum_Interfaces_Test
   Source_Files {
