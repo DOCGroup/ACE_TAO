@@ -7,7 +7,7 @@
 #include "utl_string.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
-#include "ace/os_include/os_ctype.h"
+#include "ace/OS_NS_ctype.h"
 
 ACE_RCSID (be,
            be_sunsoft,
@@ -125,9 +125,9 @@ TAO_SunSoft_OutStream::print (AST_Expression *expr)
           // or as an unsigned number too large for a char.
           else if ((unsigned char) ev->u.cval > ACE_CHAR_MAX)
             this->TAO_OutStream::print ("%hd", ev->u.cval);
-          else if (isprint (ev->u.cval))
+          else if (ACE_OS::ace_isprint (ev->u.cval))
             this->TAO_OutStream::print ("'%c'", ev->u.cval);
-          else if (iscntrl (ev->u.cval))
+          else if (ACE_OS::ace_iscntrl (ev->u.cval))
             switch (ev->u.cval)
               {
                 case '\n':

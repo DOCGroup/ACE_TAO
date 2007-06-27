@@ -31,7 +31,7 @@
 #include "ace/ACE.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_sys_stat.h"
-#include "ace/os_include/os_ctype.h"
+#include "ace/OS_NS_ctype.h"
 
 ACE_RCSID (be,
            be_global,
@@ -206,7 +206,7 @@ be_change_idl_file_extension (UTL_String* idl_file,
       ACE_OS::sprintf (fname, "%s/", output_path);
 
       // Append the base part to fname.
-      ACE_OS::strncpy (fname + strlen (fname), string, base - string);
+      ACE_OS::strncpy (fname + ACE_OS::strlen (fname), string, base - string);
     }
   else
     {
@@ -2134,7 +2134,7 @@ BE_GlobalData::parse_args (long &i, char **av)
                   {
                     be_global->gen_impl_debug_info (true);
                   }
-                else if (isalpha (av[k][j + 3] ))
+                else if (ACE_OS::ace_isalpha (av[k][j + 3] ))
                   {
                     ACE_ERROR ((
                         LM_ERROR,
