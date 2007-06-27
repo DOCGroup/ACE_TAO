@@ -20,10 +20,8 @@ public:
   void disconnect ();
   // Disconnect from the event channel.
 
-  void push (const RtecEventComm::EventSet& data)
-    throw (CORBA::SystemException);
-  void disconnect_push_consumer (void)
-    throw (CORBA::SystemException);
+  void push (const RtecEventComm::EventSet& data);
+  void disconnect_push_consumer (void);
 
 private:
   RtecEventChannelAdmin::ProxyPushSupplier_var supplier_proxy_;
