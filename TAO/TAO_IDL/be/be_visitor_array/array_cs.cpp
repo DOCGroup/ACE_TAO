@@ -228,7 +228,7 @@ int be_visitor_array_cs::visit_array (be_array *node)
       primitive_type = be_array::narrow_from_decl (tmp);
     }
 
-  if (primitive_type)
+  if (primitive_type != 0)
     {
       // The base type is a typedef to another array type, so
       // we use the base type's copy method.

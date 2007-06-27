@@ -34,14 +34,12 @@ class be_array : public virtual AST_Array,
 {
 public:
   be_array (void);
-  // Default constructor.
 
   be_array (UTL_ScopedName *n,
             unsigned long ndims,
             UTL_ExprList *dims,
             bool local,
             bool abstract);
-  // Constructor.
 
   ~be_array (void);
 
@@ -49,6 +47,12 @@ public:
                       unsigned short slice = 0);
   // Generate dimensions. If slice == 1, generate dimensions for the slice
   // definition.
+  
+  virtual void gen_ostream_operator (TAO_OutStream *os);
+  virtual void gen_member_ostream_operator (TAO_OutStream *os,
+                                            const char *instance_name,
+                                            bool accessor = false);
+  // Overridden from class be_type.
 
   // Visiting.
   virtual int accept (be_visitor *visitor);

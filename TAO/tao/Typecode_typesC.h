@@ -40,6 +40,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/Basic_Types.h"
+#include "ace/Streams.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
@@ -131,6 +132,7 @@ namespace CORBA
 
 TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, CORBA::TCKind);
 TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, CORBA::TCKind &);
+TAO_Export std::ostream& operator<< (std::ostream &strm, const CORBA::TCKind _tao_enumerator);
 
 // TAO_IDL - Generated from
 // be\be_codegen.cpp:955

@@ -1317,6 +1317,22 @@ be_interface::gen_collocated_skel_body (be_interface *derived,
 }
 
 void
+be_interface::gen_ostream_operator (TAO_OutStream *os)
+{
+  *os << be_nl
+      << "std::ostream& operator<< (" << be_idt << be_idt_nl
+      << "std::ostream &strm," << be_nl
+      << "const " << this->name () << "_ptr _tao_objref" << be_uidt_nl
+      << ")" << be_uidt_nl
+      << "{" << be_idt_nl
+      << "return ::CORBA::"
+      << (this->is_abstract () ? "AbstractBase" : "Object")
+      << "::_tao_stream (strm, _tao_objref);"
+      << be_uidt_nl
+      << "}" << be_nl;
+}
+
+void
 be_interface::analyze_parentage (void)
 {
   if (this->has_mixed_parentage_ != -1)

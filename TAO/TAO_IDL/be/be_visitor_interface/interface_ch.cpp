@@ -237,7 +237,14 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
   *os << "virtual const char* _interface_repository_id (void) const;";
 
   // The virtual marshal method, to prevent marshal of local iterfaces.
-  *os << be_nl << "virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);";
+  *os << be_nl
+      << "virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);";
+
+  if (be_global->gen_ostream_operators ())
+    {
+      *os << be_nl
+          << "virtual std::ostream &_tao_stream_v (std::ostream &) const;";
+    }
 
   if (! node->is_local ())
     {

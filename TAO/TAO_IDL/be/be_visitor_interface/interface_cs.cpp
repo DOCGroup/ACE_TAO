@@ -112,6 +112,18 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
           << "}";
     }
 
+  if (be_global->gen_ostream_operators ())
+    {
+      *os << be_nl << be_nl
+          << "std::ostream &" << be_nl
+          << node->name () << "::_tao_stream_v (std::ostream &strm) const"
+          << be_nl
+          << "{" << be_idt_nl
+          << "return strm << \"\\\"" << node->repoID () << "\\\"\";"
+          << be_uidt_nl
+          << "}";
+    }
+
   if (node->has_mixed_parentage ())
     {
       *os << be_nl << be_nl

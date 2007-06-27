@@ -495,11 +495,15 @@ namespace CORBA
 }  // End namespace CORBA
 
 
-TAO_AnyTypeCode_Export
-CORBA::Boolean operator<< (TAO_OutputCDR & cdr, const CORBA::TypeCode_ptr tc);
+TAO_AnyTypeCode_Export CORBA::Boolean
+operator<< (TAO_OutputCDR & cdr, const CORBA::TypeCode_ptr tc);
 
-TAO_AnyTypeCode_Export
-CORBA::Boolean operator>> (TAO_InputCDR & cdr, CORBA::TypeCode_ptr & tc);
+TAO_AnyTypeCode_Export CORBA::Boolean 
+operator>> (TAO_InputCDR & cdr, CORBA::TypeCode_ptr & tc);
+
+// Used in optionally generated ostream operators (for debugging).
+TAO_AnyTypeCode_Export std::ostream &
+operator<< (std::ostream &, const CORBA::TypeCode_ptr tc);
 
 namespace TAO
 {

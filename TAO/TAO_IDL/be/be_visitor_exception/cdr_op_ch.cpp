@@ -59,12 +59,19 @@ be_visitor_exception_cdr_op_ch::visit_exception (be_exception *node)
       << " &);" << be_nl;
   *os << be_global->stub_export_macro () << " ::CORBA::Boolean"
       << " operator>> (TAO_InputCDR &, "
-      << node->name () << " &);";
+      << node->name () << " &);" << be_nl;
+
+  if (be_global->gen_ostream_operators ())
+    {
+      *os << be_global->stub_export_macro () << " std::ostream&"
+          << " operator<< (std::ostream &strm, const "
+          << node->name () << " &);" << be_nl;
+    }
 
   *os << be_global->core_versioning_end () << be_nl;
 
   // Set the substate as generating code for the types defined in our scope.
-  this->ctx_->sub_state(TAO_CodeGen::TAO_CDR_SCOPE);
+  this->ctx_->sub_state (TAO_CodeGen::TAO_CDR_SCOPE);
 
   if (this->visit_scope (node) == -1)
     {

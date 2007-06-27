@@ -35,16 +35,17 @@ class be_structure : public virtual AST_Structure,
 {
 public:
   be_structure (void);
-  // Default constructor.
 
   be_structure (UTL_ScopedName *n,
                 bool local,
                 bool abstract);
-  // Constructor.
 
   virtual void redefine (AST_Structure *from);
   // Copy BE-specific values when redefining struct or union
   // from a forward declaration.
+  
+  virtual void gen_ostream_operator (TAO_OutStream *os);
+  // Overridden from class be_type.
 
   virtual void destroy (void);
   // Cleanup method.

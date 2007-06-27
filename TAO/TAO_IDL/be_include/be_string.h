@@ -33,13 +33,16 @@ class be_string : public virtual AST_String,
 {
 public:
   be_string (void);
-  //  Default constructor.
 
   be_string (AST_Decl::NodeType nt,
              UTL_ScopedName *n,
              AST_Expression *v,
              long width);
-  // Constructor.
+
+  // Overridden from class be_type.
+  virtual void gen_member_ostream_operator (TAO_OutStream *os,
+                                            const char *instance_name,
+                                            bool accessor = false);
 
   // Visiting.
   virtual int accept (be_visitor *visitor);

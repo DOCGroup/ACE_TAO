@@ -35,19 +35,20 @@ class be_union : public virtual AST_Union,
 {
 public:
   be_union (void);
-  // Default constructor.
 
   be_union (AST_ConcreteType *dt,
             UTL_ScopedName *n,
             bool local,
             bool abstract);
-  // Constructor.
 
   virtual void redefine (AST_Structure *from);
   // Catch BE-specific member values before delegating to the base class.
 
   virtual bool has_duplicate_case_labels (void);
   // Do we have at least one member with multiple case labels?
+
+  virtual void gen_ostream_operator (TAO_OutStream *os);
+  // Overridden from class be_type.
 
   virtual void destroy (void);
   // Cleanup function.

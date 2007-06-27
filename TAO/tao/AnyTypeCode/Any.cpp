@@ -290,6 +290,12 @@ operator>> (TAO_InputCDR &cdr, CORBA::Any &any)
   return true;
 }
 
+std::ostream &
+operator<< (std::ostream &strm, const CORBA::Any &)
+{
+  return strm << "CORBA::Any";
+}
+
 // =======================================================================
 
 // Insertion of the special basic types.

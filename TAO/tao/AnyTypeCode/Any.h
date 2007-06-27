@@ -268,8 +268,15 @@ namespace CORBA
   };
 }
 
-TAO_AnyTypeCode_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const CORBA::Any &);
-TAO_AnyTypeCode_Export CORBA::Boolean operator>> (TAO_InputCDR &, CORBA::Any &);
+TAO_AnyTypeCode_Export CORBA::Boolean
+operator<< (TAO_OutputCDR &, const CORBA::Any &);
+
+TAO_AnyTypeCode_Export CORBA::Boolean
+operator>> (TAO_InputCDR &, CORBA::Any &);
+
+// Used in optionally generated ostream operators (for debugging).
+TAO_AnyTypeCode_Export std::ostream &
+operator<< (std::ostream &, const CORBA::Any &);
 
 /// Typesafe insertion.
 

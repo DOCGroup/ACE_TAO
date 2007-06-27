@@ -214,7 +214,12 @@ be_visitor_array_cdr_op_cs::visit_array (be_array *node)
                         -1);
     }
 
-  *os << "}";
+  *os << "}" << be_nl;
+
+  if (be_global->gen_ostream_operators ())
+    {
+      node->gen_ostream_operator (os);
+    }
 
   *os << be_global->core_versioning_end () << be_nl;
 

@@ -87,11 +87,18 @@ namespace CORBA
                                   );
     virtual const char* _interface_repository_id (void) const;
 
-    /// TAO specific operation
+    /// TAO specific operations
+    
     virtual const char* _tao_obv_repository_id (void) const;
     virtual CORBA::Boolean _tao_marshal_v (TAO_OutputCDR &strm) const;
     virtual CORBA::Boolean _tao_unmarshal_v (TAO_InputCDR &strm);
     virtual CORBA::Boolean _tao_match_formal_type (ptrdiff_t) const;
+
+    /// Used by optionally generated ostream operators for interface
+    /// to output the actual repo id for debugging.  
+    static std::ostream& _tao_stream (std::ostream &strm,
+                                      const AbstractBase_ptr _tao_objref);
+    virtual std::ostream& _tao_stream_v (std::ostream &strm) const;
 
     /// Memmory management operations
     virtual void _add_ref (void);
@@ -153,6 +160,9 @@ operator<< (TAO_OutputCDR &, const CORBA::AbstractBase_ptr);
 
 TAO_Valuetype_Export CORBA::Boolean
 operator>> (TAO_InputCDR &, CORBA::AbstractBase_ptr &);
+
+TAO_Valuetype_Export std::ostream&
+operator<< (std::ostream &, CORBA::AbstractBase_ptr);
 
 /// Used in generated code if CORBA::AbstractBase is an argument or return type.
 namespace TAO

@@ -56,14 +56,12 @@ public:
   };
 
   be_sequence (void);
-  // Default constructor.
 
   be_sequence (AST_Expression *v,
                AST_Type *bt,
                UTL_ScopedName *n,
                bool local,
                bool abstract);
-  // Constructor.
 
   virtual int create_name (be_typedef *node);
   // Create a name for ourselves. If we are typedefed, then we get the name of
@@ -77,6 +75,9 @@ public:
 
   virtual be_decl *decl (void);
   // Overridden method on the be_scope class.
+  
+  virtual void gen_ostream_operator (TAO_OutStream *os);
+  // Overridden from class be_type.
 
   virtual void destroy (void);
   // Cleanup method.

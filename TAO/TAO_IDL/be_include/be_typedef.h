@@ -54,6 +54,11 @@ public:
   // Return the most "unaliased" type node for the base type (see
   // be_type.h).
 
+  virtual void gen_member_ostream_operator (TAO_OutStream *os,
+                                            const char *instance_name,
+                                            bool accessor = false);
+  // Overridden from class be_type.
+
   virtual void destroy (void);
   // Cleanup function.
 

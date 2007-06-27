@@ -303,6 +303,12 @@ namespace CORBA
     /// Allows us to forbid marshaling of local interfaces.
     virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
 
+    /// Used by optionally generated ostream operators for interface
+    /// to output the actual repo id for debugging.  
+    static std::ostream& _tao_stream (std::ostream &strm,
+                                      const Object_ptr _tao_objref);
+    virtual std::ostream& _tao_stream_v (std::ostream &strm) const;
+
     /// Accessor to the flag..
     CORBA::Boolean is_evaluated (void) const;
 
@@ -444,6 +450,9 @@ operator<< (TAO_OutputCDR&, const CORBA::Object*);
 
 TAO_Export CORBA::Boolean
 operator>> (TAO_InputCDR&, CORBA::Object *&);
+
+TAO_Export std::ostream&
+operator<< (std::ostream&, CORBA::Object_ptr);
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 

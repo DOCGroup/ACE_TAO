@@ -402,6 +402,30 @@ be_sequence::decl (void)
   return this;
 }
 
+// Overridden method
+void
+be_sequence::gen_ostream_operator (TAO_OutStream *os)
+{
+  *os << be_nl
+      << "std::ostream& operator<< (" << be_idt << be_idt_nl
+      << "std::ostream &strm," << be_nl
+      << "const " << this->name () << " &_tao_sequence" << be_uidt_nl
+      << ")" << be_uidt_nl
+      << "{" << be_idt_nl
+      << "strm << \"" << this->name () << "[\";" << be_nl << be_nl
+      << "for (CORBA::ULong i = 0; i < _tao_sequence.length (); ++i)"
+      << be_idt_nl
+      << "{" << be_idt_nl
+      << "if (i != 0)" << be_idt_nl
+      << "{" << be_idt_nl
+      << "strm << \", \";" << be_uidt_nl
+      << "}" << be_uidt_nl << be_nl
+      << "strm << _tao_sequence[i];" << be_uidt_nl
+      << "}" << be_uidt_nl << be_nl
+      << "return strm << \"]\";" << be_uidt_nl
+      << "}" << be_nl;
+}
+
 int
 be_sequence::accept (be_visitor *visitor)
 {

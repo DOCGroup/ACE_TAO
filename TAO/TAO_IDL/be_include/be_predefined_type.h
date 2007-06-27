@@ -33,11 +33,14 @@ class be_predefined_type : public virtual AST_PredefinedType,
 {
 public:
   be_predefined_type (void);
-  // Default constructor.
 
   be_predefined_type (AST_PredefinedType::PredefinedType t,
                       UTL_ScopedName *n);
-  // Constructor.
+                      
+  // Overridden from class be_type.
+  virtual void gen_member_ostream_operator (TAO_OutStream *os,
+                                            const char *instance_name,
+                                            bool accessor = false);
 
   // Visiting.
   virtual int accept (be_visitor* visitor);
