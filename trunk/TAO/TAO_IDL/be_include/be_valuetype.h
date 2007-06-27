@@ -73,6 +73,9 @@ public:
                                 char *full_name = 0);
   // Generate the helper functions implementation.
 
+  virtual void gen_ostream_operator (TAO_OutStream *os);
+  // Overridden from class be_type.
+
   void gen_var_out_seq_decls (void);
   // Generate the declarations used by the template _var, _out
   // classes for valuetypes, and by sequence template classes.

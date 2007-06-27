@@ -537,6 +537,20 @@ be_valuetype::gen_helper_stubs (char *, char *)
   return 0;
 }
 
+void
+be_valuetype::gen_ostream_operator (TAO_OutStream *os)
+{
+  *os << be_nl
+      << "std::ostream& operator<< (" << be_idt << be_idt_nl
+      << "std::ostream &strm," << be_nl
+      << "const " << this->name () << " *_tao_valuetype" << be_uidt_nl
+      << ")" << be_uidt_nl
+      << "{" << be_idt_nl
+      << "return ::CORBA::ValueBase::_tao_stream (strm, _tao_valuetype);"
+      << be_uidt_nl
+      << "}" << be_nl;
+}
+
 // Generate the forward declarations and static methods used by the
 // interface _var and _out template classes, as well as by the
 // template sequence classes for object references.

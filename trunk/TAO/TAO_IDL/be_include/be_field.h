@@ -26,18 +26,22 @@
 #include "ast_field.h"
 
 class be_visitor;
+class TAO_OutStream;
 
 class be_field : public virtual AST_Field,
                  public virtual be_decl
 {
 public:
   be_field (void);
-  // Default constructor.
 
   be_field (AST_Type *ft,
             UTL_ScopedName *n,
             Visibility vis = vis_NA);
-  // Constructor.
+            
+  // Generate debugging ostream operator for members.
+  void gen_member_ostream_operator (TAO_OutStream *os,
+                                    const char *instance_name,
+                                    bool accessor = false);
 
   // Visiting.
   virtual int accept (be_visitor *visitor);

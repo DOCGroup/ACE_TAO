@@ -55,6 +55,15 @@ public:
   // proxies.
 
   void gen_fwd_helper_name (void);
+  // Compute the value of the member.
+  
+  virtual void gen_ostream_operator (TAO_OutStream *os);
+  // No-op, overridden in derived classes.
+
+  virtual void gen_member_ostream_operator (TAO_OutStream *os,
+                                            const char *instance_name,
+                                            bool accessor = false);
+  // Generic implementation here, overridden for some types.
 
   const char *fwd_helper_name (void) const;
   void fwd_helper_name (const char *name);

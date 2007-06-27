@@ -64,6 +64,13 @@ be_visitor_interface_cdr_op_ch::visit_interface (be_interface *node)
       << "operator>> (TAO_InputCDR &, "
       << node->full_name () << "_ptr &);" << be_nl;
 
+  if (be_global->gen_ostream_operators ())
+    {
+      *os << be_global->stub_export_macro () << " std::ostream&"
+          << " operator<< (std::ostream &strm, const "
+          << node->full_name () << "_ptr);" << be_nl;
+    }
+
   *os << be_global->core_versioning_end () << be_nl;
 
   // Set the substate as generating code for the types defined in our scope.

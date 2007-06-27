@@ -37,7 +37,8 @@ be_union_branch::be_union_branch (void)
     AST_Decl (),
     AST_Field (),
     AST_UnionBranch (),
-    be_decl ()
+    be_decl (),
+    be_field ()
 {
 }
 
@@ -55,7 +56,9 @@ be_union_branch::be_union_branch (UTL_LabelList *ll,
                      ft,
                      n),
     be_decl (AST_Decl::NT_union_branch,
-             n)
+             n),
+    be_field (ft,
+              n)
 {
 }
 

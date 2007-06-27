@@ -143,7 +143,12 @@ be_visitor_structure_cdr_op_cs::visit_structure (be_structure *node)
       *os << ";" << be_uidt << be_uidt;
     }
 
-  *os << be_uidt_nl << "}";
+  *os << be_uidt_nl << "}" << be_nl;
+
+  if (be_global->gen_ostream_operators ())
+    {
+      node->gen_ostream_operator (os);
+    }
 
   *os << be_global->core_versioning_end () << be_nl;
 

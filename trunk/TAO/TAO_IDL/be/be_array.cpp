@@ -257,6 +257,98 @@ be_array::gen_dimensions (TAO_OutStream *os,
   return 0;
 }
 
+// Overridden method
+void
+be_array::gen_ostream_operator (TAO_OutStream *os)
+{
+  be_scope* scope = be_scope::narrow_from_scope (this->defined_in ());
+  be_decl* parent = scope->decl ();
+  ACE_CString arg_name (ACE_CString (parent->full_name ())
+                        + "::"
+                        + (this->anonymous () ? "_" : "")
+                        + this->local_name ()->get_string ()
+                        + "_forany &_tao_array");
+
+  // Using 'const' with xxx_forany here prevents the compiler from
+  // automatically converting back to xxx_slice *.
+  *os << be_nl
+      << "std::ostream& operator<< (" << be_idt << be_idt_nl
+      << "std::ostream &strm, " << be_nl
+      << "const " << arg_name.c_str () << be_uidt_nl
+      << ")" << be_uidt_nl
+      << "{" << be_idt_nl
+      << "strm << \"" << this->name () << "\";" <<  be_nl << be_nl;
+  
+  unsigned long ndims = this->n_dims ();
+  unsigned long i = 0;
+  
+  for (i = 0; i < ndims; ++i)
+    {
+      *os << "strm << \"[\";" << be_nl << be_nl;
+      
+      AST_Expression *expr = this->dims ()[i];
+      
+      // Generate a loop for each dimension.
+      *os << "for ( ::CORBA::ULong i" << i << " = 0; i" << i << " < "
+          << expr->ev ()->u.ulval << "; ++i" << i << ")" << be_idt_nl
+          << "{" << be_idt_nl
+          << "if (i" << i << " != 0)" << be_idt_nl
+          << "{" << be_idt_nl
+          << "strm << \", \";" << be_uidt_nl
+          << "}" << be_uidt_nl << be_nl;
+    }
+    
+  *os << "strm << ";
+  
+  ACE_CString instance_name ("_tao_array");
+  
+  for (i = 0; i < ndims; ++i)
+    {
+      char *working = instance_name.rep ();
+      instance_name += "[i";
+      instance_name += ACE_OS::itoa (i, working, 10);
+      instance_name += "]";
+    }
+   
+  be_type *bt = be_type::narrow_from_decl (this->base_type ());
+  bt->gen_member_ostream_operator (os, instance_name.c_str ());
+    
+  *os << ";";
+  
+  for (i = 0; i < ndims; ++i)
+    {
+      *os << be_uidt_nl 
+          << "}" << be_uidt_nl << be_nl
+          << "strm << \"]\";";
+    }
+    
+  *os << be_nl
+      << "return strm;" << be_uidt_nl
+      << "}" << be_nl;
+}
+
+void
+be_array::gen_member_ostream_operator (TAO_OutStream *os,
+                                       const char *instance_name,
+                                       bool accessor)
+{
+  be_scope* scope = be_scope::narrow_from_scope (this->defined_in ());
+  be_decl* parent = scope->decl ();
+  ACE_CString decl_name (ACE_CString (parent->full_name ())
+                         + "::"
+                         + (this->anonymous () ? "_" : "")
+                         + this->local_name ()->get_string ());
+  
+ // The container is always const, so the member is const as well,
+ // but we have to cast it away for the forany constructor.                        
+ *os << decl_name.c_str () << "_forany ("
+     << "const_cast< " << decl_name.c_str () << "_slice *> (";
+  
+  this->be_type::gen_member_ostream_operator (os, instance_name, accessor);
+  
+  *os << "))";
+}
+
 int
 be_array::accept (be_visitor *visitor)
 {

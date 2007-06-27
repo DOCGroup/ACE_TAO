@@ -345,7 +345,7 @@ AST_Union::lookup_label (AST_UnionBranch *b)
     }
 
   AST_Decl *d = 0;
-  AST_UnionBranch       *fb = 0;
+  AST_UnionBranch *fb = 0;
 
   lv->set_ev (lv->coerce (this->pd_udisc_type));
 
@@ -976,6 +976,10 @@ AST_Union::fe_add_union_branch (AST_UnionBranch *t)
   if (this->pd_udisc_type == AST_Expression::EV_enum)
     {
       t->add_labels (this);
+    }
+  else
+    {
+      t->coerce_labels (this);
     }
 
   // Add it to set of locally referenced symbols.

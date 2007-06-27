@@ -1973,12 +1973,12 @@ AST_Expression::eval_mod_op (AST_Expression::EvalKind ek)
       retval->et = EV_ulonglong;
 
       if (this->pd_v2->ev ()->u.ullval == 0)
-  {
-    return 0;
-  }
+        {
+          return 0;
+        }
 
       retval->u.ullval =
-  this->pd_v1->ev ()->u.ullval % this->pd_v2->ev ()->u.ullval;
+        this->pd_v1->ev ()->u.ullval % this->pd_v2->ev ()->u.ullval;
     }
   else if (ek == EK_longlong)
     {
@@ -1987,12 +1987,12 @@ AST_Expression::eval_mod_op (AST_Expression::EvalKind ek)
       retval->et = EV_longlong;
 
       if (this->pd_v2->ev ()->u.llval == 0)
-  {
-    return 0;
-  }
+        {
+          return 0;
+        }
 
       retval->u.llval =
-  this->pd_v1->ev ()->u.llval % this->pd_v2->ev ()->u.llval;
+        this->pd_v1->ev ()->u.llval % this->pd_v2->ev ()->u.llval;
     }
   else
 #endif
@@ -2003,12 +2003,12 @@ AST_Expression::eval_mod_op (AST_Expression::EvalKind ek)
       retval->et = EV_ulong;
 
       if (this->pd_v2->ev ()->u.ulval == 0)
-  {
-    return 0;
-  }
+        {
+          return 0;
+        }
 
       retval->u.ulval =
-  this->pd_v1->ev ()->u.ulval % this->pd_v2->ev ()->u.ulval;
+        this->pd_v1->ev ()->u.ulval % this->pd_v2->ev ()->u.ulval;
     }
   else if (ek == EK_long)
     {
@@ -2017,12 +2017,12 @@ AST_Expression::eval_mod_op (AST_Expression::EvalKind ek)
       retval->et = EV_long;
 
       if (this->pd_v2->ev ()->u.lval == 0)
-  {
-    return 0;
-  }
+        {
+          return 0;
+        }
 
       retval->u.lval =
-  this->pd_v1->ev ()->u.lval % this->pd_v2->ev ()->u.lval;
+        this->pd_v1->ev ()->u.lval % this->pd_v2->ev ()->u.lval;
     }
   else
     {
@@ -2241,16 +2241,21 @@ AST_Expression::eval_bit_op (AST_Expression::EvalKind ek)
             this->pd_v1->ev ()->u.oval & this->pd_v2->ev ()->u.oval;
           break;
         case EC_left:
-          // This is the only operation that can cause overflow even if
-          // both operands are in range, so we set the ExprType to a
-          // large type and catch the octet overflow, if any, later.
-          retval->et = EV_ulong;
-          retval->u.ulval =
-            this->pd_v1->ev ()->u.ulval << this->pd_v2->ev ()->u.ulval;
-          break;
+          {
+            // This is the only bitwise operation that can cause overflow
+            // even if both operands are in range, so we set the ExprType
+            // to a large type and then check for overflow.
+            retval->u.ulval =
+              this->pd_v1->ev ()->u.ulval << this->pd_v2->ev ()->u.ulval;             
+            AST_Expression test (retval->u.ulval, EV_ulong);
+            AST_ExprValue *ev = test.coerce (EV_octet);
+            delete retval;
+            retval = ev;
+            break;
+          }
         case EC_right:
-          retval->u.ulval =
-            this->pd_v1->ev ()->u.ulval >> this->pd_v2->ev ()->u.ulval;
+          retval->u.oval =
+            this->pd_v1->ev ()->u.oval >> this->pd_v2->ev ()->u.oval;
           break;
         default:
           return 0;
@@ -2944,7 +2949,7 @@ dump_expr_val (ACE_OSTREAM_TYPE &o,
       o << ev->u.wcval;
       break;
     case AST_Expression::EV_octet:
-      o << ev->u.oval;
+      o << static_cast<int> (ev->u.oval);
       break;
     case AST_Expression::EV_bool:
       o << (ev->u.bval == true ? "TRUE" : "FALSE");

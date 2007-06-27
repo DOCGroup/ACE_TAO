@@ -107,6 +107,7 @@ AST_Typedef::AST_Typedef (AST_Type *bt,
   if (AST_Decl::NT_array == nt || AST_Decl::NT_sequence == nt)
     {
       this->owns_base_type_ = true;
+      bt->anonymous (false);
     }
 }
 

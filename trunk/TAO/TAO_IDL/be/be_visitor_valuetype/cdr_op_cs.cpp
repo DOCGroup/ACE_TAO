@@ -106,6 +106,11 @@ be_visitor_valuetype_cdr_op_cs::visit_valuetype (be_valuetype *node)
       << be_uidt_nl
       << "}" << be_nl << be_nl;
 
+  if (be_global->gen_ostream_operators ())
+    {
+      node->gen_ostream_operator (os);
+    }
+
   *os << be_global->core_versioning_end () << be_nl;
 
   if (!node->is_abstract ())

@@ -22,7 +22,7 @@
 #ifndef BE_UNION_BRANCH_H
 #define BE_UNION_BRANCH_H
 
-#include "be_decl.h"
+#include "be_field.h"
 #include "ast_union_branch.h"
 
 class UTL_LabelList;
@@ -32,7 +32,7 @@ class TAO_OutStream;
 class be_union;
 
 class be_union_branch : public virtual AST_UnionBranch,
-                        public virtual be_decl
+                        public virtual be_field
 {
 public:
   be_union_branch (void);

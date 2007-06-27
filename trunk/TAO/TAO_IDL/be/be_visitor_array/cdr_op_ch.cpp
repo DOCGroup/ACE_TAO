@@ -117,42 +117,34 @@ be_visitor_array_cdr_op_ch::visit_array (be_array *node)
 
   *os << be_global->core_versioning_begin () << be_nl;
 
+  be_scope* scope = be_scope::narrow_from_scope (node->defined_in ());
+  be_decl* parent = scope->decl ();
+  be_typedef *td = this->ctx_->tdef ();
+  ACE_CString arg_name (ACE_CString (parent->full_name ())
+                        + "::"
+                        + (td == 0 ? "_" : "")
+                        + node->local_name ()->get_string ()
+                        + "_forany &_tao_array");
+
   // Generate the CDR << and >> operator declarations.
   *os << be_global->stub_export_macro () << " CORBA::Boolean"
-      << " operator<< (TAO_OutputCDR &strm, const ";
-
-  if (!this->ctx_->tdef ())
-    {
-      be_scope* scope = be_scope::narrow_from_scope (node->defined_in ());
-      be_decl* parent = scope->decl ();
-
-      *os << parent->full_name ()
-          << "::_" << node->local_name ()
-          << "_forany &_tao_array);" << be_nl;
-    }
-  else
-    {
-      *os << node->name () << "_forany &_tao_array);" << be_nl;
-    }
+      << " operator<< (TAO_OutputCDR &strm, const "
+      << arg_name.c_str () << ");" << be_nl;
 
   *os << be_global->stub_export_macro () << " ::CORBA::Boolean"
-      << " operator>> (TAO_InputCDR &, ";
+      << " operator>> (TAO_InputCDR &, " << arg_name.c_str ()
+      << ");" << be_nl;
 
-  if (!this->ctx_->tdef ())
+  // Using 'const' with xxx_forany prevents the compiler from
+  // automatically converting back to xxx_slice *.
+  if (be_global->gen_ostream_operators ())
     {
-      be_scope* scope = be_scope::narrow_from_scope (node->defined_in ());
-      be_decl* parent = scope->decl ();
-
-      *os << parent->full_name ()
-          << "::_" << node->local_name ()
-          << "_forany &);";
-    }
-  else
-    {
-      *os << node->name () << "_forany &);";
+      *os << be_global->stub_export_macro () << " std::ostream&"
+          << " operator<< (std::ostream &strm, const "
+          << arg_name.c_str () << ");" << be_nl;
     }
 
-  *os << be_nl << be_global->core_versioning_end ();
+  *os << be_global->core_versioning_end ();
 
   node->cli_hdr_cdr_op_gen (1);
   return 0;

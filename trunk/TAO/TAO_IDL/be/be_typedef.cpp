@@ -114,6 +114,16 @@ be_typedef::base_node_type (void) const
 }
 
 void
+be_typedef::gen_member_ostream_operator (TAO_OutStream *os,
+                                         const char *instance_name,
+                                         bool accessor)
+{
+  this->primitive_base_type ()->gen_member_ostream_operator (os,
+                                                             instance_name,
+                                                             accessor);
+}
+
+void
 be_typedef::destroy (void)
 {
   this->AST_Typedef::destroy ();

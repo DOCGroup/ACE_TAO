@@ -60,7 +60,14 @@ be_visitor_union_cdr_op_ch::visit_union (be_union *node)
       << " &);" << be_nl;
   *os << be_global->stub_export_macro () << " ::CORBA::Boolean"
       << " operator>> (TAO_InputCDR &, "
-      << node->name () << " &);";
+      << node->name () << " &);" << be_nl;
+
+  if (be_global->gen_ostream_operators ())
+    {
+      *os << be_global->stub_export_macro () << " std::ostream&"
+          << " operator<< (std::ostream &strm, const "
+          << node->name () << " &);" << be_nl;
+    }
 
   *os << be_global->core_versioning_end () << be_nl;
 
