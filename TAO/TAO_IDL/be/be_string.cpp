@@ -21,6 +21,7 @@
 
 #include "be_string.h"
 #include "be_visitor.h"
+#include "be_helper.h"
 
 #include "utl_identifier.h"
 #include "global_extern.h"
@@ -61,6 +62,42 @@ be_string::be_string (AST_Decl::NodeType nt,
              n)
 {
   idl_global->string_seen_ = true;
+}
+
+// Overridden method.
+void
+be_string::gen_member_ostream_operator (TAO_OutStream *os,
+                                        const char *instance_name,
+                                        bool accessor)
+{
+  // For wide strings, generate code that outputs the hex values of
+  // the individual wchars inside square brackets, otherwise generate
+  // code that outputs the string literal bracketed with quotes.
+  if (this->width () == 1)
+    {
+      *os << "\"\\\"\" << ";
+      
+      this->be_type::gen_member_ostream_operator (os,
+                                                  instance_name,
+                                                  accessor);
+      
+      *os << " << \"\\\"\"";
+    }
+  else
+    {
+      *os << "\"[\";" << be_nl << be_nl
+          << "for (size_t i = 0; i < " << "ACE_OS::strlen ("
+          << instance_name << ".in ()); ++i)" << be_idt_nl
+          << "{" << be_idt_nl
+          << "if (i != 0)" << be_idt_nl
+          << "{" << be_idt_nl
+          << "strm << \", \";" << be_uidt_nl
+          << "}" << be_uidt_nl << be_nl
+          << "strm << ACE_OutputCDR::from_wchar (" << instance_name
+          << "[i]);" << be_uidt_nl
+          << "}" << be_uidt_nl << be_nl
+          << "strm << \"]\"";
+    }
 }
 
 // Overriden method.

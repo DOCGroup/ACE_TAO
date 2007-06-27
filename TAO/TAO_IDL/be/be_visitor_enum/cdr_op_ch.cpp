@@ -51,14 +51,23 @@ be_visitor_enum_cdr_op_ch::visit_enum (be_enum *node)
 
   *os << be_global->core_versioning_begin () << be_nl;
 
-  // generate the CDR << and >> operators
+  // Generate the CDR << and >> operators.
   *os << be_global->stub_export_macro () << " ::CORBA::Boolean"
-      << " operator<< (TAO_OutputCDR &strm, " << node->name () << " _tao_enumerator);" << be_nl;
+      << " operator<< (TAO_OutputCDR &strm, " << node->name ()
+      << " _tao_enumerator);" << be_nl;
   *os << be_global->stub_export_macro () << " ::CORBA::Boolean"
-      << " operator>> (TAO_InputCDR &strm, " << node->name () << " &_tao_enumerator);";
+      << " operator>> (TAO_InputCDR &strm, " << node->name ()
+      << " &_tao_enumerator);" << be_nl;
+      
+  if (be_global->gen_ostream_operators ())
+    {
+      *os << be_global->stub_export_macro () << " std::ostream&"
+          << " operator<< (std::ostream &strm, const " << node->name ()
+          << " _tao_enumerator);" << be_nl;
+    }
 
   *os << be_global->core_versioning_end () << be_nl;
 
-  node->cli_hdr_cdr_op_gen (1);
+  node->cli_hdr_cdr_op_gen (true);
   return 0;
 }

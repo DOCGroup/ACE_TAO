@@ -20,6 +20,8 @@
 // ============================================================================
 
 #include "be_union.h"
+#include "be_union_branch.h"
+#include "be_union_label.h"
 #include "be_visitor.h"
 #include "be_codegen.h"
 #include "be_helper.h"
@@ -119,6 +121,77 @@ be_union::has_duplicate_case_labels (void)
 }
 
 void
+be_union::gen_ostream_operator (TAO_OutStream *os)
+{
+  *os << be_nl
+      << "std::ostream& operator<< (" << be_idt << be_idt_nl
+      << "std::ostream &strm," << be_nl
+      << "const " << this->name () << " &_tao_union" << be_uidt_nl
+      << ")" << be_uidt_nl
+      << "{" << be_idt_nl
+      << "strm << \"" << this->name () << "(\";" << be_nl << be_nl
+      << "switch (_tao_union._d ())" << be_nl
+      << "{" << be_idt;
+      
+  for (long i = 0; i < this->pd_decls_used; ++i)
+    {
+      be_union_branch *ub =
+        be_union_branch::narrow_from_decl (this->pd_decls[i]);
+      
+      // We don't want any decls, just members.
+      if (ub == 0)
+        {
+          continue;
+        }
+        
+      *os << be_nl;
+        
+      unsigned long ll_len = ub->label_list_length ();
+
+      for (unsigned long j = 0; j < ll_len; ++j)
+        {
+          // Check if we are printing the default case.
+          if (ub->label (j)->label_kind () == AST_UnionLabel::UL_default)
+            {
+              *os << "default:";
+            }
+          else
+            {
+              *os << "case ";
+
+              ub->gen_label_value (os, j);
+
+              *os << ":";
+            }
+
+          if (j == ll_len - 1)
+            {
+              *os << be_idt_nl;
+            }
+          else
+            {
+              *os << be_nl;
+            }
+        }
+
+      ACE_CString instance_name ("_tao_union.");
+      instance_name += ub->local_name ()->get_string ();
+      
+      *os << "strm << ";
+      
+      ub->gen_member_ostream_operator (os, instance_name.c_str (), true);
+      
+      *os << ";" << be_nl
+          << "break;" << be_uidt;
+    }
+    
+  *os << be_uidt_nl
+      << "}" << be_nl << be_nl
+      << "return strm << \")\";" << be_uidt_nl
+      << "}" << be_nl;
+}
+
+void
 be_union::destroy (void)
 {
   // Call the destroy methods of our base classes.
@@ -146,20 +219,20 @@ be_union::gen_empty_default_label (void)
 
   AST_ConcreteType *disc = this->disc_type ();
   AST_Decl::NodeType nt = disc->node_type ();
-
   unsigned long n_labels = this->nlabels ();
 
   if (nt == AST_Decl::NT_enum)
     {
-      AST_Enum *ast_enum = AST_Enum::narrow_from_decl (disc);
-      if (ast_enum == 0)
+      AST_Enum *e = AST_Enum::narrow_from_decl (disc);
+      
+      if (e == 0)
         {
           return true;
         }
 
       // If we have an enum and the number of labels if as big as the enum
       // has members we don't have to generate a default label
-      if (n_labels == (unsigned long)ast_enum->member_count ())
+      if (n_labels == static_cast<unsigned long> (e->member_count ()))
         {
            return false;
         }

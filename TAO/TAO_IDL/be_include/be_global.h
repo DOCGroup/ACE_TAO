@@ -334,6 +334,12 @@ public:
 
   void gen_template_export (bool val);
   // Set the gen_seq_template_export_ member.
+  
+  bool gen_ostream_operators (void) const;
+  // Get the gen_ostream_operators_ member.
+  
+  void gen_ostream_operators (bool val);
+  // Set the gen_ostream_operators_ member.
 
   const char* anyop_header_ending (void) const;
   // Get the anyop_header_ending.
@@ -790,6 +796,10 @@ private:
   bool gen_template_export_;
   // Generate explicit export for Visual Studio bug workaround,
   // needed only in TAO basic sequence *C.h files.
+  
+  bool gen_ostream_operators_;
+  // Generate ostream operators for each type declaration, for
+  // debuggin or logging.
 };
 
 #endif /* _BE_GLOBAL_H */

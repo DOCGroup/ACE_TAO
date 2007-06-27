@@ -214,6 +214,23 @@ AST_UnionBranch::add_labels (AST_Union *u)
     }
 }
 
+void
+AST_UnionBranch::coerce_labels (AST_Union *u)
+{
+  for (unsigned long i = 0; i < this->label_list_length (); ++i)
+    {
+      AST_UnionLabel *ul = this->label (i);
+      
+      if (ul->label_kind () == AST_UnionLabel::UL_default)
+        {
+          continue;
+        }
+        
+      AST_Expression *lv = ul->label_val ();
+      lv->set_ev (lv->coerce (u->udisc_type ()));
+    }
+}
+
 // Narrowing.
 IMPL_NARROW_METHODS1(AST_UnionBranch, AST_Field)
 IMPL_NARROW_FROM_DECL(AST_UnionBranch)

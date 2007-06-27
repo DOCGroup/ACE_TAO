@@ -21,6 +21,7 @@
 
 #include "be_predefined_type.h"
 #include "be_visitor.h"
+#include "be_helper.h"
 #include "utl_identifier.h"
 #include "global_extern.h"
 
@@ -99,6 +100,38 @@ be_predefined_type::be_predefined_type (AST_PredefinedType::PredefinedType t,
         break;
       default:
         idl_global->basic_type_seen_ = true;
+        break;
+    }
+}
+
+// Overridden method.
+void
+be_predefined_type::gen_member_ostream_operator (TAO_OutStream *os,
+                                                 const char *instance_name,
+                                                 bool accessor)
+{
+  switch (this->pt ())
+    {
+      case AST_PredefinedType::PT_boolean:
+        *os << "ACE_OutputCDR::from_boolean (" << instance_name
+            << (accessor ? " ()" : "") << ")";
+        break;
+      case AST_PredefinedType::PT_char:
+        *os << "ACE_OutputCDR::from_char (" << instance_name
+            << (accessor ? " ()" : "") << ")";
+        break;
+      case AST_PredefinedType::PT_octet:
+        *os << "ACE_OutputCDR::from_octet (" << instance_name
+            << (accessor ? " ()" : "") << ")";
+        break;
+      case AST_PredefinedType::PT_wchar:
+        *os << "ACE_OutputCDR::from_wchar (" << instance_name
+            << (accessor ? " ()" : "") << ")";
+        break;
+      default:
+        this->be_type::gen_member_ostream_operator (os,
+                                                    instance_name,
+                                                    accessor);
         break;
     }
 }

@@ -60,6 +60,15 @@ be_field::be_field (AST_Type *ft,
     }
 }
 
+void
+be_field::gen_member_ostream_operator (TAO_OutStream *os,
+                                       const char *instance_name,
+                                       bool accessor)
+{
+  be_type *ft = be_type::narrow_from_decl (this->field_type ());
+  ft->gen_member_ostream_operator (os, instance_name, accessor);
+}
+
 int
 be_field::accept (be_visitor *visitor)
 {

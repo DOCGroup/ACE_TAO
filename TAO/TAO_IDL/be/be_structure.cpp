@@ -20,12 +20,12 @@
 // ============================================================================
 
 #include "be_structure.h"
+#include "be_field.h"
 #include "be_codegen.h"
 #include "be_helper.h"
 #include "be_visitor.h"
 #include "be_extern.h"
 
-#include "ast_field.h"
 #include "utl_identifier.h"
 #include "idl_defines.h"
 #include "global_extern.h"
@@ -79,7 +79,48 @@ be_structure::redefine (AST_Structure *from)
 {
   be_structure *bs = be_structure::narrow_from_decl (from);
   this->common_varout_gen_ = bs->common_varout_gen_;
-  AST_Structure::redefine (from);
+  this->AST_Structure::redefine (from);
+}
+
+// Overridden method
+void
+be_structure::gen_ostream_operator (TAO_OutStream *os)
+{
+  *os << be_nl
+      << "std::ostream& operator<< (" << be_idt << be_idt_nl
+      << "std::ostream &strm," << be_nl
+      << "const " << this->name () << " &_tao_aggregate" << be_uidt_nl
+      << ")" << be_uidt_nl
+      << "{" << be_idt_nl
+      << "strm << \"" << this->name () << "(\"";
+  
+  for (long i = 0; i < this->pd_decls_used; ++i)
+    {
+      be_field *f = be_field::narrow_from_decl (this->pd_decls[i]);
+      
+      // We don't want any decls, just members.
+      if (f == 0)
+        {
+          continue;
+        }
+
+      if (i != 0)
+        {
+          *os << " << \", \"";
+        }        
+        
+      *os << be_nl
+          << "     << ";
+          
+      ACE_CString instance_name ("_tao_aggregate.");
+      instance_name += f->local_name ()->get_string ();
+      f->gen_member_ostream_operator (os, instance_name.c_str ());
+    }
+    
+  *os << be_nl
+      << "     << \")\";" << be_nl << be_nl
+      << "return strm;" << be_uidt_nl
+      << "}" << be_nl;
 }
 
 void

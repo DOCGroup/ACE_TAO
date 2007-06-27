@@ -433,6 +433,18 @@ CORBA::ValueBase::_tao_validate_box_type (TAO_InputCDR &strm,
   return false;
 }
 
+std::ostream &
+CORBA::ValueBase::_tao_stream (std::ostream &strm,
+                               const CORBA::ValueBase *value)
+{
+  return value->_tao_stream_v (strm);
+}
+
+std::ostream &
+CORBA::ValueBase::_tao_stream_v (std::ostream &strm) const
+{
+  return strm << "CORBA::ValueBase";
+}
 
 // =================== methods for chunking ====================
 
@@ -1002,6 +1014,13 @@ operator>> (TAO_InputCDR &strm,
             CORBA::ValueBase *&_tao_valuetype)
 {
   return CORBA::ValueBase::_tao_unmarshal (strm, _tao_valuetype);
+}
+
+std::ostream&
+operator<< (std::ostream &strm,
+            CORBA::ValueBase *_tao_valuetype)
+{
+  return CORBA::ValueBase::_tao_stream (strm, _tao_valuetype);
 }
 
 // =============== Template Specializations =====================

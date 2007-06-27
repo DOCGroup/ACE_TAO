@@ -68,7 +68,14 @@ be_visitor_valuetype_cdr_op_ch::visit_valuetype (be_valuetype *node)
 
   *os << be_global->stub_export_macro () << " "
       << "::CORBA::Boolean operator>> (TAO_InputCDR &, "
-      << node->full_name () << " *&);";
+      << node->full_name () << " *&);" << be_nl;
+
+  if (be_global->gen_ostream_operators ())
+    {
+      *os << be_global->stub_export_macro () << " std::ostream&"
+          << " operator<< (std::ostream &strm, const "
+          << node->full_name () << " *);" << be_nl;
+    }
 
   *os << be_global->core_versioning_end () << be_nl;
 

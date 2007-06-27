@@ -299,6 +299,9 @@ public:
                                         TAO_OutStream *os);
   // Common code called from gen_colloc_op_defn_helper().
 
+  virtual void gen_ostream_operator (TAO_OutStream *os);
+  // Overridden from class be_type.
+
   void analyze_parentage (void);
   // Compute whether or not we have both abstract and concrete parents,
   // and make a list of the abstract parents, if any.

@@ -392,6 +392,13 @@ operator>> (TAO_InputCDR &strm, CORBA::AbstractBase_ptr &abs)
   return false;
 }
 
+std::ostream&
+operator<< (std::ostream &strm,
+            CORBA::AbstractBase_ptr _tao_objref)
+{
+  return CORBA::AbstractBase::_tao_stream (strm, _tao_objref);
+}
+
 CORBA::Boolean
 CORBA::AbstractBase::_tao_marshal_v (TAO_OutputCDR &) const
 {
@@ -408,6 +415,19 @@ CORBA::Boolean
 CORBA::AbstractBase::_tao_match_formal_type (ptrdiff_t ) const
 {
   return false;
+}
+
+std::ostream &
+CORBA::AbstractBase::_tao_stream (std::ostream &strm,
+                                  const CORBA::AbstractBase_ptr _tao_objref)
+{
+  return _tao_objref->_tao_stream_v (strm);
+}
+
+std::ostream &
+CORBA::AbstractBase::_tao_stream_v (std::ostream &strm) const
+{
+  return strm << "\"IDL:omg.org/CORBA/AbstractBase:1.0\"";
 }
 
 CORBA::ValueBase *

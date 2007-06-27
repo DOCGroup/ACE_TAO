@@ -100,6 +100,13 @@ public:
   // Called if our labels are enum values - adds them the
   // enclosing scope's name_referenced list.
   void add_labels (AST_Union *u);
+  
+  // Integer literals create a ulonglong AST_Expression. If
+  // our union's discriminator type is some other kind of
+  // integer, and we have more than one label, only the first
+  // one gets coerced in the lookup for add of the branch. So
+  // we call this at the end of fe_add_union_branch.
+  void coerce_labels (AST_Union *u);
 
   // Narrowing.
   DEF_NARROW_METHODS1 (AST_UnionBranch, AST_Field);

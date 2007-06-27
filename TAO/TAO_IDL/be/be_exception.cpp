@@ -36,9 +36,11 @@ be_exception::be_exception (void)
     AST_ConcreteType (),
     UTL_Scope (),
     AST_Structure (),
+    AST_Exception (),
     be_scope (),
     be_decl (),
-    be_type ()
+    be_type (),
+    be_structure ()
 {
   // Always the case.
   this->size_type (AST_Type::VARIABLE);
@@ -60,11 +62,17 @@ be_exception::be_exception (UTL_ScopedName *n,
                    n,
                    local,
                    abstract),
+    AST_Exception (n,
+                   local,
+                   abstract),
     be_scope (AST_Decl::NT_except),
     be_decl (AST_Decl::NT_except,
              n),
     be_type (AST_Decl::NT_except,
-             n)
+             n),
+    be_structure (n,
+                  local,
+                  abstract)
 {
   // Always the case.
   this->size_type (AST_Type::VARIABLE);

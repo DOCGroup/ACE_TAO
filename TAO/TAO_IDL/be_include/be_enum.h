@@ -41,6 +41,9 @@ public:
            bool local,
            bool abstract);
   // Constructor.
+  
+  virtual void gen_ostream_operator (TAO_OutStream *os);
+  // Overridden from class be_type.
 
   virtual void destroy (void);
   // Cleanup method.
@@ -52,8 +55,6 @@ public:
   DEF_NARROW_METHODS3 (be_enum, AST_Enum, be_scope, be_type);
   DEF_NARROW_FROM_DECL (be_enum);
   DEF_NARROW_FROM_SCOPE (be_enum);
-
-private:
 };
 
 #endif

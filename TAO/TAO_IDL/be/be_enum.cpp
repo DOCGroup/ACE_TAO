@@ -21,6 +21,7 @@
 
 #include "be_enum.h"
 #include "be_visitor.h"
+#include "be_helper.h"
 
 #include "global_extern.h"
 
@@ -66,6 +67,30 @@ be_enum::be_enum (UTL_ScopedName *n,
     {
       idl_global->enum_seen_ = true;
     }
+}
+
+void
+be_enum::gen_ostream_operator (TAO_OutStream *os)
+{
+  *os << be_nl
+      << "std::ostream& operator<< (std::ostream &strm, const "
+      << this->name () << " _tao_enumerator)" << be_nl
+      << "{" << be_idt_nl
+      << "switch (_tao_enumerator)" << be_idt_nl
+      << "{" << be_idt_nl;
+      
+  for (int i = 0; i < this->member_count (); ++i)
+    {
+      UTL_ScopedName *mname =
+        this->value_to_name (static_cast<unsigned long> (i));
+    
+      *os << "case " << i << ": return strm << \""
+          << mname << "\";" << be_nl;
+    }
+    
+  *os << "default: return strm;" << be_uidt_nl
+      << "}" << be_uidt << be_uidt_nl
+      << "}" << be_nl;
 }
 
 void

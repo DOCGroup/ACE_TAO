@@ -163,6 +163,19 @@ CORBA::Object::marshal (const CORBA::Object_ptr x,
   return x->marshal (cdr);
 }
 
+/*static*/ std::ostream &
+CORBA::Object::_tao_stream (std::ostream &strm,
+                            const CORBA::Object_ptr _tao_objref)
+{
+  return _tao_objref->_tao_stream_v (strm);
+}
+
+std::ostream &
+CORBA::Object::_tao_stream_v (std::ostream &strm) const
+{
+  return strm << "\"IDL:omg.org/CORBA/Object:1.0\"";
+}
+
 bool
 CORBA::Object::can_convert_to_ior (void) const
 {
@@ -917,6 +930,12 @@ operator>> (TAO_InputCDR& cdr, CORBA::Object*& x)
     }
 
   return (CORBA::Boolean) cdr.good_bit ();
+}
+
+std::ostream&
+operator<< (std::ostream &strm, CORBA::Object_ptr _tao_objref)
+{
+  return CORBA::Object::_tao_stream (strm, _tao_objref);
 }
 
 

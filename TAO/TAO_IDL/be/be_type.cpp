@@ -232,6 +232,19 @@ be_type::gen_fwd_helper_name (void)
   this->fwd_helper_name_ += this->local_name ()->get_string ();
 }
 
+void
+be_type::gen_ostream_operator (TAO_OutStream *)
+{
+}
+
+void
+be_type::gen_member_ostream_operator (TAO_OutStream *os,
+                                      const char *instance_name,
+                                      bool accessor)
+{
+  *os << instance_name << (accessor ? " ()" : "");
+}
+
 const char *
 be_type::fwd_helper_name (void) const
 {

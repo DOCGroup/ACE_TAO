@@ -43,6 +43,10 @@ public:
 
   virtual int visit_operation (be_operation *node);
   // Called only by AMH exceptions.
+  
+private:
+  void gen_ostream_operator_r (be_valuetype *node, unsigned long &index);
+  // Recursive to generate for inherited members.
 };
 
 #endif /* _BE_VALUETYPE_VALUETYPE_CS_H_ */

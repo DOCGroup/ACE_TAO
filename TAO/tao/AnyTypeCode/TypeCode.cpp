@@ -357,6 +357,15 @@ operator<< (TAO_OutputCDR & cdr,
 
 // ---------------------------------------------------------------
 
+std::ostream &
+operator<< (std::ostream & strm,
+            const CORBA::TypeCode_ptr)
+{
+  return strm << "CORBA::TypeCode";
+}
+
+// ---------------------------------------------------------------
+
 CORBA::TypeCode_ptr
 TAO::unaliased_typecode (CORBA::TypeCode_ptr tc)
 {

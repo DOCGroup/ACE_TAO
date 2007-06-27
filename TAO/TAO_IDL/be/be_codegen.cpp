@@ -1862,6 +1862,16 @@ TAO_CodeGen::gen_stub_hdr_includes (void)
   this->gen_standard_include (this->client_header_,
                               "tao/Versioned_Namespace.h",
                               true);
+
+  // On some platforms, this include isn't needed if certain command
+  // line options are present. Rather than try to sort that all out,
+  // and to keep cross-compiling robust, we always generate this
+  // include if gen_ostream_operators_ is true. 
+  if (be_global->gen_ostream_operators ())
+    {
+      this->gen_standard_include (this->client_header_,
+                                  "ace/Streams.h");
+    }
 }
 
 void
@@ -2006,8 +2016,8 @@ TAO_CodeGen::gen_stub_src_includes (void)
       this->gen_standard_include (this->client_stubs_,
                                   "ace/OS_NS_string.h");
     }
-
-  if (be_global->gen_amh_classes () == true)
+    
+  if (be_global->gen_amh_classes ())
     {
       // Necessary for the AIX compiler.
       this->gen_standard_include (this->client_stubs_,

@@ -72,7 +72,7 @@ be_visitor_sequence_cdr_op_ch::visit_sequence (be_sequence *node)
 
   // If we're an anonymous sequence, we must protect against
   // being declared more than once.
-  if (!tdef)
+  if (tdef == 0)
     {
       *os << "\n\n#if !defined _TAO_CDR_OP_"
           << node->flat_name () << "_H_"
@@ -93,9 +93,16 @@ be_visitor_sequence_cdr_op_ch::visit_sequence (be_sequence *node)
       << node->name () << " &_tao_sequence" << be_uidt_nl
       << ");" << be_uidt;
 
+  if (be_global->gen_ostream_operators ())
+    {
+      *os << be_global->stub_export_macro () << " std::ostream&"
+          << " operator<< (std::ostream &strm, const "
+          << node->name () << " &_tao_sequence);" << be_nl;
+    }
+
   *os << be_global->core_versioning_end () << be_nl;
 
-  if (!tdef)
+  if (tdef == 0)
     {
       *os << "\n\n#endif /* _TAO_CDR_OP_"
           << node->flat_name () << "_H_ */";

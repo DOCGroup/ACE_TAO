@@ -108,7 +108,8 @@ BE_GlobalData::BE_GlobalData (void)
     gen_server_skeleton_ (true),
     gen_local_iface_anyops_ (true),
     use_clonable_in_args_ (false),
-    gen_template_export_ (false)
+    gen_template_export_ (false),
+    gen_ostream_operators_ (false)
 {
 }
 
@@ -856,6 +857,18 @@ void
 BE_GlobalData::gen_template_export (bool val)
 {
   this->gen_template_export_ = val;
+}
+
+bool
+BE_GlobalData::gen_ostream_operators (void) const
+{
+  return this->gen_ostream_operators_;
+}
+
+void
+BE_GlobalData::gen_ostream_operators (bool val)
+{
+  this->gen_ostream_operators_ = val;
 }
 
 const char*
@@ -2058,6 +2071,23 @@ BE_GlobalData::parse_args (long &i, char **av)
                   ));
               }
           }
+        else if (av[i][2] == 'o')
+          {
+            if (av[i][3] == 's')
+              {
+                // Generating ostream operators for each type.
+                this->gen_ostream_operators (true);
+              }
+            else
+              {
+                ACE_ERROR ((
+                    LM_ERROR,
+                    ACE_TEXT ("IDL: I don't understand ")
+                    ACE_TEXT ("the '%s' option\n"),
+                    av[i]
+                  ));
+              }
+          }
         else if (av[i][2] == 'I')
           {
             size_t options = ACE_OS::strlen (av[i]) - 3;
@@ -2565,11 +2595,17 @@ BE_GlobalData::usage (void) const
     ));
   ACE_DEBUG ((
       LM_DEBUG,
-      ACE_TEXT (" -Gdcps \t\tGenerate code supporting DDS DCPS type definitions.\n")
+      ACE_TEXT (" -Gdcps \t\tGenerate code supporting DDS DCPS type ")
+      ACE_TEXT ("definitions.\n")
     ));
   ACE_DEBUG ((
       LM_DEBUG,
-      ACE_TEXT (" -Gdcpsonly \t\t\tGenerate code only supporting DDS DCPS type serializer definitions.\n")
+      ACE_TEXT (" -Gos \t\t\tGenerate std::ostream insertion operators.\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -Gdcpsonly \t\t\tGenerate code only supporting DDS DCPS ")
+      ACE_TEXT ("type serializer definitions.\n")
     ));
   ACE_DEBUG ((
       LM_DEBUG,
