@@ -144,7 +144,7 @@ namespace CIDL_StockDistributor_Impl
   ::Stock::StockInfo *
   StockQuoter_exec_i::get_stock_info (const char *stock_name)
   {
-    if (strcmp (stock_name, "MSFT") == 0)
+    if (ACE_OS::strcmp (stock_name, "MSFT") == 0)
     {
       Stock::StockInfo_var info = new Stock::StockInfo;
       info->name = CORBA::string_dup ("MSFT");
@@ -153,7 +153,7 @@ namespace CIDL_StockDistributor_Impl
       info->last = this->distributor_.msft_; // retrieve the current stock value
       return info._retn ();
     }
-    else if (strcmp (stock_name, "IBM") == 0)
+    else if (ACE_OS::strcmp (stock_name, "IBM") == 0)
     {
       Stock::StockInfo_var info = new Stock::StockInfo;
       info->name = CORBA::string_dup ("IBM");

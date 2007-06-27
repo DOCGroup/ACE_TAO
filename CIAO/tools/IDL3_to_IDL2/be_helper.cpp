@@ -23,7 +23,7 @@
 #include "idl_defines.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
-#include "ace/os_include/os_ctype.h"
+#include "ace/OS_NS_ctype.h"
 
 ACE_RCSID (be,
            be_helper,
@@ -252,11 +252,11 @@ TAO_OutStream::gen_ifndef_string (const char *fname,
   // Convert letters in fname to upper case.
   for (int i = 0; i < (extension - fname); i++)
     {
-      if (isalpha (fname [i]))
+      if (ACE_OS::ace_isalpha (fname [i]))
         {
-          macro_name[i + offset] = (char) toupper (fname [i]);
+          macro_name[i + offset] = (char) ACE_OS::ace_toupper (fname [i]);
         }
-      else if (isdigit (fname [i]))
+      else if (ACE_OS::ace_isdigit (fname [i]))
         {
           macro_name[i + offset] = fname[i];
         }

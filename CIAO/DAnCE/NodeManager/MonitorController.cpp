@@ -106,7 +106,7 @@ CIAO::MonitorController::svc (void)
     // check if cpu needs to be monitored or not
     for (unsigned int i = 0;i < initial_domain_.node[0].resource.length ();i++)
       {
-        if (!strcmp (initial_domain_.node[0].resource[i].name, "Processor"))
+        if (!ACE_OS::strcmp (initial_domain_.node[0].resource[i].name, "Processor"))
           monitor_cpu_usage_ = true;
       }
 
@@ -207,8 +207,8 @@ CIAO::MonitorController::svc (void)
 
 CIAO::MonitorController::~MonitorController ()
 {
-  terminate ();
-  wait ();
+  this->terminate ();
+  this->wait ();
 }
 
 void

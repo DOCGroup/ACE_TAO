@@ -57,7 +57,7 @@ int ZIP_Wrapper::file_list_info (char* zip_name,
   char filename_try[MAXFILENAME+16] = "";
   if (zip_name!=0)
     {
-      strncpy(filename_try, zip_name, MAXFILENAME-1);
+      ACE_OS::strncpy(filename_try, zip_name, MAXFILENAME-1);
       /* strncpy doesnt append the trailing NULL, if the string is too long. */
       filename_try[ MAXFILENAME ] = '\0';
       /* open the zip file */

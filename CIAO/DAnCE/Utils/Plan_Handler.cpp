@@ -107,7 +107,7 @@ namespace CIAO
     ::Deployment::InstanceDeploymentDescriptions instance = deployment_plan->instance;
 
     for (i = 0; i < instance.length(); i++)
-      if (!strcmp(instance[i].name.in(), facet_instance))
+      if (!ACE_OS::strcmp(instance[i].name.in(), facet_instance))
         break;
 
     if (i < instance.length())
@@ -122,7 +122,7 @@ namespace CIAO
     // Looking for instance block with name equals to receptacle_instance ...
 
     for (i = 0; i < instance.length(); i++)
-      if (!strcmp(instance[i].name.in(), receptacle_instance))
+      if (!ACE_OS::strcmp(instance[i].name.in(), receptacle_instance))
         break;
 
     if (i < instance.length())
@@ -149,7 +149,7 @@ namespace CIAO
     unsigned int instance_ref = 0, i;
 
     for (i = 0; i < instance.length(); i++)
-      if (!strcmp(instance[i].name.in(), instance_name))
+      if (!ACE_OS::strcmp(instance[i].name.in(), instance_name))
       {
         instance_ref = i;
         break;
@@ -215,7 +215,7 @@ namespace CIAO
     ::Deployment::PlanConnectionDescriptions connection = deployment_plan->connection;
 
     for (unsigned int i = 0; i < connection.length(); i++)
-      if (!strcmp(connection[i].name.in(), connection_name))
+      if (!ACE_OS::strcmp(connection[i].name.in(), connection_name))
       {
         for (unsigned int k = i; k < connection.length() - 1; k++)
         {

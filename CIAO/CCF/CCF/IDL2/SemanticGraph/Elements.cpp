@@ -6,6 +6,10 @@
 
 #include <ostream>
 
+// This file has no dependency on ACE, thus we turn 
+// all ACE_OS checks off
+// FUZZ: disable check_for_lack_ACE_OS
+
 namespace CCF
 {
   namespace IDL2
