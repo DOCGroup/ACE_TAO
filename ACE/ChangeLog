@@ -35,12 +35,11 @@ Wed Jun 27 06:09:39 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
           Added ACE_LACKS_LOG2
 
         * ace/config-borland-common.h:
-        * ace/OS_NS_sys_select.inl:
-
           C++ Builder 2007 delivers operator delete
 
         * ace/Handle_Set.{h,cpp}:
         * ace/README:
+        * ace/OS_NS_sys_select.inl:
           Don't use ACE_FD_SET_TYPE, it is not required anymore
 
         * ace/Log_Record.cpp (print):
