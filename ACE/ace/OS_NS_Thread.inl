@@ -3302,22 +3302,20 @@ ACE_OS::thr_sigsetmask (int how,
                                        result),
                      int, -1);
 # elif defined (ACE_HAS_PTHREADS)
-#   if defined (AIX)
-  ACE_OSCALL_RETURN (sigthreadmask (how, nsm, osm), int, -1);
   // Draft 4 and 6 implementations will sometimes have a sigprocmask () that
   // modifies the calling thread's mask only.  If this is not so for your
   // platform, define ACE_LACKS_PTHREAD_THR_SIGSETMASK.
-#   elif defined (ACE_HAS_PTHREADS_DRAFT4) || \
+#   if defined (ACE_HAS_PTHREADS_DRAFT4) || \
     defined (ACE_HAS_PTHREADS_DRAFT6) || (defined (_UNICOS) && _UNICOS == 9)
   ACE_OSCALL_RETURN (::sigprocmask (how, nsm, osm), int, -1);
 #   elif !defined (ACE_LACKS_PTHREAD_SIGMASK)
   int result;
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_sigmask (how, nsm, osm),
                                        result), int, -1);
-#   endif /* AIX */
+#   endif /* ACE_HAS_PTHREADS_DRAFT4 || ACE_HAS_PTHREADS_DRAFT6 || _UNICOS 9 */
 
 #if 0
-  /* Don't know if anyt platform actually needs this... */
+  /* Don't know if any platform actually needs this... */
   // as far as I can tell, this is now pthread_sigaction() -- jwr
   int result;
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (pthread_sigaction (how, nsm, osm),
