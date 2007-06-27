@@ -431,6 +431,7 @@ be_visitor_traits::visit_array (be_array *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
+  //FUZZ: disable check_for_lack_ACE_OS
   *os << be_nl
       << "template<>" << be_nl
       << "struct " << be_global->stub_export_macro () << " Array_Traits<"
@@ -460,6 +461,7 @@ be_visitor_traits::visit_array (be_array *node)
       << ");" << be_uidt
       << be_uidt_nl
       << "};";
+  //FUZZ: enable check_for_lack_ACE_OS
 
   node->cli_traits_gen (true);
   return 0;

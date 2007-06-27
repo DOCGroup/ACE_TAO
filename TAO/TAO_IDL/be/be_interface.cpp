@@ -1676,11 +1676,11 @@ be_interface::gen_gperf_lookup_methods (const char *flat_name)
 
   // Open the temp file.
 #if defined (ACE_OPENVMS)
-  ACE_HANDLE input = ::open (tao_cg->gperf_input_filename (),
-                             O_RDONLY,
-                             "shr=get,put,upd",
-                             "ctx=rec",
-                             "fop=dfw");
+  ACE_HANDLE input = ACE_OS::open (tao_cg->gperf_input_filename (),
+                                   O_RDONLY,
+                                   "shr=get,put,upd",
+                                   "ctx=rec",
+                                   "fop=dfw");
 #else
   ACE_HANDLE input = ACE::open_temp_file (tao_cg->gperf_input_filename (),
                                           O_RDONLY);
@@ -1705,7 +1705,7 @@ be_interface::gen_gperf_lookup_methods (const char *flat_name)
   // this, remember to update the file offset to the correct location.
 
 #if defined (ACE_OPENVMS)
-  char* gperfOutput = tempnam (0, "idl_");
+  char* gperfOutput = ACE_OS::tempnam (0, "idl_");
 
   if (gperfOutput == 0)
     {
@@ -1713,12 +1713,12 @@ be_interface::gen_gperf_lookup_methods (const char *flat_name)
       ACE_ERROR_RETURN ((LM_ERROR, "failed to allocate memory\n"), -1);
     }
 
-  ACE_HANDLE output = ::open (gperfOutput,
-                              O_WRONLY | O_CREAT | O_EXCL,
-                              ACE_DEFAULT_FILE_PERMS ,
-                              "shr=get,put,upd",
-                              "ctx=rec",
-                              "fop=dfw");
+  ACE_HANDLE output = ACE_OS::open (gperfOutput,
+                                    O_WRONLY | O_CREAT | O_EXCL,
+                                    ACE_DEFAULT_FILE_PERMS ,
+                                    "shr=get,put,upd",
+                                    "ctx=rec",
+                                    "fop=dfw");
 #else
   ACE_HANDLE output = ACE_OS::open (this->strategy_->get_out_stream_fname (),
                                     O_WRONLY | O_APPEND);
@@ -1860,7 +1860,7 @@ be_interface::gen_gperf_lookup_methods (const char *flat_name)
   if (result != -1)
     {
       FILE* gperfOutputFile;
-      gperfOutputFile = ::fopen (gperfOutput, "r");
+      gperfOutputFile = ACE_OS::fopen (gperfOutput, "r");
 
       if (gperfOutputFile == 0)
         {
@@ -1874,9 +1874,9 @@ be_interface::gen_gperf_lookup_methods (const char *flat_name)
           FILE* out = this->strategy_->get_out_stream ()->file ();
           int c;
 
-          while ((c = fgetc(gperfOutputFile)) != EOF)
+          while ((c = ACE_OS::fgetc(gperfOutputFile)) != EOF)
             {
-              fputc (c, out);
+              ACE_OS::fputc (c, out);
             }
 
           if (ferror (gperfOutputFile) || ferror (out))
@@ -1887,12 +1887,12 @@ be_interface::gen_gperf_lookup_methods (const char *flat_name)
               result = -1;
             }
 
-          fclose (gperfOutputFile);
+          ACE_OS::fclose (gperfOutputFile);
         }
     }
 
   ACE_OS::unlink (gperfOutput);
-  free (gperfOutput);
+  ACE_OS::free (gperfOutput);
 #endif /* ACE_OPENVMS */
 
   return result;

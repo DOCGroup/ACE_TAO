@@ -1,3 +1,29 @@
+Wed Jun 27 23:49:36 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_global.cpp:
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be/be_sunsoft.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ih.cpp:
+        * TAO_IDL/be/be_visitor_traits.cpp:
+        * TAO_IDL/driver/drv_preproc.cpp:
+        * TAO_IDL/fe/lex.yy.cpp:
+
+          Fixed ACE_OS fuzz warnings. Use ACE_OS calls instead of raw OS function
+          where possible. If fuzz detected a false-positive, then disable
+          the ACE_OS fuzz check for that section of the code.
+
+
+        * TAO_IDL/be/be_codegen.cpp:
+ 
+          Fixed a bug introduced in:
+          Wed Jun 27 09:10:21 UTC 2007  Jeff Parsons <j.parsons@...>
+
+          The IDL compiler generated the following include "ace/Streams.h"
+          which I changed to "ace/streams.h" to appease compilers that are
+          case sensitive.
+
+
 Wed Jun 27 09:50:00 UTC 2007  Simon Massey  <sma@prismtech.com>
 
         * orbsvcs/tests/InterfaceRepo/Bug_2962_Regression/Bug_2962_Regression.mpc:
@@ -7,9 +33,9 @@ Wed Jun 27 09:50:00 UTC 2007  Simon Massey  <sma@prismtech.com>
         * orbsvcs/tests/InterfaceRepo/Bug_2962_Regression/test.idl:
 
           Added regression test for
-          
+
         * orbsvcs/orbsvcs/IFRService/ArrayDef_i.cpp:
-        
+
           Fixed bugzilla bug 2962, corrupted nested array length reporting.
 
 Wed Jun 27 09:39:39 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>

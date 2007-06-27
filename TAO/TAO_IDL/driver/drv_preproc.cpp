@@ -166,9 +166,9 @@ DRV_cpp_expand_output_arg (const char *filename)
 static bool
 DRV_get_line (FILE *f)
 {
-    char *l = fgets (drv_line,
-                     drv_line_size,
-                     f);
+    char *l = ACE_OS::fgets (drv_line,
+                             drv_line_size,
+                             f);
 
     if (l == 0)
       {
@@ -185,7 +185,7 @@ DRV_get_line (FILE *f)
         return true;
       }
 
-    while (strchr (drv_line, '\n') == NULL)
+    while (ACE_OS::strchr (drv_line, '\n') == NULL)
       {
         // Haven't got to a newline yet.
         // Create a bigger buffer and keep reading.
@@ -195,14 +195,14 @@ DRV_get_line (FILE *f)
         ACE_NEW_RETURN (temp,
                         char[temp_size],
                         false);
-        strcpy (temp, drv_line);
+        ACE_OS::strcpy (temp, drv_line);
         delete [] drv_line;
         drv_line = temp;
         drv_line_size = temp_size;
 
-        l = fgets (drv_line + strlen (drv_line),
-                   drv_line_size - strlen(drv_line),
-                   f);
+        l = ACE_OS::fgets (drv_line + ACE_OS::strlen (drv_line),
+                           drv_line_size - ACE_OS::strlen(drv_line),
+                           f);
 
         if (l == 0 || *l == '\0')
           {
@@ -210,7 +210,7 @@ DRV_get_line (FILE *f)
           }
       }
 
-    size_t i = strlen (drv_line) - 1;
+    size_t i = ACE_OS::strlen (drv_line) - 1;
 
     if (drv_line[i] == '\n')
       {
@@ -681,7 +681,7 @@ DRV_check_for_include (const char* buf)
   const char* include_str = "include";
 
   for (size_t ii = 0;
-       ii < strlen ("include") && *r != '\0' && *r != ' ' && *r != '\t';
+       ii < ACE_OS::strlen ("include") && *r != '\0' && *r != ' ' && *r != '\t';
        ++r, ++ii)
     {
       // Return if it doesn't match.
@@ -836,7 +836,7 @@ DRV_convert_includes (const char* buf)
   const char* include_str = "include";
 
   for (size_t ii = 0;
-       ii < strlen ("include") && *r != '\0' && *r != ' ' && *r != '\t';
+       ii < ACE_OS::strlen ("include") && *r != '\0' && *r != ' ' && *r != '\t';
        ++r, ++ii)
     {
       // Return if it doesn't match.
@@ -942,9 +942,9 @@ DRV_copy_input (FILE *fin,
     }
 
 #if !defined (ACE_WIN32)
-  fprintf (f,
-           "#line 1 \"%s\"\n",
-           orig_filename);
+  ACE_OS::fprintf (f,
+                   "#line 1 \"%s\"\n",
+                   orig_filename);
 #else
   // Convert single \ into double \ otherwise MSVC++ pre-processor
   // gets awfully confused.
@@ -1002,7 +1002,7 @@ DRV_stripped_name (char *fn)
         return 0;
       }
 
-    l = strlen (n);
+    l = ACE_OS::strlen (n);
     int slash_found = 0;
 
     for (n += l - 1; n >= fn && !slash_found; n--)
@@ -1155,8 +1155,9 @@ DRV_pre_proc (const char *myfile)
       // symbolic link attack, or another process opened the file before
       // us.
 #if defined (ACE_OPENVMS)
-      fd = ::open (t_file, O_WRONLY | O_CREAT | O_EXCL,
-                   ACE_DEFAULT_FILE_PERMS, "shr=get,put,upd", "ctx=rec", "fop=dfw");
+      fd = ACE_OS::open (t_file, O_WRONLY | O_CREAT | O_EXCL,
+                         ACE_DEFAULT_FILE_PERMS, "shr=get,put,upd", 
+                         "ctx=rec", "fop=dfw");
 #else
       fd = ACE_OS::open (t_file,
                          O_WRONLY | O_CREAT | O_EXCL,

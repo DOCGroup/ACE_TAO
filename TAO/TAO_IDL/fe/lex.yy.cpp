@@ -8,8 +8,9 @@
 #define TAO_YY_FLEX_MAJOR_VERSION 2
 #define TAO_YY_FLEX_MINOR_VERSION 5
 
-#include "ace/os_include/os_stdio.h"
-#include "ace/os_include/os_ctype.h"
+#include "ace/OS_NS_ctype.h"
+#include "ace/OS_NS_stdio.h"
+
 
 
 /* cfront 1.2 defines "c_plusplus" instead of "__cplusplus" */
@@ -984,12 +985,14 @@ TAO_YY_MALLOC_DECL
 
 /* Copy whatever the last rule matched to the standard output. */
 
+//FUZZ: disable check_for_lack_ACE_OS
 #ifndef TAO_YY_ECHO
 /* This used to be an fputs(), but since the string might contain NUL's,
  * we now use fwrite().
  */
 #define TAO_YY_ECHO (void) fwrite( tao_yytext, tao_yyleng, 1, tao_yyout )
 #endif
+//FUZZ: enable check_for_lack_ACE_OS
 
 /* Gets input and stuffs it into "buf".  number of characters read, or TAO_YY_NULL,
  * is returned in "result".
@@ -1000,7 +1003,7 @@ TAO_YY_MALLOC_DECL
                 { \
                 int c = '*', n; \
                 for ( n = 0; n < max_size && \
-                             (c = getc( tao_yyin )) != EOF && c != '\n'; ++n ) \
+                        (c = ACE_OS::getc( tao_yyin )) != EOF && c != '\n'; ++n ) \
                         buf[n] = (char) c; \
                 if ( c == '\n' ) \
                         buf[n++] = (char) c; \
@@ -1008,7 +1011,7 @@ TAO_YY_MALLOC_DECL
                         TAO_YY_FATAL_ERROR( "input in flex scanner failed" ); \
                 result = n; \
                 } \
-        else if ( ((result = static_cast<int> (fread( buf, 1, max_size, tao_yyin ))) == 0) \
+        else if ( ((result = static_cast<int> (ACE_OS::fread( buf, 1, max_size, tao_yyin ))) == 0) \
                   && ferror( tao_yyin ) ) \
                 TAO_YY_FATAL_ERROR( "input in flex scanner failed" );
 #endif
@@ -1515,7 +1518,7 @@ TAO_YY_RULE_SETUP
                   /* Skip the quotes */
                   char * const tmp = ace_tao_yytext;
                   for(size_t i = ACE_OS::strlen (tmp); i-- != 0; ) {
-                    if (isspace(tmp[i])) {
+                    if (ACE_OS::ace_isspace(tmp[i])) {
                       tmp[i] = '\0';
                     }
                     else {
@@ -1535,7 +1538,7 @@ TAO_YY_RULE_SETUP
                   /* Skip the bookends */
                   char * const tmp = ACE_OS::strdup (ace_tao_yytext);
                   for(size_t i = ACE_OS::strlen (tmp); i-- != 0; ) {
-                    if (isspace(tmp[i])) {
+                    if (ACE_OS::ace_isspace(tmp[i])) {
                       tmp[i] = '\0';
                     }
                     else {
@@ -2275,7 +2278,7 @@ FILE *file;
 #if TAO_YY_NEVER_INTERACTIVE
         b->tao_yy_is_interactive = 0;
 #else
-        b->tao_yy_is_interactive = file ? (isatty( fileno(file) ) > 0) : 0;
+        b->tao_yy_is_interactive = file ? (ACE_OS::isatty( fileno(file) ) > 0) : 0;
 #endif
 #endif
         }
@@ -2468,8 +2471,8 @@ static void tao_yy_fatal_error( msg )
 char msg[];
 #endif
         {
-        (void) fprintf( stderr, "%s\n", msg );
-        exit( TAO_YY_EXIT_FAILURE );
+        (void) ACE_OS::fprintf( stderr, "%s\n", msg );
+        ACE_OS::exit( TAO_YY_EXIT_FAILURE );
         }
 
 
@@ -2532,7 +2535,7 @@ static void *tao_yy_flex_alloc( size )
 tao_yy_size_t size;
 #endif
         {
-        return (void *) malloc( size );
+          return (void *) ACE_OS::malloc( size );
         }
 
 #ifdef TAO_YY_USE_PROTOS
@@ -2550,7 +2553,7 @@ tao_yy_size_t size;
          * any pointer type to void*, and deal with argument conversions
          * as though doing an assignment.
          */
-        return (void *) realloc( (char *) ptr, size );
+        return (void *) ACE_OS::realloc( (char *) ptr, size );
         }
 
 #ifdef TAO_YY_USE_PROTOS
@@ -2560,7 +2563,7 @@ static void tao_yy_flex_free( ptr )
 void *ptr;
 #endif
         {
-        free( ptr );
+        ACE_OS::free( ptr );
         }
 
 #if TAO_YY_MAIN
@@ -2600,14 +2603,14 @@ idl_parse_line_and_file (char *buf)
     }
 
   // Find line number.
-  while (isspace (*r))
+  while (ACE_OS::ace_isspace (*r))
     {
       r++;
     }
 
   h = r;
 
-  for (; isdigit (*r); r++)
+  for (; ACE_OS::ace_isdigit (*r); r++)
     {
       continue;
     }
@@ -2944,9 +2947,9 @@ idl_store_pragma (char *buf)
 
       // split up data type and key strings
       char *sample_type = tmp;
-      while (*tmp && !isspace (*tmp))
+      while (*tmp && !ACE_OS::ace_isspace (*tmp))
         tmp++;
-      while (isspace (*tmp))
+      while (ACE_OS::ace_isspace (*tmp))
         {
           *tmp = '\0';
           tmp++;
@@ -3182,7 +3185,7 @@ idl_escape_reader(
         int i;
 
         // hex value
-        for (i = 2; str[i] != '\0' && isxdigit (str[i]); ++i)
+        for (i = 2; str[i] != '\0' && ACE_OS::ace_isxdigit (str[i]); ++i)
           {
             continue;
           }
@@ -3231,7 +3234,7 @@ idl_wchar_escape_reader (char *str)
 
   int i;
   // get the hex digits
-  for (i = 2; str[i] != '\0' && isxdigit (str[i]); i++)
+  for (i = 2; str[i] != '\0' && ACE_OS::ace_isxdigit (str[i]); i++)
     {
       continue;
     }
@@ -3310,7 +3313,7 @@ idl_valid_version (char *s)
 
   for (i = 0; tmp[i] != '\0'; ++i)
     {
-      if (!isdigit (tmp[i]))
+      if (!ACE_OS::ace_isdigit (tmp[i]))
         {
           return 0;
         }
@@ -3320,7 +3323,7 @@ idl_valid_version (char *s)
 
   for (i = 0; i < len; ++i)
     {
-      if (!isdigit (s[i]))
+      if (!ACE_OS::ace_isdigit (s[i]))
         {
           return 0;
         }
