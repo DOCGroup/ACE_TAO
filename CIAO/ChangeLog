@@ -1,3 +1,26 @@
+Wed Jun 27 03:44:44 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * CCF/CCF/IDL2/LexicalAnalyzer.cpp:
+        * CCF/CCF/IDL2/SemanticAction/Impl/ValueTypeMember.cpp:
+        * CCF/CCF/IDL2/SemanticGraph/Elements.cpp:
+        * DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.cpp:
+        * DAnCE/NodeManager/MonitorController.cpp:
+        * DAnCE/RepositoryManager/ZIP_Wrapper.cpp:
+        * DAnCE/TargetManager/CmpClient.cpp:
+        * DAnCE/Utils/Plan_Handler.cpp:
+        * docs/tutorials/Quoter/Simple/Broker/Broker_exec.cpp:
+        * docs/tutorials/Quoter/Simple/Distributor/Distributor_exec.cpp:
+        * examples/BasicSP/EC/controller.cpp:
+        * examples/Display/NavDisplayGUI_exec/DetailView.cpp:
+        * examples/Display/NavDisplayGUI_exec/NodeItem.cpp:
+        * tools/Config_Handlers/cdd.cpp:
+        * tools/IDL3_to_IDL2/be_helper.cpp:
+        * tools/IDL3_to_IDL2/be_sunsoft.cpp:
+
+          Fixed ACE_OS fuzz warnings. Use ACE_OS calls instead of raw OS function
+          where possible. If fuzz detected a false-positive, then disable
+          the ACE_OS fuzz check for that section of the code.
+
 Wed Jun 27 01:55:29 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * CIDLC/AttributeHeaderEmitters.cpp:

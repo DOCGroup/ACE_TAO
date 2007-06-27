@@ -47,8 +47,10 @@ NodeItem::setSelected(bool yes)
 
   if(yes)
   {
+    // FUZZ: disable check_for_lack_ACE_OS
     connect(&blink_timer, SIGNAL(timeout()),
              SLOT(timerDone()));
+    // FUZZ: enable check_for_lack_ACE_OS
 
     blink_timer.start(500);
   }
