@@ -828,6 +828,20 @@ Dynamic_Priority_Test_LDADD = \
   libTest_Output.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
+noinst_PROGRAMS += Dynamic_Test
+
+Dynamic_Test_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
+
+Dynamic_Test_SOURCES = \
+  $(ACE_ROOT)/tests/Main.cpp \
+  Dynamic_Test.cpp
+
+Dynamic_Test_LDADD = \
+  libTest_Output.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
+
 ## Makefile.Enum_Interfaces_Test.am
 
 noinst_PROGRAMS += Enum_Interfaces_Test
