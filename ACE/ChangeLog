@@ -1,3 +1,7 @@
+Wed Jun 27 15:07:37 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * tests/Makefile.am: Added Dynamic_Test.
+
 Wed Jun 27 13:54:35 UTC 2007  Steve Huston  <shuston@riverace.com>
 
         * ace/OS_NS_Thread.inl (sema_wait): Allow a 0 time value to indicate
