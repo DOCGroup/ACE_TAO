@@ -1,3 +1,9 @@
+Wed Jun 27 19:46:14 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * ace/config-aix-5.x.h: For AIX 5.2 and earlier, when removing
+          ACE_HAS_POSIX_SEM_TIMEOUT, also enable
+          ACE_HAS_POSIX_SEM_TIMEOUT_EMULATION.
+
 Wed Jun 27 16:59:06 UTC 2007  Steve Huston  <shuston@riverace.com>
 
         * ace/config-aix-5.x.h: Don't automatically undef
