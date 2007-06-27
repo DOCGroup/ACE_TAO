@@ -50,7 +50,7 @@
 
 #include "ace/SStringfwd.h"
 #include "ace/Message_Block.h"
-#include "ace/Streams.h"
+#include "ace/streams.h"
 
 // Stuff used by the ACE CDR classes.
 #if defined ACE_LITTLE_ENDIAN
