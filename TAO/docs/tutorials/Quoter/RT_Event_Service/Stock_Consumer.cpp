@@ -34,7 +34,6 @@ Stock_Consumer::disconnect ()
 
 void
 Stock_Consumer::push (const RtecEventComm::EventSet &data)
-  throw (CORBA::SystemException)
 {
   for (CORBA::ULong i = 0; i != data.length (); ++i) {
     const RtecEventComm::Event &e = data[i];
@@ -52,7 +51,6 @@ Stock_Consumer::push (const RtecEventComm::EventSet &data)
 
 void
 Stock_Consumer::disconnect_push_consumer (void)
-    throw (CORBA::SystemException)
 {
   this->supplier_proxy_ =
     RtecEventChannelAdmin::ProxyPushSupplier::_nil ();

@@ -17,8 +17,7 @@ public:
                            RtecEventChannelAdmin::SupplierAdmin_ptr supplier_admin);
   void destroy_stock_objects ();
 
-  Quoter::Stock_ptr get_stock (const char *symbol)
-    throw (Quoter::Invalid_Stock_Symbol);
+  Quoter::Stock_ptr get_stock (const char *symbol);
 
 private:
   PortableServer::POA_var stock_factory_poa_;

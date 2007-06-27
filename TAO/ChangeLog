@@ -1,3 +1,13 @@
+Wed Jun 27 09:39:39 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/tutorials/Quoter/RT_Event_Service/Stock_Consumer.cpp:
+        * docs/tutorials/Quoter/RT_Event_Service/Stock_Consumer.h:
+        * docs/tutorials/Quoter/RT_Event_Service/Stock_Factory_i.cpp:
+        * docs/tutorials/Quoter/RT_Event_Service/Stock_Factory_i.h:
+        * docs/tutorials/Quoter/RT_Event_Service/Stock_i.cpp:
+        * docs/tutorials/Quoter/RT_Event_Service/Stock_i.h:
+          Zapped exception specification
+
 Wed Jun 27 09:10:21 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs\IFR_Service\IFR_Service.mpc:
