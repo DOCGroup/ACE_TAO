@@ -24,7 +24,7 @@
 #include "global_extern.h"
 #include "utl_string.h"
 #include "idl_defines.h"
-#include "ace/os_include/os_ctype.h"
+#include "ace/OS_NS_ctype.h"
 
 ACE_RCSID (be,
            be_codegen,
@@ -86,9 +86,9 @@ TAO_CodeGen::upcase (const char *str)
   // Convert letters in str to upper case.
   for (unsigned int i = 0; i < ACE_OS::strlen (str); ++i)
     {
-      if (isalpha (str[i]))
+      if (ACE_OS::ace_isalpha (str[i]))
         {
-          upcase_str[i] = static_cast<char> (toupper (str[i]));
+          upcase_str[i] = static_cast<char> (ACE_OS::ace_toupper (str[i]));
         }
       else
         {
@@ -1341,11 +1341,11 @@ TAO_CodeGen::end_implementation_header (const char *fname)
   // Convert letters in fname to upper case.
   for (int i = 0; i < (suffix - fname); ++i)
     {
-      if (isalpha (fname [i]))
+      if (ACE_OS::ace_isalpha (fname [i]))
         {
-          macro_name[i] = static_cast<char> (toupper (fname [i]));
+          macro_name[i] = static_cast<char> (ACE_OS::ace_toupper (fname [i]));
         }
-      else if (isdigit (fname [i]))
+      else if (ACE_OS::ace_isdigit (fname [i]))
         {
           macro_name[i] = fname[i];
         }
@@ -1565,11 +1565,11 @@ TAO_CodeGen::gen_ifndef_string (const char *fname,
   // Convert letters in fname to upper case.
   for (int i = 0; i < (extension - fname); i++)
     {
-      if (isalpha (fname [i]))
+      if (ACE_OS::ace_isalpha (fname [i]))
         {
-          macro_name[i + offset] = static_cast<char> (toupper (fname [i]));
+          macro_name[i + offset] = static_cast<char> (ACE_OS::ace_toupper (fname [i]));
         }
-      else if (isdigit (fname [i]))
+      else if (ACE_OS::ace_isdigit (fname [i]))
         {
           macro_name[i + offset] = fname[i];
         }
@@ -1870,7 +1870,7 @@ TAO_CodeGen::gen_stub_hdr_includes (void)
   if (be_global->gen_ostream_operators ())
     {
       this->gen_standard_include (this->client_header_,
-                                  "ace/Streams.h");
+                                  "ace/streams.h");
     }
 }
 
