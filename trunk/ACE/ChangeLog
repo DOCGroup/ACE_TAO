@@ -1,3 +1,9 @@
+Wed Jun 27 13:39:55 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * ace/OS_NS_Thread.inl (thr_sigsetmask): Removed the AIX block; AIX
+          has the proper features to just use the existing feature tests.
+          Thanks to Johnny Willemsen for noticing this.
+
 Wed Jun 27 09:50:00 UTC 2007  Simon Massey  <sma@prismtech.com>
 
         * bin/tao_other_tests.lst:
