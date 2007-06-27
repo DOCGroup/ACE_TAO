@@ -1,3 +1,17 @@
+Wed Jun 27 09:50:00 UTC 2007  Simon Massey  <sma@prismtech.com>
+
+        * orbsvcs/tests/InterfaceRepo/Bug_2962_Regression/Bug_2962_Regression.mpc:
+        * orbsvcs/tests/InterfaceRepo/Bug_2962_Regression/client.cpp:
+        * orbsvcs/tests/InterfaceRepo/Bug_2962_Regression/ReadMe.txt:
+        * orbsvcs/tests/InterfaceRepo/Bug_2962_Regression/run_test.pl:
+        * orbsvcs/tests/InterfaceRepo/Bug_2962_Regression/test.idl:
+
+          Added regression test for
+          
+        * orbsvcs/orbsvcs/IFRService/ArrayDef_i.cpp:
+        
+          Fixed bugzilla bug 2962, corrupted nested array length reporting.
+
 Wed Jun 27 09:39:39 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/tutorials/Quoter/RT_Event_Service/Stock_Consumer.cpp:
