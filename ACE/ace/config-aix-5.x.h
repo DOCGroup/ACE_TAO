@@ -136,12 +136,13 @@
 // Pick up all the detectable settings.
 #include "ace/config-posix.h"
 
-#if defined (ACE_HAS_POSIX_SEM_TIMEOUT)
-# undef ACE_HAS_POSIX_SEM_TIMEOUT
-#endif /* ACE_HAS_POSIX_SEM_TIMEOUT */
+// Regardless of what config-posix.h may indicate, AIX 5.3 is the first
+// to support sem_timedwait().
+#if defined (ACE_HAS_POSIX_SEM_TIMEOUT) && \
+  (defined (ACE_AIX_VERS) && (ACE_AIX_VERS < 503))
+#  undef ACE_HAS_POSIX_SEM_TIMEOUT
+#endif /* ACE_HAS_POSIX_SEM_TIMEOUT && ACE_AIX_VERS < 503 */
 
-// AIX shared libs look strangely like archive libs until you look inside
-// them.
 #if defined (ACE_DLL_SUFFIX)
 #  undef ACE_DLL_SUFFIX
 #endif

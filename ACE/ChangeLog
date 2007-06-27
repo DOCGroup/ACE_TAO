@@ -1,3 +1,8 @@
+Wed Jun 27 16:59:06 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * ace/config-aix-5.x.h: Don't automatically undef
+          ACE_HAS_POSIX_SEM_TIMEOUT for AIX 5.3 and up - it works fine.
+
 Wed Jun 27 15:45:09 UTC 2007  Ciju John  <johnc at ociweb dot com>
 
         * docs/bczar/bczar.html:
