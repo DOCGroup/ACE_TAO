@@ -1,3 +1,8 @@
+Wed Jun 27 15:45:09 UTC 2007  Ciju John  <johnc at ociweb dot com>
+
+        * docs/bczar/bczar.html:
+          Add to bczar notes.
+
 Wed Jun 27 15:07:37 UTC 2007  Steve Huston  <shuston@riverace.com>
 
         * tests/Makefile.am: Added Dynamic_Test.
