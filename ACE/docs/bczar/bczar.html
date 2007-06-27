@@ -166,11 +166,12 @@ CIAO/ciao/Version.h<br>
 TAO/tao/Version.h<br>
 ace/Version.h<br></code><p>
 In most cases, a <code>svn revert -R *</code> from DOC_ROOT will suffice.<br />
-The tag will also need to be removed: ACE+TAO+CIAO-X_Y_Z
+The tag will also need to be removed (both in Middleware and MPC): ACE+TAO+CIAO-X_Y_Z
 (where X and Y are the minor and beta release numbers of the release that is to be restarted).<p>
 E.g.:<br>
 <code>
 svn rm https://svn.dre.vanderbilt.edu/DOC/Middleware/tags/ACE+TAO+CIAO-X_Y_Z<br />
+svn rm https://svn.dre.vanderbilt.edu/DOC/MPC/tags/ACE+TAO+CIAO-X_Y_Z<br />
 </code>
 
 Note that this <em>only</em> needs to be done if the <em>tagging</em> fails.  If kit creation
@@ -251,7 +252,7 @@ these before you do anything with them.</li></ul>
 <li>Remove the already existing soflink to the "Beta" with rm Beta</li>
 <li>Create softlink "Beta" linking it to new Documentation using: ln X.Y.Z/html Beta --symbolic</li>
 </ul>
-<li>Update in the autobuild archive the file configs/scoreboard/releases.xml with 
+<li>Update in the autobuild archive the file configs/scoreboard/releases.xml with
 the made release. This is used by the integrated scoreboard on http://remedy.nl</li>
 <li>Mail the approved release announcement out to, at minimum the following:
 <tt>ciao-users@cs.wustl.edu</tt>,
@@ -362,4 +363,3 @@ I shall fight against them bothe.<br>
 
 
 </html>
-
