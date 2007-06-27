@@ -2352,12 +2352,21 @@ ACE_OS::sema_wait (ACE_sema_t *s, ACE_Time_Value &tv)
   // timeout.  In that case, we'll need to restart the process with
   // updated timeout value.
 
-  // <tv> is an absolute time
-  ACE_Time_Value relative_time = tv - ACE_OS::gettimeofday ();
+  // tv is an absolute time, but we need relative to work with the Windows
+  // API. Also, some users have become accustomed to using a 0 time value
+  // as a shortcut for "now", which works on non-Windows because 0 is
+  // always earlier than now. However, the need to convert to relative time
+  // means we need to watch out for this case.
+  ACE_Time_Value end_time = tv;
+  if (tv == ACE_Time_Value::zero)
+    end_time = ACE_OS::gettimeofday ();
+  ACE_Time_Value relative_time = end_time - ACE_OS::gettimeofday ();
   int result = -1;
 
-  // While we are not timeout yet.
-  while (relative_time > ACE_Time_Value::zero)
+  // While we are not timeout yet. >= 0 will let this go through once
+  // and if not able to get the object, it should hit WAIT_TIMEOUT
+  // right away.
+  while (relative_time >= ACE_Time_Value::zero)
     {
       // Wait for our turn to get the object.
       switch (::WaitForSingleObject (s->count_nonzero_, relative_time.msec ()))
@@ -2402,7 +2411,7 @@ ACE_OS::sema_wait (ACE_sema_t *s, ACE_Time_Value &tv)
 
       // Haven't been able to get the semaphore yet, update the
       // timeout value to reflect the remaining time we want to wait.
-      relative_time = tv - ACE_OS::gettimeofday ();
+      relative_time = end_time - ACE_OS::gettimeofday ();
     }
 
   // We have timed out.

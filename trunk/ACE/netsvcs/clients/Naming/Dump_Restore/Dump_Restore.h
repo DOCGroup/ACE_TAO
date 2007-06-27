@@ -10,9 +10,8 @@
 
 #include "ace/Reactor.h"
 #include "ace/Naming_Context.h"
-#include "ace/svc_export.h"
 
-class ACE_Svc_Export Dump_Restore : public ACE_Event_Handler
+class Dump_Restore : public ACE_Event_Handler
 {
 public:
   enum Operation_Type
