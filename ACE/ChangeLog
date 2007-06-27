@@ -1,6 +1,38 @@
+Wed Jun 27 03:50:39 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * bin/fuzz.pl:
+
+          Added the following new checks to fuzz:
+
+          check_for_exception_spec:
+          This checks for the usage of exception specification in method
+          signitures. This check will not flag no-throw spec i.e. throw() in
+          methods. This check may disabled at specified section in the code.
+
+          check_for_NULL:
+          0 should be used instead of NULL.
+
+          check_for_improper_main_declaration:
+          int ACE_TMAIN (int argc, ACE_TCHAR *argv[]) should be used instead
+          of plain main(int argc, char** argv).
+
+          check_for_lack_ACE_OS:
+          This checks for the usage of raw/naked OS calls. The functions in
+          ACE_OS should be used instead. This check can be disabled in sections
+          of code where false-positives are found.
+
+
+          Modified the following check in fuzz:
+
+          check_for_tab:
+          Due to the large amount of tabs found in the source code, this check
+          will no longer flag every instance of tab found (until the issue is
+          fixed). For now, it will only flag that fact that a file contains
+          tabs once.
+
 Mon Jun 25 11:34:36 CDT 2007  Ciju John  <johnc@ociweb.com>
 
-	* ACE version 5.5.9 released.
+        * ACE version 5.5.9 released.
 
 Mon Jun 25 16:03:37 UTC 2007  Ciju John  <johnc at ociweb dot com>
 
@@ -20,7 +52,7 @@ Fri Jun 22 14:50:14 UTC 2007  Ciju John  <johnc at ociweb dot com>
         * PROBLEM-REPORT-FORM:
         * VERSION:
         * ace/Version.h:
-	  Revert to x.5.8 status.
+          Revert to x.5.8 status.
 
 Tue Jun 12 20:11:59 UTC 2007  Ciju John  <johnc at ociweb dot com>
 
