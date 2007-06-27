@@ -53,7 +53,7 @@ namespace
     virtual void
     receives_post (Type&)
     {
-      os << endl << ")" << endl;
+      os << ")" << endl;
     }
 
     virtual void
@@ -238,7 +238,7 @@ namespace
 
       Traversal::ConsumerData::belongs (c, belongs_);
 
-      os << " * /* ev */" << endl
+      os << " * /* ev */"
          << ")" << endl
          << "{"
          << STRS[YCH] << endl
@@ -427,9 +427,8 @@ namespace
          << STRS[COMP_SC] << "_ptr ctx)" << endl
          << "{"
          << "this->context_ =" << endl
-         << "  " << t.name () << "_Context::_narrow (" << endl
-         << "  ctx" << endl
-         << "  " <<");"
+         << "  " << t.name () << "_Context::_narrow ("
+         << "ctx);" 
          << endl;
 
       os << "if (this->context_ == 0)" << endl

@@ -134,7 +134,7 @@ namespace
       Traversal::ProviderData::belongs (p, simple_belongs_);
 
       os << "_ptr" << endl
-         << "get_" << p.name () << " (" << endl
+         << "get_" << p.name () << " ("
          << ");" << endl;
     }
 
@@ -146,7 +146,7 @@ namespace
 
       Traversal::ConsumerData::belongs (c, belongs_);
 
-      os << " *ev" << endl
+      os << " *ev"
          << ");" << endl;
    }
 
