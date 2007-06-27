@@ -291,19 +291,23 @@ ACE_Log_Record::print (const ACE_TCHAR host_name[],
       ACE_TCHAR *verbose_msg = 0;
       ACE_NEW_RETURN (verbose_msg, ACE_TCHAR[MAXVERBOSELOGMSGLEN], -1);
 
-      int result = this->format_msg (host_name,
-                                     verbose_flag,
-                                     verbose_msg);
+      int result = this->format_msg (host_name, verbose_flag, verbose_msg);
 
       if (result == 0)
         {
           if (fp != 0)
             {
-              int verbose_msg_len =
+              int const verbose_msg_len =
                 static_cast<int> (ACE_OS::strlen (verbose_msg));
-              int fwrite_result = ACE_OS::fprintf (fp,
-                                                   ACE_LIB_TEXT ("%s"),
-                                                   verbose_msg);
+#if !defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
+              int const fwrite_result = ACE_OS::fprintf (fp,
+                                                         ACE_LIB_TEXT ("%ls"),
+                                                         verbose_msg);
+#else
+              int const fwrite_result = ACE_OS::fprintf (fp,
+                                                         ACE_LIB_TEXT ("%s"),
+                                                         verbose_msg);
+#endif
               // We should have written everything
               if (fwrite_result != verbose_msg_len)
                 result = -1;

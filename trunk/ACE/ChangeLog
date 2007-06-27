@@ -1,3 +1,45 @@
+Wed Jun 27 06:09:39 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-vxworks5.x.h:
+        * ace/config-vxworks6.2.h:
+        * ace/config-vxworks6.3.h:
+        * ace/config-vxworks6.4.h:
+          Added ACE_HAS_SOCKADDR_IN_SIN_LEN
+
+        * ace/config-vxworks6.5.h:
+          New file for VxWorks 6.5
+
+        * ace/config-freebsd.h:
+          Added ACE_LACKS_LOG2
+
+        * ace/config-borland-common.h:
+        * ace/OS_NS_sys_select.inl:
+
+          C++ Builder 2007 delivers operator delete
+
+        * ace/Handle_Set.{h,cpp}:
+        * ace/README:
+          Don't use ACE_FD_SET_TYPE, it is not required anymore
+
+        * ace/Log_Record.cpp (print):
+          Fixed problem with unicode builds
+
+        * ace/os_include/os_limits.h:
+        * ace/os_include/os_stdio.h:
+        * ace/os_include/sys/os_types.h:
+        * ace/OS_NS_sys_mman.inl:
+        * ace/OS_NS_unistd.inl:
+          VxWorks 6.5 changes
+
+        * ace/os_include/sys/os_select.h:
+          Removed ACE_FD_SET_TYPE, not needed anymore
+
+        * ace/SOCK_Dgram.cpp:
+          Intialise some pointers with 0
+
+        * ace/Svc_Handler.{h,cpp}:
+          Layout changes and changed dynamic to a real bool
+
 Wed Jun 27 03:50:39 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * bin/fuzz.pl:

@@ -163,8 +163,7 @@ public:
 #endif
 
   /// This operator permits "placement new" on a per-object basis.
-  void * operator new (size_t n,
-                       void *p);
+  void * operator new (size_t n, void *p);
 
   /**
    * Call this to free up dynamically allocated <Svc_Handlers>
@@ -232,7 +231,7 @@ protected:
   ACE_PEER_STREAM peer_;
 
   /// Have we been dynamically created?
-  int dynamic_;
+  bool dynamic_;
 
   /// Keeps track of whether we are in the process of closing (required
   /// to avoid circular calls to <handle_close>).
