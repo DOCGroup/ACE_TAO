@@ -1807,4 +1807,37 @@ operator>> (ACE_InputCDR &is, ACE_CString &x)
   return is.good_bit ();
 }
 
+// --------------------------------------------------------------
+
+std::ostream&
+operator<< (std::ostream &os, ACE_OutputCDR::from_boolean x)
+{
+  return (x.val_ ? os << "true" : os << "false");
+}
+
+std::ostream&
+operator<< (std::ostream &os, ACE_OutputCDR::from_char x)
+{
+  return os << '\'' << x.val_ << '\'';
+}
+
+std::ostream&
+operator<< (std::ostream &os, ACE_OutputCDR::from_octet x)
+{
+  // Same format (hex) and no risk of overflow.
+  ACE_CDR::WChar w = static_cast<ACE_CDR::WChar> (x.val_);
+  return os << ACE_OutputCDR::from_wchar (w);
+}
+
+std::ostream&
+operator<< (std::ostream &os, ACE_OutputCDR::from_wchar x)
+{
+  os.setf (ios_base::showbase);
+  os.setf (ios_base::hex, ios_base::basefield);
+  os << x.val_;
+  os.unsetf (ios_base::showbase);
+  os.setf (ios_base::dec, ios_base::basefield);
+  return os;
+}
+
 ACE_END_VERSIONED_NAMESPACE_DECL
