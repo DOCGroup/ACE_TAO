@@ -130,37 +130,31 @@ ACE_Dev_Poll_Reactor_Notify::notify (ACE_Event_Handler *eh,
   ACE_Notification_Buffer buffer (eh, mask);
 
 #if defined (ACE_HAS_REACTOR_NOTIFICATION_QUEUE)
+  ACE_UNUSED_ARG (timeout);
   ACE_Dev_Poll_Handler_Guard eh_guard (eh);
 
   int notification_required =
     notification_queue_.push_new_notification (buffer);
 
   if (notification_required == -1)
-  {
-    return -1;
-  }
+    return -1;             // Also decrement eh's reference count
+
+  // The notification has been queued, so it will be delivered at some
+  // point (and may have been already); release the refcnt guard.
+  eh_guard.release ();
 
   if (notification_required == 0)
-  {
-    eh_guard.release ();
-
     return 0;
-  }
 
   // Now pop the pipe to force the callback for dispatching when ready. If
   // the send fails due to a full pipe, don't fail - assume the already-sent
   // pipe bytes will cause the entire notification queue to be processed.
   ssize_t n = ACE::send (this->notification_pipe_.write_handle (),
- (char *) &buffer,
+                         (char *) &buffer,
                          1,             // Only need one byte to pop the pipe
-                         timeout);
+                         &ACE_Time_Value::zero);
   if (n == -1 && (errno != ETIME && errno != EAGAIN))
     return -1;
-
-  // Since the notify is queued (and maybe already delivered by now)
-  // we can simply release the guard. The dispatch of this notification
-  // will decrement the reference count.
-  eh_guard.release ();
 
   return 0;
 #else
@@ -168,7 +162,7 @@ ACE_Dev_Poll_Reactor_Notify::notify (ACE_Event_Handler *eh,
   ACE_Dev_Poll_Handler_Guard eh_guard (eh);
 
   ssize_t n = ACE::send (this->notification_pipe_.write_handle (),
- (char *) &buffer,
+                         (char *) &buffer,
                          sizeof buffer,
                          timeout);
   if (n == -1)
@@ -245,8 +239,10 @@ ACE_Dev_Poll_Reactor_Notify::read_notify_pipe (ACE_HANDLE handle,
     return -1;
 
   if (more_messages_queued)
- (void) ACE::send (this->notification_pipe_.write_handle (),
- (char *)&next, 1 /* one byte is enough */);
+    (void) ACE::send (this->notification_pipe_.write_handle (),
+                      (char *)&next,
+                      1 /* one byte is enough */,
+                      &ACE_Time_Value::zero);
 #else
   to_read = sizeof buffer;
   read_p = (char *)&buffer;

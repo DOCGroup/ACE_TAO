@@ -1,3 +1,19 @@
+Wed Jun 27 13:48:50 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * ace/Dev_Poll_Reactor.cpp: When queueing notifications, correctly
+          handle the case where the notify is queued
+          (and ACE_HAS_REACTOR_NOTIFICATION_QUEUE) but the pipe can't be
+          written. The notify will be delivered, so don't fail the method.
+
+        * tests/Dev_Poll_Reactor_Test.cpp: Add ECONNRESET to the errno values
+          which mean the peer (server) closed the connection; this is legit
+          and shouldn't be flagged as an error.
+
+        * tests/Proactor_Test.cpp: If running on Linux, use half-duplex mode.
+          Linux kernels up to at least 2.6.9 (RHEL 4) silently convert all
+          socket aio to blocking synchronous, so full duplex test operation
+          is a crap shoot at best.
+
 Wed Jun 27 13:39:55 UTC 2007  Steve Huston  <shuston@riverace.com>
 
         * ace/OS_NS_Thread.inl (thr_sigsetmask): Removed the AIX block; AIX
