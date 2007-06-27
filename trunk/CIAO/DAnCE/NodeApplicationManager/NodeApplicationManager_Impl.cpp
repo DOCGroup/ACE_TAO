@@ -303,11 +303,13 @@ startLaunch (const Deployment::Properties & configProperty,
            len < comp_len;
            ++len)
         {
+          //FUZZ: disable check_for_lack_ACE_OS
           //Since we know the type ahead of time...narrow is omitted here.
           if (this->component_map_.
               bind (comp_info[len].component_instance_name.in(),
                     Components::CCMObject::_duplicate
                     (comp_info[len].component_ref.in())))
+          //FUZZ: enable check_for_lack_ACE_OS
             {
               ACE_CString error ("Duplicate component instance name ");
               error += comp_info[len].component_instance_name.in();
@@ -325,9 +327,11 @@ startLaunch (const Deployment::Properties & configProperty,
       CORBA::ULong shared_comp_length = this->shared_components_.length ();
       for (CORBA::ULong j = 0; j < shared_comp_length; ++j)
         {
+          //FUZZ: disable check_for_lack_ACE_OS
           if (this->component_map_.
               bind (this->shared_components_[j].name.in (),
                     Components::CCMObject::_nil ()))
+          //FUZZ: enable check_for_lack_ACE_OS
             {
               ACE_CString error ("Duplicate component instance name ");
               error += this->shared_components_[j].name.in();
@@ -507,12 +511,14 @@ add_new_components ()
           len < comp_len;
           ++len)
         {
+          //FUZZ: disable check_for_lack_ACE_OS
           //Since we know the type ahead of time...narrow is omitted here.
           if (this->component_map_.
               bind (comp_info[len].component_instance_name.in(),
                     Components::CCMObject::_duplicate
                       (comp_info[len].component_ref.in())))
             {
+          //FUZZ: enable check_for_lack_ACE_OS
               ACE_CString error ("Duplicate component instance name ");
               error += comp_info[len].component_instance_name.in();
 
@@ -676,15 +682,17 @@ CIAO::NodeApplicationManager_Impl_Base::set_priority (
       return -1;
     }
 
+  // FUZZ: disable check_for_lack_ACE_OS
   // Here form the ACE_Sched_Params structure and pass it on to the Process
   // manager with the current process id.
   // @@ TODO: Right now we are ignoring params.msec_ value since
   // ACE_OS::sched_params fails setting errno = EINVAL if
   // scope = ACE_PROCESS_SCOPE and quantun != ACE_Time_Value:zero.
-  ACE_Sched_Params sched_params (policy ,
+  ACE_Sched_Params sched_params (policy,
                                  priority,
                                  params.scope_,
                                  ACE_Time_Value::zero);
+  // FUZZ: enable check_for_lack_ACE_OS
 
   // Enable FIFO scheduling, e.g., RT scheduling class on Solaris.
   if (node_app_process_manager_.set_scheduler (sched_params, process_id_) != 0)

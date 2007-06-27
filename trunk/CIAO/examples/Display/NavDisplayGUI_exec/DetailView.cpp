@@ -54,7 +54,7 @@ DetailView::DetailView(QWidget *parent, const char *name)
 
   // Create a label containing a QMovie
   QString path_to_movie;
-  char *ace_root = getenv("ACE_ROOT");
+  char *ace_root = ACE_OS::getenv("ACE_ROOT");
   if(ace_root)
   {
     path_to_movie += ace_root;
@@ -80,7 +80,9 @@ DetailView::DetailView(QWidget *parent, const char *name)
   apply->setDefault(1);
   grid->addWidget(apply, 7, 9);
 
+  // FUZZ: disable check_for_lack_ACE_OS
   connect(apply, SIGNAL(clicked()), this, SLOT(apply()));
+  // FUZZ: enable check_for_lack_ACE_OS
 
   QTabWidget *tabs = new QTabWidget(this);
 

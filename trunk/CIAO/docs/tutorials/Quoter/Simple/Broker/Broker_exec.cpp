@@ -30,9 +30,12 @@ namespace CIDL_StockBroker_Impl
   StockBroker_exec_i::stock_subscribe (
   const char * stock_name)
   {
-    if ((strcmp (stock_name, "MSFT") == 0) || (strcmp (stock_name, "IBM") == 0))
+    if ((ACE_OS::strcmp (stock_name, "MSFT") == 0) || 
+        (ACE_OS::strcmp (stock_name, "IBM") == 0))
     {
-      std::set<std::string>::iterator iter = this->subscribed_stock_list_.find (stock_name);
+      std::set<std::string>::iterator iter = 
+        this->subscribed_stock_list_.find (stock_name);
+
       if (iter == this->subscribed_stock_list_.end ())
       {
         this->subscribed_stock_list_.insert (stock_name);
@@ -48,9 +51,11 @@ namespace CIDL_StockBroker_Impl
   StockBroker_exec_i::stock_unsubscribe (
   const char * stock_name)
   {
-    if ((strcmp (stock_name, "MSFT") == 0) || (strcmp (stock_name, "IBM") == 0))
+    if ((ACE_OS::strcmp (stock_name, "MSFT") == 0) || 
+        (ACE_OS::strcmp (stock_name, "IBM") == 0))
     {
-      std::set<std::string>::iterator iter = this->subscribed_stock_list_.find (stock_name);
+      std::set<std::string>::iterator iter = 
+        this->subscribed_stock_list_.find (stock_name);
       if (iter != this->subscribed_stock_list_.end ())
       {
         this->subscribed_stock_list_.erase (iter);
@@ -74,17 +79,21 @@ namespace CIDL_StockBroker_Impl
 
     CORBA::String_var stock_name = CORBA::string_dup (ev->name ());
 
-    // Retrieve stock information if the stock name is in the subscribed_stock_list
-    if (this->subscribed_stock_list_.find (stock_name.in ()) != this->subscribed_stock_list_.end ())
+    // Retrieve stock information if the stock name is in the 
+    // subscribed_stock_list
+    if (this->subscribed_stock_list_.find (stock_name.in ()) != 
+        this->subscribed_stock_list_.end ())
     {
-      Stock::StockQuoter_var quoter_obj = this->context_->get_connection_read_quoter ();
+      Stock::StockQuoter_var quoter_obj = 
+        this->context_->get_connection_read_quoter ();
 
       if (CORBA::is_nil (quoter_obj.in ()))
       {
         throw CORBA::BAD_PARAM ();
       }
 
-      Stock::StockInfo_var info = quoter_obj->get_stock_info (stock_name.in ());
+      Stock::StockInfo_var info = 
+        quoter_obj->get_stock_info (stock_name.in ());
 
       ACE_DEBUG ((LM_DEBUG, "Quoter - Current value of %s is %d\n",
                              stock_name.in (),
@@ -171,4 +180,3 @@ namespace CIDL_StockBroker_Impl
     return retval;
   }
 }
-

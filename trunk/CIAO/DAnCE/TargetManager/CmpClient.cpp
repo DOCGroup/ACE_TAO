@@ -283,13 +283,13 @@ namespace TM_Tester
       for (size_t j = 0;j < domain.node[i].resource.length ();j++)
       {
 
-        if (!strcmp (domain.node[i].resource[j].name.in (), "Processor"))
+        if (!ACE_OS::strcmp (domain.node[i].resource[j].name.in (), "Processor"))
         {
           CORBA::Double node_cpu;
           domain.node[i].resource[j].property[0].value >>= node_cpu;
           out << node_cpu << std::endl;
         }
-        if (!strcmp (domain.node[i].resource[j].name.in (), "NA_Monitor"))
+        if (!ACE_OS::strcmp (domain.node[i].resource[j].name.in (), "NA_Monitor"))
         {
           std::string file_name = "NA_";
           file_name += domain.node[i].name.in ();
@@ -298,7 +298,7 @@ namespace TM_Tester
           CORBA::Double na_node_cpu;
           domain.node[i].resource[j].property[0].value >>= na_node_cpu;
           char buf[BUFSIZ];
-          memset (buf , 0 , BUFSIZ);
+          ACE_OS::memset (buf , 0 , BUFSIZ);
           ACE_OS::sprintf (buf , "%f", na_node_cpu);
           file_io.send (buf, ACE_OS::strlen (buf));
         }
