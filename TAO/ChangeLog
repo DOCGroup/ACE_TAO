@@ -1,6 +1,13 @@
+Wed Jun 27 03:23:14 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * orbsvcs/Naming_Service/Naming_Service.h:
+          The documentation says that this class uses the TAO_ORB_Manager,
+          yet TAO_ORB_Manager has been removed for a long while now. Update
+          the class documentation to remove references to TAO_ORB_Manager.
+
 Mon Jun 25 11:34:36 CDT 2007  Ciju John  <johnc@ociweb.com>
 
-	* TAO version 1.5.9 released.
+        * TAO version 1.5.9 released.
 
 Mon Jun 25 16:11:55 UTC 2007  Ciju John  <johnc at ociweb dot com>
 
@@ -16,7 +23,7 @@ Fri Jun 22 14:56:03 UTC 2007  Ciju John  <johnc at ociweb dot com>
         * PROBLEM-REPORT-FORM:
         * VERSION:
         * tao/Version.h:
-	  Revert to x.5.8 status.
+          Revert to x.5.8 status.
 
 Tue Jun 19 15:37:16 UTC 2007  Ciju John  <johnc at ociweb dot com>
 

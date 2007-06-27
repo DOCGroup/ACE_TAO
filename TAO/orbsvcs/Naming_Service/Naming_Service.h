@@ -29,8 +29,8 @@ class TAO_Naming_Service
   //   COS Naming Service.
   //
   // = DESCRIPTION
-  //   This class makes use of the <TAO_Naming_Server> and
-  //   <TAO_ORB_Manager> class to implement the COS Naming Service.
+  //   This class makes use of the <TAO_Naming_Server>
+  //   to implement the COS Naming Service.
 public:
   TAO_Naming_Service (void);
   // Default Constructor.
