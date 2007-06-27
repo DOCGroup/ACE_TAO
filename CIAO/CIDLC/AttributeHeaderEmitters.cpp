@@ -21,17 +21,17 @@ WriteAttributeHeaderEmitter::WriteAttributeHeaderEmitter (Context& c)
 void
 WriteAttributeHeaderEmitter::pre (SemanticGraph::ReadWriteAttribute&)
 {
-  os << "void" << endl;
+  os << "virtual void" << endl;
 }
 
 void
 WriteAttributeHeaderEmitter::name (SemanticGraph::ReadWriteAttribute& a)
 {
-  os << a.name () << " (" << endl;
+  os << a.name () << " (";
 
   Traversal::ReadWriteAttribute::belongs (a, write_belongs_);
 
-  os << " " << a.name () << ")" << endl;
+  os << " " << a.name () << ")";
 }
 
 void
@@ -84,7 +84,7 @@ AttributeHeaderEmitter::pre (SemanticGraph::ReadWriteAttribute& a)
 void
 AttributeHeaderEmitter::name (SemanticGraph::ReadWriteAttribute& a)
 {
-  os << a.name () << " ()" << endl;
+  os << a.name () << " ()";
 }
 
 void
