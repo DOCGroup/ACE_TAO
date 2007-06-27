@@ -137,10 +137,11 @@
 #include "ace/config-posix.h"
 
 // Regardless of what config-posix.h may indicate, AIX 5.3 is the first
-// to support sem_timedwait().
+// to support sem_timedwait(). Prior to that, use the emulation.
 #if defined (ACE_HAS_POSIX_SEM_TIMEOUT) && \
   (defined (ACE_AIX_VERS) && (ACE_AIX_VERS < 503))
 #  undef ACE_HAS_POSIX_SEM_TIMEOUT
+#  define ACE_HAS_POSIX_SEM_TIMEOUT_EMULATION
 #endif /* ACE_HAS_POSIX_SEM_TIMEOUT && ACE_AIX_VERS < 503 */
 
 #if defined (ACE_DLL_SUFFIX)
