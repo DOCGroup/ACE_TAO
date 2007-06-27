@@ -4,6 +4,7 @@
 // The following configuration file is designed to work for VxWorks
 // 6.4 platforms using one of these compilers:
 // 1) The GNU g++ compiler that is shipped with VxWorks 6.4
+// 2) The Diab compiler that is shipped with VxWorks 6.4
 
 #ifndef ACE_CONFIG_H
 #define ACE_CONFIG_H
@@ -104,6 +105,8 @@
 #define ACE_HAS_SIGINFO_T
 #define ACE_HAS_SIGWAIT
 #define ACE_HAS_SIG_ATOMIC_T
+#define ACE_HAS_SOCKADDR_IN_SIN_LEN
+#define ACE_HAS_SOCKADDR_IN6_SIN6_LEN
 #define ACE_HAS_STRERROR
 #define ACE_HAS_THREADS
 #define ACE_HAS_SYSCTL

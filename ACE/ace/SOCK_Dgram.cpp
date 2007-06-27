@@ -359,7 +359,7 @@ ACE_SOCK_Dgram::send (const iovec iov[],
 #endif
       length += iov[i].iov_len;
 
-  char *buf;
+  char *buf = 0;
 
 #if defined (ACE_HAS_ALLOCA)
   buf = alloca (length);
@@ -408,7 +408,7 @@ ACE_SOCK_Dgram::recv (iovec iov[],
 #endif
       length += iov[i].iov_len;
 
-  char *buf;
+  char *buf = 0;
 
 #if defined (ACE_HAS_ALLOCA)
   buf = alloca (length);
