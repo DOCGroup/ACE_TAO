@@ -1,3 +1,13 @@
+Wed Jun 27 08:29:56 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * ace/CDR_Stream.h:
+        * ace/CDR_Stream.cpp:
+        
+          Added ostream insertion operators for the ambiguous ACE_CDR
+          basic types. They are used in the optional generation of
+          ostream operators for IDL declaration, which can be useful
+          for debugging (see Bugzilla 2937).
+
 Wed Jun 27 08:05:39 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Capabilities_Test.cpp:
