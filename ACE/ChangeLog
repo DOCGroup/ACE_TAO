@@ -28,7 +28,7 @@ Wed Jun 27 06:09:39 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Log_Record.cpp (print):
           Fixed problem with unicode builds. Thanks to Christoph Hofmann
-          <Christoph dit Hofmann at zwick dot de> for reporting this.
+          <Christoph dot Hofmann at zwick dot de> for reporting this.
 
         * ace/os_include/os_limits.h:
         * ace/os_include/os_stdio.h:
