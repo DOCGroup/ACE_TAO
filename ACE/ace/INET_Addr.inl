@@ -177,9 +177,9 @@ ACE_INET_Addr::set (const wchar_t port_name[],
 }
 
 ACE_INLINE int
-ACE_INET_Addr::set (const wchar_t addr[])
+ACE_INET_Addr::set (const wchar_t addr[], int address_family)
 {
-  return this->set (ACE_Wide_To_Ascii (addr).char_rep ());
+  return this->set (ACE_Wide_To_Ascii (addr).char_rep (), address_family);
 }
 
 #endif /* ACE_HAS_WCHAR */

@@ -64,7 +64,8 @@ public:
    * is assumed to be a port number, with the IP address being
    * INADDR_ANY.
    */
-  explicit ACE_INET_Addr (const char address[]);
+  explicit ACE_INET_Addr (const char address[],
+                          int address_family = AF_UNSPEC);
 
   /**
    * Creates an ACE_INET_Addr from a <port_number> and an Internet
@@ -95,7 +96,8 @@ public:
                  const wchar_t host_name[],
                  int address_family = AF_UNSPEC);
 
-  explicit ACE_INET_Addr (const wchar_t address[]);
+  explicit ACE_INET_Addr (const wchar_t address[],
+                          int address_family = AF_UNSPEC);
 
   ACE_INET_Addr (const wchar_t port_name[],
                  const wchar_t host_name[],
@@ -166,7 +168,7 @@ public:
    * is assumed to be a port number, with the IP address being
    * INADDR_ANY.
    */
-  int set (const char addr[]);
+  int set (const char addr[], int address_family = AF_UNSPEC);
 
   /// Creates an ACE_INET_Addr from a sockaddr_in structure.
   int set (const sockaddr_in *,
@@ -186,7 +188,7 @@ public:
            ACE_UINT32 ip_addr,
            const wchar_t protocol[] = ACE_TEXT_WIDE ("tcp"));
 
-  int set (const wchar_t addr[]);
+  int set (const wchar_t addr[], int address_family = AF_UNSPEC);
 #endif /* ACE_HAS_WCHAR */
 
   /// Return a pointer to the underlying network address.
@@ -220,7 +222,8 @@ public:
    * is no ':' in the <address> it is assumed to be a port number,
    * with the IP address being INADDR_ANY.
    */
-  virtual int string_to_addr (const char address[]);
+  virtual int string_to_addr (const char address[],
+                              int address_family = AF_UNSPEC);
 
 #if defined (ACE_HAS_WCHAR)
   /*

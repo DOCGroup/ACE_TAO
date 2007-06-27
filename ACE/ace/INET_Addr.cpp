@@ -189,7 +189,7 @@ ACE_INET_Addr::set (const ACE_INET_Addr &sa)
 // Transform the string into the current addressing format.
 
 int
-ACE_INET_Addr::string_to_addr (const char s[])
+ACE_INET_Addr::string_to_addr (const char s[], int address_family)
 {
   ACE_TRACE ("ACE_INET_Addr::string_to_addr");
   int result;
@@ -240,7 +240,7 @@ ACE_INET_Addr::string_to_addr (const char s[])
       char *endp = 0;
       u_short port = static_cast<u_short> (ACE_OS::strtol (port_p, &endp, 10));
       if (*endp == '\0')    // strtol scanned the entire string - all digits
-        result = this->set (port, ip_addr);
+        result = this->set (port, ip_addr, 1, address_family);
       else
         result = this->set (port_p, ip_addr);
     }
@@ -250,27 +250,27 @@ ACE_INET_Addr::string_to_addr (const char s[])
 }
 
 int
-ACE_INET_Addr::set (const char address[])
+ACE_INET_Addr::set (const char address[], int address_family)
 {
   ACE_TRACE ("ACE_INET_Addr::set");
-  return this->string_to_addr (address);
+  return this->string_to_addr (address, address_family);
 }
 
-ACE_INET_Addr::ACE_INET_Addr (const char address[])
+ACE_INET_Addr::ACE_INET_Addr (const char address[], int address_family)
   : ACE_Addr (determine_type (), sizeof (inet_addr_))
 {
   ACE_TRACE ("ACE_INET_Addr::ACE_INET_Addr");
   this->reset ();
-  this->set (address);
+  this->set (address, address_family);
 }
 
 #if defined (ACE_HAS_WCHAR)
-ACE_INET_Addr::ACE_INET_Addr (const wchar_t address[])
+ACE_INET_Addr::ACE_INET_Addr (const wchar_t address[], int address_family)
   : ACE_Addr (determine_type (), sizeof (inet_addr_))
 {
   ACE_TRACE ("ACE_INET_Addr::ACE_INET_Addr");
   this->reset ();
-  this->set (address);
+  this->set (address, address_family);
 }
 
 #endif /* ACE_HAS_WCHAR */
@@ -340,13 +340,14 @@ ACE_INET_Addr::set (u_short port_number,
   int ret = -1;
   for (res = res0; res != 0; res = res->ai_next)
     {
-      if (res->ai_family == AF_INET || res->ai_family == AF_INET6)
+      if (address_family == AF_UNSPEC || res->ai_family == address_family)
         {
           this->set_type (res->ai_family);
           this->set_addr (res->ai_addr, res->ai_addrlen);
           this->set_port_number (port_number, encode);
           ret = 0;
-          break;
+          if (address_family == AF_UNSPEC && res->ai_family == AF_INET6)
+            break;
         }
     }
   freeaddrinfo (res0);

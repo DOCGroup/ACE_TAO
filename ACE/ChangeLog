@@ -1,3 +1,26 @@
+Wed Jun 27 20:25:06 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * ace/INET_Addr.h:
+        * ace/INET_Addr.inl:
+        * ace/INET_Addr.cpp:
+
+          Force consistency across platforms using IPv6 and initializing
+          an ACE_INET_Addr with a string host. Prior to this patch, the
+          set method would pick the first INET or INET6 address returned
+          by the system. On most systems, ::getaddrinfo() returns INET6
+          before INET ones, ensuring that IPv6 applications got consistent
+          results. However, a few platforms, such as RH Fedora 6, it
+          returns INET before INET6 meaning that in some contexts an
+          application would get one address for a host, and a different
+          address under other contexts. See Bugzilla entry 2952 for
+          greater detail.
+
+          Since this form of set() is used internally by string_to_addr
+          and a string-based ctor, those methods now have an optional
+          parameter for explicitly specifying the address family to be
+          used in setting the address.
+
+
 Wed Jun 27 19:46:14 UTC 2007  Steve Huston  <shuston@riverace.com>
 
         * ace/config-aix-5.x.h: For AIX 5.2 and earlier, when removing
