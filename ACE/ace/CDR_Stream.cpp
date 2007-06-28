@@ -1826,7 +1826,8 @@ operator<< (std::ostream &os, ACE_OutputCDR::from_octet x)
 {
   // Same format (hex) and no risk of overflow.
   ACE_CDR::WChar w = static_cast<ACE_CDR::WChar> (x.val_);
-  return os << ACE_OutputCDR::from_wchar (w);
+  ACE_OutputCDR::from_wchar tmp (w);
+  return os << tmp;
 }
 
 std::ostream&

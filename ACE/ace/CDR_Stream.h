@@ -1313,17 +1313,17 @@ extern ACE_Export ACE_CDR::Boolean operator>> (ACE_InputCDR &is,
 // but these below are either in generated code itself or are unambiguous
 // primitive types.
 
-extern ACE_Export std::ostream& operator<< (std::ostream &os,
-                                            ACE_OutputCDR::from_boolean x);
+ACE_Export std::ostream& operator<< (std::ostream &os,
+                                     ACE_OutputCDR::from_boolean x);
 
-extern ACE_Export std::ostream& operator<< (std::ostream &os,
-                                            ACE_OutputCDR::from_char x);
+ACE_Export std::ostream& operator<< (std::ostream &os,
+                                     ACE_OutputCDR::from_char x);
 
-extern ACE_Export std::ostream& operator<< (std::ostream &os,
-                                            ACE_OutputCDR::from_octet x);
+ACE_Export std::ostream& operator<< (std::ostream &os,
+                                     ACE_OutputCDR::from_octet x);
 
-extern ACE_Export std::ostream& operator<< (std::ostream &os,
-                                            ACE_OutputCDR::from_wchar x);
+ACE_Export std::ostream& operator<< (std::ostream &os,
+                                     ACE_OutputCDR::from_wchar x);
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
