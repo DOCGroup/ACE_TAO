@@ -48,8 +48,7 @@ namespace TAO
 
         PortableInterceptor::ORBInitializer_var initializer (tmp);
 
-        PortableInterceptor::register_orb_initializer (initializer.in ()
-                                                      );
+        PortableInterceptor::register_orb_initializer (initializer.in ());
 
         return 0;
       }

@@ -45,9 +45,7 @@ public:
   // = The IOR_Parser methods, please read the documentation in
   //   IOR_Parser.h
   virtual bool match_prefix (const char *ior_string) const;
-  virtual CORBA::Object_ptr parse_string (const char *ior,
-                                          CORBA::ORB_ptr orb
-                                          );
+  virtual CORBA::Object_ptr parse_string (const char *ior, CORBA::ORB_ptr orb);
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

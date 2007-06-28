@@ -55,6 +55,7 @@
 #include "tao/IOP.pidl"
 #include "tao/TimeBase.pidl"
 #include "tao/Policy.pidl"
+#include "tao/RTCORBA/RT_ProtocolProperties.pidl"
 
 #pragma prefix "omg.org"
 
@@ -105,9 +106,6 @@ module RTCORBA
   {
       readonly attribute ThreadpoolId threadpool;
   };
-
-  // Protocol Properties.
-  local interface ProtocolProperties {};
 
   struct Protocol
   {
@@ -179,6 +177,8 @@ module RTCORBA
 
   local interface UserDatagramProtocolProperties : ProtocolProperties
   {
+    attribute long send_buffer_size;
+    attribute long recv_buffer_size;
     attribute boolean enable_network_priority;
   };
 
@@ -263,6 +263,8 @@ module RTCORBA
                                                      in string mmap_lockname);
 
     UserDatagramProtocolProperties create_user_datagram_protocol_properties(
+                                                     in long send_buffer_size,
+                                                     in long recv_buffer_size,
                                                      in boolean enable_network_priority);
 
     StreamControlProtocolProperties create_stream_control_protocol_properties(

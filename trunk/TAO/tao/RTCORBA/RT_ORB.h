@@ -21,10 +21,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#define TAO_RTCORBA_SAFE_INCLUDE
-#include "tao/RTCORBA/RTCORBAC.h"
-#undef TAO_RTCORBA_SAFE_INCLUDE
-
+#include "tao/RTCORBA/RTCORBA_includeC.h"
 #include "tao/LocalObject.h"
 #include "ace/Hash_Map_Manager_T.h"
 
@@ -155,7 +152,9 @@ public:
                                             const char *mmap_lockname);
 
   RTCORBA::UserDatagramProtocolProperties_ptr
-  create_user_datagram_protocol_properties (CORBA::Boolean enable_network_priority);
+  create_user_datagram_protocol_properties (CORBA::Long send_buffer_size,
+                                            CORBA::Long recv_buffer_size,
+                                            CORBA::Boolean enable_network_priority);
 
   RTCORBA::StreamControlProtocolProperties_ptr
   create_stream_control_protocol_properties (CORBA::Long send_buffer_size,

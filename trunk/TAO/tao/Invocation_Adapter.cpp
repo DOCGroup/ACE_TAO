@@ -216,8 +216,6 @@ namespace TAO
           break;
         }
       }
-
-    return;
   }
 
   Invocation_Status

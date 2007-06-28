@@ -101,8 +101,8 @@ TAO_DIOP_Profile::decode_profile (TAO_InputCDR& cdr)
     {
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("TAO (%P|%t) DIOP_Profile::decode - ")
-                    ACE_TEXT ("error while decoding host/port")));
+                    ACE_TEXT ("TAO (%P|%t) - DIOP_Profile::decode - ")
+                    ACE_TEXT ("error while decoding host/port\n")));
       return -1;
     }
 
@@ -191,8 +191,8 @@ TAO_DIOP_Profile::parse_string_i (const char *ior)
 
           if (TAO_debug_level > 0)
             ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("\n\nTAO (%P|%t) ")
-                        ACE_TEXT ("IIOP_Profile::parse_string ")
+                        ACE_TEXT ("TAO (%P|%t) - ")
+                        ACE_TEXT ("DIOP_Profile::parse_string ")
                         ACE_TEXT ("- %p\n\n"),
                         ACE_TEXT ("cannot determine hostname")));
 
@@ -351,8 +351,8 @@ TAO_DIOP_Profile::create_profile_body (TAO_OutputCDR &encap) const
   else
     {
       ACE_ERROR ((LM_ERROR,
-                  "(%P|%t) TAO - UIOP_Profile::create_profile_body "
-                  "no object key marshalled \n"));
+                  "TAO (%P|%t) - DIOP_Profile::create_profile_body "
+                  "no object key marshalled\n"));
     }
 
   if (this->version_.major > 1

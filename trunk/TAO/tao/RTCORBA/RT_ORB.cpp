@@ -273,12 +273,15 @@ TAO_RT_ORB::create_shared_memory_protocol_properties (
 
 RTCORBA::UserDatagramProtocolProperties_ptr
 TAO_RT_ORB::create_user_datagram_protocol_properties (
-                                                      CORBA::Boolean enable_network_priority
-                                                      )
+                                                      CORBA::Long send_buffer_size,
+                                                      CORBA::Long recv_buffer_size,
+                                                      CORBA::Boolean enable_network_priority)
 {
   TAO_UserDatagram_Protocol_Properties *tmp = 0;
   ACE_NEW_THROW_EX (tmp,
                     TAO_UserDatagram_Protocol_Properties (
+                                                 send_buffer_size,
+                                                 recv_buffer_size,
                                                  enable_network_priority),
                     CORBA::NO_MEMORY (TAO::VMCID,
                                       CORBA::COMPLETED_NO));

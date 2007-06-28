@@ -1,7 +1,104 @@
+Thu Jun 28 08:43:39 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Connection_Handler.cpp:
+          Documentation change
+
+        * tao/Connection_Handler.h:
+        * tao/EndpointPolicy/EndpointPolicy_ORBInitializer.cpp:
+        * tao/FILE_Parser.cpp:
+        * tao/FILE_Parser.h:
+        * tao/HTTP_Parser.h:
+        * tao/RTScheduling/RTScheduler_Initializer.cpp:
+        * tao/TransportCurrent/Current_ORBInitializer_Base.cpp:
+        * tao/TransportCurrent/IIOP_Current_Loader.cpp:
+          Layout changes
+
+        * tao/DiffServPolicy/DiffServPolicy_ORBInitializer.cpp:
+          Catch exception as const
+
+        * tao/IIOP_Connector.cpp:
+          Updated some debug statements to conform the formatting
+          done in TAO
+
+        * tao/Invocation_Adapter.cpp:
+          Removed not needed return
+
+        * tao/Object.{h,cpp}:
+          _get_component is not required for CORBA/e
+
+        * tao/Protocols_Hooks.{h,cpp}:
+        * tao/RTCORBA/RT_ORB.{h,cpp}:
+        * tao/RTCORBA/RT_Protocols_Hooks.{h,cpp}:
+          Extended the DIOP protocol properties with send and receive
+          buffer size. This fixes bugzilla 2955
+
+        * tao/RTCORBA/diffs/RT_ProtocolProperties.diff:
+        * tao/RTCORBA/diffs/RTCORBA.diff:
+          Need only a diff for the new RT_ProtocolProperties
+
+        * tao/RTCORBA/Direct_Priority_Mapping.h:
+        * tao/RTCORBA/Linear_Network_Priority_Mapping.h:
+        * tao/RTCORBA/Linear_Priority_Mapping.h:
+        * tao/RTCORBA/Multi_Priority_Mapping.h:
+        * tao/RTCORBA/Network_Priority_Mapping.h:
+        * tao/RTCORBA/Network_Priority_Mapping_Manager.h:
+        * tao/RTCORBA/Priority_Mapping.h:
+        * tao/RTCORBA/Priority_Mapping_Manager.h:
+        * tao/RTCORBA/RT_Current.h:
+        * tao/RTCORBA/RT_Endpoint_Selector_Factory.h:
+        * tao/RTCORBA/RT_Invocation_Endpoint_Selectors.h:
+        * tao/RTCORBA/RT_Mutex.h:
+        * tao/RTCORBA/RT_ORB_Loader.h:
+        * tao/RTCORBA/Thread_Pool.h:
+          Rearranged includes
+
+        * tao/RTCORBA/RT_Invocation_Endpoint_Selectors.cpp:
+          No need for intermediate variable
+
+        * tao/RTCORBA/RT_Policy_i.{h,cpp}:
+          Layout changes and extended DIOP code
+
+        * tao/RTCORBA/RT_ProtocolProperties.pidl:
+        * tao/RTCORBA/RT_ProtocolPropertiesA.cpp:
+        * tao/RTCORBA/RT_ProtocolPropertiesA.h:
+        * tao/RTCORBA/RT_ProtocolPropertiesC.cpp:
+        * tao/RTCORBA/RT_ProtocolPropertiesC.h:
+        * tao/RTCORBA/RT_ProtocolPropertiesS.h:
+          Moved the ProtocolProperties to its own file, this needs a manual
+          patch
+
+        * tao/RTCORBA/RTCORBA.h:
+          Include the rtcorba_typedefs file here
+
+        * tao/RTCORBA/RTCORBA.pidl:
+          Moved the ProtocolProperties out of this file, now we can regenerate
+          this as part of the build and this also makes it possible to support
+          CORBA/e for the RTCORBA library
+
+        * tao/RTCORBA/RTCORBAA.cpp:
+        * tao/RTCORBA/RTCORBAA.h:
+        * tao/RTCORBA/RTCORBAC.cpp:
+        * tao/RTCORBA/RTCORBAC.h:
+        * tao/RTCORBA/RTCORBAS.h:
+          Removed from the repo
+
+        * tao/Strategies/DIOP_Acceptor.cpp:
+        * tao/Strategies/DIOP_Connector.cpp:
+        * tao/Strategies/DIOP_Endpoint.cpp:
+        * tao/Strategies/DIOP_Profile.cpp:
+        * tao/Strategies/DIOP_Transport.cpp:
+          Updated several debug statements, layout changes
+
+        * tao/Strategies/DIOP_Connection_Handler.cpp:
+          Use the send/receive buffer sizes
+
+        * tao/RTCORBA.mpc:
+          Enabled regeneration of RTCORBA.pidl
+
 Mon Jun 25 20:57:14 UTC 2007  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * docs: Added a new file called documentation.html to describe the
-          TAO programmer's guides in a single place. 
+          TAO programmer's guides in a single place.
 
 Thu Jun 28 04:28:26 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 

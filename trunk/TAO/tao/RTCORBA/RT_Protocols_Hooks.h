@@ -70,17 +70,13 @@ public:
   void client_protocol_properties_at_orb_level (TAO_SHMIOP_Protocol_Properties &protocol_properties
                                                );
 
-  void server_protocol_properties_at_orb_level (TAO_DIOP_Protocol_Properties &protocol_properties
-                                               );
+  void server_protocol_properties_at_orb_level (TAO_DIOP_Protocol_Properties &protocol_properties);
 
-  void client_protocol_properties_at_orb_level (TAO_DIOP_Protocol_Properties &protocol_properties
-                                               );
+  void client_protocol_properties_at_orb_level (TAO_DIOP_Protocol_Properties &protocol_properties);
 
-  void server_protocol_properties_at_orb_level (TAO_SCIOP_Protocol_Properties &protocol_properties
-                                               );
+  void server_protocol_properties_at_orb_level (TAO_SCIOP_Protocol_Properties &protocol_properties);
 
-  void client_protocol_properties_at_orb_level (TAO_SCIOP_Protocol_Properties &protocol_properties
-                                               );
+  void client_protocol_properties_at_orb_level (TAO_SCIOP_Protocol_Properties &protocol_properties);
 
   CORBA::Long get_dscp_codepoint (void);
 
@@ -128,18 +124,14 @@ protected:
                                                              );
 
   RTCORBA::ProtocolProperties_ptr client_protocol_properties (IOP::ProfileId protocol_tag,
-                                                              CORBA::Policy_ptr policy
-                                                             );
+                                                              CORBA::Policy_ptr policy);
 
-  RTCORBA::ProtocolProperties_ptr server_protocol_properties_at_orb_level (IOP::ProfileId protocol_tag
-                                                                          );
+  RTCORBA::ProtocolProperties_ptr server_protocol_properties_at_orb_level (IOP::ProfileId protocol_tag);
 
-  RTCORBA::ProtocolProperties_ptr client_protocol_properties_at_orb_level (IOP::ProfileId protocol_tag
-                                                                          );
+  RTCORBA::ProtocolProperties_ptr client_protocol_properties_at_orb_level (IOP::ProfileId protocol_tag);
 
   RTCORBA::ProtocolProperties_ptr client_protocol_properties_at_object_level (IOP::ProfileId protocol_tag,
-                                                                              TAO_Stub *stub
-                                                                             );
+                                                                              TAO_Stub *stub);
 
   void extract_protocol_properties (TAO_IIOP_Protocol_Properties &to,
                                     RTCORBA::ProtocolProperties_ptr from);
@@ -157,8 +149,7 @@ protected:
                                     RTCORBA::ProtocolProperties_ptr from);
 
   CORBA::Boolean set_network_priority (IOP::ProfileId protocol_tag,
-                                       RTCORBA::ProtocolProperties_ptr protocol_properties
-                                      );
+                                       RTCORBA::ProtocolProperties_ptr protocol_properties);
 
 protected:
 

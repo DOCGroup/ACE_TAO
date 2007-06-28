@@ -63,7 +63,7 @@ TAO_DiffServPolicy_ORBInitializer::register_policy_factories (
         {
           info->register_policy_factory (*i, this->policy_factory_.in ());
         }
-      catch ( ::CORBA::BAD_INV_ORDER& ex)
+      catch (const ::CORBA::BAD_INV_ORDER& ex)
         {
           if (ex.minor () == (CORBA::OMGVMCID | 16))
             {

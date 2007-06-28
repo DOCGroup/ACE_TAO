@@ -85,7 +85,7 @@ TAO_DIOP_Connector::set_validate_endpoint (TAO_Endpoint *endpoint)
       if (TAO_debug_level > 0)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("TAO (%P|%t) DIOP connection failed.\n")
+                      ACE_TEXT ("TAO (%P|%t) - DIOP connection failed.\n")
                       ACE_TEXT ("TAO (%P|%t) This is most likely ")
                       ACE_TEXT ("due to a hostname lookup ")
                       ACE_TEXT ("failure.\n")));
@@ -126,21 +126,19 @@ TAO_DIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
 
       svc_handler_i->open (0);
 
-      svc_handler_table_.bind (remote_address,
-                               svc_handler_i);
+      svc_handler_table_.bind (remote_address, svc_handler_i);
       svc_handler = svc_handler_i;
 
       if (TAO_debug_level > 2)
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("(%P|%t) DIOP_Connector::connect - ")
+                    ACE_TEXT ("TAO (%P|%t) - DIOP_Connector::connect - ")
                     ACE_TEXT ("new connection on HANDLE %d\n"),
                     svc_handler->get_handle ()));
    }
 
   // @@ Michael: We do not use regular connection management.
   svc_handler->add_reference ();
-  TAO_Transport *transport =
-    svc_handler->transport ();
+  TAO_Transport *transport = svc_handler->transport ();
 
   return transport;
 }
@@ -153,8 +151,7 @@ TAO_DIOP_Connector::create_profile (TAO_InputCDR& cdr)
                   TAO_DIOP_Profile (this->orb_core ()),
                   0);
 
-  int const r = pfile->decode (cdr);
-  if (r == -1)
+  if (pfile->decode (cdr) == -1)
     {
       pfile->_decr_refcnt ();
       pfile = 0;
@@ -223,10 +220,7 @@ TAO_DIOP_Connector::remote_endpoint (TAO_Endpoint *endpoint)
   if (endpoint->tag () != TAO_TAG_DIOP_PROFILE)
     return 0;
 
-  TAO_DIOP_Endpoint *diop_endpoint =
-    dynamic_cast<TAO_DIOP_Endpoint *> (endpoint );
-
-  return diop_endpoint;
+  return dynamic_cast<TAO_DIOP_Endpoint *> (endpoint);
 }
 
 int

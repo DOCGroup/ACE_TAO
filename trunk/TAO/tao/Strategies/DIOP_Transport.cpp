@@ -46,7 +46,7 @@ TAO_DIOP_Transport::TAO_DIOP_Transport (TAO_DIOP_Connection_Handler *handler,
       ACE_NEW (this->messaging_object_,
                TAO_GIOP_Message_Lite (orb_core,
                                       ACE_MAX_DGRAM_SIZE));
-                                      }
+    }
   else
     {
       // Use the normal GIOP object
@@ -94,9 +94,8 @@ TAO_DIOP_Transport::send (iovec *iov, int iovcnt,
   for (int i = 0; i < iovcnt; i++)
      bytes_to_send += iov[i].iov_len;
 
-  this->connection_handler_->dgram ().send (iov,
-                                            iovcnt,
-                                            addr);
+  this->connection_handler_->dgram ().send (iov, iovcnt, addr);
+
   // @@ Michael:
   // Always return a positive number of bytes sent, as we do
   // not handle sending errors in DIOP.
@@ -113,14 +112,12 @@ TAO_DIOP_Transport::recv (char *buf,
 {
   ACE_INET_Addr from_addr;
 
-  ssize_t n = this->connection_handler_->dgram ().recv (buf,
-                                                        len,
-                                                        from_addr);
+  ssize_t const n = this->connection_handler_->dgram ().recv (buf, len, from_addr);
 
   if (TAO_debug_level > 0)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "TAO_DIOP_Transport::recv_i: received %d bytes from %s:%d %d\n",
+                  "TAO (%P|%t) - DIOP_Transport::recv_i: received %d bytes from %s:%d %d\n",
                   n,
                   ACE_TEXT_CHAR_TO_TCHAR (from_addr.get_host_name ()),
                   from_addr.get_port_number (),
@@ -205,7 +202,9 @@ TAO_DIOP_Transport::handle_input (TAO_Resume_Handle &rh,
   if (n <= 0)
     {
       if (n == -1)
-        this->tms_->connection_closed ();
+        {
+          this->tms_->connection_closed ();
+        }
 
       return n;
     }
@@ -219,9 +218,9 @@ TAO_DIOP_Transport::handle_input (TAO_Resume_Handle &rh,
 
   // Parse the incoming message for validity. The check needs to be
   // performed by the messaging objects.
-  if (this->messaging_object ()->parse_next_message (message_block, 
+  if (this->messaging_object ()->parse_next_message (message_block,
                                                      qd,
-                                                     mesg_length) == -1) 
+                                                     mesg_length) == -1)
     return -1;
 
   if (qd.missing_data_ == TAO_MISSING_DATA_UNDEFINED)
@@ -229,7 +228,7 @@ TAO_DIOP_Transport::handle_input (TAO_Resume_Handle &rh,
       // parse/marshal error
       return -1;
     }
-  
+
   if (message_block.length () > mesg_length)
     {
       // we read too much data
@@ -268,8 +267,7 @@ TAO_DIOP_Transport::send_request (TAO_Stub *stub,
                                   int message_semantics,
                                   ACE_Time_Value *max_wait_time)
 {
-  if (this->ws_->sending_request (orb_core,
-                                  message_semantics) == -1)
+  if (this->ws_->sending_request (orb_core, message_semantics) == -1)
     return -1;
 
   if (this->send_message (stream,
@@ -299,16 +297,16 @@ TAO_DIOP_Transport::send_message (TAO_OutputCDR &stream,
   // versions seem to need it though.  Leaving it costs little.
 
   // This guarantees to send all data (bytes) or return an error.
-  ssize_t n = this->send_message_shared (stub,
-                                         message_semantics,
-                                         stream.begin (),
-                                         max_wait_time);
+  ssize_t const n = this->send_message_shared (stub,
+                                               message_semantics,
+                                               stream.begin (),
+                                               max_wait_time);
 
   if (n == -1)
     {
       if (TAO_debug_level)
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("TAO: (%P|%t|%N|%l) closing transport %d after fault %p\n"),
+                    ACE_TEXT ("TAO (%P|%t) -  DIOP_Transport, closing transport %d after fault %p\n"),
                     this->id (),
                     ACE_TEXT ("send_message ()\n")));
 

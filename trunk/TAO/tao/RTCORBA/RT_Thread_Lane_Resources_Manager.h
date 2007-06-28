@@ -26,7 +26,6 @@
 #include "tao/Thread_Lane_Resources_Manager.h"
 #include "ace/Service_Config.h"
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Thread_Pool_Manager;

@@ -18,17 +18,16 @@
 #define RT_ENDPOINT_SELECTOR_FACTORY_H
 #include /**/ "ace/pre.h"
 
-#include "tao/RTCORBA/rtcorba_export.h"
+#include "tao/orbconf.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Endpoint_Selector_Factory.h"
-#include "tao/orbconf.h"
-
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 
+#include "tao/RTCORBA/rtcorba_export.h"
+#include "tao/Endpoint_Selector_Factory.h"
 #include "ace/Service_Config.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

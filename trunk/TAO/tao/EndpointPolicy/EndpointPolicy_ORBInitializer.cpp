@@ -58,8 +58,7 @@ TAO_EndpointPolicy_ORBInitializer::register_policy_factories (
   try
     {
       info->register_policy_factory (EndpointPolicy::ENDPOINT_POLICY_TYPE,
-                                     policy_factory.in ()
-                                    );
+                                     policy_factory.in ());
     }
   catch (const ::CORBA::BAD_INV_ORDER& ex)
     {

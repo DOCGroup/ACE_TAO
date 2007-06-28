@@ -505,7 +505,7 @@ TAO_IIOP_Connector::complete_connection (int result,
           for (unsigned i = 0; i < count; i++)
             {
               ACE_ERROR ((LM_ERROR,
-                          ACE_TEXT ("(%P|%t) IIOP_Connector::complete_connection,")
+                          ACE_TEXT ("TAO (%P|%t) - IIOP_Connector::complete_connection,")
                           ACE_TEXT (" connection to <%s:%d> failed (%p)\n"),
                           ACE_TEXT_CHAR_TO_TCHAR (ep_list[i]->host ()),
                           ep_list[i]->port (),
@@ -580,7 +580,7 @@ TAO_IIOP_Connector::complete_connection (int result,
       if (TAO_debug_level > 0)
         {
           ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("(%P|%t) IIOP_Connector::make_connection, ")
+                      ACE_TEXT ("TAO (%P|%t) IIOP_Connector::make_connection, ")
                       ACE_TEXT ("could not add new connection to cache\n")));
         }
 
@@ -626,7 +626,7 @@ TAO_IIOP_Connector::complete_connection (int result,
 
       if (TAO_debug_level > 0)
         ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("(%P|%t) IIOP_Connector [%d]::make_connection, ")
+                    ACE_TEXT ("TAO (%P|%t) IIOP_Connector [%d]::make_connection, ")
                     ACE_TEXT ("could not register the transport ")
                     ACE_TEXT ("in the reactor.\n"),
                     transport->id ()));
