@@ -13,7 +13,7 @@ public:
   static QuitCmd *create(RootPanel *form);
 
 public:
-  virtual int execute(void *context = NULL);
+  virtual int execute(void *context = 0);
 
 protected:
   QuitCmd();

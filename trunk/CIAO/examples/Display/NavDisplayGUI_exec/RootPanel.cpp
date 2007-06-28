@@ -55,7 +55,7 @@ RootPanel::addUnit(NavUnit *unit)
 void
 RootPanel::updateUnit(NavUnit *unit)
 {
-  NodeItem *el = NULL;
+  NodeItem *el = 0;
   nodeMap.find(unit->getID(), el);
   UnitLocation loc = unit->getLocation();
   el->move(loc.x_, loc.y_);

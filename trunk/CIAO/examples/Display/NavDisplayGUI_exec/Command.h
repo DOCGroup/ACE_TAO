@@ -12,7 +12,7 @@ public:
   virtual ~CommandBase() {}
 
 public:
-  virtual int execute(void *context = NULL) = 0;
+  virtual int execute(void *context = 0) = 0;
   QTime timestamp_;
 };
 

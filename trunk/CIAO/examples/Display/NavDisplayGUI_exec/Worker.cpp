@@ -41,7 +41,7 @@ Worker::svc (void)
 
   int retval = a.exec();
 
-  main_wnd_ = NULL;
+  main_wnd_ = 0;
 
   ACE_DEBUG((LM_DEBUG, "LEAVE: Worker::svc()\n"));
   return retval;
