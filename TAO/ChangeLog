@@ -1,3 +1,21 @@
+Thu Jun 28 13:48:39 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/DynamicInterface/Request.cpp (poll_response):
+          Don't hold the mutex when running the orb, could lead to a deadlock
+          when the response arrives in a build with threading enabled. Thanks
+          to Martin Corino for finding this issue, this fixes bugzilla 2966
+
+        * tao/DynamicInterface/Request.{h,cpp,inl}:
+          Use Atomic_Op for the refcount, much more optimal and also cleaner
+          code
+
+        * tao/DynamicInterface/Server_Request.{h,cpp}:
+          Use Atomic_Op for the refcount, much more optimal and also cleaner
+          code
+
+        * tao/AnyTypeCode/NVList.cpp:
+          Const changed
+
 Thu Jun 28 10:27:39 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Connection_Handler.cpp:

@@ -33,6 +33,7 @@
 
 #include "tao/TAO_Server_Request.h"
 #include "tao/CDR.h"
+#include "ace/Atomic_Op.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
@@ -157,10 +158,7 @@ namespace CORBA
     CORBA::Any_ptr exception_;
 
     /// Reference counting.
-    CORBA::ULong refcount_;
-
-    /// Protect the refcount_ and response_received_.
-    TAO_SYNCH_MUTEX lock_;
+    ACE_Atomic_Op<TAO_SYNCH_MUTEX, unsigned long> refcount_;
 
     /// Request from the ORB.
     TAO_ServerRequest &orb_server_request_;

@@ -39,7 +39,7 @@ CORBA::NamedValue::_incr_refcnt (void)
 CORBA::ULong
 CORBA::NamedValue::_decr_refcnt (void)
 {
-  const CORBA::ULong new_count = --this->refcount_;
+  CORBA::ULong const new_count = --this->refcount_;
 
   if (new_count == 0)
     delete this;
