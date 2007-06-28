@@ -2,8 +2,8 @@
 // $Id$
 // The run_test.pl perl script will check for the expected output.
 
-#include <ace/config.h>
-#include <tao/IFR_Client/IFR_ComponentsC.h>
+#include "ace/config.h"
+#include "tao/IFR_Client/IFR_ComponentsC.h"
 
 const char *ifr_ior= "file://ifr.ior";
 const char *member_type_id= "IDL:arrayOfStruct:1.0";
