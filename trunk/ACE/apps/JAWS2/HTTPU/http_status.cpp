@@ -1,5 +1,6 @@
 // $Id$
 
+#include "ace/Log_Msg.h"
 #include "HTTPU/http_status.h"
 
 const char *

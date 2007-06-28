@@ -1,3 +1,8 @@
+Mon Jun 25 20:57:14 UTC 2007  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * docs: Added a new file called documentation.html to describe the
+          TAO programmer's guides in a single place. 
+
 Thu Jun 28 04:28:26 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * utils/nslist/nslist.cpp:
@@ -59,7 +64,6 @@ Wed Jun 27 23:49:36 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
           The IDL compiler generated the following include "ace/Streams.h"
           which I changed to "ace/streams.h" to appease compilers that are
           case sensitive.
-
 
 Wed Jun 27 09:50:00 UTC 2007  Simon Massey  <sma@prismtech.com>
 
@@ -201,6 +205,7 @@ Wed Jun 27 03:23:14 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
           yet TAO_ORB_Manager has been removed for a long while now. Update
           the class documentation to remove references to TAO_ORB_Manager.
 
+>>>>>>> .r78612
 Mon Jun 25 11:34:36 CDT 2007  Ciju John  <johnc@ociweb.com>
 
         * TAO version 1.5.9 released.

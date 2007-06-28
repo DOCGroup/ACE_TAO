@@ -341,7 +341,8 @@ public:
    * Register handler for OS events.
    *
    * Register an <event_handler> that will be notified when
-   * <event_handle> is signaled.
+   * <event_handle> is signaled.  This will call back its
+   * <handle_signal> hook method. 
    *
    * Reactor will call ACE_Event_Handler::add_reference() for a new
    * handler/handle pair.
