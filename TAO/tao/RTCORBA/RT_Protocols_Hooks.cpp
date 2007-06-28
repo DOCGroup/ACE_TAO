@@ -172,8 +172,7 @@ TAO_RT_Protocols_Hooks::client_protocol_properties_at_object_level (
 
 void
 TAO_RT_Protocols_Hooks::extract_protocol_properties (TAO_IIOP_Protocol_Properties &to,
-                                                     RTCORBA::ProtocolProperties_ptr from
-                                                     )
+                                                     RTCORBA::ProtocolProperties_ptr from)
 {
   RTCORBA::TCPProtocolProperties_var protocol_properties =
     RTCORBA::TCPProtocolProperties::_narrow (from);
@@ -197,8 +196,7 @@ TAO_RT_Protocols_Hooks::server_protocol_properties_at_orb_level (TAO_IIOP_Protoc
 }
 
 void
-TAO_RT_Protocols_Hooks::client_protocol_properties_at_orb_level (TAO_IIOP_Protocol_Properties &to
-                                                                 )
+TAO_RT_Protocols_Hooks::client_protocol_properties_at_orb_level (TAO_IIOP_Protocol_Properties &to)
 {
   RTCORBA::ProtocolProperties_var from =
     this->client_protocol_properties_at_orb_level (IOP::TAG_INTERNET_IOP);
@@ -285,6 +283,8 @@ TAO_RT_Protocols_Hooks::extract_protocol_properties (
     RTCORBA::UserDatagramProtocolProperties::_narrow (from);
 
   to.enable_network_priority_ = protocol_properties->enable_network_priority ();
+  to.send_buffer_size_ = protocol_properties->send_buffer_size ();
+  to.recv_buffer_size_ = protocol_properties->recv_buffer_size ();
 }
 
 void

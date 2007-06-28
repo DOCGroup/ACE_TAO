@@ -42,9 +42,7 @@ TAO_RT_Invocation_Endpoint_Selector::select_endpoint (
         {
           r->profile (r->stub ()->profile_in_use ());
 
-          int const status = this->endpoint_from_profile (*r, val);
-
-          if (status == 1)
+          if (this->endpoint_from_profile (*r, val) == 1)
             return;
         }
       while (r->stub ()->next_profile_retry () != 0);

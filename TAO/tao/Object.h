@@ -163,8 +163,10 @@ namespace CORBA
     /// Get info about the object from the Interface Repository.
     virtual InterfaceDef_ptr _get_interface (void);
 
+#if ! defined (CORBA_E_COMPACT) && ! defined (CORBA_E_MICRO)
     /// Get info about the object from the Interface Repository.
     virtual CORBA::Object_ptr _get_component (void);
+#endif
 
     /// Get the repository id.
     virtual char * _repository_id (void);

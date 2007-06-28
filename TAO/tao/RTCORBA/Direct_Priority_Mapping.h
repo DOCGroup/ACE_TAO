@@ -19,13 +19,13 @@
 
 #include "tao/orbconf.h"
 
-#include "tao/RTCORBA/Priority_Mapping.h"
-
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
+
+#include "tao/RTCORBA/Priority_Mapping.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

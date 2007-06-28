@@ -124,9 +124,13 @@ TAO_DIOP_Connection_Handler::open_handler (void *v)
 int
 TAO_DIOP_Connection_Handler::open (void*)
 {
-  // Currently, the DIOP properties are not used.  This code is here
-  // for consistency with other protocols.
   TAO_DIOP_Protocol_Properties protocol_properties;
+
+  // Initialize values from ORB params.
+  protocol_properties.send_buffer_size_ =
+    this->orb_core ()->orb_params ()->sock_sndbuf_size ();
+  protocol_properties.recv_buffer_size_ =
+    this->orb_core ()->orb_params ()->sock_rcvbuf_size ();
 
   TAO_Protocols_Hooks *tph = this->orb_core ()->get_protocols_hooks ();
 
@@ -151,10 +155,15 @@ TAO_DIOP_Connection_Handler::open (void*)
 
   this->udp_socket_.open (this->local_addr_);
 
+  if (this->set_socket_option (this->udp_socket_,
+                               protocol_properties.send_buffer_size_,
+                               protocol_properties.recv_buffer_size_) == -1)
+    return -1;
+
   if (TAO_debug_level > 5)
   {
      ACE_DEBUG ((LM_DEBUG,
-                 ACE_TEXT("\nTAO (%P|%t) TAO_DIOP_Connection_Handler::open -")
+                 ACE_TEXT("TAO (%P|%t) - DIOP_Connection_Handler::open -")
                  ACE_TEXT("listening on: <%s:%u>\n"),
                  ACE_TEXT_CHAR_TO_TCHAR (this->local_addr_.get_host_name ()),
                  this->local_addr_.get_port_number ()));
@@ -175,16 +184,51 @@ TAO_DIOP_Connection_Handler::open (void*)
 int
 TAO_DIOP_Connection_Handler::open_server (void)
 {
+  TAO_DIOP_Protocol_Properties protocol_properties;
+
+  // Initialize values from ORB params.
+  protocol_properties.send_buffer_size_ =
+    this->orb_core ()->orb_params ()->sock_sndbuf_size ();
+  protocol_properties.recv_buffer_size_ =
+    this->orb_core ()->orb_params ()->sock_rcvbuf_size ();
+
+  TAO_Protocols_Hooks *tph = this->orb_core ()->get_protocols_hooks ();
+
+  if (tph != 0)
+    {
+      try
+        {
+          if (this->transport ()->opened_as () == TAO::TAO_CLIENT_ROLE)
+            {
+              tph->client_protocol_properties_at_orb_level (protocol_properties);
+            }
+          else
+            {
+              tph->server_protocol_properties_at_orb_level (protocol_properties);
+            }
+        }
+      catch (const ::CORBA::Exception&)
+        {
+          return -1;
+        }
+    }
+
   this->udp_socket_.open (this->local_addr_);
+
+  if (this->set_socket_option (this->udp_socket_,
+                               protocol_properties.send_buffer_size_,
+                               protocol_properties.recv_buffer_size_) == -1)
+    return -1;
+
   if( TAO_debug_level > 5)
-  {
-     ACE_DEBUG ((LM_DEBUG,
-                 ACE_TEXT("\nTAO (%P|%t) TAO_DIOP_Connection_Handler::open_server -")
-                 ACE_TEXT("listening on %s:%d\n"),
-                 ACE_TEXT_CHAR_TO_TCHAR (this->local_addr_.get_host_name ()),
-                 this->local_addr_.get_port_number ()
-               ));
-  }
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT("TAO (%P|%t) - DIOP_Connection_Handler::open_server -")
+                  ACE_TEXT("listening on %s:%d\n"),
+                  ACE_TEXT_CHAR_TO_TCHAR (this->local_addr_.get_host_name ()),
+                  this->local_addr_.get_port_number ()
+                ));
+    }
 
   this->transport ()->id ((size_t) this->get_handle ());
 
@@ -235,8 +279,7 @@ TAO_DIOP_Connection_Handler::handle_timeout (const ACE_Time_Value &,
 }
 
 int
-TAO_DIOP_Connection_Handler::handle_close (ACE_HANDLE,
-                                           ACE_Reactor_Mask)
+TAO_DIOP_Connection_Handler::handle_close (ACE_HANDLE, ACE_Reactor_Mask)
 {
   // No asserts here since the handler is registered with the Reactor
   // and the handler ownership is given to the Reactor.  When the

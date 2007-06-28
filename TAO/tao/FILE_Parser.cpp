@@ -35,9 +35,7 @@ TAO_FILE_Parser::match_prefix (const char *ior_string) const
 }
 
 CORBA::Object_ptr
-TAO_FILE_Parser::parse_string (const char *ior,
-                               CORBA::ORB_ptr orb
-                               )
+TAO_FILE_Parser::parse_string (const char *ior, CORBA::ORB_ptr orb)
 {
   // Skip the prefix, we know it is there because this method in only
   // called if <match_prefix> returns 1.

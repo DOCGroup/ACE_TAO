@@ -38,7 +38,9 @@ TAO_SHMIOP_Protocol_Properties::TAO_SHMIOP_Protocol_Properties (void)
 }
 
 TAO_DIOP_Protocol_Properties::TAO_DIOP_Protocol_Properties (void)
-  : enable_network_priority_ (0)
+  : send_buffer_size_ (0),
+    recv_buffer_size_ (0),
+    enable_network_priority_ (0)
 {
 }
 

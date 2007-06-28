@@ -91,10 +91,10 @@ TAO_Connection_Handler::set_socket_option (ACE_SOCK &sock,
    ACE_UNUSED_ARG (rcv_size);
 #endif /* !ACE_LACKS_SOCKET_BUFSIZ */
 
-  (void) sock.enable (ACE_CLOEXEC);
   // Set the close-on-exec flag for that file descriptor. If the
   // operation fails we are out of luck (some platforms do not support
   // it and return -1).
+  (void) sock.enable (ACE_CLOEXEC);
 
   return 0;
 }

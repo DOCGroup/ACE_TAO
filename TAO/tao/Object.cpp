@@ -459,8 +459,7 @@ CORBA::Object::_request (const char *operation)
       return dynamic_adapter->request (
                                   this,
                                   this->protocol_proxy_->orb_core ()->orb (),
-                                  operation
-                                );
+                                  operation);
     }
   else
     {
@@ -505,12 +504,14 @@ CORBA::Object::_get_implementation (void)
   return 0;
 }
 
+#if ! defined (CORBA_E_COMPACT) && ! defined (CORBA_E_MICRO)
 CORBA::Object_ptr
 CORBA::Object::_get_component (void)
 {
   TAO_OBJECT_IOR_EVALUATE_RETURN;
   return this->proxy_broker ()->_get_component (this);
 }
+#endif
 
 char*
 CORBA::Object::_repository_id (void)
