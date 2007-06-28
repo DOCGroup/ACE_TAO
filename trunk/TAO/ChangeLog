@@ -1,3 +1,11 @@
+Thu Jun 28 04:28:26 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * utils/nslist/nslist.cpp:
+
+          Fixed ACE_OS fuzz warnings. Use ACE_OS calls instead of raw OS function
+          where possible. If fuzz detected a false-positive, then disable
+          the ACE_OS fuzz check for that section of the code.
+
 Thu Jun 28 01:28:20 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * docs/tutorials/Quoter/AMI/Stock_Factory_i.cpp:
