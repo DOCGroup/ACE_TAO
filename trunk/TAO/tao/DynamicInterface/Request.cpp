@@ -35,33 +35,18 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 CORBA::ULong
 CORBA::Request::_incr_refcnt (void)
 {
-  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
-                    ace_mon,
-                    this->lock_,
-                    0);
-
-  return this->refcount_++;
+  return ++this->refcount_;
 }
 
 CORBA::ULong
 CORBA::Request::_decr_refcnt (void)
 {
-  {
-    ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
-                      ace_mon,
-                      this->lock_,
-                      0);
+  CORBA::ULong const new_count = --this->refcount_;
 
-    --this->refcount_;
+  if (new_count == 0)
+    delete this;
 
-    if (this->refcount_ != 0)
-      {
-        return this->refcount_;
-      }
-  }
-
-  delete this;
-  return 0;
+  return new_count;
 }
 
 // DII Request class implementation
@@ -312,21 +297,34 @@ CORBA::Request::get_response (void)
 CORBA::Boolean
 CORBA::Request::poll_response (void)
 {
-  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
-                    ace_mon,
-                    this->lock_,
-                    0);
+  CORBA::Boolean response_received = false;
 
-  if (!this->response_received_)
+  {
+    ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
+                      ace_mon,
+                      this->lock_,
+                      false);
+    response_received = this->response_received_;
+  }
+
+  if (!response_received)
     {
       // If we're single-threaded, the application could starve the ORB,
       // and the response never gets received, so let the ORB do an
       // atom of work, if necessary, each time we poll.
       ACE_Time_Value tv (0, 0);
       (void) this->orb_->perform_work (&tv);
+
+      {
+        ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
+                          ace_mon,
+                          this->lock_,
+                          false);
+        response_received = this->response_received_;
+      }
     }
 
-  return this->response_received_;
+  return response_received;
 }
 
 void

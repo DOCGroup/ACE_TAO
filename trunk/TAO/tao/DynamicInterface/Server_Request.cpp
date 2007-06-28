@@ -26,33 +26,18 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 CORBA::ULong
 CORBA::ServerRequest::_incr_refcnt (void)
 {
-  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
-                    ace_mon,
-                    this->lock_,
-                    0);
-
   return ++this->refcount_;
 }
 
 CORBA::ULong
 CORBA::ServerRequest::_decr_refcnt (void)
 {
-  {
-    ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
-                      ace_mon,
-                      this->lock_,
-                      0);
+  CORBA::ULong const new_count = --this->refcount_;
 
-    --this->refcount_;
+  if (new_count == 0)
+    delete this;
 
-    if (this->refcount_ != 0)
-      {
-        return this->refcount_;
-      }
-  }
-
-  delete this;
-  return 0;
+  return new_count;
 }
 
 CORBA::ServerRequest::ServerRequest (TAO_ServerRequest &orb_server_request)
