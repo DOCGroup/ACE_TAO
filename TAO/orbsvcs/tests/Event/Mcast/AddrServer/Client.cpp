@@ -69,6 +69,11 @@ main (int argc, char *argv[])
               inet_addr.set_type(PF_INET6);
               inet_addr.set_address(udp_addr->v6_addr().ipaddr,16,0);
               inet_addr.set_port_number(udp_addr->v6_addr().port);
+#else
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "ERROR: address server returned "
+                                 "an unusable IPv6 address\n"),
+                                1);
 #endif /* ACE_HAS_IPV6 */
               break;
             }
@@ -103,6 +108,11 @@ main (int argc, char *argv[])
               inet_addr.set_type(PF_INET6);
               inet_addr.set_address(udp_addr->v6_addr().ipaddr,16,0);
               inet_addr.set_port_number(udp_addr->v6_addr().port);
+#else
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "ERROR: address server returned "
+                                 "an unusable IPv6 address\n"),
+                                1);
 #endif /* ACE_HAS_IPV6 */
               break;
             }

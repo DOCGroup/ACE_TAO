@@ -1,3 +1,24 @@
+Thu Jun 28 16:40:26 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/tests/Event/Mcast/AddrServer/Client.cpp:
+
+        * tao/EndpointPolicy/IIOPEndpointValue_i.h:
+        * tao/EndpointPolicy/IIOPEndpointValue_i.cpp:
+
+        * tao/LocalObject.h:
+        * tao/LocalObject.inl:
+        * tao/LocalObject.cpp:
+
+        * tao/Messaging/AMH_Response_Handler.cpp:
+
+        * tao/Object.h:
+        * tao/Object.inl:
+        * tao/Object.cpp:
+        * tao/Profile.h:
+        * tao/Profile.cpp:
+
+        * tao/Strategies/UIOP_Profile.cpp:
+
 Thu Jun 28 14:07:00 UTC 2007  Simon Massey  <sma@prismtech.com>
 
         * orbsvcs/tests/InterfaceRepo/Bug_2962_Regression/client.cpp:

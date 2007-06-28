@@ -25,6 +25,8 @@ IIOPEndpointValue_i::IIOPEndpointValue_i (const char *host,
   :host_(host),
    port_(port)
 {
+  if (this->addr_.set(port, host) != 0)
+    this->addr_.set_type (-1);
 }
 
 IIOPEndpointValue_i::~IIOPEndpointValue_i (void)
@@ -38,7 +40,8 @@ IIOPEndpointValue_i::is_equivalent (const TAO_Endpoint * endpoint) const
     dynamic_cast<const TAO_IIOP_Endpoint *>(endpoint);
   if (iep == 0)
     return 0;
-  return this->is_equivalent_i(iep->port(), iep->host());
+  return this->addr_.get_type() != -1 ? this->addr_ == iep->object_addr() :
+    this->is_equivalent_i (iep->port(), iep->host());
 }
 
 CORBA::Boolean
@@ -91,6 +94,8 @@ void
 IIOPEndpointValue_i::host (const char *h)
 {
   this->host_ = h;
+  if (this->addr_.set(this->port_,this->host_) != 0)
+    this->addr_.set_type (-1);
 }
 
 CORBA::UShort
@@ -103,6 +108,8 @@ void
 IIOPEndpointValue_i::port (CORBA::UShort p )
 {
   this->port_ = p;
+  if (this->addr_.set(this->port_,this->host_) != 0)
+    this->addr_.set_type (-1);
 }
 
 CORBA::ULong
