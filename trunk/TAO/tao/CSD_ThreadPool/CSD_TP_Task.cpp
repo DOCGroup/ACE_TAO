@@ -59,10 +59,12 @@ TAO::CSD::TP_Task::open(void* num_threads_ptr)
 
       if (tmp == 0)
         {
+          //FUZZ: disable check_for_lack_ACE_OS
           ACE_ERROR_RETURN((LM_ERROR,
                             "(%P|%t) TP_Task failed to open.  "
                             "Invalid argument type passed to open().\n"),
                            -1);
+          //FUZZ: enable check_for_lack_ACE_OS
         }
 
       num = *tmp;
@@ -95,10 +97,12 @@ TAO::CSD::TP_Task::open(void* num_threads_ptr)
   // call as long as we haven't been open()'ed before.
   if (this->opened_)
     {
+      //FUZZ: disable check_for_lack_ACE_OS
       ACE_ERROR_RETURN((LM_ERROR,
                         "(%P|%t) TP_Task failed to open.  "
                         "Task has previously been open()'ed.\n"),
                        -1);
+      //FUZZ: enable check_for_lack_ACE_OS
     }
 
   // Activate this task object with 'num' worker threads.

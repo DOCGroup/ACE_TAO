@@ -110,9 +110,9 @@ TAO_UIOP_Profile::parse_string_i (const char *string)
   // version is one that we accept.
 
   // Check for version
-  if (isdigit (string [0]) &&
+  if (ACE_OS::ace_isdigit (string [0]) &&
       string[1] == '.' &&
-      isdigit (string [2]) &&
+      ACE_OS::ace_isdigit (string [2]) &&
       string[3] == '@')
     {
       // @@ This may fail for non-ascii character sets [but take that

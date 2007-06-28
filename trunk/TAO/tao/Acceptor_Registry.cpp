@@ -18,7 +18,7 @@
 
 #include "ace/Auto_Ptr.h"
 #include "ace/OS_NS_string.h"
-#include "ace/os_include/os_ctype.h"
+#include "ace/OS_NS_ctype.h"
 #include "ace/CORBA_macros.h"
 
 #if !defined(__ACE_INLINE__)
@@ -667,9 +667,9 @@ TAO_Acceptor_Registry::extract_endpoint_version (ACE_CString &address,
   major = TAO_DEF_GIOP_MAJOR;
   minor = TAO_DEF_GIOP_MINOR;
 
-  if (isdigit (address[0])
+  if (ACE_OS::ace_isdigit (address[0])
       && address[1] == '.'
-      && isdigit (address[2])
+      && ACE_OS::ace_isdigit (address[2])
       && address[3] == '@')
     {
       major = address[0] - '0';

@@ -1,3 +1,19 @@
+Thu Jun 28 00:03:58 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * tao/Acceptor_Registry.cpp:
+        * tao/CSD_ThreadPool/CSD_TP_Task.cpp:
+        * tao/ORB.cpp:
+        * tao/Profile.cpp:
+        * tao/Reactive_Connect_Strategy.cpp:
+        * tao/Strategies/SHMIOP_Acceptor.cpp:
+        * tao/Strategies/UIOP_Profile.cpp:
+        * tao/TypeCodeFactory/TypeCodeFactory_i.cpp:
+
+          Fixed ACE_OS fuzz warnings. Use ACE_OS calls instead of raw OS function
+          where possible. If fuzz detected a false-positive, then disable
+          the ACE_OS fuzz check for that section of the code.
+
+
 Wed Jun 27 23:49:36 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * TAO_IDL/be/be_codegen.cpp:
@@ -15,7 +31,7 @@ Wed Jun 27 23:49:36 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
 
         * TAO_IDL/be/be_codegen.cpp:
- 
+
           Fixed a bug introduced in:
           Wed Jun 27 09:10:21 UTC 2007  Jeff Parsons <j.parsons@...>
 
