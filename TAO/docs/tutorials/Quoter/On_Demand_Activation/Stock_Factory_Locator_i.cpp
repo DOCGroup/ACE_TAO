@@ -25,7 +25,7 @@ Quoter_Stock_Factory_Locator_i::preinvoke (const PortableServer::ObjectId &oid,
       PortableServer::ObjectId_to_string (oid);
 
     // Check if the ObjectId is valid
-    if (strcmp (oid_str.in (), "Quoter/Stock_Factory") != 0) {
+    if (ACE_OS::strcmp (oid_str.in (), "Quoter/Stock_Factory") != 0) {
       // Create the required servant
       PortableServer::Servant servant =
         new Quoter_Stock_Factory_i ();

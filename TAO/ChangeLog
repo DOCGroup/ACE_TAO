@@ -1,3 +1,17 @@
+Thu Jun 28 01:28:20 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * docs/tutorials/Quoter/AMI/Stock_Factory_i.cpp:
+        * docs/tutorials/Quoter/Naming_Service/Stock_Factory_i.cpp:
+        * docs/tutorials/Quoter/On_Demand_Activation/Stock_Factory_Locator_i.cpp:
+        * docs/tutorials/Quoter/On_Demand_Activation/Stock_Factory_i.cpp:
+        * docs/tutorials/Quoter/Simple/Impl-Repo/Stock_Factory_i.cpp:
+        * docs/tutorials/Quoter/Simple/Persistent/Stock_Factory_i.cpp:
+        * docs/tutorials/Quoter/Simple/Server/Stock_Factory_i.cpp:
+
+          Fixed ACE_OS fuzz warnings. Use ACE_OS calls instead of raw OS function
+          where possible. If fuzz detected a false-positive, then disable
+          the ACE_OS fuzz check for that section of the code.
+
 Thu Jun 28 00:03:58 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * tao/Acceptor_Registry.cpp:
@@ -12,7 +26,6 @@ Thu Jun 28 00:03:58 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
           Fixed ACE_OS fuzz warnings. Use ACE_OS calls instead of raw OS function
           where possible. If fuzz detected a false-positive, then disable
           the ACE_OS fuzz check for that section of the code.
-
 
 Wed Jun 27 23:49:36 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
