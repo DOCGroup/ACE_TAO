@@ -1,3 +1,9 @@
+Thu Jun 28 14:07:00 UTC 2007  Simon Massey  <sma@prismtech.com>
+
+        * orbsvcs/tests/InterfaceRepo/Bug_2962_Regression/client.cpp:
+
+          Fix fuzz error.
+
 Thu Jun 28 13:48:39 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/DynamicInterface/Request.cpp (poll_response):
