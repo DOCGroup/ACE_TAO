@@ -264,8 +264,7 @@ TAO_Connection_Handler::handle_input_internal (
                   t_id, handle, h));
     }
 
-  TAO_Resume_Handle resume_handle (this->orb_core (),
-                                   eh->get_handle ());
+  TAO_Resume_Handle resume_handle (this->orb_core (), eh->get_handle ());
 
   int return_value = 0;
 

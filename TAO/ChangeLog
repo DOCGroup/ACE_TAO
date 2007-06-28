@@ -1,3 +1,16 @@
+Thu Jun 28 10:27:39 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Connection_Handler.cpp:
+        * tao/PortableServer/PortableServer.cpp:
+          Layout changes
+
+        * tao/PortableServer/Regular_POA.{h,cpp,inl}:
+          Not needed with CORBA/e micro
+
+        * tao/PortableServer/Root_POA.{h,cpp}:
+          The new_POA method is not required with the CORBA/e micro
+          profile
+
 Thu Jun 28 08:43:39 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Connection_Handler.cpp:
