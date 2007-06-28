@@ -1,3 +1,8 @@
+Thu Jun 28 15:18:35 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * bin/sandbox.cpp: Removed. There's an identical copy of this file
+          in the autobuild repository, autobuild/posixsandbox/sandbox.cpp.
+
 Thu Jun 28 14:12:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/ASX/Message_Queue/buffer_stream.cpp:
