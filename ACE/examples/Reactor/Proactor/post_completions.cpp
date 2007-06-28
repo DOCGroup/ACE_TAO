@@ -294,7 +294,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 #else /* ACE_HAS_WIN32_OVERLAPPED_IO || ACE_HAS_AIO_CALLS */
 
 int
-main (int, char *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_DEBUG ((LM_DEBUG,
               "This example cannot work with AIOCB_Proactor.\n"));

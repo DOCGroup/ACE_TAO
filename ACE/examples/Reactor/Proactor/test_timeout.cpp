@@ -118,7 +118,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
 #else /* ACE_HAS_WIN32_OVERLAPPED_IO || ACE_HAS_AIO_CALLS */
 
 int
-main (int, char *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_DEBUG ((LM_DEBUG,
               "This example is multithreaded version of test_timeout_st.cpp\n"

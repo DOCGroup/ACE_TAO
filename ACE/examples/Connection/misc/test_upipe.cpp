@@ -113,7 +113,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 }
 #else
 int
-main (int, char *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_ERROR_RETURN ((LM_ERROR,
                      "your platform does not support threads\n"),

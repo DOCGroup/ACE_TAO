@@ -11,7 +11,7 @@ ACE_RCSID(TLI_SAP, CPP_ATM_client, "$Id$")
 
 /* ACE_XTI/ATM Client */
 
-int main (int argc, char *argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   if (argc < 2)
     ACE_ERROR_RETURN ((LM_ERROR,

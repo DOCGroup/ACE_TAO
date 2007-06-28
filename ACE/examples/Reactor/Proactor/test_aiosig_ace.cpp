@@ -7,16 +7,16 @@
 //
 // = DESCRITPTION
 //     This program helps you to test the <aio_*> calls on a
-//     platform. 
+//     platform.
 //     Before running this test, make sure the platform can
 //     support POSIX <aio_> calls, using ACE_ROOT/tests/Aio_Plaform_Test.cpp
-// 
-//     This  program tests the Signal based completion approach which 
-//     uses <sigtimedwait> for completion querying. 
+//
+//     This  program tests the Signal based completion approach which
+//     uses <sigtimedwait> for completion querying.
 //     If this test is successful, ACE_POSIX_SIG_PROACTOR
 //     can be used on this platform.
-// 
-//     This program is a ACE version of the 
+//
+//     This program is a ACE version of the
 //     $ACE_ROOT/examples/Reactor/Proactor/test_aiosig.cpp, with
 //     ACE_DEBUGs and Message_Blocks.
 //
@@ -26,9 +26,9 @@
 //     Mask these signals from delivery.
 //     Receive this signal by doing <sigtimedwait>.
 //     Wait for two completions (two signals)
-// 
+//
 // = COMPILATION
-//     make 
+//     make
 //
 // = RUN
 //     ./test_aiosig_ace
@@ -67,26 +67,26 @@ static int
 setup_signal_delivery (void)
 {
   // = Mask all the signals.
-  
+
   sigset_t full_set;
-  
+
   // Get full set.
   if (sigfillset (&full_set) != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Error:(%P | %t):%p\n",
                        "sigfillset failed"),
                       -1);
-  
+
   // Mask them.
   if (ACE_OS::pthread_sigmask (SIG_SETMASK, &full_set, 0) != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Error:(%P | %t):%p\n",
                        "pthread_sigmask failed"),
                       -1);
-  
+
   // = Make a mask with SIGRTMIN only. We use only that signal to
   //   issue <aio_>'s.
-  
+
   if (sigemptyset (&completion_signal) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "Error: %p\n",
                        "Couldnt init the RT completion signal set"),
@@ -197,10 +197,10 @@ query_aio_completions (void)
       timespec timeout;
       timeout.tv_sec = ACE_INFINITE;
       timeout.tv_nsec = 0;
-      
+
       // To get back the signal info.
       siginfo_t sig_info;
-      
+
       // Await the RT completion signal.
       int sig_return = sigtimedwait (&completion_signal,
                                      &sig_info,
@@ -346,7 +346,7 @@ null_handler (int signal_number,
 }
 
 int
-main (int, char *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   if (test_aio_calls () == 0)
     printf ("RT SIG test successful:\n"

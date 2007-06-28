@@ -1,3 +1,44 @@
+Thu Jun 28 14:12:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/ASX/Message_Queue/buffer_stream.cpp:
+        * examples/C++NPv1/Iterative_Logging_Server.cpp:
+        * examples/C++NPv1/Logging_Client.cpp:
+        * examples/C++NPv1/Process_Per_Connection_Logging_Server.cpp:
+        * examples/C++NPv1/Reactive_Logging_Server.cpp:
+        * examples/C++NPv1/Reactive_Logging_Server_Ex.cpp:
+        * examples/C++NPv1/RT_Thread_Per_Connection_Logging_Server.cpp:
+        * examples/C++NPv1/Thread_Per_Connection_Logging_Server.cpp:
+        * examples/C++NPv2/Reactor_Logging_Server.cpp:
+        * examples/C++NPv2/Select_Reactor_Logging_Server.cpp:
+        * examples/C++NPv2/TP_Reactor_Logging_Server.cpp:
+        * examples/C++NPv2/WFMO_Reactor_Logging_Server.cpp:
+        * examples/Connection/blocking/test_spipe_acceptor.cpp:
+        * examples/Connection/misc/test_upipe.cpp:
+        * examples/IPC_SAP/SSL_SAP/SSL-server-poll.cpp:
+        * examples/IPC_SAP/TLI_SAP/CPP-ATM-client.cpp:
+        * examples/IPC_SAP/TLI_SAP/CPP-ATM-server.cpp:
+        * examples/IPC_SAP/TLI_SAP/CPP-server.cpp:
+        * examples/IPC_SAP/TLI_SAP/db-server.cpp:
+        * examples/IPC_SAP/TLI_SAP/ftp-server.cpp:
+        * examples/Reactor/Misc/notification.cpp:
+        * examples/Reactor/Misc/test_demuxing.cpp:
+        * examples/Reactor/Misc/test_reactors.cpp:
+        * examples/Reactor/Misc/test_time_value.cpp:
+        * examples/Reactor/Proactor/Aio_Platform_Test_C.cpp:
+        * examples/Reactor/Proactor/post_completions.cpp:
+        * examples/Reactor/Proactor/test_aiosig.cpp:
+        * examples/Reactor/Proactor/test_aiosig_ace.cpp:
+        * examples/Reactor/Proactor/test_end_event_loop.cpp:
+        * examples/Reactor/Proactor/test_multiple_loops.cpp:
+        * examples/Reactor/Proactor/test_timeout.cpp:
+        * examples/System_V_IPC/SV_Message_Queues/MQ_Client.cpp:
+        * examples/System_V_IPC/SV_Message_Queues/MQ_Server.cpp:
+        * examples/System_V_IPC/SV_Message_Queues/TMQ_Server.cpp:
+        * examples/System_V_IPC/SV_Semaphores/Semaphores_1.cpp:
+        * examples/System_V_IPC/SV_Semaphores/Semaphores_2.cpp:
+        * examples/Threads/task_one.cpp:
+          Changed main to ACE_TMAIN
+
 Thu Jun 28 14:07:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * apps/drwho/client.cpp:

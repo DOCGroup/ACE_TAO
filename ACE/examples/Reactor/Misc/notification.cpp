@@ -375,7 +375,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 }
 #else
 int
-main (int, char *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_ERROR_RETURN ((LM_ERROR,
 		     "threads must be supported to run this application\n"), -1);

@@ -9,7 +9,7 @@
 
 #include "Reactive_Logging_Server_Ex.h"
 
-int main (int argc, char *argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   Reactive_Logging_Server_Ex server;
 
