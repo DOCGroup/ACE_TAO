@@ -82,7 +82,8 @@ ACE_URL_Addr::addr_to_string (int ipaddr_format) const
 }
 
 int
-ACE_URL_Addr::string_to_addr (const ACE_TCHAR *s)
+ACE_URL_Addr::string_to_addr (const ACE_TCHAR *s,
+                              int /* address_family */)
 {
   int result;
   ACE_TCHAR *t;

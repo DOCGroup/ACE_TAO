@@ -45,7 +45,8 @@ public:
   int set (const ACE_URL_Addr &addr);
   // Essentially the copy constructor.
 
-  virtual int string_to_addr (const ACE_TCHAR *address);
+  virtual int string_to_addr (const ACE_TCHAR *address,
+                              int address_family = AF_UNSPEC);
   // Initializes an <ACE_URL_Addr> from the <address>, which can be
   // "ip-number:port-number/path-name" (e.g.,
   // "www.cs.wustl.edu:1234/~schmidt/" "ip-number:port-number/path-name"
