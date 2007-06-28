@@ -1,3 +1,12 @@
+Tue Jun 26 13:48:26 UTC 2007  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * apps/JAWS2/HTTPU/http_status.cpp: Added 
+        
+          #include "ace/Log_Msg.h"
+          
+          so the ACE_DEBUG macro would be visible.  Thanks to Venkat
+          Forums <venkat dot forums at gmail dot com> for reporting this.
+  
 Thu Jun 28 07:32:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Truncate.h:
@@ -230,6 +239,7 @@ Wed Jun 27 03:50:39 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
           fixed). For now, it will only flag that fact that a file contains
           tabs once.
 
+>>>>>>> .r78612
 Mon Jun 25 11:34:36 CDT 2007  Ciju John  <johnc@ociweb.com>
 
         * ACE version 5.5.9 released.
