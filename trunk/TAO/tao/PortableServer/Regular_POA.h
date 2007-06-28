@@ -25,6 +25,8 @@
 
 #include "tao/PortableServer/Root_POA.h"
 
+#if !defined (CORBA_E_MICRO)
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
@@ -66,6 +68,8 @@ protected:
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
+
+#endif
 
 // ****************************************************************
 

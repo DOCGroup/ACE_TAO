@@ -444,6 +444,7 @@ TAO_Root_POA::create_POA_i (const char *adapter_name,
 }
 #endif /* !CORBA_E_MICRO */
 
+#if ! defined (CORBA_E_MICRO)
 TAO_Root_POA *
 TAO_Root_POA::new_POA (const String &name,
                        PortableServer::POAManager_ptr poa_manager,
@@ -470,7 +471,6 @@ TAO_Root_POA::new_POA (const String &name,
   return poa;
 }
 
-#if ! defined (CORBA_E_MICRO)
 PortableServer::POA_ptr
 TAO_Root_POA::create_POA_i (const TAO_Root_POA::String &adapter_name,
                             PortableServer::POAManager_ptr poa_manager,

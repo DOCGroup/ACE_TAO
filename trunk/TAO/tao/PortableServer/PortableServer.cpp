@@ -53,49 +53,40 @@ int
 TAO_POA_Initializer::init (void)
 {
   ACE_Service_Config::process_directive (
-      ace_svc_desc_IdAssignmentStrategySystem
-    );
+      ace_svc_desc_IdAssignmentStrategySystem);
 
 #if !defined (CORBA_E_MICRO)
   ACE_Service_Config::process_directive (
-      ace_svc_desc_IdAssignmentStrategyUser
-    );
+      ace_svc_desc_IdAssignmentStrategyUser);
 #endif /* CORBA_E_MICRO */
 
 #if !defined (CORBA_E_MICRO)
   ACE_Service_Config::process_directive (
-      ace_svc_desc_IdUniquenessStrategyMultiple
-    );
+      ace_svc_desc_IdUniquenessStrategyMultiple);
 #endif /* CORBA_E_MICRO */
 
   ACE_Service_Config::process_directive (
-      ace_svc_desc_IdUniquenessStrategyUnique
-    );
+      ace_svc_desc_IdUniquenessStrategyUnique);
 
   ACE_Service_Config::process_directive (
-      ace_svc_desc_IdUniquenessStrategyUniqueFactoryImpl
-    );
+      ace_svc_desc_IdUniquenessStrategyUniqueFactoryImpl);
 
   ACE_Service_Config::process_directive (
-      ace_svc_desc_ImplicitActivationStrategyExplicit
-    );
+      ace_svc_desc_ImplicitActivationStrategyExplicit);
 
 #if !defined (CORBA_E_MICRO) && !defined (CORBA_E_COMPACT)
   ACE_Service_Config::process_directive (
-      ace_svc_desc_ImplicitActivationStrategyImplicit
-    );
+      ace_svc_desc_ImplicitActivationStrategyImplicit);
 #endif /* CORBA_E_MICRO */
 
   // Strategy factories
 
   ACE_Service_Config::process_directive (
-      ace_svc_desc_ThreadStrategyFactoryImpl
-    );
+      ace_svc_desc_ThreadStrategyFactoryImpl);
 
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_MICRO) && !defined (CORBA_E_COMPACT)
   ACE_Service_Config::process_directive (
-      ace_svc_desc_ThreadStrategySingleFactoryImpl
-    );
+      ace_svc_desc_ThreadStrategySingleFactoryImpl);
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 
   ACE_Service_Config::process_directive (
