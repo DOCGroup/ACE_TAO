@@ -1,3 +1,17 @@
+Thu Jun 28 10:08:38 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * ace/CDR_Stream.h:
+        
+          Removed 'extern' qualifier from ostream operator declarations, it's
+          not needed.
+          
+        * ace/CDR_Stream.cpp:
+        
+          Added explicit temporary of ACE_OutputCDR::from_wchar in the
+          ostream operator implementation taking ACE_OutputCDR::from_octet.
+          Unix compilers were apparently making some kind of promotion
+          of the implicit temporary before seeing it in the header file.
+
 Tue Jun 26 13:48:26 UTC 2007  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * apps/JAWS2/HTTPU/http_status.cpp: Added 
