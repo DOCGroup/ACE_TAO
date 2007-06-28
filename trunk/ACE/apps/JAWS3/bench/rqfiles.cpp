@@ -161,7 +161,7 @@ typedef ACE_Select_Reactor_T<ACE_Select_Reactor_Noop_Token>
         ACE_Select_NULL_LOCK_Reactor;
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ACE_Select_NULL_LOCK_Reactor *select_reactor;
   select_reactor = new ACE_Select_NULL_LOCK_Reactor;

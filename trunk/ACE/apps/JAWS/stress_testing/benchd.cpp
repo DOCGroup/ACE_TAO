@@ -34,7 +34,7 @@ static ACE_HANDLE OUTPUT_FILE;
 class Handle_Events : public ACE_Event_Handler
 {
 public:
-  Handle_Events (u_short udp_port, 
+  Handle_Events (u_short udp_port,
 		 const char *ip_addr,
 		 const char *interface,
 		 ACE_Reactor &reactor);
@@ -77,12 +77,12 @@ Handle_Events::handle_input (ACE_HANDLE h)
 
       // receive message from multicast group
       int retcode = this->mcast_.recv (buf, sizeof buf, remote_addr);
-      
+
       if (retcode != -1)
 	{
           /*
-            cout << "received datagram from host " << remote_addr.get_host_name () 
-            << " on port " << remote_addr.get_port_number () 
+            cout << "received datagram from host " << remote_addr.get_host_name ()
+            << " on port " << remote_addr.get_port_number ()
             << " bytes = " << retcode << endl;
             */
           serve (buf);
@@ -112,7 +112,7 @@ Handle_Events::~Handle_Events (void)
     ACE_OS::perror ("unsubscribe fails"), ACE_OS::exit (1);
 }
 
-Handle_Events::Handle_Events (u_short udp_port, 
+Handle_Events::Handle_Events (u_short udp_port,
 			      const char *ip_addr,
 			      const char *interface,
 			      ACE_Reactor &reactor)
@@ -120,10 +120,10 @@ Handle_Events::Handle_Events (u_short udp_port,
   // Create multicast address to listen on.
 
   ACE_INET_Addr sockmc_addr (udp_port, ip_addr);
-  
+
   // subscribe to multicast group.
 
-  if (this->mcast_.subscribe (sockmc_addr, 1, interface) == -1) 
+  if (this->mcast_.subscribe (sockmc_addr, 1, interface) == -1)
     ACE_OS::perror ("can't subscribe to multicast group"), ACE_OS::exit (1);
 
   // Disable loopbacks.
@@ -204,24 +204,24 @@ handler (int)
   done = 1;
 }
 
-int 
-main (int argc, char *argv[])
+int
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ACE_Sig_Action sa ((ACE_SignalHandler) handler, SIGINT);
   ACE_OS::signal (SIGCLD, SIG_IGN);
   ACE_UNUSED_ARG (sa);
 
   parse_args (argc, argv);
-  
+
   OUTPUT_FILE = ACE_OS::open (OUTPUT_FILE_NAME, O_CREAT | O_WRONLY, 0644);
-  if (OUTPUT_FILE == 0) 
+  if (OUTPUT_FILE == 0)
     return 1;
 
   ACE_Reactor reactor;
   Handle_Events handle_events (UDP_PORT, MCAST_ADDR, INTERFACE, reactor);
 
   // main loop
-	  
+
   while (!done)
     reactor.handle_events ();
 
@@ -230,8 +230,8 @@ main (int argc, char *argv[])
   return 0;
 }
 #else
-int 
-main (int argc, char *argv[])
+int
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ACE_ERROR ((LM_ERROR, "error: %s must be run on a platform that support IP multicast\n",
 	    argv[0]));
