@@ -1,3 +1,8 @@
+Thu Jun 28 07:32:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Truncate.h:
+          CB2007 can handle this code according to Codegear support
+
 Wed Jun 27 20:25:06 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * ace/INET_Addr.h:
@@ -19,7 +24,6 @@ Wed Jun 27 20:25:06 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
           and a string-based ctor, those methods now have an optional
           parameter for explicitly specifying the address family to be
           used in setting the address.
-
 
 Wed Jun 27 19:46:14 UTC 2007  Steve Huston  <shuston@riverace.com>
 
