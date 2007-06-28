@@ -1,3 +1,18 @@
+Thu Jun 28 03:41:14 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * examples/Display/NavDisplayGUI_exec/AddNavUnitCmd.h:
+        * examples/Display/NavDisplayGUI_exec/Command.h:
+        * examples/Display/NavDisplayGUI_exec/DetailView.cpp:
+        * examples/Display/NavDisplayGUI_exec/QuitCmd.h:
+        * examples/Display/NavDisplayGUI_exec/RootPanel.cpp:
+        * examples/Display/NavDisplayGUI_exec/UpdatePositionCmd.h:
+        * examples/Display/NavDisplayGUI_exec/Worker.cpp:
+        * performance-tests/Protocols/Sender/Sender_exec.cpp:
+        * tools/Config_Handlers/Utils/XercesString.cpp:
+
+          Fixed fuzz warnings. Replace NULL with 0 to adhere to ACE/TAO/CIAO
+          coding guidlines.
+
 Thu Jun 28 03:27:08 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * DAnCE/ExecutionManager/Execution_Manager.cpp:
@@ -20,7 +35,7 @@ Thu Jun 28 03:27:08 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
         * performance-tests/Protocols/Controller/Controller.cpp:
         * tests/IDL3/Events/Any/main.cpp:
 
-          Fixed ACE_OS fuzz warnings.
+          Fixed fuzz warnings.
           Use "int ACE_TMAIN (int argc, ACE_TCHAR *argv[])"
           intead of "int main (int argc, char *argv[])" to conform to ACE's
           coding guidelines.

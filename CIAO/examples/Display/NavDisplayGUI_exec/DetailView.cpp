@@ -11,7 +11,7 @@
 
 
 DetailView::DetailView(QWidget *parent, const char *name)
-: QWidget(parent, name), current_unit(NULL)
+: QWidget(parent, name), current_unit(0)
 {
   QGridLayout *grid = new QGridLayout(this, 8, 10);
 
