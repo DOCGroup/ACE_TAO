@@ -13,7 +13,7 @@
 #include "tao/CDR.h"
 
 #include "ace/os_include/os_netdb.h"
-#include "ace/os_include/os_ctype.h"
+#include "ace/OS_NS_ctype.h"
 
 ACE_RCSID (Strategies,
            SHMIOP_Acceptor,
@@ -196,7 +196,7 @@ TAO_SHMIOP_Acceptor::open (TAO_ORB_Core *orb_core,
   if (this->parse_options (options) == -1)
     return -1;
 
-  if (isdigit (*port) == 0)
+  if (ACE_OS::ace_isdigit (*port) == 0)
     return -1;                  // Port number must consist of digits
 
   if (port)

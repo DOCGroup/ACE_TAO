@@ -44,7 +44,7 @@ ACE_RCSID (tao,
 #include "ace/Static_Object_Lock.h"
 #include "ace/OS_NS_strings.h"
 #include "ace/OS_NS_string.h"
-#include "ace/os_include/os_ctype.h"
+#include "ace/OS_NS_ctype.h"
 #include "ace/CORBA_macros.h"
 
 static const char ior_prefix[] = "IOR:";
@@ -1550,7 +1550,7 @@ CORBA::ORB::ior_string_to_object (const char *str)
 #undef byte
       unsigned char byte;
 
-      if (!(isxdigit (tmp [0]) && isxdigit (tmp [1])))
+      if (!(ACE_OS::ace_isxdigit (tmp [0]) && ACE_OS::ace_isxdigit (tmp [1])))
         break;
 
       byte = (u_char) (ACE::hex2byte (tmp [0]) << 4);
@@ -1560,7 +1560,7 @@ CORBA::ORB::ior_string_to_object (const char *str)
       tmp += 2;
     }
 
-  if (tmp [0] && !isspace (tmp [0]))
+    if (tmp [0] && !ACE_OS::ace_isspace (tmp [0]))
     {
       throw ::CORBA::BAD_PARAM ();
     }

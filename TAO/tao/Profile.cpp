@@ -14,7 +14,7 @@
 
 #include "ace/ACE.h"
 #include "ace/OS_NS_string.h"
-#include "ace/os_include/os_ctype.h"
+#include "ace/OS_NS_ctype.h"
 
 #if !defined (__ACE_INLINE__)
 #include "tao/Profile.inl"
@@ -663,9 +663,9 @@ TAO_Profile::parse_string (const char *ior)
   // version is one that we accept.
 
   // Check for version
-  if (isdigit (ior [0]) &&
+  if (ACE_OS::ace_isdigit (ior [0]) &&
       ior[1] == '.' &&
-      isdigit (ior [2]) &&
+      ACE_OS::ace_isdigit (ior [2]) &&
       ior[3] == '@')
     {
       // @@ This may fail for non-ascii character sets [but take that
