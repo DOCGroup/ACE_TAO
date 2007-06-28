@@ -48,7 +48,6 @@ public:
     : time_flag_ (0)
     {}
 
-
   virtual ~My_Task (void) {}
   // Destructor.
 
