@@ -9,7 +9,7 @@
 //     program. This program may not be uptodate.
 //
 // = COMPILATION
-//     CC -g -o test_aiosig -lrt test_aiosig.cpp   
+//     CC -g -o test_aiosig -lrt test_aiosig.cpp
 //
 // = RUN
 //     ./test_aiosig
@@ -48,7 +48,7 @@ int test_aio_calls (void);
 int setup_signal_handler (void);
 int setup_signal_handler (int signal_number);
 
-int 
+int
 setup_signal_delivery (void)
 {
   // Make the sigset_t consisting of the completion signal.
@@ -57,20 +57,20 @@ setup_signal_delivery (void)
       perror ("Error:Couldnt init the RT completion signal set\n");
       return -1;
     }
-  
+
   if (sigaddset (&completion_signal, SIGRTMIN) == -1)
     {
       perror ("Error:Couldnt init the RT completion signal set\n");
       return -1;
     }
-  
+
   // Mask them.
   if (pthread_sigmask (SIG_BLOCK, &completion_signal, 0) == -1)
     {
       perror ("Error:Couldnt maks the RT completion signals\n");
       return -1;
     }
-  
+
   return setup_signal_handler (SIGRTMIN);
 }
 
@@ -85,8 +85,8 @@ issue_aio_calls (void)
   aiocb1.aio_reqprio = 0;
   aiocb1.aio_sigevent.sigev_notify = SIGEV_SIGNAL;
   aiocb1.aio_sigevent.sigev_signo = SIGRTMIN;
-  aiocb1.aio_sigevent.sigev_value.sival_ptr = (void *) &aiocb1; 
-  
+  aiocb1.aio_sigevent.sigev_value.sival_ptr = (void *) &aiocb1;
+
   // Fire off the aio write.
   if (aio_read (&aiocb1) == -1)
     {
@@ -94,7 +94,7 @@ issue_aio_calls (void)
       perror ("Error:Asynch_Read_Stream: aio_read queueing failed\n");
       return -1;
     }
-  
+
   // Setup AIOCB.
   aiocb2.aio_fildes = file_handle;
   aiocb2.aio_offset = BUFSIZ + 1;
@@ -103,8 +103,8 @@ issue_aio_calls (void)
   aiocb2.aio_reqprio = 0;
   aiocb2.aio_sigevent.sigev_notify = SIGEV_SIGNAL;
   aiocb2.aio_sigevent.sigev_signo = SIGRTMIN;
-  aiocb2.aio_sigevent.sigev_value.sival_ptr = (void *) &aiocb2; 
-  
+  aiocb2.aio_sigevent.sigev_value.sival_ptr = (void *) &aiocb2;
+
   // Fire off the aio write.
   if (aio_read (&aiocb2) == -1)
     {
@@ -129,15 +129,15 @@ query_aio_completions (void)
       timespec timeout;
       timeout.tv_sec = INT_MAX;
       timeout.tv_nsec = 0;
-  
+
       // To get back the signal info.
       siginfo_t sig_info;
-      
+
       // Await the RT completion signal.
       int sig_return = sigtimedwait (&completion_signal,
                                      &sig_info,
                                      &timeout);
-      
+
       // Error case.
       // If failure is coz of timeout, then return *0* but set
       // errno appropriately. This is what the WinNT proactor
@@ -147,7 +147,7 @@ query_aio_completions (void)
           perror ("Error:Error waiting for RT completion signals\n");
           return -1;
         }
-      
+
       // RT completion signals returned.
       if (sig_return != SIGRTMIN)
         {
@@ -155,11 +155,11 @@ query_aio_completions (void)
                   sig_return);
           return -1;
         }
-      
+
       // @@ Debugging.
       printf ("Sig number found in the sig_info block : %d\n",
               sig_info.si_signo);
-  
+
       // Is the signo returned consistent?
       if (sig_info.si_signo != sig_return)
         {
@@ -167,11 +167,11 @@ query_aio_completions (void)
                   sig_info.si_signo);
           return -1;
         }
-  
+
       // @@ Debugging.
       printf ("Signal code for this signal delivery : %d\n",
               sig_info.si_code);
-  
+
       // Is the signal code an aio completion one?
       if ((sig_info.si_code != SI_ASYNCIO) &&
           (sig_info.si_code != SI_QUEUE))
@@ -180,10 +180,10 @@ query_aio_completions (void)
                   sig_info.si_code);
           return -1;
         }
-  
+
       // Retrive the aiocb.
       aiocb* aiocb_ptr = (aiocb *) sig_info.si_value.sival_ptr;
-      
+
       // Analyze error and return values. Return values are
       // actually <errno>'s associated with the <aio_> call
       // corresponding to aiocb_ptr.
@@ -193,7 +193,7 @@ query_aio_completions (void)
           perror ("Error:Invalid control block was sent to <aio_error> for compleion querying\n");
           return -1;
         }
-  
+
       if (error_code != 0)
         {
           // Error occurred in the <aio_>call. Return the errno
@@ -210,7 +210,7 @@ query_aio_completions (void)
           perror ("Error:Invalid control block was send to <aio_return>\n");
           return -1;
         }
-      
+
       if (number_of_compleions == 0)
         // Print the buffer.
         printf ("Number of bytes transferred : %d\n The buffer : %s \n",
@@ -226,27 +226,27 @@ query_aio_completions (void)
 }
 
 int
-test_aio_calls (void) 
+test_aio_calls (void)
 {
   // Set up the input file.
   // Open file (in SEQUENTIAL_SCAN mode)
   file_handle = open ("test_aiosig.cpp", O_RDONLY);
-  
+
   if (file_handle == -1)
     {
       perror ("Error:Opening the inputfile");
       return -1;
     }
-  
+
   if (setup_signal_delivery () < 0)
     return -1;
-  
+
   if (issue_aio_calls () < 0)
     return -1;
-  
+
   if (query_aio_completions () < 0)
     return -1;
-  
+
   return 0;
 }
 
@@ -260,7 +260,7 @@ setup_signal_handler (int signal_number)
 #if defined (SA_SIGACTION)
   // Lynx says, it is better to set this bit to be portable.
   reaction.sa_flags &= SA_SIGACTION;
-#endif /* SA_SIGACTION */      
+#endif /* SA_SIGACTION */
   reaction.sa_sigaction = null_handler;     // Null handler.
   int sigaction_return = sigaction (SIGRTMIN,
                                     &reaction,
@@ -270,7 +270,7 @@ setup_signal_handler (int signal_number)
       perror ("Error:Proactor couldnt do sigaction for the RT SIGNAL");
       return -1;
     }
-  
+
   return 0;
 }
 
@@ -282,7 +282,7 @@ null_handler (int         /* signal_number */,
 }
 
 int
-main (int, char *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   if (test_aio_calls () == 0)
     printf ("RT SIG test successful:\n"

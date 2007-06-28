@@ -71,7 +71,7 @@ public:
 };
 
 
-int main (int argc, char *argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   u_short logger_port = argc > 1 ? atoi (argv[1]) : 0;
   const char *logger_host =
