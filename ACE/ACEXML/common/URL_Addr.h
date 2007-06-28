@@ -54,11 +54,13 @@ public:
    *  <address> it is assumed to be an ip-number or ip-address number, with
    *  the port number <ACE_DEFAULT_HTTP_PORT>.
    */
-  virtual int string_to_addr (const ACEXML_Char* address);
+  virtual int string_to_addr (const ACEXML_Char* address,
+                              int address_family = AF_UNSPEC);
 
   //  Function to shut up Borland C++
 #if defined (ACE_USES_WCHAR)
-  virtual int string_to_addr (const char* address);
+  virtual int string_to_addr (const char* addresss,
+                              int address_family = AF_UNSPEC);
 #endif
 
   /**
