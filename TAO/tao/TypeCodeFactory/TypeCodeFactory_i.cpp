@@ -37,7 +37,7 @@
 #include "ace/OS_NS_string.h"
 #include "ace/Value_Ptr.h"
 
-#include "ace/os_include/os_ctype.h"
+#include "ace/OS_NS_ctype.h"
 
 
 ACE_RCSID (TypeCodeFactory,
@@ -1481,7 +1481,7 @@ TAO_TypeCodeFactory_i::valid_name (const char *name)
       return true;
     }
 
-  if (!isalpha (*name))
+  if (!ACE_OS::ace_isalpha (*name))
     {
       return false;
     }
@@ -1490,7 +1490,7 @@ TAO_TypeCodeFactory_i::valid_name (const char *name)
 
   for (; *tmp; ++tmp)
     {
-      if (isalnum (*tmp) || *tmp == '_')
+      if (ACE_OS::ace_isalnum (*tmp) || *tmp == '_')
         {
           continue;
         }
