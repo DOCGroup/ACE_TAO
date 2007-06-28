@@ -8,6 +8,8 @@ ACE_RCSID (PortableServer,
 # include "tao/PortableServer/Regular_POA.inl"
 #endif /* ! __ACE_INLINE__ */
 
+#if !defined (CORBA_E_MICRO)
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Regular_POA::TAO_Regular_POA (const TAO_Root_POA::String &name,
@@ -70,3 +72,5 @@ TAO_Regular_POA::root_key_type (void)
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
+
+#endif
