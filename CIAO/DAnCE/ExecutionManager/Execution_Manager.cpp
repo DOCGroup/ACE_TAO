@@ -317,7 +317,7 @@ namespace CIAO
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   return CIAO::Execution_Manager::run_main (argc, argv);
 }

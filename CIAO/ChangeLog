@@ -1,3 +1,30 @@
+Thu Jun 28 03:27:08 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * DAnCE/ExecutionManager/Execution_Manager.cpp:
+        * DAnCE/NodeApplication/NodeApplication.cpp:
+        * DAnCE/NodeManager/Node_Manager.cpp:
+        * DAnCE/tests/NodeApplicationTest/NodeApp_test_client.cpp:
+        * DAnCE/tests/NodeApplicationTest/NodeApp_test_client_dynamic.cpp:
+        * DAnCE/tests/NodeApplicationTest/NodeApp_test_client_ex.cpp:
+        * DAnCE/tests/NodeApplicationTest/NodeApp_test_client_simple.cpp:
+        * examples/BasicSP/EC/client.cpp:
+        * examples/BasicSP/EC/controller.cpp:
+        * examples/Display/RateGen/controller.cpp:
+        * examples/Hello/Sender/starter.cpp:
+        * examples/Swapping/Sender/starter.cpp:
+        * performance-tests/Benchmark/Multi_Threaded/client.cpp:
+        * performance-tests/Benchmark/RoundTrip/client.cpp:
+        * performance-tests/Benchmark/RoundTripClient/client.cpp:
+        * performance-tests/Benchmark/RoundTripServer/server.cpp:
+        * performance-tests/Benchmark/server.cpp:
+        * performance-tests/Protocols/Controller/Controller.cpp:
+        * tests/IDL3/Events/Any/main.cpp:
+
+          Fixed ACE_OS fuzz warnings.
+          Use "int ACE_TMAIN (int argc, ACE_TCHAR *argv[])"
+          intead of "int main (int argc, char *argv[])" to conform to ACE's
+          coding guidelines.
+
 Wed Jun 27 03:44:44 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * CCF/CCF/IDL2/LexicalAnalyzer.cpp:
