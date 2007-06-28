@@ -14,7 +14,7 @@
 # define ACE_VXWORKS 0x650
 #endif /* ! ACE_VXWORKS */
 
-#include "ace/config-vxworks6.4"
+#include "ace/config-vxworks6.4.h"
 
 #include /**/ "ace/post.h"
 #endif /* ACE_CONFIG_H */
