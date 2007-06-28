@@ -47,7 +47,7 @@ int parse_args (int argc, char *argv[])
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   std::vector<NodeAppTest::NodeAppTest_RoundTrip_var> comp_list;
   //std::vector<NodeAppTest::NodeAppTest_RoundTrip_var>::const_iterator iter;
