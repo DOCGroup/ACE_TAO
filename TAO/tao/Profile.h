@@ -435,7 +435,7 @@ public:
   virtual int decode (TAO_InputCDR& cdr);
   virtual int encode (TAO_OutputCDR &stream) const;
   virtual int encode_endpoints (void);
-  virtual const TAO::ObjectKey &object_key (void) const;
+
   virtual TAO::ObjectKey *_key (void) const;
   virtual TAO_Endpoint *endpoint (void);
   virtual CORBA::ULong endpoint_count (void) const;
