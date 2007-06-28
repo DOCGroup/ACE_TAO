@@ -41,6 +41,7 @@
 #endif /* TAO_HAS_AMI */
 
 #include "ace/SString.h"
+#include "ace/Atomic_Op.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
@@ -252,9 +253,9 @@ namespace CORBA
     CORBA::Context_ptr ctx_;
 
     /// Reference counting.
-    CORBA::ULong refcount_;
+    ACE_Atomic_Op<TAO_SYNCH_MUTEX, unsigned long> refcount_;
 
-    /// Protect the refcount_ and response_received_.
+    /// Protect the response_received_.
     TAO_SYNCH_MUTEX lock_;
 
     /// If not zero then the NVList is not evaluated by default.
