@@ -22,7 +22,7 @@
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/Argv_Type_Converter.h"
-#include "ace/os_include/os_ctype.h"
+#include "ace/OS_NS_ctype.h"
 
 //============================================================================
 namespace
@@ -449,7 +449,7 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
                         myNode = ACE_TEXT_ALWAYS_CHAR (*argv);
                     }
                 }
-              else if (0 == strcmp(*argv, ACE_TEXT ("--noloops")))
+              else if (0 == ACE_OS::strcmp(*argv, ACE_TEXT ("--noloops")))
                 {
                   if (showNSonly)
                     {
@@ -537,7 +537,7 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
                   else
                     kindsep = ACE_TEXT_ALWAYS_CHAR (*argv)[0];
                 }
-              else if (0 == strcmp(*argv, ACE_TEXT ("--max")))
+              else if (0 == ACE_OS::strcmp(*argv, ACE_TEXT ("--max")))
                 {
                   if (maxDepth)
                     {
@@ -545,7 +545,7 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
                                  "Error: --max given more than once\n"));
                       failed = true;
                     }
-                  else if (!--argc || !isdigit (ACE_TEXT_ALWAYS_CHAR (*++argv)[0]))
+                  else if (!--argc || !ACE_OS::ace_isdigit (ACE_TEXT_ALWAYS_CHAR (*++argv)[0]))
                     {
                       ACE_DEBUG ((LM_DEBUG,
                                  "Error: --max requires a number\n"));
