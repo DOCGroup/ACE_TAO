@@ -29,6 +29,7 @@
 #include "tao/EndpointPolicy/IIOPEndpointValueC.h"
 #include "tao/EndpointPolicy/Endpoint_Value_Impl.h"
 #include "tao/LocalObject.h"
+#include "ace/INET_Addr.h"
 
 // This is to remove "inherits via dominance" warnings from MSVC.
 // MSVC is being a little too paranoid.
@@ -99,6 +100,8 @@ private:
 
   CORBA::String_var host_;
   CORBA::UShort     port_;
+
+  ACE_INET_Addr addr_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
