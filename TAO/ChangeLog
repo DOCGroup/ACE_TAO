@@ -1,23 +1,32 @@
 Thu Jun 28 16:40:26 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/tests/Event/Mcast/AddrServer/Client.cpp:
+          Added error bailout if IPv6 address is obtained from the address
+          server by a client compiled w/o IPv6 support.
 
         * tao/EndpointPolicy/IIOPEndpointValue_i.h:
         * tao/EndpointPolicy/IIOPEndpointValue_i.cpp:
+          Store endpoint values internally as ACE_INET_Addrs rather than
+          strings. This fixes a problem on windows where "localhost" gets
+          translated to "127.0.0.1" when initializing an ACE_INET_Addr
+          with "localhost" then later calling addr_to_string(). This then
+          caused failures when attempting to set up a localhost-only IOR
+          via the endpoint policy.
 
-        * tao/LocalObject.h:
-        * tao/LocalObject.inl:
-        * tao/LocalObject.cpp:
-
-        * tao/Messaging/AMH_Response_Handler.cpp:
-
-        * tao/Object.h:
-        * tao/Object.inl:
-        * tao/Object.cpp:
         * tao/Profile.h:
         * tao/Profile.cpp:
+          Removed obsolete function object_key from the Unknown_Profile.
+          It had previously been removed from all other profile types.
 
         * tao/Strategies/UIOP_Profile.cpp:
+          It seems that Abdul's fix, (cf Thu Jun 28 00:03:58 UTC 2007
+          Abdullah Sowayan  <abdullah.sowayan@lmco.com>) included
+          replacing a call to isdigit with ACE_OS::ace_isdigit, but my
+          compiler could not find ace_isdigit until I included
+          ACE OS_NS_ctypes.h. Having done that, it seems that the old
+          include of ace/os_include/os_ctype.h is redundant, so I've taken
+          it out.
+
 
 Thu Jun 28 14:07:00 UTC 2007  Simon Massey  <sma@prismtech.com>
 
