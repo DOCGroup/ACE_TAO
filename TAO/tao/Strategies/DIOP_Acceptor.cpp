@@ -69,13 +69,9 @@ TAO_DIOP_Acceptor::create_profile (const TAO::ObjectKey & object_key,
   // Check if multiple endpoints should be put in one profile or if
   // they should be spread across multiple profiles.
   if (priority == TAO_INVALID_PRIORITY)
-    return this->create_new_profile (object_key,
-                                     mprofile,
-                                     priority);
+    return this->create_new_profile (object_key, mprofile, priority);
   else
-    return this->create_shared_profile (object_key,
-                                        mprofile,
-                                        priority);
+    return this->create_shared_profile (object_key, mprofile, priority);
 }
 
 int
@@ -245,7 +241,7 @@ TAO_DIOP_Acceptor::open (TAO_ORB_Core *orb_core,
       // The hostname cache has already been set!
       // This is bad mojo, i.e. an internal TAO error.
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("TAO (%P|%t) ")
+                         ACE_TEXT ("TAO (%P|%t) - ")
                          ACE_TEXT ("DIOP_Acceptor::open - ")
                          ACE_TEXT ("hostname already set\n\n")),
                         -1);
@@ -354,7 +350,7 @@ TAO_DIOP_Acceptor::open_default (TAO_ORB_Core *orb_core,
       // The hostname cache has already been set!
       // This is bad mojo, i.e. an internal TAO error.
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("TAO (%P|%t) ")
+                         ACE_TEXT ("TAO (%P|%t) - ")
                          ACE_TEXT ("DIOP_Acceptor::open_default - ")
                          ACE_TEXT ("hostname already set\n\n")),
                         -1);
@@ -382,8 +378,7 @@ TAO_DIOP_Acceptor::open_default (TAO_ORB_Core *orb_core,
                 1) != 0)
     return -1;
 
-  return this->open_i (addr,
-                       reactor);
+  return this->open_i (addr, reactor);
 }
 
 int
@@ -435,7 +430,7 @@ TAO_DIOP_Acceptor::open_i (const ACE_INET_Addr& addr,
       for (size_t i = 0; i < this->endpoint_count_; ++i)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("\nTAO (%P|%t) DIOP_Acceptor::open_i - ")
+                      ACE_TEXT ("TAO (%P|%t) - DIOP_Acceptor::open_i - ")
                       ACE_TEXT ("listening on: <%s:%u>\n"),
                       ACE_TEXT_CHAR_TO_TCHAR (this->hosts_[i]),
                       this->addrs_[i].get_port_number ()));
@@ -492,7 +487,7 @@ TAO_DIOP_Acceptor::dotted_decimal_address (ACE_INET_Addr &addr,
     {
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("\n\nTAO (%P|%t) ")
+                    ACE_TEXT ("TAO (%P|%t) - ")
                     ACE_TEXT ("DIOP_Acceptor::dotted_decimal_address ")
                     ACE_TEXT ("- %p\n\n"),
                     ACE_TEXT ("cannot determine hostname")));
@@ -528,7 +523,7 @@ TAO_DIOP_Acceptor::probe_interfaces (TAO_ORB_Core *orb_core)
       if (TAO_debug_level > 0)
         {
           ACE_DEBUG ((LM_WARNING,
-                      ACE_TEXT ("TAO (%P|%t) Unable to probe network ")
+                      ACE_TEXT ("TAO (%P|%t) - Unable to probe network ")
                       ACE_TEXT ("interfaces.  Using default.")));
         }
 
@@ -626,7 +621,7 @@ TAO_DIOP_Acceptor::object_key (IOP::TaggedProfile &profile,
     if (TAO_debug_level > 0)
       {
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("TAO (%P|%t) DIOP_Profile::decode - v%d.%d\n"),
+                    ACE_TEXT ("TAO (%P|%t) - DIOP_Profile::decode - v%d.%d\n"),
                     major,
                     minor));
       }
@@ -643,7 +638,7 @@ TAO_DIOP_Acceptor::object_key (IOP::TaggedProfile &profile,
       if (TAO_debug_level > 0)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("TAO (%P|%t) TAO_DIOP_Acceptor::object_key - ")
+                      ACE_TEXT ("TAO (%P|%t) - DIOP_Acceptor::object_key - ")
                       ACE_TEXT ("error while decoding host/port")));
         }
       return -1;
@@ -707,7 +702,7 @@ TAO_DIOP_Acceptor::parse_options (const char *str)
       if (end == begin)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT ("TAO (%P|%t) Zero length DIOP option.\n")),
+                             ACE_TEXT ("TAO (%P|%t) - Zero length DIOP option.\n")),
                             -1);
         }
       else if (end != ACE_CString::npos)
@@ -719,7 +714,7 @@ TAO_DIOP_Acceptor::parse_options (const char *str)
           if (slot == len - 1
               || slot == ACE_CString::npos)
             ACE_ERROR_RETURN ((LM_ERROR,
-                               ACE_TEXT ("TAO (%P|%t) DIOP option <%s> is ")
+                               ACE_TEXT ("TAO (%P|%t) - DIOP option <%s> is ")
                                ACE_TEXT ("missing a value.\n"),
                                ACE_TEXT_CHAR_TO_TCHAR (opt.c_str ())),
                               -1);
@@ -731,21 +726,21 @@ TAO_DIOP_Acceptor::parse_options (const char *str)
 
           if (name.length () == 0)
             ACE_ERROR_RETURN ((LM_ERROR,
-                               ACE_TEXT ("TAO (%P|%t) Zero length DIOP ")
+                               ACE_TEXT ("TAO (%P|%t) - Zero length DIOP ")
                                ACE_TEXT ("option name.\n")),
                               -1);
 
           if (name == "priority")
             {
               ACE_ERROR_RETURN ((LM_ERROR,
-                                 ACE_TEXT ("TAO (%P|%t) Invalid DIOP endpoint format: ")
+                                 ACE_TEXT ("TAO (%P|%t) - Invalid DIOP endpoint format: ")
                                  ACE_TEXT ("endpoint priorities no longer supported. \n")),
                                 -1);
             }
           else
             {
               ACE_ERROR_RETURN ((LM_ERROR,
-                                 ACE_TEXT ("TAO (%P|%t) Invalid DIOP option: <%s>\n"),
+                                 ACE_TEXT ("TAO (%P|%t) - Invalid DIOP option: <%s>\n"),
                                  ACE_TEXT_CHAR_TO_TCHAR (name.c_str ())),
                                 -1);
             }

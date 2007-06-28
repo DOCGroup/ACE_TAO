@@ -154,9 +154,7 @@ protected:
   int shared_open (void);
 
   /// Set options on the socket
-  int set_socket_option (ACE_SOCK &sock,
-                         int snd_size,
-                         int rcv_size);
+  int set_socket_option (ACE_SOCK &sock, int snd_size, int rcv_size);
 
   //@{
   /**

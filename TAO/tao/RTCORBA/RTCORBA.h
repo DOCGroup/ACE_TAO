@@ -48,6 +48,8 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 #include "tao/RTCORBA/RTCORBAC.h"
 #undef TAO_RTCORBA_SAFE_INCLUDE
 
+#include "tao/RTCORBA/rtcorba_typedefs.h"
+
 #endif /* TAO_HAS_CORBA_MESSAGING != 0 */
 
 #include /**/ "ace/post.h"

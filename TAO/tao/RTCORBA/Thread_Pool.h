@@ -23,10 +23,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#define TAO_RTCORBA_SAFE_INCLUDE
-#include "tao/RTCORBA/RTCORBAC.h"
-#undef TAO_RTCORBA_SAFE_INCLUDE
-
+#include "tao/RTCORBA/RTCORBA_includeC.h"
 #include "ace/Hash_Map_Manager.h"
 #include "tao/Thread_Lane_Resources.h"
 #include "tao/New_Leader_Generator.h"

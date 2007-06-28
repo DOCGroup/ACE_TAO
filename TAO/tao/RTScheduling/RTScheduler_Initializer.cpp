@@ -39,8 +39,7 @@ void
     ACE_DEBUG ((LM_DEBUG,
                 "In pre_init\n"));
 
-  TAO_ORBInitInfo_var tao_info = TAO_ORBInitInfo::_narrow (info
-                                                          );
+  TAO_ORBInitInfo_var tao_info = TAO_ORBInitInfo::_narrow (info);
 
   if (CORBA::is_nil (tao_info.in ()))
     {
@@ -65,15 +64,12 @@ void
 
   current_cleanup = this->current_;
 
-  this->current_->init (tao_info->orb_core ()
-                       );
+  this->current_->init (tao_info->orb_core ());
 
   CORBA::Object_var current_obj = RTScheduling::Current::_narrow (this->current_
                                                                  );
 
-  info->register_initial_reference ("RTScheduler_Current",
-                                    current_obj.in ()
-                                   );
+  info->register_initial_reference ("RTScheduler_Current", current_obj.in ());
 
   Client_Interceptor *client_interceptor = 0;
   ACE_NEW_THROW_EX (client_interceptor,
@@ -87,8 +83,7 @@ void
   PortableInterceptor::ClientRequestInterceptor_var safe_client =
     client_interceptor;
 
-  info->add_client_request_interceptor (client_interceptor
-                                       );
+  info->add_client_request_interceptor (client_interceptor);
 
   Server_Interceptor *server_interceptor = 0;
   ACE_NEW_THROW_EX (server_interceptor,
@@ -102,8 +97,7 @@ void
   PortableInterceptor::ServerRequestInterceptor_var safe_server =
     server_interceptor;
 
-  info->add_server_request_interceptor (server_interceptor
-                                       );
+  info->add_server_request_interceptor (server_interceptor);
 
   // Set the RTScheduler_Manager
   TAO_RTScheduler_Manager *manager = 0;
@@ -119,9 +113,7 @@ void
 
   TAO_RTScheduler_Manager_var safe_manager = manager;
 
-  info->register_initial_reference ("RTSchedulerManager",
-                                    manager
-                                   );
+  info->register_initial_reference ("RTSchedulerManager", manager);
 }
 
 void
@@ -139,12 +131,10 @@ TAO_RTScheduler_ORB_Initializer::post_init (PortableInterceptor::ORBInitInfo_ptr
     ACE_DEBUG ((LM_DEBUG,
                 "In post_init\n"));
 
-  CORBA::Object_var rt_current_obj = info->resolve_initial_references ("RTCurrent"
-                                                                      );
+  CORBA::Object_var rt_current_obj = info->resolve_initial_references ("RTCurrent");
 
 
-  RTCORBA::Current_var rt_current = RTCORBA::Current::_narrow (rt_current_obj.in ()
-                                                              );
+  RTCORBA::Current_var rt_current = RTCORBA::Current::_narrow (rt_current_obj.in ());
 
   if (CORBA::is_nil (rt_current.in ()))
     {

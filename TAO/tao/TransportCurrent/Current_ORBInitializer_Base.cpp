@@ -30,8 +30,7 @@ namespace TAO
       // Narrow to a TAO_ORBInitInfo object to get access to the
       // allocate_tss_slot_id() TAO extension.
       TAO_ORBInitInfo_var tao_info =
-        TAO_ORBInitInfo::_narrow (info
-                                 );
+        TAO_ORBInitInfo::_narrow (info);
 
       if (CORBA::is_nil (tao_info.in ()))
         {
@@ -45,17 +44,14 @@ namespace TAO
 
       // Reserve a TSS slot in the ORB core internal TSS resources for the
       // thread-specific portion of the Current object.
-      size_t tss_slot = tao_info->allocate_tss_slot_id (0
-                                                       );
+      size_t tss_slot = tao_info->allocate_tss_slot_id (0);
 
       // Create the Current
       Current_var current (this->make_current_instance (tao_info->orb_core (),
-                                                        tss_slot
-                                                       ));
+                                                        tss_slot));
 
       info->register_initial_reference (ACE_TEXT_ALWAYS_CHAR (this->id_.fast_rep ()),
                                         current.in ());
-
     }
 
     void

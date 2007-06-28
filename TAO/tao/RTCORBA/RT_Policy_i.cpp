@@ -330,8 +330,7 @@ TAO_PriorityBandedConnectionPolicy::~TAO_PriorityBandedConnectionPolicy (void)
 }
 
 CORBA::Policy_ptr
-TAO_PriorityBandedConnectionPolicy::create (const CORBA::Any &val
-                                            )
+TAO_PriorityBandedConnectionPolicy::create (const CORBA::Any &val)
 {
   RTCORBA::PriorityBands *value = 0;
   if ((val >>= value) == 0)
@@ -439,8 +438,7 @@ TAO_ServerProtocolPolicy::~TAO_ServerProtocolPolicy (void)
 }
 
 CORBA::Policy_ptr
-TAO_ServerProtocolPolicy::create (const CORBA::Any &val
-                                  )
+TAO_ServerProtocolPolicy::create (const CORBA::Any &val)
 {
   RTCORBA::ProtocolList *value = 0;
   if ((val >>= value) == 0)
@@ -694,8 +692,7 @@ TAO_TCP_Protocol_Properties::send_buffer_size (void)
 }
 
 void
-TAO_TCP_Protocol_Properties::send_buffer_size (CORBA::Long send_buffer_size
-                                               )
+TAO_TCP_Protocol_Properties::send_buffer_size (CORBA::Long send_buffer_size)
 {
   this->send_buffer_size_ = send_buffer_size;
 }
@@ -707,8 +704,7 @@ TAO_TCP_Protocol_Properties::recv_buffer_size (void)
 }
 
 void
-TAO_TCP_Protocol_Properties::recv_buffer_size (CORBA::Long recv_buffer_size
-                                               )
+TAO_TCP_Protocol_Properties::recv_buffer_size (CORBA::Long recv_buffer_size)
 {
   this->recv_buffer_size_ = recv_buffer_size;
 }
@@ -720,8 +716,7 @@ TAO_TCP_Protocol_Properties::keep_alive (void)
 }
 
 void
-TAO_TCP_Protocol_Properties::keep_alive (CORBA::Boolean keep_alive
-                                         )
+TAO_TCP_Protocol_Properties::keep_alive (CORBA::Boolean keep_alive)
 {
   this->keep_alive_ = keep_alive;
 }
@@ -1018,8 +1013,13 @@ TAO_SharedMemory_Protocol_Properties::_tao_decode (TAO_InputCDR &in_cdr)
 
 // ****************************************************************
 
-TAO_UserDatagram_Protocol_Properties::TAO_UserDatagram_Protocol_Properties (CORBA::Boolean enable_network_priority)
-  : enable_network_priority_ (enable_network_priority)
+TAO_UserDatagram_Protocol_Properties::TAO_UserDatagram_Protocol_Properties (
+  CORBA::Long send_buffer_size,
+  CORBA::Long recv_buffer_size,
+  CORBA::Boolean enable_network_priority)
+  : send_buffer_size_ (send_buffer_size),
+    recv_buffer_size_ (recv_buffer_size),
+    enable_network_priority_ (enable_network_priority)
 {
 }
 
@@ -1034,10 +1034,33 @@ TAO_UserDatagram_Protocol_Properties::enable_network_priority (void)
 }
 
 void
-TAO_UserDatagram_Protocol_Properties::enable_network_priority (CORBA::Boolean enable
-                                                               )
+TAO_UserDatagram_Protocol_Properties::enable_network_priority (CORBA::Boolean enable)
 {
   this->enable_network_priority_ = enable;
+}
+
+CORBA::Long
+TAO_UserDatagram_Protocol_Properties::send_buffer_size (void)
+{
+  return this->send_buffer_size_;
+}
+
+void
+TAO_UserDatagram_Protocol_Properties::send_buffer_size (CORBA::Long send_buffer_size)
+{
+  this->send_buffer_size_ = send_buffer_size;
+}
+
+CORBA::Long
+TAO_UserDatagram_Protocol_Properties::recv_buffer_size (void)
+{
+  return this->recv_buffer_size_;
+}
+
+void
+TAO_UserDatagram_Protocol_Properties::recv_buffer_size (CORBA::Long recv_buffer_size)
+{
+  this->recv_buffer_size_ = recv_buffer_size;
 }
 
 CORBA::Boolean
@@ -1080,8 +1103,7 @@ TAO_StreamControl_Protocol_Properties::send_buffer_size (void)
 }
 
 void
-TAO_StreamControl_Protocol_Properties::send_buffer_size (CORBA::Long send_buffer_size
-                                                         )
+TAO_StreamControl_Protocol_Properties::send_buffer_size (CORBA::Long send_buffer_size)
 {
   this->send_buffer_size_ = send_buffer_size;
 }
@@ -1263,10 +1285,14 @@ TAO_Protocol_Properties_Factory::create_transport_protocol_property (IOP::Profil
 
   else if (id == TAO_TAG_DIOP_PROFILE)
     {
-      CORBA::Boolean enable_network_priority = 0;
+      int send_buffer_size = orb_core ? orb_core->orb_params ()->sock_sndbuf_size () : 0;
+      int recv_buffer_size = orb_core ? orb_core->orb_params ()->sock_rcvbuf_size () : 0;
+      CORBA::Boolean enable_network_priority = false;
 
       ACE_NEW_RETURN (property,
-                      TAO_UserDatagram_Protocol_Properties (enable_network_priority),
+                      TAO_UserDatagram_Protocol_Properties (send_buffer_size,
+                                                            recv_buffer_size,
+                                                            enable_network_priority),
                       0);
     }
 

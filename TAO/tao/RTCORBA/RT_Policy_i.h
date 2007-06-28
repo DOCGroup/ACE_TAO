@@ -23,10 +23,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#define TAO_RTCORBA_SAFE_INCLUDE
-#include "tao/RTCORBA/RTCORBAC.h"
-#undef TAO_RTCORBA_SAFE_INCLUDE
-
+#include "tao/RTCORBA/RTCORBA_includeC.h"
 #include "tao/LocalObject.h"
 #include "tao/Basic_Types.h"
 
@@ -585,8 +582,7 @@ public:
 
   CORBA::Boolean no_delay (void);
 
-  void no_delay (CORBA::Boolean no_delay
-                 );
+  void no_delay (CORBA::Boolean no_delay);
 
   CORBA::Boolean enable_network_priority (void);
 
@@ -654,11 +650,21 @@ class TAO_RTCORBA_Export TAO_UserDatagram_Protocol_Properties
 {
 public:
   /// Constructor.
-  TAO_UserDatagram_Protocol_Properties (CORBA::Boolean enable_network_priority);
+  TAO_UserDatagram_Protocol_Properties (CORBA::Long send_buffer_size,
+                                        CORBA::Long recv_buffer_size,
+                                        CORBA::Boolean enable_network_priority);
 
   CORBA::Boolean enable_network_priority (void);
 
   void enable_network_priority (CORBA::Boolean enable);
+
+  CORBA::Long send_buffer_size (void);
+
+  void send_buffer_size (CORBA::Long send_buffer_size);
+
+  CORBA::Long recv_buffer_size (void);
+
+  void recv_buffer_size (CORBA::Long recv_buffer_size);
 
   /// This method writes a CDR representation of UserDatagramProtocolProperties.
   CORBA::Boolean _tao_encode (TAO_OutputCDR &out_cdr);
@@ -674,6 +680,8 @@ protected:
 
 private:
   // = Attributes.
+  CORBA::Long send_buffer_size_;
+  CORBA::Long recv_buffer_size_;
 
   CORBA::Boolean enable_network_priority_;
 };

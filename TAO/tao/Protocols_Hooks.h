@@ -84,6 +84,8 @@ public:
 
   TAO_DIOP_Protocol_Properties (void);
 
+  CORBA::Long send_buffer_size_;
+  CORBA::Long recv_buffer_size_;
   CORBA::Boolean enable_network_priority_;
 };
 

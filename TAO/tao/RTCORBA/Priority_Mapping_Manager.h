@@ -16,7 +16,6 @@
 #include /**/ "ace/pre.h"
 
 #include "tao/orbconf.h"
-#include "tao/RTCORBA/rtcorba_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -24,6 +23,7 @@
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 
+#include "tao/RTCORBA/rtcorba_export.h"
 #include "tao/RTCORBA/Priority_Mapping.h"
 #include "tao/LocalObject.h"
 
