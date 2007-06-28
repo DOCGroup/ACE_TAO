@@ -14,7 +14,7 @@ public:
   static AddNavUnitCmd *create(RootPanel *form, NavUnit *unit);
 
 public:
-  virtual int execute(void *context = NULL);
+  virtual int execute(void *context = 0);
 
 protected:
   AddNavUnitCmd();
