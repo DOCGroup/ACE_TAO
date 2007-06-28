@@ -8,7 +8,7 @@
 static float gammln (float xx);
 static float poidev (float xm);
 
-int main (int argc, char *argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt options (argc, argv, "m:s:x:n:");
   // m -- median file size in kB

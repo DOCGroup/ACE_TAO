@@ -26,7 +26,7 @@ static JAWS_HTTP_10_Parse_Task HTTP_Parse;
 static JAWS_HTTP_10_Write_Task HTTP_Write;
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ACE_OS::signal (SIGCHLD, SIG_IGN);
 
