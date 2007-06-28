@@ -6,8 +6,8 @@
 // 1) The GNU g++ compiler that is shipped with VxWorks 6.4
 // 2) The Diab compiler that is shipped with VxWorks 6.4
 
-#ifndef ACE_CONFIG_H
-#define ACE_CONFIG_H
+#ifndef ACE_CONFIG_VXWORKS_6_4_H
+#define ACE_CONFIG_VXWORKS_6_4_H
 #include /**/ "ace/pre.h"
 
 #if ! defined (VXWORKS)
@@ -323,5 +323,5 @@
 #endif /* !ACE_USE_RCSID */
 
 #include /**/ "ace/post.h"
-#endif /* ACE_CONFIG_H */
+#endif /* ACE_CONFIG_VXWORKS_6_4_H */
 
