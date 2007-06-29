@@ -1822,15 +1822,6 @@ operator<< (std::ostream &os, ACE_OutputCDR::from_char x)
 }
 
 std::ostream&
-operator<< (std::ostream &os, ACE_OutputCDR::from_octet x)
-{
-  // Same format (hex) and no risk of overflow.
-  ACE_CDR::WChar w = static_cast<ACE_CDR::WChar> (x.val_);
-  ACE_OutputCDR::from_wchar tmp (w);
-  return os << tmp;
-}
-
-std::ostream&
 operator<< (std::ostream &os, ACE_OutputCDR::from_wchar x)
 {
   os.setf (ios_base::showbase);
@@ -1839,6 +1830,15 @@ operator<< (std::ostream &os, ACE_OutputCDR::from_wchar x)
   os.unsetf (ios_base::showbase);
   os.setf (ios_base::dec, ios_base::basefield);
   return os;
+}
+
+std::ostream&
+operator<< (std::ostream &os, ACE_OutputCDR::from_octet x)
+{
+  // Same format (hex) and no risk of overflow.
+  ACE_CDR::WChar w = static_cast<ACE_CDR::WChar> (x.val_);
+  ACE_OutputCDR::from_wchar tmp (w);
+  return os << tmp;
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL
