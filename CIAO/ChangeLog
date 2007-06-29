@@ -1,3 +1,12 @@
+Fri Jun 29 19:23:14 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * performance-tests/Benchmark/RoundTrip/client.cpp:
+        * performance-tests/Protocols/Receiver/Receiver_exec.cpp:
+        * performance-tests/Protocols/Sender/Sender_exec.cpp:
+        * performance-tests/Benchmark/RoundTripClient/RoundTripClient_exec.cpp:
+        * DAnCE/Plan_Launcher/Plan_Launcher_Benchmark_Impl.cpp:
+          Added include of Throughput_Stats.h
+
 Thu Jun 28 03:41:14 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * examples/Display/NavDisplayGUI_exec/AddNavUnitCmd.h:
