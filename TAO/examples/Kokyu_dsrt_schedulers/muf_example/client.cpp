@@ -121,7 +121,9 @@ main (int argc, char *argv[])
   max_prio = ACE_Sched_Params::priority_max (sched_policy,
                                              sched_scope);
 
+  //FUZZ: disable check_for_lack_ACE_OS
   ACE_Sched_Params sched_params (sched_policy, max_prio);
+  //FUZZ: enable check_for_lack_ACE_OS
 
   ACE_OS::sched_params (sched_params);
 

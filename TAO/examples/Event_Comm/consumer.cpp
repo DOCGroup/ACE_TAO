@@ -27,8 +27,10 @@ public:
   int run (void);
   // Execute the consumer;
 
+  //FUZZ: disable check_for_lack_ACE_OS
   virtual void close (void);
   // Shutdown the consumer.
+  //FUZZ: enable check_for_lack_ACE_OS
 
 private:
   virtual int handle_signal (int signum, siginfo_t *, ucontext_t *);

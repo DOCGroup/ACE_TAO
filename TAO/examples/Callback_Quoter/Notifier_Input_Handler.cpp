@@ -22,7 +22,7 @@
 #include "tao/ORB_Core.h"
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_unistd.h"
-#include "ace/os_include/os_ctype.h"
+#include "ace/OS_NS_ctype.h"
 
 // Constructor.
 
@@ -242,7 +242,7 @@ Notifier_Input_Handler::handle_input (ACE_HANDLE)
                   "%s",
                   buf));
 
-      if (tolower(buf[0]) == 'q')
+      if (ACE_OS::ace_tolower(buf[0]) == 'q')
         {
           // @@ Please remove this call if it's not used.
           // (this->notifier_i_.consumer_map_).close();

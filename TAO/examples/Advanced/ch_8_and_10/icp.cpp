@@ -126,7 +126,7 @@ short
 vary_temp(short temp)
 {
 #if defined (__BORLANDC__) || defined (_MSC_VER)
-    long r = rand() % 50;
+    long r = ACE_OS::rand() % 50;
 #else
     long r = lrand48() % 50;
 #endif
@@ -140,7 +140,7 @@ vary_temp(short temp)
     else
         delta = 0;
 #if defined (__BORLANDC__) || defined (_MSC_VER)
-    if (rand() % 2)
+    if (ACE_OS::rand() % 2)
 #else
     if (lrand48() % 2)
 #endif
@@ -246,24 +246,24 @@ ICP_get(
 
     // Depending on the attribute, return the
     // corresponding piece of state.
-    if (strcmp(attr, "model") == 0) {
-        strncpy((char *)value, pos->second.model, len);
-    } else if (strcmp(attr, "location") == 0) {
-        strncpy((char *)value, pos->second.location.c_str(), len);
-    } else if (strcmp(attr, "nominal_temp") == 0) {
+    if (ACE_OS::strcmp(attr, "model") == 0) {
+        ACE_OS::strncpy((char *)value, pos->second.model, len);
+    } else if (ACE_OS::strcmp(attr, "location") == 0) {
+        ACE_OS::strncpy((char *)value, pos->second.location.c_str(), len);
+    } else if (ACE_OS::strcmp(attr, "nominal_temp") == 0) {
         if (pos->second.type != thermostat)
             return -1;                      // Must be thermostat
-        memcpy(
+        ACE_OS::memcpy(
             value, &pos->second.nominal_temp,
             std::min(len, sizeof(pos->second.nominal_temp))
         );
-    } else if (strcmp(attr, "temperature") == 0) {
+    } else if (ACE_OS::strcmp(attr, "temperature") == 0) {
         short temp = actual_temp(pos);
-        memcpy(value, &temp, std::min(len, sizeof(temp)));
-    } else if (strcmp(attr, "MIN_TEMP") == 0) {
-        memcpy(value, &MIN_TEMP, std::min(len, sizeof(MIN_TEMP)));
-    } else if (strcmp(attr, "MAX_TEMP") == 0) {
-        memcpy(value, &MAX_TEMP, std::min(len, sizeof(MAX_TEMP)));
+        ACE_OS::memcpy(value, &temp, std::min(len, sizeof(temp)));
+    } else if (ACE_OS::strcmp(attr, "MIN_TEMP") == 0) {
+      ACE_OS::memcpy(value, &MIN_TEMP, std::min(len, sizeof(MIN_TEMP)));
+    } else if (ACE_OS::strcmp(attr, "MAX_TEMP") == 0) {
+      ACE_OS::memcpy(value, &MAX_TEMP, std::min(len, sizeof(MAX_TEMP)));
     } else {
         return -1;                          // No such attribute
     }
@@ -291,15 +291,15 @@ ICP_set(unsigned long id, const char * attr, const void * value)
         return -1;                          // No such device
 
     // Change either location or nominal temp, depending on attr.
-    if (strcmp(attr, "location") == 0) {
+    if (ACE_OS::strcmp(attr, "location") == 0) {
         pos->second.location.assign(
             (const char *)value, MAXSTR - 1
         );
-    } else if (strcmp(attr, "nominal_temp") == 0) {
+    } else if (ACE_OS::strcmp(attr, "nominal_temp") == 0) {
         if (pos->second.type != thermostat)
             return -1;                      // Must be thermostat
         short temp;
-        memcpy(&temp, value, sizeof(temp));
+        ACE_OS::memcpy(&temp, value, sizeof(temp));
         if (temp < MIN_TEMP || temp > MAX_TEMP)
             return -1;
         pos->second.nominal_temp = temp;

@@ -53,7 +53,7 @@ parse_args (int argc, char **argv)
         IOR[6] = ACE_OS::strdup (get_opts.opt_arg ());
         break;
       case 'i':
-        iterations = ::atoi (get_opts.opt_arg ());
+        iterations = ACE_OS::atoi (get_opts.opt_arg ());
         break;
       case '?':
       default:

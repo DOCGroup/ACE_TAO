@@ -21,6 +21,7 @@
 
 #include "server.h"
 #include <ace/streams.h>
+#include <ace/OS_NS_time.h>
 
 // The following headers are #included automatically by ACE+TAO.
 // Therefore, they don't need to be included explicitly.
@@ -31,8 +32,8 @@ TimeOfDay
 Time_impl::
 get_gmt (void) throw (CORBA::SystemException)
 {
-  time_t time_now = time (0);
-  struct tm *time_p = gmtime (&time_now);
+  time_t time_now = ACE_OS::time (0);
+  struct tm *time_p = ACE_OS::gmtime (&time_now);
 
   TimeOfDay tod;
   tod.hour = time_p->tm_hour;
