@@ -1,3 +1,14 @@
+Fri Jun 29 11:16:06 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * ace/CDR_Stream.h:
+        * ace/CDR_Stream.cpp:
+        
+          Reversed the order of declaration and implementation for 
+          overloads of ostream operator for from_octet and from_wchar.
+          The former calls the latter, and some compilers seem to
+          require that the latter's full implementation be seen
+          before it can be called.
+
 Fri Jun 29 11:03:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_mingw32.GNU:
