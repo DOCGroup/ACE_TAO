@@ -12,6 +12,7 @@
 #include "ace/OS_NS_time.h"
 #include "ace/High_Res_Timer.h"
 #include "ace/Stats.h"
+#include "ace/Throughput_Stats.h"
 #include "ace/Array.h"
 #include "ace/Sample_History.h"
 #include "Custom_Network_Priority_Mapping.h"
