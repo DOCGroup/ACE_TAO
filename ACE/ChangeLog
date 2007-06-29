@@ -1,3 +1,8 @@
+Fri Jun 29 19:40:27 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * bin/PerlACE/Process_Unix.pm: Don't hang waiting for a failed spawn
+          to exit its process.
+
 Fri Jun 29 19:26:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * performance-tests/TCP/tcp_test.cpp:
