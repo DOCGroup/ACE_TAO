@@ -51,6 +51,8 @@ LDFLAGS += -Wl,--enable-auto-import
 
 PWD=$(subst \,/,$(shell pwd))
 
+PLATFORM_SSL_LIBS ?= -lssl32 -leay32
+
 include $(ACE_ROOT)/include/makeinclude/platform_gnuwin32_common.GNU
 
 PRELIB:=
