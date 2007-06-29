@@ -33,10 +33,10 @@ parse_args (int argc, char **argv)
         IOR = get_opts.opt_arg ();
         break;
       case 'i':
-        iterations = ::atoi (get_opts.opt_arg ());
+        iterations = ACE_OS::atoi (get_opts.opt_arg ());
         break;
       case 'd':
-        data_bytes = ::atoi (get_opts.opt_arg ());
+        data_bytes = ACE_OS::atoi (get_opts.opt_arg ());
         break;
       case 'x':
         shutdown_server = 1;

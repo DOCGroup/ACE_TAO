@@ -24,6 +24,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_unistd.h"
+#include "ace/OS_NS_time.h"
 
 const char *ior_output_file = "server.ior";
 int done = 0;
@@ -61,8 +62,8 @@ TimeOfDay
 Time_impl::
 get_gmt ()
 {
-  time_t time_now = time (0);
-  struct tm *time_p = gmtime (&time_now);
+  time_t time_now = ACE_OS::time (0);
+  struct tm *time_p = ACE_OS::gmtime (&time_now);
 
   TimeOfDay tod;
   tod.hour = time_p->tm_hour;

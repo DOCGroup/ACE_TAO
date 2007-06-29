@@ -369,9 +369,9 @@ int test_boxed_string()
   const char *string2 = "Second-string";
 
   // Establish that we have data setup correctly...
-  OBV_VERITY (strcmp (string1, string2) <  0);
-  OBV_VERITY (strcmp (string2, string1) >  0);
-  OBV_VERITY (strcmp (string1, string1) == 0);
+  OBV_VERITY (ACE_OS::strcmp (string1, string2) <  0);
+  OBV_VERITY (ACE_OS::strcmp (string2, string1) >  0);
+  OBV_VERITY (ACE_OS::strcmp (string1, string1) == 0);
 
   // Make some objects, using our data
   VBstring *temp = 0;
@@ -385,15 +385,15 @@ int test_boxed_string()
                   VBstring(string1), // tests const char * ctor.
                   1);
 
-  OBV_VERITY (strcmp (vbstring1->_value(), string1) == 0);
-  OBV_VERITY (strcmp (vbstring2->_value(), string1) == 0);
+  OBV_VERITY (ACE_OS::strcmp (vbstring1->_value(), string1) == 0);
+  OBV_VERITY (ACE_OS::strcmp (vbstring2->_value(), string1) == 0);
 
   // Test assignment operators
   char *carray1 = 0;
   ACE_NEW_RETURN (carray1,
                   char[15],
                   1);
-  memcpy(carray1, string2, strlen(string2));
+  ACE_OS::memcpy(carray1, string2, ACE_OS::strlen(string2));
   *vbstring2 = carray1;              // char * (adopted by box)
   OBV_VERITY ((*vbstring2)[0] == 'S');
   *vbstring2 = string1;
@@ -407,7 +407,7 @@ int test_boxed_string()
   ACE_NEW_RETURN (carray2,
                   char[15],
                   1);
-  memcpy(carray2, string1, strlen(string1));
+  ACE_OS::memcpy(carray2, string1, ACE_OS::strlen(string1));
   vbstring2->_value(carray2);        // char * (adopted by box)
   OBV_VERITY ((*vbstring2)[0] == 'F');
   vbstring2->_value(string2);       // const char *
@@ -437,7 +437,7 @@ int test_boxed_string()
   ACE_NEW_RETURN (carray3,
                   char[15],
                   1);
-  memcpy(carray3, string1, strlen(string1));
+  ACE_OS::memcpy(carray3, string1, ACE_OS::strlen(string1));
   VBstring *vbstring4 = 0;
   ACE_NEW_RETURN (vbstring4,
                   VBstring(carray3),
@@ -483,14 +483,14 @@ int test_boxed_string_invocations (Test * test_object)
                         1);
         VBstring *p3 = 0;
 
-        OBV_VERITY (strcmp(p1->_value (), "string1") == 0);
-        OBV_VERITY (strcmp(p2->_value (), "string2") == 0);
+        OBV_VERITY (ACE_OS::strcmp(p1->_value (), "string1") == 0);
+        OBV_VERITY (ACE_OS::strcmp(p2->_value (), "string2") == 0);
 
         VBstring_var result = test_object->string_op1(p1, p2, p3);
 
-        OBV_VERITY (strcmp(p2->_value (), "2string") == 0);
-        OBV_VERITY (strcmp(p3->_value (), "2string") == 0);
-        OBV_VERITY (strcmp(result->_value (), "1string") == 0);
+        OBV_VERITY (ACE_OS::strcmp(p2->_value (), "2string") == 0);
+        OBV_VERITY (ACE_OS::strcmp(p3->_value (), "2string") == 0);
+        OBV_VERITY (ACE_OS::strcmp(result->_value (), "1string") == 0);
 
         //============================================================
         // Test _boxed_in(), _boxed_inout(), and _boxed_out())
@@ -502,9 +502,9 @@ int test_boxed_string_invocations (Test * test_object)
           test_object->string_op2(p1->_boxed_in(), p2->_boxed_inout(),
                                   p3->_boxed_out());
 
-        OBV_VERITY (strcmp(p2->_value (), "2second string") == 0);
-        OBV_VERITY (strcmp(p3->_value (), "2second string") == 0);
-        OBV_VERITY (strcmp(sresult.in (), "1string") == 0);
+        OBV_VERITY (ACE_OS::strcmp(p2->_value (), "2second string") == 0);
+        OBV_VERITY (ACE_OS::strcmp(p3->_value (), "2second string") == 0);
+        OBV_VERITY (ACE_OS::strcmp(sresult.in (), "1string") == 0);
 
         p1->_remove_ref ();
         p2->_remove_ref ();
@@ -900,18 +900,18 @@ int test_boxed_struct_invocations (Test * test_object)
 
 
         OBV_VERITY (p4->l() == 29);
-        OBV_VERITY (strcmp(p4->str(), "variable1") == 0);
+        OBV_VERITY (ACE_OS::strcmp(p4->str(), "variable1") == 0);
 
         VBvariable_struct1_var result2 = test_object->struct_op3(p4, p5, p6);
 
         OBV_VERITY (p5->l() == vs2.l*3);
-        OBV_VERITY (strcmp(p5->str(), "2variable") == 0);
+        OBV_VERITY (ACE_OS::strcmp(p5->str(), "2variable") == 0);
 
         OBV_VERITY (p6->l() == vs2.l*3);
-        OBV_VERITY (strcmp(p6->str(), "2variable") == 0);
+        OBV_VERITY (ACE_OS::strcmp(p6->str(), "2variable") == 0);
 
         OBV_VERITY (result2->l() == vs1.l);
-        OBV_VERITY (strcmp(result2->str(), vs1.str) == 0);
+        OBV_VERITY (ACE_OS::strcmp(result2->str(), vs1.str) == 0);
 
 
         //============================================================
@@ -923,10 +923,10 @@ int test_boxed_struct_invocations (Test * test_object)
                                 p6->_boxed_out());
 
         OBV_VERITY (p5->l() == vs2.l*3*3);
-        OBV_VERITY (strcmp(p5->str(), "e2variabl") == 0);
+        OBV_VERITY (ACE_OS::strcmp(p5->str(), "e2variabl") == 0);
 
         OBV_VERITY (p6->l() == vs1.l);
-        OBV_VERITY (strcmp(p6->str(), vs1.str) == 0);
+        OBV_VERITY (ACE_OS::strcmp(p6->str(), vs1.str) == 0);
 
 
         p4->_remove_ref ();
@@ -1122,19 +1122,19 @@ int test_boxed_array_invocations (Test * test_object)
                         VBstringarray (sa2),
                         1);
 
-        OBV_VERITY (strcmp((*p4)[0], sa[0]) == 0);
-        OBV_VERITY (strcmp((*p4)[1], sa[1]) == 0);
+        OBV_VERITY (ACE_OS::strcmp((*p4)[0], sa[0]) == 0);
+        OBV_VERITY (ACE_OS::strcmp((*p4)[1], sa[1]) == 0);
 
         VBstringarray *p6;
 
         VBstringarray_var result2 = test_object->array_op3 (p4, p5, p6);
 
-        OBV_VERITY (strcmp((*p5)[0], "1inout string") == 0);
-        OBV_VERITY (strcmp((*p5)[1], "2inout string") == 0);
-        OBV_VERITY (strcmp((*p6)[0], "1inout string") == 0);
-        OBV_VERITY (strcmp((*p6)[1], "2inout string") == 0);
-        OBV_VERITY (strcmp((*result2.in ())[0], sa[0]) == 0);
-        OBV_VERITY (strcmp((*result2.in ())[1], sa[1]) == 0);
+        OBV_VERITY (ACE_OS::strcmp((*p5)[0], "1inout string") == 0);
+        OBV_VERITY (ACE_OS::strcmp((*p5)[1], "2inout string") == 0);
+        OBV_VERITY (ACE_OS::strcmp((*p6)[0], "1inout string") == 0);
+        OBV_VERITY (ACE_OS::strcmp((*p6)[1], "2inout string") == 0);
+        OBV_VERITY (ACE_OS::strcmp((*result2.in ())[0], sa[0]) == 0);
+        OBV_VERITY (ACE_OS::strcmp((*result2.in ())[1], sa[1]) == 0);
 
         //============================================================
         // Array (variable)
@@ -1161,10 +1161,10 @@ int test_boxed_array_invocations (Test * test_object)
         ACE_DEBUG ((LM_DEBUG, "(%P|%t) p5[1]=%s\n", (const char *)((*p5)[1])));
         ACE_DEBUG ((LM_DEBUG, "(%P|%t) p6[0]=%s\n", (const char *)((*p6)[0])));
         ACE_DEBUG ((LM_DEBUG, "(%P|%t) p6[1]=%s\n", (const char *)((*p6)[1])));
-        OBV_VERITY (strcmp((*p5)[0], "g1inout strin") == 0);
-        OBV_VERITY (strcmp((*p5)[1], "g2inout strin") == 0);
-        OBV_VERITY (strcmp((*p6)[0],  sa[0]) == 0);
-        OBV_VERITY (strcmp((*p6)[1],  sa[1]) == 0);
+        OBV_VERITY (ACE_OS::strcmp((*p5)[0], "g1inout strin") == 0);
+        OBV_VERITY (ACE_OS::strcmp((*p5)[1], "g2inout strin") == 0);
+        OBV_VERITY (ACE_OS::strcmp((*p6)[0],  sa[0]) == 0);
+        OBV_VERITY (ACE_OS::strcmp((*p6)[1],  sa[1]) == 0);
 #endif
 
         p4->_remove_ref ();
@@ -1368,14 +1368,14 @@ int test_boxed_union_invocations (Test * test_object)
         OBV_VERITY (p4->_d () == 1);
         OBV_VERITY (p4->m1 () == 321);
         OBV_VERITY (p5->_d () == 2);
-        OBV_VERITY (strcmp(p5->m2 (), "abracadabra") == 0);
+        OBV_VERITY (ACE_OS::strcmp(p5->m2 (), "abracadabra") == 0);
 
         VBvariable_union1 * p6;
 
         VBvariable_union1_var result2 = test_object->union_op3 (p4, p5, p6);
 
         OBV_VERITY (p5->_d () == 2);
-        OBV_VERITY (strcmp(p5->m2 (), "aabracadabr") == 0);
+        OBV_VERITY (ACE_OS::strcmp(p5->m2 (), "aabracadabr") == 0);
         OBV_VERITY (p6->_d () == 1);
         OBV_VERITY (p6->m1 () == 321);
         OBV_VERITY (result2->_d () == 1);
@@ -1392,7 +1392,7 @@ int test_boxed_union_invocations (Test * test_object)
                                p6->_boxed_out());
 
         OBV_VERITY (p5->_d () == 2);
-        OBV_VERITY (strcmp(p5->m2 (), "raabracadab") == 0);
+        OBV_VERITY (ACE_OS::strcmp(p5->m2 (), "raabracadab") == 0);
 
         OBV_VERITY (p6->_d () == 1);
         OBV_VERITY (p6->m1 () == 1722);

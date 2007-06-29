@@ -103,6 +103,7 @@ test_i::_remove_ref (void)
     }
 }
 
+//FUZZ: disable check_for_lack_ACE_OS
 class test_factory_i :
   public POA_test_factory
 {
@@ -116,6 +117,7 @@ public:
 
   CORBA::ORB_var orb_;
 };
+//FUZZ: enable check_for_lack_ACE_OS
 
 test_factory_i::test_factory_i (CORBA::ORB_ptr orb)
   : orb_ (CORBA::ORB::_duplicate (orb))

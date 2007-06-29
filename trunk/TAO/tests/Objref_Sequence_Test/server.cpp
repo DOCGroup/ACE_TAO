@@ -17,7 +17,9 @@ public:
 
   void DeleteExtra (const ServerSequence &seq);
 
+  //FUZZ: disable check_for_lack_ACE_OS
   void shutdown (void);
+  //FUZZ: enable check_for_lack_ACE_OS
 
 private:
   /// Our root POA

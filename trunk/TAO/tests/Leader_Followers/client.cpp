@@ -56,19 +56,19 @@ parse_args (int argc, char **argv)
         break;
 
       case 'c':
-        number_of_client_threads = ::atoi (get_opts.opt_arg ());
+        number_of_client_threads = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case 'e':
-        number_of_event_loop_threads = ::atoi (get_opts.opt_arg ());
+        number_of_event_loop_threads = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case 't':
-        event_loop_timeout = ::atoi (get_opts.opt_arg ());
+        event_loop_timeout = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case 'w':
-        remote_work = ::atoi (get_opts.opt_arg ());
+        remote_work = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case 'x':

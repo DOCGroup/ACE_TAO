@@ -124,7 +124,7 @@ void
 ST_AMH_Servant::test_method (Test::AMH_RoundtripResponseHandler_ptr _tao_rh,
                              Test::Timestamp send_time)
 {
-  	printf("Recieved Timestamp # %d \n", calls_received);
+    ACE_OS::printf("Recieved Timestamp # %d \n", calls_received);
   	ACE_OS::sleep(1);
   	calls_received++;
 
@@ -341,9 +341,9 @@ ST_AMH_Servant servant(orb.in());
                                           );
 
     ACE_Thread_Manager::instance()->join(clientThr);
-    printf("End client\n");
+    ACE_OS::printf("End client\n");
     ACE_Thread_Manager::instance()->join(serverThr);
-    printf("End server\n");
+    ACE_OS::printf("End server\n");
 
    	orb->destroy();
 

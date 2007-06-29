@@ -2,6 +2,7 @@
 // $Id$
 
 #include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_time.h"
 #include "TestS.h"
 #include "tao/ORB_Core.h"
 
@@ -17,7 +18,9 @@ public:
   void test_method (Test::AMH_RoundtripResponseHandler_ptr _tao_rh,
                     Test::Timestamp send_time);
 
+  //FUZZ: disable check_for_lack_ACE_OS
   void shutdown (Test::AMH_RoundtripResponseHandler_ptr _tao_rh);
+  //FUZZ: disable check_for_lack_ACE_OS
 
 protected:
   CORBA::ORB_ptr orb_;

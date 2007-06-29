@@ -70,23 +70,23 @@ parse_args (int argc, char **argv)
         break;
 
       case 'i':
-        iterations = ::atoi (get_opts.opt_arg ());
+        iterations = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case 'd':
-        data_bytes = ::atoi (get_opts.opt_arg ());
+        data_bytes = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case 't':
-        timeout = ::atoi (get_opts.opt_arg ());
+        timeout = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case 'w':
-        work = ::atoi (get_opts.opt_arg ());
+        work = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case 'z':
-        interval = ::atoi (get_opts.opt_arg ());
+        interval = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case 'x':

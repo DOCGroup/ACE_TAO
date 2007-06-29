@@ -31,7 +31,9 @@ public:
 
   CORBA::Short method  (CORBA::Short boo);
 
+  //FUZZ: disable check_for_lack_ACE_OS
   void shutdown  (void);
+  //FUZZ: enable check_for_lack_ACE_OS
 
 private:
   CORBA::ORB_var orb_;

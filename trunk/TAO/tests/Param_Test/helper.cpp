@@ -18,7 +18,7 @@
 // ============================================================================
 
 #include "helper.h"
-#include "ace/os_include/os_ctype.h"
+#include "ace/OS_NS_ctype.h"
 
 const CORBA::ULong TEST_BUFSIZE = 128;
 
@@ -62,7 +62,7 @@ Generator::gen_string (int max_length)
   while (i < len)
     {
       int c = ACE_OS::rand () % 128;
-      if (isprint (c) && !isspace (c))
+      if (ACE_OS::ace_isprint (c) && !ACE_OS::ace_isspace (c))
         {
           buf [i] = c;
           i++;

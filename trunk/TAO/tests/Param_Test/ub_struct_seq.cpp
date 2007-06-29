@@ -368,7 +368,7 @@ Test_Unbounded_Struct_Sequence::compare (const Param_Test::PathSpec &s1,
       const Param_Test::Step& vs2 = s2[i];
 
       if (ACE_OS::strcmp (vs1.name.id.in (), vs2.name.id.in ())
-          || ACE_OS:: strcmp (vs1.name.kind.in (), vs2.name.kind.in ())
+          || ACE_OS::strcmp (vs1.name.kind.in (), vs2.name.kind.in ())
           || vs1.process != vs2.process)
         return 0;
     }

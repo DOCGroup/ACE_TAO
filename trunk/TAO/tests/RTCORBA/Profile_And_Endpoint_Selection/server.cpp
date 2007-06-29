@@ -32,7 +32,9 @@ public:
 
   void method (void);
 
+  //FUZZ: disable check_for_lack_ACE_OS
   void shutdown (void);
+  //FUZZ: enable check_for_lack_ACE_OS
 
   PortableServer::POA_ptr _default_POA (void);
 
@@ -103,7 +105,7 @@ parse_args (int argc, char **argv)
         break;
 
       case 'd':
-        debug = ::atoi (get_opts.opt_arg ());
+        debug = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case 'l':
@@ -137,10 +139,10 @@ write_iors_to_file (CORBA::Object_ptr object,
                     CORBA::ORB_ptr orb)
 {
   char filename[BUFSIZ];
-  sprintf (filename,
-           "%s_%d",
-           ior_file_base,
-           ior_file_count);
+  ACE_OS::sprintf (filename,
+                   "%s_%d",
+                   ior_file_base,
+                   ior_file_count);
   ior_file_count++;
 
   FILE *file =

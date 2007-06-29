@@ -113,11 +113,13 @@ main (int argc, char *argv[])
       if (task0.too_big_difference_calls () > iterations/20
           || task1.too_big_difference_calls () > iterations/20)
         {
+          //FUZZ: disable check_for_lack_ACE_OS
           ACE_DEBUG ((LM_DEBUG,
                       "Warning: Too many calls have a too big difference between "
                       "timeout and elapsed time (task0: %d, task1: %d)\n",
                       task0.too_big_difference_calls (),
                       task1.too_big_difference_calls ()));
+          //FUZZ: enable check_for_lack_ACE_OS
         }
       else  if (task0.too_big_difference_calls () != 0
                 || task1.too_big_difference_calls () != 0)
