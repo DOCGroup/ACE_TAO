@@ -659,7 +659,7 @@ Worker::run (void)
 }
 
 int
-main (int argc, char **argv)
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   gsf = ACE_High_Res_Timer::global_scale_factor ();
 

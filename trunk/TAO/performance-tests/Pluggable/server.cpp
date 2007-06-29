@@ -8,7 +8,7 @@ ACE_RCSID(IDL_Cubit, server, "$Id$")
 // This runs the server test.
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   PP_Test_Server pp_test_server;
 

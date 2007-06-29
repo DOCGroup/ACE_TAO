@@ -126,7 +126,7 @@ object_creation_test (PortableServer::POA_ptr poa,
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   set_rt_scheduling ();
 

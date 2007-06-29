@@ -19,7 +19,7 @@ ACE_RCSID(IDL_Cubit, client, "$Id$")
 // This function runs the client test.
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   // Enable FIFO scheduling, e.g., RT scheduling class on Solaris.
   if (ACE_OS::sched_params (ACE_Sched_Params (ACE_SCHED_FIFO,
