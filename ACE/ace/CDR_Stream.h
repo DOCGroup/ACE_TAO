@@ -1320,10 +1320,10 @@ ACE_Export std::ostream& operator<< (std::ostream &os,
                                      ACE_OutputCDR::from_char x);
 
 ACE_Export std::ostream& operator<< (std::ostream &os,
-                                     ACE_OutputCDR::from_octet x);
+                                     ACE_OutputCDR::from_wchar x);
 
 ACE_Export std::ostream& operator<< (std::ostream &os,
-                                     ACE_OutputCDR::from_wchar x);
+                                     ACE_OutputCDR::from_octet x);
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
