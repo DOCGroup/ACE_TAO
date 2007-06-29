@@ -1,3 +1,85 @@
+Fri Jun 29 01:27:22 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * tests/AMH_Exceptions/server.cpp:
+        * tests/Bug_1361_Regression/client.cpp:
+        * tests/Bug_1676_Regression/Hello.cpp:
+        * tests/Bug_2319_Regression/server.cpp:
+        * tests/Bug_2349_Regression/server.cpp:
+        * tests/Bug_2417_Regression/subscriber_impl.cpp:
+        * tests/Bug_2560_Regression/Stock_Factory_i.cpp:
+        * tests/Bug_2678_Regression/server.cpp:
+        * tests/CDR/allocator.cpp:
+        * tests/CSD_Strategy_Tests/TP_Common/OrbShutdownTask.cpp:
+        * tests/CodeSets/simple/client.cpp:
+        * tests/CodeSets/simple/server.cpp:
+        * tests/CollocationLockup/SimpleNamingService.cpp:
+        * tests/Collocation_Oneway_Tests/Collocated_Test.cpp:
+        * tests/DII_Collocation_Tests/oneway/Hello.cpp:
+        * tests/DII_Collocation_Tests/twoway/Hello.cpp:
+        * tests/DiffServ/server.cpp:
+        * tests/Explicit_Event_Loop/server.cpp:
+        * tests/File_IO/client.cpp:
+        * tests/IOR_Endpoint_Hostnames/generate_ior.cpp:
+        * tests/IOR_Endpoint_Hostnames/list_interfaces.cpp:
+        * tests/Leader_Followers/client.cpp:
+        * tests/Leader_Followers/server.cpp:
+        * tests/MT_Timeout/client.cpp:
+        * tests/Multiple_Inheritance/client.cpp:
+        * tests/NestedUpcall/MT_Client_Test/local_server.cpp:
+        * tests/Nested_Event_Loop/client.cpp:
+        * tests/OBV/Supports/client.cpp:
+        * tests/OBV/ValueBox/Test_impl.cpp:
+        * tests/OBV/ValueBox/client.cpp:
+        * tests/ORB_Local_Config/Bug_2612/DllOrb.cpp:
+        * tests/Objref_Sequence_Test/server.cpp:
+        * tests/Oneway_Buffering/client.cpp:
+        * tests/Oneway_Timeouts/server.cpp:
+        * tests/POA/EndpointPolicy/server.cpp:
+        * tests/POA/Persistent_ID/server.cpp:
+        * tests/Param_Test/helper.cpp:
+        * tests/Param_Test/results.cpp:
+        * tests/Param_Test/ub_struct_seq.cpp:
+        * tests/Param_Test/var_array.cpp:
+        * tests/Portable_Interceptors/AdvSlot/server.cpp:
+        * tests/Portable_Interceptors/AdvSlotDblCpy/server.cpp:
+        * tests/Portable_Interceptors/AdvSlotExt/server.cpp:
+        * tests/RTCORBA/Banded_Connections/server.cpp:
+        * tests/RTCORBA/Client_Propagated/server.cpp:
+        * tests/RTCORBA/Client_Protocol/server.cpp:
+        * tests/RTCORBA/Collocation/Collocation.cpp:
+        * tests/RTCORBA/Diffserv/server.cpp:
+        * tests/RTCORBA/Explicit_Binding/server.cpp:
+        * tests/RTCORBA/Linear_Priority/client.cpp:
+        * tests/RTCORBA/Linear_Priority/server.cpp:
+        * tests/RTCORBA/MT_Client_Protocol_Priority/server.cpp:
+        * tests/RTCORBA/Persistent_IOR/client.cpp:
+        * tests/RTCORBA/Persistent_IOR/server.cpp:
+        * tests/RTCORBA/Policy_Combinations/client.cpp:
+        * tests/RTCORBA/Policy_Combinations/server.cpp:
+        * tests/RTCORBA/Private_Connection/server.cpp:
+        * tests/RTCORBA/Profile_And_Endpoint_Selection/client.cpp:
+        * tests/RTCORBA/Profile_And_Endpoint_Selection/server.cpp:
+        * tests/RTCORBA/Server_Declared/server.cpp:
+        * tests/RTCORBA/Server_Protocol/server.cpp:
+        * tests/RTScheduling/Scheduling_Interceptor/test_server.cpp:
+        * tests/Reliable_Oneways/client.cpp:
+        * tests/Sequence_Unit_Tests/mock_array.cpp:
+        * tests/Sequence_Unit_Tests/unbounded_octet_sequence_nocopy_ut.cpp:
+        * tests/Single_Read/client.cpp:
+        * tests/Smart_Proxies/Benchmark/server.cpp:
+        * tests/Smart_Proxies/On_Demand/server.cpp:
+        * tests/Smart_Proxies/Policy/server.cpp:
+        * tests/Smart_Proxies/dtor/server.cpp:
+        * tests/Smart_Proxies/server.cpp:
+        * tests/Timed_Buffered_Oneways/client.cpp:
+        * tests/Timeout/client.cpp:
+        * tests/TransportCurrent/Framework/server.cpp:
+        * tests/UNKNOWN_Exception/server.cpp:
+
+          Fixed ACE_OS fuzz warnings. Use ACE_OS calls instead of raw OS function
+          where possible. If fuzz detected a false-positive, then disable
+          the ACE_OS fuzz check for that section of the code.
+
 Fri Jun 29 01:12:34 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * performance-tests/CSD_Strategy/TestInf/OrbShutdownTask.cpp:
