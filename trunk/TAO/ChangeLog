@@ -1,3 +1,17 @@
+Fri Jun 29 19:41:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * performance-tests/Latency/AMI/client.cpp
+        * performance-tests/Latency/Thread_Per_Connection/client.cpp
+        * performance-tests/Latency/Thread_Pool/client.cpp
+        * performance-tests/POA/Demux/server.cpp
+        * performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/client.cpp
+        * performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/client.cpp
+        * performance-tests/RTCorba/Oneways/Reliable/client.cpp
+        * performance-tests/Sequence_Latency/AMI/client.cpp
+        * performance-tests/Sequence_Latency/Thread_Per_Connection/client.cpp
+        * performance-tests/Sequence_Latency/Thread_Pool/client.cpp
+          Added missing includes
+
 Fri Jun 29 12:00:25 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * performance-tests/Anyop/anyop.cpp:

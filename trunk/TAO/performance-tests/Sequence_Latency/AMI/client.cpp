@@ -6,6 +6,7 @@
 #include "ace/High_Res_Timer.h"
 #include "ace/Sched_Params.h"
 #include "ace/Stats.h"
+#include "ace/Throughput_Stats.h"
 #include "ace/OS_NS_errno.h"
 #include "ace/OS_NS_string.h"
 
