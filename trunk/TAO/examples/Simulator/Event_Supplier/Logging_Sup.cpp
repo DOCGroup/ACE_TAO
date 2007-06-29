@@ -155,7 +155,7 @@ Logging_Supplier::load_schedule_data
             {
               // Run through leading whitespace.
               char *temp = input_buf;
-              while (*temp && isspace (*temp))
+              while (*temp && ACE_OS::ace_isspace (*temp))
                 ++temp;
 
               // If there is anything besides whitespace in the line
@@ -515,7 +515,7 @@ main (int argc, char *argv [])
 
       // Initialize everthing
       if (event_Supplier_ptr->init () == -1)
-        exit (1);
+        ACE_OS::exit (1);
 
       // now we can go ahead
       event_Supplier_ptr->start_generating_events ();

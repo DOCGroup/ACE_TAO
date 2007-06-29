@@ -1,3 +1,50 @@
+Fri Jun 29 23:43:45 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * examples/Advanced/ch_12/icp.cpp:
+        * examples/Advanced/ch_12/server.cpp:
+        * examples/Advanced/ch_18/icp.cpp:
+        * examples/Advanced/ch_18/server.cpp:
+        * examples/Advanced/ch_21/icp.cpp:
+        * examples/Advanced/ch_21/server.cpp:
+        * examples/Advanced/ch_3/server.cpp:
+        * examples/Advanced/ch_8_and_10/icp.cpp:
+        * examples/Borland/ChatClientWnd.cpp:
+        * examples/Buffered_AMI/client.cpp:
+        * examples/Buffered_Oneways/client.cpp:
+        * examples/CSD_Strategy/ThreadPool/OrbShutdownTask.cpp:
+        * examples/CSD_Strategy/ThreadPool2/OrbShutdownTask.cpp:
+        * examples/CSD_Strategy/ThreadPool3/OrbShutdownTask.cpp:
+        * examples/CSD_Strategy/ThreadPool4/OrbShutdownTask.cpp:
+        * examples/CSD_Strategy/ThreadPool5/OrbShutdownTask.cpp:
+        * examples/CSD_Strategy/ThreadPool6/OrbShutdownTask.cpp:
+        * examples/Callback_Quoter/Consumer_Input_Handler.cpp:
+        * examples/Callback_Quoter/Notifier_Input_Handler.cpp:
+        * examples/Content_Server/AMI_Iterator/Iterator_Factory_i.cpp:
+        * examples/Content_Server/AMI_Observer/Push_Iterator_Factory_i.cpp:
+        * examples/Content_Server/SMI_Iterator/Iterator_Factory_i.cpp:
+        * examples/Event_Comm/Event_Comm_i.cpp:
+        * examples/Event_Comm/consumer.cpp:
+        * examples/Kokyu_dsrt_schedulers/fp_example/client.cpp:
+        * examples/Kokyu_dsrt_schedulers/fp_example/test_i.cpp:
+        * examples/Kokyu_dsrt_schedulers/mif_example/client.cpp:
+        * examples/Kokyu_dsrt_schedulers/mif_example/test_i.cpp:
+        * examples/Kokyu_dsrt_schedulers/muf_example/client.cpp:
+        * examples/Kokyu_dsrt_schedulers/muf_example/test_i.cpp:
+        * examples/Logging/Logging_Test_i.cpp:
+        * examples/POA/Default_Servant/client.cpp:
+        * examples/POA/Forwarding/client.cpp:
+        * examples/POA/Generic_Servant/client.cpp:
+        * examples/POA/TIE/client.cpp:
+        * examples/PluggableUDP/tests/Performance/UDP_PerformanceClient.cpp:
+        * examples/PluggableUDP/tests/SimplePerformance/client.cpp:
+        * examples/Simulator/Event_Supplier/DualEC_Sup.cpp:
+        * examples/Simulator/Event_Supplier/Event_Sup.cpp:
+        * examples/Simulator/Event_Supplier/Logging_Sup.cpp:
+
+          Fixed ACE_OS fuzz warnings. Use ACE_OS calls instead of raw OS function
+          where possible. If fuzz detected a false-positive, then disable
+          the ACE_OS fuzz check for that section of the code.
+
 Fri Jun 29 19:41:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * performance-tests/Latency/AMI/client.cpp

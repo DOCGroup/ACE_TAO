@@ -386,10 +386,12 @@ ShutdownCallback::~ShutdownCallback (void)
 
 // -------------
 
+//FUZZ: disable check_for_lack_ACE_OS
 Consumer_i::Consumer_i (void)
   : shutdown (0)
 {
 }
+//FUZZ: enable check_for_lack_ACE_OS
 
 Consumer_i::~Consumer_i (void)
 {

@@ -21,10 +21,9 @@ Simple_Server_i::test_method (CORBA::Long exec_duration)
   int prio;
   int guid;
 
-  ACE_OS::
-    memcpy (&guid,
-            this->current_->id ()->get_buffer (),
-            sizeof (this->current_->id ()->length ()));
+  ACE_OS::memcpy (&guid,
+                  this->current_->id ()->get_buffer (),
+                  sizeof (this->current_->id ()->length ()));
 
   ACE_High_Res_Timer timer;
   ACE_Time_Value elapsed_time;

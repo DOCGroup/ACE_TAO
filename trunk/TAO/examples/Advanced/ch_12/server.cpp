@@ -72,7 +72,7 @@ make_dref (PortableServer::POA_ptr poa, CCS::AssetType anum)
   // the repository ID.
   char buf[32];
   assert (ICP_get (anum, "model", buf, sizeof (buf)) == 0);
-  const char * rep_id = strcmp (buf, "Sens-A-Temp") == 0
+  const char * rep_id = ACE_OS::strcmp (buf, "Sens-A-Temp") == 0
     ? "IDL:acme.com/CCS/Thermometer:1.0"
     : "IDL:acme.com/CCS/Thermostat:1.0";
 
@@ -579,7 +579,7 @@ preinvoke (const PortableServer::ObjectId & oid,
       throw CORBA::OBJECT_NOT_EXIST ();
     }
 
-  if  (strcmp (oid_string.in (), Controller_oid) == 0)
+  if  (ACE_OS::strcmp (oid_string.in (), Controller_oid) == 0)
     return m_ctrl;
 
   istrstream istr (oid_string.in ());
@@ -610,7 +610,7 @@ preinvoke (const PortableServer::ObjectId & oid,
       // Instantiate correct type of servant.
       char buf[32];
       assert (ICP_get (anum, "model", buf, sizeof (buf)) == 0);
-      if  (strcmp (buf, "Sens-A-Temp") == 0)
+      if  (ACE_OS::strcmp (buf, "Sens-A-Temp") == 0)
         servant = new Thermometer_impl (anum);
       else
         servant = new Thermostat_impl (anum);
@@ -623,14 +623,14 @@ preinvoke (const PortableServer::ObjectId & oid,
 
       // If operation is "remove", also remove entry from
       // active object map -- the object is about to be deleted.
-      if  (strcmp (operation, "remove") == 0)
+      if (ACE_OS::strcmp (operation, "remove") == 0)
         m_aom.erase (servant_pos);
     }
 
   // We found a servant, or just instantiated it.  If the operation is
   // not a remove, move the servant to the tail of the evictor queue
   // and update its queue position in the map.
-  if  (strcmp (operation, "remove") != 0)
+  if  (ACE_OS::strcmp (operation, "remove") != 0)
     {
       m_eq.push_front (servant);
       m_aom[anum] = m_eq.begin ();
