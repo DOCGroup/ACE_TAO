@@ -13,18 +13,6 @@ ACE_Message_Queue_Base::ACE_Message_Queue_Base (void)
 {
 }
 
-#if defined (ACE_VXWORKS)
-// Specialization to use native VxWorks Message Queues.
-
-ACE_INLINE MSG_Q_ID
-ACE_Message_Queue_Vx::msgq (void)
-{
-  // Hijack the tail_ field to store the MSG_Q_ID.
-  return reinterpret_cast<MSG_Q_ID> (tail_);
-}
-
-#endif /* ACE_VXWORKS */
-
 #if defined (ACE_HAS_WIN32_OVERLAPPED_IO)
 
 ACE_INLINE int

@@ -119,6 +119,7 @@ project(ACE) : acedefaults, install, other, codecs, token, svcconf, uuid, fileca
     MEM_Stream.cpp
     Message_Block.cpp
     Message_Queue.cpp
+    Message_Queue_Vx.cpp
     Method_Request.cpp
     MMAP_Memory_Pool.cpp
     Msg_WFMO_Reactor.cpp
