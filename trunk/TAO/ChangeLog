@@ -1,3 +1,10 @@
+Fri Jun 29 10:57:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_2953_Regression/*:
+          New regression for bug 2953, reproduces a problem with RTCORBA
+          that seems to be caused by the service gestalt related changes in
+          TAO
+
 Fri Jun 29 01:27:22 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * tests/AMH_Exceptions/server.cpp:
@@ -124,7 +131,6 @@ Thu Jun 28 16:40:26 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
           ACE OS_NS_ctypes.h. Having done that, it seems that the old
           include of ace/os_include/os_ctype.h is redundant, so I've taken
           it out.
-
 
 Thu Jun 28 14:07:00 UTC 2007  Simon Massey  <sma@prismtech.com>
 
