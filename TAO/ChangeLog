@@ -1,3 +1,19 @@
+Fri Jun 29 01:12:34 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * performance-tests/CSD_Strategy/TestInf/OrbShutdownTask.cpp:
+        * performance-tests/Cubit/TAO/MT_Cubit/client.cpp:
+        * performance-tests/POA/Demux/demux_stats.cpp:
+        * performance-tests/POA/Demux/demux_test_client.inl:
+        * performance-tests/POA/Demux/demux_test_server.cpp:
+        * performance-tests/POA/Demux/write_names.cpp:
+        * performance-tests/Protocols/distributor.cpp:
+        * performance-tests/Protocols/receiver.cpp:
+        * performance-tests/RTCorba/Thread_Pool/server.cpp:
+
+          Fixed ACE_OS fuzz warnings. Use ACE_OS calls instead of raw OS function
+          where possible. If fuzz detected a false-positive, then disable
+          the ACE_OS fuzz check for that section of the code.
+
 Thu Jun 28 16:40:26 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/tests/Event/Mcast/AddrServer/Client.cpp:

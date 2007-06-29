@@ -54,8 +54,8 @@ Demux_Stats::parse_args (int argc_, char * argv_ [])
     switch (c)
       {
       case 'i':
-	iterations = atoi (get_opts.opt_arg ());
-	break;
+        iterations = ACE_OS::atoi (get_opts.opt_arg ());
+        break;
       }
 
   return 0;
@@ -105,158 +105,160 @@ Demux_Stats::calculate_avg_latency ()
   while (fscanf (this->result_fp_, "%s %s %s %ld %ld", &str1, &str2, &str3, &i, &time) != EOF)
     {
 
-    	  if(strcmp (str1,"POA::locate_poa_i")==0 && (strcmp (str3,"end") == 0))
-	    {
-	      if (items < 1) { items = items + 1; counter++; }
-	      else
-		{
-		  sum_poa += time;
-		  last_poa_time = time;
-		  items = items + 1;
-		  ++counter;
-		}
-	    }
+      if(ACE_OS::strcmp (str1,"POA::locate_poa_i")==0 && (ACE_OS::strcmp (str3,"end") == 0))
+        {
+          if (items < 1) { items = items + 1; counter++; }
+          else
+            {
+              sum_poa += time;
+              last_poa_time = time;
+              items = items + 1;
+              ++counter;
+            }
+        }
 
-	  if(strcmp (str1,"POA::find_servant")==0 && (strcmp (str3,"end") == 0))
-	    {
-	      if (items < 1) { items = items + 1; counter++; }
-	      else
-		{
-		  sum_servant += time;
-		  last_servant_time = time;
-		  items = items + 1;
-		  counter++;
-		}
-	    }
+      if(ACE_OS::strcmp (str1,"POA::find_servant")==0 && (ACE_OS::strcmp (str3,"end") == 0))
+        {
+          if (items < 1) { items = items + 1; counter++; }
+          else
+            {
+              sum_servant += time;
+              last_servant_time = time;
+              items = items + 1;
+              counter++;
+            }
+        }
 
-	  if(strcmp (str1,"Servant::_dispatch")==0 && (strcmp (str3,"end") == 0))
-	    {
-	      if (items < 1) { ++items; counter++; }
-	      else
-		{
-		  sum_dispatch += time;
-		  last_dispatch_time = time;
-		  ++items;items++;
-		  counter++;
-		}
-	    }
-	  if(strcmp (str1,"TAO_Dynamic_Hash_OpTable::find")==0 && (strcmp (str3,"end") == 0))
-	    {
-	      if (items < 1) { ++items; counter++; }
-	      else
-		{
-		  sum_dynamic += time;
-		  last_dynamic_time = time;
-		  ++items;
-		  counter++;
-		}
-	    }
+      if(ACE_OS::strcmp (str1,"Servant::_dispatch")==0 && (ACE_OS::strcmp (str3,"end") == 0))
+        {
+          if (items < 1) { ++items; counter++; }
+          else
+            {
+              sum_dispatch += time;
+              last_dispatch_time = time;
+              ++items;items++;
+              counter++;
+            }
+        }
 
-	  if(strcmp (str1,"TAO_Linear_Search_OpTable::find")==0 && (strcmp (str3,"end") == 0))
-	    {
-	      if (items < 1) { items++; counter++; }
-	      else
-		{
-		  sum_linear += time;
-		  last_linear_time = time;
-		  items++;
-		  counter++;
-		}
-	    }
-	  if(strcmp (str1,"TAO_Perfect_Hash_OpTable::find")==0 && (strcmp (str3,"end") == 0))
-	    {
-	      if (items < 1) { items++; counter++; }
-	      else
-		{
-		  sum_perfect += time;
-		  last_perfect_time = time;
-		  items++;
-		  counter++;
-		}
-	    }
-	  if(strcmp (str1,"TAO_Binary_Search_OpTable::find")==0 && (strcmp (str3,"end") == 0))
-	    {
-	      if (items < 1) { items++; counter++; }
-	      else
-		{
-		  sum_binary += time;
-		  last_binary_time = time;
-		  items++;
-		  counter++;
-		}
-	    }
-	  if(strcmp (str1,"POA::parse_key")==0 && (strcmp (str3,"end") == 0))
-	    {
-	      if (items < 1) { items++; counter++; }
-	      else
-		{
-		  sum_parse += time;
-		  last_parse_time = time;
-		  items++;
-		  counter++;
-		}
-	    }
+      if(ACE_OS::strcmp (str1,"TAO_Dynamic_Hash_OpTable::find")==0 && (ACE_OS::strcmp (str3,"end") == 0))
+        {
+          if (items < 1) { ++items; counter++; }
+          else
+            {
+              sum_dynamic += time;
+              last_dynamic_time = time;
+              ++items;
+              counter++;
+            }
+        }
 
-	  if (iterations !=0 )
-	  {
-	    if (counter == iterations)
-	    {
+      if(ACE_OS::strcmp (str1,"TAO_Linear_Search_OpTable::find")==0 && (ACE_OS::strcmp (str3,"end") == 0))
+        {
+          if (items < 1) { items++; counter++; }
+          else
+            {
+              sum_linear += time;
+              last_linear_time = time;
+              items++;
+              counter++;
+            }
+        }
 
-	      mean_poa = sum_poa/items;
-	      mean_servant = sum_servant/items;
-	      mean_dispatch = sum_dispatch/items;
-	      mean_dynamic = sum_dynamic/items;
-	      mean_linear = sum_linear/items;
-	      mean_binary = sum_binary/items;
-	      mean_perfect = sum_perfect/items;
-	      printf("Average response times = POA = %lf SERVANT = %lf DISPATCH = %lf PERFECT = %lf DYNAMIC = %lf BINARY = %lf LINEAR = %lf microsec\n", mean_poa,
-		     mean_servant,
-		     mean_dispatch,
-		     mean_perfect,
-		     mean_dynamic,
-		     mean_binary,
-		     mean_linear
-		     );
-	      sum_poa = 0;
-	      sum_servant = 0;
-	      sum_dispatch = 0;
-	      sum_dynamic = 0;
-	      sum_linear = 0;
-	      sum_perfect = 0;
-	      sum_binary = 0;
+      if(ACE_OS::strcmp (str1,"TAO_Perfect_Hash_OpTable::find")==0 && (ACE_OS::strcmp (str3,"end") == 0))
+        {
+          if (items < 1) { items++; counter++; }
+          else
+            {
+              sum_perfect += time;
+              last_perfect_time = time;
+              items++;
+              counter++;
+            }
+        }
 
-	      items = 0;
-	      counter = 0;
-	    }
-	  }
+      if(ACE_OS::strcmp (str1,"TAO_Binary_Search_OpTable::find")==0 && (ACE_OS::strcmp (str3,"end") == 0))
+        {
+          if (items < 1) { items++; counter++; }
+          else
+            {
+              sum_binary += time;
+              last_binary_time = time;
+              items++;
+              counter++;
+            }
+        }
+
+      if(ACE_OS::strcmp (str1,"POA::parse_key")==0 && (ACE_OS::strcmp (str3,"end") == 0))
+        {
+          if (items < 1) { items++; counter++; }
+          else
+            {
+              sum_parse += time;
+              last_parse_time = time;
+              items++;
+              counter++;
+            }
+        }
+
+        if (iterations !=0 )
+          {
+            if (counter == iterations)
+              {
+                mean_poa = sum_poa/items;
+                mean_servant = sum_servant/items;
+                mean_dispatch = sum_dispatch/items;
+                mean_dynamic = sum_dynamic/items;
+                mean_linear = sum_linear/items;
+                mean_binary = sum_binary/items;
+                mean_perfect = sum_perfect/items;
+                ACE_OS::printf("Average response times = POA = %lf SERVANT = %lf DISPATCH = %lf PERFECT = %lf DYNAMIC = %lf BINARY = %lf LINEAR = %lf microsec\n", 
+                                mean_poa,
+                                mean_servant,
+                                mean_dispatch,
+                                mean_perfect,
+                                mean_dynamic,
+                                mean_binary,
+                                mean_linear);
+                sum_poa = 0;
+                sum_servant = 0;
+                sum_dispatch = 0;
+                sum_dynamic = 0;
+                sum_linear = 0;
+                sum_perfect = 0;
+                sum_binary = 0;
+                items = 0;
+                counter = 0;
+              }
+          }
     }
 
   ACE_OS::fclose (this->result_fp_);
 
-if (iterations == 0)
-  {
-    sum_poa -= last_poa_time;
-    sum_servant -= last_servant_time;
-    sum_dispatch -= last_dispatch_time;
-    sum_dynamic -= last_dynamic_time;
-    sum_linear -= last_linear_time;
-    sum_perfect -= last_perfect_time;
-    sum_binary -= last_binary_time;
-    sum_parse -= last_parse_time;
+  if (iterations == 0)
+    {
+      sum_poa -= last_poa_time;
+      sum_servant -= last_servant_time;
+      sum_dispatch -= last_dispatch_time;
+      sum_dynamic -= last_dynamic_time;
+      sum_linear -= last_linear_time;
+      sum_perfect -= last_perfect_time;
+      sum_binary -= last_binary_time;
+      sum_parse -= last_parse_time;
 
-  //items = items - 4;
+      //items = items - 4;
 
-  items = items - 2;
+      items = items - 2;
 
-  mean_poa = sum_poa/items;
-  mean_servant = sum_servant/items;
-  mean_dispatch = sum_dispatch/items;
-  mean_dynamic = sum_dynamic/items;
-  mean_linear = sum_linear/items;
-  mean_binary = sum_binary/items;
-  mean_perfect = sum_perfect/items;
-  mean_parse = sum_parse/items;
-  }
+      mean_poa = sum_poa/items;
+      mean_servant = sum_servant/items;
+      mean_dispatch = sum_dispatch/items;
+      mean_dynamic = sum_dynamic/items;
+      mean_linear = sum_linear/items;
+      mean_binary = sum_binary/items;
+      mean_perfect = sum_perfect/items;
+      mean_parse = sum_parse/items;
+    }
 
   // now compute standard deviation
 
@@ -282,23 +284,23 @@ if (iterations == 0)
     {
       time_temp = (double) time;
 
-      if(strcmp (str1,"POA::locate_poa_i")==0 && (strcmp (str3,"end") == 0))
-	{
-	  deviation_poa = time_temp - mean_poa;
-	  sum_poa_temp += deviation_poa * deviation_poa;
-	}
+      if(ACE_OS::strcmp (str1,"POA::locate_poa_i")==0 && (ACE_OS::strcmp (str3,"end") == 0))
+        {
+          deviation_poa = time_temp - mean_poa;
+          sum_poa_temp += deviation_poa * deviation_poa;
+        }
 
-      if(strcmp (str1,"POA::find_servant")==0 && (strcmp (str3,"end") == 0))
-	{
-	  deviation_servant = time_temp - mean_servant;
-	  sum_servant_temp += deviation_servant * deviation_servant;
-	}
+      if(ACE_OS::strcmp (str1,"POA::find_servant")==0 && (ACE_OS::strcmp (str3,"end") == 0))
+        {
+          deviation_servant = time_temp - mean_servant;
+          sum_servant_temp += deviation_servant * deviation_servant;
+        }
 
-      if(strcmp (str1,"Servant::_dispatch")==0 && (strcmp (str3,"end") == 0))
-	{
-	  deviation_dispatch = time_temp - mean_dispatch;
-	  sum_dispatch_temp += deviation_dispatch * deviation_dispatch;
-	}
+      if(ACE_OS::strcmp (str1,"Servant::_dispatch")==0 && (ACE_OS::strcmp (str3,"end") == 0))
+        {
+          deviation_dispatch = time_temp - mean_dispatch;
+          sum_dispatch_temp += deviation_dispatch * deviation_dispatch;
+        }
     }
 
   items_temp = (double) items;
@@ -322,19 +324,17 @@ if (iterations == 0)
   if (iterations == 0)
     {
 
-      printf("Average response times = POA = %lf SERVANT = %lf DISPATCH = %lf PERFECT = %lf DYNAMIC = %lf BINARY = %lf LINEAR = %lf PARSE = %lf microsec\n", mean_poa, mean_servant,
-		       mean_dispatch,
-		       mean_perfect,
-		       mean_dynamic,
-		       mean_binary,
-		       mean_linear,
-	               mean_parse
-		       );
-
+      ACE_OS::printf("Average response times = POA = %lf SERVANT = %lf DISPATCH = %lf PERFECT = %lf DYNAMIC = %lf BINARY = %lf LINEAR = %lf PARSE = %lf microsec\n", mean_poa, mean_servant,
+                     mean_dispatch,
+                     mean_perfect,
+                     mean_dynamic,
+                     mean_binary,
+                     mean_linear,
+                     mean_parse);
     }
 
-      return 0;
-    }
+  return 0;
+}
 
 int
 main (int argc, char *argv [])
@@ -343,5 +343,4 @@ main (int argc, char *argv [])
 
   demux_stats.parse_args (argc, argv);
   demux_stats.calculate_avg_latency ();
-
 }

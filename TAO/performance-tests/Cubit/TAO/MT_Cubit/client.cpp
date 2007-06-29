@@ -395,9 +395,9 @@ Client_i::activate_low_client (void)
 
       // Set a task_id string startiing with "@", so we are able to
       // accurately count the number of context switches on VXWORKS
-      sprintf (this->task_id_,
-               "@Low%u",
-               i);
+      ACE_OS::sprintf (this->task_id_,
+                       "@Low%u",
+                       i);
 #endif /* ACE_VXWORKS */
       ACE_DEBUG ((LM_DEBUG,
                   "Creating client with thread ID %d and priority %d\n",

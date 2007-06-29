@@ -23,7 +23,9 @@ public:
   void method (CORBA::ULong work,
                CORBA::ULong prime_number);
 
+  //FUZZ: disable check_for_lack_ACE_OS
   void shutdown (void);
+  //FUZZ: enable check_for_lack_ACE_OS
 
   PortableServer::POA_ptr _default_POA (void);
 
