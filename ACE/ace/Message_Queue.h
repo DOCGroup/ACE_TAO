@@ -22,6 +22,7 @@
 
 #include "ace/IO_Cntl_Msg.h"
 #if defined (ACE_HAS_WIN32_OVERLAPPED_IO)
+# include "ace/Synch_Traits.h"   /* Needed in ACE_Message_Queue_NT */
 # include "ace/Thread_Mutex.h"   /* Needed in ACE_Message_Queue_NT */
 #endif
 
