@@ -9,6 +9,7 @@
 #include "ace/High_Res_Timer.h"
 #include "ace/Sched_Params.h"
 #include "ace/Stats.h"
+#include "ace/Throughput_Stats.h"
 
 Client_Task::Client_Task (int &argc, char **argv)
   : argc_ (argc)
