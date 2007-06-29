@@ -30,6 +30,7 @@
 #include "ace/Thread_Manager.h"
 #include "ace/Sched_Params.h"
 #include "ace/Stats.h"
+#include "ace/Throughput_Stats.h"
 #include "ace/Sample_History.h"
 #include "ace/OS_main.h"
 #include "ace/OS_NS_arpa_inet.h"

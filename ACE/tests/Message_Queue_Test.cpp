@@ -29,6 +29,7 @@
 #include "test_config.h"
 #include "ace/Thread_Manager.h"
 #include "ace/Message_Queue.h"
+#include "ace/Message_Queue_Vx.h"
 #include "ace/Synch_Traits.h"
 #include "ace/Null_Mutex.h"
 #include "ace/Null_Condition.h"
