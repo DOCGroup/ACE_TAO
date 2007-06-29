@@ -61,27 +61,27 @@ parse_args (int argc, char **argv)
         break;
 
       case 'f':
-        flush_count = ::atoi (get_opts.opt_arg ());
+        flush_count = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case 'c':
-        message_count = ::atoi (get_opts.opt_arg ());
+        message_count = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case 'b':
-        message_bytes = ::atoi (get_opts.opt_arg ());
+        message_bytes = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case 'i':
-        iterations = ::atoi (get_opts.opt_arg ());
+        iterations = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case 'z':
-        interval = ::atoi (get_opts.opt_arg ());
+        interval = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case 't':
-        timeout = ::atoi (get_opts.opt_arg ());
+        timeout = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case 'x':

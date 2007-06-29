@@ -42,6 +42,7 @@ ACE_RCSID (Event_Supplier,
            DualEC_Sup,
            "$Id$")
 
+//FUZZ: disable check_for_lack_ACE_OS
 static const char usage [] =
 "[[-?]\n"
 "                 -f <name of input data file>\n"
@@ -55,6 +56,7 @@ static const char usage [] =
 "                 [-s to suppress data updates by EC]\n"
 "                 [-r to use runtime schedulers]\n"
 "                 [-p to suppress prioritization of operations]\n";
+//FUZZ: enable check_for_lack_ACE_OS
 
 DualEC_Supplier::DualEC_Supplier (int argc, char** argv)
 : nav_pause_ (0, 100000),
@@ -772,7 +774,7 @@ DualEC_Supplier::load_schedule_data ()
             {
               // Run through leading whitespace.
               char *temp = input_buf;
-              while (*temp && isspace (*temp))
+              while (*temp && ACE_OS::ace_isspace (*temp))
                 ++temp;
 
               // If there is anything besides whitespace in the line
@@ -797,8 +799,8 @@ DualEC_Supplier::load_schedule_data ()
                     }
 
 
-                  if ((strcmp(data.operation_name, "high_20") == 0) ||
-                      (strcmp(data.operation_name, "low_20") == 0))
+                  if ((ACE_OS::strcmp(data.operation_name, "high_20") == 0) ||
+                      (ACE_OS::strcmp(data.operation_name, "low_20") == 0))
                     {
                       ACE_NEW (weap, Weapons);
                       if (weap == 0)
@@ -813,19 +815,19 @@ DualEC_Supplier::load_schedule_data ()
                       weap->deadline_time = TWENTY_HZ_PERIOD;
                       weap->number_of_weapons = 2;
                       weap->weapon1_identifier = CORBA::string_alloc (30);
-                      strcpy (weap->weapon1_identifier.inout (),"Photon Torpedoes");
+                      ACE_OS::strcpy (weap->weapon1_identifier.inout (),"Photon Torpedoes");
                       weap->weapon1_status =(ACE_OS::rand() % 4) == 0 ? 0 : 1 ;
                       weap->weapon2_identifier = CORBA::string_alloc (30);
-                      strcpy (weap->weapon2_identifier.inout (),"Quantum Torpedoes");
+                      ACE_OS::strcpy (weap->weapon2_identifier.inout (),"Quantum Torpedoes");
                       weap->weapon2_status = (ACE_OS::rand() % 4) == 0 ? 0 : 1;
                       weap->weapon3_identifier = CORBA::string_alloc (1);
-                      strcpy (weap->weapon3_identifier.inout (), "");
+                      ACE_OS::strcpy (weap->weapon3_identifier.inout (), "");
                       weap->weapon3_status = 0;
                       weap->weapon4_identifier = CORBA::string_alloc (1);
-                      strcpy (weap->weapon4_identifier.inout (), "");
+                      ACE_OS::strcpy (weap->weapon4_identifier.inout (), "");
                       weap->weapon4_status = 0;
                       weap->weapon5_identifier = CORBA::string_alloc (1);
-                      strcpy (weap->weapon5_identifier.inout (), "");
+                      ACE_OS::strcpy (weap->weapon5_identifier.inout (), "");
                       weap->weapon5_status = 0;
                       weap->utilization =       0.0;
                       weap->overhead =          0.0;
@@ -1062,7 +1064,7 @@ main (int argc, char *argv [])
 
       // Initialize everthing
       if (event_Supplier_ptr->init () == -1)
-        exit (1);
+        ACE_OS::exit (1);
 
       // now we can go ahead
       event_Supplier_ptr->start_generating_events ();

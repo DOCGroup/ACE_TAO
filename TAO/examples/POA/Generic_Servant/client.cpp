@@ -36,11 +36,11 @@ parse_args (int argc, char **argv)
         break;
 
       case 'i':
-        iterations = ::atoi (get_opts.opt_arg ());
+        iterations = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case 'T':
-        timeout = static_cast<CORBA::ULong> (::atoi (get_opts.opt_arg ()));
+        timeout = static_cast<CORBA::ULong> (ACE_OS::atoi (get_opts.opt_arg ()));
         break;
 
       case 'x':

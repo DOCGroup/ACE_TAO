@@ -127,7 +127,7 @@ Client::svc (void)
       Octet_Seq octetSeq(SIZE_BLOCK);
       Char_Seq charSeq(SIZE_BLOCK);
       ACE_High_Res_Timer timer;
-      printf("Start sending %d Msgs...\n",this->niterations_);
+      ACE_OS::printf("Start sending %d Msgs...\n",this->niterations_);
 
       charSeq.length(SIZE_BLOCK);
       octetSeq.length(SIZE_BLOCK);

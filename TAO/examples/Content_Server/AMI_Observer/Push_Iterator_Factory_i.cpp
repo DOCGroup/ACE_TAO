@@ -80,7 +80,7 @@ Push_Iterator_Factory_i::modification_date
    Web_Server::Metadata_Type & metadata)
 {
   // Get the modification time from the file status structure/
-  struct tm *t_gmt = gmtime (&(file_status->st_mtime));
+  struct tm *t_gmt = ACE_OS::gmtime (&(file_status->st_mtime));
 
   // A time string is probably never going to exceed 256 bytes.
   const size_t buflen = 256;

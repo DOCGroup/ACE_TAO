@@ -19,7 +19,7 @@
 #include "Consumer_Input_Handler.h"
 #include "ace/Read_Buffer.h"
 #include "ace/OS_NS_unistd.h"
-#include "ace/os_include/os_ctype.h"
+#include "ace/OS_NS_ctype.h"
 
 Consumer_Input_Handler::Consumer_Input_Handler (Consumer_Handler *consumer_handler)
   {
@@ -42,7 +42,7 @@ Consumer_Input_Handler::handle_input (ACE_HANDLE)
   if (buf[strlen -1] == '\n')
     buf[strlen -1] = '\0';
 
-  switch (tolower (buf[0]))
+  switch (ACE_OS::ace_tolower (buf[0]))
     {
     case Consumer_Input_Handler::REGISTER:
       {

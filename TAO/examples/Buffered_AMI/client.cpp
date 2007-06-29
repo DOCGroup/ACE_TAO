@@ -75,9 +75,11 @@ public:
       }
   }
 
+  //FUZZ: disable check_for_lack_ACE_OS
   void shutdown (void)
   {
   }
+  //FUZZ: enable check_for_lack_ACE_OS
 
   void shutdown_excep (::Messaging::ExceptionHolder *holder)
   {
@@ -106,23 +108,23 @@ parse_args (int argc, char **argv)
         break;
 
       case 'm':
-        message_count = ::atoi (get_opts.opt_arg ());
+        message_count = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case 'a':
-        invoke_ami_style = ::atoi (get_opts.opt_arg ());
+        invoke_ami_style = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case 'b':
-        setup_buffering = ::atoi (get_opts.opt_arg ());
+        setup_buffering = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case 'i':
-        iterations = ::atoi (get_opts.opt_arg ());
+        iterations = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case 't':
-        interval = ::atoi (get_opts.opt_arg ());
+        interval = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case 'x':

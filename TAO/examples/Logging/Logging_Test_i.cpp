@@ -306,8 +306,11 @@ Logger_Client::init_record (Logger::Log_Record &newrec,
   // Assign the log priority.
   newrec.type = lp;
 
+  //FUZZ: disable check_for_lack_ACE_OS
   // Create and assign the timestamp.
   ACE_Time_Value time (ACE_OS::gettimeofday ());
+  //FUZZ: enable check_for_lack_ACE_OS
+
   newrec.time = time.sec ();
 
   // Get and store the PID of the calling process.
@@ -328,6 +331,7 @@ Logger_Client::show_record (Logger::Log_Record &newrec)
   in_addr address;
   address.s_addr = newrec.host_addr;
 
+  //FUZZ: disable check_for_lack_ACE_OS
   ACE_DEBUG ((LM_DEBUG,
               " Log Priority: %d\n"
               "         Time: %d\n"
@@ -339,4 +343,5 @@ Logger_Client::show_record (Logger::Log_Record &newrec)
               newrec.app_id,
               inet_ntoa (address),
               newrec.msg_data.in ()));
+  //FUZZ: enable check_for_lack_ACE_OS
 }

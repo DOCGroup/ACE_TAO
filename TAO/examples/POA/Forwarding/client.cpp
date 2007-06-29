@@ -40,10 +40,10 @@ parse_args (int argc, char **argv)
         IOR = get_opts.opt_arg ();
         break;
       case 's':
-        servers = ::atoi (get_opts.opt_arg ());
+        servers = ACE_OS::atoi (get_opts.opt_arg ());
         break;
       case 'i':
-        iterations = ::atoi (get_opts.opt_arg ());
+        iterations = ACE_OS::atoi (get_opts.opt_arg ());
         break;
       case '?':
       default:

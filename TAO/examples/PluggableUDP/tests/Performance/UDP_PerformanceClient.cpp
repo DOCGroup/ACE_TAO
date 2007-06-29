@@ -57,10 +57,12 @@ UDP_PerformanceClient::svc ()
       ACE_High_Res_Timer timer;
       while (1)
         {
+          //FUZZ: disable check_for_lack_ACE_OS
           ACE_DEBUG ((LM_DEBUG,
                       "\nTesting with %u us sleep (delta = %u us)\n",
                       micro_seconds,
                       delta_micro_seconds));
+          //FUZZ: enable check_for_lack_ACE_OS
 
           ACE_Time_Value tv (0, micro_seconds);
           timer.start ();
