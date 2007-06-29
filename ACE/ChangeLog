@@ -1,3 +1,8 @@
+Fri Jun 29 09:48:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_arpa_inet.cpp:
+          Fix for VxWorks 6.5
+
 Thu Jun 28 16:12:18 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * ACEXML/common/URL_Addr.h:
@@ -11,7 +16,6 @@ Thu Jun 28 16:12:18 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
 
           Update string_to_addr interface to match previous change to
           ACE_INET_Addr in order to silence some compiler warnings
-
 
 Thu Jun 28 15:18:35 UTC 2007  Steve Huston  <shuston@riverace.com>
 
