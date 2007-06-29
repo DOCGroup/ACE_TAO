@@ -212,7 +212,7 @@ Demux_Stats::calculate_avg_latency ()
                 mean_linear = sum_linear/items;
                 mean_binary = sum_binary/items;
                 mean_perfect = sum_perfect/items;
-                ACE_OS::printf("Average response times = POA = %lf SERVANT = %lf DISPATCH = %lf PERFECT = %lf DYNAMIC = %lf BINARY = %lf LINEAR = %lf microsec\n", 
+                ACE_OS::printf("Average response times = POA = %lf SERVANT = %lf DISPATCH = %lf PERFECT = %lf DYNAMIC = %lf BINARY = %lf LINEAR = %lf microsec\n",
                                 mean_poa,
                                 mean_servant,
                                 mean_dispatch,
@@ -337,7 +337,7 @@ Demux_Stats::calculate_avg_latency ()
 }
 
 int
-main (int argc, char *argv [])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   Demux_Stats demux_stats;
 

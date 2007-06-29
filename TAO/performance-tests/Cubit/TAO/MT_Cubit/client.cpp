@@ -838,7 +838,7 @@ Client_i::do_thread_per_rate_test (void)
 // metrics and print them.
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   ACE_Log_Msg::instance()->clr_flags (ACE_Log_Msg::LOGGER);
 

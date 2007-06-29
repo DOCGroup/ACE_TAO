@@ -69,7 +69,7 @@ svr_worker (void *arg)
 
 
 int
-main (int argc, char **argv)
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, "s:c:");
   int c = -1;
