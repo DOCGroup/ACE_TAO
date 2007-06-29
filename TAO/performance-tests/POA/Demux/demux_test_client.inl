@@ -4,10 +4,12 @@ static void M302 (Demux_Test_ptr objref)
   objref->M302 ();
 }
 
+//FUZZ: disable check_for_lack_ACE_OS
 static void shutdown (Demux_Test_ptr objref)
 {
   objref->shutdown ();
 }
+//FUZZ: enable check_for_lack_ACE_OS
 
 int Demux_Test_Client::init_operation_db (void)
 {
