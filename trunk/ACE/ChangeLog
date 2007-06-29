@@ -1,3 +1,8 @@
+Fri Jun 29 10:59:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+          Added new Bug_2953_Regression
+
 Fri Jun 29 09:48:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_arpa_inet.cpp:
