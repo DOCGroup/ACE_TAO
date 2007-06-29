@@ -20,11 +20,11 @@ void rotate_string(char *s)
    unsigned char c;
    size_t l;
 
-   l = strlen(s);
+   l = ACE_OS::strlen(s);
    if (l>1)
    {
       c = s[l-1];
-      memmove(&s[1], &s[0], l-1);
+      ACE_OS::memmove(&s[1], &s[0], l-1);
       s[0] = c;
    }
 }
@@ -106,14 +106,14 @@ Test_impl::string_op2 (const char * p1,
 {
   rotate_string (p2);
 
-  p3 = CORBA::string_alloc (strlen(p2));
-  strcpy (p3, p2);
+  p3 = CORBA::string_alloc (ACE_OS::strlen(p2));
+  ACE_OS::strcpy (p3, p2);
 
   rotate_string ((char *) p1);
 
   char *return_string;
-  return_string = CORBA::string_alloc (strlen(p1));
-  strcpy (return_string, p1);
+  return_string = CORBA::string_alloc (ACE_OS::strlen(p1));
+  ACE_OS::strcpy (return_string, p1);
 
   return return_string;
 }

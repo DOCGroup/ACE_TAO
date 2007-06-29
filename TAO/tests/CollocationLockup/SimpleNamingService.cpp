@@ -20,10 +20,12 @@ class SimpleNamingService_i : public virtual POA_SimpleNamingService
 {
 public:
 
+  //FUZZ: disable check_for_lack_ACE_OS
   virtual void bind (CORBA::Object_ptr obj)
   {
     obj_ = CORBA::Object::_duplicate (obj);
   }
+  //FUZZ: enable check_for_lack_ACE_OS
 
 
   virtual CORBA::Object_ptr resolve ()

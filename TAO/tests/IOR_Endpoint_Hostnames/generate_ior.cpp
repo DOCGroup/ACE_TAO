@@ -37,7 +37,7 @@ main (int argc, char *argv[])
       CORBA::String_var ior =
         orb->object_to_string (b.in());
 
-      printf ("%s\n", ior.in());
+      ACE_OS::printf ("%s\n", ior.in());
 
       orb->shutdown();
       orb->destroy();

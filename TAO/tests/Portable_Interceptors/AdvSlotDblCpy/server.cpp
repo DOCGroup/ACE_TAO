@@ -160,12 +160,14 @@ public:
     ACE_DEBUG ((LM_DEBUG, "invoke_me\n"));
   }
 
+  //FUZZ: disable check_for_lack_ACE_OS
   virtual void
   shutdown () throw (SystemException)
   {
     ACE_DEBUG ((LM_DEBUG, "\nServer is shutting down.\n"));
     this->orb_->shutdown (0);
   }
+  //FUZZ: enable check_for_lack_ACE_OS
 
 private:
   ORB_var orb_;

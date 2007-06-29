@@ -155,7 +155,7 @@ int DllOrb::fini (void)
 
 
   // wait for our threads to finish
-  wait();
+  this->wait();
 
 #if defined (ACE_HAS_THREADS)
   delete mp_barrier;

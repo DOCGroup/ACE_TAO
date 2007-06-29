@@ -19,7 +19,9 @@ public:
   // = The Test methods.
   void test_method (void);
 
+  //FUZZ: disable check_for_lack_ACE_OS
   void shutdown (void);
+  //FUZZ: enable check_for_lack_ACE_OS
 
 private:
   CORBA::ORB_var orb_;

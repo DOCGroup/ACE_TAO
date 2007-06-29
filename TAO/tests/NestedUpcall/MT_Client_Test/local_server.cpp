@@ -111,7 +111,7 @@ MT_Server::parse_args (void)
       case 'i':
       case 'n':
         break;
-      case 's': this->iterations_ = atoi (get_opts.opt_arg ());
+      case 's': this->iterations_ = ACE_OS::atoi (get_opts.opt_arg ());
         break;
       case '?':
       default:

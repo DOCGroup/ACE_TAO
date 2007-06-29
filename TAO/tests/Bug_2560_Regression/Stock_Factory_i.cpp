@@ -27,9 +27,9 @@ Quoter_Stock_Factory_i::get_stock (const char *symbol)
     throw (Quoter::Invalid_Stock_Symbol)
 {
   try {
-    if (strcmp (symbol, "RHAT") == 0) {
+    if (ACE_OS::strcmp (symbol, "RHAT") == 0) {
       return Quoter::Stock::_duplicate(ref1_);
-    } else if (strcmp (symbol, "MSFT") == 0) {
+    } else if (ACE_OS::strcmp (symbol, "MSFT") == 0) {
       return Quoter::Stock::_duplicate(ref2_);
     }
   } catch (CORBA::Exception & e) {

@@ -744,9 +744,11 @@ run_timeout_reactive (CORBA::ORB_ptr orb,
         {
           CORBA::ULong receive_count =
             request_count (oneway_buffering_admin);
-
+    
+          //FUZZ: disable check_for_lack_ACE_OS
           ACE_Time_Value sleep (0, 10000);
           orb->run (sleep);
+          //FUZZ: enable check_for_lack_ACE_OS
 
           ACE_Time_Value elapsed = ACE_OS::gettimeofday () - start;
           if (receive_count != initial_receive_count)

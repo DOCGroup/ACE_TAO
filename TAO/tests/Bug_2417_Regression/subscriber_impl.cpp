@@ -20,7 +20,7 @@ Subscriber_impl::onData (
 {
 	++count;
 	if (count > 100)
-		shutdown();
+		this->shutdown();
 }
 
 ::CORBA::Boolean

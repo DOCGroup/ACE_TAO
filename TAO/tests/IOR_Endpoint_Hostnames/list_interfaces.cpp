@@ -9,6 +9,7 @@
 #include "ace/Auto_Ptr.h"
 #include "ace/INET_Addr.h"
 #include "ace/Log_Msg.h"
+#include "ace/OS_NS_stdio.h"
 
 ACE_RCSID (IOR_Endpoint_Hostnames, list_interfaces, "$Id$")
 
@@ -76,7 +77,7 @@ main (int argc, char *argv[])
         continue;
 
       // Print the address as a string.
-      printf ("%s\n", if_addrs[i].get_host_addr());
+      ACE_OS::printf ("%s\n", if_addrs[i].get_host_addr());
 
       host_cnt++;
     }

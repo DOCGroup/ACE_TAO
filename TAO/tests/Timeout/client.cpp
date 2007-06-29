@@ -244,9 +244,11 @@ int main (int argc, char* argv[])
         ACE_ERROR ((LM_ERROR,
                     "ERROR: No messages timed out\n"));
 
+      //FUZZ: disable check_for_lack_ACE_OS
       if (in_time_count_total == 0)
         ACE_ERROR ((LM_ERROR,
                     "ERROR: No messages on time (within time limit)\n"));
+      //FUZZ: enable check_for_lack_ACE_OS
 
       ACE_DEBUG ((LM_DEBUG, "in_time_count_total = %d, timeout_count_total = %d\n",
                   in_time_count_total, timeout_count_total));

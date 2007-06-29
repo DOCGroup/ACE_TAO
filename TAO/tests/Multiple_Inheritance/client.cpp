@@ -96,7 +96,7 @@ main (int argc, char **argv)
                                "Unable to read ior\n"),
                               -1);
           ior = ACE_OS::strdup (data);
-          ior_buffer.alloc ()-> free (data);
+          ior_buffer.alloc ()->free (data);
           ACE_OS::close (input_file);
         }
 

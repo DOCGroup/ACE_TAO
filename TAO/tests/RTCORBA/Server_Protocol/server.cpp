@@ -18,7 +18,9 @@ public:
   Test_i (CORBA::ORB_ptr orb);
   // ctor
 
+  //FUZZ: disable check_for_lack_ACE_OS
   void shutdown (void);
+  //FUZZ: enable check_for_lack_ACE_OS
 
 private:
   CORBA::ORB_var orb_;

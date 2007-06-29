@@ -178,7 +178,7 @@ main (int argc, char **argv)
                           -1);
 
       ACE_CString ior = data;
-      ior_buffer.alloc ()-> free (data);
+      ior_buffer.alloc ()->free (data);
       ACE_OS::close (input_file);
 
       if (ACE_Thread_Manager::instance ()->spawn_n (NUM_THREADS,

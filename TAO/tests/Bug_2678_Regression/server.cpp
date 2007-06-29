@@ -9,7 +9,10 @@ class Test_impl : public virtual POA_Test
 public:
   Test_impl (CORBA::ORB_ptr orb);
   virtual AnySeq *RunTest(const AnySeq &params);
+
+  //FUZZ: disable check_for_lack_ACE_OS
   virtual void shutdown (void);
+  //FUZZ: enable check_for_lack_ACE_OS
 private:
   CORBA::ORB_var orb_;
 };

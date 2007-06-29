@@ -39,7 +39,7 @@ parse_args (int argc, char *argv[])
       {
         verbose = 1;
       }
-    else if (strstr(argv[c],"-ORB") == argv[c])
+    else if (ACE_OS::strstr(argv[c],"-ORB") == argv[c])
       {
         c++;
         continue;

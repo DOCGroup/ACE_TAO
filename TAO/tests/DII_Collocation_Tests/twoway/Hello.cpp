@@ -67,7 +67,7 @@ Hello::test_unbounded_string_arg(const char* message)
     ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Hello::test_unbounded_string_arg ")
                         ACE_TEXT("got unbounded string: %s\n"),
                         message));
-  if (ACE_OS::strncmp (message, TEST_STR, strlen (TEST_STR) != 0))
+  if (ACE_OS::strncmp (message, TEST_STR, ACE_OS::strlen (TEST_STR) != 0))
   {
     ERROR_COUNT ("Hello::test_unbounded_string_arg")
   }
@@ -80,7 +80,7 @@ Hello::test_unbounded_string_arg_out(const char* message, ::CORBA::String_out ou
     ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Hello::test_unbounded_string_arg_out ")
                         ACE_TEXT("got unbounded string: %s\n"),
                         message));
-  if (ACE_OS::strncmp (message, TEST_STR, strlen (TEST_STR) != 0))
+  if (ACE_OS::strncmp (message, TEST_STR, ACE_OS::strlen (TEST_STR) != 0))
   {
     ERROR_COUNT ("Hello::test_unbounded_string_arg_out")
   }
@@ -134,7 +134,7 @@ Hello::test_unbounded_var_size_arg(const ::Test::Unbounded_Var_Size_Arg& message
   if (debug)
     ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Hello::test_unbounded_var_size_arg ")
                         ACE_TEXT("got unbounded var size arg.\n")));
-  if (ACE_OS::strncmp (message.get_buffer (), TEST_STR, strlen (TEST_STR)) != 0)
+  if (ACE_OS::strncmp (message.get_buffer (), TEST_STR, ACE_OS::strlen (TEST_STR)) != 0)
     ERROR_COUNT ("Hello::test_unbounded_var_size_arg")
 }
 
@@ -162,7 +162,7 @@ Hello::test_var_array_arg(const Test::Var_Array messages)
     if (debug)
       ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Hello::test_var_array_arg ")
                         ACE_TEXT("messages[%d] = %s \n"), i, messages[i].in ()));
-    if (ACE_OS::strncmp (messages[i].in (), TEST_STR, strlen (TEST_STR)) != 0)
+    if (ACE_OS::strncmp (messages[i].in (), TEST_STR, ACE_OS::strlen (TEST_STR)) != 0)
       ERROR_COUNT ("Hello::test_var_array_arg")
   }
 }
@@ -252,7 +252,7 @@ void Hello::test_args_2 (
 {
   if (debug)
     ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Hello::test_args_2 \n")));
-  if (ACE_OS::strncmp (arg1, TEST_STR, strlen (TEST_STR)) != 0 )
+  if (ACE_OS::strncmp (arg1, TEST_STR, ACE_OS::strlen (TEST_STR)) != 0 )
     ERROR_COUNT ("Hello::test_args_2")
 
   for (unsigned i = 0; i < ::Test::FIX_ARRAY_SIZE; i++)
@@ -276,15 +276,15 @@ void Hello::test_args_3 (
 {
   if (debug)
     ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Hello::test_args_3 \n")));
-  if (ACE_OS::strncmp (arg1, TEST_STR, strlen (arg1)) != 0)
+  if (ACE_OS::strncmp (arg1, TEST_STR, ACE_OS::strlen (arg1)) != 0)
     ERROR_COUNT ("Hello::test_args_3")
   if (ACE_OS::strncmp (arg2.get_buffer (), TEST_STR, ::Test::BOUNDED_VAR_SIZE) != 0)
     ERROR_COUNT ("Hello::test_args_3")
-  if (ACE_OS::strncmp (arg3.get_buffer (), TEST_STR, strlen (TEST_STR)) != 0)
+  if (ACE_OS::strncmp (arg3.get_buffer (), TEST_STR, ACE_OS::strlen (TEST_STR)) != 0)
     ERROR_COUNT ("Hello::test_args_3")
   for (CORBA::ULong i = 0; i != ::Test::VAR_ARRAY_SIZE; i ++)
   {
-    if (ACE_OS::strncmp (arg4[i].in (), TEST_STR, strlen (TEST_STR)) != 0)
+    if (ACE_OS::strncmp (arg4[i].in (), TEST_STR, ACE_OS::strlen (TEST_STR)) != 0)
       ERROR_COUNT ("Hello::test_args_3")
   }
 }
