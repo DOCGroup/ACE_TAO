@@ -24,6 +24,7 @@
 #include "orbsvcs/RtecEventChannelAdminC.h"
 #include "ace/Task.h"
 #include "ace/OS_NS_time.h"
+#include "ace/Throughput_Stats.h"
 
 class Test_Consumer : public POA_RtecEventComm::PushConsumer
 {
