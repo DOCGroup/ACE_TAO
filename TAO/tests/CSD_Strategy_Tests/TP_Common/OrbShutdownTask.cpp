@@ -37,11 +37,13 @@ OrbShutdownTask::open(void*)
 {
   if (this->activate(THR_NEW_LWP | THR_JOINABLE, 1) != 0)
     {
+      //FUZZ: disable check_for_lack_ACE_OS
       // Assumes that when activate returns non-zero return code that
       // no threads were activated.
       ACE_ERROR_RETURN((LM_ERROR,
                         "(%P|%t) OrbShutdownTask failed to open().\n"),
                        -1);
+      //FUZZ: enable check_for_lack_ACE_OS
     }
 
   return 0;

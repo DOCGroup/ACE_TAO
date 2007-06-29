@@ -12,7 +12,9 @@ public:
    : orb_ (CORBA::ORB::_duplicate (orb)) {
   }
 
+  //FUZZ: disable check_for_lack_ACE_OS
   void shutdown ();
+  //FUZZ: enable check_for_lack_ACE_OS
 
   void destroy ();
 

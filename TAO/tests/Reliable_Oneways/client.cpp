@@ -122,9 +122,12 @@ main (int argc, char *argv[])
           run_test_sync_none (oneway_receiver.in ());
         }
 
+      //FUZZ: disable check_for_lack_ACE_OS
       // Run the orb for 3 seconds, this way we make sure things are flushed
       // to the transport.
       ACE_Time_Value time (3, 0);
+      //FUZZ: enable check_for_lack_ACE_OS
+
       orb->run (time);
 
       if (successful_calls == 0)

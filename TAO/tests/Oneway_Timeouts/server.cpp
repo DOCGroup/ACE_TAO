@@ -154,6 +154,7 @@ namespace {
 
   void print_usage ()
   {
+    //FUZZ: disable check_for_lack_ACE_OS
     cout << "server [-activate_delay ms] [-run_delay ms] [-request_delay ms] "
       "[-abort_after n]\n"
       "\t[-expected n=0] [-elapsed_max ms=0] [-elapsed_min ms=0] "
@@ -163,6 +164,7 @@ namespace {
       "\trun_delay Millisecond delay before ORB::run ().\n"
       "\trequest_delay Millisecond delay within each servant request.\n"
       "\tabort_after abort () after N requests.\n" << endl;
+    //FUZZ: enable check_for_lack_ACE_OS
   }
 
   bool parse_command_line (int ac, char *av[])

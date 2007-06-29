@@ -22,6 +22,8 @@
 #include "tao/Basic_Types.h"
 #include "tao/CDR.h"
 
+#include "ace/OS_NS_stdio.h"
+
 using namespace boost::unit_test_framework;
 using namespace TAO_VERSIONED_NAMESPACE_NAME::TAO;
 
@@ -168,8 +170,8 @@ struct Tester
   ACE_Message_Block * alloc_and_init_mb()
   {
     char buf[9];
-    sprintf (buf, "%s", "testing ");
-    size_t n = (strlen (buf) + 1) * sizeof (char);
+    ACE_OS::sprintf (buf, "%s", "testing ");
+    size_t n = (ACE_OS::strlen (buf) + 1) * sizeof (char);
     ACE_Message_Block * mb = new ACE_Message_Block (n);
     mb->copy ((char *) buf, n);
 
@@ -371,8 +373,8 @@ struct Tester
     BOOST_CHECK_EQUAL(CORBA::Octet( 'g'), a[6]);
 
     char upperbuf[256];
-    sprintf (upperbuf, "%s", "THIS IS A TEST");
-    size_t n = (strlen (upperbuf) + 1) * sizeof (char);
+    ACE_OS::sprintf (upperbuf, "%s", "THIS IS A TEST");
+    size_t n = (ACE_OS::strlen (upperbuf) + 1) * sizeof (char);
     ACE_Message_Block * upper_mb = 0;
     ACE_NEW (upper_mb,
              ACE_Message_Block (n));

@@ -62,10 +62,12 @@ public:
     return CORBA::wstring_dup (s1);
   };
 
+  //FUZZ: disable check_for_lack_ACE_OS
   void shutdown (void)
   {
     this->orb_->shutdown (0);
   };
+  //FUZZ: enable check_for_lack_ACE_OS
 
 private:
   /// Use an ORB reference to shutdown

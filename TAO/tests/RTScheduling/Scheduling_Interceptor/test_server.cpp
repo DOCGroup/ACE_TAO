@@ -40,10 +40,12 @@ public:
     return CORBA::string_dup (message);
   }
 
+  //FUZZ: disable check_for_lack_ACE_OS
   virtual void shutdown (void)
   {
     orb_->shutdown ();
   }
+  //FUZZ: enable check_for_lack_ACE_OS
 
 private:
   CORBA::ORB_ptr orb_;

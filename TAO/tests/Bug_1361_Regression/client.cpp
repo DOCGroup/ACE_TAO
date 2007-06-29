@@ -185,7 +185,7 @@ parse_args (int argc, char *argv[])
         ior = get_opts.opt_arg ();
         break;
       case 't':
-        serverthreads = atoi(get_opts.opt_arg ());
+        serverthreads = ACE_OS::atoi(get_opts.opt_arg ());
         break;
 
       case '?':

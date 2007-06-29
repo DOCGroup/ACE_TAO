@@ -17,7 +17,9 @@ public:
 
   void method (void);
 
+  //FUZZ: disable check_for_lack_ACE_OS
   void shutdown (void);
+  //FUZZ: enable check_for_lack_ACE_OS
 
   PortableServer::POA_ptr _default_POA (void);
 
@@ -84,7 +86,7 @@ parse_args (int argc, char **argv)
         break;
 
       case 'd':
-        debug = ::atoi (get_opts.opt_arg ());
+        debug = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case 'l':

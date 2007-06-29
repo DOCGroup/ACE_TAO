@@ -78,7 +78,7 @@ main (int argc, char *argv[])
   int max_arguments = 16;
   int max_argument_size = 1024;
   int quiet = 0;
-  ACE_RANDR_TYPE seed = time(0);
+  ACE_RANDR_TYPE seed = ACE_OS::time(0);
 
   ACE_Get_Opt get_opt (argc, argv, "tn:f:m:s:a:b:r:q");
   int opt;

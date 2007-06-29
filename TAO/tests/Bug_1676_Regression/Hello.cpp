@@ -31,7 +31,7 @@ Hello::get_stringList (
 	for (CORBA::ULong i = 0; i<seq->length(); i++)
 	{
 		char tmp[255] = {0};
-		sprintf(tmp, "Hello World %d", i);
+    ACE_OS::sprintf(tmp, "Hello World %d", i);
 		(*seq)[i] = CORBA::string_dup(tmp);
 	}
 
@@ -55,7 +55,7 @@ Hello::get_stringList2 (
         for (CORBA::ULong i = 0; i<osl->length(); i++)
 	    {
 		    char tmp[255] = {0};
-		    sprintf(tmp, "Hello Again %d", i);
+        ACE_OS::sprintf(tmp, "Hello Again %d", i);
 		    (*osl)[i] = CORBA::string_dup(tmp);
 	    }
     }
@@ -70,7 +70,7 @@ Hello::mod_stringList (
     for (CORBA::ULong i = 0; i<iosl.length(); i++)
 	{
 		char tmp[255] = {0};
-		sprintf(tmp, "Hello Client %d", i);
+    ACE_OS::sprintf(tmp, "Hello Client %d", i);
         if (i%2) {
 		    iosl[i] = CORBA::string_dup(tmp);
         }

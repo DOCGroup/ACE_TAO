@@ -6,22 +6,21 @@
 #include "mock_array.hpp"
 
 my_array_slice *
-TAO::Array_Traits<my_array,my_array_slice,my_array_tag>::
-alloc()
+TAO::Array_Traits<my_array,my_array_slice,my_array_tag>::alloc()
 {
   return new my_array;
 }
 
 void
-TAO::Array_Traits<my_array,my_array_slice,my_array_tag>::
-free(my_array_slice * _tao_slice)
+TAO::Array_Traits<my_array,my_array_slice,my_array_tag>::free(
+    my_array_slice * _tao_slice)
 {
   delete[] _tao_slice;
 }
 
 my_array_slice *
-TAO::Array_Traits<my_array,my_array_slice,my_array_tag>::
-dup(my_array_slice const * _tao_source)
+TAO::Array_Traits<my_array,my_array_slice,my_array_tag>::dup(
+    my_array_slice const * _tao_source)
 {
   // TODO exception safety
   my_array_slice * _tao_destination = alloc();
@@ -30,8 +29,7 @@ dup(my_array_slice const * _tao_source)
 }
 
 void
-TAO::Array_Traits<my_array,my_array_slice,my_array_tag>::
-copy(
+TAO::Array_Traits<my_array,my_array_slice,my_array_tag>::copy(
     my_array_slice * _tao_destination,
     my_array_slice const * _tao_source)
 {

@@ -187,11 +187,13 @@ server_main (int argc,
                            ACE_TEXT ("Server (%P|%t) Cannot activate %d threads\n"),
                            nthreads),
                           -1);
+      //FUZZ: disable check_for_lack_ACE_OS
       if(worker.thr_mgr ()->wait () != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("Server (%P|%t) wait() Cannot wait for all %d threads\n"),
                            nthreads),
                           -1);
+      //FUZZ: enable check_for_lack_ACE_OS
 #else
       if (nthreads > 1)
         ACE_ERROR ((LM_WARNING,

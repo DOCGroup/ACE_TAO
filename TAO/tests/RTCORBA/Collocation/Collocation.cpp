@@ -361,7 +361,10 @@ public:
                                                          RTCORBA::PriorityModel priority_model);
   void test (void);
   void start_testing (void);
+
+  //FUZZ: disable check_for_lack_ACE_OS
   void shutdown (void);
+  //FUZZ: enable check_for_lack_ACE_OS
 
   CORBA::ORB_var orb_;
   RTCORBA::RTORB_var rt_orb_;

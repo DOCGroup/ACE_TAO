@@ -35,11 +35,11 @@ parse_args (int argc, char **argv)
         break;
 
       case 'i':
-        event_loop_iterations = ::atoi (get_opts.opt_arg ());
+        event_loop_iterations = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case 'd':
-        event_loop_depth = ::atoi (get_opts.opt_arg ());
+        event_loop_depth = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case 'x':

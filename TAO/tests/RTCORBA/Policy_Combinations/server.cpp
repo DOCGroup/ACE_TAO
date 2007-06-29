@@ -20,7 +20,9 @@ public:
 
   void prioritized_method (void);
 
+  //FUZZ: disable check_for_lack_ACE_OS
   void shutdown (void);
+  //FUZZ: enable check_for_lack_ACE_OS
 
   PortableServer::POA_ptr _default_POA (void);
 
@@ -109,11 +111,11 @@ parse_args (int argc, char **argv)
     switch (c)
       {
       case 's':
-        ::server_priority = ::atoi (get_opts.opt_arg ());
+        ::server_priority = ACE_OS::atoi (get_opts.opt_arg ());
       break;
 
       case 'c':
-        ::client_priority = ::atoi (get_opts.opt_arg ());
+        ::client_priority = ACE_OS::atoi (get_opts.opt_arg ());
       break;
 
       case '?':
