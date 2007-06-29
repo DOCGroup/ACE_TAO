@@ -1,3 +1,14 @@
+Fri Jun 29 13:38:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Stats.{h,cpp,inl}:
+        * ace/Throughput_Stats.{h,cpp}:
+          Moved ACE_Throughput_Stats to its own file, fixes bugzilla bug
+          2969
+
+        * ace/ace.mpc:
+        * ace/Makefile.am:
+          Added new files
+
 Fri Jun 29 12:04:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Message_Queue.{h,cpp,inl}:
