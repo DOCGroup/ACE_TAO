@@ -25,7 +25,7 @@ ACE_RCSID(IDL_Cubit, server, "$Id$")
 // This runs the server test.
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   int priority = ACE_THR_PRI_FIFO_DEF;
   priority = ACE_Sched_Params::next_priority (ACE_SCHED_FIFO,

@@ -59,7 +59,7 @@ set_priority()
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   //Use Real-time Scheduling class if possible
   set_priority();
