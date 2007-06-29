@@ -156,6 +156,7 @@ libACE_la_SOURCES = \
   Mem_Map.cpp \
   Message_Block.cpp \
   Message_Queue.cpp \
+  Message_Queue_Vx.cpp \
   Method_Request.cpp \
   Msg_WFMO_Reactor.cpp \
   Multihomed_INET_Addr.cpp \
@@ -675,6 +676,8 @@ nobase_include_HEADERS += \
   Message_Block_T.inl \
   Message_Queue.h \
   Message_Queue.inl \
+  Message_Queue_Vx.h \
+  Message_Queue_Vx.inl \
   Message_Queue_T.cpp \
   Message_Queue_T.h \
   Method_Object.h \
