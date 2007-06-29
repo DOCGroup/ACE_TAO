@@ -1,3 +1,9 @@
+Fri Jun 29 11:03:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_mingw32.GNU:
+          Set PLATFORM_SSL_LIBS. Thanks to Andy Wang
+          <ypwangandy at gmail dot com> for reporting this
+
 Fri Jun 29 10:59:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/tao_orb_tests.lst:
