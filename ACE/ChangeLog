@@ -2,8 +2,8 @@ Fri Jun 29 18:39:46 UTC 2007  Adam Mitz  <mitza@ociweb.com>
 
         * bin/depgen.pl:
 
-          Removed assigment of () to %types since it was sometimes
-          clobbering the value already there (from the BEGIN block).
+          Load modules from $MPC_ROOT/modules since the NMake dependency
+          generator now uses some functions from MPC.
 
 Fri Jun 29 13:38:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
