@@ -313,6 +313,10 @@ sub WaitKill ($)
     my $self = shift;
     my $timeout = shift;
 
+    if ($self->{RUNNING} == 0) {
+        return 0;
+    }
+
     my $status = $self->TimedWait ($timeout);
 
     if ($status == -1) {
@@ -425,8 +429,11 @@ sub Wait ($)
 {
     my $self = shift;
     my $timeout = shift;
+    if (!defined $self->{PROCESS}) {
+      return 0;
+    }
     if (!defined $timeout || $timeout < 0) {
-    waitpid ($self->{PROCESS}, 0);
+      return waitpid ($self->{PROCESS}, 0);
     } else {
       return TimedWait($self, $timeout);
     }
@@ -437,6 +444,10 @@ sub TimedWait ($)
 {
     my $self = shift;
     my $timeout = shift;
+
+    if (!defined $self->{PROCESS}) {
+        return 0;
+    }
 
     $timeout *= $PerlACE::Process::WAIT_DELAY_FACTOR;
 
