@@ -29,7 +29,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   try
   {
     const char *orbidA = "orbidA";
-    const char *orbidB = "orbidB";
     const char *orbidAfile = "file://iorA.ior";
     const char *orbidBfile = "file://iorB.ior";
 
