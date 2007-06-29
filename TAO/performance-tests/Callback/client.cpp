@@ -10,6 +10,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/Basic_Stats.h"
 #include "ace/Stats.h"
+#include "ace/Throughput_Stats.h"
 #include "ace/Sched_Params.h"
 #include "ace/Task.h"
 #include "ace/OS_NS_errno.h"
