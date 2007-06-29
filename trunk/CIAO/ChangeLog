@@ -37,7 +37,7 @@ Thu Jun 28 03:27:08 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
           Fixed fuzz warnings.
           Use "int ACE_TMAIN (int argc, ACE_TCHAR *argv[])"
-          intead of "int main (int argc, char *argv[])" to conform to ACE's
+          instead of "int main (int argc, char *argv[])" to conform to ACE's
           coding guidelines.
 
 Wed Jun 27 03:44:44 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
