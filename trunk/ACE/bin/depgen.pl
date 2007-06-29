@@ -28,7 +28,7 @@ unshift(@INC, $basePath . '/DependencyGenerator');
 my($mpcroot) = $ENV{MPC_ROOT};
 my($mpcpath) = (defined $mpcroot ? $mpcroot :
                                    dirname($basePath) . '/MPC');
-unshift(@INC, $mpcpath . '/modules/Depgen');
+unshift(@INC, $mpcpath . '/modules/Depgen', $mpcpath . '/modules');
 
 if (! -d "$mpcpath/modules/Depgen") {
   print STDERR "ERROR: Unable to find the MPC DependencyGenerator ",
