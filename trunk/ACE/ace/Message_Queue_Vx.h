@@ -20,10 +20,11 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#if defined (ACE_VXWORKS)
+
 // Include the templates here.
 #include "ace/Message_Queue_T.h"
 
-#if defined (ACE_VXWORKS)
 # include /**/ <msgQLib.h>
 # include "ace/Null_Mutex.h"
 # include "ace/Null_Condition.h"
