@@ -239,7 +239,7 @@ namespace Test
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   return Test::try_main (argc, argv);
 }

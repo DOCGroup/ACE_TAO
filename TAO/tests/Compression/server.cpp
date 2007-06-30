@@ -100,7 +100,7 @@ test_register_nil_compression_factory (
 
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   int retval = 0;
   try

@@ -166,8 +166,8 @@ ST_AMH_Server::register_servant (ST_AMH_Servant *servant)
       CORBA::Object_var poa_object =
         this->orb_->resolve_initial_references("RootPOA");
 
-      PortableServer::POA_var root_poa =    
-        PortableServer::POA::_narrow (poa_object.in ()); 
+      PortableServer::POA_var root_poa =
+        PortableServer::POA::_narrow (poa_object.in ());
 
       PortableServer::ObjectId_var id =
         root_poa->activate_object (servant);
@@ -224,7 +224,7 @@ ST_AMH_Server::write_ior_to_file (CORBA::String_var ior)
 
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   ST_AMH_Server amh_server (&argc, argv);
 

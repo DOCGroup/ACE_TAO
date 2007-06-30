@@ -79,7 +79,7 @@ testCurrentLoader (int, char *[])
 
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   return testCurrentLoader (argc, argv)
     || testCurrentORBInitializer (argc, argv);

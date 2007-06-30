@@ -69,7 +69,7 @@ parse_args (int argc, char **argv)
 
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   ACE_HANDLE handle = ACE_OS::open ("big.txt",
                                     O_RDWR | O_CREAT,

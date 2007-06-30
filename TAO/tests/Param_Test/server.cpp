@@ -57,7 +57,7 @@ parse_args (int argc, char *argv[])
 // Standard command line parsing utilities used.
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   PortableServer::POA_var oa_ptr;
   Param_Test_i *param_test = 0;

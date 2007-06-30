@@ -172,7 +172,7 @@ test_exception (base_ptr abs)
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   CORBA::String_var retval;
 

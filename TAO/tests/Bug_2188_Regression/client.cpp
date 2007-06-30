@@ -34,7 +34,7 @@ parse_args (int argc, char *argv[])
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   ServerAdmin_var saobj;
   CORBA::ORB_var orb;

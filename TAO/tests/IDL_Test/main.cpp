@@ -85,7 +85,7 @@ struct something_handler : public POA_bug_1985_c::d::AMI_somethingHandler
 };
 
 int
-main (int argc , char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   int error_count = 0;
 

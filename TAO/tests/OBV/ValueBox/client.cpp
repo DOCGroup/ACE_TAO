@@ -1419,7 +1419,7 @@ int test_boxed_union_invocations (Test * test_object)
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   Test_var test_object;
   CORBA::ORB_var orb;

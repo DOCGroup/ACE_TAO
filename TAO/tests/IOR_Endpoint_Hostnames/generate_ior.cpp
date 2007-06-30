@@ -12,7 +12,7 @@
 ACE_RCSID (IOR_Endpoint_Hostnames, generate_ior, "$Id$")
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   try
     {

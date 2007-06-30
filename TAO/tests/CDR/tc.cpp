@@ -34,7 +34,7 @@ ACE_RCSID (CDR,
 // verify that CDR offers the services needed for Typecode...
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   try
     {

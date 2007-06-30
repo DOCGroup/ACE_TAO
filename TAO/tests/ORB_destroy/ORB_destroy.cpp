@@ -112,7 +112,7 @@ test_with_funky_poa_manager (int argc,
 }
 
 int
-main (int argc, char **argv)
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   int result = 0;
 

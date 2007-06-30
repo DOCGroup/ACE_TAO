@@ -118,7 +118,7 @@ MT_Object_Server::~MT_Object_Server (void)
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   MT_Object_Server MT_Object_Server;
 

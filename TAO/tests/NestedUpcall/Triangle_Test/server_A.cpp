@@ -112,7 +112,7 @@ Object_A_Server::~Object_A_Server (void)
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   Object_A_Server object_A_Server;
 

@@ -460,7 +460,7 @@ test_mutex_try_lock (RTCORBA::RTORB_ptr rt_orb)
 #endif /* ACE_HAS_THREADS */
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   try
     {

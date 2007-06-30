@@ -40,7 +40,7 @@ parse_args (int argc, char *argv[])
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   int interceptor_type;
   get_interceptor_type (argc, argv, interceptor_type);

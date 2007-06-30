@@ -37,7 +37,7 @@ parse_args (int argc, char *argv[])
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   Fl_Window window(300, 300);
   TAO::FlResource_Loader fl_loader;

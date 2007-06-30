@@ -136,7 +136,7 @@ test_reference_to_servant_active_object(PortableServer::POA_ptr root_poa)
 
 
 int
-main (int argc, char **argv)
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
 
   try

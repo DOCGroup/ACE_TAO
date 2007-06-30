@@ -48,7 +48,7 @@ static void test_synchronous (Test::Echo_ptr echo);
 static void test_ami (CORBA::ORB_ptr orb,
                       Test::Echo_ptr echo);
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   try
     {

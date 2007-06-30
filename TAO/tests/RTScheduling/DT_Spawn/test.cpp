@@ -7,7 +7,7 @@
 #include "ace/SString.h"
 
 int
-main (int argc, char* argv [])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   CORBA::ORB_var orb;
   RTScheduling::Current_var current;

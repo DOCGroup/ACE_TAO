@@ -5,7 +5,7 @@
 const char *ior = "file://test.ior";
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   int received_expected_exception = 0;
   try
