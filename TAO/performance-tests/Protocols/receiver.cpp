@@ -6,6 +6,7 @@
 #include "ace/Sample_History.h"
 #include "ace/High_Res_Timer.h"
 #include "ace/Stats.h"
+#include "ace/Throughput_Stats.h"
 #include "tao/debug.h"
 #include "testS.h"
 
