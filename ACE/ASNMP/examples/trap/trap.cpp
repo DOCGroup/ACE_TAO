@@ -171,7 +171,11 @@ int trapapp::run()
    const char *name = address_.resolve_hostname(rc);
 
    cout << "Device: " << address_ << " ";
+
+   //FUZZ: disable check_for_lack_ACE_OS
    cout << (rc ? "<< did not resolve via gethostbyname() >>" : name) << "\n";
+   //FUZZ: enable check_for_lack_ACE_OS
+
    cout << "[ Community=" <<  community_.to_string() << " ]"<< endl;
 
    if (snmp_.trap( pdu_, target_) == SNMP_CLASS_SUCCESS) {

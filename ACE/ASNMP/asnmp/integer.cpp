@@ -125,8 +125,8 @@ SnmpSyntax* SnmpUInt32::clone() const
 // ASCII format return
 const char * SnmpUInt32::to_string()
 {
-  sprintf(output_buffer, "%d", (int) (this->smival.value.uNumber));
-     return output_buffer;
+  ACE_OS::sprintf(output_buffer, "%d", (int) (this->smival.value.uNumber));
+  return output_buffer;
 }
 
 
@@ -225,6 +225,6 @@ SnmpSyntax* SnmpInt32::clone() const
 
 const char *SnmpInt32::to_string()
 {
-  sprintf(output_buffer, "%d", (int) (long) this->smival.value.sNumber);
+  ACE_OS::sprintf(output_buffer, "%d", (int) (long) this->smival.value.sNumber);
   return output_buffer;
 }

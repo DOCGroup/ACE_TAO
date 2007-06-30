@@ -241,7 +241,11 @@ int set::run()
    const char *name = address_.resolve_hostname(rc);
 
    cout << "Device: " << address_ << " ";
+
+   //FUZZ: disable check_for_lack_ACE_OS
    cout << (rc ? "<< did not resolve via gethostbyname() >>" : name) << "\n";
+   //FUZZ: enable check_for_lack_ACE_OS
+
    cout << "[ Retries=" << target_.get_retry() << " \
         Timeout=" << target_.get_timeout() <<" ms " << "Community=" << \
          community_.to_string() << " ]"<< endl;
