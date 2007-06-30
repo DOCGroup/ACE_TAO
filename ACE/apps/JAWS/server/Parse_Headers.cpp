@@ -6,7 +6,7 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_strings.h"
 #include "ace/OS_NS_stdlib.h"
-#include "ace/os_include/os_ctype.h"
+#include "ace/OS_NS_ctype.h"
 
 ACE_RCSID(server, Parse_Headers, "$Id$")
 
@@ -58,7 +58,7 @@ Headers::parse_header_line (char * const header_line)
 
   if (header != NULL && this->map_.mapped (header))
     {
-      while (isspace (*value))
+      while (ACE_OS::ace_isspace (*value))
         value++;
 
       this->map_[header] = value;
@@ -112,7 +112,7 @@ Headers::complete_header_line (char *const header_line)
           return 1;
 
         default:
-          if (isalpha (ptr[offset]))
+          if (ACE_OS::ace_isalpha (ptr[offset]))
             return 1;
           else
             return -1;
@@ -274,11 +274,11 @@ Headers_Map::find (const char * const header) const
   mutable_this->garbage_.header_ = header;
 #if 0
   Headers_Map_Item *mi_ptr = (Headers_Map_Item *)
-    ::bsearch (&this->garbage_,
-               this->map_,
-               this->num_headers_,
-               sizeof (Headers_Map_Item),
-               Headers_Map::compare);
+    ACE_OS::bsearch (&this->garbage_,
+                     this->map_,
+                     this->num_headers_,
+                     sizeof (Headers_Map_Item),
+                     Headers_Map::compare);
 #else
   int i = 0;
   int j = this->num_headers_;

@@ -37,7 +37,7 @@ client_thread(void *data)
   throughput_timer.start();
   latency_timer.start();
   ACE_OS::sprintf(request,"GET /%s HTTP/1.0\r\n\r\n",u->get_filename());
-  webserver.write_n(request, strlen(request)) ;
+  webserver.write_n(request, ACE_OS::strlen(request)) ;
   
   char buffer[BUFSIZ];
   ssize_t num_read = 0, total_read = 0;
@@ -78,23 +78,23 @@ int driver(char *id, int total_num, float requests_sec, char *url1, float p1, ch
   // sleep_time is in microseconds, and requests_sec is per second, hence the pow(10,6)
   float sleep_time = (1/requests_sec) * (1000.0 * 1000.0); // pow(10,6); 
   float delta = 0;
-  srand(time(NULL));
+  ACE_OS::srand(ACE_OS::time(NULL));
   for(int i = 0; i < total_num; i++) { // i is used as a id for threads
     ACE_Profile_Timer timer;
     if(sleep_time < delta) 
       {
-	// cerr << "Requested rate is too high, sleep_time == " << sleep_time << ", and delta = " << delta << ", after " << i  << " iterations! " << endl;
-	missed_deadlines++;
+        // cerr << "Requested rate is too high, sleep_time == " << sleep_time << ", and delta = " << delta << ", after " << i  << " iterations! " << endl;
+        missed_deadlines++;
       }
     else
       {
-	ACE_Time_Value tv(0, (long int) (sleep_time - delta));
-	ACE_OS::sleep(tv);
-	timer.start();
+        ACE_Time_Value tv(0, (long int) (sleep_time - delta));
+        ACE_OS::sleep(tv);
+        timer.start();
       }
     Client_Parameters *cp = new Client_Parameters(i);
     
-    double r = ((double)rand()/(double)RAND_MAX);
+    double r = ((double)ACE_OS::rand()/(double)RAND_MAX);
     // cerr << " choosing between " << url1 << url2 << url3 << " with r == " << r;
     if(r <= p1)   cp->url = new URL(url1);
     if( (r > p1) && (r <= (p1 + p2)))   cp->url = new URL(url2);
@@ -138,15 +138,15 @@ main(int argc, char **argv)
     return 1;
   }
   
-  FILE *fp = fopen(argv[1],"r");
+  FILE *fp = ACE_OS::fopen(argv[1],"r");
   if(fp == NULL) {
-    perror("fopen");
+    ACE_POS::perror("fopen");
     return 2;
   }
-  close(1);
-  int fd = open(argv[2], O_WRONLY | O_CREAT | O_TRUNC, 0644);
+  ACE_OS::close(1);
+  int fd = ACE_OS::open(argv[2], O_WRONLY | O_CREAT | O_TRUNC, 0644);
   if(fd == -1) {
-    perror("open");
+    ACE_OS::perror("open");
     return 3;
   }
     
@@ -162,11 +162,11 @@ main(int argc, char **argv)
   while(!feof(fp)) {
 	fscanf(fp,"%s %d %f %s %f %s %f %s %f %d %d\n", id, &total_num, &rate, url1, &p1, url2, &p2, url3, &p3, &tcp, &sock);
         if (id[0] == '#') continue;
-	fprintf(stderr,"----\n");
-	fprintf(stderr,"\tNow performing experiment:%s\n\tSending %d requests at %f requests/second\n", id, total_num, rate);
-    driver(id, total_num, rate, url1, p1, url2, p2, url3, p3, tcp, sock);
+  ACE_OS::fprintf(stderr,"----\n");
+  ACE_OS::fprintf(stderr,"\tNow performing experiment:%s\n\tSending %d requests at %f requests/second\n", id, total_num, rate);
+  driver(id, total_num, rate, url1, p1, url2, p2, url3, p3, tcp, sock);
   }
-  fclose(fp);
-  close(fd);
+  ACE_OS::fclose(fp);
+  ACE_OS::close(fd);
   return 0;
 }

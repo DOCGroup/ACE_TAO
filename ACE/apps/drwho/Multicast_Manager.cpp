@@ -7,7 +7,7 @@
 #include "ace/OS_NS_arpa_inet.h"
 #include "ace/OS_NS_netdb.h"
 #include "ace/OS_Memory.h"
-#include "ace/os_include/os_ctype.h"
+#include "ace/OS_NS_ctype.h"
 
 // Initialize all the static member vars.
 int Multicast_Manager::received_host_count = 0;
@@ -38,7 +38,10 @@ Multicast_Manager::insert_default_hosts (void)
 int
 Multicast_Manager::insert_hosts_from_file (const char *filename)
 {
+  //FUZZ: disable check_for_exception_sepc
   ACE_Mem_Map mmap (filename);
+  //FUZZ: enable check_for_exception_sepc
+
   char *host_ptr = (char *) mmap.addr ();
 
   if (host_ptr == 0)
@@ -107,7 +110,7 @@ Multicast_Manager::get_host_entry (const char *host)
   static hostent host_entry;
   hostent *hp;
 
-  if (isdigit (*host)) // IP address.
+  if (ACE_OS::ace_isdigit (*host)) // IP address.
     {
       u_long ia = ACE_OS::inet_addr (host);
 

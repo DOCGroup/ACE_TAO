@@ -2,7 +2,7 @@
 
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
-#include "ace/os_include/os_ctype.h"
+#include "ace/OS_NS_ctype.h"
 #include "ace/Process.h"
 #include "ace/Mem_Map.h"
 #include "ace/Log_Msg.h"
@@ -284,12 +284,12 @@ HTTP_Response::cgi_response (void)
       int j = 0;
 
       for (char c; (c = this->request_.header_strings (i)[j++]) != '\0'; )
-	if (isalpha (c))
-	  *q++ = toupper (c);
-	else if (c == '-')
-	  *q++ = '_';
-	else
-	  *q++ = c;
+        if (ACE_OS::ace_isalpha (c))
+          *q++ = ACE_OS::ace_toupper (c);
+        else if (c == '-')
+          *q++ = '_';
+        else
+          *q++ = c;
 
       *q = '\0';
 

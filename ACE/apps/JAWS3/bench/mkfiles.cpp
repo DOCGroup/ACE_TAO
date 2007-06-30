@@ -49,7 +49,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   for (i = 0; i < number; i++)
     {
       long size = 0;
-      float p = ::floor (::pow (2, poidev (::log (2 * median)/::log (2)) - 1));
+      float p = ACE_OS::floor (::pow (2, poidev (::log (2 * median)/::log (2)) - 1));
       if (p > maximum)
         p = maximum;
       p *= 1024;
@@ -62,22 +62,22 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       else
         seen_max = (size == (maximum * 1024));
 
-      ::sprintf (filename, "file%011ld.html", i);
-      FILE *fp = ::fopen (filename, "w+b");
+      ACE_OS::sprintf (filename, "file%011ld.html", i);
+      FILE *fp = ACE_OS::fopen (filename, "w+b");
       while (size > 75)
         {
-          fprintf (fp, "%s", seventyfive_bytes);
+          ACE_OS::fprintf (fp, "%s", seventyfive_bytes);
           size -= 75;
         }
       if (size > 15)
         {
-          fprintf (fp, "%0*.0f\n", (int) (size - 1), p);
+          ACE_OS::fprintf (fp, "%0*.0f\n", (int) (size - 1), p);
         }
       else
         {
-          fprintf (fp, "%015.0f\n", p + 16 - size);
+          ACE_OS::fprintf (fp, "%015.0f\n", p + 16 - size);
         }
-      fclose (fp);
+        ACE_OS::fclose (fp);
     }
 
   return 0;
@@ -125,7 +125,7 @@ poidev (float xm)
       do
         {
           ++em;
-          t *= (1.0 + ::rand ())/RAND_MAX;
+          t *= (1.0 + ACE_OS::rand ())/RAND_MAX;
         }
       while (t > g);
     }
@@ -146,10 +146,10 @@ poidev (float xm)
               em = sq * y + xm;
             }
           while (em < 0.0);
-          fem = ::floor (em);
+          fem = ACE_OS::floor (em);
           t = 0.9 * (1.0 + y * y) * ::exp (fem * alxm - gammln (fem + 1.0) - g);
         }
-      while ((1.0 + ::rand ())/RAND_MAX > t);
+      while ((1.0 + ACE_OS::rand ())/RAND_MAX > t);
     }
 
   return em;

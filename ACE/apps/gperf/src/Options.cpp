@@ -261,7 +261,10 @@ Options::parse_args (int argc, char *argv[])
   if (ACE_LOG_MSG->open (argv[0]) == -1)
     return -1;
 
+  //FUZZ: disable check_for_lack_ACE_OS
   ACE_Get_Opt getopt (argc, argv, "abBcCdDe:Ef:F:gGhH:i:IJj:k:K:lL:mMnN:oOprs:S:tTvVZ:");
+  //FUZZ: enable check_for_lack_ACE_OS
+
   int option_char;
 
   argc_ = argc;
@@ -387,7 +390,7 @@ Options::parse_args (int argc, char *argv[])
                              "\tSetting this value larger helps inflate the size of the final table.\n"
                              "-j\tAffects the ``jump value,'' i.e., how far to advance the associated\n"
                              "\tcharacter value upon collisions.  Must be an odd number, default is %d.\n"
-                             "-J\tSkips '#include <string.h>' part in the output.\n"
+                             "-J\tSkips '#include \"ace/OS_NS_string.h\"' part in the output.\n"
                              "-k\tAllows selection of the key positions used in the hash function.\n"
                              "\tThe allowable choices range between 1-%d, inclusive.  The positions\n"
                              "\tare separated by commas, ranges may be used, and key positions may\n"
@@ -488,7 +491,7 @@ Options::parse_args (int argc, char *argv[])
                           jump_++));
             break;
           }
-        // Skip including the header file string.h.
+        // Skip including the header file ace/OS_NS_string.h.
         case 'J':
           {
             ACE_SET_BITS (option_word_, SKIPSTRINGH);
@@ -696,9 +699,9 @@ Options::parse_args (int argc, char *argv[])
     }
 
   if (argv[getopt.opt_ind ()] &&
-      freopen (argv[getopt.opt_ind ()],
-               "r",
-               stdin) == 0)
+    ACE_OS::freopen (argv[getopt.opt_ind ()],
+                     "r",
+                     stdin) == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Cannot open keyword file %p\n%r",
                        argv[getopt.opt_ind ()],

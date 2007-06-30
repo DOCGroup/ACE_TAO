@@ -39,7 +39,7 @@ public:
      * Dtor: deletes all sub-PameterList objects as well as
      *       memory block allocated for the param_ by _wcsdup().
      */
-    ~ParameterList() { free(param_); delete next_; };
+    ~ParameterList() { ACE_OS::free(param_); delete next_; };
 
     /**
      * Add a new parameter to the list.
@@ -121,7 +121,7 @@ void ParameterList::saveParameter(FILE* outputFile)
             this->next_->saveParameter(outputFile);
         }
         else {
-            fclose(outputFile);
+          ACE_OS::fclose(outputFile);
         }
     }
 }
@@ -166,8 +166,8 @@ HWND                CreateRpCommandBar(HWND);
 void InitSetup()
 {
     g_OutputFile    = 0;
-    memset(g_CommandLine,  0, MAX_COMMAND_LINE * sizeof(ACE_TCHAR));
-    memset(g_SaveFileName, 0, MAX_LOADSTRING   * sizeof(ACE_TCHAR));
+    ACE_OS::memset(g_CommandLine,  0, MAX_COMMAND_LINE * sizeof(ACE_TCHAR));
+    ACE_OS::memset(g_SaveFileName, 0, MAX_LOADSTRING   * sizeof(ACE_TCHAR));
 }
 
 
@@ -182,11 +182,11 @@ void LoadParameterHistory()
             // to wide-character (Unicode on WinCE).
             char singleParameter[MAX_COMMAND_LINE];
             int size = 0;
-            fread(&singleParameter[size], sizeof(char), 1, parameterFile);
+            ACE_OS::fread(&singleParameter[size], sizeof(char), 1, parameterFile);
 
             // WinCE does not have function that reads upto the end of line.
             while (singleParameter[size] != '\n') {
-                fread(&singleParameter[++size], sizeof(char), 1, parameterFile);
+              ACE_OS::fread(&singleParameter[++size], sizeof(char), 1, parameterFile);
             }
 
             if (size > 0) {
@@ -194,7 +194,7 @@ void LoadParameterHistory()
                 g_Parameter.addParameter(singleParameter);
             }
         }
-        fclose(parameterFile);
+        ACE_OS::fclose(parameterFile);
     }
 }
 
@@ -368,7 +368,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         case WM_CREATE:
             SHMENUBARINFO mbi;
 
-            memset(&mbi, 0, sizeof(SHMENUBARINFO));
+            ACE_OS::memset(&mbi, 0, sizeof(SHMENUBARINFO));
             mbi.cbSize     = sizeof(SHMENUBARINFO);
             mbi.hwndParent = hWnd;
             mbi.nToolBarId = IDM_MENU;
@@ -382,7 +382,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             g_hwndCB = mbi.hwndMB;
 
             // Initialize the shell activate info structure
-            memset (&s_sai, 0, sizeof (s_sai));
+            ACE_OS::memset (&s_sai, 0, sizeof (s_sai));
             s_sai.cbSize = sizeof (s_sai);
 
             GetClientRect(hWnd, &textRect);
@@ -438,7 +438,7 @@ HWND CreateRpCommandBar(HWND hwnd)
 {
     SHMENUBARINFO mbi;
 
-    memset(&mbi, 0, sizeof(SHMENUBARINFO));
+    ACE_OS::memset(&mbi, 0, sizeof(SHMENUBARINFO));
     mbi.cbSize     = sizeof(SHMENUBARINFO);
     mbi.hwndParent = hwnd;
     mbi.nToolBarId = IDM_MENU;
@@ -556,7 +556,7 @@ LRESULT CALLBACK SaveFileName(HWND hDlg, UINT message, WPARAM wParam, LPARAM lPa
 
             if (tempFile != NULL)  // if file exists
             {
-                fclose(tempFile);  // close temp handler
+              ACE_OS::fclose(tempFile);  // close temp handler
                 int choice = DialogBox(g_hInst, (const ACE_TCHAR*)IDD_FILEEXIST, hDlg, (DLGPROC)FileExist);
                 switch (choice)
                 {
@@ -589,7 +589,7 @@ LRESULT CALLBACK SaveFileName(HWND hDlg, UINT message, WPARAM wParam, LPARAM lPa
 
                 if (g_OutputFile != NULL)
                 {
-                    fclose(g_OutputFile);  // close any open file
+                  ACE_OS::fclose(g_OutputFile);  // close any open file
                 }
 
                 g_OutputFile = tempFile;

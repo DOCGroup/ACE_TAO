@@ -28,7 +28,7 @@ ACE_RCSID(src, List_Node, "$Id$")
 #if defined (ACE_HAS_GPERF)
 
 #include "Vectors.h"
-#include "ace/os_include/os_ctype.h"
+#include "ace/OS_NS_ctype.h"
 
 // Sorts the key set alphabetically to speed up subsequent operation
 // Uses insertion sort since the set is probably quite small.
@@ -80,8 +80,8 @@ List_Node::List_Node (char *k, int len)
   // Lower case if STRCASECMP option is enabled.
   if (option[STRCASECMP])
     for (char *p = k; *p; p++)
-      if (isupper (*p))
-        *p = static_cast<char> (tolower (*p));
+      if (ACE_OS::ace_isupper (*p))
+        *p = static_cast<char> (ACE_OS::ace_tolower (*p));
 
   if (option[ALLCHARS])         // Use all the character position in the KEY.
     for (; *k; k++, ptr++)

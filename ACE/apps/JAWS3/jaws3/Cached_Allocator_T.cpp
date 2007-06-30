@@ -10,7 +10,7 @@ JAWS_Cached_Allocator<T, ACE_LOCK>::get_next_pool (char *pool)
 {   
   char *next = 0;
   char *next_indirect = pool + (this->pool_size_);
-  memcpy (&next, next_indirect, sizeof (char *));
+  ACE_OS::memcpy (&next, next_indirect, sizeof (char *));
   return next;
 }   
     
@@ -18,7 +18,7 @@ template <class T, class ACE_LOCK> void
 JAWS_Cached_Allocator<T, ACE_LOCK>::set_next_pool (char *pool, char *next_pool)
 {   
   char *next_indirect = pool + (this->pool_size_);
-  memcpy (next_indirect, &next_pool, sizeof (char *));
+  ACE_OS::memcpy (next_indirect, &next_pool, sizeof (char *));
 }   
     
 template <class T, class ACE_LOCK> void
