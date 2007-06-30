@@ -15,6 +15,7 @@
 #include "tao/orbconf.h"
 #include "ace/Stats.h"
 #include "ace/CORBA_macros.h"
+#include "ace/Throughput_Stats.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace CORBA
