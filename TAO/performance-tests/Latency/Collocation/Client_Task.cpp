@@ -4,6 +4,7 @@
 
 #include "Client_Task.h"
 #include "ace/Stats.h"
+#include "ace/Throughput_Stats.h"
 #include "ace/Sample_History.h"
 #include "ace/High_Res_Timer.h"
 #include "ace/SString.h"
