@@ -1099,7 +1099,6 @@ Wed Jun 27 03:23:14 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
           yet TAO_ORB_Manager has been removed for a long while now. Update
           the class documentation to remove references to TAO_ORB_Manager.
 
->>>>>>> .r78612
 Mon Jun 25 11:34:36 CDT 2007  Ciju John  <johnc@ociweb.com>
 
         * TAO version 1.5.9 released.
