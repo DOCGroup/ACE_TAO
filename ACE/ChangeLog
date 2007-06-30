@@ -1,3 +1,13 @@
+Sat Jun 30 16:19:57 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * apps/drwho/PMC_All.cpp:
+        * apps/drwho/PMC_Flo.cpp:
+        * apps/drwho/PMS_Flo.cpp:
+        * apps/drwho/PMS_Ruser.cpp:
+        * apps/drwho/PM_Server.cpp:
+
+          Fixed compile-time error. Added missing #include "ace/OS_NS_stdio.h".
+
 Sat Jun 30 05:11:43 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * apps/FaCE/CE_Screen_Output.cpp:
