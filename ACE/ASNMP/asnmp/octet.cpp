@@ -546,20 +546,20 @@ const char *OctetStr::to_string_hex()
   while (local_len > 0) {
     cnt      = 16;        /* print 16 bytes per line */
     buf_ptr  = char_buf;
-    sprintf(line_ptr, "  ");
+    ACE_OS::sprintf(line_ptr, "  ");
     line_ptr += 2;  /* indent */
 
       /*-----------------------*/
       /* process a single line */
       /*-----------------------*/
     while (cnt-- > 0 && local_len-- > 0) {
-      sprintf(line_ptr, "%2.2X ", *bytes);
+      ACE_OS::sprintf(line_ptr, "%2.2X ", *bytes);
 
       line_ptr +=3;   /* the display of a byte always 3 chars long */
-      if (isprint(*bytes))
-        sprintf(buf_ptr, "%c", *bytes);
+      if (ACE_OS::ace_isprint(*bytes))
+        ACE_OS::sprintf(buf_ptr, "%c", *bytes);
       else
-        sprintf(buf_ptr, ".");
+        ACE_OS::sprintf(buf_ptr, ".");
       bytes++;
       buf_ptr++;
     }
@@ -570,7 +570,7 @@ const char *OctetStr::to_string_hex()
        /* incomplete lines of hex                                  */
        /*----------------------------------------------------------*/
     while (cnt-- > 0) {
-      sprintf(line_ptr,"   ");
+      ACE_OS::sprintf(line_ptr,"   ");
       line_ptr += 3;
     }
 

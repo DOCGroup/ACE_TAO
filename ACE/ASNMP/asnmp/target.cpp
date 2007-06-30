@@ -32,6 +32,7 @@
   =====================================================================*/
 
 #include "asnmp/target.h"
+#include "ace/OS_NS_stdio.h"
 
 ACE_RCSID(asnmp, target, "$Id$")
 
@@ -289,11 +290,12 @@ UdpTarget& UdpTarget::operator=( const UdpTarget& lhs)
 
 const char *UdpTarget::to_string()
 {
-  sprintf(output_buffer_,"UdpTarget: [ valid: %d addr: %s rd: %s wr: %s \
-ver: %d, timeout: %d, retries: %d max_pdu_size: %d]",
-          valid(), udp_address_.to_string(), read_community_.to_string(),
-          write_community_.to_string(), version_, (int) timeout_,
-          retries_, max_pdu_size_);
+  ACE_OS::sprintf(output_buffer_,"UdpTarget: [ valid: %d addr: %s rd: %s wr: %s \
+                  ver: %d, timeout: %d, retries: %d max_pdu_size: %d]",
+                  valid(), udp_address_.to_string(), read_community_.to_string(),
+                  write_community_.to_string(), version_, (int) timeout_,
+                  retries_, max_pdu_size_);
+
   return output_buffer_;
 }
 

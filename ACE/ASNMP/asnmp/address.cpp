@@ -42,7 +42,7 @@
 #include "ace/OS_NS_netdb.h"
 #include "ace/OS_NS_stdlib.h"
 #include "ace/OS_NS_stdio.h"
-#include "ace/os_include/os_ctype.h"
+#include "ace/OS_NS_ctype.h"
 #include "ace/OS_Memory.h"
 
 ACE_RCSID(asnmp, address, "$Id$")
@@ -470,7 +470,7 @@ int IpAddress::parse_dotted_ipstring( const char *inaddr)
       if (( ip_token[z] < '0') || ( ip_token[z] > '9'))
         return 0;
 
-    value = ( unsigned int) strtod(ip_token,0);
+    value = ( unsigned int) ACE_OS::strtod(ip_token,0);
     if (( value > 0)&& ( value <=255))
       address_buffer[token_count] = (unsigned char) value;
     else
@@ -1343,7 +1343,7 @@ int IpxAddress::parse_address( const char *inaddr)
   // convert the string to all lower case
   // this allows hex values to be in upper or lower
   for (z=0;z< tmplen;z++)
-    temp[z] = tolower(temp[z]);
+    temp[z] = ACE_OS::ace_tolower(temp[z]);
 
   // check for separated nodeid
   // if found remove it
@@ -1911,7 +1911,7 @@ int MacAddress::parse_address( const char *inaddr)
 
   // convert to lower
   for(z=0;z<ACE_OS::strlen(temp);z++)
-     temp[z] = tolower( temp[z]);
+    temp[z] = ACE_OS::ace_tolower( temp[z]);
 
 
   // check out the MAC address
@@ -1959,9 +1959,9 @@ const char * MacAddress::to_string()
 void MacAddress::format_output()
 {
   if ( valid_flag)
-    sprintf(output_buffer,"%02x:%02x:%02x:%02x:%02x:%02x",address_buffer[0],
-            address_buffer[1],address_buffer[2],address_buffer[3],
-            address_buffer[4],address_buffer[5]);
+    ACE_OS::sprintf(output_buffer,"%02x:%02x:%02x:%02x:%02x:%02x",address_buffer[0],
+                    address_buffer[1],address_buffer[2],address_buffer[3],
+                    address_buffer[4],address_buffer[5]);
   else
     output_buffer[0] = 0;
 }

@@ -1,3 +1,27 @@
+Sat Jun 30 04:48:34 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * ASNMP/asnmp/address.cpp:
+        * ASNMP/asnmp/ctr64.cpp:
+        * ASNMP/asnmp/integer.cpp:
+        * ASNMP/asnmp/octet.cpp:
+        * ASNMP/asnmp/oid.cpp:
+        * ASNMP/asnmp/pdu.cpp:
+        * ASNMP/asnmp/target.cpp:
+        * ASNMP/asnmp/timetick.cpp:
+        * ASNMP/asnmp/transaction.cpp:
+        * ASNMP/asnmp/wpdu.cpp:
+        * ASNMP/examples/get/get.cpp:
+        * ASNMP/examples/get/get_async.cpp:
+        * ASNMP/examples/next/next.cpp:
+        * ASNMP/examples/set/set.cpp:
+        * ASNMP/examples/trap/trap.cpp:
+        * ASNMP/examples/walk/walk.cpp:
+        * ASNMP/tests/Address_Test.cpp:
+
+          Fixed ACE_OS fuzz warnings. Use ACE_OS calls instead of raw OS function
+          where possible. If fuzz detected a false-positive, then disable
+          the ACE_OS fuzz check for that section of the code.
+
 Fri Jun 29 19:40:27 UTC 2007  Steve Huston  <shuston@riverace.com>
 
         * bin/PerlACE/Process_Unix.pm: Don't hang waiting for a failed spawn
