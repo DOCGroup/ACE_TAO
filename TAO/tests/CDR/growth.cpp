@@ -63,7 +63,7 @@ test_read (TAO_InputCDR &cdr, int n)
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   int n = 100;
   int low = 64;

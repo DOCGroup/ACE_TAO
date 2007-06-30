@@ -67,7 +67,7 @@ run_test (Test_Interceptors::Visual_ptr server)
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   try
     {

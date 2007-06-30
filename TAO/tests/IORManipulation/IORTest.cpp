@@ -23,7 +23,7 @@ ACE_RCSID (IORManipluation,
            "$Id$")
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   // The variable is declared volatile because, some compilers
   // optimizes this the wrong way. A case is point is the CC compiler

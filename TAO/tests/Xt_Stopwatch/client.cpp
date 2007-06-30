@@ -10,7 +10,7 @@ ACE_RCSID(Xt_Stopwatch, client, "$Id$")
 
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   XtAppContext app;
   Widget toplevel = XtAppInitialize (&app,

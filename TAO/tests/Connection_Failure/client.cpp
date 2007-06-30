@@ -13,7 +13,7 @@ const char *ior =
   "corbaloc:iiop:192.3.47/10007/RandomObject";
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   try
     {

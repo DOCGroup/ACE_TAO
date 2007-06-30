@@ -149,7 +149,7 @@ public:
 };
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   ORBInitializer_var orb_initializer (new ORB_Initializer ());
   register_orb_initializer (orb_initializer.in ());

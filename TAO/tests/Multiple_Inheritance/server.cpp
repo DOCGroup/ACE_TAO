@@ -44,7 +44,7 @@ parse_args (int argc, char **argv)
 
 
 int
-main (int argc, char **argv)
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   Multiple_Inheritance_i servant;
   TAO_ORB_Manager orb_manager;

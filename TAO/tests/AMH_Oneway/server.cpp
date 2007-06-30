@@ -249,7 +249,7 @@ ST_AMH_Server::write_ior_to_file (CORBA::String_var ior)
 
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   if (parse_args (argc, argv) != 0)
     return 1;

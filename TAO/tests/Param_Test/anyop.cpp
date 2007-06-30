@@ -31,7 +31,7 @@ ACE_RCSID (Param_Test,
            "$Id$")
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   int n = 1024;
 

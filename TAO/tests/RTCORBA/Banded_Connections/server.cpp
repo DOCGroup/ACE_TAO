@@ -314,7 +314,7 @@ poa_creation_exception_test (PortableServer::POA_ptr root_poa,
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   CORBA::ORB_var orb;
 

@@ -114,7 +114,7 @@ run_buffer_size (CORBA::ORB_ptr orb,
                  Test::AMI_Buffering_Admin_ptr ami_buffering_admin);
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   int test_failed = 0;
   try

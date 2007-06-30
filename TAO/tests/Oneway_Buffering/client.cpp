@@ -112,7 +112,7 @@ run_buffer_size (CORBA::ORB_ptr orb,
                  Test::Oneway_Buffering_Admin_ptr oneway_buffering_admin);
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   int test_failed = 0;
   try
@@ -744,7 +744,7 @@ run_timeout_reactive (CORBA::ORB_ptr orb,
         {
           CORBA::ULong receive_count =
             request_count (oneway_buffering_admin);
-    
+
           //FUZZ: disable check_for_lack_ACE_OS
           ACE_Time_Value sleep (0, 10000);
           orb->run (sleep);

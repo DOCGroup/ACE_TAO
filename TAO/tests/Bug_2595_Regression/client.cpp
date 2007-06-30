@@ -36,7 +36,7 @@ parse_args (int argc, char *argv[])
 void get_stringList2(Test::Hello_var hello);
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   try
     {
