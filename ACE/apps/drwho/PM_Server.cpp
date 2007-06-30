@@ -5,6 +5,7 @@
 #include "PM_Server.h"
 #include "ace/ACE.h"
 #include "ace/OS_NS_string.h"
+#include "ace/OS_NS_stdio.h"
 
 // This is the main method for the server side of things.  It reads
 // the RWHO file on the local machine and inserts HOST_NAME
