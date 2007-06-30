@@ -1,3 +1,48 @@
+Sat Jun 30 21:38:25 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * orbsvcs/tests/AVStreams/Modify_QoS/sender.cpp:
+        * orbsvcs/tests/BiDir_CORBALOC/TimeServer.cpp:
+        * orbsvcs/tests/Bug_2247_Regression/test_i.cpp:
+        * orbsvcs/tests/Bug_2248_Regression/test_i.cpp:
+        * orbsvcs/tests/Bug_2377_Regression/Hello_Impl.cpp:
+        * orbsvcs/tests/Bug_2800_Regression/NamingTask.cpp:
+        * orbsvcs/tests/Bug_2800_Regression/nsmain.cpp:
+        * orbsvcs/tests/Bug_2800_Regression/server.cpp:
+        * orbsvcs/tests/Bug_2925_Regression/Hello_Impl.cpp:
+        * orbsvcs/tests/COIOP_Naming_Test/NamingTask.cpp:
+        * orbsvcs/tests/Concurrency/CC_client.cpp:
+        * orbsvcs/tests/Concurrency/CC_command.tab.cpp:
+        * orbsvcs/tests/Concurrency/CC_command.cpp:
+        * orbsvcs/tests/Concurrency/lex.CC_command.cpp:
+        * orbsvcs/tests/EC_Mcast/EC_Mcast.cpp:
+        * orbsvcs/tests/EC_Multiple/EC_Multiple.cpp:
+        * orbsvcs/tests/Event/Mcast/RTEC_MCast_Federated/EchoEventConsumerMain.cpp:
+        * orbsvcs/tests/Event/Mcast/RTEC_MCast_Federated/EchoEventConsumer_i.cpp:
+        * orbsvcs/tests/Event/Mcast/RTEC_MCast_Federated/EchoEventSupplierMain.cpp:
+        * orbsvcs/tests/Event/Mcast/Two_Way/application.cpp:
+        * orbsvcs/tests/FT_App/FT_Client.cpp:
+        * orbsvcs/tests/FT_App/FT_Creator.cpp:
+        * orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/client.cpp:
+        * orbsvcs/tests/FtRtEvent/PushConsumer.cpp:
+        * orbsvcs/tests/InterfaceRepo/IFR_Inheritance_Test/main.cpp:
+        * orbsvcs/tests/Interoperable_Naming/ncontextext_client_i.cpp:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Manage_Object_Group/LB_server.cpp:
+        * orbsvcs/tests/Notify/Reconnecting/Consumer.cpp:
+        * orbsvcs/tests/Notify/Reconnecting/Supplier.cpp:
+        * orbsvcs/tests/Notify/Structured_Filter/Structured_Consumer.cpp:
+        * orbsvcs/tests/Notify/Structured_Multi_Filter/Structured_Consumer.cpp:
+        * orbsvcs/tests/Notify/XML_Persistence/main.cpp:
+        * orbsvcs/tests/RTCosScheduling/client.cpp:
+        * orbsvcs/tests/RTCosScheduling/server.cpp:
+        * orbsvcs/tests/Redundant_Naming/client.cpp:
+        * orbsvcs/tests/Sched/DynSched_Test.cpp:
+        * orbsvcs/tests/Security/EndpointPolicy/test.cpp:
+        * orbsvcs/tests/Security/InsecureReferences/test.cpp:
+
+          Fixed ACE_OS fuzz warnings. Use ACE_OS calls instead of raw OS function
+          where possible. If fuzz detected a false-positive, then disable
+          the ACE_OS fuzz check for that section of the code.
+
 Sat Jun 30 18:42:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/csd_framework.mpb:

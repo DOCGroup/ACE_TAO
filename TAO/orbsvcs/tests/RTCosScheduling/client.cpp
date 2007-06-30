@@ -151,8 +151,8 @@ int svc(void) {
           return 1;
         }
 
-       if (strcmp(activity_,"Client2") == 0
-         || strcmp(activity_,"Client3") == 0)
+      if (ACE_OS::strcmp(activity_,"Client2") == 0 || 
+          ACE_OS::strcmp(activity_,"Client3") == 0)
           {
             ACE_OS::sleep(1);
           }

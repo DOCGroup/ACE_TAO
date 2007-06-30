@@ -33,7 +33,9 @@ Simple_Server_i::remote_call (void)
 char*
 Simple_Server_i::shutdown (const char* key)
 {
+  //FUZZ: disable check_for_lack_ACE_OS
   ACE_DEBUG ((LM_DEBUG, "SERVER(%s)> executing shutdown()\n", _key.in()));
+  //FUZZ: enable check_for_lack_ACE_OS
 
   int still_alive = 1;
   if (!ACE_OS::strcmp (_key.in(), key))
@@ -52,7 +54,10 @@ Simple_Server_i::shutdown (const char* key)
 char*
 Simple_Server_i::abort (const char* key)
 {
+  //FUZZ: disable check_for_lack_ACE_OS
   ACE_DEBUG ((LM_DEBUG, "SERVER(%s)> executing abort()\n", _key.in()));
+  //FUZZ: enable check_for_lack_ACE_OS
+
   int still_alive = 1;
   if (!ACE_OS::strcmp (_key.in(), key))
     {

@@ -101,7 +101,7 @@ DynSched_Test::register_rt_info (ACE_DynScheduler &scheduler,
       ACE_DynScheduler::SUCCEEDED)
   {
      result = 1;
-     printf ("Could not register info for \"%s\"\n", info.entry_point.in ());
+     ACE_OS::printf ("Could not register info for \"%s\"\n", info.entry_point.in ());
   }
 
   return result;
@@ -277,9 +277,9 @@ main (int, char *[])
                                  "RMS Scheduling Strategy");
   if (result < 0)
   {
-    printf ("run_schedule (rms_strategy, \"RMS_Timelines\", "
-            "\"RMS Scheduling Strategy\") returned %d\n",
-            result);
+    ACE_OS::printf ("run_schedule (rms_strategy, \"RMS_Timelines\", "
+                    "\"RMS Scheduling Strategy\") returned %d\n",
+                    result);
     return 1;
   }
 
@@ -288,9 +288,9 @@ main (int, char *[])
                                  "MLF Scheduling Strategy");
   if (result < 0)
   {
-    printf ("run_schedule (mlf_strategy, \"MLF_Timelines\", "
-            "\"MLF Scheduling Strategy\") returned %d\n",
-            result);
+    ACE_OS::printf ("run_schedule (mlf_strategy, \"MLF_Timelines\", "
+                    "\"MLF Scheduling Strategy\") returned %d\n",
+                    result);
     return 1;
   }
 
@@ -299,9 +299,9 @@ main (int, char *[])
                                  "EDF Scheduling Strategy");
   if (result < 0)
   {
-    printf ("run_schedule (edf_strategy, \"EDF_Timelines\", "
-            "\"EDF Scheduling Strategy\") returned %d\n",
-            result);
+    ACE_OS::printf ("run_schedule (edf_strategy, \"EDF_Timelines\", "
+                    "\"EDF Scheduling Strategy\") returned %d\n",
+                    result);
     return 1;
   }
 
@@ -310,9 +310,9 @@ main (int, char *[])
                                  "MUF Scheduling Strategy");
   if (result < 0)
   {
-    printf ("run_schedule (muf_strategy, \"MUF_Timelines\", "
-            "\"MUF Scheduling Strategy\") returned %d\n",
-            result);
+    ACE_OS::printf ("run_schedule (muf_strategy, \"MUF_Timelines\", "
+                    "\"MUF Scheduling Strategy\") returned %d\n",
+                    result);
     return 1;
   }
 

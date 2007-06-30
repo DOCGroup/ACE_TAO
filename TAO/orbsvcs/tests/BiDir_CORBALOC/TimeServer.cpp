@@ -5,6 +5,7 @@
 #include "tao/Utils/PolicyList_Destroyer.h"
 #include "orbsvcs/CosNamingC.h"
 #include "tao/AnyTypeCode/Any.h"
+#include "ace/OS_NS_time.h"
 
 class Time_impl :
   public POA_TimeModule::Time
@@ -20,8 +21,8 @@ public:
 TimeModule::TimeOfDay Time_impl::get_gmt (void)
 {
 
-  time_t time_now   = time(0);
-  struct tm *time_p = gmtime(&time_now);
+  time_t time_now   = ACE_OS::time(0);
+  struct tm *time_p = ACE_OS::gmtime(&time_now);
 
   TimeModule::TimeOfDay tod;
 
@@ -35,7 +36,7 @@ TimeModule::TimeOfDay Time_impl::get_gmt (void)
 void
 Time_impl::Shutdown (void)
 {
-  exit(0);
+  ACE_OS::exit(0);
 }
 
 int

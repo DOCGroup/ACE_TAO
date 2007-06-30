@@ -6,6 +6,7 @@
 #include "EchoEventConsumer_i.h"
 #include "tao/PortableServer/PS_CurrentC.h"
 #include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_unistd.h"
 
 #include <sstream>
 
@@ -27,8 +28,9 @@ void EchoEventConsumer_i::push(const RtecEventComm::EventSet& events)
     // Extract event data from the any.
     const char* eventData;
     std::ostringstream out;
+
 #ifndef ACE_LACKS_GETPID
-    out << "[" << getpid();
+    out << "[" << ACE_OS::getpid();
 #endif
     out << "] Received event,"
         << "  type: "   << events[i].header.type

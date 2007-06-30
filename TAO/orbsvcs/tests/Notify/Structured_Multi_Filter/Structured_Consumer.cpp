@@ -38,7 +38,7 @@ Consumer_Client::parse_args (int argc, char *argv[])
     switch (x)
   {
     case 'e':
-      numEvents = atoi (get_opts.optarg);
+      numEvents = ACE_OS::atoi (get_opts.optarg);
       break;
 
     case 'f':

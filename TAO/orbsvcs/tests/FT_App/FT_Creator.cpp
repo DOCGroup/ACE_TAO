@@ -108,7 +108,9 @@ FTAPP::FT_Creator::parse_args (int argc, char *argv[])
 
   if ( this->create_roles_.size() == 0 && this->unregister_roles_.size() == 0)
   {
+    //FUZZ: disable check_for_lack_ACE_OS
     ACE_OS::fprintf (stderr, "Creator: neither create (-t) nor kill (-u) specified.  Nothing to do.\n");
+    //FUZZ: enable check_for_lack_ACE_OS
     usage (stderr);
     result = -1;
   }
@@ -195,12 +197,12 @@ int FTAPP::FT_Creator::run (void)
         this->prefix_,
         role,
         this->iogr_seq_);
-      FILE * iogr_file = fopen (iogr_filename, "w");
+      FILE * iogr_file = ACE_OS::fopen (iogr_filename, "w");
       if (iogr_file != 0)
       {
         char const * siogr = static_cast<const char *> (iogr.in ());
-        fwrite (siogr, 1, strlen(siogr), iogr_file);
-        fclose (iogr_file);
+        ACE_OS::fwrite (siogr, 1, ACE_OS::strlen(siogr), iogr_file);
+        ACE_OS::fclose (iogr_file);
       }
       else
       {

@@ -250,7 +250,7 @@ int FTClientMain::pass (
       char op = command[0];
       ACE_CString cdr = command.substr(1);
       char * junque;
-      long operand = strtol(cdr.c_str(),&junque, 10);
+      long operand = ACE_OS::strtol(cdr.c_str(),&junque, 10);
 
       if (this->verbose_ >= NOISY)
       {

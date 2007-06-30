@@ -91,10 +91,10 @@ int main(int ac, char **av)
     if (! pass1 && !pass2)
     {
       FILE *f;
-      f = fopen ("loadtest.xml", "r");
+      f = ACE_OS::fopen ("loadtest.xml", "r");
       if (f != 0)
       {
-        fclose (f);
+        ACE_OS::fclose (f);
         pass1 = false;
         pass2 = true;
       }
