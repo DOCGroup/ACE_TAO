@@ -1,3 +1,10 @@
+Sat Jun 30 18:42:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/csd_framework.mpb:
+        * MPC/bin/CSD_Framework.mpc:
+          CSD_Framework can't be build with CORBA/e micro enabled because with
+          CORBA/e micro you can't create a child POA
+
 Sat Jun 30 16:58:36 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * tests/AMH_Exceptions/client.cpp:
