@@ -3,7 +3,7 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_pwd.h"
 #include "ace/OS_NS_string.h"
-#include "ace/os_include/os_ctype.h"
+#include "ace/OS_NS_ctype.h"
 #include "File_Manager.h"
 
 File_Manager::File_Manager (void)
@@ -38,14 +38,14 @@ File_Manager::get_login_and_real_name (const char *&login_name, const char *&rea
 
   // Skip to the end of the login name.
 
-  while (isalnum (*buf_ptr))
+  while (ACE_OS::ace_isalnum (*buf_ptr))
     buf_ptr++;
 
   *buf_ptr++ = '\0';
 
   // Now skip over white space to *start* of real name!
 
-  while (isspace (*buf_ptr) || *buf_ptr == '\0')
+  while (ACE_OS::ace_isspace (*buf_ptr) || *buf_ptr == '\0')
     buf_ptr++;
 
   real_name = buf_ptr;
@@ -56,7 +56,7 @@ File_Manager::get_login_and_real_name (const char *&login_name, const char *&rea
   // Clear the trailing blanks and junk.
 
   for (char *tmp_ptr = buf_ptr - 1;
-       isspace (*tmp_ptr);
+       ACE_OS::ace_isspace (*tmp_ptr);
        tmp_ptr--)
     *tmp_ptr = '\0';
 

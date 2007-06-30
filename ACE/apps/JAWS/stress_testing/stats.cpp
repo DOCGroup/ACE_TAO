@@ -50,7 +50,7 @@ void Stats::output() {
   int i;
   float tavg = 0, lavg = 0;
 
-  qsort(init_fini_, 2*thread_count_, sizeof(Init_Fini_t), comp);
+  ACE_OS::qsort(init_fini_, 2*thread_count_, sizeof(Init_Fini_t), comp);
 
   int max = 0,thread_peak = 0;
 

@@ -29,7 +29,7 @@ int connection::connect(char *hostname_opt_port, int tcp_nodelay, int sockbufsiz
   ACE_SOCK_Connector con;
 
   if(con.connect(stream_, server_addr) == -1) {
-    perror("ACE_SOCK_Connector::connect");
+    ACE_OS::perror("ACE_SOCK_Connector::connect");
     return 1;
   }
 
@@ -44,8 +44,9 @@ int connection::connect(char *hostname_opt_port, int tcp_nodelay, int sockbufsiz
     if (p && stream_.set_option (p->p_proto,
 				 TCP_NODELAY,
 				 (char *)& one, 
-				 sizeof (one))) {
-      perror("tcp_nodelay");
+				 sizeof (one))) 
+    {
+      ACE_OS::perror("tcp_nodelay");
       return 1;
     }
   }
@@ -54,8 +55,9 @@ int connection::connect(char *hostname_opt_port, int tcp_nodelay, int sockbufsiz
     if (stream_.set_option (SOL_SOCKET,
 			    SO_RCVBUF,
 			    (char *) &sockbufsiz,
-			    sizeof sockbufsiz) == -1) {
-      perror("socket_queue_size");
+			    sizeof sockbufsiz) == -1) 
+    {
+      ACE_OS::perror("socket_queue_size");
       return 1;
     }
   

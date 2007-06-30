@@ -555,7 +555,7 @@ Key_List::output_switch (int use_keyword_table)
   if (pointer_and_type_enabled)
     {
       // Keep track of the longest string we'll need!
-      const char *s = "charmap[*str] == *resword->%s && !strncasecmp (str + 1, resword->%s + 1, len - 1)";
+      const char *s = "charmap[*str] == *resword->%s && !ACE_OS::strncasecmp (str + 1, resword->%s + 1, len - 1)";
 
       char * const tmp =
         new char[ACE_OS::strlen (s)
@@ -565,24 +565,24 @@ Key_List::output_switch (int use_keyword_table)
       comp_buffer = safe_comp_buffer.get ();
 
       if (option[COMP])
-        sprintf (comp_buffer, "%s == *resword->%s && !%s (str + 1, resword->%s + 1, len - 1)",
-                 option[STRCASECMP] ? "charmap[*str]" : "*str", option.key_name (),
-                 option[STRCASECMP] ? "strncasecmp" : "strncmp", option.key_name ());
+        ACE_OS::sprintf (comp_buffer, "%s == *resword->%s && !%s (str + 1, resword->%s + 1, len - 1)",
+                         option[STRCASECMP] ? "charmap[*str]" : "*str", option.key_name (),
+                         option[STRCASECMP] ? "strncasecmp" : "strncmp", option.key_name ());
       else
-        sprintf (comp_buffer, "%s == *resword->%s && !%s (str + 1, resword->%s + 1)",
-                 option[STRCASECMP] ? "charmap[*str]" : "*str", option.key_name (),
-                 option[STRCASECMP] ? "strcasecmp" : "strcmp", option.key_name ());
+        ACE_OS::sprintf (comp_buffer, "%s == *resword->%s && !%s (str + 1, resword->%s + 1)",
+                         option[STRCASECMP] ? "charmap[*str]" : "*str", option.key_name (),
+                         option[STRCASECMP] ? "strcasecmp" : "strcmp", option.key_name ());
     }
   else
     {
       if (option[COMP])
         comp_buffer = option[STRCASECMP]
-          ? (char *) "charmap[*str] == *resword && !strncasecmp (str + 1, resword + 1, len - 1)"
-          : (char *) "*str == *resword && !strncmp (str + 1, resword + 1, len - 1)";
+          ? (char *) "charmap[*str] == *resword && !ACE_OS::strncasecmp (str + 1, resword + 1, len - 1)"
+          : (char *) "*str == *resword && !ACE_OS::strncmp (str + 1, resword + 1, len - 1)";
       else
         comp_buffer = option[STRCASECMP]
-          ? (char *) "charmap[*str] == *resword && !strncasecmp (str + 1, resword + 1, len - 1)"
-          : (char *) "*str == *resword && !strcmp (str + 1, resword + 1)";
+          ? (char *) "charmap[*str] == *resword && !ACE_OS::strncasecmp (str + 1, resword + 1, len - 1)"
+          : (char *) "*str == *resword && !ACE_OS::strcmp (str + 1, resword + 1)";
     }
   if (!option[OPTIMIZE])
     ACE_OS::printf ("  if (len <= MAX_WORD_LENGTH && len >= MIN_WORD_LENGTH)\n    {\n");
@@ -899,7 +899,7 @@ Key_List::output_binary_search_function (void)
 
   // Get prototype for strncmp() and strcmp().
   if (!option[SKIPSTRINGH])
-    ACE_OS::printf ("#include <string.h>\n");
+    ACE_OS::printf ("#include \"ace/OS_NS_string.h\"\n");
 
   // Output type declaration now, reference it later on....
   if (option[TYPE] && !option[NOTYPE])
@@ -962,8 +962,8 @@ Key_List::output_binary_search_function (void)
   ACE_OS::printf ("while (last >= first)\n");
   ACE_OS::printf ("\t{\n");
   ACE_OS::printf ("\t   middle = (last + first) / 2;\n");
-  ACE_OS::printf ("\t   if (strcmp (wordlist[middle].%s, str) == 0)\n      break;\n", option.key_name());
-  ACE_OS::printf ("\t   if (strcmp (wordlist[middle].%s, str) < 0)\n      first = middle + 1;\n", option.key_name());
+  ACE_OS::printf ("\t   if (ACE_OS::strcmp (wordlist[middle].%s, str) == 0)\n      break;\n", option.key_name());
+  ACE_OS::printf ("\t   if (ACE_OS::strcmp (wordlist[middle].%s, str) < 0)\n      first = middle + 1;\n", option.key_name());
   ACE_OS::printf ("\t   else last = middle - 1;\n");
   ACE_OS::printf ("\t}\n");
   ACE_OS::printf ("if (last < first)\n  return 0;\n");
@@ -982,7 +982,7 @@ Key_List::output_binary_search_function (void)
         }
     }
 
-  fflush(stdout);
+  ACE_OS::fflush(stdout);
 
   return 0;
 
@@ -998,7 +998,7 @@ Key_List::output_linear_search_function (void)
 
   // Get prototype for strncmp() and strcmp().
   if (!option[SKIPSTRINGH])
-    ACE_OS::printf ("#include <string.h>\n");
+    ACE_OS::printf ("#include \"ace/OS_NS_string.h\"\n");
 
   // Output type declaration now, reference it later on....
   if (option[TYPE] && !option[NOTYPE])
@@ -1053,7 +1053,7 @@ Key_List::output_linear_search_function (void)
 
   ACE_OS::printf ("for (int i=0; i<=%d; i++)",total_keys-1);
   ACE_OS::printf ("\t{\n");
-  ACE_OS::printf ("\t   if (strcmp (wordlist[i].%s, str) == 0)\n", option.key_name());
+  ACE_OS::printf ("\t   if (ACE_OS::strcmp (wordlist[i].%s, str) == 0)\n", option.key_name());
   ACE_OS::printf ("\t        return &wordlist[i];\n");
   ACE_OS::printf ("\t}\n");
   ACE_OS::printf ("return 0;\n}\n");
@@ -1673,7 +1673,7 @@ Key_List::output (void)
 
       // Get prototype for strncmp() and strcmp().
       if (!option[SKIPSTRINGH])
-        ACE_OS::printf ("#include <string.h>\n");
+        ACE_OS::printf ("#include \"ace/OS_NS_string.h\"\n");
 
       // Output type declaration now, reference it later on....
       if (option[TYPE] && !option[NOTYPE])
@@ -1795,7 +1795,7 @@ Key_List::output (void)
                 putchar (c);
             }
         }
-      fflush (stdout);
+      ACE_OS::fflush (stdout);
     }
   return 0;
   }

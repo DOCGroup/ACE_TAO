@@ -16,21 +16,21 @@ URL::URL(char *input_buf) {
   char *lasts;
 
   if((temp = ACE_OS::strtok_r(buffer,": ",&lasts)))  {
-	protocol_ = (char *) ACE_OS::malloc(strlen(temp) + 1);
-	ACE_OS::strcpy(protocol_, temp);
+    protocol_ = (char *) ACE_OS::malloc(ACE_OS::strlen(temp) + 1);
+    ACE_OS::strcpy(protocol_, temp);
   }
 
   if((temp = ACE_OS::strtok_r(NULL,"/",&lasts)))  {
-	hostname_ = (char *) ACE_OS::malloc(strlen(temp) + 1);
-	ACE_OS::strcpy(hostname_, temp);
+    hostname_ = (char *) ACE_OS::malloc(strlen(temp) + 1);
+    ACE_OS::strcpy(hostname_, temp);
   }
   if((temp = ACE_OS::strtok_r(NULL,"\0",&lasts))) {
-    filename_ = (char *) malloc(strlen(temp) + 1);
-	ACE_OS::strcpy(filename_, temp);
+    filename_ = (char *) ACE_OS::malloc(ACE_OS::strlen(temp) + 1);
+    ACE_OS::strcpy(filename_, temp);
   }
   else {
-    filename_ = (char *) malloc(strlen(INDEX_NAME) + 1);
-	ACE_OS::strcpy(filename_,INDEX_NAME);
+    filename_ = (char *) ACE_OS::malloc(ACE_OS::strlen(INDEX_NAME) + 1);
+    ACE_OS::strcpy(filename_,INDEX_NAME);
   }
 }
 
@@ -51,8 +51,8 @@ char *URL::get_filename(void) {
 
 
 void cleanup(void) {
-  unlink(TEMPORARY_FILE_NAME);
-  unlink(INCOMING_FILE_NAME);
+  ACE_OS::unlink(TEMPORARY_FILE_NAME);
+  ACE_OS::unlink(INCOMING_FILE_NAME);
 }
 
 void sigint(int) {

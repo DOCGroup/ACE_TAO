@@ -30,6 +30,7 @@ ACE_RCSID(src, Gen_Perf, "$Id$")
 #include "Vectors.h"
 #include "ace/OS_NS_stdlib.h"
 #include "ace/OS_NS_time.h"
+#include "ace/OS_NS_stdio.h"
 #include "ace/OS_Memory.h"
 
 // Current release version.
@@ -273,16 +274,16 @@ Gen_Perf::open (void)
   ACE_NEW_RETURN (this->union_set,
                   char[2 * option.max_keysig_size () + 1],
                   -1);
-  printf ("/* ");
+  ACE_OS::printf ("/* ");
 
   if (option[C])
-    printf ("C");
+    ACE_OS::printf ("C");
 
   else if (option[CPLUSPLUS])
-    printf ("C++");
+    ACE_OS::printf ("C++");
 
-  printf (" code produced by gperf version %s */\n",
-          version_string);
+  ACE_OS::printf (" code produced by gperf version %s */\n",
+                  version_string);
   Options::print_options ();
 
   if (option[DEBUGGING])

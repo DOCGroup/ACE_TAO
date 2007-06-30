@@ -19,7 +19,7 @@
 
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
-#include "ace/os_include/os_ctype.h"
+#include "ace/OS_NS_ctype.h"
 #include "http_handler.h"
 
 ACE_RCSID(Caching, http_client, "$Id$")
@@ -48,14 +48,14 @@ ACE_TMAIN (int, ACE_TCHAR *[])
       if (len > 0 && s[len - 1] == '\n')
         s[len - 1] = 0;
 
-      while (isspace (*s))
+      while (ACE_OS::ace_isspace (*s))
         s++;
 
       if (*s == '!')
         {
           do
-	    s++;
-	  while (isspace (*s));
+          s++;
+          while (ACE_OS::ace_isspace (*s));
 
           // Shell command.
           if (ACE_OS::system (ACE_TEXT_CHAR_TO_TCHAR (s)) == -1)

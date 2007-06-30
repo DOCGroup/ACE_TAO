@@ -16,7 +16,7 @@ CM_Server::open (short port_number)
 {
   int max_packet_size = UDP_PACKET_SIZE;
 
-  this->sokfd_ = socket (PF_INET, SOCK_DGRAM, 0);
+  this->sokfd_ = ACE_OS::socket (PF_INET, SOCK_DGRAM, 0);
 
   if (this->sokfd_ < 0)
     return -1;
@@ -84,12 +84,12 @@ CM_Server::send (void)
                 "sending to client host %s\n",
                 ACE_OS::inet_ntoa (this->sin_.sin_addr)));
 
-  if (sendto (this->sokfd_,
-              this->send_packet_,
-              packet_length,
-              0,
-              reinterpret_cast<sockaddr *> (&this->sin_),
-              sizeof this->sin_) < 0)
+  if (ACE_OS::sendto (this->sokfd_,
+                      this->send_packet_,
+                      packet_length,
+                      0,
+                      reinterpret_cast<sockaddr *> (&this->sin_),
+                      sizeof this->sin_) < 0)
     return -1;
 
   return 1;

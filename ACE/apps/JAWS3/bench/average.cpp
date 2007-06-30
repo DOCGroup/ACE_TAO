@@ -9,7 +9,7 @@ main (void)
   int input;
   char buf[BUFSIZ];
 
-  while (::fgets (buf, sizeof (buf), stdin) != 0)
+  while (ACE_OS::fgets (buf, sizeof (buf), stdin) != 0)
     {
       input = ACE_OS::atoi (buf);
       sum += input;

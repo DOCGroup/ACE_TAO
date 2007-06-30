@@ -27,7 +27,7 @@ ACE_RCSID(src, Iterator, "$Id$")
 
 #if defined (ACE_HAS_GPERF)
 
-#include "ace/os_include/os_ctype.h"
+#include "ace/OS_NS_ctype.h"
 
 // Constructor for Iterator.
 
@@ -75,14 +75,14 @@ Iterator::operator() (void)
           case '$': str++; return end_word;
           case '0': case '1': case '2': case '3': case '4':
           case '5': case '6': case '7': case '8': case '9':
-            for (curr_value = 0; isdigit (*str); str++)
+            for (curr_value = 0; ACE_OS::ace_isdigit (*str); str++)
               curr_value = curr_value * 10 + *str - '0';
 
             if (*str == '-')
               {
 
                 for (size = 1, upper_bound = 0;
-                     isdigit (*++str);
+                     ACE_OS::ace_isdigit (*++str);
                      upper_bound = upper_bound * 10 + *str - '0');
 
                 if (upper_bound <= curr_value || upper_bound > hi_bound)

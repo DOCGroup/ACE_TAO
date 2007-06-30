@@ -16,7 +16,7 @@ CE_Screen_Output::CE_Screen_Output()
 CE_Screen_Output::~CE_Screen_Output()
 {
     if (pFile_ != 0) {
-        fclose(pFile_);
+      ACE_OS::fclose(pFile_);
     }
 }
 
