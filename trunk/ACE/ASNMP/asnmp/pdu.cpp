@@ -170,9 +170,9 @@ const char * Pdu::to_string()
   ACE_NEW_RETURN(output_, char[size], "");
 
   // print pdu header info
-  sprintf(output_, "pdu: valid: %d type:%d, req:%d, cnt: %d, err stat: %d \
- err idx: %d\n",     validity_, pdu_type_, (int) request_id_,
-    vb_count_, error_status_, error_index_ );
+  ACE_OS::sprintf(output_, "pdu: valid: %d type:%d, req:%d, cnt: %d, err stat: %d \
+                  err idx: %d\n",     validity_, pdu_type_, (int) request_id_,
+                  vb_count_, error_status_, error_index_ );
 
   // now append vb pairs in this object
    for ( z = 0; z < vb_count_; z++) {

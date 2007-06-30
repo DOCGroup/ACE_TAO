@@ -18,8 +18,9 @@
 // ============================================================================
 
 #include "asnmp/wpdu.h"
-#include <ace/Log_Msg.h>
+#include "ace/Log_Msg.h"
 #include "ace/OS_NS_string.h"
+#include "ace/OS_NS_stdio.h"
 
 #define DEFINE_TRAP_CONSTANTS_
 #include "asnmp/enttraps.h"
@@ -254,8 +255,8 @@ void wpdu::copy_iovec(iovec& dest, const iovec& src)
   if (&dest == &src)
     return;
 
-   ACE_OS:: memmove( dest.iov_base, src.iov_base, src.iov_len);
-   dest.iov_len =  src.iov_len;
+   ACE_OS::memmove( dest.iov_base, src.iov_base, src.iov_len);
+   dest.iov_len = src.iov_len;
 }
 
 int wpdu::convert_vb_to_smival( Vb &tempvb, SmiVALUE *smival )
@@ -462,12 +463,12 @@ int wpdu::restore_vbs(Pdu& pdu, const snmp_pdu *raw_pdu) const
     case sNMP_SYNTAX_IPADDR:
     {
        char buffer[20];
-       sprintf( buffer,"%d.%d.%d.%d",
-               vp->val.string[0],
-              vp->val.string[1],
-              vp->val.string[2],
-              vp->val.string[3]);
-        IpAddress ipaddress( buffer);
+       ACE_OS::sprintf( buffer,"%d.%d.%d.%d",
+                        vp->val.string[0],
+                        vp->val.string[1],
+                        vp->val.string[2],
+                        vp->val.string[3]);
+       IpAddress ipaddress( buffer);
        tempvb.set_value( ipaddress);
     }
     break;
