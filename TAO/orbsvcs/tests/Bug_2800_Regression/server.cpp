@@ -31,7 +31,7 @@ TestTask::TestTask(int argc, char **argv)
 void TestTask::end()
 {
   orb_->shutdown(0);
-  wait();
+  this->wait();
 }
 
 int

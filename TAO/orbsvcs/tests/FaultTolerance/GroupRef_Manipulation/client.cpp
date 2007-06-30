@@ -104,7 +104,7 @@ main (int argc, char *argv[])
       CORBA::String_var marshaled_obj_snapshot2 =
           orb->object_to_string (server.in ());
 
-      if (strcmp (marshaled_obj_snapshot1.in (), marshaled_obj_snapshot2.in ()) == 0)
+      if (ACE_OS::strcmp (marshaled_obj_snapshot1.in (), marshaled_obj_snapshot2.in ()) == 0)
         {
           // Error, before and after the marhaled object references look equal
           ACE_ERROR ((LM_ERROR,

@@ -100,7 +100,7 @@ main (int argc, ACE_TCHAR **argv)
         {
           ACE_ERROR((LM_ERROR,
                      ACE_TEXT ("Invalid breath, must be 2 or more\n")));
-          exit(1);
+          ACE_OS::exit(1);
         }
         c_breath = i;
         break;
@@ -110,7 +110,7 @@ main (int argc, ACE_TCHAR **argv)
         {
           ACE_ERROR((LM_ERROR,
                      ACE_TEXT ("Invalid depth, must be 2 or more\n")));
-          exit(1);
+          ACE_OS::exit(1);
         }
         c_depth = i;
         break;
@@ -120,7 +120,7 @@ main (int argc, ACE_TCHAR **argv)
         {
           ACE_ERROR((LM_ERROR,
                      ACE_TEXT ("Invalid breath, must be 2 or more\n")));
-          exit(1);
+          ACE_OS::exit(1);
         }
         o_breath = i;
         break;

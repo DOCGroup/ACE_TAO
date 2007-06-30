@@ -29,7 +29,7 @@ parse_args (int argc, char *argv[])
       {
         endpoint_port = ACE_OS::atoi (argv[++c]);
       }
-    else if (strstr(argv[c],"-ORB") == argv[c])
+    else if (ACE_OS::strstr(argv[c],"-ORB") == argv[c])
       {
         c++;
         continue;

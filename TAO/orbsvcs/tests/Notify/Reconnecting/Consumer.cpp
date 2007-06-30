@@ -181,8 +181,8 @@ StructuredPushConsumer_i::push_structured_event (
         ));
     }
   }
-  else if (0 == ACE_OS::strcmp (notification.header.fixed_header.event_type.type_name, "%ANY")
-    && 0 == strcmp (notification.header.fixed_header.event_type.domain_name, ""))
+  else if (0 == ACE_OS::strcmp (notification.header.fixed_header.event_type.type_name, "%ANY") && 
+           0 == ACE_OS::strcmp (notification.header.fixed_header.event_type.domain_name, ""))
   {
     const CORBA::Any * any;
     if (notification.remainder_of_body >>= any)
@@ -406,8 +406,8 @@ SequencePushConsumer_i::push_structured_events (
           ));
       }
     }
-    else if (0 == ACE_OS::strcmp (notification.header.fixed_header.event_type.type_name, "%ANY")
-        && 0 == strcmp (notification.header.fixed_header.event_type.domain_name, ""))
+    else if (0 == ACE_OS::strcmp (notification.header.fixed_header.event_type.type_name, "%ANY") && 
+             0 == ACE_OS::strcmp (notification.header.fixed_header.event_type.domain_name, ""))
     {
       CORBA::ULong seq = 0;
       if (notification.remainder_of_body >>= seq)
@@ -856,6 +856,7 @@ Consumer_Main::parse_single_arg (int argc, char *argv[])
 
 void Consumer_Main::usage(FILE * out)const
 {
+  //FUZZ: disable check_for_lack_ACE_OS
   ACE_OS::fputs (
     ACE_TEXT ("usage\n")
     ACE_TEXT ("  -channel filename Where to find a channel number.\n")
@@ -869,6 +870,7 @@ void Consumer_Main::usage(FILE * out)const
     ACE_TEXT ("  -disconnect       Disconnect from channel on exit (prevents reconnect.) \n")
     ACE_TEXT ("  -nonamesvc        Don't use the name service to find EventChannelFactory\n")
     , out);
+  //FUZZ: enable check_for_lack_ACE_OS
 }
 
 int Consumer_Main::init (int argc, char *argv[])
@@ -1275,7 +1277,7 @@ Consumer_Main::init_event_channel (void)
     if (chf != 0)
     {
       ACE_OS::fprintf (chf, "%d\n", static_cast<int> (this->ec_id_));
-      fclose (chf);
+      ACE_OS::fclose (chf);
     }
   }
 }

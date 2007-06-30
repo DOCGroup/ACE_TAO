@@ -17,7 +17,7 @@
 #include "ace/Read_Buffer.h"
 #include "ace/OS_NS_sys_time.h"
 #include "ace/OS_NS_unistd.h"
-#include "ace/os_include/os_ctype.h"
+#include "ace/OS_NS_ctype.h"
 
 #if !defined (__ACE_INLINE__)
 #include "EC_Mcast.inl"
@@ -521,7 +521,7 @@ ECM_Driver::skip_blanks (FILE* file,
 {
   int c;
   // Consume all the blanks.
-  while (isspace (c = fgetc (file)));
+  while (ACE_OS::ace_isspace (c = ACE_OS::fgetc (file)));
   if (c == EOF)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -529,7 +529,7 @@ ECM_Driver::skip_blanks (FILE* file,
                          error_msg),
                         -1);
     }
-  ungetc (c, file);
+  ACE_OS::ungetc (c, file);
   return 0;
 }
 // ****************************************************************

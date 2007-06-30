@@ -104,13 +104,13 @@ int CC_Start_Cmd::execute(void)
 {
   if (excep_)
     {
-      printf ("Exception: %s\n", excep_->_rep_id ());
+      ACE_OS::printf ("Exception: %s\n", excep_->_rep_id ());
       delete excep_;
       excep_ = 0;
       return 0; // CC_FAIL
     }
 
-  printf ("Executing start command (script file: %s)\n", cfg_name_);
+  ACE_OS::printf ("Executing start command (script file: %s)\n", cfg_name_);
 
   char cmd_line[1024];
   int success = ACE_OS::sprintf(&cmd_line[0], "%s -c %s",
@@ -152,13 +152,13 @@ int CC_CreateLockSet_Cmd::execute(void)
 {
   if(excep_)
     {
-      printf("Exception: %s\n", excep_->_rep_id ());
+      ACE_OS::printf("Exception: %s\n", excep_->_rep_id ());
       delete excep_;
       excep_ = 0;
       return 0; // CC_FAIL
     }
 
-  printf("Executing create command (lock set: %s)\n", name_);
+  ACE_OS::printf("Executing create command (lock set: %s)\n", name_);
 
   try
     {
@@ -201,14 +201,14 @@ int CC_Lock_Cmd::execute(void)
 {
   if(excep_)
     {
-      printf("Exception: %s\n", excep_->_rep_id ());
+      ACE_OS::printf("Exception: %s\n", excep_->_rep_id ());
       delete excep_;
       excep_ = 0;
       return 0; // CC_FAIL
     }
 
-  printf("Executing lock command (lock set: %s, mode: %s)\n",
-         name_, CC_TestUtils::get_lock_mode_name(mode_));
+  ACE_OS::printf("Executing lock command (lock set: %s, mode: %s)\n",
+                 name_, CC_TestUtils::get_lock_mode_name(mode_));
 
   try
     {
@@ -242,14 +242,14 @@ int CC_UnLock_Cmd::execute(void)
 {
   if(excep_)
     {
-      printf("Exception: %s\n", excep_->_rep_id ());
+      ACE_OS::printf("Exception: %s\n", excep_->_rep_id ());
       delete excep_;
       excep_ = 0;
       return 0; // CC_FAIL
     }
 
-  printf("Executing unlock command (lock set: %s, mode: %s)\n",
-         name_, CC_TestUtils::get_lock_mode_name(mode_));
+  ACE_OS::printf("Executing unlock command (lock set: %s, mode: %s)\n",
+                 name_, CC_TestUtils::get_lock_mode_name(mode_));
 
   try
     {
@@ -284,14 +284,14 @@ int CC_TryLock_Cmd::execute(void)
 {
   if(excep_)
     {
-      printf("Exception: %s\n", excep_->_rep_id ());
+      ACE_OS::printf("Exception: %s\n", excep_->_rep_id ());
       delete excep_;
       excep_ = 0;
       return 0; // CC_FAIL
     }
 
-  printf("Executing try_lock command (lock set: %s, mode: %s)\n",
-         name_, CC_TestUtils::get_lock_mode_name(mode_));
+  ACE_OS::printf("Executing try_lock command (lock set: %s, mode: %s)\n",
+                 name_, CC_TestUtils::get_lock_mode_name(mode_));
 
   CORBA::Boolean lock_not_held;
 
@@ -344,15 +344,15 @@ int CC_ChangeMode_Cmd::execute(void)
 {
   if(excep_)
     {
-      printf("Exception: %s\n", excep_->_rep_id ());
+      ACE_OS::printf("Exception: %s\n", excep_->_rep_id ());
       delete excep_;
       excep_ = 0;
       return 0; // CC_FAIL
     }
 
-  printf("Executing change_mode command (lock set: %s, held_mode: %s, new_mode: %s)\n",
-         name_, CC_TestUtils::get_lock_mode_name(held_mode_),
-         CC_TestUtils::get_lock_mode_name(new_mode_));
+  ACE_OS::printf("Executing change_mode command (lock set: %s, held_mode: %s, new_mode: %s)\n",
+                 name_, CC_TestUtils::get_lock_mode_name(held_mode_),
+                 CC_TestUtils::get_lock_mode_name(new_mode_));
 
   try
     {
@@ -381,13 +381,13 @@ int CC_Sleep_Cmd::execute(void)
 {
   if(excep_)
     {
-      printf("Exception: %s\n", excep_->_rep_id ());
+      ACE_OS::printf("Exception: %s\n", excep_->_rep_id ());
       delete excep_;
       excep_ = 0;
       return 0; // CC_FAIL
     }
 
-  printf("Executing sleep command (time: %i)\n", time_);
+  ACE_OS::printf("Executing sleep command (time: %i)\n", time_);
 
   ACE_OS::sleep(time_);
   return 1; // CC_SUCCESS
@@ -406,13 +406,13 @@ int CC_Repeat_Cmd::execute(void)
 {
   if(excep_)
     {
-      printf("Exception: %s\n", excep_->_rep_id ());
+      ACE_OS::printf("Exception: %s\n", excep_->_rep_id ());
       delete excep_;
       excep_ = 0;
       return 0; // CC_FAIL
     }
 
-  printf("Executing repeat command (times: %i)\n", times_);
+  ACE_OS::printf("Executing repeat command (times: %i)\n", times_);
 
   return 1; // CC_SUCCESS
 }
@@ -431,15 +431,15 @@ int CC_Wait_Cmd::execute(void)
 {
   if (excep_)
     {
-      printf ("Exception: %s\n", excep_->_rep_id ());
+      ACE_OS::printf ("Exception: %s\n", excep_->_rep_id ());
       delete excep_;
       excep_ = 0;
       return 0; // CC_FAIL
     }
 
-  printf ("Executing wait command\n");
+  ACE_OS::printf ("Executing wait command\n");
 
-  printf ("%s", prompt_);
+  ACE_OS::printf ("%s", prompt_);
   (void) ACE_OS::fgetc (stdin);
 
   return 1; // CC_SUCCESS
@@ -459,7 +459,7 @@ CC_Excep_Cmd::~CC_Excep_Cmd(void)
 int
 CC_Excep_Cmd::execute(void)
 {
-  printf ("Executing excep command (expected: %s)\n", ex_);
+  ACE_OS::printf ("Executing excep command (expected: %s)\n", ex_);
   // First we check to see if an exception has occured. If not we fail
   // because we expected to see one
   if(excep_==0)
@@ -474,7 +474,7 @@ CC_Excep_Cmd::execute(void)
     }
   else
     {
-      printf ("Exception: %s\n", excep_->_rep_id ());
+      ACE_OS::printf ("Exception: %s\n", excep_->_rep_id ());
       delete excep_;
       excep_ = 0;
       return 0; // CC_FAIL
@@ -508,7 +508,7 @@ CC_Print_Cmd::~CC_Print_Cmd(void)
 int
 CC_Print_Cmd::execute(void)
 {
-  printf ("%s\n", msg_);
+  ACE_OS::printf ("%s\n", msg_);
   return 1; // CC_SUCCESS
 }
 
@@ -531,13 +531,13 @@ CC_Lookup_Cmd::execute(void)
 {
   if(excep_)
     {
-      printf ("Exception: %s\n", excep_->_rep_id ());
+      ACE_OS::printf ("Exception: %s\n", excep_->_rep_id ());
       delete excep_;
       excep_ = 0;
       return 0; // CC_FAIL
     }
 
-  printf ("Executing lookup command (lock set: %s)\n", name_);
+  ACE_OS::printf ("Executing lookup command (lock set: %s)\n", name_);
 
   // Do the lookup if we haven't done it before
   if(cc_lockset_.in() == 0)
@@ -591,7 +591,7 @@ CC_CommandElem::SetNext(CC_CommandElem *next)
 CC_CommandList::CC_CommandList(void)
   : head_ (0), last_ (0), times_ (1)
 {
-  printf("CC_CommandList::CC_CommandList\n");
+  ACE_OS::printf("CC_CommandList::CC_CommandList\n");
 }
 
 CC_CommandList::~CC_CommandList(void)

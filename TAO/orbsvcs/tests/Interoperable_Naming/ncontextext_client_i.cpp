@@ -23,6 +23,7 @@
 #include "tao/debug.h"
 #include "ace/Get_Opt.h"
 #include "ace/Read_Buffer.h"
+#include "ace/OS_NS_time.h"
 
 // FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
@@ -79,7 +80,7 @@ NContextExt_Client_i::get_name ()
 {
 
   // USe time (NULL) to produce the seed:
-  srand (time (0));
+  ACE_OS::srand (ACE_OS::time (0));
 
   const int len = 10;
   char *name_component = CORBA::string_alloc (len);
@@ -89,7 +90,7 @@ NContextExt_Client_i::get_name ()
   for (int i = 0; i < len; ++i)
     {
 
-      int rand_value = rand () % 10;
+      int rand_value = ACE_OS::rand () % 10;
 
       switch (rand_value)
         {
@@ -131,7 +132,7 @@ NContextExt_Client_i::get_name ()
         case 7:
         case 8:
         case 9:
-          *name_componentPtr = 'A' + ( rand () % 26 );
+          *name_componentPtr = 'A' + ( ACE_OS::rand () % 26 );
           ++name_componentPtr;
           break;
 

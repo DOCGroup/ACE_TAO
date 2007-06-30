@@ -202,7 +202,7 @@ LB_server::remove_basic_member (void)
       this->lm_->remove_member (this->basic_object_group_.in (),
                                 location);
 
-      printf("Removed Basic Member at location %s\n\n", loc);
+      ACE_OS::printf("Removed Basic Member at location %s\n\n", loc);
     }
   catch (const CORBA::Exception& ex)
     {
@@ -228,7 +228,7 @@ LB_server::remove_simple_member (void)
       this->lm_->remove_member (this->simple_object_group_.in (),
                                 location);
 
-      printf("Removed Simple Member at location %s\n\n", loc);
+      ACE_OS::printf("Removed Simple Member at location %s\n\n", loc);
     }
   catch (const CORBA::Exception& ex)
     {
@@ -259,7 +259,7 @@ LB_server::register_basic_servant (Basic *servant, const char *loc)
       CORBA::Short number = 0;
       number = servant->number ();
 
-      printf("Added Basic member %d at location %s\n", number, loc);
+      ACE_OS::printf("Added Basic member %d at location %s\n", number, loc);
     }
   catch (const CORBA::Exception& ex)
     {
@@ -290,7 +290,7 @@ LB_server::register_simple_servant (Simple *servant, const char *loc)
       CORBA::Short number = 0;
       number = servant->number ();
 
-      printf("Added Simple member %d at location %s\n", number, loc);
+      ACE_OS::printf("Added Simple member %d at location %s\n", number, loc);
     }
   catch (const CORBA::Exception& ex)
     {

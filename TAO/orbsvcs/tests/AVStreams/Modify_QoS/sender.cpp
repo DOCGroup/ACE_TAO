@@ -47,7 +47,7 @@ Sender_StreamEndPoint::modify_QoS (AVStreams::streamQoS &new_qos,
   if (new_qos.length () != 0)
     {
       // Check which qos parameter has changed.
-      if (strcmp (new_qos [0].QoSParams [0].property_name, "video_frame_rate") == 0)
+      if (ACE_OS::strcmp (new_qos [0].QoSParams [0].property_name, "video_frame_rate") == 0)
         {
           // The video frame rate for this flow has changed.
 
