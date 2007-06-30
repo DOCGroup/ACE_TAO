@@ -25,7 +25,7 @@
 #include "ace/Read_Buffer.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_unistd.h"
-#include "ace/os_include/os_ctype.h"
+#include "ace/OS_NS_ctype.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_fcntl.h"
 
@@ -251,7 +251,7 @@ CC_Client::check_extended_test_params(char *params)
       switch(state)
         {
         case TAO_START:
-          if(isdigit(*cp))
+          if(ACE_OS::ace_isdigit(*cp))
             state = TAO_NUMBER;
           else
             state = TAO_ERROR;
@@ -264,7 +264,7 @@ CC_Client::check_extended_test_params(char *params)
               no_of_params++;
             }
           else
-            if(!isdigit(*cp))
+            if(!ACE_OS::ace_isdigit(*cp))
               state = TAO_ERROR;
           break;
 

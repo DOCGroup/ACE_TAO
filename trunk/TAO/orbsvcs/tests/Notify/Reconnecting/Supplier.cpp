@@ -300,6 +300,7 @@ Supplier_Main::parse_single_arg (int argc, char *argv[])
 
 void Supplier_Main::usage(FILE * log)const
 {
+  //FUZZ: disable check_for_lack_ACE_OS
   ACE_OS::fputs (
       ACE_TEXT ("usage\n")
       ACE_TEXT ("  -channel filename Where to find a channel number.\n")
@@ -312,6 +313,7 @@ void Supplier_Main::usage(FILE * log)const
       ACE_TEXT ("  -disconnect       Disconnect from channel on exit (prevents reconnect.) \n")
       ACE_TEXT ("  -nonamesvc        Don't use the name service to find EventChannelFactory\n")
       , log);
+  //FUZZ: enable check_for_lack_ACE_OS
 }
 
 int Supplier_Main::init (int argc, char *argv[])
@@ -677,7 +679,7 @@ Supplier_Main::init_event_channel (void)
     if (chf != 0)
     {
       ACE_OS::fprintf (chf, "%d\n", static_cast<int> (this->ec_id_));
-      fclose (chf);
+      ACE_OS::fclose (chf);
     }
   }
 }

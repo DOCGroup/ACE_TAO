@@ -25,7 +25,9 @@ Hello_Impl::shutdown ()
     }
   catch (const CORBA::Exception& ex)
     {
+      //FUZZ: disable check_for_lack_ACE_OS
       ex._tao_print_exception ("Exception caught in shutdown ():");
+      //FUZZ: enable check_for_lack_ACE_OS
     }
 }
 

@@ -142,61 +142,61 @@ typedef unsigned int ace_cc_yy_size_t;
 
 
 struct ace_cc_yy_buffer_state
-	{
-	FILE *ace_cc_yy_input_file;
+{
+  FILE *ace_cc_yy_input_file;
 
-	char *ace_cc_yy_ch_buf;		/* input buffer */
-	char *ace_cc_yy_buf_pos;		/* current position in input buffer */
+  char *ace_cc_yy_ch_buf;		/* input buffer */
+  char *ace_cc_yy_buf_pos;		/* current position in input buffer */
 
-	/* Size of input buffer in bytes, not including room for EOB
-	 * characters.
-	 */
-	ace_cc_yy_size_t ace_cc_yy_buf_size;
+  /* Size of input buffer in bytes, not including room for EOB
+   * characters.
+   */
+  ace_cc_yy_size_t ace_cc_yy_buf_size;
 
-	/* Number of characters read into ace_cc_yy_ch_buf, not including EOB
-	 * characters.
-	 */
-	int ace_cc_yy_n_chars;
+  /* Number of characters read into ace_cc_yy_ch_buf, not including EOB
+   * characters.
+   */
+  int ace_cc_yy_n_chars;
 
-	/* Whether we "own" the buffer - i.e., we know we created it,
-	 * and can realloc() it to grow it, and should free() it to
-	 * delete it.
-	 */
-	int ace_cc_yy_is_our_buffer;
+  /* Whether we "own" the buffer - i.e., we know we created it,
+   * and can realloc() it to grow it, and should free() it to
+   * delete it.
+   */
+  int ace_cc_yy_is_our_buffer;
 
-	/* Whether this is an "interactive" input source; if so, and
-	 * if we're using stdio for input, then we want to use getc()
-	 * instead of fread(), to make sure we stop fetching input after
-	 * each newline.
-	 */
-	int ace_cc_yy_is_interactive;
+  /* Whether this is an "interactive" input source; if so, and
+   * if we're using stdio for input, then we want to use getc()
+   * instead of fread(), to make sure we stop fetching input after
+   * each newline.
+   */
+  int ace_cc_yy_is_interactive;
 
-	/* Whether we're considered to be at the beginning of a line.
-	 * If so, '^' rules will be active on the next match, otherwise
-	 * not.
-	 */
-	int ace_cc_yy_at_bol;
+  /* Whether we're considered to be at the beginning of a line.
+   * If so, '^' rules will be active on the next match, otherwise
+   * not.
+   */
+  int ace_cc_yy_at_bol;
 
-	/* Whether to try to fill the input buffer when we reach the
-	 * end of it.
-	 */
-	int ace_cc_yy_fill_buffer;
+  /* Whether to try to fill the input buffer when we reach the
+   * end of it.
+   */
+  int ace_cc_yy_fill_buffer;
 
-	int ace_cc_yy_buffer_status;
+  int ace_cc_yy_buffer_status;
 #define ACE_CC_YY_BUFFER_NEW 0
 #define ACE_CC_YY_BUFFER_NORMAL 1
-	/* When an EOF's been seen but there's still some text to process
-	 * then we mark the buffer as ACE_CC_YY_EOF_PENDING, to indicate that we
-	 * shouldn't try reading from the input source any more.  We might
-	 * still have a bunch of tokens to match, though, because of
-	 * possible backing-up.
-	 *
-	 * When we actually see the EOF, we change the status to "new"
-	 * (via ace_cc_yyrestart()), so that the user can continue scanning by
-	 * just pointing ace_cc_yyin at a new input file.
-	 */
+  /* When an EOF's been seen but there's still some text to process
+   * then we mark the buffer as ACE_CC_YY_EOF_PENDING, to indicate that we
+   * shouldn't try reading from the input source any more.  We might
+   * still have a bunch of tokens to match, though, because of
+   * possible backing-up.
+   *
+   * When we actually see the EOF, we change the status to "new"
+   * (via ace_cc_yyrestart()), so that the user can continue scanning by
+   * just pointing ace_cc_yyin at a new input file.
+   */
 #define ACE_CC_YY_BUFFER_EOF_PENDING 2
-	};
+};
 
 static ACE_CC_YY_BUFFER_STATE ace_cc_yy_current_buffer = 0;
 
@@ -541,33 +541,35 @@ ACE_CC_YY_MALLOC_DECL
 
 /* Copy whatever the last rule matched to the standard output. */
 
+//FUZZ: disable check_for_lack_ACE_OS
 #ifndef ACE_CC_ECHO
 /* This used to be an fputs(), but since the string might contain NUL's,
  * we now use fwrite().
  */
 #define ACE_CC_ECHO (void) fwrite( ace_cc_yytext, ace_cc_yyleng, 1, ace_cc_yyout )
 #endif
+//FUZZ: enable check_for_lack_ACE_OS
 
 /* Gets input and stuffs it into "buf".  number of characters read, or ACE_CC_YY_NULL,
  * is returned in "result".
  */
 #ifndef ACE_CC_YY_INPUT
 #define ACE_CC_YY_INPUT(buf,result,max_size) \
-	if ( ace_cc_yy_current_buffer->ace_cc_yy_is_interactive ) \
-		{ \
-		int c = '*', n; \
-		for ( n = 0; n < max_size && \
-			     (c = getc( ace_cc_yyin )) != EOF && c != '\n'; ++n ) \
-			buf[n] = (char) c; \
-		if ( c == '\n' ) \
-			buf[n++] = (char) c; \
-		if ( c == EOF && ferror( ace_cc_yyin ) ) \
-			ACE_CC_YY_FATAL_ERROR( "input in flex scanner failed" ); \
-		result = n; \
-		} \
-	else if ( ((result = fread( buf, 1, max_size, ace_cc_yyin )) == 0) \
-		  && ferror( ace_cc_yyin ) ) \
-		ACE_CC_YY_FATAL_ERROR( "input in flex scanner failed" );
+  if ( ace_cc_yy_current_buffer->ace_cc_yy_is_interactive ) \
+  { \
+    int c = '*', n; \
+    for ( n = 0; n < max_size && \
+         (c = ACE_OS::getc( ace_cc_yyin )) != EOF && c != '\n'; ++n ) \
+      buf[n] = (char) c; \
+    if ( c == '\n' ) \
+      buf[n++] = (char) c; \
+    if ( c == EOF && ferror( ace_cc_yyin ) ) \
+      ACE_CC_YY_FATAL_ERROR( "input in flex scanner failed" ); \
+    result = n; \
+  } \
+  else if ( ((result = ACE_OS::fread( buf, 1, max_size, ace_cc_yyin )) == 0) \
+            && ferror( ace_cc_yyin ) ) \
+    ACE_CC_YY_FATAL_ERROR( "input in flex scanner failed" );
 #endif
 
 /* No semi-colon after return; correct usage is to write "ace_cc_yyterminate();" -
@@ -786,7 +788,7 @@ ACE_CC_YY_RULE_SETUP
 	/* ACE_CC_YY_BREAK */
 case 20:
 ACE_CC_YY_RULE_SETUP
-{ ace_cc_yylval.num = atoi(ace_cc_yytext); return T_NUM; }
+{ ace_cc_yylval.num = ACE_OS::atoi(ace_cc_yytext); return T_NUM; }
 	/* ACE_CC_YY_BREAK */
 case 21:
 ACE_CC_YY_RULE_SETUP
@@ -1405,7 +1407,7 @@ FILE *file;
 #if ACE_CC_YY_NEVER_INTERACTIVE
 	b->ace_cc_yy_is_interactive = 0;
 #else
-	b->ace_cc_yy_is_interactive = file ? (isatty( fileno(file) ) > 0) : 0;
+  b->ace_cc_yy_is_interactive = file ? (ACE_OS::ace_isatty( fileno(file) ) > 0) : 0;
 #endif
 #endif
 	}
@@ -1598,8 +1600,8 @@ static void ace_cc_yy_fatal_error( msg )
 char msg[];
 #endif
 	{
-	(void) fprintf( stderr, "%s\n", msg );
-	exit( ACE_CC_YY_EXIT_FAILURE );
+  (void) ACE_OS::fprintf( stderr, "%s\n", msg );
+  ACE_OS::exit( ACE_CC_YY_EXIT_FAILURE );
 	}
 
 
@@ -1662,7 +1664,7 @@ static void *ace_cc_yy_flex_alloc( size )
 ace_cc_yy_size_t size;
 #endif
 	{
-	return (void *) malloc( size );
+    return (void *) ACE_OS::malloc( size );
 	}
 
 #ifdef ACE_CC_YY_USE_PROTOS
@@ -1680,7 +1682,7 @@ ace_cc_yy_size_t size;
 	 * any pointer type to void*, and deal with argument conversions
 	 * as though doing an assignment.
 	 */
-	return (void *) realloc( (char *) ptr, size );
+   return (void *) ACE_OS::realloc( (char *) ptr, size );
 	}
 
 #ifdef ACE_CC_YY_USE_PROTOS
@@ -1690,7 +1692,7 @@ static void ace_cc_yy_flex_free( ptr )
 void *ptr;
 #endif
 	{
-	free( ACE_MALLOC_T (ptr) );
+  ACE_OS::free( ACE_MALLOC_T (ptr) );
 	}
 
 #if ACE_CC_YY_MAIN

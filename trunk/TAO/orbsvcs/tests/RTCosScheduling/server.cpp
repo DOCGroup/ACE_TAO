@@ -42,7 +42,8 @@ ORB_Thread(CORBA::ORB_var orb) : orb_(orb)
 }
 
 int
-svc(void) {
+svc(void) 
+{
 
   try
     {
@@ -54,7 +55,7 @@ svc(void) {
       return 1;
     }
 
-  exit(0);
+  ACE_OS::exit(0);
   return 0;
 }
 

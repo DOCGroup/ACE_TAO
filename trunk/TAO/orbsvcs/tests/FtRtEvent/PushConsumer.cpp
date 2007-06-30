@@ -3,7 +3,7 @@
 #include "ace/OS_NS_sys_time.h"
 #include "PushConsumer.h"
 #include "orbsvcs/FtRtEvent/Utils/resolve_init.h"
-#include <stdio.h>
+#include "ace/OS_NS_stdio.h"
 
 ACE_RCSID (FtRtEvent,
            PushConsumer,
@@ -26,7 +26,7 @@ PushConsumer_impl::push (const RtecEventComm::EventSet & event
     TimeBase::TimeT elaps =
       time_val.sec () * 10000000 + time_val.usec ()* 10 - event[0].header.ec_send_time;
     event[0].data.any_value >>= x;
-    printf("Received data : %d,  single trip time = %d usec\n", x, static_cast<int> (elaps/10));
+    ACE_OS::printf("Received data : %d,  single trip time = %d usec\n", x, static_cast<int> (elaps/10));
   }
 }
 

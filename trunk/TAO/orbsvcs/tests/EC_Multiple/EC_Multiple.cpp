@@ -97,7 +97,9 @@ print_priority_info (const char *const name)
 
 #ifdef sun
   // Find what scheduling class the thread's LWP is in.
+  //FUZZ: disable check_for_lack_ACE_OS
   ACE_Sched_Params sched_params (ACE_SCHED_OTHER, 0);
+  //FUZZ: enable check_for_lack_ACE_OS
   if (ACE_OS::lwp_getparams (sched_params) == -1)
     {
       ACE_OS::perror ("ACE_OS::lwp_getparams");
@@ -912,7 +914,9 @@ Test_ECG::shutdown_supplier (void* /* supplier_cookie */,
     return;
 
   // We propagate a shutdown event through the system...
+  //FUZZ: disable check_for_lack_ACE_OS
   RtecEventComm::EventSet shutdown (1);
+  //FUZZ: enable check_for_lack_ACE_OS
   shutdown.length (1);
   RtecEventComm::Event& s = shutdown[0];
 

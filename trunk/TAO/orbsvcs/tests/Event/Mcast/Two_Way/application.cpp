@@ -58,10 +58,12 @@ public:
   void init (CORBA::ORB_var orb,
              RtecEventChannelAdmin::EventChannel_var ec);
 
+  //FUZZ: disable check_for_lack_ACE_OS
   // No-op if the object hasn't been fully initialized.  Otherwise,
   // deregister from reactor and poa, destroy ec or just disconnect from it
   // (based on <destroy_ec> flag), and shut down the orb.
   void shutdown (void);
+  //FUZZ: enable check_for_lack_ACE_OS
 
   /// Send another heartbeat or, if we already sent/attempted the required
   /// number of heartbeats, perform shutdown().

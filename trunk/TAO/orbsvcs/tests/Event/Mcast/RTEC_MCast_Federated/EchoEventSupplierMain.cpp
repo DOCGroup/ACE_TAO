@@ -78,14 +78,14 @@ int main (int argc, char* argv[])
             else
               ACE_ERROR_RETURN ((LM_ERROR, "Missing port\n"), 0);
           }
-        else if (strcmp(argv[i], "-iorfile") == 0)
+        else if (ACE_OS::strcmp(argv[i], "-iorfile") == 0)
           {
             if (argv[i+1] != 0)
               iorfile = argv[++i];
              else
               ACE_ERROR_RETURN ((LM_ERROR, "Missing ior file\n"), 0);
           }
-        else if (strcmp(argv[i], "-udp") == 0)
+        else if (ACE_OS::strcmp(argv[i], "-udp") == 0)
           mcast = 0;
       }
 

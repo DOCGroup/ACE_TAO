@@ -33,7 +33,7 @@ void NamingTask::waitInit ()
 void NamingTask::end()
 {
   orb_->shutdown(0);
-  wait();
+  this->wait();
 }
 
 const char* NamingTask::ior()
