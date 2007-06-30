@@ -67,7 +67,7 @@ Handle_Events::handle_input (ACE_HANDLE h)
 	  return 0;
 	}
       else if (readresult == -1)
-	::perror ("can't read from STDIN");
+	ACE_OS::perror ("can't read from STDIN");
 
       return -1;
     }

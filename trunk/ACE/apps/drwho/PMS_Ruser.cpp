@@ -27,9 +27,9 @@ PMS_Ruser::encode (char *packet, int &packet_length)
   Protocol_Record *prp;
   char *buf_ptr = packet;
 
-  sprintf (buf_ptr,
-           "Users   %d",
-           this->get_total_users ());
+  ACE_OS::sprintf (buf_ptr,
+                   "Users   %d",
+                   this->get_total_users ());
   buf_ptr += ACE_OS::strlen (buf_ptr) + 1;
 
   // We only send back info on hosts that we actually see.
@@ -115,10 +115,10 @@ PMS_Ruser::handle_protocol_entries (char *buf_ptr,
 {
   for (; np != 0; np = np->next_)
     {
-      sprintf (buf_ptr,
-               "%d %d ",
-               np->get_inactive_count (),
-               np->get_active_count ());
+      ACE_OS::sprintf (buf_ptr,
+                       "%d %d ",
+                       np->get_inactive_count (),
+                       np->get_active_count ());
       buf_ptr += ACE_OS::strlen (buf_ptr);
 
       buf_ptr = ACE_OS::strecpy (ACE_OS::strecpy (buf_ptr,

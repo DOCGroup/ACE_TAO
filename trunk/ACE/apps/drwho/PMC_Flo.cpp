@@ -32,9 +32,9 @@ PMC_Flo::encode (char *packet, int &packet_length)
   SET_PACKET_TYPE (packet, Options::PROTO_FLO);
   char *buf_ptr = SKIP_PACKET_TYPE (packet);
 
-  sprintf (buf_ptr,
-           "%d",
-           this->friend_count ());
+  ACE_OS::sprintf (buf_ptr,
+                   "%d",
+                   this->friend_count ());
 
   buf_ptr += MAXUSERIDNAMELEN;
 

@@ -26,9 +26,9 @@ PMS_All::encode (char *packet, int &packet_length)
   Protocol_Record *prp;
   char *buf_ptr = packet;
 
-  sprintf (buf_ptr,
-           "Users   %d",
-           this->get_total_users ());
+  ACE_OS::sprintf (buf_ptr,
+                   "Users   %d",
+                   this->get_total_users ());
   buf_ptr += ACE_OS::strlen (buf_ptr) + 1;
 
   // We only send back info on friends that we actually see logged in.

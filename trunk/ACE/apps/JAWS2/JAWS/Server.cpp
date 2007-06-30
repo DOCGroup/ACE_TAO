@@ -82,7 +82,10 @@ JAWS_Server::init (int argc, char *argv[])
       this->policy_.acceptor (JAWS_IO_Synch_Acceptor_Singleton::instance ());
     }
 
+  //FUZZ: disable check_for_lack_ACE_OS
   ACE_INET_Addr inet_addr (this->port_);
+  //FUZZ: enable check_for_lack_ACE_OS
+
   this->policy_.acceptor ()->open (inet_addr);
 }
 
@@ -142,8 +145,10 @@ JAWS_Server::parse_args (int argc, char *argv[])
   int c;
   int t = 0;
 
+  //FUZZ: disable check_for_lack_ACE_OS
   ACE_Get_Opt getopt (argc, argv, "t" "p:c:d:n:m:f:r:");
   while ((c = getopt ()) != -1)
+  //FUZZ: enable check_for_lack_ACE_OS
     switch (c)
       {
       case 't':
