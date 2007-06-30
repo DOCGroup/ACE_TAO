@@ -224,7 +224,7 @@ check_server_protocol_at_root_poa (CORBA::ORB_ptr /*orb*/,
 
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   try
     {

@@ -9,7 +9,7 @@ ACE_RCSID(QtTests, client, "$Id$")
 #include "client.h"
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   QApplication app (argc, argv);
   TAO::QtResource_Loader qt_resources (&app);

@@ -53,7 +53,7 @@ static ACE_THR_FUNC_RETURN run_test(void* pData)
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
     try
     {

@@ -9,7 +9,7 @@
 
 #define TEST_APP_MAIN(APP_TYPE) \
 int \
-main(int argc, char* argv[]) \
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])\
 { \
   ACE_LOG_MSG->priority_mask(LM_TRACE     | \
                              LM_DEBUG     | \

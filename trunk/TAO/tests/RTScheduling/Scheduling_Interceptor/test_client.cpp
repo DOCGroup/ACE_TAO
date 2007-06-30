@@ -36,7 +36,7 @@ parse_args (int argc,
 #endif /* THREAD_CANCELLED */
 
 int
-main (int argc, char* argv [])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   CORBA::ORB_var orb;
   test_var server;

@@ -5,7 +5,7 @@
 // This is the main driver program for the INS test server.
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
 
   Server_i server;

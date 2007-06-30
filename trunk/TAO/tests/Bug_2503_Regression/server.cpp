@@ -9,7 +9,7 @@ void parse_args(int argc, char * argv[]);
 void write_ior_to_file(char const * ior);
 
 int
-main(int argc, char * argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   try
   {

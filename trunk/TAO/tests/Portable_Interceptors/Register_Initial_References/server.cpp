@@ -95,7 +95,7 @@ int test_orb (CORBA::ORB_ptr orb)
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   Server_ORBInitializer *initializer = 0;
   int retval = 0;

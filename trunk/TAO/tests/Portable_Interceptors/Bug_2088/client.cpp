@@ -7,7 +7,7 @@
 ACE_RCSID(Interceptors, client, "$Id$")
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   Client_ORBInitializer* initializer1 = 0;
   Client_ORBInitializer* initializer2 = 0;

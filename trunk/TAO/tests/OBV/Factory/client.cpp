@@ -66,7 +66,7 @@ no_factory (OBV_FactoryTest::Test_ptr test)
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   try
     {

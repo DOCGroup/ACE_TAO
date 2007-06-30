@@ -65,7 +65,7 @@ private:
 };
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   CORBA::ORB_var orb =
     CORBA::ORB_init (argc, argv);

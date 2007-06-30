@@ -46,7 +46,7 @@ parse_args (int argc, char *argv[])
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   ACE_DEBUG ((LM_DEBUG, "(%P) Starting server\n"));
 

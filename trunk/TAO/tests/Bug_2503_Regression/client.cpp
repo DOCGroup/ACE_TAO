@@ -9,7 +9,7 @@ void test_remote_calls(CORBA::ORB_ptr orb);
 void test_colocated_calls(CORBA::ORB_ptr orb);
 
 int
-main(int argc, char * argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   try
   {

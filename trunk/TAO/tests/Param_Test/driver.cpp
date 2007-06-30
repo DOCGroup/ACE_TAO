@@ -28,7 +28,7 @@ ACE_RCSID (Param_Test,
 
 // This function runs the test (main program)
 int
-main (int argc, char **argv)
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   // get an instance of the driver object
   Driver drv;
