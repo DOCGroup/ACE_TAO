@@ -22,6 +22,7 @@ project(*Server): rt_server, avoids_minimum_corba, avoids_corba_e_compact, avoid
 }
 
 project(*Client): rt_client, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
+  exename = client
   after += *idl
   Source_Files {
     TestC.cpp
