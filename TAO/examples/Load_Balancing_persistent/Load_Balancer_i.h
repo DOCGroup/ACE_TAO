@@ -22,6 +22,7 @@
 #include "ace/Synch.h"
 #include "ace/Containers.h"
 #include "ace/Stats.h"
+#include "ace/Throughput_Stats.h"
 #include "ace/High_Res_Timer.h"
 #include "ace/Memory_Pool.h"
 #include "ace/Malloc_T.h"
