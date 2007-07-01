@@ -1,3 +1,10 @@
+Sun Jul  1 17:13:40 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * tests/Bug_1904_Regression/test.cpp:
+        * tests/Bug_2399_Regression/test.cpp:
+
+          Fixed unused parameter warnings.
+
 Sat Jun 30 21:38:25 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * orbsvcs/tests/AVStreams/Modify_QoS/sender.cpp:

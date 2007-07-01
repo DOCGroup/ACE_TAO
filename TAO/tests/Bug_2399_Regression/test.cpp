@@ -3,7 +3,7 @@
 #include "testC.h"
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN(int, ACE_TCHAR *[])
 {
   return 0;
 }
