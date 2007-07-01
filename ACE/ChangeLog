@@ -1,3 +1,16 @@
+Sun Jul  1 17:01:21 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * apps/drwho/PMC_All.cpp:
+
+          Removed #include "ace/OS_NS_stdio.h"
+
+        * apps/drwho/PMS_All.cpp:
+
+          Added #include "ace/OS_NS_stdio.h"
+
+          The include was introduced to the wrong file by mistake in 
+          Sat Jun 30 16:19:57 UTC 2007  Abdullah Sowayan  <abdul...>
+
 Sat Jun 30 16:19:57 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * apps/drwho/PMC_All.cpp:
