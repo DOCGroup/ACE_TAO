@@ -8,6 +8,7 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_pwd.h"
 #include "ace/OS_NS_unistd.h"
+#include "ace/OS_NS_stdio.h"
 #include "ace/OS_Memory.h"
 
 // This function packs the located friends userids, plus the machines
