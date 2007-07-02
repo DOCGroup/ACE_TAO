@@ -1,3 +1,13 @@
+Mon Jul  2 12:42:53 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tests/IDL_Test/IDL_Test.mpc:
+        
+          Removed the hard-coded -Gos IDL compiler option from being
+          applied to sequence.idl, but allowed it to be applied if
+          the ORB has also been built with ostream insertion operator
+          generation turned on, since sequence.idl references a basic
+          type IDL sequence defined in the ORB.
+
 Mon Jul  2 12:15:37 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * MPC/config/gen_ostream.mpb:

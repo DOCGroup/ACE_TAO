@@ -1,11 +1,12 @@
 // -*- MPC -*-
 // $Id$
 
-project(*Main): taoserver, messaging {
+project(*Main): taoserver, messaging, gen_ostream {
   exename = main
-  idlflags += -GC -GH -Gd -GT -Gos
+  idlflags += -GC -GH -Gd -GT
 
   IDL_Files {
+    idlflags += -Gos
     array.idl
     Bug_2350_Regression.idl
     Bug_2577_Regression.idl
@@ -24,15 +25,26 @@ project(*Main): taoserver, messaging {
     nested_scope.idl
     params.idl
     reopened_modules.idl
-    sequence.idl
     struct.idl
     reopen_include1.idl
     reopen_include2.idl
     typeprefix.idl
   }
+  
+  // We leave the hard-coded -Gos (hard-coded for
+  // the other IDL files) off the command line for
+  // this file, since it references a basic type IDL
+  // sequence, which won't have it's own ostream
+  // insertion operator generated unless the gen_ostream
+  // MPC feature has been turned on by the user, in which
+  // case, the gen_ostream base project above will bring
+  // in the -Gos option for this file as well.
+  IDL_Files {
+    sequence.idl
+  }
 
   IDL_Files {
-    idlflags += -GA
+    idlflags += -GA -Gos
     anonymous.idl
     valuetype.idl
     constants.idl
