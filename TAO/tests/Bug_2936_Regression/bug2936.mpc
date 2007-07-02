@@ -8,7 +8,7 @@ project (bug2936-exe): aceexe {
   }
 }
 
-project (bug2936-lib): taolib, portableserver, threads {
+project (bug2936-lib): taolib, portableserver, threads, avoids_corba_e_micro {
   sharedname = bug2936
   dynamicflags += BUG2936_BUILD_DLL
 
