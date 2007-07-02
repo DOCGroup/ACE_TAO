@@ -122,8 +122,6 @@ void loadunloadcycle()
 }
 int ACE_TMAIN (int , ACE_TCHAR **)
 {
-  int result = 0;
-
   ACE_DEBUG((
     LM_DEBUG,
     ACE_TEXT ("(%P|%t) main - entered\n")
