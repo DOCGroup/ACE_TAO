@@ -1,6 +1,6 @@
 // $Id$
 
-project (*lib): taolib, portableserver {
+project (*lib): taolib, portableserver, threads {
   sharedname = bug2926
   dynamicflags += BUG2926_BUILD_DLL
 
@@ -9,7 +9,7 @@ project (*lib): taolib, portableserver {
   }
 }
 
-project (*Server): taoserver, notify, notify_serv {
+project (*Server): taoserver, notify, notify_serv, threads {
   libs += bug2926
   after += *lib
   Source_Files {
