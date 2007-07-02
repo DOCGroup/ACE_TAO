@@ -3,7 +3,7 @@
 #include "ace/Service_Config.h"
 
 int
-ACE_TMAIN (int, ACE_TCHAR**)
+ACE_TMAIN(int, ACE_TCHAR *[])
 {
   ACE_TCHAR const * const scpc_loadOrb =
     ACE_DYNAMIC_SERVICE_DIRECTIVE ("testDllORB",

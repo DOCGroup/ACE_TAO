@@ -15,7 +15,7 @@
 #include "ace/Thread_Manager.h"
 
 int
-main (int, char *[])
+ACE_TMAIN(int, ACE_TCHAR *[])
 {
   // Process a Service Configurator directive that will cause the test
   // server module to be dynamically loaded.

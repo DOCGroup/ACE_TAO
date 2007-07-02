@@ -6,7 +6,7 @@
 * This test does not run - successful compile and link == successful test.
 */
 int
-main (int, char *[])
+ACE_TMAIN(int, ACE_TCHAR *[])
 {
   Array_Typedef_slice*  body3 = Array_Typedef_alloc();
   Array_Typedef_slice* body31 = Array_Typedef_dup (body3);
