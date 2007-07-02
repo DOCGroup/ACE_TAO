@@ -110,7 +110,7 @@ TYPE::type_id()\
 }\
 void    * \
 TYPE::narrow(size_t type_const) {\
-  void  *rval = NULL; \
+  void  *rval = 0; \
   size_t temp = (size_t) &TYPE::type_id; \
   if (type_const == temp) \
     rval = this; \
@@ -130,11 +130,11 @@ TYPE::type_id() \
 }\
 void    * \
 TYPE::narrow(size_t type_const) {\
-  void  *rval = NULL; \
+  void  *rval = 0; \
   size_t temp = (size_t) &TYPE::type_id; \
   if (type_const == temp) \
     rval = this; \
-  if (rval == NULL) \
+  if (rval == 0) \
     rval = PARENT::narrow(type_const);\
   return rval;\
 }
@@ -152,13 +152,13 @@ TYPE::type_id() \
 }\
 void    * \
 TYPE::narrow(size_t type_const) { \
-  void *rval = NULL; \
+  void *rval = 0; \
   size_t temp = (size_t) &TYPE::type_id; \
   if (type_const == temp) \
     rval = this; \
-  if (rval == NULL) \
+  if (rval == 0) \
     rval = PARENT1::narrow(type_const);\
-  if (rval == NULL) \
+  if (rval == 0) \
     rval = PARENT2::narrow(type_const);\
   return rval;\
 }
@@ -176,15 +176,15 @@ TYPE::type_id() \
 }\
 void    * \
 TYPE::narrow(size_t type_const) {\
-  void *rval = NULL; \
+  void *rval = 0; \
   size_t temp = (size_t) &TYPE::type_id; \
   if (type_const == temp) \
     rval = this; \
-  if (rval == NULL) \
+  if (rval == 0) \
     rval = PARENT1::narrow(type_const);\
-  if (rval == NULL) \
+  if (rval == 0) \
     rval = PARENT2::narrow(type_const);\
-  if (rval == NULL) \
+  if (rval == 0) \
     rval = PARENT3::narrow(type_const);\
   return rval;\
 }
@@ -202,17 +202,17 @@ TYPE::type_id() \
 }\
 void    * \
 TYPE::narrow(size_t type_const) {\
-  void *rval = NULL; \
+  void *rval = 0; \
   size_t temp = (size_t) &TYPE::type_id; \
   if (type_const == temp) \
     rval = this; \
-  if (rval == NULL) \
+  if (rval == 0) \
     rval = PARENT1::narrow(type_const);\
-  if (rval == NULL) \
+  if (rval == 0) \
     rval = PARENT2::narrow(type_const);\
-  if (rval == NULL) \
+  if (rval == 0) \
     rval = PARENT3::narrow(type_const);\
-  if (rval == NULL) \
+  if (rval == 0) \
     rval = PARENT4::narrow(type_const);\
   return rval;\
 }
@@ -230,19 +230,19 @@ TYPE::type_id() \
 }\
 void    * \
 TYPE::narrow(size_t type_const) {\
-  void *rval = NULL; \
+  void *rval = 0; \
   size_t temp = (size_t) &TYPE::type_id; \
   if (type_const == temp) \
     rval = this; \
-  if (rval == NULL) \
+  if (rval == 0) \
     rval = PARENT1::narrow(type_const);\
-  if (rval == NULL) \
+  if (rval == 0) \
     rval = PARENT2::narrow(type_const);\
-  if (rval == NULL) \
+  if (rval == 0) \
     rval = PARENT3::narrow(type_const);\
-  if (rval == NULL) \
+  if (rval == 0) \
     rval = PARENT4::narrow(type_const);\
-  if (rval == NULL) \
+  if (rval == 0) \
     rval = PARENT5::narrow(type_const);\
   return rval;\
 }
