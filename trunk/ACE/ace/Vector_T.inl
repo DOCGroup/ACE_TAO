@@ -2,6 +2,8 @@
 //
 // $Id$
 
+#include <algorithm>
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class T, size_t DEFAULT_SIZE> ACE_INLINE
@@ -50,6 +52,15 @@ ACE_Vector<T, DEFAULT_SIZE>::operator!= (const ACE_Vector<T, DEFAULT_SIZE> &s) c
 {
   return !(*this == s);
 }
+
+template <class T, size_t DEFAULT_SIZE> ACE_INLINE void
+ACE_Vector<T, DEFAULT_SIZE>::swap (ACE_Vector &rhs)
+{
+  ACE_Array<T>::swap (rhs);
+  std::swap (this->length_, rhs.length_);
+  std::swap (this->curr_max_size_, rhs.curr_max_size_);
+}
+
 
 // ****************************************************************
 

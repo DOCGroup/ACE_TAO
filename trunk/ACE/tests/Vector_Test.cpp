@@ -128,6 +128,14 @@ int run_main (int, ACE_TCHAR *[])
   if (!(v1 == v2))
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("Equality test failed!\n")));
 
+  v1.push_back (3);
+  if (v1.size () != 3)
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("v1's size should be 3\n")));
+
+  v1.swap (v2);
+  if (v2.size () != 3)
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("v2's size should be 3\n")));
+
   ACE_END_TEST;
 
   return 0;

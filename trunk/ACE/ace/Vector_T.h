@@ -185,6 +185,8 @@ public:
    */
   bool operator!= (const ACE_Vector<T, DEFAULT_SIZE> &s) const;
 
+  void swap (ACE_Vector &rhs);
+
 protected:
 
   /**
