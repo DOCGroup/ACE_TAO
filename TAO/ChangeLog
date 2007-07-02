@@ -1,3 +1,12 @@
+Mon Jul  2 11:36:01 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * TAO_IDL/fe/idl.ll:
+        * TAO_IDL/fe/lex.yy.cpp:
+
+          The regular expression to recognize #line pragmas put in by the C
+          preprocessor was enhanced to accept optional numbers after the file
+          name to work with some versions of the GNU C preprocessor.
+
 Mon Jul  2 11:29:28 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * tests/Bug_1812_Regression/test.cpp:
