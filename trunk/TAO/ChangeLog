@@ -1,3 +1,25 @@
+Mon Jul  2 12:15:37 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * MPC/config/gen_ostream.mpb:
+        
+          New file, containing the 'gen_ostream' feature, to enable the
+          generation of ostream insertion operators for ORB IDL 
+          declarations (off by default) to be turned on by setting the
+          feature in default.features.
+          
+        * tao/tao.mpc:
+        
+          Removed the -Gos command line option from the block of basic
+          type sequence .pidl files, and added the base project described
+          above.
+          
+        * docs/compiler.html:
+        
+          Added documentation for the new -Gos IDL compiler command line
+          option, along with an explanation of how to turn on ostream
+          insertion operator generation for ORB IDL declarations, and
+          why such a thing might be needed.
+
 Mon Jul  2 11:40:54 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * TAO.mwc:
