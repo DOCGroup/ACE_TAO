@@ -1,3 +1,10 @@
+Mon Jul  2 11:40:54 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * TAO.mwc:
+
+          Utilize the new 'associate' feature to decrease the amount of
+          hand editing required for automake generation.               
+
 Mon Jul  2 11:36:01 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * TAO_IDL/fe/idl.ll:
