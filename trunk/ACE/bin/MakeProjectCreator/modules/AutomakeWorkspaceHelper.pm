@@ -101,8 +101,7 @@ sub modify_value {
                 "\t(cd \$(top_srcdir); tar cf - \$(TAO_EXTRA_DIST)) | (cd \$(distdir); \\\n" .
                 "\t  tar xfBp -)\n" .
                 "\tlist=`find \$(distdir) -type d -name .svn -print`; for p in \$\$list; do \\\n" .
-                "\t  rm -rf \$\$p; \\\n" .
-                "\tdone\n";
+                "\t  rm -rf \$\$p; done\n";
     }
   }
 

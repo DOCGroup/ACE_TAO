@@ -1,3 +1,14 @@
+Mon Jul  2 11:39:20 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ACE.mwc:
+
+          Utilize the new 'associate' feature to decrease the amount of
+          hand editing required for automake generation.
+
+        * bin/MakeProjectCreator/modules/AutomakeWorkspaceHelper.pm:
+
+          Minor change to remove an extra new line.
+
 Mon Jul  2 09:40:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/os_include/sys/os_socket.h:
