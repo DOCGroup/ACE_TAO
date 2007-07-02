@@ -173,6 +173,7 @@ project(ACE_FOR_TAO) : acedefaults, install, svcconf, uuid, versioned_namespace,
     Thread_Hook.cpp
     Thread_Manager.cpp
     Thread_Mutex.cpp
+    Throughput_Stats.cpp
     Time_Value.cpp
     Timeprobe.cpp
     Timer_Hash.cpp
