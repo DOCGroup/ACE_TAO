@@ -1,7 +1,13 @@
+Mon Jul  2 14:19:03 UTC 2007  Adam Mitz  <mitza@ociweb.com>
+
+        * docs/ACE-guidelines.html:
+
+          Fixed incorrect statement about casts between pointers and longs.
+
 Mon Jul  2 12:03:36 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * bin/MakeProjectCreator/config/global.features:
-        
+
           Added line 'gen_ostream = 0' so that the gen_ostream feature
           can be inherited into tao.mpc but be turned off by default.
           Thanks to Johnny Willemsen <jwillemsen at remedy dot nl> for
