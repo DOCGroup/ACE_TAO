@@ -1,19 +1,15 @@
 /* -*- c++ -*- */
-// Hey, Emacs!  This is a C++ file!
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    jaws
-//
-// = FILENAME
-//    HTTP_Handler.h
-//
-// = AUTHOR
-//    James Hu and Irfan Pyarali
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    HTTP_Handler.h
+ *
+ *  $Id$
+ *
+ *  @author James Hu and Irfan Pyarali
+ */
+//=============================================================================
+
 
 #ifndef HTTP_HANDLER_H
 #define HTTP_HANDLER_H
@@ -32,18 +28,18 @@ class HTTP_Handler_Factory;
 #include "HTTP_Response.h"
 #include "IO.h"
 
+/**
+ * @class HTTP_Handler
+ *
+ * @brief This class is used to implement the HTTP protocol
+ *
+ * The HTTP_Handler class is a state based implementation of the
+ * HTTP protocol. Therefore, it can be used synchronously and
+ * asynchronously. It uses an abstract IO class to move between
+ * different HTTP protocol states. It is up to the IO class to
+ * decide on synchronous or asynchronous I/O.
+ */
 class HTTP_Handler : protected JAWS_IO_Handler
-  // = TITLE
-  //
-  //     This class is used to implement the HTTP protocol
-  //
-  // = DESCRIPTION
-  //
-  //     The HTTP_Handler class is a state based implementation of the
-  //     HTTP protocol. Therefore, it can be used synchronously and
-  //     asynchronously. It uses an abstract IO class to move between
-  //     different HTTP protocol states. It is up to the IO class to
-  //     decide on synchronous or asynchronous I/O.
 {
   // Friend I/O classes. Can call protected methods.
   friend class JAWS_Synch_IO;
@@ -56,36 +52,40 @@ class HTTP_Handler : protected JAWS_IO_Handler
   friend class No_Cache_Synch_HTTP_Handler_Factory;
 
 public:
+  /**
+   * The handler is initialized with a connection <handle> of a new
+   * client and any <initial_data> that came across. The
+   * <initial_data> block will be of MAX_REQUEST_SIZE and the number
+   * of bytes in <initial_data> can be found from
+   * <initial_data>.length ()
+   */
   virtual void open (ACE_HANDLE handle,
                      ACE_Message_Block &initial_data);
-  // The handler is initialized with a connection <handle> of a new
-  // client and any <initial_data> that came across. The
-  // <initial_data> block will be of MAX_REQUEST_SIZE and the number
-  // of bytes in <initial_data> can be found from
-  // <initial_data>.length ()
 
 protected:
+  /// The constructor is passed the factory that created <this> and the
+  /// IO mechanism that the handler should use.
   HTTP_Handler (JAWS_IO &io,
                 HTTP_Handler_Factory &factory);
-  // The constructor is passed the factory that created <this> and the
-  // IO mechanism that the handler should use.
 
+  /// Destructor
   virtual ~HTTP_Handler (void);
-  // Destructor
 
+  /// This method is called by the framework when there is a timeout.
   virtual void timeout (void);
-  // This method is called by the framework when there is a timeout.
 
+  /**
+   * This is the termination state of the handler. After successful or
+   * unsuccessful completions, the handler will end up in this state
+   * (method).
+   */
   virtual void done (void);
-  // This is the termination state of the handler. After successful or
-  // unsuccessful completions, the handler will end up in this state
-  // (method).
 
+  /// Request too long.
   virtual void request_too_long (void);
-  // Request too long.
 
+  /// Reference to the creating factory.
   HTTP_Handler_Factory &factory_;
-  // Reference to the creating factory.
 
 protected:
   // = Completion methods inherited from <JAWS_IO_Handler>.
@@ -110,112 +110,128 @@ public:
   };
 
 private:
+  /// This points to the request sent by the client
   ACE_Message_Block *request_data_;
-  // This points to the request sent by the client
 
+  /// I/O handle to the client
   ACE_HANDLE handle_;
-  // I/O handle to the client
 
   HTTP_Request request_;
   HTTP_Response response_;
 
+  /// IO class used by the handler
   JAWS_IO &io_;
-  // IO class used by the handler
 };
 
+/**
+ * @class HTTP_Handler_Factory
+ *
+ * @brief This class is used to create new HTTP handlers
+ *
+ * This is an abstract factory for creating new HTTP handlers.
+ */
 class HTTP_Handler_Factory
-  // = TITLE
-  //
-  //     This class is used to create new HTTP handlers
-  //
-  // = DESCRIPTION
-  //
-  //     This is an abstract factory for creating new HTTP handlers.
 {
 public:
+  /// Destructor
   virtual ~HTTP_Handler_Factory (void);
-  // Destructor
 
+  /// This creates a new HTTP_Handler
   virtual HTTP_Handler *create_http_handler (void) = 0;
-  // This creates a new HTTP_Handler
 
+  /**
+   * The HTTP handler will call this method from HTTP_Handler::done to
+   * tell the factory to reap up the handler as it is now done with
+   * the protocol
+   */
   virtual void destroy_http_handler (HTTP_Handler &handler,
                                      JAWS_IO &io) = 0;
-  // The HTTP handler will call this method from HTTP_Handler::done to
-  // tell the factory to reap up the handler as it is now done with
-  // the protocol
 };
 
+/**
+ * @class Synch_HTTP_Handler_Factory
+ *
+ * @brief This class is used to create new HTTP handlers that will use
+ * Synch IO
+ *
+ */
 class Synch_HTTP_Handler_Factory : public HTTP_Handler_Factory
-  // = TITLE
-  //
-  //     This class is used to create new HTTP handlers that will use
-  //     Synch IO
-  //
-  // = DESCRIPTION
 {
 public:
+  /// This creates a new HTTP_Handler
   HTTP_Handler *create_http_handler (void);
-  // This creates a new HTTP_Handler
 
+  /**
+   * The HTTP handler will call this method from HTTP_Handler::done to
+   * tell the factory to reap up the handler as it is now done with
+   * the protocol
+   */
   void destroy_http_handler (HTTP_Handler &handler,
                              JAWS_IO &io);
-  // The HTTP handler will call this method from HTTP_Handler::done to
-  // tell the factory to reap up the handler as it is now done with
-  // the protocol
 };
 
 //--------------Added a factory for SYNCH IO without caching
 
+/**
+ * @class No_Cache_Synch_HTTP_Handler_Factory
+ *
+ * @brief This class is used to create new HTTP handlers that will use
+ * Synch IO without caching
+ *
+ */
 class No_Cache_Synch_HTTP_Handler_Factory : public HTTP_Handler_Factory
-  // = TITLE
-  //
-  //     This class is used to create new HTTP handlers that will use
-  //     Synch IO without caching
-  //
-  // = DESCRIPTION
 {
 public:
+  /// This creates a new HTTP_Handler
   HTTP_Handler *create_http_handler (void);
-  // This creates a new HTTP_Handler
 
+  /**
+   * The HTTP handler will call this method from HTTP_Handler::done to
+   * tell the factory to reap up the handler as it is now done with
+   * the protocol
+   */
   void destroy_http_handler (HTTP_Handler &handler,
                              JAWS_IO &io);
-  // The HTTP handler will call this method from HTTP_Handler::done to
-  // tell the factory to reap up the handler as it is now done with
-  // the protocol
 };
 
 //--------------
 
 #if defined (ACE_HAS_WIN32_OVERLAPPED_IO)
+/**
+ * @class Asynch_HTTP_Handler_Factory
+ *
+ * @brief This class is used to create new HTTP handlers that will use
+ * Asynchronous IO.  This only works on Win32.
+ *
+ */
 class Asynch_HTTP_Handler_Factory : public HTTP_Handler_Factory, public ACE_Service_Handler
-  // = TITLE
-  //     This class is used to create new HTTP handlers that will use
-  //     Asynchronous IO.  This only works on Win32.
-  //
-  // = DESCRIPTION
 {
 public:
+  /**
+   * The HTTP handler will call this method from HTTP_Handler::done to
+   * tell the factory to reap up the handler as it is now done with
+   * the protocol
+   */
   void destroy_http_handler (HTTP_Handler &handler,
                              JAWS_IO &io);
-  // The HTTP handler will call this method from HTTP_Handler::done to
-  // tell the factory to reap up the handler as it is now done with
-  // the protocol
 
+  /**
+   * <open> is called by <ACE_Asynch_Acceptor> to initialize a new
+   * instance of ACE_Service_Handler that has been created after the a
+   * new connection is accepted.
+   *
+   * This will act as a creation point for new handlers.
+   */
   virtual void open (ACE_HANDLE handle,
                      ACE_Message_Block &message_block);
-  // <open> is called by <ACE_Asynch_Acceptor> to initialize a new
-  // instance of ACE_Service_Handler that has been created after the a
-  // new connection is accepted.
-  //
-  // This will act as a creation point for new handlers.
 
 private:
+  /**
+   * This method is private as users are not allowed to create new
+   * handlers. New handlers can only be created by the framework when
+   * new client connections arrive.
+   */
   HTTP_Handler *create_http_handler (void);
-  // This method is private as users are not allowed to create new
-  // handlers. New handlers can only be created by the framework when
-  // new client connections arrive.
 };
 #endif /* ACE_HAS_WIN32_OVERLAPPED_IO */
 #endif /* HTTP_HANDLER_H */

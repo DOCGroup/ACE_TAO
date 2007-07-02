@@ -1,18 +1,15 @@
 // -*- C++ -*-
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//   jaws
-//
-// = FILENAME
-//    HTTP_Server.h
-//
-// = AUTHOR
-//    James Hu
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    HTTP_Server.h
+ *
+ *  $Id$
+ *
+ *  @author James Hu
+ */
+//=============================================================================
+
 
 #ifndef HTTP_SERVER_H
 #define HTTP_SERVER_H
@@ -48,29 +45,31 @@ typedef ACE_LOCK_SOCK_Acceptor<ACE_SYNCH_MUTEX> HTTP_SOCK_Acceptor;
 
 typedef HTTP_SOCK_Acceptor HTTP_Acceptor;
 
+/**
+ * @class HTTP_Server
+ *
+ * @brief This server is used to create HTTP Handlers for the Web
+ * server
+ *
+ */
 class ACE_Svc_Export HTTP_Server : public ACE_Service_Object
-  // = TITLE
-  //     This server is used to create HTTP Handlers for the Web
-  //     server
-  //
-  // = DESCRIPTION
 {
 public:
+  /// Initialization
   virtual int init (int argc, ACE_TCHAR *argv[]);
-  // Initialization
 
+  /// Exit hooks
   virtual int fini (void);
-  // Exit hooks
 
 protected:
+  /// Thread Per Request implementation
   virtual int thread_per_request (HTTP_Handler_Factory &factory);
-  // Thread Per Request implementation
 
+  /// Asynch Thread Pool implementation
   virtual int asynch_thread_pool (void);
-  // Asynch Thread Pool implementation
 
+  /// Synch Thread Pool implementation
   virtual int synch_thread_pool (HTTP_Handler_Factory &factory);
-  // Synch Thread Pool implementation
 
 private:
   // James, comment these data members.
@@ -85,13 +84,15 @@ private:
   HTTP_Acceptor acceptor_;
 };
 
+/**
+ * @class Synch_Thread_Pool_Task
+ *
+ * @brief Used to implement Synch Thread Pool
+ *
+ * Describe this and the others below.
+ * NOTE: this class was modified to make caching disabling possible
+ */
 class Synch_Thread_Pool_Task : public ACE_Task<ACE_NULL_SYNCH>
-  // = TITLE
-  //     Used to implement Synch Thread Pool
-  //
-  // = DESCRIPTION
-  //     Describe this and the others below.
-  //	 NOTE: this class was modified to make caching disabling possible
 {
 public:
   Synch_Thread_Pool_Task (HTTP_Acceptor &acceptor,
@@ -105,14 +106,16 @@ private:
   HTTP_Handler_Factory &factory_;
 };
 
+/**
+ * @class Thread_Per_Request_Task
+ *
+ * @brief Used to implement Thread Per Request.
+ *
+ * Spawns a new thread for every new incoming connection.  The
+ * handle below is the socket stream of the incoming connection.
+ * NOTE: this class was modified to make caching disabling possible
+ */
 class Thread_Per_Request_Task : public ACE_Task<ACE_NULL_SYNCH>
-  // = TITLE
-  //     Used to implement Thread Per Request.
-  //
-  // = DESCRIPTION
-  //     Spawns a new thread for every new incoming connection.  The
-  //     handle below is the socket stream of the incoming connection.
-  //	 NOTE: this class was modified to make caching disabling possible
 {
 public:
   Thread_Per_Request_Task (ACE_HANDLE handle,
@@ -131,12 +134,14 @@ private:
 
 // This only works on Win32
 #if defined (ACE_HAS_WIN32_OVERLAPPED_IO)
+/**
+ * @class Asynch_Thread_Pool_Task
+ *
+ * @brief Used to implement Asynch Thread Pool
+ *
+ * The proactor below utilizes WaitForMultipleObjects.
+ */
 class Asynch_Thread_Pool_Task : public ACE_Task<ACE_NULL_SYNCH>
-  // = TITLE
-  //     Used to implement Asynch Thread Pool
-  //
-  // = DESCRIPTION
-  //     The proactor below utilizes WaitForMultipleObjects.
 {
 public:
   Asynch_Thread_Pool_Task (ACE_Proactor &proactor,

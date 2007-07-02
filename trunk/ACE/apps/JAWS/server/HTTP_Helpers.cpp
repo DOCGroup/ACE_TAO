@@ -148,7 +148,7 @@ HTTP_Helper::HTTP_date (char *s)
   char * date_string = s;
 
   if (ACE_OS::time (&tloc) != (time_t) -1
-      && ACE_OS::gmtime_r (&tloc, &tms) != NULL)
+      && ACE_OS::gmtime_r (&tloc, &tms) != 0)
   {
     ACE_OS::sprintf (date_string,
                      "%s, %2.2d %s %4.4d %2.2d:%2.2d:%2.2d GMT",
