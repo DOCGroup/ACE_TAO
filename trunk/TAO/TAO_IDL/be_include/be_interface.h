@@ -302,6 +302,11 @@ public:
   virtual void gen_ostream_operator (TAO_OutStream *os);
   // Overridden from class be_type.
 
+  virtual void gen_member_ostream_operator (TAO_OutStream *os,
+                                            const char *instance_name,
+                                            bool accessor = false);
+  // Overridden from class be_type.
+
   void analyze_parentage (void);
   // Compute whether or not we have both abstract and concrete parents,
   // and make a list of the abstract parents, if any.
