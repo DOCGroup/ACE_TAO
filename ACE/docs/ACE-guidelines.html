@@ -607,9 +607,11 @@ Foo::bar ()
         of <strong>NULL</strong> is implementation dependent, so it is
         difficult to use portably without casting.<p>
 
-    <li>Never cast a pointer to or from an <strong><code>int</code></strong>.
-        On all currently supported ACE platforms, it is safe to cast
-        a pointer to or from a <strong><code>long</code></strong>.<p>
+    <li>Never cast a pointer to or from an <strong><code>int</code></strong>
+        or a <strong><code>long</code></strong>.  On all currently supported
+        ACE platforms, it is safe to cast a pointer to or from
+        <strong><code>intptr_t</code></strong> or
+        <strong><code>uintptr_t</code></strong> (include ace/Basic_Types.h).<p>
 
     <li>Be very careful when selecting an integer type that must be a
         certain size, <em>e.g.</em>, 4 bytes.  <strong>long</strong> is
