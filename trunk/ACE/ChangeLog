@@ -1,3 +1,14 @@
+Mon Jul  2 09:40:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/os_include/sys/os_socket.h:
+          Defined SCM_RIGHTS when it is not defined yet
+
+        * ace/Activation_Queue.{h,cpp}:
+          Changed delete_queue_ to a real bool
+
+        * ace/Sig_Handler.h:
+          Doxygen improvements
+
 Mon Jul  2 09:01:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/tao_orb_tests.lst:
