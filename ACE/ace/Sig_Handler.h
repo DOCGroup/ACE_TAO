@@ -35,9 +35,9 @@ class ACE_Sig_Action;
  * global/static variables and functions.
  *
  * Using this class a program can register an ACE_Event_Handler
- * with the <ACE_Sig_Handler> in order to handle a designated
+ * with the ACE_Sig_Handler in order to handle a designated
  * @a signum.  When a signal occurs that corresponds to this
- * @a signum, the <handle_signal> method of the registered
+ * @a signum, the @c handle_signal method of the registered
  * ACE_Event_Handler is invoked automatically.
  */
 class ACE_Export ACE_Sig_Handler
@@ -62,7 +62,7 @@ public:
 
   /**
    * Remove the ACE_Event_Handler currently associated with
-   * @a signum.  <sigkey> is ignored in this implementation since there
+   * @a signum.  @a sigkey is ignored in this implementation since there
    * is only one instance of a signal handler.  Install the new
    * disposition (if given) and return the previous disposition (if
    * desired by the caller).  Returns 0 on success and -1 if @a signum
@@ -117,8 +117,8 @@ protected:
 
   /**
    * This implementation method is called by <register_handler> and
-   * <dispatch>.  It doesn't do any locking so that it can be called
-   * within a signal handler, such as <dispatch>.  It adds a new
+   * @c dispatch.  It doesn't do any locking so that it can be called
+   * within a signal handler, such as @c dispatch.  It adds a new
    * ACE_Event_Handler and a new sigaction associated with @a signum.
    * Passes back the existing ACE_Event_Handler and its sigaction if
    * pointers are non-zero.  Returns -1 on failure and >= 0 on
