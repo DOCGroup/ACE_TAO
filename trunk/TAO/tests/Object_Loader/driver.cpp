@@ -9,7 +9,7 @@
 #include "ace/OS_NS_stdio.h"
 
 int
-main (int, char *[])
+ACE_TMAIN(int, ACE_TCHAR *[])
 {
   int niterations = 10;
   int norbs = 10;

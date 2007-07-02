@@ -6,7 +6,7 @@
 * This test does not run - successful compile and link == successful test.
 */
 int
-main (int, char *[])
+ACE_TMAIN(int, ACE_TCHAR *[])
 {
   return 0;
 }
