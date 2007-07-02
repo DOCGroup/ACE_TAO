@@ -1,8 +1,21 @@
+Mon Jul  2 15:59:28 UTC 2007  Adam Mitz  <mitza@ociweb.com>
+
+        * ace/Vector_T.h:
+        * ace/Vector_T.inl:
+
+          Added a swap() member to Vector.  Previously Vector inherited swap()
+          which would produce invalid results since the members declared in
+          Vector were not swapped.  This fixes bugilla bug #2951.
+
+        * tests/Vector_Test.cpp:
+
+          Test for the change above.
+
 Mon Jul  2 14:36:25 UTC 2007  Adam Mitz  <mitza@ociweb.com>
 
         * bin/generate_doxygen.pl:
 
-          Fixed logic error that resulted in manpage documentation even when
+          Fixed a logic error that resulted in manpage documentation even when
           the option was not specified.
 
 Mon Jul  2 14:19:03 UTC 2007  Adam Mitz  <mitza@ociweb.com>
