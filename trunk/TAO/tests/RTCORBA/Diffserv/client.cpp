@@ -34,7 +34,7 @@ change_network_priority (int enable_network_priority,
       RTCORBA::RTORB_var rt_orb =
         RTCORBA::RTORB::_narrow (object.in ());
 
-      // Set the tcp protocol protperties
+      // Set the tcp protocol properties
       RTCORBA::TCPProtocolProperties_var tcp_properties =
         rt_orb->create_tcp_protocol_properties (ACE_DEFAULT_MAX_SOCKET_BUFSIZ,
                                                 ACE_DEFAULT_MAX_SOCKET_BUFSIZ,

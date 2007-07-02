@@ -1,0 +1,19 @@
+// -*- MPC -*-
+// $Id$
+
+project (bug2936-exe): aceexe {
+  exename=bug2936
+  Source_Files {
+    bug2936.cpp
+  }
+}
+
+project (bug2936-lib): taolib, portableserver {
+  sharedname = bug2936
+  dynamicflags += BUG2936_BUILD_DLL
+
+  Source_Files {
+    DllORB.cpp,
+    PersistentPOA.cpp
+  }
+}

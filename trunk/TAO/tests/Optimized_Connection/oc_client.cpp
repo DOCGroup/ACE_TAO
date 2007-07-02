@@ -61,8 +61,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                             1);
         }
 
-      CORBA::String_var the_string =
-        hello->get_string ();
+      CORBA::String_var the_string = hello->get_string ();
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) - string returned <%s>\n",
                   the_string.in ()));
