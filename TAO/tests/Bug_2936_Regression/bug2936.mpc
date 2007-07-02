@@ -8,7 +8,7 @@ project (bug2936-exe): aceexe {
   }
 }
 
-project (bug2936-lib): taolib, portableserver {
+project (bug2936-lib): taolib, portableserver, threads {
   sharedname = bug2936
   dynamicflags += BUG2936_BUILD_DLL
 
