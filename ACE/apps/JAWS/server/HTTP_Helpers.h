@@ -1,19 +1,15 @@
 /* -*- c++ -*- */
-// Hey, Emacs!  This is a C++ file!
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    apps
-//
-// = FILENAME
-//    HTTP_Helpers.h
-//
-// = AUTHOR
-//    James Hu
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    HTTP_Helpers.h
+ *
+ *  $Id$
+ *
+ *  @author James Hu
+ */
+//=============================================================================
+
 
 #ifndef HTTP_HELPERS_H
 #define HTTP_HELPERS_H
@@ -25,8 +21,11 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+/**
+ * @class HTTP_Helper
+ Static functions to enhance the lives of HTTP programmers everywhere.
+ */
 class HTTP_Helper
-// Static functions to enhance the lives of HTTP programmers everywhere.
 {
 public:
 
@@ -55,23 +54,25 @@ private:
   static const char *const months_[12];
   static char const *alphabet_;
 
+  /// Use this sometimes (e.g. HTTP_date)
   static char *date_string_;
   static ACE_SYNCH_MUTEX mutex_;
-  // Use this sometimes (e.g. HTTP_date)
 };
 
 // Design around the Singleton pattern
 
+/**
+ * @class HTTP_Status_Code
+ *
+ * @brief Go from numeric status codes to descriptive strings.
+ *
+ * Design around the Singleton pattern
+ */
 class HTTP_Status_Code
-  // = TITLE
-  //     Go from numeric status codes to descriptive strings.
-  //
-  // = DESCRIPTION
-  //     Design around the Singleton pattern
 {
 public:
+  /// Singleton access point.
   static const char **instance (void);
-  // Singleton access point.
 
   enum STATUS_CODE
   {
