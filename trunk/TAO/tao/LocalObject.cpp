@@ -189,21 +189,16 @@ CORBA::LocalObject::_get_orb (void)
 
 // ****************************************************************
 
-TAO_Local_RefCounted_Object::~TAO_Local_RefCounted_Object (void)
-{
-}
-
 void
 TAO_Local_RefCounted_Object::_add_ref (void)
 {
-  ++this->refcount_;
+  this->_tao_actual_add_ref ();
 }
 
 void
 TAO_Local_RefCounted_Object::_remove_ref (void)
 {
-  if (--this->refcount_ == 0)
-    delete this;
+  this->_tao_actual_remove_ref ();
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

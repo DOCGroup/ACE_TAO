@@ -52,7 +52,6 @@ CORBA::Object::Object (TAO_Stub * protocol_proxy,
     , ior_ (0)
     , orb_core_ (orb_core)
     , protocol_proxy_ (protocol_proxy)
-    , refcount_ ()
     , object_init_lock_ (0)
 {
   /// This constructor should not be called when the protocol proxy is
@@ -84,7 +83,6 @@ CORBA::Object::Object (IOP::IOR *ior,
     , ior_ (ior)
     , orb_core_ (orb_core)
     , protocol_proxy_ (0)
-    , refcount_ ()
     , object_init_lock_ (0)
 {
   this->object_init_lock_ =
@@ -118,7 +116,7 @@ CORBA::Object::_add_ref (void)
   if (this->is_local_)
     return;
 
-  this->refcount_.increment ();
+  this->_tao_actual_add_ref ();
 }
 
 void
@@ -127,10 +125,7 @@ CORBA::Object::_remove_ref (void)
   if (this->is_local_)
     return;
 
-  if (this->refcount_.decrement () != 0)
-    return;
-
-  delete this;
+  this->_tao_actual_remove_ref ();
 }
 
 void
