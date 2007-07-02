@@ -1,3 +1,18 @@
+Mon Jul  2 07:31:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Event/EC_ObserverStrategy.cpp:
+          Initialise pointer with 0
+
+        * orbsvcs/orbsvcs/FaultTolerance/FT_ClientORBInitializer.cpp:
+          Layout changes
+
+        * orbsvcs/tests/Bug_2926_Regression/*:
+          New regression test for bug 2926. Thanks to Lothar Werzingen
+          <lothar at tradescape dot biz> for reporting this issue
+
+        * orbsvcs/PortableServer/POAManager.inl:
+          Fix bug 2926.
+
 Sun Jul  1 17:13:40 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * tests/Bug_1904_Regression/test.cpp:
