@@ -13,7 +13,6 @@ CORBA::Object::Object (int)
     ior_ (),
     orb_core_ (0),
     protocol_proxy_ (0),
-    refcount_ (),
     object_init_lock_ (0)
 {
 }
@@ -94,6 +93,21 @@ ACE_INLINE const IOP::IOR &
 CORBA::Object::ior (void) const
 {
   return this->ior_.in ();
+}
+
+ACE_INLINE void
+CORBA::Object::_tao_actual_add_ref (void)
+{
+  this->refcount_.increment ();
+}
+
+ACE_INLINE void
+CORBA::Object::_tao_actual_remove_ref (void)
+{
+  if (this->refcount_.decrement () != 0)
+    return;
+
+  delete this;
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

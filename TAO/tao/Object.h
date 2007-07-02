@@ -255,6 +255,11 @@ namespace CORBA
      * tao_. But we have deviated from that principle.
      */
 
+  protected:
+    void _tao_actual_add_ref (void);
+    void _tao_actual_remove_ref (void);
+
+  public:
     /// Marshalling operator used by the stub code. A long story why
     /// the stub code uses this, let us keep it short here.
     static CORBA::Boolean marshal (const Object_ptr x,
@@ -356,6 +361,9 @@ namespace CORBA
     /// underlying stub.
     TAO::Object_Proxy_Broker *proxy_broker () const;
 
+    /// Number of outstanding references to this object.
+    TAO_Configurable_Refcount refcount_;
+
   private:
 
     // = Unimplemented methods
@@ -396,9 +404,6 @@ namespace CORBA
      * Objects
      */
     TAO_Stub * protocol_proxy_;
-
-    /// Number of outstanding references to this object.
-    TAO_Configurable_Refcount refcount_;
 
     /// Protect reference count manipulation from race conditions.
     /**

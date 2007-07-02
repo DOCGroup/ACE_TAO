@@ -196,9 +196,6 @@ class TAO_Export TAO_Local_RefCounted_Object
 {
 public:
 
-  /// Destructor.
-  virtual ~TAO_Local_RefCounted_Object (void);
-
   /// Increment reference count.
   virtual void _add_ref (void);
 
@@ -224,10 +221,6 @@ private:
       const TAO_Local_RefCounted_Object &
     );
   //@}
-
-protected:
-  /// Reference counter.
-  ACE_Atomic_Op<TAO_SYNCH_MUTEX, unsigned long> refcount_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
