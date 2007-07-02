@@ -1,7 +1,21 @@
+Mon Jul  2 16:14:25 UTC 2007  Adam Mitz  <mitza@ociweb.com>
+
+        * tao/LocalObject.h:
+        * tao/LocalObject.inl:
+        * tao/LocalObject.cpp:
+        * tao/Messaging/AMH_Response_Handler.cpp:
+        * tao/Object.h:
+        * tao/Object.inl:
+        * tao/Object.cpp:
+
+          Removed the separate reference count from
+          TAO_Local_RefCounted_Object.  Local refcounted objects will now just
+          use the reference count kept in Object itself.
+
 Mon Jul  2 12:42:53 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tests/IDL_Test/IDL_Test.mpc:
-        
+
           Removed the hard-coded -Gos IDL compiler option from being
           applied to sequence.idl, but allowed it to be applied if
           the ORB has also been built with ostream insertion operator
@@ -11,20 +25,20 @@ Mon Jul  2 12:42:53 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
 Mon Jul  2 12:15:37 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * MPC/config/gen_ostream.mpb:
-        
+
           New file, containing the 'gen_ostream' feature, to enable the
-          generation of ostream insertion operators for ORB IDL 
+          generation of ostream insertion operators for ORB IDL
           declarations (off by default) to be turned on by setting the
           feature in default.features.
-          
+
         * tao/tao.mpc:
-        
+
           Removed the -Gos command line option from the block of basic
           type sequence .pidl files, and added the base project described
           above.
-          
+
         * docs/compiler.html:
-        
+
           Added documentation for the new -Gos IDL compiler command line
           option, along with an explanation of how to turn on ostream
           insertion operator generation for ORB IDL declarations, and
@@ -35,7 +49,7 @@ Mon Jul  2 11:40:54 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
         * TAO.mwc:
 
           Utilize the new 'associate' feature to decrease the amount of
-          hand editing required for automake generation.               
+          hand editing required for automake generation.
 
 Mon Jul  2 11:36:01 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
@@ -82,7 +96,7 @@ Mon Jul  2 10:15:47 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
 
           Added a check to ensure that a leading '::' will be generated
           for the type name of CORBA::TypeCode as it is for the other
-          CORBA types Object, AbstractBase, Va;ueBase and Any.
+          CORBA types Object, AbstractBase, ValueBase and Any.
 
 Mon Jul  2 10:05:28 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -189,8 +203,8 @@ Sat Jun 30 21:38:25 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
 Sat Jun 30 18:42:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-        * tao/csd_framework.mpb:
-        * MPC/bin/CSD_Framework.mpc:
+        * MPC/config/csd_framework.mpb:
+        * tao/CSD_Framework.mpc:
           CSD_Framework can't be build with CORBA/e micro enabled because with
           CORBA/e micro you can't create a child POA
 

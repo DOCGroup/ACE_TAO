@@ -227,7 +227,7 @@ TAO_AMH_Response_Handler::_tao_rh_send_exception (const CORBA::Exception &ex)
 void
 TAO_AMH_Response_Handler::_remove_ref (void)
 {
-  if (--this->refcount_ > 0)
+  if (this->refcount_.decrement () > 0)
     return;
 
   if (this->allocator_)
