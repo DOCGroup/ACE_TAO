@@ -271,7 +271,7 @@ oneway          return IDL_ONEWAY;
                 }
 (L\"([^\\\"]*|\\[ntvbrfax\\\?\'\"]|\\[0-7]{1,3}|\\u([0-9a-fA-F]{1,4}))*\"[ \t]*)+ {
                   /* Skip the bookends */
-                  char *tmp = ACE_OS::strdup (ace_yytext);
+                  char * const tmp = ACE_OS::strdup (ace_yytext);
                   for(size_t i = ACE_OS::strlen (tmp); i-- != 0; ) {
                     if (isspace(tmp[i])) {
                       tmp[i] = '\0';
@@ -329,7 +329,7 @@ L"'"\\u([0-9a-fA-F]{1,4})"'" {
 ^\?\?=[ \t]*[0-9]*" ""\""[^\"]*"\""{NL} {
                   idl_parse_line_and_file(ace_yytext);
                 }
-^[ \t]*#line[ \t]*[0-9]+[ \t]*("\""[^\"]*"\"")?{NL} |
+^[ \t]*#line[ \t]*[0-9]+[ \t]*("\""[^\"]*"\""([ \t]*[0-9]*([ \t]*[0-9]*)?)?)?{NL} |
 ^\?\?=line[ \t]*[0-9]*" ""\""[^\"]*"\""{NL} {
                   idl_parse_line_and_file(ace_yytext);
                 }
