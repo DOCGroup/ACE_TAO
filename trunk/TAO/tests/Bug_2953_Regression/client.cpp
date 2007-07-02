@@ -35,17 +35,17 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     CORBA::ORB_var orbA = CORBA::ORB_init(argc, argv, orbidA);
 
     CORBA::Object_var objA = orbA->string_to_object(orbidAfile);
-    Test::Hello_var helloA(Test::Hello::_narrow(objA));
+    Test::Hello_var helloA(Test::Hello::_narrow(objA.in ()));
     CORBA::String_var resA = helloA->get_string();
 
     CORBA::Object_var objB = orbA->string_to_object(orbidBfile);
-    Test::Hello_var helloB(Test::Hello::_narrow(objB));
+    Test::Hello_var helloB(Test::Hello::_narrow(objB.in ()));
     CORBA::String_var resB = helloB->get_string();
 
     ACE_DEBUG ((LM_DEBUG,
                 "got resA: <%s> and resB: <%s>",
                 resA.in(), resB.in ()));
-    shutdownORB(orbA, orbidA);
+    shutdownORB(orbA.in (), orbidA);
   }
   catch (const CORBA::Exception& ex)
   {
