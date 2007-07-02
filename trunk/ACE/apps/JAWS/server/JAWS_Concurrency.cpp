@@ -21,7 +21,7 @@ JAWS_Concurrency_Base::svc (void)
 
   for (;;)
     {
-      ACE_Message_Block *mb;
+      ACE_Message_Block *mb = 0;
 
       // At this point we could set a timeout value so that the
       // threading strategy can delete a thread if there is nothing to

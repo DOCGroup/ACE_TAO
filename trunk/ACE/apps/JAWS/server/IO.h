@@ -282,8 +282,7 @@ public:
                            int length);
 
 protected:
-  virtual void send_message (const char *buffer,
-                             int length);
+  virtual void send_message (const char *buffer, int length);
 
   ACE_HANDLE handle_;
 };
