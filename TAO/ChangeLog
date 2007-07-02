@@ -1,3 +1,14 @@
+Mon Jul  2 10:05:28 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_predefined_type.cpp:
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be/be_array.cpp:
+        
+          Added generation of ".in ()" to ostream operator generation
+          for members that are _var or _forany types. Thanks to
+          Johnny Willemsen <jwillemsen at remedy dot nl> for reporting
+          the problem.
+
 Mon Jul  2 09:45:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO/TAO_IDL/include/idl_narrow.h:

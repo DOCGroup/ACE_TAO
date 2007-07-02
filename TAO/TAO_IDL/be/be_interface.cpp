@@ -1333,6 +1333,14 @@ be_interface::gen_ostream_operator (TAO_OutStream *os)
 }
 
 void
+be_interface::gen_member_ostream_operator (TAO_OutStream *os,
+                                           const char *instance_name,
+                                           bool accessor)
+{
+  *os << instance_name << (accessor ? " ()" : ".in ()");
+}
+
+void
 be_interface::analyze_parentage (void)
 {
   if (this->has_mixed_parentage_ != -1)
