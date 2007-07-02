@@ -300,7 +300,7 @@ be_array::gen_ostream_operator (TAO_OutStream *os)
     
   *os << "strm << ";
   
-  ACE_CString instance_name ("_tao_array");
+  ACE_CString instance_name ("_tao_array.in ()");
   
   for (i = 0; i < ndims; ++i)
     {
