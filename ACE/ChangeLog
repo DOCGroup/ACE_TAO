@@ -1,3 +1,10 @@
+Mon Jul  2 14:36:25 UTC 2007  Adam Mitz  <mitza@ociweb.com>
+
+        * bin/generate_doxygen.pl:
+
+          Fixed logic error that resulted in manpage documentation even when
+          the option was not specified.
+
 Mon Jul  2 14:19:03 UTC 2007  Adam Mitz  <mitza@ociweb.com>
 
         * docs/ACE-guidelines.html:
