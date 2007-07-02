@@ -113,7 +113,7 @@ TAO_EC_Basic_ObserverStrategy::create_observer_list (
                  RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR());
 
   int size = static_cast<int> (this->observers_.current_size ());
-  RtecEventChannelAdmin::Observer_var *tmp;
+  RtecEventChannelAdmin::Observer_var *tmp = 0;
   ACE_NEW_RETURN (tmp,
                   RtecEventChannelAdmin::Observer_var[size],
                   0);

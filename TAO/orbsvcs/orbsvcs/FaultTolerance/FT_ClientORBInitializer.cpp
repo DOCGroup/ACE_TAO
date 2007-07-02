@@ -14,8 +14,7 @@ ACE_RCSID (FaultTolerance,
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 void
-TAO_FT_ClientORBInitializer::pre_init (
-    PortableInterceptor::ORBInitInfo_ptr)
+TAO_FT_ClientORBInitializer::pre_init (PortableInterceptor::ORBInitInfo_ptr)
 {
 }
 
@@ -25,11 +24,7 @@ TAO_FT_ClientORBInitializer::post_init (
 {
   this->register_policy_factories (info);
 
-
   this->register_client_request_interceptors (info);
-
-
-
 }
 
 void
@@ -59,12 +54,10 @@ TAO_FT_ClientORBInitializer::register_policy_factories (
   // the different types of RTCORBA policies.
 
   CORBA::PolicyType type = FT::REQUEST_DURATION_POLICY;
-  info->register_policy_factory (type,
-                                 policy_factory.in ());
+  info->register_policy_factory (type, policy_factory.in ());
 
   type = FT::HEARTBEAT_POLICY;
-  info->register_policy_factory (type,
-                                 policy_factory.in ());
+  info->register_policy_factory (type, policy_factory.in ());
 
   /*
   type = FT::HEARTBEAT_ENABLED_POLICY;
