@@ -1,3 +1,8 @@
+Mon Jul  2 10:48:28 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * server/*.{h,cpp}:
+          Converted to doxygen format and replaced NULL with 0
+
 Fri Oct 28 03:23:18 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
 
         * server/IO.cpp:
@@ -7,14 +12,14 @@ Fri Oct 28 03:23:18 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
 Mon Feb  6 01:00:55 UTC 2006  William Otte  <wotte@dre.vanderbilt.edu>
 
         * server/HTTP_Server.h
-        
+
           Surrounded a proactor forward declaration with versioned
           namespace macros.
 
 Thu Jan  5 00:42:28 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * ChangeLog:
-        
+
           Untabify.
           Delete-trailing-whitespace.
 
