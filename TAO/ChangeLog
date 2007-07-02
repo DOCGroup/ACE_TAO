@@ -1,21 +1,37 @@
+Mon Jul  2 11:29:28 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * tests/Bug_1812_Regression/test.cpp:
+        * tests/Bug_1813_Regression/test.cpp:
+        * tests/Bug_2222_Regression/test.cpp:
+        * tests/Bug_2677_Regression/server.cpp:
+        * tests/DLL_ORB/client.cpp:
+        * tests/DLL_ORB/server.cpp:
+        * tests/Object_Loader/driver.cpp:
+        * tests/Queued_Message_Test/Queued_Message_Test.cpp:
+
+          Fixed fuzz warnings.
+          Use "int ACE_TMAIN (int argc, ACE_TCHAR *argv[])"
+          instead of "int main (int argc, char *argv[])" to conform to ACE's
+          coding guidelines.
+
 Mon Jul  2 10:20:34 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/include/utl_scope.h:
-        
+
           Cosmetic changes.
-          
+
         * TAO_IDL/be_include/be_interface.h:
-        
+
           Not checked in with
-          
+
           Mon Jul  2 10:05:28 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
-          
+
           as it should have been.
 
 Mon Jul  2 10:15:47 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/ast/ast_type.cpp(nested_name):
-        
+
           Added a check to ensure that a leading '::' will be generated
           for the type name of CORBA::TypeCode as it is for the other
           CORBA types Object, AbstractBase, Va;ueBase and Any.
@@ -25,7 +41,7 @@ Mon Jul  2 10:05:28 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
         * TAO_IDL/be/be_predefined_type.cpp:
         * TAO_IDL/be/be_interface.cpp:
         * TAO_IDL/be/be_array.cpp:
-        
+
           Added generation of ".in ()" to ostream operator generation
           for members that are _var or _forany types. Thanks to
           Johnny Willemsen <jwillemsen at remedy dot nl> for reporting
