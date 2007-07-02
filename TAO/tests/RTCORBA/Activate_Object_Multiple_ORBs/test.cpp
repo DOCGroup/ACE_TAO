@@ -21,15 +21,14 @@ public:
 };
 
 
-int main(int, char**)
+int main(int argc, char* argv[])
 {
   try
     {
-      int argc = 0;
       CORBA::ORB_var orb1 =
-                    CORBA::ORB_init(argc, 0, "orb1");
+                    CORBA::ORB_init(argc, argv, "orb1");
       CORBA::ORB_var orb2 =
-                    CORBA::ORB_init(argc, 0, "orb2");
+                    CORBA::ORB_init(argc, argv, "orb2");
 
       CORBA::Object_var poaObj_var =
                     orb1->resolve_initial_references ("RootPOA");

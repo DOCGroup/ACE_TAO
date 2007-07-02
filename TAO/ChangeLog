@@ -1,3 +1,23 @@
+Mon Jul  2 08:58:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_2936_Regression/*:
+          New regression test for bug 2936. Thanks to Lothar Werzingen
+          <lothar at tradescape dot biz> for making the regression. The
+          problem is in the regression itself, but that has been fixed and
+          the test looks interesting for our test suite.
+
+        * tests/RTCORBA/Activate_Object_Multiple_ORBs/run_test.pl:
+          Improved for cross platform testing
+
+        * tests/RTCORBA/Activate_Object_Multiple_ORBs/test.cpp:
+          Make it possible to pass arguments to orb_init from the commandline
+
+        * tests/RTCORBA/Diffserv/client.cpp:
+          Fixed typo
+
+        * tests/Optimized_Connection/oc_client.cpp:
+          Layout change
+
 Mon Jul  2 07:31:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Event/EC_ObserverStrategy.cpp:
