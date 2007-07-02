@@ -1,3 +1,8 @@
+Mon Jul  2 18:35:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/Bug_2926_Regression/DllORB.h:
+          Added missing duplicate call
+
 Mon Jul  2 16:14:25 UTC 2007  Adam Mitz  <mitza@ociweb.com>
 
         * tao/LocalObject.h:

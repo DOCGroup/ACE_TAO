@@ -19,7 +19,7 @@ public:
 
   inline CORBA::ORB_ptr orb () const
   {
-    return mv_orb_;
+    return CORBA::ORB::_duplicate (mv_orb_.in ());
   }
 
   virtual int init (int argc, ACE_TCHAR *argv[]);
