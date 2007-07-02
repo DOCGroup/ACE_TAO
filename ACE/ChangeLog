@@ -1,3 +1,14 @@
+Mon Jul  2 12:03:36 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * bin/MakeProjectCreator/config/global.features:
+        
+          Added line 'gen_ostream = 0' so that the gen_ostream feature
+          can be inherited into tao.mpc but be turned off by default.
+          Thanks to Johnny Willemsen <jwillemsen at remedy dot nl> for
+          suggesting this approach to keeping the default footprint
+          of TAO from rising by default generation of ostream insertion
+          operators for all ORB-defined IDL types.
+
 Mon Jul  2 11:39:20 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * ACE.mwc:

@@ -41,6 +41,7 @@ dummy_label   = 0
 cidl          = 0
 wince         = 0
 uses_wchar    = 0
+gen_ostream   = 0
 ziparchive    = 0
 negotiate_codesets  = 0
 versioned_namespace = 0
