@@ -196,6 +196,10 @@ extern "C"
 #  define SO_ERROR 0x1007
 #endif /* SO_ERROR */
 
+#if !defined (SCM_RIGHTS)
+#  define SCM_RIGHTS 0x01
+#endif /* SCM_RIGHTS */
+
 #if defined (ACE_HAS_IPV6)
 #  if defined (ACE_USES_IPV4_IPV6_MIGRATION)
 #    define ACE_ADDRESS_FAMILY_INET  AF_UNSPEC
