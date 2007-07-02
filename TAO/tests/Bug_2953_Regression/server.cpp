@@ -130,7 +130,7 @@ addServant(
 
   PortableServer::ObjectId_var dummy = poa->activate_object(servant);
   CORBA::Object_var ref = poa->servant_to_reference(servant);
-  CORBA::String_var str = orb->object_to_string(ref);
+  CORBA::String_var str = orb->object_to_string(ref.in ());
 
   return str._retn();
 }
@@ -195,20 +195,20 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
     // server - write our iors to two files
     CORBA::ORB_var orbB = CORBA::ORB_init(argc, argv, orbidB);
-    RTCORBA::RTORB_var rtorbA = getRTORB(orbA, orbidA);
-    RTCORBA::RTORB_var rtorbB = getRTORB(orbB, orbidB);
+    RTCORBA::RTORB_var rtorbA = getRTORB(orbA.in (), orbidA);
+    RTCORBA::RTORB_var rtorbB = getRTORB(orbB.in (), orbidB);
 
-    PortableServer::POA_var rootPoaA = getRootPoa(orbA, orbidA);
-    PortableServer::POA_var rootPoaB = getRootPoa(orbB, orbidB);
+    PortableServer::POA_var rootPoaA = getRootPoa(orbA.in (), orbidA);
+    PortableServer::POA_var rootPoaB = getRootPoa(orbB.in (), orbidB);
 
     rootPoaA->the_POAManager()->activate();
     rootPoaB->the_POAManager()->activate();
 
-    implA = new Test_i(orbA);
-    implB = new Test_i(orbB);
+    implA = new Test_i(orbA.in ());
+    implB = new Test_i(orbB.in ());
 
-    const char* iorA = addServant(orbA, rtorbA, rootPoaA, implA, tpidA, 3);
-    const char* iorB = addServant(orbB, rtorbB, rootPoaB, implB, tpidB, 3);
+    const char* iorA = addServant(orbA.in (), rtorbA.in (), rootPoaA.in (), implA, tpidA, 3);
+    const char* iorB = addServant(orbB.in (), rtorbB.in (), rootPoaB.in (), implB, tpidB, 3);
 
     if (write_iorfile("iorA.ior", iorA) == 1)
       return 1;
@@ -224,7 +224,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     // note: orbA can convert iorB into a legal colocated object,
     // even though objB was created by orbB!
     CORBA::Object_var objB = orbA->string_to_object(iorB);
-    Test::Hello_var helloB(Test::Hello::_narrow(objB));
+    Test::Hello_var helloB(Test::Hello::_narrow(objB.in ()));
     CORBA::String_var resB = helloB->get_string();
 
     cout << "server got resA: " << resA << " and resB: " << resB << endl;
@@ -243,17 +243,17 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
     if (implB != 0)
       {
-        removeServant(rtorbB, rootPoaB, implB, tpidB);
+        removeServant(rtorbB.in (), rootPoaB.in (), implB, tpidB);
       }
 
-    shutdownORB(orbB, orbidB);
+    shutdownORB(orbB.in (), orbidB);
 
     if (implA != 0)
       {
-        removeServant(rtorbA, rootPoaA, implA, tpidA);
+        removeServant(rtorbA.in (), rootPoaA.in (), implA, tpidA);
       }
 
-    shutdownORB(orbA, orbidA);
+    shutdownORB(orbA.in (), orbidA);
   }
   catch (const CORBA::Exception& ex)
   {
