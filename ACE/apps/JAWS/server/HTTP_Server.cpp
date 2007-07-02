@@ -55,15 +55,15 @@ HTTP_Server::parse_args (int argc, ACE_TCHAR *argv[])
     switch (c)
       {
       case 'p':
-	this->port_ = ACE_OS::atoi (get_opt.opt_arg ());
-	break;
+        this->port_ = ACE_OS::atoi (get_opt.opt_arg ());
+        break;
       case 'n':
-	this->threads_ = ACE_OS::atoi (get_opt.opt_arg ());
-	break;
+        this->threads_ = ACE_OS::atoi (get_opt.opt_arg ());
+        break;
       case 't':
-	// POOL        -> thread pool
-	// PER_REQUEST -> thread per request
-	// THROTTLE    -> thread per request with throttling
+        // POOL        -> thread pool
+        // PER_REQUEST -> thread per request
+        // THROTTLE    -> thread per request with throttling
         if (ACE_OS::strcmp (get_opt.opt_arg (), ACE_TEXT ("POOL")) == 0)
           thr_strategy = JAWS::JAWS_POOL;
         else if (ACE_OS::strcmp (get_opt.opt_arg (), ACE_TEXT ("PER_REQUEST")) == 0)
@@ -76,7 +76,7 @@ HTTP_Server::parse_args (int argc, ACE_TCHAR *argv[])
             thr_strategy = JAWS::JAWS_PER_REQUEST;
             this->throttle_ = 1;
           }
-	break;
+        break;
       case 'f':
         if (ACE_OS::strcmp (get_opt.opt_arg (), ACE_TEXT ("THR_BOUND")) == 0)
           {
@@ -89,24 +89,24 @@ HTTP_Server::parse_args (int argc, ACE_TCHAR *argv[])
           {
           }
       case 'i':
-	// SYNCH  -> synchronous I/O
-	// ASYNCH -> asynchronous I/O
+        // SYNCH  -> synchronous I/O
+        // ASYNCH -> asynchronous I/O
         if (ACE_OS::strcmp (get_opt.opt_arg (), ACE_TEXT ("SYNCH")) == 0)
           io_strategy = JAWS::JAWS_SYNCH;
         else if (ACE_OS::strcmp (get_opt.opt_arg (), ACE_TEXT ("ASYNCH")) == 0)
           io_strategy = JAWS::JAWS_ASYNCH;
-	break;
+        break;
       case 'b':
-	this->backlog_ = ACE_OS::atoi (get_opt.opt_arg ());
-	break;
-	  case 'c':
-		  if (ACE_OS::strcmp (get_opt.opt_arg (), ACE_TEXT ("NO_CACHE")) == 0)
-			  this->caching_ = false;
-		  else
-			  this->caching_ = true;
-		  break;
-      default:
-	break;
+        this->backlog_ = ACE_OS::atoi (get_opt.opt_arg ());
+        break;
+      case 'c':
+        if (ACE_OS::strcmp (get_opt.opt_arg (), ACE_TEXT ("NO_CACHE")) == 0)
+          this->caching_ = false;
+        else
+          this->caching_ = true;
+        break;
+        default:
+        break;
       }
 
   // No magic numbers.
@@ -220,7 +220,7 @@ Synch_Thread_Pool_Task::svc (void)
 
       // Lock in this accept.  When it returns, we have a connection.
       if (this->acceptor_.accept (stream) == -1)
-	ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT("%p\n"),
+        ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT("%p\n"),
                            ACE_TEXT ("HTTP_Acceptor::accept")), -1);
 
       ACE_Message_Block *mb;
@@ -263,7 +263,7 @@ HTTP_Server::thread_per_request (HTTP_Handler_Factory &factory)
   for (;;)
     {
       if (this->acceptor_.accept (stream) == -1)
-	ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
+        ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
                            ACE_TEXT ("HTTP_Acceptor::accept")), -1);
 
       Thread_Per_Request_Task *t;

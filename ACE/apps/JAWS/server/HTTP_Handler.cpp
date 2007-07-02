@@ -30,8 +30,8 @@ HTTP_Handler::~HTTP_Handler (void)
   this->request_data_ = 0;
 }
 
-void 
-HTTP_Handler::open (ACE_HANDLE handle, 
+void
+HTTP_Handler::open (ACE_HANDLE handle,
 		    ACE_Message_Block &initial_data)
 {
   ACE_DEBUG ((LM_DEBUG, "(%t) New connection \n"));
@@ -58,12 +58,12 @@ HTTP_Handler::open (ACE_HANDLE handle,
 
   this->handle_ = handle;
   this->io_.handle (this->handle_);
-  
+
   this->request_data_ = initial_data.duplicate ();
   this->read_complete (initial_data);
 }
 
-void 
+void
 HTTP_Handler::read_complete (ACE_Message_Block &message_block)
 {
   // This is actually a callback entry point.  The JAWS_IO framework
@@ -94,7 +94,7 @@ HTTP_Handler::read_complete (ACE_Message_Block &message_block)
     }
 }
 
-void 
+void
 HTTP_Handler::receive_file_complete (void)
 {
   ACE_DEBUG ((LM_DEBUG, " (%t) %s received successfully\n",
@@ -102,16 +102,16 @@ HTTP_Handler::receive_file_complete (void)
 
   char buffer[BUFSIZ];
   int buflen =
-    ACE_OS::sprintf (buffer, 
+    ACE_OS::sprintf (buffer,
                      "%s %d %s\r\n",
                      this->request_.version (),
                      HTTP_Status_Code::STATUS_OK,
-                     "Successful");  
+                     "Successful");
 
   this->io_.send_confirmation_message (buffer, buflen);
 }
 
-void 
+void
 HTTP_Handler::receive_file_error (int result)
 {
   ACE_DEBUG ((LM_DEBUG, " (%t) %s error in receiving file\n",
@@ -137,28 +137,28 @@ HTTP_Handler::receive_file_error (int result)
       break;
     }
   int buflen =
-    ACE_OS::sprintf (buffer, 
+    ACE_OS::sprintf (buffer,
                      "%s %d %s",
                      this->request_.version (),
                      status_code,
-                     "Failed");  
+                     "Failed");
 
   this->io_.send_confirmation_message (buffer, buflen);
 }
 
-void 
+void
 HTTP_Handler::confirmation_message_complete (void)
 {
-  this->done ();  
+  this->done ();
 }
 
-void 
+void
 HTTP_Handler::error_message_complete (void)
 {
-  this->done ();  
+  this->done ();
 }
 
-void 
+void
 HTTP_Handler::transmit_file_complete (void)
 {
   ACE_DEBUG ((LM_DEBUG, " (%t) %s transmitted successfully\n",
@@ -167,7 +167,7 @@ HTTP_Handler::transmit_file_complete (void)
   this->done ();
 }
 
-void 
+void
 HTTP_Handler::transmit_file_error (int result)
 {
   ACE_DEBUG ((LM_DEBUG,
@@ -196,7 +196,7 @@ HTTP_Handler::transmit_file_error (int result)
   this->response_.error_response (status_code, "error in transmitting file");
 }
 
-void 
+void
 HTTP_Handler::read_error (void)
 {
   ACE_DEBUG ((LM_DEBUG, " (%t) error in reading request\n"));
@@ -212,7 +212,7 @@ HTTP_Handler::write_error (void)
   this->done ();
 }
 
-void 
+void
 HTTP_Handler::timeout (void)
 {
   ACE_DEBUG ((LM_DEBUG, " (%t) %s error in reading request\n",
@@ -223,7 +223,7 @@ HTTP_Handler::timeout (void)
                     "error in reading request");
 }
 
-void 
+void
 HTTP_Handler::request_too_long (void)
 {
   ACE_DEBUG ((LM_DEBUG, " (%t) request too long\n"));
@@ -232,7 +232,7 @@ HTTP_Handler::request_too_long (void)
                     "request too long");
 }
 
-void 
+void
 HTTP_Handler::done (void)
 {
   this->factory_.destroy_http_handler (*this, this->io_);
@@ -255,7 +255,7 @@ Synch_HTTP_Handler_Factory::create_http_handler (void)
 
 void
 Synch_HTTP_Handler_Factory::destroy_http_handler (HTTP_Handler &handler,
-						  JAWS_IO &io)
+                                                  JAWS_IO &io)
 {
   delete &io;
   delete &handler;
@@ -266,9 +266,9 @@ Synch_HTTP_Handler_Factory::destroy_http_handler (HTTP_Handler &handler,
 HTTP_Handler *
 No_Cache_Synch_HTTP_Handler_Factory::create_http_handler (void)
 {
-  JAWS_Synch_IO_No_Cache *io;
+  JAWS_Synch_IO_No_Cache *io = 0;
   ACE_NEW_RETURN (io, JAWS_Synch_IO_No_Cache, 0);
-  HTTP_Handler *handler;
+  HTTP_Handler *handler = 0;
   ACE_NEW_RETURN (handler, HTTP_Handler (*io, *this), 0);
 
   return handler;
