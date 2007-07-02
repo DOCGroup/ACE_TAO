@@ -195,7 +195,7 @@ sub generate_doxy_files {
 	  print DOXYOUTPUT "GENERATE_TAGFILE = $html_out_dir\n";
 	  next;
         }
-      } elsif ($generate_html && /^MAN_OUTPUT/) {
+      } elsif ($generate_man && /^MAN_OUTPUT/) {
         my @field = split(' = ');
         if ($#field >= 1) {
           push @output_dirs, $field[1];
@@ -215,16 +215,18 @@ sub generate_doxy_files {
     unlink $output;
   }
 
-  open(FIND, "find man -type f -print |") or die "Can't run find\n";
-  while (<FIND>) {
-    chop;
-    my $name_with_whitespace = $_;
-    next unless ($name_with_whitespace =~ /\s/);
-    my $name_without_whitespace = $name_with_whitespace;
-    $name_without_whitespace =~ s/\s+//g;
-    rename $name_with_whitespace, $name_without_whitespace;
+  if ($generate_man) {
+    open(FIND, "find man -type f -print |") or die "Can't run find\n";
+    while (<FIND>) {
+      chomp;
+      my $name_with_whitespace = $_;
+      next unless ($name_with_whitespace =~ /\s/);
+      my $name_without_whitespace = $name_with_whitespace;
+      $name_without_whitespace =~ s/\s+//g;
+      rename $name_with_whitespace, $name_without_whitespace;
+    }
+    close FIND;
   }
-  close FIND;
 }
 
 sub run_doxy {
