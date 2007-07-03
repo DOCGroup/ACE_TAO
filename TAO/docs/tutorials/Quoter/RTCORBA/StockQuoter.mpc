@@ -6,11 +6,11 @@
 // Contains project definitions for the Publish/Subscribe Real-time CORBA
 // Stock Quoter Service.
 
-project(RTCORBA_Quoter_Common): rt_server, taolib, valuetype {
+project(RTCORBA_Quoter_Common): negotiate_codesets, rtportableserver, rtcorba, taolib, valuetype {
    sharedname = RTCORBA_Quoter_Common
    idlflags += -Wb,stub_export_macro=RTCORBA_Quoter_Common_Export \
                -Wb,stub_export_include=Common_Export.h \
-   
+
    dynamicflags = RTCORBA_QUOTER_COMMON_BUILD_DLL
 
    IDL_Files {
@@ -38,7 +38,8 @@ project(RTCORBA_Quoter_Common): rt_server, taolib, valuetype {
 project(RTCORBA_Quoter_Admin): valuetype, rt_client, naming, stl {
   after = RTCORBA_Quoter_Common
   libs += RTCORBA_Quoter_Common
-  
+  exename = admin
+
   Idl_Files {
   }
 
@@ -53,6 +54,7 @@ project(RTCORBA_Quoter_Admin): valuetype, rt_client, naming, stl {
 project(RTCORBA_Quoter_Distributor): valuetype, rt_server, naming, utils, stl {
   libs +=  RTCORBA_Quoter_Common
   after += RTCORBA_Quoter_Common
+  exename = distributor
 
   IDL_Files {
   }
@@ -60,7 +62,7 @@ project(RTCORBA_Quoter_Distributor): valuetype, rt_server, naming, utils, stl {
   Source_Files {
       DistributorS.cpp
       Distributor.cpp
-      Distributor_i.cpp               
+      Distributor_i.cpp
       CommonS.cpp
   }
 
@@ -74,6 +76,7 @@ project(RTCORBA_Quoter_Distributor): valuetype, rt_server, naming, utils, stl {
 project(RTCORBA_Quoter_Broker): valuetype, rt_server, naming, utils, stl {
   libs +=  RTCORBA_Quoter_Common
   after += RTCORBA_Quoter_Common
+  exename = broker
 
   IDL_Files {
   }
