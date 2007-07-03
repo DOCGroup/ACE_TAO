@@ -89,12 +89,22 @@ be_structure::gen_ostream_operator (TAO_OutStream *os)
   *os << be_nl
       << "std::ostream& operator<< (" << be_idt << be_idt_nl
       << "std::ostream &strm," << be_nl
-      << "const " << this->name () << " &_tao_aggregate" << be_uidt_nl
+      << "const " << this->name () << " &";
+  
+  long n = this->pd_decls_used;
+      
+  // be_exception is a subclass and could be empty.    
+  if (n > 0)
+    {    
+      *os <<  "_tao_aggregate";
+    }
+    
+  *os << be_uidt_nl
       << ")" << be_uidt_nl
       << "{" << be_idt_nl
       << "strm << \"" << this->name () << "(\"";
   
-  for (long i = 0; i < this->pd_decls_used; ++i)
+  for (long i = 0; i < n; ++i)
     {
       be_field *f = be_field::narrow_from_decl (this->pd_decls[i]);
       
