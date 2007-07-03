@@ -1,15 +1,20 @@
+Tue Jul  3 12:25:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Makefile.am:
+          Regenerated
+
 Tue Jul  3 09:34:10 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_union.cpp:
-        
+
           Fixed a bug in code generation of ostream operators, some
           compilers require a default switch case, but only if not
-          all possible values appear as case statements.          
+          all possible values appear as case statements.
 
 Tue Jul  3 08:36:18 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_structure.cpp:
-        
+
           Fixed a bug in code generation of ostream operators, an unused
           parameter warning in the operator for empty IDL exceptions.
 
