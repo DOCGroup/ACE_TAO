@@ -9,6 +9,7 @@ project(*imore) : aceexe {
   }
 }
 project(*process) : aceexe {
+  avoids += wince
   exename = process
   Source_Files {
     process.cpp
