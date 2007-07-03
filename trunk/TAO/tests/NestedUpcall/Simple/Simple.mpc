@@ -8,7 +8,7 @@ project(*Nested_Upcall_Idl): taoidldefaults {
   custom_only = 1
 }
 
-project(*Nested_Upcall_Server): taoexe, portableserver {
+project(*Nested_Upcall_Server): taoserver {
   after += *Nested_Upcall_Idl
   Source_Files {
     testC.cpp
@@ -20,9 +20,9 @@ project(*Nested_Upcall_Server): taoexe, portableserver {
   }
 }
 
-project(*Nested_Upcall_Client): taoexe, portableserver {
+project(*Nested_Upcall_Client): taoserver {
+  exename = client
   after += *Nested_Upcall_Idl
-  after += *Nested_Upcall_Server
   Source_Files {
     testC.cpp
     testS.cpp

@@ -8,7 +8,8 @@ project(*idl): taoidldefaults {
   custom_only = 1
 }
 
-project(*client) : taoexe, portableserver, rtcorba, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
+project(*client) : taoserver, rtcorba, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
+  exename = client
   after += *idl
   source_files {
     client.cpp
@@ -21,7 +22,7 @@ project(*client) : taoexe, portableserver, rtcorba, avoids_minimum_corba, avoids
   }
 }
 
-project(*server) : taoexe, rtportableserver, rtcorba, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
+project(*server) : taoserver, rtcorba, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
   after += *idl
   source_files {
     server.cpp

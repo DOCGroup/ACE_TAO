@@ -38,7 +38,8 @@ project(*Nested_Upcall_Server_B): taoserver, utils, avoids_corba_e_micro {
   }
 }
 
-project(*Nested_Upcall_Initiator): taoexe, utils, portableserver, avoids_corba_e_micro {
+project(*Nested_Upcall_Initiator): taoserver, utils, avoids_corba_e_micro {
+  exename = initiator
   after += *Nested_Upcall_Server_Idl
   Source_Files {
     Initiator_i.cpp

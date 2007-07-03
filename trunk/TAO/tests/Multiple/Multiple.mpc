@@ -25,7 +25,8 @@ project(*Server): taoserver {
   }
 }
 
-project(*Client): taoexe, portableserver {
+project(*Client): taoserver {
+  exename = client
   after += *idl
 
   Source_Files {

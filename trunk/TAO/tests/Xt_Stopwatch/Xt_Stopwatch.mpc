@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(*Server): taoexe, portableserver, tao_xtresource, ace_motif {
+project(*Server): taoserver, tao_xtresource, ace_motif {
   Source_Files {
     test_i.cpp
     Stopwatch_display.cpp
@@ -10,7 +10,7 @@ project(*Server): taoexe, portableserver, tao_xtresource, ace_motif {
   }
 }
 
-project(*Client): taoexe, tao_xtresource, ace_motif {
+project(*Client): taoclient, tao_xtresource, ace_motif {
   after += *Server
   Source_Files {
     testC.cpp

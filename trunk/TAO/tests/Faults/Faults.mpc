@@ -56,7 +56,8 @@ project(*Client): taoserver, avoids_minimum_corba, avoids_corba_e_compact, avoid
   }
 }
 
-project(*Ping): taoexe, portableserver, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
+project(*Ping): taoserver, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
+  exename = ping
   after += *idl
 
   Source_Files {
@@ -71,7 +72,8 @@ project(*Ping): taoexe, portableserver, avoids_minimum_corba, avoids_corba_e_com
   }
 }
 
-project(*Pong): taoexe, portableserver, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
+project(*Pong): taoserver, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
+  exename = pong
   after += *idl
 
   Source_Files {

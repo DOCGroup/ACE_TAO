@@ -35,7 +35,8 @@ project(*Client): taoclient, messaging {
   }
 }
 
-project(*Shutdown): taoexe, messaging {
+project(*Shutdown): taoclient, messaging {
+  exename = shutdown
   after += *idl
   Source_Files {
     TestC.cpp

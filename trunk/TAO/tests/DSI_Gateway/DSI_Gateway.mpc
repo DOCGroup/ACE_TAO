@@ -34,7 +34,8 @@ project(*Client): taoclient, messaging, avoids_minimum_corba, avoids_corba_e_com
   }
 }
 
-project(*Gateway): taoexe, portableserver, messaging, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro, dynamicinterface {
+project(*Gateway): taoserver, messaging, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro, dynamicinterface {
+  exename = gateway
   after += *idl
   Source_Files {
     test_dsi.cpp
