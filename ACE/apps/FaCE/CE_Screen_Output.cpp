@@ -3,6 +3,8 @@
 #include "CE_Screen_Output.h"
 #include <string.h>
 
+// This utility does not use ACE, and shouldn't.
+//FUZZ: disable check_for_lack_ACE_OS
 
 HWND CE_Screen_Output::handler_ = 0;
 
@@ -16,7 +18,7 @@ CE_Screen_Output::CE_Screen_Output()
 CE_Screen_Output::~CE_Screen_Output()
 {
     if (pFile_ != 0) {
-      ACE_OS::fclose(pFile_);
+        fclose(pFile_);
     }
 }
 
@@ -160,3 +162,5 @@ CE_Screen_Output& CE_Screen_Output::operator << (FILE* pFile)
     pFile_ = pFile;
     return *this;
 }
+
+//FUZZ: enable check_for_lack_ACE_OS

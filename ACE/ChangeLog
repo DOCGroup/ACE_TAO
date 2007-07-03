@@ -1,3 +1,46 @@
+Tue Jul  3 21:04:59 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * ace/config-win32-common.h: Remove the include <wce.h> for CE.
+          It's not there for building CE using VS .NET 2005.
+
+        * examples/Reactor/Multicast/Log_Wrapper.cpp:
+        * protocols/ace/RMCast/Link.cpp:
+        * protocols/ace/RMCast/Simulator.cpp: Use ACE_OS::time() rather than
+          naked time(); fixes build error on WinCE.
+
+        * examples/APG/Sockets/Basic.cpp:
+        * examples/APG/Sockets/Iovec.cpp:
+        * examples/Connection/misc/test_upipe.h: Use ACE_OS::write() rather
+          than naked write() and use ACE_STDOUT rather than fd 1. Fixes
+          WinCE build errors.
+
+        * examples/Reactor/Misc/notification.cpp:
+        * examples/Reactor/Misc/test_demuxing.cpp: Avoid compile errors where
+          both SIGINT and SIGQUIT are stubbed to 0 (such as WinCE).
+
+        * examples/OS/Process/OS_Process.mpc: Avoid this for WinCE. The code
+          uses plenty of naked Windows system calls that make no sense for CE.
+
+        * examples/Log_Msg/Log_Msg_MFC/Log_Msg_MFC.mpc: Avoid this for WinCE.
+          The code sends ACE logging output to the Visual Studio debug
+          window, something not really possible using this code on CE.
+
+        * examples/IPC_SAP/SOCK_SAP/sock_sap.mpc: Avoid wince for C-inserver.
+          It uses too much low-level system calls for CE to hack it.
+
+        * tests/Malloc_Test.cpp: Cast the initializer for CHILD_BASE_ADDR
+          so the VC8 WinCE compiler can hack it.
+
+        * apps/FaCE/CE_Screen_Output.cpp:
+        * apps/FaCE/FaCE.cpp: Reverted addition of ACE_OS from
+          Sat Jun 30 05:11:43 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+          This utility doesn't make use of ACE except in very limited
+          situations. I disabled FUZZ checks for ACE_OS instead.
+
+        * apps/FaCE.cpp: Use ACE_ARGV instead of ACE_CE_ARGV. The latter was
+          removed long ago when ACE_ARGV was improved to obviate it. See
+          Fri Mar 28 16:04:28 2003  Steve Huston  <shuston@riverace.com>
+
 Tue Jul  3 14:29:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-vxworks6.5.h:

@@ -278,7 +278,11 @@ Thread_Handler::handle_signal (int signum, siginfo_t *, ucontext_t *)
   switch (signum)
     {
     case SIGINT:
+      // This is coded thusly to avoid problems if SIGQUIT is a legit
+      // value but is not a preprocessor macro.
+#if !defined (SIGQUIT) || (SIGQUIT != 0)
     case SIGQUIT:
+#endif
       ACE_ERROR ((LM_ERROR,
 		  "(%t) ******************** shutting down %n on signal %S\n",
 		  signum));

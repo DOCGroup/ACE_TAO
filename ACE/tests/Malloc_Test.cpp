@@ -82,7 +82,8 @@ static const void *PARENT_BASE_ADDR = ACE_DEFAULT_BASE_ADDR;
 # define CHILD_ADDR_DELTA 0
 #endif /* CHILD_ADDR_DELTA */
 
-static const void *CHILD_BASE_ADDR = CHILD_ADDR_DELTA + ACE_DEFAULT_BASE_ADDR;
+static const void *CHILD_BASE_ADDR =
+  (const void *)(CHILD_ADDR_DELTA + ACE_DEFAULT_BASE_ADDR);
 
 // Shared memory allocator.  Hide the allocator inside this function
 // so that it doesn't get constructed until after the

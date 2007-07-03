@@ -410,9 +410,6 @@
 #  include /**/ <afxwin.h>   /* He is doing MFC */
 // Windows.h will be included via afxwin.h->afx.h->afx_ver_.h->afxv_w32.h
 // #define      _INC_WINDOWS  // Prevent winsock.h from including windows.h
-#  if defined (ACE_HAS_WINCE)
-#    include /**/ <wce.h>
-#  endif /* ACE_HAS_WINCE */
 #elif defined (ACE_HAS_WINCE)
 #  include /**/ <windows.h>
 #endif

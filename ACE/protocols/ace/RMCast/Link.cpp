@@ -6,6 +6,7 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_stdlib.h"
 #include "ace/OS_NS_sys_socket.h"
+#include "ace/OS_NS_time.h"
 
 #include "Link.h"
 
@@ -30,7 +31,7 @@ namespace ACE_RMCast
         stop_ (false)
 
   {
-    srand ((unsigned int) time (0));
+    srand ((unsigned int) ACE_OS::time (0));
 
 
     rsock_.set_option (IP_MULTICAST_LOOP, 0);

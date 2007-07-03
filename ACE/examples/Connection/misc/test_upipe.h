@@ -34,7 +34,7 @@ public:
       ssize_t n;
 
       while ((n = this->peer ().recv (buf, sizeof buf)) > 0)
-        ::write (1, buf, n);
+        ACE_OS::write (ACE_STDOUT, buf, n);
 
       return 0;
     }
