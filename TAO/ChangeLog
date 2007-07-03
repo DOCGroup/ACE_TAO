@@ -1,3 +1,10 @@
+Tue Jul  3 06:50:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * MPC/config/rt_client.mpb:
+        * MPC/config/rt_server.mpb:
+          Set exename, most of the RTCorba tests do derive from these base
+          projects
+
 Tue Jul  3 06:46:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/AMH_Exceptions/AMH_Exceptions.mpc
