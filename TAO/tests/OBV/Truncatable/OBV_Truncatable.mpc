@@ -9,7 +9,7 @@ project(*idl): taoidldefaults, valuetype {
   custom_only = 1
 }
 
-project(*Server): taoexe, portableserver, valuetype {
+project(*Server): taoserver, valuetype {
   after += *idl
   Source_Files {
     TruncatableS_impl.cpp
@@ -25,7 +25,7 @@ project(*Server): taoexe, portableserver, valuetype {
   }
 }
 
-project(*Client): taoexe, valuetype {
+project(*Client): taoclient, valuetype {
   after += *idl
   Source_Files {
     client.cpp

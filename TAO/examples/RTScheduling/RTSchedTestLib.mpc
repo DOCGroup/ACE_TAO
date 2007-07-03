@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(RTSchedTestLib): naming, rtscheduling_server {
+project(RTSchedTestLib): naming, rtscheduling, negotiate_codesets, rtportableserver, rtcorba {
   after += Job
   libs += Job RTSchedSynch
   dynamicflags += RTSCHEDTESTLIB_BUILD_DLL

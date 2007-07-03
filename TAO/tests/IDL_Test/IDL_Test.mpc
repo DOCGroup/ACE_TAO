@@ -30,7 +30,7 @@ project(*Main): taoserver, messaging, gen_ostream {
     reopen_include2.idl
     typeprefix.idl
   }
-  
+
   // We leave the hard-coded -Gos (hard-coded for
   // the other IDL files) off the command line for
   // this file, since it references a basic type IDL

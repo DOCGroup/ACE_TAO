@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project: taoexe, portableserver {
+project: taoserver {
   exename = ORB_destroy
 }
 

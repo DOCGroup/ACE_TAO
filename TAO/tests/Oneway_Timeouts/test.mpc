@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project (*client) : taoexe, messaging, portableserver, strategies {
+project (*client) : taoserver, messaging, strategies {
   exename = client
   after = *server
   source_files {

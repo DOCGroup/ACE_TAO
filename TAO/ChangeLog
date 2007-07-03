@@ -1,3 +1,37 @@
+Tue Jul  3 18:25:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/RTScheduling/RTSchedTestLib.mpc
+        * tests/Bug_1270_Regression/Bug_1270_Regression.mpc
+        * tests/Bug_1361_Regression/Bug_1361_Regression.mpc
+        * tests/Bug_2702_Regression/CloseConnection.mpc
+        * tests/Bug_2791_Regression/Bug_2791_Regression.mpc
+        * tests/DSI_Gateway/DSI_Gateway.mpc
+        * tests/Faults/Faults.mpc
+        * tests/IDL_Test/IDL_Test.mpc
+        * tests/IORManipulation/filter/IORManip_Filter_Test.mpc
+        * tests/LongDouble/LongDoubleTest.mpc
+        * tests/MT_BiDir/MT_BiDir.mpc
+        * tests/Multiple/Multiple.mpc
+        * tests/NestedUpcall/Simple/Simple.mpc
+        * tests/NestedUpcall/Triangle_Test/TT.mpc
+        * tests/Object_Loader/Object_Loader.mpc
+        * tests/OBV/Any/OBV_Any.mpc
+        * tests/OBV/Truncatable/OBV_Truncatable.mpc
+        * tests/Oneway_Timeouts/test.mpc
+        * tests/ORB_destroy/ORB_destroy.mpc
+        * tests/ORB_init/Portspan/ORB_Init_Portspan.mpc
+        * tests/POA/Nested_Non_Servant_Upcalls/Nested_Non_Servant_Upcalls.mpc
+        * tests/POA/Non_Servant_Upcalls/Non_Servant_Upcalls.mpc
+        * tests/POA/Object_Reactivation/Object_Reactivation.mpc
+        * tests/POA/POA_Destruction/POA_Destruction.mpc
+        * tests/POA/POAManagerFactory/POAManagerFactory.mpc
+        * tests/POA/Single_Threaded_POA/Single_Threaded_POA.mpc
+        * tests/RTCORBA/Activate_Object_Multiple_ORBs/AO_Multiple_ORBs.mpc
+        * tests/RTCORBA/Diffserv/RTCORBA_Diffserv.mpc
+        * tests/Strategies/Strategies.mpc
+        * tests/Xt_Stopwatch/Xt_Stopwatch.mpc
+          Make sure we have an explicit exename
+
 Tue Jul  3 12:25:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Makefile.am:

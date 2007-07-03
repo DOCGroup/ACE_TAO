@@ -1,8 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(*Client): taoexe {
-  exename = client
+project(*Client): taoclient {
   idlflags += -GA
 
   Source_Files {

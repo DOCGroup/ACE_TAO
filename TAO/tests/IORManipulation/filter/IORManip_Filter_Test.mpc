@@ -1,6 +1,5 @@
 // -*- MPC -*-
 // $Id$
 
-project(*Server): taoexe, portableserver, iormanip {
-  exename = server
+project(*Server): taoserver, iormanip {
 }
