@@ -25,7 +25,7 @@ project(NoOp_Configurator): ciao_nodeapp_configurator {
   }
 }
 
-project(RTNA_Configurator): rt_server, ciao_nodeapp_configurator {
+project(RTNA_Configurator): negotiate_codesets, rtportableserver, rtcorba, ciao_nodeapp_configurator {
   sharedname   = CIAO_RTNA_Configurator
   dynamicflags = CIAO_RTNA_CONFIGURATOR_BUILD_DLL
   Source_Files {
