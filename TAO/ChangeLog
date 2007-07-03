@@ -1,3 +1,11 @@
+Tue Jul  3 09:34:10 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_union.cpp:
+        
+          Fixed a bug in code generation of ostream operators, some
+          compilers require a default switch case, but only if not
+          all possible values appear as case statements.          
+
 Tue Jul  3 08:36:18 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_structure.cpp:

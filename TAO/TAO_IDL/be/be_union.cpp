@@ -184,6 +184,15 @@ be_union::gen_ostream_operator (TAO_OutStream *os)
       *os << ";" << be_nl
           << "break;" << be_uidt;
     }
+  
+  // Some compilers complain unless this is present, but only
+  // if not all values are covered in case statements.  
+  if (this->gen_empty_default_label ())
+    {
+      *os << be_nl
+          << "default:" << be_idt_nl
+          << "break;" << be_uidt;
+    }
     
   *os << be_uidt_nl
       << "}" << be_nl << be_nl
