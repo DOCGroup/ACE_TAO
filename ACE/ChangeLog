@@ -1,7 +1,13 @@
+Tue Jul  3 14:29:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-vxworks6.5.h:
+        * ace/Sock_Connect.cpp:
+          VxWorks 6.5 rtp doesn't have getifaddrs
+
 Tue Jul  3 13:08:42 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * ace/CDR_Stream.h:
-        
+
           Moved ostream operator declarations out of the #else branch
           of #if defined (__ACE_INLINE__), where they were mistakenly
           put originally.

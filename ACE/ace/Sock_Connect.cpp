@@ -36,7 +36,7 @@
 #   endif /*ACE_VXWORKS */
 # endif /* ACE_HAS_GETIFADDRS */
 
-#if defined (ACE_VXWORKS) && (ACE_VXWORKS < 0x600)
+#if defined (ACE_VXWORKS) && !defined (ACE_HAS_GETIFADDRS)
 #include /**/ <inetLib.h>
 #include /**/ <netinet/in_var.h>
 #if defined (ACE_HAS_IPV6)
@@ -1235,7 +1235,7 @@ ACE::get_ip_interfaces (size_t &count,
   return get_ip_interfaces_aix (count, addrs);
 #elif defined (ACE_VXWORKS) && (ACE_VXWORKS < 0x600)
   return get_ip_interfaces_vxworks_lt600 (count, addrs);
-#elif (defined (__unix) || defined (__unix__) || defined (__Lynx__) || defined (ACE_OPENVMS) || defined (ACE_HAS_RTEMS)) && !defined (ACE_LACKS_NETWORKING)
+#elif (defined (__unix) || defined (__unix__) || defined (__Lynx__) || defined (ACE_OPENVMS) || (defined (ACE_VXWORKS) && (ACE_VXWORKS == 0x650)) || defined (ACE_HAS_RTEMS)) && !defined (ACE_LACKS_NETWORKING)
   // COMMON (SVR4 and BSD) UNIX CODE
 
   // Call specific routine as necessary.

@@ -16,6 +16,10 @@
 
 #include "ace/config-vxworks6.4.h"
 
+#if defined (__RTP__)
+# undef ACE_HAS_GETIFADDRS
+#endif
+
 #include /**/ "ace/post.h"
 #endif /* ACE_CONFIG_VXWORKS_6_5_H */
 
