@@ -534,6 +534,8 @@ JAWS_Synch_IO_No_Cache::transmit_file (const char *filename,
     result = -1;
     this->handler_->transmit_file_error (result);
   }
+
+  ACE_OS::close (handle);
 }
 
 void
