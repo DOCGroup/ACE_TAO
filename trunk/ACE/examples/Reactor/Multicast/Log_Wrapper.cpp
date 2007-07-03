@@ -8,6 +8,7 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_netdb.h"
 #include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_time.h"
 
 ACE_RCSID(Multicast, Log_Wrapper, "$Id$")
 
@@ -66,7 +67,7 @@ Log_Wrapper::log_message (Log_Priority type, char *message)
   this->log_msg_.type = type;
   // Casting time() to long will start causing bad results sometime in 2038
   // but the receiver isn't looking at the time, so who cares?
-  this->log_msg_.time = (long) time (0);
+  this->log_msg_.time = (long) ACE_OS::time (0);
   this->log_msg_.msg_length = ACE_OS::strlen(message)+1;
   this->log_msg_.sequence_number = ACE_HTONL(sequence_number_);
 

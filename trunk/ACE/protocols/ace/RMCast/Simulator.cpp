@@ -2,6 +2,7 @@
 // author    : Boris Kolpackov <boris@kolpackov.net>
 // cvs-id    : $Id$
 
+#include "ace/OS_NS_time.h"
 #include "Simulator.h"
 
 namespace ACE_RMCast
@@ -9,7 +10,7 @@ namespace ACE_RMCast
   Simulator::
   Simulator ()
   {
-    srand ((unsigned int)time (0));
+    srand ((unsigned int) ACE_OS::time (0));
   }
 
   void Simulator::
