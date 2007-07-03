@@ -193,7 +193,7 @@ HTTP_Response::normal_response (void)
       else if (ACE_OS::strncmp (hv, "Basic ", 6) != 0)
         // ``6'' is the length of the string "Basic "
         this->error_response (HTTP_Status_Code::STATUS_UNAUTHORIZED,
-                              "Unknown authroization method");
+                              "Unknown authorization method");
       else
         {
           ACE_Mem_Map mmapfile;
