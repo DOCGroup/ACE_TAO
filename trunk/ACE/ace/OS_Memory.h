@@ -116,9 +116,9 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #    if (HPUX_VERS >= 1100)
 #      if ((__HP_aCC < 32500 && !defined (RWSTD_NO_NAMESPACE)) || \
            defined (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB))
-#        define ACE_bad_alloc std::bad_alloc
-#        define ACE_nothrow   std::nothrow
-#        define ACE_nothrow_t std::nothrow_t
+#        define ACE_bad_alloc ::std::bad_alloc
+#        define ACE_nothrow   ::std::nothrow
+#        define ACE_nothrow_t ::std::nothrow_t
 #      else
 #        define ACE_bad_alloc bad_alloc
 #        define ACE_nothrow   nothrow
@@ -126,9 +126,9 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #      endif /* __HP_aCC */
 #    elif ((__HP_aCC <  12500 && !defined (RWSTD_NO_NAMESPACE)) || \
            defined (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB))
-#      define ACE_bad_alloc std::bad_alloc
-#      define ACE_nothrow   std::nothrow
-#      define ACE_nothrow_t std::nothrow_t
+#      define ACE_bad_alloc ::std::bad_alloc
+#      define ACE_nothrow   ::std::nothrow
+#      define ACE_nothrow_t ::std::nothrow_t
 #    else
 #      define ACE_bad_alloc bad_alloc
 #      define ACE_nothrow   nothrow
@@ -144,11 +144,11 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #        define ACE_throw_bad_alloc throw ACE_bad_alloc ("no more memory")
 #      else
 #        include /**/ <new>
-#        define ACE_bad_alloc std::bad_alloc
+#        define ACE_bad_alloc ::std::bad_alloc
 #        if defined (ACE_HAS_NEW_NOTHROW)
 #          if defined (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB)
-#            define ACE_nothrow   std::nothrow
-#            define ACE_nothrow_t std::nothrow_t
+#            define ACE_nothrow   ::std::nothrow
+#            define ACE_nothrow_t ::std::nothrow_t
 #          else
 #            define ACE_nothrow   nothrow
 #            define ACE_nothrow_t nothrow_t
@@ -159,10 +159,10 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #  elif defined (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB)
 #    include /**/ <new>
 #    if !defined (ACE_bad_alloc)
-#      define ACE_bad_alloc std::bad_alloc
+#      define ACE_bad_alloc ::std::bad_alloc
 #    endif
-#    define ACE_nothrow   std::nothrow
-#    define ACE_nothrow_t std::nothrow_t
+#    define ACE_nothrow   ::std::nothrow
+#    define ACE_nothrow_t ::std::nothrow_t
      // MFC changes the behavior of operator new at all MSVC versions from 6 up.
 #    if defined (ACE_HAS_MFC) && (ACE_HAS_MFC == 1)
 #      define ACE_throw_bad_alloc AfxThrowMemoryException ()

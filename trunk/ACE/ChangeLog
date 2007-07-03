@@ -1,3 +1,11 @@
+Tue Jul  3 11:41:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_Memory.h:
+          Use ::std instead of std to prevent problems when users
+          have XXX::YYY::std as namespace in their own code. This fixes
+          bugzilla 2976. Thanks to Pavel Zaichenko <zpf at ivl dot ua>
+          for reporting this
+
 Mon Jul  2 15:59:28 UTC 2007  Adam Mitz  <mitza@ociweb.com>
 
         * ace/Vector_T.h:
