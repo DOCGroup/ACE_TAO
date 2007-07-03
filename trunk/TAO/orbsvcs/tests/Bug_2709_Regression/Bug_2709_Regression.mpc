@@ -25,7 +25,6 @@ project(*Client): taoserver, iortable, ftclientorb, fault_tolerance {
 
 project(*Server): taoserver, iortable, fault_tolerance {
   after += *idl
-  exename = server
   Source_Files {
     TestC.cpp
     TestS.cpp
