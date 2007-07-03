@@ -1,3 +1,11 @@
+Tue Jul  3 13:08:42 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * ace/CDR_Stream.h:
+        
+          Moved ostream operator declarations out of the #else branch
+          of #if defined (__ACE_INLINE__), where they were mistakenly
+          put originally.
+
 Tue Jul  3 11:41:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_Memory.h:
