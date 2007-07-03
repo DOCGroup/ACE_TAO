@@ -13,7 +13,7 @@ project (bug2936-lib): taolib, portableserver, threads, avoids_corba_e_micro {
   dynamicflags += BUG2936_BUILD_DLL
 
   Source_Files {
-    DllORB.cpp,
+    DllORB.cpp
     PersistentPOA.cpp
   }
 }
