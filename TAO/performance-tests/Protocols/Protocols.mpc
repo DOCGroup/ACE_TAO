@@ -35,6 +35,7 @@ project(*Distributor): rt_server {
 
 project(*Sender): rt_client {
   avoids += ace_for_tao
+  exename = sender
   after += *IDL
 
   specific (automake ) {
