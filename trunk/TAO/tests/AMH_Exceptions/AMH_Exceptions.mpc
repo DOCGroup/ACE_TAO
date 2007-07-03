@@ -19,7 +19,8 @@ project(*Server): taoserver, amh, strategies {
   }
 }
 
-project(*Client): taoexe, amh, portableserver, strategies {
+project(*Client): taoserver, amh, strategies {
+  exename = client
   after += *idl
   Source_Files {
     client.cpp

@@ -23,7 +23,8 @@ project(*Server): taoserver, messaging, ami {
   }
 }
 
-project(*Client): messaging, taoexe, portableserver, ami {
+project(*Client): messaging, taoserver, ami {
+  exename = blocking_client
   after += *idl
   Source_Files {
     Controller.cpp
@@ -52,7 +53,8 @@ project(*AMI_Server): taoserver, messaging, ami {
   }
 }
 
-project(*AMI_Client): messaging, taoexe, portableserver, ami {
+project(*AMI_Client): messaging, taoserver, ami {
+  exename = ami_client
   after += *idl
   Source_Files {
     Controller.cpp
