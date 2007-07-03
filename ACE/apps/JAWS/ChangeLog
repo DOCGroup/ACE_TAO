@@ -1,3 +1,15 @@
+Tue Jul  3 10:56:28 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * clients/Blobby/Blob_Handler.cpp (ACE_Blob_Writer::receive_reply):
+          Don't use the return value of recv_n to set the last byte to zero, but
+          use the optional argument num_recvd
+
+        * server/HTTP_Response.cpp:
+          Fixed typo in error message
+
+        * server/IO.cpp (ACE_Blob_Writer::receive_reply):
+          Close the file handle after we have send the file
+
 Mon Jul  2 12:24:28 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * server/HTTP_Handler.cpp:

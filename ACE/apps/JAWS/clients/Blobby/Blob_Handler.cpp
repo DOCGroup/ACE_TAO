@@ -311,14 +311,15 @@ ACE_Blob_Writer::receive_reply (void)
   char buf[MAX_HEADER_SIZE];
 
   // Receive the reply from the server
-  ssize_t len = peer ().recv_n (buf, sizeof buf - 1); // reserve one byte to store the \0
+  size_t num_recvd = 0;
+  ssize_t len = peer ().recv_n (buf, sizeof buf - 1, 0, &num_recvd); // reserve one byte to store the \0
   if (len ==-1)
     ACE_ERROR_RETURN((LM_ERROR, "%p\n", "Error reading header"), -1);
 
-  buf [len] = 0;
+  buf [num_recvd] = 0;
 
   // Parse the header
-  char *lasts;
+  char *lasts = 0;
 
   // First check if this was a valid header -- HTTP/1.0
   char *token = ACE_OS::strtok_r (buf, " \t", &lasts);
