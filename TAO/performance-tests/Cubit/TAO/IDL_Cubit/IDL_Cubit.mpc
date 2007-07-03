@@ -10,7 +10,7 @@ project(*IDL): taoidldefaults, strategies {
   custom_only = 1
 }
 
-project(*Server): taoexe, utils, portableserver, strategies, avoids_corba_e_micro, avoids_ace_for_tao {
+project(*Server): taoserver, utils, strategies, avoids_corba_e_micro, avoids_ace_for_tao {
   after += *IDL
   Source_Files {
     cubitC.cpp
@@ -26,7 +26,8 @@ project(*Server): taoexe, utils, portableserver, strategies, avoids_corba_e_micr
   }
 }
 
-project(*client): taoexe, portableserver, strategies {
+project(*client): taoclient, strategies {
+  exename = client
   after += *IDL
   avoids += ace_for_tao
   Source_Files {
