@@ -1,3 +1,42 @@
+Tue Jul  3 06:46:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/AMH_Exceptions/AMH_Exceptions.mpc
+        * tests/AMH_Oneway/AMH_Oneway.mpc
+        * tests/AMI/AMI.mpc
+        * tests/BiDirectional_DelayedUpcall/BiDir_DelayedUpcall.mpc
+        * tests/BiDirectional_NestedUpcall/BiDir_NestedUpcall.mpc
+        * tests/Big_Oneways/Big_Oneways.mpc
+        * tests/Big_Twoways/Big_Twoways.mpc
+        * tests/Bug_2503_Regression/Bug_2503_Regression.mpc
+        * tests/Bug_2805_Regression/Bug_2805_Regression.mpc
+        * tests/Bug_2909_Regression/Bug_2909_Regression.mpc
+        * tests/DiffServ/diffserv.mpc
+        * tests/DSI_AMI_Gateway/DSI_AMI_Gateway.mpc
+        * tests/Faults/Faults.mpc
+        * tests/LongUpcalls/LongUpcalls.mpc
+        * tests/MT_Timeout/MT_Timeout.mpc
+        * tests/Nested_Event_Loop/Nested_Event_Loop.mpc
+        * tests/NestedUpcall/MT_Client_Test/MT_Client_Test.mpc
+        * tests/NestedUpcall/Triangle_Test/TT.mpc
+        * tests/Oneway_Buffering/Oneway_Buffering.mpc
+        * tests/Oneways_Invoking_Twoways/Oneways_Invoking_Twoways.mpc
+        * tests/POA/Nested_Non_Servant_Upcalls/Nested_Non_Servant_Upcalls.mpc
+        * tests/POA/Non_Servant_Upcalls/Non_Servant_Upcalls.mpc
+        * tests/POA/Object_Reactivation/Object_Reactivation.mpc
+        * tests/POA/POA_Destruction/POA_Destruction.mpc
+        * tests/POA/POAManagerFactory/POAManagerFactory.mpc
+        * tests/POA/Policies/Policies.mpc
+        * tests/POA/Single_Threaded_POA/Single_Threaded_POA.mpc
+        * tests/Portable_Interceptors/Slot/PI_Slot.mpc
+        * tests/Reliable_Oneways/Reliable_Oneways.mpc
+        * tests/RTCORBA/Collocation/RTCORBA_Collocation.mpc
+        * tests/RTCORBA/Destroy_Thread_Pool/RTCORBA_Destroy_Thread_Pool.mpc
+        * tests/RTCORBA/Diffserv/RTCORBA_Diffserv.mpc
+        * tests/RTCORBA/Policies/Policies.mpc
+        * tests/Servant_To_Reference_Test/Servant_to_Reference.mpc
+        * tests/Timed_Buffered_Oneways/Timed_Buffered_Oneways.mpc
+          Set explicit exename
+
 Mon Jul  2 18:35:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/Bug_2926_Regression/DllORB.h:
