@@ -64,7 +64,7 @@ createThreadpool(CORBA::ORB_ptr orb, RTCORBA::RTORB_ptr rtorb, CORBA::ULong nthr
   }
   catch (const CORBA::SystemException &x)
   {
-    ACE_PRINT_EXCEPTION(x, "creating thread pool");
+    x._tao_print_exception ("creating thread pool");
     throw;
   }
   return poolId;
