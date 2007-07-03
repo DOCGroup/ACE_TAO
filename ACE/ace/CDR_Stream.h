@@ -1309,6 +1309,12 @@ extern ACE_Export ACE_CDR::Boolean operator>> (ACE_InputCDR &is,
 extern ACE_Export ACE_CDR::Boolean operator>> (ACE_InputCDR &is,
                                                ACE_CDR::WChar*& x);
                                                
+ACE_END_VERSIONED_NAMESPACE_DECL
+
+#endif /* __ACE_INLINE__ */
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // ostream insertion operators for debugging code generated from IDL. All
 // but these below are either in generated code itself or are unambiguous
 // primitive types.
@@ -1326,8 +1332,6 @@ ACE_Export std::ostream& operator<< (std::ostream &os,
                                      ACE_OutputCDR::from_octet x);
 
 ACE_END_VERSIONED_NAMESPACE_DECL
-
-#endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
 
