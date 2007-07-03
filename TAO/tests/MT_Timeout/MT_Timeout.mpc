@@ -23,7 +23,8 @@ project(*Server): messaging, taoserver {
   }
 }
 
-project(*Client): messaging, taoexe, portableserver {
+project(*Client): messaging, taoclient {
+  exename = client
   after += *idl
   Source_Files {
     Client_Task.cpp

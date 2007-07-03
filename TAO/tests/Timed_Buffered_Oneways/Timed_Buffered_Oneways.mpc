@@ -8,7 +8,7 @@ project(*idl): taoidldefaults {
   custom_only = 1
 }
 
-project(*Server): messaging, taoexe, portableserver {
+project(*Server): messaging, taoserver {
   after += *idl
   Source_Files {
     test_i.cpp
@@ -22,7 +22,8 @@ project(*Server): messaging, taoexe, portableserver {
   }
 }
 
-project(*Client): messaging, taoexe, portableserver {
+project(*Client): messaging, taoserver {
+  exename = client
   after += *idl
   Source_Files {
     client.cpp
