@@ -2114,7 +2114,7 @@ ifr_adding_visitor::visit_typedef (AST_Typedef *node)
 
   try
     {
-      this->element_type (node->base_type ());
+      this->element_type (node->base_type (), node->owns_base_type ());
 
       CORBA::Container_ptr current_scope =
         CORBA::Container::_nil ();
@@ -2441,9 +2441,11 @@ ifr_adding_visitor::load_any (AST_Expression::AST_ExprValue *ev,
 }
 
 void
-ifr_adding_visitor::element_type (AST_Type *base_type)
+ifr_adding_visitor::element_type (AST_Type *base_type, bool owned)
 {
-  if (base_type->anonymous ())
+  // In a typedef of a sequence, the sequence is no longer considered
+  // anonymous, but instead 'owned' by the typedef, so we check both.
+  if (base_type->anonymous () || owned)
     {
       if (base_type->ast_accept (this) == -1)
         {

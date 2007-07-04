@@ -102,8 +102,9 @@ public:
   virtual bool is_local (void);
   // Override the base class method.
 
+  bool owns_base_type (void) const;
   void owns_base_type (bool val);
-  // Sometimes this has to be managed from outside.
+  // Sometimes this has to be accessed or managed from outside.
 
   // Narrowing.
   DEF_NARROW_METHODS1(AST_Typedef, AST_Type);
