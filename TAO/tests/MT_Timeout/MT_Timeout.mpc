@@ -23,7 +23,7 @@ project(*Server): messaging, taoserver {
   }
 }
 
-project(*Client): messaging, taoclient {
+project(*Client): messaging, taoserver {
   exename = client
   after += *idl
   Source_Files {
