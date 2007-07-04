@@ -5,7 +5,7 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # $Id$
 # -*- perl -*-
 
-use lib "../../../../../bin";
+use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::Run_Test;
 
 $status = 0;
@@ -13,11 +13,11 @@ my $exec_extn="";
 if ($^O eq "MSWin32") {
   $exec_extn=".exe";
 }
-$ifr_service= "../../../../../bin/IFR_Service";
+$ifr_service= "$ENV{ACE_ROOT}/bin/IFR_Service";
 if (! -e $ifr_service . $exec_extn ) {
-    $ifr_service= "../../../IFR_Service/IFR_Service";
+    $ifr_service= "$ENV{TAO_ROOT}/orbscvs/IFR_Service/IFR_Service";
     if (! -e $ifr_service . $exec_extn ) {
-      $ifr_service = "../../../IFR_Service/Release/IFR_Service";
+      $ifr_service = "$ENV{TAO_ROOT}/orbscvs/IFR_Service/Release/IFR_Service";
       if (! -e $ifr_service . $exec_extn ) {
             print STDERR "ERROR: IFR_Service not found.\n";
             exit 1;
