@@ -15,7 +15,7 @@
 class Test_i : public virtual POA_Test::Hello
 {
 public:
-  Test_i(CORBA::ORB_ptr orb) : orb_(CORBA::ORB::_duplicate(orb))
+  Test_i(CORBA::ORB_ptr orb, Client_Task* t) : orb_(CORBA::ORB::_duplicate(orb)), task_ (t)
   {
   }
 
@@ -30,11 +30,13 @@ public:
 
   void shutdown()
   {
-    orb_->shutdown(0);
+    task_->terminate_loop ();
+    orb_ = CORBA::ORB::_nil ();
   }
 
 private:
   CORBA::ORB_var orb_;
+  Client_Task* task_;
 };
 
 RTCORBA::ThreadpoolId
@@ -204,8 +206,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     rootPoaA->the_POAManager()->activate();
     rootPoaB->the_POAManager()->activate();
 
-    implA = new Test_i(orbA.in ());
-    implB = new Test_i(orbB.in ());
+    Client_Task client_taskA (orbA.in ());
+    Client_Task client_taskB (orbB.in ());
+
+    implA = new Test_i(orbA.in (), &client_taskA);
+    implB = new Test_i(orbB.in (), &client_taskB);
 
     const char* iorA = addServant(orbA.in (), rtorbA.in (), rootPoaA.in (), implA, tpidA, 3);
     const char* iorB = addServant(orbB.in (), rtorbB.in (), rootPoaB.in (), implB, tpidB, 3);
@@ -218,7 +223,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
     // colocated calls work fine
     CORBA::Object_var objA = orbA->string_to_object(iorA);
-    Test::Hello_var helloA(Test::Hello::_narrow(objA));
+    Test::Hello_var helloA(Test::Hello::_narrow(objA.in ()));
     CORBA::String_var resA = helloA->get_string();
 
     // note: orbA can convert iorB into a legal colocated object,
@@ -229,12 +234,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
     cout << "server got resA: " << resA << " and resB: " << resB << endl;
 
-    Client_Task client_taskA (orbA.in ());
     if (client_taskA.activate (THR_NEW_LWP | THR_JOINABLE, 1) == -1)
       {
         ACE_ERROR ((LM_ERROR, "Error activating client task\n"));
       }
-    Client_Task client_taskB (orbB.in ());
     if (client_taskB.activate (THR_NEW_LWP | THR_JOINABLE, 1) == -1)
       {
         ACE_ERROR ((LM_ERROR, "Error activating client task\n"));
