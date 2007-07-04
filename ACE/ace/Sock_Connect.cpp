@@ -36,7 +36,7 @@
 #   endif /*ACE_VXWORKS */
 # endif /* ACE_HAS_GETIFADDRS */
 
-#if defined (ACE_VXWORKS) && !defined (ACE_HAS_GETIFADDRS)
+#if defined (ACE_VXWORKS) && (ACE_VXWORKS < 0x600)
 #include /**/ <inetLib.h>
 #include /**/ <netinet/in_var.h>
 #if defined (ACE_HAS_IPV6)
