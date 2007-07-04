@@ -10,6 +10,7 @@ project(*idl): taoidldefaults {
 
 project(*server): orbsvcsexe, portablegroup, loadbalancing, naming, svc_utils {
   after += *idl
+  exename = server
   Source_Files {
 	TestC.cpp
 	TestS.cpp
@@ -23,6 +24,7 @@ project(*server): orbsvcsexe, portablegroup, loadbalancing, naming, svc_utils {
   
 project(*client): orbsvcsexe, portablegroup, loadbalancing, naming, svc_utils {
   after += *idl
+  exename = client
   Source_Files {
 	TestC.cpp
 	client.cpp

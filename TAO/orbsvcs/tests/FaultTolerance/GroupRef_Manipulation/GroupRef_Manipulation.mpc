@@ -12,6 +12,7 @@ project(*idl): taoidldefaults {
 
 project(*Server): taoserver, orbsvcsexe, iormanip, pi_server, ftorb, messaging {
   after += *idl
+  exename = server
   Source_Files {
     test_i.cpp
     testC.cpp
@@ -26,6 +27,7 @@ project(*Server): taoserver, orbsvcsexe, iormanip, pi_server, ftorb, messaging {
 
 project(*Client): taoclient, orbsvcsexe, iormanip, pi_server, ftorb {
   after += *idl
+  exename = client
   Source_Files {
     testC.cpp
     client.cpp

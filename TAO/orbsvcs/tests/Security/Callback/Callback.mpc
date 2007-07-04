@@ -11,7 +11,7 @@ project(*idl): taoidldefaults {
 
 project(*security server): taoexe, portableserver, ssl {
   after += *idl
-
+  exename = server
   IDL_Files {
   }
 
@@ -26,7 +26,7 @@ project(*security server): taoexe, portableserver, ssl {
 
 project(*security client): taoexe, portableserver, ssl {
   after += *idl
-
+  exename = client
   IDL_Files {
   }
 
