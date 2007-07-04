@@ -1,3 +1,19 @@
+Wed Jul  4 12:39:39 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/include/ast_typedef.h:
+        * TAO_IDL/ast/ast_typedef.cpp:
+        
+          Added a public accessor for the 'owns_base_type' member. It turns
+          out to be needed by the tao_ifr backend.
+          
+        * orbsvcs/IFR_Service/ifr_adding_visitor.h(element_type):
+        * orbsvcs/IFR_Service/ifr_adding_visitor.cpp(element_type):
+        
+          Added a parameter to the signature, used when called from a
+          typedef, when the 'owns_base_type' member of the typedef
+          must be checked, taking the place of 'anonymous' as used
+          in calls from a sequence, attribute or valuebox.
+
 Wed Jul  4 06:58:31 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * orbsvcs/tests/Bug_1395_Regression/Bug_1395_Regression.mpc:

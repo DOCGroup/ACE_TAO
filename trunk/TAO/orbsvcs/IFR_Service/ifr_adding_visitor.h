@@ -140,7 +140,7 @@ protected:
                  CORBA::Any &any);
   // Determine the primitive type and insert into the Any.
 
-  void element_type (AST_Type *base_type);
+  void element_type (AST_Type *base_type, bool owned = false);
   // Creates or looks up the element type of an array or sequence,
   // and stores the result in ir_current_.
 
