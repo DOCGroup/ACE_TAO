@@ -7,7 +7,7 @@ ACE_RCSID (ImplRepo,
            "$Id$")
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   Airplane_Server_i server;
 

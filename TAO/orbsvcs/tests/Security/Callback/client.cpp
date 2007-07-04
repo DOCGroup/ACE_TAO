@@ -10,7 +10,7 @@ ACE_RCSID (Callback,
 const char *cert_file = "cacert.pem";
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   try
     {

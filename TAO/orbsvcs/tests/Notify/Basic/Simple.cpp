@@ -207,7 +207,7 @@ Simple_Test::check_results (void)
 //***************************************************************************
 
 int
-main (int argc, char* argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   Simple_Test events;
 

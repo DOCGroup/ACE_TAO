@@ -7,7 +7,7 @@ const char *ior_callback = "callback.ior";
 const char *ior_server = "file://server.ior";
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   int result = 0;
   try

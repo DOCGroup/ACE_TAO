@@ -366,9 +366,9 @@ MT_Test::execute (TAO_Naming_Client &root_context)
     {
       PortableServer::ObjectId_var id_act =
         this->poa_->activate_object (test_obj_impl);
-      
+
       CORBA::Object_var object_act = this->poa_->id_to_reference (id_act.in ());
-      
+
       test_ref_ =
         Test_Object::_narrow (object_act.in ());
 
@@ -1157,7 +1157,7 @@ Persistent_Test_End::execute (TAO_Naming_Client &root_context)
 // This function runs the test.
 
 int
-main (int argc, char **argv)
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   CosNaming_Client cosnaming_client;
 

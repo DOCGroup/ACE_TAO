@@ -20,7 +20,7 @@ const char *ior_file_name = "ec.ior";
 static int parse_args (int argc, char *argv[]);
 
 int
-main (int argc, char *argv [])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   TAO_EC_Default_Factory::init_svcs ();
 

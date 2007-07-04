@@ -38,7 +38,7 @@ parse_args (int argc, char *argv[])
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   try
     {
@@ -130,7 +130,7 @@ main (int argc, char *argv[])
 
       // Clear the STDERR flags so that the first expected
       // failed connection attempt by the client doesn't trigger an
-      // error on the scoreboard.  The flag is also set in the 
+      // error on the scoreboard.  The flag is also set in the
       // Foo_i::baz() method since the connection has been successfully
       // made by that time.
       ACE_LOG_MSG->clr_flags (ACE_Log_Msg::STDERR);

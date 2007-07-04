@@ -110,7 +110,7 @@ void
 print_results (int how, ExpectedValues expected, ExpectedValues actuals)
 {
   const char* op =
-    (how == ThreadFlagsTest::INIT) ? "INIT" : 
+    (how == ThreadFlagsTest::INIT) ? "INIT" :
     (how == ThreadFlagsTest::ASSIGN) ? "ASSIGN" :
     (how == ThreadFlagsTest::BOTH) ? "BOTH" :
     "unk?";
@@ -122,11 +122,11 @@ print_results (int how, ExpectedValues expected, ExpectedValues actuals)
 }
 
 int
-main (int argc, char* argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   ThreadFlagsTest static_tests[] = {
     // Test 1
-    ThreadFlagsTest(0, ThreadFlagsTest::BOTH, DEFAULTS, CHECK_ALL), 
+    ThreadFlagsTest(0, ThreadFlagsTest::BOTH, DEFAULTS, CHECK_ALL),
     // Test 2
     ThreadFlagsTest("THR_CANCEL_DISABLE", ThreadFlagsTest::BOTH, ExpectedValues(THR_CANCEL_DISABLE), CHECK_ALL),
     ThreadFlagsTest("THR_CANCEL_ENABLE", ThreadFlagsTest::BOTH, ExpectedValues(THR_CANCEL_ENABLE), CHECK_ALL),
@@ -158,7 +158,7 @@ main (int argc, char* argv[])
                     ExpectedValues(THR_NEW_LWP|THR_SCHED_FIFO|THR_SCOPE_SYSTEM|THR_JOINABLE, THR_SCOPE_SYSTEM, THR_SCHED_FIFO),
                     CHECK_ALL)
   };
-  
+
   int returnval = 0;
   const size_t numtests = sizeof(static_tests)/sizeof(static_tests[0]);
   if (argc > 1)
@@ -179,10 +179,10 @@ main (int argc, char* argv[])
                   ACE_DEBUG ((LM_DEBUG, "FAILED -- details: "));
                   if (r & ThreadFlagsTest::INIT)
                     print_results (ThreadFlagsTest::INIT, t.expected_values_, results);
-              
+
                   if (r & ThreadFlagsTest::ASSIGN)
                     print_results (ThreadFlagsTest::ASSIGN, t.expected_values_, results);
-          
+
                   ACE_DEBUG ((LM_DEBUG, "\n"));
                 }
               else
@@ -211,10 +211,10 @@ main (int argc, char* argv[])
               ACE_DEBUG ((LM_DEBUG, "FAILED -- details: "));
               if (r & ThreadFlagsTest::INIT)
                 print_results (ThreadFlagsTest::INIT, t.expected_values_, results);
-              
+
               if (r & ThreadFlagsTest::ASSIGN)
                 print_results (ThreadFlagsTest::ASSIGN, t.expected_values_, results);
-          
+
               ACE_DEBUG ((LM_DEBUG, "\n"));
             }
           else

@@ -547,7 +547,7 @@ Notify_Throughput::dump_results (void)
 /***************************************************************************/
 
 int
-main (int argc, char* argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   ACE_High_Res_Timer::calibrate ();
 
