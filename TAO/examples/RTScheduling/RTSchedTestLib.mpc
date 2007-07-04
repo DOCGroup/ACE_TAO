@@ -5,6 +5,7 @@ project(RTSchedTestLib): naming, rtscheduling, negotiate_codesets, rtportableser
   after += Job
   libs += Job RTSchedSynch
   dynamicflags += RTSCHEDTESTLIB_BUILD_DLL
+  sharedname   = RTSchedTestLib
 
   IDL_Files {
   }
