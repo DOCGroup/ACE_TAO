@@ -9,7 +9,7 @@ project(*idl): taoidldefaults {
 
 project(*server) : portableserver, orbsvcsexe, avoids_minimum_corba, iortable, imr_client, avoids_corba_e_micro {
   after += *idl
-
+  exename = server
   IDL_Files {
   }
 
@@ -23,7 +23,7 @@ project(*server) : portableserver, orbsvcsexe, avoids_minimum_corba, iortable, i
 
 project(*client) : portableserver, orbsvcsexe, avoids_minimum_corba, iortable {
   after += *idl
-
+  exename = client
   IDL_Files {
   }
 

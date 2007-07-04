@@ -10,6 +10,7 @@ project(*idl): taoidldefaults {
 
 project(*server): taoexe, portableserver, ssliop, pi_server, codecfactory, interceptors {
   after += *idl
+  exename = server
   Source_Files {
     server.cpp
     test_i.cpp
@@ -22,6 +23,7 @@ project(*server): taoexe, portableserver, ssliop, pi_server, codecfactory, inter
 
 project(*client): taoexe, portableserver, ssliop, pi_server, codecfactory, interceptors {
   after += *idl
+  exename = client
   Source_Files {
     client.cpp
     testC.cpp

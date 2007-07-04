@@ -24,6 +24,7 @@ project(*NsMain): namingexe, naming_serv {
 }
 
 project(*Client): namingexe {
+  exename = client
   after += *idl
   Source_Files {
     client.cpp

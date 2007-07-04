@@ -10,6 +10,7 @@ project(*idl): taoidldefaults {
 
 project(*SSL Server): taoexe, portableserver, avoids_minimum_corba, bidir_giop, avoids_corba_e_micro {
   after += *idl
+  exename = server
   Source_Files {
     test_i.cpp
     testS.cpp
@@ -22,6 +23,7 @@ project(*SSL Server): taoexe, portableserver, avoids_minimum_corba, bidir_giop, 
 
 project(*SSL Client): taoexe, portableserver, avoids_minimum_corba, bidir_giop, avoids_corba_e_micro {
   after += *idl
+  exename = client
   Source_Files {
     test_i.cpp
     testS.cpp

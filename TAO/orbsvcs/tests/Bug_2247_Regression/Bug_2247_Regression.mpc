@@ -11,6 +11,9 @@ project(*idl): taoidldefaults {
 
 project(*server): portableserver, orbsvcsexe, iormanip, messaging, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
   after += *idl
+
+  exename = server
+
   Source_Files {
     test_i.cpp
     testS.cpp
@@ -23,6 +26,9 @@ project(*server): portableserver, orbsvcsexe, iormanip, messaging, avoids_minimu
 
 project(*Manager): portableserver, orbsvcsexe, iormanip, ftorb, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
   after += *idl
+
+  exename = Manager
+
   Source_Files {
     testC.cpp
     Manager.cpp

@@ -1,4 +1,5 @@
 // $Id$
 
 project(*Client): loadbalancing {
+  exename = client
 }
