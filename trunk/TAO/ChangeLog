@@ -1,3 +1,44 @@
+Wed Jul  4 05:35:49 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * orbsvcs/tests/BiDir_CORBALOC/BiDirCORBALOC.mpc:
+        * orbsvcs/tests/Bug_1395_Regression/Bug_1395_Regression.mpc:
+        * orbsvcs/tests/Bug_2137_Regression/Bug_2137_Regression.mpc:
+        * orbsvcs/tests/Bug_2247_Regression/Bug_2247_Regression.mpc:
+        * orbsvcs/tests/Bug_2248_Regression/Bug_2248_Regression.mpc:
+        * orbsvcs/tests/Bug_2800_Regression/Bug_2800_Regression.mpc:
+        * orbsvcs/tests/Event/Basic/Event_Basic.mpc:
+        * orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/GroupRef_Manipulation.mpc:
+        * orbsvcs/tests/FaultTolerance/IOGR/FaultTolerance_IOGR.mpc:
+        * orbsvcs/tests/HTIOP/AMI/HTIOP_AMI.mpc:
+        * orbsvcs/tests/HTIOP/BiDirectional/HTIOP_BiDirectional.mpc:
+        * orbsvcs/tests/HTIOP/Hello/HTIOP_Hello.mpc:
+        * orbsvcs/tests/ImplRepo/ImplRepo.mpc:
+        * orbsvcs/tests/ImplRepo/scale/scaletest.mpc:
+        * orbsvcs/tests/InterfaceRepo/Application_Test/IFR_Application_Test.mpc:
+        * orbsvcs/tests/InterfaceRepo/Latency_Test/Latency_Test.mpc:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/Application_Controlled.mpc:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Infrastructure_Controlled/Infrastructure_Controlled.mpc:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Manage_Object_Group/Manage_Object_Group.mpc:
+        * orbsvcs/tests/LoadBalancing/LoadMonitor/CPU/LoadMonitorCPU.mpc:
+        * orbsvcs/tests/Miop/McastHello/McastHello.mpc:
+        * orbsvcs/tests/Notify/Reconnecting/Reconnecting.mpc:
+        * orbsvcs/tests/Property/Property.mpc:
+        * orbsvcs/tests/Sched_Conf/Sched_Conf.mpc:
+        * orbsvcs/tests/Security/BiDirectional/Secure_BiDir.mpc:
+        * orbsvcs/tests/Security/Big_Request/Big_Request.mpc:
+        * orbsvcs/tests/Security/Bug_1107_Regression/Bug_1107_Regression.mpc:
+        * orbsvcs/tests/Security/Bug_2908_Regression/Bug_2908_Regression.mpc:
+        * orbsvcs/tests/Security/Callback/Callback.mpc:
+        * orbsvcs/tests/Security/Crash_Test/Security_Crash_Test.mpc:
+        * orbsvcs/tests/Security/MT_IIOP_SSL/MT_IIOP_SSL.mpc:
+        * orbsvcs/tests/Security/MT_SSLIOP/MT_SSLIOP.mpc:
+        * orbsvcs/tests/Security/Secure_Invocation/Secure_Invocation.mpc:
+        * orbsvcs/tests/Security/ssliop_corbaloc/corbaloc_ssliop.mpc:
+        * orbsvcs/tests/Simple_Naming/Simple_Naming.mpc:
+        * orbsvcs/tests/Trading/Trading.mpc:
+
+          Make sure we have an explicit exename
+
 Wed Jul  4 04:18:48 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * orbsvcs/tests/BiDir_CORBALOC/TimeServer.cpp:
