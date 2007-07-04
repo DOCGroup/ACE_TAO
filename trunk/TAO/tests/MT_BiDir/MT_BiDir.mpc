@@ -25,7 +25,7 @@ project(*Server): taoserver, avoids_minimum_corba, bidir_giop, avoids_corba_e_mi
   }
 }
 
-project(*Client): taoclient, avoids_minimum_corba, bidir_giop, avoids_corba_e_micro {
+project(*Client): taoserver, avoids_minimum_corba, bidir_giop, avoids_corba_e_micro {
   exename = client
   after += *idl
   Source_Files {
