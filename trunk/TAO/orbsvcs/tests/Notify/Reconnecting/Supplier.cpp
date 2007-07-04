@@ -1215,7 +1215,7 @@ int Supplier_Main::run (void)
 
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   int result = -1;
   Supplier_Main app;

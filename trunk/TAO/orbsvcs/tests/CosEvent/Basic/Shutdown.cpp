@@ -13,7 +13,7 @@ static void run_test (PortableServer::POA_ptr poa,
                       int with_callbacks);
 
 int
-main (int argc, char* argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   TAO_CEC_Default_Factory::init_svcs ();
 

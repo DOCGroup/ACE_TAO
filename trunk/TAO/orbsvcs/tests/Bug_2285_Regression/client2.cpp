@@ -92,7 +92,7 @@ make_iogr (const char* domain_id, CORBA::ULongLong group_id, CORBA::ULong group_
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   CORBA::Boolean result = 0;
   try

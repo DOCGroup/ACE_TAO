@@ -600,7 +600,7 @@ int FTClientMain::run (void)
 
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   FTClientMain app;
   int result = app.parse_args(argc, argv);

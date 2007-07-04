@@ -25,7 +25,7 @@ bool valuetype = false;
 int parse_args (int argc, char *argv[]);
 
 int
-main (int argc, char* argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   // Register the default factory in the Service Configurator.
   // If your platform supports static constructors then you can

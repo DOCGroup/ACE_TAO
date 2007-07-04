@@ -289,7 +289,7 @@ Events::check_results (void)
 /***************************************************************************/
 
 int
-main (int argc, char* argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   Events events;
 

@@ -14,7 +14,7 @@
 ACE_RCSID(EC_Tests_Basic, Schedule, "$Id$")
 
 int
-main (int argc, char *argv [])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   EC_Schedule driver;
   return driver.run (argc, argv);

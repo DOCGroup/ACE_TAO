@@ -4,7 +4,7 @@
 #include "ace/OS_NS_stdio.h"
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   try
     {
@@ -13,15 +13,15 @@ main (int argc, char *argv[])
         CORBA::Object_var poa_object =
         orb->resolve_initial_references("RootPOA");
         PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (poa_object.in ());        
+        PortableServer::POA::_narrow (poa_object.in ());
         PortableServer::POAManager_var poa_manager =
         root_poa->the_POAManager ();
         poa_manager->activate ();
-        
+
         Server_impl* server_obj = new Server_impl(orb.in());
         server_var server = server_obj->_this();
         CORBA::String_var ior = orb->object_to_string (server.in ());
-        
+
         FILE *output_file = ACE_OS::fopen ("server.ior", "w");
         ACE_OS::fprintf (output_file, "%s", ior.in ());
         ACE_OS::fclose (output_file);
@@ -33,6 +33,6 @@ main (int argc, char *argv[])
     {
         return 1;
     }
-    
+
     return 0;
 }

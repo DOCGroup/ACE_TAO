@@ -8,7 +8,7 @@ ACE_RCSID (Application_Test,
            "$Id$")
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   IDL3_Client client;
 

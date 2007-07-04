@@ -568,7 +568,7 @@ parse_args (int argc, char ** argv)
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   // We may want this to be alive beyond the next block.
   TAO_EC_Servant_Var<Heartbeat_Application> app;
