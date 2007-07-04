@@ -1,3 +1,20 @@
+Wed Jul  4 06:58:31 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * orbsvcs/tests/Bug_1395_Regression/Bug_1395_Regression.mpc:
+        * orbsvcs/tests/Bug_2137_Regression/Bug_2137_Regression.mpc:
+        * orbsvcs/tests/Bug_2248_Regression/Bug_2248_Regression.mpc:
+        * orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/GroupRef_Manipulation.mpc:
+        * orbsvcs/tests/HTIOP/Hello/HTIOP_Hello.mpc:
+        * orbsvcs/tests/Security/Big_Request/Big_Request.mpc:
+        * orbsvcs/tests/Security/Bug_1107_Regression/Bug_1107_Regression.mpc:
+        * orbsvcs/tests/Security/Bug_2908_Regression/Bug_2908_Regression.mpc:
+        * orbsvcs/tests/Security/Secure_Invocation/Secure_Invocation.mpc:
+
+          Remove exename from all projects that inherit from taoserver or taoclient.
+          All projects that have taoserver or taoclient as base project do get an
+          exename set as part of that project. Thanks to Johnny Willemsen for 
+          pointing that out.
+
 Wed Jul  4 05:35:49 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * orbsvcs/tests/BiDir_CORBALOC/BiDirCORBALOC.mpc:
