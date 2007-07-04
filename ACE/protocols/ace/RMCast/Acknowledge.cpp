@@ -136,13 +136,19 @@ namespace ACE_RMCast
       {
         Message_ptr* ppm;
         i.next (ppm);
+
+        //FUZZ: disable check_for_lack_ACE_OS
         send (*ppm);
+        //FUZZ: enable check_for_lack_ACE_OS
       }
 
       // Go to sleep but watch for "manual cancellation" request.
       //
       {
+        //FUZZ: disable check_for_lack_ACE_OS
         ACE_Time_Value time (ACE_OS::gettimeofday ());
+        //FUZZ: enable check_for_lack_ACE_OS
+
         time += params_.tick ();
 
         Lock l (mutex_);
@@ -235,8 +241,7 @@ namespace ACE_RMCast
     }
   }
 
-  void Acknowledge::
-  recv (Message_ptr m)
+  void Acknowledge::recv (Message_ptr m)
   {
     // Handle NRTM. There could be some nasty interaction with code
     // that handles data below (like missing message and NAK). This
@@ -320,8 +325,7 @@ namespace ACE_RMCast
     }
   }
 
-  void Acknowledge::
-  send (Message_ptr m)
+  void Acknowledge::send (Message_ptr m)
   {
     if (Data const* data = static_cast<Data const*> (m->find (Data::id)))
     {

@@ -5,8 +5,8 @@
 #include "ace/Time_Value.h"        // ACE_Time_Value
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_stdlib.h"
-#include "ace/OS_NS_sys_socket.h"
 #include "ace/OS_NS_time.h"
+#include "ace/OS_NS_sys_socket.h"
 
 #include "Link.h"
 
@@ -31,7 +31,7 @@ namespace ACE_RMCast
         stop_ (false)
 
   {
-    srand ((unsigned int) ACE_OS::time (0));
+    ACE_OS::srand ((unsigned int) ACE_OS::time (0));
 
 
     rsock_.set_option (IP_MULTICAST_LOOP, 0);
@@ -105,14 +105,13 @@ namespace ACE_RMCast
     Element::in_stop ();
   }
 
-  void Link::
-  send (Message_ptr m)
+  void Link::send (Message_ptr m)
   {
     // Simulate message loss and reordering.
     //
     if (params_.simulator ())
     {
-      if ((rand () % 17) != 0)
+      if ((ACE_OS::rand () % 17) != 0)
       {
         Lock l (mutex_);
 
@@ -124,7 +123,7 @@ namespace ACE_RMCast
         }
         else
         {
-          if ((rand () % 17) != 0)
+          if ((ACE_OS::rand () % 17) != 0)
           {
             send_ (m);
           }
@@ -179,14 +178,13 @@ namespace ACE_RMCast
     /*
       if (m->find (nrtm::id))
       {
-      write (1, os.buffer (), os.length ());
-      exit (1);
+        ACE_OS::write (1, os.buffer (), os.length ());
+        ACE_OS::exit (1);
       }
     */
   }
 
-  void Link::
-  recv ()
+  void Link::recv ()
   {
     size_t max_packet_size (params_.max_packet_size ());
 
@@ -332,8 +330,7 @@ namespace ACE_RMCast
     return 0;
   }
 
-  void Link::
-  recv (Message_ptr)
+  void Link::recv (Message_ptr)
   {
     ACE_OS::abort ();
   }
