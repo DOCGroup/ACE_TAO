@@ -1,4 +1,10 @@
-Wed Jul  4 12:39:39 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
+Wed Jul  4 14:30:00 UTC 2007  Simon Massey  <sma@prismtech.com>
+
+        * orbsvcs/tests/InterfaceRepo/Bug_2962_Regression/run_test.pl:
+
+          Fixed relative paths to ACE_ROOT/TAO_ROOT versions.
+
+Wed Jul  4 12:39:39 UTC 2007  Jeff Parsons  <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/include/ast_typedef.h:
         * TAO_IDL/ast/ast_typedef.cpp:
