@@ -152,6 +152,12 @@ AST_Typedef::is_local (void)
   return this->pd_base_type->is_local ();
 }
 
+bool
+AST_Typedef::owns_base_type (void) const
+{
+  return this->owns_base_type_;
+}
+
 void
 AST_Typedef::owns_base_type (bool val)
 {
