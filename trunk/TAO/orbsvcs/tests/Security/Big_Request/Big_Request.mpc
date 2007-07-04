@@ -10,7 +10,6 @@ project(*idl): taoidldefaults {
 
 project(*security client): taoclient, anytypecode, ssl {
   after += *idl
-  exename = client
   Source_Files {
     TX_ObjectC.cpp
     client.cpp
@@ -21,7 +20,6 @@ project(*security client): taoclient, anytypecode, ssl {
 
 project(*security server): taoserver, ssl {
   after += *idl
-  exename = server
   Source_Files {
     TX_Object_i.cpp
     TX_ObjectS.cpp

@@ -10,7 +10,6 @@ project(*idl) : taoidldefaults {
 
 project(*security server): taoserver, orbsvcslib, security, ssliop, pi_server, codecfactory, interceptors {
   after += *idl
-  exename = server
   Source_Files {
     Foo_i.cpp
     FooS.cpp

@@ -3,8 +3,6 @@
 
 project(*Client): taoclient, ftclientorb {
 
-  exename = client
-
   Source_Files {
     client.cpp
   }
