@@ -103,7 +103,7 @@ ACE::HTBP::Outside_Squid_Filter::recv_data_header (ACE::HTBP::Channel *ch)
                              "missing sender key"),0);
     }
   *slash = 0;
-  session_id.id_ = strtol(start,0,10);
+  session_id.id_ = ACE_OS::strtol(start,0,10);
   start = slash + 1;
 
   if (is_inbound)
@@ -115,7 +115,7 @@ ACE::HTBP::Outside_Squid_Filter::recv_data_header (ACE::HTBP::Channel *ch)
           nl = ACE_OS::strchr(tpos,'\n');
           tpos += token.length();
           *nl = 0;
-          ch->data_len(strtol(tpos,0,10));
+          ch->data_len(ACE_OS::strtol(tpos,0,10));
           start = nl+1;
         }
     }

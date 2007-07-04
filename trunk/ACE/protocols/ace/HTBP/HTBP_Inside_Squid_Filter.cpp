@@ -145,7 +145,7 @@ ACE::HTBP::Inside_Squid_Filter::recv_data_header (ACE::HTBP::Channel *ch)
     {
       tpos += token.length();
       *nl = 0;
-      ch->data_len (strtol(tpos,0,10));
+      ch->data_len (ACE_OS::strtol(tpos,0,10));
       start = nl+1;
     }
 
@@ -224,7 +224,7 @@ ACE::HTBP::Inside_Squid_Filter::recv_ack (ACE::HTBP::Channel *ch)
     {
       tpos += token.length();
       *nl = 0;
-      ch->data_len (strtol(tpos,0,10));
+      ch->data_len (ACE_OS::strtol(tpos,0,10));
       start = nl+1;
     }
 

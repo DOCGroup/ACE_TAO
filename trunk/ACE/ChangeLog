@@ -1,3 +1,27 @@
+Wed Jul  4 06:02:38 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * protocols/ace/HTBP/HTBP_Filter.cpp:
+        * protocols/ace/HTBP/HTBP_Inside_Squid_Filter.cpp:
+        * protocols/ace/HTBP/HTBP_Outside_Squid_Filter.cpp:
+        * protocols/ace/RMCast/Acknowledge.cpp:
+        * protocols/ace/RMCast/Flow.cpp:
+        * protocols/ace/RMCast/Fragment.cpp:
+        * protocols/ace/RMCast/Link.cpp:
+        * protocols/ace/RMCast/Reassemble.cpp:
+        * protocols/ace/RMCast/Retransmit.cpp:
+        * protocols/ace/RMCast/Simulator.cpp:
+        * protocols/ace/RMCast/Socket.cpp:
+        * protocols/ace/RMCast/Stack.cpp:
+        * protocols/ace/TMCast/Group.cpp:
+        * protocols/examples/RMCast/Send_Msg/Receiver.cpp:
+        * protocols/examples/RMCast/Send_Msg/Sender.cpp:
+        * protocols/tests/RMCast/Receiver.cpp:
+        * protocols/tests/RMCast/Sender.cpp:
+
+          Fixed ACE_OS fuzz warnings. Use ACE_OS calls instead of raw OS function
+          where possible. If fuzz detected a false-positive, then disable
+          the ACE_OS fuzz check for that section of the code.
+
 Tue Jul  3 21:04:59 UTC 2007  Steve Huston  <shuston@riverace.com>
 
         * ace/config-win32-common.h: Remove the include <wce.h> for CE.

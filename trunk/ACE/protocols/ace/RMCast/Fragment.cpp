@@ -19,8 +19,7 @@ namespace ACE_RMCast
   {
   }
 
-  void Fragment::
-  send (Message_ptr m)
+  void Fragment::send (Message_ptr m)
   {
     if (Data const* data = static_cast<Data const*> (m->find (Data::id)))
     {
