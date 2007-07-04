@@ -22,7 +22,7 @@ project(*client) : taoserver, rtcorba, avoids_minimum_corba, avoids_corba_e_comp
   }
 }
 
-project(*server) : taoserver, rtcorba, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
+project(*server) : rt_server, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
   after += *idl
   source_files {
     server.cpp
