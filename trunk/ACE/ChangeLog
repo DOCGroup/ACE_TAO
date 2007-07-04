@@ -1,3 +1,11 @@
+Wed Jul  4 15:45:45 UTC 2007  Vladimir Zykov <vladimir.zykov@prismtech.com>
+
+        * bin/PerlACE/Process_Unix.pm:
+          Fixed a problem that existed on SunOS when arguments of spawned
+          process contained any of [] and exec in that case was spawning a
+          new process instead of loading it in place of a process created
+          by fork.
+
 Wed Jul  4 06:02:38 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * protocols/ace/HTBP/HTBP_Filter.cpp:

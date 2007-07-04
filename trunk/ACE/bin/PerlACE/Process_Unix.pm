@@ -288,11 +288,15 @@ sub Spawn ()
         }
         elsif (defined $self->{PROCESS}) {
             #child here
+            my @cmdlist = $self->parse_command_line($cmdline);
             if (defined $ENV{'ACE_TEST_VERBOSE'}) {
-              print "$cmdline\n";
+                print "INFO: $cmdline\n";
+                foreach my $arg (@cmdlist) {
+                    print "INFO: argument - '$arg'\n";
+                }
             }
-            exec $cmdline;
-            die "ERROR: exec failed for <" . $cmdline . ">";
+            exec @cmdlist;
+            die "ERROR: exec failed for <" . $cmdline . ">\n";
         }
         elsif ($! =~ /No more process/) {
             #EAGAIN, supposedly recoverable fork error
@@ -405,6 +409,41 @@ sub check_return_value ($)
     print STDERR "signal $rc : ", $signame[$rc], "\n";
 
     return 0;
+}
+
+# for internal use
+sub parse_command_line ($)
+{
+    my $self = shift;
+    my $cmdline = shift;
+    $cmdline =~ s/^\s+//;
+
+    my @cmdlist = ();
+    while ($cmdline ne '') {
+        if ($cmdline =~ /^\"([^\"\\]*(?:\\.[^\"\\]*)*)\"(.*)/) {
+            my $unquoted = $1;
+            $cmdline = $2;
+            $unquoted =~ s/\\\"/\"/g;
+            push @cmdlist, $unquoted;
+        }
+        elsif ($cmdline =~ /^\'([^\'\\]*(?:\\.[^\'\\]*)*)\'(.*)/) {
+            my $unquoted = $1;
+            $cmdline = $2;
+            $unquoted =~ s/\\\'/\'/g;
+            push @cmdlist, $unquoted;
+        }
+        elsif ($cmdline =~ /^([^\s]*)(.*)/) {
+            push @cmdlist, $1;
+            $cmdline = $2;
+        }
+        else {
+            # this must be some kind of error
+            push @cmdlist, $cmdline;
+        }
+        $cmdline =~ s/^\s+//;
+    }
+
+    return @cmdlist;
 }
 
 sub Kill ($)
