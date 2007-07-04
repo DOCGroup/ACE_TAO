@@ -45,6 +45,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     ACE_DEBUG ((LM_DEBUG,
                 "got resA: <%s> and resB: <%s>",
                 resA.in(), resB.in ()));
+
+    helloA->shutdown ();
+    helloB->shutdown ();
     shutdownORB(orbA.in (), orbidA);
   }
   catch (const CORBA::Exception& ex)
@@ -56,7 +59,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   }
 
   ACE_DEBUG ((LM_DEBUG,
-              "Test completed successfully.\n"));
+              "Client test completed successfully.\n"));
 
   return 0;
 }
