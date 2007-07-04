@@ -12,7 +12,7 @@ ACE_RCSID (CEC_Tests,
            "$Id$")
 
 int
-main (int argc, char* argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   RND_Driver driver;
   return driver.run (argc, argv);

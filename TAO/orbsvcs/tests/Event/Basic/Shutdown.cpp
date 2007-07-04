@@ -7,7 +7,7 @@
 ACE_RCSID(EC_Tests_Basic, Shutdown, "$Id$")
 
 int
-main (int argc, char *argv [])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   EC_Shutdown driver;
   return driver.run (argc, argv);

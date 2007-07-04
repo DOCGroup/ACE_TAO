@@ -4,14 +4,14 @@
 
 #include "ace/Log_Msg.h"
 
-ACE_RCSID (ImplRepo, 
-           nestea_client, 
+ACE_RCSID (ImplRepo,
+           nestea_client,
            "$Id$")
 
 // This function runs the test.
 
 int
-main (int argc, char **argv)
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   Nestea_Client_i client;
 

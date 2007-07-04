@@ -1065,7 +1065,7 @@ ECM_Local_Federation::subscribed_bit (int i) const
 }
 
 int
-main (int argc, char *argv [])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   TAO_EC_Default_Factory::init_svcs ();
 

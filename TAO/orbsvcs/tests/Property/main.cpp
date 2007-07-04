@@ -434,7 +434,7 @@ TAO_PropertyNamesIterator_Tester::test_next_n (size_t n)
 }
 
 int
-main (int argc, char *argv [])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   try
     {

@@ -4,14 +4,14 @@
 
 #include "ace/Log_Msg.h"
 
-ACE_RCSID (ImplRepo, 
-           airplane_client, 
+ACE_RCSID (ImplRepo,
+           airplane_client,
            "$Id$")
 
 // This function runs the test.
 
 int
-main (int argc, char **argv)
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   Airplane_Client_i client;
 

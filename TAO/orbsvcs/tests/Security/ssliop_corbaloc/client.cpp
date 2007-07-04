@@ -1069,7 +1069,7 @@ Persistent_Test_End::execute (TAO_Naming_Client &root_context)
 // This function runs the test.
 
 int
-main (int argc, char **argv)
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   CosNaming_Client cosnaming_client;
 

@@ -40,7 +40,7 @@ writeIORFile (const char* ior)
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   try
     {
@@ -74,7 +74,7 @@ main (int argc, char *argv[])
       orb->run ();
 
       // the following 1 second of sleep is needed to help
-      // Windows with "server shutdown too quickly so the 
+      // Windows with "server shutdown too quickly so the
       // client cannot get the reply" issue.
       ACE_OS::sleep(1);
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Messenger server shutting "

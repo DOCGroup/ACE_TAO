@@ -48,7 +48,7 @@ parse_args (int argc, char *argv[])
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
 
   try
@@ -94,7 +94,7 @@ main (int argc, char *argv[])
           catch (const CORBA::COMM_FAILURE&)
             {
               // If this happens second time then we are done.
-              if (i != 0) 
+              if (i != 0)
                 throw;
 
               // Waiting for server to come back

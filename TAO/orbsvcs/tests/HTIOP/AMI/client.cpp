@@ -160,7 +160,7 @@ public:
 Handler handler;
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   ACE_START_TEST (ACE_TEXT ("HTIOP_AMI_client"));
   try

@@ -2,8 +2,8 @@
 
 #include "Gateway_EC.h"
 
-int 
-main (int argc, char ** argv)
+int
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   Gateway_EC test;
   if (test.run (argc, argv) == -1)

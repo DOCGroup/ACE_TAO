@@ -23,7 +23,7 @@ ACE_RCSID (EC_Custom_Marshal,
            "$Id$")
 
 int
-main (int argc, char *argv [])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   Driver driver;
   return driver.run (argc, argv);

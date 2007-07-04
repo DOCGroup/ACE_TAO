@@ -70,7 +70,7 @@ check_is_equivalent (const char* ior1, const char * ior2, CORBA::Boolean expecte
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   CORBA::Boolean result = 0;
   try

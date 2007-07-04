@@ -5,7 +5,7 @@
 ACE_RCSID(ImplRepo, nestea_server, "$Id$")
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   Nestea_Server_i server;
 

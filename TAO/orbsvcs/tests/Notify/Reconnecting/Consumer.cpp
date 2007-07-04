@@ -181,7 +181,7 @@ StructuredPushConsumer_i::push_structured_event (
         ));
     }
   }
-  else if (0 == ACE_OS::strcmp (notification.header.fixed_header.event_type.type_name, "%ANY") && 
+  else if (0 == ACE_OS::strcmp (notification.header.fixed_header.event_type.type_name, "%ANY") &&
            0 == ACE_OS::strcmp (notification.header.fixed_header.event_type.domain_name, ""))
   {
     const CORBA::Any * any;
@@ -406,7 +406,7 @@ SequencePushConsumer_i::push_structured_events (
           ));
       }
     }
-    else if (0 == ACE_OS::strcmp (notification.header.fixed_header.event_type.type_name, "%ANY") && 
+    else if (0 == ACE_OS::strcmp (notification.header.fixed_header.event_type.type_name, "%ANY") &&
              0 == ACE_OS::strcmp (notification.header.fixed_header.event_type.domain_name, ""))
     {
       CORBA::ULong seq = 0;
@@ -1737,7 +1737,7 @@ int Consumer_Main::run (void)
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   int result = -1;
   Consumer_Main app;

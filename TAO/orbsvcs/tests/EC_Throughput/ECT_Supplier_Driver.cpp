@@ -21,7 +21,7 @@ ACE_RCSID (EC_Throughput,
            "$Id$")
 
 int
-main (int argc, char *argv [])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   ECT_Supplier_Driver driver;
   return driver.run (argc, argv);

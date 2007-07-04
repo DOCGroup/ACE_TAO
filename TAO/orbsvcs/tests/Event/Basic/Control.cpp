@@ -18,7 +18,7 @@ const int event_type = 20;
 const int event_source = 10;
 
 int
-main (int argc, char* argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   TAO_EC_Default_Factory::init_svcs ();
 

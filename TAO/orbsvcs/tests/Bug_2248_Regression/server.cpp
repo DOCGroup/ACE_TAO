@@ -36,8 +36,8 @@ parse_args (int argc, char *argv[])
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s "
                            "-o <iorfile>"
-			   "-k <key> "
-			   "-f merged_iorstr"
+                           "-k <key> "
+                           "-f merged_iorstr"
                            "\n",
                            argv [0]),
                           -1);
@@ -47,7 +47,7 @@ parse_args (int argc, char *argv[])
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
 
 

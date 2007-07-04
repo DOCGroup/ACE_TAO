@@ -12,7 +12,7 @@ ACE_RCSID (EC_Tests_Basic,
            "$Id$")
 
 int
-main (int argc, char *argv [])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   EC_Reconnect driver;
   return driver.run (argc, argv);

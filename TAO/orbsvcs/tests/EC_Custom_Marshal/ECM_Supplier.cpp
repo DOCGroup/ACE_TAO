@@ -491,7 +491,7 @@ Test_Supplier::consumer_proxy (void)
 }
 
 int
-main (int argc, char *argv [])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   ECMS_Driver driver;
   return driver.run (argc, argv);
