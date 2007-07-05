@@ -1,3 +1,16 @@
+Thu Jul  5 18:50:00 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/Notify_Service/Notify_Server.cpp:
+        * orbsvcs/orbsvcs/Notify/Properties.cpp:
+        * orbsvcs/orbsvcs/Notify/Properties.h:
+          Make the protocols an unmanages singleton and leak them at process
+          exit. When loading the notification service as dll it can happen
+          that we unload it after the unload of the anytypecode library
+          and when we get a crash. The only solution that works when making
+          a dll or an exe is to leak the singleton. Thanks to Chad Elliot
+          for testing and some patches and giving his insights in why things
+          crash.
+
 Thu Jul  5 13:35:00 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/Notify_Service/Notify_Server.cpp

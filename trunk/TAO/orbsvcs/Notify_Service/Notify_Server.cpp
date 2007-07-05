@@ -50,13 +50,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   try
     {
-      // Set the properties instance before initializing the notify
-      // service.  Using the static singleton can cause static
-      // destruction issues between the properties instance and
-      // statically allocated type code structures.
-      TAO_Notify_Properties properties;
-      TAO_Notify_Properties::instance (&properties);
-
       if (notify_service.init (argc, argv) == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT("Failed to initialize the Notification Service.\n")),
