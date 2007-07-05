@@ -50,9 +50,9 @@ TAO_ORB_Parameters::TAO_ORB_Parameters (void)
   , negotiate_codesets_ (true)
   , ami_collication_ (true)
   , protocols_hooks_name_ ("Protocols_Hooks")
+  , stub_factory_name_ ("Default_Stub_Factory")
   , endpoint_selector_factory_name_ ("Default_Endpoint_Selector_Factory")
   , thread_lane_resources_manager_factory_name_ ("Default_Thread_Lane_Resources_Manager_Factory")
-  , stub_factory_name_ ("Default_Stub_Factory")
   , poa_factory_name_ ("TAO_Object_Adapter_Factory")
   , poa_factory_directive_
       (ACE_TEXT_ALWAYS_CHAR

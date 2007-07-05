@@ -1,3 +1,11 @@
+Thu Jul  5 11:26:00 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/ORB_Core.cpp:
+          Removed not used static resource variable
+
+        * tao/params.cpp:
+          Fixed variable initialization order
+
 Thu Jul  5 08:01:00 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/ORB_Core.cpp:
