@@ -12,7 +12,7 @@ $ORBdebuglevel = 0;
 
 foreach $i (@ARGV) {
     if ($i eq '-debug') {
-        $debug_level = '10';
+        $ORBdebuglevel = '10';
     } 
 }
 
