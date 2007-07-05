@@ -8,7 +8,7 @@ Thu Jul  5 18:50:00 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
           that we unload it after the unload of the anytypecode library
           and when we get a crash. The only solution that works when making
           a dll or an exe is to leak the singleton. Thanks to Chad Elliot
-          for testing and some patches and giving his insights in why things
+          for testing some patches and giving his insights in why things
           crash.
 
 Thu Jul  5 13:35:00 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
