@@ -97,13 +97,8 @@ find_another_host (ACE_TCHAR other_host[])
 
       // @@ We really need to add wrappers for these hostent methods.
 
-      // AIX 4.3 has problems with DNS usage when sethostent(1) is
-      // called - further DNS lookups don't work at all.
-#if defined (ACE_AIX_MINOR_VERS) && (ACE_AIX_MINOR_VERS == 3)
-      sethostent (0);
-#else
+      // Optimize for sequential access of DNS or hosts file.
       sethostent (1);
-#endif /* (ACE_AIX_MINOR_VERS) && (ACE_AIX_MINOR_VERS == 3) */
 
       int candidate_count = 0;
 

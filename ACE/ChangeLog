@@ -1,3 +1,11 @@
+Thu Jul  5 18:56:11 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * tests/SOCK_Connector_Test.cpp: Removed the AIX 4.3 condition for
+          not calling sethostent(1). The condition was coded incorrectly such
+          that it was used for AIX 5.3; since AIX 4.3 is no longer supported,
+          the check was removed instead of changed. Thanks to Phil Mesnier for
+          calling this to my attention.
+
 Thu Jul  5 16:03:29 UTC 2007  Steve Huston  <shuston@riverace.com>
 
         * tests/Semaphore_Test.cpp: Removed the platform restrictions for
