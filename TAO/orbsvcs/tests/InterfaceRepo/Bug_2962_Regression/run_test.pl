@@ -15,9 +15,9 @@ if ($^O eq "MSWin32") {
 }
 $ifr_service= "$ENV{ACE_ROOT}/bin/IFR_Service";
 if (! -e $ifr_service . $exec_extn ) {
-    $ifr_service= "$ENV{TAO_ROOT}/orbscvs/IFR_Service/IFR_Service";
+    $ifr_service= "$ENV{TAO_ROOT}/orbsvcs/IFR_Service/IFR_Service";
     if (! -e $ifr_service . $exec_extn ) {
-      $ifr_service = "$ENV{TAO_ROOT}/orbscvs/IFR_Service/Release/IFR_Service";
+      $ifr_service = "$ENV{TAO_ROOT}/orbsvcs/IFR_Service/Release/IFR_Service";
       if (! -e $ifr_service . $exec_extn ) {
             print STDERR "ERROR: IFR_Service not found.\n";
             exit 1;
