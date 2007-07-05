@@ -48,7 +48,6 @@ TAO_Notify_ThreadPool_Task::init (const NotifyExt::ThreadPoolParams& tp_params,
     CORBA::NO_MEMORY ());
   this->timer_.reset (timer);
 
-
   TAO_Notify_Buffering_Strategy* buffering_strategy = 0;
   ACE_NEW_THROW_EX (buffering_strategy,
     TAO_Notify_Buffering_Strategy (*msg_queue (), admin_properties),
@@ -66,9 +65,9 @@ TAO_Notify_ThreadPool_Task::init (const NotifyExt::ThreadPoolParams& tp_params,
   // This is done in the originating thread before the spawn to
   // avoid any race conditions.
   for ( CORBA::ULong i = 0; i < tp_params.static_threads; ++i )
-  {
-    this->_incr_refcnt();
-  }
+    {
+      this->_incr_refcnt();
+    }
 
   // Become an active object.
   if (this->ACE_Task <ACE_NULL_SYNCH>::activate (flags,
@@ -78,9 +77,9 @@ TAO_Notify_ThreadPool_Task::init (const NotifyExt::ThreadPoolParams& tp_params,
   {
     // Undo the ref counts on error
     for ( CORBA::ULong i = 0; i < tp_params.static_threads; ++i )
-    {
-      this->_decr_refcnt();
-    }
+      {
+        this->_decr_refcnt();
+      }
 
     if (TAO_debug_level > 0)
     {

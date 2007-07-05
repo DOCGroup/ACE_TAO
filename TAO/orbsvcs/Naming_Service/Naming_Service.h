@@ -1,76 +1,72 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    orbsvcs/Naming_Service/Naming_Service
-//
-// = FILENAME
-//    Naming_Service.h
-//
-// = DESCRIPTION
-//      This class implements the functionality of a Naming_Service in
-//      a stand-alone process.
-//
-// = AUTHORS
-//    Nagarajan Surendran (naga@cs.wustl.edu)
-//    Marina Spivak <marina@cs.wustl.edu>
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Naming_Service.h
+ *
+ *  $Id$
+ *
+ *    This class implements the functionality of a Naming_Service in
+ *    a stand-alone process.
+ *
+ *
+ *  @author Nagarajan Surendran (naga@cs.wustl.edu) Marina Spivak <marina@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef TAO_NAMING_SERVICE_H
 #define TAO_NAMING_SERVICE_H
 
 #include "orbsvcs/Naming/Naming_Server.h"
 
+/**
+ * @class TAO_Naming_Service
+ *
+ * @brief Defines a class that encapsulates the implementation of the
+ * COS Naming Service.
+ *
+ * This class makes use of the <TAO_Naming_Server>
+ * to implement the COS Naming Service.
+ */
 class TAO_Naming_Service
 {
-  // = TITLE
-  //   Defines a class that encapsulates the implementation of the
-  //   COS Naming Service.
-  //
-  // = DESCRIPTION
-  //   This class makes use of the <TAO_Naming_Server>
-  //   to implement the COS Naming Service.
 public:
+  /// Default Constructor.
   TAO_Naming_Service (void);
-  // Default Constructor.
 
+  /// Constructor taking the command-line arguments.
   TAO_Naming_Service (int argc, ACE_TCHAR* argv[]);
-  // Constructor taking the command-line arguments.
 
+  /// Initialize the Naming Service with the arguments.
   virtual int init (int argc, ACE_TCHAR* argv[]);
-  // Initialize the Naming Service with the arguments.
 
+  /// The opposite of init().
   virtual int fini (void);
-  // The opposite of init().
 
+  /// Run the TAO_Naming_Service.
   int run (void);
-  // Run the TAO_Naming_Service.
 
+  /// Shut down the TAO_Naming_Service; you must still call fini().
   void shutdown (void);
-  // Shut down the TAO_Naming_Service; you must still call fini().
 
+  /// Destructor.
   virtual ~TAO_Naming_Service (void);
-  // Destructor.
 
 protected:
 
+  /// Parse the command line arguments to find
+  /// the timeout period.
   int parse_args (int &argc, ACE_TCHAR* argv[]);
-  // Parse the command line arguments to find
-  // the timeout period.
 
+  /// The ORB.
   CORBA::ORB_var orb_;
-  // The ORB.
 
-  //  PortableServer::POA_var root_poa_;
-  // The Root POA.
-
+  /// Naming Server instance.
   TAO_Naming_Server my_naming_server_;
-  // Naming Server instance.
 
+  /// After how long the server should stop listening to requests (in
+  /// seconds).
   long time_;
-  // After how long the server should stop listening to requests (in
-  // seconds).
 };
 
 #endif /* TAO_NAMING_SERVICE_H */
