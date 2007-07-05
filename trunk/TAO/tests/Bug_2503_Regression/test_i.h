@@ -11,11 +11,9 @@ class test_i
 public:
   test_i(CORBA::ORB_ptr);
 
-  virtual void the_operation(CORBA::Long & x)
-    throw(CORBA::SystemException);
+  virtual void the_operation(CORBA::Long & x);
 
-  virtual void shutdown (void)
-    throw (CORBA::SystemException);
+  virtual void shutdown (void);
 
   char * create_and_activate_server(void);
 private:
