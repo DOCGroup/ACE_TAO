@@ -1,3 +1,16 @@
+Thu Jul  5 12:18:00 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/Object_Adapter.inl:
+          Layout change
+
+        * tao/Strategies/DIOP_Acceptor.cpp:
+        * tao/Strategies/DIOP_Connection_Handler.cpp:
+        * tao/Strategies/DIOP_Connector.cpp:
+        * tao/Strategies/DIOP_Endpoint.cpp:
+        * tao/Strategies/DIOP_Factory.cpp:
+          Made formatting of the ACE_DEBUG statements the same as in the core
+          TAO lib
+
 Thu Jul  5 12:17:00 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/DIOP/run_test.pl:

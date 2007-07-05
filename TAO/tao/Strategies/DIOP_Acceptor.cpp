@@ -283,8 +283,7 @@ TAO_DIOP_Acceptor::open (TAO_ORB_Core *orb_core,
                     1) != 0)
         return -1;
       else
-        return this->open_i (addr,
-                             reactor);
+        return this->open_i (addr, reactor);
     }
   else if (port_separator_loc == 0)
     {
@@ -351,7 +350,7 @@ TAO_DIOP_Acceptor::open_default (TAO_ORB_Core *orb_core,
       // This is bad mojo, i.e. an internal TAO error.
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("TAO (%P|%t) - ")
-                         ACE_TEXT ("DIOP_Acceptor::open_default - ")
+                         ACE_TEXT ("DIOP_Acceptor::open_default, ")
                          ACE_TEXT ("hostname already set\n\n")),
                         -1);
     }
@@ -411,8 +410,8 @@ TAO_DIOP_Acceptor::open_i (const ACE_INET_Addr& addr,
     {
       if (TAO_debug_level > 0)
         ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("TAO (%P|%t) DIOP_Acceptor::open_i ")
-                    ACE_TEXT ("- %p"),
+                    ACE_TEXT ("TAO (%P|%t) DIOP_Acceptor::open_i, ")
+                    ACE_TEXT ("%p"),
                     ACE_TEXT ("cannot get local addr\n")));
       return -1;
     }
@@ -430,7 +429,7 @@ TAO_DIOP_Acceptor::open_i (const ACE_INET_Addr& addr,
       for (size_t i = 0; i < this->endpoint_count_; ++i)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("TAO (%P|%t) - DIOP_Acceptor::open_i - ")
+                      ACE_TEXT ("TAO (%P|%t) - DIOP_Acceptor::open_i, ")
                       ACE_TEXT ("listening on: <%s:%u>\n"),
                       ACE_TEXT_CHAR_TO_TCHAR (this->hosts_[i]),
                       this->addrs_[i].get_port_number ()));
@@ -488,8 +487,8 @@ TAO_DIOP_Acceptor::dotted_decimal_address (ACE_INET_Addr &addr,
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("TAO (%P|%t) - ")
-                    ACE_TEXT ("DIOP_Acceptor::dotted_decimal_address ")
-                    ACE_TEXT ("- %p\n\n"),
+                    ACE_TEXT ("DIOP_Acceptor::dotted_decimal_address, ")
+                    ACE_TEXT ("%p\n\n"),
                     ACE_TEXT ("cannot determine hostname")));
       return -1;
     }
@@ -621,7 +620,7 @@ TAO_DIOP_Acceptor::object_key (IOP::TaggedProfile &profile,
     if (TAO_debug_level > 0)
       {
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("TAO (%P|%t) - DIOP_Profile::decode - v%d.%d\n"),
+                    ACE_TEXT ("TAO (%P|%t) - DIOP_Profile::decode, v%d.%d\n"),
                     major,
                     minor));
       }
@@ -638,7 +637,7 @@ TAO_DIOP_Acceptor::object_key (IOP::TaggedProfile &profile,
       if (TAO_debug_level > 0)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("TAO (%P|%t) - DIOP_Acceptor::object_key - ")
+                      ACE_TEXT ("TAO (%P|%t) - DIOP_Acceptor::object_key, ")
                       ACE_TEXT ("error while decoding host/port")));
         }
       return -1;

@@ -101,8 +101,8 @@ TAO_DIOP_Endpoint::set (const ACE_INET_Addr &addr,
           if (TAO_debug_level > 0)
             ACE_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("TAO (%P|%t) - ")
-                        ACE_TEXT ("DIOP_Endpoint::set ")
-                        ACE_TEXT ("- %p\n\n"),
+                        ACE_TEXT ("DIOP_Endpoint::set, ")
+                        ACE_TEXT ("%p\n\n"),
                         ACE_TEXT ("cannot determine hostname\n")));
           return -1;
         }
