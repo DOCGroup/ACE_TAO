@@ -58,7 +58,7 @@ TAO_PolicyFactory_Registry::register_policy_factory (
         {
           // PolicyFactory of given type already exists.
           throw ::CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 16,
-                                           CORBA::COMPLETED_NO);
+                                        CORBA::COMPLETED_NO);
         }
       else
         {
@@ -70,8 +70,7 @@ TAO_PolicyFactory_Registry::register_policy_factory (
 
 CORBA::Policy_ptr
 TAO_PolicyFactory_Registry::create_policy (CORBA::PolicyType type,
-                                           const CORBA::Any &value
-                                           )
+                                           const CORBA::Any &value)
 {
   PortableInterceptor::PolicyFactory_ptr policy_factory =
     PortableInterceptor::PolicyFactory::_nil ();

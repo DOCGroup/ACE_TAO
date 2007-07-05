@@ -451,7 +451,7 @@ namespace
 #endif /* TAO_PLATFORM_SVC_CONF_FILE_NOTSUP */
 
     // Copy command line parameter to allow conversion
-    ACE_Argv_Type_Converter command_line (argc, argv); 
+    ACE_Argv_Type_Converter command_line (argc, argv);
 
     return pcfg->open (command_line.get_argc (),
                        command_line.get_TCHAR_argv (),
@@ -571,17 +571,6 @@ namespace
       {
         pcfg->process_directive
           (ACE_TEXT_CHAR_TO_TCHAR (server_strategy_factory_args));
-      }
-
-    // If available, allow the Adapter Factory to setup.
-    ACE_Service_Object *adapter_factory =
-      ACE_Dynamic_Service<ACE_Service_Object>::instance (
-        pcfg,
-        TAO_ORB_Core::poa_factory_name ().c_str ());
-
-    if (adapter_factory != 0)
-      {
-        adapter_factory->init (0, 0);
       }
 
     ACE_Service_Object * const pi_server_loader =

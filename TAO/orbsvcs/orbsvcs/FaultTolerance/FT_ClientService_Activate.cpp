@@ -1,7 +1,6 @@
 #include "orbsvcs/FaultTolerance/FT_ClientService_Activate.h"
 #include "orbsvcs/FaultTolerance/FT_Service_Callbacks.h"
 #include "orbsvcs/FaultTolerance/FT_ClientORBInitializer.h"
-#include "orbsvcs/FaultTolerance/FT_Endpoint_Selector_Factory.h"
 #include "tao/ORB_Core.h"
 #include "tao/Service_Callbacks.h"
 #include "tao/ORBInitializer_Registry.h"
@@ -47,20 +46,16 @@ TAO_FT_ClientService_Activate::Initializer (void)
 
       PortableInterceptor::ORBInitializer_ptr temp_orb_initializer =
         PortableInterceptor::ORBInitializer::_nil ();
-      PortableInterceptor::ORBInitializer_var orb_initializer;
 
       // Register the RTCORBA ORBInitializer.
       ACE_NEW_RETURN (temp_orb_initializer,
                       TAO_FT_ClientORBInitializer,
                       -1);
 
-      orb_initializer = temp_orb_initializer;
+      PortableInterceptor::ORBInitializer_var orb_initializer =
+        temp_orb_initializer;
 
       PortableInterceptor::register_orb_initializer (orb_initializer.in ());
-
-      // Set the name of the endpoint selector factory
-      TAO_ORB_Core::set_endpoint_selector_factory ("FT_Endpoint_Selector_Factory");
-      ACE_Service_Config::process_directive (ace_svc_desc_TAO_FT_Endpoint_Selector_Factory);
 
       initialized = true;
     }

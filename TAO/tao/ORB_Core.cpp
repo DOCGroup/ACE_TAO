@@ -148,30 +148,17 @@ TAO_ORB_Core_Static_Resources::instance (void)
 
 TAO_ORB_Core_Static_Resources::TAO_ORB_Core_Static_Resources (void)
   : sync_scope_hook_ (0),
-    protocols_hooks_name_ ("Protocols_Hooks"),
     network_priority_protocols_hooks_name_ (
       "Network_Priority_Protocols_Hooks"),
     timeout_hook_ (0),
     connection_timeout_hook_ (0),
-    endpoint_selector_factory_name_ ("Default_Endpoint_Selector_Factory"),
-    thread_lane_resources_manager_factory_name_
-      ("Default_Thread_Lane_Resources_Manager_Factory"),
-
     collocation_resolver_name_ ("Default_Collocation_Resolver"),
-    stub_factory_name_ ("Default_Stub_Factory"),
     resource_factory_name_ ("Resource_Factory"),
     dynamic_adapter_name_ ("Dynamic_Adapter"),
     ifr_client_adapter_name_ ("IFR_Client_Adapter"),
     typecodefactory_adapter_name_ ("TypeCodeFactory_Adapter"),
     iorinterceptor_adapter_factory_name_ ("IORInterceptor_Adapter_Factory"),
     valuetype_adapter_factory_name_ ("Valuetype_Adapter_Factory"),
-    poa_factory_name_ ("TAO_Object_Adapter_Factory"),
-    poa_factory_directive_
-      (ACE_TEXT_ALWAYS_CHAR
-        (ACE_DYNAMIC_SERVICE_DIRECTIVE("TAO_Object_Adapter_Factory",
-                                       "TAO_PortableServer",
-                                       "_make_TAO_Object_Adapter_Factory",
-                                       ""))),
     alt_connection_timeout_hook_ (0)
 {
 }
@@ -180,17 +167,11 @@ TAO_ORB_Core_Static_Resources&
 TAO_ORB_Core_Static_Resources::operator=(const TAO_ORB_Core_Static_Resources& other)
 {
   this->sync_scope_hook_ = other.sync_scope_hook_;
-  this->protocols_hooks_name_ = other.protocols_hooks_name_;
   this->network_priority_protocols_hooks_name_ =
     other.network_priority_protocols_hooks_name_;
   this->timeout_hook_ = other.timeout_hook_;
   this->connection_timeout_hook_ = other.connection_timeout_hook_;
-  this->endpoint_selector_factory_name_ =
-    other.endpoint_selector_factory_name_;
-  this->thread_lane_resources_manager_factory_name_ =
-    other.thread_lane_resources_manager_factory_name_;
   this->collocation_resolver_name_ = other.collocation_resolver_name_;
-  this->stub_factory_name_ = other.stub_factory_name_;
   this->resource_factory_name_ = other.resource_factory_name_;
   this->dynamic_adapter_name_ = other.dynamic_adapter_name_;
   this->ifr_client_adapter_name_ = other.ifr_client_adapter_name_;
@@ -199,8 +180,6 @@ TAO_ORB_Core_Static_Resources::operator=(const TAO_ORB_Core_Static_Resources& ot
     other.iorinterceptor_adapter_factory_name_;
   this->valuetype_adapter_factory_name_ =
     other.valuetype_adapter_factory_name_;
-  this->poa_factory_name_ = other.poa_factory_name_;
-  this->poa_factory_directive_ = other.poa_factory_directive_;
   this->alt_connection_timeout_hook_ = other.alt_connection_timeout_hook_;
   return *this;
 }
@@ -1333,18 +1312,28 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
   this->flushing_strategy_ = trf->create_flushing_strategy ();
 
   // Look in the service repository for an instance of the Protocol Hooks.
-  const ACE_CString &protocols_hooks_name =
-     TAO_ORB_Core_Static_Resources::instance ()->protocols_hooks_name_;
+  const char *protocols_hooks_name = this->orb_params ()->protocols_hooks_name ();
 
   this->protocols_hooks_ =
     ACE_Dynamic_Service<TAO_Protocols_Hooks>::instance
     (this->configuration (),
-     ACE_TEXT_CHAR_TO_TCHAR (protocols_hooks_name.c_str()));
+     ACE_TEXT_CHAR_TO_TCHAR (protocols_hooks_name));
 
   if (this->protocols_hooks_ != 0)
     {
       // Initialize the protocols hooks instance.
       this->protocols_hooks_->init_hooks (this);
+    }
+
+  // If available, allow the Adapter Factory to setup.
+  ACE_Service_Object *adapter_factory =
+    ACE_Dynamic_Service<ACE_Service_Object>::instance (
+      this->configuration (),
+      this->orb_params ()->poa_factory_name ());
+
+  if (adapter_factory != 0)
+    {
+      adapter_factory->init (0, 0);
     }
 
   // Look in the service repository for an instance of the
@@ -1438,24 +1427,10 @@ TAO_ORB_Core::fini (void)
 }
 
 void
-TAO_ORB_Core::set_thread_lane_resources_manager_factory (const char *thread_lane_resources_manager_factory_name)
-{
-  TAO_ORB_Core_Static_Resources::instance ()->thread_lane_resources_manager_factory_name_ =
-    thread_lane_resources_manager_factory_name;
-}
-
-void
 TAO_ORB_Core::set_collocation_resolver (const char *collocation_resolver_name)
 {
   TAO_ORB_Core_Static_Resources::instance ()->collocation_resolver_name_ =
     collocation_resolver_name;
-}
-
-void
-TAO_ORB_Core::set_stub_factory (const char *stub_factory_name)
-{
-  TAO_ORB_Core_Static_Resources::instance ()->stub_factory_name_ =
-    stub_factory_name;
 }
 
 void
@@ -1577,13 +1552,13 @@ TAO_ORB_Core::thread_lane_resources_manager (void)
     return *this->thread_lane_resources_manager_;
 
   // If not, lookup the corresponding factory and ask it to make one.
-  const ACE_CString &thread_lane_resources_manager_factory_name =
-    TAO_ORB_Core_Static_Resources::instance ()->thread_lane_resources_manager_factory_name_;
+  const char *thread_lane_resources_manager_factory_name =
+    this->orb_params ()->thread_lane_resources_manager_factory_name ();
 
   TAO_Thread_Lane_Resources_Manager_Factory *factory =
     ACE_Dynamic_Service<TAO_Thread_Lane_Resources_Manager_Factory>::instance
       (this->configuration (),
-       ACE_TEXT_CHAR_TO_TCHAR (thread_lane_resources_manager_factory_name.c_str()));
+       ACE_TEXT_CHAR_TO_TCHAR (thread_lane_resources_manager_factory_name));
 
   this->thread_lane_resources_manager_ =
     factory->create_thread_lane_resources_manager (*this);
@@ -1683,38 +1658,15 @@ TAO_ORB_Core::stub_factory (void)
     return this->stub_factory_;
 
   // If not, look in the service repository for an instance.
-  const ACE_CString &stub_factory_name =
-    TAO_ORB_Core_Static_Resources::instance ()->stub_factory_name_;
+  const char *stub_factory_name =
+    this->orb_params ()->stub_factory_name ();
 
   this->stub_factory_ =
     ACE_Dynamic_Service<TAO_Stub_Factory>::instance
       (this->configuration (),
-       ACE_TEXT_CHAR_TO_TCHAR (stub_factory_name.c_str()));
+       ACE_TEXT_CHAR_TO_TCHAR (stub_factory_name));
 
   return this->stub_factory_;
-}
-
-void
-TAO_ORB_Core::set_poa_factory (const char *poa_factory_name,
-                               const char *poa_factory_directive)
-{
-  TAO_ORB_Core_Static_Resources::instance ()->poa_factory_name_ =
-    poa_factory_name;
-  TAO_ORB_Core_Static_Resources::instance ()->poa_factory_directive_ =
-    poa_factory_directive;
-}
-
-const ACE_CString &
-TAO_ORB_Core::poa_factory_name (void)
-{
-  return TAO_ORB_Core_Static_Resources::instance ()->poa_factory_name_;
-}
-
-void
-TAO_ORB_Core::set_endpoint_selector_factory (const char *endpoint_selector_factory_name)
-{
-  TAO_ORB_Core_Static_Resources::instance ()->endpoint_selector_factory_name_ =
-    endpoint_selector_factory_name;
 }
 
 TAO_Endpoint_Selector_Factory *
@@ -1725,23 +1677,15 @@ TAO_ORB_Core::endpoint_selector_factory (void)
     return this->endpoint_selector_factory_;
 
   // If not, look in the service repository for an instance.
-  const ACE_CString &endpoint_selector_factory_name =
-    TAO_ORB_Core_Static_Resources::instance ()->endpoint_selector_factory_name_;
+  const char* endpoint_selector_factory_name =
+    this->orb_params ()->endpoint_selector_factory_name ();
 
   this->endpoint_selector_factory_ =
     ACE_Dynamic_Service<TAO_Endpoint_Selector_Factory>::instance
       (this->configuration (),
-       ACE_TEXT_CHAR_TO_TCHAR (endpoint_selector_factory_name.c_str()));
+       ACE_TEXT_CHAR_TO_TCHAR (endpoint_selector_factory_name));
 
   return this->endpoint_selector_factory_;
-}
-
-void
-TAO_ORB_Core::set_protocols_hooks (const char *protocols_hooks_name)
-{
-  // Is synchronization necessary?
-  TAO_ORB_Core_Static_Resources::instance ()->protocols_hooks_name_ =
-    protocols_hooks_name;
 }
 
 void
@@ -1867,18 +1811,18 @@ TAO_ORB_Core::root_poa (void)
       TAO_Adapter_Factory *factory =
         ACE_Dynamic_Service<TAO_Adapter_Factory>::instance
           (this->configuration (),
-          static_resources->poa_factory_name_.c_str());
+          this->orb_params ()->poa_factory_name ());
 
       if (factory == 0)
         {
           this->configuration()->process_directive (
            ACE_TEXT_CHAR_TO_TCHAR (
-             static_resources->poa_factory_directive_.c_str()));
+             this->orb_params ()->poa_factory_directive ()));
 
           factory =
             ACE_Dynamic_Service<TAO_Adapter_Factory>::instance
               (this->configuration (),
-              static_resources->poa_factory_name_.c_str());
+              this->orb_params ()->poa_factory_name ());
         }
 
       if (factory == 0)

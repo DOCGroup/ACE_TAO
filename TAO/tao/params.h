@@ -218,6 +218,24 @@ public:
   void ami_collication (bool opt);
   bool ami_collication (void) const;
 
+  void protocols_hooks_name (const char *s);
+  const char *protocols_hooks_name (void) const;
+
+  void thread_lane_resources_manager_factory_name (const char *s);
+  const char *thread_lane_resources_manager_factory_name (void) const;
+
+  void stub_factory_name (const char *s);
+  const char *stub_factory_name (void) const;
+
+  void poa_factory_name (const char *s);
+  const char *poa_factory_name (void) const;
+
+  void poa_factory_directive (const char *s);
+  const char *poa_factory_directive (void) const;
+
+  void endpoint_selector_factory_name (const char *s);
+  const char *endpoint_selector_factory_name (void) const;
+
 private:
   // Each "endpoint" is of the form:
   //
@@ -374,6 +392,53 @@ private:
 
   /// Do we make collocated ami calls
   bool ami_collication_;
+
+  /**
+   * Name of the protocols_hooks that needs to be instantiated.
+   * The default value is "Protocols_Hooks". If RTCORBA option is
+   * set, its value will be set to be "RT_Protocols_Hooks".
+   */
+  ACE_CString protocols_hooks_name_;
+
+  /**
+   * Name of the stub factory that needs to be instantiated.
+   * The default value is "Default_Stub_Factory". If TAO_RTCORBA is
+   * linked, the set_stub_factory will be called to set the value
+   * to be "RT_Stub_Factory".
+   */
+  ACE_CString stub_factory_name_;
+
+  /**
+   * Name of the endpoint selector factory that needs to be instantiated.
+   * The default value is "Default_Endpoint_Selector_Factory". If
+   * TAO_RTCORBA is linked, the set_endpoint_selector_factory will be
+   * called to set the value to be "RT_Endpoint_Selector_Factory".
+   */
+  ACE_CString endpoint_selector_factory_name_;
+
+  /**
+   * Name of the thread lane resources manager that needs to be
+   * instantiated.  The default value is
+   * "Default_Thread_Lane_Resources_Manager_Factory". If TAO_RTCORBA
+   * is linked, the set_thread_lane_resources_manager will be called
+   * to set the value to be
+   * "RT_Thread_Lane_Resources_Manager_Factory".
+   */
+  ACE_CString thread_lane_resources_manager_factory_name_;
+
+  /**
+   * Name of the service object used to create the RootPOA.  The
+   * default value is "TAO_POA".  If TAO_RTCORBA is loaded, this
+   * will be changed to TAO_RT_POA so that a POA equipped with
+   * realtime extensions will be returned.
+   */
+  ACE_CString poa_factory_name_;
+
+  /**
+   * The service configurator directive used to load
+   * poa_factory_name_ dynamically.
+   */
+  ACE_CString poa_factory_directive_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
