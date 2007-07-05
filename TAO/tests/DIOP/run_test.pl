@@ -10,6 +10,12 @@ use PerlACE::Run_Test;
 
 $ORBdebuglevel = 0;
 
+foreach $i (@ARGV) {
+    if ($i eq '-debug') {
+        $debug_level = '10';
+    } 
+}
+
 $status = 0;
 $iorbase = "test.ior";
 $iorfile = PerlACE::LocalFile ($iorbase);
