@@ -1,3 +1,14 @@
+Thu Jul  5 11:31:00 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Portable_Interceptors/AdvSlot/server.cpp:
+        * tests/Portable_Interceptors/AdvSlotDblCpy/server.cpp:
+        * tests/Portable_Interceptors/AdvSlotExt/server.cpp:
+        * tests/Portable_Interceptors/Slot/driver.cpp:
+          Removed exception specification
+
+        * tests/POA/EndpointPolicy/run_test.pl:
+          Remove another ior file
+
 Thu Jul  5 11:26:00 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/ORB_Core.cpp:

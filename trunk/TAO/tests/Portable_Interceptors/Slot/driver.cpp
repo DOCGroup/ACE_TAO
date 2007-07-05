@@ -13,12 +13,12 @@ class ORB_Initializer : public virtual PortableInterceptor::ORBInitializer,
 {
 public:
   virtual void
-  pre_init (PortableInterceptor::ORBInitInfo_ptr) throw (CORBA::SystemException)
+  pre_init (PortableInterceptor::ORBInitInfo_ptr)
   {
   }
 
   virtual void
-  post_init (PortableInterceptor::ORBInitInfo_ptr info) throw (CORBA::SystemException)
+  post_init (PortableInterceptor::ORBInitInfo_ptr info)
   {
     slot_id = info->allocate_slot_id ();
     ACE_DEBUG ((LM_DEBUG, "Allocated slot with id %d.\n", slot_id));

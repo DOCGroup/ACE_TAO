@@ -155,14 +155,14 @@ public:
   {
   }
 
-  virtual void invoke_me() throw (SystemException)
+  virtual void invoke_me()
   {
     ACE_DEBUG ((LM_DEBUG, "invoke_me\n"));
   }
 
   //FUZZ: disable check_for_lack_ACE_OS
   virtual void
-  shutdown () throw (SystemException)
+  shutdown ()
   {
     ACE_DEBUG ((LM_DEBUG, "\nServer is shutting down.\n"));
     this->orb_->shutdown (0);
@@ -187,20 +187,19 @@ public:
   }
 
   virtual char*
-  name () throw (SystemException)
+  name ()
   {
     return string_dup ("ReplicaController");
   }
 
   virtual void
-  destroy () throw (SystemException)
+  destroy ()
   {
   }
 
 #if TAO_HAS_EXTENDED_FT_INTERCEPTORS == 1
   virtual void
   tao_ft_interception_point (ServerRequestInfo_ptr ri, OctetSeq_out)
-    throw (SystemException, ForwardRequest)
   {
     getAndSetMySlot( ri, this->pi_current_, "tao_ft_interception_point", 0, 0 );
   }
@@ -208,7 +207,6 @@ public:
 
   virtual void
   receive_request_service_contexts (ServerRequestInfo_ptr ri)
-    throw (SystemException, ForwardRequest)
   {
 #if TAO_HAS_EXTENDED_FT_INTERCEPTORS == 1
     getAndSetMySlot( ri, this->pi_current_, "receive_request_service_contexts", 0, 61 );
@@ -219,27 +217,24 @@ public:
 
   virtual void
   receive_request (ServerRequestInfo_ptr ri)
-    throw (SystemException, ForwardRequest)
   {
     getAndSetMySlot( ri, this->pi_current_, "receive_request", 62, 62 );
   }
 
   virtual void
-  send_reply (ServerRequestInfo_ptr ri) throw (SystemException)
+  send_reply (ServerRequestInfo_ptr ri)
   {
     getAndSetMySlot( ri, this->pi_current_, "send_reply", 62, 62 );
   }
 
   virtual void
   send_exception (ServerRequestInfo_ptr ri)
-    throw (SystemException, ForwardRequest)
   {
     getAndSetMySlot( ri, this->pi_current_, "send_exception", 62, 62 );
   }
 
   virtual void
   send_other (ServerRequestInfo_ptr ri)
-    throw (SystemException, ForwardRequest)
   {
     getAndSetMySlot( ri, this->pi_current_, "send_other", 62, 62 );
   }
@@ -253,12 +248,12 @@ class ORB_Initializer : public virtual ORBInitializer,
 {
 public:
   virtual void
-  pre_init (ORBInitInfo_ptr) throw (SystemException)
+  pre_init (ORBInitInfo_ptr)
   {
   }
 
   virtual void
-  post_init (ORBInitInfo_ptr info) throw (SystemException)
+  post_init (ORBInitInfo_ptr info)
   {
     CORBA::Object_var obj =
       info->resolve_initial_references ("PICurrent");

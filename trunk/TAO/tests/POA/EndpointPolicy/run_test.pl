@@ -12,10 +12,13 @@ $status = 0;
 
 $goodiorbase = "good.ior";
 $badiorbase = "bad.ior";
+$rootiorbase = "root.ior";
 $goodiorfile = PerlACE::LocalFile ("$goodiorbase");
 $badiorfile =  PerlACE::LocalFile ("$badiorbase");
+$rootiorfile =  PerlACE::LocalFile ("$rootiorbase");
 unlink $goodiorfile;
 unlink $badiorfile;
+unlink $rootiorfile;
 
 $port = 12345;
 
@@ -105,5 +108,6 @@ if ($server != 0) {
 
 unlink $goodiorfile;
 unlink $badiorfile;
+unlink $rootiorfile;
 
 exit $status;
