@@ -62,7 +62,6 @@ namespace PortableInterceptor
           ACE_Dynamic_Service<TAO::ORBInitializer_Registry_Adapter>::instance
             ("ORBInitializer_Registry");
       }
-
   #endif /* !TAO_AS_STATIC_LIBS */
 
     if (orbinitializer_registry_ != 0)

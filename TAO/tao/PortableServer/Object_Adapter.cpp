@@ -242,8 +242,7 @@ TAO_Object_Adapter::TAO_Object_Adapter (const TAO_Server_Strategy_Factory::Activ
 }
 
 void
-TAO_Object_Adapter::init_default_policies (TAO_POA_Policy_Set &policies
-                                           )
+TAO_Object_Adapter::init_default_policies (TAO_POA_Policy_Set &policies)
 {
   // Initialize the default policies.
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)

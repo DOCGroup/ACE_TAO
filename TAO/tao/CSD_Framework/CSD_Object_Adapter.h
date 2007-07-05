@@ -47,8 +47,7 @@ public:
   /// Hand the request to the Service_Dispatching_Strategy_Proxy for
   /// dispatching.
   virtual void do_dispatch (TAO_ServerRequest& req,
-                            TAO::Portable_Server::Servant_Upcall& upcall
-                           );
+                            TAO::Portable_Server::Servant_Upcall& upcall);
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

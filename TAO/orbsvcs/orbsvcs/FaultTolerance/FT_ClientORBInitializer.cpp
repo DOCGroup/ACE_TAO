@@ -3,7 +3,10 @@
 #include "orbsvcs/FaultTolerance/FT_ClientORBInitializer.h"
 #include "orbsvcs/FaultTolerance/FT_ClientPolicyFactory.h"
 #include "orbsvcs/FaultTolerance/FT_ClientRequest_Interceptor.h"
+#include "orbsvcs/FaultTolerance/FT_Endpoint_Selector_Factory.h"
 #include "orbsvcs/FT_CORBA_ORBC.h"
+#include "tao/PI/ORBInitInfo.h"
+#include "tao/ORB_Core.h"
 #include "tao/Exception.h"
 #include "tao/ORB_Constants.h"
 
@@ -14,8 +17,13 @@ ACE_RCSID (FaultTolerance,
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 void
-TAO_FT_ClientORBInitializer::pre_init (PortableInterceptor::ORBInitInfo_ptr)
+TAO_FT_ClientORBInitializer::pre_init (PortableInterceptor::ORBInitInfo_ptr info)
 {
+  TAO_ORBInitInfo_var tao_info = TAO_ORBInitInfo::_narrow (info);
+
+  // Set the name of the endpoint selector factory
+  tao_info->orb_core ()->orb_params ()->endpoint_selector_factory_name ("FT_Endpoint_Selector_Factory");
+  ACE_Service_Config::process_directive (ace_svc_desc_TAO_FT_Endpoint_Selector_Factory);
 }
 
 void

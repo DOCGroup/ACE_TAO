@@ -68,25 +68,29 @@ TAO_RT_ORBInitializer::pre_init (PortableInterceptor::ORBInitInfo_ptr info)
   // Register all of the RT related services.
   //
 
+  // Narrow to a TAO_ORBInitInfo object to get access to the
+  // orb_core() TAO extension.
+  TAO_ORBInitInfo_var tao_info = TAO_ORBInitInfo::_narrow (info);
+
   // Set the name of the Protocol_Hooks to be RT_Protocols_Hooks.
-  TAO_ORB_Core::set_protocols_hooks ("RT_Protocols_Hooks");
+  tao_info->orb_core ()->orb_params ()->protocols_hooks_name ("RT_Protocols_Hooks");
   ACE_Service_Config::process_directive (ace_svc_desc_TAO_RT_Protocols_Hooks);
 
   // Set the name of the stub factory to be RT_Stub_Factory.
-  TAO_ORB_Core::set_stub_factory ("RT_Stub_Factory");
+  tao_info->orb_core ()->orb_params ()->stub_factory_name ("RT_Stub_Factory");
   ACE_Service_Config::process_directive (ace_svc_desc_TAO_RT_Stub_Factory);
 
   // Set the name of the stub factory to be RT_Stub_Factory.
-  TAO_ORB_Core::set_endpoint_selector_factory ("RT_Endpoint_Selector_Factory");
+  tao_info->orb_core ()->orb_params ()->endpoint_selector_factory_name ("RT_Endpoint_Selector_Factory");
   ACE_Service_Config::process_directive (ace_svc_desc_RT_Endpoint_Selector_Factory);
 
   // Set the name of the thread lane resources manager to be RT_Thread_Lane_Resources_Manager.
-  TAO_ORB_Core::set_thread_lane_resources_manager_factory ("RT_Thread_Lane_Resources_Manager_Factory");
+  tao_info->orb_core ()->orb_params ()->thread_lane_resources_manager_factory_name ("RT_Thread_Lane_Resources_Manager_Factory");
   ACE_Service_Config::process_directive (ace_svc_desc_TAO_RT_Thread_Lane_Resources_Manager_Factory);
 
   // If the application resolves the root POA, make sure we load the RT POA.
-  TAO_ORB_Core::set_poa_factory (rt_poa_factory_name,
-                                 ACE_TEXT_ALWAYS_CHAR (rt_poa_factory_directive));
+  tao_info->orb_core ()->orb_params ()->poa_factory_name (rt_poa_factory_name);
+  tao_info->orb_core ()->orb_params ()->poa_factory_directive (ACE_TEXT_ALWAYS_CHAR (rt_poa_factory_directive));
 
   // Create the initial priority mapping instance.
   TAO_Priority_Mapping *pm = 0;
@@ -154,10 +158,6 @@ TAO_RT_ORBInitializer::pre_init (PortableInterceptor::ORBInitInfo_ptr info)
 
   info->register_initial_reference ("NetworkPriorityMappingManager",
                                     network_manager);
-
-  // Narrow to a TAO_ORBInitInfo object to get access to the
-  // orb_core() TAO extension.
-  TAO_ORBInitInfo_var tao_info = TAO_ORBInitInfo::_narrow (info);
 
   if (CORBA::is_nil (tao_info.in ()))
     {
