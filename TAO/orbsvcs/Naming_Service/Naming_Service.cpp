@@ -15,8 +15,7 @@ TAO_Naming_Service::TAO_Naming_Service (void)
 }
 
 // Constructor taking command-line arguments.
-TAO_Naming_Service::TAO_Naming_Service (int argc,
-                                        ACE_TCHAR* argv[])
+TAO_Naming_Service::TAO_Naming_Service (int argc, ACE_TCHAR* argv[])
   : time_ (0)
 {
   this->init (argc, argv);
@@ -25,8 +24,7 @@ TAO_Naming_Service::TAO_Naming_Service (int argc,
 
 // Initialize the state of the TAO_Naming_Service object
 int
-TAO_Naming_Service::init (int argc,
-                          ACE_TCHAR* argv[])
+TAO_Naming_Service::init (int argc, ACE_TCHAR* argv[])
 {
   int result;
 
@@ -63,8 +61,7 @@ TAO_Naming_Service::init (int argc,
 }
 
 int
-TAO_Naming_Service::parse_args (int &argc,
-                                ACE_TCHAR* argv[])
+TAO_Naming_Service::parse_args (int &argc, ACE_TCHAR* argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("-t:"));
   int c;
@@ -125,7 +122,6 @@ TAO_Naming_Service::shutdown (void)
 int
 TAO_Naming_Service::fini (void)
 {
-
   this->my_naming_server_.fini();
 
   try

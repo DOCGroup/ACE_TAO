@@ -1,24 +1,19 @@
 // -*- C++ -*-
 
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    ace
-//
-// = FILENAME
-//    NT_Naming_Service.h
-//
-//
-// = DESCRIPTION
-//    Run the TAO Naming Service as a Windows NT Service.
-//
-// = AUTHORS
-//    John Tucker <jtucker@infoglide.com> and
-//    Mike Vitalo <mvitalo@infoglide.com>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    NT_Naming_Service.h
+ *
+ *  $Id$
+ *
+ *  Run the TAO Naming Service as a Windows NT Service.
+ *
+ *
+ *  @author John Tucker <jtucker@infoglide.com> and Mike Vitalo <mvitalo@infoglide.com>
+ */
+//=============================================================================
+
 
 #ifndef TAO_NT_NAMING_SERVICE_H
 #define TAO_NT_NAMING_SERVICE_H
@@ -32,10 +27,13 @@
 #include /**/ "ace/Synch.h"
 #include /**/ "tao/orbconf.h"
 
+/**
+ * @class TAO_NT_Naming_Service
+ *
+ * @brief Run the TAO Naming Service as a Windows NT Service.
+ */
 class TAO_NT_Naming_Service : public ACE_NT_Service
 {
-  // = TITLE
-  //    Run the TAO Naming Service as a Windows NT Service.
 public:
   typedef TAO_SYNCH_RECURSIVE_MUTEX MUTEX;
 
@@ -43,30 +41,30 @@ public:
   TAO_NT_Naming_Service (void);
   virtual ~TAO_NT_Naming_Service (void);
 
+  /// We override <handle_control> because it handles stop requests
+  /// privately.
   virtual void handle_control (DWORD control_code);
-  // We override <handle_control> because it handles stop requests
-  // privately.
 
+  /// We override <handle_exception> so a 'stop' control code can pop
+  /// the reactor off of its wait.
   virtual int handle_exception (ACE_HANDLE h);
-  // We override <handle_exception> so a 'stop' control code can pop
-  // the reactor off of its wait.
 
+  /// This is a virtual method inherited from ACE_NT_Service.
   virtual int svc (void);
-  // This is a virtual method inherited from ACE_NT_Service.
 
+  /// Initialize the objects argc_ and argv_ attributes values.
   virtual int init (int argc,
                     ACE_TCHAR *argv[]);
-  // Initialize the objects argc_ and argv_ attributes values.
 
 private:
   // = Keep track of the "command-line" arguments.
+  /// Argument count.
   int argc_;
   int argc_save_;
-  // Argument count.
 
+  /// Argument list.
   char **argv_;
   char **argv_save_;
-  // Argument list.
 
   friend class ACE_Singleton<TAO_NT_Naming_Service, MUTEX>;
   friend class AutoFinalizer;
