@@ -12,7 +12,6 @@ test_i(CORBA::ORB_ptr orb)
 
 void test_i::
 the_operation(CORBA::Long & x)
-  throw(CORBA::SystemException)
 {
   x = 42;
 }
@@ -42,7 +41,6 @@ create_and_activate_server()
 
 void
 test_i::shutdown (void)
-  throw (CORBA::SystemException)
 {
   if (!CORBA::is_nil (this->orb_.in ()))
     this->orb_->shutdown (0);
