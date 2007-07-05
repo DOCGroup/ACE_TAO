@@ -14,10 +14,10 @@ public:
                   const char *full_name,
                   CORBA::Double price);
 
-  char *symbol () throw (CORBA::SystemException);
-  char *full_name () throw (CORBA::SystemException);
-  CORBA::Double price () throw (CORBA::SystemException);
-  Quoter::Stock::StockHistory * history () throw (CORBA::SystemException) ;
+  char *symbol ();
+  char *full_name ();
+  CORBA::Double price ();
+  Quoter::Stock::StockHistory * history ();
 
   static void set_default_POA ( PortableServer::POA_ptr poa ) { Quoter_Stock_i::_poa = poa ; }
   virtual PortableServer::POA_ptr _default_POA () { return Quoter_Stock_i::_poa ; }
