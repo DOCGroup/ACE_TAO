@@ -21,6 +21,7 @@
 
 #include "orbsvcs/Notify/Service.h"
 #include "orbsvcs/Notify/Builder.h"
+#include "orbsvcs/Notify/Properties.h"
 #include "orbsvcs/Notify/Factory.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -87,6 +88,9 @@ private:
 
   /// Service component for building NS participants.
   ACE_Auto_Ptr< TAO_Notify_Builder > builder_;
+
+  /// Notify properties
+  TAO_Notify_Properties properties_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

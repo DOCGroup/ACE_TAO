@@ -515,7 +515,7 @@ TAO_Notify_Builder::apply_reactive_concurrency (TAO_Notify_Object& object)
 void
 TAO_Notify_Builder::apply_thread_pool_concurrency (TAO_Notify_Object& object, const NotifyExt::ThreadPoolParams& tp_params)
 {
-  TAO_Notify_ThreadPool_Task* worker_task;
+  TAO_Notify_ThreadPool_Task* worker_task = 0;
 
   ACE_NEW_THROW_EX (worker_task,
                     TAO_Notify_ThreadPool_Task (),

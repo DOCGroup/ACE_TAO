@@ -162,13 +162,13 @@ TAO_Notify_QoSProperties::init (const CosNotification::PropertySeq& prop_seq, Co
         this->stop_time_supported_.set (*this);
         this->maximum_batch_size_.set (*this);
         this->pacing_interval_.set (*this);
-    this->max_events_per_consumer_.set (*this);
-    this->discard_policy_.set (*this);
-    this->order_policy_.set (*this);
+        this->max_events_per_consumer_.set (*this);
+        this->discard_policy_.set (*this);
+        this->order_policy_.set (*this);
 
         this->thread_pool_.set (*this);
         this->thread_pool_lane_.set (*this);
-    this->blocking_policy_.set (*this);
+        this->blocking_policy_.set (*this);
   }
 
   return err_index == -1 ? 0 : 1;

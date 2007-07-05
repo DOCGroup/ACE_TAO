@@ -1,7 +1,6 @@
 // $Id$
 
 #include "orbsvcs/Notify/CosNotify_Service.h"
-#include "orbsvcs/Notify/Properties.h"
 #include "orbsvcs/Notify/Default_Factory.h"
 #include "orbsvcs/Notify/Builder.h"
 #include "ace/Sched_Params.h"
@@ -19,9 +18,10 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_CosNotify_Service::TAO_CosNotify_Service (void)
 {
+  TAO_Notify_Properties::instance (&properties_);
 }
 
-TAO_CosNotify_Service::~TAO_CosNotify_Service ()
+TAO_CosNotify_Service::~TAO_CosNotify_Service (void)
 {
 }
 
