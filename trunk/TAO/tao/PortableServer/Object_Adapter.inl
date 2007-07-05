@@ -81,8 +81,7 @@ TAO_Object_Adapter::find_poa (const poa_name &system_name,
                               CORBA::Boolean activate_it,
                               CORBA::Boolean root,
                               const TAO::Portable_Server::Temporary_Creation_Time &poa_creation_time,
-                              TAO_Root_POA *&poa
-                              )
+                              TAO_Root_POA *&poa)
 {
   if (activate_it)
     {
@@ -93,8 +92,7 @@ TAO_Object_Adapter::find_poa (const poa_name &system_name,
       return this->find_transient_poa (system_name,
                                        root,
                                        poa_creation_time,
-                                       poa
-                                      );
+                                       poa);
     }
 }
 
@@ -103,8 +101,7 @@ TAO_Object_Adapter::bind_transient_poa (TAO_Root_POA *poa,
                                         poa_name_out system_name)
 {
   poa_name name;
-  int result = this->transient_poa_map_->bind_create_key (poa,
-                                                          name);
+  int result = this->transient_poa_map_->bind_create_key (poa, name);
 
   if (result == 0)
     {
