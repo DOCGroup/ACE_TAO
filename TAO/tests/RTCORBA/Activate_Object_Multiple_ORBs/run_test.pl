@@ -9,10 +9,10 @@ use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::Run_Test;
 
 if (PerlACE::is_vxworks_test()) {
-$T      = new PerlACE::ProcessVX ("test");
+$T      = new PerlACE::ProcessVX ("server");
 }
 else {
-$T      = new PerlACE::Process ("test");
+$T      = new PerlACE::Process ("server");
 }
 my($test)   = $T->SpawnWaitKill ($PerlACE::wait_interval_for_process_creation);
 my($status) = 0;
