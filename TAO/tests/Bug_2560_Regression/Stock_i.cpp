@@ -17,25 +17,25 @@ Quoter_Stock_i::Quoter_Stock_i (const char *symbol,
 }
 
 char *
-Quoter_Stock_i::symbol () throw (CORBA::SystemException)
+Quoter_Stock_i::symbol ()
 {
   return CORBA::string_dup (this->symbol_.c_str ());
 }
 
 char *
-Quoter_Stock_i::full_name () throw (CORBA::SystemException)
+Quoter_Stock_i::full_name ()
 {
   return CORBA::string_dup (this->full_name_.c_str ());
 }
 
 CORBA::Double
-Quoter_Stock_i::price () throw (CORBA::SystemException)
+Quoter_Stock_i::price ()
 {
   return this->price_;
 }
 
 Quoter::Stock::StockHistory*
-Quoter_Stock_i::history () throw (CORBA::SystemException)
+Quoter_Stock_i::history ()
 {
   Quoter::Stock::StockHistory_var hist = new Quoter::Stock::StockHistory ;
 
