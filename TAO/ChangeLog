@@ -1,3 +1,12 @@
+Thu Jul  5 13:35:00 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/Notify_Service/Notify_Server.cpp
+        * orbsvcs/Notify_Service/Notify_Service.cpp
+        * orbsvcs/orbsvcs/Notify/CosNotify_Service.cpp
+        * orbsvcs/orbsvcs/Notify/CosNotify_Service.h
+          Reverted my change below, it breaks the executable
+          Thu Jul  5 06:22:00 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
 Thu Jul  5 12:50:00 UTC 2007  Simon Massey  <sma@prismtech.com>
 
         * orbsvcs/tests/InterfaceRepo/Bug_2962_Regression/run_test.pl:
