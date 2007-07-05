@@ -31,7 +31,7 @@ public:
   }
 
   virtual Short
-  number () throw (SystemException)
+  number ()
   {
     // Prepare state update.
     //
@@ -50,7 +50,7 @@ public:
 
   //FUZZ: disable check_for_lack_ACE_OS
   virtual void
-  shutdown () throw (SystemException)
+  shutdown ()
   {
     ACE_DEBUG ((LM_DEBUG, "Server is shutting down.\n"));
     this->orb_->shutdown (0);
@@ -74,33 +74,30 @@ public:
   }
 
   virtual char*
-  name () throw (SystemException)
+  name ()
   {
     return string_dup ("ReplicaController");
   }
 
   virtual void
-  destroy () throw (SystemException)
+  destroy ()
   {
   }
 
 #if TAO_HAS_EXTENDED_FT_INTERCEPTORS == 1
   virtual void
   tao_ft_interception_point (ServerRequestInfo_ptr, OctetSeq_out)
-    throw (SystemException, ForwardRequest)
   {
   }
 #endif /*TAO_HAS_EXTENDED_FT_INTERCEPTORS*/
 
   virtual void
   receive_request_service_contexts (ServerRequestInfo_ptr)
-    throw (SystemException, ForwardRequest)
   {
   }
 
   virtual void
   receive_request (ServerRequestInfo_ptr ri)
-    throw (SystemException, ForwardRequest)
   {
     Any state;
     CORBA::Long number = 5;
@@ -124,7 +121,7 @@ public:
   }
 
   virtual void
-  send_reply (ServerRequestInfo_ptr ri) throw (SystemException)
+  send_reply (ServerRequestInfo_ptr ri)
   {
     CORBA::String_var op = ri->operation ();
 
@@ -143,12 +140,11 @@ public:
 
   virtual void
   send_exception (ServerRequestInfo_ptr)
-    throw (SystemException, ForwardRequest)
   {
   }
 
   virtual void
-  send_other (ServerRequestInfo_ptr) throw (SystemException, ForwardRequest)
+  send_other (ServerRequestInfo_ptr)
   {
   }
   PortableInterceptor::Current_var pi_current_;
@@ -162,12 +158,12 @@ class ORB_Initializer : public virtual ORBInitializer,
 {
 public:
   virtual void
-  pre_init (ORBInitInfo_ptr) throw (SystemException)
+  pre_init (ORBInitInfo_ptr)
   {
   }
 
   virtual void
-  post_init (ORBInitInfo_ptr info) throw (SystemException)
+  post_init (ORBInitInfo_ptr info)
   {
     slot_id = info->allocate_slot_id ();
     ACE_DEBUG ((LM_DEBUG, "Allocated slot with id %d.\n", slot_id));
