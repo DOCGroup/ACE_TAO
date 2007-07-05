@@ -131,7 +131,7 @@ TAO_DIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
 
       if (TAO_debug_level > 2)
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("TAO (%P|%t) - DIOP_Connector::connect - ")
+                    ACE_TEXT ("TAO (%P|%t) - DIOP_Connector::connect, ")
                     ACE_TEXT ("new connection on HANDLE %d\n"),
                     svc_handler->get_handle ()));
    }

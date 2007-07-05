@@ -163,7 +163,7 @@ TAO_DIOP_Connection_Handler::open (void*)
   if (TAO_debug_level > 5)
   {
      ACE_DEBUG ((LM_DEBUG,
-                 ACE_TEXT("TAO (%P|%t) - DIOP_Connection_Handler::open -")
+                 ACE_TEXT("TAO (%P|%t) - DIOP_Connection_Handler::open, ")
                  ACE_TEXT("listening on: <%s:%u>\n"),
                  ACE_TEXT_CHAR_TO_TCHAR (this->local_addr_.get_host_name ()),
                  this->local_addr_.get_port_number ()));
@@ -223,7 +223,7 @@ TAO_DIOP_Connection_Handler::open_server (void)
   if( TAO_debug_level > 5)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT("TAO (%P|%t) - DIOP_Connection_Handler::open_server -")
+                  ACE_TEXT("TAO (%P|%t) - DIOP_Connection_Handler::open_server, ")
                   ACE_TEXT("listening on %s:%d\n"),
                   ACE_TEXT_CHAR_TO_TCHAR (this->local_addr_.get_host_name ()),
                   this->local_addr_.get_port_number ()
@@ -315,7 +315,7 @@ TAO_DIOP_Connection_Handler::set_tos (int tos)
         {
           ACE_DEBUG ((LM_DEBUG,
                       "TAO (%P|%t) - DIOP_Connection_Handler::"
-                      "set_dscp_codepoint -> dscp: %x; result: %d; %s\n",
+                      "set_dscp_codepoint, dscp: %x; result: %d; %s\n",
                       tos,
                       result,
                       result == -1 ? "try running as superuser" : ""));
