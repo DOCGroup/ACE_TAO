@@ -1,3 +1,60 @@
+Thu Jul  5 08:01:00 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/ORB_Core.cpp:
+        * tao/ORB_Core.h:
+        * tao/params.cpp:
+        * tao/params.h:
+          Moved several ORB configuration settins out of the static resources
+          into the ORB params. With the introduction of the service gestalt
+          the static resources where handled to have an instance for each ORB
+          which leads to problems with RTCORBA. Now explicitly changed these
+          settings to have a value for each ORB, this makes it also possible
+          to mix RT and non RT ORBs/POAs in one process, but using the ORB
+          Initializer we can make sure all RTORBs get the correct value.
+          This fixes bugzilla 2953.
+
+        * MPC/config/strategies.mpb:
+          Strategies library needs PI
+
+        * orbsvcs/orbsvcs/FaultTolerance/FT_ClientORBInitializer.cpp:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_ClientService_Activate.cpp:
+          Changed to set the endpoint selector factory name on each ORB
+          instance using the ORB Initializer
+
+        * orbsvcs/orbsvcs/PortableGroup/PortableGroup_ORBInitializer.cpp:
+          Changed to set the POA name in each ORB instance
+
+        * tao/CSD_Framework/CSD_Framework_Loader.cpp:
+        * tao/CSD_Framework/CSD_Object_Adapter.h:
+        * tao/CSD_Framework/CSD_ORBInitializer.cpp:
+        * tao/CSD_Framework/CSD_ORBInitializer.h:
+          Added an ORB Initializer to set the POA name in each ORB instance
+          instead of setting it in the ORB static resources
+
+        * tao/EndpointPolicy/EndpointPolicy_ORBInitializer.cpp:
+        * tao/ORBInitializer_Registry.cpp:
+        * tao/PI/PolicyFactory_Registry.cpp:
+        * tao/PortableServer/Object_Adapter.cpp:
+          Layout changes
+
+        * tao/RTCORBA/RT_ORBInitializer.cpp:
+          Set all values into the ORB we are now initializing instead of
+          into the static resources
+
+        * tao/Strategies.mpc:
+        * tao/Strategies/OC_Endpoint_Selector_Factory.cpp:
+        * tao/Strategies/OC_Endpoint_Selector_Factory.h:
+        * tao/Strategies/Strategies_ORBInitializer.cpp:
+        * tao/Strategies/Strategies_ORBInitializer.h
+          Added ORB Initializer to set the endpoint selector factory, because
+          of this the strategies library now also depends on PI
+
+        * tao/TAO_Internal.cpp:
+          Don't initialize the POA here, do that in the ORB
+
+        * tao/Valuetype/ValueFactory_Map.cpp:
+          No need to include TAO_Singleton
+
 Thu Jul  5 06:22:00 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Notify/CosNotify_Service.cpp:

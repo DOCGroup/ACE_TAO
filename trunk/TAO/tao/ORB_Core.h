@@ -298,16 +298,8 @@ public:
 
   //@}
 
-  /// Sets the value of
-  /// TAO_ORB_Core::thread_lane_resources_manager_factory_name_
-  static void set_thread_lane_resources_manager_factory (const char *
-    thread_lane_resources_manager_factory_name);
-
   /// Sets the value of TAO_ORB_Core::collocation_resolver_name_
   static void set_collocation_resolver (const char *collocation_resolver_name);
-
-  /// Sets the value of TAO_ORB_Core::stub_factory_name_
-  static void set_stub_factory (const char *stub_factory_name);
 
   /// Sets the value of TAO_ORB_Core::resource_factory_
   static void set_resource_factory (const char *resource_factory_name);
@@ -319,24 +311,9 @@ public:
    */
   static void set_gui_resource_factory (TAO::GUIResource_Factory *gui_factory);
 
-  /// Sets the value of TAO_ORB_Core::protocols_hooks_
-  static void set_protocols_hooks (const char *protocols_hooks_name);
-
   /// Sets the value of TAO_ORB_Core::network_priority_protocols_hooks_
   static void set_network_priority_protocols_hooks (
     const char *network_priority_protocols_hooks_name);
-
-  /// Sets the value of TAO_ORB_Core::endpoint_selector_factory_
-  static void set_endpoint_selector_factory (
-    const char *endpoint_selector_factory_name);
-
-  /// Sets the name of the POA factory and the dynamic service
-  /// configurator directive to load it if needed.
-  static void set_poa_factory (const char *poa_factory_name,
-                               const char *poa_factory_directive);
-
-  /// Access the POA factory name.
-  static const ACE_CString &poa_factory_name (void);
 
   /// Gets the value of TAO_ORB_Core::protocols_hooks__
   TAO_Protocols_Hooks * get_protocols_hooks (void);
@@ -1275,14 +1252,6 @@ public:
   TAO_ORB_Core::Sync_Scope_Hook sync_scope_hook_;
 
   /**
-   * Name of the protocols_hooks that needs to be instantiated.
-   * The default value is "Protocols_Hooks". If RTCORBA option is
-   * set, its value will be set to be "RT_Protocols_Hooks".
-   */
-  ACE_CString protocols_hooks_name_;
-
-
-  /**
    * Name of the network_priority_protocols_hooks that needs to be instantiated.
   */
   ACE_CString network_priority_protocols_hooks_name_;
@@ -1294,38 +1263,12 @@ public:
   TAO_ORB_Core::Timeout_Hook connection_timeout_hook_;
 
   /**
-   * Name of the endpoint selector factory that needs to be instantiated.
-   * The default value is "Default_Endpoint_Selector_Factory". If
-   * TAO_RTCORBA is linked, the set_endpoint_selector_factory will be
-   * called to set the value to be "RT_Endpoint_Selector_Factory".
-   */
-  ACE_CString endpoint_selector_factory_name_;
-
-  /**
-   * Name of the thread lane resources manager that needs to be
-   * instantiated.  The default value is
-   * "Default_Thread_Lane_Resources_Manager_Factory". If TAO_RTCORBA
-   * is linked, the set_thread_lane_resources_manager will be called
-   * to set the value to be
-   * "RT_Thread_Lane_Resources_Manager_Factory".
-   */
-  ACE_CString thread_lane_resources_manager_factory_name_;
-
-  /**
    * Name of the collocation resolver that needs to be instantiated.
    * The default value is "Default_Collocation_Resolver". If
    * TAO_RTCORBA is linked, the set_collocation_resolver will be
    * called to set the value to be "RT_Collocation_Resolver".
    */
   ACE_CString collocation_resolver_name_;
-
-  /**
-   * Name of the stub factory that needs to be instantiated.
-   * The default value is "Default_Stub_Factory". If TAO_RTCORBA is
-   * linked, the set_stub_factory will be called to set the value
-   * to be "RT_Stub_Factory".
-   */
-  ACE_CString stub_factory_name_;
 
   /**
    * Name of the resource factory that needs to be instantiated.
@@ -1379,20 +1322,6 @@ public:
    * the value to "Concrete_Valuetype_Adapter_Factory".
    */
   ACE_CString valuetype_adapter_factory_name_;
-
-  /**
-   * Name of the service object used to create the RootPOA.  The
-   * default value is "TAO_POA".  If TAO_RTCORBA is loaded, this
-   * will be changed to TAO_RT_POA so that a POA equipped with
-   * realtime extensions will be returned.
-   */
-  ACE_CString poa_factory_name_;
-
-  /**
-   * The service configurator directive used to load
-   * poa_factory_name_ dynamically.
-   */
-  ACE_CString poa_factory_directive_;
 
   /// An alternative hook to be set for the ConnectionTimeoutPolicy
   TAO_ORB_Core::Timeout_Hook alt_connection_timeout_hook_;

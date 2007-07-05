@@ -15,8 +15,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 void
 TAO_EndpointPolicy_ORBInitializer::pre_init (
-    PortableInterceptor::ORBInitInfo_ptr
-    )
+    PortableInterceptor::ORBInitInfo_ptr)
 {
 }
 
@@ -25,14 +24,12 @@ TAO_EndpointPolicy_ORBInitializer::post_init (
     PortableInterceptor::ORBInitInfo_ptr info
     )
 {
-  this->register_policy_factories (info
-                                  );
+  this->register_policy_factories (info);
 }
 
 void
 TAO_EndpointPolicy_ORBInitializer::register_policy_factories (
-  PortableInterceptor::ORBInitInfo_ptr info
-  )
+  PortableInterceptor::ORBInitInfo_ptr info)
 {
   TAO_ORBInitInfo * local_info = dynamic_cast <TAO_ORBInitInfo *> (info);
 

@@ -8,7 +8,7 @@
 #endif /* __ACE_INLINE__ */
 
 #include "ace/OS_NS_Thread.h"
-
+#include "ace/Service_Config.h"
 
 ACE_RCSID (tao,
            params,
@@ -49,6 +49,17 @@ TAO_ORB_Parameters::TAO_ORB_Parameters (void)
 #endif /* ACE_HAS_IPV6 */
   , negotiate_codesets_ (true)
   , ami_collication_ (true)
+  , protocols_hooks_name_ ("Protocols_Hooks")
+  , endpoint_selector_factory_name_ ("Default_Endpoint_Selector_Factory")
+  , thread_lane_resources_manager_factory_name_ ("Default_Thread_Lane_Resources_Manager_Factory")
+  , stub_factory_name_ ("Default_Stub_Factory")
+  , poa_factory_name_ ("TAO_Object_Adapter_Factory")
+  , poa_factory_directive_
+      (ACE_TEXT_ALWAYS_CHAR
+        (ACE_DYNAMIC_SERVICE_DIRECTIVE("TAO_Object_Adapter_Factory",
+                                       "TAO_PortableServer",
+                                       "_make_TAO_Object_Adapter_Factory",
+                                       "")))
 {
   for (int i = 0; i != TAO_NO_OF_MCAST_SERVICES; ++i)
     {
@@ -322,5 +333,77 @@ TAO_ORB_Parameters::use_ipv6_link_local (void) const
   return this->use_ipv6_link_local_;
 }
 #endif /* ACE_HAS_IPV6 */
+
+void
+TAO_ORB_Parameters::protocols_hooks_name (const char *s)
+{
+  this->protocols_hooks_name_ = s;
+}
+
+const char *
+TAO_ORB_Parameters::protocols_hooks_name (void) const
+{
+  return this->protocols_hooks_name_.c_str ();
+}
+
+void
+TAO_ORB_Parameters::thread_lane_resources_manager_factory_name (const char *s)
+{
+  this->thread_lane_resources_manager_factory_name_ = s;
+}
+
+const char *
+TAO_ORB_Parameters::thread_lane_resources_manager_factory_name (void) const
+{
+  return this->thread_lane_resources_manager_factory_name_.c_str ();
+}
+
+void
+TAO_ORB_Parameters::stub_factory_name (const char *s)
+{
+  this->stub_factory_name_ = s;
+}
+
+const char *
+TAO_ORB_Parameters::stub_factory_name (void) const
+{
+  return this->stub_factory_name_.c_str ();
+}
+
+void
+TAO_ORB_Parameters::poa_factory_name (const char *s)
+{
+  this->poa_factory_name_ = s;
+}
+
+const char *
+TAO_ORB_Parameters::poa_factory_name (void) const
+{
+  return this->poa_factory_name_.c_str ();
+}
+
+void
+TAO_ORB_Parameters::poa_factory_directive (const char *s)
+{
+  this->poa_factory_directive_ = s;
+}
+
+const char *
+TAO_ORB_Parameters::poa_factory_directive (void) const
+{
+  return this->poa_factory_directive_.c_str ();
+}
+
+void
+TAO_ORB_Parameters::endpoint_selector_factory_name (const char *s)
+{
+  this->endpoint_selector_factory_name_ = s;
+}
+
+const char *
+TAO_ORB_Parameters::endpoint_selector_factory_name (void) const
+{
+  return this->endpoint_selector_factory_name_.c_str ();
+}
 
 TAO_END_VERSIONED_NAMESPACE_DECL

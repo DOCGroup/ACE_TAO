@@ -61,7 +61,6 @@ public:
   /// Destructor.
   virtual ~TAO_OC_Endpoint_Selector_Factory (void);
 
-
   virtual int init (int argc, ACE_TCHAR *argv[]);
 
   /// Get an Invocation's endpoint selection strategy and
@@ -73,6 +72,8 @@ protected:
   /// returned by this factory
 
   TAO_Optimized_Connection_Endpoint_Selector *oc_endpoint_selector_;
+
+  int register_orb_initializer (void);
 };
 
 

@@ -2,6 +2,9 @@
 
 #include "tao/Strategies/OC_Endpoint_Selector_Factory.h"
 #include "tao/Strategies/Optimized_Connection_Endpoint_Selector.h"
+#include "tao/Strategies/Strategies_ORBInitializer.h"
+#include "tao/ORBInitializer_Registry.h"
+#include "tao/PI/ORBInitInfo.h"
 #include "ace/Log_Msg.h"
 #include "tao/ORB_Core.h"
 #include "ace/OS.h"
@@ -27,7 +30,6 @@ TAO_OC_Endpoint_Selector_Factory::init (int argc, ACE_TCHAR *argv[])
 {
   ACE_Time_Value timeout(0,0);
 
-  TAO_ORB_Core::set_endpoint_selector_factory ("OC_Endpoint_Selector_Factory");
   for (int count = 0; count < argc; count++)
     {
       if ((ACE_OS::strcasecmp (argv[count],
@@ -40,12 +42,48 @@ TAO_OC_Endpoint_Selector_Factory::init (int argc, ACE_TCHAR *argv[])
         }
     }
 
+  if (this->register_orb_initializer () == -1)
+    return -1;
+
   ACE_NEW_RETURN (this->oc_endpoint_selector_,
                   TAO_Optimized_Connection_Endpoint_Selector(timeout),
                   -1);
   return 0;
 }
 
+int
+TAO_OC_Endpoint_Selector_Factory::register_orb_initializer (void)
+{
+  // Register the ORB initializer.
+  try
+    {
+      PortableInterceptor::ORBInitializer_ptr temp_orb_initializer =
+        PortableInterceptor::ORBInitializer::_nil ();
+
+      /// Register the RTCORBA ORBInitializer.
+      ACE_NEW_THROW_EX (temp_orb_initializer,
+                        TAO_Strategies_ORBInitializer,
+                        CORBA::NO_MEMORY (
+                          CORBA::SystemException::_tao_minor_code (
+                            TAO::VMCID,
+                            ENOMEM),
+                          CORBA::COMPLETED_NO));
+
+      PortableInterceptor::ORBInitializer_var orb_initializer;
+      orb_initializer = temp_orb_initializer;
+
+      PortableInterceptor::register_orb_initializer (orb_initializer.in ());
+    }
+  catch (const ::CORBA::Exception& ex)
+    {
+      ex._tao_print_exception (
+        "Unexpected exception caught while "
+        "initializing the Strategies library");
+      return -1;
+    }
+
+  return 0;
+}
 
 TAO_Invocation_Endpoint_Selector *
 TAO_OC_Endpoint_Selector_Factory::get_selector (void)
