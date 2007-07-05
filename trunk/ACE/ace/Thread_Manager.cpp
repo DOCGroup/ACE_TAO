@@ -532,6 +532,7 @@ ace_thread_manager_adapter (void *args)
   // Invoke the user-supplied function with the args.
   void *status = thread_args->invoke ();
 
+  delete static_cast<ACE_Base_Thread_Adapter> (thread_args);
   return status;
 }
 #endif
@@ -585,6 +586,7 @@ ACE_Thread_Manager::spawn_i (ACE_THR_FUNC func,
                                       new_thr_desc.get ()),
                   -1);
 # endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
+  auto_ptr <ACE_Base_Thread_Adapter> auto_thread_args (static_cast<ACE_Base_Thread_Adapter *> (thread_args));
 
   ACE_TRACE ("ACE_Thread_Manager::spawn_i");
   ACE_hthread_t thr_handle;
@@ -639,6 +641,7 @@ ACE_Thread_Manager::spawn_i (ACE_THR_FUNC func,
       new_thr_desc->sync_->release ();
       return -1;
     }
+  auto_thread_args.release ();
 
 #if defined (ACE_HAS_WTHREADS)
   // Have to duplicate handle if client asks for it.

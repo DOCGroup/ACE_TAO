@@ -1,6 +1,13 @@
-Wed Jul  4 15:45:45 UTC 2007  Vladimir Zykov <vladimir.zykov@prismtech.com>
+Thu Jul  5 07:35:45 UTC 2007  Simon Massey  <sma@prismtech.com>
+
+        * ace/Thread_Manager.cpp:
+
+          Fixed Bugzilla 2972 - Memory leak of ACE_Thread_Adapter on spawn.
+
+Wed Jul  4 15:45:45 UTC 2007  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * bin/PerlACE/Process_Unix.pm:
+
           Fixed a problem that existed on SunOS when arguments of spawned
           process contained any of [] and exec in that case was spawning a
           new process instead of loading it in place of a process created
