@@ -1,3 +1,10 @@
+Thu Jul  5 16:03:29 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * tests/Semaphore_Test.cpp: Removed the platform restrictions for
+          avoiding the semaphore timed-acquire functionality. There should
+          be available support for all (or most) platforms, so we need to
+          shake out which have it natively and which need the emulation.
+
 Thu Jul  5 07:35:45 UTC 2007  Simon Massey  <sma@prismtech.com>
 
         * ace/Thread_Manager.cpp:

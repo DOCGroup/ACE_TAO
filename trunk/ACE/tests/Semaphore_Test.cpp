@@ -55,7 +55,6 @@ static size_t n_workers = 10;
 // Amount to release the semaphore.
 static u_int n_release_count = 3;
 
-#if !defined (ACE_HAS_STHREADS) && (!defined (ACE_HAS_POSIX_SEM) || defined (ACE_HAS_POSIX_SEM_TIMEOUT))
 // Number of timeouts.
 static size_t timeouts = 0;
 
@@ -114,7 +113,6 @@ test_timeout (void)
   ++wait_secs;
   return status;
 }
-#endif /* ACE_HAS_STHREADS && ACE_HAS_POSIX_SEM */
 
 // Explain usage and exit.
 static void
@@ -160,7 +158,6 @@ worker (void *)
        iterations <= n_iterations;
        iterations++)
     {
-#if !defined (ACE_HAS_STHREADS) && (!defined (ACE_HAS_POSIX_SEM) || defined (ACE_HAS_POSIX_SEM_TIMEOUT))
       ACE_Time_Value wait (0,
                            iterations * 1000 * 100);  // Wait 'iter' msec
       ACE_Time_Value tv = ACE_OS::gettimeofday () + wait;
@@ -195,13 +192,6 @@ worker (void *)
                                          (ACE_OS::rand () % 1000) * 1000));
           s.release ();
         }
-#else
-      s.acquire ();
-      // Hold the lock for a while.
-      ACE_OS::sleep (ACE_Time_Value (0,
-                                     (ACE_OS::rand () % 1000) * 1000));
-      s.release ();
-#endif /* ACE_HAS_STHREADS && ACE_HAS_POSIX_SEM */
       ACE_Thread::yield ();
     }
 
@@ -220,12 +210,10 @@ int run_main (int argc, ACE_TCHAR *argv[])
   parse_args (argc, argv);
   ACE_OS::srand ((u_int) ACE_OS::time (0L));
 
-#  if !defined (ACE_HAS_STHREADS) && (!defined (ACE_HAS_POSIX_SEM) || defined (ACE_HAS_POSIX_SEM_TIMEOUT))
   //Test timed waits.
   for (size_t i = 0; i < test_timeout_count; i++)
     if (test_timeout () != 0)
       test_result = 1;
-#  endif /* ACE_HAS_STHREADS && ACE_HAS_POSIX_SEM */
 
   // Release the semaphore a certain number of times.
   s.release (n_release_count);
@@ -242,13 +230,11 @@ int run_main (int argc, ACE_TCHAR *argv[])
 
   ACE_Thread_Manager::instance ()->wait ();
 
-#  if !defined (ACE_HAS_STHREADS) && (!defined (ACE_HAS_POSIX_SEM) || defined (ACE_HAS_POSIX_SEM_TIMEOUT))
   size_t percent = (timeouts * 100) / (n_workers * n_iterations);
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Worker threads timed out %d percent of the time\n"),
               (int)percent));
-#  endif /* ACE_HAS_STHREADS && ACE_HAS_POSIX_SEM */
 
   if (test_result == 0)
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Semaphore Test successful\n")));
