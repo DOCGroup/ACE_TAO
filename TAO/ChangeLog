@@ -1,3 +1,9 @@
+Thu Jul  5 12:50:00 UTC 2007  Simon Massey  <sma@prismtech.com>
+
+        * orbsvcs/tests/InterfaceRepo/Bug_2962_Regression/run_test.pl:
+
+          typo.
+
 Thu Jul  5 12:18:00 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/Object_Adapter.inl:
