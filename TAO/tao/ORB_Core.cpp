@@ -1805,9 +1805,6 @@ TAO_ORB_Core::root_poa (void)
       // the correct service repository (ours), instead of the global one.
       ACE_Service_Config_Guard scg (this->configuration ());
 
-      TAO_ORB_Core_Static_Resources* static_resources =
-        TAO_ORB_Core_Static_Resources::instance ();
-
       TAO_Adapter_Factory *factory =
         ACE_Dynamic_Service<TAO_Adapter_Factory>::instance
           (this->configuration (),
