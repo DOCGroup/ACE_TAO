@@ -1,3 +1,11 @@
+Thu Jul  5 12:17:00 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/DIOP/run_test.pl:
+          Use a valid explicit portnumer
+
+        * tests/DIOP/server.cpp:
+          Layout change
+
 Thu Jul  5 11:40:00 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_2503_Regression/test_i.cpp:
