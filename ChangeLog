@@ -1,3 +1,12 @@
+2007-07-05    <wotte@localhost.localdomain>
+
+	* SA_POP/XML_TaskMap.cpp:
+	* SA_POP/XML_TaskMap.hpp:
+	* SA_POP/SA_POP.mpc:
+
+	  Updated generated code to latest version of XSC and added an
+	  XSC generation project to the MPC file.
+
 Thu May 17 17:49:57 UTC 2007  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
 
         * SA_POP/SA_POP_Standalone.mwc:
