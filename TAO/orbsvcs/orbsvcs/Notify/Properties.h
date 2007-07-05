@@ -49,9 +49,6 @@ public:
   /// Return a singleton instance of this class.
   static TAO_Notify_Properties * instance (void);
 
-  /// Set the singleton instance for this class.
-  static void instance (TAO_Notify_Properties* properties);
-
   // = Property Accessors
   TAO_Notify_Factory* factory (void);
   void factory (TAO_Notify_Factory* factory);
