@@ -18,6 +18,10 @@ USER VISIBLE CHANGES BETWEEN ACE-5.5.9 and ACE-5.5.10
 . CodeGear C++ Builder 2007 support. Compilation of ACE has been validated but
   no runtime testing has been performed.
 
+. The FaCE utility was moved from the ACE_wrappers/apps directory to
+  ACE_wrappers/contrib. It is used for testing ACE+TAO apps on WinCE.
+  See the ACE_wrappers/contrib/FaCE/README file for more information.
+
 USER VISIBLE CHANGES BETWEEN ACE-5.5.8 and ACE-5.5.9
 ====================================================
 
