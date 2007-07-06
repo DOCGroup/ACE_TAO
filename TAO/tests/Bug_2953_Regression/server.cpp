@@ -5,6 +5,7 @@
 #include "tao/Object.h"
 #include "tao/SystemException.h"
 #include "tao/RTCORBA/RTCORBA.h"
+#include "tao/RTPortableServer/RTPortableServer.h"
 #include "tao/Utils/PolicyList_Destroyer.h"
 #include "ace/Log_Msg.h"
 #include "ace/Thread.h"
@@ -87,7 +88,7 @@ RTCORBA::RTORB_ptr getRTORB(CORBA::ORB_ptr orb, const char *id)
                   "Failed getting RTORB for orb <%s>\n",
                   id));
     }
-  return rtorb;
+  return RTCORBA::RTORB::_duplicate (rtorb);
 }
 
 PortableServer::POA_ptr getRootPoa(CORBA::ORB_ptr orb, const char *id)
@@ -100,7 +101,7 @@ PortableServer::POA_ptr getRootPoa(CORBA::ORB_ptr orb, const char *id)
                   "Failed getting RootPOA for orb <%s>\n",
                   id));
     }
-  return poa;
+  return PortableServer::POA::_duplicate (poa);
 }
 
 const char*
@@ -154,7 +155,7 @@ removeServant(
 
 void shutdownORB(CORBA::ORB_ptr orb, const char * orbid)
 {
-  orb->shutdown(0);
+  orb->shutdown(true);
   ACE_DEBUG ((LM_DEBUG,
               "ORB <%s> is shutdown\n",
               orbid));
@@ -188,14 +189,13 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     const char *orbidA = "orbidA";
     const char *orbidB = "orbidB";
 
-    CORBA::ORB_var orbA = CORBA::ORB_init(argc, argv, orbidA);
-
     PortableServer::ServantBase *implA = 0;
     PortableServer::ServantBase *implB = 0;
     RTCORBA::ThreadpoolId tpidA = 0;
     RTCORBA::ThreadpoolId tpidB = 0;
 
     // server - write our iors to two files
+    CORBA::ORB_var orbA = CORBA::ORB_init(argc, argv, orbidA);
     CORBA::ORB_var orbB = CORBA::ORB_init(argc, argv, orbidB);
     RTCORBA::RTORB_var rtorbA = getRTORB(orbA.in (), orbidA);
     RTCORBA::RTORB_var rtorbB = getRTORB(orbB.in (), orbidB);
@@ -226,9 +226,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     Test::Hello_var helloA(Test::Hello::_narrow(objA.in ()));
     CORBA::String_var resA = helloA->get_string();
 
-    // note: orbA can convert iorB into a legal colocated object,
-    // even though objB was created by orbB!
-    CORBA::Object_var objB = orbA->string_to_object(iorB);
+    CORBA::Object_var objB = orbB->string_to_object(iorB);
     Test::Hello_var helloB(Test::Hello::_narrow(objB.in ()));
     CORBA::String_var resB = helloB->get_string();
 
@@ -243,13 +241,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         ACE_ERROR ((LM_ERROR, "Error activating client task\n"));
       }
     client_taskA.thr_mgr ()->wait ();
-
-    if (implB != 0)
-      {
-        removeServant(rtorbB.in (), rootPoaB.in (), implB, tpidB);
-      }
-
-    shutdownORB(orbB.in (), orbidB);
+    client_taskB.thr_mgr ()->wait ();
 
     if (implA != 0)
       {
@@ -257,6 +249,23 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       }
 
     shutdownORB(orbA.in (), orbidA);
+
+    if (implB != 0)
+      {
+        removeServant(rtorbB.in (), rootPoaB.in (), implB, tpidB);
+      }
+
+    shutdownORB(orbB.in (), orbidB);
+    objB = CORBA::Object::_nil ();
+    helloB = Test::Hello::_nil ();
+    orbB = CORBA::ORB::_nil ();
+    rtorbB = RTCORBA::RTORB::_nil ();
+    rootPoaB = PortableServer::POA::_nil ();
+    objA = CORBA::Object::_nil ();
+    helloA = Test::Hello::_nil ();
+    orbA = CORBA::ORB::_nil ();
+    rtorbA = RTCORBA::RTORB::_nil ();
+    rootPoaA = PortableServer::POA::_nil ();
   }
   catch (const CORBA::Exception& ex)
   {
