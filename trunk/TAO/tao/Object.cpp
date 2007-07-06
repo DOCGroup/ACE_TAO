@@ -158,6 +158,8 @@ CORBA::Object::marshal (const CORBA::Object_ptr x,
   return x->marshal (cdr);
 }
 
+#if defined (GEN_OSTREAM_OPS)
+
 /*static*/ std::ostream &
 CORBA::Object::_tao_stream (std::ostream &strm,
                             const CORBA::Object_ptr _tao_objref)
@@ -170,6 +172,8 @@ CORBA::Object::_tao_stream_v (std::ostream &strm) const
 {
   return strm << "\"IDL:omg.org/CORBA/Object:1.0\"";
 }
+
+#endif /* GEN_OSTREAM_OPS */
 
 bool
 CORBA::Object::can_convert_to_ior (void) const
@@ -928,12 +932,15 @@ operator>> (TAO_InputCDR& cdr, CORBA::Object*& x)
   return (CORBA::Boolean) cdr.good_bit ();
 }
 
+#if defined (GEN_OSTREAM_OPS)
+
 std::ostream&
 operator<< (std::ostream &strm, CORBA::Object_ptr _tao_objref)
 {
   return CORBA::Object::_tao_stream (strm, _tao_objref);
 }
 
+#endif /* GEN_OSTREAM_OPS */
 
 // =========================================================
 // Traits specializations for CORBA::Object.

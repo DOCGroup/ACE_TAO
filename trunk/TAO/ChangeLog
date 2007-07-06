@@ -1,3 +1,21 @@
+Fri Jul  6 10:18:16 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * MPC/config/gen_ostream.mpb:
+        * tao/AnyTypeCode/TypeCode.cpp:
+        * tao/AnyTypeCode/Any.h:
+        * tao/AnyTypeCode/Any.cpp:
+        * tao/AnyTypeCode/TypeCode.h:
+        * tao/Object.h:
+        * tao/Valuetype/AbstractBase.h:
+        * tao/Valuetype/ValueBase.cpp:
+        * tao/Valuetype/AbstractBase.cpp:
+        * tao/Valuetype/ValueBase.h:
+        * tao/Object.cpp:
+        
+          Added a flag, defined by when the gen_ostream feature is turned on,
+          that guards the ostream operators for Object, ValueBase, Any,
+          TypeCode, and AbstractBase.
+
 Fri Jul  6 05:03:43 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * orbsvcs/examples/ImR/Advanced/TestClient.cpp:
