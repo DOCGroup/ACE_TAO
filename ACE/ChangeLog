@@ -1,3 +1,19 @@
+Fri Jul  6 14:52:00 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * ace/OS_NS_Thread.inl:
+        * ace/os_include/os_semaphore.h: Reversed the default for platforms
+          that do have POSIX semaphores (ACE_HAS_POSIX_SEM) but do not have
+          native timed-wait functionality (ACE_HAS_POSIX_SEM_TIMEOUT). They
+          used to include the timed wait capability only if the
+          ACE_HAS_POSIX_SEM_TIMEOUT_EMULATION macro was set; now they will
+          always include the timed wait emulation unless the
+          ACE_DISABLE_POSIX_SEM_TIMEOUT_EMULATION macro is set. This
+          automatically extends the capability where it is needed but leaves
+          a way for it to be disabled for users who really want to save the
+          memory footprint and don't need timed waits.
+
+        * ace/config-aix-5.x.h: Removed ACE_HAS_POSIX_SEM_TIMEOUT_EMULATION.
+
 Fri Jul  6 10:10:58 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * bin/MakeProjectCreator/config/support_ostream.mpb:

@@ -59,13 +59,13 @@ extern "C"
      int new_sema_;
 #  endif /* ACE_LACKS_NAMED_POSIX_SEM */
 
-#  if !defined (ACE_HAS_POSIX_SEM_TIMEOUT) && defined (ACE_HAS_POSIX_SEM_TIMEOUT_EMULATION)
+#  if !defined (ACE_HAS_POSIX_SEM_TIMEOUT) && !defined (ACE_DISABLE_POSIX_SEM_TIMEOUT_EMULATION)
      /// Serialize access to internal state.
      ACE_mutex_t lock_;
 
      /// Block until there are no waiters.
      ACE_cond_t count_nonzero_;
-#  endif /* !ACE_HAS_POSIX_SEM_TIMEOUT && ACE_HAS_POSIX_SEM_TIMEOUT_EMULATION */
+#  endif /* !ACE_HAS_POSIX_SEM_TIMEOUT && !ACE_DISABLE_POSIX_SEM_TIMEOUT_EMULATION */
    } ACE_sema_t;
 #endif /* ACE_HAS_POSIX_SEM */
 
