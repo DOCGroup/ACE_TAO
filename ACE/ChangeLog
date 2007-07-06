@@ -1,3 +1,13 @@
+Fri Jul  6 21:33:47 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * apps/FaCE:
+        * contrib/FaCE: Moved the FaCE utility from apps to contrib. It's a
+          useful utility for testing ACE+TAO apps on WinCE, but is not an
+          ACE app. It's also not particularly well-maintained, but is a
+          useful utility to keep for WinCE developers.
+
+        * NEWS: Noted the above move.
+
 Fri Jul  6 15:24:48 UTC 2007  Steve Huston  <shuston@riverace.com>
 
         * ace/OS_NS_unistd.cpp (fork_exec): Free allocated memory in the case
