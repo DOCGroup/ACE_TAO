@@ -7,9 +7,13 @@ PLANNED MAJOR CHANGES "SOMETIME IN THE FUTURE" (i.e., exact beta not known)
 
 . (OO) Various other fixes that have been piling up.
 
-. (Remedy) VxWorks 6.5 support
-
 . (Remedy) Intel C++ 10.0 support
+
+USER VISIBLE CHANGES BETWEEN ACE-5.5.9 and ACE-5.5.10
+====================================================
+
+. VxWorks 6.5 support. Compilation of the core libraries has been validated
+  but no runtime testing has been performed.
 
 USER VISIBLE CHANGES BETWEEN ACE-5.5.8 and ACE-5.5.9
 ====================================================
