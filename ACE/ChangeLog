@@ -1,3 +1,9 @@
+Fri Jul  6 15:24:48 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * ace/OS_NS_unistd.cpp (fork_exec): Free allocated memory in the case
+          where Windows CreateProcess() fails. Thanks to Martin Kolleck for
+          this fix. Resolves Bugzilla #2983.
+
 Fri Jul  6 14:52:00 UTC 2007  Steve Huston  <shuston@riverace.com>
 
         * ace/OS_NS_Thread.inl:

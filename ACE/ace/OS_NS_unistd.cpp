@@ -269,6 +269,7 @@ ACE_OS::fork_exec (ACE_TCHAR *argv[])
           delete [] buf;
           return process_info.dwProcessId;
         }
+      delete [] buf;
     }
 
   // CreateProcess failed.
