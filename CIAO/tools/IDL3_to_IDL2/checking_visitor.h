@@ -7,18 +7,18 @@
 //    TAO_IDL3_TO_IDL2_BE_DLL
 //
 // = FILENAME
-//    idl3_to_idl2_visitor.h
+//    checking_visitor.h
 //
 // = DESCRIPTION
-//    Generates equivalent IDL2 from IDL3.
+//    Visitor that checks input IDL3 in a separate pass.
 //
 // = AUTHOR
 //    Jeff Parsons <j.parsons@vanderbilt.edu>
 //
 // ============================================================================
 
-#ifndef TAO_IDL3_TO_IDL2_VISITOR_H
-#define TAO_IDL3_TO_IDL2_VISITOR_H
+#ifndef TAO_IDL_CHECKING_VISITOR_H
+#define TAO_IDL_CHECKING_VISITOR_H
 
 #include "ast_visitor.h"
 #include "utl_scoped_name.h"
@@ -27,23 +27,21 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-class TAO_OutStream;
 class UTL_ExceptList;
 
-class idl3_to_idl2_visitor : public ast_visitor
+class checking_visitor : public ast_visitor
 {
   //
   // = TITLE
-  //    idl3_to_idl2_visitor.
+  //    checking_visitor.
   //
   // = DESCRIPTION
-  //    IDL3 to IDL2 conversion visitor. The methods are
-  //    not pure virtual to facilitate the implementation of some
-  //    derived visitors that override only a few.
+  //    Checks input IDL3 and sets flags used by subsequent
+  //    equivalent IDL generating visitor.
   //
 public:
-  idl3_to_idl2_visitor (void);
-  virtual ~idl3_to_idl2_visitor (void);
+  checking_visitor (void);
+  virtual ~checking_visitor (void);
 
   virtual int visit_decl (AST_Decl *d);
   virtual int visit_scope (UTL_Scope *node);
@@ -82,35 +80,13 @@ public:
   virtual int visit_typedef (AST_Typedef *node);
   virtual int visit_root (AST_Root *node);
   virtual int visit_native (AST_Native *node);
+  
+  bool is_idl3 (void) const;
+  bool is_local_idl3 (void) const;
 
 private:
-  void check_prefix (AST_Decl *d);
-  void check_id_and_version (AST_Decl *d);
-  const char *type_name (AST_Type *t);
-  void gen_anonymous_array (AST_Type *array, AST_Decl *wrapper);
-  void gen_label_value (AST_UnionLabel *node);
-  void gen_provides (AST_Component *node);
-  void gen_uses (AST_Component *node);
-  void gen_publishes (AST_Component *node);
-  void gen_emits (AST_Component *node);
-  void gen_consumes (AST_Component *node);
-  UTL_ScopedName *create_scoped_name (const char *prefix,
-                                      const char *local_name,
-                                      const char *suffix,
-                                      AST_Decl *parent);
-  void tranfer_scope_elements (AST_Home *src, AST_Interface &dst);
-  void gen_factories (AST_Home *node, AST_Interface &xplicit);
-  void gen_finders (AST_Home *node, AST_Interface &xplicit);
-  void gen_params (UTL_Scope *s, int arg_count);
-  void gen_exception_list (UTL_ExceptList *exceptions,
-                           const char *prefix = "",
-                           bool closed = true);
-  void gen_attribute (AST_Attribute *node);
-  void gen_operation (AST_Operation *node);
-
-private:
-  TAO_OutStream *os;
-  AST_Type *disc_type_;
+  bool is_idl3_;
+  bool is_local_idl3_;
 };
 
-#endif /* TAO_IDL3_TO_IDL2_VISITOR_H */
+#endif /* TAO_IDL_CHECKING_VISITOR_H */

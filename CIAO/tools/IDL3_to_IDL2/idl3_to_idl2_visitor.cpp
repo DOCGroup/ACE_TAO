@@ -2,6 +2,7 @@
 // $Id$
 
 #include "idl3_to_idl2_visitor.h"
+#include "identifier_helper.h"
 #include "be_sunsoft.h"
 #include "be_extern.h"
 
@@ -113,7 +114,9 @@ idl3_to_idl2_visitor::visit_module (AST_Module *node)
 
   *os << be_nl << be_nl;
 
-  *os << "module " << node->local_name () << be_nl
+  ACE_CString name =
+    IdentifierHelper::try_escape (node->original_local_name ());
+  *os << "module " << name.c_str () << be_nl
       << "{" << be_idt;
 
   this->check_id_and_version (node);
@@ -128,7 +131,7 @@ idl3_to_idl2_visitor::visit_module (AST_Module *node)
     }
 
   *os << be_uidt_nl
-      << "};";
+      << "}; // end of module " << name.c_str ();
 
   return 0;
 }
@@ -153,7 +156,8 @@ idl3_to_idl2_visitor::visit_interface (AST_Interface *node)
       *os << "abstract ";
     }
 
-  *os << "interface " << node->local_name ();
+  *os << "interface "
+      << IdentifierHelper::try_escape (node->original_local_name ()).c_str ();
 
   AST_Interface **parents = node->inherits ();
 
@@ -211,7 +215,9 @@ idl3_to_idl2_visitor::visit_interface_fwd (AST_InterfaceFwd *node)
       *os << "abstract ";
     }
 
-  *os << "interface " << node->local_name () << ";";
+  *os << "interface "
+      << IdentifierHelper::try_escape (node->original_local_name ()).c_str ()
+      << ";";
 
   return 0;
 }
@@ -225,7 +231,8 @@ idl3_to_idl2_visitor::visit_valuebox (AST_ValueBox *node)
     }
 
   *os << be_nl << be_nl
-      << "valuetype " << node->local_name ();
+      << "valuetype "
+      << IdentifierHelper::try_escape (node->original_local_name ()).c_str ();
 
   AST_Type *bt = node->boxed_type ();
 
@@ -267,7 +274,8 @@ idl3_to_idl2_visitor::visit_valuetype (AST_ValueType *node)
       *os << "custom ";
     }
 
-  *os << "valuetype " << node->local_name ();
+  *os << "valuetype "
+      << IdentifierHelper::try_escape (node->original_local_name ()).c_str ();
 
   AST_Decl::NodeType nt = node->node_type ();
   AST_Interface **parents = node->inherits ();
@@ -347,7 +355,9 @@ idl3_to_idl2_visitor::visit_valuetype_fwd (AST_ValueTypeFwd *node)
 
   (void) node->node_type ();
 
-  *os << "valuetype " << node->local_name () << ";";
+  *os << "valuetype "
+      << IdentifierHelper::try_escape (node->original_local_name ()).c_str ()
+      << ";";
 
   return 0;
 }
@@ -361,7 +371,8 @@ idl3_to_idl2_visitor::visit_component (AST_Component *node)
     }
 
   *os << be_nl << be_nl
-      << "interface " << node->local_name ();
+      << "interface "
+      << IdentifierHelper::try_escape (node->original_local_name ()).c_str ();
 
   AST_Component *base = node->base_component ();
   long nsupports = node->n_supports ();
@@ -409,7 +420,9 @@ idl3_to_idl2_visitor::visit_component_fwd (AST_ComponentFwd *node)
 
   *os << be_nl << be_nl;
 
-  *os << "component " << node->local_name () << ";";
+  *os << "component "
+      << IdentifierHelper::try_escape (node->original_local_name ()).c_str ()
+      << ";";
 
   return 0;
 }
@@ -431,7 +444,7 @@ idl3_to_idl2_visitor::visit_eventtype (AST_EventType *node)
     }
 
   *os << be_nl << be_nl
-      << "interface " << node->local_name () << "Consumer : ";
+      << "interface " << node->original_local_name () << "Consumer : ";
 
   AST_Interface *parent = 0;
   AST_Decl::NodeType nt = AST_Decl::NT_native;
@@ -454,9 +467,10 @@ idl3_to_idl2_visitor::visit_eventtype (AST_EventType *node)
 
   *os << be_nl
       << "{" << be_idt_nl
-      << "void push_" << node->local_name () << " (in "
-      << node->local_name () << " the_"
-      << node->local_name () << ");" << be_uidt_nl
+      << "void push_" << node->original_local_name () << " (in "
+      << IdentifierHelper::try_escape (node->original_local_name ()).c_str ()
+      << " the_"
+      << node->original_local_name () << ");" << be_uidt_nl
       << "};";
 
   return 0;
@@ -479,7 +493,7 @@ idl3_to_idl2_visitor::visit_eventtype_fwd (AST_EventTypeFwd *node)
     }
 
   *os << be_nl
-      << "interface " << node->local_name () << "Consumer;";
+      << "interface " << node->original_local_name () << "Consumer;";
 
   return 0;
 }
@@ -593,9 +607,11 @@ idl3_to_idl2_visitor::visit_home (AST_Home *node)
 
   // Create equivalent interface.
   *os << be_nl << be_nl
-      << "interface " << node->local_name () << " : "
-      << node->local_name () << "Explicit, "
-      << node->local_name () << "Implicit" << be_nl
+      << "interface "
+      << IdentifierHelper::try_escape (node->original_local_name ()).c_str ()
+      << " : "
+      << node->original_local_name () << "Explicit, "
+      << node->original_local_name () << "Implicit" << be_nl
       << "{" << be_nl
       << "};";
 
@@ -613,7 +629,9 @@ idl3_to_idl2_visitor::visit_factory  (AST_Factory *node)
 
   *os << be_nl;
 
-  *os << "factory " << node->local_name () << " (";
+  *os << "factory "
+      << IdentifierHelper::try_escape (node->original_local_name ()).c_str ()
+      << " (";
 
   this->gen_params (node, node->argument_count ());
 
@@ -638,7 +656,9 @@ idl3_to_idl2_visitor::visit_structure (AST_Structure *node)
 
   *os << be_nl << be_nl;
 
-  *os << "struct " << node->local_name () << be_nl
+  *os << "struct "
+      << IdentifierHelper::try_escape (node->original_local_name ()).c_str ()
+      << be_nl
       << "{" << be_idt;
 
   this->check_id_and_version (node);
@@ -667,7 +687,9 @@ idl3_to_idl2_visitor::visit_structure_fwd (AST_StructureFwd *node)
 
   *os << be_nl << be_nl;
 
-  *os << "struct " << node->local_name () << ";";
+  *os << "struct "
+      << IdentifierHelper::try_escape (node->original_local_name ()).c_str ()
+      << ";";
 
   return 0;
 }
@@ -682,7 +704,9 @@ idl3_to_idl2_visitor::visit_exception (AST_Exception *node)
 
   *os << be_nl << be_nl;
 
-  *os << "exception " << node->local_name () << be_nl
+  *os << "exception "
+      << IdentifierHelper::try_escape (node->original_local_name ()).c_str ()
+      << be_nl
       << "{" << be_idt;
 
   this->check_id_and_version (node);
@@ -717,7 +741,9 @@ idl3_to_idl2_visitor::visit_enum (AST_Enum *node)
 
   *os << be_nl << be_nl;
 
-  *os << "enum " << node->local_name () << be_nl
+  *os << "enum "
+      << IdentifierHelper::try_escape (node->original_local_name ()).c_str ()
+      << be_nl
       << "{" << be_idt;
 
   for (UTL_ScopeActiveIterator i (node, UTL_Scope::IK_decls);
@@ -726,7 +752,7 @@ idl3_to_idl2_visitor::visit_enum (AST_Enum *node)
       *os << be_nl;
 
       AST_EnumVal *ev = AST_EnumVal::narrow_from_decl (i.item ());
-      *os << ev->local_name ();
+      *os << ev->original_local_name ();
 
       // Advance here so the check below will work.
       i.next ();
@@ -748,24 +774,7 @@ idl3_to_idl2_visitor::visit_enum (AST_Enum *node)
 int
 idl3_to_idl2_visitor::visit_operation (AST_Operation *node)
 {
-  *os << be_nl << be_nl;
-
-  if (node->flags () == AST_Operation::OP_oneway)
-    {
-      *os << "oneway ";
-    }
-
-  *os << this->type_name (node->return_type ());
-  *os << " " << node->local_name () << " (";
-
-  this->gen_params (node, node->argument_count ());
-
-  *os << ")";
-
-  this->gen_exception_list (node->exceptions ());
-
-  *os << ";";
-
+  this->gen_operation (node);
   this->check_id_and_version (node);
 
   return 0;
@@ -791,7 +800,8 @@ idl3_to_idl2_visitor::visit_field (AST_Field *node)
     {
       // Keep these statements separate because of side effects.
       *os << this->type_name (ft);
-      *os << " " << node->local_name ();
+      *os << " "
+          << IdentifierHelper::try_escape (node->original_local_name ()).c_str ();
     }
 
   *os << ";";
@@ -820,7 +830,8 @@ idl3_to_idl2_visitor::visit_argument (AST_Argument *node)
     }
 
   *os << this->type_name (node->field_type ())
-      << " " << node->local_name ();
+      << " "
+      << IdentifierHelper::try_escape (node->original_local_name ()).c_str ();
 
   return 0;
 }
@@ -828,24 +839,7 @@ idl3_to_idl2_visitor::visit_argument (AST_Argument *node)
 int
 idl3_to_idl2_visitor::visit_attribute (AST_Attribute *node)
 {
-  bool rd_only = node->readonly ();
-
-  // Keep output statements separate because of side effects.
-  // No need to check for anonymous array - anonymous types not
-  // accepted by parser for attributes.
-  *os << be_nl << be_nl
-      << (rd_only ? "readonly " : "") << "attribute ";
-  *os << this->type_name (node->field_type ());
-  *os << " " << node->local_name ();
-
-  this->gen_exception_list (node->get_get_exceptions (),
-                            rd_only ? "" : "get");
-
-  this->gen_exception_list (node->get_set_exceptions (),
-                            "set");
-
-  *os << ";";
-
+  this->gen_attribute (node);
   this->check_id_and_version (node);
 
   return 0;
@@ -861,10 +855,12 @@ idl3_to_idl2_visitor::visit_union (AST_Union *node)
 
   this->disc_type_ = node->disc_type ()->unaliased_type ();
 
-  *os << be_nl << be_nl;
-
-  *os << "union " << node->local_name () << " switch ("
-      << node->disc_type ()->name () << ")" << be_nl
+  *os << be_nl << be_nl
+      << "union "
+      << IdentifierHelper::try_escape (node->original_local_name ()).c_str ()
+      << " switch ("
+      << this->type_name (node->disc_type ())
+      << ")" << be_nl
       << "{" << be_idt;
 
   this->check_id_and_version (node);
@@ -892,7 +888,9 @@ idl3_to_idl2_visitor::visit_union_fwd (AST_UnionFwd *node)
     }
 
   *os << be_nl << be_nl
-      << "union " << node->local_name () << ";";
+      << "union "
+      << IdentifierHelper::try_escape (node->original_local_name ()).c_str ()
+      << ";";
 
   return 0;
 }
@@ -920,7 +918,8 @@ idl3_to_idl2_visitor::visit_union_branch (AST_UnionBranch *node)
   else
     {
       *os << this->type_name (ft);
-      *os << " " << node->local_name ();
+      *os << " "
+          << IdentifierHelper::try_escape (node->original_local_name ()).c_str ();
     }
 
   *os << ";";
@@ -1013,8 +1012,9 @@ idl3_to_idl2_visitor::visit_constant (AST_Constant *node)
         break;
     }
 
-  *os <<  " "
-      << node->local_name () << " = " << node->constant_value () << ";";
+  *os << " "
+      << IdentifierHelper::try_escape (node->original_local_name ()).c_str ()
+      << " = " << node->constant_value () << ";";
 
   this->check_id_and_version (node);
 
@@ -1094,7 +1094,8 @@ idl3_to_idl2_visitor::visit_typedef (AST_Typedef *node)
   else
     {
       *os << this->type_name (bt);
-      *os << " " << node->local_name ();
+      *os << " "
+          << IdentifierHelper::try_escape (node->original_local_name ()).c_str ();
    }
 
   *os << ";";
@@ -1107,53 +1108,61 @@ idl3_to_idl2_visitor::visit_typedef (AST_Typedef *node)
 int
 idl3_to_idl2_visitor::visit_root (AST_Root *node)
 {
-  ACE_NEW_RETURN (this->os,
-                  TAO_SunSoft_OutStream,
-                  -1);
-
-  ACE_CString fn (idl_global->stripped_filename ()->get_string ());
-  fn = fn.substr (0, fn.rfind ('.'));
-  fn += "_IDL2.idl";
-
-  const char *path = be_global->output_dir ();
-  ACE_CString target_name;
-
-  if (path != 0)
+  if (be_global->outfile_init (this->os) == -1)
     {
-      target_name = path;
-      target_name += "/";
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("idl3_to_idl2_visitor::visit_root - ")
+                         ACE_TEXT ("failed to initialize output file\n")),
+                        -1);
     }
-
-  target_name += fn;
-
-  if (this->os->open (target_name.c_str ()) != 0)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  "Failed to open file %s for writing.\n",
-                  target_name.c_str ()));
-
-      return -1;
-    }
-
-  *os << be_nl;
-
-  os->gen_ifndef_string (fn.c_str (), "_TAO_IDL_", "_IDL_");
 
   ACE_CString raw_filename;
   ACE_CString filename;
+  bool excluded_file_found;
+  ACE_CString::size_type p;
 
   for (size_t i = 0; i < idl_global->n_included_idl_files (); ++i)
     {
+      excluded_file_found = false;
+      p = 0;
+    
       if (i == 0)
         {
           *os << be_nl;
         }
 
       raw_filename = idl_global->included_idl_files ()[i];
+      
+      // If this included IDL file matches one of the 'excluded' files,
+      // generate the include without tacking on the suffix.
+      while (p != ACE_CString::npos)
+        {
+          ACE_CString::size_type cursor = p;
+          p = be_global->excluded_filenames ().find (' ', cursor);
+          
+          ACE_CString one_filename =
+            be_global->excluded_filenames ().substr (cursor, p - cursor);
+            
+          if (one_filename == raw_filename)
+            {
+              excluded_file_found = true;
+              break;
+            }
+            
+          // Skip the whitespace.  
+          if (p != ACE_CString::npos)
+            {
+              while (be_global->excluded_filenames ()[p] == ' ')
+                {
+                  p++;
+                }
+            }
+        }
 
       if (raw_filename.find (".pidl") != ACE_CString::npos
           || raw_filename == "orb.idl"
-          || raw_filename == "Components.idl")
+          || raw_filename == "Components.idl"
+          || excluded_file_found)
         {
           filename = raw_filename;
         }
@@ -1178,8 +1187,8 @@ idl3_to_idl2_visitor::visit_root (AST_Root *node)
   if (this->visit_scope (node) != 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                          "idl3_to_idl2_visitor::visit_root - "
-                          "codegen for scope failed\n"),
+                         ACE_TEXT ("idl3_to_idl2_visitor::visit_root - ")
+                         ACE_TEXT ("codegen for scope failed\n")),
                         -1);
     }
 
@@ -1199,7 +1208,9 @@ idl3_to_idl2_visitor::visit_native (AST_Native *node)
 
   *os << be_nl << be_nl;
 
-  *os << "native " << node->local_name () << ";";
+  *os << "native "
+      << IdentifierHelper::try_escape (node->original_local_name ()).c_str ()
+      << ";";
 
   return 0;
 }
@@ -1218,7 +1229,8 @@ idl3_to_idl2_visitor::check_prefix (AST_Decl *d)
   if (ACE_OS::strcmp (the_prefix, p->prefix ()) != 0)
     {
       *os << be_nl
-          << "typeprefix " << d->local_name ()
+          << "typeprefix "
+          << IdentifierHelper::try_escape (d->original_local_name ()).c_str ()
           << " \"" << the_prefix << "\";";
     }
 }
@@ -1229,7 +1241,8 @@ idl3_to_idl2_visitor::check_id_and_version (AST_Decl *d)
   if (d->typeid_set ())
     {
       *os << be_nl
-          << "typeid " << d->local_name ()
+          << "typeid "
+          << IdentifierHelper::try_escape (d->original_local_name ()).c_str ()
           << " \"" << d->repoID () << "\";";
 
       return;
@@ -1241,7 +1254,8 @@ idl3_to_idl2_visitor::check_id_and_version (AST_Decl *d)
   if (ACE_OS::strcmp (the_version, p->version ()) != 0)
     {
       *os << "\n"
-          << "#pragma version " << d->local_name ()
+          << "#pragma version "
+          << IdentifierHelper::try_escape (d->original_local_name ()).c_str ()
           << " " << the_version;
     }
 }
@@ -1315,7 +1329,8 @@ idl3_to_idl2_visitor::gen_anonymous_array (AST_Type *a,
   AST_Type *bt = array->base_type ();
 
   *os << this->type_name (bt);
-  *os << " " << wrapper->local_name ();
+  *os << " "
+      << IdentifierHelper::try_escape (wrapper->original_local_name ()).c_str ();
 
   for (unsigned long i = 0; i < array->n_dims (); ++i)
     {
@@ -1362,7 +1377,7 @@ idl3_to_idl2_visitor::gen_label_value (AST_UnionLabel *node)
         break;
       case AST_Expression::EV_longlong:
 #if ! defined (ACE_LACKS_LONGLONG_T)
-        this->os->print ("%ld", ev->u.llval);
+        this->os->print ("%lld", ev->u.llval);
 #endif /* ! defined (ACE_LACKS_LONGLONG_T) */
         break;
       case AST_Expression::EV_ulonglong:
@@ -1401,9 +1416,15 @@ idl3_to_idl2_visitor::gen_provides (AST_Component *node)
        iter.advance ())
     {
       iter.next (pd);
+      
+      Identifier *orig_id = IdentifierHelper::original_local_name (pd->id);
 
       *os << be_nl << be_nl
-          << pd->impl->name () << " provide_" << pd->id << " ();";
+          << pd->impl->name () << " provide_" << orig_id << " ();";
+          
+      orig_id->destroy ();
+      delete orig_id;
+      orig_id = 0;
     }
 }
 
@@ -1421,6 +1442,8 @@ idl3_to_idl2_visitor::gen_uses (AST_Component *node)
       iter.next (pd);
 
       *os << be_nl << be_nl;
+      
+      Identifier *orig_id = IdentifierHelper::original_local_name (pd->id);
 
       if (pd->is_multiple)
         {
@@ -1429,32 +1452,36 @@ idl3_to_idl2_visitor::gen_uses (AST_Component *node)
               << pd->impl->name () << " objref;" << be_nl
               << "Components::Cookie ck;" << be_uidt_nl
               << "};" << be_nl << be_nl
-              << "typedef sequence<" << pd->id << "Connection> "
+              << "typedef sequence<" << orig_id << "Connection> "
               << pd->id << "Connections;"
               << be_nl << be_nl
-              << "Components::Cookie connect_" << pd->id << " (in "
+              << "Components::Cookie connect_" << orig_id << " (in "
               << pd->impl->name () << " connection)" << be_idt_nl
               << "raises (Components::ExceededConnectionLimit, "
               << "Components::InvalidConnection);" << be_uidt_nl << be_nl
-              << pd->impl->name () << " disconnect_" << pd->id
+              << pd->impl->name () << " disconnect_" << orig_id
               << " (in Components::Cookie ck)" << be_idt_nl
               << "raises (Components::InvalidConnection);"
               << be_uidt_nl << be_nl
-              << pd->id << "Connections get_connections_" << pd->id
+              << orig_id << "Connections get_connections_" << orig_id
               << " ();";
         }
       else
         {
-          *os << "void connect_" << pd->id << " (in "
+          *os << "void connect_" << orig_id << " (in "
               << pd->impl->name () << " conxn)" << be_idt_nl
               << "raises (Components::AlreadyConnected, "
               << "Components::InvalidConnection);" << be_uidt_nl << be_nl
-              << pd->impl->name () << " disconnect_" << pd->id
+              << pd->impl->name () << " disconnect_" << orig_id
               << " ()" << be_idt_nl
               << "raises (Components::NoConnection);" << be_uidt_nl << be_nl
-              << pd->impl->name () << " get_connection_" << pd->id
+              << pd->impl->name () << " get_connection_" << orig_id
               << " ();";
         }
+        
+      orig_id->destroy ();
+      delete orig_id;
+      orig_id = 0;
     }
 }
 
@@ -1470,17 +1497,23 @@ idl3_to_idl2_visitor::gen_publishes (AST_Component *node)
        iter.advance ())
     {
       iter.next (pd);
+      
+      Identifier *orig_id = IdentifierHelper::original_local_name (pd->id);
 
       *os << be_nl << be_nl
-          << "Components::Cookie subscribe_" << pd->id
+          << "Components::Cookie subscribe_" << orig_id
           << " (in " << pd->impl->name () <<"Consumer consumer)"
           << be_idt_nl
           << "raises (Components::ExceededConnectionLimit);"
           << be_uidt_nl << be_nl
-          << pd->impl->name () << "Consumer unsubscribe_" << pd->id
+          << pd->impl->name () << "Consumer unsubscribe_" << orig_id
           << " (in Components::Cookie ck)" << be_idt_nl
           << "raises (Components::InvalidConnection);" << be_uidt;
-    }
+         
+      orig_id->destroy ();
+      delete orig_id;
+      orig_id = 0;
+   }
 }
 
 void
@@ -1496,15 +1529,21 @@ idl3_to_idl2_visitor::gen_emits (AST_Component *node)
     {
       iter.next (pd);
 
+      Identifier *orig_id = IdentifierHelper::original_local_name (pd->id);
+
       *os << be_nl << be_nl
-          << "void connect_" << pd->id
+          << "void connect_" << orig_id
           << " (in " << pd->impl->name ()
           << "Consumer consumer)" << be_idt_nl
           << "raises (Components::AlreadyConnected);"
           << be_uidt_nl << be_nl
-          << pd->impl->name () << "Consumer disconnect_" << pd->id
+          << pd->impl->name () << "Consumer disconnect_" << orig_id
           << " ()" << be_idt_nl
           << "raises (Components::NoConnection);" << be_uidt;
+         
+      orig_id->destroy ();
+      delete orig_id;
+      orig_id = 0;
     }
 }
 
@@ -1520,10 +1559,16 @@ idl3_to_idl2_visitor::gen_consumes (AST_Component *node)
        iter.advance ())
     {
       iter.next (pd);
+      
+      Identifier *orig_id = IdentifierHelper::original_local_name (pd->id);
 
       *os << be_nl << be_nl
-          << pd->impl->name () << "Consumer get_consumer_" << pd->id
+          << pd->impl->name () << "Consumer get_consumer_" << orig_id
           << " ();";
+         
+      orig_id->destroy ();
+      delete orig_id;
+      orig_id = 0;
     }
 }
 
@@ -1604,7 +1649,8 @@ idl3_to_idl2_visitor::gen_factories (AST_Home *node,
 
       *os << be_nl << be_nl
           << node->managed_component ()->name () << " "
-          << (*item)->local_name () << " (";
+          << IdentifierHelper::try_escape ((*item)->original_local_name ()).c_str ()
+          << " (";
 
       this->gen_params (*item, (*item)->argument_count ());
 
@@ -1640,7 +1686,8 @@ idl3_to_idl2_visitor::gen_finders (AST_Home *node,
 
       *os << be_nl << be_nl
           << node->managed_component ()->name () << " "
-          << (*item)->local_name () << " (";
+          << IdentifierHelper::try_escape( (*item)->original_local_name ()).c_str ()
+          << " (";
 
       this->gen_params (*item, (*item)->argument_count ());
 
@@ -1719,4 +1766,52 @@ idl3_to_idl2_visitor::gen_exception_list (UTL_ExceptList *exceptions,
           *os << ")" << be_uidt;
         }
     }
+}
+
+void
+idl3_to_idl2_visitor::gen_attribute (AST_Attribute *node)
+{
+   bool rd_only = node->readonly ();
+
+   // Keep output statements separate because of side effects.
+   // No need to check for anonymous array - anonymous types not
+   // accepted by parser for attributes.
+   *os << be_nl << be_nl
+       << (rd_only ? "readonly " : "") << "attribute ";
+   *os << this->type_name (node->field_type ());
+   *os << " "
+       << IdentifierHelper::try_escape (node->original_local_name ()).c_str ();
+
+   this->gen_exception_list (node->get_get_exceptions (),
+                             rd_only ? "" : "get");
+
+   this->gen_exception_list (node->get_set_exceptions (),
+                             "set");
+
+   *os << ";";
+}
+
+void
+idl3_to_idl2_visitor::gen_operation (AST_Operation *node)
+{
+   *os << be_nl << be_nl;
+
+   if (node->flags () == AST_Operation::OP_oneway)
+     {
+        *os << "oneway ";
+     }
+
+   *os << this->type_name (node->return_type ());
+
+   *os << " "
+       << IdentifierHelper::try_escape (node->original_local_name ()).c_str ()
+       << " (";
+
+   this->gen_params (node, node->argument_count ());
+
+   *os << ")";
+
+   this->gen_exception_list (node->exceptions ());
+
+   *os << ";";
 }

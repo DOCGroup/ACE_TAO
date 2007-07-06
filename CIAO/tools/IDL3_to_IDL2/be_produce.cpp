@@ -67,8 +67,11 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "TAO_IDL3_TO_IDL2_BE_Export.h"
 #include "global_extern.h"
 #include "be_extern.h"
+#include "be_helper.h"
 #include "fe_extern.h"
+#include "utl_string.h"
 #include "ast_root.h"
+#include "checking_visitor.h"
 #include "idl3_to_idl2_visitor.h"
 
 // Clean up before exit, whether successful or not.
@@ -105,13 +108,57 @@ BE_produce (void)
       BE_abort ();
     }
     
-  idl3_to_idl2_visitor visitor;
-
-  if (visitor.visit_root (ast_root) == -1)
+  checking_visitor c_visitor;
+      
+  if (be_global->encapsulate_idl2 ())
     {
-      ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("(%N:%l) BE_produce -")
-                  ACE_TEXT (" failed to accept visitor\n")));
+      if (c_visitor.visit_root (ast_root) == -1)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("(%N:%l) BE_produce - failed")
+                      ACE_TEXT (" to accept checking visitor\n")));
+                      
+          BE_abort ();
+        }
+    }
+   
+  // Create and launch the 'equivalent IDL' visitor only if IDL3
+  // declarations were seen by the checking visitor, or if we
+  // are not just including an IDL2-only original file in a new file. 
+  if (c_visitor.is_idl3 () || !be_global->encapsulate_idl2 ())
+    {  
+      idl3_to_idl2_visitor visitor;
+
+      if (visitor.visit_root (ast_root) == -1)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("(%N:%l) BE_produce - failed to")
+                      ACE_TEXT (" accept idl3_to_idl2 visitor\n")));
+        }
+    }
+  else
+    {
+      TAO_OutStream *os = 0;
+      
+      if (be_global->outfile_init (os) == -1)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("(%N:%l) BE_produce - ")
+                      ACE_TEXT ("failed to initialize output file\n")));
+
+          delete os;
+          os = 0;
+          BE_abort ();
+        }
+        
+      *os << be_nl << be_nl
+          << "#include \""
+          << idl_global->stripped_filename ()->get_string ()
+          << "\"" << be_nl << be_nl
+          << "#endif /* ifndef */" << be_nl;
+
+      delete os;
+      os = 0;
     }
 
   // Clean up.

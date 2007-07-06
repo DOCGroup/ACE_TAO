@@ -1,3 +1,38 @@
+Fri Jul  6 12:09:31 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tools/IDL3_to_IDL2/checking_visitor.cpp:
+        * tools/IDL3_to_IDL2/checking_visitor.h:
+        * tools/IDL3_to_IDL2/identifier_helper.cpp:
+        * tools/IDL3_to_IDL2/identifier_helper.h:
+        
+          New files, added to help implement the new features
+          described below.
+          
+        * tools/IDL3_to_IDL2/be_global.cpp:
+        * tools/IDL3_to_IDL2/be_produce.cpp:
+        * tools/IDL3_to_IDL2/be_init.cpp:
+        * tools/IDL3_to_IDL2/be_global.h:
+        * tools/IDL3_to_IDL2/be_helper.cpp:
+        * tools/IDL3_to_IDL2/idl3_to_idl2_visitor.cpp:
+        * tools/IDL3_to_IDL2/idl3_to_idl2_visitor.h:
+        
+          Changes to existing files which, along with the new files
+          listed above, add the following improvements to the CIAO
+          IDL3_to_IDL2 compiler:
+          
+          - more robust handling of escaped identifiers
+          - more robust handling of identifiers prefixed with _cxx_
+            due to clashes with C++ keywords
+          - a new command line option to exclude included IDL files
+            from default processing, generating a corresponding
+            include with the name of the IDL file unchanged
+          - an optional alternative to regenerating an IDL file with
+            no IDL3 declarations, which is to simply generate an
+            include of the original IDL file
+            
+          Thanks for all these improvements to Hakim Souami
+          <hakim.souami@thalesatm.com> and his team.
+
 Fri Jun 29 19:23:14 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * performance-tests/Benchmark/RoundTrip/client.cpp:
