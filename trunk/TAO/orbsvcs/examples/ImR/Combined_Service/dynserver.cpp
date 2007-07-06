@@ -49,7 +49,7 @@ public:
   void end() {
     if (! is_nil(orb_.in())) {
       orb_->shutdown(1);
-      wait();
+      this->wait();
     }
   }
   virtual int svc()

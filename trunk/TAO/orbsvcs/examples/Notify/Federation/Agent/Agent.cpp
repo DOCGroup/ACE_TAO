@@ -75,7 +75,8 @@ public:
     if (ACE_OS::thr_create (&tracker_thunk,
                             this,
                             THR_JOINABLE,
-                            &thread_) != 0) ::abort ();
+                            &thread_) != 0) 
+      ACE_OS::abort ();
   }
 
 private:

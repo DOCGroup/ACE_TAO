@@ -101,7 +101,7 @@ string normalizePath(const string& dir, char delim, bool toLower)
       else
       {
         if (toLower)
-          buffer[j] = ::tolower(dir[i]);
+          buffer[j] = ACE_OS::ace_tolower(dir[i]);
         else
           buffer[j] = dir[i];
         j++;
@@ -111,7 +111,7 @@ string normalizePath(const string& dir, char delim, bool toLower)
     else
     {
       if (toLower)
-        buffer[j] = ::tolower(dir[i]);
+        buffer[j] = ACE_OS::ace_tolower(dir[i]);
       else
         buffer[j] = dir[i];
       j++;

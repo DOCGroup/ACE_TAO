@@ -1,3 +1,17 @@
+Fri Jul  6 05:03:43 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * orbsvcs/examples/ImR/Advanced/TestClient.cpp:
+        * orbsvcs/examples/ImR/Advanced/TestServer.cpp:
+        * orbsvcs/examples/ImR/Advanced/manager_main.cpp:
+        * orbsvcs/examples/ImR/Combined_Service/dynserver.cpp:
+        * orbsvcs/examples/LoadBalancing/StockFactory.cpp:
+        * orbsvcs/examples/Notify/Federation/Agent/Agent.cpp:
+        * orbsvcs/examples/Notify/Federation/Gate/Gate.cpp:
+
+          Fixed ACE_OS fuzz warnings. Use ACE_OS calls instead of raw OS function
+          where possible. If fuzz detected a false-positive, then disable
+          the ACE_OS fuzz check for that section of the code.
+
 Thu Jul  5 18:50:00 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/Notify_Service/Notify_Server.cpp:

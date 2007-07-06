@@ -60,8 +60,8 @@ init (ConsumerAdmin_ptr consumer_admin,
   ACE_Utils::UUID_GENERATOR::instance ()->generateUUID (uuid);
 
   id_ = string_alloc (uuid.to_string ()->length () + 2);
-  strcpy (id_.inout (), "_");
-  strcpy (id_.inout () + 1, uuid.to_string ()->rep ());
+  ACE_OS::strcpy (id_.inout (), "_");
+  ACE_OS::strcpy (id_.inout () + 1, uuid.to_string ()->rep ());
 
   // ACE_DEBUG ((LM_DEBUG, "ID: %s\n", id_.in ()));
 
@@ -132,7 +132,7 @@ tracker ()
       if (n == -1)
       {
         if (errno != ETIME)
-          abort ();
+          ACE_OS::abort ();
       }
       else
         break;
@@ -162,7 +162,7 @@ tracker ()
 
     for (; i < e.header.variable_header.length (); ++i)
     {
-      if (strcmp (e.header.variable_header[i].name.in (), id_.in ()) == 0)
+      if (ACE_OS::strcmp (e.header.variable_header[i].name.in (), id_.in ()) == 0)
         break;
     }
 
@@ -195,7 +195,7 @@ push_structured_event (StructuredEvent const& e)
 {
   for (ULong i (0); i < e.header.variable_header.length (); ++i)
   {
-    if (strcmp (e.header.variable_header[i].name.in (), id_.in ()) == 0)
+    if (ACE_OS::strcmp (e.header.variable_header[i].name.in (), id_.in ()) == 0)
     {
       ULong ttl;
 
