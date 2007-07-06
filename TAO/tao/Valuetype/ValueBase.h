@@ -190,10 +190,14 @@ namespace CORBA
       const char * const repo_id_expected,
       CORBA::Boolean & null_object);
       
+#if defined (GEN_OSTREAM_OPS)
+
     /// Used by optionally generated ostream operators for valuetypes
     /// to output the state of the actual type for debugging.  
     static std::ostream& _tao_stream (std::ostream &strm, const ValueBase *value);
     virtual std::ostream& _tao_stream_v (std::ostream &strm) const;
+    
+#endif /* GEN_OSTREAM_OPS */
 
   public:  // otherwise these cannot be called from a static function
 
@@ -349,9 +353,13 @@ operator<< (TAO_OutputCDR&, const CORBA::ValueBase *);
 TAO_Valuetype_Export CORBA::Boolean
 operator>> (TAO_InputCDR&, CORBA::ValueBase *&);
 
+#if defined (GEN_OSTREAM_OPS)
+
 /// Outputs the state for debugging.
 TAO_Valuetype_Export std::ostream&
 operator<< (std::ostream&, CORBA::ValueBase *);
+
+#endif /* GEN_OSTREAM_OPS */
 
 /// Used in generated code if CORBA::ValueBase is an argument or return type.
 namespace TAO

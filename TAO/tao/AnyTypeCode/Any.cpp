@@ -290,11 +290,15 @@ operator>> (TAO_InputCDR &cdr, CORBA::Any &any)
   return true;
 }
 
+#if defined (GEN_OSTREAM_OPS)
+
 std::ostream &
 operator<< (std::ostream &strm, const CORBA::Any &)
 {
   return strm << "CORBA::Any";
 }
+
+#endif /* GEN_OSTREAM_OPS */
 
 // =======================================================================
 

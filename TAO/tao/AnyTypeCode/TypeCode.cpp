@@ -357,12 +357,16 @@ operator<< (TAO_OutputCDR & cdr,
 
 // ---------------------------------------------------------------
 
+#if defined (GEN_OSTREAM_OPS)
+
 std::ostream &
 operator<< (std::ostream & strm,
             const CORBA::TypeCode_ptr)
 {
   return strm << "CORBA::TypeCode";
 }
+
+#endif /* GEN_OSTREAM_OPS */
 
 // ---------------------------------------------------------------
 
