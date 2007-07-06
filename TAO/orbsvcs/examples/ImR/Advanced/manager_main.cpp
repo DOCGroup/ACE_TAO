@@ -18,7 +18,7 @@ int main(int argc, char* argv[])
       switch (c)
       {
       case 'r':
-        retryCount = ::atoi(get_opts.opt_arg());
+        retryCount = ACE_OS::atoi(get_opts.opt_arg());
         break;
       case '?':
       default:

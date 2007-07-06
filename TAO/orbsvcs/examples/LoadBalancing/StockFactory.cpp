@@ -18,9 +18,9 @@ StockFactory::get_stock (const char *symbol)
     throw (Test::Invalid_Stock_Symbol)
 {
   cout << "Server Number is " << number_ << endl;
-  if (strcmp (symbol, "RHAT") == 0) {
+  if (ACE_OS::strcmp (symbol, "RHAT") == 0) {
     return this->rhat_._this ();
-  } else if (strcmp (symbol, "MSFT") == 0) {
+  } else if (ACE_OS::strcmp (symbol, "MSFT") == 0) {
     return this->msft_._this ();
   }
   throw Test::Invalid_Stock_Symbol ();

@@ -38,22 +38,22 @@ int TestClient::parseCommands(int argc, char* argv[])
     switch (c)
     {
     case 's':
-      startupPause_ = ::atoi(get_opts.opt_arg());
+      startupPause_ = ACE_OS::atoi(get_opts.opt_arg());
       break;
 
     case 't':
-      threadCount_ = ::atoi(get_opts.opt_arg());
+      threadCount_ = ACE_OS::atoi(get_opts.opt_arg());
       break;
 
     case 'i':
-      iterations_ = ::atoi(get_opts.opt_arg());
+      iterations_ = ACE_OS::atoi(get_opts.opt_arg());
       break;
 
     case 'r':
       {
         const char* opt = get_opts.opt_arg();
         if (opt[0] == 'r') { randomRequests_ = true; opt++; }
-        requestCount_ = ::atoi(opt);
+        requestCount_ = ACE_OS::atoi(opt);
         break;
       }
 
@@ -126,7 +126,8 @@ void TestClient::run()
   {
     ACE_ERROR((LM_ERROR, "%p\n", "activate failed"));
   }
-  wait();
+  
+  this->wait();
 
   ACE_DEBUG((LM_DEBUG, "* Client ended.\n"));
 
