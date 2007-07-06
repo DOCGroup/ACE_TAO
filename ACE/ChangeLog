@@ -1,3 +1,21 @@
+Fri Jul  6 10:10:58 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * bin/MakeProjectCreator/config/support_ostream.mpb:
+        
+          New file, containing a feature, inherited in ace.mpc that is
+          turned on by modifying gen_ostream = 0 in default.features.
+          
+        * ace/ace.mpc:
+        
+          Added inheritance of the above new feature.
+          
+        * ace/CDR_Stream.h:
+        * ace/CDR_Stream.cpp:
+        
+          Guarded the recently added ostream operators for ACE_CDR::from_char,
+          from_wchar, from_octet and from_boolean with a flag that
+          is defined when the above new feature is turned on.
+
 Thu Jul  5 18:56:11 UTC 2007  Steve Huston  <shuston@riverace.com>
 
         * tests/SOCK_Connector_Test.cpp: Removed the AIX 4.3 condition for
