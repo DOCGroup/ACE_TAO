@@ -1807,7 +1807,7 @@ operator>> (ACE_InputCDR &is, ACE_CString &x)
   return is.good_bit ();
 }
 
-// --------------------------------------------------------------
+#if defined (GEN_OSTREAM_OPS)
 
 std::ostream&
 operator<< (std::ostream &os, ACE_OutputCDR::from_boolean x)
@@ -1840,5 +1840,7 @@ operator<< (std::ostream &os, ACE_OutputCDR::from_octet x)
   ACE_OutputCDR::from_wchar tmp (w);
   return os << tmp;
 }
+
+#endif /* GEN_OSTREAM_OPS */
 
 ACE_END_VERSIONED_NAMESPACE_DECL

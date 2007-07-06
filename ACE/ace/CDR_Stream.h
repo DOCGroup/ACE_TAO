@@ -50,7 +50,10 @@
 
 #include "ace/SStringfwd.h"
 #include "ace/Message_Block.h"
+
+#if defined (GEN_OSTREAM_OPS)
 #include "ace/streams.h"
+#endif /* GEN_OSTREAM_OPS */
 
 // Stuff used by the ACE CDR classes.
 #if defined ACE_LITTLE_ENDIAN
@@ -1313,6 +1316,8 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* __ACE_INLINE__ */
 
+#if defined (GEN_OSTREAM_OPS)
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // ostream insertion operators for debugging code generated from IDL. All
@@ -1332,6 +1337,8 @@ ACE_Export std::ostream& operator<< (std::ostream &os,
                                      ACE_OutputCDR::from_octet x);
 
 ACE_END_VERSIONED_NAMESPACE_DECL
+
+#endif /* GEN_OSTREAM_OPS */
 
 #include /**/ "ace/post.h"
 
