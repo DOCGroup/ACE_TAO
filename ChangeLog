@@ -1,3 +1,11 @@
+2007-07-06    <wotte@localhost.localdomain>
+
+	* SA_POP/SA_POP.mpc:
+	* SA_POP/SANet/XML_SANet.hpp:
+	* SA_POP/SANet/XML_SANet.cpp:
+
+	  Added an additional schema from previous commit.
+	
 2007-07-05    <wotte@localhost.localdomain>
 
 	* SA_POP/XML_TaskMap.cpp:
