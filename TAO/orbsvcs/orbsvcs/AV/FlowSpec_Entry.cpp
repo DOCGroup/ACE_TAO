@@ -383,7 +383,7 @@ TAO_FlowSpec_Entry::parse_address (const char *address,
 
           short control_port = static_cast<short> (ACE_OS::atoi(port_tokenizer[0])) + 1;
           char control_port_str[6];
-          sprintf (control_port_str, "%d", control_port);
+          ACE_OS::sprintf (control_port_str, "%d", control_port);
 
           ACE_CString control_addr = "";
           if (ACE_OS::strcasecmp (this->carrier_protocol_.c_str(),"RTP/UDP") == 0)
@@ -794,7 +794,7 @@ TAO_Forward_FlowSpec_Entry::entry_to_string (void)
 
       address_str += ";";
       char port_str[10];
-      sprintf(port_str, "%u", control_port);
+      ACE_OS::sprintf(port_str, "%u", control_port);
       address_str += port_str;
     }
 
@@ -996,7 +996,7 @@ TAO_Reverse_FlowSpec_Entry::entry_to_string (void)
 
       address_str += ";";
       char port_str[10];
-      sprintf(port_str, "%u", control_port);
+      ACE_OS::sprintf(port_str, "%u", control_port);
       address_str += port_str;
 
     }

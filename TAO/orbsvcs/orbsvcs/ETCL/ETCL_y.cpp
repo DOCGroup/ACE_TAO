@@ -594,7 +594,7 @@ yyparse(YYPARSE_PARAM_ARG)
 
 #if YYDEBUG != 0
   if (yydebug)
-    fprintf(stderr, "Starting parse\n");
+    ACE_OS::fprintf(stderr, "Starting parse\n");
 #endif
 
   yystate = 0;
@@ -662,10 +662,10 @@ yynewstate:
 	  yyerror("parser stack overflow");
 	  if (yyfree_stacks)
 	    {
-	      free (yyss);
-	      free (yyvs);
+        ACE_OS::free (yyss);
+        ACE_OS::free (yyvs);
 #ifdef YYLSP_NEEDED
-	      free (yyls);
+        ACE_OS::free (yyls);
 #endif
 	    }
 	  return 2;
@@ -697,7 +697,7 @@ yynewstate:
 
 #if YYDEBUG != 0
       if (yydebug)
-	fprintf(stderr, "Stack size increased to %d\n", yystacksize);
+        ACE_OS::fprintf(stderr, "Stack size increased to %d\n", yystacksize);
 #endif
 
       if (yyssp >= yyss + yystacksize - 1)
@@ -706,7 +706,7 @@ yynewstate:
 
 #if YYDEBUG != 0
   if (yydebug)
-    fprintf(stderr, "Entering state %d\n", yystate);
+    ACE_OS::fprintf(stderr, "Entering state %d\n", yystate);
 #endif
 
   goto yybackup;
@@ -731,7 +731,7 @@ yynewstate:
     {
 #if YYDEBUG != 0
       if (yydebug)
-	fprintf(stderr, "Reading a token: ");
+        ACE_OS::fprintf(stderr, "Reading a token: ");
 #endif
       yychar = YYLEX;
     }
@@ -745,7 +745,7 @@ yynewstate:
 
 #if YYDEBUG != 0
       if (yydebug)
-	fprintf(stderr, "Now at end of input.\n");
+        ACE_OS::fprintf(stderr, "Now at end of input.\n");
 #endif
     }
   else
@@ -755,13 +755,13 @@ yynewstate:
 #if YYDEBUG != 0
       if (yydebug)
 	{
-	  fprintf (stderr, "Next token is %d (%s", yychar, yytname[yychar1]);
+    ACE_OS::fprintf (stderr, "Next token is %d (%s", yychar, yytname[yychar1]);
 	  /* Give the individual parser a way to print the precise meaning
 	     of a token, for further debugging info.  */
 #ifdef YYPRINT
 	  YYPRINT (stderr, yychar, yylval);
 #endif
-	  fprintf (stderr, ")\n");
+    ACE_OS::fprintf (stderr, ")\n");
 	}
 #endif
     }
@@ -796,7 +796,7 @@ yynewstate:
 
 #if YYDEBUG != 0
   if (yydebug)
-    fprintf(stderr, "Shifting token %d (%s), ", yychar, yytname[yychar1]);
+    ACE_OS::fprintf(stderr, "Shifting token %d (%s), ", yychar, yytname[yychar1]);
 #endif
 
   /* Discard the token being shifted unless it is eof.  */
@@ -832,13 +832,13 @@ yyreduce:
     {
       int i;
 
-      fprintf (stderr, "Reducing via rule %d (line %d), ",
-	       yyn, yyrline[yyn]);
+      ACE_OS::fprintf (stderr, "Reducing via rule %d (line %d), ",
+	                     yyn, yyrline[yyn]);
 
       /* Print the symbols being reduced, and their result.  */
       for (i = yyprhs[yyn]; yyrhs[i] > 0; i++)
-	fprintf (stderr, "%s ", yytname[yyrhs[i]]);
-      fprintf (stderr, " -> %s\n", yytname[yyr1[yyn]]);
+        ACE_OS::fprintf (stderr, "%s ", yytname[yyrhs[i]]);
+      ACE_OS::fprintf (stderr, " -> %s\n", yytname[yyr1[yyn]]);
     }
 #endif
 
@@ -1075,10 +1075,10 @@ case 70:
   if (yydebug)
     {
       short *ssp1 = yyss - 1;
-      fprintf (stderr, "state stack now");
+      ACE_OS::fprintf (stderr, "state stack now");
       while (ssp1 != yyssp)
-	fprintf (stderr, " %d", *++ssp1);
-      fprintf (stderr, "\n");
+        ACE_OS::fprintf (stderr, " %d", *++ssp1);
+      ACE_OS::fprintf (stderr, "\n");
     }
 #endif
 
@@ -1137,11 +1137,11 @@ yyerrlab:   /* here on detecting error */
 	  for (x = (yyn < 0 ? -yyn : 0);
 	       x < (sizeof(yytname) / sizeof(char *)); x++)
 	    if (yycheck[x + yyn] == x)
-	      size += strlen(yytname[x]) + 15, count++;
-	  msg = (char *) malloc(size + 15);
+        size += ACE_OS::strlen(yytname[x]) + 15, count++;
+    msg = (char *) ACE_OS::malloc(size + 15);
 	  if (msg != 0)
 	    {
-	      strcpy(msg, "parse error");
+        ACE_OS::strcpy(msg, "parse error");
 
 	      if (count < 5)
 		{
@@ -1150,14 +1150,14 @@ yyerrlab:   /* here on detecting error */
 		       x < (sizeof(yytname) / sizeof(char *)); x++)
 		    if (yycheck[x + yyn] == x)
 		      {
-			strcat(msg, count == 0 ? ", expecting `" : " or `");
-			strcat(msg, yytname[x]);
-			strcat(msg, "'");
-			count++;
+            ACE_OS::strcat(msg, count == 0 ? ", expecting `" : " or `");
+            ACE_OS::strcat(msg, yytname[x]);
+            ACE_OS::strcat(msg, "'");
+            count++;
 		      }
 		}
 	      yyerror(msg);
-	      free(msg);
+        ACE_OS::free(msg);
 	    }
 	  else
 	    yyerror ("parse error; also virtual memory exceeded");
@@ -1180,7 +1180,7 @@ yyerrlab1:   /* here on error raised explicitly by an action */
 
 #if YYDEBUG != 0
       if (yydebug)
-	fprintf(stderr, "Discarding token %d (%s).\n", yychar, yytname[yychar1]);
+        ACE_OS::fprintf(stderr, "Discarding token %d (%s).\n", yychar, yytname[yychar1]);
 #endif
 
       yychar = YYEMPTY;
@@ -1215,10 +1215,10 @@ yyerrpop:   /* pop the current state because it cannot handle the error token */
   if (yydebug)
     {
       short *ssp1 = yyss - 1;
-      fprintf (stderr, "Error: state stack now");
+      ACE_OS::fprintf (stderr, "Error: state stack now");
       while (ssp1 != yyssp)
-	fprintf (stderr, " %d", *++ssp1);
-      fprintf (stderr, "\n");
+        ACE_OS::fprintf (stderr, " %d", *++ssp1);
+      ACE_OS::fprintf (stderr, "\n");
     }
 #endif
 
@@ -1248,7 +1248,7 @@ yyerrhandle:
 
 #if YYDEBUG != 0
   if (yydebug)
-    fprintf(stderr, "Shifting error token, ");
+    ACE_OS::fprintf(stderr, "Shifting error token, ");
 #endif
 
   *++yyvsp = yylval;
@@ -1263,10 +1263,10 @@ yyerrhandle:
   /* YYACCEPT comes here.  */
   if (yyfree_stacks)
     {
-      free (yyss);
-      free (yyvs);
+      ACE_OS::free (yyss);
+      ACE_OS::free (yyvs);
 #ifdef YYLSP_NEEDED
-      free (yyls);
+      ACE_OS::free (yyls);
 #endif
     }
   return 0;
@@ -1281,10 +1281,10 @@ yyerrhandle:
 
   if (yyfree_stacks)
     {
-      free (yyss);
-      free (yyvs);
+      ACE_OS::free (yyss);
+      ACE_OS::free (yyvs);
 #ifdef YYLSP_NEEDED
-      free (yyls);
+      ACE_OS::free (yyls);
 #endif
     }
   return 1;

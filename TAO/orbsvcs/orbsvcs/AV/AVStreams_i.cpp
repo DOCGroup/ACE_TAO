@@ -788,7 +788,9 @@ TAO_StreamCtrl::bind_devs (AVStreams::MMDevice_ptr a_party,
               b_party->is_property_defined("Flows") )
           {
               if (TAO_debug_level > 0) {
+                //FUZZ: disable check_for_lack_ACE_OS
                 ACE_DEBUG ((LM_DEBUG, "(%N,%l) Full profile, invoking bind()\n"));
+                //FUZZ: enable check_for_lack_ACE_OS
               }
 
               // It is full profile
@@ -806,7 +808,9 @@ TAO_StreamCtrl::bind_devs (AVStreams::MMDevice_ptr a_party,
           else  if (!CORBA::is_nil (this->vdev_a_.in ()) && !CORBA::is_nil (this->vdev_b_.in ()))
           {
               if (TAO_debug_level > 0) {
+                //FUZZ: disable check_for_lack_ACE_OS
                 ACE_DEBUG ((LM_DEBUG, "(%N,%l) Light profile, invoking connect()\n"));
+                //FUZZ: enable check_for_lack_ACE_OS
               }
 
               // Tell the 2 VDev's about one another
@@ -3000,7 +3004,7 @@ TAO_MMDevice::create_A_B (MMDevice_Type type,
                   //static int blah = 0; if(blah == 1){blah=0; abort();}else{blah=1;}
                   CORBA::Object_var flowconnection_obj =
                     streamctrl->get_flow_connection (forward_entry.flowname ());
-                        printf("successfully called get_flow_connection\n");
+                  ACE_OS::printf("successfully called get_flow_connection\n");
                   if (!CORBA::is_nil (flowconnection_obj.in ()))
                     {
                       flowconnection = AVStreams::FlowConnection::_narrow (flowconnection_obj.in ());

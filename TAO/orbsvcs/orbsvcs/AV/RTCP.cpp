@@ -699,13 +699,13 @@ TAO_AV_RTCP_Callback::send_report (int bye)
 
   ACE_Message_Block mb (cp_length + sdes_length + bye_length);
 
-  memcpy (mb.wr_ptr (), cp_ptr, cp_length);
+  ACE_OS::memcpy (mb.wr_ptr (), cp_ptr, cp_length);
   mb.wr_ptr (cp_length);
-  memcpy (mb.wr_ptr (), sdes_ptr, sdes_length);
+  ACE_OS::memcpy (mb.wr_ptr (), sdes_ptr, sdes_length);
   mb.wr_ptr (sdes_length);
   if (bye_length)
     {
-      memcpy (mb.wr_ptr (), bye_ptr, bye_length);
+      ACE_OS::memcpy (mb.wr_ptr (), bye_ptr, bye_length);
       mb.wr_ptr (bye_length);
     }
 

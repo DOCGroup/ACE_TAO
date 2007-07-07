@@ -120,8 +120,7 @@ TAO_ESF_Copy_On_Write<PROXY,COLLECTION,ITERATOR,ACE_SYNCH_USE>::
 }
 
 template<class PROXY, class COLLECTION, class ITERATOR, ACE_SYNCH_DECL> void
-TAO_ESF_Copy_On_Write<PROXY,COLLECTION,ITERATOR,ACE_SYNCH_USE>::
-    shutdown (void)
+TAO_ESF_Copy_On_Write<PROXY,COLLECTION,ITERATOR,ACE_SYNCH_USE>::shutdown (void)
 {
   // We need to perform a copy to follow the protocol.
   Write_Guard ace_mon (this->mutex_,

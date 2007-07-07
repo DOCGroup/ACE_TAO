@@ -826,7 +826,7 @@ TAO_AV_UDP_Connection_Setup::setup (TAO_AV_Flow_Handler *&flow_handler,
                                                                   SO_RCVBUF,
                                                                   (char *)&bufsize,
                                                                   sizeof(bufsize)) < 0)
-            perror("SO_RCVBUF");
+            ACE_OS::perror("SO_RCVBUF");
         }
       ACE_NEW_RETURN (local_addr,
                       ACE_INET_Addr ("0"),
