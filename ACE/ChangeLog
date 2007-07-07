@@ -1,3 +1,15 @@
+Sat Jul  7 17:45:34 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * NEWS:
+
+          Note about a minor change of behavior for ACE_INET_Addr setting
+          with a string on IPv6 enabled builds.
+
+        * ace/INET_Addr.cpp:
+
+          More tweaks to setting the address based on a hostname string
+          with IPv6 support compiled in. This cleans up errors on AIX.
+
 Fri Jul  6 21:33:47 UTC 2007  Steve Huston  <shuston@riverace.com>
 
         * apps/FaCE:
@@ -33,17 +45,17 @@ Fri Jul  6 14:52:00 UTC 2007  Steve Huston  <shuston@riverace.com>
 Fri Jul  6 10:10:58 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * bin/MakeProjectCreator/config/support_ostream.mpb:
-        
+
           New file, containing a feature, inherited in ace.mpc that is
           turned on by modifying gen_ostream = 0 in default.features.
-          
+
         * ace/ace.mpc:
-        
+
           Added inheritance of the above new feature.
-          
+
         * ace/CDR_Stream.h:
         * ace/CDR_Stream.cpp:
-        
+
           Guarded the recently added ostream operators for ACE_CDR::from_char,
           from_wchar, from_octet and from_boolean with a flag that
           is defined when the above new feature is turned on.
