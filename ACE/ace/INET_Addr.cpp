@@ -327,32 +327,70 @@ ACE_INET_Addr::set (u_short port_number,
                   sizeof this->inet_addr_);
 
 #if defined (ACE_HAS_IPV6)
-  struct addrinfo hints, *res, *res0;
-  int error;
-  ACE_OS::memset (&hints, 0, sizeof (hints));
-
-  hints.ai_family = address_family;
-
-  error = getaddrinfo (host_name, 0, &hints, &res0);
-  if (error)
-    return -1;
-
-  int ret = -1;
-  for (res = res0; res != 0; res = res->ai_next)
+# if defined (AIX)
+  struct hostent *h_ent;
+  int error_num = 0;
+  if (address_family == AF_UNSPEC || address_family == AF_INET6)
     {
-      if (address_family == AF_UNSPEC || res->ai_family == address_family)
+      h_ent = ::getipnodebyname (host_name, AF_INET6, 0, &error_num);
+      if (h_ent == 0)
         {
-          this->set_type (res->ai_family);
-          this->set_addr (res->ai_addr, res->ai_addrlen);
-          this->set_port_number (port_number, encode);
-          ret = 0;
-          if (address_family == AF_UNSPEC && res->ai_family == AF_INET6)
-            break;
+          if (address_family == AF_INET6 || error_num != NO_ADDRESS)
+            return -1;
         }
     }
-  freeaddrinfo (res0);
-  return ret;
+  if (h_ent == 0)
+    {
+      h_ent = ::getipnodebyname (host_name, AF_INET, 0, &error_num);
+      if (h_ent == 0)
+        {
+          return -1;
+        }
+    }
+  this->set_type (h_ent->h_addrtype);
+  this->set_addr (h_ent->h_addr_list[0], h_ent->h_length);
+  this->set_port_number (port_number, encode);
 
+  ::freehostent (h_ent);
+  return 0;
+
+# else
+  struct addrinfo hints;
+  struct addrinfo *res = 0;
+  int error = 0;
+  ACE_OS::memset (&hints, 0, sizeof (hints));
+  if (address_family == AF_UNSPEC || address_family == AF_INET6)
+    {
+      hints.ai_family = AF_INET6;
+      error = ::getaddrinfo (host_name, 0, &hints, &res);
+      if (error)
+        {
+          if (address_family == AF_INET6)
+            {
+              if (res)
+                ::freeaddrinfo(res);
+              return -1;
+            }
+          address_family = AF_INET;
+        }
+    }
+  if (address_family == AF_INET)
+    {
+      hints.ai_family = AF_INET;
+      error = ::getaddrinfo (host_name, 0, &hints, &res);
+      if (error)
+        {
+          if (res)
+            ::freeaddrinfo(res);
+          return -1;
+        }
+    }
+  this->set_type (res->ai_family);
+  this->set_addr (res->ai_addr, res->ai_addrlen);
+  this->set_port_number (port_number, encode);
+  ::freeaddrinfo (res);
+  return 0;
+# endif /* AIX */
 #else /* ACE_HAS_IPV6 */
 
   // IPv6 not supported... insure the family is set to IPv4

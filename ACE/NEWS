@@ -22,6 +22,12 @@ USER VISIBLE CHANGES BETWEEN ACE-5.5.9 and ACE-5.5.10
   ACE_wrappers/contrib. It is used for testing ACE+TAO apps on WinCE.
   See the ACE_wrappers/contrib/FaCE/README file for more information.
 
+. ACE_INET_Addr::set (u_short port, char *host_name, ...) now favors IPv6
+  addresses when compiled with ACE_HAS_IPV6 defined and the supplied address
+  family is AF_UNSPEC. This means that if host_name has an IPv6 address in
+  DNS or /etc/hosts, that will be used over an IPv4 address. If no IPv6
+  address exists for host_name, then its IPv4 address will be used.
+
 USER VISIBLE CHANGES BETWEEN ACE-5.5.8 and ACE-5.5.9
 ====================================================
 
