@@ -34,8 +34,7 @@ TAO_ESF_Immediate_Changes<PROXY,COLLECTION,ITERATOR,ACE_LOCK>::
 }
 
 template<class PROXY, class COLLECTION, class ITERATOR, class ACE_LOCK> void
-TAO_ESF_Immediate_Changes<PROXY,COLLECTION,ITERATOR,ACE_LOCK>::
-    shutdown (void)
+TAO_ESF_Immediate_Changes<PROXY,COLLECTION,ITERATOR,ACE_LOCK>::shutdown (void)
 {
   ACE_GUARD (ACE_LOCK, ace_mon, this->lock_);
 

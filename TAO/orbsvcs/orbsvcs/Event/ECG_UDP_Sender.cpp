@@ -62,8 +62,11 @@ TAO_ECG_UDP_Sender::connect (const RtecEventChannelAdmin::ConsumerQOS& sub)
 {
   if (CORBA::is_nil (this->lcl_ec_.in ()))
     {
+      //FUZZ: disable check_for_lack_ACE_OS
       ACE_ERROR ((LM_ERROR, "Error initializing TAO_ECG_UDP_Sender: "
                             "init() has not been called before connect()."));
+      //FUZZ: enable check_for_lack_ACE_OS
+
       throw CORBA::INTERNAL ();
     }
 

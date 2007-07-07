@@ -51,7 +51,7 @@ RTP_Packet::RTP_Packet(char* buffer, int length)
   // skip the standard header info
   int index = 12;
 
-  memcpy(this->packet_, buffer, length);
+  ACE_OS::memcpy(this->packet_, buffer, length);
 
   for (int j=0; j<(int)this->cc(); j++)
     {
@@ -152,7 +152,7 @@ RTP_Packet::RTP_Packet(unsigned char padding,
       index+=4;
     }
 
-  memcpy (this->host_byte_order_payload_, data, data_size);
+    ACE_OS::memcpy (this->host_byte_order_payload_, data, data_size);
 
   this->payload_size_ = data_size;
 
@@ -357,7 +357,7 @@ TAO_AV_RTP_Object::handle_input (void)
   rtp_packet.get_payload(&data_ptr, length);
 
   this->frame_.rd_ptr (this->frame_.base ());
-  memcpy (this->frame_.rd_ptr (), data_ptr, length);
+  ACE_OS::memcpy (this->frame_.rd_ptr (), data_ptr, length);
   this->frame_.wr_ptr (this->frame_.rd_ptr() + length);
 
   this->callback_->receive_frame (&this->frame_, &frame_info, *addr);

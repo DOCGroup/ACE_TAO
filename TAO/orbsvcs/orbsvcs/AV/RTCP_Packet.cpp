@@ -94,11 +94,11 @@ RTCP_BYE_Packet::RTCP_BYE_Packet(ACE_UINT32 *ssrc_list,
   // Optional - if there is a reason for leaving, store it.
   // The reason is padded with extra zeros because the packet must
   // end on an even 32-bit boundary.
-  memset(this->reason_, 0, sizeof(this->reason_));
+  ACE_OS::memset(this->reason_, 0, sizeof(this->reason_));
   if (text)
     {
       size_t text_length = ACE_OS::strlen(text);
-      memcpy(this->reason_, text, text_length);
+      ACE_OS::memcpy(this->reason_, text, text_length);
       this->reason_length_ = static_cast<unsigned char> (text_length);
     }
   else
@@ -137,12 +137,12 @@ RTCP_BYE_Packet::RTCP_BYE_Packet(char* buffer, int *len)
   // Optional - store the reason for leaving
   unsigned int temp = this->chd_.length_; // Borland reports a warning on the
                                           // following line with out this.
-  memset(this->reason_, 0, sizeof(this->reason_));
+  ACE_OS::memset(this->reason_, 0, sizeof(this->reason_));
   if (temp > this->chd_.count_)
     {
       this->reason_length_ = buffer[index];
       index++;
-      memcpy(this->reason_, &buffer[index], this->reason_length_);
+      ACE_OS::memcpy(this->reason_, &buffer[index], this->reason_length_);
       index+=this->reason_length_;
 
     }
@@ -236,7 +236,7 @@ RTCP_BYE_Packet::build_packet(void)
     {
       this->packet_data_[index] = this->reason_length_;
       index++;
-      memcpy(&this->packet_data_[index], this->reason_, this->reason_length_);
+      ACE_OS::memcpy(&this->packet_data_[index], this->reason_, this->reason_length_);
       index += this->reason_length_;
       while (index < this->packet_size())
         {
@@ -522,9 +522,9 @@ RTCP_SDES_Packet::RTCP_SDES_Packet(char* buffer, int *len):
               i++;
               ACE_NEW (ip->info_.standard_.data_,
                        char[ip->info_.standard_.length_+1]);
-              memcpy(ip->info_.standard_.data_,
-                     &buffer[i],
-                     ip->info_.standard_.length_);
+              ACE_OS::memcpy(ip->info_.standard_.data_,
+                             &buffer[i],
+                             ip->info_.standard_.length_);
               ip->info_.standard_.data_[ip->info_.standard_.length_] = 0;
               i+=ip->info_.standard_.length_;
             }
@@ -536,16 +536,16 @@ RTCP_SDES_Packet::RTCP_SDES_Packet(char* buffer, int *len):
               i++;
               ACE_NEW (ip->info_.priv_.name_,
                        char[ip->info_.priv_.name_length_+1]);
-              memcpy(ip->info_.priv_.name_,
-                     &buffer[i],
-                     ip->info_.priv_.name_length_);
+              ACE_OS::memcpy(ip->info_.priv_.name_,
+                             &buffer[i],
+                             ip->info_.priv_.name_length_);
               ip->info_.priv_.name_[ip->info_.priv_.name_length_] = 0;
               i+=ip->info_.priv_.name_length_;
               ACE_NEW (ip->info_.priv_.data_,
                        char[ip->info_.priv_.data_length_+1]);
-              memcpy(ip->info_.priv_.data_,
-                     &buffer[i],
-                     ip->info_.priv_.data_length_);
+              ACE_OS::memcpy(ip->info_.priv_.data_,
+                             &buffer[i],
+                             ip->info_.priv_.data_length_);
               ip->info_.priv_.data_[ip->info_.priv_.data_length_] = 0;
               i+=ip->info_.priv_.data_length_;
             }
@@ -696,7 +696,7 @@ RTCP_SDES_Packet::add_item (ACE_UINT32 ssrc,
   ACE_NEW (ip->info_.standard_.data_,
            char[length]);
 
-  memcpy(ip->info_.standard_.data_, data, length);
+  ACE_OS::memcpy(ip->info_.standard_.data_, data, length);
 }
 
 //==============================================================================
@@ -770,8 +770,8 @@ RTCP_SDES_Packet::add_priv_item (ACE_UINT32 ssrc,
   ACE_NEW (ip->info_.priv_.data_,
            char[dataLength]);
 
-  memcpy(ip->info_.priv_.name_, name, nameLength);
-  memcpy(ip->info_.priv_.data_, data, dataLength);
+  ACE_OS::memcpy(ip->info_.priv_.name_, name, nameLength);
+  ACE_OS::memcpy(ip->info_.priv_.data_, data, dataLength);
 }
 
 //==============================================================================
