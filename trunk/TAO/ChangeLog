@@ -1,3 +1,27 @@
+Sat Jul  7 19:56:20 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * orbsvcs/orbsvcs/AV/AVStreams_i.cpp:
+        * orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.cpp:
+        * orbsvcs/orbsvcs/AV/FlowSpec_Entry.cpp:
+        * orbsvcs/orbsvcs/AV/RTCP.cpp:
+        * orbsvcs/orbsvcs/AV/RTCP_Packet.cpp:
+        * orbsvcs/orbsvcs/AV/RTP.cpp:
+        * orbsvcs/orbsvcs/AV/UDP.cpp:
+        * orbsvcs/orbsvcs/ESF/ESF_Copy_On_Read.cpp:
+        * orbsvcs/orbsvcs/ESF/ESF_Copy_On_Write.cpp:
+        * orbsvcs/orbsvcs/ESF/ESF_Delayed_Changes.cpp:
+        * orbsvcs/orbsvcs/ESF/ESF_Immediate_Changes.inl:
+        * orbsvcs/orbsvcs/ESF/ESF_Proxy_Admin.cpp:
+        * orbsvcs/orbsvcs/ETCL/ETCL_Interpreter.cpp:
+        * orbsvcs/orbsvcs/ETCL/ETCL_l.cpp:
+        * orbsvcs/orbsvcs/ETCL/ETCL_y.cpp:
+        * orbsvcs/orbsvcs/Event/ECG_UDP_Receiver.cpp:
+        * orbsvcs/orbsvcs/Event/ECG_UDP_Sender.cpp:
+
+          Fixed ACE_OS fuzz warnings. Use ACE_OS calls instead of raw OS function
+          where possible. If fuzz detected a false-positive, then disable
+          the ACE_OS fuzz check for that section of the code.
+
 Sat Jul  7 09:43:00 UTC 2007  Martin Corino  <mcorino@remedy.nl>
 
         * TAO_IDL/driver/drv_preproc.cpp:
@@ -21,7 +45,7 @@ Fri Jul  6 10:18:16 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
         * tao/Valuetype/AbstractBase.cpp:
         * tao/Valuetype/ValueBase.h:
         * tao/Object.cpp:
-        
+
           Added a flag, defined by when the gen_ostream feature is turned on,
           that guards the ostream operators for Object, ValueBase, Any,
           TypeCode, and AbstractBase.

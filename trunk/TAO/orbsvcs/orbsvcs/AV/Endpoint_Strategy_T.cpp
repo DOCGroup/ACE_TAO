@@ -562,11 +562,11 @@ TAO_AV_Child_Process  <T_StreamEndpoint_B, T_VDev, T_MediaCtrl>::release_semapho
   char sem_str [BUFSIZ];
 
   long pid = this->pid_;
-  sprintf (sem_str,
-           "%s:%s:%ld",
-           "TAO_AV_Process_Semaphore",
-           this->host_,
-           pid);
+  ACE_OS::sprintf (sem_str,
+                   "%s:%s:%ld",
+                   "TAO_AV_Process_Semaphore",
+                   this->host_,
+                   pid);
 
   if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) semaphore is %s\n",

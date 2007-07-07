@@ -46,8 +46,7 @@ TAO_ESF_Proxy_Admin<EVENT_CHANNEL,PROXY,INTERFACE>::
 }
 
 template<class EVENT_CHANNEL, class PROXY, class INTERFACE> void
-TAO_ESF_Proxy_Admin<EVENT_CHANNEL,PROXY,INTERFACE>::
-    shutdown (void)
+TAO_ESF_Proxy_Admin<EVENT_CHANNEL,PROXY,INTERFACE>::shutdown (void)
 {
   TAO_ESF_Shutdown_Proxy<PROXY> worker;
 
