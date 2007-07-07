@@ -1155,9 +1155,9 @@ DRV_pre_proc (const char *myfile)
       // symbolic link attack, or another process opened the file before
       // us.
 #if defined (ACE_OPENVMS)
-      fd = ACE_OS::open (t_file, O_WRONLY | O_CREAT | O_EXCL,
-                         ACE_DEFAULT_FILE_PERMS, "shr=get,put,upd", 
-                         "ctx=rec", "fop=dfw");
+      fd = ::open (t_file, O_WRONLY | O_CREAT | O_EXCL,
+                   ACE_DEFAULT_FILE_PERMS,
+                   "shr=get,put,upd", "ctx=rec", "fop=dfw");
 #else
       fd = ACE_OS::open (t_file,
                          O_WRONLY | O_CREAT | O_EXCL,
