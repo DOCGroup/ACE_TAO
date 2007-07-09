@@ -25,7 +25,7 @@ namespace CCF
       //
 
       SimpleName::
-      SimpleName (char const* name) throw (InvalidName)
+      SimpleName (char const* name)
           : escaped_ (name[0] == '_'),
             name_ (escaped_ ? name + 1 : name)
       {
@@ -34,7 +34,7 @@ namespace CCF
       }
 
       SimpleName::
-      SimpleName (std::string const& name) throw (InvalidName)
+      SimpleName (std::string const& name)
           : escaped_ (name[0] == '_'),
             name_ (name, escaped_ ? 1 : 0)
       {
@@ -65,19 +65,19 @@ namespace CCF
       }
 
       Name::
-      Name (char const* name) throw (InvalidName)
+      Name (char const* name)
       {
         init (name);
       }
 
       Name::
-      Name (std::string const& name) throw (InvalidName)
+      Name (std::string const& name)
       {
         init (name);
       }
 
       void Name::
-      init (std::string const& name) throw (InvalidName)
+      init (std::string const& name)
       {
         // cerr << "parsing name \'" << name_cache_ << "\' {"<< endl;
 
@@ -117,7 +117,7 @@ namespace CCF
 
 
       Name::
-      Name (Iterator begin, Iterator end) throw (InvalidName)
+      Name (Iterator begin, Iterator end)
       {
         for (Iterator i (begin); i != end; ++i)
         {
@@ -146,28 +146,28 @@ namespace CCF
       //
 
       ScopedName::
-      ScopedName (char const* name) throw (InvalidName)
+      ScopedName (char const* name)
           : Name (name)
       {
         if (!scoped ()) throw InvalidName ();
       }
 
       ScopedName::
-      ScopedName (std::string const& name) throw (InvalidName)
+      ScopedName (std::string const& name)
           : Name (name)
       {
         if (!scoped ()) throw InvalidName ();
       }
 
       ScopedName::
-      ScopedName (Iterator begin, Iterator end) throw (InvalidName)
+      ScopedName (Iterator begin, Iterator end)
           : Name (begin, end)
       {
         if (!scoped ()) throw InvalidName ();
       }
 
       ScopedName::
-      ScopedName (Name const& name) throw (InvalidName)
+      ScopedName (Name const& name)
           : Name (name)
       {
         if (!scoped ()) throw InvalidName ();
@@ -175,7 +175,6 @@ namespace CCF
 
       ScopedName::
       ScopedName (ScopedName const& scope, Name const& name)
-        throw (InvalidName)
           : Name (scope.str () + "::" + name.str ())
       {
         if (!scoped ()) throw InvalidName ();
@@ -188,7 +187,7 @@ namespace CCF
       }
 
       ScopedName ScopedName::
-      scope_name () const throw (FileScope)
+      scope_name () const
       {
         Iterator end (this->end () - 1);
 

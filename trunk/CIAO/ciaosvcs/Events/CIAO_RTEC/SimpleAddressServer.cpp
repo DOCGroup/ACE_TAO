@@ -32,18 +32,15 @@ SimpleAddressServer::SimpleAddressServer (const RtecUDPAdmin::UDP_Addr& addr)
 void
 SimpleAddressServer::get_addr (const RtecEventComm::EventHeader&,
                                RtecUDPAdmin::UDP_Addr& address)
-    throw (CORBA::SystemException)
 {
   if (this->address_._d() == RtecUDPAdmin::Rtec_inet6)
     throw CORBA::DATA_CONVERSION(0, CORBA::COMPLETED_YES);
   address = this->address_.v4_addr();
 }
 
-
 void
 SimpleAddressServer::get_address (const RtecEventComm::EventHeader&,
                                   RtecUDPAdmin::UDP_Address_out address)
-  throw (CORBA::SystemException)
 {
   address = this->address_;
 }

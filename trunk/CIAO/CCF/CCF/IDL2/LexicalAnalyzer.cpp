@@ -539,8 +539,7 @@ namespace CCF
       }
     }
 
-    pair<char, size_t> LexicalAnalyzer::
-    scan_char (char const* s) throw (Format)
+    pair<char, size_t> LexicalAnalyzer::scan_char (char const* s)
     {
       if (*s == '\0')
       {
@@ -667,8 +666,7 @@ namespace CCF
       }
     }
 
-    string LexicalAnalyzer::
-    scan_string (string const& s) throw (Format)
+    string LexicalAnalyzer::scan_string (string const& s)
     {
       string r;
 
@@ -805,7 +803,6 @@ namespace CCF
 
     unsigned long long LexicalAnalyzer::
     scan_integer (string const& s, unsigned short base)
-      throw (Format, Boundary)
     {
       unsigned long long const max (~0ULL);
       unsigned long long bound (max / base);

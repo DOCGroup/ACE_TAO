@@ -15,7 +15,6 @@ namespace CCF
         resolve (SemanticGraph::ScopedName const& from,
                  SemanticGraph::Name const& name,
                  Flags::Value flags)
-          throw (NotFound, NotUnique, WrongType, NotDefined, NotComplete)
         {
           using namespace SemanticGraph;
 
@@ -64,7 +63,6 @@ namespace CCF
         template<typename I>
         void Base::
         check_inheritance (I begin, I end, SemanticGraph::Nameable& t)
-          throw (AlreadyInherited)
         {
           for (;begin != end; ++begin)
           {
@@ -78,7 +76,6 @@ namespace CCF
         template<typename I>
         void Base::
         check_support (I begin, I end, SemanticGraph::Nameable& t)
-          throw (AlreadySupported)
         {
           for (;begin != end; ++begin)
           {

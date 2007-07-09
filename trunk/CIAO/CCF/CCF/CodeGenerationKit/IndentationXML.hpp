@@ -47,7 +47,7 @@ namespace Indentation
 
   public:
     virtual int_type
-    put (char_type c) throw (ExH::System::Exception)
+    put (char_type c)
     {
       int_type result = traits_type::to_int_type (c);
 
@@ -147,7 +147,7 @@ namespace Indentation
     }
 
     virtual void
-    unbuffer () throw (EndOfStream, ExH::System::Exception)
+    unbuffer ()
     {
       try
       {
@@ -162,7 +162,7 @@ namespace Indentation
     class Full {};
 
     void
-    flush_buffer () throw (Full)
+    flush_buffer ()
     {
       long delta = indentation_ - base_indent_;
 
@@ -183,7 +183,7 @@ namespace Indentation
     }
 
     void
-    output_indentation (unsigned long indentation) throw (Full)
+    output_indentation (unsigned long indentation)
     {
       for (unsigned long i = 0; i < indentation * spaces_; i++)
       {
@@ -192,7 +192,7 @@ namespace Indentation
     }
 
     int_type
-    write (int_type c) throw (Full)
+    write (int_type c)
     {
       int_type result;
 

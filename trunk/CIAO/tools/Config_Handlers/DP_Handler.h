@@ -57,19 +57,15 @@ throw ();
 /// Generates the IDL->XSC mapping.  returns
 /// null if the method fails or if the class was
 /// constructed with the wrong source.
-DeploymentPlan const *xsc (void) const
-throw (NoPlan);
+DeploymentPlan const *xsc (void) const;
 
-DeploymentPlan *xsc (void)
-throw (NoPlan);
+DeploymentPlan *xsc (void);
 
 /// Generates the XSC->IDL mapping.  returns null
 /// if the method fails or the class was constructed
-::Deployment::DeploymentPlan const *plan (void) const
-throw (NoPlan);
+::Deployment::DeploymentPlan const *plan (void) const;
 
-::Deployment::DeploymentPlan *plan (void)
-throw (NoPlan);
+::Deployment::DeploymentPlan *plan (void);
 
 private:
 

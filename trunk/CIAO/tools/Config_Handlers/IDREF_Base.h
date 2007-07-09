@@ -46,18 +46,15 @@ IDREF_Base (T start_point)
 }
 
 /// Bind an IDREF to an index
-void bind_ref (ACE_CString& id, T value)
-throw (Config_Error);
+void bind_ref (ACE_CString& id, T value);
 
 void bind_next_available (ACE_CString &id);
 
 /// Get the index associated with an IDREF
-void find_ref (const ACE_CString& id, T& value)
-throw (Config_Error);
+void find_ref (const ACE_CString& id, T& value);
 
 /// get the IDREF associated with an index
-void find_ref (const T &value, ACE_CString& id)
-throw (Config_Error);
+void find_ref (const T &value, ACE_CString& id);
 
 /// Unbind all IDREFS
 bool

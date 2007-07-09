@@ -170,28 +170,25 @@ namespace CIAO
       return true;
     }
 
-
     ::CIAO::DAnCE::EventServiceDeploymentDescriptions const *
-        CIAOEvents_Handler::esd_idl () const
-      throw (CIAOEvents_Handler::NoESD)
-      {
-        if(!this->idl_esd_.get())
-          throw NoESD ();
+    CIAOEvents_Handler::esd_idl () const
+    {
+      if(!this->idl_esd_.get())
+        throw NoESD ();
 
-         //else
-        return this->idl_esd_.get();
-      }
+      //else
+      return this->idl_esd_.get();
+    }
 
     ::CIAO::DAnCE::EventServiceDeploymentDescriptions *
-        CIAOEvents_Handler::esd_idl ()
-      throw (CIAOEvents_Handler::NoESD)
-      {
-        if(!this->idl_esd_.get())
-          throw NoESD();
+    CIAOEvents_Handler::esd_idl ()
+    {
+      if(!this->idl_esd_.get())
+        throw NoESD();
 
-        //else
-        return this->idl_esd_.release();
-      }
-   }
+      //else
+      return this->idl_esd_.release();
+    }
+  }
 }
 

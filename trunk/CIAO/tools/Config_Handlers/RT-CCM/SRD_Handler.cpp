@@ -115,7 +115,6 @@ namespace CIAO
 
     ::CIAO::DAnCE::ServerResource const *
     SRD_Handler::srd_idl () const
-      throw (SRD_Handler::NoSRD)
     {
       if(!this->idl_srd_.get())
         throw NoSRD ();
@@ -126,7 +125,6 @@ namespace CIAO
 
     ::CIAO::DAnCE::ServerResource *
     SRD_Handler::srd_idl ()
-      throw (SRD_Handler::NoSRD)
     {
       if(!this->idl_srd_.get())
         throw NoSRD();
@@ -137,7 +135,6 @@ namespace CIAO
 
     ServerResourcesDef const *
     SRD_Handler::srd_xsc () const
-      throw (SRD_Handler::NoSRD)
     {
       if(!this->srd_.get())
         throw NoSRD ();
@@ -148,7 +145,6 @@ namespace CIAO
 
     ServerResourcesDef *
     SRD_Handler::srd_xsc ()
-      throw (SRD_Handler::NoSRD)
     {
       if(!this->srd_.get())
         throw NoSRD ();
@@ -158,5 +154,3 @@ namespace CIAO
     }
   }
 }
-
-

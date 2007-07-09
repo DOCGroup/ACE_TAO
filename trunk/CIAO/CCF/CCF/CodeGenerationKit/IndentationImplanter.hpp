@@ -76,13 +76,13 @@ namespace Indentation
     }
 
     virtual int_type
-    put (char_type c) throw (Exception, ExH::System::Exception)
+    put (char_type c)
     {
       return buffer_.sputc (c);
     }
 
     virtual void
-    unbuffer () throw (ExH::System::Exception)
+    unbuffer ()
     {
       try
       {
