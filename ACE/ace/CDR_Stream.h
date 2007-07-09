@@ -1311,7 +1311,7 @@ extern ACE_Export ACE_CDR::Boolean operator>> (ACE_InputCDR &is,
                                                ACE_CDR::Char*& x);
 extern ACE_Export ACE_CDR::Boolean operator>> (ACE_InputCDR &is,
                                                ACE_CDR::WChar*& x);
-                                               
+
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* __ACE_INLINE__ */

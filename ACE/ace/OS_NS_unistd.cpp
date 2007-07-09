@@ -15,6 +15,7 @@ ACE_RCSID (ace, OS_NS_unistd, "$Id$")
 #include "ace/OS_Memory.h"
 #include "ace/OS_NS_Thread.h"
 #include "ace/Object_Manager_Base.h"
+#include "ace/Auto_Ptr.h"
 #include "ace/os_include/sys/os_pstat.h"
 #include "ace/os_include/sys/os_sysctl.h"
 
@@ -227,8 +228,9 @@ pid_t
 ACE_OS::fork_exec (ACE_TCHAR *argv[])
 {
 # if defined (ACE_WIN32)
-  ACE_TCHAR *buf = 0;
 
+  ACE_TCHAR *buf = 0;
+  ACE_Auto_Basic_Array_Ptr<ACE_TCHAR> safe_ptr (buf);
   if (ACE_OS::argv_to_string (argv, buf) != -1)
     {
       PROCESS_INFORMATION process_info;
@@ -266,10 +268,8 @@ ACE_OS::fork_exec (ACE_TCHAR *argv[])
           ACE_OS::close (process_info.hThread);
           ACE_OS::close (process_info.hProcess);
           // Return new process id.
-          delete [] buf;
           return process_info.dwProcessId;
         }
-      delete [] buf;
     }
 
   // CreateProcess failed.
