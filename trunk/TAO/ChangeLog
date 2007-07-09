@@ -1,3 +1,13 @@
+Mon Jul  9 12:25:56 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tests/IDL_Test/IDL_Test.mpc:
+         
+          Removed the -Gos option altogether from any settings via
+          idlflags, and let the option be used only if the gen_ostream
+          feature is turned on. There are too many IDL files that
+          reference CORBA types to make it worth while to try and
+          test the -Gos option in any kind of hard-coded way.
+
 Mon Jul  9 11:32:20 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tests/IDL_Test/IDL_Test.mpc:
