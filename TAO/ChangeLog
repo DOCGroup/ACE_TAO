@@ -1,7 +1,7 @@
 Mon Jul  9 12:25:56 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tests/IDL_Test/IDL_Test.mpc:
-         
+
           Removed the -Gos option altogether from any settings via
           idlflags, and let the option be used only if the gen_ostream
           feature is turned on. There are too many IDL files that
@@ -11,7 +11,7 @@ Mon Jul  9 12:25:56 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
 Mon Jul  9 11:32:20 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tests/IDL_Test/IDL_Test.mpc:
-        
+
           Further subdivided IDL files into blocks that get slightly
           different IDL compiler command line options, in particular
           a new block, containing anonymous.idl and array_only.idl,
@@ -171,7 +171,8 @@ Thu Jul  5 08:01:00 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
           settings to have a value for each ORB, this makes it also possible
           to mix RT and non RT ORBs/POAs in one process, but using the ORB
           Initializer we can make sure all RTORBs get the correct value.
-          This fixes bugzilla 2953.
+          This fixes bugzilla 2953, thanks to Iliyan Jeliazkov for reviewing
+          the patches.
 
         * MPC/config/strategies.mpb:
           Strategies library needs PI
