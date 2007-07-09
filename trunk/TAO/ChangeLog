@@ -1,3 +1,12 @@
+Mon Jul  9 11:32:20 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tests/IDL_Test/IDL_Test.mpc:
+        
+          Further subdivided IDL files into blocks that get slightly
+          different IDL compiler command line options, in particular
+          a new block, containing anonymous.idl and array_only.idl,
+          that get -GA but not -Gos.
+
 Sat Jul  7 19:56:20 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * orbsvcs/orbsvcs/AV/AVStreams_i.cpp:
