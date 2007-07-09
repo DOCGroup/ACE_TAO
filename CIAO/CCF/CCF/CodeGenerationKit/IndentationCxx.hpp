@@ -48,7 +48,7 @@ namespace Indentation
 
   public:
     virtual int_type
-    put (char_type c) throw (ExH::System::Exception)
+    put (char_type c)
     {
       int_type result = traits_type::to_int_type (c);
 
@@ -290,7 +290,7 @@ namespace Indentation
     }
 
     virtual void
-    unbuffer () throw (EndOfStream, ExH::System::Exception)
+    unbuffer ()
     {
       int_type result;
 
@@ -323,7 +323,7 @@ namespace Indentation
 
 
     void
-    output_indentation () throw (Full)
+    output_indentation ()
     {
       if (!hold_.empty () && hold_.back () == '\n')
       {
@@ -335,7 +335,7 @@ namespace Indentation
     }
 
     int_type
-    write (char_type c) throw (Full)
+    write (char_type c)
     {
       hold_.push_back (c);
 

@@ -68,29 +68,25 @@ DD_Handler(::Deployment::Domain *dmn);
 * @brief Returns the const IDL domain
 * @return Domain* the IDL domain pointer
 */
-::Deployment::Domain const *domain_idl (void) const
-throw (NoDomain);
+::Deployment::Domain const *domain_idl (void) const;
 
 /**
 * @brief Returns the IDL domain
 * @return Domain* the IDL domain pointer
 */
-::Deployment::Domain *domain_idl (void)
-throw (NoDomain);
+::Deployment::Domain *domain_idl (void);
 
 /**
 * @brief Returns the const XSC domain
 * @return Domain* the XSC domain pointer
 */
-Domain const *domain_xsc (void) const
-throw (NoDomain);
+Domain const *domain_xsc (void) const;
 
 /**
 * @brief Returns the XSC domain
 * @return Domain* the XSC domain pointer
 */
-Domain *domain_xsc (void)
-throw (NoDomain);
+Domain *domain_xsc (void);
 
 private:
 /**

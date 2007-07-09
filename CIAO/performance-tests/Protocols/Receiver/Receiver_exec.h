@@ -17,35 +17,21 @@ namespace CIDL_ReceiverImpl
 
     ReceiverExec_i (void);
 
-    ::Protocols::CCM_test_ptr get_writer (void)
-      throw (CORBA::SystemException);
+    ::Protocols::CCM_test_ptr get_writer (void);
 
-    void shutdown (void)
-      throw (CORBA::SystemException);
+    void shutdown (void);
 
-    void set_session_context (Components::SessionContext_ptr ctx)
-      throw (CORBA::SystemException,
-             Components::CCMException);
+    void set_session_context (Components::SessionContext_ptr ctx);
 
-    void ccm_activate (void)
-      throw (CORBA::SystemException,
-             Components::CCMException);
+    void ccm_activate (void);
 
-    void ccm_passivate (void)
-      throw (CORBA::SystemException,
-             Components::CCMException);
+    void ccm_passivate (void);
 
-    void ccm_remove (void)
-      throw (CORBA::SystemException,
-             Components::CCMException);
+    void ccm_remove (void);
 
-    void ciao_preactivate (void)
-      throw (CORBA::SystemException,
-             Components::CCMException);
+    void ciao_preactivate (void);
 
-    void ciao_postactivate (void)
-      throw (CORBA::SystemException,
-             Components::CCMException);
+    void ciao_postactivate (void);
 
   protected:
 
@@ -67,27 +53,21 @@ namespace CIDL_ReceiverImpl
                      const char *protocol,
                      CORBA::ULong invocation_rate,
                      CORBA::ULong message_size,
-                     CORBA::ULong iterations)
-      throw (CORBA::SystemException);
+                     CORBA::ULong iterations);
 
-    void end_test (void)
-      throw (CORBA::SystemException);
+    void end_test (void);
 
-    void oneway_sync (void)
-      throw (CORBA::SystemException);
+    void oneway_sync (void);
 
-    void twoway_sync (void)
-      throw (CORBA::SystemException);
+    void twoway_sync (void);
 
     void oneway_method (CORBA::Long session_id,
                         CORBA::ULong iteration,
-                        const Protocols::test::octets &payload)
-      throw (CORBA::SystemException);
+                        const Protocols::test::octets &payload);
 
     void twoway_method (CORBA::Long &session_id,
                         CORBA::ULong &iteration,
-                        Protocols::test::octets &payload)
-      throw (CORBA::SystemException);
+                        Protocols::test::octets &payload);
 
   private:
     typedef ACE_Array_Base<CORBA::Boolean> Invocations;
@@ -108,14 +88,9 @@ namespace CIDL_ReceiverImpl
   {
   public:
 
-    ::Components::EnterpriseComponent_ptr create (void)
-      throw (CORBA::SystemException,
-             Components::CCMException);
+    ::Components::EnterpriseComponent_ptr create (void);
   };
 
   extern "C" RECEIVER_EXEC_Export ::Components::HomeExecutorBase_ptr
   createReceiverHome_Impl (void);
 }
-
-
-

@@ -30,7 +30,7 @@ namespace CCF
         Nameables
         resolve (TranslationUnit& tu,
                  ScopedName const& from,
-                 Name const& name) throw (NotFound)
+                 Name const& name)
         {
 
           if (trace) cerr << "resolve: starting resolution process for \'"
@@ -108,7 +108,7 @@ namespace CCF
         Nameable*
         lookup (SemanticGraph::TranslationUnit& tu,
                 SemanticGraph::Scope& in,
-                SemanticGraph::SimpleName const& name) throw (NotUnique)
+                SemanticGraph::SimpleName const& name)
         {
           Nameables r;
 

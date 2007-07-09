@@ -50,12 +50,10 @@ namespace CIAO
     public:
       static void es_deployment_descrs (
           const DeploymentPlan &src,
-          ::Deployment::EventServiceDeploymentDescriptions& dest)
-        throw (Config_Error);
+          ::Deployment::EventServiceDeploymentDescriptions& dest);
 
       static EventServiceDeploymentDescription es_deployment_descr (
-          const Deployment::EventServiceDeploymentDescription &src)
-        throw (Config_Error);
+          const Deployment::EventServiceDeploymentDescription &src);
 
       static IDREF_Base<CORBA::ULong> IDREF;
 
@@ -63,8 +61,7 @@ namespace CIAO
       static void es_deployment_descr (
           const EventServiceDeploymentDescription &src,
           ::Deployment::EventServiceDeploymentDescription &dest,
-          CORBA::ULong pos)
-        throw (Config_Error);
+          CORBA::ULong pos);
     };
   }
 }

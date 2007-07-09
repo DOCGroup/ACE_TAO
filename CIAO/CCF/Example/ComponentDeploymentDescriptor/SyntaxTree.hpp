@@ -150,7 +150,7 @@ namespace CDD
       class AlreadyExist {};
 
       void
-      insert (PortInstancePtr const& d) throw (AlreadyExist)
+      insert (PortInstancePtr const& d)
       {
         if (!ports_.insert (d).second) throw AlreadyExist ();
       }

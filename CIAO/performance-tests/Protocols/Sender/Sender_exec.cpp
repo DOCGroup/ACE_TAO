@@ -573,7 +573,6 @@ CIDL_SenderImpl::SenderExec_i::start (
     ::CORBA::Short priority,
     ::Protocols::Sender_Controller::Test_Type test_type
   )
-  throw (CORBA::SystemException)
 {
   ACE_DEBUG ((LM_DEBUG, "CIDL_SenderImpl::SenderExec_i::start\n"));
 
@@ -641,7 +640,6 @@ CIDL_SenderImpl::SenderExec_i::start (
 
 void
 CIDL_SenderImpl::SenderExec_i::shutdown (void)
-  throw (CORBA::SystemException)
 {
   ACE_DEBUG ((LM_DEBUG, "CIDL_SenderImpl::SenderExec_i::shutdown\n"));
   this->orb_->shutdown ();
@@ -651,8 +649,6 @@ void
 CIDL_SenderImpl::SenderExec_i::set_session_context (
     Components::SessionContext_ptr ctx
   )
-  throw (CORBA::SystemException,
-         Components::CCMException)
 {
   ACE_DEBUG ((LM_DEBUG, "CIDL_SenderImpl::SenderExec_i::set_session_context\n"));
 
@@ -665,24 +661,18 @@ CIDL_SenderImpl::SenderExec_i::set_session_context (
 
 void
 CIDL_SenderImpl::SenderExec_i::ccm_activate (void)
-  throw (CORBA::SystemException,
-         Components::CCMException)
 {
   ACE_DEBUG ((LM_DEBUG, "CIDL_SenderImpl::SenderExec_i::ccm_activate\n"));
 }
 
 void
 CIDL_SenderImpl::SenderExec_i::ccm_passivate (void)
-  throw (CORBA::SystemException,
-         Components::CCMException)
 {
   ACE_DEBUG ((LM_DEBUG, "CIDL_SenderImpl::SenderExec_i::ccm_passivate\n"));
 }
 
 void
 CIDL_SenderImpl::SenderExec_i::ccm_remove (void)
-  throw (CORBA::SystemException,
-         Components::CCMException)
 {
   ACE_DEBUG ((LM_DEBUG, "CIDL_SenderImpl::SenderExec_i::ccm_remove\n"));
 }
@@ -690,24 +680,18 @@ CIDL_SenderImpl::SenderExec_i::ccm_remove (void)
 
 void
 CIDL_SenderImpl::SenderExec_i::ciao_preactivate (void)
-  throw (CORBA::SystemException,
-         Components::CCMException)
 {
   ACE_DEBUG ((LM_DEBUG, "CIDL_SenderImpl::SenderExec_i::ccm_preactivate\n"));
 }
 
 void
 CIDL_SenderImpl::SenderExec_i::ciao_postactivate (void)
-  throw (CORBA::SystemException,
-         Components::CCMException)
 {
   ACE_DEBUG ((LM_DEBUG, "CIDL_SenderImpl::SenderExec_i::ccm_postactivate\n"));
 }
 
 ::Components::EnterpriseComponent_ptr
 CIDL_SenderImpl::SenderHomeExec_i::create (void)
-  throw (CORBA::SystemException,
-         Components::CCMException)
 {
   ACE_DEBUG ((LM_DEBUG, "CIDL_SenderImpl::SenderHome_exec::create\n"));
   return new CIDL_SenderImpl::SenderExec_i;

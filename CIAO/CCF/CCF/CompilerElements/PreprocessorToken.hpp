@@ -27,10 +27,10 @@ namespace CCF
 
         class EOS {};
 
-        operator char () const throw (EOS);
+        operator char () const;
 
         unsigned long
-        line () const throw (EOS);
+        line () const;
 
         friend bool
         operator== (Token const& a, Token const& b);

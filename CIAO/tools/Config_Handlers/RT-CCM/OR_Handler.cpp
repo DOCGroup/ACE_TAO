@@ -53,7 +53,6 @@ namespace CIAO
     }
 
     ORBResources OR_Handler::orb_resources (const ::CIAO::DAnCE::ORBResources &src)
-      throw (OR_Handler::No_Resource)
     {
       if (src.length () == 0 ||
           src[0].threadpool_list.length () == 0 ||

@@ -24,8 +24,8 @@ namespace CCF
       class SimpleName
       {
       public:
-        SimpleName (char const* name) throw (InvalidName);
-        SimpleName (std::string const& name) throw (InvalidName);
+        SimpleName (char const* name);
+        SimpleName (std::string const& name);
 
       public:
         // Comparisons are escape-insensitive.
@@ -93,14 +93,14 @@ namespace CCF
       public:
         Name (SimpleName const& name);
 
-        Name (char const* name) throw (InvalidName);
-        Name (std::string const& name) throw (InvalidName);
+        Name (char const* name);
+        Name (std::string const& name);
 
         typedef
         Name_::const_iterator
         Iterator;
 
-        Name (Iterator begin, Iterator end) throw (InvalidName);
+        Name (Iterator begin, Iterator end);
 
       public:
         // Comparisons are escape-insensitive.
@@ -163,7 +163,7 @@ namespace CCF
 
       private:
         void
-        init (std::string const& name) throw (InvalidName);
+        init (std::string const& name);
 
       private:
         Name_ name_;
@@ -177,17 +177,16 @@ namespace CCF
       class ScopedName : public Name
       {
       public:
-        ScopedName (char const* name) throw (InvalidName);
+        ScopedName (char const* name);
 
-        ScopedName (std::string const& name) throw (InvalidName);
+        ScopedName (std::string const& name);
 
-        ScopedName (Iterator begin, Iterator end) throw (InvalidName);
+        ScopedName (Iterator begin, Iterator end);
 
         explicit
-        ScopedName (Name const& name) throw (InvalidName);
+        ScopedName (Name const& name);
 
-        ScopedName (ScopedName const& scope, Name const& name)
-          throw (InvalidName);
+        ScopedName (ScopedName const& scope, Name const& name);
 
       public:
         SimpleName
@@ -196,7 +195,7 @@ namespace CCF
         class FileScope {};
 
         ScopedName
-        scope_name () const throw (FileScope);
+        scope_name () const;
       };
 
 
