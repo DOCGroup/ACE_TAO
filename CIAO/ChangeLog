@@ -1,3 +1,9 @@
+Mon Jul  9 11:23:12 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tools/IDL3_to_IDL2/checking_visitor.cpp:
+        
+          Added missing newline to the end of the file.
+
 Mon Jul  9 07:26:20 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tools/IDL3_to_IDL2/IDL3_to_IDL2.mpc:

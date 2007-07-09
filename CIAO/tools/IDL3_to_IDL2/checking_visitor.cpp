@@ -352,3 +352,4 @@ checking_visitor::is_local_idl3 (void) const
 {
   return this->is_local_idl3_;
 }
+
