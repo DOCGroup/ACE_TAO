@@ -52,12 +52,10 @@ class Config_Handlers_Export IDD_Handler
 public:
 static void instance_deployment_descrs (
 const DeploymentPlan &src,
-::Deployment::InstanceDeploymentDescriptions& dest)
-throw (Config_Error);
+::Deployment::InstanceDeploymentDescriptions& dest);
 
 static InstanceDeploymentDescription instance_deployment_descr (
-const Deployment::InstanceDeploymentDescription &src)
-throw (Config_Error);
+const Deployment::InstanceDeploymentDescription &src);
 
 static IDREF_Base<CORBA::ULong> IDREF;
 
@@ -65,8 +63,7 @@ private:
 static void instance_deployment_descr (
 const InstanceDeploymentDescription &src,
 ::Deployment::InstanceDeploymentDescription &dest,
-CORBA::ULong pos)
-throw (Config_Error);
+CORBA::ULong pos);
 
 };
 }

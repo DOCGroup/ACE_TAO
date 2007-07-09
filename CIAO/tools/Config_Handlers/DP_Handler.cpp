@@ -51,7 +51,6 @@ ACE_RCSID (Config_Handlers,
 
       DeploymentPlan const *
       DP_Handler::xsc (void) const
-        throw (DP_Handler::NoPlan)
       {
         if (this->retval_ && this->xsc_dp_.get () != 0)
           return this->xsc_dp_.get ();
@@ -61,7 +60,6 @@ ACE_RCSID (Config_Handlers,
 
       DeploymentPlan *
       DP_Handler::xsc (void)
-        throw (DP_Handler::NoPlan)
       {
         if (this->retval_ && this->xsc_dp_.get () != 0)
           return this->xsc_dp_.release ();
@@ -71,7 +69,6 @@ ACE_RCSID (Config_Handlers,
 
       ::Deployment::DeploymentPlan const *
       DP_Handler::plan (void) const
-        throw (DP_Handler::NoPlan)
       {
         if (this->retval_ && this->idl_dp_.get () != 0)
           return this->idl_dp_.get ();
@@ -81,8 +78,6 @@ ACE_RCSID (Config_Handlers,
 
       ::Deployment::DeploymentPlan *
       DP_Handler::plan (void)
-        throw (DP_Handler::NoPlan)
-
       {
         if (this->retval_ && this->idl_dp_.get () != 0)
           return this->idl_dp_.release ();

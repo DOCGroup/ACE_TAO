@@ -25,7 +25,7 @@ namespace CCF
       }
 
       Token::
-      operator char () const throw (EOS)
+      operator char () const
       {
         if (*this == eos) throw EOS ();
 
@@ -34,7 +34,7 @@ namespace CCF
 
 
       unsigned long Token::
-      line () const throw (EOS)
+      line () const 
       {
         if (*this == eos) throw EOS ();
 

@@ -17,10 +17,8 @@ namespace CIAO
     IDREF_Base<CORBA::ULong> IDD_Handler::IDREF;
 
     void
-    IDD_Handler::instance_deployment_descrs (
-                                             const DeploymentPlan &src,
+    IDD_Handler::instance_deployment_descrs (const DeploymentPlan &src,
                                              Deployment::InstanceDeploymentDescriptions& dest)
-      throw (Config_Error)
     {
       CIAO_TRACE("IDD_Handler::instance_deployment_descrs");
       DeploymentPlan::instance_const_iterator idd_e =
@@ -40,11 +38,9 @@ namespace CIAO
     }
 
     void
-    IDD_Handler::instance_deployment_descr (
-                                            const InstanceDeploymentDescription& src,
+    IDD_Handler::instance_deployment_descr (const InstanceDeploymentDescription& src,
                                             Deployment::InstanceDeploymentDescription& dest,
                                             CORBA::ULong pos)
-      throw (Config_Error)
     {
       CIAO_TRACE("IDD_Handler::instance_deployment_descr");
       try
@@ -102,9 +98,7 @@ namespace CIAO
     }
 
     InstanceDeploymentDescription
-    IDD_Handler::instance_deployment_descr (
-                                            const Deployment::InstanceDeploymentDescription& src)
-      throw (Config_Error)
+    IDD_Handler::instance_deployment_descr (const Deployment::InstanceDeploymentDescription& src)
     {
       CIAO_TRACE("IDD_Handler::instance_deployment_descr - reverse");
       //Get all the string/IDREFs
@@ -112,10 +106,10 @@ namespace CIAO
       XMLSchema::string < ACE_TCHAR > node ((src.node));
       XMLSchema::string < ACE_TCHAR > source ("");
       if (src.source.length () > 0)
-      {
-         XMLSchema::string < ACE_TCHAR > source_detail (src.source[0]);
-         source = source_detail;
-    }
+        {
+          XMLSchema::string < ACE_TCHAR > source_detail (src.source[0]);
+          source = source_detail;
+        }
       ACE_CString temp;
       MDD_Handler::IDREF.find_ref(src.implementationRef, temp);
       XMLSchema::IDREF< ACE_TCHAR > implementation ((temp.c_str()));
@@ -127,9 +121,7 @@ namespace CIAO
       size_t total = src.configProperty.length();
       for(size_t j = 0; j < total; j++)
         {
-          idd.add_configProperty(
-                                 Property_Handler::get_property (
-                                                                 src.configProperty[j]));
+          idd.add_configProperty(Property_Handler::get_property (src.configProperty[j]));
         }
 
       // Get and store the deployedResource(s)
@@ -158,6 +150,5 @@ namespace CIAO
 
       return idd;
     }
-
   }
 }

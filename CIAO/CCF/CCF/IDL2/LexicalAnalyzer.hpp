@@ -76,14 +76,13 @@ namespace CCF
       class Boundary {};
 
       std::pair<char, std::size_t>
-      scan_char (char const* s) throw (Format);
+      scan_char (char const* s);
 
       std::string
-      scan_string (std::string const& s) throw (Format);
+      scan_string (std::string const& s);
 
       unsigned long long
-      scan_integer (std::string const& s, unsigned short base)
-        throw (Format, Boundary);
+      scan_integer (std::string const& s, unsigned short base);
 
     protected:
       virtual Char

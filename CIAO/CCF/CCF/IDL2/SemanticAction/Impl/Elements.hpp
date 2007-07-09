@@ -218,8 +218,7 @@ namespace CCF
           T&
           resolve (SemanticGraph::ScopedName const& from,
                    SemanticGraph::Name const& name,
-                   Flags::Value flags = Flags::none)
-            throw (NotFound, NotUnique, WrongType, NotDefined, NotComplete);
+                   Flags::Value flags = Flags::none);
 
 
           class AlreadyInherited_ {};
@@ -230,13 +229,11 @@ namespace CCF
 
           template<typename I>
           void
-          check_inheritance (I begin, I end, SemanticGraph::Nameable& t)
-            throw (AlreadyInherited);
+          check_inheritance (I begin, I end, SemanticGraph::Nameable& t);
 
           template<typename I>
           void
-          check_support (I begin, I end, SemanticGraph::Nameable& t)
-            throw (AlreadySupported);
+          check_support (I begin, I end, SemanticGraph::Nameable& t);
 
         protected:
           Context& ctx;
@@ -301,7 +298,7 @@ namespace CCF
         SemanticGraph::Nameables
         resolve (SemanticGraph::TranslationUnit& tu,
                  SemanticGraph::ScopedName const& from,
-                 SemanticGraph::Name const& name) throw (NotFound);
+                 SemanticGraph::Name const& name);
 
 
 
@@ -309,7 +306,7 @@ namespace CCF
         SemanticGraph::Nameable*
         lookup (SemanticGraph::TranslationUnit& tu,
                 SemanticGraph::Scope& in,
-                SemanticGraph::SimpleName const& name) throw (NotUnique);
+                SemanticGraph::SimpleName const& name);
       }
     }
   }

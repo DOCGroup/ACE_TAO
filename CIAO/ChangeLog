@@ -1,13 +1,61 @@
+Mon Jul  9 02:11:22 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * CCF/CCF/CodeGenerationKit/IndentationCxx.hpp:
+        * CCF/CCF/CodeGenerationKit/IndentationIDL.hpp:
+        * CCF/CCF/CodeGenerationKit/IndentationImplanter.hpp:
+        * CCF/CCF/CodeGenerationKit/IndentationXML.hpp:
+        * CCF/CCF/CompilerElements/Context.hpp:
+        * CCF/CCF/CompilerElements/Preprocessor.cpp:
+        * CCF/CCF/CompilerElements/PreprocessorToken.cpp:
+        * CCF/CCF/CompilerElements/PreprocessorToken.hpp:
+        * CCF/CCF/IDL2/LexicalAnalyzer.hpp:
+        * CCF/CCF/IDL2/LexicalAnalyzer.cpp:
+        * CCF/CCF/IDL2/SemanticAction/Impl/Elements.cpp:
+        * CCF/CCF/IDL2/SemanticAction/Impl/Elements.hpp:
+        * CCF/CCF/IDL2/SemanticAction/Impl/Elements.tpp:
+        * CCF/CCF/IDL2/SemanticGraph/Name.cpp:
+        * CCF/CCF/IDL2/SemanticGraph/Name.hpp:
+        * CCF/Example/ComponentDeploymentDescriptor/SyntaxTree.hpp:
+        * CCF/Example/ComponentDeploymentDescriptor/Traversal.hpp:
+        * DAnCE/Utils/Plan_Handler.h:
+        * DAnCE/Utils/Plan_Handler.cpp:
+        * ciaosvcs/Events/CIAO_RTEC/SimpleAddressServer.h:
+        * ciaosvcs/Events/CIAO_RTEC/SimpleAddressServer.cpp:
+        * performance-tests/Protocols/Receiver/Receiver_exec.h:
+        * performance-tests/Protocols/Receiver/Receiver_exec.cpp:
+        * performance-tests/Protocols/Sender/Sender_exec.h:
+        * performance-tests/Protocols/Sender/Sender_exec.cpp:
+        * tools/Config_Handlers/CIAO_Events/CIAOEvents_Handler.h:
+        * tools/Config_Handlers/CIAO_Events/CIAOEvents_Handler.cpp:
+        * tools/Config_Handlers/DD_Handler.h:
+        * tools/Config_Handlers/DD_Handler.cpp:
+        * tools/Config_Handlers/DP_Handler.h:
+        * tools/Config_Handlers/DP_Handler.cpp:
+        * tools/Config_Handlers/ESD_Handler.h:
+        * tools/Config_Handlers/ESD_Handler.cpp:
+        * tools/Config_Handlers/IDD_Handler.h:
+        * tools/Config_Handlers/IDD_Handler.cpp:
+        * tools/Config_Handlers/IDREF_Base.h:
+        * tools/Config_Handlers/IDREF_Base.cpp:
+        * tools/Config_Handlers/IRDD_Handler.h:
+        * tools/Config_Handlers/IRDD_Handler.cpp:
+        * tools/Config_Handlers/RT-CCM/OR_Handler.h:
+        * tools/Config_Handlers/RT-CCM/OR_Handler.cpp:
+        * tools/Config_Handlers/RT-CCM/SRD_Handler.h:
+        * tools/Config_Handlers/RT-CCM/SRD_Handler.cpp:
+
+          Fixed fuzz warnings. Zap the usage of exception specification.
+
 Fri Jul  6 12:09:31 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tools/IDL3_to_IDL2/checking_visitor.cpp:
         * tools/IDL3_to_IDL2/checking_visitor.h:
         * tools/IDL3_to_IDL2/identifier_helper.cpp:
         * tools/IDL3_to_IDL2/identifier_helper.h:
-        
+
           New files, added to help implement the new features
           described below.
-          
+
         * tools/IDL3_to_IDL2/be_global.cpp:
         * tools/IDL3_to_IDL2/be_produce.cpp:
         * tools/IDL3_to_IDL2/be_init.cpp:
@@ -15,11 +63,11 @@ Fri Jul  6 12:09:31 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
         * tools/IDL3_to_IDL2/be_helper.cpp:
         * tools/IDL3_to_IDL2/idl3_to_idl2_visitor.cpp:
         * tools/IDL3_to_IDL2/idl3_to_idl2_visitor.h:
-        
+
           Changes to existing files which, along with the new files
           listed above, add the following improvements to the CIAO
           IDL3_to_IDL2 compiler:
-          
+
           - more robust handling of escaped identifiers
           - more robust handling of identifiers prefixed with _cxx_
             due to clashes with C++ keywords
@@ -29,7 +77,7 @@ Fri Jul  6 12:09:31 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
           - an optional alternative to regenerating an IDL file with
             no IDL3 declarations, which is to simply generate an
             include of the original IDL file
-            
+
           Thanks for all these improvements to Hakim Souami
           <hakim.souami@thalesatm.com> and his team.
 

@@ -56,7 +56,6 @@ namespace CDD
       map (Introspection::TypeId id,
            TraverserInterface* t,
            bool suppress_ambiguity = false)
-        throw (Ambiguous)
       {
         if (!traversal_map_.insert (std::make_pair (id, t)).second)
         {
@@ -118,7 +117,7 @@ namespace CDD
     {
     public:
       virtual void
-      add (Dispatcher* d) throw (Ambiguous)
+      add (Dispatcher* d)
       {
         for (Iterator i = d->begin (); i != d->end (); i++)
         {

@@ -46,17 +46,13 @@ namespace CIAO
 
       ~SRD_Handler (void);
 
-      ::CIAO::DAnCE::ServerResource const *srd_idl (void) const
-        throw (NoSRD);
+      ::CIAO::DAnCE::ServerResource const *srd_idl (void) const;
 
-      ::CIAO::DAnCE::ServerResource *srd_idl (void)
-        throw (NoSRD);
+      ::CIAO::DAnCE::ServerResource *srd_idl (void);
 
-      ServerResourcesDef const *srd_xsc (void) const
-        throw (NoSRD);
+      ServerResourcesDef const *srd_xsc (void) const;
 
-      ServerResourcesDef *srd_xsc (void)
-        throw (NoSRD);
+      ServerResourcesDef *srd_xsc (void);
 
     private:
       bool build_srd ();

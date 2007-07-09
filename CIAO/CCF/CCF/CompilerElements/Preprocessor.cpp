@@ -126,7 +126,7 @@ namespace CCF
           class EOS {};
 
           InToken
-          get () throw (EOS)
+          get ()
           {
             if (ibuffer_.empty ())
             {
@@ -147,7 +147,7 @@ namespace CCF
           // Get first non-space token
           //
           InToken
-          get_ns () throw (EOS)
+          get_ns ()
           {
             InToken t (get ());
 
@@ -801,7 +801,7 @@ namespace CCF
         class EOS {};
 
         char_type
-        get () throw (EOS)
+        get ()
         {
           int_type i;
 
@@ -849,7 +849,7 @@ namespace CCF
         }
 
         Token
-        ls_get () throw (EOS)
+        ls_get ()
         {
           if (ls_buffer_.empty ())
           {
@@ -870,7 +870,7 @@ namespace CCF
         // Get first non-space token
         //
         Token
-        ls_get_ns () throw (EOS)
+        ls_get_ns () 
         {
           Token t (ls_get ());
 

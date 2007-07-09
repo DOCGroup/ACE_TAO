@@ -22,12 +22,10 @@ public:
   SimpleAddressServer (const RtecUDPAdmin::UDP_Addr& addr);
 
   virtual void get_addr (const RtecEventComm::EventHeader& header,
-                         RtecUDPAdmin::UDP_Addr& address)
-    throw (CORBA::SystemException);
+                         RtecUDPAdmin::UDP_Addr& address);
 
   virtual void get_address (const RtecEventComm::EventHeader& header,
-                            RtecUDPAdmin::UDP_Address_out address)
-    throw (CORBA::SystemException);
+                            RtecUDPAdmin::UDP_Address_out address);
 
 private:
   RtecUDPAdmin::UDP_Address address_;

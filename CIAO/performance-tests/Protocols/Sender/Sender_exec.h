@@ -27,35 +27,21 @@ namespace CIDL_SenderImpl
                 ::CORBA::ULong number_of_connection_attempts,
                 ::CORBA::Boolean enable_diffserv_code_points,
                 ::CORBA::Short priority,
-                ::Protocols::Sender_Controller::Test_Type test_type)
-      throw (CORBA::SystemException);
+                ::Protocols::Sender_Controller::Test_Type test_type);
 
-    void shutdown (void)
-      throw (CORBA::SystemException);
+    void shutdown (void);
 
-    void set_session_context (Components::SessionContext_ptr ctx)
-      throw (CORBA::SystemException,
-             Components::CCMException);
+    void set_session_context (Components::SessionContext_ptr ctx);
 
-    void ccm_activate (void)
-      throw (CORBA::SystemException,
-             Components::CCMException);
+    void ccm_activate (void);
 
-    void ccm_passivate (void)
-      throw (CORBA::SystemException,
-             Components::CCMException);
+    void ccm_passivate (void);
 
-    void ccm_remove (void)
-      throw (CORBA::SystemException,
-             Components::CCMException);
+    void ccm_remove (void);
 
-    void ciao_preactivate (void)
-      throw (CORBA::SystemException,
-             Components::CCMException);
+    void ciao_preactivate (void);
 
-    void ciao_postactivate (void)
-      throw (CORBA::SystemException,
-             Components::CCMException);
+    void ciao_postactivate (void);
 
   protected:
 
@@ -71,12 +57,9 @@ namespace CIDL_SenderImpl
   {
   public:
 
-    ::Components::EnterpriseComponent_ptr create (void)
-      throw (CORBA::SystemException,
-             Components::CCMException);
+    ::Components::EnterpriseComponent_ptr create (void);
   };
 
   extern "C" SENDER_EXEC_Export ::Components::HomeExecutorBase_ptr
   createSenderHome_Impl (void);
 }
-

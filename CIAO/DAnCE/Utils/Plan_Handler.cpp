@@ -12,7 +12,6 @@ namespace CIAO
       const char *node_name, 
       const char *impl_name, 
       const char *ns_name)
-    throw (ImplementationNotFound)
   {
     // Modifying the deployment plan in order to include the new instance ...
     ::Deployment::InstanceDeploymentDescriptions instance = 
@@ -58,24 +57,23 @@ namespace CIAO
       const char *node_name, 
       const char *impl_name, 
       const char *ns_name)
-    throw (ImplementationNotFound)
   {
     for (int i = 1; i <= num; ++i)
       {
-	ACE_CString inst_name (instance_name);
-	//ACE_CString naming (ns_name);
+        ACE_CString inst_name (instance_name);
+        //ACE_CString naming (ns_name);
 
-	const int BUF_SIZE = 256;
-	char buf[BUF_SIZE];
-	ACE_OS::itoa (i, buf, 10);
-	inst_name += buf;
-	//naming += buf;
-	
-	DAnCE_Utils::add_instance (deployment_plan,
-				   inst_name.c_str (),
-				   node_name,
-				   impl_name,
-				   ns_name);
+        const int BUF_SIZE = 256;
+        char buf[BUF_SIZE];
+        ACE_OS::itoa (i, buf, 10);
+        inst_name += buf;
+        //naming += buf;
+
+        DAnCE_Utils::add_instance (deployment_plan,
+                                   inst_name.c_str (),
+                                   node_name,
+                                   impl_name,
+                                   ns_name);
       }
   }
 
@@ -84,7 +82,6 @@ namespace CIAO
   /*
   void
   DAnCE_Utils::add_connection (::Deployment::DeploymentPlan_var &deployment_plan, const char *connection_name, const char *port_name, const char *facet_instance, const char *receptacle_instance)
-    throw (InstanceNotFound)
   {
     // Modifying the deployment plan in order to include the new connection ...
 
@@ -137,7 +134,6 @@ namespace CIAO
 
   void
   DAnCE_Utils::remove_instance (::Deployment::DeploymentPlan_var &deployment_plan, const char *instance_name)
-    throw (InstanceNotFound)
   {
     // Modifying the deployment plan in order to remove the instance ...
 
@@ -163,14 +159,14 @@ namespace CIAO
     for (i = 0; i < connection.length(); i++)
       for (unsigned int j = 0; j < connection[i].internalEndpoint.length(); j++)
         if (connection[i].internalEndpoint[j].instanceRef == instance_ref)
-	{
-	  remove_connection(deployment_plan, connection[i].name.in());
-	  // Updating i in order to verify the shifted connection ...
-	  i--;
-          // Re-acquiring instances from the deployment plan ...
-	  connection = deployment_plan->connection;
-	  break;
-	}
+          {
+            remove_connection(deployment_plan, connection[i].name.in());
+            // Updating i in order to verify the shifted connection ...
+            i--;
+            // Re-acquiring instances from the deployment plan ...
+            connection = deployment_plan->connection;
+            break;
+          }
 
     // And then, removing the instance itself ...
 
@@ -210,7 +206,6 @@ namespace CIAO
   DAnCE_Utils::remove_connection (
       ::Deployment::DeploymentPlan_var &deployment_plan, 
       const char *connection_name)
-    throw (ConnectionNotFound)
   {
     ::Deployment::PlanConnectionDescriptions connection = deployment_plan->connection;
 
@@ -257,8 +252,8 @@ namespace CIAO
           }
         }
         connection.length(connection.length()-1);
-	// Re-assigning connection to the deployment plan ...
-	deployment_plan->connection = connection;
+        // Re-assigning connection to the deployment plan ...
+        deployment_plan->connection = connection;
         return;
       }
     // Throw exception if connection name not found ...
@@ -281,7 +276,7 @@ namespace CIAO
       ACE_DEBUG ((LM_DEBUG, "\tNumber of properties: %d\n", instance[i].configProperty.length()));
 
       for (CORBA::ULong k = 0; k < instance[i].configProperty.length(); k++)
-	      ACE_DEBUG ((LM_DEBUG, "\t\tName: %s\n", instance[i].configProperty[k].name.in()));
+        ACE_DEBUG ((LM_DEBUG, "\t\tName: %s\n", instance[i].configProperty[k].name.in()));
     }
   }
 
@@ -340,7 +335,7 @@ namespace CIAO
             ACE_DEBUG ((LM_DEBUG, "\t\t\tPortname: %s\n", connection[i].internalEndpoint[j].portName.in()));
             ACE_DEBUG ((LM_DEBUG,  "\t\t\tProvider: %d\n", connection[i].internalEndpoint[j].provider));
 
-	          if (connection[i].internalEndpoint[j].kind == ::Deployment::Facet || 
+            if (connection[i].internalEndpoint[j].kind == ::Deployment::Facet || 
                 connection[i].internalEndpoint[j].kind == ::Deployment::SimplexReceptacle)
                 ACE_DEBUG ((LM_DEBUG, 
                             "\t\t\tKind: %s\n", 

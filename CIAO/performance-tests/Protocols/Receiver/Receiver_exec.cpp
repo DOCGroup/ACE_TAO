@@ -25,7 +25,6 @@ namespace CIDL_ReceiverImpl
                       CORBA::ULong invocation_rate,
                       CORBA::ULong message_size,
                       CORBA::ULong iterations)
-    throw (CORBA::SystemException)
   {
     if (TAO_debug_level > 0)
       {
@@ -68,7 +67,6 @@ namespace CIDL_ReceiverImpl
 
   void
   test_i::end_test (void)
-    throw (CORBA::SystemException)
   {
     // Record end time.
     this->test_end_ =
@@ -132,13 +130,11 @@ namespace CIDL_ReceiverImpl
 
   void
   test_i::oneway_sync (void)
-    throw (CORBA::SystemException)
   {
   }
 
   void
   test_i::twoway_sync (void)
-    throw (CORBA::SystemException)
   {
   }
 
@@ -146,7 +142,6 @@ namespace CIDL_ReceiverImpl
   test_i::oneway_method (CORBA::Long session_id,
                          CORBA::ULong iteration,
                          const Protocols::test::octets &payload)
-    throw (CORBA::SystemException)
   {
     if (this->session_id_ != session_id)
       {
@@ -183,7 +178,6 @@ namespace CIDL_ReceiverImpl
   test_i::twoway_method (CORBA::Long &session_id,
                          CORBA::ULong &iteration,
                          Protocols::test::octets &payload)
-    throw (CORBA::SystemException)
   {
     if (this->session_id_ != session_id)
       {
@@ -232,7 +226,6 @@ namespace CIDL_ReceiverImpl
 
   ::Protocols::CCM_test_ptr
   ReceiverExec_i::get_writer (void)
-    throw (CORBA::SystemException)
   {
     ACE_DEBUG ((LM_DEBUG, "ReceiverExec_i::get_writer\n"));
     return new test_i;
@@ -240,7 +233,6 @@ namespace CIDL_ReceiverImpl
 
   void
   ReceiverExec_i::shutdown (void)
-    throw (CORBA::SystemException)
   {
     ACE_DEBUG ((LM_DEBUG, "ReceiverExec_i::shutdown\n"));
     this->orb_->shutdown ();
@@ -248,8 +240,6 @@ namespace CIDL_ReceiverImpl
 
   void
   ReceiverExec_i::set_session_context (Components::SessionContext_ptr ctx)
-    throw (CORBA::SystemException,
-          Components::CCMException)
   {
     ACE_DEBUG ((LM_DEBUG, "ReceiverExec_i::set_session_context\n"));
 
@@ -262,48 +252,36 @@ namespace CIDL_ReceiverImpl
 
   void
   ReceiverExec_i::ccm_activate (void)
-    throw (CORBA::SystemException,
-          Components::CCMException)
   {
     ACE_DEBUG ((LM_DEBUG, "ReceiverExec_i::ccm_activate\n"));
   }
 
   void
   ReceiverExec_i::ccm_passivate (void)
-    throw (CORBA::SystemException,
-          Components::CCMException)
   {
     ACE_DEBUG ((LM_DEBUG, "ReceiverExec_i::ccm_passivate\n"));
   }
 
   void
   ReceiverExec_i::ccm_remove (void)
-    throw (CORBA::SystemException,
-          Components::CCMException)
   {
     ACE_DEBUG ((LM_DEBUG, "ReceiverExec_i::ccm_remove\n"));
   }
 
   void
   ReceiverExec_i::ciao_preactivate (void)
-    throw (CORBA::SystemException,
-          Components::CCMException)
   {
     ACE_DEBUG ((LM_DEBUG, "ReceiverExec_i::ccm_preactivate\n"));
   }
 
   void
   ReceiverExec_i::ciao_postactivate (void)
-    throw (CORBA::SystemException,
-          Components::CCMException)
   {
     ACE_DEBUG ((LM_DEBUG, "ReceiverExec_i::ccm_postactivate\n"));
   }
 
   ::Components::EnterpriseComponent_ptr
   ReceiverHomeExec_i::create (void)
-    throw (CORBA::SystemException,
-          Components::CCMException)
   {
     ACE_DEBUG ((LM_DEBUG, "ReceiverHome_exec::create\n"));
     return new ReceiverExec_i;
@@ -316,4 +294,3 @@ namespace CIDL_ReceiverImpl
     return new ReceiverHomeExec_i;
   }
 }
-
