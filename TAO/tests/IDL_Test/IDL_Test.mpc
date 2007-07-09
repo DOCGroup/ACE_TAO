@@ -6,7 +6,6 @@ project(*Main): taoserver, messaging, gen_ostream {
   idlflags += -GC -GH -Gd -GT
 
   IDL_Files {
-    idlflags += -Gos
     array.idl
     Bug_2350_Regression.idl
     Bug_2577_Regression.idl
@@ -21,39 +20,21 @@ project(*Main): taoserver, messaging, gen_ostream {
     including.idl
     interface.idl
     included.idl
-    union.idl
     nested_scope.idl
     params.idl
     reopened_modules.idl
+    sequence.idl
     struct.idl
     reopen_include1.idl
     reopen_include2.idl
     typeprefix.idl
+    union.idl
   }
 
-  // We leave the hard-coded -Gos (hard-coded for
-  // the other IDL files) off the command line for
-  // these files, since they reference IDL types
-  // which won't have their own ostream
-  // insertion operators generated unless the gen_ostream
-  // MPC feature has been turned on by the user, in which
-  // case, the gen_ostream base project above will bring
-  // in the -Gos option for this file as well.
-  IDL_Files {
-    sequence.idl
-  }
-  
-  // These files must also lose -Gos by default, but
-  // unlike the block above, must get -GA.
   IDL_Files {
     idlflags += -GA
     anonymous.idl
     array_only.idl
-  }
-
-  IDL_Files {
-    idlflags += -GA -Gos
-    valuetype.idl
     constants.idl
     generic_object.idl
     keywords.idl
@@ -61,6 +42,7 @@ project(*Main): taoserver, messaging, gen_ostream {
     repo_id_mod.idl
     typedef.idl
     typecode.idl
+    valuetype.idl
   }
 
   Source_Files {
