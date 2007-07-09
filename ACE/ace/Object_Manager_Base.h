@@ -108,7 +108,7 @@ protected:
    * application, then the application is responsible for destroying
    * it.)
    */
-  unsigned int dynamically_allocated_;
+  bool dynamically_allocated_;
 
   /// Link to next Object_Manager, for chaining.
   ACE_Object_Manager_Base *next_;
