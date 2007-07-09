@@ -1,3 +1,18 @@
+Mon Jul  9 12:25:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_unistd.cpp (fork_exec): Improved free allocation memory
+          in the case where Windows CreateProcess() fails using
+          ACE_Auto_Basic_Array_Ptr. Resolves Bugzilla #2983.
+
+        * ace/Service_Config.cpp:
+        * ace/CDR_Stream.h:
+          Layout change
+
+        * ace/Object_Manager.cpp:
+        * ace/Object_Manager_Base.cpp:
+        * ace/Object_Manager_Base.h:
+          Changed dynamically_allocated to a real bool
+
 Sun Jul  8 22:05:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_stdio.inl (cuserid):

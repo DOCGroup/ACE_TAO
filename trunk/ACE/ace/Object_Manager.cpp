@@ -314,7 +314,7 @@ ACE_Object_Manager::ACE_Object_Manager (void)
 
 ACE_Object_Manager::~ACE_Object_Manager (void)
 {
-  dynamically_allocated_ = 0;   // Don't delete this again in fini()
+  dynamically_allocated_ = false;   // Don't delete this again in fini()
   fini ();
 }
 
@@ -327,14 +327,14 @@ ACE_Object_Manager::instance (void)
 
   if (instance_ == 0)
     {
-      ACE_Object_Manager *instance_pointer;
+      ACE_Object_Manager *instance_pointer = 0;
 
       ACE_NEW_RETURN (instance_pointer,
                       ACE_Object_Manager,
                       0);
       ACE_ASSERT (instance_pointer == instance_);
 
-      instance_pointer->dynamically_allocated_ = 1;
+      instance_pointer->dynamically_allocated_ = true;
 
       return instance_pointer;
     }

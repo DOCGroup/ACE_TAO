@@ -42,7 +42,7 @@ int ACE_SEH_Default_Exception_Handler (void *)
 
 ACE_Object_Manager_Base::ACE_Object_Manager_Base (void)
   : object_manager_state_ (OBJ_MAN_UNINITIALIZED)
-  , dynamically_allocated_ (0)
+  , dynamically_allocated_ (false)
   , next_ (0)
 {
 }
@@ -51,7 +51,7 @@ ACE_Object_Manager_Base::~ACE_Object_Manager_Base (void)
 {
 #if defined (ACE_HAS_NONSTATIC_OBJECT_MANAGER)
   // Clear the flag so that fini () doesn't delete again.
-  dynamically_allocated_ = 0;
+  dynamically_allocated_ = false;
 #endif /* ACE_HAS_NONSTATIC_OBJECT_MANAGER */
 }
 
@@ -110,7 +110,7 @@ ACE_OS_Object_Manager::ACE_OS_Object_Manager (void)
 
 ACE_OS_Object_Manager::~ACE_OS_Object_Manager (void)
 {
-  dynamically_allocated_ = 0;   // Don't delete this again in fini()
+  dynamically_allocated_ = false;   // Don't delete this again in fini()
   fini ();
 }
 
@@ -180,7 +180,7 @@ ACE_OS_Object_Manager::instance (void)
 
   if (instance_ == 0)
     {
-      ACE_OS_Object_Manager *instance_pointer;
+      ACE_OS_Object_Manager *instance_pointer = 0;
 
       ACE_NEW_RETURN (instance_pointer,
                       ACE_OS_Object_Manager,
@@ -189,7 +189,7 @@ ACE_OS_Object_Manager::instance (void)
       // brings down the Log msg stuff
       // ACE_ASSERT (instance_pointer == instance_);
 
-      instance_pointer->dynamically_allocated_ = 1;
+      instance_pointer->dynamically_allocated_ = true;
 
     }
 

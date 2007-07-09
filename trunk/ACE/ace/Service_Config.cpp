@@ -28,17 +28,17 @@ ACE_RCSID (ace,
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-  /**
-   * @c ACE_Service_Config is supposed to be a Singleton. This is the
-   * only Configuration Gestalt available for access from static
-   * initializers at proces start-up time. Using Unmanaged Singleton
-   * is safer because (a) the Object Manager may not yet be fully initialized in the
-   * context of a static initializer that uses SC, and (b) because we
-   * know that upon process exit the SC will still be automaticaly and explicitely closed
-   * by @c ACE_Object_Manager::fini().
-   */
-  typedef ACE_Unmanaged_Singleton<ACE_Service_Config,
-                                  ACE_SYNCH_RECURSIVE_MUTEX> ACE_SERVICE_CONFIG_SINGLETON;
+/**
+  * @c ACE_Service_Config is supposed to be a Singleton. This is the
+  * only Configuration Gestalt available for access from static
+  * initializers at proces start-up time. Using Unmanaged Singleton
+  * is safer because (a) the Object Manager may not yet be fully initialized in the
+  * context of a static initializer that uses SC, and (b) because we
+  * know that upon process exit the SC will still be automaticaly and explicitely closed
+  * by @c ACE_Object_Manager::fini().
+  */
+typedef ACE_Unmanaged_Singleton<ACE_Service_Config,
+                                ACE_SYNCH_RECURSIVE_MUTEX> ACE_SERVICE_CONFIG_SINGLETON;
 
 
 ///
@@ -57,7 +57,6 @@ ACE_Service_Config_Guard::ACE_Service_Config_Guard (ACE_Service_Gestalt * psg)
       (void)ACE_Service_Config::current (psg);
 }
 
-///
 ACE_Service_Config_Guard::~ACE_Service_Config_Guard (void)
 {
   ACE_Service_Config::current (this->saved_);
