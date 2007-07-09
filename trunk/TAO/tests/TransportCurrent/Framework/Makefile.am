@@ -19,6 +19,7 @@ noinst_PROGRAMS =
 
 if BUILD_EXCEPTIONS
 if BUILD_INTERCEPTORS
+if BUILD_TRANSPORT_CURRENT
 
 noinst_PROGRAMS += server
 
@@ -48,6 +49,7 @@ server_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
+endif BUILD_TRANSPORT_CURRENT
 endif BUILD_INTERCEPTORS
 endif BUILD_EXCEPTIONS
 
@@ -56,6 +58,7 @@ endif BUILD_EXCEPTIONS
 if BUILD_CORBA_MESSAGING
 if BUILD_EXCEPTIONS
 if BUILD_INTERCEPTORS
+if BUILD_TRANSPORT_CURRENT
 
 noinst_PROGRAMS += client
 
@@ -74,6 +77,7 @@ client_SOURCES = \
 client_LDADD = \
   $(top_builddir)/tests/TransportCurrent/lib/libCurrent_Test_Lib_Client.la \
   $(top_builddir)/tests/TransportCurrent/lib/libCurrent_Test_Lib_Server.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PI_Server.la \
   $(TAO_BUILDDIR)/tao/libTAO_DynamicInterface.la \
   $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
@@ -85,6 +89,7 @@ client_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
+endif BUILD_TRANSPORT_CURRENT
 endif BUILD_INTERCEPTORS
 endif BUILD_EXCEPTIONS
 endif BUILD_CORBA_MESSAGING

@@ -20,7 +20,6 @@ TAO_ROOT = $(top_srcdir)
 ## Makefile.AO_Multiple_ORBs.am
 
 if BUILD_EXCEPTIONS
-if BUILD_RT_CORBA
 
 BUILT_SOURCES = \
   testC.cpp \
@@ -42,18 +41,18 @@ CLEANFILES = \
 testC.cpp testC.h testC.inl testS.cpp testS.h testS.inl: test-stamp
 
 test-stamp: $(srcdir)/test.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/test.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/test.idl
 	@touch $@
 
-noinst_PROGRAMS = test
+noinst_PROGRAMS = server
 
-test_CPPFLAGS = \
+server_CPPFLAGS = \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR)
 
-test_SOURCES = \
+server_SOURCES = \
   test.cpp \
   testC.cpp \
   testS.cpp \
@@ -62,17 +61,12 @@ test_SOURCES = \
   testS.h \
   testS.inl
 
-test_LDADD = \
-  $(TAO_BUILDDIR)/tao/libTAO_RTPortableServer.la \
-  $(TAO_BUILDDIR)/tao/libTAO_RTCORBA.la \
+server_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
-  $(TAO_BUILDDIR)/tao/libTAO_PI.la \
-  $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
   $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-endif BUILD_RT_CORBA
 endif BUILD_EXCEPTIONS
 
 ## Clean up template repositories, etc.

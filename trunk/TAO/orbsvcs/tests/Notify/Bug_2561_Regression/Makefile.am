@@ -64,8 +64,8 @@ Consumer_CPPFLAGS = \
   -DTAO_HAS_TYPED_EVENT_CHANNEL
 
 Consumer_SOURCES = \
-  Notify_Push_Consumer.cpp \
   Consumer.cpp \
+  Notify_Push_Consumer.cpp \
   goC.cpp \
   Notify_Push_Consumer.h
 

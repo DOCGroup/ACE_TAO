@@ -1,11 +1,21 @@
 // -*- MPC -*-
 // $Id$
 
+project(*idl): taoidldefaults {
+  IDL_Files {
+    Test.idl
+  }
+  custom_only = 1
+}
+
 project(*Test): taolib_with_idl, portableserver {
+  after += *idl
   sharedname   = Test_DLL
   dynamicflags = OLT_BUILD_DLL
 
   Source_Files {
+    TestC.cpp
+    TestS.cpp
     Test_i.cpp
     Loader.cpp
   }
@@ -13,10 +23,9 @@ project(*Test): taolib_with_idl, portableserver {
 
 project(*Driver): taoserver {
   exename = driver
-  after += *Test
+  after += *Test *idl
   Source_Files {
     TestC.cpp
     driver.cpp
   }
 }
-

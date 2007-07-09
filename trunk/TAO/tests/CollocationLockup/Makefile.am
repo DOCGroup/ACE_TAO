@@ -70,31 +70,6 @@ noinst_HEADERS = \
   AB.idl \
   SimpleNamingService.idl
 
-## Makefile.CollocationLockup_SimpleNamingService.am
-
-if BUILD_EXCEPTIONS
-
-noinst_PROGRAMS += SimpleNamingService
-
-SimpleNamingService_CPPFLAGS = \
-  -I$(ACE_ROOT) \
-  -I$(ACE_BUILDDIR) \
-  -I$(TAO_ROOT) \
-  -I$(TAO_BUILDDIR)
-
-SimpleNamingService_SOURCES = \
-  SimpleNamingService.cpp \
-  SimpleNamingServiceC.cpp \
-  SimpleNamingServiceS.cpp
-
-SimpleNamingService_LDADD = \
-  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
-  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
-  $(TAO_BUILDDIR)/tao/libTAO.la \
-  $(ACE_BUILDDIR)/ace/libACE.la
-
-endif BUILD_EXCEPTIONS
-
 ## Makefile.CollocationLockup.am
 
 if BUILD_EXCEPTIONS
@@ -114,6 +89,31 @@ CollocationLockup_SOURCES = \
   SimpleNamingServiceC.cpp
 
 CollocationLockup_LDADD = \
+  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
+  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
+  $(TAO_BUILDDIR)/tao/libTAO.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+endif BUILD_EXCEPTIONS
+
+## Makefile.CollocationLockup_SimpleNamingService.am
+
+if BUILD_EXCEPTIONS
+
+noinst_PROGRAMS += SimpleNamingService
+
+SimpleNamingService_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR) \
+  -I$(TAO_ROOT) \
+  -I$(TAO_BUILDDIR)
+
+SimpleNamingService_SOURCES = \
+  SimpleNamingService.cpp \
+  SimpleNamingServiceC.cpp \
+  SimpleNamingServiceS.cpp
+
+SimpleNamingService_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \

@@ -46,27 +46,27 @@ Test-stamp: $(srcdir)/Test.idl $(TAO_IDL_DEP)
 noinst_HEADERS = \
   Test.idl
 
-## Makefile.Oneway_Buffering_Server.am
+## Makefile.Oneway_Buffering_Admin.am
 
 if BUILD_CORBA_MESSAGING
 if BUILD_EXCEPTIONS
 
-noinst_PROGRAMS += server
+noinst_PROGRAMS += admin
 
-server_CPPFLAGS = \
+admin_CPPFLAGS = \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR)
 
-server_SOURCES = \
-  Oneway_Buffering.cpp \
+admin_SOURCES = \
+  Oneway_Buffering_Admin.cpp \
   TestC.cpp \
   TestS.cpp \
-  server.cpp \
-  Oneway_Buffering.h
+  admin.cpp \
+  Oneway_Buffering_Admin.h
 
-server_LDADD = \
+admin_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
   $(TAO_BUILDDIR)/tao/libTAO_PI.la \
   $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
@@ -111,27 +111,27 @@ client_LDADD = \
 endif BUILD_EXCEPTIONS
 endif BUILD_CORBA_MESSAGING
 
-## Makefile.Oneway_Buffering_Admin.am
+## Makefile.Oneway_Buffering_Server.am
 
 if BUILD_CORBA_MESSAGING
 if BUILD_EXCEPTIONS
 
-noinst_PROGRAMS += admin
+noinst_PROGRAMS += server
 
-admin_CPPFLAGS = \
+server_CPPFLAGS = \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR)
 
-admin_SOURCES = \
-  Oneway_Buffering_Admin.cpp \
+server_SOURCES = \
+  Oneway_Buffering.cpp \
   TestC.cpp \
   TestS.cpp \
-  admin.cpp \
-  Oneway_Buffering_Admin.h
+  server.cpp \
+  Oneway_Buffering.h
 
-admin_LDADD = \
+server_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
   $(TAO_BUILDDIR)/tao/libTAO_PI.la \
   $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \

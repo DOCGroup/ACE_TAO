@@ -10,6 +10,7 @@
 
 SUBDIRS = \
         Anyop \
+        CSD_Strategy \
         Callback \
         Cubit \
         Latency \
@@ -21,4 +22,3 @@ SUBDIRS = \
         Sequence_Latency \
         Throughput
 
-#	CSD_Strategy

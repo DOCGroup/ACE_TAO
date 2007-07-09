@@ -16,8 +16,8 @@ TAO_IDL_DEP = $(TAO_BUILDDIR)/TAO_IDL/tao_idl
 TAO_IDLFLAGS = -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf
 TAO_ROOT = $(top_srcdir)
 
-noinst_PROGRAMS =
 CLEANFILES =
+noinst_PROGRAMS =
 BUILT_SOURCES =
 
 ## Makefile.RecursiveHello_Idl.am
@@ -76,6 +76,34 @@ noinst_HEADERS = \
 
 endif BUILD_EXCEPTIONS
 
+## Makefile.RecursiveHello_Client.am
+
+if BUILD_EXCEPTIONS
+
+noinst_PROGRAMS += client
+
+client_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR) \
+  -I$(TAO_ROOT) \
+  -I$(TAO_BUILDDIR)
+
+client_SOURCES = \
+  NonRecursiveC.cpp \
+  TestC.cpp \
+  client.cpp \
+  Hello.h
+
+client_LDADD = \
+  $(TAO_BUILDDIR)/tao/libTAO_TypeCodeFactory.la \
+  $(TAO_BUILDDIR)/tao/libTAO_IFR_Client.la \
+  $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
+  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
+  $(TAO_BUILDDIR)/tao/libTAO.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+endif BUILD_EXCEPTIONS
+
 ## Makefile.RecursiveHello_Server.am
 
 if BUILD_EXCEPTIONS
@@ -100,34 +128,6 @@ server_SOURCES = \
 server_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
-  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
-  $(TAO_BUILDDIR)/tao/libTAO.la \
-  $(ACE_BUILDDIR)/ace/libACE.la
-
-endif BUILD_EXCEPTIONS
-
-## Makefile.RecursiveHello_Client.am
-
-if BUILD_EXCEPTIONS
-
-noinst_PROGRAMS += client
-
-client_CPPFLAGS = \
-  -I$(ACE_ROOT) \
-  -I$(ACE_BUILDDIR) \
-  -I$(TAO_ROOT) \
-  -I$(TAO_BUILDDIR)
-
-client_SOURCES = \
-  NonRecursiveC.cpp \
-  TestC.cpp \
-  client.cpp \
-  Hello.h
-
-client_LDADD = \
-  $(TAO_BUILDDIR)/tao/libTAO_TypeCodeFactory.la \
-  $(TAO_BUILDDIR)/tao/libTAO_IFR_Client.la \
-  $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
   $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la

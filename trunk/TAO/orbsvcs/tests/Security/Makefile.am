@@ -12,8 +12,11 @@ SUBDIRS = \
         BiDirectional \
         Big_Request \
         Bug_1107_Regression \
+        Bug_2908_Regression \
         Callback \
         Crash_Test \
+        EndpointPolicy \
+        InsecureReferences \
         MT_IIOP_SSL \
         MT_SSLIOP \
         Secure_Invocation \

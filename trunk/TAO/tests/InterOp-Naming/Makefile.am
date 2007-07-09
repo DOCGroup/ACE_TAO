@@ -46,6 +46,31 @@ INS-stamp: $(srcdir)/INS.idl $(TAO_IDL_DEP)
 noinst_HEADERS = \
   INS.idl
 
+## Makefile.InterOp_Naming_Client.am
+
+if BUILD_EXCEPTIONS
+
+noinst_PROGRAMS += INS_test_client
+
+INS_test_client_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR) \
+  -I$(TAO_ROOT) \
+  -I$(TAO_BUILDDIR)
+
+INS_test_client_SOURCES = \
+  INSC.cpp \
+  INS_test_client.cpp \
+  INS_i.h \
+  Server_i.h
+
+INS_test_client_LDADD = \
+  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
+  $(TAO_BUILDDIR)/tao/libTAO.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+endif BUILD_EXCEPTIONS
+
 ## Makefile.InterOp_Naming_Server.am
 
 if BUILD_EXCEPTIONS
@@ -73,31 +98,6 @@ INS_test_server_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_PI.la \
   $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
-  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
-  $(TAO_BUILDDIR)/tao/libTAO.la \
-  $(ACE_BUILDDIR)/ace/libACE.la
-
-endif BUILD_EXCEPTIONS
-
-## Makefile.InterOp_Naming_Client.am
-
-if BUILD_EXCEPTIONS
-
-noinst_PROGRAMS += INS_test_client
-
-INS_test_client_CPPFLAGS = \
-  -I$(ACE_ROOT) \
-  -I$(ACE_BUILDDIR) \
-  -I$(TAO_ROOT) \
-  -I$(TAO_BUILDDIR)
-
-INS_test_client_SOURCES = \
-  INSC.cpp \
-  INS_test_client.cpp \
-  INS_i.h \
-  Server_i.h
-
-INS_test_client_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la

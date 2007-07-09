@@ -9,6 +9,7 @@
 ## ../bin/mwc.pl -type automake -noreldefs TAO.mwc
 
 SUBDIRS = \
+        AddrServer \
         Common \
         Complex \
         RTEC_MCast_Federated \

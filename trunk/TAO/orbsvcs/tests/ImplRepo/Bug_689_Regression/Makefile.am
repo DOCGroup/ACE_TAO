@@ -17,33 +17,38 @@ TAO_IDLFLAGS = -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROO
 TAO_ROOT = $(top_srcdir)
 
 noinst_PROGRAMS =
-CLEANFILES =
-BUILT_SOURCES =
 
-## Makefile.Bug_689_Regression_Client.am
+## Makefile.Bug_689_Regression_Idl.am
 
-if BUILD_EXCEPTIONS
-
-BUILT_SOURCES += \
+BUILT_SOURCES = \
   bug_689_regressionC.cpp \
   bug_689_regressionC.h \
   bug_689_regressionC.inl \
+  bug_689_regressionS.cpp \
   bug_689_regressionS.h \
   bug_689_regressionS.inl
 
-CLEANFILES += \
+CLEANFILES = \
   bug_689_regression-stamp \
   bug_689_regressionC.cpp \
   bug_689_regressionC.h \
   bug_689_regressionC.inl \
+  bug_689_regressionS.cpp \
   bug_689_regressionS.h \
   bug_689_regressionS.inl
 
-bug_689_regressionC.cpp bug_689_regressionC.h bug_689_regressionC.inl bug_689_regressionS.h bug_689_regressionS.inl: bug_689_regression-stamp
+bug_689_regressionC.cpp bug_689_regressionC.h bug_689_regressionC.inl bug_689_regressionS.cpp bug_689_regressionS.h bug_689_regressionS.inl: bug_689_regression-stamp
 
 bug_689_regression-stamp: $(srcdir)/bug_689_regression.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/bug_689_regression.idl
-	@touch "$@"
+	@touch $@
+
+noinst_HEADERS = \
+  bug_689_regression.idl
+
+## Makefile.Bug_689_Regression_Client.am
+
+if BUILD_EXCEPTIONS
 
 noinst_PROGRAMS += client
 
@@ -56,10 +61,7 @@ client_CPPFLAGS = \
 client_SOURCES = \
   bug_689_regressionC.cpp \
   client.cpp \
-  bug_689_regressionC.h \
-  bug_689_regressionC.inl \
-  bug_689_regressionS.h \
-  bug_689_regressionS.inl
+  bug_689_regression_i.h
 
 client_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
@@ -67,53 +69,9 @@ client_LDADD = \
 
 endif BUILD_EXCEPTIONS
 
-## Makefile.Bug_689_Regression_Idl.am
-
-BUILT_SOURCES += \
-  bug_689_regressionC.cpp \
-  bug_689_regressionC.h \
-  bug_689_regressionC.inl \
-  bug_689_regressionS.cpp \
-  bug_689_regressionS.h \
-  bug_689_regressionS.inl
-
-CLEANFILES += \
-  bug_689_regression-stamp \
-  bug_689_regressionC.cpp \
-  bug_689_regressionC.h \
-  bug_689_regressionC.inl \
-  bug_689_regressionS.cpp \
-  bug_689_regressionS.h \
-  bug_689_regressionS.inl
-
-bug_689_regressionC.cpp bug_689_regressionC.h bug_689_regressionC.inl bug_689_regressionS.cpp bug_689_regressionS.h bug_689_regressionS.inl: bug_689_regression-stamp
-
-
-noinst_HEADERS = \
-  bug_689_regression.idl
-
 ## Makefile.Bug_689_Regression_Server.am
 
 if BUILD_EXCEPTIONS
-
-BUILT_SOURCES += \
-  bug_689_regressionC.cpp \
-  bug_689_regressionC.h \
-  bug_689_regressionC.inl \
-  bug_689_regressionS.cpp \
-  bug_689_regressionS.h \
-  bug_689_regressionS.inl
-
-CLEANFILES += \
-  bug_689_regression-stamp \
-  bug_689_regressionC.cpp \
-  bug_689_regressionC.h \
-  bug_689_regressionC.inl \
-  bug_689_regressionS.cpp \
-  bug_689_regressionS.h \
-  bug_689_regressionS.inl
-
-
 
 noinst_PROGRAMS += server
 
@@ -128,10 +86,6 @@ server_SOURCES = \
   bug_689_regressionS.cpp \
   bug_689_regression_i.cpp \
   server.cpp \
-  bug_689_regressionC.h \
-  bug_689_regressionC.inl \
-  bug_689_regressionS.h \
-  bug_689_regressionS.inl \
   bug_689_regression_i.h
 
 server_LDADD = \

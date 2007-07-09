@@ -19,7 +19,6 @@ bin_PROGRAMS =
 
 if BUILD_EXCEPTIONS
 if BUILD_WINNT
-if !BUILD_ACE_FOR_TAO
 
 bin_PROGRAMS += NT_Naming_Service
 
@@ -53,14 +52,12 @@ NT_Naming_Service_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-endif !BUILD_ACE_FOR_TAO
 endif BUILD_WINNT
 endif BUILD_EXCEPTIONS
 
 ## Makefile.Naming_Service.am
 
 if BUILD_EXCEPTIONS
-if !BUILD_ACE_FOR_TAO
 
 bin_PROGRAMS += Naming_Service
 
@@ -93,7 +90,6 @@ Naming_Service_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-endif !BUILD_ACE_FOR_TAO
 endif BUILD_EXCEPTIONS
 
 ## Clean up template repositories, etc.

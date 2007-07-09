@@ -16,10 +16,9 @@ TAO_IDL_DEP = $(TAO_BUILDDIR)/TAO_IDL/tao_idl
 TAO_IDLFLAGS = -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf
 TAO_ROOT = $(top_srcdir)
 
+noinst_PROGRAMS =
 
-## Makefile.COIOP_Tests.am
-
-if BUILD_EXCEPTIONS
+## Makefile.COIOP_Tests_Idl.am
 
 BUILT_SOURCES = \
   TestC.cpp \
@@ -41,10 +40,47 @@ CLEANFILES = \
 TestC.cpp TestC.h TestC.inl TestS.cpp TestS.h TestS.inl: Test-stamp
 
 Test-stamp: $(srcdir)/Test.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/Test.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/Test.idl
 	@touch $@
 
-noinst_PROGRAMS = COIOP_Test
+noinst_HEADERS = \
+  Test.idl
+
+## Makefile.COIOP_Simple_Test.am
+
+if BUILD_EXCEPTIONS
+
+noinst_PROGRAMS += COIOP_Simple_Test
+
+COIOP_Simple_Test_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR) \
+  -I$(TAO_ROOT) \
+  -I$(TAO_BUILDDIR)
+
+COIOP_Simple_Test_SOURCES = \
+  COIOP_Simple_Test.cpp \
+  Hello.cpp \
+  TestC.cpp \
+  TestS.cpp \
+  Hello.h
+
+COIOP_Simple_Test_LDADD = \
+  $(TAO_BUILDDIR)/tao/libTAO_Strategies.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PI.la \
+  $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
+  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
+  $(TAO_BUILDDIR)/tao/libTAO.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+endif BUILD_EXCEPTIONS
+
+## Makefile.COIOP_Test.am
+
+if BUILD_EXCEPTIONS
+
+noinst_PROGRAMS += COIOP_Test
 
 COIOP_Test_CPPFLAGS = \
   -I$(ACE_ROOT) \
@@ -61,14 +97,12 @@ COIOP_Test_SOURCES = \
   TestS.cpp \
   Client_Task.h \
   Hello.h \
-  Server_Task.h \
-  TestC.h \
-  TestC.inl \
-  TestS.h \
-  TestS.inl
+  Server_Task.h
 
 COIOP_Test_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_Strategies.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PI.la \
+  $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \

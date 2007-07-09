@@ -16,9 +16,9 @@ TAO_IDL_DEP = $(TAO_BUILDDIR)/TAO_IDL/tao_idl
 TAO_IDLFLAGS = -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf
 TAO_ROOT = $(top_srcdir)
 
-CLEANFILES =
 noinst_PROGRAMS =
 BUILT_SOURCES =
+CLEANFILES =
 
 ## Makefile.RTCORBA_Quoter_Common.am
 
@@ -124,9 +124,9 @@ if BUILD_EXCEPTIONS
 if BUILD_RT_CORBA
 if BUILD_STL
 
-noinst_PROGRAMS += Admin
+noinst_PROGRAMS += admin
 
-Admin_CPPFLAGS = \
+admin_CPPFLAGS = \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
@@ -134,10 +134,10 @@ Admin_CPPFLAGS = \
   -I$(TAO_ROOT)/orbsvcs \
   -I$(TAO_BUILDDIR)/orbsvcs
 
-Admin_SOURCES = \
+admin_SOURCES = \
   Admin.cpp
 
-Admin_LDADD = \
+admin_LDADD = \
   libRTCORBA_Quoter_Common.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
   $(TAO_BUILDDIR)/tao/libTAO_RTCORBA.la \
@@ -158,9 +158,9 @@ if BUILD_EXCEPTIONS
 if BUILD_RT_CORBA
 if BUILD_STL
 
-noinst_PROGRAMS += Broker
+noinst_PROGRAMS += broker
 
-Broker_CPPFLAGS = \
+broker_CPPFLAGS = \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
@@ -168,7 +168,7 @@ Broker_CPPFLAGS = \
   -I$(TAO_ROOT)/orbsvcs \
   -I$(TAO_BUILDDIR)/orbsvcs
 
-Broker_SOURCES = \
+broker_SOURCES = \
   Broker.cpp \
   BrokerS.cpp \
   Broker_i.cpp \
@@ -179,7 +179,7 @@ Broker_SOURCES = \
   StockNameConsumer_i.h \
   Stock_Database.h
 
-Broker_LDADD = \
+broker_LDADD = \
   libRTCORBA_Quoter_Common.la \
   $(TAO_BUILDDIR)/tao/libTAO_Utils.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
@@ -203,9 +203,9 @@ if BUILD_EXCEPTIONS
 if BUILD_RT_CORBA
 if BUILD_STL
 
-noinst_PROGRAMS += Distributor
+noinst_PROGRAMS += distributor
 
-Distributor_CPPFLAGS = \
+distributor_CPPFLAGS = \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
@@ -213,7 +213,7 @@ Distributor_CPPFLAGS = \
   -I$(TAO_ROOT)/orbsvcs \
   -I$(TAO_BUILDDIR)/orbsvcs
 
-Distributor_SOURCES = \
+distributor_SOURCES = \
   CommonS.cpp \
   Distributor.cpp \
   DistributorS.cpp \
@@ -222,7 +222,7 @@ Distributor_SOURCES = \
   Distributor_i.h \
   Stock_Database.h
 
-Distributor_LDADD = \
+distributor_LDADD = \
   libRTCORBA_Quoter_Common.la \
   $(TAO_BUILDDIR)/tao/libTAO_Utils.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \

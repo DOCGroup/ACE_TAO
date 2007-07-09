@@ -21,9 +21,9 @@ SUBDIRS = \
         MIF_Scheduler \
         Fixed_Priority_Scheduler
 
+BUILT_SOURCES =
 noinst_LTLIBRARIES =
 CLEANFILES =
-BUILT_SOURCES =
 noinst_HEADERS =
 
 ## Makefile.RTSchedSynch.am
@@ -50,7 +50,7 @@ CLEANFILES += \
 SynchC.cpp SynchC.h SynchC.inl SynchS.cpp SynchS.h SynchS.inl: Synch-stamp
 
 Synch-stamp: $(srcdir)/Synch.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -St -Wb,export_macro=SYNCH_Export -Wb,export_include=synch_export.h $(srcdir)/Synch.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St -St -Wb,export_macro=SYNCH_Export -Wb,export_include=synch_export.h $(srcdir)/Synch.idl
 	@touch $@
 
 noinst_LTLIBRARIES += libRTSchedSynch.la
@@ -102,7 +102,7 @@ CLEANFILES += \
 JobC.cpp JobC.h JobC.inl JobS.cpp JobS.h JobS.inl: Job-stamp
 
 Job-stamp: $(srcdir)/Job.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -St -Wb,export_macro=JOB_Export -Wb,export_include=job_export.h $(srcdir)/Job.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St -St -Wb,export_macro=JOB_Export -Wb,export_include=job_export.h $(srcdir)/Job.idl
 	@touch $@
 
 noinst_LTLIBRARIES += libJob.la

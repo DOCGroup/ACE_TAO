@@ -17,15 +17,10 @@ TAO_IDLFLAGS = -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROO
 TAO_ROOT = $(top_srcdir)
 
 noinst_LTLIBRARIES =
-noinst_HEADERS =
-CLEANFILES =
-BUILT_SOURCES =
 
-## Makefile.ORB_DLL_Client.am
+## Makefile.Two_DLL_ORB_Idl.am
 
-if BUILD_EXCEPTIONS
-
-BUILT_SOURCES += \
+BUILT_SOURCES = \
   TestC.cpp \
   TestC.h \
   TestC.inl \
@@ -33,7 +28,7 @@ BUILT_SOURCES += \
   TestS.h \
   TestS.inl
 
-CLEANFILES += \
+CLEANFILES = \
   Test-stamp \
   TestC.cpp \
   TestC.h \
@@ -45,8 +40,15 @@ CLEANFILES += \
 TestC.cpp TestC.h TestC.inl TestS.cpp TestS.h TestS.inl: Test-stamp
 
 Test-stamp: $(srcdir)/Test.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/Test.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/Test.idl
 	@touch $@
+
+noinst_HEADERS = \
+  Test.idl
+
+## Makefile.ORB_DLL_Client.am
+
+if BUILD_EXCEPTIONS
 
 noinst_LTLIBRARIES += libORB_DLL_Client.la
 
@@ -68,11 +70,6 @@ libORB_DLL_Client_la_SOURCES = \
 noinst_HEADERS += \
   ORB_DLL.h \
   ORB_DLL_Export.h \
-  Test.idl \
-  TestC.h \
-  TestC.inl \
-  TestS.h \
-  TestS.inl \
   Test_i.h
 
 endif BUILD_EXCEPTIONS
@@ -80,29 +77,6 @@ endif BUILD_EXCEPTIONS
 ## Makefile.ORB_DLL_Server.am
 
 if BUILD_THREADS
-
-BUILT_SOURCES += \
-  TestC.cpp \
-  TestC.h \
-  TestC.inl \
-  TestS.cpp \
-  TestS.h \
-  TestS.inl
-
-CLEANFILES += \
-  Test-stamp \
-  TestC.cpp \
-  TestC.h \
-  TestC.inl \
-  TestS.cpp \
-  TestS.h \
-  TestS.inl
-
-TestC.cpp TestC.h TestC.inl TestS.cpp TestS.h TestS.inl: Test-stamp
-
-Test-stamp: $(srcdir)/Test.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/Test.idl
-	@touch $@
 
 noinst_LTLIBRARIES += libORB_DLL_Server.la
 
@@ -124,11 +98,6 @@ libORB_DLL_Server_la_SOURCES = \
 noinst_HEADERS += \
   ORB_DLL.h \
   ORB_DLL_Export.h \
-  Test.idl \
-  TestC.h \
-  TestC.inl \
-  TestS.h \
-  TestS.inl \
   Test_i.h
 
 endif BUILD_THREADS
@@ -154,11 +123,7 @@ CLEANFILES += \
   TestS.h \
   TestS.inl
 
-TestC.cpp TestC.h TestC.inl TestS.cpp TestS.h TestS.inl: Test-stamp
 
-Test-stamp: $(srcdir)/Test.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/Test.idl
-	@touch $@
 
 noinst_PROGRAMS = Test
 
