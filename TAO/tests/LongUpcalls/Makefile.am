@@ -54,63 +54,30 @@ endif BUILD_EXCEPTIONS
 endif BUILD_CORBA_MESSAGING
 endif BUILD_AMI
 
-## Makefile.LongUpcalls_Server.am
+## Makefile.LongUpcalls_AMI_Client.am
 
 if BUILD_AMI
 if BUILD_CORBA_MESSAGING
 if BUILD_EXCEPTIONS
 
-noinst_PROGRAMS += blocking_server
+noinst_PROGRAMS += ami_client
 
-blocking_server_CPPFLAGS = \
+ami_client_CPPFLAGS = \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR)
 
-blocking_server_SOURCES = \
-  Manager.cpp \
-  TestC.cpp \
-  TestS.cpp \
-  blocking_server.cpp \
-  Manager.h
-
-blocking_server_LDADD = \
-  $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
-  $(TAO_BUILDDIR)/tao/libTAO_PI.la \
-  $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
-  $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
-  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
-  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
-  $(TAO_BUILDDIR)/tao/libTAO.la \
-  $(ACE_BUILDDIR)/ace/libACE.la
-
-endif BUILD_EXCEPTIONS
-endif BUILD_CORBA_MESSAGING
-endif BUILD_AMI
-
-## Makefile.LongUpcalls_Client.am
-
-if BUILD_AMI
-if BUILD_CORBA_MESSAGING
-if BUILD_EXCEPTIONS
-
-noinst_PROGRAMS += blocking_client
-
-blocking_client_CPPFLAGS = \
-  -I$(ACE_ROOT) \
-  -I$(ACE_BUILDDIR) \
-  -I$(TAO_ROOT) \
-  -I$(TAO_BUILDDIR)
-
-blocking_client_SOURCES = \
+ami_client_SOURCES = \
   Controller.cpp \
+  Manager_Handler.cpp \
   TestC.cpp \
   TestS.cpp \
-  blocking_client.cpp \
-  Controller.h
+  ami_client.cpp \
+  Controller.h \
+  Manager_Handler.h
 
-blocking_client_LDADD = \
+ami_client_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
   $(TAO_BUILDDIR)/tao/libTAO_PI.la \
   $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
@@ -159,35 +126,68 @@ endif BUILD_EXCEPTIONS
 endif BUILD_CORBA_MESSAGING
 endif BUILD_AMI
 
-## Makefile.LongUpcalls_AMI_Client.am
+## Makefile.LongUpcalls_Client.am
 
 if BUILD_AMI
 if BUILD_CORBA_MESSAGING
 if BUILD_EXCEPTIONS
 
-noinst_PROGRAMS += ami_client
+noinst_PROGRAMS += blocking_client
 
-ami_client_CPPFLAGS = \
+blocking_client_CPPFLAGS = \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR)
 
-ami_client_SOURCES = \
+blocking_client_SOURCES = \
   Controller.cpp \
-  Manager_Handler.cpp \
   TestC.cpp \
   TestS.cpp \
-  ami_client.cpp \
-  Controller.h \
-  Manager_Handler.h
+  blocking_client.cpp \
+  Controller.h
 
-ami_client_LDADD = \
+blocking_client_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
   $(TAO_BUILDDIR)/tao/libTAO_PI.la \
   $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
+  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
+  $(TAO_BUILDDIR)/tao/libTAO.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+endif BUILD_EXCEPTIONS
+endif BUILD_CORBA_MESSAGING
+endif BUILD_AMI
+
+## Makefile.LongUpcalls_Server.am
+
+if BUILD_AMI
+if BUILD_CORBA_MESSAGING
+if BUILD_EXCEPTIONS
+
+noinst_PROGRAMS += blocking_server
+
+blocking_server_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR) \
+  -I$(TAO_ROOT) \
+  -I$(TAO_BUILDDIR)
+
+blocking_server_SOURCES = \
+  Manager.cpp \
+  TestC.cpp \
+  TestS.cpp \
+  blocking_server.cpp \
+  Manager.h
+
+blocking_server_LDADD = \
+  $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PI.la \
+  $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
+  $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la

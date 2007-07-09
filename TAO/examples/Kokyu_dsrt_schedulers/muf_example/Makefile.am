@@ -71,7 +71,7 @@ muf_client_SOURCES = \
   test_i.inl
 
 muf_client_LDADD = \
-  $(top_builddir)/examples/Kokyu_dsrt_schedulers/libKokyu_DSRT_Schedulers.la \
+  $(ACE_BUILDDIR)/examples/Kokyu_dsrt_schedulers/libKokyu_DSRT_Schedulers.la \
   $(TAO_BUILDDIR)/tao/libTAO_RTScheduler.la \
   $(TAO_BUILDDIR)/tao/libTAO_PI_Server.la \
   $(ACE_BUILDDIR)/Kokyu/libKokyu.la \
@@ -112,7 +112,7 @@ muf_server_SOURCES = \
   test_i.inl
 
 muf_server_LDADD = \
-  $(top_builddir)/examples/Kokyu_dsrt_schedulers/libKokyu_DSRT_Schedulers.la \
+  $(ACE_BUILDDIR)/examples/Kokyu_dsrt_schedulers/libKokyu_DSRT_Schedulers.la \
   $(TAO_BUILDDIR)/tao/libTAO_RTScheduler.la \
   $(TAO_BUILDDIR)/tao/libTAO_PI_Server.la \
   $(ACE_BUILDDIR)/Kokyu/libKokyu.la \

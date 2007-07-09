@@ -46,34 +46,6 @@ test-stamp: $(srcdir)/test.idl $(TAO_IDL_DEP)
 noinst_HEADERS = \
   test.idl
 
-## Makefile.MProfile_Forwarding_Server.am
-
-if BUILD_EXCEPTIONS
-
-noinst_PROGRAMS += server
-
-server_CPPFLAGS = \
-  -I$(ACE_ROOT) \
-  -I$(ACE_BUILDDIR) \
-  -I$(TAO_ROOT) \
-  -I$(TAO_BUILDDIR)
-
-server_SOURCES = \
-  server.cpp \
-  testC.cpp \
-  testS.cpp \
-  test_i.cpp \
-  test_i.h \
-  test_i.inl
-
-server_LDADD = \
-  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
-  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
-  $(TAO_BUILDDIR)/tao/libTAO.la \
-  $(ACE_BUILDDIR)/ace/libACE.la
-
-endif BUILD_EXCEPTIONS
-
 ## Makefile.MProfile_Forwarding_Client.am
 
 if BUILD_EXCEPTIONS
@@ -123,6 +95,34 @@ manager_SOURCES = \
 
 manager_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_IORManip.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
+  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
+  $(TAO_BUILDDIR)/tao/libTAO.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+endif BUILD_EXCEPTIONS
+
+## Makefile.MProfile_Forwarding_Server.am
+
+if BUILD_EXCEPTIONS
+
+noinst_PROGRAMS += server
+
+server_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR) \
+  -I$(TAO_ROOT) \
+  -I$(TAO_BUILDDIR)
+
+server_SOURCES = \
+  server.cpp \
+  testC.cpp \
+  testS.cpp \
+  test_i.cpp \
+  test_i.h \
+  test_i.inl
+
+server_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \

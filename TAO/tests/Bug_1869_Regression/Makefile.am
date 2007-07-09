@@ -54,6 +54,39 @@ endif BUILD_EXCEPTIONS
 endif BUILD_CORBA_MESSAGING
 endif BUILD_AMI
 
+## Makefile.Bug_1869_Regression_Client.am
+
+if BUILD_AMI
+if BUILD_CORBA_MESSAGING
+if BUILD_EXCEPTIONS
+
+noinst_PROGRAMS += client
+
+client_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR) \
+  -I$(TAO_ROOT) \
+  -I$(TAO_BUILDDIR)
+
+client_SOURCES = \
+  AMIC.cpp \
+  AMIS.cpp \
+  client.cpp
+
+client_LDADD = \
+  $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PI.la \
+  $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
+  $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
+  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
+  $(TAO_BUILDDIR)/tao/libTAO.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+endif BUILD_EXCEPTIONS
+endif BUILD_CORBA_MESSAGING
+endif BUILD_AMI
+
 ## Makefile.Bug_1869_Regression_Server.am
 
 if BUILD_AMI
@@ -80,39 +113,6 @@ server_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
   $(TAO_BUILDDIR)/tao/libTAO_IORTable.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
-  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
-  $(TAO_BUILDDIR)/tao/libTAO.la \
-  $(ACE_BUILDDIR)/ace/libACE.la
-
-endif BUILD_EXCEPTIONS
-endif BUILD_CORBA_MESSAGING
-endif BUILD_AMI
-
-## Makefile.Bug_1869_Regression_Client.am
-
-if BUILD_AMI
-if BUILD_CORBA_MESSAGING
-if BUILD_EXCEPTIONS
-
-noinst_PROGRAMS += client
-
-client_CPPFLAGS = \
-  -I$(ACE_ROOT) \
-  -I$(ACE_BUILDDIR) \
-  -I$(TAO_ROOT) \
-  -I$(TAO_BUILDDIR)
-
-client_SOURCES = \
-  AMIC.cpp \
-  AMIS.cpp \
-  client.cpp
-
-client_LDADD = \
-  $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
-  $(TAO_BUILDDIR)/tao/libTAO_PI.la \
-  $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
-  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
-  $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
   $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la

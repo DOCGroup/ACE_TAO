@@ -46,37 +46,6 @@ Test-stamp: $(srcdir)/Test.idl $(TAO_IDL_DEP)
 noinst_HEADERS = \
   Test.idl
 
-## Makefile.Client_Leaks_Server.am
-
-if BUILD_EXCEPTIONS
-
-noinst_PROGRAMS += server
-
-server_CPPFLAGS = \
-  -I$(ACE_ROOT) \
-  -I$(ACE_BUILDDIR) \
-  -I$(TAO_ROOT) \
-  -I$(TAO_BUILDDIR)
-
-server_SOURCES = \
-  Process_Factory.cpp \
-  Server_Task.cpp \
-  Startup_Callback.cpp \
-  TestC.cpp \
-  TestS.cpp \
-  server.cpp \
-  Process_Factory.h \
-  Server_Task.h \
-  Startup_Callback.h
-
-server_LDADD = \
-  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
-  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
-  $(TAO_BUILDDIR)/tao/libTAO.la \
-  $(ACE_BUILDDIR)/ace/libACE.la
-
-endif BUILD_EXCEPTIONS
-
 ## Makefile.Client_Leaks_Client.am
 
 if BUILD_EXCEPTIONS
@@ -122,6 +91,37 @@ child_SOURCES = \
   Process.h
 
 child_LDADD = \
+  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
+  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
+  $(TAO_BUILDDIR)/tao/libTAO.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+endif BUILD_EXCEPTIONS
+
+## Makefile.Client_Leaks_Server.am
+
+if BUILD_EXCEPTIONS
+
+noinst_PROGRAMS += server
+
+server_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR) \
+  -I$(TAO_ROOT) \
+  -I$(TAO_BUILDDIR)
+
+server_SOURCES = \
+  Process_Factory.cpp \
+  Server_Task.cpp \
+  Startup_Callback.cpp \
+  TestC.cpp \
+  TestS.cpp \
+  server.cpp \
+  Process_Factory.h \
+  Server_Task.h \
+  Startup_Callback.h
+
+server_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \

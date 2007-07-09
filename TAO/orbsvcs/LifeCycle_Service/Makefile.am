@@ -39,11 +39,11 @@ LifeCycle_Service_SOURCES = \
   LifeCycle_Service_i.h
 
 LifeCycle_Service_LDADD = \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosTrading_Serv.la \
+  $(TAO_BUILDDIR)/tao/libTAO_IORTable.la \
   $(TAO_BUILDDIR)/tao/libTAO_Utils.la \
   $(TAO_BUILDDIR)/tao/libTAO_PI.la \
   $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosTrading_Serv.la \
-  $(TAO_BUILDDIR)/tao/libTAO_IORTable.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_Svc_Utils.la \
   $(TAO_BUILDDIR)/tao/libTAO_DynamicAny.la \
   $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \

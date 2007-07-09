@@ -46,6 +46,33 @@ test-stamp: $(srcdir)/test.idl $(TAO_IDL_DEP)
 noinst_HEADERS = \
   test.idl
 
+## Makefile.Leader_Followers_Client.am
+
+if BUILD_EXCEPTIONS
+
+noinst_PROGRAMS += client
+
+client_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR) \
+  -I$(TAO_ROOT) \
+  -I$(TAO_BUILDDIR)
+
+client_SOURCES = \
+  client.cpp \
+  testC.cpp \
+  test_i.h
+
+client_LDADD = \
+  $(TAO_BUILDDIR)/tao/libTAO_Strategies.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PI.la \
+  $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
+  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
+  $(TAO_BUILDDIR)/tao/libTAO.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+endif BUILD_EXCEPTIONS
+
 ## Makefile.Leader_Followers_Server.am
 
 if BUILD_EXCEPTIONS
@@ -67,32 +94,9 @@ server_SOURCES = \
 
 server_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_Strategies.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PI.la \
+  $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
-  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
-  $(TAO_BUILDDIR)/tao/libTAO.la \
-  $(ACE_BUILDDIR)/ace/libACE.la
-
-endif BUILD_EXCEPTIONS
-
-## Makefile.Leader_Followers_Client.am
-
-if BUILD_EXCEPTIONS
-
-noinst_PROGRAMS += client
-
-client_CPPFLAGS = \
-  -I$(ACE_ROOT) \
-  -I$(ACE_BUILDDIR) \
-  -I$(TAO_ROOT) \
-  -I$(TAO_BUILDDIR)
-
-client_SOURCES = \
-  client.cpp \
-  testC.cpp \
-  test_i.h
-
-client_LDADD = \
-  $(TAO_BUILDDIR)/tao/libTAO_Strategies.la \
   $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la

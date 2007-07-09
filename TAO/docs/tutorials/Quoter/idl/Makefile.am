@@ -45,7 +45,7 @@ CLEANFILES = \
 QuoterC.cpp QuoterC.h QuoterC.inl QuoterS.cpp QuoterS.h QuoterS.inl QuoterS_T.cpp QuoterS_T.h: Quoter-stamp
 
 Quoter-stamp: $(srcdir)/Quoter.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,export_macro=QUOTER_COMMON_Export -Wb,export_include=quoter_common_export.h -GT $(srcdir)/Quoter.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St -Wb,export_macro=QUOTER_COMMON_Export -Wb,export_include=quoter_common_export.h -GT $(srcdir)/Quoter.idl
 	@touch $@
 
 noinst_LTLIBRARIES = libQuoter_Idl_Lib.la
@@ -67,6 +67,7 @@ noinst_HEADERS = \
   QuoterC.inl \
   QuoterS.h \
   QuoterS.inl \
+  QuoterS_T.cpp \
   QuoterS_T.h \
   quoter_common_export.h
 

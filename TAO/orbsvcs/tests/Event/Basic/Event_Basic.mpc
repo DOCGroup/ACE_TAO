@@ -23,7 +23,7 @@ project(*Observer): rteventtestexe {
 }
 
 project(*BCast): rteventtestexe {
-  exename = BCase
+  exename = BCast
   Source_Files {
     BCast.cpp
   }

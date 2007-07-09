@@ -46,34 +46,6 @@ Test-stamp: $(srcdir)/Test.idl $(TAO_IDL_DEP)
 noinst_HEADERS = \
   Test.idl
 
-## Makefile.Bug_2289_Regression_Server.am
-
-if BUILD_EXCEPTIONS
-
-noinst_PROGRAMS += server
-
-server_CPPFLAGS = \
-  -I$(ACE_ROOT) \
-  -I$(ACE_BUILDDIR) \
-  -I$(TAO_ROOT) \
-  -I$(TAO_BUILDDIR)
-
-server_SOURCES = \
-  MyInterfaceImpl.cpp \
-  TestC.cpp \
-  TestS.cpp \
-  server.cpp \
-  MyInterfaceImpl.h
-
-server_LDADD = \
-  $(TAO_BUILDDIR)/tao/libTAO_IORTable.la \
-  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
-  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
-  $(TAO_BUILDDIR)/tao/libTAO.la \
-  $(ACE_BUILDDIR)/ace/libACE.la
-
-endif BUILD_EXCEPTIONS
-
 ## Makefile.Bug_2289_Regression_Client.am
 
 if BUILD_EXCEPTIONS
@@ -94,6 +66,34 @@ client_SOURCES = \
   MyInterfaceImpl.h
 
 client_LDADD = \
+  $(TAO_BUILDDIR)/tao/libTAO_IORTable.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
+  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
+  $(TAO_BUILDDIR)/tao/libTAO.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+endif BUILD_EXCEPTIONS
+
+## Makefile.Bug_2289_Regression_Server.am
+
+if BUILD_EXCEPTIONS
+
+noinst_PROGRAMS += server
+
+server_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR) \
+  -I$(TAO_ROOT) \
+  -I$(TAO_BUILDDIR)
+
+server_SOURCES = \
+  MyInterfaceImpl.cpp \
+  TestC.cpp \
+  TestS.cpp \
+  server.cpp \
+  MyInterfaceImpl.h
+
+server_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_IORTable.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \

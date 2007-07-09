@@ -9,6 +9,7 @@
 ## ../bin/mwc.pl -type automake -noreldefs TAO.mwc
 
 SUBDIRS = \
+        Bug_1592_Regression \
         Bug_2511_Regression \
         Current \
         Deactivate_Object \

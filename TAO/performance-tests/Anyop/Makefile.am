@@ -43,26 +43,24 @@ test-stamp: $(srcdir)/test.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/test.idl
 	@touch $@
 
-noinst_PROGRAMS = anyop
+noinst_LTLIBRARIES = libAnyop.la
 
-anyop_CPPFLAGS = \
+libAnyop_la_CPPFLAGS = \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR)
 
-anyop_SOURCES = \
+libAnyop_la_SOURCES = \
   anyop.cpp \
-  testC.cpp \
+  testC.cpp
+
+noinst_HEADERS = \
+  test.idl \
   testC.h \
   testC.inl \
   testS.h \
   testS.inl
-
-anyop_LDADD = \
-  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
-  $(TAO_BUILDDIR)/tao/libTAO.la \
-  $(ACE_BUILDDIR)/ace/libACE.la
 
 endif !BUILD_ACE_FOR_TAO
 endif BUILD_EXCEPTIONS

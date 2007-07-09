@@ -18,9 +18,9 @@ TAO_ROOT = $(top_srcdir)
 
 if BUILD_EXCEPTIONS
 
-noinst_PROGRAMS = main
+noinst_PROGRAMS = Filter
 
-main_CPPFLAGS = \
+Filter_CPPFLAGS = \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
@@ -29,12 +29,12 @@ main_CPPFLAGS = \
   -I$(TAO_BUILDDIR)/orbsvcs \
   -DTAO_HAS_TYPED_EVENT_CHANNEL
 
-main_SOURCES = \
+Filter_SOURCES = \
   Filter.cpp \
   main.cpp \
   Filter.h
 
-main_LDADD = \
+Filter_LDADD = \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNotification_Skel.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosEvent_Skel.la \

@@ -46,6 +46,31 @@ Test-stamp: $(srcdir)/Test.idl $(TAO_IDL_DEP)
 noinst_HEADERS = \
   Test.idl
 
+## Makefile.Stack_Recursion_Client.am
+
+if BUILD_EXCEPTIONS
+
+noinst_PROGRAMS += client
+
+client_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR) \
+  -I$(TAO_ROOT) \
+  -I$(TAO_BUILDDIR)
+
+client_SOURCES = \
+  Client_Task.cpp \
+  TestC.cpp \
+  client.cpp \
+  Client_Task.h
+
+client_LDADD = \
+  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
+  $(TAO_BUILDDIR)/tao/libTAO.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+endif BUILD_EXCEPTIONS
+
 ## Makefile.Stack_Recursion_Server.am
 
 if BUILD_EXCEPTIONS
@@ -69,31 +94,6 @@ server_SOURCES = \
 
 server_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
-  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
-  $(TAO_BUILDDIR)/tao/libTAO.la \
-  $(ACE_BUILDDIR)/ace/libACE.la
-
-endif BUILD_EXCEPTIONS
-
-## Makefile.Stack_Recursion_Client.am
-
-if BUILD_EXCEPTIONS
-
-noinst_PROGRAMS += client
-
-client_CPPFLAGS = \
-  -I$(ACE_ROOT) \
-  -I$(ACE_BUILDDIR) \
-  -I$(TAO_ROOT) \
-  -I$(TAO_BUILDDIR)
-
-client_SOURCES = \
-  Client_Task.cpp \
-  TestC.cpp \
-  client.cpp \
-  Client_Task.h
-
-client_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la

@@ -1,7 +1,15 @@
 // -*- MPC -*-
 // $Id$
 
+project (*idl): taoidldefaults {
+  IDL_Files {
+    Test.idl
+  }
+  custom_only = 1
+}
+
 project(*Test_Client_Module): taolib_with_idl, anytypecode {
+  after += *idl
   sharedname    = Test_Client_Module
   dynamicflags  = TEST_CLIENT_MODULE_BUILD_DLL
 
@@ -9,9 +17,12 @@ project(*Test_Client_Module): taolib_with_idl, anytypecode {
     TestC.cpp
     Test_Client_Module.cpp
   }
+  IDL_Files {
+  }
 }
 
 project(*Test_Server_Module) : taolib_with_idl, portableserver {
+  after += *idl
   sharedname   = Test_Server_Module
   dynamicflags = TEST_SERVER_MODULE_BUILD_DLL
   after += *Test_CLient_Module
@@ -20,9 +31,13 @@ project(*Test_Server_Module) : taolib_with_idl, portableserver {
     Test_Server_Module.cpp
     Test_i.cpp
   }
+
+  IDL_Files {
+  }
 }
 
 project(*Server) : taoexe {
+  after += *idl
   exename = server
   IDL_Files {
   }
@@ -33,6 +48,7 @@ project(*Server) : taoexe {
 }
 
 project(*Client): taoclient {
+  after += *idl
   IDL_Files {
   }
 
@@ -40,4 +56,3 @@ project(*Client): taoclient {
     client.cpp
   }
 }
-

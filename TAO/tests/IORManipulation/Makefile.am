@@ -14,7 +14,9 @@ TAO_BUILDDIR = $(top_builddir)
 TAO_ROOT = $(top_srcdir)
 
 SUBDIRS = \
+        . \
         filter
+
 
 ## Makefile.IORManipulation_IORTest.am
 

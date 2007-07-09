@@ -13,8 +13,6 @@ SUBDIRS = \
         Test_Filter \
         XML_Persistence \
         lib \
-        Bug_1385_Regression \
-        Bug_2561_Regression \
         Structured_Multi_Filter \
         Structured_Filter \
         Sequence_Multi_Filter \
@@ -26,7 +24,11 @@ SUBDIRS = \
         Driver \
         Discarding \
         Destroy \
+        Bug_2561_Regression \
+        Bug_1385_Regression \
         Blocking \
-        Basic \
-        performance-tests
+        Basic
 
+if BUILD_TESTS
+SUBDIRS += performance-tests
+endif

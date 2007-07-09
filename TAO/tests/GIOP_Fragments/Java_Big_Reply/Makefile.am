@@ -60,7 +60,7 @@ CLEANFILES += \
 TestC.cpp TestC.h TestC.inl TestS.cpp TestS.h TestS.inl: Test-stamp
 
 Test-stamp: $(srcdir)/Test.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/Test.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/Test.idl
 	@touch $@
 
 BUILT_SOURCES += \
@@ -72,30 +72,27 @@ CLEANFILES += \
 server.class: $(srcdir)/server.java
 	javac -d . $(srcdir)/server.java
 
-noinst_PROGRAMS = client
+noinst_LTLIBRARIES = libJava_Big_Reply.la
 
-client_CPPFLAGS = \
+libJava_Big_Reply_la_CPPFLAGS = \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR)
 
-client_SOURCES = \
+libJava_Big_Reply_la_SOURCES = \
   Client_Task.cpp \
   TestC.cpp \
   TestS.cpp \
-  client.cpp \
+  client.cpp
+
+noinst_HEADERS = \
   Client_Task.h \
+  Test.idl \
   TestC.h \
   TestC.inl \
   TestS.h \
   TestS.inl
-
-client_LDADD = \
-  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
-  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
-  $(TAO_BUILDDIR)/tao/libTAO.la \
-  $(ACE_BUILDDIR)/ace/libACE.la
 
 endif BUILD_JAVA
 endif BUILD_EXCEPTIONS

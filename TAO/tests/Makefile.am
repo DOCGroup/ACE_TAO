@@ -33,6 +33,7 @@ SUBDIRS = \
         Bug_1270_Regression \
         Bug_1330_Regression \
         Bug_1361_Regression \
+        Bug_1383_Regression \
         Bug_1476_Regression \
         Bug_1476_Test \
         Bug_1482_Regression \
@@ -70,7 +71,9 @@ SUBDIRS = \
         Bug_2328_Regression \
         Bug_2345_Regression \
         Bug_2349_Regression \
+        Bug_2356_Regression \
         Bug_2375_Regression \
+        Bug_2399_Regression \
         Bug_2417_Regression \
         Bug_2419_Regression \
         Bug_2424_Regression \
@@ -86,11 +89,30 @@ SUBDIRS = \
         Bug_2654_Regression \
         Bug_2669_Regression \
         Bug_2677_Regression \
+        Bug_2678_Regression \
         Bug_2683_Regression \
+        Bug_2702_Regression \
         Bug_2735_Regression \
-	Bug_2702_Regression \
+        Bug_2768_Regression \
+        Bug_2791_Regression \
+        Bug_2792_Regression \
+        Bug_2795_Regression \
+        Bug_2804_Regression \
+        Bug_2805_Regression \
+        Bug_2809_Regression \
+        Bug_2826_Regression \
+        Bug_2844_Regression \
+        Bug_2869_Regression \
+        Bug_2909_Regression \
+        Bug_2918_Regression \
+        Bug_2936_Regression \
+        Bug_2953_Regression \
+        Bug_2966_Regression \
+        Bug_933_Regression \
         CDR \
         COIOP \
+        CORBA_e_Implicit_Activation \
+        CSD_Strategy_Tests \
         Cache_Growth_Test \
         CallbackTest \
         Client_Leaks \
@@ -112,8 +134,12 @@ SUBDIRS = \
         DII_Collocation_Tests \
         DIOP \
         DLL_ORB \
+        DSI_AMH \
+        DSI_AMI_Gateway \
         DSI_Gateway \
+        DiffServ \
         DynAny_Test \
+        DynUnion_Test \
         Explicit_Event_Loop \
         Exposed_Policies \
         FL_Cube \
@@ -130,6 +156,7 @@ SUBDIRS = \
         IPV6 \
         InterOp-Naming \
         Leader_Followers \
+        LongDouble \
         LongUpcalls \
         MProfile \
         MProfile_Connection_Timeout \
@@ -189,6 +216,3 @@ SUBDIRS = \
         UNKNOWN_Exception \
         Xt_Stopwatch
 
-# SUBDIRS += \
-#         Bug_2399_Regression \
-#         CSD_Strategy_Tests 

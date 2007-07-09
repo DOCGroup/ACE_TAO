@@ -46,35 +46,6 @@ Multiple-stamp: $(srcdir)/Multiple.idl $(TAO_IDL_DEP)
 noinst_HEADERS = \
   Multiple.idl
 
-## Makefile.Multiple_Server.am
-
-if BUILD_EXCEPTIONS
-
-noinst_PROGRAMS += server
-
-server_CPPFLAGS = \
-  -I$(ACE_ROOT) \
-  -I$(ACE_BUILDDIR) \
-  -I$(TAO_ROOT) \
-  -I$(TAO_BUILDDIR)
-
-server_SOURCES = \
-  Collocation_Tester.cpp \
-  MultipleC.cpp \
-  MultipleS.cpp \
-  Multiple_Impl.cpp \
-  server.cpp \
-  Collocation_Tester.h \
-  Multiple_Impl.h
-
-server_LDADD = \
-  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
-  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
-  $(TAO_BUILDDIR)/tao/libTAO.la \
-  $(ACE_BUILDDIR)/ace/libACE.la
-
-endif BUILD_EXCEPTIONS
-
 ## Makefile.Multiple_Client.am
 
 if BUILD_EXCEPTIONS
@@ -97,6 +68,35 @@ client_SOURCES = \
   Multiple_Impl.h
 
 client_LDADD = \
+  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
+  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
+  $(TAO_BUILDDIR)/tao/libTAO.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+endif BUILD_EXCEPTIONS
+
+## Makefile.Multiple_Server.am
+
+if BUILD_EXCEPTIONS
+
+noinst_PROGRAMS += server
+
+server_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR) \
+  -I$(TAO_ROOT) \
+  -I$(TAO_BUILDDIR)
+
+server_SOURCES = \
+  Collocation_Tester.cpp \
+  MultipleC.cpp \
+  MultipleS.cpp \
+  Multiple_Impl.cpp \
+  server.cpp \
+  Collocation_Tester.h \
+  Multiple_Impl.h
+
+server_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \

@@ -24,29 +24,6 @@ BUILT_SOURCES =
 if BUILD_EXCEPTIONS
 
 BUILT_SOURCES += \
-  includedC.cpp \
-  includedC.h \
-  includedC.inl \
-  includedS.cpp \
-  includedS.h \
-  includedS.inl
-
-CLEANFILES += \
-  included-stamp \
-  includedC.cpp \
-  includedC.h \
-  includedC.inl \
-  includedS.cpp \
-  includedS.h \
-  includedS.inl
-
-includedC.cpp includedC.h includedC.inl includedS.cpp includedS.h includedS.inl: included-stamp
-
-included-stamp: $(srcdir)/included.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -t ./mytmp $(srcdir)/included.idl
-	@touch $@
-
-BUILT_SOURCES += \
   testC.cpp \
   testC.h \
   testC.inl \
@@ -66,7 +43,30 @@ CLEANFILES += \
 testC.cpp testC.h testC.inl testS.cpp testS.h testS.inl: test-stamp
 
 test-stamp: $(srcdir)/test.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -t ./mytmp $(srcdir)/test.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St -t ./mytmp $(srcdir)/test.idl
+	@touch $@
+
+BUILT_SOURCES += \
+  includedC.cpp \
+  includedC.h \
+  includedC.inl \
+  includedS.cpp \
+  includedS.h \
+  includedS.inl
+
+CLEANFILES += \
+  included-stamp \
+  includedC.cpp \
+  includedC.h \
+  includedC.inl \
+  includedS.cpp \
+  includedS.h \
+  includedS.inl
+
+includedC.cpp includedC.h includedC.inl includedS.cpp includedS.h includedS.inl: included-stamp
+
+included-stamp: $(srcdir)/included.idl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St -t ./mytmp $(srcdir)/included.idl
 	@touch $@
 
 noinst_PROGRAMS = test

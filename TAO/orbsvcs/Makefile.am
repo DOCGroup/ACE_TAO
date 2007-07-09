@@ -31,13 +31,9 @@ SUBDIRS = \
         Concurrency_Service
 
 if BUILD_TESTS
-SUBDIRS += \
-        performance-tests \
-        tests
+SUBDIRS += performance-tests tests
 endif
 
 if BUILD_EXAMPLES
-SUBDIRS += \
-        examples
+SUBDIRS += examples
 endif
-

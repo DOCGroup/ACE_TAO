@@ -24,6 +24,29 @@ BUILT_SOURCES =
 if BUILD_EXCEPTIONS
 
 BUILT_SOURCES += \
+  TreeNodeC.cpp \
+  TreeNodeC.h \
+  TreeNodeC.inl \
+  TreeNodeS.cpp \
+  TreeNodeS.h \
+  TreeNodeS.inl
+
+CLEANFILES += \
+  TreeNode-stamp \
+  TreeNodeC.cpp \
+  TreeNodeC.h \
+  TreeNodeC.inl \
+  TreeNodeS.cpp \
+  TreeNodeS.h \
+  TreeNodeS.inl
+
+TreeNodeC.cpp TreeNodeC.h TreeNodeC.inl TreeNodeS.cpp TreeNodeS.h TreeNodeS.inl: TreeNode-stamp
+
+TreeNode-stamp: $(srcdir)/TreeNode.idl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/TreeNode.idl
+	@touch $@
+
+BUILT_SOURCES += \
   TreeBaseC.cpp \
   TreeBaseC.h \
   TreeBaseC.inl \
@@ -67,29 +90,6 @@ TreeControllerC.cpp TreeControllerC.h TreeControllerC.inl TreeControllerS.cpp Tr
 
 TreeController-stamp: $(srcdir)/TreeController.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/TreeController.idl
-	@touch $@
-
-BUILT_SOURCES += \
-  TreeNodeC.cpp \
-  TreeNodeC.h \
-  TreeNodeC.inl \
-  TreeNodeS.cpp \
-  TreeNodeS.h \
-  TreeNodeS.inl
-
-CLEANFILES += \
-  TreeNode-stamp \
-  TreeNodeC.cpp \
-  TreeNodeC.h \
-  TreeNodeC.inl \
-  TreeNodeS.cpp \
-  TreeNodeS.h \
-  TreeNodeS.inl
-
-TreeNodeC.cpp TreeNodeC.h TreeNodeC.inl TreeNodeS.cpp TreeNodeS.h TreeNodeS.inl: TreeNode-stamp
-
-TreeNode-stamp: $(srcdir)/TreeNode.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/TreeNode.idl
 	@touch $@
 
 noinst_PROGRAMS = collocated

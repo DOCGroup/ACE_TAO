@@ -87,7 +87,6 @@ Supplier_CPPFLAGS = \
   -I$(TAO_BUILDDIR) \
   -I$(TAO_ROOT)/orbsvcs \
   -I$(TAO_BUILDDIR)/orbsvcs \
-  -I$(srcdir)/../../lib \
   -DTAO_HAS_TYPED_EVENT_CHANNEL
 
 Supplier_SOURCES = \
@@ -96,8 +95,6 @@ Supplier_SOURCES = \
   Multiple.h \
   Supplier.h
 
-../../lib:
-	mkdir -p ../../lib
 
 
 Supplier_DEPENDENCIES = \

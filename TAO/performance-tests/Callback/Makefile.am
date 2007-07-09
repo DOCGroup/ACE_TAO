@@ -16,7 +16,7 @@ TAO_IDL_DEP = $(TAO_BUILDDIR)/TAO_IDL/tao_idl
 TAO_IDLFLAGS = -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf
 TAO_ROOT = $(top_srcdir)
 
-noinst_PROGRAMS =
+noinst_HEADERS =
 
 ## Makefile.Callback_Perf_IDL.am
 
@@ -45,7 +45,7 @@ callback-stamp: $(srcdir)/callback.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/callback.idl
 	@touch $@
 
-noinst_HEADERS = \
+noinst_HEADERS += \
   callback.idl
 
 endif BUILD_EXCEPTIONS
@@ -56,32 +56,23 @@ if BUILD_CORBA_MESSAGING
 if BUILD_EXCEPTIONS
 if !BUILD_ACE_FOR_TAO
 
-noinst_PROGRAMS += client
+noinst_LTLIBRARIES = libCallback_Client.la
 
-client_CPPFLAGS = \
+libCallback_Client_la_CPPFLAGS = \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR)
 
-client_SOURCES = \
+libCallback_Client_la_SOURCES = \
   Callback_i.cpp \
   callbackC.cpp \
   callbackS.cpp \
-  client.cpp \
+  client.cpp
+
+noinst_HEADERS += \
   Callback_i.h \
   Callback_i.inl
-
-client_LDADD = \
-  $(TAO_BUILDDIR)/tao/libTAO_Strategies.la \
-  $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
-  $(TAO_BUILDDIR)/tao/libTAO_PI.la \
-  $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
-  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
-  $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
-  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
-  $(TAO_BUILDDIR)/tao/libTAO.la \
-  $(ACE_BUILDDIR)/ace/libACE.la
 
 endif !BUILD_ACE_FOR_TAO
 endif BUILD_EXCEPTIONS
@@ -93,7 +84,7 @@ if BUILD_CORBA_MESSAGING
 if BUILD_EXCEPTIONS
 if !BUILD_ACE_FOR_TAO
 
-noinst_PROGRAMS += server
+noinst_PROGRAMS = server
 
 server_CPPFLAGS = \
   -I$(ACE_ROOT) \

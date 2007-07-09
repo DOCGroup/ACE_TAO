@@ -41,7 +41,7 @@ CLEANFILES = \
 testC.cpp testC.h testC.inl testS.cpp testS.h testS.inl: test-stamp
 
 test-stamp: $(srcdir)/test.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,export_macro=GENERIC_SERVANT_Export -Wb,export_include=generic_servant_export.h $(srcdir)/test.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St -Wb,export_macro=GENERIC_SERVANT_Export -Wb,export_include=generic_servant_export.h $(srcdir)/test.idl
 	@touch $@
 
 noinst_LTLIBRARIES = libGeneric_Servant.la

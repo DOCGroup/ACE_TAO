@@ -54,28 +54,28 @@ endif BUILD_EXCEPTIONS
 endif BUILD_CORBA_MESSAGING
 endif BUILD_AMI
 
-## Makefile.AMI_Buffering_Server.am
+## Makefile.AMI_Buffering_Admin.am
 
 if BUILD_AMI
 if BUILD_CORBA_MESSAGING
 if BUILD_EXCEPTIONS
 
-noinst_PROGRAMS += server
+noinst_PROGRAMS += admin
 
-server_CPPFLAGS = \
+admin_CPPFLAGS = \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR)
 
-server_SOURCES = \
-  AMI_Buffering.cpp \
+admin_SOURCES = \
+  AMI_Buffering_Admin.cpp \
   TestC.cpp \
   TestS.cpp \
-  server.cpp \
-  AMI_Buffering.h
+  admin.cpp \
+  AMI_Buffering_Admin.h
 
-server_LDADD = \
+admin_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
   $(TAO_BUILDDIR)/tao/libTAO_PI.la \
   $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
@@ -126,28 +126,28 @@ endif BUILD_EXCEPTIONS
 endif BUILD_CORBA_MESSAGING
 endif BUILD_AMI
 
-## Makefile.AMI_Buffering_Admin.am
+## Makefile.AMI_Buffering_Server.am
 
 if BUILD_AMI
 if BUILD_CORBA_MESSAGING
 if BUILD_EXCEPTIONS
 
-noinst_PROGRAMS += admin
+noinst_PROGRAMS += server
 
-admin_CPPFLAGS = \
+server_CPPFLAGS = \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR)
 
-admin_SOURCES = \
-  AMI_Buffering_Admin.cpp \
+server_SOURCES = \
+  AMI_Buffering.cpp \
   TestC.cpp \
   TestS.cpp \
-  admin.cpp \
-  AMI_Buffering_Admin.h
+  server.cpp \
+  AMI_Buffering.h
 
-admin_LDADD = \
+server_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
   $(TAO_BUILDDIR)/tao/libTAO_PI.la \
   $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \

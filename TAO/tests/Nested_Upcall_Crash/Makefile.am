@@ -46,29 +46,29 @@ Test-stamp: $(srcdir)/Test.idl $(TAO_IDL_DEP)
 noinst_HEADERS = \
   Test.idl
 
-## Makefile.Nested_Upcall_Crash_Server.am
+## Makefile.Nested_Upcall_Crash_Client.am
 
 if BUILD_CORBA_MESSAGING
 if BUILD_EXCEPTIONS
 
-noinst_PROGRAMS += server
+noinst_PROGRAMS += client
 
-server_CPPFLAGS = \
+client_CPPFLAGS = \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR)
 
-server_SOURCES = \
+client_SOURCES = \
+  Client_Peer.cpp \
   Clock_Ticks.cpp \
-  Server_Peer.cpp \
   TestC.cpp \
   TestS.cpp \
-  server.cpp \
-  Clock_Ticks.h \
-  Server_Peer.h
+  client.cpp \
+  Client_Peer.h \
+  Clock_Ticks.h
 
-server_LDADD = \
+client_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
   $(TAO_BUILDDIR)/tao/libTAO_PI.la \
   $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
@@ -115,29 +115,29 @@ scavenger_LDADD = \
 endif BUILD_EXCEPTIONS
 endif BUILD_CORBA_MESSAGING
 
-## Makefile.Nested_Upcall_Crash_Client.am
+## Makefile.Nested_Upcall_Crash_Server.am
 
 if BUILD_CORBA_MESSAGING
 if BUILD_EXCEPTIONS
 
-noinst_PROGRAMS += client
+noinst_PROGRAMS += server
 
-client_CPPFLAGS = \
+server_CPPFLAGS = \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR)
 
-client_SOURCES = \
-  Client_Peer.cpp \
+server_SOURCES = \
   Clock_Ticks.cpp \
+  Server_Peer.cpp \
   TestC.cpp \
   TestS.cpp \
-  client.cpp \
-  Client_Peer.h \
-  Clock_Ticks.h
+  server.cpp \
+  Clock_Ticks.h \
+  Server_Peer.h
 
-client_LDADD = \
+server_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
   $(TAO_BUILDDIR)/tao/libTAO_PI.la \
   $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \

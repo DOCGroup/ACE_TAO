@@ -38,6 +38,8 @@ distributer_SOURCES = \
 
 distributer_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_Strategies.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PI.la \
+  $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_AV.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosProperty_Serv.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosProperty_Skel.la \
@@ -74,6 +76,8 @@ receiver_SOURCES = \
 
 receiver_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_Strategies.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PI.la \
+  $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_AV.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosProperty_Serv.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosProperty_Skel.la \
@@ -110,6 +114,8 @@ sender_SOURCES = \
 
 sender_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_Strategies.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PI.la \
+  $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_AV.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosProperty_Serv.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosProperty_Skel.la \

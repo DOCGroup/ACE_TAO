@@ -50,6 +50,7 @@ noinst_HEADERS = \
 
 if BUILD_EXCEPTIONS
 if BUILD_INTERCEPTORS
+if BUILD_TRANSPORT_CURRENT
 
 noinst_LTLIBRARIES += libCurrent_Test_Lib_Client.la
 
@@ -70,6 +71,7 @@ noinst_HEADERS += \
   Client_ORBInitializer.h \
   Client_Request_Interceptor.h
 
+endif BUILD_TRANSPORT_CURRENT
 endif BUILD_INTERCEPTORS
 endif BUILD_EXCEPTIONS
 
@@ -77,6 +79,7 @@ endif BUILD_EXCEPTIONS
 
 if BUILD_EXCEPTIONS
 if BUILD_INTERCEPTORS
+if BUILD_TRANSPORT_CURRENT
 
 noinst_LTLIBRARIES += libCurrent_Test_Lib_Server.la
 
@@ -98,6 +101,7 @@ noinst_HEADERS += \
   Server_ORBInitializer.h \
   Server_Request_Interceptor.h
 
+endif BUILD_TRANSPORT_CURRENT
 endif BUILD_INTERCEPTORS
 endif BUILD_EXCEPTIONS
 

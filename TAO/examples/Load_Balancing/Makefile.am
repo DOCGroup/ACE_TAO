@@ -105,6 +105,37 @@ endif !BUILD_REPO
 endif !BUILD_ACE_FOR_TAO
 endif BUILD_EXCEPTIONS
 
+## Makefile.Load_Balancing_Client.am
+
+if BUILD_EXCEPTIONS
+if !BUILD_REPO
+
+noinst_PROGRAMS += client
+
+client_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR) \
+  -I$(TAO_ROOT) \
+  -I$(TAO_BUILDDIR)
+
+client_SOURCES = \
+  IdentityC.cpp \
+  Identity_Client.cpp \
+  Load_BalancerC.cpp \
+  Identity_Client.h
+
+client_LDADD = \
+  $(TAO_BUILDDIR)/tao/libTAO_Utils.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PI.la \
+  $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
+  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
+  $(TAO_BUILDDIR)/tao/libTAO.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+endif !BUILD_REPO
+endif BUILD_EXCEPTIONS
+
 ## Makefile.Load_Balancing_Server.am
 
 if BUILD_EXCEPTIONS
@@ -128,37 +159,6 @@ server_SOURCES = \
   Identity_i.h
 
 server_LDADD = \
-  $(TAO_BUILDDIR)/tao/libTAO_Utils.la \
-  $(TAO_BUILDDIR)/tao/libTAO_PI.la \
-  $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
-  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
-  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
-  $(TAO_BUILDDIR)/tao/libTAO.la \
-  $(ACE_BUILDDIR)/ace/libACE.la
-
-endif !BUILD_REPO
-endif BUILD_EXCEPTIONS
-
-## Makefile.Load_Balancing_Client.am
-
-if BUILD_EXCEPTIONS
-if !BUILD_REPO
-
-noinst_PROGRAMS += client
-
-client_CPPFLAGS = \
-  -I$(ACE_ROOT) \
-  -I$(ACE_BUILDDIR) \
-  -I$(TAO_ROOT) \
-  -I$(TAO_BUILDDIR)
-
-client_SOURCES = \
-  IdentityC.cpp \
-  Identity_Client.cpp \
-  Load_BalancerC.cpp \
-  Identity_Client.h
-
-client_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_Utils.la \
   $(TAO_BUILDDIR)/tao/libTAO_PI.la \
   $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \

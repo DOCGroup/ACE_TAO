@@ -46,42 +46,6 @@ test-stamp: $(srcdir)/test.idl $(TAO_IDL_DEP)
 noinst_HEADERS = \
   test.idl
 
-## Makefile.Bug_1495_Server.am
-
-if BUILD_EXCEPTIONS
-if BUILD_INTERCEPTORS
-
-noinst_PROGRAMS += server
-
-server_CPPFLAGS = \
-  -I$(ACE_ROOT) \
-  -I$(ACE_BUILDDIR) \
-  -I$(TAO_ROOT) \
-  -I$(TAO_BUILDDIR)
-
-server_SOURCES = \
-  Server_ORBInitializer.cpp \
-  Threaded_Server.cpp \
-  server_interceptor.cpp \
-  testC.cpp \
-  testS.cpp \
-  test_i.cpp \
-  Server_ORBInitializer.h \
-  server_interceptor.h \
-  test_i.h
-
-server_LDADD = \
-  $(TAO_BUILDDIR)/tao/libTAO_PI_Server.la \
-  $(TAO_BUILDDIR)/tao/libTAO_PI.la \
-  $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
-  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
-  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
-  $(TAO_BUILDDIR)/tao/libTAO.la \
-  $(ACE_BUILDDIR)/ace/libACE.la
-
-endif BUILD_INTERCEPTORS
-endif BUILD_EXCEPTIONS
-
 ## Makefile.Bug_1495_Client.am
 
 if BUILD_EXCEPTIONS
@@ -109,6 +73,42 @@ client_SOURCES = \
   test_i.h
 
 client_LDADD = \
+  $(TAO_BUILDDIR)/tao/libTAO_PI.la \
+  $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
+  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
+  $(TAO_BUILDDIR)/tao/libTAO.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+endif BUILD_INTERCEPTORS
+endif BUILD_EXCEPTIONS
+
+## Makefile.Bug_1495_Server.am
+
+if BUILD_EXCEPTIONS
+if BUILD_INTERCEPTORS
+
+noinst_PROGRAMS += server
+
+server_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR) \
+  -I$(TAO_ROOT) \
+  -I$(TAO_BUILDDIR)
+
+server_SOURCES = \
+  Server_ORBInitializer.cpp \
+  Threaded_Server.cpp \
+  server_interceptor.cpp \
+  testC.cpp \
+  testS.cpp \
+  test_i.cpp \
+  Server_ORBInitializer.h \
+  server_interceptor.h \
+  test_i.h
+
+server_LDADD = \
+  $(TAO_BUILDDIR)/tao/libTAO_PI_Server.la \
   $(TAO_BUILDDIR)/tao/libTAO_PI.la \
   $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \

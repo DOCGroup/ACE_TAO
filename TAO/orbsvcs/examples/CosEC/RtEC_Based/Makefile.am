@@ -10,6 +10,8 @@
 
 SUBDIRS = \
         lib \
-        bin \
-        tests
+        bin
 
+if BUILD_TESTS
+SUBDIRS += tests
+endif

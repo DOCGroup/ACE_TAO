@@ -41,7 +41,7 @@ CLEANFILES = \
 OneLineCosNamingC.cpp OneLineCosNamingC.h OneLineCosNamingC.inl OneLineCosNamingS.cpp OneLineCosNamingS.h OneLineCosNamingS.inl: OneLineCosNaming-stamp
 
 OneLineCosNaming-stamp: $(srcdir)/OneLineCosNaming.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/OneLineCosNaming.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/OneLineCosNaming.idl
 	@touch $@
 
 noinst_PROGRAMS = client
