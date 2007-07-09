@@ -17,6 +17,8 @@ project(TAO_IDL3_TO_IDL2_BE) : acelib, install, tao_output, crosscompile {
     be_init.cpp
     be_produce.cpp
     be_sunsoft.cpp
+    checking_visitor.cpp
+    identifier_helper.cpp
     idl3_to_idl2_visitor.cpp
   }
 
@@ -25,6 +27,8 @@ project(TAO_IDL3_TO_IDL2_BE) : acelib, install, tao_output, crosscompile {
     be_global.h
     be_helper.h
     be_sunsoft.h
+    checking_visitor.h
+    identifier_helper.h
     idl3_to_idl2_visitor.h
     TAO_IDL3_TO_IDL2_BE_Export.h
   }
