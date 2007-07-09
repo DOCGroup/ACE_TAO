@@ -63,9 +63,9 @@ if BUILD_CORBA_MESSAGING
 if BUILD_EXCEPTIONS
 if !BUILD_ACE_FOR_TAO
 
-noinst_PROGRAMS += BCast
+noinst_PROGRAMS += BCase
 
-BCast_CPPFLAGS = \
+BCase_CPPFLAGS = \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
@@ -74,11 +74,11 @@ BCast_CPPFLAGS = \
   -I$(TAO_BUILDDIR)/orbsvcs \
   -I$(srcdir)/../lib
 
-BCast_SOURCES = \
+BCase_SOURCES = \
   BCast.cpp \
   BCast.h
 
-BCast_LDADD = \
+BCase_LDADD = \
   $(top_builddir)/orbsvcs/tests/Event/lib/libECTests.la \
   $(TAO_BUILDDIR)/tao/libTAO_IORTable.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \

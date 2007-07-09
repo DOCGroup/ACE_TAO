@@ -41,7 +41,7 @@ CLEANFILES = \
 simpleC.cpp simpleC.h simpleC.inl simpleS.cpp simpleS.h simpleS.inl: simple-stamp
 
 simple-stamp: $(srcdir)/simple.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/simple.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/simple.idl
 	@touch $@
 
 noinst_PROGRAMS = server

@@ -30,8 +30,8 @@ IFR_Inheritance_Test_SOURCES = \
   main.cpp
 
 IFR_Inheritance_Test_LDADD = \
-  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   $(TAO_BUILDDIR)/tao/libTAO_IFR_Client.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la

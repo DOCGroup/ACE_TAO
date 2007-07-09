@@ -42,7 +42,7 @@ CLEANFILES = \
 testC.cpp testC.h testC.inl testS.cpp testS.h testS.inl: test-stamp
 
 test-stamp: $(srcdir)/test.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,export_macro=RTCORBA_COMMON_Export -Wb,export_include=rtcorba_common_export.h $(srcdir)/test.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St -Wb,export_macro=RTCORBA_COMMON_Export -Wb,export_include=rtcorba_common_export.h $(srcdir)/test.idl
 	@touch $@
 
 noinst_LTLIBRARIES = libRTCORBA_Common.la

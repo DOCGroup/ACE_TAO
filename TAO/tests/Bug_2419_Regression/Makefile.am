@@ -25,29 +25,6 @@ if BUILD_CORBA_MESSAGING
 if BUILD_EXCEPTIONS
 
 BUILT_SOURCES += \
-  local_childC.cpp \
-  local_childC.h \
-  local_childC.inl \
-  local_childS.cpp \
-  local_childS.h \
-  local_childS.inl
-
-CLEANFILES += \
-  local_child-stamp \
-  local_childC.cpp \
-  local_childC.h \
-  local_childC.inl \
-  local_childS.cpp \
-  local_childS.h \
-  local_childS.inl
-
-local_childC.cpp local_childC.h local_childC.inl local_childS.cpp local_childS.h local_childS.inl: local_child-stamp
-
-local_child-stamp: $(srcdir)/local_child.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/local_child.idl
-	@touch $@
-
-BUILT_SOURCES += \
   abstract_parentC.cpp \
   abstract_parentC.h \
   abstract_parentC.inl \
@@ -68,6 +45,29 @@ abstract_parentC.cpp abstract_parentC.h abstract_parentC.inl abstract_parentS.cp
 
 abstract_parent-stamp: $(srcdir)/abstract_parent.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/abstract_parent.idl
+	@touch $@
+
+BUILT_SOURCES += \
+  local_childC.cpp \
+  local_childC.h \
+  local_childC.inl \
+  local_childS.cpp \
+  local_childS.h \
+  local_childS.inl
+
+CLEANFILES += \
+  local_child-stamp \
+  local_childC.cpp \
+  local_childC.h \
+  local_childC.inl \
+  local_childS.cpp \
+  local_childS.h \
+  local_childS.inl
+
+local_childC.cpp local_childC.h local_childC.inl local_childS.cpp local_childS.h local_childS.inl: local_child-stamp
+
+local_child-stamp: $(srcdir)/local_child.idl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/local_child.idl
 	@touch $@
 
 noinst_PROGRAMS = client

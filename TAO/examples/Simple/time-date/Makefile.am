@@ -42,7 +42,7 @@ CLEANFILES = \
 Time_DateC.cpp Time_DateC.h Time_DateC.inl Time_DateS.cpp Time_DateS.h Time_DateS.inl: Time_Date-stamp
 
 Time_Date-stamp: $(srcdir)/Time_Date.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,export_macro=Alt_Resource_Factory_Export -Wb,export_include=Alt_Resource_Factory.h $(srcdir)/Time_Date.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St -Wb,export_macro=Alt_Resource_Factory_Export -Wb,export_include=Alt_Resource_Factory.h $(srcdir)/Time_Date.idl
 	@touch $@
 
 noinst_LTLIBRARIES = libTime_Date.la

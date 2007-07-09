@@ -46,6 +46,43 @@ Counter-stamp: $(srcdir)/Counter.idl $(TAO_IDL_DEP)
 noinst_HEADERS = \
   Counter.idl
 
+## Makefile.Exposed_Policies_Client.am
+
+if BUILD_EXCEPTIONS
+if BUILD_RT_CORBA
+
+noinst_PROGRAMS += client
+
+client_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR) \
+  -I$(TAO_ROOT) \
+  -I$(TAO_BUILDDIR)
+
+client_SOURCES = \
+  CounterC.cpp \
+  Policy_Tester.cpp \
+  Policy_Verifier.cpp \
+  RT_Properties.cpp \
+  client.cpp \
+  Policy_Tester.h \
+  Policy_Verifier.h \
+  RT_Properties.h
+
+client_LDADD = \
+  $(TAO_BUILDDIR)/tao/libTAO_RTPortableServer.la \
+  $(TAO_BUILDDIR)/tao/libTAO_RTCORBA.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
+  $(TAO_BUILDDIR)/tao/libTAO_Strategies.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PI.la \
+  $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
+  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
+  $(TAO_BUILDDIR)/tao/libTAO.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+endif BUILD_RT_CORBA
+endif BUILD_EXCEPTIONS
+
 ## Makefile.Exposed_Policies_Server.am
 
 if BUILD_EXCEPTIONS
@@ -74,46 +111,9 @@ server_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_RTPortableServer.la \
   $(TAO_BUILDDIR)/tao/libTAO_RTCORBA.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
+  $(TAO_BUILDDIR)/tao/libTAO_Strategies.la \
   $(TAO_BUILDDIR)/tao/libTAO_PI.la \
   $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
-  $(TAO_BUILDDIR)/tao/libTAO_Strategies.la \
-  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
-  $(TAO_BUILDDIR)/tao/libTAO.la \
-  $(ACE_BUILDDIR)/ace/libACE.la
-
-endif BUILD_RT_CORBA
-endif BUILD_EXCEPTIONS
-
-## Makefile.Exposed_Policies_Client.am
-
-if BUILD_EXCEPTIONS
-if BUILD_RT_CORBA
-
-noinst_PROGRAMS += client
-
-client_CPPFLAGS = \
-  -I$(ACE_ROOT) \
-  -I$(ACE_BUILDDIR) \
-  -I$(TAO_ROOT) \
-  -I$(TAO_BUILDDIR)
-
-client_SOURCES = \
-  CounterC.cpp \
-  Policy_Tester.cpp \
-  Policy_Verifier.cpp \
-  RT_Properties.cpp \
-  client.cpp \
-  Policy_Tester.h \
-  Policy_Verifier.h \
-  RT_Properties.h
-
-client_LDADD = \
-  $(TAO_BUILDDIR)/tao/libTAO_RTPortableServer.la \
-  $(TAO_BUILDDIR)/tao/libTAO_RTCORBA.la \
-  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
-  $(TAO_BUILDDIR)/tao/libTAO_PI.la \
-  $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
-  $(TAO_BUILDDIR)/tao/libTAO_Strategies.la \
   $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la

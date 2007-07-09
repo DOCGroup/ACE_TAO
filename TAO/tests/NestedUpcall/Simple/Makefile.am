@@ -46,33 +46,6 @@ test-stamp: $(srcdir)/test.idl $(TAO_IDL_DEP)
 noinst_HEADERS = \
   test.idl
 
-## Makefile.Simple_Nested_Upcall_Server.am
-
-if BUILD_EXCEPTIONS
-
-noinst_PROGRAMS += server
-
-server_CPPFLAGS = \
-  -I$(ACE_ROOT) \
-  -I$(ACE_BUILDDIR) \
-  -I$(TAO_ROOT) \
-  -I$(TAO_BUILDDIR)
-
-server_SOURCES = \
-  server.cpp \
-  server_i.cpp \
-  testC.cpp \
-  testS.cpp \
-  server_i.h
-
-server_LDADD = \
-  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
-  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
-  $(TAO_BUILDDIR)/tao/libTAO.la \
-  $(ACE_BUILDDIR)/ace/libACE.la
-
-endif BUILD_EXCEPTIONS
-
 ## Makefile.Simple_Nested_Upcall_Client.am
 
 if BUILD_EXCEPTIONS
@@ -93,6 +66,33 @@ client_SOURCES = \
   client_i.h
 
 client_LDADD = \
+  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
+  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
+  $(TAO_BUILDDIR)/tao/libTAO.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+endif BUILD_EXCEPTIONS
+
+## Makefile.Simple_Nested_Upcall_Server.am
+
+if BUILD_EXCEPTIONS
+
+noinst_PROGRAMS += server
+
+server_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR) \
+  -I$(TAO_ROOT) \
+  -I$(TAO_BUILDDIR)
+
+server_SOURCES = \
+  server.cpp \
+  server_i.cpp \
+  testC.cpp \
+  testS.cpp \
+  server_i.h
+
+server_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \

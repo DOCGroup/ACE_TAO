@@ -6,7 +6,7 @@
 ## this file will be lost the next time it is generated.
 ##
 ## MPC Command:
-## /tao_builds/chad/doc/build/linux/ACE/bin/mwc.pl -type automake -noreldefs
+## ../bin/mwc.pl -type automake -noreldefs TAO.mwc
 
 ACE_BUILDDIR = $(top_builddir)/..
 ACE_ROOT = $(top_srcdir)/..
@@ -36,11 +36,6 @@ server_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 endif BUILD_EXCEPTIONS
-
-
-ACLOCAL = @ACLOCAL@
-ACLOCAL_AMFLAGS = -I m4
-AUTOMAKE_OPTIONS = foreign
 
 ## Clean up template repositories, etc.
 clean-local:

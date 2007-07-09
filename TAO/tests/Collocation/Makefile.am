@@ -113,6 +113,8 @@ Collocation_LDADD = \
   libCollocation_Test_Stub.la \
   libCollocation_Diamond.la \
   $(TAO_BUILDDIR)/tao/libTAO_Strategies.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PI.la \
+  $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \

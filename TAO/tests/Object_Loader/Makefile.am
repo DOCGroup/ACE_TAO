@@ -16,8 +16,34 @@ TAO_IDL_DEP = $(TAO_BUILDDIR)/TAO_IDL/tao_idl
 TAO_IDLFLAGS = -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf
 TAO_ROOT = $(top_srcdir)
 
-CLEANFILES =
-BUILT_SOURCES =
+
+## Makefile.Object_Loader_Idl.am
+
+BUILT_SOURCES = \
+  TestC.cpp \
+  TestC.h \
+  TestC.inl \
+  TestS.cpp \
+  TestS.h \
+  TestS.inl
+
+CLEANFILES = \
+  Test-stamp \
+  TestC.cpp \
+  TestC.h \
+  TestC.inl \
+  TestS.cpp \
+  TestS.h \
+  TestS.inl
+
+TestC.cpp TestC.h TestC.inl TestS.cpp TestS.h TestS.inl: Test-stamp
+
+Test-stamp: $(srcdir)/Test.idl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/Test.idl
+	@touch $@
+
+noinst_HEADERS = \
+  Test.idl
 
 ## Makefile.Object_Loader_Test.am
 
@@ -40,11 +66,7 @@ CLEANFILES += \
   TestS.h \
   TestS.inl
 
-TestC.cpp TestC.h TestC.inl TestS.cpp TestS.h TestS.inl: Test-stamp
 
-Test-stamp: $(srcdir)/Test.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/Test.idl
-	@touch $@
 
 noinst_LTLIBRARIES = libTest_DLL.la
 
@@ -61,7 +83,7 @@ libTest_DLL_la_SOURCES = \
   TestS.cpp \
   Test_i.cpp
 
-noinst_HEADERS = \
+noinst_HEADERS += \
   Loader.h \
   Test.idl \
   TestC.h \
@@ -93,9 +115,6 @@ CLEANFILES += \
 
 TestC.cpp TestC.h TestC.inl TestS.h TestS.inl: Test-stamp
 
-Test-stamp: $(srcdir)/Test.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/Test.idl
-	@touch $@
 
 noinst_PROGRAMS = driver
 

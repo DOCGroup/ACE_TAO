@@ -19,9 +19,9 @@ TAO_IDL_DEP = $(TAO_BUILDDIR)/TAO_IDL/tao_idl
 TAO_IDLFLAGS = -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf
 TAO_ROOT = $(top_srcdir)
 
-lib_LTLIBRARIES =
 pkgconfig_DATA =
 CLEANFILES =
+lib_LTLIBRARIES =
 BUILT_SOURCES =
 
 ## Makefile.CosNaming_IDL.am
@@ -96,7 +96,7 @@ CLEANFILES += \
   TAO_CosNaming.pc
 
 TAO_CosNaming.pc: ${top_builddir}/config.status ${srcdir}/TAO_CosNaming.pc.in
-	${top_builddir}/config.status --file $@:${srcdir}/TAO_CosNaming.pc.in
+	${top_builddir}/config.status --file "$@":${srcdir}/TAO_CosNaming.pc.in
 
 endif BUILD_EXCEPTIONS
 
@@ -202,7 +202,7 @@ CLEANFILES += \
   TAO_CosProperty.pc
 
 TAO_CosProperty.pc: ${top_builddir}/config.status ${srcdir}/TAO_CosProperty.pc.in
-	${top_builddir}/config.status --file $@:${srcdir}/TAO_CosProperty.pc.in
+	${top_builddir}/config.status --file "$@":${srcdir}/TAO_CosProperty.pc.in
 
 endif BUILD_EXCEPTIONS
 
@@ -253,7 +253,7 @@ CLEANFILES += \
   TAO_CosProperty_Skel.pc
 
 TAO_CosProperty_Skel.pc: ${top_builddir}/config.status ${srcdir}/TAO_CosProperty_Skel.pc.in
-	${top_builddir}/config.status --file $@:${srcdir}/TAO_CosProperty_Skel.pc.in
+	${top_builddir}/config.status --file "$@":${srcdir}/TAO_CosProperty_Skel.pc.in
 
 endif BUILD_EXCEPTIONS
 
@@ -301,7 +301,7 @@ CLEANFILES += \
   TAO_CosProperty_Serv.pc
 
 TAO_CosProperty_Serv.pc: ${top_builddir}/config.status ${srcdir}/TAO_CosProperty_Serv.pc.in
-	${top_builddir}/config.status --file $@:${srcdir}/TAO_CosProperty_Serv.pc.in
+	${top_builddir}/config.status --file "$@":${srcdir}/TAO_CosProperty_Serv.pc.in
 
 endif BUILD_EXCEPTIONS
 
@@ -566,7 +566,7 @@ CLEANFILES += \
   TAO_CosConcurrency.pc
 
 TAO_CosConcurrency.pc: ${top_builddir}/config.status ${srcdir}/TAO_CosConcurrency.pc.in
-	${top_builddir}/config.status --file $@:${srcdir}/TAO_CosConcurrency.pc.in
+	${top_builddir}/config.status --file "$@":${srcdir}/TAO_CosConcurrency.pc.in
 
 endif BUILD_EXCEPTIONS
 
@@ -614,7 +614,7 @@ CLEANFILES += \
   TAO_CosConcurrency_Skel.pc
 
 TAO_CosConcurrency_Skel.pc: ${top_builddir}/config.status ${srcdir}/TAO_CosConcurrency_Skel.pc.in
-	${top_builddir}/config.status --file $@:${srcdir}/TAO_CosConcurrency_Skel.pc.in
+	${top_builddir}/config.status --file "$@":${srcdir}/TAO_CosConcurrency_Skel.pc.in
 
 endif BUILD_EXCEPTIONS
 
@@ -670,7 +670,7 @@ CLEANFILES += \
   TAO_CosConcurrency_Serv.pc
 
 TAO_CosConcurrency_Serv.pc: ${top_builddir}/config.status ${srcdir}/TAO_CosConcurrency_Serv.pc.in
-	${top_builddir}/config.status --file $@:${srcdir}/TAO_CosConcurrency_Serv.pc.in
+	${top_builddir}/config.status --file "$@":${srcdir}/TAO_CosConcurrency_Serv.pc.in
 
 endif BUILD_EXCEPTIONS
 
@@ -846,7 +846,7 @@ CLEANFILES += \
   TAO_CosEvent.pc
 
 TAO_CosEvent.pc: ${top_builddir}/config.status ${srcdir}/TAO_CosEvent.pc.in
-	${top_builddir}/config.status --file $@:${srcdir}/TAO_CosEvent.pc.in
+	${top_builddir}/config.status --file "$@":${srcdir}/TAO_CosEvent.pc.in
 
 endif BUILD_EXCEPTIONS
 
@@ -958,7 +958,7 @@ CLEANFILES += \
   TAO_Svc_Utils.pc
 
 TAO_Svc_Utils.pc: ${top_builddir}/config.status ${srcdir}/TAO_Svc_Utils.pc.in
-	${top_builddir}/config.status --file $@:${srcdir}/TAO_Svc_Utils.pc.in
+	${top_builddir}/config.status --file "$@":${srcdir}/TAO_Svc_Utils.pc.in
 
 endif BUILD_EXCEPTIONS
 
@@ -1025,7 +1025,7 @@ CLEANFILES += \
   TAO_CosEvent_Skel.pc
 
 TAO_CosEvent_Skel.pc: ${top_builddir}/config.status ${srcdir}/TAO_CosEvent_Skel.pc.in
-	${top_builddir}/config.status --file $@:${srcdir}/TAO_CosEvent_Skel.pc.in
+	${top_builddir}/config.status --file "$@":${srcdir}/TAO_CosEvent_Skel.pc.in
 
 endif BUILD_EXCEPTIONS
 
@@ -1151,7 +1151,7 @@ CLEANFILES += \
   TAO_CosEvent_Serv.pc
 
 TAO_CosEvent_Serv.pc: ${top_builddir}/config.status ${srcdir}/TAO_CosEvent_Serv.pc.in
-	${top_builddir}/config.status --file $@:${srcdir}/TAO_CosEvent_Serv.pc.in
+	${top_builddir}/config.status --file "$@":${srcdir}/TAO_CosEvent_Serv.pc.in
 
 endif BUILD_EXCEPTIONS
 endif BUILD_CORBA_MESSAGING
@@ -1257,7 +1257,7 @@ CLEANFILES += \
   TAO_CosLifeCycle.pc
 
 TAO_CosLifeCycle.pc: ${top_builddir}/config.status ${srcdir}/TAO_CosLifeCycle.pc.in
-	${top_builddir}/config.status --file $@:${srcdir}/TAO_CosLifeCycle.pc.in
+	${top_builddir}/config.status --file "$@":${srcdir}/TAO_CosLifeCycle.pc.in
 
 endif BUILD_EXCEPTIONS
 
@@ -1472,7 +1472,7 @@ CLEANFILES += \
   TAO_PortableGroup.pc
 
 TAO_PortableGroup.pc: ${top_builddir}/config.status ${srcdir}/TAO_PortableGroup.pc.in
-	${top_builddir}/config.status --file $@:${srcdir}/TAO_PortableGroup.pc.in
+	${top_builddir}/config.status --file "$@":${srcdir}/TAO_PortableGroup.pc.in
 
 endif BUILD_EXCEPTIONS
 endif BUILD_CORBA_MESSAGING
@@ -1632,7 +1632,7 @@ CLEANFILES += \
   TAO_CosLoadBalancing.pc
 
 TAO_CosLoadBalancing.pc: ${top_builddir}/config.status ${srcdir}/TAO_CosLoadBalancing.pc.in
-	${top_builddir}/config.status --file $@:${srcdir}/TAO_CosLoadBalancing.pc.in
+	${top_builddir}/config.status --file "$@":${srcdir}/TAO_CosLoadBalancing.pc.in
 
 endif BUILD_EXCEPTIONS
 endif BUILD_CORBA_MESSAGING
@@ -1683,7 +1683,7 @@ CLEANFILES += \
   TAO_CosNaming_Skel.pc
 
 TAO_CosNaming_Skel.pc: ${top_builddir}/config.status ${srcdir}/TAO_CosNaming_Skel.pc.in
-	${top_builddir}/config.status --file $@:${srcdir}/TAO_CosNaming_Skel.pc.in
+	${top_builddir}/config.status --file "$@":${srcdir}/TAO_CosNaming_Skel.pc.in
 
 endif BUILD_EXCEPTIONS
 
@@ -1695,7 +1695,6 @@ EXTRA_DIST += \
 ## Makefile.CosNaming_Serv.am
 
 if BUILD_EXCEPTIONS
-if !BUILD_ACE_FOR_TAO
 
 lib_LTLIBRARIES += libTAO_CosNaming_Serv.la
 
@@ -1765,9 +1764,8 @@ CLEANFILES += \
   TAO_CosNaming_Serv.pc
 
 TAO_CosNaming_Serv.pc: ${top_builddir}/config.status ${srcdir}/TAO_CosNaming_Serv.pc.in
-	${top_builddir}/config.status --file $@:${srcdir}/TAO_CosNaming_Serv.pc.in
+	${top_builddir}/config.status --file "$@":${srcdir}/TAO_CosNaming_Serv.pc.in
 
-endif !BUILD_ACE_FOR_TAO
 endif BUILD_EXCEPTIONS
 
 EXTRA_DIST += \
@@ -1984,7 +1982,7 @@ CLEANFILES += \
   TAO_CosNotification.pc
 
 TAO_CosNotification.pc: ${top_builddir}/config.status ${srcdir}/TAO_CosNotification.pc.in
-	${top_builddir}/config.status --file $@:${srcdir}/TAO_CosNotification.pc.in
+	${top_builddir}/config.status --file "$@":${srcdir}/TAO_CosNotification.pc.in
 
 endif BUILD_EXCEPTIONS
 
@@ -2037,7 +2035,7 @@ CLEANFILES += \
   TAO_ETCL.pc
 
 TAO_ETCL.pc: ${top_builddir}/config.status ${srcdir}/TAO_ETCL.pc.in
-	${top_builddir}/config.status --file $@:${srcdir}/TAO_ETCL.pc.in
+	${top_builddir}/config.status --file "$@":${srcdir}/TAO_ETCL.pc.in
 
 endif BUILD_EXCEPTIONS
 
@@ -2104,7 +2102,7 @@ CLEANFILES += \
   TAO_CosNotification_Skel.pc
 
 TAO_CosNotification_Skel.pc: ${top_builddir}/config.status ${srcdir}/TAO_CosNotification_Skel.pc.in
-	${top_builddir}/config.status --file $@:${srcdir}/TAO_CosNotification_Skel.pc.in
+	${top_builddir}/config.status --file "$@":${srcdir}/TAO_CosNotification_Skel.pc.in
 
 endif BUILD_EXCEPTIONS
 
@@ -2346,7 +2344,7 @@ CLEANFILES += \
   TAO_CosNotification_Serv.pc
 
 TAO_CosNotification_Serv.pc: ${top_builddir}/config.status ${srcdir}/TAO_CosNotification_Serv.pc.in
-	${top_builddir}/config.status --file $@:${srcdir}/TAO_CosNotification_Serv.pc.in
+	${top_builddir}/config.status --file "$@":${srcdir}/TAO_CosNotification_Serv.pc.in
 
 endif BUILD_EXCEPTIONS
 
@@ -2359,6 +2357,7 @@ EXTRA_DIST += \
 
 if BUILD_ACEXML
 if BUILD_EXCEPTIONS
+if BUILD_ZLIB
 if !BUILD_ACE_FOR_TAO
 
 lib_LTLIBRARIES += libTAO_CosNotification_Persist.la
@@ -2372,15 +2371,9 @@ libTAO_CosNotification_Persist_la_CPPFLAGS = \
   -I$(TAO_BUILDDIR)/orbsvcs \
   -I$(ACE_ROOT)/ACEXML/common \
   -DTAO_HAS_TYPED_EVENT_CHANNEL \
-  -DTAO_NOTIFY_PERSIST_BUILD_DLL
-
-if BUILD_ZLIB
-if BUILD_ZZIP
-libTAO_CosNotification_Persist_la_CPPFLAGS += \
   $(ACE_ZZIP_CPPFLAGS) \
-  $(ACE_ZLIB_CPPFLAGS)
-endif BUILD_ZZIP
-endif BUILD_ZLIB
+  $(ACE_ZLIB_CPPFLAGS) \
+  -DTAO_NOTIFY_PERSIST_BUILD_DLL
 
 libTAO_CosNotification_Persist_la_SOURCES = \
   Notify/XML_Loader.cpp \
@@ -2388,15 +2381,7 @@ libTAO_CosNotification_Persist_la_SOURCES = \
   Notify/XML_Topology_Factory.cpp
 
 libTAO_CosNotification_Persist_la_LDFLAGS = \
- -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
-
-if BUILD_ZLIB
-if BUILD_ZZIP
-libTAO_CosNotification_Persist_la_LDFLAGS += \
-  $(ACE_ZZIP_LDFLAGS) \
-  $(ACE_ZLIB_LDFLAGS)
-endif BUILD_ZZIP
-endif BUILD_ZLIB
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@ $(ACE_ZZIP_LDFLAGS) $(ACE_ZLIB_LDFLAGS)
 
 libTAO_CosNotification_Persist_la_LIBADD = \
   $(ACE_BUILDDIR)/ACEXML/parser/parser/libACEXML_Parser.la \
@@ -2413,15 +2398,9 @@ libTAO_CosNotification_Persist_la_LIBADD = \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
-  $(ACE_BUILDDIR)/ace/libACE.la
-
-if BUILD_ZLIB
-if BUILD_ZZIP
-libTAO_CosNotification_Persist_la_LIBADD += \
+  $(ACE_BUILDDIR)/ace/libACE.la \
   $(ACE_ZZIP_LIBS) \
   $(ACE_ZLIB_LIBS)
-endif BUILD_ZZIP
-endif BUILD_ZLIB
 
 nobase_include_HEADERS += \
   Notify/XML_Loader.h \
@@ -2430,6 +2409,7 @@ nobase_include_HEADERS += \
   Notify/notify_persist_export.h
 
 endif !BUILD_ACE_FOR_TAO
+endif BUILD_ZLIB
 endif BUILD_EXCEPTIONS
 endif BUILD_ACEXML
 
@@ -2510,7 +2490,7 @@ CLEANFILES += \
   TAO_CosTime.pc
 
 TAO_CosTime.pc: ${top_builddir}/config.status ${srcdir}/TAO_CosTime.pc.in
-	${top_builddir}/config.status --file $@:${srcdir}/TAO_CosTime.pc.in
+	${top_builddir}/config.status --file "$@":${srcdir}/TAO_CosTime.pc.in
 
 endif BUILD_EXCEPTIONS
 
@@ -2643,7 +2623,7 @@ CLEANFILES += \
   TAO_CosTrading.pc
 
 TAO_CosTrading.pc: ${top_builddir}/config.status ${srcdir}/TAO_CosTrading.pc.in
-	${top_builddir}/config.status --file $@:${srcdir}/TAO_CosTrading.pc.in
+	${top_builddir}/config.status --file "$@":${srcdir}/TAO_CosTrading.pc.in
 
 endif BUILD_EXCEPTIONS
 
@@ -2698,7 +2678,7 @@ CLEANFILES += \
   TAO_CosTrading_Skel.pc
 
 TAO_CosTrading_Skel.pc: ${top_builddir}/config.status ${srcdir}/TAO_CosTrading_Skel.pc.in
-	${top_builddir}/config.status --file $@:${srcdir}/TAO_CosTrading_Skel.pc.in
+	${top_builddir}/config.status --file "$@":${srcdir}/TAO_CosTrading_Skel.pc.in
 
 endif BUILD_EXCEPTIONS
 
@@ -2783,7 +2763,7 @@ CLEANFILES += \
   TAO_CosTrading_Serv.pc
 
 TAO_CosTrading_Serv.pc: ${top_builddir}/config.status ${srcdir}/TAO_CosTrading_Serv.pc.in
-	${top_builddir}/config.status --file $@:${srcdir}/TAO_CosTrading_Serv.pc.in
+	${top_builddir}/config.status --file "$@":${srcdir}/TAO_CosTrading_Serv.pc.in
 
 endif BUILD_EXCEPTIONS
 
@@ -2889,7 +2869,7 @@ CLEANFILES += \
   TAO_DsLogAdmin.pc
 
 TAO_DsLogAdmin.pc: ${top_builddir}/config.status ${srcdir}/TAO_DsLogAdmin.pc.in
-	${top_builddir}/config.status --file $@:${srcdir}/TAO_DsLogAdmin.pc.in
+	${top_builddir}/config.status --file "$@":${srcdir}/TAO_DsLogAdmin.pc.in
 
 endif BUILD_EXCEPTIONS
 
@@ -2971,7 +2951,7 @@ CLEANFILES += \
   TAO_DsEventLogAdmin.pc
 
 TAO_DsEventLogAdmin.pc: ${top_builddir}/config.status ${srcdir}/TAO_DsEventLogAdmin.pc.in
-	${top_builddir}/config.status --file $@:${srcdir}/TAO_DsEventLogAdmin.pc.in
+	${top_builddir}/config.status --file "$@":${srcdir}/TAO_DsEventLogAdmin.pc.in
 
 endif BUILD_EXCEPTIONS
 
@@ -3023,7 +3003,7 @@ CLEANFILES += \
   TAO_DsLogAdmin_Skel.pc
 
 TAO_DsLogAdmin_Skel.pc: ${top_builddir}/config.status ${srcdir}/TAO_DsLogAdmin_Skel.pc.in
-	${top_builddir}/config.status --file $@:${srcdir}/TAO_DsLogAdmin_Skel.pc.in
+	${top_builddir}/config.status --file "$@":${srcdir}/TAO_DsLogAdmin_Skel.pc.in
 
 endif BUILD_EXCEPTIONS
 
@@ -3110,7 +3090,7 @@ CLEANFILES += \
   TAO_DsLogAdmin_Serv.pc
 
 TAO_DsLogAdmin_Serv.pc: ${top_builddir}/config.status ${srcdir}/TAO_DsLogAdmin_Serv.pc.in
-	${top_builddir}/config.status --file $@:${srcdir}/TAO_DsLogAdmin_Serv.pc.in
+	${top_builddir}/config.status --file "$@":${srcdir}/TAO_DsLogAdmin_Serv.pc.in
 
 endif BUILD_EXCEPTIONS
 
@@ -3163,7 +3143,7 @@ CLEANFILES += \
   TAO_DsEventLogAdmin_Skel.pc
 
 TAO_DsEventLogAdmin_Skel.pc: ${top_builddir}/config.status ${srcdir}/TAO_DsEventLogAdmin_Skel.pc.in
-	${top_builddir}/config.status --file $@:${srcdir}/TAO_DsEventLogAdmin_Skel.pc.in
+	${top_builddir}/config.status --file "$@":${srcdir}/TAO_DsEventLogAdmin_Skel.pc.in
 
 endif BUILD_EXCEPTIONS
 
@@ -3236,7 +3216,7 @@ CLEANFILES += \
   TAO_DsEventLogAdmin_Serv.pc
 
 TAO_DsEventLogAdmin_Serv.pc: ${top_builddir}/config.status ${srcdir}/TAO_DsEventLogAdmin_Serv.pc.in
-	${top_builddir}/config.status --file $@:${srcdir}/TAO_DsEventLogAdmin_Serv.pc.in
+	${top_builddir}/config.status --file "$@":${srcdir}/TAO_DsEventLogAdmin_Serv.pc.in
 
 endif BUILD_EXCEPTIONS
 endif BUILD_CORBA_MESSAGING
@@ -3320,7 +3300,7 @@ CLEANFILES += \
   TAO_DsNotifyLogAdmin.pc
 
 TAO_DsNotifyLogAdmin.pc: ${top_builddir}/config.status ${srcdir}/TAO_DsNotifyLogAdmin.pc.in
-	${top_builddir}/config.status --file $@:${srcdir}/TAO_DsNotifyLogAdmin.pc.in
+	${top_builddir}/config.status --file "$@":${srcdir}/TAO_DsNotifyLogAdmin.pc.in
 
 endif BUILD_EXCEPTIONS
 
@@ -3378,7 +3358,7 @@ CLEANFILES += \
   TAO_DsNotifyLogAdmin_Skel.pc
 
 TAO_DsNotifyLogAdmin_Skel.pc: ${top_builddir}/config.status ${srcdir}/TAO_DsNotifyLogAdmin_Skel.pc.in
-	${top_builddir}/config.status --file $@:${srcdir}/TAO_DsNotifyLogAdmin_Skel.pc.in
+	${top_builddir}/config.status --file "$@":${srcdir}/TAO_DsNotifyLogAdmin_Skel.pc.in
 
 endif BUILD_EXCEPTIONS
 
@@ -3449,7 +3429,7 @@ CLEANFILES += \
   TAO_DsNotifyLogAdmin_Serv.pc
 
 TAO_DsNotifyLogAdmin_Serv.pc: ${top_builddir}/config.status ${srcdir}/TAO_DsNotifyLogAdmin_Serv.pc.in
-	${top_builddir}/config.status --file $@:${srcdir}/TAO_DsNotifyLogAdmin_Serv.pc.in
+	${top_builddir}/config.status --file "$@":${srcdir}/TAO_DsNotifyLogAdmin_Serv.pc.in
 
 endif BUILD_EXCEPTIONS
 
@@ -3535,7 +3515,7 @@ CLEANFILES += \
   TAO_FTORB_Utils.pc
 
 TAO_FTORB_Utils.pc: ${top_builddir}/config.status ${srcdir}/TAO_FTORB_Utils.pc.in
-	${top_builddir}/config.status --file $@:${srcdir}/TAO_FTORB_Utils.pc.in
+	${top_builddir}/config.status --file "$@":${srcdir}/TAO_FTORB_Utils.pc.in
 
 endif BUILD_EXCEPTIONS
 endif BUILD_CORBA_MESSAGING
@@ -3719,7 +3699,7 @@ CLEANFILES += \
   TAO_RTEvent.pc
 
 TAO_RTEvent.pc: ${top_builddir}/config.status ${srcdir}/TAO_RTEvent.pc.in
-	${top_builddir}/config.status --file $@:${srcdir}/TAO_RTEvent.pc.in
+	${top_builddir}/config.status --file "$@":${srcdir}/TAO_RTEvent.pc.in
 
 endif BUILD_EXCEPTIONS
 
@@ -3783,7 +3763,7 @@ CLEANFILES += \
   TAO_RTEvent_Skel.pc
 
 TAO_RTEvent_Skel.pc: ${top_builddir}/config.status ${srcdir}/TAO_RTEvent_Skel.pc.in
-	${top_builddir}/config.status --file $@:${srcdir}/TAO_RTEvent_Skel.pc.in
+	${top_builddir}/config.status --file "$@":${srcdir}/TAO_RTEvent_Skel.pc.in
 
 endif BUILD_EXCEPTIONS
 endif BUILD_CORBA_MESSAGING
@@ -4020,7 +4000,7 @@ CLEANFILES += \
   TAO_RTEvent_Serv.pc
 
 TAO_RTEvent_Serv.pc: ${top_builddir}/config.status ${srcdir}/TAO_RTEvent_Serv.pc.in
-	${top_builddir}/config.status --file $@:${srcdir}/TAO_RTEvent_Serv.pc.in
+	${top_builddir}/config.status --file "$@":${srcdir}/TAO_RTEvent_Serv.pc.in
 
 endif !BUILD_ACE_FOR_TAO
 endif BUILD_EXCEPTIONS
@@ -4398,7 +4378,7 @@ CLEANFILES += \
   TAO_FT_ClientORB.pc
 
 TAO_FT_ClientORB.pc: ${top_builddir}/config.status ${srcdir}/TAO_FT_ClientORB.pc.in
-	${top_builddir}/config.status --file $@:${srcdir}/TAO_FT_ClientORB.pc.in
+	${top_builddir}/config.status --file "$@":${srcdir}/TAO_FT_ClientORB.pc.in
 
 endif !BUILD_ACE_FOR_TAO
 endif BUILD_INTERCEPTORS
@@ -4467,7 +4447,7 @@ CLEANFILES += \
   TAO_FT_ServerORB.pc
 
 TAO_FT_ServerORB.pc: ${top_builddir}/config.status ${srcdir}/TAO_FT_ServerORB.pc.in
-	${top_builddir}/config.status --file $@:${srcdir}/TAO_FT_ServerORB.pc.in
+	${top_builddir}/config.status --file "$@":${srcdir}/TAO_FT_ServerORB.pc.in
 
 endif BUILD_INTERCEPTORS
 endif BUILD_EXCEPTIONS
@@ -4681,7 +4661,7 @@ CLEANFILES += \
   TAO_FaultTolerance.pc
 
 TAO_FaultTolerance.pc: ${top_builddir}/config.status ${srcdir}/TAO_FaultTolerance.pc.in
-	${top_builddir}/config.status --file $@:${srcdir}/TAO_FaultTolerance.pc.in
+	${top_builddir}/config.status --file "$@":${srcdir}/TAO_FaultTolerance.pc.in
 
 endif !BUILD_ACE_FOR_TAO
 endif BUILD_INTERCEPTORS
@@ -4696,6 +4676,7 @@ EXTRA_DIST += \
 
 ## Makefile.HTIOP.am
 
+if BUILD_ACE_UUID
 if BUILD_EXCEPTIONS
 if !BUILD_ACE_FOR_TAO
 
@@ -4794,6 +4775,7 @@ nobase_include_HEADERS += \
 
 endif !BUILD_ACE_FOR_TAO
 endif BUILD_EXCEPTIONS
+endif BUILD_ACE_UUID
 
 ## Makefile.IFRService.am
 
@@ -5099,7 +5081,7 @@ CLEANFILES += \
   TAO_RTEventLogAdmin.pc
 
 TAO_RTEventLogAdmin.pc: ${top_builddir}/config.status ${srcdir}/TAO_RTEventLogAdmin.pc.in
-	${top_builddir}/config.status --file $@:${srcdir}/TAO_RTEventLogAdmin.pc.in
+	${top_builddir}/config.status --file "$@":${srcdir}/TAO_RTEventLogAdmin.pc.in
 
 endif BUILD_EXCEPTIONS
 endif BUILD_CORBA_MESSAGING
@@ -5249,7 +5231,7 @@ CLEANFILES += \
   TAO_RTEventLogAdmin_Skel.pc
 
 TAO_RTEventLogAdmin_Skel.pc: ${top_builddir}/config.status ${srcdir}/TAO_RTEventLogAdmin_Skel.pc.in
-	${top_builddir}/config.status --file $@:${srcdir}/TAO_RTEventLogAdmin_Skel.pc.in
+	${top_builddir}/config.status --file "$@":${srcdir}/TAO_RTEventLogAdmin_Skel.pc.in
 
 endif BUILD_EXCEPTIONS
 endif BUILD_CORBA_MESSAGING
@@ -5322,7 +5304,7 @@ CLEANFILES += \
   TAO_RTEventLogAdmin_Serv.pc
 
 TAO_RTEventLogAdmin_Serv.pc: ${top_builddir}/config.status ${srcdir}/TAO_RTEventLogAdmin_Serv.pc.in
-	${top_builddir}/config.status --file $@:${srcdir}/TAO_RTEventLogAdmin_Serv.pc.in
+	${top_builddir}/config.status --file "$@":${srcdir}/TAO_RTEventLogAdmin_Serv.pc.in
 
 endif !BUILD_ACE_FOR_TAO
 endif BUILD_EXCEPTIONS
@@ -5834,32 +5816,32 @@ libTAO_SSLIOP_la_CPPFLAGS = \
   -DTAO_SSLIOP_BUILD_DLL
 
 libTAO_SSLIOP_la_SOURCES = \
-  SSLIOP/IIOP_SSL_Acceptor.cpp \
-  SSLIOP/IIOP_SSL_Connection_Handler.cpp \
-  SSLIOP/IIOP_SSL_Connector.cpp \
-  SSLIOP/IIOP_SSL_Transport.cpp \
-  SSLIOP/SSLIOP_Accept_Strategy.cpp \
-  SSLIOP/SSLIOP_Acceptor.cpp \
-  SSLIOP/SSLIOP_ClientCredentials.cpp \
-  SSLIOP/SSLIOP_Connection_Handler.cpp \
-  SSLIOP/SSLIOP_Connector.cpp \
-  SSLIOP/SSLIOP_Credentials.cpp \
-  SSLIOP/SSLIOP_CredentialsAcquirer.cpp \
-  SSLIOP/SSLIOP_CredentialsAcquirerFactory.cpp \
-  SSLIOP/SSLIOP_Current.cpp \
-  SSLIOP/SSLIOP_Current_Impl.cpp \
-  SSLIOP/SSLIOP_EVP_PKEY.cpp \
-  SSLIOP/SSLIOP_Endpoint.cpp \
-  SSLIOP/SSLIOP_Factory.cpp \
-  SSLIOP/SSLIOP_Invocation_Interceptor.cpp \
-  SSLIOP/SSLIOP_ORBInitializer.cpp \
-  SSLIOP/SSLIOP_OwnCredentials.cpp \
-  SSLIOP/SSLIOP_Profile.cpp \
-  SSLIOP/SSLIOP_TargetCredentials.cpp \
-  SSLIOP/SSLIOP_Transport.cpp \
-  SSLIOP/SSLIOP_Util.cpp \
-  SSLIOP/params_dup.c \
-  SSLIOP/ssl_endpointsC.cpp \
+  ./SSLIOP/IIOP_SSL_Acceptor.cpp \
+  ./SSLIOP/IIOP_SSL_Connection_Handler.cpp \
+  ./SSLIOP/IIOP_SSL_Connector.cpp \
+  ./SSLIOP/IIOP_SSL_Transport.cpp \
+  ./SSLIOP/SSLIOP_Accept_Strategy.cpp \
+  ./SSLIOP/SSLIOP_Acceptor.cpp \
+  ./SSLIOP/SSLIOP_ClientCredentials.cpp \
+  ./SSLIOP/SSLIOP_Connection_Handler.cpp \
+  ./SSLIOP/SSLIOP_Connector.cpp \
+  ./SSLIOP/SSLIOP_Credentials.cpp \
+  ./SSLIOP/SSLIOP_CredentialsAcquirer.cpp \
+  ./SSLIOP/SSLIOP_CredentialsAcquirerFactory.cpp \
+  ./SSLIOP/SSLIOP_Current.cpp \
+  ./SSLIOP/SSLIOP_Current_Impl.cpp \
+  ./SSLIOP/SSLIOP_EVP_PKEY.cpp \
+  ./SSLIOP/SSLIOP_Endpoint.cpp \
+  ./SSLIOP/SSLIOP_Factory.cpp \
+  ./SSLIOP/SSLIOP_Invocation_Interceptor.cpp \
+  ./SSLIOP/SSLIOP_ORBInitializer.cpp \
+  ./SSLIOP/SSLIOP_OwnCredentials.cpp \
+  ./SSLIOP/SSLIOP_Profile.cpp \
+  ./SSLIOP/SSLIOP_TargetCredentials.cpp \
+  ./SSLIOP/SSLIOP_Transport.cpp \
+  ./SSLIOP/SSLIOP_Util.cpp \
+  ./SSLIOP/params_dup.c \
+  ./SSLIOP/ssl_endpointsC.cpp \
   SSLIOPC.cpp
 
 libTAO_SSLIOP_la_LDFLAGS = \
@@ -5879,40 +5861,42 @@ libTAO_SSLIOP_la_LIBADD = \
   @ACE_TLS_LIBS@
 
 nobase_include_HEADERS += \
-  Channel_Clients_T.cpp \
+  ./SSLIOP/IIOP_SSL_Acceptor.h \
+  ./SSLIOP/IIOP_SSL_Connection_Handler.h \
+  ./SSLIOP/IIOP_SSL_Connection_Handler.inl \
+  ./SSLIOP/IIOP_SSL_Connector.h \
+  ./SSLIOP/IIOP_SSL_Transport.h \
+  ./SSLIOP/SSLIOP_Accept_Strategy.h \
+  ./SSLIOP/SSLIOP_Acceptor.h \
+  ./SSLIOP/SSLIOP_Acceptor.inl \
+  ./SSLIOP/SSLIOP_ClientCredentials.h \
+  ./SSLIOP/SSLIOP_Connection_Handler.h \
+  ./SSLIOP/SSLIOP_Connection_Handler.inl \
+  ./SSLIOP/SSLIOP_Connector.h \
+  ./SSLIOP/SSLIOP_Credentials.h \
+  ./SSLIOP/SSLIOP_Credentials.inl \
+  ./SSLIOP/SSLIOP_CredentialsAcquirer.h \
+  ./SSLIOP/SSLIOP_CredentialsAcquirerFactory.h \
+  ./SSLIOP/SSLIOP_Current.h \
+  ./SSLIOP/SSLIOP_Current.inl \
+  ./SSLIOP/SSLIOP_Current_Impl.h \
+  ./SSLIOP/SSLIOP_Current_Impl.inl \
+  ./SSLIOP/SSLIOP_EVP_PKEY.h \
+  ./SSLIOP/SSLIOP_Endpoint.h \
+  ./SSLIOP/SSLIOP_Endpoint.inl \
+  ./SSLIOP/SSLIOP_Factory.h \
+  ./SSLIOP/SSLIOP_Invocation_Interceptor.h \
+  ./SSLIOP/SSLIOP_ORBInitializer.h \
+  ./SSLIOP/SSLIOP_OpenSSL_st_T.cpp \
+  ./SSLIOP/SSLIOP_OpenSSL_st_T.h \
+  ./SSLIOP/SSLIOP_OpenSSL_st_T.inl \
+  ./SSLIOP/SSLIOP_OwnCredentials.h \
+  ./SSLIOP/SSLIOP_Profile.h \
+  ./SSLIOP/SSLIOP_TargetCredentials.h \
+  ./SSLIOP/SSLIOP_Transport.h \
+  ./SSLIOP/SSLIOP_Util.h \
+  ./SSLIOP/params_dup.h \
   SSLIOP.idl \
-  SSLIOP/IIOP_SSL_Acceptor.h \
-  SSLIOP/IIOP_SSL_Connection_Handler.h \
-  SSLIOP/IIOP_SSL_Connection_Handler.inl \
-  SSLIOP/IIOP_SSL_Connector.h \
-  SSLIOP/IIOP_SSL_Transport.h \
-  SSLIOP/SSLIOP_Accept_Strategy.h \
-  SSLIOP/SSLIOP_Acceptor.h \
-  SSLIOP/SSLIOP_Acceptor.inl \
-  SSLIOP/SSLIOP_ClientCredentials.h \
-  SSLIOP/SSLIOP_Connection_Handler.h \
-  SSLIOP/SSLIOP_Connection_Handler.inl \
-  SSLIOP/SSLIOP_Connector.h \
-  SSLIOP/SSLIOP_Credentials.h \
-  SSLIOP/SSLIOP_Credentials.inl \
-  SSLIOP/SSLIOP_CredentialsAcquirer.h \
-  SSLIOP/SSLIOP_CredentialsAcquirerFactory.h \
-  SSLIOP/SSLIOP_Current.h \
-  SSLIOP/SSLIOP_Current.inl \
-  SSLIOP/SSLIOP_Current_Impl.h \
-  SSLIOP/SSLIOP_Current_Impl.inl \
-  SSLIOP/SSLIOP_EVP_PKEY.h \
-  SSLIOP/SSLIOP_Endpoint.h \
-  SSLIOP/SSLIOP_Endpoint.inl \
-  SSLIOP/SSLIOP_Factory.h \
-  SSLIOP/SSLIOP_Invocation_Interceptor.h \
-  SSLIOP/SSLIOP_ORBInitializer.h \
-  SSLIOP/SSLIOP_OwnCredentials.h \
-  SSLIOP/SSLIOP_Profile.h \
-  SSLIOP/SSLIOP_TargetCredentials.h \
-  SSLIOP/SSLIOP_Transport.h \
-  SSLIOP/SSLIOP_Util.h \
-  SSLIOP/params_dup.h \
   SSLIOP/ssl_endpoints.pidl \
   SSLIOP/ssl_endpointsC.h \
   SSLIOP/ssl_endpointsS.h \

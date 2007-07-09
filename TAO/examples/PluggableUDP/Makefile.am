@@ -8,6 +8,8 @@
 ## MPC Command:
 ## ../bin/mwc.pl -type automake -noreldefs TAO.mwc
 
-SUBDIRS = \
-        tests
+SUBDIRS =
 
+if BUILD_TESTS
+SUBDIRS += tests
+endif

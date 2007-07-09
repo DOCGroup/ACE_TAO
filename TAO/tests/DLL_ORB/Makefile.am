@@ -18,9 +18,34 @@ TAO_ROOT = $(top_srcdir)
 
 noinst_LTLIBRARIES =
 noinst_PROGRAMS =
-noinst_HEADERS =
-CLEANFILES =
-BUILT_SOURCES =
+
+## Makefile.DLL_ORB_Idl.am
+
+BUILT_SOURCES = \
+  TestC.cpp \
+  TestC.h \
+  TestC.inl \
+  TestS.cpp \
+  TestS.h \
+  TestS.inl
+
+CLEANFILES = \
+  Test-stamp \
+  TestC.cpp \
+  TestC.h \
+  TestC.inl \
+  TestS.cpp \
+  TestS.h \
+  TestS.inl
+
+TestC.cpp TestC.h TestC.inl TestS.cpp TestS.h TestS.inl: Test-stamp
+
+Test-stamp: $(srcdir)/Test.idl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/Test.idl
+	@touch $@
+
+noinst_HEADERS = \
+  Test.idl
 
 ## Makefile.DLL_ORB_Client.am
 
@@ -78,27 +103,6 @@ endif BUILD_EXCEPTIONS
 
 if BUILD_EXCEPTIONS
 
-BUILT_SOURCES += \
-  TestC.cpp \
-  TestC.h \
-  TestC.inl \
-  TestS.h \
-  TestS.inl
-
-CLEANFILES += \
-  Test-stamp \
-  TestC.cpp \
-  TestC.h \
-  TestC.inl \
-  TestS.h \
-  TestS.inl
-
-TestC.cpp TestC.h TestC.inl TestS.h TestS.inl: Test-stamp
-
-Test-stamp: $(srcdir)/Test.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/Test.idl
-	@touch $@
-
 noinst_LTLIBRARIES += libTest_Client_Module.la
 
 libTest_Client_Module_la_CPPFLAGS = \
@@ -113,11 +117,6 @@ libTest_Client_Module_la_SOURCES = \
   Test_Client_Module.cpp
 
 noinst_HEADERS += \
-  Test.idl \
-  TestC.h \
-  TestC.inl \
-  TestS.h \
-  TestS.inl \
   Test_Client_Module.h
 
 endif BUILD_EXCEPTIONS
@@ -125,29 +124,6 @@ endif BUILD_EXCEPTIONS
 ## Makefile.DLL_ORB_Test_Server_Module.am
 
 if BUILD_EXCEPTIONS
-
-BUILT_SOURCES += \
-  TestC.cpp \
-  TestC.h \
-  TestC.inl \
-  TestS.cpp \
-  TestS.h \
-  TestS.inl
-
-CLEANFILES += \
-  Test-stamp \
-  TestC.cpp \
-  TestC.h \
-  TestC.inl \
-  TestS.cpp \
-  TestS.h \
-  TestS.inl
-
-TestC.cpp TestC.h TestC.inl TestS.cpp TestS.h TestS.inl: Test-stamp
-
-Test-stamp: $(srcdir)/Test.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/Test.idl
-	@touch $@
 
 noinst_LTLIBRARIES += libTest_Server_Module.la
 
@@ -159,17 +135,10 @@ libTest_Server_Module_la_CPPFLAGS = \
   -DTEST_SERVER_MODULE_BUILD_DLL
 
 libTest_Server_Module_la_SOURCES = \
-  TestC.cpp \
-  TestS.cpp \
   Test_Server_Module.cpp \
   Test_i.cpp
 
 noinst_HEADERS += \
-  Test.idl \
-  TestC.h \
-  TestC.inl \
-  TestS.h \
-  TestS.inl \
   Test_Server_Module.h \
   Test_i.h
 

@@ -54,43 +54,6 @@ endif BUILD_EXCEPTIONS
 endif BUILD_CORBA_MESSAGING
 endif BUILD_AMI
 
-## Makefile.AMI_Timeouts_Server.am
-
-if BUILD_AMI
-if BUILD_CORBA_MESSAGING
-if BUILD_EXCEPTIONS
-
-noinst_PROGRAMS += server
-
-server_CPPFLAGS = \
-  -I$(ACE_ROOT) \
-  -I$(ACE_BUILDDIR) \
-  -I$(TAO_ROOT) \
-  -I$(TAO_BUILDDIR)
-
-server_SOURCES = \
-  server.cpp \
-  timeoutC.cpp \
-  timeoutS.cpp \
-  timeout_client.cpp \
-  timeout_i.cpp \
-  timeout_client.h \
-  timeout_i.h
-
-server_LDADD = \
-  $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
-  $(TAO_BUILDDIR)/tao/libTAO_PI.la \
-  $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
-  $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
-  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
-  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
-  $(TAO_BUILDDIR)/tao/libTAO.la \
-  $(ACE_BUILDDIR)/ace/libACE.la
-
-endif BUILD_EXCEPTIONS
-endif BUILD_CORBA_MESSAGING
-endif BUILD_AMI
-
 ## Makefile.AMI_Timeouts_Client.am
 
 if BUILD_AMI
@@ -115,6 +78,43 @@ client_SOURCES = \
   timeout_i.h
 
 client_LDADD = \
+  $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PI.la \
+  $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
+  $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
+  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
+  $(TAO_BUILDDIR)/tao/libTAO.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+endif BUILD_EXCEPTIONS
+endif BUILD_CORBA_MESSAGING
+endif BUILD_AMI
+
+## Makefile.AMI_Timeouts_Server.am
+
+if BUILD_AMI
+if BUILD_CORBA_MESSAGING
+if BUILD_EXCEPTIONS
+
+noinst_PROGRAMS += server
+
+server_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR) \
+  -I$(TAO_ROOT) \
+  -I$(TAO_BUILDDIR)
+
+server_SOURCES = \
+  server.cpp \
+  timeoutC.cpp \
+  timeoutS.cpp \
+  timeout_client.cpp \
+  timeout_i.cpp \
+  timeout_client.h \
+  timeout_i.h
+
+server_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
   $(TAO_BUILDDIR)/tao/libTAO_PI.la \
   $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \

@@ -53,11 +53,11 @@ bug_1535_regression_CPPFLAGS = \
   -I$(TAO_BUILDDIR)
 
 bug_1535_regression_SOURCES = \
-  TestC.cpp \
   Test.cpp \
-  Test.h \
+  TestC.cpp \
   TestS.cpp \
   bug_1535_regression.cpp \
+  Test.h \
   TestC.h \
   TestC.inl \
   TestS.h \

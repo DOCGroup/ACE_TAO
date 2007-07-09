@@ -54,43 +54,6 @@ endif BUILD_EXCEPTIONS
 endif BUILD_CORBA_MESSAGING
 endif BUILD_AMI
 
-## Makefile.Bug_2503_Regression_Server.am
-
-if BUILD_AMI
-if BUILD_CORBA_MESSAGING
-if BUILD_EXCEPTIONS
-
-noinst_PROGRAMS += server
-
-server_CPPFLAGS = \
-  -I$(ACE_ROOT) \
-  -I$(ACE_BUILDDIR) \
-  -I$(TAO_ROOT) \
-  -I$(TAO_BUILDDIR)
-
-server_SOURCES = \
-  TestC.cpp \
-  TestS.cpp \
-  common.cpp \
-  server.cpp \
-  test_i.cpp \
-  common.h \
-  test_i.h
-
-server_LDADD = \
-  $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
-  $(TAO_BUILDDIR)/tao/libTAO_PI.la \
-  $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
-  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
-  $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
-  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
-  $(TAO_BUILDDIR)/tao/libTAO.la \
-  $(ACE_BUILDDIR)/ace/libACE.la
-
-endif BUILD_EXCEPTIONS
-endif BUILD_CORBA_MESSAGING
-endif BUILD_AMI
-
 ## Makefile.Bug_2503_Regression_Client.am
 
 if BUILD_AMI
@@ -111,10 +74,55 @@ client_SOURCES = \
   client.cpp \
   common.cpp \
   test_i.cpp \
+  TestC.h \
+  TestC.inl \
+  TestS.h \
+  TestS.inl \
   common.h \
   test_i.h
 
 client_LDADD = \
+  $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PI.la \
+  $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
+  $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
+  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
+  $(TAO_BUILDDIR)/tao/libTAO.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+endif BUILD_EXCEPTIONS
+endif BUILD_CORBA_MESSAGING
+endif BUILD_AMI
+
+## Makefile.Bug_2503_Regression_Server.am
+
+if BUILD_AMI
+if BUILD_CORBA_MESSAGING
+if BUILD_EXCEPTIONS
+
+noinst_PROGRAMS += server
+
+server_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR) \
+  -I$(TAO_ROOT) \
+  -I$(TAO_BUILDDIR)
+
+server_SOURCES = \
+  TestC.cpp \
+  TestS.cpp \
+  common.cpp \
+  server.cpp \
+  test_i.cpp \
+  TestC.h \
+  TestC.inl \
+  TestS.h \
+  TestS.inl \
+  common.h \
+  test_i.h
+
+server_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
   $(TAO_BUILDDIR)/tao/libTAO_PI.la \
   $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \

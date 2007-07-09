@@ -106,8 +106,8 @@ anyop_SOURCES = \
   var_struct.h
 
 anyop_LDADD = \
-  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   $(TAO_BUILDDIR)/tao/libTAO_Codeset.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
@@ -118,7 +118,6 @@ endif BUILD_EXCEPTIONS
 
 if BUILD_CORBA_MESSAGING
 if BUILD_EXCEPTIONS
-if !BUILD_ACE_FOR_TAO
 
 noinst_PROGRAMS += client
 
@@ -219,13 +218,12 @@ client_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_PI.la \
   $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
   $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
-  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   $(TAO_BUILDDIR)/tao/libTAO_Codeset.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-endif !BUILD_ACE_FOR_TAO
 endif BUILD_EXCEPTIONS
 endif BUILD_CORBA_MESSAGING
 
@@ -249,8 +247,8 @@ server_SOURCES = \
   param_test_i.h
 
 server_LDADD = \
-  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   $(TAO_BUILDDIR)/tao/libTAO_Codeset.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la

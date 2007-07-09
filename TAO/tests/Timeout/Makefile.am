@@ -46,33 +46,6 @@ test-stamp: $(srcdir)/test.idl $(TAO_IDL_DEP)
 noinst_HEADERS = \
   test.idl
 
-## Makefile.Timeout_Server.am
-
-if BUILD_EXCEPTIONS
-
-noinst_PROGRAMS += server
-
-server_CPPFLAGS = \
-  -I$(ACE_ROOT) \
-  -I$(ACE_BUILDDIR) \
-  -I$(TAO_ROOT) \
-  -I$(TAO_BUILDDIR)
-
-server_SOURCES = \
-  server.cpp \
-  testC.cpp \
-  testS.cpp \
-  test_i.cpp \
-  test_i.h
-
-server_LDADD = \
-  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
-  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
-  $(TAO_BUILDDIR)/tao/libTAO.la \
-  $(ACE_BUILDDIR)/ace/libACE.la
-
-endif BUILD_EXCEPTIONS
-
 ## Makefile.Timeout_Client.am
 
 if BUILD_CORBA_MESSAGING
@@ -103,6 +76,33 @@ client_LDADD = \
 
 endif BUILD_EXCEPTIONS
 endif BUILD_CORBA_MESSAGING
+
+## Makefile.Timeout_Server.am
+
+if BUILD_EXCEPTIONS
+
+noinst_PROGRAMS += server
+
+server_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR) \
+  -I$(TAO_ROOT) \
+  -I$(TAO_BUILDDIR)
+
+server_SOURCES = \
+  server.cpp \
+  testC.cpp \
+  testS.cpp \
+  test_i.cpp \
+  test_i.h
+
+server_LDADD = \
+  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
+  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
+  $(TAO_BUILDDIR)/tao/libTAO.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+endif BUILD_EXCEPTIONS
 
 ## Clean up template repositories, etc.
 clean-local:

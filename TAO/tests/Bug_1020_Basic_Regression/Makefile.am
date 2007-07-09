@@ -46,41 +46,6 @@ Test-stamp: $(srcdir)/Test.idl $(TAO_IDL_DEP)
 noinst_HEADERS = \
   Test.idl
 
-## Makefile.Bug_1020_Basic_Regression_Server.am
-
-if BUILD_CORBA_MESSAGING
-if BUILD_EXCEPTIONS
-
-noinst_PROGRAMS += server
-
-server_CPPFLAGS = \
-  -I$(ACE_ROOT) \
-  -I$(ACE_BUILDDIR) \
-  -I$(TAO_ROOT) \
-  -I$(TAO_BUILDDIR)
-
-server_SOURCES = \
-  Echo_Caller.cpp \
-  Server_Task.cpp \
-  TestC.cpp \
-  TestS.cpp \
-  server.cpp \
-  Echo_Caller.h \
-  Server_Task.h
-
-server_LDADD = \
-  $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
-  $(TAO_BUILDDIR)/tao/libTAO_PI.la \
-  $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
-  $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
-  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
-  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
-  $(TAO_BUILDDIR)/tao/libTAO.la \
-  $(ACE_BUILDDIR)/ace/libACE.la
-
-endif BUILD_EXCEPTIONS
-endif BUILD_CORBA_MESSAGING
-
 ## Makefile.Bug_1020_Basic_Regression_Client.am
 
 if BUILD_CORBA_MESSAGING
@@ -109,6 +74,41 @@ client_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
+  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
+  $(TAO_BUILDDIR)/tao/libTAO.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+endif BUILD_EXCEPTIONS
+endif BUILD_CORBA_MESSAGING
+
+## Makefile.Bug_1020_Basic_Regression_Server.am
+
+if BUILD_CORBA_MESSAGING
+if BUILD_EXCEPTIONS
+
+noinst_PROGRAMS += server
+
+server_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR) \
+  -I$(TAO_ROOT) \
+  -I$(TAO_BUILDDIR)
+
+server_SOURCES = \
+  Echo_Caller.cpp \
+  Server_Task.cpp \
+  TestC.cpp \
+  TestS.cpp \
+  server.cpp \
+  Echo_Caller.h \
+  Server_Task.h
+
+server_LDADD = \
+  $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PI.la \
+  $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
+  $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
