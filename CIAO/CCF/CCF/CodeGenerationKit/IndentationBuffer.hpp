@@ -42,7 +42,7 @@ namespace Indentation
 
   public:
     virtual int_type
-    put (char_type c) throw (Exception, ExH::System::Exception) = 0;
+    put (char_type c) = 0;
 
     // Unbuffer flushes internal formatting buffers (if any).
     // Note that unbuffer is not exactly flushing since it can
@@ -52,7 +52,7 @@ namespace Indentation
     // data is expected.
     //
     virtual void
-    unbuffer () throw (EndOfStream, Exception, ExH::System::Exception) = 0;
+    unbuffer () = 0;
   };
 }
 
