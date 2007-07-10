@@ -251,7 +251,7 @@ namespace CIAO
               }
 
             ACE_ERROR ((LM_ERROR,
-                        "CIAO (%P|%t) Container_Base.cpp -"
+                        "CIAO (%P|%t) Session_Container.cpp -"
                         "Session_Container::ciao_install_home -"
                         "ERROR: %s\n",
                         exception.c_str ()));
@@ -269,7 +269,7 @@ namespace CIAO
             error += exe_dll_name;
 
             ACE_ERROR ((LM_ERROR,
-                        "CIAO (%P|%t) Container_Base.cpp -"
+                        "CIAO (%P|%t) Session_Container.cpp -"
                         "Session_Container::ciao_install_home -"
                         "ERROR in opening the executor DLL [%s] \n",
                         exe_dll_name));
@@ -287,7 +287,7 @@ namespace CIAO
             error += sv_dll_name;
 
             ACE_ERROR ((LM_ERROR,
-                        "CIAO (%P|%t) Container_Base.cpp -"
+                        "CIAO (%P|%t) Session_Container.cpp -"
                         "Session_Container::ciao_install_home -"
                         "ERROR in opening the servant DLL [%s] \n",
                         sv_dll_name));
@@ -304,7 +304,7 @@ namespace CIAO
             if (exe_entrypt == 0)
               {
                 ACE_ERROR ((LM_ERROR,
-                            "CIAO (%P|%t) Container_Base.cpp -"
+                            "CIAO (%P|%t) Session_Container.cpp -"
                             "Session_Container::ciao_install_home -"
                             "ERROR in opening the executor entry point "
                             "for executor DLL [%s] \n",
@@ -314,7 +314,7 @@ namespace CIAO
             else
               {
                 ACE_ERROR ((LM_ERROR,
-                            "CIAO (%P|%t) Container_Base.cpp -"
+                            "CIAO (%P|%t) Session_Container.cpp -"
                             "Session_Container::ciao_install_home -"
                             "ERROR in opening the servant entry point "
                             "for servant DLL [%s] \n",
