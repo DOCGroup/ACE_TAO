@@ -327,34 +327,6 @@ ACE_INET_Addr::set (u_short port_number,
                   sizeof this->inet_addr_);
 
 #if defined (ACE_HAS_IPV6)
-# if defined (AIX)
-  struct hostent *h_ent;
-  int error_num = 0;
-  if (address_family == AF_UNSPEC || address_family == AF_INET6)
-    {
-      h_ent = ::getipnodebyname (host_name, AF_INET6, 0, &error_num);
-      if (h_ent == 0)
-        {
-          if (address_family == AF_INET6 || error_num != NO_ADDRESS)
-            return -1;
-        }
-    }
-  if (h_ent == 0)
-    {
-      h_ent = ::getipnodebyname (host_name, AF_INET, 0, &error_num);
-      if (h_ent == 0)
-        {
-          return -1;
-        }
-    }
-  this->set_type (h_ent->h_addrtype);
-  this->set_addr (h_ent->h_addr_list[0], h_ent->h_length);
-  this->set_port_number (port_number, encode);
-
-  ::freehostent (h_ent);
-  return 0;
-
-# else
   struct addrinfo hints;
   struct addrinfo *res = 0;
   int error = 0;
@@ -390,7 +362,6 @@ ACE_INET_Addr::set (u_short port_number,
   this->set_port_number (port_number, encode);
   ::freeaddrinfo (res);
   return 0;
-# endif /* AIX */
 #else /* ACE_HAS_IPV6 */
 
   // IPv6 not supported... insure the family is set to IPv4
