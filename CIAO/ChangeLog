@@ -1,13 +1,19 @@
+Tue Jul 10 03:53:18 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * CCF/CCF/CodeGenerationKit/IndentationBuffer.hpp:
+ 
+          Fixed fuzz warnings. Zap the usage of exception specification.
+
 Mon Jul  9 11:23:12 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tools/IDL3_to_IDL2/checking_visitor.cpp:
-        
+
           Added missing newline to the end of the file.
 
 Mon Jul  9 07:26:20 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tools/IDL3_to_IDL2/IDL3_to_IDL2.mpc:
-        
+
           Updated project to include new source and header files.
 
 Mon Jul  9 02:11:22 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
