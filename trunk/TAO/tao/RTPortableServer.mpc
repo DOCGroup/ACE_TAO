@@ -38,7 +38,7 @@ project : taolib, install, rtcorba, portableserver, avoids_corba_e_micro {
   }
 
   IDL_Files {
-    idlflags += -SS -Sorb -GX -Sci \
+    idlflags += -SS -Sorb -GX -Sci -Sa \
                 -Wb,export_macro=TAO_RTPortableServer_Export \
                 -Wb,export_include=tao/RTPortableServer/rtportableserver_export.h \
                 -Wb,unique_include=tao/RTPortableServer/RTPortableServer.h \
