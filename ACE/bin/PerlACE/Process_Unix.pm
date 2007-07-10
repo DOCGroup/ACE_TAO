@@ -408,7 +408,7 @@ sub check_return_value ($)
 
     print STDERR "signal $rc : ", $signame[$rc], "\n";
 
-    return 0;
+    return 255;
 }
 
 # for internal use

@@ -1,3 +1,9 @@
+Tue Jul 10 06:25:48 UTC 2007  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * bin/PerlACE/Process_Unix.pm:
+          Now check_return_value will return 255 instead of 0 at the end
+          when it reports an error.
+
 Mon Jul  9 12:25:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_unistd.cpp (fork_exec): Improved free allocation memory
