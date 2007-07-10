@@ -1,3 +1,8 @@
+Tue Jul 10 19:31:15 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * configure.ac:
+          Updated to catch new test directories.
+
 Tue Jul 10 16:06:47 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tests/DLL_ORB/DLL_ORB.mpc:
