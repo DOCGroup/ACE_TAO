@@ -1,3 +1,8 @@
+Tue Jul 10 17:06:10 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * ace/config-sunos5.10.h: Added correct printf() modifiers for
+          ACE_SIZE_T_FORMAT_SPECIFIER and ACE_SSIZE_T_FORMAT_SPECIFIER.
+
 Tue Jul 10 16:07:38 UTC 2007  Steve Huston  <shuston@riverace.com>
 
         * tests/Basic_Types_Test.cpp:

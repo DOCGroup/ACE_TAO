@@ -12,6 +12,9 @@
 // #include the SunOS 5.9 config, then add any SunOS 5.10 updates below.
 #include "ace/config-sunos5.9.h"
 
+// Solaris 10 can do sem_timedwait() (see ACE_OS::sema_wait).
+#define ACE_HAS_POSIX_SEM_TIMEOUT
+
 #define ACE_HAS_SCANDIR
 
 // Solaris 10 offers a useable alphasort() unlike previous Solaris versions.
@@ -23,5 +26,16 @@
 #if defined (ACE_LACKS_LOG2)
 #  undef ACE_LACKS_LOG2
 #endif
+
+// Solaris 10 introduced printf() modifiers for [s]size_t types.
+#if defined (ACE_SSIZE_T_FORMAT_SPECIFIER)
+#  undef ACE_SSIZE_T_FORMAT_SPECIFIER
+#  define ACE_SSIZE_T_FORMAT_SPECIFIER ACE_LIB_TEXT ("%zd")
+#endif /* ACE_SSIZE_T_FORMAT_SPECIFIER */
+
+#if defined (ACE_SIZE_T_FORMAT_SPECIFIER)
+#  undef ACE_SIZE_T_FORMAT_SPECIFIER
+#  define ACE_SIZE_T_FORMAT_SPECIFIER ACE_LIB_TEXT ("%zu")
+#endif /* ACE_SIZE_T_FORMAT_SPECIFIER */
 
 #endif /* ACE_CONFIG_H */
