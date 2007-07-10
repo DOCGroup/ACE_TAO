@@ -462,6 +462,10 @@ if test $tao_build_tests = yes; then
     orbsvcs/tests/Bug_2377_Regression/Makefile
     orbsvcs/tests/Bug_2615_Regression/Makefile
     orbsvcs/tests/Bug_2709_Regression/Makefile
+    orbsvcs/tests/Bug_2800_Regression/Makefile
+    orbsvcs/tests/Bug_2925_Regression/Makefile
+    orbsvcs/tests/Bug_2926_Regression/Makefile
+    orbsvcs/tests/COIOP_Naming_Test/Makefile
     orbsvcs/tests/Concurrency/Makefile
     orbsvcs/tests/CosEvent/Basic/Makefile
     orbsvcs/tests/CosEvent/Makefile
@@ -474,6 +478,7 @@ if test $tao_build_tests = yes; then
     orbsvcs/tests/EC_Throughput/Makefile
     orbsvcs/tests/Event/Basic/Makefile
     orbsvcs/tests/Event/Makefile
+    orbsvcs/tests/Event/Mcast/AddrServer/Makefile
     orbsvcs/tests/Event/Mcast/Common/Makefile
     orbsvcs/tests/Event/Mcast/Complex/Makefile
     orbsvcs/tests/Event/Mcast/Makefile
@@ -501,6 +506,7 @@ if test $tao_build_tests = yes; then
     orbsvcs/tests/ImplRepo/NameService/Makefile
     orbsvcs/tests/ImplRepo/scale/Makefile
     orbsvcs/tests/InterfaceRepo/Application_Test/Makefile
+    orbsvcs/tests/InterfaceRepo/Bug_2962_Regression/Makefile
     orbsvcs/tests/InterfaceRepo/IDL3_Test/Makefile
     orbsvcs/tests/InterfaceRepo/IFR_Inheritance_Test/Makefile
     orbsvcs/tests/InterfaceRepo/IFR_Test/Makefile
@@ -551,8 +557,11 @@ if test $tao_build_tests = yes; then
     orbsvcs/tests/Security/BiDirectional/Makefile
     orbsvcs/tests/Security/Big_Request/Makefile
     orbsvcs/tests/Security/Bug_1107_Regression/Makefile
+    orbsvcs/tests/Security/Bug_2908_Regression/Makefile
     orbsvcs/tests/Security/Callback/Makefile
     orbsvcs/tests/Security/Crash_Test/Makefile
+    orbsvcs/tests/Security/EndpointPolicy/Makefile
+    orbsvcs/tests/Security/InsecureReferences/Makefile
     orbsvcs/tests/Security/MT_IIOP_SSL/Makefile
     orbsvcs/tests/Security/MT_SSLIOP/Makefile
     orbsvcs/tests/Security/Makefile
@@ -591,6 +600,7 @@ if test $tao_build_tests = yes; then
     tests/Bug_1270_Regression/Makefile
     tests/Bug_1330_Regression/Makefile
     tests/Bug_1361_Regression/Makefile
+    tests/Bug_1383_Regression/Makefile
     tests/Bug_1476_Regression/Makefile
     tests/Bug_1476_Test/Makefile
     tests/Bug_1482_Regression/Makefile
@@ -628,6 +638,7 @@ if test $tao_build_tests = yes; then
     tests/Bug_2328_Regression/Makefile
     tests/Bug_2345_Regression/Makefile
     tests/Bug_2349_Regression/Makefile
+    tests/Bug_2356_Regression/Makefile
     tests/Bug_2375_Regression/Makefile
     tests/Bug_2399_Regression/Makefile
     tests/Bug_2417_Regression/Makefile
@@ -648,8 +659,26 @@ if test $tao_build_tests = yes; then
     tests/Bug_2683_Regression/Makefile
     tests/Bug_2702_Regression/Makefile
     tests/Bug_2735_Regression/Makefile
+    tests/Bug_2768_Regression/Makefile
+    tests/Bug_2791_Regression/Makefile
+    tests/Bug_2792_Regression/Makefile
+    tests/Bug_2795_Regression/Makefile
+    tests/Bug_2804_Regression/Makefile
+    tests/Bug_2805_Regression/Makefile
+    tests/Bug_2809_Regression/Makefile
+    tests/Bug_2826_Regression/Makefile
+    tests/Bug_2844_Regression/Makefile
+    tests/Bug_2869_Regression/Makefile
+    tests/Bug_2909_Regression/Makefile
+    tests/Bug_2918_Regression/Makefile
+    tests/Bug_2936_Regression/Makefile
+    tests/Bug_2953_Regression/Makefile
+    tests/Bug_2966_Regression/Makefile
+    tests/Bug_933_Regression/Makefile
+
     tests/CDR/Makefile
     tests/COIOP/Makefile
+    tests/CORBA_e_Implicit_Activation/Makefile
     tests/CSD_Strategy_Tests/Broken/Makefile
     tests/CSD_Strategy_Tests/Makefile
     tests/CSD_Strategy_Tests/TP_Common/Makefile
@@ -689,9 +718,13 @@ if test $tao_build_tests = yes; then
     tests/DII_Collocation_Tests/twoway/Makefile
     tests/DIOP/Makefile
     tests/DLL_ORB/Makefile
+    tests/DSI_AMH/Makefile
+    tests/DSI_AMI_Gateway/Makefile
     tests/DSI_Gateway/Makefile
+    tests/DiffServ/Makefile
     tests/DynAny_Test/Makefile
     tests/Explicit_Event_Loop/Makefile
+    tests/DynUnion_Test/Makefile
     tests/Exposed_Policies/Makefile
     tests/FL_Cube/Makefile
     tests/Faults/Makefile
@@ -711,6 +744,7 @@ if test $tao_build_tests = yes; then
     tests/IPV6/Makefile
     tests/InterOp-Naming/Makefile
     tests/Leader_Followers/Makefile
+    tests/LongDouble/Makefile
     tests/LongUpcalls/Makefile
     tests/MProfile/Makefile
     tests/MProfile_Connection_Timeout/Makefile
@@ -764,6 +798,7 @@ if test $tao_build_tests = yes; then
     tests/Oneway_Timeouts/Makefile
     tests/Oneways_Invoking_Twoways/Makefile
     tests/Optimized_Connection/Makefile
+    tests/POA/Bug_1592_Regression/Makefile
     tests/POA/Bug_2511_Regression/Makefile
     tests/POA/Current/Makefile
     tests/POA/Deactivate_Object/Makefile
