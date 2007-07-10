@@ -1,3 +1,11 @@
+Tue Jul 10 16:06:47 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tests/DLL_ORB/DLL_ORB.mpc:
+        * tests/DLL_ORB/Makefile.am:
+
+          Refactored mpc file was missing the generated sources for the
+          server lib.
+
 Tue Jul 10 14:44:00 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/RTCORBA/RT_ProtocolProperties.*:
