@@ -46,7 +46,7 @@
 #   endif
 # endif /* (__GNUC__ > 3 || (__GNUC__ == 3 && __GNUC_MINOR__ >= 3)) */
 
-# if defined __RTP__
+# if defined (__RTP__) && !defined (_HAS_C9X)
 // Workaround for the fact that under RTP the log2 method can't be used
 // without this define set, see TSR560446
 #  define _C99

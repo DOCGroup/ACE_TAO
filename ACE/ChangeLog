@@ -1,3 +1,12 @@
+Tue Jul 10 13:13:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-vxworks6.2.h:
+        * ace/config-vxworks6.3.h:
+        * ace/config-vxworks6.4.h:
+          WindRiver has released a patch for TSR560446, so slightly changed the way
+          we check whether to define _C99 so that when the patch for the TSR has been
+          applied we don't define _C99 manually
+
 Tue Jul 10 06:25:48 UTC 2007  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * bin/PerlACE/Process_Unix.pm:
