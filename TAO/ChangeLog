@@ -1,3 +1,10 @@
+Tue Jul 10 10:20:00 UTC 2007  Simon Massey  <sma@prismtech.com>
+
+        * tao/AnyTypeCode/TypeCode_CDR_Extraction.cpp
+
+          Bug fix for Bugzilla 2918 and 2982. Second and subsequent indirect
+          typecodes are not duplicated. (tao527 and tao536).
+
 Mon Jul  9 15:40:40 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * configure.ac:
