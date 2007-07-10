@@ -34,6 +34,10 @@
 #include "tao/AnyTypeCode/Any.h"
 #include "tao/AnyTypeCode/Any_Impl_T.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+
+
 // TAO_IDL - Generated from
 // be\be_visitor_typecode/objref_typecode.cpp:76
 
@@ -54,6 +58,10 @@ namespace RTCORBA
 
 // TAO_IDL - Generated from
 // be\be_visitor_interface/any_op_cs.cpp:51
+
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 
@@ -88,6 +96,10 @@ namespace TAO
   }
 }
 TAO_END_VERSIONED_NAMESPACE_DECL
+
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 
 
 
@@ -137,6 +149,10 @@ namespace RTCORBA
 
 #else
 
+
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 
@@ -181,5 +197,13 @@ operator>>= (
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+
+
 
 #endif
+
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+

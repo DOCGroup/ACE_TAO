@@ -26,7 +26,7 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:816
+// be\be_codegen.cpp:887
 
 #ifndef _TAO_IDL_RTCORBA_RT_PROTOCOLPROPERTIESA_H_
 #define _TAO_IDL_RTCORBA_RT_PROTOCOLPROPERTIESA_H_
@@ -34,7 +34,13 @@
 #include /**/ "ace/pre.h"
 
 #include /**/ "tao/RTCORBA/rtcorba_export.h"
+#define TAO_RTCORBA_SAFE_INCLUDE
 #include "tao/RTCORBA/RT_ProtocolPropertiesC.h"
+#undef TAO_RTCORBA_SAFE_INCLUDE
+
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 
 
 // TAO_IDL - Generated from
@@ -42,10 +48,10 @@
 
 namespace RTCORBA
 {
-  
+
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:49
-  
+
   extern TAO_RTCORBA_Export ::CORBA::TypeCode_ptr const _tc_ProtocolProperties;
 
 // TAO_IDL - Generated from
@@ -71,6 +77,10 @@ namespace RTCORBA
 #else
 
 
+
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_RTCORBA_Export void operator<<= (::CORBA::Any &, RTCORBA::ProtocolProperties_ptr); // copying
@@ -79,8 +89,16 @@ TAO_RTCORBA_Export ::CORBA::Boolean operator>>= (const ::CORBA::Any &, RTCORBA::
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+
+
 
 #endif
+
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+
 
 #include /**/ "ace/post.h"
 
