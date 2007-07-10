@@ -1,3 +1,8 @@
+Tue Jul 10 14:44:00 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/RTCORBA/RT_ProtocolProperties.*:
+          Regenerated
+
 Tue Jul 10 10:20:00 UTC 2007  Simon Massey  <sma@prismtech.com>
 
         * tao/AnyTypeCode/TypeCode_CDR_Extraction.cpp
