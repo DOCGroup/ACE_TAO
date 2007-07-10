@@ -6,7 +6,7 @@
 ## this file will be lost the next time it is generated.
 ##
 ## MPC Command:
-## ../bin/mwc.pl -type automake -noreldefs TAO.mwc
+## /tao_builds/phil/wustl/ACE+TAO+CIAO/ACE_wrappers/build/native/bin/mwc.pl -type automake -noreldefs
 
 ACE_BUILDDIR = $(top_builddir)/..
 ACE_ROOT = $(top_srcdir)/..
@@ -16,8 +16,8 @@ TAO_IDL_DEP = $(TAO_BUILDDIR)/TAO_IDL/tao_idl
 TAO_IDLFLAGS = -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf
 TAO_ROOT = $(top_srcdir)
 
-noinst_LTLIBRARIES =
 noinst_PROGRAMS =
+noinst_LTLIBRARIES =
 
 ## Makefile.DLL_ORB_Idl.am
 
@@ -42,7 +42,7 @@ TestC.cpp TestC.h TestC.inl TestS.cpp TestS.h TestS.inl: Test-stamp
 
 Test-stamp: $(srcdir)/Test.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/Test.idl
-	@touch $@
+	@touch "$@"
 
 noinst_HEADERS = \
   Test.idl
@@ -68,7 +68,7 @@ client_SOURCES = \
   Test_i.h
 
 client_LDADD = \
-  $(TAO_BUILDDIR)/tao/libTAO.la \
+  libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 endif BUILD_EXCEPTIONS
@@ -94,7 +94,7 @@ server_SOURCES = \
   Test_i.h
 
 server_LDADD = \
-  $(TAO_BUILDDIR)/tao/libTAO.la \
+  libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 endif BUILD_EXCEPTIONS
@@ -135,6 +135,8 @@ libTest_Server_Module_la_CPPFLAGS = \
   -DTEST_SERVER_MODULE_BUILD_DLL
 
 libTest_Server_Module_la_SOURCES = \
+  TestC.cpp \
+  TestS.cpp \
   Test_Server_Module.cpp \
   Test_i.cpp
 
@@ -143,6 +145,11 @@ noinst_HEADERS += \
   Test_i.h
 
 endif BUILD_EXCEPTIONS
+
+
+ACLOCAL = @ACLOCAL@
+ACLOCAL_AMFLAGS = -I m4
+AUTOMAKE_OPTIONS = foreign
 
 ## Clean up template repositories, etc.
 clean-local:

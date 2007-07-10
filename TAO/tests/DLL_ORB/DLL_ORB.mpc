@@ -29,6 +29,8 @@ project(*Test_Server_Module) : taolib_with_idl, portableserver {
 
   Source_Files {
     Test_Server_Module.cpp
+    TestS.cpp
+    TestC.cpp
     Test_i.cpp
   }
 
