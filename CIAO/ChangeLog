@@ -1,7 +1,13 @@
+Tue Jul 10 13:21:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Session_Container.cpp:
+          Fixed debug statements, thanks to Friedhelm Wolf
+          <friedhelm dot wolf at googlemail dot com> for pointing this out
+
 Tue Jul 10 03:53:18 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * CCF/CCF/CodeGenerationKit/IndentationBuffer.hpp:
- 
+
           Fixed fuzz warnings. Zap the usage of exception specification.
 
 Mon Jul  9 11:23:12 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
