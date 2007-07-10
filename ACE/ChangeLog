@@ -1,3 +1,8 @@
+Tue Jul 10 14:30:50 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * ace/INET_Addr.cpp:
+          Reverted AIX-specific change. It didn't work.
+
 Tue Jul 10 13:13:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-vxworks6.2.h:
