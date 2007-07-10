@@ -1,3 +1,15 @@
+Tue Jul 10 16:07:38 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * tests/Basic_Types_Test.cpp:
+        * tests/Time_Value_Test.cpp: Moved the ACE_U_LongLong checks from
+          Time_Value_Test, where they were artificially wedged in for Sun,
+          to Basic_Types_Test. The ACE_U_LongLong stuff was put in place
+          (Tue Aug 26 11:06:45 1997  David L. Levine  <levine@cs.wustl.edu>)
+          during what was apparantly some tumultuous platform times, then
+          subsequently enabled and disabled in various platforms as needed
+          to resolve side-affects. If it's still needed on any platforms
+          that don't have native long long, it'll be run.
+
 Tue Jul 10 14:30:50 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * ace/INET_Addr.cpp:
