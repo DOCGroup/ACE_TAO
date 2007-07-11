@@ -30,7 +30,8 @@ Starter_CPPFLAGS = \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
   -I$(TAO_ROOT)/orbsvcs \
-  -I$(TAO_BUILDDIR)/orbsvcs
+  -I$(TAO_BUILDDIR)/orbsvcs \
+  -I..
 
 Starter_SOURCES = \
   ../Starter.cpp \
@@ -76,7 +77,8 @@ test_CPPFLAGS = \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
   -I$(TAO_ROOT)/orbsvcs \
-  -I$(TAO_BUILDDIR)/orbsvcs
+  -I$(TAO_BUILDDIR)/orbsvcs \
+  -I..
 
 test_SOURCES = \
   ../MIF_SchedulingC.cpp \

@@ -392,6 +392,7 @@ libTAO_AV_la_CPPFLAGS = \
   -I$(TAO_BUILDDIR) \
   -I$(TAO_ROOT)/orbsvcs \
   -I$(TAO_BUILDDIR)/orbsvcs \
+  -DACE_HAS_QOS \
   -DTAO_AV_BUILD_DLL
 
 libTAO_AV_la_SOURCES = \
@@ -427,6 +428,7 @@ libTAO_AV_la_LDFLAGS = \
  -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
 
 libTAO_AV_la_LIBADD = \
+  $(ACE_BUILDDIR)/ace/libACE_QoS.la \
   libTAO_CosNaming.la \
   libTAO_CosProperty_Serv.la \
   libTAO_CosProperty_Skel.la \

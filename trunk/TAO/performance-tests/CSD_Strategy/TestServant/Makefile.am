@@ -53,6 +53,7 @@ libCSD_PT_TestServant_la_CPPFLAGS = \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
   -I$(TAO_ROOT)/performance-tests/CSD_Strategy \
+  -I$(TAO_BUILDDIR)/performance-tests/CSD_Strategy \
   -I$(TAO_ROOT)/tao \
   -DCSD_PT_TESTSERVANT_BUILD_DLL
 

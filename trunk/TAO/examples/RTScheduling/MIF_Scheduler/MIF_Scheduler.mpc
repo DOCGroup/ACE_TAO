@@ -4,6 +4,7 @@
 project(*Starter): portableserver, namingexe {
   after += RTSchedSynch
   libs += RTSchedSynch
+  includes += ..
 
   Source_Files {
     ../Starter.cpp
@@ -16,6 +17,7 @@ project(*test) : namingexe, rtscheduling_server {
   after += *Starter RTSchedTestLib
   libs += RTSchedTestLib Job RTSchedSynch
   idlflags += -SS -St -o ..
+  includes += ..
 
   IDL_Files {
     ../MIF_Scheduling.idl
@@ -35,4 +37,3 @@ project(*test) : namingexe, rtscheduling_server {
 
   exename = test
 }
-

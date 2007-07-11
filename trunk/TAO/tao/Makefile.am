@@ -5349,7 +5349,7 @@ CLEANFILES += \
 RTPortableServer/RTPortableServer_includeA.h RTPortableServer/RTPortableServer_includeC.cpp RTPortableServer/RTPortableServer_includeC.h RTPortableServer/RTPortableServer_includeS.h: RTPortableServer/RTPortableServer_include-stamp
 
 RTPortableServer/RTPortableServer_include-stamp: $(srcdir)/RTPortableServer/RTPortableServer_include.pidl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -SS -Sorb -GX -Sci -Wb,export_macro=TAO_RTPortableServer_Export -Wb,export_include=tao/RTPortableServer/rtportableserver_export.h -Wb,unique_include=tao/RTPortableServer/RTPortableServer.h -o RTPortableServer $(srcdir)/RTPortableServer/RTPortableServer_include.pidl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -SS -Sorb -GX -Sci -Sa -Wb,export_macro=TAO_RTPortableServer_Export -Wb,export_include=tao/RTPortableServer/rtportableserver_export.h -Wb,unique_include=tao/RTPortableServer/RTPortableServer.h -o RTPortableServer $(srcdir)/RTPortableServer/RTPortableServer_include.pidl
 	@touch $@
 
 lib_LTLIBRARIES += libTAO_RTPortableServer.la

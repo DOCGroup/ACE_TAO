@@ -27,7 +27,8 @@ client_main_CPPFLAGS = \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
-  -I$(TAO_ROOT)/performance-tests/CSD_Strategy
+  -I$(TAO_ROOT)/performance-tests/CSD_Strategy \
+  -I$(TAO_BUILDDIR)/performance-tests/CSD_Strategy
 
 client_main_SOURCES = \
   ClientApp.cpp \
@@ -61,7 +62,8 @@ server_main_CPPFLAGS = \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
-  -I$(TAO_ROOT)/performance-tests/CSD_Strategy
+  -I$(TAO_ROOT)/performance-tests/CSD_Strategy \
+  -I$(TAO_BUILDDIR)/performance-tests/CSD_Strategy
 
 server_main_SOURCES = \
   ServerApp.cpp \
