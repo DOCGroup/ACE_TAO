@@ -1,3 +1,9 @@
+Wed Jul 11 17:02:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/fuzz.pl:
+          Increased level for the tab check, something to fix in
+          the future
+
 Tue Jul 10 17:06:10 UTC 2007  Steve Huston  <shuston@riverace.com>
 
         * ace/config-sunos5.10.h: Added correct printf() modifiers for
