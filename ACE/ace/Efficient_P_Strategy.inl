@@ -42,7 +42,6 @@ Efficient_P_Strategy<AnnotationId>::grant(AnnotationId handle)
       p_r--;
     }   
   }
-  return true;
 }
 
 template <typename AnnotationId>
@@ -50,7 +49,7 @@ ACE_INLINE
 void 
 Efficient_P_Strategy<AnnotationId>::release(AnnotationId upcall_handle)
 {
-  int annotation = get_annotation(handle);
+  int annotation = get_annotation(upcall_handle);
   {
     ACE_Guard<ACE_Thread_Mutex> guard(_lock);
     t_r ++;

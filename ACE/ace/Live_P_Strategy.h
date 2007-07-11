@@ -19,13 +19,14 @@
 
 #include "ace/DA_Strategy_Base.h"
 #include "ace/RB_Tree.h"
+#include "ace/Mutex.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 //forward decl
-class LivePTree;
+class Live_P_Tree;
 
 template <typename AnnotationId>
 class Live_P_Strategy : public DA_Strategy_Base<AnnotationId> {
@@ -39,7 +40,10 @@ public:
     virtual void grant(AnnotationId handle);
     virtual void release(AnnotationId upcall_handle);
 private:
-   LivePTree* tree_pimpl_; 
+   Live_P_Tree* tree_pimpl_; 
+   bool min_illegal_is_computed_;
+   int min_illegal_;
+   ACE_Mutex computation_mutex_;
   
 };
 #if defined (__ACE_INLINE__)

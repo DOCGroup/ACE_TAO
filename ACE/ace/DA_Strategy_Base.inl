@@ -13,7 +13,7 @@ DA_Strategy_Base<AnnotationId>::~DA_Strategy_Base()
 
 template <typename AnnotationId>
 ACE_INLINE int 
-DA_Strategy_Base<AnnotationId>::get_annotation (AnnotationId id)
+DA_Strategy_Base<AnnotationId>::get_annotation (AnnotationId id) const
 {
   int annotation;
   if (annotations_repo_.find (id, annotation) == -1)
@@ -26,7 +26,7 @@ ACE_INLINE int
 DA_Strategy_Base<AnnotationId>::set_annotations_table (
         const HASH_ANNOTATIONS_REVERSE_ITER& table)
 {
-  HASH_ANNOTATIONS_CONST_ITER iter(table);
+  HASH_ANNOTATIONS_REVERSE_ITER iter(table);
   int rc=0;
   
   for (;!(iter.done()); iter++)
@@ -61,8 +61,9 @@ ACE_INLINE ACE_Hash_Map_Const_Iterator_Ex<AnnotationId,
                                        ACE_Hash<AnnotationId>,
                                        ACE_Equal_To<AnnotationId>,
                                        ACE_Thread_Mutex>
-DA_Strategy_Base<AnnotationId>::get_annotations_iter() 
+DA_Strategy_Base<AnnotationId>::get_annotations_iter() const
 {
+  
   return annotations_repo_.begin();
 }
 
