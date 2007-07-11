@@ -199,7 +199,7 @@ namespace CIAO
                       ex.propertyName.in (),
                       ex.elementName.in (),
                       ex.resourceName.in ()));
-          throw (Deployment_Failure (""));
+          throw Deployment_Failure ("");
         }
       catch (Deployment::StartError& ex)
         {
@@ -207,7 +207,7 @@ namespace CIAO
                       "EXCEPTION: StartError exception caught: %s, %s\n",
                       ex.name.in (),
                       ex.reason.in ()));
-          throw (Deployment_Failure (""));
+          throw Deployment_Failure ("");
         }
       catch (Deployment::InvalidProperty& ex)
         {
@@ -215,7 +215,7 @@ namespace CIAO
                       "EXCEPTION: InvalidProperty exception caught: %s, %s\n",
                       ex.name.in (),
                       ex.reason.in ()));
-          throw (Deployment_Failure (""));
+          throw Deployment_Failure ("");
         }
       catch (Deployment::InvalidConnection& ex)
         {
@@ -223,20 +223,20 @@ namespace CIAO
                       "EXCEPTION: InvalidConnection exception caught: %s, %s\n",
                       ex.name.in (),
                       ex.reason.in ()));
-          throw (Deployment_Failure  (""));
+          throw Deployment_Failure  ("");
         }
       catch (const CORBA::Exception& ex)
         {
           ACE_ERROR ((LM_ERROR,
                       "CORBA EXCEPTION: %s\n",
                       ex._info().fast_rep()));
-          throw (Deployment_Failure  (""));
+          throw Deployment_Failure  ("");
         }
       catch (...)
         {
           ACE_ERROR ((LM_ERROR,
                       "EXCEPTION: non-CORBA exception\n"));
-          throw (Deployment_Failure  (""));
+          throw Deployment_Failure  ("");
         }
 
       return CORBA::string_dup (plan.UUID.in ());

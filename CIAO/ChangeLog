@@ -1,3 +1,9 @@
+Wed Jul 11 04:33:45 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * DAnCE/Plan_Launcher/Plan_Launcher_Benchmark_Impl.cpp:
+
+          Fix fuzz warning regarding exception specification.
+
 Tue Jul 10 13:21:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/Session_Container.cpp:
