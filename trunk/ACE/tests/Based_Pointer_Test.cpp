@@ -109,21 +109,23 @@ int singleton_test (void)
        reinterpret_cast<Get_Bp_Repository_Inst> (tmp);
     if (get_bp_repository_inst == 0)
        ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       dll.error ()),
-                       -1);
+                          ACE_TEXT ("%p\n"),
+                          dll.error ()),
+                         -1);
 
     void* baddr_dll = get_bp_repository_inst ();
 
     dll.close ();
 
     if (baddr_dll != baddr1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("ACE_Based_Pointer_Repository is not a singleton in DLL %x %x\n"), baddr_dll, baddr1),
-                        -1);
-    }
-
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("ACE_Based_Pointer_Repository is not a ")
+                           ACE_TEXT ("singleton in DLL %@ %@\n"),
+                           baddr_dll,
+                           baddr1),
+                          -1);
+      }
 #endif /* ACE_HAS_DYNAMIC_LINKING */
 
     return 0;
@@ -161,8 +163,7 @@ mmap_map_test(void)
        void* ba = 0;
        if(ACE_BASED_POINTER_REPOSITORY::instance()->find(addr, ba) == -1)
         {
-           ACE_ERROR((LM_ERROR,
-               ACE_TEXT ("Unable to access repository\n")));
+           ACE_ERROR((LM_ERROR, ACE_TEXT ("Unable to access repository\n")));
            alloc->remove();
            delete alloc;
            return -1;
@@ -174,23 +175,22 @@ mmap_map_test(void)
        if(ba != addr)
          {
            ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT (
-                           "MMAP pool mapping not present\n")),
-                        -1);
+                              ACE_TEXT ("MMAP pool mapping not present\n")),
+                             -1);
          }
 
        // Check Mapping is removed when object is deleted
-       if(ACE_BASED_POINTER_REPOSITORY::instance()->find(addr, ba) == -1)
+       if (ACE_BASED_POINTER_REPOSITORY::instance()->find(addr, ba) == -1)
          {
            ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("Unable to access repository\n")),
-                        -1);
+                              ACE_TEXT ("Unable to access repository\n")),
+                             -1);
          }
        if(ba != 0)
          {
            ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("MMAP pool mapping not removed\n")),
-                        -1);
+                              ACE_TEXT ("MMAP pool mapping not removed\n")),
+                             -1);
          }
     }
     return 0;

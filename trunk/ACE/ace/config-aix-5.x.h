@@ -97,6 +97,10 @@
 
 #    if (__IBMCPP__ >= 600) /* Visual Age 6 and XL C/C++ 7 and up */
 #      define ACE_HAS_TEMPLATE_TYPEDEFS
+#      define ACE_HAS_CUSTOM_EXPORT_MACROS
+#      define ACE_Proper_Export_Flag
+#      define ACE_Proper_Import_Flag
+#      define ACE_IMPORT_SINGLETON_DECLARE(SINGLETON_TYPE, CLASS, LOCK) extern template class SINGLETON_TYPE < CLASS, LOCK >;
 #    endif /* __IBMCPP__ >= 600 */
 #  endif /* __IBMCPP__ */
 

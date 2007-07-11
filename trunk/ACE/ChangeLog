@@ -1,3 +1,14 @@
+Wed Jul 11 20:17:07 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * ace/config-aix-5.x.h: For IBM compilers Visual Age C++ 6 and up,
+          use custom template export macros to correctly generate weak
+          symbols for importable templates. Allows correct reuse of templates
+          instantiated in a shared library - in this case, fixes failures
+          in Based_Pointer_Test where singletons from ACE and another shared
+          library did not resolve to the same pointer.
+
+        * tests/Based_Pointer_Test.cpp: Use %@, not %x, to log pointer values.
+
 Wed Jul 11 17:02:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/fuzz.pl:
