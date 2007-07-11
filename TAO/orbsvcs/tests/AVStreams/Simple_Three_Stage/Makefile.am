@@ -28,7 +28,8 @@ distributer_CPPFLAGS = \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
   -I$(TAO_ROOT)/orbsvcs \
-  -I$(TAO_BUILDDIR)/orbsvcs
+  -I$(TAO_BUILDDIR)/orbsvcs \
+  -DACE_HAS_QOS
 
 distributer_SOURCES = \
   distributer.cpp \
@@ -36,6 +37,7 @@ distributer_SOURCES = \
 
 distributer_LDADD = \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_AV.la \
+  $(ACE_BUILDDIR)/ace/libACE_QoS.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosProperty_Serv.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosProperty_Skel.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
@@ -61,7 +63,8 @@ receiver_CPPFLAGS = \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
   -I$(TAO_ROOT)/orbsvcs \
-  -I$(TAO_BUILDDIR)/orbsvcs
+  -I$(TAO_BUILDDIR)/orbsvcs \
+  -DACE_HAS_QOS
 
 receiver_SOURCES = \
   receiver.cpp \
@@ -69,6 +72,7 @@ receiver_SOURCES = \
 
 receiver_LDADD = \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_AV.la \
+  $(ACE_BUILDDIR)/ace/libACE_QoS.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosProperty_Serv.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosProperty_Skel.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
@@ -94,7 +98,8 @@ sender_CPPFLAGS = \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
   -I$(TAO_ROOT)/orbsvcs \
-  -I$(TAO_BUILDDIR)/orbsvcs
+  -I$(TAO_BUILDDIR)/orbsvcs \
+  -DACE_HAS_QOS
 
 sender_SOURCES = \
   sender.cpp \
@@ -102,6 +107,7 @@ sender_SOURCES = \
 
 sender_LDADD = \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_AV.la \
+  $(ACE_BUILDDIR)/ace/libACE_QoS.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosProperty_Serv.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosProperty_Skel.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \

@@ -17,8 +17,8 @@ TAO_IDLFLAGS = -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROO
 TAO_ROOT = $(top_srcdir)
 
 noinst_PROGRAMS =
-BUILT_SOURCES =
 CLEANFILES =
+BUILT_SOURCES =
 
 ## Makefile.RTCORBA_Quoter_Common.am
 

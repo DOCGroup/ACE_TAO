@@ -53,6 +53,7 @@ libCSD_TP_Foo_C_la_CPPFLAGS = \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
   -I$(TAO_ROOT)/tests/CSD_Strategy_Tests/TP_Common \
+  -I$(TAO_BUILDDIR)/tests/CSD_Strategy_Tests/TP_Common \
   -I$(TAO_ROOT)/tao \
   -DCSD_TP_FOO_C_BUILD_DLL
 
