@@ -2,7 +2,7 @@
 template <typename AnnotationId>
 ACE_INLINE 
 Basic_P_Strategy<AnnotationId>::Basic_P_Strategy(int maxThreads)
-:DA_Strategy_Base(maxThreads)
+:DA_Strategy_Base(maxThreads),
  t_r(maxThreads)
 {
 }

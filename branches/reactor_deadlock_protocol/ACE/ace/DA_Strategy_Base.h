@@ -21,7 +21,7 @@
 #define DA_STRATEGY_BASE_H
 
 #include /**/ "ace/pre.h"
-#include "ace/Hash_Map_Manager_T.h"
+#include "ace/Hash_Map_Manager.h"
 #include "ace/Thread_Mutex.h"
 #include "ace/Atomic_Op_T.h"
 
@@ -71,9 +71,9 @@ public:
     virtual bool is_deadlock_potential(AnnotationId handle)=0;
     virtual void grant(AnnotationId handle)=0;
     virtual void release(AnnotationId upcall_handle)=0;
-    int get_max_threads() { return num_avail_threads_};
-    HASH_ANNOTATIONS_CONST_ITER get_annotations_iter();
-    virtual int get_annotation (AnnotationId handle);
+    int get_max_threads() { return num_avail_threads_.value();}
+    HASH_ANNOTATIONS_CONST_ITER get_annotations_iter() const;
+    virtual int get_annotation (AnnotationId handle) const;
     virtual int add_annotation (AnnotationId handle, int annotation);
     virtual int remove_annotation (AnnotationId handle);
     virtual int set_annotations_table (const HASH_ANNOTATIONS_REVERSE_ITER& table);
@@ -84,6 +84,10 @@ private:
   ACE_Atomic_Op<ACE_Thread_Mutex, long> num_avail_threads_;
 
 };
+
+#if defined (__ACE_INLINE__)
+#include "ace/DA_Strategy_Base.inl"
+#endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
 

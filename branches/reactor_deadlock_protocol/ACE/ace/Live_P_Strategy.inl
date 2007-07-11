@@ -42,7 +42,7 @@ private:
 };
 
 ACE_INLINE
-Live_P_Tree::Live_P_Tree(int maxThreads, int k) 
+Live_P_Tree::Live_P_Tree(int maxThreads) 
 :ACE_RB_Tree(),
  T_(maxThreads) {
 
@@ -162,7 +162,9 @@ Live_P_Tree::calc_max_i(ACE_RB_Tree_Node<int, AnnotationNode>* nodePtr, int extr
 template <typename AnnotationId>
 ACE_INLINE 
 Live_P_Strategy<AnnotationId>::Live_P_Strategy(int maxThreads)
-:DA_Strategy_Base(maxThreads)
+:DA_Strategy_Base(maxThreads),
+ min_illegal_is_computed_(false),
+ min_illegal_(0)
 {
 }
 
@@ -179,19 +181,18 @@ ACE_INLINE
 bool 
 Live_P_Strategy<AnnotationId>::is_deadlock_potential(AnnotationId handle)
 {
-    int min_illegal = getMaxThreads();
-    int annotation = getAnnotation(handle);
-
-    if (!min_ilegal_is_computed_) 
+    int annotation = get_annotation(handle);
+    computation_mutex_.acquire();
+    if (!min_illegal_is_computed_) 
     {
-      if (tree_->current_size() > 1) 
+      if (tree_pimpl_->current_size() > 1) 
       {	    
-	      min_ilegal_ = calc_max();
+	      min_illegal_ = tree_pimpl_->calc_max();
       }
-      min_ilegal_is_computed_ = true;
+      min_illegal_is_computed_ = true;
     }
-
-    return annotation >= min_ilegal_;
+    computation_mutex_.release();
+    return annotation >= min_illegal_;
 }
 
 template <typename AnnotationId>
@@ -199,9 +200,14 @@ ACE_INLINE
 void 
 Live_P_Strategy<AnnotationId>::grant(AnnotationId handle)
 {
-  int annotation = getAnnotation(handle);
-  tree_pimpl_->bind(annotation);
-  min_ilegal_is_computed_ = false;
+  int annotation = get_annotation(handle);
+  //since the state of the tree is involved in calculation
+  //of max, we must aquire the lock before changing the 
+  //structure of the tree
+  computation_mutex_.acquire();
+  tree_pimpl_->bind(annotation);  
+  min_illegal_is_computed_ = false;
+  computation_mutex_.release();
 }
 
 template <typename AnnotationId>
@@ -209,7 +215,12 @@ ACE_INLINE
 void 
 Live_P_Strategy<AnnotationId>::release(AnnotationId handle)
 {
-  min_ilegal_is_computed_ = false;
-  int annotation = getAnnotation(handle);
+  //since the state of the tree is involved in calculation
+  //of max, we must aquire the lock before changing the 
+  //structure of the tree
+  computation_mutex_.acquire();
+  min_illegal_is_computed_ = false;
+  int annotation = get_annotation(handle);
   tree_pimpl_->unbind(annotation);
+  computation_mutex_.release();
 }
