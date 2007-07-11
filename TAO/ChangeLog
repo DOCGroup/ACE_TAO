@@ -1,3 +1,99 @@
+Wed Jul 11 19:33:48 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * configure.ac:
+          Added yet another missed test directory
+
+        * MPC/config/csd_pt_testinf_lib.mpb:
+        * MPC/config/csd_tp_foo_a_lib.mpb:
+        * MPC/config/csd_tp_foo_b_lib.mpb:
+        * MPC/config/csd_tp_foo_c_lib.mpb:
+        * MPC/config/csd_tp_test_lib.mpb:
+        * MPC/config/ftrteventchannel.mpb:
+        * MPC/config/notifytest.mpb:
+          Added automake-specific sections to catch the different include
+          files necessary in the automake environment for finding idl
+          generated header files.
+
+
+        * examples/Kokyu_dsrt_schedulers/fp_example/Makefile.am:
+        * examples/Kokyu_dsrt_schedulers/mif_example/Makefile.am:
+        * examples/Kokyu_dsrt_schedulers/muf_example/Makefile.am:
+          I had to manually touch these files. For some reason the LDADD
+          list included $(ACE_BUILDDIR)/examples/Kokyu... for libraries
+          that are really in $(TAO_BUILDDIR)/examples/Kokyu... I'm not
+          sure the correct value to put in the kokyu_dsrt_schedulers.mpb
+          to make this work right.
+
+        * examples/RTScheduling/MIF_Scheduler/MIF_Scheduler.mpc:
+        * examples/RTScheduling/Fixed_Priority_Scheduler.mpc:
+          Added -I.. to top level to ensure it gets the right generated
+          files. This should probably be in a base file, and probably in a
+          specific() section, but I don't think there is any harm putting
+          it here.
+
+        * orbsvcs/orbsvcs/Makefile.am:
+        * tao/Makefile.am:
+          Manually touched the @includedir@ specification to exclude the
+          full path from my local build machine. I don't know the role of
+          this definition, but I'm pretty sure something specific to my
+          local workstation should not put into SVN.
+
+        * docs/tutorials/Quoter/RTCORBA/Makefile.am:
+        * examples/RTScheduling/MIF_Scheduler/Makefile.am:
+        * examples/RTScheduling/Fixed_Priority_Scheduler/Makefile.am:
+        * examples/Simple/time-date/Makefile.am:
+        * orbsvcs/tests/AVStreams/Asynch_Three_Stage/Makefile.am:
+        * orbsvcs/tests/AVStreams/Bidirectional_Flows/Makefile.am:
+        * orbsvcs/tests/AVStreams/Component_Switching/Makefile.am:
+        * orbsvcs/tests/AVStreams/Full_Profile/Makefile.am:
+        * orbsvcs/tests/AVStreams/Latency/Makefile.am:
+        * orbsvcs/tests/AVStreams/Modify_QoS/Makefile.am:
+        * orbsvcs/tests/AVStreams/Multicast/Makefile.am:
+        * orbsvcs/tests/AVStreams/Multicast_Full_Profile/Makefile.am:
+        * orbsvcs/tests/AVStreams/Multiple_Flows/Makefile.am:
+        * orbsvcs/tests/AVStreams/Pluggable/Makefile.am:
+        * orbsvcs/tests/AVStreams/Pluggable_Flow_Protocol/Makefile.am:
+        * orbsvcs/tests/AVStreams/Simple_Three_Stage/Makefile.am:
+        * orbsvcs/tests/AVStreams/Simple_Two_Stage/Makefile.am:
+        * orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/Makefile.am:
+        * orbsvcs/tests/Event/Basic/Makefile.am:
+        * performance-tests/CSD_Strategy/TestApps/Makefile.am:
+        * performance-tests/CSD_Strategy/TestInf/Makefile.am:
+        * performance-tests/CSD_Strategy/TestServant/Makefile.am:
+        * tests/CSD_Strategy_Tests/Broken/Makefile.am:
+        * tests/CSD_Strategy_Tests/TP_Foo_A/Makefile.am:
+        * tests/CSD_Strategy_Tests/TP_Foo_B/Makefile.am:
+        * tests/CSD_Strategy_Tests/TP_Foo_C/Makefile.am:
+        * tests/CSD_Strategy_Tests/TP_Test_1/Makefile.am:
+        * tests/CSD_Strategy_Tests/TP_Test_2/Makefile.am:
+        * tests/CSD_Strategy_Tests/TP_Test_3/Makefile.am:
+        * tests/CSD_Strategy_Tests/TP_Test_4/Makefile.am:
+        * tests/CSD_Strategy_Tests/TP_Test_Static/Makefile.am:
+        * tests/DLL_ORB/Makefile.am:
+        * tests/IDL_Test/Makefile.am:
+        * tests/QtTests/Makefile.am:
+
+          Regenerated automake files. These all contain minor changes that
+          appear to relate to minor changes in various MPC files. The
+          technique I used to generate these is this:
+
+          CD $TAO_ROOT, where TAO_ROOT is the SVN workspace, not a cloned
+          build directory.
+
+          ../bin/mwc.pl -type automake -noreldefs TAO.mwc
+
+          I used that exact command line as that is what had been used
+          previously. The command line is stored in header comments in the
+          generated Makefile.am, so using a different command path will
+          yeild hundreds of changed files.
+
+          I also post-processed the generated files to remove other
+          innocuous changes, specificly resplacing the string
+           'touch "$@"' with 'touch $@' and reordering some default
+          initialization of BUILT_SOURCES and CLEAN_SOURCES. I only did
+          this to avoid having several hundred checked files that only had
+          these trivial changes.
+
 Tue Jul 10 19:31:15 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * configure.ac:
