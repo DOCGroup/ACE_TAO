@@ -78,6 +78,14 @@ TAO_OutputCDR::TAO_OutputCDR (size_t size,
   , timeout_ (0)
 {
   ACE_FUNCTION_TIMEPROBE (TAO_OUTPUT_CDR_CTOR1_ENTER);
+
+#if defined (TAO_ZERO_TAO_OUTPUTCDR_ALLOCATED_BUFFERS)
+  // Zero out the buffer if we allocated the buffer.
+  if (size == 0)
+    (void) ACE_OS::memset (this->current()->wr_ptr(),
+			   0,
+			   this->current()->space());
+#endif /* TAO_ZERO_TAO_OUTPUTCDR_ALLOCATED_BUFFERS */
 }
 
 TAO_OutputCDR::TAO_OutputCDR (char *data,
