@@ -43,10 +43,10 @@ single_cpu_increment (volatile long *value)
   asm("addi %0,%0,1" : "+r" (tmp) );
   asm("stw %0,%1" : "+r" (tmp), "=m" (*value) );
   return tmp;
-#else /* __GNUC__ && ACE_HAS_PENTIUM */
+#else /* ACE_HAS_INTEL_ASSEMBLY*/
   ACE_UNUSED_ARG (value);
   ACE_NOTSUP_RETURN (-1);
-#endif /* __GNUC__ && ACE_HAS_PENTIUM */
+#endif /* ACE_HAS_INTEL_ASSEMBLY*/
 }
 
 long
@@ -66,10 +66,10 @@ single_cpu_decrement (volatile long *value)
   asm("addi %0,%0,-1" : "+r" (tmp) );
   asm("stw %0,%1" : "+r" (tmp), "=m" (*value) );
   return tmp;
-#else /* __GNUC__ && ACE_HAS_PENTIUM */
+#else /* ACE_HAS_INTEL_ASSEMBLY*/
   ACE_UNUSED_ARG (value);
   ACE_NOTSUP_RETURN (-1);
-#endif /* __GNUC__ && ACE_HAS_PENTIUM */
+#endif /* ACE_HAS_INTEL_ASSEMBLY*/
 }
 
 long
@@ -87,11 +87,11 @@ single_cpu_exchange (volatile long *value, long rhs)
   asm("lwz %0,%1" : "=r" (tmp) : "m" (rhs) );
   asm("stw %0,%1" : "+r" (tmp), "=m" (*value) );
   return tmp;
-#else /* __GNUC__ && ACE_HAS_PENTIUM */
+#else /* ACE_HAS_INTEL_ASSEMBLY*/
   ACE_UNUSED_ARG (value);
   ACE_UNUSED_ARG (rhs);
   ACE_NOTSUP_RETURN (-1);
-#endif /* __GNUC__ && ACE_HAS_PENTIUM */
+#endif /* ACE_HAS_INTEL_ASSEMBLY*/
 }
 
 long
@@ -128,11 +128,11 @@ single_cpu_exchange_add (volatile long *value, long rhs)
   ACE_UNUSED_ARG (rhs);
   ACE_NOTSUP_RETURN (-1);
 # endif /* _MSC_VER */
-#else /* __GNUC__ && ACE_HAS_PENTIUM */
+#else /* ACE_HAS_INTEL_ASSEMBLY*/
   ACE_UNUSED_ARG (value);
   ACE_UNUSED_ARG (rhs);
   ACE_NOTSUP_RETURN (-1);
-#endif /* __GNUC__ && ACE_HAS_PENTIUM */
+#endif /* ACE_HAS_INTEL_ASSEMBLY*/
 }
 
 long
@@ -146,10 +146,10 @@ multi_cpu_increment (volatile long *value)
 #elif defined (sun)
   return ace_atomic_add_long (
            reinterpret_cast<volatile unsigned long*> (value), 1);
-#else /* __GNUC__ && ACE_HAS_PENTIUM */
+#else /* ACE_HAS_INTEL_ASSEMBLY*/
   ACE_UNUSED_ARG (value);
   ACE_NOTSUP_RETURN (-1);
-#endif /* __GNUC__ && ACE_HAS_PENTIUM */
+#endif /* ACE_HAS_INTEL_ASSEMBLY*/
 }
 
 long
@@ -163,10 +163,10 @@ multi_cpu_decrement (volatile long *value)
 #elif defined (sun)
   return ace_atomic_add_long (
            reinterpret_cast<volatile unsigned long*> (value), -1);
-#else /* __GNUC__ && ACE_HAS_PENTIUM */
+#else /* ACE_HAS_INTEL_ASSEMBLY*/
   ACE_UNUSED_ARG (value);
   ACE_NOTSUP_RETURN (-1);
-#endif /* __GNUC__ && ACE_HAS_PENTIUM */
+#endif /* ACE_HAS_INTEL_ASSEMBLY*/
 }
 
 long
@@ -180,11 +180,11 @@ multi_cpu_exchange (volatile long *value, long rhs)
 #elif defined (sun)
   return ace_atomic_swap_long (
            reinterpret_cast<volatile unsigned long*> (value), rhs);
-#else /* __GNUC__ && ACE_HAS_PENTIUM */
+#else /* ACE_HAS_INTEL_ASSEMBLY*/
   ACE_UNUSED_ARG (value);
   ACE_UNUSED_ARG (rhs);
   ACE_NOTSUP_RETURN (-1);
-#endif /* __GNUC__ && ACE_HAS_PENTIUM */
+#endif /* ACE_HAS_INTEL_ASSEMBLY*/
 }
 
 long
@@ -216,11 +216,11 @@ multi_cpu_exchange_add (volatile long *value, long rhs)
   ACE_UNUSED_ARG (rhs);
   ACE_NOTSUP_RETURN (-1);
 # endif /* _MSC_VER */
-#else /* __GNUC__ && ACE_HAS_PENTIUM */
+#else /* ACE_HAS_INTEL_ASSEMBLY*/
   ACE_UNUSED_ARG (value);
   ACE_UNUSED_ARG (rhs);
   ACE_NOTSUP_RETURN (-1);
-#endif /* __GNUC__ && ACE_HAS_PENTIUM */
+#endif /* ACE_HAS_INTEL_ASSEMBLY*/
 }
 
 #if defined (_MSC_VER)
