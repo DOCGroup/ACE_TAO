@@ -171,7 +171,8 @@ Client::svc (void)
                     1000000 / (dur / this->niterations_)));
       }
 
-      server_->shutdown ();
+      for (int c = 0; c < 10; ++c)
+        server_->shutdown ();
 
     }
   catch (const CORBA::Exception& ex)

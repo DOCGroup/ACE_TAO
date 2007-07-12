@@ -1,3 +1,32 @@
+Thu Jul 12 11:29:39 UTC 2007  Vadym Ridosh  <vridosh@prismtech.com>
+
+        * tao/Strategies/DIOP_Connector.cpp:
+        * tao/Strategies/DIOP_Transport.cpp:
+        * tao/Strategies/DIOP_Acceptor.h:
+        * tao/Strategies/DIOP_Acceptor.cpp:
+        * tao/Strategies/DIOP_Endpoint.h:
+        * tao/Strategies/DIOP_Connection_Handler.cpp:
+        * tao/Strategies/DIOP_Profile.cpp:
+        * tao/Strategies/DIOP_Endpoint.cpp:
+        * tao/Strategies/DIOP_Connector.h:
+        * tao/Strategies/DIOP_Acceptor.inl:
+
+          Implemented DIOP over IPv6. Also made connection managment
+          same as in other protocols and fixed few log messages.
+          This is for fix of bug#2979.
+
+        * tests/DIOP/UDP_Client_i.cpp:
+        * tests/DIOP/run_test_ipv6.pl:
+        * examples/PluggableUDP/tests/Performance/client.cpp:
+        * examples/PluggableUDP/tests/Performance/run_test_ipv6.pl:
+        * examples/PluggableUDP/tests/Performance/UDP_PerformanceClient.cpp:
+        * examples/PluggableUDP/tests/SimplePerformance/client.cpp:
+        * examples/PluggableUDP/tests/SimplePerformance/run_test_ipv6.pl:
+
+          Made that shutdown is called 10 times in all DIOP tests to make
+          sure that server does not miss it. Added scripts for testing IPv6
+          implementation in DIOP.
+        
 Thu Jul 12 09:39:46 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/orbsvcs/IFRService/UnionDef_i.h:
