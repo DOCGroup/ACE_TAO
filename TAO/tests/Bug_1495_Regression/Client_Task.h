@@ -1,3 +1,5 @@
+// -*- C++ -*-
+
 /**
  * @file Client_Task.h
  * @author Will Otte <wotte@dre.vanderbilt.edu>'
@@ -22,23 +24,21 @@
 
 class Client_Task : public ACE_Task_Base
 {
-  public:
-    /// Constructor
-    Client_Task (const char *input,
-                 CORBA::ORB_ptr corb,
-                 ACE_Thread_Manager *thr_mgr);
+ public:
+  /// Constructor
+  Client_Task (const char *input,
+               CORBA::ORB_ptr corb,
+               ACE_Thread_Manager *thr_mgr);
 
-    /// Thread entry point.
-    int svc (void);
+  /// Thread entry point.
+  int svc (void);
 
+private:
+  /// File to read in the remote IOR.
+  const char *input_;
 
-  private:
-    /// File to read in the remote IOR.
-    const char *input_;
-
-    /// Client ORB.
-    CORBA::ORB_var corb_;
-
+  /// Client ORB.
+  CORBA::ORB_var corb_;
 };
 
 

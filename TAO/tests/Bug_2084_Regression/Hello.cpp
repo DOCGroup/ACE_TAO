@@ -7,25 +7,27 @@
 
 ACE_RCSID(Hello, Hello, "$Id$")
 
-  Hello::Hello (CORBA::ORB_ptr orb,
+Hello::Hello (CORBA::ORB_ptr orb,
               ACE_thread_t thrid)
   : orb_ (CORBA::ORB::_duplicate (orb))
-    , thr_id_ (thrid)
+  , thr_id_ (thrid)
 {
 }
 
 char *
-Hello::get_string (::CORBA::Long caller_threadid)
+Hello::get_string (::Test::ThreadId caller_threadid ACE_ENV_ARG_DECL)
 {
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) Upcall in process ..\n"));
 
   // Use portable thread IDs
   ACE_Thread_ID this_ID;
-  this_ID.id(this->thr_id_);
+  this_ID.id (this->thr_id_);
 
-  if (static_cast<CORBA::Long> ((size_t)ACE_Thread::self ()) != caller_threadid) // this means a remote call was made
+  if ((::Test::ThreadId) ACE_Thread::self () != caller_threadid)
     {
+      // this means a remote call was made
+
       if (this->orb_->orb_core ()->optimize_collocation_objects () &&
           this->orb_->orb_core ()->use_global_collocation ())
         {

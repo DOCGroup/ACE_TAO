@@ -1,3 +1,100 @@
+Thu Jul 12 23:42:00 UTC 2007  Ossama Othman  <ossama_othman at symantec dot com>
+
+        * TAO_IDL/tao_idl.cpp:
+
+          Paired deallocation of ACE::strnew()-created string array with
+          ACE::strdelete() instead operator delete[]().
+
+        * TAO_IDL/driver/drv_preproc.cpp:
+
+          Paired deallocation of ACE::strnew()-created string array with
+          ACE::strdelete() instead operator delete[]().
+
+          Statically initialize argument array elements to zero.
+
+          Corrected problem where memory corresponding to tao_idl command
+          line "-Yp" argument owned by the shell was being deallocated.
+
+          Changed DRV_cpp_new_location() parameter from "char*" to "char
+          const*" to better enforce proper argument list memory 
+          management.
+
+          Search for orb.idl in supplied include path, and only fallback
+          on $TAO_ROOT/tao if the include path search fails.  Addresses
+          regression where orb.idl could not be found if $TAO_ROOT was not
+          set even if it existed in the include path, as well allowing the
+          user to override $TAO_ROOT/tao, if necessary.
+
+          Const correctness imrovements.
+
+        * TAO_IDL/include/drv_extern.h:
+
+          Match function protototype signature with implementation
+          signature.  Necessitated by const correctness improvements
+          above.
+
+        * TAO_IDL/include/idl_global.h (open_included_file):
+        * TAO_IDL/util/utl_global.cpp  (open_included_file):
+
+          New utility function that searches for the given file in the
+          include path supplied to the TAO_IDL compiler, and opens it.
+
+        * TAO_IDL/include/idl_narrow.h:
+
+          Replaced legacy type narrowing code with standard C++
+          dynamic_cast<> calls.  This is now possible since ACE/TAO
+          require RTTI to be enabled.
+
+        * tao/Exception.h:
+        * tao/SystemException.h:
+
+          Moved #undef of THREAD_CANCELLED to tao/SystemException.h.
+
+          (SystemException):
+
+          For g++ >= 4, exceptions found in DLL A but potentially thrown
+          in DLL B must always be exported.
+
+        * tao/ORB_Core.h (open_called_):
+
+          Removed unused TAO_ORB_Core member.
+
+        * tao/Unbounded_Octet_Sequence_T.h (operator==):
+
+          Use the subscript operator instead of get_buffer() to avoid a
+          potential buffer allocation.
+
+        * tao/AnyTypeCode/Any_Array_Impl_T.cpp (extract):
+        * tao/Valuetype/AbstractBase_T.cpp (unchecked_narrow):
+
+          Check for null pointer before dereferencing dynamic_cast<>
+          result.  Addresses FORWARD_NULL Coverity error.
+        
+        * tao/BiDir_GIOP/BiDir_ORBInitializer.cpp:
+
+          Addressed Coverity UNUSED_VALUE error.
+
+        * tests/Bug_1495_Regression/Client_Task.cpp:
+        * tests/Bug_1495_Regression/Client_Task.h:
+        * tests/Bug_1495_Regression/test.idl:
+        * tests/Bug_1495_Regression/test_i.cpp:
+        * tests/Bug_1495_Regression/test_i.h:
+        * tests/Bug_2084_Regression/EventNode.cpp:
+        * tests/Bug_2084_Regression/EventNode.h:
+        * tests/Bug_2084_Regression/Hello.cpp:
+        * tests/Bug_2084_Regression/Hello.h:
+        * tests/Bug_2084_Regression/Test.idl:
+
+          Support platforms with 64 bit thread IDs.
+
+        * utils/catior/catior.cpp:
+
+          Fixed memory leak.
+
+          Added CDR demarshaling operation check.
+
+          Converted boolean 1's and 0's to true and false, respectively.
+
 Thu Jul 12 23:33:43 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * tests/objref_comparison_test/foo.idl:

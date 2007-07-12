@@ -95,176 +95,42 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // IMPL_NARROW_METHODSn where n is 0,1,2 and 3 are provided.
 // DEF_NARROW_METHODSn where n is 0,1,2 and 3 are provided.
 
-extern char *type_id_to_string(long);
+extern char * type_id_to_string (long);
 
-#define DEF_NARROW_METHODS0(TYPE)\
-static  int     type_id(); \
-virtual void    *narrow(size_t type_const)
+#define DEF_NARROW_METHODS0(TYPE)
+#define IMPL_NARROW_METHODS0(TYPE)
 
+#define DEF_NARROW_METHODS1(TYPE,PARENT)
+#define IMPL_NARROW_METHODS1(TYPE,PARENT)
 
-#define IMPL_NARROW_METHODS0(TYPE)\
-int \
-TYPE::type_id()\
-{\
-  return 0;\
-}\
-void    * \
-TYPE::narrow(size_t type_const) {\
-  void  *rval = 0; \
-  size_t temp = (size_t) &TYPE::type_id; \
-  if (type_const == temp) \
-    rval = this; \
-  return rval; \
+#define DEF_NARROW_METHODS2(TYPE,PARENT1,PARENT2)
+#define IMPL_NARROW_METHODS2(TYPE,PARENT1,PARENT2)
+
+#define DEF_NARROW_METHODS3(TYPE,PARENT1,PARENT2,PARENT3)
+#define IMPL_NARROW_METHODS3(TYPE,PARENT1,PARENT2,PARENT3)
+
+#define DEF_NARROW_METHODS4(TYPE,PARENT1,PARENT2,PARENT3,PARENT4)
+#define IMPL_NARROW_METHODS4(TYPE,PARENT1,PARENT2,PARENT3,PARENT4)
+
+#define DEF_NARROW_METHODS5(TYPE,PARENT1,PARENT2,PARENT3,PARENT4,PARENT5)
+#define IMPL_NARROW_METHODS5(TYPE,PARENT1,PARENT2,PARENT3,PARENT4,PARENT5)
+
+#define DEF_NARROW_FROM_DECL(TYPE)              \
+static  TYPE* narrow_from_decl(AST_Decl *t)
+
+#define IMPL_NARROW_FROM_DECL(TYPE)             \
+TYPE *                                          \
+TYPE::narrow_from_decl (AST_Decl *t) {          \
+  return dynamic_cast<TYPE *> (t);              \
 }
 
-#define DEF_NARROW_METHODS1(TYPE,PARENT) \
-static  int     type_id(); \
-virtual void    *narrow(size_t type_const)
+#define DEF_NARROW_FROM_SCOPE(TYPE)             \
+static TYPE * narrow_from_scope(UTL_Scope *t)
 
-
-#define IMPL_NARROW_METHODS1(TYPE,PARENT) \
-int \
-TYPE::type_id() \
-{\
-   return 0;\
-}\
-void    * \
-TYPE::narrow(size_t type_const) {\
-  void  *rval = 0; \
-  size_t temp = (size_t) &TYPE::type_id; \
-  if (type_const == temp) \
-    rval = this; \
-  if (rval == 0) \
-    rval = PARENT::narrow(type_const);\
-  return rval;\
-}
-
-#define DEF_NARROW_METHODS2(TYPE,PARENT1,PARENT2) \
-static  int     type_id(); \
-virtual void    *narrow(size_t type_const)
-
-
-#define IMPL_NARROW_METHODS2(TYPE,PARENT1,PARENT2) \
-int \
-TYPE::type_id() \
-{\
-   return 0;\
-}\
-void    * \
-TYPE::narrow(size_t type_const) { \
-  void *rval = 0; \
-  size_t temp = (size_t) &TYPE::type_id; \
-  if (type_const == temp) \
-    rval = this; \
-  if (rval == 0) \
-    rval = PARENT1::narrow(type_const);\
-  if (rval == 0) \
-    rval = PARENT2::narrow(type_const);\
-  return rval;\
-}
-
-#define DEF_NARROW_METHODS3(TYPE,PARENT1,PARENT2,PARENT3) \
-static  int     type_id(); \
-virtual void    *narrow(size_t type_const)
-
-
-#define IMPL_NARROW_METHODS3(TYPE,PARENT1,PARENT2,PARENT3) \
-int \
-TYPE::type_id() \
-{\
-   return 0;\
-}\
-void    * \
-TYPE::narrow(size_t type_const) {\
-  void *rval = 0; \
-  size_t temp = (size_t) &TYPE::type_id; \
-  if (type_const == temp) \
-    rval = this; \
-  if (rval == 0) \
-    rval = PARENT1::narrow(type_const);\
-  if (rval == 0) \
-    rval = PARENT2::narrow(type_const);\
-  if (rval == 0) \
-    rval = PARENT3::narrow(type_const);\
-  return rval;\
-}
-
-#define DEF_NARROW_METHODS4(TYPE,PARENT1,PARENT2,PARENT3,PARENT4) \
-static  int     type_id(); \
-virtual void    *narrow(size_t type_const)
-
-
-#define IMPL_NARROW_METHODS4(TYPE,PARENT1,PARENT2,PARENT3,PARENT4) \
-int \
-TYPE::type_id() \
-{\
-   return 0;\
-}\
-void    * \
-TYPE::narrow(size_t type_const) {\
-  void *rval = 0; \
-  size_t temp = (size_t) &TYPE::type_id; \
-  if (type_const == temp) \
-    rval = this; \
-  if (rval == 0) \
-    rval = PARENT1::narrow(type_const);\
-  if (rval == 0) \
-    rval = PARENT2::narrow(type_const);\
-  if (rval == 0) \
-    rval = PARENT3::narrow(type_const);\
-  if (rval == 0) \
-    rval = PARENT4::narrow(type_const);\
-  return rval;\
-}
-
-#define DEF_NARROW_METHODS5(TYPE,PARENT1,PARENT2,PARENT3,PARENT4,PARENT5) \
-static  int     type_id(); \
-virtual void    *narrow(size_t type_const)
-
-
-#define IMPL_NARROW_METHODS5(TYPE,PARENT1,PARENT2,PARENT3,PARENT4,PARENT5) \
-int \
-TYPE::type_id() \
-{\
-   return 0;\
-}\
-void    * \
-TYPE::narrow(size_t type_const) {\
-  void *rval = 0; \
-  size_t temp = (size_t) &TYPE::type_id; \
-  if (type_const == temp) \
-    rval = this; \
-  if (rval == 0) \
-    rval = PARENT1::narrow(type_const);\
-  if (rval == 0) \
-    rval = PARENT2::narrow(type_const);\
-  if (rval == 0) \
-    rval = PARENT3::narrow(type_const);\
-  if (rval == 0) \
-    rval = PARENT4::narrow(type_const);\
-  if (rval == 0) \
-    rval = PARENT5::narrow(type_const);\
-  return rval;\
-}
-
-#define DEF_NARROW_FROM_DECL(TYPE)\
-static  TYPE *narrow_from_decl(AST_Decl *t)
-
-
-#define IMPL_NARROW_FROM_DECL(TYPE)\
-TYPE * \
-TYPE::narrow_from_decl(AST_Decl *t) { \
-   return (TYPE *)t->narrow((size_t)&TYPE::type_id);\
-}
-
-#define DEF_NARROW_FROM_SCOPE(TYPE)\
-static  TYPE *narrow_from_scope(UTL_Scope *t)
-
-
-#define IMPL_NARROW_FROM_SCOPE(TYPE)\
-TYPE * \
-TYPE::narrow_from_scope(UTL_Scope *t) { \
-    return (TYPE *)t->narrow((size_t)&TYPE::type_id);\
+#define IMPL_NARROW_FROM_SCOPE(TYPE)            \
+TYPE *                                          \
+TYPE::narrow_from_scope (UTL_Scope *t) {        \
+  return dynamic_cast<TYPE *> (t);              \
 }
 
 #endif  // _IDL_NARROW_IDL_NARROW_HH

@@ -7,10 +7,9 @@
 
 ACE_RCSID(EventNode, EventNode, "$Id$")
 
-EventNode::EventNode (CORBA::ORB_ptr orb,
-                      ACE_thread_t thrid)
+EventNode::EventNode (CORBA::ORB_ptr orb, ACE_thread_t thrid)
   : orb_ (CORBA::ORB::_duplicate (orb))
-    , thr_id_ (thrid)
+  , thr_id_ (thrid)
 {
 }
 
@@ -48,7 +47,7 @@ void EventNode::registerHello ( ::Test::Hello_ptr h )
     }
 
   CORBA::String_var str =
-    h->get_string (static_cast<CORBA::Long> ((size_t)ACE_Thread::self ()));
+    h->get_string((::Test::ThreadId) ACE_Thread::self ());
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) - EventNode: string returned <%s>\n",
               str.in ()));

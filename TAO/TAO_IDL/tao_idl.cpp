@@ -166,7 +166,7 @@ DRV_cleanup (void)
 
   for (unsigned long i = 0; i < DRV_argcount; ++i)
     {
-      delete [] (const_cast<char *> (DRV_arglist[i]));
+      ACE::strdelete (const_cast<char *> (DRV_arglist[i]));
     }
 }
 

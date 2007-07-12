@@ -101,7 +101,8 @@ namespace TAO
     else
       {
         proxy = dynamic_cast<T *> (obj);
-        proxy->_add_ref ();
+        if (proxy)
+          proxy->_add_ref ();
       }
 
     return proxy;

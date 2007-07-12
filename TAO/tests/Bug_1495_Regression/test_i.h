@@ -40,22 +40,18 @@
 class  Bug1495_i : public virtual POA_Bug1495_Regression::Bug1495
 {
 public:
-    //Constructor
-    Bug1495_i (void);
 
-    Bug1495_i (CORBA::ORB_ptr orb);
+  Bug1495_i (CORBA::ORB_ptr orb);
 
+  //Destructor
+  virtual ~Bug1495_i (void);
 
-    //Destructor
-    virtual ~Bug1495_i (void);
+  virtual void get_thread_id (Bug1495_Regression::ThreadId_out thread_id);
 
-    virtual
-    void get_thread_id (CORBA::Long_out thread_id);
-
-    virtual
-    void shutdown (void);
+  virtual void shutdown (void);
 private:
-    CORBA::ORB_ptr orb_;
+
+  CORBA::ORB_var orb_;
 
 };
 
