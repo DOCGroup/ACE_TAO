@@ -1,3 +1,12 @@
+Thu Jul 12 01:27:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Atomic_Op.cpp:
+          Updated some comments
+
+        * ace/Atomic_Op.h:
+          Also enable the intel assembly when using Intel C++ or when
+          running on EM64T.
+
 Thu Jul 12 01:15:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Atomic_Op.{h,cpp}:
