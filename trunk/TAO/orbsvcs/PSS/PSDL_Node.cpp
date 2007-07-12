@@ -943,7 +943,7 @@ TAO_PSDL_Local_Op_Dcl::raises_expr (void) const
 
 /// = The Node methods.
 int
-TAO_PSDL_Local_Op_Dcl:: accept (TAO_PSDL_Node_Visitor *visitor)
+TAO_PSDL_Local_Op_Dcl::accept (TAO_PSDL_Node_Visitor *visitor)
 {
   return visitor->visit_local_op_dcl (this);
 }

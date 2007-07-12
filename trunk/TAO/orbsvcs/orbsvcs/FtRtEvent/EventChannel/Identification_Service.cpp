@@ -64,7 +64,7 @@ namespace FTRTEC {
     if (object_id_.length() == 0) {
       // assign an default value for object id
       object_id_.length(16);
-      memcpy(&object_id_[0], oid, 16);
+      ACE_OS::memcpy(&object_id_[0], oid, 16);
     }
     service = this;
     return 0;

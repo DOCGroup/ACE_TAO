@@ -13,7 +13,7 @@
 #include "orbsvcs/Naming/Naming_Context_Interface.h"
 #include "ace/ACE.h"
 #include "ace/OS_NS_string.h"
-#include "ace/os_include/os_ctype.h"
+#include "ace/OS_NS_ctype.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -329,7 +329,7 @@ TAO_Naming_Context::to_name (const char *sn)
 int
 TAO_Naming_Context::to_url_is_alnum_or_punctuation (char c)
 {
-  if (isalnum (c))
+  if (ACE_OS::ace_isalnum (c))
     return 1;
 
   // NON US-ASCII charcters excluding those in this array are the

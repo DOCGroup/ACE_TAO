@@ -80,7 +80,7 @@ int ConnectionDetectHandler<ACE_PEER_STREAM_2>::handle_close (ACE_HANDLE,
                                                         ACE_Reactor_Mask)
 {
   ACE_TRACE("ConnectionDetectHandler::handle_close\n");
-  close();
+  this->close();
   return 0;
 }
 

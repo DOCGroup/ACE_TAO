@@ -258,7 +258,7 @@ FT_EventService::report_factory(CORBA::ORB_ptr orb,
       ACE_DEBUG((LM_DEBUG,"Factory connected\n"));
       CORBA::String_var my_ior_string = orb->object_to_string(ec);
 
-      int len = strlen(my_ior_string.in()) ;
+      int len = ACE_OS::strlen(my_ior_string.in()) ;
 
       if (stream.send_n(my_ior_string.in(), len) != len)
         ACE_ERROR_RETURN((LM_ERROR, "(%P|%t) IOR Transmission Error\n"), -1);

@@ -713,16 +713,16 @@ ACE_Scheduler_Factory::log_scheduling_tuples(
 
    for (int ndx = 0; ndx < tuple_ptr_array_size; ndx++)
      {
-       fprintf(file,
-               subset_tuple_format,
-               tuple_ptr_array[ndx]->handle,
-               tuple_ptr_array[ndx]->rate_index,
-               tuple_ptr_array[ndx]->period,
-               tuple_ptr_array[ndx]->criticality,
-               tuple_ptr_array[ndx]->priority,
-               tuple_ptr_array[ndx]->preemption_subpriority,
-               tuple_ptr_array[ndx]->preemption_priority,
-               tuple_ptr_array[ndx]->enabled);
+       ACE_OS::fprintf(file,
+                       subset_tuple_format,
+                       tuple_ptr_array[ndx]->handle,
+                       tuple_ptr_array[ndx]->rate_index,
+                       tuple_ptr_array[ndx]->period,
+                       tuple_ptr_array[ndx]->criticality,
+                       tuple_ptr_array[ndx]->priority,
+                       tuple_ptr_array[ndx]->preemption_subpriority,
+                       tuple_ptr_array[ndx]->preemption_priority,
+                       tuple_ptr_array[ndx]->enabled);
      }
 
    ACE_OS::fclose (file);

@@ -86,7 +86,7 @@ int SCTP_Fault_Detector::parse_conf(int argc, char** argv)
     {
       curarg++;
       if (curarg < argc)
-        connector_.set_heart_beat(atoi(argv[curarg]));
+        connector_.set_heart_beat(ACE_OS::atoi(argv[curarg]));
     }
   return 0;
 }
