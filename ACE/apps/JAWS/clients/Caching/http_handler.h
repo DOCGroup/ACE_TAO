@@ -49,10 +49,10 @@ public:
 
 private:
   char request_[BUFSIZ];
-  int request_size_;
+  size_t request_size_;
 
   char filename_[BUFSIZ];
-  int response_size_;
+  size_t response_size_;
 };
 
 class HTTP_Connector
