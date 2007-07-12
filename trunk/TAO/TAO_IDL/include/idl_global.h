@@ -558,6 +558,12 @@ public:
   void add_include_path (const char *s);
   // Add another path to 'include_paths_'.
 
+  FILE * open_included_file (char const * filename,
+                             char const *& directory);
+  // Attempt to open file for reading until it is found in one of the
+  // supplied include paths.  If the file was successfully opened, the
+  // directory within which it was found is returned as well.
+
   ACE_Hash_Map_Manager<char *, char *, ACE_Null_Mutex> &
   file_prefixes (void);
   // Accessor for the IDL file prefix container.

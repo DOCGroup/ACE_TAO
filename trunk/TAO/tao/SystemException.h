@@ -28,14 +28,24 @@
 
 #include "tao/Exception.h"
 
+#ifndef TAO_Exception_Export
+# if (__GNUC__ > 3)
+// Exceptions found in DLL A but potentially thrown in DLL B must
+// always be exported.
+#  define TAO_Exception_Export ACE_Proper_Export_Flag
+# else
+#  define TAO_Exception_Export TAO_Export
+# endif  /* __GNUC__ > 3*/
+#endif  /* !TAO_Exception_Export */
+
+#ifdef THREAD_CANCELLED
+# undef THREAD_CANCELLED
+#endif /* THREAD_CANCELLED */
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_OutputCDR;
 class TAO_InputCDR;
-
-#if defined (THREAD_CANCELLED)
-#undef THREAD_CANCELLED
-#endif /* THREAD_CANCELLED */
 
 // This is already done in orbconf.h. But this file is totally
 // decoupled from its contents that we have to do this here. Including
@@ -177,7 +187,7 @@ namespace CORBA
   // inside the ORB.  All minor codes should be symbolically catalogued.
 
 #define TAO_SYSTEM_EXCEPTION(name) \
-    class TAO_Export name : public SystemException \
+    class TAO_Exception_Export name : public SystemException \
     { \
     public: \
       name (void); \

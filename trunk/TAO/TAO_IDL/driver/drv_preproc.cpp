@@ -93,15 +93,15 @@ ACE_RCSID (driver,
            "$Id$")
 
 // Storage for preprocessor args.
-const unsigned long DRV_MAX_ARGCOUNT = 128;
+unsigned long const DRV_MAX_ARGCOUNT = 128;
 unsigned long DRV_argcount = 0;
-const char *DRV_arglist[DRV_MAX_ARGCOUNT];
+char const * DRV_arglist[DRV_MAX_ARGCOUNT] = { 0 };
 
-static const char *output_arg_format = 0;
+static char const * output_arg_format = 0;
 static long output_arg_index = 0;
 
-const char *DIR_DOT = ".";
-const char *DIR_DOT_DOT = "..";
+char const DIR_DOT[] = ".";
+char const DIR_DOT_DOT[] = "..";
 
 // File names.
 static char tmp_file [MAXPATHLEN + 1] = { 0 };
@@ -114,9 +114,10 @@ static size_t drv_line_size = LINEBUF_SIZE + 1;
 
 // Push the new CPP location if we got a -Yp argument.
 void
-DRV_cpp_new_location (char *new_loc)
+DRV_cpp_new_location (char const * new_loc)
 {
-  DRV_arglist[0] = new_loc;
+  ACE::strdelete (const_cast<char *> (DRV_arglist[0]));
+  DRV_arglist[0] = ACE::strnew (new_loc);
 }
 
 // Push an argument into the DRV_arglist.
@@ -145,7 +146,7 @@ DRV_cpp_expand_output_arg (const char *filename)
 {
   if (output_arg_format != 0)
     {
-      delete [] const_cast<char *> (DRV_arglist[output_arg_index]);
+      ACE::strdelete (const_cast<char *> (DRV_arglist[output_arg_index]));
       DRV_arglist[output_arg_index] = 0;
 
       char *output_arg = 0;
@@ -232,7 +233,7 @@ DRV_cpp_init (void)
   ACE_NEW (drv_line,
            char [drv_line_size]);
 
-  const char *cpp_loc = FE_get_cpp_loc_from_env ();
+  char const * const cpp_loc = FE_get_cpp_loc_from_env ();
   DRV_cpp_putarg (cpp_loc);
 
   // Add an option to the IDL compiler to make the TAO version
@@ -322,13 +323,8 @@ DRV_cpp_init (void)
               ACE_OS::strcat (option1, TAO_IDL_INCLUDE_DIR);
               ACE_OS::strcat (option2, ".");
 #else
-              ACE_ERROR ((LM_WARNING,
-                          "NOTE: The environment variables "
-                          "TAO_ROOT and ACE_ROOT are not defined.\n"
-                          "      TAO_IDL may not be able to "
-                          "locate orb.idl\n"));
-
               ACE_OS::strcat (option1, ".");
+              ACE_OS::strcat (option2, ".");
 #endif  /* TAO_IDL_INCLUDE_DIR */
             }
         }
@@ -422,12 +418,12 @@ DRV_sweep_dirs (const char *rel_path,
                   incl_arg += bname;
                   DRV_cpp_putarg (incl_arg.c_str ());
                   full_path = ACE_OS::realpath ("", abspath);
-                  
+
                   if (full_path != 0)
                     {
                       idl_global->add_include_path (full_path);
                     }
-                    
+
                   include_added = true;
                 }
 
@@ -678,14 +674,15 @@ DRV_check_for_include (const char* buf)
     }
 
   // Check whether this word is `include` or no.
-  const char* include_str = "include";
+  static const char include_str[] = "include";
 
   for (size_t ii = 0;
-       ii < ACE_OS::strlen ("include") && *r != '\0' && *r != ' ' && *r != '\t';
+       ii < (sizeof (include_str) / sizeof (include_str[0]) - 1)
+         && *r != '\0' && *r != ' ' && *r != '\t';
        ++r, ++ii)
     {
       // Return if it doesn't match.
-      if (include_str [ii] != *r)
+      if (include_str[ii] != *r)
         {
           return;
         }
@@ -760,11 +757,11 @@ DRV_check_for_include (const char* buf)
   // Terminate this string.
   incl_file [i] = '\0';
 
-  size_t len = ACE_OS::strlen (incl_file);
-  ACE_CString name_str (incl_file);
-  ACE_CString simple ("orb.idl");
-  ACE_CString nix_path ("tao/orb.idl");
-  ACE_CString win_path ("tao\\orb.idl");
+  size_t const len = ACE_OS::strlen (incl_file);
+  ACE_CString const name_str (incl_file);
+  ACE_CString const simple ("orb.idl");
+  ACE_CString const nix_path ("tao/orb.idl");
+  ACE_CString const win_path ("tao\\orb.idl");
 
   // Some backends pass this file through, others don't.
   if (name_str == simple || name_str == nix_path || name_str == win_path)
@@ -778,6 +775,7 @@ DRV_check_for_include (const char* buf)
           DRV_get_orb_idl_includes ();
         }
     }
+
   // We have special lookup for orb.idl (TAO_ROOT/tao) that
   // also kicks in for .pidl files. If one of the latter is
   // included as a local name only, we add the 'tao/' prefix
@@ -788,6 +786,7 @@ DRV_check_for_include (const char* buf)
     {
       ACE_CString fixed_name ("tao/");
       fixed_name += incl_file;
+
       idl_global->add_to_included_idl_files (fixed_name.rep ());
     }
   else
@@ -833,14 +832,15 @@ DRV_convert_includes (const char* buf)
     }
 
   // Check whether this word is `include` or no.
-  const char* include_str = "include";
+  static const char include_str[] = "include";
 
   for (size_t ii = 0;
-       ii < ACE_OS::strlen ("include") && *r != '\0' && *r != ' ' && *r != '\t';
+       ii < (sizeof (include_str) / sizeof (include_str[0]) - 1)
+         && *r != '\0' && *r != ' ' && *r != '\t';
        ++r, ++ii)
     {
       // Return if it doesn't match.
-      if (include_str [ii] != *r)
+      if (include_str[ii] != *r)
         {
           return;
         }
@@ -886,30 +886,58 @@ DRV_convert_includes (const char* buf)
 void
 DRV_get_orb_idl_includes (void)
 {
-  ACE_CString orb_idl_path (idl_global->tao_root ());
-  orb_idl_path += "/tao/orb.idl";
-  FILE *fd = ACE_OS::fopen (orb_idl_path.fast_rep (), "r");
+  static char const orb_idl[] = "tao/orb.idl";
 
-  if (fd == 0)
+ // Search for orb.idl in supplied include file search paths.
+  char const * directory = 0;
+  FILE * fp = idl_global->open_included_file (orb_idl, directory);
+
+  if (fp == 0)
     {
-      ACE_ERROR ((LM_ERROR,
-                  "%s%s",
-                  orb_idl_path.fast_rep (),
-                  ": cannot open input file\n"));
+      // Fall back on $TAO_ROOT/tao/orb.idl if orb.idl is not in the
+      // include path.
+      ACE_CString orb_idl_path (ACE_CString (idl_global->tao_root ())
+                                + ACE_CString ('/')
+                                + ACE_CString (orb_idl));
 
+      fp = ACE_OS::fopen (orb_idl_path.c_str (), "r");
 
-      idl_global->set_err_count (idl_global->err_count () + 1);
-      throw FE_Bailout ();
+      if (fp == 0)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "TAO_IDL: cannot open or find file: %s\n",
+                      orb_idl_path.c_str ()));
+
+          idl_global->set_err_count (idl_global->err_count () + 1);
+          throw FE_Bailout ();
+        }
+    }
+  else
+    {
+      // Make sure the include directory containing orb.idl is passed
+      // to the preprocessor.
+      char include_path_arg[2 + MAXPATHLEN + 1] = { 0 };
+      include_path_arg[0] = '-';
+      include_path_arg[1] = 'I';
+      ACE_OS::strcat (include_path_arg, directory);
+#if defined (ACE_WIN32)
+      ACE_OS::strcat (include_path_arg, "\\tao");
+#else
+      ACE_OS::strcat (include_path_arg, "/tao");
+#endif
+
+      // This should go after user supplied include paths.
+      DRV_cpp_putarg (include_path_arg);
     }
 
-  while (DRV_get_line (fd))
+  while (DRV_get_line (fp))
     {
-      // Find the included .pidl files and add them to
-      // the included IDL file list.
+      // Find the included .pidl files in orb.idl and add them to the
+      // included IDL file list.
       DRV_check_for_include (drv_line);
     }
 
-  ACE_OS::fclose (fd);
+  ACE_OS::fclose (fp);
 }
 
 // Copy to a file.
@@ -1097,7 +1125,7 @@ DRV_pre_proc (const char *myfile)
   {
     char main_abspath[MAXPATHLEN] = "";
     char trans_path[MAXPATHLEN] = "";
-    char *main_fullpath = 
+    char *main_fullpath =
       ACE_OS::realpath (IDL_GlobalData::translateName (myfile, trans_path),
                         main_abspath);
     idl_global->set_main_filename (
@@ -1209,7 +1237,7 @@ DRV_pre_proc (const char *myfile)
 
   // Remove the null termination and the input file from the DRV_arglist,
   // the next file will the previous args.
-  delete [] const_cast<char *> (DRV_arglist[DRV_argcount - 2]);
+  ACE::strdelete (const_cast<char *> (DRV_arglist[DRV_argcount - 2]));
 
   DRV_argcount -= 2;
   ACE_exitcode status = 0;

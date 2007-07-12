@@ -73,15 +73,15 @@ const unsigned long TAO_IDL_COMMAND_LINE_BUFFER_SIZE = 4 * 1024;
 // External functions for the IDL compiler driver program.
 extern void DRV_parse_args (long, char **);
 extern void DRV_usage (void);
-extern void DRV_pre_proc (const char *myfile);
+extern void DRV_pre_proc (char const * myfile);
 extern void DRV_store_env_include_paths (void);
 extern void DRV_cpp_init (void);
 extern void DRV_cpp_post_init (void);
-extern void DRV_cpp_putarg (const char *str);
-extern void DRV_cpp_new_location (char *new_loc);
+extern void DRV_cpp_putarg (char const * str);
+extern void DRV_cpp_new_location (char const * new_loc);
 extern void DRV_get_orb_idl_includes (void);
 
 // Not used by all backends.
-extern void DRV_push_file (const char *s);
+extern void DRV_push_file (char const * s);
 
 #endif           // _DRV_EXTERN_DRV_EXTERN_HH

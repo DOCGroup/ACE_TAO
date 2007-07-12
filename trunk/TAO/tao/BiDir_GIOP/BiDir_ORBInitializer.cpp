@@ -33,7 +33,7 @@ TAO_BiDir_ORBInitializer::register_policy_factories (
 {
   /// Register the BiDir policy factories.
   PortableInterceptor::PolicyFactory_ptr temp_factory =
-    PortableInterceptor::PolicyFactory::_nil ();
+    PortableInterceptor::PolicyFactory_ptr ();
   /// This policy factory is used for all BiDir related policies.
   ACE_NEW_THROW_EX (temp_factory,
                     TAO_BiDir_PolicyFactory,
