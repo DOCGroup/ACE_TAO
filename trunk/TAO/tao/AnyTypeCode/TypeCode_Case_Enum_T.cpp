@@ -55,22 +55,23 @@ TAO::TypeCode::Case_Enum_T<StringType,
                                                        ::CORBA::TypeCode_ptr tc
                                                        ) const
 {
-  CORBA::Any_var const any = tc->member_label (index
-                                              );
-
-  // The equality operator == below is guaranteed to be defined for
-  // the discriminator type since an IDL union discriminator type must
-  // be any of the following: (1) an integer, (2) a character, (3) a
-  // boolean, or (4) an enumeration.
-
-  CORBA::ULong tc_label;
-  if ((any.in () >>= tc_label)
-      && this->label_ == tc_label)
+  CORBA::Any_var any = tc->member_label (index);
+  TAO_OutputCDR out_cdr;
+  
+  if (! any->impl ()->marshal_value (out_cdr))
     {
-      return true;
+      return false;
     }
-
-  return false;
+  
+  TAO_InputCDR in_cdr (out_cdr);
+  CORBA::ULong tc_label = ACE_UINT32_MAX;
+  
+  if (! in_cdr.read_ulong (tc_label))
+    {
+      return false;
+    }
+  
+  return (this->label_ == tc_label);
 }
 
 template <typename StringType,

@@ -938,13 +938,18 @@ TAO_Container_i::create_union_i (const char *id,
                                           version,
                                           "defns");
 
-  // Add a field to hold the path to the discriminator type.
-  char *disc_path =
-    TAO_IFR_Service_Utils::reference_to_path (discriminator_type);
+  // Add a field to hold the path to the discriminator type. If it's
+  // nil, we are creating an entry for a forward declared union which
+  // will be later destroyed and replaced by the full union definition.
+  if (!CORBA::is_nil (discriminator_type))
+    {
+      char *disc_path =
+        TAO_IFR_Service_Utils::reference_to_path (discriminator_type);
 
-  this->repo_->config ()->set_string_value (new_key,
-                                            "disc_path",
-                                            disc_path);
+      this->repo_->config ()->set_string_value (new_key,
+                                                "disc_path",
+                                                disc_path);
+    }
 
   ACE_Configuration_Section_Key refs_key;
 

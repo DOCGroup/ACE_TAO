@@ -1,3 +1,53 @@
+Thu Jul 12 09:39:46 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/IFRService/UnionDef_i.h:
+        
+          Cosmetic changes.
+          
+        * orbsvcs/orbsvcs/IFRService/Container_i.cpp(create_union_i):
+        
+          Added check for a null discriminator type before setting
+          a reference to it in the repository. Required to support
+          creation of an entry for a forward declared union, in
+          which case the discriminator and the members will be
+          added when the full definition is seen.
+          
+        * orbsvcs/IFR_Service/ifr_adding_visitor.h:
+        * orbsvcs/IFR_Service/ifr_adding_visitor_union.h:
+        * orbsvcs/IFR_Service/ifr_adding_visitor_exception.h:
+        * orbsvcs/IFR_Service/ifr_adding_visitor_structure.h:
+        * orbsvcs/IFR_Service/ifr_adding_visitor.cpp:
+        * orbsvcs/IFR_Service/ifr_adding_visitor_union.cpp:
+        * orbsvcs/IFR_Service/ifr_adding_visitor_exception.cpp:
+        * orbsvcs/IFR_Service/ifr_adding_visitor_structure.cpp:
+        
+          - Added support for forward declared structs and unions.
+          - Factored out common code that adds union members, used
+            when creating a new union entry in the repo and also
+            when filling in members of an existing entry originally
+            created for a forward delared union.
+          - Added changes required by changes in the TAO_IDL front
+            end for typedefs.
+            
+        * tao/AnyTypeCode/TypeCode_Case_Enum_T.cpp:
+        
+          Changed code that compares equality of union labels where
+          the discriminator is an enum to always extract the value
+          to compare as an unsigned long, since the Any extraction
+          operator overload for the enum type may not be known to the
+          ORB code that is doing the comparison.
+          
+        * tao/TypeCodeFactory/TypeCodeFactory_i.h(check_recursion):
+        * tao/TypeCodeFactory/TypeCodeFactory_i.cpp(check_recursion):
+        
+          Added parameter to the method that holds a 'working id'
+          that enables the method to determine that, although a
+          recursion has been detected, it may be the recursion of
+          another member at a lower level that isn't the one we're
+          interested in. If such a thing is detected, we pop out
+          of the method's recursion and prevent an infinite
+          regression.
+
 Wed Jul 11 19:33:48 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * configure.ac:

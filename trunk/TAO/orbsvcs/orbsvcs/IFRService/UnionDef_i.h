@@ -50,63 +50,48 @@ public:
   virtual ~TAO_UnionDef_i (void);
 
   /// Return our definition kind.
-  virtual CORBA::DefinitionKind def_kind ()
-;
+  virtual CORBA::DefinitionKind def_kind ();
 
   /// Remove the repository entry and its contents.
-  virtual void destroy ()
-;
+  virtual void destroy ();
 
-  virtual void destroy_i ()
-;
+  virtual void destroy_i ();
 
   /// From IDLType_i's pure virtual function.
-  virtual CORBA::TypeCode_ptr type ()
-;
+  virtual CORBA::TypeCode_ptr type ();
 
   /// From IDLType_i's pure virtual function.
-  virtual CORBA::TypeCode_ptr type_i ()
-;
+  virtual CORBA::TypeCode_ptr type_i ();
 
-  virtual CORBA::TypeCode_ptr discriminator_type ()
-;
+  virtual CORBA::TypeCode_ptr discriminator_type ();
 
-  CORBA::TypeCode_ptr discriminator_type_i ()
-;
+  CORBA::TypeCode_ptr discriminator_type_i ();
 
-  virtual CORBA::IDLType_ptr discriminator_type_def ()
-;
+  virtual CORBA::IDLType_ptr discriminator_type_def ();
 
-  CORBA::IDLType_ptr discriminator_type_def_i ()
-;
+  CORBA::IDLType_ptr discriminator_type_def_i ();
 
   virtual void discriminator_type_def (
-      CORBA::IDLType_ptr discriminator_type_def)
-;
+    CORBA::IDLType_ptr discriminator_type_def);
 
   void discriminator_type_def_i (
-      CORBA::IDLType_ptr discriminator_type_def)
-;
+    CORBA::IDLType_ptr discriminator_type_def);
 
-  virtual CORBA::UnionMemberSeq *members ()
-;
+  virtual CORBA::UnionMemberSeq *members ();
 
-  CORBA::UnionMemberSeq *members_i ()
-;
+  CORBA::UnionMemberSeq *members_i ();
 
   virtual void members (
-      const CORBA::UnionMemberSeq &members)
-;
+    const CORBA::UnionMemberSeq &members);
 
   void members_i (
-      const CORBA::UnionMemberSeq &members)
-;
+    const CORBA::UnionMemberSeq &members);
 
 private:
   /// Used by members() to get each member's label value.
   void fetch_label (
-      const ACE_Configuration_Section_Key member_key,
-      CORBA::UnionMember &member);
+    const ACE_Configuration_Section_Key member_key,
+    CORBA::UnionMember &member);
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

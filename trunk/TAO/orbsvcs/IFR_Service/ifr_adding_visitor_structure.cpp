@@ -16,7 +16,7 @@ ACE_RCSID (IFR_Service,
 
 ifr_adding_visitor_structure::ifr_adding_visitor_structure (
     AST_Decl *scope,
-    CORBA::Boolean is_nested
+    bool is_nested
   )
   : ifr_adding_visitor (scope),
     is_nested_ (is_nested)
@@ -72,7 +72,7 @@ ifr_adding_visitor_structure::visit_scope (UTL_Scope *node)
                   // Since the enclosing scope hasn't been created yet,
                   // we make a special visitor to create this member
                   // at global scope and move it into the struct later.
-                  ifr_adding_visitor_structure visitor (ft, 1);
+                  ifr_adding_visitor_structure visitor (ft, true);
 
                   if (ft->ast_accept (&visitor) == -1)
                     {
@@ -144,19 +144,21 @@ ifr_adding_visitor_structure::visit_structure (AST_Structure *node)
 {
   try
     {
+      CORBA::StructDef_var struct_def;
       CORBA::Contained_var prev_def =
         be_global->repository ()->lookup_id (node->repoID ());
 
       if (CORBA::is_nil (prev_def.in ()))
         {
-          CORBA::StructDef_var    struct_def;
-          CORBA::StructMemberSeq  dummyMembers( 0 );
-          dummyMembers.length( 0 );
+          CORBA::StructDef_var struct_def;
+          CORBA::StructMemberSeq dummyMembers;
+          dummyMembers.length (0);
 
-          CORBA::Container_ptr current_scope= CORBA::Container::_nil ();
+          CORBA::Container_ptr current_scope = CORBA::Container::_nil ();
+          
           if (this->is_nested_)
             {
-              current_scope= be_global->holding_scope ();
+              current_scope = be_global->holding_scope ();
             }
           else if (be_global->ifr_scopes ().top (current_scope) != 0)
             {
@@ -170,8 +172,8 @@ ifr_adding_visitor_structure::visit_structure (AST_Structure *node)
               );
             }
 
-          // First create the named structure without any members
-          struct_def=
+          // First create the named structure without any members.
+          struct_def =
             current_scope->create_struct (
                 node->repoID (),
                 node->local_name ()->get_string (),
@@ -179,8 +181,8 @@ ifr_adding_visitor_structure::visit_structure (AST_Structure *node)
                 dummyMembers
               );
 
-          // Then recurse into the real structure members (which corrupts ir_current_)
-          if (this->visit_scope (node) == -1)
+          // Then add the real structure members (which corrupts ir_current_).
+          if (this->add_members (node, struct_def.in ()) == -1)
             {
               ACE_ERROR_RETURN ((
                   LM_ERROR,
@@ -191,46 +193,37 @@ ifr_adding_visitor_structure::visit_structure (AST_Structure *node)
                 -1
               );
             }
-
-          // Correct ir_current_ and move the real structure members into the struct
-          this->ir_current_= CORBA::StructDef::_duplicate (struct_def.in ());
-          struct_def->members( this->members_ );
-
-
-          size_t size = this->move_queue_.size ();
-
-          if (size > 0)
-            {
-              CORBA::Contained_var traveller;
-
-              CORBA::Container_var new_container =
-                CORBA::Container::_narrow (this->ir_current_.in ());
-
-              for (size_t i = 0; i < size; ++i)
-                {
-                  this->move_queue_.dequeue_head (traveller);
-
-                  CORBA::String_var name =
-                    traveller->name ();
-
-                  CORBA::String_var version =
-                    traveller->version ();
-
-                  traveller->move (new_container.in (),
-                                   name.in (),
-                                   version.in ());
-                }
-            }
-
-          node->ifr_added (1);
         }
       else
         {
-          // If the line below is true, we are clobbering a previous
-          // entry (from another IDL file) of another type. In that
+          // Are we seeing the full definition of a previous forward
+          // declaration. If so, just add the members so the repo
+          // entry referencing the StructDef will still be valid.
+          if (node->ifr_fwd_added ())
+            {
+              struct_def = CORBA::StructDef::_narrow (prev_def.in ());
+          
+              if (this->add_members (node, struct_def.in ()) == -1)
+                {
+                  ACE_ERROR_RETURN ((
+                      LM_ERROR,
+                      ACE_TEXT ("(%N:%l) ifr_adding_visitor_structure::")
+                      ACE_TEXT ("visit_structure -")
+                      ACE_TEXT (" visit_scope failed\n")
+                    ),
+                    -1
+                  );
+                }
+                
+              // We shouldn't see this node again, but just in case.
+              node->ifr_fwd_added (false);
+           }
+           
+          // Are we clobbering a previous
+          // entry (from another IDL file) of another type? In that
           // case we do what other ORB vendors do, and destroy the
           // original entry, create the new one, and let the user beware.
-          if (node->ifr_added () == 0)
+          if (!node->ifr_added ())
             {
               prev_def->destroy ();
 
@@ -238,8 +231,7 @@ ifr_adding_visitor_structure::visit_structure (AST_Structure *node)
               return this->visit_structure (node);
             }
 
-          this->ir_current_ =
-            CORBA::IDLType::_narrow (prev_def.in ());
+          this->ir_current_ = CORBA::IDLType::_narrow (prev_def.in ());
         }
     }
   catch (const CORBA::Exception& ex)
@@ -301,7 +293,7 @@ ifr_adding_visitor_structure::visit_enum (AST_Enum *node)
           // queue to be moved later.
           this->move_queue_.enqueue_tail (tmp);
 
-          node->ifr_added (1);
+          node->ifr_added (true);
         }
       else
         {
@@ -309,7 +301,7 @@ ifr_adding_visitor_structure::visit_enum (AST_Enum *node)
           // entry (from another IDL file) of another type. In that
           // case we do what other ORB vendors do, and destroy the
           // original entry, create the new one, and let the user beware.
-          if (node->ifr_added () == 0)
+          if (!node->ifr_added ())
             {
               prev_def->destroy ();
 
@@ -374,7 +366,7 @@ ifr_adding_visitor_structure::visit_union (AST_Union *node)
           // entry (from another IDL file) of another type. In that
           // case we do what other ORB vendors do, and destroy the
           // original entry, create the new one, and let the user beware.
-          if (node->ifr_added () == 0)
+          if (!node->ifr_added ())
             {
               prev_def->destroy ();
 
@@ -402,4 +394,49 @@ CORBA::IDLType_ptr
 ifr_adding_visitor_structure::ir_current (void) const
 {
   return this->ir_current_.in ();
+}
+
+int
+ifr_adding_visitor_structure::add_members (AST_Structure *node,
+                                           CORBA::StructDef_ptr struct_def)
+{
+  if (this->visit_scope (node) == -1)
+    {
+      ACE_ERROR_RETURN ((
+          LM_ERROR,
+          ACE_TEXT ("(%N:%l) ifr_adding_visitor_structure::")
+          ACE_TEXT ("visit_structure -")
+          ACE_TEXT (" visit_scope failed\n")
+        ),
+        -1
+      );
+    }
+
+  // Correct ir_current_ and move the real union members into the union.
+  this->ir_current_= CORBA::StructDef::_duplicate (struct_def);
+  struct_def->members (this->members_);
+  size_t size = this->move_queue_.size ();
+
+  if (size > 0)
+    {
+      CORBA::Contained_var traveller;
+
+      CORBA::Container_var new_container =
+        CORBA::Container::_narrow (this->ir_current_.in ());
+
+      for (size_t i = 0; i < size; ++i)
+        {
+          this->move_queue_.dequeue_head (traveller);
+
+          CORBA::String_var name = traveller->name ();
+          CORBA::String_var version = traveller->version ();
+
+          traveller->move (new_container.in (),
+                           name.in (),
+                           version.in ());
+        }
+    }
+   
+  node->ifr_added (true);
+  return 0;
 }
