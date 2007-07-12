@@ -162,11 +162,11 @@ TAO_DIOP_Profile::parse_string_i (const char *ior)
                           ACE_TEXT ("invalid IPv6 decimal address specified.\n")));
             }
 
-          ACE_THROW (CORBA::INV_OBJREF (
+          throw ::CORBA::INV_OBJREF (
                          CORBA::SystemException::_tao_minor_code (
                                                                   0,
                                                                   EINVAL),
-                         CORBA::COMPLETED_NO));
+                         CORBA::COMPLETED_NO);
         }
       else
         {
