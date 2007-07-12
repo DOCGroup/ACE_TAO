@@ -123,8 +123,8 @@ ACE_Blob_Reader::receive_reply (void)
   char buf [MAX_HEADER_SIZE + 1];
   char *buf_ptr;
   int bytes_read = 0;
-  int bytes_left = length_;
-  int offset_left = offset_;
+  size_t bytes_left = this->length_;
+  size_t offset_left = this->offset_;
 
   // Receive the first MAX_HEADER_SIZE bytes to be able to strip off the
   // header. Note that we assume that the header will fit into the
@@ -267,14 +267,14 @@ ACE_Blob_Writer::send_request (void)
   // Determine the length of the header message we will be sending to
   // the server. Note that we add 32 for safety -- this corresponds to
   // the number of bytes needed for the length field.
-  u_short mesglen =
+  size_t mesglen =
     ACE_OS::strlen (request_prefix_)
     + ACE_OS::strlen (filename_)
     + ACE_OS::strlen (request_suffix_)
     + 32; // safety
 
   // Allocate a buffer to hold the header
-  char *mesg;
+  char *mesg = 0;
   ACE_NEW_RETURN (mesg, char [mesglen], -1);
 
   // Create the header, store the actual length in mesglen.

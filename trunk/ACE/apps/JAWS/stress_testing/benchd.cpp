@@ -9,6 +9,7 @@
 #include "ace/Reactor.h"
 #include "ace/Get_Opt.h"
 #include "ace/ARGV.h"
+#include "ace/OS_NS_stdio.h"
 
 ACE_RCSID(stress_testing, benchd, "$Id$")
 
@@ -98,9 +99,9 @@ int
 Handle_Events::handle_close (ACE_HANDLE h, ACE_Reactor_Mask)
 {
   if (h == 0)
-    cout << "STDIN_Events handle removed from reactor." << endl << flush;
+    ACE_DEBUG ((LM_DEBUG, "STDIN_Events handle removed from reactor.\n"));
   else
-    cout << "Mcast_Events handle removed from reactor." << endl << flush;
+    ACE_DEBUG ((LM_DEBUG, "Mcast_Events handle removed from reactor.\n"));
   return 0;
 }
 
