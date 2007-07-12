@@ -22,8 +22,11 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "orbsvcs/SSLIOPC.h"
+#include "orbsvcs/SecurityLevel2C.h"
 #include "tao/PortableInterceptorC.h"
+#include "tao/PI/ORBInitInfo.h"
 #include "tao/PI_Server/PI_Server.h"
+#include "tao/PortableServer/PS_CurrentC.h"
 #include "tao/LocalObject.h"
 
 // This is to remove "inherits via dominance" warnings from MSVC.
@@ -55,9 +58,16 @@ namespace TAO
     {
     public:
 
-      /// Constructor.
-      Server_Invocation_Interceptor (::SSLIOP::Current_ptr current,
-                                     ::Security::QOP qop);
+      /*!
+	\brief Constructor.
+        \param info reference to the ORBInitInfo object so that
+                    the interceptor can get access to initial references, etc.
+        \param default_qop the default Quality of Protection
+	\param tss_slot the TSS slot used by the various security features.
+      */
+      Server_Invocation_Interceptor (PortableInterceptor::ORBInitInfo_ptr info,
+				     ::Security::QOP default_qop,
+				     size_t tss_slot);
 
       /**
        * @name PortableInterceptor::ServerRequestInterceptor Methods
@@ -113,9 +123,15 @@ namespace TAO
       /// Reference to the current SSLIOP execution context.
       ::SSLIOP::Current_var ssliop_current_;
 
+      /// Reference to the POA current
+      PortableServer::Current_var poa_current_;
+
       /// The default quality-of-protection settings in use.
       ::Security::QOP qop_;
 
+      /// SecurityLevel2 security manager reference
+      SecurityLevel2::SecurityManager_var sec2manager_;
+      SecurityLevel2::Current_var sec2_current_;
     };
 
   }  // End SSLIOP namespace.
