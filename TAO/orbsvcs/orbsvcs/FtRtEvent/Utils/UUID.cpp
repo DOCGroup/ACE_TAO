@@ -161,7 +161,7 @@ UUID::create (unsigned char *buffer)
   buffer[8] = (unsigned char) ((clockSequence >> 8) & 0x1f);
   buffer[9] = (unsigned char) (clockSequence & 0x1f);
 
-  memcpy(buffer + 10, &node, 6);
+  ACE_OS::memcpy(buffer + 10, &node, 6);
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -12,13 +12,13 @@ namespace
     size_t const len = ACE_OS::strlen (s);
     if (len == 0)
       return 0;
-    if (! isdigit(s[0]))
+    if (! ACE_OS::ace_isdigit(s[0]))
       return 0;
 
     ACE_UINT64 t = 0;
     for (size_t i = 0; i < len; ++i)
     {
-      if (isdigit(s[i]) == 0)
+      if (ACE_OS::ace_isdigit(s[i]) == 0)
       {
         break;
       }

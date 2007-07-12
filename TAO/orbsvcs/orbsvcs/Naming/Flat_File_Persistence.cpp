@@ -52,14 +52,14 @@ TAO_NS_FlatFileStream::open()
   // For now, three flags exist "r", "w",  and "c"
   int flags = 0;
   const char *fdmode = 0;
-  if( strchr(mode_.c_str(), 'r') )
-    if( strchr(mode_.c_str(), 'w') )
+  if( ACE_OS::strchr(mode_.c_str(), 'r') )
+    if( ACE_OS::strchr(mode_.c_str(), 'w') )
       flags = O_RDWR, fdmode = "r+";
     else
       flags = O_RDONLY, fdmode = "r";
   else
     flags = O_WRONLY, fdmode = "w";
-  if( strchr(mode_.c_str(), 'c') )
+  if( ACE_OS::strchr(mode_.c_str(), 'c') )
     flags |= O_CREAT;
 #ifndef ACE_WIN32
   if( ACE_OS::flock_init (&filelock_, flags, ACE_TEXT_CHAR_TO_TCHAR(file_.c_str()), 0666) != 0 )

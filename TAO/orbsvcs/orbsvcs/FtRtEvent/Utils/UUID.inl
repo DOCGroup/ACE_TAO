@@ -19,13 +19,13 @@ UUID::UUID(int)
 ACE_INLINE
 UUID::UUID(const unsigned char* id)
 {
-  memcpy(rep_.uuid, id, 16);
+  ACE_OS::memcpy(rep_.uuid, id, 16);
 }
 
 ACE_INLINE
 bool UUID::operator == (const UUID& other) const
 {
-  return memcmp(this->rep_.uuid, other.rep_.uuid, BINRARY_LENGTH) == 0;
+  return ACE_OS::memcmp(this->rep_.uuid, other.rep_.uuid, BINRARY_LENGTH) == 0;
 }
 
 ACE_INLINE
@@ -45,7 +45,7 @@ bool UUID::is_valid() const
 ACE_INLINE
 void UUID::to_binary(unsigned char* binary_rep) const
 {
-  memcpy(binary_rep, rep_.uuid, 16);
+  ACE_OS::memcpy(binary_rep, rep_.uuid, 16);
 }
 
 ACE_INLINE

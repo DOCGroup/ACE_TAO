@@ -78,7 +78,7 @@ TAO::HTIOP::Protocol_Factory::init (int argc,
       else if (ACE_OS::strcasecmp(argv[i], ACE_TEXT("-inside")) == 0)
         {
           if (++i < argc)
-            this->inside_ = ::atoi (ACE_TEXT_ALWAYS_CHAR(argv[i]));
+            this->inside_ = ACE_OS::atoi (ACE_TEXT_ALWAYS_CHAR(argv[i]));
         }
     }
 

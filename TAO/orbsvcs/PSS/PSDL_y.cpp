@@ -134,7 +134,7 @@ extern int yylex (void);
 
 static void yyerror (const char *error)
 {
-  printf ("Error %s\n", error);
+  ACE_OS::printf ("Error %s\n", error);
 }
 
 #ifndef YYSTYPE

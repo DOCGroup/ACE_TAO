@@ -374,8 +374,8 @@ yyloop:
             yys = 0;
             if (yychar <= YYMAXTOKEN) yys = yyname[yychar];
             if (!yys) yys = "illegal-symbol";
-            printf("%sdebug: state %d, reading %d (%s)\n",
-                    YYPREFIX, yystate, yychar, yys);
+            ACE_OS::printf("%sdebug: state %d, reading %d (%s)\n",
+                           YYPREFIX, yystate, yychar, yys);
         }
 #endif
     }
@@ -384,8 +384,8 @@ yyloop:
     {
 #if YYDEBUG
         if (yydebug)
-            printf("%sdebug: state %d, shifting to state %d\n",
-                    YYPREFIX, yystate, yytable[yyn]);
+          ACE_OS::printf("%sdebug: state %d, shifting to state %d\n",
+                         YYPREFIX, yystate, yytable[yyn]);
 #endif
         if (yyssp >= yysslim && yygrowstack())
         {
@@ -425,7 +425,7 @@ yyinrecovery:
             {
 #if YYDEBUG
                 if (yydebug)
-                    printf("%sdebug: state %d, error recovery shifting\
+                  ACE_OS::printf("%sdebug: state %d, error recovery shifting\
  to state %d\n", YYPREFIX, *yyssp, yytable[yyn]);
 #endif
                 if (yyssp >= yysslim && yygrowstack())
@@ -440,8 +440,8 @@ yyinrecovery:
             {
 #if YYDEBUG
                 if (yydebug)
-                    printf("%sdebug: error recovery discarding state %d\n",
-                            YYPREFIX, *yyssp);
+                  ACE_OS::printf("%sdebug: error recovery discarding state %d\n",
+                                 YYPREFIX, *yyssp);
 #endif
                 if (yyssp <= yyss) goto yyabort;
                 --yyssp;
@@ -458,8 +458,8 @@ yyinrecovery:
             yys = 0;
             if (yychar <= YYMAXTOKEN) yys = yyname[yychar];
             if (!yys) yys = "illegal-symbol";
-            printf("%sdebug: state %d, error recovery discards token %d (%s)\n",
-                    YYPREFIX, yystate, yychar, yys);
+            ACE_OS::printf("%sdebug: state %d, error recovery discards token %d (%s)\n",
+                           YYPREFIX, yystate, yychar, yys);
         }
 #endif
         yychar = (-1);
@@ -468,8 +468,8 @@ yyinrecovery:
 yyreduce:
 #if YYDEBUG
     if (yydebug)
-        printf("%sdebug: state %d, reducing by rule %d (%s)\n",
-                YYPREFIX, yystate, yyn, yyrule[yyn]);
+      ACE_OS::printf("%sdebug: state %d, reducing by rule %d (%s)\n",
+                     YYPREFIX, yystate, yyn, yyrule[yyn]);
 #endif
     yym = yylen[yyn];
     yyval = yyvsp[1-yym];
@@ -595,7 +595,7 @@ break;
     {
 #if YYDEBUG
         if (yydebug)
-            printf("%sdebug: after reduction, shifting from state 0 to\
+          ACE_OS::printf("%sdebug: after reduction, shifting from state 0 to\
  state %d\n", YYPREFIX, YYFINAL);
 #endif
         yystate = YYFINAL;
@@ -610,8 +610,8 @@ break;
                 yys = 0;
                 if (yychar <= YYMAXTOKEN) yys = yyname[yychar];
                 if (!yys) yys = "illegal-symbol";
-                printf("%sdebug: state %d, reading %d (%s)\n",
-                        YYPREFIX, YYFINAL, yychar, yys);
+                ACE_OS::printf("%sdebug: state %d, reading %d (%s)\n",
+                               YYPREFIX, YYFINAL, yychar, yys);
             }
 #endif
         }
@@ -625,7 +625,7 @@ break;
         yystate = yydgoto[yym];
 #if YYDEBUG
     if (yydebug)
-        printf("%sdebug: after reduction, shifting from state %d \
+      ACE_OS::printf("%sdebug: after reduction, shifting from state %d \
 to state %d\n", YYPREFIX, *yyssp, yystate);
 #endif
     if (yyssp >= yysslim && yygrowstack())

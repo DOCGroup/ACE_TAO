@@ -115,7 +115,7 @@ TAO_LB_CPU_Load_Average_Monitor::loads (void)
   // defined.
 
   // Obtain the load average directly from the `/proc' filesystem.
-  FILE * s = ::fopen ("/proc/loadavg", "r");
+  FILE * s = ACE_OS::fopen ("/proc/loadavg", "r");
 
   if (s == 0)
     throw CORBA::NO_IMPLEMENT (
@@ -126,7 +126,7 @@ TAO_LB_CPU_Load_Average_Monitor::loads (void)
 
   fscanf (s, "%f", &loadavg[0]);
 
-  (void) fclose (s);
+  (void) ACE_OS::fclose (s);
 
   const int samples = 1;
 
@@ -148,7 +148,7 @@ TAO_LB_CPU_Load_Average_Monitor::loads (void)
 
   if (samples == 1)
     {
-      const long num_processors = ::sysconf (_SC_NPROCESSORS_ONLN);
+      const long num_processors = ACE_OS::sysconf (_SC_NPROCESSORS_ONLN);
 
       ACE_ASSERT (num_processors > 0);
 

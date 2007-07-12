@@ -32,7 +32,7 @@ TAO_Notify_Service_Driver::TAO_Notify_Service_Driver (void)
 TAO_Notify_Service_Driver::~TAO_Notify_Service_Driver (void)
 {
   if (ior_output_file_)
-    fclose(ior_output_file_);
+    ACE_OS::fclose(ior_output_file_);
 }
 
 int
