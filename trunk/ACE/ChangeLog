@@ -1,3 +1,10 @@
+Thu Jul 12 16:29:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_2975_Regression.cpp:
+        * tests/test.mpc:
+          New regression test for 2975, thanks to Pavel Zaichenko
+          <zaichep at mail dot ru> for making this test
+
 Thu Jul 12 12:07:27 UTC 2007  Vadym Ridosh  <vridosh@prismtech.com>
 
         * bin/tao_other_tests.lst:
