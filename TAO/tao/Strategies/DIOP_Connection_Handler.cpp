@@ -49,7 +49,7 @@ TAO_DIOP_Connection_Handler::TAO_DIOP_Connection_Handler (TAO_ORB_Core *orb_core
 {
   TAO_DIOP_Transport* specific_transport = 0;
   ACE_NEW (specific_transport,
-           TAO_DIOP_Transport(this, orb_core, flag));
+           TAO_DIOP_Transport (this, orb_core, flag));
 
   // store this pointer (indirectly increment ref count)
   this->transport (specific_transport);
@@ -65,9 +65,9 @@ TAO_DIOP_Connection_Handler::~TAO_DIOP_Connection_Handler (void)
   if (result == -1 && TAO_debug_level)
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT("TAO (%P|%t) - DIOP_Connection_Handler::")
-                  ACE_TEXT("~DIOP_Connection_Handler, ")
-                  ACE_TEXT("release_os_resources() failed %m\n")));
+                  ACE_TEXT ("TAO (%P|%t) - DIOP_Connection_Handler::")
+                  ACE_TEXT ("~DIOP_Connection_Handler, ")
+                  ACE_TEXT ("release_os_resources() failed %m\n")));
     }
   this->udp_socket_.close ();
 }
@@ -97,14 +97,14 @@ TAO_DIOP_Connection_Handler::addr (const ACE_INET_Addr &addr)
 const ACE_INET_Addr &
 TAO_DIOP_Connection_Handler::local_addr (void)
 {
-  return local_addr_;
+  return this->local_addr_;
 }
 
 
 void
 TAO_DIOP_Connection_Handler::local_addr (const ACE_INET_Addr &addr)
 {
-  local_addr_ = addr;
+  this->local_addr_ = addr;
 }
 
 
@@ -220,7 +220,7 @@ TAO_DIOP_Connection_Handler::open_server (void)
                                protocol_properties.recv_buffer_size_) == -1)
     return -1;
 
-  if( TAO_debug_level > 5)
+  if (TAO_debug_level > 5)
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT("TAO (%P|%t) - DIOP_Connection_Handler::open_server, ")
@@ -302,14 +302,64 @@ TAO_DIOP_Connection_Handler::release_os_resources (void)
 }
 
 int
+TAO_DIOP_Connection_Handler::add_transport_to_cache (void)
+{
+  ACE_INET_Addr addr;
+
+  // This function is called by the acceptor to add this
+  // transport to the transport cache.  This is really
+  // important for proper shutdown.  The address used
+  // is irrelevent, since DIOP is connectionless.
+
+  // Construct a DIOP_Endpoint object.
+  TAO_DIOP_Endpoint endpoint (
+      addr,
+      this->orb_core ()->orb_params ()->cache_incoming_by_dotted_decimal_address ());
+
+  // Construct a property object
+  TAO_Base_Transport_Property prop (&endpoint);
+
+  // Add the handler to Cache
+  return this->orb_core ()->lane_resources ()
+    .transport_cache ().cache_transport (&prop,
+                                         this->transport ());
+}
+
+int
 TAO_DIOP_Connection_Handler::set_tos (int tos)
 {
   if (tos != this->dscp_codepoint_)
     {
-      int const result = this->dgram ().set_option (IPPROTO_IP,
-                                                    IP_TOS,
-                                                    (int *) &tos ,
-                                                    (int) sizeof (tos));
+      int result = 0;
+#if defined (ACE_HAS_IPV6)
+      ACE_INET_Addr local_addr;
+      if (this->dgram ().get_local_addr (local_addr) == -1)
+        return -1;
+      else if (local_addr.get_type () == AF_INET6)
+# if !defined (IPV6_TCLASS)
+        // IPv6 defines option IPV6_TCLASS for specifying traffic class/priority
+        // but not many implementations yet (very new;-).
+        {
+          if (TAO_debug_level)
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "TAO (%P|%t) - DIOP_Connection_Handler::"
+                          "set_dscp_codepoint -> IPV6_TCLASS not supported yet\n"));
+            }
+          return 0;
+        }
+# else /* !IPV6_TCLASS */
+        result = this->dgram ().set_option (IPPROTO_IPV6,
+                                            IPV6_TCLASS,
+                                            (int *) &tos ,
+                                            (int) sizeof (tos));
+      else
+# endif /* IPV6_TCLASS */
+#endif /* ACE_HAS_IPV6 */
+      result = this->dgram ().set_option (IPPROTO_IP,
+                                          IP_TOS,
+                                          (int *) &tos ,
+                                          (int) sizeof (tos));
 
       if (TAO_debug_level)
         {

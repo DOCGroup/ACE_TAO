@@ -117,18 +117,26 @@ private:
   int set (const ACE_INET_Addr &addr,
            int use_dotted_decimal_addresses);
 
+  /// Helper method for object_addr () call.
+  void object_addr_i (void) const;
+
   /// String representing the host name.
   CORBA::String_var host_;
 
   /// TCP port number.
   CORBA::UShort port_;
 
+#if defined (ACE_HAS_IPV6)
+  /// Does the host string represent an IPv6 decimal address.
+  bool is_ipv6_decimal_;
+#endif /* ACE_HAS_IPV6 */
+
   /// Cached instance of <ACE_INET_Addr> for use in making
   /// invocations, etc.
-  ACE_INET_Addr object_addr_;
+  mutable ACE_INET_Addr object_addr_;
 
   /// Flag to indicate if the address has been resolved and set.
-  bool object_addr_set_;
+  mutable bool object_addr_set_;
 
   /// DIOP Endpoints can be stringed into a list.  Return the next
   /// endpoint in the list, if any.
