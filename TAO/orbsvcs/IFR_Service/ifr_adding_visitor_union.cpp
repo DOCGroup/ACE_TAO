@@ -20,7 +20,7 @@ ACE_RCSID (IFR_Service,
 
 ifr_adding_visitor_union::ifr_adding_visitor_union (
     AST_Decl *scope,
-    CORBA::Boolean is_nested
+    bool is_nested
   )
   : ifr_adding_visitor (scope),
     is_nested_ (is_nested)
@@ -83,8 +83,7 @@ ifr_adding_visitor_union::visit_scope (UTL_Scope *node)
                   // Since the enclosing scope hasn't been created yet,
                   // we make a special visitor to create this member
                   // at global scope and move it into the union later.
-                  ifr_adding_visitor_union visitor (ft,
-                                                    1);
+                  ifr_adding_visitor_union visitor (ft, 1);
 
                   if (ft->ast_accept (&visitor) == -1)
                     {
@@ -129,11 +128,8 @@ ifr_adding_visitor_union::visit_scope (UTL_Scope *node)
 
           // Get the case label(s).
 
-          AST_UnionBranch *ub = 0;
           AST_UnionLabel *case_label = 0;
-
-          ub = AST_UnionBranch::narrow_from_decl (*f);
-
+          AST_UnionBranch *ub = AST_UnionBranch::narrow_from_decl (*f);
           unsigned long len = ub->label_list_length ();
 
           // If there are multiple case labels, we will have an element
@@ -248,7 +244,7 @@ ifr_adding_visitor_union::visit_structure (AST_Structure *node)
           // entry (from another IDL file) of another type. In that
           // case we do what other ORB vendors do, and destroy the
           // original entry, create the new one, and let the user beware.
-          if (node->ifr_added () == 0)
+          if (!node->ifr_added ())
             {
               prev_def->destroy ();
 
@@ -317,7 +313,7 @@ ifr_adding_visitor_union::visit_enum (AST_Enum *node)
           // queue to be moved later.
           this->move_queue_.enqueue_tail (tmp);
 
-          node->ifr_added (1);
+          node->ifr_added (true);
         }
       else
         {
@@ -325,7 +321,7 @@ ifr_adding_visitor_union::visit_enum (AST_Enum *node)
           // entry (from another IDL file) of another type. In that
           // case we do what other ORB vendors do, and destroy the
           // original entry, create the new one, and let the user beware.
-          if (node->ifr_added () == 0)
+          if (!node->ifr_added ())
             {
               prev_def->destroy ();
 
@@ -354,41 +350,59 @@ ifr_adding_visitor_union::visit_union (AST_Union *node)
 {
   try
     {
+      // This will put the discriminator in ir_current_.
+      if (node->disc_type ()->ast_accept (this) == -1)
+        {
+          ACE_ERROR_RETURN ((
+              LM_ERROR,
+              ACE_TEXT ("(%N:%l) ifr_adding_visitor_union::")
+              ACE_TEXT ("visit_union -")
+              ACE_TEXT (" visit of discriminator failed\n")
+            ),
+            -1
+          );
+        }
+
+      this->disc_tc_ = this->ir_current_->type ();
+
+      CORBA::UnionDef_var union_def;
       CORBA::Contained_var prev_def =
         be_global->repository ()->lookup_id (node->repoID ());
 
       if (CORBA::is_nil (prev_def.in ()))
         {
-          // Get the discrimintor node.
-          AST_ConcreteType *disc_type = node->disc_type ();
-
-          // Since the IDL compiler stores enum label values as ulongs,
-          // we need to get the typecode to insert the label value into
-          // an Any.
-          if (disc_type->node_type () == AST_Decl::NT_enum)
+          CORBA::UnionMemberSeq dummyMembers;
+          dummyMembers.length (0);
+          CORBA::Container_ptr current_scope = CORBA::Container::_nil ();
+          
+          if (this->is_nested_)
             {
-              CORBA::Contained_var disc_def =
-                be_global->repository ()->lookup_id (disc_type->repoID ());
-
-              if (CORBA::is_nil (disc_def.in ()))
-                {
-                  ACE_ERROR_RETURN ((
-                      LM_ERROR,
-                      ACE_TEXT ("(%N:%l) ifr_adding_visitor_union::")
-                      ACE_TEXT ("visit_union -")
-                      ACE_TEXT (" discriminator not found in repository\n")
-                    ),
-                    -1
-                  );
-                }
-
-              CORBA::IDLType_var idl_def =
-                CORBA::IDLType::_narrow (disc_def.in ());
-
-              this->disc_tc_ = idl_def->type ();
+              current_scope = be_global->holding_scope ();
             }
-
-          if (this->visit_scope (node) == -1)
+          else if (be_global->ifr_scopes ().top (current_scope) != 0)
+            {
+              ACE_ERROR_RETURN ((
+                  LM_ERROR,
+                  ACE_TEXT ("(%N:%l) ifr_adding_visitor_union::")
+                  ACE_TEXT ("visit_union -")
+                  ACE_TEXT (" scope stack is empty\n")
+                ),
+                -1
+              );
+            }
+            
+          // First create the named union without any members.
+          union_def =
+            current_scope->create_union (
+                node->repoID (),
+                node->local_name ()->get_string (),
+                node->version (),
+                this->ir_current_.in (),
+                this->members_
+              );
+         
+          // Then add the real union members (which corrupts ir_current_).
+          if (this->add_members (node, union_def.in ()) == -1)
             {
               ACE_ERROR_RETURN ((
                   LM_ERROR,
@@ -398,91 +412,38 @@ ifr_adding_visitor_union::visit_union (AST_Union *node)
                 -1
               );
             }
-
-          // This will put an IR object for the discriminator in ir_current_.
-          if (disc_type->ast_accept (this) == -1)
+        } // if (CORBA::is_nil (...))
+      else
+        {
+          // Are we seeing the full definition of a previous forward
+          // declaration. If so, just add the members so the repo
+          // entry referencing the UnionDef will still be valid.
+          if (node->ifr_fwd_added ())
             {
-              ACE_ERROR_RETURN ((
-                  LM_ERROR,
-                  ACE_TEXT ("(%N:%l) ifr_adding_visitor_union::visit_union -")
-                  ACE_TEXT (" failed to accept visitor\n")
-                ),
-                -1
-              );
-            }
-
-          if (this->is_nested_)
-            {
-              this->ir_current_ =
-                be_global->holding_scope ()->create_union (
-                    node->repoID (),
-                    node->local_name ()->get_string (),
-                    node->version (),
-                    this->ir_current_.in (),
-                    this->members_
-                  );
-            }
-          else
-            {
-              CORBA::Container_ptr current_scope =
-                CORBA::Container::_nil ();
-
-              if (be_global->ifr_scopes ().top (current_scope) != 0)
+              union_def = CORBA::UnionDef::_narrow (prev_def.in ());
+              union_def->discriminator_type_def (this->ir_current_.in ());
+          
+              if (this->add_members (node, union_def.in ()) == -1)
                 {
                   ACE_ERROR_RETURN ((
                       LM_ERROR,
                       ACE_TEXT ("(%N:%l) ifr_adding_visitor_union::")
                       ACE_TEXT ("visit_union -")
-                      ACE_TEXT (" scope stack is empty\n")
+                      ACE_TEXT (" visit_scope failed\n")
                     ),
                     -1
                   );
                 }
-
-              this->ir_current_ =
-                current_scope->create_union (
-                                   node->repoID (),
-                                   node->local_name ()->get_string (),
-                                   node->version (),
-                                   this->ir_current_.in (),
-                                   this->members_
-                                );
-            }
-
-
-          size_t size = this->move_queue_.size ();
-
-          if (size > 0)
-            {
-              CORBA::Contained_var traveller;
-
-              CORBA::Container_var new_container =
-                CORBA::Container::_narrow (this->ir_current_.in ());
-
-              for (size_t i = 0; i < size; ++i)
-                {
-                  this->move_queue_.dequeue_head (traveller);
-
-                  CORBA::String_var name = traveller->name ();
-
-                  CORBA::String_var version =
-                    traveller->version ();
-
-                  traveller->move (new_container.in (),
-                                   name.in (),
-                                   version.in ());
-                }
-            }
-
-          node->ifr_added (1);
-        } // if (CORBA::is_nil (...))
-      else
-        {
-          // If the line below is true, we are clobbering a previous
-          // entry (from another IDL file) of another type. In that
+                
+              // We shouldn't see this node again, but just in case.
+              node->ifr_fwd_added (false);
+           }
+           
+          // Are we clobbering a previous
+          // entry (from another IDL file) of another type? In that
           // case we do what other ORB vendors do, and destroy the
           // original entry, create the new one, and let the user beware.
-          if (node->ifr_added () == 0)
+          if (!node->ifr_added ())
             {
               prev_def->destroy ();
 
@@ -490,8 +451,7 @@ ifr_adding_visitor_union::visit_union (AST_Union *node)
               return this->visit_union (node);
             }
 
-          this->ir_current_ =
-            CORBA::IDLType::_narrow (prev_def.in ());
+          this->ir_current_ = CORBA::IDLType::_narrow (prev_def.in ());
         }
     }
   catch (const CORBA::Exception& ex)
@@ -510,4 +470,48 @@ CORBA::IDLType_ptr
 ifr_adding_visitor_union::ir_current (void) const
 {
   return this->ir_current_.in ();
+}
+
+int
+ifr_adding_visitor_union::add_members (AST_Union *node,
+                                       CORBA::UnionDef_ptr union_def)
+{
+  if (this->visit_scope (node) == -1)
+    {
+      ACE_ERROR_RETURN ((
+          LM_ERROR,
+          ACE_TEXT ("(%N:%l) ifr_adding_visitor_union::visit_union -")
+          ACE_TEXT (" visit_scope failed\n")
+        ),
+        -1
+      );
+    }
+
+  // Correct ir_current_ and move the real union members into the union.
+  this->ir_current_= CORBA::UnionDef::_duplicate (union_def);
+  union_def->members (this->members_);
+  size_t size = this->move_queue_.size ();
+
+  if (size > 0)
+    {
+      CORBA::Contained_var traveller;
+
+      CORBA::Container_var new_container =
+        CORBA::Container::_narrow (this->ir_current_.in ());
+
+      for (size_t i = 0; i < size; ++i)
+        {
+          this->move_queue_.dequeue_head (traveller);
+
+          CORBA::String_var name = traveller->name ();
+          CORBA::String_var version = traveller->version ();
+
+          traveller->move (new_container.in (),
+                           name.in (),
+                           version.in ());
+        }
+    }
+   
+  node->ifr_added (true);
+  return 0;
 }

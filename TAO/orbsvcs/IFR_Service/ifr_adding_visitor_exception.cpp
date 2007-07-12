@@ -18,7 +18,7 @@ ACE_RCSID (IFR_Service,
 
 ifr_adding_visitor_exception::ifr_adding_visitor_exception (
     AST_Decl *scope,
-    CORBA::Boolean in_reopened
+    bool in_reopened
   )
   : ifr_adding_visitor (scope,
                         in_reopened)
@@ -127,8 +127,7 @@ ifr_adding_visitor_exception::visit_structure (AST_Structure *node)
       // If not, create a new entry.
       if (CORBA::is_nil (prev_def.in ()))
         {
-          ifr_adding_visitor_structure visitor (node,
-                                                1);
+          ifr_adding_visitor_structure visitor (node, true);
 
           int retval = visitor.visit_structure (node);
 
@@ -156,7 +155,7 @@ ifr_adding_visitor_exception::visit_structure (AST_Structure *node)
           // entry (from another IDL file) of another type. In that
           // case we do what other ORB vendors do, and destroy the
           // original entry, create the new one, and let the user beware.
-          if (node->ifr_added () == 0)
+          if (!node->ifr_added ())
             {
               prev_def->destroy ();
 
@@ -194,7 +193,7 @@ ifr_adding_visitor_exception::visit_exception (AST_Exception *node)
           // repository, we are probably processing the same IDL file
           // a second time. If it is just a name clash, there is no
           // way to detect it.
-          if (this->in_reopened_ == 1)
+          if (this->in_reopened_)
             {
               return 0;
             }
@@ -203,7 +202,7 @@ ifr_adding_visitor_exception::visit_exception (AST_Exception *node)
           // entry (from another IDL file) of another type. In that
           // case we do what other ORB vendors do, and destroy the
           // original entry, create the new one, and let the user beware.
-          if (node->ifr_added () == 0)
+          if (!node->ifr_added ())
             {
               prev_def->destroy ();
 
@@ -276,7 +275,7 @@ ifr_adding_visitor_exception::visit_exception (AST_Exception *node)
             }
         }
 
-      node->ifr_added (1);
+      node->ifr_added (true);
     }
   catch (const CORBA::Exception& ex)
     {
@@ -333,7 +332,7 @@ ifr_adding_visitor_exception::visit_enum (AST_Enum *node)
 
           this->move_queue_.enqueue_tail (tmp);
 
-          node->ifr_added (1);
+          node->ifr_added (true);
         }
       else
         {
@@ -341,7 +340,7 @@ ifr_adding_visitor_exception::visit_enum (AST_Enum *node)
           // entry (from another IDL file) of another type. In that
           // case we do what other ORB vendors do, and destroy the
           // original entry, create the new one, and let the user beware.
-          if (node->ifr_added () == 0)
+          if (!node->ifr_added ())
             {
               prev_def->destroy ();
 
@@ -377,8 +376,7 @@ ifr_adding_visitor_exception::visit_union (AST_Union *node)
       // If not, create a new entry.
       if (CORBA::is_nil (prev_def.in ()))
         {
-          ifr_adding_visitor_union visitor (node,
-                                            1);
+          ifr_adding_visitor_union visitor (node, true);
 
           int retval = visitor.visit_union (node);
 
@@ -406,7 +404,7 @@ ifr_adding_visitor_exception::visit_union (AST_Union *node)
           // entry (from another IDL file) of another type. In that
           // case we do what other ORB vendors do, and destroy the
           // original entry, create the new one, and let the user beware.
-          if (node->ifr_added () == 0)
+          if (!node->ifr_added ())
             {
               prev_def->destroy ();
 
