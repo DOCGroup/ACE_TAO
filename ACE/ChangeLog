@@ -1,3 +1,10 @@
+Thu Jul 12 01:15:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Atomic_Op.{h,cpp}:
+          When using Intel assembly, just define ACE_HAS_INTEL_ASSEMBLY in
+          the header file and check this in the cpp file, much easier to
+          maintain then all explicit checks in the cpp file
+
 Wed Jul 11 20:17:07 UTC 2007  Steve Huston  <shuston@riverace.com>
 
         * ace/config-aix-5.x.h: For IBM compilers Visual Age C++ 6 and up,
