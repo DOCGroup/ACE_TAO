@@ -63,7 +63,8 @@ UDP_Client_i::svc (void)
         }
 
       // shut down remote ORB
-      udp_->shutdown ();
+      for (int c = 0; c < 10; ++c)
+        udp_->shutdown ();
 
       ACE_Time_Value tv (0, 500); // 50ms
       ACE_OS::sleep (tv);  // let the previous request go through

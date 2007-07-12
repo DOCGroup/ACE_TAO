@@ -99,20 +99,6 @@ private:
 
   /// Return the remote endpoint, a helper function
   TAO_DIOP_Endpoint *remote_endpoint (TAO_Endpoint *ep);
-
-private:
-  // @@ Michael: UDP Addition
-  ACE_Hash_Map_Manager_Ex < ACE_INET_Addr,
-                            TAO_DIOP_Connection_Handler *,
-                            ACE_Hash < ACE_INET_Addr >,
-                            ACE_Equal_To < ACE_INET_Addr >,
-                            ACE_Null_Mutex > svc_handler_table_;
-
-  typedef ACE_Hash_Map_Iterator_Ex < ACE_INET_Addr,
-                                     TAO_DIOP_Connection_Handler *,
-                                     ACE_Hash < ACE_INET_Addr >,
-                                     ACE_Equal_To < ACE_INET_Addr >,
-                                     ACE_Null_Mutex > SvcHandlerIterator;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

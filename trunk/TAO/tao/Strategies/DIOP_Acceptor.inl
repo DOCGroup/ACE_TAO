@@ -25,4 +25,16 @@ TAO_DIOP_Acceptor::endpoints (void)
   return this->addrs_;
 }
 
+ACE_INLINE const ACE_INET_Addr&
+TAO_DIOP_Acceptor::default_address (void) const
+{
+  return this->default_address_;
+}
+
+ACE_INLINE void
+TAO_DIOP_Acceptor::set_default_address (const ACE_INET_Addr& addr)
+{
+  this->default_address_.set (addr);
+}
+
 TAO_END_VERSIONED_NAMESPACE_DECL

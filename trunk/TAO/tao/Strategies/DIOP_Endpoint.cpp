@@ -33,6 +33,9 @@ TAO_DIOP_Endpoint::TAO_DIOP_Endpoint (const ACE_INET_Addr &addr,
   : TAO_Endpoint (TAO_TAG_DIOP_PROFILE)
     , host_ ()
     , port_ (0)
+#if defined (ACE_HAS_IPV6)
+    , is_ipv6_decimal_ (false)
+#endif /* ACE_HAS_IPV6 */
     , object_addr_ (addr)
     , object_addr_set_ (false)
     , next_ (0)
@@ -48,18 +51,23 @@ TAO_DIOP_Endpoint::TAO_DIOP_Endpoint (const char *host,
                   priority)
     , host_ ()
     , port_ (port)
+#if defined (ACE_HAS_IPV6)
+    , is_ipv6_decimal_ (false)
+#endif /* ACE_HAS_IPV6 */
     , object_addr_ (addr)
     , object_addr_set_ (false)
     , next_ (0)
 {
-  if (host != 0)
-    this->host_ = host;
+  this->host (host); // With IPv6 performs check for decimal address
 }
 
 TAO_DIOP_Endpoint::TAO_DIOP_Endpoint (void)
   : TAO_Endpoint (TAO_TAG_DIOP_PROFILE),
     host_ (),
     port_ (0),
+#if defined (ACE_HAS_IPV6)
+    is_ipv6_decimal_ (false),
+#endif /* ACE_HAS_IPV6 */
     object_addr_ (),
     object_addr_set_ (false),
     next_ (0)
@@ -69,17 +77,17 @@ TAO_DIOP_Endpoint::TAO_DIOP_Endpoint (void)
 TAO_DIOP_Endpoint::TAO_DIOP_Endpoint (const char *host,
                                       CORBA::UShort port,
                                       CORBA::Short priority)
-  : TAO_Endpoint (TAO_TAG_DIOP_PROFILE),
+  : TAO_Endpoint (TAO_TAG_DIOP_PROFILE, priority),
     host_ (),
     port_ (port),
+#if defined (ACE_HAS_IPV6)
+    is_ipv6_decimal_ (false),
+#endif /* ACE_HAS_IPV6 */
     object_addr_ (),
     object_addr_set_ (false),
     next_ (0)
 {
-  if (host != 0)
-    this->host_ = host;
-
-  this->priority (priority);
+  this->host (host); // With IPv6 performs check for decimal address
 }
 
 TAO_DIOP_Endpoint::~TAO_DIOP_Endpoint (void)
@@ -92,9 +100,21 @@ TAO_DIOP_Endpoint::set (const ACE_INET_Addr &addr,
 {
   char tmp_host[MAXHOSTNAMELEN + 1];
 
+#if defined (ACE_HAS_IPV6)
+  this->is_ipv6_decimal_ = false; // Reset
+#endif /* ACE_HAS_IPV6 */
+
   if (use_dotted_decimal_addresses
       || addr.get_host_name (tmp_host, sizeof (tmp_host)) != 0)
     {
+      if (use_dotted_decimal_addresses == 0 && TAO_debug_level > 5)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("TAO (%P|%t) - DIOP_Endpoint::set, ")
+                      ACE_TEXT ("%p\n"),
+                      ACE_TEXT ("cannot determine hostname")));
+        }
+
       const char *tmp = addr.get_host_addr ();
       if (tmp == 0)
         {
@@ -102,17 +122,23 @@ TAO_DIOP_Endpoint::set (const ACE_INET_Addr &addr,
             ACE_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("TAO (%P|%t) - ")
                         ACE_TEXT ("DIOP_Endpoint::set, ")
-                        ACE_TEXT ("%p\n\n"),
+                        ACE_TEXT ("%p\n"),
                         ACE_TEXT ("cannot determine hostname\n")));
           return -1;
         }
       else
-        this->host_ = tmp;
+        {
+          this->host_ = tmp;
+#if defined (ACE_HAS_IPV6)
+          if (addr.get_type () == PF_INET6)
+            this->is_ipv6_decimal_ = true;
+#endif /* ACE_HAS_IPV6 */
+        }
     }
   else
     this->host_ = CORBA::string_dup (tmp_host);
 
-  this->port_ = addr.get_port_number();
+  this->port_ = addr.get_port_number ();
 
   return 0;
 }
@@ -120,15 +146,26 @@ TAO_DIOP_Endpoint::set (const ACE_INET_Addr &addr,
 int
 TAO_DIOP_Endpoint::addr_to_string (char *buffer, size_t length)
 {
-  size_t const actual_len =
+  size_t actual_len =
     ACE_OS::strlen (this->host_.in ()) // chars in host name
     + sizeof (':')                     // delimiter
     + ACE_OS::strlen ("65536")         // max port
     + sizeof ('\0');
 
+#if defined (ACE_HAS_IPV6)
+  if (this->is_ipv6_decimal_)
+    actual_len += 2; // '[' + ']'
+#endif /* ACE_HAS_IPV6 */
+
   if (length < actual_len)
     return -1;
 
+#if defined (ACE_HAS_IPV6)
+  if (this->is_ipv6_decimal_)
+    ACE_OS::sprintf (buffer, "[%s]:%d",
+                     this->host_.in (), this->port_);
+  else
+#endif /* ACE_HAS_IPV6 */
   ACE_OS::sprintf (buffer, "%s:%d",
                    this->host_.in (), this->port_);
 
@@ -139,6 +176,10 @@ const char *
 TAO_DIOP_Endpoint::host (const char *h)
 {
   this->host_ = h;
+#if defined (ACE_HAS_IPV6)
+  if (ACE_OS::strchr (h, ':') != 0)
+    this->is_ipv6_decimal_ = true;
+#endif /* ACE_HAS_IPV6 */
 
   return this->host_.in ();
 }
@@ -174,7 +215,7 @@ TAO_DIOP_Endpoint::is_equivalent (const TAO_Endpoint *other_endpoint)
     return 0;
 
   return (this->port () == endpoint->port ()
-          && ACE_OS::strcmp(this->host (), endpoint->host()) == 0);
+          && ACE_OS::strcmp (this->host (), endpoint->host ()) == 0);
 }
 
 CORBA::ULong
@@ -211,38 +252,64 @@ TAO_DIOP_Endpoint::object_addr (void) const
   // Double checked locking optimization.
   if (!this->object_addr_set_)
     {
-      // We need to modify the object_addr_ in this method.  Do so
-      // using a  non-const copy of the <this> pointer.
-      TAO_DIOP_Endpoint *endpoint =
-        const_cast<TAO_DIOP_Endpoint *> (this);
-
       ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                         guard,
-                        endpoint->addr_lookup_lock_,
+                        this->addr_lookup_lock_,
                         this->object_addr_ );
 
       if (!this->object_addr_set_)
         {
-          if (endpoint->object_addr_.set (this->port_,
-                                          this->host_.in ()) == -1)
-            {
-              // If this call fails, it most likely due a hostname
-              // lookup failure caused by a DNS misconfiguration.  If
-              // a request is made to the object at the given host and
-              // port, then a CORBA::TRANSIENT() exception should be
-              // thrown.
-
-              // Invalidate the ACE_INET_Addr.  This is used as a flag
-              // to denote that ACE_INET_Addr initialization failed.
-              endpoint->object_addr_.set_type (-1);
-            }
-          else
-            {
-              endpoint->object_addr_set_ = true;
-            }
+          (void) this->object_addr_i ();
         }
     }
   return this->object_addr_;
+}
+
+void
+TAO_DIOP_Endpoint::object_addr_i (void) const
+{
+  // We should have already held the lock
+
+#if defined (ACE_HAS_IPV6)
+  bool is_ipv4_decimal_ = false;
+  if (!this->is_ipv6_decimal_)
+    is_ipv4_decimal_ =
+      ACE_OS::strspn (this->host_.in (), ".0123456789") ==
+      ACE_OS::strlen (this->host_.in ());
+
+  // If this is *not* an IPv4 decimal address at first try to
+  // resolve the address as an IPv6 address; if that fails
+  // (or it's an IPv4 address) and the address is *not* an IPv6
+  // decimal address try to resolve it as an IPv4 address.
+  if ((is_ipv4_decimal_ ||
+        this->object_addr_.set (this->port_,
+                                this->host_.in (),
+                                1,
+                                AF_INET6) == -1) &&
+      (this->is_ipv6_decimal_ ||
+        this->object_addr_.set (this->port_,
+                              this->host_.in (),
+                              1,
+                              AF_INET) == -1))
+#else
+  if (this->object_addr_.set (this->port_,
+                              this->host_.in ()) == -1)
+#endif /* ACE_HAS_IPV6 */
+    {
+      // If this call fails, it most likely due a hostname
+      // lookup failure caused by a DNS misconfiguration.  If
+      // a request is made to the object at the given host and
+      // port, then a CORBA::TRANSIENT() exception should be
+      // thrown.
+
+      // Invalidate the ACE_INET_Addr.  This is used as a flag
+      // to denote that ACE_INET_Addr initialization failed.
+      this->object_addr_.set_type (-1);
+    }
+  else
+    {
+      this->object_addr_set_ = true;
+    }
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

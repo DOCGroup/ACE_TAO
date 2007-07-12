@@ -152,13 +152,14 @@ UDP_PerformanceClient::svc ()
         }
 
       // shut down remote ORB
-      udp_->shutdown ();
+      for (int c = 0; c < 10; ++c)
+        udp_->shutdown ();
 
       ACE_Time_Value tv (0, 50); // 50ms
       ACE_OS::sleep (tv);  // let the previous request go through
 
       // Shut down local ORB, trigger the end of the ORB event loop
-            // in the main thread.
+      // in the main thread.
       orb_->shutdown (0);
     }
   catch (const CORBA::Exception& ex)

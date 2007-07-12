@@ -139,11 +139,13 @@ main (int argc, char *argv[])
 
       ACE_DEBUG ((LM_DEBUG, "ORB finished\n"));
 
+      client->wait ();
+
       root_poa->destroy (1, // ethernalize objects
                          0  // wait for completion
                          );
 
-            orb->destroy ();
+      orb->destroy ();
 
       // it is save to delete the client, because the client was actually
       // the one calling orb->shutdown () triggering the end of the ORB
