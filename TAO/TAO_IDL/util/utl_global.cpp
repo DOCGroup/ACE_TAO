@@ -750,17 +750,9 @@ IDL_GlobalData::validate_included_idl_files (void)
               post_tmp = post_preproc_includes[ni]->get_string ();
               full_path = ACE_OS::realpath (post_tmp, post_abspath);
               if (full_path != 0
-                  && this->path_cmp (pre_abspath, post_abspath) == 0)
+                  && this->path_cmp (pre_abspath, post_abspath) == 0
+                  && ACE_OS::access (post_abspath, R_OK) == 0)
                 {
-                  FILE *test = ACE_OS::fopen (post_abspath, "r");
-
-                  if (test == 0)
-                    {
-                      continue;
-                    }
-
-                  ACE_OS::fclose (test);
-
                   // This file name is valid.
                   valid_file = 1;
                   ++n_found;
@@ -801,17 +793,9 @@ IDL_GlobalData::validate_included_idl_files (void)
                       full_path = ACE_OS::realpath (post_tmp, post_abspath);
 
                       if (full_path != 0
-                          && this->path_cmp (pre_abspath, post_abspath) == 0)
+                          && this->path_cmp (pre_abspath, post_abspath) == 0
+                          && ACE_OS::access (post_abspath, R_OK) == 0)
                         {
-                          FILE *test = ACE_OS::fopen (post_abspath, "r");
-
-                          if (test == 0)
-                            {
-                              continue;
-                            }
-
-                          ACE_OS::fclose (test);
-
                           // This file name is valid.
                           valid_file = 1;
                           ++n_found;
@@ -1822,4 +1806,34 @@ IDL_GlobalData::is_dcps_type (UTL_ScopedName* target)
 
   // No joy.
   return 0;
+}
+
+FILE *
+IDL_GlobalData::open_included_file (char const * filename,
+                                    char const *& directory)
+{
+  FILE * f = 0;
+  ACE_CString const the_file (ACE_CString ('/')
+                              + ACE_CString (filename));
+  
+  for (ACE_Unbounded_Queue_Iterator<char *> i (this->include_paths_);
+       !i.done () && f == 0;
+       i.advance ())
+    {
+      char ** path = 0;
+      (void) i.next (path);
+
+      if (path != 0)
+        {
+          ACE_CString const complete_filename (ACE_CString (*path)
+                                               + the_file);
+
+          f = ACE_OS::fopen (complete_filename.c_str (), "r");
+
+          if (f != 0)
+            directory = *path;
+        }
+    }
+
+  return f;
 }

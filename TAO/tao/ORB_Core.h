@@ -885,7 +885,7 @@ protected:
 
   /// Initialize the guts of the ORB Core.  It is intended that this be
   /// called by <CORBA::ORB_init>.
-  int init (int &argc, char **argv);
+  int init (int &argc, char *argv[]);
 
   /// Final termination hook, typically called by CORBA::ORB's
   /// destructor.
@@ -1148,9 +1148,6 @@ protected:
 
   /// Mutual exclusion for calling open.
   TAO_SYNCH_MUTEX open_lock_;
-
-  /// Flag which denotes that the open method was called.
-  int open_called_;
 
   TAO_Endpoint_Selector_Factory *endpoint_selector_factory_;
 

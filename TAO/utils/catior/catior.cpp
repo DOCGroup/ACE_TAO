@@ -1295,7 +1295,7 @@ cat_octet_seq (const char *object_name,
 {
   CORBA::ULong length = 0;
   if (stream.read_ulong (length) == 0)
-    return 1;
+    return true;
 
   ACE_DEBUG ((LM_DEBUG,
               "%I %s len:\t%d\n",
@@ -1307,21 +1307,23 @@ cat_octet_seq (const char *object_name,
               object_name));
 
   CORBA::Octet anOctet;
-  char* objKey = CORBA::string_alloc (length + 1);
+  CORBA::String_var objKey = CORBA::string_alloc (length + 1);
 
   short counter = -1;
 
   ACE_DEBUG ((LM_DEBUG, "%I "));
-  u_int i = 0;
+  CORBA::ULong i = 0;
 
-  for (; i < length; i++)
+  for (; i < length; ++i)
     {
       if (++counter == 16)
         {
           ACE_DEBUG ((LM_DEBUG, "\n%I "));
           counter = 0;
         }
-      stream.read_octet (anOctet);
+
+      if (!stream.read_octet (anOctet))
+        return false;
 
       ACE_DEBUG ((LM_DEBUG, "%02.2x ", anOctet));
       objKey[i] = (char) anOctet;
@@ -1333,7 +1335,7 @@ cat_octet_seq (const char *object_name,
               "\n%I The %s as string:\n%I ",
               object_name));
 
-  for (i = 0; i < length; i++)
+  for (i = 0; i < length; ++i)
     {
       char c = objKey[i];
       int tmp = (unsigned char) c; // isprint doesn't work with negative vals.(except EOF)
@@ -1343,10 +1345,9 @@ cat_octet_seq (const char *object_name,
         ACE_DEBUG ((LM_DEBUG, "."));
     }
 
-  CORBA::string_free (objKey);
   ACE_DEBUG ((LM_DEBUG, "\n"));
 
-  return 1;
+  return true;
 }
 
 CORBA::Boolean

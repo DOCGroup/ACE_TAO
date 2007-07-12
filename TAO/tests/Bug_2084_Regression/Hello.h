@@ -1,3 +1,4 @@
+// -*- C++ -*-
 //
 // $Id$
 //
@@ -8,7 +9,7 @@
 
 #include "TestS.h"
 
-#include "ace/OS.h"
+#include "ace/OS_NS_Thread.h"
 
 /// Implement the Test::Hello interface
 class Hello
@@ -20,7 +21,7 @@ public:
          ACE_thread_t thr_id);
 
   // = The skeleton methods
-  virtual char * get_string ( ::CORBA::Long caller_threadid );
+  virtual char * get_string ( ::Test::ThreadId caller_threadid);
 
   virtual void shutdown (void);
 
@@ -29,7 +30,7 @@ private:
   /// the application.
   CORBA::ORB_var orb_;
 
-  ACE_thread_t thr_id_;
+  ACE_thread_t const thr_id_;
 };
 
 #include /**/ "ace/post.h"

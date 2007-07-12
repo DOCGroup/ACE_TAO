@@ -32,6 +32,7 @@
 #include "ace/iosfwd.h"
 #include "ace/CORBA_macros.h"
 
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Allocator;
 ACE_END_VERSIONED_NAMESPACE_DECL
@@ -40,10 +41,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_OutputCDR;
 class TAO_InputCDR;
-
-#if defined (THREAD_CANCELLED)
-#undef THREAD_CANCELLED
-#endif /* THREAD_CANCELLED */
 
 // This is already done in orbconf.h. But this file is totally
 // decoupled from its contents that we have to do this here. Including
@@ -210,7 +207,7 @@ namespace CORBA
 
   // Required by C++ mapping.
   TAO_Export ACE_OSTREAM_TYPE& operator<< (ACE_OSTREAM_TYPE &os,
-                                          const CORBA::Exception &e);
+                                           const CORBA::Exception &e);
 
   TAO_Export ACE_OSTREAM_TYPE& operator<< (ACE_OSTREAM_TYPE &os,
                                            const CORBA::Exception *e);
