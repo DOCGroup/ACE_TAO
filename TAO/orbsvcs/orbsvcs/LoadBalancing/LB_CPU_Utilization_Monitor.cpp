@@ -30,17 +30,17 @@ double calc_cpu_loading (void)
 
   double percent_cpu_load = 0.0;
 
-  if ((file_ptr = fopen("/proc/stat", "r")) == 0)
+  if ((file_ptr = ACE_OS::fopen("/proc/stat", "r")) == 0)
           return percent_cpu_load;
 
-  while ((fgets (buf, sizeof (buf), file_ptr)) != 0)
+  while ((ACE_OS::fgets (buf, sizeof (buf), file_ptr)) != 0)
   {
     item = ACE_OS::strtok (buf, " \t\n");
     arg = ACE_OS::strtok (0, "\n");
 
     if (item == 0 || arg == 0)
             continue;
-    if (item[0] == 'c' && strlen (item) == 3)
+    if (item[0] == 'c' && ACE_OS::strlen (item) == 3)
     {
       sscanf (arg, "%lu %lu %lu %lu", &user, &nice, &sys, &idle);
       break;
@@ -49,7 +49,7 @@ double calc_cpu_loading (void)
 
   }
 
-  fclose (file_ptr);
+  ACE_OS::fclose (file_ptr);
 
   delta_idle = idle - prev_idle;
   double total;

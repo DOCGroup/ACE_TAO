@@ -263,7 +263,7 @@ ImR_Locator_i::shutdown (CORBA::Boolean activators, CORBA::Boolean servers)
     }
   // Technically, we should wait for all the activators to unregister, but
   // ,for now at least, it doesn't seem worth it.
-  shutdown (false);
+  this->shutdown (false);
 }
 
 void

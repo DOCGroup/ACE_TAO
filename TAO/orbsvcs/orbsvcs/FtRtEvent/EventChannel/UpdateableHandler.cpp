@@ -26,8 +26,8 @@ FTRT::AMI_UpdateableHandler_ptr UpdateableHandler::activate(
   PortableServer::ObjectId& object_id)
 {
   object_id.length(sizeof(mgr) + sizeof(id));
-  memcpy(object_id.get_buffer(), &mgr, sizeof(mgr));
-  memcpy(object_id.get_buffer() + sizeof(mgr), &id, sizeof(id));
+  ACE_OS::memcpy(object_id.get_buffer(), &mgr, sizeof(mgr));
+  ACE_OS::memcpy(object_id.get_buffer() + sizeof(mgr), &id, sizeof(id));
   strategy_->poa()->activate_object_with_id(object_id,
                                             this);
   CORBA::Object_var object = strategy_->poa()->id_to_reference(
@@ -50,8 +50,8 @@ void UpdateableHandler::dispatch(UpdateableHandler::Handler handler)
   Update_Manager* mgr;
   int id;
 
-  memcpy(&mgr, object_id->get_buffer(), sizeof(mgr));
-  memcpy(&id, object_id->get_buffer()+sizeof(mgr), sizeof(id));
+  ACE_OS::memcpy(&mgr, object_id->get_buffer(), sizeof(mgr));
+  ACE_OS::memcpy(&id, object_id->get_buffer()+sizeof(mgr), sizeof(id));
 
   ACE_DEBUG((LM_DEBUG, "%d\n", id));
 

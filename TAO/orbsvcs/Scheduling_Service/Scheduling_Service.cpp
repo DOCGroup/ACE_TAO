@@ -121,7 +121,7 @@ TAO_Scheduling_Service::init (int argc, ACE_TCHAR* argv[])
 
       if (this->ior_file_name_.rep() != 0)
         {
-          FILE *iorf = fopen (this->ior_file_name_.rep(), "w");
+          FILE *iorf = ACE_OS::fopen (this->ior_file_name_.rep(), "w");
           if (iorf != 0)
             {
               ACE_OS::fprintf (iorf,
@@ -133,7 +133,7 @@ TAO_Scheduling_Service::init (int argc, ACE_TCHAR* argv[])
 
       if (this->pid_file_name_.rep() != 0)
         {
-          FILE *pidf = fopen (this->pid_file_name_.rep(), "w");
+          FILE *pidf = ACE_OS::fopen (this->pid_file_name_.rep(), "w");
           if (pidf != 0)
             {
               ACE_OS::fprintf (pidf,

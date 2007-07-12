@@ -1,3 +1,42 @@
+Thu Jul 12 23:21:29 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * orbsvcs/FTRT_Event_Service/Event_Service/FT_EventService.cpp:
+        * orbsvcs/FTRT_Event_Service/Factory_Service/EventChannelFactory_i.cpp:
+        * orbsvcs/ImplRepo_Service/ImR_Activator_i.cpp:
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+        * orbsvcs/Notify_Service/Notify_Service.cpp:
+        * orbsvcs/PSS/PSDL_Interpreter.cpp:
+        * orbsvcs/PSS/PSDL_Node.cpp:
+        * orbsvcs/PSS/PSDL_l.cpp:
+        * orbsvcs/PSS/PSDL_y.cpp:
+        * orbsvcs/Scheduling_Service/Scheduling_Service.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/ClientORB/FTRT_ClientORB_Loader.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/ConnectionHandler_T.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/Dynamic_Bitset.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/Identification_Service.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/SCTP_Fault_Detector.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/Set_Update_Interceptor.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/UpdateableHandler.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/Utils/FTEC_Gateway.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/Utils/UUID.inl:
+        * orbsvcs/orbsvcs/FtRtEvent/Utils/UUID.cpp:
+        * orbsvcs/orbsvcs/HTIOP/HTIOP_Factory.cpp:
+        * orbsvcs/orbsvcs/LoadBalancing/LB_CPU_Load_Average_Monitor.cpp:
+        * orbsvcs/orbsvcs/LoadBalancing/LB_CPU_Utilization_Monitor.cpp:
+        * orbsvcs/orbsvcs/Naming/Flat_File_Persistence.cpp:
+        * orbsvcs/orbsvcs/Naming/Naming_Context_Interface.cpp:
+        * orbsvcs/orbsvcs/Notify/Name_Value_Pair.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Profile.cpp:
+        * orbsvcs/orbsvcs/Sched/DynSched.cpp:
+        * orbsvcs/orbsvcs/Scheduler_Factory.cpp:
+        * orbsvcs/orbsvcs/Trader/Constraint_l.cpp:
+        * orbsvcs/orbsvcs/Trader/Constraint_y.cpp:
+        * orbsvcs/orbsvcs/Trader/Interpreter.cpp:
+
+          Fixed ACE_OS fuzz warnings. Use ACE_OS calls instead of raw OS function
+          where possible. If fuzz detected a false-positive, then disable
+          the ACE_OS fuzz check for that section of the code.
+
 Thu Jul 12 18:33:31 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/Strategies/DIOP_Profile.cpp (parse_string_i):

@@ -33,7 +33,7 @@ CORBA::Object_ptr EventChannelFactory_i::create_object (
 
   try{
 
-    file = fopen(conf_file, "r");
+    file = ACE_OS::fopen(conf_file, "r");
     if (file == 0)
       throw PortableGroup::NoFactory();
 
@@ -42,13 +42,13 @@ CORBA::Object_ptr EventChannelFactory_i::create_object (
     while ((id_str = read_buf.read(' ')) != 0 &&
       (prog = read_buf.read('\n')) != 0) {
         id_str[strlen(id_str)-1] = '\0';
-        if (strcmp(id_str, type_id) == 0) {
+        if (ACE_OS::strcmp(id_str, type_id) == 0) {
           return create_process(prog, the_criteria, factory_creation_id);
       }
     }
   }
   catch (...){
-    if (file) fclose(file);
+    if (file) ACE_OS::fclose(file);
     if (id_str) ACE_Allocator::instance()->free(id_str);
     if (prog) ACE_Allocator::instance()->free(prog);
     throw;
@@ -166,13 +166,13 @@ CORBA::Object_ptr EventChannelFactory_i::create_process (
     byteRead += n;
   }
 
-  if (strlen(ior)  ==0)
+  if (ACE_OS::strlen(ior) == 0)
     return result;
 
   try{
     CORBA::Object_var result  = orb->string_to_object(ior);
 
-    if (objects.bind(id, result) ==0){
+    if (objects.bind(id, result) == 0){
       return result._retn();
     }
   }

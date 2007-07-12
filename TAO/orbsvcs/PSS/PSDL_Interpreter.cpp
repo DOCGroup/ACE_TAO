@@ -88,9 +88,9 @@ TAO_Lex_String_Input::copy_into (char* buf,
 
   if (n > 0)
     {
-      ACE_OS:: memcpy (buf,
-                       TAO_Lex_String_Input::current_,
-                       n);
+      ACE_OS::memcpy (buf,
+                      TAO_Lex_String_Input::current_,
+                      n);
       TAO_Lex_String_Input::current_ += n;
     }
 

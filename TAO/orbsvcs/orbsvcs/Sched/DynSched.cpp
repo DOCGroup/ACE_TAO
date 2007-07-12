@@ -1930,7 +1930,7 @@ ACE_DynScheduler::output_dispatch_priorities (const char *filename)
   if (file)
   {
     status = output_dispatch_priorities (file);
-    fclose (file);
+    ACE_OS::fclose (file);
   }
   else
   {
@@ -2025,7 +2025,7 @@ ACE_DynScheduler::output_dispatch_timeline (const char *filename)
   if (file)
   {
     status = output_dispatch_timeline (file);
-    fclose (file);
+    ACE_OS::fclose (file);
   }
   else
   {
@@ -2041,6 +2041,7 @@ ACE_DynScheduler::output_dispatch_timeline (const char *filename)
 ACE_DynScheduler::status_t
 ACE_DynScheduler::output_dispatch_timeline (FILE *file)
 {
+  //FUZZ: disable check_for_lack_ACE_OS
   if (ACE_OS::fprintf (
       file, "\n\nDISPATCH TIMELINE:\n\n"
             "                dispatch  arrival  deadline     start        stop    execution     latency        laxity\n"
@@ -2052,6 +2053,7 @@ ACE_DynScheduler::output_dispatch_timeline (FILE *file)
                        ACE_TEXT("Could not write to schedule file")),
                       UNABLE_TO_WRITE_SCHEDULE_FILE);
   }
+  //FUZZ: enable check_for_lack_ACE_OS
 
   // iterate through timeline, picking out entries whose prev_ pointer
   // is null (i.e. those representing the start of a dispatch), find end
@@ -2150,7 +2152,7 @@ ACE_DynScheduler::output_preemption_timeline (const char *filename)
   if (file)
   {
     status = output_preemption_timeline (file);
-    fclose (file);
+    ACE_OS::fclose (file);
   }
   else
   {
@@ -2240,7 +2242,7 @@ ACE_DynScheduler::output_viewer_timeline (const char *filename)
   if (file)
   {
     status = output_dispatch_timeline (file);
-    fclose (file);
+    ACE_OS::fclose (file);
   }
 
   return status;
@@ -2249,6 +2251,7 @@ ACE_DynScheduler::output_viewer_timeline (const char *filename)
 ACE_DynScheduler::status_t
 ACE_DynScheduler::output_viewer_timeline (FILE *file)
 {
+  //FUZZ: disable check_for_lack_ACE_OS
   if (ACE_OS::fprintf (
       file, "\n\nVIEWER TIMELINE:\n\n"
             "                                    arrival  deadline   completion    execution  \n"
@@ -2257,6 +2260,7 @@ ACE_DynScheduler::output_viewer_timeline (FILE *file)
   {
     return UNABLE_TO_WRITE_SCHEDULE_FILE;
   }
+  //FUZZ: enable check_for_lack_ACE_OS
 
   // iterate through timeline, picking out dispatches in chronological
   // order of operation completion time
@@ -2408,7 +2412,7 @@ ACE_DynScheduler::output_timeline (const char *filename, const char *heading)
 
   if (file)
   {
-    fclose (file);
+    ACE_OS::fclose (file);
   }
 
   return status;

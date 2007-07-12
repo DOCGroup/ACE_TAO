@@ -7,7 +7,7 @@
 #include "tao/ORB_Core.h"
 #include "tao/debug.h"
 #include "tao/target_specification.h"
-#include "ace/os_include/os_ctype.h"
+#include "ace/OS_NS_ctype.h"
 
 #include "orbsvcs/miopC.h"
 #include "orbsvcs/PortableGroupC.h"
@@ -186,9 +186,9 @@ TAO_UIPMC_Profile::parse_string_i (const char *string)
   // version is one that we accept.
 
   // Check for MIOP version
-  if (isdigit (string [0]) &&
+  if (ACE_OS::ace_isdigit (string [0]) &&
       string[1] == '.' &&
-      isdigit (string [2]) &&
+      ACE_OS::ace_isdigit (string [2]) &&
       string[3] == '@')
     {
       if (string[0] != '1' ||
@@ -213,9 +213,9 @@ TAO_UIPMC_Profile::parse_string_i (const char *string)
   //
 
   // Parse the group component version.
-  if (isdigit (string [0]) &&
+  if (ACE_OS::ace_isdigit (string [0]) &&
       string[1] == '.' &&
-      isdigit (string [2]) &&
+      ACE_OS::ace_isdigit (string [2]) &&
       string[3] == '-')
     {
       CORBA::Char major;
@@ -302,7 +302,7 @@ TAO_UIPMC_Profile::parse_string_i (const char *string)
   const char* str_check;
   for (str_check = string; str_check < pos; str_check++)
     {
-      if (!isdigit (str_check[0]))
+      if (!ACE_OS::ace_isdigit (str_check[0]))
         {
           // Throw an exception if it's not a proper number
           throw CORBA::INV_OBJREF (
@@ -342,7 +342,7 @@ TAO_UIPMC_Profile::parse_string_i (const char *string)
 
       for (str_check = string; str_check < pos; str_check++)
         {
-          if (!isdigit (str_check[0]))
+          if (!ACE_OS::ace_isdigit (str_check[0]))
             {
               // Throw an exception if it's not a proper number
               throw CORBA::INV_OBJREF (
@@ -422,7 +422,7 @@ TAO_UIPMC_Profile::parse_string_i (const char *string)
 
   for (str_check = mcast_addr.c_str (); str_check[0] != '\0'; str_check++)
     {
-      if (!isdigit (str_check[0]) && !isxdigit (str_check[0]) &&
+      if (!ACE_OS::ace_isdigit (str_check[0]) && !ACE_OS::ace_isxdigit (str_check[0]) &&
           str_check[0] != ':' && str_check[0] != '.')
         {
           // Throw an exception if it's not a proper IPv4/IPv6 address
@@ -450,7 +450,7 @@ TAO_UIPMC_Profile::parse_string_i (const char *string)
 
   for (str_check = string; str_check[0] != '\0'; str_check++)
     {
-      if (!isdigit (str_check[0]))
+      if (!ACE_OS::ace_isdigit (str_check[0]))
         {
           // Throw an exception if it's not a proper number
           throw CORBA::INV_OBJREF (

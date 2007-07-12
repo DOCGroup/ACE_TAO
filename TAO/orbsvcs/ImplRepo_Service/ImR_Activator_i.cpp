@@ -259,7 +259,7 @@ ImR_Activator_i::run (void)
 void
 ImR_Activator_i::shutdown (void)
 {
-  shutdown (false);
+  this->shutdown (false);
 }
 
 void
