@@ -1,3 +1,15 @@
+Thu Jul 12 23:33:43 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * tests/objref_comparison_test/foo.idl:
+        * tests/objref_comparison_test/main.cpp:
+        * tests/objref_comparison_test/objref_comparison_test.mpc:
+
+          Added $id$ subversion tag to silence fuzz warnings.
+
+        * tests/objref_comparison_test/foo.idl:
+
+          Added missing include guards.
+
 Thu Jul 12 23:21:29 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * orbsvcs/FTRT_Event_Service/Event_Service/FT_EventService.cpp:
