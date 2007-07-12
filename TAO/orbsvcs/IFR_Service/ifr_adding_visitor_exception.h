@@ -63,10 +63,6 @@ public:
   // Lets the visitor one level above acess this value.
 
 private:
-  CORBA::Boolean is_nested_;
-  // Is this visitor visiting a struct that was defined inside
-  // a union, an exception, or another struct?
-
   CORBA::StructMemberSeq members_;
   // Holder for the member list passed to create_struct() or
   // create_exception().

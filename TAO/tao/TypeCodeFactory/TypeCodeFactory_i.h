@@ -217,7 +217,8 @@ private:
   bool check_recursion (CORBA::TCKind kind,
                         char const * id,
                         CORBA::TypeCode_ptr member,
-                        CORBA::TypeCode_ptr & recursive_tc);
+                        CORBA::TypeCode_ptr & recursive_tc,
+                        char const * working_id);
 
   /// Make a recursive TypeCode with the given kind and repository ID.
   CORBA::TypeCode_ptr make_recursive_tc (CORBA::TCKind kind,

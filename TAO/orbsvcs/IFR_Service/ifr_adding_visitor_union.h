@@ -38,31 +38,27 @@ class ifr_adding_visitor_union : public ifr_adding_visitor
   //
 public:
   ifr_adding_visitor_union (AST_Decl *scope,
-                            CORBA::Boolean is_nested);
-  // Constructor.
+                            bool is_nested);
 
   virtual ~ifr_adding_visitor_union (void);
-  // Destructor.
 
   virtual int visit_scope (UTL_Scope *node);
-  // Visit a struct.
-
   virtual int visit_structure (AST_Structure *node);
-  // Visit a struct.
-
   virtual int visit_enum (AST_Enum *node);
-  // Visit an enum.
-
   virtual int visit_union (AST_Union *node);
-  // Visit union.
-
+  
   virtual CORBA::IDLType_ptr ir_current (void) const;
   // Lets the visitor one level above acess this value.
+  
+private:
+  int add_members (AST_Union *node, CORBA::UnionDef_ptr union_def);
+  // Common code called whether we are creating a new union
+  // or filling out a forward declaration.
 
 private:
-  CORBA::Boolean is_nested_;
-  // Is this visitor visiting a struct that was defined inside
-  // a union, an exception, or another struct?
+  bool is_nested_;
+  // Is this visitor visiting a union that was defined inside
+  // a union, an exception, or a struct?
 
   CORBA::UnionMemberSeq members_;
   // Holder for the member list passed to create_struct() or

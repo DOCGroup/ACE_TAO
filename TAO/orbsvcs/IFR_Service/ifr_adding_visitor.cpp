@@ -26,6 +26,7 @@
 #include "ast_string.h"
 #include "ast_structure.h"
 #include "ast_union.h"
+#include "ast_union_fwd.h"
 #include "ast_valuebox.h"
 #include "ast_valuetype.h"
 #include "ast_valuetype_fwd.h"
@@ -49,7 +50,7 @@ ACE_RCSID (IFR_Service,
            "$Id$")
 
 ifr_adding_visitor::ifr_adding_visitor (AST_Decl *scope,
-                                        CORBA::Boolean in_reopened)
+                                        bool in_reopened)
   : scope_ (scope),
     in_reopened_ (in_reopened)
 {
@@ -188,7 +189,7 @@ ifr_adding_visitor::visit_module (AST_Module *node)
               // tell the difference. So any members whose repository ID
               // already exists in this case will throw BAD_PARAM
               // when we attempt to add them to the repository.
-              this->in_reopened_ = 1;
+              this->in_reopened_ = true;
 
               new_def =
                 CORBA::ComponentIR::Container::_narrow (prev_def.in ());
@@ -217,7 +218,7 @@ ifr_adding_visitor::visit_module (AST_Module *node)
           );
         }
 
-      this->in_reopened_ = 0;
+      this->in_reopened_ = false;
       CORBA::Container_ptr tmp =
         CORBA::Container::_nil ();
 
@@ -270,32 +271,25 @@ ifr_adding_visitor::visit_interface (AST_Interface *node)
           // now. If it is not yet defined or the full definition has already
           // been added to the repository, we just update the current IR object
           // holder.
-          if (node->is_defined ()
-              && node->ifr_added () == 0
-              && this->in_reopened_ == 0)
+          if (node->is_defined () && !node->ifr_added ())
             {
               // If we are here and the line below is true, then either
-              // 1. We are defining an undefined forward declared interface
+              // 1. We are defining an undefined forward declaration
               //    from a previously processed IDL file, or
-              // 2. We are clobbering a previous definition, either of an
-              //    interface or of some other type.
-              // 3. We are inside a module that has a previous entry.
-              // If prev_def would narrow successfully to an InterfaceDef, we
+              // 2. We are clobbering a previous definition, either of the
+              //    node type or of some other type.
+              // If prev_def would narrow successfully to the node type, we
               // have NO WAY of knowing if we are defining or clobbering. So
               // we destroy the contents of the previous entry (we don't want
               // to destroy the entry itself, since it may have already been
               // made a member of some other entry, and destroying it would
               // make the containing entry's section key invalid) and repopulate.
-              // On the other hand, if prev_def is NOT an interface, we can
-              // safely destroy it, since we know we are not redefining a
-              // previous entry, forward declared or not.
-              // If we are inside a module that was seen before, we could be
-              // just processing an IDL file a second time, in which case we
-              // again just update ir_current_.
-              if (node->ifr_fwd_added () == 0)
+              // On the other hand, if prev_def is NOT the node type, we go 
+              // ahead an attempt to create an interface, which will get an
+              // exception from the IFR, as the spec requires.
+              if (!node->ifr_fwd_added ())
                 {
-                  CORBA::DefinitionKind kind =
-                    prev_def->def_kind ();
+                  CORBA::DefinitionKind kind = prev_def->def_kind ();
 
                   if (kind == CORBA::dk_Interface)
                     {
@@ -303,23 +297,18 @@ ifr_adding_visitor::visit_interface (AST_Interface *node)
                         CORBA::InterfaceDef::_narrow (prev_def.in ());
 
                       CORBA::ContainedSeq_var contents =
-                        iface->contents (CORBA::dk_all,
-                                         1);
+                        iface->contents (CORBA::dk_all, true);
 
-                      CORBA::ULong length = contents->length ();
-
-                      for (CORBA::ULong i = 0; i < length; ++i)
+                      for (CORBA::ULong i = 0; i < contents->length (); ++i)
                         {
                           contents[i]->destroy ();
                         }
                     }
                   else
                     {
-                      prev_def->destroy ();
-
-                      int status = this->create_interface_def (node);
-
-                      return status;
+                      // This will cause the IFR to throw an exception,
+                      // as it should.
+                      return this->create_interface_def (node);
                     }
                 }
 
@@ -371,7 +360,7 @@ ifr_adding_visitor::visit_interface (AST_Interface *node)
 
               extant_def->base_interfaces (bases);
 
-              node->ifr_added (1);
+              node->ifr_added (true);
 
               // Push the new IR object onto the scope stack.
               if (be_global->ifr_scopes ().push (extant_def.in ()) != 0)
@@ -511,8 +500,8 @@ ifr_adding_visitor::visit_interface_fwd (AST_InterfaceFwd *node)
               );
             }
 
-          node->ifr_added (1);
-          i->ifr_fwd_added (1);
+          node->ifr_added (true);
+          i->ifr_fwd_added (true);
         }
 
    }
@@ -562,7 +551,7 @@ ifr_adding_visitor::visit_valuebox (AST_ValueBox *node)
           );
         }
 
-      node->ifr_added (1);
+      node->ifr_added (true);
     }
   catch (const CORBA::Exception& ex)
     {
@@ -602,29 +591,23 @@ ifr_adding_visitor::visit_valuetype (AST_ValueType *node)
           // now. If it is not yet defined or the full definition has already
           // been added to the repository, we just update the current IR object
           // holder.
-          if (node->is_defined ()
-              && node->ifr_added () == 0
-              && this->in_reopened_ == 0)
+          if (node->is_defined () && !node->ifr_added ())
             {
               // If we are here and the line below is true, then either
-              // 1. We are defining an undefined forward declared interface
+              // 1. We are defining an undefined forward declaration
               //    from a previously processed IDL file, or
-              // 2. We are clobbering a previous definition, either of an
-              //    interface or of some other type.
-              // 3. We are inside a module that has a previous entry.
-              // If prev_def would narrow successfully to an InterfaceDef, we
+              // 2. We are clobbering a previous definition, either of the
+              //    node type or of some other type.
+              // If prev_def would narrow successfully to the node type, we
               // have NO WAY of knowing if we are defining or clobbering. So
               // we destroy the contents of the previous entry (we don't want
               // to destroy the entry itself, since it may have already been
               // made a member of some other entry, and destroying it would
-              // make the containing entry's key invalid) and repopulate.
-              // On the other hand, if prev_def is NOT an interface, we can
-              // safely destroy it, since we know we are not redefining a
-              // previous entry, forward declared or not.
-              // If we are inside a module that was seen before, we could be
-              // just processing an IDL file a second time, in which case we
-              // again just update ir_current_.
-              if (node->ifr_fwd_added () == 0)
+              // make the containing entry's section key invalid) and repopulate.
+              // On the other hand, if prev_def is NOT the node type, we go 
+              // ahead an attempt to create an interface, which will get an
+              // exception from the IFR, as the spec requires.
+              if (!node->ifr_fwd_added ())
                 {
                   CORBA::DefinitionKind kind =
                     prev_def->def_kind ();
@@ -701,7 +684,7 @@ ifr_adding_visitor::visit_valuetype (AST_ValueType *node)
 
               extant_def->is_custom (static_cast<CORBA::Boolean> (node->custom ()));
 
-              node->ifr_added (1);
+              node->ifr_added (true);
 
               // Push the new IR object onto the scope stack before visiting
               // the new object's scope.
@@ -841,8 +824,8 @@ ifr_adding_visitor::visit_valuetype_fwd (AST_ValueTypeFwd *node)
               );
             }
 
-          node->ifr_added (1);
-          v->ifr_fwd_added (1);
+          node->ifr_added (true);
+          v->ifr_fwd_added (true);
         }
    }
   catch (const CORBA::Exception& ex)
@@ -883,29 +866,23 @@ ifr_adding_visitor::visit_component (AST_Component *node)
           // now. If it is not yet defined or the full definition has already
           // been added to the repository, we just update the current IR object
           // holder.
-          if (node->is_defined ()
-              && node->ifr_added () == 0
-              && this->in_reopened_ == 0)
+          if (node->is_defined () && !node->ifr_added ())
             {
               // If we are here and the line below is true, then either
-              // 1. We are defining an undefined forward declared interface
+              // 1. We are defining an undefined forward declaration
               //    from a previously processed IDL file, or
-              // 2. We are clobbering a previous definition, either of an
-              //    interface or of some other type.
-              // 3. We are inside a module that has a previous entry.
-              // If prev_def would narrow successfully to an InterfaceDef, we
+              // 2. We are clobbering a previous definition, either of the
+              //    node type or of some other type.
+              // If prev_def would narrow successfully to the node type, we
               // have NO WAY of knowing if we are defining or clobbering. So
               // we destroy the contents of the previous entry (we don't want
               // to destroy the entry itself, since it may have already been
               // made a member of some other entry, and destroying it would
-              // make the containing entry's key invalid) and repopulate.
-              // On the other hand, if prev_def is NOT an interface, we can
-              // safely destroy it, since we know we are not redefining a
-              // previous entry, forward declared or not.
-              // If we are inside a module that was seen before, we could be
-              // just processing an IDL file a second time, in which case we
-              // again just update ir_current_.
-              if (node->ifr_fwd_added () == 0)
+              // make the containing entry's section key invalid) and repopulate.
+              // On the other hand, if prev_def is NOT the node type, we go 
+              // ahead an attempt to create an interface, which will get an
+              // exception from the IFR, as the spec requires.
+              if (!node->ifr_fwd_added ())
                 {
                   CORBA::DefinitionKind kind =
                     prev_def->def_kind ();
@@ -973,7 +950,7 @@ ifr_adding_visitor::visit_component (AST_Component *node)
               this->visit_all_consumes (node,
                                         extant_def.in ());
 
-              node->ifr_added (1);
+              node->ifr_added (true);
 
               // Push the new IR object onto the scope stack before visiting
               // the new object's scope.
@@ -1143,8 +1120,8 @@ ifr_adding_visitor::visit_component_fwd (AST_ComponentFwd *node)
               );
             }
 
-          node->ifr_added (1);
-          c->ifr_fwd_added (1);
+          node->ifr_added (true);
+          c->ifr_fwd_added (true);
         }
    }
   catch (const CORBA::Exception& ex)
@@ -1185,29 +1162,23 @@ ifr_adding_visitor::visit_eventtype (AST_EventType *node)
           // now. If it is not yet defined or the full definition has already
           // been added to the repository, we just update the current IR object
           // holder.
-          if (node->is_defined ()
-              && node->ifr_added () == 0
-              && this->in_reopened_ == 0)
+          if (node->is_defined () && !node->ifr_added ())
             {
               // If we are here and the line below is true, then either
-              // 1. We are defining an undefined forward declared interface
+              // 1. We are defining an undefined forward declaration
               //    from a previously processed IDL file, or
-              // 2. We are clobbering a previous definition, either of an
-              //    interface or of some other type.
-              // 3. We are inside a module that has a previous entry.
-              // If prev_def would narrow successfully to an InterfaceDef, we
+              // 2. We are clobbering a previous definition, either of the
+              //    node type or of some other type.
+              // If prev_def would narrow successfully to the node type, we
               // have NO WAY of knowing if we are defining or clobbering. So
               // we destroy the contents of the previous entry (we don't want
               // to destroy the entry itself, since it may have already been
               // made a member of some other entry, and destroying it would
-              // make the containing entry's key invalid) and repopulate.
-              // On the other hand, if prev_def is NOT an interface, we can
-              // safely destroy it, since we know we are not redefining a
-              // previous entry, forward declared or not.
-              // If we are inside a module that was seen before, we could be
-              // just processing an IDL file a second time, in which case we
-              // again just update ir_current_.
-              if (node->ifr_fwd_added () == 0)
+              // make the containing entry's section key invalid) and repopulate.
+              // On the other hand, if prev_def is NOT the node type, we go 
+              // ahead an attempt to create an interface, which will get an
+              // exception from the IFR, as the spec requires.
+              if (!node->ifr_fwd_added ())
                 {
                   CORBA::DefinitionKind kind =
                     prev_def->def_kind ();
@@ -1286,7 +1257,7 @@ ifr_adding_visitor::visit_eventtype (AST_EventType *node)
 
               extant_def->is_custom (static_cast<CORBA::Boolean> (node->custom ()));
 
-              node->ifr_added (1);
+              node->ifr_added (true);
 
               // Push the new IR object onto the scope stack before visiting
               // the new object's scope.
@@ -1431,8 +1402,8 @@ ifr_adding_visitor::visit_eventtype_fwd (AST_EventTypeFwd *node)
               );
             }
 
-          node->ifr_added (1);
-          v->ifr_fwd_added (1);
+          node->ifr_added (true);
+          v->ifr_fwd_added (true);
         }
    }
   catch (const CORBA::Exception& ex)
@@ -1473,29 +1444,23 @@ ifr_adding_visitor::visit_home (AST_Home *node)
           // now. If it is not yet defined or the full definition has already
           // been added to the repository, we just update the current IR object
           // holder.
-          if (node->is_defined ()
-              && node->ifr_added () == 0
-              && this->in_reopened_ == 0)
+          if (node->is_defined () && !node->ifr_added ())
             {
               // If we are here and the line below is true, then either
-              // 1. We are defining an undefined forward declared interface
+              // 1. We are defining an undefined forward declaration
               //    from a previously processed IDL file, or
-              // 2. We are clobbering a previous definition, either of an
-              //    interface or of some other type.
-              // 3. We are inside a module that has a previous entry.
-              // If prev_def would narrow successfully to an InterfaceDef, we
+              // 2. We are clobbering a previous definition, either of the
+              //    node type or of some other type.
+              // If prev_def would narrow successfully to the node type, we
               // have NO WAY of knowing if we are defining or clobbering. So
               // we destroy the contents of the previous entry (we don't want
               // to destroy the entry itself, since it may have already been
               // made a member of some other entry, and destroying it would
-              // make the containing entry's key invalid) and repopulate.
-              // On the other hand, if prev_def is NOT an interface, we can
-              // safely destroy it, since we know we are not redefining a
-              // previous entry, forward declared or not.
-              // If we are inside a module that was seen before, we could be
-              // just processing an IDL file a second time, in which case we
-              // again just update ir_current_.
-              if (node->ifr_fwd_added () == 0)
+              // make the containing entry's section key invalid) and repopulate.
+              // On the other hand, if prev_def is NOT the node type, we go 
+              // ahead an attempt to create an interface, which will get an
+              // exception from the IFR, as the spec requires.
+              if (!node->ifr_fwd_added ())
                 {
                   CORBA::DefinitionKind kind =
                     prev_def->def_kind ();
@@ -1576,7 +1541,7 @@ ifr_adding_visitor::visit_structure (AST_Structure *node)
 
       if (CORBA::is_nil (prev_def.in ()))
         {
-          ifr_adding_visitor_structure visitor (node, 0);
+          ifr_adding_visitor_structure visitor (node, false);
           int retval = visitor.visit_structure (node);
 
           if (retval == 0)
@@ -1593,10 +1558,7 @@ ifr_adding_visitor::visit_structure (AST_Structure *node)
           // entry (from another IDL file) of another type. In that
           // case we do what other ORB vendors do, and destroy the
           // original entry, create the new one, and let the user beware.
-          // Unless we are in a module that has been seen before, in
-          // which case we might be just processing and IDL file a
-          // second time and we want to just update ir_current_.
-          if (node->ifr_added () == 0 && this->in_reopened_ == 0)
+          if (!node->ifr_added ())
             {
               prev_def->destroy ();
 
@@ -1612,6 +1574,59 @@ ifr_adding_visitor::visit_structure (AST_Structure *node)
       ex._tao_print_exception (
         ACE_TEXT (
           "ifr_adding_visitor::visit_structure"));
+
+      return -1;
+    }
+
+  return 0;
+}
+
+int
+ifr_adding_visitor::visit_structure_fwd (AST_StructureFwd *node)
+{
+  if (node->imported () && !be_global->do_included_files ())
+    {
+      return 0;
+    }
+
+  try
+    {
+      CORBA::Contained_var prev_def =
+        be_global->repository ()->lookup_id (node->repoID ());
+
+      if (CORBA::is_nil (prev_def.in ()))
+        {
+          CORBA::StructMemberSeq dummyMembers;
+          dummyMembers.length (0);
+          CORBA::Container_ptr current_scope = CORBA::Container::_nil ();
+          
+          if (be_global->ifr_scopes ().top (current_scope) != 0)
+            {
+              ACE_ERROR_RETURN ((
+                  LM_ERROR,
+                  ACE_TEXT ("(%N:%l) ifr_adding_visitor::")
+                  ACE_TEXT ("visit_structure_fwd -")
+                  ACE_TEXT (" scope stack is empty\n")
+                ),
+                -1
+              );
+            }
+            
+          CORBA::StructDef_var struct_def =
+            current_scope->create_struct (
+                node->repoID (),
+                node->local_name ()->get_string (),
+                node->version (),
+                dummyMembers
+              );
+              
+          node->full_definition ()->ifr_fwd_added (true);
+        }
+    }
+  catch (const CORBA::Exception& ex)
+    {
+      ex._tao_print_exception (ACE_TEXT ("ifr_adding_visitor::")
+                               ACE_TEXT ("visit_structure_fwd"));
 
       return -1;
     }
@@ -1696,7 +1711,7 @@ ifr_adding_visitor::visit_enum (AST_Enum *node)
               );
             }
 
-          node->ifr_added (1);
+          node->ifr_added (true);
         }
       else
         {
@@ -1704,10 +1719,7 @@ ifr_adding_visitor::visit_enum (AST_Enum *node)
           // entry (from another IDL file) of another type. In that
           // case we do what other ORB vendors do, and destroy the
           // original entry, create the new one, and let the user beware.
-          // Unless we are in a module that has been seen before, in
-          // which case we might be just processing and IDL file a
-          // second time and we want to just update ir_current_.
-          if (node->ifr_added () == 0 && this->in_reopened_ == 0)
+          if (!node->ifr_added ())
             {
               prev_def->destroy ();
 
@@ -1897,10 +1909,7 @@ ifr_adding_visitor::visit_union (AST_Union *node)
           // entry (from another IDL file) of another type. In that
           // case we do what other ORB vendors do, and destroy the
           // original entry, create the new one, and let the user beware.
-          // Unless we are in a module that has been seen before, in
-          // which case we might be just processing and IDL file a
-          // second time and we want to just update ir_current_.
-          if (node->ifr_added () == 0 && this->in_reopened_ == 0)
+          if (!node->ifr_added ())
             {
               prev_def->destroy ();
 
@@ -1914,6 +1923,60 @@ ifr_adding_visitor::visit_union (AST_Union *node)
   catch (const CORBA::Exception& ex)
     {
       ex._tao_print_exception (ACE_TEXT ("ifr_adding_visitor::visit_union"));
+
+      return -1;
+    }
+
+  return 0;
+}
+
+int
+ifr_adding_visitor::visit_union_fwd (AST_UnionFwd *node)
+{
+  if (node->imported () && !be_global->do_included_files ())
+    {
+      return 0;
+    }
+
+  try
+    {
+      CORBA::Contained_var prev_def =
+        be_global->repository ()->lookup_id (node->repoID ());
+
+      if (CORBA::is_nil (prev_def.in ()))
+        {
+          CORBA::UnionMemberSeq dummyMembers;
+          dummyMembers.length (0);
+          CORBA::Container_ptr current_scope = CORBA::Container::_nil ();
+          
+          if (be_global->ifr_scopes ().top (current_scope) != 0)
+            {
+              ACE_ERROR_RETURN ((
+                  LM_ERROR,
+                  ACE_TEXT ("(%N:%l) ifr_adding_visitor::")
+                  ACE_TEXT ("visit_union_fwd -")
+                  ACE_TEXT (" scope stack is empty\n")
+                ),
+                -1
+              );
+            }
+            
+          CORBA::UnionDef_var union_def =
+            current_scope->create_union (
+                node->repoID (),
+                node->local_name ()->get_string (),
+                node->version (),
+                CORBA::IDLType::_nil (),
+                dummyMembers
+              );
+              
+          node->full_definition ()->ifr_fwd_added (true);
+        }
+    }
+  catch (const CORBA::Exception& ex)
+    {
+      ex._tao_print_exception (ACE_TEXT ("ifr_adding_visitor::")
+                               ACE_TEXT ("visit_union_fwd"));
 
       return -1;
     }
@@ -1947,10 +2010,7 @@ ifr_adding_visitor::visit_constant (AST_Constant *node)
           // entry (from another IDL file) of another type. In that
           // case we do what other ORB vendors do, and destroy the
           // original entry, create the new one, and let the user beware.
-          // Unless we are in a module that has been seen before, in
-          // which case we might be just processing and IDL file a
-          // second time and we want to just update ir_current_.
-          if (node->ifr_added () == 0 && this->in_reopened_ == 0)
+          if (!node->ifr_added ())
             {
               prev_def->destroy ();
             }
@@ -2140,7 +2200,7 @@ ifr_adding_visitor::visit_typedef (AST_Typedef *node)
           );
         }
 
-      node->ifr_added (1);
+      node->ifr_added (true);
     }
   catch (const CORBA::Exception& ex)
     {
@@ -2232,7 +2292,7 @@ ifr_adding_visitor::visit_native (AST_Native *node)
               );
             }
 
-          node->ifr_added (1);
+          node->ifr_added (true);
         }
       else
         {
@@ -2240,10 +2300,7 @@ ifr_adding_visitor::visit_native (AST_Native *node)
           // entry (from another IDL file) of another type. In that
           // case we do what other ORB vendors do, and destroy the
           // original entry, create the new one, and let the user beware.
-          // Unless we are in a module that has been seen before, in
-          // which case we might be just processing and IDL file a
-          // second time and we want to just update ir_current_.
-          if (node->ifr_added () == 0 && this->in_reopened_ == 0)
+          if (!node->ifr_added ())
             {
               prev_def->destroy ();
 
@@ -2443,9 +2500,12 @@ ifr_adding_visitor::load_any (AST_Expression::AST_ExprValue *ev,
 void
 ifr_adding_visitor::element_type (AST_Type *base_type, bool owned)
 {
-  // In a typedef of a sequence, the sequence is no longer considered
-  // anonymous, but instead 'owned' by the typedef, so we check both.
-  if (base_type->anonymous () || owned)
+  AST_Decl::NodeType nt = base_type->node_type ();
+  bool no_repo_id = nt == AST_Decl::NT_array
+                    || nt == AST_Decl::NT_sequence
+                    || base_type->anonymous ();
+
+  if (no_repo_id)
     {
       if (base_type->ast_accept (this) == -1)
         {
@@ -2621,7 +2681,7 @@ ifr_adding_visitor::create_interface_def (AST_Interface *node)
         }
 
 
-      node->ifr_added (1);
+      node->ifr_added (true);
 
       // Push the new IR object onto the scope stack.
       CORBA::Container_var new_scope =
@@ -2729,7 +2789,7 @@ ifr_adding_visitor::create_value_def (AST_ValueType *node)
                            initializers
                          );
 
-      node->ifr_added (1);
+      node->ifr_added (true);
 
       // Push the new IR object onto the scope stack.
       CORBA::Container_var new_scope =
@@ -2825,7 +2885,7 @@ ifr_adding_visitor::create_component_def (AST_Component *node)
                                      base_component.in (),
                                      supported_interfaces);
 
-      node->ifr_added (1);
+      node->ifr_added (true);
 
       if (be_global->ifr_scopes ().push (new_def.in ()) != 0)
         {
@@ -2942,7 +3002,7 @@ ifr_adding_visitor::create_home_def (AST_Home *node)
                                 supported_interfaces,
                                 primary_key.in ());
 
-      node->ifr_added (1);
+      node->ifr_added (true);
 
       // Push the new IR object onto the scope stack.
       CORBA::Container_var new_scope =
@@ -3061,7 +3121,7 @@ ifr_adding_visitor::create_event_def (AST_EventType *node)
                        initializers
                      );
 
-      node->ifr_added (1);
+      node->ifr_added (true);
 
       // Push the new IR object onto the scope stack.
       CORBA::Container_var new_scope =
