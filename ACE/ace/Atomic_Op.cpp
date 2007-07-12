@@ -29,7 +29,7 @@ namespace {
 long
 single_cpu_increment (volatile long *value)
 {
-#if defined (__GNUC__) && (defined (ACE_HAS_PENTIUM) || defined (__amd64__))
+#if defined (ACE_HAS_INTEL_ASSEMBLY)
   long tmp = 1;
   unsigned long addr = reinterpret_cast<unsigned long> (value);
   asm( "xadd %0, (%1)" : "+r"(tmp) : "r"(addr) );
@@ -52,7 +52,7 @@ single_cpu_increment (volatile long *value)
 long
 single_cpu_decrement (volatile long *value)
 {
-#if defined (__GNUC__) && (defined (ACE_HAS_PENTIUM) || defined (__amd64__))
+#if defined (ACE_HAS_INTEL_ASSEMBLY)
   long tmp = -1;
   unsigned long addr = reinterpret_cast<unsigned long> (value);
   asm( "xadd %0, (%1)" : "+r"(tmp) : "r"(addr) );
@@ -75,7 +75,7 @@ single_cpu_decrement (volatile long *value)
 long
 single_cpu_exchange (volatile long *value, long rhs)
 {
-#if defined (__GNUC__) && (defined (ACE_HAS_PENTIUM) || defined (__amd64__))
+#if defined (ACE_HAS_INTEL_ASSEMBLY)
   unsigned long addr = reinterpret_cast<unsigned long> (value);
   asm( "xchg %0, (%1)" : "+r"(rhs) : "r"(addr) );
   return rhs;
@@ -97,7 +97,7 @@ single_cpu_exchange (volatile long *value, long rhs)
 long
 single_cpu_exchange_add (volatile long *value, long rhs)
 {
-#if defined (__GNUC__) && (defined (ACE_HAS_PENTIUM) || defined (__amd64__))
+#if defined (ACE_HAS_INTEL_ASSEMBLY)
   unsigned long addr = reinterpret_cast<unsigned long> (value);
   asm( "xadd %0, (%1)" : "+r"(rhs) : "r"(addr) );
   return rhs;
@@ -138,7 +138,7 @@ single_cpu_exchange_add (volatile long *value, long rhs)
 long
 multi_cpu_increment (volatile long *value)
 {
-#if defined (__GNUC__) && (defined (ACE_HAS_PENTIUM) || defined (__amd64__))
+#if defined (ACE_HAS_INTEL_ASSEMBLY)
   long tmp = 1;
   unsigned long addr = reinterpret_cast<unsigned long> (value);
   asm( "lock ; xadd %0, (%1)" : "+r"(tmp) : "r"(addr) );
@@ -155,7 +155,7 @@ multi_cpu_increment (volatile long *value)
 long
 multi_cpu_decrement (volatile long *value)
 {
-#if defined (__GNUC__) && (defined (ACE_HAS_PENTIUM) || defined (__amd64__))
+#if defined (ACE_HAS_INTEL_ASSEMBLY)
   long tmp = -1;
   unsigned long addr = reinterpret_cast<unsigned long> (value);
   asm( "lock ; xadd %0, (%1)" : "+r"(tmp) : "r"(addr) );
@@ -172,7 +172,7 @@ multi_cpu_decrement (volatile long *value)
 long
 multi_cpu_exchange (volatile long *value, long rhs)
 {
-#if defined (__GNUC__) && (defined (ACE_HAS_PENTIUM) || defined (__amd64__))
+#if defined (ACE_HAS_INTEL_ASSEMBLY)
   unsigned long addr = reinterpret_cast<unsigned long> (value);
   // The XCHG instruction automatically follows LOCK semantics
   asm( "xchg %0, (%1)" : "+r"(rhs) : "r"(addr) );
@@ -190,7 +190,7 @@ multi_cpu_exchange (volatile long *value, long rhs)
 long
 multi_cpu_exchange_add (volatile long *value, long rhs)
 {
-#if defined (__GNUC__) && (defined (ACE_HAS_PENTIUM) || defined (__amd64__))
+#if defined (ACE_HAS_INTEL_ASSEMBLY)
   unsigned long addr = reinterpret_cast<unsigned long> (value);
   asm( "lock ; xadd %0, (%1)" : "+r"(rhs) : "r"(addr) );
   return rhs;

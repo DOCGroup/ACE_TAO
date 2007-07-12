@@ -43,6 +43,7 @@
 #  endif /* ACE_HAS_INTERLOCKED_EXCHANGEADD */
 # elif defined (__GNUC__) && (defined (ACE_HAS_PENTIUM) || defined (__amd64__))
 #  define ACE_HAS_BUILTIN_ATOMIC_OP
+#  define ACE_HAS_INTEL_ASSEMBLY
 # endif /* WIN32 */
 #endif /* ACE_HAS_THREADS */
 
