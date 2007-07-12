@@ -1,3 +1,95 @@
+Thu Jul 12 16:51:30 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Invocation_Interceptor.h:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Invocation_Interceptor.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_ORBInitializer.cpp:
+        * orbsvcs/orbsvcs/Security/SL2_SecurityManager.h:
+        * orbsvcs/orbsvcs/Security/SL2_SecurityManager.cpp:
+        * orbsvcs/orbsvcs/Security/Security_ORBInitializer.cpp:
+          The mixed security feature is an implementation of the Security
+          Level 2 Access Decision interface. The actual implementation
+          deviates slightly from the specification because the spec
+          requires passing an object reference for the target to be
+          considered by the access_allowed operation. Unfortunately the
+          point where this method is called requires synthesizing an
+          object reference based on a POA and an object ID. But doing this
+          requires the POA to have the RETAIN policy set otherwise
+          id_to_reference fails. Furthermore, there is no way to
+          conclusively compare two object references. The obvious way,
+          calling object_to_string() and comparing the results fails
+          because the stringified reference is really a CDR buffer that
+          contains alignment padding bytes that are filled with garbage.
+          Two otherwise identical references might have different strings.
+          To work around these problems, we implement an alternative
+          interface to take ORB, POA, and object ids as blobs and use
+          these for comparisons.
+
+        * orbsvcs/orbsvcs/SecurityLevel2.idl:
+        * orbsvcs/tests/Security/mixed_security_test:
+        * orbsvcs/tests/Security/mixed_security_test/Foo.idl:
+        * orbsvcs/tests/Security/mixed_security_test/Foo_i.h:
+        * orbsvcs/tests/Security/mixed_security_test/Foo_i.cpp:
+        * orbsvcs/tests/Security/mixed_security_test/README:
+        * orbsvcs/tests/Security/mixed_security_test/cacert.pem:
+        * orbsvcs/tests/Security/mixed_security_test/client.conf:
+        * orbsvcs/tests/Security/mixed_security_test/client.conf.xml:
+        * orbsvcs/tests/Security/mixed_security_test/client.cpp:
+        * orbsvcs/tests/Security/mixed_security_test/client_cert.pem:
+        * orbsvcs/tests/Security/mixed_security_test/client_key.pem:
+        * orbsvcs/tests/Security/mixed_security_test/client_key_nopasswd.pem:
+        * orbsvcs/tests/Security/mixed_security_test/client_none.conf:
+        * orbsvcs/tests/Security/mixed_security_test/client_nopasswd.conf:
+        * orbsvcs/tests/Security/mixed_security_test/client_nopasswd.conf.xml:
+        * orbsvcs/tests/Security/mixed_security_test/constants.h:
+        * orbsvcs/tests/Security/mixed_security_test/mixed_security.mpc:
+        * orbsvcs/tests/Security/mixed_security_test/run_test.pl:
+        * orbsvcs/tests/Security/mixed_security_test/server.conf:
+        * orbsvcs/tests/Security/mixed_security_test/server.conf.xml:
+        * orbsvcs/tests/Security/mixed_security_test/server.cpp:
+        * orbsvcs/tests/Security/mixed_security_test/server_cert.pem:
+        * orbsvcs/tests/Security/mixed_security_test/server_key.pem:
+        * orbsvcs/tests/Security/mixed_security_test/server_key_nopasswd.pem:
+        * orbsvcs/tests/Security/mixed_security_test/server_none.conf:
+        * orbsvcs/tests/Security/mixed_security_test/server_none.conf.xml:
+        * orbsvcs/tests/Security/mixed_security_test/server_nopasswd.conf:
+        * orbsvcs/tests/Security/mixed_security_test/server_nopasswd.conf.xml:
+          This is the regression test for validating the mixed security
+          feature.
+
+        * tao/CDR.cpp:
+        * tao/Profile.cpp:
+          During the development of the mixed security feature, it was
+          discovered that comparing object references by comparing
+          stringified buffers failed because the stringified buffers
+          contained alignment padding bytes that contained garbage. This
+          garbage is ignored by CDR, but causes two otherwise identical
+          object references to fail to compare. As a way to validate this
+          problem we added some code to initialize a CDR buffer to all
+          zeros before encoding to it, thereby ensuring that twe encodings
+          of the same object reference would yield the same stringified
+          result. The mixed security feature was reimplemented to not
+          require a full object reference for comparison anyway, rending
+          this problem moot for the moment. The buffer blanking code is
+          left in place, but not compiled.
+
+        * tests/objref_comparison_test/foo.idl:
+        * tests/objref_comparison_test/main.cpp:
+        * tests/objref_comparison_test/objref_comparison_test.mpc:
+        * tests/objref_comparison_test/server.conf:
+        * tests/objref_comparison_test/server_cert.pem:
+        * tests/objref_comparison_test/server_key.pem:
+          This test is used to highlight the difficulty in comparing
+          object references. It is not to be added to the nightly build
+          suite.
+
+        * utils/catior/catior.cpp:
+          Add the ability to parse out ssl component elements. This does
+          not require linking any ssl or SSLIOP code.
+
+        * orbsvcs/Naming_Service/NT_Naming_Server.cpp:
+          Fix emacs mode selector line.
+
 Thu Jul 12 11:29:39 UTC 2007  Vadym Ridosh  <vridosh@prismtech.com>
 
         * tao/Strategies/DIOP_Connector.cpp:
@@ -26,21 +118,21 @@ Thu Jul 12 11:29:39 UTC 2007  Vadym Ridosh  <vridosh@prismtech.com>
           Made that shutdown is called 10 times in all DIOP tests to make
           sure that server does not miss it. Added scripts for testing IPv6
           implementation in DIOP.
-        
+
 Thu Jul 12 09:39:46 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/orbsvcs/IFRService/UnionDef_i.h:
-        
+
           Cosmetic changes.
-          
+
         * orbsvcs/orbsvcs/IFRService/Container_i.cpp(create_union_i):
-        
+
           Added check for a null discriminator type before setting
           a reference to it in the repository. Required to support
           creation of an entry for a forward declared union, in
           which case the discriminator and the members will be
           added when the full definition is seen.
-          
+
         * orbsvcs/IFR_Service/ifr_adding_visitor.h:
         * orbsvcs/IFR_Service/ifr_adding_visitor_union.h:
         * orbsvcs/IFR_Service/ifr_adding_visitor_exception.h:
@@ -49,7 +141,7 @@ Thu Jul 12 09:39:46 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
         * orbsvcs/IFR_Service/ifr_adding_visitor_union.cpp:
         * orbsvcs/IFR_Service/ifr_adding_visitor_exception.cpp:
         * orbsvcs/IFR_Service/ifr_adding_visitor_structure.cpp:
-        
+
           - Added support for forward declared structs and unions.
           - Factored out common code that adds union members, used
             when creating a new union entry in the repo and also
@@ -57,18 +149,18 @@ Thu Jul 12 09:39:46 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
             created for a forward delared union.
           - Added changes required by changes in the TAO_IDL front
             end for typedefs.
-            
+
         * tao/AnyTypeCode/TypeCode_Case_Enum_T.cpp:
-        
+
           Changed code that compares equality of union labels where
           the discriminator is an enum to always extract the value
           to compare as an unsigned long, since the Any extraction
           operator overload for the enum type may not be known to the
           ORB code that is doing the comparison.
-          
+
         * tao/TypeCodeFactory/TypeCodeFactory_i.h(check_recursion):
         * tao/TypeCodeFactory/TypeCodeFactory_i.cpp(check_recursion):
-        
+
           Added parameter to the method that holds a 'working id'
           that enables the method to determine that, although a
           recursion has been detected, it may be the recursion of

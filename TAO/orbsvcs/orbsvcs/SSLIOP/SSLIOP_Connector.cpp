@@ -348,6 +348,7 @@ TAO::SSLIOP::Connector::iiop_connect (
   TAO::Profile_Transport_Resolver *resolver,
   ACE_Time_Value *timeout)
 {
+#if 0
   const ::SSLIOP::SSL &ssl_component = ssl_endpoint->ssl_component ();
 
   // Only allow connection to the insecure IIOP port if the endpoint
@@ -368,6 +369,7 @@ TAO::SSLIOP::Connector::iiop_connect (
         TAO::VMCID,
         EPERM),
       CORBA::COMPLETED_NO);
+#endif
 
   TAO_IIOP_Endpoint *iiop_endpoint = ssl_endpoint->iiop_endpoint ();
 
