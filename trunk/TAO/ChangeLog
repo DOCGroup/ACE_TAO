@@ -1,3 +1,8 @@
+Fri Jul 13 12:35:16 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/tests/Security/mixed_security_test/constants.h:
+          Removed superfluous semicolon.
+
 Fri Jul 13 11:33:42 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/tests/Security/mixed_security_test/Foo_i.h:
