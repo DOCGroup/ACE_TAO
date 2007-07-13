@@ -92,7 +92,7 @@ public:
   // Check if we or the parameter node is in recursion.
 
   // Narrowing
-  DEF_NARROW_METHODS1(AST_Exception, AST_Structure);
+
   DEF_NARROW_FROM_DECL(AST_Exception);
   DEF_NARROW_FROM_SCOPE(AST_Exception);
 

@@ -98,7 +98,7 @@ be_exception::accept (be_visitor *visitor)
   return visitor->visit_exception (this);
 }
 
-// Narrowing
-IMPL_NARROW_METHODS3 (be_exception, AST_Exception, be_scope, be_type)
+
+
 IMPL_NARROW_FROM_DECL (be_exception)
 IMPL_NARROW_FROM_SCOPE (be_exception)

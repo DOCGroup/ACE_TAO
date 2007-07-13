@@ -345,7 +345,7 @@ AST_Factory::ast_accept (ast_visitor *visitor)
 
 // Data accessors
 
-// Narrowing.
-IMPL_NARROW_METHODS2(AST_Factory, AST_Decl, UTL_Scope)
+
+
 IMPL_NARROW_FROM_DECL(AST_Factory)
 IMPL_NARROW_FROM_SCOPE(AST_Factory)

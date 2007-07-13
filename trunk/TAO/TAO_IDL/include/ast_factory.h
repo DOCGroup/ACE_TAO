@@ -107,7 +107,7 @@ public:
   // generated for the stubs.
 
   // Narrowing.
-  DEF_NARROW_METHODS2(AST_Factory, AST_Decl, UTL_Scope);
+
   DEF_NARROW_FROM_DECL(AST_Factory);
   DEF_NARROW_FROM_SCOPE(AST_Factory);
 

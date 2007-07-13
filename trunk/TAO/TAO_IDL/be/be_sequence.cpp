@@ -793,6 +793,6 @@ be_sequence::destroy (void)
   this->AST_Sequence::destroy ();
 }
 
-// Narrowing
-IMPL_NARROW_METHODS3 (be_sequence, AST_Sequence, be_scope, be_type)
+
+
 IMPL_NARROW_FROM_DECL (be_sequence)

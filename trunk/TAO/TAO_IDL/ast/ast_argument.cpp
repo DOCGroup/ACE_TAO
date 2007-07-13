@@ -148,6 +148,6 @@ AST_Argument::direction (void)
   return this->pd_direction;
 }
 
-// Narrowing operations.
-IMPL_NARROW_METHODS1(AST_Argument, AST_Field)
+
+
 IMPL_NARROW_FROM_DECL(AST_Argument)

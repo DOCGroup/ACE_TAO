@@ -97,7 +97,7 @@ public:
   UTL_ExceptList *get_set_exceptions (void) const;
 
   // Narrowing.
-  DEF_NARROW_METHODS1(AST_Attribute, AST_Field);
+
   DEF_NARROW_FROM_DECL(AST_Attribute);
 
   // AST Dumping.

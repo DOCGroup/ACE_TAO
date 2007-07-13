@@ -32,7 +32,7 @@ public:
   // Cleanup.
 
   // Narrowing.
-  DEF_NARROW_METHODS1(AST_Native, AST_Exception);
+
   DEF_NARROW_FROM_DECL(AST_Native);
 
   // AST Dumping.

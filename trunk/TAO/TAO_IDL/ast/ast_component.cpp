@@ -234,7 +234,7 @@ AST_Component::redef_clash (void)
   return 0;
 }
 
-// Narrowing methods.
-IMPL_NARROW_METHODS1(AST_Component, AST_Interface)
+
+
 IMPL_NARROW_FROM_DECL(AST_Component)
 IMPL_NARROW_FROM_SCOPE(AST_Component)

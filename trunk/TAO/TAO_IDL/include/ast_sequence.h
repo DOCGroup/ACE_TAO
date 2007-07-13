@@ -108,7 +108,7 @@ public:
   virtual void destroy (void);
 
   // Narrowing.
-  DEF_NARROW_METHODS1(AST_Sequence, AST_ConcreteType);
+
   DEF_NARROW_FROM_DECL(AST_Sequence);
 
   // AST Dumping.

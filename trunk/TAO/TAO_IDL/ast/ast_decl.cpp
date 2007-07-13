@@ -1464,8 +1464,8 @@ AST_Decl::contains_wstring (int val)
 }
 
 //Narrowing methods for AST_Decl.
-IMPL_NARROW_METHODS0(AST_Decl)
+
 IMPL_NARROW_FROM_DECL(AST_Decl)
 
-// Narrowing methods for COMMON_Base.
-IMPL_NARROW_METHODS0(COMMON_Base)
+
+

@@ -167,7 +167,7 @@ public:
   void ccm_pre_proc_gen (bool);
 
   // Narrowing
-  DEF_NARROW_METHODS1 (be_decl, AST_Decl);
+
   DEF_NARROW_FROM_DECL (be_decl);
 
 protected:

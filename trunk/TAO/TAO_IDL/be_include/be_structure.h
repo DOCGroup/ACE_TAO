@@ -57,7 +57,7 @@ public:
   // To access the protected base class method fe_add_field.
 
  // Narrowing.
-  DEF_NARROW_METHODS3 (be_structure, AST_Structure, be_scope, be_type);
+
   DEF_NARROW_FROM_DECL (be_structure);
   DEF_NARROW_FROM_SCOPE (be_structure);
 };

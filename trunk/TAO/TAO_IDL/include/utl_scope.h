@@ -219,7 +219,7 @@ public:
   }
 
   // Narrowing.
-  DEF_NARROW_METHODS0(UTL_Scope);
+
   DEF_NARROW_FROM_SCOPE(UTL_Scope);
 
   // AST Dumping.

@@ -91,6 +91,6 @@ be_valuebox::destroy (void)
   this->AST_Type::destroy ();
 }
 
-// Narrowing.
-IMPL_NARROW_METHODS2 (be_valuebox, AST_ValueBox, be_type)
+
+
 IMPL_NARROW_FROM_DECL (be_valuebox)

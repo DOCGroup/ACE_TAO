@@ -112,7 +112,7 @@ public:
   PredefinedType pt (void);
 
   // Narrowing
-  DEF_NARROW_METHODS1(AST_PredefinedType, AST_ConcreteType);
+
   DEF_NARROW_FROM_DECL(AST_PredefinedType);
 
   // AST Dumping

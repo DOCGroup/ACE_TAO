@@ -121,7 +121,7 @@ public:
   void set_recursive_flag (void);
 
   // Narrowing.
-  DEF_NARROW_METHODS1(AST_Field, AST_Decl);
+
   DEF_NARROW_FROM_DECL(AST_Field);
 
   // AST Dumping.

@@ -137,7 +137,7 @@ be_eventtype::destroy (void)
   this->be_valuetype::destroy ();
 }
 
-// Narrowing.
-IMPL_NARROW_METHODS2 (be_eventtype, be_valuetype, AST_EventType)
+
+
 IMPL_NARROW_FROM_DECL (be_eventtype)
 IMPL_NARROW_FROM_SCOPE (be_eventtype)

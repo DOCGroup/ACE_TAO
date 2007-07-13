@@ -50,7 +50,7 @@ public:
   virtual void destroy (void);
 
   // Narrowing.
-  DEF_NARROW_METHODS2 (be_field, AST_Field, be_decl);
+
   DEF_NARROW_FROM_DECL (be_field);
 };
 

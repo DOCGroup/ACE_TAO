@@ -64,6 +64,6 @@ be_enum_val::destroy (void)
   this->be_decl::destroy ();
 }
 
-// Narrowing
-IMPL_NARROW_METHODS2 (be_enum_val, AST_EnumVal, be_decl)
+
+
 IMPL_NARROW_FROM_DECL (be_enum_val)

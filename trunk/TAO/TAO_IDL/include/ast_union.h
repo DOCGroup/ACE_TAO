@@ -106,7 +106,7 @@ public:
   AST_Expression::ExprType udisc_type (void);
 
   // Narrowing.
-  DEF_NARROW_METHODS1(AST_Union, AST_Structure);
+
   DEF_NARROW_FROM_DECL(AST_Union);
   DEF_NARROW_FROM_SCOPE(AST_Union);
 

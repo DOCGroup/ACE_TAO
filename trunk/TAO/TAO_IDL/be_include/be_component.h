@@ -59,7 +59,7 @@ public:
   AST_Typedef *be_add_typedef (AST_Typedef *t);
 
   // Narrowing.
-  DEF_NARROW_METHODS2 (be_component, be_interface, AST_Component);
+
   DEF_NARROW_FROM_DECL (be_component);
   DEF_NARROW_FROM_SCOPE (be_component);
 };

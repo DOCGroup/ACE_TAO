@@ -1261,7 +1261,7 @@ AST_Union::udisc_type (void)
   return this->pd_udisc_type;
 }
 
-// Narrowing.
-IMPL_NARROW_METHODS1(AST_Union, AST_Structure)
+
+
 IMPL_NARROW_FROM_DECL(AST_Union)
 IMPL_NARROW_FROM_SCOPE(AST_Union)

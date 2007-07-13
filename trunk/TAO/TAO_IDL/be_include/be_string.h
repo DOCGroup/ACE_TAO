@@ -51,7 +51,7 @@ public:
   virtual void destroy (void);
 
   // Narrowing.
-  DEF_NARROW_METHODS2 (be_string, AST_String, be_type);
+
   DEF_NARROW_FROM_DECL (be_string);
 
 protected:

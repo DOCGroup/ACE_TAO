@@ -61,6 +61,6 @@ AST_ValueTypeFwd::destroy (void)
 {
 }
 
-// Narrowing methods.
-IMPL_NARROW_METHODS1 (AST_ValueTypeFwd, AST_InterfaceFwd)
+
+
 IMPL_NARROW_FROM_DECL (AST_ValueTypeFwd)

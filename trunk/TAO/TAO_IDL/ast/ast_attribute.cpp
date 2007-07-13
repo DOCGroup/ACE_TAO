@@ -318,6 +318,6 @@ AST_Attribute::fe_add_set_exceptions (UTL_NameList *t)
   return t;
 }
 
-// Narrowing methods.
-IMPL_NARROW_METHODS1(AST_Attribute, AST_Field)
+
+
 IMPL_NARROW_FROM_DECL(AST_Attribute)

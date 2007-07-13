@@ -126,7 +126,7 @@ be_component::be_add_typedef (AST_Typedef *t)
   return this->fe_add_typedef (t);
 }
 
-// Narrowing.
-IMPL_NARROW_METHODS2 (be_component, be_interface, AST_Component)
+
+
 IMPL_NARROW_FROM_DECL (be_component)
 IMPL_NARROW_FROM_SCOPE (be_component)

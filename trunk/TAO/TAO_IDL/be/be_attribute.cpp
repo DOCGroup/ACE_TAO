@@ -154,6 +154,6 @@ be_attribute::destroy (void)
   this->AST_Attribute::destroy ();
 }
 
-// Narrowing
-IMPL_NARROW_METHODS2 (be_attribute, AST_Attribute, be_decl)
+
+
 IMPL_NARROW_FROM_DECL (be_attribute)

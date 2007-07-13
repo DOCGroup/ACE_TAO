@@ -52,7 +52,7 @@ public:
   virtual int accept (be_visitor* visitor);
 
   // Narrowing.
-  DEF_NARROW_METHODS2 (be_union_fwd, AST_UnionFwd, be_structure_fwd);
+
   DEF_NARROW_FROM_DECL (be_union_fwd);
 };
 

@@ -313,6 +313,6 @@ AST_Constant::enum_full_name (void)
     }
 }
 
-// Narrowing methods.
-IMPL_NARROW_METHODS1(AST_Constant, AST_Decl)
+
+
 IMPL_NARROW_FROM_DECL(AST_Constant)
