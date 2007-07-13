@@ -46,9 +46,7 @@ public:
 
   virtual void reset (const char * client_name);
 
-
   virtual void shutdown (void);
-
   // Shutdown the server.
 
   void orb (CORBA::ORB_ptr o);
@@ -59,7 +57,6 @@ public:
 
   ACE_UINT32 getWrongMessagesCount ();
   // Return the number of lost messages
-
 
 private:
   CORBA::ORB_var orb_;
