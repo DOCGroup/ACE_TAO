@@ -27,9 +27,9 @@ public:
          SecurityLevel3::SecurityCurrent_ptr);
 
   /// Test method.
-  virtual void baz ();
+  virtual void baz (void);
 
-  virtual void shutdown ();
+  virtual void shutdown (void);
 
 private:
 

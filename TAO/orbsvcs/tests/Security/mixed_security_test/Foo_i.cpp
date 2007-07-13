@@ -18,7 +18,7 @@ Foo_i::Foo_i (CORBA::ORB_ptr orb,
 }
 
 void
-Foo_i::baz ()
+Foo_i::baz (void)
 {
   if (this->current_ == 0)
     {
@@ -57,7 +57,7 @@ Foo_i::baz ()
 }
 
 void
-Foo_i::shutdown ()
+Foo_i::shutdown (void)
 {
   this->orb_->shutdown (0);
 }
