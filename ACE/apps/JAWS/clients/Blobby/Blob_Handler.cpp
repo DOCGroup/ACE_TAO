@@ -228,7 +228,7 @@ ACE_Blob_Reader::receive_reply (void)
 
   len = peer().recv_n (mb_->wr_ptr (), bytes_left);
 
-  if (len != bytes_left)
+  if (len != static_cast<ssize_t>(bytes_left))
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n",
                        "ACE_Blob_Reader::receiveReply():Read error" ), -1);
 
