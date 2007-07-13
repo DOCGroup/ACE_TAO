@@ -601,8 +601,15 @@ sub check_for_exception_spec ()
                     $disable = 0;
                 }
                 if ($disable == 0) {
-                    if(/throw\s*\(.+\)\s*$/) {
-                        print_error ("$file:$.: exception specification found");
+                    if($file == /.*.hpp/ or $file == /.*.h/) {
+                        if(/throw\s*\(.+\).*;/) {
+                            print_error ("$file:$.: exception specification found");                    
+                        }
+                    }
+                    else {
+                        if(/throw\s*\(.+\).*{/) {
+                            print_error ("$file:$.: exception specification found");
+                        } 
                     }
                 }
             }
@@ -1723,10 +1730,10 @@ check_for_inline_in_cpp () if ($opt_l >= 2);
 check_for_id_string () if ($opt_l >= 1);
 check_for_newline () if ($opt_l >= 1);
 check_for_tab () if ($opt_l >= 6);
-check_for_lack_ACE_OS () if ($opt_l >= 1);
-check_for_exception_spec () if ($opt_l >= 1);
-check_for_NULL () if ($opt_l >= 1);
-check_for_improper_main_declaration () if ($opt_l >= 1);
+check_for_lack_ACE_OS () if ($opt_l >= 10);
+check_for_exception_spec () if ($opt_l >= 10);
+check_for_NULL () if ($opt_l >= 10);
+check_for_improper_main_declaration () if ($opt_l >= 10);
 check_for_inline () if ($opt_l >= 2);
 check_for_math_include () if ($opt_l >= 3);
 check_for_synch_include () if ($opt_l >= 6);
