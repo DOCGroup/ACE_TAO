@@ -12,6 +12,7 @@ project(TAO_IDL3_TO_IDL2_BE) : acelib, install, tao_output, crosscompile {
   includes += $(CIAO_ROOT)
 
   Source_Files {
+    basic_visitor.cpp
     be_global.cpp
     be_helper.cpp
     be_init.cpp
@@ -23,6 +24,7 @@ project(TAO_IDL3_TO_IDL2_BE) : acelib, install, tao_output, crosscompile {
   }
 
   Header_Files {
+    basic_visitor.h
     be_extern.h
     be_global.h
     be_helper.h
