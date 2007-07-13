@@ -1,3 +1,9 @@
+Fri Jul 13 08:13:19 UTC 2007  Vadym Ridosh  <vridosh@prismtech.com>
+
+        * bin/tao_other_tests.lst:
+          Excluded examples/PluggableUDP/tests/Performance from corba_e_compact
+          and corba_e_micro builds.
+
 Fri Jul 13 03:02:58 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * bin/fuzz.pl:
