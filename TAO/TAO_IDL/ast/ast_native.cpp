@@ -60,6 +60,6 @@ AST_Native::ast_accept (ast_visitor *visitor)
   return visitor->visit_native (this);
 }
 
-// Narrowing.
-IMPL_NARROW_METHODS1(AST_Native, AST_Exception)
+
+
 IMPL_NARROW_FROM_DECL(AST_Native)

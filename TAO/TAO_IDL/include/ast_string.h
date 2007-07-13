@@ -95,7 +95,7 @@ public:
   long width (void);
 
   // Narrowing.
-  DEF_NARROW_METHODS1(AST_String, AST_ConcreteType);
+
   DEF_NARROW_FROM_DECL(AST_String);
 
   // AST Dumping.

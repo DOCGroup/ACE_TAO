@@ -136,6 +136,6 @@ be_typedef::accept (be_visitor *visitor)
   return visitor->visit_typedef (this);
 }
 
-// Narrowing.
-IMPL_NARROW_METHODS2 (be_typedef, AST_Typedef, be_type)
+
+
 IMPL_NARROW_FROM_DECL (be_typedef)

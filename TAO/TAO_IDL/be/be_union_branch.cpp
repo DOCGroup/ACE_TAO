@@ -198,6 +198,6 @@ be_union_branch::destroy (void)
   this->AST_UnionBranch::destroy ();
 }
 
-// Narrowing.
-IMPL_NARROW_METHODS2 (be_union_branch, AST_UnionBranch, be_decl)
+
+
 IMPL_NARROW_FROM_DECL (be_union_branch)

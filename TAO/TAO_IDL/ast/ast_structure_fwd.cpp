@@ -99,6 +99,6 @@ AST_StructureFwd::destroy (void)
   this->AST_Type::destroy ();
 }
 
-// Narrowing methods.
-IMPL_NARROW_METHODS1 (AST_StructureFwd, AST_Type)
+
+
 IMPL_NARROW_FROM_DECL (AST_StructureFwd)

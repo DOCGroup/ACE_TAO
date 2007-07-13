@@ -137,7 +137,7 @@ be_home::accept (be_visitor *visitor)
   return visitor->visit_home (this);
 }
 
-// Narrowing
-IMPL_NARROW_METHODS2 (be_home, be_interface, AST_Home)
+
+
 IMPL_NARROW_FROM_DECL (be_home)
 IMPL_NARROW_FROM_SCOPE (be_home)

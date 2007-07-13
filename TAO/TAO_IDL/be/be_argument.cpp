@@ -86,6 +86,6 @@ be_argument::destroy (void)
   this->AST_Argument::destroy ();
 }
 
-// Narrowing.
-IMPL_NARROW_METHODS2 (be_argument, AST_Argument, be_decl)
+
+
 IMPL_NARROW_FROM_DECL (be_argument)

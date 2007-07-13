@@ -62,7 +62,7 @@ public:
   virtual int accept (be_visitor *visitor);
 
   // Narrowing.
-  DEF_NARROW_METHODS1 (be_scope, UTL_Scope);
+
   DEF_NARROW_FROM_SCOPE (be_scope);
 
 private:

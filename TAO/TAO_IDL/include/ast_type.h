@@ -140,7 +140,7 @@ public:
   // union, array, typedef, and interface.
 
   // Narrowing.
-  DEF_NARROW_METHODS1(AST_Type, AST_Decl);
+
   DEF_NARROW_FROM_DECL(AST_Type);
 
   // Visiting.

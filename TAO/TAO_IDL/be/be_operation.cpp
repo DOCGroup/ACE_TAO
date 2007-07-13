@@ -147,7 +147,7 @@ be_operation::arguments (void)
 }
 
 
-// Narrowing
-IMPL_NARROW_METHODS3 (be_operation, AST_Operation, be_scope, be_decl)
+
+
 IMPL_NARROW_FROM_DECL (be_operation)
 IMPL_NARROW_FROM_SCOPE (be_operation)

@@ -589,7 +589,7 @@ AST_Operation::exceptions (void)
   return this->pd_exceptions;
 }
 
-// Narrowing.
-IMPL_NARROW_METHODS2(AST_Operation, AST_Decl, UTL_Scope)
+
+
 IMPL_NARROW_FROM_DECL(AST_Operation)
 IMPL_NARROW_FROM_SCOPE(AST_Operation)

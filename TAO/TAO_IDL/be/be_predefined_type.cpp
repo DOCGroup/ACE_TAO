@@ -282,6 +282,6 @@ be_predefined_type::destroy (void)
   this->be_type::destroy ();
 }
 
-// Narrowing
-IMPL_NARROW_METHODS2 (be_predefined_type, AST_PredefinedType, be_type)
+
+
 IMPL_NARROW_FROM_DECL (be_predefined_type)

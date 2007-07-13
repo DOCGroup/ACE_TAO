@@ -91,7 +91,7 @@ public:
   virtual ~AST_Module (void);
 
   // Narrowing.
-  DEF_NARROW_METHODS2(AST_Module, AST_Decl, UTL_Scope);
+
   DEF_NARROW_FROM_DECL(AST_Module);
   DEF_NARROW_FROM_SCOPE(AST_Module);
 

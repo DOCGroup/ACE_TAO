@@ -120,7 +120,7 @@ be_root::accept (be_visitor *visitor)
   return visitor->visit_root (this);
 }
 
-// Narrowing methods
-IMPL_NARROW_METHODS3 (be_root, AST_Root, be_scope, be_decl)
+
+
 IMPL_NARROW_FROM_DECL (be_root)
 IMPL_NARROW_FROM_SCOPE (be_root)

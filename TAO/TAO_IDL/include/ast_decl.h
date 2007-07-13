@@ -112,7 +112,7 @@ public:
   virtual void destroy (void);
 
         // Narrowing.
-  DEF_NARROW_METHODS0(COMMON_Base);
+
 
 protected:
   bool is_local_;
@@ -253,7 +253,7 @@ public:
   void set_added (bool is_it);
 
   // Narrowing.
-  DEF_NARROW_METHODS0(AST_Decl);
+
   DEF_NARROW_FROM_DECL(AST_Decl);
 
   // AST Dumping.

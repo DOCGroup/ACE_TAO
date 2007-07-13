@@ -116,7 +116,7 @@ public:
   virtual void destroy (void);
 
  // Narrowing.
-  DEF_NARROW_METHODS2 (be_valuetype, be_interface, AST_ValueType);
+
   DEF_NARROW_FROM_DECL (be_valuetype);
   DEF_NARROW_FROM_SCOPE (be_valuetype);
 

@@ -46,7 +46,7 @@ public:
   virtual void destroy (void);
 
   // Narrowing
-  DEF_NARROW_METHODS2 (be_enum_val, AST_EnumVal, be_decl);
+
   DEF_NARROW_FROM_DECL (be_enum_val);
 };
 

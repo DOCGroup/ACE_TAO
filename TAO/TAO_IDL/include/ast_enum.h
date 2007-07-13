@@ -84,7 +84,7 @@ public:
   virtual ~AST_Enum (void);
 
   // Narrowing
-  DEF_NARROW_METHODS2(AST_Enum, AST_ConcreteType, UTL_Scope);
+
   DEF_NARROW_FROM_DECL(AST_Enum);
   DEF_NARROW_FROM_SCOPE(AST_Enum);
 

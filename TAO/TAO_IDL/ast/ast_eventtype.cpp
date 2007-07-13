@@ -136,7 +136,7 @@ AST_EventType::ast_accept (ast_visitor *visitor)
 }
 
   // Narrowing.
-IMPL_NARROW_METHODS1(AST_EventType, AST_ValueType)
+
 IMPL_NARROW_FROM_DECL(AST_EventType)
 IMPL_NARROW_FROM_SCOPE(AST_EventType)
 

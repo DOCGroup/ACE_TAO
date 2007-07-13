@@ -79,6 +79,6 @@ be_component_fwd::accept (be_visitor *visitor)
   return visitor->visit_component_fwd (this);
 }
 
-// Narrowing
-IMPL_NARROW_METHODS2 (be_component_fwd, AST_ComponentFwd, be_interface_fwd)
+
+
 IMPL_NARROW_FROM_DECL (be_component_fwd)

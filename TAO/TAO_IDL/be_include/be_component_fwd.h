@@ -47,7 +47,7 @@ public:
   virtual int accept (be_visitor* visitor);
 
   // Narrowing.
-  DEF_NARROW_METHODS2 (be_component_fwd, AST_ComponentFwd, be_interface_fwd);
+
   DEF_NARROW_FROM_DECL (be_component_fwd);
 };
 

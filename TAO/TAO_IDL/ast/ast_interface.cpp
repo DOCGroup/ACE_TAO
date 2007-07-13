@@ -1676,7 +1676,7 @@ AST_Interface::ast_accept (ast_visitor *visitor)
   return visitor->visit_interface (this);
 }
 
-// Narrowing methods.
-IMPL_NARROW_METHODS2(AST_Interface, AST_Type, UTL_Scope)
+
+
 IMPL_NARROW_FROM_DECL(AST_Interface)
 IMPL_NARROW_FROM_SCOPE(AST_Interface)

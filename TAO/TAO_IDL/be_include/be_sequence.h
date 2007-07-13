@@ -86,7 +86,7 @@ public:
   virtual int accept (be_visitor *visitor);
 
   // Narrowing.
-  DEF_NARROW_METHODS3 (be_sequence, AST_Sequence, be_scope, be_type);
+
   DEF_NARROW_FROM_DECL (be_sequence);
 
   const char *instance_name (void);

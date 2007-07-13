@@ -154,7 +154,7 @@ be_structure::be_add_field (AST_Field *f)
   return this->fe_add_field (f);
 }
 
-// Narrowing.
-IMPL_NARROW_METHODS3 (be_structure, AST_Structure, be_scope, be_type)
+
+
 IMPL_NARROW_FROM_DECL (be_structure)
 IMPL_NARROW_FROM_SCOPE (be_structure)

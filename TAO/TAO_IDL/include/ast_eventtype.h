@@ -30,7 +30,7 @@ public:
   virtual void destroy (void);
 
   // Narrowing.
-  DEF_NARROW_METHODS1(AST_EventType, AST_ValueType);
+
   DEF_NARROW_FROM_DECL(AST_EventType);
   DEF_NARROW_FROM_SCOPE(AST_EventType);
 

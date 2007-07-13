@@ -78,7 +78,7 @@ be_valuetype_fwd::destroy (void)
   this->be_interface_fwd::destroy ();
 }
 
-// Narrowing.
-IMPL_NARROW_METHODS2 (be_valuetype_fwd, be_interface_fwd, AST_ValueTypeFwd)
+
+
 IMPL_NARROW_FROM_DECL (be_valuetype_fwd)
 

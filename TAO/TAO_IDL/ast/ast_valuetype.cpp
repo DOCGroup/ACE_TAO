@@ -551,8 +551,8 @@ AST_ValueType::lookup_primary_key_base (void) const
   return retval;
 }
 
-// Narrowing.
-IMPL_NARROW_METHODS1(AST_ValueType, AST_Interface)
+
+
 IMPL_NARROW_FROM_DECL(AST_ValueType)
 IMPL_NARROW_FROM_SCOPE(AST_ValueType)
 

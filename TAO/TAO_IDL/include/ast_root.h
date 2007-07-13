@@ -83,7 +83,7 @@ public:
   virtual unsigned long nmembers (void);
 
   // Narrowing.
-  DEF_NARROW_METHODS1(AST_Root, AST_Module);
+
   DEF_NARROW_FROM_DECL(AST_Root);
   DEF_NARROW_FROM_SCOPE(AST_Root);
 

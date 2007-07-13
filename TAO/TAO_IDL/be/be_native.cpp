@@ -91,6 +91,6 @@ be_native::accept (be_visitor *visitor)
   return visitor->visit_native (this);
 }
 
-// Narrowing
-IMPL_NARROW_METHODS2(be_native, AST_Native, be_exception)
+
+
 IMPL_NARROW_FROM_DECL(be_native)

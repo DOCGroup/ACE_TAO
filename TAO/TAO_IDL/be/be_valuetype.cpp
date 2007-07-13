@@ -872,7 +872,7 @@ be_valuetype::gen_skel_helper (be_interface *concrete,
   return 0;
 }
 
-// Narrowing.
-IMPL_NARROW_METHODS2 (be_valuetype, be_interface, AST_ValueType)
+
+
 IMPL_NARROW_FROM_DECL (be_valuetype)
 IMPL_NARROW_FROM_SCOPE (be_valuetype)

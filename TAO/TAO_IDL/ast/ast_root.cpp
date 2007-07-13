@@ -269,7 +269,7 @@ AST_Root::fini (void)
   this->AST_Decl::destroy ();
 }
 
-// Narrowing methods.
-IMPL_NARROW_METHODS1(AST_Root, AST_Module)
+
+
 IMPL_NARROW_FROM_DECL(AST_Root)
 IMPL_NARROW_FROM_SCOPE(AST_Root)
