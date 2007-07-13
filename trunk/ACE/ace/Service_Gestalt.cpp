@@ -848,10 +848,9 @@ ACE_Service_Gestalt::get_xml_svc_conf (ACE_DLL &xmldll)
                        "ACE_Service_Config::get_xml_svc_conf"),
                       0);
 
-  void *foo =
-        xmldll.symbol (ACE_LIB_TEXT ("_ACEXML_create_XML_Svc_Conf_Object"));
+  void * foo =
+    xmldll.symbol (ACE_LIB_TEXT ("_ACEXML_create_XML_Svc_Conf_Object"));
 
-  // Cast the void* to long first.
   ACE_XML_Svc_Conf::Factory factory =
     reinterpret_cast<ACE_XML_Svc_Conf::Factory> (foo);
   if (factory == 0)

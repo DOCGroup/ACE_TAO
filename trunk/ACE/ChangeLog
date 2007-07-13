@@ -1,3 +1,52 @@
+Thu Jul 13 00:04:25 UTC 2007  Ossama Othman  <ossama_othman at symantec dot com>
+
+        * ace/ACE.cpp (daemonize):
+        * ace/ACE.h (daemonize):
+
+          Changed "close_all_handles" parameter to a bool to better
+          reflect its purpose.
+
+        * ace/CDR_Stream.cpp (grow_and_adjust):
+
+          Replaced C style casts with C++ casts.
+
+          (skip_wchar, read_wchar):
+
+          Cleaned up local/temporary variables.
+
+          (read_string, read_wstring):
+
+          Fixed leak on exception.
+
+          (skip_wstring):
+
+          No need for a boolean comparison in a conditional.  Use the
+          boolean value directly.
+
+        * ace/Condition_Thread_Mutex.cpp:
+        * ace/Condition_Thread_Mutex.h:
+
+          Removed const qualifier from ACE_Thread_Mutex parameter in
+          ACE_Condition_Thread_Mutex constructors.  It is misleading since
+          the ACE_Thread_Mutex must be mutable, and is used in that way.
+
+        * ace/DLL.cpp (operator=):
+
+          Simplified the ACE_DLL assignment operator, and simultaneously
+          made it strongly exception safe.
+
+        * ace/Service_Gestalt.cpp:
+
+          Whitespace/indentation correction.
+
+        * ace/Svc_Conf.y (yyerror):
+        * ace/Svc_Conf_y.cpp (ace_yyerror):
+
+          Corrected message string parameter type.  s/char/ACE_TCHAR/.
+
+          Improved error message to make it clear the error is coming from
+          ACE.
+
 Thu Jul 12 16:29:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_2975_Regression.cpp:

@@ -1642,7 +1642,7 @@ ace_yyreturn:
 // messages.
 
 void
-ace_yyerror (int ace_yyerrno, int ace_yylineno, const char *s)
+ace_yyerror (int ace_yyerrno, int ace_yylineno, ACE_TCHAR const *s)
 {
 #if defined (ACE_NLOGGING)
   ACE_UNUSED_ARG (ace_yyerrno);
@@ -1651,7 +1651,7 @@ ace_yyerror (int ace_yyerrno, int ace_yylineno, const char *s)
 #endif /* ACE_NLOGGING */
 
   ACE_ERROR ((LM_ERROR,
-              ACE_LIB_TEXT ("[error %d] on line %d: %s\n"),
+              ACE_LIB_TEXT ("ACE (%P|%t) [error %d] on line %d: %s\n"),
               ace_yyerrno,
               ace_yylineno,
               s));
