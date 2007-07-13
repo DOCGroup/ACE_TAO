@@ -1,12 +1,18 @@
+Fri Jul 13 15:52:22 UTC 2007  Vadym Ridosh  <vridosh@prismtech.com>
+
+        * examples/PluggableUDP/tests/Performance/UDP_PerformanceClient.cpp:
+          Fixed output format for ACE_DEBUG message for time_t and unsigned
+          long values.
+
 Fri Jul 13 13:15:04 UTC 2007  Vadym Ridosh  <vridosh@prismtech.com>
 
-        * examples/PluggableUDP/tests/Performance/Performance.mpc
-        * examples/PluggableUDP/tests/Performance/client.cpp
-        * examples/PluggableUDP/tests/Performance/UDP_i.cpp
-        * examples/PluggableUDP/tests/Performance/UDP_i.h
-        * examples/PluggableUDP/tests/Performance/server.cpp
-        * examples/PluggableUDP/tests/Performance/UDP_PerformanceClient.cpp
-        * examples/PluggableUDP/tests/Performance/UDP_PerformanceClient.h
+        * examples/PluggableUDP/tests/Performance/Performance.mpc:
+        * examples/PluggableUDP/tests/Performance/client.cpp:
+        * examples/PluggableUDP/tests/Performance/UDP_i.cpp:
+        * examples/PluggableUDP/tests/Performance/UDP_i.h:
+        * examples/PluggableUDP/tests/Performance/server.cpp:
+        * examples/PluggableUDP/tests/Performance/UDP_PerformanceClient.cpp:
+        * examples/PluggableUDP/tests/Performance/UDP_PerformanceClient.h:
           Changed this test because in its previous implementation it could
           run too long and time out. Also beatufied the code a bit and used
           casting to 32 int of sec/msec/usec of the measured perfomance
