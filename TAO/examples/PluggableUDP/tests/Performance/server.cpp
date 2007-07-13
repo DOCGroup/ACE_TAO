@@ -133,7 +133,6 @@ main (int argc, char *argv[])
       CORBA::Object_var obj =
         persistent_poa->id_to_reference (id.in ());
 
-
       UDP_var udp_var = UDP::_narrow (obj.in ());
 
       if (CORBA::is_nil (udp_var.in ()))
@@ -173,7 +172,7 @@ main (int argc, char *argv[])
                          0  // wait for completion
                          );
 
-            orb->destroy ();
+      orb->destroy ();
 
       ACE_Thread_Manager::instance ()->wait ();
     }

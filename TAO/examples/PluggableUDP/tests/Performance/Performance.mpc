@@ -14,12 +14,14 @@ project(*IDL): taoidldefaults {
 project(*server): taoserver, strategies, avoids_corba_e_micro {
   exename = server
   after += *IDL
+
   Source_Files {
     UDP_i.cpp
     server.cpp
     UDPS.cpp
     UDPC.cpp
   }
+
   IDL_Files {
   }
 }
@@ -27,6 +29,7 @@ project(*server): taoserver, strategies, avoids_corba_e_micro {
 project(*client): taoserver, strategies {
   exename = client
   after += *IDL
+
   Source_Files {
     client.cpp
     UDP_i.cpp
@@ -34,7 +37,7 @@ project(*client): taoserver, strategies {
     UDPS.cpp
     UDPC.cpp
   }
+
   IDL_Files {
   }
 }
-

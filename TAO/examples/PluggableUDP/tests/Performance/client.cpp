@@ -33,15 +33,13 @@ ACE_RCSID(Performance, client, "$Id$")
 
 const char *ior = "file://test.ior";
 ACE_UINT32 burst_messages = 1000;
-ACE_UINT32 final_delta_micro_seconds = 10;
-
 
 unsigned char performance_test = 0;
 
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "k:t:i:");
+  ACE_Get_Opt get_opts (argc, argv, "k:t:");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -53,17 +51,12 @@ parse_args (int argc, char *argv[])
       case 't':
         burst_messages = ACE_OS::atoi (get_opts.opt_arg ());
         break;
-      case 'i':
-        final_delta_micro_seconds = ACE_OS::atoi (get_opts.opt_arg ());
-        break;
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s "
-                           "-d "
                            "-k <ior> "
                            "-t <burst_messages> "
-                           "-i <final_delta_micro_seconds> "
                            "\n",
                            argv [0]),
                           -1);
@@ -98,7 +91,6 @@ main (int argc, char *argv[])
         }
 
       // Activate POA to handle the call back.
-
       CORBA::Object_var poa_object =
         orb->resolve_initial_references("RootPOA");
 
@@ -128,8 +120,7 @@ main (int argc, char *argv[])
       ACE_Task_Base* client = new UDP_PerformanceClient (orb.in (),
                                                          udp_var.in (),
                                                          &udp_i,
-                                                         burst_messages,
-                                                         final_delta_micro_seconds);
+                                                         burst_messages);
 
       // let the client run in a separate thread
       client->activate ();

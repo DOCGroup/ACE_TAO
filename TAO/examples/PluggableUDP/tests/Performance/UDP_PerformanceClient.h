@@ -27,7 +27,7 @@
 #include "UDPC.h"
 
 class UDP_PerformanceClient 
-: public ACE_Task_Base
+  : public ACE_Task_Base
 {
   // = TITLE
   //    UDP Client interface subclass.
@@ -40,8 +40,7 @@ public:
   UDP_PerformanceClient (CORBA::ORB_ptr orb,
                          UDP_ptr udp,
                          UDP_i *udpHandler,
-                         ACE_UINT32 burst_messages,
-                         ACE_UINT32 final_delta_micro_seconds);
+                         ACE_UINT32 burst_messages);
   // Constructor
 
   virtual ~UDP_PerformanceClient (void);
@@ -61,9 +60,6 @@ private:
   ACE_UINT32 last_wrong_messages_;
 
   ACE_UINT32 burst_messages_;
-
-  ACE_UINT32 final_delta_micro_seconds_;
 };
-
 
 #endif /* UDP_PERFORMANCECLIENT_H */
