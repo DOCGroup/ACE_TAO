@@ -1,3 +1,13 @@
+Fri Jul 13 16:59:26 UTC 2007  Ossama Othman  <ossama_othman at symantec dot com>
+
+        * tests/Bug_1495_Regression/test_i.cpp (get_thread_id):
+
+          Corrected type used in cast.
+
+        * tests/Bug_2084_Regression/Hello.cpp (get_string):
+
+          Removed emulated exception macro.
+
 Fri Jul 13 15:52:22 UTC 2007  Vadym Ridosh  <vridosh@prismtech.com>
 
         * examples/PluggableUDP/tests/Performance/UDP_PerformanceClient.cpp:
