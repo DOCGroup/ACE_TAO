@@ -204,7 +204,8 @@ main (int argc, char *argv[])
     }
   catch (CORBA::Exception& ex)
     {
-      ex._tao_print_exception ("Caught exception:");
+      ex._tao_print_exception
+        ("mized_security/client: caught unexpected exception ");
       return 1;
     }
 
