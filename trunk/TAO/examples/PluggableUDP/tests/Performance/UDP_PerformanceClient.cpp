@@ -125,14 +125,14 @@ UDP_PerformanceClient::svc ()
             ACE_Time_Value tv;
             timer.elapsed_time (tv);
 
-            ACE_UINT32 elapsed_sec = static_cast<ACE_UINT32> (tv.sec ());
-            ACE_UINT32 elapsed_usec = static_cast<ACE_UINT32> (tv.usec ());
-            ACE_UINT32 elapsed_msec = static_cast<ACE_UINT32> (tv.msec ());
+            time_t elapsed_sec = tv.sec ();
+            suseconds_t elapsed_usec = tv.usec ();
+            unsigned long elapsed_msec = tv.msec ();
 
             ACE_UINT32 calls_per_second = (1000L * burst_messages_) / tv.msec ();
 
             ACE_DEBUG ((LM_DEBUG,
-                        "\n  Time needed %d s %d us  (%d ms) for %d messages"
+                        "\n  Time needed %: s %d us  (%u ms) for %d messages"
                         "\n  Performance = %d asynch calls per second\n\n",
                         elapsed_sec,
                         elapsed_usec,
