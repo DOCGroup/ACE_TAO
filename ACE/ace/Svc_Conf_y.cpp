@@ -1642,7 +1642,7 @@ ace_yyreturn:
 // messages.
 
 void
-ace_yyerror (int ace_yyerrno, int ace_yylineno, ACE_TCHAR const *s)
+ace_yyerror (int ace_yyerrno, int ace_yylineno, char const *s)
 {
 #if defined (ACE_NLOGGING)
   ACE_UNUSED_ARG (ace_yyerrno);
@@ -1654,7 +1654,7 @@ ace_yyerror (int ace_yyerrno, int ace_yylineno, ACE_TCHAR const *s)
               ACE_LIB_TEXT ("ACE (%P|%t) [error %d] on line %d: %s\n"),
               ace_yyerrno,
               ace_yylineno,
-              s));
+              ACE_TEXT_CHAR_TO_TCHAR (s)));
 }
 
 // Note that SRC_REC represents left context, which is the STREAM *
