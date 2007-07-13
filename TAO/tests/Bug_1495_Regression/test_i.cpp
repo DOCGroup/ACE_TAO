@@ -22,7 +22,7 @@ Bug1495_i::~Bug1495_i (void)
 void
 Bug1495_i::get_thread_id (Bug1495_Regression::ThreadId_out thread_id)
 {
-  thread_id = (Bug1495_Regression::ThreadId_type) ACE_Thread::self ();
+  thread_id = (Bug1495_Regression::ThreadId) ACE_Thread::self ();
 }
 
 void

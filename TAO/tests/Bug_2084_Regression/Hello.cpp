@@ -15,7 +15,7 @@ Hello::Hello (CORBA::ORB_ptr orb,
 }
 
 char *
-Hello::get_string (::Test::ThreadId caller_threadid ACE_ENV_ARG_DECL)
+Hello::get_string (::Test::ThreadId caller_threadid)
 {
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) Upcall in process ..\n"));
