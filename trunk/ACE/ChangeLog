@@ -1,3 +1,8 @@
+Fri Jul 13 22:39:43 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * tests/run_test.lst: Add !BAD_AIO to Bug_2912_Regression_Test since
+          it relies on ACE_Proactor which can't work if there's BAD_AIO.
+
 Fri Jul 13 22:15:05 UTC 2007  Steve Huston  <shuston@riverace.com>
 
         * ace/WIN32_Proactor.cpp (handle_events): Don't try to dispatch a
