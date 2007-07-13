@@ -2,9 +2,9 @@
 
 #include <iostream>
 #include <fstream>
-#include <tao/corba.h>
-#include <ace/Functor.h>
-#include <ace/Task.h>
+#include "tao/corba.h"
+#include "ace/Functor.h"
+#include "ace/Task.h"
 #include "fooS.h"
 
 /*

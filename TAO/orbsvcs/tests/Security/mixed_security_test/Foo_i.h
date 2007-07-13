@@ -19,7 +19,6 @@
 #include "orbsvcs/SecurityLevel3C.h"
 
 class Foo_i : public virtual POA_Foo::Bar
-            , public virtual PortableServer::RefCountServantBase
 {
 public:
 
@@ -28,12 +27,9 @@ public:
          SecurityLevel3::SecurityCurrent_ptr);
 
   /// Test method.
-  virtual void baz (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     Foo::Bar::NoSecurityAttributes));
+  virtual void baz ();
 
-  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void shutdown ();
 
 private:
 

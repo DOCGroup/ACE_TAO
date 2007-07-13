@@ -1,7 +1,24 @@
+Fri Jul 13 03:43:00 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * orbsvcs/tests/Security/mixed_security_test/Foo_i.h:
+        * orbsvcs/tests/Security/mixed_security_test/Foo_i.cpp:
+
+          Don't use ACE_THROW_SPEC, it is deprecated.
+
+        * orbsvcs/tests/Security/mixed_security_test/client.cpp:
+        * orbsvcs/tests/Security/mixed_security_test/server.cpp:
+
+          Don't use ACE_PRINT_EXCEPTION macro anymore. It is deprecated.
+
+        * tests/objref_comparison_test/main.cpp:
+
+          Don't include any ACE/TAO/CIAO header file as <ace/*.h>, use "ace/*.h"
+          instead.
+
 Fri Jul 13 06:43:03 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/IFR_Service/ifr_adding_visitor.cpp (element_type):
-        
+
           Fixed unused arg warning.
 
 Thu Jul 12 23:42:00 UTC 2007  Ossama Othman  <ossama_othman at symantec dot com>
@@ -22,7 +39,7 @@ Thu Jul 12 23:42:00 UTC 2007  Ossama Othman  <ossama_othman at symantec dot com>
           line "-Yp" argument owned by the shell was being deallocated.
 
           Changed DRV_cpp_new_location() parameter from "char*" to "char
-          const*" to better enforce proper argument list memory 
+          const*" to better enforce proper argument list memory
           management.
 
           Search for orb.idl in supplied include path, and only fallback
@@ -75,7 +92,7 @@ Thu Jul 12 23:42:00 UTC 2007  Ossama Othman  <ossama_othman at symantec dot com>
 
           Check for null pointer before dereferencing dynamic_cast<>
           result.  Addresses FORWARD_NULL Coverity error.
-        
+
         * tao/BiDir_GIOP/BiDir_ORBInitializer.cpp:
 
           Addressed Coverity UNUSED_VALUE error.
