@@ -9,7 +9,7 @@ Fri Jul 13 16:49:31 UTC 2007  Ossama Othman  <ossama_othman at symantec dot com>
           strings, and passes narrow strings to ace_yyerror().  For the
           moment, convert the narrow string message parameter to an
           ACE_TCHAR using the ACE_CHAR_TO_TCHAR macro instead.  Once the
-          parser (and lexer) pass support passing wide strings to
+          parser (and lexer) support passing wide strings to
           ace_yyerror(), the use of ACE_CHAR_TO_TCHAR can be removed.
 
 Fri Jul 13 16:41:31 UTC 2007  Ossama Othman  <ossama_othman at symantec dot com>
