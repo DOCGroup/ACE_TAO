@@ -9,6 +9,8 @@
 #include "ace/OS_NS_dlfcn.h"
 #include "ace/OS_NS_Thread.h"
 
+#include <algorithm>
+
 ACE_RCSID(ace, DLL, "$Id$")
 
   ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -53,25 +55,14 @@ ACE_DLL::operator= (const ACE_DLL &rhs)
 {
   ACE_TRACE ("ACE_DLL::operator= (const ACE_DLL &)");
 
-  if (this != &rhs)
-    {
-      open_mode_ = 0;
-      delete [] dll_name_;
-      dll_name_ = 0;
-      close_handle_on_destruction_=0;
-      dll_handle_=0;
-      error_=0;
+  ACE_DLL tmp (rhs);
 
-      if (rhs.dll_name_
-          // This will automatically up the refcount and initialize *this
-          && this->open (rhs.dll_name_,
-                         rhs.open_mode_,
-                         rhs.close_handle_on_destruction_) != 0
-          && ACE::debug ())
-        ACE_ERROR ((LM_ERROR,
-        ACE_LIB_TEXT ("ACE_DLL::operator=: error: %s\n"),
-        this->error ()));
-    }
+  std::swap (this->open_mode_, tmp.open_mode_);
+  std::swap (this->dll_name_, tmp.dll_name_);
+  std::swap (this->close_handle_on_destruction_,
+             tmp.close_handle_on_destruction_);
+  std::swap (this->dll_handle_, tmp.dll_handle_);
+  std::swap (this->error_, tmp.error_);
 
   return *this;
 }

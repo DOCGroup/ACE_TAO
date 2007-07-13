@@ -2740,7 +2740,7 @@ ACE::handle_timed_accept (ACE_HANDLE listener,
 
 int
 ACE::daemonize (const ACE_TCHAR pathname[],
-                int close_all_handles,
+                bool close_all_handles,
                 const ACE_TCHAR program_name[])
 {
   ACE_TRACE ("ACE::daemonize");
