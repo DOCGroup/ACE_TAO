@@ -41,8 +41,11 @@ ACE_RCSID (tests,
            Bug_2912_Regression_Test,
            "$Id$")
 
+/* Linux kernels can't hack multiple outstanding I/O, which this
+   test requires */
 #if defined (ACE_HAS_THREADS) && \
-    (defined (ACE_HAS_WIN32_OVERLAPPED_IO) || defined (ACE_HAS_AIO_CALLS))
+    (defined (ACE_HAS_WIN32_OVERLAPPED_IO) || defined (ACE_HAS_AIO_CALLS)) && \
+    !defined (linux)
 
 /**
  * Data payload sent between client and server.  Test is not dependent
@@ -1252,10 +1255,10 @@ run_main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("Bug_2912_Regression_Test"));
 
-  ACE_ERROR ((LM_INFO,
-              "threads or proactor not supported on this platform\n"));
+  ACE_DEBUG ((LM_INFO,
+              ACE_TEXT ("threads or proactor not supported on this platform\n")));
 
   ACE_END_TEST;
   return 0;
 }
-#endif /* ACE_HAS_THREADS && (ACE_HAS_WIN32_OVERLAPPED_IO || ACE_HAS_AIO_CALLS) */
+#endif /* ACE_HAS_THREADS && (ACE_HAS_WIN32_OVERLAPPED_IO || ACE_HAS_AIO_CALLS) && !linux */

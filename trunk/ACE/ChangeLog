@@ -1,3 +1,9 @@
+Fri Jul 13 23:05:13 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * tests/Bug_2912_Regression_Test.cpp: Don't run this test on Linux;
+          it requires multiple outstanding asynch I/O ops, which Linux
+          can't hack at this time (at least up thru RHEL 4).
+
 Fri Jul 13 22:39:43 UTC 2007  Steve Huston  <shuston@riverace.com>
 
         * tests/run_test.lst: Add !BAD_AIO to Bug_2912_Regression_Test since
