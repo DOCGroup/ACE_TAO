@@ -7,21 +7,17 @@
 //    TAO_IDL3_TO_IDL2_BE_DLL
 //
 // = FILENAME
-//    checking_visitor.h
+//    basic_visitor.h
 //
 // = DESCRIPTION
-//    Visitor that checks input IDL3 in a separate pass.
-//
-// = AUTHOR
-//    Jeff Parsons <j.parsons@vanderbilt.edu>
+//    Base class for other visitors in this backend.
 //
 // ============================================================================
 
-#ifndef TAO_IDL_CHECKING_VISITOR_H
-#define TAO_IDL_CHECKING_VISITOR_H
+#ifndef TAO_BASIC_VISITOR_H
+#define TAO_BASIC_VISITOR_H
 
 #include "ast_visitor.h"
-#include "utl_scoped_name.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -29,37 +25,38 @@
 
 #include "TAO_IDL3_TO_IDL2_BE_Export.h"
 
+class TAO_OutStream;
 class UTL_ExceptList;
 
-class TAO_IDL3_TO_IDL2_BE_Export checking_visitor : public ast_visitor
+class TAO_IDL3_TO_IDL2_BE_Export basic_visitor : public ast_visitor
 {
   //
   // = TITLE
-  //    checking_visitor.
+  //    basic_visitor.
   //
   // = DESCRIPTION
-  //    Checks input IDL3 and sets flags used by subsequent
-  //    equivalent IDL generating visitor.
+  //    Base class for other visitors in this backend, collecting
+  //    common code in a single class.
   //
 public:
-  checking_visitor (void);
-  virtual ~checking_visitor (void);
+  basic_visitor (void);
+  virtual ~basic_visitor (void);
 
   virtual int visit_decl (AST_Decl *d);
   virtual int visit_scope (UTL_Scope *node);
   virtual int visit_type (AST_Type *node);
   virtual int visit_predefined_type (AST_PredefinedType *node);
-  virtual int visit_module (AST_Module *node);
-  virtual int visit_interface (AST_Interface *node);
+  virtual int visit_module (AST_Module *node) = 0;
+  virtual int visit_interface (AST_Interface *node) = 0;
   virtual int visit_interface_fwd (AST_InterfaceFwd *node);
   virtual int visit_valuebox (AST_ValueBox *node);
   virtual int visit_valuetype (AST_ValueType *node);
   virtual int visit_valuetype_fwd (AST_ValueTypeFwd *node);
-  virtual int visit_component (AST_Component *node);
-  virtual int visit_component_fwd (AST_ComponentFwd *node);
-  virtual int visit_eventtype (AST_EventType *node);
-  virtual int visit_eventtype_fwd (AST_EventTypeFwd *node);
-  virtual int visit_home (AST_Home *node);
+  virtual int visit_component (AST_Component *node) = 0;
+  virtual int visit_component_fwd (AST_ComponentFwd *node) = 0;
+  virtual int visit_eventtype (AST_EventType *node) = 0;
+  virtual int visit_eventtype_fwd (AST_EventTypeFwd *node) = 0;
+  virtual int visit_home (AST_Home *node) = 0;
   virtual int visit_factory (AST_Factory *node);
   virtual int visit_structure (AST_Structure *node);
   virtual int visit_structure_fwd (AST_StructureFwd *node);
@@ -80,15 +77,27 @@ public:
   virtual int visit_sequence (AST_Sequence *node);
   virtual int visit_string (AST_String *node);
   virtual int visit_typedef (AST_Typedef *node);
-  virtual int visit_root (AST_Root *node);
+  virtual int visit_root (AST_Root *node) = 0;
   virtual int visit_native (AST_Native *node);
   
-  bool is_idl3 (void) const;
-  bool is_local_idl3 (void) const;
+protected:
+  void check_prefix (AST_Decl *d);
+  void check_id_and_version (AST_Decl *d);
+  const char *type_name (AST_Type *t);
+  void gen_anonymous_array (AST_Type *array, AST_Decl *wrapper);
+  void gen_params (UTL_Scope *s, int arg_count);
+  void gen_exception_list (UTL_ExceptList *exceptions,
+                           const char *prefix = "",
+                           bool closed = true);
+  void gen_operation (AST_Operation *node);
+  void gen_attribute (AST_Attribute *node);
+  void gen_label_value (AST_UnionLabel *node);
+  
+  virtual bool scope_skip_type (AST_Decl *d);
 
-private:
-  bool is_idl3_;
-  bool is_local_idl3_;
+protected:
+  TAO_OutStream *os;
+  AST_Type *disc_type_;
 };
 
-#endif /* TAO_IDL_CHECKING_VISITOR_H */
+#endif // TAO_BASIC_VISITOR_H

@@ -21,9 +21,15 @@
 #define IDENTIFIER_HELPER_H
 
 #include "utl_identifier.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "TAO_IDL3_TO_IDL2_BE_Export.h"
 #include "ace/SString.h"
 
-struct IdentifierHelper
+struct TAO_IDL3_TO_IDL2_BE_Export IdentifierHelper
 {
   /*
     1) keeps escape (leading underscore character in generated
