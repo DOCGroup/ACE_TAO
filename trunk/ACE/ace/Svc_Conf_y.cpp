@@ -1694,7 +1694,7 @@ ace_get_module (ACE_Service_Type const * sr,
     (sr == 0
      ? 0
      : static_cast<ACE_Stream_Type const *> (sr->type ()));
-  
+
   ACE_Module_Type const * const mt =
     static_cast <ACE_Module_Type const *> (sv->type ());
 
