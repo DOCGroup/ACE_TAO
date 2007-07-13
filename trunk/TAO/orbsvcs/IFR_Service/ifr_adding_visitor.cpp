@@ -2505,7 +2505,7 @@ ifr_adding_visitor::element_type (AST_Type *base_type, bool owned)
                     || nt == AST_Decl::NT_sequence
                     || base_type->anonymous ();
 
-  if (no_repo_id)
+  if (no_repo_id || owned)
     {
       if (base_type->ast_accept (this) == -1)
         {

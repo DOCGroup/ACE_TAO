@@ -1,3 +1,9 @@
+Fri Jul 13 06:43:03 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/IFR_Service/ifr_adding_visitor.cpp (element_type):
+        
+          Fixed unused arg warning.
+
 Thu Jul 12 23:42:00 UTC 2007  Ossama Othman  <ossama_othman at symantec dot com>
 
         * TAO_IDL/tao_idl.cpp:
