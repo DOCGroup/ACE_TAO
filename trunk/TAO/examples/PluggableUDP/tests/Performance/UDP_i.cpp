@@ -6,14 +6,13 @@ ACE_RCSID(UDP, UDP_i, "")
 
 // Constructor
 UDP_i::UDP_i (void)
-: messages_count_ (0),
-  wrong_messages_count_ (0)
+  : messages_count_ (0)
+  , wrong_messages_count_ (0)
 {
   // no-op
 }
 
 // Destructor
-
 UDP_i::~UDP_i (void)
 {
   // no-op
@@ -26,7 +25,6 @@ UDP_i::orb (CORBA::ORB_ptr orb)
 {
   this->orb_ = CORBA::ORB::_duplicate (orb);
 }
-
 
 void
 UDP_i::setResponseHandler (UDP_ptr udpHandler)
@@ -60,7 +58,7 @@ UDP_i::invoke (const char * client_name,
           if (last_request_id + 1 != request_id)
             {
               ACE_DEBUG ((LM_DEBUG,
-                          "UDP_i::invoke: failure on %s expected id = %d, got %d\n",
+                          "(%P) UDP_i::invoke: failure on %s expected id = %d, got %d\n",
                           client_name,
                           last_request_id+1,
                           request_id));
@@ -86,7 +84,6 @@ UDP_i::invoke (const char * client_name,
     }
 }
 
-
 void
 UDP_i::reset (const char * client_name)
 {
@@ -104,8 +101,8 @@ UDP_i::reset (const char * client_name)
     }
   catch (const CORBA::Exception&)
     {
-       ACE_DEBUG ((LM_DEBUG,
-                   "UDP_i::reset: Received exception\n"));
+      ACE_DEBUG ((LM_DEBUG,
+                  "UDP_i::reset: Received exception\n"));
     }
 }
 
@@ -125,7 +122,7 @@ UDP_i::shutdown (void)
     }
   catch (const CORBA::Exception& ex)
     {
-      ex._tao_print_exception ("Caught exception: orb->run");
+      ex._tao_print_exception ("Caught exception: orb->shutdown");
     }
 }
 

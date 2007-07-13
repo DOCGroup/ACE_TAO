@@ -12,16 +12,13 @@
 UDP_PerformanceClient::UDP_PerformanceClient (CORBA::ORB_ptr orb,
                                               UDP_ptr udp,
                                               UDP_i *udpHandler,
-                                              ACE_UINT32 burst_messages,
-                                              ACE_UINT32 final_delta_micro_seconds)
-: orb_ (CORBA::ORB::_duplicate (orb))
-, udp_ (UDP::_duplicate (udp))
-, udpHandler_ (udpHandler)
-, last_wrong_messages_ (0)
-, burst_messages_ (burst_messages)
-, final_delta_micro_seconds_ (final_delta_micro_seconds)
+                                              ACE_UINT32 burst_messages)
+  : orb_ (CORBA::ORB::_duplicate (orb))
+  , udp_ (UDP::_duplicate (udp))
+  , udpHandler_ (udpHandler)
+  , last_wrong_messages_ (0)
+  , burst_messages_ (burst_messages)
 {
-
 }
 
 //Destructor.
@@ -73,15 +70,14 @@ UDP_PerformanceClient::svc ()
               udp_->invoke (corba_client_name.in (),
                             j);
 
-
               if (micro_seconds)
                 {
                   ACE_OS::sleep (tv);
                 }
             }
-           timer.stop ();
+          timer.stop ();
 
-          ACE_Time_Value tv1 (1,0); // 1 s
+          ACE_Time_Value tv1 (1, 0); // 1 s
           ACE_OS::sleep (tv1);
 
           ACE_UINT32 current_wrong_messages =
@@ -95,7 +91,6 @@ UDP_PerformanceClient::svc ()
 
           // Give the reset a chance to propagate back to us
           ACE_OS::sleep (tv);
-
 
           if (current_wrong_messages == 0)
             {
@@ -120,35 +115,34 @@ UDP_PerformanceClient::svc ()
             }
           last_wrong_messages_ = current_wrong_messages;
 
-
           if (current_message_count == 0)
             {
               ACE_DEBUG ((LM_DEBUG,
                           "\nError: No callbacks received!\n\n"));
             }
 
+          {
+            ACE_Time_Value tv;
+            timer.elapsed_time (tv);
 
-            {
-              ACE_Time_Value tv;
-              timer.elapsed_time (tv);
+            ACE_UINT32 elapsed_sec = static_cast<ACE_UINT32> (tv.sec ());
+            ACE_UINT32 elapsed_usec = static_cast<ACE_UINT32> (tv.usec ());
+            ACE_UINT32 elapsed_msec = static_cast<ACE_UINT32> (tv.msec ());
 
-              ACE_UINT32 calls_per_second = (1000L * burst_messages_) / tv.msec ();
+            ACE_UINT32 calls_per_second = (1000L * burst_messages_) / tv.msec ();
 
-              ACE_DEBUG ((LM_DEBUG,
-                          "\n  Time needed %d s %d us  (%d ms) for %d messages"
-                          "\n  Performance = %d asynch calls per second\n\n",
-                          tv.sec (),
-                          tv.usec (),
-                          tv.msec (),
-                          burst_messages_,
-                          calls_per_second));
-            }
+            ACE_DEBUG ((LM_DEBUG,
+                        "\n  Time needed %d s %d us  (%d ms) for %d messages"
+                        "\n  Performance = %d asynch calls per second\n\n",
+                        elapsed_sec,
+                        elapsed_usec,
+                        elapsed_msec,
+                        burst_messages_,
+                        calls_per_second));
+          }
 
-          if (delta_micro_seconds <= final_delta_micro_seconds_
-              && current_wrong_messages == 0)
-            {
-              break;
-            }
+          if (current_wrong_messages == 0)
+            break;
         }
 
       // shut down remote ORB
@@ -167,7 +161,6 @@ UDP_PerformanceClient::svc ()
       ex._tao_print_exception ("\tException");
       return -1;
     }
-
 
   return 0;
 }
