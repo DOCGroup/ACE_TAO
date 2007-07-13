@@ -216,20 +216,17 @@ public:
 
   // moved inside the class to resolve namespace lookup issues.
   // This is a replacement for the commented block below.
-  inline bool operator== (const unbounded_value_sequence<CORBA::Octet> & rhs) const
-  {
-    ::CORBA::ULong const rlen = rhs.length ();
+  inline bool operator== (const unbounded_value_sequence<CORBA::Octet> & rhs) const {
+    unbounded_value_sequence<CORBA::Octet> const & lhs = *this;
+    CORBA::ULong const len = lhs.length();
 
-    if (rlen != this->length ())
-      {
-        return false;
-      }
-
-    const CORBA::Octet * rhs_buff = rhs.get_buffer ();
-    const CORBA::Octet * lhs_buff = this->get_buffer ();
-    const bool result = (ACE_OS::memcmp (lhs_buff, rhs_buff, rlen) == 0);
-
-    return result;
+    // We use the subscript operator instead of get_buffer() to avoid a
+    // potential buffer allocation.
+    return
+      (len == rhs.length()
+       && (len == 0
+           ? true
+           : ACE_OS::memcmp(&lhs[0], &rhs[0], len) == 0));
   }
 
   inline bool operator!= (const unbounded_value_sequence<CORBA::Octet> & rhs) const
