@@ -594,7 +594,7 @@ ACE_WIN32_Proactor::handle_events (unsigned long milli_seconds)
           return -1;
         }
     }
-  else
+  else if (overlapped != 0)
     {
       // Narrow the result.
       ACE_WIN32_Asynch_Result *asynch_result = (ACE_WIN32_Asynch_Result *) overlapped;
