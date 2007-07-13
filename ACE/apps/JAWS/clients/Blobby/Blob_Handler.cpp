@@ -143,7 +143,7 @@ ACE_Blob_Reader::receive_reply (void)
         buf_ptr = buf;
 
       // Determine number of data bytes read. This is equal to the
-      // total butes read minus number of header bytes.
+      // total bytes read minus number of header bytes.
       bytes_read = (buf + len) - buf_ptr;
     }
   else
@@ -228,9 +228,10 @@ ACE_Blob_Reader::receive_reply (void)
 
   len = peer().recv_n (mb_->wr_ptr (), bytes_left);
 
-  if (len != static_cast<ssize_t>(bytes_left))
+  if (len < 0 || static_cast<size_t> (len) != bytes_left)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n",
-                       "ACE_Blob_Reader::receiveReply():Read error" ), -1);
+                       "ACE_Blob_Reader::receiveReply():Read error" ),
+                      -1);
 
   // Adjust the message buffer write pointer by number of bytes we
   // received.
