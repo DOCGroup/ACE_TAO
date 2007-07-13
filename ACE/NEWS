@@ -12,6 +12,9 @@ PLANNED MAJOR CHANGES "SOMETIME IN THE FUTURE" (i.e., exact beta not known)
 USER VISIBLE CHANGES BETWEEN ACE-5.5.9 and ACE-5.5.10
 ====================================================
 
+. The ACE::daemonize() "close_all_handles" parameter was changed from
+  an "int" to a "bool" to better reflect how it is used.
+
 . VxWorks 6.5 support. Compilation of the core libraries has been validated
   but no runtime testing has been performed.
 
