@@ -24,6 +24,6 @@ namespace TAO_Mixed_Security_Test
 
   const char *restricted_ior_file = "restricted.ior";
   const char *restricted_ior = "file://restricted.ior";
-};
+}
 
 #endif
