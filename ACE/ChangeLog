@@ -1,3 +1,19 @@
+Fri Jul 13 03:02:58 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * bin/fuzz.pl:
+
+          Enhanced regular expression for exception specification check.
+
+          Increased level for the following checks:
+            check_for_lack_ACE_OS
+            check_for_exception_spec
+            check_for_NULL
+            check_for_improper_main_declaration
+
+           There are way too many fuzz warnings now, I will enable those checks
+           again once I'm done zapping the current warnings. That way fuzz can be 
+           useful again to folks that check code in.
+
 Thu Jul 13 00:04:25 UTC 2007  Ossama Othman  <ossama_othman at symantec dot com>
 
         * ace/ACE.cpp (daemonize):
