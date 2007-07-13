@@ -147,7 +147,7 @@ ClientTest::secure_invocation ()
 		  "ClientTest::secure_invocation: got NO_PERMISSION\n"));
       invocation_succeeded = false;
     }
-  
+
   return invocation_succeeded;
 }
 
@@ -199,13 +199,12 @@ main (int argc, char *argv[])
 	  Foo::Bar_var foo = Foo::Bar::_narrow (o.in());
 	  foo->shutdown ();
 	}
-      
+
       orb->destroy ();
     }
   catch (CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Caught exception:");
+      ex._tao_print_exception ("Caught exception:");
       return 1;
     }
 

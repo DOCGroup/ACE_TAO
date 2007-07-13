@@ -19,8 +19,6 @@ Foo_i::Foo_i (CORBA::ORB_ptr orb,
 
 void
 Foo_i::baz ()
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   Foo::Bar::NoSecurityAttributes))
 {
   if (this->current_ == 0)
     {
@@ -32,9 +30,9 @@ Foo_i::baz ()
     {
       SecurityLevel3::ClientCredentials_var credentials =
 	this->current_->client_credentials ();
-      
+
       CORBA::String_var id = credentials->creds_id ();
-      
+
       ACE_DEBUG ((LM_DEBUG,
 		  "FOO (%P|%t) ClientCredentials ID: %s\n", id.in ()));
       return;
@@ -53,14 +51,13 @@ Foo_i::baz ()
   catch (CORBA::Exception& ex)
     {
       ACE_DEBUG ((LM_ERROR, "FOO (%P|%t) Caught exception, trying to obtain ClientCredentials"));
-      ACE_PRINT_EXCEPTION (ex, "Exception");
+      ex._tao_print_exception ("Exception");
     }
-  
+
 }
 
 void
 Foo_i::shutdown ()
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown (0);
 }
