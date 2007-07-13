@@ -64,6 +64,6 @@ AST_EventTypeFwd::destroy (void)
 {
 }
 
-// Narrowing methods.
-IMPL_NARROW_METHODS1 (AST_EventTypeFwd, AST_ValueTypeFwd)
+
+
 IMPL_NARROW_FROM_DECL (AST_EventTypeFwd)

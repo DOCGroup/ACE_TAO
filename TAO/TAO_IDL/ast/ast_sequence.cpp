@@ -263,6 +263,6 @@ AST_Sequence::destroy (void)
   this->AST_ConcreteType::destroy ();
 }
 
-// Narrowing.
-IMPL_NARROW_METHODS1(AST_Sequence, AST_ConcreteType)
+
+
 IMPL_NARROW_FROM_DECL(AST_Sequence)

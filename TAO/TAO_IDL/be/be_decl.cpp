@@ -981,6 +981,6 @@ be_decl::set_arg_seen_bit (be_type *bt)
     }
 }
 
-// Narrowing methods.
-IMPL_NARROW_METHODS1 (be_decl, AST_Decl)
+
+
 IMPL_NARROW_FROM_DECL (be_decl)

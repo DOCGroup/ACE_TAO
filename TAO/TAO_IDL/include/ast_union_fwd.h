@@ -24,7 +24,7 @@ public:
   virtual void destroy (void);
 
   // Narrowing.
-  DEF_NARROW_METHODS1(AST_UnionFwd, AST_StructureFwd);
+
   DEF_NARROW_FROM_DECL(AST_UnionFwd);
 
   // AST Dumping.

@@ -278,6 +278,6 @@ AST_Array::set_dims (AST_Expression **ds,
   this->pd_n_dims = nds;
 }
 
-// Narrowing methods.
-IMPL_NARROW_METHODS1(AST_Array, AST_ConcreteType)
+
+
 IMPL_NARROW_FROM_DECL(AST_Array)

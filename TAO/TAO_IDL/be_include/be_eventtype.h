@@ -59,7 +59,7 @@ public:
   virtual void destroy (void);
 
  // Narrowing.
-  DEF_NARROW_METHODS2 (be_eventtype, be_valuetype, AST_EventType);
+
   DEF_NARROW_FROM_DECL (be_eventtype);
   DEF_NARROW_FROM_SCOPE (be_eventtype);
 };

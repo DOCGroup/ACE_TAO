@@ -81,7 +81,7 @@ be_eventtype_fwd::destroy (void)
   this->be_valuetype_fwd::destroy ();
 }
 
-// Narrowing.
-IMPL_NARROW_METHODS2 (be_eventtype_fwd, be_valuetype_fwd, AST_EventTypeFwd)
+
+
 IMPL_NARROW_FROM_DECL (be_eventtype_fwd)
 

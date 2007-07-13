@@ -73,6 +73,6 @@ be_union_fwd::accept (be_visitor *visitor)
   return visitor->visit_union_fwd (this);
 }
 
-// Narrowing
-IMPL_NARROW_METHODS2 (be_union_fwd, AST_UnionFwd, be_type)
+
+
 IMPL_NARROW_FROM_DECL (be_union_fwd)

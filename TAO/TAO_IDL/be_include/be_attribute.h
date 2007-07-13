@@ -70,7 +70,7 @@ public:
   // Cleanup.
 
   // Narrowing
-  DEF_NARROW_METHODS2 (be_attribute, AST_Attribute, be_decl);
+
   DEF_NARROW_FROM_DECL (be_attribute);
 
 private:

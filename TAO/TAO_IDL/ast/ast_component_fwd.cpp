@@ -56,6 +56,6 @@ AST_ComponentFwd::destroy (void)
   this->AST_InterfaceFwd::destroy ();
 }
 
-// Narrowing methods.
-IMPL_NARROW_METHODS1 (AST_ComponentFwd, AST_InterfaceFwd)
+
+
 IMPL_NARROW_FROM_DECL (AST_ComponentFwd)

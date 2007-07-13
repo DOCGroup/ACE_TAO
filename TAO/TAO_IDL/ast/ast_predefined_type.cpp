@@ -285,6 +285,6 @@ AST_PredefinedType::pt (void)
   return this->pd_pt;
 }
 
-// Narrowing.
-IMPL_NARROW_METHODS1(AST_PredefinedType, AST_ConcreteType)
+
+
 IMPL_NARROW_FROM_DECL(AST_PredefinedType)

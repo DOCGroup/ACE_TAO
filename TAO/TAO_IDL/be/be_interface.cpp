@@ -2656,7 +2656,7 @@ be_interface::server_enclosing_scope (void)
 }
 
 
-// Narrowing
-IMPL_NARROW_METHODS3 (be_interface, AST_Interface, be_scope, be_type)
+
+
 IMPL_NARROW_FROM_DECL (be_interface)
 IMPL_NARROW_FROM_SCOPE (be_interface)

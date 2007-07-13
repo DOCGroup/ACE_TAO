@@ -227,6 +227,6 @@ AST_Typedef::destroy (void)
 
 // Data accessors.
 
-// Narrowing.
-IMPL_NARROW_METHODS1(AST_Typedef, AST_Type)
+
+
 IMPL_NARROW_FROM_DECL(AST_Typedef)

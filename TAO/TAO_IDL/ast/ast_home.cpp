@@ -246,7 +246,7 @@ AST_Home::ast_accept (ast_visitor *visitor)
 }
 
   // Narrowing.
-IMPL_NARROW_METHODS1(AST_Home, AST_Interface)
+
 IMPL_NARROW_FROM_DECL(AST_Home)
 IMPL_NARROW_FROM_SCOPE(AST_Home)
 

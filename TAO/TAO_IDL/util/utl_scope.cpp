@@ -2547,8 +2547,8 @@ UTL_Scope::destroy (void)
   this->pd_referenced_used = 0;
 }
 
-// Narrowing.
-IMPL_NARROW_METHODS0(UTL_Scope)
+
+
 IMPL_NARROW_FROM_SCOPE(UTL_Scope)
 
 // UTL_SCOPE_ACTIVE_ITERATOR

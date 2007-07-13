@@ -362,6 +362,6 @@ be_array::destroy (void)
   this->AST_Array::destroy ();
 }
 
-// Narrowing
-IMPL_NARROW_METHODS2 (be_array, AST_Array, be_type)
+
+
 IMPL_NARROW_FROM_DECL (be_array)

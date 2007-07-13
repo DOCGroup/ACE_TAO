@@ -22,7 +22,7 @@ public:
   AST_Type            *boxed_type (void) const;
    
   // Narrowing.
-  DEF_NARROW_METHODS1(AST_ValueBox, AST_ConcreteType);
+
   DEF_NARROW_FROM_DECL(AST_ValueBox);
 
   // AST Dumping.

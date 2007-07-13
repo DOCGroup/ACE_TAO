@@ -65,7 +65,7 @@ public:
   // multiple case labels.
 
   // Narrowing.
-  DEF_NARROW_METHODS3 (be_union, AST_Union, be_scope, be_type);
+
   DEF_NARROW_FROM_DECL(be_union);
   DEF_NARROW_FROM_SCOPE(be_union);
 };

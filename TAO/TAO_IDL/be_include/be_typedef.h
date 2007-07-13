@@ -66,7 +66,7 @@ public:
   virtual int accept (be_visitor *visitor);
 
   // Narrowing.
-  DEF_NARROW_METHODS2 (be_typedef, AST_Typedef, be_type);
+
   DEF_NARROW_FROM_DECL (be_typedef);
 };
 

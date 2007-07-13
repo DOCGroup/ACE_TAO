@@ -26,7 +26,7 @@ public:
   virtual int accept (be_visitor *visitor);
 
   // Narrowing.
-  DEF_NARROW_METHODS3 (be_exception, AST_Exception, be_scope, be_type);
+
   DEF_NARROW_FROM_DECL (be_exception);
   DEF_NARROW_FROM_SCOPE (be_exception);
 };

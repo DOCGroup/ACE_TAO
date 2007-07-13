@@ -440,7 +440,7 @@ AST_Exception::destroy (void)
   this->AST_Structure::destroy ();
 }
 
-// Narrowing methods.
-IMPL_NARROW_METHODS1(AST_Exception, AST_Structure)
+
+
 IMPL_NARROW_FROM_DECL(AST_Exception)
 IMPL_NARROW_FROM_SCOPE(AST_Exception)

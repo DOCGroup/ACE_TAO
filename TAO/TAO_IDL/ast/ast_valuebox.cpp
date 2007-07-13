@@ -61,8 +61,8 @@ AST_ValueBox::destroy (void)
   this->AST_ConcreteType::destroy ();
 }
 
-// Narrowing.
-IMPL_NARROW_METHODS1(AST_ValueBox, AST_ConcreteType)
+
+
 IMPL_NARROW_FROM_DECL(AST_ValueBox)
 
 

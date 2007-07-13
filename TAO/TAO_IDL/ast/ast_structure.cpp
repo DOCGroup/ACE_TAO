@@ -784,8 +784,8 @@ AST_Structure::destroy (void)
   this->UTL_Scope::destroy ();
 }
 
-// Narrowing.
-IMPL_NARROW_METHODS2(AST_Structure, AST_ConcreteType, UTL_Scope)
+
+
 IMPL_NARROW_FROM_DECL(AST_Structure)
 IMPL_NARROW_FROM_SCOPE(AST_Structure)
 

@@ -76,7 +76,7 @@ public:
   // also the first argument is the reply handler.
 
   // Narrowing
-  DEF_NARROW_METHODS3 (be_operation, AST_Operation, be_scope, be_decl);
+
   DEF_NARROW_FROM_DECL (be_operation);
   DEF_NARROW_FROM_SCOPE (be_operation);
 

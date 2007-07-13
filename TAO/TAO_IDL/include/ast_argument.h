@@ -100,7 +100,7 @@ public:
   Direction direction (void);
 
   // Narrowing
-  DEF_NARROW_METHODS1(AST_Argument, AST_Field);
+
   DEF_NARROW_FROM_DECL(AST_Argument);
 
   // AST Dumping.

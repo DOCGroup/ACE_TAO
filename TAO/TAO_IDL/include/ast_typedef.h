@@ -107,7 +107,7 @@ public:
   // Sometimes this has to be accessed or managed from outside.
 
   // Narrowing.
-  DEF_NARROW_METHODS1(AST_Typedef, AST_Type);
+
   DEF_NARROW_FROM_DECL(AST_Typedef);
 
   // AST Dumping.

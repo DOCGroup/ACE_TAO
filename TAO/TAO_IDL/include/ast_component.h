@@ -62,7 +62,7 @@ public:
   virtual void destroy (void);
 
   // Narrowing.
-  DEF_NARROW_METHODS1(AST_Component, AST_Interface);
+
   DEF_NARROW_FROM_DECL(AST_Component);
   DEF_NARROW_FROM_SCOPE(AST_Component);
 

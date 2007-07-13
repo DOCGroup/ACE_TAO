@@ -58,7 +58,7 @@ public:
   virtual void destroy (void);
 
   // Narrowing.
-  DEF_NARROW_METHODS2 (be_union_branch, AST_UnionBranch, be_decl);
+
   DEF_NARROW_FROM_DECL (be_union_branch);
 };
 

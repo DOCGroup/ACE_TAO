@@ -69,7 +69,7 @@ be_factory::accept (be_visitor *visitor)
   return visitor->visit_factory (this);
 }
 
-// Narrowing
-IMPL_NARROW_METHODS3 (be_factory, AST_Factory, be_scope, be_decl)
+
+
 IMPL_NARROW_FROM_DECL (be_factory)
 IMPL_NARROW_FROM_SCOPE (be_factory)

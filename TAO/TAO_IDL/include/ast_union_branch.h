@@ -109,7 +109,7 @@ public:
   void coerce_labels (AST_Union *u);
 
   // Narrowing.
-  DEF_NARROW_METHODS1 (AST_UnionBranch, AST_Field);
+
   DEF_NARROW_FROM_DECL (AST_UnionBranch);
 
   // AST Dumping.

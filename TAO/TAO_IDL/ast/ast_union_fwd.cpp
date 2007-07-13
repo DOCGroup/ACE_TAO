@@ -60,6 +60,6 @@ AST_UnionFwd::destroy (void)
   this->AST_StructureFwd::destroy ();
 }
 
-// Narrowing methods.
-IMPL_NARROW_METHODS1 (AST_UnionFwd, AST_StructureFwd)
+
+
 IMPL_NARROW_FROM_DECL (AST_UnionFwd)

@@ -53,7 +53,7 @@ public:
   virtual int accept (be_visitor* visitor);
 
   // Narrowing.
-  DEF_NARROW_METHODS2 (be_home, be_interface, AST_Home);
+
   DEF_NARROW_FROM_DECL (be_home);
   DEF_NARROW_FROM_SCOPE (be_home);
 };

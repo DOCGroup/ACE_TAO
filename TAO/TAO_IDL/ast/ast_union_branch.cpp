@@ -231,6 +231,6 @@ AST_UnionBranch::coerce_labels (AST_Union *u)
     }
 }
 
-// Narrowing.
-IMPL_NARROW_METHODS1(AST_UnionBranch, AST_Field)
+
+
 IMPL_NARROW_FROM_DECL(AST_UnionBranch)

@@ -86,7 +86,7 @@ public:
   virtual ~AST_EnumVal (void);
 
   // Narrowing.
-  DEF_NARROW_METHODS1(AST_EnumVal, AST_Constant);
+
   DEF_NARROW_FROM_DECL(AST_EnumVal);
 
   // AST Dumping.

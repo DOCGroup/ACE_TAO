@@ -380,7 +380,7 @@ AST_Enum::destroy (void)
 }
 
 
-// Narrowing methods
-IMPL_NARROW_METHODS2(AST_Enum, AST_ConcreteType, UTL_Scope)
+
+
 IMPL_NARROW_FROM_DECL(AST_Enum)
 IMPL_NARROW_FROM_SCOPE(AST_Enum)

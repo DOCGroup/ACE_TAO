@@ -288,7 +288,7 @@ be_union::nlabels (void)
   return retval;
 }
 
-// Narrowing.
-IMPL_NARROW_METHODS3 (be_union, AST_Union, be_scope, be_type)
+
+
 IMPL_NARROW_FROM_DECL (be_union)
 IMPL_NARROW_FROM_SCOPE (be_union)
