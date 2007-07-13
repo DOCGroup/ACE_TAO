@@ -501,7 +501,7 @@ namespace ACE
    */
   extern ACE_Export int daemonize (
     const ACE_TCHAR pathname[] = ACE_LIB_TEXT ("/"),
-    int close_all_handles = ACE_DEFAULT_CLOSE_ALL_HANDLES,
+    bool close_all_handles = ACE_DEFAULT_CLOSE_ALL_HANDLES,
     const ACE_TCHAR program_name[] = ACE_LIB_TEXT ("<unknown>"));
 
   // = Miscellaneous functions.

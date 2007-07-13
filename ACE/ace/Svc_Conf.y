@@ -319,7 +319,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 // messages.
 
 void
-yyerror (int yyerrno, int yylineno, const char *s)
+yyerror (int yyerrno, int yylineno, ACE_TCHAR const * s)
 {
 #if defined (ACE_NLOGGING)
   ACE_UNUSED_ARG (yyerrno);
@@ -328,7 +328,7 @@ yyerror (int yyerrno, int yylineno, const char *s)
 #endif /* ACE_NLOGGING */
 
   ACE_ERROR ((LM_ERROR,
-              ACE_LIB_TEXT ("[error %d] on line %d: %s\n"),
+              ACE_LIB_TEXT ("ACE (%P|%t) [error %d] on line %d: %s\n"),
               yyerrno,
               yylineno,
               s));
@@ -371,7 +371,7 @@ ace_get_module (ACE_Service_Type const * sr,
     (sr == 0
      ? 0
      : static_cast<ACE_Stream_Type const *> (sr->type ()));
-  
+
   ACE_Module_Type const * const mt =
     static_cast <ACE_Module_Type const *> (sv->type ());
 

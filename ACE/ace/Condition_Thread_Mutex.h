@@ -78,12 +78,12 @@ class ACE_Export ACE_Condition_Thread_Mutex
 {
 public:
   /// Initialize the condition variable.
-  ACE_Condition_Thread_Mutex (const ACE_Thread_Mutex &m,
+  ACE_Condition_Thread_Mutex (ACE_Thread_Mutex &m,
                               const ACE_TCHAR *name = 0,
                               void *arg = 0);
 
   /// Initialize the condition variable.
-  ACE_Condition_Thread_Mutex (const ACE_Thread_Mutex &m,
+  ACE_Condition_Thread_Mutex (ACE_Thread_Mutex &m,
                               ACE_Condition_Attributes &attributes,
                               const ACE_TCHAR *name = 0,
                               void *arg = 0);

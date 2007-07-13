@@ -42,10 +42,10 @@ ACE_Condition_Thread_Mutex::dump (void) const
 #endif /* ACE_HAS_DUMP */
 }
 
-ACE_Condition_Thread_Mutex::ACE_Condition_Thread_Mutex (const ACE_Thread_Mutex &m,
+ACE_Condition_Thread_Mutex::ACE_Condition_Thread_Mutex (ACE_Thread_Mutex &m,
                                                         const ACE_TCHAR *name,
                                                         void *arg)
-  : mutex_ ((ACE_Thread_Mutex &) m),
+  : mutex_ (m),
     removed_ (false)
 {
 // ACE_TRACE ("ACE_Condition_Thread_Mutex::ACE_Condition_Thread_Mutex");
@@ -59,11 +59,11 @@ ACE_Condition_Thread_Mutex::ACE_Condition_Thread_Mutex (const ACE_Thread_Mutex &
 }
 
 ACE_Condition_Thread_Mutex::
-ACE_Condition_Thread_Mutex (const ACE_Thread_Mutex &m,
+ACE_Condition_Thread_Mutex (ACE_Thread_Mutex &m,
                             ACE_Condition_Attributes &attributes,
                             const ACE_TCHAR *name,
                             void *arg)
-  : mutex_ ((ACE_Thread_Mutex &) m),
+  : mutex_ (m),
     removed_ (false)
 {
 // ACE_TRACE ("ACE_Condition_Thread_Mutex::ACE_Condition_Thread_Mutex");
