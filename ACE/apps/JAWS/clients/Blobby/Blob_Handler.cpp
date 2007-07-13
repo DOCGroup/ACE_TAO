@@ -122,7 +122,7 @@ ACE_Blob_Reader::receive_reply (void)
   ssize_t len;
   char buf [MAX_HEADER_SIZE + 1];
   char *buf_ptr;
-  int bytes_read = 0;
+  size_t bytes_read = 0;
   size_t bytes_left = this->length_;
   size_t offset_left = this->offset_;
 
@@ -167,7 +167,7 @@ ACE_Blob_Reader::receive_reply (void)
       // Determine how many data bytes are actually there. This is
       // basically the total number of data bytes we read minus any
       // offset we have.
-      int data_bytes = bytes_read - offset_left;
+      size_t data_bytes = bytes_read - offset_left;
 
       // Check for the case where the bytes read are enough to fulfill
       // our request (for length bytes). If this is the case, then we
@@ -202,14 +202,14 @@ ACE_Blob_Reader::receive_reply (void)
      offset_left -= bytes_read;
     }
 
-  // If we had any offset left, take care of that.
+  // If we ad any offset left, take care of that.
   while (offset_left > 0)
     {
       // MAX_HEADER_SIZE in which case we should do a receive of
       // offset bytes into a temporary buffer. Otherwise, we should
       // receive MAX_HEADER_SIZE bytes into temporary buffer and
       // decrement offset_left.
-      if (offset_left < (int) (sizeof buf))
+      if (offset_left < (sizeof buf))
         len = offset_left;
       else
         len = sizeof buf;
