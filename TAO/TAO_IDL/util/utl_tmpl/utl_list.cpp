@@ -82,7 +82,7 @@ template<class L, class T>
 long
 UTL_List<L, T>::list_length(long n)
 {
-  if (pd_cdr_data == NULL)
+  if (pd_cdr_data == 0)
     return n;
   else
     return pd_cdr_data->list_length(n+1);
@@ -97,7 +97,7 @@ template<class L, class T>
 void
 UTL_List<L, T>::nconc(L *l)
 {
-  if (pd_cdr_data == NULL)
+  if (pd_cdr_data == 0)
     pd_cdr_data = l;
   else
     pd_cdr_data->nconc(l);
@@ -111,8 +111,8 @@ template<class L, class T>
 L *
 UTL_List<L, T>::copy()
 {
-  if (pd_cdr_data == NULL)
-    return new L(head(), NULL);
+  if (pd_cdr_data == 0)
+    return new L(head(), 0);
   return new L(head(), pd_cdr_data->copy());
 }
 
@@ -185,7 +185,7 @@ template<class L, class T>
 long
 UTL_ListActiveIterator<L, T>::is_done()
 {
-  return (source == NULL) ? true : false;
+  return (source == 0) ? true : false;
 }
 
 // Get current item
@@ -193,8 +193,8 @@ template<class L, class T>
 T *
 UTL_ListActiveIterator<L, T>::item()
 {
-  if (source == NULL)
-    return NULL;
+  if (source == 0)
+    return 0;
   return source->head();
 }
 
@@ -203,7 +203,7 @@ template<class L, class T>
 void
 UTL_ListActiveIterator<L, T>::next()
 {
-  if (source != NULL)
+  if (source != 0)
     source = source->tail();
 }
 

@@ -82,7 +82,7 @@ UTL_StrList::UTL_StrList(String *s, UTL_StrList *cdr)
 String *
 UTL_StrList::last_component()
 {
-  if (tail() == NULL)
+  if (tail() == 0)
     return head();
   return tail()->last_component();
 }

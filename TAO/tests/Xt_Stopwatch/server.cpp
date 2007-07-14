@@ -51,12 +51,12 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   XtAppContext app;
   Widget toplevel = XtAppInitialize (&app,
                                      "Stopwatch",
-                                     NULL,
+                                     0,
                                      0,
                                      &argc,
                                      argv,
-                                     NULL,
-                                     NULL,
+                                     0,
+                                     0,
                                      0);
 
   TAO::XtResource_Loader xt_loader (app);

@@ -16,7 +16,7 @@ class CSelectNSDialog : public CDialog
 {
 // Construction
 public:
-	CSelectNSDialog(CWnd* pParent = NULL);   // standard constructor
+	CSelectNSDialog(CWnd* pParent = 0);   // standard constructor
 
 // Dialog Data
 	//{{AFX_DATA(CSelectNSDialog)

@@ -63,7 +63,7 @@ void connect_push_supplier(TAO_FTEC_Event_Channel_Impl* ec,
   TAO_FTEC_ProxyPushConsumer* proxy
     = ec->find_proxy_push_consumer(op.object_id);
 
-  if (proxy == NULL)  {
+  if (proxy == 0)  {
     obtain_push_consumer_and_connect(ec,
                                      op.object_id,
                                      param.push_supplier.in(),
@@ -105,7 +105,7 @@ void connect_push_consumer(TAO_FTEC_Event_Channel_Impl* ec,
 
   TAO_FTEC_ProxyPushSupplier* proxy = ec->find_proxy_push_supplier(op.object_id);
 
-  if (proxy == NULL){
+  if (proxy == 0){
     obtain_push_supplier_and_connect(ec,
                                      op.object_id,
                                      param.push_consumer.in(),
@@ -125,7 +125,7 @@ void disconnect_push_supplier(TAO_FTEC_Event_Channel_Impl* ec,
   TAO_FTEC_ProxyPushSupplier* proxy = ec->find_proxy_push_supplier(op.object_id);
 
 
-  if (proxy == NULL) // proxy not found
+  if (proxy == 0) // proxy not found
     throw FTRT::InvalidUpdate();
 
   proxy->disconnect_push_supplier();
@@ -138,7 +138,7 @@ void disconnect_push_consumer(TAO_FTEC_Event_Channel_Impl* ec,
 
   TAO_FTEC_ProxyPushConsumer* proxy = ec->find_proxy_push_consumer(op.object_id);
 
-  if (proxy == NULL) // proxy not found
+  if (proxy == 0) // proxy not found
     throw FTRT::InvalidUpdate();
 
   proxy->disconnect_push_consumer();
@@ -153,7 +153,7 @@ void suspend_connection (TAO_FTEC_Event_Channel_Impl* ec,
   TAO_FTEC_ProxyPushSupplier* proxy = ec->find_proxy_push_supplier(op.object_id);
 
 
-  if (proxy == NULL) // proxy not found
+  if (proxy == 0) // proxy not found
     throw FTRT::InvalidUpdate();
 
   proxy->suspend_connection();
@@ -165,7 +165,7 @@ void resume_connection(TAO_FTEC_Event_Channel_Impl* ec,
   TAO_FTEC_ProxyPushSupplier* proxy = ec->find_proxy_push_supplier(op.object_id);
 
 
-  if (proxy == NULL) // proxy not found
+  if (proxy == 0) // proxy not found
     throw FTRT::InvalidUpdate();
 
   proxy->resume_connection();
@@ -332,7 +332,7 @@ void TAO_FTEC_Event_Channel_Impl::disconnect_push_supplier (
 
   TAO_FTEC_ProxyPushSupplier* proxy = this->find_proxy_push_supplier(oid);
 
-  if (proxy == NULL) // proxy not found
+  if (proxy == 0) // proxy not found
     return;
 
   proxy->disconnect_push_supplier();
@@ -347,7 +347,7 @@ void TAO_FTEC_Event_Channel_Impl::disconnect_push_consumer (
 
   TAO_FTEC_ProxyPushConsumer* proxy = this->find_proxy_push_consumer(oid);
 
-  if (proxy == NULL) // proxy not found
+  if (proxy == 0) // proxy not found
     return;
 
   proxy->disconnect_push_consumer();
@@ -362,7 +362,7 @@ void TAO_FTEC_Event_Channel_Impl::suspend_push_supplier (
 
   TAO_FTEC_ProxyPushSupplier* proxy = this->find_proxy_push_supplier(oid);
 
-  if (proxy == NULL) // proxy not found
+  if (proxy == 0) // proxy not found
     throw FtRtecEventComm::InvalidObjectID();
 
   proxy->suspend_connection();
@@ -378,7 +378,7 @@ void TAO_FTEC_Event_Channel_Impl::resume_push_supplier (
 
   TAO_FTEC_ProxyPushSupplier* proxy = this->find_proxy_push_supplier(oid);
 
-  if (proxy == NULL) // proxy not found
+  if (proxy == 0) // proxy not found
     throw FtRtecEventComm::InvalidObjectID();
 
   proxy->resume_connection();
@@ -391,7 +391,7 @@ void TAO_FTEC_Event_Channel_Impl::push (
 {
   TAO_FTEC_ProxyPushConsumer* proxy = this->find_proxy_push_consumer(oid);
 
-  if (proxy == NULL) // proxy not found
+  if (proxy == 0) // proxy not found
     throw FtRtecEventComm::InvalidObjectID();
 
   proxy->push(data);

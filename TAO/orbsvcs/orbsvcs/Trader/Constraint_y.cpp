@@ -297,13 +297,13 @@ static int yygrowstack()
     i = yyssp - yyss;
     newss = yyss ? (short *)ACE_OS::realloc(yyss, newsize * sizeof *newss) :
       (short *)ACE_OS::malloc(newsize * sizeof *newss);
-    if (newss == NULL)
+    if (newss == 0)
         return -1;
     yyss = newss;
     yyssp = newss + i;
     newvs = yyvs ? (YYSTYPE *)ACE_OS::realloc(yyvs, newsize * sizeof *newvs) :
       (YYSTYPE *)ACE_OS::malloc(newsize * sizeof *newvs);
-    if (newvs == NULL)
+    if (newvs == 0)
         return -1;
     yyvs = newvs;
     yyvsp = newvs + i;
@@ -358,7 +358,7 @@ yyparse (YYPARSE_PARAM_ARG)
     yyerrflag = 0;
     yychar = (-1);
 
-    if (yyss == NULL && yygrowstack()) goto yyoverflow;
+    if (yyss == 0 && yygrowstack()) goto yyoverflow;
     yyssp = yyss;
     yyvsp = yyvs;
     *yyssp = yystate = 0;

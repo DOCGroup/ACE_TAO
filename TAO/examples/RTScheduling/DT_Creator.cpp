@@ -550,7 +550,7 @@ DT_Creator::check_ifexit (void)
 
       FILE* log_file = ACE_OS::fopen (log_file_name_, "w");
 
-      if (log_file != NULL)
+      if (log_file != 0)
         {
     // first dump what the caller has to say.
     ACE_OS::fprintf (log_file, "Log File\n");

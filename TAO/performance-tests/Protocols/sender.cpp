@@ -232,7 +232,7 @@ Worker::Worker (CORBA::ORB_ptr orb,
 {
   // Each sender will have a random session id.  This helps in
   // identifying late packets arriving at the server.
-  ACE_OS::srand ((unsigned) ACE_OS::time (NULL));
+  ACE_OS::srand ((unsigned) ACE_OS::time (0));
   this->session_id_ = ACE_OS::rand ();
 
   // Interval is inverse of rate.

@@ -121,7 +121,7 @@ run_service_command (Activator_Options& opts)
         const DWORD MAX_PATH_LENGTH = 4096;
         char pathname[MAX_PATH_LENGTH];
 
-        DWORD length = ACE_TEXT_GetModuleFileName(NULL, pathname, MAX_PATH_LENGTH);
+        DWORD length = ACE_TEXT_GetModuleFileName(0, pathname, MAX_PATH_LENGTH);
         if (length == 0 || length >= MAX_PATH_LENGTH - sizeof(" -s"))
           {
             ACE_ERROR ((LM_ERROR, "Error: Could not get module file name\n"));

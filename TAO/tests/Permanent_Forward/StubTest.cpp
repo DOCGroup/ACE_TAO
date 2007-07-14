@@ -107,7 +107,7 @@ test_forward_permanent (CORBA::ORB_ptr orb)
   TAO_Stub *stub1 = obj1->_stubobj ();
   TAO_Stub *stub4 = obj4->_stubobj ();
 
-  TAO_Profile *profile = NULL;
+  TAO_Profile *profile = 0;
 
   profile = stub1->profile_in_use ();
 
@@ -116,7 +116,7 @@ test_forward_permanent (CORBA::ORB_ptr orb)
   // ----- forward to obj2 permanently
   stub1->add_forward_profiles (stub4->base_profiles(), true /* permanent */ );
 
-  FRANKS_ASSERT (stub1->forward_profiles () != NULL);
+  FRANKS_ASSERT (stub1->forward_profiles () != 0);
 
   profile = stub1->next_profile ();
 
@@ -136,9 +136,9 @@ test_forward_permanent (CORBA::ORB_ptr orb)
 
   profile = stub1->next_profile ();
 
-  FRANKS_ASSERT (profile == NULL);
+  FRANKS_ASSERT (profile == 0);
 
-  FRANKS_ASSERT (stub1->forward_profiles () != NULL);
+  FRANKS_ASSERT (stub1->forward_profiles () != 0);
 }
 
 static void
@@ -160,7 +160,7 @@ test_forward_permanent_mix (CORBA::ORB_ptr orb)
   TAO_Stub *stub4 = obj4->_stubobj ();
   TAO_Stub *stub5 = obj5->_stubobj ();
 
-  TAO_Profile *profile = NULL;
+  TAO_Profile *profile = 0;
 
   profile = stub1->profile_in_use ();
 
@@ -169,7 +169,7 @@ test_forward_permanent_mix (CORBA::ORB_ptr orb)
   // ----- forward to obj2
   stub1->add_forward_profiles (stub2->base_profiles(), false /* permanent */ );
 
-  FRANKS_ASSERT (stub1->forward_profiles () != NULL);
+  FRANKS_ASSERT (stub1->forward_profiles () != 0);
 
   profile = stub1->next_profile ();
 
@@ -178,7 +178,7 @@ test_forward_permanent_mix (CORBA::ORB_ptr orb)
   // ----- forward to obj3
   stub1->add_forward_profiles (stub3->base_profiles(), false /* permanent */ );
 
-  FRANKS_ASSERT (stub1->forward_profiles () != NULL);
+  FRANKS_ASSERT (stub1->forward_profiles () != 0);
 
   profile = stub1->next_profile ();
 
@@ -190,7 +190,7 @@ test_forward_permanent_mix (CORBA::ORB_ptr orb)
   // ----- forward to obj4 permanently
   stub1->add_forward_profiles (stub4->base_profiles(), true /* permanent */ );
 
-  FRANKS_ASSERT (stub1->forward_profiles () != NULL);
+  FRANKS_ASSERT (stub1->forward_profiles () != 0);
 
   profile = stub1->next_profile ();
 
@@ -207,7 +207,7 @@ test_forward_permanent_mix (CORBA::ORB_ptr orb)
   // ----- forward to obj2
   stub1->add_forward_profiles (stub2->base_profiles(), false /* permanent */ );
 
-  FRANKS_ASSERT (stub1->forward_profiles () != NULL);
+  FRANKS_ASSERT (stub1->forward_profiles () != 0);
 
   profile = stub1->next_profile ();
 
@@ -216,7 +216,7 @@ test_forward_permanent_mix (CORBA::ORB_ptr orb)
   // ----- forward to obj3
   stub1->add_forward_profiles (stub3->base_profiles(), false /* permanent */ );
 
-  FRANKS_ASSERT (stub1->forward_profiles () != NULL);
+  FRANKS_ASSERT (stub1->forward_profiles () != 0);
 
   profile = stub1->next_profile ();
 
@@ -228,7 +228,7 @@ test_forward_permanent_mix (CORBA::ORB_ptr orb)
   // ----- forward to obj5 permanently
   stub1->add_forward_profiles (stub5->base_profiles(), true /* permanent */ );
 
-  FRANKS_ASSERT (stub1->forward_profiles () != NULL);
+  FRANKS_ASSERT (stub1->forward_profiles () != 0);
 
   profile = stub1->next_profile ();
 
@@ -249,7 +249,7 @@ test_forward_permanent_mix (CORBA::ORB_ptr orb)
 
   profile = stub1->next_profile ();
 
-  FRANKS_ASSERT (profile == NULL);
+  FRANKS_ASSERT (profile == 0);
 }
 
 static void
@@ -265,7 +265,7 @@ test_forward (CORBA::ORB_ptr orb)
   TAO_Stub *stub2 = obj2->_stubobj ();
   TAO_Stub *stub3 = obj3->_stubobj ();
 
-  TAO_Profile *profile = NULL;
+  TAO_Profile *profile = 0;
 
   profile = stub1->profile_in_use ();
 
@@ -274,7 +274,7 @@ test_forward (CORBA::ORB_ptr orb)
   // ----- forward to obj2
   stub1->add_forward_profiles (stub2->base_profiles(), false /* permanent */ );
 
-  FRANKS_ASSERT (stub1->forward_profiles () != NULL);
+  FRANKS_ASSERT (stub1->forward_profiles () != 0);
 
   profile = stub1->next_profile ();
 
@@ -284,7 +284,7 @@ test_forward (CORBA::ORB_ptr orb)
 
   stub1->add_forward_profiles (stub3->base_profiles(), false /* permanent */ );
 
-  FRANKS_ASSERT (stub1->forward_profiles () != NULL);
+  FRANKS_ASSERT (stub1->forward_profiles () != 0);
 
   profile = stub1->next_profile ();
 
@@ -311,7 +311,7 @@ test_forward (CORBA::ORB_ptr orb)
 
   FRANKS_ASSERT (is_endpoint (profile, "192.168.1.3", 1111));
 
-  FRANKS_ASSERT (stub1->forward_profiles () == NULL);
+  FRANKS_ASSERT (stub1->forward_profiles () == 0);
 
   // ----- reached end, next_profile() must yield NULL
 

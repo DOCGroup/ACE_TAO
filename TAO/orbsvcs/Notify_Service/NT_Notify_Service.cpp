@@ -82,7 +82,7 @@ TAO_NT_Notify_Service::init (int argc,
 
   ACE_TEXT_RegQueryValueEx (hkey,
                             TAO_NOTIFY_SERVICE_OPTS_NAME,
-                            NULL,
+                            0,
                             &type,
                             buf,
                             &bufSize);
