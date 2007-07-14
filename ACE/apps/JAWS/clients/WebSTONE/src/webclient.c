@@ -97,8 +97,8 @@ static void ClientThread(void *);
 
 /* used to bypass DNS/YP name resolution for every page */
 struct hostent 	webserv_phe, webmast_phe;
-struct protoent	webserv_ppe, webmast_ppe; 
-unsigned long	webserv_addr, webmast_addr; 
+struct protoent	webserv_ppe, webmast_ppe;
+unsigned long	webserv_addr, webmast_addr;
 short 		webserv_type, webmast_type;               /* socket type */
 
 /* End of globals */
@@ -154,10 +154,10 @@ struct protoent *ppe;
 	*addr = inet_addr(host);
 	if (*addr == INADDR_NONE)
 	    return(returnerr("Invalid IP address %s\n", host));
-	 
+
     } else {
 	/* look up by name */
-	phe = gethostbyname(host);								
+	phe = gethostbyname(host);
 	if (phe == NULL)
 	{
 	    D_PRINTF( "Gethostbyname failed: %s", neterrstr() );
@@ -187,7 +187,7 @@ struct protoent *ppe;
     else
     {
 	*type = SOCK_STREAM;
-	D_PRINTF( "Choosing SOCK_STREAM %d type %d %s\n", 
+	D_PRINTF( "Choosing SOCK_STREAM %d type %d %s\n",
 	    SOCK_STREAM, *type, neterrstr() );
     }
 
@@ -243,22 +243,22 @@ connectsock(char *host, NETPORT portnum, char *protocol)
   s = socket(PF_INET, type, proto);
   D_PRINTF( "Socket %d returned %d, %s\n",
 	type, s, neterrstr() );
-  
+
   if (BADSOCKET(s))
   {
     D_PRINTF( "Can't create socket: %s\n",neterrstr() );
     return BADSOCKET_VALUE;
   }
-  
+
   /* Connect the socket */
   D_PRINTF( "Trying to connect %d with size %d, %s\n",
 	s, sizeof(sin), neterrstr() );
-  D_PRINTF( "Address is family %d, port %d, addr %s\n", 
+  D_PRINTF( "Address is family %d, port %d, addr %s\n",
 	sin.sin_family, ntohs(sin.sin_port),
 	inet_ntoa(sin.sin_addr) );
-  
+
   returnval = connect(s, (struct sockaddr *)&sin, sizeof(sin));
-  D_PRINTF( "Connect returned %d, %s\n", 
+  D_PRINTF( "Connect returned %d, %s\n",
 	returnval, neterrstr() );
   if (returnval < 0)
     {
@@ -304,8 +304,8 @@ connecttomaster(char *str)
      */
     *tempch = '\0';
     tempch++;
-    
-    /* loop here to connect to webmaster - TCP/IP allows no more than 5 
+
+    /* loop here to connect to webmaster - TCP/IP allows no more than 5
      * connection requests outstanding at once and thus the webmaster may
      * reject a connection if there are a lot of client processes
      */
@@ -326,7 +326,7 @@ connecttomaster(char *str)
 	/*  ERROR CONNECTING TO MASTER PROCESS */
 	return(returnerr("Could not connect to master process\n"));
     }
-	
+
     /*
      * SIGNAL THE MASTER THAT WE ARE READY TO PROCEED.  WHEN ALL
      * CHILD PROCESSES HAVE CONNECTED AND SENT THIS SIGNAL,
@@ -336,7 +336,7 @@ connecttomaster(char *str)
     {
 	return(returnerr("Error sending READY message to master"));
     }
-   
+
     memset(msg,0,GOSTRLEN+1);
     if(NETREAD(sock,msg,GOSTRLEN) != GOSTRLEN)
     {
@@ -361,7 +361,7 @@ connecttomaster(char *str)
 static void
 accumstats(rqst_timer_t *rqsttimer, page_stats_t *pagestats, stats_t *timestat)
 {
-    rqst_stats_t	rqststats; 
+    rqst_stats_t	rqststats;
 
 #define TFMT	"%10u:%10u"
     /*
@@ -405,16 +405,16 @@ accumstats(rqst_timer_t *rqsttimer, page_stats_t *pagestats, stats_t *timestat)
 } /* END accumstats */
 
 
-/* 
+/*
  * fetch the set of files that constitute a page
- * 
+ *
  * maxcount = the number of files in the WWW page
  * pageval = the number of the WWW page (offset in load_file_list[])
  *	(if -1, use page # 0 - does this still work?)
  *
  * returns the number of files retrieved
  */
-static int 
+static int
 makeload(int maxcount, int pageval, THREAD rqst_timer_t *timerarray, THREAD stats_t *timestat, THREAD SOCKET mastersock, THREAD page_stats_t *page_stats)
 {
     int cnt;
@@ -433,13 +433,13 @@ makeload(int maxcount, int pageval, THREAD rqst_timer_t *timerarray, THREAD stat
     D_PRINTF( "Page stats initialized\n" );
 
     for (cnt = 0; cnt < maxcount; cnt++)
-    { 
+    {
 	D_PRINTF( "Loop count %d in makeload()\n", cnt );
 	if (pageval == -1)
 	{
 	    pageval = cnt;
 	}
-	if (timeexpired) 
+	if (timeexpired)
 	{
 	    break;
 	}
@@ -447,12 +447,12 @@ makeload(int maxcount, int pageval, THREAD rqst_timer_t *timerarray, THREAD stat
 	/* check for a filename */
 	if (strlen(load_file_list[pageval].filename[cnt]) < 1)
 	{
-	    D_PRINTF( "Bad filename at pageval %d, count %d\n", 
+	    D_PRINTF( "Bad filename at pageval %d, count %d\n",
 		pageval, cnt );
-	    return(returnerr("Bad filename at pageval %d, count %d\n", 
+	    return(returnerr("Bad filename at pageval %d, count %d\n",
 		pageval, cnt));
 	}
-      
+
         /*        if (load_file_list[pageval].port_number[cnt] != 0)
         {
             loc_portnum = load_file_list[pageval].port_number[cnt];
@@ -462,7 +462,7 @@ makeload(int maxcount, int pageval, THREAD rqst_timer_t *timerarray, THREAD stat
             loc_portnum = portnum;
         } */
         loc_portnum = portnum;
-        if ((load_file_list[pageval].servername[cnt] != NULL) 
+        if ((load_file_list[pageval].servername[cnt] != NULL)
 	      &&
 	    *load_file_list[pageval].servername[cnt])
 	{
@@ -482,15 +482,15 @@ makeload(int maxcount, int pageval, THREAD rqst_timer_t *timerarray, THREAD stat
 	    server, loc_portnum, load_file_list[pageval].filename[cnt],
 	    cnt );
 
-	returnval = get(server, loc_portnum, 
+	returnval = get(server, loc_portnum,
 			  load_file_list[pageval].filename[cnt],
 			  &(timerarray[cnt]));
 	if (returnval < 0)
 	{
 	    D_PRINTF( "***GET() RETURNED AN ERROR\n" );
 	}
-     
-	/* 
+
+	/*
 	* DID GET() RETURN A VALID TIME?
 	*/
 	if ((returnval == 0) && (timerarray[cnt].valid == 2))
@@ -525,13 +525,13 @@ makeload(int maxcount, int pageval, THREAD rqst_timer_t *timerarray, THREAD stat
 	}
 
     } /* END for cnt */
-  
-    /* 
-     * DO WE HAVE A VALID RETURN FROM GET()? 
+
+    /*
+     * DO WE HAVE A VALID RETURN FROM GET()?
      * WHY NOT USE returnval HERE?
      */
     if ((returnval == 0) &&
-	  (cnt == load_file_list[pageval].num_of_files) && 
+	  (cnt == load_file_list[pageval].num_of_files) &&
 	  (timerarray[cnt-1].valid == 2))
     {
 	rqst_stats_t *ps_rs;
@@ -543,7 +543,7 @@ makeload(int maxcount, int pageval, THREAD rqst_timer_t *timerarray, THREAD stat
 	rqstat_sum(ps_rs, pst_rs);
 
 	page_stats[pageval].totalpages++;
-      
+
 	if (page_stats[pageval].page_size == 0)
 	{
 	    page_stats[pageval].page_size = (unsigned)
@@ -636,7 +636,7 @@ main(int argc, char *argv[])
     memset(proxyserver, 0, sizeof(proxyserver));
     memset(connectstr, 0, sizeof(connectstr));
 
-    /* 
+    /*
      * PARSE THE COMMAND LINE OPTIONS
      */
 
@@ -686,7 +686,7 @@ main(int argc, char *argv[])
 	    haveproxyserver = 1;
 	    sprintf(proxyserver, "%s", optarg);
 	    break;
-	case 'R':	
+	case 'R':
 	    record_all_transactions = 1;
 	    break;
         default:
@@ -731,7 +731,7 @@ main(int argc, char *argv[])
     {
        /*
         * GET THE URLS TO RETRIEVE.
-        */        
+        */
        if (numfiles == MAXNUMOFFILES) {
 	   returnerr("Maximum of %d files on the command line.\n");
 	   usage(argv[0]);
@@ -757,7 +757,7 @@ main(int argc, char *argv[])
     }
 
     if((numloops == 0) && (testtime == 0))
-    { 
+    {
         /*
          * NO SPECIFIED NUMBER OF LOOPS, AND NO TEST TIME
          */
@@ -796,12 +796,12 @@ main(int argc, char *argv[])
 
     if (resolve_addrs(webserver, "tcp", &webserv_phe, &webserv_ppe, &webserv_addr, &webserv_type))
 	exit(1);
-    
+
     /*
      * INITIALIZE DATA
      */
     /* allocate space for dynamic arrays */
-    load_file_list = 
+    load_file_list =
       (page_list_t *)mymalloc((MAXNUMOFPAGES)*sizeof(page_list_t));
 
     if (uil_filelist_f)
@@ -819,7 +819,7 @@ main(int argc, char *argv[])
 	{
 	  for (j=0; j<MAXNUMOFFILES; j++)
 	    {
-	      load_file_list[i].servername[j] = 
+	      load_file_list[i].servername[j] =
 		(char *)mymalloc(URL_SIZE);
 	      load_file_list[i].filename[j] =
 		(char *)mymalloc(URL_SIZE);
@@ -827,13 +827,13 @@ main(int argc, char *argv[])
 	}
 
       D_PRINTF( "Parsing file list: %s\n", uil_filelist );
-      parse_file_list(uil_filelist, load_file_list, 
+      parse_file_list(uil_filelist, load_file_list,
 		      &number_of_pages, &numfiles);
       /* free memory for pages that won't be used? */
       D_PRINTF( "Actual page list: %ld by %d\n",
 	number_of_pages, MAXNUMOFFILES );
 
-      D_PRINTF( "Setting up weighting for %ld pages\n", 
+      D_PRINTF( "Setting up weighting for %ld pages\n",
 	number_of_pages );
       total_weight = load_percent(load_file_list, number_of_pages);
       /*      total_weight = load_percent(load_file_list, number_of_pages, pages); */
@@ -861,34 +861,34 @@ main(int argc, char *argv[])
     signal(SIGCHLD, childhandler);
     for(i = 0; i < numclients; i++)
     {
-      thr_create (NULL, NULL, ClientThread, NULL, THR_BOUND, NULL); 
+      thr_create (NULL, NULL, ClientThread, NULL, THR_BOUND, NULL);
 
-      /* switch(fork()) 
-         { 
-             case 0: 
-                 numclients = 1; 
-                 ClientThread(NULL); 
-                 exit(0); 
-                 break; 
-             case -1: 
-                 errexit("Error forking child processes\n"); 
-                 exit(1); 
-             default: 
-                break; 
+      /* switch(fork())
+         {
+             case 0:
+                 numclients = 1;
+                 ClientThread(NULL);
+                 exit(0);
+                 break;
+             case -1:
+                 errexit("Error forking child processes\n");
+                 exit(1);
+             default:
+                break;
          } */
       select(0,(fd_set *)0,(fd_set *)0, (fd_set *)0, &sleeptime);
-    } 
+    }
 
     /*
      * Wait for all children to exit.
      */
 
-    while (thr_join(NULL, NULL, NULL) == 0); 
+    while (thr_join(NULL, NULL, NULL) == 0);
 
-    /*     for(;;)  
-       { 
-     	int pid = wait((int*)0); 
- 	if ((pid == -1) && errno == ECHILD) break; 
+    /*     for(;;)
+       {
+     	int pid = wait((int*)0);
+ 	if ((pid == -1) && errno == ECHILD) break;
        } */
 #else
     /* start threads on NT */
@@ -904,7 +904,7 @@ main(int argc, char *argv[])
 #ifdef WIN32
     /* wait for children to get to sync point */
     while (CounterSemaphore < numclients)
-        sleep(1);				
+        sleep(1);
     CounterSemaphore = 0;
 
     /* start all children simultaneously */
@@ -919,7 +919,7 @@ main(int argc, char *argv[])
      * Wait for all threads to exit.
      */
     while (CounterSemaphore < numclients)
-        sleep(1);				
+        sleep(1);
 
     CloseHandle(hSemaphore);
 #endif /* WIN32 */
@@ -931,12 +931,12 @@ void ClientThread(void *dummy)
 {
 
   THREAD FILE	*logfile;
-  
+
   THREAD stats_t	timestat;
-  
+
   THREAD rqst_timer_t	timerarray[MAXNUMOFFILES];
   THREAD SOCKET	mastersock = BADSOCKET_VALUE;	/* connection to webmaster */
-  
+
 
   THREAD page_stats_t *page_stats;    /* actually a dynamic array */
 
@@ -957,7 +957,7 @@ void ClientThread(void *dummy)
      * INITIALIZE DATA
      */
 
-    page_stats = 
+    page_stats =
       (page_stats_t *)mymalloc((number_of_pages)*sizeof(page_stats_t));
 
     for (i=0; i < number_of_pages; i++) {
@@ -979,7 +979,7 @@ void ClientThread(void *dummy)
 
     if (record_all_transactions)
     {
-	/* 
+	/*
 	 *  OPEN A LOG FILE.
 	 */
 	sprintf(file_name, "%s%d", LOG_FILE, (int)getpid());
@@ -992,7 +992,7 @@ void ClientThread(void *dummy)
     rand_r(&junk);
     D_PRINTF( "Random seed: %d\n", junk );
 
-    for (i=0; i < MAXNUMOFFILES; i++) 
+    for (i=0; i < MAXNUMOFFILES; i++)
     {
 	rqtimer_init(&(timerarray[i]));
     }
@@ -1003,7 +1003,7 @@ void ClientThread(void *dummy)
     timestat.total_num_of_files = numfiles;
 
     if (amclient)
-    {	
+    {
         /*
          * WE ARE A CLIENT PROCESS. (i.e. WE ARE NOT RUN BY A USER, BUT BY
          * THE MASTER WWWSTONE PROCESS. WE NEED TO CONNECT TO THE
@@ -1014,7 +1014,7 @@ void ClientThread(void *dummy)
 	mastersock = connecttomaster(connectstr);
 
 	D_PRINTF( "connecttomaster returns %d, %s\n",
-    	    mastersock, neterrstr() ); 
+    	    mastersock, neterrstr() );
 
 	if(BADSOCKET(mastersock))
         {
@@ -1036,7 +1036,7 @@ void ClientThread(void *dummy)
     if (testtime != 0)
     {
        /*
-        * IF RUNNING A TIMED TEST, WE WILL LOOP 
+        * IF RUNNING A TIMED TEST, WE WILL LOOP
 	* UNTIL THE ALARM GOES OFF.
         * WE'LL ALSO NEED TO SET THE SIGNAL HANDLER
         */
@@ -1061,8 +1061,8 @@ void ClientThread(void *dummy)
     for(loopcnt = 0;  (loopcnt < numloops) && !timeexpired;  loopcnt++)
     {
 	/*
-	 * THIS IS WHERE LOAD TESTING IS DONE. 
-	 * GET A RANDOM NUMBER, THEN INDEX INTO THE 
+	 * THIS IS WHERE LOAD TESTING IS DONE.
+	 * GET A RANDOM NUMBER, THEN INDEX INTO THE
 	 * PAGE, AND THEN REQUEST THAT SET OF FILES.
 	 */
 	if (uil_filelist_f) /* HAVE FILELIST */
@@ -1076,8 +1076,8 @@ void ClientThread(void *dummy)
                 junk = getpid ();
 		ran_number = (rand_r(&junk) % total_weight);
 		D_PRINTF( "random %ld\n", ran_number );
-		
-		/* loop through pages, find correct one 
+
+		/* loop through pages, find correct one
 		 * while ran_number is positive, decrement it
 		 * by the load_num of the current page
 		 * example: ran_number is 5, pages have weights of 10 and 10
@@ -1089,30 +1089,30 @@ void ClientThread(void *dummy)
 		  {
 		    page_index++;
 		    D_PRINTF( "Current page index %d: %ld - %d\n",
-		      page_index, ran_number, 
+		      page_index, ran_number,
 		      load_file_list[page_index].load_num
 		      );
 		    ran_number -= load_file_list[page_index].load_num;
-		  } 
+		  }
 
 		if (page_index >= number_of_pages) { page_index--; }
 
 		D_PRINTF( "Final page index %d\n", page_index );
-		filecnt = makeload(load_file_list[page_index].num_of_files, 
+		filecnt = makeload(load_file_list[page_index].num_of_files,
 						   page_index, timerarray, &timestat, mastersock, page_stats);
                 testtime = 1;
-	    } 
+	    }
 	    else /* NOT RUNNING IN TIMED MODE */
 	    {
-		for (page_number = 0; 
-		     page_number < number_of_pages; 
+		for (page_number = 0;
+		     page_number < number_of_pages;
 		     page_number++)
 		{
-		    filecnt = makeload(load_file_list[page_number].num_of_files, 
+		    filecnt = makeload(load_file_list[page_number].num_of_files,
 			page_number, timerarray, &timestat, mastersock, page_stats);
-		    
-		} /* END for page_number */			
-	    } /* END if/else TIMED MODE */		    	    
+
+		} /* END for page_number */
+	    } /* END if/else TIMED MODE */
 	}
 	else /* NO FILELIST */
 	{
@@ -1138,9 +1138,9 @@ void ClientThread(void *dummy)
     if (testtime == 0)
     {
 	numfiles = loopcnt;
-    
+
 	if (uil_filelist_f)
-	{ 
+	{
 	    numfiles = file_count;
 	}
     }
@@ -1161,23 +1161,23 @@ void ClientThread(void *dummy)
 			     " afterbody \t%d.%d\n"
 			     " exittime \t%d.%d\n"
 			     " total bytes \t%d\n"
-			     " body bytes\t%d\n", 
+			     " body bytes\t%d\n",
 		timerarray[loop].entertime.tv_sec,
 		timerarray[loop].entertime.tv_usec,
 		timerarray[loop].beforeconnect.tv_sec,
 		timerarray[loop].beforeconnect.tv_usec,
 		timerarray[loop].afterconnect.tv_sec,
-		timerarray[loop].afterconnect.tv_usec, 
+		timerarray[loop].afterconnect.tv_usec,
 		timerarray[loop].beforeheader.tv_sec,
 		timerarray[loop].beforeheader.tv_usec,
 		timerarray[loop].afterheader.tv_sec,
-		timerarray[loop].afterheader.tv_usec, 
+		timerarray[loop].afterheader.tv_usec,
 		timerarray[loop].afterbody.tv_sec,
 		timerarray[loop].afterbody.tv_usec,
 		timerarray[loop].exittime.tv_sec,
 		timerarray[loop].exittime.tv_usec,
 		timerarray[loop].totalbytes,
-		timerarray[loop].bodybytes);  
+		timerarray[loop].bodybytes);
 	} /* end for loop */
     } /* end if recording all transactions */
 
@@ -1200,7 +1200,7 @@ void ClientThread(void *dummy)
 
 	returnval = senddata(mastersock, stats_as_text,
 		SIZEOF_STATSTEXTBASE + number_of_pages*SIZEOF_DOUBLETEXT);
-	D_PRINTF( "Wrote time stats to master %d\n", returnval );	    	    
+	D_PRINTF( "Wrote time stats to master %d\n", returnval );
 
 	if (returnval < 1)
 	  {
@@ -1214,12 +1214,12 @@ void ClientThread(void *dummy)
 	  /* write pagestats */
 	  {
 	    char *page_stats_as_text;
-	    for (i = 0; i < number_of_pages; i++) 
+	    for (i = 0; i < number_of_pages; i++)
 	      {
 		D_PRINTF( "On page_stats[%d]\n", i );
 		page_stats_as_text = page_stats_to_text(&page_stats[i]);
 		returnval = strlen(page_stats_as_text);
-		D_PRINTF( "page_stats_to_text[%d] returned %d\n", 
+		D_PRINTF( "page_stats_to_text[%d] returned %d\n",
 		  i, returnval );
 		returnval = senddata(mastersock, page_stats_as_text,
 			       SIZEOF_PAGESTATSTEXT);
@@ -1230,7 +1230,7 @@ void ClientThread(void *dummy)
 		    errexit("Error while writing page_stats[%d]: %s\n",
 			    i, neterrstr());
 		  } /* end if */
-		D_PRINTF( "Wrote %d bytes of page_stats[%d] to master\n", 
+		D_PRINTF( "Wrote %d bytes of page_stats[%d] to master\n",
 		  returnval, i );
 	      } /* end for */
 	  } /* end if filelist */
@@ -1244,14 +1244,14 @@ void ClientThread(void *dummy)
 	if (testtime)
   	{
 	    printf("Test ran for: %d minutes\n",(testtime/60));
-	} 
+	}
 	else
 	{
 	    printf("Test ran for: %d iterations.\n",numloops);
 	}
-	compdifftime(&(timestat.endtime), &(timestat.starttime), 
+	compdifftime(&(timestat.endtime), &(timestat.starttime),
 		&(runningtime));
-	printf("Total time of test (sec) %d.%d\n", runningtime.tv_sec, 
+	printf("Total time of test (sec) %d.%d\n", runningtime.tv_sec,
 		runningtime.tv_usec);
 	printf("Files retrieved per iteration: %d\n",numfiles);  /* 'per iteration' */
 	printf("----------------------------------\n");
@@ -1272,7 +1272,7 @@ void ClientThread(void *dummy)
 		    printf ("===============================================================================\n");
 		    printf ("Page # %d\n\n", loop);
 		    printf ("Total number of times page was hit %d\n",
-			    page_stats[loop].totalpages); 
+			    page_stats[loop].totalpages);
 		    rqstat_print(&(page_stats[loop].rs));
 		    printf ("Page size %d \n", page_stats[loop].page_size);
 		    printf ("===============================================================================\n\n");
