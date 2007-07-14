@@ -1,3 +1,8 @@
+Sat Jul 14 13:20:26 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/tests/Security/mixed_security_test/Foo_i.cpp:
+          Fixed borland detected ambiguity.
+
 Sat Jul 14 01:32:45 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * configure.ac:
