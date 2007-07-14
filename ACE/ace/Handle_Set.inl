@@ -84,6 +84,9 @@ ACE_Handle_Set::is_set (ACE_HANDLE handle) const
   return FD_ISSET (handle,
                    &this->mask_)
     && this->size_ > 0;
+#elif defined (ACE_HAS_NONCONST_FD_ISSET)
+  return FD_ISSET (handle,
+                   const_cast<fd_set*> (&this->mask_));
 #else
   return FD_ISSET (handle,
                    &this->mask_);

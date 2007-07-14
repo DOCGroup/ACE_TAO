@@ -520,7 +520,7 @@ ACE_High_Res_Timer::get_env_global_scale_factor (const ACE_TCHAR *env)
       const char *env_value = ACE_OS::getenv (ACE_TEXT_ALWAYS_CHAR (env));
       if (env_value != 0)
         {
-          int value = ACE_OS::atoi (env_value);
+          int const value = ACE_OS::atoi (env_value);
           if (value > 0)
             {
               ACE_High_Res_Timer::global_scale_factor (value);

@@ -350,13 +350,13 @@ public:
   /// of day.
   void gettimeofday (ACE_Time_Value (*gettimeofday)(void));
 
-  /// Determine the next event to timeout.  Returns <max> if there are
+  /// Determine the next event to timeout.  Returns @a max if there are
   /// no pending timers or if all pending timers are longer than max.
   /// This method acquires a lock internally since it modifies internal state.
   virtual ACE_Time_Value *calculate_timeout (ACE_Time_Value *max);
 
   /**
-   * Determine the next event to timeout.  Returns <max> if there are
+   * Determine the next event to timeout.  Returns @a max if there are
    * no pending timers or if all pending timers are longer than max.
    * <the_timeout> should be a pointer to storage for the timeout value,
    * and this value is also returned.  This method does not acquire a

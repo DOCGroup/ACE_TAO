@@ -100,31 +100,31 @@ ACE_OS::ioctl (ACE_HANDLE socket,
 
 
       if (result == SOCKET_ERROR)
-          {
-                unsigned long dwErr = ::WSAGetLastError ();
+        {
+          unsigned long dwErr = ::WSAGetLastError ();
 
-                if (dwErr == WSAEWOULDBLOCK)
-                {
-                        errno = dwErr;
-                        return -1;
-                }
-                else
-                        if (dwErr != WSAENOBUFS)
-                        {
-                                errno = dwErr;
-                                return -1;
-                        }
+          if (dwErr == WSAEWOULDBLOCK)
+            {
+              errno = dwErr;
+              return -1;
+            }
+          else
+            if (dwErr != WSAENOBUFS)
+              {
+                errno = dwErr;
+                return -1;
+              }
           }
 
-    char *qos_buf;
-        ACE_NEW_RETURN (qos_buf,
-                                        char [dwBufferLen],
-                                        -1);
+    char *qos_buf = 0;
+    ACE_NEW_RETURN (qos_buf,
+                    char [dwBufferLen],
+                    -1);
 
-        QOS *qos = reinterpret_cast<QOS*> (qos_buf);
+    QOS *qos = reinterpret_cast<QOS*> (qos_buf);
 
-        result = ::WSAIoctl ((ACE_SOCKET) socket,
-                                   io_control_code,
+    result = ::WSAIoctl ((ACE_SOCKET) socket,
+                       io_control_code,
                        NULL,
                        0,
                        qos,
@@ -134,7 +134,7 @@ ACE_OS::ioctl (ACE_HANDLE socket,
                        NULL);
 
     if (result == SOCKET_ERROR)
-                return result;
+      return result;
 
     ACE_Flow_Spec sending_flowspec (qos->SendingFlowspec.TokenRate,
                                     qos->SendingFlowspec.TokenBucketSize,
