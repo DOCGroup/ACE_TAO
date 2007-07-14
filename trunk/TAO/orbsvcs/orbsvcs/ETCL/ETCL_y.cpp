@@ -197,7 +197,7 @@ static const char * const yytname[] = {   "$","error","$undefined.","TAO_ETCL_GT
 "TAO_ETCL_TYPE_ID","TAO_ETCL_REPOS_ID","constraint","preference","bool_or","bool_and",
 "bool_compare","expr_in","expr_twiddle","expr","term","factor_not","factor",
 "component","component_ext","component_dot","component_array","component_assoc",
-"component_pos","union_pos","union_val", NULL
+"component_pos","union_pos","union_val", 0
 };
 #endif
 

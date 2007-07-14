@@ -32,17 +32,17 @@ CORBA::Long  after_     = 1;
 u_int use_realtime_     = 1;
 
 /// This is the name of the node that the client executes on.
-char *node_ = NULL;
+char *node_ = 0;
 
 /// the name of the config file holding the scheduling information
-char *file_ = NULL;
+char *file_ = 0;
 
 /// the name of the activity to run (the name of the string passed in
 /// schedule_activity(activity_)
-char * activity_ = NULL;
+char * activity_ = 0;
 
 /// The name of the output file
-char *client_output_file_ = NULL;
+char *client_output_file_ = 0;
 
 CORBA::String_var serv_output_;
 
@@ -113,13 +113,13 @@ parse_args (int argc, char *argv[])
             ACE_OS::exit (1);
         }
     }
-  if (node_ == NULL)
+  if (node_ == 0)
     node_ = ACE_OS::strdup("1");
-  if (file_ == NULL)
+  if (file_ == 0)
     file_ = ACE_OS::strdup("schedule.cfg");
-  if (activity_ == NULL)
+  if (activity_ == 0)
     activity_ = ACE_OS::strdup("");
-  if (client_output_file_ == NULL)
+  if (client_output_file_ == 0)
     client_output_file_ = ACE_OS::strdup("");
 
   return 0;

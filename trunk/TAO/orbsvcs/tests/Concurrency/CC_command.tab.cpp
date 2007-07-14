@@ -132,7 +132,7 @@ static const char * const ace_cc_yytname[] = {   "$","error","$undefined.","T_ST
 "T_SLEEP_CMD","T_WAIT_CMD","T_REPEAT_CMD","T_EXCEP_CMD","T_PRINT_CMD","T_LOOKUP_CMD",
 "T_TERM","T_READ","T_IREAD","T_UPGRADE","T_WRITE","T_IWRITE","T_IDENT","Q_STRING",
 "T_NUM","start","cmd_list","cmd","config_file_name","lock_set_name","exception_name",
-"lock_mode", NULL
+"lock_mode", 0
 };
 #endif
 

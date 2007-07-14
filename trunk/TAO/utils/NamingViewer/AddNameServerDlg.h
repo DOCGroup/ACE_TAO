@@ -15,7 +15,7 @@ class CAddNameServerDlg : public CDialog
 {
 // Construction
 public:
-	CAddNameServerDlg(CWnd* pParent = NULL);   // standard constructor
+	CAddNameServerDlg(CWnd* pParent = 0);   // standard constructor
 
 // Dialog Data
 	//{{AFX_DATA(CAddNameServerDlg)

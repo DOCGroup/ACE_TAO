@@ -62,7 +62,7 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // CNamingViewerDlg dialog
 
-CNamingViewerDlg::CNamingViewerDlg(CORBA::ORB_ptr pORB, CWnd* pParent /*=NULL*/)
+CNamingViewerDlg::CNamingViewerDlg(CORBA::ORB_ptr pORB, CWnd* pParent /*=0*/)
 	: CDialog(CNamingViewerDlg::IDD, pParent)
 {
 	//{{AFX_DATA_INIT(CNamingViewerDlg)
@@ -112,7 +112,7 @@ BOOL CNamingViewerDlg::OnInitDialog()
 
 #if !defined (_WIN32_WCE)
 	CMenu* pSysMenu = GetSystemMenu(FALSE);
-	if (pSysMenu != NULL)
+	if (pSysMenu != 0)
 	{
 		CString strAboutMenu;
 		strAboutMenu.LoadString(IDS_ABOUTBOX);

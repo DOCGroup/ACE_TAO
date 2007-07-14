@@ -114,7 +114,7 @@ TAO_NT_Naming_Service::init (int argc,
 
   ACE_TEXT_RegQueryValueEx (hkey,
                             TAO_NAMING_SERVICE_OPTS_NAME,
-                            NULL,
+                            0,
                             &type,
                             buf,
                             &bufSize);

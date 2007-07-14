@@ -408,7 +408,7 @@ PCP_Manager_Factory::PCP_Manager_Factory(const char *shared_file)
       if (ACE_OS::mkstemp (this->shm_key_) == 0
 #else
       char *new_key = ACE_OS::mktemp (this->shm_key_);
-      if (ACE_OS::fopen(new_key, "w") != NULL
+      if (ACE_OS::fopen(new_key, "w") != 0
 #endif /* ACE_LACKS_MKSTEMP */
           || (ACE_OS::unlink (this->shm_key_) == -1
 #ifndef ACE_HAS_WINCE

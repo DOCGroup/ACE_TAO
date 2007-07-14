@@ -138,7 +138,7 @@ void TestClient::run()
 void TestClient::buildIORList()
 {
   FILE* iorFile = ACE_OS::fopen ("imr_test.ior", "r");
-  if ( iorFile == NULL )
+  if ( iorFile == 0 )
     ACE_ERROR ((LM_ERROR, "Fail to open imr_test.ior\n"));
 
   ACE_TString ior;

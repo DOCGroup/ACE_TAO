@@ -288,7 +288,7 @@ bool TestServer::verifyEnvironment() const
   for (string::size_type i = 0; i < expectedEnv_.size(); i++)
   {
     const char* realValue = ACE_OS::getenv(expectedEnv_[i].first.c_str()) ;
-    if (realValue == NULL)
+    if (realValue == 0)
     {
       ACE_DEBUG((LM_DEBUG, "Error, env variable '%s' not found\n",
                  expectedEnv_[i].first.c_str()));

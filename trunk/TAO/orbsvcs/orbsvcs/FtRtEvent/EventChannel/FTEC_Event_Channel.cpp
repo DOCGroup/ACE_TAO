@@ -25,7 +25,7 @@ TAO_FTEC_Event_Channel::TAO_FTEC_Event_Channel(CORBA::ORB_var orb,
                                                PortableServer::POA_var poa)
   : orb_(orb)
   , poa_(poa)
-  , ec_impl_(NULL)
+  , ec_impl_(0)
 {
 }
 

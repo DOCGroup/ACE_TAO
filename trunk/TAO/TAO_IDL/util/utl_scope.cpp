@@ -167,7 +167,7 @@ iter_lookup_by_name_local (AST_Decl *d,
   AST_Decl *result = 0;
 
   // Remove all the layers of typedefs.
-  while (d != NULL && d->node_type () == AST_Decl::NT_typedef)
+  while (d != 0 && d->node_type () == AST_Decl::NT_typedef)
     {
       if (td == 0)
         {

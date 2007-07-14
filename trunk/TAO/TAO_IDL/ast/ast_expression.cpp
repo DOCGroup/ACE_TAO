@@ -797,7 +797,7 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
           ev->et = AST_Expression::EV_ulong;
           return ev;
 #else /* ! defined (ACE_LACKS_LONGLONG_T) */
-          return NULL;
+          return 0;
 #endif /* ! defined (ACE_LACKS_LONGLONG_T) */
         case AST_Expression::EV_ulonglong:
 #if ! defined (ACE_LACKS_LONGLONG_T)
@@ -1244,7 +1244,7 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
           ev->et = AST_Expression::EV_double;
           return ev;
 #else /* ! defined (ACE_LACKS_LONGLONG_T) */
-          return NULL;
+          return 0;
 #endif /* ! defined (ACE_LACKS_LONGLONG_T) */
         case AST_Expression::EV_bool:
           ev->u.dval = (ev->u.bval == true) ? 1.0 : 0.0;

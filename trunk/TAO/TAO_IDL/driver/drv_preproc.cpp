@@ -186,7 +186,7 @@ DRV_get_line (FILE *f)
         return true;
       }
 
-    while (ACE_OS::strchr (drv_line, '\n') == NULL)
+    while (ACE_OS::strchr (drv_line, '\n') == 0)
       {
         // Haven't got to a newline yet.
         // Create a bigger buffer and keep reading.
@@ -1292,7 +1292,7 @@ DRV_pre_proc (const char *myfile)
 
   FILE * const yyin = ACE_OS::fopen (t_file, "r");
 
-  if (yyin == NULL)
+  if (yyin == 0)
     {
       ACE_ERROR ((LM_ERROR,
                   "%s: Could not open cpp output file: %p\n",

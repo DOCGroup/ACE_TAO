@@ -618,7 +618,7 @@ ACE_CC_YY_MALLOC_DECL
 ACE_CC_YY_DECL
 	{
 	register ace_cc_yy_state_type ace_cc_yy_current_state;
-	register char *ace_cc_yy_cp = NULL, *ace_cc_yy_bp = NULL;
+	register char *ace_cc_yy_cp = 0, *ace_cc_yy_bp = 0;
 	register int ace_cc_yy_act;
 
 

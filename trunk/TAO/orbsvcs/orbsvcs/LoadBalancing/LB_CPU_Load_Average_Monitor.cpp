@@ -175,7 +175,7 @@ TAO_LB_CPU_Load_Average_Monitor::loads (void)
       mib[1] = HW_NCPU;
       len = sizeof(num_processors);
 
-      sysctl(mib, 2, &num_processors, &len, NULL, 0);
+      sysctl(mib, 2, &num_processors, &len, 0, 0);
 
       ACE_ASSERT (num_processors > 0);
 
