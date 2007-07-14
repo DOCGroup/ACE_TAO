@@ -753,8 +753,8 @@ ACE_OS::recursive_mutex_lock (ACE_recursive_thread_mutex_t *m)
     result = -1;
   else
   {
-      // If there's no contention, just grab the lock immediately
-      // (since this is the common case we'll optimize for it).
+    // If there's no contention, just grab the lock immediately
+    // (since this is the common case we'll optimize for it).
     if (m->nesting_level_ == 0)
       m->owner_id_ = t_id;
       // If we already own the lock, then increment the nesting level
@@ -771,9 +771,9 @@ ACE_OS::recursive_mutex_lock (ACE_recursive_thread_mutex_t *m)
       m->owner_id_ = t_id;
     }
 
-      // At this point, we can safely increment the nesting_level_ no
-      // matter how we got here!
-    m->nesting_level_++;
+    // At this point, we can safely increment the nesting_level_ no
+    // matter how we got here!
+    ++m->nesting_level_;
   }
 
   {
