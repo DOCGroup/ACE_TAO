@@ -53,11 +53,17 @@ int
 main (int argc, char *argv[])
 {
   ACE_Profile_Timer timer;
+
+  //FUZZ: disable check_for_lack_ACE_OS
   ACE_Get_Opt getopt (argc, argv, "gtn:");
+  //FUZZ: enable check_for_lack_ACE_OS
+
   int iterations = DEFAULT_ITERATIONS;
   int c, i;
 
+  //FUZZ: disable check_for_lack_ACE_OS
   while ((c = getopt()) != -1)
+  //FUZZ: enable check_for_lack_ACE_OS
     switch (c)
       {
 #if defined (ACE_USES_OBSOLETE_GUARD_CLASSES)

@@ -119,8 +119,8 @@ int ACE_TMAIN (int argc, ACE_TCHAR **argv){
   // memory leak.
   char * histName = (char *) malloc(200);
 
-  sprintf(histName, "%s Unmarshalled Msg Synchronous Latency Test\n\t\t\t\t\t(Message Size %u, Message Type octet)",
-          "ACE", messageSize);
+  ACE_OS::sprintf(histName, "%s Unmarshalled Msg Synchronous Latency Test\n\t\t\t\t\t(Message Size %u, Message Type octet)",
+                  "ACE", messageSize);
 
   // actually create the histogram
   ACE_SCTP::HIST createdHist = ACE_SCTP::histogram(histName,

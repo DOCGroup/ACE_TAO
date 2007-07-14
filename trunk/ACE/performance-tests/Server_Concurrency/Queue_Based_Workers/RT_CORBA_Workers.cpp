@@ -79,8 +79,10 @@ Synchronisers::start_synchronization (void)
 
   if (debug)
     {
+      //FUZZ: disable check_for_lack_ACE_OS
       ACE_DEBUG ((LM_DEBUG,
                   "(%P|%t) Ready to wait () on event.. \n"));
+      //FUZZ: enable check_for_lack_ACE_OS
     }
 
   // Wait blisfully till we are woken up

@@ -13,10 +13,12 @@ int main (int argc, char* argv[])
   int nsamples = 10000;
   int c;
 
+  //FUZZ: disable check_for_lack_ACE_OS
   ACE_Get_Opt getopt (argc, argv, "h:i:");
 
   while ((c = getopt ()) != -1)
     {
+  //FUZZ: enable check_for_lack_ACE_OS
       switch ((char) c)
         {
         case 'h':
