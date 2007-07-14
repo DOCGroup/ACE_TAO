@@ -156,7 +156,7 @@ prof_fork (size_t iteration)
               ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "process.spawn"), -1);
               /* NOTREACHED */
             case 0:
-              exit (0);
+              ACE_OS::exit (0);
               /* NOTREACHED */
               break;
             default:
@@ -199,6 +199,7 @@ prof_native_thread (size_t iteration)
                                   CREATE_SUSPENDED,
                                   0) == 0)
 #elif defined (ACE_HAS_STHREADS)
+                //FUZZ: disable check_for_lack_ACE_OS
                 if (::thr_create (0,
                                   0,
                                   &ace_empty,
@@ -207,6 +208,7 @@ prof_native_thread (size_t iteration)
                                   0) != 0)
 #endif
                   ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "CreateThread"), -1);
+                //FUZZ: enable check_for_lack_ACE_OS
             }
           ptimer.stop ();
           ptimer.elapsed_time (et);

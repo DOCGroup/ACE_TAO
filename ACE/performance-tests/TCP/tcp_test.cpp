@@ -111,8 +111,10 @@ public:
   virtual int handle_close (ACE_HANDLE handle,
                             ACE_Reactor_Mask close_mask);
 
+  //FUZZ: disable check_for_lack_ACE_OS
   int send (const char *buf, size_t len);
   // Send the <buf> to the server.
+  //FUZZ: enable check_for_lack_ACE_OS
 
   int get_response (char *buf, size_t len);
   // Wait for the response.
@@ -120,8 +122,10 @@ public:
   int run (void);
   // Send messages to server and record statistics.
 
+  //FUZZ: disable check_for_lack_ACE_OS
   int shutdown (void);
   // Send shutdown message to server.
+  //FUZZ: enable check_for_lack_ACE_OS
 
 private:
   ACE_SOCK_Stream endpoint_;
@@ -528,11 +532,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                     "server (%P|%t): sched_params failed\n"));
     }
 
-
+  //FUZZ: disable check_for_lack_ACE_OS
   ACE_Get_Opt getopt (argc, argv, ACE_TEXT("hxwvb:I:p:sci:m:at:"));
 
   while ((c = getopt ()) != -1)
     {
+  //FUZZ: enable check_for_lack_ACE_OS
       switch ((char) c)
         {
         case 'v':
