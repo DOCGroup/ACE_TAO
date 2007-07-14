@@ -263,15 +263,15 @@ ACE_Thread_Timer_Queue_Adapter<TQ>::svc (void)
         {
           // Compute the remaining time, being careful not to sleep
           // for "negative" amounts of time.
-          const ACE_Time_Value tv_curr = this->timer_queue_->gettimeofday ();
-          const ACE_Time_Value tv_earl = this->timer_queue_->earliest_time ();
+          ACE_Time_Value const tv_curr = this->timer_queue_->gettimeofday ();
+          ACE_Time_Value const tv_earl = this->timer_queue_->earliest_time ();
 
           if (tv_earl > tv_curr)
             {
               // The earliest time on the Timer_Queue is in future, so
               // use ACE_OS::gettimeofday() to convert the tv to the
               // absolute time.
-              const ACE_Time_Value tv = ACE_OS::gettimeofday () + (tv_earl - tv_curr);
+              ACE_Time_Value const tv = ACE_OS::gettimeofday () + (tv_earl - tv_curr);
               // ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("waiting until %u.%3.3u secs\n"),
               // tv.sec(), tv.msec()));
               this->condition_.wait (&tv);
