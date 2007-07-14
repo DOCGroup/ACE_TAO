@@ -1,3 +1,12 @@
+Sat Jul 14 15:44:13 UTC 2007  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * TAO_IDL/driver/drv_preproc.cpp:
+        * TAO_IDL/include/drv_extern.h:
+
+          Factored out the code to add include paths and ensured that the
+          paths are enclosed in quotes.  Resolves an issue with
+          space-containing paths on windows (bug#2977).
+
 Sat Jul 14 14:43:31 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * TAO_IDL/ast/ast_expression.cpp:
