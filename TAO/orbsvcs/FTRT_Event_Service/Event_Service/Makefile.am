@@ -30,6 +30,7 @@ ftrt_eventservice_CPPFLAGS = \
   -I$(TAO_ROOT)/orbsvcs \
   -I$(TAO_BUILDDIR)/orbsvcs \
   -I$(TAO_ROOT)/orbsvcs/FtRtEvent/EventChannel \
+  -I$(TAO_BUILDDIR)/orbsvcs/FtRtEvent/EventChannel \
   -I$(TAO_ROOT)/orbsvcs/FtRtEvent/Utils
 
 ftrt_eventservice_SOURCES = \

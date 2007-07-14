@@ -17,64 +17,56 @@ TAO_IDLFLAGS = -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROO
 TAO_ROOT = $(top_srcdir)
 
 
-## Makefile.csd_pt_testservant.am
+## Makefile.objref_comparison_test.am
 
 if BUILD_EXCEPTIONS
-if BUILD_THREADS
 
 BUILT_SOURCES = \
-  FooC.cpp \
-  FooC.h \
-  FooC.inl \
-  FooS.cpp \
-  FooS.h \
-  FooS.inl
+  fooC.cpp \
+  fooC.h \
+  fooC.inl \
+  fooS.cpp \
+  fooS.h \
+  fooS.inl
 
 CLEANFILES = \
-  Foo-stamp \
-  FooC.cpp \
-  FooC.h \
-  FooC.inl \
-  FooS.cpp \
-  FooS.h \
-  FooS.inl
+  foo-stamp \
+  fooC.cpp \
+  fooC.h \
+  fooC.inl \
+  fooS.cpp \
+  fooS.h \
+  fooS.inl
 
-FooC.cpp FooC.h FooC.inl FooS.cpp FooS.h FooS.inl: Foo-stamp
+fooC.cpp fooC.h fooC.inl fooS.cpp fooS.h fooS.inl: foo-stamp
 
-Foo-stamp: $(srcdir)/Foo.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/performance-tests/CSD_Strategy -Wb,export_macro=CSD_PT_TestServant_Export -Wb,export_include=TestServant/CSD_PT_TestServant_Export.h $(srcdir)/Foo.idl
+foo-stamp: $(srcdir)/foo.idl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/foo.idl
 	@touch $@
 
-noinst_LTLIBRARIES = libCSD_PT_TestServant.la
+noinst_PROGRAMS = server
 
-libCSD_PT_TestServant_la_CPPFLAGS = \
+server_CPPFLAGS = \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
-  -I$(TAO_BUILDDIR) \
-  -I$(TAO_ROOT)/performance-tests/CSD_Strategy \
-  -I$(TAO_BUILDDIR)/performance-tests/CSD_Strategy \
-  -I$(TAO_ROOT)/tao \
-  -DCSD_PT_TESTSERVANT_BUILD_DLL
+  -I$(TAO_BUILDDIR)
 
-libCSD_PT_TestServant_la_SOURCES = \
-  FooC.cpp \
-  FooS.cpp \
-  Foo_ClientEngine.cpp \
-  Foo_Statistics.cpp \
-  Foo_i.cpp
+server_SOURCES = \
+  fooC.cpp \
+  fooS.cpp \
+  main.cpp \
+  fooC.h \
+  fooC.inl \
+  fooS.h \
+  fooS.inl
 
-noinst_HEADERS = \
-  Foo.idl \
-  FooC.h \
-  FooC.inl \
-  FooS.h \
-  FooS.inl \
-  Foo_ClientEngine.h \
-  Foo_Statistics.h \
-  Foo_i.h
+server_LDADD = \
+  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
+  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
+  $(TAO_BUILDDIR)/tao/libTAO.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-endif BUILD_THREADS
 endif BUILD_EXCEPTIONS
 
 ## Clean up template repositories, etc.

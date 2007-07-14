@@ -31,6 +31,7 @@ Starter_CPPFLAGS = \
   -I$(TAO_BUILDDIR) \
   -I$(TAO_ROOT)/orbsvcs \
   -I$(TAO_BUILDDIR)/orbsvcs \
+  -I$(TAO_ROOT)/examples/RTScheduling \
   -I..
 
 Starter_SOURCES = \
@@ -78,6 +79,7 @@ test_CPPFLAGS = \
   -I$(TAO_BUILDDIR) \
   -I$(TAO_ROOT)/orbsvcs \
   -I$(TAO_BUILDDIR)/orbsvcs \
+  -I$(TAO_ROOT)/examples/RTScheduling \
   -I..
 
 test_SOURCES = \

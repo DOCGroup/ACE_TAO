@@ -16,8 +16,8 @@ TAO_IDL_DEP = $(TAO_BUILDDIR)/TAO_IDL/tao_idl
 TAO_IDLFLAGS = -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf
 TAO_ROOT = $(top_srcdir)
 
-BUILT_SOURCES =
 CLEANFILES =
+BUILT_SOURCES =
 
 ## Makefile.csd_pt_testinf.am
 
@@ -44,7 +44,7 @@ CLEANFILES += \
 FooExceptionC.cpp FooExceptionC.h FooExceptionC.inl FooExceptionS.cpp FooExceptionS.h FooExceptionS.inl: FooException-stamp
 
 FooException-stamp: $(srcdir)/FooException.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,export_macro=CSD_PT_TestInf_Export -Wb,export_include=CSD_PT_TestInf_Export.h $(srcdir)/FooException.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,export_macro=CSD_PT_TestInf_Export -Wb,export_include=TestInf/CSD_PT_TestInf_Export.h $(srcdir)/FooException.idl
 	@touch $@
 
 BUILT_SOURCES += \
@@ -67,7 +67,7 @@ CLEANFILES += \
 TestAppExceptionC.cpp TestAppExceptionC.h TestAppExceptionC.inl TestAppExceptionS.cpp TestAppExceptionS.h TestAppExceptionS.inl: TestAppException-stamp
 
 TestAppException-stamp: $(srcdir)/TestAppException.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,export_macro=CSD_PT_TestInf_Export -Wb,export_include=CSD_PT_TestInf_Export.h $(srcdir)/TestAppException.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,export_macro=CSD_PT_TestInf_Export -Wb,export_include=TestInf/CSD_PT_TestInf_Export.h $(srcdir)/TestAppException.idl
 	@touch $@
 
 BUILT_SOURCES += \
@@ -90,7 +90,7 @@ CLEANFILES += \
 CancelledExceptionC.cpp CancelledExceptionC.h CancelledExceptionC.inl CancelledExceptionS.cpp CancelledExceptionS.h CancelledExceptionS.inl: CancelledException-stamp
 
 CancelledException-stamp: $(srcdir)/CancelledException.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,export_macro=CSD_PT_TestInf_Export -Wb,export_include=CSD_PT_TestInf_Export.h $(srcdir)/CancelledException.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,export_macro=CSD_PT_TestInf_Export -Wb,export_include=TestInf/CSD_PT_TestInf_Export.h $(srcdir)/CancelledException.idl
 	@touch $@
 
 BUILT_SOURCES += \
@@ -113,7 +113,7 @@ CLEANFILES += \
 CustomExceptionC.cpp CustomExceptionC.h CustomExceptionC.inl CustomExceptionS.cpp CustomExceptionS.h CustomExceptionS.inl: CustomException-stamp
 
 CustomException-stamp: $(srcdir)/CustomException.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,export_macro=CSD_PT_TestInf_Export -Wb,export_include=CSD_PT_TestInf_Export.h $(srcdir)/CustomException.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,export_macro=CSD_PT_TestInf_Export -Wb,export_include=TestInf/CSD_PT_TestInf_Export.h $(srcdir)/CustomException.idl
 	@touch $@
 
 noinst_LTLIBRARIES = libCSD_PT_TestInf.la

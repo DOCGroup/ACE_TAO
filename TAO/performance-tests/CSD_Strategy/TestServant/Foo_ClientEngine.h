@@ -15,7 +15,7 @@
 
 #include "CSD_PT_TestServant_Export.h"
 #include "TestInf/ClientEngine.h"
-#include "FooC.h"
+#include "TestServant/FooC.h"
 
 class Foo_Statistics;
 

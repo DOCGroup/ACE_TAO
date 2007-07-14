@@ -4,7 +4,11 @@
 project(*Starter): portableserver, namingexe {
   after += MIF_Scheduler_Starter
   libs += RTSchedSynch
-  includes += ..
+
+  specific (automake) {
+    includes += $(TAO_ROOT)/examples/RTScheduling
+    includes += ..
+  }
 
   Source_Files {
     ../Starter.cpp
@@ -16,7 +20,12 @@ project(*Starter): portableserver, namingexe {
 project(*test) : namingexe, rtscheduling_server {
   after += *Starter RTSchedTestLib
   libs += RTSchedTestLib Job RTSchedSynch
-  includes += ..
+
+  specific (automake) {
+    includes += $(TAO_ROOT)/examples/RTScheduling
+    includes += ..
+  }
+
 
   idlflags += -SS -St -o ..
 

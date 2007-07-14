@@ -20,5 +20,6 @@ SUBDIRS = \
         MT_IIOP_SSL \
         MT_SSLIOP \
         Secure_Invocation \
+        mixed_security_test \
         ssliop_corbaloc
 
