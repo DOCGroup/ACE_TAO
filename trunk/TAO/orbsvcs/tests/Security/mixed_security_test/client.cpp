@@ -118,7 +118,7 @@ ClientTest::non_secure_invocation ()
       server->baz ();
       ACE_DEBUG ((LM_DEBUG, "mixed_security/client: non-secured invocation succeeded\n"));
     }
-  catch (const CORBA::NO_PERMISSION& exc)
+  catch (const CORBA::NO_PERMISSION& )
     {
       ACE_DEBUG ((LM_DEBUG,
 		  "ClientTest::non_secure_invocation: got NO_PERMISSION\n"));

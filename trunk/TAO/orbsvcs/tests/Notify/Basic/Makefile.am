@@ -30,6 +30,7 @@ AdminProperties_CPPFLAGS = \
   -I$(TAO_ROOT)/orbsvcs \
   -I$(TAO_BUILDDIR)/orbsvcs \
   -I$(TAO_ROOT)/orbsvcs/tests/Notify/lib \
+  -I$(TAO_BUILDDIR)/orbsvcs/tests/Notify/lib \
   -DTAO_HAS_TYPED_EVENT_CHANNEL
 
 AdminProperties_SOURCES = \
@@ -77,6 +78,7 @@ ConnectDisconnect_CPPFLAGS = \
   -I$(TAO_ROOT)/orbsvcs \
   -I$(TAO_BUILDDIR)/orbsvcs \
   -I$(TAO_ROOT)/orbsvcs/tests/Notify/lib \
+  -I$(TAO_BUILDDIR)/orbsvcs/tests/Notify/lib \
   -DTAO_HAS_TYPED_EVENT_CHANNEL
 
 ConnectDisconnect_SOURCES = \
@@ -124,6 +126,7 @@ Events_CPPFLAGS = \
   -I$(TAO_ROOT)/orbsvcs \
   -I$(TAO_BUILDDIR)/orbsvcs \
   -I$(TAO_ROOT)/orbsvcs/tests/Notify/lib \
+  -I$(TAO_BUILDDIR)/orbsvcs/tests/Notify/lib \
   -DTAO_HAS_TYPED_EVENT_CHANNEL
 
 Events_SOURCES = \
@@ -171,6 +174,7 @@ Filter_CPPFLAGS = \
   -I$(TAO_ROOT)/orbsvcs \
   -I$(TAO_BUILDDIR)/orbsvcs \
   -I$(TAO_ROOT)/orbsvcs/tests/Notify/lib \
+  -I$(TAO_BUILDDIR)/orbsvcs/tests/Notify/lib \
   -DTAO_HAS_TYPED_EVENT_CHANNEL
 
 Filter_SOURCES = \
@@ -218,6 +222,7 @@ IdAssignment_CPPFLAGS = \
   -I$(TAO_ROOT)/orbsvcs \
   -I$(TAO_BUILDDIR)/orbsvcs \
   -I$(TAO_ROOT)/orbsvcs/tests/Notify/lib \
+  -I$(TAO_BUILDDIR)/orbsvcs/tests/Notify/lib \
   -DTAO_HAS_TYPED_EVENT_CHANNEL
 
 IdAssignment_SOURCES = \
@@ -265,6 +270,7 @@ LifeCycle_CPPFLAGS = \
   -I$(TAO_ROOT)/orbsvcs \
   -I$(TAO_BUILDDIR)/orbsvcs \
   -I$(TAO_ROOT)/orbsvcs/tests/Notify/lib \
+  -I$(TAO_BUILDDIR)/orbsvcs/tests/Notify/lib \
   -DTAO_HAS_TYPED_EVENT_CHANNEL
 
 LifeCycle_SOURCES = \
@@ -312,6 +318,7 @@ MultiTypes_CPPFLAGS = \
   -I$(TAO_ROOT)/orbsvcs \
   -I$(TAO_BUILDDIR)/orbsvcs \
   -I$(TAO_ROOT)/orbsvcs/tests/Notify/lib \
+  -I$(TAO_BUILDDIR)/orbsvcs/tests/Notify/lib \
   -DTAO_HAS_TYPED_EVENT_CHANNEL
 
 MultiTypes_SOURCES = \
@@ -359,6 +366,7 @@ Sequence_CPPFLAGS = \
   -I$(TAO_ROOT)/orbsvcs \
   -I$(TAO_BUILDDIR)/orbsvcs \
   -I$(TAO_ROOT)/orbsvcs/tests/Notify/lib \
+  -I$(TAO_BUILDDIR)/orbsvcs/tests/Notify/lib \
   -DTAO_HAS_TYPED_EVENT_CHANNEL
 
 Sequence_SOURCES = \
@@ -406,6 +414,7 @@ Simple_CPPFLAGS = \
   -I$(TAO_ROOT)/orbsvcs \
   -I$(TAO_BUILDDIR)/orbsvcs \
   -I$(TAO_ROOT)/orbsvcs/tests/Notify/lib \
+  -I$(TAO_BUILDDIR)/orbsvcs/tests/Notify/lib \
   -DTAO_HAS_TYPED_EVENT_CHANNEL
 
 Simple_SOURCES = \
@@ -453,6 +462,7 @@ Updates_CPPFLAGS = \
   -I$(TAO_ROOT)/orbsvcs \
   -I$(TAO_BUILDDIR)/orbsvcs \
   -I$(TAO_ROOT)/orbsvcs/tests/Notify/lib \
+  -I$(TAO_BUILDDIR)/orbsvcs/tests/Notify/lib \
   -DTAO_HAS_TYPED_EVENT_CHANNEL
 
 Updates_SOURCES = \

@@ -1,3 +1,84 @@
+Sat Jul 14 01:32:45 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * configure.ac:
+          Added new test directories.
+
+        * examples/RTScheduling/Fixed_Priority_Scheduler/Fixed_Priority_Scheduler.mpc:
+        * examples/RTScheduling/Fixed_Priority_Scheduler/Makefile.am:
+        * examples/RTScheduling/MIF_Scheduler/MIF_Scheduler.mpc:
+        * examples/RTScheduling/MIF_Scheduler/Makefile.am:
+          Added included directories needed for automake to ensure that
+          both generated and stored indirect headers may be found. This is
+          necessary because automake refers to stored (svn-based) files in
+          a different directory tree that used by generated files.
+
+        * examples/Simple/time-date/Makefile.am:
+        * orbsvcs/FTRT_Event_Service/Event_Service/Makefile.am:
+        * orbsvcs/ImplRepo_Service/Makefile.am:
+        * orbsvcs/examples/Notify/Lanes/Makefile.am:
+        * orbsvcs/examples/Notify/ThreadPool/Makefile.am:
+          Minor regen tweaks.
+
+        * orbsvcs/orbsvcs/Makefile.am:
+        * orbsvcs/tests/AVStreams/Asynch_Three_Stage/Makefile.am:
+        * orbsvcs/tests/AVStreams/Bidirectional_Flows/Makefile.am:
+        * orbsvcs/tests/AVStreams/Component_Switching/Makefile.am:
+        * orbsvcs/tests/AVStreams/Full_Profile/Makefile.am:
+        * orbsvcs/tests/AVStreams/Latency/Makefile.am:
+        * orbsvcs/tests/AVStreams/Modify_QoS/Makefile.am:
+        * orbsvcs/tests/AVStreams/Multicast/Makefile.am:
+        * orbsvcs/tests/AVStreams/Multicast_Full_Profile/Makefile.am:
+        * orbsvcs/tests/AVStreams/Multiple_Flows/Makefile.am:
+        * orbsvcs/tests/AVStreams/Pluggable/Makefile.am:
+        * orbsvcs/tests/AVStreams/Pluggable_Flow_Protocol/Makefile.am:
+        * orbsvcs/tests/AVStreams/Simple_Three_Stage/Makefile.am:
+        * orbsvcs/tests/AVStreams/Simple_Two_Stage/Makefile.am:
+        * orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/Makefile.am:
+          Removed reverences to ACE_QoS. This was introduced by an earlier
+          attempt to resolve build problems by adding "qos=1" to
+          default.features and generating Makefile.am files. This is now correct.
+
+        * orbsvcs/tests/Notify/Basic/Makefile.am:
+        * orbsvcs/tests/Notify/Blocking/Makefile.am:
+        * orbsvcs/tests/Notify/Bug_1385_Regression/Makefile.am:
+        * orbsvcs/tests/Notify/Bug_2561_Regression/Makefile.am:
+        * orbsvcs/tests/Notify/Destroy/Makefile.am:
+        * orbsvcs/tests/Notify/Discarding/Makefile.am:
+        * orbsvcs/tests/Notify/Driver/Makefile.am:
+        * orbsvcs/tests/Notify/MT_Dispatching/Makefile.am:
+        * orbsvcs/tests/Notify/Ordering/Makefile.am:
+        * orbsvcs/tests/Notify/RT_lib/Makefile.am:
+        * orbsvcs/tests/Notify/Reconnecting/Makefile.am:
+        * orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/Makefile.am:
+        * orbsvcs/tests/Notify/Sequence_Multi_Filter/Makefile.am:
+        * orbsvcs/tests/Notify/Structured_Filter/Makefile.am:
+        * orbsvcs/tests/Notify/Structured_Multi_Filter/Makefile.am:
+        * orbsvcs/tests/Notify/performance-tests/Filter/Makefile.am:
+        * orbsvcs/tests/Notify/performance-tests/RedGreen/Makefile.am:
+        * orbsvcs/tests/Notify/performance-tests/Throughput/Makefile.am:
+          Added include path to find generated files. This was done via
+          the TAO/MPC/config/notifytest.mpb file.
+
+        * orbsvcs/tests/Security/Makefile.am:
+          Added new mixed_security_test to the subdir list.
+
+        * orbsvcs/tests/Security/mixed_security_test/client.cpp:
+          Cleaned up execption code to silence a warning.
+
+        * performance-tests/CSD_Strategy/TestInf/AppHelper.h:
+        * performance-tests/CSD_Strategy/TestInf/Makefile.am:
+        * performance-tests/CSD_Strategy/TestInf/ServantList_T.cpp:
+        * performance-tests/CSD_Strategy/TestInf/csd_pt_testinf.mpc:
+        * performance-tests/CSD_Strategy/TestServant/Foo_ClientEngine.h:
+        * performance-tests/CSD_Strategy/TestServant/Foo_i.h:
+        * performance-tests/CSD_Strategy/TestServant/Makefile.am:
+        * performance-tests/CSD_Strategy/TestServant/csd_pt_testservant.mpc:
+          Added specific directories for finding generated and stored
+          headers in the automake environment.
+
+        * tests/Makefile.am:
+          Added new test, objref_comparison_test.
+
 Fri Jul 13 17:35:42 UTC 2007  Ossama Othman  <ossama_othman at symantec dot com>
 
         * TAO_IDL/ast/ast_argument.cpp:

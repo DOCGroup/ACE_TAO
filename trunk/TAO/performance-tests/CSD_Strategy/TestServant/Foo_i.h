@@ -3,7 +3,7 @@
 #define FOO_I_H
 
 #include "CSD_PT_TestServant_Export.h"
-#include "FooS.h"
+#include "TestServant/FooS.h"
 #include "Foo_Statistics.h"
 
 

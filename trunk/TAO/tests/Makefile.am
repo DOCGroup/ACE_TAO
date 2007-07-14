@@ -214,5 +214,6 @@ SUBDIRS = \
         Two_Objects \
         Typedef_String_Array \
         UNKNOWN_Exception \
-        Xt_Stopwatch
+        Xt_Stopwatch \
+        objref_comparison_test
 

@@ -19,10 +19,10 @@ TAO_IDL_DEP = $(TAO_BUILDDIR)/TAO_IDL/tao_idl
 TAO_IDLFLAGS = -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf
 TAO_ROOT = $(top_srcdir)
 
-pkgconfig_DATA =
 CLEANFILES =
-lib_LTLIBRARIES =
 BUILT_SOURCES =
+pkgconfig_DATA =
+lib_LTLIBRARIES =
 
 ## Makefile.CosNaming_IDL.am
 
@@ -392,7 +392,6 @@ libTAO_AV_la_CPPFLAGS = \
   -I$(TAO_BUILDDIR) \
   -I$(TAO_ROOT)/orbsvcs \
   -I$(TAO_BUILDDIR)/orbsvcs \
-  -DACE_HAS_QOS \
   -DTAO_AV_BUILD_DLL
 
 libTAO_AV_la_SOURCES = \
@@ -428,7 +427,6 @@ libTAO_AV_la_LDFLAGS = \
  -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
 
 libTAO_AV_la_LIBADD = \
-  $(ACE_BUILDDIR)/ace/libACE_QoS.la \
   libTAO_CosNaming.la \
   libTAO_CosProperty_Serv.la \
   libTAO_CosProperty_Skel.la \
@@ -5670,6 +5668,7 @@ libTAO_Security_la_SOURCES = \
   Security/CSI_Utils.cpp \
   Security/SL2_EstablishTrustPolicy.cpp \
   Security/SL2_QOPPolicy.cpp \
+  Security/SL2_SecurityManager.cpp \
   Security/SL3_ContextEstablishmentPolicy.cpp \
   Security/SL3_CredentialsAcquirerFactory.cpp \
   Security/SL3_CredentialsCurator.cpp \
@@ -5719,6 +5718,7 @@ nobase_include_HEADERS += \
   Security/CSI_Utils.h \
   Security/SL2_EstablishTrustPolicy.h \
   Security/SL2_QOPPolicy.h \
+  Security/SL2_SecurityManager.h \
   Security/SL3_ContextEstablishmentPolicy.h \
   Security/SL3_CredentialsAcquirerFactory.h \
   Security/SL3_CredentialsCurator.h \

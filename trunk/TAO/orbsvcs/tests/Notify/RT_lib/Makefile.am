@@ -30,6 +30,7 @@ libTAO_RT_NotifyTests_la_CPPFLAGS = \
   -I$(TAO_ROOT)/orbsvcs \
   -I$(TAO_BUILDDIR)/orbsvcs \
   -I$(TAO_ROOT)/orbsvcs/tests/Notify/lib \
+  -I$(TAO_BUILDDIR)/orbsvcs/tests/Notify/lib \
   -DTAO_HAS_TYPED_EVENT_CHANNEL \
   -DTAO_RT_NOTIFY_TEST_BUILD_DLL
 
