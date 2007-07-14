@@ -10,16 +10,16 @@
 //     filter the results into two files for each, one with exported names, the
 //     other with imported names.
 //  3. apply "nm" to all of the elements which use ace & tao. build a list of
-//     imported names 
-//  4. Repeat the following steps until no entries remain in the list of 
+//     imported names
+//  4. Repeat the following steps until no entries remain in the list of
 //     imports
-//  4.1 Take a name from the list of imports, locate the module containing the 
+//  4.1 Take a name from the list of imports, locate the module containing the
 //      export of that name
 //  4.2 Add the exporting module to the list of required modules, add its list
 //      of exports to the list of resolved exports, add its imported names to
 //      the list of imports.
 //  4.4 Traverse the list of imported names to eliminate any found in the list
-//      of exported names. 
+//      of exported names.
 //  4.5 go to step 4.1
 //  5. construct a new makefile for all required modules.
 //
@@ -32,7 +32,7 @@
 ACE_RCSID (src, soreduce, "$Id$")
 
 int
-main (int argc, char ** argv)
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   SO_Group group;
 

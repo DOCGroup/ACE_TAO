@@ -312,7 +312,7 @@ csdb_generator::fini_output (const char *tgt)
 }
 
 int
-main (int argc, char ** argv)
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   ACE_CString srcname;
   if (argc > 1)
