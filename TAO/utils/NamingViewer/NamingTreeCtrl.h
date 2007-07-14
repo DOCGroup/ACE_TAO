@@ -24,8 +24,8 @@ public:
   void SetpORB(CORBA::ORB_ptr pORB);
 // Operations
 public:
-  CNamingObject* GetTreeObject(HTREEITEM hItem = NULL);
-  void ClearChildren(HTREEITEM hItem = NULL);
+  CNamingObject* GetTreeObject(HTREEITEM hItem = 0);
+  void ClearChildren(HTREEITEM hItem = 0);
   void ListContext(HTREEITEM hItem);
   void Resolve(CosNaming::NamingContext_ptr pRootContext);
 // Overrides

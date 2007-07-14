@@ -16,7 +16,7 @@ class CBindDialog : public CDialog
 {
 // Construction
 public:
-  CBindDialog(bool Context, CORBA::ORB_ptr pORB, CWnd* pParent = NULL);   // standard constructor
+  CBindDialog(bool Context, CORBA::ORB_ptr pORB, CWnd* pParent = 0);   // standard constructor
 
 // Dialog Data
 	//{{AFX_DATA(CBindDialog)

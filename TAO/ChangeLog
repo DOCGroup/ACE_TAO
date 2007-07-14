@@ -1,3 +1,53 @@
+Sat Jul 14 14:43:31 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * TAO_IDL/ast/ast_expression.cpp:
+        * TAO_IDL/driver/drv_preproc.cpp:
+        * TAO_IDL/util/utl_scope.cpp:
+        * TAO_IDL/util/utl_tmpl/utl_list.cpp:
+        * TAO_IDL/util/utl_tmpl/utl_strlist.cpp:
+        * examples/Kokyu_dsrt_schedulers/EDF_Scheduler.cpp:
+        * examples/RTScheduling/DT_Creator.cpp:
+        * orbsvcs/FTRT_Event_Service/Event_Service/FT_EventService.cpp:
+        * orbsvcs/ImplRepo_Service/Activator_Options.cpp:
+        * orbsvcs/ImplRepo_Service/ImR_Activator.cpp:
+        * orbsvcs/ImplRepo_Service/ImR_Locator.cpp:
+        * orbsvcs/ImplRepo_Service/Locator_Options.cpp:
+        * orbsvcs/ImplRepo_Service/tao_imr_i.cpp:
+        * orbsvcs/Naming_Service/NT_Naming_Service.cpp:
+        * orbsvcs/Notify_Service/NT_Notify_Service.cpp:
+        * orbsvcs/examples/ImR/Advanced/TestClient.cpp:
+        * orbsvcs/examples/ImR/Advanced/TestServer.cpp:
+        * orbsvcs/orbsvcs/ETCL/ETCL_y.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/ConnectionHandler_T.h:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/FTEC_Event_Channel.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/FTEC_Event_Channel_Impl.cpp:
+        * orbsvcs/orbsvcs/LoadBalancing/LB_CPU_Load_Average_Monitor.cpp:
+        * orbsvcs/orbsvcs/Notify/CosNotify_Service.cpp:
+        * orbsvcs/orbsvcs/RTCosScheduling/RTCosScheduling_ClientScheduler_i.cpp:
+        * orbsvcs/orbsvcs/RTCosScheduling/RTCosScheduling_PCP_Manager.cpp:
+        * orbsvcs/orbsvcs/RTCosScheduling/RTCosScheduling_ServerScheduler_i.cpp:
+        * orbsvcs/orbsvcs/Trader/Constraint_y.cpp:
+        * orbsvcs/tests/AVStreams/Asynch_Three_Stage/Connection_Manager.cpp:
+        * orbsvcs/tests/Concurrency/CC_command.tab.cpp:
+        * orbsvcs/tests/Concurrency/lex.CC_command.cpp:
+        * orbsvcs/tests/RTCosScheduling/client.cpp:
+        * performance-tests/Protocols/sender.cpp:
+        * tests/Permanent_Forward/StubTest.cpp:
+        * tests/Xt_Stopwatch/Stopwatch_display.cpp:
+        * tests/Xt_Stopwatch/client.cpp:
+        * tests/Xt_Stopwatch/server.cpp:
+        * utils/NamingViewer/AddNameServerDlg.h:
+        * utils/NamingViewer/BindDialog.h:
+        * utils/NamingViewer/BindNewContext.h:
+        * utils/NamingViewer/NamingTreeCtrl.h:
+        * utils/NamingViewer/NamingTreeCtrl.cpp:
+        * utils/NamingViewer/NamingViewerDlg.h:
+        * utils/NamingViewer/NamingViewerDlg.cpp:
+        * utils/NamingViewer/SelectNSDialog.h:
+        * utils/NamingViewer/ViewIORDialog.h:
+
+          Fixed Fuzz warnings. Used 0 instead of NULL.
+
 Sat Jul 14 13:20:26 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/tests/Security/mixed_security_test/Foo_i.cpp:

@@ -38,7 +38,7 @@ RTCosScheduling_ServerScheduler_i::
 {
   /// Read the Resources and ceilings from the config file
   /// and put them into the resource_map_
-  if ( !ACE_OS::strcmp(file,"") || file == NULL || !TAO_HAS_INTERCEPTORS)
+  if ( !ACE_OS::strcmp(file,"") || file == 0 || !TAO_HAS_INTERCEPTORS)
     {
       ACE_DEBUG((LM_DEBUG,
                  "Server will not schedule object execution "
@@ -582,7 +582,7 @@ RTCosScheduling_ServerScheduler_i::resources(
   /// get the resource list list just for the particular node
   const unsigned int BUF_MAX = 256;
   FILE *fp = ACE_OS::fopen(file_name, "r");
-  if (fp == NULL)
+  if (fp == 0)
     {
       /// Error return of we cannot open the file.
       ACE_ERROR_RETURN((LM_ERROR,

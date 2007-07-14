@@ -35,7 +35,7 @@ namespace TAO
       {
         /// Read the resources and ceilings from the config file
         /// and put them into the activity_map_
-        if ( !ACE_OS::strcmp(file,"") || file == NULL)
+        if ( !ACE_OS::strcmp(file,"") || file == 0)
           {
             ACE_DEBUG((LM_DEBUG,
                        "No config supplied to the ServerScheduler, "
@@ -179,7 +179,7 @@ RTCosScheduling_ClientScheduler_i::tasks(
 
   FILE *fp = ACE_OS::fopen(file_name, "r");
   /// Make sure we can open the file
-  if (fp == NULL)
+  if (fp == 0)
     {
       /// Error return of we cannot open the file.
       ACE_ERROR_RETURN((LM_ERROR,

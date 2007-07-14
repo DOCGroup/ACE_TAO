@@ -245,7 +245,7 @@ FT_EventService::report_factory(CORBA::ORB_ptr orb,
   try{
     char* addr = ACE_OS::getenv("EventChannelFactoryAddr");
 
-    if (addr != NULL) {
+    if (addr != 0) {
       // instaniated by object factory, report my ior back to the factory
       ACE_INET_Addr factory_addr(addr);
       ACE_SOCK_Connector connector;

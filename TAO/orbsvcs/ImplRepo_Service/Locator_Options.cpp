@@ -267,9 +267,9 @@ Options::save_registry_options ()
                              "", // class
                              REG_OPTION_NON_VOLATILE,
                              KEY_ALL_ACCESS,
-                             NULL,
+                             0,
                              &key,
-                             NULL
+                             0
                              );
   if (err != ERROR_SUCCESS)
     {

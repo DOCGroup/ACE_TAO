@@ -40,7 +40,7 @@ Connection_Manager::load_ep_addr (const char* file_name)
 			     addr_file);
       */
 
-      if ((ACE_OS::fgets (buf,BUFSIZ,addr_file)) == NULL)
+      if ((ACE_OS::fgets (buf,BUFSIZ,addr_file)) == 0)
 	{
 	  // At end of file break the loop and end the sender.
 	  if (TAO_debug_level > 0)
