@@ -20,36 +20,31 @@ CLEANFILES =
 BUILT_SOURCES =
 noinst_PROGRAMS =
 
-## Makefile.FL_Cube_Client.am
+## Makefile.mixed_security_security_client.am
 
-if BUILD_ACE_FLREACTOR
+if BUILD_CORBA_MESSAGING
 if BUILD_EXCEPTIONS
-if BUILD_FL
-if BUILD_GL
-if BUILD_TAO_FLRESOURCE
-if BUILD_X11
+if BUILD_INTERCEPTORS
 
 BUILT_SOURCES += \
-  testC.cpp \
-  testC.h \
-  testC.inl \
-  testS.cpp \
-  testS.h \
-  testS.inl
+  FooC.cpp \
+  FooC.h \
+  FooC.inl \
+  FooS.h \
+  FooS.inl
 
 CLEANFILES += \
-  test-stamp \
-  testC.cpp \
-  testC.h \
-  testC.inl \
-  testS.cpp \
-  testS.h \
-  testS.inl
+  Foo-stamp \
+  FooC.cpp \
+  FooC.h \
+  FooC.inl \
+  FooS.h \
+  FooS.inl
 
-testC.cpp testC.h testC.inl testS.cpp testS.h testS.inl: test-stamp
+FooC.cpp FooC.h FooC.inl FooS.h FooS.inl: Foo-stamp
 
-test-stamp: $(srcdir)/test.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/test.idl
+Foo-stamp: $(srcdir)/Foo.idl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs $(srcdir)/Foo.idl
 	@touch $@
 
 noinst_PROGRAMS += client
@@ -59,62 +54,56 @@ client_CPPFLAGS = \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
-  $(ACE_FLTK_CPPFLAGS)
+  -I$(TAO_ROOT)/orbsvcs \
+  -I$(TAO_BUILDDIR)/orbsvcs
 
 client_SOURCES = \
+  FooC.cpp \
   client.cpp \
-  testC.cpp \
-  testS.cpp \
-  testC.h \
-  testC.inl \
-  testS.h \
-  testS.inl
-
-client_LDFLAGS = \
- $(ACE_FLTK_LDFLAGS)
+  FooC.h \
+  FooC.inl \
+  FooS.h \
+  FooS.inl
 
 client_LDADD = \
-  $(TAO_BUILDDIR)/tao/libTAO_FlResource.la \
-  $(ACE_BUILDDIR)/ace/libACE_FlReactor.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_Security.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PI.la \
+  $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
+  $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
-  $(ACE_BUILDDIR)/ace/libACE.la \
-  $(ACE_FLTK_LIBS)
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-endif BUILD_X11
-endif BUILD_TAO_FLRESOURCE
-endif BUILD_GL
-endif BUILD_FL
+endif BUILD_INTERCEPTORS
 endif BUILD_EXCEPTIONS
-endif BUILD_ACE_FLREACTOR
+endif BUILD_CORBA_MESSAGING
 
-## Makefile.FL_Cube_Server.am
+## Makefile.mixed_security_security_server.am
 
-if BUILD_ACE_FLREACTOR
+if BUILD_CORBA_MESSAGING
 if BUILD_EXCEPTIONS
-if BUILD_FL
-if BUILD_GL
-if BUILD_TAO_FLRESOURCE
-if BUILD_X11
+if BUILD_INTERCEPTORS
+if BUILD_SSL
 
 BUILT_SOURCES += \
-  testC.cpp \
-  testC.h \
-  testC.inl \
-  testS.cpp \
-  testS.h \
-  testS.inl
+  FooC.cpp \
+  FooC.h \
+  FooC.inl \
+  FooS.cpp \
+  FooS.h \
+  FooS.inl
 
 CLEANFILES += \
-  test-stamp \
-  testC.cpp \
-  testC.h \
-  testC.inl \
-  testS.cpp \
-  testS.h \
-  testS.inl
+  Foo-stamp \
+  FooC.cpp \
+  FooC.h \
+  FooC.inl \
+  FooS.cpp \
+  FooS.h \
+  FooS.inl
 
+FooC.cpp FooC.h FooC.inl FooS.cpp FooS.h FooS.inl: Foo-stamp
 
 
 noinst_PROGRAMS += server
@@ -124,37 +113,43 @@ server_CPPFLAGS = \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
-  $(ACE_FLTK_CPPFLAGS)
+  -I$(TAO_ROOT)/orbsvcs \
+  -I$(TAO_BUILDDIR)/orbsvcs \
+  -DACE_HAS_SSL=1 \
+  @ACE_TLS_CPPFLAGS@
 
 server_SOURCES = \
+  FooC.cpp \
+  FooS.cpp \
+  Foo_i.cpp \
   server.cpp \
-  testC.cpp \
-  testS.cpp \
-  test_i.cpp \
-  testC.h \
-  testC.inl \
-  testS.h \
-  testS.inl \
-  test_i.h
+  FooC.h \
+  FooC.inl \
+  FooS.h \
+  FooS.inl \
+  Foo_i.h
 
 server_LDFLAGS = \
- $(ACE_FLTK_LDFLAGS)
+ @ACE_TLS_LDFLAGS@
 
 server_LDADD = \
-  $(TAO_BUILDDIR)/tao/libTAO_FlResource.la \
-  $(ACE_BUILDDIR)/ace/libACE_FlReactor.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_SSLIOP.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PI_Server.la \
+  $(ACE_BUILDDIR)/ace/SSL/libACE_SSL.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_Security.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PI.la \
+  $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
+  $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la \
-  $(ACE_FLTK_LIBS)
+  @ACE_TLS_LIBS@
 
-endif BUILD_X11
-endif BUILD_TAO_FLRESOURCE
-endif BUILD_GL
-endif BUILD_FL
+endif BUILD_SSL
+endif BUILD_INTERCEPTORS
 endif BUILD_EXCEPTIONS
-endif BUILD_ACE_FLREACTOR
+endif BUILD_CORBA_MESSAGING
 
 ## Clean up template repositories, etc.
 clean-local:

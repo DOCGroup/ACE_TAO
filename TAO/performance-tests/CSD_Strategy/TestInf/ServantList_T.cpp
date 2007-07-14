@@ -1,7 +1,7 @@
 // $Id$
 #include "ServantList_T.h"
 #include "AppHelper.h"
-#include "TestAppExceptionC.h"
+#include "TestInf/TestAppExceptionC.h"
 
 
 template <typename T>

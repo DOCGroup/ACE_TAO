@@ -16,11 +16,11 @@ TAO_IDL_DEP = $(TAO_BUILDDIR)/TAO_IDL/tao_idl
 TAO_IDLFLAGS = -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf
 TAO_ROOT = $(top_srcdir)
 
-BUILT_SOURCES =
-noinst_LTLIBRARIES =
 bin_PROGRAMS =
-CLEANFILES =
 noinst_HEADERS =
+BUILT_SOURCES =
+CLEANFILES =
+noinst_LTLIBRARIES =
 
 ## Makefile.ImR_Activator_IDL.am
 

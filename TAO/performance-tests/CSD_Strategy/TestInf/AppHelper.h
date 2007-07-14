@@ -3,7 +3,7 @@
 #define APPHELPER_H
 
 #include "CSD_PT_TestInf_Export.h"
-#include "TestAppExceptionC.h"
+#include "TestInf/TestAppExceptionC.h"
 #include "tao/PortableServer/PortableServer.h"
 #include "tao/ORB.h"
 #include "ace/OS.h"
@@ -102,4 +102,3 @@ struct CSD_PT_TestInf_Export AppHelper
 };
 
 #endif
-

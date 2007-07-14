@@ -566,6 +566,7 @@ if test $tao_build_tests = yes; then
     orbsvcs/tests/Security/MT_SSLIOP/Makefile
     orbsvcs/tests/Security/Makefile
     orbsvcs/tests/Security/Secure_Invocation/Makefile
+    orbsvcs/tests/Security/mixed_security_test/Makefile
     orbsvcs/tests/Security/ssliop_corbaloc/Makefile
     orbsvcs/tests/Simple_Naming/Makefile
     orbsvcs/tests/Time/Makefile
@@ -767,6 +768,7 @@ if test $tao_build_tests = yes; then
     tests/Nested_Event_Loop/Makefile
     tests/Nested_Upcall_Crash/Makefile
     tests/No_Server_MT_Connect_Test/Makefile
+    tests/objref_comparison_test/Makefile
     tests/OBV/Any/Makefile
     tests/OBV/Collocated/Forward/Makefile
     tests/OBV/Collocated/Makefile

@@ -28,8 +28,7 @@ ftp_CPPFLAGS = \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
   -I$(TAO_ROOT)/orbsvcs \
-  -I$(TAO_BUILDDIR)/orbsvcs \
-  -DACE_HAS_QOS
+  -I$(TAO_BUILDDIR)/orbsvcs
 
 ftp_SOURCES = \
   ftp.cpp \
@@ -37,7 +36,6 @@ ftp_SOURCES = \
 
 ftp_LDADD = \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_AV.la \
-  $(ACE_BUILDDIR)/ace/libACE_QoS.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosProperty_Serv.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosProperty_Skel.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
@@ -63,8 +61,7 @@ server_CPPFLAGS = \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
   -I$(TAO_ROOT)/orbsvcs \
-  -I$(TAO_BUILDDIR)/orbsvcs \
-  -DACE_HAS_QOS
+  -I$(TAO_BUILDDIR)/orbsvcs
 
 server_SOURCES = \
   server.cpp \
@@ -72,7 +69,6 @@ server_SOURCES = \
 
 server_LDADD = \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_AV.la \
-  $(ACE_BUILDDIR)/ace/libACE_QoS.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosProperty_Serv.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosProperty_Skel.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
