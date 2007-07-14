@@ -1,3 +1,24 @@
+Sat Jul 14 15:03:39 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * performance-tests/Misc/childbirth_time.cpp:
+        * performance-tests/Misc/preempt.cpp:
+        * performance-tests/Misc/test_guard.cpp:
+        * performance-tests/Misc/test_naming.cpp:
+        * performance-tests/RPC/client.cpp:
+        * performance-tests/SCTP/SOCK_SEQPACK_clt.cpp:
+        * performance-tests/SCTP/SOCK_STREAM_clt.cpp:
+        * performance-tests/SCTP/hist.cpp:
+        * performance-tests/Server_Concurrency/Queue_Based_Workers/RT_CORBA_Workers.cpp:
+        * performance-tests/Synch-Benchmarks/Base_Test/Baseline_Test.cpp:
+        * performance-tests/Synch-Benchmarks/Perf_Test/guard_test.cpp:
+        * performance-tests/TCP/tcp_test.cpp:
+        * performance-tests/TTCP/C/new-ttcp.cpp:
+        * performance-tests/UDP/udp_test.cpp:
+
+          Fixed ACE_OS fuzz warnings. Use ACE_OS calls instead of raw OS function
+          where possible. If fuzz detected a false-positive, then disable
+          the ACE_OS fuzz check for that section of the code.
+
 Sat Jul 14 07:47:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-macosx-tiger.h:

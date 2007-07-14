@@ -48,6 +48,8 @@
 /* #define BSD41a */
 #define SYSV /* required on SGI IRIX releases before 3.3 */
 
+//FUZZ: disable check_for_lack_ACE_OS
+
 #include "ace/Log_Msg.h"
 #include "ace/SOCK_Connector.h"
 #include "ace/SOCK_Acceptor.h"
