@@ -1,3 +1,9 @@
+Sat Jul 14 01:28:25 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/AutomakeWorkspaceHelper.pm:
+          Fix for getting the right base directory for Kokyu based TAO
+          examples and tests.
+
 Fri Jul 13 23:05:13 UTC 2007  Steve Huston  <shuston@riverace.com>
 
         * tests/Bug_2912_Regression_Test.cpp: Don't run this test on Linux;
@@ -63,7 +69,7 @@ Fri Jul 13 03:02:58 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
             check_for_improper_main_declaration
 
            There are way too many fuzz warnings now, I will enable those checks
-           again once I'm done zapping the current warnings. That way fuzz can be 
+           again once I'm done zapping the current warnings. That way fuzz can be
            useful again to folks that check code in.
 
 Thu Jul 13 00:04:25 UTC 2007  Ossama Othman  <ossama_othman at symantec dot com>

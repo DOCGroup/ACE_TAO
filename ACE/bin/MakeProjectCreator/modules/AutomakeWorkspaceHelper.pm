@@ -114,7 +114,7 @@ sub modify_libpath {
   my($reldir)  = shift;
   my($libname) = shift;
 
-  if ($libname =~ /^lib(ace|kokyu)/i) {
+  if ($libname =~ /^lib(ace|kokyu\.)/i) {
     if (!defined $reldir) {
       if (defined $libdirs{$libname}) {
         $reldir = $libdirs{$libname};
@@ -126,7 +126,7 @@ sub modify_libpath {
     $str =~ s!$libname!\$(ACE_BUILDDIR)/$reldir/$libname!;
     return $str;
   }
-  elsif ($libname =~ /^libtao/i) {
+  elsif ($libname =~ /^lib(tao|kokyu)/i) {
     if (defined $reldir) {
       $reldir =~ s!TAO/!!;
       $str =~ s!$libname!\$(TAO_BUILDDIR)/$reldir/$libname!;
