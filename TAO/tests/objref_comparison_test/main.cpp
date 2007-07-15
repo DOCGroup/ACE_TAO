@@ -1,8 +1,5 @@
 // $Id$
 
-#include <iostream>
-#include <fstream>
-#include "tao/corba.h"
 #include "ace/Functor.h"
 #include "ace/Task.h"
 #include "fooS.h"
@@ -43,16 +40,6 @@ Foo_Impl::match_references ()
   CORBA::String_var ior_from_upcall = orb->object_to_string (o);
 
   CORBA::Boolean r1 = equal_func (this->ior_from_main_.in(), ior_from_upcall.in());
-#if 0
-  if (! r1)
-    {
-      std::ofstream f1("ior_from_main", std::ios::app);
-      f1 << ior_from_main_.in() << std::endl;
-
-      std::ofstream f2("ior_from_upcall", std::ios::app);
-      f2 << ior_from_upcall.in() << std::endl;
-    }
-#endif
 
   return r1;
 }
@@ -65,7 +52,7 @@ public:
   {
   }
   virtual ~Server_Task ();
-    
+
   virtual int svc ();
 private:
   CORBA::ORB_var orb_;
@@ -87,7 +74,7 @@ main (int argc, char * argv[])
   try
     {
       s_orb = CORBA::ORB_init (argc, argv);
-    
+
       CORBA::Object_var o = s_orb->resolve_initial_references ("RootPOA");
       PortableServer::POA_var rootpoa = PortableServer::POA::_narrow (o.in());
       if (CORBA::is_nil (rootpoa.in()))
@@ -127,7 +114,7 @@ main (int argc, char * argv[])
 	  ACE_DEBUG ((LM_DEBUG, "(%P|%t) client: iteration %d, match = %d\n",
 		      i, b));
 	}
-      
+
       ACE_DEBUG ((LM_DEBUG,
 		  "(%P|%t) client: next %d iterations should NOT match\n",
 		  iterations));
@@ -137,11 +124,11 @@ main (int argc, char * argv[])
 	  ACE_DEBUG ((LM_DEBUG, "(%P|%t) client: iteration %d, match = %d\n",
 		      i, b));
 	}
-      
+
     }
   catch (...)
     {
     }
-  
+
   return 0;
 }
