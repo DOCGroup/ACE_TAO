@@ -542,7 +542,7 @@ get_ip_interfaces_win32 (size_t &count,
   RetVal =
     GetAdaptersAddresses(AF_UNSPEC,
                          0,
-                         NULL,
+                         0,
                          AdapterAddresses,
                          &OutBufferLength);
 
@@ -557,7 +557,7 @@ get_ip_interfaces_win32 (size_t &count,
   RetVal =
     GetAdaptersAddresses(AF_UNSPEC,
                          0,
-                         NULL,
+                         0,
                          AdapterAddresses,
                          &OutBufferLength);
 
@@ -1395,7 +1395,7 @@ ACE::get_ip_interfaces (size_t &count,
   hints.ai_flags = AI_NUMERICHOST;
   hints.ai_family = AF_INET6;
 
-  if ((fp = ACE_OS::fopen (ACE_LIB_TEXT ("/proc/net/if_inet6"), ACE_LIB_TEXT ("r"))) != NULL)
+  if ((fp = ACE_OS::fopen (ACE_LIB_TEXT ("/proc/net/if_inet6"), ACE_LIB_TEXT ("r"))) != 0)
     {
       while (fscanf (fp,
                      "%4s%4s%4s%4s%4s%4s%4s%4s %02x %*02x %*02x %*02x %*8s\n",
@@ -1546,7 +1546,7 @@ return 0;
 # if defined (ACE_HAS_IPV6)
   FILE* fp = 0;
 
-  if ((fp = ACE_OS::fopen (ACE_LIB_TEXT ("/proc/net/if_inet6"), ACE_LIB_TEXT ("r"))) != NULL)
+  if ((fp = ACE_OS::fopen (ACE_LIB_TEXT ("/proc/net/if_inet6"), ACE_LIB_TEXT ("r"))) != 0)
     {
       // Scan the lines according to the expected format but don't really read any input
       while (fscanf (fp, "%*32s %*02x %*02x %*02x %*02x %*8s\n") != EOF)

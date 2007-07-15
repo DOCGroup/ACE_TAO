@@ -36,6 +36,7 @@ extern "C"
 {
 #endif /* __cplusplus */
 
+//FUZZ: disable check_for_NULL
 // NULL pointer constant
 #if defined (ACE_LACKS_NULL)
 #  undef NULL
@@ -45,6 +46,7 @@ extern "C"
 #    define NULL ((void *)0)
 #  endif
 #endif /* ACE_LACKS_NULL */
+//FUZZ: enable check_for_NULL
 
 /*
   Integer constant expression of type size_t, the value of which is the offset

@@ -1127,7 +1127,7 @@ ACE_OS::default_win32_security_attributes_r (LPSECURITY_ATTRIBUTES sa,
         {
           InitializeSecurityDescriptor
             (sd_buffer, SECURITY_DESCRIPTOR_REVISION);
-          SetSecurityDescriptorDacl (sd_buffer, TRUE, NULL, FALSE);
+          SetSecurityDescriptorDacl (sd_buffer, TRUE, 0, FALSE);
           sa_buffer->nLength = sizeof(SECURITY_ATTRIBUTES);
           sa_buffer->lpSecurityDescriptor = sd_buffer;
           sa_buffer->bInheritHandle       = TRUE;

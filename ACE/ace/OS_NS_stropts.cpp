@@ -90,13 +90,13 @@ ACE_OS::ioctl (ACE_HANDLE socket,
       // Query for the buffer size.
       int result = ::WSAIoctl ((ACE_SOCKET) socket,
                                 io_control_code,
-                                NULL,
+                                0,
                                 0,
                                 &dwBufferLen,
                                 sizeof (dwBufferLen),
                                 bytes_returned,
-                                NULL,
-                                NULL);
+                                0,
+                                0);
 
 
       if (result == SOCKET_ERROR)
@@ -125,13 +125,13 @@ ACE_OS::ioctl (ACE_HANDLE socket,
 
     result = ::WSAIoctl ((ACE_SOCKET) socket,
                        io_control_code,
-                       NULL,
+                       0,
                        0,
                        qos,
                        dwBufferLen,
                        bytes_returned,
-                       NULL,
-                       NULL);
+                       0,
+                       0);
 
     if (result == SOCKET_ERROR)
       return result;
