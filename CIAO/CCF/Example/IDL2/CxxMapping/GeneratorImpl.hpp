@@ -217,7 +217,9 @@ namespace IDL2
       virtual void
       raises_pre (Type&)
       {
+        //FUZZ: disable check_for_exception_sepc
         cout << " throw (";
+        //FUZZ: enable check_for_exception_sepc
       }
 
       virtual void
@@ -272,7 +274,9 @@ namespace IDL2
       virtual void
       raises_pre (Type&)
       {
+        //FUZZ: disable check_for_exception_sepc
         cout << " throw (";
+        //FUZZ: enable check_for_exception_sepc
       }
 
       virtual void
