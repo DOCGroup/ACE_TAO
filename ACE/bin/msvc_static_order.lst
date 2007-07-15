@@ -124,6 +124,7 @@ TAO/tests/Smart_Proxies/Collocation/SP_Collocation_TestStubsLib
 TAO/tests/Collocation/Collocation_Idl
 TAO/tests/Collocation/Collocation_Test_Stub
 TAO/tests/Collocation/Collocation_Diamond
+TAO/tests/Local_ORB_Config/Two_DLL_ORB/Two_DLL_ORB_Idl
 TAO/tests/TransportCurrent/lib/Current_Test_Lib_Idl
 TAO/tests/TransportCurrent/lib/Current_Test_Lib_Client
 TAO/tests/TransportCurrent/lib/Current_Test_Lib_Server
