@@ -1,26 +1,32 @@
+Sun Jul 15 13:06:12 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * CCF/Example/IDL2/CxxMapping/GeneratorImpl.hpp:
+
+          Fixed Fuzz warnings regarding exception specification.
+
 Fri Jul 13 11:04:13 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tools/IDL3_to_IDL2/basic_visitor.cpp:
         * tools/IDL3_to_IDL2/basic_visitor.h:
-        
+
           New files containing a base class visitor that factors
           out code common to idl3_to_idl2_visitor and others which
           may be created later or link this library.
-          
+
         * tools/IDL3_to_IDL2/IDL3_to_IDL2.mpc:
-        
+
           Updated MPC file with new additions above.
-          
+
         * tools/IDL3_to_IDL2/checking_visitor.h:
         * tools/IDL3_to_IDL2/idl3_to_idl2_visitor.cpp:
         * tools/IDL3_to_IDL2/identifier_helper.h:
         * tools/IDL3_to_IDL2/idl3_to_idl2_visitor.h:
-        
+
           - Factored code out of idl3_to_idl2_visitor into basic_visitor
             described above.
-            
+
           - Added export macros to classes so another tool can instantiate
-            and inherit from them. 
+            and inherit from them.
 
 Wed Jul 11 04:33:45 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
