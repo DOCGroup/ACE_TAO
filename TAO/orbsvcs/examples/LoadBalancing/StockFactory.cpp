@@ -15,7 +15,6 @@ StockFactory::StockFactory (CORBA::ORB_ptr orb, int number)
 
 Test::Stock_ptr
 StockFactory::get_stock (const char *symbol)
-    throw (Test::Invalid_Stock_Symbol)
 {
   cout << "Server Number is " << number_ << endl;
   if (ACE_OS::strcmp (symbol, "RHAT") == 0) {

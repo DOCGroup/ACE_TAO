@@ -1,3 +1,67 @@
+Sun Jul 15 13:01:49 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * docs/tutorials/Quoter/Event_Service/Stock_Consumer.h:
+        * docs/tutorials/Quoter/Event_Service/Stock_Consumer.cpp:
+        * docs/tutorials/Quoter/Naming_Service/Stock_Factory_i.h:
+        * docs/tutorials/Quoter/Naming_Service/Stock_Factory_i.cpp:
+        * docs/tutorials/Quoter/Naming_Service/Stock_i.h:
+        * docs/tutorials/Quoter/Naming_Service/Stock_i.cpp:
+        * docs/tutorials/Quoter/On_Demand_Activation/Handler_i.h:
+        * docs/tutorials/Quoter/On_Demand_Activation/Handler_i.cpp:
+        * docs/tutorials/Quoter/On_Demand_Activation/Stock_Factory_Locator_i.h:
+        * docs/tutorials/Quoter/On_Demand_Activation/Stock_Factory_Locator_i.cpp:
+        * docs/tutorials/Quoter/On_Demand_Activation/Stock_Factory_i.h:
+        * docs/tutorials/Quoter/On_Demand_Activation/Stock_Factory_i.cpp:
+        * docs/tutoriasls/Quoter/On_Demand_Activation/Stock_i.h:
+        * docs/tutorials/Quoter/On_Demand_Activation/Stock_i.cpp:
+        * docs/tutorials/Quoter/RTCORBA/Broker_i.h:
+        * docs/tutorials/Quoter/RTCORBA/Broker_i.cpp:
+        * docs/tutorials/Quoter/RTCORBA/Distributor_i.h:
+        * docs/tutorials/Quoter/RTCORBA/Distributor_i.cpp:
+        * docs/tutorials/Quoter/RTCORBA/StockNameConsumer_i.h:
+        * docs/tutorials/Quoter/RTCORBA/StockNameConsumer_i.cpp:
+        * docs/tutorials/Quoter/RTCORBA/Stock_Database.h:
+        * docs/tutorials/Quoter/RTCORBA/Stock_Database.tpp:
+        * docs/tutorials/Quoter/Simple/Impl-Repo/Stock_Factory_i.h:
+        * docs/tutorials/Quoter/Simple/Impl-Repo/Stock_Factory_i.cpp:
+        * docs/tutorials/Quoter/Simple/Impl-Repo/Stock_i.h:
+        * docs/tutorials/Quoter/Simple/Impl-Repo/Stock_i.cpp:
+        * docs/tutorials/Quoter/Simple/ImprovedServer/Stock_Factory_i.h:
+        * docs/tutorials/Quoter/Simple/ImprovedServer/Stock_Factory_i.cpp:
+        * docs/tutorials/Quoter/Simple/ImprovedServer/Stock_i.h:
+        * docs/tutorials/Quoter/Simple/ImprovedServer/Stock_i.cpp:
+        * docs/tutorials/Quoter/Simple/Persistent/Stock_Factory_i.h:
+        * docs/tutorials/Quoter/Simple/Persistent/Stock_Factory_i.cpp:
+        * docs/tutorials/Quoter/Simple/Persistent/Stock_i.h:
+        * docs/tutorials/Quoter/Simple/Persistent/Stock_i.cpp:
+        * docs/tutorials/Quoter/Simple/Server/Stock_Factory_i.h:
+        * docs/tutorials/Quoter/Simple/Server/Stock_Factory_i.cpp:
+        * docs/tutorials/Quoter/Simple/Server/Stock_i.h:
+        * docs/tutorials/Quoter/Simple/Server/Stock_i.cpp:
+        * orbsvcs/ImplRepo_Service/Locator_XMLHandler.h:
+        * orbsvcs/ImplRepo_Service/Locator_XMLHandler.cpp:
+        * orbsvcs/examples/FaultTolerance/RolyPoly/LogACE_RB_Tree.h:
+        * orbsvcs/examples/FaultTolerance/RolyPoly/LogStdMap.h:
+        * orbsvcs/examples/LoadBalancing/Stock.h:
+        * orbsvcs/examples/LoadBalancing/Stock.cpp:
+        * orbsvcs/examples/LoadBalancing/StockFactory.h:
+        * orbsvcs/examples/LoadBalancing/StockFactory.cpp:
+        * orbsvcs/orbsvcs/Notify/XML_Loader.h:
+        * orbsvcs/orbsvcs/Notify/XML_Loader.cpp:
+        * orbsvcs/tests/Bug_2316_Regression/Test_impl.h:
+        * orbsvcs/tests/Bug_2316_Regression/Test_impl.cpp:
+        * orbsvcs/tests/CosEvent/Timeout/TestEventConsumer_i.h:
+        * orbsvcs/tests/CosEvent/Timeout/TestEventConsumer_i.cpp:
+        * orbsvcs/tests/Event/Mcast/RTEC_MCast_Federated/EchoEventConsumer_i.h:
+        * orbsvcs/tests/Event/Mcast/RTEC_MCast_Federated/EchoEventConsumer_i.cpp:
+        * orbsvcs/tests/Event/Mcast/RTEC_MCast_Federated/EchoEventSupplier_i.h:
+        * orbsvcs/tests/Event/Mcast/RTEC_MCast_Federated/EchoEventSupplier_i.cpp:
+        * orbsvcs/tests/Notify/XML_Persistence/main.cpp:
+        * tao/PortableServer/POAManager.cpp:
+        * tao/PortableServer/ServantRetentionStrategyRetain.cpp:
+
+          Fixed Fuzz warnings regarding the usage of exception specification.
+
 Sun Jul 15 04:36:50 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * performance-tests/CSD_Strategy/TestInf/Makefile.am:

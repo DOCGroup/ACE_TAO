@@ -16,8 +16,7 @@ class Quoter_Stock_Factory_i : public POA_Quoter::Stock_Factory {
 public:
   Quoter_Stock_Factory_i (PortableServer::POA_ptr stock_factory_poa);
 
-  Quoter::Stock_ptr get_stock (const char *symbol)
-    throw (Quoter::Invalid_Stock_Symbol);
+  Quoter::Stock_ptr get_stock (const char *symbol);
 
 private:
   PortableServer::POA_var stock_factory_poa_;

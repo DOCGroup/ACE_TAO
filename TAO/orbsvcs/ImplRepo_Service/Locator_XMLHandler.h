@@ -61,13 +61,11 @@ public:
   virtual void startElement (const ACEXML_Char* namespaceURI,
                              const ACEXML_Char* localName,
                              const ACEXML_Char* qName,
-                             ACEXML_Attributes* atts)
-                               throw (ACEXML_SAXException);
+                             ACEXML_Attributes* atts);
 
   virtual void endElement (const ACEXML_Char* namespaceURI,
                            const ACEXML_Char* localName,
-                           const ACEXML_Char* qName)
-                             throw (ACEXML_SAXException);
+                           const ACEXML_Char* qName);
 
  private:
 

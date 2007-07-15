@@ -3,7 +3,6 @@
 #include "Test_impl.h"
 
 void Server_impl::shutdown ()
-    throw (CORBA::SystemException)
 {
   this->orb_->shutdown (0);
 }
@@ -14,6 +13,5 @@ Server_impl::Server_impl (CORBA::ORB_ptr orb)
 }
 
 void Server_impl::method (CORBA::Object_ptr)
-    throw (CORBA::SystemException)
 {
 }

@@ -37,7 +37,6 @@ StockDistributor_i::~StockDistributor_i (void)
 ::Stock::Cookie *
 StockDistributor_i::subscribe_notifier (::Stock::StockNameConsumer_ptr c,
                                               ::RTCORBA::Priority priority)
-  throw (::CORBA::SystemException)
 {
   // Get mutual exclusion of the <subscribers_list_>.
   ACE_WRITE_GUARD_RETURN (ACE_RW_Thread_Mutex, g, lock_, 0);
@@ -62,8 +61,6 @@ StockDistributor_i::subscribe_notifier (::Stock::StockNameConsumer_ptr c,
 
 ::Stock::StockNameConsumer_ptr
 StockDistributor_i::unsubscribe_notifier (::Stock::Cookie *ck)
-  throw (::CORBA::SystemException,
-         ::Stock::Invalid_Subscription)
 {
   if (ck == 0)
     {
@@ -93,8 +90,6 @@ StockDistributor_i::unsubscribe_notifier (::Stock::Cookie *ck)
 
 ::Stock::StockQuoter_ptr
 StockDistributor_i::provide_quoter_info (::Stock::Cookie *ck)
-  throw (::CORBA::SystemException,
-         ::Stock::Invalid_Subscription)
 {
   ACE_READ_GUARD_RETURN (ACE_RW_Thread_Mutex, guard, lock_, 0);
 
@@ -133,14 +128,12 @@ StockDistributor_i::provide_quoter_info (::Stock::Cookie *ck)
 
 ::CORBA::Long
 StockDistributor_i::notification_rate ()
-  throw (::CORBA::SystemException)
 {
   return this->rate_;
 }
 
 void
 StockDistributor_i::notification_rate (::CORBA::Long notification_rate)
-  throw (::CORBA::SystemException)
 {
   this->rate_ = notification_rate;
   STOCK_DATABASE->update_rate (this->rate_);
@@ -148,21 +141,18 @@ StockDistributor_i::notification_rate (::CORBA::Long notification_rate)
 
 void
 StockDistributor_i::start ()
-  throw (::CORBA::SystemException)
 {
   STOCK_DATABASE->start ();
 }
 
 void
 StockDistributor_i::stop ()
-  throw (::CORBA::SystemException)
 {
   STOCK_DATABASE->stop ();
 }
 
 void
 StockDistributor_i::shutdown ()
-  throw (::CORBA::SystemException)
 {
   ACE_DEBUG ((LM_DEBUG, "Stopping publisher\n"));
   // Stop publishing events
@@ -264,7 +254,6 @@ StockQuoter_i::~StockQuoter_i (void)
 
 ::Stock::StockInfo *
 StockQuoter_i::get_stock_info (const char * stock_name)
-  throw (::CORBA::SystemException, ::Stock::Invalid_Stock)
 {
   // Obtain the stock information from the database.
   ACE_DEBUG ((LM_DEBUG, "*** message: requesting stock_info from the database\n"));
@@ -370,7 +359,6 @@ StockDistributorHome_i::~StockDistributorHome_i (void)
 
 ::Stock::StockDistributor_ptr
 StockDistributorHome_i::create ()
-  throw (::CORBA::SystemException)
 {
   CORBA::Object_var obj;
 

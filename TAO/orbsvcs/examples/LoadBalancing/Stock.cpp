@@ -14,19 +14,19 @@ Stock::Stock (const char *symbol,
 }
 
 char *
-Stock::symbol () throw (CORBA::SystemException)
+Stock::symbol ()
 {
   return CORBA::string_dup (this->symbol_.c_str ());
 }
 
 char *
-Stock::full_name () throw (CORBA::SystemException)
+Stock::full_name ()
 {
   return CORBA::string_dup (this->full_name_.c_str ());
 }
 
 CORBA::Double
-Stock::price () throw (CORBA::SystemException)
+Stock::price ()
 {
   return this->price_;
 }

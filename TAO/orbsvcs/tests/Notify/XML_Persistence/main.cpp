@@ -25,12 +25,12 @@
 class TestSupplier
 : public POA_CosNotifyComm::StructuredPushSupplier
 {
-  virtual void disconnect_structured_push_supplier(void) throw (CORBA::SystemException) {
+  virtual void disconnect_structured_push_supplier(void)
+  {
   }
 
   virtual void subscription_change( const CosNotification::EventTypeSeq&,
-    const CosNotification::EventTypeSeq&)
-    throw (CORBA::SystemException, CosNotifyComm::InvalidEventType)
+                                    const CosNotification::EventTypeSeq&)
   {
   }
 };
@@ -38,16 +38,15 @@ class TestSupplier
 class TestConsumer
 : public POA_CosNotifyComm::StructuredPushConsumer
 {
-  virtual void disconnect_structured_push_consumer(void) throw (CORBA::SystemException) {
+  virtual void disconnect_structured_push_consumer(void)
+  {
   }
 
   virtual void offer_change( const CosNotification::EventTypeSeq&, const CosNotification::EventTypeSeq&)
-    throw (CORBA::SystemException, CosNotifyComm::InvalidEventType)
   {
   }
 
   virtual void push_structured_event(const CosNotification::StructuredEvent&)
-    throw (CORBA::SystemException, CosEventComm::Disconnected)
   {
   }
 };

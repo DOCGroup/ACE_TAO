@@ -75,7 +75,6 @@ Stock_Database<CALLBACK>::Stock_Database (const Init_Map &stockmap,
 template <typename CALLBACK>
 typename Stock_Database<CALLBACK>::StockInfo 
 Stock_Database<CALLBACK>::get_stock_info(const char *name)
-  throw (Invalid_Stock)
 {
   ACE_READ_GUARD_RETURN (ACE_RW_Thread_Mutex,
                          guard,
