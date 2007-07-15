@@ -1,4 +1,4 @@
-// $Id$
+ // $Id$
 
 #ifndef ACE_FUTURE_CPP
 #define ACE_FUTURE_CPP
@@ -110,7 +110,7 @@ ACE_Future_Rep<T>::detach (ACE_Future_Rep<T>*& rep)
   // Use value_ready_mutex_ for both condition and ref count management
   ACE_MT (ACE_GUARD (ACE_Recursive_Thread_Mutex, r_mon, rep->value_ready_mutex_));
 
-  if (--rep->ref_count_ == 0)
+  if (rep->ref_count_-- == 0)
     {
       ACE_MT (r_mon.release ());
       // We do not need the lock when deleting the representation.
@@ -132,7 +132,7 @@ ACE_Future_Rep<T>::assign (ACE_Future_Rep<T>*& rep, ACE_Future_Rep<T>* new_rep)
   rep = new_rep;
 
   // detached old last for exception safety
-  if (--old->ref_count_ == 0)
+  if (old->ref_count_-- == 0)
     {
       ACE_MT (r_mon.release ());
       // We do not need the lock when deleting the representation.
