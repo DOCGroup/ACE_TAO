@@ -1,3 +1,10 @@
+Sun Jul 15 04:36:50 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * performance-tests/CSD_Strategy/TestInf/Makefile.am:
+        * performance-tests/CSD_Strategy/TestInf/csd_pt_testinf.mpc:
+          More reconciling differences between automake and non automake
+          build environments.
+
 Sun Jul 15 01:43:25 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * examples/Advanced/ch_12/server.h:
