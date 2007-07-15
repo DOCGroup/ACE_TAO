@@ -1,3 +1,9 @@
+Sun Jul 15 14:52:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Future.cpp:
+          Reverted the change of yesterday to use prefix decrement, breaks the
+          future code
+
 Sun Jul 15 13:08:50 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * ace/Malloc.h:
