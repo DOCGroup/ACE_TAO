@@ -687,7 +687,7 @@ ACE_SOCK_Dgram::make_multicast_ifaddr6 (ipv6_mreq *ret_mreq,
       ULONG bufLen = 0;
       if ((dwRetVal = ::GetAdaptersAddresses (AF_INET6,
                                               0,
-                                              NULL,
+                                              0,
                                               &tmp_addrs,
                                               &bufLen)) != ERROR_BUFFER_OVERFLOW)
         return -1; // With output bufferlength 0 this can't be right.
@@ -701,7 +701,7 @@ ACE_SOCK_Dgram::make_multicast_ifaddr6 (ipv6_mreq *ret_mreq,
       pAddrs = reinterpret_cast<PIP_ADAPTER_ADDRESSES> (buf);
       if ((dwRetVal = ::GetAdaptersAddresses (AF_INET6,
                                               0,
-                                              NULL,
+                                              0,
                                               pAddrs,
                                               &bufLen)) != NO_ERROR)
         {

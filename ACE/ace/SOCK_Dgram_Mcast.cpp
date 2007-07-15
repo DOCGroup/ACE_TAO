@@ -289,7 +289,7 @@ ACE_SOCK_Dgram_Mcast::subscribe_ifs (const ACE_INET_Addr &mcast_addr,
           ULONG bufLen = 0;
           if ((dwRetVal = ::GetAdaptersAddresses (AF_INET6,
                                                   0,
-                                                  NULL,
+                                                  0,
                                                   &tmp_addrs,
                                                   &bufLen)) != ERROR_BUFFER_OVERFLOW)
             return -1; // With output bufferlength 0 this can't be right.
@@ -303,7 +303,7 @@ ACE_SOCK_Dgram_Mcast::subscribe_ifs (const ACE_INET_Addr &mcast_addr,
           pAddrs = reinterpret_cast<PIP_ADAPTER_ADDRESSES> (buf);
           if ((dwRetVal = ::GetAdaptersAddresses (AF_INET6,
                                                   0,
-                                                  NULL,
+                                                  0,
                                                   pAddrs,
                                                   &bufLen)) != NO_ERROR)
             {
@@ -673,7 +673,7 @@ ACE_SOCK_Dgram_Mcast::unsubscribe_ifs (const ACE_INET_Addr &mcast_addr,
           ULONG bufLen = 0;
           if ((dwRetVal = ::GetAdaptersAddresses (AF_INET6,
                                                   0,
-                                                  NULL,
+                                                  0,
                                                   &tmp_addrs,
                                                   &bufLen)) != ERROR_BUFFER_OVERFLOW)
             return -1; // With output bufferlength 0 this can't be right.
@@ -687,7 +687,7 @@ ACE_SOCK_Dgram_Mcast::unsubscribe_ifs (const ACE_INET_Addr &mcast_addr,
           pAddrs = reinterpret_cast<PIP_ADAPTER_ADDRESSES> (buf);
           if ((dwRetVal = ::GetAdaptersAddresses (AF_INET6,
                                                   0,
-                                                  NULL,
+                                                  0,
                                                   pAddrs,
                                                   &bufLen)) != NO_ERROR)
             {

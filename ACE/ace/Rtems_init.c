@@ -104,7 +104,7 @@ static struct rtems_bsdnet_ifconfig loopback_config = {
 	"lo0",				/* name */
 	rtems_bsdnet_loopattach,	/* attach function */
 
-	NULL,				/* link to next interface */
+	0,				/* link to next interface */
 
 	"127.0.0.1",			/* IP address */
 	"255.0.0.0",			/* IP net mask */
@@ -122,12 +122,12 @@ static struct rtems_bsdnet_ifconfig netdriver_config = {
 #ifdef RTEMS_USE_LOOPBACK
 	&loopback_config,		/* link to next interface */
 #else
-	NULL,				/* No more interfaces */
+	0,				/* No more interfaces */
 #endif
 
 #if (defined (RTEMS_USE_BOOTP))
-	NULL,				/* BOOTP supplies IP address */
-	NULL,				/* BOOTP supplies IP net mask */
+	0,				/* BOOTP supplies IP address */
+	0,				/* BOOTP supplies IP net mask */
 #else
   "XXX.YYY.ZZZ.XYZ",   /* IP address */
 	"255.255.255.0",		/* IP net mask */
@@ -136,7 +136,7 @@ static struct rtems_bsdnet_ifconfig netdriver_config = {
 #if (defined (RTEMS_SET_ETHERNET_ADDRESS))
 	ethernet_address,               /* Ethernet hardware address */
 #else
-	NULL,                           /* Driver supplies hardware address */
+	0,                           /* Driver supplies hardware address */
 #endif
 	0				/* Use default driver parameters */
 };
@@ -151,7 +151,7 @@ struct rtems_bsdnet_config rtems_bsdnet_config = {
 #if (defined (RTEMS_USE_BOOTP))
 	rtems_bsdnet_do_bootp,
 #else
-	NULL,
+	0,
 #endif
 
 	0,			/* Default network task priority */

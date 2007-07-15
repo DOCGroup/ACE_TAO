@@ -427,7 +427,7 @@ ACE_OS_Object_Manager::print_error_message (unsigned int line_number,
                    (ACE_TCHAR *) &lpMsgBuf,
                    0,
                    0);
-  ::MessageBox (NULL,
+  ::MessageBox (0,
                 lpMsgBuf,
                 ACE_LIB_TEXT ("ACE_OS error"),
                 MB_OK);
