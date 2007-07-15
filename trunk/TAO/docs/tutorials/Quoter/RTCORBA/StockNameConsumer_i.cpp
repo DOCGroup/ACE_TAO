@@ -18,7 +18,6 @@ Stock_StockNameConsumer_i::~Stock_StockNameConsumer_i (void)
 }
 
 void Stock_StockNameConsumer_i::push_StockName (::Stock::StockNames *the_stockname)
-  throw (::CORBA::SystemException)
 {
   for (CORBA::ULong i = 0;
        i < the_stockname->names ().length ();
@@ -62,14 +61,12 @@ void Stock_StockNameConsumer_i::push_StockName (::Stock::StockNames *the_stockna
 
 ::Stock::Cookie *
 Stock_StockNameConsumer_i::cookie ()
-  throw (::CORBA::SystemException)
 {
   return this->cookie_.in ();
 }
 
 void
 Stock_StockNameConsumer_i::cookie (::Stock::Cookie *cookie)
-  throw (::CORBA::SystemException)
 {
   this->cookie_ = cookie;
   cookie->_add_ref ();

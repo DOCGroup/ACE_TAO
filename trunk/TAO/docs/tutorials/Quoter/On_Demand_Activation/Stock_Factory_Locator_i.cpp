@@ -14,7 +14,6 @@ Quoter_Stock_Factory_Locator_i::preinvoke (const PortableServer::ObjectId &oid,
                                            PortableServer::POA_ptr,
                                            const char *,
                                            void * & cookie)
-  throw (CORBA::SystemException, PortableServer::ForwardRequest)
 {
 
   // Check to see if the object ID is valid
@@ -48,12 +47,10 @@ Quoter_Stock_Factory_Locator_i::postinvoke (const PortableServer::ObjectId &,
                                             const char *,
                                             void * cookie,
                                             PortableServer::Servant servant)
-  throw (CORBA::SystemException)
 {
 
   // Delete the servant as it is no longer needed.
   PortableServer::Servant my_servant = (PortableServer::Servant) cookie;
   if (servant == my_servant)
     delete servant;
-
 }

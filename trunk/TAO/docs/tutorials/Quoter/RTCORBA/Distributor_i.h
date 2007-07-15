@@ -57,8 +57,7 @@ public:
    * @return A Cookie object that records this subscription.
    */
   virtual ::Stock::Cookie * subscribe_notifier (::Stock::StockNameConsumer_ptr c, 
-                                                ::RTCORBA::Priority priority)
-    throw (::CORBA::SystemException);
+                                                ::RTCORBA::Priority priority);
 
   /**
    * Erase the StockNameConsumer object from the StockDistributor object's subscribers' map.
@@ -66,50 +65,41 @@ public:
    * @param ck The Cookie object that records the subscription.
    * @param The reference of the StockNameConsumer object that has been erased.
    */
-  virtual ::Stock::StockNameConsumer_ptr unsubscribe_notifier (::Stock::Cookie *ck)
-    throw (::CORBA::SystemException,
-           ::Stock::Invalid_Subscription);
+  virtual ::Stock::StockNameConsumer_ptr unsubscribe_notifier (::Stock::Cookie *ck);
 
   /**
    * Return the StockQuoter object created by the Constructor.
    *
    * @return A StockQuoter object created by this StockDistributor object.
    */
-  virtual ::Stock::StockQuoter_ptr provide_quoter_info (::Stock::Cookie *ck)
-    throw (::CORBA::SystemException,
-           ::Stock::Invalid_Subscription);
+  virtual ::Stock::StockQuoter_ptr provide_quoter_info (::Stock::Cookie *ck);
 
   /**
    * Get the notification_rate attribute.
    *
    * @return The notification_rate attribute.
    */
-  virtual ::CORBA::Long notification_rate ()
-    throw (::CORBA::SystemException);
+  virtual ::CORBA::Long notification_rate ();
 
   /**
    * Set the notification_rate attribute.
    *
    * @param notification_rate The value of notification_rate attribute that need to be set.
    */
-  virtual void notification_rate (::CORBA::Long notification_rate)
-    throw (::CORBA::SystemException);
+  virtual void notification_rate (::CORBA::Long notification_rate);
 
   /**
    * Set the active state of the StockDistributor object to true and create a thread 
    * to publish the stock information to the Stock Broker clients.
    */
-  virtual void start (void)
-    throw (::CORBA::SystemException);
+  virtual void start (void);
 
   /**
    * Set the active state of StockDistributor object to false.
    */
-  virtual void stop (void)
-    throw (::CORBA::SystemException);
+  virtual void stop (void);
   
-  virtual void shutdown ()
-    throw (::CORBA::SystemException);
+  virtual void shutdown ();
   
   /// Callback for stock database.
   void operator () (std::vector <std::string> &stocks);
@@ -160,8 +150,7 @@ public:
    * @param stock_name The name of the stock whose detailed info is needed.
    * @throw ::Stock::Invalid_Stock
    */
-  virtual ::Stock::StockInfo *get_stock_info (const char *stock_name)
-    throw (::CORBA::SystemException, ::Stock::Invalid_Stock);
+  virtual ::Stock::StockInfo *get_stock_info (const char *stock_name);
 };
 
 /**
@@ -190,8 +179,7 @@ public:
    * 
    * @return The StockDistributor object created by the Constructor.
    */
-  virtual ::Stock::StockDistributor_ptr create ()
-    throw (::CORBA::SystemException);
+  virtual ::Stock::StockDistributor_ptr create ();
   
   virtual int handle_signal (int signum,
                              siginfo_t * = 0,

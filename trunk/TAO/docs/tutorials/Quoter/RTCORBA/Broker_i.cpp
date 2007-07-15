@@ -62,20 +62,17 @@ Stock_StockBroker_i::~Stock_StockBroker_i (void)
 }
 
 ::Stock::StockNameConsumer_ptr Stock_StockBroker_i::get_consumer_notifier ()
-  throw (::CORBA::SystemException)
 {
   Stock::StockNameConsumer_var consumer = this->consumer_->_this ();
   return consumer._retn();
 }
 
 void Stock_StockBroker_i::connect_quoter_info (::Stock::StockQuoter_ptr c)
-  throw (::CORBA::SystemException)
 {
   this->quoter_ = Stock::StockQuoter::_duplicate (c);
 }
 
 ::Stock::StockQuoter_ptr Stock_StockBroker_i::disconnect_quoter_info ()
-  throw (::CORBA::SystemException)
 {
   Stock::StockQuoter_var old_quoter = this->quoter_;
   this->quoter_ = Stock::StockQuoter::_nil();
@@ -83,14 +80,12 @@ void Stock_StockBroker_i::connect_quoter_info (::Stock::StockQuoter_ptr c)
 }
 
 ::Stock::StockQuoter_ptr Stock_StockBroker_i::get_connection_quoter_info ()
-  throw (::CORBA::SystemException)
 {
   return Stock::StockQuoter::_duplicate (this->quoter_);
 }
 
 void 
 Stock_StockBroker_i::shutdown (void)
-  throw (::CORBA::SystemException)
 {
   // Unsubscribe
   ACE_DEBUG ((LM_DEBUG, "Shutdown unsubscribing notifiers\n"));
@@ -140,7 +135,6 @@ Stock_StockBrokerHome_i::~Stock_StockBrokerHome_i (void)
 ::Stock::StockBroker_ptr 
 Stock_StockBrokerHome_i::create (Stock::StockDistributor_ptr dist,
                                  const char *stock_name)
-  throw (::CORBA::SystemException)
 {
   if (CORBA::is_nil (this->broker_.in ()))
     {

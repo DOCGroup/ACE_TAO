@@ -172,7 +172,6 @@ namespace TAO_Notify
     const ACEXML_Char*,
     const ACEXML_Char* name,
     ACEXML_Attributes* xml_attrs)
-        throw (ACEXML_SAXException)
   {
     ACE_ASSERT (name != 0);
     ACE_ASSERT (xml_attrs != 0);
@@ -209,7 +208,6 @@ namespace TAO_Notify
   XML_Loader::endElement (const ACEXML_Char*,
     const ACEXML_Char*,
     const ACEXML_Char* name)
-        throw (ACEXML_SAXException)
   {
     ACE_UNUSED_ARG (name);
     if (this->live_)

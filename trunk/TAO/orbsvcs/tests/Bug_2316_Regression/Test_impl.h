@@ -9,8 +9,8 @@ class Server_impl   : public virtual POA_server
 {
 public:
   Server_impl (CORBA::ORB_ptr orb);
-  virtual void method (CORBA::Object_ptr object) throw (CORBA::SystemException);
-  virtual void shutdown () throw (CORBA::SystemException);
+  virtual void method (CORBA::Object_ptr object);
+  virtual void shutdown ();
 
 private:
   CORBA::ORB_var orb_;    

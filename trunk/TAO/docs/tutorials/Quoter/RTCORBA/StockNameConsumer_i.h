@@ -56,24 +56,21 @@ public:
    *
    * @param the_stockname The name of the stock that will be provided to the context StockBroker object.
    */
-  virtual void push_StockName (::Stock::StockNames *the_stockname)
-    throw (::CORBA::SystemException);
+  virtual void push_StockName (::Stock::StockNames *the_stockname);
   
   /**
    * Get the cookie attribute.
    *
    * @return The cookie attribute.
    */
-  virtual ::Stock::Cookie * cookie ()
-    throw (::CORBA::SystemException);
+  virtual ::Stock::Cookie * cookie ();
 
   /**
    * Set the cookie attribute.
    *
    * @param cookie The value of cookie attribute that need to be set.
    */
-  virtual void cookie (::Stock::Cookie *cookie)
-    throw (::CORBA::SystemException);
+  virtual void cookie (::Stock::Cookie *cookie);
 
 private:
   /// Context of the StockNameConsumer object.

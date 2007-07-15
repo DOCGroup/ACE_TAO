@@ -815,8 +815,8 @@ namespace TAO
       // same then the ORB shall return SUCCESS.
       if (!priorities_match)
         {
-          throw ( ::CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 1,
-                                          CORBA::COMPLETED_NO));
+          throw ::CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 1,
+                                        CORBA::COMPLETED_NO);
         }
 
       bool const may_activate =

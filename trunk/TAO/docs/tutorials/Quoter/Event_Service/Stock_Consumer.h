@@ -18,10 +18,8 @@ public:
   void disconnect ();
   // Disconnect from the event channel.
 
-  void push (const CORBA::Any& data)
-    throw (CORBA::SystemException);
-  void disconnect_push_consumer (void)
-    throw (CORBA::SystemException);
+  void push (const CORBA::Any& data);
+  void disconnect_push_consumer (void);
 
 private:
   CosEventChannelAdmin::ProxyPushSupplier_var supplier_proxy_;

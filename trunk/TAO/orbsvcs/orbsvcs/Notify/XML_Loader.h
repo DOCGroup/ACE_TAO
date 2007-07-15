@@ -58,13 +58,11 @@ public:
   virtual void startElement (const ACEXML_Char* namespaceURI,
     const ACEXML_Char* localName,
     const ACEXML_Char* qName,
-    ACEXML_Attributes* atts ACEXML_ENV_ARG_DECL)
-      throw (ACEXML_SAXException);
+    ACEXML_Attributes* atts ACEXML_ENV_ARG_DECL);
 
   virtual void endElement (const ACEXML_Char*,
     const ACEXML_Char*,
-    const ACEXML_Char* name ACEXML_ENV_ARG_DECL_NOT_USED)
-      throw (ACEXML_SAXException);
+    const ACEXML_Char* name ACEXML_ENV_ARG_DECL_NOT_USED);
 
 private:
   /// The name of the file from which data is read.

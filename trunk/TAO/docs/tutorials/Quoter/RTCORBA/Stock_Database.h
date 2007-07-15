@@ -85,7 +85,7 @@ public:
    * @param name The name of the stock.
    * @return A StockInfo object.
    */
-  StockInfo get_stock_info (const char *name) throw (Invalid_Stock);
+  StockInfo get_stock_info (const char *name);
   
   /**
    * This function is used to calculate the new high, low and last values

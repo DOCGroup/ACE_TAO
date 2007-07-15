@@ -46,24 +46,21 @@ public:
    *
    * @return Returns a StockNameConsumer object reference.
    */
-  virtual ::Stock::StockNameConsumer_ptr get_consumer_notifier ()
-    throw (::CORBA::SystemException);
+  virtual ::Stock::StockNameConsumer_ptr get_consumer_notifier ();
 
   /**
    * Duplicate a StockQuoter object using the StockQuoter object reference "c" in the argument.
    *
    * @param c A StockQuoter object reference.
    */
-  virtual void connect_quoter_info (::Stock::StockQuoter_ptr c)
-    throw (::CORBA::SystemException);
+  virtual void connect_quoter_info (::Stock::StockQuoter_ptr c);
 
   /**
    * Destroy the StockQuoter object and return it.
    *
    * @return Returns the destroyed StockQuoter object reference.
    */
-  virtual ::Stock::StockQuoter_ptr disconnect_quoter_info ()
-    throw (::CORBA::SystemException);
+  virtual ::Stock::StockQuoter_ptr disconnect_quoter_info ();
 
   /**
    * Return the StockQuoter object.
@@ -71,14 +68,12 @@ public:
    * @return Returns the StockQuoter object reference that has been
    *         created by connect_quoter_info (). 
    */
-  virtual ::Stock::StockQuoter_ptr get_connection_quoter_info ()
-    throw (::CORBA::SystemException);
+  virtual ::Stock::StockQuoter_ptr get_connection_quoter_info ();
 
   /**
    * Shutdown the object and destroy the application.
    */
-  virtual void shutdown ()
-    throw (::CORBA::SystemException);
+  virtual void shutdown ();
   
 private:
   // Cached ORB pointer
@@ -123,8 +118,7 @@ public:
    * @return The StockBroker object created by the Constructor.
    */
   virtual ::Stock::StockBroker_ptr create (Stock::StockDistributor_ptr dist,
-                                           const char *stock_name)
-    throw (::CORBA::SystemException);
+                                           const char *stock_name);
 
   virtual int handle_signal (int signum,
                              siginfo_t * = 0,
