@@ -15,11 +15,9 @@ class EchoEventConsumer_i : public virtual POA_RtecEventComm::PushConsumer
     EchoEventConsumer_i(CORBA::ORB_ptr orb, int event_limit);
 
     // Override operations from PushConsumer interface.
-    virtual void push(const RtecEventComm::EventSet& events)
-     throw(CORBA::SystemException);
+    virtual void push(const RtecEventComm::EventSet& events);
 
-    virtual void disconnect_push_consumer()
-     throw(CORBA::SystemException);
+    virtual void disconnect_push_consumer();
 
   private:
     CORBA::ORB_var orb_;

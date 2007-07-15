@@ -29,7 +29,6 @@ public:
 
   void
   insert (RecordIdType const& ri, RecordValueType const& rv)
-    throw (Duplicate)
   {
     if (map_.bind (ri, rv) != 0) throw Duplicate ();
   }
@@ -48,7 +47,7 @@ public:
 
 
   RecordValueType const&
-  lookup (RecordIdType const& ri) const throw (NotFound)
+  lookup (RecordIdType const& ri) const
   {
     Map_& m = const_cast<Map_&> (map_);
 

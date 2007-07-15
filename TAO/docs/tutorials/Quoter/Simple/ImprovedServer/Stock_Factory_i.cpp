@@ -11,7 +11,6 @@ Quoter_Stock_Factory_i::Quoter_Stock_Factory_i (PortableServer::POA_ptr poa)
 
 Quoter::Stock_ptr
 Quoter_Stock_Factory_i::get_stock (const char *symbol)
-    throw (Quoter::Invalid_Stock_Symbol)
 {
   PortableServer::ObjectId_var oid =
     PortableServer::string_to_ObjectId (symbol);

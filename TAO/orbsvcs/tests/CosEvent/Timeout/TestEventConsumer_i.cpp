@@ -43,7 +43,6 @@ TestEventConsumer_i::ORB_task::svc ()
 
 void
 TestEventConsumer_i::push (const CORBA::Any & data)
-  throw (CORBA::SystemException, CosEventComm::Disconnected)
 {
   // Extract event data from the any.
   const char *eventData;
@@ -69,7 +68,6 @@ TestEventConsumer_i::push (const CORBA::Any & data)
 
 void
 TestEventConsumer_i::disconnect_push_consumer ()
- throw (CORBA::SystemException)
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("TestEventConsumer_i::disconnect_push_consumer()\n")));

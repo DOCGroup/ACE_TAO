@@ -14,8 +14,7 @@ class StockFactory
 public:
   StockFactory (CORBA::ORB_ptr orb, int number);
 
-  Test::Stock_ptr get_stock (const char *symbol)
-    throw (Test::Invalid_Stock_Symbol);
+  Test::Stock_ptr get_stock (const char *symbol);
 
   virtual void shutdown (void);
 

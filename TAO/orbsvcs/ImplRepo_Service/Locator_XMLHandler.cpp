@@ -20,7 +20,6 @@ Locator_XMLHandler::startElement (const ACEXML_Char*,
                                   const ACEXML_Char*,
                                   const ACEXML_Char* qName,
                                   ACEXML_Attributes* attrs)
-                                    throw (ACEXML_SAXException)
 {
   ACE_ASSERT (qName != 0);
   if (ACE_OS::strcasecmp (qName, SERVER_INFO_TAG) == 0)
@@ -70,7 +69,6 @@ void
 Locator_XMLHandler::endElement (const ACEXML_Char*,
                                 const ACEXML_Char*,
                                 const ACEXML_Char* qName)
-                                  throw (ACEXML_SAXException)
 {
   ACE_ASSERT(qName != 0);
   if (ACE_OS::strcasecmp (qName, SERVER_INFO_TAG) == 0

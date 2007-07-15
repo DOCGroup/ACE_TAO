@@ -12,7 +12,6 @@ Quoter_Stock_Factory_i::Quoter_Stock_Factory_i ()
 
 Quoter::Stock_ptr
 Quoter_Stock_Factory_i::get_stock (const char *symbol)
-    throw (Quoter::Invalid_Stock_Symbol)
 {
   if (ACE_OS::strcmp (symbol, "RHAT") == 0) {
     return this->rhat_._this ();

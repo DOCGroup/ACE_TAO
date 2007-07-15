@@ -351,11 +351,9 @@ TAO_POA_Manager::check_state (void)
 
       // Since there is no queuing in TAO, we immediately raise a
       // TRANSIENT exception.
-      throw ( ::CORBA::TRANSIENT (
-        CORBA::SystemException::_tao_minor_code (
-          TAO_POA_HOLDING,
-          1),
-        CORBA::COMPLETED_NO));
+      throw ::CORBA::TRANSIENT (
+                CORBA::SystemException::_tao_minor_code (TAO_POA_HOLDING, 1),
+                CORBA::COMPLETED_NO);
     }
 
   if (state_ == PortableServer::POAManager::INACTIVE)
@@ -371,11 +369,9 @@ TAO_POA_Manager::check_state (void)
       // co-resident in the same process, the ORB could raise the
       // OBJ_ADAPTER system exception, with standard minor code 1, to
       // indicate that the object implementation is unavailable.
-      throw ( ::CORBA::OBJ_ADAPTER (
-        CORBA::SystemException::_tao_minor_code (
-          TAO_POA_INACTIVE,
-          1),
-        CORBA::COMPLETED_NO));
+      throw ::CORBA::OBJ_ADAPTER (
+                CORBA::SystemException::_tao_minor_code (TAO_POA_INACTIVE, 1),
+                CORBA::COMPLETED_NO);
     }
 }
 

@@ -32,7 +32,6 @@ Stock_Consumer::disconnect ()
 
 void
 Stock_Consumer::push (const CORBA::Any& data)
-  throw (CORBA::SystemException)
 {
   Quoter::Event *event;
   if ((data >>= event) == 0)
@@ -46,7 +45,6 @@ Stock_Consumer::push (const CORBA::Any& data)
 
 void
 Stock_Consumer::disconnect_push_consumer (void)
-    throw (CORBA::SystemException)
 {
   this->supplier_proxy_ = CosEventChannelAdmin::ProxyPushSupplier::_nil ();
 }
