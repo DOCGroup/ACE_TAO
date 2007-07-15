@@ -1,3 +1,10 @@
+Sun Jul 15 18:45:03 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * bin/fuzz.pl:
+
+          Enhaced NULL detection.
+          Re-enable the check for NULL.
+
 Sun Jul 15 14:52:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Future.cpp:
