@@ -35,16 +35,11 @@ class Controller_impl;
 class Thermometer_impl : public virtual POA_CCS::Thermometer {
 public:
     // CORBA attributes
-    virtual CCS::ModelType  model()
-                                throw(CORBA::SystemException);
-    virtual CCS::AssetType  asset_num()
-                                throw(CORBA::SystemException);
-    virtual CCS::TempType   temperature()
-                                throw(CORBA::SystemException);
-    virtual CCS::LocType    location()
-                                throw(CORBA::SystemException);
-    virtual void            location(const char * loc)
-                                throw(CORBA::SystemException);
+    virtual CCS::ModelType  model();
+    virtual CCS::AssetType  asset_num();
+    virtual CCS::TempType   temperature();
+    virtual CCS::LocType    location();
+    virtual void            location(const char * loc);
 
     // Constructor and destructor
     Thermometer_impl(CCS::AssetType anum, const char * location);
@@ -72,14 +67,8 @@ class Thermostat_impl :
     public virtual Thermometer_impl {
 public:
     // CORBA operations
-    virtual CCS::TempType   get_nominal()
-                                throw(CORBA::SystemException);
-    virtual CCS::TempType   set_nominal(
-                                CCS::TempType new_temp
-                            ) throw(
-                                CORBA::SystemException,
-                                CCS::Thermostat::BadTemp
-                            );
+    virtual CCS::TempType get_nominal();
+    virtual CCS::TempType set_nominal(CCS::TempType new_temp));
 
     // Constructor and destructor
     Thermostat_impl(
@@ -91,9 +80,8 @@ public:
 
 private:
     // Helper functions
-    CCS::TempType   get_nominal_temp();
-    CCS::TempType   set_nominal_temp(CCS::TempType new_temp)
-                        throw(CCS::Thermostat::BadTemp);
+    CCS::TempType get_nominal_temp();
+    CCS::TempType set_nominal_temp(CCS::TempType new_temp);
 
     // Copy and assignment not supported
     Thermostat_impl(const Thermostat_impl &);
@@ -103,19 +91,10 @@ private:
 class Controller_impl : public virtual POA_CCS::Controller {
 public:
     // CORBA operations
-    virtual CCS::Controller::ThermometerSeq *
-                list() throw(CORBA::SystemException);
-    virtual void
-                find(CCS::Controller::SearchSeq & slist)
-                    throw(CORBA::SystemException);
-    virtual void
-                change(
-                    const CCS::Controller::ThermostatSeq & tlist,
-                    CORBA::Short                           delta
-                ) throw(
-                    CORBA::SystemException,
-                    CCS::Controller::EChange
-                );
+    virtual CCS::Controller::ThermometerSeq* list();
+    virtual void find(CCS::Controller::SearchSeq & slist);
+    virtual void change(const CCS::Controller::ThermostatSeq & tlist,
+                        CORBA::Short                           delta);
 
     // Constructor and destructor
     Controller_impl() {}

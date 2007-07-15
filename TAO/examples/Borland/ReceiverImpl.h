@@ -15,9 +15,9 @@ public:
   ~TReceiverImplementation (void);
   // Destructor.
 
-  virtual void message (const char* msg) throw (CORBA::SystemException);
+  virtual void message (const char* msg);
 
-  virtual void shutdown (void) throw (CORBA::SystemException);
+  virtual void shutdown (void);
   // Called when the chat server is going away.  The client
   // implementation should shutdown the chat client in response to
   // this.

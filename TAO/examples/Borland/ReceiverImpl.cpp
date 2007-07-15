@@ -14,7 +14,7 @@ TReceiverImplementation::~TReceiverImplementation ()
 {
 }
 //---------------------------------------------------------------------------
-void TReceiverImplementation::message (const char* msg) throw (CORBA::SystemException)
+void TReceiverImplementation::message (const char* msg)
 {
   ::PostMessage (ChatClientWindow->Handle,
                  WM_MESSAGE_RECEIVED,
@@ -22,7 +22,7 @@ void TReceiverImplementation::message (const char* msg) throw (CORBA::SystemExce
                  (LPARAM) 0);
 }
 //---------------------------------------------------------------------------
-void TReceiverImplementation::shutdown () throw (CORBA::SystemException)
+void TReceiverImplementation::shutdown ()
 {
   // Instruct the ORB to shutdown.
   orb_->shutdown (0);

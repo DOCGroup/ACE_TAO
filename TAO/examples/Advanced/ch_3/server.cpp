@@ -30,7 +30,7 @@
 
 TimeOfDay
 Time_impl::
-get_gmt (void) throw (CORBA::SystemException)
+get_gmt (void)
 {
   time_t time_now = ACE_OS::time (0);
   struct tm *time_p = ACE_OS::gmtime (&time_now);
