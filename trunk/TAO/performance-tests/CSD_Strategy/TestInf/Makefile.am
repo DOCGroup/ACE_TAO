@@ -124,6 +124,8 @@ libCSD_PT_TestInf_la_CPPFLAGS = \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
   -I$(TAO_ROOT)/tao \
+  -I$(TAO_ROOT)/performance-tests/CSD_Strategy \
+  -I$(TAO_BUILDDIR)/performance-tests/CSD_Strategy \
   -DCSD_PT_TESTINF_BUILD_DLL
 
 libCSD_PT_TestInf_la_SOURCES = \
