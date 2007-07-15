@@ -253,7 +253,7 @@ main(int argc, char * argv[])
             ctrl = resolve_name<CCS::Controller>(inc.in(), n);
         } catch (const CosNaming::NamingContext::NotFound &) {
             std::cerr << "No controller in Naming Service" << std::endl;
-            throw(0);
+            throw 0;
         }
 
         // Get list of devices

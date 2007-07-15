@@ -26,7 +26,7 @@
 class Time_impl : public virtual POA_Time 
 { 
 public:
-  virtual TimeOfDay get_gmt (void) throw (CORBA::SystemException);
+  virtual TimeOfDay get_gmt (void);
 };
 
 #endif /* server_HH_ */

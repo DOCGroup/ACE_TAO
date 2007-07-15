@@ -169,8 +169,7 @@ Thermometer_impl::_remove_ref ()
 // IDL model attribute.
 
 CCS::ModelType
-Thermometer_impl::
-model () throw (CORBA::SystemException)
+Thermometer_impl::model ()
 {
     return get_model ();
 }
@@ -178,8 +177,7 @@ model () throw (CORBA::SystemException)
 // IDL asset_num attribute.
 
 CCS::AssetType
-Thermometer_impl::
-asset_num () throw (CORBA::SystemException)
+Thermometer_impl::asset_num ()
 {
     return m_anum;
 }
@@ -187,8 +185,7 @@ asset_num () throw (CORBA::SystemException)
 // IDL temperature attribute.
 
 CCS::TempType
-Thermometer_impl::
-temperature () throw (CORBA::SystemException)
+Thermometer_impl::temperature ()
 {
     return get_temp ();
 }
@@ -196,8 +193,7 @@ temperature () throw (CORBA::SystemException)
 // IDL location attribute accessor.
 
 CCS::LocType
-Thermometer_impl::
-location () throw (CORBA::SystemException)
+Thermometer_impl::location ()
 {
     return get_loc ();
 }
@@ -205,8 +201,7 @@ location () throw (CORBA::SystemException)
 // IDL remove operation.
 
 void
-Thermometer_impl::
-remove () throw (CORBA::SystemException)
+Thermometer_impl::remove ()
 {
     m_removed = true;
     _remove_ref ();
@@ -215,8 +210,7 @@ remove () throw (CORBA::SystemException)
 // IDL location attribute modifier.
 
 void
-Thermometer_impl::
-location (const char *loc) throw (CORBA::SystemException)
+Thermometer_impl::location (const char *loc)
 {
     set_loc (loc);
 }
@@ -237,9 +231,7 @@ get_nominal_temp ()
 // Helper function to set a thermostat's nominal temperature.
 
 CCS::TempType
-Thermostat_impl::
-set_nominal_temp (CCS::TempType new_temp)
-throw (CCS::Thermostat::BadTemp)
+Thermostat_impl::set_nominal_temp (CCS::TempType new_temp)
 {
     short old_temp;
 
@@ -294,8 +286,7 @@ Thermostat_impl::
 // IDL get_nominal operation.
 
 CCS::TempType
-Thermostat_impl::
-get_nominal () throw (CORBA::SystemException)
+Thermostat_impl::get_nominal ()
 {
     return get_nominal_temp ();
 }
@@ -303,9 +294,7 @@ get_nominal () throw (CORBA::SystemException)
 // IDL set_nominal operation.
 
 CCS::TempType
-Thermostat_impl::
-set_nominal (CCS::TempType new_temp)
-throw (CORBA::SystemException, CCS::Thermostat::BadTemp)
+Thermostat_impl::set_nominal (CCS::TempType new_temp)
 {
     return set_nominal_temp (new_temp);
 }
@@ -333,8 +322,7 @@ remove_impl (CCS::AssetType anum)
 // Helper function to locate a servant in the asset map.
 
 bool
-Controller_impl::
-exists (CCS::AssetType anum)
+Controller_impl::exists (CCS::AssetType anum)
 {
     return m_assets.find (anum) != m_assets.end ();
 }
@@ -343,7 +331,7 @@ exists (CCS::AssetType anum)
 
 Controller_impl::
 Controller_impl (PortableServer::POA_ptr poa, const char * asset_file)
-throw (int) : m_poa (PortableServer::POA::_duplicate (poa)),
+           : m_poa (PortableServer::POA::_duplicate (poa)),
              m_asset_file (asset_file)
 {
     std::ifstream afile (m_asset_file.in (), std::ios::in|std::ios::out);//, 0666);
@@ -389,9 +377,7 @@ Controller_impl::
 }
 
 CCS::Thermometer_ptr
-Controller_impl::
-create_thermometer (CCS::AssetType anum, const char * loc)
-throw (CORBA::SystemException, CCS::Controller::DuplicateAsset)
+Controller_impl::create_thermometer (CCS::AssetType anum, const char * loc)
 {
     {
     ACE_Guard<ACE_Mutex> guard (m_assets_mutex);
@@ -415,10 +401,6 @@ create_thermostat (
     CCS::AssetType      anum,
     const char*     loc,
     CCS::TempType       temp)
-throw (
-    CORBA::SystemException,
-    CCS::Controller::DuplicateAsset,
-    CCS::Thermostat::BadTemp)
 {
     {
     ACE_Guard<ACE_Mutex> guard (m_assets_mutex);
@@ -461,8 +443,7 @@ throw (
 // IDL list operation.
 
 CCS::Controller::ThermometerSeq *
-Controller_impl::
-list () throw (CORBA::SystemException)
+Controller_impl::list ()
 {
     // Create a new thermometer sequence. Because we know
     // the number of elements we will put onto the sequence,
@@ -493,7 +474,7 @@ Controller_impl::
 change (
     const CCS::Controller::ThermostatSeq &  tlist,
     CORBA::Short                            delta
-) throw (CORBA::SystemException, CCS::Controller::EChange)
+)
 {
     CCS::Controller::EChange ec;    // Just in case we need it
 
@@ -533,7 +514,6 @@ change (
 void
 Controller_impl::
 find (CCS::Controller::SearchSeq & slist)
-throw (CORBA::SystemException)
 {
     // Loop over input list and lookup each device.
     CORBA::ULong listlen = slist.length ();
@@ -617,7 +597,7 @@ preinvoke (
     PortableServer::POA_ptr          /* poa */ ,
     const char *                     operation,
     void * &                         /* cookie */ 
-) throw (CORBA::SystemException, PortableServer::ForwardRequest)
+)
 {
     // Convert object id into asset number.
     CORBA::String_var oid_string;
