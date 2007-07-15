@@ -342,7 +342,7 @@ ACE_OS::num_processors (void)
   int num_processors;
   int mib[2] = { CTL_HW, HW_NCPU };
   size_t len = sizeof (num_processors);
-  if (::sysctl (mib, 2, &num_processors, &len, NULL, 0) != -1)
+  if (::sysctl (mib, 2, &num_processors, &len, 0, 0) != -1)
     return num_processors;
   else
     return -1;
@@ -374,7 +374,7 @@ ACE_OS::num_processors_online (void)
   int num_processors;
   int mib[2] = { CTL_HW, HW_NCPU };
   size_t len = sizeof (num_processors);
-  if (::sysctl (mib, 2, &num_processors, &len, NULL, 0) != -1)
+  if (::sysctl (mib, 2, &num_processors, &len, 0, 0) != -1)
     return num_processors;
   else
     return -1;

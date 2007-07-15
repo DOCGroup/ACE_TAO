@@ -1,3 +1,23 @@
+Sun Jul 15 13:08:50 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * ace/Malloc.h:
+        * ace/OS_NS_stdio.inl:
+        * ace/OS_NS_stropts.cpp:
+        * ace/OS_NS_unistd.cpp:
+        * ace/Object_Manager_Base.cpp:
+        * ace/QoS/QoS_Session_Impl.cpp:
+        * ace/Rtems_init.c:
+        * ace/SOCK_Dgram.cpp:
+        * ace/SOCK_Dgram_Mcast.cpp:
+        * ace/SOCK_SEQPACK_Connector.inl:
+        * ace/SSL/SSL_Asynch_BIO.cpp:
+        * ace/SSL/SSL_Context.cpp:
+        * ace/Sock_Connect.cpp:
+        * ace/os_include/os_stddef.h:
+
+          Fixed Fuzz warnings regarding the usage of NULL. Prefer the usage of 0 instead
+          of NULL.
+
 Sun Jul 15 04:21:44 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * bin/msvc_static_order.lst:

@@ -598,13 +598,13 @@ ACE_SSL_Context::dh_params (const char *file_name,
     DH * ret=0;
     BIO * bio = 0;
 
-    if ((bio = ::BIO_new_file (this->dh_params_.file_name (), "r")) == NULL)
+    if ((bio = ::BIO_new_file (this->dh_params_.file_name (), "r")) == 0)
       {
         this->dh_params_ = ACE_SSL_Data_File ();
         return -1;
       }
 
-    ret = PEM_read_bio_DHparams (bio, NULL, NULL, NULL);
+    ret = PEM_read_bio_DHparams (bio, 0, 0, 0);
     BIO_free (bio);
 
     if (ret == 0)

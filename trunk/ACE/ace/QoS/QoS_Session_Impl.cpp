@@ -340,10 +340,10 @@ ACE_RAPI_Session::sending_qos (const ACE_QoS &ace_qos)
       int result = rapi_sender (this->session_id_,
 				0,
 				0,
-				NULL,
 				0,
-				NULL,
-				NULL,
+				0,
+				0,
+				0,
 				25) ;
       if (result != 0)
 	ACE_ERROR_RETURN ((LM_ERROR,
@@ -404,20 +404,20 @@ ACE_RAPI_Session::sending_qos (const ACE_QoS &ace_qos)
   int result = rapi_sender(this->session_id_,
 			   0,
 			   (sockaddr *) this->src_addr_->get_addr (),
-			   NULL,
+			   0,
 			   t_spec,
-			   NULL,
-			   NULL,
+			   0,
+			   0,
 			   sending_flowspec->ttl ()) ;
   
   /*
   int result = rapi_sender(this->session_id_,
 			   0,
 			   (sockaddr *) sender_addr.get_addr (),
-			   NULL,
+			   0,
 			   t_spec,
-			   NULL,
-			   NULL,
+			   0,
+			   0,
 			   sending_flowspec->ttl ()) ;
   */
   if(result!= 0)
@@ -449,10 +449,10 @@ ACE_RAPI_Session::receiving_qos (const ACE_QoS &ace_qos)
 		       RAPI_RSTYLE_WILDCARD,
 		       // This applies the flowspec to all the senders. Given this,
 		       // @@I am passing the filter_spec to be null, hoping this will work.
-		       NULL,
-		       NULL,
 		       0,
-		       NULL,
+		       0,
+		       0,
+		       0,
 		       // The filter spec is NULL. This should work since the RSTYLE is
 		       // WILDCARD.
 		       0,
@@ -517,10 +517,10 @@ ACE_RAPI_Session::receiving_qos (const ACE_QoS &ace_qos)
                    RAPI_RSTYLE_WILDCARD,
                    // This applies the flowspec to all the senders. Given this,
                    // @@I am passing the filter_spec to be null, hoping this will work.
-                   NULL,
-                   NULL,
                    0,
-                   NULL,
+                   0,
+                   0,
+                   0,
                    // The filter spec is NULL. This should work since the RSTYLE is
                    // WILDCARD.
                    1,
