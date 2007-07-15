@@ -127,8 +127,7 @@ Thermometer_impl::
 // IDL model attribute.
 
 CCS::ModelType
-Thermometer_impl::
-model () throw (CORBA::SystemException)
+Thermometer_impl::model ()
 {
     return get_model ();
 }
@@ -136,8 +135,7 @@ model () throw (CORBA::SystemException)
 // IDL asset_num attribute.
 
 CCS::AssetType
-Thermometer_impl::
-asset_num () throw (CORBA::SystemException)
+Thermometer_impl::asset_num ()
 {
     return m_anum;
 }
@@ -145,8 +143,7 @@ asset_num () throw (CORBA::SystemException)
 // IDL temperature attribute.
 
 CCS::TempType
-Thermometer_impl::
-temperature () throw (CORBA::SystemException)
+Thermometer_impl::temperature ()
 {
     return get_temp ();
 }
@@ -154,8 +151,7 @@ temperature () throw (CORBA::SystemException)
 // IDL location attribute accessor.
 
 CCS::LocType
-Thermometer_impl::
-location () throw (CORBA::SystemException)
+Thermometer_impl::location ()
 {
     return get_loc ();
 }
@@ -163,8 +159,7 @@ location () throw (CORBA::SystemException)
 // IDL location attribute modifier.
 
 void
-Thermometer_impl::
-location (const char * loc) throw (CORBA::SystemException)
+Thermometer_impl::location (const char * loc)
 {
     set_loc (loc);
 }
@@ -174,8 +169,7 @@ location (const char * loc) throw (CORBA::SystemException)
 // Helper function to get a thermostat's nominal temperature.
 
 CCS::TempType
-Thermostat_impl::
-get_nominal_temp ()
+Thermostat_impl::get_nominal_temp ()
 {
     short temp;
     assert (
@@ -189,7 +183,6 @@ get_nominal_temp ()
 CCS::TempType
 Thermostat_impl::
 set_nominal_temp (CCS::TempType new_temp)
-throw (CCS::Thermostat::BadTemp)
 {
     short old_temp;
 
@@ -242,8 +235,7 @@ Thermostat_impl (
 // IDL get_nominal operation.
 
 CCS::TempType
-Thermostat_impl::
-get_nominal () throw (CORBA::SystemException)
+Thermostat_impl::get_nominal ()
 {
     return get_nominal_temp ();
 }
@@ -253,7 +245,6 @@ get_nominal () throw (CORBA::SystemException)
 CCS::TempType
 Thermostat_impl::
 set_nominal (CCS::TempType new_temp)
-throw (CORBA::SystemException, CCS::Thermostat::BadTemp)
 {
     return set_nominal_temp (new_temp);
 }
@@ -283,8 +274,7 @@ remove_impl (CCS::AssetType anum)
 // IDL list operation.
 
 CCS::Controller::ThermometerSeq *
-Controller_impl::
-list () throw (CORBA::SystemException)
+Controller_impl::list ()
 {
     // Create a new thermometer sequence. Because we know
     // the number of elements we will put onto the sequence,
@@ -309,7 +299,7 @@ Controller_impl::
 change (
     const CCS::Controller::ThermostatSeq &  tlist,
     CORBA::Short                            delta
-) throw (CORBA::SystemException, CCS::Controller::EChange)
+)
 {
     CCS::Controller::EChange ec;    // Just in case we need it
 
@@ -349,7 +339,6 @@ change (
 void
 Controller_impl::
 find (CCS::Controller::SearchSeq & slist)
-throw (CORBA::SystemException)
 {
     // Loop over input list and look up each device.
     CORBA::ULong listlen = slist.length ();

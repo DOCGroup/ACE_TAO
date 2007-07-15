@@ -1,3 +1,21 @@
+Sun Jul 15 01:43:25 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * examples/Advanced/ch_12/server.h:
+        * examples/Advanced/ch_12/server.cpp:
+        * examples/Advanced/ch_18/client.cpp:
+        * examples/Advanced/ch_18/server.h:
+        * examples/Advanced/ch_18/server.cpp:
+        * examples/Advanced/ch_21/server.h:
+        * examples/Advanced/ch_21/server.cpp:
+        * examples/Advanced/ch_3/server.h:
+        * examples/Advanced/ch_3/server.cpp:
+        * examples/Advanced/ch_8_and_10/server.h:
+        * examples/Advanced/ch_8_and_10/server.cpp:
+        * examples/Borland/ReceiverImpl.h:
+        * examples/Borland/ReceiverImpl.cpp:
+
+          Fixed fuzz warnings. Zap the usage of exception specification.
+
 Sat Jul 14 15:44:13 UTC 2007  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * TAO_IDL/driver/drv_preproc.cpp:

@@ -41,18 +41,12 @@ class Controller_impl;
 class Thermometer_impl : public virtual POA_CCS::Thermometer {
 public:
     // CORBA attributes
-    virtual CCS::ModelType  model()
-                                throw(CORBA::SystemException);
-    virtual CCS::AssetType  asset_num()
-                                throw(CORBA::SystemException);
-    virtual CCS::TempType   temperature()
-                                throw(CORBA::SystemException);
-    virtual CCS::LocType    location()
-                                throw(CORBA::SystemException);
-    virtual void            location(const char *loc)
-                                throw(CORBA::SystemException);
-    virtual void            remove()
-                                throw(CORBA::SystemException);
+    virtual CCS::ModelType  model();
+    virtual CCS::AssetType  asset_num();
+    virtual CCS::TempType   temperature();
+    virtual CCS::LocType    location();
+    virtual void            location(const char *loc);
+    virtual void            remove();
 
     // Constructor & destructor
     Thermometer_impl(CCS::AssetType anum);
@@ -85,14 +79,8 @@ class Thermostat_impl :
     public virtual Thermometer_impl {
 public:
     // CORBA operations
-    virtual CCS::TempType   get_nominal()
-                                throw(CORBA::SystemException);
-    virtual CCS::TempType   set_nominal(
-                                CCS::TempType new_temp
-                            ) throw(
-                                CORBA::SystemException,
-                                CCS::Thermostat::BadTemp
-                            );
+    virtual CCS::TempType   get_nominal();
+    virtual CCS::TempType   set_nominal(CCS::TempType new_temp));
 
     // Constructor and destructor
     Thermostat_impl(CCS::AssetType anum);
@@ -101,8 +89,7 @@ public:
 private:
     // Helper functions
     CCS::TempType   get_nominal_temp();
-    CCS::TempType   set_nominal_temp(CCS::TempType new_temp)
-                        throw(CCS::Thermostat::BadTemp);
+    CCS::TempType   set_nominal_temp(CCS::TempType new_temp);
 
     // Copy and assignment not supported
     Thermostat_impl(const Thermostat_impl &);
@@ -112,49 +99,26 @@ private:
 class Controller_impl : public virtual POA_CCS::Controller {
 public:
     // CORBA operations
-    virtual CCS::Controller::ThermometerSeq *
-                list() throw(CORBA::SystemException);
-    virtual void
-                find(CCS::Controller::SearchSeq & slist)
-                    throw(CORBA::SystemException);
-    virtual void
-                change(
-                    const CCS::Controller::ThermostatSeq & tlist,
-                    CORBA::Short                           delta
-                ) throw(
-                    CORBA::SystemException,
-                    CCS::Controller::EChange
-                );
-    virtual CCS::Thermometer_ptr
-                create_thermometer(
-                    CCS::AssetType      anum,
-                    const char*     loc
-                ) throw(
-                    CORBA::SystemException,
-                    CCS::Controller::DuplicateAsset
-                );
-    virtual CCS::Thermostat_ptr
-                create_thermostat(
-                    CCS::AssetType      anum,
-                    const char*     loc,
-                    CCS::TempType       temp
-                ) throw(
-                    CORBA::SystemException,
-                    CCS::Controller::DuplicateAsset,
-                    CCS::Thermostat::BadTemp
-                );
+    virtual CCS::Controller::ThermometerSeq* list();
+    virtual void find(CCS::Controller::SearchSeq & slist);
+    virtual void change(const CCS::Controller::ThermostatSeq & tlist,
+                        CORBA::Short                           delta));
+
+    virtual CCS::Thermometer_ptr create_thermometer(CCS::AssetType anum,
+                                                    const char*    loc);
+
+    virtual CCS::Thermostat_ptr create_thermostat(CCS::AssetType anum,
+                                                  const char*    loc,
+                                                  CCS::TempType  temp);
 
     // Constructor and destructor
-    Controller_impl(
-        PortableServer::POA_ptr poa,
-        const char *            asset_file
-    ) throw(int);
+    Controller_impl(PortableServer::POA_ptr poa,
+                    const char *            asset_file);
+
     virtual ~Controller_impl();
 
     // Helper functions to allow access to the object map
-    void                add_impl(
-                            CCS::AssetType      anum
-                        );
+    void                add_impl(CCS::AssetType anum);
     void                remove_impl(CCS::AssetType anum);
     bool                exists(CCS::AssetType anum);
 
@@ -216,9 +180,8 @@ public:
                     PortableServer::POA_ptr          /* poa */ ,
                     const char *                     operation,
                     void * &                         /* cookie */ 
-                ) throw(
-                    CORBA::SystemException,
-                    PortableServer::ForwardRequest);
+                );
+
     virtual void
                 postinvoke(
                     const PortableServer::ObjectId & /* oid */ ,
@@ -226,7 +189,7 @@ public:
                     const char *                     /* operation */ ,
                     void *                           /* cookie */ ,
                     PortableServer::Servant          /* servant */
-                ) throw(CORBA::SystemException) {}
+                ) {}
 private:
     Controller_impl *                   m_ctrl;
 
