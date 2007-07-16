@@ -62,9 +62,6 @@ client_SOURCES = \
   MessageS.inl \
   Message_i.h
 
-client_LDFLAGS = \
-  -L$(ACE_ROOT)/ace -L$(TAO_ROOT)/tao/PortableServer -L$(TAO_ROOT)/tao/IORInterceptor -L$(TAO_ROOT)/tao/ObjRefTemplate -L$(TAO_ROOT)/tao/Valuetype -L$(TAO_ROOT)/tao/IORTable -L$(TAO_ROOT)/tao -L$(TAO_ROOT)/lib
-
 client_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
   $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
