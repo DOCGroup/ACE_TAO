@@ -1,3 +1,33 @@
+Mon Jul 16 10:19:51 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * apps/svcconf/Svcconf_Handler.h:
+        * apps/svcconf/Svcconf_Handler.cpp:
+        * common/Attributes_Def_Builder.h:
+        * common/ContentHandler.h:
+        * common/DTDHandler.h:
+        * common/DefaultHandler.h:
+        * common/DefaultHandler.cpp:
+        * common/Element_Def_Builder.h:
+        * common/EntityResolver.h:
+        * common/ErrorHandler.h:
+        * common/Validator.h:
+        * common/XMLFilterImpl.h:
+        * common/XMLFilterImpl.cpp:
+        * common/XMLReader.h:
+        * examples/SAXPrint/Print_Handler.h:
+        * examples/SAXPrint/Print_Handler.cpp:
+        * examples/SAXPrint/SAXPrint_Handler.h:
+        * examples/SAXPrint/SAXPrint_Handler.cpp:
+        * parser/debug_validator/Debug_Attributes_Builder.h:
+        * parser/debug_validator/Debug_Attributes_Builder.cpp:
+        * parser/debug_validator/Debug_Element_Builder.h:
+        * parser/debug_validator/Debug_Element_Builder.cpp:
+        * parser/parser/Parser.h:
+        * parser/parser/Parser.cpp:
+        * tests/ContentHandler_Test.cpp:
+
+          Fixed Fuzz warnings. Zap the usage of exception specification.
+
 Sun Jun  3 20:02:32 UTC 2007  Olli Savia  <ops@iki.fi>
 
         * common/FileCharStream.cpp:

@@ -45,7 +45,7 @@ public:
    * @retval 0 if valid, -1 otherwise.
    */
   virtual int startElement (ACEXML_Attributes *atts ACEXML_ENV_ARG_DECL)
-        ACE_THROW_SPEC ((ACEXML_SAXException)) = 0;
+        = 0;
 
   /**
    * Validate the next child element.
@@ -55,7 +55,7 @@ public:
   virtual int nextElement (const ACEXML_Char *namespaceURI,
                             const ACEXML_Char *localName,
                             const ACEXML_Char *qName ACEXML_ENV_ARG_DECL)
-        ACE_THROW_SPEC ((ACEXML_SAXException)) = 0;
+        = 0;
 };
 
 
