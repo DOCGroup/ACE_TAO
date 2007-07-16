@@ -1,3 +1,10 @@
+Mon Jul 16 19:29:56 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * ace/POSIX_Proactor.cpp (ACE_AIOCB_Notify_Pipe_Manager): Set pipe's
+          read handle blocking, else it constantly completes reads of 0
+          bytes, EWOULDBLOCK. Correcting this makes HP-UX PA-RISC
+          Proactor_Timer_Test complete.
+
 Mon Jul 16 18:57:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Reactor/Proactor/Proactor.mpc:
