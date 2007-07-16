@@ -23,8 +23,7 @@ ACE_OS::uname (ACE_utsname *name)
   ACE_OSCALL_RETURN (::uname (name), int, -1);
 #elif defined (ACE_WIN32)
   size_t maxnamelen = sizeof name->nodename;
-  ACE_OS::strcpy (name->sysname,
-                  ACE_LIB_TEXT ("Win32"));
+  ACE_OS::strcpy (name->sysname, "Win32");
 
   ACE_TEXT_OSVERSIONINFO vinfo;
   vinfo.dwOSVersionInfoSize = sizeof(ACE_TEXT_OSVERSIONINFO);
