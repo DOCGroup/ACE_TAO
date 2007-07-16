@@ -1452,7 +1452,7 @@ ACE_POSIX_AIOCB_Proactor::start_aio_i (ACE_POSIX_Asynch_Result *result)
         ACE_ERROR ((LM_ERROR,
                     ACE_LIB_TEXT ("%N:%l:(%P | %t)::start_aio_i: aio_%s %p\n"),
                     ptype,
-                    ACE_LIB_TEXT ("queueing failed\n")));
+                    ACE_LIB_TEXT ("queueing failed")));
     }
 
   return ret_val;
