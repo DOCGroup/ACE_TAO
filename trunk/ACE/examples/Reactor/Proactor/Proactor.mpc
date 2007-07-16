@@ -41,21 +41,21 @@ project(*proactor) : aceexe {
   }
 }
 
-project(*proactor2) : aceexe {
-  avoids += ace_for_tao
-  exename = test_proactor2
-  Source_Files {
-    test_proactor2.cpp
-  }
-}
+// project(*proactor2) : aceexe {
+//   avoids += ace_for_tao
+//   exename = test_proactor2
+//   Source_Files {
+//     test_proactor2.cpp
+//   }
+// }
 
-project(*proactor3) : aceexe {
-  avoids += ace_for_tao
-  exename = test_proactor3
-  Source_Files {
-    test_proactor3.cpp
-  }
-}
+// project(*proactor3) : aceexe {
+//   avoids += ace_for_tao
+//   exename = test_proactor3
+//   Source_Files {
+//     test_proactor3.cpp
+//   }
+// }
 
 project(*timeout) : aceexe {
   avoids += ace_for_tao
