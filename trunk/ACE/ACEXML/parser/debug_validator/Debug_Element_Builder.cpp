@@ -18,7 +18,6 @@ int
 ACEXML_Debug_Element_Builder::setElementName (const ACEXML_Char *,
                                               const ACEXML_Char *,
                                               const ACEXML_Char *qName ACEXML_ENV_ARG_DECL_NOT_USED)
-      ACE_THROW_SPEC ((ACEXML_SAXException))
 {
   this->element_.set (qName, 0);
   return 0;
@@ -26,7 +25,6 @@ ACEXML_Debug_Element_Builder::setElementName (const ACEXML_Char *,
 
 int
 ACEXML_Debug_Element_Builder::setContentType (CONTENT_TYPE type ACEXML_ENV_ARG_DECL)
-      ACE_THROW_SPEC ((ACEXML_SAXException))
 {
   if (this->type_ == UNDEFINED)
     {
@@ -41,7 +39,6 @@ int
 ACEXML_Debug_Element_Builder::insertMixedElement (const ACEXML_Char *,
                                                   const ACEXML_Char *,
                                                   const ACEXML_Char *qName ACEXML_ENV_ARG_DECL_NOT_USED)
-      ACE_THROW_SPEC ((ACEXML_SAXException))
 {
   ACEXML_Element_Tree_Name_Node *node;
 
@@ -108,7 +105,6 @@ int
 ACEXML_Debug_Element_Builder::insertElement  (const ACEXML_Char *,
                                               const ACEXML_Char *,
                                               const ACEXML_Char *qName ACEXML_ENV_ARG_DECL_NOT_USED)
-      ACE_THROW_SPEC ((ACEXML_SAXException))
 {
   ACEXML_Element_Tree_Name_Node *node;
 

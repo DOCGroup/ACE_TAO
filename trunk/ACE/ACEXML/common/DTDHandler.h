@@ -60,7 +60,7 @@ public:
   virtual void notationDecl (const ACEXML_Char *name,
                              const ACEXML_Char *publicId,
                              const ACEXML_Char *systemId ACEXML_ENV_ARG_DECL)
-        ACE_THROW_SPEC ((ACEXML_SAXException)) = 0;
+        = 0;
 
   /**
    * Receive notification of an unparsed entity declaration event.
@@ -69,7 +69,7 @@ public:
                                    const ACEXML_Char *publicId,
                                    const ACEXML_Char *systemId,
                                    const ACEXML_Char *notationName ACEXML_ENV_ARG_DECL)
-        ACE_THROW_SPEC ((ACEXML_SAXException)) = 0;
+        = 0;
 };
 
 
