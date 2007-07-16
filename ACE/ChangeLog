@@ -1,3 +1,15 @@
+Mon Jul 16 10:01:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Reactor/Proactor/test_aiosig.cpp:
+          Fixed compile problems, thanks to Craig Rodrigues
+          <rodrigc at crodrigues dot org> for reporting these
+
+        * examples/Reactor/Proactor/Proactor.mpc:
+          Added proactor2 and proactor3
+
+        * examples/Reactor/Proactor/test_proactor3.cpp:
+          Fixed compile warnings
+
 Sun Jul 15 18:45:03 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * bin/fuzz.pl:

@@ -27,6 +27,7 @@
 #include "ace/Asynch_IO_Impl.h"
 #include "ace/Asynch_Acceptor.h"
 #include "ace/INET_Addr.h"
+#include "ace/Manual_Event.h"
 #include "ace/SOCK_Connector.h"
 #include "ace/SOCK_Acceptor.h"
 #include "ace/SOCK_Stream.h"
@@ -421,6 +422,7 @@ public:
   int open (const ACE_TCHAR *host, u_short port);
   void close (void);
   ACE_HANDLE handle (void) const;
+  virtual void handle (ACE_HANDLE);
 
 protected:
   // These methods are called by the freamwork
@@ -474,6 +476,11 @@ void Sender::close (void)
 ACE_HANDLE Sender::handle (void) const
 {
   return this->stream_.get_handle ();
+}
+
+void Sender::handle (ACE_HANDLE handle)
+{
+  this->stream_.set_handle (handle);
 }
 
 int Sender::open (const ACE_TCHAR *host, u_short port)
@@ -821,6 +828,9 @@ disable_signal (int sigmin, int sigmax)
     ACE_ERROR ((LM_ERROR,
                 "Error:(%P | %t):%p\n",
                 "pthread_sigmask failed"));
+#else
+  ACE_UNUSED_ARG (sigmin);
+  ACE_UNUSED_ARG (sigmax);
 #endif /* ACE_WIN32 */
 
   return 1;
