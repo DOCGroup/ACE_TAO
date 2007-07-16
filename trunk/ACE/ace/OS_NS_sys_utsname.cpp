@@ -68,7 +68,7 @@ ACE_OS::uname (ACE_utsname *name)
       ACE_OS::sprintf (name->version,
                        "Build %d %s",
                        (int) vinfo.dwBuildNumber,
-                       vinfo.szCSDVersion);
+                       ACE_TEXT_ALWAYS_CHAR (vinfo.szCSDVersion));
 
       // We have to make sure that the size of (processor + subtype)
       // is not greater than the size of name->machine.  So we give
