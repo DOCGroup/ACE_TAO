@@ -1,3 +1,12 @@
+Mon Jul 16 20:15:22 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * tests/run_test.pl: When checking for Starting/Ending lines in
+          child sublogs, allow one Process_Manager_Test sublog to miss its
+          Ending line. One of the child processes gets terminated and on
+          some platforms (notably HP-UX 11 on PA-RISC) this leaves a short
+          log file. Since this is the intended purpose of the test, don't
+          flag it as a failure.
+
 Mon Jul 16 19:29:56 UTC 2007  Steve Huston  <shuston@riverace.com>
 
         * ace/POSIX_Proactor.cpp (ACE_AIOCB_Notify_Pipe_Manager): Set pipe's
