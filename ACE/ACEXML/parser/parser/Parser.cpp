@@ -85,7 +85,6 @@ ACEXML_Parser::initialize(ACEXML_InputSource* input)
 
 void
 ACEXML_Parser::parse (const ACEXML_Char *systemId ACEXML_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((ACEXML_SAXException))
 {
   ACEXML_InputSource* input = 0;
   ACE_NEW (input, ACEXML_InputSource (systemId));
@@ -94,7 +93,6 @@ ACEXML_Parser::parse (const ACEXML_Char *systemId ACEXML_ENV_ARG_DECL)
 
 void
 ACEXML_Parser::parse (ACEXML_InputSource *input ACEXML_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((ACEXML_SAXException))
 {
   if (input == 0)
     {
@@ -235,7 +233,6 @@ ACEXML_Parser::parse (ACEXML_InputSource *input ACEXML_ENV_ARG_DECL)
 
 int
 ACEXML_Parser::parse_doctypedecl (ACEXML_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((ACEXML_SAXException))
 {
   if (this->parse_token (ACE_TEXT ("DOCTYPE")) < 0)
     {
@@ -311,7 +308,6 @@ ACEXML_Parser::parse_doctypedecl (ACEXML_ENV_SINGLE_ARG_DECL)
 
 int
 ACEXML_Parser::parse_internal_dtd (ACEXML_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((ACEXML_SAXException))
 {
   this->ref_state_ = ACEXML_ParserInt::IN_INT_DTD;
   ACEXML_Char nextch = this->skip_whitespace ();
@@ -366,7 +362,6 @@ ACEXML_Parser::parse_internal_dtd (ACEXML_ENV_SINGLE_ARG_DECL)
 
 int
 ACEXML_Parser::parse_external_dtd (ACEXML_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((ACEXML_SAXException))
 {
   this->ref_state_ = ACEXML_ParserInt::IN_EXT_DTD;
   ACEXML_Char* publicId = 0;
@@ -417,7 +412,6 @@ ACEXML_Parser::parse_external_dtd (ACEXML_ENV_SINGLE_ARG_DECL)
 
 int
 ACEXML_Parser::parse_external_subset (ACEXML_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((ACEXML_SAXException))
 {
   this->ref_state_ = ACEXML_ParserInt::IN_EXT_DTD;
   this->external_subset_ = 1;
@@ -473,7 +467,6 @@ ACEXML_Parser::parse_external_subset (ACEXML_ENV_SINGLE_ARG_DECL)
 
 int
 ACEXML_Parser::parse_conditional_section (ACEXML_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((ACEXML_SAXException))
 {
   ACEXML_Char ch = this->get ();
   int include = 0;
@@ -551,7 +544,6 @@ ACEXML_Parser::parse_conditional_section (ACEXML_ENV_SINGLE_ARG_DECL)
 
 int
 ACEXML_Parser::parse_ignoresect (ACEXML_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((ACEXML_SAXException))
 {
   ACEXML_Char nextch = this->skip_whitespace();
   int count = 0;
@@ -607,7 +599,6 @@ ACEXML_Parser::parse_ignoresect (ACEXML_ENV_SINGLE_ARG_DECL)
 
 int
 ACEXML_Parser::parse_includesect (ACEXML_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((ACEXML_SAXException))
 {
   ACEXML_Char nextch = this->skip_whitespace();
   do {
@@ -666,7 +657,6 @@ ACEXML_Parser::parse_includesect (ACEXML_ENV_SINGLE_ARG_DECL)
 
 int
 ACEXML_Parser::parse_markup_decl (ACEXML_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((ACEXML_SAXException))
 {
   ACEXML_Char nextch = this->peek ();
   switch (nextch)
@@ -725,7 +715,6 @@ int
 ACEXML_Parser::parse_external_id (ACEXML_Char *&publicId,
                                   ACEXML_Char *&systemId
                                   ACEXML_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((ACEXML_SAXException))
 {
   publicId = systemId = 0;
   ACEXML_Char nextch = this->get ();
@@ -823,7 +812,6 @@ ACEXML_Parser::normalize_systemid (const ACEXML_Char* systemId)
 
 void
 ACEXML_Parser::parse_element (int is_root ACEXML_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((ACEXML_SAXException))
 {
   // Parse STag.
   const ACEXML_Char *startname = this->parse_name ();
@@ -991,7 +979,6 @@ int
 ACEXML_Parser::parse_content (const ACEXML_Char* startname,
                               const ACEXML_Char*& ns_uri,
                               const ACEXML_Char*& ns_lname, int ns_flag ACEXML_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((ACEXML_SAXException))
 {
   ACEXML_Char *cdata;
   size_t cdata_length = 0;
@@ -1172,7 +1159,6 @@ ACEXML_Parser::parse_content (const ACEXML_Char* startname,
 
 int
 ACEXML_Parser::parse_cdata (ACEXML_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((ACEXML_SAXException))
 {
   if (this->parse_token (ACE_TEXT ("[CDATA[")) < 0)
     {
@@ -1215,7 +1201,6 @@ ACEXML_Parser::parse_cdata (ACEXML_ENV_SINGLE_ARG_DECL)
 
 int
 ACEXML_Parser::parse_entity_decl (ACEXML_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((ACEXML_SAXException))
 {
   ACEXML_Char nextch = 0;
 
@@ -1380,7 +1365,6 @@ ACEXML_Parser::parse_entity_decl (ACEXML_ENV_SINGLE_ARG_DECL)
 
 int
 ACEXML_Parser::parse_attlist_decl (ACEXML_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((ACEXML_SAXException))
 {
   if (this->parse_token (ACE_TEXT ("ATTLIST")) < 0)
     {
@@ -1497,7 +1481,6 @@ ACEXML_Parser::check_for_PE_reference (ACEXML_ENV_SINGLE_ARG_DECL)
 
 ACEXML_Char*
 ACEXML_Parser::parse_attname (ACEXML_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((ACEXML_SAXException))
 {
   // Parse attribute name
   ACEXML_Char *att_name = this->parse_name ();
@@ -1512,7 +1495,6 @@ ACEXML_Parser::parse_attname (ACEXML_ENV_SINGLE_ARG_DECL)
 
 int
 ACEXML_Parser::parse_defaultdecl (ACEXML_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((ACEXML_SAXException))
 {
   // DefaultDecl ::=  '#REQUIRED' | '#IMPLIED' | (('#FIXED' S)? AttValue)
   ACEXML_Char nextch = this->peek ();
@@ -1588,7 +1570,6 @@ ACEXML_Parser::parse_defaultdecl (ACEXML_ENV_SINGLE_ARG_DECL)
 
 int
 ACEXML_Parser::parse_tokenized_type (ACEXML_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((ACEXML_SAXException))
 {
   ACEXML_Char ch = this->get();
   switch (ch)
@@ -1710,7 +1691,6 @@ ACEXML_Parser::parse_tokenized_type (ACEXML_ENV_SINGLE_ARG_DECL)
  */
 int
 ACEXML_Parser::parse_atttype (ACEXML_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((ACEXML_SAXException))
 {
   ACEXML_Char nextch = this->peek();
   switch (nextch)
@@ -1833,7 +1813,6 @@ ACEXML_Parser::parse_atttype (ACEXML_ENV_SINGLE_ARG_DECL)
 
 int
 ACEXML_Parser::parse_notation_decl (ACEXML_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((ACEXML_SAXException))
 {
   if (this->parse_token (ACE_TEXT ("NOTATION")) < 0)
     {
@@ -1919,7 +1898,6 @@ ACEXML_Parser::parse_notation_decl (ACEXML_ENV_SINGLE_ARG_DECL)
 
 int
 ACEXML_Parser::parse_element_decl (ACEXML_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((ACEXML_SAXException))
 {
   if (this->parse_token (ACE_TEXT ("LEMENT")) < 0)
     {
@@ -1994,7 +1972,6 @@ ACEXML_Parser::parse_element_decl (ACEXML_ENV_SINGLE_ARG_DECL)
 
 int
 ACEXML_Parser::parse_children_definition (ACEXML_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((ACEXML_SAXException))
 {
   this->get ();                 // consume the '('
   this->check_for_PE_reference (ACEXML_ENV_SINGLE_ARG_PARAMETER);
@@ -2067,7 +2044,6 @@ ACEXML_Parser::parse_children_definition (ACEXML_ENV_SINGLE_ARG_DECL)
 
 int
 ACEXML_Parser::parse_child (int skip_open_paren ACEXML_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((ACEXML_SAXException))
 {
   // Conditionally consume the open paren.
   if (skip_open_paren == 0 && this->get () != '(')
@@ -2276,7 +2252,6 @@ ACEXML_Parser::parse_reference_name (void)
 
 int
 ACEXML_Parser::parse_attvalue (ACEXML_Char *&str ACEXML_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((ACEXML_SAXException))
 {
   ACEXML_Char quote = this->get ();
   if (quote != '\'' && quote != '"')  // Not a quoted string.
@@ -2360,7 +2335,6 @@ ACEXML_Parser::parse_attvalue (ACEXML_Char *&str ACEXML_ENV_ARG_DECL)
 
 int
 ACEXML_Parser::parse_entity_reference (ACEXML_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((ACEXML_SAXException))
 {
   ACEXML_Char* replace = this->parse_reference_name ();
   if (replace == 0)
@@ -2513,7 +2487,6 @@ ACEXML_Parser::parse_entity_reference (ACEXML_ENV_SINGLE_ARG_DECL)
 
 int
 ACEXML_Parser::parse_PE_reference (ACEXML_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((ACEXML_SAXException))
 {
   ACEXML_Char* replace = this->parse_reference_name ();
   if (replace == 0)
@@ -2655,7 +2628,6 @@ ACEXML_Parser::parse_PE_reference (ACEXML_ENV_SINGLE_ARG_DECL)
 int
 ACEXML_Parser::parse_entity_value (ACEXML_Char *&str
                                    ACEXML_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((ACEXML_SAXException))
 {
   ACEXML_ParserInt::ReferenceState temp = this->ref_state_;
   ACEXML_Char quote = this->get ();
@@ -2904,7 +2876,6 @@ void
 ACEXML_Parser::prefix_mapping (const ACEXML_Char* prefix,
                                const ACEXML_Char* uri,
                                int start ACEXML_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((ACEXML_SAXException))
 {
   if (this->namespaces_)
     {
@@ -3023,8 +2994,6 @@ ACEXML_Parser::pop_context (int GE_ref ACEXML_ENV_ARG_DECL)
 
 int
 ACEXML_Parser::getFeature (const ACEXML_Char *name ACEXML_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((ACEXML_SAXNotRecognizedException,
-                   ACEXML_SAXNotSupportedException))
 {
   if (ACE_OS::strcmp (name, ACEXML_Parser::simple_parsing_feature_) == 0)
     {
@@ -3051,8 +3020,6 @@ ACEXML_Parser::getFeature (const ACEXML_Char *name ACEXML_ENV_ARG_DECL)
 void
 ACEXML_Parser::setFeature (const ACEXML_Char *name,
                            int boolean_value ACEXML_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((ACEXML_SAXNotRecognizedException,
-                   ACEXML_SAXNotSupportedException))
 {
   if (ACE_OS::strcmp (name, ACEXML_Parser::simple_parsing_feature_) == 0)
     {
@@ -3081,8 +3048,6 @@ ACEXML_Parser::setFeature (const ACEXML_Char *name,
 
 void *
 ACEXML_Parser::getProperty (const ACEXML_Char *name ACEXML_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((ACEXML_SAXNotRecognizedException,
-                   ACEXML_SAXNotSupportedException))
 {
   ACEXML_THROW_RETURN (ACEXML_SAXNotSupportedException (name), 0);
 }
@@ -3090,8 +3055,6 @@ ACEXML_Parser::getProperty (const ACEXML_Char *name ACEXML_ENV_ARG_DECL)
 void
 ACEXML_Parser::setProperty (const ACEXML_Char *name,
                             void *value ACEXML_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((ACEXML_SAXNotRecognizedException,
-                   ACEXML_SAXNotSupportedException))
 {
   ACE_UNUSED_ARG (value);
 
@@ -3100,7 +3063,6 @@ ACEXML_Parser::setProperty (const ACEXML_Char *name,
 
 void
 ACEXML_Parser::error (const ACEXML_Char* msg ACEXML_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((ACEXML_SAXException))
 {
   ACEXML_SAXParseException* exception = 0;
   ACE_NEW_NORETURN (exception, ACEXML_SAXParseException (msg));
@@ -3113,7 +3075,6 @@ ACEXML_Parser::error (const ACEXML_Char* msg ACEXML_ENV_ARG_DECL)
 
 void
 ACEXML_Parser::warning (const ACEXML_Char* msg ACEXML_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((ACEXML_SAXException))
 {
   ACEXML_SAXParseException* exception = 0;
   ACE_NEW_NORETURN (exception, ACEXML_SAXParseException (msg));
@@ -3125,7 +3086,6 @@ ACEXML_Parser::warning (const ACEXML_Char* msg ACEXML_ENV_ARG_DECL)
 
 void
 ACEXML_Parser::fatal_error (const ACEXML_Char* msg ACEXML_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((ACEXML_SAXException))
 {
   ACEXML_SAXParseException* exception = 0;
   ACE_NEW_NORETURN (exception, ACEXML_SAXParseException (msg));
@@ -3138,7 +3098,6 @@ ACEXML_Parser::fatal_error (const ACEXML_Char* msg ACEXML_ENV_ARG_DECL)
 
 void
 ACEXML_Parser::parse_version_info (ACEXML_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((ACEXML_SAXException))
 {
   ACEXML_Char* astring;
   if (this->parse_token (ACE_TEXT("ersion")) < 0
@@ -3159,7 +3118,6 @@ ACEXML_Parser::parse_version_info (ACEXML_ENV_SINGLE_ARG_DECL)
 
 void
 ACEXML_Parser::parse_encoding_decl (ACEXML_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((ACEXML_SAXException))
 {
   ACEXML_Char* astring = 0;
   if ((this->parse_token (ACE_TEXT("ncoding")) < 0)
@@ -3183,7 +3141,6 @@ ACEXML_Parser::parse_encoding_decl (ACEXML_ENV_SINGLE_ARG_DECL)
 
 int
 ACEXML_Parser::parse_text_decl (ACEXML_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((ACEXML_SAXException))
 {
   // Read xml
   if (this->parse_token (ACE_TEXT("xml")) < 0)
@@ -3225,7 +3182,6 @@ ACEXML_Parser::parse_text_decl (ACEXML_ENV_SINGLE_ARG_DECL)
 
 void
 ACEXML_Parser::parse_xml_decl (ACEXML_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((ACEXML_SAXException))
 {
   // Read <?xml
   if (this->parse_token (ACE_TEXT("xml")) < 0)
@@ -3305,7 +3261,6 @@ ACEXML_Parser::parse_comment (void)
 
 int
 ACEXML_Parser::parse_processing_instruction (ACEXML_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((ACEXML_SAXException))
 {
   const ACEXML_Char *pitarget = this->parse_name ();
   ACEXML_Char *instruction = 0;

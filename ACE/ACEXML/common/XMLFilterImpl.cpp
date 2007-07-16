@@ -33,7 +33,6 @@ ACEXML_XMLFilterImpl::~ACEXML_XMLFilterImpl (void)
 
 void
 ACEXML_XMLFilterImpl::parse (ACEXML_InputSource *input ACEXML_ENV_ARG_DECL)
-      ACE_THROW_SPEC ((ACEXML_SAXException))
 {
   if (this->setupParser () < 0)
     {
@@ -45,7 +44,6 @@ ACEXML_XMLFilterImpl::parse (ACEXML_InputSource *input ACEXML_ENV_ARG_DECL)
 
 void
 ACEXML_XMLFilterImpl::parse (const ACEXML_Char *systemId ACEXML_ENV_ARG_DECL)
-      ACE_THROW_SPEC ((ACEXML_SAXException))
 {
   if (this->setupParser () < 0)
     {
@@ -58,8 +56,6 @@ ACEXML_XMLFilterImpl::parse (const ACEXML_Char *systemId ACEXML_ENV_ARG_DECL)
 
 int
 ACEXML_XMLFilterImpl::getFeature (const ACEXML_Char *name ACEXML_ENV_ARG_DECL)
-        ACE_THROW_SPEC ((ACEXML_SAXNotRecognizedException,
-                         ACEXML_SAXNotSupportedException))
 {
   if (this->parent_ != 0)
     return this->parent_->getFeature (name ACEXML_ENV_ARG_PARAMETER);
@@ -69,8 +65,6 @@ ACEXML_XMLFilterImpl::getFeature (const ACEXML_Char *name ACEXML_ENV_ARG_DECL)
 
 void *
 ACEXML_XMLFilterImpl::getProperty (const ACEXML_Char *name ACEXML_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((ACEXML_SAXNotRecognizedException,
-                   ACEXML_SAXNotSupportedException))
 {
   if (this->parent_ != 0)
     return this->parent_->getProperty (name ACEXML_ENV_ARG_PARAMETER);
@@ -81,8 +75,6 @@ ACEXML_XMLFilterImpl::getProperty (const ACEXML_Char *name ACEXML_ENV_ARG_DECL)
 void
 ACEXML_XMLFilterImpl::setFeature (const ACEXML_Char *name,
                                   int boolean_value ACEXML_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((ACEXML_SAXNotRecognizedException,
-                   ACEXML_SAXNotSupportedException))
 {
   if (this->parent_ != 0)
     {
@@ -97,8 +89,6 @@ ACEXML_XMLFilterImpl::setFeature (const ACEXML_Char *name,
 void
 ACEXML_XMLFilterImpl::setProperty (const ACEXML_Char *name,
                                    void *value ACEXML_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((ACEXML_SAXNotRecognizedException,
-                   ACEXML_SAXNotSupportedException))
 {
   if (this->parent_ != 0)
     {
@@ -127,7 +117,6 @@ ACEXML_XMLFilterImpl::characters (const ACEXML_Char *ch,
                                   size_t start,
                                   size_t length
                                   ACEXML_ENV_ARG_DECL)
-      ACE_THROW_SPEC ((ACEXML_SAXException))
 {
   if (this->contentHandler_ != 0)
     this->contentHandler_->characters (ch, start, length ACEXML_ENV_ARG_PARAMETER);
@@ -135,7 +124,6 @@ ACEXML_XMLFilterImpl::characters (const ACEXML_Char *ch,
 
 void
 ACEXML_XMLFilterImpl::endDocument (ACEXML_ENV_SINGLE_ARG_DECL)
-      ACE_THROW_SPEC ((ACEXML_SAXException))
 {
   if (this->contentHandler_ != 0)
     this->contentHandler_->endDocument (ACEXML_ENV_SINGLE_ARG_PARAMETER);
@@ -145,7 +133,6 @@ void
 ACEXML_XMLFilterImpl::endElement (const ACEXML_Char *namespaceURI,
                                   const ACEXML_Char *localName,
                                   const ACEXML_Char *qName ACEXML_ENV_ARG_DECL)
-      ACE_THROW_SPEC ((ACEXML_SAXException))
 {
   if (this->contentHandler_ != 0)
     this->contentHandler_->endElement (namespaceURI,
@@ -155,7 +142,6 @@ ACEXML_XMLFilterImpl::endElement (const ACEXML_Char *namespaceURI,
 
 void
 ACEXML_XMLFilterImpl::endPrefixMapping (const ACEXML_Char *prefix ACEXML_ENV_ARG_DECL)
-      ACE_THROW_SPEC ((ACEXML_SAXException))
 {
   if (this->contentHandler_ != 0)
     this->contentHandler_->endPrefixMapping (prefix ACEXML_ENV_ARG_PARAMETER);
@@ -165,7 +151,6 @@ void
 ACEXML_XMLFilterImpl::ignorableWhitespace (const ACEXML_Char *ch,
                                            int start,
                                            int length ACEXML_ENV_ARG_DECL)
-      ACE_THROW_SPEC ((ACEXML_SAXException))
 {
   if (this->contentHandler_ != 0)
     this->contentHandler_->ignorableWhitespace (ch,
@@ -176,7 +161,6 @@ ACEXML_XMLFilterImpl::ignorableWhitespace (const ACEXML_Char *ch,
 void
 ACEXML_XMLFilterImpl::processingInstruction (const ACEXML_Char *target,
                                              const ACEXML_Char *data ACEXML_ENV_ARG_DECL)
-      ACE_THROW_SPEC ((ACEXML_SAXException))
 {
   if (this->contentHandler_ != 0)
     this->contentHandler_->processingInstruction (target,
@@ -192,7 +176,6 @@ ACEXML_XMLFilterImpl::setDocumentLocator (ACEXML_Locator *locator)
 
 void
 ACEXML_XMLFilterImpl::skippedEntity (const ACEXML_Char *name ACEXML_ENV_ARG_DECL)
-      ACE_THROW_SPEC ((ACEXML_SAXException))
 {
   if (this->contentHandler_ != 0)
     this->contentHandler_->skippedEntity (name ACEXML_ENV_ARG_PARAMETER);
@@ -200,7 +183,6 @@ ACEXML_XMLFilterImpl::skippedEntity (const ACEXML_Char *name ACEXML_ENV_ARG_DECL
 
 void
 ACEXML_XMLFilterImpl::startDocument (ACEXML_ENV_SINGLE_ARG_DECL)
-      ACE_THROW_SPEC ((ACEXML_SAXException))
 {
   if (this->contentHandler_ != 0)
     this->contentHandler_->startDocument (ACEXML_ENV_SINGLE_ARG_PARAMETER);
@@ -211,7 +193,6 @@ ACEXML_XMLFilterImpl::startElement (const ACEXML_Char *namespaceURI,
                                     const ACEXML_Char *localName,
                                     const ACEXML_Char *qName,
                                     ACEXML_Attributes *atts ACEXML_ENV_ARG_DECL)
-      ACE_THROW_SPEC ((ACEXML_SAXException))
 {
   if (this->contentHandler_ != 0)
     this->contentHandler_->startElement (namespaceURI,
@@ -223,7 +204,6 @@ ACEXML_XMLFilterImpl::startElement (const ACEXML_Char *namespaceURI,
 void
 ACEXML_XMLFilterImpl::startPrefixMapping (const ACEXML_Char *prefix,
                                           const ACEXML_Char *uri ACEXML_ENV_ARG_DECL)
-      ACE_THROW_SPEC ((ACEXML_SAXException))
 {
   if (this->contentHandler_ != 0)
     this->contentHandler_->startPrefixMapping (prefix,
@@ -234,7 +214,6 @@ void
 ACEXML_XMLFilterImpl::notationDecl (const ACEXML_Char *name,
                                     const ACEXML_Char *publicId,
                                     const ACEXML_Char *systemId ACEXML_ENV_ARG_DECL)
-      ACE_THROW_SPEC ((ACEXML_SAXException))
 {
   if (this->dtdHandler_ != 0)
     this->dtdHandler_->notationDecl (name,
@@ -247,7 +226,6 @@ ACEXML_XMLFilterImpl::unparsedEntityDecl (const ACEXML_Char *name,
                                           const ACEXML_Char *publicId,
                                           const ACEXML_Char *systemId,
                                           const ACEXML_Char *notationName ACEXML_ENV_ARG_DECL)
-      ACE_THROW_SPEC ((ACEXML_SAXException))
 {
   if (this->dtdHandler_ != 0)
     this->dtdHandler_->unparsedEntityDecl (name,
@@ -259,7 +237,6 @@ ACEXML_XMLFilterImpl::unparsedEntityDecl (const ACEXML_Char *name,
 ACEXML_InputSource *
 ACEXML_XMLFilterImpl::resolveEntity (const ACEXML_Char *publicId,
                                      const ACEXML_Char *systemId ACEXML_ENV_ARG_DECL)
-      ACE_THROW_SPEC ((ACEXML_SAXException))
 {
   if (this->entityResolver_ != 0)
     return this->entityResolver_->resolveEntity (publicId,
@@ -269,7 +246,6 @@ ACEXML_XMLFilterImpl::resolveEntity (const ACEXML_Char *publicId,
 
 void
 ACEXML_XMLFilterImpl::error (ACEXML_SAXParseException &exception ACEXML_ENV_ARG_DECL)
-      ACE_THROW_SPEC ((ACEXML_SAXException))
 {
   if (this->errorHandler_ != 0)
     this->errorHandler_->error (exception ACEXML_ENV_ARG_PARAMETER);
@@ -277,7 +253,6 @@ ACEXML_XMLFilterImpl::error (ACEXML_SAXParseException &exception ACEXML_ENV_ARG_
 
 void
 ACEXML_XMLFilterImpl::fatalError (ACEXML_SAXParseException &exception ACEXML_ENV_ARG_DECL)
-      ACE_THROW_SPEC ((ACEXML_SAXException))
 {
   if (this->errorHandler_ != 0)
     this->errorHandler_->fatalError (exception ACEXML_ENV_ARG_PARAMETER);
@@ -285,7 +260,6 @@ ACEXML_XMLFilterImpl::fatalError (ACEXML_SAXParseException &exception ACEXML_ENV
 
 void
 ACEXML_XMLFilterImpl::warning (ACEXML_SAXParseException &exception ACEXML_ENV_ARG_DECL)
-      ACE_THROW_SPEC ((ACEXML_SAXException))
 {
   if (this->errorHandler_ != 0)
     this->errorHandler_->warning (exception ACEXML_ENV_ARG_PARAMETER);

@@ -23,8 +23,7 @@ public:
    */
   virtual void characters (const ACEXML_Char *ch,
                            size_t start,
-                           size_t length ACEXML_ENV_ARG_DECL)
-        ACE_THROW_SPEC ((ACEXML_SAXException));
+                           size_t length ACEXML_ENV_ARG_DECL);
 
   const ACEXML_Char *get_test_string (void)
     { return Basic_Content_Tester::test_string_; }
@@ -42,7 +41,6 @@ void
 Basic_Content_Tester::characters (const ACEXML_Char *ch,
                                   size_t start,
                                   size_t length ACEXML_ENV_ARG_DECL)
-        ACE_THROW_SPEC ((ACEXML_SAXException))
 {
   static int already_called = 0;
   static const ACEXML_Char *expect =
