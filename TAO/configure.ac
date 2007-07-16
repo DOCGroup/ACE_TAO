@@ -910,6 +910,9 @@ if test $tao_build_tests = yes; then
     tests/UNKNOWN_Exception/Makefile
     tests/Xt_Stopwatch/Makefile
   ])
+  AC_CONFIG_COMMANDS([bug_2399], [
+      mkdir tests/Bug_2399_Regression/mytmp
+   ],[])
 fi
 
 dnl Note that the "TAO_VERSION" in the message below is an M4 macro

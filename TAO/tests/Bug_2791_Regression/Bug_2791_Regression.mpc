@@ -3,7 +3,6 @@
 
 
 project (*client) : taoclient, valuetype {
-   libpaths   += $(ACE_ROOT)/ace $(TAO_ROOT)/tao/PortableServer $(TAO_ROOT)/tao/IORInterceptor $(TAO_ROOT)/tao/ObjRefTemplate $(TAO_ROOT)/tao/Valuetype $(TAO_ROOT)/tao/IORTable $(TAO_ROOT)/tao $(TAO_ROOT)/lib
 
    IDL_Files {
       Message.idl
