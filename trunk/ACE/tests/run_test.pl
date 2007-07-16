@@ -323,8 +323,12 @@ sub check_log ($)
             local $sublognames = "$program\-.*".$log_suffix;
             @sublogs = grep (/^$sublognames/, readdir (THISDIR));
             closedir (THISDIR);
+            my $saw_short_process_manager_child_log = 0;
             foreach $log (@sublogs) {
-                # Just like the main log, but no start/end check
+                # Just like the main log, but note that Process_Manager_Test
+                # kills (signal 9) one of its children so the log may get
+                # deleted, or it may be incomplete. So let this one go, but
+                # only once per Process_Manager_Test.
                 if (open (LOG, "<log/".$log) == 0) {
                     print STDERR "Error: Cannot open sublog file $log\n";
                 }
@@ -355,8 +359,15 @@ sub check_log ($)
                     }
 
                     if ($number_ending == 0) {
-                       print STDERR "Error ($log): no line with 'Ending'\n";
-                       $print_log = 1;
+                       if ($program eq 'Process_Manager_Test' &&
+                           $saw_short_process_manager_child_log == 0) {
+                           $saw_short_process_manager_child_log = 1;
+                           $number_ending = 1;
+                       }
+                       else {
+                           print STDERR "Error ($log): no line with 'Ending'\n";
+                           $print_log = 1;
+                       }
                     }
 
                     if ($number_starting != $number_ending) {
