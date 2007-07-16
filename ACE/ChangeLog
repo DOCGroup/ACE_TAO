@@ -1,3 +1,17 @@
+Mon Jul 16 21:00:46 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * ace/OS_NS_sys_utsname.{h cpp}: When ACE needs to define a
+          ACE_utsname struct (for sytems where ACE_LACKS_UTSNAME_T) define
+          the character strings as char[], not ACE_TCHAR[], to make it
+          the same across all platforms. Unifies handling for this struct
+          and fixes Bugzilla #2665.
+
+        * NEWS: Describes the above change in ACE_utsname's types.
+
+        * tests/Enum_Interfaces_Test.cpp: Remove the specialized handling for
+          ACE_utsname depending on the ACE_LACKS_UTSNAME setting; it's all the
+          same now.
+
 Mon Jul 16 20:15:22 UTC 2007  Steve Huston  <shuston@riverace.com>
 
         * tests/run_test.pl: When checking for Starting/Ending lines in

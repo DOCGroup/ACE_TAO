@@ -12,6 +12,14 @@ PLANNED MAJOR CHANGES "SOMETIME IN THE FUTURE" (i.e., exact beta not known)
 USER VISIBLE CHANGES BETWEEN ACE-5.5.9 and ACE-5.5.10
 ====================================================
 
+. The ACE_utsname struct, used in the ACE_OS::uname() function when the
+  platform doesn't provide the standard utsname struct, was changed. It
+  defines a number of text fields and their types were changed from
+  ACE_TCHAR[] to char[] in order to be consistent with all other platforms.
+  This removes the need to write different code for platforms where
+  ACE_LACKS_UTSNAME_T is set and that have wide characters (most probably
+  Windows). Fixes Bugzilla #2665.
+
 . The ACE::daemonize() "close_all_handles" parameter was changed from
   an "int" to a "bool" to better reflect how it is used.
 
