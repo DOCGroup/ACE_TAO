@@ -31,6 +31,7 @@
 #include <stdio.h>
 
 #include <limits.h>
+#include <pthread.h>
 
 #include <aio.h>
 
@@ -118,7 +119,6 @@ issue_aio_calls (void)
 int
 query_aio_completions (void)
 {
-  int result = 0;
   size_t number_of_compleions = 0;
   for (number_of_compleions = 0;
        number_of_compleions < 2;
@@ -250,6 +250,13 @@ test_aio_calls (void)
   return 0;
 }
 
+void
+null_handler (int         /* signal_number */,
+              siginfo_t * /* info */,
+              void *      /* context */)
+{
+}
+
 int
 setup_signal_handler (int signal_number)
 {
@@ -274,15 +281,8 @@ setup_signal_handler (int signal_number)
   return 0;
 }
 
-void
-null_handler (int         /* signal_number */,
-              siginfo_t * /* info */,
-              void *      /* context */)
-{
-}
-
 int
-ACE_TMAIN (int, ACE_TCHAR *[])
+main (int, char *[])
 {
   if (test_aio_calls () == 0)
     printf ("RT SIG test successful:\n"
