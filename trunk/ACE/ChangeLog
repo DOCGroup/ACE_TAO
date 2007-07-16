@@ -1,3 +1,8 @@
+Mon Jul 16 18:57:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Reactor/Proactor/Proactor.mpc:
+          Temporarily removed proactor2 and 3, to cleanup scoreboard
+
 Mon Jul 16 10:01:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Reactor/Proactor/test_aiosig.cpp:
