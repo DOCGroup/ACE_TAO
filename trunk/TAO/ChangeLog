@@ -1,3 +1,25 @@
+Mon Jul 17 05:42:20 UTC 2007  Ossama Othman  <ossama_othman at symantec dot com>
+
+        * tests/Bug_1495_Regression/tid_to_int.h:
+        * tests/Bug_2084_Regression/tid_to_int.h:
+
+          New header containing portable ACE_thread_t to integer
+          conversion code that doesn't rely heavily on platform specific
+          configuration.  This file should probably be moved to a common
+          location if there is interest in the conversion functionality it
+          provides.
+
+        * tests/Bug_1495_Regression/Client_Task.cpp (svc): 
+        * tests/Bug_1495_Regression/test_i.cpp (get_thread_id):
+        * tests/Bug_2084_Regression/EventNode.cpp (registerHello):
+        * tests/Bug_2084_Regression/Hello.cpp (get_string): 
+
+          Convert from ACE_thread_t to the test's ThreadId type using the
+          conversion utility function in tid_to_int.h.  Addresses "cast
+          from pointer to integer of different size" compile-time
+          warnings on platforms where ACE_thread_t is a pointer, such as
+          VxWorks.
+
 Mon Jul 16 13:47:54 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * configure.ac:
