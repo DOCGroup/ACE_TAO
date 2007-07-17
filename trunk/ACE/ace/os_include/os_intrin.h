@@ -45,8 +45,8 @@ extern "C"
 // See http://msdn2.microsoft.com/en-us/library/f24ya7ct(VS.71).aspx
 LONG __cdecl _InterlockedIncrement (LONG volatile *Addend);
 LONG __cdecl _InterlockedDecrement (LONG volatile *Addend);
-LONG __cdecl _InterlockedExchange (LPLONG volatile Target, LONG Value);
-LONG __cdecl _InterlockedExchangeAdd (LPLONG volatile Addend, LONG Value);
+LONG __cdecl _InterlockedExchange (LONG volatile *Target, LONG Value);
+LONG __cdecl _InterlockedExchangeAdd (LONG volatile *Addend, LONG Value);
 #endif //_MSC_VER
 
 #ifdef __cplusplus
