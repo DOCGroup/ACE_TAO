@@ -109,16 +109,29 @@ namespace TAO_Notify
   }
 
   bool
-  Topology_Object::change_to_parent (void)
+  Topology_Object::send_deletion_change (void)
   {
-    bool result = false;
-    Topology_Parent * parent = this->topology_parent();
-    if (parent != 0)
+    bool saving = false;
+    if (is_persistent ())
     {
-      result = parent->child_change();
+      saving = this->change_to_parent ();
     }
-    return result;
+    this->self_changed_ = false;
+    this->children_changed_ = false;
+    return saving;
   }
+
+  bool
+    Topology_Object::change_to_parent (void)
+    {
+      bool result = false;
+      Topology_Parent * parent = this->topology_parent();
+      if (parent != 0)
+      {
+        result = parent->child_change();
+      }
+      return result;
+    }
 
   void
   Topology_Object::get_id_path (TAO_Notify::IdVec & id_path) const
