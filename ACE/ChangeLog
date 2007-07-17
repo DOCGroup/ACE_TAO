@@ -1,3 +1,9 @@
+Tue Jul 17 18:38:53 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * examples/Reactor/Multicast/Log_Wrapper.cpp (open): Removed the
+          ACE_LACKS_UTSNAME_T block as it's no longer needed. See
+          Mon Jul 16 21:00:46 UTC 2007  Steve Huston  <shuston@riverace.com>
+
 Tue Jul 17 18:21:25 UTC 2007  Steve Huston  <shuston@riverace.com>
 
         * ace/Process.h: Expanded the documentation for creation_flags().
