@@ -10,6 +10,7 @@
 #include "Client_Task.h"
 #include "testC.h"
 #include "Client_ORBInitializer.h"
+#include "tid_to_int.h"
 
 
 Client_Task::Client_Task (const char *input,
@@ -44,8 +45,10 @@ Client_Task::svc (void)
       // Try multiple calls to see if we keep being forwarded
       for (int i = 0; i < 5; ++i)
         {
+          using Bug1495_Regression::ThreadId;
+
           // call the thread_id function on the test object
-          Bug1495_Regression::ThreadId remote_thread_id;
+          ThreadId remote_thread_id;
 
           server->get_thread_id (remote_thread_id);
 
@@ -55,8 +58,8 @@ Client_Task::svc (void)
                       "\n",
                       remote_thread_id));
 
-          Bug1495_Regression::ThreadId const mythread_id =
-            (Bug1495_Regression::ThreadId) ACE_Thread::self ();
+          ThreadId const mythread_id =
+            ACE_thread_t_to_integer<ThreadId> (ACE_Thread::self ());
 
           if (mythread_id != remote_thread_id)
             {
