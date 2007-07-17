@@ -1,3 +1,7 @@
+Tue Jul 17 18:21:25 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * ace/Process.h: Expanded the documentation for creation_flags().
+
 Tue Jul 17 18:07:01 UTC 2007  Steve Huston  <shuston@riverace.com>
 
         * ace/os_include/os_intrin.h: Corrected the prototypes for
