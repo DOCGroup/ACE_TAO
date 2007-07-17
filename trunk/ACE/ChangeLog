@@ -1,3 +1,9 @@
+Tue Jul 17 10:20:24 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Reactor/Proactor/test_proactor2.cpp:
+        * examples/Reactor/Proactor/test_proactor3.cpp:
+          Fixed some compile warnings/errors
+
 Tue Jul 17 08:36:24 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/POSIX_Proactor.h:

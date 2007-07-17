@@ -454,7 +454,7 @@ private:
   long io_count_;
 };
 
-static char *data = "Welcome to Irfan World! Irfan RULES here !!\n";
+static const char *data = "Welcome to Irfan World! Irfan RULES here !!\n";
 
 Sender::Sender (void)
   : io_count_ (0)
@@ -870,5 +870,15 @@ print_sigmask (void)
   return 0;
 }
 #endif /* 0 */
+
+#else /* ACE_HAS_WIN32_OVERLAPPED_IO || ACE_HAS_AIO_CALLS */
+
+int
+ACE_TMAIN (int, ACE_TCHAR *[])
+{
+  ACE_DEBUG ((LM_DEBUG,
+              "This example does not work on this platform.\n"));
+  return 1;
+}
 
 #endif /* ACE_HAS_WIN32_OVERLAPPED_IO || ACE_HAS_AIO_CALLS */

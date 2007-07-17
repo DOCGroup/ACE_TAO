@@ -409,7 +409,7 @@ MyMutex m_Mtx ;
 long    nIOCount ;
 };
 
-static char *data = "Welcome to Irfan World! Irfan RULES here !!\n";
+static const char *data = "Welcome to Irfan World! Irfan RULES here !!\n";
 
 Sender::Sender (void)
   :nIOCount ( 0 )
@@ -803,6 +803,16 @@ int PrintSigMask ()
       }
 #endif
   return 0;
+}
+
+#else /* ACE_HAS_WIN32_OVERLAPPED_IO || ACE_HAS_AIO_CALLS */
+
+int
+ACE_TMAIN (int, ACE_TCHAR *[])
+{
+  ACE_DEBUG ((LM_DEBUG,
+              "This example does not work on this platform.\n"));
+  return 1;
 }
 
 #endif /* ACE_HAS_WIN32_OVERLAPPED_IO || ACE_HAS_AIO_CALLS */
