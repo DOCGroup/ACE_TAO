@@ -31,7 +31,7 @@ void CE_Screen_Output::SetOutputWindow(HWND hEdit)
 
 void CE_Screen_Output::clear()
 {
-    SetWindowText(handler_, NULL);
+    SetWindowText(handler_, 0);
 }
 
 
@@ -41,7 +41,7 @@ CE_Screen_Output& CE_Screen_Output::operator << (wchar_t* output)
     SendMessage(handler_, EM_SETSEL, length, length);
     SendMessage(handler_, EM_REPLACESEL, 0, (LPARAM)output);
 
-    if (pFile_ != NULL)
+    if (pFile_ != 0)
     {
         fwprintf(pFile_, L"%s", output);
     }
@@ -64,7 +64,7 @@ CE_Screen_Output& CE_Screen_Output::operator << (const wchar_t* output)
 
 CE_Screen_Output& CE_Screen_Output::operator << (char* output)
 {
-    int len = MultiByteToWideChar(CP_OEMCP, MB_PRECOMPOSED, output, -1, NULL, 0);
+    int len = MultiByteToWideChar(CP_OEMCP, MB_PRECOMPOSED, output, -1, 0, 0);
     wchar_t* w_output = new wchar_t[len];
 
     MultiByteToWideChar(CP_OEMCP, MB_PRECOMPOSED, output, -1, w_output, len);
@@ -78,7 +78,7 @@ CE_Screen_Output& CE_Screen_Output::operator << (char* output)
 
 CE_Screen_Output& CE_Screen_Output::operator << (const char* output)
 {
-    int len = MultiByteToWideChar(CP_OEMCP, MB_PRECOMPOSED, output, -1, NULL, 0);
+    int len = MultiByteToWideChar(CP_OEMCP, MB_PRECOMPOSED, output, -1, 0, 0);
     wchar_t* w_output = new wchar_t[len];
 
     MultiByteToWideChar(CP_OEMCP, MB_PRECOMPOSED, output, -1, w_output, len);

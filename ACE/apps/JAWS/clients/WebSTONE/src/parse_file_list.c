@@ -57,7 +57,7 @@ count_file_list(const char *url_list_file)
 
   fp = fopen(url_list_file, "r");
   
-  if (fp == NULL)
+  if (fp == 0)
     {
       D_PRINTF( "Error %d opening filelist %s: %s\n", 
 		       errno, url_list_file, strerror(errno) );;
@@ -72,11 +72,11 @@ count_file_list(const char *url_list_file)
        * parse through the file line-by-line 
        * strip out comments, but don't check for URL consistency
        */
-      while (fgets(a_line, BUFSIZ, fp) != NULL)
+      while (fgets(a_line, BUFSIZ, fp) != 0)
 	{
 	  textvalue = a_line;
 	  /* check for comments */
-	  if (strchr(textvalue, '#') != NULL)
+	  if (strchr(textvalue, '#') != 0)
 	    {
 	      /* throw out anything after any '#' */
 	      D_PRINTF( "Stripping comment from line: %s\n", textvalue );
@@ -84,11 +84,11 @@ count_file_list(const char *url_list_file)
 	      D_PRINTF( "Found first # at %d\n", returnval );
 	      if (returnval == 0) 
 		{
-		  textvalue = NULL;
+		  textvalue = 0;
 		}
 	    }
 	  /* is there more? */
-	  if (textvalue != NULL) 
+	  if (textvalue != 0) 
 	    {
 	      num_of_pages++;
 	      D_PRINTF( "Found %ld pages\n", num_of_pages );
@@ -123,7 +123,7 @@ parse_file_list (const char *url_list_file, page_list_t *page_list,
 
   fp = fopen(url_list_file, "r");
   
-  if (fp == NULL)
+  if (fp == 0)
     {
       errexit("Error %d opening filelist: %s\n", errno, strerror(errno));
     }
@@ -134,11 +134,11 @@ parse_file_list (const char *url_list_file, page_list_t *page_list,
        * EXAMPLE: http://www/file.html 1
        */
       D_PRINTF( "File is open.\n" );
-      while(fgets(a_line, BUFSIZ, fp) != NULL)
+      while(fgets(a_line, BUFSIZ, fp) != 0)
 	{
 	  textvalue = a_line;
 	  /* check for comments */
-	  if (strchr(textvalue, '#') != NULL)
+	  if (strchr(textvalue, '#') != 0)
 	    {
 	      /* throw out anything after a '#' */
 	      D_PRINTF( "Stripping comment from line: %s\n", textvalue );
@@ -156,7 +156,7 @@ parse_file_list (const char *url_list_file, page_list_t *page_list,
 	  D_PRINTF( "Processing page %ld\n", numpages );
 	  loadnum = 0;
 
-	  if (textvalue != NULL) { /* is there more? */
+	  if (textvalue != 0) { /* is there more? */
 	    /* check for weighting factor */
 	    D_PRINTF( "Setting page values from: %s\n", textvalue );
 	    returnval = sscanf(textvalue, "%s%d", tempbuf, &loadnum);
@@ -189,7 +189,7 @@ parse_file_list (const char *url_list_file, page_list_t *page_list,
 
 	    if (haveproxyserver)
 	      {
-		pp->servername[filenum] = NULL;
+		pp->servername[filenum] = 0;
 		pp->port_number[filenum] = 0;
 		strcpy(pp->filename[filenum], textvalue);
 	      }
@@ -218,7 +218,7 @@ parse_file_list (const char *url_list_file, page_list_t *page_list,
 		      }
 		    if (returnval == EOF)
 		      {
-			pp->servername[filenum] = NULL;
+			pp->servername[filenum] = 0;
 		      }
 		    else
 		      {
@@ -238,7 +238,7 @@ parse_file_list (const char *url_list_file, page_list_t *page_list,
 		    pp->port_number[filenum] = 80;
 		    D_PRINTF( "Trying filename, returnval=%d\n", 
 		      returnval );
-		    pp->servername[filenum] = NULL;
+		    pp->servername[filenum] = 0;
 		    D_PRINTF( "Server %s, port number %d\n", 
 		      pp->servername[filenum],
 		      pp->port_number[filenum] );

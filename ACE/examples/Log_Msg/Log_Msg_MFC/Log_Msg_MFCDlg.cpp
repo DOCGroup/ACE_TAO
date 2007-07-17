@@ -63,7 +63,7 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // CLog_Msg_MFCDlg dialog
 
-CLog_Msg_MFCDlg::CLog_Msg_MFCDlg(CWnd* pParent /*=NULL*/)
+CLog_Msg_MFCDlg::CLog_Msg_MFCDlg(CWnd* pParent /*=0*/)
 	: CDialog(CLog_Msg_MFCDlg::IDD, pParent)
 {
 	//{{AFX_DATA_INIT(CLog_Msg_MFCDlg)
@@ -107,7 +107,7 @@ BOOL CLog_Msg_MFCDlg::OnInitDialog()
 
 #if !defined (_WIN32_WCE)
 	CMenu* pSysMenu = GetSystemMenu(FALSE);
-	if (pSysMenu != NULL)
+	if (pSysMenu != 0)
 	{
 		CString strAboutMenu;
 		strAboutMenu.LoadString(IDS_ABOUTBOX);

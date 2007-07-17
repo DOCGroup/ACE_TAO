@@ -78,7 +78,7 @@ typedef unsigned short                  ushort;
 #define S_ADDR                          s_addr
 
 #ifdef USE_TIMEZONE
-#define GETTIMEOFDAY(timeval,tz)        gettimeofday(timeval, NULL)
+#define GETTIMEOFDAY(timeval,tz)        gettimeofday(timeval, 0)
 #else
 #define GETTIMEOFDAY(timeval,tz)        gettimeofday(timeval, tz)
 #endif /* USE_TIMEZONE */

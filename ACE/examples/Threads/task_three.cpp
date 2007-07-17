@@ -188,7 +188,7 @@ ACE_TMAIN (int argc, ACE_TCHAR **)
                                 ios::trunc|ios::out),
                       -1);
 #else
-      if ((out_stream = ACE_OS::fopen ("test_task_three.out", "w")) == NULL)
+      if ((out_stream = ACE_OS::fopen ("test_task_three.out", "w")) == 0)
         return -1;
 #endif
       ACE_LOG_MSG->set_flags (ACE_Log_Msg::OSTREAM);

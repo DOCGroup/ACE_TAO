@@ -703,7 +703,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   int Rc = -1 ;
 
-  if ( host == NULL ) // Acceptor
+  if ( host == 0 ) // Acceptor
     {
       // Simplify , initial read with  zero size
       Rc = acceptor.open (ACE_INET_Addr (port),0,1);
@@ -724,7 +724,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   ACE_Proactor::end_event_loop () ;
 
-  if ( host != NULL ) // we are sender
+  if ( host != 0 ) // we are sender
     {
       sender.close () ; // disconnect to get reciever error !!!
     }
@@ -734,7 +734,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   pTM->wait_task ( & Task1 ) ;
 
-  ACE_Proactor::instance( ( ACE_Proactor* )NULL );
+  ACE_Proactor::instance( ( ACE_Proactor* )0 );
 
   return 0;
 }

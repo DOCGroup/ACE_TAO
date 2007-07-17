@@ -53,14 +53,14 @@ int
 ACE_TMAIN (int argc, ACE_TCHAR**argv)
 {
   // The worlds most useless user interface
-  Widget top_level = XtVaAppInitialize (NULL,
+  Widget top_level = XtVaAppInitialize (0,
                                         "buttontest",
-                                        NULL,
+                                        0,
                                         0,
                                         &argc,
                                         argv,
-                                        NULL,
-                                        NULL);
+                                        0,
+                                        0);
   char change[] = "change"; // XmCreatePushButton() wants a non-const
                             // string.
   Widget button = XmCreatePushButton (top_level,
@@ -71,7 +71,7 @@ ACE_TMAIN (int argc, ACE_TCHAR**argv)
   XtAddCallback (button,
                  XmNactivateCallback,
                  ActivateCB,
-                 NULL);
+                 0);
 
   // A reactor beastie.
   ACE_XtReactor xreactor (XtWidgetToApplicationContext (top_level));

@@ -403,7 +403,7 @@ Secondary_Ipaddr_Handler::open (ACE_Reactor *const reactor,
                        ACE_TEXT("can't schedule timer with reactor.\n")),
                       -1);
 
-  this->seq_ = time (NULL);
+  this->seq_ = time (0);
 
   ACE_OS::strncpy (this->ip_buff_,
                    ip_slash_mask,

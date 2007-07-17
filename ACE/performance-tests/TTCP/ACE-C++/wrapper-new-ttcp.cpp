@@ -676,7 +676,7 @@ prep_timer ()
   fprintf(stdout, "beginning sys time = %d sec and %d usec\n", ru0.ru_stime.tv_sec, ru0.ru_stime.tv_usec);
 
   /* Init REAL Timer */
-  if (setitimer (ITIMER_REAL, &itime0, NULL))
+  if (setitimer (ITIMER_REAL, &itime0, 0))
     {
       perror ("Setting 'itimer' REAL failed");
       return;

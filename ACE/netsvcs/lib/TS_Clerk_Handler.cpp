@@ -499,7 +499,7 @@ ACE_TS_Clerk_Processor::init (int argc, ACE_TCHAR *argv[])
   // Now set up timer to receive updates from server
   // set the timer to go off after timeout value
   this->timer_id_ = ACE_Reactor::instance ()->schedule_timer (this,
-                                                              NULL,
+                                                              0,
                                                               ACE_Time_Value (this->timeout_),
                                                               ACE_Time_Value (this->timeout_));
   return 0;

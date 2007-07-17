@@ -26,7 +26,7 @@ char *strerror(int errnum)
 	return(sys_errlist[errnum]);
     }
 
-    return(NULL);
+    return(0);
 }
 
 #endif /* strerror() */

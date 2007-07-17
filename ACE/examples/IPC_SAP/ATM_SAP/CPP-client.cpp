@@ -130,7 +130,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       con.add_leaf( atm_stream,
                     hosts[ i ],
                     i,
-                    NULL );
+                    0 );
 
     }
   } /* if num_leaves == 1 */
