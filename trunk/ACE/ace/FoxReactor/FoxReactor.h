@@ -44,7 +44,7 @@ class ACE_FoxReactor_Export ACE_FoxReactor : public FXObject , public ACE_Select
   FXDECLARE(ACE_FoxReactor)
 public:
   // = Initialization and termination methods.
-  ACE_FoxReactor (FXApp* a=NULL,
+  ACE_FoxReactor (FXApp* a=0,
                  size_t size = DEFAULT_SIZE,
                  int restart = 0,
                  ACE_Sig_Handler * = 0);

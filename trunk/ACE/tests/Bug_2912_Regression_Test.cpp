@@ -137,11 +137,11 @@ get_dh1024 ()
   };
   DH *dh;
 
-  if ((dh=DH_new()) == NULL) return(NULL);
-  dh->p=BN_bin2bn(dh1024_p,sizeof(dh1024_p),NULL);
-  dh->g=BN_bin2bn(dh1024_g,sizeof(dh1024_g),NULL);
-  if ((dh->p == NULL) || (dh->g == NULL))
-    { DH_free(dh); return(NULL); }
+  if ((dh=DH_new()) == 0) return(0);
+  dh->p=BN_bin2bn(dh1024_p,sizeof(dh1024_p),0);
+  dh->g=BN_bin2bn(dh1024_g,sizeof(dh1024_g),0);
+  if ((dh->p == 0) || (dh->g == 0))
+    { DH_free(dh); return(0); }
   return(dh);
 }
 

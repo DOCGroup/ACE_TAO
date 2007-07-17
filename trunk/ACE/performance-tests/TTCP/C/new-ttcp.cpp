@@ -700,7 +700,7 @@ prep_timer ()
   getrusage (RUSAGE_SELF, &ru0);
 
   /* Init REAL Timer */
-  if (setitimer (ITIMER_REAL, &itime0, NULL))
+  if (setitimer (ITIMER_REAL, &itime0, 0))
     {
       perror ("Setting 'itimer' REAL failed");
       return;

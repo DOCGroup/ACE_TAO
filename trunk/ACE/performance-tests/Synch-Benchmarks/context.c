@@ -47,9 +47,9 @@ main (int argc, char *argv[])
 
   ncorr = atoi (argv[5]);
 
-  if (thr_create (NULL, 0, work, 0, t0arg, &tid0) != 0)
+  if (thr_create (0, 0, work, 0, t0arg, &tid0) != 0)
     perror ("couldn't create thread 0");
-  if (thr_create (NULL, 0, work, (void *) 1, t1arg, &tid1) != 0)
+  if (thr_create (0, 0, work, (void *) 1, t1arg, &tid1) != 0)
     perror ("couldn't create thread 1");
 
   orig_ncorr = thr_getconcurrency ();

@@ -12,10 +12,10 @@ main (int argc, char **argv)
   FILE *infile, *outfile;
   char buf[BUFSIZ];
 
-  if ((infile = fopen (argv[1], "r")) == NULL)
+  if ((infile = fopen (argv[1], "r")) == 0)
     return -1;
 
-  if ((outfile = fopen (argv[2], "w")) == NULL)
+  if ((outfile = fopen (argv[2], "w")) == 0)
     return -1;
 
   int count = 0;

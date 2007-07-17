@@ -236,7 +236,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   int i = 0;
   static char buf[BUFSIZ];
   fp = ACE_OS::fopen (filelist_name, "r+b");
-  while (ACE_OS::fgets (buf, sizeof (buf), fp) != NULL)
+  while (ACE_OS::fgets (buf, sizeof (buf), fp) != 0)
     {
       static char rq[BUFSIZ];
       ACE_OS::sprintf (rq, "GET /%s\r\n", buf);

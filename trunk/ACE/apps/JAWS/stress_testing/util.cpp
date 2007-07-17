@@ -9,7 +9,7 @@ URL::URL(char *input_buf) {
   char *buffer = new char[BUFSIZ];
 
   ACE_OS::strcpy(buffer,input_buf);
-  if(buffer == NULL)
+  if(buffer == 0)
     return;
 
   char *temp;
@@ -20,11 +20,11 @@ URL::URL(char *input_buf) {
     ACE_OS::strcpy(protocol_, temp);
   }
 
-  if((temp = ACE_OS::strtok_r(NULL,"/",&lasts)))  {
+  if((temp = ACE_OS::strtok_r(0,"/",&lasts)))  {
     hostname_ = (char *) ACE_OS::malloc(strlen(temp) + 1);
     ACE_OS::strcpy(hostname_, temp);
   }
-  if((temp = ACE_OS::strtok_r(NULL,"\0",&lasts))) {
+  if((temp = ACE_OS::strtok_r(0,"\0",&lasts))) {
     filename_ = (char *) ACE_OS::malloc(ACE_OS::strlen(temp) + 1);
     ACE_OS::strcpy(filename_, temp);
   }

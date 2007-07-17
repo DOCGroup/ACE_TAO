@@ -19,7 +19,7 @@ client_thread(void *data)
 
   if(!(u->get_protocol() && u->get_hostname() && u->get_filename())) {
     cerr << "Invalid URL" << endl;
-    return NULL;
+    return 0;
   }
 
   cp->stats->i_have_started(cp->id);
@@ -27,7 +27,7 @@ client_thread(void *data)
   // Attempt connection
   connection webserver;
 
-  if(webserver.connect(u->get_hostname(), cp->tcp_nodelay, cp->sockbufsiz)) return NULL;
+  if(webserver.connect(u->get_hostname(), cp->tcp_nodelay, cp->sockbufsiz)) return 0;
   // Send the request now.
 
 
@@ -62,7 +62,7 @@ client_thread(void *data)
   throughput = (8 * total_read/et.real_time) / (1000 * 1000); //pow(10,6) ;
   cp->stats->log(cp->id, throughput, latency);
   webserver.close();
-  return NULL;
+  return 0;
 }
 
 int driver(char *id, int total_num, float requests_sec, char *url1, float p1, char *url2, float p2, char *url3, float p3, int tcp_nodelay, int sockbufsiz) {
@@ -78,7 +78,7 @@ int driver(char *id, int total_num, float requests_sec, char *url1, float p1, ch
   // sleep_time is in microseconds, and requests_sec is per second, hence the pow(10,6)
   float sleep_time = (1/requests_sec) * (1000.0 * 1000.0); // pow(10,6);
   float delta = 0;
-  ACE_OS::srand(ACE_OS::time(NULL));
+  ACE_OS::srand(ACE_OS::time(0));
   for(int i = 0; i < total_num; i++) { // i is used as a id for threads
     ACE_Profile_Timer timer;
     if(sleep_time < delta)
@@ -139,7 +139,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   }
 
   FILE *fp = ACE_OS::fopen(argv[1],"r");
-  if(fp == NULL) {
+  if(fp == 0) {
     ACE_POS::perror("fopen");
     return 2;
   }

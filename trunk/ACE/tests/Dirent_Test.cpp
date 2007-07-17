@@ -163,7 +163,7 @@ dirent_count (const ACE_TCHAR *dir_path,
 # if (defined (ACE_VXWORKS) && (ACE_VXWORKS < 0x600))
   // VxWorks only allows full paths (incl. device spec if applicable) to be specified
   ACE_TCHAR full_path[MAXPATHLEN];
-  if (ACE_OS::getcwd (full_path, sizeof(full_path)) == NULL)
+  if (ACE_OS::getcwd (full_path, sizeof(full_path)) == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("getcwd: failed\n")),
                       -1);

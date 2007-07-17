@@ -152,7 +152,7 @@ static void MyOpenService(const char *remote_host)
 	struct hostent *hent;
 
     hent = gethostbyname(remote_host);
-	if (hent == NULL)
+	if (hent == 0)
 	  {
 	    D_PRINTF( "Can't get %s host entry\n", remote_host );
 	    D_PRINTF( "Gethostbyname failed: %d", WSAGetLastError() );
@@ -339,7 +339,7 @@ static BOOL Close(FILECOOKIE fc)
 static int Read(FILECOOKIE fc, char *buf, size_t nbuf)
 {
 	DWORD cbRead;
-	if (!ReadFile(fc, buf, nbuf, &cbRead, NULL)) {
+	if (!ReadFile(fc, buf, nbuf, &cbRead, 0)) {
 		return -1;
 	}
 	return (int)cbRead;
@@ -350,7 +350,7 @@ static BOOL Write(FILECOOKIE fc, const char *buf, size_t nbuf)
 {
 	DWORD cbWritten;
 
-	if (!WriteFile(fc, buf, nbuf, &cbWritten, NULL)) {
+	if (!WriteFile(fc, buf, nbuf, &cbWritten, 0)) {
 		return FALSE;
 	}
 	if (cbWritten != nbuf) {

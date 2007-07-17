@@ -1,3 +1,64 @@
+Tue Jul 17 04:03:24 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * Kokyu/Dispatch_Deferrer.cpp:
+        * ace/FoxReactor/FoxReactor.h:
+        * apps/JAWS/clients/Caching/http_client.cpp:
+        * apps/JAWS/clients/WebSTONE/src/nsapi-includes/base/crit.h:
+        * apps/JAWS/clients/WebSTONE/src/nsapi-includes/base/dll.h:
+        * apps/JAWS/clients/WebSTONE/src/nsapi-includes/base/file.h:
+        * apps/JAWS/clients/WebSTONE/src/nsapi-includes/base/nterrors.h:
+        * apps/JAWS/clients/WebSTONE/src/nsapi-includes/base/sem.h:
+        * apps/JAWS/clients/WebSTONE/src/parse_file_list.c:
+        * apps/JAWS/clients/WebSTONE/src/rexec.c:
+        * apps/JAWS/clients/WebSTONE/src/sysdep.h:
+        * apps/JAWS/clients/WebSTONE/src/sysdep.c:
+        * apps/JAWS/clients/WebSTONE/src/webclient.c:
+        * apps/JAWS/stress_testing/http_tester.cpp:
+        * apps/JAWS/stress_testing/util.cpp:
+        * apps/JAWS2/JAWS/Parse_Headers.cpp:
+        * apps/JAWS3/bench/rqfiles.cpp:
+        * apps/JAWS3/jaws3/Cached_Allocator_T.cpp:
+        * contrib/FaCE/CE_Screen_Output.cpp:
+        * contrib/FaCE/FaCE.cpp:
+        * contrib/FaCE/FaCE_OS.h:
+        * contrib/minizip/crypt.h:
+        * contrib/minizip/ioapi.c:
+        * contrib/minizip/miniunz.c:
+        * contrib/minizip/minizip.c:
+        * contrib/minizip/mztools.c:
+        * contrib/minizip/unzip.c:
+        * contrib/minizip/zip.c:
+        * examples/APG/Shared_Memory/PI_Malloc.cpp:
+        * examples/IPC_SAP/ATM_SAP/CPP-client.cpp:
+        * examples/Log_Msg/Log_Msg_MFC/Log_Msg_MFCDlg.h:
+        * examples/Log_Msg/Log_Msg_MFC/Log_Msg_MFCDlg.cpp:
+        * examples/Misc/test_XtReactor1.cpp:
+        * examples/Misc/test_XtReactor2.cpp:
+        * examples/Naming/test_multiple_contexts.cpp:
+        * examples/Naming/test_writers.cpp:
+        * examples/OS/Process/imore.cpp:
+        * examples/OS/Process/process.cpp:
+        * examples/Reactor/Multicast/Log_Wrapper.cpp:
+        * examples/Reactor/Proactor/test_proactor2.cpp:
+        * examples/Reactor/WFMO_Reactor/Window_Messages.cpp:
+        * examples/Threads/task_three.cpp:
+        * examples/Timer_Queue/Driver.cpp:
+        * netsvcs/clients/Naming/Dump_Restore/createfile.cpp:
+        * netsvcs/lib/TS_Clerk_Handler.cpp:
+        * performance-tests/Synch-Benchmarks/context.c:
+        * performance-tests/TTCP/ACE-C++/wrapper-new-ttcp.cpp:
+        * performance-tests/TTCP/C/new-ttcp.cpp:
+        * performance-tests/UDP/udp_test.cpp:
+        * tests/Bug_2497_Regression_Test.cpp:
+        * tests/Bug_2912_Regression_Test.cpp:
+        * tests/Dirent_Test.cpp:
+        * tests/OS_Test.cpp:
+        * tests/SOCK_Netlink_Test.cpp:
+        * tests/Sigset_Ops_Test.cpp:
+        * tests/Unload_libACE.cpp:
+
+          Fixed Fuzz warnings. Zapped the usage of NULL and replaced every NULL with 0 instead.
+
 Tue Jul 17 02:48:10 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * bin/msvc_static_order.lst:

@@ -54,7 +54,7 @@ Dispatch_Deferrer::dispatch (Dispatch_Queue_Item *qitem)
 
   //@BT INSTRUMENT with event ID: EVENT_DEFERRED_ENQUEUE Measure time
   //between release and enqueue into dispatch queue because of RG
-  DSUI_EVENT_LOG(DISP_DEFERRER_FAM, EVENT_DEFERRED_ENQUEUE, timer_id, 0, NULL);
+  DSUI_EVENT_LOG(DISP_DEFERRER_FAM, EVENT_DEFERRED_ENQUEUE, timer_id, 0, 0);
 
   //buffer until timer expires
   return this->rgq_.enqueue_deadline(qitem,&tv);
@@ -99,7 +99,7 @@ Dispatch_Deferrer::handle_timeout (const ACE_Time_Value &,
       //@BT INSTRUMENT with event ID: EVENT_DEFERRED_DEQUEUE Measure
       //time between release and enqueue into dispatch queue because
       //of RG
-      DSUI_EVENT_LOG (DISP_DEFERRER_FAM, EVENT_DEFERRED_DEQUEUE, timer_id, 0, NULL);
+      DSUI_EVENT_LOG (DISP_DEFERRER_FAM, EVENT_DEFERRED_DEQUEUE, timer_id, 0, 0);
 
       this->task_->enqueue(qitem);
 

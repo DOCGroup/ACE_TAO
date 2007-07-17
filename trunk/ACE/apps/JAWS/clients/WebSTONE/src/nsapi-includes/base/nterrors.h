@@ -734,5 +734,5 @@ NtError NtErrorStrings[] = {
 { 11002 , "WSATRY_AGAIN" },
 { 11003 , "WSANO_RECOVERY" },
 { 11004 , "WSANO_DATA" },
-{ 0, NULL }
+{ 0, 0 /*NULL*/}
 };

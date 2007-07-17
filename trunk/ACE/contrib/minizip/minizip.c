@@ -122,7 +122,7 @@ int check_exist_file(filename)
     FILE* ftestexist;
     int ret = 1;
     ftestexist = fopen(filename,"rb");
-    if (ftestexist==NULL)
+    if (ftestexist==0)
         ret = 0;
     else
         fclose(ftestexist);
@@ -154,7 +154,7 @@ int getFileCrc(const char* filenameinzip,void*buf,unsigned long size_buf,unsigne
    FILE * fin = fopen(filenameinzip,"rb");
    unsigned long size_read = 0;
    unsigned long total_read = 0;
-   if (fin==NULL)
+   if (fin==0)
    {
        err = ZIP_ERRNO;
    }
@@ -197,8 +197,8 @@ int main(argc,argv)
     int zipok;
     int err=0;
     int size_buf=0;
-    void* buf=NULL;
-    const char* password=NULL;
+    void* buf=0;
+    const char* password=0;
 
 
     do_banner();
@@ -240,7 +240,7 @@ int main(argc,argv)
 
     size_buf = WRITEBUFFERSIZE;
     buf = (void*)malloc(size_buf);
-    if (buf==NULL)
+    if (buf==0)
     {
         printf("Error allocating memory\n");
         return ZIP_INTERNALERROR;
@@ -306,12 +306,12 @@ int main(argc,argv)
 #        ifdef USEWIN32IOAPI
         zlib_filefunc_def ffunc;
         fill_win32_filefunc(&ffunc);
-        zf = zipOpen2(filename_try,(opt_overwrite==2) ? 2 : 0,NULL,&ffunc);
+        zf = zipOpen2(filename_try,(opt_overwrite==2) ? 2 : 0,0,&ffunc);
 #        else
         zf = zipOpen(filename_try,(opt_overwrite==2) ? 2 : 0);
 #        endif
 
-        if (zf == NULL)
+        if (zf == 0)
         {
             printf("error opening %s\n",filename_try);
             err= ZIP_ERRNO;
@@ -343,15 +343,15 @@ int main(argc,argv)
 
 /*
                 err = zipOpenNewFileInZip(zf,filenameinzip,&zi,
-                                 NULL,0,NULL,0,NULL / * comment * /,
+                                 0,0,0,0,0 / * comment * /,
                                  (opt_compress_level != 0) ? Z_DEFLATED : 0,
                                  opt_compress_level);
 */
-                if ((password != NULL) && (err==ZIP_OK))
+                if ((password != 0) && (err==ZIP_OK))
                     err = getFileCrc(filenameinzip,buf,size_buf,&crcFile);
 
                 err = zipOpenNewFileInZip3(zf,filenameinzip,&zi,
-                                 NULL,0,NULL,0,NULL /* comment*/,
+                                 0,0,0,0,0 /* comment*/,
                                  (opt_compress_level != 0) ? Z_DEFLATED : 0,
                                  opt_compress_level,0,
                                  /* -MAX_WBITS, DEF_MEM_LEVEL, Z_DEFAULT_STRATEGY, */
@@ -363,7 +363,7 @@ int main(argc,argv)
                 else
                 {
                     fin = fopen(filenameinzip,"rb");
-                    if (fin==NULL)
+                    if (fin==0)
                     {
                         err=ZIP_ERRNO;
                         printf("error in opening %s for reading\n",filenameinzip);
@@ -408,7 +408,7 @@ int main(argc,argv)
                 }
             }
         }
-        errclose = zipClose(zf,NULL);
+        errclose = zipClose(zf,0);
         if (errclose != ZIP_OK)
             printf("error in closing %s\n",filename_try);
     }
