@@ -152,7 +152,6 @@ public:
   /// Same as above in argv format.  @a argv must be null terminated.
   int command_line (const ACE_TCHAR * const argv[]);
 
-  // = Set/get the pathname used to name the process.
   /**
    * Specify the full path or relative path, or just the executable
    * name for the process. If this is set, then @a name will be used to
@@ -169,10 +168,18 @@ public:
   /// Get the creation flags.
   u_long creation_flags (void) const;
 
-  /// Set the creation flags.
+  /**
+   * Set the creation flags to affect how a new process is spawned.
+   * The only ACE-defined flag is @c NO_EXEC which prevents the new process
+   * from executing a new program image; this is a simple POSIX fork().
+   * The @c NO_EXEC option has no affect on Windows; on other platforms where
+   * a POSIX fork is not possible, specifying @c NO_EXEC will cause
+   * ACE_Process::spawn() to fail.
+   *
+   * On Windows, the value of creation_flags is passed to the @c CreateProcess
+   * system call as the value of the @c dwCreationFlags parameter.
+   */
   void creation_flags (u_long);
-
-  // = <ACE_Process> uses these operations to retrieve option values.
 
   /// Current working directory.  Returns "" if nothing has been set.
   ACE_TCHAR *working_directory (void);
