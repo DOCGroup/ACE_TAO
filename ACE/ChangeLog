@@ -1,3 +1,9 @@
+Tue Jul 17 18:07:01 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * ace/os_include/os_intrin.h: Corrected the prototypes for
+          InterlockedExchange[Add] on VC7.1. Thanks to Juraj Ivancic
+          for this fix.
+
 Tue Jul 17 10:20:24 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Reactor/Proactor/test_proactor2.cpp:
@@ -72,7 +78,8 @@ Tue Jul 17 04:03:24 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
         * tests/Sigset_Ops_Test.cpp:
         * tests/Unload_libACE.cpp:
 
-          Fixed Fuzz warnings. Zapped the usage of NULL and replaced every NULL with 0 instead.
+          Fixed Fuzz warnings. Zapped the usage of NULL and replaced every
+          NULL with 0 instead.
 
 Tue Jul 17 02:48:10 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
 
