@@ -164,6 +164,12 @@ namespace TAO_Notify
     /// \return false if save will never happen
     bool send_change (void);
 
+    /// \brief Handle details of propagating change
+    ///  for a deleted object.
+    ///
+    /// \return false if save will never happen
+    bool send_deletion_change ();
+
   private:
     /// \brief Send change to parent.
     ///

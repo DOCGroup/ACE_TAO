@@ -33,6 +33,8 @@ my($verbose) = "";
 
 my $svcconf = "ns_st_topo.conf";
 
+my $discon ="";
+
 # Process command line arguments
 foreach $i (@ARGV) {
   if ($i eq "-any") {
@@ -46,6 +48,9 @@ foreach $i (@ARGV) {
   }
   elsif ($i eq "-mt") {
     $svcconf = "ns_mt_topo.conf";
+  }
+  elsif ($i eq "-disconnect") {
+    $discon= "-disconnect";
   }
   elsif ($i eq "-v" or $i eq "-verbose") {
     $verbose = "-v";
@@ -95,7 +100,7 @@ unlink $channel_id;
 # write the channel number to channel.id for use by Supplier
 # expect to receive 20 events of type any
 #
-$CON->Arguments("-channel $channel_id -expect 20 $client_args");
+$CON->Arguments("-channel $channel_id -expect 20 $discon $client_args");
 if ($verbose eq "-v") {print "TEST SCRIPT: " . $CON->CommandLine . "\n";}
 print $CON->CommandLine ();
 $CON->Spawn();
