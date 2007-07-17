@@ -49,8 +49,8 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * AIOCBs are stored and completion status of the corresponding
  * operations are queried on them. The other one is based on
  * POSIX Real Time signals. This class abstracts out the common
- * code needed for both the strategies. <ACE_POSIX_AIOCB_Proactor> and
- * <ACE_POSIX_SIG_Proactor> specialize this class for each strategy.
+ * code needed for both the strategies. ACE_POSIX_AIOCB_Proactor and
+ * ACE_POSIX_SIG_Proactor specialize this class for each strategy.
  */
 class ACE_Export ACE_POSIX_Proactor : public ACE_Proactor_Impl
 {

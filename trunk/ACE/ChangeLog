@@ -1,3 +1,12 @@
+Tue Jul 17 08:36:24 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/POSIX_Proactor.h:
+        * ace/SUN_Proactor.h:
+          Doxygen updates
+
+        * ace/Service_Gestalt.cpp:
+          Layout changes
+
 Tue Jul 17 04:03:24 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * Kokyu/Dispatch_Deferrer.cpp:
