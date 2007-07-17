@@ -800,8 +800,8 @@ ACE_Service_Gestalt::process_directives_i (ACE_Svc_Conf_Param *param)
   // here which will be reported as a memory leak for some reason.
   ACE_NO_HEAP_CHECK
 
-    // Were we called in the context of the current instance?
-    ACE_ASSERT (this == param->config);
+  // Were we called in the context of the current instance?
+  ACE_ASSERT (this == param->config);
 
   // Temporarily (for the duration of this call) make sure that *any* static
   // service registrations will happen with this instance. Such registrations

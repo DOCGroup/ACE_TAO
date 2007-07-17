@@ -32,7 +32,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * @brief Implementation of the fast and reliable Proactor
  * for SunOS 5.6, 5.7, etc.
  *
- * This proactor, based on <ACE_POSIX_AIOCB_Proactor>,
+ * This proactor, based on ACE_POSIX_AIOCB_Proactor,
  * works with Sun native interface for aio calls.
  * POSIX_API          Native SUN_API
  * aio_read           aioread
