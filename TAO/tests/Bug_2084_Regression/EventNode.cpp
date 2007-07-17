@@ -2,6 +2,7 @@
 // $Id$
 //
 #include "EventNode.h"
+#include "tid_to_int.h"
 #include "tao/ORB_Core.h"
 #include "tao/ORB_Table.h"
 
@@ -47,7 +48,8 @@ void EventNode::registerHello ( ::Test::Hello_ptr h )
     }
 
   CORBA::String_var str =
-    h->get_string((::Test::ThreadId) ACE_Thread::self ());
+    h->get_string(
+      ACE_thread_t_to_integer< ::Test::ThreadId> (ACE_Thread::self ()));
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) - EventNode: string returned <%s>\n",
               str.in ()));

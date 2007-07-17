@@ -2,6 +2,7 @@
 // $Id$
 //
 #include "Hello.h"
+#include "tid_to_int.h"
 #include "tao/ORB_Core.h"
 #include "tao/ORB_Table.h"
 
@@ -24,7 +25,8 @@ Hello::get_string (::Test::ThreadId caller_threadid)
   ACE_Thread_ID this_ID;
   this_ID.id (this->thr_id_);
 
-  if ((::Test::ThreadId) ACE_Thread::self () != caller_threadid)
+  if (ACE_thread_t_to_integer< ::Test::ThreadId> (ACE_Thread::self ())
+      != caller_threadid)
     {
       // this means a remote call was made
 
