@@ -175,11 +175,11 @@ string_emulation_test (void)
 
     const char *memchr1 = "abcdefghijklmnopqrstuvwxyz";
 
-    ACE_ASSERT (ACE_OS::memchr (static_cast<const void *> (NULL),
+    ACE_ASSERT (ACE_OS::memchr (static_cast<const void *> (0),
                                 'a',
-                                0) == NULL);
-    ACE_ASSERT (ACE_OS::memchr (memchr1, 'a', sizeof (memchr1)) != NULL);
-    ACE_ASSERT (ACE_OS::memchr (memchr1, '1', sizeof (memchr1)) == NULL);
+                                0) == 0);
+    ACE_ASSERT (ACE_OS::memchr (memchr1, 'a', sizeof (memchr1)) != 0);
+    ACE_ASSERT (ACE_OS::memchr (memchr1, '1', sizeof (memchr1)) == 0);
 
     // ========================================================================
     // Test strchr
@@ -189,7 +189,7 @@ string_emulation_test (void)
 
     ACE_ASSERT (*ACE_OS::strchr (strchr1, 'h') == 'h');
     ACE_ASSERT (ACE_OS::strchr (strchr1, 'h') == strchr1 + 7);
-    ACE_ASSERT (ACE_OS::strchr (strchr1, '1') == NULL);
+    ACE_ASSERT (ACE_OS::strchr (strchr1, '1') == 0);
 
     // ========================================================================
     // Test strrchr
@@ -199,7 +199,7 @@ string_emulation_test (void)
 
     ACE_ASSERT (*ACE_OS::strrchr (strrchr1, 'h') == 'h');
     ACE_ASSERT (ACE_OS::strrchr (strrchr1, 'h') == strrchr1 + 18);
-    ACE_ASSERT (ACE_OS::strrchr (strrchr1, '1') == NULL);
+    ACE_ASSERT (ACE_OS::strrchr (strrchr1, '1') == 0);
 
     // ========================================================================
     // Test strcspn
@@ -378,7 +378,7 @@ string_emulation_test (void)
                 == ACE_TEXT_WIDE ('h'));
     ACE_ASSERT (ACE_OS::strchr (strchr1, ACE_TEXT_WIDE ('h'))
                 == strchr1 + 7);
-    ACE_ASSERT (ACE_OS::strchr (strchr1, ACE_TEXT_WIDE ('1')) == NULL);
+    ACE_ASSERT (ACE_OS::strchr (strchr1, ACE_TEXT_WIDE ('1')) == 0);
 
     // ========================================================================
     // Test strstr (wchar_t version)
@@ -426,7 +426,7 @@ string_emulation_test (void)
     ACE_ASSERT (ACE_OS::strrchr (strrchr1, ACE_TEXT_WIDE ('h'))
                   == strrchr1 + 18);
     ACE_ASSERT (ACE_OS::strrchr (strrchr1, ACE_TEXT_WIDE ('1'))
-                  == NULL);
+                  == 0);
 
     // ========================================================================
     // Test strcasecmp (wchar_t version)

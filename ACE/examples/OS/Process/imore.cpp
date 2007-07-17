@@ -102,7 +102,7 @@ setup_named_pipes (ACE_Process_Options &opt)
                                            rendezvous_pfx);
 
   // Out of memory?
-  if (rendezvous == NULL)
+  if (rendezvous == 0)
     return -1;
 
   // Alright, this is indeed strange.  Named pipes are meant to be

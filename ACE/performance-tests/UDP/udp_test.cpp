@@ -346,20 +346,20 @@ Client::run (void)
 
       distfp = ACE_OS::fopen(distfile, ACE_TEXT("w"));
 
-      if (distfp == NULL)
+      if (distfp == 0)
         {
           ACE_DEBUG ((LM_DEBUG,
                       "Unable to open dist file!\n\n"));
           logfile = 0;
         }
-      if (logfile && (sampfp = ACE_OS::fopen (sampfile, ACE_TEXT("w"))) == NULL)
+      if (logfile && (sampfp = ACE_OS::fopen (sampfile, ACE_TEXT("w"))) == 0)
         {
           ACE_OS::fclose (distfp);
           ACE_DEBUG ((LM_DEBUG,
                       "Unable to open sample file!\n\n"));
           logfile = 0;
         }
-      if (logfile && (sumfp = ACE_OS::fopen (sumfile, ACE_TEXT("w"))) == NULL)
+      if (logfile && (sumfp = ACE_OS::fopen (sumfile, ACE_TEXT("w"))) == 0)
         {
           ACE_OS::fclose (distfp);
           ACE_OS::fclose (sampfp);

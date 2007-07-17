@@ -85,7 +85,7 @@ private:
 void ParameterList::addParameter(char* newParameter)
 {
 #ifdef NO_ACE
-    int len = MultiByteToWideChar(CP_OEMCP, MB_PRECOMPOSED, newParameter, -1, NULL, 0);
+    int len = MultiByteToWideChar(CP_OEMCP, MB_PRECOMPOSED, newParameter, -1, 0, 0);
     wchar_t* w_output = new wchar_t[len];
 
     MultiByteToWideChar(CP_OEMCP, MB_PRECOMPOSED, newParameter, -1, w_output, len);
@@ -178,7 +178,7 @@ void LoadParameterHistory()
 {
     FILE* parameterFile = _wfopen(g_ParameterFileName, ACE_LIB_TEXT("r"));
 
-    if (parameterFile != NULL) {
+    if (parameterFile != 0) {
         while (feof(parameterFile) == 0) {
             // Note: Remember that fwprintf takes wide-character format specifier but
             // save string as ASCII.  Thus, history must be read as ASCII then converted
@@ -242,7 +242,7 @@ ATOM MyRegisterClass(HINSTANCE hInstance, ACE_TCHAR* szWindowClass)
 //
 BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 {
-    HWND hWnd = NULL;
+    HWND hWnd = 0;
 
     ACE_TCHAR szTitle[MAX_LOADSTRING];            // The title bar text
     ACE_TCHAR szWindowClass[MAX_LOADSTRING];      // The window class name
@@ -269,7 +269,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
     GetClientRect(hWnd, &rect);
 
     hWnd = CreateWindow(szWindowClass, szTitle, WS_VISIBLE,
-        CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, NULL, NULL, hInstance, NULL);
+        CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, 0, 0, hInstance, 0);
 
     if (!hWnd)
     {
@@ -379,7 +379,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             mbi.cBmpImages = 0;
 
             if (!SHCreateMenuBar(&mbi)) 
-                return NULL;
+                return 0;
 
             g_hwndCB = mbi.hwndMB;
 
@@ -391,16 +391,16 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             nCmdHt = CommandBar_Height(mbi.hwndMB);
 
             hWndEdit = CreateWindow(ACE_LIB_TEXT("EDIT"),
-                                    NULL,
+                                    0,
                                     WS_CHILD | WS_VISIBLE | ES_READONLY | ES_MULTILINE | WS_VSCROLL | WS_HSCROLL,
                                     0,
                                     0,
                                     textRect.right,
                                     textRect.bottom - MENU_HEIGHT,
                                     hWnd,
-                                    NULL,
+                                    0,
                                     g_hInst,
-                                    NULL);
+                                    0);
             cout.SetOutputWindow(hWndEdit);
             LoadParameterHistory();
             break;
@@ -449,7 +449,7 @@ HWND CreateRpCommandBar(HWND hwnd)
     mbi.cBmpImages = 0;
 
     if (!SHCreateMenuBar(&mbi)) 
-        return NULL;
+        return 0;
 
     return mbi.hwndMB;
 }
@@ -556,7 +556,7 @@ LRESULT CALLBACK SaveFileName(HWND hDlg, UINT message, WPARAM wParam, LPARAM lPa
 
             tempFile = _wfopen(tempBuffer, ACE_LIB_TEXT("r"));
 
-            if (tempFile != NULL)  // if file exists
+            if (tempFile != 0)  // if file exists
             {
                 fclose(tempFile);  // close temp handler
                 int choice = DialogBox(g_hInst, (const ACE_TCHAR*)IDD_FILEEXIST, hDlg, (DLGPROC)FileExist);
@@ -581,7 +581,7 @@ LRESULT CALLBACK SaveFileName(HWND hDlg, UINT message, WPARAM wParam, LPARAM lPa
 
             tempFile = _wfopen(tempBuffer, fileMode);
 
-            if (tempFile == NULL)
+            if (tempFile == 0)
             {
                 DialogBox(g_hInst, (const ACE_TCHAR*)IDD_ERRFILE, hDlg, (DLGPROC)FileError);
             }
@@ -589,7 +589,7 @@ LRESULT CALLBACK SaveFileName(HWND hDlg, UINT message, WPARAM wParam, LPARAM lPa
             {
                 wcscpy(g_SaveFileName, tempBuffer);
 
-                if (g_OutputFile != NULL)
+                if (g_OutputFile != 0)
                 {
                     fclose(g_OutputFile);  // close any open file
                 }

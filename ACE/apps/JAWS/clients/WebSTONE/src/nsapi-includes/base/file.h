@@ -66,7 +66,7 @@
 
 #if defined(FILE_STDIO)
 typedef FILE* SYS_FILE;
-#define SYS_ERROR_FD NULL
+#define SYS_ERROR_FD 0
 #define SYS_STDERR stderr
 
 #elif defined(FILE_UNIX)

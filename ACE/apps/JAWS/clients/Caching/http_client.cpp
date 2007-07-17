@@ -38,7 +38,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
 
   ACE_DEBUG ((LM_DEBUG, "* "));
 
-  while (ACE_OS::fgets (buf, sizeof (buf), stdin) != NULL)
+  while (ACE_OS::fgets (buf, sizeof (buf), stdin) != 0)
     {
       char *s = buf;
 

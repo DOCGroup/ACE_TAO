@@ -158,7 +158,7 @@ struct protoent *ppe;
     } else {
 	/* look up by name */
 	phe = gethostbyname(host);
-	if (phe == NULL)
+	if (phe == 0)
 	{
 	    D_PRINTF( "Gethostbyname failed: %s", neterrstr() );
 	    return(returnerr("Can't get %s host entry\n", host));
@@ -287,7 +287,7 @@ connecttomaster(char *str)
     /*
      * BREAK UP THE connectstr INTO A HOSTNAME/HOST-IP AND A PORT NUMBER.
      */
-    if((tempch = strpbrk(ConnectStr,":")) == NULL)
+    if((tempch = strpbrk(ConnectStr,":")) == 0)
     {
         /*
          * INCORRECT FORMAT OF ConnectStr. CORRECT FORMAT IS
@@ -462,7 +462,7 @@ makeload(int maxcount, int pageval, THREAD rqst_timer_t *timerarray, THREAD stat
             loc_portnum = portnum;
         } */
         loc_portnum = portnum;
-        if ((load_file_list[pageval].servername[cnt] != NULL)
+        if ((load_file_list[pageval].servername[cnt] != 0)
 	      &&
 	    *load_file_list[pageval].servername[cnt])
 	{
@@ -517,7 +517,7 @@ makeload(int maxcount, int pageval, THREAD rqst_timer_t *timerarray, THREAD stat
 
 	    /* if the webmaster has aborted, quit */
 	    D_PRINTF("Before select() on webmaster socket\n");
-	    if (rv = select(FD_SETSIZE, &readfds, NULL, NULL, &timeout))  {
+	    if (rv = select(FD_SETSIZE, &readfds, 0, 0, &timeout))  {
 		D_PRINTF("select() returned %d\n", rv);
 		D_PRINTF("Client terminating at request of webmaster\n");
 		exit(2);
@@ -624,8 +624,8 @@ main(int argc, char *argv[])
     SetThreadPriority(GetCurrentThread(), THREAD_PRIORITY_HIGHEST);
 
     /* create semaphore in locked state */
-    hSemaphore = CreateSemaphore(NULL, 0, 1, NULL);
-    if(hSemaphore == NULL)
+    hSemaphore = CreateSemaphore(0, 0, 1, 0);
+    if(hSemaphore == 0)
     {
 	errexit("Create semaphore failed: %d", GetLastError());
     }
@@ -771,7 +771,7 @@ main(int argc, char *argv[])
 
     /* allow use of IP address */
     if(amclient) {
-	if((tempch = strpbrk(connectstr,":")) == NULL)
+	if((tempch = strpbrk(connectstr,":")) == 0)
 	{
 	    /*
 	     * INCORRECT FORMAT OF ConnectStr. CORRECT FORMAT IS
@@ -861,13 +861,13 @@ main(int argc, char *argv[])
     signal(SIGCHLD, childhandler);
     for(i = 0; i < numclients; i++)
     {
-      thr_create (NULL, NULL, ClientThread, NULL, THR_BOUND, NULL);
+      thr_create (0, 0, ClientThread, 0, THR_BOUND, 0);
 
       /* switch(fork())
          {
              case 0:
                  numclients = 1;
-                 ClientThread(NULL);
+                 ClientThread(0);
                  exit(0);
                  break;
              case -1:
@@ -883,7 +883,7 @@ main(int argc, char *argv[])
      * Wait for all children to exit.
      */
 
-    while (thr_join(NULL, NULL, NULL) == 0);
+    while (thr_join(0, 0, 0) == 0);
 
     /*     for(;;)
        {
@@ -894,7 +894,7 @@ main(int argc, char *argv[])
     /* start threads on NT */
     for (i = 0; i < numclients; i++)
     {
-	if (_beginthread(ClientThread, 0, NULL) == -1)
+	if (_beginthread(ClientThread, 0, 0) == -1)
 	{
 	    errexit("_beginthread failed: %d", GetLastError());
 	}
@@ -908,7 +908,7 @@ main(int argc, char *argv[])
     CounterSemaphore = 0;
 
     /* start all children simultaneously */
-    ReleaseSemaphore(hSemaphore, 1, NULL);
+    ReleaseSemaphore(hSemaphore, 1, 0);
 
     if (testtime) {
 	sleep(testtime);
@@ -972,7 +972,7 @@ void ClientThread(void *dummy)
 	fflush(stderr);
 	sprintf(file_name, "%s.%d", DEBUG_FILE, (int)getpid());
 	debugfile = fopen(file_name, "w+");
-	if (debugfile == NULL)
+	if (debugfile == 0)
 	    errexit("Can't open debug file\n");
 	D_PRINTF( "Running in debug mode, %d\n",amclient );
     }
@@ -1031,7 +1031,7 @@ void ClientThread(void *dummy)
 
     /* Wait for main() thread to release us */
     WaitForSingleObject(hSemaphore, INFINITE);
-    ReleaseSemaphore(hSemaphore, 1, NULL);
+    ReleaseSemaphore(hSemaphore, 1, 0);
 #endif /* WIN32 */
     if (testtime != 0)
     {
@@ -1133,7 +1133,7 @@ void ClientThread(void *dummy)
 
     GETTIMEOFDAY(&(timestat.endtime), &(timestat.endtimezone));
     D_PRINTF( "Test run complete\n" );
-    signal(SIGALRM, NULL);
+    signal(SIGALRM, 0);
 
     if (testtime == 0)
     {

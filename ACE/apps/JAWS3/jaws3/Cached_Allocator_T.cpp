@@ -69,7 +69,7 @@ template <class T, class ACE_LOCK> void *
 JAWS_Cached_Allocator<T, ACE_LOCK>::malloc (size_t nbytes)
 {
   if (nbytes > sizeof (T))
-    return NULL;
+    return 0;
 
   ACE_Cached_Mem_Pool_Node<T> *node = 0;
   node = this->free_list_.remove ();

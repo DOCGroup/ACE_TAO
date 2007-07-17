@@ -309,11 +309,11 @@ win32_test_ls (void)
   BOOL fork_result =
     ACE_TEXT_CreateProcess (ACE_TEXT ("c:\\Utils\\bin\\ls.exe"),
                             ACE_TEXT ("-a"),
-                            NULL, // No process attributes.
-                            NULL, // No thread attributes.
+                            0, // No process attributes.
+                            0, // No thread attributes.
                             TRUE, // Allow handle inheritance.
                             0, // CREATE_NEW_CONSOLE, // Create a new console window.
-                            NULL,
+                            0,
                             0, // Current directory to start in.
                             &startup_info,
                             &process_info);
@@ -418,8 +418,8 @@ win32_spawn_environment_process (void)
   BOOL fork_result =
     ACE_TEXT_CreateProcess (ACE_TEXT ("d:\\harrison\\ACE_wrappers\\examples\\OS\\Process\\process.exe"),
                             ACE_TEXT ("process -g"),
-                            NULL, // No process attributes.
-                            NULL, // No thread attributes.
+                            0, // No process attributes.
+                            0, // No thread attributes.
                             TRUE, // Allow handle inheritance.
                             0, // CREATE_NEW_CONSOLE, // Create a new console window.
                             environment, // Environment.
