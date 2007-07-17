@@ -1,3 +1,8 @@
+Tue Jul 17 02:48:10 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * bin/msvc_static_order.lst:
+          Fixed misspelled directory name.
+
 Mon Jul 16 21:00:46 UTC 2007  Steve Huston  <shuston@riverace.com>
 
         * ace/OS_NS_sys_utsname.{h cpp}: When ACE needs to define a
