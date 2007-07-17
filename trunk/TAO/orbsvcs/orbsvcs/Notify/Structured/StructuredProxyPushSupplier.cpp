@@ -55,7 +55,7 @@ TAO_Notify_StructuredProxyPushSupplier::disconnect_structured_push_supplier (voi
 {
   TAO_Notify_StructuredProxyPushSupplier::Ptr guard( this );
   this->destroy ();
-  this->self_change ();
+  this->send_deletion_change ();
 }
 
 const char *

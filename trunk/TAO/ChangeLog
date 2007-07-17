@@ -1,3 +1,22 @@
+Tue Jul 17 18:46:23 UTC 2007  Wallace Zhang  <zhang_w@ociweb.com>
+
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredProxyPushSupplier.cpp:
+
+          Changed to use the newly added send_deletion_change() in the case of
+          saving the topology with a deleting object in the disconnect callback.
+
+        * orbsvcs/orbsvcs/Notify/Topology_Object.h:
+        * orbsvcs/orbsvcs/Notify/Topology_Object.cpp:
+
+          Added a new method for handling saving the topology with a deleting
+          object.
+
+        * orbsvcs/tests/Notify/Reconnecting/run_test.pl:
+
+          Added "disconnect" as a command line option.
+          Run "run_test.pl -str -disconnect" as the regression test.
+
+
 Mon Jul 17 05:42:20 UTC 2007  Ossama Othman  <ossama_othman at symantec dot com>
 
         * tests/Bug_1495_Regression/tid_to_int.h:
@@ -9,10 +28,10 @@ Mon Jul 17 05:42:20 UTC 2007  Ossama Othman  <ossama_othman at symantec dot com>
           location if there is interest in the conversion functionality it
           provides.
 
-        * tests/Bug_1495_Regression/Client_Task.cpp (svc): 
+        * tests/Bug_1495_Regression/Client_Task.cpp (svc):
         * tests/Bug_1495_Regression/test_i.cpp (get_thread_id):
         * tests/Bug_2084_Regression/EventNode.cpp (registerHello):
-        * tests/Bug_2084_Regression/Hello.cpp (get_string): 
+        * tests/Bug_2084_Regression/Hello.cpp (get_string):
 
           Convert from ACE_thread_t to the test's ThreadId type using the
           conversion utility function in tid_to_int.h.  Addresses "cast
