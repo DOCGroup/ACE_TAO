@@ -131,9 +131,12 @@ Thread_Pool::svc (void)
 
       if (length == 0)
 	{
+    //FUZZ: disable check_for_NULL
 	  ACE_DEBUG ((LM_DEBUG,
 		      "(%t) in iteration %d, got NULL message, exiting\n",
 		      count));
+    //FUZZ: enable check_for_NULL
+
 	  break;
 	}
     }
@@ -204,9 +207,11 @@ producer (Thread_Pool &thread_pool)
                 // Send a shutdown message to the waiting threads and exit.
           for (size_t i = thread_pool.thr_count (); i > 0; i--)
             {
+              //FUZZ: disable check_for_NULL
               ACE_DEBUG ((LM_DEBUG,
-              "(%t) EOF, enqueueing NULL block for thread = %d\n",
-              i));
+                          "(%t) EOF, enqueueing NULL block for thread = %d\n",
+                          i));
+              //FUZZ: enable check_for_NULL
 
               // Enqueue a NULL message to flag each consumer to
               // shutdown.

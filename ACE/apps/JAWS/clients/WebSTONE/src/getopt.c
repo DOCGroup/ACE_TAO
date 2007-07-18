@@ -38,7 +38,7 @@ char	**argv, *opts;
 			return(EOF);
 		}
 	optopt = c = argv[optind][sp];
-	if(c == ':' || (cp=strchr(opts, c)) == NULL) {
+	if(c == ':' || (cp=strchr(opts, c)) == 0) {
 		ERR(": unknown option, -", c);
 		if(argv[optind][++sp] == '\0') {
 			optind++;
@@ -61,7 +61,7 @@ char	**argv, *opts;
 			sp = 1;
 			optind++;
 		}
-		optarg = NULL;
+		optarg = 0;
 	}
 	return(c);
 }

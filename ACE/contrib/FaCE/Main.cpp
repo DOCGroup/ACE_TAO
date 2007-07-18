@@ -20,7 +20,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, ACE_TCHAR* lpCm
     if (!InitInstance (hInstance, nCmdShow)) return FALSE;
     hAccelTable = LoadAccelerators(hInstance, (const ACE_TCHAR*)IDC_FACE);
     InitSetup();
-    while (GetMessage(&msg, NULL, 0, 0)) {
+    while (GetMessage(&msg, 0, 0, 0)) {
         if (!TranslateAccelerator(msg.hwnd, hAccelTable, &msg)) {
             TranslateMessage(&msg);
             DispatchMessage(&msg);
