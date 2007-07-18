@@ -1,3 +1,8 @@
+Wed Jul 17 14:40:28 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * clients/Caching/http_handler.cpp:
+          Fixed gcc warning
+
 Fri Jul 13 20:21:08 UTC 2007  Ossama Othman  <ossama_othman at symantec dot com>
 
         * clients/Blobby/Blob_Handler.cpp (receive_reply):
