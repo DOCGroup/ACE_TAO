@@ -32,10 +32,10 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
   * @c ACE_Service_Config is supposed to be a Singleton. This is the
   * only Configuration Gestalt available for access from static
   * initializers at proces start-up time. Using Unmanaged Singleton
-  * is safer because (a) the Object Manager may not yet be fully initialized in the
-  * context of a static initializer that uses SC, and (b) because we
-  * know that upon process exit the SC will still be automaticaly and explicitely closed
-  * by @c ACE_Object_Manager::fini().
+  * is safer because (a) the Object Manager may not yet be fully initialized
+  * in the context of a static initializer that uses SC, and (b) because we
+  * know that upon process exit the SC will still be automaticaly and explicitly
+  * closed by @c ACE_Object_Manager::fini().
   */
 typedef ACE_Unmanaged_Singleton<ACE_Service_Config,
                                 ACE_SYNCH_RECURSIVE_MUTEX> ACE_SERVICE_CONFIG_SINGLETON;
@@ -323,8 +323,6 @@ ACE_Service_Config::global (void)
   return ACE_SERVICE_CONFIG_SINGLETON::instance ();
 }
 
-
-///
 int
 ACE_Service_Config::insert (ACE_Static_Svc_Descriptor* stsd)
 {
@@ -334,7 +332,6 @@ ACE_Service_Config::insert (ACE_Static_Svc_Descriptor* stsd)
 
 // Totally remove <svc_name> from the daemon by removing it from the
 // ACE_Reactor, and unlinking it if necessary.
-
 int
 ACE_Service_Config::remove (const ACE_TCHAR svc_name[])
 {

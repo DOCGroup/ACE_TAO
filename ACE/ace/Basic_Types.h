@@ -438,6 +438,9 @@ ACE_END_VERSIONED_NAMESPACE_DECL
   // support 64-bit integers.
 # define ACE_LONGLONG_TO_PTR(PTR_TYPE, L) \
   reinterpret_cast<PTR_TYPE> (L.lo ())
+#elif defined (ACE_OPENVMS) && (!defined (__INITIAL_POINTER_SIZE) || (__INITIAL_POINTER_SIZE < 64))
+# define ACE_LONGLONG_TO_PTR(PTR_TYPE, L) \
+  reinterpret_cast<PTR_TYPE> (static_cast<int> (L))
 #else  /* ! ACE_LACKS_LONGLONG_T */
 # define ACE_LONGLONG_TO_PTR(PTR_TYPE, L) \
   reinterpret_cast<PTR_TYPE> (static_cast<intptr_t> (L))

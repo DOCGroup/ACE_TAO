@@ -1,3 +1,12 @@
+Wed Jul 18 12:59:27 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Basic_Types.h:
+          Added special ACE_LONGLONG_TO_PTR for OpenVMS
+
+        * ace/Dynamic_Service_Base.h:
+        * ace/Service_Config.cpp:
+          Layout change
+
 Wed Jul 18 06:45:27 UTC 2007  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * 45 and going strong!

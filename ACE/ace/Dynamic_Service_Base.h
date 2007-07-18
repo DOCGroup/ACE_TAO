@@ -45,7 +45,9 @@ public:
 protected:
   /// Return instance using @a name to search the (default) Service_Repository.
   static void* instance (const ACE_TCHAR *name);
-  /// Perform the default repo search, but optionally skip searching the global repo.
+
+  /// Perform the default repo search, but optionally skip searching the global
+  /// repo.
   static void* instance (const ACE_TCHAR *name, bool no_global);
 
   /// Return instance using @a name to search the specific @a repo instance.
