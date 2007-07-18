@@ -1368,7 +1368,7 @@ extern MINIZIP_EXPORT int unzeof (unzFile file)
 }
 
 
-
+//FUZZ: disable check_for_NULL
 /*
   Read extra field from the current file (opened by unzOpenCurrentFile)
   This is the local-header version of the extra field (sometimes, there is
@@ -1381,6 +1381,7 @@ extern MINIZIP_EXPORT int unzeof (unzFile file)
   the return value is the number of bytes copied in buf, or (if <0)
     the error code
 */
+//FUZZ: enable check_for_NULL
 extern MINIZIP_EXPORT int unzGetLocalExtrafield (unzFile file,voidp buf,unsigned len)
   
 {

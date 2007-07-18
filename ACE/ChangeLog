@@ -1,3 +1,26 @@
+Wed Jul 18 05:02:49 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * ace/Activation_Queue.cpp:
+        * ace/Future.cpp:
+        * apps/JAWS/clients/WebSTONE/src/bench.c:
+        * apps/JAWS/clients/WebSTONE/src/genrand.c:
+        * apps/JAWS/clients/WebSTONE/src/getopt.c:
+        * apps/JAWS/clients/WebSTONE/src/gettimeofday.c:
+        * apps/JAWS/clients/WebSTONE/src/nsapi-includes/frame/http.h:
+        * apps/JAWS/clients/WebSTONE/src/sysdep.h:
+        * apps/JAWS/clients/WebSTONE/src/webmaster.c:
+        * contrib/FaCE/Main.cpp:
+        * contrib/minizip/unzip.c:
+        * contrib/minizip/unzip.h:
+        * contrib/minizip/zip.h:
+        * examples/Threads/thread_pool.cpp:
+        * tests/ACE_Init_TestDlg.h:
+        * tests/Message_Block_Test.cpp:
+        * tests/Network_Adapters_Test.cpp:
+
+          Fixed Fuzz warnings. Zapped the usage of NULL and replaced every
+          NULL with 0 instead.
+
 Tue Jul 17 18:38:53 UTC 2007  Steve Huston  <shuston@riverace.com>
 
         * examples/Reactor/Multicast/Log_Wrapper.cpp (open): Removed the

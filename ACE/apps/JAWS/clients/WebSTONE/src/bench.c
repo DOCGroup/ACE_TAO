@@ -39,8 +39,8 @@ void *mymalloc(size_t size) {
 void *ptr;
 
     ptr = malloc(size);
-    if (ptr == NULL)
-	errexit("Call to malloc() failed\n");
+    if (ptr == 0)
+      errexit("Call to malloc() failed\n");
     return ptr;
 }
 

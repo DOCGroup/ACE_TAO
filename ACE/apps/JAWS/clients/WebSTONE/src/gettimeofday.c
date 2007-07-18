@@ -34,9 +34,10 @@ int gettimeofday(curTimeP)
 {
 struct _timeb  localTime;
 
-    if (curTimeP == (struct timeval *) NULL) {
-	 errno = EFAULT;
-	 return (-1);
+    if (curTimeP == (struct timeval *) 0) 
+    {
+      errno = EFAULT;
+      return (-1);
     }
 
    /*

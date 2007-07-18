@@ -30,10 +30,12 @@
 #define MAXHOSTNAMELEN 64
 #endif
 
+//FUZZ: disable check_for_NULL
 /* SunOS doesn't define NULL */
 #ifndef NULL
 #define NULL 0
 #endif
+//FUZZ: enable check_for_NULL
 
 /* encapsulation of minor UNIX/WIN NT differences */
 #ifdef WIN32

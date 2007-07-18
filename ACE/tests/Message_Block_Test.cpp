@@ -219,9 +219,11 @@ Worker_Task::svc (void)
 
       if (length == 0)
         {
+          //FUZZ: disable check_for_NULL
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("(%t) in iteration %d, queue len = %d, got NULL message, exiting\n"),
                       count, this->msg_queue ()->message_count ()));
+          //FUZZ: enable check_for_NULL
           break;
         }
     }
