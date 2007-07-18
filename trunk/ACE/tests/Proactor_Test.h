@@ -74,12 +74,12 @@ private:
   ACE_HANDLE handle_;
   ACE_SYNCH_MUTEX lock_;
 
-  long io_count_;            // Number of currently outstanding I/O requests
+  int io_count_;             // Number of currently outstanding I/O requests
   int flg_cancel_;
   size_t total_snd_;         // Number of bytes successfully sent
   size_t total_rcv_;         // Number of bytes successfully received
-  long total_w_;             // Number of write operations
-  long total_r_;             // Number of read operations
+  int total_w_;              // Number of write operations
+  int total_r_;              // Number of read operations
 };
 
 // *******************************************
@@ -101,8 +101,8 @@ public:
   int id (void) { return this->id_; }
   size_t get_total_snd (void) { return this->total_snd_; }
   size_t get_total_rcv (void) { return this->total_rcv_; }
-  long get_total_w   (void) { return this->total_w_; }
-  long get_total_r   (void) { return this->total_r_; }
+  int    get_total_w   (void) { return this->total_w_; }
+  int    get_total_r   (void) { return this->total_r_; }
 
   // This is called to pass the new connection's addresses.
   virtual void addresses (const ACE_INET_Addr& peer,
@@ -130,13 +130,13 @@ private:
 
   ACE_SYNCH_MUTEX lock_;
 
-  long io_count_;
+  int io_count_;
   int stop_writing_;           // Writes are shut down; just read.
   int flg_cancel_;
   size_t total_snd_;
   size_t total_rcv_;
-  long total_w_;
-  long total_r_;
+  int total_w_;
+  int total_r_;
 };
 
 #endif /* ACE_TESTS_PROACTOR_TEST_H */
