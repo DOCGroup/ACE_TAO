@@ -111,9 +111,11 @@ Thread_Pool::svc (void)
 #if 0
       if (mb->length() == 0)
         {
+          //FUZZ: disable check_for_NULL
           ACE_DEBUG ((LM_DEBUG,
                       "(%t) in iteration %d, got NULL message, exiting\n",
                       count));
+          //FUZZ: enable check_for_NULL
           break;
         }
 #endif
@@ -125,9 +127,11 @@ Thread_Pool::svc (void)
 
       if (CORBA::is_nil(echo.in()))
         {
+          //FUZZ: disable check_for_NULL
           ACE_DEBUG ((LM_DEBUG,
                       "(%t) in iteration %d, got NULL message, exiting\n",
                       count));
+          //FUZZ: enable check_for_NULL
           break;
         }
 

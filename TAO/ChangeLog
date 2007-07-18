@@ -1,3 +1,13 @@
+Wed Jul 18 05:07:13 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * orbsvcs/orbsvcs/Scheduler_Factory.cpp:
+        * tests/Bug_1361_Regression/Server_Thread_Pool.cpp:
+        * tests/Bug_2234_Regression/server.cpp:
+        * tests/MProfile_Forwarding/client.cpp:
+
+          Fixed Fuzz warnings. Zapped the usage of NULL and replaced every
+          NULL with 0 instead.
+
 Wed Jul 18 02:43:38 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tests/objref_comparison_test/main.cpp:

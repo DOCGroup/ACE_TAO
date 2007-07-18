@@ -54,9 +54,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       if (objref.in () == 0)
         {
+          //FUZZ: disable check_for_NULL
           ACE_ERROR_RETURN  ((LM_ERROR,
                               "The received objref is NULL \n"),
                              -1);
+          //FUZZ: enable check_for_NULL
         }
 
       Simple_Server_var server =
