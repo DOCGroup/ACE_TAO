@@ -117,16 +117,23 @@ TAO_ZIOP_Loader::decompress (TAO_ServerRequest& server_request)
 
   if (!CORBA::is_nil(manager.in ()))
   {
+IOP::CompressedData data;
+if ((cdr >> data) == 0
+  return false;
+server_request.compressed_ = true;
 
   Compression::Compressor_var compressor = manager->get_compressor (::Compression::COMPRESSORID_ZLIB, 6);
+  TAO_InputCDR cdr (reinterpret_cast<const char*> (
+                      data.data.get_buffer ()),
+                      data.data.length ());
 
       CORBA::OctetSeq myout;
-      myout.length ((CORBA::ULong)server_request.original_message_length_);
+      myout.length (data.original_length);
 
       CORBA::OctetSeq input ((CORBA::ULong)(server_request.incoming()->length()),server_request.incoming()->start());
       compressor->decompress (input, myout);
       TAO_InputCDR* newstream = new TAO_InputCDR ((char*)myout.get_buffer(true), (size_t)server_request.original_message_length_);
-      server_request.incoming()->steal_from (*newstream);
+      server_request.incoming()->steal_from (*newstream);*/
   }
 //  TAO_InputCDR cdr (reinterpret_cast<const char*> (
 //                      context.context_data.get_buffer ()),
@@ -183,7 +190,7 @@ TAO_ZIOP_Loader::compress (TAO_ORB_Core& core, TAO_Operation_Details &details, T
 
       CORBA::OctetSeq input ((CORBA::ULong)(compression_stream.length()), compression_stream.begin ());
       compressor->compress (input, myout);
-  details.compressed (true);
+  out_stream.compressed (true);
   ACE_Message_Block *newblock = new ACE_Message_Block ((const char*)myout.get_buffer(), (size_t)myout.length());
   newblock->wr_ptr ((size_t)myout.length());
 //  out_stream.begin ()->cont (newblock);

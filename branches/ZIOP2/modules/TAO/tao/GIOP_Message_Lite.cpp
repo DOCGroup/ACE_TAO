@@ -184,7 +184,7 @@ TAO_GIOP_Message_Lite::format_message (TAO_OutputCDR &stream)
   const size_t offset = TAO_GIOP_LITE_MESSAGE_SIZE_OFFSET;
 
   // Ptr to first buffer.
-  char *buf = (char *) stream.buffer ();
+  char *buf = const_cast <char*> (stream.buffer ());
 
   // Length of all buffers.
   size_t total_len =

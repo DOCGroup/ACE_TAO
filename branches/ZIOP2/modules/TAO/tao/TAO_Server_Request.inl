@@ -36,6 +36,8 @@ TAO_ServerRequest::TAO_ServerRequest (void)
   , reply_status_ (-1)
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
   , transport_selection_guard_ (0)
+  , original_message_length_ (0)
+  , compressed_ (false)
 {
 }
 

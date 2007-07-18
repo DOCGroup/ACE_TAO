@@ -264,9 +264,11 @@ TAO_GIOP_Message_Generator_Parser_12::parse_request_header (
 
   request.response_expected ((response_flags > 0));
 
+  request.compressed_ = ((response_flags > 2));
+
   // The high bit of the octet has been set if the SyncScope policy
   // value is SYNC_WITH_SERVER.
-  request.sync_with_server ((response_flags == 1));
+  request.sync_with_server ((response_flags > 1));
 
   // Reserved field
   input.skip_bytes (3);

@@ -377,6 +377,7 @@ private:
   TAO::Transport_Selection_Guard transport_selection_guard_;
 public:
   CORBA::ULong original_message_length_;
+  CORBA::Boolean compressed_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

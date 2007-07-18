@@ -573,7 +573,7 @@ TAO_Transport::send_synchronous_message_i (const ACE_Message_Block *mb,
   // We are going to block, so there is no need to clone
   // the message block.
   TAO_Synch_Queued_Message synch_message (mb, this->orb_core_);
-  const size_t message_length = synch_message.message_length ();
+  size_t const message_length = synch_message.message_length ();
 
   synch_message.push_back (this->head_, this->tail_);
 
@@ -1248,13 +1248,11 @@ TAO_Transport::send_message_shared_i (TAO_Stub *stub,
   switch (message_semantics)
     {
       case TAO_Transport::TAO_TWOWAY_REQUEST:
-        ret = this->send_synchronous_message_i (message_block,
-                                                max_wait_time);
+        ret = this->send_synchronous_message_i (message_block, max_wait_time);
         break;
 
       case TAO_Transport::TAO_REPLY:
-        ret = this->send_reply_message_i (message_block,
-                                          max_wait_time);
+        ret = this->send_reply_message_i (message_block, max_wait_time);
         break;
 
       case TAO_Transport::TAO_ONEWAY_REQUEST:

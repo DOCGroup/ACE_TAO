@@ -84,6 +84,7 @@ TAO_ServerRequest::TAO_ServerRequest (TAO_Pluggable_Messaging *mesg_base,
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
     , transport_selection_guard_ (transport)
     , original_message_length_ (0)
+    , compressed_ (false)
 {
   ACE_FUNCTION_TIMEPROBE (TAO_SERVER_REQUEST_START);
   // No-op.
@@ -129,6 +130,8 @@ TAO_ServerRequest::TAO_ServerRequest (TAO_Pluggable_Messaging *mesg_base,
   , reply_status_ (-1)
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
   , transport_selection_guard_ (transport)
+  , original_message_length_ (0)
+  , compressed_ (false)
 {
   this->profile_.object_key (object_key);
   parse_error = 0;
@@ -167,6 +170,8 @@ TAO_ServerRequest::TAO_ServerRequest (TAO_ORB_Core * orb_core,
   , reply_status_ (-1)
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
   , transport_selection_guard_ (0)
+  , original_message_length_ (0)
+  , compressed_ (false)
 {
   // Have to use a const_cast<>.  *sigh*
   this->profile_.object_key (

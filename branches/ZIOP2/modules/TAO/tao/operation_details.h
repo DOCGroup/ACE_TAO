@@ -174,11 +174,11 @@ public:
   TAO_Reply_Dispatcher *reply_dispatcher (void) const;
   void reply_dispatcher (TAO_Reply_Dispatcher *rd);
 
-  void compressed (CORBA::Boolean compressed);
-  CORBA::Boolean compressed (void) const;
+//  void compressed (CORBA::Boolean compressed);
+//  CORBA::Boolean compressed (void) const;
 
   /// Temporarily @todo remove
-  CORBA::ULong uncompressed_size_;
+//  CORBA::ULong uncompressed_size_;
 
 private:
 
@@ -221,7 +221,7 @@ private:
   CORBA::ULong ex_count_;
 
   /// Compressed operation or not
-  CORBA::Boolean compressed_;
+//  CORBA::Boolean compressed_;
 
   /// Boolean flag to indicate whether in the skeletons the stub arguments
   /// stored in these operation details should be used or not.

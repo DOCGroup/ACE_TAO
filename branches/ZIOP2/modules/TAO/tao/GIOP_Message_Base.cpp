@@ -241,7 +241,7 @@ int
 TAO_GIOP_Message_Base::format_message (TAO_OutputCDR &stream)
 {
   // Ptr to first buffer.
-  char * buf = (char *) stream.buffer ();
+  char *buf = const_cast <char*> (stream.buffer ());
 
   this->set_giop_flags (stream);
 
@@ -924,7 +924,8 @@ TAO_GIOP_Message_Base::process_request (
 
       CORBA::Object_var forward_to;
 
-if (request.original_message_length_ > 0)
+//if (request.original_message_length_ > 0)
+if (request.compressed_ == true)
 {
   this->orb_core_->ziop_adapter ()->decompress (request);
 //+#if !defined (__BORLANDC__)
@@ -2017,6 +2018,9 @@ TAO_GIOP_Message_Base::set_giop_flags (TAO_OutputCDR & msg) const
   // Only supported in GIOP 1.1 or better.
   if (!(major <= 1 && minor == 0))
     ACE_SET_BITS (flags, msg.more_fragments () << 1);
+
+  if (!(major <= 1 && minor < 2))
+    ACE_SET_BITS (flags, msg.compressed () << 2);
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
