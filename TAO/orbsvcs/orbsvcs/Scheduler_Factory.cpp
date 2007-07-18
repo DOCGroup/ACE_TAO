@@ -631,7 +631,9 @@ void ACE_Scheduler_Factory::log_tuple_subset(TUPLE_SET & tuple_subset,
       if (tuple_iter.next (tuple_ptr_ptr) == 0
          || tuple_ptr_ptr == 0 || ((*tuple_ptr_ptr) == 0) )
       {
+         //FUZZ: disable check_for_NULL
          ACE_OS::fprintf (file, "{ NULL TUPLE POINTER }\n");
+         //FUZZ: enable check_for_NULL
       }
       else
       {

@@ -72,7 +72,9 @@ public:
     ACE_DEBUG( (LM_INFO, ". in TestString\n") );
     if (0 == a)
     {
+      //FUZZ: disable check_for_NULL
       ACE_DEBUG( (LM_INFO, "* Incorrect NULL string given for parameter a\n") );
+      //FUZZ: enable check_for_NULL
       throw CORBA::BAD_PARAM(0, CORBA::COMPLETED_NO);
     }
     if (1 != ACE_OS::strlen( a ))
@@ -92,7 +94,9 @@ public:
     }
     if (0 == c)
     {
+      //FUZZ: disable check_for_NULL
       ACE_DEBUG( (LM_INFO, "* Incorrect NULL string given for parameter c\n") );
+      //FUZZ: enable check_for_NULL
       throw CORBA::BAD_PARAM(0, CORBA::COMPLETED_NO);
     }
     if ('3' != *c)
@@ -155,7 +159,9 @@ public:
     ACE_DEBUG( (LM_INFO, ". in TestVarStruct\n") );
     if (0 == a.val.in())
     {
+      //FUZZ: disable check_for_NULL
       ACE_DEBUG( (LM_INFO, "* Incorrect NULL string given for parameter a\n") );
+      //FUZZ: enable check_for_NULL
       throw CORBA::BAD_PARAM(0, CORBA::COMPLETED_NO);
     }
     if (1 != ACE_OS::strlen( a.val.in() ))
@@ -170,7 +176,9 @@ public:
     }
     if (0 == c.val.in())
     {
+      //FUZZ: disable check_for_NULL
       ACE_DEBUG( (LM_INFO, "* Incorrect NULL string given for parameter c\n") );
+      //FUZZ: enable check_for_NULL
       throw CORBA::BAD_PARAM(0, CORBA::COMPLETED_NO);
     }
     if (1 != ACE_OS::strlen( c.val.in() ))
