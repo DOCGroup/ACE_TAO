@@ -21,7 +21,7 @@ ACE_RCSID (Strategies,
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_UIOP_Acceptor::TAO_UIOP_Acceptor (CORBA::Boolean flag)
+TAO_UIOP_Acceptor::TAO_UIOP_Acceptor (void)
   : TAO_Acceptor (TAO_TAG_UIOP_PROFILE),
     base_acceptor_ (),
     creation_strategy_ (0),
