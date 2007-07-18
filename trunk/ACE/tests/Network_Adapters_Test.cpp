@@ -222,11 +222,13 @@ Echo_Handler::open (ACE_Reactor * const reactor,
                        ACE_TEXT ("reactor is already set.\n")),
                       -1);
 
+  //FUZZ: disable check_for_NULL
   if (!reactor)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("(%P|%t) Echo_Handler::open - failed: NULL ")
                        ACE_TEXT ("pointer to reactor provided.\n")),
                       -1);
+  //FUZZ: enable check_for_NULL
 
   this->reactor (reactor);
   this->reply_wait_ = reply_wait;

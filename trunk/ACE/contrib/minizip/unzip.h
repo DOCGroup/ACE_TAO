@@ -238,6 +238,7 @@ extern int MINIZIP_EXPORT unzGetCurrentFileInfo OF((unzFile file,
                          uLong extraFieldBufferSize,
                          char *szComment,
                          uLong commentBufferSize));
+//FUZZ: disable check_for_NULL
 /*
   Get Info about the current file
   if pfile_info!=NULL, the *pfile_info structure will contain somes info about
@@ -250,7 +251,7 @@ extern int MINIZIP_EXPORT unzGetCurrentFileInfo OF((unzFile file,
   if szComment!=NULL, the comment string of the file will be copied in szComment
             (commentBufferSize is the size of the buffer)
 */
-
+//FUZZ: enable check_for_NULL
 /***************************************************************************/
 /* for reading the content of the current zipfile, you can open it, read data
    from it, and close it (you can close it before reading all the file)
@@ -274,6 +275,7 @@ extern int MINIZIP_EXPORT unzOpenCurrentFile2 OF((unzFile file,
                                            int* method,
                                            int* level,
                                            int raw));
+//FUZZ: disable check_for_NULL
 /*
   Same than unzOpenCurrentFile, but open for read raw the file (not uncompress)
     if raw==1
@@ -282,12 +284,14 @@ extern int MINIZIP_EXPORT unzOpenCurrentFile2 OF((unzFile file,
   note : you can set level parameter as NULL (if you did not want known level,
          but you CANNOT set method parameter as NULL
 */
+//FUZZ: enable check_for_NULL
 
 extern int MINIZIP_EXPORT unzOpenCurrentFile3 OF((unzFile file,
                                            int* method,
                                            int* level,
                                            int raw,
                                            const char* password));
+//FUZZ: disable check_for_NULL
 /*
   Same than unzOpenCurrentFile, but open for read raw the file (not uncompress)
     if raw==1
@@ -296,6 +300,7 @@ extern int MINIZIP_EXPORT unzOpenCurrentFile3 OF((unzFile file,
   note : you can set level parameter as NULL (if you did not want known level,
          but you CANNOT set method parameter as NULL
 */
+//FUZZ: enable check_for_NULL
 
 
 extern int MINIZIP_EXPORT unzCloseCurrentFile OF((unzFile file));
@@ -331,6 +336,7 @@ extern int MINIZIP_EXPORT unzeof OF((unzFile file));
 extern int MINIZIP_EXPORT unzGetLocalExtrafield OF((unzFile file,
                                              voidp buf,
                                              unsigned len));
+//FUZZ: disable check_for_NULL
 /*
   Read extra field from the current file (opened by unzOpenCurrentFile)
   This is the local-header version of the extra field (sometimes, there is
@@ -343,6 +349,7 @@ extern int MINIZIP_EXPORT unzGetLocalExtrafield OF((unzFile file,
   the return value is the number of bytes copied in buf, or (if <0)
     the error code
 */
+//FUZZ: enable check_for_NULL
 
 /***************************************************************************/
 

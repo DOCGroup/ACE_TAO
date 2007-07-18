@@ -153,6 +153,7 @@ extern int MINIZIP_EXPORT zipOpenNewFileInZip OF((zipFile file,
                        const char* comment,
                        int method,
                        int level));
+//FUZZ: disable check_for_NULL
 /*
   Open a file in the ZIP for writing.
   filename : the filename in zip (if NULL, '-' without quote will be used
@@ -165,6 +166,7 @@ extern int MINIZIP_EXPORT zipOpenNewFileInZip OF((zipFile file,
   method contain the compression method (0 for store, Z_DEFLATED for deflate)
   level contain the level of compression (can be Z_DEFAULT_COMPRESSION)
 */
+//FUZZ: enable check_for_NULL
 
 
 extern int MINIZIP_EXPORT zipOpenNewFileInZip2 OF((zipFile file,
@@ -199,13 +201,14 @@ extern int MINIZIP_EXPORT zipOpenNewFileInZip3 OF((zipFile file,
                                             int strategy,
                                             const char* password,
                                             uLong crcForCtypting));
-
+//FUZZ: disable check_for_NULL
 /*
   Same than zipOpenNewFileInZip2, except
     windowBits,memLevel,,strategy : see parameter strategy in deflateInit2
     password : crypting password (NULL for no crypting)
     crcForCtypting : crc of file to compress (needed for crypting)
  */
+//FUZZ: enable check_for_NULL
 
 
 extern int MINIZIP_EXPORT zipWriteInFileInZip OF((zipFile file,

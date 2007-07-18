@@ -23,40 +23,46 @@
 void
 main(const int argc, char* argv[])
 {
-    FILE* file;
-    int i;
-    int my_random;
-    int size;
-    char *cp;
+  FILE* file;
+  int i;
+  int my_random;
+  int size;
+  char *cp;
 
-    if (argc != 3) {
-	printf("usage: %s file_size_in_bytes[K|M] name\n", argv[0]);
-	exit(2);
+  if (argc != 3) 
+    {
+      printf("usage: %s file_size_in_bytes[K|M] name\n", argv[0]);
+      exit(2);
     }
 
-    if ((file = fopen(argv[2], "w")) == NULL) {
-	perror("fopen");
-	exit(1);
+  if ((file = fopen(argv[2], "w")) == 0) 
+    {
+      perror("fopen");
+      exit(1);
     }
 
-    size = atoi(argv[1]);
-    for (cp = argv[1]; *cp; cp++) {
-	switch(*cp) {
-	    case 'k':
-	    case 'K':
-		size *= 1024;
-		break;
-	    case 'm':
-	    case 'M':
-		size *= 1024*1024;
-		break;
-	}
+  size = atoi(argv[1]);
+
+  for (cp = argv[1]; *cp; cp++) 
+  {
+    switch(*cp) 
+      {
+        case 'k':
+        case 'K':
+          size *= 1024;
+          break;
+        case 'm':
+        case 'M':
+          size *= 1024*1024;
+          break;
+      }
+  }
+
+  for (i = 0; i < size; i++) 
+    {
+      my_random = ((RANDOM() % 94) + 33);
+      fputc((char)my_random, file);
     }
 
-    for (i = 0; i < size; i++) {
-	my_random = ((RANDOM() % 94) + 33);
-	fputc((char)my_random, file);
-    }
-
-    fclose(file);
+  fclose(file);
 }

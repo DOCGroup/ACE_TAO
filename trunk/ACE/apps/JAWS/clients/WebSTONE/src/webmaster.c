@@ -230,7 +230,7 @@ void echo_client(void *stream)
 	for (i = 0; i < num_rexecs; i++)
 	    if (sockarr[i] != BADSOCKET_VALUE)
 		FD_SET(sockarr[i], &readfds);
-	rv = select(num_rexecs, &readfds, NULL, NULL, &timeout);
+	rv = select(num_rexecs, &readfds, 0, 0, &timeout);
 	if ( rv == 0)
 	  continue;
 	if (rv < 0 && WSAGetLastError() == WSANOTINITIALISED)
@@ -300,13 +300,13 @@ int i;
 	/* we have an IP address */
 	client_addr = inet_addr(client_hostname);
 	if (client_addr == INADDR_NONE)
-	    return NULL;
+	    return 0;
     } else {
 	/* we have a hostname, use the webserver hostname */
 	return master_phe->h_name;
     }
 
-    for (i = 0; master_phe->h_addr_list[i] != NULL; i++) {
+    for (i = 0; master_phe->h_addr_list[i] != 0; i++) {
 	if ((*(int *)(master_phe->h_addr_list[i]) & netmask) == 
 		(client_addr & netmask))
 	    goto gotit;
@@ -653,12 +653,12 @@ struct sockaddr_in 	*serveraddr;
      * ITS VALIDITY AND THEN rexec A COMMAND ON THE CLIENT.
      */
 
-    if ((fp = fopen(configfile,"r")) == NULL)
+    if ((fp = fopen(configfile,"r")) == 0)
     {
         errexit("Could not open config file %s\n", configfile);
     }
    
-    if ((inetport = getservbyname("exec","tcp")) == NULL)
+    if ((inetport = getservbyname("exec","tcp")) == 0)
     {
         errexit("Could not get service name for exec/tcp\n");
     }
@@ -674,7 +674,7 @@ struct sockaddr_in 	*serveraddr;
 	int num;
 	char *primename;
 
-	if (NULL == fgets(linebuf, sizeof(linebuf), fp))
+	if (0 == fgets(linebuf, sizeof(linebuf), fp))
 	    break;
 	num = sscanf(linebuf,"%s %s %s %d %s",clienthostname[cnt],login,password,
 							&numclients, webserver2);
@@ -696,7 +696,7 @@ struct sockaddr_in 	*serveraddr;
         totalnumclients += numclients;
 
 	primename = pick_webmaster_IP_address(clienthostname[cnt], master_phe, network_mask);
-	if (primename == NULL) {
+	if (primename == 0) {
 	    errexit("Bad client address %s for Client %d\n", clienthostname[cnt], cnt); 
 	}
 
@@ -808,7 +808,7 @@ int sock;
 
 	    /* if we're hung, quit */
 	    D_PRINTF("Before select() on listen() socket\n");
-	    if (!(rv = select(FD_SETSIZE, &readfds, NULL, NULL, &timeout)))  {
+	    if (!(rv = select(FD_SETSIZE, &readfds, 0, 0, &timeout)))  {
 		fprintf(stdout,
 		    "Listen timeout after %d seconds (%d clients so far)\n",
 		    MAX_ACCEPT_SECS, cnt);
@@ -817,7 +817,7 @@ int sock;
 	    }
 	}
 
-        if(BADSOCKET(socknum[cnt] = accept(sock, NULL, 0)))
+        if(BADSOCKET(socknum[cnt] = accept(sock, 0, 0)))
         {
             /*
              * ERROR accepting FROM THE CLIENTS. WE NEED TO ISSUE AN
@@ -1073,7 +1073,7 @@ stats_t statarray[MAXCLIENTS];
      * DONE READING RESULTS FROM CLIENTS
      */
 
-    *endtime = time(NULL);
+    *endtime = time(0);
     timestr = asctime(localtime(endtime));
     fprintf(stdout,"\nAll clients ended at %s\n",timestr);
     fflush(stdout);
@@ -1364,7 +1364,7 @@ main(const int argc, char *argv[])
      */
 
 
-    gettimeofday (&sumedh_start, NULL);
+    gettimeofday (&sumedh_start, 0);
     SendGo( totalnumclients, socknum);
 
     /*
@@ -1373,7 +1373,7 @@ main(const int argc, char *argv[])
      * INFORMATION WE USE.
      */
 
-    starttime = time(NULL);
+    starttime = time(0);
     timestr = asctime(localtime(&starttime));
     fprintf(stdout,"All clients started at %s\n",timestr);
     fprintf(stdout,"Waiting for clients completion\n");
@@ -1387,7 +1387,7 @@ main(const int argc, char *argv[])
     GetResults( &fdset, page_stats, &endtime, timestr, totalnumclients,
 	       statarray);
 
-    gettimeofday (&sumedh_end, NULL);
+    gettimeofday (&sumedh_end, 0);
     PrintResults( page_stats, endtime, timestr, totalnumclients, statarray,
 		 page_stats_total);
 
