@@ -56,8 +56,7 @@ TAO::ORBInitializer_Registry::init (int, ACE_TCHAR *[])
 
       orb_initializer = temp_orb_initializer;
 
-      this->register_orb_initializer (orb_initializer.in ()
-                                                    );
+      this->register_orb_initializer (orb_initializer.in ());
     }
   catch (const ::CORBA::Exception& ex)
     {

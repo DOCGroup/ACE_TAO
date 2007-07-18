@@ -3,7 +3,11 @@
 // $Id$
 
 /**
- *   This file is used to generate the code in BooleanSeqC.*
+ * @file BooleanSeq.pidl
+ *
+ * $Id$
+ *
+ * This file is used to generate the code in BooleanSeqC.*
  */
 
 #ifndef TAO_CORBA_BOOLEAN_SEQ_IDL

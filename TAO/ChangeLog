@@ -1,3 +1,20 @@
+Wed Jul 18 12:40:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/ORBInitializer_Registry.cpp:
+          Corrected comment
+
+        * tao/ORBInitializer_Registry_Adapter.h:
+          Fixed doxygen tags
+
+        * tao/PI/ORBInitializer_Registry_Impl.cpp:
+          Layout change
+
+        * tao/BooleanSeq.pidl:
+        * tao/CharSeq.pidl:
+        * tao/CONV_FRAME.pidl:
+        * tao/Current.pidl:
+          Updated file header.
+
 Wed Jul 18 12:06:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/PortableGroup/UIPMC_Acceptor.cpp:
