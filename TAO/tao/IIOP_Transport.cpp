@@ -24,8 +24,7 @@ ACE_RCSID (tao,
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_IIOP_Transport::TAO_IIOP_Transport (TAO_IIOP_Connection_Handler *handler,
-                                        TAO_ORB_Core *orb_core,
-                                        CORBA::Boolean )
+                                        TAO_ORB_Core *orb_core)
   : TAO_Transport (IOP::TAG_INTERNET_IOP,
                    orb_core)
   , connection_handler_ (handler)

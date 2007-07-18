@@ -52,7 +52,7 @@ namespace TAO
     typedef TAO_Accept_Strategy<IIOP_SSL_Connection_Handler, ACE_SOCK_ACCEPTOR> TAO_IIOP_SSL_ACCEPT_STRATEGY;
 
     /// Constructor.
-    IIOP_SSL_Acceptor (CORBA::Boolean flag = false);
+    IIOP_SSL_Acceptor (void);
 
     /// Destructor.
     ~IIOP_SSL_Acceptor (void);

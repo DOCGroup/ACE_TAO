@@ -25,8 +25,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::SSLIOP::Transport::Transport (
   TAO::SSLIOP::Connection_Handler *handler,
-  TAO_ORB_Core *orb_core,
-  CORBA::Boolean /* flag */)
+  TAO_ORB_Core *orb_core)
   : TAO_Transport (IOP::TAG_INTERNET_IOP, orb_core),
     connection_handler_ (handler),
     messaging_object_ (0)

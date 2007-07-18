@@ -72,8 +72,7 @@ namespace TAO
 
       /// Constructor.
       Transport (Connection_Handler *handler,
-                 TAO_ORB_Core *orb_core,
-                 CORBA::Boolean flag);
+                 TAO_ORB_Core *orb_core);
 
       /// Default destructor.
       ~Transport (void);

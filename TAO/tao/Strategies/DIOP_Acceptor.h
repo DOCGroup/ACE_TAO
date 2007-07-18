@@ -47,7 +47,7 @@ class TAO_Strategies_Export TAO_DIOP_Acceptor : public TAO_Acceptor
 {
 public:
   /// Constructor.
-  TAO_DIOP_Acceptor (CORBA::Boolean flag = false);
+  TAO_DIOP_Acceptor (void);
 
   /// Destructor.
   ~TAO_DIOP_Acceptor (void);
@@ -193,9 +193,6 @@ protected:
 
   /// ORB Core.
   TAO_ORB_Core *orb_core_;
-
-  /// Should we use GIOP lite??
-  CORBA::Boolean lite_flag_;
 
   /// Address for default endpoint
   ACE_INET_Addr default_address_;

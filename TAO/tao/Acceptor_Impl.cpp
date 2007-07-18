@@ -33,11 +33,9 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 //////////////////////////////////////////////////////////////////////////////
 
 template <class SVC_HANDLER>
-TAO_Creation_Strategy<SVC_HANDLER>::TAO_Creation_Strategy (TAO_ORB_Core *orb_core,
-                                                           CORBA::Boolean flag)
+TAO_Creation_Strategy<SVC_HANDLER>::TAO_Creation_Strategy (TAO_ORB_Core *orb_core)
   : ACE_Creation_Strategy<SVC_HANDLER> (0, orb_core->reactor()),
-    orb_core_ (orb_core),
-    lite_flag_ (flag)
+    orb_core_ (orb_core)
 {
 }
 
@@ -50,8 +48,7 @@ TAO_Creation_Strategy<SVC_HANDLER>::make_svc_handler (SVC_HANDLER *&sh)
       this->orb_core_->lane_resources ().transport_cache ().purge ();
 
       ACE_NEW_RETURN (sh,
-                      SVC_HANDLER (this->orb_core_,
-                                   this->lite_flag_),
+                      SVC_HANDLER (this->orb_core_),
                       -1);
     }
 

@@ -47,8 +47,7 @@ namespace TAO
        * state/info to the service handler upon creation.
 
       */
-      Creation_Strategy (TAO_ORB_Core *orb_core,
-                         CORBA::Boolean flag = 0);
+      Creation_Strategy (TAO_ORB_Core *orb_core);
 
       /// Create a SVC_HANDLER  and set the ORB_Core pointer on it.
       int make_svc_handler (SVC_HANDLER *&sh);
@@ -56,9 +55,6 @@ namespace TAO
     protected:
       /// Pointer to the ORB Core.
       TAO_ORB_Core *orb_core_;
-
-      /// Should we use the Lite version for any protocol?
-      CORBA::Boolean lite_flag_;
     };
 
     template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1>

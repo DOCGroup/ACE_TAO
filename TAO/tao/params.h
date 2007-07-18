@@ -295,9 +295,6 @@ private:
    */
   ACE_CDR::ULong max_message_size_;
 
-  /// For selecting a liteweight version of the GIOP protocol.
-  int use_lite_protocol_;
-
   /// For selecting a address notation
   int use_dotted_decimal_addresses_;
 

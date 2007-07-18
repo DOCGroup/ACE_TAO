@@ -29,8 +29,7 @@ TAO_UIOP_Acceptor::TAO_UIOP_Acceptor (CORBA::Boolean flag)
     accept_strategy_ (0),
     version_ (TAO_DEF_GIOP_MAJOR, TAO_DEF_GIOP_MINOR),
     orb_core_ (0),
-    unlink_on_close_ (true),
-    lite_flag_ (flag)
+    unlink_on_close_ (true)
 {
 }
 
@@ -244,8 +243,7 @@ TAO_UIOP_Acceptor::open_i (const char *rendezvous,
                            ACE_Reactor *reactor)
 {
   ACE_NEW_RETURN (this->creation_strategy_,
-                  TAO_UIOP_CREATION_STRATEGY (this->orb_core_,
-                                              this->lite_flag_),
+                  TAO_UIOP_CREATION_STRATEGY (this->orb_core_),
                   -1);
 
   ACE_NEW_RETURN (this->concurrency_strategy_,

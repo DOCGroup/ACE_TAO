@@ -14,7 +14,6 @@
 #include "tao/ORB_Core.h"
 #include "tao/debug.h"
 #include "tao/GIOP_Message_Base.h"
-#include "tao/GIOP_Message_Lite.h"
 
 ACE_RCSID (Strategies,
            UIOP_Transport,
@@ -24,8 +23,7 @@ ACE_RCSID (Strategies,
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_UIOP_Transport::TAO_UIOP_Transport (TAO_UIOP_Connection_Handler *handler,
-                                        TAO_ORB_Core *orb_core,
-                                        CORBA::Boolean flag)
+                                        TAO_ORB_Core *orb_core)
   : TAO_Transport (TAO_TAG_UIOP_PROFILE,
                    orb_core)
   , connection_handler_ (handler)
@@ -37,18 +35,9 @@ TAO_UIOP_Transport::TAO_UIOP_Transport (TAO_UIOP_Connection_Handler *handler,
  * object is known a priori. In this case, the flag is ignored.
  */
 //@@ MESSAGING_SPL_COMMENT_HOOK_START
-  if (flag)
-    {
-      // Use the lite version of the protocol
-      ACE_NEW (this->messaging_object_,
-               TAO_GIOP_Message_Lite (orb_core));
-    }
-  else
-    {
-      // Use the normal GIOP object
-      ACE_NEW (this->messaging_object_,
-               TAO_GIOP_Message_Base (orb_core, this));
-    }
+  // Use the normal GIOP object
+  ACE_NEW (this->messaging_object_,
+            TAO_GIOP_Message_Base (orb_core, this));
 //@@ MESSAGING_SPL_COMMENT_HOOK_END
 }
 

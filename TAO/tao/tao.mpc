@@ -79,7 +79,6 @@ project(TAO) : acelib, install, tao_output, taodefaults, pidl, extra_core, tao_v
     GIOP_Message_Generator_Parser_11.cpp
     GIOP_Message_Generator_Parser_12.cpp
     GIOP_Message_Generator_Parser_Impl.cpp
-    GIOP_Message_Lite.cpp
     GIOP_Message_Locate_Header.cpp
     GIOP_Message_State.cpp
     GIOP_Message_Version.cpp
@@ -94,7 +93,6 @@ project(TAO) : acelib, install, tao_output, taodefaults, pidl, extra_core, tao_v
     IIOP_Endpoint.cpp
     IIOP_EndpointsC.cpp
     IIOP_Factory.cpp
-    IIOP_Lite_Factory.cpp
     IIOP_Profile.cpp
     IIOP_Transport.cpp
     IIOPC.cpp
@@ -350,7 +348,6 @@ project(TAO) : acelib, install, tao_output, taodefaults, pidl, extra_core, tao_v
     GIOP_Message_Generator_Parser_12.h
     GIOP_Message_Generator_Parser.h
     GIOP_Message_Generator_Parser_Impl.h
-    GIOP_Message_Lite.h
     GIOP_Message_Locate_Header.h
     GIOP_Message_State.h
     GIOP_Message_Version.h
@@ -369,7 +366,6 @@ project(TAO) : acelib, install, tao_output, taodefaults, pidl, extra_core, tao_v
     IIOP_EndpointsC.h
     IIOP_EndpointsS.h
     IIOP_Factory.h
-    IIOP_Lite_Factory.h
     IIOP_Profile.h
     IIOP_Transport.h
     Incoming_Message_Queue.h

@@ -45,7 +45,7 @@ namespace TAO
   public:
 
     /// Constructor.
-    IIOP_SSL_Connector (CORBA::Boolean flag = 0);
+    IIOP_SSL_Connector (void);
 
     /// Destructor.
     ~IIOP_SSL_Connector (void);

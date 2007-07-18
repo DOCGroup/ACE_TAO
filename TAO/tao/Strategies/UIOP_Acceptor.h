@@ -132,9 +132,6 @@ private:
   /// be unlinked on close.  This is really only used when an error
   /// occurs.
   bool unlink_on_close_;
-
-  /// Should we use GIOP lite??
-  const bool lite_flag_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

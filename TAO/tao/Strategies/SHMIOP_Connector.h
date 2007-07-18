@@ -52,7 +52,7 @@ class TAO_Strategies_Export TAO_SHMIOP_Connector : public TAO_Connector
 {
 public:
   /// Constructor.
-  TAO_SHMIOP_Connector (CORBA::Boolean flag = false);
+  TAO_SHMIOP_Connector (void);
 
   /// Default destructor
   ~TAO_SHMIOP_Connector (void);
@@ -123,9 +123,6 @@ private:
 
   /// The connector initiating connection requests for SHMIOP.
   TAO_SHMIOP_BASE_CONNECTOR base_connector_;
-
-  /// Are we using GIOP lite?
-  CORBA::Boolean lite_flag_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

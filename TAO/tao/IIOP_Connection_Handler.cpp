@@ -36,25 +36,17 @@ TAO_IIOP_Connection_Handler::TAO_IIOP_Connection_Handler (ACE_Thread_Manager *t)
 
 
 TAO_IIOP_Connection_Handler::TAO_IIOP_Connection_Handler (
-  TAO_ORB_Core *orb_core,
-  CORBA::Boolean flag)
+  TAO_ORB_Core *orb_core)
   : TAO_IIOP_SVC_HANDLER (orb_core->thr_mgr (), 0, 0),
     TAO_Connection_Handler (orb_core),
     dscp_codepoint_ (IPDSFIELD_DSCP_DEFAULT << 2)
 {
   TAO_IIOP_Transport* specific_transport = 0;
   ACE_NEW (specific_transport,
-           TAO_IIOP_Transport (this, orb_core, flag));
+           TAO_IIOP_Transport (this, orb_core));
 
   // store this pointer (indirectly increment ref count)
   this->transport (specific_transport);
-}
-
-TAO_IIOP_Connection_Handler::TAO_IIOP_Connection_Handler (TAO_ORB_Core *orb_core)
-  : TAO_IIOP_SVC_HANDLER (orb_core->thr_mgr (), 0, 0),
-    TAO_Connection_Handler (orb_core),
-    dscp_codepoint_ (IPDSFIELD_DSCP_DEFAULT << 2)
-{
 }
 
 TAO_IIOP_Connection_Handler::~TAO_IIOP_Connection_Handler (void)

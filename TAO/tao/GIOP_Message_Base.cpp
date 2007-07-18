@@ -1289,9 +1289,6 @@ TAO_GIOP_Message_Base::send_error (TAO_Transport *transport)
     0, 0, 0, 0
   };
 
-  // @@ Q: How does this works with GIOP lite?
-  //    A: It doesn't
-
   this->dump_msg ("send_error",
                   (const u_char *) error_message,
                   TAO_GIOP_MESSAGE_HEADER_LEN);
