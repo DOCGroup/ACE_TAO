@@ -49,7 +49,7 @@ class TAO_Strategies_Export TAO_COIOP_Connector : public TAO_Connector
 public:
   // = Initialization and termination methods.
   /// Constructor.
-  TAO_COIOP_Connector (CORBA::Boolean flag = false);
+  TAO_COIOP_Connector (void);
 
   /// Destructor.
   ~TAO_COIOP_Connector (void);
@@ -89,11 +89,6 @@ protected:
 
   /// Cancel the passed cvs handler from the connector
   int cancel_svc_handler (TAO_Connection_Handler * svc_handler);
-
-protected:
-
-  /// Do we need to use a GIOP_Lite for sending messages?
-  CORBA::Boolean lite_flag_;
 
 private:
 

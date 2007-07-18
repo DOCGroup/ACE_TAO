@@ -40,14 +40,13 @@ TAO::HTIOP::Connection_Handler::Connection_Handler (ACE_Thread_Manager *t)
   ACE_ASSERT (this->orb_core () != 0);
 }
 
-TAO::HTIOP::Connection_Handler::Connection_Handler (TAO_ORB_Core *orb_core,
-                                                    CORBA::Boolean flag)
+TAO::HTIOP::Connection_Handler::Connection_Handler (TAO_ORB_Core *orb_core)
   : SVC_HANDLER (orb_core->thr_mgr (), 0, 0),
     TAO_Connection_Handler (orb_core)
 {
   TAO::HTIOP::Transport* specific_transport = 0;
   ACE_NEW(specific_transport,
-          TAO::HTIOP::Transport (this, orb_core, flag));
+          TAO::HTIOP::Transport (this, orb_core));
 
   this->transport (specific_transport);
 }

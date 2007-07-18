@@ -451,13 +451,8 @@ TAO::SSLIOP::Acceptor::ssliop_open_i (TAO_ORB_Core *orb_core,
 {
   this->orb_core_ = orb_core;
 
-  // Explicitly disable GIOPlite support since it introduces security
-  // holes.
-  static const int giop_lite = 0;
-
   ACE_NEW_RETURN (this->creation_strategy_,
-                  CREATION_STRATEGY (this->orb_core_,
-                                     giop_lite),
+                  CREATION_STRATEGY (this->orb_core_),
                   -1);
 
   ACE_NEW_RETURN (this->concurrency_strategy_,

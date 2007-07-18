@@ -197,8 +197,7 @@ protected:
   /// Writes the GIOP header in to @a msg
   /// @note If the GIOP header happens to change in the future, we can
   /// push this method in to the generator_parser classes.
-  int write_protocol_header (TAO_GIOP_Message_Type t,
-                             TAO_OutputCDR &msg);
+  int write_protocol_header (TAO_GIOP_Message_Type t, TAO_OutputCDR &msg);
 
   /// Make a GIOP_LOCATEREPLY and hand that over to the transport so
   /// that it can be sent over the connection.

@@ -56,7 +56,7 @@ public:
   //@@ TAO_ACCEPTOR_SPL_CONCRETE_METHODS_COPY_HOOK_START
 
   /// Constructor.
-  TAO_IIOP_Acceptor (CORBA::Boolean flag = false);
+  TAO_IIOP_Acceptor (void);
 
   /// Destructor.
   ~TAO_IIOP_Acceptor (void);
@@ -254,9 +254,6 @@ protected:
 
   /// ORB Core.
   TAO_ORB_Core *orb_core_;
-
-  /// Should we use GIOP lite??
-  const bool lite_flag_;
 
   /// Enable socket option SO_REUSEADDR to be set
   int reuse_addr_;

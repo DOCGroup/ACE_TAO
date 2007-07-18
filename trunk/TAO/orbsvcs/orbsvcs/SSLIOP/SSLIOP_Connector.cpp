@@ -53,9 +53,7 @@ TAO::SSLIOP::Connector::open (TAO_ORB_Core *orb_core)
   ACE_NEW_RETURN (connect_creation_strategy,
                   CONNECT_CREATION_STRATEGY
                       (orb_core->thr_mgr (),
-                       orb_core,
-                       0 /* Forcibly disable TAO's GIOPlite feature.
-                            It introduces a security hole. */),
+                       orb_core),
                   -1);
 
   // Our activation strategy

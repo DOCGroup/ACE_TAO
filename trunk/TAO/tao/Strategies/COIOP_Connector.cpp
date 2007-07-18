@@ -22,9 +22,8 @@ ACE_RCSID (Strategies,
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_COIOP_Connector::TAO_COIOP_Connector (CORBA::Boolean flag)
-  : TAO_Connector (TAO_TAG_COIOP_PROFILE),
-    lite_flag_ (flag)
+TAO_COIOP_Connector::TAO_COIOP_Connector (void)
+  : TAO_Connector (TAO_TAG_COIOP_PROFILE)
 {
 }
 

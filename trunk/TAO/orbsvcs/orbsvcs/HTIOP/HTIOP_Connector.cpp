@@ -51,8 +51,7 @@ TAO::HTIOP::Connector::open (TAO_ORB_Core *orb_core)
   ACE_NEW_RETURN (this->connect_creation_strategy_,
                   CONNECT_CREATION_STRATEGY
                       (orb_core->thr_mgr (),
-                       orb_core,
-                       0),
+                       orb_core),
                   -1);
 
 

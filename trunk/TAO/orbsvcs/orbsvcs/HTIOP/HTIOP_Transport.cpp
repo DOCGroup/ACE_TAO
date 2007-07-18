@@ -18,7 +18,6 @@
 #include "tao/ORB_Core.h"
 #include "tao/debug.h"
 #include "tao/GIOP_Message_Base.h"
-#include "tao/GIOP_Message_Lite.h"
 #include "tao/Protocols_Hooks.h"
 #include "tao/Adapter.h"
 
@@ -29,24 +28,13 @@ ACE_RCSID (HTIOP,
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::HTIOP::Transport::Transport (TAO::HTIOP::Connection_Handler *h,
-                                  TAO_ORB_Core *orb_core,
-                                  CORBA::Boolean flag)
+                                  TAO_ORB_Core *orb_core)
   : TAO_Transport (OCI_TAG_HTIOP_PROFILE, orb_core),
     connection_handler_ (h),
     messaging_object_ (0)
 {
-  if (flag)
-    {
-      // Use the lite version of the protocol
-      ACE_NEW (this->messaging_object_,
-               TAO_GIOP_Message_Lite (orb_core));
-    }
-  else
-    {
-      // Use the normal GIOP object
-      ACE_NEW (this->messaging_object_,
-               TAO_GIOP_Message_Base (orb_core, this));
-    }
+  ACE_NEW (this->messaging_object_,
+           TAO_GIOP_Message_Base (orb_core, this));
 }
 
 TAO::HTIOP::Transport::~Transport (void)
@@ -77,7 +65,6 @@ TAO::HTIOP::Transport::send (iovec *iov, int iovcnt,
                             size_t &bytes_transferred,
                             const ACE_Time_Value *max_wait_time)
 {
-  ACE_UNUSED_ARG (max_wait_time);
   ssize_t retval = this->connection_handler_->peer ().sendv (iov, iovcnt,
                                                              max_wait_time);
   if (retval > 0)

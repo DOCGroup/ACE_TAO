@@ -55,7 +55,7 @@ class TAO_Export TAO_IIOP_Connector : public TAO_Connector
 public:
   // = Initialization and termination methods.
   /// Constructor.
-  TAO_IIOP_Connector (CORBA::Boolean flag = false);
+  TAO_IIOP_Connector (void);
 
   /// Destructor.
   ~TAO_IIOP_Connector (void);
@@ -122,11 +122,6 @@ protected:
  * base Connector class.
  */
 //@@ TAO_CONNECTOR_SPL_COPY_HOOK_START
-
-protected:
-
-  /// Do we need to use a GIOP_Lite for sending messages?
-  const bool lite_flag_;
 
 private:
   /// This is the first half of making a connection. Both make_connection

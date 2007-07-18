@@ -21,7 +21,7 @@ ACE_RCSID(tao,
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_SCIOP_Acceptor::TAO_SCIOP_Acceptor (CORBA::Boolean flag)
+TAO_SCIOP_Acceptor::TAO_SCIOP_Acceptor (void)
   : TAO_Acceptor (TAO_TAG_SCIOP_PROFILE),
     addrs_ (0),
     port_span_ (1),
@@ -30,7 +30,6 @@ TAO_SCIOP_Acceptor::TAO_SCIOP_Acceptor (CORBA::Boolean flag)
     hostname_in_ior_ (0),
     version_ (TAO_DEF_SCIOP_MAJOR, TAO_DEF_SCIOP_MINOR),
     orb_core_ (0),
-    lite_flag_ (flag),
     base_acceptor_ (),
     creation_strategy_ (0),
     concurrency_strategy_ (0),
@@ -501,8 +500,7 @@ TAO_SCIOP_Acceptor::open_i (const ACE_Multihomed_INET_Addr& addr,
                            ACE_Reactor *reactor)
 {
   ACE_NEW_RETURN (this->creation_strategy_,
-                  TAO_SCIOP_CREATION_STRATEGY (this->orb_core_,
-                                              this->lite_flag_),
+                  TAO_SCIOP_CREATION_STRATEGY (this->orb_core_),
                   -1);
 
   ACE_NEW_RETURN (this->concurrency_strategy_,

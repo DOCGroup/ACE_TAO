@@ -150,8 +150,7 @@ TAO_GIOP_Message_Generator_Parser::is_ready_for_bidirectional (void) const
 void
 TAO_GIOP_Message_Generator_Parser::marshal_reply_status (
     TAO_OutputCDR &output,
-    TAO_Pluggable_Reply_Params_Base &reply
-  )
+    TAO_Pluggable_Reply_Params_Base &reply)
 {
   switch (reply.reply_status_)
     {

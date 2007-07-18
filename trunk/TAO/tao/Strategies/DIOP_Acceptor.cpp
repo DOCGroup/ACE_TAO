@@ -28,14 +28,13 @@ ACE_RCSID (Strategies,
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_DIOP_Acceptor::TAO_DIOP_Acceptor (CORBA::Boolean flag)
+TAO_DIOP_Acceptor::TAO_DIOP_Acceptor (void)
   : TAO_Acceptor (TAO_TAG_DIOP_PROFILE),
     addrs_ (0),
     hosts_ (0),
     endpoint_count_ (0),
     version_ (TAO_DEF_GIOP_MAJOR, TAO_DEF_GIOP_MINOR),
     orb_core_ (0),
-    lite_flag_ (flag),
 #if defined (ACE_HAS_IPV6)
     default_address_ (static_cast<unsigned short> (0), ACE_IPV6_ANY, AF_INET6),
 #else
@@ -402,8 +401,7 @@ TAO_DIOP_Acceptor::open_i (const ACE_INET_Addr& addr,
                            ACE_Reactor *reactor)
 {
   ACE_NEW_RETURN (this->connection_handler_,
-                  TAO_DIOP_Connection_Handler (this->orb_core_,
-                                               this->lite_flag_),
+                  TAO_DIOP_Connection_Handler (this->orb_core_),
                   -1);
 
   this->connection_handler_->local_addr (addr);

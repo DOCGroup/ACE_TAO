@@ -18,15 +18,13 @@
 #include "tao/debug.h"
 #include "tao/Resume_Handle.h"
 #include "tao/GIOP_Message_Base.h"
-#include "tao/GIOP_Message_Lite.h"
 
 ACE_RCSID (tao, COIOP_Transport, "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_COIOP_Transport::TAO_COIOP_Transport (TAO_COIOP_Connection_Handler *handler,
-                                        TAO_ORB_Core *orb_core,
-                                        CORBA::Boolean flag)
+                                          TAO_ORB_Core *orb_core)
   : TAO_Transport (TAO_TAG_COIOP_PROFILE,
                    orb_core)
   , connection_handler_ (handler)
@@ -38,22 +36,9 @@ TAO_COIOP_Transport::TAO_COIOP_Transport (TAO_COIOP_Connection_Handler *handler,
  */
 //@@ MESSAGING_SPL_COMMENT_HOOK_START
 
-  // @@ Michael: Set the input CDR size to ACE_MAX_DGRAM_SIZE so that
-  //             we read the whole UDP packet on a single read.
-  if (flag)
-    {
-      // Use the lite version of the protocol
-      ACE_NEW (this->messaging_object_,
-               TAO_GIOP_Message_Lite (orb_core));
-    }
-  else
-    {
-      // Use the normal GIOP object
-      ACE_NEW (this->messaging_object_,
-               TAO_GIOP_Message_Base (orb_core,
-                                      this));
-    }
-
+  ACE_NEW (this->messaging_object_,
+           TAO_GIOP_Message_Base (orb_core,
+                                  this));
 //@@ MESSAGING_SPL_COMMENT_HOOK_END
 
 }

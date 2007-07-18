@@ -155,8 +155,7 @@ TAO::HTIOP::Completion_Handler::make_svc_handler (TAO::HTIOP::Connection_Handler
       // Purge connections (if necessary)
       this->orb_core_->lane_resources ().transport_cache ().purge ();
       ACE_NEW_RETURN (sh,
-                      TAO::HTIOP::Connection_Handler (this->orb_core_,
-                                                      0),
+                      TAO::HTIOP::Connection_Handler (this->orb_core_),
                       -1);
     }
 

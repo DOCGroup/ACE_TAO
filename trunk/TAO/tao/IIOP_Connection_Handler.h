@@ -67,8 +67,7 @@ public:
   TAO_IIOP_Connection_Handler (ACE_Thread_Manager * = 0);
 
   /// Constructor.
-  TAO_IIOP_Connection_Handler (TAO_ORB_Core *orb_core,
-                               CORBA::Boolean flag);
+  TAO_IIOP_Connection_Handler (TAO_ORB_Core *orb_core);
 
   /// Destructor.
   ~TAO_IIOP_Connection_Handler (void);
@@ -114,16 +113,6 @@ public:
   void abort (void);
 
 protected:
-
-  /// Constructor that could be used by the derived classes.
-  /**
-   * Sometimes new pluggable protocols which have similarities with
-   * IIOP may be tempted to this class for their use. Classical
-   * example being that of IIOP_SSL_Connection_Handler. This
-   * constructor just initializes its base class and sets all of its
-   * contents to the default value, if any
-   */
-  TAO_IIOP_Connection_Handler (TAO_ORB_Core *orb_core);
 
   //@{
   /**

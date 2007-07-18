@@ -22,12 +22,11 @@ ACE_RCSID (Strategies,
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_COIOP_Acceptor::TAO_COIOP_Acceptor (CORBA::Boolean flag)
+TAO_COIOP_Acceptor::TAO_COIOP_Acceptor (void)
   : TAO_Acceptor (TAO_TAG_COIOP_PROFILE),
     uuid_ (*ACE_Utils::UUID_GENERATOR::instance ()->generateUUID ()),
     version_ (TAO_DEF_GIOP_MAJOR, TAO_DEF_GIOP_MINOR),
-    orb_core_ (0),
-    lite_flag_ (flag)
+    orb_core_ (0)
 {
 }
 

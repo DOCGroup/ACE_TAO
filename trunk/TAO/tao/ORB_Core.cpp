@@ -376,9 +376,6 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
   // arguments and stash it for use initializing other components such
   // as the RootPOA.
 
-  // @@ GIOPLite should be an alternative ORB Messaging protocols, fredk
-  // int giop_lite = 0;
-
   bool use_ior = true;
   int cdr_tradeoff = ACE_DEFAULT_CDR_MEMCPY_TRADEOFF;
 

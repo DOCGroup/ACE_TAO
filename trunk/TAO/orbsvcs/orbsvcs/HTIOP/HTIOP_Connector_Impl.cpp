@@ -15,8 +15,7 @@ Connect_Creation_Strategy (ACE_Thread_Manager* t,
                                      CORBA::Boolean flag)
   : ACE_Creation_Strategy <SVC_HANDLER> (t),
     orb_core_ (orb_core),
-    arg_ (arg),
-    lite_flag_ (flag)
+    arg_ (arg)
 {
 
 }
@@ -27,7 +26,6 @@ TAO::HTIOP::Connect_Creation_Strategy<SVC_HANDLER>::make_svc_handler (SVC_HANDLE
   if (sh == 0)
     ACE_NEW_RETURN (sh,
                     SVC_HANDLER (this->orb_core_,
-                                 this->lite_flag_,
                                  this->arg_),
                     -1);
 
@@ -53,8 +51,7 @@ TAO::HTIOP::Connect_Concurrency_Strategy<SVC_HANDLER>::
 activate_svc_handler (SVC_HANDLER *sh,
                       void *arg)
 {
-  return ACE_Concurrency_Strategy<SVC_HANDLER>::activate_svc_handler (sh,
-                                                                      arg);
+  return ACE_Concurrency_Strategy<SVC_HANDLER>::activate_svc_handler (sh, arg);
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

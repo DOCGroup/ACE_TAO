@@ -15,7 +15,6 @@
 #include "tao/debug.h"
 #include "tao/Resume_Handle.h"
 #include "tao/GIOP_Message_Base.h"
-#include "tao/GIOP_Message_Lite.h"
 
 ACE_RCSID (Strategies, SHMIOP_Transport, "$Id$")
 
@@ -23,8 +22,7 @@ ACE_RCSID (Strategies, SHMIOP_Transport, "$Id$")
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_SHMIOP_Transport::TAO_SHMIOP_Transport (TAO_SHMIOP_Connection_Handler *handler,
-                                            TAO_ORB_Core *orb_core,
-                                            CORBA::Boolean flag)
+                                            TAO_ORB_Core *orb_core)
   : TAO_Transport (TAO_TAG_SHMEM_PROFILE,
                    orb_core),
     connection_handler_ (handler),
@@ -35,18 +33,8 @@ TAO_SHMIOP_Transport::TAO_SHMIOP_Transport (TAO_SHMIOP_Connection_Handler *handl
  * object is known a priori. In this case, the flag is ignored.
  */
 //@@ MESSAGING_SPL_COMMENT_HOOK_START
-  if (flag)
-    {
-      // Use the lite version of the protocol
-      ACE_NEW (this->messaging_object_,
-               TAO_GIOP_Message_Lite (orb_core));
-    }
-  else
-    {
-      // Use the normal GIOP object
-      ACE_NEW (this->messaging_object_,
-               TAO_GIOP_Message_Base (orb_core, this));
-    }
+  ACE_NEW (this->messaging_object_,
+            TAO_GIOP_Message_Base (orb_core, this));
 //@@ MESSAGING_SPL_COMMENT_HOOK_END
 }
 

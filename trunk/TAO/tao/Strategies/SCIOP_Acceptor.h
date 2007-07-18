@@ -48,7 +48,7 @@ class TAO_Strategies_Export TAO_SCIOP_Acceptor : public TAO_Acceptor
 {
 public:
   /// Constructor.
-  TAO_SCIOP_Acceptor (CORBA::Boolean flag = false);
+  TAO_SCIOP_Acceptor (void);
 
   /// Destructor.
   ~TAO_SCIOP_Acceptor (void);
@@ -203,9 +203,6 @@ protected:
 
   /// ORB Core.
   TAO_ORB_Core *orb_core_;
-
-  /// Should we use GIOP lite??
-  CORBA::Boolean lite_flag_;
 
 private:
 

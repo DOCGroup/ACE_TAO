@@ -1,7 +1,5 @@
 // -*- C++ -*-
 // $Id$
-
-// $Id$
 // ===================================================================
 /**
  *  @file   SHMIOP_Acceptor.h
@@ -45,7 +43,7 @@ class TAO_Strategies_Export TAO_SHMIOP_Acceptor : public TAO_Acceptor
 {
 public:
   /// Constructor.
-  TAO_SHMIOP_Acceptor (CORBA::Boolean flag = false);
+  TAO_SHMIOP_Acceptor (void);
 
   /// Destructor.
   ~TAO_SHMIOP_Acceptor (void);
@@ -140,9 +138,6 @@ private:
   /// Determine the minimum size of mmap file.  This dictate the
   /// maximum size of a CORBA method invocation.
   ACE_OFF_T mmap_size_;
-
-  /// Should we use GIOP lite??
-  CORBA::Boolean lite_flag_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

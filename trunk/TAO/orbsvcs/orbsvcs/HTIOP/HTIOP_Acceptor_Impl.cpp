@@ -27,10 +27,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 ////////////////////////////////////////////////////////////////////////////////
 
 template <class SVC_HANDLER>
-TAO::HTIOP::Creation_Strategy<SVC_HANDLER>::Creation_Strategy (TAO_ORB_Core *orb_core,
-                                                               CORBA::Boolean flag)
-  : orb_core_ (orb_core),
-    lite_flag_ (flag)
+TAO::HTIOP::Creation_Strategy<SVC_HANDLER>::Creation_Strategy (TAO_ORB_Core *orb_core)
+  : orb_core_ (orb_core)
 {
 }
 
