@@ -133,10 +133,12 @@ HTTP_Handler::svc (void)
   while (!done);
 
   // ASSERT (contentlength != 0)
+  int size = 0;
   if (contentlength
       && (::sscanf (contentlength, "\nContent-%*[lL]ength: %d ",
-                    &this->response_size_) == 1))
+                    &size) == 1))
     {
+      this->response_size_ = size;
       ACE_Filecache_Handle afh (ACE_TEXT_CHAR_TO_TCHAR (this->filename_),
                                 this->response_size_);
 
