@@ -54,8 +54,7 @@ public:
 
   /// Constructor.
   TAO_UIPMC_Transport (TAO_UIPMC_Connection_Handler *handler,
-                      TAO_ORB_Core *orb_core,
-                      CORBA::Boolean flag);
+                       TAO_ORB_Core *orb_core);
 
   /// Default destructor.
   ~TAO_UIPMC_Transport (void);

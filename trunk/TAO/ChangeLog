@@ -1,3 +1,14 @@
+Wed Jul 18 12:06:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Acceptor.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Acceptor.h:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Connection_Handler.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Connector.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Connector.h:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Transport.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Transport.h:
+          Also removed GIOP_Message_Lite support
+
 Wed Jul 18 09:55:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/HTIOP/HTIOP_Acceptor.cpp:

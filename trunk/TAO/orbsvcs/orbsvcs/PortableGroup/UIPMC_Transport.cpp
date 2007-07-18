@@ -18,7 +18,6 @@
 #include "tao/debug.h"
 #include "tao/Resume_Handle.h"
 #include "tao/GIOP_Message_Base.h"
-#include "tao/GIOP_Message_Lite.h"
 
 ACE_RCSID (PortableGroup,
            UIPMC_Transport,
@@ -69,8 +68,7 @@ struct MIOP_Packet
 
 
 TAO_UIPMC_Transport::TAO_UIPMC_Transport (TAO_UIPMC_Connection_Handler *handler,
-                                          TAO_ORB_Core *orb_core,
-                                          CORBA::Boolean /*flag*/)
+                                          TAO_ORB_Core *orb_core)
   : TAO_Transport (IOP::TAG_UIPMC,
                    orb_core)
   , connection_handler_ (handler)
