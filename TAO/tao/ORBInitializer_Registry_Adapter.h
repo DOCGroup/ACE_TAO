@@ -80,8 +80,6 @@ namespace TAO
        * @param argc Number of arguments
        * @param argv Argv array
        * @param slotid The slot id
-       * @param picurrent PI Current, if this is not null, the concrete
-       * implementation will update the slot id
        */
       virtual void post_init (
         size_t pre_init_count,

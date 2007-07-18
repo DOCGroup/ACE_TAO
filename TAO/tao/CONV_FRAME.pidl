@@ -5,7 +5,7 @@
  *
  * $Id$
  *
- * This file is used to generate CONV_FRAMEC.{h,cpp}, using the
+ * This file is used to generate CONV_FRAMEC.*
  */
 
 #ifndef TAO_CORBA_CONV_FRAME_PIDL

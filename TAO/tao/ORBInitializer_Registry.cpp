@@ -45,7 +45,7 @@ namespace PortableInterceptor
       TAO::ORB::init_orb_globals ();
     }
 
-    // If not, lookup it up.
+    // If not, look it up.
     TAO::ORBInitializer_Registry_Adapter *orbinitializer_registry_ =
       ACE_Dynamic_Service<TAO::ORBInitializer_Registry_Adapter>::instance
       ("ORBInitializer_Registry", true); // only look in the local repo
