@@ -31,7 +31,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * @brief Defines the methods for the ACE socket wrapper I/O routines
  * (e.g., send/recv).
  *
- *
  * If @a timeout == 0, then the call behaves as a normal
  * send/recv call, i.e., for blocking sockets, the call will
  * block until action is possible; for non-blocking sockets,

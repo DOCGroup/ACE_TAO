@@ -1790,7 +1790,7 @@ Andre Kostur <Andre at incognito dot com>
 Markus Stenberg <markus dot stenberg at conformiq dot com>
 Jonathan Pollack <pollack_j at ociweb dot com>
 Si Mong Park <si dot mong dot park at lmco dot com>
-Hakim Souami <hakim dot souami at fr dot thalesgroup dot com>
+Hakim Souami <hakim dot souami at thalesatm dot com>
 Paul Morrison <epm at prismtechnologies dot com>
 John Poplett <John_Poplett at 3com dot com>
 Heiko Bachmann <h dot bachmann at unicontrol dot de>
@@ -2212,6 +2212,7 @@ Venkat Forums <venkat dot forums at gmail dot com>
 James Marsh <jmarsh at cs dot man dot ac dot uk>
 Shaolong Xiang <cwengc at gmail dot com>
 Christoph Hofmann <Christoph dot Hofmann at zwick dot de>
+Vladimir Zykov <vladimir dot zykov at prismtech dot com>
 
 I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson in the early 1990's.  Paul devised the recursive Makefile
