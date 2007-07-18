@@ -7,8 +7,6 @@ PLANNED MAJOR CHANGES "SOMETIME IN THE FUTURE" (i.e., exact beta not known)
 
 . (OO) Various other fixes that have been piling up.
 
-. (Remedy) Intel C++ 10.0 support
-
 USER VISIBLE CHANGES BETWEEN ACE-5.5.9 and ACE-5.5.10
 ====================================================
 
@@ -38,6 +36,8 @@ USER VISIBLE CHANGES BETWEEN ACE-5.5.9 and ACE-5.5.10
   family is AF_UNSPEC. This means that if host_name has an IPv6 address in
   DNS or /etc/hosts, that will be used over an IPv4 address. If no IPv6
   address exists for host_name, then its IPv4 address will be used.
+
+. Intel C++ 10.0 support
 
 USER VISIBLE CHANGES BETWEEN ACE-5.5.8 and ACE-5.5.9
 ====================================================
