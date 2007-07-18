@@ -27,9 +27,8 @@ ACE_RCSID (Strategies,
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_DIOP_Connector::TAO_DIOP_Connector (CORBA::Boolean flag)
-  : TAO_Connector (TAO_TAG_DIOP_PROFILE),
-    lite_flag_ (flag)
+TAO_DIOP_Connector::TAO_DIOP_Connector (void)
+  : TAO_Connector (TAO_TAG_DIOP_PROFILE)
 {
 }
 
@@ -131,8 +130,7 @@ TAO_DIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
   TAO_DIOP_Connection_Handler *svc_handler = 0;
 
   ACE_NEW_RETURN (svc_handler,
-                  TAO_DIOP_Connection_Handler (this->orb_core (),
-                                               this->lite_flag_),
+                  TAO_DIOP_Connection_Handler (this->orb_core ()),
                   0);
 
   u_short port = 0;

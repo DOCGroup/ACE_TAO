@@ -56,8 +56,7 @@ public:
 
   /// Constructor.
   TAO_IIOP_Transport (TAO_IIOP_Connection_Handler *handler,
-                      TAO_ORB_Core *orb_core,
-                      CORBA::Boolean flag);
+                      TAO_ORB_Core *orb_core);
 
 protected:
 

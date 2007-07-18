@@ -55,7 +55,7 @@ public:
    * @@ Do we want to pass in the tag here or should it be statically
    * defined?
    */
-  TAO_UIOP_Connector (CORBA::Boolean flag = false);
+  TAO_UIOP_Connector (void);
 
   /// Destructor
   ~TAO_UIOP_Connector (void);
@@ -128,9 +128,6 @@ private:
 
   /// The connector initiating connection requests for UIOP.
   TAO_UIOP_BASE_CONNECTOR base_connector_;
-
-  /// Do we need to use a GIOP_Lite for sending messages?
-  const bool lite_flag_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

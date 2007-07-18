@@ -27,9 +27,8 @@ ACE_RCSID (TAO,
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_SCIOP_Connector::TAO_SCIOP_Connector (CORBA::Boolean flag)
+TAO_SCIOP_Connector::TAO_SCIOP_Connector (void)
   : TAO_Connector (TAO_TAG_SCIOP_PROFILE),
-    lite_flag_ (flag),
     connect_strategy_ (),
     base_connector_ ()
 {
@@ -59,8 +58,7 @@ TAO_SCIOP_Connector::open (TAO_ORB_Core *orb_core)
   ACE_NEW_RETURN (connect_creation_strategy,
                   TAO_SCIOP_CONNECT_CREATION_STRATEGY
                       (orb_core->thr_mgr (),
-                       orb_core,
-                       this->lite_flag_),
+                       orb_core),
                   -1);
 
   /// Our activation strategy

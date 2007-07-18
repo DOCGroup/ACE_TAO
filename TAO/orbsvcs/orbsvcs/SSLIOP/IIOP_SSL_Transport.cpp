@@ -16,11 +16,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::IIOP_SSL_Transport::IIOP_SSL_Transport (
     IIOP_SSL_Connection_Handler *handler,
-    TAO_ORB_Core *orb_core,
-    CORBA::Boolean flag)
-  : TAO_IIOP_Transport (handler,
-                        orb_core,
-                        flag)
+    TAO_ORB_Core *orb_core)
+  : TAO_IIOP_Transport (handler, orb_core)
 {
   this->current_ =
     TAO::SSLIOP::Util::current (orb_core);

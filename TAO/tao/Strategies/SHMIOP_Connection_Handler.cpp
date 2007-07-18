@@ -39,14 +39,13 @@ TAO_SHMIOP_Connection_Handler::TAO_SHMIOP_Connection_Handler (ACE_Thread_Manager
 }
 
 
-TAO_SHMIOP_Connection_Handler::TAO_SHMIOP_Connection_Handler (TAO_ORB_Core *orb_core,
-                                                              CORBA::Boolean flag)
+TAO_SHMIOP_Connection_Handler::TAO_SHMIOP_Connection_Handler (TAO_ORB_Core *orb_core)
   : TAO_SHMIOP_SVC_HANDLER (orb_core->thr_mgr (), 0, 0),
     TAO_Connection_Handler (orb_core)
 {
   TAO_SHMIOP_Transport* specific_transport = 0;
   ACE_NEW (specific_transport,
-          TAO_SHMIOP_Transport(this, orb_core, flag));
+          TAO_SHMIOP_Transport(this, orb_core));
 
   // store this pointer (indirectly increment ref count)
   this->transport (specific_transport);

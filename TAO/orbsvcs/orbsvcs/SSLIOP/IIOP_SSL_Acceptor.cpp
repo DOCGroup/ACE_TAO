@@ -10,8 +10,8 @@ ACE_RCSID (SSLIOP,
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO::IIOP_SSL_Acceptor::IIOP_SSL_Acceptor (CORBA::Boolean flag)
-  : TAO_IIOP_Acceptor (flag),
+TAO::IIOP_SSL_Acceptor::IIOP_SSL_Acceptor (void)
+  : TAO_IIOP_Acceptor (),
     base_acceptor_ (),
     creation_strategy_ (0),
     concurrency_strategy_ (0),

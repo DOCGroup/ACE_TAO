@@ -51,8 +51,7 @@ public:
   TAO_SHMIOP_Connection_Handler (ACE_Thread_Manager* t = 0);
 
   /// Constructor.
-  TAO_SHMIOP_Connection_Handler (TAO_ORB_Core *orb_core,
-                                 CORBA::Boolean flag);
+  TAO_SHMIOP_Connection_Handler (TAO_ORB_Core *orb_core);
 
   /// Destructor.
   ~TAO_SHMIOP_Connection_Handler (void);

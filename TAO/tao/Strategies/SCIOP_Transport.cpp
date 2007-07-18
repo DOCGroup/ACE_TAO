@@ -28,28 +28,14 @@ ACE_RCSID (tao,
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_SCIOP_Transport::TAO_SCIOP_Transport (TAO_SCIOP_Connection_Handler *handler,
-                                        TAO_ORB_Core *orb_core,
-                                        CORBA::Boolean )
+                                          TAO_ORB_Core *orb_core)
   : TAO_Transport (TAO_TAG_SCIOP_PROFILE,
                    orb_core)
   , connection_handler_ (handler)
   , messaging_object_ (0)
 {
-#if 0
-  // First step in deprecating this.
-  if (flag)
-    {
-      // Use the lite version of the protocol
-      ACE_NEW (this->messaging_object_,
-               TAO_GIOP_Message_Lite (orb_core));
-    }
-  else
-#endif /*if 0*/
-    {
-      // Use the normal GIOP object
-      ACE_NEW (this->messaging_object_,
-               TAO_GIOP_Message_Base (orb_core, this));
-    }
+  ACE_NEW (this->messaging_object_,
+            TAO_GIOP_Message_Base (orb_core, this));
 }
 
 TAO_SCIOP_Transport::~TAO_SCIOP_Transport (void)

@@ -786,7 +786,6 @@ libTAO_la_SOURCES = \
   GIOP_Message_Generator_Parser_11.cpp \
   GIOP_Message_Generator_Parser_12.cpp \
   GIOP_Message_Generator_Parser_Impl.cpp \
-  GIOP_Message_Lite.cpp \
   GIOP_Message_Locate_Header.cpp \
   GIOP_Message_State.cpp \
   GIOP_Message_Version.cpp \
@@ -802,7 +801,6 @@ libTAO_la_SOURCES = \
   IIOP_Endpoint.cpp \
   IIOP_EndpointsC.cpp \
   IIOP_Factory.cpp \
-  IIOP_Lite_Factory.cpp \
   IIOP_Profile.cpp \
   IIOP_Transport.cpp \
   IOPC.cpp \
@@ -1111,7 +1109,6 @@ nobase_include_HEADERS = \
   GIOP_Message_Generator_Parser_12.h \
   GIOP_Message_Generator_Parser_Impl.h \
   GIOP_Message_Generator_Parser_Impl.inl \
-  GIOP_Message_Lite.h \
   GIOP_Message_Locate_Header.h \
   GIOP_Message_Locate_Header.inl \
   GIOP_Message_State.h \
@@ -1139,7 +1136,6 @@ nobase_include_HEADERS = \
   IIOP_EndpointsC.h \
   IIOP_EndpointsS.h \
   IIOP_Factory.h \
-  IIOP_Lite_Factory.h \
   IIOP_Profile.h \
   IIOP_Transport.h \
   IOP.pidl \
@@ -5675,7 +5671,6 @@ libTAO_Strategies_la_SOURCES = \
   Strategies/SCIOP_Connector.cpp \
   Strategies/SCIOP_Endpoint.cpp \
   Strategies/SCIOP_Factory.cpp \
-  Strategies/SCIOP_Lite_Factory.cpp \
   Strategies/SCIOP_Profile.cpp \
   Strategies/SCIOP_Transport.cpp \
   Strategies/SHMIOP_Acceptor.cpp \
@@ -5691,7 +5686,6 @@ libTAO_Strategies_la_SOURCES = \
   Strategies/UIOP_Connector.cpp \
   Strategies/UIOP_Endpoint.cpp \
   Strategies/UIOP_Factory.cpp \
-  Strategies/UIOP_Lite_Factory.cpp \
   Strategies/UIOP_Profile.cpp \
   Strategies/UIOP_Transport.cpp \
   Strategies/advanced_resource.cpp \
@@ -5744,7 +5738,6 @@ nobase_include_HEADERS += \
   Strategies/SCIOP_Endpoint.h \
   Strategies/SCIOP_Endpoint.inl \
   Strategies/SCIOP_Factory.h \
-  Strategies/SCIOP_Lite_Factory.h \
   Strategies/SCIOP_Profile.h \
   Strategies/SCIOP_Transport.h \
   Strategies/SHMIOP_Acceptor.h \
@@ -5762,7 +5755,6 @@ nobase_include_HEADERS += \
   Strategies/UIOP_Endpoint.h \
   Strategies/UIOP_Endpoint.inl \
   Strategies/UIOP_Factory.h \
-  Strategies/UIOP_Lite_Factory.h \
   Strategies/UIOP_Profile.h \
   Strategies/UIOP_Transport.h \
   Strategies/advanced_resource.h \

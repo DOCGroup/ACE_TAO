@@ -66,9 +66,8 @@ TAO::IIOP_SSL_Connection_Handler::IIOP_SSL_Connection_Handler (
 
 
 TAO::IIOP_SSL_Connection_Handler::IIOP_SSL_Connection_Handler (
-  TAO_ORB_Core *orb_core,
-  CORBA::Boolean /* flag */)
-  : TAO_IIOP_Connection_Handler (orb_core, 0)
+  TAO_ORB_Core *orb_core)
+  : TAO_IIOP_Connection_Handler (orb_core)
 {
   // Delete the transport with TAO_IIOP_Connection_Handler.
   delete this->transport ();
@@ -76,8 +75,7 @@ TAO::IIOP_SSL_Connection_Handler::IIOP_SSL_Connection_Handler (
   IIOP_SSL_Transport* specific_transport = 0;
   ACE_NEW (specific_transport,
            IIOP_SSL_Transport (this,
-                               orb_core,
-                               0));
+                               orb_core));
 
   // store this pointer
   this->transport (specific_transport);

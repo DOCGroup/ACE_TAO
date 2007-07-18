@@ -46,7 +46,7 @@ class TAO_Strategies_Export TAO_COIOP_Acceptor : public TAO_Acceptor
 {
 public:
   /// Constructor.
-  TAO_COIOP_Acceptor (CORBA::Boolean flag = false);
+  TAO_COIOP_Acceptor (void);
 
   /// Destructor.
   ~TAO_COIOP_Acceptor (void);
@@ -113,9 +113,6 @@ protected:
 
   /// ORB Core.
   TAO_ORB_Core *orb_core_;
-
-  /// Should we use GIOP lite??
-  CORBA::Boolean lite_flag_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

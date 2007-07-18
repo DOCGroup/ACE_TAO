@@ -57,8 +57,7 @@ public:
 
   /// Constructor.
   TAO_DIOP_Transport (TAO_DIOP_Connection_Handler *handler,
-                      TAO_ORB_Core *orb_core,
-                      CORBA::Boolean flag);
+                      TAO_ORB_Core *orb_core);
 
   /// Default destructor.
   ~TAO_DIOP_Transport (void);

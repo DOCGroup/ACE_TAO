@@ -50,8 +50,7 @@ public:
 
   /// Constructor.
   TAO_Connect_Creation_Strategy (ACE_Thread_Manager * = 0,
-                                 TAO_ORB_Core* orb_core = 0,
-                                 CORBA::Boolean flag = false);
+                                 TAO_ORB_Core* orb_core = 0);
 
   /// Makes TAO_*_Client_Connection_Handlers
   virtual int make_svc_handler (SVC_HANDLER *&sh);
@@ -61,9 +60,6 @@ private:
 
   /// Pointer to the ORB_Core on which we are activated
   TAO_ORB_Core * const orb_core_;
-
-  /// Are we using GIOP lite?
-  CORBA::Boolean const lite_flag_;
 };
 
 
@@ -90,14 +86,12 @@ public:
 
   /// Activates the Svc_Handler, and if the right wait strategy is in
   /// use, registers the handle with the reactor.
-  int activate_svc_handler (SVC_HANDLER *svc_handler,
-                            void *arg);
+  int activate_svc_handler (SVC_HANDLER *svc_handler, void *arg);
 
 private:
 
   /// Pointer to the ORB Core.
   TAO_ORB_Core * const orb_core_;
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

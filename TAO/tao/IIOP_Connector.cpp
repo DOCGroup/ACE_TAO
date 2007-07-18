@@ -86,9 +86,8 @@ TAO_IIOP_Connector::~TAO_IIOP_Connector (void)
 }
 
 //@@ TAO_CONNECTOR_SPL_COPY_HOOK_START
-TAO_IIOP_Connector::TAO_IIOP_Connector (CORBA::Boolean flag)
+TAO_IIOP_Connector::TAO_IIOP_Connector (void)
   : TAO_Connector (IOP::TAG_INTERNET_IOP)
-  , lite_flag_ (flag)
   , connect_strategy_ ()
   , base_connector_ ()
 {
@@ -114,8 +113,7 @@ TAO_IIOP_Connector::open (TAO_ORB_Core *orb_core)
   ACE_NEW_RETURN (connect_creation_strategy,
                   TAO_IIOP_CONNECT_CREATION_STRATEGY
                       (orb_core->thr_mgr (),
-                       orb_core,
-                       this->lite_flag_),
+                       orb_core),
                   -1);
 
   /// Our activation strategy

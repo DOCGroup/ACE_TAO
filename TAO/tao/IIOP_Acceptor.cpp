@@ -29,7 +29,7 @@ ACE_RCSID (tao,
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_IIOP_Acceptor::TAO_IIOP_Acceptor (CORBA::Boolean flag)
+TAO_IIOP_Acceptor::TAO_IIOP_Acceptor (void)
   : TAO_Acceptor (IOP::TAG_INTERNET_IOP),
     addrs_ (0),
     port_span_ (1),
@@ -38,7 +38,6 @@ TAO_IIOP_Acceptor::TAO_IIOP_Acceptor (CORBA::Boolean flag)
     endpoint_count_ (0),
     version_ (TAO_DEF_GIOP_MAJOR, TAO_DEF_GIOP_MINOR),
     orb_core_ (0),
-    lite_flag_ (flag),
     reuse_addr_ (1),
 #if defined (ACE_HAS_IPV6)
     default_address_ (static_cast<unsigned short> (0), ACE_IPV6_ANY, AF_INET6),
@@ -442,8 +441,7 @@ TAO_IIOP_Acceptor::open_i (const ACE_INET_Addr& addr,
                            ACE_Reactor *reactor)
 {
   ACE_NEW_RETURN (this->creation_strategy_,
-                  CREATION_STRATEGY (this->orb_core_,
-                                     this->lite_flag_),
+                  CREATION_STRATEGY (this->orb_core_),
                   -1);
 
   ACE_NEW_RETURN (this->concurrency_strategy_,
@@ -774,7 +772,7 @@ TAO_IIOP_Acceptor::parse_address (const char *address,
 
           if (len >= sizeof (tmp_host))
             return -1;
-          
+
           ACE_OS::memcpy (tmp_host, address, len);
           tmp_host[len] = '\0';
         }

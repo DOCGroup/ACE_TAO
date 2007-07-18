@@ -23,11 +23,10 @@ ACE_RCSID (Strategies,
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_SHMIOP_Connector::TAO_SHMIOP_Connector (CORBA::Boolean flag)
+TAO_SHMIOP_Connector::TAO_SHMIOP_Connector (void)
   : TAO_Connector (TAO_TAG_SHMEM_PROFILE),
     connect_strategy_ (),
-    base_connector_ (),
-    lite_flag_ (flag)
+    base_connector_ ()
 {
 }
 
@@ -53,8 +52,7 @@ TAO_SHMIOP_Connector::open (TAO_ORB_Core *orb_core)
   ACE_NEW_RETURN (connect_creation_strategy,
                   TAO_SHMIOP_CONNECT_CREATION_STRATEGY
                       (orb_core->thr_mgr (),
-                       orb_core,
-                       this->lite_flag_),
+                       orb_core),
                   -1);
 
   /// Our activation strategy

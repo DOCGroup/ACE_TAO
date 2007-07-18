@@ -61,8 +61,7 @@ namespace TAO
 
       /// Constructor. <arg> parameter is used by the Acceptor to pass the
       /// protocol configuration properties for this connection.
-      Connection_Handler (TAO_ORB_Core *orb_core,
-                          CORBA::Boolean flag);
+      Connection_Handler (TAO_ORB_Core *orb_core);
 
       /// Destructor.
       ~Connection_Handler (void);

@@ -40,9 +40,7 @@ TAO::SSLIOP::Connection_Handler::Connection_Handler (
   ACE_ASSERT (0);
 }
 
-TAO::SSLIOP::Connection_Handler::Connection_Handler (
-    TAO_ORB_Core *orb_core,
-    CORBA::Boolean /* flag */) // SSLIOP does *not* support GIOPlite
+TAO::SSLIOP::Connection_Handler::Connection_Handler (TAO_ORB_Core *orb_core)
   : SVC_HANDLER (orb_core->thr_mgr (), 0, 0),
     TAO_Connection_Handler (orb_core),
     current_ ()
@@ -51,7 +49,7 @@ TAO::SSLIOP::Connection_Handler::Connection_Handler (
 
   TAO::SSLIOP::Transport* specific_transport = 0;
   ACE_NEW (specific_transport,
-          TAO::SSLIOP::Transport (this, orb_core, 0));
+          TAO::SSLIOP::Transport (this, orb_core));
 
   // store this pointer (indirectly increment ref count)
   this->transport (specific_transport);

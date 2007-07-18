@@ -73,9 +73,6 @@ namespace TAO
 
       /// Some info/state to be passed to the service handler we create.
       void *arg_;
-
-      /// Are we using GIOP lite?
-      CORBA::Boolean lite_flag_;
     };
 
 
