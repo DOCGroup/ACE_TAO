@@ -53,7 +53,7 @@ TAO_UIPMC_Connection_Handler::TAO_UIPMC_Connection_Handler (TAO_ORB_Core *orb_co
 {
   TAO_UIPMC_Transport* specific_transport = 0;
   ACE_NEW(specific_transport,
-          TAO_UIPMC_Transport(this, orb_core, 0));
+          TAO_UIPMC_Transport(this, orb_core));
 
   // store this pointer (indirectly increment ref count)
   this->transport (specific_transport);
@@ -163,7 +163,7 @@ TAO_UIPMC_Connection_Handler::open (void*)
     return -1;
   this->state_changed (TAO_LF_Event::LFS_SUCCESS,
                        this->orb_core ()->leader_follower ());
-                         
+
   return 0;
 }
 

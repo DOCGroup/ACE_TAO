@@ -47,7 +47,7 @@ class TAO_PortableGroup_Export TAO_UIPMC_Acceptor : public TAO_Acceptor
 {
 public:
   /// Constructor.
-  TAO_UIPMC_Acceptor (CORBA::Boolean flag = 0);
+  TAO_UIPMC_Acceptor (void);
 
   /// Destructor.
   ~TAO_UIPMC_Acceptor (void);

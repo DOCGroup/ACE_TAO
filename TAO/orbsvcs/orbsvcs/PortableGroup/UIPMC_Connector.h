@@ -46,7 +46,7 @@ class TAO_PortableGroup_Export TAO_UIPMC_Connector : public TAO_Connector
 public:
   // = Initialization and termination methods.
   /// Constructor.
-  TAO_UIPMC_Connector (CORBA::Boolean flag = 0);
+  TAO_UIPMC_Connector (void);
 
   /// Destructor.
   ~TAO_UIPMC_Connector (void);
