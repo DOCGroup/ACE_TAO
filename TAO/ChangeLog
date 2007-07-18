@@ -1,3 +1,8 @@
+Wed Jul 18 02:43:38 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tests/objref_comparison_test/main.cpp:
+          Scoreboard cleanup.
+
 Tue Jul 17 18:46:23 UTC 2007  Wallace Zhang  <zhang_w@ociweb.com>
 
         * orbsvcs/orbsvcs/Notify/Structured/StructuredProxyPushSupplier.cpp:

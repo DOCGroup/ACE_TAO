@@ -37,7 +37,7 @@ Foo_Impl::match_references ()
 {
   CORBA::Object_var o = _this ();
   CORBA::ORB_var orb = o->_get_orb ();
-  CORBA::String_var ior_from_upcall = orb->object_to_string (o);
+  CORBA::String_var ior_from_upcall = orb->object_to_string (o.in());
 
   CORBA::Boolean r1 = equal_func (this->ior_from_main_.in(), ior_from_upcall.in());
 
