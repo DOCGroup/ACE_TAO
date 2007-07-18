@@ -1,3 +1,11 @@
+Wed Jul 18 18:19:47 UTC 2007  Ossama Othman  <ossama_othman at symantec dot com>
+
+        * tests/Bug_2084_Regression/tid_to_int.h (ACE_thread_t_to_integer):
+        * tests/Bug_2084_Regression/tid_to_int.h (ACE_thread_t_to_integer):
+
+          Fixed typo that circumvented the intermediate cast to an integer
+          large enough to hold the thread ID pointer.
+
 Wed Jul 18 14:36:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Strategies/UIOP_Acceptor.{h,cpp}:
