@@ -24,7 +24,7 @@ ACE_RCSID (PortableGroup,
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_UIPMC_Acceptor::TAO_UIPMC_Acceptor (CORBA::Boolean /*flag*/)
+TAO_UIPMC_Acceptor::TAO_UIPMC_Acceptor (void)
   : TAO_Acceptor (IOP::TAG_UIPMC),
     addrs_ (0),
     hosts_ (0),

@@ -18,7 +18,7 @@ ACE_RCSID (PortableGroup,
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_UIPMC_Connector::TAO_UIPMC_Connector (CORBA::Boolean)
+TAO_UIPMC_Connector::TAO_UIPMC_Connector (void)
   : TAO_Connector (IOP::TAG_UIPMC)
 {
 }
