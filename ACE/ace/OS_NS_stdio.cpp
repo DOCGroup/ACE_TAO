@@ -394,7 +394,8 @@ ACE_OS::sprintf (wchar_t *buf, const wchar_t *format, ...)
      (defined (sun) && !defined (_XPG4) || defined(_XPG5)) || \
       defined (ACE_HAS_DINKUM_STL) || defined (__DMC__) || \
       defined (ACE_HAS_VSWPRINTF) || \
-     (defined (ACE_WIN32_VC8) && !defined (ACE_HAS_WINCE))
+     (defined (ACE_WIN32_VC8) && !defined (ACE_HAS_WINCE) && \
+      _MSC_FULL_VER > 140050000)
 
   // The XPG4/UNIX98/C99 signature of the wide-char sprintf has a
   // maxlen argument. Since this method doesn't supply one, pass in
