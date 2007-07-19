@@ -1,3 +1,10 @@
+Thu Jul 19 11:32:05 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * protocols/ace/TMCast/Group.hpp:
+        * protocols/ace/TMCast/Group.cpp:
+
+          Zap the usage of exception specifications.
+
 Thu Jul 19 10:29:57 UTC 2007  Vadym Ridosh  <vridosh@prismtech.com>
 
         * bin/tao_other_tests.lst:
