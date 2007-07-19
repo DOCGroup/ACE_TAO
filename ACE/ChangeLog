@@ -1,3 +1,9 @@
+Thu Jul 19 10:29:57 UTC 2007  Vadym Ridosh  <vridosh@prismtech.com>
+
+        * bin/tao_other_tests.lst:
+          Disabled TAO/examples/PluggableUDP/tests/Performance in single
+          threaded builds.
+
 Thu Jul 19 10:18:57 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_linux_icc.GNU:
