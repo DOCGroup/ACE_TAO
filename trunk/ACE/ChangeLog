@@ -1,3 +1,8 @@
+Thu Jul 19 07:32:57 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/SOCK_Netlink_Test.cpp:
+          Added missing include
+
 Thu Jul 19 03:00:57 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * tests/Auto_Event_Test.cpp:
