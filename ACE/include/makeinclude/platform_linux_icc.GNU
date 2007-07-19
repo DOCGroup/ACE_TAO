@@ -6,7 +6,6 @@ exceptions ?= 1
 debug ?= 1
 optimize ?= 1
 threads ?= 1
-no_hidden_visibility ?= 1
 fast ?= 0
 ipo ?= 0
 
@@ -74,7 +73,10 @@ ifeq (9.1,$(findstring 9.1,$(CXX_VERSION)))
 endif
 ifeq (10.0,$(findstring 10.0,$(CXX_VERSION)))
   CFLAGS += -wd1684
+  no_hidden_visibility ?= 0
 endif
+
+no_hidden_visibility ?= 1
 
 ifeq ($(inline),0)
   CPPFLAGS += -fno-inline
