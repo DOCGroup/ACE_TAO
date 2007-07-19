@@ -51,17 +51,17 @@ public:
   //=======================================
 
   // Data accessors.
-  
+
   const char *filename (void) const;
   void filename (char *fname);
 
   const char* output_dir (void) const;
   void output_dir (const char* s);
-  
-  bool const encapsulate_idl2 (void) const;
-  
+
+  bool encapsulate_idl2 (void) const;
+
   ACE_CString & excluded_filenames (void);
-  
+
   //=========================================
 
   void parse_args (long &i, char **av);
@@ -78,7 +78,7 @@ public:
 
   AST_Generator *generator_init (void);
   // Create an AST node generator.
-  
+
   int outfile_init (TAO_OutStream *&);
   // Create the output file, the associated stream, and
   // generate the initial #ifndef.
@@ -94,11 +94,11 @@ private:
   // Directory where the generated file is to be
   // kept. Default value is 0 for this string which means the current
   // directory from which the <tao_picml> is called.
-  
+
   bool encapsulate_idl2_;
   // Have the generated file just include the original file if
   // no IDL3 declarations are found by the checking visitor.
-  
+
   ACE_CString excluded_filenames_;
   // Whitespace-separated list of included IDL files
   // to be passed to the output IDL file without
