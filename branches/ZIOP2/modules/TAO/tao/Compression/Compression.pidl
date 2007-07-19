@@ -47,6 +47,8 @@ module Compression
     const CompressorId COMPRESSORID_BZIP2 = 3;
     const CompressorId COMPRESSORID_ZLIB = 4;
 
+    sequence <CompressiorId> CompressorIdList;
+
     /**
      * CompressionLevel type.
      */

@@ -118,22 +118,22 @@ TAO_ZIOP_Loader::decompress (TAO_ServerRequest& server_request)
   if (!CORBA::is_nil(manager.in ()))
   {
 IOP::CompressedData data;
-if ((cdr >> data) == 0
+if ((*(server_request.incoming()) >> data) == 0)
   return false;
 server_request.compressed_ = true;
 
-  Compression::Compressor_var compressor = manager->get_compressor (::Compression::COMPRESSORID_ZLIB, 6);
-  TAO_InputCDR cdr (reinterpret_cast<const char*> (
-                      data.data.get_buffer ()),
-                      data.data.length ());
+  Compression::Compressor_var compressor = manager->get_compressor (data.compressorid, 6);
+  //TAO_InputCDR cdr (reinterpret_cast<const char*> (
+    //                  data.data.get_buffer ()),
+      //                data.data.length ());
 
       CORBA::OctetSeq myout;
       myout.length (data.original_length);
 
-      CORBA::OctetSeq input ((CORBA::ULong)(server_request.incoming()->length()),server_request.incoming()->start());
-      compressor->decompress (input, myout);
-      TAO_InputCDR* newstream = new TAO_InputCDR ((char*)myout.get_buffer(true), (size_t)server_request.original_message_length_);
-      server_request.incoming()->steal_from (*newstream);*/
+//      CORBA::OctetSeq input ((CORBA::ULong)(server_request.incoming()->length()),server_request.incoming()->start());
+      compressor->decompress (data.data, myout);
+      TAO_InputCDR* newstream = new TAO_InputCDR ((char*)myout.get_buffer(true), (size_t)data.original_length);
+      server_request.incoming()->steal_from (*newstream);
   }
 //  TAO_InputCDR cdr (reinterpret_cast<const char*> (
 //                      context.context_data.get_buffer ()),
@@ -194,20 +194,26 @@ TAO_ZIOP_Loader::compress (TAO_ORB_Core& core, TAO_Operation_Details &details, T
   ACE_Message_Block *newblock = new ACE_Message_Block ((const char*)myout.get_buffer(), (size_t)myout.length());
   newblock->wr_ptr ((size_t)myout.length());
 //  out_stream.begin ()->cont (newblock);
-out_stream.write_octet_array(myout.get_buffer (), myout.length());
+IOP::CompressedData data;
+data.compressorid = compressor_id;
+data.original_length = compression_stream.total_length();
+data.data = myout;
+//TAO_OutputCDR
+//out_stream .write_octet_array(myout.get_buffer (), myout.length());
+out_stream << data;
 
-      TAO_OutputCDR cdr;
+//      TAO_OutputCDR cdr;
 
       // Add the original message length to the service contenxt
-      CORBA::ULong length = compression_stream.total_length();
-      if ((cdr << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER) == 0)
-          || (cdr << length) == 0
-          || (cdr << compressor_id) == 0)
-        return false;
+  //    CORBA::ULong length = compression_stream.total_length();
+    //  if ((cdr << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER) == 0)
+      //    || (cdr << length) == 0
+        //  || (cdr << compressor_id) == 0)
+        //return false;
 
       // Add this info in to the svc_list
-      details.request_service_context ().set_context (IOP::TAG_ZIOP_COMPONENT,
-                                                      cdr);
+      //details.request_service_context ().set_context (IOP::TAG_ZIOP_COMPONENT,
+        //                                              cdr);
 
   }
 
