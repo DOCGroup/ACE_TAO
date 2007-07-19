@@ -532,7 +532,7 @@ ace_thread_manager_adapter (void *args)
   // Invoke the user-supplied function with the args.
   void *status = thread_args->invoke ();
 
-  delete static_cast<ACE_Base_Thread_Adapter> (thread_args);
+  delete thread_args;
   return status;
 }
 #endif
