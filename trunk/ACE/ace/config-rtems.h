@@ -31,7 +31,7 @@
 #  ifdef __cplusplus  /* Let it slide for C compilers. */
 #   error unsupported compiler in ace/config-rtems.h
 #  endif  /* __cplusplus */
-#endif /* ! __GNUG__ && ! __KCC */
+#endif /* ! __GNUG__ */
 
 #include "ace/config-posix.h"
 
