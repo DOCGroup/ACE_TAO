@@ -1,3 +1,9 @@
+Thu Jul 19 14:00:00 UTC 2007  Simon Massey  <sma@prismtech.com>
+
+        * ace/Thread_Manager.cpp:
+
+          This cast is actually not needed and was incorrect anyway.
+
 Thu Jul 19 12:40:00 UTC 2007  Simon Massey  <sma@prismtech.com>
 
         * tests/OS_Test.cpp:
