@@ -46,7 +46,11 @@ typedef struct stati64 ACE_stat;
 #     if _MSC_VER >= 1400
 //      For vc8 which has time_t as 64bit
 //      64-bit file offsets, 64-bit time_t
+#       if defined (ACE_MSVC_USES_DOUBLE_UNDERSCORE_STAT64)
+typedef struct __stat64 ACE_stat;
+#       else
 typedef struct _stat64 ACE_stat;
+#       endif
 #       define ACE_STAT_FUNC_NAME ::_stat64
 #       define ACE_WSTAT_FUNC_NAME ::_wstat64
 #     else

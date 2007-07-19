@@ -1,3 +1,38 @@
+Thu Jul 19 19:54:22 UTC 2007  Adam Mitz  <mitza@ociweb.com>
+
+        * ace/Numeric_Limits.h:
+
+          Use the macro ACE_LACKS_NUMERIC_LIMITS_64_BIT_TYPES to control
+          whether or not ACE should define its own std::numeric_limits<>
+          specializations for the 64-bit integral types.
+
+        * ace/OS_NS_stdio.inl:
+        * ace/OS_NS_stdio.cpp:
+
+          The Platform SDK 64-bit compiler works like vc71 (not vc8) with
+          respect to the arguments needed for vswprintf().
+
+        * ace/OS_NS_sys_stat.h:
+
+          Use the macro ACE_MSVC_USES_DOUBLE_UNDERSCORE_STAT64 to control
+          whether ACE_stat should be __stat64 instead of _stat64 (MSVC only).
+
+        * ace/checked_iterator.h:
+        
+          The Platform SDK 64-bit compiler doesn't have checked iterators.
+
+        * ace/config-lite.h:
+
+          Use the macro ACE_HAS_BROKEN_STD_REVERSE_ITERATOR to indicate that
+          the std::reverse_iterator class template needs a 2nd argument.
+
+        * ace/config-win32-msvc-8.h:
+
+          With the Platform SDK compiler (detected using _MSC_FULL_VER), we
+          will now define ACE_AUTO_PTR_LACKS_RESET along with the three macros
+          listed above and other macros needed to get a good build.  This only
+          applies to the x64 (aka AMD64/EMT64) target.
+
 Thu Jul 19 17:15:42 UTC 2007  Steve Huston  <shuston@riverace.com>
 
         * ace/Event_Handler.cpp (ctor): Put the init of reference_count_
