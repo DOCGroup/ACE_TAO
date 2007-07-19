@@ -53,7 +53,9 @@ public:
 
   Client (void);
 
+  //FUZZ: disable check_for_lack_ACE_OS
   virtual int open (void * = 0);
+  //FUZZ: enable check_for_lack_ACE_OS
 
   virtual int handle_output (ACE_HANDLE handle);
 

@@ -75,10 +75,13 @@ parse_args (int argc, ACE_TCHAR *argv[])
 
 // Consolidate the ACE_Pipe initializations.
 
+//FUZZ: disable check_for_lack_ACE_OS
 static void
 open (ACE_Pipe &pipe,
       const char *name)
 {
+//FUZZ: enable check_for_lack_ACE_OS
+
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("opening %C\n"), name));
   int result = pipe.open ();
 
@@ -101,11 +104,13 @@ run_main (int argc, ACE_TCHAR *argv[])
       ACE_APPEND_LOG (ACE_TEXT("Pipe_Test-children"));
       ACE_Pipe a, b, c, d, e;
 
+      //FUZZ: disable check_for_lack_ACE_OS
       open (a, "a");
       open (b, "b");
       open (c, "c");
       open (d, "d");
       open (e, "e");
+      //FUZZ: enable check_for_lack_ACE_OS
 
       ACE_END_LOG;
     }

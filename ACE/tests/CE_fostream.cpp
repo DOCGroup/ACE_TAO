@@ -41,13 +41,13 @@ ACE_CE_fostream::ACE_CE_fostream()
 
 ACE_CE_fostream::~ACE_CE_fostream()
 {
-    fclose(ostream_);
+    ACE_OS::fclose(ostream_);
 }
 
 
 FILE* ACE_CE_fostream::open(const ACE_TCHAR *prog_name)
 {
-    ostream_ = _wfopen(prog_name, ACE_TEXT("a+"));
+    ostream_ = ACE_OS::fopen(prog_name, ACE_TEXT("a+"));
 
     return ostream_;
 }
@@ -62,14 +62,14 @@ ACE_CE_fostream& ACE_CE_fostream::operator << (NUM_TYPE num_type)
 
 ACE_CE_fostream& ACE_CE_fostream::operator << (const ACE_ANTI_TCHAR* c)
 {
-    fprintf(ostream_, "%s", c);
+    ACE_OS::fprintf(ostream_, "%s", c);
     return *this;
 }
 
 
 ACE_CE_fostream& ACE_CE_fostream::operator << (ACE_ANTI_TCHAR c)
 {
-    fprintf(ostream_, "%c", c);
+    ACE_OS::fprintf(ostream_, "%c", c);
     return *this;
 }
 

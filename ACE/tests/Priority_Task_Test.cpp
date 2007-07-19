@@ -43,9 +43,11 @@ public:
   Priority_Task (void);
   // The constructor
 
+  //FUZZ: disable check_for_lack_ACE_OS
   int open (void *);
   // Receives the priority and run svc() on a separate thread at that
   // priority.
+  //FUZZ: enable check_for_lack_ACE_OS
 
   int svc (void);
   // Runs on a separate thread an checks the priority.

@@ -32,9 +32,16 @@ public:
   Backend ()
     : reset_ (false), open_ (false), close_ (false), log_count_ (0) {}
 
+  //FUZZ: disable check_for_lack_ACE_OS
   virtual int open (const ACE_TCHAR *logger_key);
+  //FUZZ: enable check_for_lack_ACE_OS
+
   virtual int reset (void);
+  
+  //FUZZ: disable check_for_lack_ACE_OS
   virtual int close (void);
+  //FUZZ: enable check_for_lack_ACE_OS
+
   virtual ssize_t log (ACE_Log_Record &log_record);
 
   // Test probes to see if things worked as specified.

@@ -85,11 +85,13 @@ public:
   /// Constructor.
   Scheduler (Scheduler * = 0);
 
+  //FUZZ: disable check_for_lack_ACE_OS
   /// Initializer.
   virtual int open (void *args = 0);
 
   /// Terminator.
   virtual int close (u_long flags = 0);
+  //FUZZ: enable check_for_lack_ACE_OS
 
   /// Destructor.
   virtual ~Scheduler (void);

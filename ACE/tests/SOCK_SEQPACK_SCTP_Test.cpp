@@ -162,9 +162,11 @@ Server (void *arg)
     //
     if (-1 != Stream.send_n (&byte, 1))
     {
+      //FUZZ: disable check_for_lack_ACE_OS
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("(%P|%t) Negative test fail: Association")
                   ACE_TEXT(".send_n succeeded after abort()\n")));
+      //FUZZ: enable check_for_lack_ACE_OS
     }
 
   }
@@ -238,9 +240,11 @@ Client(void *arg)
 
   if (-1 != Stream.recv_n (&b, 1, &tv, &bytes))
   {
+    //FUZZ: disable check_for_lack_ACE_OS
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("(%P|%t) Negative test failed Association")
                 ACE_TEXT (".recv_n succeeded after abort()\n")));
+    //FUZZ: enable check_for_lack_ACE_OS
   }
 
   return 0;

@@ -110,7 +110,10 @@ public:
   ~MCT_Config (void)
     {}
 
+  //FUZZ: disable check_for_lack_ACE_OS
   int open (int argc, ACE_TCHAR *argv[]);
+  //FUZZ: enable check_for_lack_ACE_OS
+
   int debug (void) const { return this->debug_;}
   void dump (void) const;
   int groups (void) const { return this->groups_;}
@@ -118,7 +121,11 @@ public:
   u_long role (void) const { return this->role_;}
   int iterations (void) const { return this->iterations_;}
   int ttl (void) const { return this->ttl_;}
+
+  //FUZZ: disable check_for_lack_ACE_OS
   int wait (void) const { return this->wait_;}
+  //FUZZ: enable check_for_lack_ACE_OS
+
   ACE_SOCK_Dgram_Mcast::options options (void) const
   {
     return static_cast<ACE_SOCK_Dgram_Mcast::options> (this->sdm_opts_);
@@ -156,7 +163,9 @@ MCT_Config::open (int argc, ACE_TCHAR *argv[])
   int retval = 0;
   int help = 0;
 
+  //FUZZ: disable check_for_lack_ACE_OS
   ACE_Get_Opt getopt (argc, argv, ACE_TEXT (":?"), 1, 1);
+  //FUZZ: enable check_for_lack_ACE_OS
 
   if (getopt.long_option (ACE_TEXT ("GroupStart"),
                           'g',
@@ -218,10 +227,12 @@ MCT_Config::open (int argc, ACE_TCHAR *argv[])
                        ACE_TEXT (" Unable to add help option.\n")),
                       1);
 
+  //FUZZ: disable check_for_lack_ACE_OS
   // Now, let's parse it...
   int c = 0;
   while ((c = getopt ()) != EOF)
     {
+      //FUZZ: enable check_for_lack_ACE_OS
       switch (c)
         {
         case 0:
@@ -633,8 +644,11 @@ public:
             ACE_Reactor *reactor = ACE_Reactor::instance ());
   ~MCT_Task (void);
 
+  //FUZZ: disable check_for_lack_ACE_OS
   // = Task hooks.
   virtual int open (void *args = 0);
+  //FUZZ: enable check_for_lack_ACE_OS
+
   virtual int svc (void);
 
 private:
@@ -757,8 +771,10 @@ int producer (MCT_Config &config)
 {
   int retval = 0;
 
+  //FUZZ: disable check_for_lack_ACE_OS
   ACE_DEBUG ((LM_INFO, ACE_TEXT ("Starting producer...\n")));
   ACE_SOCK_Dgram socket (ACE_sap_any_cast (ACE_INET_Addr &), PF_INET);
+  //FUZZ: enable check_for_lack_ACE_OS
 
   // Note that is is IPv4 specific and needs to be changed once
   //

@@ -74,11 +74,13 @@ public:
   // Returns true iff failed_ == false.
 
 private:
+  //FUZZ: disable check_for_lack_ACE_OS
   virtual int open (void * = 0);
   // Spawn the threads in the pool.
 
   virtual int close (u_long);
   // Close hook.
+  //FUZZ: enable check_for_lack_ACE_OS
 
   ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long> total_activated_threads_;
   // Total number of threads activated through this thread pool ever.
@@ -125,9 +127,9 @@ Thread_Pool::start ()
   if (this->open () == -1)
     {
       ACE_DEBUG ((LM_DEBUG,
-		  ACE_TEXT ("(%P|%t) thread activation ")
-		  ACE_TEXT ("failed after %u threads\n"),
-		  this->total_threads()));
+                  ACE_TEXT ("(%P|%t) thread activation ")
+                  ACE_TEXT ("failed after %u threads\n"),
+                  this->total_threads()));
       this->failed_ = true;
     }
 }
@@ -156,8 +158,8 @@ Thread_Pool::open (void *)
 {
   if (PRINT_DEBUG_MSGS)
     ACE_DEBUG ((LM_DEBUG,
-    ACE_TEXT ("(%P|%t) pool start %d threads...\n"),
-		this->n_threads_));
+                ACE_TEXT ("(%P|%t) pool start %d threads...\n"),
+                this->n_threads_));
 
   if (this->total_activated_threads_ >= (65534 - this->n_threads_))
     no_op ();
@@ -183,9 +185,9 @@ run_main (int, ACE_TCHAR *[])
 
 #if defined (ACE_HAS_THREADS)
   ACE_DEBUG ((LM_DEBUG,
-	      ACE_TEXT ("(%P|%t) will try to start and kill up")
-	      ACE_TEXT (" to %u threads sequentially\n"),
-	      MAX_THREAD));
+              ACE_TEXT ("(%P|%t) will try to start and kill up")
+              ACE_TEXT (" to %u threads sequentially\n"),
+              MAX_THREAD));
   int initial_pool_size = 50;
 
   // Create the worker tasks.
@@ -206,9 +208,9 @@ run_main (int, ACE_TCHAR *[])
         return 1;
 
       if (PRINT_DEBUG_MSGS)
-	ACE_DEBUG ((LM_DEBUG,
-		    ACE_TEXT ("%u total threads\n"),
-		    thread_pool.total_threads()));
+        ACE_DEBUG ((LM_DEBUG,
+                    ACE_TEXT ("%u total threads\n"),
+                    thread_pool.total_threads()));
 
       int& n_threads = thread_pool.n_threads_;
       const unsigned long THREAD_THRESHOLD = 63336;
@@ -217,10 +219,10 @@ run_main (int, ACE_TCHAR *[])
     }
   
   ACE_DEBUG ((LM_DEBUG,
-	      ACE_TEXT ("%u total threads successfully started and died;")
-	      ACE_TEXT (" expected %u.\n"),
-	      thread_pool.total_threads (),
-	      MAX_THREAD));
+              ACE_TEXT ("%u total threads successfully started and died;")
+              ACE_TEXT (" expected %u.\n"),
+              thread_pool.total_threads (),
+              MAX_THREAD));
 #else
   ACE_ERROR ((LM_INFO,
               ACE_TEXT ("threads not supported on this platform\n")));

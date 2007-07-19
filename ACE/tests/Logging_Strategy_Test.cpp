@@ -352,9 +352,12 @@ parse_args (int argc, ACE_TCHAR *argv[])
           break;
         case 'i':
           interval_time = ACE_OS::atoi (get_opt.opt_arg ());
+
+          //FUZZ: disable check_for_lack_ACE_OS
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("Interval time (s): %d\n"),
                       interval_time));
+          //FUZZ: enable check_for_lack_ACE_OS
           break;
         case 'm':
           max_size_files = ACE_OS::atoi (get_opt.opt_arg ());

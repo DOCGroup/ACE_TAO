@@ -196,13 +196,13 @@ disable_signal (int sigmin, int sigmax)
 #ifndef ACE_WIN32
 
   sigset_t signal_set;
-  if (sigemptyset (&signal_set) == - 1)
+  if (ACE_OS::sigemptyset (&signal_set) == - 1)
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("Error: (%P|%t):%p\n"),
                 ACE_TEXT ("sigemptyset failed")));
 
   for (int i = sigmin; i <= sigmax; i++)
-    sigaddset (&signal_set, i);
+    ACE_OS::sigaddset (&signal_set, i);
 
   //  Put the <signal_set>.
   if (ACE_OS::pthread_sigmask (SIG_BLOCK, &signal_set, 0) != 0)
@@ -228,7 +228,9 @@ public:
 
   virtual ~Server_Service_Handler (void);
 
+  //FUZZ: disable check_for_lack_ACE_OS
   virtual void open (ACE_HANDLE h, ACE_Message_Block&);
+  //FUZZ: enable check_for_lack_ACE_OS
 
   virtual void handle_read_stream (
     const ACE_Asynch_Read_Stream::Result &result);
@@ -244,10 +246,12 @@ public:
 
   int write_data (void);
 
+  //FUZZ: disable check_for_lack_ACE_OS
   int read (ACE_Message_Block &mb, size_t bytes_to_read);
 
   int write (ACE_Message_Block &mb, size_t bytes_to_write);
-
+  //FUZZ: enable check_for_lack_ACE_OS
+  
   int safe_to_delete (void) const;
 
 private:
@@ -286,10 +290,13 @@ Server_Service_Handler::open (ACE_HANDLE h, ACE_Message_Block&)
 
   if (this->ssl_stream_.open (*this, h, 0, this->proactor ()) != 0)
   {
+    //FUZZ: disable check_for_lack_ACE_OS
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT("Server_Service_Handler::open: ")
                 ACE_TEXT("ACE_SSL_Asynch_Stream::open failed, %d\n"),
                 (int)errno));
+    //FUZZ: enable check_for_lack_ACE_OS
+
     this->cancel_and_close ();
   }
   else
@@ -531,7 +538,9 @@ public:
 
   virtual Server_Service_Handler *make_handler (void);
 
+  //FUZZ: disable check_for_lack_ACE_OS
   virtual int accept (size_t bytes_to_read = 0, const void *act = 0);
+  //FUZZ: enable check_for_lack_ACE_OS
 
   virtual void handle_accept (const ACE_Asynch_Accept::Result &result);
 
@@ -658,7 +667,9 @@ public:
 
   virtual ~Client_Service_Handler (void);
 
+  //FUZZ: disable check_for_lack_ACE_OS
   virtual void open (ACE_HANDLE h, ACE_Message_Block&);
+  //FUZZ: enable check_for_lack_ACE_OS
 
   virtual void handle_read_stream (
     const ACE_Asynch_Read_Stream::Result &result);
@@ -674,9 +685,11 @@ public:
 
   int write_data (void);
 
+  //FUZZ: disable check_for_lack_ACE_OS
   int read (ACE_Message_Block &mb, size_t bytes_to_read);
 
   int write (ACE_Message_Block &mb, size_t bytes_to_write);
+  //FUZZ: enable check_for_lack_ACE_OS
 
   int safe_to_delete (void) const;
 
@@ -997,12 +1010,14 @@ public:
 
   virtual ~Connector (void);
 
+  //FUZZ: disable check_for_lack_ACE_OS
   virtual int connect (
     const ACE_INET_Addr &remote_sap,
     const ACE_INET_Addr &local_sap =
       (const ACE_INET_Addr &)ACE_Addr::sap_any,
     int reuse_addr = 1,
     const void *act = 0);
+  //FUZZ: enable check_for_lack_ACE_OS
 
   virtual int validate_connection (
     const ACE_Asynch_Connect::Result& result,

@@ -109,9 +109,9 @@ operator>> (ACE_SOCK_IOStream & stream, qchar *buf)
   if (c != '"')
     for (*buf++ = c;
 #ifdef CHORUS
-         stream.get (c) && !isspace (c);
+         stream.get (c) && !ACE_OS::ace_isspace (c);
 #else
- (void *) stream.get (c) && !isspace (c);
+         (void *) stream.get (c) && !ACE_OS::ace_isspace (c);
 #endif /* CHORUS */
          *buf++ = c)
       continue;

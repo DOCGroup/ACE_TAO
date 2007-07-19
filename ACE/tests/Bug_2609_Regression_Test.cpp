@@ -51,12 +51,14 @@ public:
     g_handler_deleted = true;
   }
 
+  //FUZZ: disable check_for_lack_ACE_OS
   int open (void* pv)
   {
     TEST_TRACE ("open");
     g_semaphore.release(); // signal open completed
     return super::open (pv);
   }
+  //FUZZ: enable check_for_lack_ACE_OS
 
   int handle_close (ACE_HANDLE fd, ACE_Reactor_Mask mask)
   {

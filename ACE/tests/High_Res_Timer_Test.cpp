@@ -113,14 +113,19 @@ run_main (int argc, ACE_TCHAR *argv[])
 
   u_int iterations = 1;
 
+  //FUZZ: disable check_for_lack_ACE_OS
   ACE_Get_Opt getopt (argc, argv, ACE_TEXT ("i:"));
   for (int c; (c = getopt ()) != -1; )
-    switch (c)
-      {
-      case 'i':
-        iterations = ACE_OS::atoi (getopt.opt_arg ());
-        break;
-      }
+    {
+      //FUZZ: enable check_for_lack_ACE_OS
+
+      switch (c)
+        {
+        case 'i':
+          iterations = ACE_OS::atoi (getopt.opt_arg ());
+          break;
+        }
+    }
 
   // We don't check for errors if the interval is shorter than this
   // value because the OS has a finite resolution anyway.

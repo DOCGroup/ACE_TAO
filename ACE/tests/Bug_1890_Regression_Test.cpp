@@ -37,8 +37,10 @@ class Handler : public ACE_Event_Handler
 public:
     Handler();
 
+    //FUZZ: disable check_for_lack_ACE_OS
     /// Initialize the pipe and register with the reactor
     int open(ACE_Reactor * reactor);
+    //FUZZ: enable check_for_lack_ACE_OS
 
     /// Return the current count
     size_t handle_input_count() const;
@@ -71,8 +73,11 @@ class Timer : public ACE_Event_Handler
 public:
     Timer();
 
+    //FUZZ: disable check_for_lack_ACE_OS
     int open(ACE_Reactor * reactor);
     void close();
+    //FUZZ: enable check_for_lack_ACE_OS
+
     bool check_expected_results() const;
 
     virtual int handle_timeout(ACE_Time_Value const &, void const*);
@@ -296,12 +301,12 @@ Timer::remove_some_handlers()
   for (int i = 0; i != nhandlers; ++i)
     {
       if (-1 == reactor()->remove_handler(&handler_[i], mask))
-	{
+        {
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("Cannot remove handler %d in %p\n"),
                       i,
                       ACE_TEXT ("timeout")));
-	}
+        }
     }
 
   if (-1 == reactor()->register_handler(&special_handler(),
