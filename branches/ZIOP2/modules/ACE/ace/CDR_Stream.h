@@ -421,13 +421,11 @@ public:
   /// gateway.
   void reset_byte_order (int byte_order);
 
-  /// set GIOP version info
-  int set_version (ACE_CDR::Octet major,
-                   ACE_CDR::Octet minor);
+  /// Set GIOP version info
+  void set_version (ACE_CDR::Octet major, ACE_CDR::Octet minor);
 
-  /// Set the underlying GIOP version..
-  int get_version (ACE_CDR::Octet &major,
-                   ACE_CDR::Octet &minor);
+  /// Get the underlying GIOP version..
+  void get_version (ACE_CDR::Octet &major, ACE_CDR::Octet &minor);
 
 private:
 
