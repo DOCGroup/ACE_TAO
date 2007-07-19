@@ -1,3 +1,38 @@
+Thu Jul 19 00:50:28 UTC 2007  Krishnakumar B  <kitty@nospam.invalid.domain>
+
+        * examples/Hello/Hello_Base/Hello_Base.mpc:
+        * examples/Hello/Receiver/Receiver.mpc:
+        * examples/Hello/Sender/Sender.mpc:
+
+          Updated to remove traces of _DnC_ from the projects.
+
+        * examples/Hello/descriptors/DeploymentPlan.cdp:  Generated the
+          plan using the new PICML model of Hello.
+
+        * examples/Hello/descriptors_RTCCM/rt-config-example.cdp:
+        * examples/Hello/descriptors_RTCCM/rt-example.cdp:
+        * examples/Hello/descriptors_ReDaC/deploymentplan.cdp:
+        * examples/Hello/descriptors_ReDaC/deploymentplan_add.cdp:
+        * examples/Hello/descriptors_ReDaC/deploymentplan_remove.cdp:
+        * examples/Hello/descriptors_events/flattened_deploymentplan_events.cdp:
+        * examples/Hello/descriptors_events/flattened_deploymentplan_events_collocated.cdp:
+        * examples/Hello/descriptors_events/flattened_deploymentplan_federation.cdp:
+        * examples/Hello/descriptors_events/flattened_deploymentplan_federation_mcast.cdp:
+        * examples/Hello/descriptors_events/flattened_deploymentplan_federation_udp.cdp:
+        * examples/Hello/descriptors_events/flattened_deploymentplan_federation_udp_collocated.cdp:
+        * examples/Hello/descriptors_events/flattened_deploymentplan_federation_udp_two_hosts.cdp:
+        * examples/Hello/descriptors_events/flattened_deploymentplan_with_filters.cdp:
+        * examples/Hello/descriptors_naming/deploymentplan_naming.cdp:
+        * examples/Hello/descriptors_shared_components/deploymentplan.cdp:
+        * examples/Hello/descriptors_shared_components/deploymentplan_shared_components.cdp:
+
+          Removed traces of _DnC_ from these files.
+
+        * examples/Hello/descriptors/flattened_deploymentplan.cdp:
+        * examples/Hello/descriptors/flattened_deploymentplan_without_ns.cdp:
+
+          Removed these files as they were redundant.
+
 Sun Jul 15 13:06:12 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * CCF/Example/IDL2/CxxMapping/GeneratorImpl.hpp:

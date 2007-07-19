@@ -1,9 +1,9 @@
 // $Id$
 // This file is generated with "generate_component_mpc.pl -n Hello_Base"
 
-project(Hello_Base_DnC_stub): ciao_client_dnc {
+project(Hello_Base_stub): ciao_client_dnc {
 
-  sharedname = Hello_Base_DnC_stub
+  sharedname = Hello_Base_stub
   idlflags += -Wb,stub_export_macro=HELLO_BASE_STUB_Export \
               -Wb,stub_export_include=Hello_Base_stub_export.h \
               -Wb,skel_export_macro=HELLO_BASE_SVNT_Export \
@@ -27,10 +27,10 @@ project(Hello_Base_DnC_stub): ciao_client_dnc {
   }
 }
 
-project(Hello_Base_DnC_svnt) : ciao_servant_dnc {
-  after +=  Hello_Base_DnC_stub
-  sharedname  = Hello_Base_DnC_svnt
-  libs    += Hello_Base_DnC_stub
+project(Hello_Base_svnt) : ciao_servant_dnc {
+  after +=  Hello_Base_stub
+  sharedname  = Hello_Base_svnt
+  libs    += Hello_Base_stub
 
   idlflags  += -Wb,stub_export_macro=HELLO_BASE_STUB_Export \
                -Wb,stub_export_include=Hello_Base_stub_export.h \
@@ -54,7 +54,3 @@ project(Hello_Base_DnC_svnt) : ciao_servant_dnc {
     Hello_BaseS.inl
   }
 }
-
-
-
-
