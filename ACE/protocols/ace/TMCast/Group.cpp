@@ -333,7 +333,6 @@ namespace ACE_TMCast
     }
 
     GroupImpl (ACE_INET_Addr const& addr, char const* id)
-      ACE_THROW_SPEC((Group::Failed))
         : send_cond_ (mutex_),
           recv_cond_ (mutex_),
           failed_ (false),
@@ -356,7 +355,6 @@ namespace ACE_TMCast
 
     //FUZZ: disable check_for_lack_ACE_OS
     void send (void const* msg, size_t size)
-      ACE_THROW_SPEC((Group::InvalidArg, Group::Failed, Group::Aborted))
     {
     //FUZZ: enable check_for_lack_ACE_OS
 
@@ -411,7 +409,6 @@ namespace ACE_TMCast
 
     //FUZZ: disable check_for_lack_ACE_OS
     size_t recv (void* msg, size_t size)
-      ACE_THROW_SPEC((Group::Failed, Group::InsufficienSpace))
     {
     //FUZZ: enable check_for_lack_ACE_OS
 
@@ -485,7 +482,6 @@ namespace ACE_TMCast
   //
   Group::
   Group (ACE_INET_Addr const& addr, char const* id)
-    ACE_THROW_SPEC((Group::Failed))
       : pimpl_ (new GroupImpl (addr, id))
   {
   }
@@ -497,14 +493,12 @@ namespace ACE_TMCast
 
   void
   Group::send (void const* msg, size_t size)
-    ACE_THROW_SPEC((Group::InvalidArg, Group::Failed, Group::Aborted))
   {
     pimpl_->send (msg, size);
   }
 
   size_t
   Group::recv (void* msg, size_t size)
-    ACE_THROW_SPEC((Group::Failed, Group::InsufficienSpace))
   {
     return pimpl_->recv (msg, size);
   }
