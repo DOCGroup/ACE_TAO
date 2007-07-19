@@ -343,10 +343,10 @@ Test_Any::check_validity (void)
            (this->out_.in () >>= array_out) &&
            (this->ret_.in () >>= array_ret))
     {
-      for (size_t i = 0; i < Param_Test::DIM1; i ++)
+      for (CORBA::ULong i = 0; i < Param_Test::DIM1; i ++)
         {
-          ssize_t ii = i;
-          ssize_t square = i * i;
+          CORBA::Long ii = i;
+          CORBA::Long square = i * i;
           if (array_in[i] != ii ||
               array_out[i] != ii ||
               array_inout[i] != square ||

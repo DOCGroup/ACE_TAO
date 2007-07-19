@@ -44,7 +44,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                   ACE_DEBUG ((LM_INFO,
                               "Listing initial references...\n"));
 
-                  for (size_t n = 0; n < length; ++n)
+                  for (CORBA::ULong n = 0; n < length; ++n)
                     {
                       ACE_DEBUG ((LM_DEBUG,
                                   "  Reference %u: %s\n",

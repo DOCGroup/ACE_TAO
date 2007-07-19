@@ -1,3 +1,13 @@
+Thu Jul 19 20:01:40 UTC 2007  Adam Mitz  <mitza@ociweb.com>
+
+        * tests/InterOp-Naming/INS_test_client.cpp:
+        * tests/Param_Test/any.cpp:
+        * tests/Param_Test/param_test_i.cpp:
+        * tests/Typedef_String_Array/testImpl.cpp:
+
+         Replaced size_t with CORBA::ULong in places where it is used to index
+         CORBA sequences.  size_t is not 32-bit on all platforms.
+
 Thu Jul 19 15:13:51 UTC 2007  Wallace Zhang  <zhang_w@ociweb.com>
 
         * NEWS:
@@ -12,7 +22,7 @@ Thu Jul 19 15:13:51 UTC 2007  Wallace Zhang  <zhang_w@ociweb.com>
         * orbsvcs/tests/Notify/Reconnecting/run_test.pl:
 
           Added the disconnect test on the supplier side too.
-					
+
 Thu Jul 19 11:52:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Strategies/SCIOP_Connection_Handler.{h,cpp}:

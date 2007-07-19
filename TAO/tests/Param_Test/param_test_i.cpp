@@ -760,11 +760,11 @@ Param_Test_i::test_any (const CORBA::Any &a1,
       if (TAO_debug_level > 0)
         {
           ACE_DEBUG ((LM_DEBUG, "Received Fixed_Array:"));
-          for (size_t i = 0; i < Param_Test::DIM1; i++)
+          for (CORBA::ULong i = 0; i < Param_Test::DIM1; i++)
             ACE_DEBUG ((LM_DEBUG, " %d", array[i]));
           ACE_DEBUG ((LM_DEBUG, "\n"));
         }
-      for (size_t i = 0; i < Param_Test::DIM1; i++)
+      for (CORBA::ULong i = 0; i < Param_Test::DIM1; i++)
         array[i] = i * i;
       a2 <<= Param_Test::Fixed_Array_forany (array);
       *ret <<= Param_Test::Fixed_Array_forany (array);

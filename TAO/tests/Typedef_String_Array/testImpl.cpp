@@ -2,7 +2,7 @@
 
 #include "testImpl.h"
 
-static const size_t maxd = 15;
+static const CORBA::ULong maxd = 15;
 static const char* data[maxd] = { "Hi there",
                                   "This is a test",
                                   "of typedefed string",
@@ -31,7 +31,7 @@ TestImpl::get_strings (ArrayOfString_out strings)
 {
   ACE_NEW (strings, ArrayOfString);
 
-  for (size_t i = 0; i < maxd; i++)
+  for (CORBA::ULong i = 0; i < maxd; i++)
     {
       strings[i] = data[i];
     }
