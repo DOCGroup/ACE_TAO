@@ -64,8 +64,7 @@ public:
   TAO_SCIOP_Connection_Handler (ACE_Thread_Manager* t = 0);
 
   /// Constructor.
-  TAO_SCIOP_Connection_Handler (TAO_ORB_Core *orb_core,
-                                CORBA::Boolean flag);
+  TAO_SCIOP_Connection_Handler (TAO_ORB_Core *orb_core);
 
   /// Destructor.
   ~TAO_SCIOP_Connection_Handler (void);
@@ -108,16 +107,6 @@ public:
   int set_dscp_codepoint (CORBA::Long dscp);
 
 protected:
-
-  /// Constructor that could be used by the derived classes.
-  /**
-   * Sometimes new pluggbale protocols which have similarties with
-   * IIOP may be tempted to this class for their use. Classical
-   * example being that of IIOP_SSL_Connection_Handler. This
-   * constructor just initializes its base class and sets all of its
-   * contents to the default value, if any
-   */
-  TAO_SCIOP_Connection_Handler (TAO_ORB_Core *orb_core);
 
   /// Helper method needed by the set_dscp_codepoint () methods
   int set_tos (int tos);
