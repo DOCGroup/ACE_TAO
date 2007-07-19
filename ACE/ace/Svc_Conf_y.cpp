@@ -45,7 +45,10 @@
 /* Using locations.  */
 #define ACE_YYLSP_NEEDED 0
 
-
+/* On HP-UX aC++ on Itanium, disable warning 2111, statement is unreachable. */
+#if defined (__HP_aCC) && defined (__ia64)
+#  pragma diag_suppress 2111
+#endif
 
 /* Tokens.  */
 #ifndef ACE_YYTOKENTYPE

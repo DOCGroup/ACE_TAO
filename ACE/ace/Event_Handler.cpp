@@ -23,12 +23,12 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_Event_Handler::ACE_Event_Handler (ACE_Reactor *r,
                                       int p)
-  : reference_count_ (1),
-    priority_ (p),
+  : priority_ (p),
     reactor_ (r),
     reference_counting_policy_ (Reference_Counting_Policy::DISABLED)
 {
   // ACE_TRACE ("ACE_Event_Handler::ACE_Event_Handler");
+  this->reference_count_ = 1;
 }
 
 ACE_Event_Handler::~ACE_Event_Handler (void)

@@ -1,3 +1,21 @@
+Thu Jul 19 17:15:42 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * ace/Event_Handler.cpp (ctor): Put the init of reference_count_
+          in-body to avoid value-copied-to-temporary.
+
+        * ace/Log_Msg.cpp (exists): No need for casting a void* to
+          ACE_Log_Msg* just to check for 0.
+
+        * ace/OS_NS_Thread.cpp (event_init): Remove unreachable return.
+
+        * ace/Svc_Conf_y.cpp: Suppress warning 2111 "statement is unreachable"
+          for HP aC++ on Itanium.
+
+        * include/makeinclude/platform_hpux_aCC.GNU: Remove PRELIB. PRELIB
+          for instantiating templates prior to the real link hasn't been
+          needed for many years. Hopefully all the ancient compiler users
+          have upgraded.
+
 Thu Jul 19 14:00:00 UTC 2007  Simon Massey  <sma@prismtech.com>
 
         * ace/Thread_Manager.cpp:
