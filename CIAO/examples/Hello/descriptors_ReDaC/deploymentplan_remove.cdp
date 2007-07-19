@@ -153,7 +153,7 @@
     <name>Sender_exec</name>
     <source><!-- @@ Not sure about this--></source>
     <node><!-- blank --></node>
-    <location>Sender_DnC_exec</location>
+    <location>Sender_exec</location>
     <execParameter>
       <name>entryPoint</name>
       <value>
@@ -171,7 +171,7 @@
     <name>Sender_svnt</name>
     <source><!-- @@ Not sure --></source>
     <node><!-- blank --></node>
-    <location>Sender_DnC_svnt</location>
+    <location>Sender_svnt</location>
     <execParameter>
       <name>entryPoint</name>
       <value>
@@ -189,7 +189,7 @@
     <name>Receiver_exec</name>
     <source><!-- @@ Not sure about this--></source>
     <node><!-- blank --></node>
-    <location>Receiver_DnC_exec</location>
+    <location>Receiver_exec</location>
     <execParameter>
       <name>entryPoint</name>
       <value>
@@ -207,7 +207,7 @@
     <name>Receiver_svnt</name>
     <source><!-- @@ Not sure --></source>
     <node><!-- blank --></node>
-    <location>Receiver_DnC_svnt</location>
+    <location>Receiver_svnt</location>
     <execParameter>
       <name>entryPoint</name>
       <value>
