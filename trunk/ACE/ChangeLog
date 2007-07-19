@@ -1,3 +1,15 @@
+Thu Jul 19 12:40:00 UTC 2007  Simon Massey  <sma@prismtech.com>
+
+        * tests/OS_Test.cpp:
+        * tests/Map_Test.cpp:
+
+          Change all ACE_ASSERTS to THIS_IS_NOT_AN_ASSERT_IT_IS_A_NON_DEBUG_TEST_AS_WELL
+          as these tests are relying on the assert doing the actual run-time
+          test and error reporting. These SHOULD NOT be asserts but always
+          compiled and valid (otherwise the actual test code themselves is
+          pointless).  MORRAL: DO NOT IGNORE UNUSED VARIABLE WARNINGS ISSUED
+          BY A COMPILER.
+
 Thu Jul 19 11:32:05 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * protocols/ace/TMCast/Group.hpp:

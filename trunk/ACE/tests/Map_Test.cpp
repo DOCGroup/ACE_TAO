@@ -24,6 +24,12 @@
 
 ACE_RCSID(tests, Map_Test, "$Id$")
 
+#undef THIS_IS_NOT_AN_ASSERT_IT_IS_A_NON_DEBUG_TEST_AS_WELL
+#define THIS_IS_NOT_AN_ASSERT_IT_IS_A_NON_DEBUG_TEST_AS_WELL(X) \
+  ((X)									\
+   ? static_cast<void>(0)						\
+   : ACE_VERSIONED_NAMESPACE_NAME::__ace_assert(__FILE__, __LINE__, ACE_TEXT_CHAR_TO_TCHAR (#X)))
+
 // Value type.
 typedef size_t VALUE;
 
@@ -70,9 +76,9 @@ functionality_test (TEST_MAP &map,
   counter = 0;
   for (i = 0; i < iterations; ++i)
     {
-      ACE_ASSERT (map.bind_modify_key (i, modified_keys[i]) == 0);
+      THIS_IS_NOT_AN_ASSERT_IT_IS_A_NON_DEBUG_TEST_AS_WELL (map.bind_modify_key (i, modified_keys[i]) == 0);
       ++counter;
-      ACE_ASSERT (map.current_size () == counter);
+      THIS_IS_NOT_AN_ASSERT_IT_IS_A_NON_DEBUG_TEST_AS_WELL (map.current_size () == counter);
     }
 
   // Forward iteration...
@@ -88,11 +94,11 @@ functionality_test (TEST_MAP &map,
 
         // Recover original key.
         KEY original_key;
-        ACE_ASSERT (map.recover_key (entry.first (),
+        THIS_IS_NOT_AN_ASSERT_IT_IS_A_NON_DEBUG_TEST_AS_WELL (map.recover_key (entry.first (),
                                      original_key) == 0);
 
         // Make sure recovering keys work.
-        ACE_ASSERT (original_keys[entry.second ()] == original_key);
+        THIS_IS_NOT_AN_ASSERT_IT_IS_A_NON_DEBUG_TEST_AS_WELL (original_keys[entry.second ()] == original_key);
 
         // Obtain value from key.
         VALUE original_value;
@@ -110,7 +116,7 @@ functionality_test (TEST_MAP &map,
 
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("\n")));
-    ACE_ASSERT (counter == iterations);
+    THIS_IS_NOT_AN_ASSERT_IT_IS_A_NON_DEBUG_TEST_AS_WELL (counter == iterations);
   }
 
   // Reverse iteration...
@@ -127,11 +133,11 @@ functionality_test (TEST_MAP &map,
 
         // Recover original key.
         KEY original_key;
-        ACE_ASSERT (map.recover_key (entry.first (),
+        THIS_IS_NOT_AN_ASSERT_IT_IS_A_NON_DEBUG_TEST_AS_WELL (map.recover_key (entry.first (),
                                      original_key) == 0);
 
         // Make sure recovering keys work.
-        ACE_ASSERT (original_keys[entry.second ()] == original_key);
+        THIS_IS_NOT_AN_ASSERT_IT_IS_A_NON_DEBUG_TEST_AS_WELL (original_keys[entry.second ()] == original_key);
 
         // Obtain value from key.
         VALUE original_value;
@@ -149,24 +155,24 @@ functionality_test (TEST_MAP &map,
 
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("\n")));
-    ACE_ASSERT (counter == 0);
+    THIS_IS_NOT_AN_ASSERT_IT_IS_A_NON_DEBUG_TEST_AS_WELL (counter == 0);
   }
 
   // Search using the modified keys.
   for (i = 0; i < iterations; ++i)
     {
       VALUE j;
-      ACE_ASSERT (map.find (modified_keys[i], j) != -1);
-      ACE_ASSERT (i == j);
+      THIS_IS_NOT_AN_ASSERT_IT_IS_A_NON_DEBUG_TEST_AS_WELL (map.find (modified_keys[i], j) != -1);
+      THIS_IS_NOT_AN_ASSERT_IT_IS_A_NON_DEBUG_TEST_AS_WELL (i == j);
     }
 
   // Rmoved keys from map.
   counter = iterations;
   for (i = 0; i < iterations; ++i)
     {
-      ACE_ASSERT (map.unbind (modified_keys[i]) != -1);
+      THIS_IS_NOT_AN_ASSERT_IT_IS_A_NON_DEBUG_TEST_AS_WELL (map.unbind (modified_keys[i]) != -1);
       --counter;
-      ACE_ASSERT (map.current_size () == counter);
+      THIS_IS_NOT_AN_ASSERT_IT_IS_A_NON_DEBUG_TEST_AS_WELL (map.current_size () == counter);
     }
 
   // Cleanup.
@@ -183,9 +189,9 @@ insert_test (TEST_MAP &map,
   size_t counter = 0;
   for (VALUE i = 0; i < iterations; ++i)
     {
-      ACE_ASSERT (map.bind_create_key (i, keys[i]) == 0);
+      THIS_IS_NOT_AN_ASSERT_IT_IS_A_NON_DEBUG_TEST_AS_WELL (map.bind_create_key (i, keys[i]) == 0);
       ++counter;
-      ACE_ASSERT (map.current_size () == counter);
+      THIS_IS_NOT_AN_ASSERT_IT_IS_A_NON_DEBUG_TEST_AS_WELL (map.current_size () == counter);
     }
 }
 
@@ -198,8 +204,8 @@ find_test (TEST_MAP &map,
   for (VALUE i = 0; i < iterations; ++i)
     {
       VALUE j;
-      ACE_ASSERT (map.find (keys[i], j) != -1);
-      ACE_ASSERT (i == j);
+      THIS_IS_NOT_AN_ASSERT_IT_IS_A_NON_DEBUG_TEST_AS_WELL (map.find (keys[i], j) != -1);
+      THIS_IS_NOT_AN_ASSERT_IT_IS_A_NON_DEBUG_TEST_AS_WELL (i == j);
     }
 }
 
@@ -212,9 +218,9 @@ unbind_test (TEST_MAP &map,
   size_t counter = iterations;
   for (VALUE i = 0; i < iterations; ++i)
     {
-      ACE_ASSERT (map.unbind (keys[i]) != -1);
+      THIS_IS_NOT_AN_ASSERT_IT_IS_A_NON_DEBUG_TEST_AS_WELL (map.unbind (keys[i]) != -1);
       --counter;
-      ACE_ASSERT (map.current_size () == counter);
+      THIS_IS_NOT_AN_ASSERT_IT_IS_A_NON_DEBUG_TEST_AS_WELL (map.current_size () == counter);
     }
 }
 
@@ -366,4 +372,4 @@ run_main (int argc, ACE_TCHAR *argv[])
 
   return 0;
 }
-
+#undef THIS_IS_NOT_AN_ASSERT_IT_IS_A_NON_DEBUG_TEST_AS_WELL
