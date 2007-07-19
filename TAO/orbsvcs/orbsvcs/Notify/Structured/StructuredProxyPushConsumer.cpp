@@ -71,7 +71,7 @@ TAO_Notify_StructuredProxyPushConsumer::disconnect_structured_push_consumer (voi
 {
   TAO_Notify_StructuredProxyPushConsumer::Ptr guard( this );
   this->destroy ();
-  this->self_change ();
+  this->send_deletion_change ();
 }
 
 const char *

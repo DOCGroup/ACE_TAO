@@ -1,3 +1,18 @@
+Thu Jul 19 15:13:51 UTC 2007  Wallace Zhang  <zhang_w@ociweb.com>
+
+        * NEWS:
+
+          Updated with the disconnect fix.
+
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredProxyPushConsumer.cpp:
+
+          Changed to use the newly added send_deletion_change() in the case of
+          saving the topology with a deleting object in the disconnect callback.
+
+        * orbsvcs/tests/Notify/Reconnecting/run_test.pl:
+
+          Added the disconnect test on the supplier side too.
+					
 Thu Jul 19 11:52:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Strategies/SCIOP_Connection_Handler.{h,cpp}:
