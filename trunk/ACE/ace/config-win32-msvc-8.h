@@ -122,6 +122,16 @@
 #  define ACE_HAS_TR24731_2005_CRT
 #endif
 
+//Detect Platform SDK 64-bit (AMD64) compiler using _MSC_FULL_VER
+#if (defined (_WIN64) || defined (WIN64)) && _MSC_FULL_VER < 140050000
+#  define ACE_AUTO_PTR_LACKS_RESET
+#  define ACE_MSVC_USES_DOUBLE_UNDERSCORE_STAT64
+#  define ACE_HAS_BROKEN_STD_REVERSE_ITERATOR
+#  define ACE_LACKS_NUMERIC_LIMITS_64_BIT_TYPES
+#  undef ACE_HAS_TR24731_2005_CRT
+#  undef ACE_HAS_INTRIN_H
+#endif
+
 // On CE w/o MFC config-WinCE.h needs to declare a placement new. This
 // triggers a warning that there's no placement delete, which can be ignored.
 #if defined (ACE_HAS_WINCE) && !defined (ACE_HAS_MFC)

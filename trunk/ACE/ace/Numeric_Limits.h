@@ -225,7 +225,8 @@ struct ACE_Numeric_Limits
   static T max (void) { return std::numeric_limits<T>::max (); }
 };
 
-# if defined (ACE_WIN64) && defined (_MSC_VER) && _MSC_VER <= 1310
+# if (defined (ACE_WIN64) && defined (_MSC_VER) && _MSC_VER <= 1310) \
+    || defined (ACE_LACKS_NUMERIC_LIMITS_64_BIT_TYPES)
 // The Microsoft Platform SDK does not provide std::numeric_limits<>
 // specializations for 64 bit integers so we need to explicitly provide
 // ACE_Numeric_Limits<> specializations to compensate for this

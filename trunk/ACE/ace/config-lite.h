@@ -129,7 +129,8 @@ ACE_END_VERSIONED_NAMESPACE_DECL
   // the _RWSTD_NO_CLASS_PARTIAL_SPEC feature test macro below.
 # include <Cstd/stdcomp.h>
 #endif /* __SUNPRO_CC <= 0x580 */
-#if defined (_MSC_VER) && (_MSC_VER <= 1310) && defined (_WIN64)
+#if (defined (_MSC_VER) && (_MSC_VER <= 1310) && defined (_WIN64)) \
+    || defined (ACE_HAS_BROKEN_STD_REVERSE_ITERATOR)
   // VC 7.1 and the latest 64-bit platform SDK still don't define a standard
   // compliant reverse_iterator adapter.
 # define ACE_DECLARE_STL_REVERSE_ITERATORS \
