@@ -1,3 +1,11 @@
+Thu Jul 19 23:33:05 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * ace/Event_Handler.cpp (ctor): Put reference_count_ init back in the
+          initializer list. Reverts:
+          Thu Jul 19 17:15:42 UTC 2007  Steve Huston  <shuston@riverace.com>
+          because a newer compiler (A.06.13) resolves the warning. Thanks
+          to Johnny for noticing this.
+
 Thu Jul 19 19:54:22 UTC 2007  Adam Mitz  <mitza@ociweb.com>
 
         * ace/Numeric_Limits.h:
