@@ -118,7 +118,9 @@ public:
 
   Pipe (void);
 
+  //FUZZ: disable check_for_lack_ACE_OS
   int open (void);
+  //FUZZ: enable check_for_lack_ACE_OS
 
   ACE_HANDLE read_handle (void) const;
 
@@ -204,7 +206,9 @@ public:
 
   ssize_t send_message (void);
 
+  //FUZZ: disable check_for_lack_ACE_OS
   void close (void);
+  //FUZZ: enable check_for_lack_ACE_OS
 
   ACE_HANDLE handle_;
 
@@ -345,7 +349,9 @@ public:
 
   int svc (void);
 
+  //FUZZ: disable check_for_lack_ACE_OS
   int close (u_long flags);
+  //FUZZ: enable check_for_lack_ACE_OS
 
   int handle_input (ACE_HANDLE);
 
@@ -490,9 +496,11 @@ public:
              ACE_Reactor &reactor,
              int nested_upcalls);
 
+  //FUZZ: disable check_for_lack_ACE_OS
   int connect (ACE_HANDLE &client_handle,
                ACE_HANDLE &server_handle,
                int run_receiver_thread);
+  //FUZZ: enable check_for_lack_ACE_OS
 
   ACE_Thread_Manager &thread_manager_;
 

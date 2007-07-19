@@ -45,9 +45,11 @@ class Common_Task : public MT_Task
 public:
   Common_Task (void) {}
 
+  //FUZZ: disable check_for_lack_ACE_OS
   // = ACE_Task hooks.
   virtual int open (void * = 0);
   virtual int close (u_long = 0);
+  //FUZZ: enable check_for_lack_ACE_OS
 };
 
 class Supplier : public Common_Task

@@ -1,3 +1,67 @@
+Thu Jul 19 03:00:57 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * tests/Auto_Event_Test.cpp:
+        * tests/Buffer_Stream_Test.cpp:
+        * tests/Bug_1890_Regression_Test.cpp:
+        * tests/Bug_2540_Regression_Test.cpp:
+        * tests/Bug_2609_Regression_Test.cpp:
+        * tests/Bug_2659_Regression_Test.cpp:
+        * tests/Bug_2912_Regression_Test.cpp:
+        * tests/CE_fostream.cpp:
+        * tests/Conn_Test.cpp:
+        * tests/Dev_Poll_Reactor_Test.cpp:
+        * tests/Dynamic_Test.cpp:
+        * tests/FlReactor_Test.cpp:
+        * tests/Future_Set_Test.cpp:
+        * tests/Future_Test.cpp:
+        * tests/High_Res_Timer_Test.cpp:
+        * tests/IOStream_Test.cpp:
+        * tests/Log_Msg_Backend_Test.cpp:
+        * tests/Logging_Strategy_Test.cpp:
+        * tests/MT_Reference_Counted_Event_Handler_Test.cpp:
+        * tests/Malloc_Test.cpp:
+        * tests/Manual_Event_Test.cpp:
+        * tests/Message_Block_Test.cpp:
+        * tests/Multicast_Test.cpp:
+        * tests/Multicast_Test_IPV6.cpp:
+        * tests/Notify_Performance_Test.cpp:
+        * tests/OS_Test.cpp:
+        * tests/Pipe_Test.cpp:
+        * tests/Priority_Reactor_Test.cpp:
+        * tests/Priority_Task_Test.cpp:
+        * tests/Proactor_Scatter_Gather_Test.cpp:
+        * tests/Proactor_Test.cpp:
+        * tests/Proactor_Test_IPV6.cpp:
+        * tests/QtReactor_Test.cpp:
+        * tests/Reactor_Notify_Test.cpp:
+        * tests/Reactor_Performance_Test.cpp:
+        * tests/Reactors_Test.cpp:
+        * tests/Recursive_Condition_Bug_Test.cpp:
+        * tests/Refcounted_Auto_Ptr_Test.cpp:
+        * tests/SOCK_Dgram_Bcast_Test.cpp:
+        * tests/SOCK_Netlink_Test.cpp:
+        * tests/SOCK_SEQPACK_SCTP_Test.cpp:
+        * tests/SPIPE_Test.cpp:
+        * tests/SSL/SSL_Asynch_Stream_Test.cpp:
+        * tests/SSL/Thread_Pool_Reactor_SSL_Test.cpp:
+        * tests/Semaphore_Test.cpp:
+        * tests/TP_Reactor_Test.cpp:
+        * tests/Task_Ex_Test.cpp:
+        * tests/Task_Test.cpp:
+        * tests/Thread_Creation_Threshold_Test.cpp:
+        * tests/Thread_Pool_Reactor_Resume_Test.cpp:
+        * tests/Thread_Pool_Reactor_Test.cpp:
+        * tests/Thread_Pool_Test.cpp:
+        * tests/TkReactor_Test.cpp:
+        * tests/Token_Strategy_Test.cpp:
+        * tests/Unload_libACE.cpp:
+        * tests/XtAthenaReactor_Test.cpp:
+        * tests/XtMotifReactor_Test.cpp:
+
+          Fixed ACE_OS fuzz warnings. Use ACE_OS calls instead of raw OS function
+          where possible. If fuzz detected a false-positive, then disable
+          the ACE_OS fuzz check for that section of the code.
+
 Wed Jul 18 20:25:07 UTC 2007  Steve Huston  <shuston@riverace.com>
 
         * tests/Proactor_Test.{h cpp}: Fixed to log operation and byte counts

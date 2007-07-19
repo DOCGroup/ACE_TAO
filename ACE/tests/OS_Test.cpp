@@ -287,9 +287,11 @@ string_emulation_test (void)
 
 #if defined (ACE_HAS_WCHAR)
   {
+    //FUZZ: disable check_for_lack_ACE_OS
     // ========================================================================
     // Test itoa (wchar_t version)
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing itoa (wchar_t version)\n")));
+    //FUZZ: enable check_for_lack_ACE_OS
 
     wchar_t itow1[33];
 
@@ -303,9 +305,11 @@ string_emulation_test (void)
                                 ACE_TEXT_WIDE ("2a")) == 0);
 
 
+    //FUZZ: disable check_for_lack_ACE_OS
     // ========================================================================
     // Test strcmp (wchar_t version)
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing strcmp (wchar_t version)\n")));
+    //FUZZ: enable check_for_lack_ACE_OS
 
     const wchar_t *strcmp1 = ACE_TEXT_WIDE ("stringf");
     const wchar_t *strcmp2 = ACE_TEXT_WIDE ("stringfe");
@@ -319,9 +323,11 @@ string_emulation_test (void)
     ACE_ASSERT (ACE_OS::strcmp (strcmp1, strcmp4) != 0);
     ACE_ASSERT (ACE_OS::strcmp (strcmp1, strcmp5) > 0);
 
+    //FUZZ: disable check_for_lack_ACE_OS
     // ========================================================================
     // Test strcpy (wchar_t version)
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing strcpy (wchar_t version)\n")));
+    //FUZZ: enable check_for_lack_ACE_OS
 
     const wchar_t *strcpy1 = ACE_TEXT_WIDE ("abcdefghijklmnopqrstuvwxyz");
     wchar_t strcpy2[27];
@@ -331,9 +337,11 @@ string_emulation_test (void)
                        strcpy1) == 0);
     ACE_ASSERT (ACE_OS::strcmp (strcpy2, strcpy1) == 0);
 
+    //FUZZ: disable check_for_lack_ACE_OS
     // ========================================================================
     // Test strcat (wchar_t version)
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing strcat (wchar_t version)\n")));
+    //FUZZ: enable check_for_lack_ACE_OS
 
     const wchar_t *strcat1 = ACE_TEXT_WIDE ("abcdefghijklmnopqrstuvwxyz");
     wchar_t strcat2[27] = ACE_TEXT_WIDE ("abcdefghijkl");
@@ -344,9 +352,11 @@ string_emulation_test (void)
                        strcat1) == 0);
     ACE_ASSERT (ACE_OS::strcmp (strcat2, strcat1) == 0);
 
+    //FUZZ: disable check_for_lack_ACE_OS
     // ========================================================================
     // Test strncat (wchar_t version)
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing strncat (wchar_t version)\n")));
+    //FUZZ: enable check_for_lack_ACE_OS
 
     const wchar_t *strncat1 = ACE_TEXT_WIDE ("abcdefghijklmnopqrstuvwxyz");
     wchar_t strncat2[27] = ACE_TEXT_WIDE ("abcdefghijkl");
@@ -357,9 +367,11 @@ string_emulation_test (void)
                        strncat1) == 0);
     ACE_ASSERT (ACE_OS::strcmp (strncat2, strncat1) == 0);
 
+    //FUZZ: disable check_for_lack_ACE_OS
     // ========================================================================
     // Test strspn (wchar_t version)
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing strspn (wchar_t version)\n")));
+    //FUZZ: enable check_for_lack_ACE_OS
 
     const wchar_t *strspn1 = ACE_TEXT_WIDE ("abcdefghijkabcdefghijk");
 
@@ -368,9 +380,11 @@ string_emulation_test (void)
     ACE_ASSERT (ACE_OS::strspn (strspn1,
                                 ACE_TEXT_WIDE ("mno")) == 0);
 
+    //FUZZ: disable check_for_lack_ACE_OS
     // ========================================================================
     // Test strchr (wchar_t version)
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing strchr (wchar_t version)\n")));
+    //FUZZ: enable check_for_lack_ACE_OS
 
     const wchar_t *strchr1 = ACE_TEXT_WIDE ("abcdefghijkabcdefghijk");
 
@@ -380,9 +394,11 @@ string_emulation_test (void)
                 == strchr1 + 7);
     ACE_ASSERT (ACE_OS::strchr (strchr1, ACE_TEXT_WIDE ('1')) == 0);
 
+    //FUZZ: disable check_for_lack_ACE_OS
     // ========================================================================
     // Test strstr (wchar_t version)
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing strstr (wchar_t version)\n")));
+    //FUZZ: enable check_for_lack_ACE_OS
 
     const wchar_t *strstr1 = ACE_TEXT_WIDE ("abcdefghijkabcdefghijk");
 
@@ -394,9 +410,11 @@ string_emulation_test (void)
     ACE_ASSERT (ACE_OS::strstr (strstr1,
                                 ACE_TEXT_WIDE ("mno")) == 0);
 
+    //FUZZ: disable check_for_lack_ACE_OS
     // ========================================================================
     // Test strlen (wchar_t version)
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing strlen (wchar_t version)\n")));
+    //FUZZ: enable check_for_lack_ACE_OS
 
     const wchar_t *strlen1 = ACE_TEXT_WIDE ("");
     const wchar_t *strlen2 = ACE_TEXT_WIDE ("12345");
@@ -404,9 +422,11 @@ string_emulation_test (void)
     ACE_ASSERT (ACE_OS::strlen (strlen1) == 0);
     ACE_ASSERT (ACE_OS::strlen (strlen2) == 5);
 
+    //FUZZ: disable check_for_lack_ACE_OS
     // ========================================================================
     // Test strpbrk (wchar_t version)
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing strpbrk (wchar_t version)\n")));
+    //FUZZ: enable check_for_lack_ACE_OS
 
     const wchar_t *strpbrk1 = ACE_TEXT_WIDE ("abcdefghijkabcdefghijk");
 
@@ -415,9 +435,11 @@ string_emulation_test (void)
     ACE_ASSERT (ACE_OS::strpbrk (strpbrk1,
                                         ACE_TEXT_WIDE ("mno")) == 0);
 
+    //FUZZ: disable check_for_lack_ACE_OS
     // ========================================================================
     // Test strrchr (wchar_t version)
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing strrchr (wchar_t version)\n")));
+    //FUZZ: enable check_for_lack_ACE_OS
 
     const wchar_t *strrchr1 = ACE_TEXT_WIDE ("abcdefghijkabcdefghijk");
 
@@ -428,9 +450,11 @@ string_emulation_test (void)
     ACE_ASSERT (ACE_OS::strrchr (strrchr1, ACE_TEXT_WIDE ('1'))
                   == 0);
 
+    //FUZZ: disable check_for_lack_ACE_OS
     // ========================================================================
     // Test strcasecmp (wchar_t version)
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing strcasecmp (wchar_t version)\n")));
+    //FUZZ: enable check_for_lack_ACE_OS
 
     const wchar_t *strcasecmp1 = ACE_TEXT_WIDE ("stringf");
     const wchar_t *strcasecmp2 = ACE_TEXT_WIDE ("stringfe");
@@ -444,9 +468,11 @@ string_emulation_test (void)
     ACE_ASSERT (ACE_OS::strcasecmp (strcasecmp1, strcasecmp4) == 0);
     ACE_ASSERT (ACE_OS::strcasecmp (strcasecmp1, strcasecmp5) > 0);
 
+    //FUZZ: disable check_for_lack_ACE_OS
     // ========================================================================
     // Test strncasecmp (wchar_t version)
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing strncasecmp (wchar_t version)\n")));
+    //FUZZ: enable check_for_lack_ACE_OS
 
     const wchar_t *strncasecmp1 = ACE_TEXT_WIDE ("stringf");
     const wchar_t *strncasecmp2 = ACE_TEXT_WIDE ("stringfe");
@@ -465,9 +491,11 @@ string_emulation_test (void)
     ACE_ASSERT
       (ACE_OS::strncasecmp (strncasecmp1, strncasecmp5, 7) > 0);
 
+    //FUZZ: disable check_for_lack_ACE_OS
     // ========================================================================
     // Test strncmp (wchar_t version)
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing strncmp (wchar_t version)\n")));
+    //FUZZ: enable check_for_lack_ACE_OS
 
     const wchar_t *strncmp1 = ACE_TEXT_WIDE ("stringf");
     const wchar_t *strncmp2 = ACE_TEXT_WIDE ("stringfe");
@@ -481,9 +509,11 @@ string_emulation_test (void)
     ACE_ASSERT (ACE_OS::strncmp (strncmp1, strncmp4, 7) != 0);
     ACE_ASSERT (ACE_OS::strncmp (strncmp1, strncmp5, 7) > 0);
 
+    //FUZZ: disable check_for_lack_ACE_OS
     // ========================================================================
     // Test strncpy (wchar_t version)
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing strncpy (wchar_t version)\n")));
+    //FUZZ: enable check_for_lack_ACE_OS
 
     wchar_t strncpy1[] = ACE_TEXT_WIDE ("abcdefghijklmnopqrstuvwxyzabc");
     wchar_t strncpy2[27];
@@ -499,9 +529,12 @@ string_emulation_test (void)
     strncpy2[26] = 0;
     ACE_ASSERT (ACE_OS::strcmp (strncpy2, strncpy1) == 0);
 
+    //FUZZ: disable check_for_lack_ACE_OS
     // ========================================================================
     // Test strtok (wchar_t version)
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing strtok (wchar_t version)\n")));
+    //FUZZ: enable check_for_lack_ACE_OS
+
     wchar_t strtok_r1[] = ACE_TEXT_WIDE ("A string of tokens");
 
     ACE_ASSERT (ACE_OS::strcmp (ACE_OS::strtok (strtok_r1,
@@ -541,7 +574,7 @@ snprintf_test (void)
   if (retval != 3)
     {
       ACE_ERROR ((LM_ERROR,
-		  ACE_TEXT ("[1] ACE_OS::snprintf() returns %d, should be 3\n"),
+                  ACE_TEXT ("[1] ACE_OS::snprintf() returns %d, should be 3\n"),
                   retval));
       ++error_count;
     }
@@ -554,7 +587,7 @@ snprintf_test (void)
   if (retval != 4)
     {
       ACE_ERROR ((LM_ERROR,
-		  ACE_TEXT ("[2] ACE_OS::snprintf() returns %d, should be 4\n"),
+                  ACE_TEXT ("[2] ACE_OS::snprintf() returns %d, should be 4\n"),
                   retval));
       ++error_count;
     }
@@ -563,13 +596,13 @@ snprintf_test (void)
   if (buf[3] != 0)
     {
       ACE_ERROR ((LM_ERROR,
-		  ACE_TEXT ("[3] ACE_OS::snprintf() doesn't terminate string correctly\n")));
+                  ACE_TEXT ("[3] ACE_OS::snprintf() doesn't terminate string correctly\n")));
       ++error_count;
     }
   else if (ACE_OS::strcmp(buf, "123") != 0)
     {
       ACE_ERROR ((LM_ERROR,
-		  ACE_TEXT ("[4] ACE_OS::snprintf() incorrect output\n")));
+                  ACE_TEXT ("[4] ACE_OS::snprintf() incorrect output\n")));
       ++error_count;
     }
 
@@ -578,20 +611,20 @@ snprintf_test (void)
   if (retval != 5)
     {
       ACE_ERROR ((LM_ERROR,
-		  ACE_TEXT ("[5] ACE_OS::snprintf() returns %d, should be 5\n"),
+                  ACE_TEXT ("[5] ACE_OS::snprintf() returns %d, should be 5\n"),
                   retval));
       ++error_count;
     }
   else if (buf[3] != 0)
     {
       ACE_ERROR ((LM_ERROR,
-		  ACE_TEXT ("[6] ACE_OS::snprintf() doesn't terminate string correctly\n")));
+                  ACE_TEXT ("[6] ACE_OS::snprintf() doesn't terminate string correctly\n")));
       ++error_count;
     }
   else if (ACE_OS::strcmp(buf, "123") != 0)
     {
       ACE_ERROR ((LM_ERROR,
-		  ACE_TEXT ("[6] ACE_OS::snprintf() incorrect output\n")));
+                  ACE_TEXT ("[6] ACE_OS::snprintf() incorrect output\n")));
       ++error_count;
     }
 
@@ -668,9 +701,11 @@ int
 string_strsncpy_test (void)
 {
   {
+    //FUZZ: disable check_for_lack_ACE_OS
     // Test strsncpy (char version)
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("Testing strsncpy (char version)\n")));
+    //FUZZ: enable check_for_lack_ACE_OS
 
     char strsncpy1[] =  "abcdefghijklmnopqrstuvwxyzabc";
     char strsncpy2[36];
@@ -736,9 +771,11 @@ string_strsncpy_test (void)
 
 #if defined (ACE_HAS_WCHAR)
   {
+    //FUZZ: disable check_for_lack_ACE_OS
     // Test strsncpy (wchar_t version)
      ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("Testing strsncpy (wchar_t version)\n")));
+     //FUZZ: enable check_for_lack_ACE_OS
 
     wchar_t strsncpy1[] = ACE_TEXT_WIDE ("abcdefghijklmnopqrstuvwxyzabc");
     wchar_t strsncpy2[36];

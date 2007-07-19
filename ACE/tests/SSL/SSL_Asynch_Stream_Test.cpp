@@ -58,7 +58,9 @@ public:
       block_ (1024) {}
   ~Client_Handler ();
 
+  //FUZZ: disable check_for_lack_ACE_OS
   int open (ACE_HANDLE);
+  //FUZZ: enable check_for_lack_ACE_OS
 
 private:
   virtual void handle_write_stream (const ACE_SSL_Asynch_Write_Stream_Result &result);
@@ -78,7 +80,9 @@ public:
       block_ (1024) {}
   ~Server_Handler ();
 
+  //FUZZ: disable check_for_lack_ACE_OS
   int open (ACE_HANDLE);
+  //FUZZ: enable check_for_lack_ACE_OS
 
 private:
   virtual void handle_read_stream (const ACE_SSL_Asynch_Read_Stream_Result &result);
@@ -92,7 +96,9 @@ private:
 class Server_Acceptor : public ACE_Event_Handler
 {
 public:
+  //FUZZ: disable check_for_lack_ACE_OS
   int open (const ACE_INET_Addr &listen_addr);
+  //FUZZ: enable check_for_lack_ACE_OS
 
   // Called when a new connection is ready to accept.
   virtual int handle_input (ACE_HANDLE fd = ACE_INVALID_HANDLE);
@@ -135,12 +141,14 @@ static const char *test_string = "SSL_Asynch_Stream_Test!";
 static void
 parse_args (int argc, ACE_TCHAR *argv[])
 {
+  //FUZZ: disable check_for_lack_ACE_OS
   ACE_Get_Opt getopt (argc, argv, ACE_TEXT ("r:t:d:i:n:"));
 
   int c;
 
   while ((c = getopt ()) != -1)
     {
+  //FUZZ: enable check_for_lack_ACE_OS
       switch (c)
         {
         case 'r':                   // hostname:port

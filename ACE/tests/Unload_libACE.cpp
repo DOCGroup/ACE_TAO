@@ -19,6 +19,8 @@
 //
 // ============================================================================
 
+//FUZZ: disable check_for_lack_ACE_OS
+
 #include <stdio.h>
 
 #undef UNLOAD_LIBACE_TEST

@@ -73,11 +73,13 @@ public:
                    Prime_Scheduler * = 0);
   // Constructor.
 
+  //FUZZ: disable check_for_lack_ACE_OS
   virtual int open (void *args = 0);
   // Initializer.
 
   virtual int shutdown (void);
   // Terminator.
+  //FUZZ: enable check_for_lack_ACE_OS
 
   virtual ~Prime_Scheduler (void);
   // Destructor.

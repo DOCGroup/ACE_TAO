@@ -132,7 +132,9 @@ init_test (const void *base_addr = 0)
 #else
   ACE_MMAP_Memory_Pool_Options options (base_addr);
 #endif /* ACE_HAS_WINCE */
+  //FUZZ: disable check_for_lack_ACE_OS
   ACE_MMAP_Memory_Pool mmap (MMAP_FILENAME, &options);
+  //FUZZ: enable check_for_lack_ACE_OS
 
   size_t rbyte = 0;
   int ft = 0;
