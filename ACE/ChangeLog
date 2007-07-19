@@ -1,3 +1,18 @@
+Thu Jul 19 09:52:57 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-icc-common.h:
+          Updated export/import macros to be used with Intel C++
+
+        * include/makeinclude/platform_linux_icc.GNU:
+          Enable visibility with Intel C++ 10.0. It results in a few
+          warnings but seems to work.
+
+        * ace/Atomic_Op.h:
+          Updated define to check for Intel C++
+
+        * ace/config-rtems.h:
+          Removed reference to KCC
+
 Thu Jul 19 07:32:57 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/SOCK_Netlink_Test.cpp:
