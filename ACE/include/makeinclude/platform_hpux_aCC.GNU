@@ -145,7 +145,6 @@ LD              = $(CXX)
 OCCFLAGS        = -O
 PIC             = +Z
 
-PRELIB          = $(COMPILE.cc) $^
 AR              = /usr/ccs/bin/ar
 ARFLAGS         = ruv
 RANLIB          = echo
