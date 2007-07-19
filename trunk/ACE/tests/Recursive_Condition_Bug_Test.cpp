@@ -83,8 +83,10 @@ public:
     return 0;
   }
 
+  //FUZZ: disable check_for_lack_ACE_OS
   virtual int open (void * = 0)
   {
+  //FUZZ: enable check_for_lack_ACE_OS
     if (ACE_Task<ACE_MT_SYNCH>::activate (THR_NEW_LWP, 1) != 0)
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("(%t) %p\n"),

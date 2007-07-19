@@ -87,12 +87,14 @@ static int req_delay = 50;
 static void
 parse_arg (int argc, ACE_TCHAR *argv[])
 {
+  //FUZZ: disable check_for_lack_ACE_OS
   ACE_Get_Opt getopt (argc, argv, ACE_TEXT ("r:s:c:d:i:n:"));
 
   int c;
 
   while ((c = getopt ()) != -1)
     {
+  //FUZZ: enable check_for_lack_ACE_OS
       switch (c)
         {
         case 'r':                   // hostname:port

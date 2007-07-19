@@ -135,7 +135,10 @@ public:
   Connection_Handler (Test_Window *w = 0,
                       Fl_Box* box = 0);
 
+  //FUZZ: disable check_for_lack_ACE_OS
   virtual int open (void *);
+  //FUZZ: enble check_for_lack_ACE_OS
+
   virtual int handle_input (ACE_HANDLE);
 
 private:

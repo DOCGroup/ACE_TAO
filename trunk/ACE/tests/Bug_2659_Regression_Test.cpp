@@ -147,7 +147,7 @@ run_main (int, ACE_TCHAR *[])
   }
 
   while (!reactor_task_ready) {
-    ACE_OS:: sleep (1);
+    ACE_OS::sleep (1);
   }
 
   if (thread_manager->kill_all (SIGUSR1) == -1) {

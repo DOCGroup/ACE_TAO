@@ -344,10 +344,9 @@ Acceptor::on_delete_receiver (Receiver &rcvr)
 int
 Acceptor::start (const ACE_INET_Addr &addr)
 {
-  if (ACE_Acceptor<Receiver,ACE_SOCK_ACCEPTOR>
-      ::open (addr,
-              ACE_Reactor::instance (),
-              ACE_NONBLOCK) < 0)
+  if (ACE_Acceptor<Receiver,ACE_SOCK_ACCEPTOR>::open (addr,
+                                                      ACE_Reactor::instance (),
+                                                      ACE_NONBLOCK) < 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n",
                        "Acceptor::start () - open failed"),
@@ -706,9 +705,8 @@ int
 Connector::start (const ACE_INET_Addr & addr, int num)
 {
 
-  if (ACE_Connector<Sender,ACE_SOCK_CONNECTOR>
-      ::open (ACE_Reactor::instance (),
-              ACE_NONBLOCK) < 0)
+  if (ACE_Connector<Sender,ACE_SOCK_CONNECTOR>::open (ACE_Reactor::instance (),
+                                                      ACE_NONBLOCK) < 0)
     ACE_ERROR_RETURN
       ((LM_ERROR,
         "%p\n",
@@ -721,8 +719,7 @@ Connector::start (const ACE_INET_Addr & addr, int num)
     {
       Sender * sender = 0;
 
-      if (ACE_Connector<Sender,ACE_SOCK_CONNECTOR>
-          ::connect (sender, addr) < 0)
+      if (ACE_Connector<Sender,ACE_SOCK_CONNECTOR>::connect (sender, addr) < 0)
         ACE_ERROR_RETURN
           ((LM_ERROR,
             "%p\n",
@@ -1123,13 +1120,13 @@ disable_signal (int sigmin, int sigmax)
 {
 #if defined (ACE_HAS_PTHREADS_STD)  &&  !defined (ACE_LACKS_PTHREAD_SIGMASK)
   sigset_t signal_set;
-  if (sigemptyset (&signal_set) == - 1)
+  if (ACE_OS::sigemptyset (&signal_set) == - 1)
     ACE_ERROR ((LM_ERROR,
                 "Error: (%P | %t):%p\n",
                 "sigemptyset failed"));
 
   for (int i = sigmin; i <= sigmax; i++)
-    sigaddset (&signal_set, i);
+    ACE_OS::sigaddset (&signal_set, i);
 
   //  Put the <signal_set>.
   if (ACE_OS::pthread_sigmask (SIG_BLOCK, &signal_set, 0) != 0)

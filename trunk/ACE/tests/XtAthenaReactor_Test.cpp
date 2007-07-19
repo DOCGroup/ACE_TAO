@@ -94,7 +94,7 @@ client (void *)
 
   ACE_SOCK_Stream stream;
   ACE_SOCK_Connector connector;
-  sprintf (buf, "Client: the life was good!");
+  ACE_OS::sprintf (buf, "Client: the life was good!");
 
   mes_len = (int) htonl (ACE_OS::strlen (buf) + 1);
 
@@ -132,11 +132,11 @@ inc_count (Widget, XtPointer client_data, XtPointer)
 {
   char new_string[80];
 
-  sprintf (new_string,
-           "Events: [%d] [%d] [%d]",
-           count1++,
-           count2,
-           count3);
+  ACE_OS::sprintf (new_string,
+                   "Events: [%d] [%d] [%d]",
+                   count1++,
+                   count2,
+                   count3);
   set_label((Widget) client_data, new_string);
 }
 
@@ -149,11 +149,11 @@ inc_tmo (void *w,XtIntervalId *)
 
   if (count2 > 10)
     ACE_OS::exit (0);
-  sprintf (new_string,
-           "Events: [%d] [%d] [%d]",
-           count1,
-           count2++,
-           count3);
+  ACE_OS::sprintf (new_string,
+                   "Events: [%d] [%d] [%d]",
+                   count1,
+                   count2++,
+                   count3);
 
   set_label((Widget) w, new_string);
 
@@ -170,11 +170,11 @@ public:
                               const void *arg)
   {
     char new_string[80];
-    sprintf (new_string,
-             "Events: [%d] [%d] [%d]",
-             count1,
-             count2,
-             count3++);
+    ACE_OS::sprintf (new_string,
+                     "Events: [%d] [%d] [%d]",
+                     count1,
+                     count2,
+                     count3++);
     set_label((Widget) arg, new_string);
     return 0;
   }
@@ -183,8 +183,10 @@ public:
 class Connection_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
 {
 public:
+  //FUZZ: disable check_for_lack_ACE_OS
   virtual int open (void *)
   {
+  //FUZZ: enable check_for_lack_ACE_OS
     char buf[100];
     int head;
     ssize_t ret = this->peer ().recv_n ((char *) &head,

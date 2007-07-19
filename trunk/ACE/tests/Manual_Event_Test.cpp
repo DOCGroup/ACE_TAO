@@ -105,7 +105,10 @@ worker (void *)
 
   if (++n_awoken < n_workers)
   {
+    //FUZZ: disable check_for_lack_ACE_OS
     ACE_Time_Value wait (1, 0);   // Wait 10 sec
+    //FUZZ: enable check_for_lack_ACE_OS
+
     ACE_Time_Value tv = ACE_OS::gettimeofday () + wait;
 
     if (evt.wait (&tv) == -1)
@@ -136,8 +139,10 @@ worker (void *)
 
   if (evt.wait() == -1)
   {
+    //FUZZ: disable check_for_lack_ACE_OS
     ACE_DEBUG ((LM_ERROR,
                 ACE_TEXT ("(%P|%t) Failed waiting for signal()\n")));
+    //FUZZ: enable check_for_lack_ACE_OS
   }
 
   ACE_DEBUG ((LM_DEBUG,
@@ -179,8 +184,10 @@ int run_main (int argc, ACE_TCHAR *argv[])
   // Wait 2 sec
   ACE_OS::sleep (2);
 
+  //FUZZ: disable check_for_lack_ACE_OS
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("sending signal()\n")));
+  //FUZZ: enable check_for_lack_ACE_OS
 
   // Signal
   evt.signal();

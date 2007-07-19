@@ -200,14 +200,14 @@ int run_auto_test (const ACE_TCHAR *prog_name)
 
 void print_usage (void)
 {
-    printf("Usage:SOCK_Dgram_Bast_Test [-p port] [-n dgrams_no] [-t timeout_ms] [-s] [-r]\n"
-        "\tp broadcast port [14521]\n"
-        "\tn number of datagrams to broadcast [30] (<0 infinite)\n"
-        "\tt timeout in seconds for receive [5] (<=0 infinite)\n"
-        "\ts send datagrams and exit\n"
-        "\tr receive one datagram and exit\n\n"
-        "\t  run auto-test when no r and s option is passed\n"
-        "\t  test failures are minifested by -1 exit value, otherwise 0\n");
+  ACE_OS::printf("Usage:SOCK_Dgram_Bast_Test [-p port] [-n dgrams_no] [-t timeout_ms] [-s] [-r]\n"
+                 "\tp broadcast port [14521]\n"
+                 "\tn number of datagrams to broadcast [30] (<0 infinite)\n"
+                 "\tt timeout in seconds for receive [5] (<=0 infinite)\n"
+                 "\ts send datagrams and exit\n"
+                 "\tr receive one datagram and exit\n\n"
+                 "\t  run auto-test when no r and s option is passed\n"
+                 "\t  test failures are minifested by -1 exit value, otherwise 0\n");
 }
 
 int run_main (int argc, ACE_TCHAR *argv[])

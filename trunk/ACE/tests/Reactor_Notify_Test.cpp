@@ -48,11 +48,13 @@ public:
   ~Supplier_Task (void);
   // Destructor.
 
+  //FUZZ: disable check_for_lack_ACE_OS
   virtual int open (void * = 0);
   // Make this an Active Object.
 
   virtual int close (u_long);
   // Close down the supplier.
+  //FUZZ: enable check_for_lack_ACE_OS
 
   virtual int svc (void);
   // Generates events and sends them to the <Reactor>'s <notify>

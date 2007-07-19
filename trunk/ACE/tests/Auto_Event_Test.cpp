@@ -151,8 +151,11 @@ worker (void *)
        iterations <= n_iterations;
        iterations++)
     {
+      //FUZZ: disable check_for_lack_ACE_OS
       ACE_Time_Value wait (0,
                            iterations * 1000 * 100);  // Wait 'iter' msec
+      //FUZZ: enable check_for_lack_ACE_OS
+
       ACE_Time_Value tv = ACE_OS::gettimeofday () + wait;
       if (evt.wait (&tv) == -1)
       {
