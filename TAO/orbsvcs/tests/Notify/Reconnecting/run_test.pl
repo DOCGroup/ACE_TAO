@@ -125,7 +125,7 @@ $SUP->SpawnWaitKill(60);
 # forget the channel id, depend on the reconnect information
 unlink $channel_id;
 
-$SUP->Arguments("-send 10 -serial_number 10 $client_args");
+$SUP->Arguments("-send 10 -serial_number 10 $discon $client_args");
 if ($verbose eq "-v") {print "TEST SCRIPT: " . $SUP->CommandLine . "\n";}
 print $SUP->CommandLine ();
 $SUP->SpawnWaitKill(60);
