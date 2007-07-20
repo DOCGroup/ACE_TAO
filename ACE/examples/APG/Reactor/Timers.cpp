@@ -6,11 +6,9 @@
 #if !defined (ACE_LACKS_FORK)
 
 #include "ace/streams.h"
-
-#include <signal.h>
-#include <sys/types.h>
-#include <unistd.h>
-#include <time.h>
+#include "ace/OS_NS_unistd.h"
+#include "ace/OS_NS_time.h"
+#include "ace/OS_NS_signal.h"
 
 typedef void (*timerTask_t)(void);
 
