@@ -236,11 +236,24 @@ ACE_OS::gethrtime (const ACE_HRTimer_Op op)
   ::time_base_to_time(&tb, TIMEBASE_SZ);
 
   return ACE_hrtime_t(tb.tb_high) * ACE_ONE_SECOND_IN_NSECS + tb.tb_low;
-#elif defined (ghs) && defined (ACE_HAS_PENTIUM) && !defined (ACE_WIN32)
+#elif defined (ACE_WIN32)
+  ACE_UNUSED_ARG(op);
+  LARGE_INTEGER freq;
+
+  ::QueryPerformanceCounter (&freq);
+
+#  if defined (ACE_LACKS_LONGLONG_T)
+  ACE_UINT64 uint64_freq (freq.u.LowPart,
+                          static_cast<unsigned int> (freq.u.HighPart));
+  return uint64_freq;
+#  else
+  return freq.QuadPart;
+#  endif //ACE_LACKS_LONGLONG_T
+#elif defined (ghs) && defined (ACE_HAS_PENTIUM)
   ACE_UNUSED_ARG (op);
   // Use .obj/gethrtime.o, which was compiled with g++.
   return ACE_GETHRTIME_NAME ();
-#elif (defined(__KCC) || defined (__GNUG__) || defined (__INTEL_COMPILER)) && !defined (ACE_WIN32) && !defined(ACE_VXWORKS) && defined (ACE_HAS_PENTIUM)
+#elif (defined (__GNUG__) || defined (__INTEL_COMPILER)) && !defined(ACE_VXWORKS) && defined (ACE_HAS_PENTIUM)
   ACE_UNUSED_ARG (op);
 # if defined (ACE_LACKS_LONGLONG_T)
   double now;
@@ -279,20 +292,6 @@ ACE_OS::gethrtime (const ACE_HRTimer_Op op)
   asm volatile ("rpcc %0" : "=r" (now) : : "memory");
 
   return now;
-#elif defined (ACE_WIN32)
-  ACE_UNUSED_ARG(op);
-  LARGE_INTEGER freq;
-
-  ::QueryPerformanceCounter (&freq);
-
-#  if defined (ACE_LACKS_LONGLONG_T)
-  ACE_UINT64 uint64_freq (freq.u.LowPart,
-                          static_cast<unsigned int> (freq.u.HighPart));
-  return uint64_freq;
-#  else
-  return freq.QuadPart;
-#  endif //ACE_LACKS_LONGLONG_T
-
 #elif defined (ACE_HAS_POWERPC_TIMER) && (defined (ghs) || defined (__GNUG__))
   // PowerPC w/ GreenHills or g++.
 

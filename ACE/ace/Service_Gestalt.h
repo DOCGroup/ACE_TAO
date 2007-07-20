@@ -98,14 +98,14 @@ public:
    * Performs an open without parsing command-line arguments.  The
    * @a logger_key indicates where to write the logging output, which
    * is typically either a STREAM pipe or a socket address.  If
-   * @a ignore_static_svcs is 1 then static services are not loaded,
+   * @a ignore_static_svcs is true then static services are not loaded,
    * otherwise, they are loaded.  If @a ignore_default_svc_conf_file is
-   * non-0 then the <svc.conf> configuration file will be ignored.
+   * true then the <svc.conf> configuration file will be ignored.
    * Returns zero upon success, -1 if the file is not found or cannot
    * be opened (errno is set accordingly), otherwise returns the
    * number of errors encountered loading the services in the
    * specified svc.conf configuration file.  If @a ignore_debug_flag is
-   * non-0 then the application is responsible for setting the
+   * true then the application is responsible for setting the
    * <ACE_Log_Msg::priority_mask> appropriately.
    */
   int open (const ACE_TCHAR program_name[],
