@@ -3,6 +3,9 @@
 
 project: aceexe {
   exename   = FaCE
+  // This is just a dummy_label to prevent the example from being compiled
+  // in MPC builds
+  requires += dummy_label
   requires += wince
 
   Source_Files {

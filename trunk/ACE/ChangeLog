@@ -1,3 +1,10 @@
+Fri Jul 20 14:44:40 UTC 2007  Wallace Zhang  <zhang_w@ociweb.com>
+
+        * contrib/FaCE/FaCE.mpc:
+
+          Since we are not going to maintain this, label it as a
+          dummy project.
+
 Fri Jul 20 12:09:58 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * bin/fuzz.pl:
