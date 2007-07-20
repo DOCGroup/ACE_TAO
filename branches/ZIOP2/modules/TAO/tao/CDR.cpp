@@ -79,7 +79,7 @@ TAO_OutputCDR::TAO_OutputCDR (size_t size,
   , compressed_ (false)
 {
   ACE_FUNCTION_TIMEPROBE (TAO_OUTPUT_CDR_CTOR1_ENTER);
-}
+} 
 
 TAO_OutputCDR::TAO_OutputCDR (char *data,
                               size_t size,

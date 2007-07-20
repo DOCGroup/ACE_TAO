@@ -660,6 +660,8 @@ TAO_GIOP_Message_Base::process_request_message (TAO_Transport *transport,
                         this->fragmentation_strategy_.get (),
                         qd->major_version_,
                         qd->minor_version_);
+  output.compressed (qd->compressed_);
+ 
 
   // Get the read and write positions before we steal data.
   size_t rd_pos = qd->msg_block_->rd_ptr () - qd->msg_block_->base ();
@@ -708,6 +710,7 @@ TAO_GIOP_Message_Base::process_request_message (TAO_Transport *transport,
                           qd->major_version_,
                           qd->minor_version_,
                           this->orb_core_);
+input_cdr.compressed_ = qd->compressed_;
 
   transport->assign_translators(&input_cdr,&output);
 
@@ -903,6 +906,7 @@ TAO_GIOP_Message_Base::process_request (
                              output,
                              transport,
                              this->orb_core_);
+request.compressed_ = cdr.compressed_;
 
   CORBA::ULong request_id = 0;
   CORBA::Boolean response_required = false;
