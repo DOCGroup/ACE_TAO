@@ -12,7 +12,6 @@ SUBDIRS = \
         DSI \
         Default_Servant \
         FindPOA \
-        Forwarding \
         Generic_Servant \
         Explicit_Activation \
         Adapter_Activator \
