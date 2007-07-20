@@ -18,6 +18,7 @@ SUBDIRS = \
         Etherealization \
         Excessive_Object_Deactivations \
         Identity \
+        Forwarding \
         MT_Servant_Locator \
         Nested_Non_Servant_Upcalls \
         Non_Servant_Upcalls \

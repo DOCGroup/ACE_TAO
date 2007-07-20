@@ -1,3 +1,14 @@
+Fri Jul 20 09:42:40 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/POA/Forwarding/*:
+        * test/POA/Forwarding/*:
+          Moved this example to tests
+
+        * configure.ac
+        * examples/POA/Makefile.am:
+        * tests/POA/Makefile.am:
+          Updated for change above
+
 Thu Jul 19 20:01:40 UTC 2007  Adam Mitz  <mitza@ociweb.com>
 
         * tests/InterOp-Naming/INS_test_client.cpp:
