@@ -381,8 +381,8 @@ ACE::get_bcast_addr (ACE_UINT32 &bcast_addr,
                         ACE_LIB_TEXT ("ioctl (get broadaddr)")));
           else
             {
-              ACE_OS::memcpy (reinterpret_cast<sockaddr_in *> (&ip_addr),
-                              reinterpret_cast<sockaddr_in *> (&if_req.ifr_broadaddr),
+              ACE_OS::memcpy (&ip_addr,
+                              &if_req.ifr_broadaddr,
                               sizeof if_req.ifr_broadaddr);
 
               ACE_OS::memcpy ((void *) &host_addr,
