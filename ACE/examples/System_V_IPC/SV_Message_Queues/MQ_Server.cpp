@@ -46,7 +46,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
       if (ace_sv_message_queue.recv (recv_msg,
                                      sizeof (Message_Data),
                                      recv_msg.type ()) == -1)
-        ::perror ("ace_sv_message_queue.recv"), ACE_OS::exit (1);
+        ACE_OS::perror ("ace_sv_message_queue.recv"), ACE_OS::exit (1);
 
       cout << "a msg of length "
            << recv_msg.length ()

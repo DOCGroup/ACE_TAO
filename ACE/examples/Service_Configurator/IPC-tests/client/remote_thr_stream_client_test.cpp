@@ -45,17 +45,17 @@ parse_args (int argc, ACE_TCHAR *argv[])
     switch (c)
       {
       case 'f':
-	file_name = get_opt.opt_arg ();
-	break;
+        file_name = get_opt.opt_arg ();
+        break;
       case 'h':
-	host_name = get_opt.opt_arg ();
-	break;
+        host_name = get_opt.opt_arg ();
+        break;
       case 'p':
-	port_number = ACE_OS::atoi (get_opt.opt_arg ());
-	break;
+        port_number = ACE_OS::atoi (get_opt.opt_arg ());
+        break;
       default:
-	print_usage_and_die ();
-	break;
+        print_usage_and_die ();
+        break;
       }
 }
 
@@ -76,12 +76,14 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                        ACE_TEXT ("open")),
                       -1);
 
+  //FUZZ: disable check_for_lack_ACE_OS
   ACE_Mem_Map mmap (file_name, PROT_READ);
 
   if (mmap (cp) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("%p\n"),
                        ACE_TEXT ("mmap")), -1);
+  //FUZZ: enable check_for_lack_ACE_OS
 
   // Next, send the file's contents.
 
@@ -89,7 +91,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("%p\n"),
                        ACE_TEXT ("send_n")),
-		      -1);
+                       -1);
 
   if (sc.sndrel () == -1)
     ACE_ERROR_RETURN ((LM_ERROR,

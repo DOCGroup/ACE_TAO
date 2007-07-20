@@ -161,10 +161,12 @@ public:
   Peer_Handler (int argc, ACE_TCHAR *argv[]);
   ~Peer_Handler (void);
 
+  //FUZZ: disable check_for_lack_ACE_OS
   int open (void * =0);
   // This method creates the network connection to the remote peer.
   // It does blocking connects and accepts depending on whether a
   // hostname was specified from the command line.
+  //FUZZ: enable check_for_lack_ACE_OS
 
   virtual void handle_read_stream (const ACE_Asynch_Read_Stream::Result &result);
   // This method will be called when an asynchronous read completes on a stream.
@@ -227,11 +229,13 @@ public:
   STDIN_Handler (MT_TASK &ph);
   // Initialization.
 
+  //FUZZ: disable check_for_lack_ACE_OS
   virtual int open (void * = 0);
   // Activate object.
 
   virtual int close (u_long = 0);
   // Shut down.
+  //FUZZ: enable check_for_lack_ACE_OS
 
   int svc (void);
   // Thread runs here as an active object.

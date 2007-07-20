@@ -149,7 +149,7 @@ supplier (void *dummy)
   while (n < iter)
     {
       mb_p = new ACE_Message_Block (msiz);
-      strcpy (mb_p->rd_ptr (), (char *) dummy);
+      ACE_OS::strcpy (mb_p->rd_ptr (), (char *) dummy);
       mb_p->length (msiz);
       if (verb)
         cout << "supplier sending 1 message_block" << endl;

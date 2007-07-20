@@ -29,7 +29,7 @@ print_usage_and_die (void)
 {
   ACE_ERROR ((LM_ERROR,
               "usage: %s [-d] [-f rendezvous_fifo]\n",
-	      program_name));
+              program_name));
   ACE_OS::exit (1);
 }
 
@@ -57,9 +57,9 @@ parse_arguments (int argc, ACE_TCHAR *argv[])
 
   if (debug)
     ACE_DEBUG ((LM_DEBUG,
-		"rendezvous_fifo = %s\n"
-		"trace = %s\n",
-		rendezvous_fifo,
+                "rendezvous_fifo = %s\n"
+                "trace = %s\n",
+                rendezvous_fifo,
                 tracing ? "on" : "off"));
 }
 
@@ -75,10 +75,12 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                  0666) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Cannot open %s for requesting a new communication channel"
-		       "in local_fifo_client_test\n",
+                       "in local_fifo_client_test\n",
                        rendezvous_fifo),
                       -1);
   void *cp = 0;
+
+  //FUZZ: disable check_for_lack_ACE_OS
   ACE_Mem_Map mmap (file_name);
 
   if (mmap (cp) == -1)
@@ -86,6 +88,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                        "%p\n",
                        "mmap"),
                       -1);
+  //FUZZ: enable check_for_lack_ACE_OS
 
   // Next, send the file's contents.
 

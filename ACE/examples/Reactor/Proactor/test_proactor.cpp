@@ -279,8 +279,12 @@ class Sender : public ACE_Handler
 public:
   Sender (void);
   ~Sender (void);
+
+  //FUZZ: disable check_for_lack_ACE_OS
   int open (const ACE_TCHAR *host,
             u_short port);
+  //FUZZ: enable check_for_lack_ACE_OS
+
   ACE_HANDLE handle (void) const;
   void handle (ACE_HANDLE);
 

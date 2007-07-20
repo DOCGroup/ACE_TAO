@@ -44,10 +44,14 @@ public:
   Test_Task (ACE_Thread_Manager * = ACE_Thread_Manager::instance ());
   ~Test_Task (void) {};
 
+  //FUZZ: disable check_for_lack_ACE_OS
   int open (void * = 0);
   int svc (void);
   int close (u_long);
+
   int shutdown (void);
+  //FUZZ: enable check_for_lack_ACE_OS
+
   int synch (void);
 };
 

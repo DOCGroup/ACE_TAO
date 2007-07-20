@@ -22,7 +22,7 @@ pid_t timerTask (int initialDelay,
   if (initialDelay < 1 && interval < 1)
     return -1;
 
-  pid_t pid = fork ();
+  pid_t pid = ACE_OS::fork ();
 
   if (pid < 0)
     return -1;
@@ -31,7 +31,7 @@ pid_t timerTask (int initialDelay,
     return pid;
 
   if (initialDelay > 0)
-    sleep (initialDelay);
+    ACE_OS::sleep (initialDelay);
 
   if (interval < 1)
     return 0;
@@ -39,7 +39,7 @@ pid_t timerTask (int initialDelay,
   while (1)
     {
       (*task) ();
-      sleep (interval);
+      ACE_OS::sleep (interval);
     }
 
   ACE_NOTREACHED (return 0);
@@ -49,14 +49,14 @@ pid_t timerTask (int initialDelay,
 // Listing 2 code/ch07
 void foo ()
 {
-  time_t now = time (0);
-  cerr << "The time is " << ctime (&now) << endl;
+  time_t now = ACE_OS::time (0);
+  cerr << "The time is " << ACE_OS::ctime (&now) << endl;
 }
 // Listing 2
 
 void programMainLoop (void)
 {
-  sleep (30);
+  ACE_OS::sleep (30);
 }
 
 // Listing 3 code/ch07
@@ -64,17 +64,20 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
 {
   pid_t timerId = timerTask (3, 5, foo);
   programMainLoop ();
-  kill (timerId, SIGINT);
+  ACE_OS::kill (timerId, SIGINT);
   return 0;
 }
 // Listing 3
 
 #else
-#include <stdio.h>
+#include "ace/OS_NS_stdio.h"
 
 int ACE_TMAIN (int, ACE_TCHAR *[])
 {
-  puts ("This very unportable example requires fork().\n");
+  //FUZZ: disable check_for_lack_ACE_OS
+  ACE_OS::puts ("This very unportable example requires fork().\n");
+  //FUZZ: enable check_for_lack_ACE_OS
+
   return 0;
 }
 

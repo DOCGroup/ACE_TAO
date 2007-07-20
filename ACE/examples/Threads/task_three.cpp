@@ -38,8 +38,11 @@ public:
   Test_Task (void);
   ~Test_Task (void);
 
+  //FUZZ: disable check_for_lack_ACE_OS
   virtual int open (void *args = 0);
   virtual int close (u_long flags = 0);
+  //FUZZ: enable check_for_lack_ACE_OS
+
   virtual int svc (void);
 
   virtual int handle_input (ACE_HANDLE fd);
@@ -62,8 +65,8 @@ Test_Task::Test_Task (void)
   this->handled_ = 0;
   Test_Task::current_count_++;
   ACE_DEBUG ((LM_DEBUG,
-	      ACE_TEXT ("Test_Task constructed, current_count_ = %d\n"),
-	      Test_Task::current_count_));
+              ACE_TEXT ("Test_Task constructed, current_count_ = %d\n"),
+              Test_Task::current_count_));
 }
 
 Test_Task::~Test_Task (void)
@@ -72,7 +75,7 @@ Test_Task::~Test_Task (void)
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Test_Task destroyed, current_count_ = %d\n"),
-	      Test_Task::current_count_));
+              Test_Task::current_count_));
 }
 
 int
@@ -90,7 +93,7 @@ Test_Task::close (u_long)
   Test_Task::current_count_--;
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Test_Task::close () current_count_ = %d.\n"),
-	      Test_Task::current_count_));
+              Test_Task::current_count_));
   return 0;
 }
 
@@ -109,14 +112,14 @@ Test_Task::svc (void)
       ACE_OS::thr_yield ();
 
       if (r_->notify (this, ACE_Event_Handler::READ_MASK) == -1)
-	{
-	  ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, Lock, -1);
+        {
+          ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, Lock, -1);
 
-	  ACE_ERROR_RETURN ((LM_ERROR,
+          ACE_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT ("Test_Task: error %p!\n"),
                              ACE_TEXT ("notifying reactor")),
                              0);
-	}
+        }
     }
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT (" (%t) returning from svc ()\n")));
@@ -133,8 +136,8 @@ Test_Task::handle_input (ACE_HANDLE)
       ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, Lock, -1);
       Test_Task::done_cnt_++;
       ACE_DEBUG ((LM_DEBUG,
-		  ACE_TEXT (" (%t) Test_Task: handle_input done_cnt_ = %d.\n"),
-		  Test_Task::done_cnt_));
+                  ACE_TEXT (" (%t) Test_Task: handle_input done_cnt_ = %d.\n"),
+                  Test_Task::done_cnt_));
     }
 
   ACE_OS::thr_yield ();
@@ -162,7 +165,7 @@ dispatch (void *arg)
       result = r->handle_events ();
 
       if (result <= 0)
-	ACE_DEBUG ((LM_DEBUG,
+        ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("Dispatch: handle_events (): %d"),
                     result));
     }
@@ -223,18 +226,18 @@ ACE_TMAIN (int argc, ACE_TCHAR **)
       ACE_Time_Value timeout (2);
 
       if (reactor1->handle_events (timeout) <= 0)
-	{
-	  if (errno == ETIME)
-	    {
-	      ACE_DEBUG ((LM_DEBUG,
+        {
+          if (errno == ETIME)
+            {
+              ACE_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("no activity within 2 seconds, shutting down\n")));
-	      break;
-	    }
-	  else
-	    ACE_ERROR ((LM_ERROR,
+              break;
+            }
+          else
+            ACE_ERROR ((LM_ERROR,
                         ACE_TEXT ("%p error handling events\n"),
                         ACE_TEXT ("main")));
-	}
+        }
     }
 
   if (argc > 1)

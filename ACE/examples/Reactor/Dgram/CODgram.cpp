@@ -54,8 +54,10 @@ public:
   virtual int handle_close (ACE_HANDLE handle,
                             ACE_Reactor_Mask close_mask);
 
+  //FUZZ: disable check_for_lack_ACE_OS
   int send (const char *buf, size_t len);
   // Send the <buf> to the peer.
+  //FUZZ: enable check_for_lack_ACE_OS
 
 private:
   ACE_SOCK_CODgram endpoint_;

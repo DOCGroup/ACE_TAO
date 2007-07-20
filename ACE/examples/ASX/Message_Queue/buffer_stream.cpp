@@ -32,9 +32,12 @@ class Common_Task : public MT_Task
 {
 public:
   Common_Task (void) {}
+
+  //FUZZ: disable check_for_lack_ACE_OS
   // ACE_Task hooks
   virtual int open (void * = 0);
   virtual int close (u_long = 0);
+  //FUZZ: enable check_for_lack_ACE_OS
 };
 
 // Define the Producer interface.
@@ -145,22 +148,22 @@ Producer::svc (void)
             ACE_ERROR ((LM_ERROR,
                         ACE_TEXT ("(%t) %p\n"),
                         ACE_TEXT ("put_next")));
-	  break;
+          break;
         }
 
       // Send the message to the other thread.
       else
-	{
-	  mb->wr_ptr (n);
-	  // NUL-terminate the string (since we use strlen() on it
-	  // later).
+        {
+          mb->wr_ptr (n);
+          // NUL-terminate the string (since we use strlen() on it
+          // later).
           mb->rd_ptr ()[n] = '\0';
 
-	  if (this->put_next (mb) == -1)
-	    ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT ("(%t) %p\n"),
-                        ACE_TEXT ("put_next")));
-	}
+          if (this->put_next (mb) == -1)
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("(%t) %p\n"),
+                      ACE_TEXT ("put_next")));
+        }
     }
 
   return 0;
@@ -210,14 +213,14 @@ Consumer::svc (void)
       mb->release ();
 
       if (length == 0)
-	break;
+        break;
     }
 
   if (result == -1 && errno == EWOULDBLOCK)
     ACE_ERROR ((LM_ERROR,
-		ACE_TEXT ("(%t) %p\n%a"),
-		ACE_TEXT ("timed out waiting for message"),
-		1));
+                ACE_TEXT ("(%t) %p\n%a"),
+                ACE_TEXT ("timed out waiting for message"),
+                1));
   return 0;
 }
 
