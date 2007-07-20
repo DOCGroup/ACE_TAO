@@ -64,6 +64,9 @@ public:
   /// Return the byte order information
   CORBA::Octet byte_order (void) const;
 
+  /// Return the compressed information
+  CORBA::Octet compressed_data (void) const;
+
   /// Reset the state..
   void reset (void);
 
@@ -116,6 +119,9 @@ private:
 
   /// Missing data
   CORBA::ULong missing_data_;
+
+  /// Compressed data
+  CORBA::Octet compressed_data_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

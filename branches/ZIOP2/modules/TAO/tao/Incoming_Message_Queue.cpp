@@ -370,7 +370,7 @@ TAO_Queued_Data::consolidate (void)
 
       // Set the message block to the new consolidated message block
       this->msg_block_ = dest;
-      this->more_fragments_ = 0;
+      this->more_fragments_ = false;
     }
 
   return 0;

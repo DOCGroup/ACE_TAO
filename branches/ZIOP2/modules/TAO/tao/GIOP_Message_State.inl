@@ -22,6 +22,13 @@ TAO_GIOP_Message_State::byte_order (void) const
   return this->byte_order_;
 }
 
+ACE_INLINE CORBA::Octet
+TAO_GIOP_Message_State::compressed_data (void) const
+{
+  return this->compressed_data_;
+}
+
+
 ACE_INLINE void
 TAO_GIOP_Message_State::reset (void)
 {
@@ -29,6 +36,7 @@ TAO_GIOP_Message_State::reset (void)
   this->message_size_ = 0;
   this->more_fragments_ = 0;
   this->missing_data_ = 0;
+  this->compressed_data_ = 0;
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

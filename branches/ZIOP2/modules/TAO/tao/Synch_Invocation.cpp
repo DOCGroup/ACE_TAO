@@ -93,6 +93,7 @@ namespace TAO
 //        this->marshal_data (cdr);
         //ACE_CDR::consolidate (&cdr, &second);
         cdr.write_octet_array_mb (second.begin ());
+        cdr.compressed (true);
         //cdr.current ()->next (second.
         //cdr.
 

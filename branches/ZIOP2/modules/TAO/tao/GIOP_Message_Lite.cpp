@@ -802,7 +802,7 @@ TAO_GIOP_Message_Lite::process_request (TAO_Transport *transport,
               return -1;
             }
 
-          int result = transport->send_message (output);
+          int const result = transport->send_message (output);
           if (result == -1)
             {
               if (TAO_debug_level > 0)

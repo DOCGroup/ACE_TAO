@@ -43,7 +43,7 @@ TAO_GIOP_Message_Generator_Parser_12::write_request_header (
   // DII with INV_NO_RESPONSE flag set then we need to send '00000001'
   //
   // We have not implemented the policy INV_NO_RESPONSE for DII.
-  if (response_flags == TAO_TWOWAY_RESPONSE_FLAG)
+if (response_flags == TAO_TWOWAY_RESPONSE_FLAG)
     msg << ACE_OutputCDR::from_octet (3);
   // Second the response flags
   // Sync scope - ignored by server if request is not oneway.
@@ -264,11 +264,12 @@ TAO_GIOP_Message_Generator_Parser_12::parse_request_header (
 
   request.response_expected ((response_flags > 0));
 
-  request.compressed_ = ((response_flags > 2));
+  // ?????
+//  request.compressed_ = (response_flags > 2);
 
   // The high bit of the octet has been set if the SyncScope policy
   // value is SYNC_WITH_SERVER.
-  request.sync_with_server ((response_flags > 1));
+  request.sync_with_server (response_flags == 1);
 
   // Reserved field
   input.skip_bytes (3);

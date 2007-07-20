@@ -347,7 +347,7 @@ private:
 
   /**
    * An argument flag to indicate whether there is any data that is
-   * going to get marshaled along as a reply. The default will be 1
+   * going to get marshaled along as a reply. The default will be true
    * which indicates that we have some data that needs to be sent back
    * to the client.
    */

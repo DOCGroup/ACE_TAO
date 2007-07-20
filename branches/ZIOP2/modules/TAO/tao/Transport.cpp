@@ -1280,7 +1280,7 @@ TAO_Transport::send_asynchronous_message_i (TAO_Stub *stub,
   // to send first:
   bool try_sending_first = true;
 
-  const bool queue_empty = (this->head_ == 0);
+  bool const queue_empty = (this->head_ == 0);
 
   if (!queue_empty)
     {
@@ -1806,7 +1806,6 @@ TAO_Transport::handle_input_parse_data  (TAO_Resume_Handle &rh,
          this->id ()));
     }
 
-
   // The buffer on the stack which will be used to hold the input
   // messages, ACE_CDR::MAX_ALIGNMENT compensates the
   // memory-alignment. This improves performance with SUN-Java-ORB-1.4
@@ -2047,8 +2046,7 @@ TAO_Transport::handle_input_parse_data  (TAO_Resume_Handle &rh,
           if (qd.missing_data_ == 0)
             {
               // Dealing with a fragment
-              TAO_Queued_Data *nqd =
-                TAO_Queued_Data::duplicate (qd);
+              TAO_Queued_Data *nqd = TAO_Queued_Data::duplicate (qd);
 
               if (nqd == 0)
                 {

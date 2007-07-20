@@ -17,13 +17,13 @@ ACE_RCSID (tao,
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_GIOP_Message_State::TAO_GIOP_Message_State (void)
-  : giop_version_ (TAO_DEF_GIOP_MAJOR,
-                   TAO_DEF_GIOP_MINOR),
+  : giop_version_ (TAO_DEF_GIOP_MAJOR, TAO_DEF_GIOP_MINOR),
     byte_order_ (0),
     message_type_ (0),
     message_size_ (0),
     more_fragments_ (0),
-    missing_data_ (0)
+    missing_data_ (0),
+    compressed_data_ (0)
 {
 }
 
@@ -203,7 +203,11 @@ TAO_GIOP_Message_State::get_byte_order_info (char *buf)
       this->more_fragments_ =
         (CORBA::Octet) (buf[TAO_GIOP_MESSAGE_FLAGS_OFFSET]& 0x02);
 
-      if ((buf[TAO_GIOP_MESSAGE_FLAGS_OFFSET] & ~0x3) != 0)
+      // Read the compressed data
+      this->compressed_data_ =
+        (CORBA::Octet) (buf[TAO_GIOP_MESSAGE_FLAGS_OFFSET]& 0x04);
+
+      if ((buf[TAO_GIOP_MESSAGE_FLAGS_OFFSET] & ~0x7) != 0)
         {
           if (TAO_debug_level > 2)
             {

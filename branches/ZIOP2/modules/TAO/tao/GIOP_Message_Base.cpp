@@ -367,6 +367,7 @@ TAO_GIOP_Message_Base::parse_next_message (ACE_Message_Block &incoming,
 
       size_t const message_size = state.message_size (); /* Header + Payload */
 
+// Ok, have to do something here to decompress if compressed data
       if (message_size > incoming.length ())
         {
           qd.missing_data_ = message_size - incoming.length ();
@@ -440,7 +441,7 @@ TAO_GIOP_Message_Base::extract_next_message (ACE_Message_Block &incoming,
     }
 
   size_t copying_len = state.message_size ();
-
+// handle compress
   qd = this->make_queued_data (copying_len);
 
   if (qd == 0)
@@ -522,6 +523,7 @@ TAO_GIOP_Message_Base::consolidate_node (TAO_Queued_Data *qd,
       TAO_GIOP_Message_State state;
 
       // Parse the message header now...
+// decompress
       if (state.parse_message_header (*qd->msg_block_) == -1)
         {
           if (TAO_debug_level > 0)
@@ -1527,6 +1529,9 @@ TAO_GIOP_Message_Base::dump_msg (const char *label,
       // Byte order.
       int byte_order = ptr[TAO_GIOP_MESSAGE_FLAGS_OFFSET] & 0x01;
 
+      // Compressed
+      int compressed = ptr[TAO_GIOP_MESSAGE_FLAGS_OFFSET] & 0x04;
+
       // Get the version info
       CORBA::Octet major = ptr[TAO_GIOP_VERSION_MAJOR_OFFSET];
       CORBA::Octet minor = ptr[TAO_GIOP_VERSION_MINOR_OFFSET];
@@ -1568,12 +1573,13 @@ TAO_GIOP_Message_Base::dump_msg (const char *label,
       ACE_DEBUG ((LM_DEBUG,
                   "TAO (%P|%t) - GIOP_Message_Base::dump_msg, "
                   "%s GIOP v%c.%c msg, %d data bytes, %s endian, "
-                  "Type %s[%u]\n",
+                  "%s compressed, Type %s[%u]\n",
                   ACE_TEXT_CHAR_TO_TCHAR (label),
                   digits[ptr[TAO_GIOP_VERSION_MAJOR_OFFSET]],
                   digits[ptr[TAO_GIOP_VERSION_MINOR_OFFSET]],
                   len - TAO_GIOP_MESSAGE_HEADER_LEN ,
                   (byte_order == TAO_ENCAP_BYTE_ORDER) ? ACE_TEXT("my") : ACE_TEXT("other"),
+                  (compressed == 0) ? ACE_TEXT("not") : ACE_TEXT("is"),
                   ACE_TEXT_CHAR_TO_TCHAR(message_name),
                   *id));
 
