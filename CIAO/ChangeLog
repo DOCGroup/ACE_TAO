@@ -1,3 +1,19 @@
+Fri Jul 20 12:11:43 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tools/IDL3_to_IDL2/basic_visitor.cpp:
+        * tools/IDL3_to_IDL2/basic_visitor.h:
+        * tools/IDL3_to_IDL2/be_global.cpp:
+        * tools/IDL3_to_IDL2/be_produce.cpp:
+        * tools/IDL3_to_IDL2/be_global.h:
+        * tools/IDL3_to_IDL2/be_sunsoft.h:
+        * tools/IDL3_to_IDL2/be_helper.cpp:
+        * tools/IDL3_to_IDL2/idl3_to_idl2_visitor.cpp:
+        * tools/IDL3_to_IDL2/be_helper.h:
+        
+          Refactored code and other changes to make this backend more
+          friendly to others that extend it. No changes to generated
+          code or to the behavior of the backend.
+
 Thu Jul 19 07:50:21 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tools/IDL3_to_IDL2/be_global.{h,cpp}:

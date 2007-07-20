@@ -30,7 +30,8 @@
 TAO_IDL3_TO_IDL2_BE_Export BE_GlobalData *be_global = 0;
 
 BE_GlobalData::BE_GlobalData (void)
-  : filename_ (0),
+  : gen_copyright_ (true),
+    filename_ (0),
     output_dir_ (0),
     encapsulate_idl2_ (false)
 {
@@ -75,6 +76,12 @@ ACE_CString &
 BE_GlobalData::excluded_filenames (void)
 {
   return this->excluded_filenames_;
+}
+
+bool
+BE_GlobalData::gen_copyright (void) const
+{
+  return this->gen_copyright_;
 }
 
 void
@@ -128,7 +135,7 @@ BE_GlobalData::parse_args (long &i, char **av)
     }
 }
 
-// Prepare an argument for a BE
+// Prepare an argument for a BE.
 void
 BE_GlobalData::prep_be_arg (char *)
 {
@@ -154,7 +161,7 @@ BE_GlobalData::usage (void) const
     ));
   ACE_DEBUG ((
       LM_DEBUG,
-      ACE_TEXT (" -e\t\tGenerate just an include of original IDL file")
+      ACE_TEXT (" -e\t\t\tGenerate just an include of original IDL file")
       ACE_TEXT (" if no IDL3 declarations are found\n")
     ));
 }
@@ -170,7 +177,11 @@ BE_GlobalData::generator_init (void)
 }
 
 int
-BE_GlobalData::outfile_init (TAO_OutStream *& os)
+BE_GlobalData::outfile_init (TAO_OutStream *& os,
+                             const char *file_prefix,
+                             const char *file_suffix,
+                             const char *guard_prefix,
+                             const char *guard_suffix)
 {
   ACE_NEW_RETURN (os,
                   TAO_SunSoft_OutStream,
@@ -178,7 +189,7 @@ BE_GlobalData::outfile_init (TAO_OutStream *& os)
 
   ACE_CString fn (idl_global->stripped_filename ()->get_string ());
   fn = fn.substr (0, fn.rfind ('.'));
-  fn += "_IDL2.idl";
+  fn += file_suffix;
 
   const char *path = be_global->output_dir ();
   ACE_CString target_name;
@@ -189,6 +200,7 @@ BE_GlobalData::outfile_init (TAO_OutStream *& os)
       target_name += "/";
     }
 
+  target_name += file_prefix;
   target_name += fn;
 
   if (os->open (target_name.c_str ()) != 0)
@@ -201,7 +213,7 @@ BE_GlobalData::outfile_init (TAO_OutStream *& os)
 
   *os << be_nl;
 
-  os->gen_ifndef_string (fn.c_str (), "_TAO_IDL_", "_IDL_");
+  os->gen_ifndef_string (fn.c_str (), guard_prefix, guard_suffix);
 
   return 0;
 }
