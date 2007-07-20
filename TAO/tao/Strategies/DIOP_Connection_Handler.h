@@ -103,8 +103,6 @@ public:
    *
    */
   //@{
-  ACE_HANDLE get_handle (void) const;
-
   const ACE_INET_Addr &addr (void);
 
   void addr (const ACE_INET_Addr &addr);
@@ -112,12 +110,6 @@ public:
   const ACE_INET_Addr &local_addr (void);
 
   void local_addr (const ACE_INET_Addr &addr);
-
-  const ACE_INET_Addr &server_addr (void);
-
-  void server_addr (const ACE_INET_Addr &addr);
-
-  const ACE_SOCK_Dgram &dgram (void);
   //@}
   // DIOP Additions - End
 
@@ -143,8 +135,6 @@ protected:
    *
    */
   //@{
-  ACE_SOCK_Dgram udp_socket_;
-
   /// This is always the remote address
   ACE_INET_Addr addr_;
 

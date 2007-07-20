@@ -80,7 +80,7 @@ TAO_DIOP_Transport::send (iovec *iov, int iovcnt,
   for (int i = 0; i < iovcnt; i++)
      bytes_to_send += iov[i].iov_len;
 
-  this->connection_handler_->dgram ().send (iov, iovcnt, addr);
+  this->connection_handler_->peer ().send (iov, iovcnt, addr);
 
   // @@ Michael:
   // Always return a positive number of bytes sent, as we do
@@ -98,7 +98,7 @@ TAO_DIOP_Transport::recv (char *buf,
 {
   ACE_INET_Addr from_addr;
 
-  ssize_t const n = this->connection_handler_->dgram ().recv (buf, len, from_addr);
+  ssize_t const n = this->connection_handler_->peer ().recv (buf, len, from_addr);
 
   if (TAO_debug_level > 0)
     {
