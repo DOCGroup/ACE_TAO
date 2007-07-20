@@ -1,3 +1,16 @@
+Fri Jul 20 21:32:48 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * ace/MEM_Acceptor.cpp (accept): Use the sockaddr_in whose address was
+          taken to set ACE_INET_Addr; don't cast back and forth from sockaddr.
+
+        * ace/Sock_Connect.cpp (get_bcast_addr): No need to cast a pointer
+          simply to pass it to ACE_OS::memcpy(). Avoids a possible unaligned
+          access warning.
+
+        * ace/SOCK_Dgram.inl (recv): Use sockaddr.sa_family to get the
+          address type; same field as sockaddr_in.sin_family and avoids
+          unaligned access warnings from HP aC++.
+
 Fri Jul 20 18:15:27 UTC 2007  Adam Mitz  <mitza@ociweb.com>
 
         * NEWS:
