@@ -135,8 +135,10 @@ public:
     return result;
   }
 
+  //FUZZ: disable check_for_lack_ACE_OS
   void exit (void)
   {
+  //FUZZ: enable check_for_lack_ACE_OS
     ACE_TRACE (ACE_TEXT ("HA_ControllerAgentProxy::exit"));
     this->scheduler_.enqueue (new ExitMethod);
   }

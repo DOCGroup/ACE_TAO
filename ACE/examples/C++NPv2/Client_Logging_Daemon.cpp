@@ -36,9 +36,11 @@ class CLD_Handler : public ACE_Event_Handler {
 public:
   enum { QUEUE_MAX = sizeof (ACE_Log_Record) * ACE_IOV_MAX };
 
+  //FUZZ: disable check_for_lack_ACE_OS
   // Initialization hook method.
   virtual int open (CLD_Connector *);
   virtual int close (); // Shut down hook method.
+  //FUZZ: enable check_for_lack_ACE_OS
 
   // Accessor to the connection to the logging server.
   virtual ACE_SOCK_Stream &peer () { return peer_; }
@@ -52,8 +54,10 @@ protected:
   // Forward log records to the server logging daemon.
   virtual ACE_THR_FUNC_RETURN forward ();
 
+  //FUZZ: disable check_for_lack_ACE_OS
   // Send the buffered log records using a gather-write operation.
   virtual int send (ACE_Message_Block *chunk[], size_t &count);
+  //FUZZ: enable check_for_lack_ACE_OS
 
   // Entry point into forwarder thread of control.
   static ACE_THR_FUNC_RETURN run_svc (void *arg);
@@ -74,10 +78,12 @@ protected:
 
 class CLD_Connector {
 public:
+  //FUZZ: disable check_for_lack_ACE_OS
   // Establish a connection to the logging server
   // at the <remote_addr>.
   int connect (CLD_Handler *handler,
                const ACE_INET_Addr &remote_addr);
+  //FUZZ: enable check_for_lack_ACE_OS
 
   // Re-establish a connection to the logging server.
   int reconnect ();
@@ -94,9 +100,11 @@ private:
 
 class CLD_Acceptor : public ACE_Event_Handler {
 public:
+  //FUZZ: disable check_for_lack_ACE_OS
   // Initialization hook method.
   virtual int open (CLD_Handler *, const ACE_INET_Addr &,
                     ACE_Reactor * = ACE_Reactor::instance ());
+  //FUZZ: enable check_for_lack_ACE_OS
 
   // Reactor hook methods.
   virtual int handle_input (ACE_HANDLE handle);
@@ -178,12 +186,14 @@ ACE_THR_FUNC_RETURN CLD_Handler::forward () {
     if (message_index >= ACE_IOV_MAX ||
         (ACE_OS::gettimeofday () - time_of_last_send
          >= ACE_Time_Value(FLUSH_TIMEOUT))) {
-      if (send (chunk, message_index) == -1) break;
+      if (this->send (chunk, message_index) == -1) break;
       time_of_last_send = ACE_OS::gettimeofday ();
     }
   }
 
-  if (message_index > 0) send (chunk, message_index);
+  if (message_index > 0) 
+    this->send (chunk, message_index);
+
   msg_queue_.close ();
   no_sigpipe.restore_action (SIGPIPE, original_action);
   return 0;

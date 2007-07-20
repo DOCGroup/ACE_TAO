@@ -46,9 +46,9 @@ class Invoker_Task : public ACE_Task<ACE_MT_SYNCH>
 {
 public:
   Invoker_Task (ACE_Thread_Manager *thr_mgr,
-		size_t n_tasks,
-		size_t n_threads,
-		size_t n_iterations);
+                size_t n_tasks,
+                size_t n_threads,
+                size_t n_iterations);
   virtual int svc (void);
   // creats <n_tasks> and wait for them to finish
 
@@ -65,11 +65,14 @@ class Worker_Task : public ACE_Task<ACE_MT_SYNCH>
 {
 public:
   Worker_Task (ACE_Thread_Manager *thr_mgr,
-	       size_t n_threads,
-	       size_t n_iterations);
+               size_t n_threads,
+               size_t n_iterations);
   virtual int svc (void);
+
+  //FUZZ: disable check_for_lack_ACE_OS
   // Does a small work...
   virtual int open (void * = NULL);
+  //FUZZ: enable check_for_lack_ACE_OS
 
 private:
   static size_t workers_count_;
@@ -77,8 +80,11 @@ private:
   size_t n_threads_;
   size_t n_iterations_;
 
+  //FUZZ: disable check_for_lack_ACE_OS
   // = Not needed for this test.
   virtual int close (u_long);
+  //FUZZ: enable check_for_lack_ACE_OS
+
   virtual int put (ACE_Message_Block *, ACE_Time_Value *) { return 0; }
 };
 
@@ -141,9 +147,9 @@ Worker_Task::svc (void)
 }
 
 Invoker_Task::Invoker_Task (ACE_Thread_Manager *thr_mgr,
-			    size_t n_tasks,
-			    size_t n_threads,
-			    size_t n_iterations)
+                            size_t n_tasks,
+                            size_t n_threads,
+                            size_t n_iterations)
   : ACE_Task<ACE_MT_SYNCH> (thr_mgr),
     n_tasks_ (n_tasks),
     n_threads_ (n_threads),
@@ -188,13 +194,13 @@ Invoker_Task::svc (void)
                   task + 1));
 
       ACE_NEW_RETURN (worker_task[task],
-		      Worker_Task (thr_mgr,
+                      Worker_Task (thr_mgr,
                                    n_threads_,
                                    n_iterations_),
-		      -1);
+                                   -1);
 
       if (worker_task[task]->open () == -1)
-	ACE_ERROR_RETURN ((LM_ERROR,
+        ACE_ERROR_RETURN ((LM_ERROR,
                            "%p\n",
                            "open failed"),
                           -1);
@@ -264,9 +270,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ACE_Thread_Manager invoker_manager;
 
   Invoker_Task invoker (&invoker_manager,
-			n_tasks,
-			n_threads,
-			n_iterations);
+                        n_tasks,
+                        n_threads,
+                        n_iterations);
 
   // Wait for 1 second and then suspend the invoker task
   ACE_OS::sleep (1);

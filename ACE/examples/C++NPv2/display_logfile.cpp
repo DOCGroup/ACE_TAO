@@ -26,10 +26,10 @@ public:
   Logrec_Module (const ACE_TCHAR *name)
   {
     this->open (name,
-		&task_, // Initialize writer-side task.
-		0,      // Ignore reader-side task.
-		0,
-		ACE_Module<ACE_SYNCH>::M_DELETE_READER);
+	              &task_, // Initialize writer-side task.
+	              0,      // Ignore reader-side task.
+	              0,
+	              ACE_Module<ACE_SYNCH>::M_DELETE_READER);
   }
 private:
   TASK task_;
@@ -49,7 +49,10 @@ public:
 
   Logrec_Reader (const ACE_TString &file): filename_ (file) {}
 
+  //FUZZ: disable check_for_lack_ACE_OS
   virtual int open (void *) {
+  //FUZZ: enable check_for_lack_ACE_OS
+
     ACE_FILE_Addr name (filename_.c_str ());
     ACE_FILE_Connector connector;
     if (connector.connect (logfile_, name) == -1)
@@ -210,8 +213,10 @@ private:
 class Logrec_Writer : public ACE_Task<ACE_SYNCH>
 {
 public:
+  //FUZZ: disable check_for_lack_ACE_OS
   // Initialization hook method.
   virtual int open (void *) { return activate (); }
+  //FUZZ: enable check_for_lack_ACE_OS
 
   virtual int put (ACE_Message_Block *mblk, ACE_Time_Value *to)
   { return putq (mblk, to); }
@@ -259,14 +264,14 @@ public:
     ACE_CDR::Long type = * (ACE_CDR::Long *)mblk->rd_ptr ();
     mblk->size (11); // Max size in ASCII of 32-bit word.
     mblk->reset ();
-    mblk->wr_ptr ((size_t) sprintf (mblk->wr_ptr (), "%d", type));
+    mblk->wr_ptr ((size_t) ACE_OS::sprintf (mblk->wr_ptr (), "%d", type));
   }
 
   static void format_pid (ACE_Message_Block *mblk) {
     ACE_CDR::Long pid = * (ACE_CDR::Long *)mblk->rd_ptr ();
     mblk->size (11); // Max size in ASCII of 32-bit word.
     mblk->reset ();
-    mblk->wr_ptr ((size_t) sprintf (mblk->wr_ptr (), "%d", pid));
+    mblk->wr_ptr ((size_t) ACE_OS::sprintf (mblk->wr_ptr (), "%d", pid));
   }
 
   static void format_time (ACE_Message_Block *mblk) {
@@ -282,11 +287,11 @@ public:
     mblk->reset ();
     timestamp[19] = '\0'; // NUL-terminate after the time.
     timestamp[24] = '\0'; // NUL-terminate after the date.
-    size_t fmt_len (sprintf (mblk->wr_ptr (),
-                             "%s.%03d %s",
-                             timestamp + 4,
-                             usecs / 1000,
-                             timestamp + 20));
+    size_t fmt_len (ACE_OS::sprintf (mblk->wr_ptr (),
+                                     "%s.%03d %s",
+                                     timestamp + 4,
+                                     usecs / 1000,
+                                     timestamp + 20));
     mblk->wr_ptr (fmt_len);
   }
 

@@ -1,3 +1,102 @@
+Fri Jul 20 03:22:02 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * examples/APG/Active_Objects/AO.cpp:
+        * examples/APG/Active_Objects/AO2.cpp:
+        * examples/APG/Logging/Trace_Return.cpp:
+        * examples/APG/Logging/Wrap_Macros.cpp:
+        * examples/APG/Processes/Spawn.cpp:
+        * examples/APG/Reactor/HAStatus.cpp:
+        * examples/APG/Reactor/Timers.cpp:
+        * examples/APG/Signals/SigInfo.cpp:
+        * examples/APG/Sockets/Server.cpp:
+        * examples/APG/Streams/Answerer.cpp:
+        * examples/APG/ThreadManagement/Async_Cancel.cpp:
+        * examples/APG/ThreadPools/LF_ThreadPool.cpp:
+        * examples/APG/ThreadSafety/Semaphore.cpp:
+        * examples/APG/Threads/Condition_Variables.cpp:
+        * examples/ASX/CCM_App/CCM_App.cpp:
+        * examples/ASX/Event_Server/Event_Server/Options.cpp:
+        * examples/ASX/Message_Queue/buffer_stream.cpp:
+        * examples/ASX/UPIPE_Event_Server/Options.cpp:
+        * examples/ASX/UPIPE_Event_Server/event_server.cpp:
+        * examples/C++NPv1/Logging_Client.cpp:
+        * examples/C++NPv1/Logging_Handler.cpp:
+        * examples/C++NPv1/Logging_Server.cpp:
+        * examples/C++NPv1/Process_Per_Connection_Logging_Server.cpp:
+        * examples/C++NPv2/AC_Client_Logging_Daemon.cpp:
+        * examples/C++NPv2/AIO_Client_Logging_Daemon.cpp:
+        * examples/C++NPv2/Client_Logging_Daemon.cpp:
+        * examples/C++NPv2/Reactor_Logging_Server_T.cpp:
+        * examples/C++NPv2/Select_Reactor_Logging_Server.cpp:
+        * examples/C++NPv2/Server_Shutdown.cpp:
+        * examples/C++NPv2/TP_Reactor_Logging_Server.cpp:
+        * examples/C++NPv2/display_logfile.cpp:
+        * examples/ConfigViewer/ValueDlg.cpp:
+        * examples/Connection/misc/Connection_Handler.cpp:
+        * examples/IPC_SAP/FIFO_SAP/FIFO-Msg-client.cpp:
+        * examples/IPC_SAP/SOCK_SAP/C-inserver.cpp:
+        * examples/IPC_SAP/SOCK_SAP/CPP-inclient.cpp:
+        * examples/IPC_SAP/SOCK_SAP/CPP-inserver-fancy.cpp:
+        * examples/IPC_SAP/SOCK_SAP/CPP-memclient.cpp:
+        * examples/IPC_SAP/SOCK_SAP/FD-unclient.cpp:
+        * examples/IPC_SAP/SSL_SAP/SSL-client-simple.cpp:
+        * examples/IPC_SAP/SSL_SAP/SSL-client.cpp:
+        * examples/IPC_SAP/SSL_SAP/SSL-server-fancy.cpp:
+        * examples/Map_Manager/test_hash_map_manager.cpp:
+        * examples/Mem_Map/IO-tests/IO_Test.cpp:
+        * examples/OS/Process/process.cpp:
+        * examples/QOS/Diffserv/diffserv_test.cpp:
+        * examples/QOS/Diffserv/server.cpp:
+        * examples/Reactor/Dgram/CODgram.cpp:
+        * examples/Reactor/Dgram/Dgram.cpp:
+        * examples/Reactor/Misc/pingpong.cpp:
+        * examples/Reactor/Misc/test_demuxing.cpp:
+        * examples/Reactor/Misc/test_early_timeouts.cpp:
+        * examples/Reactor/Misc/test_event_handler_t.cpp:
+        * examples/Reactor/Misc/test_reactors.cpp:
+        * examples/Reactor/Multicast/Log_Wrapper.cpp:
+        * examples/Reactor/Multicast/client.cpp:
+        * examples/Reactor/Proactor/post_completions.cpp:
+        * examples/Reactor/Proactor/simple_test_proactor.cpp:
+        * examples/Reactor/Proactor/test_aiocb.cpp:
+        * examples/Reactor/Proactor/test_aiosig.cpp:
+        * examples/Reactor/Proactor/test_aiosig_ace.cpp:
+        * examples/Reactor/Proactor/test_end_event_loop.cpp:
+        * examples/Reactor/Proactor/test_proactor.cpp:
+        * examples/Reactor/Proactor/test_proactor2.cpp:
+        * examples/Reactor/Proactor/test_proactor3.cpp:
+        * examples/Reactor/Proactor/test_udp_proactor.cpp:
+        * examples/Reactor/WFMO_Reactor/Handle_Close.cpp:
+        * examples/Reactor/WFMO_Reactor/Multithreading.cpp:
+        * examples/Reactor/WFMO_Reactor/Prerun_State_Changes.cpp:
+        * examples/Reactor/WFMO_Reactor/Removals.cpp:
+        * examples/Reactor/WFMO_Reactor/Suspended_Removals.cpp:
+        * examples/Reactor/WFMO_Reactor/Talker.cpp:
+        * examples/Service_Configurator/IPC-tests/client/local_fifo_client_test.cpp:
+        * examples/Service_Configurator/IPC-tests/client/local_spipe_client_test.cpp:
+        * examples/Service_Configurator/IPC-tests/client/remote_dgram_client_test.cpp:
+        * examples/Service_Configurator/IPC-tests/client/remote_stream_client_test.cpp:
+        * examples/Service_Configurator/IPC-tests/client/remote_thr_stream_client_test.cpp:
+        * examples/Shared_Malloc/Options.cpp:
+        * examples/Synch/proc_sema.cpp:
+        * examples/System_V_IPC/SV_Message_Queues/MQ_Server.cpp:
+        * examples/Threads/barrier2.cpp:
+        * examples/Threads/future1.cpp:
+        * examples/Threads/future2.cpp:
+        * examples/Threads/manual_event.cpp:
+        * examples/Threads/task_five.cpp:
+        * examples/Threads/task_four.cpp:
+        * examples/Threads/task_three.cpp:
+        * examples/Threads/task_two.cpp:
+        * examples/Threads/thread_pool.cpp:
+        * examples/Threads/tss1.cpp:
+        * examples/Threads/wfmo.cpp:
+        * examples/Web_Crawler/Options.cpp:
+
+          Fixed ACE_OS fuzz warnings. Use ACE_OS calls instead of raw OS functions
+          where possible. If fuzz detected a false-positive, then disable
+          the ACE_OS fuzz check for that section of the code.
+
 Thu Jul 19 23:33:05 UTC 2007  Steve Huston  <shuston@riverace.com>
 
         * ace/Event_Handler.cpp (ctor): Put reference_count_ init back in the
@@ -26,7 +125,7 @@ Thu Jul 19 19:54:22 UTC 2007  Adam Mitz  <mitza@ociweb.com>
           whether ACE_stat should be __stat64 instead of _stat64 (MSVC only).
 
         * ace/checked_iterator.h:
-        
+
           The Platform SDK 64-bit compiler doesn't have checked iterators.
 
         * ace/config-lite.h:
@@ -175,7 +274,7 @@ Thu Jul 19 03:00:57 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
         * tests/XtAthenaReactor_Test.cpp:
         * tests/XtMotifReactor_Test.cpp:
 
-          Fixed ACE_OS fuzz warnings. Use ACE_OS calls instead of raw OS function
+          Fixed ACE_OS fuzz warnings. Use ACE_OS calls instead of raw OS functions
           where possible. If fuzz detected a false-positive, then disable
           the ACE_OS fuzz check for that section of the code.
 
@@ -421,7 +520,7 @@ Sat Jul 14 15:03:39 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
         * performance-tests/TTCP/C/new-ttcp.cpp:
         * performance-tests/UDP/udp_test.cpp:
 
-          Fixed ACE_OS fuzz warnings. Use ACE_OS calls instead of raw OS function
+          Fixed ACE_OS fuzz warnings. Use ACE_OS calls instead of raw OS functions
           where possible. If fuzz detected a false-positive, then disable
           the ACE_OS fuzz check for that section of the code.
 
@@ -807,7 +906,7 @@ Wed Jul  4 06:02:38 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
         * protocols/tests/RMCast/Receiver.cpp:
         * protocols/tests/RMCast/Sender.cpp:
 
-          Fixed ACE_OS fuzz warnings. Use ACE_OS calls instead of raw OS function
+          Fixed ACE_OS fuzz warnings. Use ACE_OS calls instead of raw OS functions
           where possible. If fuzz detected a false-positive, then disable
           the ACE_OS fuzz check for that section of the code.
 
@@ -1005,7 +1104,7 @@ Sat Jun 30 05:11:43 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
         * apps/mkcsregdb/mkcsregdb.cpp:
         * apps/soreduce/Library.cpp:
 
-          Fixed ACE_OS fuzz warnings. Use ACE_OS calls instead of raw OS function
+          Fixed ACE_OS fuzz warnings. Use ACE_OS calls instead of raw OS functions
           where possible. If fuzz detected a false-positive, then disable
           the ACE_OS fuzz check for that section of the code.
 
@@ -1039,7 +1138,7 @@ Sat Jun 30 04:48:34 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
         * ASNMP/examples/walk/walk.cpp:
         * ASNMP/tests/Address_Test.cpp:
 
-          Fixed ACE_OS fuzz warnings. Use ACE_OS calls instead of raw OS function
+          Fixed ACE_OS fuzz warnings. Use ACE_OS calls instead of raw OS functions
           where possible. If fuzz detected a false-positive, then disable
           the ACE_OS fuzz check for that section of the code.
 

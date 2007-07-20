@@ -99,6 +99,7 @@ Options::child (void)
 void
 Options::print_usage_and_die (void)
 {
+  //FUZZ: disable check_for_lack_ACE_OS
   ACE_ERROR ((LM_ERROR,
               ACE_TEXT ("usage: %n")
               ACE_TEXT ("\n[-d] (run in debugging mode)\n")
@@ -111,6 +112,8 @@ Options::print_usage_and_die (void)
               ACE_TEXT ("[-t number of threads or processes to spawn]\n")
               ACE_TEXT ("[-T] (enable tracking)\n")
               ACE_TEXT ("[-n iteration_count]\n")));
+  //FUZZ: enable check_for_lack_ACE_OS
+
   ACE_OS::exit (1);
   /* NOTREACHED */
 }

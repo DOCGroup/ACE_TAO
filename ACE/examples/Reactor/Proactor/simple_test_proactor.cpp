@@ -50,8 +50,10 @@ public:
 
   ~Simple_Tester (void);
 
+  //FUZZ: disable check_for_lack_ACE_OS
   int open (void);
   // Open the operations and initiate read from the file.
+  //FUZZ: enble check_for_lack_ACE_OS
 
 protected:
   // = These methods are called by the freamwork.
@@ -144,8 +146,7 @@ Simple_Tester::initiate_read_file (void)
   ACE_NEW_RETURN (mb, ACE_Message_Block (BUFSIZ + 1), -1);
 
   // Inititiate an asynchronous read from the file
-  if (this->rf_.read (*mb,
-		      mb->size () - 1) == -1)
+  if (this->rf_.read (*mb, mb->size () - 1) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "ACE_Asynch_Read_File::read"), -1);
 
   ACE_DEBUG ((LM_DEBUG,
@@ -183,11 +184,11 @@ Simple_Tester::handle_read_file (const ACE_Asynch_Read_File::Result &result)
     {
       // Read successful: write this to the file.
       if (this->wf_.write (result.message_block (),
-			   result.bytes_transferred ()) == -1)
-	{
-	  ACE_ERROR ((LM_ERROR, "%p\n", "ACE_Asynch_Write_File::write"));
-	  return;
-	}
+                           result.bytes_transferred ()) == -1)
+        {
+          ACE_ERROR ((LM_ERROR, "%p\n", "ACE_Asynch_Write_File::write"));
+          return;
+        }
     }
 }
 
@@ -231,17 +232,17 @@ parse_args (int argc, ACE_TCHAR *argv[])
     switch (c)
       {
       case 'f':
-	file = get_opt.opt_arg ();
-	break;
+        file = get_opt.opt_arg ();
+        break;
       case 'd':
-	dump_file = get_opt.opt_arg ();
-	break;
+        dump_file = get_opt.opt_arg ();
+        break;
       default:
-	ACE_ERROR ((LM_ERROR, "%p.\n",
-		    "usage :\n"
+        ACE_ERROR ((LM_ERROR, "%p.\n",
+                    "usage :\n"
                     "-d <dumpfile>\n"
-		    "-f <file>\n"));
-	return -1;
+                    "-f <file>\n"));
+        return -1;
       }
 
   return 0;

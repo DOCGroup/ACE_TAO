@@ -28,7 +28,7 @@ print_usage_and_die (void)
 {
   ACE_ERROR ((LM_ERROR,
               ACE_TEXT ("usage: %s [-d] [-r rendezvous_spipe]\n"),
-	      program_name));
+              program_name));
   ACE_OS::exit (1);
 }
 
@@ -54,7 +54,7 @@ parse_arguments (int argc, ACE_TCHAR *argv[])
   if (debug)
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("rendezvous_spipe = %s\n"),
-		rendezvous_spipe));
+                rendezvous_spipe));
 }
 
 int
@@ -68,16 +68,18 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   if (con.connect (spipe,
                    ACE_SPIPE_Addr (rendezvous_spipe)) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-		       ACE_TEXT ("Cannot open %s for requesting a new ")
-		       ACE_TEXT ("communication channel in %p\n"),
+                       ACE_TEXT ("Cannot open %s for requesting a new ")
+                       ACE_TEXT ("communication channel in %p\n"),
                        rendezvous_spipe,
-		       ACE_TEXT ("local_spipe_client_test")),
+                       ACE_TEXT ("local_spipe_client_test")),
                       -1);
 
+  //FUZZ: disable check_for_lack_ACE_OS
   ACE_Mem_Map mmap (file_name);
   void *cp;
 
   if (mmap (cp) == -1)
+  //FUZZ: enable check_for_lack_ACE_OS
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("%p\n"),
                        ACE_TEXT ("mmap")),

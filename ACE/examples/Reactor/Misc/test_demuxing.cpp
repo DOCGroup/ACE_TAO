@@ -33,7 +33,11 @@ public:
   Sig_Handler (void);
   virtual ACE_HANDLE get_handle (void) const;
   virtual int handle_input (ACE_HANDLE);
+
+  //FUZZ: disable check_for_lack_ACE_OS
   virtual int shutdown (ACE_HANDLE, ACE_Reactor_Mask);
+  //FUZZ: enable check_for_lack_ACE_OS
+
   virtual int handle_signal (int signum, siginfo_t * = 0,
                              ucontext_t * = 0);
 

@@ -51,10 +51,13 @@ public:
   virtual ~My_Task (void) {}
   // Destructor.
 
+  //FUZZ: disable check_for_lack_ACE_OS
   // If time_flag is zero do the eventloop indefinitely, otherwise do
   // it for finite amount of time (13secs!!!).
   int open (void *timed_event_loop)
     {
+  //FUZZ: enble check_for_lack_ACE_OS
+
       // Set the local variable.
       if (timed_event_loop == 0)
         this->time_flag_ = 0;

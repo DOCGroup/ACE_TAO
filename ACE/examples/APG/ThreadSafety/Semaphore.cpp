@@ -33,7 +33,7 @@ public:
         this->getq (mb);
         if (mb->msg_type () == ACE_Message_Block::MB_HANGUP)
           {
-            shutdown ();
+            this->shutdown ();
             mb->release ();
             return;
           }
@@ -48,8 +48,10 @@ public:
       }
   }
 
+  //FUZZ: disable check_for_lack_ACE_OS
   void shutdown (void)
   {
+  //FUZZ: enable check_for_lack_ACE_OS
     exit_condition_ = 1;
     this->msg_queue ()->deactivate ();
     csema_.release (N_THREADS);

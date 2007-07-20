@@ -12,6 +12,7 @@
 #include "ace/Log_Msg.h"
 #include "ace/Log_Record.h"
 #include "ace/OS_NS_unistd.h"
+#include "ace/OS_NS_stdlib.h"
 
 // FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
@@ -31,7 +32,10 @@ private:
 public:
   ACE_SOCK_Stream &peer () { return logging_peer_; }
 
+  //FUZZ: disable check_for_lack_ACE_OS
   int send (const ACE_Log_Record &log_record) {
+  //FUZZ: enable check_for_lack_ACE_OS
+
     // Serialize the log record using a CDR stream, allocate
     // enough space for the complete <ACE_Log_Record>.
     const size_t max_payload_size =
@@ -73,7 +77,7 @@ public:
 
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  u_short logger_port = argc > 1 ? atoi (argv[1]) : 0;
+  u_short logger_port = argc > 1 ? ACE_OS::atoi (argv[1]) : 0;
   const char *logger_host =
     argc > 2 ? argv[2] : ACE_DEFAULT_SERVER_HOST;
   int result;

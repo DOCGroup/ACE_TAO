@@ -9,6 +9,7 @@
 #include "ace/INET_Addr.h"
 #include "ace/Log_Record.h"
 #include "ace/Message_Block.h"
+#include "ace/OS_NS_string.h"
 
 #include "Logging_Handler.h"
 
@@ -24,7 +25,7 @@ int Logging_Handler::recv_log_record (ACE_Message_Block *&mblk)
   logging_peer_.get_remote_addr (peer_addr);
   mblk = new ACE_Message_Block (MAXHOSTNAMELEN + 1);
   peer_addr.get_host_name (mblk->wr_ptr (), MAXHOSTNAMELEN);
-  mblk->wr_ptr (strlen (mblk->wr_ptr ()) + 1); // Go past name
+  mblk->wr_ptr (ACE_OS::strlen (mblk->wr_ptr ()) + 1); // Go past name
 
   // Allocate a message block for the payload; initially at least
   // large enough to hold the header, but needs some room for

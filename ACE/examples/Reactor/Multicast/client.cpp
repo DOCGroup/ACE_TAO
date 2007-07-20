@@ -31,10 +31,12 @@ parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_LOG_MSG->open (argv[0]);
 
+  //FUZZ: disable check_for_lack_ACE_OS
   // Start at argv[1]
   ACE_Get_Opt getopt (argc, argv, ACE_TEXT("m:ui:"), 1);
 
   for (int c; (c = getopt ()) != -1; )
+  //FUZZ: enable check_for_lack_ACE_OS
     switch (c)
       {
       case 'm':
@@ -47,8 +49,8 @@ parse_args (int argc, ACE_TCHAR *argv[])
         // usage fallthrough
       default:
         ACE_ERROR ((LM_ERROR,
-		    "%n: -m max_message_size (in k) -i iterations\n%a",
-		    1));
+                    "%n: -m max_message_size (in k) -i iterations\n%a",
+                    1));
         /* NOTREACHED */
       }
 }
@@ -80,7 +82,7 @@ ACE_TMAIN (int argc, ACE_TCHAR **argv)
 
       while (iterations--)
         if (log.log_message (Log_Wrapper::LM_DEBUG, buf) == -1)
-	  ACE_ERROR_RETURN ((LM_ERROR, "%p\n" "log"), -1);
+          ACE_ERROR_RETURN ((LM_ERROR, "%p\n" "log"), -1);
     }
 
   // otherwise, a file has been redirected, or give prompts
@@ -99,27 +101,29 @@ ACE_TMAIN (int argc, ACE_TCHAR **argv)
           if (user_prompt)
             ACE_DEBUG ((LM_DEBUG, "\nEnter message ('Q':quit):\n"));
 
-	  ssize_t nbytes = ACE_OS::read (ACE_STDIN, buf, max_message_size);
+          ssize_t nbytes = ACE_OS::read (ACE_STDIN, buf, max_message_size);
 
           if (nbytes <= 0)
             break; // End of file or error.
+          
           buf[nbytes - 1] = '\0';
 
           // Quitting?
           if (user_prompt)
-	    {
-	      if (buf[0] == 'Q' || buf[0] == 'q')
-		break;
-	    }
-	  else // Keep from overrunning the receiver.
-	    ACE_OS::sleep (1);
+            {
+              if (buf[0] == 'Q' || buf[0] == 'q')
+                break;
+            }
+          else // Keep from overrunning the receiver.
+            ACE_OS::sleep (1);
 
           // Send the message to the logger.
           if (log.log_message (Log_Wrapper::LM_DEBUG, buf) == -1)
-	    ACE_ERROR_RETURN ((LM_ERROR, "%p\n" "log_message"), -1);
-	  ACE_DEBUG ((LM_DEBUG, "finished sending message %d\n", count++));
+            ACE_ERROR_RETURN ((LM_ERROR, "%p\n" "log_message"), -1);
+          
+          ACE_DEBUG ((LM_DEBUG, "finished sending message %d\n", count++));
         }
-    }
+    } 
 
   ACE_DEBUG ((LM_DEBUG, "Client done.\n"));
   return 0;

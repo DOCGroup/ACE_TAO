@@ -50,7 +50,7 @@ Slow_Read_Write_Test::run_test (int iterations,
       char c;
 
       while (ACE_OS::read (ifd, &c, sizeof c) > 0)
-        ::write (ofd, &c, sizeof c);
+        ACE_OS::write (ofd, &c, sizeof c);
 
       ACE_OS::lseek (ifd, 0, SEEK_SET);
       ACE_OS::lseek (ofd, 0, SEEK_SET);
@@ -111,7 +111,7 @@ Block_Read_Write_Test::run_test (int iterations,
       while ((n = ACE_OS::read (ifd,
                                 buf,
                                 sizeof buf)) > 0)
-                                ::write (ofd, buf, n);
+                                ACE_OS::write (ofd, buf, n);
 
       ACE_OS::lseek (ifd, 0, SEEK_SET);
       ACE_OS::lseek (ofd, 0, SEEK_SET);
@@ -143,7 +143,7 @@ Block_Fread_Fwrite_Test::run_test (int iterations,
                                  1,
                                  sizeof buf,
                                  input_fp)) != 0)
-                                 ::fwrite (buf, n, 1, output_fp);
+                                 ACE_OS::fwrite (buf, n, 1, output_fp);
 
       ACE_OS::rewind (input_fp);
       ACE_OS::rewind (output_fp);

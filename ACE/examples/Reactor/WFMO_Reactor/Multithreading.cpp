@@ -109,8 +109,10 @@ public:
   int svc (void);
   // Task event loop.
 
+  //FUZZ: disable check_for_lack_ACE_OS
   int signal (size_t index);
   // Signal an event.
+  //FUZZ: enable check_for_lack_ACE_OS
 
 private:
   ACE_Auto_Event *events_;

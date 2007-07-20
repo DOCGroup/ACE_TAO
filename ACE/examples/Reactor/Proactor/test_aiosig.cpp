@@ -20,6 +20,7 @@
 //
 // =====================================================================
 
+//FUZZ: disable check_for_lack_ACE_OS
 
 #include <unistd.h>
 #include <fcntl.h>

@@ -38,7 +38,9 @@ class Pseudo_Barrier
 public:
   Pseudo_Barrier (u_long count);
 
+  //FUZZ: disable check_for_lack_ACE_OS
   int wait (void);
+  //FUZZ: enable check_for_lack_ACE_OS
 
 private:
   ACE_Atomic_Op <ACE_Thread_Mutex, int> counter_;

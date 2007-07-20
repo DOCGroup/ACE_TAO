@@ -15,7 +15,11 @@ public:
   virtual ACE_HANDLE get_handle (void) const { return 0; }
   virtual void set_handle (ACE_HANDLE) {}
   virtual int handle_async_io (ACE_HANDLE) { return 0; }
+
+  //FUZZ: disable check_for_lack_ACE_OS
   virtual int shutdown (ACE_HANDLE, ACE_Reactor_Mask) { return 0; }
+  //FUZZ: enable check_for_lack_ACE_OS
+
   virtual int signal_handler (int /* signum */,
                               siginfo_t * = 0,
                               ucontext_t * = 0)
