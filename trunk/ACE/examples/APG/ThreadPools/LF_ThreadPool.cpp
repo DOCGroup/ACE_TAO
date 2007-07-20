@@ -19,6 +19,7 @@ public:
     owner_ = ACE_Thread::self ();
   }
 
+  //FUZZ: disable check_for_lack_ACE_OS
   int wait (void)
   {
     return this->cond_.wait ();
@@ -28,6 +29,7 @@ public:
   {
     return this->cond_.signal ();
   }
+  //FUZZ: enable check_for_lack_ACE_OS
 
   ACE_thread_t owner (void)
   {
@@ -178,7 +180,7 @@ LF_ThreadPool::elect_new_leader (void)
       // Get the old follower.
       Follower *fw;
       if (this->followers_.dequeue_head (fw) != 0)
-	return -1;
+        return -1;
       ACE_DEBUG ((LM_ERROR,
                   ACE_TEXT ("(%t) Resigning and Electing %d\n"),
                   fw->owner ()));

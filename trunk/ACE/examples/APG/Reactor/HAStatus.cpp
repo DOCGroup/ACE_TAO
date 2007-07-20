@@ -15,7 +15,9 @@ class ClientAcceptor : public ACE_Event_Handler
 public:
   virtual ~ClientAcceptor ();
 
+  //FUZZ: disable check_for_lack_ACE_OS
   int open (const ACE_INET_Addr &listen_addr);
+  //FUZZ: enable check_for_lack_ACE_OS
 
   // Get this handler's I/O handle.
   virtual ACE_HANDLE get_handle (void) const
@@ -44,7 +46,9 @@ class ClientService : public ACE_Event_Handler
 public:
   ACE_SOCK_Stream &peer (void) { return this->sock_; }
 
+  //FUZZ: disable check_for_lack_ACE_OS
   int open (void);
+  //FUZZ: enable check_for_lack_ACE_OS
 
   // Get this handler's I/O handle.
   virtual ACE_HANDLE get_handle (void) const

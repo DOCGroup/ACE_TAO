@@ -118,9 +118,11 @@ public:
   Receiver (void);
   ~Receiver (void);
 
+  //FUZZ: disable check_for_lack_ACE_OS
   virtual void open (ACE_HANDLE handle,
                      ACE_Message_Block &message_block);
   // This is called after the new connection has been accepted.
+  //FUZZ: enable check_for_lack_ACE_OS
 
 protected:
   // These methods are called by the framework
@@ -372,8 +374,12 @@ class Sender : public ACE_Handler
 public:
   Sender (void);
   ~Sender (void);
+
+  //FUZZ: disable check_for_lack_ACE_OS
   int open (const ACE_TCHAR *host, u_short port);
   void close ();
+  //FUZZ: enable check_for_lack_ACE_OS
+
   ACE_HANDLE handle (void) const;
   void handle (ACE_HANDLE);
 
@@ -420,7 +426,7 @@ Sender::Sender (void)
 
 Sender::~Sender (void)
 {
-  close ();
+  this->close ();
 }
 
 void Sender::close ()
@@ -746,14 +752,14 @@ int DisableSignal ( int SigNum )
 
 #ifndef ACE_WIN32
   sigset_t signal_set;
-  if ( sigemptyset (&signal_set) == - 1 )
+  if ( ACE_OS::sigemptyset (&signal_set) == - 1 )
     {
       ACE_ERROR ((LM_ERROR,
                   "Error:(%P | %t):%p\n",
                   "sigemptyset failed"));
     }
 
-  sigaddset (&signal_set, SigNum);
+  ACE_OS::sigaddset (&signal_set, SigNum);
 
   //  Put the <signal_set>.
   if (ACE_OS::pthread_sigmask (SIG_BLOCK, &signal_set, 0) != 0)
@@ -789,7 +795,7 @@ int PrintSigMask ()
       }
     else  for (int i = 1 ; i < 1000; i++)
       {
-        member = sigismember (&mask,i);
+        member = ACE_OS::sigismember (&mask,i);
 
         COUT ( "\nSig " )
           COUT ( i )

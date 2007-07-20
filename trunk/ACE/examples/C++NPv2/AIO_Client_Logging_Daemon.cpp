@@ -37,8 +37,10 @@
 class AIO_CLD_Acceptor
   : public ACE_Asynch_Acceptor<AIO_Input_Handler> {
 public:
+  //FUZZ: disable check_for_lack_ACE_OS
   // Cancel accept and close all clients.
   void close (void);
+  //FUZZ: enable check_for_lack_ACE_OS
 
   // Remove handler from client set.
   void remove (AIO_Input_Handler *ih)
@@ -275,7 +277,7 @@ int AIO_CLD_Connector::validate_connection
 
 void AIO_CLD_Connector::handle_time_out
 (const ACE_Time_Value&, const void *) {
-  connect (remote_addr_);
+  this->connect (remote_addr_);
 }
 
 /******************************************************/
@@ -317,7 +319,7 @@ int AIO_Client_Logging_Daemon::init
 
 int AIO_Client_Logging_Daemon::fini () {
   ACE_Proactor::instance ()->proactor_end_event_loop ();
-  wait ();
+  this->wait ();
   return 0;
 }
 

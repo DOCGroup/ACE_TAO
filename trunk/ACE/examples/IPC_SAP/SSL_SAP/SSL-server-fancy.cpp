@@ -69,11 +69,13 @@ class Handler : public ACE_Svc_Handler<ACE_SSL_SOCK_STREAM, ACE_NULL_SYNCH>
   // The factory has special permission. (to access svc ()).
 
 public:
+  //FUZZ: disable check_for_lack_ACE_OS
   virtual int open (void * = 0);
   // Generic initialization method.
 
   virtual int close (u_long);
   // Close down and delete this.
+  //FUZZ: enable check_for_lack_ACE_OS
 
 protected:
 
@@ -173,9 +175,11 @@ Options::Options (void)
 int
 Options::parse_args (int argc, ACE_TCHAR *argv[])
 {
+  //FUZZ: disable check_for_lack_ACE_OS
   ACE_Get_Opt getopt (argc, argv, ACE_TEXT ("p:r:v"), 1);
 
   for (int c; (c = getopt ()) != -1; )
+  //FUZZ: enable check_for_lack_ACE_OS
     switch (c)
       {
       case 'p':

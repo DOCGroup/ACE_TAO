@@ -56,7 +56,7 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
 #else  /* ACE_HAS_PTHREADS */
 int ACE_TMAIN (int, ACE_TCHAR *[])
 {
-  puts ("This example works on Pthreads platforms.\n");
+  ACE_OS::puts ("This example works on Pthreads platforms.\n");
   return 0;
 }
 #endif /* ACE_HAS_PTHREADS */

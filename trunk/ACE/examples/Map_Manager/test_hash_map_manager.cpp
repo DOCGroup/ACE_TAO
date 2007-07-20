@@ -39,7 +39,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           hash.bind (string, string);
         }
 
-      fclose (stdin);
+      ACE_OS::fclose (stdin);
 
       MAP_MANAGER::ITERATOR iterator (hash);
 
@@ -72,7 +72,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       assert (hash.current_size () == 0);
 
-      fclose (stdin);
+      ACE_OS::fclose (stdin);
     }
 
   return 0;

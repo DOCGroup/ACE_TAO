@@ -132,8 +132,8 @@ Process_Per_Connection_Logging_Server::run_master (int argc, char *argv[])
 {
   u_short logger_port = 0;
   if (argc == 2)
-    logger_port = atoi (argv[1]);
-  if (open (logger_port) == -1)
+    logger_port = ACE_OS::atoi (argv[1]);
+  if (this->open (logger_port) == -1)
     return -1;
 
   for (;;)
@@ -146,7 +146,7 @@ Process_Per_Connection_Logging_Server::run_master (int argc, char *argv[])
 int
 Process_Per_Connection_Logging_Server::run_worker (int, char *argv[])
 {
-  intptr_t client_handle_i = atoi (argv[2]);
+  intptr_t client_handle_i = ACE_OS::atoi (argv[2]);
   // Some compilers don't like reinterpret_casting an int to an int, so
   // only do reinterpret_cast on Windows.
 #if defined (ACE_WIN32)

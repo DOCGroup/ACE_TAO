@@ -103,7 +103,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           ACE_OS::perror (ACE_TEXT("write")), ACE_OS::exit (1);
 
       if (ACE_OS::send (n_handle, "", 1) != 1)
-        ::perror ("write"), ACE_OS::exit (1);
+        ACE_OS::perror ("write"), ACE_OS::exit (1);
 
       /* Close the new endpoint
          (listening endpoint remains open) */

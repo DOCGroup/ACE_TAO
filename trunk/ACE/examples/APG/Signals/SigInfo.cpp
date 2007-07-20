@@ -126,8 +126,10 @@ public:
 int ACE_TMAIN (int, ACE_TCHAR *[])
 {
 #if defined (ACE_LACKS_FORK)
+  //FUZZ: disable check_for_lack_ACE_OS
   ACE_DEBUG ((LM_DEBUG,
               "This example requires fork()\n"));
+  //FUZZ: enable check_for_lack_ACE_OS
 #else
   // Create a child process so that we can test our
   // ability to handle SIGCHLD

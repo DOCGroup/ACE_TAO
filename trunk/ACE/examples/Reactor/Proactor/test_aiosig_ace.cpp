@@ -71,7 +71,7 @@ setup_signal_delivery (void)
   sigset_t full_set;
 
   // Get full set.
-  if (sigfillset (&full_set) != 0)
+  if (ACE_OS::sigfillset (&full_set) != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Error:(%P | %t):%p\n",
                        "sigfillset failed"),
@@ -87,13 +87,13 @@ setup_signal_delivery (void)
   // = Make a mask with SIGRTMIN only. We use only that signal to
   //   issue <aio_>'s.
 
-  if (sigemptyset (&completion_signal) == -1)
+  if (ACE_OS::sigemptyset (&completion_signal) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "Error: %p\n",
                        "Couldnt init the RT completion signal set"),
                       -1);
 
-  if (sigaddset (&completion_signal,
-                 SIGRTMIN) == -1)
+  if (ACE_OS::sigaddset (&completion_signal,
+                         SIGRTMIN) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "Error: %p\n",
                        "Couldnt init the RT completion signal set"),
                       -1);
@@ -109,16 +109,16 @@ setup_signal_handler (int signal_number)
 
   // Setting up the handler(!) for these signals.
   struct sigaction reaction;
-  sigemptyset (&reaction.sa_mask);   // Nothing else to mask.
+  ACE_OS::sigemptyset (&reaction.sa_mask);   // Nothing else to mask.
   reaction.sa_flags = SA_SIGINFO;    // Realtime flag.
 #if defined (SA_SIGACTION)
   // Lynx says, it is better to set this bit to be portable.
   reaction.sa_flags &= SA_SIGACTION;
 #endif /* SA_SIGACTION */
   reaction.sa_sigaction = null_handler; // Null handler.
-  int sigaction_return = sigaction (SIGRTMIN,
-                                    &reaction,
-                                    0);
+  int sigaction_return = ACE_OS::sigaction (SIGRTMIN,
+                                            &reaction,
+                                            0);
   if (sigaction_return == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "Error: %p\n",
                        "Proactor couldnt do sigaction for the RT SIGNAL"),
@@ -202,9 +202,9 @@ query_aio_completions (void)
       siginfo_t sig_info;
 
       // Await the RT completion signal.
-      int sig_return = sigtimedwait (&completion_signal,
-                                     &sig_info,
-                                     &timeout);
+      int sig_return = ACE_OS::sigtimedwait (&completion_signal,
+                                             &sig_info,
+                                             &timeout);
 
       // Error case.
       // If failure is coz of timeout, then return *0* but set
@@ -215,12 +215,14 @@ query_aio_completions (void)
                            "Error waiting for RT completion signals"),
                           -1);
 
+      //FUZZ: disable check_for_lack_ACE_OS
       // RT completion signals returned.
       if (sig_return != SIGRTMIN)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Unexpected signal (%d) has been received while waiting for RT Completion Signals\n",
                            sig_return),
                           -1);
+      //FUZZ: enble check_for_lack_ACE_OS
 
       // @@ Debugging.
       ACE_DEBUG ((LM_DEBUG,
@@ -349,10 +351,10 @@ int
 ACE_TMAIN (int, ACE_TCHAR *[])
 {
   if (test_aio_calls () == 0)
-    printf ("RT SIG test successful:\n"
-            "ACE_POSIX_SIG_PROACTOR should work in this platform\n");
+    ACE_OS::printf ("RT SIG test successful:\n"
+                    "ACE_POSIX_SIG_PROACTOR should work in this platform\n");
   else
-    printf ("RT SIG test failed:\n"
-            "ACE_POSIX_SIG_PROACTOR may not work in this platform\n");
+    ACE_OS::printf ("RT SIG test failed:\n"
+                    "ACE_POSIX_SIG_PROACTOR may not work in this platform\n");
   return 0;
 }

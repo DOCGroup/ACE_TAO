@@ -265,8 +265,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   ACE_HANDLE handles[2];
 
+  //FUZZ: disable check_for_lack_ACE_OS
   // Create a pipe and initialize the handles.
   ACE_Pipe pipe (handles);
+  //FUZZ: enable check_for_lack_ACE_OS
 
 #if defined (ACE_WIN32) || defined (CHORUS)
   if (ACE_Thread::spawn (ACE_THR_FUNC (worker),

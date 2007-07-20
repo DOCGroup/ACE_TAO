@@ -61,10 +61,12 @@ public:
 
   virtual int svc (void);
 
+  //FUZZ: disable check_for_lack_ACE_OS
   virtual int open (void *args = 0);
   // Activate the thread.
 
   virtual int close (u_long args = 0);
+  //FUZZ: enable check_for_lack_ACE_OS
 };
 
 template <ACE_SYNCH_DECL> int

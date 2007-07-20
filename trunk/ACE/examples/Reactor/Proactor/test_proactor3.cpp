@@ -188,9 +188,11 @@ public:
   Receiver (void);
   ~Receiver (void);
 
+  //FUZZ: disable check_for_lack_ACE_OS
   virtual void open (ACE_HANDLE handle,
-		     ACE_Message_Block &message_block);
+                     ACE_Message_Block &message_block);
   // This is called after the new connection has been accepted.
+  //FUZZ: enable check_for_lack_ACE_OS
 
   static long get_number_sessions (void) { return sessions_; }
 
@@ -254,7 +256,7 @@ Receiver::check_destroy (void)
 
 void
 Receiver::open (ACE_HANDLE handle,
-		ACE_Message_Block &)
+                ACE_Message_Block &)
 {
   ACE_DEBUG ((LM_DEBUG,
               "%N:%l:Receiver::open called\n"));
@@ -399,7 +401,7 @@ Receiver::handle_write_stream (const ACE_Asynch_Write_Stream::Result &result)
     {
       // This code is not robust enough to deal with short file writes
       // (which hardly ever happen);-)
-      //	ACE_ASSERT (result.bytes_to_write () == result.bytes_transferred ());
+      // ACE_ASSERT (result.bytes_to_write () == result.bytes_transferred ());
 
       if (duplex == 0)
         initiate_read_stream ();
@@ -419,8 +421,12 @@ class Sender : public ACE_Handler
 public:
   Sender (void);
   ~Sender (void);
+
+  //FUZZ: disable check_for_lack_ACE_OS
   int open (const ACE_TCHAR *host, u_short port);
   void close (void);
+  //FUZZ: enable check_for_lack_ACE_OS
+
   ACE_HANDLE handle (void) const;
   virtual void handle (ACE_HANDLE);
 
@@ -465,7 +471,7 @@ Sender::Sender (void)
 
 Sender::~Sender (void)
 {
-  close ();
+  this->close ();
 }
 
 void Sender::close (void)
@@ -490,8 +496,7 @@ int Sender::open (const ACE_TCHAR *host, u_short port)
   ACE_INET_Addr address (port, host);
   ACE_SOCK_Connector connector;
 
-  if (connector.connect (this->stream_,
-			 address) == -1)
+  if (connector.connect (this->stream_, address) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "%p\n",
@@ -661,7 +666,7 @@ set_proactor_type (const char *ptype)
   if (!ptype)
     return false;
 
-  switch (toupper (*ptype))
+  switch (ACE_OS::ace_toupper (*ptype))
     {
     case 'D' :  proactor_type = 0; return true;
     case 'A' :  proactor_type = 1; return true;
@@ -684,44 +689,44 @@ parse_args (int argc, ACE_TCHAR *argv[])
       {
       case 'd':		// duplex
         duplex = ACE_OS::atoi (get_opt.opt_arg ());
-		break;
+        break;
       case 'h':		// host for sender
         host = get_opt.opt_arg ();
-		break;
+        break;
       case 'p':		// port number
         port = ACE_OS::atoi (get_opt.opt_arg ());
-		break;
+        break;
       case 'n':		// thread pool size
         threads = ACE_OS::atoi (get_opt.opt_arg ());
-		break;
+        break;
       case 's':     // number of senders
         senders = ACE_OS::atoi (get_opt.opt_arg ());
-	if (senders > MaxSenders)
-	  senders = MaxSenders;
-	break;
+        if (senders > MaxSenders)
+          senders = MaxSenders;
+        break;
       case 'o':     // max number of aio for proactor
         max_aio_operations = ACE_OS::atoi (get_opt.opt_arg ());
 	break;
       case 't':    //  Proactor Type
-	if (set_proactor_type (get_opt.opt_arg ()))
+        if (set_proactor_type (get_opt.opt_arg ()))
           break;
       case 'u':
       default:
-	ACE_ERROR ((LM_ERROR, "%p.",
-		    "\nusage:"
-		    "\n-o <max number of started aio operations for Proactor>"
+        ACE_ERROR ((LM_ERROR, "%p.",
+                    "\nusage:"
+                    "\n-o <max number of started aio operations for Proactor>"
                     "\n-t <Proactor type> UNIX-only, Win32-default always:"
                     "\n    a AIOCB"
                     "\n    i SIG"
                     "\n    s SUN"
                     "\n    d default"
-		    "\n-d <duplex mode 1-on/0-off>"
-		    "\n-h <host> for Sender mode"
-		    "\n-n <number threads for Proactor pool>"
-		    "\n-p <port to listen/connect>"
-		    "\n-s <number of sender's instances>"
-		    "\n-u show this message"
-		    "\n"));
+                    "\n-d <duplex mode 1-on/0-off>"
+                    "\n-h <host> for Sender mode"
+                    "\n-n <number threads for Proactor pool>"
+                    "\n-p <port to listen/connect>"
+                    "\n-s <number of sender's instances>"
+                    "\n-u show this message"
+                    "\n"));
 
 	return -1;
       }
@@ -815,13 +820,13 @@ disable_signal (int sigmin, int sigmax)
 #ifndef ACE_WIN32
 
   sigset_t signal_set;
-  if (sigemptyset (&signal_set) == - 1)
+  if (ACE_OS::sigemptyset (&signal_set) == - 1)
     ACE_ERROR ((LM_ERROR,
                 "Error:(%P | %t):%p\n",
                 "sigemptyset failed"));
 
   for (int i = sigmin; i <= sigmax; i++)
-    sigaddset (&signal_set, i);
+    ACE_OS::sigaddset (&signal_set, i);
 
   //  Put the <signal_set>.
   if (ACE_OS::pthread_sigmask (SIG_BLOCK, &signal_set, 0) != 0)
@@ -855,7 +860,7 @@ print_sigmask (void)
   else
     for (int i = 1; i < 1000; i++)
       {
-        member = sigismember (&mask,i);
+        member = ACE_OS::sigismember (&mask,i);
 
         COUT ("\nSig ")
         COUT (i)

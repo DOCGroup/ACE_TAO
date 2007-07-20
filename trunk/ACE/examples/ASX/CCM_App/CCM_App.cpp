@@ -16,8 +16,11 @@ typedef ACE_Module<ACE_SYNCH> MT_Module;
 class ACE_Svc_Export Test_Task : public MT_Task
 {
 public:
+  //FUZZ: disable check_for_lack_ACE_OS
   virtual int open (void *);
   virtual int close (u_long);
+  //FUZZ: enable check_for_lack_ACE_OS
+
   virtual int init (int, ACE_TCHAR *[]);
   virtual int fini (void);
   virtual int suspend (void);

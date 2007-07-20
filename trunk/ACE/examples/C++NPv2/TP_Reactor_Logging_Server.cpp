@@ -67,7 +67,7 @@ static ACE_THR_FUNC_RETURN controller (void *arg) {
                             defined (ACE_USES_OLD_IOSTREAMS))
   for (;;) {
     char user_input[80];
-    fgets (user_input, sizeof (user_input), stdin);
+    ACE_OS::fgets (user_input, sizeof (user_input), stdin);
     if (ACE_OS::strcmp (user_input, "quit") == 0) {
       reactor->notify (quit_handler);
       break;

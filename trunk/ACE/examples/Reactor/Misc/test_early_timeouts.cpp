@@ -101,6 +101,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
         }
     }
 
+  //FUZZ: disable check_for_lack_ACE_OS
   ACE_DEBUG ((LM_DEBUG,
               "There were %d early timers out of %d calls to select() (%f%%)\n"
               "The max early timeout was: %dsec %dusec\n",
@@ -109,6 +110,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
               float (no_of_early_timers) / iterations * 100,
               maximum_early_timeout.sec (),
               maximum_early_timeout.usec ()));
+  //FUZZ: enable check_for_lack_ACE_OS
 
   return 0;
 }

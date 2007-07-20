@@ -147,8 +147,10 @@ public:
   virtual ~My_Task (void) {}
   // Destructor.
 
+  //FUZZ: disable check_for_lack_ACE_OS
   int open (void *proactor)
     {
+  //FUZZ: enable check_for_lack_ACE_OS
       // Store the proactor.
       this->proactor_ = (ACE_Proactor *) proactor;
 
@@ -201,14 +203,14 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   // Signal set that we want to mask.
 
   // Clear the signal set.
-  if (sigemptyset (&signal_set) == -1)
+  if (ACE_OS::sigemptyset (&signal_set) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Error:%p\n",
                        "sigemptyset failed"),
                       1);
 
   // Add the SIGRTMAX to the signal set.
-  if (sigaddset (&signal_set, ACE_SIGRTMAX) == -1)
+  if (ACE_OS::sigaddset (&signal_set, ACE_SIGRTMAX) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Error:%p\n",
                        "sigaddset failed"),

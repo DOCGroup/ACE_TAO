@@ -21,6 +21,7 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
                       100);
   // Listing 1
 
+  //FUZZ: disable check_for_lack_ACE_OS
   /*
    * The complete open signature:
    *
@@ -33,6 +34,7 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
    // Listing 2
    *
    */
+  //FUZZ: enable check_for_lack_ACE_OS
 
   while (1)
     {

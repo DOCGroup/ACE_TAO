@@ -29,7 +29,9 @@ ACE_RCSID(misc, Connection_Handler, "$Id$")
 int
 Connection_Handler::open (void *)
 {
+  //FUZZ: disable check_for_lack_ACE_OS
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) in open()\n")));
+  //FUZZ: enable check_for_lack_ACE_OS
 
   // Make ourselves an Active Object.
   return this->activate (THR_NEW_LWP | THR_DETACHED);
@@ -38,7 +40,9 @@ Connection_Handler::open (void *)
 int
 Connection_Handler::close (u_long)
 {
+  //FUZZ: disable check_for_lack_ACE_OS
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) in close()\n")));
+  //FUZZ: enable check_for_lack_ACE_OS
 
   // Shut ourself down.  Note that this doesn't destroy the thread,
   // just the state of the object.
