@@ -1,3 +1,11 @@
+Fri Jul 20 11:00:00 UTC 2007  Simon Massey  <sma@prismtech.com>
+
+        * bin/tao_orb_tests.lst:
+        * bin/tao_other_tests.lst:
+
+          Removed 2926 & 2936 tests from LynxOS, seems to be the
+          memory mapping problem again.
+
 Fri Jul 20 09:44:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/tao_orb_tests.lst:
