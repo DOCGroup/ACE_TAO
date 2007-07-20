@@ -289,7 +289,6 @@ if test $tao_build_examples = yes; then
     examples/POA/Explicit_Activation/Alt_Resources/Makefile
     examples/POA/Explicit_Activation/Makefile
     examples/POA/FindPOA/Makefile
-    examples/POA/Forwarding/Makefile
     examples/POA/Generic_Servant/Makefile
     examples/POA/Loader/Makefile
     examples/POA/Makefile
@@ -809,6 +808,7 @@ if test $tao_build_tests = yes; then
     tests/POA/EndpointPolicy/Makefile
     tests/POA/Etherealization/Makefile
     tests/POA/Excessive_Object_Deactivations/Makefile
+    tests/POA/Forwarding/Makefile
     tests/POA/Identity/Makefile
     tests/POA/MT_Servant_Locator/Makefile
     tests/POA/Makefile
