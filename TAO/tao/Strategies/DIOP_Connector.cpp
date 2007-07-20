@@ -158,6 +158,7 @@ TAO_DIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
                       ACE_TEXT ("could not make a new connection\n")));
         }
 
+      delete svc_handler;
       return 0;
     }
 
@@ -165,7 +166,7 @@ TAO_DIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("TAO (%P|%t) - DIOP_Connector::connect, ")
                 ACE_TEXT ("new connection on HANDLE %d\n"),
-                svc_handler->get_handle ()));
+                svc_handler->peer ().get_handle ()));
 
   TAO_DIOP_Transport *transport =
     dynamic_cast <TAO_DIOP_Transport *> (svc_handler->transport ());
@@ -173,6 +174,9 @@ TAO_DIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
   // In case of errors transport is zero
   if (transport == 0)
     {
+      // Close the handler.
+      svc_handler->close ();
+
       // Give users a clue to the problem.
       if (TAO_debug_level > 3)
         ACE_DEBUG ((LM_ERROR,
@@ -182,6 +186,7 @@ TAO_DIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
                     diop_endpoint->port (),
                     ACE_TEXT ("errno")));
 
+      delete svc_handler;
       return 0;
     }
 
@@ -203,6 +208,7 @@ TAO_DIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
                       ACE_TEXT ("could not add the new connection to cache\n")));
         }
 
+      delete svc_handler;
       return 0;
     }
 

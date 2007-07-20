@@ -25,11 +25,11 @@
 
 #include "tao/Strategies/strategies_export.h"
 #include "tao/Transport.h"
-#include "ace/SOCK_Stream.h"
+#include "ace/SOCK_Dgram.h"
 #include "ace/Svc_Handler.h"
 
 #if defined ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT
-template class TAO_Strategies_Export ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
+template class TAO_Strategies_Export ACE_Svc_Handler<ACE_SOCK_DGRAM, ACE_NULL_SYNCH>;
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -42,7 +42,7 @@ class TAO_Pluggable_Messaging;
 class TAO_Acceptor;
 
 // Service Handler for this transport
-typedef ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
+typedef ACE_Svc_Handler<ACE_SOCK_DGRAM, ACE_NULL_SYNCH>
         TAO_DIOP_SVC_HANDLER;
 
 /**

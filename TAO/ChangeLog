@@ -1,3 +1,17 @@
+Fri Jul 20 15:03:14 UTC 2007  Vadym Ridosh  <vridosh@prismtech.com>
+
+        * tao/Strategies/DIOP_Connector.cpp:
+        * tao/Strategies/DIOP_Transport.cpp:
+        * tao/Strategies/DIOP_Acceptor.cpp:
+        * tao/Strategies/DIOP_Connection_Handler.h:
+        * tao/Strategies/DIOP_Connection_Handler.cpp:
+        * tao/Strategies/DIOP_Transport.h:
+          Fixed potential memory leaks while DIOP_Connection_Handler
+          is being created in DIOP_Acceptor::open_i and
+          DIOP_Connector::make_connection. Made DIOP even more look
+          like IIOP. Fixed warning genereated by MS VS in
+          DIOP_Acceptor::parse_options.
+
 Fri Jul 20 09:42:40 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/POA/Forwarding/*:

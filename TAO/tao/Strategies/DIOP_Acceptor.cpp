@@ -239,7 +239,7 @@ TAO_DIOP_Acceptor::is_collocated (const TAO_Endpoint *endpoint)
 int
 TAO_DIOP_Acceptor::close (void)
 {
-  return 0;
+  return this->connection_handler_->peer ().close ();
 }
 
 int
@@ -405,14 +405,23 @@ TAO_DIOP_Acceptor::open_i (const ACE_INET_Addr& addr,
                   -1);
 
   this->connection_handler_->local_addr (addr);
-  this->connection_handler_->open_server ();
+  int result = this->connection_handler_->open_server ();
+  if (result == -1)
+    {
+      delete this->connection_handler_;
+      return result;
+    }
 
   // Register only with a valid handle
-  int const result =
+  result =
     reactor->register_handler (this->connection_handler_,
                                ACE_Event_Handler::READ_MASK);
   if (result == -1)
-    return result;
+    {
+      this->connection_handler_->close ();
+      delete this->connection_handler_;
+      return result;
+    }
 
   // Connection handler ownership now belongs to the Reactor.
   this->connection_handler_->remove_reference ();
@@ -421,7 +430,7 @@ TAO_DIOP_Acceptor::open_i (const ACE_INET_Addr& addr,
 
   // We do this make sure the port number the endpoint is listening on
   // gets set in the addr.
-  if (this->connection_handler_->dgram ().get_local_addr (address) != 0)
+  if (this->connection_handler_->peer ().get_local_addr (address) != 0)
     {
       if (TAO_debug_level > 0)
         ACE_ERROR ((LM_ERROR,
@@ -953,7 +962,6 @@ TAO_DIOP_Acceptor::object_key (IOP::TaggedProfile &profile,
   return 1;
 }
 
-
 int
 TAO_DIOP_Acceptor::parse_options (const char *str)
 {
@@ -971,9 +979,7 @@ TAO_DIOP_Acceptor::parse_options (const char *str)
   static const char option_delimiter = '&';
 
   // Count the number of options.
-
-  CORBA::ULong option_count = 1;
-  // Number of endpoints in the string  (initialized to 1).
+  int option_count = 1;
 
   // Only check for endpoints after the protocol specification and
   // before the object key.
@@ -992,7 +998,7 @@ TAO_DIOP_Acceptor::parse_options (const char *str)
   ACE_CString::size_type begin = 0;
   ACE_CString::size_type end = 0;
 
-  for (CORBA::ULong j = 0; j < option_count; ++j)
+  for (int j = 0; j < option_count; ++j)
     {
       if (j < option_count - 1)
         end = options.find (option_delimiter, begin);
