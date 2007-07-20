@@ -7,6 +7,7 @@
 #include "ace/OS_NS_stdlib.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_unistd.h"
+#include "ace/OS_NS_pwd.h"
 #include "ace/Process.h"
 #include "ace/Log_Msg.h"
 
