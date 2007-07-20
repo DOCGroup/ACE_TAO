@@ -1,3 +1,15 @@
+Fri Jul 20 08:40:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_Thread.cpp:
+          Use ACE_HAS_POSIX_SEM_TIMEOUT instead of ACE_HAS_POSIX_TIMEOUT.
+          This fixes bugzilla 2947
+
+        * ace/OS_NS_time.inl (gethrtime):
+          Reshuffeld the implementation to make some checks less complex
+
+        * ace/Service_Gestalt.h:
+          Doxygen fixes
+
 Fri Jul 20 07:36:00 UTC 2007  Simon Massey  <sma@prismtech.com>
 
         * ace/Thread_Manager.cpp:
