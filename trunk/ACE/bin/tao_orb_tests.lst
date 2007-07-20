@@ -168,6 +168,7 @@ TAO/tests/NestedUpcall/MT_Client_Test/run_test.pl: !ST !CORBA_E_MICRO
 TAO/tests/NestedUpcall/Triangle_Test/run_test.pl: !CORBA_E_MICRO
 TAO/tests/Nested_Event_Loop/run_test.pl: !ACE_FOR_TAO
 TAO/tests/POA/Identity/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO
+TAO/tests/POA/Forwarding/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO
 TAO/tests/POA/Policies/run_test.pl: !CORBA_E_MICRO
 TAO/tests/POA/Excessive_Object_Deactivations/run_test.pl: !CORBA_E_MICRO
 TAO/tests/POA/Persistent_ID/run_test.pl: !CORBA_E_MICRO
