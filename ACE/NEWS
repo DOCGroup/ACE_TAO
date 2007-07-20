@@ -39,6 +39,11 @@ USER VISIBLE CHANGES BETWEEN ACE-5.5.9 and ACE-5.5.10
 
 . Intel C++ 10.0 support
 
+. Support for the version of vc8 for 64-bit (AMD64) shipped with the Microsoft
+  Platform SDK.
+
+. Fixed ACE_Vector::swap() (bugzilla #2951).
+
 USER VISIBLE CHANGES BETWEEN ACE-5.5.8 and ACE-5.5.9
 ====================================================
 
