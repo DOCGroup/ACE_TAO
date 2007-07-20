@@ -1,3 +1,10 @@
+Fri Jul 20 18:15:27 UTC 2007  Adam Mitz  <mitza@ociweb.com>
+
+        * NEWS:
+
+          Added entries for the ACE_Vector::swap() fix and Microsoft PSDK
+          64-bit compiler support.
+
 Fri Jul 20 14:44:40 UTC 2007  Wallace Zhang  <zhang_w@ociweb.com>
 
         * contrib/FaCE/FaCE.mpc:
