@@ -37,6 +37,7 @@ idl3_to_idl2_visitor::visit_module (AST_Module *node)
 
   ACE_CString name =
     IdentifierHelper::try_escape (node->original_local_name ());
+    
   *os << "module " << name.c_str () << be_nl
       << "{" << be_idt;
 
@@ -308,7 +309,7 @@ idl3_to_idl2_visitor::visit_home (AST_Home *node)
   *os << be_uidt_nl
       << "};" << be_nl << be_nl;
 
-  xplicit.destroy ();
+//  xplicit.destroy ();
   sn->destroy ();
   delete sn;
   sn = 0;
@@ -375,7 +376,13 @@ idl3_to_idl2_visitor::visit_home (AST_Home *node)
 int
 idl3_to_idl2_visitor::visit_root (AST_Root *node)
 {
-  if (be_global->outfile_init (this->os) == -1)
+  int status = be_global->outfile_init (this->os,
+                                        "",
+                                        "_IDL2.idl",
+                                        "_TAO_IDL_",
+                                        "_IDL_");
+                                            
+  if (status == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("idl3_to_idl2_visitor::visit_root - ")
@@ -383,48 +390,18 @@ idl3_to_idl2_visitor::visit_root (AST_Root *node)
                         -1);
     }
 
-  ACE_CString raw_filename;
   ACE_CString filename;
-  bool excluded_file_found;
-  ACE_CString::size_type p;
 
   for (size_t i = 0; i < idl_global->n_included_idl_files (); ++i)
     {
-      excluded_file_found = false;
-      p = 0;
-    
       if (i == 0)
         {
           *os << be_nl;
         }
 
-      raw_filename = idl_global->included_idl_files ()[i];
-      
-      // If this included IDL file matches one of the 'excluded' files,
-      // generate the include without tacking on the suffix.
-      while (p != ACE_CString::npos)
-        {
-          ACE_CString::size_type cursor = p;
-          p = be_global->excluded_filenames ().find (' ', cursor);
-          
-          ACE_CString one_filename =
-            be_global->excluded_filenames ().substr (cursor, p - cursor);
-            
-          if (one_filename == raw_filename)
-            {
-              excluded_file_found = true;
-              break;
-            }
-            
-          // Skip the whitespace.  
-          if (p != ACE_CString::npos)
-            {
-              while (be_global->excluded_filenames ()[p] == ' ')
-                {
-                  p++;
-                }
-            }
-        }
+      ACE_CString raw_filename = idl_global->included_idl_files ()[i];    
+      bool excluded_file_found =
+        this->match_excluded_file (raw_filename.c_str ());
 
       if (raw_filename.find (".pidl") != ACE_CString::npos
           || raw_filename == "orb.idl"

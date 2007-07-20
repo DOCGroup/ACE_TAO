@@ -139,8 +139,13 @@ BE_produce (void)
   else
     {
       TAO_OutStream *os = 0;
+      int status = be_global->outfile_init (os,
+                                            "",
+                                            "_IDL2.idl",
+                                            "_TAO_IDL_",
+                                            "_IDL_");
       
-      if (be_global->outfile_init (os) == -1)
+      if (status == -1)
         {
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("(%N:%l) BE_produce - ")

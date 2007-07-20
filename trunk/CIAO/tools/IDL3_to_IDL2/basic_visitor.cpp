@@ -4,6 +4,7 @@
 #include "basic_visitor.h"
 #include "identifier_helper.h"
 #include "be_sunsoft.h"
+#include "be_extern.h"
 
 #include "ast_argument.h"
 #include "ast_array.h"
@@ -1068,4 +1069,72 @@ bool
 basic_visitor::scope_skip_type (AST_Decl *d)
 {
   return (d->node_type () == AST_Decl::NT_pre_defined);
+}
+
+bool
+basic_visitor::can_skip_module (AST_Module *m)
+{
+  for (UTL_ScopeActiveIterator si (m, UTL_Scope::IK_decls);
+       !si.is_done ();
+       si.next ())
+    {
+      AST_Decl *d = si.item ();
+      AST_Decl::NodeType nt = d->node_type ();
+      
+      switch (nt)
+        {
+          case AST_Decl::NT_interface:
+          case AST_Decl::NT_interface_fwd:
+          case AST_Decl::NT_component:
+          case AST_Decl::NT_component_fwd:
+          case AST_Decl::NT_eventtype:
+          case AST_Decl::NT_eventtype_fwd:
+          case AST_Decl::NT_home:
+            return false;
+          case AST_Decl::NT_module:
+            if (!this->can_skip_module (AST_Module::narrow_from_decl (d)))
+              {
+                return false;
+              }
+              
+            break;
+          default:
+            break;
+        }
+    }
+    
+  return true;
+}
+
+bool
+basic_visitor::match_excluded_file (const char *raw_filename)
+{
+  ACE_CString::size_type p = 0;
+
+  // If this included IDL file matches one of the 'excluded' files,
+  // generate the include without tacking on the suffix.
+  while (p != ACE_CString::npos)
+    {
+      ACE_CString::size_type cursor = p;
+      p = be_global->excluded_filenames ().find (' ', cursor);
+      
+      ACE_CString one_filename =
+        be_global->excluded_filenames ().substr (cursor, p - cursor);
+        
+      if (one_filename == raw_filename)
+        {
+          return true;
+        }
+        
+      // Skip the whitespace.  
+      if (p != ACE_CString::npos)
+        {
+          while (be_global->excluded_filenames ()[p] == ' ')
+            {
+              p++;
+            }
+        }
+    }
+    
+  return false;
 }

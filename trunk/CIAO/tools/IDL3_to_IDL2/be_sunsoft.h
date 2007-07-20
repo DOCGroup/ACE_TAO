@@ -22,7 +22,7 @@
 
 #include "be_helper.h"
 
-class TAO_SunSoft_OutStream : public TAO_OutStream
+class TAO_IDL3_TO_IDL2_BE_Export TAO_SunSoft_OutStream : public TAO_OutStream
 {
   // =TITLE
   //  TAO_SunSoft_OutStream

@@ -61,11 +61,13 @@ public:
   bool encapsulate_idl2 (void) const;
 
   ACE_CString & excluded_filenames (void);
+  
+  bool gen_copyright (void) const;
 
   //=========================================
 
-  void parse_args (long &i, char **av);
-  // Parse args that affect the backend.
+  virtual void parse_args (long &i, char **av);
+  // Parse args that affect this backend.
 
   void prep_be_arg (char *s);
   // Special BE arg call factored out of DRV_args.
@@ -73,18 +75,26 @@ public:
   void arg_post_proc (void);
   // Checks made after parsing args.
 
-  void usage (void) const;
+  virtual void usage (void) const;
   // Usage message for backend options.
 
   AST_Generator *generator_init (void);
   // Create an AST node generator.
 
-  int outfile_init (TAO_OutStream *&);
+  int outfile_init (TAO_OutStream *&,
+                    const char *file_prefix,
+                    const char *file_suffix,
+                    const char *guard_prefix,
+                    const char *guard_suffix);
   // Create the output file, the associated stream, and
   // generate the initial #ifndef.
 
   void destroy (void);
   // Cleanup.
+  
+protected:
+  bool gen_copyright_;
+  // So it can be turned off in backends that inherit from this one.
 
 private:
   char *filename_;
