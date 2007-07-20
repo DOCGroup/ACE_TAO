@@ -25,19 +25,21 @@
 
 #include "ace/CDR_Base.h"
 
+#include "TAO_IDL3_TO_IDL2_BE_Export.h"
+
 class Identifier;
 class UTL_IdList;
 class AST_Expression;
 
 // a dummy structure to inform TAO_OutStream's << operator to  put a newline
 // and use the current indentation for the succeeding line
-struct TAO_NL
+struct TAO_IDL3_TO_IDL2_BE_Export TAO_NL
 {
 public:
   TAO_NL (void);
 };
 
-struct TAO_INDENT
+struct TAO_IDL3_TO_IDL2_BE_Export TAO_INDENT
 {
   // = TITLE
   //   Operates like a manipulator, increasing the indentation level.
@@ -51,7 +53,7 @@ struct TAO_INDENT
   const int do_now_;
 };
 
-struct TAO_UNINDENT
+struct TAO_IDL3_TO_IDL2_BE_Export TAO_UNINDENT
 {
   // = TITLE
   //   Operates like a manipulator, decreasing the indentation level.
@@ -65,13 +67,13 @@ struct TAO_UNINDENT
   const int do_now_;
 };
 
-extern const TAO_NL be_nl;
-extern const TAO_INDENT be_idt;
-extern const TAO_INDENT be_idt_nl;
-extern const TAO_UNINDENT be_uidt;
-extern const TAO_UNINDENT be_uidt_nl;
+extern TAO_IDL3_TO_IDL2_BE_Export const TAO_NL be_nl;
+extern TAO_IDL3_TO_IDL2_BE_Export const TAO_INDENT be_idt;
+extern TAO_IDL3_TO_IDL2_BE_Export const TAO_INDENT be_idt_nl;
+extern TAO_IDL3_TO_IDL2_BE_Export const TAO_UNINDENT be_uidt;
+extern TAO_IDL3_TO_IDL2_BE_Export const TAO_UNINDENT be_uidt_nl;
 
-class TAO_OutStream
+class TAO_IDL3_TO_IDL2_BE_Export TAO_OutStream
 {
   // =TITLE
   //   TAO_OutStream

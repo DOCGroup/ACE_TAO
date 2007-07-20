@@ -35,8 +35,7 @@ class TAO_IDL3_TO_IDL2_BE_Export basic_visitor : public ast_visitor
   //    basic_visitor.
   //
   // = DESCRIPTION
-  //    Base class for other visitors in this backend, collecting
-  //    common code in a single class.
+  //    Base class for visitors in this backend and others.
   //
 public:
   basic_visitor (void);
@@ -93,7 +92,14 @@ protected:
   void gen_attribute (AST_Attribute *node);
   void gen_label_value (AST_UnionLabel *node);
   
+  // Overrides allow common code for visit_scope().
   virtual bool scope_skip_type (AST_Decl *d);
+  
+  // Used by derived visitors to avoid generating an empty IDL module.
+  bool can_skip_module (AST_Module *m);
+  
+  // Used by derived visitors to check for special include handling.
+  bool match_excluded_file (const char *raw_filename);
 
 protected:
   TAO_OutStream *os;

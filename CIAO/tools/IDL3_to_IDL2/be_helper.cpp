@@ -20,6 +20,7 @@
 // ============================================================================
 
 #include "be_helper.h"
+#include "be_extern.h"
 #include "idl_defines.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
@@ -107,12 +108,15 @@ TAO_OutStream::open (const char *fname)
 
       if (this->fp_ != 0)
         {
-          // Put the copyright notice.
-          ACE_OS::fprintf (this->fp_,
-                            "%s\n",
-                            copyright);
+          if (be_global->gen_copyright ())
+            {
+              // Put the copyright notice.
+              ACE_OS::fprintf (this->fp_,
+                                "%s\n",
+                                copyright);
 
-          ACE_OS::fflush (this->fp_);
+              ACE_OS::fflush (this->fp_);
+            }
 
           return 0;
         }
