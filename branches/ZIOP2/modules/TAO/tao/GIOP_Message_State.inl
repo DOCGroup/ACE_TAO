@@ -28,6 +28,24 @@ TAO_GIOP_Message_State::compressed_data (void) const
   return this->compressed_data_;
 }
 
+ACE_INLINE const TAO_GIOP_Message_Version&
+TAO_GIOP_Message_State::giop_version (void) const
+{
+  return this->giop_version_;
+}
+
+ACE_INLINE CORBA::Octet
+TAO_GIOP_Message_State::message_type (void) const
+{
+  return this->message_type_;
+}
+
+ACE_INLINE
+CORBA::Octet
+TAO_GIOP_Message_State::more_fragments (void) const
+{
+  return this->more_fragments_;
+}
 
 ACE_INLINE void
 TAO_GIOP_Message_State::reset (void)

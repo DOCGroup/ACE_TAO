@@ -184,6 +184,8 @@ public:
   /// Pounter to the next element in the queue.
   TAO_Queued_Data *next_;
 
+  CORBA::Octet compressed_;
+
 private:
   /// Replace the datablock with a one allocated on the heap or
   /// allocator

@@ -67,12 +67,19 @@ public:
   /// Return the compressed information
   CORBA::Octet compressed_data (void) const;
 
+  /// Return the GIOP version
+  const TAO_GIOP_Message_Version &giop_version (void) const;
+
+  /// Return the message_type
+  CORBA::Octet message_type (void) const;
+
+  /// Return the more fragments
+  CORBA::Octet more_fragments (void) const;
+
   /// Reset the state..
   void reset (void);
 
 private:
-
-  friend class TAO_GIOP_Message_Base;
 
   /// Parse the message header.
   int parse_message_header_i (ACE_Message_Block &incoming);
@@ -99,7 +106,7 @@ private:
   CORBA::ULong read_ulong (const char *buf) const;
 
 private:
-  // GIOP version information..
+  /// GIOP version information..
   TAO_GIOP_Message_Version giop_version_;
 
   /// 0 = big, 1 = little
