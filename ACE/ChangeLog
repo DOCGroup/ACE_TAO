@@ -1,3 +1,10 @@
+Fri Jul 20 07:36:00 UTC 2007  Simon Massey  <sma@prismtech.com>
+
+        * ace/Thread_Manager.cpp:
+
+          I should stop trying to second guess myself, the derived class
+          has a protected destructor!
+
 Fri Jul 20 03:22:02 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * examples/APG/Active_Objects/AO.cpp:

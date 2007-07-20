@@ -503,7 +503,7 @@ ace_thread_manager_adapter (void *args)
   ACE_TSS_Emulation::tss_open (ts_storage);
 #endif /* ACE_HAS_TSS_EMULATION */
 
-  ACE_Thread_Adapter *thread_args = (ACE_Thread_Adapter *) args;
+  ACE_Thread_Adapter *thread_args = reinterpret_cast<ACE_Thread_Adapter *> (args);
 
   // NOTE: this preprocessor directive should match the one in above
   // ACE_Thread_Exit::instance ().  With the Xavier Pthreads package,
@@ -532,7 +532,7 @@ ace_thread_manager_adapter (void *args)
   // Invoke the user-supplied function with the args.
   void *status = thread_args->invoke ();
 
-  delete thread_args;
+  delete static_cast<ACE_Base_Thread_Adapter *> (thread_args);
   return status;
 }
 #endif
