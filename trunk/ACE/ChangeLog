@@ -1,3 +1,11 @@
+Sat Jul 21 06:26:30 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * bin/fuzz.pl:
+
+          Disable check_for_exception_spec for now. This test will be reenabled and
+          the remaining usage of exception sepcifications will be zapped once the
+          beta is out.
+
 Sat Jul 21 00:48:31 UTC 2007  Steve Huston  <shuston@riverace.com>
 
         * ace/SOCK_Dgram_Mcast.cpp (subscribe_i): Removed duplicate IPv4
