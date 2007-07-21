@@ -1,3 +1,8 @@
+Sat Jul 21 00:48:31 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * ace/SOCK_Dgram_Mcast.cpp (subscribe_i): Removed duplicate IPv4
+          code.
+
 Fri Jul 20 21:32:48 UTC 2007  Steve Huston  <shuston@riverace.com>
 
         * ace/MEM_Acceptor.cpp (accept): Use the sockaddr_in whose address was
