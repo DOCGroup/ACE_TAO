@@ -161,7 +161,7 @@ public:
   {
     ACE_TRACE ("Slave::showWho");
 #if !defined (ACE_LACKS_PWD_FUNCTIONS)
-    passwd *pw = ACE_OS::getpwuid (ACE_OS::geteuid ());
+    passwd *pw = ::getpwuid (ACE_OS::geteuid ());
     ACE_DEBUG ((LM_INFO,
                 ACE_TEXT ("(%P) Running this process as:%s\n"),
                 pw->pw_name));
