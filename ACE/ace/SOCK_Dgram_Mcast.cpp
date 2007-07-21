@@ -601,32 +601,21 @@ ACE_SOCK_Dgram_Mcast::subscribe_i (const ACE_INET_Addr &mcast_addr,
                                            &mreq6,
                                            sizeof mreq6) == -1)
         return -1;
-    }
-  else
-    {
-      // Create multicast addr/if struct.
-      if (this->make_multicast_ifaddr (&mreq, mcast_addr, net_if) == -1)
-        return -1;
-      // Tell IP stack to pass messages sent to this group.
-      else if (this->ACE_SOCK::set_option (IPPROTO_IP,
-                                           IP_ADD_MEMBERSHIP,
-                                           &mreq,
-                                           sizeof mreq) == -1)
-        return -1;
 
+      return 0;
     }
-#else
+  // Fall through for IPv4 case
+#endif /* ACE_HAS_IPV6 */
+
+  // Create multicast addr/if struct.
   if (this->make_multicast_ifaddr (&mreq, mcast_addr, net_if) == -1)
     return -1;
   // Tell IP stack to pass messages sent to this group.
-  // Note, this is not IPv6 compliant.
   else if (this->ACE_SOCK::set_option (IPPROTO_IP,
                                        IP_ADD_MEMBERSHIP,
                                        &mreq,
                                        sizeof mreq) == -1)
     return -1;
-
-#endif /* ACE_HAS_IPV6 */
 
   return 0;
 }
