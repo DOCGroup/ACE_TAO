@@ -1,3 +1,8 @@
+Sat Jul 22 13:06:14 UTC 2007  Martin Corino <mcorino@remedy.nl>
+
+        * tests/ORB_Local_Config/Two_DLL_ORB/Two_DLL_ORB.mpc:
+          Added small verbatim section to make this test build on OpenVMS.
+
 Fri Jul 20 15:03:14 UTC 2007  Vadym Ridosh  <vridosh@prismtech.com>
 
         * tao/Strategies/DIOP_Connector.cpp:
