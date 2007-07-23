@@ -3,6 +3,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
+#include "ace/OS_NS_unistd.h"
 #include "ace/Sample_History.h"
 #include "ace/High_Res_Timer.h"
 #include "ace/Stats.h"
@@ -378,6 +379,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       poa_manager->activate ();
 
       orb->run ();
+      ACE_OS::sleep(1);
     }
   catch (const CORBA::Exception& ex)
     {
