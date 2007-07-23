@@ -67,9 +67,6 @@ public:
 
   TAO_GIOP_Message_Version const & giop_version (void) const;
 
-  /// Reset the state..
-  void reset (void);
-
 private:
   /// Parse the message header.
   int parse_message_header_i (ACE_Message_Block &incoming);

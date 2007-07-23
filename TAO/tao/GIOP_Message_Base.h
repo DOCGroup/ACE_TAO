@@ -245,8 +245,6 @@ protected:
                          const TAO_GIOP_Message_State& state) const;
 
 private:
-  int parse_incoming_messages (ACE_Message_Block &incoming);
-
   /// Parse GIOP request-id of TAO_Queued_Data @a qd
   /// @return 0 on success, otherwise -1
   int parse_request_id (const TAO_Queued_Data *qd, CORBA::ULong &request_id) const;
@@ -266,10 +264,6 @@ private:
 private:
   /// Cached ORB_Core pointer...
   TAO_ORB_Core *orb_core_;
-
-  /// The message handler object that does reading and parsing of the
-  /// incoming messages
-  TAO_GIOP_Message_State message_state_;
 
   /// All the implementations of GIOP message generator and parsers
   TAO_GIOP_Message_Generator_Parser_Impl tao_giop_impl_;
