@@ -101,7 +101,7 @@ TAO_IIOP_Acceptor::create_new_profile (const TAO::ObjectKey &object_key,
                                        CORBA::Short priority)
 {
   // Adding this->endpoint_count_ to the TAO_MProfile.
-  const int count = mprofile.profile_count ();
+  int const count = mprofile.profile_count ();
   if ((mprofile.size () - count) < this->endpoint_count_
       && mprofile.grow (count + this->endpoint_count_) == -1)
     return -1;
