@@ -1,3 +1,11 @@
+Mon Jul 23 11:58:14 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/IIOP_Acceptor.cpp:
+          Const change
+
+        * tao/Reply_Dispatcher.h:
+          Reduced number of forward declarations
+
 Mon Jul 23 11:36:14 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/GIOP_Message_Base.{h,cpp}:
