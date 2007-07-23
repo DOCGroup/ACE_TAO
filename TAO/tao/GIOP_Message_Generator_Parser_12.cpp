@@ -70,8 +70,7 @@ TAO_GIOP_Message_Generator_Parser_12::write_request_header (
 
   msg.write_octet_array (reserved, 3);
 
-  if (this->marshall_target_spec (spec,
-                                  msg) == false)
+  if (this->marshall_target_spec (spec, msg) == false)
     return false;
 
   // Write the operation name

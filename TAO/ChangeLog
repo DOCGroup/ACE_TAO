@@ -1,10 +1,17 @@
-Mon Jul 24 05:32:14 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+Mon Jul 23 09:02:14 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/GIOP_Message_Base.cpp:
+        * tao/GIOP_Message_Generator_Parser_12.cpp:
+        * tao/On_Demand_Fragmentation_Strategy.cpp:
+          get_version doesn't have a return value anymore
+
+Mon Jul 23 05:32:14 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Security/SL2_SecurityManager.cpp:
           Commented out non reachable code to resolve warnings
           on OpenVMS
 
-Sat Jul 22 13:06:14 UTC 2007  Martin Corino <mcorino@remedy.nl>
+Sun Jul 22 13:06:14 UTC 2007  Martin Corino <mcorino@remedy.nl>
 
         * tests/ORB_Local_Config/Two_DLL_ORB/Two_DLL_ORB.mpc:
           Added small verbatim section to make this test build on OpenVMS.

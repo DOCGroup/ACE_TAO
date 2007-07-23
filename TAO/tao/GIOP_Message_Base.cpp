@@ -867,7 +867,7 @@ TAO_GIOP_Message_Base::write_protocol_header (TAO_GIOP_Message_Type type,
 
   CORBA::Octet major, minor = 0;
 
-  (void) msg.get_version (major, minor);
+  msg.get_version (major, minor);
 
   header[4] = major;
   header[5] = minor;
