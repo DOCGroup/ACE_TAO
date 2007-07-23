@@ -130,8 +130,8 @@ TAO::ObjectKey::encode_sequence_to_string (char* & str,
         }
 
       *cp++ = '%';
-      *cp++ = ACE::nibble2hex ((bt >> 4) & 0x0f);
-      *cp++ = ACE::nibble2hex (bt & 0x0f);
+      *cp++ = static_cast<char> (ACE::nibble2hex ((bt >> 4) & 0x0f));
+      *cp++ = static_cast<char> (ACE::nibble2hex (bt & 0x0f));
     }
   // Zero terminate
   *cp = '\0';
