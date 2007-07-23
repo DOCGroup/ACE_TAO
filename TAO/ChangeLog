@@ -1,3 +1,9 @@
+Mon Jul 24 05:32:14 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Security/SL2_SecurityManager.cpp:
+          Commented out non reachable code to resolve warnings
+          on OpenVMS
+
 Sat Jul 22 13:06:14 UTC 2007  Martin Corino <mcorino@remedy.nl>
 
         * tests/ORB_Local_Config/Two_DLL_ORB/Two_DLL_ORB.mpc:
