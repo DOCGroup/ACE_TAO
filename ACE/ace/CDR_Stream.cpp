@@ -14,7 +14,7 @@ ACE_RCSID (ace,
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-int ACE_OutputCDR::wchar_maxbytes_ = sizeof (ACE_CDR::WChar);
+size_t ACE_OutputCDR::wchar_maxbytes_ = sizeof (ACE_CDR::WChar);
 
 ACE_OutputCDR::ACE_OutputCDR (size_t size,
                               int byte_order,
@@ -139,12 +139,12 @@ ACE_OutputCDR::ACE_OutputCDR (ACE_Message_Block *data,
 }
 
 /*static*/ void
-ACE_OutputCDR::wchar_maxbytes (int maxbytes)
+ACE_OutputCDR::wchar_maxbytes (size_t maxbytes)
 {
   ACE_OutputCDR::wchar_maxbytes_ = maxbytes;
 }
 
-/*static*/ int
+/*static*/ size_t
 ACE_OutputCDR::wchar_maxbytes ()
 {
   return ACE_OutputCDR::wchar_maxbytes_;
@@ -567,7 +567,7 @@ ACE_OutputCDR::write_wchar_array_i (const ACE_CDR::WChar *x,
   if (length == 0)
     return true;
   char* buf = 0;
-  const size_t align = (ACE_OutputCDR::wchar_maxbytes_ == 2) ?
+  size_t const align = (ACE_OutputCDR::wchar_maxbytes_ == 2) ?
     ACE_CDR::SHORT_ALIGN :
     ACE_CDR::OCTET_ALIGN;
 

@@ -383,10 +383,10 @@ public:
 
   /// set the global size of serialized wchars. This may be different
   /// than the size of a wchar_t.
-  static void wchar_maxbytes (int );
+  static void wchar_maxbytes (size_t max_bytes);
 
   /// access the serialized size of wchars.
-  static int wchar_maxbytes (void);
+  static size_t wchar_maxbytes (void);
 
   /**
    * Return alignment of the wr_ptr(), with respect to the start of
@@ -425,12 +425,10 @@ public:
   void reset_byte_order (int byte_order);
 
   /// set GIOP version info
-  int set_version (ACE_CDR::Octet major,
-                   ACE_CDR::Octet minor);
+  void set_version (ACE_CDR::Octet major, ACE_CDR::Octet minor);
 
   /// Set the underlying GIOP version..
-  int get_version (ACE_CDR::Octet &major,
-                   ACE_CDR::Octet &minor);
+  void get_version (ACE_CDR::Octet &major, ACE_CDR::Octet &minor);
 
 private:
 
@@ -542,7 +540,7 @@ protected:
    * or not having a native wchar codeset defined, the maxbytes is
    * set to zero, indicating no wchar data is allowed.
    */
-  static int wchar_maxbytes_;
+  static size_t wchar_maxbytes_;
 };
 
 
@@ -933,12 +931,10 @@ public:
               char *&buf);
 
   /// Set the underlying GIOP version..
-  int set_version (ACE_CDR::Octet major,
-                   ACE_CDR::Octet minor);
+  void set_version (ACE_CDR::Octet major, ACE_CDR::Octet minor);
 
   /// Set the underlying GIOP version..
-  int get_version (ACE_CDR::Octet &major,
-                   ACE_CDR::Octet &minor);
+  void get_version (ACE_CDR::Octet &major, ACE_CDR::Octet &minor);
 
 protected:
 
