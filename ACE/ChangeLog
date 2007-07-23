@@ -1,3 +1,10 @@
+Mon Jul 22 08:04:30 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Rtems_init.c:
+        * ace/Atomic_Op_Sparc.c:
+          With Intel C++ don't define the static variable, result in a
+          warning that it is not used
+
 Mon Jul 22 06:34:30 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/CDR_Stream.{h,cpp,inl}:
