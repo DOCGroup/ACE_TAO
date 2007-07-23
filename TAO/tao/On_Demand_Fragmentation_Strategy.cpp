@@ -33,7 +33,7 @@ TAO_On_Demand_Fragmentation_Strategy::fragment (
   CORBA::Octet major = 0;
   CORBA::Octet minor = 0;
 
-  (void) cdr.get_version (major, minor);
+  cdr.get_version (major, minor);
 
   // GIOP fragments are supported in GIOP 1.1 and better, but TAO only
   // supports them in 1.2 or better since GIOP 1.1 fragments do not
