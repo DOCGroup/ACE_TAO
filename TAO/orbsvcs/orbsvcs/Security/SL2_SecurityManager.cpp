@@ -137,11 +137,11 @@ TAO::Security::AccessDecision::~AccessDecision ()
 TAO::Security::AccessDecision::OBJECT_KEY
 TAO::Security::AccessDecision::map_key_from_objref (CORBA::Object_ptr /*obj */)
 {
-  ACE_ERROR ((LM_ERROR,"map_key_from_objref is currently not implemented\n"));
+  ACE_ERROR ((LM_ERROR, "map_key_from_objref is currently not implemented\n"));
   throw CORBA::NO_IMPLEMENT();
 
-  OBJECT_KEY key;
-  return key;
+//  OBJECT_KEY key;
+//  return key;
 }
 
 CORBA::Boolean
@@ -162,19 +162,19 @@ TAO::Security::AccessDecision::access_allowed_i (OBJECT_KEY &key,
       // Couldn't find the IOR in the map, so we use the default
       access_decision = this->default_allowance_decision_;
       if (TAO_debug_level >= 3)
-	ACE_DEBUG ((LM_DEBUG,
-		    "TAO (%P|%t) SL2_AccessDecision::access_decision(%x,%s)"
-		    " NOT FOUND using default %d\n",
-		    hash.operator()(key),
-		    operation_name, access_decision));
+        ACE_DEBUG ((LM_DEBUG,
+          "TAO (%P|%t) SL2_AccessDecision::access_decision(%x,%s)"
+          " NOT FOUND using default %d\n",
+          hash.operator()(key),
+          operation_name, access_decision));
     }
   else if (TAO_debug_level >= 3)
     {
       ACE_DEBUG ((LM_DEBUG,
-		  "TAO (%P|%t) SL2_AccessDecision::access_decision(%x,%s)"
-		  " found with decision %d\n",
-		  hash.operator()(key),
-		  operation_name, access_decision));
+        "TAO (%P|%t) SL2_AccessDecision::access_decision(%x,%s)"
+        " found with decision %d\n",
+        hash.operator()(key),
+        operation_name, access_decision));
     }
 
   // For now we just return the default.
@@ -243,21 +243,21 @@ TAO::Security::AccessDecision::add_object
     {
       // rebind shouldn't fail under normal circumstances
       if (TAO_debug_level > 1)
-	ACE_DEBUG ((LM_DEBUG,
-		    "TAO (%P|%t): SL2_AccessDecision::add_object(%x,%d) "
-		    "unexpectedly failed (errno=%d)\n",
-		    hash.operator()(key),
-		    allow_insecure_access,
-		    errno));
+        ACE_DEBUG ((LM_DEBUG,
+          "TAO (%P|%t): SL2_AccessDecision::add_object(%x,%d) "
+          "unexpectedly failed (errno=%d)\n",
+          hash.operator()(key),
+          allow_insecure_access,
+          errno));
       throw
-	CORBA::NO_MEMORY(CORBA::SystemException::_tao_minor_code (TAO::VMCID,
+        CORBA::NO_MEMORY(CORBA::SystemException::_tao_minor_code (TAO::VMCID,
 								  errno),
-			 CORBA::COMPLETED_NO);
+         CORBA::COMPLETED_NO);
     }
   else
     {
       if (TAO_debug_level >= 3)
-	ACE_DEBUG ((LM_DEBUG,
+        ACE_DEBUG ((LM_DEBUG,
 		    "TAO (%P|%t): SL2_AccessDecision::add_object(%x,%d) okay\n",
 		    hash.operator()(key),
 		    allow_insecure_access));
