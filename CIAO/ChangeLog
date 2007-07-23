@@ -1,3 +1,16 @@
+Mon Jul 23 16:53:45 UTC 2007  Krishnakumar B  <kitty@nospam.invalid.domain>
+
+        * examples/Hello/descriptors/DeploymentPlan.cdp:  Updated
+          deployment plan generated from the corresponding PICML model.
+
+        * examples/Hello/descriptors/DeploymentPlan_without_ns.cdp:  New
+          deployment plan which doesn't use the Naming Service.
+
+        * examples/Hello/descriptors/run_test.pl:
+        * examples/Hello/descriptors/run_test_without_ns.pl:
+
+          Updated the nightly build script to use the new deployment plans.
+
 Mon Jul 23 09:07:14 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/Cookies.cpp:

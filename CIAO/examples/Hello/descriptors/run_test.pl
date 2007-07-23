@@ -148,7 +148,7 @@ $em_running = 1;
 print "Invoking executor - start the application -\n";
 $E =
   new PerlACE::Process ("$CIAO_ROOT/bin/plan_launcher",
-                        "-p flattened_deploymentplan.cdp -k file://EM.ior -o DAM.ior");
+                        "-p DeploymentPlan.cdp -k file://EM.ior -o DAM.ior");
 
 $E->SpawnWaitKill (5000);
 
