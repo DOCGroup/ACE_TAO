@@ -897,8 +897,7 @@ TAO_GIOP_Message_Base::process_request (
 
   try
     {
-      parse_error =
-        parser->parse_request_header (request);
+      parse_error = parser->parse_request_header (request);
 
       // Throw an exception if the
       if (parse_error != 0)
@@ -1224,8 +1223,7 @@ TAO_GIOP_Message_Base::make_send_locate_reply (TAO_Transport *transport,
   // Note here we are making the Locate reply header which is *QUITE*
   // different from the reply header made by the make_reply () call..
   // Make the GIOP message header
-  this->write_protocol_header (TAO_GIOP_LOCATEREPLY,
-                               output);
+  this->write_protocol_header (TAO_GIOP_LOCATEREPLY, output);
 
   // This writes the header & body
   parser->write_locate_reply_mesg (output,
@@ -1261,8 +1259,7 @@ TAO_GIOP_Message_Base::make_send_locate_reply (TAO_Transport *transport,
 int
 TAO_GIOP_Message_Base::send_error (TAO_Transport *transport)
 {
-  const char
-    error_message [TAO_GIOP_MESSAGE_HEADER_LEN] =
+  const char error_message [TAO_GIOP_MESSAGE_HEADER_LEN] =
   {
     // The following works on non-ASCII platforms, such as MVS (which
     // uses EBCDIC).

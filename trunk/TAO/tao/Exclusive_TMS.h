@@ -79,16 +79,6 @@ protected:
 
   /// Reply Dispatcher corresponding to the request.
   TAO_Reply_Dispatcher *rd_;
-
-  // @@ Commented for the time being, let the commented line stay for
-  //    sometime - Bala
-  // TAO_GIOP_Message_State message_state_;
-  // Message state to read the incoming message.
-
-  // @@ Having members of type TAO_GIOP* indicates that we
-  // (Transport_Mux_Strategy) are aware of the underlying messaging
-  // protocol. But for the present let us close our eyes till we are
-  // able to iterate on a use case - Bala.
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

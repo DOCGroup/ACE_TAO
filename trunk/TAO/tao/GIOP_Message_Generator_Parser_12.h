@@ -23,7 +23,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-class TAO_GIOP_Message_State;
 class TAO_Service_Context;
 class TAO_Transport;
 
