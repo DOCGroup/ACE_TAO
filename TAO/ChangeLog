@@ -1,3 +1,12 @@
+Mon Jul 23 11:36:14 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/GIOP_Message_Base.{h,cpp}:
+          Removed parse_incoming_messages method and message_state_ member,
+          both are not used at all
+
+        * tao/GIOP_Message_State.{h,inl}:
+          Removed reset method, it is not used anymore
+
 Mon Jul 23 11:18:14 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/GIOP_Message_State.{h,cpp,inl}:

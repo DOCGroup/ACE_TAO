@@ -29,7 +29,6 @@ TAO_GIOP_Message_Base::TAO_GIOP_Message_Base (TAO_ORB_Core * orb_core,
                                               TAO_Transport * transport,
                                               size_t input_cdr_size)
   : orb_core_ (orb_core)
-  , message_state_ ()
   , fragmentation_strategy_ (orb_core->fragmentation_strategy (transport))
   , out_stream_ (0,
                  input_cdr_size,
@@ -339,14 +338,6 @@ TAO_GIOP_Message_Base::message_type (
 }
 
 int
-TAO_GIOP_Message_Base::parse_incoming_messages (ACE_Message_Block &incoming)
-{
-  this->message_state_.reset ();
-
-  return this->message_state_.parse_message_header (incoming);
-}
-
-int
 TAO_GIOP_Message_Base::parse_next_message (ACE_Message_Block &incoming,
                                            TAO_Queued_Data &qd,
                                            size_t &mesg_length)
@@ -366,7 +357,7 @@ TAO_GIOP_Message_Base::parse_next_message (ACE_Message_Block &incoming,
           return -1;
         }
 
-      const size_t message_size = state.message_size (); /* Header + Payload */
+      size_t const message_size = state.message_size (); /* Header + Payload */
 
       if (message_size > incoming.length ())
         {
@@ -482,8 +473,7 @@ TAO_GIOP_Message_Base::consolidate_node (TAO_Queued_Data *qd,
     {
       // The data length that has been stuck in there during the last
       // read ....
-      size_t const len =
-        qd->msg_block_->length ();
+      size_t const len = qd->msg_block_->length ();
 
       // paranoid check
       if (len >= TAO_GIOP_MESSAGE_HEADER_LEN)
@@ -621,9 +611,7 @@ TAO_GIOP_Message_Base::process_request_message (TAO_Transport *transport,
   TAO_GIOP_Message_Generator_Parser *generator_parser = 0;
 
   // Get the state information that we need to use
-  this->set_state (qd->major_version_,
-                   qd->minor_version_,
-                   generator_parser);
+  this->set_state (qd->major_version_, qd->minor_version_, generator_parser);
 
   // A buffer that we will use to initialise the CDR stream.  Since we're
   // allocating the buffer on the stack, we may as well allocate the data
