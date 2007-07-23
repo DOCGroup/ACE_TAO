@@ -198,3 +198,19 @@
    };
 
  #endif /* end #if !defined */
+
+Index: Object_KeyC.cpp
+===================================================================
+--- Object_KeyC.cpp	(revision 79001)
++++ Object_KeyC.cpp	(working copy)
+@@ -130,8 +130,8 @@
+         }
+ 
+       *cp++ = '%';
+-      *cp++ = ACE::nibble2hex ((bt >> 4) & 0x0f);
+-      *cp++ = ACE::nibble2hex (bt & 0x0f);
++      *cp++ = static_cast<char> (ACE::nibble2hex ((bt >> 4) & 0x0f));
++      *cp++ = static_cast<char> (ACE::nibble2hex (bt & 0x0f));
+     }
+   // Zero terminate
+   *cp = '\0';
