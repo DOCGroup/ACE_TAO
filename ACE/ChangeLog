@@ -1,3 +1,9 @@
+Mon Jul 22 09:58:30 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-win32-msvc.h:
+          Intel C++ does mimic MSVC but does have different warning
+          numbers. Disable some Intel C++ warnings
+
 Mon Jul 22 08:04:30 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Rtems_init.c:
