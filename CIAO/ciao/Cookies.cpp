@@ -28,7 +28,7 @@ namespace CIAO
                         ptrdiff_t &key)
   {
     Cookie_Impl const * const c =
-      dynamic_cast <Cookie_Impl const * const> (ck);
+      dynamic_cast <Cookie_Impl const *> (ck);
 
     if (c == 0)
       {

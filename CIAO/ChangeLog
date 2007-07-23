@@ -1,3 +1,9 @@
+Mon Jul 23 09:07:14 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Cookies.cpp:
+          Removed const in cast, not needed and fixes Intel C++
+          warning
+
 Fri Jul 20 12:11:43 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tools/IDL3_to_IDL2/basic_visitor.cpp:
@@ -9,7 +15,7 @@ Fri Jul 20 12:11:43 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
         * tools/IDL3_to_IDL2/be_helper.cpp:
         * tools/IDL3_to_IDL2/idl3_to_idl2_visitor.cpp:
         * tools/IDL3_to_IDL2/be_helper.h:
-        
+
           Refactored code and other changes to make this backend more
           friendly to others that extend it. No changes to generated
           code or to the behavior of the backend.
