@@ -8,10 +8,10 @@
  *
  *   GIOP utility definitions
  *
- *
  *  @author  Chris Cleeland <cleeland@cs.wustl.edu>
  *  @author  Carlos O' Ryan <coryan@uci.edu>
  *  @author  Balachandran Natarajan <bala@cs.wustl.edu>
+ *  @author  Johnny Willemsen <jwillemsen@remedy.nl>
  */
 //=============================================================================
 #ifndef TAO_GIOP_MESSAGE_STATE_H
@@ -25,12 +25,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
-class TAO_ORB_Core;
-class TAO_GIOP_Message_Base;
-
 
 /**
  * @class TAO_GIOP_Message_State
@@ -64,13 +59,18 @@ public:
   /// Return the byte order information
   CORBA::Octet byte_order (void) const;
 
+  /// Return the message type
+  CORBA::Octet message_type (void) const;
+
+  /// Return the more fragments
+  CORBA::Octet more_fragments (void) const;
+
+  TAO_GIOP_Message_Version const & giop_version (void) const;
+
   /// Reset the state..
   void reset (void);
 
 private:
-
-  friend class TAO_GIOP_Message_Base;
-
   /// Parse the message header.
   int parse_message_header_i (ACE_Message_Block &incoming);
 
@@ -91,7 +91,7 @@ private:
   /// Gets the size of the payload and set the size in the <state>
   void get_payload_size (char *buf);
 
-  /// Read the unsigned long from the buffer. The <buf> should just
+  /// Read the unsigned long from the buffer. The @a buf should just
   /// point to the next 4 bytes data that represent the ULong
   CORBA::ULong read_ulong (const char *buf) const;
 
@@ -113,9 +113,6 @@ private:
   /// fragments.  A value of non-zero indicates that it does have
   /// fragments.
   CORBA::Octet more_fragments_;
-
-  /// Missing data
-  CORBA::ULong missing_data_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

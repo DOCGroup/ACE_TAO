@@ -1,3 +1,14 @@
+Mon Jul 23 11:18:14 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/GIOP_Message_State.{h,cpp,inl}:
+          Removed friend with GIOP_Message_Base and provided inline
+          accessor methods. Removed missing_data_ member, it was not
+          used at all
+
+        * tao/GIOP_Message_Base.cpp:
+          Use accessor methods of GIOP_Message_State because we are
+          not a friend anymore
+
 Mon Jul 23 09:02:14 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/GIOP_Message_Base.cpp:
