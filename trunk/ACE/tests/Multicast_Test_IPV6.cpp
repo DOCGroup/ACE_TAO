@@ -817,6 +817,16 @@ int producer (MCT_Config &config)
         ACE_DEBUG ((LM_INFO, ACE_TEXT ("set IPV6_MULTICAST_HOPS = %d\n"),
                     hops));
     }
+
+  // Turn on multicast loop back since the test relies on it and the
+  // ACE_SOCK_Dgram_Mcast documents the loopback state as indeterminate.
+  char do_loopback = 1;
+  if (socket.set_option (IPPROTO_IPV6,
+                         IPV6_MULTICAST_LOOP,
+                         (void *)&do_loopback,
+                         1) == -1)
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"),
+                ACE_TEXT ("Can't set IPV6_MULTICAST_LOOP")));
 #endif /* ACE_HAS_IPV6 */
 
 

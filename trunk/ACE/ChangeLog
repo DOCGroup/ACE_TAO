@@ -1,3 +1,11 @@
+Mon Jul 23 20:16:23 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * tests/Multicast_Test_IPV6.cpp: Always enable IPV6_MULTICAST_LOOP
+          since the test relies on seeing the datagrams sent on the local
+          host and various platforms have different defaults.
+          ACE_SOCK_Dgram_Mcast documents this indeterminate state, so if
+          the app cares (as this one does), it should set it specifically.
+
 Mon Jul 22 09:59:30 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/unload_libace.mpb:
