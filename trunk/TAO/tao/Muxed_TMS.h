@@ -69,6 +69,9 @@ public:
   virtual void connection_closed (void);
 
 protected:
+  /// Lock to protect the state of the object
+  ACE_Lock *lock_;
+
   /// Used to generate a different request_id on each call to
   /// request_id().
   CORBA::ULong request_id_generator_;

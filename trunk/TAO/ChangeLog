@@ -1,3 +1,10 @@
+Mon Jul 23 12:21:14 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Muxed_TMS.{h,cpp}
+        * tao/Transport_Mux_Strategy.{h,cpp}:
+          Moved lock_ from base to derived class, no need to be in
+          the base
+
 Mon Jul 23 12:12:14 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Exclusive_TMS.h:
