@@ -1,3 +1,15 @@
+Mon Jul 23 12:12:14 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Exclusive_TMS.h:
+          Removed commented out code
+
+        * tao/GIOP_Message_Base.cpp:
+          Layout changes
+
+        * tao/GIOP_Message_Generator_Parser_10.h:
+        * tao/GIOP_Message_Generator_Parser_12.h:
+          Reduced number of forward declarations
+
 Mon Jul 23 11:58:14 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/IIOP_Acceptor.cpp:
