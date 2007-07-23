@@ -110,8 +110,7 @@ ACE_SPIPE_Stream::send_handle (ACE_HANDLE handle) const
        !defined (ACE_HAS_WINCE)   /* CE4 has WS2 but not WSADuplicateSocket */
   DWORD procID;
   WSAPROTOCOL_INFO protInfo;
-  ssize_t res;
-  res = this->recv(&procID, sizeof(procID));
+  ssize_t res = this->recv(&procID, sizeof(procID));
   if (res != sizeof(procID))
   {
     if(res != -1)
@@ -165,8 +164,7 @@ ACE_SPIPE_Stream::recv_handle (ACE_HANDLE &handle) const
       (defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0))
   pid_t procID = ACE_OS::getpid();
   WSAPROTOCOL_INFO protInfo;
-  ssize_t res;
-  res = this->send(&procID, sizeof(procID));
+  ssize_t res = this->send(&procID, sizeof(procID));
   if (res != sizeof(procID))
   {
     if(res != -1)

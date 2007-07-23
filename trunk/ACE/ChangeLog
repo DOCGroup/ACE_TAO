@@ -1,3 +1,13 @@
+Mon Jul 22 06:34:30 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/CDR_Stream.{h,cpp,inl}:
+          Changed wchar_maxbytes_ to a size_t to resolve warnings with BCB2007
+          and removed the return value of get_version/set_version, they just
+          always do a return 0 which isn't usefull
+
+        * ace/SPIPE_Stream.inl:
+          Directly use the local variables
+
 Sat Jul 21 06:26:30 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * bin/fuzz.pl:

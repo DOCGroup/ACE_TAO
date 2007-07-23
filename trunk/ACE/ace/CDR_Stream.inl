@@ -468,21 +468,18 @@ ACE_OutputCDR::adjust (size_t size, char*& buf)
   return this->adjust (size, size, buf);
 }
 
-ACE_INLINE int
+ACE_INLINE void
 ACE_OutputCDR::set_version (ACE_CDR::Octet major, ACE_CDR::Octet minor)
 {
   this->major_version_ = major;
   this->minor_version_ = minor;
-  return 0;
 }
 
-ACE_INLINE int
-ACE_OutputCDR::get_version (ACE_CDR::Octet &major,
-                            ACE_CDR::Octet &minor)
+ACE_INLINE void
+ACE_OutputCDR::get_version (ACE_CDR::Octet &major, ACE_CDR::Octet &minor)
 {
   major = this->major_version_;
   minor = this->minor_version_;
-  return 0;
 }
 
 
@@ -1483,22 +1480,18 @@ ACE_InputCDR::align_read_ptr (size_t alignment)
   return -1;
 }
 
-ACE_INLINE int
-ACE_InputCDR::set_version (ACE_CDR::Octet major,
-                           ACE_CDR::Octet minor)
+ACE_INLINE void
+ACE_InputCDR::set_version (ACE_CDR::Octet major, ACE_CDR::Octet minor)
 {
   this->major_version_ = major;
   this->minor_version_ = minor;
-  return 0;
 }
 
-ACE_INLINE int
-ACE_InputCDR::get_version (ACE_CDR::Octet &major,
-                           ACE_CDR::Octet &minor)
+ACE_INLINE void
+ACE_InputCDR::get_version (ACE_CDR::Octet &major, ACE_CDR::Octet &minor)
 {
   major = this->major_version_;
   minor = this->minor_version_;
-  return 0;
 }
 
 ACE_INLINE ACE_Char_Codeset_Translator *
