@@ -1,7 +1,14 @@
+Mon Jul 23 19:38:23 UTC 2007  Wallace Zhang  <zhang_w@ociweb.com>
+
+        * tao/Object_KeyC.cpp:
+        * tao/diffs/Object_Key.diff:
+
+          Fixed a warning in the WinCE VC8 debug build.
+
 Mon Jul 23 13:19:19 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * NEWS:
-        
+
           Added item about support for forward declared IDL structs
           and unions in the IFR loader.
 
