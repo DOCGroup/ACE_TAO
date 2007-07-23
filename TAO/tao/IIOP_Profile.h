@@ -113,8 +113,7 @@ public:
   virtual TAO_Endpoint *base_endpoint (void);
 
   virtual CORBA::ULong endpoint_count (void) const;
-  virtual CORBA::ULong hash (CORBA::ULong max
-                            );
+  virtual CORBA::ULong hash (CORBA::ULong max);
 
 protected:
   /// Destructor is to be called only through <_decr_refcnt>.
