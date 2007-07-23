@@ -54,12 +54,4 @@ TAO_GIOP_Message_State::giop_version (void) const
   return this->giop_version_;
 }
 
-ACE_INLINE void
-TAO_GIOP_Message_State::reset (void)
-{
-  this->message_type_ = 0;
-  this->message_size_ = 0;
-  this->more_fragments_ = 0;
-}
-
 TAO_END_VERSIONED_NAMESPACE_DECL
