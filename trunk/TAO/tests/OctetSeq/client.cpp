@@ -5,6 +5,7 @@
 #include "testC.h"
 #include "ace/OS_NS_time.h"
 #include "ace/OS_NS_string.h"
+#include "ace/OS_NS_unistd.h"
 
 ACE_RCSID(OctetSeq, client, "$Id$")
 
@@ -159,7 +160,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         }
 
       server->shutdown ();
-
+      ACE_OS::sleep(1);
       orb->destroy ();
     }
   catch (const CORBA::Exception& ex)
