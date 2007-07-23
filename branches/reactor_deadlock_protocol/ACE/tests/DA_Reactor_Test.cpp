@@ -23,8 +23,9 @@
 //           -u show this message
 //           -t specify the deadlock avoidance strategy
 //               basic         - Basic P strategy
-//               efficient <k> - k-efficient P strategy (default is 1)
+//               efficient <k> - k-efficient P strategy
 //               live          - Live-P strategy
+//           -k used to express the depth k for efficient P strategy (default is 1)
 //
 //     The main difference between TP_Reactor_Test.cpp and
 //     this test is the addition of deadlock avoidance strategies.  In 
@@ -49,6 +50,7 @@
 
 #include "ace/Reactor.h"
 #include "ace/Deadlock_Free_TP_Reactor.h"
+#include "ace/Log_Msg.h"
 #include "ace/OS_NS_signal.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
@@ -98,7 +100,7 @@ static u_int seconds = 2;  // default time to run - 2 seconds
 enum StrategyEnum {BASIC, EFFICIENT, LIVE};
 static StrategyEnum strategyEnum = BASIC;
 DA_Strategy_Base<ACE_HANDLE>* strategy = 0;
-static int k = 0;
+static int k = 1;
 
 static char data[] =
   "GET / HTTP/1.1\r\n"
@@ -110,6 +112,8 @@ static char data[] =
   "\r\n" ;
 
 // *************************************************************
+
+
 
 class LogLocker
 {
@@ -132,8 +136,7 @@ public:
 class MyTask : public ACE_Task<ACE_MT_SYNCH>
 {
 public:
-  MyTask (void): sem_ ((unsigned int) 0),
-                 my_reactor_ (0) {}
+  MyTask (void): sem_ ((unsigned int) 0)  {}
 
   virtual ~MyTask () { stop (); }
 
@@ -148,7 +151,6 @@ private:
 
   ACE_SYNCH_RECURSIVE_MUTEX lock_;
   ACE_Thread_Semaphore sem_;
-  ACE_Reactor *my_reactor_;
 };
 
 int
@@ -158,10 +160,6 @@ MyTask::create_reactor (int num_threads)
                     monitor,
                     this->lock_,
                     -1);
-
-  ACE_ASSERT (this->my_reactor_ == 0);
-
-  ACE_TP_Reactor * pImpl = 0;
 
   switch (strategyEnum) {
   case BASIC:
@@ -183,20 +181,19 @@ MyTask::create_reactor (int num_threads)
   //which is ACE::max_handles().  So, I don't see how the parameter to the program is
   //setting the number of threads in the reactor.  The way I see it, this parameter
   //is used for starting the reactor event loop in a number of threads equal to this parameter.
-  ACE_NEW_RETURN (pImpl,
-                  ACE_Deadlock_Free_TP_Reactor(num_threads, strategy), 
-                  -1);
 
-  ACE_NEW_RETURN (my_reactor_,
-                  ACE_Reactor (pImpl ,1),
-                  -1);
+  ACE_Deadlock_Free_TP_Reactor_Impl::initialize(num_threads, strategy);
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT (" (%t) Create TP_Reactor\n")));
 
-  ACE_Reactor::instance (this->my_reactor_);
+  ACE_Deadlock_Free_TP_Reactor_Impl* pImpl = ACE_Deadlock_Free_TP_Reactor::instance();
 
-  this->reactor (my_reactor_);
+  ACE_Reactor* my_reactor = 0;
+  ACE_NEW_RETURN (my_reactor,
+                   ACE_Reactor (pImpl),
+                   -1);
+
 
   return 0;
 }
@@ -208,14 +205,6 @@ MyTask::delete_reactor (void)
                     monitor,
                     this->lock_,
                     -1);
-
-  ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT (" (%t) Delete TP_Reactor\n")));
-
-  delete this->my_reactor_;
-  ACE_Reactor::instance ((ACE_Reactor *) 0);
-  this->my_reactor_ = 0;
-  this->reactor (0);
 
   return 0;
 }
@@ -244,13 +233,10 @@ MyTask::start (int num_threads)
 int
 MyTask::stop (void)
 {
-  if (this->my_reactor_ != 0)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("End TP_Reactor event loop\n")));
+  ACE_DEBUG ((LM_DEBUG,
+             ACE_TEXT ("End TP_Reactor event loop\n")));
 
-      ACE_Reactor::instance()->end_reactor_event_loop ();
-    }
+  ACE_Reactor::instance()->end_reactor_event_loop ();
 
   if (this->wait () == -1)
     ACE_ERROR ((LM_ERROR,
@@ -298,7 +284,6 @@ Acceptor::Acceptor (void)
 
 Acceptor::~Acceptor (void)
 {
-  this->reactor (0);
   stop ();
 }
 
@@ -414,7 +399,6 @@ Receiver::Receiver (Acceptor * acceptor, size_t index)
 
 Receiver::~Receiver (void)
 {
-  this->reactor (0);
   if (acceptor_ != 0)
     acceptor_->on_delete_receiver (*this);
 
@@ -446,15 +430,14 @@ Receiver::open (void *)
 {
   ACE_Guard<ACE_Recursive_Thread_Mutex> locker (mutex_);
 
-  ACE_Reactor *TPReactor = ACE_Reactor::instance ();
+        
 
-  this->reactor (TPReactor);
 
   flg_mask_ = ACE_Event_Handler::NULL_MASK ;
 
-  if (TPReactor->register_handler (this, flg_mask_) == -1)
+  if (ACE_Reactor::instance()->register_handler (this, flg_mask_) == -1)
     return -1;
-
+  ACE_Deadlock_Free_TP_Reactor::instance()->add_annotation(this, 1);
   initiate_io (ACE_Event_Handler::READ_MASK);
 
   return check_destroy ();
@@ -489,12 +472,13 @@ Receiver::terminate_io (ACE_Reactor_Mask mask)
 int
 Receiver::handle_close (ACE_HANDLE, ACE_Reactor_Mask)
 {
-  ACE_Reactor *TPReactor = ACE_Reactor::instance ();
 
-  TPReactor->remove_handler (this,
+
+  ACE_Reactor::instance()->remove_handler (this,
                              ACE_Event_Handler::ALL_EVENTS_MASK |
                              ACE_Event_Handler::DONT_CALL);  // Don't call handle_close
-  this->reactor (0);
+
+  ACE_Deadlock_Free_TP_Reactor::instance()->remove_annotation(this);
   this->destroy ();
   return 0;
 }
@@ -658,7 +642,6 @@ Connector::Connector (void)
 
 Connector::~Connector (void)
 {
-  this->reactor (0);
   stop ();
 }
 
@@ -795,7 +778,6 @@ Sender::Sender (Connector* connector, size_t index)
 
 Sender::~Sender (void)
 {
-  this->reactor (0);
   if (connector_ != 0)
     connector_->on_delete_sender (*this);
 
@@ -826,13 +808,10 @@ int Sender::open (void *)
 {
   ACE_Guard<ACE_Recursive_Thread_Mutex> locker (mutex_);
 
-  ACE_Reactor * TPReactor = ACE_Reactor::instance ();
-
-  this->reactor (TPReactor);
 
   flg_mask_ = ACE_Event_Handler::NULL_MASK ;
 
-  if (TPReactor->register_handler (this,flg_mask_) == -1)
+  if (ACE_Reactor::instance()->register_handler (this,flg_mask_) == -1)
     return -1;
 
   if (this->initiate_write () == -1)
@@ -904,12 +883,11 @@ Sender::terminate_io (ACE_Reactor_Mask mask)
 int
 Sender::handle_close (ACE_HANDLE, ACE_Reactor_Mask)
 {
-  ACE_Reactor * TPReactor = ACE_Reactor::instance ();
 
-  TPReactor->remove_handler (this,
+
+  ACE_Reactor::instance()->remove_handler (this,
                              ACE_Event_Handler::ALL_EVENTS_MASK |
                              ACE_Event_Handler::DONT_CALL);  // Don't call handle_close
-  this->reactor (0);
   this->destroy ();
   return 0;
 }
@@ -1067,6 +1045,11 @@ print_usage (int /* argc */, ACE_TCHAR *argv[])
       ACE_TEXT ("\n    0 - log all messages")
       ACE_TEXT ("\n    1 - log only errors and unusual cases")
       ACE_TEXT ("\n-i time to run in seconds")
+      ACE_TEXT ("\n-t specify the deadlock avoidance strategy")
+      ACE_TEXT ("\n     basic         - Basic P strategy")
+      ACE_TEXT ("\n     efficient <k> - k-efficient P strategy")
+      ACE_TEXT ("\n     live          - Live-P strategy")
+      ACE_TEXT ("\n-k used to express the depth k for efficient P strategy (default is 1)")
       ACE_TEXT ("\n-u show this message")
       ACE_TEXT ("\n"),
       argv[0]
@@ -1094,7 +1077,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
       return 0;
     }
 
-  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("i:n:p:d:h:s:v:t:ub"));
+  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("i:n:p:d:h:s:k:v:t:ub"));
   int c;
 
   while ((c = get_opt ()) != EOF)
@@ -1133,22 +1116,24 @@ parse_args (int argc, ACE_TCHAR *argv[])
           if (size_t (senders) > MAX_SENDERS)
             senders = MAX_SENDERS;
           break;
+        case 'k':   //k-depth of efficient P strategy
+          k = ACE_OS::atoi(get_opt.opt_arg());
+          break;
         case 't':    //avoidance strategy
           stratarg = get_opt.opt_arg();
           
           strategyStr = ACE_OS::strtok(stratarg, " ");
-          if (ACE_OS::strcmp(strategyStr, "basic")) 
+          if (ACE_OS::strcasecmp(strategyStr, "basic") == 0) 
           {
             strategyEnum = BASIC;
           }
-          else if (ACE_OS::strcasecmp(strategyStr, "live")) 
+          else if (ACE_OS::strcasecmp(strategyStr, "live") == 0) 
           {
             strategyEnum = LIVE;
           }
-          else if (ACE_OS::strcmp(strategyStr, "efficient")) 
+          else if (ACE_OS::strcmp(strategyStr, "efficient") == 0) 
           {
             strategyEnum = EFFICIENT;
-            k  = ACE_OS::atoi (ACE_OS::strtok(NULL, " "));
           }
           else
           {
@@ -1201,14 +1186,11 @@ run_task(DA_Strategy_Base<ACE_HANDLE>* strategy) {
 int
 run_main (int argc, ACE_TCHAR *argv[])
 {
-  ACE_START_TEST (ACE_TEXT ("TP_Reactor_Test"));
-
+//  ACE_START_TEST (ACE_TEXT ("DA_Reactor_Test"));
 #if defined(ACE_HAS_THREADS)
   if (::parse_args (argc, argv) == -1)
     return -1;
-
   ::disable_signal (SIGPIPE, SIGPIPE);
-  
   MyTask task1;
   Acceptor  acceptor;
   Connector connector;
@@ -1291,7 +1273,7 @@ run_main (int argc, ACE_TCHAR *argv[])
 #endif /* ACE_HAS_THREADS */
 
   
-  ACE_END_TEST;
+//  ACE_END_TEST;
 
   return 0;
 }
