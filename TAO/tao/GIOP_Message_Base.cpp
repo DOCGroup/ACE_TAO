@@ -301,7 +301,7 @@ TAO_GIOP_Message_Base::message_type (
 {
   // Convert to the right type of Pluggable Messaging message type.
 
-  switch (msg_state.message_type_)
+  switch (msg_state.message_type ())
     {
     case TAO_GIOP_REQUEST:
       return TAO_PLUGGABLE_MESSAGE_REQUEST;
@@ -1658,10 +1658,10 @@ TAO_GIOP_Message_Base::init_queued_data (
   TAO_Queued_Data* qd,
   const TAO_GIOP_Message_State& state) const
 {
-  qd->byte_order_     = state.byte_order_;
-  qd->major_version_  = state.giop_version_.major;
-  qd->minor_version_  = state.giop_version_.minor;
-  qd->more_fragments_ = state.more_fragments_;
+  qd->byte_order_     = state.byte_order ();
+  qd->major_version_  = state.giop_version ().major;
+  qd->minor_version_  = state.giop_version ().minor;
+  qd->more_fragments_ = state.more_fragments ();
   qd->msg_type_       = this->message_type (state);
 }
 
