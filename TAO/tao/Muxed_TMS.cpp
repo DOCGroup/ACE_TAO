@@ -15,6 +15,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Muxed_TMS::TAO_Muxed_TMS (TAO_Transport *transport)
   : TAO_Transport_Mux_Strategy (transport)
+    , lock_ (0)
     , request_id_generator_ (0)
     , orb_core_ (transport->orb_core ())
     , dispatcher_table_ (this->orb_core_->client_factory ()->reply_dispatcher_table_size ())
@@ -81,9 +82,7 @@ TAO_Muxed_TMS::bind_dispatcher (CORBA::ULong request_id,
   if (rd == 0)
     return 0;
 
-  int result =
-    this->dispatcher_table_.bind (request_id, rd);
-
+  int const result = this->dispatcher_table_.bind (request_id, rd);
 
   if (result != 0)
     {

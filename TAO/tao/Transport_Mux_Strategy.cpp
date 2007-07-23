@@ -12,7 +12,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 TAO_Transport_Mux_Strategy::TAO_Transport_Mux_Strategy (
   TAO_Transport *transport)
   : transport_ (transport)
-  , lock_ (0)
 {
 }
 
