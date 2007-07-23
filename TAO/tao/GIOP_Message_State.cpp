@@ -16,17 +16,6 @@ ACE_RCSID (tao,
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_GIOP_Message_State::TAO_GIOP_Message_State (void)
-  : giop_version_ (TAO_DEF_GIOP_MAJOR,
-                   TAO_DEF_GIOP_MINOR),
-    byte_order_ (0),
-    message_type_ (0),
-    message_size_ (0),
-    more_fragments_ (0),
-    missing_data_ (0)
-{
-}
-
 int
 TAO_GIOP_Message_State::parse_message_header (ACE_Message_Block &incoming)
 {
@@ -47,7 +36,7 @@ TAO_GIOP_Message_State::parse_message_header_i (ACE_Message_Block &incoming)
   if (TAO_debug_level > 8)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "TAO (%P|%t) - GIOP_Message_State::parse_message_header_i\n"
+                  ACE_TEXT ("TAO (%P|%t) - GIOP_Message_State::parse_message_header_i\n")
                   ));
     }
 
@@ -87,14 +76,15 @@ TAO_GIOP_Message_State::parse_message_header_i (ACE_Message_Block &incoming)
                 (t == TAO_GIOP_CLOSECONNECTION) ? "CloseConnection" :
                 (t == TAO_GIOP_MESSAGERROR) ? "MessageError" : "unknown";
               ACE_DEBUG ((LM_DEBUG,
-                          "TAO (%P|%t) - GIOP %s received \n", which));
+                          ACE_TEXT ("TAO (%P|%t) - GIOP %s received \n"), which));
             }
           return 0;
         default:
           if (TAO_debug_level > 0)
             ACE_DEBUG ((LM_DEBUG,
-                        "TAO (%P|%t) - "
-                        "Message of  size zero recd. \n"));
+                        ACE_TEXT ("TAO (%P|%t) - ")
+                        ACE_TEXT ("TAO_GIOP_Message_State::parse_magic_bytes, ")
+                        ACE_TEXT ("Message of size zero recd. \n")));
           return -1;
         }
     }
