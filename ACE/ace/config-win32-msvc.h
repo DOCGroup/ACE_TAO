@@ -140,8 +140,7 @@
 // To resume any of these warning: #pragma warning(default: 4xxx)
 // which should be placed after these defines
 
-#   if !defined (ALL_WARNINGS) && defined(_MSC_VER) && !defined(ghs) && !defined(__MINGW32__)
-// #pragma warning(disable: 4101)  // unreferenced local variable
+#if !defined (ALL_WARNINGS) && defined(_MSC_VER) && !defined(ghs) && !defined(__MINGW32__)
 #     pragma warning(disable: 4127)  /* constant expression for TRACE/ASSERT */
 #     pragma warning(disable: 4134)  /* message map member fxn casts */
 #     pragma warning(disable: 4511)  /* private copy constructors are good to have */
@@ -149,16 +148,17 @@
 #     pragma warning(disable: 4514)  /* unreferenced inlines are common */
 #     pragma warning(disable: 4710)  /* private constructors are disallowed */
 #     pragma warning(disable: 4705)  /* statement has no effect in optimized code */
-// #pragma warning(disable: 4701)  // local variable *may* be used without init
-// #pragma warning(disable: 4702)  // unreachable code caused by optimizations
 #     pragma warning(disable: 4791)  /* loss of debugging info in retail version */
-// #pragma warning(disable: 4204)  // non-constant aggregate initializer
 #     pragma warning(disable: 4275)  /* deriving exported class from non-exported */
 #     pragma warning(disable: 4251)  /* using non-exported as public in exported */
 #     pragma warning(disable: 4786)  /* identifier was truncated to '255' characters in the browser information */
 #     pragma warning(disable: 4097)  /* typedef-name used as synonym for class-name */
 #     pragma warning(disable: 4800)  /* converting int to boolean */
-#   endif /* !ALL_WARNINGS && _MSV_VER && !ghs && !__MINGW32__ */
+# if defined (__INTEL_COMPILER)
+#     pragma warning(disable: 1744)  /* field of class type without a DLL interface used in a class with a DLL interface */
+#     pragma warning(disable: 1738)
+# endif
+#endif /* !ALL_WARNINGS && _MSV_VER && !ghs && !__MINGW32__ */
 
 // STRICT type checking in WINDOWS.H enhances type safety for Windows
 // programs by using distinct types to represent all the different
