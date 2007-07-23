@@ -1,3 +1,13 @@
+Mon Jul 23 12:35:00 UTC 2007  Simon Massey  <sma@prismtech.com>
+
+        * tests\OctetSeq\client.cpp:
+        * tests\OctetSeq\server.cpp:
+        * performance-tests\Protocols\distributor.cpp:
+        * performance-tests\Protocols\receiver.cpp:
+        * performance-tests\Protocols\sender.cpp:
+
+          Add small delay to shutdown between run loop and destroy orb.
+
 Mon Jul 23 12:21:14 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Muxed_TMS.{h,cpp}

@@ -3,6 +3,7 @@
 #include "ace/Get_Opt.h"
 #include "test_i.h"
 #include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_unistd.h"
 
 ACE_RCSID (OctetSeq,
            server,
@@ -95,10 +96,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         orb->run ();
 
         ACE_DEBUG ((LM_DEBUG, "event loop finished\n"));
-
+        ACE_OS::sleep(1);
         root_poa->destroy (1, 1);
       }
-
+      ACE_OS::sleep(1);
       orb->destroy ();
     }
   catch (const CORBA::Exception& ex)

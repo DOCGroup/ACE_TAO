@@ -731,6 +731,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         {
           test->shutdown ();
         }
+      ACE_OS::sleep(1);
     }
   catch (const CORBA::Exception& ex)
     {
