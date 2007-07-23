@@ -1,3 +1,8 @@
+Mon Jul 22 09:59:30 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/unload_libace.mpb:
+          Also define _CRT_SECURE_NO_WARNINGS with nmake
+
 Mon Jul 22 09:58:30 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-win32-msvc.h:
