@@ -1840,6 +1840,11 @@ parse_args (int argc, ACE_TCHAR *argv[])
   // Default transfer limit 50 messages per Sender
   xfer_limit = 50 * ACE_OS::strlen (complete_message);
 
+  // Linux kernels up to at least 2.6.9 (RHEL 4) can't do full duplex aio.
+# if defined (linux)
+  duplex = 0;
+#endif
+
   if (argc == 1) // no arguments , so one button test
     return 0;
 

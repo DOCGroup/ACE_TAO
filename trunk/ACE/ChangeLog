@@ -1,3 +1,12 @@
+Tue Jul 24 21:09:27 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * tests/Proactor_Test_IPV6.cpp: Default to half duplex operation on
+          Linux. Identical to recent change to Proactor_Test.cpp; see
+          Wed Jun 27 13:48:50 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * tests/Multicast_Test_IPV6.cpp: Don't log an error if
+          IPV6_MULTICAST_LOOP is an unsupported sockopt; also fix spelling.
+
 Tue Jul 24 20:03:24 UTC 2007  Ciju John  <johnc at ociweb dot com>
 
         * bin/tao_orb_tests.lst:
