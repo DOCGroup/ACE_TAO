@@ -191,7 +191,10 @@ ACE_Strong_Bound_Ptr<X, ACE_LOCK>::~ACE_Strong_Bound_Ptr (void)
 template <class X, class ACE_LOCK> inline void
 ACE_Strong_Bound_Ptr<X, ACE_LOCK>::operator = (const ACE_Strong_Bound_Ptr<X, ACE_LOCK> &rhs)
 {
-  // This will work if &r == this, by first increasing the ref count
+  // This will work if &r == this, by first increasing the ref count, but
+  // why go through all that?
+  if (&rhs == this)
+    return;
 
   COUNTER *new_counter = rhs.counter_;
   X_t *new_ptr = rhs.ptr_;
@@ -205,7 +208,10 @@ ACE_Strong_Bound_Ptr<X, ACE_LOCK>::operator = (const ACE_Strong_Bound_Ptr<X, ACE
 template <class X, class ACE_LOCK> inline void
 ACE_Strong_Bound_Ptr<X, ACE_LOCK>::operator = (const ACE_Weak_Bound_Ptr<X, ACE_LOCK> &rhs)
 {
-  // This will work if &r == this, by first increasing the ref count
+  // This will work if &r == this, by first increasing the ref count, but
+  // why go through all that?
+  if (&rhs == this)
+    return;
 
   COUNTER *new_counter = rhs.counter_;
   X_t *new_ptr = rhs.ptr_;

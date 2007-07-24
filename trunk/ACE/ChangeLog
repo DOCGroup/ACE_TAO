@@ -1,3 +1,9 @@
+Tue Jul 24 22:45:37 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * ace/Bound_Ptr.inl (operator=): Check for assign-to-self first;
+          the code would work assigning to self (as the comment states) but
+          why do it? Also resolves some compile warnings on HP aC++.
+
 Tue Jul 24 20:38:50 UTC 2007  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * COPYING: Updated this file to reflect 2007.
