@@ -16,6 +16,7 @@
 #include /**/ "ace/pre.h"
 
 #include "tao/Pluggable_Messaging_Utils.h"
+#include "tao/GIOP_Message_State.h"
 #include "ace/Message_Block.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -72,7 +73,43 @@ public:
   /// @return -1 if consolidation failed, eg out or memory, otherwise 0
   int consolidate (void);
 
-public:
+  /// Get missing data
+  size_t missing_data (void) const;
+
+  /// Set missing data
+  void missing_data (size_t data);
+
+  /// Get major version
+  CORBA::Octet major_version (void) const;
+
+  /// Get minor version
+  CORBA::Octet minor_version (void) const;
+
+  /// Get byte_order
+  CORBA::Octet byte_order (void) const;
+
+  /// Get more fragments
+  CORBA::Octet more_fragments (void) const;
+
+  /// Get message type
+  TAO_Pluggable_Message_Type msg_type (void) const;
+
+  /// Get next
+  TAO_Queued_Data *next (void) const;
+
+  /// Set next
+  void next (TAO_Queued_Data* qd);
+
+  /// Get message block
+  ACE_Message_Block *msg_block (void) const;
+
+  /// Set message block
+  void msg_block (ACE_Message_Block *mb);
+
+
+  void set_state (const TAO_GIOP_Message_State& state);
+
+private:
 
   /// The message block that contains the message.
   ACE_Message_Block *msg_block_;
@@ -111,12 +148,9 @@ public:
   /// Pounter to the next element in the queue.
   TAO_Queued_Data *next_;
 
-private:
   /// Replace the datablock with a one allocated on the heap or
   /// allocator
   static void replace_data_block (ACE_Message_Block &mb);
-
-private:
 
   /// The allocator used to allocate this class.
   ACE_Allocator *allocator_;

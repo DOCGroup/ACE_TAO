@@ -229,11 +229,6 @@ protected:
   /// node of size @a sz.
   TAO_Queued_Data *make_queued_data (size_t sz);
 
-  /// Initialize the TAO_Queued_Data from the relevant portions of
-  /// a GIOP_Message_State.
-  void init_queued_data (TAO_Queued_Data* qd,
-                         const TAO_GIOP_Message_State& state) const;
-
 private:
   /// Parse GIOP request-id of TAO_Queued_Data @a qd
   /// @return 0 on success, otherwise -1

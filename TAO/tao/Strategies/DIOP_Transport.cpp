@@ -209,7 +209,7 @@ TAO_DIOP_Transport::handle_input (TAO_Resume_Handle &rh,
                                                      mesg_length) == -1)
     return -1;
 
-  if (qd.missing_data_ == TAO_MISSING_DATA_UNDEFINED)
+  if (qd.missing_data () == TAO_MISSING_DATA_UNDEFINED)
     {
       // parse/marshal error
       return -1;
