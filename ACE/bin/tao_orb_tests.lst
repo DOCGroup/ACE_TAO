@@ -188,6 +188,18 @@ TAO/tests/POA/Current/run_test.pl:
 TAO/tests/POA/wait_for_completion/run_test.pl:
 TAO/tests/POA/POAManagerFactory/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO
 TAO/tests/POA/EndpointPolicy/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO
+TAO/examples/POA/Adapter_Activator/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !SUNCC5_1 !ACE_FOR_TAO
+TAO/examples/POA/POA_BiDir/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !DISABLE_BIDIR
+TAO/examples/POA/DSI/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO
+TAO/examples/POA/Default_Servant/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO
+TAO/examples/POA/Explicit_Activation/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ACE_FOR_TAO
+TAO/examples/POA/FindPOA/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO
+TAO/examples/POA/NewPOA/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO
+TAO/examples/POA/On_Demand_Activation/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !STATIC !ACE_FOR_TAO
+TAO/examples/POA/On_Demand_Loading/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !STATIC !KCC_Linux !ACE_FOR_TAO
+TAO/examples/POA/Reference_Counted_Servant/run_test.pl: !SUNCC5_1 !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ACE_FOR_TAO
+TAO/examples/POA/Loader/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !STATIC !KCC_Linux !ACE_FOR_TAO
+TAO/examples/POA/RootPOA/run_test.pl
 TAO/tests/DiffServ/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO
 TAO/tests/IORManipulation/run_test.pl:
 TAO/tests/IORManipulation/filter/run_test.pl:

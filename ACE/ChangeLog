@@ -1,3 +1,10 @@
+Tue Jul 24 06:58:23 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+        * bin/tao_other_tests.lst:
+          Moved all POA examples to the orb tests, core builds should also
+          test the POA in detail.
+
 Mon Jul 23 20:16:23 UTC 2007  Steve Huston  <shuston@riverace.com>
 
         * tests/Multicast_Test_IPV6.cpp: Always enable IPV6_MULTICAST_LOOP
