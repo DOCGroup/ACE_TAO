@@ -867,8 +867,8 @@ public:
   /// Verify condition for  permanent forward is given,
   /// both parameters must provide group attributes.
   CORBA::Boolean is_permanent_forward_condition
-  (const CORBA::Object_ptr obj,
-   const TAO_Service_Context &service_context);
+    (const CORBA::Object_ptr obj,
+    const TAO_Service_Context &service_context);
 
   /// Configuration accessor method
   ACE_Service_Gestalt* configuration () const;

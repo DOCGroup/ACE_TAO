@@ -25,8 +25,8 @@ ACE_RCSID (tao,
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_GIOP_Message_Base::TAO_GIOP_Message_Base (TAO_ORB_Core * orb_core,
-                                              TAO_Transport * transport,
+TAO_GIOP_Message_Base::TAO_GIOP_Message_Base (TAO_ORB_Core *orb_core,
+                                              TAO_Transport *transport,
                                               size_t input_cdr_size)
   : orb_core_ (orb_core)
   , fragmentation_strategy_ (orb_core->fragmentation_strategy (transport))

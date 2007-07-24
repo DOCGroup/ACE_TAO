@@ -210,7 +210,7 @@ protected:
                               TAO_GIOP_Message_Generator_Parser *);
 
   /// Send error messages
-  int  send_error (TAO_Transport *transport);
+  int send_error (TAO_Transport *transport);
 
   /// Close a connection, first sending GIOP::CloseConnection.
   void send_close_connection (const TAO_GIOP_Message_Version &version,
@@ -225,11 +225,10 @@ protected:
                             IOP::ServiceContextList *svc_info,
                             CORBA::Exception *x);
 
-
   /// Write the locate reply header
   virtual int generate_locate_reply_header (
-      TAO_OutputCDR & /*cdr*/,
-      TAO_Pluggable_Reply_Params_Base & /*params*/);
+      TAO_OutputCDR &cdr,
+      TAO_Pluggable_Reply_Params_Base &params);
 
   /// Is the messaging object ready for processing BiDirectional
   /// request/response?
