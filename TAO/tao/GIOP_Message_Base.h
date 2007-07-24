@@ -99,8 +99,7 @@ public:
    * @retval 1 If the message header could be parsed completely
    * @retval -1 On error.
    */
-  virtual int parse_next_message (ACE_Message_Block &incoming,
-                                  TAO_Queued_Data &qd,       /* out */
+  virtual int parse_next_message (TAO_Queued_Data &qd,
                                   size_t &mesg_length);      /* out */
 
   /// Extract the details of the next message from the @a incoming
@@ -136,8 +135,8 @@ public:
   virtual size_t header_length (void) const;
 
   /// The header length of a fragment
-  virtual size_t fragment_header_length (CORBA::Octet major,
-                                         CORBA::Octet minor) const;
+  virtual size_t fragment_header_length (
+    const TAO_GIOP_Message_Version& giop_version) const;
 
   virtual TAO_OutputCDR &out_stream (void);
 
@@ -178,8 +177,7 @@ protected:
                                       TAO_GIOP_Message_Generator_Parser *);
 
   /// Set the state
-  void set_state (CORBA::Octet major,
-                  CORBA::Octet minor,
+  void set_state (const TAO_GIOP_Message_Version &version,
                   TAO_GIOP_Message_Generator_Parser *&) const;
 
   /// Print out a debug messages..

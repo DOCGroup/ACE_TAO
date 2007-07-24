@@ -1,3 +1,48 @@
+Tue Jul 24 12:20:23 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Asynch_Queued_Message.h:
+          Doxygen and const changes
+
+        * tao/CDR.{h,cpp}:
+          Added a get_version call that accepts a
+          TAO_GIOP_Message_Version. Have to see if we can move
+          this to the ACE CDR Streams (check bugzilla 3006 for
+          more ideas)
+
+        * tao/CSD_Framework/CSD_FW_Server_Request_Wrapper.cpp:
+          Use the new get_version call on the cdr stream
+
+        * tao/GIOP_Fragmentation_Strategy.h:
+          Layout change
+
+        * tao/GIOP_Message_Base.{h,cpp}:
+          Use the new get_version call on the cdr stream. Changed
+          parse_next_message to not require the ACE_Message_Block, it
+          is already part of the TAO_Queued_Data. Also updated
+          fragment_header_length to use TAO_GIOP_Message_Versin
+
+        * tao/GIOP_Message_State.{h,cpp,inl}:
+          The message size is really the payload size
+
+        * tao/GIOP_Message_Version.{h,inl}:
+          Added methods to retrieve version numbers in preparation of
+          bugzilla 3006
+
+        * tao/On_Demand_Fragmentation_Strategy.cpp:
+          Use the new get_version call on the cdr stream
+
+        * tao/Pluggable_Messaging.h:
+          Updated to use TAO_GIOP_Message_Version
+
+        * tao/Queued_Data.{h,cpp,inl}:
+          Use TAO_GIOP_Message_State as member, changed version storage
+          and inlined all constructors
+
+        * tao/Strategies/DIOP_Transport.cpp:
+        * tao/Strategies/SHMIOP_Transport.cpp
+        * tao/Transport.cpp:
+          Updated for change of parse_next_message in GIOP Message Base
+
 Tue Jul 24 10:38:23 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Queued_Data.{h,inl}:

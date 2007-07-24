@@ -41,17 +41,27 @@ TAO_GIOP_Message_Version::set_version (CORBA::Octet maj, CORBA::Octet min)
 }
 
 ACE_INLINE bool
-TAO_GIOP_Message_Version::operator== (
-                 const TAO_GIOP_Message_Version &src) const
+TAO_GIOP_Message_Version::operator== (const TAO_GIOP_Message_Version &src) const
 {
   return this->minor == src.minor && this->major == src.major;
 }
 
 ACE_INLINE bool
-TAO_GIOP_Message_Version::operator!= (
-                 const TAO_GIOP_Message_Version &src) const
+TAO_GIOP_Message_Version::operator!= (const TAO_GIOP_Message_Version &src) const
 {
   return !(*this == src);
+}
+
+ACE_INLINE CORBA::Octet
+TAO_GIOP_Message_Version::major_version (void) const
+{
+  return this->major;
+}
+
+ACE_INLINE CORBA::Octet
+TAO_GIOP_Message_Version::minor_version (void) const
+{
+  return this->minor;
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

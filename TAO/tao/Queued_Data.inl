@@ -30,6 +30,38 @@ TAO_Queued_Data::replace_data_block (ACE_Message_Block &mb)
   mb.clr_self_flags (ACE_Message_Block::DONT_DELETE);
 }
 
+ACE_INLINE
+TAO_Queued_Data::TAO_Queued_Data (ACE_Allocator *alloc)
+  : msg_block_ (0),
+    missing_data_ (0),
+    state_ (),
+    next_ (0),
+    allocator_ (alloc)
+{
+}
+
+ACE_INLINE
+TAO_Queued_Data::TAO_Queued_Data (ACE_Message_Block *mb,
+                                  ACE_Allocator *alloc)
+  : msg_block_ (mb),
+    missing_data_ (0),
+    state_ (),
+    next_ (0),
+    allocator_ (alloc)
+{
+}
+
+ACE_INLINE
+TAO_Queued_Data::TAO_Queued_Data (const TAO_Queued_Data &qd)
+  : msg_block_ (qd.msg_block_->duplicate ()),
+    missing_data_ (qd.missing_data_),
+    state_ (qd.state_),
+    next_ (0),
+    allocator_ (qd.allocator_)
+{
+}
+
+
 ACE_INLINE size_t
 TAO_Queued_Data::missing_data (void) const
 {
@@ -42,34 +74,28 @@ TAO_Queued_Data::missing_data (size_t data)
   this->missing_data_ = data;
 }
 
-ACE_INLINE CORBA::Octet
-TAO_Queued_Data::major_version (void) const
+ACE_INLINE TAO_GIOP_Message_Version const &
+TAO_Queued_Data::giop_version (void) const
 {
-  return this->major_version_;
-}
-
-ACE_INLINE CORBA::Octet
-TAO_Queued_Data::minor_version (void) const
-{
-  return this->minor_version_;
+  return this->state_.giop_version ();
 }
 
 ACE_INLINE CORBA::Octet
 TAO_Queued_Data::byte_order (void) const
 {
-  return this->byte_order_;
+  return this->state_.byte_order ();
 }
 
 ACE_INLINE CORBA::Octet
 TAO_Queued_Data::more_fragments (void) const
 {
-  return this->more_fragments_;
+  return this->state_.more_fragments ();
 }
 
 ACE_INLINE TAO_Pluggable_Message_Type
 TAO_Queued_Data::msg_type (void) const
 {
-  return this->msg_type_;
+  return this->state_.message_type ();
 }
 
 ACE_INLINE TAO_Queued_Data *
@@ -99,11 +125,7 @@ TAO_Queued_Data::msg_block (ACE_Message_Block *mb)
 ACE_INLINE void
 TAO_Queued_Data::set_state (const TAO_GIOP_Message_State& state)
 {
-  this->byte_order_     = state.byte_order ();
-  this->major_version_  = state.giop_version ().major;
-  this->minor_version_  = state.giop_version ().minor;
-  this->more_fragments_ = state.more_fragments ();
-  this->msg_type_       = state.message_type ();
+  this->state_ = state;
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -39,7 +39,6 @@ class TAO_OutputCDR;
 class TAO_Export TAO_GIOP_Fragmentation_Strategy
 {
 public:
-
   /// Constructor
   TAO_GIOP_Fragmentation_Strategy (void) {}
 

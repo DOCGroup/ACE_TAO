@@ -46,6 +46,7 @@ class TAO_Target_Specification;
 class TAO_OutputCDR;
 class TAO_Queued_Data;
 class TAO_GIOP_Fragmentation_Strategy;
+class TAO_GIOP_Message_Version;
 
 // @@ The more I think I about this class, I feel that this class need
 // not be a ABC as it is now. Instead we have these options
@@ -117,14 +118,13 @@ public:
   /// Do any initialisations that may be needed.
   virtual void init (CORBA::Octet major, CORBA::Octet minor) = 0;
 
-  /// Parse the details of the next message from the @a incoming
-  /// and initializes attributes of @a qd. Returns 0 if the message
+  /// Parse the details of the next message from the @a qd
+  /// and initializes the other attributes of @a qd. Returns 0 if the message
   /// header could not be parsed completely, returns a 1 if the message
   /// header could be parsed completely and returns -1 on error. As the
   /// parsed data is stored directly in @a qd, no state must be stored
   /// in instance of implementation.
-  virtual int parse_next_message (ACE_Message_Block &incoming,
-                                  TAO_Queued_Data &qd,        /* out */
+  virtual int parse_next_message (TAO_Queued_Data &qd,
                                   size_t &mesg_length) = 0;   /* out */
 
   /// Extract the details of the next message from the @a incoming
@@ -168,8 +168,8 @@ public:
   virtual size_t header_length (void) const = 0;
 
   /// Fragment header length
-  virtual size_t fragment_header_length (CORBA::Octet major,
-                                         CORBA::Octet minor) const = 0;
+  virtual size_t fragment_header_length (
+    const TAO_GIOP_Message_Version& giop_version) const = 0;
 
   /// Accessor for the output CDR stream
   virtual TAO_OutputCDR &out_stream (void) = 0;

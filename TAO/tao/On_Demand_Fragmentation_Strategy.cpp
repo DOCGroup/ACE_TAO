@@ -30,15 +30,14 @@ TAO_On_Demand_Fragmentation_Strategy::fragment (
   if (this->transport_ == 0)
     return 0;  // No transport.  Can't fragment.
 
-  CORBA::Octet major = 0;
-  CORBA::Octet minor = 0;
+  TAO_GIOP_Message_Version giop_version;
 
-  cdr.get_version (major, minor);
+  cdr.get_version (giop_version);
 
   // GIOP fragments are supported in GIOP 1.1 and better, but TAO only
   // supports them in 1.2 or better since GIOP 1.1 fragments do not
   // have a fragment message header.
-  if (major == 1 && minor < 2)
+  if (giop_version.major == 1 && giop_version.minor < 2)
     return -1;
 
   // Determine increase in CDR stream length if pending data is
