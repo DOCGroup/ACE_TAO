@@ -109,22 +109,22 @@ public:
    */
   //@{
   /// Set/get the next element in the list
-  virtual TAO_Queued_Message *next (void) const;
+  TAO_Queued_Message *next (void) const;
 
   /// Set/get the previous element in the list
-  virtual TAO_Queued_Message *prev (void) const;
+  TAO_Queued_Message *prev (void) const;
 
   /// Remove this element from the list
-  virtual void remove_from_list (TAO_Queued_Message *&head,
-                                 TAO_Queued_Message *&tail);
+  void remove_from_list (TAO_Queued_Message *&head,
+                         TAO_Queued_Message *&tail);
 
   /// Insert the current element at the tail of the queue.
-  virtual void push_back (TAO_Queued_Message *&head,
-                          TAO_Queued_Message *&tail);
+  void push_back (TAO_Queued_Message *&head,
+                  TAO_Queued_Message *&tail);
 
   /// Insert the current element at the head of the queue.
-  virtual void push_front (TAO_Queued_Message *&head,
-                           TAO_Queued_Message *&tail);
+  void push_front (TAO_Queued_Message *&head,
+                   TAO_Queued_Message *&tail);
   //@}
 
   /** @name Template Methods
@@ -195,11 +195,11 @@ public:
    * a pool), they need to be reclaimed explicitly.
    */
   virtual void destroy (void) = 0;
-  
+
   /// Check for timeout
   /**
    * @param now Pass in the current time using
-   *  ACE_High_Res_Timer::gettimeofday_hr(). 
+   *  ACE_High_Res_Timer::gettimeofday_hr().
    *  This is a parameter in order to avoid calling gettimeofday_hr() inside
    *  of this method (which will be called in a tight loop).
    * @return true if the relative roundtrip timeout has expired.

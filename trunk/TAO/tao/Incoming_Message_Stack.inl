@@ -30,7 +30,7 @@ Incoming_Message_Stack::~Incoming_Message_Stack()
 ACE_INLINE void
 Incoming_Message_Stack::push(TAO_Queued_Data *data)
 {
-  data->next_ = this->top_;
+  data->next (this->top_);
   this->top_ = data;
 }
 
@@ -43,7 +43,7 @@ Incoming_Message_Stack::pop (TAO_Queued_Data* &data)
     return -1;
 
   data = this->top_;
-  this->top_ = data->next_;
+  this->top_ = data->next ();
 
   return 0;
 }

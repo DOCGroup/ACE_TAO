@@ -214,7 +214,7 @@ TAO_SHMIOP_Transport::handle_input (TAO_Resume_Handle &rh,
                                                        mesg_length) == -1)
       return -1;
 
-    if (qd.missing_data_ == TAO_MISSING_DATA_UNDEFINED)
+    if (qd.missing_data () == TAO_MISSING_DATA_UNDEFINED)
       {
         // parse/marshal error happened
         return -1;
@@ -226,13 +226,13 @@ TAO_SHMIOP_Transport::handle_input (TAO_Resume_Handle &rh,
         return -1;
       }
 
-    if (message_block.space () < qd.missing_data_)
+    if (message_block.space () < qd.missing_data ())
       {
-        const size_t message_size = message_block.length ()
-                                  + qd.missing_data_;
+        size_t const message_size = message_block.length ()
+                                  + qd.missing_data ();
 
         // reallocate buffer with correct size on heap
-	if (ACE_CDR::grow (&message_block, message_size) == -1)
+        if (ACE_CDR::grow (&message_block, message_size) == -1)
           {
             if (TAO_debug_level > 0)
               {
@@ -248,7 +248,7 @@ TAO_SHMIOP_Transport::handle_input (TAO_Resume_Handle &rh,
 
     // As this used for transports where things are available in one
     // shot this looping should not create any problems.
-    for (size_t n = qd.missing_data_;
+    for (size_t n = qd.missing_data ();
        n != 0;
        n -= bytes)
     {
@@ -261,7 +261,7 @@ TAO_SHMIOP_Transport::handle_input (TAO_Resume_Handle &rh,
       // argument that can be said against this is that, this is the
       // bad layer in which this is being done ie. recv_n is
       // simulated. But...
-        bytes = this->recv (message_block.wr_ptr (),
+      bytes = this->recv (message_block.wr_ptr (),
                           n,
                           max_wait_time);
 
@@ -271,11 +271,10 @@ TAO_SHMIOP_Transport::handle_input (TAO_Resume_Handle &rh,
           return -1;
         }
 
-        message_block.wr_ptr (bytes);
-
+      message_block.wr_ptr (bytes);
     }
 
-  qd.missing_data_ = 0;
+  qd.missing_data (0);
 
   // Now we have a full message in our buffer. Just go ahead and
   // process that
@@ -291,10 +290,10 @@ TAO_SHMIOP_Transport::handle_input (TAO_Resume_Handle &rh,
 
 int
 TAO_SHMIOP_Transport::send_request (TAO_Stub *stub,
-                                  TAO_ORB_Core *orb_core,
-                                  TAO_OutputCDR &stream,
-                                  int message_semantics,
-                                  ACE_Time_Value *max_wait_time)
+                                    TAO_ORB_Core *orb_core,
+                                    TAO_OutputCDR &stream,
+                                    int message_semantics,
+                                    ACE_Time_Value *max_wait_time)
 {
   if (this->ws_->sending_request (orb_core,
                                   message_semantics) == -1)

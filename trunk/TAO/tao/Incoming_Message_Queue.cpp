@@ -37,10 +37,10 @@ TAO_Incoming_Message_Queue::dequeue_head (void)
     return 0;
 
   // Get the node on the head of the queue...
-  TAO_Queued_Data * const head = this->last_added_->next_;
+  TAO_Queued_Data * const head = this->last_added_->next ();
 
   // Reset the head node..
-  this->last_added_->next_ = head->next_;
+  this->last_added_->next (head->next ());
 
   // Decrease the size and reset last_added_ if empty
   if (--this->size_ == 0)
@@ -58,15 +58,15 @@ TAO_Incoming_Message_Queue::dequeue_tail (void)
 
   // Get the node on the head of the queue...
   TAO_Queued_Data *head =
-    this->last_added_->next_;
+    this->last_added_->next ();
 
-  while (head->next_ != this->last_added_)
+  while (head->next () != this->last_added_)
     {
-      head = head->next_;
+      head = head->next ();
     }
 
   // Put the head in tmp.
-  head->next_ = this->last_added_->next_;
+  head->next (this->last_added_->next ());
 
   TAO_Queued_Data *ret_qd = this->last_added_;
 
@@ -85,12 +85,12 @@ TAO_Incoming_Message_Queue::enqueue_tail (TAO_Queued_Data *nd)
   if (this->size_ == 0)
     {
       this->last_added_ = nd;
-      this->last_added_->next_ = this->last_added_;
+      this->last_added_->next (this->last_added_);
     }
   else
     {
-      nd->next_ = this->last_added_->next_;
-      this->last_added_->next_ = nd;
+      nd->next (this->last_added_->next ());
+      this->last_added_->next (nd);
       this->last_added_ = nd;
     }
 
