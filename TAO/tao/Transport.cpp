@@ -2284,10 +2284,9 @@ TAO_Transport::process_parsed_messages (TAO_Queued_Data *qd,
     break;
     case TAO_PLUGGABLE_MESSAGE_CANCELREQUEST:
     {
-      // The associated request might be incomplpete residing
+      // The associated request might be incomplete residing
       // fragmented in messaging object. We must make sure the
       // resources allocated by fragments are released.
-
       if (this->messaging_object ()->discard_fragmented_message (qd) == -1)
         {
           if (TAO_debug_level > 0)
@@ -2317,6 +2316,11 @@ TAO_Transport::process_parsed_messages (TAO_Queued_Data *qd,
              this->id ()));
         }
       return -1;
+    }
+    break;
+    case TAO_PLUGGABLE_MESSAGE_FRAGMENT:
+    {
+      // Nothing to be done.
     }
     break;
   }
