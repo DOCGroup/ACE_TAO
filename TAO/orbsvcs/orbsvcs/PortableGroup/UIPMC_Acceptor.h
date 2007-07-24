@@ -17,7 +17,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/PortableGroup/UIPMC_Connection_Handler.h"
+#include "orbsvcs/PortableGroup/UIPMC_Mcast_Connection_Handler.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -147,7 +147,7 @@ protected:
 
 private:
 
-  TAO_UIPMC_Connection_Handler *connection_handler_;
+  TAO_UIPMC_Mcast_Connection_Handler *connection_handler_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

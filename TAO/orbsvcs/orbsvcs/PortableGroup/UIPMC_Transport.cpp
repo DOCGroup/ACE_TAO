@@ -1,10 +1,11 @@
 // $Id$
 
+#ifndef TAO_UIPMC_TRANSPORT_CPP
+#define TAO_UIPMC_TRANSPORT_CPP
+
 #include "orbsvcs/PortableGroup/UIPMC_Profile.h"
 #include "orbsvcs/PortableGroup/UIPMC_Transport.h"
-#include "orbsvcs/PortableGroup/UIPMC_Connection_Handler.h"
 #include "orbsvcs/PortableGroup/UIPMC_Message_Block_Data_Iterator.h"
-#include "orbsvcs/PortableGroup/UIPMC_Acceptor.h"
 #include "orbsvcs/PortableGroup/UIPMC_Wait_Never.h"
 
 #include "tao/Acceptor_Registry.h"
@@ -22,7 +23,6 @@
 ACE_RCSID (PortableGroup,
            UIPMC_Transport,
            "$Id$")
-
 
 // Local MIOP Definitions:
 
@@ -66,9 +66,11 @@ struct MIOP_Packet
   int length;
 };
 
-
-TAO_UIPMC_Transport::TAO_UIPMC_Transport (TAO_UIPMC_Connection_Handler *handler,
-                                          TAO_ORB_Core *orb_core)
+template<typename CONNECTION_HANDLER>
+TAO_UIPMC_Transport<CONNECTION_HANDLER>::TAO_UIPMC_Transport (
+  CONNECTION_HANDLER *handler,
+  TAO_ORB_Core *orb_core
+)
   : TAO_Transport (IOP::TAG_UIPMC,
                    orb_core)
   , connection_handler_ (handler)
@@ -87,32 +89,37 @@ TAO_UIPMC_Transport::TAO_UIPMC_Transport (TAO_UIPMC_Connection_Handler *handler,
            TAO_UIPMC_Wait_Never (this));
 }
 
-TAO_UIPMC_Transport::~TAO_UIPMC_Transport (void)
+template<typename CONNECTION_HANDLER>
+TAO_UIPMC_Transport<CONNECTION_HANDLER>::~TAO_UIPMC_Transport (void)
 {
   delete this->messaging_object_;
 }
 
+template<typename CONNECTION_HANDLER>
 ACE_Event_Handler *
-TAO_UIPMC_Transport::event_handler_i (void)
+TAO_UIPMC_Transport<CONNECTION_HANDLER>::event_handler_i (void)
 {
   return this->connection_handler_;
 }
 
+template<typename CONNECTION_HANDLER>
 TAO_Connection_Handler *
-TAO_UIPMC_Transport::connection_handler_i (void)
+TAO_UIPMC_Transport<CONNECTION_HANDLER>::connection_handler_i (void)
 {
   return this->connection_handler_;
 }
 
+template<typename CONNECTION_HANDLER>
 TAO_Pluggable_Messaging *
-TAO_UIPMC_Transport::messaging_object (void)
+TAO_UIPMC_Transport<CONNECTION_HANDLER>::messaging_object (void)
 {
   return this->messaging_object_;
 }
 
-
+template<typename CONNECTION_HANDLER>
 void
-TAO_UIPMC_Transport::write_unique_id (TAO_OutputCDR &miop_hdr, unsigned long unique)
+TAO_UIPMC_Transport<CONNECTION_HANDLER>::write_unique_id (TAO_OutputCDR &miop_hdr,
+                                                          unsigned long unique)
 {
   // We currently construct a unique ID for each MIOP message by
   // concatenating the address of the buffer to a counter.  We may
@@ -144,10 +151,11 @@ TAO_UIPMC_Transport::write_unique_id (TAO_OutputCDR &miop_hdr, unsigned long uni
   miop_hdr.write_octet_array (unique_id, MIOP_ID_DEFAULT_LENGTH);
 }
 
+template<typename CONNECTION_HANDLER>
 ssize_t
-TAO_UIPMC_Transport::send (iovec *iov, int iovcnt,
-                           size_t &bytes_transferred,
-                           const ACE_Time_Value *)
+TAO_UIPMC_Transport<CONNECTION_HANDLER>::send (iovec *iov, int iovcnt,
+                                               size_t &bytes_transferred,
+                                               const ACE_Time_Value *)
 {
   const ACE_INET_Addr &addr = this->connection_handler_->addr ();
   bytes_transferred = 0;
@@ -280,9 +288,9 @@ TAO_UIPMC_Transport::send (iovec *iov, int iovcnt,
       current_fragment->iov[0].iov_len = MIOP_HEADER_SIZE;
 
       // Send the fragment. - Need to check for errors!!
-      ssize_t rc = this->connection_handler_->dgram ().send (current_fragment->iov,
-                                                             current_fragment->iovcnt,
-                                                             addr);
+      ssize_t rc = this->connection_handler_->send (current_fragment->iov,
+                                                    current_fragment->iovcnt,
+                                                    addr);
 
       if (rc <= 0)
         {
@@ -323,17 +331,17 @@ TAO_UIPMC_Transport::send (iovec *iov, int iovcnt,
   return bytes_transferred;
 }
 
-
+template<typename CONNECTION_HANDLER>
 ssize_t
-TAO_UIPMC_Transport::recv (char *buf,
-                           size_t len,
-                           const ACE_Time_Value * /*max_wait_time*/)
+TAO_UIPMC_Transport<CONNECTION_HANDLER>::recv (char *buf,
+                                               size_t len,
+                                               const ACE_Time_Value * /*max_wait_time*/)
 {
   ACE_INET_Addr from_addr;
 
-  ssize_t n = this->connection_handler_->mcast_dgram ().recv (buf,
-                                                              len,
-                                                              from_addr);
+  ssize_t n = this->connection_handler_->peer ().recv (buf,
+                                                       len,
+                                                       from_addr);
   if (TAO_debug_level > 5)
     {
       ACE_DEBUG ((LM_DEBUG,
@@ -427,10 +435,11 @@ TAO_UIPMC_Transport::recv (char *buf,
   return n;
 }
 
+template<typename CONNECTION_HANDLER>
 int
-TAO_UIPMC_Transport::handle_input (TAO_Resume_Handle &rh,
-                                   ACE_Time_Value *max_wait_time,
-                                   int /*block*/)
+TAO_UIPMC_Transport<CONNECTION_HANDLER>::handle_input (TAO_Resume_Handle &rh,
+                                                       ACE_Time_Value *max_wait_time,
+                                                       int /*block*/)
 {
   // If there are no messages then we can go ahead to read from the
   // handle for further reading..
@@ -531,8 +540,9 @@ TAO_UIPMC_Transport::handle_input (TAO_Resume_Handle &rh,
   return this->process_parsed_messages (&qd, rh);
 }
 
+template<typename CONNECTION_HANDLER>
 int
-TAO_UIPMC_Transport::register_handler (void)
+TAO_UIPMC_Transport<CONNECTION_HANDLER>::register_handler (void)
 {
   // We never register register the handler with the reactor
   // as we never need to be informed about any incoming data,
@@ -544,12 +554,13 @@ TAO_UIPMC_Transport::register_handler (void)
   return 0;
 }
 
+template<typename CONNECTION_HANDLER>
 int
-TAO_UIPMC_Transport::send_request (TAO_Stub *stub,
-                                   TAO_ORB_Core *orb_core,
-                                   TAO_OutputCDR &stream,
-                                   int message_semantics,
-                                   ACE_Time_Value *max_wait_time)
+TAO_UIPMC_Transport<CONNECTION_HANDLER>::send_request (TAO_Stub *stub,
+                                                       TAO_ORB_Core *orb_core,
+                                                       TAO_OutputCDR &stream,
+                                                       int message_semantics,
+                                                       ACE_Time_Value *max_wait_time)
 {
   if (this->ws_->sending_request (orb_core,
                                   message_semantics) == -1)
@@ -565,11 +576,12 @@ TAO_UIPMC_Transport::send_request (TAO_Stub *stub,
   return 0;
 }
 
+template<typename CONNECTION_HANDLER>
 int
-TAO_UIPMC_Transport::send_message (TAO_OutputCDR &stream,
-                                   TAO_Stub *stub,
-                                   int message_semantics,
-                                   ACE_Time_Value *max_wait_time)
+TAO_UIPMC_Transport<CONNECTION_HANDLER>::send_message (TAO_OutputCDR &stream,
+                                                       TAO_Stub *stub,
+                                                       int message_semantics,
+                                                       ACE_Time_Value *max_wait_time)
 {
   // Format the message in the stream first
   if (this->messaging_object_->format_message (stream) != 0)
@@ -599,9 +611,10 @@ TAO_UIPMC_Transport::send_message (TAO_OutputCDR &stream,
   return 1;
 }
 
+template<typename CONNECTION_HANDLER>
 int
-TAO_UIPMC_Transport::messaging_init (CORBA::Octet major,
-                                    CORBA::Octet minor)
+TAO_UIPMC_Transport<CONNECTION_HANDLER>::messaging_init (CORBA::Octet major,
+                                                         CORBA::Octet minor)
 {
   this->messaging_object_->init (major,
                                  minor);
@@ -609,3 +622,5 @@ TAO_UIPMC_Transport::messaging_init (CORBA::Octet major,
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
+
+#endif /* TAO_UIPMC_TRANSPORT_CPP */

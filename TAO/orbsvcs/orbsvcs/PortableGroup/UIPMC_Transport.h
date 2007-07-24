@@ -28,19 +28,10 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Forward decls.
-class TAO_UIPMC_Connection_Handler;
 class TAO_ORB_Core;
 class TAO_Operation_Details;
 class TAO_Pluggable_Messaging;
 class TAO_Acceptor;
-
-// Service Handler for this transport
-typedef ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
-        TAO_UIPMC_SVC_HANDLER;
-
-#if defined ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT
-template class TAO_PortableGroup_Export ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT */
 
 /**
  * @class TAO_UIPMC_Transport
@@ -48,12 +39,13 @@ template class TAO_PortableGroup_Export ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NUL
  * @brief Specialization of the base TAO_Transport class to handle the
  *  MIOP protocol.
  */
+template<typename CONNECTION_HANDLER>
 class TAO_PortableGroup_Export TAO_UIPMC_Transport : public TAO_Transport
 {
 public:
 
   /// Constructor.
-  TAO_UIPMC_Transport (TAO_UIPMC_Connection_Handler *handler,
+  TAO_UIPMC_Transport (CONNECTION_HANDLER *handler,
                        TAO_ORB_Core *orb_core);
 
   /// Default destructor.
@@ -108,9 +100,6 @@ public:
   //@}
 
 private:
-  /// Process the message that we have read.
-  int process_message (void);
-
   /// Construct and write a unique ID to the MIOP header.
   void write_unique_id (TAO_OutputCDR &miop_hdr, unsigned long unique);
 
@@ -118,11 +107,19 @@ private:
 
   /// The connection service handler used for accessing lower layer
   /// communication protocols.
-  TAO_UIPMC_Connection_Handler *connection_handler_;
+  CONNECTION_HANDLER *connection_handler_;
 
   /// Our messaging object.
   TAO_Pluggable_Messaging *messaging_object_;
 };
+
+#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
+#include "orbsvcs/PortableGroup/UIPMC_Transport.cpp"
+#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
+
+#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
+#pragma implementation ("orbsvcs/PortableGroup/UIPMC_Transport.cpp")
+#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 

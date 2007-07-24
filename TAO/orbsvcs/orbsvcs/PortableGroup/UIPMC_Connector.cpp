@@ -36,8 +36,6 @@ TAO_UIPMC_Connector::open (TAO_ORB_Core *orb_core)
   if (this->create_connect_strategy () == -1)
     return -1;
 
-  // @@ Michael: We do not use traditional connection management.
-
   return 0;
 }
 
@@ -115,8 +113,8 @@ TAO_UIPMC_Connector::make_connection (TAO::Profile_Transport_Resolver *,
                                                 sizeof remote_as_string);
 
           ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT("TAO (%P|%t) - UIPMC_Connection_Handler::open, ")
-                      ACE_TEXT("invalid connection to IPv4 mapped IPv6 interface <%s>!\n"),
+                      ACE_TEXT ("TAO (%P|%t) - UIPMC_Connector::open, ")
+                      ACE_TEXT ("invalid connection to IPv4 mapped IPv6 interface <%s>!\n"),
                       remote_as_string));
         }
       return 0;
@@ -147,6 +145,9 @@ TAO_UIPMC_Connector::make_connection (TAO::Profile_Transport_Resolver *,
   // Failure to open a connection.
   if (retval != 0)
     {
+      // Close the handler (this will also delete svc_handler).
+      svc_handler->close ();
+
       if (TAO_debug_level > 0)
         {
           ACE_ERROR ((LM_ERROR,
@@ -163,18 +164,21 @@ TAO_UIPMC_Connector::make_connection (TAO::Profile_Transport_Resolver *,
                 ACE_TEXT ("new connection on HANDLE %d\n"),
                 svc_handler->get_handle ()));
 
-  TAO_UIPMC_Transport *transport =
-    dynamic_cast<TAO_UIPMC_Transport *> (svc_handler->transport ());
+  UIPMC_TRANSPORT *transport =
+    dynamic_cast<UIPMC_TRANSPORT *> (svc_handler->transport ());
 
   // In case of errors transport is zero
   if (transport == 0)
     {
+      // Close the handler (this will also delete svc_handler).
+      svc_handler->close ();
+
       // Give users a clue to the problem.
       if (TAO_debug_level > 3)
           ACE_ERROR ((LM_ERROR,
                       "TAO (%P|%t) - UIPMC_Connector::make_connection, "
                       "connection to <%s:%u> failed (%p)\n",
-                      ACE_TEXT_CHAR_TO_TCHAR (uipmc_endpoint->get_host_addr ()),
+                      ACE_TEXT_CHAR_TO_TCHAR (uipmc_endpoint->host ()),
                       uipmc_endpoint->port (),
                       ACE_TEXT ("errno")));
 
@@ -189,7 +193,7 @@ TAO_UIPMC_Connector::make_connection (TAO::Profile_Transport_Resolver *,
   // Failure in adding to cache.
   if (retval != 0)
     {
-      // Close the handler.
+      // Close the handler (this will also delete svc_handler).
       svc_handler->close ();
 
       if (TAO_debug_level > 0)
@@ -204,7 +208,6 @@ TAO_UIPMC_Connector::make_connection (TAO::Profile_Transport_Resolver *,
 
   return transport;
 }
-
 
 TAO_Profile *
 TAO_UIPMC_Connector::create_profile (TAO_InputCDR& cdr)

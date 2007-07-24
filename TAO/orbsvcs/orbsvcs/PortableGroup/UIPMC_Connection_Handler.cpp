@@ -4,7 +4,6 @@
 
 
 #include "orbsvcs/PortableGroup/UIPMC_Connection_Handler.h"
-#include "orbsvcs/PortableGroup/UIPMC_Transport.h"
 #include "orbsvcs/PortableGroup/UIPMC_Endpoint.h"
 
 #include "tao/Timeprobe.h"
@@ -29,9 +28,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 TAO_UIPMC_Connection_Handler::TAO_UIPMC_Connection_Handler (ACE_Thread_Manager *t)
   : TAO_UIPMC_SVC_HANDLER (t, 0 , 0),
     TAO_Connection_Handler (0),
-    udp_socket_ (ACE_sap_any_cast (ACE_INET_Addr &)),
-    mcast_socket_ (),
-    using_mcast_ (0),
     dscp_codepoint_ (IPDSFIELD_DSCP_DEFAULT << 2)
 {
   // This constructor should *never* get called, it is just here to
@@ -42,35 +38,21 @@ TAO_UIPMC_Connection_Handler::TAO_UIPMC_Connection_Handler (ACE_Thread_Manager *
   ACE_ASSERT (0);
 }
 
-
 TAO_UIPMC_Connection_Handler::TAO_UIPMC_Connection_Handler (TAO_ORB_Core *orb_core)
   : TAO_UIPMC_SVC_HANDLER (orb_core->thr_mgr (), 0, 0),
     TAO_Connection_Handler (orb_core),
-    udp_socket_ (ACE_sap_any_cast (ACE_INET_Addr &)),
-    mcast_socket_ (),
-    using_mcast_ (0),
     dscp_codepoint_ (IPDSFIELD_DSCP_DEFAULT << 2)
 {
-  TAO_UIPMC_Transport* specific_transport = 0;
+  UIPMC_TRANSPORT* specific_transport = 0;
   ACE_NEW(specific_transport,
-          TAO_UIPMC_Transport(this, orb_core));
+          UIPMC_TRANSPORT (this, orb_core));
 
   // store this pointer (indirectly increment ref count)
   this->transport (specific_transport);
 }
 
-
 TAO_UIPMC_Connection_Handler::~TAO_UIPMC_Connection_Handler (void)
 {
-  if (this->using_mcast_)
-    {
-      // Closing a multicast socket automatically unsubscribes us from
-      // the multicast group.
-      this->mcast_socket_.close ();
-    }
-  else
-    this->udp_socket_.close ();
-
   delete this->transport ();
   int const result =
     this->release_os_resources ();
@@ -84,21 +66,11 @@ TAO_UIPMC_Connection_Handler::~TAO_UIPMC_Connection_Handler (void)
     }
 }
 
-ACE_HANDLE
-TAO_UIPMC_Connection_Handler::get_handle (void) const
-{
-  if (this->using_mcast_)
-    return this->mcast_socket_.get_handle ();
-  else
-    return this->udp_socket_.get_handle ();
-}
-
 const ACE_INET_Addr &
 TAO_UIPMC_Connection_Handler::addr (void)
 {
   return this->addr_;
 }
-
 
 void
 TAO_UIPMC_Connection_Handler::addr (const ACE_INET_Addr &addr)
@@ -106,13 +78,11 @@ TAO_UIPMC_Connection_Handler::addr (const ACE_INET_Addr &addr)
   this->addr_ = addr;
 }
 
-
 const ACE_INET_Addr &
 TAO_UIPMC_Connection_Handler::local_addr (void)
 {
   return local_addr_;
 }
-
 
 void
 TAO_UIPMC_Connection_Handler::local_addr (const ACE_INET_Addr &addr)
@@ -120,19 +90,14 @@ TAO_UIPMC_Connection_Handler::local_addr (const ACE_INET_Addr &addr)
   local_addr_ = addr;
 }
 
-
-const ACE_SOCK_Dgram &
-TAO_UIPMC_Connection_Handler::dgram (void)
+ssize_t
+TAO_UIPMC_Connection_Handler::send (const iovec iov[],
+                                    int n,
+                                    const ACE_Addr &addr,
+                                    int flags) const
 {
-  return this->udp_socket_;
+  return this->peer ().send (iov, n, addr, flags);
 }
-
-const ACE_SOCK_Dgram_Mcast &
-TAO_UIPMC_Connection_Handler::mcast_dgram (void)
-{
-  return this->mcast_socket_;
-}
-
 
 int
 TAO_UIPMC_Connection_Handler::open_handler (void *v)
@@ -143,7 +108,7 @@ TAO_UIPMC_Connection_Handler::open_handler (void *v)
 int
 TAO_UIPMC_Connection_Handler::open (void*)
 {
-  this->udp_socket_.open (this->local_addr_);
+  this->peer ().open (this->local_addr_);
 
   if (TAO_debug_level > 5)
   {
@@ -154,35 +119,14 @@ TAO_UIPMC_Connection_Handler::open (void*)
                  this->local_addr_.get_port_number ()));
   }
 
-  this->using_mcast_ = 0;
-
   // Set that the transport is now connected, if fails we return -1
   // Use C-style cast b/c otherwise we get warnings on lots of
   // compilers
-  if (!this->transport ()->post_open ((size_t) this->udp_socket_.get_handle ()))
+  if (!this->transport ()->post_open ((size_t) this->peer ().get_handle ()))
     return -1;
+
   this->state_changed (TAO_LF_Event::LFS_SUCCESS,
                        this->orb_core ()->leader_follower ());
-
-  return 0;
-}
-
-int
-TAO_UIPMC_Connection_Handler::open_server (void)
-{
-  this->mcast_socket_.join (this->local_addr_);
-  if (TAO_debug_level > 5)
-  {
-     ACE_DEBUG ((LM_DEBUG,
-                 ACE_TEXT("TAO (%P|%t) - UIPMC_Connection_Handler::open_server, ")
-                 ACE_TEXT("subcribed to multicast group at %s:%d\n"),
-                 this->local_addr_.get_host_addr (),
-                 this->local_addr_.get_port_number ()
-               ));
-  }
-
-  this->transport ()->id ((size_t) this->mcast_socket_.get_handle ());
-  this->using_mcast_ = 1;
 
   return 0;
 }
@@ -264,7 +208,7 @@ TAO_UIPMC_Connection_Handler::close (u_long)
 int
 TAO_UIPMC_Connection_Handler::release_os_resources (void)
 {
-  return this->peer().close ();
+  return this->peer ().close ();
 }
 
 int
@@ -299,7 +243,7 @@ TAO_UIPMC_Connection_Handler::set_tos (int tos)
       int result = 0;
 #if defined (ACE_HAS_IPV6)
       ACE_INET_Addr local_addr;
-      if (!this->using_mcast_ && this->udp_socket_.get_local_addr (local_addr) == -1)
+      if (this->peer ().get_local_addr (local_addr) == -1)
         return -1;
       else if (local_addr.get_type () == AF_INET6)
 # if !defined (IPV6_TCLASS)
@@ -315,17 +259,17 @@ TAO_UIPMC_Connection_Handler::set_tos (int tos)
           return 0;
         }
 # else /* !IPV6_TCLASS */
-        result = this->udp_socket_.set_option (IPPROTO_IPV6,
-                                               IPV6_TCLASS,
-                                               (int *) &tos,
-                                               (int) sizeof (tos));
+        result = this->peer ().set_option (IPPROTO_IPV6,
+                                           IPV6_TCLASS,
+                                           (int *) &tos,
+                                           (int) sizeof (tos));
       else
 # endif /* IPV6_TCLASS */
 #endif /* ACE_HAS_IPV6 */
-      result = this->udp_socket_.set_option (IPPROTO_IP,
-                                             IP_TOS,
-                                             (int *) &tos,
-                                             (int) sizeof (tos));
+      result = this->peer ().set_option (IPPROTO_IP,
+                                         IP_TOS,
+                                         (int *) &tos,
+                                         (int) sizeof (tos));
 
       if (TAO_debug_level)
         {
@@ -340,7 +284,6 @@ TAO_UIPMC_Connection_Handler::set_tos (int tos)
       // On successful setting of TOS field.
       if (result == 0)
         this->dscp_codepoint_ = tos;
-
     }
 
   return 0;

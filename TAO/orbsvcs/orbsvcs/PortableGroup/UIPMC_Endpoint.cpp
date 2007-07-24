@@ -23,14 +23,17 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_UIPMC_Endpoint::TAO_UIPMC_Endpoint (void)
   : TAO_Endpoint (IOP::TAG_UIPMC),
+    host_ (),
+    port_ (0),
     object_addr_ (),
     next_ (0)
 {
 }
 
-
 TAO_UIPMC_Endpoint::TAO_UIPMC_Endpoint (const ACE_INET_Addr &addr)
   : TAO_Endpoint (IOP::TAG_UIPMC),
+    host_ (),
+    port_ (0),
     object_addr_ (addr),
     next_ (0)
 {
@@ -50,26 +53,24 @@ TAO_UIPMC_Endpoint::TAO_UIPMC_Endpoint (const CORBA::Octet class_d_address[4],
   this->update_object_addr ();
 }
 
-
 TAO_UIPMC_Endpoint::~TAO_UIPMC_Endpoint (void)
 {
-
 }
 
 void
 TAO_UIPMC_Endpoint::object_addr (const ACE_INET_Addr &addr)
 {
   this->port_ = addr.get_port_number();
+  this->host_ = CORBA::string_dup (addr.get_host_addr ());
 
   this->object_addr_.set (addr);
 }
 
 const char *
-TAO_UIPMC_Endpoint::get_host_addr (void) const
+TAO_UIPMC_Endpoint::host (void) const
 {
-  return this->object_addr_.get_host_addr ();
+  return this->host_.in ();
 }
-
 
 int
 TAO_UIPMC_Endpoint::addr_to_string (char *buffer, size_t length)
@@ -131,7 +132,7 @@ TAO_UIPMC_Endpoint::is_equivalent (const TAO_Endpoint *other_endpoint)
 
   return
     (this->port_ == endpoint->port_
-     && ACE_OS::strcmp (this->get_host_addr (), endpoint->get_host_addr ()) == 0);
+     && ACE_OS::strcmp (this->host (), endpoint->host ()) == 0);
 }
 
 CORBA::ULong
