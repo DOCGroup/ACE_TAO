@@ -48,7 +48,7 @@ class Incoming_Message_Stack
 #endif
 {
 public:
-  /// default constructor, intiliazes empty stack.
+  /// default constructor, initiliazes empty stack.
   Incoming_Message_Stack();
 
   /// destructor, releases all elements on stack

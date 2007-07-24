@@ -1,3 +1,15 @@
+Tue Jul 24 07:56:23 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/GIOP_Message_Base.{h,cpp}:
+        * tao/ORB_Core.h:
+          Laout changes
+
+        * tao/Incoming_Message_Queue.{cpp,inl}:
+          Mode constructor inline
+
+        * tao/Incoming_Message_Stack.h:
+          Fixed typo
+
 Tue Jul 24 06:56:23 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * performance-tests/Cubit/TAO/IDL_Cubit/iiop_lite.conf:
