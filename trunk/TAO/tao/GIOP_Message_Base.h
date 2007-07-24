@@ -185,15 +185,6 @@ protected:
   /// Print out a debug messages..
   void dump_msg (const char *label, const u_char *ptr, size_t len);
 
-  /// Get the message type. The return value would be one of the
-  /// following:
-  /// TAO_PLUGGABLE_MESSAGE_REQUEST,
-  /// TAO_PLUGGABLE_MESSAGE_REPLY,
-  /// TAO_PLUGGABLE_MESSAGE_CLOSECONNECTION,
-  /// TAO_PLUGGABLE_MESSAGE_MESSAGE_ERROR.
-  TAO_Pluggable_Message_Type message_type (
-                               const TAO_GIOP_Message_State &state) const;
-
   /// Writes the GIOP header in to @a msg
   /// @note If the GIOP header happens to change in the future, we can
   /// push this method in to the generator_parser classes.

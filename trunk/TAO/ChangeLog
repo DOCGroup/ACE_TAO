@@ -1,3 +1,19 @@
+Tue Jul 24 09:41:23 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Incoming_Message_Stack.{h,inl}:
+          Made top method const
+
+        * tao/GIOP.pidl:
+          Added several enums as mentioned in the CORBA spec
+
+        * tao/GIOP_Message_Base.{h,cpp}:
+        * tao/GIOP_Message_State.{h,cpp,inl}:
+          Moved message_type method to the state class, this one now
+          converts an Octet to TAO_Pluggable_Message_Type
+
+        * tao/Transport.cpp:
+          Const changes
+
 Tue Jul 24 08:17:23 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Queued_Data.{h,cpp,inl}:

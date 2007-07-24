@@ -532,7 +532,7 @@ TAO_Transport::send_message_block_chain_i (const ACE_Message_Block *mb,
 
   synch_message.push_back (this->head_, this->tail_);
 
-  const int n = this->drain_queue_i ();
+  int const n = this->drain_queue_i ();
 
   if (n == -1)
     {
@@ -2226,7 +2226,7 @@ TAO_Transport::process_parsed_messages (TAO_Queued_Data *qd,
     }
 
   // Get the <message_type> that we have received
-  const TAO_Pluggable_Message_Type t = qd->msg_type_;
+  TAO_Pluggable_Message_Type const t = qd->msg_type_;
 
 #if TAO_HAS_TRANSPORT_CURRENT == 1
   // Update stats, if any

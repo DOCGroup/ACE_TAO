@@ -49,7 +49,7 @@ Incoming_Message_Stack::pop (TAO_Queued_Data* &data)
 }
 
 ACE_INLINE int
-Incoming_Message_Stack::top (TAO_Queued_Data* &data)
+Incoming_Message_Stack::top (TAO_Queued_Data* &data) const
 {
   if (this->top_ == 0)
     return -1;

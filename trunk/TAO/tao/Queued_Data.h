@@ -43,7 +43,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  * case consolidate () needs to be called prior to being sent to higher
  * layers of the ORB when the GIOP fragment chain is complete.
  */
-
 class TAO_Export TAO_Queued_Data
 {
 public:
