@@ -15,13 +15,13 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/Incoming_Message_Queue.h"
+#include "tao/Queued_Data.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if defined (__BORLANDC__) && (__BORLANDC__ <= 0x582)
+#if defined (__BORLANDC__) && (__BORLANDC__ <= 0x590)
 #include /**/ "tao/TAO_Export.h"
 #endif
 

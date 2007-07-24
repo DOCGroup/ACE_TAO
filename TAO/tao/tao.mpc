@@ -176,6 +176,7 @@ project(TAO) : acelib, install, tao_output, taodefaults, pidl, extra_core, tao_v
     Protocol_Factory.cpp
     Protocols_Hooks.cpp
     Network_Priority_Protocols_Hooks.cpp
+    Queued_Data.cpp
     Queued_Message.cpp
     Reactive_Connect_Strategy.cpp
     Reactive_Flushing_Strategy.cpp
@@ -468,6 +469,7 @@ project(TAO) : acelib, install, tao_output, taodefaults, pidl, extra_core, tao_v
     Network_Priority_Protocols_Hooks.h
     Pseudo_VarOut_T.h
     Queued_Message.h
+    Queued_Data.h
     Range_Checking_T.h
     Reactive_Connect_Strategy.h
     Reactive_Flushing_Strategy.h
