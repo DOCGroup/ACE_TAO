@@ -1,3 +1,8 @@
+Tue Jul 24 20:03:24 UTC 2007  Ciju John  <johnc at ociweb dot com>
+
+        * bin/tao_orb_tests.lst:
+          Adding regression test for Bug 3000 to autorun list.
+
 Tue Jul 24 15:15:43 UTC 2007  Vadym Ridosh  <vridosh@prismtech.com>
 
         * THANKS: Added Daniel de Angelis Cordeiro to the Hall of Fame.
