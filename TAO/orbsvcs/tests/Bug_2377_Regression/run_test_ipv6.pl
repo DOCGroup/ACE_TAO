@@ -10,7 +10,9 @@ use PerlACE::Run_Test;
 
 $status = 0;
 
-$HELLO = new PerlACE::Process ("uipmc_test", "-u corbaloc:miop:1.0\@1.0-cdmwftdomain-1/[FF01:0:0:0:0:0:25:334]:3977");
+$HELLO = new PerlACE::Process ("uipmc_test",
+    "-u corbaloc:miop:1.0\@1.0-cdmwftdomain-1/[FF01:0:0:0:0:0:25:335]:3977 " .
+    "-c corbaloc:miop:1.0\@1.0-cdmwftdomain-1/[FF01:0:0:0:0:0:25:334]:3977");
 
 $prog = $HELLO->SpawnWaitKill (20);
 

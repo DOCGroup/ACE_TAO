@@ -2,16 +2,16 @@
 
 //=============================================================================
 /**
- *  @file     UIPMC_Connection_Handler.h
+ *  @file     UIPMC_Mcast_Connection_Handler.h
  *
  *  $Id$
  *
- *  @author Frank Hunleth <fhunleth@cs.wustl.edu>
+ *  @author Vadym Ridosh <vridosh@prismtech.com>
  */
 //=============================================================================
 
-#ifndef TAO_UIPMC_CONNECTION_HANDLER_H
-#define TAO_UIPMC_CONNECTION_HANDLER_H
+#ifndef TAO_UIPMC_MCAST_CONNECTION_HANDLER_H
+#define TAO_UIPMC_MCAST_CONNECTION_HANDLER_H
 
 #include /**/ "ace/pre.h"
 
@@ -28,7 +28,7 @@
 
 #include "ace/Acceptor.h"
 #include "ace/Reactor.h"
-#include "ace/SOCK_Dgram.h"
+#include "ace/SOCK_Dgram_Mcast.h"
 
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -37,39 +37,38 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Pluggable_Messaging;
 
 // This connection handler.
-typedef ACE_Svc_Handler<ACE_SOCK_DGRAM, ACE_NULL_SYNCH>
-        TAO_UIPMC_SVC_HANDLER;
+typedef ACE_Svc_Handler<ACE_SOCK_DGRAM_MCAST, ACE_NULL_SYNCH>
+        TAO_UIPMC_MCAST_SVC_HANDLER;
 
 #if defined ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT
-template class TAO_PortableGroup_Export ACE_Svc_Handler<ACE_SOCK_DGRAM, ACE_NULL_SYNCH>;
+template class TAO_PortableGroup_Export ACE_Svc_Handler<ACE_SOCK_DGRAM_MCAST, ACE_NULL_SYNCH>;
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT */
 
 // ****************************************************************
 
 /**
- * @class TAO_UIPMC_Connection_Handler
+ * @class TAO_UIPMC_Mcast_Connection_Handler
  *
  * @brief  Handles requests on a single connection.
  *
  * Since MIOP is asymmetric then this Connection handler
- * is for only use in the Connector.
+ * is for only use in the Acceptor.
  */
-class TAO_PortableGroup_Export TAO_UIPMC_Connection_Handler :
-  public TAO_UIPMC_SVC_HANDLER,
+class TAO_PortableGroup_Export TAO_UIPMC_Mcast_Connection_Handler :
+  public TAO_UIPMC_MCAST_SVC_HANDLER,
   public TAO_Connection_Handler
 {
 
 public:
 
-  TAO_UIPMC_Connection_Handler (ACE_Thread_Manager* t = 0);
+  TAO_UIPMC_Mcast_Connection_Handler (ACE_Thread_Manager* t = 0);
 
   /// Constructor. <arg> parameter is used by the Acceptor to pass the
   /// protocol configuration properties for this connection.
-  TAO_UIPMC_Connection_Handler (TAO_ORB_Core *orb_core);
-
+  TAO_UIPMC_Mcast_Connection_Handler (TAO_ORB_Core *orb_core);
 
   /// Destructor.
-  ~TAO_UIPMC_Connection_Handler (void);
+  ~TAO_UIPMC_Mcast_Connection_Handler (void);
 
   //@{
   /** @name Connection Handler overloads
@@ -96,10 +95,6 @@ public:
 
   /// Add ourselves to Cache.
   int add_transport_to_cache (void);
-
-  /// Set Diff-Serv codepoint on outgoing packets.
-  int set_dscp_codepoint (CORBA::Boolean set_network_priority);
-  int set_dscp_codepoint (CORBA::Long dscp_codepoint);
 
   // UIPMC Additions - Begin
   const ACE_INET_Addr &addr (void);
@@ -137,25 +132,17 @@ protected:
   virtual int release_os_resources (void);
   //@}
 
-  // helper function used by the set_dscp_codepoint () methods to
-  // set the TOS field in the IP packets.
-  int set_tos (int tos);
-
-private:
-
-  /// Stores the type of service value.
-  int dscp_codepoint_;
 };
 
 // Transport for this handler.
-typedef TAO_UIPMC_Transport<TAO_UIPMC_Connection_Handler>
-        UIPMC_TRANSPORT;
+typedef TAO_UIPMC_Transport<TAO_UIPMC_Mcast_Connection_Handler>
+        UIPMC_MULTICAST_TRANSPORT;
 
 #if defined ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT
-template class TAO_PortableGroup_Export TAO_UIPMC_Transport<TAO_UIPMC_Connection_Handler>;
+template class TAO_PortableGroup_Export TAO_UIPMC_Transport<TAO_UIPMC_Mcast_Connection_Handler>;
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT */
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
-#endif /* TAO_UIPMC_CONNECTION_HANDLER_H */
+#endif /* TAO_UIPMC_MCAST_CONNECTION_HANDLER_H */

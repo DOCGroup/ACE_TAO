@@ -119,9 +119,6 @@ TAO_UIPMC_Acceptor::open (TAO_ORB_Core *orb_core,
   char tmp_host[MAXHOSTNAMELEN + 1];
 
 #if defined (ACE_HAS_IPV6)
-  // IPv6 numeric address in host string?
-  bool ipv6_in_host = false;
-
   // Check if this is a (possibly) IPv6 supporting profile containing a
   // numeric IPv6 address representation.
   if ((this->version_.major > TAO_MIN_IPV6_IIOP_MAJOR ||
@@ -150,41 +147,39 @@ TAO_UIPMC_Acceptor::open (TAO_ORB_Core *orb_core,
           const size_t len = cp_pos - (address + 1);
           ACE_OS::memcpy (tmp_host, address + 1, len);
           tmp_host[len] = '\0';
-          ipv6_in_host = true; // host string contains full IPv6 numeric address
         }
-    }
-#endif /* ACE_HAS_IPV6 */
-
-  // Both host and port have to be specified.
-#if defined (ACE_HAS_IPV6)
-  if (ipv6_in_host)
-    {
-      u_short port =
-        static_cast<u_short> (ACE_OS::atoi (port_separator_loc + sizeof (':')));
-
-      if (addr.set (port, tmp_host) != 0)
-        return -1;
     }
   else
     {
 #endif /* ACE_HAS_IPV6 */
-  if (addr.set (address) != 0)
-    return -1;
-
-  // Extract out just the host part of the address.
-  size_t len = port_separator_loc - address;
-  ACE_OS::memcpy (tmp_host, address, len);
-  tmp_host[len] = '\0';
+      // Extract out just the host part of the address.
+      size_t len = port_separator_loc - address;
+      ACE_OS::memcpy (tmp_host, address, len);
+      tmp_host[len] = '\0';
 #if defined (ACE_HAS_IPV6)
     }
 #endif /* ACE_HAS_IPV6 */
+
+  // Both host and port have to be specified.
+  if (port_separator_loc == 0)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("TAO (%P|%t) - ")
+                         ACE_TEXT ("UIPMC_Acceptor::open, ")
+                         ACE_TEXT ("port is not specified\n\n")),
+                        -1);
+    }
+
+  if (addr.set (address) != 0)
+    return -1;
 
   specified_hostname = tmp_host;
 
 #if defined (ACE_HAS_IPV6)
   // Check for violation of ORBConnectIPV6Only option
   if (this->orb_core_->orb_params ()->connect_ipv6_only () &&
-      addr.is_ipv4_mapped_ipv6 ())
+      (addr.get_type () != AF_INET6 ||
+       addr.is_ipv4_mapped_ipv6 ()))
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("TAO (%P|%t) - ")
@@ -240,17 +235,21 @@ TAO_UIPMC_Acceptor::open_i (const ACE_INET_Addr& addr,
                             ACE_Reactor *reactor)
 {
   ACE_NEW_RETURN (this->connection_handler_,
-                  TAO_UIPMC_Connection_Handler (this->orb_core_),
+                  TAO_UIPMC_Mcast_Connection_Handler (this->orb_core_),
                   -1);
 
   this->connection_handler_->local_addr (addr);
-  this->connection_handler_->open_server ();
+  this->connection_handler_->open (0);
 
   int result =
     reactor->register_handler (this->connection_handler_,
                                ACE_Event_Handler::READ_MASK);
   if (result == -1)
-    return result;
+    {
+      // Close the handler (this will also delete connection_handler_).
+      this->connection_handler_->close ();
+      return result;
+    }
 
   // Connection handler ownership now belongs to the Reactor.
   this->connection_handler_->remove_reference ();
@@ -322,7 +321,6 @@ TAO_UIPMC_Acceptor::object_key (IOP::TaggedProfile &,
   return 1;
 }
 
-
 int
 TAO_UIPMC_Acceptor::parse_options (const char *str)
 {
@@ -340,9 +338,7 @@ TAO_UIPMC_Acceptor::parse_options (const char *str)
   const char option_delimiter = '&';
 
   // Count the number of options.
-
   CORBA::ULong option_count = 1;
-  // Number of endpoints in the string  (initialized to 1).
 
   // Only check for endpoints after the protocol specification and
   // before the object key.
@@ -361,12 +357,14 @@ TAO_UIPMC_Acceptor::parse_options (const char *str)
   ACE_CString::size_type begin = 0;
   ACE_CString::size_type end = 0;
 
-  for (CORBA::ULong j = 0; j < option_count; ++j)
+  for (CORBA::ULong j = 0; j < option_count;)
     {
       if (j < option_count - 1)
         end = options.find (option_delimiter, begin);
       else
         end = len;
+
+      ++j;  // In this way we fight MS VS warning about unreachable code.
 
       if (end == begin)
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -410,7 +408,6 @@ TAO_UIPMC_Acceptor::parse_options (const char *str)
                                ACE_TEXT ("TAO (%P|%t) Invalid UIPMC option: <%s>\n"),
                                name.c_str ()),
                               -1);
-
         }
       else
         break;  // No other options.

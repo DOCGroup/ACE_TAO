@@ -67,7 +67,7 @@ public:
   TAO_UIPMC_Profile (const ACE_INET_Addr &addr,
                      TAO_ORB_Core *orb_core);
 
-  ///  Profile constructor.
+  ///  Profile constructor.  @@ Vadym - deprecate this.
   TAO_UIPMC_Profile (const CORBA::Octet class_d_address[4],
                      CORBA::UShort port,
                      TAO_ORB_Core *orb_core);
