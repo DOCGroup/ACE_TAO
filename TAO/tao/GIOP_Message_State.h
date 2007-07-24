@@ -25,6 +25,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/Pluggable_Messaging_Utils.h"
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
@@ -60,7 +62,7 @@ public:
   CORBA::Octet byte_order (void) const;
 
   /// Return the message type
-  CORBA::Octet message_type (void) const;
+  TAO_Pluggable_Message_Type message_type (void) const;
 
   /// Return the more fragments
   CORBA::Octet more_fragments (void) const;
@@ -70,6 +72,9 @@ public:
 private:
   /// Parse the message header.
   int parse_message_header_i (ACE_Message_Block &incoming);
+
+  /// Get the message type. 
+  TAO_Pluggable_Message_Type message_type (CORBA::Octet type) const;
 
   /// Checks for the magic word 'GIOP' in the start of the incoing
   /// stream
@@ -100,7 +105,7 @@ private:
   CORBA::Octet byte_order_;
 
   /// MsgType above
-  CORBA::Octet message_type_;
+  TAO_Pluggable_Message_Type message_type_;
 
   /// in byte_order!
   CORBA::ULong message_size_;

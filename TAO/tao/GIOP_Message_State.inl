@@ -9,7 +9,7 @@ TAO_GIOP_Message_State::TAO_GIOP_Message_State (void)
   : giop_version_ (TAO_DEF_GIOP_MAJOR,
                    TAO_DEF_GIOP_MINOR),
     byte_order_ (0),
-    message_type_ (0),
+    message_type_ (TAO_PLUGGABLE_MESSAGE_REQUEST),
     message_size_ (0),
     more_fragments_ (0)
 {
@@ -36,7 +36,7 @@ TAO_GIOP_Message_State::byte_order (void) const
   return this->byte_order_;
 }
 
-ACE_INLINE CORBA::Octet
+ACE_INLINE TAO_Pluggable_Message_Type
 TAO_GIOP_Message_State::message_type (void) const
 {
   return this->message_type_;

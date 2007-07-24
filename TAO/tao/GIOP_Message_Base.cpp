@@ -294,49 +294,6 @@ TAO_GIOP_Message_Base::format_message (TAO_OutputCDR &stream)
   return 0;
 }
 
-TAO_Pluggable_Message_Type
-TAO_GIOP_Message_Base::message_type (
-                         const TAO_GIOP_Message_State &msg_state) const
-{
-  // Convert to the right type of Pluggable Messaging message type.
-
-  switch (msg_state.message_type ())
-    {
-    case TAO_GIOP_REQUEST:
-      return TAO_PLUGGABLE_MESSAGE_REQUEST;
-    case TAO_GIOP_LOCATEREQUEST:
-      return TAO_PLUGGABLE_MESSAGE_LOCATEREQUEST;
-
-    case TAO_GIOP_LOCATEREPLY:
-      return TAO_PLUGGABLE_MESSAGE_LOCATEREPLY;
-
-    case TAO_GIOP_REPLY:
-      return TAO_PLUGGABLE_MESSAGE_REPLY;
-
-    case TAO_GIOP_CLOSECONNECTION:
-      return TAO_PLUGGABLE_MESSAGE_CLOSECONNECTION;
-
-    case TAO_GIOP_FRAGMENT:
-      return TAO_PLUGGABLE_MESSAGE_FRAGMENT;
-
-    case TAO_GIOP_MESSAGERROR:
-      return TAO_PLUGGABLE_MESSAGE_MESSAGERROR;
-
-    case TAO_GIOP_CANCELREQUEST:
-      return TAO_PLUGGABLE_MESSAGE_CANCELREQUEST;
-
-    default:
-        if (TAO_debug_level > 0)
-          {
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("TAO (%P|%t) %N:%l        message_type : ")
-                    ACE_TEXT ("wrong message.\n")));
-           }
-    }
-
-  return TAO_PLUGGABLE_MESSAGE_MESSAGERROR;
-}
-
 int
 TAO_GIOP_Message_Base::parse_next_message (ACE_Message_Block &incoming,
                                            TAO_Queued_Data &qd,
@@ -1647,7 +1604,7 @@ TAO_GIOP_Message_Base::init_queued_data (
   qd->major_version_  = state.giop_version ().major;
   qd->minor_version_  = state.giop_version ().minor;
   qd->more_fragments_ = state.more_fragments ();
-  qd->msg_type_       = this->message_type (state);
+  qd->msg_type_       = state.message_type ();
 }
 
 int

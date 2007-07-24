@@ -64,7 +64,7 @@ public:
 
   /// peeking top element of stack
   /// @return 0 for Ok, -1 for error
-  int top (TAO_Queued_Data* &data);
+  int top (TAO_Queued_Data* &data) const;
 
 private:
   /// top element of stack

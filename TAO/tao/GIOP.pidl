@@ -57,6 +57,35 @@ module GIOP
     case ProfileAddr: IOP::TaggedProfile profile;
     case ReferenceAddr: IORAddressingInfo ior;
   };
+
+  enum MsgType {
+    Request,
+    Reply,
+    CancelRequest,
+    LocateRequest,
+    LocateReply,
+    CloseConnection,
+    MessageError,
+    Fragment
+  };
+
+  enum ReplyStatusType {
+    NO_EXCEPTION,
+    USER_EXCEPTION,
+    SYSTEM_EXCEPTION,
+    LOCATION_FORWARD,
+    LOCATION_FORWARD_PERM,
+    NEEDS_ADDRESSING_MODE
+  };
+
+  enum LocateStatusType {
+    UNKNOWN_OBJECT,
+    OBJECT_HERE,
+    OBJECT_FORWARD,
+    OBJECT_FORWARD_PERM,
+    LOC_SYSTEM_EXCEPTION,
+    LOC_NEEDS_ADDRESSING_MODE
+  };
 };
 
 #endif  /* TAO_GIOP_PIDL */
