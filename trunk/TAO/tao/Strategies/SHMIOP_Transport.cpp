@@ -205,12 +205,11 @@ TAO_SHMIOP_Transport::handle_input (TAO_Resume_Handle &rh,
     }
 
     TAO_Queued_Data qd (&message_block);
-    size_t mesg_length; // not used
+    size_t mesg_length = 0;
 
     // Parse the incoming message for validity. The check needs to be
     // performed by the messaging objects.
-    if (this->messaging_object ()->parse_next_message (message_block,
-                                                       qd,
+    if (this->messaging_object ()->parse_next_message (qd,
                                                        mesg_length) == -1)
       return -1;
 

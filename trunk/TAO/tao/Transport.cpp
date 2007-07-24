@@ -2017,8 +2017,7 @@ TAO_Transport::handle_input_parse_data  (TAO_Resume_Handle &rh,
 
       size_t mesg_length  = 0;
 
-      if (this->messaging_object ()->parse_next_message (message_block,
-                                                         qd,
+      if (this->messaging_object ()->parse_next_message (qd,
                                                          mesg_length) == -1
           || (qd.missing_data () == 0
               && mesg_length > message_block.length ()) )
@@ -2227,7 +2226,7 @@ TAO_Transport::process_parsed_messages (TAO_Queued_Data *qd,
 #if TAO_HAS_TRANSPORT_CURRENT == 1
   // Update stats, if any
   if (this->stats_ != 0)
-    this->stats_->messages_received (qd->msg_block_->length ());
+    this->stats_->messages_received (qd->msg_block ()->length ());
 #endif /* TAO_HAS_TRANSPORT_CURRENT == 1 */
 
   switch (qd->msg_type ())

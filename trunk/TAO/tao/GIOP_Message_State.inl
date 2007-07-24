@@ -10,7 +10,7 @@ TAO_GIOP_Message_State::TAO_GIOP_Message_State (void)
                    TAO_DEF_GIOP_MINOR),
     byte_order_ (0),
     message_type_ (TAO_PLUGGABLE_MESSAGE_REQUEST),
-    message_size_ (0),
+    payload_size_ (0),
     more_fragments_ (0)
 {
 }
@@ -18,16 +18,13 @@ TAO_GIOP_Message_State::TAO_GIOP_Message_State (void)
 ACE_INLINE CORBA::ULong
 TAO_GIOP_Message_State::message_size (void) const
 {
-  CORBA::ULong len =
-    this->message_size_ + TAO_GIOP_MESSAGE_HEADER_LEN;
-
-  return len;
+  return this->payload_size_ + TAO_GIOP_MESSAGE_HEADER_LEN;
 }
 
 ACE_INLINE CORBA::ULong
 TAO_GIOP_Message_State::payload_size (void) const
 {
-  return this->message_size_;
+  return this->payload_size_;
 }
 
 ACE_INLINE CORBA::Octet
@@ -46,6 +43,12 @@ ACE_INLINE CORBA::Octet
 TAO_GIOP_Message_State::more_fragments (void) const
 {
   return this->more_fragments_;
+}
+
+ACE_INLINE void
+TAO_GIOP_Message_State::more_fragments (CORBA::Octet fragment)
+{
+  this->more_fragments_ = fragment;
 }
 
 ACE_INLINE TAO_GIOP_Message_Version const &

@@ -79,11 +79,8 @@ public:
   /// Set missing data
   void missing_data (size_t data);
 
-  /// Get major version
-  CORBA::Octet major_version (void) const;
-
-  /// Get minor version
-  CORBA::Octet minor_version (void) const;
+  /// Get the GIOP version
+  TAO_GIOP_Message_Version const &giop_version (void) const;
 
   /// Get byte_order
   CORBA::Octet byte_order (void) const;
@@ -106,7 +103,7 @@ public:
   /// Set message block
   void msg_block (ACE_Message_Block *mb);
 
-
+  /// Set the state
   void set_state (const TAO_GIOP_Message_State& state);
 
 private:
@@ -127,23 +124,8 @@ private:
   size_t missing_data_;
   //@}
 
-  /// Many protocols like GIOP have a major and minor version
-  /// information that would be needed to read and decipher the
-  /// message.
-  CORBA::Octet major_version_;
-  CORBA::Octet minor_version_;
-
-  /// The byte order of the message that is stored in the node.
-  CORBA::Octet byte_order_;
-
-  /// Some messages can be fragmented by the protocol (this is an ORB
-  /// level fragmentation on top of the TCP/IP fragmentation. This
-  /// member indicates whether the message that we have recd. and
-  /// queue already has more fragments that is missing..
-  CORBA::Octet more_fragments_;
-
-  /// The message type of the message
-  TAO_Pluggable_Message_Type msg_type_;
+  /// State of this queued data
+  TAO_GIOP_Message_State state_;
 
   /// Pounter to the next element in the queue.
   TAO_Queued_Data *next_;

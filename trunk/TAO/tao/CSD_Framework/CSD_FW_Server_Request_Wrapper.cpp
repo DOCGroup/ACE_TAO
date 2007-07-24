@@ -457,17 +457,16 @@ TAO::CSD::FW_Server_Request_Wrapper::clone (TAO_Service_Context& from,
 TAO_OutputCDR*
 TAO::CSD::FW_Server_Request_Wrapper::create_new_output_cdr ()
 {
- TAO_OutputCDR* cdr = 0;
+  TAO_OutputCDR* cdr = 0;
 
- // A buffer that we will use to initialise the CDR stream
- char* repbuf;
- ACE_NEW_RETURN (repbuf,
+  // A buffer that we will use to initialise the CDR stream
+  char* repbuf = 0;
+  ACE_NEW_RETURN (repbuf,
                  char[ACE_CDR::DEFAULT_BUFSIZE],
                  0);
 
- ACE_CDR::Octet major;
- ACE_CDR::Octet minor;
- this->request_->outgoing_->get_version (major, minor);
+  TAO_GIOP_Message_Version giop_version;
+  this->request_->outgoing_->get_version (giop_version);
 
   // Initialze an output CDR on the stack
   // NOTE: Don't jump to a conclusion as to why we are using the
@@ -487,8 +486,8 @@ TAO::CSD::FW_Server_Request_Wrapper::create_new_output_cdr ()
                                  this->request_->orb_core_->input_cdr_dblock_allocator (),
                                  this->request_->orb_core_->input_cdr_msgblock_allocator (),
                                  this->request_->orb_core_->orb_params ()->cdr_memcpy_tradeoff (),
-                                 major,
-                                 minor),
+                                 giop_version.major,
+                                 giop_version.minor),
                   0);
 
   return cdr;

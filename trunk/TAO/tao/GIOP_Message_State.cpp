@@ -63,7 +63,7 @@ TAO_GIOP_Message_State::parse_message_header_i (ACE_Message_Block &incoming)
   // Get the size of the message..
   this->get_payload_size (buf);
 
-  if (this->message_size_ == 0)
+  if (this->payload_size_ == 0)
     {
       switch (this->message_type_)
         {
@@ -168,10 +168,8 @@ TAO_GIOP_Message_State::get_version_info (char *buf)
     }
 
   // We have a GIOP message on hand. Get its revision numbers
-  CORBA::Octet incoming_major =
-    buf[TAO_GIOP_VERSION_MAJOR_OFFSET];
-  CORBA::Octet incoming_minor =
-    buf[TAO_GIOP_VERSION_MINOR_OFFSET];
+  CORBA::Octet incoming_major = buf[TAO_GIOP_VERSION_MAJOR_OFFSET];
+  CORBA::Octet incoming_minor = buf[TAO_GIOP_VERSION_MINOR_OFFSET];
 
   // Check the revision information
   if (TAO_GIOP_Message_Generator_Parser_Impl::check_revision (
@@ -258,7 +256,7 @@ TAO_GIOP_Message_State::get_payload_size (char *rd_ptr)
   // Move the read pointer
   rd_ptr += TAO_GIOP_MESSAGE_SIZE_OFFSET;
 
-  this->message_size_ =  this->read_ulong (rd_ptr);
+  this->payload_size_ =  this->read_ulong (rd_ptr);
 }
 
 CORBA::ULong

@@ -67,13 +67,16 @@ public:
   /// Return the more fragments
   CORBA::Octet more_fragments (void) const;
 
-  TAO_GIOP_Message_Version const & giop_version (void) const;
+  void more_fragments (CORBA::Octet fragment);
+
+  /// Get the GIOP version
+  TAO_GIOP_Message_Version const &giop_version (void) const;
 
 private:
   /// Parse the message header.
   int parse_message_header_i (ACE_Message_Block &incoming);
 
-  /// Get the message type. 
+  /// Get the message type.
   TAO_Pluggable_Message_Type message_type (CORBA::Octet type) const;
 
   /// Checks for the magic word 'GIOP' in the start of the incoing
@@ -107,8 +110,8 @@ private:
   /// MsgType above
   TAO_Pluggable_Message_Type message_type_;
 
-  /// in byte_order!
-  CORBA::ULong message_size_;
+  /// In byte_order!
+  CORBA::ULong payload_size_;
 
   /// (Requests and Replys)
   /// A value of zero indicates that this message does not have any

@@ -75,46 +75,6 @@ clone_mb_nocopy_size (ACE_Message_Block *mb, size_t span_size)
   return nb;
 }
 
-TAO_Queued_Data::TAO_Queued_Data (ACE_Allocator *alloc)
-  : msg_block_ (0),
-    missing_data_ (0),
-    major_version_ (0),
-    minor_version_ (0),
-    byte_order_ (0),
-    more_fragments_ (0),
-    msg_type_ (TAO_PLUGGABLE_MESSAGE_MESSAGERROR),
-    next_ (0),
-    allocator_ (alloc)
-{
-}
-
-TAO_Queued_Data::TAO_Queued_Data (ACE_Message_Block *mb,
-                                  ACE_Allocator *alloc)
-  : msg_block_ (mb),
-    missing_data_ (0),
-    major_version_ (0),
-    minor_version_ (0),
-    byte_order_ (0),
-    more_fragments_ (0),
-    msg_type_ (TAO_PLUGGABLE_MESSAGE_MESSAGERROR),
-    next_ (0),
-    allocator_ (alloc)
-{
-}
-
-TAO_Queued_Data::TAO_Queued_Data (const TAO_Queued_Data &qd)
-  : msg_block_ (qd.msg_block_->duplicate ()),
-    missing_data_ (qd.missing_data_),
-    major_version_ (qd.major_version_),
-    minor_version_ (qd.minor_version_),
-    byte_order_ (qd.byte_order_),
-    more_fragments_ (qd.more_fragments_),
-    msg_type_ (qd.msg_type_),
-    next_ (0),
-    allocator_ (qd.allocator_)
-{
-}
-
 /*static*/
 TAO_Queued_Data *
 TAO_Queued_Data::make_queued_data (ACE_Allocator *message_buffer_alloc,
@@ -247,7 +207,7 @@ int
 TAO_Queued_Data::consolidate (void)
 {
   // Is this a chain of fragments?
-  if (this->more_fragments_ && this->msg_block_->cont () != 0)
+  if (this->state_.more_fragments () && this->msg_block_->cont () != 0)
     {
       // Create a message block big enough to hold the entire chain
       ACE_Message_Block *dest = clone_mb_nocopy_size (
@@ -275,7 +235,7 @@ TAO_Queued_Data::consolidate (void)
 
       // Set the message block to the new consolidated message block
       this->msg_block_ = dest;
-      this->more_fragments_ = 0;
+      this->state_.more_fragments (0);
     }
 
   return 0;

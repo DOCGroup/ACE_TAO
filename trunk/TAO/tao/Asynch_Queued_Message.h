@@ -86,6 +86,8 @@ protected:
    *            deleted when the destructor is called and hence the
    *            buffer should always come off the heap!
    *
+   * @param oc The ORB Core
+   *
    * @param size The size of the buffer <buf> that is being handed
    *             over.
    *
@@ -100,7 +102,7 @@ protected:
                              ACE_Allocator *alloc = 0);
 private:
   /// The number of bytes in the buffer
-  const size_t size_;
+  size_t const size_;
 
   /// The offset in the buffer
   /**

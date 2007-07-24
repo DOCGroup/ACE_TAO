@@ -8,7 +8,6 @@
  *
  *   GIOP Version utility class definition
  *
- *
  *  @author  Chris Cleeland <cleeland@cs.wustl.edu>
  *  @author  Carlos O' Ryan <coryan@uci.edu>
  */
@@ -44,8 +43,14 @@ public:
   /// Major version number
   CORBA::Octet major;
 
+  /// Get major version number
+  CORBA::Octet major_version (void) const;
+
   /// Minor version number
   CORBA::Octet minor;
+
+  /// Get minor version number
+  CORBA::Octet minor_version (void) const;
 
   /// Copy constructor
   TAO_GIOP_Message_Version (const TAO_GIOP_Message_Version &src);
