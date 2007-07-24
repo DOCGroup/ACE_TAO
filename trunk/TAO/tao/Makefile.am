@@ -880,6 +880,7 @@ libTAO_la_SOURCES = \
   Profile_Transport_Resolver.cpp \
   Protocol_Factory.cpp \
   Protocols_Hooks.cpp \
+  Queued_Data.cpp \
   Queued_Message.cpp \
   Reactive_Connect_Strategy.cpp \
   Reactive_Flushing_Strategy.cpp \
@@ -1308,6 +1309,8 @@ nobase_include_HEADERS = \
   Pseudo_VarOut_T.cpp \
   Pseudo_VarOut_T.h \
   Pseudo_VarOut_T.inl \
+  Queued_Data.h \
+  Queued_Data.inl \
   Queued_Message.h \
   Range_Checking_T.h \
   Reactive_Connect_Strategy.h \

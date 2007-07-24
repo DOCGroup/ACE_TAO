@@ -1,3 +1,14 @@
+Tue Jul 24 08:17:23 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Queued_Data.{h,cpp,inl}:
+          Moved TAO_Queued_Data to its own file
+
+        * tao/Incoming_Message_Queue.{h,cpp,inl}:
+        * tao/tao.mpc:
+        * tao/Makefile.am:
+        * tao/Incoming_Message_Stack.h:
+          Updated because of move of TAO_Queued_Data
+
 Tue Jul 24 08:02:23 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/IFRService/IFR_Service_Utils_T.cpp:
