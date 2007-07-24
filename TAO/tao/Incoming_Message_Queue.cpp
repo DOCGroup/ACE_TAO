@@ -16,13 +16,6 @@ ACE_RCSID (tao,
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Incoming_Message_Queue::TAO_Incoming_Message_Queue (TAO_ORB_Core *orb_core)
-  : last_added_ (0),
-    size_ (0),
-    orb_core_ (orb_core)
-{
-}
-
 TAO_Incoming_Message_Queue::~TAO_Incoming_Message_Queue (void)
 {
   const CORBA::ULong sz = this->size_;
