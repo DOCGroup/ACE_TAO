@@ -499,16 +499,13 @@ TAO_UIPMC_Transport<CONNECTION_HANDLER>::handle_input (TAO_Resume_Handle &rh,
   // Set the write pointer in the stack buffer.
   message_block.wr_ptr (n);
 
-
   // Make a node of the message block..
   TAO_Queued_Data qd (&message_block);
-  size_t mesg_length;
+  size_t mesg_length = 0;
 
   // Parse the incoming message for validity. The check needs to be
   // performed by the messaging objects.
-  if (this->messaging_object ()->parse_next_message (message_block,
-                                                     qd,
-                                                     mesg_length) == -1)
+  if (this->messaging_object ()->parse_next_message (qd, mesg_length) == -1)
     {
       if (TAO_debug_level)
         {
@@ -616,8 +613,7 @@ int
 TAO_UIPMC_Transport<CONNECTION_HANDLER>::messaging_init (CORBA::Octet major,
                                                          CORBA::Octet minor)
 {
-  this->messaging_object_->init (major,
-                                 minor);
+  this->messaging_object_->init (major, minor);
   return 1;
 }
 
