@@ -1090,6 +1090,11 @@ basic_visitor::can_skip_module (AST_Module *m)
           case AST_Decl::NT_eventtype:
           case AST_Decl::NT_eventtype_fwd:
           case AST_Decl::NT_home:
+            if (d->is_abstract () || d->is_local ())
+              {
+                break;
+              }
+              
             return false;
           case AST_Decl::NT_module:
             if (!this->can_skip_module (AST_Module::narrow_from_decl (d)))
