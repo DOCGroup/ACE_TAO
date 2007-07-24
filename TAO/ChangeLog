@@ -1,3 +1,8 @@
+Tue Jul 24 08:02:23 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/IFRService/IFR_Service_Utils_T.cpp:
+          Also BCB2007 needs the workaround in this file
+
 Tue Jul 24 07:56:23 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/GIOP_Message_Base.{h,cpp}:
