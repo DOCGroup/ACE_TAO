@@ -1,3 +1,7 @@
+Tue Jul 24 20:38:50 UTC 2007  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * COPYING: Updated this file to reflect 2007.
+
 Tue Jul 24 21:09:27 UTC 2007  Steve Huston  <shuston@riverace.com>
 
         * tests/Proactor_Test_IPV6.cpp: Default to half duplex operation on
