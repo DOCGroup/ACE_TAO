@@ -49,7 +49,7 @@
 #if defined (ACE_HAS_IP_MULTICAST) && defined (ACE_HAS_THREADS)
 
 /*
- *  The 'finished' flag is used to break out of an infninite loop in the
+ *  The 'finished' flag is used to break out of an infinite loop in the
  *  task::svc () method.  The 'handler' will set the flag in respose to
  *  SIGINT (CTRL-C).
  */
@@ -818,15 +818,21 @@ int producer (MCT_Config &config)
                     hops));
     }
 
-  // Turn on multicast loop back since the test relies on it and the
+  // Turn on multicast loopback since the test relies on it and the
   // ACE_SOCK_Dgram_Mcast documents the loopback state as indeterminate.
   char do_loopback = 1;
   if (socket.set_option (IPPROTO_IPV6,
                          IPV6_MULTICAST_LOOP,
                          (void *)&do_loopback,
                          1) == -1)
-    ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"),
-                ACE_TEXT ("Can't set IPV6_MULTICAST_LOOP")));
+    {
+      if (errno == ENOTSUP)
+        ACE_DEBUG ((LM_INFO,
+                    ACE_TEXT ("IPV6_MULTICAST_LOOP not supported\n")));
+      else
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"),
+                    ACE_TEXT ("Can't set IPV6_MULTICAST_LOOP")));
+    }
 #endif /* ACE_HAS_IPV6 */
 
 
