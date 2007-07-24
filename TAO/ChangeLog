@@ -1,3 +1,27 @@
+Tue Jul 24 10:38:23 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Queued_Data.{h,inl}:
+          Made all members private and added inlined accessor methods. This
+          makes it easier to change the members to a GIOP_Message_State
+          instance. Added a set_state method that accepts a GIOP_Message_State
+          instance
+
+        * tao/GIOP_Message_Base.cpp:
+        * tao/GIOP_Message_Base.h:
+        * tao/Incoming_Message_Queue.cpp:
+        * tao/Incoming_Message_Stack.inl:
+        * tao/Strategies/DIOP_Transport.cpp:
+        * tao/Strategies/SHMIOP_Transport.cpp:
+        * tao/Transport.cpp:
+          Updated for the changes to Queued_Data
+
+        * tao/GIOP_Message_Base.cpp:
+        * tao/Transport.cpp:
+          Changed a few large if checks to a switch statement
+
+        * tao/Queued_Message.h:
+          No need to declare the list manipulation methods as virtual
+
 Tue Jul 24 09:41:23 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Incoming_Message_Stack.{h,inl}:
