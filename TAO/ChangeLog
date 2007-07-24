@@ -1,3 +1,21 @@
+Tue Jul 24 19:58:38 UTC 2007  Ciju John  <johnc at ociweb dot com>
+
+        * tests/Bug_3000_Regression:
+        * tests/Bug_3000_Regression/Bug_3000_Regression.mpc:
+        * tests/Bug_3000_Regression/Callback.h:
+        * tests/Bug_3000_Regression/Callback.cpp:
+        * tests/Bug_3000_Regression/Makefile.am:
+        * tests/Bug_3000_Regression/README:
+        * tests/Bug_3000_Regression/Service.h:
+        * tests/Bug_3000_Regression/Service.cpp:
+        * tests/Bug_3000_Regression/Test.idl:
+        * tests/Bug_3000_Regression/client.cpp:
+        * tests/Bug_3000_Regression/run_test.pl:
+        * tests/Bug_3000_Regression/rw.conf:
+        * tests/Bug_3000_Regression/server.cpp:
+          New regression test for Bug 3000 (Handle leak upon oneway
+          invocation with RW wait startegy).
+
 Tue Jul 24 18:13:23 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/PortableGroup/UIPMC_Transport.cpp:
