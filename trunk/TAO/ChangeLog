@@ -1,3 +1,33 @@
+Tue Jul 24 14:22:54 UTC 2007  Vadym Ridosh  <vridosh@prismtech.com>
+
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Acceptor.h:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Acceptor.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Connection_Handler.h:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Transport.h:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Endpoint.h:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Connector.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Transport.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Connection_Handler.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Endpoint.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Mcast_Connection_Handler.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Profile.h:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Mcast_Connection_Handler.h:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Profile.cpp:
+          Fixed bug#3002 that was introduced with fix for bug#2925.
+          Thanks to Daniel de Angelis Cordeiro < dcordeiro at gmail dot com >
+          for reporting it. Fixed potential memory leaks in
+          TAO_UIPMC_Acceptor::open_i and TAO_UIPMC_Connector::make_connection
+          that could occur after connection handler is created and later
+          code fails for any reason. Simplified connection handler.
+          Added connection handler specific to Acceptor. Simplified the code
+          in TAO_UIPMC_Profile::parse_string_i that was introduced with fix
+          for bug#2377.
+
+        * orbsvcs/tests/Bug_2377_Regression/run_test_ipv6.pl:
+        * orbsvcs/tests/Bug_2377_Regression/run_test.pl:
+        * orbsvcs/tests/Bug_2377_Regression/uipmc_test.cpp:
+          Changed this test a bit so that it tests fix for bug#3002 as well.
+
 Tue Jul 24 12:20:23 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Asynch_Queued_Message.h:

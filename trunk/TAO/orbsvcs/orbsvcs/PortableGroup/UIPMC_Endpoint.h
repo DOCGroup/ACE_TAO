@@ -23,6 +23,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/CORBA_String.h"
 #include "ace/INET_Addr.h"
 
 #include "orbsvcs/PortableGroup/portablegroup_export.h"
@@ -82,7 +83,7 @@ public:
 
   /// Return a pointer to the stringified host address (not including the
   /// port).  This class retains ownership of the address memory.
-  const char *get_host_addr (void) const;
+  const char *host (void) const;
 
   /// Return the port number.
   CORBA::UShort port (void) const;
@@ -93,20 +94,22 @@ public:
   //TAO_UIPMC_Connection_Handler *&hint (void);
   // Access to our <hint_>.
 
-
 private:
 
-  /// Helper methods for getting and setting the IP address.
+  /// Helper methods for getting and setting the IP address.  @@ Vadym - deprecate these.
   ACE_UINT32 uint_ip_addr (void) const;
   void uint_ip_addr (ACE_UINT32 ip_addr);
 
-  /// Helper method to update the cached object address.
+  /// Helper method to update the cached object address.  @@ Vadym - deprecate this.
   void update_object_addr (void);
 
   /// IP Multicast address.  @@ Frank - deprecate this.
   CORBA::Octet class_d_address_[4];
 
-  /// UDP port number.  @@ Frank - deprecate this.
+  /// String representing the host address.
+  CORBA::String_var host_;
+
+  /// UDP port number.
   CORBA::UShort port_;
 
   /// Cached instance of <ACE_INET_Addr> for use in making

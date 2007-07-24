@@ -32,7 +32,6 @@ TAO_UIPMC_Profile::object_key_delimiter (void) const
   return TAO_UIPMC_Profile::object_key_delimiter_;
 }
 
-
 TAO_UIPMC_Profile::TAO_UIPMC_Profile (TAO_ORB_Core *orb_core)
   : TAO_Profile (IOP::TAG_UIPMC,
                  orb_core,
@@ -299,18 +298,15 @@ TAO_UIPMC_Profile::parse_string_i (const char *string)
         }
     }
 
-  const char* str_check;
-  for (str_check = string; str_check < pos; str_check++)
+  if (ACE_OS::strspn (string, "0123456789") !=
+      static_cast<size_t> (pos - string))
     {
-      if (!ACE_OS::ace_isdigit (str_check[0]))
-        {
-          // Throw an exception if it's not a proper number
-          throw CORBA::INV_OBJREF (
-            CORBA::SystemException::_tao_minor_code (
-              TAO::VMCID,
-              EINVAL),
-            CORBA::COMPLETED_NO);
-        }
+      // Throw an exception if it's not a proper number
+      throw CORBA::INV_OBJREF (
+        CORBA::SystemException::_tao_minor_code (
+          TAO::VMCID,
+          EINVAL),
+        CORBA::COMPLETED_NO);
     }
 
   // Get the group_id.
@@ -340,17 +336,15 @@ TAO_UIPMC_Profile::parse_string_i (const char *string)
             CORBA::COMPLETED_NO);
         }
 
-      for (str_check = string; str_check < pos; str_check++)
+      if (ACE_OS::strspn (string, "0123456789") !=
+          static_cast<size_t> (pos - string))
         {
-          if (!ACE_OS::ace_isdigit (str_check[0]))
-            {
-              // Throw an exception if it's not a proper number
-              throw CORBA::INV_OBJREF (
-                CORBA::SystemException::_tao_minor_code (
-                  TAO::VMCID,
-                  EINVAL),
-               CORBA::COMPLETED_NO);
-            }
+          // Throw an exception if it's not a proper number
+          throw CORBA::INV_OBJREF (
+            CORBA::SystemException::_tao_minor_code (
+              TAO::VMCID,
+              EINVAL),
+            CORBA::COMPLETED_NO);
         }
 
       ACE_CString str_group_ref_ver (string, pos - string);
@@ -398,11 +392,11 @@ TAO_UIPMC_Profile::parse_string_i (const char *string)
                           ACE_TEXT ("Invalid IPv6 decimal address specified.\n")));
             }
 
-          ACE_THROW (CORBA::INV_OBJREF (
-                       CORBA::SystemException::_tao_minor_code (
-                         0,
-                         EINVAL),
-                       CORBA::COMPLETED_NO));
+          throw CORBA::INV_OBJREF (
+            CORBA::SystemException::_tao_minor_code (
+              0,
+              EINVAL),
+            CORBA::COMPLETED_NO);
         }
       else
         {
@@ -414,24 +408,22 @@ TAO_UIPMC_Profile::parse_string_i (const char *string)
   else
     {
 #endif /* ACE_HAS_IPV6 */
-  mcast_addr = ACE_CString (string, pos - string);
-  string = pos + 1;
+      mcast_addr = ACE_CString (string, pos - string);
+      string = pos + 1;
 #if defined (ACE_HAS_IPV6)
     }
 #endif /* ACE_HAS_IPV6 */
 
-  for (str_check = mcast_addr.c_str (); str_check[0] != '\0'; str_check++)
+  size_t mcast_addr_len = mcast_addr.length ();
+  if (ACE_OS::strspn (mcast_addr.c_str (),
+                      ".:0123456789ABCDEFabcdef") != mcast_addr_len)
     {
-      if (!ACE_OS::ace_isdigit (str_check[0]) && !ACE_OS::ace_isxdigit (str_check[0]) &&
-          str_check[0] != ':' && str_check[0] != '.')
-        {
-          // Throw an exception if it's not a proper IPv4/IPv6 address
-          throw CORBA::INV_OBJREF (
-            CORBA::SystemException::_tao_minor_code (
-              TAO::VMCID,
-              EINVAL),
-            CORBA::COMPLETED_NO);
-        }
+      // Throw an exception if it's not a proper IPv4/IPv6 address
+      throw CORBA::INV_OBJREF (
+        CORBA::SystemException::_tao_minor_code (
+          TAO::VMCID,
+          EINVAL),
+        CORBA::COMPLETED_NO);
     }
 
   // Parse the multicast port number.
@@ -448,21 +440,31 @@ TAO_UIPMC_Profile::parse_string_i (const char *string)
         CORBA::COMPLETED_NO);
     }
 
-  for (str_check = string; str_check[0] != '\0'; str_check++)
+  // Port can have name thus letters and '-' are allowed.
+  const char port_chars[] =
+    "-0123456789ABCDEFGHIGKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+  size_t port_len = ACE_OS::strlen (string);
+  if (ACE_OS::strspn (string, port_chars) != port_len)
     {
-      if (!ACE_OS::ace_isdigit (str_check[0]))
-        {
-          // Throw an exception if it's not a proper number
-          throw CORBA::INV_OBJREF (
-            CORBA::SystemException::_tao_minor_code (
-              TAO::VMCID,
-              EINVAL),
-            CORBA::COMPLETED_NO);
-        }
+      // Throw an exception if it's not a proper port
+      throw CORBA::INV_OBJREF (
+        CORBA::SystemException::_tao_minor_code (
+          TAO::VMCID,
+          EINVAL),
+        CORBA::COMPLETED_NO);
     }
 
-  CORBA::UShort mcast_port =
-      static_cast<CORBA::UShort> (ACE_OS::strtoul (string, 0, 10));
+  ACE_INET_Addr ia;
+  if (ia.string_to_addr (string) == -1)
+    {
+      throw CORBA::INV_OBJREF (
+        CORBA::SystemException::_tao_minor_code (
+          TAO::VMCID,
+          EINVAL),
+        CORBA::COMPLETED_NO);
+    }
+
+  u_short mcast_port = ia.get_port_number ();
 
   //
   // Finally, set all of the fields of the profile.
@@ -575,14 +577,14 @@ TAO_UIPMC_Profile::to_string (void)
     {
       ACE_OS::sprintf (&buf[ACE_OS::strlen (buf)],
                        "/[%s]:%d",
-                       this->endpoint_.get_host_addr (),
+                       this->endpoint_.host (),
                        this->endpoint_.port ());
     }
   else
 #endif /* ACE_HAS_IPV6 */
   ACE_OS::sprintf (&buf[ACE_OS::strlen (buf)],
                    "/%s:%d",
-                   this->endpoint_.get_host_addr (),
+                   this->endpoint_.host (),
                    this->endpoint_.port ());
 
   return buf;
@@ -645,7 +647,7 @@ TAO_UIPMC_Profile::create_profile_body (TAO_OutputCDR &encap) const
   encap.write_octet (this->version_.minor);
 
   // Address.
-  encap.write_string (this->endpoint_.get_host_addr ());
+  encap.write_string (this->endpoint_.host ());
 
   // Port number.
   encap.write_ushort (this->endpoint_.port ());

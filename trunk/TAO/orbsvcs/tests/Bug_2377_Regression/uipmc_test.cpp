@@ -15,6 +15,7 @@
 #define HELLO_CALL_NUMBER       100
 
 const char *uipmc_url = 0;
+const char *client_uipmc_url = 0;
 
 void
 test_sleep (int microsec)
@@ -27,8 +28,8 @@ test_sleep (int microsec)
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "u:");
-  const unsigned char full_success = 0x01;
+  ACE_Get_Opt get_opts (argc, argv, "u:c:");
+  const unsigned char full_success = 0x03;
   unsigned char success = 0;
 
   do
@@ -41,6 +42,7 @@ parse_args (int argc, char *argv[])
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s"
                            " -u <url>"
+                           " -c <client_url>"
                            "\n",
                            argv [0]),
                            -1);
@@ -50,6 +52,10 @@ parse_args (int argc, char *argv[])
         case 'u':
           uipmc_url = get_opts.opt_arg ();
           success |= 0x01;
+          break;
+        case 'c':
+          client_uipmc_url = get_opts.opt_arg ();
+          success |= 0x02;
           break;
         }
     }
@@ -186,9 +192,17 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       CORBA::Object_var miop_ref =
         orb->string_to_object (multicast_url.in ());
 
-      // create id
+      // create UIPMC reference for client access
+      CORBA::String_var client_multicast_url =
+        CORBA::string_dup (client_uipmc_url);
+      CORBA::Object_var client_miop_ref =
+        orb->string_to_object (client_multicast_url.in ());
+
+      // create ids
       PortableServer::ObjectId_var id =
         root_poa->create_id_for_reference (miop_ref.in ());
+      PortableServer::ObjectId_var client_id =
+        root_poa->create_id_for_reference (client_miop_ref.in ());
 
       // activate Hello Object
       root_poa->activate_object_with_id (id.in (),
@@ -196,7 +210,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       // create Hello reference
       Test::Hello_var hello =
-        Test::Hello::_unchecked_narrow (miop_ref.in ());
+        Test::Hello::_unchecked_narrow (client_miop_ref.in ());
 
       poa_manager->activate ();
 
