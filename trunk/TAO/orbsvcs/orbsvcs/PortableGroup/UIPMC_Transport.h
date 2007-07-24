@@ -113,6 +113,8 @@ private:
   TAO_Pluggable_Messaging *messaging_object_;
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "orbsvcs/PortableGroup/UIPMC_Transport.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
@@ -120,8 +122,6 @@ private:
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
 #pragma implementation ("orbsvcs/PortableGroup/UIPMC_Transport.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif  /* TAO_UIPMC_TRANSPORT_H */
