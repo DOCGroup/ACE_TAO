@@ -57,6 +57,12 @@ TAO_OutputCDR::timeout (void) const
   return this->timeout_;
 }
 
+ACE_INLINE void
+TAO_OutputCDR::get_version (TAO_GIOP_Message_Version& giop_version)
+{
+  giop_version.major = this->major_version_;
+  giop_version.minor = this->minor_version_;
+}
 // -------------------------------------------------------------------
 
 ACE_INLINE

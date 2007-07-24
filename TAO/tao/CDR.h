@@ -52,6 +52,7 @@
 
 #include /**/ "tao/TAO_Export.h"
 #include "tao/Basic_Types.h"
+#include "tao/GIOP_Message_Version.h"
 
 #include "ace/CDR_Stream.h"
 
@@ -99,10 +100,8 @@ public:
                  ACE_Allocator* data_block_allocator = 0,
                  ACE_Allocator* message_block_allocator = 0,
                  size_t memcpy_tradeoff = 0,
-                 ACE_CDR::Octet major_version =
-                   TAO_DEF_GIOP_MAJOR,
-                 ACE_CDR::Octet minor_version =
-                   TAO_DEF_GIOP_MINOR);
+                 ACE_CDR::Octet major_version = TAO_DEF_GIOP_MAJOR,
+                 ACE_CDR::Octet minor_version = TAO_DEF_GIOP_MINOR);
 
   /// Build a CDR stream with an initial buffer, it will *not* remove
   /// <data>, since it did not allocated it.
@@ -113,10 +112,8 @@ public:
                  ACE_Allocator* data_block_allocator = 0,
                  ACE_Allocator* message_block_allocator = 0,
                  size_t memcpy_tradeoff = 0,
-                 ACE_CDR::Octet major_version =
-                   TAO_DEF_GIOP_MAJOR,
-                 ACE_CDR::Octet minor_version =
-                   TAO_DEF_GIOP_MINOR);
+                 ACE_CDR::Octet major_version = TAO_DEF_GIOP_MAJOR,
+                 ACE_CDR::Octet minor_version = TAO_DEF_GIOP_MINOR);
 
   /// Build a CDR stream with an initial buffer, it will *not* remove
   /// @a data since it did not allocated it, and enable fragmentation
@@ -137,10 +134,8 @@ public:
   TAO_OutputCDR (ACE_Message_Block *data,
                  int byte_order = ACE_CDR_BYTE_ORDER,
                  size_t memcpy_tradeoff = 0,
-                 ACE_CDR::Octet major_version =
-                   TAO_DEF_GIOP_MAJOR,
-                 ACE_CDR::Octet minor_version =
-                   TAO_DEF_GIOP_MINOR);
+                 ACE_CDR::Octet major_version = TAO_DEF_GIOP_MAJOR,
+                 ACE_CDR::Octet minor_version = TAO_DEF_GIOP_MINOR);
 
   /// Build a CDR stream with an initial data block, it will *not* remove
   /// <data_block>, since it did not allocated it.
@@ -149,10 +144,8 @@ public:
                  ACE_Allocator* message_block_allocator = 0,
                  size_t memcpy_tradeoff = 0,
                  TAO_GIOP_Fragmentation_Strategy * fs = 0,
-                 ACE_CDR::Octet major_version =
-                   TAO_DEF_GIOP_MAJOR,
-                 ACE_CDR::Octet minor_version =
-                   TAO_DEF_GIOP_MINOR);
+                 ACE_CDR::Octet major_version = TAO_DEF_GIOP_MAJOR,
+                 ACE_CDR::Octet minor_version = TAO_DEF_GIOP_MINOR);
 
   /// Destructor.
   ~TAO_OutputCDR (void);
@@ -163,6 +156,8 @@ public:
   // = TAO specific methods.
   static void throw_stub_exception (int error_num);
   static void throw_skel_exception (int error_num);
+
+  void get_version (TAO_GIOP_Message_Version& giop_version);
 
   /**
    * @name Outgoing GIOP Fragment Related Methods
@@ -275,29 +270,23 @@ public:
   TAO_InputCDR (const char* buf,
                 size_t bufsiz,
                 int byte_order = ACE_CDR_BYTE_ORDER,
-                ACE_CDR::Octet major_version =
-                  TAO_DEF_GIOP_MAJOR,
-                ACE_CDR::Octet minor_version =
-                  TAO_DEF_GIOP_MINOR,
+                ACE_CDR::Octet major_version = TAO_DEF_GIOP_MAJOR,
+                ACE_CDR::Octet minor_version = TAO_DEF_GIOP_MINOR,
                 TAO_ORB_Core* orb_core = 0);
 
   /// Create an empty input stream. The caller is responsible for
   /// putting the right data and providing the right alignment.
   TAO_InputCDR (size_t bufsiz,
                 int byte_order = ACE_CDR_BYTE_ORDER,
-                ACE_CDR::Octet major_version =
-                  TAO_DEF_GIOP_MAJOR,
-                ACE_CDR::Octet minor_version =
-                  TAO_DEF_GIOP_MINOR,
+                ACE_CDR::Octet major_version = TAO_DEF_GIOP_MAJOR,
+                ACE_CDR::Octet minor_version = TAO_DEF_GIOP_MINOR,
                 TAO_ORB_Core* orb_core = 0);
 
   /// Create an input stream from an ACE_Message_Block
   TAO_InputCDR (const ACE_Message_Block *data,
                 int byte_order = ACE_CDR_BYTE_ORDER,
-                ACE_CDR::Octet major_version =
-                  TAO_DEF_GIOP_MAJOR,
-                ACE_CDR::Octet minor_version =
-                  TAO_DEF_GIOP_MINOR,
+                ACE_CDR::Octet major_version = TAO_DEF_GIOP_MAJOR,
+                ACE_CDR::Octet minor_version = TAO_DEF_GIOP_MINOR,
                 TAO_ORB_Core* orb_core = 0);
 
   /// Create an input stream from an ACE_Message_Block with an optional lock
@@ -314,10 +303,8 @@ public:
   TAO_InputCDR (ACE_Data_Block *data,
                 ACE_Message_Block::Message_Flags flag = 0,
                 int byte_order = ACE_CDR_BYTE_ORDER,
-                ACE_CDR::Octet major_version =
-                  TAO_DEF_GIOP_MAJOR,
-                ACE_CDR::Octet minor_version =
-                  TAO_DEF_GIOP_MINOR,
+                ACE_CDR::Octet major_version = TAO_DEF_GIOP_MAJOR,
+                ACE_CDR::Octet minor_version = TAO_DEF_GIOP_MINOR,
                 TAO_ORB_Core* orb_core = 0);
 
   /// Create an input stream from an ACE_Data_Block
@@ -326,10 +313,8 @@ public:
                 size_t read_pointer_position,
                 size_t write_pointer_position,
                 int byte_order = ACE_CDR_BYTE_ORDER,
-                ACE_CDR::Octet major_version =
-                  TAO_DEF_GIOP_MAJOR,
-                ACE_CDR::Octet minor_version =
-                  TAO_DEF_GIOP_MINOR,
+                ACE_CDR::Octet major_version = TAO_DEF_GIOP_MAJOR,
+                ACE_CDR::Octet minor_version = TAO_DEF_GIOP_MINOR,
                 TAO_ORB_Core* orb_core = 0);
 
   /**
