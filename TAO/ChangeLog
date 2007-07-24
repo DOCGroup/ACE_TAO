@@ -36,7 +36,7 @@ Tue Jul 24 12:20:23 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Queued_Data.{h,cpp,inl}:
           Use TAO_GIOP_Message_State as member, changed version storage
-          and inlined all constructors
+          and inlined all constructors. This fixes bugzilla 2999
 
         * tao/Strategies/DIOP_Transport.cpp:
         * tao/Strategies/SHMIOP_Transport.cpp
