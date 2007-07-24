@@ -1,13 +1,24 @@
+Tue Jul 24 16:24:58 UTC 2007  Krishnakumar B  <kitty@nospam.invalid.domain>
+
+        * examples/Hello/descriptors/DeploymentPlan.cdp:
+        * examples/Hello/descriptors/DeploymentPlan_without_ns.cdp:
+
+          Initialized the attributes of the Sender.  The test spits out an
+          error message if the Sender's enum attribute could not be
+          initialized.  It is currently not possible to initialize enum
+          attributes in PICML.  So I have modified these plans by hand for
+          now.
+
 Tue Jul 24 10:09:20 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tools/IDL3_to_IDL2/basic_visitor.cpp(can_skip_module):
-        
+
           Fixed a bug in the logic, where a local or abstract interface,
           or abstract eventtype, would trigger an immediate return of
           'false'. This no longer happens.
-          
+
         * tools/IDL3_to_IDL2/idl3_to_idl2_visitor.cpp:
-        
+
           Fixed a typo where a line was commented out inadvertently.
 
 Mon Jul 23 16:53:45 UTC 2007  Krishnakumar B  <kitty@nospam.invalid.domain>
