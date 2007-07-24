@@ -309,7 +309,7 @@ idl3_to_idl2_visitor::visit_home (AST_Home *node)
   *os << be_uidt_nl
       << "};" << be_nl << be_nl;
 
-//  xplicit.destroy ();
+  xplicit.destroy ();
   sn->destroy ();
   delete sn;
   sn = 0;
