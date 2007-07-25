@@ -194,7 +194,7 @@ ACE_SizeCDR::write_short_array (const ACE_CDR::Short *x,
 
 ACE_INLINE ACE_CDR::Boolean
 ACE_SizeCDR::write_ushort_array (const ACE_CDR::UShort *x,
-                                   ACE_CDR::ULong length)
+                                 ACE_CDR::ULong length)
 {
   return this->write_array (x,
                             ACE_CDR::SHORT_SIZE,
@@ -204,7 +204,7 @@ ACE_SizeCDR::write_ushort_array (const ACE_CDR::UShort *x,
 
 ACE_INLINE ACE_CDR::Boolean
 ACE_SizeCDR::write_long_array (const ACE_CDR::Long *x,
-                                 ACE_CDR::ULong length)
+                               ACE_CDR::ULong length)
 {
   return this->write_array (x,
                             ACE_CDR::LONG_SIZE,
@@ -214,7 +214,7 @@ ACE_SizeCDR::write_long_array (const ACE_CDR::Long *x,
 
 ACE_INLINE ACE_CDR::Boolean
 ACE_SizeCDR::write_ulong_array (const ACE_CDR::ULong *x,
-                                  ACE_CDR::ULong length)
+                                ACE_CDR::ULong length)
 {
   return this->write_array (x,
                             ACE_CDR::LONG_SIZE,
