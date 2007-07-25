@@ -336,7 +336,7 @@ ACE_OS::gethrtime (const ACE_HRTimer_Op op)
     ACE_U_ONE_SECOND_IN_NSECS  +  static_cast<ACE_hrtime_t> (ts.tv_nsec);
 #else
   ACE_UNUSED_ARG (op);
-  const ACE_Time_Value now = ACE_OS::gettimeofday ();
+  ACE_Time_Value const now = ACE_OS::gettimeofday ();
 
   // Carefully create the return value to avoid arithmetic overflow
   // if ACE_hrtime_t is ACE_U_LongLong.

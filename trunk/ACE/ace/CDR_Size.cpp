@@ -145,56 +145,49 @@ ACE_SizeCDR::write_wstring (ACE_CDR::ULong len,
 }
 
 ACE_CDR::Boolean
-ACE_SizeCDR::write_1 (const ACE_CDR::Octet *x)
+ACE_SizeCDR::write_1 (const ACE_CDR::Octet *)
 {
-  ACE_UNUSED_ARG (x);
   this->adjust (1);
   return true;
 }
 
 ACE_CDR::Boolean
-ACE_SizeCDR::write_2 (const ACE_CDR::UShort *x)
+ACE_SizeCDR::write_2 (const ACE_CDR::UShort *)
 {
-  ACE_UNUSED_ARG (x);
   this->adjust (ACE_CDR::SHORT_SIZE);
   return true;
 }
 
 ACE_CDR::Boolean
-ACE_SizeCDR::write_4 (const ACE_CDR::ULong *x)
+ACE_SizeCDR::write_4 (const ACE_CDR::ULong *)
 {
-  ACE_UNUSED_ARG (x);
   this->adjust (ACE_CDR::LONG_SIZE);
   return true;
 }
 
 ACE_CDR::Boolean
-ACE_SizeCDR::write_8 (const ACE_CDR::ULongLong *x)
+ACE_SizeCDR::write_8 (const ACE_CDR::ULongLong *)
 {
-  ACE_UNUSED_ARG (x);
   this->adjust (ACE_CDR::LONGLONG_SIZE);
   return true;
 }
 
 ACE_CDR::Boolean
-ACE_SizeCDR::write_16 (const ACE_CDR::LongDouble *x)
+ACE_SizeCDR::write_16 (const ACE_CDR::LongDouble *)
 {
-  ACE_UNUSED_ARG (x);
   this->adjust (ACE_CDR::LONGDOUBLE_SIZE,
                 ACE_CDR::LONGDOUBLE_ALIGN);
   return true;
 }
 
 ACE_CDR::Boolean
-ACE_SizeCDR::write_wchar_array_i (const ACE_CDR::WChar *x,
+ACE_SizeCDR::write_wchar_array_i (const ACE_CDR::WChar *,
                                     ACE_CDR::ULong length)
 {
-  ACE_UNUSED_ARG (x);
-
   if (length == 0)
     return true;
 
-  const size_t align = (ACE_OutputCDR::wchar_maxbytes () == 2) ?
+  size_t const align = (ACE_OutputCDR::wchar_maxbytes () == 2) ?
     ACE_CDR::SHORT_ALIGN :
     ACE_CDR::OCTET_ALIGN;
 
@@ -204,13 +197,11 @@ ACE_SizeCDR::write_wchar_array_i (const ACE_CDR::WChar *x,
 
 
 ACE_CDR::Boolean
-ACE_SizeCDR::write_array (const void *x,
+ACE_SizeCDR::write_array (const void *,
                           size_t size,
                           size_t align,
                           ACE_CDR::ULong length)
 {
-  ACE_UNUSED_ARG (x);
-
   if (length == 0)
     return true;
 
@@ -219,10 +210,9 @@ ACE_SizeCDR::write_array (const void *x,
 }
 
 ACE_CDR::Boolean
-ACE_SizeCDR::write_boolean_array (const ACE_CDR::Boolean* x,
+ACE_SizeCDR::write_boolean_array (const ACE_CDR::Boolean*,
                                   ACE_CDR::ULong length)
 {
-  ACE_UNUSED_ARG (x);
   this->adjust (length, 1);
   return true;
 }

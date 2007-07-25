@@ -1,3 +1,19 @@
+Wed Jul 25 08:24:23 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/CDR_Size.cpp:
+          If an argument isn't used, just not give it a name and
+          then remove ACE_UNUSED_ARG
+
+        * ace/CDR_Stream.h:
+        * ace/CDR_Size.inl:
+          Layout change
+
+        * ace/OS_NS_time.inl:
+          Const change
+
+        * bin/tao_other_tests.lst:
+          Don't run 2709 when ST is defined
+
 Tue Jul 24 22:45:37 UTC 2007  Steve Huston  <shuston@riverace.com>
 
         * ace/Bound_Ptr.inl (operator=): Check for assign-to-self first;
