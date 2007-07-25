@@ -10,7 +10,8 @@ use PerlACE::Run_Test;
 
 $status = 0;
 
-$iorfile = PerlACE::LocalFile ("ior");
+$iorbase = "ior";
+$iorfile = PerlACE::LocalFile ("$iorbase");
 
 $iorfile_1 = $iorfile."_1";
 $iorfile_2 = $iorfile."_2";
@@ -26,7 +27,12 @@ unlink $iorfile_4;
 unlink $iorfile_5;
 unlink $iorfile_6;
 
-$SV = new PerlACE::Process ("server");
+if (PerlACE::is_vxworks_test()) {
+  $SV = new PerlACE::ProcessVX ("server");
+}
+else {
+  $SV = new PerlACE::Process ("server");
+}
 $CL1 = new PerlACE::Process ("client",
                              "-a file://$iorfile_1 -b file://$iorfile_2 -c file://$iorfile_3 -d file://$iorfile_4");
 $CL2 = new PerlACE::Process ("client", "-e file://$iorfile_5 -f file://$iorfile_6");
