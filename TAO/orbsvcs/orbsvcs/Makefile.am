@@ -1381,6 +1381,7 @@ libTAO_PortableGroup_la_SOURCES = \
   PortableGroup/UIPMC_Connector.cpp \
   PortableGroup/UIPMC_Endpoint.cpp \
   PortableGroup/UIPMC_Factory.cpp \
+  PortableGroup/UIPMC_Mcast_Connection_Handler.cpp \
   PortableGroup/UIPMC_Message_Block_Data_Iterator.cpp \
   PortableGroup/UIPMC_Profile.cpp \
   PortableGroup/UIPMC_Transport.cpp \
@@ -1446,6 +1447,7 @@ nobase_include_HEADERS += \
   PortableGroup/UIPMC_Endpoint.h \
   PortableGroup/UIPMC_Endpoint.inl \
   PortableGroup/UIPMC_Factory.h \
+  PortableGroup/UIPMC_Mcast_Connection_Handler.h \
   PortableGroup/UIPMC_Message_Block_Data_Iterator.h \
   PortableGroup/UIPMC_Profile.h \
   PortableGroup/UIPMC_Transport.h \

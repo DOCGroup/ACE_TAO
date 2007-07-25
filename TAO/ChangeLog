@@ -1,3 +1,8 @@
+Wed Jul 25 07:52:23 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Makefile.am:
+          Added new UIPMC_Mcast_Connection_Handler files
+
 Wed Jul 25 07:50:23 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/POA/Adapter_Activator/run_test.pl:
