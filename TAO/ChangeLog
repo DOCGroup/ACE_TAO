@@ -1,3 +1,20 @@
+Wed Jul 25 07:50:23 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/POA/Adapter_Activator/run_test.pl:
+        * examples/POA/Default_Servant/run_test.pl:
+        * examples/POA/DSI/run_test.pl:
+        * examples/POA/Explicit_Activation/run_test.pl:
+        * examples/POA/FindPOA/run_test.pl:
+        * examples/POA/Loader/run_test.pl:
+        * examples/POA/NewPOA/run_test.pl:
+        * examples/POA/On_Demand_Activation/run_test.pl:
+        * examples/POA/On_Demand_Loading/run_test.pl:
+        * examples/POA/POA_BiDir/run_test.pl:
+        * examples/POA/Reference_Counted_Servant/run_test.pl:
+        * examples/POA/RootPOA/run_test.pl:
+        * examples/POA/TIE/run_test.pl:
+          Added support for VxWorks cross platform testing
+
 Tue Jul 24 19:58:38 UTC 2007  Ciju John  <johnc at ociweb dot com>
 
         * tests/Bug_3000_Regression:
