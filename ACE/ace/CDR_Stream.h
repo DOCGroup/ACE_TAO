@@ -104,12 +104,9 @@ public:
                  ACE_Allocator* buffer_allocator = 0,
                  ACE_Allocator* data_block_allocator = 0,
                  ACE_Allocator* message_block_allocator = 0,
-                 size_t memcpy_tradeoff =
-                 ACE_DEFAULT_CDR_MEMCPY_TRADEOFF,
-                 ACE_CDR::Octet major_version =
-                 ACE_CDR_GIOP_MAJOR_VERSION,
-                 ACE_CDR::Octet minor_version =
-                 ACE_CDR_GIOP_MINOR_VERSION);
+                 size_t memcpy_tradeoff = ACE_DEFAULT_CDR_MEMCPY_TRADEOFF,
+                 ACE_CDR::Octet major_version = ACE_CDR_GIOP_MAJOR_VERSION,
+                 ACE_CDR::Octet minor_version = ACE_CDR_GIOP_MINOR_VERSION);
 
   /// Build a CDR stream with an initial buffer, it will *not* remove
   /// <data>, since it did not allocated it.  It's important to be careful
@@ -128,12 +125,9 @@ public:
                  ACE_Allocator* buffer_allocator = 0,
                  ACE_Allocator* data_block_allocator = 0,
                  ACE_Allocator* message_block_allocator = 0,
-                 size_t memcpy_tradeoff=
-                   ACE_DEFAULT_CDR_MEMCPY_TRADEOFF,
-                 ACE_CDR::Octet giop_major_version =
-                   ACE_CDR_GIOP_MAJOR_VERSION,
-                 ACE_CDR::Octet giop_minor_version =
-                   ACE_CDR_GIOP_MINOR_VERSION);
+                 size_t memcpy_tradeoff = ACE_DEFAULT_CDR_MEMCPY_TRADEOFF,
+                 ACE_CDR::Octet giop_major_version = ACE_CDR_GIOP_MAJOR_VERSION,
+                 ACE_CDR::Octet giop_minor_version = ACE_CDR_GIOP_MINOR_VERSION);
 
   /// Build a CDR stream with an initial data block, it will *not* remove
   /// <data_block>, since it did not allocated it.  It's important to be
@@ -149,23 +143,17 @@ public:
   ACE_OutputCDR (ACE_Data_Block *data_block,
                  int byte_order = ACE_CDR_BYTE_ORDER,
                  ACE_Allocator* message_block_allocator = 0,
-                 size_t memcpy_tradeoff=
-                 ACE_DEFAULT_CDR_MEMCPY_TRADEOFF,
-                 ACE_CDR::Octet giop_major_version =
-                 ACE_CDR_GIOP_MAJOR_VERSION,
-                 ACE_CDR::Octet giop_minor_version =
-                 ACE_CDR_GIOP_MINOR_VERSION);
+                 size_t memcpy_tradeoff = ACE_DEFAULT_CDR_MEMCPY_TRADEOFF,
+                 ACE_CDR::Octet giop_major_version = ACE_CDR_GIOP_MAJOR_VERSION,
+                 ACE_CDR::Octet giop_minor_version = ACE_CDR_GIOP_MINOR_VERSION);
 
   /// Build a CDR stream with an initial Message_Block chain, it will
   /// *not* remove @a data, since it did not allocate it.
   ACE_OutputCDR (ACE_Message_Block *data,
                  int byte_order = ACE_CDR_BYTE_ORDER,
-                 size_t memcpy_tradeoff =
-                   ACE_DEFAULT_CDR_MEMCPY_TRADEOFF,
-                 ACE_CDR::Octet giop_major_version =
-                   ACE_CDR_GIOP_MAJOR_VERSION,
-                 ACE_CDR::Octet giop_minor_version =
-                   ACE_CDR_GIOP_MINOR_VERSION);
+                 size_t memcpy_tradeoff = ACE_DEFAULT_CDR_MEMCPY_TRADEOFF,
+                 ACE_CDR::Octet giop_major_version = ACE_CDR_GIOP_MAJOR_VERSION,
+                 ACE_CDR::Octet giop_minor_version = ACE_CDR_GIOP_MINOR_VERSION);
 
   /// destructor
   ~ACE_OutputCDR (void);
@@ -579,19 +567,15 @@ public:
   ACE_InputCDR (const char *buf,
                 size_t bufsiz,
                 int byte_order = ACE_CDR_BYTE_ORDER,
-                ACE_CDR::Octet major_version =
-                ACE_CDR_GIOP_MAJOR_VERSION,
-                ACE_CDR::Octet minor_version =
-                ACE_CDR_GIOP_MINOR_VERSION);
+                ACE_CDR::Octet major_version = ACE_CDR_GIOP_MAJOR_VERSION,
+                ACE_CDR::Octet minor_version = ACE_CDR_GIOP_MINOR_VERSION);
 
   /// Create an empty input stream. The caller is responsible for
   /// putting the right data and providing the right alignment.
   ACE_InputCDR (size_t bufsiz,
                 int byte_order = ACE_CDR_BYTE_ORDER,
-                ACE_CDR::Octet major_version =
-                ACE_CDR_GIOP_MAJOR_VERSION,
-                ACE_CDR::Octet minor_version =
-                ACE_CDR_GIOP_MINOR_VERSION);
+                ACE_CDR::Octet major_version = ACE_CDR_GIOP_MAJOR_VERSION,
+                ACE_CDR::Octet minor_version = ACE_CDR_GIOP_MINOR_VERSION);
 
   /// Create an input stream from an ACE_Message_Block
   /**
@@ -613,10 +597,8 @@ public:
   ACE_InputCDR (ACE_Data_Block *data,
                 ACE_Message_Block::Message_Flags flag = 0,
                 int byte_order = ACE_CDR_BYTE_ORDER,
-                ACE_CDR::Octet major_version =
-                ACE_CDR_GIOP_MAJOR_VERSION,
-                ACE_CDR::Octet minor_version =
-                ACE_CDR_GIOP_MINOR_VERSION);
+                ACE_CDR::Octet major_version = ACE_CDR_GIOP_MAJOR_VERSION,
+                ACE_CDR::Octet minor_version = ACE_CDR_GIOP_MINOR_VERSION);
 
   /// Create an input stream from an ACE_Data_Block. It also sets the
   /// read and write pointers at the desired positions. This would be
@@ -627,10 +609,8 @@ public:
                 size_t read_pointer_position,
                 size_t write_pointer_position,
                 int byte_order = ACE_CDR_BYTE_ORDER,
-                ACE_CDR::Octet major_version =
-                ACE_CDR_GIOP_MAJOR_VERSION,
-                ACE_CDR::Octet minor_version =
-                ACE_CDR_GIOP_MINOR_VERSION);
+                ACE_CDR::Octet major_version = ACE_CDR_GIOP_MAJOR_VERSION,
+                ACE_CDR::Octet minor_version = ACE_CDR_GIOP_MINOR_VERSION);
 
   /**
    * These make a copy of the current stream state, but do not copy
