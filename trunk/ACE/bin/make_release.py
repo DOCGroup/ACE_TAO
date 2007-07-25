@@ -552,23 +552,41 @@ def create_file_lists (base_dir, prefix, exclude):
     text_files = list ()
     bin_files = list ()
 
-    for root, dirs, files in os.walk (base_dir):
+    for root, dirs, files in os.walk (base_dir, topdown=True):
+#        print "root", root
+        
         relroot = root.replace (base_dir, "")
+
+#        print "relroot", relroot
+        
         if len(relroot) and relroot[0] == '/':
             relroot = relroot [1:]
-            
+
+        excluded = False
+        for item in exclude:
+            dir_item = item + '/'
+            if relroot.startswith (dir_item) or relroot.startswith (item):
+#                print "excluding", relroot
+                excluded = True
+#            else:
+#                print relroot, "does not start with", dir_item, "or", item
+
+        if excluded:
+            continue
+        
         # Remove dirs from our exclude pattern
         for item in dirs:
+#            print "item", item
             # Remove our excludes
             if (item) in exclude:
-                print "Removing " + item + " from consideration...."
+#                print "Removing " + item + " from consideration...."
                 dirs.remove (item)
                 
         for item in files:
             
             fullitem = os.path.join (relroot, item)
-            if fullitem in exclude:
-                print "Removing " + fullitem + " from consideration...."
+            if fullitem in exclude or item in exclude:
+#                print "Removing " + fullitem + " from consideration...."
                 files.remove (item)
                 continue
             else:
@@ -579,22 +597,40 @@ def create_file_lists (base_dir, prefix, exclude):
 
     return (text_files, bin_files)
 
+def write_file_lists (comp, text, bin):
+    outfile = open (comp + ".files", 'w')
+
+    outfile.write ("\n".join (text))
+    outfile.write (".............\nbin files\n.............\n")
+    outfile.write ("\n".join (bin))
+
+    outfile.close ()
+    
 def package (stage_dir, package_dir, decorator):
     """ Packages ACE, ACE+TAO, and ACE+TAO+CIAO releases of current
         staged tree, with decorator appended to the name of the archive. """
     from os.path import join
     from os import remove
+    from os import chdir
+
+    chdir (stage_dir)
+    
+    text_files = list ()
+    bin_files = list ()
 
     # Erase our old temp files
     try:
+#        print "removing files", join (stage_dir, "zip-archive.zip"), join (stage_dir, "tar-archive.tar")
         remove (join (stage_dir, "zip-archive.zip"))
         remove (join (stage_dir, "tar-archive.tar"))
     except:
+        print "error removing files", join (stage_dir, "zip-archive.zip"), join (stage_dir, "tar-archive.tar")
         pass # swallow any errors
-    
+
     text_files, bin_files = create_file_lists (join (stage_dir, "ACE_wrappers"),
                                                "ACE_wrappers", ["TAO", "autom4te.cache"])
 
+#    write_file_lists ("fACE" + decorator, text_files, bin_files)
     update_packages ("\n".join (text_files),
                      "\n".join (bin_files),
                      stage_dir,
@@ -602,11 +638,15 @@ def package (stage_dir, package_dir, decorator):
 
 
     move_packages ("ACE" + decorator, stage_dir, package_dir)
+
+    text_files = list ()
+    bin_files = list ()
     
     # for TAO:
     text_files, bin_files = create_file_lists (join (stage_dir, "ACE_wrappers/TAO"),
                                                      "ACE_wrappers/TAO", ["CIAO", "autom4te.cache"])
 
+#    write_file_lists ("fTAO" + decorator, text_files, bin_files)
     update_packages ("\n".join (text_files),
                      "\n".join (bin_files),
                      stage_dir,
@@ -614,10 +654,13 @@ def package (stage_dir, package_dir, decorator):
 
     move_packages ("ACE+TAO" + decorator, stage_dir, package_dir)
 
+    text_files = list ()
+    bin_files = list ()
     # for CIAO:
     text_files, bin_files = create_file_lists (join (stage_dir, "ACE_wrappers/TAO/CIAO"),
                                                      "ACE_wrappers/TAO/CIAO", "")
 
+#    write_file_lists ("fCIAO" + decorator, text_files, bin_files)
     update_packages ("\n".join (text_files),
                      "\n".join (bin_files),
                      stage_dir,
