@@ -1,3 +1,8 @@
+Wed Jul 25 08:00:23 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Oneway_Buffering/Oneway_Buffering_Admin.cpp:
+          Fixed method signatures to resolve warnings on OpenVMS
+
 Wed Jul 25 07:52:23 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Makefile.am:
