@@ -19,7 +19,7 @@ Oneway_Buffering_Admin::Oneway_Buffering_Admin (CORBA::ORB_ptr orb)
 }
 
 CORBA::ULong
-Oneway_Buffering_Admin::request_count (const CORBA::ULong expected_request_count)
+Oneway_Buffering_Admin::request_count (CORBA::ULong expected_request_count)
 {
   ACE_Time_Value timeout (timeout_in_sec);
   while ( (this->request_count_ < expected_request_count)
@@ -31,7 +31,7 @@ Oneway_Buffering_Admin::request_count (const CORBA::ULong expected_request_count
 }
 
 CORBA::ULong
-Oneway_Buffering_Admin::bytes_received_count (const CORBA::ULong expected_bytes_received_count)
+Oneway_Buffering_Admin::bytes_received_count (CORBA::ULong expected_bytes_received_count)
 {
   ACE_Time_Value timeout (timeout_in_sec);
   while ( (this->bytes_received_count_ < expected_bytes_received_count)
