@@ -1,3 +1,11 @@
+Thu Jul 26 09:21:50 UTC 2007  Vadym Ridosh  <vridosh@prismtech.com>
+
+        * tao/Strategies/DIOP_Connector.cpp:
+        * tao/Strategies/DIOP_Acceptor.cpp:
+          The previous attempt to fix potential memory leaks when
+          connection handler is allocated but later code fails was
+          not completely correct. Now it's fixed.
+
 Tue Jul 24 20:38:50 UTC 2007  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * COPYING: Updated this file to reflect 2007.

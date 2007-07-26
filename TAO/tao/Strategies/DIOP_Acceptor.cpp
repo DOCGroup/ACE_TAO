@@ -239,7 +239,7 @@ TAO_DIOP_Acceptor::is_collocated (const TAO_Endpoint *endpoint)
 int
 TAO_DIOP_Acceptor::close (void)
 {
-  return this->connection_handler_->peer ().close ();
+  return 0;
 }
 
 int
@@ -418,8 +418,8 @@ TAO_DIOP_Acceptor::open_i (const ACE_INET_Addr& addr,
                                ACE_Event_Handler::READ_MASK);
   if (result == -1)
     {
+      // Close the handler (this will also delete connection_handler_).
       this->connection_handler_->close ();
-      delete this->connection_handler_;
       return result;
     }
 
@@ -979,7 +979,7 @@ TAO_DIOP_Acceptor::parse_options (const char *str)
   static const char option_delimiter = '&';
 
   // Count the number of options.
-  int option_count = 1;
+  CORBA::ULong option_count = 1;
 
   // Only check for endpoints after the protocol specification and
   // before the object key.
@@ -998,12 +998,14 @@ TAO_DIOP_Acceptor::parse_options (const char *str)
   ACE_CString::size_type begin = 0;
   ACE_CString::size_type end = 0;
 
-  for (int j = 0; j < option_count; ++j)
+  for (CORBA::ULong j = 0; j < option_count;)
     {
       if (j < option_count - 1)
         end = options.find (option_delimiter, begin);
       else
         end = len;
+
+      ++j;  // In this way we fight MS VS warning about unreachable code.
 
       if (end == begin)
         {
