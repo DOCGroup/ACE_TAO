@@ -1,3 +1,8 @@
+Thu Jul 26 10:52:23 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Dynamic_Test.cpp:
+          Removed some printf statements that where not needed
+
 Wed Jul 25 22:13:59 UTC 2007  Steve Huston  <shuston@riverace.com>
 
         * tests/ACE_Init_Test.cpp: Added missing #include "ace/OS_NS_unistd.h"
@@ -6,7 +11,7 @@ Wed Jul 25 22:13:59 UTC 2007  Steve Huston  <shuston@riverace.com>
 Wed Jul 25 18:43:53 UTC 2007  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * bin/make_release.py:
-         
+
           Additional bugfixes for packaging process.
 
 Wed Jul 25 08:24:23 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
