@@ -151,6 +151,9 @@ TAO_DIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
   // Failure to open a connection.
   if (retval != 0)
     {
+      // Close the handler (this will also delete svc_handler).
+      svc_handler->close ();
+
       if (TAO_debug_level > 0)
         {
           ACE_ERROR ((LM_ERROR,
@@ -158,7 +161,6 @@ TAO_DIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
                       ACE_TEXT ("could not make a new connection\n")));
         }
 
-      delete svc_handler;
       return 0;
     }
 
@@ -174,7 +176,7 @@ TAO_DIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
   // In case of errors transport is zero
   if (transport == 0)
     {
-      // Close the handler.
+      // Close the handler (this will also delete svc_handler).
       svc_handler->close ();
 
       // Give users a clue to the problem.
@@ -186,7 +188,6 @@ TAO_DIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
                     diop_endpoint->port (),
                     ACE_TEXT ("errno")));
 
-      delete svc_handler;
       return 0;
     }
 
@@ -198,7 +199,7 @@ TAO_DIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
   // Failure in adding to cache.
   if (retval != 0)
     {
-      // Close the handler.
+      // Close the handler (this will also delete svc_handler).
       svc_handler->close ();
 
       if (TAO_debug_level > 0)
@@ -208,7 +209,6 @@ TAO_DIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
                       ACE_TEXT ("could not add the new connection to cache\n")));
         }
 
-      delete svc_handler;
       return 0;
     }
 
