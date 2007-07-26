@@ -126,32 +126,25 @@ A::A()
 int
 run_main (int, ACE_TCHAR *[])
 {
-  ACE_START_TEST (ACE_TEXT ("Dynamic_Test"));  {
-    A from_stack;
-    A* heap = 0;
-    ACE_NEW_RETURN (heap, A, 1);
-    if (from_stack.dynamic_)
-      {
-        ACE_OS::printf ("ERROR1\n");
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("dynamic_ is true for an object on the stack\n")),
-                          1);
-      }
-    else 
-      ACE_OS::printf ("OK1\n");
+  ACE_START_TEST (ACE_TEXT ("Dynamic_Test"));
+  A from_stack;
+  A* heap = 0;
+  ACE_NEW_RETURN (heap, A, 1);
+  if (from_stack.dynamic_)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                          ACE_TEXT ("dynamic_ is true for an object on the stack\n")),
+                        1);
+    }
 
-    if (!heap->dynamic_)
-      {
-        ACE_OS::printf ("ERROR2\n");
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("dynamic_ is false for an object from the heap\n")),
-                          1);
-      }
-    else 
-      ACE_OS::printf ("OK2\n");
+  if (!heap->dynamic_)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                          ACE_TEXT ("dynamic_ is false for an object from the heap\n")),
+                        1);
+    }
 
-    delete heap;
-  }
+  delete heap;
   ACE_END_TEST;
   return 0;
 }
