@@ -3,6 +3,7 @@
 #include "ace/RW_Process_Mutex.h"
 #include "ace/SString.h"
 #include "ace/OS_NS_string.h"
+#include "ace/Truncate.h"
 
 ACE_RCSID (ace,
            Local_Name_Space,
@@ -89,7 +90,7 @@ ACE_NS_String::strstr (const ACE_NS_String &s) const
 
           if (j == pat_len)
             // Found a match!  Return the index.
-            return static_cast<int> (i);
+            return ACE_Utils::truncate_cast<int> (i);
         }
 
       return -1;
