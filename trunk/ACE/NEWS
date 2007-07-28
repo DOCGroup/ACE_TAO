@@ -43,6 +43,10 @@ USER VISIBLE CHANGES BETWEEN ACE-5.5.9 and ACE-5.5.10
 
 . Fixed ACE_Vector::swap() (bugzilla #2951).
 
+. Make use of the Atomic_Op optimizations on Intel EM64T processors. The
+  Atomic_Op is now several times faster on EM64T then with previous versions
+  of ACE
+
 USER VISIBLE CHANGES BETWEEN ACE-5.5.8 and ACE-5.5.9
 ====================================================
 
