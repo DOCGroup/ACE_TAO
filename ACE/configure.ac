@@ -592,6 +592,8 @@ AC_CHECK_HEADER([sys/procfs.h],
 
 ACE_CHECK_LACKS_HEADERS(arpa/inet.h)
 
+ACE_CHECK_HAS_HEADERS(byteswap.h)
+
 ACE_CHECK_LACKS_HEADERS(dirent.h)
 
 ACE_CHECK_LACKS_HEADERS(dlfcn.h)
@@ -637,6 +639,12 @@ ACE_CHECK_LACKS_HEADERS(net/if.h, [], [],
 ])
 
 ACE_CHECK_HAS_HEADERS(sys/filio.h)
+
+ACE_CHECK_HAS_HEADERS(intrin.h)
+
+ACE_CHECK_HAS_HEADERS(ia64intrin.h)
+
+ACE_CHECK_HAS_HEADERS(ia32intrin.h)
 
 ACE_CHECK_LACKS_HEADERS(sys/ioctl.h)
 
