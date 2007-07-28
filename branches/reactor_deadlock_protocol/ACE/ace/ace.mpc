@@ -31,6 +31,7 @@ project(ACE) : acedefaults, install, other, codecs, token, svcconf, uuid, fileca
     Barrier.cpp
     Base_Thread_Adapter.cpp
     Based_Pointer_Repository.cpp
+    Basic_P_Strategy.cpp
     Basic_Stats.cpp
     Basic_Types.cpp
     Capabilities.cpp
@@ -49,17 +50,20 @@ project(ACE) : acedefaults, install, other, codecs, token, svcconf, uuid, fileca
     Containers.cpp
     Copy_Disabled.cpp
     Countdown_Time.cpp
+    DA_Strategy_Base.cpp
     Date_Time.cpp
     DEV.cpp
     DEV_Addr.cpp
     DEV_Connector.cpp
     DEV_IO.cpp
     DLL_Manager.cpp
+    Deadlock_Free_TP_Reactor.cpp
     Dev_Poll_Reactor.cpp
     Dirent.cpp
     Dirent_Selector.cpp
     Dump.cpp
     Dynamic.cpp
+    Efficient_P_Strategy.cpp
     Event.cpp
     Event_Handler.cpp
     FIFO.cpp
@@ -89,7 +93,9 @@ project(ACE) : acedefaults, install, other, codecs, token, svcconf, uuid, fileca
     IO_Cntl_Msg.cpp
     IOStream.cpp
     IPC_SAP.cpp
+    k_Efficient_P_Strategy.cpp
     Lib_Find.cpp
+    Live_P_Strategy.cpp
     Local_Memory_Pool.cpp
     Lock.cpp
     Log_Msg.cpp
@@ -357,10 +363,16 @@ project(ACE) : acedefaults, install, other, codecs, token, svcconf, uuid, fileca
   }
 
   Inline_Files {
+    Basic_P_Strategy.inl
     Bound_Ptr.inl
     Condition_T.inl
+    DA_Strategy_Base.inl
+    Deadlock_Free_TP_Reactor.inl
+    Efficient_P_Strategy.inl
     Guard_T.inl
     Handle_Gobbler.inl
+    k_Efficient_P_Strategy.inl
+    Live_P_Strategy.inl
     Lock_Adapter_T.inl
     Refcounted_Auto_Ptr.inl
     Reverse_Lock_T.inl
@@ -372,9 +384,12 @@ project(ACE) : acedefaults, install, other, codecs, token, svcconf, uuid, fileca
   Header_Files {
     ACE_export.h
     Array.h
+    Basic_P_Strategy.h
     Bound_Ptr.h
     CORBA_macros.h
     Condition_T.h
+    DA_Strategy_Base.h
+    Deadlock_Free_TP_Reactor.h
     Default_Constants.h
     Exception_Macros.h
     Global_Macros.h
@@ -383,6 +398,8 @@ project(ACE) : acedefaults, install, other, codecs, token, svcconf, uuid, fileca
     Handle_Gobbler.h
     If_Then_Else.h
     IO_Cntl_Msg.h
+    k_Efficient_P_Strategy.h
+    Live_P_Strategy.h
     Lock_Adapter_T.h
     Log_Priority.h
     Malloc_Base.h

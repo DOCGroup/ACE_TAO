@@ -338,6 +338,14 @@ project(Conn Test) : acetest {
   }
 }
 
+project(DA Reactor Test) : acetest {
+  avoids += ace_for_tao
+  exename = DA_Reactor_Test
+  Source_Files {
+    DA_Reactor_Test.cpp
+  }
+}
+
 project(Date Time Test) : acetest {
   avoids += ace_for_tao
   exename = Date_Time_Test

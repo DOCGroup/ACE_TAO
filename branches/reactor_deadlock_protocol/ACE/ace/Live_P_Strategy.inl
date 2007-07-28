@@ -34,7 +34,7 @@ private:
    void recalculate_augmentation(ACE_RB_Tree_Node<int, AnnotationNode>* nodePtr);
    void recalculate_augmentation_up(ACE_RB_Tree_Node<int, AnnotationNode>* x);
    int calc_max_i(ACE_RB_Tree_Node<int, AnnotationNode>* nodePtr, int extra) const;
-   static int MIN(int a, int b) { return (a<b)?a:b; }
+   //static int MIN(int a, int b) { return (a<b)?a:b; }
    static int MIN_THREE(int a, int b, int c) {
      return (a<b)?MIN(a,c):MIN(b,c);
    }
@@ -43,7 +43,7 @@ private:
 
 ACE_INLINE
 Live_P_Tree::Live_P_Tree(int maxThreads) 
-:ACE_RB_Tree(),
+:ACE_RB_Tree<int, AnnotationNode, ACE_Equal_To<int>, ACE_Thread_Mutex>(),
  T_(maxThreads) {
 
 }
@@ -65,7 +65,12 @@ Live_P_Tree::bind(const int& ext_id)
   if (entry && result == EXACT) {    
     entry->item().count++;    
   } else {
-    returnVal = ACE_RB_Tree::bind(ext_id, AnnotationNode(), entry);
+    returnVal = ACE_RB_Tree<int, 
+	                        AnnotationNode, 
+							ACE_Equal_To<int>, 
+							ACE_Thread_Mutex>::bind(ext_id, 
+							                        AnnotationNode(), 
+													entry);
   }
   recalculate_augmentation_up(entry);
   return returnVal;
@@ -74,7 +79,7 @@ Live_P_Tree::bind(const int& ext_id)
 void 	
 Live_P_Tree::RB_rotate_right (ACE_RB_Tree_Node<int, AnnotationNode> *x)
 {
-  ACE_RB_Tree::RB_rotate_right(x);
+  ACE_RB_Tree<int, AnnotationNode, ACE_Equal_To<int>, ACE_Thread_Mutex>::RB_rotate_right(x);
   recalculate_augmentation_up(x);
 
 }
@@ -82,7 +87,7 @@ Live_P_Tree::RB_rotate_right (ACE_RB_Tree_Node<int, AnnotationNode> *x)
 void 	
 Live_P_Tree::RB_rotate_left (ACE_RB_Tree_Node<int, AnnotationNode> *x)
 {
-  ACE_RB_Tree::RB_rotate_left(x);
+  ACE_RB_Tree<int, AnnotationNode, ACE_Equal_To<int>, ACE_Thread_Mutex>::RB_rotate_left(x);
   recalculate_augmentation_up(x);
 }
 
@@ -99,7 +104,7 @@ Live_P_Tree::unbind(const int& ext_id)
   if (entry && result == EXACT) {    
     if (--(entry->item().count) == 0) {
       entry = entry->parent();
-      returnVal = ACE_RB_Tree::unbind(ext_id);
+      returnVal = ACE_RB_Tree<int, AnnotationNode, ACE_Equal_To<int>, ACE_Thread_Mutex>::unbind(ext_id);
     }
   } else {
     //exception?  probably bad if we try to unbind something not in the tree 
@@ -114,9 +119,10 @@ Live_P_Tree::unbind(const int& ext_id)
 ACE_INLINE  void
 Live_P_Tree::recalculate_augmentation(ACE_RB_Tree_Node<int, AnnotationNode>* nodePtr) {
 
+  AnnotationNode placeholderNode;
   AnnotationNode& node = nodePtr->item();
-  AnnotationNode& left =  nodePtr->left() ? AnnotationNode() : nodePtr->left()->item();
-  AnnotationNode& right = nodePtr->right() ? AnnotationNode() : nodePtr->right()->item();
+  AnnotationNode& left =  nodePtr->left() ? placeholderNode : nodePtr->left()->item();
+  AnnotationNode& right = nodePtr->right() ? placeholderNode : nodePtr->right()->item();
 
   // (1) size
   node.size = left.size + right.size + node.count;
@@ -162,7 +168,7 @@ Live_P_Tree::calc_max_i(ACE_RB_Tree_Node<int, AnnotationNode>* nodePtr, int extr
 template <typename AnnotationId>
 ACE_INLINE 
 Live_P_Strategy<AnnotationId>::Live_P_Strategy(int maxThreads)
-:DA_Strategy_Base(maxThreads),
+:DA_Strategy_Base<AnnotationId>(maxThreads),
  min_illegal_is_computed_(false),
  min_illegal_(0)
 {
