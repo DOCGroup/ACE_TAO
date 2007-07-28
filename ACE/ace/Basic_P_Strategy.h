@@ -44,3 +44,4 @@ private:
 #include /**/ "ace/post.h"
 
 #endif /* ACE_BASIC_P_STRATEGY_H */
+

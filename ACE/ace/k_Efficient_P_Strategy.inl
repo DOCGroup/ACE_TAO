@@ -2,7 +2,7 @@
 template <typename AnnotationId>
 ACE_INLINE 
 k_Efficient_P_Strategy<AnnotationId>::k_Efficient_P_Strategy(int maxThreads, int k)
-:DA_Strategy_Base(maxThreads),
+:DA_Strategy_Base<AnnotationId>(maxThreads),
  k_(k)
   {
     a.resize(k_ + 1);
@@ -26,7 +26,7 @@ template <typename AnnotationId>
 ACE_INLINE 
 bool k_Efficient_P_Strategy<AnnotationId>::is_deadlock_potential(AnnotationId handle)
 {
-  int annotation = get_annotation(handle);
+  int annotation = DA_Strategy_Base<AnnotationId>::get_annotation(handle);
   return (annotation >= get_min_illegal());
 }
 
@@ -35,7 +35,7 @@ ACE_INLINE
 int
 k_Efficient_P_Strategy<AnnotationId>::compute_min_illegal() 
 {
-  int T = get_max_threads();
+  int T = this->get_max_threads();
   for (int i=0; i<k_; ++i) {
     if (!(A[i] < (T - i))) {
       return i;

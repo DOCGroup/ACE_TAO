@@ -92,3 +92,4 @@ private:
 #include /**/ "ace/post.h"
 
 #endif /* DA_STRATEGY_BASE_H */
+

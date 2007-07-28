@@ -2,7 +2,7 @@
 template <typename AnnotationId>
 ACE_INLINE 
 Efficient_P_Strategy<AnnotationId>::Efficient_P_Strategy(int maxThreads)
-:DA_Strategy_Base(maxThreads),
+:DA_Strategy_Base<AnnotationId>(maxThreads),
  t_r(maxThreads),
  p_r(maxThreads),
  _lock()
