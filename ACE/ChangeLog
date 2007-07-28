@@ -1,3 +1,12 @@
+Sat Jul 28 23:00:44 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * ace/Local_Name_Space.cpp:
+          Resolve 64-32-bit transition warnings.
+
+        * ace/config-sunos5.5.h: Define ACE_MALLOC_ALIGN using a sizeof cast.
+          Makes it fit with the other ACE_MALLOC_* calculations in Malloc.h
+          without triggering 32/64-bit warnings.
+
 Sat Jul 28 22:50:12 UTC 2007  Steve Huston  <shuston@riverace.com>
 
         * tests/SOCK_Connector_Test.cpp: Added some additional diagnostics
