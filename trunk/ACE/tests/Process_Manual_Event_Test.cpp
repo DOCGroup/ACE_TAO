@@ -26,6 +26,7 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_sys_time.h"
+#include "ace/OS_NS_unistd.h"
 #include "ace/os_include/os_dirent.h"
 
 
@@ -181,12 +182,29 @@ run_main (int argc, ACE_TCHAR *argv[])
   if (child_process)
     {
       ACE_START_TEST (ACE_TEXT ("Process_Manual_Event_Test-child"));
+      ACE_OS::sleep (2);
       acquire_release ();
       ACE_END_LOG;
     }
   else
     {
       ACE_START_TEST (ACE_TEXT ("Process_Manual_Event_Test"));
+
+      // The parent cleans up any remnant of past runs of this test.
+      // See Bugzilla #2662 for further info.
+      // On AIX, this is done by removing the shared memory objects before
+      // trying to run.
+#  if defined (AIX)
+      if (::shm_unlink (event_ping_name) != 0 && errno != ENOENT)
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT ("(%P) event_ping %p\n"),
+                    ACE_TEXT ("shm_unlink")));
+      if (::shm_unlink (event_pong_name) != 0 && errno != ENOENT)
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT ("(%P) event_pong %p\n"),
+                    ACE_TEXT ("shm_unlink")));
+#  endif /* AIX */
+
 #if defined (ACE_WIN32)
       const ACE_TCHAR *cmdline_format = ACE_TEXT("\"%s\" -c -i %d");
 #elif !defined (ACE_USES_WCHAR)
