@@ -1,3 +1,13 @@
+Sat Jul 28 21:58:27 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * tests/Process_Manual_Event_Test.cpp: Added a hack to always delete
+          the underlying shared memory objects on AIX, primarily due to the
+          inability to neatly clean these objects up after a failed test.
+          See Bugzilla #2662 for further background. Also, added a delay
+          in the child process to allow the parent to initialize the event
+          objects. The race between the processes while the parent is
+          initializing the event objects can cause the child to hang.
+
 Sat Jul 28 18:56:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/bczar/bczar.html:
