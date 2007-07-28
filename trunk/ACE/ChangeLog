@@ -1,3 +1,9 @@
+Sat Jul 28 18:19:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * configure.ac:
+          Added checks for byteswap.h, intrin.h, ia32intrin.h, and
+          ia64intrin.h, part of buzilla 2905.
+
 Fri Jul 27 06:50:14 CDT 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ACE version 5.5.10 released.
