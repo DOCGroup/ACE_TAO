@@ -1,3 +1,9 @@
+Sat Jul 28 22:50:12 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * tests/SOCK_Connector_Test.cpp: Added some additional diagnostics
+          re the address info that's being tried to easier note IPv4 vs.
+          IPv6 addresses. Also removed an ACE_ASSERT.
+
 Sat Jul 28 21:58:27 UTC 2007  Steve Huston  <shuston@riverace.com>
 
         * tests/Process_Manual_Event_Test.cpp: Added a hack to always delete
