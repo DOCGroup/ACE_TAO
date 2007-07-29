@@ -225,6 +225,7 @@ project(ACE) : acedefaults, install, other, codecs, token, svcconf, uuid, fileca
     SOCK_SCTP_SEQPACK_Acceptor.cpp
     SOCK_SCTP_STREAM.cpp
     SOCK_SCTP_STREAM_Acceptor.cpp
+    SOCK_SCTP_STREAM_Connector.cpp
     SOCK_SEQPACK_Acceptor.cpp
     SOCK_SEQPACK_Association.cpp
     SOCK_SEQPACK_Connector.cpp
