@@ -1,7 +1,7 @@
 // $Id$
 
-#include <stdio.h>
-#include <string.h>
+#include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_string.h"
 #include "ace/ACE.h"
 
 ACE_RCSID(Dump_Restore, createfile, "$Id$")
@@ -12,23 +12,24 @@ main (int argc, char **argv)
   FILE *infile, *outfile;
   char buf[BUFSIZ];
 
-  if ((infile = fopen (argv[1], "r")) == 0)
+  if ((infile = ACE_OS::fopen (argv[1], "r")) == 0)
     return -1;
 
-  if ((outfile = fopen (argv[2], "w")) == 0)
+  if ((outfile = ACE_OS::fopen (argv[2], "w")) == 0)
     return -1;
 
   int count = 0;
-  while (::fgets (buf, BUFSIZ, infile))
+  while (ACE_OS::fgets (buf, BUFSIZ, infile))
     {
-      buf[::strlen(buf) - 1] = '\0';
-      fputs (buf, outfile);
+      buf[ACE_OS::strlen(buf) - 1] = '\0';
+      ACE_OS::fputs (buf, outfile);
       if (count % 2 == 0)
-	fputs (" ", outfile);
+        ACE_OS::fputs (" ", outfile);
       else
-	fputs ("\n", outfile);
+        ACE_OS::fputs ("\n", outfile);
       count++;
     }
-  fclose (outfile);
-  fclose (infile);
+
+  ACE_OS::fclose (outfile);
+  ACE_OS::fclose (infile);
 }
