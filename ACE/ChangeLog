@@ -1,3 +1,18 @@
+Sun Jul 29 20:56:40 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * netsvcs/clients/Naming/Client/Client_Test.cpp:
+        * netsvcs/clients/Naming/Dump_Restore/Dump_Restore.cpp:
+        * netsvcs/clients/Naming/Dump_Restore/createfile.cpp:
+        * netsvcs/clients/Tokens/manual/manual.cpp:
+
+          Fixed ACE_OS fuzz warnings. Use ACE_OS calls instead of raw OS functions
+          where possible. If fuzz detected a false-positive, then disable
+          the ACE_OS fuzz check for that section of the code.
+
+        * netsvcs/clients/Tokens/manual/manual.cpp:
+
+          Untabify.
+
 Sat Jul 28 23:00:44 UTC 2007  Steve Huston  <shuston@riverace.com>
 
         * ace/Local_Name_Space.cpp:

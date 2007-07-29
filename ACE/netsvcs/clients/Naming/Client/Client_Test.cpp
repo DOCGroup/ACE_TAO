@@ -10,6 +10,7 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_unistd.h"
+#include "ace/OS_NS_ctype.h"
 #include "ace/os_include/os_assert.h"
 
 #include "Client_Test.h"
@@ -82,7 +83,7 @@ Client_Test::handle_input (ACE_HANDLE)
 
   int result = -1;
 
-  switch (isupper (option[0]) ? tolower (option[0]) : option[0])
+  switch (ACE_OS::ace_isupper (option[0]) ? ACE_OS::ace_tolower (option[0]) : option[0])
     {
     case 'p' :
       result = this->set_proc_local ();
