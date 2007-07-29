@@ -1,4 +1,4 @@
-// $Id:$
+// $Id$
 
 #include "ace/SOCK_SCTP_SEQPACK_Acceptor.h"
 #include "ace/Auto_Ptr.h"
@@ -24,24 +24,25 @@ ACE_SOCK_SCTP_SEQPACK_Acceptor::~ACE_SOCK_SCTP_SEQPACK_Acceptor (void)
 
 int
 ACE_SOCK_SCTP_SEQPACK_Acceptor::open (const ACE_Multihomed_INET_Addr &local_sap,
-                         int reuse_addr,
-                         int protocol_family,
-                         int backlog)
+                                      int reuse_addr,
+                                      int protocol_family,
+                                      int backlog)
 {
   int error = 0;
  
   // Call the base class open()
   if(ACE_SOCK_SCTP_SEQPACK::open(local_sap,
                                  reuse_addr,
-                                 protocol_family,
-                                 backlog) == -1)
+                                 protocol_family) == -1)
   {
     error = 1;
   }
+  
+
   // If the base class open succeeded call listen to enable passive mode 
   // socket
-  else if(ACE_OS::listen (this->get_handle (),
-                          backlog) == -1)
+  if(ACE_OS::listen (this->get_handle (),
+                     backlog) == -1)
   {
     error = 1;
   }

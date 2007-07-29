@@ -15,7 +15,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "ace/SOCK.h"
+#include "ace/SOCK_SCTP.h"
 #include "ace/INET_Addr.h"
 #include "ace/Multihomed_INET_Addr.h"
 
@@ -33,7 +33,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * @brief Defines the methods for the ACE one-to-many style SCTP socket. 
  *
  */
-class ACE_Export ACE_SOCK_SCTP_SEQPACK : public ACE_SOCK
+class ACE_Export ACE_SOCK_SCTP_SEQPACK : public ACE_SOCK_SCTP
 {
   
 public:
@@ -46,23 +46,24 @@ public:
 
   int open (const ACE_Multihomed_INET_Addr &local_sap,
             int reuse_addr = 0,
-            int protocol_family = PF_UNSPEC,
-            int backlog = ACE_DEFAULT_BACKLOG);
+            int protocol_family = PF_UNSPEC);
 
   ssize_t recvmsg(void* msg,
                   size_t msgsz,
+                  struct sockaddr* from,
+                  socklen_t *fromlen,
                   ACE_INET_Addr& from_addr,
                   struct sctp_sndrcvinfo* sinfo,
                   int* msg_flags);
-
+  
   ssize_t sendmsg(const void* msg,
                   size_t msgsz,
                   ACE_INET_Addr& to_addr,
-                  uint32_t ppid,
-                  uint32_t flags,
-                  uint16_t stream,
-                  uint32_t timetolive,
-                  uint32_t context);
+                  uint32_t ppid = 0,
+                  uint32_t flags = 0,
+                  uint16_t stream = 0,
+                  uint32_t timetolive = 0,
+                  uint32_t context = 0);
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

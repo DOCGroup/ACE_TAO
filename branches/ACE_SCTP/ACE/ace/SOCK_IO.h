@@ -47,7 +47,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * argument will result in <send> getting called on Win32
  * platforms, and <write> getting called on non-Win32 platforms.
  */
-class ACE_Export ACE_SOCK_IO : public ACE_SOCK
+class ACE_Export ACE_SOCK_IO : public virtual ACE_SOCK
 {
 public:
   // = Initialization and termination methods.
