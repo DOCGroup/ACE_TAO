@@ -54,6 +54,21 @@ public:
    */
   int get_remote_addrs (ACE_INET_Addr *addrs, size_t &size, int assoc_id) const;
 
+  ssize_t recvmsg(void* msg,
+                  size_t msgsz,
+                  ACE_Multihomed_INET_Addr& from_addr,
+                  struct sctp_sndrcvinfo* sinfo,
+                  int* msg_flags);
+  
+  ssize_t sendmsg(const void* msg,
+                  size_t msgsz,
+                  ACE_Multihomed_INET_Addr& to_addr,
+                  uint32_t ppid = 0,
+                  uint32_t flags = 0,
+                  uint16_t stream = 0,
+                  uint32_t timetolive = 0,
+                  uint32_t context = 0);
+
   // = I/O functions.
   int close (void);
 

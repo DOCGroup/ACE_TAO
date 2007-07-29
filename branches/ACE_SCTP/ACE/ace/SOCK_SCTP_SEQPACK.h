@@ -14,8 +14,8 @@
 #define ACE_SOCK_SCTP_SEQPACK_H
 
 #include /**/ "ace/pre.h"
-
 #include "ace/SOCK_SCTP.h"
+#include "ace/SOCK_SCTP_STREAM.h"
 #include "ace/INET_Addr.h"
 #include "ace/Multihomed_INET_Addr.h"
 
@@ -48,22 +48,7 @@ public:
             int reuse_addr = 0,
             int protocol_family = PF_UNSPEC);
 
-  ssize_t recvmsg(void* msg,
-                  size_t msgsz,
-                  struct sockaddr* from,
-                  socklen_t *fromlen,
-                  ACE_INET_Addr& from_addr,
-                  struct sctp_sndrcvinfo* sinfo,
-                  int* msg_flags);
-  
-  ssize_t sendmsg(const void* msg,
-                  size_t msgsz,
-                  ACE_INET_Addr& to_addr,
-                  uint32_t ppid = 0,
-                  uint32_t flags = 0,
-                  uint16_t stream = 0,
-                  uint32_t timetolive = 0,
-                  uint32_t context = 0);
+  int peeloff(int assoc_id, ACE_SOCK_SCTP_STREAM& peer);
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

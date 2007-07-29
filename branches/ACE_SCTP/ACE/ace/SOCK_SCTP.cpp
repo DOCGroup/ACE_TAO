@@ -34,6 +34,56 @@ ACE_SOCK_SCTP::close (void)
   return ACE_SOCK::close ();
 }
 
+ssize_t ACE_SOCK_SCTP::recvmsg(void* msg,
+                               size_t msgsz,
+                               ACE_Multihomed_INET_Addr& from_addr,
+                               sctp_sndrcvinfo* sinfo,
+                               int* msg_flags
+                               )
+{
+  ssize_t rdsz;
+  sockaddr_in frm;
+  bzero(&frm, sizeof(frm));
+  socklen_t frm_len = 0;
+  
+  rdsz = sctp_recvmsg(this->get_handle(),
+                      msg,
+                      msgsz,
+                      (sockaddr*)&frm,
+                      &frm_len,
+                      sinfo,
+                      msg_flags);
+
+  // *** TO-DO: Initialize from_addr
+  
+  return rdsz;
+}
+
+ssize_t ACE_SOCK_SCTP::sendmsg(const void* msg,
+                                       size_t msgsz,
+                                       ACE_Multihomed_INET_Addr& to_addr,
+                                       uint32_t ppid,
+                                       uint32_t flags,
+                                       uint16_t stream,
+                                       uint32_t timetolive,
+                                       uint32_t context)
+{
+  ssize_t sndsize;
+
+  sndsize = sctp_sendmsg(this->get_handle(),
+                         msg,
+                         msgsz,
+                         (sockaddr*)to_addr.get_addr(),
+                         to_addr.get_addr_size(),
+                         ppid,
+                         flags,
+                         stream,
+                         timetolive,
+                         context);
+  
+  return sndsize; 
+}
+
 int
 ACE_SOCK_SCTP::get_local_addrs (ACE_INET_Addr *addrs, size_t &size, int assoc_id) const
 {

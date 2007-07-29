@@ -13,54 +13,6 @@ ACE_SOCK_SCTP_SEQPACK::~ACE_SOCK_SCTP_SEQPACK (void)
 {
 }
 
-ssize_t ACE_SOCK_SCTP_SEQPACK::recvmsg(void* msg,
-                                       size_t msgsz,
-                                       struct sockaddr* from,
-                                       socklen_t* fromlen,
-                                       ACE_INET_Addr& from_addr,
-                                       struct sctp_sndrcvinfo* sinfo,
-                                       int* msg_flags
-                                       )
-{
-  ssize_t rdsz;
-  rdsz = sctp_recvmsg(this->get_handle(),
-                      msg,
-                      msgsz,
-                      from,
-                      fromlen,
-                      sinfo,
-                      msg_flags);
-
-  // *** TO-DO: Initialize from_addr
-  
-  return rdsz;
-}
-
-ssize_t ACE_SOCK_SCTP_SEQPACK::sendmsg(const void* msg,
-                                       size_t msgsz,
-                                       ACE_INET_Addr& to_addr,
-                                       uint32_t ppid,
-                                       uint32_t flags,
-                                       uint16_t stream,
-                                       uint32_t timetolive,
-                                       uint32_t context)
-{
-  ssize_t sndsize;
-
-  sndsize = sctp_sendmsg(this->get_handle(),
-                         msg,
-                         msgsz,
-                         (sockaddr*)to_addr.get_addr(),
-                         to_addr.get_addr_size(),
-                         ppid,
-                         flags,
-                         stream,
-                         timetolive,
-                         context);
-  
-  return sndsize; 
-}
-
 int
 ACE_SOCK_SCTP_SEQPACK::open (const ACE_Multihomed_INET_Addr &local_sap,
                              int reuse_addr,
@@ -178,6 +130,20 @@ ACE_SOCK_SCTP_SEQPACK::open (const ACE_Multihomed_INET_Addr &local_sap,
     error = 1;
 
   return error ? -1 : 0;
+}
+
+int ACE_SOCK_SCTP_SEQPACK::peeloff(int assoc_id, ACE_SOCK_SCTP_STREAM& peer)
+{
+  // Call the underlying sctp_peeloff method to return a 1-to-1 style 
+  // socket
+  int new_handle = sctp_peeloff(this->get_handle(), assoc_id);
+
+  if(new_handle != -1)
+  {
+    peer.set_handle(new_handle);
+  }
+
+  return new_handle;
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL
