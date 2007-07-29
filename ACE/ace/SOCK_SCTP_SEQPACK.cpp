@@ -15,24 +15,24 @@ ACE_SOCK_SCTP_SEQPACK::~ACE_SOCK_SCTP_SEQPACK (void)
 
 ssize_t ACE_SOCK_SCTP_SEQPACK::recvmsg(void* msg,
                                        size_t msgsz,
+                                       struct sockaddr* from,
+                                       socklen_t* fromlen,
                                        ACE_INET_Addr& from_addr,
                                        struct sctp_sndrcvinfo* sinfo,
-                                       int* msg_flags)
+                                       int* msg_flags
+                                       )
 {
-  struct sockaddr_in addr;
-  socklen_t len;
-  ssize_t rdsz = 0;
-  struct sctp_sndrcvinfo sri;
-  int flags;
-  
+  ssize_t rdsz;
   rdsz = sctp_recvmsg(this->get_handle(),
                       msg,
                       msgsz,
-                      (sockaddr*)&addr,
-                      &len,
-                      &sri,
+                      from,
+                      fromlen,
+                      sinfo,
                       msg_flags);
 
+  // *** TO-DO: Initialize from_addr
+  
   return rdsz;
 }
 
@@ -63,9 +63,9 @@ ssize_t ACE_SOCK_SCTP_SEQPACK::sendmsg(const void* msg,
 
 int
 ACE_SOCK_SCTP_SEQPACK::open (const ACE_Multihomed_INET_Addr &local_sap,
-                         int reuse_addr,
-                         int protocol_family,
-                         int backlog)
+                             int reuse_addr,
+                             int protocol_family)
+                         
 {
   ACE_TRACE ("ACE_SOCK_SCTP_SEQPACK::open");
   int error = 0;
