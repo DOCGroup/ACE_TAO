@@ -46,8 +46,10 @@ public:
   int parse_args (int argc, char *argv[]);
   // Parse command-line arguments.
 
+  //FUZZ: disable check_for_lack_ACE_OS
   int open (int argc, char *argv[]);
   // Register with whatever event dispatcher is needed and run.
+  //FUZZ: enable check_for_lack_ACE_OS
 
   // = Event_Handler methods.
   int handle_input (ACE_HANDLE);
@@ -108,31 +110,31 @@ STDIN_Token::parse_args (int argc, char *argv[])
   for (int c; (c = get_opt ()) != -1; )
     {
       switch (c)
-	{
-	case 'h':  // specify the host machine on which the server is running
-	  server_host_ = get_opt.opt_arg ();
-	  remote_ = 1;
-	  break;
-	case 'p':  // specify the port on which the server is running
-	  server_port_ = ACE_OS::atoi (get_opt.opt_arg ());
-	  remote_ = 1;
-	  break;
-	case 'd':
-	  debug_ = 1;
-	  break;
-	case 'i':
-	  ignore_deadlock_ = 1;
-	  break;
-	case 'u':
-	  // usage: fallthrough
-	default:
-	  ACE_ERROR_RETURN ((LM_ERROR,
-			    "%n:\n"
-			     "[-h <remote host>]\n"
-			     "[-p <remote port>]\n"
-			     "[-i ignore deadlock]\n"
-			     "[-d debug]\n", 1), -1);
-	}
+      {
+      case 'h':  // specify the host machine on which the server is running
+        server_host_ = get_opt.opt_arg ();
+        remote_ = 1;
+        break;
+      case 'p':  // specify the port on which the server is running
+        server_port_ = ACE_OS::atoi (get_opt.opt_arg ());
+        remote_ = 1;
+        break;
+      case 'd':
+        debug_ = 1;
+        break;
+      case 'i':
+        ignore_deadlock_ = 1;
+        break;
+      case 'u':
+        // usage: fallthrough
+      default:
+        ACE_ERROR_RETURN ((LM_ERROR,
+        "%n:\n"
+        "[-h <remote host>]\n"
+        "[-p <remote port>]\n"
+        "[-i ignore deadlock]\n"
+        "[-d debug]\n", 1), -1);
+      }
     }
 
   if (remote_)
@@ -204,47 +206,46 @@ STDIN_Token::handle_input (ACE_HANDLE fd)
     case 'a':
     case 'A':
       if (proxy->acquire () == 0)
-	{
-	  ACE_OS::printf ("Succeeded.\n");
-	  if (ACE_TOKEN_INVARIANTS::instance ()->acquired (proxy) == 0)
-	    ACE_OS::printf ("Violated invariant.\n");
-	}
+        {
+          ACE_OS::printf ("Succeeded.\n");
+          if (ACE_TOKEN_INVARIANTS::instance ()->acquired (proxy) == 0)
+            ACE_OS::printf ("Violated invariant.\n");
+        }
       else
-	ACE_ERROR ((LM_ERROR, "%p.\n", "Acquire failed"));
+        ACE_ERROR ((LM_ERROR, "%p.\n", "Acquire failed"));
       break;
-
     case 'n':
     case 'N':
       ACE_TOKEN_INVARIANTS::instance ()->releasing (proxy);
       if (proxy->renew () == 0)
-	{
-	  ACE_OS::printf ("Succeeded.\n");
-	  if (ACE_TOKEN_INVARIANTS::instance ()->acquired (proxy) == 0)
-	    ACE_OS::printf ("Violated invariant.\n");
-	}
+        {
+          ACE_OS::printf ("Succeeded.\n");
+          if (ACE_TOKEN_INVARIANTS::instance ()->acquired (proxy) == 0)
+            ACE_OS::printf ("Violated invariant.\n");
+        }
       else
-	ACE_ERROR ((LM_ERROR, "%p.\n", "Renew failed"));
+        ACE_ERROR ((LM_ERROR, "%p.\n", "Renew failed"));
       break;
 
     case 'r':
     case 'R':
       ACE_TOKEN_INVARIANTS::instance ()->releasing (proxy);
       if (proxy->release () == 0)
-	ACE_OS::printf ("Succeeded.\n");
+        ACE_OS::printf ("Succeeded.\n");
       else
-	ACE_ERROR ((LM_ERROR, "%p.\n", "Release failed"));
+        ACE_ERROR ((LM_ERROR, "%p.\n", "Release failed"));
       break;
 
     case 't':
     case 'T':
       if (proxy->tryacquire () == 0)
-	{
-	  ACE_OS::printf ("Succeeded.\n");
-	  if (ACE_TOKEN_INVARIANTS::instance ()->acquired (proxy) == 0)
-	    ACE_OS::printf ("Violated invariant.\n");
-	}
+        {
+          ACE_OS::printf ("Succeeded.\n");
+          if (ACE_TOKEN_INVARIANTS::instance ()->acquired (proxy) == 0)
+            ACE_OS::printf ("Violated invariant.\n");
+        }
       else
-	ACE_ERROR ((LM_ERROR, "%p.\n", "Tryacquire failed"));
+        ACE_ERROR ((LM_ERROR, "%p.\n", "Tryacquire failed"));
       break;
     }
 
@@ -282,10 +283,10 @@ STDIN_Token::get_proxy (const char *_tid, const char *token, char type)
 
       // Put it in the collections.
       if (collections_.bind (tid, proxy_collection) == -1)
-	{
-	  delete proxy_collection;
-	  return 0;
-	}
+        {
+          delete proxy_collection;
+          return 0;
+        }
     }
 
   // Either way, we have a proxy_collection now.
@@ -300,14 +301,14 @@ STDIN_Token::get_proxy (const char *_tid, const char *token, char type)
 
       // Put the new_proxy in this tid's collection.
       if (proxy_collection->insert (*proxy) == -1)
-	ACE_ERROR_RETURN ((LM_ERROR, "insert failed\n"), 0);
+        ACE_ERROR_RETURN ((LM_ERROR, "insert failed\n"), 0);
 
       // Delete our copy (one was created in the collection).
       delete proxy;
       proxy = proxy_collection->is_member (token);
 
       if (proxy == 0)
-	ACE_ERROR_RETURN ((LM_ERROR, "is_member failed\n"), 0);
+        ACE_ERROR_RETURN ((LM_ERROR, "is_member failed\n"), 0);
 
       // Set the client_id (it was set to 1 since we're
       // single-threaded.
@@ -325,23 +326,23 @@ STDIN_Token::create_proxy (const char *token, char type)
     case 'm':
     case 'M':
       if (remote_)
-	return new ACE_Remote_Mutex (token, ignore_deadlock_, debug_);
+        return new ACE_Remote_Mutex (token, ignore_deadlock_, debug_);
       else
-	return new ACE_Local_Mutex (token, ignore_deadlock_, debug_);
+        return new ACE_Local_Mutex (token, ignore_deadlock_, debug_);
 
     case 'r':
     case 'R':
       if (remote_)
-	return new ACE_Remote_RLock (token, ignore_deadlock_, debug_);
+        return new ACE_Remote_RLock (token, ignore_deadlock_, debug_);
       else
-	return new ACE_Local_RLock (token, ignore_deadlock_, debug_);
+        return new ACE_Local_RLock (token, ignore_deadlock_, debug_);
 
     case 'w':
     case 'W':
       if (remote_)
-	return new ACE_Remote_WLock (token, ignore_deadlock_, debug_);
+        return new ACE_Remote_WLock (token, ignore_deadlock_, debug_);
       else
-	return new ACE_Local_WLock (token, ignore_deadlock_, debug_);
+        return new ACE_Local_WLock (token, ignore_deadlock_, debug_);
     }
 
   // should never get here, but this avoids a compiler warning . . .
@@ -360,6 +361,6 @@ int
 main (int, char *[])
 {
   ACE_ERROR_RETURN ((LM_ERROR,
-		     "threads or ACE_HAS_TOKENS_LIBRARY not supported on this platform\n"), -1);
+                     "threads or ACE_HAS_TOKENS_LIBRARY not supported on this platform\n"), -1);
 }
 #endif /* ACE_HAS_THREADS && ACE_HAS_TOKENS_LIBRARY */
