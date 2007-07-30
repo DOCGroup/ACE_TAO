@@ -234,7 +234,7 @@ dnl @todo Clean up / consolidate these conditionals
          ACE_CXXFLAGS="$ACE_CXXFLAGS"
          DCXXFLAGS="$DCXXFLAGS"
          OCXXFLAGS="-O3"
-         WERROR="-Werror"
+         WERROR="-Werror -Wall"
          ;;
        *)
          if test "$GXX" = yes; then
