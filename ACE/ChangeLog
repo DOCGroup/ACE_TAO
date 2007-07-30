@@ -1,3 +1,12 @@
+Mon Jul 30 22:50:40 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * tests/SOCK_Connector_Test.cpp: After rummaging through the hosts
+          list looking for other names, do sethostent(0) before endhostent().
+          Resolves the funky interaction with this and getaddrinfo() on AIX
+          with IPv6 support which would, on the second lookup of the local
+          host's name, return an AF_INET6 struct with an IPv4 address.
+          Thanks to Phil Mesnier for co-laboring to work this little mess out.
+
 Mon Jul 30 18:17:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-cray.h:
