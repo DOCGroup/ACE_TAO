@@ -1,3 +1,10 @@
+Mon Jul 30 18:12:58 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/tests/Bug_2926_Regression/server.cpp:
+
+          Added a missing parameter to the TAO_CosNotify_Service::create()
+          method.
+
 Mon Jul 30 14:54:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/POA/*:
