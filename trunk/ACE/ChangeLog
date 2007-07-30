@@ -1,3 +1,8 @@
+Mon Jul 30 15:08:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-lynxos.h:
+          Added ACE_LACKS_PTHREAD_ATTR_SETSTACK for LynxOS 4.0
+
 Mon Jul 30 14:57:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/tao_orb_tests.lst:
