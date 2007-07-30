@@ -12,6 +12,7 @@ SUBDIRS = \
         Federation \
         Filter \
         Lanes \
+        MC \
         Subscribe \
         ThreadPool
 

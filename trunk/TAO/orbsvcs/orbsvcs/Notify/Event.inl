@@ -22,6 +22,12 @@ TAO_Notify_Event::reliable (void) const
   return this->reliable_;
 }
 
+ACE_INLINE const ACE_Time_Value&
+TAO_Notify_Event::creation_time (void) const
+{
+  return this->time_;
+}
+
 ACE_INLINE
 TAO_Notify_Event*
 TAO_Notify_Event::queueable_copy (void) const

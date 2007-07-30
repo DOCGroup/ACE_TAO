@@ -10,7 +10,8 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 CosNotifyChannelAdmin::EventChannelFactory_ptr
-TAO_Notify_EventChannelFactory_i::create (PortableServer::POA_ptr default_POA)
+TAO_Notify_EventChannelFactory_i::create (PortableServer::POA_ptr default_POA,
+                                          const char* factory_name)
 {
   CosNotifyChannelAdmin::EventChannelFactory_var notify_factory;
 
@@ -31,7 +32,7 @@ TAO_Notify_EventChannelFactory_i::create (PortableServer::POA_ptr default_POA)
 
   notify_service->init_service (orb);
 
-  notify_factory = notify_service->create (default_POA);
+  notify_factory = notify_service->create (default_POA, factory_name);
 
   return notify_factory._retn ();
 }

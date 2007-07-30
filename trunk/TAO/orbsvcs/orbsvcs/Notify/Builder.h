@@ -56,7 +56,8 @@ public:
 
   /// Build EventChannel Factory.
   virtual CosNotifyChannelAdmin::EventChannelFactory_ptr
-  build_event_channel_factory (PortableServer::POA_ptr poa);
+  build_event_channel_factory (PortableServer::POA_ptr poa
+                               , const char* factory_name = 0);
 
   /// Build the Filter Factory.
   virtual CosNotifyFilter::FilterFactory_ptr build_filter_factory (
@@ -67,12 +68,14 @@ public:
   build_event_channel (TAO_Notify_EventChannelFactory* ecf
                        , const CosNotification::QoSProperties & initial_qos
                        , const CosNotification::AdminProperties & initial_admin
-                       , CosNotifyChannelAdmin::ChannelID_out id);
+                       , CosNotifyChannelAdmin::ChannelID_out id
+                       , const char* ec_name = 0);
 
 
   virtual TAO_Notify_EventChannel *
   build_event_channel (TAO_Notify_EventChannelFactory* ecf
-                       , const CosNotifyChannelAdmin::ChannelID id);
+                       , const CosNotifyChannelAdmin::ChannelID id
+                       , const char* ec_name = 0);
 
 
   /// Build ConsumerAdmin

@@ -3,17 +3,16 @@
 #include "Notify_Service.h"
 
 #include "orbsvcs/Notify/Service.h"
+#include "orbsvcs/Notify/EventChannelFactory.h"
 
 #include "tao/debug.h"
 #include "tao/IORTable/IORTable.h"
 #include "tao/ORB_Core.h"
-
 #include "ace/Arg_Shifter.h"
 #include "ace/Get_Opt.h"
 #include "ace/Sched_Params.h"
 #include "ace/Synch.h"
 #include "ace/Argv_Type_Converter.h"
-#include "ace/Dynamic_Service.h"
 
 TAO_Notify_Service_Driver::TAO_Notify_Service_Driver (void)
 : notify_service_ (0)
@@ -87,12 +86,7 @@ TAO_Notify_Service_Driver::init (int argc, ACE_TCHAR *argv[])
   if (this->init_ORB (argc, argv) != 0)
     return -1;
 
-  this->notify_service_ = ACE_Dynamic_Service<TAO_Notify_Service>::instance (TAO_NOTIFICATION_SERVICE_NAME);
-
-  if (this->notify_service_ == 0)
-    {
-      this->notify_service_ = ACE_Dynamic_Service<TAO_Notify_Service>::instance (TAO_NOTIFY_DEF_EMO_FACTORY_NAME);
-    }
+  this->notify_service_ = TAO_Notify_Service::load_default ();
 
   if (this->notify_service_ == 0)
     {
@@ -150,7 +144,8 @@ TAO_Notify_Service_Driver::init (int argc, ACE_TCHAR *argv[])
 
   // Activate the factory
   this->notify_factory_ =
-    notify_service_->create (this->poa_.in ());
+    notify_service_->create (this->poa_.in (),
+                             this->notify_factory_name_.c_str ());
 
   ACE_ASSERT (!CORBA::is_nil (this->notify_factory_.in ()));
 
@@ -198,10 +193,22 @@ TAO_Notify_Service_Driver::init (int argc, ACE_TCHAR *argv[])
           CosNotification::QoSProperties initial_qos;
           CosNotification::AdminProperties initial_admin;
 
-          CosNotifyChannelAdmin::EventChannel_var ec =
-            this->notify_factory_->create_channel (initial_qos,
-                                                   initial_admin,
-                                                   id);
+          CosNotifyChannelAdmin::EventChannel_var ec;
+          TAO_Notify_EventChannelFactory* factory_impl =
+            dynamic_cast<TAO_Notify_EventChannelFactory*> (
+              this->notify_factory_->_servant ());
+          if (factory_impl == 0)
+            {
+              ec = this->notify_factory_->create_channel (initial_qos,
+                                                          initial_admin,
+                                                          id);
+            }
+          else
+            {
+              ec = factory_impl->create_named_channel (
+                                   initial_qos, initial_admin,id,
+                                   this->notify_channel_name_.c_str ());
+            }
 
           name = this->naming_->to_name (this->notify_channel_name_.c_str ());
 
@@ -275,25 +282,33 @@ TAO_Notify_Service_Driver::run (void)
 void
 TAO_Notify_Service_Driver::shutdown (void)
 {
+  /// Release all the _vars as the ORB about to go away.
+  CosNotifyChannelAdmin::EventChannelFactory_var factory =
+    this->notify_factory_._retn ();
+  CORBA::ORB_var orb = this->orb_._retn ();
+  PortableServer::POA_var poa = this->poa_._retn ();
+  CosNaming::NamingContextExt_var naming = this->naming_._retn ();
+
+  // This must be called to ensure that all services shut down
+  // correctly.  Depending upon the type of service loaded, it may
+  // or may not actually perform any actions.
+  this->notify_service_->finalize_service (factory.in ());
+
   // Deactivate.
-  if (this->use_name_svc_ && !CORBA::is_nil (this->naming_.in ()))
+  if (this->use_name_svc_ && !CORBA::is_nil (naming.in ()))
     {
       // Unbind from the naming service.
       CosNaming::Name_var name =
-        this->naming_->to_name (this->notify_factory_name_.c_str ());
+        naming->to_name (this->notify_factory_name_.c_str ());
 
-      this->naming_->unbind (name.in ());
+      naming->unbind (name.in ());
     }
 
-  // shutdown the ORB.
-  if (!CORBA::is_nil (this->orb_.in ()))
-    this->orb_->shutdown ();
+  poa->destroy (true, true);
 
-  /// Release all the _vars as the ORB is gone now.
-  notify_factory_._retn ();
-  orb_._retn ();
-  poa_._retn ();
-  naming_._retn ();
+  // shutdown the ORB.
+  if (!CORBA::is_nil (orb.in ()))
+    orb->shutdown ();
 }
 
 int

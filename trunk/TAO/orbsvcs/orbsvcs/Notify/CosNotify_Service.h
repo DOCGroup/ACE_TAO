@@ -54,8 +54,13 @@ public:
   /// separate dispatching orb Init
   virtual void init_service2 (CORBA::ORB_ptr orb, CORBA::ORB_ptr dispatching_orb);
 
+  /// Finalize the service.
+  virtual void finalize_service (
+    CosNotifyChannelAdmin::EventChannelFactory_ptr factory);
+
   /// Create the Channel Factory.
-  virtual CosNotifyChannelAdmin::EventChannelFactory_ptr create (PortableServer::POA_ptr default_POA);
+  virtual CosNotifyChannelAdmin::EventChannelFactory_ptr
+    create (PortableServer::POA_ptr default_POA, const char* factory_name);
 
   /// Called by the factory when it is destroyed.
   virtual void remove (TAO_Notify_EventChannelFactory* ecf);

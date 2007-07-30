@@ -69,12 +69,19 @@ public:
   virtual void _remove_ref (void);
 
   /// Remove <channel> from the <ec_container_>
-  void remove (TAO_Notify_EventChannel* channel);
+  virtual void remove (TAO_Notify_EventChannel* channel);
 
   /// Accesor for the default filter factory shared by all EC's.
   virtual CosNotifyFilter::FilterFactory_ptr get_default_filter_factory (
     );
 
+  /// This method is called by the Notify_Service when the event channel
+  /// is automatically created and bound in the name service.
+  virtual CosNotifyChannelAdmin::EventChannel_ptr create_named_channel (
+      const CosNotification::QoSProperties& initial_qos,
+      const CosNotification::AdminProperties& initial_admin,
+      CosNotifyChannelAdmin::ChannelID_out id,
+      const char* name);
 
   //////////////////////////
   // The following methods are for
@@ -114,7 +121,7 @@ public:
   virtual TAO_Notify_Object::ID get_id () const;
 
 
- private:
+private:
 
   /// = Data Members
 
@@ -136,8 +143,8 @@ public:
 
   virtual CORBA::Boolean is_alive (void);
 
+protected:
   /// = CosNotifyChannelAdmin Methods
-
   virtual ::CosNotifyChannelAdmin::EventChannel_ptr create_channel (
       const CosNotification::QoSProperties & initial_qos,
       const CosNotification::AdminProperties & initial_admin,

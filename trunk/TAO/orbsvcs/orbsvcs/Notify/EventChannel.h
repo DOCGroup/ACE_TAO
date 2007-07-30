@@ -46,7 +46,7 @@ template <class TYPE> class TAO_Notify_Container_T;
  *
  */
 class TAO_Notify_Serv_Export TAO_Notify_EventChannel
-  : public POA_CosNotifyChannelAdmin::EventChannel,
+  : public virtual POA_CosNotifyChannelAdmin::EventChannel,
     public TAO_Notify::Topology_Parent
 {
   friend class TAO_Notify_Builder;
@@ -97,6 +97,9 @@ public:
   virtual int shutdown (void);
   virtual void load_attrs(const TAO_Notify::NVPList& attrs);
 
+  /// TAO_Notify_Container_T requires a destroy method
+  virtual void destroy (void);
+
 private:
   typedef TAO_Notify_Container_T <TAO_Notify_ConsumerAdmin> TAO_Notify_ConsumerAdmin_Container;
   typedef TAO_Notify_Container_T <TAO_Notify_SupplierAdmin> TAO_Notify_SupplierAdmin_Container;
@@ -115,9 +118,8 @@ private:
   // Default Supplier Admin
   CosNotifyChannelAdmin::SupplierAdmin_var default_supplier_admin_;
 
+protected:
   /// =CosNotifyChannelAdmin::EventChannel methods
-
-  virtual void destroy (void);
 
   virtual ::CosNotifyChannelAdmin::EventChannelFactory_ptr MyFactory (
   );

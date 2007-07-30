@@ -14,7 +14,6 @@
 
 // For in-process Notification Service.
 //
-#include "ace/Dynamic_Service.h"
 #include "orbsvcs/Notify/Service.h"
 #include "orbsvcs/Notify/CosNotify_Initializer.h" // NS static link helper.
 
@@ -62,16 +61,7 @@ main (int argc, char* argv[])
 
     // Initialize Notification Service.
     //
-    TAO_Notify_Service* ns =
-      ACE_Dynamic_Service<TAO_Notify_Service>::instance (
-        TAO_NOTIFICATION_SERVICE_NAME);
-
-    if (ns == 0)
-    {
-      ns =
-        ACE_Dynamic_Service<TAO_Notify_Service>::instance (
-          TAO_NOTIFY_DEF_EMO_FACTORY_NAME);
-    }
+    TAO_Notify_Service* ns = TAO_Notify_Service::load_default ();
 
     if (ns == 0)
     {

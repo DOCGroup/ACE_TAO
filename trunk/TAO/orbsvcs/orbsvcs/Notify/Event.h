@@ -106,6 +106,9 @@ public:
   /// Reliable
   const TAO_Notify_Property_Boolean& reliable(void) const;
 
+  /// Event creation time
+  const ACE_Time_Value& creation_time (void) const;
+
 protected:
   /// = QoS properties
 
@@ -126,6 +129,7 @@ private:
 
   mutable Ptr clone_;
   bool        is_on_heap_;
+  ACE_Time_Value time_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -55,7 +55,7 @@ public:
     TAO_Notify_ProxySupplier* proxy_supplier,
     bool filtering);
 
-  /// Constuct construct from another method request+event
+  /// Constuct from another method request+event
   /// event is passed separately because we may be using a copy
   /// of the one in the previous method request
   TAO_Notify_Method_Request_Dispatch (

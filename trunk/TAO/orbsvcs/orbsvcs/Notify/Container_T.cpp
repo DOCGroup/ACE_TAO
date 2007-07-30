@@ -18,6 +18,12 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+template<class TYPE> void
+TAO_Notify_Container_T<TYPE>::Destroyer::work (TYPE* type)
+{
+  type->destroy ();
+}
+
 template<class TYPE>
 TAO_Notify_Container_T<TYPE>::TAO_Notify_Container_T (void)
   : collection_ (0)
@@ -36,6 +42,13 @@ TAO_Notify_Container_T<TYPE>::shutdown (void)
   TAO_ESF_Shutdown_Proxy<TYPE> shutdown_worker;
 
   this->collection_->for_each (&shutdown_worker);
+}
+
+template <class TYPE> void
+TAO_Notify_Container_T<TYPE>::destroy (void)
+{
+  Destroyer destroyer;
+  this->collection_->for_each (&destroyer);
 }
 
 template<class TYPE> void

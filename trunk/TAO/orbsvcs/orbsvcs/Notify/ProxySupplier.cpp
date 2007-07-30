@@ -130,10 +130,7 @@ TAO_Notify_ProxySupplier::shutdown (void)
 void
 TAO_Notify_ProxySupplier::destroy (void)
 {
-  int result = this->shutdown ();
-  if ( result == 1)
-    return;
-
+  this->shutdown ();
   this->consumer_admin_->remove (this);
 
   // Do not reset this->consumer_.
