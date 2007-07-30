@@ -64,6 +64,9 @@
 #include "ace/Live_P_Strategy.h"
 #include "ace/k_Efficient_P_Strategy.h"
 
+#include <ctime>
+#include <cstdlib>
+
 ACE_RCSID(TPReactor, TPReactor_Test, "TPReactor_Test.cpp,v 1.27 2000/03/07 17:15:56 schmidt Exp")
 
 //  Some debug helper functions
@@ -437,7 +440,8 @@ Receiver::open (void *)
 
   if (ACE_Reactor::instance()->register_handler (this, flg_mask_) == -1)
     return -1;
-  ACE_Deadlock_Free_TP_Reactor::instance()->add_annotation(this, 1);
+  //randomize annotation between 1 and 10
+  ACE_Deadlock_Free_TP_Reactor::instance()->add_annotation(this, (rand()%9) + 1);
   initiate_io (ACE_Event_Handler::READ_MASK);
 
   return check_destroy ();
@@ -813,7 +817,7 @@ int Sender::open (void *)
 
   if (ACE_Reactor::instance()->register_handler (this,flg_mask_) == -1)
     return -1;
-
+  ACE_Deadlock_Free_TP_Reactor::instance()->add_annotation(this, (rand()%9) + 1);
   if (this->initiate_write () == -1)
     return -1;
 
@@ -1187,6 +1191,8 @@ int
 run_main (int argc, ACE_TCHAR *argv[])
 {
 //  ACE_START_TEST (ACE_TEXT ("DA_Reactor_Test"));
+  //seed random number generator
+  srand((unsigned int)time((time_t *)NULL));
 #if defined(ACE_HAS_THREADS)
   if (::parse_args (argc, argv) == -1)
     return -1;
