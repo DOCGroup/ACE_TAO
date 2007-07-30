@@ -14,7 +14,7 @@ TAO_BUILDDIR = $(top_builddir)
 TAO_ROOT = $(top_srcdir)
 
 
-## Makefile.Reference_Counted_Servant_Server.am
+## Makefile.POA_Adapter_Activator_Server.am
 
 if BUILD_EXCEPTIONS
 
@@ -32,7 +32,7 @@ server_SOURCES = \
   server.cpp
 
 server_LDADD = \
-  $(top_builddir)/examples/POA/Generic_Servant/libGeneric_Servant.la \
+  $(top_builddir)/tests/POA/Generic_Servant/libGeneric_Servant.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \

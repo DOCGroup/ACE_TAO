@@ -29,5 +29,19 @@ SUBDIRS = \
         Policies \
         Reference_Counting \
         Single_Threaded_POA \
-        wait_for_completion
+        wait_for_completion \
+        DSI \
+        Default_Servant \
+        FindPOA \
+        Generic_Servant \
+        Explicit_Activation \
+        Adapter_Activator \
+        Loader \
+        NewPOA \
+        On_Demand_Activation \
+        On_Demand_Loading \
+        POA_BiDir \
+        Reference_Counted_Servant \
+        RootPOA \
+        TIE
 
