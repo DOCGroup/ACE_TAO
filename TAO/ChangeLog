@@ -1,3 +1,10 @@
+Mon Jul 30 14:54:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/POA/*:
+        * tests/POA/*:
+          Moved all POA examples to tests, this are all one button POA
+          tests that we need to run in all core builds
+
 Mon Jul 30 13:13:58 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * MPC/config/notification_mc.mpb:
@@ -69,7 +76,7 @@ Mon Jul 30 13:13:58 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
         * orbsvcs/orbsvcs/Notify/CosNotify_Service.cpp:
 
           Implement the new finalize_service() method by destroying all
-          event channels held by the provided event channel factory.   
+          event channels held by the provided event channel factory.
           Implement the updated create() method to provide the factory name
           to the builder.
 
@@ -81,9 +88,9 @@ Mon Jul 30 13:13:58 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/orbsvcs/Notify/EventChannel.h:
 
-          Changed to virtually inherit from     
+          Changed to virtually inherit from
           POA_CosNotifyChannelAdmin::EventChannel and made the destroy()
-          method public to allow the TAO_Notify_Container_T access.     
+          method public to allow the TAO_Notify_Container_T access.
 
         * orbsvcs/orbsvcs/Notify/EventChannel.cpp:
 
@@ -141,7 +148,7 @@ Mon Jul 30 13:13:58 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
           This class allows the user to dynamically load the manager and
           configure it through the service configurator.  It starts a thread
-          and services monitoring requests via an ORB that is separate from 
+          and services monitoring requests via an ORB that is separate from
           the ORB for the normal operation of the notification service.
 
         * orbsvcs/orbsvcs/Notify/MonitorControl/NotificationServiceMC.idl:
@@ -251,8 +258,8 @@ Mon Jul 30 13:13:58 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
         * orbsvcs/orbsvcs/Notify/Service.cpp:
 
           Added a static method to locate the notify service from a default
-          list of service names.  This allows us to avoid duplicating this 
-          code everywhere a notify service is to be dynamically loaded.    
+          list of service names.  This allows us to avoid duplicating this
+          code everywhere a notify service is to be dynamically loaded.
 
           Added a pure virtual method to finalize the service and changed
           the create() method to take an optional factory name.
