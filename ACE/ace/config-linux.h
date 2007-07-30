@@ -59,7 +59,7 @@
 #  define ACE_LACKS_NETDB_REENTRANT_FUNCTIONS
 
    // glibc < 2.1 lacks pthread_attr_setstacksize()
-#  define ACE_LACKS_THREAD_STACK_SIZE
+#  define ACE_LACKS_PTHREAD_ATTR_SETSTACKSIZE
 #endif /* (__GLIBC__ < 2) || (__GLIBC__ == 2 && __GLIBC_MINOR__ < 1) */
 
 // uses ctime_r & asctime_r with only two parameters vs. three
