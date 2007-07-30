@@ -5747,7 +5747,7 @@ ACE_CACHE_CHECK([if signal takes a void (*)(int) as second argument],
     AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
 #include <signal.h>
        typedef void (*SA)(int);
-       void handler(int) { }
+       static void handler(int) { }
       ]], [[
        SA nn = handler;
        signal(SIGINT, nn);
