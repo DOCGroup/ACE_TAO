@@ -324,9 +324,9 @@ public:
 
   /// Check if there are messages pending in the queue
   /**
-   * @return 1 if the queue is empty
+   * @return true if the queue is empty
    */
-  int queue_is_empty (void);
+  bool queue_is_empty (void);
 
   /// Added event handler to the handlers set.
   /**
@@ -793,19 +793,14 @@ private:
   /// Implement drain_queue() assuming the lock is held
   int drain_queue_i (void);
 
-  /// This class needs priviledged access to
-  /// - queue_is_empty_i()
-  /// - drain_queue_i()
-  friend class TAO_Block_Flushing_Strategy;
-
   /// Check if there are messages pending in the queue
   /**
    * This version assumes that the lock is already held.  Use with
    * care!
    *
-   * @return 1 if the queue is empty
+   * @return true if the queue is empty
    */
-  int queue_is_empty_i (void);
+  bool queue_is_empty_i (void);
 
   /// A helper routine used in drain_queue_i()
   int drain_queue_helper (int &iovcnt, iovec iov[]);

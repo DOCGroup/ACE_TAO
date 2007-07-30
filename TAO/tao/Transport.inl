@@ -94,13 +94,13 @@ TAO_Transport::id (size_t id)
   this->id_ = id;
 }
 
-ACE_INLINE int
+ACE_INLINE bool
 TAO_Transport::queue_is_empty (void)
 {
   ACE_GUARD_RETURN (ACE_Lock,
                     ace_mon,
                     *this->handler_lock_,
-                    -1);
+                    false);
   return this->queue_is_empty_i ();
 }
 
