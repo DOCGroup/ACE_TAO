@@ -516,6 +516,12 @@ AH_TEMPLATE([ACE_HAS_POSIX_SEM],
 [Platform supports POSIX real-time semaphores (e.g., VxWorks and
    Solaris)])
 
+AH_TEMPLATE([ACE_HAS_POSIX_SEM_TIMEOUT],
+[Compiler supports timed mutex acquisitions (e.g. thread_mutex_timedlock()).])
+
+AH_TEMPLATE([ACE_HAS_POSIX_SEM_TIMEOUT_EMULATION],
+[Emulation for timed mutex acquisitions.])
+
 AH_TEMPLATE([ACE_HAS_POSIX_TIME],
 [Platform supports the POSIX struct timespec type])
 

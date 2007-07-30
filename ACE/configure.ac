@@ -3634,8 +3634,6 @@ ACE_CHECK_LACKS_FUNCS(msync mprotect)
 
 ACE_CHECK_LACKS_FUNCS(pipe)
 
-ACE_CHECK_LACKS_FUNCS(pthread_attr_setstack)
-
 ACE_CHECK_LACKS_FUNCS(qsort)
 
 ACE_CHECK_LACKS_FUNCS(realpath)
@@ -4415,6 +4413,10 @@ dnl name.
     ,
     [AC_DEFINE([ACE_LACKS_CONDATTR_PSHARED])])
 
+  AC_CHECK_FUNC([pthread_cond_timedwait],
+    [AC_DEFINE([ACE_HAS_POSIX_SEM_TIMEOUT])],
+    [AC_DEFINE([ACE_HAS_POSIX_SEM_TIMEOUT_EMULATION])])
+
   AC_CHECK_FUNC([pthread_attr_setstackaddr],
     ,
     [AC_DEFINE([ACE_LACKS_THREAD_STACK_ADDR])])
@@ -4468,6 +4470,8 @@ dnl name.
   AC_CHECK_FUNC([pthread_attr_setscope],
     ,
     [AC_DEFINE([ACE_LACKS_THREAD_PROCESS_SCOPING])])
+
+  ACE_CHECK_LACKS_FUNCS(pthread_attr_setstack)
 
   AC_CHECK_FUNC([pthread_mutexattr_setpshared],
     ,
