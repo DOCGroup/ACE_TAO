@@ -3461,6 +3461,8 @@ ACE_CHECK_LACKS_FUNCS(alarm)
 
 ACE_CHECK_LACKS_FUNCS(bsearch)
 
+ACE_CHECK_HAS_FUNCS(bswap_16 bswap_32 bswap_64)
+
 ACE_CHECK_LACKS_FUNCS(chdir)
 
 ACE_CHECK_HAS_FUNCS(clock_gettime clock_settime nanosleep)
