@@ -337,7 +337,7 @@ expire (ACE_Timer_Queue &timer_queue,
                           ACE_Time_Value (1));
   ACE_ASSERT (timer_id != -1);
 
-  timer_id =
+  result =
     timer_queue.schedule (handler,
                           two_second_timeout,
                           ACE_Time_Value (2) + timer_queue.gettimeofday ());
@@ -370,6 +370,8 @@ expire (ACE_Timer_Queue &timer_queue,
 
       i += result;
     }
+
+  timer_queue.cancel (timer_id, 0, 0);
 }
 
 template<class TIMER_QUEUE>
