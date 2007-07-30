@@ -1,7 +1,10 @@
 Mon Jul 30 23:51:07 UTC 2007  Steve Huston  <shuston@riverace.com>
 
         * ace/TP_Reactor.h: Documentation improvements, including clarification
-          of the synchronization needs for I/O and non-I/O callbacks.
+          of the synchronization needs for I/O and non-I/O callbacks. Thanks
+          to Hal Black <hal dot black at gmail dot com> for motivating this.
+
+        * THANKS: Added Hal Black.
 
 Mon Jul 30 22:50:40 UTC 2007  Steve Huston  <shuston@riverace.com>
 
