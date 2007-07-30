@@ -1,3 +1,8 @@
+Mon Jul 30 14:57:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+          All POA examples are now under tests
+
 Mon Jul 30 14:45:00 UTC 2007  Simon Massey  <sma@prismtech.com>
 
         * tests/Timer_Queue_Reference_Counting_Test.cpp:
