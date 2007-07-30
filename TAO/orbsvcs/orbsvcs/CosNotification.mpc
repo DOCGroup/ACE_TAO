@@ -244,3 +244,55 @@ project(CosNotification_Persist) : notification_serv, install, acexml {
   Template_Files {
   }
 }
+
+project(CosNotification_MC): naming, portableserver, iortable, install {
+  sharedname   = TAO_CosNotification_MC
+  dynamicflags = TAO_NOTIFY_MC_BUILD_DLL
+
+  IDL_Files {
+    commandflags += -o Notify/MonitorControl -Wb,export_macro=TAO_Notify_MC_Export -Wb,export_include=notify_mc_export.h
+    Notify/MonitorControl
+  }
+
+  Source_Files {
+    Notify/MonitorControl
+  }
+
+  Header_Files {
+    Notify/MonitorControl
+  }
+
+  Inline_Files {
+    Notify/MonitorControl
+  }
+
+  Template_Files {
+    Notify/MonitorControl
+  }
+}
+
+project(CosNotification_MC_Ext): notification_serv, notification_mc, install {
+  sharedname   = TAO_CosNotification_MC_Ext
+  dynamicflags = TAO_NOTIFY_MC_EXT_BUILD_DLL
+
+  IDL_Files {
+    commandflags += -o Notify/MonitorControlExt -Wb,export_macro=TAO_Notify_MC_Ext_Export -Wb,export_include=notify_mc_ext_export.h
+    Notify/MonitorControlExt
+  }
+
+  Source_Files {
+    Notify/MonitorControlExt
+  }
+
+  Header_Files {
+    Notify/MonitorControlExt
+  }
+
+  Inline_Files {
+    Notify/MonitorControlExt
+  }
+
+  Template_Files {
+    Notify/MonitorControlExt
+  }
+}

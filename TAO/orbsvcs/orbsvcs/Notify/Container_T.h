@@ -55,12 +55,22 @@ class TAO_Notify_Serv_Export TAO_Notify_Container_T
   /// Shutdown
   virtual void shutdown (void);
 
+  /// Call destroy on each contained object
+  virtual void destroy (void);
+
   /// Collection
   COLLECTION* collection (void);
 
 protected:
   /// The collection data structure that we add objects to.
   COLLECTION* collection_;
+
+private:
+  class Destroyer: public TAO_ESF_Worker<TYPE>
+  {
+    /// Call destroy on the object
+    virtual void work (TYPE* type);
+  };
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

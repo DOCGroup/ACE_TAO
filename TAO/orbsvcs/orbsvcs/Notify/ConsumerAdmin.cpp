@@ -87,11 +87,9 @@ TAO_Notify_ConsumerAdmin::release (void)
 void
 TAO_Notify_ConsumerAdmin::destroy (void)
 {
-  int result = this->shutdown ();
-  if ( result == 1)
-    return;
-
+  this->shutdown ();
   this->ec_->remove (this);
+  this->proxy_container ().destroy ();
 }
 
 

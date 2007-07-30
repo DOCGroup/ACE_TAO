@@ -101,6 +101,9 @@ public:
   /// load first before loading its own attributes.
   virtual void load_attrs(const TAO_Notify::NVPList& attrs);
 
+  /// Allow access to the underlying worker task.
+  TAO_Notify_Worker_Task* get_worker_task (void);
+
 protected:
   /// Constructor
   TAO_Notify_Object (void);

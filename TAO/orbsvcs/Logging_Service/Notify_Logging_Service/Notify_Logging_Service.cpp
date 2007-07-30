@@ -1,6 +1,5 @@
 #include "Notify_Logging_Service.h"
 #include "ace/Get_Opt.h"
-#include "ace/Dynamic_Service.h"
 #include "tao/debug.h"
 #include "tao/IORTable/IORTable.h"
 #include "orbsvcs/Notify/Service.h"
@@ -34,7 +33,7 @@ Notify_Logging_Service::init_ORB (int& argc, char *argv [])
                                 argv,
                                 "");
 
-  this->notify_service_ = ACE_Dynamic_Service<TAO_Notify_Service>::instance (TAO_NOTIFY_DEF_EMO_FACTORY_NAME);
+  this->notify_service_ = TAO_Notify_Service::load_default ();
 
   if (this->notify_service_ == 0)
     {

@@ -9,5 +9,6 @@
 ## ../bin/mwc.pl -type automake -noreldefs TAO.mwc
 
 SUBDIRS = \
+        Notify \
         Trading
 

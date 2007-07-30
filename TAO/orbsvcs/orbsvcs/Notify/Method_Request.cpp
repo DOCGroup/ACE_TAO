@@ -57,6 +57,14 @@ TAO_Notify_Method_Request_Queueable::init (const TAO_Notify_Event* event)
     deadline += ACE_OS::gettimeofday ();
     this->msg_deadline_time (deadline);
   }
+
+  this->time_ = event->creation_time ();
+}
+
+const ACE_Time_Value&
+TAO_Notify_Method_Request_Queueable::creation_time (void) const
+{
+  return this->time_;
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

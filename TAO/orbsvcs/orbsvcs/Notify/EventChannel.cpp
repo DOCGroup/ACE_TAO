@@ -215,6 +215,9 @@ TAO_Notify_EventChannel::destroy (void)
 
   this->ecf_->remove (this);
 
+  this->sa_container ().destroy ();
+  this->ca_container ().destroy ();
+
   this->sa_container_.reset( 0 );
   this->ca_container_.reset( 0 );
 }

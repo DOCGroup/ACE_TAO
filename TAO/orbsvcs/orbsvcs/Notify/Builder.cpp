@@ -183,20 +183,17 @@ TAO_Notify_Builder::build_filter_factory (void)
 }
 
 CosNotifyChannelAdmin::EventChannelFactory_ptr
-TAO_Notify_Builder::build_event_channel_factory (PortableServer::POA_ptr poa)
+TAO_Notify_Builder::build_event_channel_factory (PortableServer::POA_ptr poa,
+                                                 const char* name)
 {
-  CosNotifyChannelAdmin::EventChannelFactory_var ecf_ret;
-
   TAO_Notify_Factory* factory = TAO_Notify_PROPERTIES::instance ()->factory ();
 
   // Create ECF
   TAO_Notify_EventChannelFactory* ecf = 0;
-  factory->create (ecf);
+  factory->create (ecf, name);
 
   ecf->init (poa);
-  ecf_ret = ecf->activate_self ();
-
-  return (ecf_ret._retn ());
+  return ecf->activate_self ();
 }
 
 CosNotifyChannelAdmin::EventChannel_ptr
@@ -204,14 +201,13 @@ TAO_Notify_Builder::build_event_channel (
   TAO_Notify_EventChannelFactory* ecf,
   const CosNotification::QoSProperties & initial_qos,
   const CosNotification::AdminProperties & initial_admin,
-  CosNotifyChannelAdmin::ChannelID_out id)
+  CosNotifyChannelAdmin::ChannelID_out id,
+  const char* ec_name)
 {
-  CosNotifyChannelAdmin::EventChannel_var ec_ret;
-
   TAO_Notify_Factory* factory = TAO_Notify_PROPERTIES::instance ()->factory ();
 
   TAO_Notify_EventChannel* ec = 0;
-  factory->create (ec);
+  factory->create (ec, ec_name);
 
   ec->init (ecf, initial_qos, initial_admin);
 
@@ -223,20 +219,19 @@ TAO_Notify_Builder::build_event_channel (
   // Populate the ID to return.
   id = ec->id ();
 
-  ec_ret = CosNotifyChannelAdmin::EventChannel::_narrow (obj.in());
-
-  return ec_ret._retn ();
+  return CosNotifyChannelAdmin::EventChannel::_narrow (obj.in());
 }
 
 TAO_Notify_EventChannel *
 TAO_Notify_Builder::build_event_channel (
   TAO_Notify_EventChannelFactory* ecf,
-  const CosNotifyChannelAdmin::ChannelID id)
+  const CosNotifyChannelAdmin::ChannelID id,
+  const char* ec_name)
 {
   TAO_Notify_Factory* factory = TAO_Notify_PROPERTIES::instance ()->factory ();
 
   TAO_Notify_EventChannel* ec = 0;
-  factory->create (ec);
+  factory->create (ec, ec_name);
 
   ec->init (ecf); //, initial_qos, initial_admin
 
@@ -296,7 +291,9 @@ TAO_Notify_Builder::build_consumer_admin (
 }
 
 CosNotifyChannelAdmin::SupplierAdmin_ptr
-TAO_Notify_Builder::build_supplier_admin (TAO_Notify_EventChannel* ec, CosNotifyChannelAdmin::InterFilterGroupOperator op, CosNotifyChannelAdmin::AdminID_out id)
+TAO_Notify_Builder::build_supplier_admin (TAO_Notify_EventChannel* ec,
+                                          CosNotifyChannelAdmin::InterFilterGroupOperator op,
+                                          CosNotifyChannelAdmin::AdminID_out id)
 {
   CosNotifyChannelAdmin::SupplierAdmin_var sa_ret;
 

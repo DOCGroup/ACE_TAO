@@ -8,7 +8,6 @@ ACE_RCSID(lib, TAO_EventChannel_Command, "$Id$")
 #include "LookupManager.h"
 #include "Name.h"
 #include "Options_Parser.h"
-#include "ace/Dynamic_Service.h"
 #include "../../../orbsvcs/Notify/Service.h"
 
 TAO_Notify_Tests_EventChannel_Command::TAO_Notify_Tests_EventChannel_Command (void)
@@ -93,14 +92,7 @@ TAO_Notify_Tests_EventChannel_Command::create_collocated_ecf (void)
   CosNotifyChannelAdmin::EventChannelFactory_var notify_factory;
 
   // The Service Object.
-  TAO_Notify_Service* notify_service = 0;
-
-  notify_service = ACE_Dynamic_Service<TAO_Notify_Service>::instance (TAO_NOTIFICATION_SERVICE_NAME);
-
-  if (notify_service == 0)
-    {
-      notify_service = ACE_Dynamic_Service<TAO_Notify_Service>::instance (TAO_NOTIFY_DEF_EMO_FACTORY_NAME);
-    }
+  TAO_Notify_Service* notify_service = TAO_Notify_Service::load_default ();
 
   if (notify_service == 0)
     {

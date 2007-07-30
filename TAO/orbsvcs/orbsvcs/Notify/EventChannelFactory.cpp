@@ -160,6 +160,16 @@ TAO_Notify_EventChannelFactory::get_default_filter_factory (void)
   return CosNotifyFilter::FilterFactory::_duplicate (this->default_filter_factory_.in ());
 }
 
+CosNotifyChannelAdmin::EventChannel_ptr
+TAO_Notify_EventChannelFactory::create_named_channel (
+    const CosNotification::QoSProperties& initial_qos,
+    const CosNotification::AdminProperties& initial_admin,
+    CosNotifyChannelAdmin::ChannelID_out id,
+    const char*)
+{
+  return this->create_channel (initial_qos, initial_admin, id);
+}
+
 ::CosNotifyChannelAdmin::EventChannel_ptr TAO_Notify_EventChannelFactory::create_channel (
     const CosNotification::QoSProperties & initial_qos,
     const CosNotification::AdminProperties & initial_admin,
@@ -467,7 +477,6 @@ TAO_Notify_EventChannelFactory::activate_self (void)
   CORBA::Object_var obj = this->activate (this);
   this->channel_factory_
     = CosNotifyChannelAdmin::EventChannelFactory::_narrow (obj.in());
-  CosNotifyChannelAdmin::EventChannelFactory::_narrow (obj.in());
 
   try
   {

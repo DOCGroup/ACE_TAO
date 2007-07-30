@@ -72,6 +72,9 @@ public:
   /// The object used by clients to register timers.
   virtual TAO_Notify_Timer* timer (void);
 
+  /// Provide access to the underlying buffering strategy
+  TAO_Notify_Buffering_Strategy* buffering_strategy (void);
+
 protected:
   /// Task svc
   virtual int svc (void);

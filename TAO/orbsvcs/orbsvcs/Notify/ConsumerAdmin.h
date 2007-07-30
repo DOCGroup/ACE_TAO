@@ -39,8 +39,9 @@ class TAO_Notify_ProxySupplier;
  * @brief Implementation of CosNotifyChannelAdmin::ConsumerAdmin
  *
  */
-class TAO_Notify_Serv_Export TAO_Notify_ConsumerAdmin : public POA_NotifyExt::ConsumerAdmin
-                                             , public virtual TAO_Notify_Admin
+class TAO_Notify_Serv_Export TAO_Notify_ConsumerAdmin :
+                             public virtual POA_NotifyExt::ConsumerAdmin,
+                             public virtual TAO_Notify_Admin
 {
 public:
   typedef TAO_Notify_Refcountable_Guard_T< TAO_Notify_ConsumerAdmin > Ptr;
@@ -68,6 +69,9 @@ public:
   TAO_Notify_ProxySupplier * find_proxy_supplier (
       TAO_Notify::IdVec & id_path,
       size_t position);
+
+  /// TAO_Notify_Container_T requires a destroy method
+  virtual void destroy (void);
 
 protected:
   TAO_Notify::Topology_Object *load_proxy (
@@ -114,8 +118,6 @@ protected:
   virtual ::CosNotifyChannelAdmin::ProxySupplier_ptr
   obtain_notification_push_supplier (CosNotifyChannelAdmin::ClientType ctype,
                                      CosNotifyChannelAdmin::ProxyID_out proxy_id);
-
-  virtual void destroy (void);
 
   virtual ::CosNotification::QoSProperties * get_qos (void);
 

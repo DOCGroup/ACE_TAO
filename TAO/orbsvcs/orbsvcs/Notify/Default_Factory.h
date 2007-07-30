@@ -57,10 +57,12 @@ public:
   virtual void create (TAO_Notify_Proxy_Collection*& collection);
 
   /// Create EventChannelDefault_Factory
-  virtual void create (TAO_Notify_EventChannelFactory*& channel_factory);
+  virtual void create (TAO_Notify_EventChannelFactory*& channel_factory,
+                       const char* factory_name);
 
   /// Create EventChannel
-  virtual void create (TAO_Notify_EventChannel*& channel);
+  virtual void create (TAO_Notify_EventChannel*& channel,
+                       const char* ec_name);
 
   /// Create SupplierAdmin
   virtual void create (TAO_Notify_SupplierAdmin*& admin);
