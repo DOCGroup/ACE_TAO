@@ -4415,9 +4415,9 @@ dnl name.
     ,
     [AC_DEFINE([ACE_LACKS_CONDATTR_PSHARED])])
 
-  AC_CHECK_FUNC([pthread_cond_timedwait],
-    [AC_DEFINE([ACE_HAS_POSIX_SEM_TIMEOUT])],
-    [AC_DEFINE([ACE_HAS_POSIX_SEM_TIMEOUT_EMULATION])])
+  AC_CHECK_FUNC([pthread_cond_timedwait],
+    [AC_DEFINE([ACE_HAS_POSIX_SEM_TIMEOUT])],
+    [AC_DEFINE([ACE_HAS_POSIX_SEM_TIMEOUT_EMULATION])])
 
   AC_CHECK_FUNC([pthread_attr_setstackaddr],
     ,
