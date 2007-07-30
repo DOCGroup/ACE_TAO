@@ -110,6 +110,70 @@ namespace TAO
 
     /// The "real" Transport, i.e. the one selected at present
     TAO_Transport* curr_;
+
+    // Comparison. See Modern C++ Design by A. Alexandrescu for the gory detail.
+    bool
+    operator! () const
+    {
+      return curr_ == 0;
+    }
+
+    inline friend bool
+    operator== (const Transport_Selection_Guard& lhs,
+                const TAO_Transport* rhs)
+    {
+      return lhs.curr_ == rhs;
+    }
+
+    inline friend bool
+    operator== (const TAO_Transport* lhs,
+                const Transport_Selection_Guard& rhs)
+    {
+      return lhs == rhs.curr_;
+    }
+
+    inline friend bool
+    operator!= (const Transport_Selection_Guard& lhs,
+                const TAO_Transport* rhs)
+    {
+      return lhs.curr_ != rhs;
+    }
+
+    inline friend bool
+    operator!= (const TAO_Transport* lhs,
+                const Transport_Selection_Guard& rhs)
+    {
+      return lhs != rhs.curr_;
+    }
+
+    template <class U> inline friend bool
+    operator== (const Transport_Selection_Guard& lhs,
+                const U* rhs)
+    {
+      return lhs.curr_ == rhs;
+    }
+
+    template <class U> inline friend bool
+    operator== (const U* lhs,
+                const Transport_Selection_Guard& rhs)
+    {
+      return lhs == rhs.curr_;
+    }
+
+    template <class U> inline friend bool
+    operator!= (const Transport_Selection_Guard& lhs,
+                const U* rhs)
+    {
+      return lhs.curr_ != rhs;
+    }
+
+    template <class U> inline friend bool
+    operator!= (const U* lhs,
+                const Transport_Selection_Guard& rhs)
+    {
+      return lhs != rhs.curr_;
+    }
+
   };
 
 } /* namespace TAO */

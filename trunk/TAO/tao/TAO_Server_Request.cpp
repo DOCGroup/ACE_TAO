@@ -59,9 +59,6 @@ TAO_ServerRequest::TAO_ServerRequest (TAO_Pluggable_Messaging *mesg_base,
     release_operation_ (false),
     incoming_ (&input),
     outgoing_ (&output),
-    // transport already duplicated in
-    // TAO_Transport::process_parsed_messages ()
-    transport_(transport),
     response_expected_ (false),
     deferred_reply_ (false),
     sync_with_server_ (false),
@@ -79,9 +76,9 @@ TAO_ServerRequest::TAO_ServerRequest (TAO_Pluggable_Messaging *mesg_base,
     , interceptor_count_ (0)
     , rs_pi_current_ (0)
     , caught_exception_ (0)
-    , reply_status_ (-1)
+    , reply_status_ (-1),
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
-    , transport_selection_guard_ (transport)
+    transport_(transport) //already duplicated in TAO_Transport::process_parsed_messages ()
 {
   ACE_FUNCTION_TIMEPROBE (TAO_SERVER_REQUEST_START);
   // No-op.
@@ -104,9 +101,6 @@ TAO_ServerRequest::TAO_ServerRequest (TAO_Pluggable_Messaging *mesg_base,
     release_operation_ (true),
     incoming_ (0),
     outgoing_ (&output),
-    // transport already duplicated in
-    // TAO_Transport::process_parsed_messages ()
-    transport_ (transport),
     response_expected_ (response_expected),
     deferred_reply_ (deferred_reply),
     sync_with_server_ (false),
@@ -125,7 +119,7 @@ TAO_ServerRequest::TAO_ServerRequest (TAO_Pluggable_Messaging *mesg_base,
   , caught_exception_ (0)
   , reply_status_ (-1)
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
-  , transport_selection_guard_ (transport)
+  , transport_(transport) //already duplicated in TAO_Transport::process_parsed_messages ()
 {
   this->profile_.object_key (object_key);
   parse_error = 0;
@@ -141,7 +135,6 @@ TAO_ServerRequest::TAO_ServerRequest (TAO_ORB_Core * orb_core,
     release_operation_ (false),
     incoming_ (0),
     outgoing_ (0),
-    transport_ (0),
     response_expected_ (details.response_flags () == TAO_TWOWAY_RESPONSE_FLAG
                         || details.response_flags () == static_cast<CORBA::Octet> (Messaging::SYNC_WITH_SERVER)
                         || details.response_flags () == static_cast<CORBA::Octet> (Messaging::SYNC_WITH_TARGET)),
@@ -162,7 +155,7 @@ TAO_ServerRequest::TAO_ServerRequest (TAO_ORB_Core * orb_core,
   , caught_exception_ (0)
   , reply_status_ (-1)
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
-  , transport_selection_guard_ (0)
+  , transport_ (0)
 {
   // Have to use a const_cast<>.  *sigh*
   this->profile_.object_key (

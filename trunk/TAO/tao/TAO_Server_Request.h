@@ -294,9 +294,6 @@ private:
   /// Outgoing stream.
   TAO_OutputCDR *outgoing_;
 
-  /// Transport class.
-  TAO_Transport *transport_;
-
   /// false: oneway (SYNC_NONE or SYNC_WITH_TRANSPORT)
   /// true: twoway, or oneway (SYNC_WITH_SERVER or SYNC_WITH_TARGET)
   CORBA::Boolean response_expected_;
@@ -365,9 +362,10 @@ private:
   PortableInterceptor::ReplyStatus reply_status_;
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
+  ///// Transport class.
   /// An RAII (resource acquisition is initialization) class instance
   /// for interfacing with TSS storage for the "current" transport.
-  TAO::Transport_Selection_Guard transport_selection_guard_;
+  TAO::Transport_Selection_Guard transport_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
