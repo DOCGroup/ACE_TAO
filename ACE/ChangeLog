@@ -1,3 +1,10 @@
+Mon Jul 30 12:40:57 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * netsvcs/clients/Naming/Dump_Restore/Dump_Restore.h:
+
+          Use ACE_TCHAR instead of char to address problems in 
+          Redhat_Enterprise_Linux_3_Debug_Wchar build.
+
 Mon Jul 30 12:03:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/package_copy_script.sh:
