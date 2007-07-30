@@ -1,3 +1,16 @@
+Mon Jul 30 12:18:29 UTC 2007  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * tao/TAO_Server_Request.h:
+        * tao/TAO_Server_Request.inl:
+        * tao/TAO_Server_Request.cpp:
+        * tao/Transport_Selection_Guard.h:
+
+          Eliminating duplication of the transport_ member from
+          TAO_Server_Request. The Transport_Selection_Guard is a
+          smart pointer, designed to work both as a normal pointer
+          and with the transport current feature. When TC  is disabled,
+          it is also lightweight enough to avoid footprint increase.
+
 Mon Jul 30 11:24:47 UTC 2007  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * tests/GIOP_Fragments/PMB_With_Fragments/run_test.pl:

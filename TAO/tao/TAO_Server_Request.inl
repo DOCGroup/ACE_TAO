@@ -15,7 +15,6 @@ TAO_ServerRequest::TAO_ServerRequest (void)
     release_operation_ (false),
     incoming_ (0),
     outgoing_ (0),
-    transport_(0),
     response_expected_ (false),
     deferred_reply_ (false),
     sync_with_server_ (false),
@@ -34,7 +33,7 @@ TAO_ServerRequest::TAO_ServerRequest (void)
   , caught_exception_ (0)
   , reply_status_ (-1)
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
-  , transport_selection_guard_ (0)
+  ,  transport_(0)
 {
 }
 
@@ -138,7 +137,7 @@ TAO_ServerRequest::request_service_info (void)
 ACE_INLINE TAO_Transport *
 TAO_ServerRequest::transport (void)
 {
-  return this->transport_;
+  return this->transport_.get ();
 }
 
 ACE_INLINE CORBA::ULong
@@ -223,7 +222,7 @@ TAO_ServerRequest::argument_flag (CORBA::Boolean flag)
 ACE_INLINE bool
 TAO_ServerRequest::collocated (void) const
 {
-  return this->transport_ == 0;
+  return this->transport_.get () == 0;
 }
 
 
