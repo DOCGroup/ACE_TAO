@@ -229,6 +229,13 @@ dnl @todo Clean up / consolidate these conditionals
      ;;
    *linux*)
      case "$CXX" in
+       *icpc|*icc)
+         CXXFLAGS="$CXXFLAGS"
+         ACE_CXXFLAGS="$ACE_CXXFLAGS"
+         DCXXFLAGS="$DCXXFLAGS"
+         OCXXFLAGS="-O3"
+         WERROR="-Werror"
+         ;;
        *)
          if test "$GXX" = yes; then
            CXXFLAGS="$CXXFLAGS"
