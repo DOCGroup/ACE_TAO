@@ -83,6 +83,7 @@ BE_GlobalData::BE_GlobalData (void)
     gen_assign_op_ (false),
     gen_thru_poa_collocation_ (true), // Default is thru_poa.
     gen_direct_collocation_ (false),
+    gen_corba_e_ (false),
     opt_tc_ (false),
     ami_call_back_ (false),
     gen_amh_classes_ (false),
@@ -1036,6 +1037,19 @@ BE_GlobalData::gen_direct_collocation (void) const
 {
   return this->gen_direct_collocation_;
 }
+
+void
+BE_GlobalData::gen_corba_e (bool val)
+{
+  this->gen_corba_e_ = val;
+}
+
+bool
+BE_GlobalData::gen_corba_e (void) const
+{
+  return this->gen_corba_e_;
+}
+
 
 void
 BE_GlobalData::opt_tc (bool val)
@@ -2006,6 +2020,24 @@ BE_GlobalData::parse_args (long &i, char **av)
                   ));
               }
 
+            break;
+          }
+        else if (av[i][2] == 'c')
+          {
+            if (av[i][3] == 'e')
+              {
+                // CORBA/e.
+                be_global->gen_corba_e (true);
+              }
+            else
+              {
+                ACE_ERROR ((
+                    LM_ERROR,
+                    ACE_TEXT ("IDL: I don't understand ")
+                    ACE_TEXT ("the '%s' option\n"),
+                    av[i]
+                  ));
+              }
             break;
           }
         else if (av[i][2] == 't')
