@@ -375,8 +375,7 @@ TAO_Transport::generate_locate_request (
 {
   if (this->messaging_object ()->generate_locate_request_header (opdetails,
                                                                  spec,
-                                                                 output)
-       == -1)
+                                                                 output) == -1)
     {
       if (TAO_debug_level > 0)
         {
@@ -523,12 +522,11 @@ TAO_Transport::send_message_block_chain_i (const ACE_Message_Block *mb,
                                            size_t &bytes_transferred,
                                            ACE_Time_Value *)
 {
-  const size_t total_length = mb->total_length ();
+  size_t const total_length = mb->total_length ();
 
   // We are going to block, so there is no need to clone
   // the message block.
-  TAO_Synch_Queued_Message synch_message (mb,
-                                          this->orb_core_);
+  TAO_Synch_Queued_Message synch_message (mb, this->orb_core_);
 
   synch_message.push_back (this->head_, this->tail_);
 
@@ -548,8 +546,7 @@ TAO_Transport::send_message_block_chain_i (const ACE_Message_Block *mb,
   // Remove the temporary message from the queue...
   synch_message.remove_from_list (this->head_, this->tail_);
 
-  bytes_transferred =
-    total_length - synch_message.message_length ();
+  bytes_transferred = total_length - synch_message.message_length ();
 
   return 0;
 }
@@ -561,11 +558,11 @@ TAO_Transport::send_synchronous_message_i (const ACE_Message_Block *mb,
   // We are going to block, so there is no need to clone
   // the message block.
   TAO_Synch_Queued_Message synch_message (mb, this->orb_core_);
-  const size_t message_length = synch_message.message_length ();
+  size_t const message_length = synch_message.message_length ();
 
   synch_message.push_back (this->head_, this->tail_);
 
-  const int n = this->send_synch_message_helper_i (synch_message,
+  int const n = this->send_synch_message_helper_i (synch_message,
                                                    0 /*ignored*/);
   if (n == -1 || n == 1)
     {
@@ -685,16 +682,14 @@ TAO_Transport::send_reply_message_i (const ACE_Message_Block *mb,
 
   // Till this point we shouldn't have any copying and that is the
   // point anyway. Now, remove the node from the list
-  synch_message.remove_from_list (this->head_,
-                                  this->tail_);
+  synch_message.remove_from_list (this->head_, this->tail_);
 
   // Clone the node that we have.
   TAO_Queued_Message *msg =
     synch_message.clone (this->orb_core_->transport_message_buffer_allocator ());
 
   // Stick it in the queue
-  msg->push_back (this->head_,
-                  this->tail_);
+  msg->push_back (this->head_, this->tail_);
 
   TAO_Flushing_Strategy *flushing_strategy =
     this->orb_core ()->flushing_strategy ();
@@ -748,7 +743,7 @@ TAO_Transport::send_synch_message_helper_i (TAO_Synch_Queued_Message &synch_mess
   return 0;
 }
 
-int
+bool
 TAO_Transport::queue_is_empty_i (void)
 {
   return (this->head_ == 0);
@@ -1832,8 +1827,7 @@ TAO_Transport::handle_input_parse_data  (TAO_Resume_Handle &rh,
   TAO_Queued_Data *q_data = 0;
 
   // optimizing access of constants
-  const size_t header_length =
-            this->messaging_object ()->header_length ();
+  size_t const header_length = this->messaging_object ()->header_length ();
 
   // paranoid check
   if (header_length > message_block.space ())
@@ -1843,8 +1837,7 @@ TAO_Transport::handle_input_parse_data  (TAO_Resume_Handle &rh,
 
   if (this->orb_core_->orb_params ()->single_read_optimization ())
     {
-      recv_size =
-        message_block.space ();
+      recv_size = message_block.space ();
     }
   else
     {
@@ -1922,7 +1915,7 @@ TAO_Transport::handle_input_parse_data  (TAO_Resume_Handle &rh,
 
   // Read the message into the  message block that we have created on
   // the stack.
-  const ssize_t n = this->recv (message_block.wr_ptr (),
+  ssize_t const n = this->recv (message_block.wr_ptr (),
                                 recv_size,
                                 max_wait_time);
 
@@ -2364,10 +2357,9 @@ TAO_Transport::process_queue_head (TAO_Resume_Handle &rh)
                  ACE_TEXT ("TAO (%P|%t) - Transport[%d]::process_queue_head, ")
                  ACE_TEXT ("notify reactor\n"),
                  this->id ()));
-
             }
 
-          const int retval = this->notify_reactor ();
+          int const retval = this->notify_reactor ();
 
           if (retval == 1)
             {
@@ -2423,8 +2415,7 @@ TAO_Transport::notify_reactor (void)
 
 
   // Send a notification to the reactor...
-  const int retval = reactor->notify (eh,
-                                      ACE_Event_Handler::READ_MASK);
+  int const retval = reactor->notify (eh, ACE_Event_Handler::READ_MASK);
 
   if (retval < 0 && TAO_debug_level > 2)
     {
@@ -2556,7 +2547,7 @@ TAO_Transport::allocate_partial_message_block (void)
     {
       // This value must be at least large enough to hold a GIOP message
       // header plus a GIOP fragment header
-      const size_t partial_message_size =
+      size_t const partial_message_size =
         this->messaging_object ()->header_length ();
        // + this->messaging_object ()->fragment_header_length ();
        // deprecated, conflicts with not-single_read_opt.

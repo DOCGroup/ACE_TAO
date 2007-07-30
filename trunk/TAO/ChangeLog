@@ -1,3 +1,12 @@
+Mon Jul 30 08:33:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Leader_Follower_Flushing_Strategy.cpp (flush_transport):
+        * tao/Reactive_Flushing_Strategy.cpp (flush_transport):
+          Const changes and no need for intermediate variable
+
+        * tao/Transport.{h,cpp,inl}:
+          Layout changes and updated queue_is_empty to return a bool
+
 Fri Jul 27 06:50:14 CDT 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO version 1.5.10 released.
