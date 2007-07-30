@@ -1,3 +1,16 @@
+Mon Jul 30 07:55:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/generate_rel_manpages:
+          Removed support for dot_path, not supported by the doxygen
+          script anymore
+
+        * bin/PerlACE/Run_Test.pm:
+          When waiting for files we sleep each time a second, changed this
+          to 50ms so that we don't loose time for each test, given the
+          fact that we have about 600 tests it could safe a few minutes
+          for a few test run. Thanks to Chad Elliot for providing these
+          changes
+
 Mon Jul 30 07:39:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * configure.ac:
