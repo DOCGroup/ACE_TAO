@@ -10,7 +10,7 @@ use PerlACE::Run_Test;
 
 $status = 0;
 $iorfile = PerlACE::LocalFile ('server.ior');
-$TARGETHOSTNAME = 'localhost';
+$TARGETHOSTNAME = '127.0.0.1';
 $port = PerlACE::uniqueid () + 12000;
 $debug = 0;
 $endien = (pack('L', 0x41424344) eq 'ABCD' ? '_be' : '');
