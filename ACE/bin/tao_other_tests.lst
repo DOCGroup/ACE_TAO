@@ -169,3 +169,9 @@ TAO/orbsvcs/tests/Bug_2377_Regression/run_test_ipv6.pl: IPV6 !ST !MINIMUM !CORBA
 TAO/examples/PluggableUDP/tests/SimplePerformance/run_test_ipv6.pl: IPV6 !QNX !NO_DIOP !ACE_FOR_TAO
 TAO/examples/PluggableUDP/tests/Performance/run_test.pl: !QNX !ST !NO_DIOP !ACE_FOR_TAO !CORBA_E_COMPACT !CORBA_E_MICRO
 TAO/examples/PluggableUDP/tests/Performance/run_test_ipv6.pl: IPV6 !QNX !ST !NO_DIOP !ACE_FOR_TAO !CORBA_E_COMPACT !CORBA_E_MICRO
+TAO/orbsvcs/tests/unit/Notify/MC/Control/run_test.pl:
+TAO/orbsvcs/tests/unit/Notify/MC/MonitorControlExt/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO
+TAO/orbsvcs/tests/unit/Notify/MC/MonitorManager/run_test.pl: !ST !STATIC
+TAO/orbsvcs/tests/unit/Notify/MC/NotificationServiceMonitor/run_test.pl:
+TAO/orbsvcs/tests/unit/Notify/MC/Statistic_Registry/run_test.pl:
+TAO/orbsvcs/tests/unit/Notify/MC/Statistic/run_test.pl:

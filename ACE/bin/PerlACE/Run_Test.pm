@@ -12,13 +12,11 @@ use File::Spec;
 use Cwd;
 
 $PerlACE::ACE_ROOT = $ENV{ACE_ROOT};
-$PerlACE::TAO_ROOT;
 if(exists $ENV{TAO_ROOT}) {
     $PerlACE::TAO_ROOT = $ENV{TAO_ROOT};
 } else {
     $PerlACE::TAO_ROOT = "$PerlACE::ACE_ROOT/TAO";
 }
-$PerlACE::CIAO_ROOT;
 if(exists $ENV{CIAO_ROOT}) {
     $PerlACE::CIAO_ROOT = $ENV{CIAO_ROOT};
 } else {
@@ -42,7 +40,7 @@ if (!defined $svcconf_ext) {
 
 # Default timeout.  NSCORBA needs more time for process start up.
 $wait_interval_for_process_creation = (($^O eq "lynxos") ? 12 : (($PerlACE::VxWorks_Test or $PerlACE::VxWorks_RTP_Test) ? 60 : 10));
-if ($^O == 'VMS') {
+if ($^O eq 'VMS') {
   $wait_interval_for_process_creation *= 3;
 }
 
