@@ -234,7 +234,7 @@ ACE_OS::munmap (void *addr, size_t len)
 ACE_INLINE ACE_HANDLE
 ACE_OS::shm_open (const ACE_TCHAR *filename,
                   int mode,
-                  int perms,
+                  mode_t perms,
                   LPSECURITY_ATTRIBUTES sa)
 {
   ACE_OS_TRACE ("ACE_OS::shm_open");
