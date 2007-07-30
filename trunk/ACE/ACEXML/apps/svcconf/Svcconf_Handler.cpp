@@ -581,7 +581,7 @@ ACEXML_Svcconf_Handler::get_stream_id (ACEXML_Attributes *alist ACEXML_ENV_ARG_D
             msg += ACE_CString (ACE_TEXT ("'\n"));
 
             ACEXML_THROW_RETURN (ACEXML_SAXException (msg.c_str ()),
-                                                                                                          -1);
+                                 -1);
           }
       }
   return 0;
@@ -649,7 +649,7 @@ ACEXML_Svcconf_Handler::get_dynamic_attrs (ACEXML_Attributes *alist ACEXML_ENV_A
                   msg += ACE_CString (ACE_TEXT ("'\n"));
 
                   ACEXML_THROW_RETURN (ACEXML_SAXException (msg.c_str ()),
-                                  -1);
+                                       -1);
                 }
             }
           else if (ACE_OS::strcmp (alist->getQName (i), ACE_TEXT ("type")) == 0)
