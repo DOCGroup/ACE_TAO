@@ -149,6 +149,12 @@ NotificationServiceMonitor_i::get_data (
       // retrieve it.  The only reason that could happen is if
       // some one removed the statistic from the registry.
       CosNotification::NotificationServiceMonitorControl::Numeric num;
+      num.count = 0;
+      num.average = 0;
+      num.sum_of_squares = 0;
+      num.minimum = 0;
+      num.maximum = 0;
+      num.last = 0;
       data.num (num);
     }
   else
