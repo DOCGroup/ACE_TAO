@@ -1,3 +1,8 @@
+Mon Jul 30 23:51:07 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * ace/TP_Reactor.h: Documentation improvements, including clarification
+          of the synchronization needs for I/O and non-I/O callbacks.
+
 Mon Jul 30 22:50:40 UTC 2007  Steve Huston  <shuston@riverace.com>
 
         * tests/SOCK_Connector_Test.cpp: After rummaging through the hosts
