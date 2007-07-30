@@ -167,7 +167,7 @@ TAO_MCAST_Parser::multicast_query (char* & buf,
           }
 
       // Open the datagram.
-      if (dgram.open (ACE_Addr::sap_any) == -1)
+      if (dgram.open (ACE_Addr::sap_any, multicast_addr.get_type ()) == -1)
         {
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("Unable to open the Datagram!\n")));

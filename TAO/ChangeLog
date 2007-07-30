@@ -1,3 +1,10 @@
+Mon Jul 30 11:09:21 UTC 2007  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * tao/MCAST_Parser.cpp:
+          Made so that an opened datagram socket has a proper protocol
+          family. This fixes TAO/orbsvcs/tests/Simple_Naming/run_test.pl
+          of IPv6 builds.
+
 Mon Jul 30 08:33:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Leader_Follower_Flushing_Strategy.cpp (flush_transport):
