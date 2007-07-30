@@ -1,3 +1,9 @@
+Mon Jul 30 12:03:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/package_copy_script.sh:
+          Add this script to the repo, used in the release process to copy
+          the archives with a release number
+
 Mon Jul 30 11:58:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Mem_Map.{h,cpp}:
