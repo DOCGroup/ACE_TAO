@@ -191,12 +191,15 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
       << "void * servant" << be_uidt_nl
       << ");" << be_uidt_nl << be_nl;
 
-  // Add a skeleton for our _component method.
-  *os << "static void _component_skel (" << be_idt << be_idt_nl
-      << "TAO_ServerRequest & req," << be_nl
-      << "void * servant_upcall," << be_nl
-      << "void * servant" << be_uidt_nl
-      << ");" << be_uidt_nl << be_nl;
+  if (!be_global->gen_corba_e ())
+    {
+      // Add a skeleton for our _component method.
+      *os << "static void _component_skel (" << be_idt << be_idt_nl
+          << "TAO_ServerRequest & req," << be_nl
+          << "void * servant_upcall," << be_nl
+          << "void * servant" << be_uidt_nl
+          << ");" << be_uidt_nl << be_nl;
+    }
 
   // Add a skeleton for our _repository_id method.
   *os << "static void _repository_id_skel (" << be_idt << be_idt_nl
