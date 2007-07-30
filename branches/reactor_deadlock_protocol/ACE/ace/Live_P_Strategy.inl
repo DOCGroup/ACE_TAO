@@ -19,6 +19,8 @@ struct AnnotationNode {
   int larger_right;
 };
 
+
+
 class Live_P_Tree : public ACE_RB_Tree<int, AnnotationNode, ACE_Equal_To<int>, ACE_Thread_Mutex> {
 
 public:
@@ -34,9 +36,12 @@ private:
    void recalculate_augmentation(ACE_RB_Tree_Node<int, AnnotationNode>* nodePtr);
    void recalculate_augmentation_up(ACE_RB_Tree_Node<int, AnnotationNode>* x);
    int calc_max_i(ACE_RB_Tree_Node<int, AnnotationNode>* nodePtr, int extra) const;
-   //static int MIN(int a, int b) { return (a<b)?a:b; }
+   static int MIN(int a, int b) 
+   { 
+     return (a < b)? a : b;
+   }
    static int MIN_THREE(int a, int b, int c) {
-     return (a<b)?MIN(a,c):MIN(b,c);
+     return (a < b)? Live_P_Tree::MIN(a,c): Live_P_Tree::MIN(b,c);
    }
    int T_;
 };
