@@ -1,3 +1,8 @@
+Mon Jul 30 08:38:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * apps/svcconf/Svcconf_Handler.cpp:
+          Layout changes
+
 Mon Jul 16 10:19:51 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * apps/svcconf/Svcconf_Handler.h:
