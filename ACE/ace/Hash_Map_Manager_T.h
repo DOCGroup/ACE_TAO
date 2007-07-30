@@ -349,7 +349,7 @@ public:
 
   /// Break any association of @a ext_id.  Returns the value of @a int_id
   /// in case the caller needs to deallocate memory. Return 0 if the
-  /// unbind was successfully, and returns -1 if failures occur.
+  /// unbind was successful, and returns -1 if failures occur.
   int unbind (const EXT_ID &ext_id,
               INT_ID &int_id);
 

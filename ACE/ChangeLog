@@ -1,3 +1,17 @@
+Mon Jul 30 13:24:32 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ace/Hash_Map_Manager_T.h:
+
+          Made a minor grammatic correction in the Doxygen.
+
+        * bin/PerlACE/Run_Test.pm:
+
+          Fixed Perl warnings.
+
+        * bin/tao_other_tests.lst:
+
+          Added the new Notify Service monitoring unit tests.
+
 Mon Jul 30 12:55:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * m4/compiler.m4:
