@@ -59,6 +59,8 @@ PRELIB          = @true
 include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
 
 CCFLAGS         += $(CFLAGS) $(TEMPLATES_FLAG)
+# Make sure we resolve all symbols at link time, see bugzilla 2710
+LDFLAGS         += -z now
 
 PLATFORM_X11_CPPFLAGS= -I/usr/openwin/include -I/usr/dt/include
 PLATFORM_X11_LIBS =-lX11
