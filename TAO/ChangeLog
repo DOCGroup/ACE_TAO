@@ -1,3 +1,9 @@
+Mon Jul 30 11:24:47 UTC 2007  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * tests/GIOP_Fragments/PMB_With_Fragments/run_test.pl:
+          Fixed this test on IPv6 builds by changing localhost to
+          127.0.0.1.
+
 Mon Jul 30 11:09:21 UTC 2007  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * tao/MCAST_Parser.cpp:
