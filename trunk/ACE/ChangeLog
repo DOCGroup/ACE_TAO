@@ -1,3 +1,8 @@
+Mon Jul 30 18:03:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-cygwin.h:
+          Added ACE_LACKS_PTHREAD_ATTR_SETSTACK
+
 Mon Jul 30 15:08:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-lynxos.h:
