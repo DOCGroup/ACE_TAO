@@ -8,8 +8,9 @@ Mon Jul 30 12:18:29 UTC 2007  Iliyan Jeliazkov  <iliyan@ociweb.com>
           Eliminating duplication of the transport_ member from
           TAO_Server_Request. The Transport_Selection_Guard is a
           smart pointer, designed to work both as a normal pointer
-          and with the transport current feature. When TC  is disabled,
+          and with the transport current feature. When TC is disabled,
           it is also lightweight enough to avoid footprint increase.
+          This fixes bugzilla 2991.
 
 Mon Jul 30 11:24:47 UTC 2007  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
