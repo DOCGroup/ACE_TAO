@@ -193,6 +193,7 @@
 #  define ACE_LACKS_RWLOCKATTR_PSHARED
 #  define ACE_LACKS_PTHREAD_THR_SIGSETMASK 1
 #  define ACE_LACKS_PTHREAD_YIELD 1
+#  define ACE_LACKS_PTHREAD_ATTR_SETSTACK
 
 // In the 1.5.9 release of Cygwin the pthread_kill gives an access violation
 // so for the time being we say Cygwin doesn't support pthread_kill.
