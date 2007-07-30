@@ -9,15 +9,15 @@
  *  The ACE_TP_Reactor (aka, Thread Pool Reactor) uses the
  *  Leader/Followers pattern to demultiplex events among a pool of
  *  threads.  When using a thread pool reactor, an application
- *  pre-spawns a _fixed_ number of threads.  When these threads
- *  invoke the ACE_TP_Reactor's <handle_events> method, one thread
+ *  pre-spawns a fixed number of threads.  When these threads
+ *  invoke the ACE_TP_Reactor's handle_events() method, one thread
  *  will become the leader and wait for an event.  The other
  *  follower threads will queue up waiting for their turn to become
  *  the leader.  When an event occurs, the leader will pick a
  *  follower to become the leader and go on to handle the event.
  *  The consequence of using ACE_TP_Reactor is the amortization of
- *  the costs used to creating threads.  The context switching cost
- *  will also reduce.  More over, the total resources used by
+ *  the costs used to create threads.  The context switching cost
+ *  will also reduce.  Moreover, the total resources used by
  *  threads are bounded because there are a fixed number of threads.
  *
  *  @author Irfan Pyarali <irfan@cs.wustl.edu>
@@ -140,41 +140,42 @@ private:
 /**
  * @class ACE_TP_Reactor
  *
- * @brief Specialization of Select Reactor to support thread-pool
+ * @brief Specialization of ACE_Select_Reactor to support thread-pool
  * based event dispatching.
  *
- * One of the short comings of the Select_Reactor in ACE is that it
- * did not support a thread pool based event dispatching model,
- * similar to the one in WFMO_Reactor.  In Select_Reactor, only thread
- * can be blocked in <handle_events> at any given time.
+ * One of the shortcomings of the ACE_Select_Reactor is that it
+ * does not support a thread pool-based event dispatching model,
+ * similar to the one in ACE_WFMO_Reactor.  In ACE_Select_Reactor, only
+ * thread can call handle_events() at any given time. ACE_TP_Reactor
+ * removes this short-coming.
  *
- * A new Reactor has been added to ACE that removes this short-coming.
- * TP_Reactor is a specialization of Select Reactor to support
- * thread-pool based event dispatching. This Reactor takes advantage
- * of the fact that events reported by <select> are persistent if not
+ * ACE_TP_Reactor is a specialization of ACE_Select_Reactor to support
+ * thread pool-based event dispatching. This reactor takes advantage
+ * of the fact that events reported by @c select() are persistent if not
  * acted upon immediately.  It works by remembering the event handler
- * that just got activated, releasing the internal lock (so that some
- * other thread can start waiting in the event loop) and then
- * dispatching the event handler outside the context of the Reactor
- * lock. After the event handler has been dispatched the event handler is
- * resumed again. Don't call remove_handler() from the handle_x methods,
- * instead return -1.
+ * which was just activated, suspending it for further I/O activities,
+ * releasing the internal lock (so that another thread can start waiting
+ * in the event loop) and then dispatching the event's handler outside the
+ * scope of the reactor lock. After the event handler has been dispatched
+ * the event handler is resumed for further I/O activity.
  *
- * This Reactor is best suited for situations when the callbacks to
- * event handlers can take arbitrarily long and/or a number of threads
- * are available to run the event loops.  Note that callback code in
- * Event Handlers (e.g. Event_Handler::handle_input) does not have to
- * be modified or made thread-safe for this Reactor.  This is because
- * an activated Event Handler is suspended in the Reactor before the
- * upcall is made and resumed after the upcall completes.  Therefore,
- * one Event Handler cannot be called by multiple threads
- * simultaneously.
+ * This reactor implementation is best suited for situations when the
+ * callbacks to event handlers can take arbitrarily long and/or a number
+ * of threads are available to run the event loop. Note that I/O-processing
+ * callback code in event handlers (e.g. handle_input()) does not have to
+ * be modified or made thread-safe for this reactor.  This is because
+ * before an I/O event is dispatched to an event handler, the handler is
+ * suspended; it is resumed by the reactor after the upcall completes.
+ * Therefore, multiple I/O events will not be made to one event handler
+ * multiple threads simultaneously. This suspend/resume protection does not
+ * apply to either timers scheduled with the reactor or to notifications
+ * requested via the reactor. When using timers and/or notifications you
+ * must provide proper protection for your class in the context of multiple
+ * threads.
  */
 class ACE_Export ACE_TP_Reactor : public ACE_Select_Reactor
 {
 public:
-
-  // = Initialization and termination methods.
 
   /// Initialize ACE_TP_Reactor with the default size.
   ACE_TP_Reactor (ACE_Sig_Handler * = 0,
@@ -197,8 +198,6 @@ public:
                   int mask_signals = 1,
                   int s_queue = ACE_Select_Reactor_Token::FIFO);
 
-  // = Event loop drivers.
-
   /**
    * This event loop driver that blocks for @a max_wait_time before
    * returning.  It will return earlier if timer events, I/O events,
@@ -212,9 +211,9 @@ public:
    * application wishes to handle events for some fixed amount of
    * time.
    *
-   * Returns the total number of ACE_Event_Handlers that were
-   * dispatched, 0 if the @a max_wait_time elapsed without dispatching
-   * any handlers, or -1 if something goes wrong.
+   * @return The total number of events that were dispatched; 0 if the
+   * @a max_wait_time elapsed without dispatching any handlers, or -1
+   * if an error occurs (check @c errno for more information).
    */
   virtual int handle_events (ACE_Time_Value *max_wait_time = 0);
 
@@ -229,13 +228,12 @@ public:
   /// Called from handle events
   static void no_op_sleep_hook (void *);
 
-  // = Any thread can perform a <handle_events>, override the owner()
-  //   methods to avoid the overhead of setting the owner thread.
-
-  /// Set the new owner of the thread and return the old owner.
+  /// The ACE_TP_Reactor implementation does not have a single owner thread.
+  /// Attempts to set the owner explicitly are ignored. The reported owner
+  /// thread is the current Leader in the pattern.
   virtual int owner (ACE_thread_t n_id, ACE_thread_t *o_id = 0);
 
-  /// Return the current owner of the thread.
+  /// Return the thread ID of the current Leader.
   virtual int owner (ACE_thread_t *t_id);
 
   /// Declare the dynamic allocation hooks.
