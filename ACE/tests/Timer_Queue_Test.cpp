@@ -169,15 +169,17 @@ test_functionality (ACE_Timer_Queue *tq)
                          tq->gettimeofday ());
   ACE_ASSERT (result != -1);
 
-  ACE_NEW (timer_act, int (42));
+  const void *timer_act1 = 0;
+  ACE_NEW (timer_act1, int (42));
   result = tq->schedule (&eh,
-                         timer_act,
+                         timer_act1,
                          tq->gettimeofday () + ACE_Time_Value (100));
   ACE_ASSERT (result != -1);
 
-  ACE_NEW (timer_act, int (42));
+  const void *timer_act2 = 0;
+  ACE_NEW (timer_act2, int (42));
   result = tq->schedule (&eh,
-                         timer_act,
+                         timer_act2,
                          tq->gettimeofday () + ACE_Time_Value (100));
   ACE_ASSERT (result != -1);
 
@@ -194,6 +196,8 @@ test_functionality (ACE_Timer_Queue *tq)
   ACE_ASSERT (eh.close_count_ == 2);
 
   ACE_ASSERT (tq->is_empty () != 0);
+  delete (int *) timer_act2;
+  delete (int *) timer_act1;
 
   ACE_NEW (timer_act, int (4));
   timer_id = tq->schedule (&eh,
@@ -252,14 +256,14 @@ test_functionality (ACE_Timer_Queue *tq)
   ACE_ASSERT (eh.close_count_ == 3);
 
   result = tq->cancel (timer_id, &timer_act);
-  delete (int *) timer_act;
   ACE_ASSERT (result == 1);
   ACE_ASSERT (eh.close_count_ == 3);
+  delete (int *) timer_act;
 
   result = tq->cancel (timer_id2, &timer_act);
-  delete (int *) timer_act;
   ACE_ASSERT (result == 1);
   ACE_ASSERT (eh.close_count_ == 3);
+  delete (int *) timer_act;
 
   result = tq->expire ();
   ACE_ASSERT (result == 0);
