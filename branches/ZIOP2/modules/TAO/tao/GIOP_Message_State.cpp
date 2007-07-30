@@ -16,17 +16,6 @@ ACE_RCSID (tao,
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_GIOP_Message_State::TAO_GIOP_Message_State (void)
-  : giop_version_ (TAO_DEF_GIOP_MAJOR, TAO_DEF_GIOP_MINOR),
-    byte_order_ (0),
-    message_type_ (0),
-    message_size_ (0),
-    more_fragments_ (0),
-    missing_data_ (0),
-    compressed_data_ (0)
-{
-}
-
 int
 TAO_GIOP_Message_State::parse_message_header (ACE_Message_Block &incoming)
 {
@@ -56,9 +45,7 @@ TAO_GIOP_Message_State::parse_message_header_i (ACE_Message_Block &incoming)
 
   // Parse the magic bytes first
   if (this->parse_magic_bytes (buf) == -1)
-    {
-      return -1;
-    }
+    return -1;
 
   // Get the version information
   if (this->get_version_info (buf) == -1)
@@ -137,10 +124,8 @@ TAO_GIOP_Message_State::get_version_info (char *buf)
     }
 
   // We have a GIOP message on hand. Get its revision numbers
-  CORBA::Octet incoming_major =
-    buf[TAO_GIOP_VERSION_MAJOR_OFFSET];
-  CORBA::Octet incoming_minor =
-    buf[TAO_GIOP_VERSION_MINOR_OFFSET];
+  CORBA::Octet incoming_major = buf[TAO_GIOP_VERSION_MAJOR_OFFSET];
+  CORBA::Octet incoming_minor = buf[TAO_GIOP_VERSION_MINOR_OFFSET];
 
   // Check the revision information
   if (TAO_GIOP_Message_Generator_Parser_Impl::check_revision (
@@ -201,11 +186,11 @@ TAO_GIOP_Message_State::get_byte_order_info (char *buf)
 
       // Read the fragment bit
       this->more_fragments_ =
-        (CORBA::Octet) (buf[TAO_GIOP_MESSAGE_FLAGS_OFFSET]& 0x02);
+        ((buf[TAO_GIOP_MESSAGE_FLAGS_OFFSET] & 0x02) == 2);
 
       // Read the compressed data
       this->compressed_data_ =
-        (CORBA::Octet) (buf[TAO_GIOP_MESSAGE_FLAGS_OFFSET]& 0x04);
+        ((buf[TAO_GIOP_MESSAGE_FLAGS_OFFSET]& 0x04) == 4);
 
       if ((buf[TAO_GIOP_MESSAGE_FLAGS_OFFSET] & ~0x7) != 0)
         {

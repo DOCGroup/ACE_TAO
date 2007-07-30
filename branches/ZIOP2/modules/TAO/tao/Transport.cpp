@@ -2040,7 +2040,7 @@ TAO_Transport::handle_input_parse_data  (TAO_Resume_Handle &rh,
       // This prevents seeking rd_ptr behind the wr_ptr
 
       if (qd.missing_data_ != 0 ||
-          qd.more_fragments_   ||
+          qd.more_fragments_ ||
           qd.msg_type_ == TAO_PLUGGABLE_MESSAGE_FRAGMENT)
         {
           if (qd.missing_data_ == 0)

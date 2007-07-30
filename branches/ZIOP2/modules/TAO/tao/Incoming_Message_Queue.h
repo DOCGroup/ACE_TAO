@@ -176,7 +176,7 @@ public:
   /// level fragmentation on top of the TCP/IP fragmentation. This
   /// member indicates whether the message that we have recd. and
   /// queue already has more fragments that is missing..
-  CORBA::Octet more_fragments_;
+  CORBA::Boolean more_fragments_;
 
   /// The message type of the message
   TAO_Pluggable_Message_Type msg_type_;

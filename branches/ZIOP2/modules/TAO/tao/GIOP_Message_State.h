@@ -8,10 +8,10 @@
  *
  *   GIOP utility definitions
  *
- *
  *  @author  Chris Cleeland <cleeland@cs.wustl.edu>
  *  @author  Carlos O' Ryan <coryan@uci.edu>
  *  @author  Balachandran Natarajan <bala@cs.wustl.edu>
+ *  @author  Johnny Willemsen <jwillemsen@remedy.nl>
  */
 //=============================================================================
 #ifndef TAO_GIOP_MESSAGE_STATE_H
@@ -28,10 +28,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-class TAO_ORB_Core;
-class TAO_GIOP_Message_Base;
-
-
 /**
  * @class TAO_GIOP_Message_State
  *
@@ -39,7 +35,6 @@ class TAO_GIOP_Message_Base;
  *
  *  This helps to establish the state of the incoming messages.
  */
-
 class TAO_Export TAO_GIOP_Message_State
 {
 public:
@@ -65,7 +60,7 @@ public:
   CORBA::Octet byte_order (void) const;
 
   /// Return the compressed information
-  CORBA::Octet compressed_data (void) const;
+  CORBA::Boolean compressed_data (void) const;
 
   /// Return the GIOP version
   const TAO_GIOP_Message_Version &giop_version (void) const;
@@ -74,7 +69,7 @@ public:
   CORBA::Octet message_type (void) const;
 
   /// Return the more fragments
-  CORBA::Octet more_fragments (void) const;
+  CORBA::Boolean more_fragments (void) const;
 
   /// Reset the state..
   void reset (void);
@@ -119,16 +114,12 @@ private:
   CORBA::ULong message_size_;
 
   /// (Requests and Replys)
-  /// A value of zero indicates that this message does not have any
-  /// fragments.  A value of non-zero indicates that it does have
-  /// fragments.
-  CORBA::Octet more_fragments_;
-
-  /// Missing data
-  CORBA::ULong missing_data_;
+  /// A false indicates that this message does not have any
+  /// fragments.  A value of true indicates that it does have fragments.
+  CORBA::Boolean more_fragments_;
 
   /// Compressed data
-  CORBA::Octet compressed_data_;
+  CORBA::Boolean compressed_data_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
