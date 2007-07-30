@@ -1,3 +1,9 @@
+Mon Jul 30 13:27:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * configure.ac:
+          Fixed problem detecting ACE_HAS_MUTEX_TIMEOUTS. Thanks to
+          Peter Korf <peter at niendo dot de> for reporting this.
+
 Mon Jul 30 13:24:32 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * ace/Hash_Map_Manager_T.h:
