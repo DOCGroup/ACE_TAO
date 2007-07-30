@@ -283,22 +283,6 @@ if test $tao_build_examples = yes; then
     examples/Makefile
     examples/OBV/Makefile
     examples/OBV/Typed_Events/Makefile
-    examples/POA/Adapter_Activator/Makefile
-    examples/POA/DSI/Makefile
-    examples/POA/Default_Servant/Makefile
-    examples/POA/Explicit_Activation/Alt_Resources/Makefile
-    examples/POA/Explicit_Activation/Makefile
-    examples/POA/FindPOA/Makefile
-    examples/POA/Generic_Servant/Makefile
-    examples/POA/Loader/Makefile
-    examples/POA/Makefile
-    examples/POA/NewPOA/Makefile
-    examples/POA/On_Demand_Activation/Makefile
-    examples/POA/On_Demand_Loading/Makefile
-    examples/POA/POA_BiDir/Makefile
-    examples/POA/Reference_Counted_Servant/Makefile
-    examples/POA/RootPOA/Makefile
-    examples/POA/TIE/Makefile
     examples/Persistent_Grid/Makefile
     examples/PluggableUDP/Makefile
     examples/PluggableUDP/tests/Makefile
@@ -822,6 +806,22 @@ if test $tao_build_tests = yes; then
     tests/POA/Reference_Counting/Makefile
     tests/POA/Single_Threaded_POA/Makefile
     tests/POA/wait_for_completion/Makefile
+    tests/POA/Adapter_Activator/Makefile
+    tests/POA/DSI/Makefile
+    tests/POA/Default_Servant2/Makefile
+    tests/POA/Explicit_Activation/Alt_Resources/Makefile
+    tests/POA/Explicit_Activation/Makefile
+    tests/POA/FindPOA/Makefile
+    tests/POA/Generic_Servant/Makefile
+    tests/POA/Loader/Makefile
+    tests/POA/Makefile
+    tests/POA/NewPOA/Makefile
+    tests/POA/On_Demand_Activation/Makefile
+    tests/POA/On_Demand_Loading/Makefile
+    tests/POA/POA_BiDir/Makefile
+    tests/POA/Reference_Counted_Servant/Makefile
+    tests/POA/RootPOA/Makefile
+    tests/POA/TIE/Makefile
     tests/Parallel_Connect_Strategy/Makefile
     tests/Param_Test/Makefile
     tests/Permanent_Forward/Makefile
