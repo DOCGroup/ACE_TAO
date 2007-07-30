@@ -80,7 +80,7 @@ void loadunloadcycle()
   p_notifyService->init_service(v_orb.in());
 
   CosNotifyChannelAdmin::EventChannelFactory_var v_notifyFactory =
-    p_notifyService->create(v_rootPOA.in());
+    p_notifyService->create(v_rootPOA.in(), "");
 
   // create an event channel
   CosNotifyChannelAdmin::ChannelID id;
