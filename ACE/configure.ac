@@ -7298,10 +7298,10 @@ main ()
 #include <errno.h>
 #include <sys/time.h>
 
+#include <stdlib.h>
 #ifndef ACE_LACKS_UNISTD_H
 # include <unistd.h>
 #endif
-
 
 pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 
