@@ -183,7 +183,7 @@
 
 // ... and the final standard even!
 #  define ACE_HAS_PTHREADS_STD
-#  define ACE_LACKS_THREAD_STACK_ADDR
+#  define ACE_LACKS_PTHREAD_ATTR_SETSTACKADDR
 // Cygwin (see pthread.h): Not supported or implemented.
 #  define ACE_LACKS_SETSCHED
 #  define ACE_LACKS_SETDETACH

@@ -1,3 +1,18 @@
+Mon Jul 30 18:17:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-cray.h:
+        * ace/config-cygwin32.h:
+        * ace/config-linux.h:
+        * ace/config-lynxos.h:
+        * ace/config-mvs.h:
+        * ace/config-tandem-nsk-mips-v2.h:
+        * ace/config-tandem-nsk-mips-v3.h:
+        * ace/config-tru64.h:
+        * ace/OS_NS_Thread.cpp:
+        * configure.ac:
+          Updated ACE_LACKS_THREAD_STACK_ADDR to
+          ACE_LACKS_PTHREAD_SETSTACKADDR to match naming conventions
+
 Mon Jul 30 18:03:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-cygwin.h:
