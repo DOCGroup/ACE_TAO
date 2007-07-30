@@ -3634,6 +3634,8 @@ ACE_CHECK_LACKS_FUNCS(msync mprotect)
 
 ACE_CHECK_LACKS_FUNCS(pipe)
 
+ACE_CHECK_LACKS_FUNCS(pthread_attr_setstack)
+
 ACE_CHECK_LACKS_FUNCS(qsort)
 
 ACE_CHECK_LACKS_FUNCS(realpath)

@@ -3915,7 +3915,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 #     if defined (ACE_HAS_PTHREADS_DRAFT4) || defined (ACE_HAS_PTHREADS_DRAFT6)
       if (::pthread_attr_setstacksize (&attr, size) != 0)
 #     else
-#       if defined (ACE_HAS_PTHREAD_SETSTACK)
+#       if !defined (ACE_LACKS_PTHREAD_ATTR_SETSTACK)
         int result;
         if (stack != 0)
           result = ACE_ADAPT_RETVAL (pthread_attr_setstack (&attr, stack, size), result);
@@ -3924,7 +3924,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
         if (result == -1)
 #       else
         if (ACE_ADAPT_RETVAL (pthread_attr_setstacksize (&attr, size), result) == -1)
-#       endif /* ACE_HAS_PTHREAD_SETSTACK */
+#       endif /* !ACE_LACKS_PTHREAD_ATTR_SETSTACK */
 #     endif /* ACE_HAS_PTHREADS_DRAFT4, 6 */
           {
 #     if defined (ACE_HAS_PTHREADS_DRAFT4)
@@ -3940,7 +3940,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
     }
 
   // *** Set Stack Address
-#   if !defined (ACE_HAS_PTHREAD_SETSTACK)
+#   if defined (ACE_LACKS_PTHREAD_ATTR_SETSTACK)
 #     if !defined (ACE_LACKS_THREAD_STACK_ADDR)
   if (stack != 0)
     {
@@ -3957,7 +3957,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 #     else
   ACE_UNUSED_ARG (stack);
 #     endif /* !ACE_LACKS_THREAD_STACK_ADDR */
-#   endif /* ACE_HAS_PTHREAD_SETSTACK */
+#   endif /* ACE_LACKS_PTHREAD_ATTR_SETSTACK */
 
   // *** Deal with various attributes
   if (flags != 0)

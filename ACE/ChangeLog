@@ -1,3 +1,12 @@
+Mon Jul 30 07:15:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/os_include/os_pthread.h:
+        * ace/OS_NS_Thread.cpp:
+        * configure.ac:
+          Changed the check for pthread_attr_setstack and added it to the autoconf
+          support. This fixes bugzilla 2476. Thanks to Jonathan Sprinkle
+          <sprinkle at eecs dot berkeley dot edu> for reporting this
+
 Sun Jul 29 20:56:40 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * netsvcs/clients/Naming/Client/Client_Test.cpp:
