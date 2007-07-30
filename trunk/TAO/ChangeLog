@@ -1,3 +1,10 @@
+Mon Jul 30 18:17:45 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/orbsvcs/Notify/MonitorControl/NotificationServiceMonitor_i.cpp:
+
+          Explicitly initialize struct members.  There is no constructor for
+          IDL generated structs.
+
 Mon Jul 30 18:12:58 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/tests/Bug_2926_Regression/server.cpp:
