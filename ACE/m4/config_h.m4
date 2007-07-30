@@ -383,6 +383,9 @@ be defined, except on Win32).])
 AH_TEMPLATE([ACE_HAS_GNU_CSTRING_H],
 [Denotes that GNU has cstring.h as standard which redefines memchr()])
 
+AH_TEMPLATE([ACE_HAS_INTRINSIC_INTERLOCKED],
+[Platform supports the intrinsic interlocked optimizations.])
+
 AH_TEMPLATE([ACE_HAS_GPERF],
 [The GPERF utility is compiled for this platform])
 
