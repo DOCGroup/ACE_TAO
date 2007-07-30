@@ -290,7 +290,7 @@ extern int cma_sigwait  (sigset_t *);
 #define ACE_LACKS_THREAD_PROCESS_SCOPING
 
 // Platform lacks pthread_attr_setstackaddr
-#define ACE_LACKS_THREAD_STACK_ADDR
+#define ACE_LACKS_PTHREAD_ATTR_SETSTACKADDR
 
 // Defining ACE_HAS_UCONTEXT_T since G06.21 version of spthreads has
 // a definition for it.

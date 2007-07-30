@@ -4428,11 +4428,11 @@ dnl name.
 
   AC_CHECK_FUNC([pthread_attr_setstackaddr],
     ,
-    [AC_DEFINE([ACE_LACKS_THREAD_STACK_ADDR])])
+    [AC_DEFINE([ACE_LACKS_PTHREAD_ATTR_SETSTACKADDR])])
 
   ACE_CHECK_FUNC([pthread_attr_setstacksize], [pthread.h],
     ,
-    [AC_DEFINE([ACE_LACKS_THREAD_STACK_SIZE])])
+    [AC_DEFINE([ACE_LACKS_PTHREAD_ATTR_SETSTACKSIZE])])
 
   ACE_CHECK_FUNC([pthread_cancel], [pthread.h],
     [
