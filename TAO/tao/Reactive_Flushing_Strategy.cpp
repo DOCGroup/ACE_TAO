@@ -60,9 +60,7 @@ TAO_Reactive_Flushing_Strategy::flush_transport (TAO_Transport *transport)
 
       while (!transport->queue_is_empty ())
         {
-          int const result = orb_core->run (0, 1);
-
-          if (result == -1)
+          if (orb_core->run (0, 1) == -1)
             return -1;
         }
     }

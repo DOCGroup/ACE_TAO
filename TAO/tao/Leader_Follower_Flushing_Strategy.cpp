@@ -49,13 +49,11 @@ TAO_Leader_Follower_Flushing_Strategy::flush_transport (
 
   try
     {
-      TAO_ORB_Core *orb_core = transport->orb_core ();
+      TAO_ORB_Core * const orb_core = transport->orb_core ();
 
       while (!transport->queue_is_empty ())
         {
-          int result = orb_core->run (0, 1);
-
-          if (result == -1)
+          if (orb_core->run (0, 1) == -1)
             return -1;
         }
     }
