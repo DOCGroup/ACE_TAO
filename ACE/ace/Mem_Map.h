@@ -59,7 +59,7 @@ public:
   ACE_Mem_Map (const ACE_TCHAR *filename,
                size_t length = static_cast<size_t> (-1),
                int flags = O_RDWR | O_CREAT,
-               int mode = ACE_DEFAULT_FILE_PERMS,
+               mode_t mode = ACE_DEFAULT_FILE_PERMS,
                int prot = PROT_RDWR,
                int share = ACE_MAP_PRIVATE,
                void *addr = 0,
@@ -88,7 +88,7 @@ public:
   int map (const ACE_TCHAR *filename,
            size_t length = static_cast<size_t> (-1),
            int flags = O_RDWR | O_CREAT,
-           int mode = ACE_DEFAULT_FILE_PERMS,
+           mode_t mode = ACE_DEFAULT_FILE_PERMS,
            int prot = PROT_RDWR,
            int share = ACE_MAP_PRIVATE,
            void *addr = 0,
@@ -101,7 +101,7 @@ public:
   /// Open the file without mapping it.
   int open (const ACE_TCHAR *filename,
             int flags = O_RDWR | O_CREAT,
-            int mode = ACE_DEFAULT_FILE_PERMS,
+            mode_t perms = ACE_DEFAULT_FILE_PERMS,
             LPSECURITY_ATTRIBUTES sa = 0);
 
   /// Close down the <handle_> if necessary and unmap the mapping.

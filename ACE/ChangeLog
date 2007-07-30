@@ -1,3 +1,11 @@
+Mon Jul 30 11:58:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Mem_Map.{h,cpp}:
+        * ace/OS_NS_fcntl.{h,cpp}:
+        * ace/OS_NS_sys_mman.{h,inl}:
+          Updated mode argument to use mode_t as described by the posix spec.
+          This fixes bugzilla 2943.
+
 Mon Jul 30 11:24:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Parse_Node.h:

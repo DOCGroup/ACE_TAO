@@ -155,17 +155,17 @@ ACE_Mem_Map::map_it (ACE_HANDLE handle,
 int
 ACE_Mem_Map::open (const ACE_TCHAR *file_name,
                    int flags,
-                   int mode,
+                   mode_t perms,
                    LPSECURITY_ATTRIBUTES sa)
 {
   ACE_TRACE ("ACE_Mem_Map::open");
 
 #if defined (INTEGRITY)  || defined (__QNXNTO__) || defined (ACE_VXWORKS)
-  this->handle_ = ACE_OS::shm_open (file_name, flags, mode, sa);
+  this->handle_ = ACE_OS::shm_open (file_name, flags, perms, sa);
 #elif defined (ACE_OPENVMS)
-  ACE_OSCALL (::open (file_name, flags, mode, "shr=get,put,upd"), ACE_HANDLE, -1, this->handle_);
+  ACE_OSCALL (::open (file_name, flags, perms, "shr=get,put,upd"), ACE_HANDLE, -1, this->handle_);
 #else
-  this->handle_ = ACE_OS::open (file_name, flags, mode, sa);
+  this->handle_ = ACE_OS::open (file_name, flags, perms, sa);
 #endif /* INTEGRITY */
 
   if (this->handle_ == ACE_INVALID_HANDLE)
@@ -185,7 +185,7 @@ int
 ACE_Mem_Map::map (const ACE_TCHAR *file_name,
                   size_t len,
                   int flags,
-                  int mode,
+                  mode_t mode,
                   int prot,
                   int share,
                   void *addr,
@@ -226,7 +226,7 @@ ACE_Mem_Map::ACE_Mem_Map (void)
 ACE_Mem_Map::ACE_Mem_Map (const ACE_TCHAR *file_name,
                           size_t len,
                           int flags,
-                          int mode,
+                          mode_t mode,
                           int prot,
                           int share,
                           void *addr,
