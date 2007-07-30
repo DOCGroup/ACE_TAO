@@ -3449,6 +3449,13 @@ case "$host_os" in
      ;;
 esac
 
+ACE_CHECK_HAS_FUNCS(_InterlockedIncrement _InterlockedDecrement _InterlockedExchangeAdd)
+if test "$ac_cv_func__InterlockedIncrement" != yes &&
+   test "$ac_cv_func__InterlockedDecrement" != yes &&
+   test "$ac_cv_func__InterlockedExchangeAdd" != yes; then
+  AC_DEFINE([ACE_HAS_INTRINSIC_INTERLOCKED])
+fi
+
 ACE_CHECK_LACKS_FUNCS(access)
 
 ACE_CHECK_LACKS_FUNCS(alphasort)
