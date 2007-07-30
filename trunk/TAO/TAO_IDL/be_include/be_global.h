@@ -334,10 +334,10 @@ public:
 
   void gen_template_export (bool val);
   // Set the gen_seq_template_export_ member.
-  
+
   bool gen_ostream_operators (void) const;
   // Get the gen_ostream_operators_ member.
-  
+
   void gen_ostream_operators (bool val);
   // Set the gen_ostream_operators_ member.
 
@@ -429,6 +429,12 @@ public:
 
   bool gen_direct_collocation (void) const;
   // Check if we want to generate Direct collocation stubs.
+
+  void gen_corba_e (bool);
+  // Set whether we want to generate for CORBA/e
+
+  bool gen_corba_e (void) const;
+  // Check if we want to generate for CORBA/e
 
   void opt_tc (bool);
   // Set optimized typecodes.
@@ -704,6 +710,9 @@ private:
   bool gen_direct_collocation_;
   // are we generating Direct collocated stubs?
 
+  bool gen_corba_e_;
+  // are we generating for CORBA/e
+
   bool opt_tc_;
   // do we generate optimized typecodes?
 
@@ -796,7 +805,7 @@ private:
   bool gen_template_export_;
   // Generate explicit export for Visual Studio bug workaround,
   // needed only in TAO basic sequence *C.h files.
-  
+
   bool gen_ostream_operators_;
   // Generate ostream operators for each type declaration, for
   // debuggin or logging.

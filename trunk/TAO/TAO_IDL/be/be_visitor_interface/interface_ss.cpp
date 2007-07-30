@@ -548,7 +548,9 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
       << "}" << be_nl << be_nl;
 
 
-  // Generate code for the _component skeleton.
+  // Generate code for the _component skeleton, don't generate it when
+  // we use CORBA/e
+  if (!be_global->gen_corba_e ())
   {
     be_predefined_type rt (AST_PredefinedType::PT_object, 0);
     // @@ Cheat a little by placing a space before the operation name

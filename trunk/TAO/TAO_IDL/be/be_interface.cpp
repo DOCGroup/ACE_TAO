@@ -837,10 +837,13 @@ be_interface::gen_operation_table (const char *flat_name,
 
         this->skel_count_++;
 
-        *os << "{\"_component\", &" << skeleton_class_name
-            << "::_component_skel, 0}," << be_nl;
+        if (!be_global->gen_corba_e ())
+          {
+            *os << "{\"_component\", &" << skeleton_class_name
+                << "::_component_skel, 0}," << be_nl;
 
-        this->skel_count_++;
+            this->skel_count_++;
+          }
 
         *os << "{\"_interface\", &" << skeleton_class_name
             << "::_interface_skel, 0}," << be_nl;
@@ -997,10 +1000,13 @@ be_interface::gen_operation_table (const char *flat_name,
 
         this->skel_count_++;
 
-        *os << "_component,&"
-            << skeleton_class_name
-            << "::_component_skel, 0" << be_nl;
-        this->skel_count_++;
+        if (!be_global->gen_corba_e ())
+          {
+            *os << "_component,&"
+                << skeleton_class_name
+                << "::_component_skel, 0" << be_nl;
+            this->skel_count_++;
+          }
 
         *os << "_interface,&"
             << skeleton_class_name
