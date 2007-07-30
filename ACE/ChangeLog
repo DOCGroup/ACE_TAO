@@ -1,3 +1,12 @@
+Mon Jul 30 07:28:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * configure.ac:
+        * m4/config_h.m4:
+          Added check for pthread_cond_timedwait. Thanks to Peter Korf
+          <peter at niendo dot de> for delivering the patch. This also
+          fixes bugzilla 2836 which was reported by Norbert Thoden
+          <thoden at rheinmetall-de dot com>
+
 Mon Jul 30 07:15:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/os_include/os_pthread.h:
