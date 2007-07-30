@@ -135,6 +135,7 @@ find_another_host (ACE_TCHAR other_host[])
             break;
           }
 
+      sethostent (0);
       endhostent ();
 #endif /* ! ACE_LACKS_GETHOSTENT */
 
