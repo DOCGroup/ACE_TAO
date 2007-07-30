@@ -69,6 +69,9 @@ public:
   /// Shutdown
   void shutdown (void);
 
+  /// Provide the time value of the oldest event in the queue.
+  ACE_Time_Value oldest_event (void);
+
 private:
 
   /// Apply the Order Policy and queue. return -1 on error.

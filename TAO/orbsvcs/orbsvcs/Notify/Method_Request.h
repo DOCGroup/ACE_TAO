@@ -66,6 +66,12 @@ public:
 
   virtual TAO_Notify_Method_Request_Queueable* copy (void);
   void init (const TAO_Notify_Event * event);
+
+  /// The creation time of the event to which this request corresponds.
+  const ACE_Time_Value& creation_time (void) const;
+
+private:
+  ACE_Time_Value time_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

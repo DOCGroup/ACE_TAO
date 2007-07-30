@@ -81,11 +81,9 @@ TAO_Notify_SupplierAdmin::release (void)
 void
 TAO_Notify_SupplierAdmin::destroy (void)
 {
-  int result = this->shutdown ();
-  if ( result == 1)
-    return;
-
+  this->shutdown ();
   this->ec_->remove (this);
+  this->proxy_container ().destroy ();
 }
 
 TAO_Notify::Topology_Object*

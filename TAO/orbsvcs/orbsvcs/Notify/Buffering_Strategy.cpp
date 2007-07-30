@@ -69,6 +69,30 @@ TAO_Notify_Buffering_Strategy::shutdown (void)
   this->local_not_full_.broadcast();
 }
 
+ACE_Time_Value
+TAO_Notify_Buffering_Strategy::oldest_event (void)
+{
+  ACE_Time_Value tv (ACE_Time_Value::max_time);
+  ACE_Message_Block* mb = 0;
+
+  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->global_queue_lock_, tv);
+  TAO_Notify_Message_Queue::ITERATOR itr (this->msg_queue_);
+  while(itr.next (mb))
+    {
+      TAO_Notify_Method_Request_Queueable* event =
+        dynamic_cast<TAO_Notify_Method_Request_Queueable*> (mb);
+      if (event != 0)
+        {
+          const ACE_Time_Value& etime = event->creation_time ();
+          if (etime < tv)
+            tv = etime;
+        }
+      itr.advance ();
+    }
+
+  return tv;
+}
+
 int
 TAO_Notify_Buffering_Strategy::enqueue (TAO_Notify_Method_Request_Queueable* method_request)
 {

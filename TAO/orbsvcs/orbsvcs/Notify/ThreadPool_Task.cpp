@@ -36,6 +36,12 @@ TAO_Notify_ThreadPool_Task::timer (void)
   return this->timer_.get();
 }
 
+TAO_Notify_Buffering_Strategy*
+TAO_Notify_ThreadPool_Task::buffering_strategy (void)
+{
+  return this->buffering_strategy_.get ();
+}
+
 void
 TAO_Notify_ThreadPool_Task::init (const NotifyExt::ThreadPoolParams& tp_params,
                                   const TAO_Notify_AdminProperties::Ptr& admin_properties)

@@ -25,6 +25,7 @@ TAO_Notify_Event::TAO_Notify_Event (void)
 , reliable_ (CosNotification::EventReliability, false)
 , clone_ (0)
 , is_on_heap_ (false)
+, time_ (ACE_OS::gettimeofday ())
 {
   //  if (TAO_debug_level > 0)
   //  ACE_DEBUG ((LM_DEBUG,"event:%x  created\n", this ));

@@ -4,6 +4,7 @@
 #include "orbsvcs/Notify/Properties.h"
 #include "orbsvcs/Notify/Default_Factory.h"
 #include "orbsvcs/Notify/Builder.h"
+#include "orbsvcs/Notify/EventChannel.h"
 #include "ace/Sched_Params.h"
 #include "ace/Arg_Shifter.h"
 #include "ace/Dynamic_Service.h"
@@ -254,6 +255,43 @@ TAO_CosNotify_Service::init_service2 (CORBA::ORB_ptr orb, CORBA::ORB_ptr dispatc
 }
 
 void
+TAO_CosNotify_Service::finalize_service (
+                   CosNotifyChannelAdmin::EventChannelFactory_ptr factory)
+{
+  // Get out early if we can
+  if (CORBA::is_nil (factory))
+    return;
+
+  // Make sure the factory doesn't go away while we're in here
+  CosNotifyChannelAdmin::EventChannelFactory_var ecf =
+    CosNotifyChannelAdmin::EventChannelFactory::_duplicate (factory);
+
+  // Find all the consumer admin objects and shutdown the worker tasks
+  CosNotifyChannelAdmin::ChannelIDSeq_var channels =
+    ecf->get_all_channels ();
+  size_t length = channels->length ();
+  for(size_t i = 0; i < length; i++)
+    {
+      try
+        {
+          CosNotifyChannelAdmin::EventChannel_var ec =
+            ecf->get_event_channel (channels[i]);
+          if (!CORBA::is_nil (ec.in ()))
+            {
+              TAO_Notify_EventChannel* nec =
+                dynamic_cast<TAO_Notify_EventChannel*> (ec->_servant ());
+              if (nec != 0)
+                nec->destroy ();
+            }
+        }
+      catch (const CORBA::Exception&)
+        {
+          // We're shutting things down, so ignore exceptions
+        }
+    }
+}
+
+void
 TAO_CosNotify_Service::init_i (CORBA::ORB_ptr orb)
 {
   // Obtain the Root POA
@@ -338,9 +376,10 @@ TAO_CosNotify_Service::create_builder (void)
 }
 
 CosNotifyChannelAdmin::EventChannelFactory_ptr
-TAO_CosNotify_Service::create (PortableServer::POA_ptr poa)
+TAO_CosNotify_Service::create (PortableServer::POA_ptr poa,
+                               const char* factory_name)
 {
-  return this->builder().build_event_channel_factory (poa);
+  return this->builder().build_event_channel_factory (poa, factory_name);
 }
 
 void

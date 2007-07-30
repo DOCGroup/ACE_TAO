@@ -69,6 +69,9 @@ public:
       TAO_Notify::IdVec & id_path,
       size_t position);
 
+  /// TAO_Notify_Container_T requires a destroy method
+  virtual void destroy (void);
+
 protected:
 
     TAO_Notify::Topology_Object *load_proxy (
@@ -114,8 +117,6 @@ protected:
       CosNotifyChannelAdmin::ClientType ctype,
       CosNotifyChannelAdmin::ProxyID_out proxy_id
     );
-
-  virtual void destroy (void);
 
   virtual ::CosNotification::QoSProperties* get_qos (void);
 

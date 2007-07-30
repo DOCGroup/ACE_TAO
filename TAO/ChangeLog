@@ -1,3 +1,317 @@
+Mon Jul 30 13:13:58 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * MPC/config/notification_mc.mpb:
+        * MPC/config/notification_mc_ext.mpb:
+
+          Added base projects for the new noftification service libraries.
+
+        * NEWS:
+
+          Added an entry for this new feature.
+
+        * orbsvcs/Notify_Service/Notify_Service.cpp:
+
+          Updated to provide the factory name during factory creation, the
+          channel name during channel creation, and fixed a leak of objects
+          during shutdown of the service.
+
+        * orbsvcs/examples/Notify/MC:
+        * orbsvcs/examples/Notify/MC/Makefile.am:
+
+        * orbsvcs/examples/Notify/MC/TkMonitor:
+        * orbsvcs/examples/Notify/MC/TkMonitor/Makefile:
+        * orbsvcs/examples/Notify/MC/TkMonitor/README:
+        * orbsvcs/examples/Notify/MC/TkMonitor/external_idl.pl:
+        * orbsvcs/examples/Notify/MC/TkMonitor/modules:
+        * orbsvcs/examples/Notify/MC/TkMonitor/modules/GeometryStore.pm:
+        * orbsvcs/examples/Notify/MC/TkMonitor/modules/MonitorControl.pm:
+        * orbsvcs/examples/Notify/MC/TkMonitor/modules/Tk:
+        * orbsvcs/examples/Notify/MC/TkMonitor/modules/Tk/active.xpm:
+        * orbsvcs/examples/Notify/MC/TkMonitor/modules/Tk/factory.xpm:
+        * orbsvcs/examples/Notify/MC/TkMonitor/modules/Tk/hand.xbm:
+        * orbsvcs/examples/Notify/MC/TkMonitor/modules/Tk/inactive.xpm:
+        * orbsvcs/examples/Notify/MC/TkMonitor/modules/Tk/mask.xbm:
+        * orbsvcs/examples/Notify/MC/TkMonitor/monitor.pl:
+
+        * orbsvcs/examples/Notify/Makefile.am:
+        * orbsvcs/examples/Notify/MC/monitor:
+        * orbsvcs/examples/Notify/MC/monitor/Makefile.am:
+        * orbsvcs/examples/Notify/MC/monitor/monitor.cpp:
+        * orbsvcs/examples/Notify/MC/monitor/monitor.mpc:
+
+          Added a command line monitor to demonstrate the monitoring
+          and control capabilities.
+
+        * orbsvcs/orbsvcs/CosNotification.mpc:
+        * orbsvcs/orbsvcs/Makefile.am:
+
+          Added the new MC and MC_Ext libraries.
+
+        * orbsvcs/orbsvcs/Notify/Buffering_Strategy.h:
+        * orbsvcs/orbsvcs/Notify/Buffering_Strategy.cpp:
+
+          Added a method to return the time of the oldest event in the
+          queue.
+
+        * orbsvcs/orbsvcs/Notify/Builder.h:
+        * orbsvcs/orbsvcs/Notify/Builder.cpp:
+
+          Enhanced the event channel factory and event channel building
+          methods to take an optional name parameter.
+
+        * orbsvcs/orbsvcs/Notify/Container_T.h:
+        * orbsvcs/orbsvcs/Notify/Container_T.cpp:
+
+          Added a method to destroy all of the objects held in the
+          collection.
+
+        * orbsvcs/orbsvcs/Notify/CosNotify_Service.h:
+        * orbsvcs/orbsvcs/Notify/CosNotify_Service.cpp:
+
+          Implement the new finalize_service() method by destroying all
+          event channels held by the provided event channel factory.   
+          Implement the updated create() method to provide the factory name
+          to the builder.
+
+        * orbsvcs/orbsvcs/Notify/Event.h:
+        * orbsvcs/orbsvcs/Notify/Event.inl:
+        * orbsvcs/orbsvcs/Notify/Event.cpp:
+
+          Added a time of creation stamp on the event.
+
+        * orbsvcs/orbsvcs/Notify/EventChannel.h:
+
+          Changed to virtually inherit from     
+          POA_CosNotifyChannelAdmin::EventChannel and made the destroy()
+          method public to allow the TAO_Notify_Container_T access.     
+
+        * orbsvcs/orbsvcs/Notify/EventChannel.cpp:
+
+          Added a call to destroy() on the supplier and consumer admin
+          containers.  This cleans up the reference counts on the admins.
+
+        * orbsvcs/orbsvcs/Notify/EventChannelFactory.h:
+        * orbsvcs/orbsvcs/Notify/EventChannelFactory.cpp:
+
+          Added a method to create a named event channel.  To support
+          automatic creation of named event channels by the Notify_Service
+          executable.  This version is the same as calling create_channel().
+
+          Also fixed a leak during activation with the POA.  An extra narrow
+          was occurring which was not stored in a var.
+
+        * orbsvcs/orbsvcs/Notify/Factory.h:
+        * orbsvcs/orbsvcs/Notify/Default_Factory.h:
+        * orbsvcs/orbsvcs/Notify/Default_Factory.cpp:
+
+          Updated the create methods for event channel factories and event
+          channels to take a name parameter.
+
+        * orbsvcs/orbsvcs/Notify/Method_Request.h:
+        * orbsvcs/orbsvcs/Notify/Method_Request.cpp:
+
+          Added a time stamp that is populated by the event to which the
+          request corresponds.
+
+        * orbsvcs/orbsvcs/Notify/Method_Request_Dispatch.h:
+
+          Fixed a doxygen comment.
+
+        * orbsvcs/orbsvcs/Notify/MonitorControl/Control.h:
+        * orbsvcs/orbsvcs/Notify/MonitorControl/Control.cpp:
+        * orbsvcs/orbsvcs/Notify/MonitorControl/Control_Registry.h:
+        * orbsvcs/orbsvcs/Notify/MonitorControl/Control_Registry.cpp:
+
+          A class that can be used to keep track of named control objects.
+
+        * orbsvcs/orbsvcs/Notify/MonitorControl/Dynamic_Statistic.h:
+
+          A template to facilitate the creation of statistics that are
+          calculated on-the-fly.
+
+        * orbsvcs/orbsvcs/Notify/MonitorControl/Generic.h:
+        * orbsvcs/orbsvcs/Notify/MonitorControl/Generic.cpp:
+        * orbsvcs/orbsvcs/Notify/MonitorControl/Generic_Registry.h:
+        * orbsvcs/orbsvcs/Notify/MonitorControl/Generic_Registry.cpp:
+
+          A generic class that can be used to keep track of named objects.
+
+        * orbsvcs/orbsvcs/Notify/MonitorControl/MonitorManager.h:
+        * orbsvcs/orbsvcs/Notify/MonitorControl/MonitorManager.cpp:
+
+          This class allows the user to dynamically load the manager and
+          configure it through the service configurator.  It starts a thread
+          and services monitoring requests via an ORB that is separate from 
+          the ORB for the normal operation of the notification service.
+
+        * orbsvcs/orbsvcs/Notify/MonitorControl/NotificationServiceMC.idl:
+
+          Provide a definition of an interface to retrieve statistics and
+          perform functions upon the Notify Service.
+
+        * orbsvcs/orbsvcs/Notify/MonitorControl/NotificationServiceMonitor_i.h:
+        * orbsvcs/orbsvcs/Notify/MonitorControl/NotificationServiceMonitor_i.cpp:
+
+          Implements the CosNotification::NotificationServiceMonitorControl
+          which includes accessing statistics and performing control
+          functions on the notify service.
+
+        * orbsvcs/orbsvcs/Notify/MonitorControl/Statistic.h:
+        * orbsvcs/orbsvcs/Notify/MonitorControl/Statistic.inl:
+        * orbsvcs/orbsvcs/Notify/MonitorControl/Statistic.cpp:
+
+          Implement a statistic object that can hold various types of data.
+
+        * orbsvcs/orbsvcs/Notify/MonitorControl/Statistic_Registry.h:
+        * orbsvcs/orbsvcs/Notify/MonitorControl/Statistic_Registry.cpp:
+
+          A class that can be used to keep track of named statistic objects.
+
+        * orbsvcs/orbsvcs/Notify/MonitorControl/notify_mc_export.h:
+
+          Export file for the MC library.
+
+        * orbsvcs/orbsvcs/Notify/MonitorControlExt/MC_Default_Factory.h:
+        * orbsvcs/orbsvcs/Notify/MonitorControlExt/MC_Default_Factory.cpp:
+
+          Implement a factory that will create the monitor versions of the
+          event channel factory, event channel, supplier admin and consumer
+          admin.
+
+        * orbsvcs/orbsvcs/Notify/MonitorControlExt/MC_Notify_Service.h:
+        * orbsvcs/orbsvcs/Notify/MonitorControlExt/MC_Notify_Service.cpp:
+
+          Extend the TAO_CosNotify_Service to create the monitoring factory,
+          run the monitor manager during initialization and shutdown the
+          monitor manager during finalization.
+
+        * orbsvcs/orbsvcs/Notify/MonitorControlExt/MonitorConsumerAdmin.h:
+        * orbsvcs/orbsvcs/Notify/MonitorControlExt/MonitorConsumerAdmin.cpp:
+
+          Implement the NotifyMonitoringExt::ConsumerAdmin interface which
+          includes creation of named proxy suppliers.
+
+        * orbsvcs/orbsvcs/Notify/MonitorControlExt/MonitorEventChannel.h:
+        * orbsvcs/orbsvcs/Notify/MonitorControlExt/MonitorEventChannel.cpp:
+
+          Extend the TAO_Notify_EventChannel to track statistics and named
+          supplier proxies and consumer proxies.
+
+        * orbsvcs/orbsvcs/Notify/MonitorControlExt/MonitorEventChannelFactory.h:
+        * orbsvcs/orbsvcs/Notify/MonitorControlExt/MonitorEventChannelFactory.cpp:
+
+          Implement the NotifyMonitoringExt::EventChannelFactory interface
+          which includes statistics registration and tracking event channel
+          names.
+
+        * orbsvcs/orbsvcs/Notify/MonitorControlExt/MonitorSupplierAdmin.h:
+        * orbsvcs/orbsvcs/Notify/MonitorControlExt/MonitorSupplierAdmin.cpp:
+
+          Implement the NotifyMonitoringExt::SupplierAdmin interface which
+          includes creation of named proxy consumers.
+
+        * orbsvcs/orbsvcs/Notify/MonitorControlExt/NotifyMonitoringExt.idl:
+
+          Provide a definition for the monitoring extensions to the event
+          channel factory, supplier admin and consumer admin.
+
+        * orbsvcs/orbsvcs/Notify/MonitorControlExt/notify_mc_ext_export.h:
+
+          Export file for the MC_Ext library.
+
+        * orbsvcs/orbsvcs/Notify/Notify_EventChannelFactory_i.h:
+        * orbsvcs/orbsvcs/Notify/Notify_EventChannelFactory_i.cpp:
+
+          Updated to take a factory name.
+
+        * orbsvcs/orbsvcs/Notify/Object.h:
+        * orbsvcs/orbsvcs/Notify/Object.cpp:
+
+          Fixed a bug in destroy_proxy_poa() where the wrong poa object was
+          being used.
+
+          Added a method to access the worker task.
+
+        * orbsvcs/orbsvcs/Notify/ProxyConsumer.cpp:
+        * orbsvcs/orbsvcs/Notify/ProxySupplier.cpp:
+        * orbsvcs/orbsvcs/Notify/SupplierAdmin.cpp:
+        * orbsvcs/orbsvcs/Notify/ConsumerAdmin.cpp:
+
+          Fixed a bug where a the object could not be destroyed if it had
+          previously been shutdown.  This caused it and related objects to
+          be leaked due to reference counts not being decremented.
+
+        * orbsvcs/orbsvcs/Notify/RT_Factory.h:
+        * orbsvcs/orbsvcs/Notify/RT_Factory.cpp:
+
+          Removed duplicated functions that are inherited from
+          TAO_Notify_Default_Factory.
+
+        * orbsvcs/orbsvcs/Notify/Service.h:
+        * orbsvcs/orbsvcs/Notify/Service.cpp:
+
+          Added a static method to locate the notify service from a default
+          list of service names.  This allows us to avoid duplicating this 
+          code everywhere a notify service is to be dynamically loaded.    
+
+          Added a pure virtual method to finalize the service and changed
+          the create() method to take an optional factory name.
+
+        * orbsvcs/orbsvcs/Notify/ConsumerAdmin.h:
+        * orbsvcs/orbsvcs/Notify/SupplierAdmin.h:
+
+          Made the destroy() method public to allow the
+          TAO_Notify_Container_T access.
+
+        * orbsvcs/orbsvcs/Notify/ThreadPool_Task.h:
+        * orbsvcs/orbsvcs/Notify/ThreadPool_Task.cpp:
+
+          Added an accessor for the buffering strategy.
+
+        * orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Service.cpp:
+        * orbsvcs/examples/Notify/Federation/Agent/Agent.cpp:
+        * orbsvcs/examples/Notify/Federation/SpaceCraft/SpaceCraft.cpp:
+        * orbsvcs/tests/Notify/lib/EventChannel_Command.cpp:
+
+          Use the TAO_Notify_Service::load_default() method to dynamically
+          locate the notify service instead of duplicating code.
+
+        * orbsvcs/tests/unit/Makefile.am:
+        * orbsvcs/tests/unit/Notify/MC/Control/Control.cpp:
+        * orbsvcs/tests/unit/Notify/MC/Control/Control.mpc:
+        * orbsvcs/tests/unit/Notify/MC/Control/Makefile.am:
+        * orbsvcs/tests/unit/Notify/MC/Control/run_test.pl:
+        * orbsvcs/tests/unit/Notify/MC/Makefile.am:
+        * orbsvcs/tests/unit/Notify/MC/MonitorControlExt/Makefile.am:
+        * orbsvcs/tests/unit/Notify/MC/MonitorControlExt/MonitorControlExt.mpc:
+        * orbsvcs/tests/unit/Notify/MC/MonitorControlExt/MonitorControlExt.cpp:
+        * orbsvcs/tests/unit/Notify/MC/MonitorControlExt/run_test.pl:
+        * orbsvcs/tests/unit/Notify/MC/MonitorControlExt/svc.conf:
+        * orbsvcs/tests/unit/Notify/MC/MonitorControlExt/svc.conf.xml:
+        * orbsvcs/tests/unit/Notify/MC/MonitorManager/Makefile.am:
+        * orbsvcs/tests/unit/Notify/MC/MonitorManager/MonitorClient.cpp:
+        * orbsvcs/tests/unit/Notify/MC/MonitorManager/MonitorManager.cpp:
+        * orbsvcs/tests/unit/Notify/MC/MonitorManager/MonitorManager.mpc:
+        * orbsvcs/tests/unit/Notify/MC/MonitorManager/run_test.pl:
+        * orbsvcs/tests/unit/Notify/MC/MonitorManager/svc.conf:
+        * orbsvcs/tests/unit/Notify/MC/MonitorManager/svc.conf.xml:
+        * orbsvcs/tests/unit/Notify/MC/NotificationServiceMonitor/Makefile.am:
+        * orbsvcs/tests/unit/Notify/MC/NotificationServiceMonitor/NotificationServiceMonitor.mpc:
+        * orbsvcs/tests/unit/Notify/MC/NotificationServiceMonitor/NotificationServiceMonitor.cpp:
+        * orbsvcs/tests/unit/Notify/MC/NotificationServiceMonitor/run_test.pl:
+        * orbsvcs/tests/unit/Notify/MC/Statistic/Makefile.am:
+        * orbsvcs/tests/unit/Notify/MC/Statistic/Statistic.cpp:
+        * orbsvcs/tests/unit/Notify/MC/Statistic/Statistic.mpc:
+        * orbsvcs/tests/unit/Notify/MC/Statistic/run_test.pl:
+        * orbsvcs/tests/unit/Notify/MC/Statistic_Registry/Makefile.am:
+        * orbsvcs/tests/unit/Notify/MC/Statistic_Registry/Statistic_Registry.cpp:
+        * orbsvcs/tests/unit/Notify/MC/Statistic_Registry/Statistic_Registry.mpc:
+        * orbsvcs/tests/unit/Notify/MC/Statistic_Registry/run_test.pl:
+        * orbsvcs/tests/unit/Notify/Makefile.am:
+
+          Added unit tests for the different components of the MC and MC_Ext
+          libraries.
+
 Mon Jul 30 12:18:29 UTC 2007  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * tao/TAO_Server_Request.h:

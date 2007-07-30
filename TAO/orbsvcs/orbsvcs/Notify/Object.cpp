@@ -155,7 +155,7 @@ TAO_Notify_Object::destroy_proxy_poa (void)
       if ( this->own_proxy_poa_ == true )
       {
         this->own_proxy_poa_ = false;
-        ACE_Auto_Ptr< TAO_Notify_POA_Helper > app( object_poa_ );
+        ACE_Auto_Ptr< TAO_Notify_POA_Helper > app( proxy_poa_ );
         this->proxy_poa_->destroy ();
       }
       this->proxy_poa_ = 0;
@@ -355,5 +355,10 @@ TAO_Notify_Object::load_attrs(const TAO_Notify::NVPList& attrs)
   this->qos_properties_.init ();
 }
 
+TAO_Notify_Worker_Task*
+TAO_Notify_Object::get_worker_task (void)
+{
+  return this->worker_task_.get ();
+}
 
 TAO_END_VERSIONED_NAMESPACE_DECL
