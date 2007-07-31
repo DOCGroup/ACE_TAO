@@ -46,28 +46,22 @@ public:
   CORBA::ULong num_policies (void) const;
 
   /// Obtain a single cached policy.
-  CORBA::Policy_ptr get_cached_policy (TAO_Cached_Policy_Type type
-                                      );
+  CORBA::Policy_ptr get_cached_policy (TAO_Cached_Policy_Type type);
 
-  void merge_policies (const CORBA::PolicyList &policies
-                      );
+  void merge_policies (const CORBA::PolicyList &policies);
 
-  void merge_policy (const CORBA::Policy_ptr policy
-                    );
+  void merge_policy (const CORBA::Policy_ptr policy);
 
   void validate_policies (TAO_Policy_Validator &validator,
-                          TAO_ORB_Core &orb_core
-                         );
+                          TAO_ORB_Core &orb_core);
 
   /// Add all of the client exposed policies to the specified list.
-  void add_client_exposed_fixed_policies (CORBA::PolicyList *client_exposed_policies
-                                         );
+  void add_client_exposed_fixed_policies (CORBA::PolicyList *client_exposed_policies);
 
   TAO_Policy_Set &policies (void);
 
   /// Obtain a single policy.
-  CORBA::Policy_ptr get_policy (CORBA::PolicyType policy
-                               );
+  CORBA::Policy_ptr get_policy (CORBA::PolicyType policy);
 
 protected:
   TAO_Policy_Set impl_;

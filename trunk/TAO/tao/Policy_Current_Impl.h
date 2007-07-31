@@ -51,8 +51,7 @@ public:
 
   CORBA::PolicyList * get_policy_overrides (const CORBA::PolicyTypeSeq & ts);
   void set_policy_overrides (const CORBA::PolicyList & policies,
-                             CORBA::SetOverrideType set_add
-                             );
+                             CORBA::SetOverrideType set_add);
 
 private:
   /// The implementation.

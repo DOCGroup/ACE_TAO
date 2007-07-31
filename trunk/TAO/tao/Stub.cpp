@@ -443,8 +443,7 @@ TAO_Stub::get_cached_policy (TAO_Cached_Policy_Type type)
 
   if (CORBA::is_nil (result.in ()))
     {
-      result =
-        this->orb_core_->get_cached_policy_including_current (type);
+      result = this->orb_core_->get_cached_policy_including_current (type);
     }
 
   return result._retn ();

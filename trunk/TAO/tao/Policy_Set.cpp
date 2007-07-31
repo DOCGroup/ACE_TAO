@@ -131,7 +131,7 @@ TAO_Policy_Set::copy_from (TAO_Policy_Set *source)
 void
 TAO_Policy_Set::cleanup_i (void)
 {
-  const CORBA::ULong len = this->policy_list_.length ();
+  CORBA::ULong const len = this->policy_list_.length ();
   // Cleanup the policy list.
   for (CORBA::ULong i = 0; i < len; ++i)
     {
@@ -168,7 +168,7 @@ TAO_Policy_Set::set_policy_overrides (const CORBA::PolicyList &policies,
   // RTCORBA::ServerProtocolPolicy during this call.
   bool server_protocol_set = false;
 
-  const CORBA::ULong plen = policies.length ();
+  CORBA::ULong const plen = policies.length ();
 
   for (CORBA::ULong i = 0; i < plen; ++i)
     {
@@ -179,8 +179,7 @@ TAO_Policy_Set::set_policy_overrides (const CORBA::PolicyList &policies,
           continue;
         }
 
-      const CORBA::PolicyType policy_type =
-        policy->policy_type ();
+      CORBA::PolicyType const policy_type = policy->policy_type ();
 
       if (policy_type == TAO_RT_SERVER_PROTOCOL_POLICY_TYPE)
         {
@@ -210,13 +209,12 @@ TAO_Policy_Set::set_policy (const CORBA::Policy_ptr policy)
       throw ::CORBA::NO_PERMISSION ();
     }
 
-  const CORBA::PolicyType policy_type =
-    policy->policy_type ();
+  CORBA::PolicyType const policy_type = policy->policy_type ();
 
   CORBA::Policy_var copy = policy->copy ();
 
   CORBA::ULong j = 0;
-  const CORBA::ULong length = this->policy_list_.length ();
+  CORBA::ULong const length = this->policy_list_.length ();
 
   while (j != length)
     {
@@ -306,10 +304,9 @@ TAO_Policy_Set::get_policy_overrides (const CORBA::PolicyTypeSeq &types)
 }
 
 CORBA::Policy_ptr
-TAO_Policy_Set::get_policy (CORBA::PolicyType type
-                            )
+TAO_Policy_Set::get_policy (CORBA::PolicyType type)
 {
-  const CORBA::ULong length = this->policy_list_.length ();
+  CORBA::ULong const length = this->policy_list_.length ();
 
   for (CORBA::ULong i = 0; i < length; ++i)
     {
