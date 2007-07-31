@@ -1,3 +1,18 @@
+Tue Jul 31 18:48:25 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * ace/Auto_Functor.h:
+        * ace/Auto_Functor.inl:
+        * ace/Auto_Functor.cpp:
+ 
+          Zapped ACE_THROW_SPEC
+
+        * ace/Global_Macros.h:
+
+          Guarded ACE_THROW_SPEC with ACE_LACKS_DEPRECATED_MACROS. The 
+          ACE_THROW_SPEC macro now has been deprecated.
+
+          The above changes fix bugzilla 3008.
+
 Tue Jul 31 18:37:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_dirent.h:
