@@ -1,3 +1,8 @@
+Tue Jul 31 06:45:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-hpux-11.00.h:
+          HPUX doesn't have pthread_attr_setstack
+
 Tue Jul 31 05:14:35 UTC 2007  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * ace/Service_Config.h:
