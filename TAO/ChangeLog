@@ -1,3 +1,10 @@
+Tue Jul 31 05:42:34 UTC 2007  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * tao/TAO_Server_Request.cpp:
+
+        Fixing a typo in the base initializers list, only affecting
+        no-interceptors builds.
+
 Tue Jul 31 05:11:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/Servant_Base.{h,cpp}:
