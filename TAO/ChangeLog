@@ -1,3 +1,8 @@
+Tue Jul 31 10:52:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Collocated_Object_Proxy_Broker.{h,cpp}:
+          non_existent is not needed for CORBA/e
+
 Tue Jul 31 07:22:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Abstract_Servant_Base.{h,cpp,inl}:
