@@ -1,3 +1,21 @@
+Tue Jul 31 06:40:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/compiler.html:
+        * MPC/config/core_minimum_corba.mpb:
+        * tao/Object.h:
+        * tao/PortableServer/Servant_Base.{h,cpp}:
+        * TAO_IDL/be/be_global.cpp:
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be/be_visitor_component/component_sh.cpp:
+        * TAO_IDL/be/be_visitor_interface/amh_sh.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_sh.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+        * TAO_IDL/be_include/be_global.h:
+          Added -Gmc to the IDL compiler to generate code targeted for
+          Minimum CORBA. When this option is enabled we suppress several
+          methods from the generation of the skeleton. This fixes
+          bugzilla 3017
+
 Tue Jul 31 05:42:34 UTC 2007  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * tao/TAO_Server_Request.cpp:

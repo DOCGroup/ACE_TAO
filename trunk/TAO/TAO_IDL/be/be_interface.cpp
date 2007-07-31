@@ -830,30 +830,39 @@ be_interface::gen_operation_table (const char *flat_name,
         *os << "{\"_is_a\", &" << skeleton_class_name
             << "::_is_a_skel, 0}," << be_nl;
 
-        this->skel_count_++;
+        ++this->skel_count_;
 
-        *os << "{\"_non_existent\", &" << skeleton_class_name
-            << "::_non_existent_skel, 0}," << be_nl;
+        if (!be_global->gen_minimum_corba ())
+          {
+            *os << "{\"_non_existent\", &" << skeleton_class_name
+                << "::_non_existent_skel, 0}," << be_nl;
 
-        this->skel_count_++;
+            ++this->skel_count_;
+          }
 
-        if (!be_global->gen_corba_e ())
+        if (!be_global->gen_corba_e () && !be_global->gen_minimum_corba ())
           {
             *os << "{\"_component\", &" << skeleton_class_name
                 << "::_component_skel, 0}," << be_nl;
 
-            this->skel_count_++;
+            ++this->skel_count_;
           }
 
-        *os << "{\"_interface\", &" << skeleton_class_name
-            << "::_interface_skel, 0}," << be_nl;
+        if (!be_global->gen_minimum_corba ())
+          {
+            *os << "{\"_interface\", &" << skeleton_class_name
+                << "::_interface_skel, 0}," << be_nl;
 
-        this->skel_count_++;
+            ++this->skel_count_;
+          }
 
-        *os << "{\"_repository_id\", &" << skeleton_class_name
-            << "::_repository_id_skel, 0}" << be_uidt_nl;
+        if (!be_global->gen_minimum_corba ())
+          {
+            *os << "{\"_repository_id\", &" << skeleton_class_name
+                << "::_repository_id_skel, 0}" << be_uidt_nl;
 
-        this->skel_count_++;
+            ++this->skel_count_;
+          }
 
         *os << "};" << be_nl << be_nl;
         *os << "static const ::CORBA::Long _tao_" << flat_name
@@ -992,32 +1001,41 @@ be_interface::gen_operation_table (const char *flat_name,
             << skeleton_class_name
             << "::_is_a_skel, 0" << be_nl;
 
-        this->skel_count_++;
+        ++this->skel_count_;
 
-        *os << "_non_existent,&"
-            << skeleton_class_name
-            << "::_non_existent_skel, 0" << be_nl;
+        if (!be_global->gen_minimum_corba ())
+          {
+            *os << "_non_existent,&"
+                << skeleton_class_name
+                << "::_non_existent_skel, 0" << be_nl;
 
-        this->skel_count_++;
+            ++this->skel_count_;
+          }
 
-        if (!be_global->gen_corba_e ())
+        if (!be_global->gen_corba_e () && !be_global->gen_minimum_corba ())
           {
             *os << "_component,&"
                 << skeleton_class_name
                 << "::_component_skel, 0" << be_nl;
-            this->skel_count_++;
+            ++this->skel_count_;
           }
 
-        *os << "_interface,&"
-            << skeleton_class_name
-            << "::_interface_skel, 0" << be_nl;
+        if (!be_global->gen_minimum_corba ())
+          {
+            *os << "_interface,&"
+                << skeleton_class_name
+                << "::_interface_skel, 0" << be_nl;
 
-        this->skel_count_++;
+            ++this->skel_count_;
+          }
 
-        *os << "_repository_id,&"
-            << skeleton_class_name
-            << "::_repository_id_skel, 0" << be_nl;
-        this->skel_count_++;
+        if (!be_global->gen_minimum_corba ())
+          {
+            *os << "_repository_id,&"
+                << skeleton_class_name
+                << "::_repository_id_skel, 0" << be_nl;
+            ++this->skel_count_;
+          }
 
         // Input to the gperf is ready. Run gperf and get things
         // done. This method also unlinks the temp file that we used
@@ -1220,7 +1238,7 @@ be_interface::gen_optable_entries (be_interface *derived_interface,
 
               *os << "\n";
 
-              this->skel_count_++;
+              ++this->skel_count_;
             }
           else if (d->node_type () == AST_Decl::NT_attr)
             {
@@ -1250,7 +1268,7 @@ be_interface::gen_optable_entries (be_interface *derived_interface,
 
               *os << "\n";
 
-              this->skel_count_++;
+              ++this->skel_count_;
 
               if (!attr->readonly ())
                 {
@@ -1272,7 +1290,7 @@ be_interface::gen_optable_entries (be_interface *derived_interface,
 
                   *os << "\n";
 
-                  this->skel_count_++;
+                  ++this->skel_count_;
                 }
             }
         }

@@ -288,8 +288,9 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
     s.get ()->destroy ();
   }
 
-  // Generate code for the _non_existent skeleton.
+  if (!be_global->gen_minimum_corba ())
   {
+    // Generate code for the _non_existent skeleton.
     be_predefined_type rt (AST_PredefinedType::PT_boolean, 0);
     // @@ Cheat a little by placing a space before the operation name
     //    to prevent the IDL compiler from interpreting the leading
@@ -392,8 +393,9 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
     rt.destroy ();
   }
 
-  // Generate code for the _repository_id skeleton.
+  if (!be_global->gen_minimum_corba ())
   {
+    // Generate code for the _repository_id skeleton.
     auto_ptr<AST_String> s (
       idl_global->gen ()->create_string (
         idl_global->gen ()->create_expr ((idl_uns_long) 0,
@@ -500,57 +502,59 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
     s.get ()->destroy ();
   }
 
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from " << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
+  if (!be_global->gen_minimum_corba ())
+  {
+    *os << be_nl << be_nl << "// TAO_IDL - Generated from " << be_nl
+        << "// " << __FILE__ << ":" << __LINE__;
 
-  *os << be_nl << be_nl
-      << "void " << full_skel_name
-      << "::_interface_skel (" << be_idt << be_idt_nl
-      << "TAO_ServerRequest & server_request, " << be_nl
-      << "void * /* servant_upcall */," << be_nl
-      << "void * servant)" << be_uidt << be_uidt_nl;
-  *os << "{" << be_idt_nl;
-  *os << "TAO_IFR_Client_Adapter *_tao_adapter =" << be_idt_nl
-      << "ACE_Dynamic_Service<TAO_IFR_Client_Adapter>::instance ("
-      << be_idt << be_idt_nl
-      << "TAO_ORB_Core::ifr_client_adapter_name ()" << be_uidt_nl
-      << ");" << be_uidt_nl << be_uidt_nl;
-  *os << "if (_tao_adapter == 0)" << be_idt_nl
-      << "{" << be_idt_nl
-      << "throw ::CORBA::INTF_REPOS (::CORBA::OMGVMCID | 1, ::CORBA::COMPLETED_NO);"
-      << be_uidt_nl
-      << "}" << be_uidt_nl << be_nl;
+    *os << be_nl << be_nl
+        << "void " << full_skel_name
+        << "::_interface_skel (" << be_idt << be_idt_nl
+        << "TAO_ServerRequest & server_request, " << be_nl
+        << "void * /* servant_upcall */," << be_nl
+        << "void * servant)" << be_uidt << be_uidt_nl;
+    *os << "{" << be_idt_nl;
+    *os << "TAO_IFR_Client_Adapter *_tao_adapter =" << be_idt_nl
+        << "ACE_Dynamic_Service<TAO_IFR_Client_Adapter>::instance ("
+        << be_idt << be_idt_nl
+        << "TAO_ORB_Core::ifr_client_adapter_name ()" << be_uidt_nl
+        << ");" << be_uidt_nl << be_uidt_nl;
+    *os << "if (_tao_adapter == 0)" << be_idt_nl
+        << "{" << be_idt_nl
+        << "throw ::CORBA::INTF_REPOS (::CORBA::OMGVMCID | 1, ::CORBA::COMPLETED_NO);"
+        << be_uidt_nl
+        << "}" << be_uidt_nl << be_nl;
 
-  // Get the right object implementation.
-  *os << full_skel_name << " * const impl =" << be_idt_nl
-      << "static_cast<"
-      << full_skel_name << " *> (servant);"
-      << be_uidt_nl;
+    // Get the right object implementation.
+    *os << full_skel_name << " * const impl =" << be_idt_nl
+        << "static_cast<"
+        << full_skel_name << " *> (servant);"
+        << be_uidt_nl;
 
-  *os << "::CORBA::InterfaceDef_ptr _tao_retval = impl->_get_interface ();"
-      << be_nl
-      << "server_request.init_reply ();" << be_nl
-      << "TAO_OutputCDR &_tao_out = *server_request.outgoing ();"
-      << be_nl << be_nl
-      << "::CORBA::Boolean const _tao_result =" << be_idt_nl
-      << "_tao_adapter->interfacedef_cdr_insert (_tao_out, _tao_retval);"
-      << be_uidt_nl << be_nl
-      << "_tao_adapter->dispose (_tao_retval);" << be_nl << be_nl;
+    *os << "::CORBA::InterfaceDef_ptr _tao_retval = impl->_get_interface ();"
+        << be_nl
+        << "server_request.init_reply ();" << be_nl
+        << "TAO_OutputCDR &_tao_out = *server_request.outgoing ();"
+        << be_nl << be_nl
+        << "::CORBA::Boolean const _tao_result =" << be_idt_nl
+        << "_tao_adapter->interfacedef_cdr_insert (_tao_out, _tao_retval);"
+        << be_uidt_nl << be_nl
+        << "_tao_adapter->dispose (_tao_retval);" << be_nl << be_nl;
 
-  *os << "if (_tao_result == false)" << be_idt_nl
-      << "{" << be_idt_nl
-      << "throw ::CORBA::MARSHAL ();" << be_uidt_nl
-      << "}" << be_uidt;
+    *os << "if (_tao_result == false)" << be_idt_nl
+        << "{" << be_idt_nl
+        << "throw ::CORBA::MARSHAL ();" << be_uidt_nl
+        << "}" << be_uidt;
 
-  this->generate_send_reply (os);
+    this->generate_send_reply (os);
 
-  *os << be_uidt_nl
-      << "}" << be_nl << be_nl;
-
+    *os << be_uidt_nl
+        << "}" << be_nl << be_nl;
+  }
 
   // Generate code for the _component skeleton, don't generate it when
   // we use CORBA/e
-  if (!be_global->gen_corba_e ())
+  if (!be_global->gen_corba_e () && !be_global->gen_minimum_corba ())
   {
     be_predefined_type rt (AST_PredefinedType::PT_object, 0);
     // @@ Cheat a little by placing a space before the operation name
