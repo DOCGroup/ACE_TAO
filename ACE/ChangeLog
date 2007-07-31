@@ -1,3 +1,8 @@
+Tue Jul 31 17:15:47 UTC 2007  Olli Savia  <ops@iki.fi>
+
+        * ace/OS_NS_dirent.h:
+          Fixed compile error on platforms that define ACE_LACKS_REWINDDIR.
+
 Tue Jul 31 15:02:34 UTC 2007  Steve Huston  <shuston@riverace.com>
 
         * tests/Multicast_Test_IPV6.cpp: Added some more diagnostic output and
