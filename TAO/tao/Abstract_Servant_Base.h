@@ -74,17 +74,21 @@ public:
   /// Local implementation of the CORBA::Object::_is_a method.
   virtual CORBA::Boolean _is_a (const char* logical_type_id) = 0;
 
+#if (TAO_HAS_MINIMUM_CORBA == 0)
   /// Default @c _non_existent: always returns false.
   virtual CORBA::Boolean _non_existent (void) = 0;
 
   /// Query the Interface Repository.
   virtual CORBA::InterfaceDef_ptr _get_interface (void) = 0;
 
+#if !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
   /// Default @c _get_component: always returns nil.
   virtual CORBA::Object_ptr _get_component (void) = 0;
+#endif
 
   /// Default @c _repository_id
   virtual char * _repository_id (void) = 0;
+#endif /* TAO_HAS_MINIMUM_CORBA */
 
   //@{
   /**
@@ -151,6 +155,10 @@ protected:
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
+
+#if defined(__ACE_INLINE__)
+#include "tao/Abstract_Servant_Base.inl"
+#endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
 
