@@ -94,6 +94,7 @@ namespace TAO
     return _tao_retval;
   }
 
+#if !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
   CORBA::Boolean
   Collocated_Object_Proxy_Broker::_non_existent (CORBA::Object_ptr target)
   {
@@ -128,6 +129,7 @@ namespace TAO
 
     return _tao_retval;
   }
+#endif
 
   CORBA::Object_ptr
   Collocated_Object_Proxy_Broker::_get_component (CORBA::Object_ptr target)
