@@ -62,15 +62,17 @@ extern "C" {
  *
  */
 
+#if !defined (ACE_LACKS_REWINDDIR)
 inline void ace_rewinddir_helper (ACE_DIR *dir)
 {
-#if defined (rewinddir)
+#  if defined (rewinddir)
    rewinddir (dir);
-#undef rewinddir
-#else
+#  undef rewinddir
+#  else
   ACE_STD_NAMESPACE::rewinddir (dir);
-#endif /* defined (rewinddir) */
+#  endif /* defined (rewinddir) */
 }
+#endif /* ACE_LACKS_REWINDDIR */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
