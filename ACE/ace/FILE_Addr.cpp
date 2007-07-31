@@ -37,13 +37,13 @@ ACE_FILE_Addr::set (const ACE_FILE_Addr &sa)
         // -15 for ace-file-XXXXXX
         {
           ACE_ERROR ((LM_ERROR,
-                      ACE_LIB_TEXT ("Temporary path too long, ")
-                      ACE_LIB_TEXT ("defaulting to current directory\n")));
+                      ACE_TEXT ("Temporary path too long, ")
+                      ACE_TEXT ("defaulting to current directory\n")));
           this->filename_[0] = 0;
         }
 
       // Add the filename to the end
-      ACE_OS::strcat (this->filename_, ACE_LIB_TEXT ("ace-fileXXXXXX"));
+      ACE_OS::strcat (this->filename_, ACE_TEXT ("ace-fileXXXXXX"));
 
 #endif /* ACE_DEFAULT_TEMP_FILE */
 
@@ -117,7 +117,7 @@ ACE_FILE_Addr::dump (void) const
   ACE_TRACE ("ACE_FILE_Addr::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("filename_ = %s"), this->filename_));
+  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("filename_ = %s"), this->filename_));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
 }

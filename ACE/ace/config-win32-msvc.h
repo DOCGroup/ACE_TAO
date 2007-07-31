@@ -21,7 +21,7 @@
 #error Use config-win32.h in config.h instead of this header
 #endif /* ACE_CONFIG_WIN32_H */
 
-#define ACE_CC_NAME ACE_LIB_TEXT ("Visual C++")
+#define ACE_CC_NAME ACE_TEXT ("Visual C++")
 #define ACE_CC_PREPROCESSOR "CL.EXE"
 #define ACE_CC_PREPROCESSOR_ARGS "-nologo -E"
 
@@ -31,7 +31,7 @@
 
 #if !defined (ACE_LD_DECORATOR_STR)
 # if defined (_DEBUG)
-#  define ACE_LD_DECORATOR_STR ACE_LIB_TEXT ("d")
+#  define ACE_LD_DECORATOR_STR ACE_TEXT ("d")
 # endif  /* _DEBUG */
 #endif  /* ACE_LD_DECORATOR_STR */
 
@@ -133,8 +133,8 @@
 #define ACE_LACKS_TERMIOS_H
 #define ACE_LACKS_REGEX_H
 
-#define ACE_INT64_FORMAT_SPECIFIER ACE_LIB_TEXT ("%I64d")
-#define ACE_UINT64_FORMAT_SPECIFIER ACE_LIB_TEXT ("%I64u")
+#define ACE_INT64_FORMAT_SPECIFIER ACE_TEXT ("%I64d")
+#define ACE_UINT64_FORMAT_SPECIFIER ACE_TEXT ("%I64u")
 
 // Turn off warnings for /W4
 // To resume any of these warning: #pragma warning(default: 4xxx)

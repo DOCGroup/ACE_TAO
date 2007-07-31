@@ -8,7 +8,7 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class EXT_ID, class INT_ID> ACE_INLINE
-ACE_Map_Entry<EXT_ID, INT_ID>::ACE_Map_Entry (void) 
+ACE_Map_Entry<EXT_ID, INT_ID>::ACE_Map_Entry (void)
   : next_ (0),
     prev_ (0)
 #if defined (ACE_HAS_LAZY_MAP_MANAGER)
@@ -56,7 +56,7 @@ ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::ACE_Map_Manager (size_t size,
     cur_size_ (0)
 {
   if (this->open (size, alloc) == -1)
-    ACE_ERROR ((LM_ERROR, ACE_LIB_TEXT ("ACE_Map_Manager\n")));
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("ACE_Map_Manager\n")));
 }
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK> ACE_INLINE
@@ -67,7 +67,7 @@ ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::ACE_Map_Manager (ACE_Allocator *alloc
     cur_size_ (0)
 {
   if (this->open (ACE_DEFAULT_MAP_SIZE, alloc) == -1)
-    ACE_ERROR ((LM_ERROR, ACE_LIB_TEXT ("ACE_Map_Manager\n")));
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("ACE_Map_Manager\n")));
 }
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK> ACE_INLINE int

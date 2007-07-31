@@ -32,13 +32,13 @@ ACE_System_Time::ACE_System_Time (const ACE_TCHAR *poolname)
         // -17 for ace-malloc-XXXXXX
         {
           ACE_ERROR ((LM_ERROR,
-                      ACE_LIB_TEXT ("Temporary path too long, ")
-                      ACE_LIB_TEXT ("defaulting to current directory\n")));
+                      ACE_TEXT ("Temporary path too long, ")
+                      ACE_TEXT ("defaulting to current directory\n")));
           this->poolname_[0] = 0;
         }
 
       // Add the filename to the end
-      ACE_OS::strcat (this->poolname_, ACE_LIB_TEXT ("ace-malloc-XXXXXX"));
+      ACE_OS::strcat (this->poolname_, ACE_TEXT ("ace-malloc-XXXXXX"));
 
 #endif /* ACE_DEFAULT_BACKING_STORE */
     }

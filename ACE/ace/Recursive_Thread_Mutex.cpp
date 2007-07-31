@@ -33,8 +33,8 @@ ACE_Recursive_Thread_Mutex::ACE_Recursive_Thread_Mutex (const ACE_TCHAR *name,
                                      name,
                                      arg) == -1)
      ACE_ERROR ((LM_ERROR,
-                 ACE_LIB_TEXT ("%p\n"),
-                 ACE_LIB_TEXT ("recursive_mutex_init")));
+                 ACE_TEXT ("%p\n"),
+                 ACE_TEXT ("recursive_mutex_init")));
 }
 
 ACE_Recursive_Thread_Mutex::~ACE_Recursive_Thread_Mutex (void)
@@ -91,7 +91,7 @@ ACE_Recursive_Thread_Mutex::get_nesting_level (void)
   // accessed directly.  It is documented to change at any time.
   //
   // It has been reported that this this works for all three
-  // architectures.  However, this does not work on Win64 before SP1.  
+  // architectures.  However, this does not work on Win64 before SP1.
   return this->lock_.RecursionCount;
 # else
   ACE_NOTSUP_RETURN (-1);

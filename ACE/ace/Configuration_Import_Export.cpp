@@ -36,7 +36,7 @@ ACE_Registry_ImpExp::import_config (const ACE_TCHAR* filename)
       errno = EINVAL;
       return -1;
     }
-  FILE* in = ACE_OS::fopen (filename, ACE_LIB_TEXT ("r"));
+  FILE* in = ACE_OS::fopen (filename, ACE_TEXT ("r"));
   if (!in)
     return -1;
 
@@ -57,7 +57,7 @@ ACE_Registry_ImpExp::import_config (const ACE_TCHAR* filename)
     {
       // Check if we got all the line.
       end = ACE_OS::strrchr (buffer + read_pos,
-                             ACE_LIB_TEXT ('\n')); // look for end of line
+                             ACE_TEXT ('\n')); // look for end of line
       if (!end) // we havn't reach the end of the line yet
         {
           // allocate a new buffer - double size the previous one
@@ -82,13 +82,13 @@ ACE_Registry_ImpExp::import_config (const ACE_TCHAR* filename)
       read_pos = 0;
 
       // Check for a comment
-      if (buffer[0] == ACE_LIB_TEXT (';') || buffer[0] == ACE_LIB_TEXT ('#'))
+      if (buffer[0] == ACE_TEXT (';') || buffer[0] == ACE_TEXT ('#'))
         continue;
 
-      if (buffer[0] == ACE_LIB_TEXT ('['))
+      if (buffer[0] == ACE_TEXT ('['))
         {
           // We have a new section here, strip out the section name
-          end = ACE_OS::strrchr (buffer, ACE_LIB_TEXT (']'));
+          end = ACE_OS::strrchr (buffer, ACE_TEXT (']'));
           if (!end)
             {
               ACE_OS::fclose (in);
@@ -106,7 +106,7 @@ ACE_Registry_ImpExp::import_config (const ACE_TCHAR* filename)
           continue;
         }              // end if firs char is a [
 
-      if (buffer[0] == ACE_LIB_TEXT ('"'))
+      if (buffer[0] == ACE_TEXT ('"'))
         {
           // we have a value
           end = ACE_OS::strchr (buffer+1, '"');
@@ -133,7 +133,7 @@ ACE_Registry_ImpExp::import_config (const ACE_TCHAR* filename)
                   return -4;
                 }
             }
-          else if (ACE_OS::strncmp (end, ACE_LIB_TEXT ("dword:"), 6) == 0)
+          else if (ACE_OS::strncmp (end, ACE_TEXT ("dword:"), 6) == 0)
             {
               // number type
               ACE_TCHAR* endptr = 0;
@@ -145,7 +145,7 @@ ACE_Registry_ImpExp::import_config (const ACE_TCHAR* filename)
                   return -4;
                 }
             }
-          else if (ACE_OS::strncmp (end, ACE_LIB_TEXT ("hex:"), 4) == 0)
+          else if (ACE_OS::strncmp (end, ACE_TEXT ("hex:"), 4) == 0)
             {
               // binary type
               size_t string_length = ACE_OS::strlen (end + 4);
@@ -224,11 +224,11 @@ ACE_Registry_ImpExp::export_config (const ACE_TCHAR* filename)
     }
   int result = -1;
 
-  FILE* out = ACE_OS::fopen (filename, ACE_LIB_TEXT ("w"));
+  FILE* out = ACE_OS::fopen (filename, ACE_TEXT ("w"));
   if (out)
     {
       result = this->export_section (config_.root_section (),
-                                     ACE_LIB_TEXT (""),
+                                     ACE_TEXT (""),
                                      out);
       // The data may have been buffered and will be flush on close,
       // so we need to check that the close succeeds.
@@ -251,10 +251,10 @@ ACE_Registry_ImpExp::export_section (const ACE_Configuration_Section_Key& sectio
   if (path.length ())
     {
       // Write out the section header
-      ACE_TString header = ACE_LIB_TEXT ("[");
+      ACE_TString header = ACE_TEXT ("[");
       header += path;
-      header += ACE_LIB_TEXT ("]");
-      header += ACE_LIB_TEXT (" \n");
+      header += ACE_TEXT ("]");
+      header += ACE_TEXT (" \n");
       if (ACE_OS::fputs (header.fast_rep (), out) < 0)
         return -1;
       // Write out each value
@@ -269,7 +269,7 @@ ACE_Registry_ImpExp::export_section (const ACE_Configuration_Section_Key& sectio
       ACE_TString string_value;
       while (!config_.enumerate_values (section, index, name, type))
         {
-          line = ACE_LIB_TEXT ("\"") + name + ACE_LIB_TEXT ("\"=");
+          line = ACE_TEXT ("\"") + name + ACE_TEXT ("\"=");
           switch (type)
             {
             case ACE_Configuration::INTEGER:
@@ -277,8 +277,8 @@ ACE_Registry_ImpExp::export_section (const ACE_Configuration_Section_Key& sectio
                 u_int value;
                 if (config_.get_integer_value (section, name.fast_rep (), value))
                   return -2;
-                ACE_OS::sprintf (int_value, ACE_LIB_TEXT ("%08x"), value);
-                line += ACE_LIB_TEXT ("dword:");
+                ACE_OS::sprintf (int_value, ACE_TEXT ("%08x"), value);
+                line += ACE_TEXT ("dword:");
                 line += int_value;
                 break;
               }
@@ -288,8 +288,8 @@ ACE_Registry_ImpExp::export_section (const ACE_Configuration_Section_Key& sectio
                                               name.fast_rep (),
                                               string_value))
                   return -2;
-                line += ACE_LIB_TEXT ("\"");
-                line += string_value + ACE_LIB_TEXT ("\"");
+                line += ACE_TEXT ("\"");
+                line += string_value + ACE_TEXT ("\"");
                 break;
               }
 #ifdef _WIN32
@@ -306,15 +306,15 @@ ACE_Registry_ImpExp::export_section (const ACE_Configuration_Section_Key& sectio
                                               binary_data,
                                               binary_length))
                   return -2;
-                line += ACE_LIB_TEXT ("hex:");
+                line += ACE_TEXT ("hex:");
                 unsigned char* ptr = (unsigned char*)binary_data;
                 while (binary_length)
                   {
                     if (ptr != binary_data)
                       {
-                        line += ACE_LIB_TEXT (",");
+                        line += ACE_TEXT (",");
                       }
-                    ACE_OS::sprintf (bin_value, ACE_LIB_TEXT ("%02x"), *ptr);
+                    ACE_OS::sprintf (bin_value, ACE_TEXT ("%02x"), *ptr);
                     line += bin_value;
                     --binary_length;
                     ++ptr;
@@ -325,7 +325,7 @@ ACE_Registry_ImpExp::export_section (const ACE_Configuration_Section_Key& sectio
             default:
               return -3;
             }
-          line += ACE_LIB_TEXT ("\n");
+          line += ACE_TEXT ("\n");
           if (ACE_OS::fputs (line.fast_rep (), out) < 0)
             return -4;
           ++index;
@@ -340,7 +340,7 @@ ACE_Registry_ImpExp::export_section (const ACE_Configuration_Section_Key& sectio
     {
       ACE_TString sub_section (path);
       if (path.length ())
-        sub_section += ACE_LIB_TEXT ("\\");
+        sub_section += ACE_TEXT ("\\");
       sub_section += name;
       if (config_.open_section (section, name.fast_rep (), 0, sub_key))
         return -5;
@@ -359,7 +359,7 @@ ACE_Registry_ImpExp::process_previous_line_format (ACE_TCHAR* buffer,
                                                    ACE_Configuration_Section_Key& section)
 {
   // Chop any cr/lf at the end of the line.
-  ACE_TCHAR *endp = ACE_OS::strpbrk (buffer, ACE_LIB_TEXT ("\r\n"));
+  ACE_TCHAR *endp = ACE_OS::strpbrk (buffer, ACE_TEXT ("\r\n"));
   if (endp != 0)
     *endp = '\0';
 
@@ -407,7 +407,7 @@ ACE_Ini_ImpExp::import_config (const ACE_TCHAR* filename)
       errno = EINVAL;
       return -1;
     }
-  FILE* in = ACE_OS::fopen (filename, ACE_LIB_TEXT ("r"));
+  FILE* in = ACE_OS::fopen (filename, ACE_TEXT ("r"));
   if (!in)
     return -1;
 
@@ -418,15 +418,15 @@ ACE_Ini_ImpExp::import_config (const ACE_TCHAR* filename)
     {
       ACE_TCHAR *line = this->squish (buffer);
       // Check for a comment and blank line
-      if (line[0] == ACE_LIB_TEXT (';')  ||
-          line[0] == ACE_LIB_TEXT ('#')  ||
+      if (line[0] == ACE_TEXT (';')  ||
+          line[0] == ACE_TEXT ('#')  ||
           line[0] == '\0')
         continue;
 
-      if (line[0] == ACE_LIB_TEXT ('['))
+      if (line[0] == ACE_TEXT ('['))
         {
           // We have a new section here, strip out the section name
-          ACE_TCHAR* end = ACE_OS::strrchr (line, ACE_LIB_TEXT (']'));
+          ACE_TCHAR* end = ACE_OS::strrchr (line, ACE_TEXT (']'));
           if (!end)
             {
               ACE_OS::fclose (in);
@@ -447,7 +447,7 @@ ACE_Ini_ImpExp::import_config (const ACE_TCHAR* filename)
         }
 
       // We have a line; name ends at equal sign.
-      ACE_TCHAR *end = ACE_OS::strchr (line, ACE_LIB_TEXT ('='));
+      ACE_TCHAR *end = ACE_OS::strchr (line, ACE_TEXT ('='));
       if (end == 0)                            // No '='
         {
           ACE_OS::fclose (in);
@@ -470,8 +470,8 @@ ACE_Ini_ImpExp::import_config (const ACE_TCHAR* filename)
           // ACE 5.2 (and maybe earlier) exported strings may be enclosed
           // in quotes. If string is quote-delimited, strip the quotes.
           // Newer exported files don't have quote delimiters.
-          if (value[0] == ACE_LIB_TEXT ('"') &&
-              value[value_len - 1] == ACE_LIB_TEXT ('"'))
+          if (value[0] == ACE_TEXT ('"') &&
+              value[value_len - 1] == ACE_TEXT ('"'))
             {
               // Strip quotes off both ends.
               value[value_len - 1] = '\0';
@@ -509,11 +509,11 @@ ACE_Ini_ImpExp::export_config (const ACE_TCHAR* filename)
     }
   int result = -1;
 
-  FILE* out = ACE_OS::fopen (filename, ACE_LIB_TEXT ("w"));
+  FILE* out = ACE_OS::fopen (filename, ACE_TEXT ("w"));
   if (out)
     {
       result = this->export_section (config_.root_section (),
-                                     ACE_LIB_TEXT (""),
+                                     ACE_TEXT (""),
                                      out);
       // The data may have been buffered and will be flush on close,
       // so we need to check that the close succeeds.
@@ -536,9 +536,9 @@ ACE_Ini_ImpExp::export_section (const ACE_Configuration_Section_Key& section,
   if (path.length ())
     {
       // Write out the section header
-      ACE_TString header = ACE_LIB_TEXT ("[");
+      ACE_TString header = ACE_TEXT ("[");
       header += path;
-      header += ACE_LIB_TEXT ("]\n");
+      header += ACE_TEXT ("]\n");
       if (ACE_OS::fputs (header.fast_rep (), out) < 0)
         return -1;
       // Write out each value
@@ -553,7 +553,7 @@ ACE_Ini_ImpExp::export_section (const ACE_Configuration_Section_Key& section,
       ACE_TString string_value;
       while (!config_.enumerate_values (section, index, name, type))
         {
-          line = name + ACE_LIB_TEXT ("=");
+          line = name + ACE_TEXT ("=");
           switch (type)
             {
             case ACE_Configuration::INTEGER:
@@ -561,7 +561,7 @@ ACE_Ini_ImpExp::export_section (const ACE_Configuration_Section_Key& section,
                 u_int value;
                 if (config_.get_integer_value (section, name.fast_rep (), value))
                   return -2;
-                ACE_OS::sprintf (int_value, ACE_LIB_TEXT ("%08x"), value);
+                ACE_OS::sprintf (int_value, ACE_TEXT ("%08x"), value);
                 line += int_value;
                 break;
               }
@@ -588,20 +588,20 @@ ACE_Ini_ImpExp::export_section (const ACE_Configuration_Section_Key& section,
                                               binary_data,
                                               binary_length))
                   return -2;
-                line += ACE_LIB_TEXT ("\"");
+                line += ACE_TEXT ("\"");
                 unsigned char* ptr = (unsigned char*)binary_data;
                 while (binary_length)
                   {
                     if (ptr != binary_data)
                       {
-                        line += ACE_LIB_TEXT (",");
+                        line += ACE_TEXT (",");
                       }
-                    ACE_OS::sprintf (bin_value, ACE_LIB_TEXT ("%02x"), *ptr);
+                    ACE_OS::sprintf (bin_value, ACE_TEXT ("%02x"), *ptr);
                     line += bin_value;
                     --binary_length;
                     ++ptr;
                   }
-                line += ACE_LIB_TEXT ("\"");
+                line += ACE_TEXT ("\"");
                 delete [] (char *) binary_data;
                 break;
               }
@@ -610,7 +610,7 @@ ACE_Ini_ImpExp::export_section (const ACE_Configuration_Section_Key& section,
 
             }// end switch on type
 
-          line += ACE_LIB_TEXT ("\n");
+          line += ACE_TEXT ("\n");
           if (ACE_OS::fputs (line.fast_rep (), out) < 0)
             return -4;
           ++index;
@@ -625,7 +625,7 @@ ACE_Ini_ImpExp::export_section (const ACE_Configuration_Section_Key& section,
     {
       ACE_TString sub_section (path);
       if (path.length ())
-        sub_section += ACE_LIB_TEXT ("\\");
+        sub_section += ACE_TEXT ("\\");
       sub_section += name;
       if (config_.open_section (section, name.fast_rep (), 0, sub_key))
         return -5;

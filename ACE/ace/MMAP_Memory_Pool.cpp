@@ -172,14 +172,14 @@ ACE_MMAP_Memory_Pool::ACE_MMAP_Memory_Pool (
         // -17 for ace-malloc-XXXXXX
         {
           ACE_ERROR ((LM_ERROR,
-                      ACE_LIB_TEXT ("Temporary path too long, ")
-                      ACE_LIB_TEXT ("defaulting to current directory\n")));
+                      ACE_TEXT ("Temporary path too long, ")
+                      ACE_TEXT ("defaulting to current directory\n")));
           this->backing_store_name_[0] = 0;
         }
 
       // Add the filename to the end
       ACE_OS::strcat (this->backing_store_name_,
-                      ACE_LIB_TEXT ("ace-malloc-XXXXXX"));
+                      ACE_TEXT ("ace-malloc-XXXXXX"));
 
       // If requested an unique filename, use mktemp to get a random file.
       if (options && options->unique_)
@@ -242,7 +242,7 @@ ACE_MMAP_Memory_Pool::commit_backing_store_name (size_t rounded_bytes,
                             "",
                             1) == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_LIB_TEXT ("(%P|%t) %p\n"),
+                           ACE_TEXT ("(%P|%t) %p\n"),
                            this->backing_store_name_),
                           -1);
     }
@@ -291,7 +291,7 @@ ACE_MMAP_Memory_Pool::map_file (size_t map_size)
     {
 #if 0
       ACE_ERROR ((LM_ERROR,
-                  ACE_LIB_TEXT ("(%P|%t) addr = %u, base_addr = %u, map_size = %u, %p\n"),
+                  ACE_TEXT ("(%P|%t) addr = %u, base_addr = %u, map_size = %u, %p\n"),
                   this->mmap_.addr (),
                   this->base_addr_,
                   map_size,
@@ -377,8 +377,8 @@ ACE_MMAP_Memory_Pool::init_acquire (size_t nbytes,
                            0,
                            this->sa_) == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_LIB_TEXT ("%p\n"),
-                           ACE_LIB_TEXT ("MMAP_Memory_Pool::init_acquire, EEXIST")),
+                           ACE_TEXT ("%p\n"),
+                           ACE_TEXT ("MMAP_Memory_Pool::init_acquire, EEXIST")),
                           0);
 
 #if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
@@ -391,8 +391,8 @@ ACE_MMAP_Memory_Pool::init_acquire (size_t nbytes,
     }
   else
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_LIB_TEXT ("%p\n"),
-                       ACE_LIB_TEXT ("MMAP_Memory_Pool::init_acquire")),
+                       ACE_TEXT ("%p\n"),
+                       ACE_TEXT ("MMAP_Memory_Pool::init_acquire")),
                       0);
 }
 
@@ -419,7 +419,7 @@ int
 ACE_MMAP_Memory_Pool::remap (void *addr)
 {
   ACE_TRACE ("ACE_MMAP_Memory_Pool::remap");
-  //  ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("Remapping with fault address at: %X\n"), addr));
+  //  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("Remapping with fault address at: %X\n"), addr));
   size_t const current_map_size =
     ACE_Utils::truncate_cast<size_t> (ACE_OS::filesize (this->mmap_.handle ()));
   // ACE_OS::lseek (this->mmap_.handle (), 0, SEEK_END);
@@ -475,9 +475,9 @@ ACE_MMAP_Memory_Pool::handle_signal (int signum, siginfo_t *siginfo, ucontext_t 
     return -1;
 #if 0
   else
-    ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("(%P|%t) received %S\n"), signum));
+    ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("(%P|%t) received %S\n"), signum));
 #endif
-  // ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("(%P|%t) new mapping address = %u\n"), (char *) this->base_addr_ + current_map_size));
+  // ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("(%P|%t) new mapping address = %u\n"), (char *) this->base_addr_ + current_map_size));
 
 #if defined (ACE_HAS_SIGINFO_T) && !defined (ACE_LACKS_SI_ADDR)
   // Make sure that the pointer causing the problem is within the
@@ -485,7 +485,7 @@ ACE_MMAP_Memory_Pool::handle_signal (int signum, siginfo_t *siginfo, ucontext_t 
 
   if (siginfo != 0)
     {
-      // ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("(%P|%t) si_signo = %d, si_code = %d, addr = %u\n"), siginfo->si_signo, siginfo->si_code, siginfo->si_addr));
+      // ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("(%P|%t) si_signo = %d, si_code = %d, addr = %u\n"), siginfo->si_signo, siginfo->si_code, siginfo->si_addr));
       if (this->remap ((void *) siginfo->si_addr) == -1)
         return -1;
       // ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) address %u out of range\n",

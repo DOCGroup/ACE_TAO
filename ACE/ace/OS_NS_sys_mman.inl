@@ -245,7 +245,7 @@ ACE_OS::shm_open (const ACE_TCHAR *filename,
   // slashes, so replace all other / by _
   ACE_TCHAR buf [MAXPATHLEN + 1];
   ACE_OS::sprintf (buf,
-                   ACE_LIB_TEXT ("%s"),
+                   ACE_TEXT ("%s"),
                    filename);
   for (size_t i = 1; i < MAXPATHLEN + 1; i++)
     {
@@ -275,7 +275,7 @@ ACE_OS::shm_unlink (const ACE_TCHAR *path)
   // slashes, so replace all other / by _
   ACE_TCHAR buf [MAXPATHLEN + 1];
   ACE_OS::sprintf (buf,
-                   ACE_LIB_TEXT ("%s"),
+                   ACE_TEXT ("%s"),
                    path);
   for (size_t i = 1; i < MAXPATHLEN + 1; i++)
     {

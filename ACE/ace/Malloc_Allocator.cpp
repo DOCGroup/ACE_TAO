@@ -349,10 +349,10 @@ ACE_Static_Allocator_Base::dump (void) const
   ACE_TRACE ("ACE_Static_Allocator_Base::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\noffset_ = %d"), this->offset_));
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nsize_ = %d\n"), this->size_));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\noffset_ = %d"), this->offset_));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\nsize_ = %d\n"), this->size_));
   ACE_HEX_DUMP ((LM_DEBUG, this->buffer_, this->size_));
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\n")));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n")));
 
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */

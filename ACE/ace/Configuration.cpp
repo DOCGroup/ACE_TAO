@@ -151,20 +151,20 @@ ACE_Configuration::validate_name (const ACE_TCHAR* name, int allow_path)
 {
   // Invalid character set
   const ACE_TCHAR* reject =
-    allow_path ? ACE_LIB_TEXT ("][") : ACE_LIB_TEXT ("\\][");
+    allow_path ? ACE_TEXT ("][") : ACE_TEXT ("\\][");
 
   // Position of the first invalid character or terminating null.
   size_t pos = ACE_OS::strcspn (name, reject);
 
   // Check if it is an invalid character.
-  if (name[pos] != ACE_LIB_TEXT ('\0'))
+  if (name[pos] != ACE_TEXT ('\0'))
     {
       errno = EINVAL;
       return -1;
     }
 
   // The first character can never be a path separator.
-  if (name[0] == ACE_LIB_TEXT ('\\'))
+  if (name[0] == ACE_TEXT ('\\'))
     {
       errno = EINVAL;
       return -1;
@@ -1254,7 +1254,7 @@ ACE_Configuration_Heap::ACE_Configuration_Heap (void)
 {
   ACE_Configuration_Section_Key_Heap *temp = 0;
 
-  ACE_NEW (temp, ACE_Configuration_Section_Key_Heap (ACE_LIB_TEXT ("")));
+  ACE_NEW (temp, ACE_Configuration_Section_Key_Heap (ACE_TEXT ("")));
   root_ = ACE_Configuration_Section_Key (temp);
 }
 
@@ -1308,7 +1308,7 @@ ACE_Configuration_Heap::open (const ACE_TCHAR* file_name,
   // Now check if the backing store has been created successfully.
   if (ACE_OS::access (file_name, F_OK) != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_LIB_TEXT ("create_index\n")),
+                       ACE_TEXT ("create_index\n")),
                       -1);
 #endif /* ACE_LACKS_ACCESS */
 
@@ -1339,12 +1339,12 @@ ACE_Configuration_Heap::create_index (void)
         {
           // Attempt to clean up.
           ACE_ERROR ((LM_ERROR,
-                      ACE_LIB_TEXT ("create_index failed\n")));
+                      ACE_TEXT ("create_index failed\n")));
           this->allocator_->remove ();
           return -1;
         }
       // Add the root section
-      return new_section (ACE_LIB_TEXT (""), root_);
+      return new_section (ACE_TEXT (""), root_);
     }
   return 0;
 }
@@ -1406,7 +1406,7 @@ ACE_Configuration_Heap::add_section (const ACE_Configuration_Section_Key& base,
   // Create the new section name
   // only prepend a separater if were not at the root
   if (section.length ())
-    section += ACE_LIB_TEXT ("\\");
+    section += ACE_TEXT ("\\");
 
   section += sub_section;
 
@@ -1536,7 +1536,7 @@ ACE_Configuration_Heap::open_section (const ACE_Configuration_Section_Key& base,
   result = base;
 
   for (const ACE_TCHAR* separator;
-       (separator = ACE_OS::strchr (sub_section, ACE_LIB_TEXT ('\\'))) != 0;
+       (separator = ACE_OS::strchr (sub_section, ACE_TEXT ('\\'))) != 0;
        )
     {
       ACE_TString simple_section (sub_section, separator - sub_section);
@@ -1566,7 +1566,7 @@ ACE_Configuration_Heap::open_simple_section (const ACE_Configuration_Section_Key
   // Only add the \\ if were not at the root
   if (section.length ())
     {
-      section += ACE_LIB_TEXT ("\\");
+      section += ACE_TEXT ("\\");
     }
 
   section += sub_section;
@@ -1615,7 +1615,7 @@ ACE_Configuration_Heap::remove_section (const ACE_Configuration_Section_Key& key
 
   // Find this subkey
   if (section.length ())
-    section += ACE_LIB_TEXT ("\\");
+    section += ACE_TEXT ("\\");
 
   section += sub_section;
   ACE_Configuration_ExtId SectionExtId (section.fast_rep ());

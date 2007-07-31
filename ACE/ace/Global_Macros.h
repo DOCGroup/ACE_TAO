@@ -31,8 +31,8 @@
 #include "ace/Assert.h"			// For ACE_ASSERT
 
 // Start Global Macros
-# define ACE_BEGIN_DUMP ACE_LIB_TEXT ("\n====\n(%P|%t|%x)\n")
-# define ACE_END_DUMP ACE_LIB_TEXT ("====\n")
+# define ACE_BEGIN_DUMP ACE_TEXT ("\n====\n(%P|%t|%x)\n")
+# define ACE_END_DUMP ACE_TEXT ("====\n")
 
 # if defined (ACE_NDEBUG)
 #   define ACE_DB(X)

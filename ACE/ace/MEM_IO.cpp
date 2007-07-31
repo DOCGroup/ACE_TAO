@@ -175,13 +175,13 @@ ACE_MT_MEM_IO::init (ACE_HANDLE handle,
 
   // Building names.  @@ Check buffer overflow?
   ACE_OS::strcpy (server_sema, basename);
-  ACE_OS::strcat (server_sema, ACE_LIB_TEXT ("_sema_to_server"));
+  ACE_OS::strcat (server_sema, ACE_TEXT ("_sema_to_server"));
   ACE_OS::strcpy (client_sema, basename);
-  ACE_OS::strcat (client_sema, ACE_LIB_TEXT ("_sema_to_client"));
+  ACE_OS::strcat (client_sema, ACE_TEXT ("_sema_to_client"));
   ACE_OS::strcpy (server_lock, basename);
-  ACE_OS::strcat (server_lock, ACE_LIB_TEXT ("_lock_to_server"));
+  ACE_OS::strcat (server_lock, ACE_TEXT ("_lock_to_server"));
   ACE_OS::strcpy (client_lock, basename);
-  ACE_OS::strcat (client_lock, ACE_LIB_TEXT ("_lock_to_client"));
+  ACE_OS::strcat (client_lock, ACE_TEXT ("_lock_to_client"));
 
   void *to_server_ptr = 0;
   // @@ Here, we assume the shared memory fill will never be resued.

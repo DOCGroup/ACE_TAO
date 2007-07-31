@@ -273,7 +273,7 @@ ACE_Thread_Strategy<SVC_HANDLER>::open (ACE_Thread_Manager *thr_mgr,
   // Must have a thread manager!
   if (this->thr_mgr_ == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_LIB_TEXT ("error: must have a non-NULL thread manager\n")),
+                       ACE_TEXT ("error: must have a non-NULL thread manager\n")),
                       -1);
   else
     return 0;
@@ -326,8 +326,8 @@ ACE_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::ACE_Accept_Strategy
 
   if (this->open (local_addr, reuse_addr) == -1)
     ACE_ERROR ((LM_ERROR,
-                ACE_LIB_TEXT ("%p\n"),
-                ACE_LIB_TEXT ("open")));
+                ACE_TEXT ("%p\n"),
+                ACE_TEXT ("open")));
 }
 
 template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1> int
@@ -431,7 +431,7 @@ ACE_Process_Strategy<SVC_HANDLER>::activate_svc_handler (SVC_HANDLER *svc_handle
   ACE_TRACE ("ACE_Process_Strategy<SVC_HANDLER>::activate_svc_handler");
 
   // If <flags_> is non-0 then we won't create zombies.
-  switch (ACE::fork (ACE_LIB_TEXT ("child"), this->flags_))
+  switch (ACE::fork (ACE_TEXT ("child"), this->flags_))
     {
     case -1:
       {
@@ -439,8 +439,8 @@ ACE_Process_Strategy<SVC_HANDLER>::activate_svc_handler (SVC_HANDLER *svc_handle
         svc_handler->destroy ();
       }
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_LIB_TEXT ("%p\n"),
-                         ACE_LIB_TEXT ("fork")),
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("fork")),
                         -1);
       /* NOTREACHED */
     case 0: // In child process.
@@ -497,8 +497,8 @@ ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::ACE_Cache
                   con_s,
                   rec_s) == -1)
     ACE_ERROR ((LM_ERROR,
-                ACE_LIB_TEXT ("%p\n"),
-                ACE_LIB_TEXT ("ACE_Cached_Connect_Strategy::ACE_Cached_Connect_Strategy")));
+                ACE_TEXT ("%p\n"),
+                ACE_TEXT ("ACE_Cached_Connect_Strategy::ACE_Cached_Connect_Strategy")));
 }
 
 template<class SVC_HANDLER, ACE_PEER_CONNECTOR_1, class MUTEX>

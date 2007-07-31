@@ -343,29 +343,29 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::dump (void) const
   ACE_TRACE ("ACE_Timer_Heap_T::dump");
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
 
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nmax_size_ = %d"), this->max_size_));
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\ncur_size_ = %d"), this->cur_size_));
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\ncur_limbo_= %d"), this->cur_limbo_));
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nids_curr_ = %d"),
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\nmax_size_ = %d"), this->max_size_));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\ncur_size_ = %d"), this->cur_size_));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\ncur_limbo_= %d"), this->cur_limbo_));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\nids_curr_ = %d"),
               this->timer_ids_curr_));
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nmin_free_ = %d"),
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\nmin_free_ = %d"),
               this->timer_ids_min_free_));
 
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nheap_ = \n")));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\nheap_ = \n")));
 
   for (size_t i = 0; i < this->cur_size_; i++)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_LIB_TEXT ("%d\n"),
+                  ACE_TEXT ("%d\n"),
                   i));
       this->heap_[i]->dump ();
     }
 
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\ntimer_ids_ = \n")));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\ntimer_ids_ = \n")));
 
   for (size_t j = 0; j < this->max_size_; j++)
     ACE_DEBUG ((LM_DEBUG,
-                ACE_LIB_TEXT ("%d\t%d\n"),
+                ACE_TEXT ("%d\t%d\n"),
                 j,
                 this->timer_ids_[j]));
 

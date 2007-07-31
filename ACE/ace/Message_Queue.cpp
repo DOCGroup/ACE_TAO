@@ -216,25 +216,25 @@ ACE_Message_Queue_NT::dump (void) const
     {
     case ACE_Message_Queue_Base::ACTIVATED:
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_LIB_TEXT ("state = ACTIVATED\n")));
+                  ACE_TEXT ("state = ACTIVATED\n")));
       break;
     case ACE_Message_Queue_Base::DEACTIVATED:
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_LIB_TEXT ("state = DEACTIVATED\n")));
+                  ACE_TEXT ("state = DEACTIVATED\n")));
       break;
     case ACE_Message_Queue_Base::PULSED:
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_LIB_TEXT ("state = PULSED\n")));
+                  ACE_TEXT ("state = PULSED\n")));
       break;
     }
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_LIB_TEXT ("max_cthrs_ = %d\n")
-              ACE_LIB_TEXT ("cur_thrs_ = %d\n")
-              ACE_LIB_TEXT ("cur_bytes = %d\n")
-              ACE_LIB_TEXT ("cur_length = %d\n")
-              ACE_LIB_TEXT ("cur_count = %d\n")
-              ACE_LIB_TEXT ("completion_port_ = %x\n"),
+              ACE_TEXT ("max_cthrs_ = %d\n")
+              ACE_TEXT ("cur_thrs_ = %d\n")
+              ACE_TEXT ("cur_bytes = %d\n")
+              ACE_TEXT ("cur_length = %d\n")
+              ACE_TEXT ("cur_count = %d\n")
+              ACE_TEXT ("completion_port_ = %x\n"),
               this->max_cthrs_,
               this->cur_thrs_,
               this->cur_bytes_,

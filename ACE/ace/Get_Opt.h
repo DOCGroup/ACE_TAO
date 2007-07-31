@@ -171,7 +171,7 @@ public:
    */
   ACE_Get_Opt (int argc,
                ACE_TCHAR **argv,
-               const ACE_TCHAR *optstring = ACE_LIB_TEXT (""),
+               const ACE_TCHAR *optstring = ACE_TEXT (""),
                int skip_args = 1,
                int report_errors = 0,
                int ordering = PERMUTE_ARGS,

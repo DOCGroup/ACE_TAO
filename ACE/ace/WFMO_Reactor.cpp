@@ -30,7 +30,7 @@ ACE_WFMO_Reactor_Handler_Repository::open (size_t size)
 {
   if (size > MAXIMUM_WAIT_OBJECTS)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_LIB_TEXT ("%d exceeds MAXIMUM_WAIT_OBJECTS (%d)\n"),
+                       ACE_TEXT ("%d exceeds MAXIMUM_WAIT_OBJECTS (%d)\n"),
                        size,
                        MAXIMUM_WAIT_OBJECTS),
                       -1);
@@ -1002,53 +1002,53 @@ ACE_WFMO_Reactor_Handler_Repository::dump (void) const
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_LIB_TEXT ("Max size = %d\n"),
+              ACE_TEXT ("Max size = %d\n"),
               this->max_size_));
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_LIB_TEXT ("Current info table\n\n")));
+              ACE_TEXT ("Current info table\n\n")));
   ACE_DEBUG ((LM_DEBUG,
-              ACE_LIB_TEXT ("\tSize = %d\n"),
+              ACE_TEXT ("\tSize = %d\n"),
               this->max_handlep1_));
   ACE_DEBUG ((LM_DEBUG,
-              ACE_LIB_TEXT ("\tHandles to be suspended = %d\n"),
+              ACE_TEXT ("\tHandles to be suspended = %d\n"),
               this->handles_to_be_suspended_));
 
   for (i = 0; i < this->max_handlep1_; ++i)
     this->current_info_[i].dump (this->current_handles_[i]);
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_LIB_TEXT ("\n")));
+              ACE_TEXT ("\n")));
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_LIB_TEXT ("To-be-added info table\n\n")));
+              ACE_TEXT ("To-be-added info table\n\n")));
   ACE_DEBUG ((LM_DEBUG,
-              ACE_LIB_TEXT ("\tSize = %d\n"),
+              ACE_TEXT ("\tSize = %d\n"),
               this->handles_to_be_added_));
 
   for (i = 0; i < this->handles_to_be_added_; ++i)
     this->to_be_added_info_[i].dump ();
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_LIB_TEXT ("\n")));
+              ACE_TEXT ("\n")));
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_LIB_TEXT ("Suspended info table\n\n")));
+              ACE_TEXT ("Suspended info table\n\n")));
   ACE_DEBUG ((LM_DEBUG,
-              ACE_LIB_TEXT ("\tSize = %d\n"),
+              ACE_TEXT ("\tSize = %d\n"),
               this->suspended_handles_));
   ACE_DEBUG ((LM_DEBUG,
-              ACE_LIB_TEXT ("\tHandles to be resumed = %d\n"),
+              ACE_TEXT ("\tHandles to be resumed = %d\n"),
               this->handles_to_be_resumed_));
 
   for (i = 0; i < this->suspended_handles_; ++i)
     this->current_suspended_info_[i].dump ();
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_LIB_TEXT ("\n")));
+              ACE_TEXT ("\n")));
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_LIB_TEXT ("Total handles to be deleted = %d\n"),
+              ACE_TEXT ("Total handles to be deleted = %d\n"),
               this->handles_to_be_deleted_));
 
   ACE_DEBUG ((LM_DEBUG,
@@ -1095,8 +1095,8 @@ ACE_WFMO_Reactor::ACE_WFMO_Reactor (ACE_Sig_Handler *sh,
 {
   if (this->open (ACE_WFMO_Reactor::DEFAULT_SIZE, 0, sh, tq, 0, notify) == -1)
     ACE_ERROR ((LM_ERROR,
-                ACE_LIB_TEXT ("%p\n"),
-                ACE_LIB_TEXT ("WFMO_Reactor")));
+                ACE_TEXT ("%p\n"),
+                ACE_TEXT ("WFMO_Reactor")));
 }
 
 ACE_WFMO_Reactor::ACE_WFMO_Reactor (size_t size,
@@ -1130,8 +1130,8 @@ ACE_WFMO_Reactor::ACE_WFMO_Reactor (size_t size,
 
   if (this->open (size, 0, sh, tq, 0, notify) == -1)
     ACE_ERROR ((LM_ERROR,
-                ACE_LIB_TEXT ("%p\n"),
-                ACE_LIB_TEXT ("WFMO_Reactor")));
+                ACE_TEXT ("%p\n"),
+                ACE_TEXT ("WFMO_Reactor")));
 }
 #if defined (ACE_WIN32_VC8)
 #  pragma warning (pop)
@@ -1217,8 +1217,8 @@ ACE_WFMO_Reactor::open (size_t size,
   // Open the handle repository.  Two additional handles for internal
   // purposes
   if (this->handler_rep_.open (size + 2) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, ACE_LIB_TEXT ("%p\n"),
-                       ACE_LIB_TEXT ("opening handler repository")),
+    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
+                       ACE_TEXT ("opening handler repository")),
                       -1);
   else
     this->delete_handler_rep_ = true;
@@ -1246,16 +1246,16 @@ ACE_WFMO_Reactor::open (size_t size,
   // Open the notification handler
   if (this->notify_handler_->open (this, this->timer_queue_) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_LIB_TEXT ("%p\n"),
-                       ACE_LIB_TEXT ("opening notify handler ")),
+                       ACE_TEXT ("%p\n"),
+                       ACE_TEXT ("opening notify handler ")),
                       -1);
 
   // Register for <wakeup_all_threads> event
   if (this->register_handler (&this->wakeup_all_threads_handler_,
                               this->wakeup_all_threads_.handle ()) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_LIB_TEXT ("%p\n"),
-                       ACE_LIB_TEXT ("registering thread wakeup handler")),
+                       ACE_TEXT ("%p\n"),
+                       ACE_TEXT ("registering thread wakeup handler")),
                       -1);
 
   // Since we have added two handles into the handler repository,
@@ -2339,11 +2339,11 @@ ACE_WFMO_Reactor::dump (void) const
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_LIB_TEXT ("Count of currently active threads = %d\n"),
+              ACE_TEXT ("Count of currently active threads = %d\n"),
               this->active_threads_));
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_LIB_TEXT ("ID of owner thread = %d\n"),
+              ACE_TEXT ("ID of owner thread = %d\n"),
               this->owner_));
 
   this->handler_rep_.dump ();
@@ -2432,7 +2432,7 @@ ACE_WFMO_Reactor_Notify::handle_signal (int signum,
   // This will get called when <WFMO_Reactor->wakeup_one_thread_> event
   // is signaled.
   //  ACE_DEBUG ((LM_DEBUG,
-  //             ACE_LIB_TEXT ("(%t) waking up to handle internal notifications\n")));
+  //             ACE_TEXT ("(%t) waking up to handle internal notifications\n")));
 
   for (int i = 1; ; ++i)
     {
@@ -2488,7 +2488,7 @@ ACE_WFMO_Reactor_Notify::handle_signal (int signum,
                   break;
                 default:
                   ACE_ERROR ((LM_ERROR,
-                              ACE_LIB_TEXT ("invalid mask = %d\n"),
+                              ACE_TEXT ("invalid mask = %d\n"),
                               buffer->mask_));
                   break;
                 }
@@ -2689,7 +2689,7 @@ ACE_WFMO_Reactor_Notify::dump (void) const
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   this->timer_queue_->dump ();
   ACE_DEBUG ((LM_DEBUG,
-              ACE_LIB_TEXT ("Max. iteration: %d\n"),
+              ACE_TEXT ("Max. iteration: %d\n"),
               this->max_notify_iterations_));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */

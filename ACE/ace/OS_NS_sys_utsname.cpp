@@ -167,13 +167,13 @@ ACE_OS::uname (ACE_utsname *name)
       if (vinfo.dwMajorVersion == 4 && vinfo.dwMinorVersion == 0)
         {
           ACE_OS::strcpy (name->release, "Windows 95");
-          if (vinfo.szCSDVersion[1] == ACE_LIB_TEXT('C'))
+          if (vinfo.szCSDVersion[1] == ACE_TEXT('C'))
             ACE_OS::strcat (name->release, " OSR2");
         }
       else if (vinfo.dwMajorVersion == 4 && vinfo.dwMinorVersion == 10)
         {
           ACE_OS::strcpy (name->release, "Windows 98");
-          if (vinfo.szCSDVersion[1] == ACE_LIB_TEXT('A'))
+          if (vinfo.szCSDVersion[1] == ACE_TEXT('A'))
             ACE_OS::strcat (name->release, " SE");
         }
       else if (vinfo.dwMajorVersion == 4 && vinfo.dwMinorVersion == 90)

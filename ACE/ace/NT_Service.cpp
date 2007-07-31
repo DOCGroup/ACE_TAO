@@ -195,8 +195,8 @@ ACE_NT_Service::insert (DWORD start_type,
       if (ACE_TEXT_GetModuleFileName (0, this_exe + 1, MAXPATHLEN) == 0)
         return -1;
       // Make sure that this_exe is quoted
-      this_exe[0] = ACE_LIB_TEXT ('\"');
-      ACE_OS::strcat (this_exe, ACE_LIB_TEXT ("\""));
+      this_exe[0] = ACE_TEXT ('\"');
+      ACE_OS::strcat (this_exe, ACE_TEXT ("\""));
       exe_path = this_exe;
     }
 

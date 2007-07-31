@@ -27,12 +27,12 @@ ACE_Mem_Map::dump (void) const
   ACE_TRACE ("ACE_Mem_Map::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("base_addr_ = %x"), this->base_addr_));
-  ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("\nfilename_ = %s"), this->filename_));
-  ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("\nlength_ = %d"), this->length_));
-  ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("\nhandle_ = %d"), this->handle_));
-  ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("\nfile_mapping_ = %d"), this->file_mapping_));
-  ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("\nclose_handle_ = %d"), this->close_handle_));
+  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("base_addr_ = %x"), this->base_addr_));
+  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("\nfilename_ = %s"), this->filename_));
+  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("\nlength_ = %d"), this->length_));
+  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("\nhandle_ = %d"), this->handle_));
+  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("\nfile_mapping_ = %d"), this->file_mapping_));
+  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("\nclose_handle_ = %d"), this->close_handle_));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
 }
@@ -249,8 +249,8 @@ ACE_Mem_Map::ACE_Mem_Map (const ACE_TCHAR *file_name,
                  offset,
                  sa) < 0)
     ACE_ERROR ((LM_ERROR,
-                ACE_LIB_TEXT ("%p\n"),
-                ACE_LIB_TEXT ("ACE_Mem_Map::ACE_Mem_Map")));
+                ACE_TEXT ("%p\n"),
+                ACE_TEXT ("ACE_Mem_Map::ACE_Mem_Map")));
 }
 
 // Map a file from an open file descriptor HANDLE.  This function will
@@ -282,8 +282,8 @@ ACE_Mem_Map::ACE_Mem_Map (ACE_HANDLE handle,
                  offset,
                  sa) < 0)
     ACE_ERROR ((LM_ERROR,
-                ACE_LIB_TEXT ("%p\n"),
-                ACE_LIB_TEXT ("ACE_Mem_Map::ACE_Mem_Map")));
+                ACE_TEXT ("%p\n"),
+                ACE_TEXT ("ACE_Mem_Map::ACE_Mem_Map")));
 }
 
 // Close down and remove the file from the file system.

@@ -409,8 +409,8 @@ ACE_SOCK_SEQPACK_Connector::ACE_SOCK_SEQPACK_Connector (ACE_SOCK_SEQPACK_Associa
       && timeout != 0
       && !(errno == EWOULDBLOCK || errno == ETIME || errno == ETIMEDOUT))
     ACE_ERROR ((LM_ERROR,
-                ACE_LIB_TEXT ("%p\n"),
-                ACE_LIB_TEXT ("ACE_SOCK_SEQPACK_Connector::ACE_SOCK_SEQPACK_Connector")));
+                ACE_TEXT ("%p\n"),
+                ACE_TEXT ("ACE_SOCK_SEQPACK_Connector::ACE_SOCK_SEQPACK_Connector")));
 }
 
 // Multihomed version of same
@@ -436,8 +436,8 @@ ACE_SOCK_SEQPACK_Connector::ACE_SOCK_SEQPACK_Connector (ACE_SOCK_SEQPACK_Associa
       && timeout != 0
       && !(errno == EWOULDBLOCK || errno == ETIME || errno == ETIMEDOUT))
     ACE_ERROR ((LM_ERROR,
-                ACE_LIB_TEXT ("%p\n"),
-                ACE_LIB_TEXT ("ACE_SOCK_SEQPACK_Connector::ACE_SOCK_SEQPACK_Connector")));
+                ACE_TEXT ("%p\n"),
+                ACE_TEXT ("ACE_SOCK_SEQPACK_Connector::ACE_SOCK_SEQPACK_Connector")));
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL

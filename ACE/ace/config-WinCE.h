@@ -53,7 +53,7 @@
 // Need to define LD search path explicitly on CE because
 // CE doesn't have environment variables and we can't get
 // the information using getenv.
-#define ACE_DEFAULT_LD_SEARCH_PATH ACE_LIB_TEXT (".\\;\\windows")
+#define ACE_DEFAULT_LD_SEARCH_PATH ACE_TEXT (".\\;\\windows")
 
 #define ACE_LACKS_FCNTL_H
 #define ACE_LACKS_SYS_TYPES_H
@@ -102,7 +102,7 @@
 #endif  // SH3 && _DEBUG
 
 #ifndef ACE_DEFAULT_SERVER_HOST
-# define ACE_DEFAULT_SERVER_HOST ACE_LIB_TEXT("localhost")
+# define ACE_DEFAULT_SERVER_HOST ACE_TEXT("localhost")
 #endif  // ACE_DEFAULT_SERVER_HOST
 
 // @@ Need to remap every function that uses any of these flags to

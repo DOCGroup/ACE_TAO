@@ -117,7 +117,7 @@ private:
 ACE_Object_Manager_Preallocations::ACE_Object_Manager_Preallocations (void)
 {
   ACE_STATIC_SVC_DEFINE (ACE_Service_Manager_initializer,
-                         ACE_LIB_TEXT ("ACE_Service_Manager"),
+                         ACE_TEXT ("ACE_Service_Manager"),
                          ACE_SVC_OBJ_T,
                          &ACE_SVC_NAME (ACE_Service_Manager),
                          ACE_Service_Type::DELETE_THIS |
@@ -159,9 +159,9 @@ LONG _stdcall ACE_UnhandledExceptionFilter (PEXCEPTION_POINTERS pExceptionInfo)
   DWORD dwExceptionCode = pExceptionInfo->ExceptionRecord->ExceptionCode;
 
   if (dwExceptionCode == EXCEPTION_ACCESS_VIOLATION)
-    ACE_ERROR ((LM_ERROR, ACE_LIB_TEXT ("\nERROR: ACCESS VIOLATION\n")));
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("\nERROR: ACCESS VIOLATION\n")));
   else
-    ACE_ERROR ((LM_ERROR, ACE_LIB_TEXT ("\nERROR: UNHANDLED EXCEPTION\n")));
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("\nERROR: UNHANDLED EXCEPTION\n")));
 
   return EXCEPTION_EXECUTE_HANDLER;
 }

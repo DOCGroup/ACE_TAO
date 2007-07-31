@@ -65,7 +65,7 @@ ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>::ACE_Timeprobe_Ex (const ACE_Timeprobe_Ex<
   //
 
   ACE_ERROR ((LM_ERROR,
-              ACE_LIB_TEXT ("ACE_NOTSUP: %N, line %l\n")));
+              ACE_TEXT ("ACE_NOTSUP: %N, line %l\n")));
   errno = ENOTSUP;
 }
 
@@ -290,8 +290,8 @@ ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>::print_times (void)
                   time_difference));
 
       j = i;
-      i = (i + 1) % this->max_size_; 
-    } 
+      i = (i + 1) % this->max_size_;
+    }
   while (i != this->current_size_);
 
   static bool inversion_warning_printed = false;
@@ -345,14 +345,14 @@ ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>::print_absolute_times (void)
 
       // Modulus increment: loops around at the end.
       i = (i + 1) % this->max_size_;
-    } 
+    }
   while (i != this->current_size_);
 }
 
 template <class ACE_LOCK, class ALLOCATOR> const char *
 ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>::find_description_i (u_long i)
 {
-  if (this->timeprobes_[i].event_type_ == ACE_timeprobe_t::STRING) 
+  if (this->timeprobes_[i].event_type_ == ACE_timeprobe_t::STRING)
     return this->timeprobes_[i].event_.event_description_;
   else
     {

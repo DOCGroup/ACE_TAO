@@ -76,7 +76,7 @@ ACE_ATM_Acceptor::get_local_addr (ACE_ATM_Addr &local_addr)
  (struct sockaddr *) & (myaddr->sockaddratmsvc),
                           &addrlen) < 0) {
     ACE_DEBUG ((LM_DEBUG,
-               ACE_LIB_TEXT ("ATM_Acceptor (get_local_addr): ioctl: %d\n"),
+               ACE_TEXT ("ATM_Acceptor (get_local_addr): ioctl: %d\n"),
                errno));
     return -1;
   }
@@ -173,7 +173,7 @@ ACE_ATM_Acceptor::open (const ACE_Addr &remote_sap,
                                ))
       == ACE_INVALID_HANDLE) {
     ACE_DEBUG (LM_DEBUG,
-              ACE_LIB_TEXT ("Acceptor (socket): socket %d\n"),
+              ACE_TEXT ("Acceptor (socket): socket %d\n"),
               errno);
     return (ACE_INVALID_HANDLE);
   }
@@ -210,7 +210,7 @@ ACE_ATM_Acceptor::open (const ACE_Addr &remote_sap,
                     sizeof (local_sap_addr->sockaddratmsvc)
                    ) == -1) {
     ACE_DEBUG (LM_DEBUG,
-              ACE_LIB_TEXT ("Acceptor (open): bind %d\n"),
+              ACE_TEXT ("Acceptor (open): bind %d\n"),
               errno);
     return -1;
   }
@@ -219,7 +219,7 @@ ACE_ATM_Acceptor::open (const ACE_Addr &remote_sap,
                       backlog)
       == -1) {
     ACE_DEBUG (LM_DEBUG,
-              ACE_LIB_TEXT ("Acceptor (listen): listen %d\n"),
+              ACE_TEXT ("Acceptor (listen): listen %d\n"),
               errno);
     return -1;
   }

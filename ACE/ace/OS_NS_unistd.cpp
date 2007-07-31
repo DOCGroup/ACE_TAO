@@ -60,7 +60,7 @@ ACE_OS::argv_to_string (ACE_TCHAR **argv,
 #if !defined (ACE_LACKS_ENV)
       // Account for environment variables.
       if (substitute_env_args
-          && ACE_OS::strchr (argv[i], ACE_LIB_TEXT ('$')) != 0)
+          && ACE_OS::strchr (argv[i], ACE_TEXT ('$')) != 0)
         {
           if (argv_p == argv)
             {
@@ -82,7 +82,7 @@ ACE_OS::argv_to_string (ACE_TCHAR **argv,
         }
 #endif /* ACE_LACKS_ENV */
       if (quote_args
-          && ACE_OS::strchr (argv_p[i], ACE_LIB_TEXT (' ')) != 0)
+          && ACE_OS::strchr (argv_p[i], ACE_TEXT (' ')) != 0)
         {
           if (argv_p == argv)
             {
@@ -96,10 +96,10 @@ ACE_OS::argv_to_string (ACE_TCHAR **argv,
             }
           int quotes = 0;
           ACE_TCHAR *temp = argv_p[i];
-          if (ACE_OS::strchr (temp, ACE_LIB_TEXT ('"')) != 0)
+          if (ACE_OS::strchr (temp, ACE_TEXT ('"')) != 0)
             {
               for (int j = 0; temp[j] != 0; ++j)
-                if (temp[j] == ACE_LIB_TEXT ('"'))
+                if (temp[j] == ACE_TEXT ('"'))
                   ++quotes;
             }
           argv_p[i] =
@@ -112,24 +112,24 @@ ACE_OS::argv_to_string (ACE_TCHAR **argv,
             }
           ACE_TCHAR *end = argv_p[i];
 
-          *end++ = ACE_LIB_TEXT ('"');
+          *end++ = ACE_TEXT ('"');
 
           if (quotes > 0)
             {
               for (ACE_TCHAR *p = temp;
                    *p != 0;
                    *end++ = *p++)
-                if (*p == ACE_LIB_TEXT ('"'))
-                  *end++ = ACE_LIB_TEXT ('\\');
+                if (*p == ACE_TEXT ('"'))
+                  *end++ = ACE_TEXT ('\\');
 
-              *end++ = ACE_LIB_TEXT ('\0');
+              *end++ = ACE_TEXT ('\0');
             }
           else
             end = ACE_OS::strecpy (end, temp);
 
-          end[-1] = ACE_LIB_TEXT ('"');
+          end[-1] = ACE_TEXT ('"');
 
-          *end = ACE_LIB_TEXT ('\0');
+          *end = ACE_TEXT ('\0');
           if (temp != argv[i])
             ACE_OS::free (temp);
         }
@@ -147,7 +147,7 @@ ACE_OS::argv_to_string (ACE_TCHAR **argv,
                   0);
 
   // Initial null charater to make it a null string.
-  buf[0] = ACE_LIB_TEXT ('\0');
+  buf[0] = ACE_TEXT ('\0');
   ACE_TCHAR *end = buf;
 
   for (int i = 0; i < argc; ++i)
@@ -158,10 +158,10 @@ ACE_OS::argv_to_string (ACE_TCHAR **argv,
 
       // Replace the null char that strecpy put there with white
       // space.
-      end[-1] = ACE_LIB_TEXT (' ');
+      end[-1] = ACE_TEXT (' ');
     }
   // Null terminate the string.
-  *end = ACE_LIB_TEXT ('\0');
+  *end = ACE_TEXT ('\0');
 
   if (argv_p != argv)
     ACE_OS::free (argv_p);
@@ -693,30 +693,30 @@ ACE_OS::string_to_argv (ACE_TCHAR *buf,
   // First pass: count arguments.
 
   // '#' is the start-comment token..
-  while (*cp != ACE_LIB_TEXT ('\0') && *cp != ACE_LIB_TEXT ('#'))
+  while (*cp != ACE_TEXT ('\0') && *cp != ACE_TEXT ('#'))
     {
       // Skip whitespace..
       while (ACE_OS::ace_isspace (*cp))
         ++cp;
 
       // Increment count and move to next whitespace..
-      if (*cp != ACE_LIB_TEXT ('\0'))
+      if (*cp != ACE_TEXT ('\0'))
         ++argc;
 
-      while (*cp != ACE_LIB_TEXT ('\0') && !ACE_OS::ace_isspace (*cp))
+      while (*cp != ACE_TEXT ('\0') && !ACE_OS::ace_isspace (*cp))
         {
           // Grok quotes....
-          if (*cp == ACE_LIB_TEXT ('\'') || *cp == ACE_LIB_TEXT ('"'))
+          if (*cp == ACE_TEXT ('\'') || *cp == ACE_TEXT ('"'))
             {
               ACE_TCHAR quote = *cp;
 
               // Scan past the string..
-              for (++cp; *cp != ACE_LIB_TEXT ('\0')
-                   && (*cp != quote || cp[-1] == ACE_LIB_TEXT ('\\')); ++cp)
+              for (++cp; *cp != ACE_TEXT ('\0')
+                   && (*cp != quote || cp[-1] == ACE_TEXT ('\\')); ++cp)
                 continue;
 
               // '\0' implies unmatched quote..
-              if (*cp == ACE_LIB_TEXT ('\0'))
+              if (*cp == ACE_TEXT ('\0'))
                 {
                   --argc;
                   break;
@@ -755,15 +755,15 @@ ACE_OS::string_to_argv (ACE_TCHAR *buf,
 
       // Copy next argument and move to next whitespace..
       cp = argp;
-      while (*ptr != ACE_LIB_TEXT ('\0') && !ACE_OS::ace_isspace (*ptr))
-        if (*ptr == ACE_LIB_TEXT ('\'') || *ptr == ACE_LIB_TEXT ('"'))
+      while (*ptr != ACE_TEXT ('\0') && !ACE_OS::ace_isspace (*ptr))
+        if (*ptr == ACE_TEXT ('\'') || *ptr == ACE_TEXT ('"'))
           {
             ACE_TCHAR quote = *ptr++;
 
-            while (*ptr != ACE_LIB_TEXT ('\0')
-                   && (*ptr != quote || ptr[-1] == ACE_LIB_TEXT ('\\')))
+            while (*ptr != ACE_TEXT ('\0')
+                   && (*ptr != quote || ptr[-1] == ACE_TEXT ('\\')))
               {
-                if (*ptr == quote && ptr[-1] == ACE_LIB_TEXT ('\\')) --cp;
+                if (*ptr == quote && ptr[-1] == ACE_TEXT ('\\')) --cp;
                 *cp++ = *ptr++;
               }
 
@@ -773,7 +773,7 @@ ACE_OS::string_to_argv (ACE_TCHAR *buf,
         else
           *cp++ = *ptr++;
 
-      *cp = ACE_LIB_TEXT ('\0');
+      *cp = ACE_TEXT ('\0');
 
 #if !defined (ACE_LACKS_ENV)
       // Check for environment variable substitution here.

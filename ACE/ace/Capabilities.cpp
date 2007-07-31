@@ -35,36 +35,36 @@ ACE_Capabilities::~ACE_Capabilities (void)
 const ACE_TCHAR *
 ACE_Capabilities::parse (const ACE_TCHAR *buf, ACE_TString &cap)
 {
-  while (*buf != ACE_LIB_TEXT ('\0') && *buf != ACE_LIB_TEXT (','))
+  while (*buf != ACE_TEXT ('\0') && *buf != ACE_TEXT (','))
     {
-      if (*buf == ACE_LIB_TEXT ('\\'))
+      if (*buf == ACE_TEXT ('\\'))
         {
           ++buf;
-          if (*buf == ACE_LIB_TEXT ('E') || *buf == ACE_LIB_TEXT ('e'))
+          if (*buf == ACE_TEXT ('E') || *buf == ACE_TEXT ('e'))
             {
               cap += ACE_ESC;
               ++buf;
               continue;
             }
-          else if (*buf == ACE_LIB_TEXT ('r'))
+          else if (*buf == ACE_TEXT ('r'))
             {
-              cap += ACE_LIB_TEXT ('\r');
+              cap += ACE_TEXT ('\r');
               ++buf;
               continue;
             }
-          else if (*buf == ACE_LIB_TEXT ('n'))
+          else if (*buf == ACE_TEXT ('n'))
             {
-              cap += ACE_LIB_TEXT ('\n');
+              cap += ACE_TEXT ('\n');
               ++buf;
               continue;
             }
-          else if (*buf == ACE_LIB_TEXT ('t'))
+          else if (*buf == ACE_TEXT ('t'))
             {
-              cap += ACE_LIB_TEXT ('\t');
+              cap += ACE_TEXT ('\t');
               ++buf;
               continue;
             }
-          else if (*buf == ACE_LIB_TEXT ('\\'))
+          else if (*buf == ACE_TEXT ('\\'))
             {
               cap += *buf++;
               continue;
@@ -76,7 +76,7 @@ ACE_Capabilities::parse (const ACE_TCHAR *buf, ACE_TString &cap)
               for (int i = 0;
                    i < 3 && *buf && ACE_OS::ace_isdigit (*buf);
                    i++)
-                oc = oc * 8 + (*buf++ - ACE_LIB_TEXT ('0'));
+                oc = oc * 8 + (*buf++ - ACE_TEXT ('0'));
 
               cap += (ACE_TCHAR) oc;
               continue;
@@ -93,7 +93,7 @@ ACE_Capabilities::parse (const ACE_TCHAR *buf, int &cap)
   int n = 0;
 
   while (*buf && ACE_OS::ace_isdigit (*buf))
-    n = n * 10 + (*buf++ - ACE_LIB_TEXT ('0'));
+    n = n * 10 + (*buf++ - ACE_TEXT ('0'));
 
   cap = n;
 
@@ -131,26 +131,26 @@ ACE_Capabilities::fillent (const ACE_TCHAR *buf)
       while (*buf && ACE_OS::ace_isspace(*buf)) buf++;
       // If we get end of line return
 
-      if (*buf == ACE_LIB_TEXT ('\0'))
+      if (*buf == ACE_TEXT ('\0'))
         break;
 
-      if (*buf == ACE_LIB_TEXT ('#'))
+      if (*buf == ACE_TEXT ('#'))
         {
-          while (*buf && *buf != ACE_LIB_TEXT ('\n'))
+          while (*buf && *buf != ACE_TEXT ('\n'))
             buf++;
-          if (*buf == ACE_LIB_TEXT ('\n'))
+          if (*buf == ACE_TEXT ('\n'))
             buf++;
           continue;
         }
-      while(*buf && *buf != ACE_LIB_TEXT ('=')
-            && *buf!= ACE_LIB_TEXT ('#')
-            && *buf != ACE_LIB_TEXT (','))
+      while(*buf && *buf != ACE_TEXT ('=')
+            && *buf!= ACE_TEXT ('#')
+            && *buf != ACE_TEXT (','))
         name += *buf++;
 
       // If name is null.
       switch (*buf)
         {
-        case ACE_LIB_TEXT ('='):
+        case ACE_TEXT ('='):
           // String property
           buf = this->parse (buf + 1, s);
           ACE_NEW_RETURN (ce,
@@ -162,7 +162,7 @@ ACE_Capabilities::fillent (const ACE_TCHAR *buf)
               return -1;
             }
           break;
-        case ACE_LIB_TEXT ('#'):
+        case ACE_TEXT ('#'):
           // Integer property
           buf = this->parse (buf + 1, n);
           ACE_NEW_RETURN (ce,
@@ -174,7 +174,7 @@ ACE_Capabilities::fillent (const ACE_TCHAR *buf)
               return -1;
             }
           break;
-        case ACE_LIB_TEXT (','):
+        case ACE_TEXT (','):
           // Boolean
           ACE_NEW_RETURN (ce,
                           ACE_BoolCapEntry (1),
@@ -189,7 +189,7 @@ ACE_Capabilities::fillent (const ACE_TCHAR *buf)
           return 0;
         }
 
-      if (*buf++ != ACE_LIB_TEXT (','))
+      if (*buf++ != ACE_TEXT (','))
         return -1;
     }
 
@@ -206,12 +206,12 @@ ACE_Capabilities::is_entry (const ACE_TCHAR *name, const ACE_TCHAR *line)
         ++line;
 
       // End of line reached
-      if (*line == ACE_LIB_TEXT ('\0'))
+      if (*line == ACE_TEXT ('\0'))
         break;
 
       // Build the entry name
       ACE_TString nextname;
-      while (*line && *line != ACE_LIB_TEXT ('|') && *line != ACE_LIB_TEXT (','))
+      while (*line && *line != ACE_TEXT ('|') && *line != ACE_TEXT (','))
         nextname += *line++;
 
       // We have found the required entry?
@@ -219,12 +219,12 @@ ACE_Capabilities::is_entry (const ACE_TCHAR *name, const ACE_TCHAR *line)
         return 1;
 
       // Skip puntuaction char if neccesary.
-      if (*line == ACE_LIB_TEXT ('|') || *line == ACE_LIB_TEXT (','))
+      if (*line == ACE_TEXT ('|') || *line == ACE_TEXT (','))
         ++line;
       else
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_LIB_TEXT ("Invalid entry\n")));
+                      ACE_TEXT ("Invalid entry\n")));
           break;
         }
     }
@@ -238,7 +238,7 @@ ACE_Capabilities::getline (FILE *fp, ACE_TString &line)
 
   line.set (0, 0);
 
-  while ((ch = ACE_OS::fgetc (fp)) != EOF && ch != ACE_LIB_TEXT ('\n'))
+  while ((ch = ACE_OS::fgetc (fp)) != EOF && ch != ACE_TEXT ('\n'))
     line += (ACE_TCHAR) ch;
 
   if (ch == EOF && line.length () == 0)
@@ -295,7 +295,7 @@ is_empty (const ACE_TCHAR *line)
   while (*line && ACE_OS::ace_isspace (*line))
     ++line;
 
-  return *line == ACE_LIB_TEXT ('\0') || *line == ACE_LIB_TEXT ('#');
+  return *line == ACE_TEXT ('\0') || *line == ACE_TEXT ('#');
 }
 
 static int
@@ -304,18 +304,18 @@ is_line (const ACE_TCHAR *line)
   while (*line && ACE_OS::ace_isspace (*line))
     ++line;
 
-  return *line != ACE_LIB_TEXT ('\0');
+  return *line != ACE_TEXT ('\0');
 }
 #endif /* !ACE_IS_SPLITTING */
 
 int
 ACE_Capabilities::getent (const ACE_TCHAR *fname, const ACE_TCHAR *name)
 {
-  FILE *fp = ACE_OS::fopen (fname, ACE_LIB_TEXT ("r"));
+  FILE *fp = ACE_OS::fopen (fname, ACE_TEXT ("r"));
 
   if (fp == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_LIB_TEXT ("Can't open %s file\n"),
+                       ACE_TEXT ("Can't open %s file\n"),
                        fname),
                       -1);
 

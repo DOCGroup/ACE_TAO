@@ -17,7 +17,7 @@ int ACE_SEH_Default_Exception_Selector (void *)
 {
 #if 0
   ACE_DEBUG ((LM_DEBUG,
-              ACE_LIB_TEXT ("(%t) Win32 structured exception exiting thread\n")));
+              ACE_TEXT ("(%t) Win32 structured exception exiting thread\n")));
 #endif /* 0 */
   // this is only windows and only used here,
   // defined in ace/config-win32-common.h.
@@ -216,21 +216,21 @@ ACE_OS_Object_Manager::init (void)
               // This line must not be broken to avoid tickling a bug with SunC++'s preprocessor.
               (reinterpret_cast <ACE_thread_mutex_t *> (ACE_OS_Object_Manager::preallocated_object[ACE_OS_MONITOR_LOCK])) != 0)
             ACE_OS_Object_Manager::print_error_message (
-              __LINE__, ACE_LIB_TEXT ("ACE_OS_MONITOR_LOCK"));
+              __LINE__, ACE_TEXT ("ACE_OS_MONITOR_LOCK"));
           ACE_OS_PREALLOCATE_OBJECT (ACE_recursive_thread_mutex_t,
                                      ACE_TSS_CLEANUP_LOCK)
           if (ACE_OS::recursive_mutex_init
               // This line must not be broken to avoid tickling a bug with SunC++'s preprocessor.
               (reinterpret_cast <ACE_recursive_thread_mutex_t *> (ACE_OS_Object_Manager::preallocated_object[ACE_TSS_CLEANUP_LOCK])) != 0)
             ACE_OS_Object_Manager::print_error_message (
-              __LINE__, ACE_LIB_TEXT ("ACE_TSS_CLEANUP_LOCK"));
+              __LINE__, ACE_TEXT ("ACE_TSS_CLEANUP_LOCK"));
           ACE_OS_PREALLOCATE_OBJECT (ACE_thread_mutex_t,
                                      ACE_LOG_MSG_INSTANCE_LOCK)
           if (ACE_OS::thread_mutex_init
               // This line must not be broken to avoid tickling a bug with SunC++'s preprocessor.
               (reinterpret_cast <ACE_thread_mutex_t *> (ACE_OS_Object_Manager::preallocated_object[ACE_LOG_MSG_INSTANCE_LOCK])) != 0)
             ACE_OS_Object_Manager::print_error_message (
-              __LINE__, ACE_LIB_TEXT ("ACE_LOG_MSG_INSTANCE_LOCK"));
+              __LINE__, ACE_TEXT ("ACE_LOG_MSG_INSTANCE_LOCK"));
 #   if defined (ACE_HAS_TSS_EMULATION)
           ACE_OS_PREALLOCATE_OBJECT (ACE_recursive_thread_mutex_t,
                                      ACE_TSS_KEY_LOCK)
@@ -238,7 +238,7 @@ ACE_OS_Object_Manager::init (void)
               // This line must not be broken to avoid tickling a bug with SunC++'s preprocessor.
               (reinterpret_cast <ACE_recursive_thread_mutex_t *> (ACE_OS_Object_Manager::preallocated_object[ACE_TSS_KEY_LOCK])) != 0)
             ACE_OS_Object_Manager::print_error_message (
-              __LINE__, ACE_LIB_TEXT ("ACE_TSS_KEY_LOCK"));
+              __LINE__, ACE_TEXT ("ACE_TSS_KEY_LOCK"));
 #     if defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
           ACE_OS_PREALLOCATE_OBJECT (ACE_recursive_thread_mutex_t,
                                      ACE_TSS_BASE_LOCK)
@@ -246,7 +246,7 @@ ACE_OS_Object_Manager::init (void)
               // This line must not be broken to avoid tickling a bug with SunC++'s preprocessor.
               (reinterpret_cast <ACE_recursive_thread_mutex_t *> (ACE_OS_Object_Manager::preallocated_object[ACE_TSS_BASE_LOCK])) != 0)
             ACE_OS_Object_Manager::print_error_message (
-              __LINE__, ACE_LIB_TEXT ("ACE_TSS_BASE_LOCK"));
+              __LINE__, ACE_TEXT ("ACE_TSS_BASE_LOCK"));
 #     endif /* ACE_HAS_THREAD_SPECIFIC_STORAGE */
 #   endif /* ACE_HAS_TSS_EMULATION */
 # endif /* ACE_MT_SAFE */
@@ -323,7 +323,7 @@ ACE_OS_Object_Manager::fini (void)
           // This line must not be broken to avoid tickling a bug with SunC++'s preprocessor.
           (reinterpret_cast <ACE_thread_mutex_t *> (ACE_OS_Object_Manager::preallocated_object[ACE_OS_MONITOR_LOCK])) != 0)
         ACE_OS_Object_Manager::print_error_message (
-          __LINE__, ACE_LIB_TEXT ("ACE_OS_MONITOR_LOCK"));
+          __LINE__, ACE_TEXT ("ACE_OS_MONITOR_LOCK"));
 #   endif /* ! ACE_HAS_BROKEN_PREALLOCATED_OBJECTS_AFTER_FORK */
       ACE_OS_DELETE_PREALLOCATED_OBJECT (ACE_thread_mutex_t,
                                          ACE_OS_MONITOR_LOCK)
@@ -332,7 +332,7 @@ ACE_OS_Object_Manager::fini (void)
           // This line must not be broken to avoid tickling a bug with SunC++'s preprocessor.
           (reinterpret_cast <ACE_recursive_thread_mutex_t *> (ACE_OS_Object_Manager::preallocated_object[ACE_TSS_CLEANUP_LOCK])) != 0)
         ACE_OS_Object_Manager::print_error_message (
-          __LINE__, ACE_LIB_TEXT ("ACE_TSS_CLEANUP_LOCK"));
+          __LINE__, ACE_TEXT ("ACE_TSS_CLEANUP_LOCK"));
 #   endif /* ! ACE_HAS_BROKEN_PREALLOCATED_OBJECTS_AFTER_FORK */
       ACE_OS_DELETE_PREALLOCATED_OBJECT (ACE_recursive_thread_mutex_t,
                                          ACE_TSS_CLEANUP_LOCK)
@@ -341,7 +341,7 @@ ACE_OS_Object_Manager::fini (void)
           // This line must not be broken to avoid tickling a bug with SunC++'s preprocessor.
           (reinterpret_cast <ACE_thread_mutex_t *> (ACE_OS_Object_Manager::preallocated_object [ACE_LOG_MSG_INSTANCE_LOCK])) != 0)
         ACE_OS_Object_Manager::print_error_message (
-          __LINE__, ACE_LIB_TEXT ("ACE_LOG_MSG_INSTANCE_LOCK "));
+          __LINE__, ACE_TEXT ("ACE_LOG_MSG_INSTANCE_LOCK "));
 #   endif /* ! ACE_HAS_BROKEN_PREALLOCATED_OBJECTS_AFTER_FORK */
       ACE_OS_DELETE_PREALLOCATED_OBJECT (ACE_thread_mutex_t,
                                          ACE_LOG_MSG_INSTANCE_LOCK)
@@ -351,7 +351,7 @@ ACE_OS_Object_Manager::fini (void)
             // This line must not be broken to avoid tickling a bug with SunC++'s preprocessor.
             (reinterpret_cast <ACE_recursive_thread_mutex_t *> (ACE_OS_Object_Manager::preallocated_object[ACE_TSS_KEY_LOCK])) != 0)
           ACE_OS_Object_Manager::print_error_message (
-            __LINE__, ACE_LIB_TEXT ("ACE_TSS_KEY_LOCK"));
+            __LINE__, ACE_TEXT ("ACE_TSS_KEY_LOCK"));
 #     endif /* ! ACE_HAS_BROKEN_PREALLOCATED_OBJECTS_AFTER_FORK */
       ACE_OS_DELETE_PREALLOCATED_OBJECT (ACE_recursive_thread_mutex_t,
                                          ACE_TSS_KEY_LOCK)
@@ -361,7 +361,7 @@ ACE_OS_Object_Manager::fini (void)
               // This line must not be broken to avoid tickling a bug with SunC++'s preprocessor.
               (reinterpret_cast <ACE_recursive_thread_mutex_t *> (ACE_OS_Object_Manager::preallocated_object[ACE_TSS_BASE_LOCK])) != 0)
             ACE_OS_Object_Manager::print_error_message (
-              __LINE__, ACE_LIB_TEXT ("ACE_TSS_BASE_LOCK"));
+              __LINE__, ACE_TEXT ("ACE_TSS_BASE_LOCK"));
 #       endif /* ! ACE_HAS_BROKEN_PREALLOCATED_OBJECTS_AFTER_FORK */
       ACE_OS_DELETE_PREALLOCATED_OBJECT (ACE_recursive_thread_mutex_t,
                                          ACE_TSS_BASE_LOCK)
@@ -429,7 +429,7 @@ ACE_OS_Object_Manager::print_error_message (unsigned int line_number,
                    0);
   ::MessageBox (0,
                 lpMsgBuf,
-                ACE_LIB_TEXT ("ACE_OS error"),
+                ACE_TEXT ("ACE_OS error"),
                 MB_OK);
 #endif
 }

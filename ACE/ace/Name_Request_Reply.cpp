@@ -335,82 +335,82 @@ ACE_Name_Request::dump (void) const
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Name_Request::dump");
   ACE_DEBUG ((LM_DEBUG,
-              ACE_LIB_TEXT ("*******\nlength = %d\n"),
+              ACE_TEXT ("*******\nlength = %d\n"),
               this->length ()));
   ACE_DEBUG ((LM_DEBUG,
-              ACE_LIB_TEXT ("message-type = ")));
+              ACE_TEXT ("message-type = ")));
 
   switch (this->msg_type ())
     {
     case ACE_Name_Request::BIND:
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_LIB_TEXT ("BIND\n")));
+                  ACE_TEXT ("BIND\n")));
       break;
     case ACE_Name_Request::REBIND:
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_LIB_TEXT ("REBIND\n")));
+                  ACE_TEXT ("REBIND\n")));
       break;
     case ACE_Name_Request::RESOLVE:
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_LIB_TEXT ("RESOLVE\n")));
+                  ACE_TEXT ("RESOLVE\n")));
       break;
     case ACE_Name_Request::UNBIND:
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_LIB_TEXT ("UNBIND\n")));
+                  ACE_TEXT ("UNBIND\n")));
       break;
     case ACE_Name_Request::LIST_NAMES:
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_LIB_TEXT ("LIST_NAMES\n")));
+                  ACE_TEXT ("LIST_NAMES\n")));
       break;
     case ACE_Name_Request::LIST_VALUES:
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_LIB_TEXT ("LIST_VALUES\n")));
+                  ACE_TEXT ("LIST_VALUES\n")));
       break;
     case ACE_Name_Request::LIST_TYPES:
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_LIB_TEXT ("LIST_TYPES\n")));
+                  ACE_TEXT ("LIST_TYPES\n")));
       break;
     case ACE_Name_Request::LIST_NAME_ENTRIES:
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_LIB_TEXT ("LIST_NAME_ENTRIES\n")));
+                  ACE_TEXT ("LIST_NAME_ENTRIES\n")));
       break;
     case ACE_Name_Request::LIST_VALUE_ENTRIES:
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_LIB_TEXT ("LIST_VALUE_ENTRIES\n")));
+                  ACE_TEXT ("LIST_VALUE_ENTRIES\n")));
       break;
     case ACE_Name_Request::LIST_TYPE_ENTRIES:
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_LIB_TEXT ("LIST_TYPE_ENTRIES\n")));
+                  ACE_TEXT ("LIST_TYPE_ENTRIES\n")));
       break;
     default:
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_LIB_TEXT ("<unknown type> = %d\n"),
+                  ACE_TEXT ("<unknown type> = %d\n"),
                   this->msg_type ()));
       break;
     }
 
   if (this->block_forever ())
     ACE_DEBUG ((LM_DEBUG,
-                ACE_LIB_TEXT ("blocking forever\n")));
+                ACE_TEXT ("blocking forever\n")));
   else
     {
 #if !defined (ACE_NLOGGING)
       ACE_Time_Value tv = this->timeout ();
 #endif /* ! ACE_NLOGGING */
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_LIB_TEXT ("waiting for %d secs and %d usecs\n"),
+                  ACE_TEXT ("waiting for %d secs and %d usecs\n"),
                   tv.sec (),
                   tv.usec ()));
     }
   ACE_DEBUG ((LM_DEBUG,
-              ACE_LIB_TEXT ("*******\nname_len = %d\n"),
+              ACE_TEXT ("*******\nname_len = %d\n"),
               this->name_len ()));
   ACE_DEBUG ((LM_DEBUG,
-              ACE_LIB_TEXT ("*******\nvalue_len = %d\n"),
+              ACE_TEXT ("*******\nvalue_len = %d\n"),
               this->value_len ()));
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_LIB_TEXT ("+++++++\n")));
+              ACE_TEXT ("+++++++\n")));
 #endif /* ACE_HAS_DUMP */
 }
 
@@ -550,24 +550,24 @@ ACE_Name_Reply::dump (void) const
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Name_Reply::dump");
   ACE_DEBUG ((LM_DEBUG,
-              ACE_LIB_TEXT ("*******\nlength = %d\nerrnum = %d"),
+              ACE_TEXT ("*******\nlength = %d\nerrnum = %d"),
               this->length (),
               this->errnum ()));
   ACE_DEBUG ((LM_DEBUG,
-              ACE_LIB_TEXT ("type = ")));
+              ACE_TEXT ("type = ")));
   switch (this->msg_type ())
     {
     case 0:
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_LIB_TEXT ("SUCCESS\n")));
+                  ACE_TEXT ("SUCCESS\n")));
       break;
     case -1:
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_LIB_TEXT ("FAILURE\n")));
+                  ACE_TEXT ("FAILURE\n")));
       break;
     default:
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_LIB_TEXT ("<unknown type> = %d\n"),
+                  ACE_TEXT ("<unknown type> = %d\n"),
                   this->msg_type ()));
       break;
     }

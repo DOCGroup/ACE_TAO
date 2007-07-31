@@ -25,7 +25,7 @@ ACE_FIFO::dump (void) const
   ACE_TRACE ("ACE_FIFO::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("rendezvous_ = %s"), this->rendezvous_));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("rendezvous_ = %s"), this->rendezvous_));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
 }
@@ -53,7 +53,7 @@ ACE_FIFO::ACE_FIFO (const ACE_TCHAR *fifo_name,
 {
   ACE_TRACE ("ACE_FIFO::ACE_FIFO");
   if (this->open (fifo_name, flags, perms, sa) == -1)
-    ACE_ERROR ((LM_ERROR,  ACE_LIB_TEXT ("%p\n"),  ACE_LIB_TEXT ("ACE_FIFO")));
+    ACE_ERROR ((LM_ERROR,  ACE_TEXT ("%p\n"),  ACE_TEXT ("ACE_FIFO")));
 }
 
 ACE_FIFO::ACE_FIFO (void)

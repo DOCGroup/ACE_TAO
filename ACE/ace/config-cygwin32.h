@@ -160,11 +160,11 @@
 #define ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R
 
 // Cygwin DLL suffix is .dll
-#define ACE_DLL_SUFFIX ACE_LIB_TEXT (".dll")
+#define ACE_DLL_SUFFIX ACE_TEXT (".dll")
 
 // Cygwin runs on Windows, so we have to get the environment variable PATH and
 // not LD_LIBRARY_PATH which is the default in ACE
-#define ACE_LD_SEARCH_PATH ACE_LIB_TEXT ("PATH")
+#define ACE_LD_SEARCH_PATH ACE_TEXT ("PATH")
 
 #if ACE_MT_SAFE
 // Yes, we do have threads.

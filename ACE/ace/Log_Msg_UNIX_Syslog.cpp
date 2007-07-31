@@ -94,11 +94,11 @@ ACE_Log_Msg_UNIX_Syslog::log (ACE_Log_Record &log_record)
   ACE_TCHAR *strtokp = 0;
 
   for (ACE_TCHAR *line = ACE_OS::strtok_r (message,
-                                           ACE_LIB_TEXT ("\n"),
+                                           ACE_TEXT ("\n"),
                                            &strtokp);
        line != 0;
        line = ACE_OS::strtok_r (0,
-                                ACE_LIB_TEXT ("\n"),
+                                ACE_TEXT ("\n"),
                                 &strtokp))
     {
       // Format the message line.  Note that the processing for
@@ -112,7 +112,7 @@ ACE_Log_Msg_UNIX_Syslog::log (ACE_Log_Record &log_record)
         {
           ACE_TCHAR date_and_time[35];
           if (0 == ACE::timestamp (date_and_time, sizeof (date_and_time), 1))
-            ACE_OS::strcpy (date_and_time, ACE_LIB_TEXT ("<time error>"));
+            ACE_OS::strcpy (date_and_time, ACE_TEXT ("<time error>"));
           const ACE_TCHAR *prio_name =
             ACE_Log_Record::priority_name(ACE_Log_Priority(log_record.type()));
           syslog (syslog_priority,

@@ -46,12 +46,12 @@ public:
                               int clip_portnum)       // clip port# info?
     {
       if (ip_addr.addr_to_string (ret_string, len, 1) == -1)
-        ACE_OS::strcpy (ret_string, ACE_LIB_TEXT ("<?>"));
+        ACE_OS::strcpy (ret_string, ACE_TEXT ("<?>"));
       else
         {
-          ACE_TCHAR *pc = ACE_OS::strrchr (ret_string, ACE_LIB_TEXT (':'));
+          ACE_TCHAR *pc = ACE_OS::strrchr (ret_string, ACE_TEXT (':'));
           if (clip_portnum && pc)
-            *pc = ACE_LIB_TEXT ('\0'); // clip port# info.
+            *pc = ACE_TEXT ('\0'); // clip port# info.
         }
     }
     // op== for ip_mreq structs.
@@ -76,23 +76,23 @@ ACE_SOCK_Dgram_Mcast::dump (void) const
   ACE_TCHAR addr_string[MAXNAMELEN + 1];
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_LIB_TEXT ("\nOptions: bindaddr=%s, nulliface=%s\n"),
+              ACE_TEXT ("\nOptions: bindaddr=%s, nulliface=%s\n"),
               ACE_BIT_ENABLED (this->opts_, OPT_BINDADDR_YES) ?
-                ACE_LIB_TEXT ("<Bound>") : ACE_LIB_TEXT ("<Not Bound>"),
+                ACE_TEXT ("<Bound>") : ACE_TEXT ("<Not Bound>"),
               ACE_BIT_ENABLED (this->opts_, OPT_NULLIFACE_ALL) ?
-                ACE_LIB_TEXT ("<All Ifaces>") : ACE_LIB_TEXT ("<Default Iface>")));
+                ACE_TEXT ("<All Ifaces>") : ACE_TEXT ("<Default Iface>")));
 
   // Show default send addr, port#, and interface.
   ACE_SDM_helpers::addr_to_string (this->send_addr_, addr_string,
                                    sizeof addr_string, 0);
   ACE_DEBUG ((LM_DEBUG,
-              ACE_LIB_TEXT ("Send addr=%s iface=%s\n"),
+              ACE_TEXT ("Send addr=%s iface=%s\n"),
               addr_string,
               this->send_net_if_ ? this->send_net_if_
-                                 : ACE_LIB_TEXT ("<default>")));
+                                 : ACE_TEXT ("<default>")));
 
   // Show list of subscribed addresses.
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("Subscription list:\n")));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Subscription list:\n")));
 
   ACE_MT (ACE_GUARD (ACE_SDM_LOCK, guard, this->subscription_list_lock_));
   subscription_list_iter_t  iter (this->subscription_list_);
@@ -112,14 +112,14 @@ ACE_SOCK_Dgram_Mcast::dump (void) const
                              ACE_NTOHL (pm->imr_interface.s_addr));
       ACE_SDM_helpers::addr_to_string (if_addr, iface_string,
                                        sizeof iface_string, 1);
-      if (ACE_OS::strcmp (iface_string, ACE_LIB_TEXT ("0.0.0.0")) == 0)
+      if (ACE_OS::strcmp (iface_string, ACE_TEXT ("0.0.0.0")) == 0)
         // Receives on system default iface. (Note that null_iface_opt_
         // option processing has already occurred.)
-        ACE_OS::strcpy (iface_string, ACE_LIB_TEXT ("<default>"));
+        ACE_OS::strcpy (iface_string, ACE_TEXT ("<default>"));
 
       // Dump info.
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_LIB_TEXT ("\taddr=%s iface=%s\n"),
+                  ACE_TEXT ("\taddr=%s iface=%s\n"),
                   addr_string,
                   iface_string));
     }
@@ -349,7 +349,7 @@ ACE_SOCK_Dgram_Mcast::subscribe_ifs (const ACE_INET_Addr &mcast_addr,
             {
               if (this->subscribe (mcast_addr,
                                    reuse_addr,
-                                   ACE_LIB_TEXT ("0.0.0.0")) == 0)
+                                   ACE_TEXT ("0.0.0.0")) == 0)
                 ++nr_subscribed;
             }
           else
@@ -400,7 +400,7 @@ ACE_SOCK_Dgram_Mcast::subscribe_ifs (const ACE_INET_Addr &mcast_addr,
         {
           if (this->subscribe (mcast_addr,
                                reuse_addr,
-                               ACE_LIB_TEXT ("0.0.0.0")) == 0)
+                               ACE_TEXT ("0.0.0.0")) == 0)
             ++nr_subscribed;
         }
       else
@@ -502,8 +502,8 @@ ACE_SOCK_Dgram_Mcast::join (const ACE_INET_Addr &mcast_addr,
       && sub_port_number != def_port_number)
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_LIB_TEXT ("Subscribed port# (%u) different than bound ")
-                  ACE_LIB_TEXT ("port# (%u).\n"),
+                  ACE_TEXT ("Subscribed port# (%u) different than bound ")
+                  ACE_TEXT ("port# (%u).\n"),
                   (u_int) sub_port_number,
                   (u_int) def_port_number));
       errno = ENXIO;
@@ -525,8 +525,8 @@ ACE_SOCK_Dgram_Mcast::join (const ACE_INET_Addr &mcast_addr,
       ACE_SDM_helpers::addr_to_string (this->send_addr_, bound_addr_string,
                                        sizeof bound_addr_string, 1);
       ACE_ERROR ((LM_ERROR,
-                  ACE_LIB_TEXT ("Subscribed address (%s) different than ")
-                  ACE_LIB_TEXT ("bound address (%s).\n"),
+                  ACE_TEXT ("Subscribed address (%s) different than ")
+                  ACE_TEXT ("bound address (%s).\n"),
                   sub_addr_string,
                   bound_addr_string));
       errno = ENXIO;
@@ -727,7 +727,7 @@ ACE_SOCK_Dgram_Mcast::unsubscribe_ifs (const ACE_INET_Addr &mcast_addr,
           if (if_cnt < 2)
             {
               if (this->leave (mcast_addr,
-                               ACE_LIB_TEXT ("0.0.0.0")) == 0)
+                               ACE_TEXT ("0.0.0.0")) == 0)
                 ++nr_unsubscribed;
             }
           else
@@ -776,7 +776,7 @@ ACE_SOCK_Dgram_Mcast::unsubscribe_ifs (const ACE_INET_Addr &mcast_addr,
       if (if_cnt < 2)
         {
           if (this->leave (mcast_addr,
-                           ACE_LIB_TEXT ("0.0.0.0")) == 0)
+                           ACE_TEXT ("0.0.0.0")) == 0)
             ++nr_unsubscribed;
         }
       else
@@ -952,10 +952,10 @@ ACE_SOCK_Dgram_Mcast::unsubscribe (void)
   // that either. :-(
   // Should this return -1?
   ACE_ERROR_RETURN ((LM_INFO,
-                     ACE_LIB_TEXT ("ACE_SOCK_Dgram_Mcast::unsubscribe (void) ")
-                     ACE_LIB_TEXT ("has been deprecated. You must either ")
-                     ACE_LIB_TEXT ("close to socket to unsubscribe to all ")
-                     ACE_LIB_TEXT ("or unsubscribe to each individually.\n")),
+                     ACE_TEXT ("ACE_SOCK_Dgram_Mcast::unsubscribe (void) ")
+                     ACE_TEXT ("has been deprecated. You must either ")
+                     ACE_TEXT ("close to socket to unsubscribe to all ")
+                     ACE_TEXT ("or unsubscribe to each individually.\n")),
                      0);
 }
 

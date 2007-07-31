@@ -115,7 +115,7 @@ ACE_SOCK_Dgram_Mcast_QoS::subscribe_ifs (const ACE_INET_Addr &mcast_addr,
           if (this->subscribe (mcast_addr,
                                qos_params,
                                reuse_addr,
-                               ACE_LIB_TEXT ("0.0.0.0"),
+                               ACE_TEXT ("0.0.0.0"),
                                protocol_family,
                                protocol,
                                protocolinfo) == 0)
@@ -221,18 +221,18 @@ ACE_SOCK_Dgram_Mcast_QoS::subscribe (const ACE_INET_Addr &mcast_addr,
           // Subscribe to the QoS session.
           if (this->qos_manager_.join_qos_session (qos_session) == -1)
             ACE_ERROR_RETURN ((LM_ERROR,
-                               ACE_LIB_TEXT ("Unable to join QoS Session\n")),
+                               ACE_TEXT ("Unable to join QoS Session\n")),
                               -1);
         }
       else
         {
           if (this->close () != 0)
             ACE_ERROR ((LM_ERROR,
-                        ACE_LIB_TEXT ("Unable to close socket\n")));
+                        ACE_TEXT ("Unable to close socket\n")));
             ACE_ERROR_RETURN ((LM_ERROR,
-                               ACE_LIB_TEXT ("Dest Addr in the QoS Session does")
-                               ACE_LIB_TEXT (" not match the address passed into")
-                               ACE_LIB_TEXT (" subscribe\n")),
+                               ACE_TEXT ("Dest Addr in the QoS Session does")
+                               ACE_TEXT (" not match the address passed into")
+                               ACE_TEXT (" subscribe\n")),
                               -1);
         }
 

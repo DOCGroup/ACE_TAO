@@ -136,8 +136,8 @@ ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::ACE_Acceptor
                   use_select,
                   reuse_addr) == -1)
     ACE_ERROR ((LM_ERROR,
-                ACE_LIB_TEXT ("%p\n"),
-                ACE_LIB_TEXT ("ACE_Acceptor::ACE_Acceptor")));
+                ACE_TEXT ("%p\n"),
+                ACE_TEXT ("ACE_Acceptor::ACE_Acceptor")));
 }
 
 template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1>
@@ -178,10 +178,10 @@ ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::info (ACE_TCHAR **strp,
     return -1;
 
   ACE_OS::sprintf (buf,
-                   ACE_LIB_TEXT ("%s\t %s %s"),
-                   ACE_LIB_TEXT ("ACE_Acceptor"),
+                   ACE_TEXT ("%s\t %s %s"),
+                   ACE_TEXT ("ACE_Acceptor"),
                    addr_str,
-                   ACE_LIB_TEXT ("# acceptor factory\n"));
+                   ACE_TEXT ("# acceptor factory\n"));
 
   if (*strp == 0 && (*strp = ACE_OS::strdup (buf)) == 0)
     return -1;
@@ -233,7 +233,7 @@ ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::handle_close (ACE_HANDLE,
       // Shut down the listen socket to recycle the handles.
       if (this->peer_acceptor_.close () == -1)
         ACE_ERROR ((LM_ERROR,
-                    ACE_LIB_TEXT ("close\n")));
+                    ACE_TEXT ("close\n")));
       // Set the Reactor to 0 so that we don't try to close down
       // again.
       this->reactor (0);
@@ -384,8 +384,8 @@ ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::handle_input (ACE_HANDLE listene
         {
           if (ACE::debug ())
             ACE_DEBUG ((LM_DEBUG,
-                        ACE_LIB_TEXT ("%p\n"),
-                        ACE_LIB_TEXT ("make_svc_handler")));
+                        ACE_TEXT ("%p\n"),
+                        ACE_TEXT ("make_svc_handler")));
           return 0;
         }
       // Accept connection into the Svc_Handler.
@@ -395,8 +395,8 @@ ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::handle_input (ACE_HANDLE listene
           // on failure.
           if (ACE::debug ())
             ACE_DEBUG ((LM_DEBUG,
-                        ACE_LIB_TEXT ("%p\n"),
-                        ACE_LIB_TEXT ("accept_svc_handler")));
+                        ACE_TEXT ("%p\n"),
+                        ACE_TEXT ("accept_svc_handler")));
           return 0;
         }
       // Activate the <svc_handler> using the designated concurrency
@@ -410,8 +410,8 @@ ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::handle_input (ACE_HANDLE listene
 
           if (ACE::debug ())
             ACE_DEBUG ((LM_DEBUG,
-                        ACE_LIB_TEXT ("%p\n"),
-                        ACE_LIB_TEXT ("activate_svc_handler")));
+                        ACE_TEXT ("%p\n"),
+                        ACE_TEXT ("activate_svc_handler")));
           return 0;
         }
 
@@ -464,17 +464,17 @@ ACE_Strategy_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::dump (void) const
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::dump ();
   this->creation_strategy_->dump ();
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("delete_creation_strategy_ = %d"), delete_creation_strategy_));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("delete_creation_strategy_ = %d"), delete_creation_strategy_));
   this->accept_strategy_->dump ();
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("delete_accept_strategy_ = %d"), delete_accept_strategy_));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("delete_accept_strategy_ = %d"), delete_accept_strategy_));
   this->concurrency_strategy_->dump ();
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("delete_concurrency_strategy_ = %d"), delete_concurrency_strategy_));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("delete_concurrency_strategy_ = %d"), delete_concurrency_strategy_));
   this->scheduling_strategy_->dump ();
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("delete_scheduling_strategy_ = %d"), delete_scheduling_strategy_));
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nservice_name_ = %s"),
-              this->service_name_ == 0 ? ACE_LIB_TEXT ("<unknown>") : this->service_name_));
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nservice_description_ = %s"),
-              this->service_description_ == 0 ? ACE_LIB_TEXT ("<unknown>") : this->service_description_));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("delete_scheduling_strategy_ = %d"), delete_scheduling_strategy_));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\nservice_name_ = %s"),
+              this->service_name_ == 0 ? ACE_TEXT ("<unknown>") : this->service_name_));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\nservice_description_ = %s"),
+              this->service_description_ == 0 ? ACE_TEXT ("<unknown>") : this->service_description_));
   this->service_addr_.dump ();
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
@@ -683,8 +683,8 @@ ACE_Strategy_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::ACE_Strategy_Acceptor
                   use_select,
                   reuse_addr) == -1)
     ACE_ERROR ((LM_ERROR,
-                ACE_LIB_TEXT ("%p\n"),
-                ACE_LIB_TEXT ("ACE_Strategy_Acceptor::ACE_Strategy_Acceptor")));
+                ACE_TEXT ("%p\n"),
+                ACE_TEXT ("ACE_Strategy_Acceptor::ACE_Strategy_Acceptor")));
 }
 
 // Perform termination activities when <this> is removed from the
@@ -815,13 +815,13 @@ ACE_Strategy_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::info (ACE_TCHAR **strp,
 
   // @@ Should add the protocol in...
   ACE_OS::sprintf (buf,
-                   ACE_LIB_TEXT ("%s\t %s #%s\n"),
+                   ACE_TEXT ("%s\t %s #%s\n"),
                    this->service_name_ == 0
-                   ? ACE_LIB_TEXT ("<unknown>")
+                   ? ACE_TEXT ("<unknown>")
                    : this->service_name_,
                    service_addr_str,
                    this->service_description_ == 0
-                   ? ACE_LIB_TEXT ("<unknown>")
+                   ? ACE_TEXT ("<unknown>")
                    : this->service_description_);
 
   if (*strp == 0 && (*strp = ACE_OS::strdup (buf)) == 0)
@@ -847,10 +847,10 @@ ACE_Oneshot_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::dump (void) const
   ACE_TRACE ("ACE_Oneshot_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("\nsvc_handler_ = %x"), this->svc_handler_));
-  ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("\nrestart_ = %d"), this->restart_));
+  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("\nsvc_handler_ = %x"), this->svc_handler_));
+  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("\nrestart_ = %d"), this->restart_));
   this->peer_acceptor_.dump ();
-  ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("delete_concurrency_strategy_ = %d"),
+  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("delete_concurrency_strategy_ = %d"),
               delete_concurrency_strategy_));
   this->concurrency_strategy_->dump ();
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
@@ -899,8 +899,8 @@ ACE_Oneshot_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::ACE_Oneshot_Acceptor
   ACE_TRACE ("ACE_Oneshot_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::ACE_Oneshot_Acceptor");
   if (this->open (local_addr, reactor, cs) == -1)
     ACE_ERROR ((LM_ERROR,
-                ACE_LIB_TEXT ("%p\n"),
-                ACE_LIB_TEXT ("ACE_Oneshot_Acceptor::ACE_Oneshot_Acceptor")));
+                ACE_TEXT ("%p\n"),
+                ACE_TEXT ("ACE_Oneshot_Acceptor::ACE_Oneshot_Acceptor")));
 }
 
 template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1>
@@ -940,7 +940,7 @@ ACE_Oneshot_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::handle_close (ACE_HANDLE
 
   if (this->peer_acceptor_.close () == -1)
     ACE_ERROR ((LM_ERROR,
-                ACE_LIB_TEXT ("close\n")));
+                ACE_TEXT ("close\n")));
   return 0;
 }
 
@@ -1172,10 +1172,10 @@ ACE_Oneshot_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::info (ACE_TCHAR **strp,
     return -1;
 
   ACE_OS::sprintf (buf,
-                   ACE_LIB_TEXT ("%s\t %s %s"),
-                   ACE_LIB_TEXT ("ACE_Oneshot_Acceptor"),
+                   ACE_TEXT ("%s\t %s %s"),
+                   ACE_TEXT ("ACE_Oneshot_Acceptor"),
                    addr_str,
-                   ACE_LIB_TEXT ("#oneshot acceptor factory\n"));
+                   ACE_TEXT ("#oneshot acceptor factory\n"));
 
   if (*strp == 0 && (*strp = ACE_OS::strdup (buf)) == 0)
     return -1;

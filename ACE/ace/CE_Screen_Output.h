@@ -26,8 +26,8 @@
 
 namespace
 {
-  const ACE_TCHAR endl[] = ACE_LIB_TEXT("\r\n");
-  const ACE_TCHAR tab[]  = ACE_LIB_TEXT("\t");
+  const ACE_TCHAR endl[] = ACE_TEXT("\r\n");
+  const ACE_TCHAR tab[]  = ACE_TEXT("\t");
 }
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

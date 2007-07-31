@@ -12,7 +12,7 @@ ACE_Reactor_Token_T<ACE_TOKEN_TYPE>::dump (void) const
   ACE_TRACE ("ACE_Reactor_Token_T::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\n")));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
 }
@@ -63,8 +63,8 @@ ACE_Reactor_Token_T<ACE_TOKEN_TYPE>::sleep_hook (void)
   ACE_TRACE ("ACE_Reactor_Token_T::sleep_hook");
   if (this->reactor_->notify () == -1)
     ACE_ERROR ((LM_ERROR,
-                ACE_LIB_TEXT ("%p\n"),
-                ACE_LIB_TEXT ("sleep_hook failed")));
+                ACE_TEXT ("%p\n"),
+                ACE_TEXT ("sleep_hook failed")));
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL
