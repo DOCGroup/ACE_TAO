@@ -11,7 +11,7 @@ namespace Utility
 
     template <typename SynchPolicy>
     DefaultImpl<SynchPolicy>::
-    DefaultImpl () throw (Interface::SystemException)
+    DefaultImpl ()
         : ref_count_ (1),
           lock_ ()
     {
@@ -27,7 +27,7 @@ namespace Utility
 
     template <typename SynchPolicy>
     void DefaultImpl<SynchPolicy>::
-    add_ref () const throw (Exception, SystemException)
+    add_ref () const
     {
       WriteGuard_ guard (lock_);
       add_ref_i ();
@@ -53,7 +53,7 @@ namespace Utility
 
     template <typename SynchPolicy>
     Interface::count_t DefaultImpl<SynchPolicy>::
-    refcount_value () const throw (Exception, SystemException)
+    refcount_value () const
     {
       ReadGuard_ guard (lock_);
       return refcount_value_i ();
@@ -63,14 +63,14 @@ namespace Utility
 
     template <typename SynchPolicy>
     void DefaultImpl<SynchPolicy>::
-    add_ref_i () const throw (Exception, SystemException)
+    add_ref_i () const
     {
       ref_count_++;
     }
 
     template <typename SynchPolicy>
     bool DefaultImpl<SynchPolicy>::
-    remove_ref_i () const throw (Exception, SystemException)
+    remove_ref_i () const
     {
       bool destroy (false);
       if (ref_count_ > 0)
@@ -89,7 +89,7 @@ namespace Utility
 
     template <typename SynchPolicy>
     Interface::count_t DefaultImpl<SynchPolicy>::
-    refcount_value_i () const throw (Exception, SystemException)
+    refcount_value_i () const
     {
       return ref_count_;
     }
