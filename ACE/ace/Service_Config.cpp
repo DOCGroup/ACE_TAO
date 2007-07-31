@@ -363,20 +363,21 @@ ACE_Service_Config::resume (const ACE_TCHAR svc_name[])
 }
 
 // This specialization allows us to have an ACE_TSS, which will _not_ perform
-// a delete on (ACE_Service_Gestalt*) p up on thread exit, when TSS is cleaned up.
+// a delete on (ACE_Service_Gestalt*) p up on thread exit, when TSS is
+// cleaned up.
 // Note that the tss_ member will be destroyed with the ACE_Object_Manager's
 // ACE_Service_Config singleton, so no leaks are introduced.
 template<> void
 ACE_TSS<ACE_Service_Gestalt>::cleanup (void*)
 {
-  //  We need this because the SC instance
-  // is really owned by the Object Manager and the TSS cleanup must not dispose of it
-  // prematurely.
-  // Naturally, things would be simpler, if we could avoid using the TSS alltogether
-  // but we need the ability to temporarily designate a different SC instance as the
-  // "default". So, the solution is a hybrid, or non-owner ACE_TSS.
-  // See ticket 2980 for a description of a test case where ACE_TSS::cleanup() is
-  // called before ~ACE_Object_Manager.
+  // We need this because the SC instance is really owned by the Object
+  // Manager and the TSS cleanup must not dispose of it prematurely.
+  // Naturally, things would be simpler, if we could avoid using the TSS
+  // altogether but we need the ability to temporarily designate a
+  // different SC instance as the "default." So, the solution is a hybrid,
+  // or non-owner ACE_TSS.
+  // See ticket 2980 for a description of a test case where
+  // ACE_TSS::cleanup() is called before ~ACE_Object_Manager.
 }
 
 
