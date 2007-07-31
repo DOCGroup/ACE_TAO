@@ -1,3 +1,8 @@
+Tue Jul 31 12:07:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * m4/compiler.m4:
+          Don't add -O3 with Intel C++
+
 Tue Jul 31 12:02:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-sunos5.5.h:
