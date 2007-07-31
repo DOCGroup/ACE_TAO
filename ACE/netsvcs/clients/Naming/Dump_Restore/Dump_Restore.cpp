@@ -105,7 +105,7 @@ Dump_Restore::handle_input (ACE_HANDLE)
         break;
       if (this->infile_)
         ACE_OS::fclose (this->infile_);
-      this->infile_ = ACE_OS::fopen(filename_,"r");
+      this->infile_ = ACE_OS::fopen(filename_, ACE_TEXT("r"));
       break;
     case 'B' :
     case 'b' :

@@ -65,7 +65,7 @@ private:
               const char *value,
               const char *type = "");
 
-  ACE_TCHAR filename_[MAXPATHLEN + 1];
+  char filename_[MAXPATHLEN + 1];
   char dump_filename_[MAXPATHLEN + 1];
 
   u_short port_;
