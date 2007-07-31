@@ -12,7 +12,7 @@ using namespace Utility::ExH::System;
 
 struct E {};
 
-void postcondition (bool p) throw (E)
+void postcondition (bool p)
 {
   if (!p) throw E ();
 }

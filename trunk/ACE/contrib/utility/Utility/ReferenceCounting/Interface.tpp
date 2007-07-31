@@ -10,7 +10,6 @@ namespace Utility
     template <typename Type>
     inline Type*
     add_ref (Type* ptr)
-      throw (Interface::Exception, Interface::SystemException)
     {
       if (ptr != 0) ptr->add_ref ();
       return ptr;

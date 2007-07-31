@@ -26,7 +26,6 @@ namespace Utility
     template <typename T>
     SmartPtr<T>::
     SmartPtr (SmartPtr<Type> const& s_ptr)
-      throw (Interface::Exception, Interface::SystemException)
         : ptr_ (add_ref (s_ptr.in ()))
     {
     }
@@ -35,7 +34,6 @@ namespace Utility
     template <typename Other>
     SmartPtr<T>::
     SmartPtr (SmartPtr<Other> const& s_ptr)
-      throw (Interface::Exception, Interface::SystemException)
         : ptr_ (add_ref (s_ptr.in ()))
     {
     }
@@ -71,7 +69,6 @@ namespace Utility
     template <typename T>
     SmartPtr<T>& SmartPtr<T>::
     operator= (SmartPtr<Type> const& s_ptr)
-      throw (Interface::Exception, Interface::SystemException)
     {
       Type* old_ptr (ptr_);
       Type* new_ptr (add_ref (s_ptr.in ())); // this can throw
@@ -87,7 +84,6 @@ namespace Utility
     template <typename Other>
     SmartPtr<T>& SmartPtr<T>::
     operator= (SmartPtr<Other> const& s_ptr)
-      throw (Interface::Exception, Interface::SystemException)
     {
       Type*  old_ptr (ptr_);
       Other* new_ptr (add_ref (s_ptr.in ())); // this can throw
@@ -112,7 +108,7 @@ namespace Utility
 
     template <typename T>
     T* SmartPtr<T>::
-    operator-> () const throw (NotInitialized)
+    operator-> () const
     {
       if (ptr_ == 0)
       {
@@ -143,7 +139,6 @@ namespace Utility
     template <typename T>
     T*
     add_ref (SmartPtr<T> const& ptr)
-      throw (Interface::Exception, Interface::SystemException)
     {
       // delegate to generic implementation
       return add_ref (ptr.in ());
@@ -153,7 +148,6 @@ namespace Utility
     template <typename D, typename S>
     D*
     smart_cast (SmartPtr<S> const& s)
-      throw (Interface::Exception, Interface::SystemException)
     {
       return add_ref (dynamic_cast<D*>(s.in ()));
     }
@@ -161,7 +155,7 @@ namespace Utility
     // Acquisition function
     template <typename T>
     SmartPtr<T>
-    acquire (T* ptr) throw (Interface::Exception, Interface::SystemException)
+    acquire (T* ptr)
     {
       return SmartPtr<T> (ptr);
     }

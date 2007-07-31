@@ -24,7 +24,7 @@ struct B
 };
 
 void
-foo () throw (Utility::ExH::System::Exception)
+foo ()
 {
   A a;
 

@@ -72,7 +72,7 @@ namespace Utility
 
         template <typename T>
         T&
-        second () throw (Typing)
+        second ()
         {
           Value<T>* v = dynamic_cast<Value<T>*> (second_);
           if (v == 0) throw Typing ();
@@ -82,7 +82,7 @@ namespace Utility
 
         template <typename T>
         T const&
-        second () const throw (Typing)
+        second () const
         {
           Value<T>* v = dynamic_cast<Value<T>*> (second_);
           if (v == 0) throw Typing ();

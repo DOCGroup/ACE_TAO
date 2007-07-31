@@ -36,12 +36,10 @@ namespace Utility
       explicit
       StrictPtr (Type* ptr) throw ();
 
-      StrictPtr (StrictPtr<Type> const& s_ptr)
-        throw (Interface::Exception, Interface::SystemException);
+      StrictPtr (StrictPtr<Type> const& s_ptr);
 
       template <typename Other>
-      StrictPtr (StrictPtr<Other> const& s_ptr)
-        throw (Interface::Exception, Interface::SystemException);
+      StrictPtr (StrictPtr<Other> const& s_ptr);
       // d-tor
 
       ~StrictPtr () throw ();
@@ -52,13 +50,11 @@ namespace Utility
       operator= (Type* ptr) throw ();
 
       StrictPtr<Type>&
-      operator= (StrictPtr<Type> const& s_ptr)
-        throw (Interface::Exception, Interface::SystemException);
+      operator= (StrictPtr<Type> const& s_ptr);
 
       template <typename Other>
       StrictPtr<Type>&
-      operator= (StrictPtr<Other> const& s_ptr)
-        throw (Interface::Exception, Interface::SystemException);
+      operator= (StrictPtr<Other> const& s_ptr);
 
       // conversions
 
@@ -75,7 +71,7 @@ namespace Utility
       // accessors
 
       Type*
-      operator-> () const throw (NotInitialized);
+      operator-> () const;
 
       Type*
       in () const throw ();
@@ -90,14 +86,12 @@ namespace Utility
     // Specialization of add_ref function for StrictPtr<T>
     template <typename T>
     T*
-    add_ref (StrictPtr<T> const& ptr)
-      throw (Interface::Exception, Interface::SystemException);
+    add_ref (StrictPtr<T> const& ptr);
 
     // Dynamic type conversion function for StrictPtr's
     template <typename D, typename S>
     StrictPtr<D>
-    strict_cast (StrictPtr<S> const& s)
-      throw (Interface::Exception, Interface::SystemException);
+    strict_cast (StrictPtr<S> const& s);
   }
 }
 
