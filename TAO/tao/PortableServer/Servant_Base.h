@@ -78,8 +78,10 @@ public:
   /// Query the Interface Repository for the interface definition.
   virtual CORBA::InterfaceDef_ptr _get_interface (void);
 
+#if !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
   /// Default _get_component: always returns CORBA::Object::_nil().
   virtual CORBA::Object_ptr _get_component (void);
+#endif
 
   /// Get the repository id.
   virtual char * _repository_id (void);
