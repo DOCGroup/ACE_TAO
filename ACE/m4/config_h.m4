@@ -879,7 +879,7 @@ AH_TEMPLATE([ACE_LACKS_PLACEMENT_OPERATOR_DELETE],
 AH_TEMPLATE([ACE_LACKS_PRAGMA_ONCE],
 [Compiler complains about use of obsolete "pragma once"])
 
-AH_TEMPLATE([ACE_LACKS_THREAD_STACK_ADDR],
+AH_TEMPLATE([ACE_LACKS_THREAD_ATTR_SETSTACKADDR],
 [Platform lack pthread_attr_setstackaddr()])
 
 AH_TEMPLATE([ACE_LACKS_PTHREAD_CANCEL],[Platform lacks pthread_cancel()])
@@ -941,7 +941,7 @@ AH_TEMPLATE([ACE_LACKS_TCP_NODELAY],[OS does not support TCP_NODELAY])
 AH_TEMPLATE([ACE_LACKS_THREAD_PROCESS_SCOPING],
 [Platform lacks pthread_attr_setscope()])
 
-AH_TEMPLATE([ACE_LACKS_THREAD_STACK_SIZE],
+AH_TEMPLATE([ACE_LACKS_THREAD_ATTR_SETSTACKSIZE],
 [Platform lacks pthread_attr_setstacksize() (e.g., Linux pthreads)])
 
 AH_TEMPLATE([ACE_LACKS_TIMESPEC_T],
@@ -1061,7 +1061,7 @@ AH_TEMPLATE([ACE_TLI_TCP_DEVICE],
 AH_TEMPLATE([ACE_USE_POLL],
 [The OS/platform supports the poll() event demultiplexor])
 
-AH_TEMPLATE([ACE_HAS_EVENT_POLL],[Platform (Linux) supports event poll 
+AH_TEMPLATE([ACE_HAS_EVENT_POLL],[Platform (Linux) supports event poll
   interface.])
 
 AH_TEMPLATE([ACE_HAS_DEV_POLL],[Platform supports /dev/poll character
