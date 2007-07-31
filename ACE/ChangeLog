@@ -1,3 +1,8 @@
+Tue Jul 31 05:19:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * m4/config_h.m4:
+          Updated this file
+
 Tue Jul 31 04:13:34 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * netsvcs/clients/Naming/Dump_Restore/Dump_Restore.h:
