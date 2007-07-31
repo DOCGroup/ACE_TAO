@@ -116,20 +116,22 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 
 // ----------------------------------------------------------------
 
-#if defined (ACE_HAS_NO_THROW_SPEC)
-#  define ACE_THROW_SPEC(X)
-#else
-#  if defined (ACE_HAS_EXCEPTIONS)
-#    if defined (ACE_WIN32) && defined (_MSC_VER) && \
-        (_MSC_VER >= 1400) && (_MSC_VER <= 1500)
-#      define ACE_THROW_SPEC(X) throw(...)
-#    else
-#      define ACE_THROW_SPEC(X) throw X
-#    endif /* ACE_WIN32 && VC8 */
-#  else  /* ! ACE_HAS_EXCEPTIONS */
-#    define ACE_THROW_SPEC(X)
-#  endif /* ! ACE_HAS_EXCEPTIONS */
-#endif /*ACE_HAS_NO_THROW_SPEC*/
+#if !defined (ACE_LACKS_DEPRECATED_MACROS)
+  #if defined (ACE_HAS_NO_THROW_SPEC)
+  #  define ACE_THROW_SPEC(X)
+  #else
+  #  if defined (ACE_HAS_EXCEPTIONS)
+  #    if defined (ACE_WIN32) && defined (_MSC_VER) && \
+          (_MSC_VER >= 1400) && (_MSC_VER <= 1500)
+  #      define ACE_THROW_SPEC(X) throw(...)
+  #    else
+  #      define ACE_THROW_SPEC(X) throw X
+  #    endif /* ACE_WIN32 && VC8 */
+  #  else  /* ! ACE_HAS_EXCEPTIONS */
+  #    define ACE_THROW_SPEC(X)
+  #  endif /* ! ACE_HAS_EXCEPTIONS */
+  #endif /*ACE_HAS_NO_THROW_SPEC*/
+#endif /* ACE_LACKS_DEPRECATED_MACROS */
 
 // ----------------------------------------------------------------
 
