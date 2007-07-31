@@ -233,7 +233,6 @@ dnl @todo Clean up / consolidate these conditionals
          CXXFLAGS="$CXXFLAGS"
          ACE_CXXFLAGS="$ACE_CXXFLAGS"
          DCXXFLAGS="$DCXXFLAGS"
-         OCXXFLAGS="-O3"
          WERROR="-Werror -Wall -wd1419"
          ;;
        *)
