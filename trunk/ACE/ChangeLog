@@ -1,3 +1,12 @@
+Tue Jul 31 05:14:35 UTC 2007  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * ace/Service_Config.h:
+        * ace/Service_Config.cpp:
+
+          Adding a forward decl for the partial specialization to silence
+          the Borland compiler, complaining about an already defined
+          template specialization.
+
 Tue Jul 31 05:19:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * m4/config_h.m4:

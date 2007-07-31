@@ -367,7 +367,7 @@ ACE_Service_Config::resume (const ACE_TCHAR svc_name[])
 // Note that the tss_ member will be destroyed with the ACE_Object_Manager's
 // ACE_Service_Config singleton, so no leaks are introduced.
 template<> void
-ACE_TSS<ACE_Service_Gestalt>::cleanup (void* p)
+ACE_TSS<ACE_Service_Gestalt>::cleanup (void*)
 {
   //  We need this because the SC instance
   // is really owned by the Object Manager and the TSS cleanup must not dispose of it
