@@ -27,6 +27,11 @@
 #  undef ACE_LACKS_LOG2
 #endif
 
+// Solaris 10 delivers pthread_attr_setstack
+#if defined (ACE_LACKS_PTHREAD_ATTR_SETSTACK)
+#  undef ACE_LACKS_PTHREAD_ATTR_SETSTACK
+#endif
+
 // Solaris 10 introduced printf() modifiers for [s]size_t types.
 #if defined (ACE_SSIZE_T_FORMAT_SPECIFIER)
 #  undef ACE_SSIZE_T_FORMAT_SPECIFIER

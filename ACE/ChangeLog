@@ -1,7 +1,15 @@
+Tue Jul 31 12:02:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-sunos5.5.h:
+          Added ACE_LACKS_PTHREAD_ATTR_SETSTACK
+
+        * ace/config-sunos5.10.h:
+          Undef ACE_LACKS_PTHREAD_ATTR_SETSTACK
+
 Tue Jul 31 10:38:37 UTC 2007  William Otte  <wotte@dhcp-host-unknown.prismtech.com>
 
         * include/makeinclude/platform_macosx_tiger.GNU
-        
+
           Added support for building universal binaries by specifying
           universal=1 in platform_macros or command line.
 

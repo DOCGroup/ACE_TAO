@@ -328,6 +328,7 @@
 # define ACE_HAS_SIGWAIT
 # define ACE_HAS_SIGTIMEDWAIT
 # define ACE_HAS_SIGSUSPEND
+# define ACE_LACKS_PTHREAD_ATTR_SETSTACK
 
   // Compiler/platform has thread-specific storage
 # define ACE_HAS_THREAD_SPECIFIC_STORAGE
