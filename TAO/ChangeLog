@@ -1,3 +1,10 @@
+Mon Jul 30 21:12:51 UTC 2007  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * tao/Transport_Selection_Guard.h:
+
+          Implementing the misisng operator=(), needed by
+          TAO::CSD::FW_Server_Reques_Wrapper.
+
 Mon Jul 30 18:54:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/compiler.html:
