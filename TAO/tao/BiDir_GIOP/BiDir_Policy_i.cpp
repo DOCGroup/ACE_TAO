@@ -75,7 +75,8 @@ TAO_BidirectionalPolicy::destroy (void)
 
 BiDirPolicy::BidirectionalPolicyValue
 TAO_BidirectionalPolicy::value (void)
-  {return this->value_;
+{
+  return this->value_;
 }
 
 

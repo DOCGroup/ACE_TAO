@@ -1,3 +1,16 @@
+Tue Jul 31 11:36:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/BiDir_GIOP/BiDir_Policy_i.cpp:
+        * tao/Policy_Current.cpp:
+        * tao/Policy_Current.h:
+        * tao/Policy_Current_Impl.h:
+        * tao/Policy_Manager.inl:
+        * tao/Policy_Set.cpp:
+        * tao/PortableServer/Default_Policy_Validator.cpp:
+        * tao/PortableServer/POA_Policy_Set.h:
+        * tao/Stub.cpp:
+          Layout changes
+
 Tue Jul 31 11:35:53 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/orbsvcs/CosNotification.mpc:

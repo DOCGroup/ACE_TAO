@@ -20,12 +20,10 @@ TAO_Policy_Manager::get_policy (CORBA::PolicyType policy)
 ACE_INLINE CORBA::Policy_ptr
 TAO_Policy_Manager::get_cached_policy (TAO_Cached_Policy_Type type)
 {
-
   // @@ Previous code used a "double-checked locking hack" to check
   // if the policy was set before grabbing the lock to actually get
   // it, so that could save a lock operation.  This was removed, as
   // it is not as easy to do this anymore.
-
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->mutex_, 0);
 
   return this->impl_.get_cached_policy (type);
