@@ -1,3 +1,9 @@
+Tue Jul 31 12:24:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Service_Config.h:
+          Add attribute name to cleanup prototype, Borland C++ needs it,
+          don't ask why
+
 Tue Jul 31 12:07:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * m4/compiler.m4:
