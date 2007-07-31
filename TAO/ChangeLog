@@ -1,3 +1,13 @@
+Tue Jul 31 10:54:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Object_Proxy_Broker.h:
+          non_existent is not needed for CORBA/e
+
+        * tao/Codeset_Translator_Base.h:
+        * tao/Collocation_Proxy_Broker.h:
+        * tao/Collocation_Resolver.h:
+          Layout changes
+
 Tue Jul 31 10:52:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Collocated_Object_Proxy_Broker.{h,cpp}:

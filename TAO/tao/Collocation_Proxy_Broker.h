@@ -54,8 +54,7 @@ namespace TAO
 
     virtual ~Collocation_Proxy_Broker (void);
 
-    virtual Collocation_Strategy get_strategy (CORBA::Object_ptr obj
-                                               ) = 0;
+    virtual Collocation_Strategy get_strategy (CORBA::Object_ptr obj) = 0;
 
     virtual void dispatch (CORBA::Object_ptr obj,
                            CORBA::Object_out forward_obj,
@@ -63,8 +62,7 @@ namespace TAO
                            int num_args,
                            const char * op,
                            size_t op_len,
-                           Collocation_Strategy strategy
-                           ) = 0;
+                           Collocation_Strategy strategy) = 0;
   };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
