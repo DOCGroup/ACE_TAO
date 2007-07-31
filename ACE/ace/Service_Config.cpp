@@ -362,18 +362,31 @@ ACE_Service_Config::resume (const ACE_TCHAR svc_name[])
   return ACE_Service_Repository::instance ()->resume (svc_name);
 }
 
-// Initialize the Service Repository.  Note that this *must* be
-// performed in the constructor (rather than <open>) since otherwise
-// the repository will not be properly initialized to allow static
-// configuration of services...
+// This specialization allows us to have an ACE_TSS, which will _not_ perform
+// a delete on (ACE_Service_Gestalt*) p up on thread exit, when TSS is cleaned up.
+// Note that the tss_ member will be destroyed with the ACE_Object_Manager's
+// ACE_Service_Config singleton, so no leaks are introduced.
+template<> void
+ACE_TSS<ACE_Service_Gestalt>::cleanup (void* p)
+{
+  //  We need this because the SC instance
+  // is really owned by the Object Manager and the TSS cleanup must not dispose of it
+  // prematurely.
+  // Naturally, things would be simpler, if we could avoid using the TSS alltogether
+  // but we need the ability to temporarily designate a different SC instance as the
+  // "default". So, the solution is a hybrid, or non-owner ACE_TSS.
+  // See ticket 2980 for a description of a test case where ACE_TSS::cleanup() is
+  // called before ~ACE_Object_Manager.
+}
+
 
 ACE_Service_Config::ACE_Service_Config (int ignore_static_svcs,
                                         size_t size,
                                         int signum)
   : ACE_Service_Gestalt (size, false, ignore_static_svcs)
+  , tss_ (this)
 {
   ACE_TRACE ("ACE_Service_Config::ACE_Service_Config");
-  this->tss_.ts_object (this);
   ACE_Service_Config::signum_ = signum;
 }
 
@@ -438,10 +451,10 @@ ACE_Service_Config::create_service_type_impl (const ACE_TCHAR *name,
 ACE_Service_Config::ACE_Service_Config (const ACE_TCHAR program_name[],
                                         const ACE_TCHAR *logger_key)
   : ACE_Service_Gestalt (ACE_Service_Repository::DEFAULT_SIZE, false)
+  , tss_ (this)
 {
   ACE_TRACE ("ACE_Service_Config::ACE_Service_Config");
 
-  this->tss_.ts_object (this);
   if (this->open (program_name,
                   logger_key) == -1 && errno != ENOENT)
     {
@@ -545,10 +558,6 @@ ACE_Service_Config::fini_svcs (void)
 ACE_Service_Config::~ACE_Service_Config (void)
 {
   ACE_TRACE ("ACE_Service_Config::~ACE_Service_Config");
-
-  // We do not want ~ACE_TSS<> to delete this again (single-thread
-  // builds)
-  this->tss_.ts_object (0);
 }
 
 // ************************************************************
