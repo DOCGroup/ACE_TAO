@@ -135,6 +135,11 @@ public:
 
 #define ACE_Component_Config ACE_Service_Config
 
+/// A prototype for the partial specialization. See the implementation
+/// for more details on why is it necessary.
+template<> void
+ACE_TSS<ACE_Service_Gestalt>::cleanup (void*);
+
 /**
  * @class ACE_Service_Config
  *
