@@ -1,3 +1,11 @@
+Tue Jul 31 11:35:53 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/orbsvcs/CosNotification.mpc:
+        * orbsvcs/orbsvcs/Makefile.am:
+
+          Added the tao_versioning_idl_defaults base project to the
+          CosNotification_MC project.
+
 Tue Jul 31 10:58:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * MPC/config/corba_e_compact.mpb:
