@@ -1,8 +1,9 @@
 Tue Jul 31 07:52:25 UTC 2007  Olli Savia  <ops@iki.fi>
 
         * ace/os_include/os_dirent.h:
-          Removed #undef rewinddir. This may broke compilation on some
-          platforms so ACE_OS::rewinddir() may need tweaking.
+          Removed #undef rewinddir. Iy May have broken compilation 
+          compilation on some platforms so ACE_OS::rewinddir() 
+          may need tweaking.
 
 Tue Jul 31 06:45:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -27,6 +28,14 @@ Tue Jul 31 04:13:34 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * netsvcs/clients/Naming/Dump_Restore/Dump_Restore.h:
         * netsvcs/clients/Naming/Dump_Restore/Dump_Restore.cpp:
+
+          Reverted changes made in:
+          Mon Jul 30 12:40:57 UTC 2007  Abdullah Sowayan  <abdul...>
+
+        * netsvcs/clients/Naming/Dump_Restore/Dump_Restore.cpp:
+
+          Use ACE_TCHAR instead of char to address problems in
+          Redhat_Enterprise_Linux_3_Debug_Wchar build.
 
 Tue Jul 31 00:50:49 UTC 2007  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
