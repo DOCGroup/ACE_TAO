@@ -71,8 +71,8 @@ ACE_UPIPE_Connector::connect (ACE_UPIPE_Stream &new_stream,
                                       sizeof ustream);
       if (result == -1)
         ACE_ERROR ((LM_ERROR,
-                    ACE_LIB_TEXT ("ACE_UPIPE_Connector %p\n"),
-                    ACE_LIB_TEXT ("write to pipe failed")));
+                    ACE_TEXT ("ACE_UPIPE_Connector %p\n"),
+                    ACE_TEXT ("write to pipe failed")));
 
       // Wait for confirmation of stream linking.
       ACE_Message_Block *mb_p = 0;
@@ -84,8 +84,8 @@ ACE_UPIPE_Connector::connect (ACE_UPIPE_Stream &new_stream,
       // They perform different checks and cannot be merged.
       if (result == -1)
           ACE_ERROR ((LM_ERROR,
-                      ACE_LIB_TEXT ("ACE_UPIPE_Connector %p\n"),
-                      ACE_LIB_TEXT ("no confirmation from server")));
+                      ACE_TEXT ("ACE_UPIPE_Connector %p\n"),
+                      ACE_TEXT ("no confirmation from server")));
       else
         // Close down the new_stream at this point in order to
         // conserve handles.  Note that we don't need the SPIPE

@@ -50,22 +50,22 @@ ACE_OS::ace_flock_t::dump (void) const
 
 # if 0
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("handle_ = %u"), this->handle_));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("handle_ = %u"), this->handle_));
 #   if defined (ACE_WIN32)
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nInternal = %d"),
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\nInternal = %d"),
               this->overlapped_.Internal));
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nInternalHigh = %d"),
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\nInternalHigh = %d"),
               this->overlapped_.InternalHigh));
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nOffsetHigh = %d"),
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\nOffsetHigh = %d"),
               this->overlapped_.OffsetHigh));
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nhEvent = %d"),
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\nhEvent = %d"),
               this->overlapped_.hEvent));
 #   else
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nl_whence = %d"),
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\nl_whence = %d"),
               this->lock_.l_whence));
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nl_start = %d"), this->lock_.l_start));
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nl_len = %d"), this->lock_.l_len));
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nl_type = %d"), this->lock_.l_type));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\nl_start = %d"), this->lock_.l_start));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\nl_len = %d"), this->lock_.l_len));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\nl_type = %d"), this->lock_.l_type));
 #   endif /* ACE_WIN32 */
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 # endif /* 0 */
@@ -121,14 +121,14 @@ namespace
   {
     switch (x)
       {
-      case ACE_LIB_TEXT ('r'):
+      case ACE_TEXT ('r'):
         if (ACE_BIT_DISABLED (hmode, _O_RDWR))
           {
             ACE_CLR_BITS (hmode, _O_WRONLY);
             ACE_SET_BITS (hmode, _O_RDONLY);
           }
         break;
-      case ACE_LIB_TEXT ('w'):
+      case ACE_TEXT ('w'):
         if (ACE_BIT_DISABLED (hmode, _O_RDWR))
           {
             ACE_CLR_BITS (hmode, _O_RDONLY);
@@ -136,7 +136,7 @@ namespace
           }
         ACE_SET_BITS (hmode, _O_CREAT | _O_TRUNC);
         break;
-      case ACE_LIB_TEXT ('a'):
+      case ACE_TEXT ('a'):
         if (ACE_BIT_DISABLED (hmode, _O_RDWR))
           {
             ACE_CLR_BITS (hmode, _O_RDONLY);
@@ -144,15 +144,15 @@ namespace
           }
         ACE_SET_BITS (hmode, _O_CREAT | _O_APPEND);
         break;
-      case ACE_LIB_TEXT ('+'):
+      case ACE_TEXT ('+'):
         ACE_CLR_BITS (hmode, _O_RDONLY | _O_WRONLY);
         ACE_SET_BITS (hmode, _O_RDWR);
         break;
-      case ACE_LIB_TEXT ('t'):
+      case ACE_TEXT ('t'):
         ACE_CLR_BITS (hmode, _O_BINARY);
         ACE_SET_BITS (hmode, _O_TEXT);
         break;
-      case ACE_LIB_TEXT ('b'):
+      case ACE_TEXT ('b'):
         ACE_CLR_BITS (hmode, _O_TEXT);
         ACE_SET_BITS (hmode, _O_BINARY);
         break;

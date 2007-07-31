@@ -234,8 +234,8 @@ ACE_SOCK_Dgram::ACE_SOCK_Dgram (const ACE_Addr &local,
                   protocol,
                   reuse_addr) == -1)
     ACE_ERROR ((LM_ERROR,
-                ACE_LIB_TEXT ("%p\n"),
-                ACE_LIB_TEXT ("ACE_SOCK_Dgram")));
+                ACE_TEXT ("%p\n"),
+                ACE_TEXT ("ACE_SOCK_Dgram")));
 }
 
 ACE_SOCK_Dgram::ACE_SOCK_Dgram (const ACE_Addr &local,
@@ -255,8 +255,8 @@ ACE_SOCK_Dgram::ACE_SOCK_Dgram (const ACE_Addr &local,
                   flags,
                   reuse_addr) == -1)
     ACE_ERROR ((LM_ERROR,
-                ACE_LIB_TEXT ("%p\n"),
-                ACE_LIB_TEXT ("ACE_SOCK_Dgram")));
+                ACE_TEXT ("%p\n"),
+                ACE_TEXT ("ACE_SOCK_Dgram")));
 }
 
 #if defined (ACE_HAS_MSG)
@@ -602,8 +602,8 @@ ACE_SOCK_Dgram::set_nic (const ACE_TCHAR *net_if,
   ACE_UNUSED_ARG (net_if);
   ACE_UNUSED_ARG (addr_family);
   ACE_DEBUG ((LM_DEBUG,
-              ACE_LIB_TEXT ("Send interface specification not ")
-              ACE_LIB_TEXT ("supported - IGNORED.\n")));
+              ACE_TEXT ("Send interface specification not ")
+              ACE_TEXT ("supported - IGNORED.\n")));
 #endif /* !IP_MULTICAST_IF */
 
   return 0;

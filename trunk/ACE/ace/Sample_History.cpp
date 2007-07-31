@@ -48,9 +48,9 @@ ACE_Sample_History::dump_samples (const ACE_TCHAR *msg,
     {
       const ACE_UINT64 val = this->samples_[i] / scale_factor;
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_LIB_TEXT ("%s: ")
+                  ACE_TEXT ("%s: ")
                   ACE_SIZE_T_FORMAT_SPECIFIER
-                  ACE_LIB_TEXT ("%Q\n"),
+                  ACE_TEXT ("%Q\n"),
                   msg,
                   i,
                   val));

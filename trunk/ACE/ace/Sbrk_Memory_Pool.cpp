@@ -20,7 +20,7 @@ ACE_Sbrk_Memory_Pool::acquire (size_t nbytes,
 {
   ACE_TRACE ("ACE_Sbrk_Memory_Pool::acquire");
   rounded_bytes = this->round_up (nbytes);
-  // ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("(%P|%t) acquiring more chunks, nbytes = %d, rounded_bytes = %d\n"), nbytes, rounded_bytes));
+  // ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("(%P|%t) acquiring more chunks, nbytes = %d, rounded_bytes = %d\n"), nbytes, rounded_bytes));
   void *cp = ACE_OS::sbrk (rounded_bytes);
 
   if (cp == MAP_FAILED)
@@ -29,7 +29,7 @@ ACE_Sbrk_Memory_Pool::acquire (size_t nbytes,
                        cp),
                       0);
   else
-    // ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("(%P|%t) acquired more chunks, nbytes = %d, rounded_bytes = %d, new break = %u\n"), nbytes, rounded_bytes, cp));
+    // ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("(%P|%t) acquired more chunks, nbytes = %d, rounded_bytes = %d, new break = %u\n"), nbytes, rounded_bytes, cp));
   return cp;
 }
 

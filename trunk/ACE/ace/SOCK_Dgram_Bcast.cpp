@@ -81,8 +81,8 @@ ACE_SOCK_Dgram_Bcast::ACE_SOCK_Dgram_Bcast (const ACE_Addr &local,
 
   if (this->mk_broadcast (host_name) == -1)
     ACE_ERROR ((LM_ERROR,
-                ACE_LIB_TEXT ("%p\n"),
-                ACE_LIB_TEXT ("ACE_SOCK_Dgram_Bcast")));
+                ACE_TEXT ("%p\n"),
+                ACE_TEXT ("ACE_SOCK_Dgram_Bcast")));
 }
 
 // Here's the general-purpose open routine.

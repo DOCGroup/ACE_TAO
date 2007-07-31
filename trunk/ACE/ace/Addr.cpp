@@ -64,8 +64,8 @@ ACE_Addr::dump (void) const
   ACE_TRACE ("ACE_Addr::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("addr_type_ = %d"), this->addr_type_));
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\naddr_size_ = %d"), this->addr_size_));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("addr_type_ = %d"), this->addr_type_));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\naddr_size_ = %d"), this->addr_size_));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
 }

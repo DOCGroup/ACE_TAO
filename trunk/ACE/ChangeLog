@@ -1,3 +1,9 @@
+Tue Jul 31 18:14:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/*.{h,cpp,inl}:
+          Replaced all occurences of ACE_LIB_TEXT with ACE_TEXT as noted in
+          bugzilla 3021
+
 Tue Jul 31 17:15:47 UTC 2007  Olli Savia  <ops@iki.fi>
 
         * ace/OS_NS_dirent.h:

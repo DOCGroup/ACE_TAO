@@ -32,10 +32,10 @@ ACE_Condition_Thread_Mutex::dump (void) const
 // ACE_TRACE ("ACE_Condition_Thread_Mutex::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\n")));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n")));
 #if defined (ACE_WIN32)
   ACE_DEBUG ((LM_DEBUG,
-              ACE_LIB_TEXT ("waiters = %d\n"),
+              ACE_TEXT ("waiters = %d\n"),
               this->cond_.waiters ()));
 #endif /* ACE_WIN32 */
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
@@ -54,8 +54,8 @@ ACE_Condition_Thread_Mutex::ACE_Condition_Thread_Mutex (ACE_Thread_Mutex &m,
                          name,
                          arg) != 0)
     ACE_ERROR ((LM_ERROR,
-                ACE_LIB_TEXT ("%p\n"),
-                ACE_LIB_TEXT ("ACE_Condition_Thread_Mutex::ACE_Condition_Thread_Mutex")));
+                ACE_TEXT ("%p\n"),
+                ACE_TEXT ("ACE_Condition_Thread_Mutex::ACE_Condition_Thread_Mutex")));
 }
 
 ACE_Condition_Thread_Mutex::
@@ -69,8 +69,8 @@ ACE_Condition_Thread_Mutex (ACE_Thread_Mutex &m,
 // ACE_TRACE ("ACE_Condition_Thread_Mutex::ACE_Condition_Thread_Mutex");
   if (ACE_OS::cond_init (&this->cond_, attributes.attributes_,
                          name, arg) != 0)
-    ACE_ERROR ((LM_ERROR, ACE_LIB_TEXT ("%p\n"),
-                ACE_LIB_TEXT ("ACE_Condition_Thread_Mutex::ACE_Condition_Thread_Mutex")));
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"),
+                ACE_TEXT ("ACE_Condition_Thread_Mutex::ACE_Condition_Thread_Mutex")));
 }
 
 ACE_Condition_Thread_Mutex::~ACE_Condition_Thread_Mutex (void)

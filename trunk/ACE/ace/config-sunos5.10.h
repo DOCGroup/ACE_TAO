@@ -35,12 +35,12 @@
 // Solaris 10 introduced printf() modifiers for [s]size_t types.
 #if defined (ACE_SSIZE_T_FORMAT_SPECIFIER)
 #  undef ACE_SSIZE_T_FORMAT_SPECIFIER
-#  define ACE_SSIZE_T_FORMAT_SPECIFIER ACE_LIB_TEXT ("%zd")
+#  define ACE_SSIZE_T_FORMAT_SPECIFIER ACE_TEXT ("%zd")
 #endif /* ACE_SSIZE_T_FORMAT_SPECIFIER */
 
 #if defined (ACE_SIZE_T_FORMAT_SPECIFIER)
 #  undef ACE_SIZE_T_FORMAT_SPECIFIER
-#  define ACE_SIZE_T_FORMAT_SPECIFIER ACE_LIB_TEXT ("%zu")
+#  define ACE_SIZE_T_FORMAT_SPECIFIER ACE_TEXT ("%zu")
 #endif /* ACE_SIZE_T_FORMAT_SPECIFIER */
 
 #endif /* ACE_CONFIG_H */

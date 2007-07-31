@@ -247,7 +247,7 @@ ACE_SUN_Proactor::start_aio_i (ACE_POSIX_Asynch_Result *result)
   switch (result->aio_lio_opcode)
     {
     case LIO_READ :
-      ptype = ACE_LIB_TEXT ("read");
+      ptype = ACE_TEXT ("read");
       ret_val = aioread (result->aio_fildes,
                          (char *) result->aio_buf,
                          result->aio_nbytes,
@@ -257,7 +257,7 @@ ACE_SUN_Proactor::start_aio_i (ACE_POSIX_Asynch_Result *result)
       break;
 
     case LIO_WRITE :
-      ptype = ACE_LIB_TEXT ("write");
+      ptype = ACE_TEXT ("write");
       ret_val = aiowrite (result->aio_fildes,
                           (char *) result->aio_buf,
                           result->aio_nbytes,
@@ -267,7 +267,7 @@ ACE_SUN_Proactor::start_aio_i (ACE_POSIX_Asynch_Result *result)
       break;
 
     default:
-      ptype = ACE_LIB_TEXT ("?????");
+      ptype = ACE_TEXT ("?????");
       ret_val = -1;
       break;
     }
@@ -284,9 +284,9 @@ ACE_SUN_Proactor::start_aio_i (ACE_POSIX_Asynch_Result *result)
         ret_val = 1;
       else
         ACE_ERROR ((LM_ERROR,
-                    ACE_LIB_TEXT ("%N:%l:(%P | %t)::start_aio: aio%s %p\n"),
+                    ACE_TEXT ("%N:%l:(%P | %t)::start_aio: aio%s %p\n"),
                     ptype,
-                    ACE_LIB_TEXT ("queueing failed\n")));
+                    ACE_TEXT ("queueing failed\n")));
     }
 
   return ret_val;

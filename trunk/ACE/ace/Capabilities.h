@@ -198,7 +198,7 @@ is_empty (const ACE_TCHAR *line)
   while (*line && ACE_OS::ace_isspace (*line))
     ++line;
 
-  return *line == ACE_LIB_TEXT ('\0') || *line == ACE_LIB_TEXT ('#');
+  return *line == ACE_TEXT ('\0') || *line == ACE_TEXT ('#');
 }
 
 int
@@ -207,7 +207,7 @@ is_line (const ACE_TCHAR *line)
   while (*line && ACE_OS::ace_isspace (*line))
     ++line;
 
-  return *line != ACE_LIB_TEXT ('\0');
+  return *line != ACE_TEXT ('\0');
 }
 #endif /* ACE_IS_SPLITTING */
 

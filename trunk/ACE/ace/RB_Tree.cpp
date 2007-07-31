@@ -54,7 +54,7 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::ACE_RB_Tree (ACE_Allocator 
   allocator_ = alloc;
   if (this->open (alloc) == -1)
     ACE_ERROR ((LM_ERROR,
-                ACE_LIB_TEXT ("ACE_RB_Tree::ACE_RB_Tree\n")));
+                ACE_TEXT ("ACE_RB_Tree::ACE_RB_Tree\n")));
 }
 
 // Copy constructor.
@@ -150,14 +150,14 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::RB_rotate_right (ACE_RB_Tre
 
   if (!x)
     ACE_ERROR ((LM_ERROR,
-                ACE_LIB_TEXT ("%p\n"),
-                ACE_LIB_TEXT ("\nerror: x is a null pointer in ")
-                ACE_LIB_TEXT ("ACE_RB_Tree<EXT_ID, INT_ID>::RB_rotate_right\n")));
+                ACE_TEXT ("%p\n"),
+                ACE_TEXT ("\nerror: x is a null pointer in ")
+                ACE_TEXT ("ACE_RB_Tree<EXT_ID, INT_ID>::RB_rotate_right\n")));
   else if (! (x->left()))
     ACE_ERROR ((LM_ERROR,
-                ACE_LIB_TEXT ("%p\n"),
-                ACE_LIB_TEXT ("\nerror: x->left () is a null pointer in ")
-                ACE_LIB_TEXT ("ACE_RB_Tree<EXT_ID, INT_ID>::RB_rotate_right\n")));
+                ACE_TEXT ("%p\n"),
+                ACE_TEXT ("\nerror: x->left () is a null pointer in ")
+                ACE_TEXT ("ACE_RB_Tree<EXT_ID, INT_ID>::RB_rotate_right\n")));
   else
     {
       ACE_RB_Tree_Node<EXT_ID, INT_ID> * y;
@@ -189,14 +189,14 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::RB_rotate_left (ACE_RB_Tree
 
   if (! x)
     ACE_ERROR ((LM_ERROR,
-                ACE_LIB_TEXT ("%p\n"),
-                ACE_LIB_TEXT ("\nerror: x is a null pointer in ")
-                ACE_LIB_TEXT ("ACE_RB_Tree<EXT_ID, INT_ID>::RB_rotate_left\n")));
+                ACE_TEXT ("%p\n"),
+                ACE_TEXT ("\nerror: x is a null pointer in ")
+                ACE_TEXT ("ACE_RB_Tree<EXT_ID, INT_ID>::RB_rotate_left\n")));
   else if (! (x->right()))
     ACE_ERROR ((LM_ERROR,
-                ACE_LIB_TEXT ("%p\n"),
-                ACE_LIB_TEXT ("\nerror: x->right () is a null pointer ")
-                ACE_LIB_TEXT ("in ACE_RB_Tree<EXT_ID, INT_ID>::RB_rotate_left\n")));
+                ACE_TEXT ("%p\n"),
+                ACE_TEXT ("\nerror: x->right () is a null pointer ")
+                ACE_TEXT ("in ACE_RB_Tree<EXT_ID, INT_ID>::RB_rotate_left\n")));
   else
     {
       ACE_RB_Tree_Node<EXT_ID, INT_ID> * y;
@@ -399,9 +399,9 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::RB_rebalance (ACE_RB_Tree_N
         {
           // If we got here, something is drastically wrong!
           ACE_ERROR ((LM_ERROR,
-                      ACE_LIB_TEXT ("%p\n"),
-                      ACE_LIB_TEXT ("\nerror: parent's parent is null in ")
-                      ACE_LIB_TEXT ("ACE_RB_Tree<EXT_ID, INT_ID>::RB_rebalance\n")));
+                      ACE_TEXT ("%p\n"),
+                      ACE_TEXT ("\nerror: parent's parent is null in ")
+                      ACE_TEXT ("ACE_RB_Tree<EXT_ID, INT_ID>::RB_rebalance\n")));
           return;
         }
 
@@ -633,9 +633,9 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::insert_i (const EXT_ID &k, 
             {
               // If there is already a right subtree, complain.
               ACE_ERROR_RETURN ((LM_ERROR,
-                                 ACE_LIB_TEXT ("%p\n"),
-                                 ACE_LIB_TEXT ("\nright subtree already present in ")
-                                 ACE_LIB_TEXT ("ACE_RB_Tree<EXT_ID, INT_ID>::insert_i\n")),
+                                 ACE_TEXT ("%p\n"),
+                                 ACE_TEXT ("\nright subtree already present in ")
+                                 ACE_TEXT ("ACE_RB_Tree<EXT_ID, INT_ID>::insert_i\n")),
                                 0);
             }
           else
@@ -669,9 +669,9 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::insert_i (const EXT_ID &k, 
           if (current->left ())
             // If there is already a left subtree, complain.
             ACE_ERROR_RETURN ((LM_ERROR,
-                               ACE_LIB_TEXT ("%p\n"),
-                               ACE_LIB_TEXT ("\nleft subtree already present in ")
-                               ACE_LIB_TEXT ("ACE_RB_Tree<EXT_ID, INT_ID>::insert_i\n")),
+                               ACE_TEXT ("%p\n"),
+                               ACE_TEXT ("\nleft subtree already present in ")
+                               ACE_TEXT ("ACE_RB_Tree<EXT_ID, INT_ID>::insert_i\n")),
                               0);
           else
             {
@@ -710,7 +710,7 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::insert_i (const EXT_ID &k, 
       this->root_->color (ACE_RB_Tree_Node_Base::BLACK);
       ++current_size_;
       return &this->root_->item ();
-    }  
+    }
 }
 
 // Inserts a *copy* of the key and the item into the tree: both the
@@ -750,9 +750,9 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::insert_i (const EXT_ID &k,
             {
               // If there is already a right subtree, complain.
               ACE_ERROR_RETURN ((LM_ERROR,
-                                 ACE_LIB_TEXT ("%p\n"),
-                                 ACE_LIB_TEXT ("\nright subtree already present in ")
-                                 ACE_LIB_TEXT ("ACE_RB_Tree<EXT_ID, INT_ID>::insert_i\n")),
+                                 ACE_TEXT ("%p\n"),
+                                 ACE_TEXT ("\nright subtree already present in ")
+                                 ACE_TEXT ("ACE_RB_Tree<EXT_ID, INT_ID>::insert_i\n")),
                                 -1);
             }
           else
@@ -785,9 +785,9 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::insert_i (const EXT_ID &k,
           if (current->left ())
             // If there is already a left subtree, complain.
             ACE_ERROR_RETURN ((LM_ERROR,
-                               ACE_LIB_TEXT ("%p\n"),
-                               ACE_LIB_TEXT ("\nleft subtree already present in ")
-                               ACE_LIB_TEXT ("ACE_RB_Tree<EXT_ID, INT_ID>::insert_i\n")),
+                               ACE_TEXT ("%p\n"),
+                               ACE_TEXT ("\nleft subtree already present in ")
+                               ACE_TEXT ("ACE_RB_Tree<EXT_ID, INT_ID>::insert_i\n")),
                               -1);
           else
             {
@@ -866,17 +866,17 @@ dump_i (ACE_RB_Tree_Node<EXT_ID, INT_ID> *node) const
     {
       dump_node_i (*node);
 
-      ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("\ndown left\n")));
+      ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("\ndown left\n")));
       this->dump_i (node->left ());
-      ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("\nup left\n")));
+      ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("\nup left\n")));
 
-      ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("\ndown right\n")));
+      ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("\ndown right\n")));
       this->dump_i (node->right ());
-      ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("\nup right\n")));
+      ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("\nup right\n")));
     }
   else
     {
-      ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("\nNULL POINTER (BLACK)\n")));
+      ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("\nNULL POINTER (BLACK)\n")));
     }
 #else /* !ACE_HAS_DUMP */
   ACE_UNUSED_ARG (node);
@@ -895,7 +895,7 @@ dump_node_i (ACE_RB_Tree_Node<EXT_ID, INT_ID> &node) const
   const char * color_str = (node.color () == ACE_RB_Tree_Node_Base::RED)
                            ? "RED" : "BLACK";
 
-  ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT (" color=[%s]\n"), color_str));
+  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT (" color=[%s]\n"), color_str));
 #else /* !ACE_HAS_DUMP */
   ACE_UNUSED_ARG (node);
 #endif /* ACE_HAS_DUMP */
@@ -917,7 +917,7 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::test_invariant (void)
   int expected_black_height = -1;
   if (this->test_invariant_recurse (this->root_, expected_black_height, 0) == 0)
     {
-      ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("invariant holds\n")));
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("invariant holds\n")));
       return 0;
     }
 
@@ -945,9 +945,9 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::test_invariant_recurse (ACE
       else if (expected_black_height != measured_black_height)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_LIB_TEXT ("\nexpected_black_height = %d but ")
-                             ACE_LIB_TEXT ("\nmeasured_black_height = %d in ")
-                             ACE_LIB_TEXT ("ACE_RB_Tree<EXT_ID, INT_ID>::test_invariant_recurse\n"),
+                             ACE_TEXT ("\nexpected_black_height = %d but ")
+                             ACE_TEXT ("\nmeasured_black_height = %d in ")
+                             ACE_TEXT ("ACE_RB_Tree<EXT_ID, INT_ID>::test_invariant_recurse\n"),
                              expected_black_height, measured_black_height),
                             -1);
         }
@@ -961,18 +961,18 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::test_invariant_recurse (ACE
       if (x->left () && x->left ()->color () == ACE_RB_Tree_Node_Base::RED)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_LIB_TEXT ("%p\n"),
-                             ACE_LIB_TEXT ("\nRED parent has RED left child in ")
-                             ACE_LIB_TEXT ("ACE_RB_Tree<EXT_ID, INT_ID>::test_invariant_recurse\n")),
+                             ACE_TEXT ("%p\n"),
+                             ACE_TEXT ("\nRED parent has RED left child in ")
+                             ACE_TEXT ("ACE_RB_Tree<EXT_ID, INT_ID>::test_invariant_recurse\n")),
                             -1);
         }
 
       if (x->right () && x->right ()->color () == ACE_RB_Tree_Node_Base::RED)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_LIB_TEXT ("%p\n"),
-                             ACE_LIB_TEXT ("\nRED parent has RED right child in ")
-                             ACE_LIB_TEXT ("ACE_RB_Tree<EXT_ID, INT_ID>::test_invariant_recurse\n")),
+                             ACE_TEXT ("%p\n"),
+                             ACE_TEXT ("\nRED parent has RED right child in ")
+                             ACE_TEXT ("ACE_RB_Tree<EXT_ID, INT_ID>::test_invariant_recurse\n")),
                             -1);
         }
     }
@@ -1126,7 +1126,7 @@ ACE_RB_Tree_Iterator_Base<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::dump_i (void)
   ACE_TRACE ("ACE_RB_Tree_Iterator_Base<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::dump_i");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("\nnode_ = %x\n"), this->node_));
+  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("\nnode_ = %x\n"), this->node_));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 

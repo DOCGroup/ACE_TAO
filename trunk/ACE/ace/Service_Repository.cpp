@@ -127,8 +127,8 @@ ACE_Service_Repository::ACE_Service_Repository (size_t size)
 
   if (this->open (size) == -1)
     ACE_ERROR ((LM_ERROR,
-                ACE_LIB_TEXT ("%p\n"),
-                ACE_LIB_TEXT ("ACE_Service_Repository")));
+                ACE_TEXT ("%p\n"),
+                ACE_TEXT ("ACE_Service_Repository")));
 }
 
 // Finalize (call <fini> and possibly delete) all the services.
@@ -160,8 +160,8 @@ ACE_Service_Repository::fini (void)
 #ifndef ACE_NLOGGING
           if (ACE::debug ())
               ACE_DEBUG ((LM_DEBUG,
-                          ACE_LIB_TEXT ("ACE (%P|%t) SR::fini, repo=%@ [%d] (%d), ")
-                          ACE_LIB_TEXT ("name=%s, type=%@, impl=%@, object=%@, active=%d\n"),
+                          ACE_TEXT ("ACE (%P|%t) SR::fini, repo=%@ [%d] (%d), ")
+                          ACE_TEXT ("name=%s, type=%@, impl=%@, object=%@, active=%d\n"),
                           this, i, this->total_size_, s->name(), s->type (),
                           (s->type () != 0) ? s->type ()->object () : 0,
                           s->active ()));
@@ -195,7 +195,7 @@ ACE_Service_Repository::close (void)
 #ifndef ACE_NLOGGING
       if(ACE::debug ())
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_LIB_TEXT ("(%P|%t) SR::close, this=%@, size=%d\n"),
+                    ACE_TEXT ("(%P|%t) SR::close, this=%@, size=%d\n"),
                     this,
                     this->current_size_));
 #endif
@@ -209,7 +209,7 @@ ACE_Service_Repository::close (void)
 #ifndef ACE_NLOGGING
           if(ACE::debug ())
             ACE_DEBUG ((LM_DEBUG,
-                        ACE_LIB_TEXT ("(%P|%t) SR::close, this=%@, delete so[%d]=%@ (%s)\n"),
+                        ACE_TEXT ("(%P|%t) SR::close, this=%@, delete so[%d]=%@ (%s)\n"),
                         this, i,
                         this->service_vector_[i],
                         this->service_vector_[i]->name ()));
@@ -379,9 +379,9 @@ ACE_Service_Repository::insert (const ACE_Service_Type *sr)
 #ifndef ACE_NLOGGING
     if (ACE::debug ())
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_LIB_TEXT ("ACE (%P|%t) SR::insert")
-                  ACE_LIB_TEXT (" - repo=%@ [%d] (%d), name=%s")
-                  ACE_LIB_TEXT (", type=%@, object=%@, active=%d\n"),
+                  ACE_TEXT ("ACE (%P|%t) SR::insert")
+                  ACE_TEXT (" - repo=%@ [%d] (%d), name=%s")
+                  ACE_TEXT (", type=%@, object=%@, active=%d\n"),
                   this, i, this->total_size_, sr->name(), sr->type (),
                   (sr->type () != 0) ? sr->type ()->object () : 0,
                   sr->active ()));
@@ -394,9 +394,9 @@ ACE_Service_Repository::insert (const ACE_Service_Type *sr)
 #ifndef ACE_NLOGGING
       if (ACE::debug ())
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_LIB_TEXT ("ACE (%P|%t) SR::insert")
-                    ACE_LIB_TEXT (" - destroying (replacing), repo=%@ [%d] (%d), name=%s")
-                    ACE_LIB_TEXT (", type=%@, object=%@, active=%d\n"),
+                    ACE_TEXT ("ACE (%P|%t) SR::insert")
+                    ACE_TEXT (" - destroying (replacing), repo=%@ [%d] (%d), name=%s")
+                    ACE_TEXT (", type=%@, object=%@, active=%d\n"),
                     this, i, this->total_size_, s->name(), s->type (),
                     (s->type () != 0) ? s->type ()->object () : 0,
                     s->active ()));

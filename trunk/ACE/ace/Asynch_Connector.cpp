@@ -49,8 +49,8 @@ ACE_Asynch_Connector<HANDLER>::open (int pass_addresses,
                                   0,
                                   this->proactor ()) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_LIB_TEXT ("%p\n"),
-                       ACE_LIB_TEXT ("ACE_Asynch_Connect::open")),
+                       ACE_TEXT ("%p\n"),
+                       ACE_TEXT ("ACE_Asynch_Connect::open")),
                       -1);
   return 0;
 }
@@ -68,8 +68,8 @@ ACE_Asynch_Connector<HANDLER>::connect (const ACE_INET_Addr & remote_sap,
                                      reuse_addr,
                                      act) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_LIB_TEXT ("%p\n"),
-                       ACE_LIB_TEXT ("ACE_Asynch_Connect::connect")),
+                       ACE_TEXT ("%p\n"),
+                       ACE_TEXT ("ACE_Asynch_Connect::connect")),
                       -1);
   return 0;
 }
@@ -99,8 +99,8 @@ ACE_Asynch_Connector<HANDLER>::handle_connect (const ACE_Asynch_Connect::Result 
     {
       error = 1;
       ACE_ERROR ((LM_ERROR,
-                  ACE_LIB_TEXT ("%p\n"),
-                  ACE_LIB_TEXT ("ACE_Asynch_Connector::handle_connect : Set blocking mode")));
+                  ACE_TEXT ("%p\n"),
+                  ACE_TEXT ("ACE_Asynch_Connector::handle_connect : Set blocking mode")));
     }
 
   // Parse the addresses.
@@ -129,8 +129,8 @@ ACE_Asynch_Connector<HANDLER>::handle_connect (const ACE_Asynch_Connect::Result 
         {
           error = 1;
           ACE_ERROR ((LM_ERROR,
-                      ACE_LIB_TEXT ("%p\n"),
-                      ACE_LIB_TEXT ("ACE_Asynch_Connector::handle_connect : Making of new handler failed")));
+                      ACE_TEXT ("%p\n"),
+                      ACE_TEXT ("ACE_Asynch_Connector::handle_connect : Making of new handler failed")));
         }
     }
 
@@ -204,16 +204,16 @@ ACE_Asynch_Connector<HANDLER>::parse_address (const ACE_Asynch_Connect::Result &
                            reinterpret_cast<sockaddr *> (&local_addr),
                            &local_size) < 0)
     ACE_ERROR ((LM_ERROR,
-                ACE_LIB_TEXT("%p\n"),
-                ACE_LIB_TEXT("ACE_Asynch_Connector::<getsockname> failed")));
+                ACE_TEXT("%p\n"),
+                ACE_TEXT("ACE_Asynch_Connector::<getsockname> failed")));
 
   // Get the remote address.
   if (ACE_OS::getpeername (result.connect_handle (),
                            reinterpret_cast<sockaddr *> (&remote_addr),
                            &remote_size) < 0)
     ACE_ERROR ((LM_ERROR,
-                ACE_LIB_TEXT("%p\n"),
-                ACE_LIB_TEXT("ACE_Asynch_Connector::<getpeername> failed")));
+                ACE_TEXT("%p\n"),
+                ACE_TEXT("ACE_Asynch_Connector::<getpeername> failed")));
 
   // Set the addresses.
   local_address.set  (reinterpret_cast<sockaddr_in *> (&local_addr),

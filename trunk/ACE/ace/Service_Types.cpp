@@ -60,7 +60,7 @@ ACE_Service_Type_Impl::fini (void) const
   ACE_TRACE ("ACE_Service_Type_Impl::fini");
   if (ACE::debug ())
     ACE_DEBUG ((LM_DEBUG,
-                ACE_LIB_TEXT ("destroying %s, flags = %d\n"),
+                ACE_TEXT ("destroying %s, flags = %d\n"),
                 this->name_,
                 this->flags_));
 
@@ -259,9 +259,9 @@ ACE_Module_Type::info (ACE_TCHAR **str, size_t len) const
   ACE_TCHAR buf[BUFSIZ];
 
   ACE_OS::sprintf (buf,
-                   ACE_LIB_TEXT ("%s\t %s"),
+                   ACE_TEXT ("%s\t %s"),
                    this->name (),
-                   ACE_LIB_TEXT ("# ACE_Module\n"));
+                   ACE_TEXT ("# ACE_Module\n"));
 
   if (*str == 0 && (*str = ACE_OS::strdup (buf)) == 0)
     return -1;
@@ -348,9 +348,9 @@ ACE_Stream_Type::info (ACE_TCHAR **str, size_t len) const
   ACE_TCHAR buf[BUFSIZ];
 
   ACE_OS::sprintf (buf,
-                   ACE_LIB_TEXT ("%s\t %s"),
+                   ACE_TEXT ("%s\t %s"),
                    this->name (),
-                   ACE_LIB_TEXT ("# STREAM\n"));
+                   ACE_TEXT ("# STREAM\n"));
 
   if (*str == 0 && (*str = ACE_OS::strdup (buf)) == 0)
     return -1;

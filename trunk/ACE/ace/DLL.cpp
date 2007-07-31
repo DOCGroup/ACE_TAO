@@ -44,7 +44,7 @@ ACE_DLL::ACE_DLL (const ACE_DLL &rhs)
                      rhs.close_handle_on_destruction_) != 0
       && ACE::debug ())
     ACE_ERROR ((LM_ERROR,
-    ACE_LIB_TEXT ("ACE_DLL::copy_ctor: error: %s\n"),
+    ACE_TEXT ("ACE_DLL::copy_ctor: error: %s\n"),
     this->error ()));
 }
 
@@ -85,7 +85,7 @@ ACE_DLL::ACE_DLL (const ACE_TCHAR *dll_name,
   if (this->open (dll_name, this->open_mode_, close_handle_on_destruction) != 0
       && ACE::debug ())
     ACE_ERROR ((LM_ERROR,
-                ACE_LIB_TEXT ("ACE_DLL::open: error calling open: %s\n"),
+                ACE_TEXT ("ACE_DLL::open: error calling open: %s\n"),
                 this->error ()));
 }
 
@@ -141,8 +141,8 @@ ACE_DLL::open_i (const ACE_TCHAR *dll_filename,
     {
       if (ACE::debug ())
         ACE_ERROR ((LM_ERROR,
-                    ACE_LIB_TEXT ("ACE_DLL::open_i: dll_name is %s\n"),
-                    this->dll_name_ == 0 ? ACE_LIB_TEXT ("(null)")
+                    ACE_TEXT ("ACE_DLL::open_i: dll_name is %s\n"),
+                    this->dll_name_ == 0 ? ACE_TEXT ("(null)")
         : this->dll_name_));
       return -1;
     }
@@ -224,7 +224,7 @@ ACE_DLL::error (void) const
   ACE_TRACE ("ACE_DLL::error");
   if (this->error_)
     return
-      const_cast<ACE_TCHAR *> (ACE_LIB_TEXT ("Error: check log for details."));
+      const_cast<ACE_TCHAR *> (ACE_TEXT ("Error: check log for details."));
 
   return 0;
 }

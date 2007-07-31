@@ -65,9 +65,9 @@ ACE_Unbounded_Set<T>::dump (void) const
   ACE_TRACE ("ACE_Unbounded_Set<T>::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("\nhead_ = %u"), this->head_));
-  ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("\nhead_->next_ = %u"), this->head_->next_));
-  ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("\ncur_size_ = %d\n"), this->cur_size_));
+  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("\nhead_ = %u"), this->head_));
+  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("\nhead_->next_ = %u"), this->head_->next_));
+  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("\ncur_size_ = %d\n"), this->cur_size_));
 
   T *item = 0;
 #if !defined (ACE_NLOGGING)
@@ -78,7 +78,7 @@ ACE_Unbounded_Set<T>::dump (void) const
   for (const_iterator i (this->begin ());
        i != end;
        ++i)
-    ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("count = %u\n"), count++));
+    ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("count = %u\n"), count++));
 
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */

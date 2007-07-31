@@ -21,7 +21,7 @@ ACE_FILE_Connector::dump (void) const
   ACE_TRACE ("ACE_FILE_Connector::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("\n")));
+  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
 }

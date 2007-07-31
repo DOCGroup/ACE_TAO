@@ -71,8 +71,8 @@ ACE_Service_Type_Dynamic_Guard::ACE_Service_Type_Dynamic_Guard
 
   if (ACE::debug ())
     ACE_DEBUG ((LM_DEBUG,
-                ACE_LIB_TEXT ("ACE (%P|%t) STDG::<ctor>, repo=%@ [%d], ")
-                ACE_LIB_TEXT ("name=%s, type=%@, impl=%@, object=%@, active=%d - inserting dummy forward\n"),
+                ACE_TEXT ("ACE (%P|%t) STDG::<ctor>, repo=%@ [%d], ")
+                ACE_TEXT ("name=%s, type=%@, impl=%@, object=%@, active=%d - inserting dummy forward\n"),
                 &this->repo_, this->repo_begin_, this->name_, this->dummy_,
                 this->dummy_->type (),
                 (this->dummy_->type () != 0) ? this->dummy_->type ()->object () : 0,
@@ -103,7 +103,7 @@ ACE_Service_Type_Dynamic_Guard::~ACE_Service_Type_Dynamic_Guard (void)
     {
       if (ACE::debug ())
         ACE_ERROR ((LM_WARNING,
-                    ACE_LIB_TEXT ("ACE (%P|%t) STDG::<dtor> - Failed (%d) to find %s\n"),
+                    ACE_TEXT ("ACE (%P|%t) STDG::<dtor> - Failed (%d) to find %s\n"),
                     ret, this->name_));
       return;
     }
@@ -115,7 +115,7 @@ ACE_Service_Type_Dynamic_Guard::~ACE_Service_Type_Dynamic_Guard (void)
 
       if (ACE::debug ())
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_LIB_TEXT ("ACE (%P|%t) STDG::<dtor>, repo=%@, name=%s - updating [%d - %d]\n"),
+                    ACE_TEXT ("ACE (%P|%t) STDG::<dtor>, repo=%@, name=%s - updating [%d - %d]\n"),
                     &this->repo_,
                     this->name_,
                     this->repo_begin_,
@@ -134,8 +134,8 @@ ACE_Service_Type_Dynamic_Guard::~ACE_Service_Type_Dynamic_Guard (void)
 
       if (ACE::debug ())
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_LIB_TEXT ("ACE (%P|%t) STDG::<dtor>, repo=%@ [%d], ")
-                    ACE_LIB_TEXT ("name=%s, type=%@, impl=%@, object=%@, active=%d - loaded\n"),
+                    ACE_TEXT ("ACE (%P|%t) STDG::<dtor>, repo=%@ [%d], ")
+                    ACE_TEXT ("name=%s, type=%@, impl=%@, object=%@, active=%d - loaded\n"),
                     &this->repo_, this->repo_begin_, this->name_, tmp, tmp->type (),
                     (tmp->type () != 0) ? tmp->type ()->object () : 0,
                     tmp->active ()));
@@ -144,8 +144,8 @@ ACE_Service_Type_Dynamic_Guard::~ACE_Service_Type_Dynamic_Guard (void)
     {
       if (ACE::debug ())
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_LIB_TEXT ("ACE (%P|%t) STDG::<dtor>, repo=%@, ")
-                    ACE_LIB_TEXT ("name=%s, type=%@, impl=%@, object=%@, active=%d - removing dummy forward\n"),
+                    ACE_TEXT ("ACE (%P|%t) STDG::<dtor>, repo=%@, ")
+                    ACE_TEXT ("name=%s, type=%@, impl=%@, object=%@, active=%d - removing dummy forward\n"),
                     &this->repo_, this->name_, this->dummy_, this->dummy_->type (),
                     (this->dummy_->type () != 0) ? this->dummy_->type ()->object () : 0,
                     this->dummy_->active ()));
@@ -164,8 +164,8 @@ ACE_Service_Type_Dynamic_Guard::~ACE_Service_Type_Dynamic_Guard (void)
       else
         {
           ACE_ERROR ((LM_WARNING,
-                      ACE_LIB_TEXT ("ACE (%P|%t) STDG::<dtor>, repo=%@, name=%s, ")
-                      ACE_LIB_TEXT ("type=%@, impl=%@, object=%@, active=%d - dummy remove failed\n"),
+                      ACE_TEXT ("ACE (%P|%t) STDG::<dtor>, repo=%@, name=%s, ")
+                      ACE_TEXT ("type=%@, impl=%@, object=%@, active=%d - dummy remove failed\n"),
                       &this->repo_, this->name_, this->dummy_, this->dummy_->type (),
                       (this->dummy_->type () != 0) ? this->dummy_->type ()->object () : 0,
                       this->dummy_->active ()));
@@ -210,7 +210,7 @@ ACE_Service_Gestalt::~ACE_Service_Gestalt (void)
 #ifndef ACE_NLOGGING
   if (ACE::debug ())
     ACE_DEBUG ((LM_DEBUG,
-                ACE_LIB_TEXT ("ACE (%P|%t) SG::dtor - this=%@, pss = %@\n"),
+                ACE_TEXT ("ACE (%P|%t) SG::dtor - this=%@, pss = %@\n"),
                 this, this->processed_static_svcs_));
 #endif
 
@@ -248,7 +248,7 @@ ACE_Service_Gestalt::ACE_Service_Gestalt (size_t size,
 #ifndef ACE_NLOGGING
   if (ACE::debug ())
     ACE_DEBUG ((LM_DEBUG,
-                ACE_LIB_TEXT ("ACE (%P|%t) SG::ctor - this = %@, pss = %@\n"),
+                ACE_TEXT ("ACE (%P|%t) SG::ctor - this = %@, pss = %@\n"),
                 this, this->processed_static_svcs_));
 #endif
 }
@@ -405,8 +405,8 @@ ACE_Service_Gestalt::add_processed_static_svc
 
   if (ACE::debug ())
     ACE_DEBUG ((LM_DEBUG,
-                ACE_LIB_TEXT ("ACE (%P|%t) SG::add_processed_statisc_svc, ")
-                ACE_LIB_TEXT ("repo=%@ - %s\n"),
+                ACE_TEXT ("ACE (%P|%t) SG::add_processed_statisc_svc, ")
+                ACE_TEXT ("repo=%@ - %s\n"),
                 this->repo_,
                 assd->name_));
 }
@@ -455,9 +455,9 @@ ACE_Service_Gestalt::initialize (const ACE_TCHAR *svc_name,
   if (ACE::debug ())
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_LIB_TEXT ("ACE (%P|%t) SG::initialize - () repo=%@, ")
-                  ACE_LIB_TEXT ("looking up static ")
-                  ACE_LIB_TEXT ("service \'%s\' to initialize\n"),
+                  ACE_TEXT ("ACE (%P|%t) SG::initialize - () repo=%@, ")
+                  ACE_TEXT ("looking up static ")
+                  ACE_TEXT ("service \'%s\' to initialize\n"),
                   this->repo_,
                   svc_name));
     }
@@ -476,16 +476,16 @@ ACE_Service_Gestalt::initialize (const ACE_TCHAR *svc_name,
       else
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_LIB_TEXT ("ACE (%P|%t) ERROR: SG::initialize - service \'%s\'")
-                             ACE_LIB_TEXT (" was not located.\n"),
+                             ACE_TEXT ("ACE (%P|%t) ERROR: SG::initialize - service \'%s\'")
+                             ACE_TEXT (" was not located.\n"),
                              svc_name),
                             -1);
         }
     }
   if (srp == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_LIB_TEXT ("ACE (%P|%t) ERROR: SG::initialize - service \'%s\'")
-                       ACE_LIB_TEXT (" was not located.\n"),
+                       ACE_TEXT ("ACE (%P|%t) ERROR: SG::initialize - service \'%s\'")
+                       ACE_TEXT (" was not located.\n"),
                        svc_name),
                       -1);
 
@@ -495,8 +495,8 @@ ACE_Service_Gestalt::initialize (const ACE_TCHAR *svc_name,
     {
       // ... report and remove this entry.
       ACE_ERROR ((LM_ERROR,
-                  ACE_LIB_TEXT ("ACE (%P|%t) ERROR: SG::initialize - static init of \'%s\'")
-                  ACE_LIB_TEXT (" failed (%p)\n"),
+                  ACE_TEXT ("ACE (%P|%t) ERROR: SG::initialize - static init of \'%s\'")
+                  ACE_TEXT (" failed (%p)\n"),
                   svc_name));
       this->repo_->remove (svc_name);
       return -1;
@@ -518,8 +518,8 @@ ACE_Service_Gestalt::initialize (const ACE_Service_Type_Factory *stf,
 #ifndef ACE_NLOGGING
   if (ACE::debug ())
     ACE_DEBUG ((LM_DEBUG,
-                ACE_LIB_TEXT ("ACE (%P|%t) SG::initialize - repo=%@, looking up dynamic ")
-                ACE_LIB_TEXT ("service \'%s\' to initialize\n"),
+                ACE_TEXT ("ACE (%P|%t) SG::initialize - repo=%@, looking up dynamic ")
+                ACE_TEXT ("service \'%s\' to initialize\n"),
                 this->repo_,
                 stf->name ()));
 #endif
@@ -537,9 +537,9 @@ ACE_Service_Gestalt::initialize (const ACE_Service_Type_Factory *stf,
 #ifndef ACE_NLOGGING
       if (ACE::debug ())
         ACE_ERROR_RETURN ((LM_WARNING,
-                           ACE_LIB_TEXT ("ACE (%P|%t) SG::initialize - repo=%@,")
-                           ACE_LIB_TEXT (" %s is already initialized.")
-                           ACE_LIB_TEXT (" Remove before re-initializing.\n"),
+                           ACE_TEXT ("ACE (%P|%t) SG::initialize - repo=%@,")
+                           ACE_TEXT (" %s is already initialized.")
+                           ACE_TEXT (" Remove before re-initializing.\n"),
                            this->repo_,
                            stf->name ()),
                           0);
@@ -559,10 +559,10 @@ ACE_Service_Gestalt::initialize (const ACE_Service_Type_Factory *stf,
   // recursion here.
   if (retv == -2 && srp->type () == 0)
     ACE_ERROR_RETURN ((LM_WARNING,
-                       ACE_LIB_TEXT ("ACE (%P|%t) SG::initialize - repo=%@,")
-                       ACE_LIB_TEXT (" %s is forward-declared.")
-                       ACE_LIB_TEXT (" Recursive initialization requests are")
-                       ACE_LIB_TEXT (" not supported.\n"),
+                       ACE_TEXT ("ACE (%P|%t) SG::initialize - repo=%@,")
+                       ACE_TEXT (" %s is forward-declared.")
+                       ACE_TEXT (" Recursive initialization requests are")
+                       ACE_TEXT (" not supported.\n"),
                        this->repo_,
                        stf->name ()),
                       -1);
@@ -616,17 +616,17 @@ ACE_Service_Gestalt::initialize (const ACE_Service_Type *sr,
 
   if (ACE::debug ())
     ACE_DEBUG ((LM_DEBUG,
-                ACE_LIB_TEXT ("ACE (%P|%t) SG::initialize - looking up dynamic ")
-                ACE_LIB_TEXT (" service %s to initialize, repo=%@\n"),
+                ACE_TEXT ("ACE (%P|%t) SG::initialize - looking up dynamic ")
+                ACE_TEXT (" service %s to initialize, repo=%@\n"),
                 sr->name (), this->repo_));
 
   ACE_Service_Type *srp = 0;
   if (this->repo_->find (sr->name (),
                          (const ACE_Service_Type **) &srp) >= 0)
     ACE_ERROR_RETURN ((LM_WARNING,
-                       ACE_LIB_TEXT ("ACE (%P|%t) SG::initialize - \'%s\' ")
-                       ACE_LIB_TEXT ("has already been installed. ")
-                       ACE_LIB_TEXT ("Remove before reinstalling\n"),
+                       ACE_TEXT ("ACE (%P|%t) SG::initialize - \'%s\' ")
+                       ACE_TEXT ("has already been installed. ")
+                       ACE_TEXT ("Remove before reinstalling\n"),
                        sr->name ()),
                       0);
 
@@ -653,8 +653,8 @@ ACE_Service_Gestalt::initialize_i (const ACE_Service_Type *sr,
       // Not using LM_ERROR here to avoid confusing the test harness
       if (ACE::debug ())
         ACE_ERROR_RETURN ((LM_WARNING,
-                           ACE_LIB_TEXT ("ACE (%P|%t) SG::initialize_i ")
-                           ACE_LIB_TEXT ("failed for %s: %m\n"),
+                           ACE_TEXT ("ACE (%P|%t) SG::initialize_i ")
+                           ACE_TEXT ("failed for %s: %m\n"),
                            sr->name ()),
                           -1);
 #endif
@@ -667,8 +667,8 @@ ACE_Service_Gestalt::initialize_i (const ACE_Service_Type *sr,
       // Not using LM_ERROR here to avoid confusing the test harness
       if (ACE::debug ())
         ACE_ERROR_RETURN ((LM_WARNING,
-                           ACE_LIB_TEXT ("ACE (%P|%t) SG - repository insert ")
-                           ACE_LIB_TEXT ("failed for %s: %m\n"),
+                           ACE_TEXT ("ACE (%P|%t) SG - repository insert ")
+                           ACE_TEXT ("failed for %s: %m\n"),
                            sr->name ()),
                           -1);
 #endif
@@ -780,11 +780,11 @@ ACE_Service_Gestalt::process_directive_i (const ACE_Static_Svc_Descriptor &ssd,
 #ifndef ACE_NLOGGING
   if (ACE::debug ())
     ACE_DEBUG ((LM_DEBUG,
-                ACE_LIB_TEXT ("ACE (%P|%t) SG::process_directive_i, ")
-                ACE_LIB_TEXT ("repo=%@ - %s, dll=%s, force=%d\n"),
+                ACE_TEXT ("ACE (%P|%t) SG::process_directive_i, ")
+                ACE_TEXT ("repo=%@ - %s, dll=%s, force=%d\n"),
                 this->repo_,
                 ssd.name_,
-                (tmp_dll.dll_name_ == 0) ? ACE_LIB_TEXT ("<null>") : tmp_dll.dll_name_,
+                (tmp_dll.dll_name_ == 0) ? ACE_TEXT ("<null>") : tmp_dll.dll_name_,
                 force_replace));
 #endif
 
@@ -814,8 +814,8 @@ ACE_Service_Gestalt::process_directives_i (ACE_Svc_Conf_Param *param)
 #ifndef ACE_NLOGGING
   if (ACE::debug ())
     ACE_DEBUG ((LM_DEBUG,
-                ACE_LIB_TEXT ("ACE (%P|%t) SG::process_directives_i, ")
-                ACE_LIB_TEXT ("repo=%@ - %s\n"),
+                ACE_TEXT ("ACE (%P|%t) SG::process_directives_i, ")
+                ACE_TEXT ("repo=%@ - %s\n"),
                 this->repo_,
                 (param->type == ACE_Svc_Conf_Param::SVC_CONF_FILE)
     ? ACE_TEXT ("<from file>")
@@ -842,20 +842,20 @@ ACE_Service_Gestalt::process_directives_i (ACE_Svc_Conf_Param *param)
 ACE_XML_Svc_Conf *
 ACE_Service_Gestalt::get_xml_svc_conf (ACE_DLL &xmldll)
 {
-  if (xmldll.open (ACE_LIB_TEXT ("ACEXML_XML_Svc_Conf_Parser")) == -1)
+  if (xmldll.open (ACE_TEXT ("ACEXML_XML_Svc_Conf_Parser")) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_LIB_TEXT ("ACE (%P|%t) Failure to open ACEXML_XML_Svc_Conf_Parser: %p\n"),
+                       ACE_TEXT ("ACE (%P|%t) Failure to open ACEXML_XML_Svc_Conf_Parser: %p\n"),
                        "ACE_Service_Config::get_xml_svc_conf"),
                       0);
 
   void * foo =
-    xmldll.symbol (ACE_LIB_TEXT ("_ACEXML_create_XML_Svc_Conf_Object"));
+    xmldll.symbol (ACE_TEXT ("_ACEXML_create_XML_Svc_Conf_Object"));
 
   ACE_XML_Svc_Conf::Factory factory =
     reinterpret_cast<ACE_XML_Svc_Conf::Factory> (foo);
   if (factory == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_LIB_TEXT ("ACE (%P|%t) Unable to resolve factory: %p\n"),
+                       ACE_TEXT ("ACE (%P|%t) Unable to resolve factory: %p\n"),
                        xmldll.error ()),
                       0);
 
@@ -894,7 +894,7 @@ ACE_Service_Gestalt::process_file (const ACE_TCHAR file[])
   int result = 0;
 
   FILE *fp = ACE_OS::fopen (file,
-                            ACE_LIB_TEXT ("r"));
+                            ACE_TEXT ("r"));
 
   if (fp == 0)
     {
@@ -902,7 +902,7 @@ ACE_Service_Gestalt::process_file (const ACE_TCHAR file[])
       // the method.
       if (ACE::debug ())
         ACE_DEBUG ((LM_ERROR,
-                    ACE_LIB_TEXT ("ACE (%P|%t): %p\n"),
+                    ACE_TEXT ("ACE (%P|%t): %p\n"),
                     file));
 
       // Use stat to find out if the file exists.  I didn't use access()
@@ -947,7 +947,7 @@ ACE_Service_Gestalt::process_directive (const ACE_TCHAR directive[])
 #ifndef ACE_NLOGGING
   if (ACE::debug ())
     ACE_DEBUG ((LM_DEBUG,
-                ACE_LIB_TEXT ("ACE (%P|%t) SG::process_directive, repo=%@ - %s\n"),
+                ACE_TEXT ("ACE (%P|%t) SG::process_directive, repo=%@ - %s\n"),
                 this->repo_,
                 directive));
 #endif
@@ -997,8 +997,8 @@ ACE_Service_Gestalt::init_svc_conf_file_queue (void)
 #ifndef ACE_NLOGGING
   if (ACE::debug ())
     ACE_DEBUG ((LM_DEBUG,
-                ACE_LIB_TEXT ("ACE (%P|%t) SG::init_svc_conf_file_queue ")
-                ACE_LIB_TEXT ("- this=%@, repo=%@\n"),
+                ACE_TEXT ("ACE (%P|%t) SG::init_svc_conf_file_queue ")
+                ACE_TEXT ("- this=%@, repo=%@\n"),
                 this, this->repo_));
 #endif
 
@@ -1104,8 +1104,8 @@ ACE_Service_Gestalt::process_commandline_directives (void)
           if (this->process_directive ((sptr->fast_rep ())) != 0)
             {
               ACE_ERROR ((LM_ERROR,
-                          ACE_LIB_TEXT ("ACE (%P|%t) %p\n"),
-                          ACE_LIB_TEXT ("process_directive")));
+                          ACE_TEXT ("ACE (%P|%t) %p\n"),
+                          ACE_TEXT ("process_directive")));
               result = -1;
             }
         }
@@ -1132,7 +1132,7 @@ ACE_Service_Gestalt::parse_args_i (int argc, ACE_TCHAR *argv[])
   ACE_TRACE ("ACE_Service_Gestalt::parse_args_i");
   ACE_Get_Opt getopt (argc,
                       argv,
-                      ACE_LIB_TEXT ("df:k:nyp:s:S:"),
+                      ACE_TEXT ("df:k:nyp:s:S:"),
                       1); // Start at argv[1].
 
   if (this->init_svc_conf_file_queue () == -1)
@@ -1147,8 +1147,8 @@ ACE_Service_Gestalt::parse_args_i (int argc, ACE_TCHAR *argv[])
       case 'f':
         if (this->svc_conf_file_queue_->enqueue_tail (ACE_TString (getopt.opt_arg ())) == -1)
           ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_LIB_TEXT ("%p\n"),
-                             ACE_LIB_TEXT ("enqueue_tail")),
+                             ACE_TEXT ("%p\n"),
+                             ACE_TEXT ("enqueue_tail")),
                             -1);
         break;
       case 'k':
@@ -1174,14 +1174,14 @@ ACE_Service_Gestalt::parse_args_i (int argc, ACE_TCHAR *argv[])
 
         if (this->svc_queue_->enqueue_tail (ACE_TString (getopt.opt_arg ())) == -1)
           ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_LIB_TEXT ("%p\n"),
-                             ACE_LIB_TEXT ("enqueue_tail")),
+                             ACE_TEXT ("%p\n"),
+                             ACE_TEXT ("enqueue_tail")),
                             -1);
         break;
       default:
         if (ACE::debug ())
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_LIB_TEXT ("ACE (%P|%t) %c is not a ACE_Service_Config option\n"),
+                      ACE_TEXT ("ACE (%P|%t) %c is not a ACE_Service_Config option\n"),
                       c));
       }
 
@@ -1254,7 +1254,7 @@ ACE_Service_Gestalt::close (void)
 #ifndef ACE_NLOGGING
   if (ACE::debug ())
     ACE_DEBUG ((LM_DEBUG,
-                ACE_LIB_TEXT ("ACE (%P|%t) SG::close - complete this=%@, repo=%@, owned=%d\n"),
+                ACE_TEXT ("ACE (%P|%t) SG::close - complete this=%@, repo=%@, owned=%d\n"),
                 this, this->repo_, this->svc_repo_is_owned_));
 #endif
 

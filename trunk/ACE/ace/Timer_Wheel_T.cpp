@@ -694,15 +694,15 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK>::dump (void) const
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
 
   ACE_DEBUG ((LM_DEBUG,
-    ACE_LIB_TEXT ("\nspoke_count_ = %d"), this->spoke_count_));
+    ACE_TEXT ("\nspoke_count_ = %d"), this->spoke_count_));
   ACE_DEBUG ((LM_DEBUG,
-    ACE_LIB_TEXT ("\nresolution_ = %d"), 1 << this->res_bits_));
+    ACE_TEXT ("\nresolution_ = %d"), 1 << this->res_bits_));
   ACE_DEBUG ((LM_DEBUG,
-    ACE_LIB_TEXT ("\nwheel_ = \n")));
+    ACE_TEXT ("\nwheel_ = \n")));
 
   for (u_int i = 0; i < this->spoke_count_; ++i)
     {
-      ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("%d\n"), i));
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%d\n"), i));
       ACE_Timer_Node_T<TYPE>* root = this->spokes_[i];
       for (ACE_Timer_Node_T<TYPE>* n = root->get_next ();
            n != root;

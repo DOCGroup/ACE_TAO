@@ -47,8 +47,8 @@ ACE_Service_Config_Guard::ACE_Service_Config_Guard (ACE_Service_Gestalt * psg)
 {
   if (ACE::debug ())
     ACE_DEBUG ((LM_DEBUG,
-                ACE_LIB_TEXT ("ACE (%P|%t) Service_Config_Guard:<ctor>")
-                ACE_LIB_TEXT (" - repo=%@ superceded by repo=%@\n"),
+                ACE_TEXT ("ACE (%P|%t) Service_Config_Guard:<ctor>")
+                ACE_TEXT (" - repo=%@ superceded by repo=%@\n"),
                 this->saved_->repo_,
                 psg->repo_));
 
@@ -63,8 +63,8 @@ ACE_Service_Config_Guard::~ACE_Service_Config_Guard (void)
 
   if (ACE::debug ())
     ACE_DEBUG ((LM_DEBUG,
-                ACE_LIB_TEXT ("ACE (%P|%t) Service_Config_Guard:<dtor>")
-                ACE_LIB_TEXT (" - new repo=%@\n"),
+                ACE_TEXT ("ACE (%P|%t) Service_Config_Guard:<dtor>")
+                ACE_TEXT (" - new repo=%@\n"),
                 this->saved_->repo_));
 }
 
@@ -109,7 +109,7 @@ ACE_Service_Config::parse_args_i (int argc, ACE_TCHAR *argv[])
   // base class for further parsing.
   ACE_Get_Opt getopt (argc,
                       argv,
-                      ACE_LIB_TEXT ("bs:p:"),
+                      ACE_TEXT ("bs:p:"),
                       1  ,                       // Start at argv[1].
                       0,                       // Do not report errors
                       ACE_Get_Opt::RETURN_IN_ORDER);
@@ -140,7 +140,7 @@ ACE_Service_Config::parse_args_i (int argc, ACE_TCHAR *argv[])
               (ACE_Service_Config::signum_,
                ACE_Service_Config::signal_handler_) == -1)
             ACE_ERROR_RETURN ((LM_ERROR,
-                               ACE_LIB_TEXT ("cannot obtain signal handler\n")),
+                               ACE_TEXT ("cannot obtain signal handler\n")),
                               -1);
 #endif /* ACE_LACKS_UNIX_SIGNALS */
           break;
@@ -198,7 +198,7 @@ ACE_Service_Config::open_i (const ACE_TCHAR program_name[],
   if (this->pid_file_name_ != 0)
     {
       FILE* pidf = ACE_OS::fopen (this->pid_file_name_,
-                                  ACE_LIB_TEXT("w"));
+                                  ACE_TEXT("w"));
 
       if (pidf != 0)
         {
@@ -233,7 +233,7 @@ ACE_Service_Config::open_i (const ACE_TCHAR program_name[],
     {
       if (ACE::debug ())
         ACE_DEBUG ((LM_STARTUP,
-                    ACE_LIB_TEXT ("starting up daemon %n\n")));
+                    ACE_TEXT ("starting up daemon %n\n")));
 
       // Initialize the Service Repository (this will still work if
       // user forgets to define an object of type ACE_Service_Config).
@@ -255,7 +255,7 @@ ACE_Service_Config::open_i (const ACE_TCHAR program_name[],
           if (ACE_Reactor::instance ()->register_handler
               (ss, ACE_Service_Config::signal_handler_) == -1)
             ACE_ERROR ((LM_ERROR,
-                        ACE_LIB_TEXT ("can't register signal handler\n")));
+                        ACE_TEXT ("can't register signal handler\n")));
         }
 #endif /* ACE_LACKS_UNIX_SIGNALS */
     }
@@ -271,7 +271,7 @@ ACE_Service_Config::open_i (const ACE_TCHAR program_name[],
   if (!ignore_default_svc_conf_file)
     {
       FILE *fp = ACE_OS::fopen (ACE_DEFAULT_SVC_CONF,
-                                ACE_LIB_TEXT ("r"));
+                                ACE_TEXT ("r"));
       ignore_default_svc_conf_file = (fp == 0);
       if (fp != 0)
         ACE_OS::fclose (fp);
@@ -286,10 +286,10 @@ ACE_Service_Config::open_i (const ACE_TCHAR program_name[],
           (ACE_TString (ACE_DEFAULT_SVC_CONF)) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_LIB_TEXT ("%p\n"),
-                             ACE_LIB_TEXT ("enqueuing ")
+                             ACE_TEXT ("%p\n"),
+                             ACE_TEXT ("enqueuing ")
                              ACE_DEFAULT_SVC_CONF
-                             ACE_LIB_TEXT(" file")),
+                             ACE_TEXT(" file")),
                             -1);
         }
     }
@@ -367,8 +367,9 @@ ACE_Service_Config::resume (const ACE_TCHAR svc_name[])
 // cleaned up.
 // Note that the tss_ member will be destroyed with the ACE_Object_Manager's
 // ACE_Service_Config singleton, so no leaks are introduced.
-template<> void
-ACE_TSS<ACE_Service_Gestalt>::cleanup (void*)
+template<>
+void
+ACE_TSS<ACE_Service_Gestalt>::cleanup (void* ptr)
 {
   // We need this because the SC instance is really owned by the Object
   // Manager and the TSS cleanup must not dispose of it prematurely.
@@ -441,7 +442,7 @@ ACE_Service_Config::create_service_type_impl (const ACE_TCHAR *name,
       break;
     default:
       ACE_ERROR ((LM_ERROR,
-                  ACE_LIB_TEXT ("unknown case\n")));
+                  ACE_TEXT ("unknown case\n")));
       break;
     }
   return stp;
@@ -463,7 +464,7 @@ ACE_Service_Config::ACE_Service_Config (const ACE_TCHAR program_name[],
       // Only print out an error if it wasn't the svc.conf file that was
       // missing.
       ACE_ERROR ((LM_ERROR,
-                  ACE_LIB_TEXT ("(%P|%t) SC failed to open: %p\n"),
+                  ACE_TEXT ("(%P|%t) SC failed to open: %p\n"),
                   program_name));
     }
 }
@@ -500,13 +501,13 @@ ACE_Service_Config::reconfigure (void)
 #endif /* ! ACE_NLOGGING */
       if (ACE::debug ())
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_LIB_TEXT ("beginning reconfiguration at %s"),
+                    ACE_TEXT ("beginning reconfiguration at %s"),
                     ACE_OS::ctime (&t)));
     }
   if (ACE_Service_Config::process_directives () == -1)
     ACE_ERROR ((LM_ERROR,
-                ACE_LIB_TEXT ("%p\n"),
-                ACE_LIB_TEXT ("process_directives")));
+                ACE_TEXT ("%p\n"),
+                ACE_TEXT ("process_directives")));
 }
 
 // Tidy up and perform last rites on a terminating ACE_Service_Config.

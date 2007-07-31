@@ -23,8 +23,8 @@ ACE_ATM_Acceptor::ACE_ATM_Acceptor (const ACE_Addr &remote_sap,
             backlog,
             params) < 0)
     ACE_ERROR ((LM_ERROR,
-                ACE_LIB_TEXT ("%p\n"),
-                ACE_LIB_TEXT ("ACE_ATM_Acceptor::ACE_ATM_Acceptor")));
+                ACE_TEXT ("%p\n"),
+                ACE_TEXT ("ACE_ATM_Acceptor::ACE_ATM_Acceptor")));
 }
 
 ACE_INLINE

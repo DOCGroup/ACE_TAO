@@ -226,9 +226,9 @@ ACE_Stats::print_summary (const u_int precision,
       // Build a format string, in case the C library doesn't support %*u.
       ACE_TCHAR format[32];
       if (tmp_precision == 0)
-        ACE_OS::sprintf (format, ACE_LIB_TEXT ("%%%d"), tmp_precision);
+        ACE_OS::sprintf (format, ACE_TEXT ("%%%d"), tmp_precision);
       else
-        ACE_OS::sprintf (format, ACE_LIB_TEXT ("%%d.%%0%du"), tmp_precision);
+        ACE_OS::sprintf (format, ACE_TEXT ("%%d.%%0%du"), tmp_precision);
 
       ACE_Stats_Value u (tmp_precision);
       ((ACE_Stats *) this)->mean (u, scale_factor);
@@ -265,8 +265,8 @@ ACE_Stats::print_summary (const u_int precision,
 
   if (success == 1)
     {
-      ACE_OS::fprintf (file, ACE_LIB_TEXT ("samples: %u (%s - %s); mean: ")
-                       ACE_LIB_TEXT ("%s; std dev: %s\n"),
+      ACE_OS::fprintf (file, ACE_TEXT ("samples: %u (%s - %s); mean: ")
+                       ACE_TEXT ("%s; std dev: %s\n"),
                        samples (), min_string, max_string,
                        mean_string, std_dev_string);
       return 0;
@@ -275,12 +275,12 @@ ACE_Stats::print_summary (const u_int precision,
     {
 #if !defined (ACE_HAS_WINCE)
       ACE_OS::fprintf (file,
-                       ACE_LIB_TEXT ("ACE_Stats::print_summary: OVERFLOW: %s\n"),
+                       ACE_TEXT ("ACE_Stats::print_summary: OVERFLOW: %s\n"),
                        ACE_OS::strerror (overflow_));
 #else
       // WinCE doesn't have strerror ;(
       ACE_OS::fprintf (file,
-                       ACE_LIB_TEXT ("ACE_Stats::print_summary: OVERFLOW\n"));
+                       ACE_TEXT ("ACE_Stats::print_summary: OVERFLOW\n"));
 #endif /* ACE_HAS_WINCE */
       return -1;
     }

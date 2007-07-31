@@ -372,7 +372,7 @@ ACE_Dev_Poll_Reactor_Notify::dispatch_notify (ACE_Notification_Buffer &buffer)
         default:
           // Should we bail out if we get an invalid mask?
           ACE_ERROR ((LM_ERROR,
-                      ACE_LIB_TEXT ("dispatch_notify invalid mask = %d\n"),
+                      ACE_TEXT ("dispatch_notify invalid mask = %d\n"),
                       buffer.mask_));
         }
       if (result == -1)
@@ -428,7 +428,7 @@ ACE_Dev_Poll_Reactor_Notify::dump (void) const
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACE_DEBUG ((LM_DEBUG,
-              ACE_LIB_TEXT ("dp_reactor_ = %@"),
+              ACE_TEXT ("dp_reactor_ = %@"),
               this->dp_reactor_));
   this->notification_pipe_.dump ();
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
@@ -630,10 +630,10 @@ ACE_Dev_Poll_Reactor::ACE_Dev_Poll_Reactor (ACE_Sig_Handler *sh,
                   disable_notify_pipe,
                   notify) == -1)
     ACE_ERROR ((LM_ERROR,
-                ACE_LIB_TEXT ("%p\n"),
-                ACE_LIB_TEXT ("ACE_Dev_Poll_Reactor::open ")
-                ACE_LIB_TEXT ("failed inside ")
-                ACE_LIB_TEXT ("ACE_Dev_Poll_Reactor::CTOR")));
+                ACE_TEXT ("%p\n"),
+                ACE_TEXT ("ACE_Dev_Poll_Reactor::open ")
+                ACE_TEXT ("failed inside ")
+                ACE_TEXT ("ACE_Dev_Poll_Reactor::CTOR")));
 }
 
 ACE_Dev_Poll_Reactor::ACE_Dev_Poll_Reactor (size_t size,
@@ -676,9 +676,9 @@ ACE_Dev_Poll_Reactor::ACE_Dev_Poll_Reactor (size_t size,
                   disable_notify_pipe,
                   notify) == -1)
     ACE_ERROR ((LM_ERROR,
-                ACE_LIB_TEXT ("%p\n"),
-                ACE_LIB_TEXT ("ACE_Dev_Poll_Reactor::open ")
-                ACE_LIB_TEXT ("failed inside ACE_Dev_Poll_Reactor::CTOR")));
+                ACE_TEXT ("%p\n"),
+                ACE_TEXT ("ACE_Dev_Poll_Reactor::open ")
+                ACE_TEXT ("failed inside ACE_Dev_Poll_Reactor::CTOR")));
 }
 
 ACE_Dev_Poll_Reactor::~ACE_Dev_Poll_Reactor (void)
@@ -2367,14 +2367,14 @@ ACE_Dev_Poll_Reactor::dump (void) const
   ACE_TRACE ("ACE_Dev_Poll_Reactor::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("restart_ = %d\n"), this->restart_));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("restart_ = %d\n"), this->restart_));
   ACE_DEBUG ((LM_DEBUG,
-              ACE_LIB_TEXT ("initialized_ = %d"),
+              ACE_TEXT ("initialized_ = %d"),
               this->initialized_));
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("poll_fd_ = %d"), this->poll_fd_));
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("size_ = %u"), this->size_));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("poll_fd_ = %d"), this->poll_fd_));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("size_ = %u"), this->size_));
   ACE_DEBUG ((LM_DEBUG,
-              ACE_LIB_TEXT ("deactivated_ = %d"),
+              ACE_TEXT ("deactivated_ = %d"),
               this->deactivated_));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */

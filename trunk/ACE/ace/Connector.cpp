@@ -60,8 +60,8 @@ ACE_NonBlocking_Connect_Handler<SVC_HANDLER>::dump (void) const
   ACE_TRACE ("ACE_NonBlocking_Connect_Handler<SVC_HANDLER>::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("svc_handler_ = %x"), this->svc_handler_));
-  ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("\ntimer_id_ = %d"), this->timer_id_));
+  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("svc_handler_ = %x"), this->svc_handler_));
+  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("\ntimer_id_ = %d"), this->timer_id_));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
 }
@@ -189,7 +189,7 @@ ACE_Connector<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::dump (void) const
   ACE_TRACE ("ACE_Connector<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("\nflags_ = %d"), this->flags_));
+  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("\nflags_ = %d"), this->flags_));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
 }
@@ -665,7 +665,7 @@ ACE_Connector<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::close (void)
       if (handler == 0)
         {
           ACE_ERROR ((LM_ERROR,
-                      ACE_LIB_TEXT ("%t: Connector::close h %d, no handler\n"),
+                      ACE_TEXT ("%t: Connector::close h %d, no handler\n"),
                       *handle));
           // Remove handle from the set of non-blocking handles.
           this->non_blocking_handles ().remove (*handle);
@@ -678,8 +678,8 @@ ACE_Connector<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::close (void)
       if (nbch == 0)
         {
           ACE_ERROR ((LM_ERROR,
-                      ACE_LIB_TEXT ("%t: Connector::close h %d handler %@ ")
-                      ACE_LIB_TEXT ("not a legit handler\n"),
+                      ACE_TEXT ("%t: Connector::close h %d handler %@ ")
+                      ACE_TEXT ("not a legit handler\n"),
                       *handle,
                       handler));
           // Remove handle from the set of non-blocking handles.
@@ -736,9 +736,9 @@ ACE_Connector<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::info (ACE_TCHAR **strp, size_t
   ACE_TCHAR buf[BUFSIZ];
 
   ACE_OS::sprintf (buf,
-                   ACE_LIB_TEXT ("%s\t %s"),
-                   ACE_LIB_TEXT ("ACE_Connector"),
-                   ACE_LIB_TEXT ("# connector factory\n"));
+                   ACE_TEXT ("%s\t %s"),
+                   ACE_TEXT ("ACE_Connector"),
+                   ACE_TEXT ("# connector factory\n"));
 
   if (*strp == 0 && (*strp = ACE_OS::strdup (buf)) == 0)
     return -1;
@@ -856,7 +856,7 @@ ACE_Strategy_Connector<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::ACE_Strategy_Connecto
   ACE_TRACE ("ACE_Connector<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::ACE_Strategy_Connector");
 
   if (this->open (reactor, cre_s, conn_s, con_s, flags) == -1)
-    ACE_ERROR ((LM_ERROR,  ACE_LIB_TEXT ("%p\n"),  ACE_LIB_TEXT ("ACE_Strategy_Connector::ACE_Strategy_Connector")));
+    ACE_ERROR ((LM_ERROR,  ACE_TEXT ("%p\n"),  ACE_TEXT ("ACE_Strategy_Connector::ACE_Strategy_Connector")));
 }
 
 template <class SVC_HANDLER, ACE_PEER_CONNECTOR_1>

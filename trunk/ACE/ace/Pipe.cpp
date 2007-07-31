@@ -28,9 +28,9 @@ ACE_Pipe::dump (void) const
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Pipe::dump");
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("handles_[0] = %d"), this->handles_[0]));
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nhandles_[1] = %d"), this->handles_[1]));
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\n")));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("handles_[0] = %d"), this->handles_[0]));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\nhandles_[1] = %d"), this->handles_[1]));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
 }
@@ -124,8 +124,8 @@ ACE_Pipe::open (int buffer_size)
   ACE_UNUSED_ARG (buffer_size);
   if (ACE_OS::pipe (this->handles_) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_LIB_TEXT ("%p\n"),
-                       ACE_LIB_TEXT ("pipe")),
+                       ACE_TEXT ("%p\n"),
+                       ACE_TEXT ("pipe")),
                       -1);
 
 #if !defined(__QNX__)
@@ -142,8 +142,8 @@ ACE_Pipe::open (int buffer_size)
     {
       this->close ();
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_LIB_TEXT ("%p\n"),
-                         ACE_LIB_TEXT ("ioctl")), -1);
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("ioctl")), -1);
     }
 #endif /* __QNX__ */
 
@@ -153,8 +153,8 @@ ACE_Pipe::open (int buffer_size)
                           0,
                           this->handles_) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_LIB_TEXT ("%p\n"),
-                       ACE_LIB_TEXT ("socketpair")),
+                       ACE_TEXT ("%p\n"),
+                       ACE_TEXT ("socketpair")),
                       -1);
 # if defined (ACE_LACKS_SOCKET_BUFSIZ)
   ACE_UNUSED_ARG (buffer_size);
@@ -218,7 +218,7 @@ ACE_Pipe::ACE_Pipe (ACE_HANDLE handles[2])
 
   if (this->open (handles) == -1)
     ACE_ERROR ((LM_ERROR,
-                ACE_LIB_TEXT ("ACE_Pipe::ACE_Pipe")));
+                ACE_TEXT ("ACE_Pipe::ACE_Pipe")));
 }
 
 ACE_Pipe::ACE_Pipe (ACE_HANDLE read,

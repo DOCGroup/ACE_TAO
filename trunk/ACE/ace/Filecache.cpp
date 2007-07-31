@@ -157,7 +157,7 @@ ACE_Filecache_Hash_Entry::ACE_Hash_Map_Entry (
   ACE_Filecache_Hash_Entry *prev)
   : ext_id_ (ext_id
              ? ACE_OS::strdup (ext_id)
-             : ACE_OS::strdup (ACE_LIB_TEXT (""))),
+             : ACE_OS::strdup (ACE_TEXT (""))),
     int_id_ (int_id),
     next_ (next),
     prev_ (prev)
@@ -250,7 +250,7 @@ ACE_Filecache::insert_i (const ACE_TCHAR *filename,
                       ACE_Filecache_Object (filename, filelock, 0, mapit),
                       0);
 
-      //      ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("   (%t) CVF: creating %s\n"), filename));
+      //      ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("   (%t) CVF: creating %s\n"), filename));
 
       if (this->hash_.bind (filename, handle) == -1)
         {
@@ -373,7 +373,7 @@ ACE_Filecache::fetch (const ACE_TCHAR *filename, int mapit)
               filelock.release ();
           }
         }
-      //      ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("   (%t) CVF: found %s\n"), filename));
+      //      ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("   (%t) CVF: found %s\n"), filename));
     }
 
   return handle;
@@ -533,7 +533,7 @@ ACE_Filecache_Object::ACE_Filecache_Object (const ACE_TCHAR *filename,
   if (this->handle_ == ACE_INVALID_HANDLE)
     {
       this->error_i (ACE_Filecache_Object::ACE_OPEN_FAILED,
-                     ACE_LIB_TEXT ("ACE_Filecache_Object::ctor: open"));
+                     ACE_TEXT ("ACE_Filecache_Object::ctor: open"));
       return;
     }
 
@@ -544,7 +544,7 @@ ACE_Filecache_Object::ACE_Filecache_Object (const ACE_TCHAR *filename,
                            PROT_READ, ACE_MAP_PRIVATE, 0, 0, this->sa_) != 0)
         {
           this->error_i (ACE_Filecache_Object::ACE_MEMMAP_FAILED,
-                         ACE_LIB_TEXT ("ACE_Filecache_Object::ctor: map"));
+                         ACE_TEXT ("ACE_Filecache_Object::ctor: map"));
           ACE_OS::close (this->handle_);
           this->handle_ = ACE_INVALID_HANDLE;
           return;
@@ -586,7 +586,7 @@ ACE_Filecache_Object::ACE_Filecache_Object (const ACE_TCHAR *filename,
   if (this->handle_ == ACE_INVALID_HANDLE)
     {
       this->error_i (ACE_Filecache_Object::ACE_OPEN_FAILED,
-                     ACE_LIB_TEXT ("ACE_Filecache_Object::acquire: open"));
+                     ACE_TEXT ("ACE_Filecache_Object::acquire: open"));
       return;
     }
 
@@ -594,7 +594,7 @@ ACE_Filecache_Object::ACE_Filecache_Object (const ACE_TCHAR *filename,
   if (ACE_OS::pwrite (this->handle_, "", 1, this->size_ - 1) != 1)
     {
       this->error_i (ACE_Filecache_Object::ACE_WRITE_FAILED,
-                     ACE_LIB_TEXT ("ACE_Filecache_Object::acquire: write"));
+                     ACE_TEXT ("ACE_Filecache_Object::acquire: write"));
       ACE_OS::close (this->handle_);
       return;
     }
@@ -604,7 +604,7 @@ ACE_Filecache_Object::ACE_Filecache_Object (const ACE_TCHAR *filename,
                        0, 0, this->sa_) != 0)
     {
       this->error_i (ACE_Filecache_Object::ACE_MEMMAP_FAILED,
-                     ACE_LIB_TEXT ("ACE_Filecache_Object::acquire: map"));
+                     ACE_TEXT ("ACE_Filecache_Object::acquire: map"));
       ACE_OS::close (this->handle_);
     }
 
@@ -620,7 +620,7 @@ ACE_Filecache_Object::~ACE_Filecache_Object (void)
       this->handle_ = ACE_INVALID_HANDLE;
     }
 
-  this->lock_.release ();	
+  this->lock_.release ();
 }
 
 int
@@ -695,7 +695,7 @@ int
 ACE_Filecache_Object::error_i (int error_value, const ACE_TCHAR *s)
 {
   s = s;
-  ACE_ERROR ((LM_ERROR, ACE_LIB_TEXT ("%p.\n"), s));
+  ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p.\n"), s));
   this->error_ = error_value;
   return error_value;
 }

@@ -221,7 +221,7 @@ ACE_SV_Semaphore_Complex::ACE_SV_Semaphore_Complex (key_t k,
 {
   ACE_TRACE ("ACE_SV_Semaphore_Complex::ACE_SV_Semaphore_Complex");
   if (this->open (k, flags, initial_value, nsems, perms) == -1)
-    ACE_ERROR ((LM_ERROR,  ACE_LIB_TEXT ("%p\n"),  ACE_LIB_TEXT ("ACE_SV_Semaphore_Complex")));
+    ACE_ERROR ((LM_ERROR,  ACE_TEXT ("%p\n"),  ACE_TEXT ("ACE_SV_Semaphore_Complex")));
 }
 
 ACE_SV_Semaphore_Complex::ACE_SV_Semaphore_Complex (const char *name,
@@ -240,7 +240,7 @@ ACE_SV_Semaphore_Complex::ACE_SV_Semaphore_Complex (const char *name,
     key = this->name_2_key (name);
 
   if (this->open (key, flags, initial_value, nsems, perms) == -1)
-    ACE_ERROR ((LM_ERROR,  ACE_LIB_TEXT ("%p\n"),  ACE_LIB_TEXT ("ACE_SV_Semaphore_Complex")));
+    ACE_ERROR ((LM_ERROR,  ACE_TEXT ("%p\n"),  ACE_TEXT ("ACE_SV_Semaphore_Complex")));
 }
 
 ACE_SV_Semaphore_Complex::~ACE_SV_Semaphore_Complex (void)

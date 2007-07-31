@@ -523,7 +523,7 @@ ACE_Log_Msg::close (void)
                                              (void *)NULL ) != 0 )
                {
                   ACE_DEBUG ((LM_DEBUG,
-                              ACE_LIB_TEXT ("(%P|%t) ACE_Log_Msg::close failed to ACE_Thread::setspecific to NULL\n")));
+                              ACE_TEXT ("(%P|%t) ACE_Log_Msg::close failed to ACE_Thread::setspecific to NULL\n")));
                }
 
              }
@@ -810,7 +810,7 @@ ACE_Log_Msg::open (const ACE_TCHAR *prog_name,
       // Stop heap checking, block will be freed by the destructor.
       ACE_NO_HEAP_CHECK;
       ACE_ALLOCATOR_RETURN (ACE_Log_Msg::program_name_,
-                            ACE_OS::strdup (ACE_LIB_TEXT ("<unknown>")),
+                            ACE_OS::strdup (ACE_TEXT ("<unknown>")),
                             -1);
     }
 
@@ -1046,7 +1046,7 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
   // compile time. Instead, do a quick check now; if we get a -1 return,
   // the platform doesn't support the length-limiting capability.
   ACE_TCHAR test[2];
-  bool can_check = ACE_OS::snprintf (test, 1, ACE_LIB_TEXT ("x")) != -1;
+  bool can_check = ACE_OS::snprintf (test, 1, ACE_TEXT ("x")) != -1;
 
   bool abort_prog = false;
   int exit_value = 0;
@@ -1120,7 +1120,7 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
           // equivalent sprintf specifier, and run the new format spec
           // through sprintf, adding it to the bp string.
 
-          const ACE_TCHAR *abort_str = ACE_LIB_TEXT ("Aborting...");
+          const ACE_TCHAR *abort_str = ACE_TEXT ("Aborting...");
           const ACE_TCHAR *start_format = format_str;
           ACE_TCHAR format[128]; // Converted format string
           ACE_TCHAR *fp;         // Current format pointer
@@ -1175,14 +1175,14 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
 
                 case '*':
                   wp = va_arg (argp, int);
-                  ACE_OS::sprintf (fp, ACE_LIB_TEXT ("%d"), wp);
+                  ACE_OS::sprintf (fp, ACE_TEXT ("%d"), wp);
                   fp += ACE_OS::strlen (fp);
                   done = 0;
                   break;
 
                 case 'A':             // ACE_timer_t
                   {
-                    ACE_OS::strcpy (fp, ACE_LIB_TEXT ("f"));
+                    ACE_OS::strcpy (fp, ACE_TEXT ("f"));
                     double value = va_arg (argp, double);
                     if (can_check)
                       this_len = ACE_OS::snprintf (bp, bspace, format, value);
@@ -1203,7 +1203,7 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                   break;
 
                 case 'l':             // Source file line number
-                  ACE_OS::strcpy (fp, ACE_LIB_TEXT ("d"));
+                  ACE_OS::strcpy (fp, ACE_TEXT ("d"));
                   if (can_check)
                     this_len = ACE_OS::snprintf (bp,
                                                  bspace,
@@ -1216,44 +1216,44 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
 
                 case 'N':             // Source file name
 #if !defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
-                  ACE_OS::strcpy (fp, ACE_LIB_TEXT ("ls"));
+                  ACE_OS::strcpy (fp, ACE_TEXT ("ls"));
 #else
-                  ACE_OS::strcpy (fp, ACE_LIB_TEXT ("s"));
+                  ACE_OS::strcpy (fp, ACE_TEXT ("s"));
 #endif
                   if (can_check)
                     this_len = ACE_OS::snprintf (bp, bspace, format,
                                                  this->file () ?
                                                  ACE_TEXT_CHAR_TO_TCHAR (this->file ())
-                                                 : ACE_LIB_TEXT ("<unknown file>"));
+                                                 : ACE_TEXT ("<unknown file>"));
                   else
                     this_len = ACE_OS::sprintf (bp, format,
                                                 this->file () ?
                                                 ACE_TEXT_CHAR_TO_TCHAR (this->file ())
-                                                : ACE_LIB_TEXT ("<unknown file>"));
+                                                : ACE_TEXT ("<unknown file>"));
                   ACE_UPDATE_COUNT (bspace, this_len);
                   break;
 
                 case 'n':             // Program name
 #if !defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
-                  ACE_OS::strcpy (fp, ACE_LIB_TEXT ("ls"));
+                  ACE_OS::strcpy (fp, ACE_TEXT ("ls"));
 #else /* ACE_WIN32 && ACE_USES_WCHAR */
-                  ACE_OS::strcpy (fp, ACE_LIB_TEXT ("s"));
+                  ACE_OS::strcpy (fp, ACE_TEXT ("s"));
 #endif
                   if (can_check)
                     this_len = ACE_OS::snprintf (bp, bspace, format,
                                                  ACE_Log_Msg::program_name_ ?
                                                  ACE_Log_Msg::program_name_ :
-                                                 ACE_LIB_TEXT ("<unknown>"));
+                                                 ACE_TEXT ("<unknown>"));
                   else
                     this_len = ACE_OS::sprintf (bp, format,
                                                 ACE_Log_Msg::program_name_ ?
                                                 ACE_Log_Msg::program_name_ :
-                                                ACE_LIB_TEXT ("<unknown>"));
+                                                ACE_TEXT ("<unknown>"));
                   ACE_UPDATE_COUNT (bspace, this_len);
                   break;
 
                 case 'P':             // Process ID
-                  ACE_OS::strcpy (fp, ACE_LIB_TEXT ("d"));
+                  ACE_OS::strcpy (fp, ACE_TEXT ("d"));
                   if (can_check)
                     this_len = ACE_OS::snprintf
                       (bp, bspace, format,
@@ -1276,9 +1276,9 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
 #endif
 
 #if !defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
-                        ACE_OS::strcpy (fp, ACE_LIB_TEXT ("ls: %ls"));
+                        ACE_OS::strcpy (fp, ACE_TEXT ("ls: %ls"));
 #else
-                        ACE_OS::strcpy (fp, ACE_LIB_TEXT ("s: %s"));
+                        ACE_OS::strcpy (fp, ACE_TEXT ("s: %s"));
 #endif
                         if (can_check)
                           this_len = ACE_OS::snprintf
@@ -1321,7 +1321,7 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                           {
                             const ACE_TCHAR *message =
                               ACE::sock_error (errno);
-                            ACE_OS::strcpy (fp, ACE_LIB_TEXT ("s: %s"));
+                            ACE_OS::strcpy (fp, ACE_TEXT ("s: %s"));
                             if (can_check)
                               this_len = ACE_OS::snprintf
                                 (bp, bspace, format,
@@ -1335,7 +1335,7 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                           }
                         else
                           {
-                            ACE_OS::strcpy (fp, ACE_LIB_TEXT ("s: %s"));
+                            ACE_OS::strcpy (fp, ACE_TEXT ("s: %s"));
                             if (can_check)
                               this_len = ACE_OS::snprintf
                                 (bp, bspace, format,
@@ -1357,9 +1357,9 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
 
                 case 'M': // Print the name of the priority of the message.
 #if !defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
-                  ACE_OS::strcpy (fp, ACE_LIB_TEXT ("ls"));
+                  ACE_OS::strcpy (fp, ACE_TEXT ("ls"));
 #else
-                  ACE_OS::strcpy (fp, ACE_LIB_TEXT ("s"));
+                  ACE_OS::strcpy (fp, ACE_TEXT ("s"));
 #endif
                   if (can_check)
                     this_len = ACE_OS::snprintf
@@ -1385,9 +1385,9 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
 #endif
 
 #if !defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
-                        ACE_OS::strcpy (fp, ACE_LIB_TEXT ("ls"));
+                        ACE_OS::strcpy (fp, ACE_TEXT ("ls"));
 #else /* ACE_WIN32 && ACE_USES_WCHAR */
-                        ACE_OS::strcpy (fp, ACE_LIB_TEXT ("s"));
+                        ACE_OS::strcpy (fp, ACE_TEXT ("s"));
 #endif
                         if (can_check)
                           this_len = ACE_OS::snprintf
@@ -1428,7 +1428,7 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                           {
                             const ACE_TCHAR *message =
                               ACE::sock_error (errno);
-                            ACE_OS::strcpy (fp, ACE_LIB_TEXT ("s"));
+                            ACE_OS::strcpy (fp, ACE_TEXT ("s"));
                             if (can_check)
                               this_len = ACE_OS::snprintf
                                 (bp, bspace, format, message);
@@ -1437,7 +1437,7 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                           }
                         else
                           {
-                            ACE_OS::strcpy (fp, ACE_LIB_TEXT ("s"));
+                            ACE_OS::strcpy (fp, ACE_TEXT ("s"));
                             if (can_check)
                               this_len = ACE_OS::snprintf
                                 (bp, bspace, format, lpMsgBuf);
@@ -1455,7 +1455,7 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
 
                 case 'R': // Format the return status of the operation.
                   this->op_status (va_arg (argp, int));
-                  ACE_OS::strcpy (fp, ACE_LIB_TEXT ("d"));
+                  ACE_OS::strcpy (fp, ACE_TEXT ("d"));
                   if (can_check)
                     this_len = ACE_OS::snprintf
                       (bp, bspace, format, this->op_status ());
@@ -1539,7 +1539,7 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
 #if defined (ACE_HAS_SYS_SIGLIST)
                     if (sig >= 0 && sig < ACE_NSIG)
                       {
-                        ACE_OS::strcpy (fp, ACE_LIB_TEXT ("s"));
+                        ACE_OS::strcpy (fp, ACE_TEXT ("s"));
                         if (can_check)
                           this_len = ACE_OS::snprintf
                             (bp, bspace, format, _sys_siglist[sig]);
@@ -1552,18 +1552,18 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                         if (can_check)
                           this_len = ACE_OS::snprintf
                             (bp, bspace,
-                             ACE_LIB_TEXT("<unknown signal> %d"), sig);
+                             ACE_TEXT("<unknown signal> %d"), sig);
                         else
                           this_len = ACE_OS::sprintf
-                            (bp, ACE_LIB_TEXT ("<unknown signal> %d"), sig);
+                            (bp, ACE_TEXT ("<unknown signal> %d"), sig);
                       }
 #else
                     if (can_check)
                       this_len = ACE_OS::snprintf
-                        (bp, bspace, ACE_LIB_TEXT ("signal %d"), sig);
+                        (bp, bspace, ACE_TEXT ("signal %d"), sig);
                     else
                       this_len = ACE_OS::sprintf
-                        (bp, ACE_LIB_TEXT ("signal %d"), sig);
+                        (bp, ACE_TEXT ("signal %d"), sig);
 #endif /* ACE_HAS_SYS_SIGLIST */
                     ACE_UPDATE_COUNT (bspace, this_len);
                     break;
@@ -1576,9 +1576,9 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                     ACE::timestamp (day_and_time,
                                     sizeof day_and_time);
 #if !defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
-                    ACE_OS::strcpy (fp, ACE_LIB_TEXT ("ls"));
+                    ACE_OS::strcpy (fp, ACE_TEXT ("ls"));
 #else
-                    ACE_OS::strcpy (fp, ACE_LIB_TEXT ("s"));
+                    ACE_OS::strcpy (fp, ACE_TEXT ("s"));
 #endif
                     if (can_check)
                       this_len = ACE_OS::snprintf
@@ -1593,7 +1593,7 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                           // hour:minute:sec:usec format.
                   {
                     ACE_TCHAR day_and_time[35];
-                    ACE_OS::strcpy (fp, ACE_LIB_TEXT ("s"));
+                    ACE_OS::strcpy (fp, ACE_TEXT ("s"));
                     if (can_check)
                       this_len = ACE_OS::snprintf
                         (bp, bspace, format,
@@ -1608,7 +1608,7 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
 
                 case 't': // Format thread id.
 #if defined (ACE_WIN32)
-                  ACE_OS::strcpy (fp, ACE_LIB_TEXT ("u"));
+                  ACE_OS::strcpy (fp, ACE_TEXT ("u"));
                   if (can_check)
                     this_len = ACE_OS::snprintf
                       (bp, bspace, format,
@@ -1619,7 +1619,7 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                                        format,
                                        static_cast <unsigned> (ACE_Thread::self ()));
 #elif defined (DIGITAL_UNIX)
-                  ACE_OS::strcpy (fp, ACE_LIB_TEXT ("u"));
+                  ACE_OS::strcpy (fp, ACE_TEXT ("u"));
                   {
                     int id =
 #  if defined (ACE_HAS_THREADS)
@@ -1640,7 +1640,7 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
 #  if defined (ACE_MVS) || defined (ACE_TANDEM_T1248_PTHREADS)
                   // MVS's pthread_t is a struct... yuck. So use the ACE 5.0
                   // code for it.
-                  ACE_OS::strcpy (fp, ACE_LIB_TEXT ("u"));
+                  ACE_OS::strcpy (fp, ACE_TEXT ("u"));
                   if (can_check)
                     this_len = ACE_OS::snprintf (bp, bspace, format, t_id);
                   else
@@ -1651,7 +1651,7 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                   // is an integral type or a pointer type. FreeBSD uses
                   // a pointer type, but doesn't have a _np function to
                   // get an integral type, like the OSes above.
-                  ACE_OS::strcpy (fp, ACE_LIB_TEXT ("lu"));
+                  ACE_OS::strcpy (fp, ACE_TEXT ("lu"));
                   if (can_check)
                     this_len = ACE_OS::snprintf
                       (bp, bspace, format, (unsigned long)t_id);
@@ -1668,17 +1668,17 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                   {
 #if !defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
                     wchar_t *str = va_arg (argp, wchar_t *);
-                    ACE_OS::strcpy (fp, ACE_LIB_TEXT ("ls"));
+                    ACE_OS::strcpy (fp, ACE_TEXT ("ls"));
 #else /* ACE_WIN32 && ACE_USES_WCHAR */
                     ACE_TCHAR *str = va_arg (argp, ACE_TCHAR *);
-                    ACE_OS::strcpy (fp, ACE_LIB_TEXT ("s"));
+                    ACE_OS::strcpy (fp, ACE_TEXT ("s"));
 #endif /* ACE_WIN32 && ACE_USES_WCHAR */
                     if (can_check)
                       this_len = ACE_OS::snprintf
-                        (bp, bspace, format, str ? str : ACE_LIB_TEXT ("(null)"));
+                        (bp, bspace, format, str ? str : ACE_TEXT ("(null)"));
                     else
                       this_len = ACE_OS::sprintf
-                        (bp, format, str ? str : ACE_LIB_TEXT ("(null)"));
+                        (bp, format, str ? str : ACE_TEXT ("(null)"));
                     ACE_UPDATE_COUNT (bspace, this_len);
                   }
                   break;
@@ -1687,16 +1687,16 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                   {
                     ACE_TCHAR *cstr = va_arg (argp, ACE_TCHAR *);
 #if defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
-                    ACE_OS::strcpy (fp, ACE_LIB_TEXT ("S"));
+                    ACE_OS::strcpy (fp, ACE_TEXT ("S"));
 #else /* ACE_WIN32 && ACE_USES_WCHAR */
-                    ACE_OS::strcpy (fp, ACE_LIB_TEXT ("s"));
+                    ACE_OS::strcpy (fp, ACE_TEXT ("s"));
 #endif /* ACE_WIN32 && ACE_USES_WCHAR */
                     if (can_check)
                       this_len = ACE_OS::snprintf
-                        (bp, bspace, format, cstr ? cstr : ACE_LIB_TEXT ("(null)"));
+                        (bp, bspace, format, cstr ? cstr : ACE_TEXT ("(null)"));
                     else
                       this_len = ACE_OS::sprintf
-                        (bp, format, cstr ? cstr : ACE_LIB_TEXT ("(null)"));
+                        (bp, format, cstr ? cstr : ACE_TEXT ("(null)"));
                     ACE_UPDATE_COUNT (bspace, this_len);
                   }
                   break;
@@ -1706,15 +1706,15 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
 #if defined (ACE_HAS_WCHAR)
                     wchar_t *wchar_str = va_arg (argp, wchar_t *);
 # if defined (HPUX)
-                    ACE_OS::strcpy (fp, ACE_LIB_TEXT ("S"));
+                    ACE_OS::strcpy (fp, ACE_TEXT ("S"));
 # elif defined (ACE_WIN32)
 #   if defined (ACE_USES_WCHAR)
-                    ACE_OS::strcpy (fp, ACE_LIB_TEXT ("s"));
+                    ACE_OS::strcpy (fp, ACE_TEXT ("s"));
 #   else /* ACE_USES_WCHAR */
-                    ACE_OS::strcpy (fp, ACE_LIB_TEXT ("S"));
+                    ACE_OS::strcpy (fp, ACE_TEXT ("S"));
 #   endif /* ACE_USES_WCHAR */
 # else
-                    ACE_OS::strcpy (fp, ACE_LIB_TEXT ("ls"));
+                    ACE_OS::strcpy (fp, ACE_TEXT ("ls"));
 # endif /* HPUX */
                     if (can_check)
                       this_len = ACE_OS::snprintf
@@ -1730,9 +1730,9 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                 case 'w':              // Wide character
 #if defined (ACE_WIN32)
 # if defined (ACE_USES_WCHAR)
-                  ACE_OS::strcpy (fp, ACE_LIB_TEXT ("c"));
+                  ACE_OS::strcpy (fp, ACE_TEXT ("c"));
 # else /* ACE_USES_WCHAR */
-                  ACE_OS::strcpy (fp, ACE_LIB_TEXT ("C"));
+                  ACE_OS::strcpy (fp, ACE_TEXT ("C"));
 # endif /* ACE_USES_WCHAR */
                   if (can_check)
                     this_len = ACE_OS::snprintf
@@ -1742,9 +1742,9 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                       (bp, format, va_arg (argp, int));
 #elif defined (ACE_USES_WCHAR)
 # if defined (HPUX)
-                  ACE_OS::strcpy (fp, ACE_LIB_TEXT ("C"));
+                  ACE_OS::strcpy (fp, ACE_TEXT ("C"));
 # else
-                  ACE_OS::strcpy (fp, ACE_LIB_TEXT ("lc"));
+                  ACE_OS::strcpy (fp, ACE_TEXT ("lc"));
 # endif /* HPUX */
                   if (can_check)
                     this_len = ACE_OS::snprintf
@@ -1753,7 +1753,7 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                     this_len = ACE_OS::sprintf
                       (bp, format, va_arg (argp, wint_t));
 #else /* ACE_WIN32 */
-                  ACE_OS::strcpy (fp, ACE_LIB_TEXT ("u"));
+                  ACE_OS::strcpy (fp, ACE_TEXT ("u"));
                   if (can_check)
                     this_len = ACE_OS::snprintf
                       (bp, bspace, format, va_arg (argp, int));
@@ -1772,18 +1772,18 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                       static_cast<wchar_t> (va_arg (argp, int));
 #if defined (ACE_WIN32)
 # if defined (ACE_USES_WCHAR)
-                    ACE_OS::strcpy (fp, ACE_LIB_TEXT ("c"));
+                    ACE_OS::strcpy (fp, ACE_TEXT ("c"));
 # else /* ACE_USES_WCHAR */
-                    ACE_OS::strcpy (fp, ACE_LIB_TEXT ("C"));
+                    ACE_OS::strcpy (fp, ACE_TEXT ("C"));
 # endif /* ACE_USES_WCHAR */
 #elif defined (ACE_USES_WCHAR)
 # if defined (HPUX)
-                    ACE_OS::strcpy (fp, ACE_LIB_TEXT ("C"));
+                    ACE_OS::strcpy (fp, ACE_TEXT ("C"));
 # else
-                    ACE_OS::strcpy (fp, ACE_LIB_TEXT ("lc"));
+                    ACE_OS::strcpy (fp, ACE_TEXT ("lc"));
 # endif /* HPUX */
 #else /* ACE_WIN32 */
-                    ACE_OS::strcpy (fp, ACE_LIB_TEXT ("u"));
+                    ACE_OS::strcpy (fp, ACE_TEXT ("u"));
 #endif /* ACE_WIN32 */
                     if (can_check)
                       this_len = ACE_OS::snprintf (bp, bspace, format, wtchar);
@@ -1819,15 +1819,15 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                       }
 #if defined (ACE_WIN32)
 # if defined (ACE_USES_WCHAR)
-                  ACE_OS::strcpy (fp, ACE_LIB_TEXT ("s"));
+                  ACE_OS::strcpy (fp, ACE_TEXT ("s"));
 # else /* ACE_USES_WCHAR */
-                  ACE_OS::strcpy (fp, ACE_LIB_TEXT ("S"));
+                  ACE_OS::strcpy (fp, ACE_TEXT ("S"));
 # endif /* ACE_USES_WCHAR */
 #elif defined (ACE_HAS_WCHAR)
 # if defined (HPUX)
-                  ACE_OS::strcpy (fp, ACE_LIB_TEXT ("S"));
+                  ACE_OS::strcpy (fp, ACE_TEXT ("S"));
 # else
-                  ACE_OS::strcpy (fp, ACE_LIB_TEXT ("ls"));
+                  ACE_OS::strcpy (fp, ACE_TEXT ("ls"));
 # endif /* HPUX */
 #endif /* ACE_WIN32 / ACE_HAS_WCHAR */
                   if (can_check)
@@ -1845,9 +1845,9 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
 
                 case 'c':
 #if defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
-                  ACE_OS::strcpy (fp, ACE_LIB_TEXT ("C"));
+                  ACE_OS::strcpy (fp, ACE_TEXT ("C"));
 #else
-                  ACE_OS::strcpy (fp, ACE_LIB_TEXT ("c"));
+                  ACE_OS::strcpy (fp, ACE_TEXT ("c"));
 #endif /* ACE_WIN32 && ACE_USES_WCHAR */
                   if (can_check)
                     this_len = ACE_OS::snprintf
@@ -1972,7 +1972,7 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                 case ':':
                   {
                     // Assume a 32 bit time_t and change if needed.
-                    const ACE_TCHAR *fmt = ACE_LIB_TEXT ("%d");
+                    const ACE_TCHAR *fmt = ACE_TEXT ("%d");
                     if (sizeof (time_t) == 8)
                       fmt = ACE_INT64_FORMAT_SPECIFIER;
 
@@ -1990,7 +1990,7 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                   break;
 
                 case '@':
-                    ACE_OS::strcpy (fp, ACE_LIB_TEXT ("p"));
+                    ACE_OS::strcpy (fp, ACE_TEXT ("p"));
                     if (can_check)
                       this_len = ACE_OS::snprintf
                         (bp, bspace, format, va_arg (argp, void*));
@@ -2239,25 +2239,25 @@ ACE_Log_Msg::log_hexdump (ACE_Log_Priority log_priority,
 
   if (text)
     sz = ACE_OS::sprintf (msg_buf,
-                          ACE_LIB_TEXT ("%s - "),
+                          ACE_TEXT ("%s - "),
                           text);
 
   sz += ACE_OS::sprintf (msg_buf + sz,
-                         ACE_LIB_TEXT ("HEXDUMP ")
+                         ACE_TEXT ("HEXDUMP ")
                          ACE_SIZE_T_FORMAT_SPECIFIER
-                         ACE_LIB_TEXT (" bytes"),
+                         ACE_TEXT (" bytes"),
                          size);
 
   if (len < size)
     ACE_OS::sprintf (msg_buf + sz,
-                     ACE_LIB_TEXT (" (showing first ")
+                     ACE_TEXT (" (showing first ")
                      ACE_SIZE_T_FORMAT_SPECIFIER
-                     ACE_LIB_TEXT (" bytes)"),
+                     ACE_TEXT (" bytes)"),
                      len);
 
   // Now print out the formatted buffer.
   this->log (log_priority,
-             ACE_LIB_TEXT ("%s\n%s"),
+             ACE_TEXT ("%s\n%s"),
              msg_buf,
              buf);
 
@@ -2305,35 +2305,35 @@ ACE_Log_Msg::dump (void) const
   ACE_TRACE ("ACE_Log_Msg::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("status_ = %d\n"), this->status_));
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nerrnum_ = %d\n"), this->errnum_));
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nlinenum_ = %d\n"), this->linenum_));
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nfile_ = %C\n"), this->file_));
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nmsg_ = %s\n"), this->msg_));
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nrestart_ = %d\n"), this->restart_));
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nostream_ = %@\n"), this->ostream_));
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nmsg_callback_ = %@\n"),
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("status_ = %d\n"), this->status_));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\nerrnum_ = %d\n"), this->errnum_));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\nlinenum_ = %d\n"), this->linenum_));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\nfile_ = %C\n"), this->file_));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\nmsg_ = %s\n"), this->msg_));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\nrestart_ = %d\n"), this->restart_));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\nostream_ = %@\n"), this->ostream_));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\nmsg_callback_ = %@\n"),
               this->msg_callback_));
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nprogram_name_ = %s\n"),
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\nprogram_name_ = %s\n"),
               this->program_name_ ? this->program_name_
-                                  : ACE_LIB_TEXT ("<unknown>")));
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nlocal_host_ = %s\n"),
+                                  : ACE_TEXT ("<unknown>")));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\nlocal_host_ = %s\n"),
               this->local_host_ ? this->local_host_
-                                : ACE_LIB_TEXT ("<unknown>")));
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\npid_ = %d\n"), this->getpid ()));
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nflags_ = 0x%x\n"), this->flags_));
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\ntrace_depth_ = %d\n"),
+                                : ACE_TEXT ("<unknown>")));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\npid_ = %d\n"), this->getpid ()));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\nflags_ = 0x%x\n"), this->flags_));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\ntrace_depth_ = %d\n"),
               this->trace_depth_));
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\ntrace_active_ = %d\n"),
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\ntrace_active_ = %d\n"),
               this->trace_active_));
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\ntracing_enabled_ = %d\n"),
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\ntracing_enabled_ = %d\n"),
               this->tracing_enabled_));
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\npriority_mask_ = 0x%x\n"),
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\npriority_mask_ = 0x%x\n"),
               this->priority_mask_));
   if (this->thr_desc_ != 0 && this->thr_desc_->state () != 0)
-    ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nthr_state_ = %d\n"),
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\nthr_state_ = %d\n"),
                 this->thr_desc_->state ()));
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nmsg_off_ = %d\n"), this->msg_off_));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\nmsg_off_ = %d\n"), this->msg_off_));
 
   // Be sure that there is a message_queue_, with multiple threads.
   ACE_MT (ACE_Log_Msg_Manager::init_backend ());

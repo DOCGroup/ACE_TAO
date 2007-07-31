@@ -170,7 +170,7 @@
   // this must appear before its #include.
 # define ACE_HAS_STRING_CLASS
 # include "ace/config-g++-common.h"
-#define ACE_CC_NAME ACE_LIB_TEXT ("g++")
+#define ACE_CC_NAME ACE_TEXT ("g++")
 #define ACE_CC_MAJOR_VERSION __GNUC__
 #define ACE_CC_MINOR_VERSION __GNUC_MINOR__
 //#define ACE_CC_BETA_VERSION 0 /* ??? */
@@ -372,9 +372,9 @@
 #if defined (__ia64) || defined(__alpha) || defined (__x86_64__)
 // On 64 bit platforms, the "long" type is 64-bits.  Override the
 // default 32-bit platform-specific format specifiers appropriately.
-# define ACE_UINT64_FORMAT_SPECIFIER ACE_LIB_TEXT ("%lu")
-# define ACE_SSIZE_T_FORMAT_SPECIFIER ACE_LIB_TEXT ("%ld")
-# define ACE_SIZE_T_FORMAT_SPECIFIER ACE_LIB_TEXT ("%lu")
+# define ACE_UINT64_FORMAT_SPECIFIER ACE_TEXT ("%lu")
+# define ACE_SSIZE_T_FORMAT_SPECIFIER ACE_TEXT ("%ld")
+# define ACE_SIZE_T_FORMAT_SPECIFIER ACE_TEXT ("%lu")
 #endif /* __ia64 */
 
 #define ACE_SIZEOF_WCHAR 4

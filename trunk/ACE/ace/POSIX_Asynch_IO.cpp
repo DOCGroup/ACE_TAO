@@ -418,8 +418,8 @@ ACE_POSIX_Asynch_Write_Stream::write (ACE_Message_Block &message_block,
   if (bytes_to_write == 0)
     ACE_ERROR_RETURN
       ((LM_ERROR,
-        ACE_LIB_TEXT ("ACE_POSIX_Asynch_Write_Stream::write:")
-        ACE_LIB_TEXT ("Attempt to write 0 bytes\n")),
+        ACE_TEXT ("ACE_POSIX_Asynch_Write_Stream::write:")
+        ACE_TEXT ("Attempt to write 0 bytes\n")),
       -1);
 
   ACE_POSIX_Asynch_Write_Stream_Result *result = 0;
@@ -529,8 +529,8 @@ ACE_POSIX_Asynch_Read_File::read (ACE_Message_Block &message_block,
   if ( bytes_to_read == 0 )
     ACE_ERROR_RETURN
       ((LM_ERROR,
-        ACE_LIB_TEXT ("ACE_POSIX_Asynch_Read_File::read:")
-        ACE_LIB_TEXT ("Attempt to read 0 bytes or no space in the message block\n")),
+        ACE_TEXT ("ACE_POSIX_Asynch_Read_File::read:")
+        ACE_TEXT ("Attempt to read 0 bytes or no space in the message block\n")),
        -1);
 
   ACE_POSIX_Asynch_Read_File_Result *result = 0;
@@ -656,8 +656,8 @@ ACE_POSIX_Asynch_Write_File::write (ACE_Message_Block &message_block,
   if (bytes_to_write == 0)
     ACE_ERROR_RETURN
       ((LM_ERROR,
-        ACE_LIB_TEXT ("ACE_POSIX_Asynch_Write_File::write:")
-        ACE_LIB_TEXT ("Attempt to write 0 bytes\n")),
+        ACE_TEXT ("ACE_POSIX_Asynch_Write_File::write:")
+        ACE_TEXT ("Attempt to write 0 bytes\n")),
       -1);
 
   ACE_POSIX_Asynch_Write_File_Result *result = 0;
@@ -814,8 +814,8 @@ ACE_POSIX_Asynch_Accept::open (const ACE_Handler::Proxy_Ptr &handler_proxy,
   // we could not create a new handler without closing the previous
   if (this->flg_open_)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_LIB_TEXT("%N:%l:ACE_POSIX_Asynch_Accept::open:")
-                       ACE_LIB_TEXT("acceptor already open \n")),
+                       ACE_TEXT("%N:%l:ACE_POSIX_Asynch_Accept::open:")
+                       ACE_TEXT("acceptor already open \n")),
                       -1);
 
   if (-1 == ACE_POSIX_Asynch_Operation::open (handler_proxy,
@@ -855,8 +855,8 @@ ACE_POSIX_Asynch_Accept::accept (ACE_Message_Block &message_block,
 
   if (!this->flg_open_)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_LIB_TEXT("%N:%l:ACE_POSIX_Asynch_Accept::accept")
-                       ACE_LIB_TEXT("acceptor was not opened before\n")),
+                       ACE_TEXT("%N:%l:ACE_POSIX_Asynch_Accept::accept")
+                       ACE_TEXT("acceptor was not opened before\n")),
                       -1);
 
   // Sanity check: make sure that enough space has been allocated by
@@ -898,8 +898,8 @@ ACE_POSIX_Asynch_Accept::accept (ACE_Message_Block &message_block,
     if (this->result_queue_.enqueue_tail (result) == -1)
       {
         ACE_ERROR ((LM_ERROR,
-                    ACE_LIB_TEXT ("ACE_POSIX_Asynch_Accept::accept: %p\n")
-                    ACE_LIB_TEXT ("enqueue_tail")));
+                    ACE_TEXT ("ACE_POSIX_Asynch_Accept::accept: %p\n")
+                    ACE_TEXT ("enqueue_tail")));
         delete result;  // to avoid memory  leak
         return -1;
       }
@@ -956,9 +956,9 @@ ACE_POSIX_Asynch_Accept::cancel_uncompleted (int flg_notify)
 
           if (this->posix_proactor ()->post_completion (result) == -1)
             ACE_ERROR ((LM_ERROR,
-                        ACE_LIB_TEXT("(%P | %t):%p\n"),
-                        ACE_LIB_TEXT("ACE_POSIX_Asynch_Accept::")
-                        ACE_LIB_TEXT("cancel_uncompleted")
+                        ACE_TEXT("(%P | %t):%p\n"),
+                        ACE_TEXT("ACE_POSIX_Asynch_Accept::")
+                        ACE_TEXT("cancel_uncompleted")
                         ));
         }
     }
@@ -1083,9 +1083,9 @@ ACE_POSIX_Asynch_Accept::handle_input (ACE_HANDLE /* fd */)
     // Deregister this info pertaining to this accept call.
     if (this->result_queue_.dequeue_head (result) != 0)
       ACE_ERROR ((LM_ERROR,
-                  ACE_LIB_TEXT("%N:%l:(%P | %t):%p\n"),
-                  ACE_LIB_TEXT("ACE_POSIX_Asynch_Accept::handle_input:")
-                  ACE_LIB_TEXT( " dequeueing failed")));
+                  ACE_TEXT("%N:%l:(%P | %t):%p\n"),
+                  ACE_TEXT("ACE_POSIX_Asynch_Accept::handle_input:")
+                  ACE_TEXT( " dequeueing failed")));
 
     // Disable the handle in the reactor if no more accepts are pending.
     if (this->result_queue_.size () == 0)
@@ -1113,9 +1113,9 @@ ACE_POSIX_Asynch_Accept::handle_input (ACE_HANDLE /* fd */)
     {
       result->set_error (errno);
       ACE_ERROR ((LM_ERROR,
-                  ACE_LIB_TEXT("%N:%l:(%P | %t):%p\n"),
-                  ACE_LIB_TEXT("ACE_POSIX_Asynch_Accept::handle_input: ")
-                  ACE_LIB_TEXT("accept")));
+                  ACE_TEXT("%N:%l:(%P | %t):%p\n"),
+                  ACE_TEXT("ACE_POSIX_Asynch_Accept::handle_input: ")
+                  ACE_TEXT("accept")));
 
       // Notify client as usual, "AIO" finished with errors
     }
@@ -1127,9 +1127,9 @@ ACE_POSIX_Asynch_Accept::handle_input (ACE_HANDLE /* fd */)
   // Send the Result through the notification pipe.
   if (this->posix_proactor ()->post_completion (result) == -1)
     ACE_ERROR ((LM_ERROR,
-                ACE_LIB_TEXT("Error:(%P | %t):%p\n"),
-                ACE_LIB_TEXT("ACE_POSIX_Asynch_Accept::handle_input: ")
-                ACE_LIB_TEXT(" <post_completion> failed")));
+                ACE_TEXT("Error:(%P | %t):%p\n"),
+                ACE_TEXT("ACE_POSIX_Asynch_Accept::handle_input: ")
+                ACE_TEXT(" <post_completion> failed")));
 
   return 0;
 }
@@ -1253,8 +1253,8 @@ ACE_POSIX_Asynch_Connect::connect (ACE_HANDLE connect_handle,
 
   if (this->flg_open_ == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_LIB_TEXT("%N:%l:ACE_POSIX_Asynch_Connect::connect")
-                       ACE_LIB_TEXT("connector was not opened before\n")),
+                       ACE_TEXT("%N:%l:ACE_POSIX_Asynch_Connect::connect")
+                       ACE_TEXT("connector was not opened before\n")),
                       -1);
 
   // Common code for both WIN and POSIX.
@@ -1287,9 +1287,9 @@ ACE_POSIX_Asynch_Connect::connect (ACE_HANDLE connect_handle,
     if (this->result_map_.bind (connect_handle, result) == -1)
       {
         ACE_ERROR  ((LM_ERROR,
-                     ACE_LIB_TEXT ("%N:%l:%p\n"),
-                     ACE_LIB_TEXT ("ACE_POSIX_Asynch_Connect::connect:")
-                     ACE_LIB_TEXT ("bind")));
+                     ACE_TEXT ("%N:%l:%p\n"),
+                     ACE_TEXT ("ACE_POSIX_Asynch_Connect::connect:")
+                     ACE_TEXT ("bind")));
 
         result->set_error (EFAULT);
         return post_result (result, true);
@@ -1333,9 +1333,9 @@ int ACE_POSIX_Asynch_Connect::post_result (ACE_POSIX_Asynch_Connect_Result * res
         return 0;
 
       ACE_ERROR ((LM_ERROR,
-                  ACE_LIB_TEXT("Error:(%P | %t):%p\n"),
-                  ACE_LIB_TEXT("ACE_POSIX_Asynch_Connect::post_result: ")
-                  ACE_LIB_TEXT(" <post_completion> failed")));
+                  ACE_TEXT("Error:(%P | %t):%p\n"),
+                  ACE_TEXT("ACE_POSIX_Asynch_Connect::post_result: ")
+                  ACE_TEXT(" <post_completion> failed")));
     }
 
   ACE_HANDLE handle = result->connect_handle ();
@@ -1378,8 +1378,8 @@ ACE_POSIX_Asynch_Connect::connect_i (ACE_POSIX_Asynch_Connect_Result *result,
           result->set_error (errno);
           ACE_ERROR_RETURN
             ((LM_ERROR,
-              ACE_LIB_TEXT("ACE_POSIX_Asynch_Connect::connect_i: %p\n"),
-              ACE_LIB_TEXT("socket")),
+              ACE_TEXT("ACE_POSIX_Asynch_Connect::connect_i: %p\n"),
+              ACE_TEXT("socket")),
              -1);
         }
 
@@ -1396,8 +1396,8 @@ ACE_POSIX_Asynch_Connect::connect_i (ACE_POSIX_Asynch_Connect_Result *result,
           result->set_error (errno);
           ACE_ERROR_RETURN
             ((LM_ERROR,
-              ACE_LIB_TEXT("ACE_POSIX_Asynch_Connect::connect_i: %p\n"),
-              ACE_LIB_TEXT("setsockopt")),
+              ACE_TEXT("ACE_POSIX_Asynch_Connect::connect_i: %p\n"),
+              ACE_TEXT("setsockopt")),
              -1);
         }
     }
@@ -1412,8 +1412,8 @@ ACE_POSIX_Asynch_Connect::connect_i (ACE_POSIX_Asynch_Connect_Result *result,
            result->set_error (errno);
            ACE_ERROR_RETURN
              ((LM_ERROR,
-               ACE_LIB_TEXT("ACE_POSIX_Asynch_Connect::connect_i: %p\n"),
-               ACE_LIB_TEXT("bind")),
+               ACE_TEXT("ACE_POSIX_Asynch_Connect::connect_i: %p\n"),
+               ACE_TEXT("bind")),
               -1);
         }
     }
@@ -1424,8 +1424,8 @@ ACE_POSIX_Asynch_Connect::connect_i (ACE_POSIX_Asynch_Connect_Result *result,
       result->set_error (errno);
       ACE_ERROR_RETURN
         ((LM_ERROR,
-          ACE_LIB_TEXT("ACE_POSIX_Asynch_Connect::connect_i: %p\n")
-          ACE_LIB_TEXT("set_flags")),
+          ACE_TEXT("ACE_POSIX_Asynch_Connect::connect_i: %p\n")
+          ACE_TEXT("set_flags")),
          -1);
     }
 
@@ -2380,8 +2380,8 @@ ACE_POSIX_Asynch_Write_Dgram::send (ACE_Message_Block *message_block,
   if (len == 0)
     ACE_ERROR_RETURN
       ((LM_ERROR,
-        ACE_LIB_TEXT ("ACE_POSIX_Asynch_Write_Stream::write:")
-        ACE_LIB_TEXT ("Attempt to write 0 bytes\n")),
+        ACE_TEXT ("ACE_POSIX_Asynch_Write_Stream::write:")
+        ACE_TEXT ("Attempt to write 0 bytes\n")),
       -1);
 
   ACE_POSIX_Asynch_Write_Dgram_Result *result = 0;

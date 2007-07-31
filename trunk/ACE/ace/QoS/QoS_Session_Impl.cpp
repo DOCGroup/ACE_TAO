@@ -53,7 +53,7 @@ rsvp_callback (rapi_sid_t /* sid */,
   ACE_QoS_Session *qos_session = (ACE_QoS_Session *) args;
 
   qos_flowspecx_t *csxp = 0;
-  
+
   if (!flow_spec_list)
     {
       ACE_DEBUG ((LM_DEBUG,
@@ -70,7 +70,7 @@ rsvp_callback (rapi_sid_t /* sid */,
 			    -1);
 	}
     }
-  
+
   ACE_QoS ace_qos = qos_session->qos ();
 
   switch(eventype)
@@ -83,7 +83,7 @@ rsvp_callback (rapi_sid_t /* sid */,
                     flow_spec_no, &flow_spec_list->len));
 
 	ACE_Flow_Spec *receiving_fs = 0;
-		    
+
 	if (flow_spec_no != 0)
 	  {
 
@@ -103,8 +103,8 @@ rsvp_callback (rapi_sid_t /* sid */,
 					   25,
 					   0),
 			    -1);
-	
-	    
+
+
 	    ACE_DEBUG ((LM_DEBUG,
 			"\nTSpec :\n"
 			"\t Spec Type = %d\n"
@@ -121,32 +121,32 @@ rsvp_callback (rapi_sid_t /* sid */,
 			csxp->xspec_m,
 			csxp->xspec_M,
 			25));
-	   
-	  } 
+
+	  }
 	// Set the sending flowspec QoS of the given session.
 	ace_qos.receiving_flowspec (receiving_fs);
 
 	qos_session->rsvp_event_type (ACE_QoS_Session::RSVP_PATH_EVENT);
 
       }
-      
+
     break;
 
     case RAPI_RESV_EVENT:
-      {	      
+      {
 	ACE_DEBUG ((LM_DEBUG,
 		    "RSVP RESV Event received\n"
 		    "No. of FlowSpecs received : %d\n",
 		    flow_spec_no));
-      
+
 	ACE_Flow_Spec *sending_flow = 0;
-	
+
 	if (flow_spec_no != 0)
 	  {
 	    ACE_NEW_RETURN (sending_flow,
 			    ACE_Flow_Spec,
 			    -1);
-	    
+
 	    // Choose based on the service type : [QOS_GUARANTEEDX/QOS_CNTR_LOAD].
 	    switch (csxp->spec_type)
 	      {
@@ -181,11 +181,11 @@ rsvp_callback (rapi_sid_t /* sid */,
 	      };
 	  }
 	ace_qos.sending_flowspec (sending_flow);
-	
+
 	qos_session->rsvp_event_type (ACE_QoS_Session::RSVP_RESV_EVENT);
       }
       break;
-      
+
     case RAPI_PATH_ERROR:
       {
 	ACE_DEBUG ((LM_DEBUG,
@@ -209,7 +209,7 @@ rsvp_callback (rapi_sid_t /* sid */,
 	qos_session->rsvp_event_type (ACE_QoS_Session::RSVP_RESV_ERROR);
       }
       break;
-      
+
     case RAPI_RESV_CONFIRM:
       {
 	ACE_DEBUG ((LM_DEBUG,
@@ -217,7 +217,7 @@ rsvp_callback (rapi_sid_t /* sid */,
 	qos_session->rsvp_event_type (ACE_QoS_Session::RSVP_RESV_CONFIRM);
       }
       break;
-      
+
     default:
       ACE_DEBUG ((LM_DEBUG,
                   "Unknown RSVP Event Received\n"));
@@ -238,7 +238,7 @@ ACE_RAPI_Session::ACE_RAPI_Session (void)
   ACE_TRACE ("ACE_RAPI_Session::ACE_RAPI_Session");
   //this->source_port (DEFAULT_SOURCE_SENDER_PORT);
   ACE_NEW (this->src_addr_,
-	   ACE_INET_Addr ("0")); 
+	   ACE_INET_Addr ("0"));
 }
 
 // Open a RAPI QoS session [dest IP, dest port, Protocol ID].
@@ -334,7 +334,7 @@ int
 ACE_RAPI_Session::sending_qos (const ACE_QoS &ace_qos)
 {
   ACE_Flow_Spec *sending_flowspec = ace_qos.sending_flowspec ();
-  
+
   if (sending_flowspec == 0)
     {
       int result = rapi_sender (this->session_id_,
@@ -353,7 +353,7 @@ ACE_RAPI_Session::sending_qos (const ACE_QoS &ace_qos)
       else
 	ACE_DEBUG ((LM_DEBUG,
 		    "rapi_sender () call succeeds with PATH Tear! \n"));
-      
+
       return 0;
     }
 
@@ -391,7 +391,7 @@ ACE_RAPI_Session::sending_qos (const ACE_QoS &ace_qos)
               t_spec->tspecbody_qosx.xtspec_m,
               t_spec->tspecbody_qosx.xtspec_M,
               sending_flowspec->ttl ()));
-  
+
   // This the source sender port.
   //  ACE_INET_Addr sender_addr (this->source_port ());
 
@@ -409,7 +409,7 @@ ACE_RAPI_Session::sending_qos (const ACE_QoS &ace_qos)
 			   0,
 			   0,
 			   sending_flowspec->ttl ()) ;
-  
+
   /*
   int result = rapi_sender(this->session_id_,
 			   0,
@@ -463,10 +463,10 @@ ACE_RAPI_Session::receiving_qos (const ACE_QoS &ace_qos)
       else
 	ACE_DEBUG ((LM_DEBUG,
 		    "rapi_reserve () for RESV Tear call succeeds \n"));
-      
+
       return 0;
     }
-  
+
 
   rapi_flowspec_t *flow_spec = init_flowspec_simplified (*receiving_flowspec);
 
@@ -675,8 +675,8 @@ ACE_GQoS_Session::qos (ACE_SOCK *socket,
 
   if (qos_manager->qos_session_set ().find (this) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_LIB_TEXT ("This QoS session was not subscribed to")
-                       ACE_LIB_TEXT (" by the socket\n")),
+                       ACE_TEXT ("This QoS session was not subscribed to")
+                       ACE_TEXT (" by the socket\n")),
                       -1);
 
   // Set the QOS according to the supplied ACE_QoS. The I/O control
@@ -690,12 +690,12 @@ ACE_GQoS_Session::qos (ACE_SOCK *socket,
                      qos,
                      &ret_bytes) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_LIB_TEXT ("Error in Qos set ACE_OS::ioctl() %d\n"),
+                       ACE_TEXT ("Error in Qos set ACE_OS::ioctl() %d\n"),
                        ret_bytes),
                       -1);
   else
     ACE_DEBUG ((LM_DEBUG,
-                ACE_LIB_TEXT ("Setting QoS with ACE_OS::ioctl () succeeds \n")));
+                ACE_TEXT ("Setting QoS with ACE_OS::ioctl () succeeds \n")));
 
   return 0;
 }

@@ -159,8 +159,8 @@ ACE_Time_Value::dump (void) const
   // ACE_OS_TRACE ("ACE_Time_Value::dump");
 #if 0
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\ntv_sec_ = %d"), this->tv_.tv_sec));
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\ntv_usec_ = %d\n"), this->tv_.tv_usec));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\ntv_sec_ = %d"), this->tv_.tv_sec));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\ntv_usec_ = %d\n"), this->tv_.tv_usec));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* 0 */
 #endif /* ACE_HAS_DUMP */

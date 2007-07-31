@@ -120,13 +120,13 @@ ACE_OS::strenvdup (const ACE_TCHAR *str)
   ACE_NOTSUP_RETURN (0);
 #else
   const ACE_TCHAR * start = 0;
-  if ((start = ACE_OS::strchr (str, ACE_LIB_TEXT ('$'))) != 0)
+  if ((start = ACE_OS::strchr (str, ACE_TEXT ('$'))) != 0)
     {
       ACE_TCHAR buf[ACE_DEFAULT_ARGV_BUFSIZ];
       size_t var_len = ACE_OS::strcspn (&start[1],
-        ACE_LIB_TEXT ("$~!#%^&*()-+=\\|/?,.;:'\"`[]{} \t\n\r"));
+        ACE_TEXT ("$~!#%^&*()-+=\\|/?,.;:'\"`[]{} \t\n\r"));
       ACE_OS::strncpy (buf, &start[1], var_len);
-      buf[var_len++] = ACE_LIB_TEXT ('\0');
+      buf[var_len++] = ACE_TEXT ('\0');
 #  if defined (ACE_WIN32)
       // Always use the ACE_TCHAR for Windows.
       ACE_TCHAR *temp = ACE_OS::getenv (buf);
@@ -164,7 +164,7 @@ ACE_OS::strenvdup (const ACE_TCHAR *str)
         {
           ACE_OS::strncpy (p, start, var_len);
           p += var_len;
-          *p = ACE_LIB_TEXT ('\0');
+          *p = ACE_TEXT ('\0');
         }
       ACE_OS::strcpy (p, &start[var_len]);
       return (buf_p == buf) ? ACE_OS::strdup (buf) : buf_p;
@@ -296,14 +296,14 @@ ACE_OS::mktemp (ACE_TCHAR *s)
     return 0;
   else
     {
-      ACE_TCHAR *xxxxxx = ACE_OS::strstr (s, ACE_LIB_TEXT ("XXXXXX"));
+      ACE_TCHAR *xxxxxx = ACE_OS::strstr (s, ACE_TEXT ("XXXXXX"));
 
       if (xxxxxx == 0)
         // the template string doesn't contain "XXXXXX"!
         return s;
       else
         {
-          ACE_TCHAR unique_letter = ACE_LIB_TEXT ('a');
+          ACE_TCHAR unique_letter = ACE_TEXT ('a');
           ACE_stat sb;
 
           // Find an unused filename for this process.  It is assumed
@@ -313,20 +313,20 @@ ACE_OS::mktemp (ACE_TCHAR *s)
           // template).  This appears to match the behavior of the
           // SunOS 5.5 mktemp().
           ACE_OS::sprintf (xxxxxx,
-                           ACE_LIB_TEXT ("%05d%c"),
+                           ACE_TEXT ("%05d%c"),
                            ACE_OS::getpid (),
                            unique_letter);
           while (ACE_OS::stat (s, &sb) >= 0)
             {
-              if (++unique_letter <= ACE_LIB_TEXT ('z'))
+              if (++unique_letter <= ACE_TEXT ('z'))
                 ACE_OS::sprintf (xxxxxx,
-                                 ACE_LIB_TEXT ("%05d%c"),
+                                 ACE_TEXT ("%05d%c"),
                                  ACE_OS::getpid (),
                                  unique_letter);
               else
                 {
                   // maximum of 26 unique files per template, per process
-                  ACE_OS::sprintf (xxxxxx, ACE_LIB_TEXT ("%s"), ACE_LIB_TEXT (""));
+                  ACE_OS::sprintf (xxxxxx, ACE_TEXT ("%s"), ACE_TEXT (""));
                   return s;
                 }
             }
@@ -675,7 +675,7 @@ ACE_OS::mkstemp_emulation (ACE_TCHAR * s)
     }
 
   // The "XXXXXX" template to be filled in.
-  ACE_TCHAR * const t  = ACE_OS::strstr (s, ACE_LIB_TEXT ("XXXXXX"));
+  ACE_TCHAR * const t  = ACE_OS::strstr (s, ACE_TEXT ("XXXXXX"));
 
   if (t == 0)
     {

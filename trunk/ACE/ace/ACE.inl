@@ -312,9 +312,9 @@ ACE::nibble2hex (u_int n)
   // loads of warnings when inlining.
   // problem (incorrect warning leftover from older GNU) has been reported as
   // TSR to Windriver.
-  const ACE_TCHAR hex_chars[] = ACE_LIB_TEXT ("0123456789abcdef");
+  const ACE_TCHAR hex_chars[] = ACE_TEXT ("0123456789abcdef");
 #else
-  static const ACE_TCHAR hex_chars[] = ACE_LIB_TEXT ("0123456789abcdef");
+  static const ACE_TCHAR hex_chars[] = ACE_TEXT ("0123456789abcdef");
 #endif
 
   // Yes, this works for UNICODE
@@ -339,11 +339,11 @@ ACE_INLINE u_char
 ACE::hex2byte (ACE_TCHAR c)
 {
   if (ACE_OS::ace_isdigit (c))
-    return (u_char) (c - ACE_LIB_TEXT ('0'));
+    return (u_char) (c - ACE_TEXT ('0'));
   else if (ACE_OS::ace_islower (c))
-    return (u_char) (10 + c - ACE_LIB_TEXT ('a'));
+    return (u_char) (10 + c - ACE_TEXT ('a'));
   else
-    return (u_char) (10 + c - ACE_LIB_TEXT ('A'));
+    return (u_char) (10 + c - ACE_TEXT ('A'));
 }
 
 // Close versioned namespace, if enabled by the user.

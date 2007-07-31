@@ -74,14 +74,14 @@ ACE_LD_Symbol_Registry::register_symbol (const ACE_TCHAR* symname,
   int result = symbol_registry_.bind (symname, symaddr);
   if (result == 1)
     {
-      ACE_DEBUG((LM_INFO, ACE_LIB_TEXT ("ACE_LD_Symbol_Registry:")
-                          ACE_LIB_TEXT (" duplicate symbol %s registered\n"),
+      ACE_DEBUG((LM_INFO, ACE_TEXT ("ACE_LD_Symbol_Registry:")
+                          ACE_TEXT (" duplicate symbol %s registered\n"),
                           ACE_TEXT_ALWAYS_CHAR (symname)));
     }
   else if (result == -1)
     {
-      ACE_ERROR((LM_ERROR, ACE_LIB_TEXT ("ACE_LD_Symbol_Registry:")
-                           ACE_LIB_TEXT (" failed to register symbol %s\n"),
+      ACE_ERROR((LM_ERROR, ACE_TEXT ("ACE_LD_Symbol_Registry:")
+                           ACE_TEXT (" failed to register symbol %s\n"),
                            ACE_TEXT_ALWAYS_CHAR (symname)));
     }
 
@@ -272,8 +272,8 @@ ACE::ldfind (const ACE_TCHAR* filename,
 #endif /* ACE_WIN32 */
         {
           ACE_ERROR ((LM_WARNING,
-                      ACE_LIB_TEXT ("Warning: improper suffix for a ")
-                      ACE_LIB_TEXT ("shared library on this platform: %s\n"),
+                      ACE_TEXT ("Warning: improper suffix for a ")
+                      ACE_TEXT ("shared library on this platform: %s\n"),
                       s));
         }
     }
@@ -320,20 +320,20 @@ ACE::ldfind (const ACE_TCHAR* filename,
               // First, try matching the filename *without* adding a
               // prefix.
               ACE_OS::sprintf (pathname,
-                               ACE_LIB_TEXT ("%s%s%s"),
+                               ACE_TEXT ("%s%s%s"),
                                searchpathname,
                                searchfilename,
-                               has_suffix ? ACE_LIB_TEXT ("") : dll_suffix);
+                               has_suffix ? ACE_TEXT ("") : dll_suffix);
               if (ACE_OS::access (pathname, F_OK) == 0)
                 return 0;
 
               // Second, try matching the filename *with* adding a prefix.
               ACE_OS::sprintf (pathname,
-                               ACE_LIB_TEXT ("%s%s%s%s"),
+                               ACE_TEXT ("%s%s%s%s"),
                                searchpathname,
                                ACE_DLL_PREFIX,
                                searchfilename,
-                               has_suffix ? ACE_LIB_TEXT ("") : dll_suffix);
+                               has_suffix ? ACE_TEXT ("") : dll_suffix);
               if (ACE_OS::access (pathname, F_OK) == 0)
                 return 0;
             }
@@ -465,28 +465,28 @@ ACE::ldfind (const ACE_TCHAR* filename,
                   // We need to do it here rather than anywhere else so
                   // that the loop condition will still work.
                   else if (path_entry[0] == '\0')
-                    path_entry = ACE_LIB_TEXT (".");
+                    path_entry = ACE_TEXT (".");
 
                   // First, try matching the filename *without* adding a
                   // prefix.
                   ACE_OS::sprintf (pathname,
-                                   ACE_LIB_TEXT ("%s%c%s%s"),
+                                   ACE_TEXT ("%s%c%s%s"),
                                    path_entry,
                                    ACE_DIRECTORY_SEPARATOR_CHAR,
                                    searchfilename,
-                                   has_suffix ? ACE_LIB_TEXT ("") : dll_suffix);
+                                   has_suffix ? ACE_TEXT ("") : dll_suffix);
                   if (ACE_OS::access (pathname, F_OK) == 0)
                     break;
 
                   // Second, try matching the filename *with* adding a
                   // prefix.
                   ACE_OS::sprintf (pathname,
-                                   ACE_LIB_TEXT ("%s%c%s%s%s"),
+                                   ACE_TEXT ("%s%c%s%s%s"),
                                    path_entry,
                                    ACE_DIRECTORY_SEPARATOR_CHAR,
                                    ACE_DLL_PREFIX,
                                    searchfilename,
-                                   has_suffix ? ACE_LIB_TEXT ("") : dll_suffix);
+                                   has_suffix ? ACE_TEXT ("") : dll_suffix);
                   if (ACE_OS::access (pathname, F_OK) == 0)
                     break;
 
@@ -549,7 +549,7 @@ ACE::ldname (const ACE_TCHAR *entry_point)
                   ACE_TCHAR[size],
                   0);
 
-  ACE_OS::strcpy (new_name, ACE_LIB_TEXT ("_"));
+  ACE_OS::strcpy (new_name, ACE_TEXT ("_"));
   ACE_OS::strcat (new_name, entry_point);
 
   return new_name;
@@ -629,7 +629,7 @@ ACE::get_temp_dir (ACE_TCHAR *buffer, size_t buffer_len)
 
       // Add a trailing slash because we cannot assume there is already one
       // at the end.  And having an extra one should not cause problems.
-      buffer[len] = ACE_LIB_TEXT ('/');
+      buffer[len] = ACE_TEXT ('/');
       buffer[len + 1] = 0;
       result = 0;
     }

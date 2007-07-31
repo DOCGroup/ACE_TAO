@@ -80,10 +80,10 @@ ACE_Service_Manager::info (ACE_TCHAR **strp, size_t length) const
     return -1;
 
   ACE_OS::sprintf (buf,
-                   ACE_LIB_TEXT ("%d/%s %s"),
+                   ACE_TEXT ("%d/%s %s"),
                    sa.get_port_number (),
-                   ACE_LIB_TEXT ("tcp"),
-                   ACE_LIB_TEXT ("# lists all services in the daemon\n"));
+                   ACE_TEXT ("tcp"),
+                   ACE_TEXT ("# lists all services in the daemon\n"));
   if (*strp == 0 && (*strp = ACE_OS::strdup (buf)) == 0)
     return -1;
   else
@@ -96,7 +96,7 @@ ACE_Service_Manager::init (int argc, ACE_TCHAR *argv[])
 {
   ACE_TRACE ("ACE_Service_Manager::init");
   ACE_INET_Addr local_addr (ACE_Service_Manager::DEFAULT_PORT_);
-  ACE_Get_Opt getopt (argc, argv, ACE_LIB_TEXT ("dp:s:"), 0); // Start at argv[0]
+  ACE_Get_Opt getopt (argc, argv, ACE_TEXT ("dp:s:"), 0); // Start at argv[0]
 
   for (int c; (c = getopt ()) != -1; )
      switch (c)
@@ -117,13 +117,13 @@ ACE_Service_Manager::init (int argc, ACE_TCHAR *argv[])
   if (this->get_handle () == ACE_INVALID_HANDLE &&
       this->open (local_addr) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_LIB_TEXT ("%p\n"),
-                       ACE_LIB_TEXT ("open")), -1);
+                       ACE_TEXT ("%p\n"),
+                       ACE_TEXT ("open")), -1);
   else if (ACE_Reactor::instance ()->register_handler
            (this,
             ACE_Event_Handler::ACCEPT_MASK) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_LIB_TEXT ("registering service with ACE_Reactor\n")),
+                       ACE_TEXT ("registering service with ACE_Reactor\n")),
                       -1);
   return 0;
 }
@@ -185,8 +185,8 @@ ACE_Service_Manager::list_services (void)
 
       ACE_OS::strcpy (buf, sr->name ());
       ACE_OS::strcat (buf, (sr->active ()) ?
-                      ACE_LIB_TEXT (" (active) ") :
-                      ACE_LIB_TEXT (" (paused) "));
+                      ACE_TEXT (" (active) ") :
+                      ACE_TEXT (" (paused) "));
 
       p[-1] = ' ';
       p[0]  = '\0';
@@ -195,18 +195,18 @@ ACE_Service_Manager::list_services (void)
 
       if (this->debug_)
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_LIB_TEXT ("len = %d, info = %s%s"),
+                    ACE_TEXT ("len = %d, info = %s%s"),
                     len,
                     buf,
-                    buf[len - 1] == '\n' ? ACE_LIB_TEXT ("") : ACE_LIB_TEXT ("\n")));
+                    buf[len - 1] == '\n' ? ACE_TEXT ("") : ACE_TEXT ("\n")));
 
       if (len > 0)
         {
           ssize_t n = this->client_stream_.send_n (buf, len);
           if (n <= 0 && errno != EPIPE)
             ACE_ERROR ((LM_ERROR,
-                        ACE_LIB_TEXT ("%p\n"),
-                        ACE_LIB_TEXT ("send_n")));
+                        ACE_TEXT ("%p\n"),
+                        ACE_TEXT ("send_n")));
         }
     }
 
@@ -252,10 +252,10 @@ ACE_Service_Manager::process_request (ACE_TCHAR *request)
 
   *p = '\0';
 
-  if (ACE_OS::strcmp (request, ACE_LIB_TEXT ("help")) == 0)
+  if (ACE_OS::strcmp (request, ACE_TEXT ("help")) == 0)
     // Return a list of the configured services.
     this->list_services ();
-  else if (ACE_OS::strcmp (request, ACE_LIB_TEXT ("reconfigure") )== 0)
+  else if (ACE_OS::strcmp (request, ACE_TEXT ("reconfigure") )== 0)
     // Trigger a reconfiguration by re-reading the local <svc.conf> file.
     this->reconfigure_services ();
   else
@@ -293,14 +293,14 @@ ACE_Service_Manager::handle_input (ACE_HANDLE)
   if (this->debug_)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_LIB_TEXT ("client_stream fd = %d\n"),
+                  ACE_TEXT ("client_stream fd = %d\n"),
                  this->client_stream_.get_handle ()));
       ACE_INET_Addr sa;
       if (this->client_stream_.get_remote_addr (sa) == -1)
         return -1;
 
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_LIB_TEXT ("accepted from host %s at port %d\n"),
+                  ACE_TEXT ("accepted from host %s at port %d\n"),
                   ACE_TEXT_CHAR_TO_TCHAR (sa.get_host_name ()),
                   sa.get_port_number ()));
     }
@@ -332,7 +332,7 @@ ACE_Service_Manager::handle_input (ACE_HANDLE)
           if ((remaining -= result) <= 0)
             {
               ACE_DEBUG ((LM_ERROR,
-                          ACE_LIB_TEXT ("Request buffer overflow.\n")));
+                          ACE_TEXT ("Request buffer overflow.\n")));
               result = 0;
               break;
             }
@@ -352,8 +352,8 @@ ACE_Service_Manager::handle_input (ACE_HANDLE)
     case -1:
       if (this->debug_)
         ACE_DEBUG ((LM_ERROR,
-                    ACE_LIB_TEXT ("%p\n"),
-                    ACE_LIB_TEXT ("recv")));
+                    ACE_TEXT ("%p\n"),
+                    ACE_TEXT ("recv")));
       break;
     case 0:
       return 0;
@@ -376,8 +376,8 @@ ACE_Service_Manager::handle_input (ACE_HANDLE)
 
   if (this->client_stream_.close () == -1 && this->debug_)
     ACE_DEBUG ((LM_ERROR,
-                ACE_LIB_TEXT ("%p\n"),
-                ACE_LIB_TEXT ("close")));
+                ACE_TEXT ("%p\n"),
+                ACE_TEXT ("close")));
   return 0;
 }
 

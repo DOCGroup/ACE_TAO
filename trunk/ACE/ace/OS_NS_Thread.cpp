@@ -453,8 +453,8 @@ ACE_TSS_Info::dump (void)
 
 #   if 0
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("key_ = %u\n"), this->key_));
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("destructor_ = %u\n"), this->destructor_));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("key_ = %u\n"), this->key_));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("destructor_ = %u\n"), this->destructor_));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #   endif /* 0 */
 # endif /* ACE_HAS_DUMP */
@@ -5192,7 +5192,7 @@ ACE_OS::unique_name (const void *object,
   // <object>.
   wchar_t temp_name[ACE_UNIQUE_NAME_LEN];
   ACE_OS::sprintf (temp_name,
-                   ACE_LIB_TEXT ("%p%d"),
+                   ACE_TEXT ("%p%d"),
                    object,
                    static_cast <int> (ACE_OS::getpid ()));
   ACE_OS::strsncpy (name,
