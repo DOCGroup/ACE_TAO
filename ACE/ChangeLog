@@ -1,3 +1,10 @@
+Tue Jul 31 13:02:30 UTC 2007  Olli Savia  <ops@iki.fi>
+
+        * ace/OS_NS_dirent.h:
+        * ace/OS_NS_dirent.inl:
+          Fixed compile error on platforms that define rewinddir
+          as a macro.
+
 Tue Jul 31 12:52:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * m4/config_h.m4:

@@ -54,6 +54,24 @@ extern "C" {
   typedef int (*ACE_SCANDIR_SELECTOR)(const ACE_DIRENT *filename);
 }
 
+/*
+ * We inline and undef some functions that may be implemented
+ * as macros on some platforms. This way macro definitions will
+ * be usable later as there is no way to save the macro definition
+ * using the pre-processor.
+ *
+ */
+
+inline void ace_rewinddir_helper (ACE_DIR *dir)
+{
+#if defined (rewinddir)
+   rewinddir (dir);
+#undef rewinddir
+#else
+  ACE_STD_NAMESPACE::rewinddir (dir);
+#endif /* defined (rewinddir) */
+}
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE_OS {
