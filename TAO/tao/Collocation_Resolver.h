@@ -50,8 +50,7 @@ public:
   virtual ~TAO_Collocation_Resolver (void);
 
   /// Is @a object collocated?
-  virtual CORBA::Boolean is_collocated (CORBA::Object_ptr object
-                                        ) const = 0;
+  virtual CORBA::Boolean is_collocated (CORBA::Object_ptr object) const = 0;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

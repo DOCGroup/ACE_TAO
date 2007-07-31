@@ -55,11 +55,11 @@ public:
 
   /// Get the native codeset ID from the base. There is no reasonable
   /// default for this method, so it is left abstract.
-  virtual CONV_FRAME::CodeSetId ncs () const = 0;
+  virtual CONV_FRAME::CodeSetId ncs (void) const = 0;
 
   /// Get the translated codeset ID from the base. There is no reasonable
   /// default for this method, so it is left abstract.
-  virtual CONV_FRAME::CodeSetId tcs () const = 0;
+  virtual CONV_FRAME::CodeSetId tcs (void) const = 0;
 
   /// Assign the translator to the supplied input CDR. This is left abstract
   /// since the base base does not have a reference to the actual translator
