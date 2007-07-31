@@ -41,7 +41,6 @@ namespace TAO
       : public PortableServer::AdapterActivator
     {
     public:
-
       Adapter_Activator (PortableServer::POAManager_ptr poa_manager);
 
       CORBA::Boolean unknown_adapter (PortableServer::POA_ptr parent,

@@ -87,7 +87,6 @@ TAO_ServantBase::_is_a (const char *logical_type_id)
   return ACE_OS::strcmp (logical_type_id, id) == 0;
 }
 
-#if (TAO_HAS_MINIMUM_CORBA == 0)
 CORBA::Boolean
 TAO_ServantBase::_non_existent (void)
 {
@@ -112,20 +111,17 @@ TAO_ServantBase::_get_interface (void)
                                  this->_interface_repository_id ());
 }
 
-#if !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
 CORBA::Object_ptr
 TAO_ServantBase::_get_component (void)
 {
   return CORBA::Object::_nil ();
 }
-#endif
 
 char *
 TAO_ServantBase::_repository_id (void)
 {
   return CORBA::string_dup (this->_interface_repository_id ());
 }
-#endif /* TAO_HAS_MINIMUM_CORBA */
 
 int
 TAO_ServantBase::_find (const char *opname,

@@ -1,3 +1,28 @@
+Tue Jul 31 12:39:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Abstract_Servant_Base.h:
+          Fixed typo in comment
+
+        * tao/PortableServer/Adapter_Activator.h:
+          Layout change
+
+        * tao/PortableServer/POA.pidl:
+        * tao/PortableServer/POAManagerFactory.pidl:
+          Fixed a few ifdef checks so that also minimum corba with BCB
+          can be used
+
+        * tao/PortableServer/Servant_Base.{h,cpp}:
+          Don't make methods dependent on CORBA/e or Minimum Corba. This
+          makes it possible to use the -Gce and -Gmc options on the IDL
+          files. When all generated files are removed from the repo the
+          checks can be added again, created bugzilla 3019 as reminder for
+          this.
+
+        * MPC/config/corba_e_compact.mpb:
+        * MPC/config/corba_e_micro.mpb:
+        * MPC/config/core_minimum_corba.mpb:
+          Added -Gce and -Gmc again
+
 Tue Jul 31 12:22:20 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/tests/unit/Notify/MC/NotificationServiceMonitor/run_test.pl:
