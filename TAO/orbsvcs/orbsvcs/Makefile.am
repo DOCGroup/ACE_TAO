@@ -2017,7 +2017,7 @@ CLEANFILES += \
 Notify/MonitorControl/NotificationServiceMCC.cpp Notify/MonitorControl/NotificationServiceMCC.h Notify/MonitorControl/NotificationServiceMCC.inl Notify/MonitorControl/NotificationServiceMCS.cpp Notify/MonitorControl/NotificationServiceMCS.h Notify/MonitorControl/NotificationServiceMCS.inl: Notify/MonitorControl/NotificationServiceMC-stamp
 
 Notify/MonitorControl/NotificationServiceMC-stamp: $(srcdir)/Notify/MonitorControl/NotificationServiceMC.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -o Notify/MonitorControl -Wb,export_macro=TAO_Notify_MC_Export -Wb,export_include=notify_mc_export.h $(srcdir)/Notify/MonitorControl/NotificationServiceMC.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -I$(TAO_ROOT)/orbsvcs -o Notify/MonitorControl -Wb,export_macro=TAO_Notify_MC_Export -Wb,export_include=notify_mc_export.h $(srcdir)/Notify/MonitorControl/NotificationServiceMC.idl
 	@touch "$@"
 
 lib_LTLIBRARIES += libTAO_CosNotification_MC.la
