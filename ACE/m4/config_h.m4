@@ -879,7 +879,7 @@ AH_TEMPLATE([ACE_LACKS_PLACEMENT_OPERATOR_DELETE],
 AH_TEMPLATE([ACE_LACKS_PRAGMA_ONCE],
 [Compiler complains about use of obsolete "pragma once"])
 
-AH_TEMPLATE([ACE_LACKS_THREAD_ATTR_SETSTACKADDR],
+AH_TEMPLATE([ACE_LACKS_PTHREAD_ATTR_SETSTACKADDR],
 [Platform lack pthread_attr_setstackaddr()])
 
 AH_TEMPLATE([ACE_LACKS_PTHREAD_CANCEL],[Platform lacks pthread_cancel()])
@@ -941,7 +941,7 @@ AH_TEMPLATE([ACE_LACKS_TCP_NODELAY],[OS does not support TCP_NODELAY])
 AH_TEMPLATE([ACE_LACKS_THREAD_PROCESS_SCOPING],
 [Platform lacks pthread_attr_setscope()])
 
-AH_TEMPLATE([ACE_LACKS_THREAD_ATTR_SETSTACKSIZE],
+AH_TEMPLATE([ACE_LACKS_PTHREAD_ATTR_SETSTACKSIZE],
 [Platform lacks pthread_attr_setstacksize() (e.g., Linux pthreads)])
 
 AH_TEMPLATE([ACE_LACKS_TIMESPEC_T],
