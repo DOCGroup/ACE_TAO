@@ -134,7 +134,6 @@ namespace CORBA
     /// implementation method and does no remote invocations!
     virtual const char* _interface_repository_id (void) const;
 
-
     /**
      * Return a (potentially non-unique) hash value for this object.
      * This method relies on the representation of the object
@@ -313,11 +312,11 @@ namespace CORBA
 #if defined (GEN_OSTREAM_OPS)
 
     /// Used by optionally generated ostream operators for interface
-    /// to output the actual repo id for debugging.  
+    /// to output the actual repo id for debugging.
     static std::ostream& _tao_stream (std::ostream &strm,
                                       const Object_ptr _tao_objref);
     virtual std::ostream& _tao_stream_v (std::ostream &strm) const;
-    
+
 #endif /* GEN_OSTREAM_OPS */
 
     /// Accessor to the flag..
