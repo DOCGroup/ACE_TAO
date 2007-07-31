@@ -28,8 +28,7 @@ TAO_POA_Default_Policy_Validator::validate_impl (TAO_Policy_Set &policies)
 {
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
   CORBA::Policy_var policy =
-    policies.get_cached_policy (TAO_CACHED_POLICY_SERVANT_RETENTION
-                               );
+    policies.get_cached_policy (TAO_CACHED_POLICY_SERVANT_RETENTION);
 
   PortableServer::ServantRetentionPolicy_var srp =
     PortableServer::ServantRetentionPolicy::_narrow (policy.in ());
