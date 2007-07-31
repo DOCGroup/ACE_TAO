@@ -1,3 +1,10 @@
+Tue Jul 31 10:38:37 UTC 2007  William Otte  <wotte@dhcp-host-unknown.prismtech.com>
+
+        * include/makeinclude/platform_macosx_tiger.GNU
+        
+          Added support for building universal binaries by specifying
+          universal=1 in platform_macros or command line.
+
 Tue Jul 31 09:39:43 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * contrib/utility/Example/ExH/BadCast/bad_cast.cpp:
