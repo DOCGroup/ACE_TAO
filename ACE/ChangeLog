@@ -47,9 +47,8 @@ Tue Jul 31 09:39:43 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 Tue Jul 31 07:52:25 UTC 2007  Olli Savia  <ops@iki.fi>
 
         * ace/os_include/os_dirent.h:
-          Removed #undef rewinddir. Iy May have broken compilation
-          compilation on some platforms so ACE_OS::rewinddir()
-          may need tweaking.
+          Removed #undef rewinddir. It may have broken compilation
+          on some platforms so ACE_OS::rewinddir() may need tweaking.
 
 Tue Jul 31 06:45:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
