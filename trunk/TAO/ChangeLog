@@ -1,3 +1,12 @@
+Tue Jul 31 10:58:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * MPC/config/corba_e_compact.mpb:
+        * MPC/config/corba_e_micro.mpb:
+        * MPC/config/core_minimum_corba.mpb:
+          Temporarily removed the new -Gce and -Gmc idl flags, the
+          few generated files in the repo cause problems. We need to
+          zap them asap.
+
 Tue Jul 31 10:54:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Object_Proxy_Broker.h:
