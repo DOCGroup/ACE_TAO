@@ -41,7 +41,7 @@ namespace Utility
 
     public:
       virtual void
-      add_ref () const throw;
+      add_ref () const;
 
       virtual void
       remove_ref () const throw ();

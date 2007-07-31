@@ -1,3 +1,9 @@
+Tue Jul 31 14:45:35 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * contrib/utility/Utility/ReferenceCounting/DefaultImpl.hpp:
+
+          Fixed a compile-time error.
+
 Tue Jul 31 13:02:30 UTC 2007  Olli Savia  <ops@iki.fi>
 
         * ace/OS_NS_dirent.h:
