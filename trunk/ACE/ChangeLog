@@ -1,3 +1,15 @@
+Tue Jul 31 00:50:49 UTC 2007  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * ace/Service_Config.cpp:
+
+          By introducing a partial specialization of
+          ACE_TSS<ACE_Service_Config> we ensure that _if_ ACE_TSS::cleanup()
+          is called before ~ACE_Object_Manager(), the TSS pointer will not
+          clobber the ACE_Service_Config it points to. Resolves bugzilla
+          2980. Thanks to Patrick Bennett <Patrick dot Bennett at inin dot
+          com> and Lothar Werzinger <lothar at tradescape dot biz> for
+          their input.
+          
 Mon Jul 30 23:51:07 UTC 2007  Steve Huston  <shuston@riverace.com>
 
         * ace/TP_Reactor.h: Documentation improvements, including clarification
