@@ -138,7 +138,7 @@ public:
 /// A prototype for the partial specialization. See the implementation
 /// for more details on why is it necessary.
 template<> void
-ACE_TSS<ACE_Service_Gestalt>::cleanup (void*);
+ACE_TSS<ACE_Service_Gestalt>::cleanup (void* ptr);
 
 /**
  * @class ACE_Service_Config
