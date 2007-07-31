@@ -135,10 +135,27 @@ public:
 
 #define ACE_Component_Config ACE_Service_Config
 
-/// A prototype for the partial specialization. See the implementation
-/// for more details on why is it necessary.
-template<> void
-ACE_TSS<ACE_Service_Gestalt>::cleanup (void* ptr);
+/// A prototype for the partial specialization.  This specialization
+/// allows us to have an ACE_TSS, which will _not_ perform a delete on
+/// (ACE_Service_Gestalt*) p up on thread exit, when TSS is cleaned
+/// up. Note that the tss_ member will be destroyed with the
+/// ACE_Object_Manager's ACE_Service_Config singleton, so no leaks are
+/// introduced.
+/// We need this because the SC instance is really owned by the
+/// Object Manager and the TSS cleanup must not dispose of it
+/// prematurely.  Naturally, things would be simpler, if we could
+/// avoid using the TSS altogether but we need the ability to
+/// temporarily designate a different SC instance as the "default."
+/// So, the solution is a hybrid, or non-owner ACE_TSS.  See bugzila
+/// 2980 for a description of a test case where ACE_TSS::cleanup() is
+/// called before ~ACE_Object_Manager.
+
+/// Note that Borland C++ 2007 *needs* the parameter name, but I don't
+/// know why ...
+
+template<> inline void
+ACE_TSS<ACE_Service_Gestalt>::cleanup (void*p) {};
+
 
 /**
  * @class ACE_Service_Config
