@@ -1,14 +1,25 @@
+Tue Jul 31 21:27:25 UTC 2007  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * ace/Service_Config.h:
+        * ace/Service_Config.cpp:
+        
+        Moved the template specialization to the header file and made it
+        "inline". This resolved linking problems with some compilers,
+        which complained about either unresolved references or
+        multiply-defined instances of cleanup(). Bugzilla 2980.
+        
+
 Tue Jul 31 18:48:25 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * ace/Auto_Functor.h:
         * ace/Auto_Functor.inl:
         * ace/Auto_Functor.cpp:
- 
+
           Zapped ACE_THROW_SPEC
 
         * ace/Global_Macros.h:
 
-          Guarded ACE_THROW_SPEC with ACE_LACKS_DEPRECATED_MACROS. The 
+          Guarded ACE_THROW_SPEC with ACE_LACKS_DEPRECATED_MACROS. The
           ACE_THROW_SPEC macro now has been deprecated.
 
           The above changes fix bugzilla 3008.
