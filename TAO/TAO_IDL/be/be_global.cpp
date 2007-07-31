@@ -84,6 +84,7 @@ BE_GlobalData::BE_GlobalData (void)
     gen_thru_poa_collocation_ (true), // Default is thru_poa.
     gen_direct_collocation_ (false),
     gen_corba_e_ (false),
+    gen_minimum_corba_ (false),
     opt_tc_ (false),
     ami_call_back_ (false),
     gen_amh_classes_ (false),
@@ -1050,6 +1051,17 @@ BE_GlobalData::gen_corba_e (void) const
   return this->gen_corba_e_;
 }
 
+void
+BE_GlobalData::gen_minimum_corba (bool val)
+{
+  this->gen_minimum_corba_ = val;
+}
+
+bool
+BE_GlobalData::gen_minimum_corba (void) const
+{
+  return this->gen_minimum_corba_;
+}
 
 void
 BE_GlobalData::opt_tc (bool val)
@@ -2040,6 +2052,24 @@ BE_GlobalData::parse_args (long &i, char **av)
               }
             break;
           }
+        else if (av[i][2] == 'm')
+          {
+            if (av[i][3] == 'c')
+              {
+                // Minimum corba.
+                be_global->gen_minimum_corba (true);
+              }
+            else
+              {
+                ACE_ERROR ((
+                    LM_ERROR,
+                    ACE_TEXT ("IDL: I don't understand ")
+                    ACE_TEXT ("the '%s' option\n"),
+                    av[i]
+                  ));
+              }
+            break;
+          }
         else if (av[i][2] == 't')
           {
             // Optimized typecode generation.
@@ -2623,6 +2653,10 @@ BE_GlobalData::usage (void) const
   ACE_DEBUG ((
       LM_DEBUG,
       ACE_TEXT (" -Gce \t\t\tGenerate code optimized for CORBA/e\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -Gmc \t\t\tGenerate code optimized for Minimum CORBA\n")
     ));
   ACE_DEBUG ((
       LM_DEBUG,

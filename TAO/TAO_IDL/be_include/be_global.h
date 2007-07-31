@@ -436,6 +436,12 @@ public:
   bool gen_corba_e (void) const;
   // Check if we want to generate for CORBA/e
 
+  void gen_minimum_corba (bool);
+  // Set whether we want to generate for Minimum CORBA
+
+  bool gen_minimum_corba (void) const;
+  // Check if we want to generate for Minimum CORBA
+
   void opt_tc (bool);
   // Set optimized typecodes.
 
@@ -712,6 +718,9 @@ private:
 
   bool gen_corba_e_;
   // are we generating for CORBA/e
+
+  bool gen_minimum_corba_;
+  // are we generating for Minimum CORBA
 
   bool opt_tc_;
   // do we generate optimized typecodes?
