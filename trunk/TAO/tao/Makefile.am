@@ -960,6 +960,7 @@ libTAO_la_LIBADD = \
 
 nobase_include_HEADERS = \
   Abstract_Servant_Base.h \
+  Abstract_Servant_Base.inl \
   Acceptor_Filter.h \
   Acceptor_Impl.cpp \
   Acceptor_Impl.h \

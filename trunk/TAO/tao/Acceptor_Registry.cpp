@@ -25,7 +25,6 @@
 #include "tao/Acceptor_Registry.inl"
 #endif /* __ACE_INLINE__ */
 
-
 ACE_RCSID (tao,
            Acceptor_Registry,
            "$Id$")

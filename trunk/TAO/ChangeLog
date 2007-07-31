@@ -1,3 +1,13 @@
+Tue Jul 31 07:22:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Abstract_Servant_Base.{h,cpp,inl}:
+          Also disabled some methods with CORBA/e and Minimum CORBA in this
+          class and made the constructor, copy constructor and assignment
+          operator inline
+
+        * tao/Makefile.am:
+          Added new inline file
+
 Tue Jul 31 06:40:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/compiler.html:
