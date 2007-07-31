@@ -1,3 +1,9 @@
+Tue Jul 31 15:02:34 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * tests/Multicast_Test_IPV6.cpp: Added some more diagnostic output and
+          changed the enable-loopback sockopt from char to int to try and avoid
+          some platform issues, particularly on Windows.
+
 Tue Jul 31 14:45:35 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * contrib/utility/Utility/ReferenceCounting/DefaultImpl.hpp:
