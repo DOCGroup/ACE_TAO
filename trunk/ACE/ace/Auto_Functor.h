@@ -63,64 +63,46 @@ public:
 
   /// Constructor
   explicit Auto_Functor (X * p = 0,
-      Functor functor = Functor())
-    ACE_THROW_SPEC (());
+      Functor functor = Functor()); // throw()
 
-  Auto_Functor (Auto_Functor & rhs)
-    ACE_THROW_SPEC (());
+  Auto_Functor (Auto_Functor & rhs); // throw()
 
-  Auto_Functor<X,Functor>& operator= (Auto_Functor & rhs)
-    ACE_THROW_SPEC (());
+  Auto_Functor<X,Functor>& operator= (Auto_Functor & rhs); // throw()
 
 #if !defined(ACE_LACKS_MEMBER_TEMPLATES)
   template<typename Y>
-  Auto_Functor(Auto_Functor<Y,Functor>& rhs)
-    ACE_THROW_SPEC (());
+  Auto_Functor(Auto_Functor<Y,Functor>& rhs); // throw()
 
   template<typename Y>
-  Auto_Functor<X,Functor>& operator= (Auto_Functor<Y,Functor>& rhs)
-    ACE_THROW_SPEC (());
+  Auto_Functor<X,Functor>& operator= (Auto_Functor<Y,Functor>& rhs); // throw()
 #endif /* ACE_LACKS_MEMBER_TEMPLATES */
 
-  ~Auto_Functor()
-    ACE_THROW_SPEC (());
+  ~Auto_Functor(); // throw()
 
-  X & operator*() const
-    ACE_THROW_SPEC (());
+  X & operator*() const; // throw()
 
-  X * operator->() const
-    ACE_THROW_SPEC (());
+  X * operator->() const; // throw()
 
-  X * get()
-    ACE_THROW_SPEC (());
+  X * get(); // throw()
 
-  X * release()
-    ACE_THROW_SPEC (());
+  X * release(); // throw()
 
-  void reset (X * p = 0)
-    ACE_THROW_SPEC (());
+  void reset (X * p = 0); // throw()
 
-  void reset (X * p, Functor f)
-    ACE_THROW_SPEC (());
+  void reset (X * p, Functor f); // throw()
 
-  Functor const & functor() const
-    ACE_THROW_SPEC (());
+  Functor const & functor() const; // throw()
 
-  Auto_Functor(Auto_Functor_Ref<X,Functor> rhs)
-    ACE_THROW_SPEC (());
+  Auto_Functor(Auto_Functor_Ref<X,Functor> rhs); // throw()
 
-  Auto_Functor<X,Functor> & operator=(Auto_Functor_Ref<X,Functor> rhs)
-    ACE_THROW_SPEC (());
+  Auto_Functor<X,Functor> & operator=(Auto_Functor_Ref<X,Functor> rhs); // throw()
 
 #if !defined(ACE_LACKS_MEMBER_TEMPLATES)
-  template<typename Y> operator Auto_Functor_Ref<Y,Functor>()
-    ACE_THROW_SPEC (());
+  template<typename Y> operator Auto_Functor_Ref<Y,Functor>(); // throw()
 
-  template<typename Y> operator Auto_Functor<Y,Functor>()
-    ACE_THROW_SPEC (());
+  template<typename Y> operator Auto_Functor<Y,Functor>(); // throw()
 #else
-  operator Auto_Functor_Ref<X,Functor>()
-    ACE_THROW_SPEC (());
+  operator Auto_Functor_Ref<X,Functor>(); // throw()
 #endif /* ACE_LACKS_MEMBER_TEMPLATES */
 
 private:
