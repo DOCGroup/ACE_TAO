@@ -111,11 +111,13 @@ TAO_ServantBase::_get_interface (void)
                                  this->_interface_repository_id ());
 }
 
+#if !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
 CORBA::Object_ptr
 TAO_ServantBase::_get_component (void)
 {
   return CORBA::Object::_nil ();
 }
+#endif
 
 char *
 TAO_ServantBase::_repository_id (void)

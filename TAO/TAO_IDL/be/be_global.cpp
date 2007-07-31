@@ -2622,6 +2622,10 @@ BE_GlobalData::usage (void) const
     ));
   ACE_DEBUG ((
       LM_DEBUG,
+      ACE_TEXT (" -Gce \t\t\tGenerate code optimized for CORBA/e\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
       ACE_TEXT (" -Gd \t\t\tGenerate the code for direct collocation. Default ")
       ACE_TEXT ("is thru-POA collocation\n")
     ));
