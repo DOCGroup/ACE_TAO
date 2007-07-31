@@ -35,13 +35,13 @@ namespace Utility
       
     public:
       virtual void
-      add_ref () const throw (Exception, SystemException) = 0;
+      add_ref () const = 0;
 
       virtual void
       remove_ref () const throw () = 0;
 
       virtual count_t
-      refcount_value () const throw (Exception, SystemException) = 0;
+      refcount_value () const = 0;
 
     protected:
       Interface () throw ();
@@ -51,13 +51,13 @@ namespace Utility
 
     protected:
       virtual void
-      add_ref_i () const throw (Exception, SystemException) = 0;
+      add_ref_i () const = 0;
 
       virtual bool
-      remove_ref_i () const throw (Exception, SystemException) = 0;
+      remove_ref_i () const = 0;
 
       virtual count_t
-      refcount_value_i () const throw (Exception, SystemException) = 0;
+      refcount_value_i () const = 0;
 
     private:
       // Copy semanic is not supported.
@@ -68,8 +68,7 @@ namespace Utility
 
     template <typename Type>
     Type*
-    add_ref (Type* ptr)
-      throw (Interface::Exception, Interface::SystemException);
+    add_ref (Type* ptr);
   }
 }
 

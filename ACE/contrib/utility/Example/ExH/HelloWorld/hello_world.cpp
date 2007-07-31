@@ -28,15 +28,14 @@ public:
   class InvalidArg : public Exception {};
 
 public:
-  Application () throw (ExH::System::Exception)
+  Application ()
       : // The std::string c-tor may throw any kind of exceptions besides
         // quite possible std::bad_alloc.
         greeting_ ("Hello, world!")
   {
   }
 
-  Application (char const * greeting) throw (InvalidArg,
-                                             ExH::System::Exception)
+  Application (char const * greeting)
       : greeting_ (greeting == 0 ? "" : greeting)
   {
     if (greeting == 0) throw InvalidArg ();
@@ -45,7 +44,7 @@ public:
 public:
 
   void
-  run () throw (FeelingDizzy, ExH::System::Exception)
+  run ()
   {
     static unsigned int dizzy_count (0);
 

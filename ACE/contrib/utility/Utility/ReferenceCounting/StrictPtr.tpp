@@ -26,7 +26,6 @@ namespace Utility
     template <typename T>
     StrictPtr<T>::
     StrictPtr (StrictPtr<Type> const& s_ptr)
-      throw (Interface::Exception, Interface::SystemException)
         : ptr_ (add_ref (s_ptr.in ()))
     {
     }
@@ -35,7 +34,6 @@ namespace Utility
     template <typename Other>
     StrictPtr<T>::
     StrictPtr (StrictPtr<Other> const& s_ptr)
-      throw (Interface::Exception, Interface::SystemException)
         : ptr_ (add_ref (s_ptr.in ()))
     {
     }
@@ -70,7 +68,6 @@ namespace Utility
     template <typename T>
     StrictPtr<T>& StrictPtr<T>::
     operator= (StrictPtr<Type> const& s_ptr)
-      throw (Interface::Exception, Interface::SystemException)
     {
       Type* old_ptr (ptr_);
       Type* new_ptr (add_ref (s_ptr.in ())); // this can throw
@@ -86,7 +83,6 @@ namespace Utility
     template <typename Other>
     StrictPtr<T>& StrictPtr<T>::
     operator= (StrictPtr<Other> const& s_ptr)
-      throw (Interface::Exception, Interface::SystemException)
     {
       Type*  old_ptr (ptr_);
       Other* new_ptr (add_ref (s_ptr.in ())); // this can throw
@@ -117,7 +113,7 @@ namespace Utility
 
     template <typename T>
     T* StrictPtr<T>::
-    operator-> () const throw (NotInitialized)
+    operator-> () const
     {
       if (ptr_ == 0)
       {
@@ -148,7 +144,6 @@ namespace Utility
     template <typename T>
     T*
     add_ref (StrictPtr<T> const& ptr)
-      throw (Interface::Exception, Interface::SystemException)
     {
       // delegate to generic implementation
       return add_ref (ptr.in ());
@@ -158,7 +153,6 @@ namespace Utility
     template <typename D, typename S>
     StrictPtr<D>
     strict_cast (StrictPtr<S> const& s)
-      throw (Interface::Exception, Interface::SystemException)
     {
       return StrictPtr<D>(add_ref (dynamic_cast<D*>(s.in ())));
     }

@@ -33,12 +33,10 @@ namespace Utility
 
       SmartPtr () throw ();
       SmartPtr (Type* ptr) throw ();
-      SmartPtr (SmartPtr<Type> const& s_ptr)
-        throw (Interface::Exception, Interface::SystemException);
+      SmartPtr (SmartPtr<Type> const& s_ptr);
 
       template <typename Other>
-      SmartPtr (SmartPtr<Other> const& s_ptr)
-        throw (Interface::Exception, Interface::SystemException);
+      SmartPtr (SmartPtr<Other> const& s_ptr);
 
       // d-tor
 
@@ -50,13 +48,11 @@ namespace Utility
       operator= (Type* ptr) throw ();
 
       SmartPtr<Type>&
-      operator= (SmartPtr<Type> const& s_ptr)
-        throw (Interface::Exception, Interface::SystemException);
+      operator= (SmartPtr<Type> const& s_ptr);
 
       template <typename Other>
       SmartPtr<Type>&
-      operator= (SmartPtr<Other> const& s_ptr)
-        throw (Interface::Exception, Interface::SystemException);
+      operator= (SmartPtr<Other> const& s_ptr);
 
       //conversions
 
@@ -65,7 +61,7 @@ namespace Utility
       // accessors
 
       Type*
-      operator-> () const throw (NotInitialized);
+      operator-> () const;
 
       Type*
       in () const throw ();
@@ -80,20 +76,18 @@ namespace Utility
     // Specialization of add_ref function for SmartPtr<T>
     template <typename T>
     T*
-    add_ref (SmartPtr<T> const& ptr)
-      throw (Interface::Exception, Interface::SystemException);
+    add_ref (SmartPtr<T> const& ptr);
 
 
     // Dynamic type conversion function for SmartPtr's
     template <typename D, typename S>
     D*
-    smart_cast (SmartPtr<S> const& s)
-      throw (Interface::Exception, Interface::SystemException);
+    smart_cast (SmartPtr<S> const& s);
 
     // Acquisition function
     template <typename T>
     SmartPtr<T>
-    acquire (T* ptr) throw (Interface::Exception, Interface::SystemException);
+    acquire (T* ptr);
   }
 }
 

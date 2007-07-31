@@ -17,7 +17,7 @@ struct SubsystemA
   class Exception : public Utility::ExH::Logic::Exception {};
 
   void
-  foo () throw (Exception)
+  foo ()
   {
     throw Exception ();
   }
@@ -27,7 +27,7 @@ struct SubsystemA
 struct SubsystemB
 {
   void
-  foo () throw (Utility::ExH::System::Exception)
+  foo ()
   {
     SubsystemA a;
     a.foo ();
