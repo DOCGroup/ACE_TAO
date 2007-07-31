@@ -76,9 +76,9 @@ TAO_ServerRequest::TAO_ServerRequest (TAO_Pluggable_Messaging *mesg_base,
     , interceptor_count_ (0)
     , rs_pi_current_ (0)
     , caught_exception_ (0)
-    , reply_status_ (-1),
+    , reply_status_ (-1)
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
-    transport_(transport) //already duplicated in TAO_Transport::process_parsed_messages ()
+    , transport_(transport) //already duplicated in TAO_Transport::process_parsed_messages ()
 {
   ACE_FUNCTION_TIMEPROBE (TAO_SERVER_REQUEST_START);
   // No-op.
