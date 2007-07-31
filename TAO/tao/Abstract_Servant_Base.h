@@ -7,7 +7,7 @@
  *  $Id$
  *
  *  This files contains the TAO_Abstract_ServantBase, which is used
- *  as a way to decuple the PortableServer from the TAO Core,
+ *  as a way to decouple the PortableServer from the TAO Core,
  *  and make it possible to keep the reference to the servant in
  *  the CORBA::Object class.
  *
