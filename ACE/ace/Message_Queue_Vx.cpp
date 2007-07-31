@@ -30,25 +30,25 @@ ACE_Message_Queue_Vx::dump (void) const
     {
     case ACE_Message_Queue_Base::ACTIVATED:
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_LIB_TEXT ("state = ACTIVATED\n")));
+                  ACE_TEXT ("state = ACTIVATED\n")));
       break;
     case ACE_Message_Queue_Base::DEACTIVATED:
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_LIB_TEXT ("state = DEACTIVATED\n")));
+                  ACE_TEXT ("state = DEACTIVATED\n")));
       break;
     case ACE_Message_Queue_Base::PULSED:
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_LIB_TEXT ("state = PULSED\n")));
+                  ACE_TEXT ("state = PULSED\n")));
       break;
     }
   ACE_DEBUG ((LM_DEBUG,
-              ACE_LIB_TEXT ("low_water_mark = %d\n")
-              ACE_LIB_TEXT ("high_water_mark = %d\n")
-              ACE_LIB_TEXT ("cur_bytes = %d\n")
-              ACE_LIB_TEXT ("cur_length = %d\n")
-              ACE_LIB_TEXT ("cur_count = %d\n")
-              ACE_LIB_TEXT ("head_ = %u\n")
-              ACE_LIB_TEXT ("MSG_Q_ID = %u\n"),
+              ACE_TEXT ("low_water_mark = %d\n")
+              ACE_TEXT ("high_water_mark = %d\n")
+              ACE_TEXT ("cur_bytes = %d\n")
+              ACE_TEXT ("cur_length = %d\n")
+              ACE_TEXT ("cur_count = %d\n")
+              ACE_TEXT ("head_ = %u\n")
+              ACE_TEXT ("MSG_Q_ID = %u\n"),
               this->low_water_mark_,
               this->high_water_mark_,
               this->cur_bytes_,
@@ -70,7 +70,7 @@ ACE_Message_Queue_Vx::ACE_Message_Queue_Vx (size_t max_messages,
   ACE_TRACE ("ACE_Message_Queue_Vx::ACE_Message_Queue_Vx");
 
   if (this->open (max_messages_, max_message_length_, ns) == -1)
-    ACE_ERROR ((LM_ERROR, ACE_LIB_TEXT ("open")));
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("open")));
 }
 
 ACE_Message_Queue_Vx::~ACE_Message_Queue_Vx (void)
@@ -78,7 +78,7 @@ ACE_Message_Queue_Vx::~ACE_Message_Queue_Vx (void)
   ACE_TRACE ("ACE_Message_Queue_Vx::~ACE_Message_Queue_Vx");
 
   if (this->tail_ != 0  &&  this->close () == -1)
-    ACE_ERROR ((LM_ERROR, ACE_LIB_TEXT ("close")));
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("close")));
 }
 
 // Don't bother locking since if someone calls this function more than

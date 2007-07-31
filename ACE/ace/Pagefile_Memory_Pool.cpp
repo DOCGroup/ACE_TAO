@@ -91,7 +91,7 @@ ACE_Pagefile_Memory_Pool::ACE_Pagefile_Memory_Pool (const ACE_TCHAR *backing_sto
   if (update_backing_store_name
       && ACE_OS::strlen (this->backing_store_name_) < sizeof this->backing_store_name_)
       ACE_OS::strcat (this->backing_store_name_,
-                      ACE_LIB_TEXT ("_"));
+                      ACE_TEXT ("_"));
 }
 
 void *

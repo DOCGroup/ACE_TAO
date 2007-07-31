@@ -50,11 +50,11 @@ ACE_Shared_Memory_Pool::in_use (ACE_OFF_T &offset,
     {
       if (ACE_OS::shmctl (st[counter].shmid_, IPC_STAT, &buf) == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_LIB_TEXT ("(%P|%t) %p\n"),
-                           ACE_LIB_TEXT ("shmctl")),
+                           ACE_TEXT ("(%P|%t) %p\n"),
+                           ACE_TEXT ("shmctl")),
                           -1);
       offset += buf.shm_segsz;
-      // ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("(%P|%t) segment size = %d, offset = %d\n"), buf.shm_segsz, offset));
+      // ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("(%P|%t) segment size = %d, offset = %d\n"), buf.shm_segsz, offset));
     }
 
   return 0;
@@ -76,8 +76,8 @@ ACE_Shared_Memory_Pool::find_seg (const void* const searchPtr,
     {
       if (ACE_OS::shmctl (st[counter].shmid_, IPC_STAT, &buf) == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_LIB_TEXT ("(%P|%t) %p\n"),
-                           ACE_LIB_TEXT ("shmctl")),
+                           ACE_TEXT ("(%P|%t) %p\n"),
+                           ACE_TEXT ("shmctl")),
                           -1);
       offset += buf.shm_segsz;
 
@@ -90,7 +90,7 @@ ACE_Shared_Memory_Pool::find_seg (const void* const searchPtr,
           offset -= buf.shm_segsz;
           return 0;
         }
-      // ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("(%P|%t) segment size = %d, offset = %d\n"), buf.shm_segsz, offset));
+      // ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("(%P|%t) segment size = %d, offset = %d\n"), buf.shm_segsz, offset));
     }
 
   return 0;
@@ -122,8 +122,8 @@ ACE_Shared_Memory_Pool::commit_backing_store_name (size_t rounded_bytes,
                                   this->file_perms_ | IPC_CREAT | IPC_EXCL);
       if (shmid == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_LIB_TEXT ("(%P|%t) %p\n"),
-                           ACE_LIB_TEXT ("shmget")),
+                           ACE_TEXT ("(%P|%t) %p\n"),
+                           ACE_TEXT ("shmget")),
                           -1);
       st[counter].shmid_ = shmid;
       st[counter].used_ = 1;
@@ -150,7 +150,7 @@ int
 ACE_Shared_Memory_Pool::handle_signal (int , siginfo_t *siginfo, ucontext_t *)
 {
   ACE_TRACE ("ACE_Shared_Memory_Pool::handle_signal");
-  // ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("signal %S occurred\n"), signum));
+  // ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("signal %S occurred\n"), signum));
 
   // While FreeBSD 5.X has a siginfo_t struct with a si_addr field,
   // it does not define SEGV_MAPERR.
@@ -162,12 +162,12 @@ ACE_Shared_Memory_Pool::handle_signal (int , siginfo_t *siginfo, ucontext_t *)
 
   if (siginfo != 0)
     {
-      // ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("(%P|%t) si_signo = %d, si_code = %d, addr = %u\n"), siginfo->si_signo, siginfo->si_code, siginfo->si_addr));
+      // ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("(%P|%t) si_signo = %d, si_code = %d, addr = %u\n"), siginfo->si_signo, siginfo->si_code, siginfo->si_addr));
       size_t counter;
       if (this->in_use (offset, counter) == -1)
         ACE_ERROR ((LM_ERROR,
-                    ACE_LIB_TEXT ("(%P|%t) %p\n"),
-                    ACE_LIB_TEXT ("in_use")));
+                    ACE_TEXT ("(%P|%t) %p\n"),
+                    ACE_TEXT ("in_use")));
 #if !defined(_UNICOS)
       else if (!(siginfo->si_code == SEGV_MAPERR
            && siginfo->si_addr < (((char *) this->base_addr_) + offset)
@@ -200,8 +200,8 @@ ACE_Shared_Memory_Pool::handle_signal (int , siginfo_t *siginfo, ucontext_t *)
   if (this->find_seg ((const void *)siginfo->si_addr, offset, counter) == -1)
 #endif /* ! _UNICOS */
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_LIB_TEXT ("(%P|%t) %p\n"),
-                         ACE_LIB_TEXT ("in_use")),
+                         ACE_TEXT ("(%P|%t) %p\n"),
+                         ACE_TEXT ("in_use")),
                         -1);
 
   void *address = (void *) (((char *) this->base_addr_) + offset);
@@ -275,8 +275,8 @@ ACE_Shared_Memory_Pool::ACE_Shared_Memory_Pool (
 
   if (this->signal_handler_.register_handler (SIGSEGV, this) == -1)
     ACE_ERROR ((LM_ERROR,
-                ACE_LIB_TEXT ("%p\n"),
-                ACE_LIB_TEXT ("ACE_Sig_Handler::register_handler")));
+                ACE_TEXT ("%p\n"),
+                ACE_TEXT ("ACE_Sig_Handler::register_handler")));
 }
 
 ACE_Shared_Memory_Pool::~ACE_Shared_Memory_Pool (void)
@@ -293,14 +293,14 @@ ACE_Shared_Memory_Pool::acquire (size_t nbytes,
 
   rounded_bytes = this->round_up (nbytes);
 
-  // ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("(%P|%t) acquiring more chunks, nbytes = %d, rounded_bytes = %d\n"), nbytes, rounded_bytes));
+  // ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("(%P|%t) acquiring more chunks, nbytes = %d, rounded_bytes = %d\n"), nbytes, rounded_bytes));
 
   ACE_OFF_T offset;
 
   if (this->commit_backing_store_name (rounded_bytes, offset) == -1)
     return 0;
 
-  // ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("(%P|%t) acquired more chunks, nbytes = %d, rounded_bytes = %d\n"), nbytes, rounded_bytes));
+  // ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("(%P|%t) acquired more chunks, nbytes = %d, rounded_bytes = %d\n"), nbytes, rounded_bytes));
   return ((char *) this->base_addr_) + offset;
 }
 
@@ -328,8 +328,8 @@ ACE_Shared_Memory_Pool::init_acquire (size_t nbytes,
     {
       if (errno != EEXIST)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_LIB_TEXT ("(%P|%t) %p\n"),
-                           ACE_LIB_TEXT ("shmget")),
+                           ACE_TEXT ("(%P|%t) %p\n"),
+                           ACE_TEXT ("shmget")),
                           0);
       first_time = 0;
 
@@ -337,8 +337,8 @@ ACE_Shared_Memory_Pool::init_acquire (size_t nbytes,
 
       if (shmid == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_LIB_TEXT ("(%P|%t) %p\n"),
-                           ACE_LIB_TEXT ("shmget")),
+                           ACE_TEXT ("(%P|%t) %p\n"),
+                           ACE_TEXT ("shmget")),
                           0);
 
       // This implementation doesn't care if we don't get the key we

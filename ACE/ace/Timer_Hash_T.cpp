@@ -351,14 +351,14 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET>::dump (void) const
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Timer_Hash_T::dump");
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\ntable_size_ = %d"), this->table_size_));
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nearliest_position_ = %d"), this->earliest_position_));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\ntable_size_ = %d"), this->table_size_));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\nearliest_position_ = %d"), this->earliest_position_));
 
   for (size_t i = 0; i < this->table_size_; ++i)
     if (!this->table_[i]->is_empty ())
-      ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nBucket %d contains nodes"), i));
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\nBucket %d contains nodes"), i));
 
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\n")));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
 }

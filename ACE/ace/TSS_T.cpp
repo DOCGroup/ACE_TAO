@@ -71,9 +71,9 @@ ACE_TSS<TYPE>::dump (void) const
 #if defined (ACE_HAS_THREADS) && (defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) || defined (ACE_HAS_TSS_EMULATION))
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   this->keylock_.dump ();
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("key_ = %d\n"), this->key_));
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nonce_ = %d"), this->once_));
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\n")));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("key_ = %d\n"), this->key_));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\nonce_ = %d"), this->once_));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* defined (ACE_HAS_THREADS) && (defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) || defined (ACE_HAS_TSS_EMULATION)) */
 #endif /* ACE_HAS_DUMP */
@@ -140,8 +140,8 @@ ACE_TSS<TYPE>::ACE_TSS (TYPE *ts_obj)
           // What should we do if this call fails?!
 #if defined (ACE_HAS_WINCE)
           ::MessageBox (0,
-                        ACE_LIB_TEXT ("ACE_Thread::keycreate() failed!"),
-                        ACE_LIB_TEXT ("ACE_TSS::ACE_TSS"),
+                        ACE_TEXT ("ACE_Thread::keycreate() failed!"),
+                        ACE_TEXT ("ACE_TSS::ACE_TSS"),
                         MB_OK);
 #else
           ACE_OS::fprintf (stderr,
@@ -164,15 +164,15 @@ ACE_TSS<TYPE>::ACE_TSS (TYPE *ts_obj)
         {
           delete tss_adapter;
           ACE_ERROR ((LM_ERROR,
-                      ACE_LIB_TEXT ("%p\n"),
-                      ACE_LIB_TEXT ("ACE_Thread::setspecific() failed!")));
+                      ACE_TEXT ("%p\n"),
+                      ACE_TEXT ("ACE_Thread::setspecific() failed!")));
         }
 #else
       if (ACE_Thread::setspecific (this->key_,
                                    (void *) ts_obj) != 0)
         ACE_ERROR ((LM_ERROR,
-                    ACE_LIB_TEXT ("%p\n"),
-                    ACE_LIB_TEXT ("ACE_Thread::setspecific() failed!")));
+                    ACE_TEXT ("%p\n"),
+                    ACE_TEXT ("ACE_Thread::setspecific() failed!")));
 #endif /* ACE_HAS_THR_C_DEST */
     }
 }
@@ -357,8 +357,8 @@ ACE_TSS_Guard<ACE_LOCK>::dump (void) const
 // ACE_TRACE ("ACE_TSS_Guard<ACE_LOCK>::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("key_ = %d"), this->key_));
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\n")));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("key_ = %d"), this->key_));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
 }

@@ -14,7 +14,7 @@
 #  error Use config-win32.h in config.h instead of this header
 #endif /* ACE_CONFIG_WIN32_H */
 
-#define ACE_CC_NAME ACE_LIB_TEXT ("g++")
+#define ACE_CC_NAME ACE_TEXT ("g++")
 #define ACE_CC_PREPROCESSOR "cpp"
 #define ACE_CC_PREPROCESOR_ARGS ""
 
@@ -88,8 +88,8 @@
 # define ACE_HAS_PENTIUM
 #endif
 
-#define ACE_INT64_FORMAT_SPECIFIER ACE_LIB_TEXT ("%I64d")
-#define ACE_UINT64_FORMAT_SPECIFIER ACE_LIB_TEXT ("%I64u")
+#define ACE_INT64_FORMAT_SPECIFIER ACE_TEXT ("%I64d")
+#define ACE_UINT64_FORMAT_SPECIFIER ACE_TEXT ("%I64u")
 
 #define ACE_ENDTHREADEX(STATUS)  ::_endthreadex ((DWORD) (STATUS))
 

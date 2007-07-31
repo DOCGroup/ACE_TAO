@@ -443,7 +443,7 @@ template <class T> void
 ACE_Double_Linked_List_Iterator_Base<T>::dump_i (void) const
 {
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("current_ = %x"), this->current_));
+  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("current_ = %x"), this->current_));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
@@ -1650,9 +1650,9 @@ ACE_Ordered_MultiSet<T>::dump (void) const
   //  ACE_TRACE ("ACE_Ordered_MultiSet<T>::dump");
   //
   //  ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  //  ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("\nhead_ = %u"), this->head_));
-  //  ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("\nhead_->next_ = %u"), this->head_->next_));
-  //  ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("\ncur_size_ = %d\n"), this->cur_size_));
+  //  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("\nhead_ = %u"), this->head_));
+  //  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("\nhead_->next_ = %u"), this->head_->next_));
+  //  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("\ncur_size_ = %d\n"), this->cur_size_));
   //
   //  T *item = 0;
   //  size_t count = 1;
@@ -1660,7 +1660,7 @@ ACE_Ordered_MultiSet<T>::dump (void) const
   //  for (ACE_Ordered_MultiSet_Iterator<T> iter (*(ACE_Ordered_MultiSet<T> *) this);
   //       iter.next (item) != 0;
   //       iter.advance ())
-  //    ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("count = %d\n"), count++));
+  //    ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("count = %d\n"), count++));
   //
   //  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */

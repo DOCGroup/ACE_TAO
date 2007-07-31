@@ -53,7 +53,7 @@ ACE_ATM_Connector::connect (ACE_ATM_Stream &new_stream,
                             &options.get_qos());
 #elif defined (ACE_HAS_FORE_ATM_WS2)
   ACE_DEBUG(LM_DEBUG,
-            ACE_LIB_TEXT ("ATM_Connector(connect): set QoS parameters\n" ));
+            ACE_TEXT ("ATM_Connector(connect): set QoS parameters\n" ));
 
   ACE_HANDLE s = new_stream.get_handle();
   struct sockaddr_atm *saddr = ( struct sockaddr_atm *)remote_sap.get_addr();
@@ -66,7 +66,7 @@ ACE_ATM_Connector::connect (ACE_ATM_Stream &new_stream,
                                              0);
 
   ACE_DEBUG(LM_DEBUG,
-            ACE_LIB_TEXT ("ATM_Connector(connect): connecting...\n"));
+            ACE_TEXT ("ATM_Connector(connect): connecting...\n"));
 
   int result = ACE_OS::connect( s,
                                 ( struct sockaddr *)saddr,
@@ -103,7 +103,7 @@ ACE_ATM_Connector::connect (ACE_ATM_Stream &new_stream,
                          SO_ATMQOS,
                          reinterpret_cast<char*> (&qos),
                          sizeof(qos)) < 0) {
-    ACE_DEBUG((LM_DEBUG,ACE_LIB_TEXT ("ATM_Connector(connect): unable to set qos %d\n"),
+    ACE_DEBUG((LM_DEBUG,ACE_TEXT ("ATM_Connector(connect): unable to set qos %d\n"),
                errno));
     return -1;
   }
@@ -114,7 +114,7 @@ ACE_ATM_Connector::connect (ACE_ATM_Stream &new_stream,
 
   if ( result != 0 )
     ACE_DEBUG(LM_DEBUG,
-              ACE_LIB_TEXT ("ATM_Connector(connect): connection failed, %d\n"),
+              ACE_TEXT ("ATM_Connector(connect): connection failed, %d\n"),
               errno);
 
   return result;

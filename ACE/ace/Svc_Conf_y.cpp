@@ -1264,7 +1264,7 @@ ace_yyreduce:
               || st->push (mt) == -1)
             {
               ACE_ERROR ((LM_ERROR,
-                          ACE_LIB_TEXT ("dynamic initialization failed for Module %s\n"),
+                          ACE_TEXT ("dynamic initialization failed for Module %s\n"),
                           svc_type->name ()));
               ACE_SVC_CONF_PARAM->yyerrno++;
             }
@@ -1283,7 +1283,7 @@ ace_yyreduce:
       if (((ACE_Stream_Type *) sn->record (ACE_SVC_CONF_PARAM->config)->type ())->push (mt) == -1)
         {
           ACE_ERROR ((LM_ERROR,
-                      ACE_LIB_TEXT ("Problem with static\n")));
+                      ACE_TEXT ("Problem with static\n")));
           ACE_SVC_CONF_PARAM->yyerrno++;
         }
     ;}
@@ -1327,7 +1327,7 @@ ace_yyreduce:
       if (!st || (mt != 0 && st->remove (mt) == -1))
         {
           ACE_ERROR ((LM_ERROR,
-                      ACE_LIB_TEXT ("cannot remove Module_Type %s from STREAM_Type %s\n"),
+                      ACE_TEXT ("cannot remove Module_Type %s from STREAM_Type %s\n"),
                       module->name (),
                       stream->name ()));
           ACE_SVC_CONF_PARAM->yyerrno++;
@@ -1654,7 +1654,7 @@ ace_yyerror (int ace_yyerrno, int ace_yylineno, char const *s)
 #endif /* ACE_NLOGGING */
 
   ACE_ERROR ((LM_ERROR,
-              ACE_LIB_TEXT ("ACE (%P|%t) [error %d] on line %d: %s\n"),
+              ACE_TEXT ("ACE (%P|%t) [error %d] on line %d: %s\n"),
               ace_yyerrno,
               ace_yylineno,
               ACE_TEXT_CHAR_TO_TCHAR (s)));
@@ -1678,10 +1678,10 @@ ace_get_module (ACE_Service_Type const * sr,
   if (sr == 0 || st == 0 || mt == 0)
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_LIB_TEXT ("cannot locate Module_Type %s ")
-                  ACE_LIB_TEXT ("in STREAM_Type %s\n"),
+                  ACE_TEXT ("cannot locate Module_Type %s ")
+                  ACE_TEXT ("in STREAM_Type %s\n"),
                   svc_name,
-                  (sr ? sr->name () : ACE_LIB_TEXT ("(nil)"))));
+                  (sr ? sr->name () : ACE_TEXT ("(nil)"))));
       ++ace_yyerrno;
     }
 
@@ -1702,14 +1702,14 @@ ace_get_module (ACE_Service_Type const * sr,
     static_cast <ACE_Module_Type const *> (sv->type ());
 
   ACE_TCHAR const * const module_type_name =
-    (mt ? mt->name () : ACE_LIB_TEXT ("(nil)"));
+    (mt ? mt->name () : ACE_TEXT ("(nil)"));
 
   if (sr == 0 || st == 0 || mt == 0)
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_LIB_TEXT ("cannot locate Module_Type %s or STREAM_Type %s\n"),
+                  ACE_TEXT ("cannot locate Module_Type %s or STREAM_Type %s\n"),
                   module_type_name,
-                  (sr ? sr->name () : ACE_LIB_TEXT ("(nil)"))));
+                  (sr ? sr->name () : ACE_TEXT ("(nil)"))));
       ++ace_yyerrno;
     }
 
@@ -1721,7 +1721,7 @@ ace_get_module (ACE_Service_Type const * sr,
   if (mp && ACE_OS::strcmp (mp->name (), module_type_name) != 0)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_LIB_TEXT ("warning: assigning Module_Type name %s to Module %s since names differ\n"),
+                  ACE_TEXT ("warning: assigning Module_Type name %s to Module %s since names differ\n"),
                   module_type_name,
                   mp->name ()));
       mp->name (module_type_name);
@@ -1740,7 +1740,7 @@ main (int argc, char *argv[])
 
   // Try to reopen any filename argument to use ACE_YYIN.
   if (argc > 1 && (ace_yyin = freopen (argv[1], "r", stdin)) == 0)
-    (void) ACE_OS::ACE_OS::fprintf (stderr, ACE_LIB_TEXT ("usage: %s [file]\n"), argv[0]), ACE_OS::exit (1);
+    (void) ACE_OS::ACE_OS::fprintf (stderr, ACE_TEXT ("usage: %s [file]\n"), argv[0]), ACE_OS::exit (1);
 
   return ::ace_yyparse (&param);
 }

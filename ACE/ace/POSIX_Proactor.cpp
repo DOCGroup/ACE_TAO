@@ -741,9 +741,9 @@ ACE_AIOCB_Notify_Pipe_Manager::notify ()
       if (errno != EWOULDBLOCK)
 #if 0
         ACE_ERROR ((LM_ERROR,
-                    ACE_LIB_TEXT ("(%P %t):%p\n"),
-                    ACE_LIB_TEXT ("ACE_AIOCB_Notify_Pipe_Manager::notify")
-                    ACE_LIB_TEXT ("Error:Writing on to notify pipe failed")));
+                    ACE_TEXT ("(%P %t):%p\n"),
+                    ACE_TEXT ("ACE_AIOCB_Notify_Pipe_Manager::notify")
+                    ACE_TEXT ("Error:Writing on to notify pipe failed")));
 #endif /* 0 */
       return -1;
     }
@@ -769,9 +769,9 @@ ACE_AIOCB_Notify_Pipe_Manager::handle_read_stream
                                      0,   // ACT
                                      0))  // Priority
     ACE_ERROR ((LM_ERROR,
-                ACE_LIB_TEXT ("%N:%l:(%P | %t):%p\n"),
-                ACE_LIB_TEXT ("ACE_AIOCB_Notify_Pipe_Manager::handle_read_stream:")
-                ACE_LIB_TEXT ("Read from pipe failed")));
+                ACE_TEXT ("%N:%l:(%P | %t):%p\n"),
+                ACE_TEXT ("ACE_AIOCB_Notify_Pipe_Manager::handle_read_stream:")
+                ACE_TEXT ("Read from pipe failed")));
 
 
   // 2. Do the upcalls
@@ -916,7 +916,7 @@ int ACE_POSIX_AIOCB_Proactor::delete_result_aiocb_list (void)
 
 
           ACE_ERROR ((LM_ERROR,
-                      ACE_LIB_TEXT("slot=%d op=%s status=%d xfercnt=%d %s\n"),
+                      ACE_TEXT("slot=%d op=%s status=%d xfercnt=%d %s\n"),
                       ai,
                       op,
                       error_status,
@@ -939,8 +939,8 @@ int ACE_POSIX_AIOCB_Proactor::delete_result_aiocb_list (void)
   // segmentation fault!
   ACE_DEBUG
     ((LM_DEBUG,
-      ACE_LIB_TEXT("ACE_POSIX_AIOCB_Proactor::delete_result_aiocb_list\n")
-      ACE_LIB_TEXT(" number pending AIO=%d\n"),
+      ACE_TEXT("ACE_POSIX_AIOCB_Proactor::delete_result_aiocb_list\n")
+      ACE_TEXT(" number pending AIO=%d\n"),
       num_pending));
 
   delete [] this->aiocb_list_;
@@ -1006,7 +1006,7 @@ void ACE_POSIX_AIOCB_Proactor::check_max_aio_num ()
 #if defined(__sgi)
 
    ACE_DEBUG((LM_DEBUG,
-              ACE_LIB_TEXT( "SGI IRIX specific: aio_init!\n")));
+              ACE_TEXT( "SGI IRIX specific: aio_init!\n")));
 
 //typedef struct aioinit {
 //    int aio_threads;  /* The number of aio threads to start (5) */
@@ -1194,8 +1194,8 @@ ACE_POSIX_AIOCB_Proactor::handle_events_i (u_long milli_seconds)
       if (errno != EAGAIN &&   // Timeout
           errno != EINTR )    // Interrupted call
           ACE_ERROR ((LM_ERROR,
-                      ACE_LIB_TEXT ("%N:%l:(%P|%t)::%p\n"),
-                      ACE_LIB_TEXT ("handle_events: aio_suspend failed")));
+                      ACE_TEXT ("%N:%l:(%P|%t)::%p\n"),
+                      ACE_TEXT ("handle_events: aio_suspend failed")));
       // let continue work
       // we should check "post_completed" queue
     }
@@ -1327,8 +1327,8 @@ ACE_POSIX_AIOCB_Proactor::start_aio (ACE_POSIX_Asynch_Result *result,
 
     default:
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_LIB_TEXT ("%N:%l:(%P|%t)::")
-                         ACE_LIB_TEXT ("start_aio: Invalid op code %d\n"),
+                         ACE_TEXT ("%N:%l:(%P|%t)::")
+                         ACE_TEXT ("start_aio: Invalid op code %d\n"),
 			 op),
                         -1);
     }
@@ -1429,15 +1429,15 @@ ACE_POSIX_AIOCB_Proactor::start_aio_i (ACE_POSIX_Asynch_Result *result)
   switch (result->aio_lio_opcode )
     {
     case LIO_READ :
-      ptype = ACE_LIB_TEXT ("read ");
+      ptype = ACE_TEXT ("read ");
       ret_val = aio_read (result);
       break;
     case LIO_WRITE :
-      ptype = ACE_LIB_TEXT ("write");
+      ptype = ACE_TEXT ("write");
       ret_val = aio_write (result);
       break;
     default:
-      ptype = ACE_LIB_TEXT ("?????");
+      ptype = ACE_TEXT ("?????");
       ret_val = -1;
       break;
     }
@@ -1450,9 +1450,9 @@ ACE_POSIX_AIOCB_Proactor::start_aio_i (ACE_POSIX_Asynch_Result *result)
         ret_val = 1;
       else
         ACE_ERROR ((LM_ERROR,
-                    ACE_LIB_TEXT ("%N:%l:(%P | %t)::start_aio_i: aio_%s %p\n"),
+                    ACE_TEXT ("%N:%l:(%P | %t)::start_aio_i: aio_%s %p\n"),
                     ptype,
-                    ACE_LIB_TEXT ("queueing failed")));
+                    ACE_TEXT ("queueing failed")));
     }
 
   return ret_val;
@@ -1627,8 +1627,8 @@ ACE_POSIX_SIG_Proactor::ACE_POSIX_SIG_Proactor (size_t max_aio_operations)
 
   // Add the signal number to the signal set.
   if (ACE_OS::sigaddset (&this->RT_completion_signals_, ACE_SIGRTMIN) == -1)
-    ACE_ERROR ((LM_ERROR, ACE_LIB_TEXT ("ACE_POSIX_SIG_Proactor: %p\n"),
-                ACE_LIB_TEXT ("sigaddset")));
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("ACE_POSIX_SIG_Proactor: %p\n"),
+                ACE_TEXT ("sigaddset")));
   this->block_signals ();
   // Set up the signal action for SIGRTMIN.
   this->setup_signal_handler (ACE_SIGRTMIN);
@@ -1949,10 +1949,10 @@ ACE_POSIX_SIG_Proactor::handle_events_i (const ACE_Time_Value *timeout)
       // or message queue could also generate it !
       // So print the message and check our completions
       ACE_ERROR ((LM_DEBUG,
-                  ACE_LIB_TEXT ("%N:%l:(%P | %t): ")
-                  ACE_LIB_TEXT ("ACE_POSIX_SIG_Proactor::handle_events: ")
-                  ACE_LIB_TEXT ("Unexpected signal code (%d) returned ")
-                  ACE_LIB_TEXT ("from sigwait; expecting %d\n"),
+                  ACE_TEXT ("%N:%l:(%P | %t): ")
+                  ACE_TEXT ("ACE_POSIX_SIG_Proactor::handle_events: ")
+                  ACE_TEXT ("Unexpected signal code (%d) returned ")
+                  ACE_TEXT ("from sigwait; expecting %d\n"),
                   result_sigwait, sig_info.si_code));
       flg_aio = 1;
     }

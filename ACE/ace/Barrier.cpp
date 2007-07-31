@@ -31,8 +31,8 @@ ACE_Sub_Barrier::dump (void) const
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   this->barrier_finished_.dump ();
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("running_threads_ = %d"), this->running_threads_));
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\n")));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("running_threads_ = %d"), this->running_threads_));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
 }
@@ -57,8 +57,8 @@ ACE_Barrier::dump (void) const
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   this->lock_.dump ();
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("current_generation_ = %d"), this->current_generation_));
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\ncount_ = %d"), this->count_));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("current_generation_ = %d"), this->current_generation_));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\ncount_ = %d"), this->count_));
   this->sub_barrier_1_.dump ();
   this->sub_barrier_2_.dump ();
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));

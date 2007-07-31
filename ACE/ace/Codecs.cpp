@@ -175,7 +175,7 @@ ACE_Base64::decode (const ACE_Byte* input, size_t* output_len)
       if (char_count)
         {
           ACE_ERROR ((LM_ERROR,
-                      ACE_LIB_TEXT ("Decoding incomplete: atleast %d bits truncated\n"),
+                      ACE_TEXT ("Decoding incomplete: atleast %d bits truncated\n"),
                       (4 - char_count) * 6));
           ++errors;
         }
@@ -186,7 +186,7 @@ ACE_Base64::decode (const ACE_Byte* input, size_t* output_len)
         {
         case 1:
           ACE_ERROR ((LM_ERROR,
-                      ACE_LIB_TEXT ("Decoding incomplete: atleast 2 bits missing\n")));
+                      ACE_TEXT ("Decoding incomplete: atleast 2 bits missing\n")));
           ++errors;
           break;
         case 2:

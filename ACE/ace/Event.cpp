@@ -28,8 +28,8 @@ ACE_Event::ACE_Event (int manual_reset,
                           arg,
                           sa) != 0)
     ACE_ERROR ((LM_ERROR,
-                ACE_LIB_TEXT ("%p\n"),
-                ACE_LIB_TEXT ("ACE_Event::ACE_Event")));
+                ACE_TEXT ("%p\n"),
+                ACE_TEXT ("ACE_Event::ACE_Event")));
 }
 
 ACE_Event::~ACE_Event (void)

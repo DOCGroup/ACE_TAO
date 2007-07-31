@@ -469,12 +469,12 @@ ACE_Select_Reactor_Handler_Repository_Iterator::dump (void) const
   ACE_TRACE ("ACE_Select_Reactor_Handler_Repository_Iterator::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("rep_ = %u"), this->rep_));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("rep_ = %u"), this->rep_));
 # ifdef ACE_WIN32
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("current_ = ")));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("current_ = ")));
   this->current_.dump ();
 # else
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("current_ = %@"), this->current_));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("current_ = %@"), this->current_));
 # endif  /* ACE_WIN32 */
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
@@ -487,20 +487,20 @@ ACE_Select_Reactor_Handler_Repository::dump (void) const
   ACE_TRACE ("ACE_Select_Reactor_Handler_Repository::dump");
 
 # ifdef ACE_WIN32
-#  define ACE_HANDLE_FORMAT_SPECIFIER ACE_LIB_TEXT("%@")
-#  define ACE_MAX_HANDLEP1_FORMAT_SPECIFIER ACE_LIB_TEXT("%u")
+#  define ACE_HANDLE_FORMAT_SPECIFIER ACE_TEXT("%@")
+#  define ACE_MAX_HANDLEP1_FORMAT_SPECIFIER ACE_TEXT("%u")
 # else
-#  define ACE_HANDLE_FORMAT_SPECIFIER ACE_LIB_TEXT("%d")
-#  define ACE_MAX_HANDLEP1_FORMAT_SPECIFIER ACE_LIB_TEXT("%d")
+#  define ACE_HANDLE_FORMAT_SPECIFIER ACE_TEXT("%d")
+#  define ACE_MAX_HANDLEP1_FORMAT_SPECIFIER ACE_TEXT("%d")
 # endif  /* ACE_WIN32 */
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACE_DEBUG ((LM_DEBUG,
-              ACE_LIB_TEXT ("max_handlep1_ = ")
+              ACE_TEXT ("max_handlep1_ = ")
               ACE_MAX_HANDLEP1_FORMAT_SPECIFIER
-              ACE_LIB_TEXT ("\n"),
+              ACE_TEXT ("\n"),
               this->max_handlep1 ()));
-  ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("[")));
+  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("[")));
 
   ACE_Event_Handler *event_handler = 0;
 
@@ -508,14 +508,14 @@ ACE_Select_Reactor_Handler_Repository::dump (void) const
        iter.next (event_handler) != 0;
        iter.advance ())
     ACE_DEBUG ((LM_DEBUG,
-                ACE_LIB_TEXT (" (event_handler = %@,")
-                ACE_LIB_TEXT (" event_handler->handle_ = ")
+                ACE_TEXT (" (event_handler = %@,")
+                ACE_TEXT (" event_handler->handle_ = ")
                 ACE_HANDLE_FORMAT_SPECIFIER
-                ACE_LIB_TEXT ("\n"),
+                ACE_TEXT ("\n"),
                 event_handler,
                 event_handler->get_handle ()));
 
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT (" ]\n")));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT (" ]\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
 }
@@ -577,7 +577,7 @@ ACE_Select_Reactor_Notify::dump (void) const
   ACE_TRACE ("ACE_Select_Reactor_Notify::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("select_reactor_ = %x"), this->select_reactor_));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("select_reactor_ = %x"), this->select_reactor_));
   this->notification_pipe_.dump ();
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
@@ -837,7 +837,7 @@ ACE_Select_Reactor_Notify::dispatch_notify (ACE_Notification_Buffer &buffer)
         default:
           // Should we bail out if we get an invalid mask?
           ACE_ERROR ((LM_ERROR,
-                      ACE_LIB_TEXT ("invalid mask = %d\n"),
+                      ACE_TEXT ("invalid mask = %d\n"),
                       buffer.mask_));
         }
 

@@ -56,10 +56,10 @@ ACE_Future_Rep<T>::dump (void) const
  (int) this->ref_count_));
   ACE_DEBUG ((LM_INFO,"value_: \n"));
   if (this->value_)
-    ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT (" (NON-NULL)\n")));
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT (" (NON-NULL)\n")));
   else
     //FUZZ: disable check_for_NULL
-    ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT (" (NULL)\n")));
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT (" (NULL)\n")));
     //FUZZ: enable check_for_NULL
 
   ACE_DEBUG ((LM_INFO,"value_ready_: \n"));

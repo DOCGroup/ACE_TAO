@@ -198,13 +198,13 @@ ACE_Reactor::close_singleton (void)
 const ACE_TCHAR *
 ACE_Reactor::dll_name (void)
 {
-  return ACE_LIB_TEXT ("ACE");
+  return ACE_TEXT ("ACE");
 }
 
 const ACE_TCHAR *
 ACE_Reactor::name (void)
 {
-  return ACE_LIB_TEXT ("ACE_Reactor");
+  return ACE_TEXT ("ACE_Reactor");
 }
 
 int

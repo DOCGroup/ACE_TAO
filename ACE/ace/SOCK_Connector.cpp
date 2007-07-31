@@ -320,8 +320,8 @@ ACE_SOCK_Connector::ACE_SOCK_Connector (ACE_SOCK_Stream &new_stream,
       && timeout != 0
       && !(errno == EWOULDBLOCK || errno == ETIME || errno == ETIMEDOUT))
     ACE_ERROR ((LM_ERROR,
-                ACE_LIB_TEXT ("%p\n"),
-                ACE_LIB_TEXT ("ACE_SOCK_Connector::ACE_SOCK_Connector")));
+                ACE_TEXT ("%p\n"),
+                ACE_TEXT ("ACE_SOCK_Connector::ACE_SOCK_Connector")));
 }
 
 #if !defined (ACE_HAS_WINCE)
@@ -351,8 +351,8 @@ ACE_SOCK_Connector::ACE_SOCK_Connector (ACE_SOCK_Stream &new_stream,
       && timeout != 0
       && !(errno == EWOULDBLOCK || errno == ETIME || errno == ETIMEDOUT))
     ACE_ERROR ((LM_ERROR,
-                ACE_LIB_TEXT ("%p\n"),
-                ACE_LIB_TEXT ("ACE_SOCK_Connector::ACE_SOCK_Connector")));
+                ACE_TEXT ("%p\n"),
+                ACE_TEXT ("ACE_SOCK_Connector::ACE_SOCK_Connector")));
 }
 #endif  // ACE_HAS_WINCE
 

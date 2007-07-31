@@ -490,7 +490,7 @@ namespace ACE
    * needs to be fixed).
    */
   extern ACE_Export pid_t fork (
-    const ACE_TCHAR *program_name = ACE_LIB_TEXT ("<unknown>"),
+    const ACE_TCHAR *program_name = ACE_TEXT ("<unknown>"),
     int avoid_zombies = 0);
 
   /**
@@ -500,9 +500,9 @@ namespace ACE
    * closed.
    */
   extern ACE_Export int daemonize (
-    const ACE_TCHAR pathname[] = ACE_LIB_TEXT ("/"),
+    const ACE_TCHAR pathname[] = ACE_TEXT ("/"),
     bool close_all_handles = ACE_DEFAULT_CLOSE_ALL_HANDLES,
-    const ACE_TCHAR program_name[] = ACE_LIB_TEXT ("<unknown>"));
+    const ACE_TCHAR program_name[] = ACE_TEXT ("<unknown>"));
 
   // = Miscellaneous functions.
   /// Rounds the request to a multiple of the page size.

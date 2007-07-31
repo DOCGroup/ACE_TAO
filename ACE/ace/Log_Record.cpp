@@ -32,38 +32,38 @@ namespace
   // Symbolic names for the <ACE_Log_Priority> enumerators.
   ACE_TCHAR const * ace_priority_names[] =
     {
-      ACE_LIB_TEXT ("LM_SHUTDOWN"),
-      ACE_LIB_TEXT ("LM_TRACE"),
-      ACE_LIB_TEXT ("LM_DEBUG"),
-      ACE_LIB_TEXT ("LM_INFO"),
-      ACE_LIB_TEXT ("LM_NOTICE"),
-      ACE_LIB_TEXT ("LM_WARNING"),
-      ACE_LIB_TEXT ("LM_STARTUP"),
-      ACE_LIB_TEXT ("LM_ERROR"),
-      ACE_LIB_TEXT ("LM_CRITICAL"),
-      ACE_LIB_TEXT ("LM_ALERT"),
-      ACE_LIB_TEXT ("LM_EMERGENCY"),
-      ACE_LIB_TEXT ("LM_UNK(04000)"),
-      ACE_LIB_TEXT ("LM_UNK(010000)"),
-      ACE_LIB_TEXT ("LM_UNK(020000)"),
-      ACE_LIB_TEXT ("LM_UNK(040000)"),
-      ACE_LIB_TEXT ("LM_UNK(0100000)"),
-      ACE_LIB_TEXT ("LM_UNK(0200000)"),
-      ACE_LIB_TEXT ("LM_UNK(0400000)"),
-      ACE_LIB_TEXT ("LM_UNK(01000000)"),
-      ACE_LIB_TEXT ("LM_UNK(02000000)"),
-      ACE_LIB_TEXT ("LM_UNK(04000000)"),
-      ACE_LIB_TEXT ("LM_UNK(010000000)"),
-      ACE_LIB_TEXT ("LM_UNK(020000000)"),
-      ACE_LIB_TEXT ("LM_UNK(040000000)"),
-      ACE_LIB_TEXT ("LM_UNK(0100000000)"),
-      ACE_LIB_TEXT ("LM_UNK(0200000000)"),
-      ACE_LIB_TEXT ("LM_UNK(0400000000)"),
-      ACE_LIB_TEXT ("LM_UNK(01000000000)"),
-      ACE_LIB_TEXT ("LM_UNK(02000000000)"),
-      ACE_LIB_TEXT ("LM_UNK(04000000000)"),
-      ACE_LIB_TEXT ("LM_UNK(010000000000)"),
-      ACE_LIB_TEXT ("LM_UNK(020000000000)")
+      ACE_TEXT ("LM_SHUTDOWN"),
+      ACE_TEXT ("LM_TRACE"),
+      ACE_TEXT ("LM_DEBUG"),
+      ACE_TEXT ("LM_INFO"),
+      ACE_TEXT ("LM_NOTICE"),
+      ACE_TEXT ("LM_WARNING"),
+      ACE_TEXT ("LM_STARTUP"),
+      ACE_TEXT ("LM_ERROR"),
+      ACE_TEXT ("LM_CRITICAL"),
+      ACE_TEXT ("LM_ALERT"),
+      ACE_TEXT ("LM_EMERGENCY"),
+      ACE_TEXT ("LM_UNK(04000)"),
+      ACE_TEXT ("LM_UNK(010000)"),
+      ACE_TEXT ("LM_UNK(020000)"),
+      ACE_TEXT ("LM_UNK(040000)"),
+      ACE_TEXT ("LM_UNK(0100000)"),
+      ACE_TEXT ("LM_UNK(0200000)"),
+      ACE_TEXT ("LM_UNK(0400000)"),
+      ACE_TEXT ("LM_UNK(01000000)"),
+      ACE_TEXT ("LM_UNK(02000000)"),
+      ACE_TEXT ("LM_UNK(04000000)"),
+      ACE_TEXT ("LM_UNK(010000000)"),
+      ACE_TEXT ("LM_UNK(020000000)"),
+      ACE_TEXT ("LM_UNK(040000000)"),
+      ACE_TEXT ("LM_UNK(0100000000)"),
+      ACE_TEXT ("LM_UNK(0200000000)"),
+      ACE_TEXT ("LM_UNK(0400000000)"),
+      ACE_TEXT ("LM_UNK(01000000000)"),
+      ACE_TEXT ("LM_UNK(02000000000)"),
+      ACE_TEXT ("LM_UNK(04000000000)"),
+      ACE_TEXT ("LM_UNK(010000000000)"),
+      ACE_TEXT ("LM_UNK(020000000000)")
     };
 }
 
@@ -109,14 +109,14 @@ ACE_Log_Record::dump (void) const
   // ACE_TRACE ("ACE_Log_Record::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("length_ = %d\n"), this->length_));
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\ntype_ = %u\n"), this->type_));
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\ntime_stamp_ = (%:, %d)\n"),
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("length_ = %d\n"), this->length_));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\ntype_ = %u\n"), this->type_));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\ntime_stamp_ = (%:, %d)\n"),
               this->secs_, this->usecs_));
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\npid_ = %u\n"), this->pid_));
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nmsg_data_ (0x%@) = %s\n"),
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\npid_ = %u\n"), this->pid_));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\nmsg_data_ (0x%@) = %s\n"),
               this->msg_data_, this->msg_data_));
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nmsg_data_size_ = %B\n"),
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\nmsg_data_size_ = %B\n"),
               this->msg_data_size_));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
@@ -223,13 +223,13 @@ ACE_Log_Record::format_msg (const ACE_TCHAR host_name[],
   // The sprintf format needs to be different for Windows and POSIX
   // in the wide-char case.
 #if defined (ACE_WIN32) || !defined (ACE_USES_WCHAR)
-  const ACE_TCHAR *time_fmt =         ACE_LIB_TEXT ("%s.%03ld %s");
-  const ACE_TCHAR *verbose_fmt =      ACE_LIB_TEXT ("%s@%s@%u@%s@%s");
-  const ACE_TCHAR *verbose_lite_fmt = ACE_LIB_TEXT ("%s@%s@%s");
+  const ACE_TCHAR *time_fmt =         ACE_TEXT ("%s.%03ld %s");
+  const ACE_TCHAR *verbose_fmt =      ACE_TEXT ("%s@%s@%u@%s@%s");
+  const ACE_TCHAR *verbose_lite_fmt = ACE_TEXT ("%s@%s@%s");
 #else
-  const ACE_TCHAR *time_fmt = ACE_LIB_TEXT ("%ls.%03ld %ls");
-  const ACE_TCHAR *verbose_fmt = ACE_LIB_TEXT ("%ls@%ls@%u@%ls@%ls");
-  const ACE_TCHAR *verbose_lite_fmt = ACE_LIB_TEXT ("%ls@%ls@%ls");
+  const ACE_TCHAR *time_fmt = ACE_TEXT ("%ls.%03ld %ls");
+  const ACE_TCHAR *verbose_fmt = ACE_TEXT ("%ls@%ls@%u@%ls@%ls");
+  const ACE_TCHAR *verbose_lite_fmt = ACE_TEXT ("%ls@%ls@%ls");
 #endif
 
   if (ACE_BIT_ENABLED (verbose_flag,
@@ -260,7 +260,7 @@ ACE_Log_Record::format_msg (const ACE_TCHAR host_name[],
                        ACE_Log_Msg::VERBOSE))
     {
       const ACE_TCHAR *lhost_name = ((host_name == 0)
-                                      ? ACE_LIB_TEXT ("<local_host>")
+                                      ? ACE_TEXT ("<local_host>")
                                       : host_name);
       ACE_OS::sprintf (verbose_msg,
                        verbose_fmt,
@@ -301,11 +301,11 @@ ACE_Log_Record::print (const ACE_TCHAR host_name[],
                 static_cast<int> (ACE_OS::strlen (verbose_msg));
 #if !defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
               int const fwrite_result = ACE_OS::fprintf (fp,
-                                                         ACE_LIB_TEXT ("%ls"),
+                                                         ACE_TEXT ("%ls"),
                                                          verbose_msg);
 #else
               int const fwrite_result = ACE_OS::fprintf (fp,
-                                                         ACE_LIB_TEXT ("%s"),
+                                                         ACE_TEXT ("%s"),
                                                          verbose_msg);
 #endif
               // We should have written everything

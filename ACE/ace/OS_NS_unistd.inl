@@ -42,7 +42,7 @@ ACE_OS::access (const char *path, int amode)
   // Hard coded read access here.
   ACE_UNUSED_ARG (amode);
   FILE* handle = ACE_OS::fopen (ACE_TEXT_CHAR_TO_TCHAR(path),
-                                ACE_LIB_TEXT ("r"));
+                                ACE_TEXT ("r"));
   if (handle != 0)
     {
       ACE_OS::fclose (handle);

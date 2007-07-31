@@ -26,7 +26,7 @@
 
 #define ACE_OPENVMS 0x0821
 
-#define ACE_DLL_SUFFIX ACE_LIB_TEXT("")
+#define ACE_DLL_SUFFIX ACE_TEXT("")
 
 #define ACE_HAS_DUMP    1
 

@@ -372,7 +372,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::ACE_Local_Name_Space (
 {
   ACE_TRACE ("ACE_Local_Name_Space::ACE_Local_Name_Space");
   if (this->open (scope_in) == -1)
-    ACE_ERROR ((LM_ERROR,  ACE_LIB_TEXT ("%p\n"),  ACE_LIB_TEXT ("ACE_Local_Name_Space::ACE_Local_Name_Space")));
+    ACE_ERROR ((LM_ERROR,  ACE_TEXT ("%p\n"),  ACE_TEXT ("ACE_Local_Name_Space::ACE_Local_Name_Space")));
 }
 
 template <ACE_MEM_POOL_1, class ACE_LOCK>
@@ -442,7 +442,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::create_manager_i (void)
                    ACE_DIRECTORY_SEPARATOR_STR,
                    length -  ACE_OS::strlen (lock_name_for_local_name_space));
   ACE_OS::strncat (lock_name_for_local_name_space,
-                   ACE_LIB_TEXT ("name_space_"),
+                   ACE_TEXT ("name_space_"),
                    length -  ACE_OS::strlen (lock_name_for_local_name_space));
   ACE_OS::strncat (lock_name_for_local_name_space,
                    postfix,
@@ -456,11 +456,11 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::create_manager_i (void)
                    ACE_DIRECTORY_SEPARATOR_STR,
                    length -  ACE_OS::strlen (lock_name_for_backing_store));
   ACE_OS::strncat (lock_name_for_backing_store,
-                   ACE_LIB_TEXT ("backing_store_"),
+                   ACE_TEXT ("backing_store_"),
                    length -  ACE_OS::strlen (lock_name_for_backing_store));
   ACE_OS::strncat (lock_name_for_backing_store,
                    postfix,
-                   length - ACE_OS::strlen (ACE_LIB_TEXT ("backing_store_")));
+                   length - ACE_OS::strlen (ACE_TEXT ("backing_store_")));
 
   // Create the allocator with the appropriate options.
   ACE_NEW_RETURN (this->allocator_,
@@ -470,7 +470,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::create_manager_i (void)
 
   if (ACE_LOG_MSG->op_status ())
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_LIB_TEXT ("Allocator::Allocator\n")),
+                       ACE_TEXT ("Allocator::Allocator\n")),
                       -1);
 
   ACE_NEW_RETURN (this->lock_,
@@ -481,7 +481,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::create_manager_i (void)
   // Now check if the backing store has been created successfully
   if (ACE_OS::access (this->context_file_, F_OK) != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_LIB_TEXT ("create_manager\n")),
+                       ACE_TEXT ("create_manager\n")),
                       -1);
 #endif /* ACE_LACKS_ACCESS */
 
@@ -494,7 +494,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::create_manager_i (void)
       this->name_space_map_ = (ACE_Name_Space_Map <ALLOCATOR> *) ns_map;
       if (ACE::debug ())
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_LIB_TEXT ("name_space_map_ = %d, ns_map = %d\n"),
+                    ACE_TEXT ("name_space_map_ = %d, ns_map = %d\n"),
                     this->name_space_map_, ns_map));
     }
 
@@ -511,7 +511,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::create_manager_i (void)
           this->name_space_map_ = (ACE_Name_Space_Map <ALLOCATOR> *) ns_map;
           if (ACE::debug ())
             ACE_DEBUG ((LM_DEBUG,
-                        ACE_LIB_TEXT ("name_space_map_ = %d, ns_map = %d\n"),
+                        ACE_TEXT ("name_space_map_ = %d, ns_map = %d\n"),
                         this->name_space_map_, ns_map));
         }
       else
@@ -525,12 +525,12 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::create_manager_i (void)
 
           if (this->allocator_->bind (ACE_NAME_SERVER_MAP, ns_map) == -1)
             ACE_ERROR_RETURN ((LM_ERROR,
-                               ACE_LIB_TEXT ("create_manager\n")), -1);
+                               ACE_TEXT ("create_manager\n")), -1);
         }
 
       if (ACE::debug ())
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_LIB_TEXT ("name_space_map_ = %d, ns_map = %d\n"),
+                    ACE_TEXT ("name_space_map_ = %d, ns_map = %d\n"),
                     this->name_space_map_, ns_map));
     }
 
@@ -813,7 +813,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::dump_i (void) const
       const char *type = map_entry->int_id_.type ();
 #endif /* ! ACE_NLOGGING */
 
-      ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("key=%s\nvalue=%s\ntype=%s\n"),
+      ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("key=%s\nvalue=%s\ntype=%s\n"),
                   ACE_TEXT_CHAR_TO_TCHAR (key), ACE_TEXT_CHAR_TO_TCHAR (value), ACE_TEXT_CHAR_TO_TCHAR (type)));
       // We need to delete key and value since char_rep allocates
       // memory for them

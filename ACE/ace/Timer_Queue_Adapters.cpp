@@ -86,8 +86,8 @@ ACE_Async_Timer_Queue_Adapter<TQ>::schedule (ACE_Event_Handler *eh,
 
   if (tid == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_LIB_TEXT ("%p\n"),
-                       ACE_LIB_TEXT ("schedule_timer")),
+                       ACE_TEXT ("%p\n"),
+                       ACE_TEXT ("schedule_timer")),
                       -1);
 
   if (this->schedule_ualarm () == -1)
@@ -112,8 +112,8 @@ ACE_Async_Timer_Queue_Adapter<TQ>::ACE_Async_Timer_Queue_Adapter (ACE_Sig_Set *m
 
   if (this->sig_handler_.register_handler (SIGALRM, this, &sa) == -1)
     ACE_ERROR ((LM_ERROR,
-                ACE_LIB_TEXT ("%p\n"),
-                ACE_LIB_TEXT ("register_handler")));
+                ACE_TEXT ("%p\n"),
+                ACE_TEXT ("register_handler")));
 }
 
 // This is the signal handler function for the asynchronous timer
@@ -272,7 +272,7 @@ ACE_Thread_Timer_Queue_Adapter<TQ>::svc (void)
               // use ACE_OS::gettimeofday() to convert the tv to the
               // absolute time.
               ACE_Time_Value const tv = ACE_OS::gettimeofday () + (tv_earl - tv_curr);
-              // ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("waiting until %u.%3.3u secs\n"),
+              // ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("waiting until %u.%3.3u secs\n"),
               // tv.sec(), tv.msec()));
               this->condition_.wait (&tv);
             }

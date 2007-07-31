@@ -54,7 +54,7 @@ ACE_LSOCK_CODgram::ACE_LSOCK_CODgram (const ACE_Addr &remote,
   ACE_TRACE ("ACE_LSOCK_CODgram::ACE_LSOCK_CODgram");
   if (this->open (remote, local, protocol_family,
                   protocol) == -1)
-    ACE_ERROR ((LM_ERROR,  ACE_LIB_TEXT ("%p\n"),  ACE_LIB_TEXT ("ACE_LSOCK_CODgram")));
+    ACE_ERROR ((LM_ERROR,  ACE_TEXT ("%p\n"),  ACE_TEXT ("ACE_LSOCK_CODgram")));
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL

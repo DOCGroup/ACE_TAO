@@ -137,8 +137,8 @@ ACE_Framework_Repository::register_component (ACE_Framework_Component *fc)
         fc->this_ == this->component_vector_[i]->this_)
       {
         ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_LIB_TEXT ("AFR::register_component: error, ")
-                           ACE_LIB_TEXT ("compenent already registered\n")),
+                           ACE_TEXT ("AFR::register_component: error, ")
+                           ACE_TEXT ("compenent already registered\n")),
                           -1);
       }
 
@@ -198,8 +198,8 @@ ACE_Framework_Repository::remove_dll_components_i (const ACE_TCHAR *dll_name)
       {
           if (ACE::debug ())
             ACE_DEBUG ((LM_DEBUG,
-                        ACE_LIB_TEXT ("AFR::remove_dll_components_i (%s) ")
-                        ACE_LIB_TEXT ("component \"%s\"\n"),
+                        ACE_TEXT ("AFR::remove_dll_components_i (%s) ")
+                        ACE_TEXT ("component \"%s\"\n"),
                         dll_name, this->component_vector_[i]->name_));
         delete this->component_vector_[i];
         this->component_vector_[i] = 0;
@@ -273,8 +273,8 @@ ACE_Framework_Repository::ACE_Framework_Repository (int size)
 
   if (this->open (size) == -1)
     ACE_ERROR ((LM_ERROR,
-                ACE_LIB_TEXT ("%p\n"),
-                ACE_LIB_TEXT ("ACE_Framework_Repository")));
+                ACE_TEXT ("%p\n"),
+                ACE_TEXT ("ACE_Framework_Repository")));
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL

@@ -74,7 +74,7 @@ ACE_Tokens::dec_reference (void)
   ACE_TRACE ("ACE_Tokens::dec_reference");
   if (this->reference_count_ == 0)
     {
-      ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("dec_reference already zero")));
+      ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("dec_reference already zero")));
       return 0;
     }
 
@@ -128,7 +128,7 @@ ACE_Tokens::owner_id ()
 {
   ACE_TRACE ("ACE_Tokens::owner_id");
   if (this->owner () == 0)
-    return ACE_LIB_TEXT ("no owner");
+    return ACE_TEXT ("no owner");
   else
     return this->owner ()->client_id ();
 }
@@ -223,7 +223,7 @@ ACE_Token_Name::name (const ACE_TCHAR *new_name)
   ACE_TRACE ("ACE_Token_Name::name");
 
   if (new_name == 0)
-    new_name = ACE_LIB_TEXT ("no name");
+    new_name = ACE_TEXT ("no name");
 
   size_t n = ACE_OS::strlen (new_name) + 1;
 

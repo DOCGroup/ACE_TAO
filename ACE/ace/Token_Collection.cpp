@@ -20,7 +20,7 @@ ACE_Token_Collection::ACE_Token_Collection (bool debug,
   ACE_TRACE ("ACE_Token_Collection::ACE_Token_Collection");
 
   if (name == 0)
-    name = ACE_LIB_TEXT ("no name");
+    name = ACE_TEXT ("no name");
 
   ACE_OS::strsncpy (this->name_,
                     const_cast<ACE_TCHAR *> (name),
@@ -43,7 +43,7 @@ ACE_Token_Collection::insert (ACE_Token_Proxy &new_token)
   ACE_Token_Proxy *temp = new_token.clone ();
 
   if (collection_.bind (name, temp) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, ACE_LIB_TEXT ("bind failed\n")), -1);
+    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("bind failed\n")), -1);
   return 0;
 }
 
@@ -88,7 +88,7 @@ ACE_Token_Collection::acquire (int notify,
     {
       if (debug_)
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_LIB_TEXT ("collection acquiring %s\n"),
+                    ACE_TEXT ("collection acquiring %s\n"),
                     temp->int_id_->name ()));
       if (temp->int_id_->acquire (notify,
                                   sleep_hook,
@@ -152,7 +152,7 @@ ACE_Token_Collection::tryacquire (void (*sleep_hook)(void *))
        iterator.advance ())
     {
       if (debug_)
-        ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("collection acquiring %s\n"),
+        ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("collection acquiring %s\n"),
                     temp->int_id_->name ()));
       // We will fail if _any_ token is not free.
       if (temp->int_id_->tryacquire (sleep_hook) == -1)
@@ -175,7 +175,7 @@ ACE_Token_Collection::renew (int requeue_position,
        iterator.advance ())
     {
       if (debug_)
-        ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("collection renewing %s\n"),
+        ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("collection renewing %s\n"),
                     temp->int_id_->name ()));
       if (temp->int_id_->renew (requeue_position, options) == -1)
         return -1;
@@ -198,8 +198,8 @@ ACE_Token_Collection::renew (const ACE_TCHAR *token_name,
 
   // Did we find it?
   if (result == -1)
-    ACE_ERROR_RETURN ((LM_DEBUG, ACE_LIB_TEXT ("%p %s\n"),
-                       ACE_LIB_TEXT ("not in collection "),
+    ACE_ERROR_RETURN ((LM_DEBUG, ACE_TEXT ("%p %s\n"),
+                       ACE_TEXT ("not in collection "),
                        token_name), -1);
   // perform the operation
   return temp->renew (requeue_position, options);
@@ -217,7 +217,7 @@ ACE_Token_Collection::release (ACE_Synch_Options &)
        iterator.advance ())
     {
       if (debug_)
-        ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("collection releasing %s\n"),
+        ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("collection releasing %s\n"),
                     temp->int_id_->name ()));
       temp->int_id_->release ();
     }
@@ -279,11 +279,11 @@ ACE_Token_Collection::dump (void) const
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Token_Collection::dump");
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("ACE_Token_Collection::dump:\n")
-              ACE_LIB_TEXT (" debug_ = %d\n"), debug_));
-  ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("collection_\n")));
+  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("ACE_Token_Collection::dump:\n")
+              ACE_TEXT (" debug_ = %d\n"), debug_));
+  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("collection_\n")));
   collection_.dump ();
-  ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("base:\n")));
+  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("base:\n")));
   ACE_Token_Proxy::dump ();
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */

@@ -41,48 +41,48 @@ class ACE_DLL;
 
 #if (ACE_USES_CLASSIC_SVC_CONF == 1)
 #define ACE_STATIC_SERVICE_DIRECTIVE(ident, parameters) \
-  ACE_LIB_TEXT ("static ") \
-  ACE_LIB_TEXT (ident) \
-  ACE_LIB_TEXT (" \"") \
-  ACE_LIB_TEXT (parameters) \
-  ACE_LIB_TEXT ("\"")
+  ACE_TEXT ("static ") \
+  ACE_TEXT (ident) \
+  ACE_TEXT (" \"") \
+  ACE_TEXT (parameters) \
+  ACE_TEXT ("\"")
 #define ACE_DYNAMIC_SERVICE_DIRECTIVE(ident, libpathname, objectclass, parameters) \
-  ACE_LIB_TEXT ("dynamic ") \
-  ACE_LIB_TEXT (ident) \
-  ACE_LIB_TEXT (" Service_Object * ") \
-  ACE_LIB_TEXT (libpathname) \
-  ACE_LIB_TEXT (":") \
-  ACE_LIB_TEXT (objectclass) \
-  ACE_LIB_TEXT ("() \"") \
-  ACE_LIB_TEXT (parameters) \
-  ACE_LIB_TEXT ("\"")
+  ACE_TEXT ("dynamic ") \
+  ACE_TEXT (ident) \
+  ACE_TEXT (" Service_Object * ") \
+  ACE_TEXT (libpathname) \
+  ACE_TEXT (":") \
+  ACE_TEXT (objectclass) \
+  ACE_TEXT ("() \"") \
+  ACE_TEXT (parameters) \
+  ACE_TEXT ("\"")
 #define ACE_REMOVE_SERVICE_DIRECTIVE(ident) \
-  ACE_LIB_TEXT ("remove ") \
-  ACE_LIB_TEXT (ident)
+  ACE_TEXT ("remove ") \
+  ACE_TEXT (ident)
 class ACE_Svc_Conf_Param;
 #else
 #define ACE_STATIC_SERVICE_DIRECTIVE(ident, parameters) \
-  ACE_LIB_TEXT ("<ACE_Svc_Conf><static id=\"") \
-  ACE_LIB_TEXT (ident) \
-  ACE_LIB_TEXT ("\" params=\"") \
-  ACE_LIB_TEXT (parameters) \
-  ACE_LIB_TEXT ("\"/></ACE_Svc_Conf>")
+  ACE_TEXT ("<ACE_Svc_Conf><static id=\"") \
+  ACE_TEXT (ident) \
+  ACE_TEXT ("\" params=\"") \
+  ACE_TEXT (parameters) \
+  ACE_TEXT ("\"/></ACE_Svc_Conf>")
 #define ACE_DYNAMIC_SERVICE_DIRECTIVE(ident, libpathname, objectclass, parameters) \
-  ACE_LIB_TEXT ("<ACE_Svc_Conf><dynamic id=\"") \
-  ACE_LIB_TEXT (ident) \
-  ACE_LIB_TEXT ("\" type=\"Service_Object\">") \
-  ACE_LIB_TEXT ("<initializer path=\"") \
-  ACE_LIB_TEXT (libpathname) \
-  ACE_LIB_TEXT ("\" init=\"") \
-  ACE_LIB_TEXT (objectclass) \
-  ACE_LIB_TEXT ("\"") \
-  ACE_LIB_TEXT (" params=\"") \
-  ACE_LIB_TEXT (parameters) \
-  ACE_LIB_TEXT ("\"/></dynamic></ACE_Svc_Conf>")
+  ACE_TEXT ("<ACE_Svc_Conf><dynamic id=\"") \
+  ACE_TEXT (ident) \
+  ACE_TEXT ("\" type=\"Service_Object\">") \
+  ACE_TEXT ("<initializer path=\"") \
+  ACE_TEXT (libpathname) \
+  ACE_TEXT ("\" init=\"") \
+  ACE_TEXT (objectclass) \
+  ACE_TEXT ("\"") \
+  ACE_TEXT (" params=\"") \
+  ACE_TEXT (parameters) \
+  ACE_TEXT ("\"/></dynamic></ACE_Svc_Conf>")
 #define ACE_REMOVE_SERVICE_DIRECTIVE(ident) \
-  ACE_LIB_TEXT ("<ACE_Svc_Conf><remove id=\"") \
-  ACE_LIB_TEXT (ident) \
-  ACE_LIB_TEXT ("\"></remove></ACE_Svc_Conf>")
+  ACE_TEXT ("<ACE_Svc_Conf><remove id=\"") \
+  ACE_TEXT (ident) \
+  ACE_TEXT ("\"></remove></ACE_Svc_Conf>")
 class ACE_XML_Svc_Conf;
 #endif /* ACE_USES_CLASSIC_SVC_CONF == 1 */
 

@@ -36,7 +36,7 @@ ACE_Condition<ACE_Recursive_Thread_Mutex>::dump (void) const
   // No dump method for ACE_cond_t even in emulated mode.
   // cond_.dump ();
   this->mutex_.dump ();
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\n")));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
 }

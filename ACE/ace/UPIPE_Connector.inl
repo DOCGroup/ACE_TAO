@@ -19,9 +19,9 @@ ACE_UPIPE_Connector::ACE_UPIPE_Connector (ACE_UPIPE_Stream &new_stream,
                      reuse_addr, flags, perms) == -1
       && timeout != 0 && !(errno == EWOULDBLOCK || errno == ETIME))
     ACE_ERROR ((LM_ERROR,
-                ACE_LIB_TEXT ("address %s, %p\n"),
+                ACE_TEXT ("address %s, %p\n"),
                 addr.get_path_name (),
-                ACE_LIB_TEXT ("ACE_UPIPE_Connector")));
+                ACE_TEXT ("ACE_UPIPE_Connector")));
 }
 
 ACE_INLINE int

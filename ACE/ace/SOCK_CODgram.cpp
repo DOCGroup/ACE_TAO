@@ -31,7 +31,7 @@ ACE_SOCK_CODgram::ACE_SOCK_CODgram (const ACE_Addr &remote, const ACE_Addr &loca
   ACE_TRACE ("ACE_SOCK_CODgram::ACE_SOCK_CODgram");
   if (this->open (remote, local,
                   protocol_family, protocol, reuse_addr) == -1)
-    ACE_ERROR ((LM_ERROR, ACE_LIB_TEXT ("%p\n"), ACE_LIB_TEXT ("ACE_SOCK_CODgram")));
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("ACE_SOCK_CODgram")));
 }
 
 /* This is the general-purpose open routine.  Note that it performs

@@ -29,7 +29,7 @@ ACE_CE_Screen_Output::~ACE_CE_Screen_Output()
 void ACE_CE_Screen_Output::log(ACE_Log_Record &log_record)
 {
     ACE_TCHAR verbose_msg[ACE_Log_Record::MAXVERBOSELOGMSGLEN];
-    int result = log_record.format_msg (ACE_LIB_TEXT("WindozeCE"),  // host name
+    int result = log_record.format_msg (ACE_TEXT("WindozeCE"),  // host name
                                         0,                          // verbose flag
                                         verbose_msg);
 
@@ -102,7 +102,7 @@ ACE_CE_Screen_Output& ACE_CE_Screen_Output::operator << (unsigned char output)
 ACE_CE_Screen_Output& ACE_CE_Screen_Output::operator << (unsigned short output)
 {
     ACE_TCHAR buffer[20];
-    wsprintf(buffer, ACE_LIB_TEXT("%u"), output);
+    wsprintf(buffer, ACE_TEXT("%u"), output);
     *this << buffer;
     return *this;
 }
@@ -110,7 +110,7 @@ ACE_CE_Screen_Output& ACE_CE_Screen_Output::operator << (unsigned short output)
 ACE_CE_Screen_Output& ACE_CE_Screen_Output::operator << (int output)
 {
     ACE_TCHAR buffer[20];
-    wsprintf(buffer, ACE_LIB_TEXT("%d"), output);
+    wsprintf(buffer, ACE_TEXT("%d"), output);
     *this << buffer;
     return *this;
 }
@@ -118,7 +118,7 @@ ACE_CE_Screen_Output& ACE_CE_Screen_Output::operator << (int output)
 ACE_CE_Screen_Output& ACE_CE_Screen_Output::operator << (unsigned int output)
 {
     ACE_TCHAR buffer[20];
-    wsprintf(buffer, ACE_LIB_TEXT("%du"), output);
+    wsprintf(buffer, ACE_TEXT("%du"), output);
     *this << buffer;
     return *this;
 }
@@ -126,7 +126,7 @@ ACE_CE_Screen_Output& ACE_CE_Screen_Output::operator << (unsigned int output)
 ACE_CE_Screen_Output& ACE_CE_Screen_Output::operator << (float output)
 {
     ACE_TCHAR buffer[20];
-    swprintf(buffer, ACE_LIB_TEXT("%f"), output);
+    swprintf(buffer, ACE_TEXT("%f"), output);
     *this << buffer;
     return *this;
 }
@@ -134,7 +134,7 @@ ACE_CE_Screen_Output& ACE_CE_Screen_Output::operator << (float output)
 ACE_CE_Screen_Output& ACE_CE_Screen_Output::operator << (long output)
 {
     ACE_TCHAR buffer[20];
-    wsprintf(buffer, ACE_LIB_TEXT("%l"), output);
+    wsprintf(buffer, ACE_TEXT("%l"), output);
     *this << buffer;
     return *this;
 }
@@ -142,7 +142,7 @@ ACE_CE_Screen_Output& ACE_CE_Screen_Output::operator << (long output)
 ACE_CE_Screen_Output& ACE_CE_Screen_Output::operator << (unsigned long output)
 {
     ACE_TCHAR buffer[20];
-    wsprintf(buffer, ACE_LIB_TEXT("%lu"), output);
+    wsprintf(buffer, ACE_TEXT("%lu"), output);
     *this << buffer;
     return *this;
 }

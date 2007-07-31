@@ -26,9 +26,9 @@ ACE_Obstack_T<CHAR>::dump (void) const
   ACE_TRACE ("ACE_Obstack_T<CHAR>::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("size_ = %d\n"), this->size_));
-  ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("head_ = %x\n"), this->head_));
-  ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("curr_ = %x\n"), this->curr_));
+  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("size_ = %d\n"), this->size_));
+  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("head_ = %x\n"), this->head_));
+  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("curr_ = %x\n"), this->curr_));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
 }
@@ -193,7 +193,7 @@ ACE_Obstack_T<CHAR>::unwind_i (void* obj)
     }
   else if (obj != 0)
     ACE_ERROR ((LM_ERROR,
-                ACE_LIB_TEXT ("Deletion of non-existent object.\n%a")));
+                ACE_TEXT ("Deletion of non-existent object.\n%a")));
 }
 
 template <class CHAR> void

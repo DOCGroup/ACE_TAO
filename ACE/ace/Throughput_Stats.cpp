@@ -112,7 +112,7 @@ ACE_Throughput_Stats::dump_results (const ACE_TCHAR* msg,
   if (this->samples_count () == 0u)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_LIB_TEXT ("%s : no data collected\n"), msg));
+                  ACE_TEXT ("%s : no data collected\n"), msg));
       return;
     }
 
@@ -189,7 +189,7 @@ ACE_Throughput_Stats::dump_throughput (const ACE_TCHAR *msg,
   const double t_avg = samples_count / seconds;
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_LIB_TEXT ("%s throughput: %.2f (events/second)\n"),
+              ACE_TEXT ("%s throughput: %.2f (events/second)\n"),
               msg, t_avg));
 #else
   ACE_UNUSED_ARG (msg);

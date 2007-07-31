@@ -37,8 +37,8 @@ ACE_SV_Message_Queue::ACE_SV_Message_Queue (key_t external_id,
 {
   ACE_TRACE ("ACE_SV_Message_Queue::ACE_SV_Message_Queue");
   if (this->open (external_id, create, perms) == -1)
-    ACE_ERROR ((LM_ERROR, ACE_LIB_TEXT ("%p\n"),
-                ACE_LIB_TEXT ("ACE_SV_Message_Queue::ACE_SV_Message_Queue")));
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"),
+                ACE_TEXT ("ACE_SV_Message_Queue::ACE_SV_Message_Queue")));
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL

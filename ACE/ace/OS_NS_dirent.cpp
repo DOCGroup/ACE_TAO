@@ -78,9 +78,9 @@ ACE_OS::opendir_emulation (const ACE_TCHAR *filename)
       if (filename[lastchar-1] != '*')
         {
           if (filename[lastchar-1] != '/' && filename[lastchar-1] != '\\')
-            ACE_OS::strcpy (extra, ACE_LIB_TEXT ("/*"));
+            ACE_OS::strcpy (extra, ACE_TEXT ("/*"));
           else
-            ACE_OS::strcpy (extra, ACE_LIB_TEXT ("*"));
+            ACE_OS::strcpy (extra, ACE_TEXT ("*"));
         }
     }
 

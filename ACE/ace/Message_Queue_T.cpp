@@ -58,7 +58,7 @@ ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::ACE_Message_Queue_Ex (siz
 
   if (this->queue_.open (hwm, lwm, ns) == -1)
     ACE_ERROR ((LM_ERROR,
-                ACE_LIB_TEXT ("ACE_Message_Queue_Ex")));
+                ACE_TEXT ("ACE_Message_Queue_Ex")));
 }
 
 template <class ACE_MESSAGE_TYPE, ACE_SYNCH_DECL>
@@ -402,7 +402,7 @@ ACE_Message_Queue_Ex_N<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::enqueue_tail
 template <class ACE_MESSAGE_TYPE, ACE_SYNCH_DECL> ACE_Message_Block *
 ACE_Message_Queue_Ex_N<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::wrap_with_mbs_i
   (ACE_MESSAGE_TYPE *new_item)
-{    
+{
   ACE_TRACE ("ACE_Message_Queue_Ex_N<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::wrap_with_mbs_i");
 
   // We need to keep a reference to the head of the chain
@@ -868,25 +868,25 @@ ACE_Message_Queue<ACE_SYNCH_USE>::dump (void) const
     {
     case ACE_Message_Queue_Base::ACTIVATED:
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_LIB_TEXT ("state = ACTIVATED\n")));
+                  ACE_TEXT ("state = ACTIVATED\n")));
       break;
     case ACE_Message_Queue_Base::DEACTIVATED:
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_LIB_TEXT ("state = DEACTIVATED\n")));
+                  ACE_TEXT ("state = DEACTIVATED\n")));
       break;
     case ACE_Message_Queue_Base::PULSED:
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_LIB_TEXT ("state = PULSED\n")));
+                  ACE_TEXT ("state = PULSED\n")));
       break;
     }
   ACE_DEBUG ((LM_DEBUG,
-              ACE_LIB_TEXT ("low_water_mark = %d\n")
-              ACE_LIB_TEXT ("high_water_mark = %d\n")
-              ACE_LIB_TEXT ("cur_bytes = %d\n")
-              ACE_LIB_TEXT ("cur_length = %d\n")
-              ACE_LIB_TEXT ("cur_count = %d\n")
-              ACE_LIB_TEXT ("head_ = %u\n")
-              ACE_LIB_TEXT ("tail_ = %u\n"),
+              ACE_TEXT ("low_water_mark = %d\n")
+              ACE_TEXT ("high_water_mark = %d\n")
+              ACE_TEXT ("cur_bytes = %d\n")
+              ACE_TEXT ("cur_length = %d\n")
+              ACE_TEXT ("cur_count = %d\n")
+              ACE_TEXT ("head_ = %u\n")
+              ACE_TEXT ("tail_ = %u\n"),
               this->low_water_mark_,
               this->high_water_mark_,
               this->cur_bytes_,
@@ -894,9 +894,9 @@ ACE_Message_Queue<ACE_SYNCH_USE>::dump (void) const
               this->cur_count_,
               this->head_,
               this->tail_));
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("not_full_cond: \n")));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("not_full_cond: \n")));
   not_full_cond_.dump ();
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("not_empty_cond: \n")));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("not_empty_cond: \n")));
   not_empty_cond_.dump ();
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
@@ -931,7 +931,7 @@ ACE_Message_Queue<ACE_SYNCH_USE>::ACE_Message_Queue (size_t hwm,
 
   if (this->open (hwm, lwm, ns) == -1)
     ACE_ERROR ((LM_ERROR,
-                ACE_LIB_TEXT ("open")));
+                ACE_TEXT ("open")));
 }
 
 template <ACE_SYNCH_DECL>
@@ -940,7 +940,7 @@ ACE_Message_Queue<ACE_SYNCH_USE>::~ACE_Message_Queue (void)
   ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::~ACE_Message_Queue");
   if (this->head_ != 0 && this->close () == -1)
     ACE_ERROR ((LM_ERROR,
-                ACE_LIB_TEXT ("close")));
+                ACE_TEXT ("close")));
 }
 
 template <ACE_SYNCH_DECL> int
@@ -1317,7 +1317,7 @@ ACE_Message_Queue<ACE_SYNCH_USE>::dequeue_head_i (ACE_Message_Block *&first_item
 {
   if (this->head_ ==0)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_LIB_TEXT ("Attempting to dequeue from empty queue")),
+                       ACE_TEXT ("Attempting to dequeue from empty queue")),
                       -1);
   ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::dequeue_head_i");
   first_item = this->head_;
@@ -1439,7 +1439,7 @@ ACE_Message_Queue<ACE_SYNCH_USE>::dequeue_tail_i (ACE_Message_Block *&dequeued)
 {
   if (this->head_ == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_LIB_TEXT ("Attempting to dequeue from empty queue")),
+                       ACE_TEXT ("Attempting to dequeue from empty queue")),
                       -1);
   ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::dequeue_tail_i");
   dequeued = this->tail_;
@@ -1489,7 +1489,7 @@ ACE_Message_Queue<ACE_SYNCH_USE>::dequeue_deadline_i (ACE_Message_Block *&dequeu
 #if defined (ACE_HAS_TIMED_MESSAGE_BLOCKS)
   if (this->head_ == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_LIB_TEXT ("Attempting to dequeue from empty queue")),
+                       ACE_TEXT ("Attempting to dequeue from empty queue")),
                       -1);
   ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::dequeue_deadline_i");
 
@@ -2083,16 +2083,16 @@ ACE_Dynamic_Message_Queue<ACE_SYNCH_USE>::dump (void) const
   ACE_TRACE ("ACE_Dynamic_Message_Queue<ACE_SYNCH_USE>::dump");
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
 
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("ACE_Message_Queue<ACE_SYNCH_USE> (base class): \n")));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("ACE_Message_Queue<ACE_SYNCH_USE> (base class): \n")));
   this->ACE_Message_Queue<ACE_SYNCH_USE>::dump ();
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_LIB_TEXT ("pending_head_ = %u\n")
-              ACE_LIB_TEXT ("pending_tail_ = %u\n")
-              ACE_LIB_TEXT ("late_head_ = %u\n")
-              ACE_LIB_TEXT ("late_tail_ = %u\n")
-              ACE_LIB_TEXT ("beyond_late_head_ = %u\n")
-              ACE_LIB_TEXT ("beyond_late_tail_ = %u\n"),
+              ACE_TEXT ("pending_head_ = %u\n")
+              ACE_TEXT ("pending_tail_ = %u\n")
+              ACE_TEXT ("late_head_ = %u\n")
+              ACE_TEXT ("late_tail_ = %u\n")
+              ACE_TEXT ("beyond_late_head_ = %u\n")
+              ACE_TEXT ("beyond_late_tail_ = %u\n"),
               this->pending_head_,
               this->pending_tail_,
               this->late_head_,
@@ -2100,7 +2100,7 @@ ACE_Dynamic_Message_Queue<ACE_SYNCH_USE>::dump (void) const
               this->beyond_late_head_,
               this->beyond_late_tail_));
 
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("message_strategy_ : \n")));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("message_strategy_ : \n")));
   message_strategy_.dump ();
 
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
@@ -2504,7 +2504,7 @@ ACE_Dynamic_Message_Queue<ACE_SYNCH_USE>::refresh_pending_queue (const ACE_Time_
                 {
                   // if we got here, something is *seriously* wrong with the queue
                   ACE_ERROR_RETURN ((LM_ERROR,
-                                     ACE_LIB_TEXT ("Unexpected message priority status [%d] (expected LATE)"),
+                                     ACE_TEXT ("Unexpected message priority status [%d] (expected LATE)"),
                                      (int) current_status),
                                     -1);
                 }
@@ -2546,7 +2546,7 @@ ACE_Dynamic_Message_Queue<ACE_SYNCH_USE>::refresh_pending_queue (const ACE_Time_
               if (current_status != ACE_Dynamic_Message_Strategy::PENDING)
                 // if we got here, something is *seriously* wrong with the queue
                 ACE_ERROR_RETURN((LM_ERROR,
-                                  ACE_LIB_TEXT ("Unexpected message priority status [%d] (expected PENDING)"),
+                                  ACE_TEXT ("Unexpected message priority status [%d] (expected PENDING)"),
                                   (int) current_status),
                                  -1);
 
@@ -2568,7 +2568,7 @@ ACE_Dynamic_Message_Queue<ACE_SYNCH_USE>::refresh_pending_queue (const ACE_Time_
         default:
           // if we got here, something is *seriously* wrong with the queue
           ACE_ERROR_RETURN((LM_ERROR,
-                            ACE_LIB_TEXT ("Unknown message priority status [%d]"),
+                            ACE_TEXT ("Unknown message priority status [%d]"),
                             (int) current_status),
                            -1);
         }
@@ -2624,7 +2624,7 @@ ACE_Dynamic_Message_Queue<ACE_SYNCH_USE>::refresh_late_queue (const ACE_Time_Val
               else if (current_status != ACE_Dynamic_Message_Strategy::LATE)
                 // if we got here, something is *seriously* wrong with the queue
                 ACE_ERROR_RETURN ((LM_ERROR,
-                                   ACE_LIB_TEXT ("Unexpected message priority status [%d] (expected LATE)"),
+                                   ACE_TEXT ("Unexpected message priority status [%d] (expected LATE)"),
                                    (int) current_status),
                                   -1);
             }
@@ -2645,14 +2645,14 @@ ACE_Dynamic_Message_Queue<ACE_SYNCH_USE>::refresh_late_queue (const ACE_Time_Val
         case ACE_Dynamic_Message_Strategy::PENDING:
           // if we got here, something is *seriously* wrong with the queue
           ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_LIB_TEXT ("Unexpected message priority status ")
-                             ACE_LIB_TEXT ("[%d] (expected LATE or BEYOND_LATE)"),
+                             ACE_TEXT ("Unexpected message priority status ")
+                             ACE_TEXT ("[%d] (expected LATE or BEYOND_LATE)"),
                              (int) current_status),
                             -1);
         default:
           // if we got here, something is *seriously* wrong with the queue
           ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_LIB_TEXT ("Unknown message priority status [%d]"),
+                             ACE_TEXT ("Unknown message priority status [%d]"),
                              (int) current_status),
                             -1);
         }

@@ -35,7 +35,7 @@ ACE_OS::dlclose (ACE_SHLIB_HANDLE handle)
   // SunOS4 does not automatically call _fini()!
   void *ptr;
 
-  ACE_OSCALL (::dlsym (handle, ACE_LIB_TEXT ("_fini")), void *, 0, ptr);
+  ACE_OSCALL (::dlsym (handle, ACE_TEXT ("_fini")), void *, 0, ptr);
 
   if (ptr != 0)
     (*((int (*)(void)) ptr)) (); // Call _fini hook explicitly.
@@ -140,7 +140,7 @@ ACE_OS::dlopen (const ACE_TCHAR *fname,
       // Some systems (e.g., SunOS4) do not automatically call _init(), so
       // we'll have to call it manually.
 
-      ACE_OSCALL (::dlsym (handle, ACE_LIB_TEXT ("_init")), void *, 0, ptr);
+      ACE_OSCALL (::dlsym (handle, ACE_TEXT ("_init")), void *, 0, ptr);
 
       if (ptr != 0 && (*((int (*)(void)) ptr)) () == -1) // Call _init hook explicitly.
         {

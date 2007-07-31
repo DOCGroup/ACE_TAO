@@ -116,16 +116,16 @@ ACE_Process::spawn (ACE_Process_Options &options)
 #if defined (ACE_WIN32)
 # if defined (ACE_WIN64)
           curr_len += ACE_OS::sprintf (&cmd_line_buf[curr_len],
-                                       ACE_LIB_TEXT (" +H %I64p"),
+                                       ACE_TEXT (" +H %I64p"),
                                        h);
 # else
           curr_len += ACE_OS::sprintf (&cmd_line_buf[curr_len],
-                                       ACE_LIB_TEXT (" +H %p"),
+                                       ACE_TEXT (" +H %p"),
                                        h);
 # endif  /* ACE_WIN64 */
 #else
           curr_len += ACE_OS::sprintf (&cmd_line_buf[curr_len],
-                                       ACE_LIB_TEXT (" +H %d"),
+                                       ACE_TEXT (" +H %d"),
                                        h);
 #endif /* ACE_WIN32 */
         }
@@ -354,8 +354,8 @@ ACE_Process::spawn (ACE_Process_Options &options)
           && ACE_OS::setpgid (0,
                               options.getgroup ()) < 0)
         ACE_ERROR ((LM_ERROR,
-                    ACE_LIB_TEXT ("%p.\n"),
-                    ACE_LIB_TEXT ("ACE_Process::spawn: setpgid failed.")));
+                    ACE_TEXT ("%p.\n"),
+                    ACE_TEXT ("ACE_Process::spawn: setpgid failed.")));
 # endif /* ACE_LACKS_SETPGID */
 
 # if !defined (ACE_LACKS_SETREGID)
@@ -364,8 +364,8 @@ ACE_Process::spawn (ACE_Process_Options &options)
         if (ACE_OS::setregid (options.getrgid (),
                               options.getegid ()) == -1)
           ACE_ERROR ((LM_ERROR,
-                      ACE_LIB_TEXT ("%p.\n"),
-                      ACE_LIB_TEXT ("ACE_Process::spawn: setregid failed.")));
+                      ACE_TEXT ("%p.\n"),
+                      ACE_TEXT ("ACE_Process::spawn: setregid failed.")));
 # endif /* ACE_LACKS_SETREGID */
 
 # if !defined (ACE_LACKS_SETREUID)
@@ -375,8 +375,8 @@ ACE_Process::spawn (ACE_Process_Options &options)
         if (ACE_OS::setreuid (options.getruid (),
                               options.geteuid ()) == -1)
           ACE_ERROR ((LM_ERROR,
-                      ACE_LIB_TEXT ("%p.\n"),
-                      ACE_LIB_TEXT ("ACE_Process::spawn: setreuid failed.")));
+                      ACE_TEXT ("%p.\n"),
+                      ACE_TEXT ("ACE_Process::spawn: setreuid failed.")));
 # endif /* ACE_LACKS_SETREUID */
 
       this->child (ACE_OS::getppid ());
@@ -774,8 +774,8 @@ ACE_Process_Options::inherit_environment (void)
       if (this->setenv_i (existing_environment + slot, len) == -1)
         {
           ACE_ERROR ((LM_ERROR,
-                      ACE_LIB_TEXT ("%p.\n"),
-                      ACE_LIB_TEXT ("ACE_Process_Options::ACE_Process_Options")));
+                      ACE_TEXT ("%p.\n"),
+                      ACE_TEXT ("ACE_Process_Options::ACE_Process_Options")));
           break;
         }
 
@@ -858,7 +858,7 @@ ACE_Process_Options::setenv (const ACE_TCHAR *variable_name,
 
   // Add in the variable name.
   ACE_OS::sprintf (safe_newformat.get (),
-                   ACE_LIB_TEXT ("%s=%s"),
+                   ACE_TEXT ("%s=%s"),
                    variable_name,
                    format);
 
@@ -867,7 +867,7 @@ ACE_Process_Options::setenv (const ACE_TCHAR *variable_name,
   va_start (argp, format);
 
   // Add the rest of the varargs.
-  size_t tmp_buflen = DEFAULT_COMMAND_LINE_BUF_LEN > buflen 
+  size_t tmp_buflen = DEFAULT_COMMAND_LINE_BUF_LEN > buflen
                       ? static_cast<size_t> (DEFAULT_COMMAND_LINE_BUF_LEN) : buflen;
   int retval = 0;
 
@@ -875,7 +875,7 @@ ACE_Process_Options::setenv (const ACE_TCHAR *variable_name,
   ACE_NEW_RETURN (stack_buf, ACE_TCHAR[tmp_buflen], -1);
   ACE_Auto_Basic_Array_Ptr<ACE_TCHAR> safe_stack_buf (stack_buf);
 
-  do 
+  do
     {
       retval = ACE_OS::vsnprintf (safe_stack_buf.get (), tmp_buflen, safe_newformat.get (), argp);
       if (retval > ACE_Utils::truncate_cast<int> (tmp_buflen))
@@ -895,7 +895,7 @@ ACE_Process_Options::setenv (const ACE_TCHAR *variable_name,
       // e.g., LynxOS and VxWorks 5, we have to
       // fall back to vsprintf.
       if (errno == ENOTSUP)
-        { 
+        {
           // ALERT: Since we have to use vsprintf here, there is still a chance that
           // the stack_buf overflows, i.e., the length of the resulting string
           // can still possibly go beyond the allocated stack_buf.
@@ -1053,7 +1053,7 @@ ACE_Process_Options::command_line (const ACE_TCHAR *const argv[])
       while (argv[++i])
         {
           ACE_OS::strcat (command_line_buf_,
-                          ACE_LIB_TEXT (" "));
+                          ACE_TEXT (" "));
           ACE_OS::strcat (command_line_buf_,
                           argv[i]);
         }

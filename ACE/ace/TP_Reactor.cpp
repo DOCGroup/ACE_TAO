@@ -629,7 +629,7 @@ ACE_TP_Reactor::post_process_socket_event (ACE_EH_Dispatch_Info &dispatch_info,
       // Only remove or resume the event handler used during the
       // upcall.
       if (eh == dispatch_info.event_handler_)
-        {      
+        {
           if (status < 0)
             {
               result =
@@ -672,8 +672,8 @@ ACE_TP_Reactor::notify_handle (ACE_HANDLE,
                                ACE_EH_PTMF)
 {
   ACE_ERROR ((LM_ERROR,
-              ACE_LIB_TEXT ("ACE_TP_Reactor::notify_handle: ")
-              ACE_LIB_TEXT ("Wrong version of notify_handle() got called \n")));
+              ACE_TEXT ("ACE_TP_Reactor::notify_handle: ")
+              ACE_TEXT ("Wrong version of notify_handle() got called \n")));
 
   ACE_ASSERT (eh == 0);
   ACE_UNUSED_ARG (eh);

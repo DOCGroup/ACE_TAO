@@ -28,7 +28,7 @@ ACE_Condition<MUTEX>::dump (void) const
 // ACE_TRACE ("ACE_Condition<MUTEX>::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\n")));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
 }
@@ -67,8 +67,8 @@ ACE_Condition<MUTEX>::ACE_Condition (MUTEX &m,
                          name,
                          arg) != 0)
     ACE_ERROR ((LM_ERROR,
-                ACE_LIB_TEXT ("%p\n"),
-                ACE_LIB_TEXT ("ACE_Condition::ACE_Condition")));
+                ACE_TEXT ("%p\n"),
+                ACE_TEXT ("ACE_Condition::ACE_Condition")));
 }
 
 template <class MUTEX>
@@ -78,8 +78,8 @@ ACE_Condition<MUTEX>::~ACE_Condition (void)
 
   if (this->remove () == -1)
     ACE_ERROR ((LM_ERROR,
-                ACE_LIB_TEXT ("%p\n"),
-                ACE_LIB_TEXT ("ACE_Condition::~ACE_Condition")));
+                ACE_TEXT ("%p\n"),
+                ACE_TEXT ("ACE_Condition::~ACE_Condition")));
 }
 
 template <class MUTEX> int

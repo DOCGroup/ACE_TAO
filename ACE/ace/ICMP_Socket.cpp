@@ -97,10 +97,10 @@ ACE_ICMP_Socket::open (ACE_Addr const & local,
     {
       ACE_ERROR_RETURN
         ((LM_ERROR,
-          ACE_LIB_TEXT ("(%P|%t) ACE_ICMP_Socket::open: %p; %s\n"),
-          ACE_LIB_TEXT ("getprotobyname"),
-          ACE_LIB_TEXT ("ICMP protocol is not properly configured ")
-          ACE_LIB_TEXT ("or not supported.")),
+          ACE_TEXT ("(%P|%t) ACE_ICMP_Socket::open: %p; %s\n"),
+          ACE_TEXT ("getprotobyname"),
+          ACE_TEXT ("ICMP protocol is not properly configured ")
+          ACE_TEXT ("or not supported.")),
          -1);
     }
   proto_number = proto->p_proto;
@@ -108,9 +108,9 @@ ACE_ICMP_Socket::open (ACE_Addr const & local,
   if (proto_number != IPPROTO_ICMP || proto_number != protocol)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_LIB_TEXT ("(%P|%t) ACE::ICMP_Socket::open - ")
-                         ACE_LIB_TEXT ("only IPPROTO_ICMP protocol is ")
-                         ACE_LIB_TEXT ("currently supported.\n")),
+                         ACE_TEXT ("(%P|%t) ACE::ICMP_Socket::open - ")
+                         ACE_TEXT ("only IPPROTO_ICMP protocol is ")
+                         ACE_TEXT ("currently supported.\n")),
                         -1);
     }
 

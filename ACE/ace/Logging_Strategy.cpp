@@ -42,56 +42,56 @@ ACE_Logging_Strategy::priorities (ACE_TCHAR *priority_string,
   // Parse string and alternate priority mask.
 
   for (ACE_TCHAR *priority = ACE_OS::strtok_r (priority_string,
-                                               ACE_LIB_TEXT ("|"),
+                                               ACE_TEXT ("|"),
                                                &strtokp);
        priority != 0;
        priority = ACE_OS::strtok_r (0,
-                                    ACE_LIB_TEXT ("|"),
+                                    ACE_TEXT ("|"),
                                     &strtokp))
     {
-      if (ACE_OS::strcmp (priority, ACE_LIB_TEXT ("SHUTDOWN")) == 0)
+      if (ACE_OS::strcmp (priority, ACE_TEXT ("SHUTDOWN")) == 0)
         ACE_SET_BITS (priority_mask, LM_SHUTDOWN);
-      else if (ACE_OS::strcmp (priority, ACE_LIB_TEXT ("~SHUTDOWN")) == 0)
+      else if (ACE_OS::strcmp (priority, ACE_TEXT ("~SHUTDOWN")) == 0)
         ACE_CLR_BITS (priority_mask, LM_SHUTDOWN);
-      else if (ACE_OS::strcmp (priority, ACE_LIB_TEXT ("TRACE")) == 0)
+      else if (ACE_OS::strcmp (priority, ACE_TEXT ("TRACE")) == 0)
         ACE_SET_BITS (priority_mask, LM_TRACE);
-      else if (ACE_OS::strcmp (priority, ACE_LIB_TEXT ("~TRACE")) == 0)
+      else if (ACE_OS::strcmp (priority, ACE_TEXT ("~TRACE")) == 0)
         ACE_CLR_BITS (priority_mask, LM_TRACE);
-      else if (ACE_OS::strcmp (priority, ACE_LIB_TEXT ("DEBUG")) == 0)
+      else if (ACE_OS::strcmp (priority, ACE_TEXT ("DEBUG")) == 0)
         ACE_SET_BITS (priority_mask, LM_DEBUG);
-      else if (ACE_OS::strcmp (priority, ACE_LIB_TEXT ("~DEBUG")) == 0)
+      else if (ACE_OS::strcmp (priority, ACE_TEXT ("~DEBUG")) == 0)
         ACE_CLR_BITS (priority_mask, LM_DEBUG);
-      else if (ACE_OS::strcmp (priority, ACE_LIB_TEXT ("INFO")) == 0)
+      else if (ACE_OS::strcmp (priority, ACE_TEXT ("INFO")) == 0)
         ACE_SET_BITS (priority_mask, LM_INFO);
-      else if (ACE_OS::strcmp (priority, ACE_LIB_TEXT ("~INFO")) == 0)
+      else if (ACE_OS::strcmp (priority, ACE_TEXT ("~INFO")) == 0)
         ACE_CLR_BITS (priority_mask, LM_INFO);
-      else if (ACE_OS::strcmp (priority, ACE_LIB_TEXT ("NOTICE")) == 0)
+      else if (ACE_OS::strcmp (priority, ACE_TEXT ("NOTICE")) == 0)
         ACE_SET_BITS (priority_mask, LM_NOTICE);
-      else if (ACE_OS::strcmp (priority, ACE_LIB_TEXT ("~NOTICE")) == 0)
+      else if (ACE_OS::strcmp (priority, ACE_TEXT ("~NOTICE")) == 0)
         ACE_CLR_BITS (priority_mask, LM_NOTICE);
-      else if (ACE_OS::strcmp (priority, ACE_LIB_TEXT ("WARNING")) == 0)
+      else if (ACE_OS::strcmp (priority, ACE_TEXT ("WARNING")) == 0)
         ACE_SET_BITS (priority_mask, LM_WARNING);
-      else if (ACE_OS::strcmp (priority, ACE_LIB_TEXT ("~WARNING")) == 0)
+      else if (ACE_OS::strcmp (priority, ACE_TEXT ("~WARNING")) == 0)
         ACE_CLR_BITS (priority_mask, LM_WARNING);
-      else if (ACE_OS::strcmp (priority, ACE_LIB_TEXT ("STARTUP")) == 0)
+      else if (ACE_OS::strcmp (priority, ACE_TEXT ("STARTUP")) == 0)
         ACE_SET_BITS (priority_mask, LM_STARTUP);
-      else if (ACE_OS::strcmp (priority, ACE_LIB_TEXT ("~STARTUP")) == 0)
+      else if (ACE_OS::strcmp (priority, ACE_TEXT ("~STARTUP")) == 0)
         ACE_CLR_BITS (priority_mask, LM_STARTUP);
-      else if (ACE_OS::strcmp (priority, ACE_LIB_TEXT ("ERROR")) == 0)
+      else if (ACE_OS::strcmp (priority, ACE_TEXT ("ERROR")) == 0)
         ACE_SET_BITS (priority_mask, LM_ERROR);
-      else if (ACE_OS::strcmp (priority, ACE_LIB_TEXT ("~ERROR")) == 0)
+      else if (ACE_OS::strcmp (priority, ACE_TEXT ("~ERROR")) == 0)
         ACE_CLR_BITS (priority_mask, LM_ERROR);
-      else if (ACE_OS::strcmp (priority, ACE_LIB_TEXT ("CRITICAL")) == 0)
+      else if (ACE_OS::strcmp (priority, ACE_TEXT ("CRITICAL")) == 0)
         ACE_SET_BITS (priority_mask, LM_CRITICAL);
-      else if (ACE_OS::strcmp (priority, ACE_LIB_TEXT ("~CRITICAL")) == 0)
+      else if (ACE_OS::strcmp (priority, ACE_TEXT ("~CRITICAL")) == 0)
         ACE_CLR_BITS (priority_mask, LM_CRITICAL);
-      else if (ACE_OS::strcmp (priority, ACE_LIB_TEXT ("ALERT")) == 0)
+      else if (ACE_OS::strcmp (priority, ACE_TEXT ("ALERT")) == 0)
         ACE_SET_BITS (priority_mask, LM_ALERT);
-      else if (ACE_OS::strcmp (priority, ACE_LIB_TEXT ("~ALERT")) == 0)
+      else if (ACE_OS::strcmp (priority, ACE_TEXT ("~ALERT")) == 0)
         ACE_CLR_BITS (priority_mask, LM_ALERT);
-      else if (ACE_OS::strcmp (priority, ACE_LIB_TEXT ("EMERGENCY")) == 0)
+      else if (ACE_OS::strcmp (priority, ACE_TEXT ("EMERGENCY")) == 0)
         ACE_SET_BITS (priority_mask, LM_EMERGENCY);
-      else if (ACE_OS::strcmp (priority, ACE_LIB_TEXT ("~EMERGENCY")) == 0)
+      else if (ACE_OS::strcmp (priority, ACE_TEXT ("~EMERGENCY")) == 0)
         ACE_CLR_BITS (priority_mask, LM_EMERGENCY);
     }
 
@@ -112,24 +112,24 @@ ACE_Logging_Strategy::tokenize (ACE_TCHAR *flag_string)
   ACE_TCHAR *strtokp;
 
   for (ACE_TCHAR *flag = ACE_OS::strtok_r (flag_string,
-                                           ACE_LIB_TEXT ("|"),
+                                           ACE_TEXT ("|"),
                                            &strtokp);
        flag != 0;
-       flag = ACE_OS::strtok_r (0, ACE_LIB_TEXT ("|"), &strtokp))
+       flag = ACE_OS::strtok_r (0, ACE_TEXT ("|"), &strtokp))
     {
-      if (ACE_OS::strcmp (flag, ACE_LIB_TEXT ("STDERR")) == 0)
+      if (ACE_OS::strcmp (flag, ACE_TEXT ("STDERR")) == 0)
         ACE_SET_BITS (this->flags_, ACE_Log_Msg::STDERR);
-      else if (ACE_OS::strcmp (flag, ACE_LIB_TEXT ("LOGGER")) == 0)
+      else if (ACE_OS::strcmp (flag, ACE_TEXT ("LOGGER")) == 0)
         ACE_SET_BITS (this->flags_, ACE_Log_Msg::LOGGER);
-      else if (ACE_OS::strcmp (flag, ACE_LIB_TEXT ("OSTREAM")) == 0)
+      else if (ACE_OS::strcmp (flag, ACE_TEXT ("OSTREAM")) == 0)
         ACE_SET_BITS (this->flags_, ACE_Log_Msg::OSTREAM);
-      else if (ACE_OS::strcmp (flag, ACE_LIB_TEXT ("VERBOSE")) == 0)
+      else if (ACE_OS::strcmp (flag, ACE_TEXT ("VERBOSE")) == 0)
         ACE_SET_BITS (this->flags_, ACE_Log_Msg::VERBOSE);
-      else if (ACE_OS::strcmp (flag, ACE_LIB_TEXT ("VERBOSE_LITE")) == 0)
+      else if (ACE_OS::strcmp (flag, ACE_TEXT ("VERBOSE_LITE")) == 0)
         ACE_SET_BITS (this->flags_, ACE_Log_Msg::VERBOSE_LITE);
-      else if (ACE_OS::strcmp (flag, ACE_LIB_TEXT ("SILENT")) == 0)
+      else if (ACE_OS::strcmp (flag, ACE_TEXT ("SILENT")) == 0)
         ACE_SET_BITS (this->flags_, ACE_Log_Msg::SILENT);
-      else if (ACE_OS::strcmp (flag, ACE_LIB_TEXT ("SYSLOG")) == 0)
+      else if (ACE_OS::strcmp (flag, ACE_TEXT ("SYSLOG")) == 0)
         ACE_SET_BITS (this->flags_, ACE_Log_Msg::SYSLOG);
     }
 }
@@ -154,7 +154,7 @@ ACE_Logging_Strategy::parse_args (int argc, ACE_TCHAR *argv[])
   this->max_size_ = 0;
 
   ACE_Get_Opt get_opt (argc, argv,
-                       ACE_LIB_TEXT ("f:i:k:m:n:N:op:s:t:w"), 0);
+                       ACE_TEXT ("f:i:k:m:n:N:op:s:t:w"), 0);
 
   for (int c; (c = get_opt ()) != -1; )
     {
@@ -255,14 +255,14 @@ ACE_Logging_Strategy::ACE_Logging_Strategy (void)
        MAXPATHLEN - 7) == -1) // 7 for "logfile"
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_LIB_TEXT ("Temporary path too long, ")
-                  ACE_LIB_TEXT ("defaulting to current directory\n")));
+                  ACE_TEXT ("Temporary path too long, ")
+                  ACE_TEXT ("defaulting to current directory\n")));
       this->filename_[0] = 0;
     }
 
   // Add the filename to the end
   ACE_OS::strcat (this->filename_,
-                  ACE_LIB_TEXT ("logfile"));
+                  ACE_TEXT ("logfile"));
 #endif /* ACE_DEFAULT_LOGFILE */
 }
 
@@ -282,7 +282,7 @@ ACE_Logging_Strategy::fini (void)
   delete [] this->logger_key_;
   delete [] this->program_name_;
 
-  if (this->reactor () 
+  if (this->reactor ()
       && this->interval_ > 0 && this->max_size_ > 0)
     this->reactor ()->cancel_timer (this);
 
@@ -338,12 +338,12 @@ ACE_Logging_Strategy::init (int argc, ACE_TCHAR *argv[])
               if (output_file &&
                   ACE_OS::fclose (output_file) == -1)
                 return -1;
-              output_file = ACE_OS::fopen (this->filename_, ACE_LIB_TEXT ("wt"));
+              output_file = ACE_OS::fopen (this->filename_, ACE_TEXT ("wt"));
             }
           // open a stream only if such doesn't exists
           else if (output_file == 0)
             output_file = ACE_OS::fopen (this->filename_,
-                                         ACE_LIB_TEXT ("at"));
+                                         ACE_TEXT ("at"));
 
           if (output_file == 0)
             return -1;
@@ -415,7 +415,7 @@ ACE_Logging_Strategy::handle_timeout (const ACE_Time_Value &,
       // Lock out any other logging.
       if (this->log_msg_->acquire ())
         ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_LIB_TEXT ("Cannot acquire lock!\n")),
+                           ACE_TEXT ("Cannot acquire lock!\n")),
                           -1);
 
       // Close the current ostream.
@@ -440,7 +440,7 @@ ACE_Logging_Strategy::handle_timeout (const ACE_Time_Value &,
               // Open a new log file with the same name.
 #if defined (ACE_LACKS_IOSTREAM_TOTALLY)
               output_file = ACE_OS::fopen (this->filename_,
-                                           ACE_LIB_TEXT ("wt"));
+                                           ACE_TEXT ("wt"));
 
               if (output_file == 0)
                 return -1;
@@ -487,11 +487,11 @@ ACE_Logging_Strategy::handle_timeout (const ACE_Time_Value &,
               for (int i = max_num ; i > 1 ;i--)
                 {
                   ACE_OS::sprintf (backup,
-                                   ACE_LIB_TEXT ("%s.%d"),
+                                   ACE_TEXT ("%s.%d"),
                                    this->filename_,
                                    i);
                   ACE_OS::sprintf (to_backup,
-                                   ACE_LIB_TEXT ("%s.%d"),
+                                   ACE_TEXT ("%s.%d"),
                                    this->filename_,
                                    i - 1);
 
@@ -504,7 +504,7 @@ ACE_Logging_Strategy::handle_timeout (const ACE_Time_Value &,
                   ACE_OS::rename (to_backup, backup);
                 }
               ACE_OS::sprintf (backup,
-                               ACE_LIB_TEXT ("%s.1"),
+                               ACE_TEXT ("%s.1"),
                                this->filename_);
             }
           else
@@ -513,7 +513,7 @@ ACE_Logging_Strategy::handle_timeout (const ACE_Time_Value &,
                 count_ = 1; // start over from 1
 
               ACE_OS::sprintf (backup,
-                               ACE_LIB_TEXT ("%s.%d"),
+                               ACE_TEXT ("%s.%d"),
                                this->filename_,
                                count_);
             }
@@ -528,12 +528,12 @@ ACE_Logging_Strategy::handle_timeout (const ACE_Time_Value &,
         }
       else
         ACE_ERROR ((LM_ERROR,
-                    ACE_LIB_TEXT ("Backup file name too long; ")
-                    ACE_LIB_TEXT ("backup logfile not saved.\n")));
+                    ACE_TEXT ("Backup file name too long; ")
+                    ACE_TEXT ("backup logfile not saved.\n")));
 
       // Open a new log file by the same name
 #if defined (ACE_LACKS_IOSTREAM_TOTALLY)
-      output_file = ACE_OS::fopen (this->filename_, ACE_LIB_TEXT ("wt"));
+      output_file = ACE_OS::fopen (this->filename_, ACE_TEXT ("wt"));
 
       if (output_file == 0)
         return -1;

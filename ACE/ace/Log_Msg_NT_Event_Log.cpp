@@ -46,7 +46,7 @@ ACE_Log_Msg_NT_Event_Log::open (const ACE_TCHAR *logger_key)
   // program name.
   ACE_TCHAR reg_key [MAXPATHLEN];
   ACE_OS::strcpy (reg_key,
-                  ACE_LIB_TEXT ("SYSTEM\\CurrentControlSet\\Services\\EventLog\\Application\\"));
+                  ACE_TEXT ("SYSTEM\\CurrentControlSet\\Services\\EventLog\\Application\\"));
   size_t reg_key_length = ACE_OS::strlen(reg_key);
   ACE_OS::strncat (reg_key,
                    event_source_name,
@@ -61,13 +61,13 @@ ACE_Log_Msg_NT_Event_Log::open (const ACE_TCHAR *logger_key)
                          &hkey);
   DWORD flags = EVENTLOG_ERROR_TYPE | EVENTLOG_WARNING_TYPE | EVENTLOG_INFORMATION_TYPE;
   ACE_TEXT_RegSetValueEx (hkey,
-                          ACE_LIB_TEXT ("TypesSupported"),
+                          ACE_TEXT ("TypesSupported"),
                           0,
                           REG_DWORD,
                           (LPBYTE) &flags,
                           sizeof (DWORD));
   ACE_TEXT_RegSetValueEx (hkey,
-                          ACE_LIB_TEXT ("EventMessageFile"),
+                          ACE_TEXT ("EventMessageFile"),
                           0,
                           REG_SZ,
                           (LPBYTE) msg_file,
