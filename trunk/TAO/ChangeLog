@@ -1,3 +1,10 @@
+Wed Aug  1 07:34:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/examples/CosEC/TypedSimple/Consumer.cpp:
+        * orbsvcs/orbsvcs/Notify/MonitorControl/MonitorManager.cpp:
+        * orbsvcs/tests/HTIOP/test_config.h:
+          Replaced ACE_LIB_TEXT with ACE_TEXT
+
 Tue Jul 31 14:12:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Valuetype.mpc:
