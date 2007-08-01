@@ -814,7 +814,6 @@ if test $tao_build_tests = yes; then
     tests/POA/FindPOA/Makefile
     tests/POA/Generic_Servant/Makefile
     tests/POA/Loader/Makefile
-    tests/POA/Makefile
     tests/POA/NewPOA/Makefile
     tests/POA/On_Demand_Activation/Makefile
     tests/POA/On_Demand_Loading/Makefile
