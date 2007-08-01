@@ -1,3 +1,7 @@
+Wed Aug  1 21:39:04 UTC 2007  Dale Wilson  <wilsond@ociweb.com>
+
+        * bin/tao_orb_tests.lst:
+          Enable TAO\tests\Bug_2935_Regression
 Wed Aug  1 18:55:12 UTC 2007  Martin Corino  <mcorino@remedy.nl>
 
         * bin/PerlACE/ConfigList.pm:
