@@ -1,3 +1,5 @@
+// $Id$
+
 #ifndef ACE_AUTO_FUNCTOR_CPP
 #define ACE_AUTO_FUNCTOR_CPP
 
