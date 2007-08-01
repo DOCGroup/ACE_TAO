@@ -2,6 +2,7 @@
 
 #include "ace/Get_Opt.h"
 #include "TestC.h"
+#include "ace/OS_NS_unistd.h"
 
 const char *ior = "file://test.ior";
 int num_calls = 10;
@@ -60,6 +61,17 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           ACE_DEBUG ((LM_DEBUG, "Sent call # %d \n", i));
         }
       orb->destroy();
+      // The following sleep is a workaround for a defect in the Windows
+      // implementation of sockets (Win XP)
+      // The when this client exits after writing to a localhost socket
+      // Windows discards any data that has not been read by the server.
+      // The sleep gives the server time to catch up.  num_calls/2 gives
+      // it half a second per request which *really* should be overkill, but
+      // it also means the client will terminate before the server actually
+      // handles the requests (a good thing).
+      // I'm still trying to decide whether this should be a bugzilla entry.
+      // wilsond@ociweb.com
+      ACE_OS::sleep(num_calls/2);
     }
   catch (const CORBA::Exception& ex)
     {

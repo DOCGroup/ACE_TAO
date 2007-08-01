@@ -308,6 +308,33 @@ TAO_Transport::post_connect_hook (void)
   return true;
 }
 
+bool
+TAO_Transport::register_if_necessary (void)
+{
+  if (this->is_connected () &&
+      ! this->wait_strategy ()->is_registered () &&
+      this->wait_strategy ()->register_handler () != 0)
+    {
+      // Registration failures.
+
+      // Purge from the connection cache, if we are not in the cache, this
+      // just does nothing.
+      (void) this->purge_entry ();
+
+      // Close the handler.
+      (void) this->close_connection ();
+
+      if (TAO_debug_level > 0)
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT ("(%P|%t) IIOP_Connector [%d]::register_if_necessary, ")
+                    ACE_TEXT ("could not register the transport ")
+                    ACE_TEXT ("in the reactor.\n"),
+                    this->id ()));
+      return false;
+    }
+  return true;
+}
+
 void
 TAO_Transport::close_connection (void)
 {
@@ -2499,19 +2526,10 @@ TAO_Transport::post_open (size_t id)
 {
   this->id_ = id;
 
-  {
-    ACE_GUARD_RETURN (ACE_Lock,
-                      ace_mon,
-                      *this->handler_lock_,
-                      false);
-    this->is_connected_ = true;
-  }
-
   // When we have data in our outgoing queue schedule ourselves
   // for output
-  if (this->queue_is_empty_i ())
-    return true;
-
+  if (!this->queue_is_empty_i ())
+    {
   // If the wait strategy wants us to be registered with the reactor
   // then we do so. If registeration is required and it succeeds,
   // #REFCOUNT# becomes two.
@@ -2528,14 +2546,28 @@ TAO_Transport::post_open (size_t id)
 
       if (TAO_debug_level > 0)
         ACE_ERROR ((LM_ERROR,
-           ACE_TEXT ("TAO (%P|%t) - Transport[%d]::post_connect , ")
+               ACE_TEXT ("TAO (%P|%t) - Transport[%d]::post_open , ")
            ACE_TEXT ("could not register the transport ")
            ACE_TEXT ("in the reactor.\n"),
            this->id ()));
 
       return false;
     }
+    }
 
+  this->is_connected_ = true;
+  // update transport cache to make this entry available
+  if (this->cache_map_entry_ != 0)
+    {
+      ACE_GUARD_RETURN (ACE_Lock,
+                          ace_mon,
+                          *this->handler_lock_,
+                          false);
+      this->transport_cache_manager ().cache_transport (
+        this->cache_map_entry_->ext_id_.property (),
+        this,
+        TAO::ENTRY_IDLE_BUT_NOT_PURGABLE);
+    }
   return true;
 }
 

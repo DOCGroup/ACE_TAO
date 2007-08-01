@@ -212,7 +212,7 @@ TAO_Leader_Follower::wait_for_event (TAO_LF_Event *event,
   // in PathFinder
   size_t t_id = 0;
 
-  if (TAO_debug_level)
+  if (TAO_debug_level && transport != 0)
     {
       t_id = transport->id ();
     }

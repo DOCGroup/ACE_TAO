@@ -52,7 +52,7 @@ namespace TAO
   }
 
   ACE_INLINE Cache_Entries_State
-  Cache_IntId::recycle_state (void)
+  Cache_IntId::recycle_state (void) const
   {
     return this->recycle_state_;
   }
