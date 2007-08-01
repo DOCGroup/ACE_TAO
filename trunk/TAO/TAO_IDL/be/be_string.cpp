@@ -87,14 +87,15 @@ be_string::gen_member_ostream_operator (TAO_OutStream *os,
     {
       *os << "\"[\";" << be_nl << be_nl
           << "for (size_t i = 0; i < " << "ACE_OS::strlen ("
-          << instance_name << ".in ()); ++i)" << be_idt_nl
+          << instance_name
+          << (accessor ? " ()" : ".in ()") << "); ++i)" << be_idt_nl
           << "{" << be_idt_nl
           << "if (i != 0)" << be_idt_nl
           << "{" << be_idt_nl
           << "strm << \", \";" << be_uidt_nl
           << "}" << be_uidt_nl << be_nl
           << "strm << ACE_OutputCDR::from_wchar (" << instance_name
-          << "[i]);" << be_uidt_nl
+          << (accessor ? " ()" : "") << "[i]);" << be_uidt_nl
           << "}" << be_uidt_nl << be_nl
           << "strm << \"]\"";
     }
