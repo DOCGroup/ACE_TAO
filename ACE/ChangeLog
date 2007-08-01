@@ -1,3 +1,9 @@
+Wed Aug  1 07:30:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * apps/drwho/Multicast_Manager.cpp:
+        * apps/drwho/Options.cpp:
+          Removed not needed fuzz disable statements
+
 Wed Aug  1 07:29:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * netsvcs/lib/Time_Request_Reply.cpp:
