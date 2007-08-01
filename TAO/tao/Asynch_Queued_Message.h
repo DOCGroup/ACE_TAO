@@ -56,8 +56,8 @@ public:
   TAO_Asynch_Queued_Message (const ACE_Message_Block *contents,
                              TAO_ORB_Core *oc,
                              ACE_Time_Value *timeout,
-                             ACE_Allocator *alloc = 0,
-                             bool is_heap_allocated = false);
+                             ACE_Allocator *alloc,
+                             bool is_heap_allocated);
 
 
   /// Destructor
@@ -99,7 +99,8 @@ protected:
                              TAO_ORB_Core *oc,
                              size_t size,
                              const ACE_Time_Value &abs_timeout,
-                             ACE_Allocator *alloc = 0);
+                             ACE_Allocator *alloc,
+                             bool is_heap_allocated);
 private:
   /// The number of bytes in the buffer
   size_t const size_;

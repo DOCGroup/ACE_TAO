@@ -517,7 +517,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
           arg_shifter.consume_arg ();
         }
       else if (0 != (current_arg = arg_shifter.get_the_parameter
-                (ACE_LIB_TEXT("-ORBKeepalive"))))
+                (ACE_TEXT("-ORBKeepalive"))))
         {
           // Use SO_KEEPALIVE or not.
           so_keepalive =
@@ -526,7 +526,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
           arg_shifter.consume_arg ();
         }
       else if (0 != (current_arg = arg_shifter.get_the_parameter
-                (ACE_LIB_TEXT("-ORBDontRoute"))))
+                (ACE_TEXT("-ORBDontRoute"))))
         {
           // Use SO_DONTROUTE or not.
           so_dontroute =
@@ -1017,13 +1017,13 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
            arg_shifter.consume_arg ();
          }
        else if (0 != (current_arg = arg_shifter.get_the_parameter
-                 (ACE_LIB_TEXT("-ORBUseParallelConnects"))))
+                 (ACE_TEXT("-ORBUseParallelConnects"))))
          {
            use_parallel_connects = ACE_OS::atoi (current_arg);
            arg_shifter.consume_arg ();
          }
        else if (0 != (current_arg = arg_shifter.get_the_parameter
-                 (ACE_LIB_TEXT("-ORBParallelConnectDelay"))))
+                 (ACE_TEXT("-ORBParallelConnectDelay"))))
          {
            this->orb_params ()->parallel_connect_delay
              (ACE_OS::atoi (current_arg));
@@ -1049,14 +1049,14 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
           arg_shifter.consume_arg ();
         }
       else if (0 != (current_arg = arg_shifter.get_the_parameter
-                (ACE_LIB_TEXT("-ORBUseLocalMemoryPool"))))
+                (ACE_TEXT("-ORBUseLocalMemoryPool"))))
         {
           this->use_local_memory_pool_ = (0 != ACE_OS::atoi (current_arg));
 
           arg_shifter.consume_arg ();
         }
       else if (0 != (current_arg = arg_shifter.get_the_parameter
-                (ACE_LIB_TEXT("-ORBMaxMessageSize"))))
+                (ACE_TEXT("-ORBMaxMessageSize"))))
         {
           this->orb_params_.max_message_size (ACE_OS::atoi (current_arg));
 
