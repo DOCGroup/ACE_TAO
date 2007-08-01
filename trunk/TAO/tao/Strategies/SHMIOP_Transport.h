@@ -84,8 +84,7 @@ protected:
                         const ACE_Time_Value *s = 0);
 
   virtual int handle_input (TAO_Resume_Handle &rh,
-                            ACE_Time_Value *max_wait_time,
-                            int block = 0);
+                            ACE_Time_Value *max_wait_time);
   //@}
 
 public:

@@ -29,8 +29,7 @@ TAO::IIOP_SSL_Transport::~IIOP_SSL_Transport (void)
 
 int
 TAO::IIOP_SSL_Transport::handle_input (TAO_Resume_Handle &rh,
-                                       ACE_Time_Value *max_wait_time,
-                                       int block)
+                                       ACE_Time_Value *max_wait_time)
 {
   int result = 0;
 
@@ -42,7 +41,7 @@ TAO::IIOP_SSL_Transport::handle_input (TAO_Resume_Handle &rh,
   if (result != 0)
     return -1;
 
-  return this->TAO_IIOP_Transport::handle_input (rh, max_wait_time, block);
+  return this->TAO_IIOP_Transport::handle_input (rh, max_wait_time);
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

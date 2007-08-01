@@ -143,8 +143,7 @@ TAO_DIOP_Transport::recv (char *buf,
 
 int
 TAO_DIOP_Transport::handle_input (TAO_Resume_Handle &rh,
-                                  ACE_Time_Value *max_wait_time,
-                                  int /*block*/)
+                                  ACE_Time_Value *max_wait_time)
 {
   // If there are no messages then we can go ahead to read from the
   // handle for further reading..

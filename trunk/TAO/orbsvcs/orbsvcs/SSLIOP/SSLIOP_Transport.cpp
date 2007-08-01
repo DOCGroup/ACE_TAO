@@ -60,8 +60,7 @@ TAO::SSLIOP::Transport::messaging_object (void)
 
 int
 TAO::SSLIOP::Transport::handle_input (TAO_Resume_Handle &rh,
-                                      ACE_Time_Value *max_wait_time,
-                                      int block)
+                                      ACE_Time_Value *max_wait_time)
 {
   int result = 0;
 
@@ -72,9 +71,7 @@ TAO::SSLIOP::Transport::handle_input (TAO_Resume_Handle &rh,
   if (result == -1)
     return -1;
 
-  return TAO_Transport::handle_input (rh,
-                                      max_wait_time,
-                                      block);
+  return TAO_Transport::handle_input (rh, max_wait_time);
 }
 
 ssize_t
