@@ -60,7 +60,7 @@ TAO_Generic_Registry::names (void)
 
       if (this->name_cache_.length () == 0)
         {
-          size_t length = 0;
+          CORBA::ULong length = 0;
           Map::iterator itr (this->map_);
           Map::value_type* entry = 0;
           while (itr.next (entry))

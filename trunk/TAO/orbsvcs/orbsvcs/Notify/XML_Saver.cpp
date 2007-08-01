@@ -33,7 +33,7 @@ namespace TAO_Notify
   }
 
   void
-  XML_Saver::backup_file_name (char * file_path, int nfile)
+  XML_Saver::backup_file_name (char * file_path, size_t nfile)
   {
     ACE_OS::snprintf(file_path, MAXPATHLEN, "%s.%3.3d",
       this->base_name_.c_str (),

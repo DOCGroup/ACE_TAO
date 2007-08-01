@@ -33,7 +33,7 @@ public:
         this->receive (list);
       }
     else
-      this->receive (this->interf_->get_consumers (0));
+      this->receive (static_cast<double> (this->interf_->get_consumers (0)));
   }
 };
 class EventChannelSuppliers:
@@ -55,7 +55,7 @@ public:
         this->receive (list);
       }
     else
-      this->receive (this->interf_->get_suppliers (0));
+      this->receive (static_cast<double> (this->interf_->get_suppliers (0)));
   }
 };
 class QueuedEvents:
@@ -73,7 +73,9 @@ public:
   }
 
   virtual void calculate (void) {
-    this->receive (this->interf_->calculate_queue_size (this->count_));
+    this->receive (
+      static_cast<double> (
+        this->interf_->calculate_queue_size (this->count_)));
   }
 
 private:

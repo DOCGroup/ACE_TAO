@@ -76,7 +76,7 @@ ACE_TMAIN (int, ACE_TCHAR*[])
       data = monitor.get_and_clear_statistics (*names);
       if (data == 0 || data->length () != 3)
         error("get_and_clear_statistics() returned the incorrect number of data elements");
-      for(size_t i = 0; i < data->length (); i++)
+      for(CORBA::ULong i = 0; i < data->length (); i++)
         {
           num = (*data)[i].num ();
           if (num.count == 0)

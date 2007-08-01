@@ -54,7 +54,7 @@ NotificationServiceMonitor_i::get_statistics (const CosNotification::Notificatio
   if (invalid.length () > 0)
     throw CosNotification::NotificationServiceMonitorControl::InvalidName (invalid);
 
-  size_t length = names.length();
+  CORBA::ULong length = names.length();
   CosNotification::NotificationServiceMonitorControl::DataList* data = 0;
   ACE_NEW_RETURN (data,
                   CosNotification::NotificationServiceMonitorControl::DataList (
@@ -64,7 +64,7 @@ NotificationServiceMonitor_i::get_statistics (const CosNotification::Notificatio
     safe_data (data);
 
   data->length (length);
-  for(size_t i = 0; i < length; i++)
+  for(CORBA::ULong i = 0; i < length; i++)
     {
       this->get_data (registry, names[i], (*data)[i]);
     }
@@ -81,9 +81,9 @@ NotificationServiceMonitor_i::get_and_clear_statistics (const CosNotification::N
   // It is technically possible for the list of statistics names
   // to change at this point.  So, I'm bypassing the call to
   // clear_statistics() to avoid a possible exception.
-  size_t length = names.length();
+  CORBA::ULong length = names.length();
   TAO_Statistic_Registry* registry = TAO_Statistic_Registry::instance ();
-  for(size_t i = 0; i < length; i++)
+  for(CORBA::ULong i = 0; i < length; i++)
     {
       TAO_Statistic* statistic = registry->get (names[i].in ());
       if (statistic != 0)
@@ -103,8 +103,8 @@ NotificationServiceMonitor_i::clear_statistics (const CosNotification::Notificat
   if (invalid.length () > 0)
     throw CosNotification::NotificationServiceMonitorControl::InvalidName (invalid);
 
-  size_t length = names.length();
-  for(size_t i = 0; i < length; i++)
+  CORBA::ULong length = names.length();
+  for(CORBA::ULong i = 0; i < length; i++)
     {
       TAO_Statistic* statistic = registry->get (names[i].in ());
       if (statistic != 0)
@@ -169,11 +169,11 @@ NotificationServiceMonitor_i::get_data (
       if (statistic->type () == TAO_Statistic::TS_LIST)
         {
           TAO_Statistic::List slist (statistic->get_list ());
-          size_t size = slist.size ();
+          CORBA::ULong size = slist.size ();
           CosNotification::NotificationServiceMonitorControl::NameList
             list (size);
           list.length (size);
-          for(size_t i = 0; i < size; i++)
+          for(CORBA::ULong i = 0; i < size; i++)
             {
               list[i] = CORBA::string_dup (slist[i].c_str ());
             }
@@ -210,9 +210,9 @@ NotificationServiceMonitor_i::get_invalid_names (
 {
   invalid.length (0);
 
-  size_t ilength = 0;
-  size_t length  = names.length ();
-  for(size_t i = 0; i < length; i++)
+  CORBA::ULong ilength = 0;
+  CORBA::ULong length  = names.length ();
+  for(CORBA::ULong i = 0; i < length; i++)
     {
       if (registry->get (names[i].in ()) == 0)
         {
