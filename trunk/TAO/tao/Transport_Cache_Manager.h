@@ -115,7 +115,7 @@ namespace TAO
     /// in the Cache and return the connection
     Find_Result find_transport (TAO_Transport_Descriptor_Interface *prop,
                         TAO_Transport *&transport,
-                        unsigned int & busy_count);
+                        size_t & busy_count);
 
     /// Remove entries from the cache depending upon the strategy.
     int purge (void);
@@ -168,7 +168,7 @@ namespace TAO
     /// implementation function find_i.
     Find_Result find (const Cache_ExtId &key,
               Cache_IntId &value,
-              unsigned int & busy_count);
+              size_t & busy_count);
 
     /**
      * Non-Locking version and actual implementation of bind ()
@@ -189,7 +189,7 @@ namespace TAO
      */
     Find_Result find_i (const Cache_ExtId &key,
                 Cache_IntId &value,
-                unsigned int & busy_count);
+                size_t & busy_count);
 
     /// Non-locking version and actual implementation of make_idle ().
     int make_idle_i (HASH_MAP_ENTRY *&entry);

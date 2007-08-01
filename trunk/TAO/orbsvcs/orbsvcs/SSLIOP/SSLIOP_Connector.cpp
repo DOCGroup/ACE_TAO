@@ -480,7 +480,7 @@ TAO::SSLIOP::Connector::ssliop_connect (
     }
 
   // Check the Cache first for connections
-  unsigned int busy_count = 0; //not used
+  size_t busy_count = 0; //not used but needed for the call
   if (this->orb_core ()->lane_resources ().transport_cache ().find_transport (
         desc,
         transport,

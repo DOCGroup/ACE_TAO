@@ -183,7 +183,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         1);
       }
 
-      unsigned int busy_count = 0;
+      size_t busy_count = 0;
       TAO::Transport_Cache_Manager::Find_Result find_result =
         tcm.find_transport (&desc, transport, busy_count);
 

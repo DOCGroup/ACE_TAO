@@ -63,7 +63,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       orb->destroy();
       // The following sleep is a workaround for a defect in the Windows
       // implementation of sockets (Win XP)
-      // The when this client exits after writing to a localhost socket
+      // When this client exits after writing to a localhost socket
       // Windows discards any data that has not been read by the server.
       // The sleep gives the server time to catch up.  num_calls/2 gives
       // it half a second per request which *really* should be overkill, but
