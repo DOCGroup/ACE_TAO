@@ -1,3 +1,8 @@
+Wed Aug  1 08:01:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Service_Config.h (cleanup):
+          Changed argument to ptr, fixes some problems with BCB
+
 Wed Aug  1 07:39:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/ace_wchar.h:
