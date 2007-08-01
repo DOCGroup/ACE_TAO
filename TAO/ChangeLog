@@ -1,3 +1,8 @@
+Wed Aug  1 10:52:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/Collocated_Object_Proxy_Broker:
+          Disable the correct method for CORBA/e
+
 Wed Aug  1 09:02:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/PortableGroup/UIPMC_Transport.cpp:
