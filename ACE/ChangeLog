@@ -1,3 +1,8 @@
+Wed Aug  1 11:58:02 UTC 2007  Olli Savia  <ops@iki.fi>
+
+        * ace/OS_NS_dirent.h:
+          Fixed macro logic error once again.
+
 Wed Aug  1 09:50:51 UTC 2007  Olli Savia  <ops@iki.fi>
 
         * ace/OS_NS_dirent.h:
