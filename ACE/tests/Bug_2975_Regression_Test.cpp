@@ -23,6 +23,8 @@ run_main (int, ACE_TCHAR *argv[])
 {
   ACE_START_TEST (ACE_TEXT ("Bug_2975_Regression_Test"));
 
+  int ret = 0;
+
   ACE_ARGV args;
   args.add (argv[0], true);
   args.add (ACE_TEXT("-S"));
@@ -44,11 +46,11 @@ run_main (int, ACE_TCHAR *argv[])
       ACE_TEXT ("</ACE_Svc_Conf>'"));
 #endif // not (ACE_USES_CLASSIC_SVC_CONF == 1)
 
-  int ret = ACE_Service_Config::open(args.argc(), args.argv(),
-                                     ACE_DEFAULT_LOGGER_KEY,
-                                     1, 1);
+  ret = ACE_Service_Config::open(args.argc(), args.argv(),
+                                 ACE_DEFAULT_LOGGER_KEY,
+                                 1, 1);
 
-  if (-1 == ret)
+  if (0 != ret)
   {
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("ACE_Service_Config::open() failed\n")));
   }

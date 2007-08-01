@@ -27,7 +27,7 @@ ACE_RCSID (tests,
 
 #if defined (ACE_HAS_THREADS)
 
-# define TEST_TRACE(X) ACE_Trace ____ (ACE_LIB_TEXT (X), __LINE__, ACE_LIB_TEXT (__FILE__))
+# define TEST_TRACE(X) ACE_Trace ____ (ACE_TEXT (X), __LINE__, ACE_TEXT (__FILE__))
 
 int g_svc_handlers_leaked = 0;
 // use semaphore for synchronization

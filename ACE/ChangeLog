@@ -1,3 +1,29 @@
+Wed Aug  1 07:27:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Service_Config.h:
+          Fixed argument not used warning
+
+        * apps/JAWS/clients/Blobby/Blob_Handler.cpp:
+          Removed ACE_LIB_TEXT in comment
+
+        * bin/fuzz.pl:
+          Removed exception fuzz check. We have deprecated ACE_THROW
+
+        * contrib/FaCE/FaCE.cpp:
+        * contrib/FaCE/FaCE.h:
+        * examples/ASX/Event_Server/Event_Server/Options.cpp:
+        * examples/ASX/UPIPE_Event_Server/Options.cpp:
+        * tests/Bug_2609_Regression_Test.cpp:
+        * tests/Bug_2610_Regression_Test.cpp:
+        * tests/Config_Test.cpp:
+        * tests/Proactor_Test.cpp:
+        * tests/Proactor_Test_IPV6.cpp:
+        * tests/Svc_Handler_Test.cpp:
+          Replaced ACE_LIB_TEXT with ACE_TEXT
+
+        * tests/Bug_2975_Regression_Test.cpp:
+          Make sure we return the correct value out of main
+
 Wed Aug  1 06:51:11 UTC 2007  Olli Savia  <ops@iki.fi>
 
         * ace/OS_NS_dirent.h:

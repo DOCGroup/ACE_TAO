@@ -101,22 +101,22 @@ test (ACE_Configuration *config,
     return -8;
   else if (intvalue != 42)
     return -9;
-  
+
   u_char *data_out (0);
-  
+
   {
     void *data_tmp = 0; // Workaround for GCC strict aliasing warning.
     size_t length = 0;
-    
+
     if (config->get_binary_value (testsection,
                                   ACE_TEXT ("binvalue"),
                                   data_tmp,
                                   length))
       return -10;
-  
+
     data_out = reinterpret_cast <u_char *> (data_tmp);
   }
-  
+
   // compare em
   for (int j = 0; j < 80; j++)
     if (data_out[j] != data[j])
@@ -986,7 +986,7 @@ iniCompare (ACE_Configuration_Heap& fromFile, ACE_Configuration_Heap& original)
                             // we're not equal if we cannot get rhs int
                             rc = false;
 
-                          ACE_OS::sprintf (int_value, ACE_LIB_TEXT ("%08x"), intValue);
+                          ACE_OS::sprintf (int_value, ACE_TEXT ("%08x"), intValue);
                           originalString = int_value;
                         }
                       else if (originalType == ACE_Configuration::BINARY)
@@ -1008,10 +1008,10 @@ iniCompare (ACE_Configuration_Heap& fromFile, ACE_Configuration_Heap& original)
                               while (binary_length)
                                 {
                                   if (ptr != binary_data)
-                                    originalString += ACE_LIB_TEXT (",");
+                                    originalString += ACE_TEXT (",");
 
                                   ACE_OS::sprintf (bin_value,
-                                                   ACE_LIB_TEXT ("%02x"),
+                                                   ACE_TEXT ("%02x"),
                                                    *ptr);
                                   originalString += bin_value;
                                   --binary_length;
@@ -1095,18 +1095,18 @@ int Config_Test::change_one (ACE_Configuration &cfg, u_int a)
 	ACE_Configuration_Section_Key NetworkSection;
 	ACE_Configuration_Section_Key LoggerSection;
 	ACE_Configuration_Section_Key BinarySection;
-	
+
 	if (cfg.open_section (root,
 		ACE_TEXT ("network"),
 		1,
 		NetworkSection))
 		return -1;
-	
+
 	if (cfg.set_integer_value (NetworkSection,
 		ACE_TEXT ("TimeToLive"),
 		a))
 		return -2;
-	
+
 	return 0;
 }
 
@@ -1362,7 +1362,7 @@ Config_Test::testRegFormat ()
                            ACE_TEXT ("equal original (%d)\n"),
                            rc),
                           -1);
-		
+
 		// 7.1 Change a value and test NOT equal case
 		change_one (original, 101);
 		if (fromFile == original)
@@ -1382,7 +1382,7 @@ Config_Test::testRegFormat ()
 				rc),
 				-1);
 		}
-		
+
     }// end if heap could not be opened.
   else
     ACE_ERROR_RETURN ((LM_ERROR,

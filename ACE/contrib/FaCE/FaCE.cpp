@@ -21,7 +21,7 @@
 // This utility does not use ACE, and shouldn't.
 //FUZZ: disable check_for_lack_ACE_OS
 
-ACE_TCHAR* g_ParameterFileName = ACE_LIB_TEXT("Parameters.txt");
+ACE_TCHAR* g_ParameterFileName = ACE_TEXT("Parameters.txt");
 
 /**
  * This simple and small class manages user-input command line
@@ -115,12 +115,12 @@ void ParameterList::addParameter(ACE_TCHAR* newParameter)
 void ParameterList::saveParameter(FILE* outputFile)
 {
     if ( (outputFile == 0) && (this->param_ != 0) ) {
-        outputFile = _wfopen(g_ParameterFileName, ACE_LIB_TEXT("w+"));
+        outputFile = _wfopen(g_ParameterFileName, ACE_TEXT("w+"));
     }
 
     if (outputFile != 0) {
         if (this->param_ != 0) {
-            fwprintf(outputFile, ACE_LIB_TEXT("%s\n"), this->param_);
+            fwprintf(outputFile, ACE_TEXT("%s\n"), this->param_);
             this->next_->saveParameter(outputFile);
         }
         else {
@@ -176,7 +176,7 @@ void InitSetup()
 
 void LoadParameterHistory()
 {
-    FILE* parameterFile = _wfopen(g_ParameterFileName, ACE_LIB_TEXT("r"));
+    FILE* parameterFile = _wfopen(g_ParameterFileName, ACE_TEXT("r"));
 
     if (parameterFile != 0) {
         while (feof(parameterFile) == 0) {
@@ -209,7 +209,7 @@ void LoadParameterHistory()
 //
 //  COMMENTS:
 //
-//    It is important to call this function so that the application 
+//    It is important to call this function so that the application
 //    will get 'well formed' small icons associated with it.
 //
 ATOM MyRegisterClass(HINSTANCE hInstance, ACE_TCHAR* szWindowClass)
@@ -311,7 +311,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
     PAINTSTRUCT ps;
     RECT textRect;
 
-    switch (message) 
+    switch (message)
     {
         case WM_COMMAND:
             wmId    = LOWORD(wParam);
@@ -331,19 +331,19 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                 case ID_SETTING_RUN:
                     {
 #ifdef NO_ACE
-                        cout << ACE_LIB_TEXT("START with command line: ") << g_CommandLine << endl;
+                        cout << ACE_TEXT("START with command line: ") << g_CommandLine << endl;
                         CE_ARGV ce_argv(g_CommandLine);
                         main_i(ce_argv.argc(), ce_argv.argv());
-                        cout << ACE_LIB_TEXT("END") << endl << endl;
+                        cout << ACE_TEXT("END") << endl << endl;
 #else
-                        cout << ACE_LIB_TEXT("START with command line: ") << g_CommandLine << endl;
+                        cout << ACE_TEXT("START with command line: ") << g_CommandLine << endl;
                         ACE_ARGV ce_argv(g_CommandLine);
                         ACE::init();
                         ACE_LOG_MSG->msg_callback(&cout);  // register call back
                         ACE_LOG_MSG->set_flags(ACE_Log_Msg::MSG_CALLBACK);  // set call back flag
                         ace_main_i(ce_argv.argc(), ce_argv.argv());
                         ACE::fini();
-                        cout << ACE_LIB_TEXT("END") << endl << endl;
+                        cout << ACE_TEXT("END") << endl << endl;
 #endif  // NO_ACE
                     }
                     break;
@@ -378,7 +378,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             mbi.nBmpId     = 0;
             mbi.cBmpImages = 0;
 
-            if (!SHCreateMenuBar(&mbi)) 
+            if (!SHCreateMenuBar(&mbi))
                 return 0;
 
             g_hwndCB = mbi.hwndMB;
@@ -390,7 +390,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             GetClientRect(hWnd, &textRect);
             nCmdHt = CommandBar_Height(mbi.hwndMB);
 
-            hWndEdit = CreateWindow(ACE_LIB_TEXT("EDIT"),
+            hWndEdit = CreateWindow(ACE_TEXT("EDIT"),
                                     0,
                                     WS_CHILD | WS_VISIBLE | ES_READONLY | ES_MULTILINE | WS_VSCROLL | WS_HSCROLL,
                                     0,
@@ -448,7 +448,7 @@ HWND CreateRpCommandBar(HWND hwnd)
     mbi.nBmpId     = 0;
     mbi.cBmpImages = 0;
 
-    if (!SHCreateMenuBar(&mbi)) 
+    if (!SHCreateMenuBar(&mbi))
         return 0;
 
     return mbi.hwndMB;
@@ -459,7 +459,7 @@ LRESULT CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
     SHINITDLGINFO shidi;
 
-    ACE_TCHAR* copyrightNote = ACE_LIB_TEXT(
+    ACE_TCHAR* copyrightNote = ACE_TEXT(
 "ACE® and TAO® are copyrighted by Dr. Douglas C. Schmidt and Center for Distributed Object \
 Computing at Washington University,© 1993-2002, all rights reserved.  \
 FaCE is copyrighted by Object Computing, Inc.,© 2002,\n all rights reserved.\n\
@@ -474,7 +474,7 @@ See License.txt for more information.");
             shidi.hDlg = hDlg;
             SHInitDialog(&shidi);
             SetDlgItemText(hDlg, IDC_COPYRIGHT, copyrightNote);
-            return TRUE; 
+            return TRUE;
 
         case WM_COMMAND:
             if (LOWORD(wParam) == IDOK)
@@ -554,7 +554,7 @@ LRESULT CALLBACK SaveFileName(HWND hDlg, UINT message, WPARAM wParam, LPARAM lPa
             GetDlgItemText(hDlg, IDC_SAVEFILE, tempBuffer, MAX_LOADSTRING - 1);
             EndDialog(hDlg, wmId);
 
-            tempFile = _wfopen(tempBuffer, ACE_LIB_TEXT("r"));
+            tempFile = _wfopen(tempBuffer, ACE_TEXT("r"));
 
             if (tempFile != 0)  // if file exists
             {
@@ -622,7 +622,7 @@ LRESULT CALLBACK FileError(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam
     switch (message)
     {
         case WM_INITDIALOG:
-            return TRUE; 
+            return TRUE;
 
         case WM_COMMAND:
             if (LOWORD(wParam) == IDOK)
