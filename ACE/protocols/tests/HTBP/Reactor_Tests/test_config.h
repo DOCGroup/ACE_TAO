@@ -42,9 +42,6 @@
 // The second #undef protects against being reset in a config.h file.
 #undef ACE_NDEBUG
 
-#undef ACE_TEXT
-#define ACE_TEXT ACE_LIB_TEXT
-
 #if defined (ACE_HAS_WINCE)
 // Note that Pocket PC 2002 will NOT create a directory if it does not start with a leading '\'.
 // PPC 2002 only accepts '\log' as a valid directory name, while 'log\' works under WinCE 3.0.
