@@ -12,17 +12,43 @@ pthread ?= 1
 rtti ?= 1
 ssl ?= 0
 
+ifeq ($(static_libs),1)
+  override shared_libs =
+  override static_libs_only = 1
+  ifneq ($(findstring -lACE_SSL,$(LDLIBS)),)
+    override LDLIBS = $(PLATFORM_SSL_LIBS)
+  else
+    override LDLIBS =
+  endif
+else
+  override static_libs =
+  override shared_libs = 1
+endif
+
 VDIR            = obj/
 VSHDIR          = shobj/
 
 LN_S = cp -p
 DEFFLAGS        +=
-#CCFLAGS         += -D__USE_STD_IOSTREAM -ieee -Wc/template=noauto -Wc/noimplicit
-CCFLAGS         += -D__USE_STD_IOSTREAM -ieee -names_as_is_short -msg_disable intoverflow,reftemporary -Wc/template=auto
-ifeq ($(debug),1)
-LDFLAGS         += -g -threads -Wl/PRELINK=USE_OLB
+CCFLAGS         += -D__USE_STD_IOSTREAM -ieee -names_as_is_short
+CCFLAGS         += -msg_disable intoverflow -msg_disable reftemporary -msg_disable intsignchange 
+CCFLAGS         += -Wc/template=auto
+
+ifeq ($(HOSTTYPE),ia64)
+  SYMVEC_OPT_FILE ?= $(LIB_NAME)_symvec.opt
+  ifeq ($(PRJ_TYPE),library)
+    ifeq ($(shared_libs),1)
+    CCFLAGS         += "-Wc/export_sym=(OPTIONS_FILE=$(SYMVEC_OPT_FILE),ALL,NOTEMPLATES)"
+    endif
+  endif
 else
-LDFLAGS         += -threads -Wl/PRELINK=USE_OLB
+  LDFLAGS         += -Wl/PRELINK=USE_OLB
+endif
+
+ifeq ($(debug),1)
+ LDFLAGS         += -g -threads 
+else
+ LDFLAGS         += -threads 
 endif
 DCCFLAGS        += -g
 OCCFLAGS        += -O
@@ -31,12 +57,15 @@ CFLAGS          += -ieee -names_as_is_short
 DCFLAGS         += -g
 OCFLAGS         += -O
 
-#MATHLIB         = -lm
 PIC             =
-ARFLAGS         = -c
 RANLIB          = @true
-SOFLAGS         = -shared -auto_symvec
-
+ifeq ($(HOSTTYPE),ia64)
+  ARFLAGS         = -r
+  SOFLAGS         = -shared $(SYMVEC_OPT_FILE)
+else
+  ARFLAGS         = -c
+  SOFLAGS         = -shared -auto_symvec
+endif
 LIBS            += -lpthread
 
 CC              = cc
@@ -47,12 +76,29 @@ SOVERSION       =
 SOEXT           = exe
 EXEEXT          = .exe
 INSLIB          = $(ACE_ROOT)/lib
-REALCLEAN_FILES += $(CLEANUP_VSHLIB_NO_VER:%.exe=%_symvec.opt) $(CLEANUP_VSHLIB_NO_VER:%.exe=%.DSF) \
+ifeq ($(HOSTTYPE),ia64)
+  REALCLEAN_FILES += $(SYMVEC_OPT_FILE) $(CLEANUP_VSHLIB_NO_VER:%.exe=%.DSF) \
 	$(CLEANUP_BIN:%=%.DSF) $(basename $(BIN))
+else
+  REALCLEAN_FILES += $(CLEANUP_VSHLIB_NO_VER:%.exe=%_symvec.opt) $(CLEANUP_VSHLIB_NO_VER:%.exe=%.DSF) \
+	$(CLEANUP_BIN:%=%.DSF) $(basename $(BIN))
+endif
 
 ifneq ($(MAKEFILE),$(DEPENDENCY_FILE))
 VMS_DUMMY_ := $(shell touch $(DEPENDENCY_FILE))
 VMS_DUMMY_ := $(VMS_DUMMY_)
 endif
 
-POSTLINK       = ; ln -f $(BIN) $(basename $(BIN))
+ifeq ($(HOSTTYPE),ia64)
+  ifeq ($(shared_libs),1)
+   ifneq ($(SHLIB),)
+BUILD          := post_build.local
+
+.PHONY: post_build.local
+
+post_build.local:
+	@-if [ ! -z "$(VSHLIB)" ]; then dcl "set image/success $(VSHLIB)"; echo ""; fi
+
+   endif
+  endif
+endif
