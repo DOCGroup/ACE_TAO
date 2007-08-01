@@ -480,9 +480,12 @@ TAO::SSLIOP::Connector::ssliop_connect (
     }
 
   // Check the Cache first for connections
+  unsigned int busy_count = 0; //not used
   if (this->orb_core ()->lane_resources ().transport_cache ().find_transport (
         desc,
-        transport) == 0)
+        transport,
+        busy_count)
+        == TAO::Transport_Cache_Manager::CACHE_FOUND_AVAILABLE)
     {
       if (TAO_debug_level > 2)
         ACE_DEBUG ((LM_DEBUG,
@@ -494,6 +497,7 @@ TAO::SSLIOP::Connector::ssliop_connect (
       if (!transport->is_connected())
         {
           if (!this->wait_for_connection_completion (resolver,
+                                                     *desc,
                                                      transport,
                                                      max_wait_time))
             {
@@ -638,6 +642,7 @@ TAO::SSLIOP::Connector::ssliop_connect (
               // get a connected transport or not. In case of non block we get
               // a connected or not connected transport
               if (!this->wait_for_connection_completion (resolver,
+                                                         *desc,
                                                          transport,
                                                          max_wait_time))
                 {

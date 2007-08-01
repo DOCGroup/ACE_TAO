@@ -23,7 +23,8 @@ namespace TAO
   ACE_INLINE int
   Transport_Cache_Manager::cache_transport (
     TAO_Transport_Descriptor_Interface *prop,
-    TAO_Transport *transport)
+    TAO_Transport *transport,
+    Cache_Entries_State state/* = ENTRY_IDLE_BUT_NOT_PURGABLE*/)
   {
     // Compose the ExternId & Intid
     Cache_ExtId ext_id (prop);
@@ -37,7 +38,7 @@ namespace TAO
                                 -1));
 
       // Do as the semantics of this method dictates
-      int_id.recycle_state (ENTRY_BUSY);
+      int_id.recycle_state (state);
 
       retval = this->bind_i (ext_id,
                              int_id);
@@ -51,24 +52,7 @@ namespace TAO
     TAO_Transport_Descriptor_Interface *prop,
     TAO_Transport *transport)
   {
-    // Compose the ExternId & Intid
-    Cache_ExtId ext_id (prop);
-    Cache_IntId int_id (transport);
-
-    int retval = 0;
-    {
-      ACE_MT (ACE_GUARD_RETURN (ACE_Lock,
-                                guard,
-                                *this->cache_lock_,
-                                -1));
-
-      // Do as the semantics of this method dictates
-      int_id.recycle_state (ENTRY_IDLE_AND_PURGABLE);
-      retval = this->bind_i (ext_id,
-                             int_id);
-    }
-
-    return retval;
+    return cache_transport(prop, transport, ENTRY_IDLE_AND_PURGABLE);
   }
 
   ACE_INLINE int

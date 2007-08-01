@@ -251,12 +251,12 @@ ST_AMH_Server::write_ior_to_file (CORBA::String_var ior)
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
-  if (parse_args (argc, argv) != 0)
-    return 1;
-
   ST_AMH_Server amh_server (&argc, argv);
 
   amh_server.start_orb_and_poa ();
+
+  if (parse_args (argc, argv) != 0)
+    return 1;
 
   ST_AMH_Servant servant (amh_server.orb ());
 
