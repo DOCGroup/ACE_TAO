@@ -1,3 +1,10 @@
+Wed Aug  1 11:44:24 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * configure.ac:
+
+          Added the new Makefiles to the list that I added on Mon Jul 30
+          13:13:58 UTC 2007.
+
 Wed Aug  1 11:35:42 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/examples/Notify/MC/monitor/monitor.cpp:
@@ -270,10 +277,7 @@ Mon Jul 30 13:13:58 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
           channel name during channel creation, and fixed a leak of objects
           during shutdown of the service.
 
-        * orbsvcs/examples/Notify/MC:
         * orbsvcs/examples/Notify/MC/Makefile.am:
-
-        * orbsvcs/examples/Notify/MC/TkMonitor:
         * orbsvcs/examples/Notify/MC/TkMonitor/Makefile:
         * orbsvcs/examples/Notify/MC/TkMonitor/README:
         * orbsvcs/examples/Notify/MC/TkMonitor/external_idl.pl:
@@ -288,8 +292,10 @@ Mon Jul 30 13:13:58 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
         * orbsvcs/examples/Notify/MC/TkMonitor/modules/Tk/mask.xbm:
         * orbsvcs/examples/Notify/MC/TkMonitor/monitor.pl:
 
+          Added a graphical interface written in perl to access the
+          Notification Service Monitor.  It was written using opalORB.
+
         * orbsvcs/examples/Notify/Makefile.am:
-        * orbsvcs/examples/Notify/MC/monitor:
         * orbsvcs/examples/Notify/MC/monitor/Makefile.am:
         * orbsvcs/examples/Notify/MC/monitor/monitor.cpp:
         * orbsvcs/examples/Notify/MC/monitor/monitor.mpc:
