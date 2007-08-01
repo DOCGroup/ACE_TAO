@@ -1,3 +1,10 @@
+Wed Aug  1 15:55:38 UTC 2007  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * ace/Service_Config.h:
+        
+          Added conditional compilation around template specification
+          since ACE_TSS declares cleanup() only in multi-threaded builds.
+
 Wed Aug  1 12:14:17 UTC 2007  Olli Savia  <ops@iki.fi>
 
         * ace/OS_NS_dirent.h:
