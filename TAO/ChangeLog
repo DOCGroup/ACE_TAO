@@ -1,3 +1,8 @@
+Wed Aug  1 21:54:15 UTC 2007  Dale Wilson  <wilsond@ociweb.com>
+
+        * NEWS:
+          Add entries for fixing ORBMuxedConnectionMax and too-many-connections.
+
 Wed Aug  1 21:26:32 UTC 2007  Dale Wilson  <wilsond@ociweb.com>
 
         * tests/Bug_2935_Regression:
