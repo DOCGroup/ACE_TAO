@@ -1,7 +1,13 @@
+Wed Aug  1 06:51:11 UTC 2007  Olli Savia  <ops@iki.fi>
+
+        * ace/OS_NS_dirent.h:
+        * ace/OS_NS_dirent.inl:
+          Cleanup ACE_OS::rewinddir() code.
+
 Tue Jul 31 21:39:37 UTC 2007  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * ace/Auto_Functor.cpp:
-        
+
           Removed errant ChangeLog-like lines at the top of the file.
 
 Tue Jul 31 21:27:25 UTC 2007  Iliyan Jeliazkov  <iliyan@ociweb.com>
@@ -13,7 +19,6 @@ Tue Jul 31 21:27:25 UTC 2007  Iliyan Jeliazkov  <iliyan@ociweb.com>
           "inline". This resolved linking problems with some compilers,
           which complained about either unresolved references or
           multiply-defined instances of cleanup(). Bugzilla 2980.
-
 
 Tue Jul 31 18:48:25 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
