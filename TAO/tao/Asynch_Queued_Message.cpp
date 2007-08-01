@@ -48,8 +48,9 @@ TAO_Asynch_Queued_Message::TAO_Asynch_Queued_Message (char *buf,
                                                       TAO_ORB_Core *oc,
                                                       size_t size,
                                                       const ACE_Time_Value &abs_timeout,
-                                                      ACE_Allocator *alloc)
-  : TAO_Queued_Message (oc, alloc, 0)
+                                                      ACE_Allocator *alloc,
+                                                      bool is_heap_allocated)
+  : TAO_Queued_Message (oc, alloc, is_heap_allocated)
   , size_ (size)
   , offset_ (0)
   , buffer_ (buf)
@@ -140,7 +141,8 @@ TAO_Asynch_Queued_Message::clone (ACE_Allocator *alloc)
                                                         this->orb_core_,
                                                         sz,
                                                         this->abs_timeout_,
-                                                        alloc),
+                                                        alloc,
+                                                        true),
                              0);
     }
   else
@@ -158,13 +160,11 @@ TAO_Asynch_Queued_Message::clone (ACE_Allocator *alloc)
                       TAO_Asynch_Queued_Message (buf,
                                                  this->orb_core_,
                                                  sz,
-                                                 this->abs_timeout_),
+                                                 this->abs_timeout_,
+                                                 0,
+                                                 true),
                       0);
     }
-
-  // Set the flag to indicate that <qm> is created on the heap.
-  if (qm)
-    qm->is_heap_created_ = true;
 
   return qm;
 }

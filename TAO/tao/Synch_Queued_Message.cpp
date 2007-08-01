@@ -130,20 +130,14 @@ TAO_Synch_Queued_Message::clone (ACE_Allocator *alloc)
                              TAO_Synch_Queued_Message (mb,
                                                        this->orb_core_,
                                                        alloc,
-                                                       0),
+                                                       true),
                              0);
     }
   else
     {
       ACE_NEW_RETURN (qm,
-                      TAO_Synch_Queued_Message (mb, this->orb_core_, 0, 0),
+                      TAO_Synch_Queued_Message (mb, this->orb_core_, 0, true),
                       0);
-    }
-
-  // Set the flag to indicate that <qm> is created on the heap.
-  if (qm)
-    {
-      qm->is_heap_created_ = true;
     }
 
   return qm;

@@ -77,8 +77,8 @@ class TAO_Export TAO_Queued_Message : public TAO_LF_Invocation_Event
 public:
   /// Constructor
   TAO_Queued_Message (TAO_ORB_Core *oc,
-                      ACE_Allocator *alloc,
-                      bool is_heap_allocated);
+                      ACE_Allocator *alloc = 0,
+                      bool is_heap_allocated = false);
 
   /// Destructor
   virtual ~TAO_Queued_Message (void);
@@ -218,7 +218,7 @@ protected:
    * A flag to indicate whether @a this is on stack or heap. A true value
    * indicates that @a this was created on  heap.
    */
-  bool is_heap_created_;
+  bool const is_heap_created_;
 
   /// Cached copy of ORB_Core pointer
   TAO_ORB_Core *orb_core_;
