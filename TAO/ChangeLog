@@ -1,3 +1,23 @@
+Wed Aug  1 21:26:32 UTC 2007  Dale Wilson  <wilsond@ociweb.com>
+
+        * tests/Bug_2935_Regression:
+        * tests/Bug_2935_Regression/Bug_2935_Regression.mpc:
+        * tests/Bug_2935_Regression/Bug_2935_Regression.mwc:
+        * tests/Bug_2935_Regression/README.txt:
+        * tests/Bug_2935_Regression/ThreeTier.idl:
+        * tests/Bug_2935_Regression/middle.conf:
+        * tests/Bug_2935_Regression/middle.cpp:
+        * tests/Bug_2935_Regression/middle_i.h:
+        * tests/Bug_2935_Regression/middle_i.cpp:
+        * tests/Bug_2935_Regression/run_test.pl:
+        * tests/Bug_2935_Regression/sink.cpp:
+        * tests/Bug_2935_Regression/sink_i.h:
+        * tests/Bug_2935_Regression/sink_i.cpp:
+        * tests/Bug_2935_Regression/source.cpp:
+        * tests/Bug_2935_Regression/source_i.h:
+        * tests/Bug_2935_Regression/source_i.cpp:
+          Add regression test for Wed Aug  1 15:54:01 UTC 2007  checkin
+
 Wed Aug  1 21:16:15 UTC 2007  Dale Wilson  <wilsond@ociweb.com>
 
         * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp:
