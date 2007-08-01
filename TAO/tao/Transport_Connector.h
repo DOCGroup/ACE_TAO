@@ -189,7 +189,7 @@ protected:
       ACE_Time_Value *timeout);
 
   /// See if a new connection is allowed
-  bool new_connection_is_ok (unsigned int busy_count);
+  bool new_connection_is_ok (size_t busy_count);
 
   /// Wait for a transport to be connected
   /// Note: no longer changes transport reference count
