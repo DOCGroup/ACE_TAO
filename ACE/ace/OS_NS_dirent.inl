@@ -102,21 +102,13 @@ ACE_INLINE void
 rewinddir (ACE_DIR *d)
 {
 #if defined (ACE_HAS_DIRENT)
-# if defined (ACE_LACKS_SEEKDIR)
-#  if defined (ACE_LACKS_REWINDDIR)
+#  if defined (ACE_HAS_WREWINDDIR) && defined (ACE_USES_WCHAR)
+  ::wrewinddir (d);
+#  elif !defined (ACE_LACKS_REWINDDIR)
+  ace_rewinddir_helper (d);
+#  else
   ACE_UNUSED_ARG (d);
-#  elif defined (ACE_HAS_WREWINDDIR) && defined (ACE_USES_WCHAR)
-   ::wrewinddir (d);
-#  else /* ! defined (ACE_LACKS_REWINDDIR) */
-   ace_rewinddir_helper (d);
-#  endif /* ! defined (ACE_LACKS_REWINDDIR) */
-# else  /* ! ACE_LACKS_SEEKDIR */
-    // We need to implement <rewinddir> using <seekdir> since it's often
-    // defined as a macro...
-   ::seekdir (d, long (0));
-# endif /* ! ACE_LACKS_SEEKDIR */
-#else
-  ACE_UNUSED_ARG (d);
+#  endif /* !defined (ACE_LACKS_REWINDDIR) */
 #endif /* ACE_HAS_DIRENT */
 }
 
