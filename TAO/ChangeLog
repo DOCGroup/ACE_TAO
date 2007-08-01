@@ -1,3 +1,113 @@
+Wed Aug  1 15:54:01 UTC 2007  Dale Wilson  <wilsond@ociweb.com>
+          Corrections for bugs #2934 and #2935: connection problems in
+          the transport cache.
+
+          Briefly: the change involves adding the transport to the
+          cache at the time the connection is initiated rather than
+          waiting until the connection is complete.   This avoids the
+          situation where *way* too many connections are started in a
+          nested upcall and/or multithreading situation because none
+          of the connection attempts know the others are already in
+          progress.
+          At the same time it eliminates the wait-for-condition code
+          technique for honoring the -MaxMuxedConnections. The old
+          technique is unsafe and ineffective.
+
+        * tao/Cache_Entries.h:
+        * tao/Cache_Entries.inl:
+          Declare new cache entry status:  ENTRY_CONNECTING
+          Make the recycle_state method const (it's poorly named, but I'm not
+          fixing that now.)
+
+        * tao/IIOP_Connector.cpp:
+          Use RAII to manage tlist (list of pending connections) during parallel
+          connection.
+          Update the cache (rather than adding a new entry) when connection is
+          complete.
+          Change the way the transport is registered with the reactor so that it
+          is always registered before necessary.  Otherwise there was a race
+          condition when thread A tried to use a newly established connection
+          before thread B had "quite" finished preparing it for use.
+
+        * tao/Transport.h:
+          Declare new method: register_if_necessary to consolodate the various
+          attempts to register the transport with the reactor.
+
+        * tao/Transport.cpp:
+          Implement and use register_if_necessary
+          Update transport cache status in the post_connect method
+
+        * tao/Transport_Cache_Manager.h:
+        * tao/Transport_Cache_Manager.inl:
+        * tao/Transport_Cache_Manager.cpp:
+          Change find_transport to return one of the following statuses:
+            CACHE_FOUND_NONE
+            CACHE_FOUND_CONNECTING
+            CACHE_FOUND_BUSY
+            CACHE_FOUND_AVAILABLE
+          The more than one status applies, the last one in the above list
+          overrides (i.e. if there's one available, never mind the other stuff.)
+          Add an additional argument to find_transport to return the count of
+          busy transport's found when none were available.  This helps the
+          Transport_Connector to honor -MaxMuxedConnections.
+          Remove the attempt to open a new connection from the cache.  It belongs
+          in the Transport_Connector.
+          Improve support for updating cache entry status.
+
+        * tao/Transport_Connector.h:
+        * tao/Transport_Connector.cpp:
+          Eliminate TransportCleanupGuard.  It was ill conceived.
+          Supply new argument to and accept new status returns from find_transport.
+          New wait_for_transport method allows waiting for a connection to complete
+          even if it was started elsewhere.
+          The TAO_Connector::connect method has been reorganized.  It now consists
+          of a while loop that retries the search for the transport in the cache
+          until success, timeout, error, or a return because this is a non-blocking attempt.
+
+          The transport found by this method *ALWAYS* comes from the cache.   There
+          was code that attempted to short-circuit this for newly established connections
+          but it led to quite a few subtle bugs.  The new approach shouldn't be any
+          slower than the old one, but if is, there is room for improvment in the
+          cache now that it doesn't have to handle all the special cases.   (i.e.
+          consider long and carefully before trying to improve performance by reintroducing
+          the short-circuit-on-new-connection code.)
+
+        * orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connector.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp:
+        * tao/Profile_Transport_Resolver.cpp:
+        * tao/Strategies/UIOP_Connector.cpp:
+        * tests/Bug_1476_Test/client.cpp:
+          Supply additional argument to wait_for_connection_completion
+          Supply new argument to Transport_Cache_Manager::find_transport
+          Recognize new return status from Transport_Cache_Manager::find_transport
+          [no functional change]
+
+        * tao/IIOP_Transport.cpp:
+          Log status code on error.
+
+        * tao/Leader_Follower.cpp:
+          Ignore null tranport pointer (effects logging only)
+
+        * tests/AMH_Oneway/client.cpp:
+          Add a sleep before process exit.  To quote the internal documentation:
+           // The following sleep is a workaround for a defect in the Windows
+           // implementation of sockets (Win XP)
+           // The when this client exits after writing to a localhost socket
+           // Windows discards any data that has not been read by the server.
+           // The sleep gives the server time to catch up.  num_calls/2 gives
+           // it half a second per request which *really* should be overkill, but
+           // it also means the client will terminate before the server actually
+           // handles the requests (a good thing).
+           // I'm still trying to decide whether this should be a bugzilla entry.
+           // wilsond@ociweb.com
+
+        * tests/AMH_Oneway/server.cpp:
+          Modified to honor -ORB arguments on command line [so I could diagnose the silly
+          windows/localhost problem]
+
+        * performance-tests/Latency/DII/Test.idl:
+          Make the shutdown method a one-way to eliminate a very rare race condition while
+          shutting down.
 Wed Aug  1 11:44:24 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * configure.ac:

@@ -192,8 +192,9 @@ TAO_IIOP_Transport::recv (char *buf,
 
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) - IIOP_Transport[%d]::recv, ")
-                  ACE_TEXT ("read failure - %m\n"),
-                  this->id ()));
+                  ACE_TEXT ("read failure - %m errno %d\n"),
+                  this->id (),
+                  errno));
     }
 
   // Error handling

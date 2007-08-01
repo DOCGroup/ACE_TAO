@@ -53,6 +53,9 @@ namespace TAO
       /// Closed.
       ENTRY_CLOSED,
 
+      /// Connection in process, but not complete
+      ENTRY_CONNECTING,
+
       /// Unknown state.
       ENTRY_UNKNOWN
     };
@@ -102,7 +105,7 @@ namespace TAO
     void recycle_state (Cache_Entries_State new_state);
 
     /// Get <recycle_state>.
-    Cache_Entries_State recycle_state (void);
+    Cache_Entries_State recycle_state (void) const;
 
     /// Relinquish ownership of the TAO_Transport object associated with
     /// this Cache_IntId.
