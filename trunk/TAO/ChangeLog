@@ -1,3 +1,15 @@
+Wed Aug  1 07:38:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/ORB_Core.cpp:
+          Replaced ACE_LIB_TEXT with ACE_TEXT
+
+        * tao/Asynch_Queued_Message.cpp:
+        * tao/Asynch_Queued_Message.h:
+        * tao/Queued_Message.h:
+        * tao/Synch_Queued_Message.cpp:
+          Made the heap allocated flag const and pass it to all constructors
+          so that we don't have to set if after creating the qm.
+
 Wed Aug  1 07:34:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/examples/CosEC/TypedSimple/Consumer.cpp:
