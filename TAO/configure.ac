@@ -337,6 +337,8 @@ if test $tao_build_examples = yes; then
     orbsvcs/examples/Notify/Makefile
     orbsvcs/examples/Notify/Subscribe/Makefile
     orbsvcs/examples/Notify/ThreadPool/Makefile
+    orbsvcs/examples/Notify/MC/Makefile                         
+    orbsvcs/examples/Notify/MC/monitor/Makefile                 
     orbsvcs/examples/ORT/Makefile
     orbsvcs/examples/RtEC/IIOPGateway/Makefile
     orbsvcs/examples/RtEC/Kokyu/Makefile
@@ -559,6 +561,14 @@ if test $tao_build_tests = yes; then
     orbsvcs/tests/unit/Makefile
     orbsvcs/tests/unit/Trading/Makefile
     orbsvcs/tests/unit/Trading/Interpreter/Makefile
+    orbsvcs/tests/unit/Notify/Makefile  
+    orbsvcs/tests/unit/Notify/MC/Makefile
+    orbsvcs/tests/unit/Notify/MC/Control/Makefile
+    orbsvcs/tests/unit/Notify/MC/MonitorControlExt/Makefile
+    orbsvcs/tests/unit/Notify/MC/MonitorManager/Makefile  
+    orbsvcs/tests/unit/Notify/MC/NotificationServiceMonitor/Makefile
+    orbsvcs/tests/unit/Notify/MC/Statistic/Makefile                
+    orbsvcs/tests/unit/Notify/MC/Statistic_Registry/Makefile
     tests/AMH_Exceptions/Makefile
     tests/AMH_Oneway/Makefile
     tests/AMI/Makefile
