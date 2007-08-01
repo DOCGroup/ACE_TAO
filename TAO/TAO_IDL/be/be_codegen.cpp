@@ -245,7 +245,17 @@ TAO_CodeGen::start_client_header (const char *fname)
                         << "#endif /* ACE_LACKS_PRAGMA_ONCE */";
 
   *this->client_header_ << be_nl;
+  
+  // So the ostream operator header will be visible in included ORB files.
+  if (be_global->gen_ostream_operators ())
+    {
+      *this->client_header_ << "\n#if !defined (GEN_OSTREAM_OPS)\n"
+                            << "#define GEN_OSTREAM_OPS\n"
+                            << "#endif /* GEN_OSTREAM_OPS */";
+    }
 
+  *this->client_header_ << be_nl;
+  
   // Other include files.
 
   if (be_global->stub_export_include () != 0)
