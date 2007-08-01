@@ -80,12 +80,10 @@ Options::set_options (int argc, char *argv[])
 
   Options::program_name = argv[0];
 
-  //FUZZ: disable check_for_exception_sepc
   ACE_Get_Opt getopt (argc, argv, "?aA:bdF:f:hH:Llp:rRsSt:w:");
 
   while ((c = getopt ()) != -1)
     {
-  //FUZZ: enable check_for_exception_sepc
       switch (c)
         {
         case '?':
