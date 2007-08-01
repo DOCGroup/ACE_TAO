@@ -1,3 +1,16 @@
+Wed Aug  1 11:35:42 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/examples/Notify/MC/monitor/monitor.cpp:
+        * orbsvcs/orbsvcs/Notify/MonitorControl/Generic_Registry.cpp:
+        * orbsvcs/orbsvcs/Notify/MonitorControl/NotificationServiceMonitor_i.cpp:
+        * orbsvcs/orbsvcs/Notify/MonitorControlExt/MonitorEventChannel.cpp:
+        * orbsvcs/orbsvcs/Notify/MonitorControlExt/MonitorEventChannelFactory.cpp:
+        * orbsvcs/orbsvcs/Notify/XML_Saver.h:
+        * orbsvcs/orbsvcs/Notify/XML_Saver.cpp:
+        * orbsvcs/tests/unit/Notify/MC/NotificationServiceMonitor/NotificationServiceMonitor.cpp:
+
+          Changed types or added static_cast's to avoid build warnings.
+
 Wed Aug  1 10:52:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/Collocated_Object_Proxy_Broker:

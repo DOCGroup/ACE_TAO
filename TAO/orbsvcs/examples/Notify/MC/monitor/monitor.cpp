@@ -180,7 +180,7 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
                     {
                       CosNotification::NotificationServiceMonitorControl::NameList
                         list = data->list ();
-                      size_t length = list.length ();
+                      CORBA::ULong length = list.length ();
                       for(size_t i = 0; i < length; i++)
                         {
                           ACE_DEBUG ((LM_DEBUG, "%s ", list[i].in ()));

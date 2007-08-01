@@ -58,7 +58,7 @@ public:
   virtual void close (void);
 
 private:
-  void backup_file_name (char * file_path, int nfile);
+  void backup_file_name (char * file_path, size_t nfile);
 
 private:
   /// A stream representing our current output.

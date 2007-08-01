@@ -36,7 +36,8 @@ public:
       }
     else
       {
-        this->receive (this->interf_->get_ecs (0, this->active_));
+        this->receive (
+          static_cast<double> (this->interf_->get_ecs (0, this->active_)));
       }
   }
 
