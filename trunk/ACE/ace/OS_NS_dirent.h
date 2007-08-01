@@ -62,18 +62,19 @@ extern "C" {
  *
  */
 
-#if !defined (ACE_LACKS_REWINDDIR) \
-      || ( !defined (ACE_HAS_WREWINDDIR) && !defined (ACE_USES_WCHAR) )
+#if !defined (ACE_LACKS_REWINDDIR)
+#  if !defined (ACE_HAS_WREWINDDIR) && !defined (ACE_USES_WCHAR)
 inline void ace_rewinddir_helper (ACE_DIR *dir)
 {
-#  if defined (rewinddir)
+#    if defined (rewinddir)
    rewinddir (dir);
-#  undef rewinddir
-#  else
+#    undef rewinddir
+#    else
   ::rewinddir (dir);
-#  endif /* defined (rewinddir) */
+#    endif /* defined (rewinddir) */
 }
-#endif /* ACE_LACKS_REWINDDIR ... */
+#  endif /* !defined (ACE_HAS_WREWINDDIR) && !defined (ACE_USES_WCHAR) */
+#endif /* ACE_LACKS_REWINDDIR */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
