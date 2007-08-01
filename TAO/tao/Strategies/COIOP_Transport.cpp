@@ -86,8 +86,7 @@ TAO_COIOP_Transport::recv (char *, size_t , const ACE_Time_Value *)
 
 int
 TAO_COIOP_Transport::handle_input (TAO_Resume_Handle &,
-                                  ACE_Time_Value *,
-                                  int /*block*/)
+                                  ACE_Time_Value *)
 {
   return 0;
 }

@@ -590,13 +590,9 @@ public:
    * @param max_wait_time In some cases the I/O is synchronous, e.g. a
    * thread-per-connection server or when Wait_On_Read is enabled.  In
    * those cases a maximum read time can be specified.
-   *
-   * @param block Is deprecated and ignored.
-   *
    */
   virtual int handle_input (TAO_Resume_Handle &rh,
-                            ACE_Time_Value *max_wait_time = 0,
-                            int block = 0);
+                            ACE_Time_Value *max_wait_time = 0);
 
   enum
     {

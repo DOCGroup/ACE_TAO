@@ -1438,8 +1438,7 @@ TAO_Transport::queue_message_i (const ACE_Message_Block *message_block,
  */
 int
 TAO_Transport::handle_input (TAO_Resume_Handle &rh,
-                             ACE_Time_Value * max_wait_time,
-                             int /* block */ /* deprecated parameter */ )
+                             ACE_Time_Value * max_wait_time)
 {
   if (TAO_debug_level > 3)
     {

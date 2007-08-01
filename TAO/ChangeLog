@@ -1,25 +1,45 @@
+Wed Aug  1 09:02:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Transport.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Transport.h:
+        * orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Transport.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Transport.h:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.h:
+        * tao/Strategies/COIOP_Transport.cpp:
+        * tao/Strategies/COIOP_Transport.h:
+        * tao/Strategies/DIOP_Transport.cpp:
+        * tao/Strategies/DIOP_Transport.h:
+        * tao/Strategies/SHMIOP_Transport.cpp:
+        * tao/Strategies/SHMIOP_Transport.h:
+        * tao/Transport.cpp:
+        * tao/Transport.h:
+        * tao/Wait_On_Read.cpp:
+          Removed deprecated block argument from handle_input method.
+          Fixes bugzilla bug 2253
+
 Wed Aug  1 08:25:33 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/AnyTypeCode.mpc:
-        
+
           Added inheritance of gen_ostream feature, similar to tao.mpc
           and valuetype.mpc, so the ostream operator overloads in the
           library can be conditionally compiled, if the feature is
           toggled on in default.features.
-          
+
         * TAO_IDL/be/be_codegen.cpp:
-        
+
           Added generation of preprocessor definition of GEN_OSTREAM_OPS,
           if the -Gos option is used, so the ostream operators can be
           seen in included ORB headers.
-          
+
         * TAO_IDL/be/be_string.cpp:
-        
+
           Fixed incorrect ostream code generation for wstring members
           in IDL types that have member acceessors (union and valuetype),
           since these accessors return CORBA::WChar *, whereas the
           corresponding member type in an IDL struct is TAO_WString_Manager.
-          
+
           Thanks to Lothar Werzinger <lothar at tradescape dot biz> for
           reporting the compilation problems in generated code resulting
           from the above bugs.
