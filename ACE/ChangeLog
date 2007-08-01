@@ -1,3 +1,9 @@
+Wed Aug  1 07:39:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/ace_wchar.h:
+          Deprecated ACE_LIB_TEXT. Users can still use it, but not anymore
+          in the code that is in the distribution
+
 Wed Aug  1 07:30:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * apps/drwho/Multicast_Manager.cpp:
