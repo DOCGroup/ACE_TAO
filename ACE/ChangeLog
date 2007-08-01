@@ -1,7 +1,13 @@
+Wed Aug  1 18:01:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/fuzz.pl:
+          Readded throw check, thanks for Abdul to notice the wrong
+          deletion
+
 Wed Aug  1 15:55:38 UTC 2007  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * ace/Service_Config.h:
-        
+
           Added conditional compilation around template specification
           since ACE_TSS declares cleanup() only in multi-threaded builds.
 
