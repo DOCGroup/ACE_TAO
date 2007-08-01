@@ -26,7 +26,7 @@ ACE_RCSID (tests,
 
 #if defined (ACE_HAS_THREADS)
 
-# define TEST_TRACE(X) ACE_Trace ____ (ACE_LIB_TEXT (X), __LINE__, ACE_LIB_TEXT (__FILE__))
+# define TEST_TRACE(X) ACE_Trace ____ (ACE_TEXT (X), __LINE__, ACE_TEXT (__FILE__))
 
 bool g_handler_deleted = false;
 // use semaphore for synchronization
