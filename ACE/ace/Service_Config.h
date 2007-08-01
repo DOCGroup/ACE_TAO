@@ -157,7 +157,7 @@ template<> inline void
 ACE_TSS<ACE_Service_Gestalt>::cleanup (void*ptr)
 {
   ACE_UNUSED_ARG (ptr);
-};
+}
 
 
 /**
