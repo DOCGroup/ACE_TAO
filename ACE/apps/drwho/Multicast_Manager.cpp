@@ -38,9 +38,7 @@ Multicast_Manager::insert_default_hosts (void)
 int
 Multicast_Manager::insert_hosts_from_file (const char *filename)
 {
-  //FUZZ: disable check_for_exception_sepc
   ACE_Mem_Map mmap (filename);
-  //FUZZ: enable check_for_exception_sepc
 
   char *host_ptr = (char *) mmap.addr ();
 
