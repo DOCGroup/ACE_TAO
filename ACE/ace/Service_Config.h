@@ -154,9 +154,9 @@ public:
 /// know why ...
 
 template<> inline void
-ACE_TSS<ACE_Service_Gestalt>::cleanup (void*p)
+ACE_TSS<ACE_Service_Gestalt>::cleanup (void*ptr)
 {
-  ACE_UNUSED_ARG (p);
+  ACE_UNUSED_ARG (ptr);
 };
 
 
