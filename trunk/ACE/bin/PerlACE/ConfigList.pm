@@ -5,6 +5,7 @@ use strict;
 use FileHandle;
 
 @PerlACE::ConfigList::Configs = ();
+@PerlACE::ConfigList::Excludes = ();
 
 my @new_argv = ();
 
@@ -14,7 +15,16 @@ for(my $i = 0; $i <= $#ARGV; ++$i) {
             push @PerlACE::ConfigList::Configs, $ARGV[++$i];
         }
         else {
-            print STDERR "You must pass a configuration with Config\n";
+            print STDERR "You must pass a configuration with -Config\n";
+            exit(1);
+        }
+    }
+    elsif ($ARGV[$i] eq '-Exclude') {
+        if (defined $ARGV[$i + 1]) {
+            push @PerlACE::ConfigList::Excludes, $ARGV[++$i];
+        }
+        else {
+            print STDERR "You must pass an exclude pattern with -Exclude\n";
             exit(1);
         }
     }
@@ -78,11 +88,11 @@ sub load ($)
 
     while (<$fh>) {
         chomp;
-	if (/^\s*$/ || /^#/) {
+	       if (/^\s*$/ || /^#/) {
             next;
         }
         # compress white space
-	s/\s+/ /g;
+	      s/\s+/ /g;
 
         my $entry = '';
         my $configs = '';
@@ -93,7 +103,7 @@ sub load ($)
         $entry =~ s/\s+$//;
 
         push @{$self->{ENTRIES}}, $entry;
-	if (defined $configs) {
+	      if (defined $configs) {
             @{$self->{CONFIGS}->{$entry}} =  split (" ", $configs);
         }
     }
@@ -105,9 +115,17 @@ sub valid_entries ()
 {
     my $self = shift;
     my @entries = ();
+    my $exclude = 0;
 
     foreach my $entry (@{$self->{ENTRIES}}) {
-        if ($self->check_config (@{$self->{CONFIGS}->{$entry}})) {
+        $exclude = 0;
+        foreach my $expat (@PerlACE::ConfigList::Excludes) {
+          if ($entry =~ /$expat/) {
+            $exclude = 1;
+            last;
+          }
+        }
+        if (!$exclude && $self->check_config (@{$self->{CONFIGS}->{$entry}})) {
             push @entries, $entry;
         }
     }
