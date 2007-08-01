@@ -75,8 +75,7 @@ namespace TAO
       /// thread-per-connection and wait on RW strategies call this
       /// handle_input ().
       virtual int handle_input (TAO_Resume_Handle &rh,
-                                ACE_Time_Value *max_wait_time = 0,
-                                int block = 0);
+                                ACE_Time_Value *max_wait_time = 0);
 
     protected:
       /** @name Overridden Template Methods

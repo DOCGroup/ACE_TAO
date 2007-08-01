@@ -127,8 +127,7 @@ TAO_SHMIOP_Transport::recv (char *buf,
 
 int
 TAO_SHMIOP_Transport::handle_input (TAO_Resume_Handle &rh,
-                                    ACE_Time_Value *max_wait_time,
-                                    int)
+                                    ACE_Time_Value *max_wait_time)
 {
   if (TAO_debug_level > 3)
     {

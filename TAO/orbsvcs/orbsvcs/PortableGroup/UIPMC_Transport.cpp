@@ -438,8 +438,7 @@ TAO_UIPMC_Transport<CONNECTION_HANDLER>::recv (char *buf,
 template<typename CONNECTION_HANDLER>
 int
 TAO_UIPMC_Transport<CONNECTION_HANDLER>::handle_input (TAO_Resume_Handle &rh,
-                                                       ACE_Time_Value *max_wait_time,
-                                                       int /*block*/)
+                                                       ACE_Time_Value *max_wait_time)
 {
   // If there are no messages then we can go ahead to read from the
   // handle for further reading..
