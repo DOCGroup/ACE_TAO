@@ -62,8 +62,8 @@ extern "C" {
  *
  */
 
-#if !defined (ACE_LACKS_REWINDDIR) && \
-    !defined (ACE_HAS_WREWINDDIR) && !defined (ACE_USES_WCHAR)
+#if !defined (ACE_LACKS_REWINDDIR) \
+      || ( !defined (ACE_HAS_WREWINDDIR) && !defined (ACE_USES_WCHAR) )
 inline void ace_rewinddir_helper (ACE_DIR *dir)
 {
 #  if defined (rewinddir)
