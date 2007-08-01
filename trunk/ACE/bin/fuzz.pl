@@ -581,6 +581,42 @@ sub check_for_lack_ACE_OS ()
     }
 }
 
+# This test checks for the use of exception specification,
+# exception specification has fallen out of favor, and generally
+# should not be used.
+sub check_for_exception_spec ()
+{
+    print "Running exception specification check\n";
+
+    foreach $file (@files_cpp, @files_inl, @files_h) {
+        if (open (FILE, $file)) {
+            my $disable = 0;
+            print "Looking at file $file\n" if $opt_d;
+            while (<FILE>) {
+                ++$line;
+                if (/FUZZ\: disable check_for_exception_sepc/) {
+                    $disable = 1;
+                }
+                if (/FUZZ\: enable check_for_exception_sepc/) {
+                    $disable = 0;
+                }
+                if ($disable == 0) {
+                    if(/throw\s*\(\s*\)/) {
+                        #next;
+                    }
+                    elsif(/(^|\s+)throw\s*\(/ and $` !~ /\/\// and $` !~ /\/\*/ and $` !~ /\*\*+/ and $` !~ /\s+\*+\s+/) {
+                        print_error ("$file:$.: exception specification found");
+                    }
+                }
+            }
+            close (FILE);
+        }
+        else {
+            print STDERR "Error: Could not open $file\n";
+        }
+    }
+}
+
 # This test checks for the use of NULL,
 # NULL shouldn't be used, use 0 instead
 sub check_for_NULL ()
@@ -1629,6 +1665,7 @@ if (!getopts ('cdhl:t:mv') || $opt_h) {
            check_for_id_string
            check_for_newline
            check_for_tab
+           check_for_exception_spec
            check_for_NULL
            check_for_improper_main_declaration
            check_for_lack_ACE_OS
