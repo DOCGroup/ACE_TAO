@@ -176,32 +176,32 @@ ACE_Time_Request::dump (void) const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Time_Request::dump");
-  ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("*******\nlength = %d\n"),
+  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("*******\nlength = %d\n"),
               this->size ()));
-  ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("message-type = ")));
+  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("message-type = ")));
 
   switch (this->msg_type ())
     {
     case ACE_Time_Request::TIME_UPDATE:
-      ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("TIME_UPDATE\n")));
+      ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("TIME_UPDATE\n")));
       break;
     default:
-      ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("<unknown type> = %d\n"), this->msg_type ()));
+      ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("<unknown type> = %d\n"), this->msg_type ()));
       break;
     }
 
   if (this->block_forever ())
-    ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("blocking forever\n")));
+    ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("blocking forever\n")));
   else
     {
 #if !defined (ACE_NLOGGING)
       ACE_Time_Value tv = this->timeout ();
 #endif /* ! ACE_NLOGGING */
-      ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("waiting for %d secs and %d usecs\n"),
+      ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("waiting for %d secs and %d usecs\n"),
                   (int)(tv.sec ()), tv.usec ()));
     }
-  ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("*******\ntime = %d\n"),
+  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("*******\ntime = %d\n"),
               (int)(this->time ())));
-  ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("+++++++\n")));
+  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("+++++++\n")));
 #endif /* ACE_HAS_DUMP */
 }
