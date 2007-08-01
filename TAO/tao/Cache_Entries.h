@@ -34,8 +34,7 @@ class TAO_Transport;
 namespace TAO
 {
   /// States of a recyclable object.
-  /// @@todo: A lifecycle needs to be designed. It can wait for
-  /// sometime.
+  /// @todo: see discussion in bugzilla 3024
   enum Cache_Entries_State
     {
       /// Idle and can be purged.

@@ -152,7 +152,7 @@ namespace TAO
   Transport_Cache_Manager::find_transport (
     TAO_Transport_Descriptor_Interface *prop,
     TAO_Transport *&transport,
-    unsigned int &busy_count)
+    size_t &busy_count)
   {
     if (prop == 0)
       {
@@ -204,7 +204,7 @@ namespace TAO
   Transport_Cache_Manager::Find_Result
   Transport_Cache_Manager::find (const Cache_ExtId &key,
                                  Cache_IntId &value,
-                                 unsigned int &busy_count)
+                                 size_t &busy_count)
   {
     ACE_MT (ACE_GUARD_RETURN  (ACE_Lock,
                                guard,
@@ -227,7 +227,7 @@ namespace TAO
   Transport_Cache_Manager::Find_Result
   Transport_Cache_Manager::find_i (const Cache_ExtId &key,
                                    Cache_IntId &value,
-                                   unsigned int & busy_count)
+                                   size_t & busy_count)
   {
     HASH_MAP_ENTRY *entry = 0;
     busy_count = 0;

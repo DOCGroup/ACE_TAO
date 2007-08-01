@@ -251,7 +251,7 @@ namespace TAO
     // the cache increments the reference count on the transport if
     // the find is successful. We want to return a "boolean" of 0 for
     // failure, 1 for success.
-    unsigned int busy_count;
+    size_t busy_count;
     TAO_Transport* tmp = this->transport_.get ();
     if (cache.find_transport(desc, tmp, busy_count)
         != Transport_Cache_Manager::CACHE_FOUND_AVAILABLE)
