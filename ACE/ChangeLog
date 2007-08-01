@@ -1,3 +1,14 @@
+Wed Aug  1 18:55:12 UTC 2007  Martin Corino  <mcorino@remedy.nl>
+
+        * bin/PerlACE/ConfigList.pm:
+          Added '-Exclude <mask>' option to be able to finetune the actual
+          tests being run without having to add yet another Config option
+          and update the test .LST files.
+
+        * ace/config-openvms.h:
+        * include/makeinclude/platform_openvms.GNU:
+          merged changes for OpenVMS IA64 builds.
+
 Wed Aug  1 18:01:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/fuzz.pl:

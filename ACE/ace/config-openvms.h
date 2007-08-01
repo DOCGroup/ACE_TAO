@@ -24,7 +24,7 @@
 // Use a signed int to match POSIX
 #define __SIGNED_INT_TIME_T
 
-#define ACE_OPENVMS 0x0821
+#define ACE_OPENVMS __VMS_VER
 
 #define ACE_DLL_SUFFIX ACE_TEXT("")
 
@@ -40,13 +40,24 @@
 #undef memcpy
 #undef memmove
 
+#if defined(__ia64__)
+  // on OpenVMS IA64 we need this get the singleton exported since we build
+  // ACE/TAO with the NOTEMPLATES export option which prohibits exporting
+  // of any template symbols unless explicitly exported
+  #define ACE_HAS_CUSTOM_EXPORT_MACROS
+  #define ACE_Proper_Export_Flag
+  #define ACE_Proper_Import_Flag
+  #define ACE_EXPORT_SINGLETON_DECLARATION(T) template class __declspec (dllexport) T
+  #define ACE_EXPORT_SINGLETON_DECLARE(SINGLETON_TYPE, CLASS, LOCK) template class __declspec (dllexport) SINGLETON_TYPE<CLASS, LOCK>;
+#else
+  #define ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION
+#endif
+
 #define ACE_DEFAULT_BASE_ADDR ((char*)(0x30000000))
 
 #define ACE_MAX_UDP_PACKET_SIZE 65535
 
 #define ACE_HAS_STDCPP_STL_INCLUDES 1
-
-#define ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION
 
 /* missing system headers */
 #define ACE_LACKS_STDINT_H  1
