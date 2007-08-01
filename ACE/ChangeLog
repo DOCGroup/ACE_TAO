@@ -1,3 +1,9 @@
+Wed Aug  1 07:29:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * netsvcs/lib/Time_Request_Reply.cpp:
+        * protocols/tests/HTBP/Reactor_Tests/test_config.h
+          Replaced ACE_LIB_TEXT with ACE_TEXT
+
 Wed Aug  1 07:27:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Service_Config.h:
