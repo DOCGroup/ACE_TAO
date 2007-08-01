@@ -22,7 +22,7 @@ TAO_MonitorManager::init (int argc, ACE_TCHAR* argv[])
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, this->task_.mutex_, -1);
   this->task_.argv_.add ("fake_process_name");
 
-  ACE_Get_Opt opts (argc, argv, ACE_LIB_TEXT ("o:"), 0, 0,
+  ACE_Get_Opt opts (argc, argv, ACE_TEXT ("o:"), 0, 0,
                     ACE_Get_Opt::PERMUTE_ARGS, 1);
   static const ACE_TCHAR* orbarg = ACE_TEXT ("ORBArg");
   static const ACE_TCHAR* nonamesvc = ACE_TEXT ("NoNameSvc");
