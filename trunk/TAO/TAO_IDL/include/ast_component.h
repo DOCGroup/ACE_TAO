@@ -35,13 +35,21 @@ public:
   // Utility data structure for port declarations.
   struct port_description
   {
-    // Constructor.
-    port_description (void) : id (0), impl (0), is_multiple (false) {}
+    port_description (void)
+      : id (0),
+        impl (0),
+        is_multiple (false),
+        line_number (0)
+    {}
 
-    // Fields.
     Identifier *id;
     AST_Type *impl;
     bool is_multiple;
+    
+    // These structs are queued, in a separate queue for each port type,
+    // this helps some backends get a total ordering for a component's 
+    // ports and attributes.
+    long line_number;
   };
 
   // Accessors.
