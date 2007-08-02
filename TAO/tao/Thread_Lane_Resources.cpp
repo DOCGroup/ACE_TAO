@@ -80,7 +80,7 @@ TAO_Thread_Lane_Resources::acceptor_registry (void)
   // Double check.
   if (this->acceptor_registry_ == 0)
     {
-      // @@todo: Wouldnt this crash big time if you happen to
+      // @todo: Wouldnt this crash big time if you happen to
       // dereference a null-pointer? Needs fixing.
       ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                         ace_mon,

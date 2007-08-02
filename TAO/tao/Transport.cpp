@@ -749,7 +749,7 @@ int
 TAO_Transport::send_synch_message_helper_i (TAO_Synch_Queued_Message &synch_message,
                                             ACE_Time_Value * /*max_wait_time*/)
 {
-  // @@todo: Need to send timeouts for writing..
+  // @todo: Need to send timeouts for writing..
   int const n = this->drain_queue_i ();
 
   if (n == -1)
@@ -2445,7 +2445,7 @@ TAO_Transport::notify_reactor (void)
 
   if (retval < 0 && TAO_debug_level > 2)
     {
-      // @@todo: need to think about what is the action that
+      // @todo: need to think about what is the action that
       // we can take when we get here.
       ACE_DEBUG ((LM_DEBUG,
          ACE_TEXT ("TAO (%P|%t) - Transport[%d]::notify_reactor, ")

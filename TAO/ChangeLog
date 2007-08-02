@@ -1,3 +1,23 @@
+Thu Aug  2 08:39:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Asynch_Queued_Message.cpp:
+        * tao/Condition.cpp:
+        * tao/Connection_Handler.cpp:
+        * tao/default_client.cpp:
+        * tao/default_resource.cpp:
+        * tao/GIOP_Message_Base.cpp:
+        * tao/IIOP_Connector.cpp:
+        * tao/Muxed_TMS.cpp:
+        * tao/orbconf.h:
+        * tao/Queued_Data.cpp:
+        * tao/Strategies/SCIOP_Connector.cpp:
+        * tao/Strategies/SHMIOP_Connector.cpp:
+        * tao/Thread_Lane_Resources.cpp:
+        * tao/Transport.cpp:
+        * tao/Valuetype/ValueBase.cpp:
+          Replaced @@TODO with @todo so that doxygen adds this to the
+          documentation
+
 Thu Aug  2 03:15:32 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tests/Bug_2935_Regression/middle_i.h:
@@ -51,6 +71,7 @@ Wed Aug  1 21:16:15 UTC 2007  Dale Wilson  <wilsond@ociweb.com>
           Use @todo rather than @@TODO -- reference bugzilla entrys to track the todos.
 
 Wed Aug  1 15:54:01 UTC 2007  Dale Wilson  <wilsond@ociweb.com>
+
           Corrections for bugs #2934 and #2935: connection problems in
           the transport cache.
 
@@ -160,6 +181,7 @@ Wed Aug  1 15:54:01 UTC 2007  Dale Wilson  <wilsond@ociweb.com>
         * performance-tests/Latency/DII/Test.idl:
           Make the shutdown method a one-way to eliminate a very rare race condition while
           shutting down.
+
 Wed Aug  1 11:44:24 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * configure.ac:
