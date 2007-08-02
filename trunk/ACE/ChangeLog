@@ -1,3 +1,13 @@
+Thu Aug  2 20:24:22 UTC 2007  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * ace/Service_Config.h:
+
+          No-thread builds, instances of ACE_TSS use their destructor
+          instead of the static cleanup() method for deleting the object
+          they point to. Adding a destructor specialization to enable
+          non-ownership ACE_TSS behavior with no-thread builds for
+          ACE_Service_Gestalt's.
+
 Thu Aug  2 19:34:17 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * bin/fuzz.pl:
