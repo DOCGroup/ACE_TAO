@@ -1,3 +1,8 @@
+Thu Aug  2 09:46:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Log_Msg.cpp:
+          Fixed gcc4 warnings
+
 Thu Aug  2 09:22:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Log_Msg.cpp:
