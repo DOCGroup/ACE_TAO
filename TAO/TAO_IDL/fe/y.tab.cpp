@@ -7006,6 +7006,7 @@ tao_yyreduce:
               AST_Component::port_description pd;
               pd.id = tao_yyvsp[0].idval;
               pd.impl = interface_type;
+              pd.line_number = idl_global->lineno ();
               c->provides ().enqueue_tail (pd);
             }
 
@@ -7101,6 +7102,7 @@ tao_yyreduce:
               ud.id = tao_yyvsp[0].idval;
               ud.impl = interface_type;
               ud.is_multiple = tao_yyvsp[-2].bval;
+              ud.line_number = idl_global->lineno ();
               c->uses ().enqueue_tail (ud);
 
               if (ud.is_multiple == true
@@ -7182,7 +7184,8 @@ tao_yyreduce:
                   AST_Component::port_description pd;
                   pd.id = tao_yyvsp[0].idval;
                   pd.impl = event_type;
-                  c->emits ().enqueue_tail (pd);
+                  pd.line_number = idl_global->lineno ();
+                 c->emits ().enqueue_tail (pd);
                 }
             }
 
@@ -7238,6 +7241,7 @@ tao_yyreduce:
                   AST_Component::port_description pd;
                   pd.id = tao_yyvsp[0].idval;
                   pd.impl = event_type;
+                  pd.line_number = idl_global->lineno ();
                   c->publishes ().enqueue_tail (pd);
                 }
             }
@@ -7294,6 +7298,7 @@ tao_yyreduce:
                   AST_Component::port_description pd;
                   pd.id = tao_yyvsp[0].idval;
                   pd.impl = event_type;
+                  pd.line_number = idl_global->lineno ();
                   c->consumes ().enqueue_tail (pd);
                 }
             }
