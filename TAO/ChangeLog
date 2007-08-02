@@ -1,3 +1,8 @@
+Thu Aug  2 14:24:11 UTC 2007  Dale Wilson  <wilsond@ociweb.com>
+
+        * tao/Strategies/SCIOP_Connector.cpp:
+          Provide correct arguments to wait_for_connection_completion.
+
 Thu Aug  2 14:07:01 UTC 2007  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * orbsvcs/orbsvcs/Naming/Naming_Server.cpp:
@@ -17,7 +22,7 @@ Thu Aug  2 11:33:16 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
         * orbsvcs/orbsvcs/Notify/MonitorControlExt/MC_Default_Factory.h:
         * orbsvcs/orbsvcs/Notify/RT_Factory.h:
 
-          The Borland compiler does not honor the "using" statement. 
+          The Borland compiler does not honor the "using" statement.
           Instead of duplicating every create() function in the sub-classes,
           I have disabled the 8022 warning for these headers only.  The
           warning is pushed and popped in each header.
