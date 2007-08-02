@@ -29,7 +29,7 @@ Sink_i::parse_args(int &, char *[])
 // Implement the tick method
 
 void
-Sink_i::tick () ACE_THROW_SPEC ((::CORBA::SystemException))
+Sink_i::tick ()
 {
   ACE_OS::sleep(1);
   tickCount_ += 1;
@@ -37,7 +37,7 @@ Sink_i::tick () ACE_THROW_SPEC ((::CORBA::SystemException))
 }
 
 void
-Sink_i::tock () ACE_THROW_SPEC ((::CORBA::SystemException))
+Sink_i::tock ()
 {
   ACE_OS::sleep(1);
   tockCount_ += 1;
@@ -45,14 +45,14 @@ Sink_i::tock () ACE_THROW_SPEC ((::CORBA::SystemException))
 }
 
 ::CORBA::ULong
-Sink_i::tickCount () ACE_THROW_SPEC ((::CORBA::SystemException))
+Sink_i::tickCount ()
 {
   ACE_DEBUG((LM_DEBUG, "Sink (%P|%t) tickCount: %d\n", tickCount_));
   return tickCount_;
 }
 
 ::CORBA::ULong
-Sink_i::tockCount () ACE_THROW_SPEC ((::CORBA::SystemException))
+Sink_i::tockCount ()
 {
   ACE_DEBUG((LM_DEBUG, "Sink (%P|%t) tockCount: %d\n", tockCount_));
   return tockCount_;
@@ -61,7 +61,7 @@ Sink_i::tockCount () ACE_THROW_SPEC ((::CORBA::SystemException))
 // Shutdown.
 
 void
-Sink_i::shutdown () ACE_THROW_SPEC ((::CORBA::SystemException))
+Sink_i::shutdown ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "Sink (%P|%t) shutting down.  Ticks: %d Tocks %d\n",
@@ -71,4 +71,3 @@ Sink_i::shutdown () ACE_THROW_SPEC ((::CORBA::SystemException))
   // Instruct the ORB to shutdown.
   this->orb_->shutdown ();
 }
-

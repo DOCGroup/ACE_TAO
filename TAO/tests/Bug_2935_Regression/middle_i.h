@@ -40,16 +40,11 @@ public:
 
   //////////////////////////////////////
   /// Implement the ThreeTier interface
-  virtual void tick ()
-    ACE_THROW_SPEC ((::CORBA::SystemException));
-  virtual void tock ()
-    ACE_THROW_SPEC ((::CORBA::SystemException));
-  virtual ::CORBA::ULong tickCount ()
-    ACE_THROW_SPEC ((::CORBA::SystemException));
-  virtual ::CORBA::ULong tockCount ()
-    ACE_THROW_SPEC ((::CORBA::SystemException));
-  virtual void shutdown ()
-     ACE_THROW_SPEC ((::CORBA::SystemException));
+  virtual void tick ();
+  virtual void tock ();
+  virtual ::CORBA::ULong tickCount ();
+  virtual ::CORBA::ULong tockCount ();
+  virtual void shutdown ();
 
 private:
   CORBA::ORB_var orb_;
