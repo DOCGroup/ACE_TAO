@@ -800,7 +800,7 @@ enum TAO_Policy_Scope
 # endif /* TAO_MIN_IPV6_IIOP_MINOR */
 #endif /* ACE_HAS_IPV6 */
 
-// @@todo this needs to be deprecated. Use TAO_MAXBUFSIZE instead.
+// @todo this needs to be deprecated. Use TAO_MAXBUFSIZE instead.
 #if !defined (TAO_CONNECTION_HANDLER_STACK_BUF_SIZE)
 #   define TAO_CONNECTION_HANDLER_STACK_BUF_SIZE 1024
 #endif /*TAO_CONNECTION_HANDLER_STACK_BUF_SIZE */

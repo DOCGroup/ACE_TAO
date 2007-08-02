@@ -28,7 +28,7 @@ TAO_Connection_Handler::TAO_Connection_Handler (TAO_ORB_Core *orb_core)
     transport_ (0),
     connection_pending_ (false)
 {
-  // @@todo: We need to have a distinct option/ method in the resource
+  // @todo: We need to have a distinct option/ method in the resource
   // factory for this and TAO_Transport.
   this->lock_ =
     this->orb_core_->resource_factory ()->create_cached_connection_lock ();

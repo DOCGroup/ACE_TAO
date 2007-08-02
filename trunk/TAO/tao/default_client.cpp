@@ -47,7 +47,7 @@ TAO_Default_Client_Strategy_Factory::TAO_Default_Client_Strategy_Factory (void)
   this->transport_mux_strategy_ = TAO_EXCLUSIVE_TMS;
 #endif /* TAO_USE_MUXED_TRANSPORT_MUX_STRATEGY */
 
-  // @@todo: will be changed when other strategies are implemented.
+  // @todo: will be changed when other strategies are implemented.
   this->connect_strategy_ = TAO_LEADER_FOLLOWER_CONNECT;
 }
 

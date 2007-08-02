@@ -230,7 +230,7 @@ CORBA::ValueBase::_tao_unmarshal_pre (TAO_InputCDR &strm,
 
   if (TAO_OBV_GIOP_Flags::is_indirection_tag (valuetag))
     {
-      //@@TODO: read indirection value.
+      //@todo: read indirection value.
         if (TAO_debug_level > 0)
           {
             ACE_ERROR ((LM_ERROR,
@@ -462,7 +462,7 @@ CORBA::ValueBase::_tao_write_special_value (TAO_OutputCDR &strm,
   {
     return strm.write_long (TAO_OBV_GIOP_Flags::Null_tag);
   }
-  //@@TODO: Check if the value is already written to stream. If it is then
+  //@todo: Check if the value is already written to stream. If it is then
   //        put indirection and return successful, otherwise does nothing
   //        and returns false.
   else
@@ -815,12 +815,12 @@ CORBA::ValueBase::_tao_read_repository_id_list (ACE_InputCDR& strm,
 
   if (num_ids == TAO_OBV_GIOP_Flags::Indirection_tag)
     {
-      //@@TODO: read indirection repository ids and return true.
+      //@todo: read indirection repository ids and return true.
       return false;
     }
   else
     {
-      //@@TODO: map repository id for indirection
+      //@todo: map repository id for indirection
       for (CORBA::Long i = 0; i < num_ids; ++i)
         {
           if (!_tao_read_repository_id (strm,ids))
