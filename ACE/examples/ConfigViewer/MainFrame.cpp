@@ -22,7 +22,7 @@ END_EVENT_TABLE()
 
 // frame constructor
 MainFrame::MainFrame(const wxString& title, const wxPoint& pos, const wxSize& size)
-: wxFrame((wxFrame *)NULL, -1, title, pos, size),
+: wxFrame((wxFrame *)0, -1, title, pos, size),
   m_pConfig(0)
 {
   m_pInstance = this;
