@@ -175,3 +175,4 @@ TAO/orbsvcs/tests/unit/Notify/MC/MonitorManager/run_test.pl: !ST !STATIC
 TAO/orbsvcs/tests/unit/Notify/MC/NotificationServiceMonitor/run_test.pl:
 TAO/orbsvcs/tests/unit/Notify/MC/Statistic_Registry/run_test.pl:
 TAO/orbsvcs/tests/unit/Notify/MC/Statistic/run_test.pl:
+TAO/orbsvcs/tests/Simple_Naming/run_test_ipv6.pl: IPV6 !ST !SUNCC5_1 !NO_MESSAGING !ACE_FOR_TAO !DISABLE_ToFix_LynxOS_x86 !DISABLE_ToFix_LynxOS_PPC !CORBA_E_MICRO
