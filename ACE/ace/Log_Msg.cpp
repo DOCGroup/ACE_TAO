@@ -342,7 +342,7 @@ ACE_Log_Msg::instance (void)
     }
 
   ACE_Log_Msg *tss_log_msg = 0;
-  void *temp = tss_log_msg;
+  void *temp = 0;
 
   // Get the tss_log_msg from thread-specific storage.
   if (ACE_Thread::getspecific (*(log_msg_tss_key ()), &temp) == -1)
@@ -508,21 +508,21 @@ ACE_Log_Msg::close (void)
              // is disabled. Otherwise in the event of a dynamic library
              // unload of libACE, by a program not linked with libACE,
              // ACE_TSS_cleanup will be invoked after libACE has been unloaded.
-             ACE_Log_Msg *tss_log_msg = 0;
+            ACE_Log_Msg *tss_log_msg = 0;
+            void *temp = 0;
 
              // Get the tss_log_msg from thread-specific storage.
-             if ( ACE_Thread::getspecific (*(log_msg_tss_key ()),
-                           reinterpret_cast <void **> (&tss_log_msg)) != -1
-                  && tss_log_msg)
-             {
-               // we haven't been cleaned up
-               ACE_TSS_cleanup(tss_log_msg);
-
-               if ( ACE_Thread::setspecific( (*log_msg_tss_key()),
-                                             (void *)0 ) != 0 )
+             if (ACE_Thread::getspecific (*(log_msg_tss_key ()), &temp) != -1
+                  && temp)
+              {
+                tss_log_msg = static_cast <ACE_Log_Msg *> (temp);
+                // we haven't been cleaned up
+                ACE_TSS_cleanup(tss_log_msg);
+                if (ACE_Thread::setspecific(*(log_msg_tss_key()),
+                                           reinterpret_cast <void *>(0)) != 0)
                 {
                   ACE_OS::printf ("ACE_Log_Msg::close failed to ACE_Thread::setspecific to 0\n");
-               }
+                }
              }
 #endif /* ACE_HAS_BROKEN_THREAD_KEYFREE */
            }
