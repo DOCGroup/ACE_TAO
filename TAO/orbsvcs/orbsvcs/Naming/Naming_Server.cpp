@@ -600,7 +600,11 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
             {
               if (this->ior_multicast_->init (this->naming_service_ior_.in (),
                                               port,
+#if defined (ACE_HAS_IPV6)
+                                              ACE_DEFAULT_MULTICASTV6_ADDR,
+#else
                                               ACE_DEFAULT_MULTICAST_ADDR,
+#endif /* ACE_HAS_IPV6 */
                                               TAO_SERVICEID_NAMESERVICE) == -1)
                 return -1;
             }
