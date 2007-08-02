@@ -1,3 +1,9 @@
+Thu Aug  2 20:43:18 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * apps/JAWS/clients/WebSTONE/src/bench.c:
+
+          Zap NULL usage.
+
 Thu Aug  2 20:24:22 UTC 2007  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * ace/Service_Config.h:
