@@ -172,58 +172,58 @@ text_to_rqst_stats(char *rqst_stats_as_text) {
     text_to_timeval(strtok(rqst_stats_as_text, "\t"));
  
   the_rqst_stats->totalresponsetimesq = 
-    text_to_double(strtok((char *)NULL, "\t")); 
+    text_to_double(strtok((char *)0, "\t")); 
 			     			       
   the_rqst_stats->minresponsetime = 
-    text_to_timeval(strtok((char *)NULL, "\t"));
+    text_to_timeval(strtok((char *)0, "\t"));
 			     
   the_rqst_stats->maxresponsetime = 
-    text_to_timeval(strtok((char *)NULL, "\t"));
+    text_to_timeval(strtok((char *)0, "\t"));
 			     
   the_rqst_stats->totalconnecttime = 
-    text_to_timeval(strtok((char *)NULL, "\t"));
+    text_to_timeval(strtok((char *)0, "\t"));
 			      
   the_rqst_stats->totalconnecttimesq = 
-    text_to_double(strtok((char *)NULL, "\t"));
+    text_to_double(strtok((char *)0, "\t"));
 			       
   the_rqst_stats->minconnecttime = 
-    text_to_timeval(strtok((char *)NULL, "\t"));
+    text_to_timeval(strtok((char *)0, "\t"));
 			     
   the_rqst_stats->maxconnecttime = 
-    text_to_timeval(strtok((char *)NULL, "\t"));
+    text_to_timeval(strtok((char *)0, "\t"));
 			      
   the_rqst_stats->totalconnects = (unsigned long)
-    text_to_double(strtok((char *)NULL, "\t"));
+    text_to_double(strtok((char *)0, "\t"));
 			       
   the_rqst_stats->totalerrs = (unsigned long)
-    text_to_double(strtok((char *)NULL, "\t"));
+    text_to_double(strtok((char *)0, "\t"));
 			         
   the_rqst_stats->totalerrortime = 
-    text_to_timeval(strtok((char *)NULL, "\t"));
+    text_to_timeval(strtok((char *)0, "\t"));
 			       
   the_rqst_stats->totalbytes = 
-    text_to_double(strtok((char *)NULL, "\t"));
+    text_to_double(strtok((char *)0, "\t"));
 			        
   the_rqst_stats->totalbytessq = 
-    text_to_double(strtok((char *)NULL, "\t"));
+    text_to_double(strtok((char *)0, "\t"));
 			         
   the_rqst_stats->minbytes = 
-    text_to_double(strtok((char *)NULL, "\t"));
+    text_to_double(strtok((char *)0, "\t"));
 			         
   the_rqst_stats->maxbytes = 
-    text_to_double(strtok((char *)NULL, "\t"));
+    text_to_double(strtok((char *)0, "\t"));
 			         
   the_rqst_stats->totalbody = 
-    text_to_double(strtok((char *)NULL, "\t"));
+    text_to_double(strtok((char *)0, "\t"));
 			         
   the_rqst_stats->totalbodysq = 
-    text_to_double(strtok((char *)NULL, "\t"));
+    text_to_double(strtok((char *)0, "\t"));
 			         
   the_rqst_stats->minbody = 
-    text_to_double(strtok((char *)NULL, "\t"));
+    text_to_double(strtok((char *)0, "\t"));
 			        
   the_rqst_stats->maxbody = 
-    text_to_double(strtok((char *)NULL, "\t"));
+    text_to_double(strtok((char *)0, "\t"));
 
   return(the_rqst_stats);
 } /* end text_to_rqst_stats */
@@ -314,14 +314,14 @@ text_to_stats(char *stats_as_text) {
   the_stats->rs = *the_rqst_stats;
 
   /* grab main structure */
-  the_stats->starttime = text_to_timeval(strtok((char *)NULL, "\t"));  
-  the_stats->endtime = text_to_timeval(strtok((char *)NULL, "\t"));  
-  the_stats->datatime = text_to_timeval(strtok((char *)NULL, "\t"));  
-  the_stats->totalpages = (unsigned long) text_to_double(strtok((char *)NULL, "\t"));  
-  the_stats->total_num_of_files = (unsigned int) text_to_double(strtok((char *)NULL, "\t"));  
+  the_stats->starttime = text_to_timeval(strtok((char *)0, "\t"));  
+  the_stats->endtime = text_to_timeval(strtok((char *)0, "\t"));  
+  the_stats->datatime = text_to_timeval(strtok((char *)0, "\t"));  
+  the_stats->totalpages = (unsigned long) text_to_double(strtok((char *)0, "\t"));  
+  the_stats->total_num_of_files = (unsigned int) text_to_double(strtok((char *)0, "\t"));  
   for (i = 0; i < number_of_pages; i++) 
     {   
-      the_stats->page_numbers[i] = (unsigned int) text_to_double(strtok((char *)NULL, "\t"));
+      the_stats->page_numbers[i] = (unsigned int) text_to_double(strtok((char *)0, "\t"));
     }
   /* return bytes read */
   D_PRINTF( "Returning stats\n");
@@ -384,11 +384,11 @@ text_to_page_stats(char *page_stats_as_text) {
   the_rqst_stats = text_to_rqst_stats(page_stats_as_text);
 
   /* grab main structure */
-  pagestats->totalpages = (unsigned long) text_to_double(strtok((char *)NULL, "\t")); 
+  pagestats->totalpages = (unsigned long) text_to_double(strtok((char *)0, "\t")); 
 			     
-  pagestats->page_size = (unsigned int) text_to_double(strtok((char *)NULL, "\t")); 
+  pagestats->page_size = (unsigned int) text_to_double(strtok((char *)0, "\t")); 
 			     
-  pagestats->page_valid = (int) text_to_double(strtok((char *)NULL, "\t")); 
+  pagestats->page_valid = (int) text_to_double(strtok((char *)0, "\t")); 
 			    
   pagestats->rs = *the_rqst_stats;
   /* return bytes read */
