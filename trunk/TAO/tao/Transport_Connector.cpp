@@ -578,7 +578,7 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
               // next time thru this loop (using it from here causes more problems
               // than it fixes due to the changes that allow a new connection to be
               // re-used by a nested upcall before we get back here.)
-// temporarily reverted              t->remove_reference ();
+              t->remove_reference ();
             }
           else // not making new connection
             {
