@@ -508,24 +508,21 @@ ACE_Log_Msg::close (void)
              // is disabled. Otherwise in the event of a dynamic library
              // unload of libACE, by a program not linked with libACE,
              // ACE_TSS_cleanup will be invoked after libACE has been unloaded.
-
              ACE_Log_Msg *tss_log_msg = 0;
 
              // Get the tss_log_msg from thread-specific storage.
              if ( ACE_Thread::getspecific (*(log_msg_tss_key ()),
-                           ACE_reinterpret_cast (void **, &tss_log_msg)) != -1
+                           reinterpret_cast <void **> (&tss_log_msg)) != -1
                   && tss_log_msg)
              {
                // we haven't been cleaned up
                ACE_TSS_cleanup(tss_log_msg);
 
                if ( ACE_Thread::setspecific( (*log_msg_tss_key()),
-                                             (void *)NULL ) != 0 )
-               {
-                  ACE_DEBUG ((LM_DEBUG,
-                              ACE_TEXT ("(%P|%t) ACE_Log_Msg::close failed to ACE_Thread::setspecific to NULL\n")));
+                                             (void *)0 ) != 0 )
+                {
+                  ACE_OS::printf ("ACE_Log_Msg::close failed to ACE_Thread::setspecific to 0\n");
                }
-
              }
 #endif /* ACE_HAS_BROKEN_THREAD_KEYFREE */
            }

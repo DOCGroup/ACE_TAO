@@ -1,7 +1,15 @@
+Thu Aug  2 09:22:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Log_Msg.cpp:
+          Use regular reinterpret_cast, use 0 instead of NULL and
+          in case setspecific fails just do a printf, not an ACE_DEBUG
+          because that will use ACE_Log_Msg again.
+
 Wed Aug  1 21:39:04 UTC 2007  Dale Wilson  <wilsond@ociweb.com>
 
         * bin/tao_orb_tests.lst:
           Enable TAO\tests\Bug_2935_Regression
+
 Wed Aug  1 18:55:12 UTC 2007  Martin Corino  <mcorino@remedy.nl>
 
         * bin/PerlACE/ConfigList.pm:
