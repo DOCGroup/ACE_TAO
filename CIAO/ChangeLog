@@ -1,3 +1,11 @@
+Thu Aug  2 03:37:40 UTC 2007  Krishnakumar B  <kitty@nospam.invalid.domain>
+
+        * examples/BasicSP/BMDisplay/BMDisplay.mpc:
+
+          Added a dependency from BMDisplay_exec to BasicSP_exec.  Fixes
+          problems due to build order.  Thanks to Johnny and Gan for
+          reporting the problem.
+
 Fri Jul 27 06:50:14 CDT 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * CIAO version 0.5.10 released.
