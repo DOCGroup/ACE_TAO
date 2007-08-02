@@ -63,7 +63,7 @@ project(BMDisplay_stub): ciao_client_dnc {
 
 
 project(BMDisplay_exec) : ciao_component_dnc {
-  after      += BMDisplay_stub BMDisplay_lem_gen
+  after      += BMDisplay_stub BMDisplay_lem_gen BasicSP_exec
 
   sharedname = BMDisplay_exec
   libs       += BMDisplay_stub
