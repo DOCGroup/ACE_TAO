@@ -19,7 +19,7 @@ TAO_Condition<MUTEX>::TAO_Condition (MUTEX &m)
     delete_lock_ (0),
     cond_ (0)
 {
-  // @@todo: Need to add the allocatore here..
+  // @todo: Need to add the allocatore here..
   ACE_NEW (this->cond_,
            TAO_SYNCH_CONDITION (*this->mutex_));
 }
@@ -31,7 +31,7 @@ TAO_Condition<MUTEX>::TAO_Condition (void)
       cond_ (0)
 
 {
-  // @@todo: Need to add the allocatore here..
+  // @todo: Need to add the allocatore here..
 
   ACE_NEW (this->mutex_,
            MUTEX);

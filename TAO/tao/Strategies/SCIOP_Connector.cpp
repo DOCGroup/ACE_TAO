@@ -41,7 +41,7 @@ TAO_SCIOP_Connector::~TAO_SCIOP_Connector (void)
 int
 TAO_SCIOP_Connector::open (TAO_ORB_Core *orb_core)
 {
-  // @@todo: The functionality of the following two statements could
+  // @todo: The functionality of the following two statements could
   // be  done in the constructor, but that involves changing the
   // interface of the pluggable transport factory.
 

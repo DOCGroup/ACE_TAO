@@ -282,7 +282,7 @@ TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
       {
         ++curarg;
 
-        // @@todo: This needs to be removed after a few betas. The
+        // @todo: This needs to be removed after a few betas. The
         // note is being written during 1.2.3 timeframe.
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("(%P|%t) This option would be deprecated \n")

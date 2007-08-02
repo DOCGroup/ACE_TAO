@@ -115,7 +115,7 @@ TAO_Asynch_Queued_Message::clone (ACE_Allocator *alloc)
 {
   char *buf = 0;
 
-  // @@todo: Need to use a memory pool. But certain things need to
+  // @todo: Need to use a memory pool. But certain things need to
   // change a bit in this class for that. Till then.
 
   // Just allocate and copy data that needs to be sent, no point

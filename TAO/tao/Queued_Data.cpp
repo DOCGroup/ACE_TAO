@@ -143,7 +143,7 @@ TAO_Queued_Data::release (TAO_Queued_Data *qd)
       return;
     }
 
-  // @@todo: Need to be removed at some point of time!
+  // @todo: Need to be removed at some point of time!
   if (TAO_debug_level == 4)
     {
       // This debug is for testing purposes!
