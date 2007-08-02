@@ -4757,6 +4757,7 @@ provides_decl :
               AST_Component::port_description pd;
               pd.id = $3;
               pd.impl = interface_type;
+              pd.line_number = idl_global->lineno ();
               c->provides ().enqueue_tail (pd);
             }
 
@@ -4852,6 +4853,7 @@ uses_decl :
               ud.id = $4;
               ud.impl = interface_type;
               ud.is_multiple = $2;
+              ud.line_number = idl_global->lineno ();
               c->uses ().enqueue_tail (ud);
 
               if (ud.is_multiple == true
@@ -4932,6 +4934,7 @@ emits_decl :
                   AST_Component::port_description pd;
                   pd.id = $3;
                   pd.impl = event_type;
+                  pd.line_number = idl_global->lineno ();
                   c->emits ().enqueue_tail (pd);
                 }
             }
@@ -4990,6 +4993,7 @@ publishes_decl :
                   AST_Component::port_description pd;
                   pd.id = $3;
                   pd.impl = event_type;
+                  pd.line_number = idl_global->lineno ();
                   c->publishes ().enqueue_tail (pd);
                 }
             }
@@ -5048,6 +5052,7 @@ consumes_decl :
                   AST_Component::port_description pd;
                   pd.id = $3;
                   pd.impl = event_type;
+                  pd.line_number = idl_global->lineno ();
                   c->consumes ().enqueue_tail (pd);
                 }
             }

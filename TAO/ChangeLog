@@ -1,3 +1,18 @@
+Thu Aug  2 09:45:21 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/include/ast_component.h:
+        
+          Added 'line_number' member to the port description struct.
+          Since ports aren't nodes (which store their line numbers)
+          in the AST, this helps some backends get a total ordering
+          of a component's members.
+          
+        * TAO_IDL/fe/y.tab.cpp:
+        * TAO_IDL/fe/idl.yy:
+        
+          Added code to set the line number member before the port
+          description struct in enqueued in its component node.
+
 Thu Aug  2 09:03:02 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/include/idl_defines.h:
