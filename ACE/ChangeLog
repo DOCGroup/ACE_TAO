@@ -1,3 +1,13 @@
+Thu Aug  2 22:02:32 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * tests/Dirent_Test.cpp: Fixed to allow running the test against
+          directories other than "../tests". Picks hardcoded TEST_DIR if
+          compiled in (as previously) but will otherwise try $top_srcdir/tests,
+          $ACE_ROOT/tests, or ../tests depending on env variables present.
+          Allows the test to run in autoconf builds (fixes Bugzilla 1794).
+          Also removed all the ACE_ASSERTs, replacing them with informative
+          diagnostics.
+
 Thu Aug  2 21:31:32 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * examples/ConfigViewer/MainFrame.cpp:
