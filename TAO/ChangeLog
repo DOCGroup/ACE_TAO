@@ -1,3 +1,17 @@
+Thu Aug  2 14:07:01 UTC 2007  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * orbsvcs/orbsvcs/Naming/Naming_Server.cpp:
+          Made so that TAO_Naming_Server uses ACE_DEFAULT_MULTICASTV6_ADDR
+          in IPv6 builds.
+
+        * orbsvcs/tests/Simple_Naming/run_test_ipv6.pl:
+        * orbsvcs/tests/Simple_Naming/run_test.pl:
+          Updated this test so that in IPv4 builds it uses strictly IPv4
+          multicast address and in IPv6 builds it uses node-local (starting
+          with ff01) multicast address since IPv6 networking is not properly
+          configured on TAO tests machines and thus other types of IPv6
+          multicast addresses do not work.
+
 Thu Aug  2 11:33:16 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/orbsvcs/Notify/MonitorControlExt/MC_Default_Factory.h:
