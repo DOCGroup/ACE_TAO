@@ -1,3 +1,8 @@
+Thu Aug  2 14:19:46 UTC 2007  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * bin/tao_other_tests.lst:
+          Added a new test TAO/orbsvcs/tests/Simple_Naming/run_test_ipv6.pl
+
 Thu Aug  2 11:43:35 UTC 2007  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * ace/Service_Config.h:
