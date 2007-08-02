@@ -1,3 +1,8 @@
+Thu Aug  2 08:55:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_2935_Regression/Bug_2935_Regression.mpc:
+          Simplified this mpc file
+
 Thu Aug  2 08:39:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Asynch_Queued_Message.cpp:

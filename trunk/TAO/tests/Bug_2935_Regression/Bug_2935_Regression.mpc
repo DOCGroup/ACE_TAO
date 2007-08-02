@@ -8,7 +8,7 @@ project(*IDL): taoidldefaults {
   custom_only = 1
 }
 
-project(*sink): namingexe, iortable, utils {
+project(*sink): taoserver {
   exename = sink
   after += *IDL
   Source_Files {
@@ -21,7 +21,7 @@ project(*sink): namingexe, iortable, utils {
   }
 }
 
-project(*middle) : namingexe, iortable, utils {
+project(*middle) : taoserver {
   exename = middle
   after += *IDL
   Source_Files {
@@ -34,7 +34,7 @@ project(*middle) : namingexe, iortable, utils {
   }
 }
 
-project(*source): namingexe, iortable, utils {
+project(*source): taoclient {
   exename = source
   after += *IDL
   Source_Files {
