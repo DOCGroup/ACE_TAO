@@ -151,16 +151,16 @@ public:
 /// called before ~ACE_Object_Manager.
 
 ACE_MT (
-		// Since ACE_TSS<>::cleanup() is only defined in 
-		// multithreaded builds ...
-		template<> inline void
-		ACE_TSS<ACE_Service_Gestalt>::cleanup (void*ptr)
-		{
-			// Borland C++ 2007 *needs* the parameter 
-			// name, but it is not clear why ...
-			ACE_UNUSED_ARG (ptr);
-		}
-); // ACE_MT
+    // Since ACE_TSS<>::cleanup() is only defined in
+    // multithreaded builds ...
+    template<> inline void
+    ACE_TSS<ACE_Service_Gestalt>::cleanup (void*ptr)
+    {
+      // Borland C++ 2007 *needs* the parameter
+      // name, but it is not clear why ...
+      ACE_UNUSED_ARG (ptr);
+    }
+) // ACE_MT
 
 
 /**
