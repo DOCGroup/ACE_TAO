@@ -636,7 +636,7 @@ sub check_for_NULL ()
                     $disable = 0;
                 }
                 if ($disable == 0) {
-                    if(/(\(|\s+|=)NULL(\)|\s+|\;|\,)/ and $` !~ /\/\// and $` !~ /\/\*/ and $` !~ /\*\*+/ and $` !~ /\s+\*+\s+/) {
+                    if(/(\(|\)|\s+|=)NULL(\)|\s+|\;|\,)/ and $` !~ /\/\// and $` !~ /\/\*/ and $` !~ /\*\*+/ and $` !~ /\s+\*+\s+/) {
                         print_error ("$file:$.: NULL found");
                     }
                 }
