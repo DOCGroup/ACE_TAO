@@ -40,7 +40,7 @@ $status = 0;
 
 sub name_server
 {
-    my $args = "-ORBMulticastDiscoveryEndpoint 224.9.9.2:$ns_multicast_port -o $iorfile -m 1 @_";
+    my $args = "-ORBMulticastDiscoveryEndpoint [ff01::ff01:1]:$ns_multicast_port -o $iorfile -m 1 @_";
     my $prog = "$startdir/../../Naming_Service/Naming_Service";
     $NS = new PerlACE::Process ($prog, $args);
 
@@ -77,7 +77,7 @@ sub client
 # Options for all simple tests recognized by the 'client' program.
 @opts = ("-s -ORBInitRef NameService=file://$iorfile",
          "-p $persistent_ior_file -ORBInitRef NameService=file://$iorfile",
-         "-s -ORBInitRef NameService=mcast://224.9.9.2:$ns_multicast_port\::/NameService",
+         "-s -ORBInitRef NameService=mcast://[ff01::ff01:1]:$ns_multicast_port\::/NameService",
          "-t -ORBInitRef NameService=file://$iorfile",
          "-i -ORBInitRef NameService=file://$iorfile",
          "-e -ORBInitRef NameService=file://$iorfile",
