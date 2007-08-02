@@ -1,3 +1,14 @@
+Thu Aug  2 03:15:32 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tests/Bug_2935_Regression/middle_i.h:
+        * tests/Bug_2935_Regression/middle_i.cpp:
+        * tests/Bug_2935_Regression/sink_i.h:
+        * tests/Bug_2935_Regression/sink_i.cpp:
+          Removed ACE_THROW_SPEC anachronisms.
+
+        * tests/Bug_2935_Regression/Bug_2935_Regression.mwc:
+          Removed this file.
+
 Wed Aug  1 21:54:15 UTC 2007  Dale Wilson  <wilsond@ociweb.com>
 
         * NEWS:

@@ -27,7 +27,7 @@ Middle_i::parse_args(int /*argc*/ , char* /*argv*/[] )
 // Implement the tick method
 
 void
-Middle_i::tick () ACE_THROW_SPEC ((::CORBA::SystemException))
+Middle_i::tick ()
 {
   ACE_DEBUG((LM_DEBUG, "Middle (%P|%t) tick.\n"));
   try
@@ -45,7 +45,7 @@ Middle_i::tick () ACE_THROW_SPEC ((::CORBA::SystemException))
 }
 
 void
-Middle_i::tock () ACE_THROW_SPEC ((::CORBA::SystemException))
+Middle_i::tock ()
 {
   ACE_DEBUG((LM_DEBUG, "Middle (%P|%t) tock.\n"));
   try
@@ -65,7 +65,7 @@ Middle_i::tock () ACE_THROW_SPEC ((::CORBA::SystemException))
 }
 
 ::CORBA::ULong
-Middle_i::tickCount () ACE_THROW_SPEC ((::CORBA::SystemException))
+Middle_i::tickCount ()
 {
   ACE_DEBUG((LM_DEBUG, "Middle (%P|%t) tickCount.\n"));
   try
@@ -85,7 +85,7 @@ Middle_i::tickCount () ACE_THROW_SPEC ((::CORBA::SystemException))
 }
 
 ::CORBA::ULong
-Middle_i::tockCount () ACE_THROW_SPEC ((::CORBA::SystemException))
+Middle_i::tockCount ()
 {
   ACE_DEBUG((LM_DEBUG, "Middle (%P|%t) tockCount.\n"));
   try
@@ -108,7 +108,7 @@ Middle_i::tockCount () ACE_THROW_SPEC ((::CORBA::SystemException))
 // Shutdown.
 
 void
-Middle_i::shutdown () ACE_THROW_SPEC ((::CORBA::SystemException))
+Middle_i::shutdown ()
 {
   ACE_DEBUG((LM_DEBUG, "Middle (%P|%t) shutdown.\n"));
   target_->shutdown();
@@ -119,4 +119,3 @@ Middle_i::shutdown () ACE_THROW_SPEC ((::CORBA::SystemException))
   // Instruct the ORB to shutdown.
   this->orb_->shutdown (false);
 }
-
