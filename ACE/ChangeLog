@@ -1,3 +1,9 @@
+Thu Aug  2 21:31:32 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * examples/ConfigViewer/MainFrame.cpp:
+
+          ZAP the last NULL usage in the distrubtion.
+
 Thu Aug  2 20:43:18 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * apps/JAWS/clients/WebSTONE/src/bench.c:
