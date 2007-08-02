@@ -1,0 +1,16 @@
+//$Id$
+
+project(CIDLC): cidlc {
+  exename = cidlc
+  after += IDL2 IDL3 CIDL CodeGenerationKit CompilerElements
+  install = ../bin
+  libs += CIDL IDL3 IDL2 CodeGenerationKit CompilerElements
+
+  Source_Files {
+    *.cpp
+  }
+
+  Header_Files {
+    *.hpp
+  }
+}

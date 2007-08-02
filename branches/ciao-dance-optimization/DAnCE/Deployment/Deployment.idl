@@ -1,0 +1,52 @@
+// $Id$
+
+#ifndef DEPLOYMENT_IDL
+#define DEPLOYMENT_IDL
+
+#include "DAnCE/Deployment/Deployment_Packaging_Data.idl"
+#include "DAnCE/Deployment/Deployment_PlanError.idl"
+
+module Deployment {
+
+  exception InvalidProperty {
+    string name;
+    string reason;
+  };
+  
+  // @@added
+  exception InvalidNodeExecParameter {
+    string name;
+    string reason;
+  };
+  
+  // @@added
+  exception InvalidComponentExecParameter {
+    string name;
+    string reason;
+  };
+  
+  // @@added
+  exception LastConfiguration {
+  };
+  
+  exception NoSuchName {
+  };
+
+  exception InvalidReference {
+  };
+
+  /// Below exception types are CIAO specific
+  exception PlanNotExist {
+  };
+
+  /// CIAO specific struct type used for shared component management
+  /// mapping the name of component to its plan_uuid
+  struct ComponentPlan
+  {
+    string name;
+    string plan_uuid;
+  };
+  typedef sequence < ComponentPlan > ComponentPlans;
+};
+
+#endif /* DEPLOYMENT_IDL */
