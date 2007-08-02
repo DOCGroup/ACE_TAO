@@ -1,3 +1,12 @@
+Thu Aug  2 09:03:02 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/include/idl_defines.h:
+        
+          Changed the size of the buffer that holds filenames to be
+          processed from 1024 to 2048. A crash was reported and it
+          was determined that there was an attempt to process ~1450
+          IDL files.
+
 Thu Aug  2 08:55:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_2935_Regression/Bug_2935_Regression.mpc:
