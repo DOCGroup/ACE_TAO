@@ -16,8 +16,6 @@ use English;
 $status = 0;
 
 $iorfile = PerlACE::LocalFile ("cubit.ior");
-$iiop_lite_conf = PerlACE::LocalFile ("iiop_lite$PerlACE::svcconf_ext");
-$uiop_lite_conf = PerlACE::LocalFile ("uiop_lite$PerlACE::svcconf_ext");
 $server_shmiop_conf = PerlACE::LocalFile ("server_shmiop$PerlACE::svcconf_ext");
 
 $svnsflags = " -f $iorfile";
@@ -25,7 +23,6 @@ $clnsflags = " -f $iorfile";
 $clflags = "";
 $svflags = "";
 $quietflag = " -q ";
-$giopliteflag = 0;
 
 ###############################################################################
 # Parse the arguments
