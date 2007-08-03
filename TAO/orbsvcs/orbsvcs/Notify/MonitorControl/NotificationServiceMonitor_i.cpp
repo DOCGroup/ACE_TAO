@@ -169,7 +169,7 @@ NotificationServiceMonitor_i::get_data (
       if (statistic->type () == TAO_Statistic::TS_LIST)
         {
           TAO_Statistic::List slist (statistic->get_list ());
-          CORBA::ULong size = slist.size ();
+          CORBA::ULong size = static_cast<CORBA::ULong> (slist.size ());
           CosNotification::NotificationServiceMonitorControl::NameList
             list (size);
           list.length (size);
@@ -182,7 +182,7 @@ NotificationServiceMonitor_i::get_data (
       else
         {
           CosNotification::NotificationServiceMonitorControl::Numeric num;
-          num.count = statistic->count ();
+          num.count = static_cast<CORBA::ULong> (statistic->count ());
           num.minimum = statistic->minimum_sample ();
           num.maximum = statistic->maximum_sample ();
           num.last = statistic->last_sample ();
