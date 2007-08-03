@@ -2017,6 +2017,7 @@ CLEANFILES += \
 Notify/MonitorControl/NotificationServiceMCC.cpp Notify/MonitorControl/NotificationServiceMCC.h Notify/MonitorControl/NotificationServiceMCC.inl Notify/MonitorControl/NotificationServiceMCS.cpp Notify/MonitorControl/NotificationServiceMCS.h Notify/MonitorControl/NotificationServiceMCS.inl: Notify/MonitorControl/NotificationServiceMC-stamp
 
 Notify/MonitorControl/NotificationServiceMC-stamp: $(srcdir)/Notify/MonitorControl/NotificationServiceMC.idl $(TAO_IDL_DEP)
+	mkdir -p Notify/MonitorControl
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -I$(TAO_ROOT)/orbsvcs -o Notify/MonitorControl -Wb,export_macro=TAO_Notify_MC_Export -Wb,export_include=notify_mc_export.h $(srcdir)/Notify/MonitorControl/NotificationServiceMC.idl
 	@touch "$@"
 
@@ -2460,6 +2461,7 @@ CLEANFILES += \
 Notify/MonitorControlExt/NotifyMonitoringExtC.cpp Notify/MonitorControlExt/NotifyMonitoringExtC.h Notify/MonitorControlExt/NotifyMonitoringExtC.inl Notify/MonitorControlExt/NotifyMonitoringExtS.cpp Notify/MonitorControlExt/NotifyMonitoringExtS.h Notify/MonitorControlExt/NotifyMonitoringExtS.inl: Notify/MonitorControlExt/NotifyMonitoringExt-stamp
 
 Notify/MonitorControlExt/NotifyMonitoringExt-stamp: $(srcdir)/Notify/MonitorControlExt/NotifyMonitoringExt.idl $(TAO_IDL_DEP)
+	mkdir -p Notify/MonitorControlExt
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -o Notify/MonitorControlExt -Wb,export_macro=TAO_Notify_MC_Ext_Export -Wb,export_include=notify_mc_ext_export.h $(srcdir)/Notify/MonitorControlExt/NotifyMonitoringExt.idl
 	@touch "$@"
 

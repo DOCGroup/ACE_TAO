@@ -1,3 +1,16 @@
+Fri Aug  3 12:44:51 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/orbsvcs/CosNotification.mpc:
+        * orbsvcs/orbsvcs/Makefile.am:
+
+          Fixed an issue where the destination directory for the idl
+          generated files does not exist (for automake only).
+
+        * orbsvcs/examples/Notify/MC/monitor/monitor.cpp:
+        * orbsvcs/orbsvcs/Notify/MonitorControl/NotificationServiceMonitor_i.cpp:
+
+          Fixed build warnings about conversion from size_t to CORBA::Ulong.
+
 Fri Aug  3 08:56:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/POA/Single_Threaded_POA/run_test.pl:

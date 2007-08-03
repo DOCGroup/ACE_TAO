@@ -250,6 +250,7 @@ project(CosNotification_MC): tao_versioning_idl_defaults, naming, portableserver
   dynamicflags = TAO_NOTIFY_MC_BUILD_DLL
 
   IDL_Files {
+    gendir = Notify/MonitorControl
     commandflags += -o Notify/MonitorControl -Wb,export_macro=TAO_Notify_MC_Export -Wb,export_include=notify_mc_export.h
     Notify/MonitorControl
   }
@@ -276,6 +277,7 @@ project(CosNotification_MC_Ext): notification_serv, notification_mc, install {
   dynamicflags = TAO_NOTIFY_MC_EXT_BUILD_DLL
 
   IDL_Files {
+    gendir = Notify/MonitorControlExt
     commandflags += -o Notify/MonitorControlExt -Wb,export_macro=TAO_Notify_MC_Ext_Export -Wb,export_include=notify_mc_ext_export.h
     Notify/MonitorControlExt
   }
