@@ -116,6 +116,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 
 // ----------------------------------------------------------------
 
+//FUZZ: disable check_for_exception_sepc
 #if !defined (ACE_LACKS_DEPRECATED_MACROS)
   #if defined (ACE_HAS_NO_THROW_SPEC)
   #  define ACE_THROW_SPEC(X)
@@ -132,6 +133,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
   #  endif /* ! ACE_HAS_EXCEPTIONS */
   #endif /*ACE_HAS_NO_THROW_SPEC*/
 #endif /* ACE_LACKS_DEPRECATED_MACROS */
+//FUZZ: enable check_for_exception_sepc
 
 // ----------------------------------------------------------------
 
