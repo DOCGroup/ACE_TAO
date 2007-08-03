@@ -12,6 +12,7 @@
 #include <iostream>
 #include <sstream>
 #include <string>
+#include <vector>
 
 namespace CIAO
 {
@@ -20,7 +21,7 @@ namespace CIAO
     class Task : public ACE_Task_Base
     {
     public:
-      Task (Plan_Launcher_Benchmark_i launcher,
+      Task (Plan_Launcher_Benchmark_i &launcher,
             const ::Deployment::DeploymentPlan &plan);
       int svc (void);
 
@@ -34,7 +35,7 @@ namespace CIAO
 
     int Task::plan_id_count_ = 0;
 
-    Task::Task (Plan_Launcher_Benchmark_i launcher,
+    Task::Task (Plan_Launcher_Benchmark_i &launcher,
                 const ::Deployment::DeploymentPlan &plan)
       : launcher_ (launcher),
         plan_ (plan)
@@ -72,33 +73,63 @@ namespace CIAO
         return this->launch_plan_i (plan);
 
       // Create task.
-
-      Task task (*this, plan);
+      std::vector<Task*> task_vector;
 
       // Task activation flags.
       long flags = THR_NEW_LWP | THR_JOINABLE;
 
-      // Activate task with a number of threads
-      int result = task.activate (flags, nthreads_);
-      if (result == -1)
+      for (size_t i = 0; i < nthreads_; ++i)
         {
-          /*
-          if (errno == EPERM)
+          Deployment::DeploymentPlan tmp_plan (plan);
+
+          DAnCE_Utils::remove_instance (tmp_plan, 
+                                        "Hello-Sender-idd");       
+
+          char trailing[256];
+          ACE_OS::itoa (i, trailing, 10);
+          ACE_CString inst_name ("Sender");
+          inst_name += trailing;
+          DAnCE_Utils::add_instances (100,
+                                      tmp_plan, 
+                                      inst_name.c_str (),
+                                      "SenderNode",
+                                      "Hello-Sender-mdd",
+                                      0);
+
+
+
+          Task * task;
+
+          ACE_NEW_RETURN (task, 
+                          Task (*this, tmp_plan),
+                          0);
+
+          task_vector.push_back (task);
+
+          int result = task->activate (flags);
+
+          if (result == -1)
             {
-              ACE_ERROR_RETURN ((LM_ERROR,
-                                 "Cannot create thread with scheduling policy %s\n"
-                                 "because the user does not have the appropriate privileges, terminating program....\n"
-                                 "Check svc.conf options and/or run as root\n",
-                                 sched_policy_name (orb_->orb_core ()->orb_params ()->ace_sched_policy ())),
-                                2);
+              /*
+              if (errno == EPERM)
+                {
+                  ACE_ERROR_RETURN ((LM_ERROR,
+                                    "Cannot create thread with scheduling policy %s\n"
+                                    "because the user does not have the appropriate privileges, terminating program....\n"
+                                    "Check svc.conf options and/or run as root\n",
+                                    sched_policy_name (orb_->orb_core ()->orb_params ()->ace_sched_policy ())),
+                                    2);
+                }
+              else
+                // Unexpected error. */
+                ACE_ASSERT (0);
             }
-          else
-            // Unexpected error. */
-            ACE_ASSERT (0);
         }
 
-      // Wait for task to exit.
-      task.wait ();
+      for (size_t i = 0; i < nthreads_; ++i)
+        {
+          task_vector[i]->wait ();
+        }
 
       return plan.UUID.in ();
     }
@@ -117,7 +148,8 @@ namespace CIAO
                                       "SenderNode",
                                       "Hello-Sender-mdd",
                                       0);
-          
+
+
           DAnCE_Utils::add_instances (100,
                                       tmp_plan, 
                                       "Receiver",
@@ -125,7 +157,7 @@ namespace CIAO
                                       "Hello-Receiver-mdd",
                                       0);
 */
-          DAnCE_Utils::print_instances (tmp_plan);
+          // DAnCE_Utils::print_instances (tmp_plan);
 
           ///// Start Test ////////////////////////////////////////////
           ACE_Sample_History history_prepare_plan (this->niterations_);
@@ -145,7 +177,7 @@ ACE_DEBUG ((LM_DEBUG,
             if (CORBA::is_nil (this->em_.in ()))
               {
                 ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("CIAO::Plan_Launcher_Benchmark_i: ")
+                  ACE_TEXT ("(%P|%t) CIAO::Plan_Launcher_Benchmark_i: ")
                   ACE_TEXT ("launch_plan called witn an uninitialized EM.\n")));
                 return 0;
               }
@@ -153,7 +185,7 @@ ACE_DEBUG ((LM_DEBUG,
             if (CIAO::debug_level () > 9)
               {
                 ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("CIAO::Plan_Launcher_Benchmark_i: " )
+                  ACE_TEXT ("(%P|%t) CIAO::Plan_Launcher_Benchmark_i: " )
                   ACE_TEXT ("about to call this->em_->preparePlan\n")));
               }
 
@@ -163,13 +195,10 @@ ACE_DEBUG ((LM_DEBUG,
             call_end = ACE_OS::gethrtime ();
             history_prepare_plan.sample (call_end - call_start);
 
-ACE_DEBUG ((LM_DEBUG,
-           "(%P|%t) **** step 20\n"));
-
             if (CIAO::debug_level () > 9)
               {
                 ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("CIAO::Plan_Launcher_Benchmark_i: " )
+                  ACE_TEXT ("(%P|%t) CIAO::Plan_Launcher_Benchmark_i: " )
                   ACE_TEXT ("after to call this->em_->preparePlan\n")));
               }
 
@@ -184,7 +213,7 @@ ACE_DEBUG ((LM_DEBUG,
             if (CIAO::debug_level () > 9)
               {
                 ACE_DEBUG ((LM_DEBUG,
-                  "CIAO_PlanLauncher: Obtained DAM ref \n"));
+                  "(%P|%t) CIAO_PlanLauncher: Obtained DAM ref \n"));
               }
 
             ::Deployment::Properties_var properties;
@@ -195,12 +224,8 @@ ACE_DEBUG ((LM_DEBUG,
             if (CIAO::debug_level ())
             {
               ACE_DEBUG ((LM_DEBUG,
-                "CIAO_PlanLauncher: start Launch application...\n"));
+                "(%P|%t) CIAO_PlanLauncher: start Launch application...\n"));
             }
-
-
-ACE_DEBUG ((LM_DEBUG,
-           "(%P|%t) **** step 30\n"));
 
             // Do not start the Application immediately since it violates
             // the semantics of component activation sequence
@@ -219,11 +244,7 @@ ACE_DEBUG ((LM_DEBUG,
             // Call finish Launch to complete the connections
             if (CIAO::debug_level ())
               ACE_DEBUG ((LM_DEBUG,
-                          "CIAO_PlanLauncher: finish Launch application...\n"));
-
-
-ACE_DEBUG ((LM_DEBUG,
-           "(%P|%t) **** step 40\n"));
+                          "(%P|%t) CIAO_PlanLauncher: finish Launch application...\n"));
 
             //////// Measure the latency for finishLaunch()  ////////////////
             call_start = ACE_OS::gethrtime ();
@@ -234,13 +255,10 @@ ACE_DEBUG ((LM_DEBUG,
             if (CIAO::debug_level ())
               ACE_DEBUG ((LM_DEBUG, "[success]\n"));
 
-ACE_DEBUG ((LM_DEBUG,
-           "(%P|%t) **** step 50\n"));
-
             // Call start to activate components
             if (CIAO::debug_level ())
               ACE_DEBUG ((LM_DEBUG,
-                          "CIAO_PlanLauncher: start activating components...\n"));
+                          "(%P|%t) CIAO_PlanLauncher: start activating components...\n"));
 
             //////// Measure the latency for start()  ////////////////
             call_start = ACE_OS::gethrtime ();
@@ -248,23 +266,16 @@ ACE_DEBUG ((LM_DEBUG,
             call_end = ACE_OS::gethrtime ();
             history_start_system.sample (call_end - call_start);
 
-ACE_DEBUG ((LM_DEBUG,
-           "(%P|%t) **** step 60\n"));
-
-
             if (CIAO::debug_level ())
               ACE_DEBUG ((LM_DEBUG, "[success]\n"));
 
             if (CIAO::debug_level ())
               ACE_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("CIAO_PlanLauncher: ")
+                          ACE_TEXT ("(%P|%t) CIAO_PlanLauncher: ")
                           ACE_TEXT ("Application Deployed successfully\n")));
 
-         //   map_.bind_dam_reference (tmp_plan.UUID.in (),
-         //                            Deployment::DomainApplicationManager::_duplicate (dam.in ()));
-
-ACE_DEBUG ((LM_DEBUG,
-           "(%P|%t) **** step 65\n"));
+            map_.bind_dam_reference (tmp_plan.UUID.in (),
+                                     Deployment::DomainApplicationManager::_duplicate (dam.in ()));
 
             // In order to run the launch_plan() multiple times to collect benchmarking
             // results, we have to tear down the plan and then redeploy.
@@ -275,15 +286,12 @@ ACE_DEBUG ((LM_DEBUG,
               }
           }
 
-ACE_DEBUG ((LM_DEBUG,
-           "(%P|%t) **** step 70\n"));
-
           ///// End Test ////////////////////////////////////////////
           ACE_hrtime_t test_end = ACE_OS::gethrtime ();
 
-          ACE_DEBUG ((LM_DEBUG, "test finished\n"));
+          ACE_DEBUG ((LM_DEBUG, "(%P|%t) Test finished\n"));
 
-          ACE_DEBUG ((LM_DEBUG, "High resolution timer calibration...."));
+          ACE_DEBUG ((LM_DEBUG, "(%P|%t) High resolution timer calibration...."));
           ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
           ACE_DEBUG ((LM_DEBUG, "done\n"));
 
@@ -319,7 +327,7 @@ ACE_DEBUG ((LM_DEBUG,
       catch (Deployment::ResourceNotAvailable& ex)
         {
           ACE_ERROR ((LM_ERROR,
-                      "EXCEPTION: ResourceNotAvaiable exception caught: %s,\n"
+                      "(%P|%t) EXCEPTION: ResourceNotAvaiable exception caught: %s,\n"
                       "Type: %s\n"
                       "Property: %s\n"
                       "Element: %s\n"
@@ -334,7 +342,7 @@ ACE_DEBUG ((LM_DEBUG,
       catch (Deployment::StartError& ex)
         {
           ACE_ERROR ((LM_ERROR,
-                      "EXCEPTION: StartError exception caught: %s, %s\n",
+                      "(%P|%t) EXCEPTION: StartError exception caught: %s, %s\n",
                       ex.name.in (),
                       ex.reason.in ()));
           throw Deployment_Failure ("");
@@ -342,7 +350,7 @@ ACE_DEBUG ((LM_DEBUG,
       catch (Deployment::InvalidProperty& ex)
         {
           ACE_ERROR ((LM_ERROR,
-                      "EXCEPTION: InvalidProperty exception caught: %s, %s\n",
+                      "(%P|%t) EXCEPTION: InvalidProperty exception caught: %s, %s\n",
                       ex.name.in (),
                       ex.reason.in ()));
           throw Deployment_Failure ("");
@@ -350,7 +358,7 @@ ACE_DEBUG ((LM_DEBUG,
       catch (Deployment::InvalidConnection& ex)
         {
           ACE_ERROR ((LM_ERROR,
-                      "EXCEPTION: InvalidConnection exception caught: %s, %s\n",
+                      "(%P|%t) EXCEPTION: InvalidConnection exception caught: %s, %s\n",
                       ex.name.in (),
                       ex.reason.in ()));
           throw Deployment_Failure  ("");
@@ -358,14 +366,14 @@ ACE_DEBUG ((LM_DEBUG,
       catch (const CORBA::Exception& ex)
         {
           ACE_ERROR ((LM_ERROR,
-                      "CORBA EXCEPTION: %s\n",
+                      "(%P|%t) CORBA EXCEPTION: %s\n",
                       ex._info().fast_rep()));
           throw Deployment_Failure  ("");
         }
       catch (...)
         {
           ACE_ERROR ((LM_ERROR,
-                      "EXCEPTION: non-CORBA exception\n"));
+                      "(%P|%t) EXCEPTION: non-CORBA exception\n"));
           throw Deployment_Failure  ("");
         }
 

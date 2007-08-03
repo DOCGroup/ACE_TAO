@@ -132,7 +132,7 @@ namespace CIAO
 
       if (CIAO::debug_level () > 9)
         {
-          ACE_DEBUG ((LM_DEBUG, "Parsing complete....\n"));
+          ACE_DEBUG ((LM_DEBUG, "(%P|%t) Parsing complete....\n"));
         }
 
       return this->launch_plan (plan.in ());
@@ -146,7 +146,7 @@ namespace CIAO
           if (CORBA::is_nil (this->em_.in ()))
             {
               ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("CIAO::Plan_Launcher_i: ")
+                ACE_TEXT ("(%P|%t) CIAO::Plan_Launcher_i: ")
                 ACE_TEXT ("launch_plan called witn an uninitialized EM.\n")));
               return 0;
             }
@@ -154,7 +154,7 @@ namespace CIAO
           if (CIAO::debug_level () > 9)
             {
               ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("CIAO::Plan_Launcher_i: " )
+                ACE_TEXT ("(%P|%t) CIAO::Plan_Launcher_i: " )
                 ACE_TEXT ("about to call this->em_->preparePlan\n")));
             }
 
@@ -163,7 +163,7 @@ namespace CIAO
           if (CIAO::debug_level () > 9)
             {
               ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("CIAO::Plan_Launcher_i: " )
+                ACE_TEXT ("(%P|%t) CIAO::Plan_Launcher_i: " )
                 ACE_TEXT ("after to call this->em_->preparePlan\n")));
             }
 
@@ -178,7 +178,7 @@ namespace CIAO
           if (CIAO::debug_level () > 9)
             {
               ACE_DEBUG ((LM_DEBUG,
-                "CIAO_PlanLauncher: Obtained DAM ref \n"));
+                "(%P|%t) CIAO_PlanLauncher: Obtained DAM ref \n"));
             }
 
           ::Deployment::Properties_var properties;
@@ -189,7 +189,7 @@ namespace CIAO
           if (CIAO::debug_level ())
             {
               ACE_DEBUG ((LM_DEBUG,
-                "CIAO_PlanLauncher: start Launch application...\n"));
+                "(%P|%t) CIAO_PlanLauncher: start Launch application...\n"));
             }
 
           // Dont not start the Application immediately since it violates
@@ -204,7 +204,7 @@ namespace CIAO
           // Call finish Launch to complete the connections
           if (CIAO::debug_level ())
             ACE_DEBUG ((LM_DEBUG,
-                        "CIAO_PlanLauncher: finish Launch application...\n"));
+                        "(%P|%t) CIAO_PlanLauncher: finish Launch application...\n"));
           dam->finishLaunch (start, false); // is_ReDAC by default is <false>
 
           if (CIAO::debug_level ())
@@ -213,7 +213,7 @@ namespace CIAO
           // Call start to activate components
           if (CIAO::debug_level ())
             ACE_DEBUG ((LM_DEBUG,
-                        "CIAO_PlanLauncher: start activating components...\n"));
+                        "(%P|%t) CIAO_PlanLauncher: start activating components...\n"));
           dam->start ();
 
           if (CIAO::debug_level ())
@@ -221,7 +221,7 @@ namespace CIAO
 
           if (CIAO::debug_level ())
             ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("CIAO_PlanLauncher: ")
+                        ACE_TEXT ("(%P|%t) CIAO_PlanLauncher: ")
                         ACE_TEXT ("Application Deployed successfully\n")));
 
           map_.bind_dam_reference (plan.UUID.in (),
@@ -245,7 +245,7 @@ namespace CIAO
       catch (const Deployment::StartError& ex)
         {
           ACE_ERROR ((LM_ERROR,
-                      "EXCEPTION: StartError exception caught: %s, %s\n",
+                      "(%P|%t) EXCEPTION: StartError exception caught: %s, %s\n",
                       ex.name.in (),
                       ex.reason.in ()));
           throw Deployment_Failure ("");
@@ -253,7 +253,7 @@ namespace CIAO
       catch (const Deployment::InvalidProperty& ex)
         {
           ACE_ERROR ((LM_ERROR,
-                      "EXCEPTION: InvalidProperty exception caught: %s, %s\n",
+                      "(%P|%t) EXCEPTION: InvalidProperty exception caught: %s, %s\n",
                       ex.name.in (),
                       ex.reason.in ()));
           throw Deployment_Failure ("");
@@ -261,7 +261,7 @@ namespace CIAO
       catch (const Deployment::InvalidConnection& ex)
         {
           ACE_ERROR ((LM_ERROR,
-                      "EXCEPTION: InvalidConnection exception caught: %s, %s\n",
+                      "(%P|%t) EXCEPTION: InvalidConnection exception caught: %s, %s\n",
                       ex.name.in (),
                       ex.reason.in ()));
           throw Deployment_Failure  ("");
@@ -269,14 +269,14 @@ namespace CIAO
       catch (const CORBA::Exception& ex)
         {
           ACE_ERROR ((LM_ERROR,
-                      "CORBA EXCEPTION: %s\n",
+                      "(%P|%t) CORBA EXCEPTION: %s\n",
                       ex._info().fast_rep()));
           throw Deployment_Failure  ("");
         }
       catch (...)
         {
           ACE_ERROR ((LM_ERROR,
-                      "EXCEPTION: non-CORBA exception\n"));
+                      "(%P|%t) EXCEPTION: non-CORBA exception\n"));
           throw Deployment_Failure  ("");
         }
 
@@ -326,7 +326,7 @@ namespace CIAO
         {
           // @todo the destroy_dam_by_plan could give a stoperror exception
           // we should handle
-          ACE_ERROR ((LM_ERROR, "Unable to find DomainApplicationManager "
+          ACE_ERROR ((LM_ERROR, "(%P|%t) Unable to find DomainApplicationManager "
                       "for plan with uuid: %s\n", uuid));
           return false;
         }
@@ -340,7 +340,7 @@ namespace CIAO
       if (CIAO::debug_level ())
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "CIAO_PlanLauncher: destroy the application.....\n"));
+                      "(%P|%t) CIAO_PlanLauncher: destroy the application.....\n"));
         }
 
       dam->destroyApplication ();
@@ -361,7 +361,7 @@ namespace CIAO
       if (CIAO::debug_level ())
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "CIAO_PlanLauncher: destroy the manager.....\n"));
+                      "(%P|%t) CIAO_PlanLauncher: destroy the manager.....\n"));
         }
 
       this->em_->destroyManager (dam);
@@ -378,7 +378,7 @@ namespace CIAO
       if (CIAO::debug_level ())
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "CIAO_PlanLauncher: destroy the manager.....\n"));
+                      "(%P|%t) CIAO_PlanLauncher: destroy the manager.....\n"));
         }
 
       this->em_->destroyManagerByPlan (plan_uuid);
@@ -418,7 +418,7 @@ namespace CIAO
           if (CORBA::is_nil (this->em_.in ()))
             {
               ACE_ERROR ((LM_ERROR,
-                          ACE_TEXT ("CIAO::Plan_Launcher_i: ")
+                          ACE_TEXT ("(%P|%t) CIAO::Plan_Launcher_i: ")
                           ACE_TEXT ("re_launch_plan called witn an uninitialized EM.\n")));
               return 0;
             }
@@ -428,7 +428,7 @@ namespace CIAO
           if (CIAO::debug_level ())
             {
               ACE_DEBUG ((LM_DEBUG,
-                          "CIAO_PlanLauncher: new plan redeployed ...\n"));
+                          "(%P|%t) CIAO_PlanLauncher: new plan redeployed ...\n"));
             }
 
           return CORBA::string_dup (plan.UUID.in ());
@@ -436,7 +436,7 @@ namespace CIAO
       catch (const Deployment::ResourceNotAvailable& ex)
         {
           ACE_ERROR ((LM_ERROR,
-                      "EXCEPTION: ResourceNotAvaiable exception caught: %s,\n"
+                      "(%P|%t) EXCEPTION: ResourceNotAvaiable exception caught: %s,\n"
                       "Type: %s\n"
                       "Property: %s\n"
                       "Element: %s\n"
@@ -451,7 +451,7 @@ namespace CIAO
       catch (const Deployment::StartError& ex)
         {
           ACE_ERROR ((LM_ERROR,
-                      "EXCEPTION: StartError exception caught: %s, %s\n",
+                      "(%P|%t) EXCEPTION: StartError exception caught: %s, %s\n",
                       ex.name.in (),
                       ex.reason.in ()));
           throw Deployment_Failure ("");
@@ -459,7 +459,7 @@ namespace CIAO
       catch (const Deployment::InvalidProperty& ex)
         {
           ACE_ERROR ((LM_ERROR,
-                      "EXCEPTION: InvalidProperty exception caught: %s, %s\n",
+                      "(%P|%t) EXCEPTION: InvalidProperty exception caught: %s, %s\n",
                       ex.name.in (),
                       ex.reason.in ()));
           throw Deployment_Failure ("");
@@ -467,7 +467,7 @@ namespace CIAO
       catch (const Deployment::InvalidConnection& ex)
         {
           ACE_ERROR ((LM_ERROR,
-                      "EXCEPTION: InvalidConnection exception caught: %s, %s\n",
+                      "(%P|%t) EXCEPTION: InvalidConnection exception caught: %s, %s\n",
                       ex.name.in (),
                       ex.reason.in ()));
           throw Deployment_Failure  ("");
@@ -475,14 +475,14 @@ namespace CIAO
       catch (const CORBA::Exception& ex)
         {
           ACE_ERROR ((LM_ERROR,
-                      "CORBA EXCEPTION: %s\n",
+                      "(%P|%t) CORBA EXCEPTION: %s\n",
                       ex._info().fast_rep()));
           throw Deployment_Failure  ("");
         }
       catch (...)
         {
           ACE_ERROR ((LM_ERROR,
-                      "EXCEPTION: non-CORBA exception\n"));
+                      "(%P|%t) EXCEPTION: non-CORBA exception\n"));
           throw Deployment_Failure  ("");
         }
 
@@ -530,7 +530,7 @@ namespace CIAO
 
       if (desired_priority != priority)
         ACE_ERROR_RETURN ((LM_ERROR,
-                            "ERROR: Unable to set thread "
+                            "(%P|%t) ERROR: Unable to set thread "
                             "priority to %d\n", desired_priority),
                           false);
 
@@ -549,7 +549,7 @@ namespace CIAO
       if (CORBA::is_nil (priority_policy.in ()))
       {
         ACE_DEBUG ((LM_DEBUG,
-          ACE_TEXT ("CIAO::Plan_Launcher_i: " )
+          ACE_TEXT ("(%P|%t) CIAO::Plan_Launcher_i: " )
           ACE_TEXT ("In ExecutionManager, the Priority Model Policy is not exposed. ")
           ACE_TEXT ("Use non-RT mode.\n")));
         return false;
@@ -561,7 +561,7 @@ namespace CIAO
       if (priority_model != RTCORBA::CLIENT_PROPAGATED)
       {
         ACE_DEBUG ((LM_DEBUG,
-          ACE_TEXT ("CIAO::Plan_Launcher_i: " )
+          ACE_TEXT ("(%P|%t) CIAO::Plan_Launcher_i: " )
           ACE_TEXT ("The Priority Model of ExecutionManager is not CLIENT_PROPAGATED! ")
           ACE_TEXT ("Use non-RT mode instead.\n")));
         return false;
