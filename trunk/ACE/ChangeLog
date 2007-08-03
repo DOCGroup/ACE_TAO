@@ -1,3 +1,10 @@
+Fri Aug  3 01:50:05 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * ace/Global_Macros.h:
+        * examples/Reactor/TP_Reactor/client.cpp:
+
+          Fixed fuzz check_for_exception_spec warnings.
+
 Thu Aug  2 22:20:28 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * bin/fuzz.pl:
