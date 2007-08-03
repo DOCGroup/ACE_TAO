@@ -1,3 +1,11 @@
+Fri Aug  3 20:26:36 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * ace/INET_Addr.cpp:
+        * THANKS:
+          Fix for running an IPv6 supporting build of ACE on a host
+          that does not have IPV6 enabled. Thanks to Prem Kumaran <kumaran
+          dot prem at gmail dot com> for pointing out this issue.
+
 Fri Aug  3 18:31:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/PerlACE/Run_Test.pm:
