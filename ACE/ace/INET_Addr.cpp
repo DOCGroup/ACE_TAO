@@ -331,6 +331,10 @@ ACE_INET_Addr::set (u_short port_number,
   struct addrinfo *res = 0;
   int error = 0;
   ACE_OS::memset (&hints, 0, sizeof (hints));
+# if defined (ACE_USES_IPV4_IPV6_MIGRATION)
+  if (address_family == AF_UNSPEC && !ACE::ipv6_enabled())
+    address_family = AF_INET;
+# endif /* ACE_USES_IPV4_IPV6_MIGRATION */
   if (address_family == AF_UNSPEC || address_family == AF_INET6)
     {
       hints.ai_family = AF_INET6;
