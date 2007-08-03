@@ -123,6 +123,7 @@ sub waitforfile_timed
     }
     sleep 1;
   }
+  return -1;
 }
 
 sub check_n_cleanup_files
