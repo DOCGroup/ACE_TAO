@@ -15,10 +15,10 @@ else {
     $T = new PerlACE::Process ("Single_Threaded_POA");
 }
 
-$client = $T->SpawnWaitKill ($PerlACE::wait_interval_for_process_creation);
+$client = $T->SpawnWaitKill ($PerlACE::wait_interval_for_process_creation * 2);
 
 if ($client != 0) {
-  print STDERR "ERROR: test returned $client\n";
+  print STDERR "ERROR: test $PerlACE::wait_interval_for_process_creation returned $client\n";
   exit 1;
 }
 

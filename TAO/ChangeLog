@@ -1,3 +1,11 @@
+Fri Aug  3 08:56:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/POA/Single_Threaded_POA/run_test.pl:
+          Extended the timeout
+
+        * POA/Single_Threaded_POA/Single_Threaded_POA.cpp:
+          Layout changes
+
 Thu Aug  2 19:30:30 UTC 2007  Dale Wilson  <wilsond@ociweb.com>
 
         * tao/Transport_Connector.cpp:
