@@ -38,10 +38,6 @@ public:
   virtual TAO_OutStream &print (Identifier *id);
   // output the SunSoft IDL Identifier Node
 
-  virtual TAO_OutStream &print (UTL_IdList *idl);
-  // output the SunSoft IDL UTL_IdList Node which is usually used to maintain a
-  // scoped name
-
   virtual TAO_OutStream &print (AST_Expression *expr);
   // output the contents of the AST_Expression node
 };

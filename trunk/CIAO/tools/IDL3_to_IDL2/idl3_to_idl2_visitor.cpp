@@ -13,6 +13,7 @@
 #include "ast_operation.h"
 #include "ast_root.h"
 #include "utl_exceptlist.h"
+#include "utl_identifier.h"
 #include "global_extern.h"
 #include "nr_extern.h"
 
@@ -94,7 +95,7 @@ idl3_to_idl2_visitor::visit_interface (AST_Interface *node)
           *os << ", ";
         }
 
-      *os << parents[i]->name ();
+      *os << IdentifierHelper::orig_sn (parents[i]->name ()).c_str ();
     }
 
   *os << be_nl
@@ -133,11 +134,14 @@ idl3_to_idl2_visitor::visit_component (AST_Component *node)
   long nsupports = node->n_supports ();
 
   *os << " : "
-      << (base != 0 ? base->full_name () : "Components::CCMObject");
+      << (base != 0 
+            ? IdentifierHelper::orig_sn (base->name ()).c_str ()
+            : "Components::CCMObject");
 
   for (long i = 0; i < nsupports; ++i)
     {
-      *os << ", " << node->supports ()[i]->name ();
+      *os << ", "
+          << IdentifierHelper::orig_sn (node->supports ()[i]->name ()).c_str ();
     }
 
   *os << be_nl
@@ -173,9 +177,8 @@ idl3_to_idl2_visitor::visit_component_fwd (AST_ComponentFwd *node)
       return 0;
     }
 
-  *os << be_nl << be_nl;
-
-  *os << "component "
+  *os << be_nl << be_nl
+      << "component "
       << IdentifierHelper::try_escape (node->original_local_name ()).c_str ()
       << ";";
 
@@ -217,7 +220,8 @@ idl3_to_idl2_visitor::visit_eventtype (AST_EventType *node)
     }
   else
     {
-      *os << node->inherits ()[0]->name () << "Consumer";
+      *os << IdentifierHelper::orig_sn (node->inherits ()[0]->name (), true).c_str ()
+          << "Consumer";
     }
 
   *os << be_nl
@@ -261,7 +265,7 @@ idl3_to_idl2_visitor::visit_home (AST_Home *node)
       return 0;
     }
 
-  ACE_CString explicit_name = node->local_name ()->get_string ();
+  ACE_CString explicit_name = node->original_local_name ()->get_string ();
   explicit_name += "Explicit";
 
   *os << be_nl << be_nl
@@ -275,7 +279,8 @@ idl3_to_idl2_visitor::visit_home (AST_Home *node)
     }
   else
     {
-      *os << base->name () << "Explicit";
+      *os << IdentifierHelper::orig_sn (base->name (), true).c_str ()
+          << "Explicit";
     }
 
   *os << be_nl
@@ -315,17 +320,22 @@ idl3_to_idl2_visitor::visit_home (AST_Home *node)
   sn = 0;
 
   AST_ValueType *key = node->primary_key ();
+  ACE_CString mng_name =
+    IdentifierHelper::orig_sn (node->managed_component ()->name ());
+  ACE_CString key_name;
 
   // Generate the implicit home interface and its operations.
-  *os << "interface " << node->local_name () << "Implicit"
-      << (key == 0 ? " : Components::KeylessCCMHome" : "")
-      << be_nl
+  *os << "interface " << node->original_local_name () << "Implicit"
+      << (key == 0 ? " : Components::KeylessCCMHome" : "") << be_nl
       << "{" << be_idt_nl
-      << node->managed_component ()->name () << " create (";
+      << mng_name.c_str () << " create (";
 
   if (key != 0)
     {
-      *os << "in " << key->name () << " key";
+      key_name =
+        IdentifierHelper::orig_sn (key->name ());
+        
+      *os << "in " << key_name.c_str () << " key";
     }
 
   *os << ")" << be_idt_nl
@@ -341,20 +351,20 @@ idl3_to_idl2_visitor::visit_home (AST_Home *node)
   if (key != 0)
     {
       *os << be_nl << be_nl
-          << node->managed_component ()->name ()
-          << " find_by_primary_key (in " << key->name ()
+          << mng_name.c_str ()
+          << " find_by_primary_key (in " << key_name.c_str ()
           << " key)" << be_idt_nl
           << "raises (Components::InvalidKey, Components::UnknownKeyValue, "
           << "Components::FinderFailure);" << be_uidt;
 
       *os << be_nl << be_nl
-          << "void remove (in " << key->name () << " key)" << be_idt_nl
+          << "void remove (in " << key_name.c_str () << " key)" << be_idt_nl
           << "raises (Components::InvalidKey, Components::UnknownKeyValue, "
           << "Components::RemoveFailure);" << be_uidt;
 
       *os << be_nl << be_nl
-          << key->name () << " get_primary_key (in "
-          << node->managed_component ()->name () << " comp);";
+          << key_name.c_str () << " get_primary_key (in "
+          << mng_name.c_str () << " comp);";
     }
 
   *os << be_uidt_nl
@@ -458,7 +468,8 @@ idl3_to_idl2_visitor::gen_provides (AST_Component *node)
       Identifier *orig_id = IdentifierHelper::original_local_name (pd->id);
 
       *os << be_nl << be_nl
-          << pd->impl->name () << " provide_" << orig_id << " ();";
+          << IdentifierHelper::orig_sn (pd->impl->name ()).c_str ()
+          << " provide_" << orig_id << " ();";
           
       orig_id->destroy ();
       delete orig_id;
@@ -485,19 +496,22 @@ idl3_to_idl2_visitor::gen_uses (AST_Component *node)
 
       if (pd->is_multiple)
         {
-          *os << "struct " << pd->id << "Connection" << be_nl
+          *os << "struct " << orig_id << "Connection" << be_nl
               << "{" << be_idt_nl
-              << pd->impl->name () << " objref;" << be_nl
+              << IdentifierHelper::orig_sn (pd->impl->name ()).c_str ()
+              << " objref;" << be_nl
               << "Components::Cookie ck;" << be_uidt_nl
               << "};" << be_nl << be_nl
               << "typedef sequence<" << orig_id << "Connection> "
-              << pd->id << "Connections;"
+              << orig_id << "Connections;"
               << be_nl << be_nl
               << "Components::Cookie connect_" << orig_id << " (in "
-              << pd->impl->name () << " connection)" << be_idt_nl
+              << IdentifierHelper::orig_sn (pd->impl->name ()).c_str ()
+              << " connection)" << be_idt_nl
               << "raises (Components::ExceededConnectionLimit, "
               << "Components::InvalidConnection);" << be_uidt_nl << be_nl
-              << pd->impl->name () << " disconnect_" << orig_id
+              << IdentifierHelper::orig_sn (pd->impl->name ()).c_str ()
+              << " disconnect_" << orig_id
               << " (in Components::Cookie ck)" << be_idt_nl
               << "raises (Components::InvalidConnection);"
               << be_uidt_nl << be_nl
@@ -507,13 +521,16 @@ idl3_to_idl2_visitor::gen_uses (AST_Component *node)
       else
         {
           *os << "void connect_" << orig_id << " (in "
-              << pd->impl->name () << " conxn)" << be_idt_nl
+              << IdentifierHelper::orig_sn (pd->impl->name ()).c_str ()
+              << " conxn)" << be_idt_nl
               << "raises (Components::AlreadyConnected, "
               << "Components::InvalidConnection);" << be_uidt_nl << be_nl
-              << pd->impl->name () << " disconnect_" << orig_id
+              << IdentifierHelper::orig_sn (pd->impl->name ()).c_str ()
+              << " disconnect_" << orig_id
               << " ()" << be_idt_nl
               << "raises (Components::NoConnection);" << be_uidt_nl << be_nl
-              << pd->impl->name () << " get_connection_" << orig_id
+              << IdentifierHelper::orig_sn (pd->impl->name ()).c_str ()
+              << " get_connection_" << orig_id
               << " ();";
         }
         
@@ -540,11 +557,14 @@ idl3_to_idl2_visitor::gen_publishes (AST_Component *node)
 
       *os << be_nl << be_nl
           << "Components::Cookie subscribe_" << orig_id
-          << " (in " << pd->impl->name () <<"Consumer consumer)"
+          << " (in "
+          << IdentifierHelper::orig_sn (pd->impl->name (), true).c_str ()
+          << "Consumer consumer)"
           << be_idt_nl
           << "raises (Components::ExceededConnectionLimit);"
           << be_uidt_nl << be_nl
-          << pd->impl->name () << "Consumer unsubscribe_" << orig_id
+          << IdentifierHelper::orig_sn (pd->impl->name (), true).c_str ()
+          << "Consumer unsubscribe_" << orig_id
           << " (in Components::Cookie ck)" << be_idt_nl
           << "raises (Components::InvalidConnection);" << be_uidt;
          
@@ -571,11 +591,13 @@ idl3_to_idl2_visitor::gen_emits (AST_Component *node)
 
       *os << be_nl << be_nl
           << "void connect_" << orig_id
-          << " (in " << pd->impl->name ()
+          << " (in "
+          << IdentifierHelper::orig_sn (pd->impl->name (), true).c_str ()
           << "Consumer consumer)" << be_idt_nl
           << "raises (Components::AlreadyConnected);"
           << be_uidt_nl << be_nl
-          << pd->impl->name () << "Consumer disconnect_" << orig_id
+          << IdentifierHelper::orig_sn (pd->impl->name (), true).c_str ()
+          << "Consumer disconnect_" << orig_id
           << " ()" << be_idt_nl
           << "raises (Components::NoConnection);" << be_uidt;
          
@@ -601,7 +623,8 @@ idl3_to_idl2_visitor::gen_consumes (AST_Component *node)
       Identifier *orig_id = IdentifierHelper::original_local_name (pd->id);
 
       *os << be_nl << be_nl
-          << pd->impl->name () << "Consumer get_consumer_" << orig_id
+          << IdentifierHelper::orig_sn (pd->impl->name (), true).c_str ()
+          << "Consumer get_consumer_" << orig_id
           << " ();";
          
       orig_id->destroy ();
@@ -686,7 +709,8 @@ idl3_to_idl2_visitor::gen_factories (AST_Home *node,
       i.next (item);
 
       *os << be_nl << be_nl
-          << node->managed_component ()->name () << " "
+          << IdentifierHelper::orig_sn (node->managed_component ()->name ()).c_str ()
+          << " "
           << IdentifierHelper::try_escape ((*item)->original_local_name ()).c_str ()
           << " (";
 
@@ -723,7 +747,8 @@ idl3_to_idl2_visitor::gen_finders (AST_Home *node,
       i.next (item);
 
       *os << be_nl << be_nl
-          << node->managed_component ()->name () << " "
+          << IdentifierHelper::orig_sn (node->managed_component ()->name ()).c_str ()
+          << " "
           << IdentifierHelper::try_escape( (*item)->original_local_name ()).c_str ()
           << " (";
 

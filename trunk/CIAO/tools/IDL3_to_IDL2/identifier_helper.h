@@ -20,7 +20,7 @@
 #ifndef IDENTIFIER_HELPER_H
 #define IDENTIFIER_HELPER_H
 
-#include "utl_identifier.h"
+#include "utl_scoped_name.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -29,19 +29,28 @@
 #include "TAO_IDL3_TO_IDL2_BE_Export.h"
 #include "ace/SString.h"
 
+class Identifier;
+
 struct TAO_IDL3_TO_IDL2_BE_Export IdentifierHelper
 {
-  /*
-    1) keeps escape (leading underscore character in generated
-       identifier in IDL
-    2) removes the '_' escape character when the identifier is
-       part of another identifier such as in provides_XXX
-    3) removes any '_cxx_' in generated IDL (equivalent to
-       AST_Decl::original_local_name())
-    TODO: port identifiers
-  */
+  //
+  // = TITLE
+  //    IdentifierHelper.
+  //
+  // = DESCRIPTION
+  //    1) keeps escape (leading underscore character in generated
+  //       identifier in IDL
+  //    2) removes the '_' escape character when the identifier is
+  //       part of another identifier such as in provides_XXX
+  //    3) removes any '_cxx_' in generated IDL
+  
   static Identifier * 
   original_local_name (Identifier * local_name);
+  
+  // Removes '_cxx_ from segments of a scoped name, and optionally
+  // de-escape the last segment, if it's to be appended to.
+  static ACE_CString
+  orig_sn (UTL_ScopedName * scoped_name, bool appended_to = false);
 
   // Detects case-insensitive match with IDL keyword.
   static bool
