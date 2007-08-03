@@ -1,3 +1,10 @@
+Fri Aug  3 09:35:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/PerlACE/Run_Test.pm:
+          Reverted the change to use a sleep of 50ms, the test stats show that
+          some tests timeout without a real reason. Maybe the timeouts are now
+          less reliable.
+
 Fri Aug  3 01:50:05 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * ace/Global_Macros.h:

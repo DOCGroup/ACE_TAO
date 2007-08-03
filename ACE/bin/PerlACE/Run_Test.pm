@@ -104,27 +104,11 @@ sub uniqueid
   }
 }
 
-# Sleeps the specified number of milliseconds
-sub sleep_ms
-{
-  my $ms = shift;
-  $ms /= 1000.0;
-  select undef, undef, undef, $ms;
-}
-
 # Waits until a file exists
 sub waitforfile
 {
   local($file) = @_;
-
-  do  {
-    sleep_ms(50);
-    if (-e $file && -s $file) {
-      return 0;
-    }
-  } while (1);
-
-  return -1;
+  sleep 1 while (!(-e $file && -s $file));
 }
 
 sub waitforfile_timed
@@ -133,15 +117,12 @@ sub waitforfile_timed
   my $maxtime = shift;
   $maxtime *= (($PerlACE::VxWorks_Test || $PerlACE::VxWorks_RTP_Test) ? $PerlACE::ProcessVX::WAIT_DELAY_FACTOR : $PerlACE::Process::WAIT_DELAY_FACTOR);
 
-  do  {
-    sleep_ms(50);
-    $maxtime -= .05;
+  while ($maxtime-- != 0) {
     if (-e $file && -s $file) {
       return 0;
     }
-  } while ($maxtime >= 0);
-
-  return -1;
+    sleep 1;
+  }
 }
 
 sub check_n_cleanup_files
