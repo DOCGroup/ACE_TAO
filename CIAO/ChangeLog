@@ -1,3 +1,50 @@
+Fri Aug  3 07:01:35 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tools/IDL3_to_IDL2/basic_visitor.cpp:
+        * tools/IDL3_to_IDL2/basic_visitor.h:
+        * tools/IDL3_to_IDL2/be_sunsoft.cpp:
+        * tools/IDL3_to_IDL2/be_sunsoft.h:
+        * tools/IDL3_to_IDL2/identifier_helper.cpp:
+        * tools/IDL3_to_IDL2/be_helper.cpp:
+        * tools/IDL3_to_IDL2/idl3_to_idl2_visitor.cpp:
+        * tools/IDL3_to_IDL2/identifier_helper.h:
+        * tools/IDL3_to_IDL2/be_helper.h:
+        
+          - Changes incorporating enhancements by folks at Thales ATM to 
+            better handle the mapping of escaped identifiers (masking
+            IDL keywords) and identifiers that are C++ keywords from
+            IDL3 to IDL2. Thanks to Hakim Souami
+            <hakim dot souami at thalesatm dot com> for leading this
+            effort.
+            
+          - Further changes to build on those above by adding keyword
+            handling support for scoped names and component port names.
+            
+          - Addition of the capability, also from Thales ATM, to 
+            optionally generate #includes of IDL files without the
+            addition of the default '_IDL2' suffix. This feature is
+            necessary when included IDL files aren't available for
+            conversion or when 'system' IDL files are included and
+            contain only IDL declarations with no 'implied IDL'
+            mapping. It is also handy for users who may have similar
+            IDL files included and don't wish to run the conversion
+            on them needlessly. While Thales ATM's version of this
+            feature uses a list of 'excluded' filenames in a text
+            file, the feature in this version uses a command line
+            option '-x <filename>' for each file to be excluded.
+            
+        * tests/IDL3/ImpliedIDL/All/raw_include.idl:
+        * tests/IDL3/ImpliedIDL/All/keyword_clash.idl:
+        
+          New files that expand the test coverage to include the new
+          festures described above.
+          
+        * tests/IDL3/ImpliedIDL/All/all.mpc:
+        * tests/IDL3/ImpliedIDL/All/pass_through.idl:
+        
+          Changes to existing test files to make use of the new files
+          listed above.
+
 Thu Aug  2 03:37:40 UTC 2007  Krishnakumar B  <kitty@nospam.invalid.domain>
 
         * examples/BasicSP/BMDisplay/BMDisplay.mpc:

@@ -29,6 +29,7 @@
 #include "ast_native.h"
 #include "utl_exceptlist.h"
 #include "utl_idlist.h"
+#include "utl_identifier.h"
 #include "nr_extern.h"
 
 basic_visitor::basic_visitor (void)
@@ -195,7 +196,7 @@ basic_visitor::visit_valuetype (AST_ValueType *node)
           *os << ", ";
         }
 
-      *os << parents[i]->name ();
+      *os << IdentifierHelper::orig_sn (parents[i]->name ()).c_str ();
     }
 
   if (nt == AST_Decl::NT_eventtype)
@@ -217,7 +218,7 @@ basic_visitor::visit_valuetype (AST_ValueType *node)
           *os << ", ";
         }
 
-      *os << supports[i]->name ();
+      *os << IdentifierHelper::orig_sn (supports[i]->name ()).c_str ();
     }
 
   *os << be_nl
@@ -397,7 +398,8 @@ basic_visitor::visit_enum (AST_Enum *node)
       *os << be_nl;
 
       AST_EnumVal *ev = AST_EnumVal::narrow_from_decl (i.item ());
-      *os << ev->original_local_name ();
+      
+      *os << IdentifierHelper::try_escape (ev->original_local_name ()).c_str ();
 
       // Advance here so the check below will work.
       i.next ();
@@ -503,8 +505,9 @@ basic_visitor::visit_union (AST_Union *node)
   *os << be_nl << be_nl
       << "union "
       << IdentifierHelper::try_escape (node->original_local_name ()).c_str ()
-      << " switch ("
-      << this->type_name (node->disc_type ())
+      << " switch (";
+      
+  *os << this->type_name (node->disc_type ())
       << ")" << be_nl
       << "{" << be_idt;
 
@@ -651,7 +654,7 @@ basic_visitor::visit_constant (AST_Constant *node)
         *os << "wstring";
         break;
       case AST_Expression::EV_enum:
-        *os << node->enum_full_name ();
+        *os << IdentifierHelper::orig_sn (node->enum_full_name ()).c_str ();
         break;
       default:
         break;
@@ -675,7 +678,7 @@ basic_visitor::visit_enum_val (AST_EnumVal *)
 int
 basic_visitor::visit_array (AST_Array *node)
 {
-  *os << node->base_type ()->name ();
+  *os << IdentifierHelper::orig_sn (node->base_type ()->name ()).c_str ();
 
   for (unsigned long i = 0; i < node->n_dims (); ++i)
     {
@@ -871,7 +874,8 @@ basic_visitor::type_name (AST_Type *t)
               break;
           }
       default:
-        return t->full_name ();
+        this->tmp_retval_ = IdentifierHelper::orig_sn (t->name ()).c_str ();
+        return this->tmp_retval_.c_str ();
     }
 }
 
@@ -934,7 +938,7 @@ basic_visitor::gen_exception_list (UTL_ExceptList *exceptions,
       for (UTL_ExceptlistActiveIterator ei (exceptions);
            !ei.is_done ();)
         {
-          *os << ei.item ()->name ();
+          *os << IdentifierHelper::orig_sn (ei.item ()->name ()).c_str ();
 
           ei.next ();
 
@@ -1011,12 +1015,21 @@ basic_visitor::gen_label_value (AST_UnionLabel *node)
 
       if (s == 0)
         {
-          *os << val->n ();
+          *os << IdentifierHelper::orig_sn (val->n ()).c_str ();
         }
       else
         {
-          *os << ScopeAsDecl (s)->name () << "::"
-              << val->n ()->last_component ();
+          *os << IdentifierHelper::orig_sn (ScopeAsDecl (s)->name ()).c_str ()
+              << "::";
+              
+          Identifier *id =
+            IdentifierHelper::original_local_name (val->n ()->last_component ());
+
+          *os << IdentifierHelper::try_escape (id).c_str ();
+          
+          id->destroy ();
+          delete id;
+          id = 0;
         }
 
       return;
@@ -1055,10 +1068,10 @@ basic_visitor::gen_label_value (AST_UnionLabel *node)
         *os << ev->u.wcval;
         break;
       case AST_Expression::EV_bool:
-        *os << (ev->u.bval ? "true" : "false");
+        *os << (ev->u.bval ? "TRUE" : "FALSE");
         break;
       case AST_Expression::EV_enum:
-        *os << val->n ();
+        *os << IdentifierHelper::orig_sn (val->n ()).c_str ();
         break;
       default:
         break;

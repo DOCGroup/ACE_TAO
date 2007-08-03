@@ -2,6 +2,7 @@
 // $Id$
 
 #include "identifier_helper.h"
+#include "utl_identifier.h"
 #include "utl_string.h"
 #include "global_extern.h"
 
@@ -32,6 +33,56 @@ IdentifierHelper::original_local_name (Identifier * local_name)
     }
    
   return id;
+}
+
+
+ACE_CString
+IdentifierHelper::orig_sn (UTL_IdList * sn, bool appended_to)
+{
+  ACE_CString retval;
+  bool first = true;
+  bool second = false;
+  Identifier *id = 0;
+
+  for (UTL_IdListActiveIterator i (sn); !i.is_done ();)
+    {
+      if (!first)
+        {
+          retval += "::";
+        }
+      else if (second)
+        {
+          first = second = false;
+        }
+
+      id = IdentifierHelper::original_local_name (i.item ());
+      i.next ();
+      
+      // Append the identifier.
+      retval +=
+        appended_to && i.is_done ()
+          ? id->get_string ()
+          : IdentifierHelper::try_escape (id);
+
+       if (first)
+        {
+          if (ACE_OS::strcmp (id->get_string (), "") != 0)
+            {
+              // Does not start with a "".
+              first = false;
+            }
+          else
+            {
+              second = true;
+            }
+        }
+        
+     id->destroy ();
+      delete id;
+      id = 0;
+    }
+  
+  return retval;
 }
 
 bool

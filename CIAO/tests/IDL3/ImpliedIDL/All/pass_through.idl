@@ -10,9 +10,15 @@
 #pragma prefix "glooby"
 
 #include "include.idl"
+#include "raw_include.idl"
 
 module pre_mod
 {
+  module inner
+  {
+    typedef long fork;
+  };
+  
   union uke switch (which)
   {
     case ONE:
