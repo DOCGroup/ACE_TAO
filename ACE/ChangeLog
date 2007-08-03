@@ -1,3 +1,8 @@
+Fri Aug  3 18:31:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/PerlACE/Run_Test.pm:
+          Fixed a problem introduced with the revert below
+
 Fri Aug  3 09:35:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/PerlACE/Run_Test.pm:
