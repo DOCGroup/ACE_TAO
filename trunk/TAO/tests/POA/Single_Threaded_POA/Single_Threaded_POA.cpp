@@ -115,9 +115,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   try
     {
       // Initialize the ORB first.
-      CORBA::ORB_var orb = CORBA::ORB_init (argc,
-                                            argv,
-                                            0);
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
       // Obtain the RootPOA.
       CORBA::Object_var obj = orb->resolve_initial_references ("RootPOA");
@@ -186,8 +184,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // In non-debug compiles, asserts will disappear.
       ACE_UNUSED_ARG (result);
 
-      root_poa->destroy (1,
-                         1);
+      root_poa->destroy (1, 1);
     }
   catch (const CORBA::Exception& ex)
     {
