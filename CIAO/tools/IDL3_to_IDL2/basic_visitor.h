@@ -25,6 +25,8 @@
 
 #include "TAO_IDL3_TO_IDL2_BE_Export.h"
 
+#include "ace/SString.h"
+
 class TAO_OutStream;
 class UTL_ExceptList;
 
@@ -104,6 +106,9 @@ protected:
 protected:
   TAO_OutStream *os;
   AST_Type *disc_type_;
+  
+private:
+  ACE_CString tmp_retval_;
 };
 
 #endif // TAO_BASIC_VISITOR_H

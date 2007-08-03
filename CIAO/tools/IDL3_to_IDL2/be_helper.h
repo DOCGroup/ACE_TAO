@@ -159,27 +159,19 @@ public:
   TAO_OutStream &operator<< (const TAO_INDENT& i);
   TAO_OutStream &operator<< (const TAO_UNINDENT& i);
 
-  // The following will be provided by specialized classes
+  // The following will be provided by specialized classes.
 
   TAO_OutStream &operator<< (Identifier *id);
-  // output an Identifier node
-
-  TAO_OutStream &operator<< (UTL_IdList *idl);
-  // output a scoped name
-
   TAO_OutStream &operator<< (AST_Expression *expr);
-  // output an AST_Expression node
 
-  // provided by specialized classes
+  // Provided by specialized classes.
   virtual TAO_OutStream &print (Identifier *id) = 0;
-
-  virtual TAO_OutStream &print (UTL_IdList *idl) = 0;
 
   virtual TAO_OutStream &print (AST_Expression *idl) = 0;
 
 protected:
   FILE *fp_;
-  // the underlying low-level I/O handle
+  // The underlying low-level I/O handle.
 
   int indent_level_;
   // indentation level

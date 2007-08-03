@@ -1,10 +1,13 @@
 // $Id$
 
 #include "be_sunsoft.h"
+#include "identifier_helper.h"
+
 #include "ast_expression.h"
 #include "utl_identifier.h"
 #include "utl_idlist.h"
 #include "utl_string.h"
+
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_ctype.h"
@@ -27,46 +30,7 @@ TAO_SunSoft_OutStream::print (Identifier *id)
 {
   ACE_OS::fprintf (this->fp_,
                    id->get_string ());
-
-  return *this;
-}
-
-TAO_OutStream &
-TAO_SunSoft_OutStream::print (UTL_IdList *idl)
-{
-  long first = true;
-  long second = false;
-  Identifier *id = 0;
-
-  for (UTL_IdListActiveIterator i (idl); !i.is_done (); i.next ())
-    {
-      if (!first)
-        {
-          *this << "::";
-        }
-      else if (second)
-        {
-          first = second = false;
-        }
-
-      // Print the identifier.
-      id = i.item ();
-      *this << id;
-
-      if (first)
-        {
-          if (ACE_OS::strcmp (id->get_string (), "") != 0)
-            {
-              // Does not start with a "".
-              first = false;
-            }
-          else
-            {
-              second = true;
-            }
-        }
-    }
-
+                   
   return *this;
 }
 
@@ -176,7 +140,7 @@ TAO_SunSoft_OutStream::print (AST_Expression *expr)
           this->TAO_OutStream::print ("L\"%s\"", ev->u.wstrval);
           break;
         case AST_Expression::EV_enum:
-          this->print (expr->n ());
+          *this << IdentifierHelper::orig_sn (expr->n ()).c_str ();
           break;
         default:
           break;

@@ -429,12 +429,6 @@ TAO_OutStream::operator<< (Identifier *id)
 }
 
 TAO_OutStream &
-TAO_OutStream::operator<< (UTL_IdList *id)
-{
-  return this->print (id);
-}
-
-TAO_OutStream &
 TAO_OutStream::operator<< (AST_Expression *expr)
 {
   return this->print (expr);
