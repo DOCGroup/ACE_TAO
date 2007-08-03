@@ -77,7 +77,130 @@ namespace CIAO
       }
   }
 
+  void
+  DAnCE_Utils::remove_instance (::Deployment::DeploymentPlan &deployment_plan, const char *instance_name)
+  {
+    // Modifying the deployment plan in order to remove the instance ...
 
+    ::Deployment::InstanceDeploymentDescriptions instance = deployment_plan.instance;
+    ::Deployment::PlanConnectionDescriptions connection = deployment_plan.connection;
+
+    // Looking for the instance position in sequence of instances ...
+
+    unsigned int instance_ref = 0, i;
+
+    for (i = 0; i < instance.length(); i++)
+      if (!ACE_OS::strcmp(instance[i].name.in(), instance_name))
+      {
+        instance_ref = i;
+        break;
+      }
+
+    if (i == instance.length())
+      throw InstanceNotFound();
+
+    // First of all, we need to remove all connections of which this instance participates ...
+
+    for (i = 0; i < connection.length(); i++)
+      for (unsigned int j = 0; j < connection[i].internalEndpoint.length(); j++)
+        if (connection[i].internalEndpoint[j].instanceRef == instance_ref)
+          {
+            remove_connection(deployment_plan, connection[i].name.in());
+            // Updating i in order to verify the shifted connection ...
+            i--;
+            // Re-acquiring instances from the deployment plan ...
+            connection = deployment_plan.connection;
+            break;
+          }
+
+    // And then, removing the instance itself ...
+
+    for (unsigned int j = instance_ref; j < instance.length() - 1; j++)
+    {
+      instance[j].name = instance[j+1].name;
+      instance[j].node = instance[j+1].node;
+      instance[j].source.length(instance[j+1].source.length());
+      for (unsigned int k = 0; k < instance[j].source.length(); k++)
+        instance[j].source[k] = instance[j+1].source[k];
+      instance[j].implementationRef = instance[j].implementationRef;;
+      instance[j].configProperty.length(instance[j+1].configProperty.length());
+      for (unsigned int k = 0; k < instance[j].configProperty.length(); k++)
+      {
+        instance[j].configProperty[k].name  = instance[j+1].configProperty[k].name;
+        instance[j].configProperty[k].value = instance[j+1].configProperty[k].value;
+      }
+    }
+    instance.length(instance.length()-1);
+
+    // Re-assigning instances to the deployment plan ...
+    deployment_plan.instance = instance;
+
+    // Updating connections for the shifted instances ...
+    connection = deployment_plan.connection;
+    for (i = 0; i < connection.length(); i++)
+      for (unsigned int j = 0; j < connection[i].internalEndpoint.length(); j++)
+        if (connection[i].internalEndpoint[j].instanceRef > instance_ref)
+          connection[i].internalEndpoint[j].instanceRef--;
+    deployment_plan.connection = connection;
+  }
+
+  void
+  DAnCE_Utils::remove_connection (
+      ::Deployment::DeploymentPlan &deployment_plan, 
+      const char *connection_name)
+  {
+    ::Deployment::PlanConnectionDescriptions connection = deployment_plan.connection;
+
+    for (unsigned int i = 0; i < connection.length(); i++)
+      if (!ACE_OS::strcmp(connection[i].name.in(), connection_name))
+      {
+        for (unsigned int k = i; k < connection.length() - 1; k++)
+        {
+          unsigned int l;
+          connection[k].name = connection[k+1].name;
+          connection[k].source.length(connection[k+1].source.length());
+          for (l = 0; l < connection[k].source.length(); l++)
+            connection[k].source[l] = connection[k+1].source[l];
+          connection[k].deployRequirement.length(connection[k+1].deployRequirement.length());
+          for (l = 0; l < connection[k].deployRequirement.length(); l++)
+          {
+            connection[k].deployRequirement[l].resourceType = connection[k+1].deployRequirement[l].resourceType;
+            connection[k].deployRequirement[l].name = connection[k+1].deployRequirement[l].name;
+            connection[k].deployRequirement[l].property.length(connection[k+1].deployRequirement[l].property.length());
+            for (unsigned int m = 0; m < connection[k].deployRequirement[l].property.length(); m++)
+            {
+              connection[k].deployRequirement[l].property[m].name = connection[k+1].deployRequirement[l].property[m].name;
+              connection[k].deployRequirement[l].property[m].value = connection[k+1].deployRequirement[l].property[m].value;
+            }
+          }
+          connection[k].externalEndpoint.length(connection[k+1].externalEndpoint.length());
+          for (l = 0; l < connection[k].externalEndpoint.length(); l++)
+            connection[k].externalEndpoint[l].portName = connection[k+1].externalEndpoint[l].portName;
+          connection[k].internalEndpoint.length(connection[k+1].internalEndpoint.length());
+          for (l = 0; l < connection[k].internalEndpoint.length(); l++)
+          {
+            connection[k].internalEndpoint[l].portName = connection[k+1].internalEndpoint[l].portName;
+            connection[k].internalEndpoint[l].provider = connection[k+1].internalEndpoint[l].provider;
+            connection[k].internalEndpoint[l].kind = connection[k+1].internalEndpoint[l].kind;
+            connection[k].internalEndpoint[l].instanceRef = connection[k+1].internalEndpoint[l].instanceRef;
+          }
+          connection[k].deployedResource.length(connection[k+1].deployedResource.length());
+          for (l = 0; l < connection[k].deployedResource.length(); l++)
+          {
+            connection[k].deployedResource[l].targetName = connection[k+1].deployedResource[l].targetName;
+            connection[k].deployedResource[l].requirementName = connection[k+1].deployedResource[l].requirementName;
+            connection[k].deployedResource[l].resourceName = connection[k+1].deployedResource[l].resourceName;
+//            connection[k].deployedResource[l].resourceValue = connection[k+1].deployedResource[l].resourceValue;
+          }
+        }
+        connection.length(connection.length()-1);
+        // Re-assigning connection to the deployment plan ...
+        deployment_plan.connection = connection;
+        return;
+      }
+    // Throw exception if connection name not found ...
+    throw ConnectionNotFound();
+  }
 
   /*
   void
@@ -132,133 +255,7 @@ namespace CIAO
     deployment_plan->connection = connection;
   }
 
-  void
-  DAnCE_Utils::remove_instance (::Deployment::DeploymentPlan_var &deployment_plan, const char *instance_name)
-  {
-    // Modifying the deployment plan in order to remove the instance ...
 
-    ::Deployment::InstanceDeploymentDescriptions instance = deployment_plan->instance;
-    ::Deployment::PlanConnectionDescriptions connection = deployment_plan->connection;
-
-    // Looking for the instance position in sequence of instances ...
-
-    unsigned int instance_ref = 0, i;
-
-    for (i = 0; i < instance.length(); i++)
-      if (!ACE_OS::strcmp(instance[i].name.in(), instance_name))
-      {
-        instance_ref = i;
-        break;
-      }
-
-    if (i == instance.length())
-      throw InstanceNotFound();
-
-    // First of all, we need to remove all connections of which this instance participates ...
-
-    for (i = 0; i < connection.length(); i++)
-      for (unsigned int j = 0; j < connection[i].internalEndpoint.length(); j++)
-        if (connection[i].internalEndpoint[j].instanceRef == instance_ref)
-          {
-            remove_connection(deployment_plan, connection[i].name.in());
-            // Updating i in order to verify the shifted connection ...
-            i--;
-            // Re-acquiring instances from the deployment plan ...
-            connection = deployment_plan->connection;
-            break;
-          }
-
-    // And then, removing the instance itself ...
-
-    for (unsigned int j = instance_ref; j < instance.length() - 1; j++)
-    {
-      instance[j].name = instance[j+1].name;
-      instance[j].node = instance[j+1].node;
-      instance[j].source.length(instance[j+1].source.length());
-      for (unsigned int k = 0; k < instance[j].source.length(); k++)
-        instance[j].source[k] = instance[j+1].source[k];
-      instance[j].implementationRef = instance[j].implementationRef;;
-      instance[j].configProperty.length(instance[j+1].configProperty.length());
-      for (unsigned int k = 0; k < instance[j].configProperty.length(); k++)
-      {
-        instance[j].configProperty[k].name  = instance[j+1].configProperty[k].name;
-        instance[j].configProperty[k].value = instance[j+1].configProperty[k].value;
-      }
-    }
-    instance.length(instance.length()-1);
-
-    // Re-assigning instances to the deployment plan ...
-    deployment_plan->instance = instance;
-
-    // Updating connections for the shifted instances ...
-    connection = deployment_plan->connection;
-    for (i = 0; i < connection.length(); i++)
-      for (unsigned int j = 0; j < connection[i].internalEndpoint.length(); j++)
-        if (connection[i].internalEndpoint[j].instanceRef > instance_ref)
-          connection[i].internalEndpoint[j].instanceRef--;
-    deployment_plan->connection = connection;
-
-    return;
-
-  }
-
-  void
-  DAnCE_Utils::remove_connection (
-      ::Deployment::DeploymentPlan_var &deployment_plan, 
-      const char *connection_name)
-  {
-    ::Deployment::PlanConnectionDescriptions connection = deployment_plan->connection;
-
-    for (unsigned int i = 0; i < connection.length(); i++)
-      if (!ACE_OS::strcmp(connection[i].name.in(), connection_name))
-      {
-        for (unsigned int k = i; k < connection.length() - 1; k++)
-        {
-          unsigned int l;
-          connection[k].name = connection[k+1].name;
-          connection[k].source.length(connection[k+1].source.length());
-          for (l = 0; l < connection[k].source.length(); l++)
-            connection[k].source[l] = connection[k+1].source[l];
-          connection[k].deployRequirement.length(connection[k+1].deployRequirement.length());
-          for (l = 0; l < connection[k].deployRequirement.length(); l++)
-          {
-            connection[k].deployRequirement[l].resourceType = connection[k+1].deployRequirement[l].resourceType;
-            connection[k].deployRequirement[l].name = connection[k+1].deployRequirement[l].name;
-            connection[k].deployRequirement[l].property.length(connection[k+1].deployRequirement[l].property.length());
-            for (unsigned int m = 0; m < connection[k].deployRequirement[l].property.length(); m++)
-            {
-              connection[k].deployRequirement[l].property[m].name = connection[k+1].deployRequirement[l].property[m].name;
-              connection[k].deployRequirement[l].property[m].value = connection[k+1].deployRequirement[l].property[m].value;
-            }
-          }
-          connection[k].externalEndpoint.length(connection[k+1].externalEndpoint.length());
-          for (l = 0; l < connection[k].externalEndpoint.length(); l++)
-            connection[k].externalEndpoint[l].portName = connection[k+1].externalEndpoint[l].portName;
-          connection[k].internalEndpoint.length(connection[k+1].internalEndpoint.length());
-          for (l = 0; l < connection[k].internalEndpoint.length(); l++)
-          {
-            connection[k].internalEndpoint[l].portName = connection[k+1].internalEndpoint[l].portName;
-            connection[k].internalEndpoint[l].provider = connection[k+1].internalEndpoint[l].provider;
-            connection[k].internalEndpoint[l].kind = connection[k+1].internalEndpoint[l].kind;
-            connection[k].internalEndpoint[l].instanceRef = connection[k+1].internalEndpoint[l].instanceRef;
-          }
-          connection[k].deployedResource.length(connection[k+1].deployedResource.length());
-          for (l = 0; l < connection[k].deployedResource.length(); l++)
-          {
-            connection[k].deployedResource[l].targetName = connection[k+1].deployedResource[l].targetName;
-            connection[k].deployedResource[l].requirementName = connection[k+1].deployedResource[l].requirementName;
-            connection[k].deployedResource[l].resourceName = connection[k+1].deployedResource[l].resourceName;
-            connection[k].deployedResource[l].resourceValue = connection[k+1].deployedResource[l].resourceValue;
-          }
-        }
-        connection.length(connection.length()-1);
-        // Re-assigning connection to the deployment plan ...
-        deployment_plan->connection = connection;
-        return;
-      }
-    // Throw exception if connection name not found ...
-    throw ConnectionNotFound();
-  }
 */
   void
   DAnCE_Utils::print_instances (const ::Deployment::DeploymentPlan &deployment_plan)

@@ -25,6 +25,7 @@ namespace CIAO
     const char *ior_file_name_ = "executionManager.ior";
     const char *init_file_name = "deployment.dat";
     const char *pid_file_name_ = 0;
+    size_t total_lanes = 1;
     static bool register_with_ns_ = false;
     static bool write_to_ior_ = false;
     static bool rt_corba_enabled = false;
@@ -34,7 +35,7 @@ namespace CIAO
     bool
     parse_args (int argc, char *argv[])
     {
-      ACE_Get_Opt get_opts (argc, argv, "o:i:abnrp:");
+      ACE_Get_Opt get_opts (argc, argv, "o:i:abnr:p:");
       int c;
       while ((c = get_opts ()) != -1)
         switch (c)
@@ -51,6 +52,7 @@ namespace CIAO
               break;
             case 'r':
               rt_corba_enabled = true;
+              total_lanes =  ACE_OS::atoi (get_opts.opt_arg ());
               break;
             case 'p':
               pid_file_name_ = get_opts.opt_arg ();
@@ -204,12 +206,12 @@ namespace CIAO
               ///  Create thread pool with lanes  /////
               ///
 
-              CORBA::ULong TOTAL_LANES = 2; // avoid magic number
-              RTCORBA::ThreadpoolLanes lanes (TOTAL_LANES);
-              lanes.length (TOTAL_LANES);
+              CORBA::ULong TOTAL_LANES = 3; // avoid magic number
+              RTCORBA::ThreadpoolLanes lanes (total_lanes);
+              lanes.length (total_lanes);
 
               // Initialize the lane information
-              for (CORBA::ULong i = 0; i < TOTAL_LANES; ++i)
+              for (CORBA::ULong i = 0; i < total_lanes; ++i)
                 {
                   lanes[i].static_threads = 1;
                   lanes[i].dynamic_threads = 0;
@@ -224,9 +226,10 @@ namespace CIAO
               RTCORBA::Priority default_thread_priority =
                 current->the_priority ();
 
-              lanes[0].lane_priority = default_thread_priority;
-              lanes[1].lane_priority = default_thread_priority + 1;
-
+             for (CORBA::ULong i = 0; i < total_lanes; ++i)
+                {
+                  lanes[i].lane_priority = default_thread_priority + i;
+                }
 
               RTCORBA::ThreadpoolId threadpool_id =
                 rt_orb->create_threadpool_with_lanes (0, //static size
