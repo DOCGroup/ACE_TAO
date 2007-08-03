@@ -1,3 +1,11 @@
+Fri Aug  3 18:46:13 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/orbsvcs/Notify/MonitorControlExt/MC_Default_Factory.h:
+        * orbsvcs/orbsvcs/Notify/RT_Factory.h:
+
+          Changed to check for Borland <= 0x590 instead of all versions of
+          Borland compilers.
+
 Fri Aug  3 12:44:51 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/orbsvcs/CosNotification.mpc:
