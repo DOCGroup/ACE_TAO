@@ -664,16 +664,20 @@ local int unzlocal_GetCurrentFileInfoInternal (unzFile file,
             uSizeRead = extraFieldBufferSize;
 
         if (lSeek!=0)
-            {if (ZSEEK(s->z_filefunc, s->filestream,lSeek,ZLIB_FILEFUNC_SEEK_CUR)==0)
+        {
+            if (ZSEEK(s->z_filefunc, s->filestream,lSeek,ZLIB_FILEFUNC_SEEK_CUR)==0)
                 lSeek=0;
             else
                 err=UNZ_ERRNO;
-		}
+        }
+      
         if ((file_info.size_file_extra>0) && (extraFieldBufferSize>0))
-	    {   if (ZREAD(s->z_filefunc, s->filestream,extraField,uSizeRead)!=uSizeRead)
-                err=UNZ_ERRNO;
-                lSeek += file_info.size_file_extra - uSizeRead;
-	   }
+        {   
+            if (ZREAD(s->z_filefunc, s->filestream,extraField,uSizeRead)!=uSizeRead)
+              err=UNZ_ERRNO;
+              
+            lSeek += file_info.size_file_extra - uSizeRead;
+        }
     }
     else
         lSeek+=file_info.size_file_extra;
@@ -724,7 +728,6 @@ local int unzlocal_GetCurrentFileInfoInternal (unzFile file,
                                           char *szFileName,uLong fileNameBufferSize,
                                           void *extraField,uLong extraFieldBufferSize,
                                           char *szComment,uLong commentBufferSize)
- 
 {
     return unzlocal_GetCurrentFileInfoInternal(file,pfile_info,0,
                                                 szFileName,fileNameBufferSize,
@@ -940,8 +943,8 @@ local int unzlocal_CheckCurrentFileCoherencyHeader (unz_s* s,uInt* piSizeVar,
             err=UNZ_ERRNO;
         else if (uMagic!=0x04034b50)
             err=UNZ_BADZIPFILE;
-    }	    	    	       
-	    
+    }
+
 
     if (unzlocal_getShort(&s->z_filefunc, s->filestream,&uData) != UNZ_OK)
         err=UNZ_ERRNO;
@@ -1150,13 +1153,12 @@ extern MINIZIP_EXPORT int unzOpenCurrentFile (unzFile file)
     return unzOpenCurrentFile3(file, 0, 0, 0, 0);
 }
 
-extern MINIZIP_EXPORT int unzOpenCurrentFilePassword (unzFile file,const char* password) 
+extern MINIZIP_EXPORT int unzOpenCurrentFilePassword (unzFile file,const char* password)
 {
     return unzOpenCurrentFile3(file, 0, 0, 0, password);
 }
 
- extern MINIZIP_EXPORT int unzOpenCurrentFile2 (unzFile file,int* method,int* level,int raw)
-    
+extern MINIZIP_EXPORT int unzOpenCurrentFile2 (unzFile file,int* method,int* level,int raw)
 {
     return unzOpenCurrentFile3(file, method, level, raw, 0);
 }
@@ -1330,7 +1332,7 @@ extern MINIZIP_EXPORT int unzReadCurrentFile (unzFile file,voidp buf,unsigned le
 /*
   Give the current position in uncompressed data
 */
-extern MINIZIP_EXPORT z_off_t unztell (unzFile file)   
+extern MINIZIP_EXPORT z_off_t unztell (unzFile file)
 {
     unz_s* s;
     file_in_zip_read_info_s* pfile_in_zip_read_info;
@@ -1349,7 +1351,7 @@ extern MINIZIP_EXPORT z_off_t unztell (unzFile file)
 /*
   return 1 if the end of file was reached, 0 elsewhere
 */
-extern MINIZIP_EXPORT int unzeof (unzFile file)   
+extern MINIZIP_EXPORT int unzeof (unzFile file)
 {
     unz_s* s;
     file_in_zip_read_info_s* pfile_in_zip_read_info;
@@ -1383,7 +1385,6 @@ extern MINIZIP_EXPORT int unzeof (unzFile file)
 */
 //FUZZ: enable check_for_NULL
 extern MINIZIP_EXPORT int unzGetLocalExtrafield (unzFile file,voidp buf,unsigned len)
-  
 {
     unz_s* s;
     file_in_zip_read_info_s* pfile_in_zip_read_info;
@@ -1431,7 +1432,7 @@ extern MINIZIP_EXPORT int unzGetLocalExtrafield (unzFile file,voidp buf,unsigned
   Close the file in zip opened with unzipOpenCurrentFile
   Return UNZ_CRCERROR if all the file was read but the CRC is not good
 */
-extern MINIZIP_EXPORT int unzCloseCurrentFile (unzFile file)   
+extern MINIZIP_EXPORT int unzCloseCurrentFile (unzFile file)
 {
     int err=UNZ_OK;
 
@@ -1474,7 +1475,6 @@ extern MINIZIP_EXPORT int unzCloseCurrentFile (unzFile file)
   return the number of byte copied or an error code <0
 */
 extern MINIZIP_EXPORT int unzGetGlobalComment (unzFile file,char *szComment,uLong uSizeBuf)
-    
 {
      unz_s* s;
     uLong uReadThis ;
@@ -1502,7 +1502,7 @@ extern MINIZIP_EXPORT int unzGetGlobalComment (unzFile file,char *szComment,uLon
 }
 
 /* Additions by RX '2004 */
-extern MINIZIP_EXPORT uLong unzGetOffset (unzFile file)   
+extern MINIZIP_EXPORT uLong unzGetOffset (unzFile file)
 {
     unz_s* s;
 
@@ -1518,7 +1518,6 @@ extern MINIZIP_EXPORT uLong unzGetOffset (unzFile file)
 }
 
 extern MINIZIP_EXPORT int unzSetOffset (unzFile file,uLong pos)
-    
 {
     unz_s* s;
     int err;

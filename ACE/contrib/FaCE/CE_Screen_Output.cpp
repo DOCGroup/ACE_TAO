@@ -105,10 +105,10 @@ CE_Screen_Output& CE_Screen_Output::operator << (unsigned char output)
 
 CE_Screen_Output& CE_Screen_Output::operator << (unsigned short output)
 {
-	wchar_t buffer[20];
-	wsprintf(buffer, L"%u", output);
-	*this << buffer;
-	return *this;
+  wchar_t buffer[20];
+  wsprintf(buffer, L"%u", output);
+  *this << buffer;
+  return *this;
 }
 
 
