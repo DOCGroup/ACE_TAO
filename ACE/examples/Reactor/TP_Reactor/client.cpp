@@ -89,14 +89,14 @@ int ACE_TMAIN(int argc, ACE_TCHAR **argv) {
             if (stream.send_n(&size, sizeof(size), &connTimeout) != sizeof(size)) {
                 ACE_ERROR((LM_ERROR, ACE_TEXT("%N:%l: Failed to  send ")
                            ACE_TEXT ("request. (errno = %i: %m)\n"), errno));
-                throw(1);
+                throw 1;
             }
 
             // receive the answer
             if (stream.recv_n(&answer, sizeof(answer), &connTimeout) != 1) {
               ACE_ERROR((LM_ERROR, ACE_TEXT("%N: %l: Failed to receive ")
                          ACE_TEXT ("1st response. (errno = %i: %m)\n"), errno));
-                throw(1);
+                throw 1;
             }
 
             // server answer, 'K" indicates a positive answer
@@ -106,14 +106,14 @@ int ACE_TMAIN(int argc, ACE_TCHAR **argv) {
                 if (stream.send_n(someData, size, &connTimeout) != size) {
                   ACE_ERROR((LM_ERROR, ACE_TEXT("%N:%l: Failed to send ")
                              ACE_TEXT ("someData. (errno = %i: %m)\n"), errno));
-                    throw(1);
+                    throw 1;
                 }
 
                 // get an answer
                 if (stream.recv_n(&answer, sizeof(answer), &connTimeout) != 1) {
                   ACE_ERROR((LM_ERROR, ACE_TEXT("%N: %l: Failed to receive ")
                              ACE_TEXT ("2nd response. (errno = %i: %m)\n"), errno));
-                    throw(1);
+                    throw 1;
                 }
 
                 // check the answer
