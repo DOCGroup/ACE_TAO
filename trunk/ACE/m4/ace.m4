@@ -266,6 +266,21 @@ AC_DEFUN([ACE_CONFIGURATION_OPTIONS],
    AC_DEFINE([ACE_HAS_POSITION_INDEPENDENT_POINTERS])
   ])
 
+ AC_ARG_ENABLE([posix-sem-timeout-emulation],
+  AS_HELP_STRING(--enable-posix-sem-timeout-emulation,enable POSIX semaphore timeout emulation [[[no]]]),
+  [
+   case "${enableval}" in
+    yes)
+      AC_DEFINE([ACE_DISABLE_POSIX_SEM_TIMEOUT_EMULATION])
+      ;;
+    no)
+      ;;
+    *)
+      AC_MSG_ERROR([bad value ${enableval} for --enable-posix-sem-timeout-emulation])
+      ;;
+   esac
+  ],)
+
  AC_ARG_ENABLE([probe],
   AS_HELP_STRING(--enable-probe,enable ACE_Timeprobes [[[no]]]),
   [

@@ -4323,10 +4323,10 @@ main ()
   sem_t *s = 0;
 
   s = sem_open ("ace_semaphore_foo", O_CREAT | O_EXCL, 0600, 1);
-
   if (s == SEM_FAILED)
     return -1;  /* FAILURE */
 
+  sem_unlink ("ace_semaphore_foo");
   if (sem_close (s) != 0)
     return -1;  /* Something went wrong! */
 
@@ -4345,6 +4345,69 @@ main ()
     ],)
 
 fi dnl check for POSIX Semaphore functions
+
+dnl If we have POSIX semaphores available, check to see if we also have
+dnl the timed wait capability.
+if test "$ac_cv_func_sem_open"   = yes &&
+   test "$ac_cv_func_sem_close"  = yes &&
+   test "$ac_cv_func_sem_unlink" = yes; then
+     dnl Check if sem_timedwait() works - often it compiles and will run
+     dnl but if called return ENOTSUP. In that case, we don't want it.
+     ACE_CACHE_CHECK([if sem_timedwait works],
+       [ace_cv_sem_timedwait_works],
+       [
+        AC_RUN_IFELSE([AC_LANG_SOURCE([[
+#ifndef ACE_LACKS_SYS_TYPES_H
+#include <sys/types.h>
+#endif
+
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <time.h>
+#include <stddef.h>  /* for definition of "NULL" */
+
+#include <semaphore.h>
+
+#ifndef SEM_FAILED
+# define SEM_FAILED ((sem_t *) -1)
+#endif
+
+int
+main ()
+{
+  sem_t *s = 0;
+  struct timespec tmo;
+  int status = 0;
+  s = sem_open ("ace_semaphore_foo", O_CREAT, 0600, 1);
+  if (s == SEM_FAILED)
+    return -1;  /* FAILURE */
+
+  /* Don't care about the time, only whether the call works */
+  tmo.tv_sec = 0;
+  tmo.tv_nsec = 0;
+  if (sem_timedwait (s, &tmo) == -1)
+    {
+      if (errno == ENOTSUP)
+        status = -1;
+    }
+  else
+    sem_post (s);
+
+  sem_unlink ("ace_semaphore_foo");
+  sem_close (s);
+
+  return status;
+}
+        ]])],[
+          ace_cv_sem_timedwait_works=yes
+          ],[
+          ace_cv_sem_timedwait_works=no
+          ],[
+          dnl action if cross-compiling
+          ace_cv_sem_timedwait_works=yes
+         ])
+       ],,)
+fi
 
 
 dnl The following tests are performed only when the user has enabled
@@ -4418,21 +4481,14 @@ dnl name.
   ACE_CHECK_HAS_FUNCS(pthread_condattr_setkind_np)
   ACE_CHECK_HAS_FUNCS(pthread_mutexattr_setkind_np)
 
+  dnl Can't use ACE_CHECK_LACKS_FUNCS because the macro doesn't match the
+  dnl tested function name.
   AC_CHECK_FUNC([pthread_condattr_setpshared],
     ,
     [AC_DEFINE([ACE_LACKS_CONDATTR_PSHARED])])
 
-  AC_CHECK_FUNC([pthread_cond_timedwait],
-    [AC_DEFINE([ACE_HAS_POSIX_SEM_TIMEOUT])],
-    [AC_DEFINE([ACE_HAS_POSIX_SEM_TIMEOUT_EMULATION])])
-
-  AC_CHECK_FUNC([pthread_attr_setstackaddr],
-    ,
-    [AC_DEFINE([ACE_LACKS_PTHREAD_ATTR_SETSTACKADDR])])
-
-  ACE_CHECK_FUNC([pthread_attr_setstacksize], [pthread.h],
-    ,
-    [AC_DEFINE([ACE_LACKS_PTHREAD_ATTR_SETSTACKSIZE])])
+  ACE_CHECK_LACKS_FUNCS(pthread_attr_setstackaddr)
+  ACE_CHECK_LACKS_FUNCS(pthread_attr_setstacksize)
 
   ACE_CHECK_FUNC([pthread_cancel], [pthread.h],
     [

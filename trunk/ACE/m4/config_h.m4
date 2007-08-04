@@ -520,10 +520,10 @@ AH_TEMPLATE([ACE_HAS_POSIX_SEM],
    Solaris)])
 
 AH_TEMPLATE([ACE_HAS_POSIX_SEM_TIMEOUT],
-[Compiler supports timed mutex acquisitions (e.g. thread_mutex_timedlock()).])
+[Platform supports timed POSIX semaphore acquisitions (sem_timedwait()).])
 
-AH_TEMPLATE([ACE_HAS_POSIX_SEM_TIMEOUT_EMULATION],
-[Emulation for timed mutex acquisitions.])
+AH_TEMPLATE([ACE_DISABLE_POSIX_SEM_TIMEOUT_EMULATION],
+[Do not include emulation for timed semaphore acquisitions.])
 
 AH_TEMPLATE([ACE_HAS_POSIX_TIME],
 [Platform supports the POSIX struct timespec type])
@@ -879,9 +879,6 @@ AH_TEMPLATE([ACE_LACKS_PLACEMENT_OPERATOR_DELETE],
 AH_TEMPLATE([ACE_LACKS_PRAGMA_ONCE],
 [Compiler complains about use of obsolete "pragma once"])
 
-AH_TEMPLATE([ACE_LACKS_PTHREAD_ATTR_SETSTACKADDR],
-[Platform lack pthread_attr_setstackaddr()])
-
 AH_TEMPLATE([ACE_LACKS_PTHREAD_CANCEL],[Platform lacks pthread_cancel()])
 
 AH_TEMPLATE([ACE_LACKS_PWD_FUNCTIONS],
@@ -940,9 +937,6 @@ AH_TEMPLATE([ACE_LACKS_TCP_NODELAY],[OS does not support TCP_NODELAY])
 
 AH_TEMPLATE([ACE_LACKS_THREAD_PROCESS_SCOPING],
 [Platform lacks pthread_attr_setscope()])
-
-AH_TEMPLATE([ACE_LACKS_PTHREAD_ATTR_SETSTACKSIZE],
-[Platform lacks pthread_attr_setstacksize() (e.g., Linux pthreads)])
 
 AH_TEMPLATE([ACE_LACKS_TIMESPEC_T],
 [Platform does not define timepec_t as a typedef for struct timespec.])
