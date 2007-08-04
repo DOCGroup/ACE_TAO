@@ -81,7 +81,7 @@ public:
 private:
   HASH_ANNOTATIONS_MAP annotations_repo_;
   ACE_RW_Thread_Mutex lock_;
-  ACE_Atomic_Op<ACE_Thread_Mutex, long> num_avail_threads_;
+  ACE_Atomic_Op<ACE_Thread_Mutex, int> num_avail_threads_;
 
 };
 

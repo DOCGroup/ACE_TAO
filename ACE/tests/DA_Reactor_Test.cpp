@@ -437,11 +437,21 @@ Receiver::open (void *)
 
 
   flg_mask_ = ACE_Event_Handler::NULL_MASK ;
-
-  if (ACE_Reactor::instance()->register_handler (this, flg_mask_) == -1)
+  int annotation = (rand()%threads) + 1;
+  if (ACE_Deadlock_Free_TP_Reactor::instance()->add_annotation(this, annotation) == -1) {
     return -1;
-  //randomize annotation between 1 and 10
-  ACE_Deadlock_Free_TP_Reactor::instance()->add_annotation(this, (rand()%9) + 1);
+  } else {
+          ACE_DEBUG ((LM_DEBUG, "%s = %d ", "adding handle", this->get_handle()));
+          ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "with annotation", annotation));
+
+  }
+  if (ACE_Reactor::instance()->register_handler (this, flg_mask_) == -1)
+  {
+    ACE_Deadlock_Free_TP_Reactor::instance()->remove_annotation(this);
+    return -1;
+  }
+  
+  
   initiate_io (ACE_Event_Handler::READ_MASK);
 
   return check_destroy ();
@@ -581,7 +591,7 @@ Receiver::handle_output (ACE_HANDLE h)
   int     err = 0;
   ssize_t res = 0;
   size_t  bytes = 0;
-
+  int annotation = ACE_Deadlock_Free_TP_Reactor::instance()->get_annotation(h);
   int     qcount = this->getq (mb, &tv);
 
   if (mb != 0)  // qcount >= 0)
@@ -604,6 +614,7 @@ Receiver::handle_output (ACE_HANDLE h)
           ACE_DEBUG ((LM_DEBUG, "**** Receiver::handle_output () SessionId=%d****\n", index_));
           ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "bytes_to_write", bytes));
           ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "handle", h));
+          ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "annotation", annotation));
           ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "bytes_transferred", res));
           ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "error", err));
           ACE_DEBUG ((LM_DEBUG, "%s = %s\n", "message_block", mb->rd_ptr ()));
@@ -814,10 +825,20 @@ int Sender::open (void *)
 
 
   flg_mask_ = ACE_Event_Handler::NULL_MASK ;
-
-  if (ACE_Reactor::instance()->register_handler (this,flg_mask_) == -1)
+  int annotation = (rand()%threads) + 1;
+  if (ACE_Deadlock_Free_TP_Reactor::instance()->add_annotation(this, annotation) == -1)
+  {
     return -1;
-  ACE_Deadlock_Free_TP_Reactor::instance()->add_annotation(this, (rand()%9) + 1);
+  } else {
+          ACE_DEBUG ((LM_DEBUG, "%s = %d ", "adding handle", this->get_handle()));
+          ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "with annotation", annotation));
+  }
+  if (ACE_Reactor::instance()->register_handler (this,flg_mask_) == -1)
+  {
+    ACE_Deadlock_Free_TP_Reactor::instance()->remove_annotation(this);
+    return -1;
+  }
+
   if (this->initiate_write () == -1)
     return -1;
 
@@ -907,6 +928,7 @@ Sender::handle_input (ACE_HANDLE h)
                   -1);
 
   int     err = 0;
+  int annotation = ACE_Deadlock_Free_TP_Reactor::instance()->get_annotation(h);
   ssize_t res = this->peer ().recv (mb->rd_ptr (),
                                     BUFSIZ-1);
   this->total_r_++;
@@ -928,6 +950,7 @@ Sender::handle_input (ACE_HANDLE h)
       ACE_DEBUG ((LM_DEBUG, "**** Sender::handle_input () SessionId=%d****\n", index_));
       ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "bytes_to_read", BUFSIZ));
       ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "handle", h));
+      ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "annotation", annotation));
       ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "bytes_transferred", res));
       ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "error", err));
       ACE_DEBUG ((LM_DEBUG, "%s = %s\n", "message_block", mb->rd_ptr ()));
@@ -974,6 +997,7 @@ Sender::handle_output (ACE_HANDLE h)
   int     err=0;
   ssize_t res=0;
   size_t  bytes=0;
+  int annotation = ACE_Deadlock_Free_TP_Reactor::instance()->get_annotation(h);
 
   int     qcount = this->getq (mb , & tv);
 
@@ -996,6 +1020,7 @@ Sender::handle_output (ACE_HANDLE h)
           ACE_DEBUG ((LM_DEBUG, "**** Sender::handle_output () SessionId=%d****\n", index_));
           ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "bytes_to_write", bytes));
           ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "handle", h));
+          ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "annotation", annotation));
           ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "bytes_transferred", res));
           ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "error", err));
           ACE_DEBUG ((LM_DEBUG, "%s = %s\n", "message_block", mb->rd_ptr ()));

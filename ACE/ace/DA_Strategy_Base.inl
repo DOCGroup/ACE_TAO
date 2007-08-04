@@ -43,7 +43,14 @@ ACE_INLINE int
 DA_Strategy_Base<AnnotationId>::add_annotation (AnnotationId id, int annotation)
 {
   int rc;
-  rc = annotations_repo_.bind (id, annotation);
+  if (annotation > num_avail_threads_.value()) {
+    rc = -1;
+    ACE_ERROR ((LM_ERROR,
+               ACE_TEXT ("%p.\n"),
+               ACE_TEXT ("DA_Strategy_Base annotation may not exceed number of threads")));
+  } else {
+    rc = annotations_repo_.bind (id, annotation);
+  }
   /*  
     ACE_DEBUG ((LM_DEBUG, "In add_annotation\n"));
   HASH_ANNOTATIONS_CONST_ITER iter(annotations_repo_);
