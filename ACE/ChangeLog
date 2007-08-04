@@ -1,3 +1,28 @@
+Sat Aug  4 22:07:05 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * configure.ac: Removed the pthread_cond_timedwait() check - it was
+          used to set ACE_HAS_POSIX_SEM_TIMEOUT and ACE_HAS_POSIX_SEM_TIMEOUT_
+          EMULATION, neither of which it is related to. Added a correct check
+          for sem_timedwait (ACE_HAS_POSIX_SEM_TIMEOUT).
+          Also, used shortcut functions instead of hand-coding tests for
+          pthread_attr_setstackaddr and pthread_attr_setstacksize.
+
+        * m4/ace.m4: Add --enable-posix-sem-timeout-emulation, corresponding
+          to ACE_DISABLE_POSIX_SEM_TIMEOUT_EMULATION.
+
+        * m4/config_h.m4: Corrected description of ACE_HAS_POSIX_SEM_TIMEOUT
+          and added ACE_DISABLE_POSIX_SEM_TIMEOUT_EMULATION. Also, because
+          of use of shortcuts (above) can remove templates for
+          ACE_LACKS_PTHREAD_ATTR_SETSTACKSIZE and
+          ACE_LACKS_PTHREAD_ATTR_SETSTACKADDR.
+
+        * m4/compiler.m4: For IBM Visual Age C++ and XL C++, use manual
+          template instances (-qnotempinc -qnotemplateregistry) because I
+          haven't found a way to name the template registry from the
+          Makefiles and without that, building multiple items in one directory
+          clashes. Some people have reported the need to use manual template
+          mechanism for building TAO successfully, so maybe this will be ok.
+
 Fri Aug  3 21:34:40 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * contrib/FaCE/CE_Screen_Output.cpp:
