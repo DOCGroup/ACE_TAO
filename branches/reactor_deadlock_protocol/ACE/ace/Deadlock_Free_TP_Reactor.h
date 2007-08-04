@@ -101,6 +101,7 @@ public:
   virtual void pre_upcall_hook (ACE_HANDLE upcall_handle);
   virtual void post_upcall_hook (ACE_HANDLE upcall_handle);
   virtual int  get_annotation (ACE_Event_Handler* eh);
+  virtual int  get_annotation (ACE_HANDLE h);
   virtual int add_annotation (ACE_Event_Handler* eh, int annotation);
   virtual int  remove_annotation (ACE_Event_Handler* eh);
 

@@ -92,6 +92,12 @@ ACE_Deadlock_Free_TP_Reactor_Impl::get_annotation (ACE_Event_Handler* eh)
 }
 
 ACE_INLINE int 
+ACE_Deadlock_Free_TP_Reactor_Impl::get_annotation (ACE_HANDLE h)
+{
+  return da_strategy_->get_annotation(h);
+}
+
+ACE_INLINE int 
 ACE_Deadlock_Free_TP_Reactor_Impl::add_annotation (ACE_Event_Handler* eh, int annotation)
 {
   return da_strategy_->add_annotation(eh->get_handle(), annotation);
