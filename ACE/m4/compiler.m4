@@ -96,7 +96,8 @@ dnl @todo Clean up / consolidate these conditionals
          else
            CXXFLAGS="$CXXFLAGS -DACE_LACKS_RTTI"
          fi
-         TEMPLATE_OPTION='-qtemplateregistry=templateregistry.$* -DACE_TEMPLATES_REQUIRE_SOURCE'
+         #TEMPLATE_OPTION='-qtemplateregistry=templateregistry.$* -DACE_TEMPLATES_REQUIRE_SOURCE'
+         TEMPLATE_OPTION='-qnotempinc -qnotemplateregistry -DACE_TEMPLATES_REQUIRE_SOURCE'
          ACE_CXXFLAGS="$ACE_CXXFLAGS $TEMPLATE_OPTION"
          DCXXFLAGS="-g -qcheck=nobounds:div:null"
          OCXXFLAGS="-qlibansi -qarch=com"
