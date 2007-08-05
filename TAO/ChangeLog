@@ -1,3 +1,9 @@
+Sun Aug  5 18:01:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/File_IO/run_test.pl:
+          Added -sdebug and -cdebug to run server and/or client with
+          debugging
+
 Fri Aug  3 19:32:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * performance-tests/Cubit/TAO/IDL_Cubit/run_test.pl:
