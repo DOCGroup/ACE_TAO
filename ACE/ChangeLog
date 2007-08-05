@@ -1,3 +1,9 @@
+Sun Aug  5 19:27:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/SStringfwd.h:
+          Check if __HP_aCC is defined before checking its value, fixes
+          a remark in the Intel C++ autoconf build
+
 Sat Aug  4 22:07:05 UTC 2007  Steve Huston  <shuston@riverace.com>
 
         * configure.ac: Removed the pthread_cond_timedwait() check - it was
