@@ -10,16 +10,27 @@ use PerlACE::Run_Test;
 
 $iorfile = PerlACE::LocalFile ("server.ior");
 $status = 0;
+$server_debug_level = '0';
+$client_debug_level = '0';
+
+foreach $i (@ARGV) {
+    if ($i eq '-sdebug') {
+        $server_debug_level = '10';
+    } 
+    if ($i eq '-cdebug') {
+        $client_debug_level = '10';
+    } 
+}
 
 unlink $iorfile;
 
 if (PerlACE::is_vxworks_test()) {
-    $SV = new PerlACE::ProcessVX ("server", "-o server.ior");
+    $SV = new PerlACE::ProcessVX ("server", "-ORBDebuglevel $server_debug_level -o server.ior");
 }
 else {
-    $SV = new PerlACE::Process ("server", "-o $iorfile");
+    $SV = new PerlACE::Process ("server", "-ORBDebuglevel $server_debug_level -o $iorfile");
 }
-$CL = new PerlACE::Process ("client", "-k $iorfile");
+$CL = new PerlACE::Process ("client", "-ORBDebuglevel $client_debug_level -k $iorfile");
 
 $server = $SV->Spawn ();
 
