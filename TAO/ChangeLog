@@ -1,3 +1,29 @@
+Sun Aug  5 18:58:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/CSD_Framework/CSD_Framework_Loader.cpp:
+        * tao/CSD_Framework/CSD_Framework_Loader.h:
+          Don't register the ORBInitializer in the static method, this causes
+          problems when loading libraries on demand because this code does
+          trigger the loading of the PI library. The windows documentation states
+          explicityly that only very simple things should be done in static
+          methods, no loading of libraries. Thanks to Iliyan Jeliazkov and
+          Adam Mitz for analyzing why the Two_DLL_Orb fails on Windows. This is
+          related to bugzilla issue 2994
+
+        * tao/TAO_Internal.cpp:
+          Try to call init on the CSD_Framework_Loader
+
+        * tao/CSD_ThreadPool/CSD_ThreadPool.cpp:
+          Updated for CSD_Framework change
+
+        * tao/EndpointPolicy/EndpointPolicy.cpp:
+        * tao/PI_Server/PI_Server_Loader.cpp:
+        * tao/PI_Server/PI_Server_Loader.h:
+        * tao/PortableServer/Operation_Table_Perfect_Hash.cpp:
+        * tao/Valuetype/Valuetype_Adapter_Factory_Impl.h:
+        * tao/Valuetype/Valuetype_Adapter_Impl.h:
+          Layout change
+
 Sun Aug  5 18:01:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/File_IO/run_test.pl:
