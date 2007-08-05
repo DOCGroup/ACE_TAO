@@ -94,8 +94,7 @@ TAO_Perfect_Hash_OpTable::find (const char *opname,
 }
 
 int
-TAO_Perfect_Hash_OpTable::bind (const char *,
-                                const TAO::Operation_Skeletons)
+TAO_Perfect_Hash_OpTable::bind (const char *, const TAO::Operation_Skeletons)
 {
   return 0;
 }

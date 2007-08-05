@@ -43,9 +43,7 @@ class TAO_Valuetype_Export TAO_Valuetype_Adapter_Factory_Impl
 public:
   virtual ~TAO_Valuetype_Adapter_Factory_Impl (void);
 
-  virtual TAO_Valuetype_Adapter * create (
-
-    );
+  virtual TAO_Valuetype_Adapter * create (void);
 
   // Used to force the initialization of the ORB code.
   static int Initializer (void);

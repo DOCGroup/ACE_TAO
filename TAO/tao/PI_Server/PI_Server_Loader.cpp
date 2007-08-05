@@ -20,12 +20,10 @@ TAO_PI_Server_Loader::TAO_PI_Server_Loader (void)
 
 TAO_PI_Server_Loader::~TAO_PI_Server_Loader (void)
 {
-
 }
 
 int
-TAO_PI_Server_Loader::init (int,
-			      ACE_TCHAR* [])
+TAO_PI_Server_Loader::init (int, ACE_TCHAR* [])
 {
   ACE_TRACE ("TAO_PI_Server_Loader::init");
 
@@ -55,8 +53,7 @@ TAO_PI_Server_Loader::init (int,
       PortableInterceptor::ORBInitializer_var orb_initializer =
         temp_orb_initializer;
 
-      PortableInterceptor::register_orb_initializer (orb_initializer.in ()
-                                                    );
+      PortableInterceptor::register_orb_initializer (orb_initializer.in ());
     }
   catch (const ::CORBA::Exception& ex)
     {

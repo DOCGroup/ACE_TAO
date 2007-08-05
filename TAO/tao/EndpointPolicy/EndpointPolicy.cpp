@@ -49,7 +49,6 @@ TAO_EndpointPolicy_Initializer::init (void)
   ACE_Service_Config::process_directive
     (ace_svc_desc_TAO_Endpoint_Acceptor_Filter_Factory,1); // force replacement
 
-
   return 0;
 }
 

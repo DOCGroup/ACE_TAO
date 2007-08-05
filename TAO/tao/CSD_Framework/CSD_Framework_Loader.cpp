@@ -5,8 +5,6 @@
 #include "tao/CSD_Framework/CSD_Strategy_Repository.h"
 #include "tao/CSD_Framework/CSD_ORBInitializer.h"
 #include "tao/ORBInitializer_Registry.h"
-#include "ace/Dynamic_Service.h"
-#include "ace/Service_Gestalt.h"
 
 ACE_RCSID (CSD_Framework,
            CSD_Framework_Loader,
@@ -16,14 +14,39 @@ ACE_RCSID (CSD_Framework,
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+TAO_CSD_Framework_Loader::TAO_CSD_Framework_Loader (void)
+{
+}
+
+TAO_CSD_Framework_Loader::~TAO_CSD_Framework_Loader (void)
+{
+}
+
+
 int
-TAO_CSD_Framework_Loader::init (void)
+TAO_CSD_Framework_Loader::static_init (void)
 {
   ACE_Service_Config::process_directive
      (ace_svc_desc_TAO_CSD_Object_Adapter_Factory);
 
   ACE_Service_Config::process_directive
     (ace_svc_desc_TAO_CSD_Strategy_Repository);
+
+  return 0;
+}
+
+int
+TAO_CSD_Framework_Loader::init (int, ACE_TCHAR* [])
+{
+  ACE_TRACE ("TAO_CSD_Framework_Loader::init");
+
+  static bool initialized = false;
+
+  // Only allow initialization once.
+  if (initialized)
+    return 0;
+
+  initialized = true;
 
   // Register the ORB initializer.
   try
@@ -57,3 +80,14 @@ TAO_CSD_Framework_Loader::init (void)
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
+
+/////////////////////////////////////////////////////////////////////
+
+ACE_FACTORY_DEFINE (TAO_CSD_FW, TAO_CSD_Framework_Loader)
+ACE_STATIC_SVC_DEFINE (TAO_CSD_Framework_Loader,
+                       ACE_TEXT ("CSD_Framework_Loader"),
+                       ACE_SVC_OBJ_T,
+                       &ACE_SVC_NAME (TAO_CSD_Framework_Loader),
+                       ACE_Service_Type::DELETE_THIS
+                       | ACE_Service_Type::DELETE_OBJ,
+                       0)

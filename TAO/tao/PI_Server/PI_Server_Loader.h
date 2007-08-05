@@ -35,8 +35,7 @@ public:
   virtual ~TAO_PI_Server_Loader (void);
 
   /// Initialize the PI_Server loader hooks.
-  virtual int init (int argc,
-                    ACE_TCHAR* []);
+  virtual int init (int argc, ACE_TCHAR* []);
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
