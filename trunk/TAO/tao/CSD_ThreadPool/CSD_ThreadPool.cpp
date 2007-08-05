@@ -16,7 +16,7 @@ TAO_CSD_ThreadPool::init (void)
     return 0;
   initialized = 1;
 
-  TAO_CSD_Framework_Loader::init();
+  TAO_CSD_Framework_Loader::static_init();
   return ACE_Service_Config::process_directive (ace_svc_desc_TAO_CSD_TP_Strategy_Factory);
 }
 
