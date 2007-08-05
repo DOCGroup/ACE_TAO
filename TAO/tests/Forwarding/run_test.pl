@@ -15,16 +15,23 @@ unlink $iorfile;
 $port = PerlACE::uniqueid () + 10001;  # This can't be 10000 for Chorus 4.0
 $status = 0;
 
-$SV  = new PerlACE::Process ("server", "-ORBEndpoint iiop://localhost:$port -o $iorfile");
+if (PerlACE::is_vxworks_test()) {
+  $TARGETHOSTNAME = $ENV{'ACE_RUN_VX_TGTHOST'};
+  $SV  = new PerlACE::ProcessVX ("server", "-ORBEndpoint iiop://$TARGETHOSTNAME:$port -o $iorfile");
+}
+else {
+  $TARGETHOSTNAME = "localhost";
+  $SV  = new PerlACE::Process ("server", "-ORBEndpoint iiop://localhost:$port -o $iorfile");
+}
 $CL1 = new PerlACE::Process ("client", "-i 100 -k file://$iorfile");
-$CL2 = new PerlACE::Process ("client", "-x -i 100 -k corbaloc::localhost:$port/Simple_Server");
+$CL2 = new PerlACE::Process ("client", "-x -i 100 -k corbaloc::$TARGETHOSTNAME:$port/Simple_Server");
 
 $SV->Spawn ();
 
 if (PerlACE::waitforfile_timed ($iorfile,
                         $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: cannot find file <$iorfile>\n";
-    $SV->Kill (); 
+    $SV->Kill ();
     exit 1;
 }
 
@@ -39,7 +46,6 @@ if ($client != 0) {
 
 print STDERR "==== Running second test, using corbaloc IORs ($port)\n";
 
-
 $client = $CL2->SpawnWaitKill (60);
 
 if ($client != 0) {
@@ -47,7 +53,7 @@ if ($client != 0) {
     $status = 1;
 }
 
-$server = $SV->WaitKill (5);
+$server = $SV->WaitKill (15);
 
 if ($server != 0) {
     print STDERR "ERROR: server returned $server\n";
