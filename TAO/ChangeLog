@@ -1,3 +1,16 @@
+Mon Aug  6 05:12:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/BiDir_GIOP/BiDirGIOP.cpp:
+        * tao/IORManipulation/IORManip_Loader.cpp:
+          Layout change
+
+        * tao/CSD_Framework/CSD_Framework_Loader.cpp:
+          Added missing process_directive, fixes failure of the CSD tests
+
+        * tao/CSD_ThreadPool/CSD_ThreadPool.h:
+          Removed usage of ACE_HAS_BROKEN_STATIC_CONSTRUCTORS, this macro
+          has been removed a long time ago
+
 Sun Aug  5 19:14:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/POA/Forwarding/run_test.pl:

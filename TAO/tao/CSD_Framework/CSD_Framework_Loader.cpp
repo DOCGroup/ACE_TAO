@@ -32,6 +32,8 @@ TAO_CSD_Framework_Loader::static_init (void)
   ACE_Service_Config::process_directive
     (ace_svc_desc_TAO_CSD_Strategy_Repository);
 
+  ACE_Service_Config::process_directive (ace_svc_desc_TAO_CSD_Framework_Loader);
+
   return 0;
 }
 
