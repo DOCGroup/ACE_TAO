@@ -3615,6 +3615,29 @@ if test $ac_cv_func_madvise = yes; then
 		  ])
 fi
 
+ACE_CHECK_HAS_FUNCS(mkdir)
+
+if test "$ac_cv_func_mkdir" = yes; then
+dnl The mkdir() function has only one argument on Windows and VxWorks
+AC_MSG_CHECKING([for 1- or 2-param mkdir])
+AC_LINK_IFELSE([AC_LANG_PROGRAM(
+          [[
+#include <sys/stat.h>
+          ]],
+          [[
+           const char path[] = "mypath";
+           int result = mkdir (path);
+          ]])],
+          [
+           AC_DEFINE([ACE_MKDIR_LACKS_MODE], 1,
+		     [Define to 1 if platform has 1 parameter mkdir()])
+           AC_MSG_RESULT([1])
+          ],
+          [
+           AC_MSG_RESULT([2])
+          ])
+fi dnl test "$ac_cv_func_mkdir" = yes
+
 ACE_CHECK_HAS_FUNCS(memchr)
 
 ACE_CHECK_LACKS_FUNCS(mkfifo)

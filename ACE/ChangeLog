@@ -1,3 +1,11 @@
+Mon Aug  6 07:58:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * configure.ac:
+          Added a check whether we have a 1 or 2 param mkdir method. This
+          fixes bugzilla 2006. The other defines mentioned in this
+          issue are not added because they are for VxWorks 5.5 only which
+          we don't actively maintain anymore
+
 Mon Aug  6 06:55:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * m4/compiler.m4:
