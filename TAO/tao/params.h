@@ -236,6 +236,9 @@ public:
   void endpoint_selector_factory_name (const char *s);
   const char *endpoint_selector_factory_name (void) const;
 
+  void collocation_resolver_name (const char *s);
+  const char *collocation_resolver_name (void) const;
+
 private:
   // Each "endpoint" is of the form:
   //
@@ -436,6 +439,14 @@ private:
    * poa_factory_name_ dynamically.
    */
   ACE_CString poa_factory_directive_;
+
+  /**
+   * Name of the collocation resolver that needs to be instantiated.
+   * The default value is "Default_Collocation_Resolver". If
+   * TAO_RTCORBA is linked, the set_collocation_resolver will be
+   * called to set the value to be "RT_Collocation_Resolver".
+   */
+  ACE_CString collocation_resolver_name_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

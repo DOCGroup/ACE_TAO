@@ -303,4 +303,16 @@ TAO_ORB_Parameters::ami_collication (bool x)
   this->ami_collication_ = x;
 }
 
+ACE_INLINE void
+TAO_ORB_Parameters::collocation_resolver_name (const char *s)
+{
+  this->collocation_resolver_name_ = s;
+}
+
+ACE_INLINE const char *
+TAO_ORB_Parameters::collocation_resolver_name (void) const
+{
+  return this->collocation_resolver_name_.c_str ();
+}
+
 TAO_END_VERSIONED_NAMESPACE_DECL
