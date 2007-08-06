@@ -1,3 +1,19 @@
+Mon Aug  6 18:17:55 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/Notify_Service/Notify_Service.cpp:
+        * orbsvcs/examples/Notify/Federation/Gate/Gate.cpp:
+        * orbsvcs/orbsvcs/Notify/Buffering_Strategy.cpp:
+        * orbsvcs/orbsvcs/Notify/Delivery_Request.cpp:
+        * orbsvcs/orbsvcs/Notify/Routing_Slip.cpp:
+        * orbsvcs/orbsvcs/Notify/Routing_Slip_Persistence_Manager.cpp:
+        * orbsvcs/orbsvcs/Notify/Sequence/SequencePushConsumer.cpp:
+        * orbsvcs/orbsvcs/Notify/Standard_Event_Persistence.cpp:
+        * orbsvcs/tests/Notify/lib/Activation_Manager.cpp:
+        * orbsvcs/tests/Notify/lib/Driver.cpp:
+
+          Changed my static_cast's from Mon Aug  6 13:53:30 UTC 2007 into
+          ACE_Utils::truncate_cast's.
+
 Mon Aug  6 18:09:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Makefile.am:

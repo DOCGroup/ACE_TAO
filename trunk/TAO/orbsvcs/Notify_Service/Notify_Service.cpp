@@ -120,8 +120,8 @@ TAO_Notify_Service_Driver::init (int argc, ACE_TCHAR *argv[])
         this->orb_->orb_core ()->orb_params ()->thread_creation_flags ();
 
       int priority =
-        ACE_Sched_Params::priority_min (static_cast<ACE_Sched_Params::Policy> (this->orb_->orb_core ()->orb_params ()->sched_policy ()),
-                                        static_cast<int> (this->orb_->orb_core ()->orb_params ()->scope_policy ()));
+        ACE_Sched_Params::priority_min (ACE_Utils::truncate_cast<ACE_Sched_Params::Policy> (this->orb_->orb_core ()->orb_params ()->sched_policy ()),
+                                        ACE_Utils::truncate_cast<int> (this->orb_->orb_core ()->orb_params ()->scope_policy ()));
 
       if (worker_.activate (flags,
                             this->nthreads_, 0, priority) != 0)
