@@ -3,6 +3,7 @@
 #include "orbsvcs/Notify/Routing_Slip_Persistence_Manager.h"
 #include "orbsvcs/Notify/Standard_Event_Persistence.h"
 #include "orbsvcs/Notify/Persistent_File_Allocator.h"
+#include "ace/Truncate.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -446,7 +447,7 @@ Routing_Slip_Persistence_Manager::store_i(const ACE_Message_Block& event,
     if (this->first_event_block_ != 0)
     {
       this->routing_slip_header_.event_block =
-        static_cast<Block_Number> (this->first_event_block_->block_number());
+        ACE_Utils::truncate_cast<Block_Number> (this->first_event_block_->block_number());
     }
     else
     {
@@ -594,7 +595,7 @@ Routing_Slip_Persistence_Manager::build_chain(
     Persistent_Storage_Block* curblk = this->allocator_->allocate();
     allocated_blocks.push(curblk->block_number());
     // Set the previous block's overflow "pointer" to us.
-    prevhdr->next_overflow = static_cast<Block_Number> (curblk->block_number());
+    prevhdr->next_overflow = ACE_Utils::truncate_cast<Block_Number> (curblk->block_number());
     prevhdr->put_header(*prevblk);
     pos = hdr->put_header(*curblk);
     hdr->data_size = 

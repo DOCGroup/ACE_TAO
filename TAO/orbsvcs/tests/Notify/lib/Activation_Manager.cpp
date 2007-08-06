@@ -85,13 +85,13 @@ TAO_Notify_Tests_Activation_Manager::wait_for_completion (void)
 int
 TAO_Notify_Tests_Activation_Manager::supplier_count (void)
 {
-  return static_cast<int> (this->supplier_map_.current_size ());
+  return ACE_Utils::truncate_cast<int> (this->supplier_map_.current_size ());
 }
 
 int
 TAO_Notify_Tests_Activation_Manager::consumer_count (void)
 {
-  return static_cast<int> (this->consumer_map_.current_size ());
+  return ACE_Utils::truncate_cast<int> (this->consumer_map_.current_size ());
 }
 
 void

@@ -11,6 +11,8 @@
 #include "tao/debug.h"
 #include "tao/corba.h"
 
+#include "ace/Truncate.h"
+
 //#define DEBUG_LEVEL 9
 #ifndef DEBUG_LEVEL
 # define DEBUG_LEVEL TAO_debug_level
@@ -63,7 +65,7 @@ Delivery_Request::marshal (TAO_OutputCDR & cdr)
   {
     cdr.write_octet (this->delivery_type_);
     CORBA::ULong dest_count =
-      static_cast<CORBA::ULong> (this->destination_id_.size ());
+      ACE_Utils::truncate_cast<CORBA::ULong> (this->destination_id_.size ());
     cdr.write_ulong (dest_count);
     for (size_t ndest = 0; ndest < dest_count; ++ ndest)
     {
