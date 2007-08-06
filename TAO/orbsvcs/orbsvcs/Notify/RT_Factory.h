@@ -20,14 +20,6 @@
 
 #include "orbsvcs/Notify/Default_Factory.h"
 
-// The using in the class below is apparently ignored by the
-// Borland compiler.  Having the using below should take care
-// of the warning about hiding virtual functions.
-#if defined (__BORLANDC__) && (__BORLANDC__ <= 0x590)
-# pragma warning (push)
-# pragma warning (disable : 8022)
-#endif /* __BORLANDC__  && __BORLANDC__ <= 0x590 */
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
@@ -56,10 +48,6 @@ public:
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
-
-#if defined (__BORLANDC__) && (__BORLANDC__ <= 0x590)
-# pragma warning (pop)
-#endif /* __BORLANDC__ && __BORLANDC__ <= 0x590 */
 
 ACE_FACTORY_DECLARE (TAO_RT_Notify, TAO_Notify_RT_Factory)
 

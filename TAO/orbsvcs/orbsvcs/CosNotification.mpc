@@ -276,6 +276,14 @@ project(CosNotification_MC_Ext): notification_serv, notification_mc, install {
   sharedname   = TAO_CosNotification_MC_Ext
   dynamicflags = TAO_NOTIFY_MC_EXT_BUILD_DLL
 
+
+  // The using in the TAO_MC_Default_Factory class is apparently ignored by
+  // the Borland compiler.  I am disabling the virtual function hiding
+  // warning for this project only.
+  specific(borland, bmake) {
+    compile_flags += -w-hid
+  }
+
   IDL_Files {
     gendir = Notify/MonitorControlExt
     commandflags += -o Notify/MonitorControlExt -Wb,export_macro=TAO_Notify_MC_Ext_Export -Wb,export_include=orbsvcs/Notify/MonitorControlExt/notify_mc_ext_export.h

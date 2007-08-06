@@ -1,3 +1,20 @@
+Mon Aug  6 13:39:40 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/orbsvcs/Notify/MonitorControlExt/MC_Default_Factory.h:
+        * orbsvcs/orbsvcs/Notify/RT_Factory.h:
+
+          Reverted my change from Thu Aug  2 11:33:16 UTC 2007 and Fri Aug
+          3 18:46:13 UTC 2007.
+
+        * orbsvcs/orbsvcs/CosNotification.mpc:
+        * orbsvcs/orbsvcs/RT_Notification.mpc:
+
+          Added the -w-hid option for borland and bmake project types to the
+          CosNotification_MC_Ext and RT_Notification projects since
+          Borland doesn't support "using" within a class and doesn't support
+          #pragma warning (disable :8022).  The only other alternative is to
+          duplicate a lot of code.
+
 Mon Aug  6 11:45:14 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/orbsvcs/Notify/MonitorControl/Generic_Registry.h:
