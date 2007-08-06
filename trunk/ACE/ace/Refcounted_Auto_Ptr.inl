@@ -10,7 +10,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 template <class X, class ACE_LOCK> inline long
 ACE_Refcounted_Auto_Ptr_Rep<X, ACE_LOCK>::count (void) const
 {
-  return this->ref_count_;
+  return this->ref_count_.value();
 }
 
 template <class X, class ACE_LOCK> inline long
