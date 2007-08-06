@@ -27,7 +27,7 @@ public:
 
   /// This exception is thrown if a method is called that doesn't apply
   /// to the type of information being stored.
-  class Invalid_Operation {};
+  class TAO_Notify_MC_Export Invalid_Operation {};
 
   /// Construct a statistic object.  The name and type of the statistic
   /// will never change once the object is created.

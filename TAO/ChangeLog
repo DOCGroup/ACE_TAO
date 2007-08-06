@@ -1,3 +1,10 @@
+Mon Aug  6 11:45:14 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/orbsvcs/Notify/MonitorControl/Generic_Registry.h:
+        * orbsvcs/orbsvcs/Notify/MonitorControl/Statistic.h:
+
+          Added an export to the nested exception classes.
+
 Mon Aug  6 11:17:39 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/orbsvcs/CosNotification.mpc:

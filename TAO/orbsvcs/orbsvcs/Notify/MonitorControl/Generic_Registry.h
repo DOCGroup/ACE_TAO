@@ -23,7 +23,7 @@ public:
 
   /// Exception thrown in the event that something goes wrong
   /// when adding to the registry
-  class Map_Error
+  class TAO_Notify_MC_Export Map_Error
   {
   public:
     enum ErrorReason { MAP_ERROR_BIND_FAILURE, MAP_ERROR_INVALID_VALUE };
