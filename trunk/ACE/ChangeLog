@@ -1,3 +1,11 @@
+Mon Aug  6 08:24:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-WinCE.h:
+        * ace/OS_NS_sys_resource.inl:
+          Changed ACE_LACKS_WIN32_GETPROCESSTIMES to ACE_LACKS_GETPROCESSTIMES
+          to make a future autoconf check easier. Removed ACE_HAS_SYSCALL_GETRUSAGE
+          which wasn't set in any config file
+
 Mon Aug  6 07:58:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * configure.ac:

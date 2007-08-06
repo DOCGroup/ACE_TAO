@@ -31,14 +31,11 @@ ACE_OS::getrusage (int who, struct rusage *ru)
 {
   ACE_OS_TRACE ("ACE_OS::getrusage");
 
-#if defined (ACE_HAS_SYSCALL_GETRUSAGE)
-  // This nonsense is necessary for HP/UX...
-  ACE_OSCALL_RETURN (::syscall (SYS_GETRUSAGE, who, ru), int, -1);
-#elif defined (ACE_HAS_GETRUSAGE)
+#if defined (ACE_HAS_GETRUSAGE)
 # if defined (ACE_WIN32)
   ACE_UNUSED_ARG (who);
 
-#  if defined (ACE_LACKS_WIN32_GETPROCESSTIMES)
+#  if defined (ACE_LACKS_GETPROCESSTIMES)
   ACE_UNUSED_ARG (ru);
   ACE_NOTSUP_RETURN (-1);
 #  else
@@ -63,7 +60,7 @@ ACE_OS::getrusage (int who, struct rusage *ru)
   ACE_UNUSED_ARG (who);
   ACE_UNUSED_ARG (ru);
   ACE_NOTSUP_RETURN (-1);
-#endif /* ACE_HAS_SYSCALL_GETRUSAGE */
+#endif /* ACE_HAS_GETRUSAGE */
 }
 
 ACE_INLINE int
