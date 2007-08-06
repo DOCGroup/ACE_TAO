@@ -23,7 +23,6 @@ SUBDIRS = \
         Load_Balancing_persistent \
         Logging \
         OBV \
-        POA \
         Persistent_Grid \
         PluggableUDP \
         Quoter \
