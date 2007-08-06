@@ -1,3 +1,11 @@
+Mon Aug  6 18:09:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Makefile.am:
+          Removed POA directory
+
+        * examples/POA/*:
+          Deleted
+
 Mon Aug  6 13:53:30 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/Notify_Service/Notify_Service.cpp:
