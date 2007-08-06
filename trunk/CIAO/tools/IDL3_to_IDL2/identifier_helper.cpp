@@ -62,7 +62,7 @@ IdentifierHelper::orig_sn (UTL_IdList * sn, bool appended_to)
       retval +=
         appended_to && i.is_done ()
           ? id->get_string ()
-          : IdentifierHelper::try_escape (id);
+          : IdentifierHelper::try_escape (id).c_str ();
 
        if (first)
         {
