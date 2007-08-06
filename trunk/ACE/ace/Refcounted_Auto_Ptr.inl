@@ -7,14 +7,13 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-template <class X, class ACE_LOCK> inline int
+template <class X, class ACE_LOCK> inline long
 ACE_Refcounted_Auto_Ptr_Rep<X, ACE_LOCK>::count (void) const
 {
-  ACE_READ_GUARD_RETURN (ACE_LOCK, guard, this->lock_, 0);
   return this->ref_count_;
 }
 
-template <class X, class ACE_LOCK> inline int
+template <class X, class ACE_LOCK> inline long
 ACE_Refcounted_Auto_Ptr<X, ACE_LOCK>::count (void) const
 {
   return this->rep_->count ();
@@ -56,8 +55,6 @@ ACE_Refcounted_Auto_Ptr_Rep<X, ACE_LOCK>::attach (ACE_Refcounted_Auto_Ptr_Rep<X,
   if (rep == 0)
     return 0;
 
-  ACE_WRITE_GUARD_RETURN (ACE_LOCK, guard, rep->lock_, 0);
-
   ++rep->ref_count_;
 
   return rep;
@@ -69,17 +66,7 @@ ACE_Refcounted_Auto_Ptr_Rep<X, ACE_LOCK>::detach (ACE_Refcounted_Auto_Ptr_Rep<X,
   if (rep == 0)
     return;
 
-  ACE_Refcounted_Auto_Ptr_Rep<X, ACE_LOCK> *rep_del = 0;
-  {
-    ACE_WRITE_GUARD (ACE_LOCK, guard, rep->lock_);
-
-    if (rep->ref_count_-- == 0)
-      // Since rep contains the lock held by the ACE_Guard, the guard
-      // needs to be released before freeing the memory holding the
-      // lock. So save the pointer to free, then release, then free.
-      rep_del = rep;
-  }  // Release the lock
-  if (0 != rep_del)
+  if (rep->ref_count_-- == 0)
     delete rep;
 }
 

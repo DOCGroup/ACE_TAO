@@ -1,3 +1,12 @@
+Mon Aug  6 08:56:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Refcounted_Auto_Ptr.{h,inl}:
+          Changed to use Atomic_Op for the refcount and use a long instead
+          of int. That way we can benefit from the Atomic_Op optimizations
+
+        * ace/Bound_Ptr.{h,inl}:
+          Changed refcount to long as preparation of using Atomic_Op
+
 Mon Aug  6 08:31:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * m4/compiler.m4:
