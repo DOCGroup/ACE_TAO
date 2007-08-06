@@ -49,7 +49,7 @@ test_i::method (void)
   ACE_DEBUG ((LM_DEBUG,
               "Entering Worker::svc from %t and sleeping....\n"));
 
-  ACE_OS::sleep (3);
+  ACE_OS::sleep (2);
 
   ACE_DEBUG ((LM_DEBUG,
               "Done resting from %t\n"));
