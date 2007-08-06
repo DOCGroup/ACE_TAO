@@ -42,21 +42,9 @@ class TAO_CSD_TP_Export TAO_CSD_ThreadPool
   static int init (void);
 };
 
-#if defined(ACE_HAS_BROKEN_STATIC_CONSTRUCTORS)
-
-typedef int (*TAO_CSD_Threadpool) (void);
-
-static TAO_CSD_Threadpool
-TAO_Requires_CSD_Threadpool =
-  &TAO_CSD_ThreadPool::init;
-
-#else
-
 static int
 TAO_Requires_CSD_Threadpool =
   TAO_CSD_ThreadPool::init ();
-
-#endif /* ACE_HAS_BROKEN_STATIC_CONSTRUCTORS */
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
