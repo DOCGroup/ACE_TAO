@@ -5,6 +5,7 @@
 #include "tao/debug.h"
 #include "ace/Dynamic_Service.h"
 #include "ace/OS_NS_strings.h"
+#include "ace/Truncate.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -210,7 +211,7 @@ Standard_Event_Persistence_Factory::get_preallocated_pointer(
   this->psb_ = this->allocator_.allocate();
 
   next_serial_number = this->serial_number_;
-  next_block_number = static_cast<ACE_UINT32> (this->psb_->block_number());
+  next_block_number = ACE_Utils::truncate_cast<ACE_UINT32> (this->psb_->block_number());
 }
 
 Persistent_File_Allocator*

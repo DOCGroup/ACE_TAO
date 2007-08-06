@@ -3,6 +3,7 @@
 // cvs-id    : $Id$
 
 #include "Gate.h"
+#include "ace/Truncate.h"
 
 /*
 #include <iostream>
@@ -59,7 +60,7 @@ init (ConsumerAdmin_ptr consumer_admin,
   ACE_Utils::UUID_GENERATOR::instance ()->init ();
   ACE_Utils::UUID_GENERATOR::instance ()->generateUUID (uuid);
 
-  id_ = string_alloc (static_cast<CORBA::ULong> (
+  id_ = string_alloc (ACE_Utils::truncate_cast<CORBA::ULong> (
                         uuid.to_string ()->length () + 2));
   ACE_OS::strcpy (id_.inout (), "_");
   ACE_OS::strcpy (id_.inout () + 1, uuid.to_string ()->rep ());
@@ -139,7 +140,7 @@ tracker ()
         break;
     }
 
-    CORBA::ULong seqn = static_cast<CORBA::ULong> (n);
+    CORBA::ULong seqn = ACE_Utils::truncate_cast<CORBA::ULong> (n);
     OctetSeq seq (seqn);
     seq.length (seqn);
 
@@ -225,7 +226,7 @@ push_structured_event (StructuredEvent const& e)
 
   cdr << e;
 
-  CORBA::ULong size (static_cast<CORBA::ULong> (cdr.total_length ()));
+  CORBA::ULong size (ACE_Utils::truncate_cast<CORBA::ULong> (cdr.total_length ()));
 
   OctetSeq seq (size);
   seq.length (size);

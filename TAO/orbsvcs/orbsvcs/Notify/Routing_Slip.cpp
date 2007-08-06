@@ -16,6 +16,7 @@
 #include "tao/corba.h"
 
 #include "ace/Dynamic_Service.h"
+#include "ace/Truncate.h"
 
 //#define DEBUG_LEVEL 9
 #ifndef DEBUG_LEVEL
@@ -819,7 +820,7 @@ Routing_Slip::marshal (TAO_OutputCDR & cdr)
 {
   size_t request_count = this->delivery_requests_.size();
   cdr.write_ulong (
-    static_cast<CORBA::ULong> (request_count - this->complete_requests_));
+    ACE_Utils::truncate_cast<CORBA::ULong> (request_count - this->complete_requests_));
   for (size_t nreq = 0; nreq < request_count; ++nreq)
   {
     Delivery_Request * request = this->delivery_requests_[nreq].get ();

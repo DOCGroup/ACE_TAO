@@ -4,6 +4,7 @@
 
 ACE_RCSID (Notify, TAO_Notify_SequencePushConsumer, "$Id$")
 
+#include "ace/Truncate.h"
 #include "ace/Reactor.h"
 #include "tao/debug.h"
 #include "tao/Stub.h" // For debug messages printing out ORBid.
@@ -106,7 +107,7 @@ TAO_Notify_SequencePushConsumer::dispatch_from_queue (Request_Queue& requests, A
       requests.size ()));
   }
 
-  CORBA::ULong queue_size = static_cast<CORBA::ULong> (requests.size ());
+  CORBA::ULong queue_size = ACE_Utils::truncate_cast<CORBA::ULong> (requests.size ());
   CORBA::Long max_batch_size = queue_size;
   if (this->max_batch_size_.is_valid () )
   {
