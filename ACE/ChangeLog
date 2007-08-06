@@ -1,3 +1,8 @@
+Mon Aug  6 06:55:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * m4/compiler.m4:
+          Added -i-dynamic to default icpc flags
+
 Mon Aug  6 06:00:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_openvms.GNU:
