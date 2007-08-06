@@ -87,7 +87,7 @@ protected:
   long period_;
 
   /// Counts the total number of deadlines missed.
-  int total_deadlines_missed_;
+  long total_deadlines_missed_;
 
   /// RunTime - The Max. time to run the supplier.
   long run_time_;

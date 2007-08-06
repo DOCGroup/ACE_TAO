@@ -446,7 +446,7 @@ Routing_Slip_Persistence_Manager::store_i(const ACE_Message_Block& event,
     if (this->first_event_block_ != 0)
     {
       this->routing_slip_header_.event_block =
-        this->first_event_block_->block_number();
+        static_cast<Block_Number> (this->first_event_block_->block_number());
     }
     else
     {
@@ -594,7 +594,7 @@ Routing_Slip_Persistence_Manager::build_chain(
     Persistent_Storage_Block* curblk = this->allocator_->allocate();
     allocated_blocks.push(curblk->block_number());
     // Set the previous block's overflow "pointer" to us.
-    prevhdr->next_overflow = curblk->block_number();
+    prevhdr->next_overflow = static_cast<Block_Number> (curblk->block_number());
     prevhdr->put_header(*prevblk);
     pos = hdr->put_header(*curblk);
     hdr->data_size = 

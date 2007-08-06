@@ -269,8 +269,8 @@ TAO_CosNotify_Service::finalize_service (
   // Find all the consumer admin objects and shutdown the worker tasks
   CosNotifyChannelAdmin::ChannelIDSeq_var channels =
     ecf->get_all_channels ();
-  size_t length = channels->length ();
-  for(size_t i = 0; i < length; i++)
+  CORBA::ULong length = channels->length ();
+  for(CORBA::ULong i = 0; i < length; i++)
     {
       try
         {

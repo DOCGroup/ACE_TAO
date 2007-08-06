@@ -272,8 +272,9 @@ TAO_Notify_Tests_Driver::run (void)
     this->orb_->orb_core ()->orb_params ()->thread_creation_flags ();
 
   // Become an active object.
-  int priority = ACE_Sched_Params::priority_min (this->orb_->orb_core ()->orb_params ()->sched_policy ()
-                                                 , this->orb_->orb_core ()->orb_params ()->scope_policy ());
+  int priority = ACE_Sched_Params::priority_min (
+                   static_cast<ACE_Sched_Params::Policy> (this->orb_->orb_core ()->orb_params ()->sched_policy ()),
+                   static_cast<int> (this->orb_->orb_core ()->orb_params ()->scope_policy ()));
 
   // Become an active object.
   if (this->worker_.activate (flags, 1, 0, priority) == -1)

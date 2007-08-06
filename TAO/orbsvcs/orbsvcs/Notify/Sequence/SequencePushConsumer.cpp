@@ -106,7 +106,7 @@ TAO_Notify_SequencePushConsumer::dispatch_from_queue (Request_Queue& requests, A
       requests.size ()));
   }
 
-  long queue_size = requests.size ();
+  CORBA::ULong queue_size = static_cast<CORBA::ULong> (requests.size ());
   CORBA::Long max_batch_size = queue_size;
   if (this->max_batch_size_.is_valid () )
   {
