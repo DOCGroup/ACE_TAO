@@ -10,6 +10,5 @@ feature(!minimum_corba) {
 feature(corba_messaging) {
   Source_Files(TAO_COMPONENTS) {
     Policy_Manager.cpp
-    Buffering_Constraint_Policy.cpp
   }
 }

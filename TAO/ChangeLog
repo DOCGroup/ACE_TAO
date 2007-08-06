@@ -1,3 +1,50 @@
+Mon Aug  6 18:31:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Buffering_Constraint_Policy.{h,cpp,inl}:
+        * tao/Messaging/Buffering_Constraint_Policy.{h,cpp,inl}:
+          Moved the Buffering Constraint Policy to the Messaging Library. It
+          doesn't need in the core, and if someone wants to create the Policy
+          he already needed the Messaging library
+
+        * tao/extra_core.mpb:
+          Removed Buffering_Constraint_Policy.cpp:
+
+        * tao/Makefile.am:
+          Updated
+
+        * tao/Messaging/Messaging.pidl:
+          Include TAO_Ext.pidl
+
+        * tao/Messaging/Messaging_ORBInitializer.cpp:
+          Set the buffering constraint strategies into the ORB
+
+        * tao/Messaging/Messaging_PolicyFactory.{h,cpp}:
+          Updated for the fact that the Buffering Constraint Policy is now
+          in the Messaging lib
+
+        * tao/Transport_Queueing_Strategies.{h,cpp}:
+        * tao/Messaging/Messaging_Queueing_Strategies.{h,cpp}:
+          Moved the strategies that used the Buffering Constraint Policy to
+          the Messaging lib
+
+        * tao/Messaging/TAO_Ext.pidl:
+        * tao/TAO.pidl:
+          Moved Buffering Constraint Policy to Messaging
+
+        * tao/ORB_Core.{h,cpp,inl}:
+          Updated all queueing strategy methods to return a pointer and
+          added set methods for the strategies that are now in the
+          messaging lib
+
+        * tao/Stub.{h,cpp}:
+          Return the queueing strategy as pointer
+
+        * tao/tao.mpc:
+          Removed Buffering_Constraint_Policy.h
+
+        * tao/Transport.cpp:
+          Updated to handle the queuing strategy as pointer
+
 Mon Aug  6 18:17:55 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/Notify_Service/Notify_Service.cpp:

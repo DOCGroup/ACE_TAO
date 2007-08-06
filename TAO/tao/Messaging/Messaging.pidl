@@ -26,6 +26,7 @@
 #include "tao/Messaging/Messaging_SyncScope_Policy.pidl"
 #include "tao/Messaging/Messaging_RT_Policy.pidl"
 #include "tao/Messaging/Messaging_No_Impl.pidl"
+#include "tao/Messaging/TAO_Ext.pidl"
 #include "tao/Messaging/Pollable.pidl"
 #include "tao/Messaging/ExceptionHolder.pidl"
 

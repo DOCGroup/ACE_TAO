@@ -737,7 +737,6 @@ libTAO_la_SOURCES = \
   Block_Flushing_Strategy.cpp \
   Blocked_Connect_Strategy.cpp \
   BooleanSeqC.cpp \
-  Buffering_Constraint_Policy.cpp \
   CDR.cpp \
   CONV_FRAMEC.cpp \
   CORBALOC_Parser.cpp \
@@ -1011,8 +1010,6 @@ nobase_include_HEADERS = \
   Bounded_Value_Sequence_T.h \
   Buffer_Allocator_T.cpp \
   Buffer_Allocator_T.h \
-  Buffering_Constraint_Policy.h \
-  Buffering_Constraint_Policy.inl \
   CDR.h \
   CDR.inl \
   CONV_FRAME.pidl \
@@ -4203,6 +4200,7 @@ libTAO_Messaging_la_SOURCES = \
   Messaging/Asynch_Invocation_Adapter.cpp \
   Messaging/Asynch_Reply_Dispatcher.cpp \
   Messaging/Asynch_Timeout_Handler.cpp \
+  Messaging/Buffering_Constraint_Policy.cpp \
   Messaging/Connection_Timeout_Policy_i.cpp \
   Messaging/ExceptionHolderA.cpp \
   Messaging/ExceptionHolderC.cpp \
@@ -4217,6 +4215,7 @@ libTAO_Messaging_la_SOURCES = \
   Messaging/Messaging_ORBInitializer.cpp \
   Messaging/Messaging_PolicyFactory.cpp \
   Messaging/Messaging_Policy_i.cpp \
+  Messaging/Messaging_Queueing_Strategies.cpp \
   Messaging/Messaging_RT_PolicyA.cpp \
   Messaging/Messaging_RT_PolicyC.cpp \
   Messaging/Messaging_SyncScope_PolicyA.cpp \
@@ -4245,6 +4244,8 @@ nobase_include_HEADERS += \
   Messaging/Asynch_Invocation_Adapter.h \
   Messaging/Asynch_Reply_Dispatcher.h \
   Messaging/Asynch_Timeout_Handler.h \
+  Messaging/Buffering_Constraint_Policy.h \
+  Messaging/Buffering_Constraint_Policy.inl \
   Messaging/Connection_Timeout_Policy_i.h \
   Messaging/ExceptionHolder.pidl \
   Messaging/ExceptionHolderA.h \
@@ -4267,6 +4268,7 @@ nobase_include_HEADERS += \
   Messaging/Messaging_PolicyFactory.h \
   Messaging/Messaging_Policy_i.h \
   Messaging/Messaging_Policy_i.inl \
+  Messaging/Messaging_Queueing_Strategies.h \
   Messaging/Messaging_RT_Policy.pidl \
   Messaging/Messaging_RT_PolicyA.h \
   Messaging/Messaging_RT_PolicyC.h \

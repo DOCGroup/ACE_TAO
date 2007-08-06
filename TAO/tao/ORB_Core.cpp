@@ -264,12 +264,6 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
 {
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
 
-  ACE_NEW (this->eager_transport_queueing_strategy_,
-           TAO::Eager_Transport_Queueing_Strategy);
-
-  ACE_NEW (this->delayed_transport_queueing_strategy_,
-           TAO::Delayed_Transport_Queueing_Strategy);
-
   ACE_NEW (this->flush_transport_queueing_strategy_,
            TAO::Flush_Transport_Queueing_Strategy);
 
@@ -2895,7 +2889,7 @@ TAO_ORB_Core::call_sync_scope_hook (TAO_Stub *stub,
 
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
 
-TAO::Transport_Queueing_Strategy &
+TAO::Transport_Queueing_Strategy *
 TAO_ORB_Core::get_transport_queueing_strategy (TAO_Stub *,
                                                Messaging::SyncScope &scope)
 {

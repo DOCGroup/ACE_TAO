@@ -503,7 +503,7 @@ TAO_Stub::get_policy_overrides (const CORBA::PolicyTypeSeq &types)
 
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
-TAO::Transport_Queueing_Strategy &
+TAO::Transport_Queueing_Strategy *
 TAO_Stub::transport_queueing_strategy (void)
 {
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)

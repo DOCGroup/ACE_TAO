@@ -6,33 +6,12 @@ ACE_RCSID (Messaging,
 
 #include "tao/Messaging/Messaging_Policy_i.h"
 #include "tao/Messaging/Connection_Timeout_Policy_i.h"
+#include "tao/Messaging/Buffering_Constraint_Policy.h"
 
 #include "tao/PolicyC.h"
-#include "tao/Buffering_Constraint_Policy.h"
-#include "tao/AnyTypeCode/TAOA.h"
 #include "tao/AnyTypeCode/Any.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
-#if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
-
-CORBA::Policy_ptr
-TAO_Messaging_PolicyFactory::create_buffering_constraint_policy (
-    const CORBA::Any& val)
-{
-  TAO::BufferingConstraint *buffering_constraint = 0;
-  if ((val >>= buffering_constraint) == 0)
-    throw ::CORBA::PolicyError (CORBA::BAD_POLICY_VALUE);
-
-  TAO_Buffering_Constraint_Policy *servant = 0;
-  ACE_NEW_THROW_EX (servant,
-                    TAO_Buffering_Constraint_Policy (*buffering_constraint),
-                    CORBA::NO_MEMORY ());
-
-  return servant;
-}
-
-#endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
 
 CORBA::Policy_ptr
 TAO_Messaging_PolicyFactory::create_policy (
@@ -56,7 +35,7 @@ TAO_Messaging_PolicyFactory::create_policy (
 
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
   if (type == TAO::BUFFERING_CONSTRAINT_POLICY_TYPE)
-    return this->create_buffering_constraint_policy (value);
+    return TAO_Buffering_Constraint_Policy::create (value);
 #endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
 
   if (
