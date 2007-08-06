@@ -1,3 +1,9 @@
+Mon Aug  6 08:31:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * m4/compiler.m4:
+          Added -wr as flag to WERROR, with this flag remarks are not
+          promoted to error which caused several problems
+
 Mon Aug  6 08:24:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-WinCE.h:
