@@ -48,8 +48,8 @@ class TAO_Profile;
  * attempt to create new connections.
  */
 
-class TAO_Strategies_Export TAO_Optimized_Connection_Endpoint_Selector :
-public TAO_Default_Endpoint_Selector
+class TAO_Strategies_Export TAO_Optimized_Connection_Endpoint_Selector
+ : public TAO_Default_Endpoint_Selector
 {
 public:
   /// Constructor.

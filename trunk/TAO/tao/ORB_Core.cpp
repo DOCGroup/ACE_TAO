@@ -147,12 +147,9 @@ TAO_ORB_Core_Static_Resources::instance (void)
 }
 
 TAO_ORB_Core_Static_Resources::TAO_ORB_Core_Static_Resources (void)
-  : sync_scope_hook_ (0),
-    network_priority_protocols_hooks_name_ (
+  : network_priority_protocols_hooks_name_ (
       "Network_Priority_Protocols_Hooks"),
-    timeout_hook_ (0),
     connection_timeout_hook_ (0),
-    collocation_resolver_name_ ("Default_Collocation_Resolver"),
     resource_factory_name_ ("Resource_Factory"),
     dynamic_adapter_name_ ("Dynamic_Adapter"),
     ifr_client_adapter_name_ ("IFR_Client_Adapter"),
@@ -166,12 +163,9 @@ TAO_ORB_Core_Static_Resources::TAO_ORB_Core_Static_Resources (void)
 TAO_ORB_Core_Static_Resources&
 TAO_ORB_Core_Static_Resources::operator=(const TAO_ORB_Core_Static_Resources& other)
 {
-  this->sync_scope_hook_ = other.sync_scope_hook_;
   this->network_priority_protocols_hooks_name_ =
     other.network_priority_protocols_hooks_name_;
-  this->timeout_hook_ = other.timeout_hook_;
   this->connection_timeout_hook_ = other.connection_timeout_hook_;
-  this->collocation_resolver_name_ = other.collocation_resolver_name_;
   this->resource_factory_name_ = other.resource_factory_name_;
   this->dynamic_adapter_name_ = other.dynamic_adapter_name_;
   this->ifr_client_adapter_name_ = other.ifr_client_adapter_name_;
@@ -264,7 +258,9 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
     bidir_adapter_ (0),
     bidir_giop_policy_ (0),
     flushing_strategy_ (0),
-    codeset_manager_ (0)
+    codeset_manager_ (0),
+    sync_scope_hook_ (0),
+    timeout_hook_ (0)
 {
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
 
@@ -1424,13 +1420,6 @@ TAO_ORB_Core::fini (void)
 }
 
 void
-TAO_ORB_Core::set_collocation_resolver (const char *collocation_resolver_name)
-{
-  TAO_ORB_Core_Static_Resources::instance ()->collocation_resolver_name_ =
-    collocation_resolver_name;
-}
-
-void
 TAO_ORB_Core::set_resource_factory (const char *resource_factory_name)
 {
   TAO_ORB_Core_Static_Resources::instance ()->resource_factory_name_ =
@@ -1571,13 +1560,10 @@ TAO_ORB_Core::collocation_resolver (void)
     return *this->collocation_resolver_;
 
   // If not, lookup it up.
-  const ACE_CString &collocation_resolver_name =
-    TAO_ORB_Core_Static_Resources::instance ()->collocation_resolver_name_;
-
   this->collocation_resolver_ =
     ACE_Dynamic_Service<TAO_Collocation_Resolver>::instance
       (this->configuration (),
-       ACE_TEXT_CHAR_TO_TCHAR (collocation_resolver_name.c_str()));
+       ACE_TEXT_CHAR_TO_TCHAR (this->orb_params ()->collocation_resolver_name ()));
 
   return *this->collocation_resolver_;
 }
@@ -2896,14 +2882,7 @@ TAO_ORB_Core::call_sync_scope_hook (TAO_Stub *stub,
                                     bool &has_synchronization,
                                     Messaging::SyncScope &scope)
 {
-  // The below is safe as
-  // The ORB Resource object has been initialized at this point.
-  TAO_ORB_Core_Static_Resources* tocsr =
-    ACE_Dynamic_Service<TAO_ORB_Core_Static_Resources>::instance
-    (this->configuration (), ACE_TEXT("TAO_ORB_Core_Static_Resources"));
-
-  Sync_Scope_Hook sync_scope_hook =
-    tocsr->sync_scope_hook_;
+  Sync_Scope_Hook sync_scope_hook = this->sync_scope_hook_;
 
   if (sync_scope_hook == 0)
     {
@@ -2944,12 +2923,6 @@ TAO_ORB_Core::get_transport_queueing_strategy (TAO_Stub *,
 
 #endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
 
-void
-TAO_ORB_Core::set_sync_scope_hook (Sync_Scope_Hook hook)
-{
-  TAO_ORB_Core_Static_Resources::instance ()-> sync_scope_hook_ = hook;
-}
-
 int
 TAO_ORB_Core::add_tss_cleanup_func (ACE_CLEANUP_FUNC cleanup, size_t &slot_id)
 {
@@ -2961,8 +2934,7 @@ TAO_ORB_Core::call_timeout_hook (TAO_Stub *stub,
                                  bool &has_timeout,
                                  ACE_Time_Value &time_value)
 {
-  Timeout_Hook timeout_hook =
-    TAO_ORB_Core_Static_Resources::instance ()->timeout_hook_;
+  Timeout_Hook timeout_hook = this->timeout_hook_;
 
   if (timeout_hook == 0)
     {
@@ -2970,13 +2942,6 @@ TAO_ORB_Core::call_timeout_hook (TAO_Stub *stub,
       return;
     }
   (*timeout_hook) (this, stub, has_timeout, time_value);
-}
-
-void
-TAO_ORB_Core::set_timeout_hook (Timeout_Hook hook)
-{
-  // Saving the hook pointer so that we can use it later when needed.
-  TAO_ORB_Core_Static_Resources::instance ()->timeout_hook_ = hook;
 }
 
 void

@@ -92,8 +92,7 @@ namespace TAO
         throw ::CORBA::INTERNAL ();
       }
 
-    const TAO_GIOP_Message_Version& version =
-      this->profile_->version ();
+    TAO_GIOP_Message_Version const & version = this->profile_->version ();
 
     // Initialize the messaging object
     if (this->transport_->messaging_init (version.major, version.minor) == -1)
