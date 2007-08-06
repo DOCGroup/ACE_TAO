@@ -14,10 +14,16 @@ ACE_RCSID (EndpointPolicy, EndpointPolicy, "$Id$")
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 int
-TAO_EndpointPolicy_Initializer::init (void)
+TAO_EndpointPolicy_Initializer::static_init (void)
 {
-  ACE_Service_Config::process_directive (ace_svc_desc_TAO_Endpoint_Acceptor_Filter_Factory);
+  ACE_Service_Config::process_directive  (ace_svc_desc_TAO_EndpointPolicy_Initializer);
+  return 0;
 
+}
+
+int
+TAO_EndpointPolicy_Initializer::init (int, ACE_TCHAR* [])
+{
   PortableInterceptor::ORBInitializer_ptr temp_orb_initializer =
   PortableInterceptor::ORBInitializer::_nil ();
   PortableInterceptor::ORBInitializer_var orb_initializer;
@@ -53,3 +59,14 @@ TAO_EndpointPolicy_Initializer::init (void)
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
+
+/////////////////////////////////////////////////////////////////////
+
+ACE_FACTORY_DEFINE (TAO_EndpointPolicy, TAO_EndpointPolicy_Initializer)
+ACE_STATIC_SVC_DEFINE (TAO_EndpointPolicy_Initializer,
+                       ACE_TEXT ("EndpointPolicy_Initializer"),
+                       ACE_SVC_OBJ_T,
+                       &ACE_SVC_NAME (TAO_EndpointPolicy_Initializer),
+                       ACE_Service_Type::DELETE_THIS
+                       | ACE_Service_Type::DELETE_OBJ,
+                       0)
