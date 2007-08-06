@@ -42,7 +42,7 @@ public:
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
-  ACE_Bound_Ptr_Counter (int init_obj_ref_count = 0);
+  ACE_Bound_Ptr_Counter (long init_obj_ref_count = 0);
   ~ACE_Bound_Ptr_Counter (void);
 
   /// Create a ACE_Bound_Ptr_Counter<ACE_LOCK> and initialize the
@@ -52,12 +52,12 @@ public:
   /// Increase both the object and counter reference counts and return
   /// the new object reference count. A return value of -1 indicates
   /// that the object has already been destroyed.
-  static int attach_strong (ACE_Bound_Ptr_Counter<ACE_LOCK> *counter);
+  static long attach_strong (ACE_Bound_Ptr_Counter<ACE_LOCK> *counter);
 
   /// Decreases both the object and counter reference counts and
   /// deletes whichever has no more references. Returns the new object
   /// reference count.
-  static int detach_strong (ACE_Bound_Ptr_Counter<ACE_LOCK> *counter);
+  static long detach_strong (ACE_Bound_Ptr_Counter<ACE_LOCK> *counter);
 
   /// Create a ACE_Bound_Ptr_Counter<ACE_LOCK> and initialize the
   /// reference count to indicate no ownership.
@@ -71,23 +71,23 @@ public:
   static void detach_weak (ACE_Bound_Ptr_Counter<ACE_LOCK> *counter);
 
   /// Determine whether the object has been deleted.
-  static int object_was_deleted (ACE_Bound_Ptr_Counter<ACE_LOCK> *counter);
+  static bool object_was_deleted (ACE_Bound_Ptr_Counter<ACE_LOCK> *counter);
 
 private:
 
   /// Allocate a new ACE_Bound_Ptr_Counter<ACE_LOCK> instance,
   /// returning NULL if it cannot be created.
-  static ACE_Bound_Ptr_Counter<ACE_LOCK> *internal_create (int init_obj_ref_count);
+  static ACE_Bound_Ptr_Counter<ACE_LOCK> *internal_create (long init_obj_ref_count);
 
 private:
 
   /// Reference count of underlying object. Is set to -1 once the
   /// object has been destroyed to indicate to all weak pointers that
   /// it is no longer valid.
-  int obj_ref_count_;
+  long obj_ref_count_;
 
   /// Reference count of this counter.
-  int self_ref_count_;
+  long self_ref_count_;
 
   /// Mutex variable to synchronize access to the reference counts.
   ACE_LOCK lock_;
@@ -346,7 +346,7 @@ public:
    * reference counting mechanism such as those used by COM or CORBA
    * servants.
    */
-  int add_ref (void);
+  long add_ref (void);
 
   /// Decrement the reference count on the underlying object, which is deleted
   /// if the count has reached zero.
@@ -356,7 +356,7 @@ public:
    * reference counting mechanism such as those used by COM or CORBA
    * servants.
    */
-  int remove_ref (void);
+  long remove_ref (void);
 
   /// Allows us to check for NULL on all ACE_Weak_Bound_Ptr objects.
   int null (void) const;
