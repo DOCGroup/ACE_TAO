@@ -27,17 +27,23 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-class TAO_EndpointPolicy_Export TAO_EndpointPolicy_Initializer
+class TAO_EndpointPolicy_Export TAO_EndpointPolicy_Initializer : public ACE_Service_Object
 {
 public:
   /// Used to force the initialization of the ORB code.
-  static int init (void);
+  static int static_init (void);
+
+  /// Initialize the PI_Server loader hooks.
+  virtual int init (int argc, ACE_TCHAR* []);
 };
 
 static int
-TAO_Requires_EndpointPolicy_Initializer = TAO_EndpointPolicy_Initializer::init ();
+TAO_Requires_EndpointPolicy_Initializer = TAO_EndpointPolicy_Initializer::static_init ();
 
 TAO_END_VERSIONED_NAMESPACE_DECL
+
+ACE_STATIC_SVC_DECLARE_EXPORT (TAO_EndpointPolicy, TAO_EndpointPolicy_Initializer)
+ACE_FACTORY_DECLARE (TAO_EndpointPolicy, TAO_EndpointPolicy_Initializer)
 
 #include /**/ "ace/post.h"
 
