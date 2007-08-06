@@ -636,6 +636,16 @@ namespace
         csd_framework_loader->init (0, 0);
       }
 
+    ACE_Service_Object * const endpoint_policy_loader =
+      ACE_Dynamic_Service<ACE_Service_Object>::instance (
+        pcfg,
+        "EndpointPolicy_Initializer");
+
+    if (endpoint_policy_loader != 0)
+      {
+        endpoint_policy_loader->init (0, 0);
+      }
+
   } /* register_additional_services_i */
 
   int
