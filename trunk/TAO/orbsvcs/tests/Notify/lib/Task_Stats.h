@@ -78,10 +78,10 @@ class TAO_NOTIFY_TEST_Export Task_Stats
   ACE_UINT64 end_time_;
 
   /// The maximum number of samples
-  ACE_UINT32 max_samples_;
+  size_t max_samples_;
 
   /// The number of samples
-  ACE_UINT32 samples_count_;
+  size_t samples_count_;
 
   /// The samples : the time of invocation. and the recorded exec. time .
   ACE_UINT64 *time_inv_;

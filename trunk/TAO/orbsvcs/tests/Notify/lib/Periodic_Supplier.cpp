@@ -262,7 +262,7 @@ TAO_Notify_Tests_Periodic_Supplier::handle_svc (void)
             Task_Stats::diff_usec (before, after);
 
           // did we miss any deadlines?
-          int missed =
+          long missed =
             (int)elapsed_microseconds > period_ ? elapsed_microseconds/period_ : 0;
           this->total_deadlines_missed_ += missed;
 
@@ -340,7 +340,7 @@ TAO_Notify_Tests_Periodic_Supplier::dump_stats (ACE_TCHAR* msg, int dump_samples
 
   ACE_CString fname (buf);
 
-  ACE_OS::sprintf (buf,"%s# : Supplier Name = %s, Proxy ID = %d, Event Type = %s, priority %d, period %ld, exec_time %ld, phase %ld, iter_ %d , load_ %d, deadlines missed = %d\n",
+  ACE_OS::sprintf (buf,"%s# : Supplier Name = %s, Proxy ID = %d, Event Type = %s, priority %d, period %ld, exec_time %ld, phase %ld, iter_ %d , load_ %d, deadlines missed = %ld\n",
                    msg, this->name_.c_str (), this->proxy_id_, this->event_.type (), priority_, period_, exec_time_, phase_, iter_, load_, this->total_deadlines_missed_);
 
   stats_.dump_samples (fname.c_str (), buf, dump_samples);

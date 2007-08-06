@@ -160,7 +160,7 @@ TAO_Notify_Buffering_Strategy::enqueue (TAO_Notify_Method_Request_Queueable* met
 
       local_not_empty_.signal ();
     }
-  return this->msg_queue_.message_count ();
+  return static_cast<int> (this->msg_queue_.message_count ());
 }
 
 int

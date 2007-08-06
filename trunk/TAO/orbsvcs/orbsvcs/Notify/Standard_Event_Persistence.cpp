@@ -210,7 +210,7 @@ Standard_Event_Persistence_Factory::get_preallocated_pointer(
   this->psb_ = this->allocator_.allocate();
 
   next_serial_number = this->serial_number_;
-  next_block_number = this->psb_->block_number();
+  next_block_number = static_cast<ACE_UINT32> (this->psb_->block_number());
 }
 
 Persistent_File_Allocator*
