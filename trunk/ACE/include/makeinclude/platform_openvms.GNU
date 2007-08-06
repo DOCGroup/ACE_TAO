@@ -31,7 +31,11 @@ VSHDIR          = shobj/
 LN_S = cp -p
 DEFFLAGS        +=
 CCFLAGS         += -D__USE_STD_IOSTREAM -ieee -names_as_is_short
-CCFLAGS         += -msg_disable intoverflow -msg_disable reftemporary -msg_disable intsignchange 
+ifeq ($(HOSTTYPE),ia64)
+  CCFLAGS         += -msg_disable intoverflow -msg_disable reftemporary -msg_disable intsignchange
+else
+  CCFLAGS         += -msg_disable intoverflow,reftemporary,intsignchange
+endif
 CCFLAGS         += -Wc/template=auto
 
 ifeq ($(HOSTTYPE),ia64)
@@ -46,9 +50,9 @@ else
 endif
 
 ifeq ($(debug),1)
- LDFLAGS         += -g -threads 
+ LDFLAGS         += -g -threads
 else
- LDFLAGS         += -threads 
+ LDFLAGS         += -threads
 endif
 DCCFLAGS        += -g
 OCCFLAGS        += -O

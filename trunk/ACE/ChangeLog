@@ -1,3 +1,8 @@
+Mon Aug  6 06:00:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_openvms.GNU:
+          For Alpha use a different way to silence the warnings
+
 Sun Aug  5 19:27:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/SStringfwd.h:
