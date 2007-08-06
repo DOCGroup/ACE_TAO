@@ -494,30 +494,30 @@ TAO_ORB_Core::resolve_ior_table (void)
 
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
 
-ACE_INLINE TAO::Transport_Queueing_Strategy &
+ACE_INLINE TAO::Transport_Queueing_Strategy *
 TAO_ORB_Core::eager_transport_queueing_strategy (void)
 {
-  return *this->eager_transport_queueing_strategy_;
+  return this->eager_transport_queueing_strategy_;
 }
 
-ACE_INLINE TAO::Transport_Queueing_Strategy &
+ACE_INLINE TAO::Transport_Queueing_Strategy *
 TAO_ORB_Core::delayed_transport_queueing_strategy (void)
 {
-  return *this->delayed_transport_queueing_strategy_;
+  return this->delayed_transport_queueing_strategy_;
 }
 
-ACE_INLINE TAO::Transport_Queueing_Strategy &
+ACE_INLINE TAO::Transport_Queueing_Strategy *
 TAO_ORB_Core::flush_transport_queueing_strategy (void)
 {
-  return *this->flush_transport_queueing_strategy_;
+  return this->flush_transport_queueing_strategy_;
 }
 
 #endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
 
-ACE_INLINE TAO::Transport_Queueing_Strategy &
+ACE_INLINE TAO::Transport_Queueing_Strategy *
 TAO_ORB_Core::default_transport_queueing_strategy (void)
 {
-  return *this->default_transport_queueing_strategy_;
+  return this->default_transport_queueing_strategy_;
 }
 
 #if (TAO_HAS_CORBA_MESSAGING == 1)
@@ -635,6 +635,22 @@ TAO_ORB_Core::set_timeout_hook (Timeout_Hook hook)
 {
   // Saving the hook pointer so that we can use it later when needed.
   this->timeout_hook_ = hook;
+}
+
+ACE_INLINE
+void
+TAO_ORB_Core::set_eager_transport_queueing_strategy (
+  TAO::Transport_Queueing_Strategy* strategy)
+{
+  this->eager_transport_queueing_strategy_ = strategy;
+}
+
+ACE_INLINE
+void
+TAO_ORB_Core::set_delayed_transport_queueing_strategy (
+  TAO::Transport_Queueing_Strategy* strategy)
+{
+  this->delayed_transport_queueing_strategy_ = strategy;
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

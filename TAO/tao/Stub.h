@@ -90,7 +90,7 @@ public:
 
   /// Return the queueing strategy to be used in by the transport.
   /// Selection will be based on the SyncScope policies.
-  TAO::Transport_Queueing_Strategy &transport_queueing_strategy (void);
+  TAO::Transport_Queueing_Strategy *transport_queueing_strategy (void);
 
   /// All objref representations carry around a type ID.
   CORBA::String_var type_id;

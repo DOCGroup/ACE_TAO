@@ -281,7 +281,6 @@ project(TAO) : acelib, install, tao_output, taodefaults, pidl, extra_core, tao_v
     Bounded_Value_Allocation_Traits_T.h
     Bounded_Value_Sequence_T.h
     Buffer_Allocator_T.h
-    Buffering_Constraint_Policy.h
     Cache_Entries.h
     CDR.h
     CharSeqC.h

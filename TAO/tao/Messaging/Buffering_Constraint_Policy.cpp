@@ -1,19 +1,19 @@
 // $Id$
 
-#include "tao/Buffering_Constraint_Policy.h"
+#include "tao/Messaging/Buffering_Constraint_Policy.h"
 
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
 
-#include "tao/TAOC.h"
+#include "tao/Messaging/TAO_ExtA.h"
 #include "tao/SystemException.h"
 #include "ace/CORBA_macros.h"
 
-ACE_RCSID (tao,
+ACE_RCSID (Messaging,
            Buffering_Constraint_Policy,
            "$Id$")
 
 #if ! defined (__ACE_INLINE__)
-#include "tao/Buffering_Constraint_Policy.inl"
+#include "tao/Messaging/Buffering_Constraint_Policy.inl"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -44,6 +44,22 @@ TAO_Buffering_Constraint_Policy::policy_type (void)
 {
   return TAO::BUFFERING_CONSTRAINT_POLICY_TYPE;
 }
+
+CORBA::Policy_ptr
+TAO_Buffering_Constraint_Policy::create (const CORBA::Any& val)
+{
+  TAO::BufferingConstraint *buffering_constraint = 0;
+  if ((val >>= buffering_constraint) == 0)
+    throw ::CORBA::PolicyError (CORBA::BAD_POLICY_VALUE);
+
+  TAO_Buffering_Constraint_Policy *servant = 0;
+  ACE_NEW_THROW_EX (servant,
+                    TAO_Buffering_Constraint_Policy (*buffering_constraint),
+                    CORBA::NO_MEMORY ());
+
+  return servant;
+}
+
 
 TAO_Buffering_Constraint_Policy *
 TAO_Buffering_Constraint_Policy::clone (void) const

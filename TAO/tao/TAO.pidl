@@ -36,37 +36,9 @@
 
 module TAO
 {
-
-  //
-  // Buffering constraint.
-  //
-  typedef unsigned short BufferingConstraintMode;
-  const BufferingConstraintMode BUFFER_FLUSH         = 0x00;
-
-  // Note that timeout, message_count, and message_bytes can be or'd.
-  const BufferingConstraintMode BUFFER_TIMEOUT       = 0x01;
-  const BufferingConstraintMode BUFFER_MESSAGE_COUNT = 0x02;
-  const BufferingConstraintMode BUFFER_MESSAGE_BYTES = 0x04;
-
-  struct BufferingConstraint
-  {
-    BufferingConstraintMode mode;
-    TimeBase::TimeT timeout;
-    unsigned long message_count;
-    unsigned long message_bytes;
-  };
-
-  const CORBA::PolicyType BUFFERING_CONSTRAINT_POLICY_TYPE = 0x54410001;
-
-  local interface BufferingConstraintPolicy : CORBA::Policy
-    {
-      readonly attribute BufferingConstraint buffering_constraint;
-    };
-
   // = TAO specific.
   const Messaging::SyncScope SYNC_EAGER_BUFFERING   = Messaging::SYNC_NONE;
   const Messaging::SyncScope SYNC_DELAYED_BUFFERING = -2;
-
 };
 
 #pragma prefix ""

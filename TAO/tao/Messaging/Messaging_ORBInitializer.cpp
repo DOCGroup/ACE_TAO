@@ -6,7 +6,9 @@
 #include "tao/Messaging/Connection_Timeout_Policy_i.h"
 #include "tao/Messaging/Messaging_PolicyFactory.h"
 #include "tao/Messaging/ExceptionHolder_i.h"
+#include "tao/Messaging/Messaging_Queueing_Strategies.h"
 #include "tao/ORB_Core.h"
+#include "tao/Transport_Queueing_Strategies.h"
 #include "tao/PI/ORBInitInfo.h"
 #include "tao/Valuetype/ValueFactory.h"
 
@@ -20,6 +22,7 @@ void
 TAO_Messaging_ORBInitializer::pre_init (PortableInterceptor::ORBInitInfo_ptr info)
 {
 #if ((TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1) || \
+     (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1) || \
      (TAO_HAS_SYNC_SCOPE_POLICY == 1))
   TAO_ORBInitInfo_var tao_info = TAO_ORBInitInfo::_narrow (info);
 
@@ -34,6 +37,17 @@ TAO_Messaging_ORBInitializer::pre_init (PortableInterceptor::ORBInitInfo_ptr inf
 
       throw ::CORBA::INTERNAL ();
     }
+#endif
+
+#if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
+  TAO::Transport_Queueing_Strategy* queuing_strategy = 0;
+  ACE_NEW (queuing_strategy,
+           TAO::Eager_Transport_Queueing_Strategy);
+  tao_info->orb_core ()->set_eager_transport_queueing_strategy (queuing_strategy);
+
+  ACE_NEW (queuing_strategy,
+           TAO::Delayed_Transport_Queueing_Strategy);
+  tao_info->orb_core ()->set_delayed_transport_queueing_strategy (queuing_strategy);
 #endif
 
 #if (TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1)

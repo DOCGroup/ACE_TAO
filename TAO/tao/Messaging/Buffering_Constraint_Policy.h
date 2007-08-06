@@ -16,7 +16,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/TAOC.h"
+#include "tao/Messaging/TAO_ExtC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -51,6 +51,10 @@ public:
   /// Copy constructor.
   TAO_Buffering_Constraint_Policy (const TAO_Buffering_Constraint_Policy &rhs);
 
+  /// Helper method for the implementation of
+  /// CORBA::ORB::create_policy.
+  static CORBA::Policy_ptr create (const CORBA::Any& val);
+
   /// Returns a copy of <this>.
   virtual TAO_Buffering_Constraint_Policy *clone (void) const;
 
@@ -81,7 +85,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 #endif /* _MSC_VER */
 
 #if defined (__ACE_INLINE__)
-#include "tao/Buffering_Constraint_Policy.inl"
+#include "tao/Messaging/Buffering_Constraint_Policy.inl"
 #endif /* __ACE_INLINE__ */
 
 #endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */

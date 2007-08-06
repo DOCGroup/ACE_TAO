@@ -1162,8 +1162,7 @@ TAO_Transport::cleanup_queue (size_t byte_count)
 }
 
 int
-TAO_Transport::check_buffering_constraints_i (TAO_Stub *stub,
-                                              bool &must_flush)
+TAO_Transport::check_buffering_constraints_i (TAO_Stub *stub, bool &must_flush)
 {
   // First let's compute the size of the queue:
   size_t msg_count = 0;
@@ -1175,18 +1174,29 @@ TAO_Transport::check_buffering_constraints_i (TAO_Stub *stub,
       total_bytes += i->message_length ();
     }
 
-  bool set_timer;
+  bool set_timer = false;
   ACE_Time_Value new_deadline;
 
-  bool constraints_reached =
-    stub->transport_queueing_strategy ().
-      buffering_constraints_reached (stub,
-                                     msg_count,
-                                     total_bytes,
-                                     must_flush,
-                                     this->current_deadline_,
-                                     set_timer,
-                                     new_deadline);
+  TAO::Transport_Queueing_Strategy *queue_strategy =
+    stub->transport_queueing_strategy ();
+
+  bool constraints_reached = true;
+
+  if (queue_strategy)
+    {
+      constraints_reached =
+        queue_strategy->buffering_constraints_reached (stub,
+                                                       msg_count,
+                                                       total_bytes,
+                                                       must_flush,
+                                                       this->current_deadline_,
+                                                       set_timer,
+                                                       new_deadline);
+    }
+  else
+    {
+      must_flush = false;
+    }
 
   // ... set the new timer, also cancel any previous timers ...
   if (set_timer)
@@ -1194,8 +1204,7 @@ TAO_Transport::check_buffering_constraints_i (TAO_Stub *stub,
       ACE_Event_Handler *eh = this->event_handler_i ();
       ACE_Reactor * const reactor = eh->reactor ();
       this->current_deadline_ = new_deadline;
-      ACE_Time_Value delay =
-        new_deadline - ACE_OS::gettimeofday ();
+      ACE_Time_Value delay = new_deadline - ACE_OS::gettimeofday ();
 
       if (this->flush_timer_pending ())
         {
@@ -1292,15 +1301,21 @@ TAO_Transport::send_asynchronous_message_i (TAO_Stub *stub,
   // to send first:
   bool try_sending_first = true;
 
-  const bool queue_empty = (this->head_ == 0);
+  bool const queue_empty = (this->head_ == 0);
+
+  TAO::Transport_Queueing_Strategy *queue_strategy =
+    stub->transport_queueing_strategy ();
 
   if (!queue_empty)
     {
       try_sending_first = false;
     }
-  else if (stub->transport_queueing_strategy ().must_queue (queue_empty))
+  else if (queue_strategy)
     {
-      try_sending_first = false;
+      if (queue_strategy->must_queue (queue_empty))
+        {
+          try_sending_first = false;
+        }
     }
 
   if (try_sending_first)
@@ -1309,7 +1324,7 @@ TAO_Transport::send_asynchronous_message_i (TAO_Stub *stub,
       size_t byte_count = 0;
       // ... in this case we must try to send the message first ...
 
-      const size_t total_length = message_block->total_length ();
+      size_t const total_length = message_block->total_length ();
 
       if (TAO_debug_level > 6)
         {
