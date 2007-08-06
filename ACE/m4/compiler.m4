@@ -231,7 +231,7 @@ dnl @todo Clean up / consolidate these conditionals
    *linux*)
      case "$CXX" in
        *icpc|*icc)
-         CXXFLAGS="$CXXFLAGS -i-dynamic"
+         CXXFLAGS="$CXXFLAGS -i-dynamic -w1"
          ACE_CXXFLAGS="$ACE_CXXFLAGS"
          DCXXFLAGS="$DCXXFLAGS"
          WERROR="-Werror -wr -Wall"
