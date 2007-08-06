@@ -17,14 +17,31 @@ ACE_RCSID (Messaging,
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 void
-TAO_Messaging_ORBInitializer::pre_init (PortableInterceptor::ORBInitInfo_ptr)
+TAO_Messaging_ORBInitializer::pre_init (PortableInterceptor::ORBInitInfo_ptr info)
 {
+#if ((TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1) || \
+     (TAO_HAS_SYNC_SCOPE_POLICY == 1))
+  TAO_ORBInitInfo_var tao_info = TAO_ORBInitInfo::_narrow (info);
+
+  if (CORBA::is_nil (tao_info.in ()))
+    {
+      if (TAO_debug_level > 0)
+        ACE_ERROR ((LM_ERROR,
+                    "(%P|%t) TAO_Messaging_ORBInitializer::pre_init:\n"
+                    "(%P|%t)    Unable to narrow "
+                    "\"PortableInterceptor::ORBInitInfo_ptr\" to\n"
+                    "(%P|%t)   \"TAO_ORBInitInfo *.\"\n"));
+
+      throw ::CORBA::INTERNAL ();
+    }
+#endif
+
 #if (TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1)
-  TAO_ORB_Core::set_timeout_hook (TAO_RelativeRoundtripTimeoutPolicy::hook);
+  tao_info->orb_core ()->set_timeout_hook (TAO_RelativeRoundtripTimeoutPolicy::hook);
 #endif /* TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1 */
 
 #if (TAO_HAS_SYNC_SCOPE_POLICY == 1)
-  TAO_ORB_Core::set_sync_scope_hook (TAO_Sync_Scope_Policy::hook);
+  tao_info->orb_core ()->set_sync_scope_hook (TAO_Sync_Scope_Policy::hook);
 #endif  /* TAO_HAS_SYNC_SCOPE_POLICY == 1 */
 
 #if (TAO_HAS_CONNECTION_TIMEOUT_POLICY == 1)

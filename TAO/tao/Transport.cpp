@@ -659,7 +659,7 @@ TAO_Transport::send_synchronous_message_i (const ACE_Message_Block *mb,
                                   this->orb_core_,
                                   0, // no timeout
                                   0,
-                                  1),
+                                  true),
                               -1);
               queued_message->push_front (this->head_, this->tail_);
             }
@@ -1450,7 +1450,7 @@ TAO_Transport::queue_message_i (const ACE_Message_Block *message_block,
                                              this->orb_core_,
                                              max_wait_time,
                                              0,
-                                             1),
+                                             true),
                   -1);
   queued_message->push_back (this->head_, this->tail_);
 

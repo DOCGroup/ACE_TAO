@@ -95,51 +95,40 @@ TAO_POA_Initializer::init (void)
 
 #if !defined (CORBA_E_MICRO)
   ACE_Service_Config::process_directive (
-      ace_svc_desc_LifespanStrategyPersistentFactoryImpl
-    );
+      ace_svc_desc_LifespanStrategyPersistentFactoryImpl);
 #endif /* CORBA_E_MICRO */
 
   ACE_Service_Config::process_directive (
-      ace_svc_desc_LifespanStrategyTransientFactoryImpl
-    );
+      ace_svc_desc_LifespanStrategyTransientFactoryImpl);
 
   ACE_Service_Config::process_directive (
-      ace_svc_desc_IdAssignmentStrategyFactoryImpl
-    );
+      ace_svc_desc_IdAssignmentStrategyFactoryImpl);
 
   ACE_Service_Config::process_directive (
-      ace_svc_desc_IdUniquenessStrategyFactoryImpl
-    );
+      ace_svc_desc_IdUniquenessStrategyFactoryImpl);
 
   ACE_Service_Config::process_directive (
-      ace_svc_desc_ImplicitActivationStrategyFactoryImpl
-    );
+      ace_svc_desc_ImplicitActivationStrategyFactoryImpl);
 
   ACE_Service_Config::process_directive (
-      ace_svc_desc_RequestProcessingStrategyFactoryImpl
-    );
+      ace_svc_desc_RequestProcessingStrategyFactoryImpl);
 
   ACE_Service_Config::process_directive (
-      ace_svc_desc_RequestProcessingStrategyAOMOnlyFactoryImpl
-    );
+      ace_svc_desc_RequestProcessingStrategyAOMOnlyFactoryImpl);
 
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
   ACE_Service_Config::process_directive (
-      ace_svc_desc_RequestProcessingStrategyDefaultServantFactoryImpl
-    );
+      ace_svc_desc_RequestProcessingStrategyDefaultServantFactoryImpl);
 
   ACE_Service_Config::process_directive (
-      ace_svc_desc_RequestProcessingStrategyServantActivatorFactoryImpl
-    );
+      ace_svc_desc_RequestProcessingStrategyServantActivatorFactoryImpl);
 
   ACE_Service_Config::process_directive (
-      ace_svc_desc_RequestProcessingStrategyServantLocatorFactoryImpl
-    );
+      ace_svc_desc_RequestProcessingStrategyServantLocatorFactoryImpl);
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 
   ACE_Service_Config::process_directive (
-      ace_svc_desc_ServantRetentionStrategyFactoryImpl
-    );
+      ace_svc_desc_ServantRetentionStrategyFactoryImpl);
 
   ACE_Service_Config::process_directive (
       ace_svc_desc_ServantRetentionStrategyRetainFactoryImpl
@@ -147,30 +136,25 @@ TAO_POA_Initializer::init (void)
 
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_MICRO) && !defined (CORBA_E_COMPACT)
   ACE_Service_Config::process_directive (
-      ace_svc_desc_ServantRetentionStrategyNonRetainFactoryImpl
-    );
+      ace_svc_desc_ServantRetentionStrategyNonRetainFactoryImpl);
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 
   // Strategy implementations
 
   ACE_Service_Config::process_directive (
-      ace_svc_desc_ThreadStrategyORBControl
-    );
+      ace_svc_desc_ThreadStrategyORBControl);
 
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_MICRO) && !defined (CORBA_E_COMPACT)
   ACE_Service_Config::process_directive (
-      ace_svc_desc_ThreadStrategySingle
-    );
+      ace_svc_desc_ThreadStrategySingle);
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 
   ACE_Service_Config::process_directive (
-      ace_svc_desc_TAO_POA_Current_Factory
-    );
+      ace_svc_desc_TAO_POA_Current_Factory);
 
   return
     ACE_Service_Config::process_directive (
-        ace_svc_desc_TAO_Object_Adapter_Factory
-      );
+        ace_svc_desc_TAO_Object_Adapter_Factory);
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

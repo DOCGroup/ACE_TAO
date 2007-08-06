@@ -1,3 +1,30 @@
+Mon Aug  6 11:00:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/ORB_Core.{h,cpp,inl}:
+        * tao/params.{h,cpp,inl}:
+          Moved collocation_resolver to ORB params. timeout_hook
+          and sync_scope hook are moved to the ORB. This way we
+          use Service Config less in the critical path and can
+          in the future make these different for different orbs
+
+        * tao/Messaging/Messaging_ORBInitializer.cpp:
+          Set the sync_scope and timeout_hook into the ORB
+
+        * tao/PortableServer/PortableServer.cpp:
+        * tao/Profile_Transport_Resolver.cpp:
+        * tao/RTCORBA/RT_Endpoint_Selector_Factory.h:
+        * tao/Strategies/Optimized_Connection_Endpoint_Selector.h:
+          Layout changes
+
+        * tao/RTPortableServer/RT_Object_Adapter_Factory.cpp:
+          Set the collocation resolver name into the ORB
+
+        * tao/Strategies/OC_Endpoint_Selector_Factory.h:
+          Fixed typo in comment
+
+        * tao/Transport.cpp:
+          Use true instead of 1
+
 Mon Aug  6 05:12:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/BiDir_GIOP/BiDirGIOP.cpp:

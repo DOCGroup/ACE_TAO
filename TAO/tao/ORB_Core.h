@@ -298,9 +298,6 @@ public:
 
   //@}
 
-  /// Sets the value of TAO_ORB_Core::collocation_resolver_name_
-  static void set_collocation_resolver (const char *collocation_resolver_name);
-
   /// Sets the value of TAO_ORB_Core::resource_factory_
   static void set_resource_factory (const char *resource_factory_name);
 
@@ -473,7 +470,7 @@ public:
                                 bool&,
                                 ACE_Time_Value&);
 
-  static void set_timeout_hook (Timeout_Hook hook);
+  void set_timeout_hook (Timeout_Hook hook);
 
   /// Invoke the timeout hook if present.
   /**
@@ -532,7 +529,7 @@ public:
                                    bool &,
                                    Messaging::SyncScope &);
 
-  static void set_sync_scope_hook (Sync_Scope_Hook hook);
+  void set_sync_scope_hook (Sync_Scope_Hook hook);
 
   /// Handle to the factory for protocols_hooks_..
   TAO_Protocols_Hooks *protocols_hooks_;
@@ -1218,6 +1215,12 @@ protected:
 
   /// ORB's service configuration
   ACE_Service_Gestalt *config_;
+
+  /// The hook to be set for the SyncScopePolicy
+  Sync_Scope_Hook sync_scope_hook_;
+
+  /// The hook to be set for the RelativeRoundtripTimeoutPolicy.
+  Timeout_Hook timeout_hook_;
 };
 
 // ****************************************************************
@@ -1245,27 +1248,13 @@ public:
   static TAO_ORB_Core_Static_Resources* instance (void);
 
 public:
-  // The hook to be set for the SyncScopePolicy
-  TAO_ORB_Core::Sync_Scope_Hook sync_scope_hook_;
-
   /**
    * Name of the network_priority_protocols_hooks that needs to be instantiated.
   */
   ACE_CString network_priority_protocols_hooks_name_;
 
-  /// The hook to be set for the RelativeRoundtripTimeoutPolicy.
-  TAO_ORB_Core::Timeout_Hook timeout_hook_;
-
   /// The hook to be set for the ConnectionTimeoutPolicy
   TAO_ORB_Core::Timeout_Hook connection_timeout_hook_;
-
-  /**
-   * Name of the collocation resolver that needs to be instantiated.
-   * The default value is "Default_Collocation_Resolver". If
-   * TAO_RTCORBA is linked, the set_collocation_resolver will be
-   * called to set the value to be "RT_Collocation_Resolver".
-   */
-  ACE_CString collocation_resolver_name_;
 
   /**
    * Name of the resource factory that needs to be instantiated.
@@ -1323,7 +1312,7 @@ public:
   /// An alternative hook to be set for the ConnectionTimeoutPolicy
   TAO_ORB_Core::Timeout_Hook alt_connection_timeout_hook_;
 
-  //private:
+//private:
 
   /// Constructor.
   TAO_ORB_Core_Static_Resources (void);

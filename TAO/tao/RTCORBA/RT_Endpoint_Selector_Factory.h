@@ -59,8 +59,7 @@ public:
   /// Destructor.
   virtual ~RT_Endpoint_Selector_Factory (void);
 
-  virtual TAO_Invocation_Endpoint_Selector *get_selector (
-              void);
+  virtual TAO_Invocation_Endpoint_Selector *get_selector (void);
 
 private:
   TAO_RT_Invocation_Endpoint_Selector *rt_invocation_endpoint_selector_;

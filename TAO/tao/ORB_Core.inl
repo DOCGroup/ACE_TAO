@@ -622,4 +622,19 @@ TAO_ORB_Core::is_permanent_forward_condition
   return permanent_forward_condition;
 }
 
+ACE_INLINE
+void
+TAO_ORB_Core::set_sync_scope_hook (Sync_Scope_Hook hook)
+{
+  this->sync_scope_hook_ = hook;
+}
+
+ACE_INLINE
+void
+TAO_ORB_Core::set_timeout_hook (Timeout_Hook hook)
+{
+  // Saving the hook pointer so that we can use it later when needed.
+  this->timeout_hook_ = hook;
+}
+
 TAO_END_VERSIONED_NAMESPACE_DECL
