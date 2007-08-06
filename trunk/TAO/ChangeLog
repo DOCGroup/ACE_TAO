@@ -3,6 +3,12 @@ Mon Aug  6 19:53:24 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
         * tao/EndpointPolicy/EndpointPolicy.h:
         * tao/EndpointPolicy/EndpointPolicy.cpp:
 
+        * tao/TAO_Internal.cpp:
+
+          Rework the Endpoint policy loader to avoid loading a dll during
+          a static initializer, as described in Sun Aug  5 18:58:12 UTC
+          2007  Johnny Willemsen  <jwillemsen@remedy.nl>.
+
 Mon Aug  6 18:31:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Buffering_Constraint_Policy.{h,cpp,inl}:
