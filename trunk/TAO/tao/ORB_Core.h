@@ -518,7 +518,7 @@ public:
 
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
 
-  TAO::Transport_Queueing_Strategy &get_transport_queueing_strategy (
+  TAO::Transport_Queueing_Strategy *get_transport_queueing_strategy (
     TAO_Stub *stub,
     Messaging::SyncScope &scope);
 
@@ -859,7 +859,7 @@ public:
 
   /// This strategy is the default, no explicit queueing and no explicit
   /// flush
-  TAO::Transport_Queueing_Strategy &default_transport_queueing_strategy (void);
+  TAO::Transport_Queueing_Strategy *default_transport_queueing_strategy (void);
 
   /// Verify condition for  permanent forward is given,
   /// both parameters must provide group attributes.
@@ -873,6 +873,12 @@ public:
   /// Get outgoing fragmentation strategy.
   auto_ptr<TAO_GIOP_Fragmentation_Strategy>
   fragmentation_strategy (TAO_Transport * transport);
+
+ void set_eager_transport_queueing_strategy (
+  TAO::Transport_Queueing_Strategy* strategy);
+
+ void set_delayed_transport_queueing_strategy (
+  TAO::Transport_Queueing_Strategy* strategy);
 
 protected:
 
@@ -973,9 +979,9 @@ private:
 
   /// This strategy will buffer messages.
   //@{
-  TAO::Transport_Queueing_Strategy &eager_transport_queueing_strategy (void);
-  TAO::Transport_Queueing_Strategy &delayed_transport_queueing_strategy (void);
-  TAO::Transport_Queueing_Strategy &flush_transport_queueing_strategy (void);
+  TAO::Transport_Queueing_Strategy *eager_transport_queueing_strategy (void);
+  TAO::Transport_Queueing_Strategy *delayed_transport_queueing_strategy (void);
+  TAO::Transport_Queueing_Strategy *flush_transport_queueing_strategy (void);
   //@}
 
 #endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */

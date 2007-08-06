@@ -41,14 +41,8 @@ class TAO_Messaging_PolicyFactory
     public virtual TAO_Local_RefCounted_Object
 {
 public:
-
   virtual CORBA::Policy_ptr create_policy (CORBA::PolicyType type,
                                            const CORBA::Any & value);
-private:
-#if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
-  CORBA::Policy_ptr
-  create_buffering_constraint_policy (const CORBA::Any& val);
-#endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
