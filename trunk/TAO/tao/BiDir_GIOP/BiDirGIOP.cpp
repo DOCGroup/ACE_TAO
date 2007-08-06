@@ -64,8 +64,7 @@ TAO_BiDirGIOP_Loader::init (int, ACE_TCHAR* [])
 }
 
 void
-TAO_BiDirGIOP_Loader::load_policy_validators (TAO_Policy_Validator &val
-                                              )
+TAO_BiDirGIOP_Loader::load_policy_validators (TAO_Policy_Validator &val)
 {
   // Is this true? Does the GIOP protocol version matter here?
   if (TAO_DEF_GIOP_MINOR < 2)
