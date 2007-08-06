@@ -1,3 +1,23 @@
+Mon Aug  6 13:53:30 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/Notify_Service/Notify_Service.cpp:
+        * orbsvcs/examples/Notify/Federation/Gate/Gate.cpp:
+        * orbsvcs/orbsvcs/Notify/Buffering_Strategy.cpp:
+        * orbsvcs/orbsvcs/Notify/CosNotify_Service.cpp:
+        * orbsvcs/orbsvcs/Notify/Delivery_Request.cpp:
+        * orbsvcs/orbsvcs/Notify/Routing_Slip.cpp:
+        * orbsvcs/orbsvcs/Notify/Routing_Slip_Persistence_Manager.cpp:
+        * orbsvcs/orbsvcs/Notify/Sequence/SequencePushConsumer.cpp:
+        * orbsvcs/orbsvcs/Notify/Standard_Event_Persistence.cpp:
+        * orbsvcs/tests/Notify/lib/Activation_Manager.cpp:
+        * orbsvcs/tests/Notify/lib/Driver.cpp:
+        * orbsvcs/tests/Notify/lib/Periodic_Supplier.h:
+        * orbsvcs/tests/Notify/lib/Periodic_Supplier.cpp:
+        * orbsvcs/tests/Notify/lib/Task_Stats.h:
+
+          Added static_cast's and changed types to avoid type mismatch
+          warnings on 64-bit builds.
+
 Mon Aug  6 13:39:40 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/orbsvcs/Notify/MonitorControlExt/MC_Default_Factory.h:

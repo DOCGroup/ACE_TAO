@@ -62,7 +62,8 @@ Delivery_Request::marshal (TAO_OutputCDR & cdr)
   if (this->delivery_type_ != 0)
   {
     cdr.write_octet (this->delivery_type_);
-    size_t dest_count = this->destination_id_.size ();
+    CORBA::ULong dest_count =
+      static_cast<CORBA::ULong> (this->destination_id_.size ());
     cdr.write_ulong (dest_count);
     for (size_t ndest = 0; ndest < dest_count; ++ ndest)
     {
