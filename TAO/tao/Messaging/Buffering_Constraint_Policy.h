@@ -40,7 +40,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  *
  * This policy is used to control the buffering of requests by the ORB.
  */
-class TAO_Export TAO_Buffering_Constraint_Policy
+class TAO_Buffering_Constraint_Policy
   : public TAO::BufferingConstraintPolicy,
     public TAO_Local_RefCounted_Object
 {
