@@ -765,7 +765,6 @@ libTAO_la_SOURCES = \
   Default_Endpoint_Selector_Factory.cpp \
   Default_Stub_Factory.cpp \
   Default_Thread_Lane_Resources_Manager.cpp \
-  DomainC.cpp \
   DoubleSeqC.cpp \
   Dynamic_Adapter.cpp \
   Endpoint.cpp \
@@ -1064,9 +1063,6 @@ nobase_include_HEADERS = \
   Default_Endpoint_Selector_Factory.h \
   Default_Stub_Factory.h \
   Default_Thread_Lane_Resources_Manager.h \
-  Domain.pidl \
-  DomainC.h \
-  DomainC.inl \
   DoubleSeq.pidl \
   DoubleSeq.pidl \
   DoubleSeqC.h \
@@ -1809,7 +1805,6 @@ nobase_include_HEADERS += \
   AnyTypeCode/CONV_FRAMEA.h \
   AnyTypeCode/CharSeqA.h \
   AnyTypeCode/CurrentA.h \
-  AnyTypeCode/DomainA.h \
   AnyTypeCode/DoubleSeqA.h \
   AnyTypeCode/Dynamic.pidl \
   AnyTypeCode/DynamicA.h \
@@ -3772,57 +3767,6 @@ endif BUILD_EXCEPTIONS
 EXTRA_DIST += \
   IFR_Client/TAO_IFR_Client.pc.in \
   IFR_Client/TAO_IFR_Client.rc
-
-
-## Makefile.Domain.am
-
-if BUILD_EXCEPTIONS
-
-lib_LTLIBRARIES += libTAO_Domain.la
-
-libTAO_Domain_la_CPPFLAGS = \
-  -I$(ACE_ROOT) \
-  -I$(ACE_BUILDDIR) \
-  -I$(TAO_ROOT) \
-  -I$(TAO_BUILDDIR) \
-  -DTAO_DOMAIN_BUILD_DLL
-
-libTAO_Domain_la_SOURCES = \
-  Domain/DomainS.cpp
-
-libTAO_Domain_la_LDFLAGS = \
- -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
-
-libTAO_Domain_la_LIBADD = \
-  libTAO_PortableServer.la \
-  libTAO_IFR_Client.la \
-  libTAO_AnyTypeCode.la \
-  libTAO.la \
-  $(ACE_BUILDDIR)/ace/libACE.la
-
-nobase_include_HEADERS += \
-  Domain/DomainS.h \
-  Domain/DomainS.inl \
-  Domain/DomainS_T.cpp \
-  Domain/DomainS_T.h \
-  Domain/DomainS_T.inl \
-  Domain/domain_export.h
-
-pkgconfig_DATA += \
-  TAO_Domain.pc
-
-CLEANFILES += \
-  TAO_Domain.pc
-
-TAO_Domain.pc: ${top_builddir}/config.status ${srcdir}/Domain/TAO_Domain.pc.in
-	${top_builddir}/config.status --file "$@":${srcdir}/Domain/TAO_Domain.pc.in
-
-endif BUILD_EXCEPTIONS
-
-EXTRA_DIST += \
-  Domain/TAO_Domain.pc.in \
-  Domain/TAO_Domain.rc
-
 
 ## Makefile.Valuetype.am
 

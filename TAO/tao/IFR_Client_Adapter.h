@@ -71,36 +71,26 @@ public:
 
   virtual CORBA::Boolean interfacedef_cdr_insert (
       TAO_OutputCDR &cdr,
-      CORBA::InterfaceDef_ptr object_type
-    ) = 0;
+      CORBA::InterfaceDef_ptr object_type) = 0;
 
   virtual void interfacedef_any_insert (
       CORBA::Any *any,
-      CORBA::InterfaceDef_ptr object_type
-    ) = 0;
+      CORBA::InterfaceDef_ptr object_type) = 0;
 
-  virtual void dispose (
-      CORBA::InterfaceDef_ptr orphan
-    ) = 0;
+  virtual void dispose (CORBA::InterfaceDef_ptr orphan) = 0;
 
   virtual CORBA::InterfaceDef_ptr get_interface (
       CORBA::ORB_ptr orb,
-      const char *repo_id
-
-    ) = 0;
+      const char *repo_id) = 0;
 
   virtual CORBA::InterfaceDef_ptr get_interface_remote (
-      CORBA::Object_ptr target
-
-    ) = 0;
+      CORBA::Object_ptr target) = 0;
 
 #if (TAO_HAS_MINIMUM_CORBA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
   virtual void create_operation_list (
                CORBA::ORB_ptr orb,
                CORBA::OperationDef_ptr,
-               CORBA::NVList_ptr&
-
-             ) = 0;
+               CORBA::NVList_ptr&) = 0;
 #endif /*TAO_HAS_MINIMUM_CORBA*/
 };
 
