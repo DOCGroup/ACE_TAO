@@ -43,6 +43,12 @@ public:
   void init (PortableServer::POA_ptr parent_poa,
              const char* poa_name);
 
+#if !defined (CORBA_E_MICRO)
+  /// Create a new persistent PortableServer::POA.
+  void init_persistent (PortableServer::POA_ptr parent_poa,
+                        const char* poa_name);
+#endif /* !CORBA_E_MICRO */
+
   /// Create a new PortableServer::POA. The name is chosen at random.
   void init (PortableServer::POA_ptr parent_poa);
 
@@ -73,18 +79,24 @@ public:
 
   CORBA::Object_ptr servant_to_reference (PortableServer::ServantBase * servant) const;
 
+  /// Generate a unique id for each POA created.
+  ACE_CString get_unique_id (void);
+
 protected:
   /// Set default POA policies.
   virtual void set_policy (PortableServer::POA_ptr parent_poa,
                            CORBA::PolicyList &policy_list);
 
+#if !defined (CORBA_E_MICRO)
+  /// Set persistent POA policies.
+  virtual void set_persistent_policy (PortableServer::POA_ptr parent_poa,
+                                      CORBA::PolicyList &policy_list);
+#endif /* !CORBA_E_MICRO */
+
   /// Apply the polices and create child POA.
   void create_i (PortableServer::POA_ptr parent_poa,
                  const char* poa_name,
                  CORBA::PolicyList &policy_list);
-
-  /// Generate a unique id for each POA created.
-  ACE_CString get_unique_id (void);
 
   /// Convert id to ObjectID
   PortableServer::ObjectId* long_to_ObjectId (CORBA::Long id) const;
