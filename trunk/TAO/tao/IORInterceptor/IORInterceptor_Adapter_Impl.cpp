@@ -178,9 +178,7 @@ TAO_IORInterceptor_Adapter_Impl::adapter_state_changed (
         PortableInterceptor::IORInterceptor_3_0::_narrow (ior_interceptor);
       if (!CORBA::is_nil (ior_3_interceptor.in ()))
         {
-          ior_3_interceptor->adapter_state_changed (
-            seq_obj_ref_template,
-            state);
+          ior_3_interceptor->adapter_state_changed (seq_obj_ref_template, state);
         }
     }
 }
@@ -207,10 +205,7 @@ TAO_IORInterceptor_Adapter_Impl::adapter_manager_state_changed (
         PortableInterceptor::IORInterceptor_3_0::_narrow (ior_interceptor);
       if (!CORBA::is_nil (ior_3_interceptor.in ()))
         {
-          ior_3_interceptor->adapter_manager_state_changed (
-            id,
-            state
-           );
+          ior_3_interceptor->adapter_manager_state_changed (id, state);
         }
     }
 }

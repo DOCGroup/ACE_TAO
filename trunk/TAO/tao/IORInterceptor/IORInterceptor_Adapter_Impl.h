@@ -54,13 +54,11 @@ public:
   virtual ~TAO_IORInterceptor_Adapter_Impl (void);
 
   virtual void add_interceptor (
-      PortableInterceptor::IORInterceptor_ptr interceptor
-     );
+      PortableInterceptor::IORInterceptor_ptr interceptor);
 
   virtual void add_interceptor (
       PortableInterceptor::IORInterceptor_ptr interceptor,
-      const CORBA::PolicyList& policies
-     );
+      const CORBA::PolicyList& policies);
 
   virtual void destroy_interceptors (void);
 
@@ -68,18 +66,15 @@ public:
 
   /// Call the IORInterceptor::components_established() method on all
   /// registered IORInterceptors.
-  virtual void components_established (PortableInterceptor::IORInfo_ptr info
-                                       );
+  virtual void components_established (PortableInterceptor::IORInfo_ptr info);
 
   virtual void adapter_state_changed (
       const TAO::ObjectReferenceTemplate_Array &array_obj_ref_template,
-      PortableInterceptor::AdapterState state
-      );
+      PortableInterceptor::AdapterState state);
 
   virtual void adapter_manager_state_changed (
       const char * id,
-      PortableInterceptor::AdapterState state
-      );
+      PortableInterceptor::AdapterState state);
 
 private:
   /// List of IOR interceptors maintained

@@ -694,9 +694,9 @@ protected:
   TAO_POAManager_Factory& poa_manager_factory_;
 #endif
 
-  IOP::TaggedComponentList tagged_component_;
+  IOP::TaggedComponentSeq tagged_component_;
 
-  IOP::TaggedComponentList tagged_component_id_;
+  IOP::TaggedComponentSeq tagged_component_id_;
 
   ACE_Array_Base <IOP::ProfileId> profile_id_array_;
 

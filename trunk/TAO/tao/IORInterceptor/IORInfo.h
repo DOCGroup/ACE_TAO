@@ -60,37 +60,27 @@ public:
 
   /// Return the policy matching the given policy type that is in
   /// effect for the object whose IOR is being created.
-  virtual CORBA::Policy_ptr get_effective_policy (
-      CORBA::PolicyType type
-      );
+  virtual CORBA::Policy_ptr get_effective_policy (CORBA::PolicyType type);
 
   /// Add the given tagged component to all profiles.
-  virtual void add_ior_component (
-      const IOP::TaggedComponent & component
-      );
+  virtual void add_ior_component (const IOP::TaggedComponent & component);
 
   /// Add the given tagged component to all profiles matching the given
   /// ProfileId.
   virtual void add_ior_component_to_profile (
       const IOP::TaggedComponent & component,
-      IOP::ProfileId profile_id
-      );
+      IOP::ProfileId profile_id);
 
-  virtual char * manager_id (
-      void);
+  virtual char * manager_id (void);
 
-  virtual PortableInterceptor::AdapterState state (
-      void);
+  virtual PortableInterceptor::AdapterState state (void);
 
-  virtual PortableInterceptor::ObjectReferenceTemplate * adapter_template (
-      void);
+  virtual PortableInterceptor::ObjectReferenceTemplate *adapter_template (void);
 
-  virtual PortableInterceptor::ObjectReferenceFactory * current_factory (
-      void);
+  virtual PortableInterceptor::ObjectReferenceFactory *current_factory (void);
 
   virtual void current_factory (
-      PortableInterceptor::ObjectReferenceFactory * current_factory
-      );
+      PortableInterceptor::ObjectReferenceFactory * current_factory);
 
   //@}
 
