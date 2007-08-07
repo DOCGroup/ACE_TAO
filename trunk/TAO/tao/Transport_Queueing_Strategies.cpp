@@ -23,29 +23,6 @@ namespace TAO
 // ****************************************************************
 
   bool
-  Default_Transport_Queueing_Strategy::must_queue (bool) const
-  {
-    return false;
-  }
-
-  bool
-  Default_Transport_Queueing_Strategy::buffering_constraints_reached (
-    TAO_Stub *,
-    size_t ,
-    size_t ,
-    bool &must_flush,
-    const ACE_Time_Value &,
-    bool &set_timer,
-    ACE_Time_Value &) const
-  {
-    set_timer = false;
-    must_flush = false;
-    return true;
-  }
-
-// ****************************************************************
-
-  bool
   Flush_Transport_Queueing_Strategy::must_queue (bool) const
   {
     return false;

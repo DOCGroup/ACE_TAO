@@ -37,7 +37,6 @@
 module TAO
 {
   // = TAO specific.
-  const Messaging::SyncScope SYNC_EAGER_BUFFERING   = Messaging::SYNC_NONE;
   const Messaging::SyncScope SYNC_DELAYED_BUFFERING = -2;
 };
 

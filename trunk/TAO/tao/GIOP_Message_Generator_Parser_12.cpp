@@ -49,7 +49,6 @@ TAO_GIOP_Message_Generator_Parser_12::write_request_header (
   // Sync scope - ignored by server if request is not oneway.
   else if (response_flags == CORBA::Octet (Messaging::SYNC_NONE)
            || response_flags == CORBA::Octet (Messaging::SYNC_WITH_TRANSPORT)
-           || response_flags == CORBA::Octet (TAO::SYNC_EAGER_BUFFERING)
            || response_flags == CORBA::Octet (TAO::SYNC_DELAYED_BUFFERING))
     // No response required.
     msg << ACE_OutputCDR::from_octet (0);

@@ -78,21 +78,6 @@ namespace TAO
       ACE_Time_Value &interval) const = 0;
   };
 
-  class Default_Transport_Queueing_Strategy : public Transport_Queueing_Strategy
-  {
-  public:
-    virtual bool must_queue (bool queue_empty) const;
-
-    virtual bool buffering_constraints_reached (
-      TAO_Stub *stub,
-      size_t msg_count,
-      size_t total_bytes,
-      bool &must_flush,
-      const ACE_Time_Value &current_deadline,
-      bool &set_timer,
-      ACE_Time_Value &interval) const;
-  };
-
   /**
    * This strategy doesn't not queue by default, but when a message is queued
    * we always flush it to the transport. This is used for oneways with

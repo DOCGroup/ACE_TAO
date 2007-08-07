@@ -1,3 +1,60 @@
+Tue Aug  7 09:46:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/CORBALOC_Parser.{h,cpp,inl}:
+          Added new TAO_HAS_CORBALOC_PARSER that defaults to 1, set to 0 to
+          disable this parser
+
+        * tao/CORBANAME_Parser.{h,cpp}:
+          Added new TAO_HAS_CORBANAME_PARSER that defaults to 1, set to 0 to
+          disable this parser
+
+        * tao/DLL_Parser.{h,cpp}:
+          Added new TAO_HAS_DLL_PARSER that defaults to 1, set to 0 to
+          disable this parser
+
+        * tao/FILE_Parser.{h,cpp}:
+          Added new TAO_HAS_FILE_PARSER that defaults to 1, set to 0 to
+          disable this parser
+
+        * tao/HTTP_Client.{h,cpp}:
+        * tao/HTTP_Handler.{h,cpp}:
+        * tao/HTTP_Parser.{h,cpp}:
+          Added new TAO_HAS_HTTP_PARSER that defaults to 1, set to 0 to
+          disable this parser
+        * tao/MCAST_Parser.{h,cpp.inl}:
+          Added new TAO_HAS_MCAST_PARSER that defaults to 1, set to 0 to
+          disable this parser
+
+        * tao/default_resource.cpp:
+          Update the logic to file the parser_names array
+
+        * tao/ORB_Core.{h,cpp.inl}:
+        * tao/Transport_Queueing_Strategies.{h,cpp}:
+          Removed the default queueing strategy, just return 0 as
+          transport queue strategy in the default case, the Transport
+          has already set the correct defaults and we don't need to change
+          the settings at that moment. Saves a virtual call in the critical
+          path.
+
+        * tao/ORB_Core.{h,cpp.inl}:
+          Reworked get_transport_queueing_strategy to use a switch
+
+        * tao/orbconf.h:
+          Set all defines for the different parsers to 1 if they are not
+          set
+
+        * tao/Stub.{h,inl}:
+          Made a few methods inline
+
+        * tao/TAO_Internal.cpp:
+          Only do a process directive for a parser when it is enabled
+
+        * tao/GIOP_Message_Generator_Parser_12.cpp:
+        * tao/TAO.pidl:
+        * tao/Invocation_Adapter.cpp
+          Removed TAO::SYNC_EAGER_BUFFERING, it is the same as
+          Messaging::SYNC_NONE.
+
 Tue Aug  7 08:12:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/ORB_Core.{h,inl}:

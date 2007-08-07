@@ -1,4 +1,7 @@
 #include "tao/CORBALOC_Parser.h"
+
+#if (TAO_HAS_CORBALOC_PARSER == 1)
+
 #include "tao/ORB_Core.h"
 #include "tao/Stub.h"
 #include "tao/MProfile.h"
@@ -358,3 +361,4 @@ ACE_STATIC_SVC_DEFINE (TAO_CORBALOC_Parser,
 
 ACE_FACTORY_DEFINE (TAO, TAO_CORBALOC_Parser)
 
+#endif /* TAO_HAS_CORBALOC_PARSER == 1 */

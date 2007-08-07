@@ -1,6 +1,6 @@
 #include "tao/MCAST_Parser.h"
 
-#if defined ACE_HAS_IP_MULTICAST
+#if (TAO_HAS_MCAST_PARSER == 1)
 
 #include "tao/default_ports.h"
 #include "tao/ORB_Core.h"
@@ -501,4 +501,4 @@ ACE_STATIC_SVC_DEFINE (TAO_MCAST_Parser,
 
 ACE_FACTORY_DEFINE (TAO, TAO_MCAST_Parser)
 
-#endif /* ACE_HAS_IP_MULTICAST */
+#endif /* TAO_HAS_MCAST_PARSER == 1 */

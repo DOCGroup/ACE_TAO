@@ -848,6 +848,34 @@ enum TAO_Policy_Scope
 #    define TAO_HAS_TRANSPORT_CURRENT 1
 #endif  /* ! TAO_HAS_TRANSPORT_CURRENT */
 
+#if !defined (TAO_HAS_DDL_PARSER)
+# define TAO_HAS_DDL_PARSER 1
+#endif
+
+#if !defined (TAO_HAS_FILE_PARSER)
+# define TAO_HAS_FILE_PARSER 1
+#endif
+
+#if !defined (TAO_HAS_CORBALOC_PARSER)
+# define TAO_HAS_CORBALOC_PARSER 1
+#endif
+
+#if !defined (TAO_HAS_CORBANAME_PARSER)
+# define TAO_HAS_CORBANAME_PARSER 1
+#endif
+
+#if !defined (TAO_HAS_HTTP_PARSER)
+# define TAO_HAS_HTTP_PARSER 1
+#endif
+
+#if !defined (TAO_HAS_MCAST_PARSER)
+# if defined ACE_HAS_IP_MULTICAST
+#  define TAO_HAS_MCAST_PARSER 1
+# else
+#  define TAO_HAS_MCAST_PARSER 0
+# endif
+#endif
+
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"

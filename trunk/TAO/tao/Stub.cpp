@@ -323,19 +323,6 @@ TAO_Stub::is_equivalent (CORBA::Object_ptr other_obj)
 
 // Memory managment
 
-void
-TAO_Stub::_incr_refcnt (void)
-{
-  ++this->refcount_;
-}
-
-void
-TAO_Stub::_decr_refcnt (void)
-{
-  if (--this->refcount_ == 0)
-    delete this;
-}
-
 TAO_Profile *
 TAO_Stub::set_profile_in_use_i (TAO_Profile *pfile)
 {
@@ -502,24 +489,6 @@ TAO_Stub::get_policy_overrides (const CORBA::PolicyTypeSeq &types)
 }
 
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
-
-TAO::Transport_Queueing_Strategy *
-TAO_Stub::transport_queueing_strategy (void)
-{
-#if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
-
-  bool has_synchronization;
-  Messaging::SyncScope scope;
-
-  this->orb_core_->call_sync_scope_hook (this, has_synchronization, scope);
-
-  if (has_synchronization == true)
-    return this->orb_core_->get_transport_queueing_strategy  (this, scope);
-
-#endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
-
-  return this->orb_core_->default_transport_queueing_strategy ();
-}
 
 CORBA::Boolean
 TAO_Stub::marshal (TAO_OutputCDR &cdr)

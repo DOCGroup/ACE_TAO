@@ -1,6 +1,9 @@
 // $Id$
 
 #include "tao/HTTP_Parser.h"
+
+#if (TAO_HAS_HTTP_PARSER == 1)
+
 #include "tao/HTTP_Client.h"
 #include "tao/ORB.h"
 #include "tao/Object.h"
@@ -135,4 +138,4 @@ ACE_STATIC_SVC_DEFINE (TAO_HTTP_Parser,
 
 ACE_FACTORY_DEFINE (TAO, TAO_HTTP_Parser)
 
-
+#endif /* TAO_HAS_HTTP_PARSER == 1 */

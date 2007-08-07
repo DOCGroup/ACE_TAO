@@ -2,7 +2,7 @@
 //
 // $Id$
 
-#if defined ACE_HAS_IP_MULTICAST
+#if (TAO_HAS_MCAST_PARSER == 1)
 
 #include "tao/default_ports.h"
 
@@ -20,4 +20,4 @@ TAO_MCAST_Parser::TAO_MCAST_Parser (void)
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
-#endif /* ACE_HAS_IP_MULTICAST */
+#endif /* TAO_HAS_MCAST_PARSER == 1 */

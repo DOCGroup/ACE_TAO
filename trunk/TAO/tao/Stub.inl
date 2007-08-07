@@ -301,6 +301,37 @@ TAO_Stub::optimize_collocation_objects (void) const
   return this->collocation_opt_;
 }
 
+ACE_INLINE TAO::Transport_Queueing_Strategy *
+TAO_Stub::transport_queueing_strategy (void)
+{
+#if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
+
+  bool has_synchronization;
+  Messaging::SyncScope scope;
+
+  this->orb_core_->call_sync_scope_hook (this, has_synchronization, scope);
+
+  if (has_synchronization == true)
+    return this->orb_core_->get_transport_queueing_strategy  (this, scope);
+#endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
+
+  // No queueing strategy, let the transport use its default
+  return 0;
+}
+
+ACE_INLINE void
+TAO_Stub::_incr_refcnt (void)
+{
+  ++this->refcount_;
+}
+
+ACE_INLINE void
+TAO_Stub::_decr_refcnt (void)
+{
+  if (--this->refcount_ == 0)
+    delete this;
+}
+
 // ---------------------------------------------------------------
 
 // Creator methods for TAO_Stub_Auto_Ptr (TAO_Stub Auto Pointer)

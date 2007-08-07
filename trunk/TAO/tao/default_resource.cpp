@@ -600,11 +600,24 @@ TAO_Default_Resource_Factory::get_parser_names (char **&names,
       return 0;
     }
 
-  // OK fallback on the hardcoded ones....
-#if defined ACE_HAS_IP_MULTICAST
-  this->parser_names_count_ = 6; // HOW MANY DO WE HAVE?
-#else
-  this->parser_names_count_ = 5;
+  this->parser_names_count_ = 0;
+#if (TAO_HAS_DDL_PARSER == 1)
+  ++this->parser_names_count_;
+#endif
+#if (TAO_HAS_FILE_PARSER == 1)
+  ++this->parser_names_count_;
+#endif
+#if (TAO_HAS_CORBALOC_PARSER == 1)
+  ++this->parser_names_count_;
+#endif
+#if (TAO_HAS_CORBANAME_PARSER == 1)
+  ++this->parser_names_count_;
+#endif
+#if (TAO_HAS_HTTP_PARSER == 1)
+  ++this->parser_names_count_;
+#endif
+#if (TAO_HAS_MCAST_PARSER == 1)
+  ++this->parser_names_count_;
 #endif
   ACE_NEW_RETURN (this->parser_names_,
                   char *[this->parser_names_count_],
@@ -612,25 +625,35 @@ TAO_Default_Resource_Factory::get_parser_names (char **&names,
 
   CORBA::ULong index = 0;
 
+#if (TAO_HAS_DDL_PARSER == 1)
   this->parser_names_[index] = CORBA::string_dup ("DLL_Parser");
   ++index;
+#endif
 
+#if (TAO_HAS_FILE_PARSER == 1)
   this->parser_names_[index] = CORBA::string_dup ("FILE_Parser");
   ++index;
+#endif
 
+#if (TAO_HAS_CORBALOC_PARSER == 1)
   this->parser_names_[index] = CORBA::string_dup ("CORBALOC_Parser");
   ++index;
+#endif
 
+#if (TAO_HAS_CORBANAME_PARSER == 1)
   this->parser_names_[index] = CORBA::string_dup ("CORBANAME_Parser");
   ++index;
+#endif
 
-#if defined ACE_HAS_IP_MULTICAST
+#if (TAO_HAS_MCAST_PARSER == 1)
   this->parser_names_[index] = CORBA::string_dup ("MCAST_Parser");
   ++index;
 #endif
 
+#if (TAO_HAS_HTTP_PARSER == 1)
   this->parser_names_[index] = CORBA::string_dup ("HTTP_Parser");
   ++index;
+#endif
 
   names = this->parser_names_;
 
