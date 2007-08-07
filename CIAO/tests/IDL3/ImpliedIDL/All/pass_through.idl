@@ -6,6 +6,9 @@
  * Tests tool's regeneration of IDL2 constructs, which
  * should be basically unchanged.
  */
+ 
+#ifndef PASS_THROUGH_IDL
+#define PASS_THROUGH_IDL
 
 #pragma prefix "glooby"
 
@@ -86,4 +89,6 @@ module mod
     factory vt_default ();
   };
 };
+
+#endif /* PASS_THROUGH_IDL */
 

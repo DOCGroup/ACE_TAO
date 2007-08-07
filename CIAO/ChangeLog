@@ -1,3 +1,11 @@
+Tue Aug  7 08:57:46 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tests/IDL3/ImpliedIDL/All/include.idl:
+        * tests/IDL3/ImpliedIDL/All/raw_include.idl:
+        * tests/IDL3/ImpliedIDL/All/pass_through.idl:
+        
+          Added #ifndef guards.
+
 Mon Aug  6 13:00:10 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tools/IDL3_to_IDL2/identifier_helper.cpp (orig_sn):
