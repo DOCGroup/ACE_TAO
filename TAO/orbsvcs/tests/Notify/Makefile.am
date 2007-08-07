@@ -19,6 +19,7 @@ SUBDIRS = \
         Sequence_Multi_ETCL_Filter \
         Reconnecting \
         RT_lib \
+        Persistent_POA \
         Ordering \
         MT_Dispatching \
         Driver \

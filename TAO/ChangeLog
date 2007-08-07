@@ -1,3 +1,26 @@
+Tue Aug  7 15:24:09 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/orbsvcs/Notify/EventChannelFactory.cpp:
+        * orbsvcs/orbsvcs/Notify/POA_Helper.h:
+        * orbsvcs/orbsvcs/Notify/POA_Helper.cpp:
+
+          Added code to support the persistent POA activation of the notify
+          event channel by default.                                        
+
+        * orbsvcs/tests/Notify/Persistent_POA/Makefile.am:
+        * orbsvcs/tests/Notify/Persistent_POA/Persistent_POA.mpc:
+        * orbsvcs/tests/Notify/Persistent_POA/README:
+        * orbsvcs/tests/Notify/Persistent_POA/Structured_Supplier.cpp:
+        * orbsvcs/tests/Notify/Persistent_POA/run_test.pl:
+
+          Added a test to ensure that the notify event channel persistent
+          POA changes work properly.                                     
+
+        * configure.ac:
+        * orbsvcs/tests/Notify/Makefile.am:
+
+          Updated to reflect the new Makefile added for the test.
+
 Tue Aug  7 12:57:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/orbconf.h:
