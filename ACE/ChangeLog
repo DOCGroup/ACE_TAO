@@ -103,7 +103,7 @@ Fri Aug  3 21:34:40 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
         * contrib/minizip/crypt.h:
         * contrib/minizip/unzip.c:
 
-          Untabity.
+          Untabify.
 
 Fri Aug  3 20:26:36 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
 
