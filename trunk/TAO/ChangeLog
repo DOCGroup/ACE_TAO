@@ -1,3 +1,42 @@
+Tue Aug  7 11:48:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/AnyTypeCode/DomainA.cpp:
+        * tao/AnyTypeCode/DomainA.h:
+        * tao/Domain.mpc:
+        * tao/Domain.pidl:
+        * tao/Domain/diffs/Domain.diff:
+        * tao/Domain/domain_export.h:
+        * tao/Domain/DomainS.cpp:
+        * tao/Domain/DomainS.h:
+        * tao/Domain/DomainS.inl:
+        * tao/Domain/DomainS_T.cpp:
+        * tao/Domain/DomainS_T.h:
+        * tao/Domain/DomainS_T.inl:
+        * tao/Domain/TAO_Domain.pc.in:
+        * tao/Domain/TAO_Domain.rc:
+        * tao/DomainC.cpp:
+        * tao/DomainC.h:
+        * tao/DomainC.inl:
+          Removed all these files, Domain.pidl defined some interfaces
+          that are not used at all in TAO and not implemented. When we
+          really are going to implement these, we will readd them. This
+          saves footprint for all applications. Fixes bugzilla issue
+          3018.
+
+        * tao/IFR_Client_Adapter.h:
+          Layout changes
+
+        * tao/Makefile.am:
+        * tao/tao.mpc:
+          Updated
+
+        * tao/Stub.{h,cpp}:
+          Uninlined the refcount methods again, caused a footprint increase
+          in servant libraries
+
+        * tao/corba.h:
+          Removed include of DomainC.h
+
 Tue Aug  7 11:24:41 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/tests/Notify/Reconnecting/Consumer.cpp:

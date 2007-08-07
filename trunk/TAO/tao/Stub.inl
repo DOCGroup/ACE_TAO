@@ -319,19 +319,6 @@ TAO_Stub::transport_queueing_strategy (void)
   return 0;
 }
 
-ACE_INLINE void
-TAO_Stub::_incr_refcnt (void)
-{
-  ++this->refcount_;
-}
-
-ACE_INLINE void
-TAO_Stub::_decr_refcnt (void)
-{
-  if (--this->refcount_ == 0)
-    delete this;
-}
-
 // ---------------------------------------------------------------
 
 // Creator methods for TAO_Stub_Auto_Ptr (TAO_Stub Auto Pointer)
