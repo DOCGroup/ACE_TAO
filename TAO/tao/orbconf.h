@@ -675,7 +675,7 @@ const size_t TAO_DEFAULT_VALUE_FACTORY_TABLE_SIZE = 128;
 // Interceptors is supported by default if we are not building for
 // MinimumCORBA.
 #if !defined (TAO_HAS_INTERCEPTORS)
-# if (TAO_HAS_MINIMUM_CORBA == 1)
+# if (TAO_HAS_MINIMUM_CORBA == 1) || defined (CORBA_E_COMPACT) || defined (CORBA_E_MICRO)
 #   define TAO_HAS_INTERCEPTORS 0
 # else
 #   define TAO_HAS_INTERCEPTORS 1
