@@ -1,21 +1,21 @@
 // $Id$
 
 #include "tao/FILE_Parser.h"
+
+#if (TAO_HAS_FILE_PARSER == 1)
+
 #include "tao/ORB.h"
 #include "tao/Object.h"
 
 #include "ace/Read_Buffer.h"
-
 #include "ace/Malloc_Base.h"
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
 
-
 ACE_RCSID (tao,
            FILE_Parser,
            "$Id$")
-
 
 static const char file_prefix[] = "file:";
 
@@ -82,4 +82,6 @@ ACE_STATIC_SVC_DEFINE (TAO_FILE_Parser,
                        0)
 
 ACE_FACTORY_DEFINE (TAO, TAO_FILE_Parser)
+
+#endif /* TAO_HAS_FILE_PARSER == 1 */
 

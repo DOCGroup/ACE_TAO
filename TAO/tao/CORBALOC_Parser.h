@@ -22,6 +22,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#if (TAO_HAS_CORBALOC_PARSER == 1)
+
 #include "ace/Service_Config.h"
 #include "ace/Array.h"
 #include "tao/Profile.h"
@@ -97,6 +99,8 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO, TAO_CORBALOC_Parser)
 ACE_FACTORY_DECLARE (TAO, TAO_CORBALOC_Parser)
+
+#endif /* TAO_HAS_CORBALOC_PARSER == 1 */
 
 #include /**/ "ace/post.h"
 #endif /* TAO_CORBALOC_PARSER_H */

@@ -1,6 +1,9 @@
 // $Id$
 
 #include "tao/HTTP_Handler.h"
+
+#if (TAO_HAS_HTTP_PARSER == 1)
+
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_strings.h"
@@ -194,4 +197,6 @@ TAO_HTTP_Reader::receive_reply (void)
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
+
+#endif /* TAO_HAS_HTTP_PARSER == 1*/
 

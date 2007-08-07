@@ -23,6 +23,10 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/orbconf.h"
+
+#if (TAO_HAS_HTTP_PARSER == 1)
+
 #include "ace/SOCK_Stream.h"
 #include "ace/Svc_Handler.h"
 #include "ace/Message_Block.h"
@@ -90,5 +94,7 @@ private:
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
+
+#endif /* TAO_HAS_HTTP_PARSER == 1 */
 
 #endif /* TAO_HTTP_HANDLER_H */

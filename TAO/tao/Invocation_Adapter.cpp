@@ -235,7 +235,6 @@ namespace TAO
     CORBA::Octet rflags = details.response_flags ();
     bool block_connect =
       rflags != static_cast<CORBA::Octet> (Messaging::SYNC_NONE)
-      && rflags != static_cast<CORBA::Octet> (TAO::SYNC_EAGER_BUFFERING)
       && rflags != static_cast<CORBA::Octet> (TAO::SYNC_DELAYED_BUFFERING);
 
     // Create the resolver which will pick (or create) for us a

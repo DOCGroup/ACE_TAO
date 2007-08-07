@@ -492,34 +492,6 @@ TAO_ORB_Core::resolve_ior_table (void)
 
 // ****************************************************************
 
-#if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
-
-ACE_INLINE TAO::Transport_Queueing_Strategy *
-TAO_ORB_Core::eager_transport_queueing_strategy (void)
-{
-  return this->eager_transport_queueing_strategy_;
-}
-
-ACE_INLINE TAO::Transport_Queueing_Strategy *
-TAO_ORB_Core::delayed_transport_queueing_strategy (void)
-{
-  return this->delayed_transport_queueing_strategy_;
-}
-
-ACE_INLINE TAO::Transport_Queueing_Strategy *
-TAO_ORB_Core::flush_transport_queueing_strategy (void)
-{
-  return this->flush_transport_queueing_strategy_;
-}
-
-#endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
-
-ACE_INLINE TAO::Transport_Queueing_Strategy *
-TAO_ORB_Core::default_transport_queueing_strategy (void)
-{
-  return this->default_transport_queueing_strategy_;
-}
-
 #if (TAO_HAS_CORBA_MESSAGING == 1)
 
 ACE_INLINE TAO_Policy_Current &

@@ -22,6 +22,8 @@
 
 #include "tao/IOR_Parser.h"
 
+#if (TAO_HAS_DDL_PARSER == 1)
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
@@ -93,6 +95,8 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO, TAO_DLL_Parser)
 ACE_FACTORY_DECLARE (TAO, TAO_DLL_Parser)
+
+#endif /* TAO_HAS_DDL_PARSER == 1 */
 
 #include /**/ "ace/post.h"
 #endif /* TAO_DLL_PARSER_H */
