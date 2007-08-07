@@ -346,7 +346,7 @@ SequencePushConsumer_i::push_structured_events (
       const CosNotification::EventBatch & notifications
     )
 {
-  size_t batch_size = notifications.length();
+  CORBA::ULong batch_size = notifications.length();
   if (this->verbose_)
   {
     ACE_DEBUG ((LM_DEBUG,
@@ -354,7 +354,7 @@ SequencePushConsumer_i::push_structured_events (
       static_cast<int>(batch_size)
       ));
   }
-  for (size_t nevent = 0; nevent < batch_size; ++nevent)
+  for (CORBA::ULong nevent = 0; nevent < batch_size; ++nevent)
   {
     this->received_ += 1;
     if (this->received_ == this->expect_ + 1)

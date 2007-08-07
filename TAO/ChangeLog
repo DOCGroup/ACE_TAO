@@ -1,3 +1,9 @@
+Tue Aug  7 11:24:41 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/tests/Notify/Reconnecting/Consumer.cpp:
+
+          Use CORBA::ULong with sequences instead of size_t.
+
 Tue Aug  7 09:46:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/CORBALOC_Parser.{h,cpp,inl}:
