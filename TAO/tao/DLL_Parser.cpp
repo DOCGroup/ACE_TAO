@@ -1,6 +1,9 @@
 // $Id$
 
 #include "tao/DLL_Parser.h"
+
+# if (TAO_HAS_DDL_PARSER == 1)
+
 #include "tao/Object_Loader.h"
 #include "tao/Object.h"
 #include "tao/ORB_Constants.h"
@@ -73,3 +76,4 @@ ACE_STATIC_SVC_DEFINE (TAO_DLL_Parser,
 
 ACE_FACTORY_DEFINE (TAO, TAO_DLL_Parser)
 
+#endif /* TAO_HAS_DDL_PARSER == 1 */

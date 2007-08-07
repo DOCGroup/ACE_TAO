@@ -977,17 +977,6 @@ private:
   CORBA::Boolean is_collocation_enabled (TAO_ORB_Core *other_orb,
                                          const TAO_MProfile &mp);
 
-#if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
-
-  /// This strategy will buffer messages.
-  //@{
-  TAO::Transport_Queueing_Strategy *eager_transport_queueing_strategy (void);
-  TAO::Transport_Queueing_Strategy *delayed_transport_queueing_strategy (void);
-  TAO::Transport_Queueing_Strategy *flush_transport_queueing_strategy (void);
-  //@}
-
-#endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
-
   bool use_local_memory_pool_;
 
 protected:

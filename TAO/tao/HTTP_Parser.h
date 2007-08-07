@@ -24,6 +24,8 @@
 
 #include "tao/IOR_Parser.h"
 
+#if (TAO_HAS_HTTP_PARSER == 1)
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
@@ -53,6 +55,8 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO, TAO_HTTP_Parser)
 ACE_FACTORY_DECLARE (TAO, TAO_HTTP_Parser)
+
+#endif /* TAO_HAS_HTTP_PARSER == 1 */
 
 #include /**/ "ace/post.h"
 #endif /* TAO_HTTP_PARSER_H */

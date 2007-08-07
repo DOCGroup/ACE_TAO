@@ -530,14 +530,24 @@ namespace
 #endif /* TAO_HAS_IIOP && TAO_HAS_IIOP != 0 */
 
     // add descriptor to list of static objects.
-#if defined (ACE_HAS_IP_MULTICAST)
+#if (TAO_HAS_MCAST_PARSER == 1)
     pcfg->process_directive (ace_svc_desc_TAO_MCAST_Parser);
-#endif /* ACE_HAS_IP_MULTICAST */
+#endif /* TAO_HAS_MCAST_PARSER == 1 */
+#if (TAO_HAS_CORBANAME_PARSER == 1)
     pcfg->process_directive (ace_svc_desc_TAO_CORBANAME_Parser);
+#endif /* TAO_HAS_CORBANAME_PARSER == 1 */
+#if (TAO_HAS_CORBALOC_PARSER == 1)
     pcfg->process_directive (ace_svc_desc_TAO_CORBALOC_Parser);
+#endif /* TAO_HAS_CORBALOC_PARSER == 1 */
+#if (TAO_HAS_FILE_PARSER == 1)
     pcfg->process_directive (ace_svc_desc_TAO_FILE_Parser);
+#endif /* TAO_HAS_FILE_PARSER == 1 */
+#if (TAO_HAS_DDL_PARSER == 1)
     pcfg->process_directive (ace_svc_desc_TAO_DLL_Parser);
+#endif /* TAO_HAS_DDL_PARSER == 1 */
+#if (TAO_HAS_HTTP_PARSER == 1)
     pcfg->process_directive (ace_svc_desc_TAO_HTTP_Parser);
+#endif /* TAO_HAS_HTTP_PARSER */
     pcfg->process_directive (ace_svc_desc_TAO_Default_Stub_Factory);
     pcfg->process_directive (
       ace_svc_desc_TAO_Default_Endpoint_Selector_Factory);

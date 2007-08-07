@@ -243,7 +243,6 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
     delayed_transport_queueing_strategy_ (0),
     flush_transport_queueing_strategy_ (0),
 #endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
-    default_transport_queueing_strategy_ (0),
     refcount_ (1),
     policy_factory_registry_ (0),
     orbinitializer_registry_ (0),
@@ -281,9 +280,6 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
            TAO_Policy_Current);
 
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
-
-  ACE_NEW (this->default_transport_queueing_strategy_,
-           TAO::Default_Transport_Queueing_Strategy);
 
   // Initialize the default request dispatcher.
   ACE_NEW (this->request_dispatcher_,
@@ -327,8 +323,6 @@ TAO_ORB_Core::~TAO_ORB_Core (void)
   ::CORBA::release (this->policy_current_);
 
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
-
-  delete this->default_transport_queueing_strategy_;
 
   delete this->request_dispatcher_;
 
@@ -2893,26 +2887,30 @@ TAO::Transport_Queueing_Strategy *
 TAO_ORB_Core::get_transport_queueing_strategy (TAO_Stub *,
                                                Messaging::SyncScope &scope)
 {
-
-  if (scope == Messaging::SYNC_WITH_TRANSPORT
-      || scope == Messaging::SYNC_WITH_SERVER
-      || scope == Messaging::SYNC_WITH_TARGET)
+  switch (scope)
+  {
+    case Messaging::SYNC_WITH_TRANSPORT:
+    case Messaging::SYNC_WITH_SERVER:
+    case Messaging::SYNC_WITH_TARGET:
     {
-      return this->flush_transport_queueing_strategy ();
+      return this->flush_transport_queueing_strategy_;
     }
-
-  if (scope == Messaging::SYNC_NONE
-      || scope == TAO::SYNC_EAGER_BUFFERING)
+    break;
+    case Messaging::SYNC_NONE:
     {
-      return this->eager_transport_queueing_strategy ();
+      return this->eager_transport_queueing_strategy_;
     }
-
-  if (scope == TAO::SYNC_DELAYED_BUFFERING)
+    break;
+    case TAO::SYNC_DELAYED_BUFFERING:
     {
-      return this->delayed_transport_queueing_strategy ();
+      return this->delayed_transport_queueing_strategy_;
     }
-
-  return this->default_transport_queueing_strategy ();
+    break;
+    default:
+    {
+      return 0;
+    }
+  }
 }
 
 #endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */

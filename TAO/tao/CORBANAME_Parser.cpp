@@ -1,6 +1,9 @@
 // $Id$
 
 #include "tao/CORBANAME_Parser.h"
+
+#if (TAO_HAS_CORBANAME_PARSER == 1)
+
 #include "tao/ORB.h"
 #include "tao/Object.h"
 #include "tao/SystemException.h"
@@ -153,4 +156,6 @@ ACE_STATIC_SVC_DEFINE (TAO_CORBANAME_Parser,
                        0)
 
 ACE_FACTORY_DEFINE (TAO, TAO_CORBANAME_Parser)
+
+#endif /* TAO_HAS_CORBANAME_PARSER == 1 */
 
