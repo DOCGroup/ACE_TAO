@@ -874,11 +874,13 @@ public:
   auto_ptr<TAO_GIOP_Fragmentation_Strategy>
   fragmentation_strategy (TAO_Transport * transport);
 
+#if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
  void set_eager_transport_queueing_strategy (
   TAO::Transport_Queueing_Strategy* strategy);
 
  void set_delayed_transport_queueing_strategy (
   TAO::Transport_Queueing_Strategy* strategy);
+#endif
 
 protected:
 
