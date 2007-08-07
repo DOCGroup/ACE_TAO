@@ -1,3 +1,9 @@
+Tue Aug  7 08:12:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/ORB_Core.{h,inl}:
+          Disable the new queueing strategy methods when buffering constraint
+          is not enabled
+
 Mon Aug  6 19:53:24 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/EndpointPolicy/EndpointPolicy.h:

@@ -637,6 +637,8 @@ TAO_ORB_Core::set_timeout_hook (Timeout_Hook hook)
   this->timeout_hook_ = hook;
 }
 
+#if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
+
 ACE_INLINE
 void
 TAO_ORB_Core::set_eager_transport_queueing_strategy (
@@ -652,5 +654,7 @@ TAO_ORB_Core::set_delayed_transport_queueing_strategy (
 {
   this->delayed_transport_queueing_strategy_ = strategy;
 }
+
+#endif
 
 TAO_END_VERSIONED_NAMESPACE_DECL
