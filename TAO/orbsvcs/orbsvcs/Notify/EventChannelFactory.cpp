@@ -101,7 +101,12 @@ TAO_Notify_EventChannelFactory::init (PortableServer::POA_ptr poa)
 
   ACE_Auto_Ptr<TAO_Notify_POA_Helper> auto_object_poa (object_poa);
 
-  object_poa->init (poa);
+  ACE_CString poa_name = object_poa->get_unique_id ();
+#if defined (CORBA_E_MICRO)
+  object_poa->init (poa, poa_name.c_str ());
+#else
+  object_poa->init_persistent (poa, poa_name.c_str ());
+#endif /* CORBA_E_MICRO */
 
   this->adopt_poa (auto_object_poa.release ());
 

@@ -46,6 +46,18 @@ TAO_Notify_POA_Helper::init (PortableServer::POA_ptr parent_poa, const char* poa
   this->create_i (parent_poa, poa_name, policy_list);
 }
 
+#if !defined (CORBA_E_MICRO)
+void
+TAO_Notify_POA_Helper::init_persistent (PortableServer::POA_ptr parent_poa, const char* poa_name)
+{
+  CORBA::PolicyList policy_list (2);
+
+  this->set_persistent_policy (parent_poa, policy_list);
+
+  this->create_i (parent_poa, poa_name, policy_list);
+}
+#endif /* !CORBA_E_MICRO */
+
 void
 TAO_Notify_POA_Helper::init (PortableServer::POA_ptr parent_poa)
 {
@@ -65,6 +77,21 @@ TAO_Notify_POA_Helper::set_policy (PortableServer::POA_ptr parent_poa, CORBA::Po
   policy_list[1] =
     parent_poa->create_id_assignment_policy (PortableServer::USER_ID);
 }
+
+
+#if !defined (CORBA_E_MICRO)
+void
+TAO_Notify_POA_Helper::set_persistent_policy (PortableServer::POA_ptr parent_poa, CORBA::PolicyList &policy_list)
+{
+  policy_list.length (2);
+
+  policy_list[0] =
+    parent_poa->create_lifespan_policy (PortableServer::PERSISTENT);
+
+  policy_list[1] =
+    parent_poa->create_id_assignment_policy (PortableServer::USER_ID);
+}
+#endif /* !CORBA_E_MICRO */
 
 
 void
