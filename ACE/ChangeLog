@@ -1,3 +1,10 @@
+Tue Aug  7 19:04:25 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * apps/drwho/drwho.mpc:
+
+          Added the missing exename settings for the client and server.  The
+          main() was changed to ACE_TMAIN().
+
 Tue Aug  7 12:46:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/compiler.bor:
