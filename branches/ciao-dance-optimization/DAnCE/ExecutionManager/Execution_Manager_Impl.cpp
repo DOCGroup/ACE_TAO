@@ -337,6 +337,69 @@ namespace CIAO
         }
     }
 
+
+
+void
+dump_connections (const ::Deployment::Connections & connections)
+{
+  const CORBA::ULong conn_len = connections.length ();
+  for (CORBA::ULong i = 0; i < conn_len; ++i)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "instanceName: %s\n", connections[i].instanceName.in ()));
+
+      ACE_DEBUG ((LM_DEBUG, "portName: %s\n", connections[i].portName.in ()));
+
+      ACE_DEBUG ((LM_DEBUG, "portkind: "));
+
+      switch (connections[i].kind)
+        {
+          case Deployment::Facet:
+
+            ACE_DEBUG ((LM_DEBUG, "Facet\n"));
+            break;
+
+          case Deployment::SimplexReceptacle:
+
+            ACE_DEBUG ((LM_DEBUG, "SimplexReceptacle\n"));
+            break;
+
+          case Deployment::MultiplexReceptacle:
+
+            ACE_DEBUG ((LM_DEBUG, "MultiplexReceptacle\n"));
+            break;
+
+          case Deployment::EventEmitter:
+
+            ACE_DEBUG ((LM_DEBUG, "EventEmitter\n"));
+            break;
+
+          case Deployment::EventPublisher:
+
+            ACE_DEBUG ((LM_DEBUG, "EventPublisher\n"));
+            break;
+
+          case Deployment::EventConsumer:
+
+            ACE_DEBUG ((LM_DEBUG, "EventConsumer\n"));
+            break;
+
+        default:
+          ACE_DEBUG ((LM_DEBUG, "Unknown port kind.\n"));
+        }
+
+      ACE_DEBUG ((LM_DEBUG,
+                  "endpointInstanceName: %s\n",
+                  connections[i].endpointInstanceName.in ()));
+
+      ACE_DEBUG ((LM_DEBUG,
+                 "endpointPortName: %s\n",
+                 connections[i].endpointPortName.in ()));
+      ACE_DEBUG ((LM_DEBUG, "---------------------\n"));
+    }
+}
+
+
     void
     Execution_Manager_Impl::finalize_global_binding (
           const Component_Binding_Info & binding,
@@ -344,6 +407,12 @@ namespace CIAO
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Execution_Manage::finalizing  global bindings.\n"));
+
+      ACE_DEBUG ((LM_DEBUG, "======= instance name is [%s]\n", binding.name_.c_str ()));
+      ACE_DEBUG ((LM_DEBUG, "======= plan_uuid_ is [%s]\n", binding.plan_uuid_.c_str ()));
+      ACE_DEBUG ((LM_DEBUG, "======= node name is [%s]\n", binding.node_.c_str ()));
+
+      dump_connections (binding.providedReference_.in ());
 
       // Find the NodeApplication hosting the component, and then call
       // <finishLaunch> on it

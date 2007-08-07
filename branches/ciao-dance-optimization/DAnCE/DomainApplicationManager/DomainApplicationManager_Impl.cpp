@@ -1850,7 +1850,7 @@ passivate_shared_components (void)
                 this->shared_[j].name.in (),
                 this->shared_[j].plan_uuid.in ());
 
-          // Invoke <finalize_global_binding> on ExecutionManager
+          // Invoke <passivate_shared_components> on ExecutionManager
           this->execution_manager_->passivate_shared_components (
             *binding);
 
@@ -1882,7 +1882,7 @@ activate_shared_components (void)
                 this->shared_[j].name.in (),
                 this->shared_[j].plan_uuid.in ());
 
-          // Invoke <finalize_global_binding> on ExecutionManager
+          // Invoke <activate_shared_components> on ExecutionManager
           this->execution_manager_->activate_shared_components (
             *binding);
 
