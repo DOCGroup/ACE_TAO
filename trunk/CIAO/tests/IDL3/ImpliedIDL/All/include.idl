@@ -6,6 +6,9 @@
  * Tests tool's regeneration of IDL2 constructs, which
  * should be basically unchanged.
  */
+ 
+#ifndef INCLUDE_IDL
+#define INCLUDE_IDL
 
 module pre_mod
 {
@@ -27,4 +30,6 @@ module pre_mod
 };
 
 const pre_mod::which which_one = pre_mod::ONE;
+
+#endif /* INCLUDE_IDL */
 
