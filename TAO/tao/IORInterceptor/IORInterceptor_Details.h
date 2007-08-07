@@ -51,8 +51,7 @@ namespace TAO
   class IORInterceptor_Details
   {
   public:
-    void apply_policies (const CORBA::PolicyList& policies
-                        );
+    void apply_policies (const CORBA::PolicyList& policies);
   };
 }
 
