@@ -60,7 +60,6 @@ project(TAO) : acelib, install, tao_output, taodefaults, pidl, extra_core, tao_v
     Default_Stub_Factory.cpp
     Default_Thread_Lane_Resources_Manager.cpp
     DLL_Parser.cpp
-    DomainC.cpp
     DoubleSeqC.cpp
     Dynamic_Adapter.cpp
     Endpoint.cpp
@@ -323,7 +322,6 @@ project(TAO) : acelib, install, tao_output, taodefaults, pidl, extra_core, tao_v
     Default_Stub_Factory.h
     Default_Thread_Lane_Resources_Manager.h
     DLL_Parser.h
-    DomainC.h
     DoubleSeqC.h
     DoubleSeqS.h
     Dynamic_Adapter.h
