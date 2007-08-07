@@ -98,6 +98,21 @@
 	  </TD>
 	</TR>
 	<TR>
+	  <TD>libTAO_Messaging</TD>
+	    <TD><A HREF="images/libTAO_Messaging.a_size.png">
+		<IMG ALT="libTAO_Messaging.a_size" SRC="images/thumbnails/libTAO_Messaging.a_size.png">
+		</A>
+	    </TD>
+	  <TD>
+	      <PRE>
+<!--#include file="data/LAST_libTAO_Messaging.a_size.txt" -->
+	      </PRE>
+	  </TD>
+	  <TD>
+	    <A HREF="data/libTAO_Messaging.a_size.txt">[Download]</A>
+	  </TD>
+	</TR>
+	<TR>
 	  <TD>libTAO_Strategies</TD>
 	    <TD><A HREF="images/libTAO_Strategies.a_size.png">
 		<IMG ALT="libTAO_Strategies.a_size" SRC="images/thumbnails/libTAO_Strategies.a_size.png">
@@ -170,21 +185,6 @@
 	  </TD>
 	  <TD>
 	    <A HREF="data/libTAO_BiDirGIOP.a_size.txt">[Download]</A>
-	  </TD>
-	</TR>
-	<TR>
-	  <TD>libTAO_Domain</TD>
-	    <TD><A HREF="images/libTAO_Domain.a_size.png">
-		<IMG ALT="libTAO_Domain.a_size" SRC="images/thumbnails/libTAO_Domain.a_size.png">
-		</A>
-	    </TD>
-	  <TD>
-	      <PRE>
-<!--#include file="data/LAST_libTAO_Domain.a_size.txt" -->
-	      </PRE>
-	  </TD>
-	  <TD>
-	    <A HREF="data/libTAO_Domain.a_size.txt">[Download]</A>
 	  </TD>
 	</TR>
 	<TR>
