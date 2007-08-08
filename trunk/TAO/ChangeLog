@@ -1,3 +1,13 @@
+Wed Aug  8 12:29:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Codeset.mpc:
+        * tao/Codeset/Codeset_Manager_i.cpp:
+        * tao/Codeset/CodeSetContext.pidl:
+        * tao/CONV_FRAME.pidl:
+        * tao/Makefile.am:
+          Moved the CodeSetContext struct to the Codeset library, it
+          is only used by code in this library.
+
 Wed Aug  8 11:58:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/Active_Object_Map.{cpp,h}:
