@@ -12,19 +12,26 @@ ACE_RCSID (DiffServPolicy, DiffServPolicy, "$Id$")
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 int
-TAO_DiffServPolicy_Initializer::init (void)
+TAO_DiffServPolicy_Initializer::static_init (void)
 {
   TAO_ORB_Core::set_network_priority_protocols_hooks (
     "DS_Network_Priority_Protocols_Hooks");
   ACE_Service_Config::process_directive (
     ace_svc_desc_TAO_DS_Network_Priority_Protocols_Hooks);
+  ACE_Service_Config::process_directive  (
+    ace_svc_desc_TAO_DiffServPolicy_Initializer);
+  return 0;
+}
 
-  PortableInterceptor::ORBInitializer_ptr temp_orb_initializer =
-  PortableInterceptor::ORBInitializer::_nil ();
+int
+TAO_DiffServPolicy_Initializer::init (int, ACE_TCHAR* [])
+{
   PortableInterceptor::ORBInitializer_var orb_initializer;
 
   try
     {
+      PortableInterceptor::ORBInitializer_ptr temp_orb_initializer =
+        PortableInterceptor::ORBInitializer::_nil ();
       /// Register the EndpointPolicy ORBInitializer.
       ACE_NEW_THROW_EX (temp_orb_initializer,
                         TAO_DiffServPolicy_ORBInitializer,
@@ -51,3 +58,14 @@ TAO_DiffServPolicy_Initializer::init (void)
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
+
+/////////////////////////////////////////////////////////////////////
+
+ACE_FACTORY_DEFINE (TAO_DiffServPolicy, TAO_DiffServPolicy_Initializer)
+ACE_STATIC_SVC_DEFINE (TAO_DiffServPolicy_Initializer,
+                       ACE_TEXT ("DiffservPolicy_Initializer"),
+                       ACE_SVC_OBJ_T,
+                       &ACE_SVC_NAME (TAO_DiffServPolicy_Initializer),
+                       ACE_Service_Type::DELETE_THIS
+                       | ACE_Service_Type::DELETE_OBJ,
+                       0)

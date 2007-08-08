@@ -656,6 +656,15 @@ namespace
         endpoint_policy_loader->init (0, 0);
       }
 
+    ACE_Service_Object * const diffserv_policy_loader =
+      ACE_Dynamic_Service<ACE_Service_Object>::instance (
+        pcfg,
+        "DiffservPolicy_Initializer");
+
+    if (diffserv_policy_loader != 0)
+      {
+        diffserv_policy_loader->init (0, 0);
+      }
   } /* register_additional_services_i */
 
   int

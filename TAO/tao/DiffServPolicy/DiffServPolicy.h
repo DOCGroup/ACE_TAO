@@ -29,17 +29,24 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_DiffServPolicy_Export TAO_DiffServPolicy_Initializer
+  : public ACE_Service_Object
 {
 public:
   /// Used to force the initialization of the ORB code.
-  static int init (void);
+  static int static_init (void);
+
+  /// Initialize the Diffserv loader hooks.
+  virtual int init (int argc, ACE_TCHAR* []);
 };
 
 static int
-TAO_Requires_DiffServPolicy_Initializer = 
-  TAO_DiffServPolicy_Initializer::init ();
+TAO_Requires_DiffServPolicy_Initializer =
+  TAO_DiffServPolicy_Initializer::static_init ();
 
 TAO_END_VERSIONED_NAMESPACE_DECL
+
+ACE_STATIC_SVC_DECLARE_EXPORT (TAO_DiffServPolicy, TAO_DiffServPolicy_Initializer)
+ACE_FACTORY_DECLARE (TAO_DiffServPolicy, TAO_DiffServPolicy_Initializer)
 
 #include /**/ "ace/post.h"
 

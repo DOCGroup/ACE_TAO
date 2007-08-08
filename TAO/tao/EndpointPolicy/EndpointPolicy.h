@@ -27,13 +27,14 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-class TAO_EndpointPolicy_Export TAO_EndpointPolicy_Initializer : public ACE_Service_Object
+class TAO_EndpointPolicy_Export TAO_EndpointPolicy_Initializer
+  : public ACE_Service_Object
 {
 public:
   /// Used to force the initialization of the ORB code.
   static int static_init (void);
 
-  /// Initialize the PI_Server loader hooks.
+  /// Initialize the Endpoint Policy loader hooks.
   virtual int init (int argc, ACE_TCHAR* []);
 };
 
