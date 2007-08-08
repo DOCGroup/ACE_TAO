@@ -39,11 +39,11 @@ static TAO_RTPortableServer_Initializer TAO_RTPortableServer_initializer;
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
+#endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */
+
 #define TAO_RT_PORTABLESERVER_SAFE_INCLUDE
 #include "tao/RTPortableServer/RTPortableServerC.h"
 #undef TAO_RT_PORTABLESERVER_SAFE_INCLUDE
-
-#endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */
 
 #include /**/ "ace/post.h"
 
