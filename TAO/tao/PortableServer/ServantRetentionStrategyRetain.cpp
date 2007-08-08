@@ -527,8 +527,7 @@ namespace TAO
       PortableServer::ObjectId_var user_id;
       if (!this->poa_->allow_multiple_activations () &&
           this->active_object_map_->
-          find_user_id_using_servant (servant,
-                                      user_id.out ()) != -1)
+          find_user_id_using_servant (servant, user_id.out ()) != -1)
         {
           return user_id._retn ();
         }
