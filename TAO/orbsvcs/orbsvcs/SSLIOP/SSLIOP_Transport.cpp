@@ -351,10 +351,25 @@ TAO::SSLIOP::Transport::get_listen_point (
                         -1);
     }
 
+#if defined (ACE_HAS_IPV6)
+  // If this is an IPv6 decimal linklocal address containing a scopeid than
+  // remove the scopeid from the information being sent.
+  const char *cp_scope = 0;
+  if (local_addr.get_type () == PF_INET6 &&
+        (cp_scope = ACE_OS::strchr (local_interface.in (), '%')) != 0)
+    {
+      CORBA::ULong len = cp_scope - local_interface.in ();
+      local_interface[len] = '\0';
+    }
+#endif /* ACE_HAS_IPV6 */
+
   for (size_t index = 0; index < count; ++index)
     {
-      if (local_addr.get_ip_address ()
-          == endpoint_addr[index].get_ip_address ())
+      // Make sure port numbers are equal so the following comparison
+      // only concerns the IP(v4/v6) address.
+      local_addr.set_port_number (endpoint_addr[index].get_port_number ());
+
+      if (local_addr == endpoint_addr[index])
         {
           // Get the count of the number of elements
           const CORBA::ULong len = listen_point_list.length ();
