@@ -1,3 +1,13 @@
+Wed Aug  8 11:35:01 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/Makefile.am:
+        * examples/QOS/Change_Receiver_FlowSpec/Makefile.am:
+        * examples/QOS/Change_Sender_TSpec/Makefile.am:
+        * examples/QOS/Diffserv/Makefile.am:
+        * examples/QOS/Simple/Makefile.am:
+
+          The *_LDADD sections for these had wrong paths for the libraries.
+
 Wed Aug  8 09:05:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Truncate.h:
