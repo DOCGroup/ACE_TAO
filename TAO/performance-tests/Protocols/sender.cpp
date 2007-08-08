@@ -14,6 +14,7 @@
 #include "tao/RTCORBA/Network_Priority_Mapping_Manager.h"
 #include "tao/RTCORBA/Network_Priority_Mapping.h"
 #include "tao/ORB_Constants.h"
+#include "tao/Policy_ManagerC.h"
 #include "Custom_Network_Priority_Mapping.h"
 #include "Custom_Network_Priority_Mapping.cpp"
 #include "tao/debug.h"
