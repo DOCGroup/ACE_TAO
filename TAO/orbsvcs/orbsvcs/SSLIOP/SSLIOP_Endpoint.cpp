@@ -261,7 +261,7 @@ TAO_SSLIOP_Endpoint::hash (void)
     // bi-directional support - as the 'guessed' IIOP port value will
     // hardly match the one specified in the bi-dir service context.
     this->hash_val_ =
-      oaddr.get_ip_address ()
+      oaddr.hash ()
       + this->ssl_component_.port;
   }
 
@@ -279,7 +279,11 @@ TAO_SSLIOP_Endpoint::object_addr (void) const
   //   ...etc..
 
   // Double checked locking optimization.
-  if (this->object_addr_.get_type () != AF_INET)
+  if (this->object_addr_.get_type () != AF_INET
+#if defined (ACE_HAS_IPV6)
+      && this->object_addr_.get_type () != AF_INET6
+#endif /* ACE_HAS_IPV6 */
+     )
     {
       const ACE_INET_Addr &iiop_addr = this->iiop_endpoint_->object_addr ();
 
@@ -288,7 +292,11 @@ TAO_SSLIOP_Endpoint::object_addr (void) const
                         this->addr_lookup_lock_,
                         this->object_addr_);
 
-      if (this->object_addr_.get_type () != AF_INET)
+      if (this->object_addr_.get_type () != AF_INET
+#if defined (ACE_HAS_IPV6)
+          && this->object_addr_.get_type () != AF_INET6
+#endif /* ACE_HAS_IPV6 */
+     )
         {
           this->object_addr_ = iiop_addr;
           this->object_addr_.set_port_number (this->ssl_component_.port);
