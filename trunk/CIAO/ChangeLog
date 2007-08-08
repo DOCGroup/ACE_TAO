@@ -1,3 +1,11 @@
+Wed Aug  8 07:03:33 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tools/IDL3_to_IDL2/identifier_helper.cpp (original_local_name):
+        
+          To the code that removes a prepended '_cxx_' from an indentifier,
+          added a check to make sure it was added automatically to avoid
+          a C++ keyword clash, and not by the user.
+
 Tue Aug  7 08:57:46 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tests/IDL3/ImpliedIDL/All/include.idl:
