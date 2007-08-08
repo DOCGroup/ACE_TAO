@@ -26,11 +26,6 @@ module CONV_FRAME {
      CodeSetComponent ForCharData;
      CodeSetComponent ForWcharData;
   };
-
-  struct CodeSetContext {
-     CodeSetId char_data;
-     CodeSetId wchar_data;
-  };
 };
 
 #endif /* TAO_CORBA_CONV_FRAME_PIDL */

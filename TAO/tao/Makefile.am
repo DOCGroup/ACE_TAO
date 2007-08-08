@@ -1555,6 +1555,27 @@ EXTRA_DIST = \
 
 if BUILD_EXCEPTIONS
 
+BUILT_SOURCES += \
+  Codeset/CodeSetContextA.cpp \
+  Codeset/CodeSetContextA.h \
+  Codeset/CodeSetContextC.cpp \
+  Codeset/CodeSetContextC.h \
+  Codeset/CodeSetContextS.h
+
+CLEANFILES += \
+  Codeset/CodeSetContext-stamp \
+  Codeset/CodeSetContextA.cpp \
+  Codeset/CodeSetContextA.h \
+  Codeset/CodeSetContextC.cpp \
+  Codeset/CodeSetContextC.h \
+  Codeset/CodeSetContextS.h
+
+Codeset/CodeSetContextA.cpp Codeset/CodeSetContextA.h Codeset/CodeSetContextC.cpp Codeset/CodeSetContextC.h Codeset/CodeSetContextS.h: Codeset/CodeSetContext-stamp
+
+Codeset/CodeSetContext-stamp: $(srcdir)/CodeSetContext/CodeSetContext.pidl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -GA -SS -Sci -Sorb -Wb,export_macro=TAO_Codeset_Export -Wb,export_include=tao/Codeset/codeset_export.h -o Codeset $(srcdir)/Codeset/CodeSetContext.pidl
+	@touch $@
+
 lib_LTLIBRARIES += libTAO_Codeset.la
 
 libTAO_Codeset_la_CPPFLAGS = \
@@ -1566,6 +1587,8 @@ libTAO_Codeset_la_CPPFLAGS = \
 
 libTAO_Codeset_la_SOURCES = \
   Codeset/Codeset.cpp \
+  Codeset/CodeSetContextA.cpp \
+  Codeset/CodeSetContextC.cpp \
   Codeset/Codeset_Descriptor.cpp \
   Codeset/Codeset_Manager_Factory.cpp \
   Codeset/Codeset_Manager_i.cpp \
@@ -1584,6 +1607,9 @@ libTAO_Codeset_la_LIBADD = \
 
 nobase_include_HEADERS += \
   Codeset/Codeset.h \
+  Codeset/CodeSetContextA.h \
+  Codeset/CodeSetContextC.h \
+  Codeset/CodeSetContextS.h
   Codeset/Codeset_Descriptor.h \
   Codeset/Codeset_Manager_Factory.h \
   Codeset/Codeset_Manager_i.h \
