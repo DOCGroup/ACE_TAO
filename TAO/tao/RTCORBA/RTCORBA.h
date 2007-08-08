@@ -44,14 +44,14 @@ static TAO_RTCORBA_Initializer TAO_RTCORBA_initializer;
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
+#endif /* TAO_HAS_CORBA_MESSAGING != 0 */
+
 #define TAO_RTCORBA_SAFE_INCLUDE
 #include "tao/RTCORBA/RTCORBAC.h"
 #include "tao/RTCORBA/RT_ProtocolPropertiesC.h"
 #undef TAO_RTCORBA_SAFE_INCLUDE
 
 #include "tao/RTCORBA/rtcorba_typedefs.h"
-
-#endif /* TAO_HAS_CORBA_MESSAGING != 0 */
 
 #include /**/ "ace/post.h"
 
