@@ -69,19 +69,12 @@ sub test_timeouts
     }
     print "test_timeouts 5 passed...\n";
     print "test_timeouts 6 testing...\n";
-    $CLI->Arguments("-sync eager -force_timeout -request_timeout 100 -connect_timeout 200 -max_request_time 30");
-    my $ret = $CLI->SpawnWaitKill(15);
-    if ($ret != 0) {
-        return $ret;
-    }
-    print "test_timeouts 6 passed...\n";
-    print "test_timeouts 7 testing...\n";
     $CLI->Arguments("-sync delayed -force_timeout -request_timeout 100 -connect_timeout 200 -max_request_time 30");
     my $ret = $CLI->SpawnWaitKill(15);
     if ($ret != 0) {
         return $ret;
     }
-    print "test_timeouts 7 passed...\n";
+    print "test_timeouts 6 passed...\n";
     return $ret;
 }
 

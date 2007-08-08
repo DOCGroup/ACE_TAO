@@ -149,7 +149,7 @@ setup_policies (CORBA::ORB_ptr orb, test_ptr object)
     }
 
   Messaging::SyncScope sync =
-    eager_buffering ? TAO::SYNC_EAGER_BUFFERING : TAO::SYNC_DELAYED_BUFFERING;
+    eager_buffering ? Messaging::SYNC_NONE : TAO::SYNC_DELAYED_BUFFERING;
 
   CORBA::Any sync_any;
   sync_any <<= sync;

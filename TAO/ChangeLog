@@ -1,3 +1,11 @@
+Wed Aug  8 06:51:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Timed_Buffered_Oneways/client.cpp:
+        * tests/Oneway_Timeouts/client.cpp:
+        * tests/Oneway_Timeouts/run_test.pl:
+          Replaced SYNC_EAGER_BUFFERING with SYNC_NONE, they are the same and
+          SYNC_EAGER_BUFFERING is removed
+
 Tue Aug  7 15:24:09 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/orbsvcs/Notify/EventChannelFactory.cpp:
@@ -5,7 +13,7 @@ Tue Aug  7 15:24:09 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
         * orbsvcs/orbsvcs/Notify/POA_Helper.cpp:
 
           Added code to support the persistent POA activation of the notify
-          event channel by default.                                        
+          event channel by default.
 
         * orbsvcs/tests/Notify/Persistent_POA/Makefile.am:
         * orbsvcs/tests/Notify/Persistent_POA/Persistent_POA.mpc:
@@ -14,7 +22,7 @@ Tue Aug  7 15:24:09 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
         * orbsvcs/tests/Notify/Persistent_POA/run_test.pl:
 
           Added a test to ensure that the notify event channel persistent
-          POA changes work properly.                                     
+          POA changes work properly.
 
         * configure.ac:
         * orbsvcs/tests/Notify/Makefile.am:
