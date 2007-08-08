@@ -62,7 +62,7 @@ namespace
                 "[-buffer_count n=0]"
                 "[-buffer_bytes n=0] "
                 "[-buffer_timeout ms=0] "
-                "[-sync delayed|eager|none]\n",
+                "[-sync delayed|none]\n",
                 argv0));
   }
 
@@ -174,23 +174,18 @@ namespace
                 sync_scope = TAO::SYNC_DELAYED_BUFFERING;
                 use_sync_scope = true;
               }
-            else if (args.cur_arg_strncasecmp ("eager") == 0)
-              {
-                sync_scope = TAO::SYNC_EAGER_BUFFERING;
-                use_sync_scope = true;
-              }
-            else if (args.cur_arg_strncasecmp ("none") == 0)
-              {
-                sync_scope = Messaging::SYNC_NONE;
-                use_sync_scope = true;
-              }
-            else
-              {
-                print_usage (av[0]);
-                return false;
-              }
+        else if (args.cur_arg_strncasecmp ("none") == 0)
+          {
+            sync_scope = Messaging::SYNC_NONE;
+            use_sync_scope = true;
+          }
+        else
+          {
+            print_usage (av[0]);
+            return false;
+          }
 
-            args.consume_arg ();
+        args.consume_arg ();
           }
         else
           {
