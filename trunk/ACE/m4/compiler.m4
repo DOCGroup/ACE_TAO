@@ -189,7 +189,7 @@ dnl @todo Clean up / consolidate these conditionals
          OCXXFLAGS="-O"
          # Warning 67: Invalid pragma name -- needed for
          # ACE_LACKS_PRAGMA_ONCE
-         WERROR="+We67 +p"
+         WERROR="+We67 +p +We"
 
          # If exception support is explicitly disabled, tell the
          # compiler.  This is not recommended since the run-time
