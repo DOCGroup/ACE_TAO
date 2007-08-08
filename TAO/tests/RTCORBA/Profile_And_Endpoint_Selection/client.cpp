@@ -18,6 +18,7 @@
 #include "ace/Task.h"
 #include "tao/ORB_Core.h"
 #include "tao/RTCORBA/RTCORBA.h"
+#include "tao/Policy_ManagerC.h"
 #include "tao/Strategies/advanced_resource.h"
 #include "../check_supported_priorities.cpp"
 #include "../common_args.cpp"
