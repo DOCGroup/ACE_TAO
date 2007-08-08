@@ -18,18 +18,18 @@ TAO_EndpointPolicy_Initializer::static_init (void)
 {
   ACE_Service_Config::process_directive  (ace_svc_desc_TAO_EndpointPolicy_Initializer);
   return 0;
-
 }
 
 int
 TAO_EndpointPolicy_Initializer::init (int, ACE_TCHAR* [])
 {
-  PortableInterceptor::ORBInitializer_ptr temp_orb_initializer =
-  PortableInterceptor::ORBInitializer::_nil ();
   PortableInterceptor::ORBInitializer_var orb_initializer;
 
   try
     {
+      PortableInterceptor::ORBInitializer_ptr temp_orb_initializer =
+        PortableInterceptor::ORBInitializer::_nil ();
+
       /// Register the EndpointPolicy ORBInitializer.
       ACE_NEW_THROW_EX (temp_orb_initializer,
                         TAO_EndpointPolicy_ORBInitializer,
