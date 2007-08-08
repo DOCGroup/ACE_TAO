@@ -5,6 +5,7 @@
 #include "ace/OS_NS_unistd.h"
 #include "tao/Strategies/advanced_resource.h"
 #include "tao/RTCORBA/RTCORBA.h"
+#include "tao/Policy_ManagerC.h"
 
 const char *ior = "file://test.ior";
 
