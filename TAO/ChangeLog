@@ -1,3 +1,10 @@
+Wed Aug  8 14:17:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Codeset.mpc:
+        * tao/Makefile.am:
+          We really don't need Any/TypeCode support for the pidl file, so
+          remove the generation of them.
+
 Wed Aug  8 12:29:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Codeset.mpc:
