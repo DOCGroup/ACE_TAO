@@ -169,11 +169,7 @@ TAO::SSLIOP::Connection_Handler::open (void *)
   if (this->peer ().get_local_addr (local_addr) == -1)
     return -1;
 
-  int use_dotted_decimal_addresses =
-    this->orb_core ()->orb_params ()->use_dotted_decimal_addresses ();
-
-  if (local_addr.get_ip_address () == remote_addr.get_ip_address ()
-      && local_addr.get_port_number () == remote_addr.get_port_number ())
+  if (local_addr == remote_addr)
     {
       if (TAO_debug_level > 0)
         {
@@ -181,11 +177,9 @@ TAO::SSLIOP::Connection_Handler::open (void *)
           char local_as_string[MAXHOSTNAMELEN + 16];
 
           (void) remote_addr.addr_to_string (remote_as_string,
-                                             sizeof (remote_as_string),
-                                             use_dotted_decimal_addresses);
+                                             sizeof (remote_as_string));
           (void) local_addr.addr_to_string (local_as_string,
-                                            sizeof (local_as_string),
-                                             use_dotted_decimal_addresses);
+                                            sizeof (local_as_string));
           ACE_ERROR ((LM_ERROR,
                       "TAO(%P|%t) - TAO::SSLIOP::Connection_Handler::open, "
                       "Holy Cow! The remote addr and "
@@ -202,8 +196,7 @@ TAO::SSLIOP::Connection_Handler::open (void *)
 
       // Verify that we can resolve the peer hostname.
       if (remote_addr.addr_to_string (client,
-                                      sizeof (client),
-                                      use_dotted_decimal_addresses) == -1)
+                                      sizeof (client)) == -1)
       {
         ACE_OS::strcpy (client, "*unable to obtain*");
       }
@@ -216,8 +209,7 @@ TAO::SSLIOP::Connection_Handler::open (void *)
 
       // Verify that we can resolve our hostname.
       if (local_addr.addr_to_string (client,
-                                      sizeof (client),
-                                      use_dotted_decimal_addresses) == -1)
+                                      sizeof (client)) == -1)
       {
         ACE_OS::strcpy (client, "*unable to obtain*");
       }

@@ -406,6 +406,10 @@ TAO_ServerRequest::tao_send_reply_exception (const CORBA::Exception &ex)
 #else
       char repbuf[ACE_CDR::DEFAULT_BUFSIZE];
 #endif /* ACE_INITIALIZE_MEMORY_BEFORE_USE */
+      TAO_GIOP_Message_Version gv;
+      if (this->outgoing_)
+        this->outgoing_->get_version (gv);
+
       TAO_OutputCDR output (repbuf,
                             sizeof repbuf,
                             TAO_ENCAP_BYTE_ORDER,
@@ -414,8 +418,8 @@ TAO_ServerRequest::tao_send_reply_exception (const CORBA::Exception &ex)
                             this->orb_core_->output_cdr_msgblock_allocator (),
                             this->orb_core_->orb_params ()->cdr_memcpy_tradeoff (),
                             this->mesg_base_->fragmentation_strategy (),
-                            TAO_DEF_GIOP_MAJOR,
-                            TAO_DEF_GIOP_MINOR);
+                            gv.major,
+                            gv.minor);
 
       this->transport_->assign_translators (0, &output);
       // Make the reply message
@@ -461,15 +465,17 @@ void
 TAO_ServerRequest::send_cached_reply (CORBA::OctetSeq &s)
 {
 #if defined(ACE_HAS_PURIFY)
-      // Only inititialize the buffer if we're compiling with Purify.
-      // Otherwise, there is no real need to do so, especially since
-      // we can avoid the initialization overhead at runtime if we
-      // are not compiling with Purify support.
-      char repbuf[ACE_CDR::DEFAULT_BUFSIZE] = { 0 };
+  // Only inititialize the buffer if we're compiling with Purify.
+  // Otherwise, there is no real need to do so, especially since
+  // we can avoid the initialization overhead at runtime if we
+  // are not compiling with Purify support.
+  char repbuf[ACE_CDR::DEFAULT_BUFSIZE] = { 0 };
 #else
-      char repbuf[ACE_CDR::DEFAULT_BUFSIZE];
+  char repbuf[ACE_CDR::DEFAULT_BUFSIZE];
 #endif /* ACE_HAS_PURIFY */
-
+  TAO_GIOP_Message_Version gv;
+  if (this->outgoing_)
+    this->outgoing_->get_version (gv);
   TAO_OutputCDR output (repbuf,
                         sizeof repbuf,
                         TAO_ENCAP_BYTE_ORDER,
@@ -478,8 +484,8 @@ TAO_ServerRequest::send_cached_reply (CORBA::OctetSeq &s)
                         this->orb_core_->output_cdr_msgblock_allocator (),
                         this->orb_core_->orb_params ()->cdr_memcpy_tradeoff (),
                         this->mesg_base_->fragmentation_strategy (),
-                        TAO_DEF_GIOP_MAJOR,
-                        TAO_DEF_GIOP_MINOR);
+                        gv.major,
+                        gv.minor);
 
   this->transport_->assign_translators (0, &output);
 
