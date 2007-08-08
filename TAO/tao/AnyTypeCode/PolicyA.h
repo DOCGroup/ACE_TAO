@@ -86,16 +86,6 @@ namespace CORBA
 
   extern TAO_AnyTypeCode_Export ::CORBA::TypeCode_ptr const _tc_Policy;
 
-  // TAO_IDL - Generated from
-  // be\be_visitor_typecode/typecode_decl.cpp:44
-
-  extern TAO_AnyTypeCode_Export ::CORBA::TypeCode_ptr const _tc_PolicyManager;
-
-  // TAO_IDL - Generated from
-  // be\be_visitor_typecode/typecode_decl.cpp:44
-
-  extern TAO_AnyTypeCode_Export ::CORBA::TypeCode_ptr const _tc_PolicyCurrent;
-
 // TAO_IDL - Generated from
 // be\be_visitor_module/module_ch.cpp:66
 
@@ -124,20 +114,6 @@ TAO_AnyTypeCode_Export CORBA::Boolean operator>>= (const CORBA::Any &, const COR
 TAO_AnyTypeCode_Export void operator<<= (CORBA::Any &, CORBA::Policy_ptr); // copying
 TAO_AnyTypeCode_Export void operator<<= (CORBA::Any &, CORBA::Policy_ptr *); // non-copying
 TAO_AnyTypeCode_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::Policy_ptr &);
-
-// TAO_IDL - Generated from
-// be\be_visitor_interface/any_op_ch.cpp:52
-
-TAO_AnyTypeCode_Export void operator<<= (CORBA::Any &, CORBA::PolicyManager_ptr); // copying
-TAO_AnyTypeCode_Export void operator<<= (CORBA::Any &, CORBA::PolicyManager_ptr *); // non-copying
-TAO_AnyTypeCode_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::PolicyManager_ptr &);
-
-// TAO_IDL - Generated from
-// be\be_visitor_interface/any_op_ch.cpp:52
-
-TAO_AnyTypeCode_Export void operator<<= (CORBA::Any &, CORBA::PolicyCurrent_ptr); // copying
-TAO_AnyTypeCode_Export void operator<<= (CORBA::Any &, CORBA::PolicyCurrent_ptr *); // non-copying
-TAO_AnyTypeCode_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::PolicyCurrent_ptr &);
 
 // TAO_IDL - Generated from
 // be\be_codegen.cpp:955

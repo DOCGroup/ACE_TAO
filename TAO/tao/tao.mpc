@@ -160,9 +160,11 @@ project(TAO) : acelib, install, tao_output, taodefaults, pidl, extra_core, tao_v
     Pluggable_Messaging.cpp
     Pluggable_Messaging_Utils.cpp
     Policy_Current.cpp
+    Policy_CurrentC.cpp
     Policy_Current_Impl.cpp
     Policy_ForwardC.cpp
     Policy_Manager.cpp
+    Policy_ManagerC.cpp
     Policy_Set.cpp
     Policy_Validator.cpp
     PolicyC.cpp
@@ -450,8 +452,10 @@ project(TAO) : acelib, install, tao_output, taodefaults, pidl, extra_core, tao_v
     Policy_ForwardC.h
     Policy_ForwardS.h
     Policy_Current.h
+    Policy_CurrentC.h
     Policy_Current_Impl.h
     Policy_Manager.h
+    Policy_ManagerC.h
     Policy_Set.h
     PolicyS.h
     Policy_Validator.h
@@ -607,6 +611,8 @@ project(TAO) : acelib, install, tao_output, taodefaults, pidl, extra_core, tao_v
     orb_types.pidl >> AnyTypeCode/orb_typesA.h AnyTypeCode/orb_typesA.cpp
     ParameterMode.pidl >> AnyTypeCode/ParameterModeA.h AnyTypeCode/ParameterModeA.cpp
     Policy_Forward.pidl >> AnyTypeCode/Policy_ForwardA.h AnyTypeCode/Policy_ForwardA.cpp
+    Policy_Manager.pidl >> AnyTypeCode/Policy_ManagerA.h AnyTypeCode/Policy_ManagerA.cpp
+    Policy_Current.pidl >> AnyTypeCode/Policy_CurrentA.h AnyTypeCode/Policy_CurrentA.cpp
     PI_Forward.pidl >> AnyTypeCode/PI_ForwardA.h AnyTypeCode/PI_ForwardA.cpp
     PortableInterceptor.pidl >> AnyTypeCode/PortableInterceptorA.h AnyTypeCode/PortableInterceptorA.cpp
     Services.pidl >> AnyTypeCode/ServicesA.h AnyTypeCode/ServicesA.cpp

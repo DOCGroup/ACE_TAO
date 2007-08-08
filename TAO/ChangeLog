@@ -1,3 +1,24 @@
+Wed Aug  8 11:22:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/AnyTypeCode.mpc:
+        * tao/AnyTypeCode/PolicyA.cpp:
+        * tao/AnyTypeCode/PolicyA.h:
+        * tao/corba.h:
+        * tao/Makefile.am:
+        * tao/orb.idl:
+        * tao/Policy.pidl:
+        * tao/Policy_Current.h:
+        * tao/Policy_Current.pidl:
+        * tao/Policy_Manager.h:
+        * tao/Policy_Manager.pidl:
+        * tao/PolicyC.cpp:
+        * tao/PolicyC.h:
+        * tao/tao.mpc:
+        * tao/Messaging/Messaging.h:
+          Moved PolicyCurrent and PolicyManager to their own files. This
+          reduces footprint for applications that have corba messaging
+          disabled. Fixes bugzilla 3033
+
 Wed Aug  8 10:19:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/DiffServPolicy/DiffServPolicy.cpp
