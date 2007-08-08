@@ -6,7 +6,7 @@
 ## this file will be lost the next time it is generated.
 ##
 ## MPC Command:
-## /acebuilds/ACE_wrappers-repository/bin/mwc.pl -include /acebuilds/MPC/config -include /acebuilds/MPC/templates -feature_file /acebuilds/ACE_wrappers-repository/local.features -noreldefs -type automake -exclude build,Kokyu
+## bin/mwc.pl -type automake -noreldefs -features ssl=1,qos=1 ACE.mwc
 
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
@@ -16,6 +16,7 @@ noinst_PROGRAMS =
 ## Makefile.QOS_Change_Receiver_FlowSpec_Receiver.am
 
 if BUILD_QOS
+
 noinst_PROGRAMS += receiver
 
 receiver_CPPFLAGS = \
@@ -35,14 +36,15 @@ receiver_SOURCES = \
   Receiver_QoS_Event_Handler.h
 
 receiver_LDADD = \
-  $(ACE_BUILDDIR)/ace/QoS/$(ACE_BUILDDIR)/ace/QoS/libACE_QoS.la \
-  $(ACE_BUILDDIR)/ace/$(ACE_BUILDDIR)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/QoS/libACE_QoS.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
 
 endif BUILD_QOS
 
 ## Makefile.QOS_Change_Receiver_FlowSpec_Sender.am
 
 if BUILD_QOS
+
 noinst_PROGRAMS += sender
 
 sender_CPPFLAGS = \
@@ -62,8 +64,8 @@ sender_SOURCES = \
   Sender_QoS_Event_Handler.h
 
 sender_LDADD = \
-  $(ACE_BUILDDIR)/ace/QoS/$(ACE_BUILDDIR)/ace/QoS/libACE_QoS.la \
-  $(ACE_BUILDDIR)/ace/$(ACE_BUILDDIR)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/QoS/libACE_QoS.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
 
 endif BUILD_QOS
 

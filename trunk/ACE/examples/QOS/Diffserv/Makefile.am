@@ -6,7 +6,7 @@
 ## this file will be lost the next time it is generated.
 ##
 ## MPC Command:
-## /acebuilds/ACE_wrappers-repository/bin/mwc.pl -include /acebuilds/MPC/config -include /acebuilds/MPC/templates -feature_file /acebuilds/ACE_wrappers-repository/local.features -noreldefs -type automake -exclude build,Kokyu
+## bin/mwc.pl -type automake -noreldefs -features ssl=1,qos=1 ACE.mwc
 
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
@@ -17,6 +17,7 @@ noinst_PROGRAMS =
 
 if BUILD_QOS
 if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS += client
 
 client_CPPFLAGS = \
@@ -28,8 +29,8 @@ client_SOURCES = \
   diffserv_test.cpp
 
 client_LDADD = \
-  $(ACE_BUILDDIR)/ace/QoS/$(ACE_BUILDDIR)/ace/QoS/libACE_QoS.la \
-  $(ACE_BUILDDIR)/ace/$(ACE_BUILDDIR)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/QoS/libACE_QoS.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
 
 endif !BUILD_ACE_FOR_TAO
 endif BUILD_QOS
@@ -37,6 +38,7 @@ endif BUILD_QOS
 ## Makefile.QOS_Diffserv_Server.am
 
 if BUILD_QOS
+
 noinst_PROGRAMS += server
 
 server_CPPFLAGS = \
@@ -48,8 +50,8 @@ server_SOURCES = \
   server.cpp
 
 server_LDADD = \
-  $(ACE_BUILDDIR)/ace/QoS/$(ACE_BUILDDIR)/ace/QoS/libACE_QoS.la \
-  $(ACE_BUILDDIR)/ace/$(ACE_BUILDDIR)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/QoS/libACE_QoS.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
 
 endif BUILD_QOS
 
