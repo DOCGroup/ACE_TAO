@@ -869,12 +869,6 @@ CORBA::ORB::resolve_service (TAO::MCAST_SERVICEID mcast_service_id)
 }
 
 CORBA::Object_ptr
-CORBA::ORB::resolve_initial_references (const char *name)
-{
-  return this->resolve_initial_references (name, 0);
-}
-
-CORBA::Object_ptr
 CORBA::ORB::resolve_initial_references (const char *name,
                                         ACE_Time_Value *timeout)
 {
@@ -1625,20 +1619,6 @@ CORBA::ORB::url_ior_string_to_object (const char* str)
   (void) safe_objdata.release ();
 
   return obj;
-}
-
-// ****************************************************************
-
-ACE_Time_Value *
-CORBA::ORB::get_timeout (void)
-{
-  return this->timeout_;
-}
-
-void
-CORBA::ORB::set_timeout (ACE_Time_Value *timeout)
-{
-  this->timeout_ = timeout;
 }
 
 // *************************************************************
