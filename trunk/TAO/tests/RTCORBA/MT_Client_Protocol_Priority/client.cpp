@@ -7,6 +7,7 @@
 #include "ace/Task.h"
 #include "ace/Barrier.h"
 #include "tao/ORB_Core.h"
+#include "tao/Policy_ManagerC.h"
 #include "../check_supported_priorities.cpp"
 #include "tao/Strategies/advanced_resource.h"
 
