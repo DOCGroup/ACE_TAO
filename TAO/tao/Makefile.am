@@ -1558,7 +1558,7 @@ if BUILD_EXCEPTIONS
 BUILT_SOURCES += \
   Codeset/CodeSetContextC.cpp \
   Codeset/CodeSetContextC.h \
-  Codeset/CodeSetContextS.h
+  Codeset/CodeSetContextS.h 
 
 CLEANFILES += \
   Codeset/CodeSetContext-stamp \
@@ -1603,7 +1603,7 @@ libTAO_Codeset_la_LIBADD = \
 nobase_include_HEADERS += \
   Codeset/Codeset.h \
   Codeset/CodeSetContextC.h \
-  Codeset/CodeSetContextS.h
+  Codeset/CodeSetContextS.h \
   Codeset/Codeset_Descriptor.h \
   Codeset/Codeset_Manager_Factory.h \
   Codeset/Codeset_Manager_i.h \
