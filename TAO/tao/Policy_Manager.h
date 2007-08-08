@@ -27,7 +27,7 @@
 
 #if (TAO_HAS_CORBA_MESSAGING == 1)
 
-#include "tao/PolicyC.h"
+#include "tao/Policy_ManagerC.h"
 #include "tao/LocalObject.h"
 #include "tao/Policy_Set.h"
 

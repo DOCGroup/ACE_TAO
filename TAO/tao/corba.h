@@ -43,6 +43,8 @@
 
 #include "tao/CurrentC.h"
 #include "tao/PolicyC.h"
+#include "tao/Policy_ManagerC.h"
+#include "tao/Policy_CurrentC.h"
 #include "tao/ServicesC.h"
 #include "tao/WrongTransactionC.h"
 

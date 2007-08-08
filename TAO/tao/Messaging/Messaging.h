@@ -25,6 +25,8 @@
 
 #include "tao/Messaging/MessagingA.h"
 #include "tao/Messaging/TAO_ExtC.h"
+#include "tao/Policy_CurrentC.h"
+#include "tao/Policy_ManagerC.h"
 #include "tao/TAOC.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

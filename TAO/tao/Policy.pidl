@@ -75,20 +75,6 @@ module CORBA
     Policy copy ();
     void destroy ();
   };
-
-  local interface PolicyManager
-  {
-    PolicyList get_policy_overrides (in PolicyTypeSeq ts);
-    void set_policy_overrides (
-             in PolicyList policies,
-             in SetOverrideType set_add)
-        raises (InvalidPolicies);
-  };
-
-  local interface PolicyCurrent : PolicyManager, Current
-  {
-  };
-
 };
 
 #pragma prefix ""

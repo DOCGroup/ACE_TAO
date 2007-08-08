@@ -108,7 +108,6 @@ private:
   CORBA::Boolean compatible_scope (TAO_Policy_Scope policy_scope) const;
 
 private:
-
   /// Policies set for this Policy_Manager
   CORBA::PolicyList policy_list_;
 
