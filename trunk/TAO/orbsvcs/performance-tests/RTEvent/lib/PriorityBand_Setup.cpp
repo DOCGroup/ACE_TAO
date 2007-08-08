@@ -9,6 +9,7 @@
 #include "PriorityBand_Setup.h"
 #include "RTCORBA_Setup.h"
 #include "RIR_Narrow.h"
+#include "tao/Policy_ManagerC.h"
 
 #if !defined(__ACE_INLINE__)
 #include "PriorityBand_Setup.inl"
@@ -22,12 +23,10 @@ PriorityBand_Setup::PriorityBand_Setup (CORBA::ORB_ptr orb,
                                         const RTCORBA_Setup &rtcorba_setup)
 {
   CORBA::PolicyManager_var policy_manager =
-    RIR_Narrow<CORBA::PolicyManager>::resolve (orb,
-                                               "ORBPolicyManager");
+    RIR_Narrow<CORBA::PolicyManager>::resolve (orb, "ORBPolicyManager");
 
   RTCORBA::RTORB_var rtorb =
-    RIR_Narrow<RTCORBA::RTORB>::resolve (orb,
-                                         "RTORB");
+    RIR_Narrow<RTCORBA::RTORB>::resolve (orb, "RTORB");
 
   const RTCORBA::ThreadpoolLanes &lanes = rtcorba_setup.lanes ();
 
