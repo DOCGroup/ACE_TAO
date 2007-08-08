@@ -6,6 +6,7 @@
 #include "tao/RTCORBA/Network_Priority_Mapping_Manager.h"
 #include "tao/RTCORBA/Network_Priority_Mapping.h"
 #include "tao/RTCORBA/RT_Policy_i.h"
+#include "tao/Policy_ManagerC.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_stdlib.h"
