@@ -4,37 +4,45 @@
 #include "identifier_helper.h"
 #include "utl_identifier.h"
 #include "utl_string.h"
+#include "fe_private.h"
 #include "global_extern.h"
 
 Identifier *
 IdentifierHelper::original_local_name (Identifier * local_name)
 {
   Identifier * id = 0;
+  const char *lname = local_name->get_string ();
    
-  // Remove _cxx_ if it is present.
-  if (ACE_OS::strstr (local_name->get_string (),
-                       "_cxx_")
-        == local_name->get_string ())
+  // Remove _cxx_ if:
+  // 1. it occurs and
+  // 2. it occurs at the beginning of the string and
+  // 3. the rest of the string is a C++ keyword
+  if (ACE_OS::strstr (lname, "_cxx_") == lname)
     {
-      // CString class is good to do this stuff.
-      ACE_CString name_str (local_name->get_string ());
+      TAO_IDL_CPP_Keyword_Table cpp_key_tbl;
+      
+      unsigned int len =
+        static_cast<unsigned int> (ACE_OS::strlen (lname + 5));
+        
+      const TAO_IDL_CPP_Keyword_Entry *entry =
+        cpp_key_tbl.lookup (lname + 5, len);
 
-      // Remove _cxx_.
-      name_str = name_str.substr (ACE_OS::strlen ("_cxx_"));
-
-      // Assign to the Identifier variable.
-      ACE_NEW_RETURN (id,
-                      Identifier (name_str.c_str ()),
-                      0);
+      if (entry != 0)
+        {
+          // Remove _cxx_ and assign to the Identifier variable.
+          ACE_NEW_RETURN (id,
+                          Identifier (lname + 5),
+                          0);
+        }
     }
-  else
+    
+  if (id == 0)
     {
       id = local_name->copy ();
     }
    
   return id;
 }
-
 
 ACE_CString
 IdentifierHelper::orig_sn (UTL_IdList * sn, bool appended_to)
@@ -77,7 +85,7 @@ IdentifierHelper::orig_sn (UTL_IdList * sn, bool appended_to)
             }
         }
         
-     id->destroy ();
+      id->destroy ();
       delete id;
       id = 0;
     }
