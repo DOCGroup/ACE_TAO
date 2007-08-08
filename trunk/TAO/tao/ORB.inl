@@ -8,6 +8,18 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 //  ORB specific
 // ---------------------------------------------------------------------------
 
+ACE_INLINE ACE_Time_Value *
+CORBA::ORB::get_timeout (void)
+{
+  return this->timeout_;
+}
+
+ACE_INLINE void
+CORBA::ORB::set_timeout (ACE_Time_Value *timeout)
+{
+  this->timeout_ = timeout;
+}
+
 ACE_INLINE unsigned long
 CORBA::ORB::_incr_refcnt (void)
 {
