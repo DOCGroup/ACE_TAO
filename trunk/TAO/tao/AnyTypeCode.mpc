@@ -54,7 +54,9 @@ project : taolib, install, extra_anytypecode, tao_versioning_idl_defaults, nolin
     AnyTypeCode/ParameterModeA.cpp
     AnyTypeCode/PI_ForwardA.cpp
     AnyTypeCode/PolicyA.cpp
+    AnyTypeCode/Policy_CurrentA.cpp
     AnyTypeCode/Policy_ForwardA.cpp
+    AnyTypeCode/Policy_ManagerA.cpp
     AnyTypeCode/PortableInterceptorA.cpp
     AnyTypeCode/Sequence_TypeCode_Static.cpp
     AnyTypeCode/ShortSeqA.cpp

@@ -294,6 +294,48 @@ Policy_Forward-stamp: $(srcdir)/Policy_Forward.pidl $(TAO_IDL_DEP)
 	@touch $@
 
 BUILT_SOURCES += \
+  AnyTypeCode/Policy_CurrentA.cpp \
+  AnyTypeCode/Policy_CurrentA.h \
+  Policy_CurrentC.cpp \
+  Policy_CurrentC.h \
+  Policy_CurrentS.h
+
+CLEANFILES += \
+  Policy_Current-stamp \
+  AnyTypeCode/Policy_CurrentA.cpp \
+  AnyTypeCode/Policy_CurrentA.h \
+  Policy_CurrentC.cpp \
+  Policy_CurrentC.h \
+  Policy_CurrentS.h
+
+AnyTypeCode/Policy_CurrentA.cpp AnyTypeCode/Policy_CurrentA.h Policy_CurrentC.cpp Policy_CurrentC.h Policy_CurrentS.h: Policy_Current-stamp
+
+Policy_Current-stamp: $(srcdir)/Policy_Current.pidl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -SS -Sorb -GA -Gp -Gd -oA AnyTypeCode -Wb,export_macro=TAO_Export -Wb,export_include=tao/TAO_Export.h -Wb,anyop_export_macro=TAO_AnyTypeCode_Export -Wb,anyop_export_include=tao/AnyTypeCode/TAO_AnyTypeCode_Export.h -Sci $(srcdir)/Policy_Current.pidl
+	@touch $@
+
+BUILT_SOURCES += \
+  AnyTypeCode/Policy_ManagerA.cpp \
+  AnyTypeCode/Policy_ManagerA.h \
+  Policy_ManagerC.cpp \
+  Policy_ManagerC.h \
+  Policy_ManagerS.h
+
+CLEANFILES += \
+  Policy_Manager-stamp \
+  AnyTypeCode/Policy_ManagerA.cpp \
+  AnyTypeCode/Policy_ManagerA.h \
+  Policy_ManagerC.cpp \
+  Policy_ManagerC.h \
+  Policy_ManagerS.h
+
+AnyTypeCode/Policy_ManagerA.cpp AnyTypeCode/Policy_ManagerA.h Policy_ManagerC.cpp Policy_ManagerC.h Policy_ManagerS.h: Policy_Manager-stamp
+
+Policy_Manager-stamp: $(srcdir)/Policy_Manager.pidl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -SS -Sorb -GA -Gp -Gd -oA AnyTypeCode -Wb,export_macro=TAO_Export -Wb,export_include=tao/TAO_Export.h -Wb,anyop_export_macro=TAO_AnyTypeCode_Export -Wb,anyop_export_include=tao/AnyTypeCode/TAO_AnyTypeCode_Export.h -Sci $(srcdir)/Policy_Manager.pidl
+	@touch $@
+
+BUILT_SOURCES += \
   AnyTypeCode/PI_ForwardA.cpp \
   AnyTypeCode/PI_ForwardA.h \
   PI_ForwardC.cpp \
@@ -867,9 +909,11 @@ libTAO_la_SOURCES = \
   PolicyFactory_Registry_Adapter.cpp \
   PolicyFactory_Registry_Factory.cpp \
   Policy_Current.cpp \
+  Policy_CurrentC.cpp \
   Policy_Current_Impl.cpp \
   Policy_ForwardC.cpp \
   Policy_Manager.cpp \
+  Policy_ManagerC.cpp \
   Policy_Set.cpp \
   Policy_Validator.cpp \
   PortableInterceptorC.cpp \
@@ -1276,6 +1320,7 @@ nobase_include_HEADERS = \
   PolicyS.h \
   Policy_Current.h \
   Policy_Current.inl \
+  Policy_CurrentC.h \
   Policy_Current_Impl.h \
   Policy_Current_Impl.inl \
   Policy_Forward.pidl \
@@ -1284,6 +1329,7 @@ nobase_include_HEADERS = \
   Policy_ForwardS.h \
   Policy_Manager.h \
   Policy_Manager.inl \
+  Policy_ManagerC.h \
   Policy_Set.h \
   Policy_Set.inl \
   Policy_Validator.h \
@@ -1724,7 +1770,9 @@ libTAO_AnyTypeCode_la_SOURCES = \
   AnyTypeCode/PI_ForwardA.cpp \
   AnyTypeCode/ParameterModeA.cpp \
   AnyTypeCode/PolicyA.cpp \
+  AnyTypeCode/Policy_CurrentA.cpp \
   AnyTypeCode/Policy_ForwardA.cpp \
+  AnyTypeCode/Policy_ManagerA.cpp \
   AnyTypeCode/PortableInterceptorA.cpp \
   AnyTypeCode/Sequence_TypeCode_Static.cpp \
   AnyTypeCode/ServicesA.cpp \

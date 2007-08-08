@@ -31,6 +31,8 @@
 #endif /* ! defined (ACE_LACKS_U_LONGLONG_T) */
 
 #include <tao/Policy.pidl>
+#include <tao/Policy_Manager.pidl>
+#include <tao/Policy_Current.pidl>
 #include <tao/Services.pidl>
 #include <tao/ParameterMode.pidl>
 #include <tao/orb_types.pidl>
@@ -55,7 +57,7 @@ module CORBA
     USER_EXCEPTION,
     SYSTEM_EXCEPTION
   };
-  
+
   native ValueFactory;
 };
 
