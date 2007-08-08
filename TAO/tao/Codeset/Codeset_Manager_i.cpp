@@ -13,6 +13,7 @@
 #include "tao/Codeset/Codeset_Manager_i.h"
 #include "tao/Codeset/Codeset_Translator_Factory.h"
 #include "tao/Codeset/Codeset.h"
+#include "tao/Codeset/CodeSetContextC.h"
 
 #include "ace/Dynamic_Service.h"
 #include "ace/Codeset_Registry.h"
