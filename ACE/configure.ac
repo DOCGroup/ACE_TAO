@@ -4510,6 +4510,7 @@ dnl name.
     ,
     [AC_DEFINE([ACE_LACKS_CONDATTR_PSHARED])])
 
+  ACE_CHECK_LACKS_FUNCS(pthread_attr_setstack)
   ACE_CHECK_LACKS_FUNCS(pthread_attr_setstackaddr)
   ACE_CHECK_LACKS_FUNCS(pthread_attr_setstacksize)
 
@@ -4558,8 +4559,6 @@ dnl name.
   AC_CHECK_FUNC([pthread_attr_setscope],
     ,
     [AC_DEFINE([ACE_LACKS_THREAD_PROCESS_SCOPING])])
-
-  ACE_CHECK_LACKS_FUNCS(pthread_attr_setstack)
 
   AC_CHECK_FUNC([pthread_mutexattr_setpshared],
     ,
@@ -5435,9 +5434,9 @@ dnl FIXED by adding "-Werror" to compiler flags when using GNU C++
 dnl                                 -Ossama
 ACE_CONVERT_WARNINGS_TO_ERRORS(
 [
-dnl Check if select takes a const fifth argument
-ACE_CACHE_CHECK([if select takes a const fifth argument],
-  [ace_cv_lib_posix_select_const_5],[
+dnl Check if select takes a const fifth argument (timeval)
+ACE_CACHE_CHECK([if select takes a const struct timeval],
+  [ace_cv_lib_posix_select_const_timeval],[
     AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
 #ifndef ACE_LACKS_SYS_TYPES_H
 # include <sys/types.h>
@@ -5457,9 +5456,9 @@ ACE_CACHE_CHECK([if select takes a const fifth argument],
        const struct timeval* timeout = 0;
        select(n, readfds, writefds, exceptfds, timeout);
       ]])],[
-       ace_cv_lib_posix_select_const_5=yes
+       ace_cv_lib_posix_select_const_timeval=yes
       ],[
-       ace_cv_lib_posix_select_const_5=no
+       ace_cv_lib_posix_select_const_timeval=no
       ])
   ], , [AC_DEFINE([ACE_HAS_NONCONST_SELECT_TIMEVAL])])
 ]) dnl ACE_CONVERT_WARNINGS_TO_ERRORS

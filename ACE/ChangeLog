@@ -1,3 +1,11 @@
+Wed Aug  8 22:30:53 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * configure.ac: Moved check for ACE_LACKS_PTHREAD_ATTR_SETSTACK to
+          near the other stack-related pthreads checks.
+
+        * m4/compiler.m4: Add +We to WERROR setting to force compile
+          warnings to be errors when desired.
+
 Wed Aug  8 11:35:01 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/Makefile.am:
