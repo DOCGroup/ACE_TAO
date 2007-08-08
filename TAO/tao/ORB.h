@@ -448,8 +448,6 @@ namespace CORBA
      */
     void destroy (void);
 
-    CORBA::Object_ptr resolve_initial_references (const char *name);
-
     /**
      * This method acts as a mini-bootstrapping Naming Service, which is
      * provided by the ORB for certain well-known object references.  TAO
@@ -468,7 +466,7 @@ namespace CORBA
      */
     CORBA::Object_ptr resolve_initial_references (
       const char *name,
-      ACE_Time_Value *timeout);
+      ACE_Time_Value *timeout = 0);
 
 #if !defined(CORBA_E_MICRO)
     /// Register an object reference with the ORB.
