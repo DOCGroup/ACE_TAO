@@ -114,6 +114,7 @@ public:
   int find_servant_using_user_id (const PortableServer::ObjectId &user_id,
                                   PortableServer::Servant &servant);
 
+
   /// Can be used with any policy.
   int find_servant_using_system_id_and_user_id (const PortableServer::ObjectId &system_id,
                                                 const PortableServer::ObjectId &user_id,
@@ -172,13 +173,11 @@ public:
     ACE_Equal_To<PortableServer::ObjectId>,
     TAO_Incremental_Key_Generator> user_id_hash_map;
 
-#if (TAO_HAS_MINIMUM_POA_MAPS == 0)
   /// Id linear map.
   typedef ACE_Map_Manager_Adapter<
   PortableServer::ObjectId,
     TAO_Active_Object_Map_Entry *,
     TAO_Incremental_Key_Generator> user_id_linear_map;
-#endif /* TAO_HAS_MINIMUM_POA_MAPS == 0 */
 
   /// Id active map.
   typedef ACE_Active_Map_Manager_Adapter<
@@ -328,6 +327,7 @@ public:
   virtual CORBA::Boolean remaining_activations (PortableServer::Servant servant);
 };
 
+#if !defined (CORBA_E_MICRO)
 /**
  * @class TAO_Multiple_Id_Strategy
  *
@@ -369,6 +369,7 @@ public:
   /// object map?  Can be used with any policy.
   virtual CORBA::Boolean remaining_activations (PortableServer::Servant servant);
 };
+#endif
 
 /**
  * @class TAO_Lifespan_Strategy
@@ -417,6 +418,7 @@ public:
                                                         TAO_Active_Object_Map_Entry *&entry);
 };
 
+#if !defined (CORBA_E_MICRO)
 /**
  * @class TAO_Persistent_Strategy
  *
@@ -434,6 +436,7 @@ public:
                                                         TAO_Active_Object_Map_Entry *&entry);
 
 };
+#endif
 
 /**
  * @class TAO_Id_Assignment_Strategy
@@ -463,6 +466,7 @@ protected:
   TAO_Active_Object_Map *active_object_map_;
 };
 
+#if !defined (CORBA_E_MICRO)
 /**
  * @class TAO_User_Id_Strategy
  *
@@ -478,6 +482,7 @@ public:
                                     CORBA::Short priority,
                                     TAO_Active_Object_Map_Entry *&entry);
 };
+#endif
 
 /**
  * @class TAO_System_Id_With_Unique_Id_Strategy
@@ -495,6 +500,7 @@ public:
                                     TAO_Active_Object_Map_Entry *&entry);
 };
 
+#if !defined (CORBA_E_MICRO)
 /**
  * @class TAO_System_Id_With_Multiple_Id_Strategy
  *
@@ -510,6 +516,7 @@ public:
                                     CORBA::Short priority,
                                     TAO_Active_Object_Map_Entry *&entry);
 };
+#endif
 
 /**
  * @class TAO_Id_Hint_Strategy

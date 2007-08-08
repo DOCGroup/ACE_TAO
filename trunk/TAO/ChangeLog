@@ -1,3 +1,11 @@
+Wed Aug  8 11:58:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/Active_Object_Map.{cpp,h}:
+          Reduced codesize of Active Object Map when CORBA/e micro is enabled
+
+        * tao/PortableServer/ServantRetentionStrategyRetain.cpp:
+          Layout change
+
 Wed Aug  8 11:22:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/AnyTypeCode.mpc:
