@@ -6,7 +6,7 @@
 #include "tao/RTCORBA/Network_Priority_Mapping.h"
 #include "Custom_Network_Priority_Mapping.h"
 #include "ace/Get_Opt.h"
-#include "tao/Policy_Manager.h"
+#include "tao/Policy_ManagerC.h"
 
 static const char *ior = "file://simple_servant.ior";
 static int iterations = 1;
