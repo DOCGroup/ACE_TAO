@@ -37,6 +37,8 @@ TAO_Messaging_ORBInitializer::pre_init (PortableInterceptor::ORBInitInfo_ptr inf
 
       throw ::CORBA::INTERNAL ();
     }
+#else
+  ACE_UNUSED_ARG (info);
 #endif
 
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
