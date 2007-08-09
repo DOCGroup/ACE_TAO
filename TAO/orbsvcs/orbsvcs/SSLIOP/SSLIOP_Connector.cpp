@@ -427,7 +427,11 @@ TAO::SSLIOP::Connector::ssliop_connect (
   // Verify that the remote ACE_INET_Addr was initialized
   // properly.  Failure can occur if hostname lookup failed when
   // initializing the remote ACE_INET_Addr.
-  if (remote_address.get_type () != AF_INET)
+  if (remote_address.get_type () != AF_INET
+#if defined (ACE_HAS_IPV6)
+      && remote_address.get_type () != AF_INET6
+#endif /* ACE_HAS_IPV6 */
+      )
     {
       if (TAO_debug_level > 0)
         {
