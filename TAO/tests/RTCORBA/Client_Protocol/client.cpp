@@ -5,6 +5,7 @@
 #include "ace/OS_NS_unistd.h"
 #include "tao/RTCORBA/RTCORBA.h"
 #include "tao/Policy_ManagerC.h"
+#include "tao/Policy_CurrentC.h"
 
 #include "tao/Strategies/advanced_resource.h"
 
