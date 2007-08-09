@@ -1568,7 +1568,7 @@ CLEANFILES += \
 
 Codeset/CodeSetContextC.cpp Codeset/CodeSetContextC.h Codeset/CodeSetContextS.h: Codeset/CodeSetContext-stamp
 
-Codeset/CodeSetContext-stamp: $(srcdir)/CodeSetContext/CodeSetContext.pidl $(TAO_IDL_DEP)
+Codeset/CodeSetContext-stamp: $(srcdir)/Codeset/CodeSetContext.pidl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Sa -St -SS -Sci -Sorb -Wb,export_macro=TAO_Codeset_Export -Wb,export_include=tao/Codeset/codeset_export.h -o Codeset $(srcdir)/Codeset/CodeSetContext.pidl
 	@touch $@
 
