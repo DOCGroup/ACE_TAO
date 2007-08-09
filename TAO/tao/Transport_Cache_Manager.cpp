@@ -98,7 +98,7 @@ namespace TAO
         // if this is already in the cache, just ignore the request
         // this happens because some protocols bind their transport early
         // to avoid duplication simultaneous connection attempts
-        if (entry != 0 && entry->int_id_.transport () == int_id.transport ())
+        if (entry != 0 && entry->item ().transport () == int_id.transport ())
           {
             // rebind this entry to update cache status
             retval = this->cache_map_.rebind (ext_id,
@@ -253,12 +253,12 @@ namespace TAO
                 // Successfully found a TAO_Transport.
 
                 found = CACHE_FOUND_AVAILABLE;
-                entry->int_id_.recycle_state (ENTRY_BUSY);
+                entry->item ().recycle_state (ENTRY_BUSY);
 
                 // NOTE: This assignment operator indirectly incurs two
                 //       lock operations since it duplicates and releases
                 //       TAO_Transport objects.
-                value = entry->int_id_;
+                value = entry->item ();
 
                 if (TAO_debug_level > 4)
                   {
@@ -267,8 +267,8 @@ namespace TAO
                                 ACE_TEXT("{%d:%d} (Transport %x[%d]) - idle\n"),
                                 entry->ext_id_.hash (),
                                 entry->ext_id_.index (),
-                                entry->int_id_.transport (),
-                                entry->int_id_.transport ()->id ()));
+                                entry->item ().transport (),
+                                entry->item ().transport ()->id ()));
                   }
               }
             else if (this->is_entry_connecting (*entry))
@@ -280,8 +280,8 @@ namespace TAO
                                 ACE_TEXT("{%d:%d} (Transport %x[%d]) - connecting\n"),
                                 entry->ext_id_.hash (),
                                 entry->ext_id_.index (),
-                                entry->int_id_.transport (),
-                                entry->int_id_.transport ()->id ()));
+                                entry->item ().transport (),
+                                entry->item ().transport ()->id ()));
                   }
                 // if this is the first interesting entry
                 if (found != CACHE_FOUND_CONNECTING)
@@ -289,7 +289,7 @@ namespace TAO
                     // NOTE: This assignment operator indirectly incurs two
                     //       lock operations since it duplicates and releases
                     //       TAO_Transport objects.
-                    value = entry->int_id_;
+                    value = entry->item ();
                     found = CACHE_FOUND_CONNECTING;
                   }
               }
@@ -298,7 +298,7 @@ namespace TAO
                 // if this is the first busy entry
                 if (found == CACHE_FOUND_NONE && busy_count == 0)
                   {
-                    value = entry->int_id_;
+                    value = entry->item ();
                     found = CACHE_FOUND_BUSY;
                   }
                 busy_count += 1;
@@ -309,8 +309,8 @@ namespace TAO
                                 ACE_TEXT("{%d:%d} (Transport %x[%d]) - busy\n"),
                                 entry->ext_id_.hash (),
                                 entry->ext_id_.index (),
-                                entry->int_id_.transport (),
-                                entry->int_id_.transport ()->id ()));
+                                entry->item ().transport (),
+                                entry->item ().transport ()->id ()));
                   }
               }
           }
@@ -332,12 +332,12 @@ namespace TAO
   }
 
   int
-  Transport_Cache_Manager::make_idle_i (HASH_MAP_ENTRY *&entry)
+  Transport_Cache_Manager::make_idle_i (HASH_MAP_ENTRY *entry)
   {
     if (entry == 0)
       return -1;
 
-    entry->int_id_.recycle_state (ENTRY_IDLE_AND_PURGABLE);
+    entry->item ().recycle_state (ENTRY_IDLE_AND_PURGABLE);
 
     return 0;
   }
@@ -356,7 +356,7 @@ namespace TAO
       return -1;
 
     TAO_Connection_Purging_Strategy *st = this->purging_strategy_;
-    (void) st->update_item (entry->int_id_.transport ());
+    (void) st->update_item (entry->item ().transport ());
 
     return 0;
   }
@@ -428,7 +428,7 @@ namespace TAO
   }
 
   void
-  Transport_Cache_Manager::mark_invalid_i (HASH_MAP_ENTRY *&entry)
+  Transport_Cache_Manager::mark_invalid_i (HASH_MAP_ENTRY *entry)
   {
     if (entry == 0)
       {
@@ -436,7 +436,7 @@ namespace TAO
       }
 
     // Mark the entry as not usable
-    entry->int_id_.recycle_state (ENTRY_PURGABLE_BUT_NOT_IDLE);
+    entry->item ().recycle_state (ENTRY_PURGABLE_BUT_NOT_IDLE);
   }
 
   int
@@ -638,7 +638,7 @@ namespace TAO
 
             for(int j = i; j > 0 &&
                   entries[j - 1]->int_id_.transport ()->purging_order () >
-                  entry->int_id_.transport ()->purging_order (); --j)
+                  entry->item ().transport ()->purging_order (); --j)
               {
                 HASH_MAP_ENTRY* holder = entries[j];
                 entries[j] = entries[j - 1];
