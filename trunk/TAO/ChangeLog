@@ -1,3 +1,14 @@
+Thu Aug  9 08:22:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/ORB_Core.{h,inl}:
+          Disabled some methods and members when CORBA messaging is disabled
+
+        * tao/RTPortableServer/RT_Policy_Validator.cpp:
+          Layout changes
+
+        * tao/Makefile.am:
+          Corrected an error in this file
+
 Thu Aug  9 04:23:07 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp:

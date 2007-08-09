@@ -73,7 +73,6 @@ class TAO_TSS_Resources;
 class TAO_Leader_Follower;
 class TAO_LF_Strategy;
 class TAO_RT_ORB;
-class TAO_RT_Current;
 class TAO_MProfile;
 class TAO_Profile;
 
@@ -661,8 +660,10 @@ public:
   // -ORBDefaultInitRef options.
   CORBA::Object_ptr resolve_rir (const char *name);
 
+#if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
   /// Resolve the RT ORB reference for this ORB.
   CORBA::Object_ptr resolve_rt_orb (void);
+#endif
 
   /// Resolve the RT Current flyweight for this ORB.
   /// Return server_id string.
@@ -1020,11 +1021,13 @@ protected:
   /// The cached object reference for the IORTable.
   CORBA::Object_ptr ior_table_;
 
+#if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
   /// The cached object reference for the RTCORBA::RTORB.
   CORBA::Object_var rt_orb_;
 
   /// The cached object reference for the RTCORBA::Current interface.
   CORBA::Object_var rt_current_;
+#endif
 
   /**
    * @note

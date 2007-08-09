@@ -524,6 +524,7 @@ TAO_ORB_Core::get_default_policies (void)
 
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
+#if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 ACE_INLINE CORBA::Object_ptr
 TAO_ORB_Core::resolve_rt_orb (void)
 {
@@ -542,6 +543,7 @@ TAO_ORB_Core::resolve_rt_orb (void)
 
   return CORBA::Object::_duplicate (this->rt_orb_.in ());
 }
+#endif
 
 #if (TAO_HAS_INTERCEPTORS == 1)
 ACE_INLINE CORBA::Object_ptr
