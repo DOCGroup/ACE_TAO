@@ -121,13 +121,15 @@ namespace TAO
     int purge (void);
 
     /// Purge the entry from the Cache Map
-    int purge_entry (HASH_MAP_ENTRY *&);
+    int purge_entry (HASH_MAP_ENTRY *& entry);
 
     /// Mark the entry as invalid for use but keep it in cache.
-    void mark_invalid (HASH_MAP_ENTRY *&);
+    void mark_invalid (HASH_MAP_ENTRY * entry);
 
     /// Make the entry idle and ready for use.
-    int make_idle (HASH_MAP_ENTRY *&entry);
+    int make_idle (HASH_MAP_ENTRY *entry);
+
+    void set_entry_state (HASH_MAP_ENTRY *entry, TAO::Cache_Entries_State state);
 
     /// Mark the entry as touched. This call updates the purging
     /// strategy policy information.
@@ -192,7 +194,7 @@ namespace TAO
                 size_t & busy_count);
 
     /// Non-locking version and actual implementation of make_idle ().
-    int make_idle_i (HASH_MAP_ENTRY *&entry);
+    int make_idle_i (HASH_MAP_ENTRY *entry);
 
     /// Non-locking version and actual implementation of close ()
     int close_i (Connection_Handler_Set &handlers);
@@ -201,7 +203,7 @@ namespace TAO
     int purge_entry_i (HASH_MAP_ENTRY *&entry);
 
     /// Mark the entry as invalid for use but keep it in cache.
-    void mark_invalid_i (HASH_MAP_ENTRY *&);
+    void mark_invalid_i (HASH_MAP_ENTRY *entry);
 
   private:
     /**
