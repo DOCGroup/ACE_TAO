@@ -1,0 +1,17 @@
+From: Alexander Terekhov <terekhov@web.de>
+Date: Sat, 26 Jul 2003 19:17:52 +0200
+Newsgroups: comp.lang.c++
+Subject: Re: enum count
+
+
+Steve Pinard wrote:
+> 
+> Wouldn't that be nice?  And wouldn't it be nice to be able to get the
+> strings "five", "ten", and "fifteen" too?
+
+http://lcgapp.cern.ch/project/architecture/XTI_accu.pdf
+
+regards,
+alexander.
+
+$Id$

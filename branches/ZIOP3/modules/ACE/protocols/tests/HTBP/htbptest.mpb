@@ -1,0 +1,7 @@
+// -*- MPC -*-
+//
+// $Id$
+project : aceexe, htbp {
+  after += Test_Output
+  libs += Test_Output
+}

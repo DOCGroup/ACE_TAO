@@ -1,0 +1,743 @@
+Thu Aug  9 13:39:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Log_Msg.cpp:
+          Initialise local variable to resolve GCC warning
+
+        * ace/config-linux-common.h:
+          Added ACE_HAS_BROKEN_THREAD_KEYFREE so that on Linux the Log_Msg
+          does cleanup its TSS data which resolves problems when loading
+          and unloading the ACE shared library from an application that
+          doesn't use ACE at all
+
+Wed Aug  8 22:30:53 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * configure.ac: Moved check for ACE_LACKS_PTHREAD_ATTR_SETSTACK to
+          near the other stack-related pthreads checks.
+
+        * m4/compiler.m4: Add +We to WERROR setting to force compile
+          warnings to be errors when desired.
+
+Wed Aug  8 11:35:01 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/Makefile.am:
+        * examples/QOS/Change_Receiver_FlowSpec/Makefile.am:
+        * examples/QOS/Change_Sender_TSpec/Makefile.am:
+        * examples/QOS/Diffserv/Makefile.am:
+        * examples/QOS/Simple/Makefile.am:
+
+          The *_LDADD sections for these had wrong paths for the libraries.
+
+Wed Aug  8 09:05:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Truncate.h:
+          Added <signed long, signed int> specialization for BCB
+
+Tue Aug  7 19:04:25 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * apps/drwho/drwho.mpc:
+
+          Added the missing exename settings for the client and server.  The
+          main() was changed to ACE_TMAIN().
+
+Tue Aug  7 12:46:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/compiler.bor:
+          Use ACE_TEXT instead of ACE_LIB_TEXT
+
+Tue Aug  7 12:15:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * html/stats/simple_footprint.html:
+          Removed Domain added Messaging
+
+Mon Aug  6 18:03:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * m4/compiler.m4:
+          With ICC use -w1 to get rid of the remarks
+
+Mon Aug  6 11:28:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Refcounted_Auto_Ptr.inl (count):
+          Fixed compile error
+
+Mon Aug  6 08:56:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Refcounted_Auto_Ptr.{h,inl}:
+          Changed to use Atomic_Op for the refcount and use a long instead
+          of int. That way we can benefit from the Atomic_Op optimizations
+
+        * ace/Bound_Ptr.{h,inl}:
+          Changed refcount to long as preparation of using Atomic_Op
+
+Mon Aug  6 08:31:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * m4/compiler.m4:
+          Added -wr as flag to WERROR, with this flag remarks are not
+          promoted to error which caused several problems
+
+Mon Aug  6 08:24:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-WinCE.h:
+        * ace/OS_NS_sys_resource.inl:
+          Changed ACE_LACKS_WIN32_GETPROCESSTIMES to ACE_LACKS_GETPROCESSTIMES
+          to make a future autoconf check easier. Removed ACE_HAS_SYSCALL_GETRUSAGE
+          which wasn't set in any config file
+
+Mon Aug  6 07:58:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * configure.ac:
+          Added a check whether we have a 1 or 2 param mkdir method. This
+          fixes bugzilla 2006. The other defines mentioned in this
+          issue are not added because they are for VxWorks 5.5 only which
+          we don't actively maintain anymore
+
+Mon Aug  6 06:55:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * m4/compiler.m4:
+          Added -i-dynamic to default icpc flags
+
+Mon Aug  6 06:00:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_openvms.GNU:
+          For Alpha use a different way to silence the warnings
+
+Sun Aug  5 19:27:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/SStringfwd.h:
+          Check if __HP_aCC is defined before checking its value, fixes
+          a remark in the Intel C++ autoconf build
+
+Sat Aug  4 22:07:05 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * configure.ac: Removed the pthread_cond_timedwait() check - it was
+          used to set ACE_HAS_POSIX_SEM_TIMEOUT and ACE_HAS_POSIX_SEM_TIMEOUT_
+          EMULATION, neither of which it is related to. Added a correct check
+          for sem_timedwait (ACE_HAS_POSIX_SEM_TIMEOUT).
+          Also, used shortcut functions instead of hand-coding tests for
+          pthread_attr_setstackaddr and pthread_attr_setstacksize.
+
+        * m4/ace.m4: Add --enable-posix-sem-timeout-emulation, corresponding
+          to ACE_DISABLE_POSIX_SEM_TIMEOUT_EMULATION.
+
+        * m4/config_h.m4: Corrected description of ACE_HAS_POSIX_SEM_TIMEOUT
+          and added ACE_DISABLE_POSIX_SEM_TIMEOUT_EMULATION. Also, because
+          of use of shortcuts (above) can remove templates for
+          ACE_LACKS_PTHREAD_ATTR_SETSTACKSIZE and
+          ACE_LACKS_PTHREAD_ATTR_SETSTACKADDR.
+
+        * m4/compiler.m4: For IBM Visual Age C++ and XL C++, use manual
+          template instances (-qnotempinc -qnotemplateregistry) because I
+          haven't found a way to name the template registry from the
+          Makefiles and without that, building multiple items in one directory
+          clashes. Some people have reported the need to use manual template
+          mechanism for building TAO successfully, so maybe this will be ok.
+
+Fri Aug  3 21:34:40 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * contrib/FaCE/CE_Screen_Output.cpp:
+        * contrib/minizip/crypt.h:
+        * contrib/minizip/unzip.c:
+
+          Untabify.
+
+Fri Aug  3 20:26:36 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * ace/INET_Addr.cpp:
+        * THANKS:
+          Fix for running an IPv6 supporting build of ACE on a host
+          that does not have IPV6 enabled. Thanks to Premkumar P <kumaran
+          dot prem at gmail dot com> for pointing out this issue.
+
+Fri Aug  3 18:31:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/PerlACE/Run_Test.pm:
+          Fixed a problem introduced with the revert below
+
+Fri Aug  3 09:35:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/PerlACE/Run_Test.pm:
+          Reverted the change to use a sleep of 50ms, the test stats show that
+          some tests timeout without a real reason. Maybe the timeouts are now
+          less reliable.
+
+Fri Aug  3 01:50:05 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * ace/Global_Macros.h:
+        * examples/Reactor/TP_Reactor/client.cpp:
+
+          Fixed fuzz check_for_exception_spec warnings.
+
+Thu Aug  2 22:20:28 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * bin/fuzz.pl:
+
+          Enabled check_for_exception_spec.
+
+Thu Aug  2 22:02:32 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * tests/Dirent_Test.cpp: Fixed to allow running the test against
+          directories other than "../tests". Picks hardcoded TEST_DIR if
+          compiled in (as previously) but will otherwise try $top_srcdir/tests,
+          $ACE_ROOT/tests, or ../tests depending on env variables present.
+          Allows the test to run in autoconf builds (fixes Bugzilla 1794).
+          Also removed all the ACE_ASSERTs, replacing them with informative
+          diagnostics.
+
+Thu Aug  2 21:31:32 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * examples/ConfigViewer/MainFrame.cpp:
+
+          ZAP the last NULL usage in the distrubtion.
+
+Thu Aug  2 20:43:18 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * apps/JAWS/clients/WebSTONE/src/bench.c:
+
+          Zap NULL usage.
+
+Thu Aug  2 20:24:22 UTC 2007  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * ace/Service_Config.h:
+
+          No-thread builds, instances of ACE_TSS use their destructor
+          instead of the static cleanup() method for deleting the object
+          they point to. Adding a destructor specialization to enable
+          non-ownership ACE_TSS behavior with no-thread builds for
+          ACE_Service_Gestalt's.
+
+Thu Aug  2 19:34:17 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * bin/fuzz.pl:
+
+          Enhanced NULL check.
+
+Thu Aug  2 14:19:46 UTC 2007  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * bin/tao_other_tests.lst:
+          Added a new test TAO/orbsvcs/tests/Simple_Naming/run_test_ipv6.pl
+
+Thu Aug  2 11:43:35 UTC 2007  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * ace/Service_Config.h:
+          Removing extra semicolon
+
+Thu Aug  2 09:46:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Log_Msg.cpp:
+          Fixed gcc4 warnings
+
+Thu Aug  2 09:22:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Log_Msg.cpp:
+          Use regular reinterpret_cast, use 0 instead of NULL and
+          in case setspecific fails just do a printf, not an ACE_DEBUG
+          because that will use ACE_Log_Msg again.
+
+Wed Aug  1 21:39:04 UTC 2007  Dale Wilson  <wilsond@ociweb.com>
+
+        * bin/tao_orb_tests.lst:
+          Enable TAO\tests\Bug_2935_Regression
+
+Wed Aug  1 18:55:12 UTC 2007  Martin Corino  <mcorino@remedy.nl>
+
+        * bin/PerlACE/ConfigList.pm:
+          Added '-Exclude <mask>' option to be able to finetune the actual
+          tests being run without having to add yet another Config option
+          and update the test .LST files.
+
+        * ace/config-openvms.h:
+        * include/makeinclude/platform_openvms.GNU:
+          merged changes for OpenVMS IA64 builds.
+
+Wed Aug  1 18:01:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/fuzz.pl:
+          Readded throw check, thanks for Abdul to notice the wrong
+          deletion
+
+Wed Aug  1 15:55:38 UTC 2007  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * ace/Service_Config.h:
+
+          Added conditional compilation around template specification
+          since ACE_TSS declares cleanup() only in multi-threaded builds.
+
+Wed Aug  1 12:14:17 UTC 2007  Olli Savia  <ops@iki.fi>
+
+        * ace/OS_NS_dirent.h:
+          Oops... Once again.
+
+Wed Aug  1 11:58:02 UTC 2007  Olli Savia  <ops@iki.fi>
+
+        * ace/OS_NS_dirent.h:
+          Fixed macro logic error once again.
+
+Wed Aug  1 09:50:51 UTC 2007  Olli Savia  <ops@iki.fi>
+
+        * ace/OS_NS_dirent.h:
+          Fixed macro logic error.
+
+Wed Aug  1 08:08:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Service_Config.h:
+          Removed not needed semi colon
+
+Wed Aug  1 08:01:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Service_Config.h (cleanup):
+          Changed argument to ptr, fixes some problems with BCB
+
+Wed Aug  1 07:39:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/ace_wchar.h:
+          Deprecated ACE_LIB_TEXT. Users can still use it, but not anymore
+          in the code that is in the distribution
+
+Wed Aug  1 07:30:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * apps/drwho/Multicast_Manager.cpp:
+        * apps/drwho/Options.cpp:
+          Removed not needed fuzz disable statements
+
+Wed Aug  1 07:29:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * netsvcs/lib/Time_Request_Reply.cpp:
+        * protocols/tests/HTBP/Reactor_Tests/test_config.h
+          Replaced ACE_LIB_TEXT with ACE_TEXT
+
+Wed Aug  1 07:27:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Service_Config.h:
+          Fixed argument not used warning
+
+        * apps/JAWS/clients/Blobby/Blob_Handler.cpp:
+          Removed ACE_LIB_TEXT in comment
+
+        * bin/fuzz.pl:
+          Removed exception fuzz check. We have deprecated ACE_THROW
+
+        * contrib/FaCE/FaCE.cpp:
+        * contrib/FaCE/FaCE.h:
+        * examples/ASX/Event_Server/Event_Server/Options.cpp:
+        * examples/ASX/UPIPE_Event_Server/Options.cpp:
+        * tests/Bug_2609_Regression_Test.cpp:
+        * tests/Bug_2610_Regression_Test.cpp:
+        * tests/Config_Test.cpp:
+        * tests/Proactor_Test.cpp:
+        * tests/Proactor_Test_IPV6.cpp:
+        * tests/Svc_Handler_Test.cpp:
+          Replaced ACE_LIB_TEXT with ACE_TEXT
+
+        * tests/Bug_2975_Regression_Test.cpp:
+          Make sure we return the correct value out of main
+
+Wed Aug  1 06:51:11 UTC 2007  Olli Savia  <ops@iki.fi>
+
+        * ace/OS_NS_dirent.h:
+        * ace/OS_NS_dirent.inl:
+          Cleanup ACE_OS::rewinddir() code.
+
+Tue Jul 31 21:39:37 UTC 2007  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * ace/Auto_Functor.cpp:
+
+          Removed errant ChangeLog-like lines at the top of the file.
+
+Tue Jul 31 21:27:25 UTC 2007  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * ace/Service_Config.h:
+        * ace/Service_Config.cpp:
+
+          Moved the template specialization to the header file and made it
+          "inline". This resolved linking problems with some compilers,
+          which complained about either unresolved references or
+          multiply-defined instances of cleanup(). Bugzilla 2980.
+
+Tue Jul 31 18:48:25 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * ace/Auto_Functor.h:
+        * ace/Auto_Functor.inl:
+        * ace/Auto_Functor.cpp:
+
+          Zapped ACE_THROW_SPEC
+
+        * ace/Global_Macros.h:
+
+          Guarded ACE_THROW_SPEC with ACE_LACKS_DEPRECATED_MACROS. The
+          ACE_THROW_SPEC macro now has been deprecated.
+
+          The above changes fix bugzilla 3008.
+
+Tue Jul 31 18:37:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_dirent.h:
+          Removed ACE_STD_NAMESPACE for rewinddir, it causes compile errors
+          and fixed compile errors with Borland C++ Unicode
+
+Tue Jul 31 18:14:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/*.{h,cpp,inl}:
+          Replaced all occurences of ACE_LIB_TEXT with ACE_TEXT as noted in
+          bugzilla 3021
+
+Tue Jul 31 17:15:47 UTC 2007  Olli Savia  <ops@iki.fi>
+
+        * ace/OS_NS_dirent.h:
+          Fixed compile error on platforms that define ACE_LACKS_REWINDDIR.
+
+Tue Jul 31 15:02:34 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * tests/Multicast_Test_IPV6.cpp: Added some more diagnostic output and
+          changed the enable-loopback sockopt from char to int to try and avoid
+          some platform issues, particularly on Windows.
+
+Tue Jul 31 14:45:35 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * contrib/utility/Utility/ReferenceCounting/DefaultImpl.hpp:
+
+          Fixed a compile-time error.
+
+Tue Jul 31 13:02:30 UTC 2007  Olli Savia  <ops@iki.fi>
+
+        * ace/OS_NS_dirent.h:
+        * ace/OS_NS_dirent.inl:
+          Fixed compile error on platforms that define rewinddir
+          as a macro.
+
+Tue Jul 31 12:52:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * m4/config_h.m4:
+          Fixed another few macros
+
+Tue Jul 31 12:24:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Service_Config.h:
+          Add attribute name to cleanup prototype, Borland C++ needs it,
+          don't ask why
+
+Tue Jul 31 12:07:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * m4/compiler.m4:
+          Don't add -O3 with Intel C++
+
+Tue Jul 31 12:02:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-sunos5.5.h:
+          Added ACE_LACKS_PTHREAD_ATTR_SETSTACK
+
+        * ace/config-sunos5.10.h:
+          Undef ACE_LACKS_PTHREAD_ATTR_SETSTACK
+
+Tue Jul 31 10:38:37 UTC 2007  William Otte  <wotte@dhcp-host-unknown.prismtech.com>
+
+        * include/makeinclude/platform_macosx_tiger.GNU
+
+          Added support for building universal binaries by specifying
+          universal=1 in platform_macros or command line.
+
+Tue Jul 31 09:39:43 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * contrib/utility/Example/ExH/BadCast/bad_cast.cpp:
+        * contrib/utility/Example/ExH/Compound/compound.cpp:
+        * contrib/utility/Example/ExH/HelloWorld/hello_world.cpp:
+        * contrib/utility/Example/ExH/LogicToSystem/logic_to_system.cpp:
+        * contrib/utility/Test/ExH/Compound/compound.cpp:
+        * contrib/utility/Test/ExH/Converter/converter.cpp:
+        * contrib/utility/Test/ExH/Logic/DescriptiveException/descriptive_exception.cpp:
+        * contrib/utility/Test/ExH/System/DescriptiveException/descriptive_exception.cpp:
+        * contrib/utility/Test/ReferenceCounting/DefaultImpl/default_impl.cpp:
+        * contrib/utility/Test/ReferenceCounting/Interface/interface.cpp:
+        * contrib/utility/Test/ReferenceCounting/SmartPtr/smart_ptr.cpp:
+        * contrib/utility/Test/ReferenceCounting/StrictPtr/strict_ptr.cpp:
+        * contrib/utility/Utility/ReferenceCounting/DefaultImpl.hpp:
+        * contrib/utility/Utility/ReferenceCounting/DefaultImpl.ipp:
+        * contrib/utility/Utility/ReferenceCounting/Interface.hpp:
+        * contrib/utility/Utility/ReferenceCounting/Interface.tpp:
+        * contrib/utility/Utility/ReferenceCounting/SmartPtr.hpp:
+        * contrib/utility/Utility/ReferenceCounting/SmartPtr.tpp:
+        * contrib/utility/Utility/ReferenceCounting/StrictPtr.hpp:
+        * contrib/utility/Utility/ReferenceCounting/StrictPtr.tpp:
+        * contrib/utility/Vault/hetero/map.hpp:
+
+          Zap the usage of exception specification.
+
+Tue Jul 31 07:52:25 UTC 2007  Olli Savia  <ops@iki.fi>
+
+        * ace/os_include/os_dirent.h:
+          Removed #undef rewinddir. It may have broken compilation
+          on some platforms so ACE_OS::rewinddir() may need tweaking.
+
+Tue Jul 31 06:45:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-hpux-11.00.h:
+          HPUX doesn't have pthread_attr_setstack
+
+Tue Jul 31 05:14:35 UTC 2007  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * ace/Service_Config.h:
+        * ace/Service_Config.cpp:
+
+          Adding a forward decl for the partial specialization to silence
+          the Borland compiler, complaining about an already defined
+          template specialization.
+
+Tue Jul 31 05:19:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * m4/config_h.m4:
+          Updated this file
+
+Tue Jul 31 04:13:34 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * netsvcs/clients/Naming/Dump_Restore/Dump_Restore.h:
+        * netsvcs/clients/Naming/Dump_Restore/Dump_Restore.cpp:
+
+          Reverted changes made in:
+          Mon Jul 30 12:40:57 UTC 2007  Abdullah Sowayan  <abdul...>
+
+        * netsvcs/clients/Naming/Dump_Restore/Dump_Restore.cpp:
+
+          Use ACE_TCHAR instead of char to address problems in
+          Redhat_Enterprise_Linux_3_Debug_Wchar build.
+
+Tue Jul 31 00:50:49 UTC 2007  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * ace/Service_Config.cpp:
+
+          By introducing a partial specialization of
+          ACE_TSS<ACE_Service_Config> we ensure that _if_ ACE_TSS::cleanup()
+          is called before ~ACE_Object_Manager(), the TSS pointer will not
+          clobber the ACE_Service_Config it points to. Resolves bugzilla
+          2980. Thanks to Patrick Bennett <Patrick dot Bennett at inin dot
+          com> and Lothar Werzinger <lothar at tradescape dot biz> for
+          their input.
+
+Mon Jul 30 23:51:07 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * ace/TP_Reactor.h: Documentation improvements, including clarification
+          of the synchronization needs for I/O and non-I/O callbacks. Thanks
+          to Hal Black <hal dot black at gmail dot com> for motivating this.
+
+        * THANKS: Added Hal Black.
+
+Mon Jul 30 22:50:40 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * tests/SOCK_Connector_Test.cpp: After rummaging through the hosts
+          list looking for other names, do sethostent(0) before endhostent().
+          Resolves the funky interaction with this and getaddrinfo() on AIX
+          with IPv6 support which would, on the second lookup of the local
+          host's name, return an AF_INET6 struct with an IPv4 address.
+          Thanks to Phil Mesnier for co-laboring to work this little mess out.
+
+Mon Jul 30 18:17:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-cray.h:
+        * ace/config-cygwin32.h:
+        * ace/config-linux.h:
+        * ace/config-lynxos.h:
+        * ace/config-mvs.h:
+        * ace/config-tandem-nsk-mips-v2.h:
+        * ace/config-tandem-nsk-mips-v3.h:
+        * ace/config-tru64.h:
+        * ace/OS_NS_Thread.cpp:
+        * configure.ac:
+          Updated ACE_LACKS_THREAD_STACK_ADDR to
+          ACE_LACKS_PTHREAD_SETSTACKADDR to match naming conventions
+
+Mon Jul 30 18:03:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-cygwin.h:
+          Added ACE_LACKS_PTHREAD_ATTR_SETSTACK
+
+Mon Jul 30 15:08:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-lynxos.h:
+          Added ACE_LACKS_PTHREAD_ATTR_SETSTACK for LynxOS 4.0
+
+Mon Jul 30 14:57:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+          All POA examples are now under tests
+
+Mon Jul 30 14:45:00 UTC 2007  Simon Massey  <sma@prismtech.com>
+
+        * tests/Timer_Queue_Reference_Counting_Test.cpp:
+        * tests/Timer_Queue_Test.cpp:
+
+          Minor memory leak fixes.
+
+Mon Jul 30 13:37:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * configure.ac:
+          Make the signal handler a static to fix detection with Intel C++
+
+Mon Jul 30 13:27:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * configure.ac:
+          Fixed problem detecting ACE_HAS_MUTEX_TIMEOUTS. Thanks to
+          Peter Korf <peter at niendo dot de> for reporting this.
+
+Mon Jul 30 13:24:32 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ace/Hash_Map_Manager_T.h:
+
+          Made a minor grammatic correction in the Doxygen.
+
+        * bin/PerlACE/Run_Test.pm:
+
+          Fixed Perl warnings.
+
+        * bin/tao_other_tests.lst:
+
+          Added the new Notify Service monitoring unit tests.
+
+Mon Jul 30 12:55:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * m4/compiler.m4:
+          Disable warning 1419 with Intel C++
+
+Mon Jul 30 12:40:57 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * netsvcs/clients/Naming/Dump_Restore/Dump_Restore.h:
+
+          Use ACE_TCHAR instead of char to address problems in
+          Redhat_Enterprise_Linux_3_Debug_Wchar build.
+
+Mon Jul 30 12:03:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/package_copy_script.sh:
+          Add this script to the repo, used in the release process to copy
+          the archives with a release number
+
+Mon Jul 30 11:58:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Mem_Map.{h,cpp}:
+        * ace/OS_NS_fcntl.{h,cpp}:
+        * ace/OS_NS_sys_mman.{h,inl}:
+          Updated mode argument to use mode_t as described by the posix spec.
+          This fixes bugzilla 2943.
+
+Mon Jul 30 11:24:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Parse_Node.h:
+          Removed commented out code and improved documentation
+
+Mon Jul 30 11:19:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * m4/compiler.m4:
+          Improved support for Intel C++ on Linux
+
+Mon Jul 30 10:21:56 UTC 2007  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * include/makeinclude/platform_sunos5_g++.GNU:
+          Added -z now linker option to gcc builds. This fixes
+          TAO/orbsvcs/tests/Bug_2285_Regression/run_test.pl,
+          TAO/orbsvcs/tests/Bug_2285_Regression/run_test2.pl, and
+          TAO/orbsvcs/tests/Bug_2287_Regression/run_test.pl in
+          corresponding build.
+
+Mon Jul 30 09:51:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * configure.ac:
+          Added check for InterLocked methods
+
+Mon Jul 30 09:11:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_sunos5_ghs.GNU:
+        * include/makeinclude/platform_vxworks5.x_ghs.GNU:
+          Removed, these are not tested anymore and outdated.
+
+Mon Jul 30 07:55:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/generate_rel_manpages:
+          Removed support for dot_path, not supported by the doxygen
+          script anymore
+
+        * bin/PerlACE/Run_Test.pm:
+          When waiting for files we sleep each time a second, changed this
+          to 50ms so that we don't loose time for each test, given the
+          fact that we have about 600 tests it could safe a few minutes
+          for a few test run. Thanks to Chad Elliot for providing these
+          changes
+
+Mon Jul 30 07:39:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * configure.ac:
+          Added bswap_16, bswap_32, and b_swap64
+
+Mon Jul 30 07:28:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * configure.ac:
+        * m4/config_h.m4:
+          Added check for pthread_cond_timedwait. Thanks to Peter Korf
+          <peter at niendo dot de> for delivering the patch. This also
+          fixes bugzilla 2836 which was reported by Norbert Thoden
+          <thoden at rheinmetall-de dot com>
+
+Mon Jul 30 07:15:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/os_include/os_pthread.h:
+        * ace/OS_NS_Thread.cpp:
+        * configure.ac:
+          Changed the check for pthread_attr_setstack and added it to the autoconf
+          support. This fixes bugzilla 2476. Thanks to Jonathan Sprinkle
+          <sprinkle at eecs dot berkeley dot edu> for reporting this
+
+Sun Jul 29 20:56:40 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * netsvcs/clients/Naming/Client/Client_Test.cpp:
+        * netsvcs/clients/Naming/Dump_Restore/Dump_Restore.cpp:
+        * netsvcs/clients/Naming/Dump_Restore/createfile.cpp:
+        * netsvcs/clients/Tokens/manual/manual.cpp:
+
+          Fixed ACE_OS fuzz warnings. Use ACE_OS calls instead of raw OS functions
+          where possible. If fuzz detected a false-positive, then disable
+          the ACE_OS fuzz check for that section of the code.
+
+        * netsvcs/clients/Tokens/manual/manual.cpp:
+
+          Untabify.
+
+Sat Jul 28 23:00:44 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * ace/Local_Name_Space.cpp:
+          Resolve 64-32-bit transition warnings.
+
+        * ace/config-sunos5.5.h: Define ACE_MALLOC_ALIGN using a sizeof cast.
+          Makes it fit with the other ACE_MALLOC_* calculations in Malloc.h
+          without triggering 32/64-bit warnings.
+
+Sat Jul 28 22:50:12 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * tests/SOCK_Connector_Test.cpp: Added some additional diagnostics
+          re the address info that's being tried to easier note IPv4 vs.
+          IPv6 addresses. Also removed an ACE_ASSERT.
+
+Sat Jul 28 21:58:27 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * tests/Process_Manual_Event_Test.cpp: Added a hack to always delete
+          the underlying shared memory objects on AIX, primarily due to the
+          inability to neatly clean these objects up after a failed test.
+          See Bugzilla #2662 for further background. Also, added a delay
+          in the child process to allow the parent to initialize the event
+          objects. The race between the processes while the parent is
+          initializing the event objects can cause the child to hang.
+
+Sat Jul 28 18:56:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/bczar/bczar.html:
+          Small improvements
+
+Sat Jul 28 18:19:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * configure.ac:
+          Added checks for byteswap.h, intrin.h, ia32intrin.h, and
+          ia64intrin.h, part of buzilla 2905.
+
+Fri Jul 27 06:50:14 CDT 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ACE version 5.5.10 released.
+
+Local Variables:
+mode: change-log
+add-log-time-format: (lambda () (progn (setq tz (getenv "TZ")) (set-time-zone-rule "UTC") (setq time (format-time-string "%a %b %e %H:%M:%S %Z %Y" (current-time))) (set-time-zone-rule tz) time))
+indent-tabs-mode: nil
+End:
