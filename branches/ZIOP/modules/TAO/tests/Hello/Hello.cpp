@@ -11,9 +11,10 @@ Hello::Hello (CORBA::ORB_ptr orb)
 }
 
 char *
-Hello::get_string (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Hello::get_string (const char * mytst ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+ACE_DEBUG ((LM_DEBUG, "Received %s", mytst));
   return CORBA::string_dup ("Hello there!");
 }
 
