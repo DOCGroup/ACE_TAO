@@ -1,3 +1,14 @@
+Thu Aug  9 16:39:53 UTC 2007  Dale Wilson  <wilsond@ociweb.com>
+
+        * tao/Transport_Cache_Manager.cpp:
+          Clean up log messages.
+            Consistent formatting
+            Consistent use of TAO_debug_level and LM_xxxx
+               TAO_debug_level > 0: recoverable/ignorable error condition (LM_ERROR)
+               TAO_debug_level > 4: normal transport cache operations (LM_INFO)
+               TAO_debug_level > 6: detailed cache operations (LM_DEBUG)
+               TAO_debug_level > 8: for debugging the cache itself
+
 Thu Aug  9 14:31:02 UTC 2007  Dale Wilson  <wilsond@ociweb.com>
 
         * tao/Transport.cpp:
