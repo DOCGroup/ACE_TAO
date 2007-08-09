@@ -712,7 +712,7 @@ ACE_Log_Msg::~ACE_Log_Msg (void)
 {
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
 
-  int instance_count;
+  int instance_count = 0;
 
   // Only hold the guard while updating the instance_count_.
   // If ACE_Log_Msg_Manager::close () is called, the lock will
