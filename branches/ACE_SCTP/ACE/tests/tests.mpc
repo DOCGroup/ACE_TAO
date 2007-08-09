@@ -1397,6 +1397,22 @@ project(SOCK_SEQPACK_SCTP_Test) : acetest {
   }
 }
 
+project(SOCK_SCTP_SEQPACK_Test) : acetest {
+  avoids += ace_for_tao
+  exename = SOCK_SCTP_SEQPACK_Test
+  Source_Files {
+    SOCK_SCTP_SEQPACK_Test.cpp
+  }
+}
+
+project(SOCK_SCTP_STREAM_Test) : acetest {
+  avoids += ace_for_tao
+  exename = SOCK_SCTP_STREAM_Test
+  Source_Files {
+  	SOCK_SCTP_STREAM_Test.cpp
+  }
+}
+            
 project(QtReactor Test) : acetest, ace_qtreactor {
   exename   = QtReactor_Test
   MOC_Files {
