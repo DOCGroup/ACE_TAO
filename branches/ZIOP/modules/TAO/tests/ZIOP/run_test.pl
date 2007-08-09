@@ -2,7 +2,7 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
      & eval 'exec perl -S $0 $argv:q'
      if 0;
 
-# $Id: run_test.pl 73792 2006-07-28 00:51:55Z wotte $
+# $Id$
 # -*- perl -*-
 
 use lib "$ENV{ACE_ROOT}/bin";
@@ -56,6 +56,6 @@ if ($server != 0) {
     $status = 1;
 }
 
-unlink $iorfile;
+#unlink $iorfile;
 
 exit $status;

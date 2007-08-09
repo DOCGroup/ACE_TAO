@@ -1,7 +1,7 @@
 // -*- MPC -*-
-// $Id: Hello.mpc 69739 2005-12-01 18:16:23Z parsons $
+// $Id$
 
-project(*Server): taoserver, bzip2, ziop {
+project(*Server): taoserver,  ziop {
   idlflags += -Sa -St
   Source_Files {
     Hello.cpp
@@ -10,7 +10,7 @@ project(*Server): taoserver, bzip2, ziop {
   }
 }
 
-project(*Client): taoclient, bzip2, ziop {
+project(*Client): taoclient,  ziop {
   after += *Server
   Source_Files {
     TestC.cpp
