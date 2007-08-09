@@ -7,6 +7,7 @@
 #include "Custom_Network_Priority_Mapping.h"
 #include "ace/Get_Opt.h"
 #include "tao/Policy_ManagerC.h"
+#include "tao/Policy_CurrentC.h"
 
 static const char *ior = "file://simple_servant.ior";
 static int iterations = 1;
