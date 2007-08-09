@@ -1,3 +1,21 @@
+Thu Aug  9 14:31:02 UTC 2007  Dale Wilson  <wilsond@ociweb.com>
+
+        * tao/Transport.cpp:
+          Fix indenting.
+          In post_open set cache entry state to ENTRY_IDLE_BUT_NOT_PURGABLE directly
+          rather than trying to re-register.
+          Remove the call to purge_entry in the destructor.  If this transport
+          is still in the cache at the time it gets destroyed, we're already in deep trouble.
+
+        * tao/Transport_Cache_Manager.h:
+        * tao/Transport_Cache_Manager.inl:
+        * tao/Transport_Cache_Manager.cpp:
+          Change some argument types from reference to pointer entry to simple pointer.
+          These routines don't change the pointer.  They only change the entry.
+          Add set_entry_state method to directly change the state of a cached entry.
+
+
+
 Thu Aug  9 08:22:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/ORB_Core.{h,inl}:

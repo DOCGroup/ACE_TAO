@@ -58,7 +58,6 @@ namespace TAO
   ACE_INLINE int
   Transport_Cache_Manager::purge_entry (HASH_MAP_ENTRY *&entry)
   {
-    // Double checked locking
     if(entry == 0)
       return 0;
 
@@ -68,7 +67,7 @@ namespace TAO
   }
 
   ACE_INLINE void
-  Transport_Cache_Manager::mark_invalid (HASH_MAP_ENTRY *&entry)
+  Transport_Cache_Manager::mark_invalid (HASH_MAP_ENTRY *entry)
   {
     if(entry == 0)
       return;
@@ -80,13 +79,25 @@ namespace TAO
   }
 
   ACE_INLINE int
-  Transport_Cache_Manager::make_idle (HASH_MAP_ENTRY *&entry)
+  Transport_Cache_Manager::make_idle (HASH_MAP_ENTRY *entry)
   {
     if(entry == 0)
       return -1;
 
     ACE_MT (ACE_GUARD_RETURN (ACE_Lock, guard, *this->cache_lock_, -1));
     return this->make_idle_i (entry);
+  }
+
+  ACE_INLINE void
+  Transport_Cache_Manager::set_entry_state (
+    HASH_MAP_ENTRY *entry,
+    TAO::Cache_Entries_State state)
+  {
+    if(entry != 0)
+      {
+        ACE_MT (ACE_GUARD (ACE_Lock, guard, *this->cache_lock_));
+        entry->item ().recycle_state (state);
+      }
   }
 
   ACE_INLINE int
