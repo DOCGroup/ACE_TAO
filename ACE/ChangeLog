@@ -1,3 +1,14 @@
+Thu Aug  9 13:39:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Log_Msg.cpp:
+          Initialise local variable to resolve GCC warning
+
+        * ace/config-linux-common.h:
+          Added ACE_HAS_BROKEN_THREAD_KEYFREE so that on Linux the Log_Msg
+          does cleanup its TSS data which resolves problems when loading
+          and unloading the ACE shared library from an application that
+          doesn't use ACE at all
+
 Wed Aug  8 22:30:53 UTC 2007  Steve Huston  <shuston@riverace.com>
 
         * configure.ac: Moved check for ACE_LACKS_PTHREAD_ATTR_SETSTACK to
