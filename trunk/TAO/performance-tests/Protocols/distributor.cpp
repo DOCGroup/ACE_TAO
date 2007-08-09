@@ -6,6 +6,7 @@
 #include "ace/OS_NS_unistd.h"
 #include "tao/RTCORBA/RTCORBA.h"
 #include "tao/ORB_Constants.h"
+#include "tao/Policy_CurrentC.h"
 #include "tao/debug.h"
 #include "testS.h"
 
