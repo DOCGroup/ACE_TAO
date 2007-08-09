@@ -158,8 +158,7 @@ TAO_POA_RT_Policy_Validator::validate_priorities (TAO_Policy_Set &policies)
     TAO::Portable_Server::Cached_Policies::NOT_SPECIFIED;
 
   CORBA::Policy_var policy =
-    policies.get_cached_policy (TAO_CACHED_POLICY_PRIORITY_MODEL
-                               );
+    policies.get_cached_policy (TAO_CACHED_POLICY_PRIORITY_MODEL);
 
   RTCORBA::PriorityModelPolicy_var priority_model =
     RTCORBA::PriorityModelPolicy::_narrow (policy.in ());
@@ -193,12 +192,10 @@ TAO_POA_RT_Policy_Validator::validate_priorities (TAO_Policy_Set &policies)
     }
 
   policy =
-    policies.get_cached_policy (TAO_CACHED_POLICY_RT_PRIORITY_BANDED_CONNECTION
-                               );
+    policies.get_cached_policy (TAO_CACHED_POLICY_RT_PRIORITY_BANDED_CONNECTION);
 
   RTCORBA::PriorityBandedConnectionPolicy_var priority_bands
-    = RTCORBA::PriorityBandedConnectionPolicy::_narrow (policy.in ()
-                                                       );
+    = RTCORBA::PriorityBandedConnectionPolicy::_narrow (policy.in ());
 
   TAO_PriorityBandedConnectionPolicy *bands_policy =
     dynamic_cast<TAO_PriorityBandedConnectionPolicy *> (priority_bands.in ());
@@ -345,13 +342,10 @@ TAO_POA_RT_Policy_Validator::validate_priorities (TAO_Policy_Set &policies)
 }
 
 void
-TAO_POA_RT_Policy_Validator::validate_thread_pool (TAO_Policy_Set &policies
-                                                   )
+TAO_POA_RT_Policy_Validator::validate_thread_pool (TAO_Policy_Set &policies)
 {
   this->thread_pool_ =
-    TAO_POA_RT_Policy_Validator::extract_thread_pool (this->orb_core_,
-                                                      policies
-                                                     );
+    TAO_POA_RT_Policy_Validator::extract_thread_pool (this->orb_core_, policies);
 }
 
 void
@@ -359,8 +353,7 @@ TAO_POA_RT_Policy_Validator::merge_policies_impl (TAO_Policy_Set &policies)
 {
   // Check if the user has specified the priority model policy.
   CORBA::Policy_var priority_model =
-    policies.get_cached_policy (TAO_CACHED_POLICY_PRIORITY_MODEL
-                               );
+    policies.get_cached_policy (TAO_CACHED_POLICY_PRIORITY_MODEL);
 
   if (CORBA::is_nil (priority_model.in ()))
     {
@@ -385,9 +378,7 @@ TAO_POA_RT_Policy_Validator::merge_policies_impl (TAO_Policy_Set &policies)
       // If not, check if the server protocol policy has been
       // specified at the ORB level.
       server_protocol =
-        this->orb_core_.get_cached_policy (
-          TAO_CACHED_POLICY_RT_SERVER_PROTOCOL
-         );
+        this->orb_core_.get_cached_policy (TAO_CACHED_POLICY_RT_SERVER_PROTOCOL);
 
       if (!CORBA::is_nil (server_protocol.in ()))
         {
@@ -405,8 +396,7 @@ TAO_POA_RT_Policy_Validator::merge_policies_impl (TAO_Policy_Set &policies)
       // If not, check if the thread pool policy has been specified at
       // the ORB level.
       thread_pool =
-        this->orb_core_.get_cached_policy (TAO_CACHED_POLICY_THREADPOOL
-                                          );
+        this->orb_core_.get_cached_policy (TAO_CACHED_POLICY_THREADPOOL);
 
       if (!CORBA::is_nil (thread_pool.in ()))
         {
@@ -474,19 +464,16 @@ TAO_POA_RT_Policy_Validator::server_protocol_policy_from_acceptor_registry (RTCO
                                                                             TAO_Acceptor_Registry &acceptor_registry,
                                                                             TAO_ORB_Core &orb_core)
 {
-  TAO_AcceptorSetIterator end =
-    acceptor_registry.end ();
+  TAO_AcceptorSetIterator end = acceptor_registry.end ();
 
-  for (TAO_AcceptorSetIterator acceptor =
-         acceptor_registry.begin ();
+  for (TAO_AcceptorSetIterator acceptor = acceptor_registry.begin ();
        acceptor != end;
        ++acceptor)
     {
       if (*acceptor == 0)
         continue;
 
-      CORBA::ULong current_length =
-        protocols.length ();
+      CORBA::ULong current_length = protocols.length ();
 
       // Make sure that this protocol is not already in the protocol
       // list.
@@ -556,4 +543,4 @@ TAO_POA_RT_Policy_Validator::extract_thread_pool (TAO_ORB_Core &orb_core,
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
-#endif /* TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0 */
+#endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */
