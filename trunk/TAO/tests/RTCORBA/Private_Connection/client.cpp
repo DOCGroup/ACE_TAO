@@ -3,6 +3,7 @@
 #include "testC.h"
 #include "tao/RTCORBA/RTCORBA.h"
 #include "tao/Policy_ManagerC.h"
+#include "tao/Policy_CurrentC.h"
 #include "ace/Get_Opt.h"
 
 const char *ior1 = "file://test1.ior";
