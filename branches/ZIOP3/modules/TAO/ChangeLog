@@ -1,0 +1,1379 @@
+Thu Aug  9 08:22:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/ORB_Core.{h,inl}:
+          Disabled some methods and members when CORBA messaging is disabled
+
+        * tao/RTPortableServer/RT_Policy_Validator.cpp:
+          Layout changes
+
+        * tao/Makefile.am:
+          Corrected an error in this file
+
+Thu Aug  9 04:23:07 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp:
+          More support for IPv6 by allowing the acceptance of IPv4 or IPv6
+          addresses during endpoint validation.
+
+Wed Aug  8 18:00:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Messaging/Messaging_ORBInitializer.cpp:
+          Fixed unused argument warning
+
+Wed Aug  8 15:06:35 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Endpoint.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp:
+
+          Fix for SSLIOP when used with IPv6 and Bidir.
+
+        * tao/TAO_Server_Request.cpp:
+
+          Fix for using GIOP versions other than the default. The
+          particular problem was that servers always return raised
+          exceptions using their default GIOP version, not the version
+          used by the client.
+
+Wed Aug  8 14:56:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/ORB.{h,cpp,inl}:
+          Make use of default argument values and inline methods
+
+Wed Aug  8 14:17:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Codeset.mpc:
+        * tao/Makefile.am:
+          We really don't need Any/TypeCode support for the pidl file, so
+          remove the generation of them.
+
+Wed Aug  8 12:29:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Codeset.mpc:
+        * tao/Codeset/Codeset_Manager_i.cpp:
+        * tao/Codeset/CodeSetContext.pidl:
+        * tao/CONV_FRAME.pidl:
+        * tao/Makefile.am:
+          Moved the CodeSetContext struct to the Codeset library, it
+          is only used by code in this library.
+
+Wed Aug  8 11:58:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/Active_Object_Map.{cpp,h}:
+          Reduced codesize of Active Object Map when CORBA/e micro is enabled
+
+        * tao/PortableServer/ServantRetentionStrategyRetain.cpp:
+          Layout change
+
+Wed Aug  8 11:22:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/AnyTypeCode.mpc:
+        * tao/AnyTypeCode/PolicyA.cpp:
+        * tao/AnyTypeCode/PolicyA.h:
+        * tao/corba.h:
+        * tao/Makefile.am:
+        * tao/orb.idl:
+        * tao/Policy.pidl:
+        * tao/Policy_Current.h:
+        * tao/Policy_Current.pidl:
+        * tao/Policy_Manager.h:
+        * tao/Policy_Manager.pidl:
+        * tao/PolicyC.cpp:
+        * tao/PolicyC.h:
+        * tao/tao.mpc:
+        * tao/Messaging/Messaging.h:
+          Moved PolicyCurrent and PolicyManager to their own files. This
+          reduces footprint for applications that have corba messaging
+          disabled. Fixes bugzilla 3033
+
+Wed Aug  8 10:19:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/DiffServPolicy/DiffServPolicy.cpp
+        * tao/DiffServPolicy/DiffServPolicy.h
+        * tao/EndpointPolicy/EndpointPolicy.cpp
+        * tao/EndpointPolicy/EndpointPolicy.h
+        * tao/TAO_Internal.cpp
+          Rework the Diffserv policy loader to avoid loading a dll during
+          a static initializer, as described in Sun Aug  5 18:58:12 UTC
+          2007  Johnny Willemsen  <jwillemsen@remedy.nl>.
+
+Wed Aug  8 08:38:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PI/diff/PolicyFactory.diff:
+          Updated
+
+        * tao/RTCORBA/RTCORBA.h:
+          Fixed compile problem when messaging is disabled
+
+Wed Aug  8 06:51:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Timed_Buffered_Oneways/client.cpp:
+        * tests/Oneway_Timeouts/client.cpp:
+        * tests/Oneway_Timeouts/run_test.pl:
+          Replaced SYNC_EAGER_BUFFERING with SYNC_NONE, they are the same and
+          SYNC_EAGER_BUFFERING is removed
+
+Tue Aug  7 15:24:09 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/orbsvcs/Notify/EventChannelFactory.cpp:
+        * orbsvcs/orbsvcs/Notify/POA_Helper.h:
+        * orbsvcs/orbsvcs/Notify/POA_Helper.cpp:
+
+          Added code to support the persistent POA activation of the notify
+          event channel by default.
+
+        * orbsvcs/tests/Notify/Persistent_POA/Makefile.am:
+        * orbsvcs/tests/Notify/Persistent_POA/Persistent_POA.mpc:
+        * orbsvcs/tests/Notify/Persistent_POA/README:
+        * orbsvcs/tests/Notify/Persistent_POA/Structured_Supplier.cpp:
+        * orbsvcs/tests/Notify/Persistent_POA/run_test.pl:
+
+          Added a test to ensure that the notify event channel persistent
+          POA changes work properly.
+
+        * configure.ac:
+        * orbsvcs/tests/Notify/Makefile.am:
+
+          Updated to reflect the new Makefile added for the test.
+
+Tue Aug  7 12:57:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/orbconf.h:
+          Also disable interceptors with CORBA/e
+
+Tue Aug  7 12:41:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/IOP_IOR.pidl:
+        * tao/PortableServer/Root_POA.h:
+          Removed TaggedComponentList and use TaggedComponentSeq, the first
+          one is not part of the CORBA spec, the second is.
+
+        * tao/IORInterceptor/IORInfo.h:
+        * tao/IORInterceptor/IORInterceptor_Adapter_Factory_Impl.h:
+        * tao/IORInterceptor/IORInterceptor_Adapter_Impl.cpp:
+        * tao/IORInterceptor/IORInterceptor_Adapter_Impl.h:
+        * tao/IORInterceptor/IORInterceptor_Details.h:
+          Layout changes
+
+Tue Aug  7 11:48:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/AnyTypeCode/DomainA.cpp:
+        * tao/AnyTypeCode/DomainA.h:
+        * tao/Domain.mpc:
+        * tao/Domain.pidl:
+        * tao/Domain/diffs/Domain.diff:
+        * tao/Domain/domain_export.h:
+        * tao/Domain/DomainS.cpp:
+        * tao/Domain/DomainS.h:
+        * tao/Domain/DomainS.inl:
+        * tao/Domain/DomainS_T.cpp:
+        * tao/Domain/DomainS_T.h:
+        * tao/Domain/DomainS_T.inl:
+        * tao/Domain/TAO_Domain.pc.in:
+        * tao/Domain/TAO_Domain.rc:
+        * tao/DomainC.cpp:
+        * tao/DomainC.h:
+        * tao/DomainC.inl:
+          Removed all these files, Domain.pidl defined some interfaces
+          that are not used at all in TAO and not implemented. When we
+          really are going to implement these, we will readd them. This
+          saves footprint for all applications. Fixes bugzilla issue
+          3018.
+
+        * tao/IFR_Client_Adapter.h:
+          Layout changes
+
+        * tao/Makefile.am:
+        * tao/tao.mpc:
+          Updated
+
+        * tao/Stub.{h,cpp}:
+          Uninlined the refcount methods again, caused a footprint increase
+          in servant libraries
+
+        * tao/corba.h:
+          Removed include of DomainC.h
+
+Tue Aug  7 11:24:41 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/tests/Notify/Reconnecting/Consumer.cpp:
+
+          Use CORBA::ULong with sequences instead of size_t.
+
+Tue Aug  7 09:46:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/CORBALOC_Parser.{h,cpp,inl}:
+          Added new TAO_HAS_CORBALOC_PARSER that defaults to 1, set to 0 to
+          disable this parser
+
+        * tao/CORBANAME_Parser.{h,cpp}:
+          Added new TAO_HAS_CORBANAME_PARSER that defaults to 1, set to 0 to
+          disable this parser
+
+        * tao/DLL_Parser.{h,cpp}:
+          Added new TAO_HAS_DLL_PARSER that defaults to 1, set to 0 to
+          disable this parser
+
+        * tao/FILE_Parser.{h,cpp}:
+          Added new TAO_HAS_FILE_PARSER that defaults to 1, set to 0 to
+          disable this parser
+
+        * tao/HTTP_Client.{h,cpp}:
+        * tao/HTTP_Handler.{h,cpp}:
+        * tao/HTTP_Parser.{h,cpp}:
+          Added new TAO_HAS_HTTP_PARSER that defaults to 1, set to 0 to
+          disable this parser
+        * tao/MCAST_Parser.{h,cpp.inl}:
+          Added new TAO_HAS_MCAST_PARSER that defaults to 1, set to 0 to
+          disable this parser
+
+        * tao/default_resource.cpp:
+          Update the logic to file the parser_names array
+
+        * tao/ORB_Core.{h,cpp.inl}:
+        * tao/Transport_Queueing_Strategies.{h,cpp}:
+          Removed the default queueing strategy, just return 0 as
+          transport queue strategy in the default case, the Transport
+          has already set the correct defaults and we don't need to change
+          the settings at that moment. Saves a virtual call in the critical
+          path.
+
+        * tao/ORB_Core.{h,cpp.inl}:
+          Reworked get_transport_queueing_strategy to use a switch
+
+        * tao/orbconf.h:
+          Set all defines for the different parsers to 1 if they are not
+          set
+
+        * tao/Stub.{h,inl}:
+          Made a few methods inline
+
+        * tao/TAO_Internal.cpp:
+          Only do a process directive for a parser when it is enabled
+
+        * tao/GIOP_Message_Generator_Parser_12.cpp:
+        * tao/TAO.pidl:
+        * tao/Invocation_Adapter.cpp
+          Removed TAO::SYNC_EAGER_BUFFERING, it is the same as
+          Messaging::SYNC_NONE.
+
+Tue Aug  7 08:12:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/ORB_Core.{h,inl}:
+          Disable the new queueing strategy methods when buffering constraint
+          is not enabled
+
+Mon Aug  6 19:53:24 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/EndpointPolicy/EndpointPolicy.h:
+        * tao/EndpointPolicy/EndpointPolicy.cpp:
+
+        * tao/TAO_Internal.cpp:
+
+          Rework the Endpoint policy loader to avoid loading a dll during
+          a static initializer, as described in Sun Aug  5 18:58:12 UTC
+          2007  Johnny Willemsen  <jwillemsen@remedy.nl>.
+
+Mon Aug  6 18:31:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Buffering_Constraint_Policy.{h,cpp,inl}:
+        * tao/Messaging/Buffering_Constraint_Policy.{h,cpp,inl}:
+          Moved the Buffering Constraint Policy to the Messaging Library. It
+          doesn't need in the core, and if someone wants to create the Policy
+          he already needed the Messaging library
+
+        * tao/extra_core.mpb:
+          Removed Buffering_Constraint_Policy.cpp:
+
+        * tao/Makefile.am:
+          Updated
+
+        * tao/Messaging/Messaging.pidl:
+          Include TAO_Ext.pidl
+
+        * tao/Messaging/Messaging_ORBInitializer.cpp:
+          Set the buffering constraint strategies into the ORB
+
+        * tao/Messaging/Messaging_PolicyFactory.{h,cpp}:
+          Updated for the fact that the Buffering Constraint Policy is now
+          in the Messaging lib
+
+        * tao/Transport_Queueing_Strategies.{h,cpp}:
+        * tao/Messaging/Messaging_Queueing_Strategies.{h,cpp}:
+          Moved the strategies that used the Buffering Constraint Policy to
+          the Messaging lib
+
+        * tao/Messaging/TAO_Ext.pidl:
+        * tao/TAO.pidl:
+          Moved Buffering Constraint Policy to Messaging
+
+        * tao/ORB_Core.{h,cpp,inl}:
+          Updated all queueing strategy methods to return a pointer and
+          added set methods for the strategies that are now in the
+          messaging lib
+
+        * tao/Stub.{h,cpp}:
+          Return the queueing strategy as pointer
+
+        * tao/tao.mpc:
+          Removed Buffering_Constraint_Policy.h
+
+        * tao/Transport.cpp:
+          Updated to handle the queuing strategy as pointer
+
+Mon Aug  6 18:17:55 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/Notify_Service/Notify_Service.cpp:
+        * orbsvcs/examples/Notify/Federation/Gate/Gate.cpp:
+        * orbsvcs/orbsvcs/Notify/Buffering_Strategy.cpp:
+        * orbsvcs/orbsvcs/Notify/Delivery_Request.cpp:
+        * orbsvcs/orbsvcs/Notify/Routing_Slip.cpp:
+        * orbsvcs/orbsvcs/Notify/Routing_Slip_Persistence_Manager.cpp:
+        * orbsvcs/orbsvcs/Notify/Sequence/SequencePushConsumer.cpp:
+        * orbsvcs/orbsvcs/Notify/Standard_Event_Persistence.cpp:
+        * orbsvcs/tests/Notify/lib/Activation_Manager.cpp:
+        * orbsvcs/tests/Notify/lib/Driver.cpp:
+
+          Changed my static_cast's from Mon Aug  6 13:53:30 UTC 2007 into
+          ACE_Utils::truncate_cast's.
+
+Mon Aug  6 18:09:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Makefile.am:
+          Removed POA directory
+
+        * examples/POA/*:
+          Deleted
+
+Mon Aug  6 13:53:30 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/Notify_Service/Notify_Service.cpp:
+        * orbsvcs/examples/Notify/Federation/Gate/Gate.cpp:
+        * orbsvcs/orbsvcs/Notify/Buffering_Strategy.cpp:
+        * orbsvcs/orbsvcs/Notify/CosNotify_Service.cpp:
+        * orbsvcs/orbsvcs/Notify/Delivery_Request.cpp:
+        * orbsvcs/orbsvcs/Notify/Routing_Slip.cpp:
+        * orbsvcs/orbsvcs/Notify/Routing_Slip_Persistence_Manager.cpp:
+        * orbsvcs/orbsvcs/Notify/Sequence/SequencePushConsumer.cpp:
+        * orbsvcs/orbsvcs/Notify/Standard_Event_Persistence.cpp:
+        * orbsvcs/tests/Notify/lib/Activation_Manager.cpp:
+        * orbsvcs/tests/Notify/lib/Driver.cpp:
+        * orbsvcs/tests/Notify/lib/Periodic_Supplier.h:
+        * orbsvcs/tests/Notify/lib/Periodic_Supplier.cpp:
+        * orbsvcs/tests/Notify/lib/Task_Stats.h:
+
+          Added static_cast's and changed types to avoid type mismatch
+          warnings on 64-bit builds.
+
+Mon Aug  6 13:39:40 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/orbsvcs/Notify/MonitorControlExt/MC_Default_Factory.h:
+        * orbsvcs/orbsvcs/Notify/RT_Factory.h:
+
+          Reverted my change from Thu Aug  2 11:33:16 UTC 2007 and Fri Aug
+          3 18:46:13 UTC 2007.
+
+        * orbsvcs/orbsvcs/CosNotification.mpc:
+        * orbsvcs/orbsvcs/RT_Notification.mpc:
+
+          Added the -w-hid option for borland and bmake project types to the
+          CosNotification_MC_Ext and RT_Notification projects since
+          Borland doesn't support "using" within a class and doesn't support
+          #pragma warning (disable :8022).  The only other alternative is to
+          duplicate a lot of code.
+
+Mon Aug  6 11:45:14 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/orbsvcs/Notify/MonitorControl/Generic_Registry.h:
+        * orbsvcs/orbsvcs/Notify/MonitorControl/Statistic.h:
+
+          Added an export to the nested exception classes.
+
+Mon Aug  6 11:17:39 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/orbsvcs/CosNotification.mpc:
+        * orbsvcs/orbsvcs/Makefile.am:
+
+          Changed the idl flags to create the include for the export header
+          to include orbsvcs/Notify/MonitorControl and
+          orbsvcs/Notify/MonitorControlExt for the CosNotification_MC and
+          CosNotification_MC_Ext projects respectively.
+
+Mon Aug  6 11:00:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/ORB_Core.{h,cpp,inl}:
+        * tao/params.{h,cpp,inl}:
+          Moved collocation_resolver to ORB params. timeout_hook
+          and sync_scope hook are moved to the ORB. This way we
+          use Service Config less in the critical path and can
+          in the future make these different for different orbs
+
+        * tao/Messaging/Messaging_ORBInitializer.cpp:
+          Set the sync_scope and timeout_hook into the ORB
+
+        * tao/PortableServer/PortableServer.cpp:
+        * tao/Profile_Transport_Resolver.cpp:
+        * tao/RTCORBA/RT_Endpoint_Selector_Factory.h:
+        * tao/Strategies/Optimized_Connection_Endpoint_Selector.h:
+          Layout changes
+
+        * tao/RTPortableServer/RT_Object_Adapter_Factory.cpp:
+          Set the collocation resolver name into the ORB
+
+        * tao/Strategies/OC_Endpoint_Selector_Factory.h:
+          Fixed typo in comment
+
+        * tao/Transport.cpp:
+          Use true instead of 1
+
+Mon Aug  6 05:12:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/BiDir_GIOP/BiDirGIOP.cpp:
+        * tao/IORManipulation/IORManip_Loader.cpp:
+          Layout change
+
+        * tao/CSD_Framework/CSD_Framework_Loader.cpp:
+          Added missing process_directive, fixes failure of the CSD tests
+
+        * tao/CSD_ThreadPool/CSD_ThreadPool.h:
+          Removed usage of ACE_HAS_BROKEN_STATIC_CONSTRUCTORS, this macro
+          has been removed a long time ago
+
+Sun Aug  5 19:14:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/POA/Forwarding/run_test.pl:
+          Updated for cross platform testing
+
+Sun Aug  5 18:58:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/CSD_Framework/CSD_Framework_Loader.cpp:
+        * tao/CSD_Framework/CSD_Framework_Loader.h:
+          Don't register the ORBInitializer in the static method, this causes
+          problems when loading libraries on demand because this code does
+          trigger the loading of the PI library. The windows documentation states
+          explicityly that only very simple things should be done in static
+          methods, no loading of libraries. Thanks to Iliyan Jeliazkov and
+          Adam Mitz for analyzing why the Two_DLL_Orb fails on Windows. This is
+          related to bugzilla issue 2994
+
+        * tao/TAO_Internal.cpp:
+          Try to call init on the CSD_Framework_Loader
+
+        * tao/CSD_ThreadPool/CSD_ThreadPool.cpp:
+          Updated for CSD_Framework change
+
+        * tao/EndpointPolicy/EndpointPolicy.cpp:
+        * tao/PI_Server/PI_Server_Loader.cpp:
+        * tao/PI_Server/PI_Server_Loader.h:
+        * tao/PortableServer/Operation_Table_Perfect_Hash.cpp:
+        * tao/Valuetype/Valuetype_Adapter_Factory_Impl.h:
+        * tao/Valuetype/Valuetype_Adapter_Impl.h:
+          Layout change
+
+Sun Aug  5 18:01:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/File_IO/run_test.pl:
+          Added -sdebug and -cdebug to run server and/or client with
+          debugging
+
+Fri Aug  3 19:32:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * performance-tests/Cubit/TAO/IDL_Cubit/run_test.pl:
+          Removed references to lite protocols
+
+Fri Aug  3 18:46:13 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/orbsvcs/Notify/MonitorControlExt/MC_Default_Factory.h:
+        * orbsvcs/orbsvcs/Notify/RT_Factory.h:
+
+          Changed to check for Borland <= 0x590 instead of all versions of
+          Borland compilers.
+
+Fri Aug  3 12:44:51 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/orbsvcs/CosNotification.mpc:
+        * orbsvcs/orbsvcs/Makefile.am:
+
+          Fixed an issue where the destination directory for the idl
+          generated files does not exist (for automake only).
+
+        * orbsvcs/examples/Notify/MC/monitor/monitor.cpp:
+        * orbsvcs/orbsvcs/Notify/MonitorControl/NotificationServiceMonitor_i.cpp:
+
+          Fixed build warnings about conversion from size_t to CORBA::Ulong.
+
+Fri Aug  3 08:56:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/POA/Single_Threaded_POA/run_test.pl:
+          Extended the timeout
+
+        * POA/Single_Threaded_POA/Single_Threaded_POA.cpp:
+          Layout changes
+
+Thu Aug  2 19:30:30 UTC 2007  Dale Wilson  <wilsond@ociweb.com>
+
+        * tao/Transport_Connector.cpp:
+          remove_reference call was disabled for testing. Put it back in.
+
+Thu Aug  2 14:24:11 UTC 2007  Dale Wilson  <wilsond@ociweb.com>
+
+        * tao/Strategies/SCIOP_Connector.cpp:
+          Provide correct arguments to wait_for_connection_completion.
+
+Thu Aug  2 14:07:01 UTC 2007  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * orbsvcs/orbsvcs/Naming/Naming_Server.cpp:
+          Made so that TAO_Naming_Server uses ACE_DEFAULT_MULTICASTV6_ADDR
+          in IPv6 builds.
+
+        * orbsvcs/tests/Simple_Naming/run_test_ipv6.pl:
+        * orbsvcs/tests/Simple_Naming/run_test.pl:
+          Updated this test so that in IPv4 builds it uses strictly IPv4
+          multicast address and in IPv6 builds it uses node-local (starting
+          with ff01) multicast address since IPv6 networking is not properly
+          configured on TAO tests machines and thus other types of IPv6
+          multicast addresses do not work.
+
+Thu Aug  2 11:33:16 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/orbsvcs/Notify/MonitorControlExt/MC_Default_Factory.h:
+        * orbsvcs/orbsvcs/Notify/RT_Factory.h:
+
+          The Borland compiler does not honor the "using" statement.
+          Instead of duplicating every create() function in the sub-classes,
+          I have disabled the 8022 warning for these headers only.  The
+          warning is pushed and popped in each header.
+
+Thu Aug  2 09:45:21 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/include/ast_component.h:
+
+          Added 'line_number' member to the port description struct.
+          Since ports aren't nodes (which store their line numbers)
+          in the AST, this helps some backends get a total ordering
+          of a component's members.
+
+        * TAO_IDL/fe/y.tab.cpp:
+        * TAO_IDL/fe/idl.yy:
+
+          Added code to set the line number member before the port
+          description struct in enqueued in its component node.
+
+Thu Aug  2 09:03:02 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/include/idl_defines.h:
+
+          Changed the size of the buffer that holds filenames to be
+          processed from 1024 to 2048. A crash was reported and it
+          was determined that there was an attempt to process ~1450
+          IDL files.
+
+Thu Aug  2 08:55:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_2935_Regression/Bug_2935_Regression.mpc:
+          Simplified this mpc file
+
+Thu Aug  2 08:39:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Asynch_Queued_Message.cpp:
+        * tao/Condition.cpp:
+        * tao/Connection_Handler.cpp:
+        * tao/default_client.cpp:
+        * tao/default_resource.cpp:
+        * tao/GIOP_Message_Base.cpp:
+        * tao/IIOP_Connector.cpp:
+        * tao/Muxed_TMS.cpp:
+        * tao/orbconf.h:
+        * tao/Queued_Data.cpp:
+        * tao/Strategies/SCIOP_Connector.cpp:
+        * tao/Strategies/SHMIOP_Connector.cpp:
+        * tao/Thread_Lane_Resources.cpp:
+        * tao/Transport.cpp:
+        * tao/Valuetype/ValueBase.cpp:
+          Replaced @@TODO with @todo so that doxygen adds this to the
+          documentation
+
+Thu Aug  2 03:15:32 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tests/Bug_2935_Regression/middle_i.h:
+        * tests/Bug_2935_Regression/middle_i.cpp:
+        * tests/Bug_2935_Regression/sink_i.h:
+        * tests/Bug_2935_Regression/sink_i.cpp:
+          Removed ACE_THROW_SPEC anachronisms.
+
+        * tests/Bug_2935_Regression/Bug_2935_Regression.mwc:
+          Removed this file.
+
+Wed Aug  1 21:54:15 UTC 2007  Dale Wilson  <wilsond@ociweb.com>
+
+        * NEWS:
+          Add entries for fixing ORBMuxedConnectionMax and too-many-connections.
+
+Wed Aug  1 21:26:32 UTC 2007  Dale Wilson  <wilsond@ociweb.com>
+
+        * tests/Bug_2935_Regression:
+        * tests/Bug_2935_Regression/Bug_2935_Regression.mpc:
+        * tests/Bug_2935_Regression/Bug_2935_Regression.mwc:
+        * tests/Bug_2935_Regression/README.txt:
+        * tests/Bug_2935_Regression/ThreeTier.idl:
+        * tests/Bug_2935_Regression/middle.conf:
+        * tests/Bug_2935_Regression/middle.cpp:
+        * tests/Bug_2935_Regression/middle_i.h:
+        * tests/Bug_2935_Regression/middle_i.cpp:
+        * tests/Bug_2935_Regression/run_test.pl:
+        * tests/Bug_2935_Regression/sink.cpp:
+        * tests/Bug_2935_Regression/sink_i.h:
+        * tests/Bug_2935_Regression/sink_i.cpp:
+        * tests/Bug_2935_Regression/source.cpp:
+        * tests/Bug_2935_Regression/source_i.h:
+        * tests/Bug_2935_Regression/source_i.cpp:
+          Add regression test for Wed Aug  1 15:54:01 UTC 2007  checkin
+
+Wed Aug  1 21:16:15 UTC 2007  Dale Wilson  <wilsond@ociweb.com>
+
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp:
+        * tao/Cache_Entries.h:
+        * tao/Profile_Transport_Resolver.cpp:
+        * tao/Transport_Cache_Manager.h:
+        * tao/Transport_Cache_Manager.cpp:
+        * tao/Transport_Connector.h:
+        * tao/Transport_Connector.cpp:
+        * tests/AMH_Oneway/client.cpp:
+        * tests/Bug_1476_Test/client.cpp:
+          Jonnny's suggestions
+          Change find_transport's busy_count argument from unsigned int
+          to size_t
+          Use @todo rather than @@TODO -- reference bugzilla entrys to track the todos.
+
+Wed Aug  1 15:54:01 UTC 2007  Dale Wilson  <wilsond@ociweb.com>
+
+          Corrections for bugs #2934 and #2935: connection problems in
+          the transport cache.
+
+          Briefly: the change involves adding the transport to the
+          cache at the time the connection is initiated rather than
+          waiting until the connection is complete.   This avoids the
+          situation where *way* too many connections are started in a
+          nested upcall and/or multithreading situation because none
+          of the connection attempts know the others are already in
+          progress.
+          At the same time it eliminates the wait-for-condition code
+          technique for honoring the -MaxMuxedConnections. The old
+          technique is unsafe and ineffective.
+
+        * tao/Cache_Entries.h:
+        * tao/Cache_Entries.inl:
+          Declare new cache entry status:  ENTRY_CONNECTING
+          Make the recycle_state method const (it's poorly named, but I'm not
+          fixing that now.)
+
+        * tao/IIOP_Connector.cpp:
+          Use RAII to manage tlist (list of pending connections) during parallel
+          connection.
+          Update the cache (rather than adding a new entry) when connection is
+          complete.
+          Change the way the transport is registered with the reactor so that it
+          is always registered before necessary.  Otherwise there was a race
+          condition when thread A tried to use a newly established connection
+          before thread B had "quite" finished preparing it for use.
+
+        * tao/Transport.h:
+          Declare new method: register_if_necessary to consolodate the various
+          attempts to register the transport with the reactor.
+
+        * tao/Transport.cpp:
+          Implement and use register_if_necessary
+          Update transport cache status in the post_connect method
+
+        * tao/Transport_Cache_Manager.h:
+        * tao/Transport_Cache_Manager.inl:
+        * tao/Transport_Cache_Manager.cpp:
+          Change find_transport to return one of the following statuses:
+            CACHE_FOUND_NONE
+            CACHE_FOUND_CONNECTING
+            CACHE_FOUND_BUSY
+            CACHE_FOUND_AVAILABLE
+          The more than one status applies, the last one in the above list
+          overrides (i.e. if there's one available, never mind the other stuff.)
+          Add an additional argument to find_transport to return the count of
+          busy transport's found when none were available.  This helps the
+          Transport_Connector to honor -MaxMuxedConnections.
+          Remove the attempt to open a new connection from the cache.  It belongs
+          in the Transport_Connector.
+          Improve support for updating cache entry status.
+
+        * tao/Transport_Connector.h:
+        * tao/Transport_Connector.cpp:
+          Eliminate TransportCleanupGuard.  It was ill conceived.
+          Supply new argument to and accept new status returns from find_transport.
+          New wait_for_transport method allows waiting for a connection to complete
+          even if it was started elsewhere.
+          The TAO_Connector::connect method has been reorganized.  It now consists
+          of a while loop that retries the search for the transport in the cache
+          until success, timeout, error, or a return because this is a non-blocking attempt.
+
+          The transport found by this method *ALWAYS* comes from the cache.   There
+          was code that attempted to short-circuit this for newly established connections
+          but it led to quite a few subtle bugs.  The new approach shouldn't be any
+          slower than the old one, but if is, there is room for improvment in the
+          cache now that it doesn't have to handle all the special cases.   (i.e.
+          consider long and carefully before trying to improve performance by reintroducing
+          the short-circuit-on-new-connection code.)
+
+        * orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connector.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp:
+        * tao/Profile_Transport_Resolver.cpp:
+        * tao/Strategies/UIOP_Connector.cpp:
+        * tests/Bug_1476_Test/client.cpp:
+          Supply additional argument to wait_for_connection_completion
+          Supply new argument to Transport_Cache_Manager::find_transport
+          Recognize new return status from Transport_Cache_Manager::find_transport
+          [no functional change]
+
+        * tao/IIOP_Transport.cpp:
+          Log status code on error.
+
+        * tao/Leader_Follower.cpp:
+          Ignore null tranport pointer (effects logging only)
+
+        * tests/AMH_Oneway/client.cpp:
+          Add a sleep before process exit.  To quote the internal documentation:
+           // The following sleep is a workaround for a defect in the Windows
+           // implementation of sockets (Win XP)
+           // The when this client exits after writing to a localhost socket
+           // Windows discards any data that has not been read by the server.
+           // The sleep gives the server time to catch up.  num_calls/2 gives
+           // it half a second per request which *really* should be overkill, but
+           // it also means the client will terminate before the server actually
+           // handles the requests (a good thing).
+           // I'm still trying to decide whether this should be a bugzilla entry.
+           // wilsond@ociweb.com
+
+        * tests/AMH_Oneway/server.cpp:
+          Modified to honor -ORB arguments on command line [so I could diagnose the silly
+          windows/localhost problem]
+
+        * performance-tests/Latency/DII/Test.idl:
+          Make the shutdown method a one-way to eliminate a very rare race condition while
+          shutting down.
+
+Wed Aug  1 11:44:24 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * configure.ac:
+
+          Added the new Makefiles to the list that I added on Mon Jul 30
+          13:13:58 UTC 2007.
+
+Wed Aug  1 11:35:42 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/examples/Notify/MC/monitor/monitor.cpp:
+        * orbsvcs/orbsvcs/Notify/MonitorControl/Generic_Registry.cpp:
+        * orbsvcs/orbsvcs/Notify/MonitorControl/NotificationServiceMonitor_i.cpp:
+        * orbsvcs/orbsvcs/Notify/MonitorControlExt/MonitorEventChannel.cpp:
+        * orbsvcs/orbsvcs/Notify/MonitorControlExt/MonitorEventChannelFactory.cpp:
+        * orbsvcs/orbsvcs/Notify/XML_Saver.h:
+        * orbsvcs/orbsvcs/Notify/XML_Saver.cpp:
+        * orbsvcs/tests/unit/Notify/MC/NotificationServiceMonitor/NotificationServiceMonitor.cpp:
+
+          Changed types or added static_cast's to avoid build warnings.
+
+Wed Aug  1 10:52:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/Collocated_Object_Proxy_Broker:
+          Disable the correct method for CORBA/e
+
+Wed Aug  1 09:02:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Transport.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Transport.h:
+        * orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Transport.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Transport.h:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.h:
+        * tao/Strategies/COIOP_Transport.cpp:
+        * tao/Strategies/COIOP_Transport.h:
+        * tao/Strategies/DIOP_Transport.cpp:
+        * tao/Strategies/DIOP_Transport.h:
+        * tao/Strategies/SHMIOP_Transport.cpp:
+        * tao/Strategies/SHMIOP_Transport.h:
+        * tao/Transport.cpp:
+        * tao/Transport.h:
+        * tao/Wait_On_Read.cpp:
+          Removed deprecated block argument from handle_input method.
+          Fixes bugzilla bug 2253
+
+Wed Aug  1 08:25:33 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/AnyTypeCode.mpc:
+
+          Added inheritance of gen_ostream feature, similar to tao.mpc
+          and valuetype.mpc, so the ostream operator overloads in the
+          library can be conditionally compiled, if the feature is
+          toggled on in default.features.
+
+        * TAO_IDL/be/be_codegen.cpp:
+
+          Added generation of preprocessor definition of GEN_OSTREAM_OPS,
+          if the -Gos option is used, so the ostream operators can be
+          seen in included ORB headers.
+
+        * TAO_IDL/be/be_string.cpp:
+
+          Fixed incorrect ostream code generation for wstring members
+          in IDL types that have member acceessors (union and valuetype),
+          since these accessors return CORBA::WChar *, whereas the
+          corresponding member type in an IDL struct is TAO_WString_Manager.
+
+          Thanks to Lothar Werzinger <lothar at tradescape dot biz> for
+          reporting the compilation problems in generated code resulting
+          from the above bugs.
+
+Wed Aug  1 07:38:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/ORB_Core.cpp:
+          Replaced ACE_LIB_TEXT with ACE_TEXT
+
+        * tao/Asynch_Queued_Message.cpp:
+        * tao/Asynch_Queued_Message.h:
+        * tao/Queued_Message.h:
+        * tao/Synch_Queued_Message.cpp:
+          Made the heap allocated flag const and pass it to all constructors
+          so that we don't have to set if after creating the qm.
+
+Wed Aug  1 07:34:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/examples/CosEC/TypedSimple/Consumer.cpp:
+        * orbsvcs/orbsvcs/Notify/MonitorControl/MonitorManager.cpp:
+        * orbsvcs/tests/HTIOP/test_config.h:
+          Replaced ACE_LIB_TEXT with ACE_TEXT
+
+Tue Jul 31 14:12:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Valuetype.mpc:
+          Added genostream as base project
+
+Tue Jul 31 12:39:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Abstract_Servant_Base.h:
+          Fixed typo in comment
+
+        * tao/PortableServer/Adapter_Activator.h:
+          Layout change
+
+        * tao/PortableServer/POA.pidl:
+        * tao/PortableServer/POAManagerFactory.pidl:
+          Fixed a few ifdef checks so that also minimum corba with BCB
+          can be used
+
+        * tao/PortableServer/Servant_Base.{h,cpp}:
+          Don't make methods dependent on CORBA/e or Minimum Corba. This
+          makes it possible to use the -Gce and -Gmc options on the IDL
+          files. When all generated files are removed from the repo the
+          checks can be added again, created bugzilla 3019 as reminder for
+          this.
+
+        * MPC/config/corba_e_compact.mpb:
+        * MPC/config/corba_e_micro.mpb:
+        * MPC/config/core_minimum_corba.mpb:
+          Added -Gce and -Gmc again
+
+Tue Jul 31 12:22:20 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/tests/unit/Notify/MC/NotificationServiceMonitor/run_test.pl:
+
+          Set the executable property on this script.
+
+Tue Jul 31 11:36:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/BiDir_GIOP/BiDir_Policy_i.cpp:
+        * tao/Policy_Current.cpp:
+        * tao/Policy_Current.h:
+        * tao/Policy_Current_Impl.h:
+        * tao/Policy_Manager.inl:
+        * tao/Policy_Set.cpp:
+        * tao/PortableServer/Default_Policy_Validator.cpp:
+        * tao/PortableServer/POA_Policy_Set.h:
+        * tao/Stub.cpp:
+          Layout changes
+
+Tue Jul 31 11:35:53 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/orbsvcs/CosNotification.mpc:
+        * orbsvcs/orbsvcs/Makefile.am:
+
+          Added the tao_versioning_idl_defaults base project to the
+          CosNotification_MC project.
+
+Tue Jul 31 10:58:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * MPC/config/corba_e_compact.mpb:
+        * MPC/config/corba_e_micro.mpb:
+        * MPC/config/core_minimum_corba.mpb:
+          Temporarily removed the new -Gce and -Gmc idl flags, the
+          few generated files in the repo cause problems. We need to
+          zap them asap.
+
+Tue Jul 31 10:54:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Object_Proxy_Broker.h:
+          non_existent is not needed for CORBA/e
+
+        * tao/Codeset_Translator_Base.h:
+        * tao/Collocation_Proxy_Broker.h:
+        * tao/Collocation_Resolver.h:
+          Layout changes
+
+Tue Jul 31 10:52:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Collocated_Object_Proxy_Broker.{h,cpp}:
+          non_existent is not needed for CORBA/e
+
+Tue Jul 31 07:22:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Abstract_Servant_Base.{h,cpp,inl}:
+          Also disabled some methods with CORBA/e and Minimum CORBA in this
+          class and made the constructor, copy constructor and assignment
+          operator inline
+
+        * tao/Makefile.am:
+          Added new inline file
+
+Tue Jul 31 06:40:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/compiler.html:
+        * MPC/config/core_minimum_corba.mpb:
+        * tao/Object.h:
+        * tao/PortableServer/Servant_Base.{h,cpp}:
+        * TAO_IDL/be/be_global.cpp:
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be/be_visitor_component/component_sh.cpp:
+        * TAO_IDL/be/be_visitor_interface/amh_sh.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_sh.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+        * TAO_IDL/be_include/be_global.h:
+          Added -Gmc to the IDL compiler to generate code targeted for
+          Minimum CORBA. When this option is enabled we suppress several
+          methods from the generation of the skeleton. This fixes
+          bugzilla 3017
+
+Tue Jul 31 05:42:34 UTC 2007  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * tao/TAO_Server_Request.cpp:
+
+        Fixing a typo in the base initializers list, only affecting
+        no-interceptors builds.
+
+Tue Jul 31 05:11:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/Servant_Base.{h,cpp}:
+          With CORBA/e no need to compile get_component
+
+        * tao/Protocol_Factory.{h,cpp}:
+          Made most methods pure virtual, derived classes must implement them
+
+        * TAO_IDL/be/be_global.cpp:
+          Added -Gce to the compiler flags
+
+Mon Jul 30 21:12:51 UTC 2007  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * tao/Transport_Selection_Guard.h:
+
+          Implementing the misisng operator=(), needed by
+          TAO::CSD::FW_Server_Reques_Wrapper.
+
+Mon Jul 30 18:54:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/compiler.html:
+        * MPC/config/corba_e_compact.mpb:
+        * MPC/config/corba_e_micro.mpb:
+        * TAO_IDL/be/be_global.cpp:
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be/be_visitor_component/component_sh.cpp:
+        * TAO_IDL/be/be_visitor_interface/amh_sh.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_sh.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+        * TAO_IDL/be_include/be_global.h:
+          Added new option -Gce indicating that we are compiling with CORBA/e
+          enabled. In that case we don't need to generate the _component
+          method in the skeleton which safes footprint. This fixes bugzilla
+          issue 2968
+
+Mon Jul 30 18:17:45 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/orbsvcs/Notify/MonitorControl/NotificationServiceMonitor_i.cpp:
+
+          Explicitly initialize struct members.  There is no constructor for
+          IDL generated structs.
+
+Mon Jul 30 18:12:58 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/tests/Bug_2926_Regression/server.cpp:
+
+          Added a missing parameter to the TAO_CosNotify_Service::create()
+          method.
+
+Mon Jul 30 14:54:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/POA/*:
+        * tests/POA/*:
+          Moved all POA examples to tests, this are all one button POA
+          tests that we need to run in all core builds
+
+Mon Jul 30 13:13:58 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * MPC/config/notification_mc.mpb:
+        * MPC/config/notification_mc_ext.mpb:
+
+          Added base projects for the new noftification service libraries.
+
+        * NEWS:
+
+          Added an entry for this new feature.
+
+        * orbsvcs/Notify_Service/Notify_Service.cpp:
+
+          Updated to provide the factory name during factory creation, the
+          channel name during channel creation, and fixed a leak of objects
+          during shutdown of the service.
+
+        * orbsvcs/examples/Notify/MC/Makefile.am:
+        * orbsvcs/examples/Notify/MC/TkMonitor/Makefile:
+        * orbsvcs/examples/Notify/MC/TkMonitor/README:
+        * orbsvcs/examples/Notify/MC/TkMonitor/external_idl.pl:
+        * orbsvcs/examples/Notify/MC/TkMonitor/modules:
+        * orbsvcs/examples/Notify/MC/TkMonitor/modules/GeometryStore.pm:
+        * orbsvcs/examples/Notify/MC/TkMonitor/modules/MonitorControl.pm:
+        * orbsvcs/examples/Notify/MC/TkMonitor/modules/Tk:
+        * orbsvcs/examples/Notify/MC/TkMonitor/modules/Tk/active.xpm:
+        * orbsvcs/examples/Notify/MC/TkMonitor/modules/Tk/factory.xpm:
+        * orbsvcs/examples/Notify/MC/TkMonitor/modules/Tk/hand.xbm:
+        * orbsvcs/examples/Notify/MC/TkMonitor/modules/Tk/inactive.xpm:
+        * orbsvcs/examples/Notify/MC/TkMonitor/modules/Tk/mask.xbm:
+        * orbsvcs/examples/Notify/MC/TkMonitor/monitor.pl:
+
+          Added a graphical interface written in perl to access the
+          Notification Service Monitor.  It was written using opalORB.
+
+        * orbsvcs/examples/Notify/Makefile.am:
+        * orbsvcs/examples/Notify/MC/monitor/Makefile.am:
+        * orbsvcs/examples/Notify/MC/monitor/monitor.cpp:
+        * orbsvcs/examples/Notify/MC/monitor/monitor.mpc:
+
+          Added a command line monitor to demonstrate the monitoring
+          and control capabilities.
+
+        * orbsvcs/orbsvcs/CosNotification.mpc:
+        * orbsvcs/orbsvcs/Makefile.am:
+
+          Added the new MC and MC_Ext libraries.
+
+        * orbsvcs/orbsvcs/Notify/Buffering_Strategy.h:
+        * orbsvcs/orbsvcs/Notify/Buffering_Strategy.cpp:
+
+          Added a method to return the time of the oldest event in the
+          queue.
+
+        * orbsvcs/orbsvcs/Notify/Builder.h:
+        * orbsvcs/orbsvcs/Notify/Builder.cpp:
+
+          Enhanced the event channel factory and event channel building
+          methods to take an optional name parameter.
+
+        * orbsvcs/orbsvcs/Notify/Container_T.h:
+        * orbsvcs/orbsvcs/Notify/Container_T.cpp:
+
+          Added a method to destroy all of the objects held in the
+          collection.
+
+        * orbsvcs/orbsvcs/Notify/CosNotify_Service.h:
+        * orbsvcs/orbsvcs/Notify/CosNotify_Service.cpp:
+
+          Implement the new finalize_service() method by destroying all
+          event channels held by the provided event channel factory.
+          Implement the updated create() method to provide the factory name
+          to the builder.
+
+        * orbsvcs/orbsvcs/Notify/Event.h:
+        * orbsvcs/orbsvcs/Notify/Event.inl:
+        * orbsvcs/orbsvcs/Notify/Event.cpp:
+
+          Added a time of creation stamp on the event.
+
+        * orbsvcs/orbsvcs/Notify/EventChannel.h:
+
+          Changed to virtually inherit from
+          POA_CosNotifyChannelAdmin::EventChannel and made the destroy()
+          method public to allow the TAO_Notify_Container_T access.
+
+        * orbsvcs/orbsvcs/Notify/EventChannel.cpp:
+
+          Added a call to destroy() on the supplier and consumer admin
+          containers.  This cleans up the reference counts on the admins.
+
+        * orbsvcs/orbsvcs/Notify/EventChannelFactory.h:
+        * orbsvcs/orbsvcs/Notify/EventChannelFactory.cpp:
+
+          Added a method to create a named event channel.  To support
+          automatic creation of named event channels by the Notify_Service
+          executable.  This version is the same as calling create_channel().
+
+          Also fixed a leak during activation with the POA.  An extra narrow
+          was occurring which was not stored in a var.
+
+        * orbsvcs/orbsvcs/Notify/Factory.h:
+        * orbsvcs/orbsvcs/Notify/Default_Factory.h:
+        * orbsvcs/orbsvcs/Notify/Default_Factory.cpp:
+
+          Updated the create methods for event channel factories and event
+          channels to take a name parameter.
+
+        * orbsvcs/orbsvcs/Notify/Method_Request.h:
+        * orbsvcs/orbsvcs/Notify/Method_Request.cpp:
+
+          Added a time stamp that is populated by the event to which the
+          request corresponds.
+
+        * orbsvcs/orbsvcs/Notify/Method_Request_Dispatch.h:
+
+          Fixed a doxygen comment.
+
+        * orbsvcs/orbsvcs/Notify/MonitorControl/Control.h:
+        * orbsvcs/orbsvcs/Notify/MonitorControl/Control.cpp:
+        * orbsvcs/orbsvcs/Notify/MonitorControl/Control_Registry.h:
+        * orbsvcs/orbsvcs/Notify/MonitorControl/Control_Registry.cpp:
+
+          A class that can be used to keep track of named control objects.
+
+        * orbsvcs/orbsvcs/Notify/MonitorControl/Dynamic_Statistic.h:
+
+          A template to facilitate the creation of statistics that are
+          calculated on-the-fly.
+
+        * orbsvcs/orbsvcs/Notify/MonitorControl/Generic.h:
+        * orbsvcs/orbsvcs/Notify/MonitorControl/Generic.cpp:
+        * orbsvcs/orbsvcs/Notify/MonitorControl/Generic_Registry.h:
+        * orbsvcs/orbsvcs/Notify/MonitorControl/Generic_Registry.cpp:
+
+          A generic class that can be used to keep track of named objects.
+
+        * orbsvcs/orbsvcs/Notify/MonitorControl/MonitorManager.h:
+        * orbsvcs/orbsvcs/Notify/MonitorControl/MonitorManager.cpp:
+
+          This class allows the user to dynamically load the manager and
+          configure it through the service configurator.  It starts a thread
+          and services monitoring requests via an ORB that is separate from
+          the ORB for the normal operation of the notification service.
+
+        * orbsvcs/orbsvcs/Notify/MonitorControl/NotificationServiceMC.idl:
+
+          Provide a definition of an interface to retrieve statistics and
+          perform functions upon the Notify Service.
+
+        * orbsvcs/orbsvcs/Notify/MonitorControl/NotificationServiceMonitor_i.h:
+        * orbsvcs/orbsvcs/Notify/MonitorControl/NotificationServiceMonitor_i.cpp:
+
+          Implements the CosNotification::NotificationServiceMonitorControl
+          which includes accessing statistics and performing control
+          functions on the notify service.
+
+        * orbsvcs/orbsvcs/Notify/MonitorControl/Statistic.h:
+        * orbsvcs/orbsvcs/Notify/MonitorControl/Statistic.inl:
+        * orbsvcs/orbsvcs/Notify/MonitorControl/Statistic.cpp:
+
+          Implement a statistic object that can hold various types of data.
+
+        * orbsvcs/orbsvcs/Notify/MonitorControl/Statistic_Registry.h:
+        * orbsvcs/orbsvcs/Notify/MonitorControl/Statistic_Registry.cpp:
+
+          A class that can be used to keep track of named statistic objects.
+
+        * orbsvcs/orbsvcs/Notify/MonitorControl/notify_mc_export.h:
+
+          Export file for the MC library.
+
+        * orbsvcs/orbsvcs/Notify/MonitorControlExt/MC_Default_Factory.h:
+        * orbsvcs/orbsvcs/Notify/MonitorControlExt/MC_Default_Factory.cpp:
+
+          Implement a factory that will create the monitor versions of the
+          event channel factory, event channel, supplier admin and consumer
+          admin.
+
+        * orbsvcs/orbsvcs/Notify/MonitorControlExt/MC_Notify_Service.h:
+        * orbsvcs/orbsvcs/Notify/MonitorControlExt/MC_Notify_Service.cpp:
+
+          Extend the TAO_CosNotify_Service to create the monitoring factory,
+          run the monitor manager during initialization and shutdown the
+          monitor manager during finalization.
+
+        * orbsvcs/orbsvcs/Notify/MonitorControlExt/MonitorConsumerAdmin.h:
+        * orbsvcs/orbsvcs/Notify/MonitorControlExt/MonitorConsumerAdmin.cpp:
+
+          Implement the NotifyMonitoringExt::ConsumerAdmin interface which
+          includes creation of named proxy suppliers.
+
+        * orbsvcs/orbsvcs/Notify/MonitorControlExt/MonitorEventChannel.h:
+        * orbsvcs/orbsvcs/Notify/MonitorControlExt/MonitorEventChannel.cpp:
+
+          Extend the TAO_Notify_EventChannel to track statistics and named
+          supplier proxies and consumer proxies.
+
+        * orbsvcs/orbsvcs/Notify/MonitorControlExt/MonitorEventChannelFactory.h:
+        * orbsvcs/orbsvcs/Notify/MonitorControlExt/MonitorEventChannelFactory.cpp:
+
+          Implement the NotifyMonitoringExt::EventChannelFactory interface
+          which includes statistics registration and tracking event channel
+          names.
+
+        * orbsvcs/orbsvcs/Notify/MonitorControlExt/MonitorSupplierAdmin.h:
+        * orbsvcs/orbsvcs/Notify/MonitorControlExt/MonitorSupplierAdmin.cpp:
+
+          Implement the NotifyMonitoringExt::SupplierAdmin interface which
+          includes creation of named proxy consumers.
+
+        * orbsvcs/orbsvcs/Notify/MonitorControlExt/NotifyMonitoringExt.idl:
+
+          Provide a definition for the monitoring extensions to the event
+          channel factory, supplier admin and consumer admin.
+
+        * orbsvcs/orbsvcs/Notify/MonitorControlExt/notify_mc_ext_export.h:
+
+          Export file for the MC_Ext library.
+
+        * orbsvcs/orbsvcs/Notify/Notify_EventChannelFactory_i.h:
+        * orbsvcs/orbsvcs/Notify/Notify_EventChannelFactory_i.cpp:
+
+          Updated to take a factory name.
+
+        * orbsvcs/orbsvcs/Notify/Object.h:
+        * orbsvcs/orbsvcs/Notify/Object.cpp:
+
+          Fixed a bug in destroy_proxy_poa() where the wrong poa object was
+          being used.
+
+          Added a method to access the worker task.
+
+        * orbsvcs/orbsvcs/Notify/ProxyConsumer.cpp:
+        * orbsvcs/orbsvcs/Notify/ProxySupplier.cpp:
+        * orbsvcs/orbsvcs/Notify/SupplierAdmin.cpp:
+        * orbsvcs/orbsvcs/Notify/ConsumerAdmin.cpp:
+
+          Fixed a bug where a the object could not be destroyed if it had
+          previously been shutdown.  This caused it and related objects to
+          be leaked due to reference counts not being decremented.
+
+        * orbsvcs/orbsvcs/Notify/RT_Factory.h:
+        * orbsvcs/orbsvcs/Notify/RT_Factory.cpp:
+
+          Removed duplicated functions that are inherited from
+          TAO_Notify_Default_Factory.
+
+        * orbsvcs/orbsvcs/Notify/Service.h:
+        * orbsvcs/orbsvcs/Notify/Service.cpp:
+
+          Added a static method to locate the notify service from a default
+          list of service names.  This allows us to avoid duplicating this
+          code everywhere a notify service is to be dynamically loaded.
+
+          Added a pure virtual method to finalize the service and changed
+          the create() method to take an optional factory name.
+
+        * orbsvcs/orbsvcs/Notify/ConsumerAdmin.h:
+        * orbsvcs/orbsvcs/Notify/SupplierAdmin.h:
+
+          Made the destroy() method public to allow the
+          TAO_Notify_Container_T access.
+
+        * orbsvcs/orbsvcs/Notify/ThreadPool_Task.h:
+        * orbsvcs/orbsvcs/Notify/ThreadPool_Task.cpp:
+
+          Added an accessor for the buffering strategy.
+
+        * orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Service.cpp:
+        * orbsvcs/examples/Notify/Federation/Agent/Agent.cpp:
+        * orbsvcs/examples/Notify/Federation/SpaceCraft/SpaceCraft.cpp:
+        * orbsvcs/tests/Notify/lib/EventChannel_Command.cpp:
+
+          Use the TAO_Notify_Service::load_default() method to dynamically
+          locate the notify service instead of duplicating code.
+
+        * orbsvcs/tests/unit/Makefile.am:
+        * orbsvcs/tests/unit/Notify/MC/Control/Control.cpp:
+        * orbsvcs/tests/unit/Notify/MC/Control/Control.mpc:
+        * orbsvcs/tests/unit/Notify/MC/Control/Makefile.am:
+        * orbsvcs/tests/unit/Notify/MC/Control/run_test.pl:
+        * orbsvcs/tests/unit/Notify/MC/Makefile.am:
+        * orbsvcs/tests/unit/Notify/MC/MonitorControlExt/Makefile.am:
+        * orbsvcs/tests/unit/Notify/MC/MonitorControlExt/MonitorControlExt.mpc:
+        * orbsvcs/tests/unit/Notify/MC/MonitorControlExt/MonitorControlExt.cpp:
+        * orbsvcs/tests/unit/Notify/MC/MonitorControlExt/run_test.pl:
+        * orbsvcs/tests/unit/Notify/MC/MonitorControlExt/svc.conf:
+        * orbsvcs/tests/unit/Notify/MC/MonitorControlExt/svc.conf.xml:
+        * orbsvcs/tests/unit/Notify/MC/MonitorManager/Makefile.am:
+        * orbsvcs/tests/unit/Notify/MC/MonitorManager/MonitorClient.cpp:
+        * orbsvcs/tests/unit/Notify/MC/MonitorManager/MonitorManager.cpp:
+        * orbsvcs/tests/unit/Notify/MC/MonitorManager/MonitorManager.mpc:
+        * orbsvcs/tests/unit/Notify/MC/MonitorManager/run_test.pl:
+        * orbsvcs/tests/unit/Notify/MC/MonitorManager/svc.conf:
+        * orbsvcs/tests/unit/Notify/MC/MonitorManager/svc.conf.xml:
+        * orbsvcs/tests/unit/Notify/MC/NotificationServiceMonitor/Makefile.am:
+        * orbsvcs/tests/unit/Notify/MC/NotificationServiceMonitor/NotificationServiceMonitor.mpc:
+        * orbsvcs/tests/unit/Notify/MC/NotificationServiceMonitor/NotificationServiceMonitor.cpp:
+        * orbsvcs/tests/unit/Notify/MC/NotificationServiceMonitor/run_test.pl:
+        * orbsvcs/tests/unit/Notify/MC/Statistic/Makefile.am:
+        * orbsvcs/tests/unit/Notify/MC/Statistic/Statistic.cpp:
+        * orbsvcs/tests/unit/Notify/MC/Statistic/Statistic.mpc:
+        * orbsvcs/tests/unit/Notify/MC/Statistic/run_test.pl:
+        * orbsvcs/tests/unit/Notify/MC/Statistic_Registry/Makefile.am:
+        * orbsvcs/tests/unit/Notify/MC/Statistic_Registry/Statistic_Registry.cpp:
+        * orbsvcs/tests/unit/Notify/MC/Statistic_Registry/Statistic_Registry.mpc:
+        * orbsvcs/tests/unit/Notify/MC/Statistic_Registry/run_test.pl:
+        * orbsvcs/tests/unit/Notify/Makefile.am:
+
+          Added unit tests for the different components of the MC and MC_Ext
+          libraries.
+
+Mon Jul 30 12:18:29 UTC 2007  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * tao/TAO_Server_Request.h:
+        * tao/TAO_Server_Request.inl:
+        * tao/TAO_Server_Request.cpp:
+        * tao/Transport_Selection_Guard.h:
+
+          Eliminating duplication of the transport_ member from
+          TAO_Server_Request. The Transport_Selection_Guard is a
+          smart pointer, designed to work both as a normal pointer
+          and with the transport current feature. When TC is disabled,
+          it is also lightweight enough to avoid footprint increase.
+          This fixes bugzilla 2991.
+
+Mon Jul 30 11:24:47 UTC 2007  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * tests/GIOP_Fragments/PMB_With_Fragments/run_test.pl:
+          Fixed this test on IPv6 builds by changing localhost to
+          127.0.0.1.
+
+Mon Jul 30 11:09:21 UTC 2007  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * tao/MCAST_Parser.cpp:
+          Made so that an opened datagram socket has a proper protocol
+          family. This fixes TAO/orbsvcs/tests/Simple_Naming/run_test.pl
+          of IPv6 builds.
+
+Mon Jul 30 08:33:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Leader_Follower_Flushing_Strategy.cpp (flush_transport):
+        * tao/Reactive_Flushing_Strategy.cpp (flush_transport):
+          Const changes and no need for intermediate variable
+
+        * tao/Transport.{h,cpp,inl}:
+          Layout changes and updated queue_is_empty to return a bool
+
+Fri Jul 27 06:50:14 CDT 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO version 1.5.10 released.
+
+Local Variables:
+mode: change-log
+add-log-time-format: (lambda () (progn (setq tz (getenv "TZ")) (set-time-zone-rule "UTC") (setq time (format-time-string "%a %b %e %H:%M:%S %Z %Y" (current-time))) (set-time-zone-rule tz) time))
+indent-tabs-mode: nil
+End:
