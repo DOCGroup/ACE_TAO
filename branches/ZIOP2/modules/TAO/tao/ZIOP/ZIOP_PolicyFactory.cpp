@@ -10,13 +10,11 @@ ACE_RCSID (ZIOP_GIOP,
            "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 CORBA::Policy_ptr
 TAO_ZIOP_PolicyFactory::create_policy (
     CORBA::PolicyType type,
-    const CORBA::Any &value
-    ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   CORBA::PolicyError))
+    const CORBA::Any &value)
 {
   CORBA::Policy_ptr policy = CORBA::Policy::_nil ();
 

@@ -1,6 +1,5 @@
 #include "tao/ZIOP/ZIOP_ORBInitializer.h"
 #include "tao/ZIOP/ZIOP.h"
-//#include "tao/BiDir_GIOP/BiDirPolicy_Validator.h"
 #include "tao/ORB_Core.h"
 #include "tao/debug.h"
 #include "tao/ORBInitializer_Registry.h"
@@ -71,33 +70,8 @@ TAO_ZIOP_Loader::init (int,
 }
 
 void
-TAO_ZIOP_Loader::load_policy_validators (TAO_Policy_Validator &val
-                                              ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+TAO_ZIOP_Loader::load_policy_validators (TAO_Policy_Validator &val)
 {
-/*  // Is this true? Does the GIOP protocol version matter here?
-  if (TAO_DEF_GIOP_MINOR < 2)
-    return;
-
-  TAO_BiDirPolicy_Validator *validator = 0;
-  ACE_NEW_THROW_EX (validator,
-                    TAO_BiDirPolicy_Validator (val.orb_core ()),
-                    CORBA::NO_MEMORY (
-                        CORBA::SystemException::_tao_minor_code (
-                            TAO::VMCID,
-                            ENOMEM),
-                        CORBA::COMPLETED_NO));
-  ACE_CHECK;
-
-  // We may be adding another TAO_BiDirPolicy_Validator instance for
-  // the same ORB (different POA). In cases where huge numbers of
-  // bi-directional POA instances are created, having a validator
-  // instance per POA may introduce additional delays in policy
-  // validation and hence, the overal policy creation time. Since this
-  // is out of the critical invocation processing path, I plan to keep
-  // the design simple and not try to avoid an ineficiency of such
-  // small proportions.
-  val.add_validator (validator);*/
 }
 
 int
@@ -116,56 +90,28 @@ TAO_ZIOP_Loader::decompress (TAO_ServerRequest& server_request)
     Compression::CompressionManager::_narrow (compression_manager.in ());
 
   if (!CORBA::is_nil(manager.in ()))
-  {
-IOP::CompressedData data;
-if ((*(server_request.incoming()) >> data) == 0)
-  return false;
-server_request.compressed_ = true;
+    {
+      IOP::CompressedData data;
+      if ((*(server_request.incoming()) >> data) == 0)
+        return false;
+      server_request.compressed_ = true;
 
-  Compression::Compressor_var compressor = manager->get_compressor (data.compressorid, 6);
-  //TAO_InputCDR cdr (reinterpret_cast<const char*> (
-    //                  data.data.get_buffer ()),
-      //                data.data.length ());
-
+      Compression::Compressor_var compressor = manager->get_compressor (data.compressorid, 6);
       CORBA::OctetSeq myout;
       myout.length (data.original_length);
 
-//      CORBA::OctetSeq input ((CORBA::ULong)(server_request.incoming()->length()),server_request.incoming()->start());
       compressor->decompress (data.data, myout);
       TAO_InputCDR* newstream = new TAO_InputCDR ((char*)myout.get_buffer(true), (size_t)data.original_length);
       server_request.incoming()->steal_from (*newstream);
-  }
-//  TAO_InputCDR cdr (reinterpret_cast<const char*> (
-//                      context.context_data.get_buffer ()),
-//                      context.context_data.length ());
-
-//  CORBA::Boolean byte_order;
-//  if ((cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
-//    return false;
-
-//  cdr.reset_byte_order (static_cast<int> (byte_order));
-
-//  CORBA::ULong message_length = 0;
-//  if (!(cdr >> message_length))
-//    return false;
-//+#if !defined (__BORLANDC__)
-//+            Bytef* LargBuffer = new Bytef [request.original_message_length_ * 2];
-//+     uLongf length = request.original_message_length_ * 2;
-//+            int retval = uncompress (LargBuffer,   &length,
-//+       (const Bytef*)cdr.rd_ptr(), cdr.length ());
-//+                          //       reinterpret_cast <const Bytef*>(compression_stream.buffer ()), compression_stream.total_length ());
-//+     char* buf = (char*)LargBuffer;
-
-//+TAO_InputCDR* newstream = new TAO_InputCDR (buf, (size_t)length);
-//+request.incoming_ = newstream;
-//+#endif
-//+
-//+ // do decompression
-return true;
+    }
+  return true;
 }
 
 bool
-TAO_ZIOP_Loader::compress (TAO_ORB_Core& core, TAO_Operation_Details &details, TAO_OutputCDR &out_stream)
+TAO_ZIOP_Loader::compress (
+  TAO_ORB_Core& core,
+  TAO_Operation_Details &details,
+  TAO_OutputCDR &out_stream)
 {
   TAO_OutputCDR compression_stream;
   if (details.marshal_args (compression_stream) == false)
@@ -181,51 +127,24 @@ TAO_ZIOP_Loader::compress (TAO_ORB_Core& core, TAO_Operation_Details &details, T
 
   if (!CORBA::is_nil(manager.in ()))
   {
-
     Compression::CompressorId compressor_id = Compression::COMPRESSORID_ZLIB;
-  Compression::Compressor_var compressor = manager->get_compressor (compressor_id, 6);
+    Compression::Compressor_var compressor = manager->get_compressor (compressor_id, 6);
 
-      CORBA::OctetSeq myout;
-      myout.length ((CORBA::ULong)(compression_stream.length() * 1.1));
+    CORBA::OctetSeq myout;
+    myout.length ((CORBA::ULong)(compression_stream.length() * 1.1));
 
-      CORBA::OctetSeq input ((CORBA::ULong)(compression_stream.length()), compression_stream.begin ());
-      compressor->compress (input, myout);
-  out_stream.compressed (true);
-  ACE_Message_Block *newblock = new ACE_Message_Block ((const char*)myout.get_buffer(), (size_t)myout.length());
-  newblock->wr_ptr ((size_t)myout.length());
-//  out_stream.begin ()->cont (newblock);
-IOP::CompressedData data;
-data.compressorid = compressor_id;
-data.original_length = compression_stream.total_length();
-data.data = myout;
-//TAO_OutputCDR
-//out_stream .write_octet_array(myout.get_buffer (), myout.length());
-out_stream << data;
-
-//      TAO_OutputCDR cdr;
-
-      // Add the original message length to the service contenxt
-  //    CORBA::ULong length = compression_stream.total_length();
-    //  if ((cdr << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER) == 0)
-      //    || (cdr << length) == 0
-        //  || (cdr << compressor_id) == 0)
-        //return false;
-
-      // Add this info in to the svc_list
-      //details.request_service_context ().set_context (IOP::TAG_ZIOP_COMPONENT,
-        //                                              cdr);
-
+    CORBA::OctetSeq input ((CORBA::ULong)(compression_stream.length()), compression_stream.begin ());
+    compressor->compress (input, myout);
+    out_stream.compressed (true);
+    ACE_Message_Block *newblock = new ACE_Message_Block ((const char*)myout.get_buffer(), (size_t)myout.length());
+    newblock->wr_ptr ((size_t)myout.length());
+    IOP::CompressedData data;
+    data.compressorid = compressor_id;
+    data.original_length = compression_stream.total_length();
+    data.data = myout;
+    out_stream << data;
   }
-
-//#if !defined (__BORLANDC__)
-//            Bytef* LargBuffer = new Bytef [1000];
-//     uLongf length = 100;
-//            int retval = compress (LargBuffer,   &length,
-//                                 reinterpret_cast <const Bytef*>(compression_stream.buffer ()), compression_stream.total_length ());
-//#endif
-            // Compress stream, dependent on bigger or smaller we use
-            // the compressed stream or the non compressed
-
+  return true;
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

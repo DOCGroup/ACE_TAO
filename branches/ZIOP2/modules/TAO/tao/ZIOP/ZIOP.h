@@ -50,8 +50,7 @@ public:
   virtual bool compress (TAO_ORB_Core& core, TAO_Operation_Details &detail, TAO_OutputCDR &out_stream);
 
   /// Initialize the BiDIR loader hooks.
-  virtual int init (int argc,
-                    ACE_TCHAR* []);
+  virtual int init (int argc, ACE_TCHAR* []);
 
   virtual void load_policy_validators (TAO_Policy_Validator &validator
                                        ACE_ENV_ARG_DECL)
