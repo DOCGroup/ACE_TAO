@@ -161,7 +161,15 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
                     }
                   if (space)
                     {
-                      nsm->shutdown_event_channel (name + i);
+                      try
+                        {
+                          nsm->shutdown_event_channel (name + i);
+                        }
+                      catch (const CORBA::Exception& ex)
+                        {
+                          ACE_OS::strcat (rl, ": ");
+                          ex._tao_print_exception (rl);
+                        }
                       continue;
                     }
                 }
