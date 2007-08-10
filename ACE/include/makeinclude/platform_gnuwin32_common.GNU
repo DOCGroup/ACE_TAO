@@ -35,6 +35,13 @@ optimize ?= 1
 threads ?= 1
 pipes ?= 1
 
+# When building shared libraries
+ifeq ($(shared_libs), 1)
+  ifneq ($(static_libs_only), 1)
+    inline ?= 0
+  endif
+endif
+
 ifeq ($(debug),0)
 CFLAGS += -DNDEBUG
 endif
