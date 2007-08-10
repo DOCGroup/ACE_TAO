@@ -114,8 +114,8 @@ sub modify_libpath {
   my($reldir)  = shift;
   my($libname) = shift;
 
-  if ($libname =~ /^lib(ace|kokyu\.)/i) {
-    if (!defined $reldir) {
+  if ($libname =~ /^lib(ace)/i) {
+    if (!defined $reldir || $reldir eq '') {
       if (defined $libdirs{$libname}) {
         $reldir = $libdirs{$libname};
       }
@@ -124,6 +124,18 @@ sub modify_libpath {
       }
     }
     $str =~ s!$libname!\$(ACE_BUILDDIR)/$reldir/$libname!;
+    return $str;
+  }
+  elsif ($libname =~ /^lib(kokyu\.)/i) {
+    if (!defined $reldir || $reldir eq '') {
+      if (defined $libdirs{$libname}) {
+        $reldir = $libdirs{$libname};
+      }
+      else {
+        $reldir = 'Kokyu';
+      }
+    }
+    $str =~ s!$libname!\$(top_builddir)/$reldir/$libname!;
     return $str;
   }
   elsif ($libname =~ /^lib(tao|kokyu)/i) {
