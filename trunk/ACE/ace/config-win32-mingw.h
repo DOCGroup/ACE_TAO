@@ -81,6 +81,7 @@
 #define ACE_LACKS_STROPTS_H
 #define ACE_LACKS_SYS_IOCTL_H
 #define ACE_HAS_NONCONST_WCSDUP
+#define ACE_HAS_WINSOCK2_GQOS
 
 // We trust the user: He must have used -mpentiumpro or -mpentium
 // if that is what he wants.

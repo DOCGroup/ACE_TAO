@@ -31,18 +31,21 @@
 #
 TCPU ?= pentiumpro
 
-mingw32 = 1
+mingw32 ?= 1
 
 # MingW doesn't allow to add the version number of ACE to the dll name
 # because fe ace.dll.5.2.3 isn't a valid dll name
 versioned_so=0
 
 # MinGW doesn't have rwho
-rwho = 0
+rwho ?= 0
 
 # MinGW has wfmo and registry
-wfmo = 1
-winregistry = 1
+wfmo ?= 1
+winregistry ?= 1
+
+# We can use the QoS support
+qos ?= 1
 
 # Disable auto-import warnings. The MingW linker has a problem with imports
 # See https://sourceforge.net/tracker/?func=detail&atid=102435&aid=683455&group_id=2435
