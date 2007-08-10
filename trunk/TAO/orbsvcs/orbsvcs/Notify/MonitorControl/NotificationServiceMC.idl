@@ -67,7 +67,8 @@ module CosNotification
     void clear_statistics (in NameList names)
       raises (InvalidName);
 
-    void shutdown_event_channel (in string name);
+    void shutdown_event_channel (in string name)
+      raises (InvalidName);
 
     oneway void shutdown ();
   };
