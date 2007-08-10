@@ -162,7 +162,7 @@ class ACE_Export ACE_Main_Base
 {
 public:
   ACE_Main_Base ();
-  ~ACE_Main_Base ();
+  virtual ~ACE_Main_Base ();
   int run (int, char *[]);
   virtual int run_i (int, char *[]) = 0;
 };
