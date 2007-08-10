@@ -1,3 +1,10 @@
+Fri Aug 10 15:52:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        Reverted this change, could lead to problems
+
+        * bin/MakeProjectCreator/config/gnuace.features:
+          Enabled qos, the GNU makefiles will block the building of QoS
+
 Fri Aug 10 11:59:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/config/gnuace.features:
