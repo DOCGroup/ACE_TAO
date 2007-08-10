@@ -1,3 +1,13 @@
+Fri Aug 10 11:39:48 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ACE.mwc:
+
+          Associate more directories and use the new '--' key.
+
+        * bin/MakeProjectCreator/modules/AutomakeWorkspaceHelper.pm:
+
+          Fixed issues with generated Kokyu projects.
+
 Fri Aug 10 09:33:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_gnuwin32_common.GNU:

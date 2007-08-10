@@ -2,7 +2,6 @@
 workspace {
   exclude(automake) {
     build
-    Kokyu
   }
   exclude {
     TAO
@@ -16,5 +15,18 @@ workspace {
   associate(tests) {
     performance-tests
     tests
+  }
+  associate(gperf) {
+    gperf
+  }
+
+  // The '--' is a special key that indicates that the associated
+  // projects should be of the form @NAME@ in the generate Makefile.am.
+  associate(--) {
+    ACEXML
+    ASNMP
+    protocols
+    KOKYU
+    TAO
   }
 }
