@@ -64,6 +64,11 @@ run_main (int, ACE_TCHAR *[])
   foo = 7;
   ACE_ASSERT (foo == 7);
 
+  ACE_Atomic_Op <ACE_SYNCH_MUTEX, long> foo2 (5);
+  foo2 = foo;
+  ACE_ASSERT (foo == 7);
+  ACE_ASSERT (foo2 == 7);
+
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Starting <long> assignment %D\n")));
   int i;
   for (i = 0; i < TEST_ITERATIONS; ++i)
@@ -146,6 +151,11 @@ run_main (int, ACE_TCHAR *[])
   foo_unsigned = 7;
   ACE_ASSERT (foo_unsigned == 7);
 
+  ACE_Atomic_Op <ACE_SYNCH_MUTEX, unsigned long> foo_unsigned2 (5);
+  foo_unsigned2 = foo_unsigned;
+  ACE_ASSERT (foo_unsigned == 7);
+  ACE_ASSERT (foo_unsigned2 == 7);
+
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Starting <unsigned long> assignment %D\n")));
   for (i = 0; i < TEST_ITERATIONS; ++i)
     {
@@ -224,8 +234,13 @@ run_main (int, ACE_TCHAR *[])
   ACE_ASSERT (bar == 5);
   ACE_ASSERT (result == 5);
 
-  bar = 5L;
-  ACE_ASSERT (bar == 5);
+  bar = 7L;
+  ACE_ASSERT (bar == 7);
+
+  ACE_Atomic_Op <ACE_SYNCH_MUTEX, int> bar2 (5L);
+  bar2 = bar;
+  ACE_ASSERT (bar == 7);
+  ACE_ASSERT (bar2 == 7);
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Starting <int> assignment %D\n")));
   for (i = 0; i < TEST_ITERATIONS; ++i)
@@ -277,84 +292,89 @@ run_main (int, ACE_TCHAR *[])
     }
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Ending <int> subtraction %D\n")));
 
-  ACE_Atomic_Op <ACE_SYNCH_MUTEX, unsigned int> bar_unsigned (5);
+  ACE_Atomic_Op <ACE_SYNCH_MUTEX, unsigned int> unsigned_bar (5);
 
-  ACE_ASSERT (bar_unsigned == 5);
+  ACE_ASSERT (unsigned_bar == 5);
 
-  unsigned int ui_result = ++bar_unsigned;
-  ACE_ASSERT (bar_unsigned == 6);
+  unsigned int ui_result = ++unsigned_bar;
+  ACE_ASSERT (unsigned_bar == 6);
   ACE_ASSERT (ui_result == 6);
 
-  ui_result = --bar_unsigned;
-  ACE_ASSERT (bar_unsigned == 5);
+  ui_result = --unsigned_bar;
+  ACE_ASSERT (unsigned_bar == 5);
   ACE_ASSERT (ui_result == 5);
 
-  ui_result = bar_unsigned++;
-  ACE_ASSERT (bar_unsigned == 6);
+  ui_result = unsigned_bar++;
+  ACE_ASSERT (unsigned_bar == 6);
   ACE_ASSERT (ui_result == 5);
 
-  ui_result = bar_unsigned--;
-  ACE_ASSERT (bar_unsigned == 5);
+  ui_result = unsigned_bar--;
+  ACE_ASSERT (unsigned_bar == 5);
   ACE_ASSERT (ui_result == 6);
 
-  ui_result = bar_unsigned += 10;
-  ACE_ASSERT (bar_unsigned == 15);
+  ui_result = unsigned_bar += 10;
+  ACE_ASSERT (unsigned_bar == 15);
   ACE_ASSERT (ui_result == 15);
 
-  ui_result = bar_unsigned -= 10;
-  ACE_ASSERT (bar_unsigned == 5);
+  ui_result = unsigned_bar -= 10;
+  ACE_ASSERT (unsigned_bar == 5);
   ACE_ASSERT (ui_result == 5);
 
-  bar_unsigned = 5L;
-  ACE_ASSERT (bar_unsigned == 5);
+  unsigned_bar = 7L;
+  ACE_ASSERT (unsigned_bar == 7);
+
+  ACE_Atomic_Op <ACE_SYNCH_MUTEX, unsigned int> unsigned_bar2 (5L);
+  unsigned_bar2 = unsigned_bar;
+  ACE_ASSERT (unsigned_bar == 7);
+  ACE_ASSERT (unsigned_bar2 == 7);
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Starting <unsigned int> assignment %D\n")));
   for (i = 0; i < TEST_ITERATIONS; ++i)
     {
-      bar_unsigned = 1;
-      bar_unsigned = 2;
-      bar_unsigned = 3;
-      bar_unsigned = 4;
+      unsigned_bar = 1;
+      unsigned_bar = 2;
+      unsigned_bar = 3;
+      unsigned_bar = 4;
     }
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Ending <unsigned int> assignment %D\n")));
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Starting <unsigned int> increment %D\n")));
   for (i = 0; i < TEST_ITERATIONS; ++i)
     {
-      ++bar_unsigned;
-      ++bar_unsigned;
-      ++bar_unsigned;
-      ++bar_unsigned;
+      ++unsigned_bar;
+      ++unsigned_bar;
+      ++unsigned_bar;
+      ++unsigned_bar;
     }
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Ending <unsigned int> increment %D\n")));
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Starting <unsigned int> decrement %D\n")));
   for (i = 0; i < TEST_ITERATIONS; ++i)
     {
-      --bar_unsigned;
-      --bar_unsigned;
-      --bar_unsigned;
-      --bar_unsigned;
+      --unsigned_bar;
+      --unsigned_bar;
+      --unsigned_bar;
+      --unsigned_bar;
     }
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Ending <unsigned int> decrement %D\n")));
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Starting <unsigned int> addition %D\n")));
   for (i = 0; i < TEST_ITERATIONS; ++i)
     {
-      bar_unsigned += 5;
-      bar_unsigned += 5;
-      bar_unsigned += 5;
-      bar_unsigned += 5;
+      unsigned_bar += 5;
+      unsigned_bar += 5;
+      unsigned_bar += 5;
+      unsigned_bar += 5;
     }
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Ending <unsigned int> addition %D\n")));
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Starting <unsigned int> subtraction %D\n")));
   for (i = 0; i < TEST_ITERATIONS; ++i)
     {
-      bar_unsigned -= 5;
-      bar_unsigned -= 5;
-      bar_unsigned -= 5;
-      bar_unsigned -= 5;
+      unsigned_bar -= 5;
+      unsigned_bar -= 5;
+      unsigned_bar -= 5;
+      unsigned_bar -= 5;
     }
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Ending <unsigned int> subtraction %D\n")));
 
