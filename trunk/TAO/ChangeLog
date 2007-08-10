@@ -1,3 +1,8 @@
+Fri Aug 10 10:22:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/POA/Loader/Servant_Activator.cpp:
+          Fixed OpenVMS warning
+
 Thu Aug  9 16:39:53 UTC 2007  Dale Wilson  <wilsond@ociweb.com>
 
         * tao/Transport_Cache_Manager.cpp:
@@ -24,8 +29,6 @@ Thu Aug  9 14:31:02 UTC 2007  Dale Wilson  <wilsond@ociweb.com>
           Change some argument types from reference to pointer entry to simple pointer.
           These routines don't change the pointer.  They only change the entry.
           Add set_entry_state method to directly change the state of a cached entry.
-
-
 
 Thu Aug  9 08:22:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
