@@ -1,3 +1,13 @@
+Fri Aug 10 08:57:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_main.h:
+          Made the destructor of ACE_Main_Base virtual to resolve MinGW
+          warnings
+
+        * include/makeinclude/platform_linux_icc.GNU:
+          Updated this file with changes that have been done in the gcc
+          file the last years
+
 Fri Aug 10 07:39:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Atomic_Op_Test.cpp:
