@@ -1,3 +1,9 @@
+Fri Aug 10 07:14:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Atomic_Op_Test.cpp:
+          Test the Atomic_Op also in single threaded builds and extended
+          the test with unsigned long and unsigned int tests
+
 Thu Aug  9 13:39:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Log_Msg.cpp:
