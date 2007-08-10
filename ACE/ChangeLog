@@ -1,3 +1,18 @@
+Fri Aug 10 11:59:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/config/gnuace.features:
+          Enabled qos, the GNU makefiles will block the building of QoS
+
+        * include/makeinclude/platform_mingw32.GNU:
+          With MinGW we can build QoS support
+
+        * ace/QoS/qos.mpc:
+          Added ACE_HAS_QOS to the macros, this is already done for projects
+          that use qos but not for the qos library itself
+
+        * ace/config-win32-mingw.h:
+          Added ACE_HAS_WINSOCK2_GQOS
+
 Fri Aug 10 11:39:48 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * ACE.mwc:
