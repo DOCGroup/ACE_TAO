@@ -119,6 +119,10 @@ NotificationServiceMonitor_i::shutdown_event_channel (const char* name)
   TAO_NS_Control* control = instance->get (name);
   if (control == 0)
     {
+      CosNotification::NotificationServiceMonitorControl::NameList invalid (1);
+      invalid.length (1);
+      invalid[0] = name; 
+      throw CosNotification::NotificationServiceMonitorControl::InvalidName (invalid);
     }
   else
     {

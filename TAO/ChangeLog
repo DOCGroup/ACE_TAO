@@ -1,3 +1,19 @@
+Fri Aug 10 15:33:54 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * docs/notification/monitor.html:
+
+          Added documentation for the Notification Service Monitor.
+
+        * orbsvcs/examples/Notify/MC/monitor/monitor.cpp:
+
+          Catch potential exceptions from the "shutdown" command.
+
+        * orbsvcs/orbsvcs/Notify/MonitorControl/NotificationServiceMC.idl:
+        * orbsvcs/orbsvcs/Notify/MonitorControl/NotificationServiceMonitor_i.cpp:
+
+          Modified to throw the InvalidName exception if the name provided       
+          to shutdown_event_channel does not correspond to an event channel.
+
 Fri Aug 10 10:22:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/POA/Loader/Servant_Activator.cpp:
