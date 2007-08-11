@@ -176,9 +176,7 @@ namespace TAO
      * Non-Locking version and actual implementation of bind ()
      * call. Calls bind on the Hash_Map_Manager that it holds. If the
      * bind succeeds, it adds the Hash_Map_Entry in to the
-     * Transport for its reference. If the bind fails because
-     * of an exiting entry, this method calls the get_last_index_bind
-     * ().
+     * Transport for its reference.
      */
     int bind_i (Cache_ExtId &ext_id,
                 Cache_IntId &int_id);
@@ -206,18 +204,6 @@ namespace TAO
     void mark_invalid_i (HASH_MAP_ENTRY *entry);
 
   private:
-    /**
-     * This is called by the bind () call when a bind fails with a
-     * available entry. When a new connection is created in TAO with an
-     * already existing endpoint, in addition to an exisitng one, we
-     * mark the connections with an index. This method, finds out the
-     * last highest index and binds the entry with an index = (last
-     * highest index + 1).
-     */
-    int get_last_index_bind (Cache_ExtId &key,
-                             Cache_IntId &val,
-                             HASH_MAP_ENTRY *&entry);
-
   /**
    * Tries to find if the <int_id_> in entry is available for use.
    */

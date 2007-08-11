@@ -1,3 +1,13 @@
+Sat Aug 11 11:38:47 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/Transport_Cache_Manager.h:
+        * tao/Transport_Cache_Manager.cpp:
+
+          Re-applying Dale's change. The lock up I noticed was the result
+          of attempting to recursively grab a non-recursive lock. With
+          that sorted out, the patch is otherwise fine. At last on my
+          machine.
+
 Sat Aug 11 02:34:18 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/Transport_Cache_Manager.h:
