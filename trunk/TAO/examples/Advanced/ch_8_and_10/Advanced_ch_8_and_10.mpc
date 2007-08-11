@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(*client) : taoexe, portableserver {
+project(*client) : taoclient {
   requires += dummy_label
   source_files {
     client.cpp

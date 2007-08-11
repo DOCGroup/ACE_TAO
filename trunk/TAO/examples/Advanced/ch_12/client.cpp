@@ -136,7 +136,7 @@ set_temp (CCS::Thermostat_ptr tmstat, CCS::TempType new_temp)
 }
 
 int
-main (int argc, char * argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   CORBA::ULong i = 0;
   try
@@ -169,7 +169,7 @@ main (int argc, char * argv[])
       catch (const CORBA::SystemException &se)
         {
           std::cerr << "Cannot narrow controller reference: "
-               //<< se 
+               //<< se
                << std::endl;
           throw 0;
         }
@@ -289,8 +289,8 @@ main (int argc, char * argv[])
     }
   catch  (const CORBA::Exception & e)
     {
-      std::cerr << "Uncaught CORBA exception: " 
-                //<< e 
+      std::cerr << "Uncaught CORBA exception: "
+                //<< e
                 << std::endl;
       return 1;
     }

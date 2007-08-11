@@ -22,6 +22,7 @@ project(*server): taoserver, utils, avoids_corba_e_micro, avoids_ace_for_tao {
 }
 
 project(*client): taoexe, utils, portableserver {
+  exename = client
   after += *IDL
   Source_Files {
     GridC.cpp
@@ -34,6 +35,7 @@ project(*client): taoexe, utils, portableserver {
 }
 
 project(*persistent client): taoexe, utils, portableserver {
+  exename = persistent_client
   after += *IDL
   Source_Files {
     GridC.cpp

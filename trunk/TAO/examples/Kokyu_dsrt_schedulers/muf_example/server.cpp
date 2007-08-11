@@ -80,7 +80,7 @@ private:
 Task_Stats task_stats;
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   MUF_Scheduler* scheduler = 0;
   RTScheduling::Current_var current;

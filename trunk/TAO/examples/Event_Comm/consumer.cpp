@@ -92,43 +92,43 @@ Consumer::initialize (int argc, char *argv[])
   // Initialize the <Consumer_Handler>.
   if (this->ch_.init (argc, argv, this) == -1)
      ACE_ERROR_RETURN ((LM_ERROR,
-			"%p\n",
-			"Consumer_Handler failed to initialize\n"),
+                        "%p\n",
+                        "Consumer_Handler failed to initialize\n"),
                        -1);
    // Initialize the <Consumer_Input_Handler>.
   else if (this->ih_.initialize (&this->ch_) == -1)
      ACE_ERROR_RETURN ((LM_ERROR,
-			"%p\n",
-			"Consumer_Input_Handler failed to initialize\n"),
+                        "%p\n",
+                        "Consumer_Input_Handler failed to initialize\n"),
                        -1);
   else if (this->ch_.reactor ()->register_handler (SIGINT,
                                               this) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-		       "%p\n",
-		       "register_handler"),
+                       "%p\n",
+                       "register_handler"),
                       -1);
   else
     return 0;
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   // Initialize the supplier and consumer object references.
   Consumer consumer;
 
   if (consumer.initialize (argc, argv) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-		       "%p\n",
-		       "Consumer init failed\n"),
-		      1);
+                       "%p\n",
+                       "Consumer init failed\n"),
+                      1);
 
   // Loop forever handling events.
   if (consumer.run () == -1)
-  ACE_ERROR_RETURN ((LM_ERROR,
-		       "%p\n",
-		       "Consumer run failed\n"),
-		      1);
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "%p\n",
+                       "Consumer run failed\n"),
+                      1);
 
   return 0;
 }

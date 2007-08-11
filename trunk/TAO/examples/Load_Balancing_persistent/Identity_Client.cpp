@@ -225,7 +225,7 @@ Identity_Client::~Identity_Client (void)
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   int result = 0;
   Identity_Client client;

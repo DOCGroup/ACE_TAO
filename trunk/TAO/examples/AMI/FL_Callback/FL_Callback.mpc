@@ -9,6 +9,7 @@ project(*idl): taoexe, messaging, ami {
 }
 
 project(*progress): taoexe, messaging, ami, portableserver, tao_flresource {
+  exename = progress
   after += *idl
 
   Source_Files {
@@ -22,6 +23,7 @@ project(*progress): taoexe, messaging, ami, portableserver, tao_flresource {
 }
 
 project(*peer): taoexe, strategies, messaging, ami, portableserver {
+  exename = peer
   after += *idl
 
   Source_Files {

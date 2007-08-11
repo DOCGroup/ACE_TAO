@@ -9,6 +9,7 @@ project(*IDL): taoidldefaults {
 }
 
 project(*Service): namingexe, utils, avoids_corba_e_micro {
+  exename = Logging_Service
   after += *IDL
   Source_Files {
     Logger_i.cpp
@@ -22,6 +23,7 @@ project(*Service): namingexe, utils, avoids_corba_e_micro {
 }
 
 project(*Test): namingexe, utils {
+  exename = Logging_Test
   after += *IDL
   Source_Files {
     Logging_Test.cpp

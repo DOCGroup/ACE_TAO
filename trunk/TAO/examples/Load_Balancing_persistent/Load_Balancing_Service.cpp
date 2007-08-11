@@ -158,7 +158,7 @@ Load_Balancing_Service::~Load_Balancing_Service (void)
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   int result = 0;
   Load_Balancing_Service factory;

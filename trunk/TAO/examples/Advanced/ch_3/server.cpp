@@ -48,9 +48,9 @@ get_gmt (void)
 // ______________________________________________________
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
-  try 
+  try
     {
       // Initialize orb
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
@@ -77,7 +77,7 @@ main (int argc, char *argv[])
       // Accept requests
       orb->run ();
     }
-  catch (const CORBA::Exception &) 
+  catch (const CORBA::Exception &)
     {
       cerr << "Uncaught CORBA exception" << endl;
       return 1;
