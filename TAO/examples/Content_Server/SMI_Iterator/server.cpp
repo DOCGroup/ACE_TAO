@@ -13,7 +13,7 @@ ACE_RCSID (SMI_Iterator,
            "$Id$")
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   try
     {

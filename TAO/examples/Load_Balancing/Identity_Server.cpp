@@ -186,7 +186,7 @@ Identity_Server::~Identity_Server (void)
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   int result = 0;
   Identity_Server server;

@@ -9,6 +9,7 @@ project(*IDL): taoidldefaults {
 }
 
 project(*notifier): namingexe, utils, avoids_corba_e_micro {
+  exename = notifier
   after += *IDL
   Source_Files {
     Event_Comm_i.cpp
@@ -22,6 +23,7 @@ project(*notifier): namingexe, utils, avoids_corba_e_micro {
 }
 
 project(*consumer): namingexe, portableserver {
+  exename = consumer
   after += *IDL
   Source_Files {
     Consumer_Input_Handler.cpp
@@ -36,6 +38,7 @@ project(*consumer): namingexe, portableserver {
 }
 
 project(*supplier): namingexe, portableserver {
+  exename = supplier
   after += *IDL
   Source_Files {
     Event_Comm_i.cpp

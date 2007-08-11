@@ -9,7 +9,7 @@ usage (const char *message)
   // @@ Mayur, what use is there in placing a space before a newline
   //    character?
   //
-  // Mayur: It makes the newline stand out 
+  // Mayur: It makes the newline stand out
 
   static const char * usage =
     "invoke as: st_server -o <ior_output_file> \n"
@@ -19,7 +19,7 @@ usage (const char *message)
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   Base_Server amh_server (argc, argv);
   amh_server.try_RT_scheduling();

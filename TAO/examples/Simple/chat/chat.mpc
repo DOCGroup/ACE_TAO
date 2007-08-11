@@ -24,6 +24,7 @@ project(*server) : taoserver, utils, iortable {
 }
 
 project(*client): taoexe, portableserver, utils {
+  exename = client
   after += *IDL
   IDL_Files {
   }

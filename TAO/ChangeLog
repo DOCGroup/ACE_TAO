@@ -1,3 +1,109 @@
+Sat Aug 11 17:20:15 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * examples/AMH/Sink_Server/client.cpp:
+        * examples/AMH/Sink_Server/mt_server.cpp:
+        * examples/AMH/Sink_Server/st_server.cpp:
+        * examples/AMI/FL_Callback/peer.cpp:
+        * examples/AMI/FL_Callback/progress.cpp:
+        * examples/Advanced/ch_12/client.cpp:
+        * examples/Advanced/ch_12/server.cpp:
+        * examples/Advanced/ch_18/client.cpp:
+        * examples/Advanced/ch_18/server.cpp:
+        * examples/Advanced/ch_21/client.cpp:
+        * examples/Advanced/ch_21/server.cpp:
+        * examples/Advanced/ch_3/client.cpp:
+        * examples/Advanced/ch_3/server.cpp:
+        * examples/Advanced/ch_8_and_10/client.cpp:
+        * examples/Advanced/ch_8_and_10/server.cpp:
+        * examples/Buffered_AMI/client.cpp:
+        * examples/Buffered_AMI/server.cpp:
+        * examples/Buffered_Oneways/client.cpp:
+        * examples/Buffered_Oneways/server.cpp:
+        * examples/CSD_Strategy/ThreadPool/client_main.cpp:
+        * examples/CSD_Strategy/ThreadPool/server_main.cpp:
+        * examples/CSD_Strategy/ThreadPool2/client_main.cpp:
+        * examples/CSD_Strategy/ThreadPool2/server_main.cpp:
+        * examples/CSD_Strategy/ThreadPool3/client_main.cpp:
+        * examples/CSD_Strategy/ThreadPool3/server_main.cpp:
+        * examples/CSD_Strategy/ThreadPool4/server_main.cpp:
+        * examples/CSD_Strategy/ThreadPool5/client_main.cpp:
+        * examples/CSD_Strategy/ThreadPool5/server_main.cpp:
+        * examples/CSD_Strategy/ThreadPool6/client_main.cpp:
+        * examples/CSD_Strategy/ThreadPool6/server_main.cpp:
+        * examples/Callback_Quoter/consumer.cpp:
+        * examples/Callback_Quoter/notifier.cpp:
+        * examples/Callback_Quoter/supplier.cpp:
+        * examples/Content_Server/AMI_Iterator/client.cpp:
+        * examples/Content_Server/AMI_Iterator/server.cpp:
+        * examples/Content_Server/AMI_Observer/client.cpp:
+        * examples/Content_Server/AMI_Observer/server.cpp:
+        * examples/Content_Server/SMI_Iterator/client.cpp:
+        * examples/Content_Server/SMI_Iterator/server.cpp:
+        * examples/Event_Comm/consumer.cpp:
+        * examples/Event_Comm/notifier.cpp:
+        * examples/Event_Comm/supplier.cpp:
+        * examples/Kokyu_dsrt_schedulers/fp_example/client.cpp:
+        * examples/Kokyu_dsrt_schedulers/fp_example/server.cpp:
+        * examples/Kokyu_dsrt_schedulers/mif_example/client.cpp:
+        * examples/Kokyu_dsrt_schedulers/mif_example/server.cpp:
+        * examples/Kokyu_dsrt_schedulers/muf_example/client.cpp:
+        * examples/Kokyu_dsrt_schedulers/muf_example/server.cpp:
+        * examples/Load_Balancing/Identity_Client.cpp:
+        * examples/Load_Balancing/Identity_Server.cpp:
+        * examples/Load_Balancing/Load_Balancing_Service.cpp:
+        * examples/Load_Balancing_persistent/Identity_Client.cpp:
+        * examples/Load_Balancing_persistent/Identity_Server.cpp:
+        * examples/Load_Balancing_persistent/Load_Balancing_Service.cpp:
+        * examples/Logging/Logging_Service.cpp:
+        * examples/Logging/Logging_Test.cpp:
+        * examples/OBV/Typed_Events/client.cpp:
+        * examples/OBV/Typed_Events/server.cpp:
+        * examples/Persistent_Grid/client.cpp:
+        * examples/Persistent_Grid/persistent_client.cpp:
+        * examples/Persistent_Grid/server.cpp:
+        * examples/PluggableUDP/tests/Performance/client.cpp:
+        * examples/PluggableUDP/tests/Performance/server.cpp:
+        * examples/Quoter/Factory_Finder.cpp:
+        * examples/Quoter/Generic_Factory.cpp:
+        * examples/Quoter/client.cpp:
+        * examples/Quoter/server.cpp:
+        * examples/RTCORBA/Activity/Activity.cpp:
+        * examples/RTScheduling/Fixed_Priority_Scheduler/test.cpp:
+        * examples/RTScheduling/MIF_Scheduler/test.cpp:
+        * examples/RTScheduling/Starter.cpp:
+        * examples/Simple/bank/client.cpp:
+        * examples/Simple/bank/server.cpp:
+        * examples/Simple/chat/client.cpp:
+        * examples/Simple/chat/server.cpp:
+        * examples/Simple/echo/client.cpp:
+        * examples/Simple/echo/server.cpp:
+        * examples/Simple/grid/client.cpp:
+        * examples/Simple/grid/server.cpp:
+        * examples/Simple/time-date/client.cpp:
+        * examples/Simple/time-date/server.cpp:
+        * examples/Simple/time/client.cpp:
+        * examples/Simple/time/server.cpp:
+        * examples/Simulator/Event_Supplier/DualEC_Sup.cpp:
+        * examples/Simulator/Event_Supplier/Event_Con.cpp:
+        * examples/Simulator/Event_Supplier/Event_Sup.cpp:
+        * examples/Simulator/Event_Supplier/Logging_Sup.cpp:
+        * examples/mfc/client.cpp:
+
+          Use ACE_TMAIN instead of main to adhere to ACE/TAO coding guidlines.
+
+        * examples/AMH/Sink_Server/Sink_Server.mpc:
+        * examples/AMI/FL_Callback/FL_Callback.mpc:
+        * examples/Advanced/ch_8_and_10/Advanced_ch_8_and_10.mpc:
+        * examples/Callback_Quoter/Callback_Quoter.mpc:
+        * examples/Event_Comm/Event_Comm.mpc:
+        * examples/Logging/Logging.mpc:
+        * examples/Persistent_Grid/Persistent_Grid.mpc:
+        * examples/Quoter/Quoter.mpc:
+        * examples/Simple/chat/chat.mpc:
+
+          Explicitly set exename in MPC files. This is required because MPC does
+          not recognize ACE_TMAIN as a program entry point.
+
 Sat Aug 11 11:38:47 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/Transport_Cache_Manager.h:

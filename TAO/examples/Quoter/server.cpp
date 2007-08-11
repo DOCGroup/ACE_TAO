@@ -236,7 +236,7 @@ Quoter_Server::~Quoter_Server (void)
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   Quoter_Server quoter_server;
 

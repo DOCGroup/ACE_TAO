@@ -10,6 +10,7 @@ project(*IDL): taoidldefaults {
 }
 
 project(Callback_Quoter notifier): namingexe, utils, avoids_corba_e_micro {
+  exename = notifier
   after += *IDL
   Source_Files {
     NotifierC.cpp
@@ -24,6 +25,7 @@ project(Callback_Quoter notifier): namingexe, utils, avoids_corba_e_micro {
 }
 
 project(Callback_Quoter consumer): namingexe, portableserver {
+  exename = consumer
   after += *IDL
   Source_Files {
     ConsumerC.cpp
@@ -40,6 +42,7 @@ project(Callback_Quoter consumer): namingexe, portableserver {
 }
 
 project(Callback_Quoter supplier): namingexe, portableserver {
+  exename = supplier
   after += *IDL
   Source_Files {
     ConsumerC.cpp

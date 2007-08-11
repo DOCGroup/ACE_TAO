@@ -148,22 +148,22 @@ Identity_Server::register_groups (void)
   // We want to make two groups Random & Round Robin.
   Load_Balancer::Object_Group_var random_group =
     factory->make_random ("Random group");
-  
+
   if (CORBA::is_nil (random_group.in ()))
     {
       ACE_ERROR ((LM_ERROR, "Got nil random group from load balancer\n"));
       return -1;
     }
-  
+
   Load_Balancer::Object_Group_var rr_group =
     factory->make_round_robin ("Round Robin group");
-  
+
   if (CORBA::is_nil (rr_group.in ()))
     {
       ACE_ERROR ((LM_ERROR, "Got nil round robin group from load balancer\n"));
       return -1;
     }
-  
+
   // Create the requested number of <Identity> objects, and
   // register them with the random and round robin
   // <Object_Group>s.
@@ -239,7 +239,7 @@ Identity_Server::~Identity_Server (void)
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   int result = 0;
   Identity_Server server;
@@ -254,10 +254,10 @@ main (int argc, char *argv[])
   try
     {
       result = server.register_groups ();
-      
+
       if (result != 0)
         return 1;
-      
+
       result = server.run ();
     }
   catch (const CORBA::Exception& ex)
