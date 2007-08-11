@@ -60,7 +60,7 @@ operator<<(std::ostream &os, CCS::Thermometer_ptr t)
         os << "Cannot show state for nil reference." << std::endl;
         return os;
     }
-    
+
     // Try to narrow and print what kind of device it is.
     CCS::Thermostat_var tmstat = CCS::Thermostat::_narrow(t);
     os << (CORBA::is_nil(tmstat.in()) ? "Thermometer:" : "Thermostat:")
@@ -139,7 +139,7 @@ set_temp(CCS::Thermostat_ptr tmstat, CCS::TempType new_temp)
 //----------------------------------------------------------------
 
 int
-main(int argc, char * argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
     CORBA::ULong i = 0;
     try {
@@ -166,7 +166,7 @@ main(int argc, char * argv[])
             ctrl = CCS::Controller::_narrow(obj.in());
         } catch (const CORBA::SystemException &se) {
             std::cerr << "Cannot narrow controller reference: "
-                      //<< se 
+                      //<< se
                       << std::endl;
             throw 0;
         }
@@ -201,7 +201,7 @@ main(int argc, char * argv[])
         for ( i = 0; i < list->length(); i++)
             std::cout << list[i];
         std::cout << std::endl;
-        
+
         // Change the location of first device in the list
         CCS::AssetType anum = list[0U]->asset_num();
         std::cout << "Changing location of device "
@@ -248,7 +248,7 @@ main(int argc, char * argv[])
         for ( i = 0; i < ss.length(); i++)
             std::cout << ss[i].device.in();          // Overloaded <<
         std::cout << std::endl;
-        
+
         // Increase the temperature of all thermostats
         // by 40 degrees. First, make a new list (tss)
         // containing only thermostats.
@@ -270,8 +270,8 @@ main(int argc, char * argv[])
             std::cerr << ec;                     // Overloaded <<
         }
     } catch (const CORBA::Exception & e) {
-        std::cerr << "Uncaught CORBA exception: " 
-                  //<< e 
+        std::cerr << "Uncaught CORBA exception: "
+                  //<< e
                   << std::endl;
         return 1;
     } catch (...) {

@@ -47,19 +47,18 @@ Supplier::init (int argc, char *argv[])
 {
   if (this->nh_.init (argc, argv, this) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-		       "%p\n",
-		       "Notifier_Handler did not init\n"),
+                       "%p\n",
+                       "Notifier_Handler did not init\n"),
                       -1);
   else if (this->ih_.initialize (&nh_) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-		       "%p\n",
-		       "Supplier Input handler did not init\n"),
+                       "%p\n",
+                       "Supplier Input handler did not init\n"),
                       -1);
-  else if (nh_.reactor ()->register_handler (SIGINT,
-                                                       this) == -1)
+  else if (nh_.reactor ()->register_handler (SIGINT, this) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-		       "%p\n",
-		       "register_handler"),
+                       "%p\n",
+                       "register_handler"),
                       -1);
   ACE_DEBUG ((LM_DEBUG,
               "Supplier initialized.. \n"));
@@ -67,7 +66,7 @@ Supplier::init (int argc, char *argv[])
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   // Initialize server daemon.
   Supplier supplier;

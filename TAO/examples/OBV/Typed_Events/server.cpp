@@ -5,7 +5,7 @@
 // This is the main driver program for the time and date server.
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   Server<Checkpoint_i> server;
 

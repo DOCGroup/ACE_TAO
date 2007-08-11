@@ -253,7 +253,7 @@ Quoter_Generic_Factory_Server::parse_args (void)
 // function main
 
 int
-main (int argc, char *argv [])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   Quoter_Generic_Factory_Server quoter_Generic_Factory_Server;
 

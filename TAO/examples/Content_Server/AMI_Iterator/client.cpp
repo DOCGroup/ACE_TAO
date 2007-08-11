@@ -24,7 +24,7 @@ void invoke_requests (int argc,
                       Web_Server::Iterator_Factory_ptr f);
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   try
     {

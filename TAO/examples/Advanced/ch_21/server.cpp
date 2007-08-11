@@ -596,7 +596,7 @@ preinvoke (
     const PortableServer::ObjectId & oid,
     PortableServer::POA_ptr          /* poa */ ,
     const char *                     operation,
-    void * &                         /* cookie */ 
+    void * &                         /* cookie */
 )
 {
     // Convert object id into asset number.
@@ -667,7 +667,7 @@ preinvoke (
 //----------------------------------------------------------------
 
 int
-main (int argc, char **argv)
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
     try {
         // Initialize orb
@@ -737,8 +737,8 @@ main (int argc, char **argv)
         orb->run ();
     }
     catch (const CORBA::Exception & e) {
-        std::cerr << "Uncaught CORBA exception: " 
-                  //<< e 
+        std::cerr << "Uncaught CORBA exception: "
+                  //<< e
                   << std::endl;
         return 1;
     }

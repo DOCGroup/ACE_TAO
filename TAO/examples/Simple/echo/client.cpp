@@ -5,21 +5,21 @@
 // The client program for the application.
 
 int
-main (int argc, char **argv)
+ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   Echo_Client_i client;
-  
+
 
   ACE_DEBUG ((LM_DEBUG,
               "\nEcho client\n\n"));
 
   if (client.run ("Echo",
-                  argc, 
+                  argc,
                   argv) == -1)
-    return -1; 
+    return -1;
   else
     return 0;
-   
+
 }
 
-                                 
+
