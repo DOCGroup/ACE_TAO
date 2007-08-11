@@ -1,11 +1,21 @@
+Sat Aug 11 02:34:18 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/Transport_Cache_Manager.h:
+        * tao/Transport_Cache_Manager.cpp:
+
+          Reverting Dale's change. This causes tests to sieze up, at least
+          on linux.
+
 Fri Aug 10 21:59:23 UTC 2007  Dale Wilson  <wilsond@ociweb.com>
 
         * tao/Transport_Cache_Manager.h:
         * tao/Transport_Cache_Manager.cpp:
-          The cache manager uses an index to distinguish between duplicate cache entries.
-          It makes some invalid assumptions about this index.  This changes corrects
-          one of those assumptions which led to poor performance and/or failure of
-          multithreaded latency performance tests.
+
+          The cache manager uses an index to distinguish between duplicate
+          cache entries.  It makes some invalid assumptions about this
+          index.  This changes corrects one of those assumptions which led
+          to poor performance and/or failure of multithreaded latency
+          performance tests.
 
 Fri Aug 10 15:33:54 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 

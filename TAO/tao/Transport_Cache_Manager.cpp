@@ -19,11 +19,11 @@ ACE_RCSID (tao,
            Transport_Cache_Manager,
            "$Id$")
 
-// notes on debug level and LM_xxxx codes for transport cache
+// notes on debug level for transport cache
 // TAO_debug_level > 0: recoverable error condition (LM_ERROR)
 // TAO_debug_level > 4: normal transport cache operations (LM_INFO)
 // TAO_debug_level > 6: detailed cache operations (LM_DEBUG)
-// TAO_debug_level > 8: for debugging the cache itself (LM_DEBUG)
+// TAO_debug_level > 8: for debugging the cache itself
 
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -88,68 +88,71 @@ namespace TAO
     // Update the purging strategy information while we
     // are holding our lock
     this->purging_strategy_->update_item (int_id.transport ());
-    int retval = 0;
-    bool more_to_do = true;
-    while (more_to_do)
-      {
-         retval = this->cache_map_.bind (ext_id, int_id, entry);
-        if (retval == 0)
-          {
-            // The entry has been added to cache succesfully
-            // Add the cache_map_entry to the transport
-            int_id.transport ()->cache_map_entry (entry);
-            more_to_do = false;
-          }
-        else if (retval == 1)
-          {
-            if (entry->item ().transport () == int_id.transport ())
-              {
-                // update the cache status
-                this->set_entry_state (entry, int_id.recycle_state ());
-                retval = 0;
-                more_to_do = false;
-              }
-            else
-            {
-              ext_id.index (ext_id.index() + 1);
-              if (TAO_debug_level > 8)
-                {
-                  ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("TAO (%P|%t) - Transport_Cache_Manager::bind_i: ")
-                    ACE_TEXT ("Unable to bind Transport[%d] @ hash:index{%d:%d}. ")
-                    ACE_TEXT ("Trying with a new index \n"),
-                    int_id.transport ()->id (),
-                    ext_id.hash (),
-                    ext_id.index ()
-                    ));
-                }
-            }
-          }
-        else
-          {
-            if (TAO_debug_level > 0)
-              {
-                ACE_ERROR ((LM_ERROR,
-                  "TAO (%P|%t) - Transport_Cache_Manager::bind_i, "
-                  "ERROR: unable to bind transport\n"));
-              }
-            more_to_do = false;
-          }
-      }
+
+    int retval = this->cache_map_.bind (ext_id,
+                                        int_id,
+                                        entry);
     if (retval == 0)
       {
-        if (TAO_debug_level > 4)
+        // The entry has been added to cache succesfully
+        // Add the cache_map_entry to the transport
+        int_id.transport ()->cache_map_entry (entry);
+      }
+    else if (retval == 1)
+      {
+        // if this is already in the cache, just ignore the request
+        // this happens because some protocols bind their transport early
+        // to avoid duplication simultaneous connection attempts
+        if (entry != 0 && entry->item ().transport () == int_id.transport ())
           {
-            ACE_DEBUG ((LM_INFO,
-              ACE_TEXT ("TAO (%P|%t) - Transport_Cache_Manager::bind_i: ")
-              ACE_TEXT ("Success Transport[%d] @ hash:index{%d:%d}. ")
-              ACE_TEXT ("Cache size is [%d]\n"),
-              int_id.transport ()->id (),
-              ext_id.hash (),
-              ext_id.index (),
-              this->current_size ()
-              ));
+            // rebind this entry to update cache status
+            retval = this->cache_map_.rebind (ext_id,
+                                        int_id,
+                                        entry);
+            if(retval == 1) // 1 from rebind means replaced
+              {
+                retval = 0;
+              }
           }
+        else
+        {
+          if (TAO_debug_level > 4)
+            {
+              ACE_DEBUG ((LM_INFO,
+                ACE_TEXT ("TAO (%P|%t) - Transport_Cache_Manager::bind_i: ")
+                ACE_TEXT ("Unable to bind in the first attempt. ")
+                ACE_TEXT ("Trying with a new index\n")
+                ));
+            }
+
+          // There was an entry like this before, so let us do some
+          // minor adjustments and rebind
+          retval = this->get_last_index_bind (ext_id,
+                                              int_id,
+                                              entry);
+          if (retval == 0)
+            {
+              int_id.transport ()->cache_map_entry (entry);
+            }
+        }
+      }
+
+    if (retval != 0)
+      {
+        if (TAO_debug_level > 0)
+          {
+            ACE_ERROR ((LM_ERROR,
+                      "TAO (%P|%t) - Transport_Cache_Manager::bind_i, "
+                      "unable to bind\n"));
+          }
+      }
+    else if (TAO_debug_level > 4)
+      {
+        ACE_DEBUG ((LM_INFO,
+          ACE_TEXT ("TAO (%P|%t) - Transport_Cache_Manager::bind_i: ")
+          ACE_TEXT ("Cache size is [%d]\n"),
+          this->current_size ()
+          ));
       }
 
     return retval;
@@ -446,6 +449,31 @@ namespace TAO
     entry->item ().recycle_state (ENTRY_PURGABLE_BUT_NOT_IDLE);
   }
 
+  int
+  Transport_Cache_Manager::get_last_index_bind (Cache_ExtId &key,
+                                                Cache_IntId &val,
+                                                HASH_MAP_ENTRY *&entry)
+  {
+    CORBA::ULong ctr = entry->ext_id_.index ();
+    int retval = 0;
+
+    while (retval == 0)
+      {
+        // Set the index
+        key.index (++ctr);
+
+        // Check to see if an element exists in the Map. If it exists we
+        // loop, else we drop out of the loop
+        retval = this->cache_map_.find (key);
+      }
+
+    // Now do a bind again with the new index
+    return  this->cache_map_.bind (key,
+                                   val,
+                                   entry);
+  }
+
+
   bool
   Transport_Cache_Manager::is_entry_available (const HASH_MAP_ENTRY &entry)
   {
@@ -659,7 +687,7 @@ namespace TAO
     // Do we need to worry about cache purging?
     if (cache_maximum >= 0)
       {
-        current_size = static_cast<int> (this->current_size ());
+        current_size = static_cast<int> (this->cache_map_.current_size ());
 
         if (TAO_debug_level > 6)
           {
