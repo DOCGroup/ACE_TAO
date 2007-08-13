@@ -175,7 +175,7 @@ ACE_OutputCDR::grow_and_adjust (size_t size,
       if (minsize < cursize)
         minsize = cursize;
 
-      const size_t newsize = ACE_CDR::next_size (minsize);
+      size_t const newsize = ACE_CDR::next_size (minsize);
 
       this->good_bit_ = false;
       ACE_Message_Block* tmp = 0;
