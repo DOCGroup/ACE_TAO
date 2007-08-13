@@ -183,7 +183,7 @@ public:
    * On failure, returns ACE_INVALID_PID.
    */
   pid_t spawn (ACE_Process_Options &options,
-	       ACE_Event_Handler *event_handler = 0);
+               ACE_Event_Handler *event_handler = 0);
 
   /**
    * Create @a n new processes with the same @a options.
@@ -196,7 +196,7 @@ public:
   int spawn_n (size_t n,
                ACE_Process_Options &options,
                pid_t *child_pids = 0,
-	       ACE_Event_Handler *event_Handler = 0);
+               ACE_Event_Handler *event_Handler = 0);
   //@}
 
   /**

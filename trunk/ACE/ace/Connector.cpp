@@ -655,8 +655,8 @@ ACE_Connector<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::close (void)
   ACE_HANDLE *handle = 0;
   while (1)
     {
-      ACE_Unbounded_Set_Iterator<ACE_HANDLE>
-	iterator (this->non_blocking_handles ());
+      ACE_Unbounded_Set_Iterator<ACE_HANDLE> 
+        iterator (this->non_blocking_handles ());
       if (!iterator.next (handle))
         break;
 

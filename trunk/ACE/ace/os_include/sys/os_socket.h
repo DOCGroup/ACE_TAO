@@ -281,7 +281,7 @@ extern "C"
                           struct timespec *timeout);
 
   ssize_t sendmsg_timedwait (ACE_HANDLE handle,
-			     const struct msghdr *msg,
+                             const struct msghdr *msg,
                              int flags,
                              struct timespec *timeout);
 

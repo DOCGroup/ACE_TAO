@@ -140,7 +140,7 @@ public:
 /// up. Note that the tss_ member will be destroyed with the
 /// ACE_Object_Manager's ACE_Service_Config singleton, so no leaks
 /// will be introduced.
-/// We need this non-ownership ACE_TSS because the SC instance is 
+/// We need this non-ownership ACE_TSS because the SC instance is
 /// really owned by the Object Manager and only it must do the cleanup.
 ///
 /// Naturally, things would be simpler, if we could
@@ -151,14 +151,14 @@ public:
 /// called before ~ACE_Object_Manager.
 
 # if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
-// Since ACE_TSS<>::cleanup() is only defined in 
+// Since ACE_TSS<>::cleanup() is only defined in
 // multithreaded builds ...
 template<> inline void
 ACE_TSS<ACE_Service_Gestalt>::cleanup (void*ptr)
 {
-	// Borland C++ 2007 *needs* the parameter 
-	// name, but it is not clear why ...
-	ACE_UNUSED_ARG (ptr);
+  // Borland C++ 2007 *needs* the parameter
+  // name, but it is not clear why ...
+  ACE_UNUSED_ARG (ptr);
 }
 # else
 template<> inline

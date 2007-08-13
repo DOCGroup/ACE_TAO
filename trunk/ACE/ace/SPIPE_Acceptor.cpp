@@ -91,9 +91,9 @@ ACE_SPIPE_Acceptor::create_new_instance (int perms)
                           I_PUSH,
                           module) == -1)
     return -1;
-  else if (-1 == ACE_OS::fattach
-	           (spipe[0],
-		    ACE_TEXT_ALWAYS_CHAR (this->local_addr_.get_path_name ())))
+  else if (-1 == ACE_OS::fattach(spipe[0],
+                                 ACE_TEXT_ALWAYS_CHAR (
+                                   this->local_addr_.get_path_name ())))
     return -1;
 
   this->set_duplex_handle (spipe[0]);

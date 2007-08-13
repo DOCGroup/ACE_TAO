@@ -83,9 +83,9 @@ ACE_Dev_Poll_Reactor_Notify::open (ACE_Reactor_Impl *r,
 
 #if defined (ACE_HAS_REACTOR_NOTIFICATION_QUEUE)
       if (notification_queue_.open () == -1)
-	{
-	  return -1;
-	}
+        {
+          return -1;
+        }
 
       if (ACE::set_flags (this->notification_pipe_.write_handle (),
                           ACE_NONBLOCK) == -1)
@@ -572,7 +572,7 @@ ACE_Dev_Poll_Reactor_Handler_Repository::bind (
 
 int
 ACE_Dev_Poll_Reactor_Handler_Repository::unbind (ACE_HANDLE handle,
-						 bool decr_refcnt)
+                                                 bool decr_refcnt)
 {
   ACE_TRACE ("ACE_Dev_Poll_Reactor_Handler_Repository::unbind");
 
@@ -1050,7 +1050,7 @@ ACE_Dev_Poll_Reactor::handle_events_i (ACE_Time_Value *max_wait_time,
     {
       result = this->work_pending_i (max_wait_time);
       if (result == -1)
-	ACE_ERROR ((LM_ERROR, "%t: %p\n", "work_pending_i"));
+        ACE_ERROR ((LM_ERROR, "%t: %p\n", "work_pending_i"));
     }
   while (result == -1 && this->restart_ != 0 && errno == EINTR);
 

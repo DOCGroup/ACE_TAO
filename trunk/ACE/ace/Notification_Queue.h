@@ -100,7 +100,7 @@ public:
    * detailed description.  This is just a helper function.
    */
   int purge_pending_notifications(ACE_Event_Handler * eh,
-				  ACE_Reactor_Mask mask);
+                                  ACE_Reactor_Mask mask);
 
   /**
    * @brief Add a new notification to the queue

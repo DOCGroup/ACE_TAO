@@ -1329,7 +1329,7 @@ ACE_POSIX_AIOCB_Proactor::start_aio (ACE_POSIX_Asynch_Result *result,
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("%N:%l:(%P|%t)::")
                          ACE_TEXT ("start_aio: Invalid op code %d\n"),
-			 op),
+                         op),
                         -1);
     }
 
