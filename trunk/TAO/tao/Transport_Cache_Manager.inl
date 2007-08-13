@@ -72,7 +72,6 @@ namespace TAO
     if(entry == 0)
       return;
 
-    // Double checked locking
     ACE_MT (ACE_GUARD (ACE_Lock, guard, *this->cache_lock_));
 
     this->mark_invalid_i (entry);
@@ -99,6 +98,21 @@ namespace TAO
         entry->item ().recycle_state (state);
       }
   }
+
+  ACE_INLINE Transport_Cache_Manager::Find_Result
+  Transport_Cache_Manager::find (
+    TAO_Transport_Descriptor_Interface *prop,
+    TAO_Transport *&transport,
+    size_t &busy_count)
+  {
+    ACE_MT (ACE_GUARD_RETURN  (ACE_Lock,
+                               guard,
+                               *this->cache_lock_,
+                               Transport_Cache_Manager::CACHE_FOUND_NONE));
+
+    return this->find_i (prop, transport, busy_count);
+  }
+
 
   ACE_INLINE int
   Transport_Cache_Manager::close (Connection_Handler_Set &handlers)
