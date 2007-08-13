@@ -18,10 +18,6 @@
 #define __ACE_INLINE__
 #endif /* ! __ACE_INLINE__ */
 
-// #ifndef _XOPEN_SOURCE
-// #  define _XOPEN_SOURCE 600
-// #endif /* _XOPEN_SOURCE */
-
 // Needed to differentiate between libc 5 and libc 6 (aka glibc).
 #include <features.h>
 
@@ -29,18 +25,14 @@
 #  define ACE_HAS_PTHREADS_UNIX98_EXT
 #endif /* _XOPEN_SOURCE - 0 >= 500 */
 
-#if defined (ACE_HAS_LINUX_NPTL)
-# include "ace/config-posix.h"
+#include "ace/config-posix.h"
 
+#if defined (ACE_HAS_LINUX_NPTL)
   // Temporary fix because NPTL kernels do have shm_open but there is a problem
   // with shm_open/shm_unlink pairing in ACE which  needs to be fixed when I have time.
 # if defined (ACE_HAS_SHM_OPEN)
 #   undef ACE_HAS_SHM_OPEN
 # endif /* ACE_HAS_SHM_OPEN */
-
-# if !defined (ACE_LACKS_LINUX_VERSION_H)
-#  include <linux/version.h>
-# endif /* !ACE_LACKS_LINUX_VERSION_H */
 
 # if defined (ACE_USES_FIFO_SEM)
     // Don't use this for Linux NPTL since this has complete
