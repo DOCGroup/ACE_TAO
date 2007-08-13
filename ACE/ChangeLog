@@ -1,3 +1,10 @@
+Mon Aug 12 07:03:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Log_Msg_IPC.cpp:
+          Fixed wrong calculation of payload size when unicode is enabled.
+          Thanks to David Beck <davidbeck at acm dot org> for reporting this.
+          This fixes bugzilla 3038
+
 Mon Aug 12 04:40:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-linux-common.h:
