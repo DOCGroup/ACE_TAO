@@ -22,7 +22,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 TAO_Notify_Event::TAO_Notify_Event (void)
 : priority_ (CosNotification::Priority, CosNotification::DefaultPriority)
 , timeout_ (CosNotification::Timeout)
-, reliable_ (CosNotification::EventReliability, false)
+, reliable_ (CosNotification::EventReliability, true)
 , clone_ (0)
 , is_on_heap_ (false)
 , time_ (ACE_OS::gettimeofday ())

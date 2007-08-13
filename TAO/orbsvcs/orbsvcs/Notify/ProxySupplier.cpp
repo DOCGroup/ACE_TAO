@@ -79,6 +79,8 @@ TAO_Notify_ProxySupplier::connect (TAO_Notify_Consumer *consumer)
       }
 
     // Adopt the consumer
+    if (this->consumer_.get() != 0)
+      auto_consumer->assume_pending_events (*this->consumer_.get ());
     this->consumer_ = auto_consumer;
 
     this->consumer_admin_->subscribed_types (this->subscribed_types_); // get the parents subscribed types.

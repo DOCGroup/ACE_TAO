@@ -237,18 +237,6 @@ TAO_Notify_Method_Request_Dispatch_Queueable::execute (void)
 
 /*********************************************************************************************************/
 
-TAO_Notify_Method_Request_Dispatch_No_Copy::TAO_Notify_Method_Request_Dispatch_No_Copy (
-      const TAO_Notify_Event* event,
-      TAO_Notify_ProxySupplier* proxy_supplier,
-      bool filtering)
-  : TAO_Notify_Method_Request_Dispatch (event, proxy_supplier, filtering)
-{
-#if 0
-    ACE_DEBUG ((LM_DEBUG,
-      ACE_TEXT ("(%P|%t) Construct Method_Request_Dispatch_No_Copy @%@\n"),
-      this));
-#endif
-}
   /// Constuct construct from another method request
 TAO_Notify_Method_Request_Dispatch_No_Copy::TAO_Notify_Method_Request_Dispatch_No_Copy (
       const TAO_Notify_Method_Request_Event & request,

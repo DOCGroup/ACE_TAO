@@ -301,7 +301,9 @@ TAO_Notify_Object::find_qos_property_value (
   const char * name,
   CosNotification::PropertyValue & value) const
 {
-  return this->qos_properties_.find (name, value);
+  // qos_properties_ is essentially a map and the find() method returns
+  // zero on success.  We must convert this to a boolean value.
+  return (this->qos_properties_.find (name, value) == 0);
 }
 
 

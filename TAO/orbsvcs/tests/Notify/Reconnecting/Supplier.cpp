@@ -626,7 +626,6 @@ Supplier_Main::init_event_channel (void)
     CosNotification::QoSProperties qosprops (7);
     qosprops.length (7);
     CORBA::ULong i = 0;
-#ifdef DISABLE_PROPERTIES_TODO
     qosprops[i].name = CORBA::string_dup(CosNotification::EventReliability);
     qosprops[i++].value <<= CosNotification::Persistent;
     qosprops[i].name = CORBA::string_dup(CosNotification::ConnectionReliability);
@@ -641,12 +640,10 @@ Supplier_Main::init_event_channel (void)
     qosprops[i++].value <<= (CORBA::Long) 2;
     qosprops[i].name = CORBA::string_dup(CosNotification::PacingInterval);
     qosprops[i++].value <<= (TimeBase::TimeT) 50 * 10000; // 50ms
-#endif
-    qosprops.length (i);
+
     CosNotification::AdminProperties adminprops(4);
     adminprops.length (4);
     i = 0;
-#ifdef DISABLE_PROPERTIES_TODO
     adminprops[i].name = CORBA::string_dup(CosNotification::MaxQueueLength);
     adminprops[i++].value <<= (CORBA::Long) 1234;
     adminprops[i].name = CORBA::string_dup(CosNotification::MaxConsumers);
@@ -655,8 +652,6 @@ Supplier_Main::init_event_channel (void)
     adminprops[i++].value <<= (CORBA::Long) 1000;
     adminprops[i].name = CORBA::string_dup(CosNotification::RejectNewEvents);
     adminprops[i++].value <<= CORBA::Any::from_boolean(1);
-#endif
-    adminprops.length(i);
 
     ec_ = this->ecf_->create_channel (
           qosprops,

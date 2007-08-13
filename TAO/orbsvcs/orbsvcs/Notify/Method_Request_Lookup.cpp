@@ -31,6 +31,14 @@ TAO_Notify_Method_Request_Lookup::TAO_Notify_Method_Request_Lookup (
 {
 }
 
+TAO_Notify_Method_Request_Lookup::TAO_Notify_Method_Request_Lookup (
+      const TAO_Notify::Delivery_Request_Ptr& delivery,
+      TAO_Notify_ProxyConsumer * proxy)
+  : TAO_Notify_Method_Request_Event (delivery)
+  , proxy_consumer_ (proxy)
+{
+}
+
 TAO_Notify_Method_Request_Lookup::~TAO_Notify_Method_Request_Lookup ()
 {
 }
@@ -168,7 +176,7 @@ TAO_Notify_Method_Request_Lookup_Queueable::TAO_Notify_Method_Request_Lookup_Que
 TAO_Notify_Method_Request_Lookup_Queueable::TAO_Notify_Method_Request_Lookup_Queueable (
       TAO_Notify::Delivery_Request_Ptr & request,
       TAO_Notify_ProxyConsumer * proxy_consumer)
-  : TAO_Notify_Method_Request_Lookup (request->event ().get (), proxy_consumer)
+  : TAO_Notify_Method_Request_Lookup (request, proxy_consumer)
   , TAO_Notify_Method_Request_Queueable (request->event ().get ())
   , event_var_ (request->event ())
   , proxy_guard_ (proxy_consumer)

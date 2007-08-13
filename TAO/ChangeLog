@@ -1,3 +1,76 @@
+Mon Aug 13 11:19:28 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/orbsvcs/Notify/Consumer.h:
+        * orbsvcs/orbsvcs/Notify/Consumer.cpp:
+
+          Added a new function, assume_pending_events, so that events
+          that were sent for a consumer are not lost during the consumer
+          reconnect.
+
+        * orbsvcs/orbsvcs/Notify/Event.h:
+
+          Document the way that the queueable_copy() method works.
+
+        * orbsvcs/orbsvcs/Notify/Event.cpp:
+
+          Change the default reliable_ setting to true.  This doesn't cause
+          any harm since this value is only inspected when persistence is
+          enabled.
+
+        * orbsvcs/orbsvcs/Notify/Method_Request_Dispatch.h:
+        * orbsvcs/orbsvcs/Notify/Method_Request_Dispatch.cpp:
+
+          Removed an unused constructor from
+          TAO_Notify_Method_Request_Dispatch_No_Copy.
+
+        * orbsvcs/orbsvcs/Notify/Method_Request_Lookup.h:
+        * orbsvcs/orbsvcs/Notify/Method_Request_Lookup.cpp:
+
+          Added a constructor to make a TAO_Notify_Method_Request_Lookup
+          using a deliver request.  And use this new constructor in the
+          TAO_Notify_Method_Request_Lookup_Queueable constructor.
+
+        * orbsvcs/orbsvcs/Notify/Object.cpp:
+
+          Fixed a bug in find_qos_property_value() where finding a property
+          would return false when, in fact, the property existed.
+
+        * orbsvcs/orbsvcs/Notify/ProxyConsumer.cpp:
+
+          Fixed a bug where getting the CosNotification::EventReliability
+          would fail due to extraction of a CORBA::Any into the wrong type.
+
+        * orbsvcs/orbsvcs/Notify/ProxySupplier.cpp:
+
+          Attempt to have the new consumer assume the pending events for the
+          old consumer.
+
+        * orbsvcs/orbsvcs/Notify/Routing_Slip.cpp:
+
+          Fixed a locking issue where the lock was not being released at the
+          correct time.  Also, reduced the number of mutex acquire()'s which
+          will increase performence.
+
+        * orbsvcs/tests/Notify/Reconnecting/Consumer.cpp:
+        * orbsvcs/tests/Notify/Reconnecting/Supplier.cpp:
+
+          Cleaned up the code by removing redundant sequence length settings
+          and the TEST_SET_QOS and DISABLE_PROPERTIES_TODO #ifdef's.
+
+        * orbsvcs/tests/Notify/Reconnecting/event.conf:
+        * orbsvcs/tests/Notify/Reconnecting/ns_mt_both.conf:
+        * orbsvcs/tests/Notify/Reconnecting/ns_st_both.conf:
+
+          Fixed a bug where the wrong library name is used to find the
+          Standard_Event_Persistence service.
+
+        * orbsvcs/tests/Notify/Reconnecting/run_test.pl:
+
+          Cleaned up this script quite a bit and added a new test which
+          tests the persistence of events that are sent by a supplier (upon
+          reconnect) before the consumer reconnects.  The consumer should
+          receive events sent during it's absence.
+
 Mon Aug 12 10:45:00 UTC 2007  Simon Massey  <sma@prismtech.com>
 
         * tao/AnyTypeCode/TypeCode_CDR_Extraction.cpp:

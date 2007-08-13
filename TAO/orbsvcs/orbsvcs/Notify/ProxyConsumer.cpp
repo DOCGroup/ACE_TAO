@@ -133,13 +133,13 @@ TAO_Notify_ProxyConsumer::supports_reliable_events () const
 {
   bool reliable = false;
   CosNotification::PropertyValue value;
-    if (this->find_qos_property_value (CosNotification::EventReliability, value))
+  if (this->find_qos_property_value (CosNotification::EventReliability, value))
     {
-      CORBA::Long setting;
+      CORBA::Short setting;
       if (value >>= setting)
-      {
-        reliable = (setting == CosNotification::Persistent);
-      }
+        {
+          reliable = (setting == CosNotification::Persistent);
+        }
     }
   return reliable;
 }
