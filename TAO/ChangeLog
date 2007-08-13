@@ -1,3 +1,12 @@
+Mon Aug 13 14:16:58 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/tests/Notify/MC/MonitorControl.mpc:
+        * orbsvcs/tests/Notify/MC/Notify_Structured_Push_Consumer.h:
+        * orbsvcs/tests/Notify/MC/Notify_Structured_Push_Consumer.cpp:
+        * orbsvcs/tests/Notify/MC/test_monitor.cpp:
+
+          Removed fuzz errors.
+
 Mon Aug 13 12:11:29 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * examples/Event_Comm/notifier.h:
