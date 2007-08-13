@@ -1,3 +1,10 @@
+Mon Aug 13 18:57:05 UTC 2007  Dale Wilson  <wilsond@ociweb.com>
+
+        * tao/Transport_Cache_Manager.h:
+        * tao/Transport_Cache_Manager.inl:
+        * tao/Transport_Cache_Manager.cpp:
+          Optimize the most common path thru cache manager.
+
 Mon Aug 13 17:53:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * performance-tests/POA/Demux/Demux.mpc:

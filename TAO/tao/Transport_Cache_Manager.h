@@ -113,9 +113,10 @@ namespace TAO
 
     /// Check the Transport Cache to check whether the connection exists
     /// in the Cache and return the connection
-    Find_Result find_transport (TAO_Transport_Descriptor_Interface *prop,
-                        TAO_Transport *&transport,
-                        size_t & busy_count);
+    Find_Result find_transport (
+      TAO_Transport_Descriptor_Interface *prop,
+      TAO_Transport *&transport,
+      size_t & busy_count);
 
     /// Remove entries from the cache depending upon the strategy.
     int purge (void);
@@ -168,9 +169,10 @@ namespace TAO
 
     /// Lookup entry<key,value> in the cache. Grabs the lock and calls the
     /// implementation function find_i.
-    Find_Result find (const Cache_ExtId &key,
-              Cache_IntId &value,
-              size_t & busy_count);
+    Find_Result find (
+      TAO_Transport_Descriptor_Interface *prop,
+      TAO_Transport *&transport,
+      size_t & busy_count);
 
     /**
      * Non-Locking version and actual implementation of bind ()
@@ -187,9 +189,10 @@ namespace TAO
      * Hash_Map_Manager. If the find succeeds, it calls the
      * get_idle_transport ().
      */
-    Find_Result find_i (const Cache_ExtId &key,
-                Cache_IntId &value,
-                size_t & busy_count);
+    Find_Result find_i (
+      TAO_Transport_Descriptor_Interface *prop,
+      TAO_Transport *&transport,
+      size_t & busy_count);
 
     /// Non-locking version and actual implementation of make_idle ().
     int make_idle_i (HASH_MAP_ENTRY *entry);
