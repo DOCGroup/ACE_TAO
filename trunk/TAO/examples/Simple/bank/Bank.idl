@@ -14,13 +14,13 @@ module Bank
       // balance, deposit and withdraw.
 
       exception Overdraft
-	{
-	  // = TITLE
-	  // This exception is raised if the client tries to
-	  // withdraw more money than the current balance.
+        {
+          // = TITLE
+          // This exception is raised if the client tries to
+          // withdraw more money than the current balance.
 
-	  string reason;
-	};
+          string reason;
+        };
 
       readonly attribute float balance;
       // Attribute to obtain the current <balance>.
@@ -42,7 +42,7 @@ module Bank
       // operations to create <Account>s and to delete them.
 
       Account open (in string name,
-		    in float initial_balance);
+                    in float initial_balance);
       // Returns the <Account> associated with <name>.  If this is the
       // first time <name> has been seen, the server will create the
       // account.  Otherwise, the server will return back an object

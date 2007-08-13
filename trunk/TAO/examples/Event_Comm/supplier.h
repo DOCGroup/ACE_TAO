@@ -44,8 +44,8 @@ public:
 
 private:
   virtual int handle_signal (int signum,
-			     siginfo_t *,
-			     ucontext_t *);
+                             siginfo_t *,
+                             ucontext_t *);
   // Handle shutdown signals.
 
   Supplier_Input_Handler ih_;
