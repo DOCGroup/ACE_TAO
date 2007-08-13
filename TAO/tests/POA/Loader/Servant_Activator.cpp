@@ -48,7 +48,7 @@ ServantActivator::ServantActivator (CORBA::ORB_ptr orb,
   // to long first.
   void *symbol = this->dll_.symbol (factory_function);
 #if defined (ACE_OPENVMS) && (!defined (__INITIAL_POINTER_SIZE) || (__INITIAL_POINTER_SIZE < 64))
-  int intptr_t = reinterpret_cast<int> (symbol);
+  int function = reinterpret_cast<int> (symbol);
 #else
   intptr_t function = reinterpret_cast<intptr_t> (symbol);
 #endif
