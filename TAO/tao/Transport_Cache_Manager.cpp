@@ -168,15 +168,10 @@ namespace TAO
         return CACHE_FOUND_NONE;
       }
 
-    // Compose the ExternId
-    Cache_ExtId ext_id (prop);
-    Cache_IntId int_id;
-
-    Transport_Cache_Manager::Find_Result find_result = this->find (ext_id,
-                                   int_id, busy_count);
+    Transport_Cache_Manager::Find_Result find_result = this->find (
+      prop, transport, busy_count);
     if (find_result != CACHE_FOUND_NONE)
       {
-        transport = int_id.relinquish_transport ();
         if (find_result == CACHE_FOUND_AVAILABLE)
           {
             if (transport->wait_strategy ()->non_blocking () == 0 &&
@@ -210,49 +205,31 @@ namespace TAO
   }
 
   Transport_Cache_Manager::Find_Result
-  Transport_Cache_Manager::find (const Cache_ExtId &key,
-                                 Cache_IntId &value,
-                                 size_t &busy_count)
+  Transport_Cache_Manager::find_i (
+    TAO_Transport_Descriptor_Interface *prop,
+    TAO_Transport *&transport,
+    size_t &busy_count)
   {
-    ACE_MT (ACE_GUARD_RETURN  (ACE_Lock,
-                               guard,
-                               *this->cache_lock_,
-                               Transport_Cache_Manager::CACHE_FOUND_NONE));
 
-    Transport_Cache_Manager::Find_Result status =  this->find_i (key,
-                                      value, busy_count);
-
-    if (status != CACHE_FOUND_NONE)
-      {
-        // Update the purging strategy information while we
-        // are holding our lock
-        this->purging_strategy_->update_item (value.transport ());
-      }
-
-    return status;
-  }
-
-  Transport_Cache_Manager::Find_Result
-  Transport_Cache_Manager::find_i (const Cache_ExtId &key,
-                                   Cache_IntId &value,
-                                   size_t & busy_count)
-  {
-    HASH_MAP_ENTRY *entry = 0;
-    busy_count = 0;
+    // Compose the ExternId
+    Cache_IntId value;
 
     // Get the entry from the Hash Map
     Transport_Cache_Manager::Find_Result found = CACHE_FOUND_NONE;
 
     // Make a temporary object. It does not do a copy.
-    Cache_ExtId tmp_key (key.property ());
+    Cache_ExtId key (prop);
+    HASH_MAP_ENTRY *entry = 0;
+    busy_count = 0;
     int cache_status = 0;
+    HASH_MAP_ENTRY *found_entry = 0;
 
     // loop until we find a usable transport, or until we've checked
     // all cached entries for this endpoint
     while (found != CACHE_FOUND_AVAILABLE && cache_status == 0)
       {
         entry = 0;
-        cache_status  = this->cache_map_.find (tmp_key,
+        cache_status  = this->cache_map_.find (key,
                                         entry);
         if (cache_status == 0 && entry)
           {
@@ -261,12 +238,8 @@ namespace TAO
                 // Successfully found a TAO_Transport.
 
                 found = CACHE_FOUND_AVAILABLE;
+                found_entry = entry;
                 entry->item ().recycle_state (ENTRY_BUSY);
-
-                // NOTE: This assignment operator indirectly incurs two
-                //       lock operations since it duplicates and releases
-                //       TAO_Transport objects.
-                value = entry->item ();
 
                 if (TAO_debug_level > 6)
                   {
@@ -294,10 +267,7 @@ namespace TAO
                 // if this is the first interesting entry
                 if (found != CACHE_FOUND_CONNECTING)
                   {
-                    // NOTE: This assignment operator indirectly incurs two
-                    //       lock operations since it duplicates and releases
-                    //       TAO_Transport objects.
-                    value = entry->item ();
+                    found_entry = entry;
                     found = CACHE_FOUND_CONNECTING;
                   }
               }
@@ -306,7 +276,7 @@ namespace TAO
                 // if this is the first busy entry
                 if (found == CACHE_FOUND_NONE && busy_count == 0)
                   {
-                    value = entry->item ();
+                    found_entry = entry;
                     found = CACHE_FOUND_BUSY;
                   }
                 busy_count += 1;
@@ -324,18 +294,19 @@ namespace TAO
           }
 
         // Bump the index up
-        tmp_key.incr_index ();
+        key.incr_index ();
       }
-
-    if (TAO_debug_level > 6 && found != CACHE_FOUND_AVAILABLE)
-      {
-        ACE_ERROR ((LM_ERROR,
-                    "TAO (%P|%t) - Transport_Cache_Manager::find_i, "
-                    "no idle transport is available for hash {%d}\n",
-                    tmp_key.hash ()
-                    ));
-      }
-
+    if (found_entry != 0)
+    {
+      transport = found_entry->item ().transport ();
+      transport->add_reference ();
+      if (found == CACHE_FOUND_AVAILABLE)
+        {
+          // Update the purging strategy information while we
+          // are holding our lock
+          this->purging_strategy_->update_item (transport);
+        }
+    }
     return found;
   }
 
