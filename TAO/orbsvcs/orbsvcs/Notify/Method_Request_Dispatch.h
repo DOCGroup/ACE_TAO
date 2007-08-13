@@ -139,12 +139,6 @@ class TAO_Notify_Serv_Export TAO_Notify_Method_Request_Dispatch_No_Copy
     , public TAO_Notify_Method_Request
 {
 public:
-  /// Constuct from event
-  TAO_Notify_Method_Request_Dispatch_No_Copy (
-    const TAO_Notify_Event * event,
-    TAO_Notify_ProxySupplier* proxy_supplier,
-    bool filtering);
-
   /// Constuct construct from another method request
   TAO_Notify_Method_Request_Dispatch_No_Copy (
     const TAO_Notify_Method_Request_Event & request,

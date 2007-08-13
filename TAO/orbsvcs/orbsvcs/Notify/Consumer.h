@@ -105,6 +105,11 @@ public:
   /// Override, Peer::qos_changed
   virtual void qos_changed (const TAO_Notify_QoSProperties& qos_properties);
 
+  /// Take the pending queue from the rhs, cancel it's timer and
+  /// schedule our timer.  The caller should have locked the proxy lock
+  /// before calling this method.
+  void assume_pending_events (TAO_Notify_Consumer& rhs);
+
 protected:
   typedef ACE_Unbounded_Queue<TAO_Notify_Method_Request_Event_Queueable *> Request_Queue;
 
