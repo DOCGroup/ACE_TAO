@@ -1300,6 +1300,7 @@ namespace
                         name.in (),
                         content_type),
           false);
+      return true;
     }
 
     // Don't bother demarshaling the rest of the parameters.  They will

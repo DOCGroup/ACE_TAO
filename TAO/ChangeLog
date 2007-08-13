@@ -1,3 +1,10 @@
+Mon Aug 12 10:45:00 UTC 2007  Simon Massey  <sma@prismtech.com>
+
+        * tao/AnyTypeCode/TypeCode_CDR_Extraction.cpp:
+
+          Add a missing return true; from the original commit of:
+          Tue Jul 10 10:20:00 UTC 2007  Simon Massey  <sma@prismtech.com>
+
 Sat Aug 11 17:20:15 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * examples/AMH/Sink_Server/client.cpp:
