@@ -296,8 +296,7 @@ EDF_Scheduler::send_request (PortableInterceptor::ClientRequestInfo_ptr ri)
 
   sc.context_data =
     ACE_reinterpret_cast<IOP::ServiceContext::_tao_seq_CORBA_Octet_ &> (
-	*codec_->encode (sc_qos_as_any)
-	);
+      *codec_->encode (sc_qos_as_any));
 
 #ifdef KOKYU_DSRT_LOGGING
   ACE_DEBUG ((LM_DEBUG,
@@ -404,13 +403,13 @@ EDF_Scheduler::receive_request (PortableInterceptor::ServerRequestInfo_ptr ri,
       guid_copy (guid, sc_qos_ptr->guid);
 
       ACE_NEW (guid_out.ptr (),
-	       RTScheduling::Current::IdType);
+               RTScheduling::Current::IdType);
       guid_out.ptr ()->length (guid.length ());
       *(guid_out.ptr ()) = guid;
 
       ACE_OS::memcpy (&int_guid,
-		      guid.get_buffer (),
-		      guid.length ());
+                      guid.get_buffer (),
+                      guid.length ());
 
 
 #ifdef KOKYU_DSRT_LOGGING

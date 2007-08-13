@@ -379,7 +379,7 @@ Fixed_Priority_Scheduler::receive_request (PortableInterceptor::ServerRequestInf
       guid_copy (guid, sc_qos_ptr->guid);
 
       ACE_NEW (guid_out.ptr (),
-	       RTScheduling::Current::IdType);
+               RTScheduling::Current::IdType);
       guid_out.ptr ()->length (guid.length ());
       *(guid_out.ptr ()) = guid;
 

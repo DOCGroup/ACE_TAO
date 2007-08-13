@@ -15,50 +15,50 @@
 class CServerView : public CView
 {
 protected: // create from serialization only
-	CServerView();
-	DECLARE_DYNCREATE(CServerView)
+  CServerView();
+  DECLARE_DYNCREATE(CServerView)
 
 // Attributes
 public:
-	CServerDoc* GetDocument();
+  CServerDoc* GetDocument();
 
 // Operations
 public:
 
 // Overrides
-	// ClassWizard generated virtual function overrides
-	//{{AFX_VIRTUAL(CServerView)
-	public:
-	virtual void OnDraw(CDC* pDC);  // overridden to draw this view
-	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
-	protected:
-	virtual BOOL OnPreparePrinting(CPrintInfo* pInfo);
-	virtual void OnBeginPrinting(CDC* pDC, CPrintInfo* pInfo);
-	virtual void OnEndPrinting(CDC* pDC, CPrintInfo* pInfo);
-	//}}AFX_VIRTUAL
+// ClassWizard generated virtual function overrides
+//{{AFX_VIRTUAL(CServerView)
+public:
+  virtual void OnDraw(CDC* pDC);  // overridden to draw this view
+  virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
+protected:
+  virtual BOOL OnPreparePrinting(CPrintInfo* pInfo);
+  virtual void OnBeginPrinting(CDC* pDC, CPrintInfo* pInfo);
+  virtual void OnEndPrinting(CDC* pDC, CPrintInfo* pInfo);
+//}}AFX_VIRTUAL
 
 // Implementation
 public:
-	virtual ~CServerView();
+  virtual ~CServerView();
 #ifdef _DEBUG
-	virtual void AssertValid() const;
-	virtual void Dump(CDumpContext& dc) const;
+  virtual void AssertValid() const;
+  virtual void Dump(CDumpContext& dc) const;
 #endif
 
 protected:
 
 // Generated message map functions
 protected:
-	//{{AFX_MSG(CServerView)
-		// NOTE - the ClassWizard will add and remove member functions here.
-		//    DO NOT EDIT what you see in these blocks of generated code !
-	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
+  //{{AFX_MSG(CServerView)
+  // NOTE - the ClassWizard will add and remove member functions here.
+  //        DO NOT EDIT what you see in these blocks of generated code !
+  //}}AFX_MSG
+  DECLARE_MESSAGE_MAP()
 };
 
 #ifndef _DEBUG  // debug version in serverView.cpp
 inline CServerDoc* CServerView::GetDocument()
-   { return (CServerDoc*)m_pDocument; }
+  { return (CServerDoc*)m_pDocument; }
 #endif
 
 /////////////////////////////////////////////////////////////////////////////

@@ -40,7 +40,7 @@ MUF_Sched_Param_Policy::copy (void)
 {
   MUF_Sched_Param_Policy* tmp;
   ACE_NEW_THROW_EX (tmp,
-		    MUF_Sched_Param_Policy (*this),
+                    MUF_Sched_Param_Policy (*this),
                     CORBA::NO_MEMORY (TAO::VMCID,
                                       CORBA::COMPLETED_NO));
 
@@ -393,7 +393,7 @@ MUF_Scheduler::receive_request (PortableInterceptor::ServerRequestInfo_ptr ri,
       guid_copy (guid, sc_qos_ptr->guid);
 
       ACE_NEW (guid_out.ptr (),
-	       RTScheduling::Current::IdType);
+               RTScheduling::Current::IdType);
       guid_out.ptr ()->length (guid.length ());
       *(guid_out.ptr ()) = guid;
 

@@ -33,16 +33,16 @@ Simple_Server_i::test_method (CORBA::Long exec_duration)
   if (ACE_Thread::getprio (thr_handle, prio) == -1)
     {
       if (errno == ENOTSUP)
-	{
-	  ACE_DEBUG((LM_DEBUG,
-		     ACE_TEXT ("getprio not supported on this platform\n")
-		     ));
-	  return 0;
-	}
+        {
+          ACE_DEBUG((LM_DEBUG,
+                     ACE_TEXT ("getprio not supported on this platform\n")));
+          return 0;
+        }
+
       ACE_ERROR_RETURN ((LM_ERROR,
-			 ACE_TEXT ("%p\n"),
-			 ACE_TEXT ("getprio failed")),
-			-1);
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("getprio failed")),
+                        -1);
     }
 
   ACE_DEBUG ((LM_DEBUG,
@@ -66,8 +66,8 @@ Simple_Server_i::test_method (CORBA::Long exec_duration)
   while (compute_count_down_time > ACE_Time_Value::zero)
     {
       ACE::is_prime (prime_number,
-		     2,
-		     prime_number / 2);
+                     2,
+                     prime_number / 2);
 
       ++j;
 
@@ -111,9 +111,9 @@ Simple_Server_i::test_method (CORBA::Long exec_duration)
   timer.elapsed_time (elapsed_time);
 
   ACE_DEBUG ((LM_DEBUG,
-	      "Request processing in thread %t done, "
-	      "prio = %d, load = %d, elapsed time = %umsec\n",
-	      prio, exec_duration, elapsed_time.msec () ));
+              "Request processing in thread %t done, "
+              "prio = %d, load = %d, elapsed time = %umsec\n",
+              prio, exec_duration, elapsed_time.msec () ));
 
   return exec_duration;
 }

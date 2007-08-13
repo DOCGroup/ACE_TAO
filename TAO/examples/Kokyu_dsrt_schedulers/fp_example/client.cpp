@@ -231,10 +231,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         {
           if (enable_dynamic_scheduling)
             {
-	      FP_Scheduling::SegmentSchedulingParameter sched_param;
-	      sched_param.base_priority = 0;
+              FP_Scheduling::SegmentSchedulingParameter sched_param;
+              sched_param.base_priority = 0;
               CORBA::Policy_var sched_param_policy
-		= scheduler->create_segment_scheduling_parameter (sched_param);
+                = scheduler->create_segment_scheduling_parameter (sched_param);
               CORBA::Policy_ptr implicit_sched_param = 0;
               current->begin_scheduling_segment (0,
                                                  sched_param_policy.in (),
@@ -320,7 +320,7 @@ Worker::svc (void)
       FP_Scheduling::SegmentSchedulingParameter sched_param;
       sched_param.base_priority = prio_;
       CORBA::Policy_var sched_param_policy
-	= scheduler_->create_segment_scheduling_parameter (sched_param);
+        = scheduler_->create_segment_scheduling_parameter (sched_param);
 
       CORBA::Policy_ptr implicit_sched_param = 0;
       ACE_DEBUG ((LM_DEBUG, "(%t|%T):before begin_sched_segment\n"));

@@ -1,7 +1,6 @@
 // $Id$
 
 // serverView.cpp : implementation of the CServerView class
-//
 
 #include "stdafx.h"
 #include "server.h"
@@ -21,14 +20,14 @@ static char THIS_FILE[] = __FILE__;
 IMPLEMENT_DYNCREATE(CServerView, CView)
 
 BEGIN_MESSAGE_MAP(CServerView, CView)
-	//{{AFX_MSG_MAP(CServerView)
-		// NOTE - the ClassWizard will add and remove mapping macros here.
-		//    DO NOT EDIT what you see in these blocks of generated code!
-	//}}AFX_MSG_MAP
-	// Standard printing commands
-	ON_COMMAND(ID_FILE_PRINT, CView::OnFilePrint)
-	ON_COMMAND(ID_FILE_PRINT_DIRECT, CView::OnFilePrint)
-	ON_COMMAND(ID_FILE_PRINT_PREVIEW, CView::OnFilePrintPreview)
+  //{{AFX_MSG_MAP(CServerView)
+  // NOTE - the ClassWizard will add and remove mapping macros here.
+  //        DO NOT EDIT what you see in these blocks of generated code!
+  //}}AFX_MSG_MAP
+  // Standard printing commands
+  ON_COMMAND(ID_FILE_PRINT, CView::OnFilePrint)
+  ON_COMMAND(ID_FILE_PRINT_DIRECT, CView::OnFilePrint)
+  ON_COMMAND(ID_FILE_PRINT_PREVIEW, CView::OnFilePrintPreview)
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -36,8 +35,7 @@ END_MESSAGE_MAP()
 
 CServerView::CServerView()
 {
-	// TODO: add construction code here
-
+  // TODO: add construction code here
 }
 
 CServerView::~CServerView()
@@ -46,10 +44,10 @@ CServerView::~CServerView()
 
 BOOL CServerView::PreCreateWindow(CREATESTRUCT& cs)
 {
-	// TODO: Modify the Window class or styles here by modifying
-	//  the CREATESTRUCT cs
+  // TODO: Modify the Window class or styles here by modifying
+  //  the CREATESTRUCT cs
 
-	return CView::PreCreateWindow(cs);
+  return CView::PreCreateWindow(cs);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -57,9 +55,9 @@ BOOL CServerView::PreCreateWindow(CREATESTRUCT& cs)
 
 void CServerView::OnDraw(CDC* pDC)
 {
-	CServerDoc* pDoc = GetDocument();
-	ASSERT_VALID(pDoc);
-	// TODO: add draw code for native data here
+  CServerDoc* pDoc = GetDocument();
+  ASSERT_VALID(pDoc);
+  // TODO: add draw code for native data here
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -67,18 +65,18 @@ void CServerView::OnDraw(CDC* pDC)
 
 BOOL CServerView::OnPreparePrinting(CPrintInfo* pInfo)
 {
-	// default preparation
-	return DoPreparePrinting(pInfo);
+  // default preparation
+  return DoPreparePrinting(pInfo);
 }
 
 void CServerView::OnBeginPrinting(CDC* /*pDC*/, CPrintInfo* /*pInfo*/)
 {
-	// TODO: add extra initialization before printing
+  // TODO: add extra initialization before printing
 }
 
 void CServerView::OnEndPrinting(CDC* /*pDC*/, CPrintInfo* /*pInfo*/)
 {
-	// TODO: add cleanup after printing
+  // TODO: add cleanup after printing
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -87,18 +85,18 @@ void CServerView::OnEndPrinting(CDC* /*pDC*/, CPrintInfo* /*pInfo*/)
 #ifdef _DEBUG
 void CServerView::AssertValid() const
 {
-	CView::AssertValid();
+  CView::AssertValid();
 }
 
 void CServerView::Dump(CDumpContext& dc) const
 {
-	CView::Dump(dc);
+  CView::Dump(dc);
 }
 
 CServerDoc* CServerView::GetDocument() // non-debug version is inline
 {
-	ASSERT(m_pDocument->IsKindOf(RUNTIME_CLASS(CServerDoc)));
-	return (CServerDoc*)m_pDocument;
+  ASSERT(m_pDocument->IsKindOf(RUNTIME_CLASS(CServerDoc)));
+  return (CServerDoc*)m_pDocument;
 }
 #endif //_DEBUG
 

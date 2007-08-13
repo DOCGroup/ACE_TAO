@@ -32,8 +32,8 @@ module Stock
         raises (Invalid_Stock, Invalid_Quoter);
 
       // LifeCycleObject copy(in FactoryFinder there,
-      // 	   in Criteria the_criteria)
-      //     raises(NoFactory, NotCopyable, InvalidCriteria, CannotMeetCriteria);
+      //                      in Criteria the_criteria)
+      //    raises(NoFactory, NotCopyable, InvalidCriteria, CannotMeetCriteria);
       // copies this object to a location "there" using the "the_criteria"
 
       // void move(in FactoryFinder there,
@@ -89,9 +89,9 @@ module Stock
       //      raises (NoFactory, InvalidCriteria, CannotMeetCriteria);
 
       void register_factory (in string name,
-			     in string location,
-			     in string description,
-			     in Object _object);
+                             in string location,
+                             in string description,
+                             in Object _object);
       // provide an method for registering factories with their properties
     };
 
