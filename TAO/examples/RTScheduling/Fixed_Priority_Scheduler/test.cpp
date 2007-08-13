@@ -52,14 +52,14 @@ DT_Test::check_supported_priorities (void)
       min_priority_ = ACE_Sched_Params::priority_min (sched_policy_);
 
       if (max_priority_ == min_priority_)
-	{
-	  ACE_DEBUG ((LM_DEBUG,
-		      "Not enough priority levels on this platform"
-		      " to run the test, aborting \n"));
-	  ACE_OS::exit (2);
-	}
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "Not enough priority levels on this platform"
+                      " to run the test, aborting \n"));
+          ACE_OS::exit (2);
+        }
       else ACE_DEBUG ((LM_DEBUG, "max_priority = %d, min_priority = %d\n",
-		       max_priority_, min_priority_));
+                       max_priority_, min_priority_));
     }
 }
 
@@ -67,8 +67,8 @@ int
 DT_Test::init (int argc, char *argv [])
 {
   orb_ = CORBA::ORB_init (argc,
-			  argv,
-			  "");
+                          argv,
+                          "");
 
   this->check_supported_priorities ();
 
@@ -82,7 +82,7 @@ DT_Test::init (int argc, char *argv [])
 
 
   ACE_NEW_RETURN (scheduler_,
-		  Fixed_Priority_Scheduler (orb_.in ()),
+                  Fixed_Priority_Scheduler (orb_.in ()),
                   -1);
 
   manager->rtscheduler (scheduler_);
@@ -96,22 +96,21 @@ DT_Test::init (int argc, char *argv [])
 
   if (sched_policy_ != ACE_SCHED_OTHER)
     {
-
-        //Set the main thread to max priority...
-        if (ACE_OS::sched_params (ACE_Sched_Params (sched_policy_,
-  						  55,
-  						  ACE_SCOPE_PROCESS)) != 0)
-  	{
-  	  if (ACE_OS::last_error () == EPERM)
-  	    {
-  	      ACE_DEBUG ((LM_DEBUG,
-  			  "(%P|%t): user is not superuser, "
-  			  "test runs in time-shared class\n"));
-  	    }
-  	  else
-  	    ACE_ERROR ((LM_ERROR,
-  			"(%P|%t): sched_params failed\n"));
-  	}
+      //Set the main thread to max priority...
+      if (ACE_OS::sched_params (ACE_Sched_Params (sched_policy_,
+                                55,
+                                ACE_SCOPE_PROCESS)) != 0)
+        {
+          if (ACE_OS::last_error () == EPERM)
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "(%P|%t): user is not superuser, "
+                          "test runs in time-shared class\n"));
+            }
+          else
+            ACE_ERROR ((LM_ERROR,
+                        "(%P|%t): sched_params failed\n"));
+        }
     }
 
   return 0;
@@ -139,7 +138,7 @@ DT_Test::run (int argc, char* argv [])
   dt_creator->register_synch_obj ();
 
   ACE_DEBUG ((LM_DEBUG,
-	      "Registered Synch Object\n"));
+              "Registered Synch Object\n"));
 
   /*
   dt_creator_->create_distributable_threads (current_.in ());
@@ -153,10 +152,7 @@ DT_Test::run (int argc, char* argv [])
 
   //ACE_Thread_Manager::instance ()->wait ();
   orb_->run ();
-
-
 }
-
 
 void
 DT_Test::dt_creator (FP_DT_Creator* dt_creator)
@@ -170,7 +166,6 @@ DT_Test::dt_creator (void)
   return this->dt_creator_;
 }
 
-
 Fixed_Priority_Scheduler*
 DT_Test::scheduler (void)
 {
@@ -182,7 +177,7 @@ DT_Test::activate_task (void)
 {
 
   ACE_DEBUG ((LM_DEBUG,
-	      "Test Activate Task\n"));
+              "Test Activate Task\n"));
 
   long flags;
   flags = THR_NEW_LWP | THR_JOINABLE;
@@ -191,16 +186,16 @@ DT_Test::activate_task (void)
     orb_->orb_core ()->orb_params ()->sched_policy ();
 
   if (this->activate (flags,
-		      1,
-		      0,
-		      50) == -1)
+                      1,
+                      0,
+                      50) == -1)
     {
       if (ACE_OS::last_error () == EPERM)
-	ACE_ERROR_RETURN ((LM_ERROR,
-			   ACE_TEXT ("Insufficient privilege to run this test.\n")),
-			  -1);
-
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("Insufficient privilege to run this test.\n")),
+                          -1);
     }
+
   return 0;
 }
 
@@ -210,11 +205,9 @@ DT_Test::svc (void)
   try
     {
       ACE_DEBUG ((LM_DEBUG,
-		  "In test::svc\n"));
+                  "In test::svc\n"));
 
       dt_creator_->create_distributable_threads (current_.in ());
-
-
     }
   catch (const CORBA::Exception& ex)
     {
@@ -224,7 +217,6 @@ DT_Test::svc (void)
 
   return 0;
 }
-
 
 CORBA::ORB_ptr
 DT_Test::orb (void)

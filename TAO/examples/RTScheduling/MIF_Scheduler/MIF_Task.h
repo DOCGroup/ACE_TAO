@@ -8,19 +8,19 @@ class MIF_Task : public Thread_Task
 {
  public:
   MIF_Task (int importance,
-	    int start_time,
-	    int load,
-	    int iter,
-	    int dist,
-	    char *job_name,
-	    DT_Creator *dt_creator);
+            int start_time,
+            int load,
+            int iter,
+            int dist,
+            char *job_name,
+            DT_Creator *dt_creator);
 
   ~MIF_Task (void);
 
   virtual int activate_task (RTScheduling::Current_ptr current,
-			     CORBA::Policy_ptr sched_param,
-			     long flags,
-			     ACE_Time_Value* base_time);
+                             CORBA::Policy_ptr sched_param,
+                             long flags,
+                             ACE_Time_Value* base_time);
 
   virtual int perform_task (void);
 

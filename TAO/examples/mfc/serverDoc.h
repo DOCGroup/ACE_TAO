@@ -15,8 +15,8 @@
 class CServerDoc : public CDocument
 {
 protected: // create from serialization only
-	CServerDoc();
-	DECLARE_DYNCREATE(CServerDoc)
+  CServerDoc();
+  DECLARE_DYNCREATE(CServerDoc)
 
 // Attributes
 public:
@@ -25,30 +25,30 @@ public:
 public:
 
 // Overrides
-	// ClassWizard generated virtual function overrides
-	//{{AFX_VIRTUAL(CServerDoc)
-	public:
-	virtual BOOL OnNewDocument();
-	virtual void Serialize(CArchive& ar);
-	//}}AFX_VIRTUAL
+// ClassWizard generated virtual function overrides
+//{{AFX_VIRTUAL(CServerDoc)
+public:
+  virtual BOOL OnNewDocument();
+  virtual void Serialize(CArchive& ar);
+//}}AFX_VIRTUAL
 
 // Implementation
 public:
-	virtual ~CServerDoc();
+  virtual ~CServerDoc();
 #ifdef _DEBUG
-	virtual void AssertValid() const;
-	virtual void Dump(CDumpContext& dc) const;
+  virtual void AssertValid() const;
+  virtual void Dump(CDumpContext& dc) const;
 #endif
 
 protected:
 
 // Generated message map functions
 protected:
-	//{{AFX_MSG(CServerDoc)
-		// NOTE - the ClassWizard will add and remove member functions here.
-		//    DO NOT EDIT what you see in these blocks of generated code !
-	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
+  //{{AFX_MSG(CServerDoc)
+  // NOTE - the ClassWizard will add and remove member functions here.
+  //        DO NOT EDIT what you see in these blocks of generated code !
+  //}}AFX_MSG
+  DECLARE_MESSAGE_MAP()
 };
 
 /////////////////////////////////////////////////////////////////////////////

@@ -1,3 +1,44 @@
+Mon Aug 13 12:11:29 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * examples/Event_Comm/notifier.h:
+        * examples/Event_Comm/supplier.h:
+        * examples/Kokyu_dsrt_schedulers/EDF_Scheduler.cpp:
+        * examples/Kokyu_dsrt_schedulers/FP_Scheduler.cpp:
+        * examples/Kokyu_dsrt_schedulers/MIF_Scheduler.cpp:
+        * examples/Kokyu_dsrt_schedulers/MUF_Scheduler.cpp:
+        * examples/Kokyu_dsrt_schedulers/Task_Stats.cpp:
+        * examples/Kokyu_dsrt_schedulers/fp_example/client.cpp:
+        * examples/Kokyu_dsrt_schedulers/fp_example/test_i.cpp:
+        * examples/Kokyu_dsrt_schedulers/mif_example/test_i.cpp:
+        * examples/Kokyu_dsrt_schedulers/muf_example/test_i.cpp:
+        * examples/Logging/Logger.idl:
+        * examples/Quoter/Quoter.idl:
+        * examples/RTScheduling/Fixed_Priority_Scheduler/FP_Scheduler.h:
+        * examples/RTScheduling/Fixed_Priority_Scheduler/FP_Task.h:
+        * examples/RTScheduling/Fixed_Priority_Scheduler/FP_Task.cpp:
+        * examples/RTScheduling/Fixed_Priority_Scheduler/test.cpp:
+        * examples/RTScheduling/Job.idl:
+        * examples/RTScheduling/MIF_Scheduler/MIF_DT_Creator.h:
+        * examples/RTScheduling/MIF_Scheduler/MIF_DT_Creator.cpp:
+        * examples/RTScheduling/MIF_Scheduler/MIF_Task.h:
+        * examples/RTScheduling/Synch_i.cpp:
+        * examples/RTScheduling/Task_Stats.cpp:
+        * examples/Simple/bank/Bank.idl:
+        * examples/Simple/chat/client.cpp:
+        * examples/Simple/echo/Echo.idl:
+        * examples/Simulator/NavWeap.idl:
+        * examples/mfc/MainFrm.h:
+        * examples/mfc/MainFrm.cpp:
+        * examples/mfc/client.cpp:
+        * examples/mfc/server.h:
+        * examples/mfc/server.cpp:
+        * examples/mfc/serverDoc.h:
+        * examples/mfc/serverDoc.cpp:
+        * examples/mfc/serverView.h:
+        * examples/mfc/serverView.cpp:
+
+          Untabify.
+
 Mon Aug 13 11:38:23 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * configure.ac:

@@ -25,10 +25,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     {
       Client_i client_i;
 
-      if (client_i.init (argc, argv) == -1
-	  || client_i.run () == -1)
-	return -1;
-
+      if (client_i.init (argc, argv) == -1 || client_i.run () == -1)
+        return -1;
     }
   catch (const CORBA::Exception& ex)
     {

@@ -1,5 +1,5 @@
 // $Id$
-
+ 
 // ============================================================================
 //
 // = LIBRARY
@@ -37,8 +37,8 @@ class Notifier : public ACE_Event_Handler
   
  private:
   virtual int handle_signal (int signum,
-			     siginfo_t *,
-			     ucontext_t *);
+                             siginfo_t *,
+                             ucontext_t *);
   // Handle signals that shut us down.
   
   Notifier_Server ns_;

@@ -16,48 +16,47 @@
 
 #include "tao/TimeBase.pidl"
 
-struct Navigation {
-	long position_latitude;
-	long position_longitude;
-	unsigned long altitude;
-	long heading;
-	long roll;
-	long pitch;
-	// common part
-	double utilization;
-	double overhead;
-	TimeBase::TimeT arrival_time;
-	TimeBase::TimeT deadline_time;
-	TimeBase::TimeT completion_time;
-	TimeBase::TimeT computation_time;
-        unsigned long criticality;
-        unsigned long update_data;
+struct Navigation
+{
+  long position_latitude;
+  long position_longitude;
+  unsigned long altitude;
+  long heading;
+  long roll;
+  long pitch;
+  // common part
+  double utilization;
+  double overhead;
+  TimeBase::TimeT arrival_time;
+  TimeBase::TimeT deadline_time;
+  TimeBase::TimeT completion_time;
+  TimeBase::TimeT computation_time;
+  unsigned long criticality;
+  unsigned long update_data;
 };
 
-
-
-struct Weapons {
-
-	unsigned long number_of_weapons;
-	string weapon1_identifier;
-	unsigned long weapon1_status;
-	string weapon2_identifier;
-	unsigned long weapon2_status;
-	string weapon3_identifier;
-	unsigned long weapon3_status;
-	string weapon4_identifier;
-	unsigned long weapon4_status;
-	string weapon5_identifier;
-	unsigned long weapon5_status;
-	// common part
-	double utilization;
-	double overhead;
-	TimeBase::TimeT arrival_time;
-	TimeBase::TimeT deadline_time;
-	TimeBase::TimeT completion_time;
-	TimeBase::TimeT computation_time;
-        unsigned long criticality;
-        unsigned long update_data;
+struct Weapons
+{
+  unsigned long number_of_weapons;
+  string weapon1_identifier;
+  unsigned long weapon1_status;
+  string weapon2_identifier;
+  unsigned long weapon2_status;
+  string weapon3_identifier;
+  unsigned long weapon3_status;
+  string weapon4_identifier;
+  unsigned long weapon4_status;
+  string weapon5_identifier;
+  unsigned long weapon5_status;
+  // common part
+  double utilization;
+  double overhead;
+  TimeBase::TimeT arrival_time;
+  TimeBase::TimeT deadline_time;
+  TimeBase::TimeT completion_time;
+  TimeBase::TimeT computation_time;
+  unsigned long criticality;
+  unsigned long update_data;
 };
 
 interface NavWeapTerminator
@@ -68,6 +67,5 @@ interface NavWeapTerminator
     // servant dispatched servant, but with the request
     // originating from another thread.
 {
-    void shutdown ();
+  void shutdown ();
 };
-

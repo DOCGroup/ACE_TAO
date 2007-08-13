@@ -66,8 +66,8 @@ Task_Stats::dump_samples (const ACE_TCHAR *file_name, const ACE_TCHAR *msg,
   if (output_file == 0)
     {
       ACE_ERROR ((LM_ERROR,
-		  "%s cannot be opened \n",
-		  file_name));
+                  "%s cannot be opened \n",
+                  file_name));
     }
 
   // first dump what the caller has to say.
@@ -95,7 +95,7 @@ Task_Stats::dump_samples (const ACE_TCHAR *file_name, const ACE_TCHAR *msg,
   ACE_OS::fclose (output_file);
 
   ACE_DEBUG ((LM_DEBUG,
-	      "Samples are ready to view\n"));
+              "Samples are ready to view\n"));
 }
 
 #if defined (ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION)

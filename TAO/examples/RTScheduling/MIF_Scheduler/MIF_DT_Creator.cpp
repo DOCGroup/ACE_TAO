@@ -11,22 +11,22 @@ MIF_DT_Creator::MIF_DT_Creator (void)
 
 Thread_Task*
 MIF_DT_Creator::create_thr_task (int importance,
-				 int start_time,
-				 int load,
-				 int iter,
-				 int dist,
-				 char *job_name)
+                                 int start_time,
+                                 int load,
+                                 int iter,
+                                 int dist,
+                                 char *job_name)
 {
   MIF_Task* task;
   ACE_NEW_RETURN (task,
-		  MIF_Task (importance,
-			    start_time,
-			    load,
-			    iter,
-			    dist,
-			    job_name,
-			    this),
-		  0);
+                  MIF_Task (importance,
+                            start_time,
+                            load,
+                            iter,
+                            dist,
+                            job_name,
+                            this),
+                  0);
   return task;
 }
 
@@ -38,7 +38,7 @@ MIF_DT_Creator::sched_param (int importance)
 
 void
 MIF_DT_Creator::yield (int suspend_time,
-		       Thread_Task*)
+                       Thread_Task*)
 {
   try
     {
