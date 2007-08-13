@@ -210,10 +210,6 @@ namespace TAO
     TAO_Transport *&transport,
     size_t &busy_count)
   {
-
-    // Compose the ExternId
-    Cache_IntId value;
-
     // Get the entry from the Hash Map
     Transport_Cache_Manager::Find_Result found = CACHE_FOUND_NONE;
 
