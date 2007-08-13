@@ -16,7 +16,7 @@ __ace_assert(const char *file, int line, const ACE_TCHAR *expression)
   ACE_Log_Msg *log = ACE_Log_Msg::instance ();
 
   log->set (file, line, -1, error, log->restart (),
-	    log->msg_ostream (), log->msg_callback ());
+            log->msg_ostream (), log->msg_callback ());
 
   log->log (LM_ERROR, ACE_TEXT ("ACE_ASSERT: file %N, line %l assertion failed for '%s'.%a\n"), expression, -1);
 }

@@ -610,9 +610,9 @@ ACE_Select_Reactor_Notify::open (ACE_Reactor_Impl *r,
 
 #if defined (ACE_HAS_REACTOR_NOTIFICATION_QUEUE)
       if (notification_queue_.open() == -1)
-	{
-	  return -1;
-	}
+        {
+          return -1;
+        }
 #endif /* ACE_HAS_REACTOR_NOTIFICATION_QUEUE */
 
       // There seems to be a Win32 bug with this...  Set this into
@@ -650,12 +650,12 @@ ACE_Select_Reactor_Notify::close (void)
       // pipe....
       ACE_Notification_Buffer b;
       for (int r = read_notify_pipe(notification_pipe_.read_handle(), b);
-	   r > 0;
-	   r = read_notify_pipe(notification_pipe_.read_handle(), b))
-	{
-	  if (b.eh_ == 0) continue;
-	  b.eh_->remove_reference();
-	}
+           r > 0;
+           r = read_notify_pipe(notification_pipe_.read_handle(), b))
+        {
+          if (b.eh_ == 0) continue;
+          b.eh_->remove_reference();
+        }
     }
 #endif /* ACE_HAS_REACTOR_NOTIFICATION_QUEUE */
 
@@ -782,8 +782,9 @@ ACE_Select_Reactor_Notify::dispatch_notify (ACE_Notification_Buffer &buffer)
   bool more_messages_queued = false;
   ACE_Notification_Buffer next;
 
-  result = notification_queue_.pop_next_notification(
-	     buffer, more_messages_queued, next);
+  result = notification_queue_.pop_next_notification(buffer, 
+                                                     more_messages_queued, 
+                                                     next);
 
   if (result == 0)
     {

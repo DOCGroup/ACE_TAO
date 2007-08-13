@@ -79,8 +79,8 @@ allocate_more_buffers()
   ACE_Notification_Queue_Node *temp = 0;
 
   ACE_NEW_RETURN (temp,
-		  ACE_Notification_Queue_Node[ACE_REACTOR_NOTIFICATION_ARRAY_SIZE],
-		  -1);
+                  ACE_Notification_Queue_Node[ACE_REACTOR_NOTIFICATION_ARRAY_SIZE],
+                  -1);
 
   if (this->alloc_queue_.enqueue_head (temp) == -1)
     {
@@ -99,7 +99,7 @@ allocate_more_buffers()
 int
 ACE_Notification_Queue::
 purge_pending_notifications(ACE_Event_Handler * eh,
-			    ACE_Reactor_Mask mask)
+                            ACE_Reactor_Mask mask)
 {
   ACE_TRACE ("ACE_Notification_Queue::purge_pending_notifications");
 
@@ -113,20 +113,20 @@ purge_pending_notifications(ACE_Event_Handler * eh,
   while(node != 0)
     {
       if (!node->matches_for_purging(eh))
-	{
-	  // Easy case, skip to the next node
+        {
+          // Easy case, skip to the next node
           node = node->next();
-	  continue;
-	}
+          continue;
+        }
 
       if (!node->mask_disables_all_notifications(mask))
-	{
+        {
           // ... another easy case, skip this node too, but clear the
           // mask first ...
-	  node->clear_mask(mask);
+          node->clear_mask(mask);
           node = node->next();
-	  continue;
-	}
+          continue;
+        }
 
       // ... this is the more complicated case, we want to remove the
       // node from the notify_queue_ list.  First save the next node
@@ -140,7 +140,7 @@ purge_pending_notifications(ACE_Event_Handler * eh,
       // ... release resources ...
       ACE_Event_Handler *event_handler = node->get().eh_;
       event_handler->remove_reference ();
-      
+
       // ... now this is a free node ...
       free_queue_.push_front(node);
 
@@ -168,9 +168,9 @@ push_new_notification(
   if (free_queue_.is_empty())
     {
       if (allocate_more_buffers() == -1)
-	{
-	  return -1;
-	}
+        {
+          return -1;
+        }
     }
 
   ACE_Notification_Queue_Node * node =

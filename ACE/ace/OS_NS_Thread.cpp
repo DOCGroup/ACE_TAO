@@ -4202,15 +4202,15 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
       if (ACE_BIT_ENABLED (flags, THR_SUSPENDED))
         {
            if (ACE_ADAPT_RETVAL(::pthread_attr_setcreatesuspend_np(&attr), result) != 0)
-	     {
+            {
 
 #     if defined (ACE_HAS_PTHREADS_DRAFT4)
               ::pthread_attr_delete (&attr);
 #     else /* ACE_HAS_PTHREADS_DRAFT4 */
               ::pthread_attr_destroy (&attr);
 #     endif /* ACE_HAS_PTHREADS_DRAFT4 */
-	      return -1;
-	    }
+              return -1;
+            }
         }
 #   endif /* !ACE_HAS_PTHREAD_ATTR_SETCREATESUSPEND_NP */
 
