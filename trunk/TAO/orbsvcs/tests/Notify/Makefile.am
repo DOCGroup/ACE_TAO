@@ -22,6 +22,7 @@ SUBDIRS = \
         Persistent_POA \
         Ordering \
         MT_Dispatching \
+        MC \
         Driver \
         Discarding \
         Destroy \
