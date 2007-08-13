@@ -766,10 +766,13 @@ namespace ACE_Utils
   {
     signed int operator() (signed long val)
     {
-      return
-        (val > static_cast<signed long> (ACE_Numeric_Limits<signed int>::max ())
-         ? ACE_Numeric_Limits<signed int>::max ()
-         : static_cast<signed int> (val));
+      return static_cast<signed int> (val);
+//      This code causes asserts and compiler crashes with BCB6 Static and
+//      BCB2007 Static
+//      return
+//        (val > static_cast<signed long> (ACE_Numeric_Limits<signed int>::max ())
+//         ? ACE_Numeric_Limits<signed int>::max ()
+//         : static_cast<signed int> (val));
     }
   };
 
