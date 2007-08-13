@@ -1,3 +1,14 @@
+Mon Aug 12 10:55;12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/CDR_Stream.cpp:
+          Const change
+
+        * ace/OS_QoS.h:
+          Instead of making all ACE_ defines dependent on winsock2, just for each
+          one check if the non ACE define exists or not. If it exists, use it, if
+          not, use a special ACE value. This makes it easier to support QoS with
+          MinGW.
+
 Mon Aug 12 07:03:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Log_Msg_IPC.cpp:
