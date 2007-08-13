@@ -680,4 +680,26 @@ TAO_Notify_Consumer::proxy_supplier (void)
   return this->proxy_;
 }
 
+void
+TAO_Notify_Consumer::assume_pending_events (TAO_Notify_Consumer& rhs)
+{
+  // No need to lock the this proxy's lock.  It should have been locked
+  // by the caller.
+
+  // If the original consumer has pending events
+  if (!rhs.pending_events ().is_empty ())
+    {
+      // We will take them away and cancel it's timer
+      this->pending_events_.reset (rhs.pending_events_.release ());
+      if (rhs.timer_.isSet ())
+        {
+          rhs.cancel_timer ();
+        }
+
+      // Schedule a new timer for us, which will use the default
+      // timer value (unless we have a valid pacing interval).
+      this->schedule_timer ();
+    }
+}
+
 TAO_END_VERSIONED_NAMESPACE_DECL

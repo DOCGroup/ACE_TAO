@@ -87,7 +87,9 @@ public:
   /// Push event to the Event_Forwarder interface
   virtual void push_no_filtering (Event_Forwarder::ProxyPushSupplier_ptr forwarder) const = 0;
 
-  /// Return a pointer to a copy of this event on the heap
+  /// Return a pointer to a copy of this event on the heap.  The
+  /// event is not owned by the caller, so it should not be deleted or
+  /// released.
   TAO_Notify_Event* queueable_copy (void) const;
 
   /// marshal this event into a CDR buffer (for persistence)

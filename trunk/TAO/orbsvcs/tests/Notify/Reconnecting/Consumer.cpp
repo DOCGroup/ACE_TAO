@@ -1224,7 +1224,6 @@ Consumer_Main::init_event_channel (void)
     CosNotification::QoSProperties qosprops (7);
     qosprops.length (7);
     CORBA::ULong i = 0;
-#ifdef DISABLE_PROPERTIES_TODO
     qosprops[i].name = CORBA::string_dup(CosNotification::EventReliability);
     qosprops[i++].value <<= CosNotification::Persistent;
     qosprops[i].name = CORBA::string_dup(CosNotification::ConnectionReliability);
@@ -1239,12 +1238,10 @@ Consumer_Main::init_event_channel (void)
     qosprops[i++].value <<= (CORBA::Long)2;
     qosprops[i].name = CORBA::string_dup(CosNotification::PacingInterval);
     qosprops[i++].value <<= (TimeBase::TimeT) 50 * 10000; // 50ms
-#endif
-    qosprops.length (i);
+
     CosNotification::AdminProperties adminprops(4);
     adminprops.length (4);
     i = 0;
-#ifdef DISABLE_PROPERTIES_TODO
     adminprops[i].name = CORBA::string_dup(CosNotification::MaxQueueLength);
     adminprops[i++].value <<= (CORBA::Long) 1234;
     adminprops[i].name = CORBA::string_dup(CosNotification::MaxSuppliers);
@@ -1253,8 +1250,6 @@ Consumer_Main::init_event_channel (void)
     adminprops[i++].value <<= (CORBA::Long) 1000;
     adminprops[i].name = CORBA::string_dup(CosNotification::RejectNewEvents);
     adminprops[i++].value <<= CORBA::Any::from_boolean(1);
-#endif
-    adminprops.length(i);
 
     ec_ = this->ecf_->create_channel (
           qosprops,
@@ -1365,7 +1360,6 @@ Consumer_Main::init_consumer_admin (void)
         this->sa_id_);
       ok = ! CORBA::is_nil (this->sa_.in ());
 
-#ifdef TEST_SET_QOS
       // temporary: be sure we can set qos properties here
       if (ok)
       {
@@ -1380,7 +1374,6 @@ Consumer_Main::init_consumer_admin (void)
         qosprops.length(i);
         this->sa_->set_qos (qosprops);
       }
-#endif
 
       if (ok && this->verbose_)
       {
@@ -1412,16 +1405,30 @@ Consumer_Main::init_structured_proxy_supplier (void)
                            this->structured_proxy_id_
                         );
       ok = ! CORBA::is_nil (proxy.in ());
-      if (ok && this->verbose_)
+      if (this->verbose_)
       {
-        ACE_DEBUG ((LM_DEBUG,
-          ACE_TEXT ("(%P|%t) Consumer: Reconnect to proxy supplier %d\n"),
-          static_cast<int>(this->structured_proxy_id_)
-          ));
+        if (ok)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+            ACE_TEXT ("(%P|%t) Consumer: Reconnect to proxy supplier %d\n"),
+            static_cast<int>(this->structured_proxy_id_)
+            ));
+        }
+        else
+        {
+          ACE_DEBUG ((LM_DEBUG,
+            ACE_TEXT ("(%P|%t) Consumer: Unable to reconnect to proxy supplier %d\n"),
+            static_cast<int>(this->structured_proxy_id_)
+            ));
+        }
       }
     }
     catch (...)
     {
+      ACE_DEBUG ((LM_DEBUG,
+        ACE_TEXT ("(%P|%t) Consumer: Unable to reconnect to proxy supplier %d\n"),
+        static_cast<int>(this->structured_proxy_id_)
+        ));
     }
   }
 
@@ -1508,13 +1515,13 @@ Consumer_Main::init_sequence_proxy_supplier (void)
         CosNotifyChannelAdmin::SEQUENCE_EVENT,
         this->sequence_proxy_id_);
     ok = ! CORBA::is_nil (proxy.in ());
-#ifdef TEST_SET_QOS
+
     // temporary
     if (ok)
     {
       set_proxy_qos (proxy.in ());
     }
-#endif // TEST_SET_QOS
+
     if (ok && this->verbose_)
     {
       ACE_DEBUG ((LM_DEBUG,

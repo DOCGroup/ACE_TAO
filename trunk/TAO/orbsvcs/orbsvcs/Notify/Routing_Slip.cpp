@@ -262,7 +262,7 @@ Routing_Slip::route (TAO_Notify_ProxyConsumer* pc, bool reliable_channel)
     {
       enter_state_new (guard);
     }
-    else if (this->event_->reliable().value() == CosNotification::Persistent)
+    else if (this->event_->reliable().value() == true)
     {
       enter_state_new (guard);
     }
@@ -271,7 +271,13 @@ Routing_Slip::route (TAO_Notify_ProxyConsumer* pc, bool reliable_channel)
       enter_state_transient (guard);
     }
   }
-  guard.release ();
+  else
+  {
+    // We only need to release the guard if the state is rssCREATING.
+    // By calling enter_state_*, we are guaranteed that the guard has
+    // been released.
+    guard.release ();
+  }
   pc->execute_task (method);
 }
 #if 0 // forward
@@ -285,6 +291,7 @@ Routing_Slip::forward (TAO_Notify_ProxySupplier* ps, bool filter)
   Routing_Slip_Guard guard (this->internals_);
 
   enter_state_transient (guard);
+  guard.acquire();
   size_t request_id = delivery_requests_.size ();
 
   if (DEBUG_LEVEL > 8) ACE_DEBUG ((LM_DEBUG,
@@ -464,6 +471,7 @@ Routing_Slip::at_front_of_persist_queue ()
         ACE_TEXT ("(%P|%t) Routing Slip #%d: COMPLETE_WHILE_NEW Reached front of queue\n"),
         this->sequence_
         ));
+      guard.release ();
       this->persistent_queue_.complete ();
       enter_state_terminal (guard);
       break;
@@ -554,6 +562,7 @@ Routing_Slip::persist_complete ()
         ACE_TEXT ("(%P|%t) Notification Service Routing Slip: Unexpected transition in state %d\n"),
         static_cast<int> (this->state_)
         ));
+      guard.release ();
       break;
     }
   }
@@ -574,7 +583,6 @@ Routing_Slip::add_to_persist_queue(Routing_Slip_Guard & guard)
 {
   guard.release ();
   this->persistent_queue_.add (this->this_ptr_);
-  guard.acquire (); // necessary?
 }
 
 ////////////////////
@@ -600,6 +608,7 @@ Routing_Slip::continue_state_new (Routing_Slip_Guard & guard)
   {
     this->enter_state_complete_while_new (guard);
   }
+  guard.release ();
 }
 void
 Routing_Slip::enter_state_complete_while_new (Routing_Slip_Guard & guard)
@@ -623,19 +632,18 @@ void
 Routing_Slip::enter_state_reloaded (Routing_Slip_Guard & guard)
 {
   ++count_enter_reloaded_;
-  ACE_UNUSED_ARG (guard);
   if (DEBUG_LEVEL > 8) ACE_DEBUG ((LM_DEBUG,
       ACE_TEXT ("(%P|%t) Routing Slip #&d: enter state RELOADED\n"),
       this->sequence_
       ));
   this->state_ = rssRELOADED;
+  guard.release();
 }
 
 void
 Routing_Slip::enter_state_transient (Routing_Slip_Guard & guard)
 {
   ++count_enter_transient_;
-  ACE_UNUSED_ARG (guard);
   if (DEBUG_LEVEL > 8) ACE_DEBUG ((LM_DEBUG,
       ACE_TEXT ("(%P|%t) Routing Slip #%d: enter state TRANSIENT\n"),
       this->sequence_
@@ -650,6 +658,10 @@ Routing_Slip::enter_state_transient (Routing_Slip_Guard & guard)
   {
     enter_state_terminal (guard);
   }
+  else
+  {
+    guard.release ();
+  }
 }
 
 void
@@ -660,6 +672,10 @@ Routing_Slip::continue_state_transient (Routing_Slip_Guard & guard)
   {
     enter_state_terminal (guard);
   }
+  else
+  {
+    guard.release ();
+  }
 }
 void
 Routing_Slip::enter_state_saving (Routing_Slip_Guard & guard)
@@ -669,6 +685,7 @@ Routing_Slip::enter_state_saving (Routing_Slip_Guard & guard)
   {
     // Note This should actually be a throw (out of memory)
     // but we cheat and make this a transient event.
+    guard.release ();
     this->persistent_queue_.complete ();
     enter_state_transient (guard);
   }
@@ -690,8 +707,6 @@ Routing_Slip::enter_state_saving (Routing_Slip_Guard & guard)
 
     guard.release ();
     this->rspm_->store (*event_mb, *rs_mb);
-
-    guard.acquire (); // necessary?
   }
 }
 
@@ -699,12 +714,12 @@ void
 Routing_Slip::enter_state_saved (Routing_Slip_Guard & guard)
 {
   ++count_enter_saved_;
-  ACE_UNUSED_ARG (guard);
   if (DEBUG_LEVEL > 8) ACE_DEBUG ((LM_DEBUG,
       ACE_TEXT ("(%P|%t) Routing Slip #%d: enter state SAVED\n"),
       this->sequence_
       ));
   this->state_ = rssSAVED;
+  guard.release ();
 }
 
 void
@@ -724,7 +739,6 @@ Routing_Slip::enter_state_updating (Routing_Slip_Guard & guard)
 
   ACE_ASSERT (this->rspm_ != 0);
   this->rspm_->update (*rs_mb);
-  guard.acquire (); // necessary?
 }
 
 
@@ -732,19 +746,19 @@ void
 Routing_Slip::enter_state_changed_while_saving (Routing_Slip_Guard & guard)
 {
   ++count_enter_changed_while_saving_;
-  ACE_UNUSED_ARG (guard);
   if (DEBUG_LEVEL > 8) ACE_DEBUG ((LM_DEBUG,
       ACE_TEXT ("(%P|%t) Routing Slip #%d: enter state CHANGED_WHILE_SAVING\n"),
       this->sequence_
       ));
   this->state_ = rssCHANGED_WHILE_SAVING;
+  guard.release ();
 }
 
 void
 Routing_Slip::continue_state_changed_while_saving (Routing_Slip_Guard & guard)
 {
-  ACE_UNUSED_ARG (guard);
   // no action necessary
+  guard.release ();
 }
 
 void
@@ -773,18 +787,22 @@ Routing_Slip::continue_state_changed (Routing_Slip_Guard & guard)
   {
     enter_state_complete (guard);
   }
+  else
+  {
+    guard.release ();
+  }
 }
 
 void
 Routing_Slip::enter_state_complete (Routing_Slip_Guard & guard)
 {
   ++count_enter_complete_;
-  ACE_UNUSED_ARG (guard);
   if (DEBUG_LEVEL > 8) ACE_DEBUG ((LM_DEBUG,
       ACE_TEXT ("(%P|%t) Routing Slip #%d: enter state COMPLETE\n"),
       this->sequence_
       ));
   this->state_ = rssCOMPLETE;
+  guard.release ();
 }
 
 void
@@ -798,14 +816,12 @@ Routing_Slip::enter_state_deleting (Routing_Slip_Guard & guard)
   this->state_ = rssDELETING;
   guard.release ();
   this->rspm_->remove ();
-  guard.acquire (); // necessary?
 }
 
 void
 Routing_Slip::enter_state_terminal (Routing_Slip_Guard & guard)
 {
   ++count_enter_terminal_;
-  ACE_UNUSED_ARG (guard);
   ACE_ASSERT( this->is_safe_);
   if (DEBUG_LEVEL > 8) ACE_DEBUG ((LM_DEBUG,
       ACE_TEXT ("(%P|%t) Routing Slip #%d: enter state TERMINAL\n"),
@@ -813,6 +829,7 @@ Routing_Slip::enter_state_terminal (Routing_Slip_Guard & guard)
       ));
   this->state_ = rssTERMINAL;
   this->this_ptr_.reset ();
+  guard.release ();
 }
 
 void
@@ -892,7 +909,7 @@ Routing_Slip::reconnect (void)
 {
   Routing_Slip_Guard guard (this->internals_);
   enter_state_saved (guard);
-  guard.release ();
+
   //@@todo is there a worker_task available to do this?
   size_t count = this->delivery_methods_.size ();
   for (size_t nmethod = 0; nmethod < count; ++nmethod)

@@ -59,6 +59,9 @@ protected:
   /// Constuctor
   TAO_Notify_Method_Request_Lookup (const TAO_Notify_Event * event, TAO_Notify_ProxyConsumer * proxy);
 
+  /// Constuctor
+  TAO_Notify_Method_Request_Lookup (const TAO_Notify::Delivery_Request_Ptr& delivery, TAO_Notify_ProxyConsumer * proxy);
+
   /// Execute the dispatch operation.
   int execute_i (void);
 
