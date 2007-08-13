@@ -518,6 +518,7 @@ if test $tao_build_tests = yes; then
     orbsvcs/tests/Notify/Destroy/Makefile
     orbsvcs/tests/Notify/Discarding/Makefile
     orbsvcs/tests/Notify/Driver/Makefile
+    orbsvcs/tests/Notify/MC/Makefile
     orbsvcs/tests/Notify/MT_Dispatching/Makefile
     orbsvcs/tests/Notify/Makefile
     orbsvcs/tests/Notify/Ordering/Makefile

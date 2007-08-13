@@ -1,3 +1,23 @@
+Mon Aug 13 11:38:23 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * configure.ac:
+        * orbsvcs/tests/Notify/MC/Makefile.am:
+        * orbsvcs/tests/Notify/MC/MonitorControl.mpc:
+        * orbsvcs/tests/Notify/MC/MonitorTestInterface.idl:
+        * orbsvcs/tests/Notify/MC/Notify_Structured_Push_Consumer.h:
+        * orbsvcs/tests/Notify/MC/Notify_Structured_Push_Consumer.cpp:
+        * orbsvcs/tests/Notify/MC/Structured_Consumer.cpp:
+        * orbsvcs/tests/Notify/MC/Structured_Supplier.cpp:
+        * orbsvcs/tests/Notify/MC/notify.conf:
+        * orbsvcs/tests/Notify/MC/notify.conf.xml:
+        * orbsvcs/tests/Notify/MC/run_test.pl:
+        * orbsvcs/tests/Notify/MC/test_monitor.cpp:
+        * orbsvcs/tests/Notify/Makefile.am:
+
+          Added a new test that involves a slow consumer and has a test
+          monitor checking the state of the notification service at various
+          times.
+
 Mon Aug 13 11:19:28 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/orbsvcs/Notify/Consumer.h:
@@ -191,7 +211,7 @@ Sat Aug 11 11:38:47 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
 
           Re-applying Dale's change. The lock up I noticed was the result
           of attempting to recursively grab a non-recursive lock. With
-          that sorted out, the patch is otherwise fine. At last on my
+          that sorted out, the patch is otherwise fine. At least on my
           machine.
 
 Sat Aug 11 02:34:18 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
