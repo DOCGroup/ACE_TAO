@@ -85,9 +85,9 @@ ACE_SOCK_IO::recvv (iovec *io_vec,
       // don't want that value cast to unsigned and returned.
       ssize_t recv_len = this->recv (io_vec->iov_base, inlen);
       if (recv_len > 0)
-	// u_long is the Windows type; size_t is everyone else's. A u_long
-	// should go into a size_t anywhere without an issue.
-	io_vec->iov_len = static_cast<u_long> (recv_len);
+        // u_long is the Windows type; size_t is everyone else's. A u_long
+        // should go into a size_t anywhere without an issue.
+        io_vec->iov_len = static_cast<u_long> (recv_len);
       return recv_len;
     }
   else

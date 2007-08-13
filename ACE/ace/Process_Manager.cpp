@@ -495,7 +495,7 @@ ACE_Process_Manager::spawn_n (size_t n,
 
 int
 ACE_Process_Manager::append_proc (ACE_Process *proc,
-				  ACE_Event_Handler *event_handler)
+                                  ACE_Event_Handler *event_handler)
 {
   ACE_TRACE ("ACE_Process_Manager::append_proc");
 
@@ -535,7 +535,7 @@ ACE_Process_Manager::append_proc (ACE_Process *proc,
 
 int
 ACE_Process_Manager::insert_proc (ACE_Process *proc,
-				  ACE_Event_Handler *event_handler)
+                                  ACE_Event_Handler *event_handler)
 {
   ACE_TRACE ("ACE_Process_Manager::insert_proc");
 

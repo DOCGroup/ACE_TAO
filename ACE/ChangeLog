@@ -1,3 +1,30 @@
+Mon Aug 13 20:27:43 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * ace/Assert.cpp:
+        * ace/Connector.cpp:
+        * ace/Dev_Poll_Reactor.cpp:
+        * ace/INET_Addr.cpp:
+        * ace/Notification_Queue.h:
+        * ace/Notification_Queue.cpp:
+        * ace/OS_NS_Thread.cpp:
+        * ace/OS_NS_dirent.inl:
+        * ace/POSIX_Proactor.cpp:
+        * ace/Process_Manager.h:
+        * ace/Process_Manager.cpp:
+        * ace/QoS/QoS_Session_Impl.cpp:
+        * ace/Rtems_init.c:
+        * ace/SOCK_Dgram.cpp:
+        * ace/SOCK_IO.cpp:
+        * ace/SPIPE_Acceptor.cpp:
+        * ace/Select_Reactor_Base.cpp:
+        * ace/Service_Config.h:
+        * ace/config-vxworks5.x.h:
+        * ace/config-vxworks6.2.h:
+        * ace/config-vxworks6.3.h:
+        * ace/os_include/sys/os_socket.h:
+
+          Untabify.
+
 Mon Aug 13 14:52:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Truncate.h:

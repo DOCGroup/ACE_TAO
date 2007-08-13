@@ -29,8 +29,8 @@
 # define ACE_LACKS_LINEBUFFERED_STREAMBUF
 
 # if (__GNUC__ > 3 || (__GNUC__ == 3 && __GNUC_MINOR__ >= 3))
-	// GNU 3.3+ toolchain supports long long types but fails to define this so STL
-	// skips some definitions
+  // GNU 3.3+ toolchain supports long long types but fails to define this so STL
+  // skips some definitions
 #   if !defined (_GLIBCPP_USE_LONG_LONG)
 #     define _GLIBCPP_USE_LONG_LONG
 #   endif
