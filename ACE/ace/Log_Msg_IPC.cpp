@@ -49,13 +49,17 @@ ACE_Log_Msg_IPC::log (ACE_Log_Record &log_record)
 {
   // Serialize the log record using a CDR stream, allocate enough
   // space for the complete <ACE_Log_Record>.
-  size_t max_payload_size =
+  size_t const max_payload_size =
     4    // type
     + 4  // pid
     + 12 // timestamp
     + 4  // process id
     + 4  // data length
-    + log_record.msg_data_len ()  // message
+#if defined (ACE_USES_WCHAR)
+    + (log_record.msg_data_len () * ACE_OutputCDR::wchar_maxbytes())  // message
+#else
+    + log_record.msg_data_len () // message
+#endif
     + ACE_CDR::MAX_ALIGNMENT;     // padding;
 
   // Insert contents of <log_record> into payload stream.
