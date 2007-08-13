@@ -65,7 +65,6 @@ Notify_Structured_Push_Consumer::_connect (
 void
 Notify_Structured_Push_Consumer::push_structured_event (
   const CosNotification::StructuredEvent&)
-  ACE_THROW_SPEC ((CORBA::SystemException, CosEventComm::Disconnected))
 {
   ACE_DEBUG ((LM_DEBUG, "-"));
   static const ACE_Time_Value sl (0, 2000);
