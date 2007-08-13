@@ -13,11 +13,9 @@ public:
    : nsm_ (CosNotification::NotificationServiceMonitorControl::_duplicate (nsm)) {
   }
 
-  virtual void running (MonitorTestInterface::Which proc)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void running (MonitorTestInterface::Which proc);
 
-  virtual void finished (MonitorTestInterface::Which proc)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void finished (MonitorTestInterface::Which proc);
 
 private:
   ACE_CString base_;
@@ -26,7 +24,6 @@ private:
 
 void
 MonitorTestInterface_i::running (MonitorTestInterface::Which proc)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_CString str;
   CosNotification::NotificationServiceMonitorControl::Data_var data;
@@ -98,7 +95,6 @@ MonitorTestInterface_i::running (MonitorTestInterface::Which proc)
 
 void
 MonitorTestInterface_i::finished (MonitorTestInterface::Which proc)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_CString str;
   CosNotification::NotificationServiceMonitorControl::Data_var data;

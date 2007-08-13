@@ -30,8 +30,7 @@ public:
   void _connect (CosNotifyChannelAdmin::ConsumerAdmin_ptr consumer_admin);
 
 protected:
-  void push_structured_event (const CosNotification::StructuredEvent&)
-    ACE_THROW_SPEC ((CORBA::SystemException, CosEventComm::Disconnected));
+  void push_structured_event (const CosNotification::StructuredEvent&);
 
   ACE_CString name_;
   unsigned int expected_;
