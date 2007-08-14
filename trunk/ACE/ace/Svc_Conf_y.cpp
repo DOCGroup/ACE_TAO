@@ -1,5 +1,5 @@
 /* A Bison parser, made by GNU Bison 2.0.  */
-
+ 
 /* Skeleton parser for Yacc-like parsing with Bison,
    Copyright (C) 1984, 1989, 1990, 2000, 2001, 2002, 2003, 2004 Free Software Foundation, Inc.
 
@@ -212,7 +212,7 @@ union ace_yyalloc
 /* The size of an array large to enough to hold all stacks, each with
    N elements.  */
 # define ACE_YYSTACK_BYTES(N) \
-     ((N) * (sizeof (short int) + sizeof (ACE_YYSTYPE))			\
+     ((N) * (sizeof (short int) + sizeof (ACE_YYSTYPE)) \
       + ACE_YYSTACK_GAP_MAXIMUM)
 
 /* Copy COUNT objects from FROM to TO.  The source and destination do
@@ -222,13 +222,13 @@ union ace_yyalloc
 #   define ACE_YYCOPY(To, From, Count) \
       __builtin_memcpy (To, From, (Count) * sizeof (*(From)))
 #  else
-#   define ACE_YYCOPY(To, From, Count)		\
-      do					\
-  {					\
-    register ACE_YYSIZE_T ace_yyi;		\
-    for (ace_yyi = 0; ace_yyi < (Count); ace_yyi++)	\
-      (To)[ace_yyi] = (From)[ace_yyi];		\
-  }					\
+#   define ACE_YYCOPY(To, From, Count)                    \
+      do                                                  \
+        {                                                 \
+          register ACE_YYSIZE_T ace_yyi;                  \
+          for (ace_yyi = 0; ace_yyi < (Count); ace_yyi++) \
+            (To)[ace_yyi] = (From)[ace_yyi];              \
+        }                                                 \
       while (0)
 #  endif
 # endif
@@ -238,15 +238,15 @@ union ace_yyalloc
    elements in the stack, and ACE_YYPTR gives the new location of the
    stack.  Advance ACE_YYPTR to a properly aligned location for the next
    stack.  */
-# define ACE_YYSTACK_RELOCATE(Stack)					\
-    do									\
-      {									\
-  ACE_YYSIZE_T ace_yynewbytes;						\
-  ACE_YYCOPY (&ace_yyptr->Stack, Stack, ace_yysize);				\
-  Stack = &ace_yyptr->Stack;						\
-  ace_yynewbytes = ace_yystacksize * sizeof (*Stack) + ACE_YYSTACK_GAP_MAXIMUM; \
-  ace_yyptr += ace_yynewbytes / sizeof (*ace_yyptr);				\
-      }									\
+# define ACE_YYSTACK_RELOCATE(Stack)                                                  \
+    do                                                                                \
+      {                                                                               \
+        ACE_YYSIZE_T ace_yynewbytes;                                                  \
+        ACE_YYCOPY (&ace_yyptr->Stack, Stack, ace_yysize);                            \
+        Stack = &ace_yyptr->Stack;                                                    \
+        ace_yynewbytes = ace_yystacksize * sizeof (*Stack) + ACE_YYSTACK_GAP_MAXIMUM; \
+        ace_yyptr += ace_yynewbytes / sizeof (*ace_yyptr);                            \
+      }                                                                               \
     while (0)
 
 #endif
@@ -275,7 +275,7 @@ union ace_yyalloc
 #define ACE_YYUNDEFTOK  2
 #define ACE_YYMAXUTOK   271
 
-#define ACE_YYTRANSLATE(ACE_YYX) 						\
+#define ACE_YYTRANSLATE(ACE_YYX)  \
   ((unsigned int) (ACE_YYX) <= ACE_YYMAXUTOK ? ace_yytranslate[ACE_YYX] : ACE_YYUNDEFTOK)
 
 /* ACE_YYTRANSLATE[ACE_YYLEX] -- Bison symbol number corresponding to ACE_YYLEX.  */
@@ -499,44 +499,44 @@ static const unsigned char ace_yystos[] =
 # define ACE_YYSIZE_T unsigned int
 #endif
 
-#define ace_yyerrok		(ace_yyerrstatus = 0)
-#define ace_yyclearin	(ace_yychar = ACE_YYEMPTY)
-#define ACE_YYEMPTY		(-2)
-#define ACE_YYEOF		0
+#define ace_yyerrok   (ace_yyerrstatus = 0)
+#define ace_yyclearin (ace_yychar = ACE_YYEMPTY)
+#define ACE_YYEMPTY   (-2)
+#define ACE_YYEOF     0
 
-#define ACE_YYACCEPT	goto ace_yyacceptlab
-#define ACE_YYABORT		goto ace_yyabortlab
-#define ACE_YYERROR		goto ace_yyerrorlab
+#define ACE_YYACCEPT  goto ace_yyacceptlab
+#define ACE_YYABORT   goto ace_yyabortlab
+#define ACE_YYERROR   goto ace_yyerrorlab
 
 
 /* Like ACE_YYERROR except do call ace_yyerror.  This remains here temporarily
    to ease the transition to the new meaning of ACE_YYERROR, for GCC.
    Once GCC version 2 has supplanted version 1, this can go.  */
 
-#define ACE_YYFAIL		goto ace_yyerrlab
+#define ACE_YYFAIL    goto ace_yyerrlab
 
 #define ACE_YYRECOVERING()  (!!ace_yyerrstatus)
 
-#define ACE_YYBACKUP(Token, Value)					\
-do								\
-  if (ace_yychar == ACE_YYEMPTY && ace_yylen == 1)				\
-    {								\
-      ace_yychar = (Token);						\
-      ace_yylval = (Value);						\
-      ace_yytoken = ACE_YYTRANSLATE (ace_yychar);				\
-      ACE_YYPOPSTACK;						\
-      goto ace_yybackup;						\
-    }								\
-  else								\
-    { 								\
-      ace_yyerror (ACE_SVC_CONF_PARAM->yyerrno, ACE_SVC_CONF_PARAM->yylineno, "syntax error: cannot back up");\
-      ACE_YYERROR;							\
-    }								\
-while (0)
+#define ACE_YYBACKUP(Token, Value)                   \
+  do                                                 \
+    if (ace_yychar == ACE_YYEMPTY && ace_yylen == 1) \
+      {                                              \
+        ace_yychar = (Token);                        \
+        ace_yylval = (Value);                        \
+        ace_yytoken = ACE_YYTRANSLATE (ace_yychar);  \
+        ACE_YYPOPSTACK;                              \
+        goto ace_yybackup;                           \
+      }                                              \
+    else                                             \
+      {                                              \
+        ace_yyerror (ACE_SVC_CONF_PARAM->yyerrno, ACE_SVC_CONF_PARAM->yylineno, "syntax error: cannot back up");\
+        ACE_YYERROR;                                 \
+      }                                              \
+  while (0)
 
 
-#define ACE_YYTERROR	1
-#define ACE_YYERRCODE	256
+#define ACE_YYTERROR  1
+#define ACE_YYERRCODE 256
 
 
 /* ACE_YYLLOC_DEFAULT -- Set CURRENT to span from RHS[1] to RHS[N].
@@ -545,22 +545,22 @@ while (0)
 
 #define ACE_YYRHSLOC(Rhs, K) ((Rhs)[K])
 #ifndef ACE_YYLLOC_DEFAULT
-# define ACE_YYLLOC_DEFAULT(Current, Rhs, N)				\
-    do									\
-      if (N)								\
-  {								\
-    (Current).first_line   = ACE_YYRHSLOC (Rhs, 1).first_line;	\
-    (Current).first_column = ACE_YYRHSLOC (Rhs, 1).first_column;	\
-    (Current).last_line    = ACE_YYRHSLOC (Rhs, N).last_line;		\
-    (Current).last_column  = ACE_YYRHSLOC (Rhs, N).last_column;	\
-  }								\
-      else								\
-  {								\
-    (Current).first_line   = (Current).last_line   =		\
-      ACE_YYRHSLOC (Rhs, 0).last_line;				\
-    (Current).first_column = (Current).last_column =		\
-      ACE_YYRHSLOC (Rhs, 0).last_column;				\
-  }								\
+# define ACE_YYLLOC_DEFAULT(Current, Rhs, N)                            \
+    do                                                                  \
+      if (N)                                                            \
+        {                                                               \
+          (Current).first_line   = ACE_YYRHSLOC (Rhs, 1).first_line;    \
+          (Current).first_column = ACE_YYRHSLOC (Rhs, 1).first_column;  \
+          (Current).last_line    = ACE_YYRHSLOC (Rhs, N).last_line;     \
+          (Current).last_column  = ACE_YYRHSLOC (Rhs, N).last_column;   \
+        }                                                               \
+      else                                                              \
+        {                                                               \
+          (Current).first_line   = (Current).last_line   =              \
+            ACE_YYRHSLOC (Rhs, 0).last_line;                            \
+          (Current).first_column = (Current).last_column =              \
+            ACE_YYRHSLOC (Rhs, 0).last_column;                          \
+        }                                                               \
     while (0)
 #endif
 
@@ -571,10 +571,10 @@ while (0)
 
 #ifndef ACE_YY_LOCATION_PRINT
 # if ACE_YYLTYPE_IS_TRIVIAL
-#  define ACE_YY_LOCATION_PRINT(File, Loc)			\
-     ACE_OS::fprintf (File, "%d.%d-%d.%d",			\
-              (Loc).first_line, (Loc).first_column,	\
-              (Loc).last_line,  (Loc).last_column)
+#  define ACE_YY_LOCATION_PRINT(File, Loc)                  \
+     ACE_OS::fprintf (File, "%d.%d-%d.%d",                  \
+                      (Loc).first_line, (Loc).first_column, \
+                      (Loc).last_line,  (Loc).last_column)
 # else
 #  define ACE_YY_LOCATION_PRINT(File, Loc) ((void) 0)
 # endif
@@ -597,22 +597,26 @@ while (0)
 #  define ACE_YYFPRINTF ACE_OS::fprintf
 # endif
 
-# define ACE_YYDPRINTF(Args)			\
-do {						\
-  if (ace_yydebug)					\
-    ACE_YYFPRINTF Args;				\
-} while (0)
+# define ACE_YYDPRINTF(Args) \
+  do                         \ 
+    {                        \
+      if (ace_yydebug)       \
+        ACE_YYFPRINTF Args;  \
+    }                        \
+  while (0)
 
-# define ACE_YY_SYMBOL_PRINT(Title, Type, Value, Location)		\
-do {								\
-  if (ace_yydebug)							\
-    {								\
-      ACE_YYFPRINTF (stderr, "%s ", Title);				\
-      ace_yysymprint (stderr, 					\
-                  Type, Value);	\
-      ACE_YYFPRINTF (stderr, "\n");					\
-    }								\
-} while (0)
+# define ACE_YY_SYMBOL_PRINT(Title, Type, Value, Location)  \
+  do                                                        \
+    {                                                       \
+      if (ace_yydebug)                                      \
+        {                                                   \
+          ACE_YYFPRINTF (stderr, "%s ", Title);             \
+          ace_yysymprint (stderr,                           \
+                          Type, Value);                     \
+          ACE_YYFPRINTF (stderr, "\n");                     \
+        }                                                   \
+    }                                                       \
+  while (0)
 
 /*------------------------------------------------------------------.
 | ace_yy_stack_print -- Print the state stack from its BOTTOM up to its |
@@ -635,11 +639,13 @@ ace_yy_stack_print (bottom, top)
   ACE_YYFPRINTF (stderr, "\n");
 }
 
-# define ACE_YY_STACK_PRINT(Bottom, Top)				\
-do {								\
-  if (ace_yydebug)							\
-    ace_yy_stack_print ((Bottom), (Top));				\
-} while (0)
+# define ACE_YY_STACK_PRINT(Bottom, Top)      \
+  do                                          \
+    {                                         \
+      if (ace_yydebug)                        \
+        ace_yy_stack_print ((Bottom), (Top)); \
+    }                                         \
+  while (0)
 
 
 /*------------------------------------------------.
@@ -665,11 +671,13 @@ ace_yy_reduce_print (ace_yyrule)
   ACE_YYFPRINTF (stderr, "-> %s\n", ace_yytname [ace_yyr1[ace_yyrule]]);
 }
 
-# define ACE_YY_REDUCE_PRINT(Rule)		\
-do {					\
-  if (ace_yydebug)				\
-    ace_yy_reduce_print (Rule);		\
-} while (0)
+# define ACE_YY_REDUCE_PRINT(Rule)  \
+  do                                \
+    {                               \
+      if (ace_yydebug)              \
+        ace_yy_reduce_print (Rule); \
+    }                               \
+  while (0)
 
 /* Nonzero means print parse trace.  It is left uninitialized so that
    multiple parsers can coexist.  */
@@ -683,7 +691,7 @@ int ace_yydebug;
 
 
 /* ACE_YYINITDEPTH -- initial size of the parser's stacks.  */
-#ifndef	ACE_YYINITDEPTH
+#ifndef  ACE_YYINITDEPTH
 # define ACE_YYINITDEPTH 200
 #endif
 
@@ -920,7 +928,7 @@ int ace_yynerrs;
   ace_yystate = 0;
   ace_yyerrstatus = 0;
   ace_yynerrs = 0;
-  ace_yychar = ACE_YYEMPTY;		/* Cause a token to be read.  */
+  ace_yychar = ACE_YYEMPTY; /* Cause a token to be read.  */
 
   /* Initialize stack pointers.
      Waste one element of value and location stack
@@ -1566,7 +1574,7 @@ ace_yyvsp -= ace_yylen;
 | ace_yyerrlab1 -- common code for both syntax error and ACE_YYERROR.  |
 `-------------------------------------------------------------*/
 ace_yyerrlab1:
-  ace_yyerrstatus = 3;	/* Each real token shifted decrements this.  */
+  ace_yyerrstatus = 3; /* Each real token shifted decrements this.  */
 
   for (;;)
     {

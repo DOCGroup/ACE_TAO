@@ -42,7 +42,7 @@ template <ACE_SYNCH_DECL> class ACE_Module;
  * template <ACE_SYNCH_DECL, ACE_MESSAGE_TYPE = ACE_Message_Block>
  * class ACE_Task : public ACE_Task_Base
  * {
- * 	// use here the code from ACE_Task_Ex using ACE_Message_Queue_Ex
+ *  // use here the code from ACE_Task_Ex using ACE_Message_Queue_Ex
  * };
  *
  * Now specialized version of ACE_Task with ACE_Message_Block as its

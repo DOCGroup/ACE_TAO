@@ -27,9 +27,9 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #define ACE_ASSERT(x) \
   (static_cast<void>(0))
 #else
-#define ACE_ASSERT(X) \
-  ((X)									\
-   ? static_cast<void>(0)						\
+#define ACE_ASSERT(X)     \
+  ((X)                    \
+   ? static_cast<void>(0) \
    : ACE_VERSIONED_NAMESPACE_NAME::__ace_assert(__FILE__, __LINE__, ACE_TEXT_CHAR_TO_TCHAR (#X)))
 #endif /* ACE_NDEBUG */
 
