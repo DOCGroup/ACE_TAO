@@ -12,34 +12,68 @@
 
 #include "ace/SOCK_Acceptor.h"
 #include "ace/SOCK_Stream.h"
+#include "ace/Get_Opt.h"
+
+unsigned port = 8088;
 
 int
-ACE_TMAIN (int, ACE_TCHAR *[])
+parse_args (int argc, char *argv[])
+{
+  ACE_Get_Opt get_opts (argc, argv, "p:");
+  int c;
+
+  while ((c = get_opts ()) != -1)
+    switch (c)
+      {
+      case 'p':
+        port = static_cast<unsigned>(ACE_OS::atoi (get_opts.opt_arg()));
+        break;
+      case '?':
+      default:
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "usage:  %s "
+                           "-p port "
+                            "\n",
+                           argv [0]),
+                          -1);
+      }
+  // Indicates sucessful parsing of the command line
+  return 0;
+}
+
+int
+ACE_TMAIN (int argc , ACE_TCHAR *argv[])
 {
   char buffer[1000];
   ssize_t n = 0;
-
   ACE_OS::socket_init (ACE_WSOCK_VERSION);
 
-  ACE_INET_Addr local(8088);
+  if (parse_args(argc, argv) != 0)
+    return 1;
+
+  ACE_INET_Addr local(port);
   ACE_SOCK_Stream sock[2];
   ACE_SOCK_Acceptor acc(local,1);
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("server is ready\n")));
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("(%P|%t) Server is ready\n")));
 
   acc.accept (sock[0]);
   ACE::HTBP::Channel channel1(sock[0]);
   ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("(%P|%t) Server: ")
               ACE_TEXT ("Got sock[0], handle = %d\n"),
               sock[0].get_handle()));
   acc.accept (sock[1]);
   ACE::HTBP::Channel channel2 (sock[1]);
   ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("(%P|%t) Server: ")
               ACE_TEXT ("Got sock[1], handle = %d\n"),
               sock[1].get_handle()));
   int res = 0;
   while ((res = channel1.pre_recv ()) != 0)
     {
       ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("(%P|%t) Server: ")
                   ACE_TEXT ("res = %d. waiting 1 sec. %p\n"),
                   res,
                   ACE_TEXT ("stream.pre_recv()")));
@@ -50,6 +84,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   while ((res = channel2.pre_recv()) != 0)
     {
       ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("(%P|%t) Server: ")
                   ACE_TEXT ("res = %d, waiting 1 sec. %p\n"),
                   res,
                   ACE_TEXT ("stream2.pre_recv()")));
@@ -60,6 +95,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   ACE::HTBP::Stream stream (session);
 
   ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("(%P|%t) Server: ")
               ACE_TEXT ("using streams %d, %d. Got sesssion = %@\n"),
               sock[0].get_handle(),
               sock[1].get_handle(),
@@ -74,6 +110,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
         {
           retrycount--;
           ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("(%P|%t) Server: ")
                       ACE_TEXT ("waiting for inbound data, %d tries left\n"),
                       retrycount));
           ACE_OS::sleep(1);
@@ -83,7 +120,9 @@ ACE_TMAIN (int, ACE_TCHAR *[])
 
       buffer[n] = 0;
 
-      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Got: \"%C\"\n"), buffer));
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("(%P|%t) Server: ")
+                  ACE_TEXT ("Got: \"%C\"\n"), buffer));
 
       if (ACE_OS::strstr (buffer,"goodbye") != 0)
         break;
@@ -95,7 +134,8 @@ ACE_TMAIN (int, ACE_TCHAR *[])
                            ACE_TEXT ("stream.send")),
                           -1);
 
-      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Send returned %d\n"), n));
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("(%P|%t) Server: Send returned %d\n"), n));
 
       int got[2] = {-1,-1};
       while (got[0] == -1 || got[1] == -1)
@@ -104,6 +144,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
             {
               if ((got[0] = (res =channel1.pre_recv())) == -1)
                 ACE_DEBUG ((LM_DEBUG,
+                            ACE_TEXT ("(%P|%t) Server: ")
                             ACE_TEXT ("res = %d, waiting 1 sec. %p\n"),
                             got[0],
                             ACE_TEXT ("channel1.pre_recv()")));
@@ -112,6 +153,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
             {
               if ((got[1] = (res =channel2.pre_recv())) == -1)
                 ACE_DEBUG ((LM_DEBUG,
+                            ACE_TEXT ("(%P|%t) Server: ")
                             ACE_TEXT ("res = %d, waiting 1 sec. %p\n"),
                             got[1],
                             ACE_TEXT ("channel2.pre_recv()")));

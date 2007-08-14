@@ -11,14 +11,19 @@ use Sys::Hostname;
 
 $status = 0;
 
-$SV = new PerlACE::Process ("server");
-
 $host = hostname();
+if (PerlACE::is_vxworks_test()) {
+    $host =  $ENV{'ACE_RUN_VX_TGTHOST'};
+    $SV = new PerlACE::ProcessVX ("server", "");
+}
+else {
+    $SV = new PerlACE::Process ("server", "");
+}
 
 # The client code should later be modified to get the hostname
 # using ACE_OS::hostname so the same script can be run on all
 # hosts without havng to reset the host where it has to be run.
-$CL = new PerlACE::Process ("client", $host);
+$CL = new PerlACE::Process ("client", "-h $host");
 
 $SV->Spawn ();
 
