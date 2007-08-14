@@ -72,9 +72,9 @@ run_main (int, ACE_TCHAR *[])
     {
       result = -1;
       ACE_ERROR((LM_ERROR,
-		 ACE_TEXT("Reference count should increase by %d.")
-		 ACE_TEXT("  Initial count=%d, final count = %d\n"),
-		 notify_count, pre_notify_count, pos_notify_count));
+                 ACE_TEXT("Reference count should increase by %d.")
+                 ACE_TEXT("  Initial count=%d, final count = %d\n"),
+                 notify_count, pre_notify_count, pos_notify_count));
     }
 
   ACE_auto_ptr_reset(reactor, (ACE_Reactor*)0);
@@ -91,16 +91,16 @@ run_main (int, ACE_TCHAR *[])
     {
       result = -1;
       ACE_ERROR((LM_ERROR,
-		 ACE_TEXT("Reference count should have increased by 2.")
-		 ACE_TEXT("  Initial count=%d, final count = %d\n"),
-		 pre_notify_count, pos_release_count));
+                 ACE_TEXT("Reference count should have increased by 2.")
+                 ACE_TEXT("  Initial count=%d, final count = %d\n"),
+                 pre_notify_count, pos_release_count));
     }
 
   ACE_DEBUG ((LM_INFO,
-	      ACE_TEXT("Ref count results.  pre_notify refcount=%d,")
-	      ACE_TEXT(" pos_notify=%d, pos_delete=%d\n"),
-	      pre_notify_count, pos_notify_count, pos_release_count));
-  
+              ACE_TEXT("Ref count results.  pre_notify refcount=%d,")
+              ACE_TEXT(" pos_notify=%d, pos_delete=%d\n"),
+              pre_notify_count, pos_notify_count, pos_release_count));
+
   // Remove a reference for each time we explicitly increased it.
   v->remove_reference();
   v->remove_reference();
@@ -108,10 +108,10 @@ run_main (int, ACE_TCHAR *[])
       v->remove_reference();
 
   ACE_DEBUG ((LM_INFO,
-	      ACE_TEXT("Ref count results.  pre_notify refcount=%d,")
-	      ACE_TEXT(" pos_notify=%d, pos_delete=%d, pos_remove=%d\n"),
-	      pre_notify_count, pos_notify_count, pos_release_count,
-	      pos_remove_count));
+              ACE_TEXT("Ref count results.  pre_notify refcount=%d,")
+              ACE_TEXT(" pos_notify=%d, pos_delete=%d, pos_remove=%d\n"),
+              pre_notify_count, pos_notify_count, pos_release_count,
+              pos_remove_count));
 
   ACE_END_TEST;
 

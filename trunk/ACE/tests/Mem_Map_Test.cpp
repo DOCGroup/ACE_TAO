@@ -226,13 +226,13 @@ run_main (int, ACE_TCHAR *[])
                       -1);
 #if defined (__QNXNTO__) || (defined (ACE_VXWORKS) && (ACE_VXWORKS <= 0x640))
   mmap_4_open.open(temp_file2,
-	  O_RDWR | O_TRUNC | O_CREAT,
-	  ACE_DEFAULT_FILE_PERMS);
-  temp_file_handle = mmap_4_open.handle();
+                   O_RDWR | O_TRUNC | O_CREAT,
+                   ACE_DEFAULT_FILE_PERMS);
+                   temp_file_handle = mmap_4_open.handle();
 #else
   temp_file_handle = ACE_OS::open (temp_file2,
-	  O_RDWR | O_TRUNC | O_CREAT,
-	  ACE_DEFAULT_FILE_PERMS);
+                                   O_RDWR | O_TRUNC | O_CREAT,
+                                   ACE_DEFAULT_FILE_PERMS);
 #endif
   if ( temp_file_handle == ACE_INVALID_HANDLE)
 

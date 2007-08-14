@@ -180,7 +180,7 @@ Supplier_Task::perform_notifications (int notifications)
     {
       iterations *= (iterations * iterations * 2);
 #if defined (ACE_VXWORKS)
-	  // scale down otherwise the test won'y finish in time
+      // scale down otherwise the test won'y finish in time
       iterations /= 4;
 #endif
     }
@@ -440,9 +440,9 @@ run_notify_purge_test (void)
     // notifications.  It is the application's responsability to do
     // so.
     r->purge_pending_notifications(n2,
-				   ACE_Event_Handler::ALL_EVENTS_MASK);
+                                   ACE_Event_Handler::ALL_EVENTS_MASK);
     r->purge_pending_notifications(&n1,
-				   ACE_Event_Handler::ALL_EVENTS_MASK);
+                                   ACE_Event_Handler::ALL_EVENTS_MASK);
   }
 
   ACE_Time_Value t (1);

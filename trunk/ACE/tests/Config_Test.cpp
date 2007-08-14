@@ -1091,23 +1091,23 @@ iniCompare (ACE_Configuration_Heap& fromFile, ACE_Configuration_Heap& original)
 // change a network section value
 int Config_Test::change_one (ACE_Configuration &cfg, u_int a)
 {
-	ACE_Configuration_Section_Key root = cfg.root_section ();
-	ACE_Configuration_Section_Key NetworkSection;
-	ACE_Configuration_Section_Key LoggerSection;
-	ACE_Configuration_Section_Key BinarySection;
+  ACE_Configuration_Section_Key root = cfg.root_section ();
+  ACE_Configuration_Section_Key NetworkSection;
+  ACE_Configuration_Section_Key LoggerSection;
+  ACE_Configuration_Section_Key BinarySection;
 
-	if (cfg.open_section (root,
-		ACE_TEXT ("network"),
-		1,
-		NetworkSection))
-		return -1;
+  if (cfg.open_section (root,
+                        ACE_TEXT ("network"),
+                        1,
+                        NetworkSection))
+    return -1;
 
-	if (cfg.set_integer_value (NetworkSection,
-		ACE_TEXT ("TimeToLive"),
-		a))
-		return -2;
+  if (cfg.set_integer_value (NetworkSection,
+                             ACE_TEXT ("TimeToLive"),
+                             a))
+    return -2;
 
-	return 0;
+  return 0;
 }
 
 // Used to test INI Import Export class
@@ -1363,25 +1363,25 @@ Config_Test::testRegFormat ()
                            rc),
                           -1);
 
-		// 7.1 Change a value and test NOT equal case
-		change_one (original, 101);
-		if (fromFile == original)
-		{
-			ACE_ERROR_RETURN ((LM_ERROR,
-				ACE_TEXT ("not pass value change test (%d)\n"),
-				rc),
-				-1);
-		}
+      // 7.1 Change a value and test NOT equal case
+      change_one (original, 101);
+      if (fromFile == original)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("not pass value change test (%d)\n"),
+                             rc),
+                            -1);
+        }
 
-		// 7.2 change value back, they should be equal now
-		change_one (original, 100);
-		if (fromFile != original)
-		{
-			ACE_ERROR_RETURN ((LM_ERROR,
-				ACE_TEXT ("not pass value change test (%d)\n"),
-				rc),
-				-1);
-		}
+      // 7.2 change value back, they should be equal now
+      change_one (original, 100);
+        if (fromFile != original)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("not pass value change test (%d)\n"),
+                             rc),
+                            -1);
+        }
 
     }// end if heap could not be opened.
   else

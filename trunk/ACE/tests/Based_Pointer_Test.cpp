@@ -29,8 +29,8 @@
 #include "ace/Null_Mutex.h"
 
 ACE_RCSID (tests,
-	   Based_Pointer_Repository_Test,
-	   "$Id$")
+           Based_Pointer_Repository_Test,
+           "$Id$")
 
 #ifdef ACE_HAS_POSITION_INDEPENDENT_POINTERS
 
@@ -344,7 +344,7 @@ mmap_remap_test(void)
       {
         ACE_ERROR ((LM_ERROR,
             ACE_TEXT ("Unable to find base address after remap of segment\n")));
-  	for (i= 0; i<3; ++i)
+        for (i= 0; i<3; ++i)
           {
             alloc[ i ]->remove();
             delete alloc[ i ];
@@ -356,7 +356,7 @@ mmap_remap_test(void)
       {
         ACE_ERROR ((LM_ERROR,
               ACE_TEXT ("New base address not mapped after MMAP remap\n")));
-	for (i= 0; i<3; ++i)
+        for (i= 0; i<3; ++i)
           {
             alloc[ i ]->remove();
             delete alloc[ i ];

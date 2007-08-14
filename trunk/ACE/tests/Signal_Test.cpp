@@ -336,7 +336,7 @@ run_test (ACE_THR_FUNC worker,
       int result;
 
       ACE_DEBUG ((LM_DEBUG,
-		  ACE_TEXT ("(%P|%t) spawning worker thread\n")));
+                  ACE_TEXT ("(%P|%t) spawning worker thread\n")));
       result = ACE_Thread_Manager::instance ()->spawn
                 (worker,
                   reinterpret_cast <void *> (handle_signals_synchronously),
@@ -405,10 +405,10 @@ parse_args (int argc, ACE_TCHAR *argv[])
     default:
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%P|%t) usage:\n")
-		  ACE_TEXT ("-i <iterations>\n")
-		  ACE_TEXT ("-c\n")
-		  ACE_TEXT ("-p <parent_pid>\n")
-		  ACE_TEXT ("-t <test_number>\n")));
+                  ACE_TEXT ("-i <iterations>\n")
+                  ACE_TEXT ("-c\n")
+                  ACE_TEXT ("-p <parent_pid>\n")
+                  ACE_TEXT ("-t <test_number>\n")));
       break;
   }
 }
