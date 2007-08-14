@@ -598,7 +598,7 @@ static const unsigned char ace_yystos[] =
 # endif
 
 # define ACE_YYDPRINTF(Args) \
-  do                         \ 
+  do                         \
     {                        \
       if (ace_yydebug)       \
         ACE_YYFPRINTF Args;  \
