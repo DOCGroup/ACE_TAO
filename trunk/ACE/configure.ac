@@ -3934,13 +3934,13 @@ case "$host" in
     ACE_CACHE_CHECK([for epoll_create],
      [ace_cv_linux_event_poll],
      [
-      AC_LINK_IFELSE([
+      AC_RUN_IFELSE([
       AC_LANG_PROGRAM([
 #include <sys/epoll.h>
        ],
        [
 int const ACE_NUM_DESCRIPTORS = 10;
-(void) epoll_create (ACE_NUM_DESCRIPTORS);
+return epoll_create (ACE_NUM_DESCRIPTORS) == -1 ? -1 : 0;
        ])
       ],
       [
