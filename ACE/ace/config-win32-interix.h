@@ -30,7 +30,7 @@
 
 #include "ace/config-g++-common.h"
 
-#define ACE_HAS_NEW_NOTHROW	// Need to know 'new's failure semantics.
+#define ACE_HAS_NEW_NOTHROW // Need to know 'new's failure semantics.
 
 #if defined (ACE_HAS_THREADS)
 #define ACE_HAS_THREADS

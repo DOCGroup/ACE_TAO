@@ -1,10 +1,23 @@
+Tue Aug 14 14:32:57 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * ace/Assert.h:
+        * ace/Global_Macros.h:
+        * ace/Netlink_Addr.h:
+        * ace/Rtems_init.c:
+        * ace/Svc_Conf_y.cpp:
+        * ace/Task_Ex_T.h:
+        * ace/config-win32-common.h:
+        * ace/config-win32-interix.h:
+
+          Untabify.
+
 Tue Aug 14 13:48:56 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * bin/fuzz.pl:
-          Enabled the Check_for_tab test. The check_for_tab test now will 
+          Enabled the Check_for_tab test. The check_for_tab test now will
           only check the core of ACE/TAO for tabs. This will prevent the
           introduction of new tabs to the core of ACE/TAO. When we remove
-          tabs from other directories we will enable checks for those 
+          tabs from other directories we will enable checks for those
           directories.
 
 Tue Aug 14 08:46:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>

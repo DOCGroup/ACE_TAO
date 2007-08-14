@@ -28,7 +28,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/config-lite.h"
-#include "ace/Assert.h"			// For ACE_ASSERT
+#include "ace/Assert.h" // For ACE_ASSERT
 
 // Start Global Macros
 # define ACE_BEGIN_DUMP ACE_TEXT ("\n====\n(%P|%t|%x)\n")
