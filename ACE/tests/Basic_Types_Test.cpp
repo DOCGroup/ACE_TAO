@@ -276,18 +276,18 @@ run_main (int, ACE_TCHAR *[])
   else
     {
       ACE_ERROR ((LM_ERROR,
-		  ACE_TEXT ("sizeof (ptrdiff_t) != sizeof (void*)\n")));
+                  ACE_TEXT ("sizeof (ptrdiff_t) != sizeof (void*)\n")));
       ++errors;
     }
 
   // ACE assumes sizeof (ptrdiff_t) >= sizeof (a_function_pointer)
   if (sizeof (ptrdiff_t) >= sizeof (a_function_pointer))
     ACE_DEBUG ((LM_DEBUG,
-		ACE_TEXT ("sizeof (ptrdiff_t) >= sizeof (a_function_pointer)\n")));
+                ACE_TEXT ("sizeof (ptrdiff_t) >= sizeof (a_function_pointer)\n")));
   else
     {
       ACE_ERROR ((LM_ERROR,
-		  ACE_TEXT ("sizeof (ptrdiff_t) < sizeof (a_function_pointer)\n")));
+                  ACE_TEXT ("sizeof (ptrdiff_t) < sizeof (a_function_pointer)\n")));
       ++errors;
     }
 
