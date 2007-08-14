@@ -53,6 +53,8 @@ TAO::HTIOP::Protocol_Factory::init (int argc,
 {
   const ACE_TCHAR * config_file = 0;
   const ACE_TCHAR * persist_file = 0;
+  unsigned proxy_port = 0;
+  const ACE_TCHAR * proxy_host = 0;
 
   ACE_stat statbuf;
   int use_registry = 0;
@@ -80,6 +82,18 @@ TAO::HTIOP::Protocol_Factory::init (int argc,
           if (++i < argc)
             this->inside_ = ACE_OS::atoi (ACE_TEXT_ALWAYS_CHAR(argv[i]));
         }
+      else if (ACE_OS::strcasecmp(argv[i], ACE_TEXT("-proxy_port")) == 0)
+        {
+          if (++i < argc)
+            proxy_port = static_cast<unsigned>
+              (ACE_OS::atoi (ACE_TEXT_ALWAYS_CHAR(argv[i])));
+        }
+      else if (ACE_OS::strcasecmp(argv[i], ACE_TEXT("-proxy_host")) == 0)
+        {
+          if (++i < argc)
+            if (ACE_OS::stat (argv[i],&statbuf) != -1)
+              proxy_host = argv[i];
+        }
     }
 
   ACE_NEW_RETURN (this->ht_env_,
@@ -90,7 +104,13 @@ TAO::HTIOP::Protocol_Factory::init (int argc,
 
   if (config_file != 0)
     this->ht_env_->import_config (config_file);
-
+  else
+    {
+      if (proxy_port != 0)
+        this->ht_env_->set_proxy_port (proxy_port);
+      if (proxy_host != 0)
+        this->ht_env_->set_proxy_host (proxy_host);
+    }
   return 0;
 }
 

@@ -19,8 +19,6 @@
 
 #include "ami_test_i.h"
 
-#include "tests/test_config.h"
-
 #include "tao/debug.h"
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_sys_socket.h"
@@ -60,7 +58,6 @@ parse_args (int argc, char *argv[])
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
-  ACE_START_TEST (ACE_TEXT ("HTIOP_AMI_server"));
   try
     {
       CORBA::ORB_var orb =
@@ -126,6 +123,5 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       return 1;
     }
 
-  ACE_END_TEST;
   return 0;
 }
