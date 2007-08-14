@@ -1,3 +1,34 @@
+Tue Aug 14 21:50:40 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/orbsvcs/HTIOP/HTIOP_Acceptor.cpp:
+        * orbsvcs/orbsvcs/HTIOP/HTIOP_Connection_Handler.cpp:
+        * orbsvcs/orbsvcs/HTIOP/HTIOP_Endpoint.cpp:
+        * orbsvcs/orbsvcs/HTIOP/HTIOP_Factory.cpp:
+        * orbsvcs/orbsvcs/HTIOP/HTIOP_Transport.cpp:
+
+          Make sure HTIOP builds and runs properly in an IPv6 enabled
+          environment.
+
+        * orbsvcs/tests/HTIOP/AMI/client.cpp:
+        * orbsvcs/tests/HTIOP/AMI/server.cpp:
+
+        * orbsvcs/tests/HTIOP/HT_Config.conf:
+
+        * orbsvcs/tests/HTIOP/Hello/client.cpp:
+        * orbsvcs/tests/HTIOP/Hello/server.cpp:
+
+          Fix up the tests to run cleanly in a nightly build environment
+          This is primarily fixing the configuration so that it does not
+          depend on an external proxy, but will use one if locally
+          configured to do so. Also fixed up the test output and command
+          line processing to make it more consistent with other tests.
+
+          I've not turned on the automatic running of these tests just
+          yet, I'd rather wait and just make sure the build is clean. We
+          can turn on the automatic run at some point later now that the
+          tests are cleaned up.
+
+
 Tue Aug 14 17:47:30 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * tao/AnyTypeCode/append.cpp:
@@ -24,7 +55,7 @@ Tue Aug 14 17:47:30 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
         * tao/RTScheduling/RTScheduler_Loader.cpp:
         * tao/Stub.inl:
         * tao/TAO_Singleton_Manager.inl:
-   
+
           Untabify.
 
 Tue Aug 14 16:19:35 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>

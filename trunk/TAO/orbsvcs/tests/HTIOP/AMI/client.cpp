@@ -17,7 +17,6 @@
 //
 // ============================================================================
 
-#include "tests/test_config.h"
 #include "ace/OS_NS_sys_socket.h"
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"
@@ -162,7 +161,6 @@ Handler handler;
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
-  ACE_START_TEST (ACE_TEXT ("HTIOP_AMI_client"));
   try
     {
       CORBA::ORB_var orb =
@@ -264,7 +262,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       return 1;
     }
 
-  ACE_END_TEST;
   return 0;
 }
 

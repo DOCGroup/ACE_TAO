@@ -95,7 +95,7 @@ TAO::HTIOP::Connection_Handler::open (void*)
   if (this->peer ().get_local_addr (local_addr) == -1)
     return -1;
 
-  if (local_addr.get_ip_address () == remote_addr.get_ip_address ()
+  if (local_addr.is_ip_equal (remote_addr)
       && local_addr.get_port_number () == remote_addr.get_port_number ())
     {
 

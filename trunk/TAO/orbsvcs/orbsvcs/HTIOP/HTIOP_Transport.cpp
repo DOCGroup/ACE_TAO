@@ -402,8 +402,7 @@ TAO::HTIOP::Transport::get_listen_point (::HTIOP::ListenPointList &lp_list,
            index != count;
            index++)
         {
-          if (local_addr.get_ip_address()
-              == endpoint_addr[index].get_ip_address())
+          if (local_addr.is_ip_equal (endpoint_addr[index]))
             {
               // Get the count of the number of elements
               CORBA::ULong len = lp_list.length ();

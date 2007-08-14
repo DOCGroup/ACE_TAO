@@ -213,13 +213,9 @@ TAO::HTIOP::Endpoint::is_equivalent (const TAO_Endpoint *other_endpoint)
 CORBA::ULong
 TAO::HTIOP::Endpoint::hash (void)
 {
-  // We could call ACE::HTBP::Addr::hash() since it does much the same
-  // thing except that it converts the port from network byte order to
-  // host byte order.  As such, this implementation is actually less
-  // costly.
   if (this->htid_.in() && ACE_OS::strlen (this->htid_.in()))
     return ACE::hash_pjw(this->htid_.in());
-  return this->object_addr ().get_ip_address () + this->port ();
+  return this->object_addr ().hash();
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

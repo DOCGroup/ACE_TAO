@@ -2,8 +2,6 @@
 
 #include "Hello.h"
 
-#include "tests/test_config.h"
-
 #include "ace/Get_Opt.h"
 #include "tao/IORTable/IORTable.h"
 #include "orbsvcs/CosNamingC.h"
@@ -43,8 +41,6 @@ parse_args (int argc, char *argv[])
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
-  ACE_START_TEST (ACE_TEXT ("Hello_server"));
-
   try
     {
       ACE_DEBUG ((LM_DEBUG, "Begin of Hello_Server test\n"));
@@ -140,16 +136,12 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       orb->destroy ();
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) server - orb destroyed\n"));
-
-      ACE_DEBUG ((LM_DEBUG, "server exiting\n"));
     }
   catch (const CORBA::Exception& ex)
     {
-      ACE_END_TEST;
       ex._tao_print_exception ("Exception caught:");
       return 1;
     }
 
-  ACE_END_TEST;
   return 0;
 }
