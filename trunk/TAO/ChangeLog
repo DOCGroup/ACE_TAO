@@ -1,9 +1,15 @@
+Tue Aug 14 10:25:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Transport_Selection_Guard.cpp:
+          Fixed incorrect ACE_RCSID. Thanks to Bogdan Jeram
+          <bjeram at eso dot org> for reporting this. This fixes bugzilla
+          3040
+
 Mon Aug 13 20:54:46 UTC 2007  Dale Wilson  <wilsond@ociweb.com>
 
         * tao/Transport_Cache_Manager.cpp:
           Eliminate the unused variable which was optimized out of
           existence by the previous check-in.
-
 
 Mon Aug 13 18:57:05 UTC 2007  Dale Wilson  <wilsond@ociweb.com>
 
