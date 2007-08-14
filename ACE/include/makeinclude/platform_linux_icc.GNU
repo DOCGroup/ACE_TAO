@@ -53,6 +53,11 @@ PLATFORM_TK_LDFLAGS=
 PLATFORM_AIO_SUPPORT := \
        $(shell test "`ls -L /usr/lib/librt.so* /lib/librt.so*`" && echo -DACE_HAS_AIO_CALLS)
 
+GNU_LIBPTHREAD_VERSION := $(shell getconf GNU_LIBPTHREAD_VERSION)
+ifeq (NPTL, $(word 1,$(GNU_LIBPTHREAD_VERSION)))
+  CPPFLAGS += -DACE_HAS_LINUX_NPTL
+endif
+
 SYSARCH := $(shell uname -m)
 ssl ?= 0
 ifeq ($(ssl),1)
