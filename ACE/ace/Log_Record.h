@@ -199,6 +199,10 @@ private:
   /// Logging record data
   ACE_TCHAR *msg_data_;   // Heap-allocated text message area
   size_t msg_data_size_;  // Allocated size of msg_data_ in ACE_TCHARs
+
+  /// disallow copying...
+  ACE_Log_Record (const ACE_Log_Record& rhs);
+  ACE_Log_Record& operator= (const ACE_Log_Record& rhs);
 };
 
 // Forward decls.

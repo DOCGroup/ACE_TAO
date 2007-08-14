@@ -134,16 +134,16 @@ class ACE_Log_Record;
  * subsequent call to log().
  *
  * The ACE_Log_Msg class uses two priority masks to control its
- * logging behavior.  The @c priority_mask_ object attribute is thread-
- * specific and specifies the priority levels logged by the thread.
- * The @c process_priority_mask_ class attribute is not thread-specific
- * and specifies the priority levels that will be logged by all
- * threads in the process.  By default, all levels are disabled for
- * @c priority_mask_ and all levels are enabled for
- * @c process_priority_mask_ (i.e. the process-wide mask controls
- * the settings, and each instance can expand on it if desired).
- * Both priority masks can be modified using the priority_mask()
- * method of this class.
+ * logging behavior.  The @c priority_mask_ object attribute is
+ * thread- specific and specifies the priority levels logged by the
+ * thread.  The @c process_priority_mask_ class attribute is not
+ * thread-specific and specifies the priority levels that will be
+ * logged by all threads in the process.  By default, all levels are
+ * disabled for @c priority_mask_ and all levels are enabled for @c
+ * process_priority_mask_ (i.e. the process-wide mask controls the
+ * settings, and each instance can expand on it if desired).  Both
+ * priority masks can be modified using the priority_mask() method of
+ * this class.
  */
 class ACE_Export ACE_Log_Msg
 {
