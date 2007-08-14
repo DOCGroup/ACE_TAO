@@ -14,6 +14,34 @@
 #include "ace/SOCK_Stream.h"
 #include "ace/Event_Handler.h"
 #include "ace/Reactor.h"
+#include "ace/Get_Opt.h"
+
+unsigned port = 8088;
+
+int
+parse_args (int argc, char *argv[])
+{
+  ACE_Get_Opt get_opts (argc, argv, "p:");
+  int c;
+
+  while ((c = get_opts ()) != -1)
+    switch (c)
+      {
+      case 'p':
+        port = static_cast<unsigned>(ACE_OS::atoi (get_opts.opt_arg()));
+        break;
+      case '?':
+      default:
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "usage:  %s "
+                           "-p port "
+                            "\n",
+                           argv [0]),
+                          -1);
+      }
+  // Indicates sucessful parsing of the command line
+  return 0;
+}
 
 class Accept_Handler : public ACE_Event_Handler
 {
@@ -80,7 +108,7 @@ Accept_Handler::handle_input (ACE_HANDLE h)
       }
   if (ch == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("Accept_Handler::handle_input, ")
+                       ACE_TEXT ("(%P|%t) Server Accept_Handler::handle_input, ")
                        ACE_TEXT ("unknown handle %d\n") ,h),
                       -1);
   int result = (*ch)->pre_recv();
@@ -99,18 +127,22 @@ Accept_Handler::handle_input (ACE_HANDLE h)
       if (handler == 0)
         {
           ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("(%P|%t) Server Accept_Handler::handle_input ")
                       ACE_TEXT ("Creating new stream handler for %d\n"),
                       stream->get_handle()));
           Stream_Handler *sh = new Stream_Handler(*stream);
           session->handler (sh);
         }
       else
-        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("There is already a handler for %d\n"),
+        ACE_DEBUG ((LM_DEBUG,
+                    ACE_TEXT ("(%P|%t) Server Accept_Handler::handle_input ")
+                    ACE_TEXT ("There is already a handler for %d\n"),
                     stream->get_handle()));
 
       if ((*ch)->state() == ACE::HTBP::Channel::Data_Queued)
         {
           ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("(%P|%t) Server Accept_Handler::handle_input \n"),
                       ACE_TEXT ("Issuing notification on handler\n")));
           this->reactor()->notify (session->handler(),
                                    ACE_Event_Handler::READ_MASK);
@@ -135,12 +167,13 @@ Stream_Handler::handle_input (ACE_HANDLE h)
   ssize_t n = this->stream_.recv (buffer,1000);
   if (n == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("Stream_Handler::handle_input %p\n"),
+                       ACE_TEXT ("(%P|%t) Server Stream_Handler::handle_input %p\n"),
                        ACE_TEXT ("recv")),
                       0);
   buffer[n] = 0;
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("Stream_Handler::handle_input (%d) read %d:\n%C\n"),
+              ACE_TEXT ("(%P|%t) Server Stream_Handler::handle_input ")
+              ACE_TEXT (" (%d) read %d:\n%C\n"),
               h, n, buffer));
 
   const char *tok_loc = ACE_OS::strstr (buffer, "goodbye");
@@ -151,10 +184,12 @@ Stream_Handler::handle_input (ACE_HANDLE h)
       ACE::HTBP::Channel *ch = stream_.session()->outbound();
       if (ch != 0)
         ACE_DEBUG ((LM_DEBUG,
+                    ACE_TEXT ("(%P|%t) Server Stream_Handler::handle_input ")
                     ACE_TEXT ("Sending reply on %d\n"),
                     ch->ace_stream().get_handle()));
       else
         ACE_DEBUG ((LM_DEBUG,
+                    ACE_TEXT ("(%P|%t) Server Stream_Handler::handle_input ")
                     ACE_TEXT ("Can't send reply on nul channel\n")));
       this->stream_.send ("Back atcha!",11);
     }
@@ -162,18 +197,30 @@ Stream_Handler::handle_input (ACE_HANDLE h)
 }
 
 int
-ACE_TMAIN (int, ACE_TCHAR *[])
+ACE_TMAIN (int argc, ACE_TCHAR * argv[])
 {
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("At start of main\n")));
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("(%P|%t) Server: ")
+              ACE_TEXT ("At start of main\n")));
   ACE_OS::socket_init (ACE_WSOCK_VERSION);
 
-  ACE_INET_Addr local(8088);
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("got address\n")));
+  if (parse_args(argc, argv) != 0)
+    return 1;
+
+  ACE_INET_Addr local(port);
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("(%P|%t) Server: ")
+              ACE_TEXT ("got address\n")));
+
   ACE_SOCK_Acceptor acc(local,1);
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("opened listener\n")));
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("(%P|%t) Server: ")
+              ACE_TEXT ("opened listener\n")));
 
   Accept_Handler handler (acc);
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("server is ready\n")));
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("(%P|%t) Server: ")
+              ACE_TEXT ("server is ready\n")));
 
   ACE_Reactor::instance()->run_reactor_event_loop();
   return 0;

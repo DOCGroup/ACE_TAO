@@ -50,7 +50,7 @@ ACE::HTBP::Inside_Squid_Filter::make_request_header (ACE::HTBP::Channel *ch,
   tempId = ch->request_count();
   while (tempId /= 10) rid_size++;
 
-  // This test was originally get_host_name() == -1, but this is 
+  // This test was originally get_host_name() == -1, but this is
   // problematic if the address doesn't resolve to a name. I think
   // that it should be configurable, or maybe the hostname needs to
   // be carried independent of the address to work with hosts that may
@@ -116,10 +116,11 @@ ACE::HTBP::Inside_Squid_Filter::recv_data_header (ACE::HTBP::Channel *ch)
 {
   if (this->http_code() != 200 && this->http_code() != 0)
     {
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT("Inside_Squid_Filter::recv_data_header, ")
-                  ACE_TEXT("non-OK result code %d recvd\n"),
-                  this->http_code()));
+      if (ACE::debug())
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT("HTBP::Inside_Squid_Filter::recv_data_header, ")
+                    ACE_TEXT("non-OK result code %d recvd\n"),
+                    this->http_code()));
 
       errno = ch->consume_error () ? EINVAL : EWOULDBLOCK;
       return 0;
@@ -133,7 +134,8 @@ ACE::HTBP::Inside_Squid_Filter::recv_data_header (ACE::HTBP::Channel *ch)
           errno = EWOULDBLOCK;
         }
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT("Inside_Squid_Filter::recv_data_header, ")
+                         ACE_TEXT("HTBP::Inside_Squid_Filter::")
+                         ACE_TEXT("recv_data_header, ")
                          ACE_TEXT("header not complete\n")),
                         0);
     }
@@ -152,8 +154,8 @@ ACE::HTBP::Inside_Squid_Filter::recv_data_header (ACE::HTBP::Channel *ch)
   ch->leftovers().rd_ptr(header_end);
   if (this->http_code() != 200)
     {
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT("Inside_Squid_Filter::recv_data_header, ")
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT("HTBP::Inside_Squid_Filter::recv_data_header, ")
                   ACE_TEXT("non-OK result code %d recvd\n"),
                   this->http_code()));
 
@@ -180,7 +182,7 @@ ACE::HTBP::Inside_Squid_Filter::send_ack (ACE::HTBP::Channel *ch)
   if (ch->state() == ACE::HTBP::Channel::Ack_Sent)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT("Inside Filter::send_ack: ")
+                         ACE_TEXT("HTBP::Inside Filter::send_ack: ")
                          ACE_TEXT("state is already ACK_SENT\n")),
                         1);
     }
@@ -206,7 +208,8 @@ ACE::HTBP::Inside_Squid_Filter::recv_ack (ACE::HTBP::Channel *ch)
       if (ch->state() != ACE::HTBP::Channel::Closed)
         errno = EWOULDBLOCK;
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT("Inside_Squid_Filter::recv_data_header, ")
+                         ACE_TEXT("HTBP::Inside_Squid_Filter::")
+                         ACE_TEXT("recv_data_header, ")
                          ACE_TEXT("header not complete\n")),0);
     }
   if (this->http_code() == 200)

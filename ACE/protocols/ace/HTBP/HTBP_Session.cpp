@@ -200,7 +200,9 @@ ACE::HTBP::Session::detach (ACE::HTBP::Channel *ch)
   else if (this->outbound_ == ch)
     this->outbound_ = 0;
   else
-    ACE_ERROR ((LM_ERROR, "ACE::HTBP::Session::detach called with unknown channel\n"));
+    ACE_ERROR ((LM_ERROR,
+                ACE_TEXT("ACE::HTBP::Session::detach ")
+                ACE_TEXT("called with unknown channel\n")));
 }
 
 void

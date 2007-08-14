@@ -56,8 +56,9 @@ ACE::HTBP::Outside_Squid_Filter::recv_data_header (ACE::HTBP::Channel *ch)
           ch->leftovers().length(0);
           errno = EINVAL;
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "ACE::HTBP::Outside_Squid_Filter::recv_data_header "
-                             "bad request header\n"),0);
+                             ACE_TEXT("ACE::HTBP::Outside_Squid_Filter::")
+                             ACE_TEXT("recv_data_header ")
+                             ACE_TEXT("bad request header\n")),0);
         }
     }
   start += token.length();
@@ -73,8 +74,9 @@ ACE::HTBP::Outside_Squid_Filter::recv_data_header (ACE::HTBP::Channel *ch)
       ch->leftovers().length(0);
       errno = EINVAL;
       ACE_ERROR_RETURN ((LM_ERROR,
-                             "ACE::HTBP::Outside_Squid_Filter::recv_data_header "
-                             "missing sender key\n"),0);
+                         ACE_TEXT("ACE::HTBP::Outside_Squid_Filter::")
+                         ACE_TEXT("recv_data_header ")
+                         ACE_TEXT("missing sender key\n")),0);
     }
   *slash = 0;
   session_id.local_.string_to_addr (start);
@@ -86,8 +88,9 @@ ACE::HTBP::Outside_Squid_Filter::recv_data_header (ACE::HTBP::Channel *ch)
       ch->leftovers().length(0);
       errno = EINVAL;
       ACE_ERROR_RETURN ((LM_ERROR,
-                             "ACE::HTBP::Outside_Squid_Filter::recv_data_header "
-                             "missing sender key\n"),0);
+                         ACE_TEXT("ACE::HTBP::Outside_Squid_Filter::")
+                         ACE_TEXT("recv_data_header ")
+                         ACE_TEXT("missing sender key\n")),0);
     }
   *slash = 0;
   session_id.peer_.string_to_addr (start);
@@ -99,8 +102,9 @@ ACE::HTBP::Outside_Squid_Filter::recv_data_header (ACE::HTBP::Channel *ch)
       ch->leftovers().length (0);
       errno = EINVAL;
       ACE_ERROR_RETURN ((LM_ERROR,
-                             "ACE::HTBP::Outside_Squid_Filter::recv_data_header "
-                             "missing sender key"),0);
+                         ACE_TEXT("ACE::HTBP::Outside_Squid_Filter::")
+                         ACE_TEXT("recv_data_header ")
+                         ACE_TEXT("missing sender key")),0);
     }
   *slash = 0;
   session_id.id_ = ACE_OS::strtol(start,0,10);
@@ -127,9 +131,9 @@ ACE::HTBP::Outside_Squid_Filter::recv_data_header (ACE::HTBP::Channel *ch)
       ACE_NEW_RETURN (session, ACE::HTBP::Session (session_id), 0);
       if (ACE::HTBP::Session::add_session (session) == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "ACE::HTBP::Outside_Squid_Filter::"
-                           "recv_data_header %p",
-                           "add_session"),0);
+                           ACE_TEXT("ACE::HTBP::Outside_Squid_Filter::")
+                           ACE_TEXT("recv_data_header %p"),
+                           ACE_TEXT("add_session")),0);
     }
   ch->session(session);
 
