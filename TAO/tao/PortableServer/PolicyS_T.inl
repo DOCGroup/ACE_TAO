@@ -33,30 +33,30 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class T> ACE_INLINE
 POA_CORBA::Policy_tie<T>::Policy_tie (T &t)
-	: ptr_ (&t),
-	  poa_ (PortableServer::POA::_nil ()),
-	  rel_ (0)
+  : ptr_ (&t),
+    poa_ (PortableServer::POA::_nil ()),
+    rel_ (0)
 {}
 
 template <class T> ACE_INLINE
 POA_CORBA::Policy_tie<T>::Policy_tie (T &t, PortableServer::POA_ptr poa)
-	: ptr_ (&t),
-	  poa_ (PortableServer::POA::_duplicate (poa)),
-	  rel_ (0)
+  : ptr_ (&t),
+    poa_ (PortableServer::POA::_duplicate (poa)),
+    rel_ (0)
 {}
 
 template <class T> ACE_INLINE
 POA_CORBA::Policy_tie<T>::Policy_tie (T *tp, CORBA::Boolean release)
-	: ptr_ (tp),
-	  poa_ (PortableServer::POA::_nil ()),
-	  rel_ (release)
+  : ptr_ (tp),
+    poa_ (PortableServer::POA::_nil ()),
+    rel_ (release)
 {}
 
 template <class T> ACE_INLINE
 POA_CORBA::Policy_tie<T>::Policy_tie (T *tp, PortableServer::POA_ptr poa, CORBA::Boolean release)
-	: ptr_ (tp),
-	  poa_ (PortableServer::POA::_duplicate (poa)),
-	  rel_ (release)
+  : ptr_ (tp),
+    poa_ (PortableServer::POA::_duplicate (poa)),
+    rel_ (release)
 {}
 
 template <class T> ACE_INLINE

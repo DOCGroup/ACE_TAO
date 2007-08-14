@@ -46,19 +46,19 @@ namespace TAO
   {
     Active_Policy_Strategies::Active_Policy_Strategies (void)
       : thread_strategy_ (0),
-	request_processing_strategy_ (0),
-	id_assignment_strategy_ (0),
-	lifespan_strategy_ (0),
-	id_uniqueness_strategy_ (0),
-	implicit_activation_strategy_ (0),
-	servant_retention_strategy_ (0),
-	thread_strategy_factory_ (0),
-	servant_retention_strategy_factory_ (0),
-	request_processing_strategy_factory_ (0),
-	lifespan_strategy_factory_ (0),
-	implicit_activation_strategy_factory_ (0),
-	id_uniqueness_strategy_factory_ (0),
-	id_assignment_strategy_factory_ (0)
+        request_processing_strategy_ (0),
+        id_assignment_strategy_ (0),
+        lifespan_strategy_ (0),
+        id_uniqueness_strategy_ (0),
+        implicit_activation_strategy_ (0),
+        servant_retention_strategy_ (0),
+        thread_strategy_factory_ (0),
+        servant_retention_strategy_factory_ (0),
+        request_processing_strategy_factory_ (0),
+        lifespan_strategy_factory_ (0),
+        implicit_activation_strategy_factory_ (0),
+        id_uniqueness_strategy_factory_ (0),
+        id_assignment_strategy_factory_ (0)
     {
     }
 

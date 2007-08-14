@@ -1151,7 +1151,7 @@ TAO_Marshal_Value::append (CORBA::TypeCode_ptr  tc,
           return TAO::TRAVERSE_STOP;
         }
 
-	  TAO_ORB_Core *orb_core = src->orb_core ();
+      TAO_ORB_Core *orb_core = src->orb_core ();
       if (orb_core == 0)
         {
           orb_core = TAO_ORB_Core_instance ();

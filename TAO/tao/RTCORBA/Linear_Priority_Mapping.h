@@ -53,9 +53,9 @@ public:
   virtual ~TAO_Linear_Priority_Mapping (void);
 
   virtual CORBA::Boolean to_native (RTCORBA::Priority corba_priority,
-				    RTCORBA::NativePriority &native_priority);
+                                    RTCORBA::NativePriority &native_priority);
   virtual CORBA::Boolean to_CORBA (RTCORBA::NativePriority native_priority,
-				   RTCORBA::Priority &corba_priority);
+                                   RTCORBA::Priority &corba_priority);
 
 private:
   /// The scheduling policy

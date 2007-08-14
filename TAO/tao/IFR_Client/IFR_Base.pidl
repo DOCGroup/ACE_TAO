@@ -364,18 +364,16 @@ module CORBA
         in InterfaceDefSeq base_interfaces
       );
 
-    ExtValueDef create_ext_value (
-	in RepositoryId id,
-	in Identifier name,
-	in VersionSpec version,
-	in boolean is_custom,
-	in boolean is_abstract,
-	in ValueDef base_value,
-	in boolean is_truncatable,
-	in ValueDefSeq abstract_base_values,
-	in InterfaceDefSeq supported_interfaces,
-	in ExtInitializerSeq initializers
-      );
+    ExtValueDef create_ext_value ( in RepositoryId id,
+                                   in Identifier name,
+                                   in VersionSpec version,
+                                   in boolean is_custom,
+                                   in boolean is_abstract,
+                                   in ValueDef base_value,
+                                   in boolean is_truncatable,
+                                   in ValueDefSeq abstract_base_values,
+                                   in InterfaceDefSeq supported_interfaces,
+                                   in ExtInitializerSeq initializers );
   };
 
   interface IDLType : IRObject

@@ -324,7 +324,7 @@ TAO_AMH_DSI_Response_Handler::~TAO_AMH_DSI_Response_Handler (void)
 
 void
 TAO_AMH_DSI_Response_Handler::invoke_reply (CORBA::NVList_ptr args,
-					    CORBA::NamedValue_ptr result)
+                                            CORBA::NamedValue_ptr result)
 {
   try
    {
@@ -333,13 +333,13 @@ TAO_AMH_DSI_Response_Handler::invoke_reply (CORBA::NVList_ptr args,
     // Send the return value, if any.
     if (result != 0 && result->value () != 0)
       {
-	      result->value ()->impl ()->marshal_value (this->_tao_out);
+        result->value ()->impl ()->marshal_value (this->_tao_out);
       }
 
     // Send the "inout" and "out" parameters.
     if (args != 0)
       {
-	      args->_tao_encode (this->_tao_out, CORBA::ARG_INOUT | CORBA::ARG_OUT);
+        args->_tao_encode (this->_tao_out, CORBA::ARG_INOUT | CORBA::ARG_OUT);
       }
     this->_tao_rh_send_reply ();
   }

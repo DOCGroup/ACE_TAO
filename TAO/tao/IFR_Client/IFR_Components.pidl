@@ -68,45 +68,37 @@ module CORBA
 
     interface Container : CORBA::Container
     {
-      ComponentDef create_component (
-	  in RepositoryId id,
-	  in Identifier name,
-	  in VersionSpec version,
-	  in ComponentDef base_component,
-	  in InterfaceDefSeq supports_interfaces
-	);
+      ComponentDef create_component ( in RepositoryId id,
+                                      in Identifier name,
+                                      in VersionSpec version,
+                                      in ComponentDef base_component,
+                                      in InterfaceDefSeq supports_interfaces );
 
-      HomeDef create_home (
-	  in RepositoryId id,
-	  in Identifier name,
-	  in VersionSpec version,
-	  in HomeDef base_home,
-	  in ComponentDef managed_component,
-	  in InterfaceDefSeq supports_interfaces,
-	  in ValueDef primary_key
-	);
+      HomeDef create_home ( in RepositoryId id,
+                            in Identifier name,
+                            in VersionSpec version,
+                            in HomeDef base_home,
+                            in ComponentDef managed_component,
+                            in InterfaceDefSeq supports_interfaces,
+                            in ValueDef primary_key );
 
-      EventDef create_event (
-	  in RepositoryId id,
-	  in Identifier name,
-	  in VersionSpec version,
-	  in boolean is_custom,
-	  in boolean is_abstract,
-	  in ValueDef base_value,
-	  in boolean is_truncatable,
-	  in ValueDefSeq abstract_base_values,
-	  in InterfaceDefSeq supported_interfaces,
-	  in ExtInitializerSeq initializers
-	);
+      EventDef create_event ( in RepositoryId id,
+                              in Identifier name,
+                              in VersionSpec version,
+                              in boolean is_custom,
+                              in boolean is_abstract,
+                              in ValueDef base_value,
+                              in boolean is_truncatable,
+                              in ValueDefSeq abstract_base_values,
+                              in InterfaceDefSeq supported_interfaces,
+                              in ExtInitializerSeq initializers );
     };
 
-    interface ModuleDef : CORBA::ModuleDef,
-			  Container
+    interface ModuleDef : CORBA::ModuleDef, Container
     {
     };
 
-    interface Repository : CORBA::Repository,
-			   Container
+    interface Repository : CORBA::Repository, Container
     {
     };
 
@@ -176,41 +168,31 @@ module CORBA
       attribute InterfaceDefSeq supported_interfaces;
 
       // write interface
-      ProvidesDef create_provides (
-	  in RepositoryId id,
-	  in Identifier name,
-	  in VersionSpec version,
-	  in InterfaceDef interface_type
-	);
+      ProvidesDef create_provides ( in RepositoryId id,
+                                    in Identifier name,
+                                    in VersionSpec version,
+                                    in InterfaceDef interface_type );
 
-      UsesDef create_uses (
-	  in RepositoryId id,
-	  in Identifier name,
-	  in VersionSpec version,
-	  in InterfaceDef interface_type,
-	  in boolean is_multiple
-	);
+      UsesDef create_uses ( in RepositoryId id,
+                            in Identifier name,
+                            in VersionSpec version,
+                            in InterfaceDef interface_type,
+                            in boolean is_multiple );
 
-      EmitsDef create_emits (
-	  in RepositoryId id,
-	  in Identifier name,
-	  in VersionSpec version,
-	  in EventDef event
-	);
+      EmitsDef create_emits ( in RepositoryId id,
+                              in Identifier name,
+                              in VersionSpec version,
+                              in EventDef event );
 
-      PublishesDef create_publishes (
-	  in RepositoryId id,
-	  in Identifier name,
-	  in VersionSpec version,
-	  in EventDef event
-	);
+      PublishesDef create_publishes ( in RepositoryId id,
+                                      in Identifier name,
+                                      in VersionSpec version,
+                                      in EventDef event );
 
-      ConsumesDef create_consumes (
-	  in RepositoryId id,
-	  in Identifier name,
-	  in VersionSpec version,
-	  in EventDef event
-	);
+      ConsumesDef create_consumes ( in RepositoryId id,
+                                    in Identifier name,
+                                    in VersionSpec version,
+                                    in EventDef event );
     };
 
     typedef sequence<ProvidesDescription> ProvidesDescriptionSeq;
@@ -251,21 +233,17 @@ module CORBA
       attribute ValueDef primary_key;
 
       // write interface
-      FactoryDef create_factory (
-	  in RepositoryId id,
-	  in Identifier name,
-	  in VersionSpec version,
-	  in ParDescriptionSeq params,
-	  in ExceptionDefSeq exceptions
-	);
+      FactoryDef create_factory ( in RepositoryId id,
+                                  in Identifier name,
+                                  in VersionSpec version,
+                                  in ParDescriptionSeq params,
+                                  in ExceptionDefSeq exceptions );
 
-      FinderDef create_finder (
-	  in RepositoryId id,
-	  in Identifier name,
-	  in VersionSpec version,
-	  in ParDescriptionSeq params,
-	  in ExceptionDefSeq exceptions
-	);
+      FinderDef create_finder ( in RepositoryId id,
+                                in Identifier name,
+                                in VersionSpec version,
+                                in ParDescriptionSeq params,
+                                in ExceptionDefSeq exceptions );
     };
 
     struct HomeDescription

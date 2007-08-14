@@ -97,9 +97,7 @@ module CORBA
     attribute Visibility access;
   };
 
-  interface ValueDef : Container,
-		       Contained,
-		       IDLType
+  interface ValueDef : Container, Contained, IDLType
   {
     // read/write interface
     attribute InterfaceDefSeq supported_interfaces;
@@ -203,14 +201,13 @@ module CORBA
     ExtFullValueDescription describe_ext_value ();
 
     // write interface
-    ExtAttributeDef create_ext_attribute (
-	in RepositoryId id,
-	in Identifier name,
-	in VersionSpec version,
-	in IDLType type,
-	in AttributeMode mode,
-	in ExceptionDefSeq get_exceptions,
-	in ExceptionDefSeq set_exceptions
+    ExtAttributeDef create_ext_attribute ( in RepositoryId id,
+                                           in Identifier name,
+                                           in VersionSpec version,
+                                           in IDLType type,
+                                           in AttributeMode mode,
+                                           in ExceptionDefSeq get_exceptions,
+                                           in ExceptionDefSeq set_exceptions
       );
   };
 
