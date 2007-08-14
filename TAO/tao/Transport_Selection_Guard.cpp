@@ -4,7 +4,7 @@
 #include "tao/TSS_Resources.h"
 
 ACE_RCSID (tao,
-           Transport_Selection_Guard.cpp,
+           Transport_Selection_Guard,
            "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
