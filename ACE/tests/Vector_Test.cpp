@@ -49,8 +49,8 @@ int run_main (int, ACE_TCHAR *[])
 
   ACE_ASSERT (vector.size () == TOP);
   ACE_DEBUG ((LM_DEBUG,
-	      ACE_TEXT ("Size: %d\n"),
-	      vector.size ()));
+              ACE_TEXT ("Size: %d\n"),
+              vector.size ()));
 
   for (i = 0; i < TOP; ++i)
     ACE_ASSERT (vector[i] == i);
@@ -79,15 +79,15 @@ int run_main (int, ACE_TCHAR *[])
 
   ACE_ASSERT (vector.size () == LEFT);
   ACE_DEBUG ((LM_DEBUG,
-	      ACE_TEXT ("Size: %d\n"),
-	      vector.size ()));
+              ACE_TEXT ("Size: %d\n"),
+              vector.size ()));
 
   for (i = 0; i < LEFT; ++i)
     {
       ACE_ASSERT (vector[i] == i);
       ACE_DEBUG ((LM_DEBUG,
-            ACE_TEXT ("vector[%d]:%d\n"),
-            i, vector[i]));
+                  ACE_TEXT ("vector[%d]:%d\n"),
+                  i, vector[i]));
     }
 
   vector.resize(RESIZE, 0);
@@ -114,8 +114,8 @@ int run_main (int, ACE_TCHAR *[])
   vector.clear ();
   ACE_ASSERT (vector.size () == 0);
   ACE_DEBUG ((LM_DEBUG,
-	      ACE_TEXT ("Size: %d\n"),
-	      vector.size ()));
+              ACE_TEXT ("Size: %d\n"),
+              vector.size ()));
 
   VECTOR v1;
   VECTOR v2;

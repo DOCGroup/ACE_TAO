@@ -42,8 +42,8 @@
 #include "test_config.h"
 
 ACE_RCSID (tests,
-	QtReactor_Test,
-	"$Id$")
+           QtReactor_Test,
+           "$Id$")
 
 #include <assert.h>
 #include <qapplication.h>

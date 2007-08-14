@@ -129,25 +129,25 @@ client (void *arg)
                    &timeout) == -1)
     {
 #if defined (ACE_VXWORKS)
-	  if (errno == ETIME)
-	  {
-		if ( ++retry_port_<6 )
-		{
-  		  ACE_DEBUG ((LM_DEBUG,
-  		   	         ACE_TEXT ("(%P|%t) Going to retry port %d\n"),
-                     server_addr.get_port_number()));
-		}
-	  }
-	  if ( retry_port_>5 )
-	  {
-		retry_port_ = 0;
+      if (errno == ETIME)
+        {
+          if ( ++retry_port_<6 )
+          {
+            ACE_DEBUG ((LM_DEBUG,
+                        ACE_TEXT ("(%P|%t) Going to retry port %d\n"),
+                        server_addr.get_port_number()));
+          }
+        }
+      if ( retry_port_>5 )
+        {
+          retry_port_ = 0;
 #endif
-      ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("(%P|%t) %p\n"),
-                  ACE_TEXT ("connection failed")));
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("(%P|%t) %p\n"),
+                      ACE_TEXT ("connection failed")));
 
 #if defined (ACE_VXWORKS)
-	  }
+        }
 #endif
       return 0;
     }
@@ -183,11 +183,11 @@ run_main (int argc, ACE_TCHAR *argv[])
   for (u_short idx = USHRT_MAX; idx != USHRT_MAX - 300; --idx)
     {
 #if defined (ACE_VXWORKS)
-	  if (retry_port_>0)
-	  {
-	  	++idx;
-        ACE_OS::sleep (ACE_Time_Value (2*ACE_DEFAULT_TIMEOUT));
-	  }
+      if (retry_port_>0)
+        {
+          ++idx;
+          ACE_OS::sleep (ACE_Time_Value (2*ACE_DEFAULT_TIMEOUT));
+        }
 #endif
 
       ACE_INET_Addr addr (idx);

@@ -46,18 +46,18 @@ class Driver
 {
 public:
   Driver(ACE_Reactor * reactor,
-	 int max_notifications,
-	 char const *test_name);
+         int max_notifications,
+         char const *test_name);
 
   /// Run the test
   void run (void);
-  
+
   /// One of the sub-handlers has received a notification
   void notification_received ();
-  
+
   /// One of the sub-handlers has decided to skip several notifications
   void notifications_skipped (int skip_count);
-	
+
   /**
    * @brief Return the reactor configured for this test
    */
@@ -76,29 +76,29 @@ private:
    * @brief Return true if the test is finished.
    */
   bool done (void) const;
-  
+
   /**
    * @brief Return true if there are more iterations to run.
    */
   bool more_iterations () const;
-  
+
   /**
    * @brief Return true if the current iteration is completed.
    */
   bool current_iteration_done () const;
-  
+
   /**
    * @brief Run one iteration of the test, each iteration doubles
    * the number of events.
    */
   int run_one_iteration (void);
-  
+
   /**
    * @brief Initialize a bunch of One_Shot_Handlers
    */
   void initialize_handlers(
     int nhandlers, One_Shot_Handler ** handlers);
-	
+
   /**
    * @brief Dispatch events to the One_Shot_Handlers
    */
@@ -176,12 +176,12 @@ class One_Shot_Handler : public ACE_Event_Handler
 public:
   One_Shot_Handler(
     Driver * master_handler,
-	char const * test_name,
-	int id);
+    char const * test_name,
+    int id);
 
   /// Increase the number of expected notifications
   void notification_queued();
-  
+
   /// Receive the notifications, but remove itself from the reactor on
   /// on the first one.
   virtual int handle_exception(ACE_HANDLE);
@@ -195,7 +195,7 @@ private:
 
   /// Identify the test and handler for debugging and better error output
   char const * test_name_;
-  int id_;  
+  int id_;
 };
 
 int
@@ -218,8 +218,8 @@ run_main (int, ACE_TCHAR *[])
         1);
 
     Driver handler(&select_reactor,
-		   max_notifications,
-		   "Select_Reactor");
+                   max_notifications,
+                   "Select_Reactor");
 
     handler.run ();
   }
@@ -228,8 +228,8 @@ run_main (int, ACE_TCHAR *[])
     ACE_Reactor tp_reactor (new ACE_TP_Reactor,
                             1);
     Driver handler(&tp_reactor,
-		   max_notifications,
-		   "TP_Reactor");
+                   max_notifications,
+                   "TP_Reactor");
     handler.run();
   }
 
@@ -260,18 +260,18 @@ Driver::run (void)
   {
     if(run_one_iteration() == -1)
       {
-	return;
+        return;
       }
 
     notifications_curr_ *= 2;
   }
 
   ACE_DEBUG ((LM_INFO,
-	      ACE_TEXT ("Test %C passed sent=%d, recv=%d, skip=%d\n"),
-	      test_name_,
-	      notifications_sent_,
-	      notifications_recv_,
-	      notifications_skipped_));
+              ACE_TEXT ("Test %C passed sent=%d, recv=%d, skip=%d\n"),
+              test_name_,
+              notifications_sent_,
+              notifications_recv_,
+              notifications_skipped_));
 }
 
 void
@@ -300,7 +300,7 @@ Driver::send_notifications (void)
   int const nhandlers = 16;
   One_Shot_Handler * handlers[nhandlers];
   initialize_handlers(nhandlers, handlers);
-  
+
   for (int i = 0; i != notifications_curr_; ++i)
   {
     notify_handlers(nhandlers, handlers);
@@ -330,8 +330,8 @@ Driver::run_one_iteration (void)
 {
   ACE_DEBUG ((LM_INFO,
               ACE_TEXT ("Running iteration with %d events for %C test\n"),
-	      notifications_curr_,
-	      test_name_));
+              notifications_curr_,
+              test_name_));
 
   send_notifications ();
 
@@ -348,14 +348,14 @@ Driver::run_one_iteration (void)
 
     if (end - start >= timeout)
       {
-	ACE_ERROR ((LM_ERROR,
-		    ACE_TEXT ("Test %C failed due to timeout ")
-		    ACE_TEXT (" sent=%d,recv=%d,skip=%d\n"),
-		    test_name_,
-		    notifications_sent_,
-		    notifications_recv_,
-		    notifications_skipped_));
-	return -1;
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT ("Test %C failed due to timeout ")
+                    ACE_TEXT (" sent=%d,recv=%d,skip=%d\n"),
+                    test_name_,
+                    notifications_sent_,
+                    notifications_recv_,
+                    notifications_skipped_));
+        return -1;
       }
   }
 
@@ -380,10 +380,10 @@ Driver::notify_handlers(
   {
     if(reactor()->notify (handlers[i]) == -1)
       {
-	ACE_ERROR((LM_ERROR,
-		   ACE_TEXT ("Cannot send notifications in %C test (%d/%d)\n"),
-		   test_name_, i, notifications_curr_));
-	return;
+        ACE_ERROR((LM_ERROR,
+                   ACE_TEXT ("Cannot send notifications in %C test (%d/%d)\n"),
+                   test_name_, i, notifications_curr_));
+        return;
       }
     handlers[i]->notification_queued();
 
@@ -397,55 +397,55 @@ check_notification_invariants()
   if (notifications_sent_ < 0)
     {
       ACE_ERROR ((LM_ERROR,
-		  ACE_TEXT("The number of notifications sent (%d)")
-		  ACE_TEXT(" should be positive\n"),
-		  notifications_sent_));
+                  ACE_TEXT("The number of notifications sent (%d)")
+                  ACE_TEXT(" should be positive\n"),
+                  notifications_sent_));
       invariant_failed();
     }
 
   if (notifications_recv_ < 0)
     {
       ACE_ERROR ((LM_ERROR,
-		  ACE_TEXT("The number of notifications received (%d)")
-		  ACE_TEXT(" should be positive\n"),
-		  notifications_recv_));
+                  ACE_TEXT("The number of notifications received (%d)")
+                  ACE_TEXT(" should be positive\n"),
+                  notifications_recv_));
       invariant_failed();
     }
 
   if (notifications_skipped_ < 0)
     {
       ACE_ERROR ((LM_ERROR,
-		  ACE_TEXT("The number of notifications skipped (%d)")
-		  ACE_TEXT(" should be positive\n"),
-		  notifications_skipped_));
+                  ACE_TEXT("The number of notifications skipped (%d)")
+                  ACE_TEXT(" should be positive\n"),
+                  notifications_skipped_));
       invariant_failed();
     }
-  
+
   if (notifications_sent_ < notifications_recv_)
     {
       ACE_ERROR ((LM_ERROR,
-		  ACE_TEXT("Too many notifications received (%d)")
-		  ACE_TEXT(" vs sent (%d)\n"),
-		  notifications_recv_, notifications_sent_));
+                  ACE_TEXT("Too many notifications received (%d)")
+                  ACE_TEXT(" vs sent (%d)\n"),
+                  notifications_recv_, notifications_sent_));
       invariant_failed();
     }
 
   if (notifications_sent_ < notifications_skipped_)
     {
       ACE_ERROR ((LM_ERROR,
-		  ACE_TEXT("Too many notifications skipped (%d)")
-		  ACE_TEXT(" vs sent (%d)\n"),
-		  notifications_skipped_, notifications_sent_));
+                  ACE_TEXT("Too many notifications skipped (%d)")
+                  ACE_TEXT(" vs sent (%d)\n"),
+                  notifications_skipped_, notifications_sent_));
       invariant_failed();
     }
 
   if (notifications_skipped_ + notifications_recv_ > notifications_sent_)
     {
       ACE_ERROR ((LM_ERROR,
-		  ACE_TEXT("Too many notifications skipped (%d)")
-		  ACE_TEXT(" and received (%d) vs sent (%d)\n"),
-		  notifications_skipped_, notifications_recv_,
-		  notifications_sent_));
+                  ACE_TEXT("Too many notifications skipped (%d)")
+                  ACE_TEXT(" and received (%d) vs sent (%d)\n"),
+                  notifications_skipped_, notifications_recv_,
+                  notifications_sent_));
       invariant_failed();
     }
 }
@@ -459,8 +459,8 @@ invariant_failed()
 // ============================================
 
 One_Shot_Handler::One_Shot_Handler(
-	Driver * master_handler,
-	char const * test_name, int id)
+  Driver * master_handler,
+  char const * test_name, int id)
   : ACE_Event_Handler(master_handler->reactor())
   , master_handler_(master_handler)
   , expected_notifications_(0)
@@ -474,13 +474,13 @@ notification_queued()
 {
   ++expected_notifications_;
 }
-  
+
 int One_Shot_Handler::
 handle_exception(ACE_HANDLE)
 {
   --expected_notifications_;
   master_handler_->notification_received();
-  
+
   int r = reactor()->purge_pending_notifications(this);
   if (r >= 0)
     {
@@ -488,10 +488,10 @@ handle_exception(ACE_HANDLE)
       delete this;
       return 0;
     }
-	
+
   ACE_ERROR((LM_ERROR,
-	     ACE_TEXT ("Cannot remove handler %d in %C test\n"),
-	     id_, test_name_));
+             ACE_TEXT ("Cannot remove handler %d in %C test\n"),
+             id_, test_name_));
 
   delete this;
   return 0;
