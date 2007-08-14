@@ -3,12 +3,18 @@
 // $Id$
 //
 
-project: aceexe, htbp {
-  exename = SendRecv_Test
-  after  += Test_Output
-  libs   += Test_Output
+project(*server): aceexe, htbp {
+  exename = server
 
   Source_Files {
-     SendRecv_Test.cpp
+     server.cpp
+  }
+}
+
+project(*client): aceexe, htbp {
+  exename = client
+
+  Source_Files {
+     client.cpp
   }
 }

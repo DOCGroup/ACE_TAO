@@ -51,13 +51,19 @@ ACE::HTBP::Notifier::handle_input(ACE_HANDLE )
             this->reactor()->notify(h,
                                     ACE_Event_Handler::READ_MASK);
           else
-            ACE_DEBUG ((LM_DEBUG,"Notifier cannot notify, session has no handler (%x), or reactor (%x)\n",h,this->reactor()));
+            ACE_ERROR ((LM_ERROR,
+                        ACE_TEXT ("(%P|%t) ACE::HTBP::Notifier::handle_input ")
+                        ACE_TEXT ("Notifier cannot notify, session has no ")
+                        ACE_TEXT ("handler (%x), or reactor (%x)\n"),
+                        h,this->reactor()));
         }
       else
         this->channel_->flush_buffer();
     }
   else
-    ACE_DEBUG ((LM_DEBUG,"Notifier has no session to notify!\n"));
+    ACE_ERROR ((LM_ERROR,
+                ACE_TEXT ("(%P|%t) ACE::HTBP::Notifier::handle_input ")
+                ACE_TEXT ("Notifier has no session to notify!\n")));
   return 0;
 }
 

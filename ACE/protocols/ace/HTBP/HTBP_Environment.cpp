@@ -52,7 +52,8 @@ ACE::HTBP::Environment::initialize (int use_registry,
       if (result != 0)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT("ACE::HTBP::Environment::initialize (): ")
+                             ACE_TEXT("(%P|%t) ACE::HTBP::Environment")
+                             ACE_TEXT("::initialize ")
                              ACE_TEXT("Open Config failed")),
                             -1);
         }
@@ -67,7 +68,7 @@ ACE::HTBP::Environment::initialize (int use_registry,
 				   ACE_TEXT("htbp"), 1,
                                    this->htbp_key_) != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT("ACE::HTBP::Environment::initialize (). ")
+                       ACE_TEXT("(%P|%t) ACE::HTBP::Environment::initialize ")
                        ACE_TEXT("Open HTBP Section failed")),
                       -1);
   return 0;
@@ -105,7 +106,8 @@ ACE::HTBP::Environment::open_persistent_config (const ACE_TCHAR *persistent_file
   else
     if (heap->open (persistent_file) != 0)
       ACE_ERROR_RETURN (( LM_ERROR,
-                          ACE_TEXT ("ACE::HTBP::Environment::open_config: %p\n"),
+                          ACE_TEXT ("(%P|%t) ACE::HTBP::Environment::")
+                          ACE_TEXT ("open_config: %p\n"),
                           persistent_file),
                         -1 );
   return 0;

@@ -1,11 +1,52 @@
+Tue Aug 14 19:11:06 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * protocols/ace/HTBP/HTBP_Channel.cpp:
+        * protocols/ace/HTBP/HTBP_Environment.cpp:
+        * protocols/ace/HTBP/HTBP_ID_Requestor.cpp:
+        * protocols/ace/HTBP/HTBP_Inside_Squid_Filter.cpp:
+        * protocols/ace/HTBP/HTBP_Notifier.cpp:
+        * protocols/ace/HTBP/HTBP_Outside_Squid_Filter.cpp:
+        * protocols/ace/HTBP/HTBP_Stream.cpp:
+
+          Clean up the debug output.
+
+        * protocols/tests/HTBP/Reactor_Tests/client.cpp:
+        * protocols/tests/HTBP/Reactor_Tests/run_test.pl:
+        * protocols/tests/HTBP/Reactor_Tests/server.cpp:
+
+        * protocols/tests/HTBP/Send_Large_Msg/client.cpp:
+        * protocols/tests/HTBP/Send_Large_Msg/run_test.pl:
+        * protocols/tests/HTBP/Send_Large_Msg/server.cpp:
+
+        * protocols/tests/HTBP/Send_Recv_Tests/SendRecv_Test.cpp:
+        * protocols/tests/HTBP/Send_Recv_Tests/SendRecv_Test.mpc:
+        * protocols/tests/HTBP/Send_Recv_Tests/server.cpp:
+        * protocols/tests/HTBP/Send_Recv_Tests/client.cpp:
+        * protocols/tests/HTBP/Send_Recv_Tests/run_test.pl:
+
+        * protocols/tests/HTBP/ping/client.cpp:
+        * protocols/tests/HTBP/ping/run_test.pl:
+        * protocols/tests/HTBP/ping/server.cpp:
+
+          Fix up the tests to run cleanly in a nightly build environment
+          This is primarily fixing the configuration so that it does not
+          depend on an external proxy, but will use one if locally
+          configured to do so. Also fixed up the test output and command
+          line processing to make it more consistent with other tests.
+
+          I've not turned on the automatic running of these tests just
+          yet, I'd rather wait and just make sure the build is clean. We
+          can turn on the automatic run at some point later now that the
+          tests are cleaned up.
+
 Tue Aug 14 18:44:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_linux.GNU:
         * include/makeinclude/platform_linux_icc.GNU:
         * include/makeinclude/platform_linux_pgi.GNU:
         * include/makeinclude/platform_linux_suncc.GNU:
-          Added a check whether we run on a kernel with NPTL. If this is the case
-          we add ACE_HAS_LINUX_NPTL to the compiler flags
+          Added a check whether we run on a kernel with NPTL. If this is
+          the case we add ACE_HAS_LINUX_NPTL to the compiler flags
 
 Tue Aug 14 18:06:16 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
