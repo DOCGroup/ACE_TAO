@@ -127,6 +127,9 @@ namespace TAO
     /// Mark the entry as invalid for use but keep it in cache.
     void mark_invalid (HASH_MAP_ENTRY * entry);
 
+    /// Mark the entry as connected.
+    void mark_connected (HASH_MAP_ENTRY * entry, bool state);
+
     /// Make the entry idle and ready for use.
     int make_idle (HASH_MAP_ENTRY *entry);
 

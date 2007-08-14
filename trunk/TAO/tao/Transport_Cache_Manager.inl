@@ -77,6 +77,18 @@ namespace TAO
     this->mark_invalid_i (entry);
   }
 
+  ACE_INLINE void
+  Transport_Cache_Manager::mark_connected (HASH_MAP_ENTRY *entry,
+                                           bool state)
+  {
+    if(entry == 0)
+      return;
+
+    //    ACE_MT (ACE_GUARD (ACE_Lock, guard, *this->cache_lock_));
+
+    entry->item().is_connected_ = state;
+  }
+
   ACE_INLINE int
   Transport_Cache_Manager::make_idle (HASH_MAP_ENTRY *entry)
   {

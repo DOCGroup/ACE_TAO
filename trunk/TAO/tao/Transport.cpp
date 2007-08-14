@@ -308,7 +308,7 @@ TAO_Transport::post_connect_hook (void)
 bool
 TAO_Transport::register_if_necessary (void)
 {
-  if (this->is_connected () &&
+  if (this->is_connected_ &&
       ! this->wait_strategy ()->is_registered () &&
       this->wait_strategy ()->register_handler () != 0)
     {
@@ -2525,7 +2525,14 @@ TAO_Transport::out_stream (void)
 void
 TAO_Transport::pre_close (void)
 {
+  // @TODO: something needs to be done with is_connected_. Checking it is
+  // guarded by a mutex, but setting it is not. Until the need for mutexed
+  // protection is required, the transport cache is holding its own copy
+  // of the is_connected_ flag, so that during cache lookups the cache
+  // manager doesn't need to be burdened by the lock in is_connected().
   this->is_connected_ = false;
+  this->transport_cache_manager().mark_connected(this->cache_map_entry_,
+                                                 false);
   this->purge_entry ();
   {
     ACE_MT (ACE_GUARD (ACE_Lock, guard, *this->handler_lock_));
@@ -2567,7 +2574,15 @@ TAO_Transport::post_open (size_t id)
         }
     }
 
+  // @TODO: something needs to be done with is_connected_. Checking it is
+  // guarded by a mutex, but setting it is not. Until the need for mutexed
+  // protection is required, the transport cache is holding its own copy
+  // of the is_connected_ flag, so that during cache lookups the cache
+  // manager doesn't need to be burdened by the lock in is_connected().
   this->is_connected_ = true;
+  this->transport_cache_manager ().mark_connected (this->cache_map_entry_,
+                                                   true);
+
   // update transport cache to make this entry available
   this->transport_cache_manager ().set_entry_state (
     this->cache_map_entry_,
