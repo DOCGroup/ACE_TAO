@@ -114,7 +114,7 @@ namespace TAO
     /// Reference to the orb core.
     TAO_ORB_Core &orb_core_;
 
-   	/// TSS slot assigned to PICurrent_Impl objects in the OrbCore.
+    /// TSS slot assigned to PICurrent_Impl objects in the OrbCore.
     /// Allocated by the orb_core_.add_tss_cleanup_func() when our
     /// initialize() method is called.
     size_t tss_slot_;

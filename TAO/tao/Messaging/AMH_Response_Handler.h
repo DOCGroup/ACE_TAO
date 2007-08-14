@@ -87,7 +87,7 @@ public:
    * Stores necessary information from a TAO_Server_Request onto the heap
    */
   virtual void init (TAO_ServerRequest &server_request,
-		     TAO_AMH_BUFFER_ALLOCATOR* allocator);
+                     TAO_AMH_BUFFER_ALLOCATOR* allocator);
 
   /// @name Mutators for refcount
   //@{

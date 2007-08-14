@@ -83,8 +83,8 @@ TAO_OutputCDR::TAO_OutputCDR (size_t size,
   // Zero out the buffer if we allocated the buffer.
   if (size == 0)
     (void) ACE_OS::memset (this->current()->wr_ptr(),
-			   0,
-			   this->current()->space());
+                           0,
+                           this->current()->space());
 #endif /* TAO_ZERO_TAO_OUTPUTCDR_ALLOCATED_BUFFERS */
 }
 

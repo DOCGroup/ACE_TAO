@@ -10,7 +10,7 @@
  *
  * This file is used to generate PI_Forward.{h,cpp},
  * using the following command:
-	 *
+ *
  *   tao_idl.exe
  *        -o orig -Gp -Gd -Sci
  *        -Wb,export_macro=TAO_Export

@@ -19,13 +19,13 @@ TAO_RTScheduler_Loader::~TAO_RTScheduler_Loader (void)
 
 int
 TAO_RTScheduler_Loader::init (int,
-			      ACE_TCHAR* [])
+                              ACE_TCHAR* [])
 {
   ACE_TRACE ("TAO_RTScheduler_Loader::init");
 
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
-		"In RTScheduler_Loader::init\n"));
+                "In RTScheduler_Loader::init\n"));
 
   static int initialized = 0;
 
@@ -48,7 +48,7 @@ TAO_RTScheduler_Loader::init (int,
                           CORBA::SystemException::_tao_minor_code (
                           TAO::VMCID,
                           ENOMEM),
-					  CORBA::COMPLETED_NO));
+                          CORBA::COMPLETED_NO));
 
       PortableInterceptor::ORBInitializer_var orb_initializer =
         temp_orb_initializer;

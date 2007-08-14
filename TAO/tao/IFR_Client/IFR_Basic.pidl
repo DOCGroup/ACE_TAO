@@ -314,9 +314,7 @@ module CORBA
   typedef sequence <AttributeDescription> AttrDescriptionSeq;
   typedef sequence <ExtAttributeDescription> ExtAttrDescriptionSeq;
 
-  interface InterfaceDef : Container,
-			   Contained,
-			   IDLType
+  interface InterfaceDef : Container, Contained, IDLType
   {
     // read/write interface
     attribute InterfaceDefSeq base_interfaces;
@@ -340,23 +338,20 @@ module CORBA
     FullInterfaceDescription describe_interface ();
 
     // write interface
-    AttributeDef create_attribute (
-        in RepositoryId id,
-        in Identifier name,
-        in VersionSpec version,
-        in IDLType type,
-        in AttributeMode mode
-      );
-    OperationDef create_operation (
-        in RepositoryId id,
-        in Identifier name,
-        in VersionSpec version,
-        in IDLType result,
-        in OperationMode mode,
-        in ParDescriptionSeq params,
-        in ExceptionDefSeq exceptions,
-        in ContextIdSeq contexts
-      );
+    AttributeDef create_attribute ( in RepositoryId id,
+                                    in Identifier name,
+                                    in VersionSpec version,
+                                    in IDLType type,
+                                    in AttributeMode mode );
+                                    
+    OperationDef create_operation ( in RepositoryId id,
+                                    in Identifier name,
+                                    in VersionSpec version,
+                                    in IDLType result,
+                                    in OperationMode mode,
+                                    in ParDescriptionSeq params,
+                                    in ExceptionDefSeq exceptions,
+                                    in ContextIdSeq contexts );
   };
 
   struct InterfaceDescription
@@ -386,19 +381,16 @@ module CORBA
     ExtFullInterfaceDescription describe_ext_interface ();
 
     // write interface
-    ExtAttributeDef create_ext_attribute (
-	in RepositoryId id,
-	in Identifier name,
-	in VersionSpec version,
-	in IDLType type,
-	in AttributeMode mode,
-	in ExceptionDefSeq get_exceptions,
-	in ExceptionDefSeq set_exceptions
-      );
+    ExtAttributeDef create_ext_attribute ( in RepositoryId id,
+                                           in Identifier name,
+                                           in VersionSpec version,
+                                           in IDLType type,
+                                           in AttributeMode mode,
+                                           in ExceptionDefSeq get_exceptions,
+                                           in ExceptionDefSeq set_exceptions );
   };
 
-  interface ExtInterfaceDef : InterfaceDef,
-			      InterfaceAttrExtension
+  interface ExtInterfaceDef : InterfaceDef, InterfaceAttrExtension
   {
   };
 
@@ -406,8 +398,8 @@ module CORBA
   {
   };
 
-  interface ExtAbstractInterfaceDef : AbstractInterfaceDef,
-				      InterfaceAttrExtension
+  interface ExtAbstractInterfaceDef : AbstractInterfaceDef, 
+                                      InterfaceAttrExtension
   {
   };
 
@@ -416,7 +408,7 @@ module CORBA
   };
 
   interface ExtLocalInterfaceDef : LocalInterfaceDef,
-				   InterfaceAttrExtension
+                                   InterfaceAttrExtension
   {
   };
 };
