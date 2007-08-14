@@ -1,3 +1,9 @@
+Tue Aug 14 18:06:16 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * ace/Svc_Conf_y.cpp:
+          Removed an extra space that was causing Debian_Core build to
+          emit a warning.
+
 Tue Aug 14 17:49:04 UTC 2007  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * ace/Log_Record.h: Disallow copying and assignment of
