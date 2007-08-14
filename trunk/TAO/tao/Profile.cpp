@@ -157,8 +157,8 @@ TAO_Profile::encode (TAO_OutputCDR &stream) const
 #if defined (TAO_ZERO_TAO_OUTPUTCDR_ALLOCATED_BUFFERS)
   // Support limited oref ACE_OS::strcmp
   (void) ACE_OS::memset (encap.current()->wr_ptr (),
-			 0,
-			 encap.current()->space ());
+                         0,
+                         encap.current()->space ());
 #endif /* TAO_ZERO_TAO_OUTPUTCDR_ALLOCATED_BUFFERS */
 
   // Create the profile body

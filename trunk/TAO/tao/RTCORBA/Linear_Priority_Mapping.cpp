@@ -64,7 +64,7 @@ TAO_Linear_Priority_Mapping::to_native (
   for (int i = 2; i <= native_priority_index; ++i)
     {
       native_priority = static_cast<RTCORBA::NativePriority> 
-	(ACE_Sched_Params::next_priority (this->policy_, native_priority));
+        (ACE_Sched_Params::next_priority (this->policy_, native_priority));
     }
   return 1;
 

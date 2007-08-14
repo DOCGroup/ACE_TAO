@@ -46,10 +46,10 @@ public:
 
   virtual CORBA::Boolean
     to_network (RTCORBA::Priority corba_priority,
-		RTCORBA::NetworkPriority &network_priority) = 0;
+                RTCORBA::NetworkPriority &network_priority) = 0;
   virtual CORBA::Boolean
     to_CORBA (RTCORBA::NetworkPriority network_priority,
-	      RTCORBA::Priority &corba_priority) = 0;
+              RTCORBA::Priority &corba_priority) = 0;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -56,7 +56,7 @@ public:
   virtual void pre_invoke_remote_request (
       TAO_Root_POA &poa,
       CORBA::Short servant_priority,
-			TAO_ServerRequest &req,
+      TAO_ServerRequest &req,
       TAO::Portable_Server::Servant_Upcall::Pre_Invoke_State &pre_invoke_state
     ) = 0;
 
