@@ -303,14 +303,43 @@ sub check_for_tab ()
                 if (/FUZZ\: enable check_for_tab/) {
                     $disable = 0;
                 }
-                if ($disable == 0 and m/^\s*\t/) {
+                if ($disable == 0 and /\t/) {
+                    # The following directories are infested 
+                    # with tabs. When don't check these
+                    # directories for now to enable detection
+                    # of new tabs introduced in the core
+                    # of ACE/TAO/CIAO
+                    if (($file =~ /(ACE)*.*tests/i)             ||
+                        ($file =~ /(ACE)*.*performance-tests/i) ||
+                        ($file =~ /(ACE)*.*protocols/i)         ||
+                        ($file =~ /(ACE)*.*netsvcs/i)           ||
+                        ($file =~ /(ACE)*.*examples/i)          ||
+                        ($file =~ /(ACE)*.*contrib/i)           ||
+                        ($file =~ /(ACE)*.*ASNMP/i)             ||
+                        ($file =~ /(ACE)*.*apps/i)              ||
+                        ($file =~ /(ACE)*.*Kokyu/i)             ||
+                        ($file =~ /(ACE)*.*ACEXML/i)            ||
+                        ($file =~ /(TAO)*.*tests/i)             ||
+                        ($file =~ /(TAO)*.*utils/i)             ||
+                        ($file =~ /(TAO)*.*TAO_IDL/i)           ||
+                        ($file =~ /(TAO)*.*orbsvcs/i)           ||
+                        ($file =~ /(TAO)*.*docs/i)              ||
+                        ($file =~ /(TAO)*.*tools/i)             ||
+                        ($file =~ /(TAO)*.*performance-tests/i) ||
+                        ($file =~ /(TAO)*.*examples/i)          ||
+                        ($file =~ /(CIAO).*/i)) {
+                      next ITERATION;
+                    }
+
                     # for now, we don't want to indicate
                     # each occurance of tab in a file, 
                     # we just want to indicate once that
                     # tabs exist in a file.
                     # print_error ("$file:$.: tab found");
-                    print_error ("$file: tab found");
-                    next ITERATION;
+                    #print_error ("$file: tab found");
+                    #next ITERATION;
+
+                    print_error ("$file:$.: found tab");
                 }
             }
             close (FILE);
@@ -1725,7 +1754,7 @@ check_for_makefile_variable () if ($opt_l >= 1);
 check_for_inline_in_cpp () if ($opt_l >= 2);
 check_for_id_string () if ($opt_l >= 1);
 check_for_newline () if ($opt_l >= 1);
-check_for_tab () if ($opt_l >= 6);
+check_for_tab () if ($opt_l >= 1);
 check_for_lack_ACE_OS () if ($opt_l >= 10);
 check_for_exception_spec () if ($opt_l >= 1);
 check_for_NULL () if ($opt_l >= 1);
