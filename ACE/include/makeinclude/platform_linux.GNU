@@ -116,6 +116,11 @@ ifeq ($(optimize),1)
   SOFLAGS += -Wl,-O3
 endif
 
+GNU_LIBPTHREAD_VERSION := $(shell getconf GNU_LIBPTHREAD_VERSION)
+ifeq (NPTL, $(word 1,$(GNU_LIBPTHREAD_VERSION)))
+  CPPFLAGS += -DACE_HAS_LINUX_NPTL
+endif
+
 PLATFORM_QT_CPPFLAGS ?= -I$(QTDIR)/include
 PLATFORM_QT_LIBS ?= -lqt-mt
 PLATFORM_QT_LDFLAGS ?= -L$(QTDIR)/lib
