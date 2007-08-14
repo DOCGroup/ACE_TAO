@@ -20,7 +20,9 @@ namespace TAO
   Cache_IntId::Cache_IntId (TAO_Transport *transport)
     : transport_ (transport)
     , recycle_state_ (ENTRY_UNKNOWN)
+    , is_connected_ (false)
   {
+    this->is_connected_ = transport->is_connected();
     transport->add_reference ();
   }
 
@@ -36,7 +38,7 @@ namespace TAO
     if (this != &rhs)
       {
         this->recycle_state_ = rhs.recycle_state_;
-
+        this->is_connected_ = rhs.is_connected_;
         TAO_Transport *old_transport = this->transport_;
         this->transport_ = rhs.transport_;
         if (this->transport_)

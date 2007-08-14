@@ -33,6 +33,7 @@ class TAO_Transport;
 
 namespace TAO
 {
+  class Transport_Cache_Manager;
   /// States of a recyclable object.
   /// @todo: see discussion in bugzilla 3024
   enum Cache_Entries_State
@@ -72,7 +73,7 @@ namespace TAO
   class TAO_Export Cache_IntId
   {
   public:
-
+    friend class TAO::Transport_Cache_Manager;
     /// Constructor.
     Cache_IntId (void);
 
@@ -123,6 +124,10 @@ namespace TAO
 
     /// The state of the handle
     Cache_Entries_State recycle_state_;
+
+    /// This is an analog for the transport::is_connected(), which is
+    /// guarded by a mutex.
+    bool is_connected_;
   };
 
 
