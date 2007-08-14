@@ -517,7 +517,7 @@ ACE_Log_Msg::close (void)
               {
                 tss_log_msg = static_cast <ACE_Log_Msg *> (temp);
                 // we haven't been cleaned up
-                ACE_TSS_cleanup(tss_log_msg);
+                ACE_TSS_CLEANUP_NAME(tss_log_msg);
                 if (ACE_Thread::setspecific(*(log_msg_tss_key()),
                                            reinterpret_cast <void *>(0)) != 0)
                 {

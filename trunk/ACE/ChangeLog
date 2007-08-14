@@ -1,3 +1,9 @@
+Tue Aug 14 08:46:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Log_Msg.cpp:
+          Use ACE_TSS_CLEANUP_NAME instead of ACE_TSS_cleanup to resolve
+          compile problems with versioned namespaces enabled
+
 Mon Aug 13 20:27:43 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * ace/Assert.cpp:
@@ -22,7 +28,6 @@ Mon Aug 13 20:27:43 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
         * ace/config-vxworks6.2.h:
         * ace/config-vxworks6.3.h:
         * ace/os_include/sys/os_socket.h:
-
           Untabify.
 
 Mon Aug 13 14:52:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
