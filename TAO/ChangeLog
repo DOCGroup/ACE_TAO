@@ -1,3 +1,19 @@
+Tue Aug 14 16:19:35 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/Cache_Entries.h:
+        * tao/Cache_Entries.inl:
+        * tao/Cache_Entries.cpp:
+        * tao/Transport.inl:
+        * tao/Transport.cpp:
+        * tao/Transport_Cache_Manager.h:
+        * tao/Transport_Cache_Manager.inl:
+        * tao/Transport_Cache_Manager.cpp:
+
+          Performance enhancement for looking up connections in the
+          cache. The problem was that the fix for the transport cache
+          problems required a call to Transport->is_connected(), which has
+          a lock.
+
 Tue Aug 14 10:25:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Transport_Selection_Guard.cpp:

@@ -9,14 +9,16 @@ namespace TAO
   ACE_INLINE
   Cache_IntId::Cache_IntId (void)
     : transport_ (0),
-      recycle_state_ (ENTRY_UNKNOWN)
+      recycle_state_ (ENTRY_UNKNOWN),
+      is_connected_ (false)
   {
   }
 
   ACE_INLINE
   Cache_IntId::Cache_IntId (const Cache_IntId &rhs)
     : transport_ (0),
-      recycle_state_ (ENTRY_UNKNOWN)
+      recycle_state_ (ENTRY_UNKNOWN),
+      is_connected_ (false)
   {
     *this = rhs;
   }

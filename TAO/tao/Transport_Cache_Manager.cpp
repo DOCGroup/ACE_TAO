@@ -425,7 +425,7 @@ namespace TAO
     if (result && entry.int_id_.transport () != 0)
     {
       // if it's not connected, it's not available
-      result = entry.int_id_.transport ()->is_connected();
+      result = entry.int_id_.is_connected_;
     }
 
     if (TAO_debug_level > 8)
@@ -450,7 +450,7 @@ namespace TAO
     {
       // if we're not connected, that counts, too.
       // Can this happen?  Not sure <wilsond@ociweb.com>
-      result = !entry.int_id_.transport ()->is_connected();
+      result = !entry.int_id_.is_connected_;
     }
 
     if (TAO_debug_level  > 8)
