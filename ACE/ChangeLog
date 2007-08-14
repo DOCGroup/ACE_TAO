@@ -1,3 +1,8 @@
+Tue Aug 14 22:39:56 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * configure.ac: Run the epoll_create() check; don't just link it.
+          RHEL 3 can link it but what ACE expects generates a run-time error.
+
 Tue Aug 14 19:11:06 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * protocols/ace/HTBP/HTBP_Channel.cpp:
