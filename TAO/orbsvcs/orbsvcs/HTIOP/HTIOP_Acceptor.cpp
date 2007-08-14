@@ -599,11 +599,13 @@ TAO::HTIOP::Acceptor::dotted_decimal_address (ACE_INET_Addr &addr,
   // INET_Addr with the hostname from the original one.  If that fails
   // then something is seriously wrong with the systems networking
   // setup.
-  if (addr.get_ip_address () == INADDR_ANY)
+  if (addr.is_any())
     {
       ACE::HTBP::Addr new_addr;
       result = new_addr.ACE_INET_Addr::set (addr.get_port_number (),
-                                            addr.get_host_name ());
+                                            addr.get_host_name (),
+                                            1,
+                                            addr.get_type());
       tmp = new_addr.get_host_addr ();
     }
   else

@@ -1,8 +1,6 @@
 // $Id$
 
 #include "TestC.h"
-
-#include "tests/test_config.h"
 #include <ace/Get_Opt.h>
 
 
@@ -39,8 +37,6 @@ parse_args (int argc, char *argv[])
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
-  ACE_START_TEST (ACE_TEXT ("Hello_client"));
-
   try
     {
 
@@ -81,6 +77,5 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       return 1;
     }
 
-  ACE_END_TEST;
   return 0;
 }
