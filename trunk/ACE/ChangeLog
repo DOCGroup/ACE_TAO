@@ -1,3 +1,23 @@
+Wed Aug 15 15:56:12 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * performance-tests/Misc/test_mutex.cpp:
+        * performance-tests/Misc/test_singleton.cpp:
+        * performance-tests/SCTP/Options_Manager.cpp:
+        * performance-tests/Synch-Benchmarks/Perf_Test/condb_test.cpp:
+        * performance-tests/Synch-Benchmarks/Perf_Test/conds_test.cpp:
+        * performance-tests/Synch-Benchmarks/Perf_Test/memory_test.cpp:
+        * performance-tests/Synch-Benchmarks/context.c:
+        * performance-tests/Synch-Benchmarks/synch_driver.cpp:
+        * performance-tests/TTCP/ACE-C++/wrapper-new-ttcp.cpp:
+        * performance-tests/TTCP/C/new-ttcp.cpp:
+
+          Untabify.
+
+        * bin/fuzz.pl:
+
+          Remove performance-tests directory from the list of excluded 
+          directories for the tabs check.
+
 Wed Aug 15 14:57:06 UTC 2007  Steve Huston  <shuston@riverace.com>
 
         * m4/platform.m4: Check for NPTL on Linux. Fixes Bugzilla 3044.
@@ -20,7 +40,7 @@ Wed Aug 15 14:55:36 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * bin/fuzz.pl:
 
-          Remove tests directory from the list of excluded directories for 
+          Remove tests directory from the list of excluded directories for
           the tabs check.
 
 Wed Aug 15 12:15:16 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
