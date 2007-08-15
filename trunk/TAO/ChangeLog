@@ -1,3 +1,18 @@
+Wed Aug 15 11:21:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Bounded_Array_Allocation_Traits_T.h:
+        * tao/Bounded_Reference_Allocation_Traits_T.h:
+        * tao/Bounded_Value_Allocation_Traits_T.h:
+        * tao/Valuetype/Bounded_Valuetype_Allocation_Traits_T.h:
+          Don't preallocate all sequence members when using bound sequences,
+          this could lead to a stack overflow when using recursive types
+          as described in bugzilla 3042. Thanks to Stanislaw Trytek
+          <tryteks at pit dot edu dot pl> for reporting this.
+
+        * tests/Bug_3042_Regression/*:
+          New regression test for bug 3042, thanks to Stanislaw Trytek
+          <tryteks at pit dot edu dot pl> for creating this one
+
 Tue Aug 14 21:50:40 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/orbsvcs/HTIOP/HTIOP_Acceptor.cpp:
