@@ -179,7 +179,11 @@ int run_main (int argc, ACE_TCHAR *argv[])
               ACE_TEXT ("sending pulse()\n")));
 
   // Release the all workers.
-  evt.pulse ();
+  if (evt.pulse () == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("%p\n"),
+                       ACE_TEXT ("pulse")),
+                      1);
 
   // Wait 2 sec
   ACE_OS::sleep (2);

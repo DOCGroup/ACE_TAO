@@ -1,3 +1,8 @@
+Wed Aug 15 11:47:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Manual_Event_Test.cpp:
+          Check the return value of the pulse method
+
 Wed Aug 15 11:23:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/tao_orb_tests.lst:
