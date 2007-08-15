@@ -18,7 +18,7 @@
 //---------------------------------------------------------------------------
 class TChatClientWindow : public TForm
 {
-__published:	// IDE-managed Components
+__published:  // IDE-managed Components
   TMemo *OutputMemo;
   TMemo *InputMemo;
   TOpenDialog *OpenDialog;
@@ -56,7 +56,7 @@ private:
   Receiver_var receiver_var_;
   // Pointer to the receiver object registered with the ORB.
 
-public:		// User declarations
+public:    // User declarations
   __fastcall TChatClientWindow (TComponent* Owner);
 
 protected: // Message handlers
