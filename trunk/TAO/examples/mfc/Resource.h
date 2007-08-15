@@ -4,9 +4,9 @@
 // Microsoft Visual C++ generated include file.
 // Used by SERVER.RC
 //
-#define IDD_ABOUTBOX				100
-#define IDR_MAINFRAME				128
-#define IDR_SERVERTYPE				129
+#define IDD_ABOUTBOX   100
+#define IDR_MAINFRAME  128
+#define IDR_SERVERTYPE 129
 
 // Next default values for new objects
 // 

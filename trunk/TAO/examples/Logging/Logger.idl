@@ -81,7 +81,7 @@ interface Logger
     Log_Priority type;                 // Type of logging message.
     long time;                         // Timestamp of the sender.
     long app_id;                       // Process id of the sender.
-    long host_addr;	               // IP address of the sender.
+    long host_addr;                    // IP address of the sender.
     string<TAO_MAXLOGMSGLEN> msg_data; // The logging message.
   };
 
