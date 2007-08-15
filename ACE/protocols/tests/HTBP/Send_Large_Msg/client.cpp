@@ -17,9 +17,9 @@ const ACE_TCHAR * config_file = 0;
 unsigned remote_port = 8088;
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "p:h:c:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("p:h:c:"));
   int c;
 
   while ((c = get_opts ()) != -1)
