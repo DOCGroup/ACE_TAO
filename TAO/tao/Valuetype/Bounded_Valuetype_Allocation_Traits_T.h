@@ -33,7 +33,7 @@ struct bounded_valuetype_allocation_traits
 
   inline static value_type * default_buffer_allocation()
   {
-    return allocbuf(MAX);
+    return 0;
   }
 
   inline static value_type * allocbuf(CORBA::ULong /* maximum */)
