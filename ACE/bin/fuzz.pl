@@ -309,8 +309,7 @@ sub check_for_tab ()
                     # directories for now to enable detection
                     # of new tabs introduced in the core
                     # of ACE/TAO/CIAO
-                    if (($file =~ /(ACE)*.*performance-tests/i) ||
-                        ($file =~ /(ACE)*.*protocols/i)         ||
+                    if (($file =~ /(ACE)*.*protocols/i)         ||
                         ($file =~ /(ACE)*.*netsvcs/i)           ||
                         ($file =~ /(ACE)*.*examples/i)          ||
                         ($file =~ /(ACE)*.*contrib/i)           ||

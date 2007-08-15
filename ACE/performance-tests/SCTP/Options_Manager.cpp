@@ -477,8 +477,8 @@ void Options_Manager::_show_usage(FILE* out, ACE_TCHAR const * const opts_set)
 
   if (!ACE_OS::strcmp (ACE_TEXT ("client-opts"), opts_set)){
     ACE_OS::fprintf (out,   "  Flag  Args           Option-Name                 Default\n"
-    					    "   -c   int            test-iterations             1000000\n"
-    				        "   -n   none           test-enable-nagle           NO NAGLING\n");
+                            "   -c   int            test-iterations             1000000\n"
+                            "   -n   none           test-enable-nagle           NO NAGLING\n");
     if (ACE_OS::strstr(__program_name, ACE_TEXT ("SOCK_STREAM_clt"))) {
       ACE_OS::fprintf (out, "   -t   str (sctp|tcp) test-transport-protocol     sctp\n");
     }
@@ -486,19 +486,19 @@ void Options_Manager::_show_usage(FILE* out, ACE_TCHAR const * const opts_set)
     ACE_OS::fprintf (out, "\n");
 
     ACE_OS::fprintf (out, "   -m   dbl            histogram-min-bin           0\n"
-    				      "   -M   dbl            histogram-max-bin           10000\n"
-    					  "   -x   int            histogram-num-outliers      100\n"
-    					  "   -b   int            histogram-bin-count         1000\n");
+                          "   -M   dbl            histogram-max-bin           10000\n"
+                          "   -x   int            histogram-num-outliers      100\n"
+                          "   -b   int            histogram-bin-count         1000\n");
 
     ACE_OS::fprintf (out, "\n");
 
     ACE_OS::fprintf (out, "   -C   int            client-port                 assigned by kernel\n"
-    					  "   -i   str            client-connect-addr         INADDR_ANY\n");
+                          "   -i   str            client-connect-addr         INADDR_ANY\n");
 
     ACE_OS::fprintf (out, "\n");
 
     ACE_OS::fprintf (out, "   -p   int            server-port                 45453\n"
-    				      "   -H   str            server-host                 localhost\n");
+                          "   -H   str            server-host                 localhost\n");
 
     ACE_OS::fprintf (out, "\n");
 
@@ -512,7 +512,7 @@ void Options_Manager::_show_usage(FILE* out, ACE_TCHAR const * const opts_set)
 
   } else if (!ACE_OS::strcmp(ACE_TEXT ("server-opts"), opts_set)){
     ACE_OS::fprintf (out, "  Flag  Args           Option-Name                 Default\n"
-    				      "   -n   none           test-enable-nagle           NO NAGLING\n");
+                          "   -n   none           test-enable-nagle           NO NAGLING\n");
     if (ACE_OS::strstr(__program_name, ACE_TEXT ("SOCK_STREAM_srv"))) {
       ACE_OS::fprintf (out, "   -t   str (sctp|tcp) test-transport-protocol     sctp\n");
     }
@@ -523,9 +523,9 @@ void Options_Manager::_show_usage(FILE* out, ACE_TCHAR const * const opts_set)
 
     if (ACE_OS::strstr(__program_name, ACE_TEXT ("SOCK_SEQPACK_srv"))) {
       ACE_OS::fprintf (out, "   -a   w.x.y.z,a.b.c.d,...  server-accept-addr    INADDR_ANY\n"
-      					    "        (comma-separated                                     \n"
-      						"         list of one or more                                 \n"
-      						"         addresses)                                          \n");
+                            "        (comma-separated                                     \n"
+                            "         list of one or more                                 \n"
+                            "         addresses)                                          \n");
     } else {
       ACE_OS::fprintf (out, "   -a   w.x.y.z        server-accept-addr          INADDR_ANY\n");
     }
