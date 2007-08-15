@@ -36,10 +36,8 @@ Client_Task::svc (void)
                         "(%P|%t) In iteration [%d] ....\n",
                         i));
 #endif /*if 0*/
-          Test::Payload_var pl = new Test::Payload;
-          Test::Payload_out payload (pl.out ());
-          this->sender_->get_data (this->event_size_,
-                                   payload);
+          Test::Payload_var pl;
+          this->sender_->get_data (this->event_size_, pl.out ());
         }
     }
   catch (const CORBA::Exception&)
