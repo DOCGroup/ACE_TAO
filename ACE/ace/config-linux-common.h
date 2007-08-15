@@ -29,7 +29,7 @@
 
 #if defined (ACE_HAS_LINUX_NPTL)
   // Temporary fix because NPTL kernels do have shm_open but there is a problem
-  // with shm_open/shm_unlink pairing in ACE which  needs to be fixed when I have time.
+  // with shm_open/shm_unlink pairing in ACE which needs to be fixed when I have time.
 # if defined (ACE_HAS_SHM_OPEN)
 #   undef ACE_HAS_SHM_OPEN
 # endif /* ACE_HAS_SHM_OPEN */
