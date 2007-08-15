@@ -1,3 +1,18 @@
+Wed Aug 15 12:15:16 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * protocols/tests/HTBP/Reactor_Tests/client.cpp:
+        * protocols/tests/HTBP/Reactor_Tests/server.cpp:
+        * protocols/tests/HTBP/Send_Large_Msg/client.cpp:
+        * protocols/tests/HTBP/Send_Large_Msg/server.cpp:
+        * protocols/tests/HTBP/Send_Recv_Tests/Makefile.am:
+        * protocols/tests/HTBP/Send_Recv_Tests/client.cpp:
+        * protocols/tests/HTBP/Send_Recv_Tests/server.cpp:
+        * protocols/tests/HTBP/ping/client.cpp:
+        * protocols/tests/HTBP/ping/server.cpp:
+        * protocols/tests/HTBP/htbptest.mpb:
+
+          Fix up tests to build correctly on wchar platforms and automake. 
+
 Wed Aug 15 11:47:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Manual_Event_Test.cpp:
