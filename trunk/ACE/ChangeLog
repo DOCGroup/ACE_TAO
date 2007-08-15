@@ -1,3 +1,14 @@
+Wed Aug 15 12:09:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/CDR_Stream.cpp:
+          Const and layout changes
+
+        * ace/config-linux-common.h:
+          Removed unneeded space
+
+        * ace/config-posix.h:
+          Only test semaphare support in a multi threaded build
+
 Tue Aug 14 23:28:07 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * tests/ACE_Init_Test.h:
