@@ -167,6 +167,11 @@ dnl FIXME: "FSU" isn't a platform!  We need to move this somewhere.
     AC_DEFINE([ACE_DEFAULT_BASE_ADDR], [((char *) 0x80000000)])
     AC_DEFINE([ACE_HAS_BIG_FD_SET]) dnl FIXME: We need a test for this!
     AC_DEFINE([ACE_TIMER_SKEW], [(1000 * 10)])
+    dnl Does this box have NPTL?
+    NPTL=`getconf GNU_LIBPTHREAD_VERSION | $AWK '{print [$][1]}' -`
+    if test "$NPTL" = NPTL; then
+      ACE_CPPFLAGS="$ACE_CPPFLAGS -DACE_HAS_LINUX_NPTL"
+    fi
     ;;
   *lynxos*)
     ACE_CPPFLAGS="$ACE_CPPFLAGS -D_POSIX_THREADS_CALLS"

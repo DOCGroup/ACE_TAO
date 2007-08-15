@@ -1,3 +1,10 @@
+Wed Aug 15 14:57:06 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * m4/platform.m4: Check for NPTL on Linux. Fixes Bugzilla 3044.
+
+        * protocols/tests/HTBP/Send_Recv_Tests/Makefile.am: Corrected
+          multi-test syntax.
+
 Wed Aug 15 14:55:36 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * tests/ACE_Init_Test.h:
