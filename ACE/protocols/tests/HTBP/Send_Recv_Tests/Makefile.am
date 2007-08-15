@@ -11,6 +11,8 @@
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
 
+noinst_PROGRAMS =
+
 ## Makefile.SendRecv_Test_Client.am
 
 if BUILD_ACE_UUID
