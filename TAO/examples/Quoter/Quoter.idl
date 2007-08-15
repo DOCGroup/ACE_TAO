@@ -74,7 +74,7 @@ module Stock
       //
       // inherits:
       // boolean supports(in Key k);
-      // Object create_object(in Key	k, in Criteria the_criteria)
+      // Object create_object(in Key k, in Criteria the_criteria)
       //      raises (NoFactory, InvalidCriteria, CannotMeetCriteria);
     };
 
@@ -85,7 +85,7 @@ module Stock
       //
       // inherits:
       // boolean supports(in Key k);
-      // Object create_object(in Key	k, in Criteria the_criteria)
+      // Object create_object(in Key k, in Criteria the_criteria)
       //      raises (NoFactory, InvalidCriteria, CannotMeetCriteria);
 
       void register_factory (in string name,
