@@ -1,3 +1,20 @@
+Wed Aug 15 17:31:43 UTC 2007  Dale Wilson  <wilsond@ociweb.com>
+
+        * tao/Transport_Connector.cpp:
+          Disable code paths that call wait_for_transport.  This
+          avoids a problem in which more than one thread waits
+          on the same transport.  However it also negates the
+          fix for too-many-connections (bugzilla 2935)
+
+        * tao/Transport_Cache_Manager.cpp:
+          Cosmetic fix to a log message
+
+        * tests/Stack_Recursion/Client_Task.cpp:
+          Fix some ugly code without changing functionality.
+
+        * tests/Stack_Recursion/README:
+          Document what this test really does.
+
 Wed Aug 15 15:00:38 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * examples/Borland/ChatClientWnd.h:
