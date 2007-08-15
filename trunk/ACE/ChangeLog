@@ -1,4 +1,9 @@
-Wed Aug 15 12:09:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+Wed Aug 15 11:23:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+          Added new 3042 test
+
+Wed Aug 15 11:09:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/CDR_Stream.cpp:
           Const and layout changes
