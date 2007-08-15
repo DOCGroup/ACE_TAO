@@ -27,7 +27,7 @@
 #endif // _MSC_VER >= 1000
 
 // Exclude rarely-used stuff from Windows headers
-#define VC_EXTRALEAN		
+#define VC_EXTRALEAN
 
 // MFC core and standard components
 #include <afxwin.h>
@@ -35,7 +35,7 @@
 #include <afxext.h>
 #ifndef _AFX_NO_AFXCMN_SUPPORT
 // MFC support for Windows Common Controls
-#include <afxcmn.h>			
+#include <afxcmn.h>
 #endif /* _AFX_NO_AFXCMN_SUPPORT */
 
 //{{AFX_INSERT_LOCATION}} Microsoft Developer Studio will insert

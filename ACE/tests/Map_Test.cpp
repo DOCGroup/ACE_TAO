@@ -26,8 +26,8 @@ ACE_RCSID(tests, Map_Test, "$Id$")
 
 #undef THIS_IS_NOT_AN_ASSERT_IT_IS_A_NON_DEBUG_TEST_AS_WELL
 #define THIS_IS_NOT_AN_ASSERT_IT_IS_A_NON_DEBUG_TEST_AS_WELL(X) \
-  ((X)									\
-   ? static_cast<void>(0)						\
+  ((X)                                                          \
+   ? static_cast<void>(0)                                       \
    : ACE_VERSIONED_NAMESPACE_NAME::__ace_assert(__FILE__, __LINE__, ACE_TEXT_CHAR_TO_TCHAR (#X)))
 
 // Value type.

@@ -28,7 +28,7 @@
   #error include 'stdafx.h' before including this file for PCH
 #endif
 
-#include "ACE_Init_Test_Resource.h"		// main symbols
+#include "ACE_Init_Test_Resource.h" // main symbols
 
 class CACE_Init_TestApp : public CWinApp
 {
