@@ -446,7 +446,7 @@ int TCPConnectionHandler::open (void * )
   if (!serverSide_)
     {
       ACE_Message_Block *buffer = new ACE_Message_Block (TCPBytesToSend);
-      char *bufferData = 	buffer->wr_ptr ();
+      char *bufferData = buffer->wr_ptr ();
       int i;
 
       for (i = buffer->size () - 1; i >= 0; --i)

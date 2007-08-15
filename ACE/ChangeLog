@@ -1,3 +1,21 @@
+Wed Aug 15 14:55:36 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * tests/ACE_Init_Test.h:
+        * tests/ACE_Init_Test_Resource.h:
+        * tests/ACE_Init_Test_StdAfx.h:
+        * tests/Map_Test.cpp:
+        * tests/OS_Test.cpp:
+        * tests/QtReactor_Test.cpp:
+        * tests/TP_Reactor_Test.h:
+        * tests/Thread_Pool_Reactor_Resume_Test.cpp:
+
+          Untabify
+
+        * bin/fuzz.pl:
+
+          Remove tests directory from the list of excluded directories for 
+          the tabs check.
+
 Wed Aug 15 12:15:16 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * protocols/tests/HTBP/Reactor_Tests/client.cpp:
@@ -11,7 +29,7 @@ Wed Aug 15 12:15:16 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
         * protocols/tests/HTBP/ping/server.cpp:
         * protocols/tests/HTBP/htbptest.mpb:
 
-          Fix up tests to build correctly on wchar platforms and automake. 
+          Fix up tests to build correctly on wchar platforms and automake.
 
 Wed Aug 15 11:47:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
