@@ -378,7 +378,7 @@ ACE_OutputCDR::write_octet_array_mb (const ACE_Message_Block* mb)
        i != 0;
        i = i->cont ())
     {
-      const size_t length = i->length ();
+      size_t const length = i->length ();
 
       // If the mb does not own its data we are forced to make a copy.
       if (ACE_BIT_ENABLED (i->flags (),
@@ -1761,8 +1761,7 @@ ACE_InputCDR::clone_from (ACE_InputCDR &cdr)
 ACE_Message_Block*
 ACE_InputCDR::steal_contents (void)
 {
-  ACE_Message_Block* block =
-    this->start_.clone ();
+  ACE_Message_Block* block = this->start_.clone ();
   this->start_.data_block (block->data_block ()->clone ());
 
   // If at all our message had a DONT_DELETE flag set, just clear it
@@ -1777,8 +1776,7 @@ ACE_InputCDR::steal_contents (void)
 void
 ACE_InputCDR::reset_contents (void)
 {
-  this->start_.data_block (this->start_.data_block ()->clone_nocopy
-                           ());
+  this->start_.data_block (this->start_.data_block ()->clone_nocopy ());
 
   // Reset the flags...
   this->start_.clr_self_flags (ACE_Message_Block::DONT_DELETE);
