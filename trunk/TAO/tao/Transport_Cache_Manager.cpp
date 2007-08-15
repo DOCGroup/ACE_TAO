@@ -241,7 +241,7 @@ namespace TAO
                   {
                     ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("TAO (%P|%t) - Transport_Cache_Manager::find_i: ")
-                      ACE_TEXT ("Found available Transport[%d] @hash:index {%d:%d}(\n"),
+                      ACE_TEXT ("Found available Transport[%d] @hash:index {%d:%d}\n"),
                       entry->item ().transport ()->id (),
                       entry->ext_id_.hash (),
                       entry->ext_id_.index ()

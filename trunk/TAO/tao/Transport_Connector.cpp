@@ -488,11 +488,11 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
                 return base_transport;
             }
         }
+#if 0 // @todo: <wilsond.ociweb.com> Temporarly disable this code because the wait_for_transport is not safe
       else if (found == TAO::Transport_Cache_Manager::CACHE_FOUND_CONNECTING )
         {
           if (r->blocked_connect ())
             {
-
               if (TAO_debug_level > 4)
                 {
                   ACE_DEBUG ((LM_DEBUG,
@@ -501,18 +501,18 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
                               base_transport->id ()));
                 }
 
-                // If wait_for_transport returns no errors, the base_transport
-                // points to the connection we wait for.
-                if (this->wait_for_transport (r, base_transport, timeout, false))
-                  {
-                    // be sure this transport is registered with the reactor
-                    // before using it.
-                    if (!base_transport->register_if_necessary ())
-                      {
-                          base_transport->remove_reference ();
-                          return 0;
-                      }
-                  }
+              // If wait_for_transport returns no errors, the base_transport
+              // points to the connection we wait for.
+              if (this->wait_for_transport (r, base_transport, timeout, false))
+                {
+                  // be sure this transport is registered with the reactor
+                  // before using it.
+                  if (!base_transport->register_if_necessary ())
+                    {
+                        base_transport->remove_reference ();
+                        return 0;
+                    }
+                }
                 // In either success or failure cases of wait_for_transport, the
                 // ref counter in corresponding to the ref counter added by
                 // find_transport is decremented.
@@ -531,60 +531,71 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
               return base_transport;
             }
         }
+#endif // Temporarily disable CONNECTING handling
       else
         {
           // @todo: This is not the right place for this! (bugzilla 3023)
           // Purge connections (if necessary)
           tcm.purge ();
-
+#if 0 // @todo: <wilsond.ociweb.com> Temporarly disable this code because the wait_for_transport is not safe
           bool make_new_connection =
             (found == TAO::Transport_Cache_Manager::CACHE_FOUND_NONE) ||
             (found == TAO::Transport_Cache_Manager::CACHE_FOUND_BUSY
                 && this->new_connection_is_ok (busy_count));
 
           if (make_new_connection)
+#endif // temporarily disable check -- just open the conneciton
             {
-              TAO_Transport* t = this->make_connection (r, *desc, timeout);
-              if (t == 0)
+              // we aren't going to use the transport returned from the cache (if any)
+              if (base_transport != 0)
                 {
-                  return t;
+                  base_transport->remove_reference ();
+                }
+
+              base_transport = this->make_connection (r, *desc, timeout);
+              if (base_transport == 0)
+                {
+                  return base_transport;
                 }
 
               // Should this code be moved?  If so, where to?
-              t->opened_as (TAO::TAO_CLIENT_ROLE);
+              base_transport->opened_as (TAO::TAO_CLIENT_ROLE);
 
               if (TAO_debug_level > 4)
                 {
                   ACE_DEBUG ((LM_DEBUG,
                               ACE_TEXT("TAO (%P|%t) - Transport_Connector::connect, ")
                               ACE_TEXT("opening Transport[%d] in TAO_CLIENT_ROLE\n"),
-                              t->id ()));
+                              base_transport->id ()));
                 }
 
               // Call post connect hook. If the post_connect_hook () returns
               // false, just purge the entry.
-              if (!t->post_connect_hook ())
+              if (!base_transport->post_connect_hook ())
                 {
                   if (TAO_debug_level > 4)
                     {
                       ACE_DEBUG ((LM_DEBUG,
                                   ACE_TEXT("TAO (%P|%t) - Post_connect_hook failed.  ")
                                   ACE_TEXT("Purging transport[%d]\n"),
-                                  t->id ()));
+                                  base_transport->id ()));
                     }
-                  (void) t->purge_entry ();
+                  (void) base_transport->purge_entry ();
                 }
               // The new transport is in the cache.  We'll pick it up from there
               // next time thru this loop (using it from here causes more problems
               // than it fixes due to the changes that allow a new connection to be
               // re-used by a nested upcall before we get back here.)
-              t->remove_reference ();
+              base_transport->remove_reference ();
             }
+#if 0 // @todo: <wilsond.ociweb.com> Temporarly disable this code because the wait_for_transport is not safe
           else // not making new connection
             {
                (void) this->wait_for_transport (r, base_transport, timeout, true);
                 base_transport->remove_reference ();
             }
+#endif // temporarily disable check -- just open the conneciton
+
         }
     }
 }
