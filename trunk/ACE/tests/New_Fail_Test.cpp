@@ -32,6 +32,9 @@ ACE_RCSID(tests, New_Fail_Test, "$Id$")
 
 #if (!defined (__SUNPRO_CC) && !defined (__GNUG__)) || \
   defined (ACE_HAS_EXCEPTIONS)
+
+#include "ace/Numeric_Limits.h"
+
 // This test allocates all of the heap memory, forcing 'new' to fail
 // because of a lack of memory.  The ACE_NEW macros should prevent an
 // exception from being thrown past the ACE_NEW.  If this test doesn't
@@ -41,11 +44,12 @@ ACE_RCSID(tests, New_Fail_Test, "$Id$")
 // wrong.  The allocated memory is always freed to avoid masking a leak
 // somewhere else in the test.
 
-// 1MB
-static const int BIG_BLOCK = 1024*1024;
+// Most we can do, by half. Using max alone gets "invalid allocation size"
+// messages on stdout on Windows.
+static const size_t BIG_BLOCK = ACE_Numeric_Limits<size_t>::max () / 2;
 
-// about 4GB max in the test
-static const int MAX_ALLOCS_IN_TEST = 4096;
+// Shouldn't take many "as much as possible" tries to get a failure.
+static const int MAX_ALLOCS_IN_TEST = 4;
 
 static void
 try_ace_new (char **p)
@@ -106,18 +110,25 @@ run_main (int, ACE_TCHAR *[])
         }
       if (i == MAX_ALLOCS_IN_TEST)
         {
-          ACE_ERROR((LM_WARNING,
-                     ACE_TEXT ("Test didn't exhaust all available memory\n")));
+          ACE_ERROR ((LM_WARNING,
+                      ACE_TEXT ("Test didn't exhaust available memory\n")));
           // Back up to valid pointer for deleting.
           --i;
         }
       else
         {
           ACE_ASSERT (blocks[i] == 0);
-          ACE_ASSERT (errno == ENOMEM);
-          ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("ACE_NEW failed properly at block %d\n"),
-                      i));
+          if (errno == ENOMEM)
+            ACE_DEBUG ((LM_DEBUG,
+                        ACE_TEXT ("ACE_NEW failed properly at block %d\n"),
+                        i));
+          else
+            ACE_ERROR ((LM_ERROR,
+                        ACE_TEXT ("ACE_NEW failed at block %d, but ")
+                        ACE_TEXT ("expected ENOMEM, %p (%d)\n"),
+                        i,
+                        ACE_TEXT ("got"),
+                        errno));
         }
 
       // Free the memory to try ACE_NEW_RETURN
@@ -135,17 +146,24 @@ run_main (int, ACE_TCHAR *[])
       if (i == MAX_ALLOCS_IN_TEST)
         {
           ACE_ERROR ((LM_WARNING,
-                      ACE_TEXT ("Test didn't exhaust all available memory\n")));
+                      ACE_TEXT ("Test didn't exhaust available memory\n")));
           // Back up to valid pointer.
           --i;
         }
       else
         {
           ACE_ASSERT (blocks[i] == 0);
-          ACE_ASSERT (errno == ENOMEM);
-          ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("ACE_NEW_RETURN failed properly at block %d\n"),
-                      i));
+          if (errno == ENOMEM)
+            ACE_DEBUG ((LM_DEBUG,
+                        ACE_TEXT ("ACE_NEW_RETURN failed properly at block %d\n"),
+                        i));
+          else
+            ACE_ERROR ((LM_ERROR,
+                        ACE_TEXT ("ACE_NEW_RETURN failed at block %d, but ")
+                        ACE_TEXT ("expected ENOMEM, %p (%d)\n"),
+                        i,
+                        ACE_TEXT ("got"),
+                        errno));
         }
       while (i >= 0)
         delete [] blocks[i--];
@@ -161,17 +179,24 @@ run_main (int, ACE_TCHAR *[])
       if (i == MAX_ALLOCS_IN_TEST)
         {
           ACE_ERROR ((LM_WARNING,
-                      ACE_TEXT ("Test didn't exhaust all available memory\n")));
+                      ACE_TEXT ("Test didn't exhaust available memory\n")));
           // Back up to valid pointer.
           --i;
         }
       else
         {
           ACE_ASSERT (blocks[i] == 0);
-          ACE_ASSERT (errno == ENOMEM);
-          ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("ACE_NEW_NORETURN failed properly at block %d\n"),
-                      i));
+          if (errno == ENOMEM)
+            ACE_DEBUG ((LM_DEBUG,
+                        ACE_TEXT ("ACE_NEW_NORETURN failed properly at block %d\n"),
+                        i));
+          else
+            ACE_ERROR ((LM_ERROR,
+                        ACE_TEXT ("ACE_NEW_NORETURN failed at block %d, but ")
+                        ACE_TEXT ("expected ENOMEM, %p (%d)\n"),
+                        i,
+                        ACE_TEXT ("got"),
+                        errno));
         }
       while (i >= 0)
         delete [] blocks[i--];
@@ -185,7 +210,8 @@ run_main (int, ACE_TCHAR *[])
                   ACE_TEXT ("Caught exception during test; ")
                   ACE_TEXT ("ACE_bad_alloc not defined correctly, or\n")));
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("ACE_NEW_THROWS_EXCEPTIONS is not #defined (and should be).\n")));
+                  ACE_TEXT ("ACE_NEW_THROWS_EXCEPTIONS is not #defined ")
+                  ACE_TEXT ("(and should be).\n")));
       // Mark test failure
       status = 1;
     }

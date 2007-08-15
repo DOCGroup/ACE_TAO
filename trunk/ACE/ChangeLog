@@ -1,3 +1,12 @@
+Wed Aug 15 21:54:11 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * tests/New_Fail_Test.cpp: Allocate the hugest blocks we can instead
+          of many merely big ones. Helps the test run without dragging the
+          system to a crawl, at least on my WinXP VC7.1 box w/ 1GB memory.
+          YMMV. Not ready to re-enable in tests/run_test.lst until a few
+          other people try this out by hand.
+          Also, replace ACE_ASSERT with if/else and ACE_ERROR.
+
 Wed Aug 15 15:56:12 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * performance-tests/Misc/test_mutex.cpp:
