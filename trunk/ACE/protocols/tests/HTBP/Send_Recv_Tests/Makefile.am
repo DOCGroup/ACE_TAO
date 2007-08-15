@@ -11,27 +11,49 @@
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
 
+## Makefile.SendRecv_Test_Client.am
 
-## Makefile.SendRecv_Test.am
-
+if BUILD_ACE_UUID
 if !BUILD_ACE_FOR_TAO
 
-noinst_PROGRAMS = SendRecv_Test
+noinst_PROGRAMS += client
 
-SendRecv_Test_CPPFLAGS = \
+client_CPPFLAGS = \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
   -I$(ACE_ROOT)/protocols
 
-SendRecv_Test_SOURCES = \
-  SendRecv_Test.cpp
+client_SOURCES = \
+  client.cpp
 
-SendRecv_Test_LDADD = \
-  $(top_builddir)/tests/libTest_Output.la \
+client_LDADD = \
   $(ACE_BUILDDIR)/protocols/ace/HTBP/libACE_HTBP.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 endif !BUILD_ACE_FOR_TAO
+endif BUILD_ACE_UUID
+
+## Makefile.SendRecv_Test_Server.am
+
+if BUILD_ACE_UUID
+if !BUILD_ACE_FOR_TAO
+
+noinst_PROGRAMS += server
+
+server_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR) \
+  -I$(ACE_ROOT)/protocols 
+
+server_SOURCES = \
+  server.cpp
+
+server_LDADD = \
+  $(ACE_BUILDDIR)/protocols/ace/HTBP/libACE_HTBP.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+endif !BUILD_ACE_FOR_TAO
+endif BUILD_ACE_UUID
 
 ## Clean up template repositories, etc.
 clean-local:

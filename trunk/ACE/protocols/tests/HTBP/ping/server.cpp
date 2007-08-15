@@ -17,9 +17,9 @@
 unsigned port = 8088;
 
 int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "p:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("p:"));
   int c;
 
   while ((c = get_opts ()) != -1)
