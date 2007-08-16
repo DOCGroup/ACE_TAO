@@ -161,6 +161,11 @@ Test_DynSequence::run_test (void)
           return -1;
         }
 
+      elem_any <<= CORBA::Any::from_string ("replacement",20);
+      DynamicAny::DynAny *&io = out_elems[0].inout();
+
+      io = dynany_factory->create_dyn_any (elem_any);
+
       analyzer.analyze (fa1.in());
 
       CORBA::String_var out_str;
@@ -168,6 +173,7 @@ Test_DynSequence::run_test (void)
       for (i = 0; i < length; ++i)
         {
           out_str = out_elems[i]->get_string ();
+          ACE_DEBUG ((LM_DEBUG,"elem[%d] = %s\n", i, out_str.in()));
 
           CORBA::Boolean equal =
             out_elems[i]->equal (elements[i]);

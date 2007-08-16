@@ -81,15 +81,19 @@ public:
 
   inline operator value_type()
   {
-    return *element_;
+    return *this->element_;
   }
 
   inline operator const_value_type() const
   {
-    return *element_;
+    return *this->element_;
   }
 
   inline object_reference_type *in (void) const {
+    return *this->element_;
+  }
+
+  inline object_reference_type *&inout (void) const {
     return *this->element_;
   }
 
