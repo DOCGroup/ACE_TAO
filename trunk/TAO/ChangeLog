@@ -1,14 +1,49 @@
+Thu Aug 16 23:44:00 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * TAO_IDL/ast/ast_argument.cpp:
+        * TAO_IDL/ast/ast_enum_val.cpp:
+        * TAO_IDL/ast/ast_string.cpp:
+        * TAO_IDL/be/be_constant.cpp:
+        * TAO_IDL/be/be_operation_strategy.cpp:
+        * TAO_IDL/be/be_union_label.cpp:
+        * TAO_IDL/be/be_visitor_component/component.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ih.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_is.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/public_reset_cs.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_obv_ch.cpp:
+        * TAO_IDL/fe/fe_private.cpp:
+        * TAO_IDL/idl_specs/array.idl:
+        * TAO_IDL/idl_specs/constant.idl:
+        * TAO_IDL/idl_specs/dif2.idl:
+        * TAO_IDL/idl_specs/module.idl:
+        * TAO_IDL/idl_specs/primtypes.idl:
+        * TAO_IDL/idl_specs/sequence.idl:
+        * TAO_IDL/idl_specs/simple.idl:
+        * TAO_IDL/idl_specs/simple2.idl:
+        * TAO_IDL/idl_specs/struct.idl:
+        * TAO_IDL/idl_specs/union.idl:
+        * TAO_IDL/idl_specs/union2.idl:
+        * TAO_IDL/util/utl_exceptlist.cpp:
+        * TAO_IDL/util/utl_exprlist.cpp:
+        * TAO_IDL/util/utl_labellist.cpp:
+        * TAO_IDL/util/utl_tmpl/utl_decllist.cpp:
+        * TAO_IDL/util/utl_tmpl/utl_exceptlist.cpp:
+        * TAO_IDL/util/utl_tmpl/utl_exprlist.cpp:
+        * TAO_IDL/util/utl_tmpl/utl_labellist.cpp:
+        * TAO_IDL/util/utl_tmpl/utl_namelist.cpp:
+          Untabify.
+
 Thu Aug 16 19:19:11 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_field/cdr_op_cs.cpp (visit_interface_fwd):
-        
+
           Fixed incorrect code generation for CDR insertion operators
           for struct members which are forward declared interfaces
           not yet fully defined, and forward declared inside a reopening
           of the module in which the struct is defined.
-          
+
         * tests/IDL_Test/fwd.idl:
-        
+
           Added IDL to test for the use case above.
 
 Thu Aug 16 19:12:27 UTC 2007  Ciju John  <johnc at ociweb dot com>

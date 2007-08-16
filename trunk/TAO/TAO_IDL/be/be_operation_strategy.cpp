@@ -20,8 +20,8 @@
 #include "be_operation_strategy.h"
 #include "be_operation.h"
 
-ACE_RCSID (be, 
-           be_operation_strategy, 
+ACE_RCSID (be,
+           be_operation_strategy,
            "$Id$")
 
 
@@ -203,12 +203,12 @@ be_operation_ami_sendc_strategy::destroy (void)
       this->marshaling_->destroy ();
       delete this->marshaling_;
       this->marshaling_ = 0;
-      
+
       this->arguments_->destroy ();
       delete this->arguments_;
       this->arguments_ = 0;
     }
-  
+
   this->be_operation_strategy::destroy ();
 }
 
@@ -349,9 +349,9 @@ be_operation_amh_strategy::next_state (
     int /* is_extra_state */
   )
 {
-// We don't know yet if we need extra state for AMH but
-// we''ll leave the placeholder code here anyway ...
-	return current_state;
+  // We don't know yet if we need extra state for AMH but
+  // we''ll leave the placeholder code here anyway ...
+  return current_state;
 }
 
 be_operation*

@@ -170,8 +170,8 @@ be_visitor_interface_is::visit_interface (be_interface *node)
 // Helper method to generate the members in the scope of the base classes.
 int
 be_visitor_interface_is::method_helper (be_interface *derived,
-					                              be_interface *node,
-					                              TAO_OutStream *os)
+                                        be_interface *node,
+                                        TAO_OutStream *os)
 {
   if (ACE_OS::strcmp (derived->flat_name (), node->flat_name ()) != 0)
     {

@@ -1,14 +1,14 @@
 // $Id$
 
 struct Bar {
-    long	b1;
-    char	b2;
+  long b1;
+  char b2;
 };
 
 union Foo switch (long) {
-case 1: long x;
-case 2: Bar y;
-default: char z;
+  case 1: long x;
+  case 2: Bar y;
+  default: char z;
 };
 
 
@@ -18,11 +18,12 @@ union Foo2 switch (char) {
 };
 
 interface a {
-	struct astruct {
-		Foo2	a1;
-		Foo	a2;
-		Bar	a3;
-	};
-	Foo2	opA(in astruct b);
+  struct astruct {
+    Foo2 a1;
+    Foo  a2;
+    Bar  a3;
+  };
+
+  Foo2 opA(in astruct b);
 };
 

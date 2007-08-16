@@ -56,8 +56,8 @@
 //
 // Implementation of a list of strings
 
-#include	<idl.hh>
-#include	<idl_extern.hh>
+#include <idl.hh>
+#include <idl_extern.hh>
 
 ACE_RCSID(utl_tmpl, utl_exprlist, "$Id$")
 
@@ -66,7 +66,7 @@ ACE_RCSID(utl_tmpl, utl_exprlist, "$Id$")
  */
 
 UTL_ExprList::UTL_ExprList(AST_Expression *s, UTL_ExprList *cdr)
-	    : UTL_List<UTL_ExprList, AST_Expression>(s, cdr)
+  : UTL_List<UTL_ExprList, AST_Expression>(s, cdr)
 {
 }
 
@@ -89,7 +89,7 @@ UTL_ExprList::UTL_ExprList(AST_Expression *s, UTL_ExprList *cdr)
  */
 
 UTL_ExprlistActiveIterator::UTL_ExprlistActiveIterator(UTL_ExprList *s)
-		  : UTL_ListActiveIterator<UTL_ExprList, AST_Expression>(s)
+  : UTL_ListActiveIterator<UTL_ExprList, AST_Expression>(s)
 {
 }
 
