@@ -1,3 +1,9 @@
+Thu Aug 16 23:47:47 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * bin/fuzz.pl:
+          Remove TAO/TAO_IDL directory from the list of excluded
+          directories for the tabs check.
+
 Thu Aug 16 21:53:36 UTC 2007  Steve Huston  <shuston@riverace.com>
 
         * configure.ac: When checking for pthread_attr_setstack(), don't use
