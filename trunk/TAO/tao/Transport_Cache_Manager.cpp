@@ -75,7 +75,7 @@ namespace TAO
        {
          ACE_DEBUG ((LM_INFO,
             ACE_TEXT ("TAO (%P|%t) - Transport_Cache_Manager::bind_i: ")
-            ACE_TEXT (" Transport[%d] @ hash:index{%d:%d}\n"),
+            ACE_TEXT ("Transport[%d] @ hash:index{%d:%d}\n"),
             int_id.transport ()->id (),
             ext_id.hash (),
             ext_id.index ()

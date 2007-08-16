@@ -14,6 +14,7 @@ ACE_TMAIN(int, ACE_TCHAR *[])
     {
        // creation
        Foo::Node node;
+       node.nodes.length (2);
     }
   catch (const CORBA::Exception& ex)
     {
