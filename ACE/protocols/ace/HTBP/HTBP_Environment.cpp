@@ -3,8 +3,8 @@
 #include "HTBP_Environment.h"
 
 ACE_RCSID (HTBP,
-       	   ACE_HTBP_Environment,
-	   "$Id$")
+           ACE_HTBP_Environment,
+           "$Id$")
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -65,7 +65,7 @@ ACE::HTBP::Environment::initialize (int use_registry,
                   -1);
 
   if (this->config_->open_section (config_->root_section (),
-				   ACE_TEXT("htbp"), 1,
+                                   ACE_TEXT("htbp"), 1,
                                    this->htbp_key_) != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT("(%P|%t) ACE::HTBP::Environment::initialize ")

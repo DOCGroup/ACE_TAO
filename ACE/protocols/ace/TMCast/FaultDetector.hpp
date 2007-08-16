@@ -23,7 +23,7 @@ namespace ACE_TMCast
     {
       if (alone_)
         alone_ = false;
-	
+
       silence_period_ = 0;
     }
 

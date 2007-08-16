@@ -1,3 +1,13 @@
+Thu Aug 16 00:04:21 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+        
+        * protocols/ace/HTBP/HTBP_Environment.cpp:
+        * protocols/ace/TMCast/FaultDetector.hpp:
+          Untabify.
+
+        * bin/fuzz.pl:
+          Remove protocols directory from the list of excluded
+          directories for the tabs check.
+
 Wed Aug 15 21:54:11 UTC 2007  Steve Huston  <shuston@riverace.com>
 
         * tests/New_Fail_Test.cpp: Allocate the hugest blocks we can instead
@@ -24,7 +34,7 @@ Wed Aug 15 15:56:12 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * bin/fuzz.pl:
 
-          Remove performance-tests directory from the list of excluded 
+          Remove performance-tests directory from the list of excluded
           directories for the tabs check.
 
 Wed Aug 15 14:57:06 UTC 2007  Steve Huston  <shuston@riverace.com>
