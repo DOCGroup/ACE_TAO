@@ -1,3 +1,8 @@
+Thu Aug 16 07:21:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Generic_Sequence_T.h:
+          Forgot to commit this file as part of buzilla 3042
+
 Wed Aug 15 17:31:43 UTC 2007  Dale Wilson  <wilsond@ociweb.com>
 
         * tao/Transport_Connector.cpp:
