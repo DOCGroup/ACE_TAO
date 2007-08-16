@@ -1,3 +1,12 @@
+Thu Aug 16 19:12:27 UTC 2007  Ciju John  <johnc at ociweb dot com>
+
+        * tao/Valuetype/Bounded_Valuetype_Sequence_T.h:
+        * tests/IDL_Test/valuetype.idl:
+          Bounded_ValueType_Sequence unit marshalling now uses the stream
+          '<<' operator as currently done in the
+          Unbounded_ValueType_Sequence. Also add test for
+          Bounded_ValueType_Sequence.
+
 Thu Aug 16 16:29:46 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/ORB.cpp:
