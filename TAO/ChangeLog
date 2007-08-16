@@ -1,3 +1,25 @@
+Thu Aug 16 12:13:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/IFR_Service_Utils_T.cpp:
+        * orbsvcs/orbsvcs/Trader/Trader.h:
+          Updated for BCB2007 Update 2
+
+Thu Aug 16 11:42:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Object_Reference_Sequence_Element_T.h:
+          Provide an inout method, this fixes bugzilla 2877. Thanks to Phil
+          Mesnier for reporting this
+
+        * tests/DynAny_Test/test_dynsequence.cpp:
+          Added test code for bugzilla 2877
+
+        * tao/Transport_Cache_Manager.cpp:
+          Improved layout of a debug message
+
+        * tests/Bug_3042_Regression/client.cpp:
+        * tests/Bug_3042_Regression/test.idl:
+          Increased the bound maximum and set the length of the sequence
+
 Thu Aug 16 11:34:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Bounded_Object_Reference_Sequence_T.h:
