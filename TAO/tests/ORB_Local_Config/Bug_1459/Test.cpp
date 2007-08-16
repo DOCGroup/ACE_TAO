@@ -23,17 +23,17 @@ ACE_RCSID (tests, server, "$Id$")
 
 #include "Service_Configuration_Per_ORB.h"
 
-const char argA[] = "AAA -ORBId ORB-A -ORBSvcConf a.conf";
+const char argA[] = "AAA -ORBGestalt LOCAL -ORBId ORB-A -ORBSvcConf a.conf";
 
 // dynamic SSLIOP_Factory Service_Object * TAO_SSLIOP:_make_TAO_SSLIOP_Protocol_Factory() "-SSLAuthenticate SERVER_AND_CLIENT -SSLPrivateKey PEM:server_key.pem -SSLCertificate PEM:server_cert.pem";
 // static Resource_Factory "-ORBProtocolFactory SSLIOP_Factory"
 
-const char argB[] = "BBB -ORBSvcConf b.conf";
+const char argB[] = "BBB -ORBGestalt LOCAL -ORBSvcConf b.conf";
 
 // dynamic SSLIOP_Factory Service_Object * TAO_SSLIOP:_make_TAO_SSLIOP_Protocol_Factory() "-SSLAuthenticate SERVER_AND_CLIENT -SSLPrivateKey PEM:client_key.pem -SSLCertificate PEM:client_cert.pem"
 // static Resource_Factory "-ORBProtocolFactory SSLIOP_Factory"
 
-const char argM[] = "MMM -ORBId ORB-M -ORBSvcConf m.conf";
+const char argM[] = "MMM -ORBGestalt LOCAL -ORBId ORB-M -ORBSvcConf m.conf";
 
 // dynamic UIPMC_Factory Service_Object * TAO_PortableGroup:_make_TAO_UIPMC_Protocol_Factory() ""
 // static Resource_Factory "-ORBProtocolFactory IIOP_Factory -ORBProtocolFactory UIPMC_Factory"

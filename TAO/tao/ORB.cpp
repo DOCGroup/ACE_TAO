@@ -1086,8 +1086,59 @@ CORBA::ORB::_tao_make_ORB (TAO_ORB_Core * orb_core)
 
 // ****************************************************************
 
-// ORB initialization, per OMG document 98-12-01.
+namespace TAO
+{
+  bool
+  parse_orb_opt (ACE_Argv_Type_Converter& command_line,
+                 const ACE_TCHAR* orb_opt,
+                 ACE_CString& opt_arg)
+  {
 
+    if (opt_arg.length () > 0)
+      return false;
+
+    ACE_Arg_Shifter arg_shifter (command_line.get_argc (),
+                                 command_line.get_TCHAR_argv ());
+
+    size_t opt_len = ACE_OS::strlen (orb_opt);
+
+    bool found = false;
+    while (arg_shifter.is_anything_left ())
+      {
+        const ACE_TCHAR *current_arg = arg_shifter.get_current ();
+
+        if (ACE_OS::strcasecmp (current_arg,
+                                orb_opt) == 0)
+          {
+            found = true;
+            arg_shifter.consume_arg ();
+            if (arg_shifter.is_parameter_next ())
+              {
+                opt_arg =
+                  ACE_TEXT_ALWAYS_CHAR (arg_shifter.get_current ());
+                arg_shifter.consume_arg ();
+              }
+          }
+        else if (ACE_OS::strncasecmp (current_arg, orb_opt,
+                                      opt_len) == 0)
+          {
+            arg_shifter.consume_arg ();
+            // The rest of the argument is the ORB id...
+            // but we should skip an optional space...
+            if (current_arg[opt_len] == ' ')
+              opt_arg =
+                ACE_TEXT_ALWAYS_CHAR (current_arg + opt_len + 1);
+            else
+              opt_arg = ACE_TEXT_ALWAYS_CHAR (current_arg + opt_len);
+          }
+        else
+          arg_shifter.ignore_arg ();
+      }
+    return found;
+  }
+}
+
+// ORB initialization, per OMG document 98-12-01.
 CORBA::ORB_ptr
 CORBA::ORB_init (int &argc, char *argv[], const char *orbid)
 {
@@ -1141,73 +1192,108 @@ CORBA::ORB_init (int &argc, char *argv[], const char *orbid)
         CORBA::COMPLETED_NO);
     }
 
-  if (orbid_string.length () == 0)
-    {
-      ACE_Arg_Shifter arg_shifter (command_line.get_argc (),
-                                   command_line.get_TCHAR_argv ());
-
-      while (arg_shifter.is_anything_left ())
-        {
-          const ACE_TCHAR *current_arg = arg_shifter.get_current ();
-
-          static const ACE_TCHAR orbid_opt[] = ACE_TEXT ("-ORBid");
-          size_t orbid_len = ACE_OS::strlen (orbid_opt);
-          if (ACE_OS::strcasecmp (current_arg,
-                                  orbid_opt) == 0)
-            {
-              arg_shifter.consume_arg ();
-              if (arg_shifter.is_parameter_next ())
-                {
-                  orbid_string =
-                    ACE_TEXT_ALWAYS_CHAR (arg_shifter.get_current ());
-                  arg_shifter.consume_arg ();
-                }
-            }
-          else if (ACE_OS::strncasecmp (current_arg, orbid_opt,
-                                        orbid_len) == 0)
-            {
-              arg_shifter.consume_arg ();
-              // The rest of the argument is the ORB id...
-              // but we should skip an optional space...
-              if (current_arg[orbid_len] == ' ')
-                orbid_string =
-                  ACE_TEXT_ALWAYS_CHAR (current_arg + orbid_len + 1);
-              else
-                orbid_string = ACE_TEXT_ALWAYS_CHAR (current_arg + orbid_len);
-            }
-          else
-            arg_shifter.ignore_arg ();
-        }
-    }
+  TAO::parse_orb_opt (command_line, ACE_TEXT("-ORBid"), orbid_string);
 
   // Get ORB Core
   TAO_ORB_Core_Auto_Ptr oc (
     TAO::ORB_Table::instance ()->find (orbid_string.c_str ()));
 
-  // The ORB was already initialized.  Just return that one.
+    // The ORB was already initialized.  Just return that one.
   if (oc.get () != 0)
     {
       return CORBA::ORB::_duplicate (oc->orb ());
     }
-  else
-    {
-      // An ORB corresponding to the desired ORBid doesn't exist so create
-      // a new one.
-      TAO_ORB_Core * tmp = 0;
-      ACE_NEW_THROW_EX (tmp,
-                        TAO_ORB_Core (orbid_string.c_str ()),
-                        CORBA::NO_MEMORY (
-                          CORBA::SystemException::_tao_minor_code (0,
-                                                                   ENOMEM),
-                          CORBA::COMPLETED_NO));
 
-      // The ORB table increases the reference count on the ORB Core
-      // so do not release it here.  Allow the TAO_ORB_Core_Auto_Ptr
-      // to decrease the reference count on the ORB Core when it goes
-      // out of scope.
-      oc.reset (tmp);
+
+  // Determine the service object registry this ORB will use. The choises
+  // are: (a) the legacy (global); (b) its own, local, or (c) share somebody
+  // else's configuration
+
+  // By default use the process (application?) global configuration context
+  ACE_Service_Gestalt* gestalt = ACE_Service_Config::current ();
+
+  // Use this string variable to hold the config identity
+  ACE_CString orbconfig_string;
+  ACE_Auto_Ptr<ACE_Service_Gestalt> guard_gestalt(0);
+
+  if (TAO::parse_orb_opt (command_line,
+                         ACE_TEXT("-ORBGestalt"),
+                         orbconfig_string))
+    {
+      // Need a local repo? Make one which typically should not be as
+      // big as the default repository
+      if  (ACE_OS::strcasecmp (orbconfig_string.c_str (),
+                                  ACE_TEXT("LOCAL")) == 0)
+        {
+          ACE_NEW_THROW_EX (gestalt,
+                            ACE_Service_Gestalt
+                            (ACE_Service_Gestalt::MAX_SERVICES / 4, true),
+                            CORBA::NO_MEMORY
+                            (CORBA::SystemException::_tao_minor_code (0,
+                                                                      ENOMEM),
+                             CORBA::COMPLETED_NO));
+          guard_gestalt.reset(gestalt);
+        }
+      else if (ACE_OS::strncmp (orbconfig_string.c_str (),
+                                ACE_TEXT ("ORB:"), 4) == 0)
+        {
+          // @TODO: At some point, we need to implement a lookup of an
+          // existing configuration context based on the orbid
+          // following the "ORB:" It may be the case that contexts may
+          // be initialized separate from the ORB of the same ID, in
+          // which case we would need some sort of table of contexts
+          // at which point we would either find this one or make a
+          // new one. And making a new one would require assigning it
+          // to the guard_gestalt just like the local.
+          if (TAO_debug_level > 0)
+            {
+              ACE_ERROR ((LM_ERROR,
+                          ACE_TEXT ("ERROR: Sharing ORB configuration ")
+                          ACE_TEXT ("contexts is not yet supported\n")));
+            }
+
+          throw ::CORBA::BAD_PARAM
+            (CORBA::SystemException::_tao_minor_code
+             ( TAO_ORB_CORE_INIT_LOCATION_CODE,
+               ENOTSUP),
+             CORBA::COMPLETED_NO);
+        }
+      else
+        {
+          if (TAO_debug_level > 0)
+            {
+              ACE_ERROR ((LM_ERROR,
+                          ACE_TEXT ("ERROR: -ORBGestalt unknown value <%s>\n"),
+                          orbconfig_string.c_str()));
+            }
+
+          throw ::CORBA::BAD_PARAM
+            (CORBA::SystemException::_tao_minor_code
+             ( TAO_ORB_CORE_INIT_LOCATION_CODE,
+               EINVAL),
+             CORBA::COMPLETED_NO);
+        }
     }
 
+  // An ORB corresponding to the desired ORBid doesn't exist so create
+  // a new one.
+  TAO_ORB_Core * tmp = 0;
+  ACE_NEW_THROW_EX (tmp,
+                    TAO_ORB_Core (orbid_string.c_str (), gestalt),
+                    CORBA::NO_MEMORY (
+                      CORBA::SystemException::_tao_minor_code (0,
+                                                               ENOMEM),
+                      CORBA::COMPLETED_NO));
+
+  // The ORB table increases the reference count on the ORB Core
+  // so do not release it here.  Allow the TAO_ORB_Core_Auto_Ptr
+  // to decrease the reference count on the ORB Core when it goes
+  // out of scope.
+  oc.reset (tmp);
+
+  // The ORB now owns its configuration and the auto pointer is not
+  // necessary anymore.
+  guard_gestalt.release ();
 
   // Having the ORB's default static services be shared among all ORBs
   // is tempting from the point of view of reducing the dynamic
@@ -1218,17 +1304,9 @@ CORBA::ORB_init (int &argc, char *argv[], const char *orbid)
   // which will have disastrous consequences at the process
   // shutdown. Hence, the ACE_Service_Config_Guard ensures that for
   // the current thread, any references to the global
-  // ACE_Service_Config will be forwarded to the ORB's.
+  // ACE_Service_Config will be re-routed to this ORB's service gestalt.
 
-  // Making sure the initialization process in the current thread uses
-  // the correct service repository (ours), instead of the global one.
   ACE_Service_Config_Guard scg (oc->configuration ());
-
-  /*
-   * Currently I choose to make the ORB an owner of its configuration,
-   * which in general is not quite correct because it is very common ORBs to
-   * need to share the same configuration.
-   */
 
   // Initialize the Service Configurator.  This must occur before the
   // ORBInitializer::pre_init() method is invoked on each registered
