@@ -47,12 +47,13 @@ public:
   {
   }
 
-  inline operator const_value_type() const
+  inline operator object_reference_type * (void) const
   {
-    return *element_;
+    return *this->element_;
   }
 
-  inline const object_reference_type * in (void) const {
+  inline object_reference_type * in (void) const
+  {
     return *this->element_;
   }
 
@@ -74,7 +75,7 @@ private:
 
 private:
   value_type const * const element_;
-  CORBA::Boolean release_;
+  CORBA::Boolean const release_;
 };
 
 } // namespace details
