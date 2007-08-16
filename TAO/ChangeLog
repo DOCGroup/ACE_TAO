@@ -1,3 +1,8 @@
+Thu Aug 16 09:54:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Incoming_Message_Stack.h:
+          Updated for BCB2007 Update 2
+
 Thu Aug 16 07:21:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Generic_Sequence_T.h:
