@@ -162,7 +162,8 @@ Test_DynSequence::run_test (void)
         }
 
       elem_any <<= CORBA::Any::from_string ("replacement",20);
-      DynamicAny::DynAny *&io = out_elems[0].inout();
+      CORBA::ULong io_index = 0;
+      DynamicAny::DynAny *&io = out_elems[io_index].inout();
 
       io = dynany_factory->create_dyn_any (elem_any);
 
