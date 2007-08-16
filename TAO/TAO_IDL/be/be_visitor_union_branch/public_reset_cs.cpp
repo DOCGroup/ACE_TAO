@@ -356,7 +356,7 @@ be_visitor_union_branch_public_reset_cs::visit_predefined_type (
       break;
     case AST_PredefinedType::PT_pseudo:
       *os << "::CORBA::release (this->u_."
-	        << ub->local_name () << "_);" << be_nl;
+          << ub->local_name () << "_);" << be_nl;
       *os << "this->u_." << ub->local_name ()
           << "_ = 0;" << be_nl
           << "break;" << be_uidt;
@@ -364,7 +364,7 @@ be_visitor_union_branch_public_reset_cs::visit_predefined_type (
       break;
     case AST_PredefinedType::PT_any:
       *os << "delete this->u_."
-	        << ub->local_name () << "_;" << be_nl
+          << ub->local_name () << "_;" << be_nl
           << "this->u_." << ub->local_name ()
           << "_ = 0;" << be_nl
           << "break;" << be_uidt;

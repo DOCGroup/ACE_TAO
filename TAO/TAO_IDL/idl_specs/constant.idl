@@ -5,27 +5,28 @@ const short l = 4;
 enum N { zero, un , deux, trois };
 
 exception E {
-	short cause ;
-	};
+  short cause ;
+};
 
 module M {
-	const short l = 4; 
+  const short l = 4; 
 
-	enum N { zero, un , deux, trois };
+  enum N { zero, un , deux, trois };
 
-	exception E {
-        short cause ;
-        };
-	
-	interface A {
-	        const short l = 4; 
+  exception E {
+    short cause ;
+  };
+
+  interface A {
+    const short l = 4; 
  
-	        enum N { zero, un , deux, trois };
+    enum N { zero, un , deux, trois };
  
-       		 exception E {
-        	short cause ;
-        	};
-	N foo(in N x, out N y, inout N z);
-	};
+    exception E {
+      short cause ;
+    };
+
+    N foo(in N x, out N y, inout N z);
+  };
 };
 

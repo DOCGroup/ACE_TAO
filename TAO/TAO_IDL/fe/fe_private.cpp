@@ -71,4 +71,4 @@ ACE_RCSID (fe,
            fe_private, 
            "$Id$")
 
-UTL_StrList	*DRV_global_pragmas = 0;
+UTL_StrList *DRV_global_pragmas = 0;

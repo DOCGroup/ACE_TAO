@@ -56,8 +56,8 @@
 //
 // Implementation of a list of scoped names
 
-#include	<idl.hh>
-#include	<idl_extern.hh>
+#include <idl.hh>
+#include <idl_extern.hh>
 
 ACE_RCSID(utl_tmpl, utl_namelist, "$Id$")
 
@@ -68,7 +68,7 @@ typedef UTL_List<UTL_NameList, UTL_ScopedName> _dummy_;
  */
 
 UTL_NameList::UTL_NameList(UTL_ScopedName *s, UTL_NameList *cdr)
-	    : UTL_List<UTL_NameList, UTL_ScopedName>(s, cdr)
+  : UTL_List<UTL_NameList, UTL_ScopedName>(s, cdr)
 {
 }
 
@@ -91,7 +91,7 @@ UTL_NameList::UTL_NameList(UTL_ScopedName *s, UTL_NameList *cdr)
  */
 
 UTL_NamelistActiveIterator::UTL_NamelistActiveIterator(UTL_NameList *s)
-		    : UTL_ListActiveIterator<UTL_NameList, UTL_ScopedName>(s)
+  : UTL_ListActiveIterator<UTL_NameList, UTL_ScopedName>(s)
 {
 }
 

@@ -70,22 +70,22 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 // NOTE: This list class only works correctly because we use single public
 //       inheritance, as opposed to multiple inheritance or public virtual.
-//	 It relies on a type-unsafe cast from UTL_List to subclasses, which
-//	 will cease to operate correctly if you use either multiple or
-//	 public virtual inheritance.
+//       It relies on a type-unsafe cast from UTL_List to subclasses, which
+//       will cease to operate correctly if you use either multiple or
+//       public virtual inheritance.
 
-#include	"utl_exceptlist.h"
+#include "utl_exceptlist.h"
 
 #include "ace/OS_Memory.h"
 
-ACE_RCSID (util, 
-           utl_exceptlist, 
+ACE_RCSID (util,
+           utl_exceptlist,
            "$Id$")
 
-UTL_ExceptList::UTL_ExceptList (AST_Exception *s, 
+UTL_ExceptList::UTL_ExceptList (AST_Exception *s,
                                 UTL_ExceptList *cdr)
   : UTL_List (cdr),
-	  pd_car_data (s)
+    pd_car_data (s)
 {
 }
 
@@ -109,7 +109,7 @@ UTL_ExceptList::destroy (void)
     {
       this->pd_cdr_data->destroy ();
     }
-    
+
   delete this;
 }
 
@@ -125,12 +125,12 @@ UTL_ExceptList::copy (void)
                         : 0
                     ),
                   0);
-                  
+
   return retval;
 }
 
 UTL_ExceptlistActiveIterator::UTL_ExceptlistActiveIterator (UTL_ExceptList *s)
-	: UTL_ListActiveIterator(s)
+  : UTL_ListActiveIterator(s)
 {
 }
 

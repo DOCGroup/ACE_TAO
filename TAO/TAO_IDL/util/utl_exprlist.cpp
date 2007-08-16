@@ -68,21 +68,21 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 // NOTE: This list class only works correctly because we use single public
 //       inheritance, as opposed to multiple inheritance or public virtual.
-//	 It relies on a type-unsafe cast from UTL_List to subclasses, which
-//	 will cease to operate correctly if you use either multiple or
-//	 public virtual inheritance.
+//       It relies on a type-unsafe cast from UTL_List to subclasses, which
+//       will cease to operate correctly if you use either multiple or
+//       public virtual inheritance.
 
 #include "utl_exprlist.h"
 #include "ast_expression.h"
 
-ACE_RCSID (util, 
-           utl_exprlist, 
+ACE_RCSID (util,
+           utl_exprlist,
            "$Id$")
 
-UTL_ExprList::UTL_ExprList (AST_Expression *s, 
+UTL_ExprList::UTL_ExprList (AST_Expression *s,
                             UTL_ExprList *cdr)
-	: UTL_List (cdr),
-	  pd_car_data (s)
+  : UTL_List (cdr),
+    pd_car_data (s)
 {
 }
 
@@ -107,7 +107,7 @@ UTL_ExprList::destroy (void)
 }
 
 UTL_ExprlistActiveIterator::UTL_ExprlistActiveIterator (UTL_ExprList *s)
-	: UTL_ListActiveIterator(s)
+  : UTL_ListActiveIterator(s)
 {
 }
 

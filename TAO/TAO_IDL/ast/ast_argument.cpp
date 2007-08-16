@@ -108,12 +108,9 @@ AST_Argument::AST_Argument (Direction d,
                             AST_Type *ft,
                             UTL_ScopedName *n)
   : COMMON_Base (),
-    AST_Decl (AST_Decl::NT_argument,
-              n),
-	  AST_Field (AST_Decl::NT_argument,
-               ft,
-               n),
-	  pd_direction (d)
+    AST_Decl (AST_Decl::NT_argument, n),
+    AST_Field (AST_Decl::NT_argument, ft, n),
+    pd_direction (d)
 {
 }
 
