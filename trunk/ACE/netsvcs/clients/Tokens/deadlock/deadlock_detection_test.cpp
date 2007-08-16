@@ -4,7 +4,7 @@
 //
 // = LIBRARY
 //    examples
-// 
+//
 // = FILENAME
 //    deadlock_detection_test.cpp
 //
@@ -12,7 +12,7 @@
 //
 // = AUTHOR
 //    Tim Harrison
-// 
+//
 // ============================================================================
 
 #include "ace/Token_Manager.h"
@@ -64,29 +64,29 @@ two_token_thread (void *vp)
 
   for (int x = 0; x < iterations; x++)
     {
-      if (tm->first_->acquire () == -1) 
-	{
-	  ACE_DEBUG ((LM_DEBUG, "Deadlock detected\n"));
-	  continue;
-	}
+      if (tm->first_->acquire () == -1)
+        {
+          ACE_DEBUG ((LM_DEBUG, "Deadlock detected\n"));
+          continue;
+        }
 
       if (ACE_TOKEN_INVARIANTS::instance ()->acquired (tm->first_) == 0)
-	{
-	  tm->first_->dump ();
-	  ACE_ERROR_RETURN ((LM_ERROR, "violated invariant.\n"), 0);
-	}
+        {
+          tm->first_->dump ();
+          ACE_ERROR_RETURN ((LM_ERROR, "violated invariant.\n"), 0);
+        }
 
       if (tm->second_->acquire () == -1)
-	{
-	  ACE_DEBUG ((LM_DEBUG, "Deadlock Detected\n"));
-	  goto G1;
-	}
+        {
+          ACE_DEBUG ((LM_DEBUG, "Deadlock Detected\n"));
+          goto G1;
+        }
 
       if (ACE_TOKEN_INVARIANTS::instance ()->acquired (tm->second_) == 0)
-	{
-	  tm->second_->dump ();
-	  ACE_ERROR_RETURN ((LM_ERROR, "violated invariant.\n"), 0);
-	}
+        {
+          tm->second_->dump ();
+          ACE_ERROR_RETURN ((LM_ERROR, "violated invariant.\n"), 0);
+        }
 
       ACE_TOKEN_INVARIANTS::instance ()->releasing (tm->second_);
 
@@ -112,53 +112,54 @@ run_writer (void *vp)
       // Cycle through each of the first three tokens.
       ACE_Token_Proxy *t = 0;
       switch (acquire_number)
-	{
-	case 0:
-	  t = ft->first1_;
-	  break;
-	case 1:
-	  t = ft->first2_;
-	  break;
-	case 2:
-	  t = ft->first3_;
-	  break;
-	}
+        {
+        case 0:
+          t = ft->first1_;
+          break;
+        case 1:
+          t = ft->first2_;
+          break;
+        case 2:
+          t = ft->first3_;
+          break;
+        }
 
       acquire_number = (acquire_number + 1) % 3;
 
-      if (t->acquire () == -1) 
-	{
-	  ACE_ASSERT (errno == EDEADLK);
-	  ACE_DEBUG ((LM_DEBUG, "Deadlock detected.\n"));
-	  continue;
-	}
+      if (t->acquire () == -1)
+        {
+          ACE_ASSERT (errno == EDEADLK);
+          ACE_DEBUG ((LM_DEBUG, "Deadlock detected.\n"));
+          continue;
+        }
 
       if (ACE_TOKEN_INVARIANTS::instance ()->acquired (t) == 0)
-	{
-	  t->dump ();
-	  ACE_ERROR_RETURN ((LM_ERROR, "violated invariant.\n"), 0);
-	}
+        {
+          t->dump ();
+          ACE_ERROR_RETURN ((LM_ERROR, "violated invariant.\n"), 0);
+        }
 
       if (ft->second_->acquire () == -1)
-	{
-	  ACE_ASSERT (errno == EDEADLK);
-	  ACE_DEBUG ((LM_DEBUG, "Deadlock Detected..\n"));
-	  goto G1;
-	}
+        {
+          ACE_ASSERT (errno == EDEADLK);
+          ACE_DEBUG ((LM_DEBUG, "Deadlock Detected..\n"));
+          goto G1;
+        }
 
       if (ACE_TOKEN_INVARIANTS::instance ()->acquired (ft->second_) == 0)
-	{
-	  ft->second_->dump ();
-	  ACE_ERROR_RETURN ((LM_ERROR, "violated invariant.\n"), 0);
-	}
+        {
+          ft->second_->dump ();
+          ACE_ERROR_RETURN ((LM_ERROR, "violated invariant.\n"), 0);
+        }
 
       ACE_TOKEN_INVARIANTS::instance ()->releasing (ft->second_);
 
       ft->second_->release ();
-    G1:
-      ACE_TOKEN_INVARIANTS::instance ()->releasing (t);
 
-      t->release ();
+      G1:
+        ACE_TOKEN_INVARIANTS::instance ()->releasing (t);
+
+        t->release ();
     }
 
   ACE_DEBUG ((LM_DEBUG, "thread %t exiting\n"));
@@ -175,34 +176,34 @@ parse_args (int argc, char *argv[])
   for (int c; (c = get_opt ()) != -1; )
     {
       switch (c)
-	{
-	case 'r':
-	  rwlocks = 1;
-	  break;
-	case 'i':
-	  ignore_deadlock = 1;
-	  break;
-	case 'h':
-	  server_host = get_opt.opt_arg ();
-	  remote_mutexes = 1;
-	  break;
-	case 'p':
-	  server_port = ACE_OS::atoi (get_opt.opt_arg ());
-	  remote_mutexes = 1;
-	  break;
-	case 'n':
-	  iterations = ACE_OS::atoi (get_opt.opt_arg ());
-	  break;
-	case 'u':
-	default:
-	  ACE_ERROR_RETURN ((LM_ERROR, 
-			    "%n:\n"
-			    "[-r test readers/writer locks]\n"
-			    "[-n <iterations>]\n"
-			    "[-h <remote host>]\n"
-			    "[-p <remote port>]\n"
-			    "[-i ignore deadlock]\n%a", 1), -1);
-	}
+        {
+        case 'r':
+          rwlocks = 1;
+          break;
+        case 'i':
+          ignore_deadlock = 1;
+          break;
+        case 'h':
+          server_host = get_opt.opt_arg ();
+          remote_mutexes = 1;
+          break;
+        case 'p':
+          server_port = ACE_OS::atoi (get_opt.opt_arg ());
+          remote_mutexes = 1;
+          break;
+        case 'n':
+          iterations = ACE_OS::atoi (get_opt.opt_arg ());
+          break;
+        case 'u':
+        default:
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "%n:\n"
+                             "[-r test readers/writer locks]\n"
+                             "[-n <iterations>]\n"
+                             "[-h <remote host>]\n"
+                             "[-p <remote port>]\n"
+                             "[-i ignore deadlock]\n%a", 1), -1);
+        }
     }
 
   return 0;
@@ -229,7 +230,7 @@ mutex_test (void)
       one.first_ = new ACE_Remote_Mutex ("local proxy", ignore_deadlock, 1);
       two.second_ = new ACE_Remote_Mutex ("local proxy", ignore_deadlock, 1);
     }
-  
+
   one.second_ = global_mutex;
   two.first_ = global_mutex;
 
@@ -237,11 +238,11 @@ mutex_test (void)
   ACE_Token_Manager::instance ()->debug (1);
 
   if (thr_mgr.spawn (ACE_THR_FUNC (two_token_thread),
-		     (void *) &one, THR_BOUND) == -1)
+                                   (void *) &one, THR_BOUND) == -1)
     ACE_ERROR_RETURN ((LM_DEBUG, "%p\n", "first spawn"), -1);
 
   if (thr_mgr.spawn (ACE_THR_FUNC (two_token_thread),
-		     (void *) &two, THR_BOUND) == -1)
+                                   (void *) &two, THR_BOUND) == -1)
     ACE_ERROR_RETURN ((LM_DEBUG, "%p\n", "second spawn"), -1);
 
   // Wait for all threads to exit.
@@ -290,24 +291,24 @@ rwlock_test (void)
       writer.first3_  = new ACE_Remote_WLock ("writer first 3", ignore_deadlock, 1);
       writer.second_  = new ACE_Remote_WLock ("reader first", ignore_deadlock, 1);
     }
-  
+
   // Tell the token manager to be verbose when reporting deadlock.
   ACE_Token_Manager::instance ()->debug (1);
 
   if (thr_mgr.spawn (ACE_THR_FUNC (two_token_thread),
-		     (void *) &reader1, THR_BOUND) == -1)
+                                   (void *) &reader1, THR_BOUND) == -1)
     ACE_ERROR_RETURN ((LM_DEBUG, "%p\n", "first spawn"), -1);
 
   if (thr_mgr.spawn (ACE_THR_FUNC (two_token_thread),
-		     (void *) &reader2, THR_BOUND) == -1)
+                                   (void *) &reader2, THR_BOUND) == -1)
     ACE_ERROR_RETURN ((LM_DEBUG, "%p\n", "first spawn"), -1);
 
   if (thr_mgr.spawn (ACE_THR_FUNC (two_token_thread),
-		     (void *) &reader3, THR_BOUND) == -1)
+                                   (void *) &reader3, THR_BOUND) == -1)
     ACE_ERROR_RETURN ((LM_DEBUG, "%p\n", "first spawn"), -1);
 
   if (thr_mgr.spawn (ACE_THR_FUNC (run_writer),
-		     (void *) &writer, THR_BOUND) == -1)
+                                   (void *) &writer, THR_BOUND) == -1)
     ACE_ERROR_RETURN ((LM_DEBUG, "%p\n", "second spawn"), -1);
 
   // Wait for all threads to exit.
@@ -331,10 +332,10 @@ main (int argc, char* argv[])
   return 0;
 }
 #else
-int 
+int
 main (int, char *[])
 {
-  ACE_ERROR_RETURN ((LM_ERROR, 
-		     "threads not supported on this platform\n"), -1);
+  ACE_ERROR_RETURN ((LM_ERROR,
+                     "threads not supported on this platform\n"), -1);
 }
 #endif /* ACE_HAS_THREADS */

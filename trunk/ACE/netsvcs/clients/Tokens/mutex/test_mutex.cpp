@@ -4,7 +4,7 @@
 //
 // = LIBRARY
 //    examples
-// 
+//
 // = FILENAME
 //    test_mutex.cpp
 //
@@ -12,7 +12,7 @@
 //
 // = AUTHOR
 //    Tim Harrison
-// 
+//
 // ============================================================================
 
 #include "ace/Get_Opt.h"
@@ -40,23 +40,23 @@ run_test (void *)
   while (count--)
     {
       if (mutex->acquire () == -1)
-	{
-	  ACE_ERROR ((LM_ERROR, "(%t) %p acquire failed\n","test_mutex"));
-	  return (void *) -1;
-	}
-      
+        {
+          ACE_ERROR ((LM_ERROR, "(%t) %p acquire failed\n","test_mutex"));
+          return (void *) -1;
+        }
+
 //      mutex->acquire ();
       if (mutex->renew () == -1)
-	{
-	  ACE_ERROR ((LM_ERROR, "(%t) %p renew failed\n","test_mutex"));
-	  return (void *) -1;
-	}
+        {
+          ACE_ERROR ((LM_ERROR, "(%t) %p renew failed\n","test_mutex"));
+          return (void *) -1;
+        }
 
       if (mutex->release () == -1)
-	{
-	  ACE_ERROR ((LM_ERROR, "(%t) %p release failed\n","test_mutex"));
-	  return (void *) -1;
-	}
+        {
+          ACE_ERROR ((LM_ERROR, "(%t) %p release failed\n","test_mutex"));
+          return (void *) -1;
+        }
 
 //      mutex->release ();
     }
@@ -74,33 +74,33 @@ parse_args (int argc, char *argv[])
   for (int c; (c = get_opt ()) != -1; )
     {
       switch (c)
-	{
-	case 't':
-	  spawn_count = ACE_OS::atoi (get_opt.opt_arg ());
-	  break;
-	case 'h':  // specify the host machine on which the server is running
-	  server_host = get_opt.opt_arg ();
-	  remote_mutexes = 1;
-	  break;
-	case 'p':  // specify the port on which the server is running
-	  server_port = ACE_OS::atoi (get_opt.opt_arg ());
-	  remote_mutexes = 1;
-	  break;
-	case 'n':  // specify the port on which the server is running
-	  iterations = ACE_OS::atoi (get_opt.opt_arg ());
-	  break;
-	case 'u':
-	default:
-	  ACE_ERROR_RETURN ((LM_ERROR, 
-			    "%n:\n"
-			    "[-h <remote host>]\n"
-			    "[-p <remote port>]\n"
-			    "[-n <iterations>]\n"
-			    "[-t <threads>]\n"
-			    "[-h <remote host>]\n"
-			    "[-p <remote port>]\n", 1), -1);
-	  /* NOTREACHED */
-	}
+        {
+        case 't':
+          spawn_count = ACE_OS::atoi (get_opt.opt_arg ());
+          break;
+        case 'h':  // specify the host machine on which the server is running
+          server_host = get_opt.opt_arg ();
+          remote_mutexes = 1;
+          break;
+        case 'p':  // specify the port on which the server is running
+          server_port = ACE_OS::atoi (get_opt.opt_arg ());
+          remote_mutexes = 1;
+          break;
+        case 'n':  // specify the port on which the server is running
+          iterations = ACE_OS::atoi (get_opt.opt_arg ());
+          break;
+        case 'u':
+          default:
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "%n:\n"
+                             "[-h <remote host>]\n"
+                             "[-p <remote port>]\n"
+                             "[-n <iterations>]\n"
+                             "[-t <threads>]\n"
+                             "[-h <remote host>]\n"
+                             "[-p <remote port>]\n", 1), -1);
+        /* NOTREACHED */
+        }
     }
 
   return 0;
@@ -125,9 +125,9 @@ main (int argc, char *argv[])
     }
 
   if (thread_mgr.spawn_n (spawn_count,
-			  ACE_THR_FUNC (run_test),
-			  0, 
-			  THR_BOUND) == -1)
+                          ACE_THR_FUNC (run_test),
+                          0,
+                          THR_BOUND) == -1)
     ACE_ERROR_RETURN ((LM_DEBUG, "%p\n", "spawn"), -1);
 
   thread_mgr.wait ();
