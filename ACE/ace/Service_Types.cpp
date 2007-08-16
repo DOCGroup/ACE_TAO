@@ -60,7 +60,7 @@ ACE_Service_Type_Impl::fini (void) const
   ACE_TRACE ("ACE_Service_Type_Impl::fini");
   if (ACE::debug ())
     ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("destroying %s, flags = %d\n"),
+                ACE_TEXT ("(%P|%t) ST::fini - destroying %s, flags = %d\n"),
                 this->name_,
                 this->flags_));
 

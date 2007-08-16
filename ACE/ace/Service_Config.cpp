@@ -47,8 +47,10 @@ ACE_Service_Config_Guard::ACE_Service_Config_Guard (ACE_Service_Gestalt * psg)
 {
   if (ACE::debug ())
     ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("ACE (%P|%t) Service_Config_Guard:<ctor>")
-                ACE_TEXT (" - repo=%@ superceded by repo=%@\n"),
+                ACE_TEXT ("ACE (%P|%t) Service_Config_Guard:<ctor=%@>")
+                ACE_TEXT (" - config=%@ repo=%@ superceded by repo=%@\n"),
+                this,
+                this->saved_,
                 this->saved_->repo_,
                 psg->repo_));
 
@@ -63,8 +65,9 @@ ACE_Service_Config_Guard::~ACE_Service_Config_Guard (void)
 
   if (ACE::debug ())
     ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("ACE (%P|%t) Service_Config_Guard:<dtor>")
+                ACE_TEXT ("ACE (%P|%t) Service_Config_Guard:<dtor=%@>")
                 ACE_TEXT (" - new repo=%@\n"),
+                this,
                 this->saved_->repo_));
 }
 
@@ -182,7 +185,11 @@ ACE_Service_Config::open_i (const ACE_TCHAR program_name[],
   // The base class open_i increments this and we are
   // forwarding to it, so we don't have to increment here.
   if (this->is_opened_ != 0)
-    return 0;
+    return ACE_Service_Gestalt::open_i (program_name,
+                                        logger_key,
+                                        ignore_static_svcs,
+                                        ignore_default_svc_conf_file,
+                                        ignore_debug_flag);
 
   // Check for things we need to do on a per-process basis and which
   // may not be safe, or wise to do an a per instance basis
