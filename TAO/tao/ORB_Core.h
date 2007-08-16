@@ -164,7 +164,7 @@ class TAO_Export TAO_ORB_Core
 public:
 
   /// Constructor.
-  TAO_ORB_Core (const char* id);
+  TAO_ORB_Core (const char* id, ACE_Service_Gestalt* g);
 
   /// Accessor for the ORB parameters.
   TAO_ORB_Parameters *orb_params (void);
