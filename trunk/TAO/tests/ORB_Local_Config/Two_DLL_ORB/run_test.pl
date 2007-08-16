@@ -34,7 +34,7 @@ sub test($)
         print STDERR "ERROR: test failed, status=$status\n";
     }
     return $status;
-} 
+}
 
 my $status = test("Test");
 
@@ -45,4 +45,3 @@ else {
     print STDERR "ERROR: Some test failed, status=$status\n";
 }
 exit $status;
-

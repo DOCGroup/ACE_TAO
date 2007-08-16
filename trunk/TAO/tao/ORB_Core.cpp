@@ -180,7 +180,8 @@ TAO_ORB_Core_Static_Resources::operator=(const TAO_ORB_Core_Static_Resources& ot
 
 // ****************************************************************
 
-TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
+TAO_ORB_Core::TAO_ORB_Core (const char *orbid,
+                            ACE_Service_Gestalt* gestalt)
   : protocols_hooks_ (0),
     network_priority_protocols_hooks_ (0),
 #if TAO_USE_LOCAL_MEMORY_POOL == 1
@@ -258,6 +259,7 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
     bidir_giop_policy_ (0),
     flushing_strategy_ (0),
     codeset_manager_ (0),
+    config_ (gestalt),
     sync_scope_hook_ (0),
     timeout_hook_ (0)
 {
@@ -285,19 +287,6 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
   ACE_NEW (this->request_dispatcher_,
            TAO_Request_Dispatcher);
 
-  // @TODO: Can this be dynamic container instead?
-  if (ACE_OS::strnlen (this->orbid_, 1) == 0)
-    {
-      ACE_NEW (this->config_,
-               ACE_Service_Gestalt (ACE_Service_Gestalt::MAX_SERVICES,
-                                    false)); // (Re)use the process-global repository
-    }
-  else
-    {
-      ACE_NEW (this->config_,
-               ACE_Service_Gestalt (ACE_Service_Gestalt::MAX_SERVICES / 4,
-                                    true)); // Use our own service repository
-    }
 }
 
 TAO_ORB_Core::~TAO_ORB_Core (void)
@@ -339,7 +328,9 @@ TAO_ORB_Core::~TAO_ORB_Core (void)
   // This will destroy the service repository for this core
   (void) TAO::ORB::close_services (this->config_);
 
-  delete this->config_;
+  if (this->config_ != ACE_Service_Config::global())
+    delete this->config_;
+
   this->config_ = 0;
 }
 

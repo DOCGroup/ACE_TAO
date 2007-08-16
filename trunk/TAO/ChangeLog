@@ -1,3 +1,26 @@
+Thu Aug 16 16:29:46 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/ORB.cpp:
+        * tao/ORB_Core.h:
+        * tao/ORB_Core.cpp:
+
+          Add explicit configuration of configuration contexts to resolve
+          the multiple ORBInitializer issue documented in bug 2995. By
+          default ORBs will use the global configuration context
+          exclusively. If -ORBGestalt Local is supplied on the command
+          line the ORB will create a local configuration context into
+          which separately loaded service objects will override any of
+          those installed in the global context.
+
+        * tests/ORB_Local_Config/Bug_1459/Test.cpp:
+        * tests/ORB_Local_Config/Bug_2612/Test.cpp:
+        * tests/ORB_Local_Config/Two_DLL_ORB/primary-csd.conf:
+        * tests/ORB_Local_Config/Two_DLL_ORB/primary-ssl.conf:
+        * tests/ORB_Local_Config/Two_DLL_ORB/run_test.pl:
+
+          Add the new -ORBGestalt Local option to ensure these tests still
+          perform as intended.
+
 Thu Aug 16 12:13:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/IFR_Service_Utils_T.cpp:
