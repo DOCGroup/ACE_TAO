@@ -1,3 +1,16 @@
+Thu Aug 16 19:19:11 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_field/cdr_op_cs.cpp (visit_interface_fwd):
+        
+          Fixed incorrect code generation for CDR insertion operators
+          for struct members which are forward declared interfaces
+          not yet fully defined, and forward declared inside a reopening
+          of the module in which the struct is defined.
+          
+        * tests/IDL_Test/fwd.idl:
+        
+          Added IDL to test for the use case above.
+
 Thu Aug 16 19:12:27 UTC 2007  Ciju John  <johnc at ociweb dot com>
 
         * tao/Valuetype/Bounded_Valuetype_Sequence_T.h:

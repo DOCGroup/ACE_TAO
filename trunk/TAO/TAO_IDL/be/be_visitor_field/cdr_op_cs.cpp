@@ -355,13 +355,6 @@ be_visitor_field_cdr_op_cs::visit_interface_fwd (be_interface_fwd *node)
         }
       else
         {
-          AST_Decl *parent = ScopeAsDecl (node->defined_in ());
-
-          if (parent != 0 && parent->node_type () != AST_Decl::NT_root)
-            {
-              *os << parent->name () << "::";
-            }
-
           *os << "TAO::Objref_Traits<" << node->name () << ">::marshal ("
               << be_idt << be_idt_nl
               << "_tao_aggregate." << f->local_name () << ".in ()," << be_nl

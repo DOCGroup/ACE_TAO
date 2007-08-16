@@ -31,6 +31,14 @@ module scope_test
   interface i_scope_test;
 };
 
+module scope_test
+{
+  struct same_scope_struct
+  {
+    i_scope_test same_scope_member;
+  };
+};
+
 module mod2
 {
   struct scope_struct
