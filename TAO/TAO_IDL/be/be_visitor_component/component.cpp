@@ -18,8 +18,8 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_component, 
-           component, 
+ACE_RCSID (be_visitor_component,
+           component,
            "$Id$")
 
 // ******************************************************
@@ -64,7 +64,7 @@ be_visitor_component::visit_attribute (be_attribute *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_component::"
                          "visit_attribute - "
-                         "failed to accept visitor\n"),  
+                         "failed to accept visitor\n"),
                         -1);
     }
 
@@ -140,7 +140,7 @@ be_visitor_component::visit_operation (be_operation *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_component::"
                          "visit_operation - "
-                         "failed to accept visitor\n"),  
+                         "failed to accept visitor\n"),
                         -1);
     }
 
@@ -155,7 +155,7 @@ be_visitor_component::visit_operation (be_operation *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_component::"
                          "visit_operation - "
-                         "NUL visitor\n"),  
+                         "NUL visitor\n"),
                          -1);
     }
 
@@ -164,7 +164,7 @@ be_visitor_component::visit_operation (be_operation *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_component::"
                          "visit_operation - "
-                         "failed to accept visitor\n"),  
+                         "failed to accept visitor\n"),
                         -1);
     }
 
@@ -187,7 +187,7 @@ be_visitor_component::visit_operation (be_operation *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_component::"
                              "visit_operation - "
-                             "NUL visitor\n"),  
+                             "NUL visitor\n"),
                             -1);
         }
 
@@ -196,7 +196,7 @@ be_visitor_component::visit_operation (be_operation *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_component::"
                              "visit_operation - "
-                             "failed to accept visitor\n"),  
+                             "failed to accept visitor\n"),
                             -1);
         }
 
@@ -269,7 +269,7 @@ be_visitor_component::visit_structure (be_structure *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_component::"
                          "visit_structure - "
-                         "failed to accept visitor\n"),  
+                         "failed to accept visitor\n"),
                         -1);
     }
 
@@ -334,13 +334,13 @@ be_visitor_component::visit_typedef (be_typedef *node)
     case TAO_CodeGen::TAO_ROOT_IS:
     case TAO_CodeGen::TAO_ROOT_SI:
     case TAO_CodeGen::TAO_ROOT_SS:
-		  return 0; // nothing to be done
+      return 0; // nothing to be done
     default:
       {
         ACE_ERROR_RETURN ((LM_ERROR,
                            "(%N:%l) be_visitor_component::"
                            "visit_typedef - "
-                           "Bad context state\n"), 
+                           "Bad context state\n"),
                           -1);
       }
     }
@@ -350,7 +350,7 @@ be_visitor_component::visit_typedef (be_typedef *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_component::"
                          "visit_typedef - "
-                         "failed to accept visitor\n"),  
+                         "failed to accept visitor\n"),
                         -1);
     }
 

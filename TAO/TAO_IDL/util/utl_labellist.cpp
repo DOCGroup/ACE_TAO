@@ -68,21 +68,21 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 // NOTE: This list class only works correctly because we use single public
 //       inheritance, as opposed to multiple inheritance or public virtual.
-//	     It relies on a type-unsafe cast from UTL_List to subclasses, which
-//	     will cease to operate correctly if you use either multiple or
-//	     public virtual inheritance.
+//       It relies on a type-unsafe cast from UTL_List to subclasses, which
+//       will cease to operate correctly if you use either multiple or
+//       public virtual inheritance.
 
 #include "utl_labellist.h"
 #include "ast_union_label.h"
 
-ACE_RCSID (util, 
-           utl_labellist, 
+ACE_RCSID (util,
+           utl_labellist,
            "$Id$")
 
-UTL_LabelList::UTL_LabelList (AST_UnionLabel *s, 
+UTL_LabelList::UTL_LabelList (AST_UnionLabel *s,
                               UTL_LabelList *cdr)
   : UTL_List(cdr),
-	  pd_car_data(s)
+    pd_car_data(s)
 {
 }
 
@@ -99,7 +99,7 @@ UTL_LabelList::destroy (void)
   this->pd_car_data->destroy ();
   delete this->pd_car_data;
   this->pd_car_data = 0;
-  
+
   this->UTL_List::destroy ();
 }
 

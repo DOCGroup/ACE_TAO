@@ -71,8 +71,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_enum_val.h"
 #include "ast_visitor.h"
 
-ACE_RCSID (ast, 
-           ast_enum_val, 
+ACE_RCSID (ast,
+           ast_enum_val,
            "$Id$")
 
 AST_EnumVal::AST_EnumVal (void)
@@ -85,12 +85,11 @@ AST_EnumVal::AST_EnumVal (void)
 AST_EnumVal::AST_EnumVal (unsigned long v,
                           UTL_ScopedName *n)
   : COMMON_Base (),
-    AST_Decl (AST_Decl::NT_enum_val,
-              n),
-    AST_Constant  (AST_Expression::EV_ulong,
-		               AST_Decl::NT_enum_val,
-			             new AST_Expression (v),
-                   n)
+    AST_Decl (AST_Decl::NT_enum_val, n),
+    AST_Constant (AST_Expression::EV_ulong,
+                  AST_Decl::NT_enum_val,
+                  new AST_Expression (v),
+                  n)
 {
 }
 

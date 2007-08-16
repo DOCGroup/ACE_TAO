@@ -24,8 +24,8 @@
 #include "utl_scope.h"
 #include "nr_extern.h"
 
-ACE_RCSID (be, 
-           be_constant, 
+ACE_RCSID (be,
+           be_constant,
            "$Id$")
 
 be_constant::be_constant (void)
@@ -37,16 +37,12 @@ be_constant::be_constant (void)
 }
 
 be_constant::be_constant (AST_Expression::ExprType et,
-			                    AST_Expression *v,
+                          AST_Expression *v,
                           UTL_ScopedName *n)
   : COMMON_Base (),
-    AST_Decl (AST_Decl::NT_const,
-              n),
-    AST_Constant (et,
-                  v,
-                  n),
-    be_decl (AST_Decl::NT_const,
-             n)
+    AST_Decl (AST_Decl::NT_const, n),
+    AST_Constant (et, v, n),
+    be_decl (AST_Decl::NT_const, n)
 {
 }
 

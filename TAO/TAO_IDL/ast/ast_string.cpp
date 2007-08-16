@@ -78,8 +78,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "idl_defines.h"
 #include "global_extern.h"
 
-ACE_RCSID (ast, 
-           ast_string, 
+ACE_RCSID (ast,
+           ast_string,
            "$Id$")
 
 AST_String::AST_String (void)
@@ -99,13 +99,9 @@ AST_String::AST_String (AST_Decl::NodeType nt,
                         AST_Expression *ms,
                         long wide)
   : COMMON_Base (),
-    AST_Decl (nt,
-		          n,
-              true),
-    AST_Type (nt,
-		          n),
-    AST_ConcreteType (nt,
-		                  n),
+    AST_Decl (nt, n, true),
+    AST_Type (nt, n),
+    AST_ConcreteType (nt, n),
     pd_max_size (ms),
     pd_width (wide)
 {

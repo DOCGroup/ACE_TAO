@@ -56,8 +56,8 @@
 //
 // Implementation of a list of declarators
 
-#include	<idl.hh>
-#include	<idl_extern.hh>
+#include <idl.hh>
+#include <idl_extern.hh>
 
 ACE_RCSID(utl_tmpl, utl_decllist, "$Id$")
 
@@ -66,7 +66,7 @@ ACE_RCSID(utl_tmpl, utl_decllist, "$Id$")
  */
 
 UTL_DeclList::UTL_DeclList(FE_Declarator *s, UTL_DeclList *cdr)
-	    : UTL_List<UTL_DeclList, FE_Declarator>(s, cdr)
+  : UTL_List<UTL_DeclList, FE_Declarator>(s, cdr)
 {
 }
 
@@ -89,7 +89,7 @@ UTL_DeclList::UTL_DeclList(FE_Declarator *s, UTL_DeclList *cdr)
  */
 
 UTL_DecllistActiveIterator::UTL_DecllistActiveIterator(UTL_DeclList *s)
-		    : UTL_ListActiveIterator<UTL_DeclList, FE_Declarator>(s)
+  : UTL_ListActiveIterator<UTL_DeclList, FE_Declarator>(s)
 {
 }
 

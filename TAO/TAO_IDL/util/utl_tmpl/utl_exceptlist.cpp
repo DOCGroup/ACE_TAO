@@ -56,8 +56,8 @@
 //
 // Implementation of a list of exceptions
 
-#include	<idl.hh>
-#include	<idl_extern.hh>
+#include <idl.hh>
+#include <idl_extern.hh>
 
 ACE_RCSID(utl_tmpl, utl_exceptlist, "$Id$")
 
@@ -66,7 +66,7 @@ ACE_RCSID(utl_tmpl, utl_exceptlist, "$Id$")
  */
 
 UTL_ExceptList::UTL_ExceptList(AST_Exception *s, UTL_ExceptList *cdr)
-	      : UTL_List<UTL_ExceptList, AST_Exception>(s, cdr)
+  : UTL_List<UTL_ExceptList, AST_Exception>(s, cdr)
 {
 }
 
@@ -89,7 +89,7 @@ UTL_ExceptList::UTL_ExceptList(AST_Exception *s, UTL_ExceptList *cdr)
  */
 
 UTL_ExceptlistActiveIterator::UTL_ExceptlistActiveIterator(UTL_ExceptList *s)
-		: UTL_ListActiveIterator<UTL_ExceptList, AST_Exception>(s)
+  : UTL_ListActiveIterator<UTL_ExceptList, AST_Exception>(s)
 {
 }
 
