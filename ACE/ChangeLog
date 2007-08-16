@@ -1,5 +1,19 @@
+Thu Aug 16 15:28:45 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * ace/Service_Config.cpp:
+
+          Part of fix for bug 2995. Both the Service Config and Service
+          Gestalt have separate open counts, but multiple calls to open_i
+          on the Service Config were not propogated to Service Gestalt.
+          This led to a problem where closing a multiply opened Service
+          Config would result in a premature clean up of resources in the
+          Gestalt, triggering a crash later on.
+
+        * ace/Service_Types.cpp:
+          Make debugging output more clear.
+
 Thu Aug 16 00:04:21 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
-        
+
         * protocols/ace/HTBP/HTBP_Environment.cpp:
         * protocols/ace/TMCast/FaultDetector.hpp:
           Untabify.
