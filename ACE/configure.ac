@@ -4510,7 +4510,35 @@ dnl name.
     ,
     [AC_DEFINE([ACE_LACKS_CONDATTR_PSHARED])])
 
-  ACE_CHECK_LACKS_FUNCS(pthread_attr_setstack)
+  dnl ACE_CHECK_LACKS_FUNCS(pthread_attr_setstack)
+  dnl Can't use ACE_CHECK_LACKS_FUNCS because the lower-down AC macros build
+  dnl a program with a stubbed-out pthread_attr_setstack(), avoiding the need
+  dnl to see pthread_attr_setstack() in pthreads.h. This is usually not a
+  dnl problem since the link will fail. However, on HP-UX 11iv2 there is a
+  dnl pthread_attr_setstack() in libpthread, but not in the header. Thus,
+  dnl the test passes, but ACE build fails. Don't hack in use of this until
+  dnl HP sees fit to include it in pthread.h (which it does at 11iv3).
+  AC_MSG_CHECKING([for pthread_attr_setstack])
+  AH_TEMPLATE([ACE_LACKS_PTHREAD_ATTR_SETSTACK],
+               [Define to 1 if platform lacks pthread_attr_setstack()])
+  AC_LINK_IFELSE([AC_LANG_PROGRAM(
+    [[
+#include <pthread.h>
+    ]],
+    [[
+      pthread_attr_t attr;
+      void *stack;
+      size_t size;
+      pthread_attr_setstack (&attr, stack, size);
+    ]])],
+    [
+      AC_MSG_RESULT([yes])
+    ],
+    [
+      AC_MSG_RESULT([no])
+      AC_DEFINE([ACE_LACKS_PTHREAD_ATTR_SETSTACK])
+    ])
+
   ACE_CHECK_LACKS_FUNCS(pthread_attr_setstackaddr)
   ACE_CHECK_LACKS_FUNCS(pthread_attr_setstacksize)
 
