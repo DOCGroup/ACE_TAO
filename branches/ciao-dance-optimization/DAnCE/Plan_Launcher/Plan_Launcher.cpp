@@ -31,6 +31,10 @@ namespace CIAO
     size_t niterations = 0;
     size_t nthreads = 1;
     CORBA::Short priority = 0;
+    
+    /* For benchmarking purpose only */
+    size_t total_nodes = 1;
+    size_t total_components = 1;
 
     enum mode_type {
       pl_mode_start,
@@ -74,7 +78,7 @@ namespace CIAO
     {
       ACE_Get_Opt get_opt (argc,
                            argv,
-                           ACE_TEXT ("a:b:c:e:p:nk:l:v:t:o:i:r:z:h"));
+                           ACE_TEXT ("a:b:c:e:p:nk:l:v:t:o:i:r:x:y:z:h"));
       int c;
 
       while ((c = get_opt ()) != EOF)
@@ -129,6 +133,12 @@ namespace CIAO
               case 'r':
                 new_deployment_plan_url = get_opt.opt_arg ();
                 mode = pl_mode_redeployment;
+                break;
+              case 'x':
+                total_nodes = ACE_OS::atoi (get_opt.opt_arg ());
+                break;
+              case 'y':
+                total_components = ACE_OS::atoi (get_opt.opt_arg ());
                 break;
               case 'z':
                 priority = ACE_OS::atoi (get_opt.opt_arg ());
@@ -222,7 +232,9 @@ namespace CIAO
                                rm_use_naming ? repoman_name_ : rm_ior_file,
                                priority,
                                niterations,
-                               nthreads))
+                               nthreads,
+                               total_nodes,
+                               total_components))
             {
               ACE_ERROR ((LM_ERROR, "(%P|%t) Plan_Launcher: Error initializing the EM.\n"));
               return -1;

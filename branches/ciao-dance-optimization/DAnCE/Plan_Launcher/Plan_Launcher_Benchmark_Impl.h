@@ -35,9 +35,6 @@ namespace CIAO
       virtual const char * launch_plan (const ::Deployment::DeploymentPlan &plan);
 
       const char * launch_plan_i (const ::Deployment::DeploymentPlan &plan);
-      
-    protected:
-
     };
 
   }

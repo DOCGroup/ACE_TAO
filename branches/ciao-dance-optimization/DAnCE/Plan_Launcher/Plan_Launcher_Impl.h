@@ -47,7 +47,9 @@ namespace CIAO
                  const char *rm_name = 0,
                  CORBA::Short priority = 0,
                  size_t niterations = 0,
-                 size_t nthreads = 1);
+                 size_t nthreads = 1,
+                 size_t total_nodes = 1,
+                 size_t total_components = 1);
 
       /**
        * @brief Launch a plan, given a deployment plan URI
@@ -112,6 +114,12 @@ namespace CIAO
 
       /// Total number of threads to spawn inside plan_launcher
       size_t nthreads_;
+
+      /// Total number of nodes
+      size_t total_nodes_;
+
+      /// Total number of components
+      size_t total_components_;
 
     };
 

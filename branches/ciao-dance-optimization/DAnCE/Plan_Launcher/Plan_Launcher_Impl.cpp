@@ -51,12 +51,16 @@ namespace CIAO
                            const char *rm_name,
                            CORBA::Short priority,
                            size_t niterations,
-                           size_t nthreads)
+                           size_t nthreads,
+                           size_t total_nodes,
+                           size_t total_components)
     {
       this->orb_ = CORBA::ORB::_duplicate  (orb);
       this->niterations_ = niterations;
       this->nthreads_ = nthreads;
       this->desired_priority_ = priority;
+      this->total_nodes_ = total_nodes;
+      this->total_components_ = total_components;
 
       CORBA::Object_var obj;
 

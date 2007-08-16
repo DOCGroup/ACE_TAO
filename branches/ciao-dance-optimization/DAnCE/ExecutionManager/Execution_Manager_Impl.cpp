@@ -455,7 +455,7 @@ dump_connections (const ::Deployment::Connections & connections)
                   "Execution_Manage::passivate shared components.\n"));
 
       // Find the NodeApplication hosting the component, and then call
-      // <finishLaunch> on it
+      // <passivate_component> on it
       try
       {
         Deployment::NodeApplication_var

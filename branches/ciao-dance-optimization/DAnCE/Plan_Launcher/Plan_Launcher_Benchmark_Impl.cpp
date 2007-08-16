@@ -85,18 +85,32 @@ namespace CIAO
           DAnCE_Utils::remove_instance (tmp_plan, 
                                         "Hello-Sender-idd");       
 
-          char trailing[256];
-          ACE_OS::itoa (i, trailing, 10);
-          ACE_CString inst_name ("Sender");
-          inst_name += trailing;
-          DAnCE_Utils::add_instances (100,
-                                      tmp_plan, 
-                                      inst_name.c_str (),
-                                      "SenderNode",
-                                      "Hello-Sender-mdd",
-                                      0);
+          /* Modify the deployment plan. For each thread, we must
+             give different component instance name to avoid
+             confusing DAnCE to treat them as shared components */
 
+          // Instance name starts with thread_id (i.e., task_id).
+          char thread_id[256];
+          ACE_OS::itoa (i, thread_id, 10);
+          ACE_CString inst_name ("Task_");
+          inst_name += thread_id;  
+          inst_name += "_";
 
+          // Now we add component instances into the plan 
+          for (size_t j = 0; j < this->total_nodes_; ++j)
+            {
+              char node_id[256];
+              ACE_OS::itoa (j, node_id, 10);
+              ACE_CString node_name ("node");
+              inst_name += node_id;  
+
+              DAnCE_Utils::add_instances (this->total_components_,
+                                          tmp_plan, 
+                                          inst_name.c_str (),
+                                          node_id,
+                                          "Hello-Sender-mdd",
+                                          0);
+            }
 
           Task * task;
 
