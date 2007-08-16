@@ -101,13 +101,13 @@ private:
 
   template <typename stream, typename object_t, typename object_t_var, CORBA::ULong MAX>
   bool marshal_sequence(stream & strm, const TAO::bounded_valuetype_sequence<object_t, object_t_var, MAX> & source) {
-    typedef typename TAO::bounded_valuetype_sequence<object_t, object_t_var, MAX>::object_type seq_object_t;
+
     const ::CORBA::ULong length = source.length ();
     if (!(strm << length)) {
       return false;
     }
     for(CORBA::ULong i = 0; i < length; ++i) {
-      if (!TAO::Objref_Traits<seq_object_t>::marshal (source[i], strm)) {
+      if (!(strm << source[i])) {
         return false;
       }
     }
