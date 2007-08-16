@@ -15,7 +15,7 @@
 module Foo
 {
   struct Node {
-    sequence <Node,2> nodes;
+    sequence <Node,5> nodes;
   };
-  
+
 };
