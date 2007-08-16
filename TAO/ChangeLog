@@ -1,3 +1,23 @@
+Thu Aug 16 11:34:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Bounded_Object_Reference_Sequence_T.h:
+        * tao/Object_Reference_Const_Sequence_Element_T.h:
+        * tao/Unbounded_Object_Reference_Sequence_T.h:
+          Let the const operator[] return a const element on which
+          we can use .in(). Fixes bugzilla 2829
+
+        * tao/EndpointPolicy/EndpointPolicy_Factory.cpp:
+          Use .in on the element returned by operator[]
+
+        * tao/Bounded_Object_Reference_Sequence_T.h:
+          Improved doxygen docu
+
+        * tao/diffs/Domain.diff:
+          Removed, obsolete
+
+        * tao/String_Const_Sequence_Element_T.h:
+          Const improvement
+
 Thu Aug 16 09:54:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Incoming_Message_Stack.h:
