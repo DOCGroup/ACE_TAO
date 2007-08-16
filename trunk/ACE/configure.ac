@@ -5221,10 +5221,20 @@ if test "$ace_user_enable_exceptions" = yes; then
 # include <exception.h>
 #endif
 
+/* We already checked for ACE_LACKS_NUMERIC_LIMITS */
+#if !defined ACE_LACKS_NUMERIC_LIMITS
+#include <limits>
+#endif
+
         int main(int, char *[]) {
+#if defined ACE_LACKS_NUMERIC_LIMITS
+          const size_t ALLOC_SIZE = 2 * 1024 * 1024 * 1024;
+#else
+          const size_t ALLOC_SIZE = std::numeric_limits<size_t>::max () / 2;
+#endif
           while (1) {
             try {
-              char *a = new char[1024*1024];
+              char *a = new char[ALLOC_SIZE];
               if (a == 0) {
                 return 1; /* new() does NOT throw exceptions */
               }
@@ -5268,10 +5278,20 @@ if test "$ace_user_enable_exceptions" = yes; then
 # include <exception.h>
 #endif
 
+/* We already checked for ACE_LACKS_NUMERIC_LIMITS */
+#if !defined ACE_LACKS_NUMERIC_LIMITS
+#include <limits>
+#endif
+
         int main(int, char *[]) {
+#if defined ACE_LACKS_NUMERIC_LIMITS
+          const size_t ALLOC_SIZE = 2 * 1024 * 1024 * 1024;
+#else
+          const size_t ALLOC_SIZE = std::numeric_limits<size_t>::max () / 2;
+#endif
           while (1) {
             try {
-              char *a = new char[1024*1024];
+              char *a = new char[ALLOC_SIZE];
               if (a == 0) {
                 return 1; /* new() does NOT throw exceptions */
               }
