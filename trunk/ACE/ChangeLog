@@ -1,3 +1,12 @@
+Thu Aug 16 21:53:36 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * configure.ac: When checking for pthread_attr_setstack(), don't use
+          the ACE_CHECK_LACKS_FUNCS macro - the underlying autoconf macros
+          generate code that will compile/link on HP-UX 11iv2 because there's
+          an entrypoint for it in libpthread, but it's not supported. So
+          check with a hand-crafted short code segment. Thanks to Johnny
+          Willemsen for this idea.
+
 Thu Aug 16 20:02:53 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * netsvcs/clients/Logger/direct_logging.cpp:
