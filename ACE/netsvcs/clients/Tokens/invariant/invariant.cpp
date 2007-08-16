@@ -4,7 +4,7 @@
 //
 // = LIBRARY
 //    examples
-// 
+//
 // = FILENAME
 //    invariant.cpp
 //
@@ -12,7 +12,7 @@
 //
 // = AUTHOR
 //    Tim Harrison
-// 
+//
 // ============================================================================
 
 #include "ace/Get_Opt.h"
@@ -36,35 +36,35 @@ run_reader_writer (void *)
     {
       int y = 0;
       for (; y < 5; y++)
-	{
-	  if (ACE_TOKEN_INVARIANTS::instance ()->reader_acquired (rwname) == 0)
-	    ACE_ERROR_RETURN ((LM_ERROR, "reader acquire violated invariant.\n"), 0);
+        {
+          if (ACE_TOKEN_INVARIANTS::instance ()->reader_acquired (rwname) == 0)
+            ACE_ERROR_RETURN ((LM_ERROR, "reader acquire violated invariant.\n"), 0);
 
-	  ACE_DEBUG ((LM_DEBUG, "(%t) rlock acquired.\n"));
-	}
+          ACE_DEBUG ((LM_DEBUG, "(%t) rlock acquired.\n"));
+        }
 
       ACE_TOKEN_INVARIANTS::instance ()->rwlock_releasing (rwname);
 
       if (ACE_TOKEN_INVARIANTS::instance ()->reader_acquired (rwname) == 0)
-	ACE_ERROR_RETURN ((LM_ERROR, "reader renew violated invariant.\n"), 0);
+        ACE_ERROR_RETURN ((LM_ERROR, "reader renew violated invariant.\n"), 0);
 
       ACE_DEBUG ((LM_DEBUG, "(%t) rlock renewed.\n"));
-      
+
       for (; y > 0; y--)
-	{
-	  ACE_TOKEN_INVARIANTS::instance ()->rwlock_releasing (rwname);
-	  ACE_DEBUG ((LM_DEBUG, "(%t) r-released.\n"));
-	}
+        {
+          ACE_TOKEN_INVARIANTS::instance ()->rwlock_releasing (rwname);
+          ACE_DEBUG ((LM_DEBUG, "(%t) r-released.\n"));
+        }
 
       if (ACE_TOKEN_INVARIANTS::instance ()->writer_acquired (rwname) == 0)
-	ACE_ERROR_RETURN ((LM_ERROR, "writer acquire violated invariant.\n"), 0);
+        ACE_ERROR_RETURN ((LM_ERROR, "writer acquire violated invariant.\n"), 0);
 
       ACE_DEBUG ((LM_DEBUG, "\t\t(%t) wlock acquired.\n"));
 
       ACE_TOKEN_INVARIANTS::instance ()->rwlock_releasing (rwname);
 
       if (ACE_TOKEN_INVARIANTS::instance ()->writer_acquired (rwname) == 0)
-	ACE_ERROR_RETURN ((LM_ERROR, "writer renew violated invariant.\n"), 0);
+        ACE_ERROR_RETURN ((LM_ERROR, "writer renew violated invariant.\n"), 0);
 
       ACE_DEBUG ((LM_DEBUG, "(%t) rlock renewed.\n"));
 
@@ -81,17 +81,17 @@ run_mutex (void *)
   for (int x = 0; x < 50; x++)
     {
       if (ACE_TOKEN_INVARIANTS::instance ()->mutex_acquired (mutexname) == 0)
-	ACE_ERROR_RETURN ((LM_ERROR, "mutex acquire violated invariant.\n"), 0);
+        ACE_ERROR_RETURN ((LM_ERROR, "mutex acquire violated invariant.\n"), 0);
 
       ACE_DEBUG ((LM_DEBUG, "(%t) mutex acquired.\n"));
 
       ACE_TOKEN_INVARIANTS::instance ()->mutex_releasing (mutexname);
 
       if (ACE_TOKEN_INVARIANTS::instance ()->mutex_acquired (mutexname) == 0)
-	ACE_ERROR_RETURN ((LM_ERROR, "mutex renew violated invariant.\n"), 0);
+        ACE_ERROR_RETURN ((LM_ERROR, "mutex renew violated invariant.\n"), 0);
 
       ACE_DEBUG ((LM_DEBUG, "(%t) mutex renewed.\n"));
-      
+
       ACE_TOKEN_INVARIANTS::instance ()->mutex_releasing (mutexname);
       ACE_DEBUG ((LM_DEBUG, "(%t) mutex released.\n"));
     }
@@ -163,8 +163,8 @@ main (int /* argc */, char* /* argv */ [])
 
   // Run reader/writer test
   if (mgr.spawn_n (2, ACE_THR_FUNC (run_reader_writer),
-		   (void *) 0,
-		   THR_NEW_LWP | THR_DETACHED) == -1)
+                   (void *) 0,
+                   THR_NEW_LWP | THR_DETACHED) == -1)
     ACE_ERROR_RETURN ((LM_DEBUG, "%p\n", "spawn failed"), -1);
 
   mgr.wait ();
@@ -173,8 +173,8 @@ main (int /* argc */, char* /* argv */ [])
 
   // Run mutex test.
   if (mgr.spawn_n (2, ACE_THR_FUNC (run_mutex),
-		   (void *) 0, 
-		   THR_NEW_LWP | THR_DETACHED) == -1)
+                   (void *) 0,
+                   THR_NEW_LWP | THR_DETACHED) == -1)
     ACE_ERROR_RETURN ((LM_DEBUG, "%p\n", "spawn failed"), -1);
 
   mgr.wait ();
@@ -187,10 +187,10 @@ main (int /* argc */, char* /* argv */ [])
 }
 
 #else
-int 
+int
 main (int, char *[])
 {
-  ACE_ERROR_RETURN ((LM_ERROR, 
-		     "threads not supported on this platform\n"), -1);
+  ACE_ERROR_RETURN ((LM_ERROR,
+                     "threads not supported on this platform\n"), -1);
 }
 #endif /* ACE_HAS_THREADS */

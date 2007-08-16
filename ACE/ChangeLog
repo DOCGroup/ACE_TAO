@@ -1,3 +1,19 @@
+Thu Aug 16 20:02:53 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * netsvcs/clients/Logger/direct_logging.cpp:
+        * netsvcs/clients/Logger/indirect_logging.cpp:
+        * netsvcs/clients/Tokens/collection/collection.cpp:
+        * netsvcs/clients/Tokens/collection/rw_locks.cpp:
+        * netsvcs/clients/Tokens/deadlock/deadlock_detection_test.cpp:
+        * netsvcs/clients/Tokens/invariant/invariant.cpp:
+        * netsvcs/clients/Tokens/mutex/test_mutex.cpp:
+        * netsvcs/clients/Tokens/rw_lock/rw_locks.cpp:
+          Untabify
+
+        * bin/fuzz.pl:
+          Remove netsvcs directory from the list of excluded
+          directories for the tabs check.
+
 Thu Aug 16 19:41:23 UTC 2007  Steve Huston  <shuston@riverace.com>
 
         * configure.ac: Adjusted the checks for "new throws..." to grab

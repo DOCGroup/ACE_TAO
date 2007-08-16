@@ -27,8 +27,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ACE_SOCK_Connector connector;
   ACE_INET_Addr addr (logger_port, logger_host);
   ACE_Log_Record log_record (LM_DEBUG,
-			     ACE_OS::time ((time_t *) 0),
-			     ACE_OS::getpid ());
+                             ACE_OS::time ((time_t *) 0),
+                             ACE_OS::getpid ());
 
   if (connector.connect (logger, addr) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "open"), -1);
@@ -58,7 +58,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   header << ACE_CDR::ULong (length);
 
   // Use an iovec to send both buffer and payload simultaneously.
-  iovec iov[2];  
+  iovec iov[2];
   iov[0].iov_base = header.begin ()->rd_ptr ();
   iov[0].iov_len  = 8;
   iov[1].iov_base = payload.begin ()->rd_ptr ();

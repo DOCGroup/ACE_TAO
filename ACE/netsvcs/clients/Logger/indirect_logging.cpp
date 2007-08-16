@@ -38,9 +38,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ACE_POW (priority);
       ACE_Log_Priority log_priority = ACE_Log_Priority (priority);
       ACE_DEBUG ((log_priority,
-		  "random message %s (%d)...\n",
+                  "random message %s (%d)...\n",
                   ACE_Log_Record::priority_name (log_priority),
-		  priority));
+                  priority));
     }
 
   ACE_DEBUG ((LM_SHUTDOWN, "closing down the test\n"));

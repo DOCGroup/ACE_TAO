@@ -4,7 +4,7 @@
 //
 // = LIBRARY
 //    examples
-// 
+//
 // = FILENAME
 //    collection.cpp
 //
@@ -16,7 +16,7 @@
 //
 // = AUTHOR
 //    Tim Harrison
-// 
+//
 // ============================================================================
 
 #include "ace/Get_Opt.h"
@@ -47,41 +47,40 @@ run_thread (void *vp)
   while (count--)
     {
       if (collection->acquire () == -1)
-	{
-	  if (ACE_OS::last_error () == EDEADLK)
-	    {
-	      ACE_DEBUG ((LM_DEBUG, "deadlock detected in acquire"));
-	      continue;
-	    }
-	  ACE_ERROR ((LM_ERROR, "(%t) %p acquire failed\n","run_thread"));
-	  return (void *) -1;
-	}
-      
+        {
+          if (ACE_OS::last_error () == EDEADLK)
+            {
+              ACE_DEBUG ((LM_DEBUG, "deadlock detected in acquire"));
+              continue;
+            }
+          ACE_ERROR ((LM_ERROR, "(%t) %p acquire failed\n","run_thread"));
+          return (void *) -1;
+        }
+
       ACE_DEBUG ((LM_DEBUG, "(%t) %s acquired.\n", collection->name ()));
 
       if (collection->renew () == -1)
-	{
-	  if (ACE_OS::last_error () == EDEADLK)
-	    {
-	      ACE_DEBUG ((LM_DEBUG, "deadlock detected"));
-	      goto deadlock;
-	    }
-	  ACE_ERROR ((LM_ERROR, "(%t) %p renew failed\n","run_thread"));
-	  return (void *) -1;
-	}
+        {
+          if (ACE_OS::last_error () == EDEADLK)
+            {
+              ACE_DEBUG ((LM_DEBUG, "deadlock detected"));
+              goto deadlock;
+            }
+          ACE_ERROR ((LM_ERROR, "(%t) %p renew failed\n","run_thread"));
+          return (void *) -1;
+        }
 
       ACE_DEBUG ((LM_DEBUG, "(%t) %s renewed.\n", collection->name ()));
 
-    deadlock:
-      if (collection->release () == -1)
-	{
-	  ACE_ERROR ((LM_ERROR, "(%t) %p release failed\n","run_thread"));
-	  return (void *) -1;
-	}
+      deadlock:
+        if (collection->release () == -1)
+          {
+            ACE_ERROR ((LM_ERROR, "(%t) %p release failed\n","run_thread"));
+            return (void *) -1;
+          }
 
       ACE_DEBUG ((LM_DEBUG, "(%t) %s released.\n", collection->name ()));
     }
-
 
   ACE_DEBUG ((LM_DEBUG, "(%t) thread exiting.\n"));
   return 0;
@@ -97,32 +96,32 @@ parse_args (int argc, char *argv[])
   for (int c; (c = get_opt ()) != -1; )
     {
       switch (c)
-	{
-	case 'h':  // specify the host machine on which the server is running
-	  server_host = get_opt.opt_arg ();
-	  remote = 1;
-	  break;
-	case 'p':  // specify the port on which the server is running
-	  server_port = ACE_OS::atoi (get_opt.opt_arg ());
-	  remote = 1;
-	  break;
-	case 'd':
-	  debug = 1;
-	  break;
-	case 'n':
-	  iterations = ACE_OS::atoi (get_opt.opt_arg ());
-	  break;
-	case 'u':
-	  // usage: fallthrough
-	default:
-	  ACE_ERROR_RETURN ((LM_ERROR, 
-			     "%n:\n"
-			     "[-h <remote host>]\n"
-			     "[-p <remote port>]\n"
-			     "[-n <iterations>]\n"
-			     "[-d debug]\n", 1), -1);
-	  /* NOTREACHED */
-	}
+        {
+        case 'h':  // specify the host machine on which the server is running
+          server_host = get_opt.opt_arg ();
+          remote = 1;
+          break;
+        case 'p':  // specify the port on which the server is running
+          server_port = ACE_OS::atoi (get_opt.opt_arg ());
+          remote = 1;
+          break;
+        case 'd':
+          debug = 1;
+          break;
+        case 'n':
+          iterations = ACE_OS::atoi (get_opt.opt_arg ());
+          break;
+        case 'u':
+        // usage: fallthrough
+        default:
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "%n:\n"
+                             "[-h <remote host>]\n"
+                             "[-p <remote port>]\n"
+                             "[-n <iterations>]\n"
+                             "[-d debug]\n", 1), -1);
+          /* NOTREACHED */
+        }
     }
 
   return 0;
@@ -178,15 +177,15 @@ main (int argc, char* argv[])
   ACE_Thread_Manager *mgr = ACE_Thread_Manager::instance ();
 
   if (mgr->spawn (ACE_THR_FUNC (run_thread),
-		 (void *) &collectionAR, THR_BOUND | THR_SUSPENDED) == -1)
+                  (void *) &collectionAR, THR_BOUND | THR_SUSPENDED) == -1)
     ACE_ERROR_RETURN ((LM_DEBUG, "%p\n", "spawn 1 failed"), -1);
 
   if (mgr->spawn (ACE_THR_FUNC (run_thread),
-		 (void *) &collectionAW, THR_BOUND | THR_SUSPENDED) == -1)
+                  (void *) &collectionAW, THR_BOUND | THR_SUSPENDED) == -1)
     ACE_ERROR_RETURN ((LM_DEBUG, "%p\n", "spawn 2 failed"), -1);
 
   if (mgr->spawn (ACE_THR_FUNC (run_thread),
-		 (void *) &collectionBR, THR_BOUND | THR_SUSPENDED) == -1)
+                  (void *) &collectionBR, THR_BOUND | THR_SUSPENDED) == -1)
     ACE_ERROR_RETURN ((LM_DEBUG, "%p\n", "spawn 3 failed"), -1);
 
 #if ! defined (ACE_HAS_PTHREADS)
@@ -201,10 +200,10 @@ main (int argc, char* argv[])
 }
 
 #else
-int 
+int
 main (int, char *[])
 {
-  ACE_ERROR_RETURN ((LM_ERROR, 
-		     "threads not supported on this platform\n"), -1);
+  ACE_ERROR_RETURN ((LM_ERROR,
+                     "threads not supported on this platform\n"), -1);
 }
 #endif /* ACE_HAS_THREADS && ACE_HAS_TOKENS_LIBRARY */
