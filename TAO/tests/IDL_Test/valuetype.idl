@@ -52,6 +52,7 @@ union MyValueTypeUnion switch (ValueSort2) {
 valuetype RecValueType
 {
   private sequence<RecValueType> rec_value_types;
+  private sequence<RecValueType,2> rec_value_types2;
 };
 
 // Inherits an anonymous sequence member, which was not named
