@@ -1,3 +1,8 @@
+Thu Aug 16 19:41:23 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * configure.ac: Adjusted the checks for "new throws..." to grab
+          much larger chunks; helps it run quicker and more accurately.
+
 Thu Aug 16 15:28:45 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * ace/Service_Config.cpp:
