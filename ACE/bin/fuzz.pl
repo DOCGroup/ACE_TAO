@@ -317,7 +317,6 @@ sub check_for_tab ()
                         ($file =~ /(ACE)*.*ACEXML/i)            ||
                         ($file =~ /(TAO)*.*tests/i)             ||
                         ($file =~ /(TAO)*.*utils/i)             ||
-                        ($file =~ /(TAO)*.*TAO_IDL/i)           ||
                         ($file =~ /(TAO)*.*orbsvcs/i)           ||
                         ($file =~ /(TAO)*.*docs/i)              ||
                         ($file =~ /(TAO)*.*tools/i)             ||
