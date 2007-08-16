@@ -1,0 +1,35 @@
+// -*- MPC -*-
+// $Id$
+
+project(*Perf_IDL): taoidldefaults, strategies {
+  IDL_Files {
+    callback.idl
+  }
+  custom_only = 1
+}
+
+project(*server): taoserver, messaging, strategies {
+  after += *Perf_IDL
+  avoids += ace_for_tao
+  Source_Files {
+    callbackC.cpp
+    callbackS.cpp
+    Server_i.cpp
+    server.cpp
+  }
+  IDL_Files {
+  }
+}
+
+project(*client): taoexe, messaging, portableserver, strategies {
+  after += *Perf_IDL
+  avoids += ace_for_tao
+  Source_Files {
+    callbackC.cpp
+    callbackS.cpp
+    Callback_i.cpp
+    client.cpp
+  }
+  IDL_Files {
+  }
+}

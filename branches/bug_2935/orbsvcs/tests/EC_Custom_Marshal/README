@@ -1,0 +1,19 @@
+# $Id$
+
+	This example shows how to do custom marshaling of IDL and
+non-IDL data structures in TAO, store the resulting CDR stream in an
+octet sequence, send it to a remove server and then demarshal it.
+	The example emphasize the use of efficient, non-copy
+mechanisms to achieve those goals.
+
+To run this test just start the Naming_Service, the Event_Service and then
+start
+
+$ ./ECM_Consumer
+
+and after that
+
+$ ./ECM_Supplier
+
+you can vary the size of the payload (the number of elements in arrays
+and sequences) using the -b option to the ECM_Supplier program.
