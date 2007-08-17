@@ -203,10 +203,7 @@ namespace CIAO
           PortableServer::POA_var child_poa;
           if (rt_corba_enabled)
             {
-              ///  Create thread pool with lanes  /////
-              ///
-
-              CORBA::ULong TOTAL_LANES = 3; // avoid magic number
+              /*  Create thread pool with lanes  */
               RTCORBA::ThreadpoolLanes lanes (total_lanes);
               lanes.length (total_lanes);
 
@@ -229,6 +226,10 @@ namespace CIAO
              for (CORBA::ULong i = 0; i < total_lanes; ++i)
                 {
                   lanes[i].lane_priority = default_thread_priority + i;
+                  ACE_DEBUG ((LM_DEBUG, 
+                              "***** Lane[%d] Priority: [%d]\n", 
+                              i,
+                              lanes[i].lane_priority));
                 }
 
               RTCORBA::ThreadpoolId threadpool_id =
