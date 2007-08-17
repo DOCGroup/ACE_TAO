@@ -264,6 +264,22 @@ options on the same command-line. </td>
      side-effect of not initializing the ACE Service Configurator
      framework or registering the SIGHUP signal.
      </td>
+      </tr>
+      <tr>
+     <td><code>-ORBSGestalt Local|ORB:<i>orbid</i></CODE> </td>
+     <TD>Instruct the ORB to create a local configuration "gestalt" or
+     context. By default, all ORBs share a common configuration context. This
+     is defined by a Service Repository that contains service objects, such
+     as the resource factory. In some cases multiple ORBs may be dynamically
+     loaded and as such may wish to have distinct configurations. Passing the
+     <code>Local</code> argument achieves this. Service objects loaded by an
+     ORB with a local configuration context will be used by that ORB in place
+     of any default service object. The final variation is that of shared
+     contexts. Passing the argument <code>ORB:<i>orbid</i></code> will cause
+     the ORB to share the local configuration of another ORB as identified with
+     the supplied id. <i>The shared context feature is not yet implemented.</i>
+     </td>
+      </tr>
     </tbody>
   </table>
   </p>
