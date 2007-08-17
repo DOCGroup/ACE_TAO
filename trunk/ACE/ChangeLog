@@ -1,3 +1,8 @@
+Fri Aug 17 22:56:54 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * tests/Manual_Event_Test.cpp: Added additional diagnostics; fixed
+          spacing; removed ACE_ASSERT.
+
 Fri Aug 17 21:52:37 UTC 2007  Steve Huston  <shuston@riverace.com>
 
         * ace/config-linux-common.h: Only include config-posix.h when
