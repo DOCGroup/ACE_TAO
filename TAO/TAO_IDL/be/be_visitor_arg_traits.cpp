@@ -41,6 +41,7 @@
 #include "be_extern.h"
 #include "utl_identifier.h"
 #include "idl_defines.h"
+#include "nr_extern.h"
 #include "ace/Log_Msg.h"
 
 #include <string>
@@ -564,20 +565,28 @@ be_visitor_arg_traits::visit_argument (be_argument *node)
 
   bool const skel =
     (this->ctx_->state () == TAO_CodeGen::TAO_ROOT_SS);
+    
+  AST_Decl *op = ScopeAsDecl (node->defined_in ());
+  AST_Decl *intf = ScopeAsDecl (op->defined_in ());
+  ACE_CString arg_flat_name (intf->flat_name ());
+  arg_flat_name += '_';
+  arg_flat_name += op->local_name ()->get_string ();
+  arg_flat_name += '_';
+  arg_flat_name += node->local_name ()->get_string ();
 
   // Avoid generating a duplicate structure in the skeleton when
   // generating Arg_Traits<> for ThruPOA and direct collocation code.
   if (!skel
       || (skel && ACE_OS::strlen (this->S_) != 0))
     {
-      *os << "struct " << node->flat_name () << " {};"
+      *os << "struct " << arg_flat_name.c_str () << " {};"
           << be_nl << be_nl;
     }
 
   *os << "template<>" << be_nl
       << "class "
       << this->S_ << "Arg_Traits<"
-      << node->flat_name ()
+      << arg_flat_name.c_str ()
       << ">" << be_idt_nl
       << ": public" << be_idt << be_idt_nl
       << "BD_String_" << this->S_ << "Arg_Traits_T<" << be_nl
