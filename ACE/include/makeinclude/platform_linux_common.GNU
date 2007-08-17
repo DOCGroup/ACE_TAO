@@ -75,7 +75,10 @@ PLATFORM_AIO_SUPPORT := \
 
 GNU_LIBPTHREAD_VERSION := $(shell getconf GNU_LIBPTHREAD_VERSION)
 ifeq (NPTL, $(word 1,$(GNU_LIBPTHREAD_VERSION)))
-  CPPFLAGS += -DACE_HAS_LINUX_NPTL
+  NPTL_VERS := $(subst ., ,$(word 2,$(GNU_LIBPTHREAD_VERSION)))
+  ifneq (0, $(word 1,$(NPTL_VERS)))
+    CPPFLAGS += -DACE_HAS_LINUX_NPTL
+  endif
 endif
 
 ssl ?= 0
