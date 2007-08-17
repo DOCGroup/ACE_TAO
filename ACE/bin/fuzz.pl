@@ -310,7 +310,6 @@ sub check_for_tab ()
                     # of new tabs introduced in the core
                     # of ACE/TAO/CIAO
                     if (($file =~ /(ACE)*.*examples/i)          ||
-                        ($file =~ /(ACE)*.*contrib/i)           ||
                         ($file =~ /(ACE)*.*ASNMP/i)             ||
                         ($file =~ /(ACE)*.*apps/i)              ||
                         ($file =~ /(ACE)*.*Kokyu/i)             ||
