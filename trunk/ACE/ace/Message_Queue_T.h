@@ -991,11 +991,11 @@ public:
   /**
    * Initialize an ACE_Message_Queue_Ex.
    *
-   * @param hwm High water mark. Determines how many bytes can be stored in a
-   *        queue before it's considered full.  Supplier threads must block
-   *        until the queue is no longer full.
-   * @param lwm Low water mark. Determines how many bytes must be in the queue
-   *        before supplier threads are allowed to enqueue additional
+   * @param high_water_mark High water mark. Determines how many bytes can be
+   *        stored in a queue before it's considered full.  Supplier threads
+   *        must block until the queue is no longer full.
+   * @param low_water_mark Low water mark. Determines how many bytes must be in
+   *        the queue before supplier threads are allowed to enqueue additional
    *        data.  By default, the @a hwm equals @a lwm, which means
    *        that suppliers will be able to enqueue new messages as soon as
    *        a consumer removes any message from the queue.  Making the low
@@ -1009,7 +1009,7 @@ public:
    */
   ACE_Message_Queue_Ex (size_t high_water_mark = ACE_Message_Queue_Base::DEFAULT_HWM,
                         size_t low_water_mark = ACE_Message_Queue_Base::DEFAULT_LWM,
-                        ACE_Notification_Strategy * = 0);
+                        ACE_Notification_Strategy * ns = 0);
   virtual int open (size_t hwm = ACE_Message_Queue_Base::DEFAULT_HWM,
                     size_t lwm = ACE_Message_Queue_Base::DEFAULT_LWM,
                     ACE_Notification_Strategy * = 0);
@@ -1180,8 +1180,8 @@ public:
    * FIFO order for items with the same priority) and return a pointer
    * to it.
    *
-   * @param first_item  Reference to an ACE_MESSAGE_TYPE * that will
-   *                    be set to the address of the dequeued item.
+   * @param dequeued  Reference to an ACE_MESSAGE_TYPE * that will
+   *                  be set to the address of the dequeued item.
    * @param timeout     The absolute time the caller will wait until
    *                    for an item to be dequeued.
    *
