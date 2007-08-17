@@ -277,7 +277,7 @@ ACE::HTBP::Channel::pre_recv(void)
 {
   if (ACE::debug())
     ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("ACE::HTBP::Channel::pre_recv ")
+                ACE_TEXT ("(%P|%t) ACE::HTBP::Channel::pre_recv ")
                 ACE_TEXT ("in initial state = %d\n"),state_));
   if (this->state_ == Init ||
       this->state_ == Detached ||
@@ -290,14 +290,14 @@ ACE::HTBP::Channel::pre_recv(void)
             this->state_ = Closed;
           if (ACE::debug())
             ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("ACE::HTBP::Channel::pre_recv ")
+                        ACE_TEXT ("(%P|%t) ACE::HTBP::Channel::pre_recv ")
                         ACE_TEXT ("pre_recv returning -1, state = %d, %p\n"),
                         state_, ACE_TEXT("load_buffer()")));
           return -1;
         }
       if (this->filter_->recv_data_header(this) == -1)
         ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("ACE::HTBP::Channel::pre_recv ")
+                    ACE_TEXT ("(%P|%t) ACE::HTBP::Channel::pre_recv ")
                     ACE_TEXT ("recv_data_header failed, %p\n"),
                     ACE_TEXT("pre_recv")));
     }
@@ -313,7 +313,7 @@ ACE::HTBP::Channel::pre_recv(void)
     default:
       if (ACE::debug())
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("ACE::HTBP::Channel::pre_recv ")
+                    ACE_TEXT ("(%P|%t) ACE::HTBP::Channel::pre_recv ")
                     ACE_TEXT("channel[%d] state = %d, %p\n"),
                     this->get_handle(),
                     this->state_,
@@ -332,7 +332,6 @@ ACE::HTBP::Channel::recv (void *buf,
   ssize_t result = 0;
   if (this->pre_recv() == -1 && this->leftovers_.length() == 0)
     return -1;
-
   if (this->leftovers_.length() > 0)
     {
       result = ACE_MIN (n,this->leftovers_.length());
