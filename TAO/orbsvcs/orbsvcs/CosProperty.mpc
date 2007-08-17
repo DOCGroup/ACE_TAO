@@ -7,9 +7,6 @@ project(CosProperty_IDL) : orbsvcslib, install, tao_versioning_idl_defaults {
 
   IDL_Files {
     CosProperty.idl
-
-    // This is a wrappper for backwards compatibility
-    CosPropertyService.idl
   }
 }
 
@@ -24,18 +21,15 @@ project(CosProperty) : orbsvcslib, install {
 
   Source_Files {
     CosPropertyC.cpp
-    CosPropertyServiceC.cpp
   }
 
   Header_Files {
     CosPropertyC.h
-    CosPropertyServiceC.h
     Property/property_export.h
   }
 
   Inline_Files {
     CosPropertyC.inl
-    CosPropertyServiceC.inl
   }
 
   Template_Files {
@@ -60,18 +54,15 @@ project(CosProperty_Skel) : orbsvcslib, install, property, portableserver {
 
   Source_Files {
     CosPropertyS.cpp
-    CosPropertyServiceS.cpp
   }
 
   Header_Files {
     CosPropertyS.h
-    CosPropertyServiceS.h
     Property/property_skel_export.h
   }
 
   Inline_Files {
     CosPropertyS.inl
-    CosPropertyServiceS.inl
   }
 
   Template_Files {
