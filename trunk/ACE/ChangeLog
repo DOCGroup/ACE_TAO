@@ -1,3 +1,19 @@
+Fri Aug 17 21:52:37 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * ace/config-linux-common.h: Only include config-posix.h when
+          ACE_HAS_LINUX_NPTL is defined; effectively reverts:
+          Mon Aug 13 04:40:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+          to fix broken RHEL 3 test results. RHEL 3's NPTL is not quite up to
+          snuff, apparantly (NPTL version 0.60) but even simply removing
+          ACE_HAS_LINUX_NPTL didn't do the trick. This effectively puts things
+          back the way they were for RHEL 3 and lets others stay with the
+          newer scheme of including config-posix.h.
+
+        * include/makeinclude/platform_linux_common.GNU: Refined the NPTL
+          check to only set ACE_HAS_LINUX_NPTL when the NPTL version is not
+          0.x. This works with the above to allow RHEL 4 et al to go on with
+          the new scheme and leave RHEL 3 at the old settings.
+
 Fri Aug 17 18:28:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * m4/platform.m4:
