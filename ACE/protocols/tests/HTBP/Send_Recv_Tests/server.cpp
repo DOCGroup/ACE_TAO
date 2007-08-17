@@ -121,8 +121,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("(%P|%t) %p\n"),
                   ACE_TEXT ("accept")));
-      Test_Result = 1;
-      return 0;
+      return 1;
     }
 
   ACE::HTBP::Channel channel1(sock_stream[0]);
@@ -135,8 +134,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("(%P|%t) %p\n"),
                   ACE_TEXT ("accept")));
-      Test_Result = 1;
-      return 0;
+      return 1;
     }
 
   ACE::HTBP::Channel channel2(sock_stream[1]);
@@ -171,13 +169,15 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
               ACE_TEXT_CHAR_TO_TCHAR(cli_addr.get_host_name ()),
               cli_addr.get_port_number ()));
 
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT("(%P) *****  server TEST 1 ***** \n")));
   //*******************   TEST 1   ******************************
   //
   // Do a iovec recvv - the client should send 255 bytes, which we
   // will be detected and read into a ACE-allocated buffer.  Use a 5
   // second timeout to give the client a chance to send it all.
 
-  ACE_OS::sleep (5);
+  ACE_OS::sleep (2);
 
   u_char buffer[255];
 
@@ -204,6 +204,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       Test_Result = 1;
     }
 
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT("(%P) server, Test 1: recvd len = %d\n"),len));
+
   for (i = 0; i < 255; i++)
     if (buffer[i] != i)
       {
@@ -216,22 +219,53 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       }
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT("(%P) server: *****  TEST 2 ***** \n")));
+              ACE_TEXT("(%P) ***** server  TEST 2 ***** \n")));
 
   //*******************   TEST 2   ******************************
   //
   // Send the buffer back, using send (size_t n, ...) in 3 pieces.
 
   len = stream.send (buffer, 6);
-  len += stream.send (buffer,42);
-  len += stream.send (buffer,189);
-  len += stream.send (buffer,18);
-  ACE_ASSERT (len == 255);
+  len += stream.send (buffer + 6,42);
+  len += stream.send (buffer + 48,189);
+  len += stream.send (buffer + 237,18);
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT("(%P) server sent len=%d\n"),len));
+  //  ACE_OS::sleep(10);
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT("(%P) flushing outbound queue\n")));
+
+  while ((res = channel1.pre_recv()) != 0 &&
+         (res = channel2.pre_recv()) != 0)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT("(%P)res = %d. waiting 1 sec. %p\n"),
+                  res,
+                  ACE_TEXT("stream.pre_recv()")));
+      ACE_OS::sleep (1);
+    }
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT("(%P)Read from channel2\n")));
+
+  int result = session->flush_outbound_queue();
+
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT("(%P) server: shutting down, flush returned %d\n"), result));
+
+
   sock_stream[0].close();
   sock_stream[1].close();
   stream.close ();
 
   peer_acceptor.close ();
 
-  return 0;
+
+  if (len != 255)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT("(%P} server: send result %d != 255\n"), len));
+      return 1;
+    }
+
+  return Test_Result;
 }
