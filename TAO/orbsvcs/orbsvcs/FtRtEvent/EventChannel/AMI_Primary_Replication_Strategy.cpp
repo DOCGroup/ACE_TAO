@@ -143,7 +143,8 @@ AMI_Primary_Replication_Strategy::replicate_request(
    if (!success) { // replication failed, transaction depth too high
      for (size_t i =0; i < num_backups; ++i)  {
        try{
-         (backups[i]->*rollback)(oid);
+         FtRtecEventChannelAdmin::EventChannel_ptr ec = backups[i];
+         (ec->*rollback)(oid);
        }
        catch (...){
        }
