@@ -130,7 +130,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
               ACE_TEXT ("(%P|%t) connected to %s\n"),
               ACE_TEXT_CHAR_TO_TCHAR(remote.get_host_name ())));
 
-  //*******************   TEST 1   ******************************
+   ACE_DEBUG ((LM_DEBUG, "(%P) *****  client TEST 1 ***** \n"));
+
+ //*******************   TEST 1   ******************************
   //
   // Do a iovec sendv - send the 255 byte buffer in 5 chunks.  The
   // server will verify that the correct data is sent, and that there
@@ -172,9 +174,15 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       Test_Result = 1;
     }
   else
-    ACE_ASSERT (len == 255);
+    if (len != 255)
+      {
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT ("(%P|%t) %p\n"),
+                    ACE_TEXT ("Test 1, len = %d != 255\n"), len));
+          Test_Result = 1;
+      }
 
-
+  //  ACE_OS::sleep (10);
   ACE_DEBUG ((LM_DEBUG, "(%P) *****  client TEST 2 ***** \n"));
 
   //*******************   TEST 2   ******************************
@@ -183,29 +191,28 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   // ...)  and compare it to the original data.
 
   u_char buffer2[255];
-  printf ("client - waiting!\n");
-  // Give it a chance to get here
-  ACE_OS::sleep (60);
 
+  ssize_t total = 0;
   do {
-    len = stream.recv (buffer2, 155);
+    len = stream.recv (buffer2+total, 145 - total);
     ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT("(%P) Test 2: want 155 bytes, got %d\n"),
-                len));
+                ACE_TEXT("(%P) Test 2: want %d bytes, got %d\n"),
+                145 - total,len));
     if (len == -1 || errno == EWOULDBLOCK)
-
       ACE_OS::sleep (1);
-  } while (len == -1 &&  errno == EWOULDBLOCK);
+    else
+      total += len;
+  } while ((len == -1 &&  errno == EWOULDBLOCK) || total < 145);
 
-    if (len != 155)
+    if (total != 145)
       Test_Result = 1;
 
-  len = stream.recv (buffer2, 105);
+  len = stream.recv (buffer2 + total, 110);
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT("(%P) Test 2: second read want 105 bytes, got %d\n"),
+              ACE_TEXT("(%P) Test 2: second read want 110 bytes, got %d\n"),
               len));
 
-  if (len != 105)
+  if (len != 110)
     Test_Result = 1;
 
   for (i = 0; Test_Result == 0 && i < 255; i++)
@@ -220,5 +227,5 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   stream.close ();
 
-  return 0;
+  return Test_Result;
 }

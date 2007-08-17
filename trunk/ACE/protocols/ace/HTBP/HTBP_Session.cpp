@@ -127,7 +127,10 @@ ACE::HTBP::Session::Session (const ACE::HTBP::Session &other)
 ACE::HTBP::Session&
 ACE::HTBP::Session::operator= (const ACE::HTBP::Session &)
 {
-  ACE_ASSERT (this == 0);
+  // @TODO: figure out why the assignment operator is here if it is
+  // unimplemented? Previously there was an ACE_ASSERT(this == 0)
+  // so apparently something bad had been happening long ago, but I
+  // have no idea what.
   return *this;
 }
 
@@ -238,6 +241,8 @@ ACE::HTBP::Session::flush_outbound_queue (void)
           iov[i].iov_len = msg->length();
           msg = msg->next();
         }
+      if (this->outbound_->state() ==  ACE::HTBP::Channel::Wait_For_Ack)
+        this->outbound_->recv_ack();
       result = this->outbound_->sendv (iov,this->outbound_queue_.message_count(),0);
       delete [] iov;
       while (this->outbound_queue_.dequeue_head(msg))

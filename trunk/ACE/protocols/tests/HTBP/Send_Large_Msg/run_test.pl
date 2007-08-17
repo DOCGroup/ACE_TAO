@@ -41,6 +41,5 @@ if ($server != 0) {
     $status = 1;
 }
 
-unlink $iorfile;
 
 exit $status;
