@@ -1220,10 +1220,12 @@ CORBA::ORB_init (int &argc, char *argv[], const char *orbid)
                          ACE_TEXT("-ORBGestalt"),
                          orbconfig_string))
     {
+      const ACE_TCHAR *arg = ACE_TEXT_CHAR_TO_TCHAR(orbconfig_string.c_str ());
+      const ACE_TCHAR *local = ACE_TEXT("LOCAL");
+      const ACE_TCHAR *shared = ACE_TEXT("ORB:");
       // Need a local repo? Make one which typically should not be as
       // big as the default repository
-      if  (ACE_OS::strcasecmp (orbconfig_string.c_str (),
-                                  ACE_TEXT("LOCAL")) == 0)
+      if  (ACE_OS::strcasecmp (arg,local) == 0)
         {
           ACE_NEW_THROW_EX (gestalt,
                             ACE_Service_Gestalt
@@ -1234,8 +1236,7 @@ CORBA::ORB_init (int &argc, char *argv[], const char *orbid)
                              CORBA::COMPLETED_NO));
           guard_gestalt.reset(gestalt);
         }
-      else if (ACE_OS::strncmp (orbconfig_string.c_str (),
-                                ACE_TEXT ("ORB:"), 4) == 0)
+      else if (ACE_OS::strncmp (arg, shared, sizeof (shared) - 1) == 0)
         {
           // @TODO: At some point, we need to implement a lookup of an
           // existing configuration context based on the orbid

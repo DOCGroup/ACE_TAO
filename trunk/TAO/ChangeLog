@@ -1,3 +1,11 @@
+Fri Aug 17 14:38:15 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * docs/Options.html:
+          Add description of the -ORBGestalt option.
+
+        * tao/ORB.cpp:
+          Fix ACE_TEXT consistency.
+
 Fri Aug 17 08:24:00 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/CosPropertyService.idl:
