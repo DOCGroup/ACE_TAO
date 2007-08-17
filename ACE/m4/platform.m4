@@ -1,12 +1,12 @@
 dnl -------------------------------------------------------------------------
 dnl       $Id$
-dnl 
+dnl
 dnl       platform.m4
 dnl
 dnl       ACE M4 include file which contains ACE specific M4 macros
 dnl       that set/determine which known platform specific C++ macros
 dnl       to define.
-dnl 
+dnl
 dnl -------------------------------------------------------------------------
 
 dnl  Copyright (C) 1998, 1999, 2000, 2002, 2003  Ossama Othman
@@ -15,7 +15,7 @@ dnl  All Rights Reserved
 dnl
 dnl This library is free software; you can redistribute it and/or
 dnl modify it under the current ACE distribution terms.
-dnl 
+dnl
 dnl This library is distributed in the hope that it will be useful,
 dnl but WITHOUT ANY WARRANTY; without even the implied warranty of
 dnl MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
@@ -361,12 +361,12 @@ dnl End ACE_SET_PLATFORM_MACROS
 
 # ACE_CHECK_FORMAT_SPECIFIERS
 #
-# Override default *printf format specifiers for size_t, ssize_t, ACE_INT64, 
+# Override default *printf format specifiers for size_t, ssize_t, ACE_INT64,
 # and ACE_UINT64
 #
 # FIXME: Is it possible to write a portable feature test, or is checking
 #        the the target OS / target CPU the best we can do?
-# 
+#
 #---------------------------------------------------------------------------
 AC_DEFUN([ACE_CHECK_FORMAT_SPECIFIERS],
 [dnl
@@ -389,6 +389,7 @@ linux*)
     alpha|ia64|x86_64)
       AC_DEFINE([ACE_SIZE_T_FORMAT_SPECIFIER], ["%lu"])
       AC_DEFINE([ACE_SSIZE_T_FORMAT_SPECIFIER], ["%ld"])
+      AC_DEFINE([ACE_UINT64_FORMAT_SPECIFIER], ["%lu"])
       ;;
     *)
       ;;
@@ -417,7 +418,7 @@ esac])
 #
 # FIXME: Is it possible to write a portable feature test, or is checking
 #        the the target OS the best we can do?
-# 
+#
 #---------------------------------------------------------------------------
 AC_DEFUN([ACE_CHECK_LACKS_PERFECT_MULTICAST_FILTERING],
 [AC_CACHE_CHECK([whether platform lacks perfect multicast filtering],
@@ -428,11 +429,11 @@ AC_DEFUN([ACE_CHECK_LACKS_PERFECT_MULTICAST_FILTERING],
   *)
     ace_cv_lacks_perfect_multicast_filtering=no ;;
   esac])
-    
+
 if test $ace_cv_lacks_perfect_multicast_filtering = yes; then
   AC_DEFINE([ACE_LACKS_PERFECT_MULTICAST_FILTERING], 1,
-[Define to 1 if platform lacks IGMPv3 "perfect" filtering of multicast 
-datagrams at the socket level.  If defined, ACE_SOCK_Dgram_Mcast will bind 
+[Define to 1 if platform lacks IGMPv3 "perfect" filtering of multicast
+datagrams at the socket level.  If defined, ACE_SOCK_Dgram_Mcast will bind
 the first joined multicast group to the socket, and all future joins on that
 socket will fail with an error.])
 fi
@@ -445,10 +446,10 @@ fi
 # define the types in ACE_IOCTL_TYPE_ARG2.
 #
 # FIXME: Should we support ioctl's third argument as well...?
-# 
+#
 # FIXME: Is it possible to write a portable feature test, or is checking
 #        the the target OS the best we can do?
-# 
+#
 #---------------------------------------------------------------------------
 AC_DEFUN([ACE_FUNC_IOCTL_ARGTYPES],
 [AC_CACHE_CHECK([types of arguments for ioctl()],
@@ -463,7 +464,7 @@ AC_DEFUN([ACE_FUNC_IOCTL_ARGTYPES],
 AC_DEFINE_UNQUOTED(ACE_IOCTL_TYPE_ARG2, $ace_cv_func_ioctl_arg2,
 	           [Define to the type of arg 2 for `ioctl'.])
 ])
- 
+
 
 # ACE_VAR_TIMEZONE
 #
