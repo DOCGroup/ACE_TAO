@@ -132,32 +132,8 @@ CosProperty-stamp: $(srcdir)/CosProperty.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,stub_export_macro=TAO_Property_Export -Wb,stub_export_include=orbsvcs/Property/property_export.h -Wb,skel_export_macro=TAO_Property_Skel_Export -Wb,skel_export_include=orbsvcs/Property/property_skel_export.h $(srcdir)/CosProperty.idl
 	@touch "$@"
 
-BUILT_SOURCES += \
-  CosPropertyServiceC.cpp \
-  CosPropertyServiceC.h \
-  CosPropertyServiceC.inl \
-  CosPropertyServiceS.cpp \
-  CosPropertyServiceS.h \
-  CosPropertyServiceS.inl
-
-CLEANFILES += \
-  CosPropertyService-stamp \
-  CosPropertyServiceC.cpp \
-  CosPropertyServiceC.h \
-  CosPropertyServiceC.inl \
-  CosPropertyServiceS.cpp \
-  CosPropertyServiceS.h \
-  CosPropertyServiceS.inl
-
-CosPropertyServiceC.cpp CosPropertyServiceC.h CosPropertyServiceC.inl CosPropertyServiceS.cpp CosPropertyServiceS.h CosPropertyServiceS.inl: CosPropertyService-stamp
-
-CosPropertyService-stamp: $(srcdir)/CosPropertyService.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,stub_export_macro=TAO_Property_Export -Wb,stub_export_include=orbsvcs/Property/property_export.h -Wb,skel_export_macro=TAO_Property_Skel_Export -Wb,skel_export_include=orbsvcs/Property/property_skel_export.h $(srcdir)/CosPropertyService.idl
-	@touch "$@"
-
 nobase_include_HEADERS += \
-  CosProperty.idl \
-  CosPropertyService.idl
+  CosProperty.idl 
 
 endif BUILD_EXCEPTIONS
 
@@ -177,8 +153,7 @@ libTAO_CosProperty_la_CPPFLAGS = \
   -DTAO_PROPERTY_BUILD_DLL
 
 libTAO_CosProperty_la_SOURCES = \
-  CosPropertyC.cpp \
-  CosPropertyServiceC.cpp
+  CosPropertyC.cpp 
 
 libTAO_CosProperty_la_LDFLAGS = \
  -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
@@ -191,8 +166,6 @@ libTAO_CosProperty_la_LIBADD = \
 nobase_include_HEADERS += \
   CosPropertyC.h \
   CosPropertyC.inl \
-  CosPropertyServiceC.h \
-  CosPropertyServiceC.inl \
   Property/property_export.h
 
 pkgconfig_DATA += \
@@ -226,8 +199,7 @@ libTAO_CosProperty_Skel_la_CPPFLAGS = \
   -DTAO_PROPERTY_SKEL_BUILD_DLL
 
 libTAO_CosProperty_Skel_la_SOURCES = \
-  CosPropertyS.cpp \
-  CosPropertyServiceS.cpp
+  CosPropertyS.cpp 
 
 libTAO_CosProperty_Skel_la_LDFLAGS = \
  -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
@@ -242,8 +214,6 @@ libTAO_CosProperty_Skel_la_LIBADD = \
 nobase_include_HEADERS += \
   CosPropertyS.h \
   CosPropertyS.inl \
-  CosPropertyServiceS.h \
-  CosPropertyServiceS.inl \
   Property/property_skel_export.h
 
 pkgconfig_DATA += \

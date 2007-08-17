@@ -1,3 +1,17 @@
+Fri Aug 17 08:24:00 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/CosPropertyService.idl:
+          Removed, it was for backward compatibility for years, now time to remove
+          it. Users should include CosProperty.idl, this is related to bugzilla 3041,
+          thanks to Bogdan Jeram <bjeram at eso dot org> for reporting that issue
+
+        * orbsvcs/orbsvcs/CosProperty.idl:
+          Doxygen updates
+
+        * orbsvcs/orbsvcs/CosProperty.mpc:
+        * orbsvcs/orbsvcs/Makefile.am:
+          Removed CosPropertyService.idl
+
 Thu Aug 16 23:44:00 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * TAO_IDL/ast/ast_argument.cpp:
