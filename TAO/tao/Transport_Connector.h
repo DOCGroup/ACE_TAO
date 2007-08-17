@@ -17,7 +17,6 @@
 #define TAO_CONNECTOR_H
 
 #include /**/ "ace/pre.h"
-//#include "ace/CORBA_macros.h"
 #include "tao/Basic_Types.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -173,7 +172,6 @@ protected:
    */
   virtual bool wait_for_connection_completion(
       TAO::Profile_Transport_Resolver *r,
-      TAO_Transport_Descriptor_Interface &desc,
       TAO_Transport *&transport,
       ACE_Time_Value *timeout);
 
@@ -187,19 +185,6 @@ protected:
       unsigned int count,
       TAO_LF_Multi_Event *mev,
       ACE_Time_Value *timeout);
-
-  /// See if a new connection is allowed
-  bool new_connection_is_ok (size_t busy_count);
-
-  /// Wait for a transport to be connected
-  /// Note: no longer changes transport reference count
-  /// @ returns true if wait was uneventful
-  /// @         false if error occurred during wait
-  bool wait_for_transport(
-    TAO::Profile_Transport_Resolver *r,
-    TAO_Transport *base_transport,
-    ACE_Time_Value * timeout,
-    bool force_wait);
 
   /// Set the ORB Core pointer
   void orb_core (TAO_ORB_Core *orb_core);

@@ -202,7 +202,6 @@ TAO_UIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
           // get a connected transport or not. In case of non block we get
           // a connected or not connected transport
           if (!this->wait_for_connection_completion (r,
-                                                     desc,
                                                      transport,
                                                      max_wait_time))
             {
