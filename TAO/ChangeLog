@@ -1,3 +1,36 @@
+Fri Aug 17 15:50:19 UTC 2007  Dale Wilson  <wilsond@ociweb.com>
+
+        * NEWS:
+        * orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connector.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp:
+        * tao/IIOP_Connector.cpp:
+        * tao/Profile_Transport_Resolver.cpp:
+        * tao/Strategies/SCIOP_Connector.cpp:
+        * tao/Strategies/UIOP_Connector.cpp:
+        * tao/Transport.h:
+        * tao/Transport.inl:
+        * tao/Transport.cpp:
+        * tao/Transport_Cache_Manager.h:
+        * tao/Transport_Cache_Manager.inl:
+        * tao/Transport_Cache_Manager.cpp:
+        * tao/Transport_Connector.h:
+        * tao/Transport_Connector.cpp:
+        * tests/Bug_1476_Test/client.cpp:
+          Revert bug 2935 changes.
+          Changes are now in a bug_2935 branch and will
+          be reapplied later once I fix whatever is causing
+          some tests to fail.
+
+
+        * tests/Bug_1361_Regression/Echo.cpp:
+        * tests/Bug_1361_Regression/client.cpp:
+          raise (SIGABRT) rather than raise (9) to kill self process.
+          Q: would calling abort() be a better approach?
+
+        * tests/AMI/run_test.pl:
+        * tests/BiDirectional/run_test.pl:
+          Minor script changes to help use the tests as TAO debug tools.
+
 Fri Aug 17 14:38:15 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * docs/Options.html:
