@@ -98,7 +98,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                   ACE_TEXT ("Could not get the hostname\n")));
     }
 
-  ACE::HTBP::Addr addr (8088, hostname);
+  ACE::HTBP::Addr addr (port, hostname);
 
   // Bind listener to any port and then find out what the port was.
   if (peer_acceptor.open (addr) == -1

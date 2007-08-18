@@ -1,3 +1,22 @@
+Sat Aug 18 16:37:35 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * protocols/ace/HTBP/HTBP_Session.cpp:
+          Error reporting enhancement.
+
+        * protocols/tests/HTBP/Reactor_Tests/client.cpp:
+        * protocols/tests/HTBP/Reactor_Tests/run_test.pl:
+        * protocols/tests/HTBP/Send_Large_Msg/client.cpp:
+        * protocols/tests/HTBP/Send_Large_Msg/run_test.pl:
+        * protocols/tests/HTBP/Send_Recv_Tests/client.cpp:
+        * protocols/tests/HTBP/Send_Recv_Tests/run_test.pl:
+        * protocols/tests/HTBP/Send_Recv_Tests/server.cpp:
+        * protocols/tests/HTBP/ping/client.cpp:
+        * protocols/tests/HTBP/ping/run_test.pl:
+        * protocols/tests/HTBP/ping/server.cpp:
+
+          Fix the tests so that a random port is selected each run to
+          avoid problems with TCP wait states.
+
 Sat Aug 18 01:16:11 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * Kokyu/DSRT_Direct_Dispatcher_Impl_T.cpp:

@@ -55,7 +55,7 @@ ACE_TMAIN (int argc , ACE_TCHAR *argv[])
   ACE_SOCK_Stream sock[2];
   ACE_SOCK_Acceptor acc(local,1);
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("(%P|%t) Server is ready\n")));
+              ACE_TEXT ("(%P|%t) Server is ready on port %d\n"),port));
 
   acc.accept (sock[0]);
   ACE::HTBP::Channel channel1(sock[0]);
@@ -162,5 +162,9 @@ ACE_TMAIN (int argc , ACE_TCHAR *argv[])
             ACE_OS::sleep (1);
         }
     }
+
+  stream.close();
+  acc.close();
+
   return 0;
 }

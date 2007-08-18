@@ -174,7 +174,8 @@ ACE::HTBP::Session::reconnect_i (ACE::HTBP::Channel *s)
       ACE_TCHAR buffer[128];
       this->proxy_addr_->addr_to_string(buffer,128, 0);
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT("ACE::HTBP::Session::reconnect failed to %s, %p\n"),
+                  ACE_TEXT("(%P|%t) ACE::HTBP::Session::reconnect")
+                  ACE_TEXT(" failed to %s, %p\n"),
                   buffer, s == this->inbound_ ?
                   ACE_TEXT("inbound") : ACE_TEXT ("outbound")));
     }
