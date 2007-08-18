@@ -29,6 +29,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
       {
       case 'p':
         remote_port = static_cast<unsigned>(ACE_OS::atoi (get_opts.opt_arg()));
+        break;
       case 'h':
         remote_host = get_opts.opt_arg ();
         break;
@@ -84,7 +85,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
   ACE_INET_Addr proxy(proxy_port,proxy_host.c_str());
   ACE::HTBP::Addr remote (remote_port,ACE_TEXT_ALWAYS_CHAR(remote_host));
-
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT("(%P|%t) Client: connecting to port %d\n"),
+              proxy_port));
   ACE::HTBP::Session session(remote,
                            local,
                            ACE::HTBP::Session::next_session_id(),
@@ -185,6 +188,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
               ACE_TEXT ("(%P|%t) Client: ")
               ACE_TEXT ("After wait for ack, n = %d, retry = %d\n"),
               n,retrycount,errno));
-
+  stream.close();
   return 0;
 }
