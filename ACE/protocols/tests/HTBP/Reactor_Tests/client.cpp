@@ -28,6 +28,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
       {
       case 'p':
         remote_port = static_cast<unsigned>(ACE_OS::atoi (get_opts.opt_arg()));
+        break;
       case 'h':
         remote_host = get_opts.opt_arg ();
         break;
