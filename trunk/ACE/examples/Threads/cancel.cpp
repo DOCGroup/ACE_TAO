@@ -18,11 +18,11 @@ worker (intptr_t iterations)
   for (intptr_t i = 0; i < iterations; i++)
     {
       if ((i % 10) == 0
-		  && (ACE_Thread_Manager::instance ()->testcancel (ACE_Thread::self ()) != 0))
-	{
-	  ACE_DEBUG ((LM_DEBUG, "(%t) has been cancelled before iteration!\n", i));
-	  break;
-	}
+          && (ACE_Thread_Manager::instance ()->testcancel (ACE_Thread::self ()) != 0))
+        {
+          ACE_DEBUG ((LM_DEBUG, "(%t) has been cancelled before iteration!\n", i));
+          break;
+        }
     }
 
   return 0;
@@ -45,8 +45,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ACE_Thread_Manager *thr_mgr = ACE_Thread_Manager::instance ();
 
   int grp_id = thr_mgr->spawn_n (n_threads, ACE_THR_FUNC (worker),
-				 (void *) n_iterations,
-				 THR_NEW_LWP | THR_DETACHED);
+                                 (void *) n_iterations,
+                                 THR_NEW_LWP | THR_DETACHED);
 
   // Wait for 2 seconds and then suspend every thread in the group.
   ACE_OS::sleep (2);

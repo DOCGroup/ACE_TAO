@@ -181,7 +181,7 @@ DSRT_Direct_Dispatcher_Impl<DSRT_Scheduler_Traits>::svc (void)
           this->curr_scheduled_thr_handle_ = most_eligible_thr_handle;
           this->curr_scheduled_guid_ = item_var->guid ();
         }
-	/*change all threads in blocked_prio_ to inactive_prio_*/
+          /*change all threads in blocked_prio_ to inactive_prio_*/
           this->ready_queue_.change_prio(this->blocked_prio_, this->inactive_prio_,this->sched_policy_);
     }
 
