@@ -40,8 +40,8 @@ ACE_RCSID (Timer_Queue,
 
 typedef Timer_Queue_Test_Driver<Thread_Timer_Queue,
                                 Input_Task,
-				Input_Task::ACTION>
-	THREAD_TIMER_QUEUE_TEST_DRIVER;
+                                Input_Task::ACTION>
+  THREAD_TIMER_QUEUE_TEST_DRIVER;
 
 int
 ACE_TMAIN (int, ACE_TCHAR *[])
