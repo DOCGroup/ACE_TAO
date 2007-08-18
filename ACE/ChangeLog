@@ -1,3 +1,19 @@
+Sat Aug 18 01:16:11 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * Kokyu/DSRT_Direct_Dispatcher_Impl_T.cpp:
+        * Kokyu/Dispatch_Deferrer.h:
+        * Kokyu/Dispatch_Deferrer.cpp:
+        * Kokyu/Kokyu_dsrt.h:
+        * examples/Threads/cancel.cpp:
+        * examples/Timer_Queue/Async_Timer_Queue_Test.cpp:
+        * examples/Timer_Queue/Reactor_Timer_Queue_Test.cpp:
+        * examples/Timer_Queue/main_thread.cpp:
+          Untabify.
+
+        * bin/fuzz.pl:
+          Remove Kokyu directory from the list of excluded
+          directories for the tabs check.
+
 Fri Aug 17 22:56:54 UTC 2007  Steve Huston  <shuston@riverace.com>
 
         * tests/Manual_Event_Test.cpp: Added additional diagnostics; fixed
