@@ -29,11 +29,13 @@ public:
     return CORBA::string_dup("hello");
   }
 
+  //FUZZ: disable check_for_lack_ACE_OS
   void shutdown()
   {
     task_->terminate_loop ();
     orb_ = CORBA::ORB::_nil ();
   }
+  //FUZZ: enable check_for_lack_ACE_OS
 
 private:
   CORBA::ORB_var orb_;
