@@ -2,6 +2,7 @@
 
 #include "orbsvcs/Notify/MonitorControl/NotificationServiceMCC.h"
 #include "ace/Get_Opt.h"
+#include "ace/OS_NS_ctype.h"
 
 const ACE_TCHAR* monitor_ior = 0;
 
@@ -75,12 +76,12 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
           if (rl != 0)
             {
               int len = static_cast<int> (ACE_OS::strlen (line));
-              for(int i = 0; i < len && isspace (rl[0]); i++)
+              for(int i = 0; i < len && ACE_OS::ace_isspace (rl[0]); i++)
                 {
                   rl++;
                 }
 
-              for(int i = len - 1; i >= 0 && isspace (line[i]); i--)
+              for(int i = len - 1; i >= 0 && ACE_OS::ace_isspace (line[i]); i--)
                 {
                   line[i] = '\0';
                 }
@@ -154,7 +155,7 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
                   const char* name = rl + ACE_OS::strlen (shutdown);
                   bool space = false;
                   size_t i = 0;
-                  while (isspace (name[i]))
+                  while (ACE_OS::ace_isspace (name[i]))
                     {
                       space = true;
                       i++;

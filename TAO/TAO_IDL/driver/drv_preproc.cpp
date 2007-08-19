@@ -1117,9 +1117,11 @@ DRV_pre_proc (const char *myfile)
       // symbolic link attack, or another process opened the file before
       // us.
 #if defined (ACE_OPENVMS)
+      //FUZZ: disable check_for_lack_ACE_OS
       fd = ::open (t_file, O_WRONLY | O_CREAT | O_EXCL,
                    ACE_DEFAULT_FILE_PERMS,
                    "shr=get,put,upd", "ctx=rec", "fop=dfw");
+      //FUZZ: enable check_for_lack_ACE_OS
 #else
       fd = ACE_OS::open (t_file,
                          O_WRONLY | O_CREAT | O_EXCL,

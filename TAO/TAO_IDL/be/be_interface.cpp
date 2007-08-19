@@ -1708,11 +1708,13 @@ be_interface::gen_gperf_lookup_methods (const char *flat_name)
 
   // Open the temp file.
 #if defined (ACE_OPENVMS)
+  //FUZZ: disable check_for_lack_ACE_OS
   ACE_HANDLE input = ::open (tao_cg->gperf_input_filename (),
                              O_RDONLY,
                              "shr=get,put,upd",
                              "ctx=rec",
                              "fop=dfw");
+  //FUZZ: enable check_for_lack_ACE_OS
 #else
   ACE_HANDLE input = ACE::open_temp_file (tao_cg->gperf_input_filename (),
                                           O_RDONLY);
@@ -1745,12 +1747,14 @@ be_interface::gen_gperf_lookup_methods (const char *flat_name)
       ACE_ERROR_RETURN ((LM_ERROR, "failed to allocate memory\n"), -1);
     }
 
+  //FUZZ: disable check_for_lack_ACE_OS
   ACE_HANDLE output = ::open (gperfOutput,
                               O_WRONLY | O_CREAT | O_EXCL,
-                              ACE_DEFAULT_FILE_PERMS ,
+                              ACE_DEFAULT_FILE_PERMS,
                               "shr=get,put,upd",
                               "ctx=rec",
                               "fop=dfw");
+  //FUZZ: enable check_for_lack_ACE_OS
 #else
   ACE_HANDLE output = ACE_OS::open (this->strategy_->get_out_stream_fname (),
                                     O_WRONLY | O_APPEND);
