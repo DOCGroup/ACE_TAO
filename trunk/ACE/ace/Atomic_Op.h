@@ -46,6 +46,7 @@
 #  define ACE_HAS_INTEL_ASSEMBLY
 # elif defined (__SUNPRO_CC) && (defined (__i386) || defined (__x86_64))
 #  define ACE_HAS_BUILTIN_ATOMIC_OP
+#  define ACE_INCLUDE_ATOMIC_OP_SPARC
 # endif /* WIN32 */
 #endif /* ACE_HAS_THREADS */
 

@@ -1,3 +1,8 @@
+Sun Aug 19 06:20:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Atomic_Op.h:
+          Added missing define for Sun
+
 Sat Aug 18 16:37:35 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * protocols/ace/HTBP/HTBP_Session.cpp:
