@@ -1,3 +1,13 @@
+Sun Aug 19 13:57:44 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * ACEXML/common/XML_Macros.h:
+        * ASNMP/agent/agent_impl.cpp:
+          Untabify.
+
+        * bin/fuzz.pl:
+          Remove ACEXML and ASNMP directory from the list of excluded
+          directories for the tabs check.
+
 Sun Aug 19 06:20:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Atomic_Op.h:
