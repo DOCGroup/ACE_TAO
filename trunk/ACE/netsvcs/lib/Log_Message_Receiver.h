@@ -177,7 +177,6 @@ private:
 template<ACE_SYNCH_DECL>
 class Log_Message_Receiver_Impl
 {
-  friend class ACE_Shutup_GPlusPlus;  // Turn off g++ warning
 public:
   // Methods for handling reference count and instance lifetime
   static Log_Message_Receiver_Impl *create (void);
@@ -191,7 +190,7 @@ public:
                   ACE_Log_Record &record,
                   ostream *output);
 
-private:
+protected:
   Log_Message_Receiver_Impl (void);
   ~Log_Message_Receiver_Impl (void);
 
@@ -200,6 +199,7 @@ private:
   int count_;
   ACE_SYNCH_MUTEX_T print_lock_;
 
+private:
 #if !defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES)
   static ACE_SYNCH_MUTEX_T copy_lock_;
 #endif /* ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES */

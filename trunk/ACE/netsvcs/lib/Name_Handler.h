@@ -66,8 +66,6 @@ template class ACE_Svc_Export ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
  */
 class ACE_Svc_Export ACE_Name_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
 {
-
-  friend class ACE_Shutup_GPlusPlus;  // Turn off g++ warning
 public:
   /// Pointer to a member function of ACE_Name_Handler returning int
   typedef int (ACE_Name_Handler::*OPERATION) (void);
@@ -123,6 +121,9 @@ protected:
   /// Enable clients to limit the amount of time they wait for a name.
   virtual int handle_timeout (const ACE_Time_Value &tv, const void *arg);
 
+  /// Ensure dynamic allocation...
+  ~ACE_Name_Handler (void);
+
 private:
 
   /// Table of pointers to member functions
@@ -157,9 +158,6 @@ private:
 
   /// Address of client we are connected with.
   ACE_INET_Addr addr_;
-
-  /// Ensure dynamic allocation...
-  ~ACE_Name_Handler (void);
 
   /// Handle binds.
   int bind (void);
