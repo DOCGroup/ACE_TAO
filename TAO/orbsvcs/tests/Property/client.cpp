@@ -30,8 +30,7 @@ Client::init (int argc,
               char *argv[])
 {
   // Init the ORB.
-  manager_.init (argc,
-                 argv);
+  manager_.init (argc, argv);
 
   // Initialize the naming services
   if (my_name_client_.init (manager_.orb()) != 0)
