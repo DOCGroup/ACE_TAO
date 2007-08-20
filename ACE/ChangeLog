@@ -1,3 +1,9 @@
+Mon Aug 20 21:37:13 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tests/MT_Reference_Counted_Event_Handler_Test.cpp:
+          Add thread ID and some additional debug output to help chase
+          test hangs.
+
 Mon Aug 20 20:02:32 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * protocols/tests/HTBP/Reactor_Tests/server.cpp:
