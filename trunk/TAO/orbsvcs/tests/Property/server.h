@@ -20,7 +20,6 @@
 #ifndef COSPROPERTYSERVICE_SERVER_H
 #define COSPROPERTYSERVICE_SERVER_H
 
-#include "tao/Utils/ORB_Manager.h"
 #include "orbsvcs/Property/CosPropertyService_i.h"
 #include "orbsvcs/Naming/Naming_Client.h"
 

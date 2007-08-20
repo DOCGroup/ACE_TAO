@@ -1,3 +1,18 @@
+Mon Aug 20 14:02:00 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/Property/client.cpp:
+          Layout change
+
+        * orbsvcs/tests/Property/server.cpp:
+          Don't use the TAO_ORB_Manager, that way we can run also this test
+          with CORBA/e compact
+
+        * orbsvcs/tests/Property/server.h:
+          No need to include TAO_ORB_Manager
+
+        * orbsvcs/tests/Property/Property.mpc:
+          Server doesn't need utils lib
+
 Mon Aug 20 07:31:59 UTC 2007  Trevor Fields  <fields_t@ociweb.com>
 
         * tests/Big_Request_Muxing/Client_Task.cpp:
