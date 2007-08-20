@@ -28,20 +28,27 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
   try
     {
-      TAO_ORB_Manager m;
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
-      // Initialize the ORB.
-      m.init_child_poa (argc,
-                        argv,
-                        "child_poa");
+      CORBA::Object_var poa_object = orb->resolve_initial_references("RootPOA");
+
+      PortableServer::POA_var root_poa =
+        PortableServer::POA::_narrow (poa_object.in ());
+
+      if (CORBA::is_nil (root_poa.in ()))
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           " (%P|%t) Panic: nil RootPOA\n"),
+                          1);
+
+      PortableServer::POAManager_var poa_manager = root_poa->the_POAManager ();
 
       // Using naming server.
       TAO_Naming_Client my_name_client;
-      if (my_name_client.init (m.orb ()) < 0)
+      if (my_name_client.init (orb.in ()) < 0)
         return 1;
 
       // Create PropertySetDef object and register.
-      TAO_PropertySetDef *propsetdef_impl;
+      TAO_PropertySetDef *propsetdef_impl = 0;
       ACE_NEW_RETURN (propsetdef_impl,
                       TAO_PropertySetDef,
                       -1);
@@ -84,8 +91,14 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       my_name_client->bind (propset_factory_name,
                             propset_factory.in ());
 
+      poa_manager->activate ();
+
       // Run the ORB Event loop.
-      m.run ();
+      orb->run ();
+
+      root_poa->destroy (1, 1);
+
+      orb->destroy ();
     }
   catch (const CORBA::SystemException& sysex)
     {
