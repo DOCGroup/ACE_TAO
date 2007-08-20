@@ -21,6 +21,16 @@ project(*Main): taoserver, messaging, gen_ostream {
     interface.idl
     included.idl
     nested_scope.idl
+
+    old_array.idl
+    old_constants.idl
+    old_sequence.idl
+    simple.idl
+    simple2.idl
+    old_struct.idl
+    old_union.idl
+    old_union2.idl
+
     params.idl
     reopened_modules.idl
     sequence.idl
@@ -38,6 +48,12 @@ project(*Main): taoserver, messaging, gen_ostream {
     constants.idl
     generic_object.idl
     keywords.idl
+    
+    dif2.idl
+    inherit.idl
+    module.idl
+    primtypes.idl
+    
     pragma.idl
     repo_id_mod.idl
     typedef.idl

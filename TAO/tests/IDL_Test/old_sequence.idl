@@ -1,6 +1,7 @@
 // $Id$
 
-typedef sequence<long,10> vec10;
+#include "simple.idl"
+
 typedef sequence<char,20> c20;
 typedef sequence<c20,23> cc23;
 typedef sequence<char,24> c24;
@@ -11,17 +12,17 @@ struct TProgram {
   sequence<string> envp;
 };
 
-struct foo {
+struct sfoo {
   long f1;
   char f2;
 };
 
-typedef foo              foo_ar[20];
-typedef sequence<foo>    f_unbounded;
-typedef sequence<foo_ar> f_ar_unbounded;
+typedef sfoo              sfoo_ar[20];
+typedef sequence<sfoo>    f_unbounded;
+typedef sequence<sfoo_ar> f_ar_unbounded;
 
 interface TestSeq {
   attribute f_unbounded fattr;
   typedef sequence<long,10> also_vec10;
-  vec10 op(in also_vec10 a, out vec10 b, inout sequence <long,10> c);
+//  vec10 op(in also_vec10 a, out vec10 b, inout sequence <long,10> c);
 };
