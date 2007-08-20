@@ -11,6 +11,7 @@
 #include "ace/Task.h"
 #include "ace/SString.h"
 #include "ace/OS_NS_unistd.h"
+#include "ace/Atomic_Op.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -56,6 +57,9 @@ private:
 
   /// The SyncScope used in this Task
   Messaging::SyncScope sync_scope_;
+
+  /// Track the number of tasks still running.
+  ACE_Atomic_Op<TAO_SYNCH_MUTEX, unsigned long> tasks_running_;
 
   bool done_;
 

@@ -26,6 +26,7 @@ Client_Task::Client_Task (ACE_Thread_Manager *thr_mgr,
   , event_size_ (event_size)
   , orb_ (CORBA::ORB::_duplicate (orb))
   , sync_scope_ (sync_scope)
+  , tasks_running_(0)
   , done_(false)
   , id_ (ident)
 {
@@ -34,7 +35,11 @@ Client_Task::Client_Task (ACE_Thread_Manager *thr_mgr,
 bool
 Client_Task::done(void) const
 {
-  return done_;
+  if (tasks_running_ == 0)
+    return done_;
+
+  //else
+  return false;
 }
 
 const char *
@@ -46,6 +51,7 @@ Client_Task::ID (void) const
 int
 Client_Task::svc (void)
 {
+  ++tasks_running_;
   if (TAO_debug_level > 0)
     {
       ACE_DEBUG ((LM_DEBUG,"(%P|%t) Client_Task %s started\n", this->ID ()));
@@ -116,12 +122,14 @@ Client_Task::svc (void)
     {
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) Client_Task %s: ", this->ID ()));
       ex._tao_print_exception ("CORBA Exception caught:");
+      --tasks_running_;
       done_ = true;
       return -1;
     }
   catch (...)
     {
       ACE_DEBUG ((LM_DEBUG, "(%P) Unknown exception caught\n"));
+      --tasks_running_;
       done_ = true;
       return -1;
     }
@@ -130,6 +138,7 @@ Client_Task::svc (void)
     {
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) Client_Task %s finished.\n", this->ID ()));
     }
+  --tasks_running_;
   done_ = true;
   return 0;
 }
