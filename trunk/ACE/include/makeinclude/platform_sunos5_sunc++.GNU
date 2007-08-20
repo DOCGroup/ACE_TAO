@@ -118,16 +118,7 @@ ifeq (Compilers 4.2,$(findstring Compilers 4.2,$(CC_VERSION)))
   #### CC 4.2, only, supports -features=castop
   CCFLAGS      += $(CFLAGS) -features=castop
 
-  #### RTTI can coexist with ACE, but it doesn't use it.  To enable,
-  #### add rtti=1 to your make invocation.  Sun C++ 4.2, only, supports
-  #### this option.
-  ifeq (1,$(rtti))
-    CCFLAGS += -features=rtti
-  else  # ! rtti
-    #### ACE_LACKS_RTTI is necessary with -features=castop, but
-    #### without -features=rtti, to convert dynamic_cast to static_cast.
-    CPPFLAGS += -DACE_LACKS_RTTI
-  endif # ! rtti
+  CCFLAGS += -features=rtti
 
   #### Create template repository to avoid compiler warning.
   TEMPLATE_REPOSITORY = Templates.DB
@@ -155,19 +146,9 @@ else  # ! 4.2
     #### is turning on -compat=4, and not trying to enable the new libraries.
     ifeq ($(compat4),1)
       CCFLAGS += -compat=4
-
-      #### RTTI can coexist with ACE, but it doesn't use it.  To enable,
-      #### add rtti=1 to your make invocation.  Sun C++ 4.2, only, supports
-      #### this option.
-      ifeq (1,$(rtti))
-        CCFLAGS += -features=rtti
-      else  # ! rtti
-        #### ACE_LACKS_RTTI is necessary with -features=castop, but
-        #### without -features=rtti, to convert dynamic_cast to static_cast.
-        CPPFLAGS += -DACE_LACKS_RTTI
-      endif # ! rtti
+      CCFLAGS += -features=rtti
     else
-      #### Support RTTI by default. And, use old iostreams.
+      #### Use old iostreams.
       ifeq (C++ 5.0,$(findstring C++ 5.0,$(CC_VERSION)))
         ifeq (1,$(stdcpplib))
           CCFLAGS += -library=Cstd

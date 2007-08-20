@@ -45,8 +45,6 @@
 #  quantify         Quantify all executables.  quantify must be in user's PATH!
 #  repo             Use GNU template repository (g++ with repo patches and
 #                   egcs only).
-#  rtti             Enable run-time type identification.  On some platforms,
-#                   it is enabled by default, so this is ignored.
 #  shared_libs      Build shared libraries. Ignored if static_libs_only is set.
 #  static_libs      Build static libraries. Ignored if shared_libs_only is set.
 #  shared_libs_only Only build shared libraries.  Ignored if no SHLIBs are
@@ -290,12 +288,11 @@ ifeq ($(threads),0)
 endif # threads
 
 ####
-#### Defaults are exceptions on (1), fast off (0), rtti on (1), threads on (1)
+#### Defaults are exceptions on (1), fast off (0), threads on (1)
 #### and versioned_so on (1).
 ####
 exceptions ?= 1
 fast ?= 0
-rtti ?= 1
 versioned_so ?= 1
 use_dep_libs ?= 1
 threads ?= 1

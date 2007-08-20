@@ -10,7 +10,6 @@ debug ?= 1
 distrib ?= 0
 exceptions ?= 1
 optimize ?= 0
-rtti ?= 1
 threads ?= 1
 buildbits ?= 32
 
@@ -96,7 +95,6 @@ ifeq ($(XLCVERSION),0x0306)
 # ibmcxx_build turns on the extra step for instantiating and compiling
 # template instances in rules.lib.GNU.
   ibmcxx_build = 1
-  rtti = 0
 else    # Visual Age 5 and up
   ifeq ($(XLCVERSION),0x0500)
     SHR_FILTER=$(ACE_ROOT)/bin/aix_shr
@@ -165,11 +163,7 @@ ifeq ($(exceptions),0)
   CCFLAGS     += -qnoeh
 endif
 
-ifeq (1,$(rtti))
-  CCFLAGS += -qrtti=all
-else  # ! rtti
-  CCFLAGS += -DACE_LACKS_RTTI
-endif # ! rtti
+CCFLAGS += -qrtti=all
 
 ifeq ($(shared_libs),1)
 ACELIB      = -lACE

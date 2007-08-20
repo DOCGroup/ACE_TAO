@@ -7,7 +7,6 @@ CROSS-COMPILE = 1
 debug ?= 1
 optimize ?= 1
 exceptions ?= 1
-rtti ?= 1
 threads ?= 1
 pipes ?= 1
 
@@ -46,9 +45,6 @@ endif
 
 CFLAGS          += -specs bsp_specs -qrtems -D_REENTRANT -fasm -fno-builtin -fno-defer-pop -fvolatile -W -Wall -DACE_HAS_RTEMS -B$(RTEMS_MAKEFILE_PATH)/lib
 CCFLAGS         += -specs bsp_specs -qrtems -D_REENTRANT -fasm -fno-builtin -fno-defer-pop -fvolatile -W -Wall -DACE_HAS_RTEMS -B$(RTEMS_MAKEFILE_PATH)/lib
-ifeq (0,$(rtti))
-  CCFLAGS += -fno-rtti -DACE_LACKS_RTTI
-endif # rtti
 DCFLAGS         += -g
 DCCFLAGS        += -g
 DLD             = $(LD)
