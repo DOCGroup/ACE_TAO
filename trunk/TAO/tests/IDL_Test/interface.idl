@@ -181,13 +181,13 @@ interface A {
 
 module M
 {
-    interface A;
+  interface A;
 };
 
 module M
 {
-    interface A;
+  interface A;
 
-    interface A {};
+  interface A {};
 };
 
