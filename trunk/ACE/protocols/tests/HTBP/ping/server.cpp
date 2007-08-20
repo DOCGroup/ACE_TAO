@@ -13,18 +13,22 @@
 #include "ace/SOCK_Acceptor.h"
 #include "ace/SOCK_Stream.h"
 #include "ace/Get_Opt.h"
+#include "ace/OS_NS_stdio.h"
 
 unsigned port = 8088;
-
+const ACE_TCHAR *notifier_file = 0;
 int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("p:"));
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("p:o:"));
   int c;
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
+      case 'o':
+        notifier_file = get_opts.opt_arg();
+        break;
       case 'p':
         port = static_cast<unsigned>(ACE_OS::atoi (get_opts.opt_arg()));
         break;
@@ -56,7 +60,13 @@ ACE_TMAIN (int argc , ACE_TCHAR *argv[])
   ACE_SOCK_Acceptor acc(local,1);
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%P|%t) Server is ready on port %d\n"),port));
-
+  if (notifier_file != 0)
+    {
+      FILE *f = ACE_OS::fopen (notifier_file,ACE_TEXT("w+"));
+      char *msg = "server ready";
+      ACE_OS::fwrite (msg,ACE_OS::strlen(msg),1,f);
+      ACE_OS::fclose (f);
+    }
   acc.accept (sock[0]);
   ACE::HTBP::Channel channel1(sock[0]);
   ACE_DEBUG ((LM_DEBUG,
