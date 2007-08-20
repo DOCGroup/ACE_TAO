@@ -32,7 +32,7 @@ $iorfile = PerlACE::LocalFile ("server.ior");
 unlink $iorfile;
 
 $SV = new PerlACE::Process ("server",
-                            "-ORBEndpoint htiop://$host:8088 -ORBdebuglevel $debug_level -d -o $iorfile");
+                            "-ORBEndpoint htiop://$host: -ORBdebuglevel $debug_level -d -o $iorfile");
 
 $SV->Spawn ();
 
