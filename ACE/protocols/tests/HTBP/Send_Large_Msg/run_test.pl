@@ -23,7 +23,7 @@ else {
 
 # The client code should later be modified to get the hostname
 # using ACE_OS::hostname so the same script can be run on all
-# hosts without havng to reset the host where it has to be run.
+# hosts without having to reset the host where it has to be run.
 $CL = new PerlACE::Process ("client", "-h $host -p $port");
 
 $SV->Spawn ();
