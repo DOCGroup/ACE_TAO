@@ -4,28 +4,28 @@
 
 
 interface simple3 : simple2 {
-  exception OVERFLOW {
+  exception OverFlow {
     long   a;
     string msg;
   };
 
-  exception UNDERFLOW {
+  exception UnderFlow {
     long   b;
     string msg;
   };
 
-  exception BADNUM {
+  exception BadNum {
     vec10 c;
   };
 
-  exception USERERROR { 
+  exception UserError { 
     any reason;
   };
 
   long op3(in long a, out simple3 b, out simple2 c, out simple d)
-    raises (OVERFLOW, UNDERFLOW, BADNUM);
+    raises (OverFlow, UnderFlow, BadNum);
 
-  any op4(in any x, inout any y, out any z) raises(UNDERFLOW);
+  any op4(in any x, inout any y, out any z) raises(UnderFlow);
 
-  oneway void op5() raises(USERERROR);
+//  oneway void op5() raises(USERERROR);
 };

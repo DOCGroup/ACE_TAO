@@ -1,3 +1,37 @@
+Mon Aug 20 15:06:33 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tests/IDL_Test/interface.idl:
+        
+          Cosmetic changes.
+        
+        * tests/IDL_Test/IDL_Test.mpc:
+        
+          Added moved files below to the MPC project.
+        
+        * tests/IDL_Test/old_union2.idl:
+        * tests/IDL_Test/old_struct.idl:
+        * tests/IDL_Test/dif2.idl:
+        * tests/IDL_Test/module.idl:
+        * tests/IDL_Test/inherit.idl:
+        * tests/IDL_Test/old_constants.idl:
+        * tests/IDL_Test/simple2.idl:
+        * tests/IDL_Test/old_array.idl:
+        * tests/IDL_Test/old_union.idl:
+        * tests/IDL_Test/simple.idl:
+        * tests/IDL_Test/primtypes.idl:
+        * tests/IDL_Test/old_sequence.idl:
+        
+          File moved from TAO_IDL/idl_specs. In some cases, there
+          was a name clash with existing IDL files, so 'old_' was
+          prepended to those filenames of the moved files. These
+          files were used for testing the earliest versions of the
+          IDL compiler, and were moved to the IDL_Test directory
+          so they can be used again.
+        
+        * TAO_IDL/idl_specs/*:
+        
+          Removed IDL files from this directory and removed the directory.
+
 Mon Aug 20 14:05:18 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * examples/Callback_Quoter/Consumer_Input_Handler.h:
