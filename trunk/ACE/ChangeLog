@@ -1,3 +1,11 @@
+Mon Aug 20 20:02:32 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * protocols/tests/HTBP/Reactor_Tests/server.cpp:
+        * protocols/tests/HTBP/Send_Large_Msg/server.cpp:
+        * protocols/tests/HTBP/Send_Recv_Tests/server.cpp:
+        * protocols/tests/HTBP/ping/server.cpp:
+          eliminate anachronistic code warnings.
+
 Mon Aug 20 14:16:20 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * examples/C++NPv2/Select_Reactor_Logging_Server.cpp:
@@ -8,10 +16,10 @@ Mon Aug 20 14:16:20 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
         * netsvcs/lib/Name_Handler.h:
         * netsvcs/lib/TS_Server_Handler.h:
 
-          Zapped ACE_Shutup_GPlusPLus and ace_dewarn_gplusplus, they were 
-          a reclic from the older days of ACE, it was used to silence 
-          incorrect warning from g++  compiler. Moved the destructor to 
-          the protected section to correctly handle such warnings 
+          Zapped ACE_Shutup_GPlusPLus and ace_dewarn_gplusplus, they were
+          a reclic from the older days of ACE, it was used to silence
+          incorrect warning from g++  compiler. Moved the destructor to
+          the protected section to correctly handle such warnings
           (if they still exist) without having to introduce a phony friend.
 
 Mon Aug 20 13:06:38 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
@@ -168,7 +176,7 @@ Fri Aug 17 13:36:11 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * protocols/tests/HTBP/Send_Large_Msg/run_test.pl:
 
-          removed used code.
+          removed unused code.
 
         * protocols/tests/HTBP/Send_Recv_Tests/client.cpp:
         * protocols/tests/HTBP/Send_Recv_Tests/run_test.pl:
