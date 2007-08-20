@@ -9,15 +9,11 @@ exceptions ?= 0
 debug ?= 1
 optimize ?= 1
 threads ?= 1
-rtti ?= 1
 
 pipes = 0
 ifeq ($(debug),0)
 CFLAGS += -DNDEBUG -v1
-endif
-ifeq ($(rtti),1)
-  CFLAGS += -Ar
-endif
+CFLAGS += -Ar
 
 CC      = dmc
 CXX     = dmc

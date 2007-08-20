@@ -11,7 +11,6 @@ debug ?= 1
 distrib ?= 0
 exceptions ?= 1
 optimize ?= 1
-rtti ?= 1
 threads ?= 1
 buildbits ?= native
 with_ld ?= aix
@@ -32,10 +31,6 @@ SOEXT       = a
 # aix_build turns on the funky shared library building code in
 # rules.lib.GNU
 aix_build = 1
-
-ifeq (0,$(rtti))
-  CFLAGS += -fno-rtti -DACE_LACKS_RTTI
-endif
 
 ifeq (1,$(threads))
   CFLAGS  += -pthread

@@ -24,7 +24,6 @@ endif
 
 debug ?= 1
 optimize ?= 1
-rtti ?= 1
 threads ?= 1
 exceptions ?= 1
 rtp ?= 1
@@ -268,15 +267,6 @@ else
 endif
 endif
 endif
-
-ifeq (0,$(rtti))
-C++FLAGS += -DACE_LACKS_RTTI
-ifeq ("$(TOOL)","gnu")
-  C++FLAGS += -fno-rtti
-else
-  C++FLAGS += -Xrtti-off
-endif
-endif # rtti
 
 ifneq ($(findstring $(VX_CPU_FAMILY),ppc arm),)
 ifeq ("$(TOOL)","diab")

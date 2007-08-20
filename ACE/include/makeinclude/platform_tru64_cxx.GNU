@@ -16,8 +16,6 @@ debug ?= 1
 # on this platform can cause bad things to happen.
 exceptions ?= 1
 
-# We want to test with rtti=1
-rtti ?= 1
 threads ?= 1
 
 # Use of Standard C++ Library requires some flags to be added to the
@@ -120,9 +118,6 @@ SOFLAGS         += -shared -use_ld_input $(ACELIB)
 LIBS            :=  $(LIBS)
 SOBUILD         = $(RM) $@; $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.o $< && \
                   ln $(VSHDIR)$*.o $@
-ifeq (0,$(rtti))
-  CCFLAGS += -nortti
-endif # rtti
 
 ifeq (0,$(exceptions))
   #### Disable the default exception handling of cxx >= 6.0.

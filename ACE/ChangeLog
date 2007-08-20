@@ -1,3 +1,21 @@
+Mon Aug 20 12:28:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_aix_g++.GNU:
+        * include/makeinclude/platform_aix_ibm.GNU:
+        * include/makeinclude/platform_integrity_ghs.GNU:
+        * include/makeinclude/platform_openvms.GNU:
+        * include/makeinclude/platform_rtems.x_g++.GNU:
+        * include/makeinclude/platform_sunos5_sunc++.GNU:
+        * include/makeinclude/platform_tru64_cxx.GNU:
+        * include/makeinclude/platform_tru64_g++.GNU:
+        * include/makeinclude/platform_vxworks5.5.x.GNU:
+        * include/makeinclude/platform_vxworks6.2.GNU:
+        * include/makeinclude/platform_vxworks6.3.GNU:
+        * include/makeinclude/platform_win32_dmc.GNU:
+        * include/makeinclude/wrapper_macros.GNU:
+          Removed rtti as make option, ACE requires rtti so we don't need an
+          option to disable rtti.
+
 Mon Aug 20 10:51:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/generate_rel_manpages:

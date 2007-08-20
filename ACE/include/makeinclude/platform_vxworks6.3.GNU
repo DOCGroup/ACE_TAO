@@ -18,7 +18,6 @@ CROSS-COMPILE = 1
 
 debug ?= 1
 optimize ?= 1
-rtti ?= 1
 threads ?= 1
 exceptions ?= 1
 rtp ?= 1
@@ -315,15 +314,6 @@ else
 endif
 endif
 endif
-
-ifeq (0,$(rtti))
-C++FLAGS += -DACE_LACKS_RTTI
-ifeq ("$(TOOL_FAMILY)","gnu")
-  C++FLAGS += -fno-rtti
-else
-  C++FLAGS += -Xrtti-off
-endif
-endif # rtti
 
 ifeq ("$(TOOL_FAMILY)","diab")
   LIBS += -lstlstd
