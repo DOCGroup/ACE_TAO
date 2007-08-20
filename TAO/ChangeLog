@@ -1,3 +1,12 @@
+Mon Aug 20 07:31:59 UTC 2007  Trevor Fields  <fields_t@ociweb.com>
+
+        * tests/Big_Request_Muxing/Client_Task.cpp:
+        * tests/Big_Request_Muxing/Client_Task.h:
+        * tests/Big_Request_Muxing/server.cpp:
+
+          Fixed issue of first thread done marking task done for all threads.
+          Corrected typo in output.
+
 Mon Aug 20 07:14:00 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/Options.html:

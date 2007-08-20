@@ -109,7 +109,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       poa_manager->activate ();
 
       ACE_DEBUG ((LM_DEBUG,
-                 "(%P) Server waiting for %d (+%d possiable) messages...\n",
+                 "(%P) Server waiting for %d (+%d possible) messages...\n",
                  expected, maybe_lost));
 
       const ACE_Time_Value start_time = ACE_OS::gettimeofday ();
