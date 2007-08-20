@@ -51,14 +51,12 @@ public:
   // the handle_signal () returns < 0 this method will be executed
   // automatically.
 
-private:
-  friend class ACE_Shutup_GPlusPlus;
-  // Turn off g++ warning
-
+protected:
   ~Consumer_Signal_Handler (void);
-  // Private destructor so that the signal handler is always created
+  // Protected destructor so that the signal handler is always created
   // dynamically and hence the heap doesnt get corrupted.
 
+private:
   int quit_on_signal (void);
   // Exit gracefully on a signal.
 

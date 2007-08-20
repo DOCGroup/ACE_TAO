@@ -1,3 +1,13 @@
+Mon Aug 20 14:05:18 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * examples/Callback_Quoter/Consumer_Input_Handler.h:
+        * examples/Callback_Quoter/Consumer_Signal_Handler.h:
+          Zapped ACE_Shutup_GPlusPLus, it was a reclic from the older days 
+          of ACE/TAO, it was used to silence incorrect warning from g++ 
+          compiler. Moved the destructor to the protected section to 
+          correctly handle such warnings (if they still exist) without
+          having to introduce a phony friend.
+
 Mon Aug 20 14:02:00 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/Property/client.cpp:
