@@ -284,13 +284,6 @@ TAO::HTIOP::Transport::tear_listen_point_list (TAO_InputCDR &cdr)
   // 1 (i.e., non-originating side)
   this->bidirectional_flag (0);
 
-  // Just make sure that the connection handler is sane before we go
-  // head and do anything with it.
-  ACE_GUARD_RETURN (ACE_Lock,
-                    ace_mon,
-                    *this->handler_lock_,
-                    -1);
-
   return this->connection_handler_->process_listen_point_list (listen_list);
 }
 
