@@ -38,8 +38,6 @@ template class ACE_Svc_Export ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
  */
 class ACE_Svc_Export ACE_TS_Server_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
 {
-
-  friend class ACE_Shutup_GPlusPlus;  // Turn off g++ warning
 public:
   // = Initialization and termination.
 
@@ -50,10 +48,10 @@ public:
   /// <ACE_Strategy_Acceptor>).
   virtual int open (void * = 0);
 
+protected:
   /// Must be allocated dynamically.
   ~ACE_TS_Server_Handler (void);
 
-protected:
   // = Helper routines for the operations exported to clients.
 
   /// Give up waiting (e.g., when a timeout occurs or a client shuts
