@@ -15,7 +15,7 @@ $host = hostname();
 
 unlink $iorfile;
 
-$SV = new PerlACE::Process ("server", "-orbendpoint htiop://$host:8088 -orbsvcconf outside.conf -o $iorfile -i 100");
+$SV = new PerlACE::Process ("server", "-orbendpoint htiop://$host: -orbsvcconf outside.conf -o $iorfile -i 100");
 $CL = new PerlACE::Process ("client", "-orbsvcconf inside.conf -k file://$iorfile");
 
 $SV->Spawn ();

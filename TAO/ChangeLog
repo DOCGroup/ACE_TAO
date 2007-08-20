@@ -1,3 +1,17 @@
+Mon Aug 20 02:21:04 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/orbsvcs/HTIOP/HTIOP_Transport.cpp:
+          Update the protocol-specific tear_listen_point_list impl to be
+          consistent with those of other protocols. There was an obsolete
+          guard that was conflicting with recent changes to the transport
+          cache manager. The processing of listen points requires a
+          recache of the transport, and that involves calling is_connected
+          which in turn is guarded by the transport's lock.
+
+        * orbsvcs/tests/HTIOP/AMI/run_test.pl:
+        * orbsvcs/tests/HTIOP/BiDirectional/run_test.pl:
+          Fix to take away the hard-coded listen endpoint.
+
 Sun Aug 19 23:48:56 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * TAO_IDL/be/be_interface.cpp:
