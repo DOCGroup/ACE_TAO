@@ -1,3 +1,9 @@
+Mon Aug 20 12:42:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/DLL_Test.cpp:
+        * tests/DLL_Test_Impl.cpp:
+          Removed left overs from the time that we could use ACE without rtti
+
 Mon Aug 20 12:33:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/ATM_Connector.h:
