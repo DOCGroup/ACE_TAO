@@ -115,8 +115,6 @@ int basic_test (ACE_DLL &dll)
 
 int dynamic_cast_test (ACE_DLL &dll)
 {
-
-#if !defined (ACE_LACKS_RTTI)
   Child child;
   child.test();
 
@@ -138,9 +136,6 @@ int dynamic_cast_test (ACE_DLL &dll)
 
   if (pfnAcquire (&child) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("dynamic_cast failed.\n")), -1);
-#else
-  ACE_UNUSED_ARG (dll);
-#endif /* !ACE_LACKS_RTTI */
 
   return 0;
 }
