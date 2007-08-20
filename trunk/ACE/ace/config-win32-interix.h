@@ -72,7 +72,6 @@
 #define ACE_HAS_UALARM
 #define ACE_HAS_TERMIOS
 #define ACE_HAS_SIGWAIT
-#define ACE_LACKS_RTTI                      // DLL_Test checks RTTI, and it fails so...
 
 // Turns off the tracing feature.
 #if !defined (ACE_NTRACE)

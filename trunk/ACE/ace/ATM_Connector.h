@@ -126,11 +126,6 @@ public:
                 ACE_ATM_Addr *remote_sap,
                 ACE_Time_Value *tv);
 
-  //int add_leaf (ACE_ATM_Stream &current_stream,
-  //              const ACE_Addr &remote_sap,
-  //              ACE_INT32 leaf_id,
-  //              ACE_Time_Value *timeout = 0);
-
   /**
    * Actively add a leaf to the root (i.e., point-to-multipoint). The
    * <remote_sap> is the address of the leaf that we

@@ -35,18 +35,7 @@
 # endif  /* _DEBUG */
 #endif  /* ACE_LD_DECORATOR_STR */
 
-// Compiler sets _CPPRTTI if rtti is enabled.
-#if defined (_CPPRTTI)
-#  if defined (ACE_LACKS_RTTI)
-#    undef ACE_LACKS_RTTI
-#  endif
-#else
-#  if !defined (ACE_LACKS_RTTI)
-#    define ACE_LACKS_RTTI
-#  endif
-#endif /* _CPPRTTI */
-
-#if ! defined(_NATIVE_WCHAR_T_DEFINED)
+#if !defined(_NATIVE_WCHAR_T_DEFINED)
   #define ACE_LACKS_NATIVE_WCHAR_T
 #endif
 
