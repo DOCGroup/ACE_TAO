@@ -3,7 +3,6 @@ CROSS-COMPILE = 1
 
 debug ?= 1
 optimize ?= 1
-rtti ?= 0
 
 shared_libs =
 static_libs = 1
@@ -57,7 +56,6 @@ CXX = $(GHSROOT)/cx$(CPU)
 IOPS = -bspname=$(RTOSROOT)/target/$(BSP).bld -os_dir $(RTOSROOT) --one_instantiation_per_object -non_shared -Uvector
 ifeq (1, $(exceptions))
    IOPS += --exceptions
-   override rtti = 1
 endif # exceptions
 
 CCFLAGS  += $(CFLAGS) -integrate -dynamic -I$(RTOSROOT)/INTEGRITY-include-SCA $(IOPS) -bspfile=$(TARGET_BSP) $(TARGET_LD)
@@ -70,7 +68,3 @@ PIC      =
 AR := $(CXX) -archive $(IOPS)
 ARFLAGS = -o
 
-
-ifeq (0, $(rtti))
-  CCFLAGS += --no_rtti
-endif # rtti
