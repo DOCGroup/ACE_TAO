@@ -35,6 +35,7 @@
 #include "ace/SOCK_Acceptor.h"
 #include "ace/SOCK_Stream.h"
 #include "ace/Get_Opt.h"
+#include "ace/OS_NS_stdio.h"
 
 // Change to non-zero if test fails
 static int Test_Result = 0;
@@ -50,16 +51,20 @@ const size_t Test3_Send_Size = 4*1024;
 const size_t Test3_Loops = 10;
 const size_t Test3_Total_Size = Test3_Send_Size * Test3_Loops;
 unsigned port = 8088;
+const ACE_TCHAR *notifier_file = 0;
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("p:"));
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:p:"));
   int c;
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
+      case 'o':
+        notifier_file = get_opts.opt_arg();
+        break;
       case 'p':
         port = static_cast<unsigned>(ACE_OS::atoi (get_opts.opt_arg()));
         break;
@@ -110,6 +115,14 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%P|%t) starting server at port %d\n"),
               server_addr.get_port_number ()));
+
+  if (notifier_file != 0)
+    {
+      FILE *f = ACE_OS::fopen (notifier_file,ACE_TEXT("w+"));
+      char *msg = "server ready";
+      ACE_OS::fwrite (msg,ACE_OS::strlen(msg),1,f);
+      ACE_OS::fclose (f);
+    }
 
   ACE_INET_Addr cli_addr;
 

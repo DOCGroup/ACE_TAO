@@ -15,18 +15,24 @@
 #include "ace/Event_Handler.h"
 #include "ace/Reactor.h"
 #include "ace/Get_Opt.h"
+#include "ace/OS_NS_stdio.h"
 
 unsigned port = 8088;
+const ACE_TCHAR *notifier_file = 0;
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("p:"));
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:p:"));
   int c;
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
+      case 'o':
+        notifier_file = get_opts.opt_arg();
+        break;
+
       case 'p':
         port = static_cast<unsigned>(ACE_OS::atoi (get_opts.opt_arg()));
         break;
@@ -221,6 +227,14 @@ ACE_TMAIN (int argc, ACE_TCHAR * argv[])
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%P|%t) Server: ")
               ACE_TEXT ("server is ready\n")));
+
+  if (notifier_file != 0)
+    {
+      FILE *f = ACE_OS::fopen (notifier_file,ACE_TEXT("w+"));
+      char *msg = "server ready";
+      ACE_OS::fwrite (msg,ACE_OS::strlen(msg),1,f);
+      ACE_OS::fclose (f);
+    }
 
   ACE_Reactor::instance()->run_reactor_event_loop();
   return 0;

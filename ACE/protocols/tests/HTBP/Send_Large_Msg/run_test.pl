@@ -13,12 +13,14 @@ $status = 0;
 
 $host = hostname();
 $port = PerlACE::random_port();
+$synchfile = PerlACE::LocalFile ("ready");
+
 if (PerlACE::is_vxworks_test()) {
     $host =  $ENV{'ACE_RUN_VX_TGTHOST'};
-    $SV = new PerlACE::ProcessVX ("server", "-p $port");
+    $SV = new PerlACE::ProcessVX ("server", "-p $port -o $synchfile");
 }
 else {
-    $SV = new PerlACE::Process ("server", "-p $port");
+    $SV = new PerlACE::Process ("server", "-p $port -o $synchfile");
 }
 
 # The client code should later be modified to get the hostname
@@ -26,7 +28,17 @@ else {
 # hosts without having to reset the host where it has to be run.
 $CL = new PerlACE::Process ("client", "-h $host -p $port");
 
+unlink $synchfile;
 $SV->Spawn ();
+
+if (PerlACE::waitforfile_timed ($synchfile,
+                                $PerlACE::wait_interval_for_process_creation) == -1) {
+    print STDERR "ERROR: cannot find file <$synchfile>\n";
+    $SV->Kill (); $SV->TimedWait (1);
+    exit 1;
+}
+
+unlink $synchfile;
 
 $client = $CL->SpawnWaitKill (300);
 
