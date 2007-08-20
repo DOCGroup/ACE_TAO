@@ -1,3 +1,20 @@
+Mon Aug 20 15:57:00 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tests/IDL_Test/old_union2.idl:
+        * tests/IDL_Test/old_struct.idl:
+        * tests/IDL_Test/dif2.idl:
+        * tests/IDL_Test/module.idl:
+        * tests/IDL_Test/inherit.idl:
+        * tests/IDL_Test/old_constants.idl:
+        * tests/IDL_Test/simple2.idl:
+        * tests/IDL_Test/old_array.idl:
+        * tests/IDL_Test/old_union.idl:
+        * tests/IDL_Test/simple.idl:
+        * tests/IDL_Test/primtypes.idl:
+        * tests/IDL_Test/old_sequence.idl:
+        
+          Added file description comments and fixed formatting.
+
 Mon Aug 20 15:06:33 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tests/IDL_Test/interface.idl:
