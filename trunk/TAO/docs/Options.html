@@ -845,8 +845,9 @@ Repository</a>. </td>
       <tr>
         <td><code>-ORBDaemon</code></td>
         <td>Specifies that the ORB should <em>daemonize</em> itself, <em>i.e.</em>,
-run as a background process. This option is only meaningful on OS
-platforms that support daemonization.</td>
+run as a background process. Note, that this changes the working directory to 
+be the root directory "/". This especially affects relative paths specified at the command line.
+This option is only meaningful on OS platforms that support daemonization.</td>
       </tr>
     </tbody>
   </table>

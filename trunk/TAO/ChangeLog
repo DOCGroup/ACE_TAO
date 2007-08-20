@@ -1,3 +1,10 @@
+Mon Aug 20 07:14:00 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/Options.html:
+          Added note that -ORBDeamon changes the current directory to /
+          Thanks to Hans Utz <hans dot utz at nasa dot gov> for making
+          this proposal
+
 Mon Aug 20 02:21:04 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/orbsvcs/HTIOP/HTIOP_Transport.cpp:
