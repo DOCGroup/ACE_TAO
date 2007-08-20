@@ -231,7 +231,7 @@ ACE_TMAIN (int argc, ACE_TCHAR * argv[])
   if (notifier_file != 0)
     {
       FILE *f = ACE_OS::fopen (notifier_file,ACE_TEXT("w+"));
-      char *msg = "server ready";
+      const char *msg = "server ready";
       ACE_OS::fwrite (msg,ACE_OS::strlen(msg),1,f);
       ACE_OS::fclose (f);
     }
