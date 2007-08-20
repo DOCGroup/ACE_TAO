@@ -1,3 +1,15 @@
+Mon Aug 20 12:33:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/ATM_Connector.h:
+          Removed commented out method
+
+        * ace/config-cxx-common.h:
+        * ace/config-macros.h:
+        * ace/config-qnx-rtp-pre62x.h:
+        * ace/config-win32-interix.h:
+        * ace/config-win32-msvc.h:
+          Removed left overs from the time that we could use ACE without rtti
+
 Mon Aug 20 12:28:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_aix_g++.GNU:

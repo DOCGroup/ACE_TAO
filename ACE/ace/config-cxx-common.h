@@ -30,9 +30,6 @@
 #   if defined (ACE_HAS_EXCEPTIONS)
 #     define ACE_NEW_THROWS_EXCEPTIONS
 #   endif /* ACE_HAS_EXCEPTIONS */
-#   if !defined (__RTTI)
-#     define ACE_LACKS_RTTI
-#   endif
 #   define ACE_HAS_STANDARD_CPP_LIBRARY 1
 #   define ACE_HAS_TEMPLATE_SPECIALIZATION
 #   define ACE_HAS_TEMPLATE_TYPEDEFS
