@@ -12,6 +12,8 @@ USER VISIBLE CHANGES BETWEEN ACE-5.5.10 and ACE-5.6.0
 
 . Added autoconf support for Intel C++ 10.0
 
+. Improved autoconf support on Linux, Solaris, NetBSD and HPUX
+
 USER VISIBLE CHANGES BETWEEN ACE-5.5.9 and ACE-5.5.10
 ====================================================
 
