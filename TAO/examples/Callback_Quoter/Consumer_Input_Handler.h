@@ -61,9 +61,6 @@ public:
   int quit_consumer_process (void);
   // Ends the consumer process.
 
-  friend class ACE_Shutup_GPlusPlus;
-  // Turn off g++ warning
-
   enum
   {
     // =  TITLE
@@ -87,15 +84,13 @@ public:
     // application.
   };
 
-private:
+protected:
   ~Consumer_Input_Handler (void);
   // the destructor.
 
+private:
   Consumer_Handler *consumer_handler_;
   // The Consumer_Handler object.
-
-
-
 };
 
 #endif /* CONSUMER_INPUT_HANDLER_H */
