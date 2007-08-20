@@ -1,34 +1,73 @@
 // $Id$
 
+// ============================================================================
+//
+// = LIBRARY
+//    TAO/tests/IDL_Test
+//
+// = FILENAME
+//    old_constants.idl
+//
+// = DESCRIPTION
+//    Tests of const IDL constructs
+//
+// = AUTHORS
+//    Andy Gokhale <gokhale@dre.vanderbilt.edu>
+//
+// ============================================================================
+
 module OldConstants
 {
   const short l = 4;
 
-  enum N { zero, un , deux, trois };
+  enum N
+  {
+    zero,
+    un,
+    deux,
+    trois
+  };
 
-  exception E {
+  exception E
+  {
     short cause ;
   };
 
-  module M {
+  module M
+  {
     const short l = 4; 
 
-    enum N { zero, un , deux, trois };
+    enum N
+    {
+      zero,
+      un,
+      deux,
+      trois
+    };
 
-    exception E {
+    exception E
+    {
       short cause ;
     };
 
-    interface A {
+    interface A
+    {
       const short l = 4; 
    
-      enum N { zero, un , deux, trois };
+      enum N
+      {
+        zero,
+        un,
+        deux,
+        trois
+      };
    
-      exception E {
+      exception E
+      {
         short cause ;
       };
 
-      N foo(in N x, out N y, inout N z);
+      N foo (in N x, out N y, inout N z);
     };
   };
 };
