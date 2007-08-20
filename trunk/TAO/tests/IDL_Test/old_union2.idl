@@ -1,25 +1,45 @@
 // $Id$
 
+// ============================================================================
+//
+// = LIBRARY
+//    TAO/tests/IDL_Test
+//
+// = FILENAME
+//    old_union2.idl
+//
+// = DESCRIPTION
+//    Further tests of union IDL constructs
+//
+// = AUTHORS
+//    Andy Gokhale <gokhale@dre.vanderbilt.edu>
+//
+// ============================================================================
+
 module OldUnion2
 {
-  enum FooDisc {
+  enum FooDisc
+  {
     FOO1,
     FOO2
   };
 
-  union Foo switch (FooDisc) {
+  union Foo switch (FooDisc)
+  {
     case FOO1: long x;
     case FOO2: string y;
-  //  default: char z;
   };
 
-  struct Bar {
-    enum BarDisc {
+  struct Bar
+  {
+    enum BarDisc
+    {
       BAR1,
       BAR2
     } kind;
 
-    union Foo switch (BarDisc) {
+    union Foo switch (BarDisc)
+    {
       case BAR1: long x;
       case BAR2: long y;
     } addr;
