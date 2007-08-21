@@ -45,9 +45,7 @@ TAO_GIOP_Message_State::parse_message_header_i (ACE_Message_Block &incoming)
 
   // Parse the magic bytes first
   if (this->parse_magic_bytes (buf) == -1)
-    {
-      return -1;
-    }
+    return -1;
 
   // Get the version information
   if (this->get_version_info (buf) == -1)
@@ -230,9 +228,13 @@ TAO_GIOP_Message_State::get_byte_order_info (char *buf)
 
       // Read the fragment bit
       this->more_fragments_ =
-        (CORBA::Octet) (buf[TAO_GIOP_MESSAGE_FLAGS_OFFSET]& 0x02);
+        ((buf[TAO_GIOP_MESSAGE_FLAGS_OFFSET]& 0x02) == 2)
 
-      if ((buf[TAO_GIOP_MESSAGE_FLAGS_OFFSET] & ~0x3) != 0)
+      // Read the compressed data
+      this->compressed_data_ =
+        ((buf[TAO_GIOP_MESSAGE_FLAGS_OFFSET]& 0x04) == 4);
+
+      if ((buf[TAO_GIOP_MESSAGE_FLAGS_OFFSET] & ~0x7) != 0)
         {
           if (TAO_debug_level > 2)
             {

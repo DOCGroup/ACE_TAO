@@ -72,6 +72,9 @@ public:
   /// Get the GIOP version
   TAO_GIOP_Message_Version const &giop_version (void) const;
 
+  /// Return the compressed information
+  CORBA::Boolean compressed_data (void) const;
+
 private:
   /// Parse the message header.
   int parse_message_header_i (ACE_Message_Block &incoming);
@@ -101,7 +104,7 @@ private:
   CORBA::ULong read_ulong (const char *buf) const;
 
 private:
-  // GIOP version information..
+  /// GIOP version information..
   TAO_GIOP_Message_Version giop_version_;
 
   /// 0 = big, 1 = little
@@ -114,10 +117,12 @@ private:
   CORBA::ULong payload_size_;
 
   /// (Requests and Replys)
-  /// A value of zero indicates that this message does not have any
-  /// fragments.  A value of non-zero indicates that it does have
-  /// fragments.
-  CORBA::Octet more_fragments_;
+  /// A false indicates that this message does not have any
+  /// fragments.  A value of true indicates that it does have fragments.
+  CORBA::Boolean more_fragments_;
+
+  /// Compressed data
+  CORBA::Boolean compressed_data_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
