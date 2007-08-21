@@ -1,3 +1,11 @@
+Tue Aug 21 15:01:33 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/fe/fe_extern.cpp (FE_yyparse):
+        
+          Added ACE_OS::fclose of the input file after parsing is done.
+          This lack was causing an error and exit if more than 512 files
+          are parsed in a single execution.
+
 Tue Aug 21 14:23:30 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * examples/Callback_Quoter/Consumer_Signal_Handler.h:
