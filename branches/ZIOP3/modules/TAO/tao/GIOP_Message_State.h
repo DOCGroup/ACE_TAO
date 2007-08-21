@@ -8,10 +8,10 @@
  *
  *   GIOP utility definitions
  *
+ *
  *  @author  Chris Cleeland <cleeland@cs.wustl.edu>
  *  @author  Carlos O' Ryan <coryan@uci.edu>
  *  @author  Balachandran Natarajan <bala@cs.wustl.edu>
- *  @author  Johnny Willemsen <jwillemsen@remedy.nl>
  */
 //=============================================================================
 #ifndef TAO_GIOP_MESSAGE_STATE_H
