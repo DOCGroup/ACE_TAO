@@ -451,7 +451,7 @@ namespace
 #endif /* TAO_PLATFORM_SVC_CONF_FILE_NOTSUP */
 
     // Copy command line parameter to allow conversion
-    ACE_Argv_Type_Converter command_line (argc, argv);
+    ACE_Argv_Type_Converter command_line (argc, argv); 
 
     return pcfg->open (command_line.get_argc (),
                        command_line.get_TCHAR_argv (),

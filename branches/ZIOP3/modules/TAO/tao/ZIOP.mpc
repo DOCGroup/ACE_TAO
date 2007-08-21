@@ -1,0 +1,43 @@
+//$Id$
+project : taolib, compression, core, pi, tao_versioning_idl_defaults {
+  sharedname   = TAO_ZIOP
+  dynamicflags = TAO_ZIOP_BUILD_DLL
+
+  Source_Files {
+    ZIOP
+  }
+
+  Header_Files {
+    ZIOP
+  }
+
+  Inline_Files {
+    ZIOP
+  }
+
+  Template_Files {
+    ZIOP
+  }
+
+  Resource_Files {
+    ZIOP
+  }
+
+  PIDL_Files {
+    ZIOP
+  }
+
+  IDL_Files {
+    idlflags += -Gp -Gd -Sci -SS -Sorb -Sa -St \
+                -Wb,export_macro=TAO_ZIOP_Export \
+                -Wb,export_include=tao/ZIOP/ziop_export.h \
+                -Wb,include_guard=TAO_ZIOP_SAFE_INCLUDE \
+                -Wb,safe_include=tao/ZIOP/ZIOP.h \
+                -o ZIOP
+    ZIOP/ZIOP.pidl
+  }
+
+  Pkgconfig_Files {
+    ZIOP/TAO_ZIOP.pc.in
+  }
+}

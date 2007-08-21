@@ -78,10 +78,8 @@ namespace TAO
       // index that we need.
       CORBA::ULong index = 0;
       IOP::IOR *ior_info = 0;
-      int const retval =
-        this->resolver_.stub ()->create_ior_info (ior_info, index);
 
-      if (retval == -1)
+      if (this->resolver_.stub ()->create_ior_info (ior_info, index) == -1)
         {
           if (TAO_debug_level > 0)
             {
@@ -121,6 +119,7 @@ namespace TAO
   void
   Remote_Invocation::marshal_data (TAO_OutputCDR &out_stream)
   {
+    // @todo Invoke compression??
     if (this->details_.marshal_args (out_stream) == false)
       {
         throw ::CORBA::MARSHAL ();
@@ -145,13 +144,13 @@ namespace TAO
     if (nph != 0)
       {
         // nph = 0, means DiffServ library is not used
-        // nph = 0, means DiffServ library is used, and 
+        // nph = 0, means DiffServ library is used, and
         // request DSCP and reply DSCP are set.
         // Note that the application could still be using
         // RTCORBA, but still setting DIffServ codepoints
         // using the DiffServ library takes precedence.
         //
-        CORBA::Long dscp = nph->get_dscp_codepoint (this->resolver_.stub (),
+        CORBA::Long const dscp = nph->get_dscp_codepoint (this->resolver_.stub (),
           this->resolver_.object ());
         connection_handler->set_dscp_codepoint (dscp);
       }

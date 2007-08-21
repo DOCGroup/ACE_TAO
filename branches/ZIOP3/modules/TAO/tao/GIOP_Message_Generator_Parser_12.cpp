@@ -89,6 +89,21 @@ TAO_GIOP_Message_Generator_Parser_12::write_request_header (
   return true;
 }
 
+/*
+  // We have the ListenPointList at this point. Create a output CDR
+  // stream at this point
+  TAO_OutputCDR cdr;
+
+  // Marshal the information into the stream
+  if ((cdr << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER) == 0)
+      || (cdr << listen_point_list) == 0)
+    return;
+
+  // Add this info in to the svc_list
+  opdetails.request_service_context ().set_context (IOP::BI_DIR_IIOP,
+                                                    cdr);
+ */
+
 bool
 TAO_GIOP_Message_Generator_Parser_12::write_locate_request_header (
     CORBA::ULong request_id,
@@ -99,8 +114,7 @@ TAO_GIOP_Message_Generator_Parser_12::write_locate_request_header (
   msg << request_id;
 
   // Write the target address
-  if (this->marshall_target_spec (spec,
-                                  msg) == false)
+  if (!(this->marshall_target_spec (spec, msg)))
     return false;
 
   // I dont think we need to align the pointer to an 8 byte boundary
@@ -248,9 +262,12 @@ TAO_GIOP_Message_Generator_Parser_12::parse_request_header (
 
   request.response_expected ((response_flags > 0));
 
+  // ?????
+ //request.compressed_ = (response_flags > 0);
+
   // The high bit of the octet has been set if the SyncScope policy
   // value is SYNC_WITH_SERVER.
-  request.sync_with_server ((response_flags == 1));
+  request.sync_with_server (response_flags == 1);
 
   // Reserved field
   input.skip_bytes (3);
@@ -296,6 +313,8 @@ TAO_GIOP_Message_Generator_Parser_12::parse_request_header (
       this->check_bidirectional_context (request);
     }
 
+  this->check_compression_context (request);
+
   if (input.length () > 0)
     {
       // Reset the read_ptr to an 8-byte boundary.
@@ -313,7 +332,7 @@ TAO_GIOP_Message_Generator_Parser_12::parse_locate_header (
   // Get the stream .
   TAO_InputCDR &msg = request.incoming_stream ();
 
-  CORBA::Boolean hdr_status = 1;
+  CORBA::Boolean hdr_status = true;
 
   // Get the request id.
   CORBA::ULong req_id = 0;
@@ -323,8 +342,7 @@ TAO_GIOP_Message_Generator_Parser_12::parse_locate_header (
   request.request_id (req_id);
 
   // Unmarshal the target address field.
-  hdr_status =
-    hdr_status && request.profile ().unmarshall_target_address(msg);
+  hdr_status = hdr_status && request.profile ().unmarshall_target_address(msg);
 
   // Reset the pointer to an 8-byte bouns]dary
   msg.align_read_ptr (TAO_GIOP_MESSAGE_ALIGN_PTR);
@@ -337,17 +355,17 @@ TAO_GIOP_Message_Generator_Parser_12::parse_reply (
     TAO_InputCDR &cdr,
     TAO_Pluggable_Reply_Params &params)
 {
-  if (TAO_GIOP_Message_Generator_Parser::parse_reply (cdr,
-                                                      params) == -1)
-
+  if (TAO_GIOP_Message_Generator_Parser::parse_reply (cdr, params) == -1)
     return -1;
 
   if ((cdr >> params.svc_ctx_) == 0)
     {
-      // if (TAO_debug_level > 0)
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("TAO (%P|%t) parse_reply, ")
-                    ACE_TEXT ("extracting context\n")));
+      if (TAO_debug_level)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("TAO (%P|%t) parse_reply, ")
+                      ACE_TEXT ("extracting context\n")));
+        }
 
       return -1;
     }
@@ -454,7 +472,7 @@ TAO_GIOP_Message_Generator_Parser_12::marshall_target_spec (
             if (TAO_debug_level)
               {
                 ACE_DEBUG ((LM_DEBUG,
-                            ACE_TEXT ("(%N |%l) Unable to handle this request \n")));
+                            ACE_TEXT ("(%N |%l) Unable to handle this request\n")));
               }
             return false;
           }
@@ -467,7 +485,7 @@ TAO_GIOP_Message_Generator_Parser_12::marshall_target_spec (
 
         // Get the IOR
         IOP::IOR *ior = 0;
-        CORBA::ULong index = spec.iop_ior (ior);
+        CORBA::ULong const index = spec.iop_ior (ior);
 
         if (ior)
           {
@@ -484,7 +502,7 @@ TAO_GIOP_Message_Generator_Parser_12::marshall_target_spec (
                 ACE_DEBUG ((LM_DEBUG,
                             ACE_TEXT ("(%N |%l) Unable to handle this request \n")));
               }
-            return 0;
+            return false;
           }
         break;
       }
@@ -492,7 +510,7 @@ TAO_GIOP_Message_Generator_Parser_12::marshall_target_spec (
       if (TAO_debug_level)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%N |%l) Unable to handle this request \n")));
+                      ACE_TEXT ("(%N |%l) Unable to handle this request\n")));
         }
       return false;
     }
@@ -519,6 +537,23 @@ TAO_GIOP_Message_Generator_Parser_12::check_bidirectional_context (
 }
 
 bool
+TAO_GIOP_Message_Generator_Parser_12::check_compression_context (
+    TAO_ServerRequest &request)
+{
+  TAO_Service_Context &service_context = request.request_service_context ();
+
+  // Check whether we have the BiDir service context info available in
+  // the ServiceContextList
+  if (service_context.is_service_id (IOP::TAG_ZIOP_COMPONENT))
+    {
+      return this->process_compression_context (service_context, request);
+    }
+
+  return false;
+}
+
+
+bool
 TAO_GIOP_Message_Generator_Parser_12::process_bidir_context (
     TAO_Service_Context &service_context,
     TAO_Transport *transport)
@@ -538,6 +573,49 @@ TAO_GIOP_Message_Generator_Parser_12::process_bidir_context (
 
   return transport->tear_listen_point_list (cdr);
 }
+
+bool
+TAO_GIOP_Message_Generator_Parser_12::process_compression_context (
+    TAO_Service_Context &service_context,
+    TAO_ServerRequest &request)
+{
+  // Get the context info
+  IOP::ServiceContext context;
+  context.context_id = IOP::TAG_ZIOP_COMPONENT;
+
+  if (service_context.get_context (context) != 1)
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("(%P|%t) Context info not found \n")),
+                        false);
+
+  TAO_InputCDR cdr (reinterpret_cast<const char*> (
+                      context.context_data.get_buffer ()),
+                      context.context_data.length ());
+
+  CORBA::Boolean byte_order;
+  if ((cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
+    return false;
+
+  cdr.reset_byte_order (static_cast<int> (byte_order));
+
+  CORBA::ULong message_length = 0;
+  if (!(cdr >> message_length))
+    return false;
+
+    // @TODO use real typedef
+  CORBA::UShort compressorid = 0;
+  if (!(cdr >> compressorid))
+    return false;
+
+   request.original_message_length_ = message_length;
+ACE_DEBUG ((LM_DEBUG, "Received compressor %d\n", compressorid));
+//+  request.compressed_ = true;
+//+  request.original_message_length_ = message_length;
+//+
+
+  return true;
+}
+
 
 size_t
 TAO_GIOP_Message_Generator_Parser_12::fragment_header_length (void) const
