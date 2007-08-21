@@ -1,3 +1,13 @@
+Tue Aug 21 21:07:24 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * netsvcs/lib/Client_Logging_Handler.cpp (ACE_Client_Logging_Acceptor):
+          Added an optional argument to the client logging daemon setup:
+          -llocal-ip[:local-port]  - this allows one to specify the local
+          address and port number for the connection to the server logging
+          daemon. If the port number is not specified, it defaults to 0 (select
+          an unused port) and if -l is not specified, the host's defaults
+          are applied (as in all previous versions).
+
 Tue Aug 21 15:34:00 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * ace/Service_Config.cpp:
