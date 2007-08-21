@@ -14,6 +14,8 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/CDR_Stream.h"
 #include "ace/Auto_Ptr.h"
+#include "ace/SString.h"
+#include "ace/INET_Addr.h"
 #include "Client_Logging_Handler.h"
 
 ACE_RCSID(lib, Client_Logging_Handler, "$Id$")
@@ -439,7 +441,11 @@ private:
   // connections.
 
   ACE_INET_Addr server_addr_;
-  // Address of the client logging daemon.
+  // Address to connect to the server logging daemon.
+
+  ACE_INET_Addr local_addr_;
+  // Local IP/port number to use for the connection to the server logging
+  // daemon.
 
   const ACE_TCHAR *logger_key_;
   // Communication endpoint where the client logging daemon will
@@ -562,7 +568,9 @@ ACE_Client_Logging_Acceptor::init (int argc, ACE_TCHAR *argv[])
 #endif /* ACE_HAS_STREAM_PIPES */
 
   if (con.connect (stream,
-                   this->server_addr_) == -1)
+                   this->server_addr_,
+                   0,
+                   this->local_addr_) == -1)
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("can't connect to logging server %s on port %d: ")
@@ -601,7 +609,8 @@ ACE_Client_Logging_Acceptor::init (int argc, ACE_TCHAR *argv[])
 int
 ACE_Client_Logging_Acceptor::parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("h:k:p:"), 0);
+  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("h:k:p:l:"), 0);
+  ACE_TString local_addr_str;
 
   for (int c; (c = get_opt ()) != -1; )
     {
@@ -618,18 +627,33 @@ ACE_Client_Logging_Acceptor::parse_args (int argc, ACE_TCHAR *argv[])
         case 'p':
           this->server_port_ = ACE_OS::atoi (get_opt.opt_arg ());
           break;
+        case 'l':
+          local_addr_str = get_opt.opt_arg ();
+          break;
         default:
           ACE_ERROR_RETURN ((LM_ERROR,
-                                   ACE_TEXT ("%n:\n[-p server-port]\n%a"), 1),
-                                  -1);
+                             ACE_TEXT ("%n:\n[-p server-port]\n")
+                             ACE_TEXT ("[-l local-ip[:local-port]]\n")),
+                            -1);
         }
+    }
+
+  this->local_addr_.set ((u_short)0);   // "any"
+  if (local_addr_str.length () > 0)
+    {
+      if (local_addr_str.rfind (ACE_TCHAR(':')) == ACE_TString::npos)
+        local_addr_str += ACE_TEXT (":0");
+      ACE_TCHAR *local_addr_cstr = local_addr_str.rep ();
+      if (-1 == local_addr_.string_to_addr (local_addr_cstr))
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), local_addr_cstr));
+      delete local_addr_cstr;
     }
 
   if (this->server_addr_.set (this->server_port_,
                               this->server_host_) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("set")),
+                       this->server_host_),
                       -1);
   return 0;
 }

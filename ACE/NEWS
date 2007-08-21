@@ -16,6 +16,12 @@ USER VISIBLE CHANGES BETWEEN ACE-5.5.10 and ACE-5.6.0
 
 . CodeGear C++ Builder 2007 Update 2 support
 
+. The netsvcs's client logging daemon has a new configuration option,
+  -llocal-ip[:local-port], which can be used to specify the local IP
+  address and port number for the client logging daemon's connection to
+  the server logging daemon. If the -l option is specified with an IP
+  address but not a port number, an unused port number is selected.
+
 USER VISIBLE CHANGES BETWEEN ACE-5.5.9 and ACE-5.5.10
 ====================================================
 
