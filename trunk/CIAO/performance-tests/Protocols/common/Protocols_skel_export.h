@@ -2,12 +2,16 @@
 // -*- C++ -*-
 // $Id$
 // Definition for Win32 Export directives.
-// This file is generated automatically by generate_export_file.pl PROTOCOLS_SVNT
+// This file is generated automatically by generate_export_file.pl PROTOCOLS_SKEL
 // ------------------------------
 #ifndef PROTOCOLS_SKEL_EXPORT_H
 #define PROTOCOLS_SKEL_EXPORT_H
 
 #include "ace/config-all.h"
+
+#if defined (ACE_AS_STATIC_LIBS) && !defined (PROTOCOLS_SKEL_HAS_DLL)
+#  define PROTOCOLS_SKEL_HAS_DLL 0
+#endif /* ACE_AS_STATIC_LIBS && PROTOCOLS_SKEL_HAS_DLL */
 
 #if !defined (PROTOCOLS_SKEL_HAS_DLL)
 #  define PROTOCOLS_SKEL_HAS_DLL 1

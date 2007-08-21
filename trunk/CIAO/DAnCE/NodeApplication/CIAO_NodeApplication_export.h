@@ -9,6 +9,10 @@
 
 #include "ace/config-all.h"
 
+#if defined (ACE_AS_STATIC_LIBS) && !defined (NODEAPPLICATION_HAS_DLL)
+#  define NODEAPPLICATION_HAS_DLL 0
+#endif /* ACE_AS_STATIC_LIBS && NODEAPPLICATION_HAS_DLL */
+
 #if !defined (NODEAPPLICATION_HAS_DLL)
 #  define NODEAPPLICATION_HAS_DLL 1
 #endif /* ! NODEAPPLICATION_HAS_DLL */

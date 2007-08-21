@@ -2,12 +2,16 @@
 // -*- C++ -*-
 // $Id$
 // Definition for Win32 Export directives.
-// This file is generated automatically by generate_export_file.pl ENW_SVNT
+// This file is generated automatically by generate_export_file.pl ENW_SKEL
 // ------------------------------
 #ifndef ENW_SKEL_EXPORT_H
 #define ENW_SKEL_EXPORT_H
 
 #include "ace/config-all.h"
+
+#if defined (ACE_AS_STATIC_LIBS) && !defined (ENW_SKEL_HAS_DLL)
+#  define ENW_SKEL_HAS_DLL 0
+#endif /* ACE_AS_STATIC_LIBS && ENW_SKEL_HAS_DLL */
 
 #if !defined (ENW_SKEL_HAS_DLL)
 #  define ENW_SKEL_HAS_DLL 1
@@ -42,7 +46,11 @@
 #if (ENW_SKEL_NTRACE == 1)
 #  define ENW_SKEL_TRACE(X)
 #else /* (ENW_SKEL_NTRACE == 1) */
+#  if !defined (ACE_HAS_TRACE)
+#    define ACE_HAS_TRACE
+#  endif /* ACE_HAS_TRACE */
 #  define ENW_SKEL_TRACE(X) ACE_TRACE_IMPL(X)
+#  include "ace/Trace.h"
 #endif /* (ENW_SKEL_NTRACE == 1) */
 
 #endif /* ENW_SKEL_EXPORT_H */

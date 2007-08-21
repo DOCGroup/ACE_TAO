@@ -9,6 +9,10 @@
 
 #include "ace/config-all.h"
 
+#if defined (ACE_AS_STATIC_LIBS) && !defined (FACTORY_SVNT_HAS_DLL)
+#  define FACTORY_SVNT_HAS_DLL 0
+#endif /* ACE_AS_STATIC_LIBS && FACTORY_SVNT_HAS_DLL */
+
 #if !defined (FACTORY_SVNT_HAS_DLL)
 #  define FACTORY_SVNT_HAS_DLL 1
 #endif /* ! FACTORY_SVNT_HAS_DLL */

@@ -2,12 +2,16 @@
 // -*- C++ -*-
 // $Id$
 // Definition for Win32 Export directives.
-// This file is generated automatically by generate_export_file.pl STOCK_BASE_SVNT
+// This file is generated automatically by generate_export_file.pl STOCK_BASE_SKEL
 // ------------------------------
 #ifndef STOCK_BASE_SKEL_EXPORT_H
 #define STOCK_BASE_SKEL_EXPORT_H
 
 #include "ace/config-all.h"
+
+#if defined (ACE_AS_STATIC_LIBS) && !defined (STOCK_BASE_SKEL_HAS_DLL)
+#  define STOCK_BASE_SKEL_HAS_DLL 0
+#endif /* ACE_AS_STATIC_LIBS && STOCK_BASE_SKEL_HAS_DLL */
 
 #if !defined (STOCK_BASE_SKEL_HAS_DLL)
 #  define STOCK_BASE_SKEL_HAS_DLL 1

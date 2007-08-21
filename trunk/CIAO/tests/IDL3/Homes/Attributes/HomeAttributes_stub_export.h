@@ -9,6 +9,10 @@
 
 #include "ace/config-all.h"
 
+#if defined (ACE_AS_STATIC_LIBS) && !defined (HOMEATTRIBUTES_STUB_HAS_DLL)
+#  define HOMEATTRIBUTES_STUB_HAS_DLL 0
+#endif /* ACE_AS_STATIC_LIBS && HOMEATTRIBUTES_STUB_HAS_DLL */
+
 #if !defined (HOMEATTRIBUTES_STUB_HAS_DLL)
 #  define HOMEATTRIBUTES_STUB_HAS_DLL 1
 #endif /* ! HOMEATTRIBUTES_STUB_HAS_DLL */

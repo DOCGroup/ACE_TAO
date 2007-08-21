@@ -9,6 +9,10 @@
 
 #include "ace/config-all.h"
 
+#if defined (ACE_AS_STATIC_LIBS) && !defined (PROTOCOLS_STUB_HAS_DLL)
+#  define PROTOCOLS_STUB_HAS_DLL 0
+#endif /* ACE_AS_STATIC_LIBS && PROTOCOLS_STUB_HAS_DLL */
+
 #if !defined (PROTOCOLS_STUB_HAS_DLL)
 #  define PROTOCOLS_STUB_HAS_DLL 1
 #endif /* ! PROTOCOLS_STUB_HAS_DLL */

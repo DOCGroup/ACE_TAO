@@ -9,6 +9,10 @@
 
 #include "ace/config-all.h"
 
+#if defined (ACE_AS_STATIC_LIBS) && !defined (SENDER_EXEC_1_HAS_DLL)
+#  define SENDER_EXEC_1_HAS_DLL 0
+#endif /* ACE_AS_STATIC_LIBS && SENDER_EXEC_1_HAS_DLL */
+
 #if !defined (SENDER_EXEC_1_HAS_DLL)
 #  define SENDER_EXEC_1_HAS_DLL 1
 #endif /* ! SENDER_EXEC_1_HAS_DLL */

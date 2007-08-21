@@ -9,6 +9,10 @@
 
 #include "ace/config-all.h"
 
+#if defined (ACE_AS_STATIC_LIBS) && !defined (EVENTSINK_STUB_HAS_DLL)
+#  define EVENTSINK_STUB_HAS_DLL 0
+#endif /* ACE_AS_STATIC_LIBS && EVENTSINK_STUB_HAS_DLL */
+
 #if !defined (EVENTSINK_STUB_HAS_DLL)
 #  define EVENTSINK_STUB_HAS_DLL 1
 #endif /* ! EVENTSINK_STUB_HAS_DLL */

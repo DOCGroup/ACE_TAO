@@ -9,6 +9,10 @@
 
 #include "ace/config-all.h"
 
+#if defined (ACE_AS_STATIC_LIBS) && !defined (RECEPTACLES_STUB_HAS_DLL)
+#  define RECEPTACLES_STUB_HAS_DLL 0
+#endif /* ACE_AS_STATIC_LIBS && RECEPTACLES_STUB_HAS_DLL */
+
 #if !defined (RECEPTACLES_STUB_HAS_DLL)
 #  define RECEPTACLES_STUB_HAS_DLL 1
 #endif /* ! RECEPTACLES_STUB_HAS_DLL */

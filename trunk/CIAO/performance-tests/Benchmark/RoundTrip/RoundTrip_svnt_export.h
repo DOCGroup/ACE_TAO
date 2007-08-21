@@ -9,6 +9,10 @@
 
 #include "ace/config-all.h"
 
+#if defined (ACE_AS_STATIC_LIBS) && !defined (ROUNDTRIP_SVNT_HAS_DLL)
+#  define ROUNDTRIP_SVNT_HAS_DLL 0
+#endif /* ACE_AS_STATIC_LIBS && ROUNDTRIP_SVNT_HAS_DLL */
+
 #if !defined (ROUNDTRIP_SVNT_HAS_DLL)
 #  define ROUNDTRIP_SVNT_HAS_DLL 1
 #endif /* ! ROUNDTRIP_SVNT_HAS_DLL */
@@ -42,7 +46,11 @@
 #if (ROUNDTRIP_SVNT_NTRACE == 1)
 #  define ROUNDTRIP_SVNT_TRACE(X)
 #else /* (ROUNDTRIP_SVNT_NTRACE == 1) */
+#  if !defined (ACE_HAS_TRACE)
+#    define ACE_HAS_TRACE
+#  endif /* ACE_HAS_TRACE */
 #  define ROUNDTRIP_SVNT_TRACE(X) ACE_TRACE_IMPL(X)
+#  include "ace/Trace.h"
 #endif /* (ROUNDTRIP_SVNT_NTRACE == 1) */
 
 #endif /* ROUNDTRIP_SVNT_EXPORT_H */
