@@ -191,3 +191,24 @@ module M
   interface A {};
 };
 
+module i1
+{
+  interface if1
+  {
+    string getStr();
+  };
+};
+
+module i2
+{
+  interface if2 : ::i1::if1
+    {
+      string getstr2();
+    };
+
+  interface if3 : ::i2::if2
+    {
+      string getstr3();
+    };
+};
+
