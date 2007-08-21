@@ -1,3 +1,9 @@
+Tue Aug 21 05:03:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_unixware_udk.GNU:
+          Deleted, mentions it is for gcc 2.7.2, that compiler isn't
+          supported anymore for a long time
+
 Mon Aug 20 21:37:13 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tests/MT_Reference_Counted_Event_Handler_Test.cpp:
