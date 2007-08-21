@@ -6,6 +6,7 @@
 
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_unistd.h"
+#include "ace/OS_NS_stdio.h"
 
 #include "Notify_Structured_Push_Consumer.h"
 #include "MonitorTestInterfaceC.h"
@@ -17,6 +18,7 @@
 // ******************************************************************
 
 static const char* ior = "file://test_monitor.ior";
+static const char* ready = "ready.txt";
 static unsigned int expected = 2000;
 static Notify_Structured_Push_Consumer* consumer_1 = 0;
 
@@ -122,6 +124,14 @@ int main (int argc, char* argv[])
       sig->running (MonitorTestInterface::Consumer);
 
       ACE_DEBUG ((LM_DEBUG, "\nConsumer waiting for events...\n"));
+
+      FILE* ready_file = ACE_OS::fopen (ready, "w");
+      if (ready_file == 0)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "Cannot open ready file for writing\n"),
+                          1);
+      ACE_OS::fprintf (ready_file, "ready\n");
+      ACE_OS::fclose (ready_file);
 
       client.ORB_run ();
 
