@@ -180,6 +180,12 @@ public:
   /// Specify whether there are more data fragments to come.
   void more_fragments (bool more);
 
+  /// Are we containing compressed data?
+  bool compressed (void) const;
+
+  /// Specify whether we have compressed data.
+  void compressed (bool compressed);
+
   /// Set fragmented message attributes.
   void message_attributes (CORBA::ULong request_id,
                            TAO_Stub * stub,
@@ -235,6 +241,9 @@ private:
 
   /// Request/reply send timeout.
   ACE_Time_Value * timeout_;
+
+  /// Do we contain compressed data
+  bool compressed_;
   //@}
 
 };
@@ -262,6 +271,7 @@ private:
 class TAO_Export TAO_InputCDR : public ACE_InputCDR
 {
 public:
+  CORBA::Octet compressed_;
   /**
    * Create an input stream from an arbitrary buffer, care must be
    * exercised wrt alignment, because this contructor will *not* work
