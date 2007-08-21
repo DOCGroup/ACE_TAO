@@ -2,7 +2,7 @@
 
 # For MVS OpenEdition platform
 
-debug = 0
+debug ?= 0
 
 CXX           = cxx
 DCFLAGS	      += -g
@@ -30,6 +30,6 @@ ACELIB_DLL    = $(ACE_ROOT)/lib/libACE.x
 # set accordingly to build either static or shared executables
 ACELIB        = $(ACELIB_DLL)
 
-SOFLAGS       += -W l,dll 
+SOFLAGS       += -W l,dll
 PIC           = -W c,exportall
-static_libs   = 1
+static_libs  ?= 1
