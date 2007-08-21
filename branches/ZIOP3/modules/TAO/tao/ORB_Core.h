@@ -81,6 +81,7 @@ class TAO_Message_State_Factory;
 class TAO_Protocols_Hooks;
 class TAO_Network_Priority_Protocols_Hooks;
 class TAO_BiDir_Adapter;
+class TAO_ZIOP_Adapter;
 
 class TAO_Flushing_Strategy;
 
@@ -883,6 +884,8 @@ public:
   TAO::Transport_Queueing_Strategy* strategy);
 #endif
 
+  TAO_ZIOP_Adapter* ziop_adapter (void);
+
 protected:
 
   /// Destructor is protected since the ORB Core is a reference
@@ -934,6 +937,8 @@ protected:
 
   /// Obtain and cache the IORManipulation factory object reference.
   void resolve_iormanipulation_i (void);
+
+  TAO_ZIOP_Adapter* ziop_adapter_i (void);
 
   /// Search the Dynamic service list for well known services that has
   /// callbacks  which can be dynamically loaded.
@@ -1204,8 +1209,11 @@ protected:
   /// BiDirectional GIOP factory
   TAO_BiDir_Adapter *bidir_adapter_;
 
-  /// Bir Dir GIOP policy value
+    /// Bir Dir GIOP policy value
   CORBA::Boolean bidir_giop_policy_;
+
+  /// ZIOP Adapter
+  TAO_ZIOP_Adapter *ziop_adapter_;
 
   /// Hold the flushing strategy
   TAO_Flushing_Strategy *flushing_strategy_;
