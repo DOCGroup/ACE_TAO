@@ -149,12 +149,12 @@ ACE_Service_Config::parse_args_i (int argc, ACE_TCHAR *argv[])
           break;
         }
       default:
-        superargv.add ( argv[getopt.opt_ind () - 1]);
+        superargv.add ( argv[getopt.opt_ind () - 1],true);
       }
 
   // Collect any argumets that were left
   for (int c = getopt.opt_ind (); c < argc; c++)
-      superargv.add (argv[c-1]);
+      superargv.add (argv[c-1],true);
 
   return ACE_Service_Gestalt::parse_args_i (superargv.argc (),
                                             superargv.argv ());

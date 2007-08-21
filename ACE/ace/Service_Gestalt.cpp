@@ -497,7 +497,7 @@ ACE_Service_Gestalt::initialize (const ACE_TCHAR *svc_name,
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("ACE (%P|%t) ERROR: SG::initialize - static init of \'%s\'")
                   ACE_TEXT (" failed (%p)\n"),
-                  svc_name));
+                  svc_name, ACE_TEXT ("error")));
       this->repo_->remove (svc_name);
       return -1;
     }
@@ -1132,7 +1132,7 @@ ACE_Service_Gestalt::parse_args_i (int argc, ACE_TCHAR *argv[])
   ACE_TRACE ("ACE_Service_Gestalt::parse_args_i");
   ACE_Get_Opt getopt (argc,
                       argv,
-                      ACE_TEXT ("df:k:nyp:s:S:"),
+                      ACE_TEXT ("df:k:nyS:"),
                       1); // Start at argv[1].
 
   if (this->init_svc_conf_file_queue () == -1)
