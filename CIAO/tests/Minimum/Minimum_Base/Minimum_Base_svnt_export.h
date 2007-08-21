@@ -9,6 +9,10 @@
 
 #include "ace/config-all.h"
 
+#if defined (ACE_AS_STATIC_LIBS) && !defined (MINIMUM_BASE_SVNT_HAS_DLL)
+#  define MINIMUM_BASE_SVNT_HAS_DLL 0
+#endif /* ACE_AS_STATIC_LIBS && MINIMUM_BASE_SVNT_HAS_DLL */
+
 #if !defined (MINIMUM_BASE_SVNT_HAS_DLL)
 #  define MINIMUM_BASE_SVNT_HAS_DLL 1
 #endif /* ! MINIMUM_BASE_SVNT_HAS_DLL */

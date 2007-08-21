@@ -1,3 +1,4 @@
+
 // -*- C++ -*-
 // $Id$
 // Definition for Win32 Export directives.
@@ -7,6 +8,10 @@
 #define ROUNDTRIPCLIENT_SVNT_EXPORT_H
 
 #include "ace/config-all.h"
+
+#if defined (ACE_AS_STATIC_LIBS) && !defined (ROUNDTRIPCLIENT_SVNT_HAS_DLL)
+#  define ROUNDTRIPCLIENT_SVNT_HAS_DLL 0
+#endif /* ACE_AS_STATIC_LIBS && ROUNDTRIPCLIENT_SVNT_HAS_DLL */
 
 #if !defined (ROUNDTRIPCLIENT_SVNT_HAS_DLL)
 #  define ROUNDTRIPCLIENT_SVNT_HAS_DLL 1
@@ -41,7 +46,11 @@
 #if (ROUNDTRIPCLIENT_SVNT_NTRACE == 1)
 #  define ROUNDTRIPCLIENT_SVNT_TRACE(X)
 #else /* (ROUNDTRIPCLIENT_SVNT_NTRACE == 1) */
+#  if !defined (ACE_HAS_TRACE)
+#    define ACE_HAS_TRACE
+#  endif /* ACE_HAS_TRACE */
 #  define ROUNDTRIPCLIENT_SVNT_TRACE(X) ACE_TRACE_IMPL(X)
+#  include "ace/Trace.h"
 #endif /* (ROUNDTRIPCLIENT_SVNT_NTRACE == 1) */
 
 #endif /* ROUNDTRIPCLIENT_SVNT_EXPORT_H */

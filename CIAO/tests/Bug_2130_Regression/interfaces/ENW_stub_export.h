@@ -9,6 +9,10 @@
 
 #include "ace/config-all.h"
 
+#if defined (ACE_AS_STATIC_LIBS) && !defined (ENW_STUB_HAS_DLL)
+#  define ENW_STUB_HAS_DLL 0
+#endif /* ACE_AS_STATIC_LIBS && ENW_STUB_HAS_DLL */
+
 #if !defined (ENW_STUB_HAS_DLL)
 #  define ENW_STUB_HAS_DLL 1
 #endif /* ! ENW_STUB_HAS_DLL */
@@ -42,7 +46,11 @@
 #if (ENW_STUB_NTRACE == 1)
 #  define ENW_STUB_TRACE(X)
 #else /* (ENW_STUB_NTRACE == 1) */
+#  if !defined (ACE_HAS_TRACE)
+#    define ACE_HAS_TRACE
+#  endif /* ACE_HAS_TRACE */
 #  define ENW_STUB_TRACE(X) ACE_TRACE_IMPL(X)
+#  include "ace/Trace.h"
 #endif /* (ENW_STUB_NTRACE == 1) */
 
 #endif /* ENW_STUB_EXPORT_H */

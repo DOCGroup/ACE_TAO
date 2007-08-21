@@ -9,6 +9,10 @@
 
 #include "ace/config-all.h"
 
+#if defined (ACE_AS_STATIC_LIBS) && !defined (CIAO_SERVER_HAS_DLL)
+#  define CIAO_SERVER_HAS_DLL 0
+#endif /* ACE_AS_STATIC_LIBS && CIAO_SERVER_HAS_DLL */
+
 #if !defined (CIAO_SERVER_HAS_DLL)
 #  define CIAO_SERVER_HAS_DLL 1
 #endif /* ! CIAO_SERVER_HAS_DLL */
@@ -42,7 +46,11 @@
 #if (CIAO_SERVER_NTRACE == 1)
 #  define CIAO_SERVER_TRACE(X)
 #else /* (CIAO_SERVER_NTRACE == 1) */
+#  if !defined (ACE_HAS_TRACE)
+#    define ACE_HAS_TRACE
+#  endif /* ACE_HAS_TRACE */
 #  define CIAO_SERVER_TRACE(X) ACE_TRACE_IMPL(X)
+#  include "ace/Trace.h"
 #endif /* (CIAO_SERVER_NTRACE == 1) */
 
 #endif /* CIAO_SERVER_EXPORT_H */

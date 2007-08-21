@@ -9,6 +9,10 @@
 
 #include "ace/config-all.h"
 
+#if defined (ACE_AS_STATIC_LIBS) && !defined (BENCHMARK_STUB_HAS_DLL)
+#  define BENCHMARK_STUB_HAS_DLL 0
+#endif /* ACE_AS_STATIC_LIBS && BENCHMARK_STUB_HAS_DLL */
+
 #if !defined (BENCHMARK_STUB_HAS_DLL)
 #  define BENCHMARK_STUB_HAS_DLL 1
 #endif /* ! BENCHMARK_STUB_HAS_DLL */
@@ -42,7 +46,11 @@
 #if (BENCHMARK_STUB_NTRACE == 1)
 #  define BENCHMARK_STUB_TRACE(X)
 #else /* (BENCHMARK_STUB_NTRACE == 1) */
+#  if !defined (ACE_HAS_TRACE)
+#    define ACE_HAS_TRACE
+#  endif /* ACE_HAS_TRACE */
 #  define BENCHMARK_STUB_TRACE(X) ACE_TRACE_IMPL(X)
+#  include "ace/Trace.h"
 #endif /* (BENCHMARK_STUB_NTRACE == 1) */
 
 #endif /* BENCHMARK_STUB_EXPORT_H */

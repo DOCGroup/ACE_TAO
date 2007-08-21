@@ -9,6 +9,10 @@
 
 #include "ace/config-all.h"
 
+#if defined (ACE_AS_STATIC_LIBS) && !defined (CIAO_NAM_HAS_DLL)
+#  define CIAO_NAM_HAS_DLL 0
+#endif /* ACE_AS_STATIC_LIBS && CIAO_NAM_HAS_DLL */
+
 #if !defined (CIAO_NAM_HAS_DLL)
 #  define CIAO_NAM_HAS_DLL 1
 #endif /* ! CIAO_NAM_HAS_DLL */

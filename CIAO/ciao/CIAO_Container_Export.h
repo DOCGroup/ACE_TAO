@@ -9,6 +9,10 @@
 
 #include "ace/config-all.h"
 
+#if defined (ACE_AS_STATIC_LIBS) && !defined (CIAO_CONTAINER_HAS_DLL)
+#  define CIAO_CONTAINER_HAS_DLL 0
+#endif /* ACE_AS_STATIC_LIBS && CIAO_CONTAINER_HAS_DLL */
+
 #if !defined (CIAO_CONTAINER_HAS_DLL)
 #  define CIAO_CONTAINER_HAS_DLL 1
 #endif /* ! CIAO_CONTAINER_HAS_DLL */
@@ -42,7 +46,11 @@
 #if (CIAO_CONTAINER_NTRACE == 1)
 #  define CIAO_CONTAINER_TRACE(X)
 #else /* (CIAO_CONTAINER_NTRACE == 1) */
+#  if !defined (ACE_HAS_TRACE)
+#    define ACE_HAS_TRACE
+#  endif /* ACE_HAS_TRACE */
 #  define CIAO_CONTAINER_TRACE(X) ACE_TRACE_IMPL(X)
+#  include "ace/Trace.h"
 #endif /* (CIAO_CONTAINER_NTRACE == 1) */
 
 #endif /* CIAO_CONTAINER_EXPORT_H */
