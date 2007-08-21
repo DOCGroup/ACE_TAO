@@ -1,3 +1,14 @@
+Tue Aug 21 15:34:00 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * ace/Service_Config.cpp:
+        * ace/Service_Gestalt.cpp:
+          Service_Config::parse_args_i was improperly splitting arguments
+          that may contain spaces, such as explicit service directives.
+          This patch addresses that explicitly quoting unknown arguments
+          being passed on to the Service_Gestalt::parse_args_i. I removed
+          unparsed args from the gestalt's list of known args, and cleaned
+          up a bad error message.
+
 Tue Aug 21 15:24:47 UTC 2007  James H. Hill  <hillj@isis.vanderbilt.edu>
 
         * docs/ace_guidelines.vsmacros:
