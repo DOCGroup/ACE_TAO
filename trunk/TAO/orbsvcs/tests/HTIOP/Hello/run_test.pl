@@ -36,7 +36,7 @@ foreach $i (@ARGV) {
 $NS =
     new PerlACE::Process ("$ENV{TAO_ROOT}/orbsvcs/Naming_Service/Naming_Service",
                           "-ORBSvcConf $server_config "
-                          . "-ORBEndpoint 'iiop://;htiop://$host:$name_port' "
+                          . "-ORBEndpoint \"iiop://;htiop://$host:$name_port\" "
                           . "-o $nsiorfile");
 
 $NS->IgnoreExeSubDir ();
