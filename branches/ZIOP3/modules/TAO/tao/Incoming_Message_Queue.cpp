@@ -17,7 +17,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Incoming_Message_Queue::~TAO_Incoming_Message_Queue (void)
 {
-  const CORBA::ULong sz = this->size_;
+  CORBA::ULong const sz = this->size_;
 
   // Delete all the nodes left behind
   for (CORBA::ULong i = 0;
