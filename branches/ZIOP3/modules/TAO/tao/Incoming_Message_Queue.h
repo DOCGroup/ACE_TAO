@@ -73,6 +73,8 @@ private:
 
   friend class TAO_Transport;
 
+  CORBA::Octet compressed_;
+
 private:
   /*!
     \brief A circular linked list of messages awaiting processing.
