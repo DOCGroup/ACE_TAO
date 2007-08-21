@@ -9,6 +9,10 @@
 
 #include "ace/config-all.h"
 
+#if defined (ACE_AS_STATIC_LIBS) && !defined (NOOP_CONFIGURATOR_HAS_DLL)
+#  define NOOP_CONFIGURATOR_HAS_DLL 0
+#endif /* ACE_AS_STATIC_LIBS && NOOP_CONFIGURATOR_HAS_DLL */
+
 #if !defined (NOOP_CONFIGURATOR_HAS_DLL)
 #  define NOOP_CONFIGURATOR_HAS_DLL 1
 #endif /* ! NOOP_CONFIGURATOR_HAS_DLL */

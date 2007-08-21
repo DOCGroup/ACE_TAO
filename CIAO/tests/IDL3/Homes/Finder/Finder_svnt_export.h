@@ -9,6 +9,10 @@
 
 #include "ace/config-all.h"
 
+#if defined (ACE_AS_STATIC_LIBS) && !defined (FINDER_SVNT_HAS_DLL)
+#  define FINDER_SVNT_HAS_DLL 0
+#endif /* ACE_AS_STATIC_LIBS && FINDER_SVNT_HAS_DLL */
+
 #if !defined (FINDER_SVNT_HAS_DLL)
 #  define FINDER_SVNT_HAS_DLL 1
 #endif /* ! FINDER_SVNT_HAS_DLL */

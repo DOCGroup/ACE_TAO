@@ -9,6 +9,10 @@
 
 #include "ace/config-all.h"
 
+#if defined (ACE_AS_STATIC_LIBS) && !defined (ROUNDTRIP_EXEC_HAS_DLL)
+#  define ROUNDTRIP_EXEC_HAS_DLL 0
+#endif /* ACE_AS_STATIC_LIBS && ROUNDTRIP_EXEC_HAS_DLL */
+
 #if !defined (ROUNDTRIP_EXEC_HAS_DLL)
 #  define ROUNDTRIP_EXEC_HAS_DLL 1
 #endif /* ! ROUNDTRIP_EXEC_HAS_DLL */
@@ -42,7 +46,11 @@
 #if (ROUNDTRIP_EXEC_NTRACE == 1)
 #  define ROUNDTRIP_EXEC_TRACE(X)
 #else /* (ROUNDTRIP_EXEC_NTRACE == 1) */
+#  if !defined (ACE_HAS_TRACE)
+#    define ACE_HAS_TRACE
+#  endif /* ACE_HAS_TRACE */
 #  define ROUNDTRIP_EXEC_TRACE(X) ACE_TRACE_IMPL(X)
+#  include "ace/Trace.h"
 #endif /* (ROUNDTRIP_EXEC_NTRACE == 1) */
 
 #endif /* ROUNDTRIP_EXEC_EXPORT_H */

@@ -9,6 +9,10 @@
 
 #include "ace/config-all.h"
 
+#if defined (ACE_AS_STATIC_LIBS) && !defined (ICEVENTSOURCE_SVNT_HAS_DLL)
+#  define ICEVENTSOURCE_SVNT_HAS_DLL 0
+#endif /* ACE_AS_STATIC_LIBS && ICEVENTSOURCE_SVNT_HAS_DLL */
+
 #if !defined (ICEVENTSOURCE_SVNT_HAS_DLL)
 #  define ICEVENTSOURCE_SVNT_HAS_DLL 1
 #endif /* ! ICEVENTSOURCE_SVNT_HAS_DLL */
