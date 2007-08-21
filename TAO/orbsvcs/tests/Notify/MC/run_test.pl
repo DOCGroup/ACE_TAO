@@ -15,6 +15,7 @@ my $ior = PerlACE::LocalFile('test_monitor.ior');
 my $monitorior = PerlACE::LocalFile('monitor.ior');
 my $namingior = PerlACE::LocalFile('naming.ior');
 my $notifyior = PerlACE::LocalFile('notify.ior');
+my $ready = PerlACE::LocalFile('ready.txt');
 my $notify_conf = PerlACE::LocalFile("notify$PerlACE::svcconf_ext");
 my $port = PerlACE::random_port();
 my $nscorbaloc = "-ORBInitRef NameService=corbaloc:iiop:" .
@@ -33,7 +34,7 @@ my $STS = new PerlACE::Process("Structured_Supplier",
 my $STC = new PerlACE::Process("Structured_Consumer",
                               "$nscorbaloc");
 
-unlink($ior, $monitorior, $notifyior, $namingior);
+unlink($ior, $monitorior, $notifyior, $namingior, $ready);
 
 $NS->Spawn();
 if (PerlACE::waitforfile_timed(
@@ -47,7 +48,7 @@ if (PerlACE::waitforfile_timed(
 $TS->Spawn();
 if (PerlACE::waitforfile_timed(
                  $notifyior,
-                 $PerlACE::wait_interval_for_process_creation) == -1) {
+                 $PerlACE::wait_interval_for_process_creation * 2) == -1) {
   print STDERR "ERROR: waiting for the notify service to start\n";
   $TS->Kill();
   $NS->Kill();
@@ -77,7 +78,16 @@ if ($client != 0) {
 
 ## Wait for the consumer to create the event channel in
 ## the Notify_Service and register it with the Name Service
-sleep(2);
+if (PerlACE::waitforfile_timed(
+                 $ready,
+                 $PerlACE::wait_interval_for_process_creation) == -1) {
+  print STDERR "ERROR: waiting for the consumer to start\n";
+  $STC->Kill();
+  $MON->Kill();
+  $TS->Kill();
+  $NS->Kill();
+  exit(1);
+}
 
 my $server = $STS->SpawnWaitKill(30);
 if ($server != 0) {
@@ -104,5 +114,5 @@ $MON->Kill();
 $TS->Kill();
 $NS->Kill();
 
-unlink($ior, $monitorior, $notifyior, $namingior);
+unlink($ior, $monitorior, $notifyior, $namingior, $ready);
 exit(0);

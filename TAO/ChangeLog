@@ -1,3 +1,13 @@
+Tue Aug 21 11:37:02 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/tests/Notify/MC/Structured_Consumer.cpp:
+        * orbsvcs/tests/Notify/MC/run_test.pl:
+
+          Modified the consumer to write out a file once the event channel
+          has been created and registered with the name service.  Then
+          instead of a sleep, wait for the file in the run_test.pl before
+          starting the supplier.
+
 Tue Aug 21 09:36:00 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/IDL_Test/interface.idl:
