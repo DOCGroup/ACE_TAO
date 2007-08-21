@@ -81,6 +81,9 @@ public:
   /// marshalled in the reply
   CORBA::Boolean argument_flag_;
 
+  /// Do we have a compressed reply
+  CORBA::Boolean compressed_;
+
 protected:
   /// The service context list that we don't own.
   IOP::ServiceContextList *service_context_;
