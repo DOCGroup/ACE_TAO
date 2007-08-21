@@ -23,6 +23,7 @@
 #include "tao/ORB_Core.h"
 #include "tao/MMAP_Allocator.h"
 #include "tao/SystemException.h"
+#include "tao/Operation_Details.h"
 
 #include "ace/OS_NS_sys_time.h"
 #include "ace/OS_NS_stdio.h"
@@ -424,7 +425,7 @@ TAO_Transport::generate_request_header (
     TAO_Target_Specification &spec,
     TAO_OutputCDR &output)
 {
-  // codeset service context is only supposed to be sent in the first request
+  // Codeset service context is only supposed to be sent in the first request
   // on a particular connection.
   if (this->first_request_)
     {
@@ -433,15 +434,31 @@ TAO_Transport::generate_request_header (
         csm->generate_service_context (opdetails,*this);
     }
 
+  // Check whether we have Compression set
+//  if (opdetails.compressed ())
+//    {
+//      TAO_OutputCDR cdr;
+//
+//      // Add the original message length to the service contenxt
+//      CORBA::ULong length = opdetails.uncompressed_size_;
+//      if ((cdr << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER) == 0)
+//          || (cdr << length) == 0)
+//        return -1;
+//
+//      // Add this info in to the svc_list
+//      opdetails.request_service_context ().set_context (IOP::TAG_ZIOP_COMPONENT,
+//                                                        cdr);
+//    }
+
   if (this->messaging_object ()->generate_request_header (opdetails,
                                                           spec,
                                                           output) == -1)
     {
       if (TAO_debug_level > 0)
         {
-        ACE_DEBUG ((LM_DEBUG,
-                   ACE_TEXT ("(%P|%t) - Transport[%d]::generate_request_header, ")
-                   ACE_TEXT ("error while marshalling the Request header\n"),
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("(%P|%t) - Transport[%d]::generate_request_header, ")
+                      ACE_TEXT ("error while marshalling the Request header\n"),
                       this->id()));
         }
 
@@ -460,8 +477,7 @@ TAO_Transport::recache_transport (TAO_Transport_Descriptor_Interface *desc)
   this->purge_entry ();
 
   // Then add ourselves to the cache
-  return this->transport_cache_manager ().cache_transport (desc,
-                                                           this);
+  return this->transport_cache_manager ().cache_transport (desc, this);
 }
 
 int
@@ -490,9 +506,7 @@ TAO_Transport::update_transport (void)
 }
 
 /*
- *
  *  Methods called and used in the output path of the ORB.
- *
  */
 int
 TAO_Transport::handle_output (void)
@@ -1267,13 +1281,11 @@ TAO_Transport::send_message_shared_i (TAO_Stub *stub,
   switch (message_semantics)
     {
       case TAO_Transport::TAO_TWOWAY_REQUEST:
-        ret = this->send_synchronous_message_i (message_block,
-                                                max_wait_time);
+        ret = this->send_synchronous_message_i (message_block, max_wait_time);
         break;
 
       case TAO_Transport::TAO_REPLY:
-        ret = this->send_reply_message_i (message_block,
-                                          max_wait_time);
+        ret = this->send_reply_message_i (message_block, max_wait_time);
         break;
 
       case TAO_Transport::TAO_ONEWAY_REQUEST:
@@ -1831,7 +1843,6 @@ TAO_Transport::handle_input_parse_data  (TAO_Resume_Handle &rh,
          this->id ()));
     }
 
-
   // The buffer on the stack which will be used to hold the input
   // messages, ACE_CDR::MAX_ALIGNMENT compensates the
   // memory-alignment. This improves performance with SUN-Java-ORB-1.4
@@ -2190,7 +2201,7 @@ TAO_Transport::handle_input_parse_data  (TAO_Resume_Handle &rh,
 
                 }
 
-              const int retval = this->notify_reactor ();
+              int const retval = this->notify_reactor ();
 
               if (retval == 1)
                 {
@@ -2209,8 +2220,7 @@ TAO_Transport::handle_input_parse_data  (TAO_Resume_Handle &rh,
             }
 
           // PRE: incoming_message_queue is empty
-          if (this->process_parsed_messages (&qd,
-                                             rh) == -1)
+          if (this->process_parsed_messages (&qd, rh) == -1)
             {
               return -1;
             }
