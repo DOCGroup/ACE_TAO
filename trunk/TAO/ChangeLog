@@ -1,3 +1,8 @@
+Tue Aug 21 14:23:30 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * examples/Callback_Quoter/Consumer_Signal_Handler.h:
+          Minor layout change.
+
 Tue Aug 21 11:37:02 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/tests/Notify/MC/Structured_Consumer.cpp:
