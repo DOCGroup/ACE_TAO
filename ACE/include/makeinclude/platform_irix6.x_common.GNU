@@ -2,6 +2,8 @@
 
 xt_reactor ?= 1
 exceptions ?= 1
+debug ?= 1
+optimize ?= 1
 
 PLATFORM_XT_CPPFLAGS=
 PLATFORM_XT_LIBS=-lXm -lXt -lX11

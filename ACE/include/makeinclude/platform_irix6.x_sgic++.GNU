@@ -7,8 +7,6 @@
 # environment variable to -n32.  This causes a new compiler to be
 # invoked.
 
-debug ?= 1
-optimize ?= 1
 threads ?= 1
 templates ?= implicit
 
