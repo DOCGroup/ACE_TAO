@@ -92,7 +92,8 @@ FE_yyparse (void)
     {
       idl_global->root ()->call_add ();
     }
-
+    
+  ACE_OS::fclose (tao_yyin);
   return result;
 }
 
