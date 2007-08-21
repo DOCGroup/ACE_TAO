@@ -1,3 +1,20 @@
+Tue Aug 21 07:07:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_irix6.x_common.GNU:
+        * include/makeinclude/platform_irix6.x_g++.GNU:
+        * include/makeinclude/platform_irix6.x_sgic++.GNU:
+          Moved some parts to the common file
+
+        * include/makeinclude/platform_mvs.GNU:
+          Use ?=
+
+        * include/makeinclude/platform_sco-nothread.GNU:
+        * include/makeinclude/platform_sco5.0.0-CC-fsu-pthread.GNU:
+        * include/makeinclude/platform_sco5.0.0-fsu-pthread.GNU:
+        * include/makeinclude/platform_sco5.0.0-mit-pthread.GNU:
+        * include/makeinclude/platform_sco5.0.0-nothread.GNU:
+          Removed, ancient and not maintained for years
+
 Tue Aug 21 05:03:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_unixware_udk.GNU:
