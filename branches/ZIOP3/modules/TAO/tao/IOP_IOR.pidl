@@ -32,6 +32,12 @@
 
 module IOP
 {
+struct CompressedData {
+  long compressorid;
+  long original_length;
+  CORBA::OctetSeq data;
+};
+
   typedef unsigned long ProfileId;
   const ProfileId TAG_INTERNET_IOP = 0;
   const ProfileId TAG_MULTIPLE_COMPONENTS = 1;
@@ -103,6 +109,8 @@ module IOP
   const ServiceId FT_REQUEST = 13;
 
   const ServiceId REP_NWPRIORITY = 0x54410005;
+
+  const ComponentId TAG_ZIOP_COMPONENT = 0x54410555;
 
   // The following are defined in 03-01-11
   const ProfileId TAG_UIPMC = 3;
