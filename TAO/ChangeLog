@@ -1,3 +1,16 @@
+Tue Aug 21 09:36:00 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/IDL_Test/interface.idl:
+          Added a new test case
+
+        * testsHello/run_test.pl:
+        * tests/No_Server_MT_Connect_Test/run_test.pl:
+          Put iorbase filename into a perl variable
+
+        * tests/POA/Default_Servant2/run_test.pl:
+        * tests/Exposed_Policies/run_test.pl:
+          Extended timeout for slow systems
+
 Mon Aug 20 15:57:00 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tests/IDL_Test/old_union2.idl:
@@ -12,19 +25,19 @@ Mon Aug 20 15:57:00 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
         * tests/IDL_Test/simple.idl:
         * tests/IDL_Test/primtypes.idl:
         * tests/IDL_Test/old_sequence.idl:
-        
+
           Added file description comments and fixed formatting.
 
 Mon Aug 20 15:06:33 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tests/IDL_Test/interface.idl:
-        
+
           Cosmetic changes.
-        
+
         * tests/IDL_Test/IDL_Test.mpc:
-        
+
           Added moved files below to the MPC project.
-        
+
         * tests/IDL_Test/old_union2.idl:
         * tests/IDL_Test/old_struct.idl:
         * tests/IDL_Test/dif2.idl:
@@ -37,25 +50,25 @@ Mon Aug 20 15:06:33 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
         * tests/IDL_Test/simple.idl:
         * tests/IDL_Test/primtypes.idl:
         * tests/IDL_Test/old_sequence.idl:
-        
+
           File moved from TAO_IDL/idl_specs. In some cases, there
           was a name clash with existing IDL files, so 'old_' was
           prepended to those filenames of the moved files. These
           files were used for testing the earliest versions of the
           IDL compiler, and were moved to the IDL_Test directory
           so they can be used again.
-        
+
         * TAO_IDL/idl_specs/*:
-        
+
           Removed IDL files from this directory and removed the directory.
 
 Mon Aug 20 14:05:18 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * examples/Callback_Quoter/Consumer_Input_Handler.h:
         * examples/Callback_Quoter/Consumer_Signal_Handler.h:
-          Zapped ACE_Shutup_GPlusPLus, it was a reclic from the older days 
-          of ACE/TAO, it was used to silence incorrect warning from g++ 
-          compiler. Moved the destructor to the protected section to 
+          Zapped ACE_Shutup_GPlusPLus, it was a reclic from the older days
+          of ACE/TAO, it was used to silence incorrect warning from g++
+          compiler. Moved the destructor to the protected section to
           correctly handle such warnings (if they still exist) without
           having to introduce a phony friend.
 
