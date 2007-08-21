@@ -17,11 +17,12 @@ foreach $i (@ARGV) {
     } 
 }
 
-$iorfile = PerlACE::LocalFile ("server.ior");
+$iorbase = "server.ior";
+$iorfile = PerlACE::LocalFile ("$iorbase");
 unlink $iorfile;
 
 if (PerlACE::is_vxworks_test()) {
-    $SV = new PerlACE::ProcessVX ("server", "-ORBDebuglevel $debug_level -o server.ior");
+    $SV = new PerlACE::ProcessVX ("server", "-ORBDebuglevel $debug_level -o $iorbase");
 }
 else {
     $SV = new PerlACE::Process ("server", "-ORBdebuglevel $debug_level -o $iorfile");
