@@ -8,6 +8,8 @@ Tue Aug 21 21:07:24 UTC 2007  Steve Huston  <shuston@riverace.com>
           an unused port) and if -l is not specified, the host's defaults
           are applied (as in all previous versions).
 
+        * NEWS: Describe the above addition.
+
 Tue Aug 21 15:34:00 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * ace/Service_Config.cpp:
