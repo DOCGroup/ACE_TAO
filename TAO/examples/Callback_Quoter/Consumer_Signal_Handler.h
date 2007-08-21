@@ -41,8 +41,8 @@ public:
   // methods.
 
   int handle_signal (int signum,
-                             siginfo_t*,
-                             ucontext_t*);
+                     siginfo_t*,
+                     ucontext_t*);
   // This method takes action on an signal event.
 
   int handle_close (ACE_HANDLE handle,
