@@ -1,3 +1,9 @@
+Wed Aug 22 21:28:38 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * bin/ace_tests.lst: Marked RMCast tests to only run if the RMCAST
+          config is set. This effectively disables it everywhere pending some
+          requested feedack from the ACE users community on usage.
+
 Wed Aug 22 21:24:07 UTC 2007  Steve Huston  <shuston@riverace.com>
 
         * tests/Multicast_Test.cpp: Log the joined multicast groups.
