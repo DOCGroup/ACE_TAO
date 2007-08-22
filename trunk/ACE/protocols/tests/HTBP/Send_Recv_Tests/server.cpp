@@ -265,6 +265,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT("(%P) server: shutting down, flush returned %d\n"), result));
 
+  ACE_OS::sleep(1); // prevent test failure on windows when the connection
+                    // closes too fast.
 
   sock_stream[0].close();
   sock_stream[1].close();
