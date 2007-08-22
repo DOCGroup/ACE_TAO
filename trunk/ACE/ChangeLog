@@ -1,3 +1,9 @@
+Wed Aug 22 08:49:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ACE-INSTALL.html:
+        * m4/ace.m4:
+          Removed support for disabling rtti
+
 Wed Aug 22 08:46:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/msvc_mpc_auto_compile.pl:

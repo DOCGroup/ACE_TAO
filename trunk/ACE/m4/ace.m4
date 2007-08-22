@@ -533,7 +533,7 @@ AC_DEFUN([ACE_CONFIGURATION_OPTIONS],
      AC_MSG_WARN([gperf program already exists])
      AC_MSG_WARN([existing gperf may be overwritten during installation])
     ],[])
- fi 
+ fi
  AM_CONDITIONAL([COMPILE_GPERF], [test X$ace_user_enable_gperf = Xyes])
 
  ACE_ENABLE_QOS
@@ -876,38 +876,6 @@ dnl    fi
   ],
   [
    ace_user_enable_repo=no
-  ])
-
- AC_ARG_ENABLE([rtti],
-  AS_HELP_STRING(--enable-rtti,enable run-time type identification [[[yes]]]),
-  [
-   case "${enableval}" in
-    yes)
-      if test "$GXX" = no; then
-        case "$host" in
-          *solaris*)
-               ace_user_enable_rtti=yes
-               ;;
-          *aix*)
-               ace_user_enable_rtti=yes
-               ;;
-          *)
-               ;;
-        esac
-      else
-        AC_MSG_WARN([We do not know if rtti needs enabling for this compiler.])
-      fi
-      ;;
-    no)
-      ace_user_enable_rtti=no
-      ;;
-    *)
-      AC_MSG_ERROR([bad value ${enableval} for --enable-rtti])
-      ;;
-   esac
-  ],
-  [
-   ace_user_enable_rtti=yes
   ])
 
  AC_ARG_ENABLE([stdcpplib],
