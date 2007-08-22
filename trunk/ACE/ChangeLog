@@ -1,3 +1,12 @@
+Wed Aug 22 06:23:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_gnuwin32_common.GNU:
+          The GCC compiler on windows gives a lot of warnings about attributes
+          that are ignored. These are not usefull, so added no_attributes
+          which by default is set to 1 which then disable this warning. If you
+          want to see these warnings, set no_attributes=0 to your
+          platform_macros.GNU file
+
 Wed Aug 22 04:53:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * protocols/tests/HTBP/ping/run_test.pl:
