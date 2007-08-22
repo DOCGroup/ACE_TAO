@@ -1,3 +1,11 @@
+Wed Aug 22 04:53:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * protocols/tests/HTBP/ping/run_test.pl:
+        * protocols/tests/HTBP/Reactor_Tests/run_test.pl:
+        * protocols/tests/HTBP/Send_Large_Msg/run_test.pl:
+        * protocols/tests/HTBP/Send_Recv_Tests/run_test.pl:
+          Fixes for VxWorks cross platform testing
+
 Tue Aug 21 21:07:24 UTC 2007  Steve Huston  <shuston@riverace.com>
 
         * netsvcs/lib/Client_Logging_Handler.cpp (ACE_Client_Logging_Acceptor):
