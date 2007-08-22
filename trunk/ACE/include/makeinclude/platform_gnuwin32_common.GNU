@@ -10,10 +10,6 @@ ifneq ($(mingw32),1)
   endif
 endif
 
-# debug = 1
-# optimize = 1
-# exceptions = 0
-
 GNUWIN32_CXX_VERSION := $(shell $(CXX) -dumpversion)
 
 winsock2 ?= 1
@@ -96,11 +92,6 @@ SHLIBBUILD = \
   && $(SOLINK.cc) -Wl,--enable-auto-image-base -Wl,--out-implib,$@.a \
     -shared -o $@ $(LDFLAGS) -Wl,$(VSHDIR)/$@.def \
     $(VSHOBJS) $(ACE_SHLIBS) $(LIBS)
-
-ifeq ($(exceptions),1)
-  SHLIBBUILD += \
-   ;echo "Warning: exceptions fail when mixing DLL and non DLL calls."
-endif
 
 PRELIB  = @true
 
