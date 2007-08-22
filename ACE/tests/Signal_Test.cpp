@@ -146,7 +146,16 @@ synchronous_signal_handler (void *)
     {
       // Block waiting for SIGINT, SIGTERM, or SIGHUP, depending on
       // whether we're the parent or child process.
-      if (handle_signal (ACE_OS::sigwait (sigset)) == -1)
+      int signr = ACE_OS::sigwait (sigset);
+      if (signr == -1)
+        {
+          if (errno != EINTR)
+            ACE_ERROR ((LM_ERROR,
+                        ACE_TEXT ("(%P|%t) %p\n"),
+                        ACE_TEXT ("sigwait")));
+          continue;
+        }
+      if (handle_signal (signr) == -1)
         break;
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%P|%t) handled signal\n")));
