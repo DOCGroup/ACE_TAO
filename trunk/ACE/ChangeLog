@@ -1,3 +1,11 @@
+Wed Aug 22 18:09:45 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * m4/compiler.m4: For AIX xlC and Solaris CC 4.2, always turn on
+          RTTI support. ACE requires it, and for these compilers, the default
+          is RTTI disabled. The previous code used the rtti-enabled flag
+          which was removed at:
+          Wed Aug 22 08:49:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
 Wed Aug 22 15:58:55 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * bin/msvc_static_order.lst:
