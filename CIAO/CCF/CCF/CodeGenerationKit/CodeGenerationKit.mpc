@@ -1,0 +1,7 @@
+//$Id$
+
+project(CodeGenerationKit): cidlc {
+  sharedname =
+  staticname = CodeGenerationKit
+  libout = ..
+}
