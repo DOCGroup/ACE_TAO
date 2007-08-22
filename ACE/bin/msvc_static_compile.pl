@@ -347,7 +347,7 @@ while ( $#ARGV >= 0  &&  $ARGV[0] =~ /^(-|\/)/ )
         exit;
     }
     else {
-        warn "$0:  unknown option $ARGV[0]\n";
+        warn "$0: error unknown option $ARGV[0]\n";
         die -1;
     }
     shift;
