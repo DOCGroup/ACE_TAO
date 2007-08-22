@@ -1,3 +1,7 @@
+Wed Aug 22 11:32:41 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * netsvcs/lib/Client_Logging_Handler.cpp: Fixed wide-char error.
+
 Wed Aug 22 08:52:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ACE-INSTALL.html:
