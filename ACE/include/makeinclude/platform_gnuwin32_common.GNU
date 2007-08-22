@@ -34,6 +34,11 @@ debug ?= 1
 optimize ?= 1
 threads ?= 1
 pipes ?= 1
+no_attributes ?= 1
+
+ifeq ($(no_attributes), 1)
+  CFLAGS += -Wno-attributes
+endif
 
 # When building shared libraries
 ifeq ($(shared_libs), 1)
