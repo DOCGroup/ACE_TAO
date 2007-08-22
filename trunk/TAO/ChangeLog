@@ -1,3 +1,20 @@
+Wed Aug 22 20:27:35 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/TAO_Internal.cpp:
+          Since adding the -ORBGestalt Local option, with a default of
+          using the global service context, it turns out that service
+          directives passed explicitly on the command line using
+          -ORBSvcConfDirective weren't being processed. The problem is
+          that these directives were considered "private" to the ORB that
+          was being initialized and stored separately to be procesed by
+          the ORB's local configuration context. But now that ORBs may be
+          using the global context exclusively, these "private" directives
+          need to be passed to the service configurator along with all the
+          rest. Having done this means that calling ORB_init more a second
+          time with -ORBSvcConf... arguments will see those arguments
+          ignored. This is the way it worked before ORB-specific
+          configuration was defined.
+
 Tue Aug 21 19:47:26 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/tests/HTIOP/Hello/run_test.pl:

@@ -313,6 +313,17 @@ TAO::ORB::open_services (ACE_Service_Gestalt* pcfg,
           return -1;
         }
 
+      // If the target configuration happens to be the global context,
+      // add any 'private' arguments here.
+      if (pcfg == theone && svc_config_argv.length() > 1)
+        {
+          CORBA::ULong glen = global_svc_config_argv.length();
+          global_svc_config_argv.length(glen + svc_config_argv.length() - 1);
+          for (CORBA::ULong i = 1; i < svc_config_argv.length(); i++)
+            global_svc_config_argv[glen++] = svc_config_argv[i];
+          svc_config_argv.length(1);
+        }
+
       int global_svc_config_argc = global_svc_config_argv.length ();
       int status =
         open_private_services_i (theone,
@@ -381,12 +392,17 @@ TAO::ORB::open_services (ACE_Service_Gestalt* pcfg,
       return -1;
     }
 
-  int svc_config_argc = svc_config_argv.length ();
-  int status =
-    open_private_services_i (pcfg,
-                             svc_config_argc,
-                             svc_config_argv.get_buffer (),
-                             skip_service_config_open);
+  int status = 0;
+  // only open the private context if it is not also the global context
+  if (pcfg != ACE_Service_Config::global())
+    {
+      int svc_config_argc = svc_config_argv.length ();
+      status =
+        open_private_services_i (pcfg,
+                                 svc_config_argc,
+                                 svc_config_argv.get_buffer (),
+                                 skip_service_config_open);
+    }
 
   if (status >= 0)
     {
