@@ -13,11 +13,12 @@ $status = 0;
 
 $host = hostname();
 $port = PerlACE::random_port();
-$synchfile = PerlACE::LocalFile ("ready");
+$synchbase = "ready";
+$synchfile = PerlACE::LocalFile ("$synchbase");
 
 if (PerlACE::is_vxworks_test()) {
     $host =  $ENV{'ACE_RUN_VX_TGTHOST'};
-    $SV = new PerlACE::ProcessVX ("server", "-p $port -o $synchfile");
+    $SV = new PerlACE::ProcessVX ("server", "-p $port -o $synchbase");
 }
 else {
     $SV = new PerlACE::Process ("server", "-p $port -o $synchfile");
