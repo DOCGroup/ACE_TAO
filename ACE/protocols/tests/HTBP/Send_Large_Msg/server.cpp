@@ -1,7 +1,5 @@
 // $Id$
 
-#include "tests/test_config.h"
-
 #include "ace/Log_Msg.h"
 #include "ace/Get_Opt.h"
 
@@ -150,9 +148,15 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
               ACE_TEXT("(%P|%t) Server: ")
               ACE_TEXT("send returned %d\n"),n));
 
-  ACE_DEBUG ((LM_DEBUG,"deleting channels[1]\n"));
+  ACE_OS::sleep(1); // prevent test failure on windows when the connection
+                    // closes too fast.
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT("(%P|%t) Server: ")
+              ACE_TEXT("deleting channels[1]\n")));
   delete channels[1];
-  ACE_DEBUG ((LM_DEBUG,"deleting channels[0]\n"));
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT("(%P|%t) Server: ")
+              ACE_TEXT("deleting channels[0]\n")));
   delete channels[0];
   return 0;
 }
