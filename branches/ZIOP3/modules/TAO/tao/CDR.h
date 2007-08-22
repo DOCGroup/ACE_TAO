@@ -271,7 +271,7 @@ private:
 class TAO_Export TAO_InputCDR : public ACE_InputCDR
 {
 public:
-  CORBA::Octet compressed_;
+  CORBA::Boolean compressed_;
   /**
    * Create an input stream from an arbitrary buffer, care must be
    * exercised wrt alignment, because this contructor will *not* work

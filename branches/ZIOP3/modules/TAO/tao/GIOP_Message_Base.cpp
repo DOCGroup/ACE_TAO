@@ -319,7 +319,7 @@ TAO_GIOP_Message_Base::parse_next_message (TAO_Queued_Data &qd,
         }
 
       /* init out-parameters */
-      qd.set_state (state);
+      qd.state (state);
       mesg_length = message_size;
 
       return 1; /* complete header */
@@ -409,7 +409,7 @@ TAO_GIOP_Message_Base::extract_next_message (ACE_Message_Block &incoming,
   qd->msg_block ()->copy (incoming.rd_ptr (), copying_len);
 
   incoming.rd_ptr (copying_len);
-  qd->set_state (state);
+  qd->state (state);
 
   return 1;
 }
@@ -513,7 +513,7 @@ TAO_GIOP_Message_Base::consolidate_node (TAO_Queued_Data *qd,
       incoming.rd_ptr (copy_len);
 
       // Get the other details...
-      qd->set_state (state);
+      qd->state (state);
     }
   else
     {
@@ -644,7 +644,7 @@ TAO_GIOP_Message_Base::process_request_message (TAO_Transport *transport,
                           qd->giop_version ().major_version (),
                           qd->giop_version ().minor_version (),
                           this->orb_core_);
-input_cdr.compressed_ = qd->compressed_;
+input_cdr.compressed_ = qd->state().compressed ();
 
   transport->assign_translators(&input_cdr,&output);
 
@@ -867,7 +867,7 @@ TAO_GIOP_Message_Base::process_request (
       CORBA::Object_var forward_to;
 
 //if (request.original_message_length_ > 0)
-if (request.compressed_ == true)
+if (cdr.compressed_ == true)
 {
   this->orb_core_->ziop_adapter ()->decompress (request);
 //+#if !defined (__BORLANDC__)

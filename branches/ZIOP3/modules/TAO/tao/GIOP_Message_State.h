@@ -73,7 +73,7 @@ public:
   TAO_GIOP_Message_Version const &giop_version (void) const;
 
   /// Return the compressed information
-  CORBA::Boolean compressed_data (void) const;
+  CORBA::Boolean compressed (void) const;
 
 private:
   /// Parse the message header.
@@ -121,8 +121,8 @@ private:
   /// fragments.  A value of true indicates that it does have fragments.
   CORBA::Boolean more_fragments_;
 
-  /// Compressed data
-  CORBA::Boolean compressed_data_;
+  /// Compressed
+  CORBA::Boolean compressed_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

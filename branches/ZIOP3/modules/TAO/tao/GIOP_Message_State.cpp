@@ -228,10 +228,10 @@ TAO_GIOP_Message_State::get_byte_order_info (char *buf)
 
       // Read the fragment bit
       this->more_fragments_ =
-        ((buf[TAO_GIOP_MESSAGE_FLAGS_OFFSET]& 0x02) == 2)
+        ((buf[TAO_GIOP_MESSAGE_FLAGS_OFFSET]& 0x02) == 2);
 
-      // Read the compressed data
-      this->compressed_data_ =
+      // Read the compressed bit
+      this->compressed_ =
         ((buf[TAO_GIOP_MESSAGE_FLAGS_OFFSET]& 0x04) == 4);
 
       if ((buf[TAO_GIOP_MESSAGE_FLAGS_OFFSET] & ~0x7) != 0)
