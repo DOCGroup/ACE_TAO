@@ -1,0 +1,10 @@
+// -*- MPC -*-
+// $Id$
+
+project(*Client): taoclient, pi, interceptors {
+  Source_Files {
+    Client_ORBInitializer.cpp
+    client.cpp
+  }
+}
+
