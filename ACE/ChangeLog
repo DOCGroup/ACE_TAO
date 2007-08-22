@@ -1,3 +1,12 @@
+Wed Aug 22 19:59:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_gnuwin32_common.GNU:
+          Added wall GNU make variable which is default set to 1, which then
+          adds -Wall to the CFLAGS. This option results in a lot of warnings
+          related dllimport which makes it not really usable, with GCC 4.x
+          we can disable that warning, but not with GCC 3.4, so the user can
+          set wall=0 to disable the usage of -Wall
+
 Wed Aug 22 18:10:09 UTC 2007  Steve Huston  <shuston@riverace.com>
 
         * ace/Hash_Map_Manager_T.inl (open): If open fails, include the
@@ -28,7 +37,7 @@ Wed Aug 22 15:58:55 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
           Added CIAO projects to the list. This may need further tweaking.
           Hopefully this will address problems in the
-          WinXP_VC71_CIAOCore_Static_Debug build.         
+          WinXP_VC71_CIAOCore_Static_Debug build.
 
 Wed Aug 22 11:32:41 UTC 2007  Steve Huston  <shuston@riverace.com>
 
