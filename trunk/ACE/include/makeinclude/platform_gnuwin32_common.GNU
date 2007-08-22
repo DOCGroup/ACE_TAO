@@ -18,6 +18,7 @@ debug ?= 1
 optimize ?= 1
 threads ?= 1
 pipes ?= 1
+wall ?= 1
 
 # When building shared libraries
 ifeq ($(shared_libs), 1)
@@ -40,9 +41,12 @@ else
   MODEL_FLAGS += -mcpu=$(TCPU)
 endif
 
-CFLAGS  += -W -Wall -Wpointer-arith
+CFLAGS += -W -Wpointer-arith
+ifeq ($(wall),1)
+  CFLAGS += -Wall
+endif
 ifeq ($(threads),1)
-        MODEL_FLAGS += -mthreads
+  CFLAGS += -mthreads
 endif # threads
 
 CFLAGS += $(MODEL_FLAGS)
