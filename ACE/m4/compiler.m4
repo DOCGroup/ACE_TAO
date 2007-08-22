@@ -91,12 +91,8 @@ dnl @todo Clean up / consolidate these conditionals
 
      case "$CXX" in
        xlC*)
-         if test "$ace_user_enable_rtti" = yes; then
-           CXXFLAGS="$CXXFLAGS -qrtti=all"
-         else
-           CXXFLAGS="$CXXFLAGS -DACE_LACKS_RTTI"
-         fi
-         #TEMPLATE_OPTION='-qtemplateregistry=templateregistry.$* -DACE_TEMPLATES_REQUIRE_SOURCE'
+         dnl AIX compilers need to have RTTI enabled and ACE requires it.
+         CXXFLAGS="$CXXFLAGS -qrtti=all"
          TEMPLATE_OPTION='-qnotempinc -qnotemplateregistry -DACE_TEMPLATES_REQUIRE_SOURCE'
          ACE_CXXFLAGS="$ACE_CXXFLAGS $TEMPLATE_OPTION"
          DCXXFLAGS="-g -qcheck=nobounds:div:null"
@@ -271,12 +267,9 @@ dnl @todo Clean up / consolidate these conditionals
            CXXFLAGS="$CXXFLAGS -noex"
          fi
 
-         dnl Some flags only work with Sun C++ 4.2
+         dnl Some flags only work with Sun C++ 4.2. ACE requires RTTI.
          if (CC -V 2>&1 | $EGREP 'Compilers 4\.2' > /dev/null); then
-           CXXFLAGS="$CXXFLAGS -features=castop"
-           if test "$ace_user_enable_rtti" = yes; then
-             CXXFLAGS="$CXXFLAGS -features=rtti"
-           fi
+           CXXFLAGS="$CXXFLAGS -features=castop -features=rtti"
          fi
 
          dnl Sun C++ 5.0 weirdness
