@@ -533,7 +533,7 @@ MCT_Event_Handler::find (const char *buf)
       local += this->address_vec_[i]->c_str ();
       local += "\n";
     }
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%s not in:\n%s"),
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%C not in:\n%C"),
               buf, local.c_str ()));
 
   return -1;
@@ -556,10 +556,10 @@ MCT_Event_Handler::join (const ACE_INET_Addr &mcast_addr,
                        buf,
                        ACE_TEXT ("failed")),
                       -1);
-
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Joined %C\n"), buf));
+
   ACE_CString *str;
-  ACE_NEW_RETURN (str, ACE_CString (ACE::strnew (buf)), -1);
+  ACE_NEW_RETURN (str, ACE_CString (buf), -1);
   this->address_vec_.push_back (str);
   return 0;
 }
