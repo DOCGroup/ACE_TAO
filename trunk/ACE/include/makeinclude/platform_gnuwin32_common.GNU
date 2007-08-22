@@ -14,19 +14,7 @@ endif
 # optimize = 1
 # exceptions = 0
 
-GNUWIN32_DLL_ALLOW_EXECP = 0
-
 GNUWIN32_CXX_VERSION := $(shell $(CXX) -dumpversion)
-#exceptions across dll boundries are ok in gcc 3+
-ifeq (2.95,$(findstring 2.95,$(GNUWIN32_CXX_VERSION)))
-  GNUWIN32_DLL_ALLOW_EXECP = 0
-else
-  ifeq (3.,$(findstring 3.,$(GNUWIN32_CXX_VERSION)))
-    GNUWIN32_DLL_ALLOW_EXECP = 1
-  else
-    GNUWIN32_DLL_ALLOW_EXECP = 0
-  endif
-endif
 
 winsock2 ?= 1
 exceptions ?= 1
@@ -34,11 +22,6 @@ debug ?= 1
 optimize ?= 1
 threads ?= 1
 pipes ?= 1
-no_attributes ?= 1
-
-ifeq ($(no_attributes), 1)
-  CFLAGS += -Wno-attributes
-endif
 
 # When building shared libraries
 ifeq ($(shared_libs), 1)
@@ -114,11 +97,9 @@ SHLIBBUILD = \
     -shared -o $@ $(LDFLAGS) -Wl,$(VSHDIR)/$@.def \
     $(VSHOBJS) $(ACE_SHLIBS) $(LIBS)
 
-ifneq ($(GNUWIN32_DLL_ALLOW_EXECP), 1)
-  ifeq ($(exceptions),1)
-    SHLIBBUILD += \
-     ;echo "Warning: exceptions fail when mixing DLL and non DLL calls."
-  endif
+ifeq ($(exceptions),1)
+  SHLIBBUILD += \
+   ;echo "Warning: exceptions fail when mixing DLL and non DLL calls."
 endif
 
 PRELIB  = @true
@@ -127,5 +108,15 @@ PRELIB  = @true
 # add -E to LDFLAGS if using GNU ld
 #
 include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
+
+ifeq ($(GXX_4_OR_BETTER), 1)
+  no_attributes ?= 1
+else
+  no_attributes ?= 0
+endif
+
+ifeq ($(no_attributes), 1)
+  CFLAGS += -Wno-attributes
+endif
 
 CCFLAGS += $(CFLAGS) $(TEMPLATES_FLAG)
