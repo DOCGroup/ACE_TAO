@@ -494,7 +494,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::create_manager_i (void)
       this->name_space_map_ = (ACE_Name_Space_Map <ALLOCATOR> *) ns_map;
       if (ACE::debug ())
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("name_space_map_ = %d, ns_map = %d\n"),
+                    ACE_TEXT ("name_space_map_ = %@, ns_map = %@\n"),
                     this->name_space_map_, ns_map));
     }
 
@@ -511,7 +511,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::create_manager_i (void)
           this->name_space_map_ = (ACE_Name_Space_Map <ALLOCATOR> *) ns_map;
           if (ACE::debug ())
             ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("name_space_map_ = %d, ns_map = %d\n"),
+                        ACE_TEXT ("name_space_map_ = %@, ns_map = %@\n"),
                         this->name_space_map_, ns_map));
         }
       else
@@ -530,7 +530,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::create_manager_i (void)
 
       if (ACE::debug ())
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("name_space_map_ = %d, ns_map = %d\n"),
+                    ACE_TEXT ("name_space_map_ = %@, ns_map = %@\n"),
                     this->name_space_map_, ns_map));
     }
 

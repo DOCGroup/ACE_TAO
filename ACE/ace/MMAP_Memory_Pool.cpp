@@ -271,14 +271,17 @@ ACE_MMAP_Memory_Pool::map_file (size_t map_size)
   this->mmap_.unmap ();
 
 #if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
-  if(use_fixed_addr_ == ACE_MMAP_Memory_Pool_Options::NEVER_FIXED)
+  if (use_fixed_addr_ == ACE_MMAP_Memory_Pool_Options::NEVER_FIXED)
     this->base_addr_ = 0;
 #endif /* ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1 */
 
-  // Remap the file.
+  // Remap the file; try to stay at the same location as a previous mapping.
+  int flags = this->flags_;
+  if (this->base_addr_ != 0)
+    flags |= MAP_FIXED;
   if (this->mmap_.map (map_size,
                        PROT_RDWR,
-                       this->flags_,
+                       flags,
                        this->base_addr_,
                        0,
                        this->sa_) == -1
@@ -291,7 +294,7 @@ ACE_MMAP_Memory_Pool::map_file (size_t map_size)
     {
 #if 0
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("(%P|%t) addr = %u, base_addr = %u, map_size = %u, %p\n"),
+                  ACE_TEXT ("(%P|%t) addr = %@, base_addr = %@, map_size = %B, %p\n"),
                   this->mmap_.addr (),
                   this->base_addr_,
                   map_size,
@@ -324,7 +327,7 @@ ACE_MMAP_Memory_Pool::acquire (size_t nbytes,
   rounded_bytes = this->round_up (nbytes);
 
   // ACE_DEBUG ((LM_DEBUG, "(%P|%t) acquiring more chunks, nbytes =
-  // %d, rounded_bytes = %d\n", nbytes, rounded_bytes));
+  // %B, rounded_bytes = %B\n", nbytes, rounded_bytes));
 
   size_t map_size;
 
@@ -334,8 +337,8 @@ ACE_MMAP_Memory_Pool::acquire (size_t nbytes,
   else if (this->map_file (map_size) == -1)
     return 0;
 
-  // ACE_DEBUG ((LM_DEBUG, "(%P|%t) acquired more chunks, nbytes = %d,
-  // rounded_bytes = %d, map_size = %d\n", nbytes, rounded_bytes,
+  // ACE_DEBUG ((LM_DEBUG, "(%P|%t) acquired more chunks, nbytes = %B,
+  // rounded_bytes = %B, map_size = %B\n", nbytes, rounded_bytes,
   // map_size));
 
   return (void *) ((char *) this->mmap_.addr () + (this->mmap_.size () - rounded_bytes));
@@ -419,7 +422,7 @@ int
 ACE_MMAP_Memory_Pool::remap (void *addr)
 {
   ACE_TRACE ("ACE_MMAP_Memory_Pool::remap");
-  //  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("Remapping with fault address at: %X\n"), addr));
+  //  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("Remapping with fault address at: %@\n"), addr));
   size_t const current_map_size =
     ACE_Utils::truncate_cast<size_t> (ACE_OS::filesize (this->mmap_.handle ()));
   // ACE_OS::lseek (this->mmap_.handle (), 0, SEEK_END);
@@ -477,7 +480,7 @@ ACE_MMAP_Memory_Pool::handle_signal (int signum, siginfo_t *siginfo, ucontext_t 
   else
     ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("(%P|%t) received %S\n"), signum));
 #endif
-  // ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("(%P|%t) new mapping address = %u\n"), (char *) this->base_addr_ + current_map_size));
+  // ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("(%P|%t) new mapping address = %@\n"), (char *) this->base_addr_ + current_map_size));
 
 #if defined (ACE_HAS_SIGINFO_T) && !defined (ACE_LACKS_SI_ADDR)
   // Make sure that the pointer causing the problem is within the
@@ -485,10 +488,10 @@ ACE_MMAP_Memory_Pool::handle_signal (int signum, siginfo_t *siginfo, ucontext_t 
 
   if (siginfo != 0)
     {
-      // ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("(%P|%t) si_signo = %d, si_code = %d, addr = %u\n"), siginfo->si_signo, siginfo->si_code, siginfo->si_addr));
+      // ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("(%P|%t) si_signo = %d, si_code = %d, addr = %@\n"), siginfo->si_signo, siginfo->si_code, siginfo->si_addr));
       if (this->remap ((void *) siginfo->si_addr) == -1)
         return -1;
-      // ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) address %u out of range\n",
+      // ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) address %@ out of range\n",
       // siginfo->si_addr), -1);
       return 0;
     }

@@ -104,11 +104,11 @@ class ACE_Allocator;
  * @class ACE_Hash_Map_Manager_Ex
  *
  * @brief Define a map abstraction that efficiently associates
- * <EXT_ID>s with <INT_ID>s.
+ * @c EXT_ID type objects with @c INT_ID type objects.
  *
  * This implementation of a map uses a hash table.  Key hashing
- * is achieved through the HASH_KEY object and key comparison is
- * achieved through the COMPARE_KEYS object.
+ * is achieved through the @c HASH_KEY object and key comparison is
+ * achieved through the @c COMPARE_KEYS object.
  * This class uses an ACE_Allocator to allocate memory.  The
  * user can make this a persistent class by providing an
  * ACE_Allocator with a persistable memory pool.
@@ -163,44 +163,46 @@ public:
   // = Initialization and termination methods.
 
   /**
-   * Initialize a @c Hash_Map_Manager_Ex with default size elements.
+   * Initialize an ACE_Hash_Map_Manager_Ex with a default number of elements.
+   *
    * @param table_alloc is a pointer to a memory allocator used for
    *        table_, so it should supply size*sizeof (ACE_Hash_Map_Entry<EXT_ID, INT_ID>).
+   *        If @a table_alloc is 0 it defaults to ACE_Allocator::instance().
    * @param entry_alloc is a pointer to an additional allocator for
    *        entries, so it should be able to allocate 'size' / chunks
    *        of sizeof(ACE_Hash_Map_Entry<EXT_ID, INT_ID>) bytes each.
-   * If @c table_alloc is 0 it defaults to @c ACE_Allocator::instance().
-   * If @c entry_alloc is 0 then it defaults to the same allocator as
-   * @c table_alloc.
+   *        If @a entry_alloc is 0 it defaults to the same allocator as
+   *        @a table_alloc.
    */
   ACE_Hash_Map_Manager_Ex (ACE_Allocator *table_alloc = 0,
                            ACE_Allocator *entry_alloc = 0);
 
   /**
-   * Initialize a @c Hash_Map_Manager_Ex with @c size elements.
+   * Initialize an ACE_Hash_Map_Manager_Ex with @a size elements.
+   *
    * @param table_alloc is a pointer to a memory allocator used for
    *        table_, so it should supply size*sizeof (ACE_Hash_Map_Entry<EXT_ID, INT_ID>).
+   *        If @a table_alloc is 0 it defaults to ACE_Allocator::instance().
    * @param entry_alloc is a pointer to an additional allocator for
    *        entries, so it should be able to allocate 'size' / chunks
    *        of sizeof(ACE_Hash_Map_Entry<EXT_ID, INT_ID>) bytes each.
-   * If @c table_alloc is 0 it defaults to @c ACE_Allocator::instance().
-   * If @c entry_alloc is 0 then it defaults to the same allocator as
-   * @c table_alloc.
+   *        If @a entry_alloc is 0 it defaults to the same allocator as
+   *        @a table_alloc.
    */
   ACE_Hash_Map_Manager_Ex (size_t size,
                            ACE_Allocator *table_alloc = 0,
                            ACE_Allocator *entry_alloc = 0);
 
   /**
-   * Initialize a @c Hash_Map_Manager_Ex with @c size elements.
+   * Initialize an ACE_Hash_Map_Manager_Ex with @a size elements.
    * @param table_alloc is a pointer to a memory allocator used for
    *        table_, so it should supply size*sizeof (ACE_Hash_Map_Entry<EXT_ID, INT_ID>).
+   *        If @a table_alloc is 0 it defaults to ACE_Allocator::instance().
    * @param entry_alloc is a pointer to an additional allocator for
    *        entries, so it should be able to allocate 'size' / chunks
    *        of sizeof(ACE_Hash_Map_Entry<EXT_ID, INT_ID>) bytes each.
-   * If @c table_alloc is 0 it defaults to @c ACE_Allocator::instance().
-   * If @c entry_alloc is 0 then it defaults to the same allocator as
-   * @c table_alloc.
+   *        If @a entry_alloc is 0 then it defaults to the same allocator as
+   *        @a table_alloc.
    * @return -1 on failure, 0 on success
    */
 
@@ -208,21 +210,23 @@ public:
             ACE_Allocator *table_alloc = 0,
             ACE_Allocator *entry_alloc = 0);
 
-  /// Close down a <Hash_Map_Manager_Ex> and release dynamically allocated
+  /// Close down the ACE_Hash_Map_Manager_Ex and release dynamically allocated
   /// resources.
   int close (void);
 
-  /// Removes all the entries in <Map_Manager_Ex>.
+  /// Removes all the entries in the ACE_Hash_Map_Manager_Ex.
   int unbind_all (void);
 
-  /// Cleanup the <Hash_Map_Manager_Ex>.
+  /// Cleanup the ACE_Hash_Map_Manager_Ex.
   ~ACE_Hash_Map_Manager_Ex (void);
 
   /**
-   * Associate @a ext_id with @a int_id.  If @a ext_id is already in the
-   * map then the <ACE_Hash_Map_Entry> is not changed.  Returns 0 if a
-   * new entry is bound successfully, returns 1 if an attempt is made
-   * to bind an existing entry, and returns -1 if failures occur.
+   * Associate @a item with @a int_id.  If @a item is already in the
+   * map then the map is not changed.
+   *
+   * @retval 0 if a new entry is bound successfully.
+   * @retval 1 if an attempt is made to bind an existing entry.
+   * @retval -1 if a failure occurs; check @c errno for more information.
    */
   int bind (const EXT_ID &item,
             const INT_ID &int_id);
