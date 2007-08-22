@@ -94,7 +94,7 @@ TAO_ZIOP_Loader::decompress (TAO_ServerRequest& server_request)
       IOP::CompressedData data;
       if ((*(server_request.incoming()) >> data) == 0)
         return false;
-      server_request.compressed_ = true;
+//      server_request.compressed_ = true;
 
       Compression::Compressor_var compressor = manager->get_compressor (data.compressorid, 6);
       CORBA::OctetSeq myout;

@@ -18,7 +18,7 @@
 #define TAO_ZIOP_POLICY_VALIDATOR_H_
 
 #include /**/ "ace/pre.h"
-#include "tao/ZIOP_GIOP/ZIOPgiop_export.h"
+#include "tao/ZIOP/ZIOP_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -36,7 +36,7 @@ class TAO_ORB_Core;
  * @brief Policy Validator for ZIOP GIOP class
  *
  */
-class TAO_ZIOPGIOP_Export TAO_ZIOPPolicy_Validator : public TAO_Policy_Validator
+class TAO_ZIOP_Export TAO_ZIOPPolicy_Validator : public TAO_Policy_Validator
 {
 public:
 

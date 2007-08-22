@@ -161,9 +161,6 @@ public:
   /// request/response?
   virtual int is_ready_for_bidirectional (TAO_OutputCDR &msg) = 0;
 
-  /// Reset the messaging the object
-  virtual void reset (void) = 0;
-
   /// Header length
   virtual size_t header_length (void) const = 0;
 

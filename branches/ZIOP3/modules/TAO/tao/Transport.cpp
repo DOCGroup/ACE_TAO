@@ -1262,8 +1262,6 @@ void
 TAO_Transport::send_connection_closed_notifications_i (void)
 {
   this->cleanup_queue_i ();
-
-  this->messaging_object ()->reset ();
 }
 
 int

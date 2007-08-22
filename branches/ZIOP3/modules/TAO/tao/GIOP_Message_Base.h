@@ -64,9 +64,6 @@ public:
   virtual void init (CORBA::Octet major,
                      CORBA::Octet minor);
 
-  /// Reset the messaging the object
-  virtual void reset (void);
-
   /// Write the RequestHeader in to the @a cdr stream. The underlying
   /// implementation of the mesaging should do the right thing.
   virtual int generate_request_header (TAO_Operation_Details &op,
@@ -177,8 +174,8 @@ protected:
                                       TAO_GIOP_Message_Generator_Parser *);
 
   /// Set the state
-  void set_state (const TAO_GIOP_Message_Version &version,
-                  TAO_GIOP_Message_Generator_Parser *&) const;
+  TAO_GIOP_Message_Generator_Parser *get_parser (
+    const TAO_GIOP_Message_Version &version) const;
 
   /// Print out a debug messages..
   void dump_msg (const char *label, const u_char *ptr, size_t len);
@@ -186,7 +183,9 @@ protected:
   /// Writes the GIOP header in to @a msg
   /// @note If the GIOP header happens to change in the future, we can
   /// push this method in to the generator_parser classes.
-  int write_protocol_header (TAO_GIOP_Message_Type t, TAO_OutputCDR &msg);
+  int write_protocol_header (TAO_GIOP_Message_Type t,
+                             const TAO_GIOP_Message_Version &version,
+                             TAO_OutputCDR &msg);
 
   /// Make a GIOP_LOCATEREPLY and hand that over to the transport so
   /// that it can be sent over the connection.

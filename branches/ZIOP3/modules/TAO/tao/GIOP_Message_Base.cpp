@@ -62,12 +62,6 @@ TAO_GIOP_Message_Base::out_stream (void)
   return this->out_stream_;
 }
 
-void
-TAO_GIOP_Message_Base::reset (void)
-{
-  // no-op
-}
-
 int
 TAO_GIOP_Message_Base::generate_request_header (
     TAO_Operation_Details &op,
@@ -75,16 +69,12 @@ TAO_GIOP_Message_Base::generate_request_header (
     TAO_OutputCDR &cdr)
 {
   // Get a parser for us
-  TAO_GIOP_Message_Generator_Parser *generator_parser = 0;
   TAO_GIOP_Message_Version giop_version;
 
   cdr.get_version (giop_version);
 
-  // Get the state information that we need to use
-  this->set_state (giop_version, generator_parser);
-
   // Write the GIOP header first
-  if (!this->write_protocol_header (TAO_GIOP_REQUEST, cdr))
+  if (!this->write_protocol_header (TAO_GIOP_REQUEST, giop_version, cdr))
     {
       if (TAO_debug_level)
         {
@@ -94,6 +84,10 @@ TAO_GIOP_Message_Base::generate_request_header (
 
       return -1;
     }
+
+  // Get the parser we need to use
+  TAO_GIOP_Message_Generator_Parser *generator_parser =
+    this->get_parser (giop_version);
 
   // Now call the implementation for the rest of the header
   if (!generator_parser->write_request_header (op, spec, cdr))
@@ -114,17 +108,12 @@ TAO_GIOP_Message_Base::generate_locate_request_header (
     TAO_Target_Specification &spec,
     TAO_OutputCDR &cdr)
 {
-  // Get a parser for us
-  TAO_GIOP_Message_Generator_Parser *generator_parser = 0;
   TAO_GIOP_Message_Version giop_version;
 
   cdr.get_version (giop_version);
 
-  // Get the state information that we need to use
-  this->set_state (giop_version, generator_parser);
-
   // Write the GIOP header first
-  if (!this->write_protocol_header (TAO_GIOP_LOCATEREQUEST, cdr))
+  if (!this->write_protocol_header (TAO_GIOP_LOCATEREQUEST, giop_version, cdr))
     {
       if (TAO_debug_level)
         ACE_ERROR ((LM_ERROR,
@@ -132,6 +121,10 @@ TAO_GIOP_Message_Base::generate_locate_request_header (
 
       return -1;
     }
+
+  // Get the parser we need to use
+  TAO_GIOP_Message_Generator_Parser *generator_parser =
+    this->get_parser (giop_version);
 
   // Now call the implementation for the rest of the header
   if (!generator_parser->write_locate_request_header
@@ -155,16 +148,12 @@ TAO_GIOP_Message_Base::generate_reply_header (
     TAO_Pluggable_Reply_Params_Base &params)
 {
   // Get a parser for us
-  TAO_GIOP_Message_Generator_Parser *generator_parser = 0;
   TAO_GIOP_Message_Version giop_version;
 
   cdr.get_version (giop_version);
 
-  // Get the state information that we need to use
-  this->set_state (giop_version, generator_parser);
-
   // Write the GIOP header first
-  if (!this->write_protocol_header (TAO_GIOP_REPLY, cdr))
+  if (!this->write_protocol_header (TAO_GIOP_REPLY, giop_version, cdr))
     {
       if (TAO_debug_level)
         ACE_ERROR ((LM_ERROR,
@@ -175,6 +164,10 @@ TAO_GIOP_Message_Base::generate_reply_header (
 
   try
     {
+      // Get the parser we need to use
+      TAO_GIOP_Message_Generator_Parser *generator_parser =
+        this->get_parser (giop_version);
+
       // Now call the implementation for the rest of the header
       if (!generator_parser->write_reply_header (cdr, params))
         {
@@ -202,8 +195,6 @@ int
 TAO_GIOP_Message_Base::generate_fragment_header (TAO_OutputCDR & cdr,
                                                  CORBA::ULong request_id)
 {
-  // Get a parser for us
-  TAO_GIOP_Message_Generator_Parser *generator_parser = 0;
   TAO_GIOP_Message_Version giop_version;
 
   cdr.get_version (giop_version);
@@ -214,11 +205,12 @@ TAO_GIOP_Message_Base::generate_fragment_header (TAO_OutputCDR & cdr,
   if (giop_version.major == 1 && giop_version.minor < 2)
     return -1;
 
-  // Get the state information that we need to use
-  this->set_state (giop_version, generator_parser);
+  // Get the parser we need to use
+  TAO_GIOP_Message_Generator_Parser *generator_parser =
+    this->get_parser (giop_version);
 
   // Write the GIOP header first
-  if (!this->write_protocol_header (TAO_GIOP_FRAGMENT, cdr)
+  if (!this->write_protocol_header (TAO_GIOP_FRAGMENT, giop_version, cdr)
       || !generator_parser->write_fragment_header (cdr, request_id))
     {
       if (TAO_debug_level)
@@ -556,11 +548,9 @@ TAO_GIOP_Message_Base::process_request_message (TAO_Transport *transport,
   // Set the upcall thread
   this->orb_core_->lf_strategy ().set_upcall_thread (this->orb_core_->leader_follower ());
 
-  // Get a parser for us
-  TAO_GIOP_Message_Generator_Parser *generator_parser = 0;
-
-  // Get the state information that we need to use
-  this->set_state (qd->giop_version (), generator_parser);
+  // Get the parser we need to use
+  TAO_GIOP_Message_Generator_Parser *generator_parser =
+    this->get_parser (qd->giop_version ());
 
   // A buffer that we will use to initialise the CDR stream.  Since we're
   // allocating the buffer on the stack, we may as well allocate the data
@@ -681,11 +671,9 @@ TAO_GIOP_Message_Base::process_reply_message (
     TAO_Pluggable_Reply_Params &params,
     TAO_Queued_Data *qd)
 {
-  // Get a parser for us
-  TAO_GIOP_Message_Generator_Parser *generator_parser = 0;
-
-  // Get the state information that we need to use
-  this->set_state (qd->giop_version (), generator_parser);
+  // Get the parser we need to use
+  TAO_GIOP_Message_Generator_Parser *generator_parser =
+    this->get_parser (qd->giop_version());
 
   // Get the read and write positions before we steal data.
   size_t rd_pos = qd->msg_block ()->rd_ptr () - qd->msg_block ()->base ();
@@ -788,6 +776,7 @@ TAO_GIOP_Message_Base::generate_exception_reply (
 
 int
 TAO_GIOP_Message_Base::write_protocol_header (TAO_GIOP_Message_Type type,
+                                              const TAO_GIOP_Message_Version &version,
                                               TAO_OutputCDR &msg)
 {
   // Reset the message type
@@ -803,12 +792,8 @@ TAO_GIOP_Message_Base::write_protocol_header (TAO_GIOP_Message_Type type,
       0x50  // 'P'
     };
 
-  TAO_GIOP_Message_Version giop_version;
-
-  msg.get_version (giop_version);
-
-  header[4] = giop_version.major;
-  header[5] = giop_version.minor;
+  header[4] = version.major;
+  header[5] = version.minor;
 
   // "flags" octet, i.e. header[6] will be set up later when message
   // is formatted by the transport.
@@ -1189,10 +1174,13 @@ TAO_GIOP_Message_Base::make_send_locate_reply (TAO_Transport *transport,
                                                TAO_OutputCDR &output,
                                                TAO_GIOP_Message_Generator_Parser *parser)
 {
+  TAO_GIOP_Message_Version giop_version;
+  output.get_version (giop_version);
+
   // Note here we are making the Locate reply header which is *QUITE*
   // different from the reply header made by the make_reply () call..
   // Make the GIOP message header
-  this->write_protocol_header (TAO_GIOP_LOCATEREPLY, output);
+  this->write_protocol_header (TAO_GIOP_LOCATEREPLY, giop_version, output);
 
   // This writes the header & body
   parser->write_locate_reply_mesg (output,
@@ -1271,10 +1259,9 @@ TAO_GIOP_Message_Base::send_error (TAO_Transport *transport)
   return result;
 }
 
-void
-TAO_GIOP_Message_Base::set_state (
-    const TAO_GIOP_Message_Version &version,
-    TAO_GIOP_Message_Generator_Parser *&gen_parser) const
+TAO_GIOP_Message_Generator_Parser*
+TAO_GIOP_Message_Base::get_parser (
+    const TAO_GIOP_Message_Version &version) const
 {
   switch (version.major)
     {
@@ -1282,25 +1269,27 @@ TAO_GIOP_Message_Base::set_state (
       switch (version.minor)
         {
         case 0:
-          gen_parser =
+          return
             const_cast<TAO_GIOP_Message_Generator_Parser_10 *> (
                                      &this->tao_giop_impl_.tao_giop_10);
           break;
         case 1:
-          gen_parser =
+          return
             const_cast<TAO_GIOP_Message_Generator_Parser_11 *> (
                                      &this->tao_giop_impl_.tao_giop_11);
           break;
         case 2:
-          gen_parser =
+          return
             const_cast<TAO_GIOP_Message_Generator_Parser_12 *> (
                                      &this->tao_giop_impl_.tao_giop_12);
           break;
         default:
+          throw ::CORBA::INTERNAL (0, CORBA::COMPLETED_NO);
           break;
         }
       break;
     default:
+      throw ::CORBA::INTERNAL (0, CORBA::COMPLETED_NO);
       break;
     }
 }
@@ -1539,20 +1528,19 @@ TAO_GIOP_Message_Base::generate_locate_reply_header (
 int
 TAO_GIOP_Message_Base::is_ready_for_bidirectional (TAO_OutputCDR &msg)
 {
-  // Get a parser for us
-  TAO_GIOP_Message_Generator_Parser *parser = 0;
   TAO_GIOP_Message_Version giop_version;
 
   msg.get_version (giop_version);
 
-  // Get the state information that we need to use
-  this->set_state (giop_version, parser);
+  // Get the parser we need to use
+  TAO_GIOP_Message_Generator_Parser *generator_parser =
+    this->get_parser (giop_version);
 
   // We dont really know.. So ask the generator and parser objects that
   // we know.
   // @@ TODO: Need to make this faster, instead of making virtual
   // call, try todo the check within this class
-  return parser->is_ready_for_bidirectional ();
+  return generator_parser->is_ready_for_bidirectional ();
 }
 
 
@@ -1598,10 +1586,9 @@ size_t
 TAO_GIOP_Message_Base::fragment_header_length (
   const TAO_GIOP_Message_Version& giop_version) const
 {
-  TAO_GIOP_Message_Generator_Parser *generator_parser = 0;
-
-  // Get the state information that we need to use
-  this->set_state (giop_version, generator_parser);
+  // Get the parser we need to use
+  TAO_GIOP_Message_Generator_Parser *generator_parser =
+    this->get_parser (giop_version);
 
   return generator_parser->fragment_header_length ();
 }
@@ -1610,11 +1597,9 @@ int
 TAO_GIOP_Message_Base::parse_request_id (const TAO_Queued_Data *qd,
                                          CORBA::ULong &request_id) const
 {
-  // Get a parser for us
-  TAO_GIOP_Message_Generator_Parser *generator_parser = 0;
-
-  // Get the state information that we need to use
-  this->set_state (qd->giop_version (), generator_parser);
+  // Get the parser we need to use
+  TAO_GIOP_Message_Generator_Parser *generator_parser =
+    this->get_parser (qd->giop_version ());
 
   // Get the read and write positions before we steal data.
   size_t rd_pos = qd->msg_block ()->rd_ptr () - qd->msg_block ()->base ();

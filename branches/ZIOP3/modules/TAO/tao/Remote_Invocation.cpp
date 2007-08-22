@@ -107,8 +107,7 @@ namespace TAO
     // Send the request for the header
     if (this->resolver_.transport ()->generate_request_header (this->details_,
                                                                spec,
-                                                               out_stream)
-        == -1)
+                                                               out_stream) == -1)
       {
         throw ::CORBA::MARSHAL ();
       }
