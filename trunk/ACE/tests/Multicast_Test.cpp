@@ -535,16 +535,19 @@ MCT_Event_Handler::join (const ACE_INET_Addr &mcast_addr,
                          int reuse_addr,
                          const ACE_TCHAR *net_if)
 {
-  if (this->mcast_.join (mcast_addr, reuse_addr, net_if) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("MCT_Event_Handler::join - %p\n"),
-                       ACE_TEXT ("Could not join group")),
-                      -1);
-
   char buf[MAX_STRING_SIZE];
   ACE_OS::sprintf (buf, "%s/%d",
                    mcast_addr.get_host_addr (),
                    mcast_addr.get_port_number ());
+
+  if (this->mcast_.join (mcast_addr, reuse_addr, net_if) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("MCT_Event_Handler::join %C %p\n"),
+                       buf,
+                       ACE_TEXT ("failed")),
+                      -1);
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Joined %C\n"), buf));
+
   ACE_CString *str;
   ACE_NEW_RETURN (str, ACE_CString (buf), -1);
   this->address_vec_.push_back (str);

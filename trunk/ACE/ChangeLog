@@ -1,3 +1,9 @@
+Wed Aug 22 21:24:07 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * tests/Multicast_Test.cpp: Log the joined multicast groups.
+
+        * tests/Multicast_Test_IPV6.cpp: Fixed string logging and a leak.
+
 Wed Aug 22 19:59:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_gnuwin32_common.GNU:
