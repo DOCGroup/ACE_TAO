@@ -172,6 +172,8 @@ ACE_TMAIN (int argc , ACE_TCHAR *argv[])
             ACE_OS::sleep (1);
         }
     }
+  ACE_OS::sleep(1); // prevent test failure on windows when the connection
+                    // closes too fast.
 
   stream.close();
   acc.close();

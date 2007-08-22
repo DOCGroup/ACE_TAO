@@ -1,3 +1,15 @@
+Wed Aug 22 21:41:36 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * protocols/tests/HTBP/Send_Large_Msg/Send_Large_Msg.mpc:
+        * protocols/tests/HTBP/Send_Large_Msg/server.cpp:
+        * protocols/tests/HTBP/Send_Recv_Tests/server.cpp:
+        * protocols/tests/HTBP/ping/server.cpp:
+
+          Add a small sleep in the server right before closing the socket.
+          This helps reduce the likelyhood that tests will fail on windows
+          if the server happens to close before the client has read the
+          last bit of data on the conection.
+
 Wed Aug 22 21:28:38 UTC 2007  Steve Huston  <shuston@riverace.com>
 
         * bin/ace_tests.lst: Marked RMCast tests to only run if the RMCAST
