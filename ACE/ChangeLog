@@ -1,3 +1,11 @@
+Wed Aug 22 15:58:55 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * bin/msvc_static_order.lst:
+
+          Added CIAO projects to the list. This may need further tweaking.
+          Hopefully this will address problems in the
+          WinXP_VC71_CIAOCore_Static_Debug build.         
+
 Wed Aug 22 11:32:41 UTC 2007  Steve Huston  <shuston@riverace.com>
 
         * netsvcs/lib/Client_Logging_Handler.cpp: Fixed wide-char error.
