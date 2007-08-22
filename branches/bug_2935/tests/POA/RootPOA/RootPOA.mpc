@@ -1,7 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project(*Server): taoserver {
-  exename = RootPOA
-}
-
