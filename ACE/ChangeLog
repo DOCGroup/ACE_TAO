@@ -1,3 +1,19 @@
+Wed Aug 22 18:10:09 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * ace/Hash_Map_Manager_T.inl (open): If open fails, include the
+          error reason in the logged message.
+
+        * ace/Hash_Map_Manager_T.h: Documentation improvements.
+
+        * ace/Local_Name_Space_T.cpp: Corrected logging of pointers to use
+          %@ instead of %d or %u.
+
+        * ace/MMAP_Memory_Pool.cpp (map_file): When remapping a previous
+          mapping, try to use MAP_FIXED unless the memory pool option
+          NEVER_FIXED is also set. Resolves a problem of mapping to a
+          different region when remapping an existing area on RHEL 4 x64.
+          Also fixed logging of pointers and size_t to use %@ and %B.
+
 Wed Aug 22 18:09:45 UTC 2007  Steve Huston  <shuston@riverace.com>
 
         * m4/compiler.m4: For AIX xlC and Solaris CC 4.2, always turn on
