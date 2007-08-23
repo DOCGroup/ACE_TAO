@@ -1,6 +1,8 @@
 Thu Aug 23 14:39:30 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/TAO_Internal.cpp:
+          One more change related to the use of a single global context.
+          The failed status was being lost if TAO debug level was 0.
 
 Wed Aug 22 20:27:35 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
 
