@@ -1,7 +1,12 @@
+Thu Aug 23 15:07:01 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * configure.ac: Allow POSIX semaphores to be used with UI Threads
+          (ala Solaris) if the functions are there.
+
 Thu Aug 23 05:35:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Hash_Map_Manager_T.inl:
-          Don't use ACE_LIB_TEXT, but ACE_TEST
+          Don't use ACE_LIB_TEXT, but ACE_TEXT
 
 Wed Aug 22 22:31:00 UTC 2007  Steve Huston  <shuston@riverace.com>
 
