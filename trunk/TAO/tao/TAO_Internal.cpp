@@ -331,15 +331,13 @@ TAO::ORB::open_services (ACE_Service_Gestalt* pcfg,
                                  global_svc_config_argv.get_buffer (),
                                  skip_service_config_open);
 
-      if (status == -1 && TAO_debug_level > 0)
+      if (status == -1)
         {
           if (TAO_debug_level > 0)
             {
-              ACE_ERROR_RETURN ((LM_DEBUG,
-                                 ACE_TEXT ("TAO (%P|%t) Failed to ")
-                                 ACE_TEXT ("open process-wide service ")
-                                 ACE_TEXT ("configuration\n")),
-                                -1);
+              ACE_ERROR ((LM_DEBUG,
+                          ACE_TEXT ("TAO (%P|%t) Failed to open process-")
+                          ACE_TEXT ("wide service configuration\n")))
             }
 
           return -1;
