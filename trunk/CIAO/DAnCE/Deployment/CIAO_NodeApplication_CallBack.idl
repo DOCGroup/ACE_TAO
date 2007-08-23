@@ -18,6 +18,6 @@ module CIAO
   {
     Deployment::NodeApplicationManager
       register_node_application (in Deployment::NodeApplication na,
-				 out Deployment::Properties properties);
+                                 out Deployment::Properties properties);
   };
 };

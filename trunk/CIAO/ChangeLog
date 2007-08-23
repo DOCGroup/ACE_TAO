@@ -1,3 +1,10 @@
+Thu Aug 23 22:21:16 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * DAnCE/Deployment/CIAO_NodeApplication_CallBack.idl:
+        * DAnCE/NodeApplication/NodeApplication_Impl.cpp:
+        * DAnCE/RepositoryManager/ZIP_Wrapper.cpp:
+          Untabify.
+
 Tue Aug 21 14:43:24 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * DAnCE/Interfaces/ExecutionManager_stub_export.h:
@@ -128,7 +135,7 @@ Tue Aug 21 14:43:24 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
         * tools/Config_Handlers/XSC_XML_Handlers_Export.h:
         * tools/IDL3_to_IDL2/TAO_IDL3_TO_IDL2_BE_Export.h:
 
-          Regenerated export files to address compile-time problems 
+          Regenerated export files to address compile-time problems
           for static MSVC71 builds.
 
 Mon Aug 20 12:38:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
