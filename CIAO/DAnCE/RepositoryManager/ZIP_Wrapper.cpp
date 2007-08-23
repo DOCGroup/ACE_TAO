@@ -104,15 +104,17 @@ int ZIP_Wrapper::file_list_info (char* zip_name,
       /* add information about current file to the list */
       list.insert_tail (next);
       if ((i+1)<gi.number_entry)
-	{
-	  err = unzGoToNextFile(uf);
-	  if (err!=UNZ_OK)
-	    {
-	      ACE_DEBUG((LM_DEBUG,ACE_TEXT(" unzGoToNextFile failed"
-                         " while trying to go to next file\n"), err));
-	      break;
-	    }
-	}
+        {
+          err = unzGoToNextFile(uf);
+          if (err!=UNZ_OK)
+          {
+            ACE_DEBUG((LM_DEBUG,
+                       ACE_TEXT(" unzGoToNextFile failed"
+                                " while trying to go to next file\n"),
+                       err));
+            break;
+          }
+        }
     }
   unzCloseCurrentFile(uf);
   return gi.number_entry;
@@ -244,7 +246,7 @@ bool ZIP_Wrapper::uncompress (char* zip_archive, char* path, bool verbose)
           makethedir(filename_inzip, arch_dir);
         }
       /* If it is a file, we read its data and write the uncompressed
-	 data to the file with proper path.*/
+         data to the file with proper path.*/
       else if (direc==0)
         {
           handlethefile(filename_inzip, uf, file_info, verbose, arch_dir);

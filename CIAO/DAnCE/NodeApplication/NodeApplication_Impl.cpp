@@ -559,7 +559,7 @@ install_es (const ::CIAO::DAnCE::EventServiceDeploymentDescription & es_info)
       CIAO_Event_Service_var ciao_es =
         es_factory_.create (es_info.type, es_info.name.in ());
 
-		  // Set up the event channel federations
+      // Set up the event channel federations
       if (es_info.type == CIAO::RTEC)
         {
           // Narrow the event service to CIAO_RT_Event_Service
@@ -571,48 +571,49 @@ install_es (const ::CIAO::DAnCE::EventServiceDeploymentDescription & es_info)
 
           // Set up the event channel federations
           for (CORBA::ULong j = 0; j < es_info.addr_servs.length (); ++j)
-		        {
-			        bool retv =
-			        ciao_rtes->create_addr_serv (
-				        es_info.addr_servs[j].name.in (),
-				        es_info.addr_servs[j].port,
-				        es_info.addr_servs[j].address);
+            {
+              bool retv =
+              ciao_rtes->create_addr_serv (
+                es_info.addr_servs[j].name.in (),
+                es_info.addr_servs[j].port,
+                es_info.addr_servs[j].address);
 
-			        if (retv == false)
-			        {
-				        ACE_DEBUG ((LM_ERROR, "RTEC failed to create addr serv object\t\n"));
-				        throw ::Deployment::InstallationFailure ();
-			        }
-		        }
+              if (retv == false)
+              {
+                ACE_DEBUG ((LM_ERROR, "RTEC failed to create addr serv object\t\n"));
+                throw ::Deployment::InstallationFailure ();
+              }
+            }
 
-		      for (CORBA::ULong j = 0; j < es_info.senders.length (); ++j)
-		        {
-			        bool retv =
-			        ciao_rtes->create_sender (
-				        es_info.senders[j].addr_serv_id.in ());
+          for (CORBA::ULong j = 0; j < es_info.senders.length (); ++j)
+          {
+            bool retv =
+            ciao_rtes->create_sender (
+              es_info.senders[j].addr_serv_id.in ());
 
-			        if (retv == false)
-			        {
-				        ACE_DEBUG ((LM_ERROR, "RTEC failed to create UDP sender object\t\n"));
-				        throw ::Deployment::InstallationFailure ();
-			        }
-		        }
+            if (retv == false)
+            {
+              ACE_DEBUG ((LM_ERROR, "RTEC failed to create UDP sender object\t\n"));
+              throw ::Deployment::InstallationFailure ();
+            }
+          }
 
-		      for (CORBA::ULong j = 0; j < es_info.receivers.length (); ++j)
-		        {
-			        bool retv =
-			        ciao_rtes->create_receiver (
-				        es_info.receivers[j].addr_serv_id.in (),
-				        es_info.receivers[j].is_multicast,
-				        es_info.receivers[j].listen_port);
+          for (CORBA::ULong j = 0; j < es_info.receivers.length (); ++j)
+          {
+            bool retv =
+              ciao_rtes->create_receiver (
+                es_info.receivers[j].addr_serv_id.in (),
+                es_info.receivers[j].is_multicast,
+                es_info.receivers[j].listen_port);
 
-			        if (retv == false)
-			        {
-				        ACE_DEBUG ((LM_ERROR, "RTEC failed to create UDP receiver object\t\n"));
-				        throw ::Deployment::InstallationFailure ();
-			        }
-		        }
+            if (retv == false)
+            {
+              ACE_DEBUG ((LM_ERROR, "RTEC failed to create UDP receiver object\t\n"));
+              throw ::Deployment::InstallationFailure ();
+            }
+          }
         }
+
       return ciao_es._retn ();
     }
   catch (const CORBA::Exception& ex)
@@ -620,9 +621,7 @@ install_es (const ::CIAO::DAnCE::EventServiceDeploymentDescription & es_info)
       ex._tao_print_exception ("NodeApplication_Impl::finishLaunch\t\n");
       throw ::Deployment::InstallationFailure ();
     }
-
 }
-
 
 ACE_CString *
 CIAO::NodeApplication_Impl::
