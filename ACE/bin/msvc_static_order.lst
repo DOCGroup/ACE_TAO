@@ -30,6 +30,7 @@ TAO/tao/Strategies
 TAO/tao/RTCORBA
 TAO/tao/RTPortableServer
 TAO/tao/Utils
+TAO/tao/TAO_Utils
 TAO/tao/RTScheduler
 TAO/tao/IFR_Client
 TAO/tao/TypeCodeFactory
@@ -37,6 +38,7 @@ TAO/tao/ImR_Client
 TAO/tao/CSD_Framework
 TAO/tao/CSD_ThreadPool
 TAO/tao/TC
+TAO/tao/DiffServPolicy
 TAO/orbsvcs/orbsvcs/Svc_Utils
 TAO/orbsvcs/orbsvcs/CosNaming_IDL
 TAO/orbsvcs/orbsvcs/CosNaming
