@@ -4269,16 +4269,9 @@ dnl instead of AC_CHECK_FUNC. This will add any needed library to LIBS.
 AC_SEARCH_LIBS([sem_init],rt,[ace_cv_func_sem_init=yes],,)
 AC_SEARCH_LIBS([sem_destroy],rt,[ace_cv_func_sem_destroy=yes],,)
 
-dnl We only enable POSIX semaphores if we are not using UNIX International
-dnl threads.
-dnl Enabling POSIX semaphores on Solaris seems to cause problems for
-dnl ACE. (NOTE: This may no longer be true after the updates/fixes
-dnl I made.  The fixes corrected broken code in ACE_OS::sema_init().
-dnl -Ossama)
 if test "$ace_cv_func_sem_init" = yes &&
    test "$ace_cv_func_sem_destroy" = yes &&
-   test "$ace_cv_type_sem_t" = yes &&
-   test "$ace_has_sthreads" != yes; then
+   test "$ace_cv_type_sem_t" = yes; then
 
 dnl Only enable POSIX semaphore support if process shared semaphores
 dnl are supported.  Presumably process shared semaphores are only
