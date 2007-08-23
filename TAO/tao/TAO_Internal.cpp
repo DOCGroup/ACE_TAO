@@ -337,7 +337,7 @@ TAO::ORB::open_services (ACE_Service_Gestalt* pcfg,
             {
               ACE_ERROR ((LM_DEBUG,
                           ACE_TEXT ("TAO (%P|%t) Failed to open process-")
-                          ACE_TEXT ("wide service configuration\n")))
+                          ACE_TEXT ("wide service configuration\n")));
             }
 
           return -1;
