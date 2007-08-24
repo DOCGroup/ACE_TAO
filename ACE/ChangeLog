@@ -1,9 +1,16 @@
+Fri Aug 24 16:15:59 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * bin/ace_tests.lst:
+        * bin/tao_other_tests.lst:
+          guard against running the HTBP and HTIOP tests on systems that
+          do not build ACE_UUID, such as the compact builds.
+
 Thu Aug 23 19:39:27 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * bin/msvc_static_order.lst:
           Added some TAO projects to the list in an attempt to fix
           the WinXP_VC71_CIAOCore_Static_Debug build.
-            
+
 Thu Aug 23 15:07:01 UTC 2007  Steve Huston  <shuston@riverace.com>
 
         * configure.ac: Allow POSIX semaphores to be used with UI Threads

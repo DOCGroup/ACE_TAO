@@ -12,7 +12,7 @@
 tests/run_test.pl
 examples/Reactor/WFMO_Reactor/run_test.pl: !Cygwin !VxWorks !ACE_FOR_TAO
 protocols/tests/RMCast/run_test.pl: RMCAST !ST !NO_MCAST !nsk !LynxOS !ACE_FOR_TAO !VxWorks
-protocols/tests/HTBP/ping/run_test.pl: !nsk !LynxOS !ACE_FOR_TAO !VxWorks
-protocols/tests/HTBP/Send_Recv_Tests/run_test.pl: !nsk !LynxOS !ACE_FOR_TAO !VxWorks
-protocols/tests/HTBP/Send_Large_Msg/run_test.pl: !nsk !LynxOS !ACE_FOR_TAO !VxWorks
-protocols/tests/HTBP/Reactor_Tests/run_test.pl: !nsk !LynxOS !ACE_FOR_TAO !VxWorks
+protocols/tests/HTBP/ping/run_test.pl: !NO_UUID !nsk !LynxOS !ACE_FOR_TAO !VxWorks
+protocols/tests/HTBP/Send_Recv_Tests/run_test.pl: !NO_UUID !nsk !LynxOS !ACE_FOR_TAO !VxWorks
+protocols/tests/HTBP/Send_Large_Msg/run_test.pl: !NO_UUID !nsk !LynxOS !ACE_FOR_TAO !VxWorks
+protocols/tests/HTBP/Reactor_Tests/run_test.pl: !NO_UUID !nsk !LynxOS !ACE_FOR_TAO !VxWorks
