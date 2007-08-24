@@ -2,9 +2,9 @@
 
 extern "C" ::Components::HomeExecutorBase_ptr create_Null_Component_Home_Impl (void);
 extern "C" ::PortableServer::Servant create_Null_Component_Home_Servant
-		(::Components::HomeExecutorBase_ptr p,
-		::CIAO::Session_Container *c,
-		const char*);
+              (::Components::HomeExecutorBase_ptr p,
+              ::CIAO::Session_Container *c,
+              const char*);
 
 // Below two extern "C++" is to fixing the "Anachronism" warning of Sun C++ 5.7
 
@@ -14,9 +14,9 @@ extern "C++" ::Components::HomeExecutorBase_ptr create_Null_Component_Home_Impl_
 }
 
 extern "C++" ::PortableServer::Servant create_Null_Component_Home_Servant_wrapper
-		(::Components::HomeExecutorBase_ptr p,
-		::CIAO::Session_Container *c,
-		const char* no_op)
+                (::Components::HomeExecutorBase_ptr p,
+                ::CIAO::Session_Container *c,
+                const char* no_op)
 {
   return create_Null_Component_Home_Servant (p, c, no_op);
 }

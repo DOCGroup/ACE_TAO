@@ -25,7 +25,7 @@ namespace CIDL_Receiver_Impl
 
   class RECEIVER_EXEC_Export Receiver_exec_i :
           public virtual Receiver_Exec,
-	  public virtual TAO_Local_RefCounted_Object
+          public virtual TAO_Local_RefCounted_Object
   {
 
   public:
