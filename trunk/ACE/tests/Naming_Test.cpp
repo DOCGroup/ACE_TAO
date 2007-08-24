@@ -198,7 +198,19 @@ run_main (int argc, ACE_TCHAR *argv[])
   ACE_Name_Options *name_options = ns_context->name_options ();
 
   name_options->parse_args (argc, argv);
-
+  /*
+  ** NOTE! This is an experimental value and is not magic in any way. It
+  ** works for me, on one system. It's needed because in the particular
+  ** case here where the underlying mmap will allocate a small area and
+  ** then try to grow it, it always moves it to a new location, which
+  ** totally screws things up. I once tried forcing the realloc to do
+  ** MAP_FIXED but that's not a good solution since it may overwrite other
+  ** mapped areas of memory, like the heap, or the C library, and get very
+  ** unexpected results.    (Steve Huston, 24-August-2007)
+  */
+# if defined (linux) && defined (__x86_64__)
+  name_options->base_address ((char*)0x3c00000000);
+#endif
   int unicode = 0;
 #if (defined (ACE_WIN32) && defined (ACE_USES_WCHAR))
   unicode = 1;
