@@ -427,6 +427,8 @@ TAO::ORB::close_services (ACE_Service_Gestalt* pcfg)
                             -1));
   service_open_count--;
 
+  if (pcfg == ACE_Service_Config::global())
+    return 0;
   return pcfg->close ();
 }
 

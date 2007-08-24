@@ -1,3 +1,13 @@
+Fri Aug 24 15:18:56 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/TAO_Internal.cpp:
+          Again, since adding the -ORBGestalt Local option, there was a
+          problem when multiple ORBs were defined. It was assumed that
+          since each ORB has its own local configuration context in
+          addition to the global context, the local configuration instance
+          should be closed when the ORB is destroyed. However, this isn't
+          the case when the only configuration context is the global one.
+
 Thu Aug 23 14:39:30 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/TAO_Internal.cpp:
