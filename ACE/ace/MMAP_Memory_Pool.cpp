@@ -275,13 +275,13 @@ ACE_MMAP_Memory_Pool::map_file (size_t map_size)
     this->base_addr_ = 0;
 #endif /* ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1 */
 
-  // Remap the file; try to stay at the same location as a previous mapping.
-  int flags = this->flags_;
-  if (this->base_addr_ != 0)
-    flags |= MAP_FIXED;
+  // Remap the file; try to stay at the same location as a previous mapping
+  // but do not force it with MAP_FIXED. Doing so will give the OS permission
+  // to map locations currently holding other things (such as the heap, or
+  // the C library) into the map file, producing very unexpected results.
   if (this->mmap_.map (map_size,
                        PROT_RDWR,
-                       flags,
+                       this->flags_,
                        this->base_addr_,
                        0,
                        this->sa_) == -1
