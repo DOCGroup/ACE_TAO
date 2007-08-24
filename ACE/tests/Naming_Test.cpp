@@ -237,8 +237,9 @@ run_main (int argc, ACE_TCHAR *argv[])
   if (ns_context->open (ACE_Naming_Context::PROC_LOCAL, 1) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                  "ERROR: Naming_Test - ns_context->open () failed.\n"),
-                  -1);
+                         ACE_TEXT ("ns_context->open (PROC_LOCAL) %p\n"),
+                         ACE_TEXT ("failed")),
+                        -1);
     }
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("time to test %d iterations using %s\n"),
