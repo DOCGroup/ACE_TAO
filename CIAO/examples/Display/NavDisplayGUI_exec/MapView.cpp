@@ -6,9 +6,9 @@
 #include "worldmap1.xpm"
 
 MapView::MapView(
-	QCanvas& c,
+  QCanvas& c,
   QWidget* parent,
-	const char* name,
+  const char* name,
   WFlags f)
   :
   QCanvasView(&c, parent, name, f),
@@ -29,10 +29,12 @@ MapView::MapView(
 void
 MapView::clear()
 {
-  /*QCanvasItemList list = canvas()->allItems();
+  /*
+  QCanvasItemList list = canvas()->allItems();
   for(QCanvasItemList::Iterator it = list.begin(); it != list.end(); ++it)
-  {
-  	if(*it)
-	    delete *it;
-  }*/
+    {
+      if(*it)
+        delete *it;
+    }
+  */
 }
