@@ -41,9 +41,9 @@ else
   MODEL_FLAGS += -mcpu=$(TCPU)
 endif
 
-CFLAGS += -W -Wpointer-arith
+CFLAGS += -Wpointer-arith
 ifeq ($(wall),1)
-  CFLAGS += -Wall
+  CFLAGS += -Wall -W
 endif
 ifeq ($(threads),1)
   CFLAGS += -mthreads
