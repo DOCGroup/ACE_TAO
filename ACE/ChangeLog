@@ -1,6 +1,18 @@
 Fri Aug 24 21:52:37 UTC 2007  Steve Huston  <shuston@riverace.com>
 
-        * tests/Naming_Test.cpp: Correct logging formats.
+        * ace/MMAP_Memoy_Pool.cpp (map_file): Reverted the "always do
+          MAP_FIXED" flag on remapping a file from:
+          Wed Aug 22 18:10:09 UTC 2007  Steve Huston  <shuston@riverace.com>
+          That's an invalid thing to do, as it has the potential to remap
+          pages from things like the heap or the C library or ACE into the
+          mapped file - definitely not what we want. If the remap has to move
+          the area, it's best to fail it here.
+
+        * tests/Naming_Test.cpp: Correct logging formats and wedge in a base
+          address for the name space's mmaped region. This avoids having to
+          move the mapped area as it grows, which totally screws the name
+          space map. RHEL4 x64 seems to be the only platform this is tested
+          on regularly where this condition is hit.
 
 Fri Aug 24 16:15:59 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
 
