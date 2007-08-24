@@ -20,19 +20,19 @@ parse_args (int argc, char *argv[])
         {
         case 'k':
           ior = get_opts.opt_arg ();
-	        break;
+          break;
 
         case 'm':
-	        message = get_opts.opt_arg ();
-	        break;
+          message = get_opts.opt_arg ();
+          break;
 
         case '?':  // display help for use of the server.
         default:
           ACE_ERROR_RETURN ((LM_ERROR,
                             "usage:  %s\n"
-			    "-k <Sender IOR> (default is file://sender.ior)\n",
-			    "-m <Message> (default is starters message)\n"
-			    "\n",
+                            "-k <Sender IOR> (default is file://sender.ior)\n",
+                            "-m <Message> (default is starters message)\n"
+                            "\n",
                             argv [0]),
                             -1);
           break;

@@ -1,3 +1,15 @@
+Fri Aug 24 14:23:06 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * examples/BasicSP/EC/controller.cpp:
+        * examples/Display/NavDisplayGUI_exec/DetailView.cpp:
+        * examples/Display/NavDisplayGUI_exec/MapView.cpp:
+        * examples/Hello/Receiver/Receiver_exec.h:
+        * examples/Hello/Sender/starter.cpp:
+        * examples/Null_Component/plan.h:
+        * examples/Swapping/Receiver/Receiver_exec.h:
+        * examples/Swapping/Sender/starter.cpp:
+          Untabify.
+
 Thu Aug 23 22:21:16 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * DAnCE/Deployment/CIAO_NodeApplication_CallBack.idl:

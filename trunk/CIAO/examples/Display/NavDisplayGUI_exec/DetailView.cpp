@@ -71,7 +71,7 @@ DetailView::DetailView(QWidget *parent, const char *name)
   movielabel->setFrameStyle( QFrame::Box | QFrame::Plain );
   movielabel->setMovie(movie);
   movielabel->setFixedSize( 128+movielabel->frameWidth()*2,
-				  64+movielabel->frameWidth()*2 );
+                            64+movielabel->frameWidth()*2 );
   grid->addMultiCellWidget(new QLabel("", this), 1, 4, 8, 8);
   grid->addMultiCellWidget(movielabel, 1, 4, 9, 9);
 
@@ -143,25 +143,26 @@ DetailView::apply()
 void
 DetailView::movieUpdate( const QRect& )
 {
-    // Uncomment this to test animated icons on your window manager
-    //setIcon( movie.framePixmap() );
+  // Uncomment this to test animated icons on your window manager
+  //setIcon( movie.framePixmap() );
 }
 
 
 void
 DetailView::movieStatus( int s )
 {
-    switch ( s ) {
-      case QMovie::SourceEmpty:
-      case QMovie::UnrecognizedFormat:
-	{
-	    QPixmap pm("tt-logo.png");
-	    movielabel->setPixmap(pm);
-	    movielabel->setFixedSize(pm.size());
-	}
+  switch ( s )
+    {
+    case QMovie::SourceEmpty:
+    case QMovie::UnrecognizedFormat:
+      {
+        QPixmap pm("tt-logo.png");
+        movielabel->setPixmap(pm);
+        movielabel->setFixedSize(pm.size());
+      }
       break;
-      default:
-	if ( movielabel->movie() )	 	// for flicker-free animation:
-	    movielabel->setBackgroundMode( NoBackground );
+    default:
+      if ( movielabel->movie() ) // for flicker-free animation:
+        movielabel->setBackgroundMode( NoBackground );
     }
 }
