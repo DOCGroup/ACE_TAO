@@ -4,14 +4,15 @@ Sat Aug 25 12:57:30 UTC 2007  Steve Huston  <shuston@riverace.com>
           test on a LabVIEW RT Pharlap ETS target. This requires the Perl
           Net-Telnet.
 
-        * bin/TestTarget.pm: The new TestTarget class is for test operations
-          that are per-target, such as creating a local file path, deleting
-          a file on the target, waiting for a file, creating a process, and
-          getting the standard error log. In the default case, these all do
-          the usual PerlACE functions currently in use. However, you can
-          derive a class from this to do things differently. For example,
-          on LabVIEW RT, creating a process really uses the ProcessLVRT
-          module described above. Deleting a file uses FTP to delete it, etc.
+        * bin/PerlACE/TestTarget.pm: The new TestTarget class is for test
+          operations that are per-target, such as creating a local file path,
+          deleting a file on the target, waiting for a file, creating a
+          process, and getting the standard error log. In the default case,
+          these all do the usual PerlACE functions currently in use. However,
+          you can derive a class from this to do things differently. For
+          example, on LabVIEW RT, creating a process really uses the
+          ProcessLVRT module described above. Deleting a file uses FTP to
+          delete it, etc.
           In this way, it's possible to customize the behaviors to a target
           without changing all the test scripts. The hitch is that the test
           script has to be changed once to instantiate the TestTarget object
