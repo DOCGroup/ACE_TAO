@@ -7,17 +7,20 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 
 use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::Run_Test;
+use PerlACE::TestTarget;
 
-$iorfile = PerlACE::LocalFile ("server.ior");
-unlink $iorfile;
+my $target = PerlACE::TestTarget::create_target ($PerlACE::TestConfig);
+
+$iorfile = $target->LocalFile ("server.ior");
+$target->DeleteFile ($iorfile);
 $status = 0;
 
-$SV = new PerlACE::Process ("server", "-o $iorfile");
-$CL = new PerlACE::Process ("client", " -k file://$iorfile");
+$SV = $target->CreateProcess ("server", "-ORBid Client_Leaks_server -o $iorfile");
+$CL = $target->CreateProcess ("client", " -k file://$iorfile");
 
 $SV->Spawn ();
 
-if (PerlACE::waitforfile_timed ($iorfile, $PerlACE::wait_interval_for_process_creation) == -1) {
+if ($target->WaitForFileTimed($iorfile, $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: cannot find file <$iorfile>\n";
     $SV->Kill (); $SV->TimedWait (1);
     exit 1;
@@ -37,6 +40,7 @@ if ($server != 0) {
     $status = 1;
 }
 
-unlink $iorfile;
+$target->GetStderrLog();
+$target->DeleteFile ($iorfile);
 
 exit $status;

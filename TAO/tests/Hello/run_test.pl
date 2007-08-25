@@ -7,6 +7,7 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 
 use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::Run_Test;
+use PerlACE::TestTarget;
 
 $status = 0;
 $debug_level = '0';
@@ -17,17 +18,19 @@ foreach $i (@ARGV) {
     } 
 }
 
+my $target = PerlACE::TestTarget::create_target ($PerlACE::TestConfig);
+
 $iorbase = "server.ior";
-$iorfile = PerlACE::LocalFile ("$iorbase");
-unlink $iorfile;
+$iorfile = $target->LocalFile ("$iorbase");
+$target->DeleteFile($iorfile);
 
 if (PerlACE::is_vxworks_test()) {
     $SV = new PerlACE::ProcessVX ("server", "-ORBDebuglevel $debug_level -o $iorbase");
 }
 else {
-    $SV = new PerlACE::Process ("server", "-ORBdebuglevel $debug_level -o $iorfile");
+    $SV = $target->CreateProcess ("server", "-ORBdebuglevel $debug_level -ORBid hello_server -o $iorfile");
 }
-$CL = new PerlACE::Process ("client", " -k file://$iorfile");
+$CL = $target->CreateProcess ("client", " -ORBid hello_client -k file://$iorfile");
     
 $server = $SV->Spawn ();
 
@@ -36,7 +39,7 @@ if ($server != 0) {
     exit 1;
 }
 
-if (PerlACE::waitforfile_timed ($iorfile,
+if ($target->WaitForFileTimed ($iorfile,
                         $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: cannot find file <$iorfile>\n";
     $SV->Kill (); $SV->TimedWait (1);
@@ -57,6 +60,9 @@ if ($server != 0) {
     $status = 1;
 }
 
-unlink $iorfile;
+$target->GetStderrLog();
+
+#unlink $iorfile;
+$target->DeleteFile($iorfile);
 
 exit $status;
