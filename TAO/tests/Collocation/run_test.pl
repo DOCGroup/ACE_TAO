@@ -7,6 +7,9 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 
 use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::Run_Test;
+use PerlACE::TestTarget;
+
+my $target = PerlACE::TestTarget::create_target ($PerlACE::TestConfig);
 
 $status = 0;
 
@@ -16,9 +19,8 @@ if (PerlACE::is_vxworks_test()) {
     $SV = new PerlACE::ProcessVX ("Collocation");
 }
 else {
-    $SV = new PerlACE::Process ("Collocation");
+    $SV = $target->CreateProcess ("Collocation");
 }
-
 
 $server = $SV->SpawnWaitKill ($PerlACE::wait_interval_for_process_creation);
 
@@ -26,5 +28,7 @@ if ($server != 0) {
     print STDERR "ERROR: Collocation returned $server\n";
     $status = 1;
 }
+
+$target->GetStderrLog();
 
 exit $status;
