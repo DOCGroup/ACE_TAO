@@ -17,6 +17,7 @@ if (defined $ENV{top_srcdir}) {
 }
 
 use PerlACE::Run_Test;
+use PerlACE::TestTarget;
 
 use Cwd;
 use English;
@@ -122,11 +123,16 @@ sub run_program ($)
       $P->IgnoreExeSubDir(1);
     }
     else {
-      $P = new PerlACE::Process ($program);
+      if ($config_list->check_config ('LabVIEW_RT')) {
+        $P = new PerlACE::ProcessLVRT ($program);
+      }
+      else {
+        $P = new PerlACE::Process ($program);
+      }
 
       ### Try to run the program
 
-      if (! -x $P->Executable ()) {
+      if (! -e $P->Executable ()) {
           print STDERR "Error: " . $P->Executable () .
                        " does not exist or is not runnable\n";
           return;
@@ -518,6 +524,9 @@ if (defined $opt_v && defined $opt_o) {
   }
 }
 else {
+
+  my $target = PerlACE::TestTarget::create_target ($PerlACE::TestConfig);
+  
   foreach $test (@tests) {
     if (defined $opt_d) {
       print "Would run test $test now\n";
@@ -531,6 +540,7 @@ else {
     else {
       run_program ($test);
     }
+    $target->GetStderrLog();
   }
 }
 
