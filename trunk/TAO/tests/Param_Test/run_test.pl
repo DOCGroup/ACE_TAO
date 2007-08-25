@@ -7,15 +7,17 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 
 use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::Run_Test;
+use PerlACE::TestTarget;
 
-$iorfile = PerlACE::LocalFile ("server.ior");
+$target = PerlACE::TestTarget::create_target() || die "Create target failed\n";
+$iorfile = $target->LocalFile ("server.ior");
 
 $invocation = "sii";
 $num = 5;
 $debug = "";
 $status = 0;
 
-unlink $iorfile;
+$target->DeleteFile($iorfile);
 
 # Parse the arguments
 
@@ -67,12 +69,12 @@ if (PerlACE::is_vxworks_test()) {
     $SV = new PerlACE::ProcessVX ("server", "$debug -o server.ior");
 }
 else {
-    $SV = new PerlACE::Process ("server", "$debug -o $iorfile");
+    $SV = $target->CreateProcess ("server", "$debug -o $iorfile");
 }
-$CL = new PerlACE::Process ("client");
+$CL = $target->CreateProcess ("client");
 
 foreach $type (@types) {
-    unlink $iorfile; # Ignore errors
+    $target->DeleteFile($iorfile); # Ignore errors
 
     print STDERR "==== Testing $type === wait....\n";
 

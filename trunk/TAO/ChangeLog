@@ -1,3 +1,16 @@
+Sat Aug 25 12:37:53 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * tests/AHM_Exceptions/run_test.pl:
+        * tests/CDR/run_test.pl:
+        * tests/CallbackTest/run_test.pl:
+        * tests/Client_Leaks/run_test.pl:
+        * tests/Codec/run_test.pl:
+        * tests/Collocation/run_test.pl:
+        * tests/Hello/run_test.pl:
+        * tests/Param_Test/run_test.pl: Converted to use the new target
+          test mechanism. See ACE ChangeLog
+          Sat Aug 25 12:57:30 UTC 2007  Steve Huston  <shuston@riverace.com>
+
 Fri Aug 24 15:18:56 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/TAO_Internal.cpp:
