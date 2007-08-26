@@ -18,7 +18,6 @@ debug ?= 1
 optimize ?= 1
 threads ?= 1
 pipes ?= 1
-wall ?= 1
 
 # When building shared libraries
 ifeq ($(shared_libs), 1)
@@ -42,9 +41,6 @@ else
 endif
 
 CFLAGS += -Wpointer-arith
-ifeq ($(wall),1)
-  CFLAGS += -Wall -W
-endif
 ifeq ($(threads),1)
   CFLAGS += -mthreads
 endif # threads
@@ -106,12 +102,18 @@ include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
 
 ifeq ($(GXX_4_OR_BETTER), 1)
   no_attributes ?= 1
+  wall ?= 1
 else
   no_attributes ?= 0
+  wall ?= 0
 endif
 
 ifeq ($(no_attributes), 1)
   CFLAGS += -Wno-attributes
+endif
+
+ifeq ($(wall),1)
+  CFLAGS += -Wall -W
 endif
 
 CCFLAGS += $(CFLAGS) $(TEMPLATES_FLAG)
