@@ -1,3 +1,10 @@
+Mon Aug 27 08:06:00 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/SSLIOP.mpc:
+        * orbsvcs/orbsvcs/Makefile.am:
+          Added missing header and inline files section. Thanks to
+          Vikram Karandikar <softking at gmail dot com> for reporting this
+
 Sat Aug 25 12:37:53 UTC 2007  Steve Huston  <shuston@riverace.com>
 
         * tests/AHM_Exceptions/run_test.pl:
