@@ -329,6 +329,7 @@ project(ACE_FOR_TAO) : acedefaults, install, svcconf, uuid, versioned_namespace,
     Reactor_Timer_Interface.h
     Refcounted_Auto_Ptr.h
     Reverse_Lock_T.h
+    Select_Reactor.h
     SStringfwd.h
     Static_Object_Lock.h
     Strategies.h
