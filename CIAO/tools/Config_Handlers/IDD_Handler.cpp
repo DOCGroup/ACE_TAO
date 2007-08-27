@@ -85,7 +85,7 @@ namespace CIAO
             {
               dest.deployedSharedResource.length (1);
               IRDD_Handler::handle_irdd (src.deployedSharedResource (),
-					 dest.deployedSharedResource[0]);
+                                         dest.deployedSharedResource[0]);
             }
 
         }

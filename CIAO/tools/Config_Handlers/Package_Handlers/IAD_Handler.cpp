@@ -48,9 +48,9 @@ namespace CIAO
                        String_Seq_Functor (toconfig.location));
 
         toconfig.dependsOn.length (iad->count_dependsOn ());
-	SEQ_HAND_GCC_BUG_WORKAROUND (NIA_Handler::handle_nia,
-				     desc.begin_dependsOn (),
-				     toconfig.dependsOn);
+        SEQ_HAND_GCC_BUG_WORKAROUND (NIA_Handler::handle_nia,
+                                     desc.begin_dependsOn (),
+                                     toconfig.dependsOn);
         std::for_each (iad->begin_dependsOn (),
                        iad->end_dependsOn (),
                        NIA_Functor (toconfig.dependsOn));

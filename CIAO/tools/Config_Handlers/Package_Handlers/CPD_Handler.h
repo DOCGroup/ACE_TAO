@@ -54,19 +54,17 @@ namespace CIAO
                                              ::Deployment::ComponentPackageDescription &toconfig);
 
         static ComponentPackageDescription
-	  component_package_descr (const Deployment::ComponentPackageDescription& src);
+        component_package_descr (const Deployment::ComponentPackageDescription& src);
       private:
         static ComponentPackageDescription * resolve_cpd (const char *uri);
-
       };
 
       typedef Sequence_Handler < ComponentPackageDescription,
                                  ::Deployment::ComponentPackageDescriptions,
                                  ::Deployment::ComponentPackageDescription,
-                                 CPD_Handler::handle_component_package_descr > CPD_Functor;
-
+                                 CPD_Handler::handle_component_package_descr >
+        CPD_Functor;
     }
-
   }
 }
 
