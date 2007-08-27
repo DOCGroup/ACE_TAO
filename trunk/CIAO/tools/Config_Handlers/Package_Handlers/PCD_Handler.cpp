@@ -38,8 +38,8 @@ namespace CIAO
         if (root == XStr ("Deployment:topLevelPackageDescription"))
           {
             TopLevelPackageDescription tpd;
-	    
-	    tpd = topLevelPackageDescription (dom);
+
+            tpd = topLevelPackageDescription (dom);
 
             PCD_Handler::package_config (*tpd.begin_basePackage (),
                                          toconfig);

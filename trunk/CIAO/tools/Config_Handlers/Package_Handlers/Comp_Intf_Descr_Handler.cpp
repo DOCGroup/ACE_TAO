@@ -94,9 +94,9 @@ namespace CIAO
                        CIAO::Config_Handlers::CPD_Functor (toconfig.port));
 
         toconfig.property.length (cid->count_property ());
-	SEQ_HAND_GCC_BUG_WORKAROUND (Comp_Prop_Handler::handle_cpd,
-				     cid->begin_property (),
-				     toconfig.property);
+        SEQ_HAND_GCC_BUG_WORKAROUND (Comp_Prop_Handler::handle_cpd,
+                                     cid->begin_property (),
+                                     toconfig.property);
         std::for_each (cid->begin_property (),
                        cid->end_property (),
                        Comp_Prop_Functor (toconfig.property));

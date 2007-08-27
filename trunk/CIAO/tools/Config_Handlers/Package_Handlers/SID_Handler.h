@@ -61,8 +61,8 @@ namespace CIAO
       typedef Sequence_Handler < SubcomponentInstantiationDescription,
                                  ::Deployment::SubcomponentInstantiationDescriptions,
                                  ::Deployment::SubcomponentInstantiationDescription,
-	SID_Handler::handle_sub_comp_inst_descr > SID_Functor;
-
+                                 SID_Handler::handle_sub_comp_inst_descr >
+        SID_Functor;
     }
   }
 }
