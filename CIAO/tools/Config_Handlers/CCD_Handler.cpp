@@ -71,7 +71,7 @@ namespace CIAO
            ++pstart)
         {
           Property_Handler::handle_property (*pstart,
-						 toconfig.configProperty [pos++]);
+                                             toconfig.configProperty [pos++]);
         }
 
       pos = 0;
@@ -105,7 +105,7 @@ namespace CIAO
             infoProp++)
         {
           Property_Handler::handle_property (*infoProp,
-						 toconfig.infoProperty[pos]);
+                                             toconfig.infoProperty[pos]);
         }
     }
 

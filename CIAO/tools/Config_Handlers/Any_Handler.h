@@ -30,31 +30,31 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 namespace CIAO
 {
   namespace Config_Handlers
+  {
+    class Any;
+
+    /*
+      * @class Any_Handler
+      *
+      * @brief Handler class for <ComponentInterfaceDescription> types.
+      *
+      * This class defines handler methods to map values from
+      * XSC Any objects, parsed from the descriptor files, to the
+      * corresponding CORBA IDL Any type.
+      *
+      */
+    class Config_Handlers_Common_Export Any_Handler
     {
-      class Any;
+    public:
+      Any_Handler (void);
+      virtual ~Any_Handler (void);
 
-      /*
-       * @class Any_Handler
-       *
-       * @brief Handler class for <ComponentInterfaceDescription> types.
-       *
-       * This class defines handler methods to map values from
-       * XSC Any objects, parsed from the descriptor files, to the
-       * corresponding CORBA IDL Any type.
-       *
-       */
-      class Config_Handlers_Common_Export Any_Handler
-	{
-	public:
-	  Any_Handler (void);
-	  virtual ~Any_Handler (void);
+      static void extract_into_any (const Any& desc,
+                                    ::CORBA::Any& toconfig);
 
-	  static void extract_into_any (const Any& desc,
-					::CORBA::Any& toconfig);
-
-	  static Any get_any (const CORBA::Any &src);
-	};
-    }
+      static Any get_any (const CORBA::Any &src);
+    };
+  }
 }
 
 #include /**/ "ace/post.h"

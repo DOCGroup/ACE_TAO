@@ -1,3 +1,32 @@
+Mon Aug 27 13:21:14 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * tools/Config_Handlers/ADD_Handler.cpp:
+        * tools/Config_Handlers/Any_Handler.h:
+        * tools/Config_Handlers/CCD_Handler.cpp:
+        * tools/Config_Handlers/CEPE_Handler.h:
+        * tools/Config_Handlers/CPD_Handler.h:
+        * tools/Config_Handlers/DP_PCD_Handler.h:
+        * tools/Config_Handlers/DP_PCD_Handler.cpp:
+        * tools/Config_Handlers/ERE_Handler.h:
+        * tools/Config_Handlers/IDD_Handler.cpp:
+        * tools/Config_Handlers/Package_Handlers/CAD_Handler.cpp:
+        * tools/Config_Handlers/Package_Handlers/CID_Handler.cpp:
+        * tools/Config_Handlers/Package_Handlers/CPD_Handler.h:
+        * tools/Config_Handlers/Package_Handlers/CPD_Handler.cpp:
+        * tools/Config_Handlers/Package_Handlers/Comp_Intf_Descr_Handler.cpp:
+        * tools/Config_Handlers/Package_Handlers/IAD_Handler.cpp:
+        * tools/Config_Handlers/Package_Handlers/PCD_Handler.cpp:
+        * tools/Config_Handlers/Package_Handlers/SID_Handler.h:
+        * tools/Config_Handlers/Property_Handler.h:
+        * tools/Config_Handlers/RT-CCM/TPL_Handler.h:
+        * tools/Config_Handlers/Req_Handler.h:
+        * tools/Config_Handlers/Req_Handler.cpp:
+        * tools/Config_Handlers/STD_CID_Handler.cpp:
+        * tools/Config_Handlers/SatisfierProperty_Handler.h:
+        * tools/Config_Handlers/Utils/XML_Helper.h:
+        * tools/Config_Handlers/XSCRT/Traversal.hpp:
+          Untabify.
+
 Fri Aug 24 14:23:06 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * examples/BasicSP/EC/controller.cpp:

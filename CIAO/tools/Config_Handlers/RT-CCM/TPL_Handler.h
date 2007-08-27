@@ -20,27 +20,27 @@
 
 namespace CIAO
 {
-    namespace Config_Handlers
+  namespace Config_Handlers
+  {
+    class ThreadpoolWithLanesDef;
+
+    /*
+     *  @class TPL_Handler
+     *  A brief Handler class for <ThreadpoolWithLanesDef>
+     */
+
+    class RT_CCM_Handlers_Export TPL_Handler
     {
-	class ThreadpoolWithLanesDef;
+    public:
 
-	/*
-	 *  @class TPL_Handler
-	 *  A brief Handler class for <ThreadpoolWithLanesDef>
-	 */
+      static bool threadpool_with_lanes (
+        const ThreadpoolWithLanesDef &src,
+        ::CIAO::DAnCE::ORS_ThreadpoolWithLanes &dest);
 
-	class RT_CCM_Handlers_Export TPL_Handler
-	{
-	public:
-
-	    static bool threadpool_with_lanes (
-		const ThreadpoolWithLanesDef &src,
-		::CIAO::DAnCE::ORS_ThreadpoolWithLanes &dest);
-
-	    static ThreadpoolWithLanesDef threadpool_with_lanes (
-		const ::CIAO::DAnCE::ORS_ThreadpoolWithLanes &src);
-	};
-    }
+      static ThreadpoolWithLanesDef threadpool_with_lanes (
+        const ::CIAO::DAnCE::ORS_ThreadpoolWithLanes &src);
+    };
+  }
 }
 
 #include /**/ "ace/post.h"
