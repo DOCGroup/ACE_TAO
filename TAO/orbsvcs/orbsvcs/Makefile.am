@@ -6024,6 +6024,7 @@ nobase_include_HEADERS += \
   ./SSLIOP/SSLIOP_Current.inl \
   ./SSLIOP/SSLIOP_Current_Impl.h \
   ./SSLIOP/SSLIOP_Current_Impl.inl \
+  ./SSLIOP/SSLIOP_Export.h \
   ./SSLIOP/SSLIOP_EVP_PKEY.h \
   ./SSLIOP/SSLIOP_Endpoint.h \
   ./SSLIOP/SSLIOP_Endpoint.inl \
