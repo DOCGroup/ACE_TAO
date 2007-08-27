@@ -1,3 +1,9 @@
+Mon Aug 27 23:04:36 UTC 2007  Nilabja R  <nilabjar@dre.vanderbilt.edu>
+
+        * ciao/Servant_Impl_Base.h:
+          Deleted the Private Constructor in the class Servant_Impl_Base.
+          This strangely solves the problem on Bug 3060.
+
 Mon Aug 27 13:21:14 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * tools/Config_Handlers/ADD_Handler.cpp:
