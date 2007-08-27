@@ -39,7 +39,7 @@ if (PerlACE::waitforfile_timed ($iorfile, $PerlACE::wait_interval_for_process_cr
     exit 1;
 }
 
-$CL->SpawnWaitKill (10);
+$CL->SpawnWaitKill (30);
 $status = $SV->Kill (); $SV->TimedWait (1);
 
 unlink $iorfile;
