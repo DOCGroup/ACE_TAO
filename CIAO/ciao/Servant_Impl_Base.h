@@ -212,9 +212,6 @@ namespace CIAO
     Components::CCMHome_var home_;
     Home_Servant_Impl_Base *home_servant_;
     Session_Container * container_;
-  private:
-    /// Not allowed to be used
-    Servant_Impl_Base (void);
 
   private:
     /// For internal locking of table reads and writes.
