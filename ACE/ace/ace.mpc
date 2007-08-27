@@ -411,6 +411,7 @@ project(ACE) : acedefaults, install, other, codecs, token, svcconf, uuid, fileca
     Reactor_Timer_Interface.h
     Refcounted_Auto_Ptr.h
     Reverse_Lock_T.h
+    Select_Reactor.h
     SOCK_Netlink.h
     SStringfwd.h
     Static_Object_Lock.h

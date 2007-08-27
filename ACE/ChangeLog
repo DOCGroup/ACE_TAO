@@ -1,3 +1,11 @@
+Mon Aug 27 07:55:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/ace.mpc:
+        * ace/ace_for_tao.mpc:
+        * ace/Makefile.am:
+          Added missing Select_Reactor.h, thanks to Vikram Karandikar
+          <softking at gmail dot com> for reporting this
+
 Sat Aug 25 12:57:30 UTC 2007  Steve Huston  <shuston@riverace.com>
 
         * bin/PerlACE/ProcessLVRT.pm: New class that integrates running a
@@ -18,7 +26,7 @@ Sat Aug 25 12:57:30 UTC 2007  Steve Huston  <shuston@riverace.com>
           script has to be changed once to instantiate the TestTarget object
           and then make method calls on it instead of calling PerlACE
           functions directly.
-        
+
         * bin/TestTarget_LVRT.pm: Customization of TestTarget for LabVIEW RT.
           It requires the Net-Telnet Perl module to work. It's used when
           the TestTarget::create_target method is called and LabVIEW_RT is

@@ -921,6 +921,7 @@ nobase_include_HEADERS += \
   Sbrk_Memory_Pool.h \
   Sched_Params.h \
   Sched_Params.inl \
+  Select_Reactor.h \
   Select_Reactor_Base.h \
   Select_Reactor_Base.inl \
   Select_Reactor_T.cpp \
