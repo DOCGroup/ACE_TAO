@@ -50,6 +50,14 @@ project(SSLIOP) : orbsvcslib, install, security, ssl, pi_server, interceptors, t
     }
   }
 
+  Header_Files {
+    ./SSLIOP
+  }
+
+  Inline_Files {
+    ./SSLIOP
+  }
+
   Template_Files {
     ./SSLIOP/SSLIOP_OpenSSL_st_T.cpp
   }
