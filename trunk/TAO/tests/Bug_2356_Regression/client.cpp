@@ -101,8 +101,8 @@ public:
               ex._tao_print_exception ("ERROR");
                  ACE_ERROR ((LM_ERROR,
                            "... caught the exception but got wrong wstring -> ERROR\n"));
+              result = 1;
             }
-          result = 1;
         }
       catch (const CORBA::Exception& ex)
         {
