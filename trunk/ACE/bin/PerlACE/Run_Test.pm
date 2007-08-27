@@ -24,12 +24,19 @@ if(exists $ENV{CIAO_ROOT}) {
 }
 
 my $config = new PerlACE::ConfigList;
-$PerlACE::VxWorks_Test = $config->check_config("VxWorks");
-$PerlACE::VxWorks_RTP_Test = $config->check_config("VxWorks_RTP");
+$PerlACE::TestConfig = $config;
 
 # load VxWorks Process helpers in case this is a VxWorks target build
+$PerlACE::VxWorks_Test = $config->check_config("VxWorks");
+$PerlACE::VxWorks_RTP_Test = $config->check_config("VxWorks_RTP");
 if ($PerlACE::VxWorks_Test or $PerlACE::VxWorks_RTP_Test) {
     require PerlACE::ProcessVX;
+}
+
+# Load LabVIEW RT Process helpers in case this is a LabVIEW RT target build.
+$PerlACE::LabVIEW_RT_Test = $config->check_config("LabVIEW_RT");
+if ($PerlACE::LabVIEW_RT_Test) {
+    require PerlACE::ProcessLVRT;
 }
 
 # Figure out the svc.conf extension
