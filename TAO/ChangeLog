@@ -1,3 +1,9 @@
+Mon Aug 27 13:29:00 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_2356_Regression/client.cpp:
+          Fixed error in this test program, when things did work we returned
+          1 by accident which was wrong
+
 Mon Aug 27 08:06:00 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/SSLIOP.mpc:
