@@ -27,15 +27,11 @@ class Simple_C
 public:
   Simple_C (CORBA::ORB_ptr orb);
 
-  void op1 (
-      Foo::Bar::AMH_AResponseHandler_ptr _tao_rh);
-  void op2 (
-      Foo::Bar::AMH_AResponseHandler_ptr _tao_rh);
-  void op3 (
-      Foo::Bar::AMH_BResponseHandler_ptr _tao_rh);
-  void op4 (
-      Baz::AMH_CResponseHandler_ptr _tao_rh);
-
+  void op1 (Foo::Bar::AMH_AResponseHandler_ptr _tao_rh);
+  void op2 (Foo::Bar::AMH_AResponseHandler_ptr _tao_rh);
+  void op3 (Foo::Bar::AMH_BResponseHandler_ptr _tao_rh);
+  void op4 (Baz::AMH_CResponseHandler_ptr _tao_rh);
+  void shutdown (Baz::AMH_CResponseHandler_ptr _tao_rh);
 protected:
   CORBA::ORB_ptr orb_;
 };
@@ -50,31 +46,33 @@ Simple_C::Simple_C (CORBA::ORB_ptr orb)
 }
 
 void
-Simple_C::op1(
-    Foo::Bar::AMH_AResponseHandler_ptr _tao_rh)
+Simple_C::op1(Foo::Bar::AMH_AResponseHandler_ptr _tao_rh)
 {
   _tao_rh->op1();
 }
 
 void
-Simple_C::op2(
-    Foo::Bar::AMH_AResponseHandler_ptr _tao_rh)
+Simple_C::op2(Foo::Bar::AMH_AResponseHandler_ptr _tao_rh)
 {
   _tao_rh->op2();
 }
 
 void
-Simple_C::op3(
-    Foo::Bar::AMH_BResponseHandler_ptr _tao_rh)
+Simple_C::op3(Foo::Bar::AMH_BResponseHandler_ptr _tao_rh)
 {
   _tao_rh->op3();
 }
 
 void
-Simple_C::op4(
-    Baz::AMH_CResponseHandler_ptr _tao_rh)
+Simple_C::op4(Baz::AMH_CResponseHandler_ptr _tao_rh)
 {
   _tao_rh->op4();
+}
+
+void
+Simple_C::shutdown (Baz::AMH_CResponseHandler_ptr)
+{
+  this->orb_->shutdown (0);
 }
 
 // ****************************************************************
