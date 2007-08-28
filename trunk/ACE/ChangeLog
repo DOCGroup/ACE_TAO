@@ -1,3 +1,9 @@
+Tue Aug 28 08:43:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_aix_g++.GNU:
+          Improved this file, thanks to Werner Buchert <w dot buchert at medat dot de>
+          for testing these changes
+
 Mon Aug 27 07:55:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/ace.mpc:
