@@ -69,6 +69,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       cobject->op2 ();
       cobject->op3 ();
       cobject->op4 ();
+      cobject->shutdown ();
     }
   catch (const CORBA::Exception& ex)
     {

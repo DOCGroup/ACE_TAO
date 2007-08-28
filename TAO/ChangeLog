@@ -1,3 +1,12 @@
+Tue Aug 28 18:42:00 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_1568_Regression/run_test.pl:
+        * tests/Bug_1568_Regression/server.cpp:
+        * tests/Bug_1568_Regression/client.cpp:
+        * tests/Bug_1568_Regression/Test.idl:
+          Added a shutdown call to the server so that we shutdown nicely,
+          fixes the crash of this test on OpenVMS
+
 Tue Aug 28 14:16:37 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * docs/notification/using_monitor_extensions.html:
