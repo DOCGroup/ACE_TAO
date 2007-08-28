@@ -1,3 +1,9 @@
+Tue Aug 28 14:16:37 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * docs/notification/using_monitor_extensions.html:
+
+          Documented the extended monitoring interfaces.
+
 Tue Aug 28 10:29:00 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/ORB.cpp:
