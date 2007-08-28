@@ -3,7 +3,7 @@ project : taolib, install, pi, tao_versioning_idl_defaults {
   sharedname   = TAO_RTCORBA
   dynamicflags = TAO_RTCORBA_BUILD_DLL
   requires    += rt_corba
-  idlflags    += -Sci -SS -Sorb \
+  idlflags    += -Sci -SS -Sorb -GX \
                  -Wb,export_macro=TAO_RTCORBA_Export \
                  -Wb,export_include=tao/RTCORBA/rtcorba_export.h \
                  -o RTCORBA
@@ -33,13 +33,13 @@ project : taolib, install, pi, tao_versioning_idl_defaults {
   }
 
   IDL_Files {
-    idlflags += -Sa -GX \
+    idlflags += -Sa \
                 -Wb,unique_include=tao/RTCORBA/RTCORBA.h
     RTCORBA/RTCORBA_include.pidl
   }
 
   IDL_Files {
-    idlflags += -Gp -Gd -GX \
+    idlflags += -Gp -Gd \
                 -Wb,include_guard=TAO_RTCORBA_SAFE_INCLUDE \
                 -Wb,safe_include=tao/RTCORBA/RTCORBA.h
     RTCORBA/RTCORBA.pidl

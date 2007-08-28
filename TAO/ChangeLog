@@ -1,3 +1,13 @@
+Tue Aug 28 10:29:00 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/ORB.cpp:
+        * tao/ORB_Core.cpp:
+          Layout changes
+
+        * tao/RTCORBA.mpc:
+        * tao/RTPortableServer.mpc:
+          Simplified these files
+
 Mon Aug 27 13:29:00 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_2356_Regression/client.cpp:
