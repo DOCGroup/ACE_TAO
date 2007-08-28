@@ -27,13 +27,18 @@ PLATFORM_X11_LDFLAGS=
 # The way to make a shared lib on AIX is to make a shared object file and
 # then put that in an archive.
 # Non-shared archives are named lib<x>ns.a - ns = non-shared.
-SOEXT       = a
-# aix_build turns on the funky shared library building code in
-# rules.lib.GNU
-aix_build = 1
+SOEXT    = so
+SOFLAGS += -G
+LDFLAGS += -brtl
 
 ifeq (1,$(threads))
   CFLAGS  += -pthread
+endif
+
+ifeq ($(shared_libs),1)
+ACELIB      = -lACE
+else
+ACELIB      = -lACEns
 endif
 
 # In case anything here or in the config depends on OS version number,
@@ -64,16 +69,16 @@ endif
 OCFLAGS         = -O2
 OCCFLAGS        = $(OCFLAGS)
 ifeq ($(threads),1)
-SOFLAGS        += -pthread
+  SOFLAGS        += -pthread
 endif
 
 # AIX 5 has a new ld option, -bexpfull, that exports all the symbols that
 # g++ 3.3+ needs to work correctly. The new option is available by default
 # in AIX 5.2 and later, but must be installed by a patch to AIX 5.1.
 ifeq ($(AIX_MAJOR_VERS),5)
-SOFLAGS        += -shared -Wl,-bexpfull # -Wl,-bloadmap:lib.map
+  SOFLAGS        += -shared -Wl,-G #-Wl,bexpfull -Wl,-bloadmap:lib.map
 else
-SOFLAGS        += -shared -Wl,-bexpall # -Wl,-bloadmap:lib.map
+  SOFLAGS        += -shared -Wl,-bexpall # -Wl,-bloadmap:lib.map
 endif
 
 LIBS           += -lxti -ldl
