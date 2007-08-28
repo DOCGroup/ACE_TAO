@@ -1,3 +1,8 @@
+Tue Aug 28 20:48:47 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * tests/Param_Test/run_test.pl: Added missing config argument to
+          the create_target() call. Fixes test failures on all platforms.
+
 Tue Aug 28 18:42:00 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_1568_Regression/run_test.pl:
