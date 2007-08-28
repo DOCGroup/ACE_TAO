@@ -9,7 +9,7 @@ use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::Run_Test;
 use PerlACE::TestTarget;
 
-$target = PerlACE::TestTarget::create_target() || die "Create target failed\n";
+$target = PerlACE::TestTarget::create_target($PerlACE::TestConfig) || die "Create target failed\n";
 $iorfile = $target->LocalFile ("server.ior");
 
 $invocation = "sii";
