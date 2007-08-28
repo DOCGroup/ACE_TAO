@@ -3390,8 +3390,7 @@ TAO_ORB_Core_instance (void)
 
 
 TAO::Collocation_Strategy
-TAO_ORB_Core::collocation_strategy (CORBA::Object_ptr object
-                                    )
+TAO_ORB_Core::collocation_strategy (CORBA::Object_ptr object)
 {
   TAO_Stub *stub = object->_stubobj ();
   if (!CORBA::is_nil (stub->servant_orb_var ().in ()) &&
@@ -3401,8 +3400,7 @@ TAO_ORB_Core::collocation_strategy (CORBA::Object_ptr object
         stub->servant_orb_var ()->orb_core ();
 
       const int collocated =
-        orb_core->collocation_resolver ().is_collocated (object
-                                                        );
+        orb_core->collocation_resolver ().is_collocated (object);
 
       if (collocated)
         {

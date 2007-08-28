@@ -1351,7 +1351,6 @@ CORBA::ORB_init (int &argc, char *argv[], const char *orbid)
 
   if (orbinitializer_registry != 0)
     {
-
       orbinitializer_registry->post_init (pre_init_count,
                                           oc.get (),
                                           command_line.get_argc(),
@@ -1392,8 +1391,8 @@ CORBA::ORB::object_to_string (CORBA::Object_ptr obj)
 
       // Allow a user to provide custom object stringification
       char* user_string =
-        obj->convert_to_ior (this->use_omg_ior_format_,
-                             ior_prefix);
+        obj->convert_to_ior (this->use_omg_ior_format_, ior_prefix);
+
       if (user_string != 0)
         return user_string;
     }
