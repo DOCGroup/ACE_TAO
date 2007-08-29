@@ -101,6 +101,7 @@ enable-auto-props = yes
 *.py=svn:eol-style=native;svn:keywords=Author Date Id Revision;svn:executable
 *.pl=svn:eol-style=native;svn:keywords=Author Date Id Revision;svn:executable
 *.bat=svn:eol-style=native;svn:keywords=Author Date Id Revision;svn:executable
+*.ini=svn:eol-style=native;svn:keywords=Author Date Id Revision
 *.mpc=svn:eol-style=native;svn:keywords=Author Date Id Revision
 *.mwc=svn:eol-style=native;svn:keywords=Author Date Id Revision
 *.mpb=svn:eol-style=native;svn:keywords=Author Date Id Revision
