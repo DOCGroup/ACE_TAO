@@ -1,3 +1,8 @@
+Wed Aug 29 18:21:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_aix_g++.GNU:
+          Another try, if this doesn't work I revert all changes from last wek
+
 Wed Aug 29 18:02:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_g++_common.GNU:
