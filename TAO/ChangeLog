@@ -1,3 +1,9 @@
+Wed Aug 29 18:47:00 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/FL_Cube/server.cpp:
+          Fixed incorrect include. Thanks to Hans Utz <hans dot utz at nasa dot gov>
+          for reporting this.
+
 Wed Aug 29 10:40:00 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/POA/EndpointPolicy/run_test.pl:
