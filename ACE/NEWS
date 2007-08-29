@@ -5,7 +5,7 @@ PLANNED MAJOR CHANGES "SOMETIME IN THE FUTURE" (i.e., exact beta not known)
 
 . (OO) Various other fixes that have been piling up.
 
-USER VISIBLE CHANGES BETWEEN ACE-5.5.10 and ACE-5.6.0
+USER VISIBLE CHANGES BETWEEN ACE-5.5.10 and ACE-5.6
 ====================================================
 
 . OpenVMS 8.3 on IA64 port
@@ -21,6 +21,10 @@ USER VISIBLE CHANGES BETWEEN ACE-5.5.10 and ACE-5.6.0
   address and port number for the client logging daemon's connection to
   the server logging daemon. If the -l option is specified with an IP
   address but not a port number, an unused port number is selected.
+
+. A new ACE+TAO port to LabVIEW RT 8.2 with Pharlap ETS. The host build
+  environment is Windows with Microsoft Visual Studio .NET 2003 (VC7.1).
+  Please see the ACE-INSTALL.html file for build instructions.
 
 USER VISIBLE CHANGES BETWEEN ACE-5.5.9 and ACE-5.5.10
 ====================================================

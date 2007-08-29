@@ -1,3 +1,7 @@
+Wed Aug 29 15:09:17 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * NEWS: Add note about LabVIEW RT/Pharlap ETS port.
+
 Wed Aug 29 08:33:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/cut_cidlc.sh:
