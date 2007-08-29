@@ -49,6 +49,19 @@ endif
 
 static_libs_only ?=
 
+CXX_FULL_VERSION := $(shell $(CXX_FOR_VERSION_TEST) --version)
+ifeq (Red Hat 4.1.1-52,$(findstring Red Hat 4.1.1-52,$(CXX_FULL_VERSION)))
+  gcc_template_instantiation_visibility = 1
+endif
+ifeq (Red Hat 4.1.1-51,$(findstring Red Hat 4.1.1-51,$(CXX_FULL_VERSION)))
+  gcc_template_instantiation_visibility = 1
+endif
+ifeq (Red Hat 4.1.2-12,$(findstring Red Hat 4.1.2-12,$(CXX_FULL_VERSION)))
+  gcc_template_instantiation_visibility = 1
+endif
+
+gcc_template_instantiation_visibility ?= 0
+
 # Only modify LDFLAGS if DLD has been set.
 ifneq ($(DLD),)
   ifeq ($(DLD),$(CXX_FOR_VERSION_TEST)) # only try this is we are using ld through gcc
@@ -96,6 +109,9 @@ ifeq ($(shared_libs), 1)
     ifeq ($(GXX_4_OR_BETTER), 1)
       ifneq ($(no_hidden_visibility),1)
         CCFLAGS += -fvisibility=hidden -fvisibility-inlines-hidden
+        ifeq ($(gcc_template_instantiation_visibility),1)
+          CCFLAGS += -DACE_GCC_HAS_TEMPLATE_INSTANTIATION_VISIBILITY_ATTRS=1
+        endif # gcc_template_instantiation_visibility
       else
         CPPFLAGS += -DACE_HAS_CUSTOM_EXPORT_MACROS=0
       endif # no_hidden_visibility

@@ -1,3 +1,11 @@
+Wed Aug 29 18:02:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_g++_common.GNU:
+          Detect the RedHat GCC compilers that need to have
+          ACE_GCC_HAS_TEMPLATE_INSTANTIATION_VISIBILITY_ATTRS defined to 1.
+          If we detect that, add CE_GCC_HAS_TEMPLATE_INSTANTIATION_VISIBILITY_ATTRS=1
+          to the compiler flags
+
 Wed Aug 29 15:09:17 UTC 2007  Steve Huston  <shuston@riverace.com>
 
         * NEWS: Add note about LabVIEW RT/Pharlap ETS port.
