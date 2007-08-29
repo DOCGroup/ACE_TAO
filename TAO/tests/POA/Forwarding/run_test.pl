@@ -13,13 +13,19 @@ print STDERR "\n";
 
 $status = 0;
 
-$iorfile1 = PerlACE::LocalFile ("server1.ior");
+$iorfile1base = "server.ior";
+$iorfile1 = PerlACE::LocalFile ("$iorfile1base");
 $iorfile2 = PerlACE::LocalFile ("server2.ior");
 $iorfile3 = PerlACE::LocalFile ("server3.ior");
 
 unlink $iorfile1, $iorfile2, $iorfile3;
 
-$SV1 = new PerlACE::Process ("server", "-o $iorfile1");
+if (PerlACE::is_vxworks_test()) {
+  $SV1 = new PerlACE::ProcessVX ("server", "-o $iorfile1base");
+}
+else {
+  $SV1 = new PerlACE::Process ("server", "-o $iorfile1");
+}
 $SV2 = new PerlACE::Process ("server", "-o $iorfile2 -f file://$iorfile1");
 $SV3 = new PerlACE::Process ("server", "-o $iorfile3 -f file://$iorfile2");
 $CL  = new PerlACE::Process ("client", "-s 3 -k file://$iorfile3");
@@ -53,9 +59,9 @@ if (PerlACE::waitforfile_timed ($iorfile3, $PerlACE::wait_interval_for_process_c
 }
     
 $client  = $CL->SpawnWaitKill (60);
-$server1 = $SV1->WaitKill (10);
-$server2 = $SV2->WaitKill (10);
-$server3 = $SV3->WaitKill (10);
+$server1 = $SV1->WaitKill (15);
+$server2 = $SV2->WaitKill (15);
+$server3 = $SV3->WaitKill (15);
 
 unlink $iorfile1, $iorfile2, $iorfile3;
     
