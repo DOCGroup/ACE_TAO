@@ -36,7 +36,7 @@ if (PerlACE::waitforfile_timed ($iorfile, $PerlACE::wait_interval_for_process_cr
 }
 
 $client = $CL->SpawnWaitKill (60);
-$server = $SV->TerminateWaitKill (15);
+$server = $SV->WaitKill (15);
 
 unlink $iorfile;
 unlink "test"; # created by the program

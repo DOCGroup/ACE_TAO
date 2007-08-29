@@ -23,8 +23,9 @@
 ACE_RCSID(Default_Servant, File_i, "$Id$")
 
 // IDL File::System constructor
-FileImpl::System::System (PortableServer::POA_ptr poa)
-  : poa_ (PortableServer::POA::_duplicate (poa)),
+FileImpl::System::System (CORBA::ORB_ptr orb, PortableServer::POA_ptr poa)
+  : orb_ (CORBA::ORB::_duplicate (orb)),
+    poa_ (PortableServer::POA::_duplicate (poa)),
     // Create the Default Descriptor Servant
     fd_servant_ (poa)
 {
@@ -79,6 +80,12 @@ FileImpl::System::open (const char *file_name,
 
 
   return fd._retn ();
+}
+
+void
+FileImpl::System::shutdown (void)
+{
+  this->orb_->shutdown (0);
 }
 
 // IDL File::Descriptor constructor

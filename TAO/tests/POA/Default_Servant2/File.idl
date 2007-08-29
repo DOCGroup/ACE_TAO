@@ -15,17 +15,17 @@
 
 // IDL
 
-module File 
+module File
 {
-  exception IOError 
+  exception IOError
     {
       long error;
     };
 
-  interface Descriptor 
+  interface Descriptor
     {
       typedef sequence<octet> DataBuffer;
-      
+
       long write (in DataBuffer buffer)
         raises (IOError);
       // write buffer to File
@@ -43,11 +43,13 @@ module File
       // destroy the descriptor
     };
 
-  interface System 
+  interface System
     {
+      /// File open operation
       Descriptor open (in string file_name,
                        in long flags)
         raises (IOError);
-      // File open operation
-    };        
+
+      oneway void shutdown ();
+    };
 };

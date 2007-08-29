@@ -116,7 +116,7 @@ main (int argc, char **argv)
         }
 
       // Create a File System Implementation object in first_poa
-      FileImpl::System file_system_impl (first_poa.in ());
+      FileImpl::System file_system_impl (orb.in (), first_poa.in ());
 
       PortableServer::ObjectId_var file_system_oid =
         PortableServer::string_to_ObjectId ("FileSystem");
