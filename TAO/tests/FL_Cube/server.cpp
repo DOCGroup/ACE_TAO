@@ -2,7 +2,7 @@
 
 #include "test_i.h"
 #include "ace/Get_Opt.h"
-#include "tao/FlResource_Loader.h"
+#include "tao/FlResource/FlResource_Loader.h"
 
 ACE_RCSID(FL_Cube, server, "$Id$")
 
