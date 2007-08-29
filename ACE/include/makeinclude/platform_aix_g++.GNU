@@ -75,7 +75,7 @@ endif
 # g++ 3.3+ needs to work correctly. The new option is available by default
 # in AIX 5.2 and later, but must be installed by a patch to AIX 5.1.
 ifeq ($(AIX_MAJOR_VERS),5)
-  SOFLAGS        += -shared -Wl,-G #-Wl,bexpfull -Wl,-bloadmap:lib.map
+  SOFLAGS        += -shared -Wl,-bexpfull # -Wl,-bloadmap:lib.mapelse
 else
   SOFLAGS        += -shared -Wl,-bexpall # -Wl,-bloadmap:lib.map
 endif
