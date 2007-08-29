@@ -1,3 +1,11 @@
+Wed Aug 29 08:16:00 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/OBV/Simple/client.cpp:
+        * tests/OBV/Simple/Client_i.cpp:
+        * tests/OBV/Simple/run_test.pl:
+          Let the client shutdown the server. Fixes test failure on
+          OpenVMS
+
 Wed Aug 29 07:52:00 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/POA/Default_Servant2/client.cpp:
