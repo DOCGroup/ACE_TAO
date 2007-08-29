@@ -76,6 +76,13 @@ USER VISIBLE CHANGES BETWEEN CIAO-0.5.10 and CIAO-0.6.0
 
 . Added support for building CIAO statically with Microsoft Visual C++
 
+. Fixes to idl3_to_idl2 conversion tool, which
+  - handle the mapping of IDL identifiers that are
+    escaped (due to a clash with an IDL keyword) or
+    that clash with a C++ keyword
+  - handle the mapping of #includes of IDL files
+    that aren't themselves processed by the tool
+
 USER VISIBLE CHANGES BETWEEN CIAO-0.5.9 and CIAO-0.5.10
 =======================================================
 
