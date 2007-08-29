@@ -1,3 +1,10 @@
+Wed Aug 29 18:55:33 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * protocols/tests/HTBP/ping/client.cpp: Explicitly set AF_INET on the
+          address to connect to the server on. Fixes fails on IPv6 builds.
+          Thanks to Phil Mesnier for diagnosing this problem.
+          Also fixed logging conversions where needed for 64-bit and wide-char.
+
 Wed Aug 29 18:21:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_aix_g++.GNU:
