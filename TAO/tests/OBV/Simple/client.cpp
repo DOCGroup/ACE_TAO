@@ -9,7 +9,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   Checkpoint_Client_i client;
 
-
   ACE_DEBUG ((LM_DEBUG,
               "\nEvent_Types client\n\n"));
 
