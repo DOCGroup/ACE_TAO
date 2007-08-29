@@ -28,8 +28,7 @@ PLATFORM_X11_LDFLAGS=
 # then put that in an archive.
 # Non-shared archives are named lib<x>ns.a - ns = non-shared.
 SOEXT    = so
-SOFLAGS += -G
-#LDFLAGS += -brtl
+LDFLAGS += -Wl,-brtl
 
 ifeq (1,$(threads))
   CFLAGS  += -pthread
