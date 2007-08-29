@@ -1,3 +1,12 @@
+Wed Aug 29 22:53:57 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * bin/LabVIEW_RT: A directory of information and utilities useful
+          for running ACE+TAO tests on LabVIEW RT / Phar Lap ETS targets.
+          See the README file in that directory for more information.
+
+        * docs/svn/config:
+        * docs/svn/svn-prefs.reg: Add .ini as a text-type known file type.
+
 Wed Aug 29 18:55:33 UTC 2007  Steve Huston  <shuston@riverace.com>
 
         * protocols/tests/HTBP/ping/client.cpp: Explicitly set AF_INET on the
