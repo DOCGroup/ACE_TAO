@@ -62,7 +62,8 @@ public:
     // = TITLE
     //   File System implementation class.
   public:
-    System (PortableServer::POA_ptr poa);
+    System (CORBA::ORB_ptr orb,
+            PortableServer::POA_ptr poa);
     // Constructor, Creates a single File Descriptor Servant and
     // registers it with the POA as the Default Servant
 
@@ -77,7 +78,10 @@ public:
     // Opens a file ,creates a Descriptor reference with the
     // ACE_HANDLE and returns that reference
 
+    void shutdown (void);
   private:
+    CORBA::ORB_var orb_;
+
     PortableServer::POA_var poa_;
 
     Descriptor fd_servant_;
