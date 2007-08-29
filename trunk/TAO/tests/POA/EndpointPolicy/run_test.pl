@@ -23,7 +23,7 @@ unlink $rootiorfile;
 $port = 12345;
 
 if (PerlACE::is_vxworks_test()) {
-    $sharedSV = new PerlACE::ProcessVX ("server", "-ORBDottedDecimalAddresses 0 -ORBUseSharedProfile 1 -g $goodiorbase -b $badiorbasee -p $port");
+    $sharedSV = new PerlACE::ProcessVX ("server", "-ORBDottedDecimalAddresses 0 -ORBUseSharedProfile 1 -g $goodiorbase -b $badiorbase -p $port");
 }
 else {
     $sharedSV = new PerlACE::Process ("server", "-ORBDottedDecimalAddresses 0 -ORBUseSharedProfile 1 -g $goodiorfile -b $badiorfile -p $port");
