@@ -1,3 +1,15 @@
+Wed Aug 29 08:33:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/cut_cidlc.sh:
+          Put this script under version control, it is used to cut the cidlc
+          release binaries
+
+        * docs/bczar/bczar.html:
+          Added cut_cidlc.sh as last step of the release instructions
+
+        * include/makeinclude/platform_aix_g++.GNU:
+          Made another few changes to resolve the new link errors
+
 Tue Aug 28 08:43:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_aix_g++.GNU:
