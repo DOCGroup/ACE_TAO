@@ -1,3 +1,11 @@
+Thu Aug 30 03:41:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_g++_common.GNU:
+          FC6 and FC5 have exact the same GCC version, FC5 doesn't need the
+          workaround, FC6 does. Disabled the check for this specific RedHat
+          GCC version. FC6 users have to manually set
+          ACE_GCC_HAS_TEMPLATE_INSTANTIATION_VISIBILITY_ATTRS to 1
+
 Wed Aug 29 23:36:52 UTC 2007  Steve Huston  <shuston@riverace.com>
 
         * protocols/tests/HTBP/Reactor_Tests/server.cpp:
