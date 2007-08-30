@@ -15,9 +15,10 @@ This yields the following:
 
 - All test "programs" are built as DLLs instead of executables. The DLL has
   a known "main" entrypoint. To run the test, the DLL must be copied down
-  to the target, explicitly loaded, and its entrypoint called. The MPC
-  target for LabVIEW RT knows how to build these DLLs whenever a program
-  is to be built.
+  to the target, explicitly loaded, and its entrypoint called. MPC will
+  automatically build these DLLs when an executable is specified in the MPC
+  file by basing the MPC project on the labviewrt_dll.mpb base. This is done
+  by supplying "-base labviewrt_dll" on the MPC command line.
 
 - There is a test-controlling DLL that lives on the LabVIEW RT target, and is
   loaded when the target boots. This DLL spawns a thread that listens on a
