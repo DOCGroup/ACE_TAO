@@ -1,3 +1,12 @@
+Thu Aug 30 16:34:06 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * bin/MakeProjectCreator/config/labviewrt_dll.mpb: A base that
+          is used with LabVIEW RT-target builds to change all the builds
+          for executables to build a DLL instead. This is needed for LabVIEW
+          RT w/ Phar Lap ETS. Please see bin/LabVIEW_RT/README for info.
+
+        * bin/LabVIEW_RT/README: Added a note about labviewrt_dll.mpb's use.
+
 Thu Aug 30 07:06:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_g++_common.GNU:
