@@ -67,7 +67,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     env.import_config (config_file);
 
   ACE::HTBP::ID_Requestor req (&env);
-  ACE::HTBP::Addr local(ACE_TEXT_ALWAYS_CHAR(req.get_HTID()));
+  ACE::HTBP::Addr local (ACE_TEXT_ALWAYS_CHAR(req.get_HTID()));
 
   unsigned proxy_port = 0;
   ACE_TString proxy_host;
@@ -83,10 +83,23 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       proxy_host = remote_host;
     }
 
-  ACE_INET_Addr proxy(proxy_port,proxy_host.c_str());
-  ACE::HTBP::Addr remote (remote_port,ACE_TEXT_ALWAYS_CHAR(remote_host));
+  ACE_INET_Addr proxy (proxy_port, proxy_host.c_str ());
+  ACE::HTBP::Addr remote (remote_port, ACE_TEXT_ALWAYS_CHAR (remote_host));
 
-  ACE::HTBP::Session session(remote,local,ACE::HTBP::Session::next_session_id(),&proxy);
+  ACE_TCHAR local_s[512], remote_s[512], proxy_s[512];
+  remote.addr_to_string (remote_s, 512);
+  local.addr_to_string (local_s, 512);
+  proxy.addr_to_string (proxy_s, 512);
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("(%P|%t) Client starting session for ")
+              ACE_TEXT ("remote %s, local %s, proxy %s\n"),
+              remote_s,
+              local_s,
+              proxy_s));
+  ACE::HTBP::Session session (remote,
+                              local,
+                              ACE::HTBP::Session::next_session_id(),
+                              &proxy);
   ACE::HTBP::Stream stream (&session);
 
   char buffer[1000];

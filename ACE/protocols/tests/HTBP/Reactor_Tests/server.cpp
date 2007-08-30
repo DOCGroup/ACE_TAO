@@ -16,6 +16,7 @@
 #include "ace/Reactor.h"
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_unistd.h"
 
 unsigned port = 8088;
 const ACE_TCHAR *notifier_file = 0;
@@ -179,7 +180,7 @@ Stream_Handler::handle_input (ACE_HANDLE h)
   buffer[n] = 0;
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%P|%t) Server Stream_Handler::handle_input ")
-              ACE_TEXT (" (%d) read %d:\n%C\n"),
+              ACE_TEXT (" (%d) read %b:\n%C\n"),
               h, n, buffer));
 
   const char *tok_loc = ACE_OS::strstr (buffer, "goodbye");
@@ -210,15 +211,24 @@ ACE_TMAIN (int argc, ACE_TCHAR * argv[])
               ACE_TEXT ("At start of main\n")));
   ACE_OS::socket_init (ACE_WSOCK_VERSION);
 
-  if (parse_args(argc, argv) != 0)
+  if (parse_args (argc, argv) != 0)
     return 1;
 
-  ACE_INET_Addr local(port);
+  ACE_TCHAR host[MAXHOSTNAMELEN+1];
+  if (ACE_OS::hostname (host, MAXHOSTNAMELEN) != 0)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("(%P|%t) Server failure: %p\n"),
+                       ACE_TEXT ("hostname")),
+                      1);
+
+  ACE_INET_Addr local (port, host);
+  local.addr_to_string (host, MAXHOSTNAMELEN);
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%P|%t) Server: ")
-              ACE_TEXT ("got address\n")));
+              ACE_TEXT ("listening at %s\n"),
+              host));
 
-  ACE_SOCK_Acceptor acc(local,1);
+  ACE_SOCK_Acceptor acc (local, 1);
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%P|%t) Server: ")
               ACE_TEXT ("opened listener\n")));

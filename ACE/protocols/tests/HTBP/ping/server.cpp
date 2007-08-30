@@ -55,11 +55,19 @@ ACE_TMAIN (int argc , ACE_TCHAR *argv[])
   if (parse_args(argc, argv) != 0)
     return 1;
 
-  ACE_INET_Addr local(port);
+  ACE_TCHAR host[MAXHOSTNAMELEN+1];
+  if (ACE_OS::hostname (host, MAXHOSTNAMELEN) != 0)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("(%P|%t) Server failure: %p\n"),
+                       ACE_TEXT ("hostname")),
+                      1);
+
+  ACE_INET_Addr local (port, host);
   ACE_SOCK_Stream sock[2];
   ACE_SOCK_Acceptor acc(local,1);
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("(%P|%t) Server is ready on port %d\n"),port));
+              ACE_TEXT ("(%P|%t) Server is ready on port %s:%d\n"),
+              host, port));
   if (notifier_file != 0)
     {
       FILE *f = ACE_OS::fopen (notifier_file,ACE_TEXT("w+"));
