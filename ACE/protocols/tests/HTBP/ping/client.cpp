@@ -88,11 +88,13 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       proxy_host = remote_host;
     }
 
-  ACE_INET_Addr proxy (proxy_port, proxy_host.c_str (), AF_INET);
+  ACE_INET_Addr proxy (proxy_port, proxy_host.c_str ());
   ACE::HTBP::Addr remote (remote_port, ACE_TEXT_ALWAYS_CHAR (remote_host));
+  ACE_TCHAR proxy_s[MAXHOSTNAMELEN+1];
+  proxy.addr_to_string (proxy_s, MAXHOSTNAMELEN);
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("(%P|%t) Client: connecting to port %u\n"),
-              proxy_port));
+              ACE_TEXT ("(%P|%t) Client: connecting to %s\n"),
+              proxy_s));
   ACE::HTBP::Session session (remote,
                               local,
                               ACE::HTBP::Session::next_session_id (),
