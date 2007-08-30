@@ -1,3 +1,5 @@
+// $Id$
+
 #include <stdio.h>
 __declspec(dllimport) int test_entry(void);
 

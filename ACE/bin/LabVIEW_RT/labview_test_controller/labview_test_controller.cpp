@@ -21,6 +21,10 @@
 
 #include <Winsock2.h>
 
+// NULL is the documented way to check DLL handles, and this is plain
+// Windows code, not ACE, so we stick to the Microsoft way...
+// FUZZ: disable check_for_NULL
+
 // TEST_FUNC is the prototype for the called test's main entrypoint. It's
 // the normal C main.
 typedef int (*TEST_FUNC) (int argc, char *argv[]);
@@ -39,7 +43,7 @@ static HANDLE logf = INVALID_HANDLE_VALUE;
 BOOL APIENTRY DllMain( HANDLE hModule, 
                        DWORD  ul_reason_for_call, 
                        LPVOID lpReserved
-					 )
+                      )
 {
   if (ul_reason_for_call == DLL_PROCESS_ATTACH)
     {
