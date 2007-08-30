@@ -1,3 +1,13 @@
+Thu Aug 30 17:05:00 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * protocols/tests/HTBP/ping/client.cpp: Reverted the addition of
+          specific AF_INET address family. Since the server and client are
+          both doing specific name lookup, they'll both get the same IP
+          address and family, so we need not try to force one. Also added
+          more logging of the address and port to connect to.
+
+        * protocols/tests/HTBP/ping/server.cpp: Log the listening IP/port.
+
 Thu Aug 30 16:34:06 UTC 2007  Steve Huston  <shuston@riverace.com>
 
         * bin/MakeProjectCreator/config/labviewrt_dll.mpb: A base that
