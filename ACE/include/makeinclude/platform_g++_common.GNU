@@ -51,13 +51,10 @@ static_libs_only ?=
 
 CXX_FULL_VERSION := $(shell $(CXX_FOR_VERSION_TEST) --version)
 ifeq (Red Hat 4.1.1-52,$(findstring Red Hat 4.1.1-52,$(CXX_FULL_VERSION)))
-  gcc_template_instantiation_visibility = 1
-endif
-ifeq (Red Hat 4.1.1-51,$(findstring Red Hat 4.1.1-51,$(CXX_FULL_VERSION)))
-  gcc_template_instantiation_visibility = 1
+  gcc_template_instantiation_visibility ?= 1
 endif
 ifeq (Red Hat 4.1.2-12,$(findstring Red Hat 4.1.2-12,$(CXX_FULL_VERSION)))
-  gcc_template_instantiation_visibility = 1
+  gcc_template_instantiation_visibility ?= 1
 endif
 
 gcc_template_instantiation_visibility ?= 0
