@@ -1,3 +1,14 @@
+Wed Aug 29 23:36:52 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * protocols/tests/HTBP/Reactor_Tests/server.cpp:
+        * protocols/tests/HTBP/Send_Large_Msg/server.cpp:
+        * protocols/tests/HTBP/ping/server.cpp:
+          Listen at the IP address represented by the hostname, not "any".
+          Matches what the client is going to do when looking up the host
+          to connect to. Of particular interest is getting the IP address
+          families to be the same for server and client on IPv6-capable
+          systems. Thanks to Phil Mesnier for these patches.
+
 Wed Aug 29 22:53:57 UTC 2007  Steve Huston  <shuston@riverace.com>
 
         * bin/LabVIEW_RT: A directory of information and utilities useful
