@@ -52,10 +52,17 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   ACE_OS::socket_init (ACE_WSOCK_VERSION);
 
-  if (parse_args(argc, argv) != 0)
+  if (parse_args (argc, argv) != 0)
     return 1;
 
-  ACE_INET_Addr local(port);
+  ACE_TCHAR host[MAXHOSTNAMELEN+1];
+  if (ACE_OS::hostname (host,MAXHOSTNAMELEN) != 0)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("(%P|%t) Server failure: %p\n"),
+                       ACE_TEXT ("hostname")),
+                      1);
+
+  ACE_INET_Addr local (port, host);
   ACE_SOCK_Stream sock[2];
   ACE::HTBP::Channel *channels[2];
   ACE_SOCK_Acceptor acc(local,1);
@@ -124,7 +131,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       got = stream.recv (buffer, sizeof (buffer));
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT("(%P|%t) Server: ")
-                  ACE_TEXT("got = %d\n"), got));
+                  ACE_TEXT("got = %b\n"), got));
 
       if (got < 0)
         break;
@@ -133,11 +140,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT("(%P|%t) Server: ")
-              ACE_TEXT("received %d \n"),total_recv));
+              ACE_TEXT("received %b \n"),total_recv));
 
 
   ACE_OS::strcpy (buffer,"I hear you !");
-  ssize_t n = stream.send (buffer,ACE_OS::strlen(buffer)+1);
+  ssize_t n = stream.send (buffer, ACE_OS::strlen (buffer)+1);
   if (n == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT("(%P|%t) Server: ")
@@ -146,7 +153,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT("(%P|%t) Server: ")
-              ACE_TEXT("send returned %d\n"),n));
+              ACE_TEXT("send returned %b\n"),
+              n));
 
   ACE_OS::sleep(1); // prevent test failure on windows when the connection
                     // closes too fast.
