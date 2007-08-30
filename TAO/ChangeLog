@@ -1,3 +1,8 @@
+Thu Aug 30 08:09:00 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/Security/BiDirectional/ssl/*.pem:
+          Generated new keys, old ones are expired
+
 Wed Aug 29 18:47:00 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/FL_Cube/server.cpp:
