@@ -64,10 +64,11 @@ ACE_TMAIN (int argc , ACE_TCHAR *argv[])
 
   ACE_INET_Addr local (port, host);
   ACE_SOCK_Stream sock[2];
-  ACE_SOCK_Acceptor acc(local,1);
+  ACE_SOCK_Acceptor acc(local, 1);
+  local.addr_to_string (host, MAXHOSTNAMELEN);
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("(%P|%t) Server is ready on port %s:%d\n"),
-              host, port));
+              ACE_TEXT ("(%P|%t) Server is ready on %s\n"),
+              host));
   if (notifier_file != 0)
     {
       FILE *f = ACE_OS::fopen (notifier_file,ACE_TEXT("w+"));
