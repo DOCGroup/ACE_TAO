@@ -1,3 +1,11 @@
+Thu Aug 30 17:23:21 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * bin/LabVIEW_RT/labview_test_controller/stdafx.cpp:
+        * bin/LabVIEW_RT/labview_test_controller/stdafx.h:
+        * bin/LabVIEW_RT/labview_test_controller/test.cpp:
+        * bin/LabVIEW_RT/labview_test_controller/labview_test_controller.cpp:
+          Fixed Fuxx errors.
+
 Thu Aug 30 17:05:00 UTC 2007  Steve Huston  <shuston@riverace.com>
 
         * protocols/tests/HTBP/ping/client.cpp: Reverted the addition of
