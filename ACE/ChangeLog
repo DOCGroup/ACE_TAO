@@ -1,3 +1,8 @@
+Thu Aug 30 07:06:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_g++_common.GNU:
+          Added rules to detect FC6 explicitly
+
 Thu Aug 30 03:41:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_g++_common.GNU:
