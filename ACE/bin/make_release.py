@@ -99,7 +99,7 @@ def parse_args ():
                        help="Create kits. DO NOT USE WITH --tag", default=None, const="kit")
     parser.add_option ("--dest", dest="package_dir", action="store",
                        help="Specify destination for the created packages.", default=None)
-    
+
     parser.add_option ("--root", dest="repo_root", action="store",
                        help="Specify an alternate repository root",
                        default="https://svn.dre.vanderbilt.edu/DOC/")
@@ -112,7 +112,7 @@ def parse_args ():
     parser.add_option ("--override-host", dest="override_host", action="store_true",
                        help="Override the default release host.  Not reccomended", default=False)
     (options, arguments) = parser.parse_args ()
-    
+
     if options.action is None:
         parser.error ("Must specify an action, ie --tag or --kit")
 
@@ -122,7 +122,7 @@ def parse_args ():
 
         if options.update is False:
             print "Warning: You are tagging a release, but not requesting a version increment"
-    
+
     return (options, arguments)
 
 
@@ -134,12 +134,12 @@ def ex (command):
     if not opts.take_action:
         print "Executing " + command
         return
-    
+
     status = system(command)
     if status != 0:
         print "ERROR: Nonzero retrun value from " + command
         raise Exception
-    
+
 ###
 # Checks that the users environment is sane.
 #
@@ -162,7 +162,7 @@ def check_environment ():
     if (mailid is None):
         print "ERROR: Must define MAILID environment to your email address for changelogs."
         return False
-        
+
     from socket import gethostname
 
     if ((not opts.override_host) and gethostname () != "anduril.dre.vanderbilt.edu"):
@@ -211,15 +211,15 @@ def check_workspace ():
 def update_version_files (component):
     """ Updates the version files for a given component.  This includes
     Version.h, the PRF, and the VERSION file."""
-    
+
     global comp_versions, opts, release_date
 
     vprint ("Updating version files for " + component)
-        
+
     import re
 
     retval = list ()
-    
+
     ## Update component/VERSION
     with open (component + "/VERSION", "r+") as version_file:
         new_version = re.sub (component + " version .*",
@@ -236,9 +236,9 @@ def update_version_files (component):
             print new_version
 
         vprint ("Updating Version.h for " + component)
-    
+
     retval += [component + "/VERSION"]
-    
+
     ## Update component/component/Version.h
     version_header = """
 // -*- C++ -*-
@@ -253,7 +253,7 @@ def update_version_files (component):
        component, comp_versions[component + "_minor"],
        component, comp_versions[component + "_beta"],
        component, comp_versions[component + "_version"])
-    
+
     if opts.take_action:
         with open (component + '/' + component.lower () + "/Version.h", 'r+') as version_h:
             version_h.write (version_header)
@@ -262,12 +262,12 @@ def update_version_files (component):
         print version_header
 
     retval += [component + '/' + component.lower () + "/Version.h"]
-    
+
     # Update component/PROBLEM-REPORT-FORM
     vprint ("Updating PRF for " + component)
-    
+
     version_string = re.compile ("^\s*(\w+) +VERSION ?:")
-    
+
     with open (component + "/PROBLEM-REPORT-FORM", 'r+') as prf:
         new_prf = ""
         for line in prf.readlines ():
@@ -280,7 +280,7 @@ def update_version_files (component):
                                line)
 
             new_prf += line
-            
+
         if opts.take_action:
             prf.seek (0)
             prf.truncate (0)
@@ -291,51 +291,49 @@ def update_version_files (component):
 
     retval += [component + "/PROBLEM-REPORT-FORM"]
     return retval
-                
-    
+
+
 def get_and_update_versions ():
     """ Gets current version information for each component,
     updates the version files, creates changelog entries,
     and commit the changes into the repository."""
-    
+
     try:
-        get_comp_versions ("ACE") 
-        get_comp_versions ("TAO") 
+        get_comp_versions ("ACE")
+        get_comp_versions ("TAO")
         get_comp_versions ("CIAO")
 
         files = list ()
-        files += update_version_files ("ACE") 
-        files += update_version_files ("TAO") 
-        files += update_version_files ("CIAO") 
-        files += create_changelog ("ACE") 
-        files += create_changelog ("TAO") 
+        files += update_version_files ("ACE")
+        files += update_version_files ("TAO")
+        files += update_version_files ("CIAO")
+        files += create_changelog ("ACE")
+        files += create_changelog ("TAO")
         files += create_changelog ("CIAO")
-        
+
         commit (files)
     except:
         print "Fatal error in get_and_update_versions."
         raise
-    
+
 def create_changelog (component):
     """ Creates a changelog entry for the supplied component that includes
     the version number being released"""
     vprint ("Creating ChangeLog entry for " + component)
-    
+
     global comp_versions, opts
 
     # generate our changelog entry
     changelog_entry = """%s  %s  <%s>
 
-\t* %s version %d.%d.%d released.
+\t* %s version %s released.
 
 """ % (release_date, signature, mailid,
        component,
-       comp_versions[component + "_major"],
-       comp_versions[component + "_minor"],
-       comp_versions[component + "_beta"])
+       comp_versions[component + "_version"])
 
     vprint ("Changelog Entry for " + component + "\n" + changelog_entry)
-    
+
     with open ("%s/ChangeLog" % (component), 'r+') as changelog:
         changelog_entry += changelog.read ()
 
@@ -343,19 +341,19 @@ def create_changelog (component):
             changelog.seek (0)
             changelog.truncate (0)
             changelog.write (changelog_entry)
-    
+
     return ["%s/ChangeLog" % (component)]
-    
+
 def get_comp_versions (component):
     """ Extracts the current version number from the VERSION
     file and increments it appropriately for the release type
     requested."""
     vprint ("Detecting current version for" + component)
-        
+
     import re
 
     global comp_versions, opts
-    
+
     beta = re.compile ("version (\d+)\.(\d+)\.(\d+)")
     minor = re.compile ("version (\d+)\.(\d+)[^\.]")
     major = re.compile ("version (\d+)[^\.]")
@@ -378,7 +376,7 @@ def get_comp_versions (component):
             if match is not None:
                 vprint ("Detected minor version %s.%s" %
                             (match.group (1), match.group (2)))
-                    
+
                 comp_versions[component + "_major"] = int (match.group (1))
                 comp_versions[component + "_minor"] = int (match.group (2))
                 comp_versions[component + "_beta"] = 0
@@ -395,7 +393,7 @@ def get_comp_versions (component):
 
             print "FATAL ERROR: Unable to locate current version for " + component
             raise Exception
-        
+
     if opts.update:
         if opts.release_type == "major":
             comp_versions[component + "_major"] += 1
@@ -439,9 +437,9 @@ def tag ():
 def export_wc (stage_dir):
 
     global doc_root
-    
+
     # Export our working copy
-    print ("Exporting ACE")    
+    print ("Exporting ACE")
     svn_client.export (doc_root + "/ACE",
                        stage_dir + "/ACE_wrappers")
 
@@ -486,7 +484,7 @@ def update_packages (text_files, bin_files, stage_dir, package_dir):
     # Need to wait for zip process spawned by popen2 to complete
     # before proceeding.
     os.wait ()
-    
+
     print "\tAdding text files to zip....."
     instream, outstream = os.popen2 ("xargs zip " + zip_base_args + zip_text_args + zip_file)
 
@@ -498,7 +496,7 @@ def update_packages (text_files, bin_files, stage_dir, package_dir):
     # Need to wait for zip process spawned by popen2 to complete
     # before proceeding.
     os.wait ()
-    
+
     # Tar files
     print "\tAdding to tar file...."
     instream, outstream = os.popen2 ("xargs tar " + tar_args + tar_file)
@@ -509,7 +507,7 @@ def update_packages (text_files, bin_files, stage_dir, package_dir):
     outstream.close ()
 
     os.wait ()
-    
+
 def move_packages (name, stage_dir, package_dir):
     """ Copies the temporary files from the stage_dir to the package_dir.
         Renames them to name.tar and name.zip, respectively, and compresses
@@ -518,7 +516,7 @@ def move_packages (name, stage_dir, package_dir):
     from os.path import join
 
     print "Storing packages for ", name
-    
+
     # Take care of the zip file
     print "\tZip file..."
     target_file = join (package_dir, name + ".zip")
@@ -542,23 +540,23 @@ def move_packages (name, stage_dir, package_dir):
                  target_file)
     ex ("gzip " + target_file)
     ex ("md5sum " + target_file + ".gz > " + target_file + ".gz.md5")
-    
+
 def create_file_lists (base_dir, prefix, exclude):
     """ Creates two lists of files:  files that need CR->CRLF
     conversions (useful for zip files) and those that don't,
     excluding filies/directories found in exclude. """
     import os
-    
+
     text_files = list ()
     bin_files = list ()
 
     for root, dirs, files in os.walk (base_dir, topdown=True):
 #        print "root", root
-        
+
         relroot = root.replace (base_dir, "")
 
 #        print "relroot", relroot
-        
+
         if len(relroot) and relroot[0] == '/':
             relroot = relroot [1:]
 
@@ -573,7 +571,7 @@ def create_file_lists (base_dir, prefix, exclude):
 
         if excluded:
             continue
-        
+
         # Remove dirs from our exclude pattern
         for item in dirs:
 #            print "item", item
@@ -581,9 +579,9 @@ def create_file_lists (base_dir, prefix, exclude):
             if (item) in exclude:
 #                print "Removing " + item + " from consideration...."
                 dirs.remove (item)
-                
+
         for item in files:
-            
+
             fullitem = os.path.join (relroot, item)
             if fullitem in exclude or item in exclude:
 #                print "Removing " + fullitem + " from consideration...."
@@ -605,7 +603,7 @@ def write_file_lists (comp, text, bin):
     outfile.write ("\n".join (bin))
 
     outfile.close ()
-    
+
 def package (stage_dir, package_dir, decorator):
     """ Packages ACE, ACE+TAO, and ACE+TAO+CIAO releases of current
         staged tree, with decorator appended to the name of the archive. """
@@ -614,7 +612,7 @@ def package (stage_dir, package_dir, decorator):
     from os import chdir
 
     chdir (stage_dir)
-    
+
     text_files = list ()
     bin_files = list ()
 
@@ -641,7 +639,7 @@ def package (stage_dir, package_dir, decorator):
 
     text_files = list ()
     bin_files = list ()
-    
+
     # for TAO:
     text_files, bin_files = create_file_lists (join (stage_dir, "ACE_wrappers/TAO"),
                                                      "ACE_wrappers/TAO", ["CIAO", "autom4te.cache"])
@@ -689,7 +687,7 @@ def generate_workspaces (stage_dir):
     mpc_option = ' -recurse -hierarchy -relative ACE_ROOT=' + stage_dir + '/ACE_wrappers '
     mpc_option += ' -relative TAO_ROOT=' + stage_dir + '/ACE_wrappers/TAO '
     mpc_option += ' -relative CIAO_ROOT=' + stage_dir + '/ACE_wrappers/TAO/CIAO '
-    
+
     static_option = ' -static -name_modifier *_Static -apply_project -exclude TAO/CIAO,TAO/TAO_*.mwc '
     static_option += mpc_option
 
@@ -705,7 +703,7 @@ def generate_workspaces (stage_dir):
     redirect_option = str ()
     if not opts.verbose:
         redirect_option = " >> ../mpc.log 2>&1"
-        
+
     # Generate GNUmakefiles
     print "\tGenerating GNUmakefiles...."
     ex (mpc_command + " -type gnuace " + exclude_option + mpc_option + redirect_option)
@@ -714,7 +712,7 @@ def generate_workspaces (stage_dir):
     ex (mpc_command + " -type vc8 " + mpc_option + vc8_option + redirect_option)
 
     print "\tGenerating VC8 Windows CE solutions..."
-    ex (mpc_command + " -type vc8 " + mpc_option + exclude_option + ce_option + redirect_option) 
+    ex (mpc_command + " -type vc8 " + mpc_option + exclude_option + ce_option + redirect_option)
 
     print "\tGenerating VC71 solutions..."
     ex (mpc_command + " -type vc71 " + mpc_option + redirect_option)
@@ -727,10 +725,10 @@ def generate_workspaces (stage_dir):
 
     print "\tBootstrapping autotools support"
     ex ("bin/bootstrap " + redirect_option)
-    
+
     print "\tCorrecting permissions for all generated files..."
     ex ("find ./ -name '*.vc[p,w]' -or -name '*.bor' -or -name '*.vcproj' -or -name '*.sln' -or -name 'GNUmake*' | xargs chmod 0644")
-    
+
 def create_kit ():
     """ Creates kits """
     import os
@@ -738,7 +736,7 @@ def create_kit ():
     # Get version numbers for this working copy, note this will
     # not update the numbers.
     print "Getting current version information...."
-    
+
     get_comp_versions ("ACE")
     get_comp_versions ("TAO")
     get_comp_versions ("CIAO")
@@ -756,7 +754,7 @@ def create_kit ():
 
     ### create standard packages.
     package (stage_dir, package_dir, "")
-    
+
 def make_working_directories ():
     """ Creates directories that we will be working in.
     In particular, we will have DOC_ROOT/stage-PID and
@@ -782,19 +780,19 @@ def main ():
         check_workspace ()
         get_and_update_versions ()
         tag ()
-            
+
     else:
         print "Creating a kit."
         raw_input ("Press enter to continue")
 
         create_kit ()
 
-        
+
 
 if __name__ == "__main__":
     (opts, args) = parse_args ()
 
     if check_environment() is not True:
         exit (1)
-    
+
     main ()
