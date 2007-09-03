@@ -1,0 +1,81 @@
+// -*- MPC -*-
+// $Id$
+
+project(*idl): taoidldefaults {
+  IDL_Files {
+    Test.idl
+  }
+  custom_only = 1
+}
+
+
+project(ORB DLL Server) : taolib_with_idl, portableserver {
+  after += *idl
+  sharedname   = ORB_DLL_Server
+  dynamicflags = SERVICE_CONFIG_ORB_DLL_BUILD_DLL
+  requires = threads
+
+  verbatim(gnuace, macros) {
+    ifeq ($(OSTYPE),VMS)
+      SYMVEC_OPT_FILE = LIBORB_DLL_CLIENT_SYMVEC.OPT
+    endif
+  }
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    ORB_DLL.cpp
+    Test_i.cpp
+    TestC.cpp
+    TestS.cpp
+    server.cpp
+    client.cpp
+  }
+  Header_Files {
+    ORB_DLL.h
+    ORB_DLL_Export.h
+  }
+  Resource_Files {
+  }
+}
+
+project(ORB DLL Client) : taolib_with_idl, portableserver {
+  after += *idl
+  sharedname   = ORB_DLL_Client
+  dynamicflags = SERVICE_CONFIG_ORB_DLL_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    ORB_DLL.cpp
+    Test_i.cpp
+    TestC.cpp
+    TestS.cpp
+    client.cpp
+    server.cpp
+  }
+  Header_Files {
+    ORB_DLL.h
+    ORB_DLL_Export.h
+  }
+  Resource_Files {
+  }
+}
+
+
+project(*) : taoserver {
+  after += lib ORB_DLL_Client ORB_DLL_Server
+  exename = Test
+
+  specific (automake) {
+    includes += $(srcdir)/../lib
+  } else {
+    includes += ../lib
+  }
+
+  Source_Files {
+    Test.cpp
+  }
+}
