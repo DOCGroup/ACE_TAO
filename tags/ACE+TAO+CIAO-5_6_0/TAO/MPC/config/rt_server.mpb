@@ -1,6 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project : taoexe, negotiate_codesets, rtportableserver, rtcorba {
-  exename = server
-}
