@@ -1,0 +1,9 @@
+// -*- MPC -*-
+// $Id$
+
+project(*Client): taoclient, ftclientorb {
+
+  Source_Files {
+    client.cpp
+  }
+}
