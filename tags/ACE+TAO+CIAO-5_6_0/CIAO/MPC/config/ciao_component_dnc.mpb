@@ -1,7 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project : portableserver, ciao_server_dnc, ciao_events_dnc {
-  after    += CIAO_Container
-  libs     += CIAO_Container
-}
