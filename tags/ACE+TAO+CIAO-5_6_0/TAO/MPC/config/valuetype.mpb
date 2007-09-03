@@ -1,0 +1,7 @@
+// -*- MPC -*-
+// $Id$
+
+project: taolib, anytypecode, avoids_corba_e_micro {
+  after    += Valuetype
+  libs     += TAO_Valuetype
+}

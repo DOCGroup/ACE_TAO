@@ -1,0 +1,35 @@
+/* -*- C++ -*- */
+// $Id$
+
+#if !defined (_NOTIFIER_IDL)
+#define _NOTTIFIER_IDL
+
+#include "Consumer.idl"
+
+interface Notifier
+{
+  // = TITLE
+  //  The Notifier interface in the Callback_Quoter example which
+  //  contains the methods by which the consumer can register,
+  //  unregister from the Notifier.
+
+  void register_callback (in string stock_name,
+                          in long threshold_value,
+                          in Callback_Quoter::Consumer consumer_handler)
+    raises (Callback_Quoter::Invalid_Stock);
+  // Register a distributed callback handler that is invoked when the
+  // given stock reaches the desired threshold value.
+
+  void unregister_callback (in Callback_Quoter::Consumer consumer_handler)
+    raises (Callback_Quoter::Invalid_Handle);
+  // Remove the handler.
+
+  void market_status (in string stock_name,
+                      in long stock_value);
+  // Get market status.
+
+   void shutdown ();
+  // Shuts the server down.
+};
+
+#endif /* _NOTIFIER_IDL */
