@@ -1,7 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project : orbsvcslib, dsnotifylogadmin, dseventlogadmin_skel, dslogadmin_skel, event_skel, notification_skel, portableserver {
-  after      += DsNotifyLogAdmin_Skel
-  libs       += TAO_DsNotifyLogAdmin_Skel
-}

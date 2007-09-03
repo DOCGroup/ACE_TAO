@@ -1,5 +1,0 @@
-// $Id$
-project(Latency*): taoserver, strategies {
-  exename = Collocated_Test
-  avoids += ace_for_tao
-}
