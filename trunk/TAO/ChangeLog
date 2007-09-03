@@ -1,3 +1,7 @@
+Mon Sep 03 02:20:09 CDT 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* TAO version 1.6.0 released.
+
 Thu Aug 30 08:09:00 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/Security/BiDirectional/ssl/*.pem:
