@@ -238,12 +238,11 @@ these before you do anything with them.</li></ul>
 <li>Login to naboo.dre.vanderbilt.edu</li>
 <li>su to bczar user</li>
 <li>cd to directory /web/www/Doxygen</li>
-<li>Create a temporary directory. eg. tmp</li>
-<li>Change Directory to tmp</li>
+<li>Create a temporary directory. eg. tmp - mkdir tmp</li>
+<li>Change Directory to tmp - cd tmp</li>
 <li>scp file from the download server -
     scp bczar@download.dre.vanderbilt.edu:/export/www/download.dre/ACE+TAO-distribution/ACE-html.tar.bz2 .</li>
-<li>Unzip and untar the files -  bunzip2 <filename>;tar -xvf
-    <filename></li>
+<li>Unzip and untar the files -  bunzip2 ACE-html.tar.bz2;tar -xvf ACE-html.tar</li>
 <li>Do cd ..</li>
 <li>Create directory 'Current Version No'</li>
 <li>Change directory to 'Current Version No'</li>
@@ -251,6 +250,7 @@ these before you do anything with them.</li></ul>
 <li>Now Change Directory - cd ..</li>
 <li>Remove the already existing soflink to the "Beta" with rm Beta</li>
 <li>Create softlink "Beta" linking it to new Documentation using: ln X.Y.Z/html Beta --symbolic</li>
+<li>Remove the directory tmp - rm -rf tmp</lib>
 </ul>
 <li>Update in the autobuild archive the file configs/scoreboard/releases.xml with
 the made release. This is used by the integrated scoreboard on http://remedy.nl</li>
