@@ -1,0 +1,7 @@
+// -*- MPC -*-
+// $Id$
+
+project : portableserver, orbsvcslib {
+  after   += Svc_Utils
+  libs    += TAO_Svc_Utils
+}
