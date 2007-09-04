@@ -677,7 +677,7 @@ also receives other options that are specific to it.<p>
 
     <td>Generate empty A.h file</td>
     <td>Used by TAO developers for generating an empty A.h file when the
-        -GA option can't be used.
+        -GA option can't be used. Overrides -Sa and -St.
     </td>
   </tr>
 
@@ -770,7 +770,7 @@ also receives other options that are specific to it.<p>
     <td>Generate type codes and Any operators in *A.h and *A.cpp</td>
     <td>Decouples client and server decisions to compile and link
         TypeCode- and Any-related code, which is generated in
-        *C.h and *C.cpp by default.</td>
+        *C.h and *C.cpp by default. Overridden by -Sa and -St.</td>
   </tr>
 
   <tr><a name="Gos">
