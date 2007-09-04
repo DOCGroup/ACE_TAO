@@ -1,6 +1,12 @@
+Tue Sep  4 14:25:24 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * performance-tests/Benchmark/RoundTripClient/RoundTripClient_exec.cpp:
+        * performance-tests/Benchmark/RoundTripClient/client.cpp:
+          Untabify.
+
 Mon Sep 03 02:50:30 CDT 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* CIAO version 0.6 released.
+        * CIAO version 0.6 released.
 
 Mon Aug 27 23:04:36 UTC 2007  Nilabja R  <nilabjar@dre.vanderbilt.edu>
 
