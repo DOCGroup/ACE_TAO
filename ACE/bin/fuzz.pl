@@ -317,8 +317,7 @@ sub check_for_tab ()
                         ($file =~ /(TAO)*.*docs/i)              ||
                         ($file =~ /(TAO)*.*tools/i)             ||
                         ($file =~ /(TAO)*.*performance-tests/i) ||
-                        ($file =~ /(TAO)*.*examples/i)          ||
-                        ($file =~ /(CIAO).*/i)) {
+                        ($file =~ /(TAO)*.*examples/i)) {
                       next ITERATION;
                     }
 
