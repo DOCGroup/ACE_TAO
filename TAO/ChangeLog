@@ -1,6 +1,16 @@
+Tue Sep  4 17:52:54 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_codegen.cpp (start_anyop_header);
+        
+          Changed the logic of the check at the top of this method so
+          that the options to suppress generation of Any operators or
+          type codes will override the option to generate a separate
+          header file for these things. However, the option to generate
+          an empty *A.h file will override all of the above.
+
 Mon Sep 03 02:50:30 CDT 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* TAO version 1.6 released.
+	      * TAO version 1.6 released.
 
 Thu Aug 30 08:09:00 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 

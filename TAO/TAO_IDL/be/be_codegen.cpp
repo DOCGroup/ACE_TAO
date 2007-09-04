@@ -854,7 +854,13 @@ TAO_CodeGen::server_inline (void)
 int
 TAO_CodeGen::start_anyop_header (const char *fname)
 {
-  if (!be_global->gen_anyop_files () && !be_global->gen_empty_anyop_header ())
+  // It's ok, maybe even somtimes desirable, to generate an empty
+  // *A.h file even if Any operator generation is suppressed.
+  bool go_ahead =
+    (be_global->gen_anyop_files () && be_global->any_support ())
+     || be_global->gen_empty_anyop_header ();
+     
+  if (!go_ahead)
     {
       return 0;
     }
@@ -1030,7 +1036,7 @@ TAO_CodeGen::start_anyop_header (const char *fname)
 int
 TAO_CodeGen::start_anyop_source (const char *fname)
 {
-  if (!be_global->gen_anyop_files ())
+  if (!be_global->gen_anyop_files () || !be_global->any_support ())
     {
       return 0;
     }
