@@ -32,7 +32,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       CORBA::Object_var obj
         = orb->string_to_object (ior);
       Benchmark::RoundTripClient_var test =
-	      Benchmark::RoundTripClient::_narrow(obj.in());
+        Benchmark::RoundTripClient::_narrow(obj.in());
       //Get the RoundTrip reference
       Benchmark::Controller_var trigger = test->provide_controller ();
 
