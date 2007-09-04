@@ -116,9 +116,10 @@ MyImpl::RoundTripClient_exec_i::start ()
   history.collect_basic_stats (stats);
   stats.dump_results ("Total", gsf);
 
-  ACE_Throughput_Stats::dump_throughput ("Total", gsf,
-					 test_end - test_start,
-					 stats.samples_count ());
+  ACE_Throughput_Stats::dump_throughput ("Total",
+                                         gsf,
+                                         test_end - test_start,
+                                         stats.samples_count ());
 
 }
 
