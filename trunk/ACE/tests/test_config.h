@@ -173,6 +173,4 @@ private:
 
 typedef ACE_Test_Output ace_file_stream;
 
-Test_Output_Export void randomize (int array[], size_t size);
-
 #endif /* ACE_TEST_CONFIG_H */

@@ -24,6 +24,7 @@
 // ============================================================================
 
 #include "test_config.h"
+#include "randomize.h"
 #include "ace/Profile_Timer.h"
 #include "ace/Timer_Queue.h"
 #include "ace/Timer_List.h"
@@ -38,17 +39,6 @@
 
 ACE_RCSID(tests, Timer_Queue_Test, "$Id$")
 
-static void
-randomize_array (ACE_Time_Value array[], int size)
-{
-  for (int i = 0; i < size; ++i)
-    {
-      int index = ACE_OS::rand() % size--;
-      ACE_Time_Value temp = array [index];
-      array [index] = array [size];
-      array [size] = temp;
-    }
-}
 
 // Number of iterations for the performance tests.  Some platforms
 // have a very high ACE_DEFAULT_TIMERS (HP-UX is 400), so limit this
@@ -288,14 +278,14 @@ test_performance (ACE_Timer_Queue *tq,
   ACE_NEW (times, ACE_Time_Value[max_iterations]);
 
   // Set up a bunch of times TIMER_DISTANCE ms apart.
-  for (i = 0; i < max_iterations; i++)
+  for (i = 0; i < max_iterations; ++i)
     times[i] = tq->gettimeofday() + ACE_Time_Value(0, i * TIMER_DISTANCE * 1000);
 
   ACE_Time_Value last_time = times[max_iterations-1];
 
   timer.start ();
 
-  for (i = 0; i < max_iterations; i++)
+  for (i = 0; i < max_iterations; ++i)
     {
       ACE_NEW (timer_act, int (42));
       timer_ids[i] = tq->schedule (&eh,
@@ -326,7 +316,7 @@ test_performance (ACE_Timer_Queue *tq,
 
   timer.start ();
 
-  for (i = max_iterations - 1; i >= 0; i--)
+  for (i = max_iterations; i-- != 0; )
     {
       tq->cancel (timer_ids[i], &timer_act);
       delete (int *) timer_act;
@@ -353,7 +343,7 @@ test_performance (ACE_Timer_Queue *tq,
 
   timer.start ();
 
-  for (i = 0; i < max_iterations; i++)
+  for (i = 0; i < max_iterations; ++i)
     {
       ACE_NEW (timer_act, int (42));
       long result = tq->schedule (&eh, timer_act, times[i]);
@@ -381,12 +371,14 @@ test_performance (ACE_Timer_Queue *tq,
               ACE_TEXT ("time per call = %f usecs\n"),
               (et.user_time / ACE_timer_t (max_iterations)) * 1000000));
 
-  randomize_array (times, max_iterations);
+  randomize (times,
+             max_iterations,
+             static_cast<ACE_RANDR_TYPE> (ACE_OS::time (0L)));
 
   // Test the amount of time required to randomly cancel all the
   // timers.
 
-  for (i = 0; i < max_iterations; i++)
+  for (i = 0; i < max_iterations; ++i)
     {
       ACE_NEW (timer_act, int (42));
       timer_ids[i] = tq->schedule (&eh,
@@ -428,7 +420,7 @@ test_performance (ACE_Timer_Queue *tq,
 
   timer.start ();
 
-  for (i = 0; i < max_iterations; i++)
+  for (i = 0; i < max_iterations; ++i)
     {
       ACE_NEW (timer_act, int (42));
       timer_ids[i] = tq->schedule (&eh,
@@ -571,8 +563,6 @@ int
 run_main (int argc, ACE_TCHAR *argv[])
 {
   ACE_START_TEST (ACE_TEXT ("Timer_Queue_Test"));
-
-  ACE_OS::srand ((u_int) ACE_OS::time (0L));
 
   if (argc > 1)
     max_iterations = ACE_OS::atoi (argv[1]);

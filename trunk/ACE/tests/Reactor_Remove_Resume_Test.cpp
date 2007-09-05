@@ -469,7 +469,7 @@ run_main (int, ACE_TCHAR *[])
 #endif  /* ACE_HAS_EVENT_POLL || ACE_HAS_DEV_POLL */
     };
 
-  static size_t const factory_count = sizeof (factories) / sizeof (factories);
+  static size_t const factory_count = sizeof (factories) / sizeof (factories[0]);
 
   std::for_each (factories, factories + factory_count, Run_Test ());
 
