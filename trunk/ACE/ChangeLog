@@ -6,7 +6,7 @@ Wed Sep  6 00:13:48 UTC 2007  Ossama Othman  <ossama_othman at symantec dot com>
 
 Wed Sep  5 23:40:15 UTC 2007  Ossama Othman  <ossama_othman at symantec dot com>
 
-        * tests/Bug_2912_Regression.cpp:
+        * tests/Bug_2912_Regression_Test.cpp:
         * tests/tests.mpc:
         * tests/SSL/tests.mpc:
 
