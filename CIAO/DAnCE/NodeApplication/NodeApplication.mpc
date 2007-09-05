@@ -44,11 +44,22 @@ project(NA_Configurator): ciao_deployment_stub, diffservpolicy, ciao_nodeapp_con
 project(NodeApplicationLib): ciao_server_dnc, ciao_events_dnc, ciao_nodeapp_configurator {
   sharedname   = CIAO_NodeApplication
   dynamicflags = NODEAPPLICATION_BUILD_DLL
+  
+  includes += $(CIAO_ROOT)/DAnCE/NodeManager
+
+  
+  IDL_Files {
+    App_Monitor.idl
+  }
+
   Source_Files {
     Configurator_Factory.cpp
     Container_Impl.cpp
     NodeApplication_Core.cpp
     NodeApplication_Impl.cpp
+    App_Monitor_Impl.cpp
+    App_MonitorS.cpp
+    App_MonitorC.cpp
   }
 }
 

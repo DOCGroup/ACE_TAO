@@ -72,6 +72,9 @@ public:
   virtual
   void destroyApplication_excep (::Messaging::ExceptionHolder *);
 
+  virtual void monitor_qos(CORBA::Object*);
+
+  virtual void monitor_qos_excep(Messaging::ExceptionHolder*);
 private:
   ::Deployment::NodeApplication_var retn_node_app_;
 

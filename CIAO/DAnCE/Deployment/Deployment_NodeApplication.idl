@@ -121,6 +121,11 @@ module Deployment
     /// CIAO specific extension
     void ciao_passivate ()
       raises (StopError);
+
+    /// This operation starts the online QoS monitoring
+    /// It returns its monitoring object ...
+    Object monitor_qos ();
+
   };
 
 };

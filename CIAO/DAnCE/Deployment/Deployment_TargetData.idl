@@ -7,6 +7,9 @@
 #include "tao/StringSeq.pidl"
 #include "tao/ULongSeq.pidl"
 
+// for QoS Monitoring
+#include "QoS.idl"
+
 module Deployment {
 
   struct Resource {
@@ -31,6 +34,7 @@ module Deployment {
     ::CORBA::ULongSeq sharedResourceRef;
     ::CORBA::ULongSeq connectionRef;
     Resources resource;
+    QoSSpecifications qos_seq;
   };
   typedef sequence < Node > Nodes;
 

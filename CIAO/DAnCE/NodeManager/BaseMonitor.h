@@ -17,6 +17,7 @@
 
 namespace CIAO
 {
+  class MonitorController;
 
   class MonitorBase
     {
@@ -32,7 +33,6 @@ namespace CIAO
        */
       virtual int initialize_params (
                                      ::Deployment::Domain& domain,
-                                     ::Deployment::TargetManager_ptr target_manager,
                                      int interval
                                      )=0;
       /**
@@ -52,6 +52,8 @@ namespace CIAO
        * @return The current Domain data
        */
       virtual ::Deployment::Domain* get_current_data ()=0;
+
+      virtual void set_context (MonitorController*) = 0;
     };
 
   extern "C" ACE_Proper_Export_Flag CIAO::MonitorBase *

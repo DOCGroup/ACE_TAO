@@ -3,6 +3,7 @@
 #include "NodeManager_Impl.h"
 #include "DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.h"
 #include "ace/Log_Msg.h"
+#include "MonitorController.h"
 
 CIAO::NodeManager_Impl_Base::NodeManager_Impl_Base (const char *name,
                                                     CORBA::ORB_ptr orb,
@@ -73,27 +74,21 @@ CIAO::NodeManager_Impl_Base::joinDomain (const Deployment::Domain & domain,
   // Here start the Monitor
   CIAO_TRACE("CIAO::NodeManager_Impl_Base::joinDomain");
 
-  ::Deployment::Domain this_domain = domain;
+  ACE_DEBUG ((LM_DEBUG, "Inside the Join Domain\n"));
+
 
   monitor_controller_.reset (
-                             new MonitorController (orb_.in (),
-                                                    this_domain,
-                                                    target,
-                                                    this));
+      new MonitorController (orb_.in (),
+        domain,
+        this));
 
-  if (CIAO::debug_level () > 9)
-    {
-      ACE_DEBUG ((LM_DEBUG , "Before Activate\n"));
-    }
 
-  // Activate the Monitor Controller to
-  // start the monitoring
-  monitor_controller_->activate ();
+  //    monitor_controller_ = new MonitorController (orb_.in (),
+  //                                                 domain,
+  //                                                 this);
 
-  if (CIAO::debug_level () > 9)
-    {
-      ACE_DEBUG ((LM_DEBUG , "Monitor Activated\n"));
-    }
+  monitor_controller_->init ();
+
 }
 
 void
@@ -580,7 +575,31 @@ validate_plan (const Deployment::DeploymentPlan &plan)
 void CIAO::NodeManager_Impl_Base::
 push_component_id_info (Component_Ids comps)
 {
-  components_ = comps;
+  // Here instead of simply assigning , add the components
+    // to the end of the arrays ..
+
+  ACE_Unbounded_Set_Iterator<pid_t> iter (comps.process_ids_);
+
+  for (iter = comps.process_ids_.begin ();
+      iter != comps.process_ids_.end ();
+      iter++)
+  {
+    components_.process_ids_.insert_tail (*iter);
+  }
+
+  //   ACE_Unbounded_Set_Iterator<ACE_CString> iter (comps.cid_seq_);
+
+  //   for (iter = comps.process_ids_.begin ();
+  //        iter != comps.process_ids_.end ();
+  //        iter++)
+  //     {           
+  //       components_.insert_tail (*iter);
+  //     }
+
+
+
+  //  components_ = comps;
+
 }
 
 CIAO::NodeManager_Impl_Base::Component_Ids
@@ -589,6 +608,14 @@ get_component_detail ()
 {
   return components_;
 }
+
+::CORBA::Object_ptr
+CIAO::NodeManager_Impl_Base::
+get_NAM (const ACE_CString& plan_node)
+{   
+  return this->poa_->id_to_reference (this->map_.get_nam (plan_node));
+}
+
 
 CIAO::NodeManager_Impl::~NodeManager_Impl ()
 {

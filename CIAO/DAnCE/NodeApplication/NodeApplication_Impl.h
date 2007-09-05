@@ -36,6 +36,8 @@
 #include "NodeApp_Configurator.h"
 #include "Session_Container.h"
 
+#include "App_MonitorC.h"
+
 using CIAO::Utility::write_IOR;
 
 /**
@@ -56,6 +58,9 @@ using CIAO::Utility::write_IOR;
  * use the lock in the imeplementation to do some simple
  * prootections.
  **/
+
+class App_Monitor_i;
+
 
 namespace CIAO
 {
@@ -231,6 +236,9 @@ namespace CIAO
     virtual ACE_CString *
     create_connection_key (const Deployment::Connection & connection);
 
+    /// start monitoring qos ...
+        virtual ::CORBA::Object_ptr monitor_qos (void);
+
     /// To build a map between a component instance and  its container
     typedef ACE_Hash_Map_Manager_Ex<ACE_CString,
                                     Deployment::Container_var,
@@ -301,6 +309,17 @@ namespace CIAO
     ES_Installation_Map es_info_map_;
 
     const Static_Config_EntryPoints_Maps* static_entrypts_maps_;
+
+    /// The function starts the QoS monitor and registers it with
+    /// the Node Manager Monitor
+    int activate_QoS_Monitor ();
+
+    /// The app monitor servant pointer
+    App_Monitor_i*  app_monitor_;
+
+    /// The application monitor Var ..
+    ::Onl_Monitor::App_Monitor_var app_monitorV_;
+
   private:
     /// Default constructor, noop
     NodeApplication_Impl(void);

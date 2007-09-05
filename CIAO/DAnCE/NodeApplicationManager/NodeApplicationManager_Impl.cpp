@@ -14,6 +14,12 @@
 #include "NodeApplication/NodeApp_Configurator.h"
 #include "ace/Reactor.h"
 
+#include   "BPatch.h"
+#include   "BPatch_Vector.h"
+#include   "BPatch_thread.h"
+#include   "BPatch_function.h"
+
+
 #if !defined (__ACE_INLINE__)
 # include "NodeApplicationManager_Impl.inl"
 #endif /* __ACE_INLINE__ */
@@ -987,6 +993,8 @@ push_component_info (pid_t process_id)
 {
   CIAO::NodeManager_Impl_Base::Component_Ids comp;
 
+  this->process_ids_.insert (process_id);
+
   for (unsigned int i=0;i < plan_.instance.length ();i++)
     {
       if (CIAO::debug_level () > 10)
@@ -997,7 +1005,7 @@ push_component_info (pid_t process_id)
       comp.cid_seq_.insert (plan_.instance[i].name.in ());
     }
 
-  comp.process_id_ = process_id;
+  comp.process_ids_ = this->process_ids_;
 
   node_manager_->push_component_id_info (comp);
 }
@@ -1107,4 +1115,122 @@ create_node_application (const ACE_CString & options)
 
 CIAO::NodeApplicationManager_Impl_Base::~NodeApplicationManager_Impl_Base (void)
 {
+
 }
+
+::CORBA::Object_ptr
+CIAO::NodeApplicationManager_Impl_Base::
+monitor_qos (const ::Deployment::DeploymentPlan & plan)
+{
+
+  // make a call to the NA obj ptr
+  ::CORBA::Object_ptr obj = this->nodeapp_->monitor_qos ();
+
+  ACE_DEBUG ((LM_DEBUG, "Inside the monitor_qos\n"));
+
+  // insert the dyninst binary code instrusion here .....
+  ACE_DEBUG ((LM_DEBUG, "The function to be modified is %s\n",
+        plan_.instance[0].source[0].in ()));
+
+  ACE_CString func;
+
+  for (int i =0;i < plan_.instance.length ();i++)
+  {
+    func = plan_.instance[i].source[0].in ();
+    if (func.length () > 0)
+      break;
+  }
+
+
+  ACE_DEBUG ((LM_DEBUG, "Using DynInst\n"));
+
+  if (func.length () == 0)
+    return obj;
+
+  BPatch bpatch;
+
+  // Attach to the program
+  BPatch_process *appThread =
+    bpatch.processAttach (this->nodeapp_command_op_.in (), this->process_id_);
+
+  // Read the program's image and get an associated image object
+  BPatch_image *appImage = appThread->getImage();
+
+  ACE_DEBUG ((LM_DEBUG, "After getImage\n"));
+
+  ////// Insert your function calls in to the program ....
+
+  BPatch_Vector<BPatch_function*> targetFuncs;
+  appImage->findFunction(func.c_str (), targetFuncs);
+
+  if (targetFuncs.size () == 0)
+    ACE_DEBUG ((LM_DEBUG, "%s not found\n", func.c_str ()));
+  else
+  {
+    ACE_DEBUG ((LM_DEBUG, "\t\nTarget Func Found\n"));
+
+    BPatch_Vector<BPatch_point *> *entrypoints =
+      targetFuncs[0]->findPoint(BPatch_entry);
+    if ((*entrypoints).size() == 0) {
+      //    fprintf(stderr, "Unable to find entry point to \"sleep.\"\n");
+      ACE_DEBUG ((LM_DEBUG, "\t\nUnable to find entry point\n"));
+    }
+
+    BPatch_Vector<BPatch_point *> *exitpoints =
+      targetFuncs[0]->findPoint(BPatch_exit);
+    if ((*exitpoints).size() == 0) {
+      //      fprintf(stderr, "Unable to find exit point to \"sleep.\"\n");
+      ACE_DEBUG ((LM_DEBUG, "\t\nUnable to find exit point\n"));
+    }
+
+    BPatch_Vector<BPatch_function*> startFuncs;
+    appImage->findFunction("start_timing", startFuncs);
+
+    if (startFuncs.size () == 0)
+      ACE_DEBUG ((LM_DEBUG, "start_timing not found\n"));
+
+    BPatch_Vector<BPatch_function*> stopFuncs;
+    appImage->findFunction("stop_timing",  stopFuncs);
+
+    if (stopFuncs.size () == 0)
+      ACE_DEBUG ((LM_DEBUG, "stop_timing not found\n"));
+
+    // do the insertion in a batch .. that has two advantages
+    // 1. Will save time , since everything will be inserted at the same time
+    // 2. Will have rollback since everything will be rolled back ,
+    //    if something goes wrong .....
+
+    //  appThread->beginInsertionSet ();
+
+    BPatch_Vector<BPatch_snippet *> startArgs;
+    // Create a function call snippet write(fd, parameter[1], parameter[2])
+    BPatch_funcCallExpr startCall(*startFuncs[0], startArgs);
+    // Insert the code into the thread.
+    if (appThread->insertSnippet(startCall, *entrypoints) == NULL)
+      ACE_DEBUG ((LM_DEBUG, "\n\nInsert Snippet start WRONG \n\n"));
+
+    BPatch_Vector<BPatch_snippet *> stopArgs;
+    // Create a function call snippet write(fd, parameter[1], parameter[2])
+    BPatch_funcCallExpr stopCall(*stopFuncs[0], stopArgs);
+    // Insert the code into the thread.
+    if (appThread->insertSnippet(stopCall, *exitpoints) == NULL)
+      ACE_DEBUG ((LM_DEBUG, "\n\nERROR in Insert Snippet in stop_timing call \n\n"));
+
+    //   if (appThread->finalizeInsertionSet (true) == 0)
+    //     ACE_DEBUG ((LM_DEBUG, "\r\n Error in Finalize Insertion Set\n"));
+
+  } // target_func success ...
+
+  ACE_DEBUG ((LM_DEBUG, "\t\nContinuing Execution  \n"));
+
+  // continue execution of the mutatee
+  appThread->continueExecution();
+  // wait for mutatee to terminate and allow Dyninst to handle events
+  //   while (!appThread->isTerminated())
+  //             bpatch.waitForStatusChange();
+
+  ACE_DEBUG ((LM_DEBUG, "\t\nContinuing Execution\n"));
+
+  return obj;
+}
+

@@ -126,3 +126,10 @@ void Deployment_AMI_NodeApplicationManagerHandler_i::destroyApplication_excep (
   // Add your implementation here
 }
 
+void Deployment_AMI_NodeApplicationManagerHandler_i::monitor_qos(CORBA::Object*)
+{
+}
+
+void Deployment_AMI_NodeApplicationManagerHandler_i::monitor_qos_excep(Messaging::ExceptionHolder*)
+{
+}

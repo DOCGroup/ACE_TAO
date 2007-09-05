@@ -130,6 +130,9 @@ namespace CIAO
         const char * cid,
         const ::Deployment::Sched_Params & params);
 
+    virtual ::CORBA::Object_ptr monitor_qos (
+            const ::Deployment::DeploymentPlan & plan);
+
   protected:
     /// Destructor
     virtual ~NodeApplicationManager_Impl_Base (void);
@@ -230,12 +233,16 @@ namespace CIAO
     /// Each NAM will only have one NA associated with it,
     /// so we have only one process associated with it.
 
-    // this is UNIX specific .... not portable
-    pid_t process_id_;
+    /// The process id set
+    ACE_Unbounded_Set<pid_t> process_ids_;
 
     /// For synchronization between multiple threads
     ACE_Condition<ACE_Thread_Mutex> waitCond_;
     ACE_Thread_Mutex mutex_;
+
+    // this is UNIX specific .... not portable
+    pid_t process_id_;
+
   };
 
 

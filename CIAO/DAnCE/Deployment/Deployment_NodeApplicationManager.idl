@@ -57,6 +57,9 @@ module Deployment {
     /// CIAO specific function to set priority
     /// of component, required by RACE
     long set_priority (in string cid , in Sched_Params params);
+
+    /// This call turns on the monitoring of Application QoS 
+    Object monitor_qos (in ::Deployment::DeploymentPlan plan);
   };
 };
 

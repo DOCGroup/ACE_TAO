@@ -6,9 +6,14 @@
 #include "DAnCE/Deployment/Deployment_EventsC.h"
 #include "ciaosvcs/Events/CIAO_RTEC/CIAO_RTEventC.h"
 
+#include "App_Monitor_Impl.h"
+
 #if !defined (__ACE_INLINE__)
 # include "NodeApplication_Impl.inl"
 #endif /* __ACE_INLINE__ */
+
+// had  to make a global var. .. gotto to remove it
+extern App_Monitor_i* app_monitor;
 
 CIAO::NodeApplication_Impl::~NodeApplication_Impl (void)
 {
@@ -1205,3 +1210,34 @@ _is_publisher_es_conn (Deployment::Connection conn)
   else
     return false;
 }
+
+/// start monitoring qos ...
+  ::CORBA::Object_ptr
+CIAO::NodeApplication_Impl::monitor_qos (void)
+{
+  ACE_DEBUG ((LM_DEBUG, "NA :: Within the monitor_qos\n"));
+  this->activate_QoS_Monitor ();
+
+  Onl_Monitor::App_Monitor_var appV =
+    Onl_Monitor::App_Monitor::_duplicate (this->app_monitorV_);
+
+  return appV._retn ();
+}
+
+
+int
+CIAO::NodeApplication_Impl::
+activate_QoS_Monitor ()
+{
+  //create the servant and the object for the app monitor ...
+
+  app_monitor_ = new App_Monitor_i ();
+
+  app_monitorV_ = app_monitor_->_this ();
+
+  // set the global variable ...
+  app_monitor = app_monitor_;
+
+  return 0;
+}
+

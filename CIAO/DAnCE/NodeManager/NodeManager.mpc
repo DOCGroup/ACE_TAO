@@ -5,8 +5,13 @@
 project(NodeManager_svnt): ciao_component_dnc, ciao_deployment_svnt, iortable, ifr_client, dance_extension_stub, ciao_server_dnc, ciao_nodeapplicationmanager, ciao_nodemanager_stub {
   sharedname = NodeManager
   dynamicflags = NODEMANAGER_SVNT_BUILD_DLL
+  includes += $(CIAO_ROOT)/DAnCE/Deployment $(CIAO_ROOT)/DAnCE/TM_Daemon
+
+  idlflags = -GC
+
 
   IDL_Files {
+    NM_Monitor.idl
   }
 
   Source_Files {
@@ -15,6 +20,10 @@ project(NodeManager_svnt): ciao_component_dnc, ciao_deployment_svnt, iortable, i
     NAM_Map.cpp
     MonitorController.cpp
     MonitorCB.cpp
+    NM_Monitor_Impl.cpp
+    $(CIAO_ROOT)/DAnCE/NodeApplication/App_MonitorC.cpp
+    $(CIAO_ROOT)/DAnCE/TM_Daemon/Profile_Code.cpp
+
   }
 }
 

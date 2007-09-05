@@ -29,6 +29,16 @@ namespace CIAO
 {
   class ReceiverThread;
 
+
+  struct Load_Values
+  {
+    double user_cpu;
+    double user_cpu_low;
+    double system_cpu;
+    double idle_time;
+    double total_load;
+  };
+
   /**
    * @class CIAO_Monitor
    *
@@ -52,7 +62,6 @@ namespace CIAO
      */
     virtual int  initialize_params (
                                     ::Deployment::Domain& domain,
-                                    ::Deployment::TargetManager_ptr target_manager,
                                     int interval
                                     );
     /**
@@ -79,10 +88,12 @@ namespace CIAO
      */
     ::Deployment::Domain* get_current_data ();
 
+    void set_context (MonitorController*);
+
   protected:
 
+    double calculate_load ();
     /// The TargetManager Object to be sent to the RSSSubscriber ..
-    ::Deployment::TargetManager_ptr target_ptr_;
 
     /// The interval after which update is to be returned.
     int interval_;
@@ -101,6 +112,15 @@ namespace CIAO
 
     /// The previous idle time
     long prev_idle_time_;
+
+    ///The MonitorController context
+    MonitorController* controller_;
+
+    /// current load value ...
+    Load_Values current_;
+
+    /// previous load value 
+    Load_Values previous_;
   };
 
 } // CIAO

@@ -13,6 +13,11 @@
 #include "CIAO_Monitor.h"
 #include "CIAO_common.h"
 #include "ace/OS_NS_stdio.h"
+#include "ace/Log_Msg.h"
+#include <string>
+#include <fstream>
+
+using namespace std;
 
 extern "C" ACE_Proper_Export_Flag CIAO::MonitorBase * CIAO::createMonitor ()
 {
@@ -23,6 +28,11 @@ extern "C" ACE_Proper_Export_Flag CIAO::MonitorBase * CIAO::createMonitor ()
 
 CIAO::CIAO_Monitor::CIAO_Monitor ()
 {
+  previous_.user_cpu = 0;
+  previous_.user_cpu_low = 0;
+  previous_.system_cpu = 0;
+  previous_.idle_time = 0;
+  previous_.total_load = 0;
 }
 
 /// The Desctructor
@@ -32,12 +42,10 @@ CIAO::CIAO_Monitor::~CIAO_Monitor ()
 
 int CIAO::CIAO_Monitor::initialize_params (
                                      ::Deployment::Domain& domain,
-                                     ::Deployment::TargetManager_ptr target_manager,
                                      int interval
                                      )
 {
   current_domain_.reset (new ::Deployment::Domain (domain));
-  target_ptr_= target_manager;
   this->interval_=interval;
 
   return 0;
@@ -62,68 +70,18 @@ int CIAO::CIAO_Monitor::stop ()
       //            current_domain_->node[0].name.in ()));
     }
 
+  ACE_DEBUG ((LM_DEBUG ,
+        "CIAO_Monitor::Inside the get_current_data of[%s]\n",
+        current_domain_->node[0].name.in ()));
+  
   CORBA::Double current_load = 0;
 
-  long user_cpu;
-  long user_cpu_low;
-  long sys_cpu;
-  long idle_time;
-
-  // get the load average value from the /proc/loadavg
-
-  FILE *load_file = 0;
-
-  load_file = ACE_OS::fopen ("/proc/stat", "r");
-
-  if (load_file == 0)
-    {
-      // load file cannot be opened ..
-      current_load = 0;
-    }
-  else
-    {
-      char buffer [99];
-
-      // read in the cpu label
-      fscanf (load_file, "%s", buffer);
-
-      //read the user_cpu
-      fscanf (load_file, "%ld", &user_cpu);
-
-      //read the user cpu low priority
-      fscanf (load_file, "%ld", &user_cpu_low);
-
-      //read the system cpu
-      fscanf (load_file, "%ld", &sys_cpu);
-
-      //read the cpu in idle time ..
-      fscanf (load_file, "%ld", &idle_time);
-
-      ACE_OS::fclose (load_file);
-
-      // Calculate the percent CPU
-      long const current_user_cpu = user_cpu - prev_user_cpu_;
-      long const total_cpu_usage = user_cpu + user_cpu_low + sys_cpu +
-        idle_time - prev_user_cpu_ - prev_idle_time_ - prev_sys_cpu_
-        - prev_user_cpu_low_;
-
-      current_load = (current_user_cpu * 100)/total_cpu_usage;
-
-      // Save the current cpu values in the previous variables
-
-      prev_user_cpu_ = user_cpu;
-
-      prev_user_cpu_low_ = user_cpu_low;
-
-      prev_sys_cpu_ = sys_cpu;
-
-      prev_idle_time_ = idle_time;
-
-    }
-
+  current_load = calculate_load ();
 
   CORBA::Any any;
   any <<= current_load;
+
+  ACE_DEBUG ((LM_DEBUG, "The current load is %f\n", current_load));
 
   // here insert the util value, in the right position
 
@@ -152,4 +110,40 @@ int CIAO::CIAO_Monitor::stop ()
     }
 
   return current_domain_.get ();
+}
+
+void CIAO::CIAO_Monitor::set_context (MonitorController* context)
+{
+  this->controller_ = context;
+}
+
+double CIAO::CIAO_Monitor::calculate_load ()
+{
+  ifstream res_file;
+
+  res_file.open ("/proc/stat");
+
+
+  string cpu; // for getting the cpu value
+
+  res_file >> cpu;
+  res_file >> current_.user_cpu;
+  res_file >> current_.user_cpu_low;
+  res_file >> current_.system_cpu;
+  res_file >> current_.idle_time;
+
+  current_.total_load = current_.user_cpu + current_.user_cpu_low + current_.system_cpu + current_.idle_time;
+
+  double load = current_.total_load - previous_.total_load;
+
+  double user_current_load = (current_.user_cpu - previous_.user_cpu)/load;
+  double system_current_load = (current_.system_cpu - previous_.system_cpu)/load;
+  double idle_load = (current_.idle_time - previous_.idle_time)/load;
+
+
+  res_file.close ();
+
+  previous_ = current_;
+
+  return user_current_load*100;
 }
