@@ -1,3 +1,15 @@
+Wed Sep  5 13:26:26 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_codegen.cpp (start_anyop_header):
+        
+          Changed logic again to generate empty *A.h file if -GA appears
+          with -Sa or -St.
+          
+        * docs/compiler.html:
+        
+          Updated command line option table description to reflect the
+          change above.
+
 Tue Sep  4 18:05:08 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * docs/compiler.html:
