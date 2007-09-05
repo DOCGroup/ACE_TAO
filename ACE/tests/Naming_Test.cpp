@@ -37,7 +37,7 @@ static char type[BUFSIZ];
 void
 initialize_array (int * array, int size)
 {
-  for (int n = 0; n < ACE_NS_MAX_ENTRIES; ++n)
+  for (int n = 0; n < size; ++n)
     array[n] = n;
 }
 
