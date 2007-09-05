@@ -1,6 +1,14 @@
 //  -*- MPC -*-
 // $Id$
 
+project(Bug_2912_Regression_Test) : acetest, ssl {
+  avoids += ace_for_tao
+  exename = Bug_2912_Regression_Test
+  Source_Files {
+    Bug_2912_Regression_Test.cpp
+  }
+}
+
 project(SSL Asynch_Stream Test) : acetest, ssl {
   avoids += ace_for_tao
   exename = SSL_Asynch_Stream_Test

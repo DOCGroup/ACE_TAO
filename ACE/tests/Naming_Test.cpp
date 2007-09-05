@@ -19,6 +19,7 @@
 // ============================================================================
 
 #include "test_config.h"
+#include "randomize.h"
 #include "ace/ACE.h"
 #include "ace/SString.h"
 #include "ace/Naming_Context.h"
@@ -32,6 +33,13 @@ ACE_RCSID(tests, Naming_Test, "$Id$")
 static char name[BUFSIZ];
 static char value[BUFSIZ];
 static char type[BUFSIZ];
+
+void
+initialize_array (int * array, int size)
+{
+  for (int n = 0; n < ACE_NS_MAX_ENTRIES; ++n)
+    array[n] = n;
+}
 
 static void
 print_time (ACE_Profile_Timer &timer,
@@ -53,7 +61,9 @@ static void
 test_bind (ACE_Naming_Context &ns_context)
 {
   int array [ACE_NS_MAX_ENTRIES];
-  randomize (array, sizeof array / sizeof (int));
+
+  initialize_array (array, sizeof (array) / sizeof (array[0]));
+  randomize (array, sizeof (array) / sizeof (array[0]));
 
   // do the binds
   for (size_t i = 0; i < ACE_NS_MAX_ENTRIES; i++)
@@ -90,7 +100,9 @@ static void
 test_rebind (ACE_Naming_Context &ns_context)
 {
   int array [ACE_NS_MAX_ENTRIES];
-  randomize (array, sizeof array / sizeof (int));
+
+  initialize_array (array, sizeof (array) / sizeof (array[0]));
+  randomize (array, sizeof (array) / sizeof (array[0]));
 
   // do the rebinds
   for (size_t i = 0; i < ACE_NS_MAX_ENTRIES; i++)
@@ -111,7 +123,9 @@ static void
 test_unbind (ACE_Naming_Context &ns_context)
 {
   int array [ACE_NS_MAX_ENTRIES];
-  randomize (array, sizeof array / sizeof (int));
+
+  initialize_array (array, sizeof (array) / sizeof (array[0]));
+  randomize (array, sizeof (array) / sizeof (array[0]));
 
   // do the unbinds
   for (size_t i = 0; i < ACE_NS_MAX_ENTRIES; i++)
@@ -130,7 +144,9 @@ test_find (ACE_Naming_Context &ns_context, int sign, int result)
   char temp_type[BUFSIZ];
 
   int array [ACE_NS_MAX_ENTRIES];
-  randomize (array, sizeof array / sizeof (int));
+
+  initialize_array (array, sizeof (array) / sizeof (array[0]));
+  randomize (array, sizeof (array) / sizeof (array[0]));
 
   // do the finds
   for (size_t i = 0; i < ACE_NS_MAX_ENTRIES; i++)
