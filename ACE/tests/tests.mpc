@@ -1087,6 +1087,9 @@ project(Time Value Test) : acetest {
 project(Timer Queue Test) : acetest {
   avoids += ace_for_tao
   exename = Timer_Queue_Test
+  Header_Files {
+    randomize.h
+  }
   Source_Files {
     Timer_Queue_Test.cpp
   }
@@ -1148,7 +1151,9 @@ project(Naming Test) : acetest {
   avoids   += ace_for_tao
   exename   = Naming_Test
   requires += ace_other
-
+  Header_Files {
+    randomize.h
+  }
   Source_Files {
     Naming_Test.cpp
   }
@@ -1464,12 +1469,3 @@ project(Bug_2610_Regression_Test) : acetest {
     Bug_2610_Regression_Test.cpp
   }
 }
-
-project(Bug_2912_Regression_Test) : acetest, ssl {
-  avoids += ace_for_tao
-  exename = Bug_2912_Regression_Test
-  Source_Files {
-    Bug_2912_Regression_Test.cpp
-  }
-}
-

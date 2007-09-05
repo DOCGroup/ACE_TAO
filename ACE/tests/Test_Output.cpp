@@ -83,7 +83,7 @@ ACE_Test_Output::set_output (const ACE_TCHAR *filename, int append)
   ACE_LOG_MSG->msg_ostream (&cout);
 
 #else
-  ACE_TCHAR temp[MAXPATHLEN];
+  ACE_TCHAR temp[MAXPATHLEN + 1] = { 0 };
   // Ignore the error value since the directory may already exist.
   const ACE_TCHAR *test_dir;
 
@@ -91,13 +91,15 @@ ACE_Test_Output::set_output (const ACE_TCHAR *filename, int append)
 #  if defined (ACE_WIN32) || !defined (ACE_USES_WCHAR)
   test_dir = ACE_OS::getenv (ACE_TEXT ("ACE_TEST_DIR"));
 #  else
-  ACE_TCHAR tempenv[MAXPATHLEN];
-  char *test_dir_n = ACE_OS::getenv ("ACE_TEST_DIR");
+  ACE_TCHAR tempenv[MAXPATHLEN + 1] = { 0 };
+  char const * const test_dir_n = ACE_OS::getenv ("ACE_TEST_DIR");
   if (test_dir_n == 0)
     test_dir = 0;
   else
     {
-      ACE_OS::strcpy (tempenv, ACE_TEXT_CHAR_TO_TCHAR (test_dir_n));
+      ACE_OS::strncpy (tempenv,
+                       ACE_TEXT_CHAR_TO_TCHAR (test_dir_n),
+                       MAXPATHLEN);
       test_dir = tempenv;
     }
 #  endif /* ACE_WIN32 || !ACE_USES_WCHAR */
@@ -109,11 +111,11 @@ ACE_Test_Output::set_output (const ACE_TCHAR *filename, int append)
   // This could be done with ACE_OS::sprintf() but it requires different
   // format strings for wide-char POSIX vs. narrow-char POSIX and Windows.
   // Easier to keep straight like this.
-  ACE_OS_String::strcpy (temp, test_dir);
-  ACE_OS_String::strcat (temp, ACE_LOG_DIRECTORY);
-  ACE_OS_String::strcat
-    (temp, ACE::basename (filename, ACE_DIRECTORY_SEPARATOR_CHAR));
-  ACE_OS_String::strcat (temp, ACE_LOG_FILE_EXT_NAME);
+  ACE_OS::strncpy (temp, test_dir, MAXPATHLEN);
+  ACE_OS::strcat (temp, ACE_LOG_DIRECTORY);
+  ACE_OS::strcat (temp,
+                  ACE::basename (filename, ACE_DIRECTORY_SEPARATOR_CHAR));
+  ACE_OS::strcat (temp, ACE_LOG_FILE_EXT_NAME);
 
 #if defined (VXWORKS)
   // This is the only way I could figure out to avoid a console
@@ -220,27 +222,3 @@ ACE_Test_Output::close_singleton (void)
   delete ACE_Test_Output::instance_;
   ACE_Test_Output::instance_ = 0;
 }
-
-void
-randomize (int array[], size_t size)
-{
-  size_t i;
-
-  for (i = 0; i < size; i++)
-    array [i] = static_cast <int> (i);
-
-  // See with a fixed number so that we can produce "repeatable"
-  // random numbers.
-  ACE_OS::srand (0);
-
-  // Generate an array of random numbers from 0 .. size - 1.
-
-  for (i = 0; i < size; i++)
-    {
-      size_t index = ACE_OS::rand() % size--;
-      int temp = array [index];
-      array [index] = array [size];
-      array [size] = temp;
-    }
-}
-

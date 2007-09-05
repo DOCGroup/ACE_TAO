@@ -1,3 +1,32 @@
+Wed Sep  5 23:40:15 UTC 2007  Ossama Othman  <ossama_othman at symantec dot com>
+
+        * tests/Bug_2912_Regression.cpp:
+        * tests/tests.mpc:
+        * tests/SSL/tests.mpc:
+
+          Moved Bug_2912_Regression test to the SSL subdirectory.  It is
+          an SSL related test.
+
+        * tests/Naming_Test.cpp:
+        * tests/Test_Output.cpp (randomize):
+        * tests/Timer_Queue_Test.cpp:
+        * tests/randomize.h (randomize):
+        * tests/test_config.h:
+
+          Refactored test array element order randomization code to a
+          generic function template that can be leveraged by all tests.
+          In the process of refactoring the code, also corrected problem
+          where only the first half of the array elements were
+          randomized.
+
+        * tests/Reactor_Remove_Resume_Test.cpp (run_main):
+
+          Fixed typo in factory count calculation.
+
+        * tests/Test_Output.cpp:
+
+          Addressed some Coverity errors.
+
 Tue Sep  4 14:39:11 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * bin/fuzz.pl:
