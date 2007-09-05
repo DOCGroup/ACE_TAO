@@ -1,0 +1,995 @@
+<?xml version="1.0"?>
+
+<!-- IIOP Pluggable Protocol specialization
+ *   ======================================
+ *   This specializes the pluggable protocol framework within
+ *   TAO for the IIOP concrete protocol implementation. This
+ *   specialization encompasses specializations, such as
+ *   specializations for the Transport, Profile, end-point,
+ *   Acceptor and Connector implementations within ACE+TAO.
+ *
+ *   @author Arvind S. Krishna <arvindk@dre.vanderbilt.edu>
+ *   $Id$
+-->
+<transform>
+
+<module name="TAO/tao">
+
+<!-- Transformations to Transport implementation in TAO -->
+<file name="Transport.h">
+
+<!-- Search for TAO_Connection_Handler -->
+<substitute match-line="yes">
+ <search>class TAO_Connection_Handler;</search>
+ <replace>#include "tao/Connection_Handler.h"</replace>
+</substitute>
+
+<!-- Add forward declarations and includes specific to
+     IIOP -->
+<add>
+ <hook>TAO_TRANSPORT_SPL_INCLUDE_FORWARD_DECL_ADD_HOOK</hook>
+ <data>
+namespace IIOP
+{
+  class ListenPointList;
+}
+
+class TAO_Acceptor;
+class TAO_Adapter;
+ </data>
+</add>
+
+<!-- Remove all virtual and pure virtual methods in this
+     class -->
+<remove>virtual</remove>
+
+<substitute match-line="yes">
+ <search>= 0;</search>
+ <replace>;</replace>
+</substitute>
+
+<!-- Replace the base class constructor with the derive
+     classes's constructor -->
+<substitute match-line="yes">
+ <search>TAO_Transport \(CORBA::ULong tag,</search>
+ <replace>TAO_Transport (TAO_IIOP_Connection_Handler *, CORBA::ULong tag,
+  </replace>
+</substitute>
+
+<!-- Add public methods defined in IIOP_Transport -->
+<add>
+ <hook>TAO_TRANSPORT_SPL_PUBLIC_METHODS_ADD_HOOK</hook>
+ <data>
+
+ /// Bridge method to call a similar method on the connection handler
+  void update_protocol_properties (int send_buffer_size,
+                                   int recv_buffer_size,
+                                   int no_delay,
+                                   int enable_network_priority);
+
+ /// Generate the request header
+ int generate_request_header (TAO_Operation_Details &amp;opd,
+                              TAO_Target_Specification &amp;spec,
+                              TAO_OutputCDR &amp;msg);
+ </data>
+</add>
+
+<!-- Add private methods from IIOP_Transport -->
+<add>
+ <hook>TAO_TRANSPORT_SPL_PRIVATE_METHODS_ADD_HOOK</hook>
+ <data>
+  void set_bidir_context_info (TAO_Operation_Details &amp;opdetails);
+  int get_listen_point (IIOP::ListenPointList &amp;listen_point_list,
+                        TAO_Acceptor *acceptor);
+ </data>
+</add>
+
+<!-- Add private data from IIOP_Transport -->
+<add>
+ <hook>TAO_TRANSPORT_SPL_DATA_MEMBERS_ADD_HOOK</hook>
+ <data>
+  /// The connection service handler used for accessing lower layer
+  /// communication protocols.
+  TAO_IIOP_Connection_Handler *connection_handler_;
+
+  /// Our messaging object.
+  TAO_Pluggable_Messaging *messaging_object_;
+ </data>
+</add>
+
+<!-- Typedef the TAO_Transport as IIOP_Transport -->
+<add>
+ <hook>TAO_TRANSPORT_SPL_EXTERN_ADD_HOOK</hook>
+ <data>typedef TAO_Transport TAO_IIOP_Transport;</data>
+</add>
+
+<!-- This method is overridden in the derived class -->
+<substitute>
+ <search>generate_request_header</search>
+ <replace>generate_request_header_base__</replace>
+</substitute>
+
+</file>
+
+<file name="Transport.cpp">
+
+<!-- Add necessary includes -->
+<add>
+ <hook>TAO_TRANSPORT_SPL_INCLUDE_FORWARD_DECL_ADD_HOOK</hook>
+ <data>
+#include "Transport_Acceptor.h"
+#include "IIOPC.h"
+#include "Acceptor_Registry.h"
+#include "operation_details.h"
+#include "GIOP_Message_Base.h"
+#include "Protocols_Hooks.h"
+ </data>
+</add>
+
+<!-- Modify the TAO constructor adding the IIOP Transport's data -->
+<substitute match-line="yes">
+ <search>TAO_Transport::TAO_Transport \(CORBA::ULong tag,</search>
+ <replace>TAO_Transport::TAO_Transport (TAO_IIOP_Connection_Handler *handler,
+                                        CORBA::ULong tag,
+ </replace>
+</substitute>
+
+<substitute match-line="yes">
+ <search>, partial_message_ \(0\)</search>
+ <replace>  , partial_message_ (0)
+  , connection_handler_ (handler)
+  , messaging_object_ (0)
+ </replace>
+</substitute>
+
+<!-- Within the constructor create/initialize the messaging object -->
+<add>
+ <hook>TAO_TRANSPORT_SPL_CONSTRUCTOR_ADD_HOOK</hook>
+ <data>
+  // Use the normal GIOP object
+  ACE_NEW (this->messaging_object_,
+           TAO_GIOP_Message_Base (orb_core));
+ </data>
+</add>
+
+<add>
+ <hook>TAO_TRANSPORT_SPL_DESTRUCTOR_ADD_HOOK</hook>
+ <data>delete this->messaging_object_;</data>
+</add>
+
+<!-- comment out unimplemented base class methods -->
+<comment>
+ <start-hook>TAO_TRANSPORT_SPL_COMMENT_HOOK_START</start-hook>
+ <end-hook>TAO_TRANSPORT_SPL_COMMENT_HOOK_END</end-hook>
+</comment>
+
+<!-- Add the concrete methods from IIOP_Transport implementation -->
+<copy-from-source>
+ <source>IIOP_Transport.cpp</source>
+
+ <copy-hook-start>TAO_TRANSPORT_SPL_COPY_HOOK_START</copy-hook-start>
+ <copy-hook-end>TAO_TRANSPORT_SPL_COPY_HOOK_END</copy-hook-end>
+
+ <dest-hook>TAO_TRANSPORT_SPL_METHODS_ADD_HOOK</dest-hook>
+</copy-from-source>
+
+<!-- The derived class calls this method. Override this -->
+<substitute>
+ <search>TAO_Transport::generate_request_header</search>
+ <replace>TAO_Transport::generate_request_header_base__</replace>
+</substitute>
+
+</file>
+
+<!-- Transformations to specialize Connection_Handler class -->
+<file name="Connection_Handler.h">
+
+<!-- Remove the default constructor, NOTE: we use regular expressions
+     to match the constructor but not the destructor  -->
+<remove>\s+TAO_Connection_Handler\s*\(void\);</remove>
+
+<!-- Make sure that Connection_Handler inherits from SVC_HANDLER -->
+<substitute match-line="yes">
+ <search>: public TAO_LF_CH_Event</search>
+ <replace>: public TAO_IIOP_SVC_HANDLER,
+            public TAO_LF_CH_Event
+ </replace>
+</substitute>
+
+<!-- Forward declarations -->
+<add>
+ <hook>CONNECTION_HANDLER_SPL_INCLUDE_FORWARD_DECL_ADD_HOOK</hook>
+ <data>
+#include "ace/Svc_Handler.h"
+#include "ace/SOCK_Stream.h"
+
+typedef ACE_Svc_Handler &lt; ACE_SOCK_STREAM, ACE_NULL_SYNCH &gt;
+        TAO_IIOP_SVC_HANDLER;
+
+namespace IIOP
+{
+  class ListenPointList;
+}
+ </data>
+</add>
+
+<!-- Public methods from IIOP_Connection_Handler class -->
+<add>
+ <hook>CONNECTION_HANDLER_SPL_PUBLIC_METHODS_ADD_HOOK</hook>
+ <data>
+  int open (void *);
+  int close (u_long = 0);
+
+  int resume_handler (void);
+  int handle_output (ACE_HANDLE);
+  int handle_close (ACE_HANDLE, ACE_Reactor_Mask);
+  int handle_timeout (const ACE_Time_Value &amp;current_time,
+                      const void *act = 0);
+
+  /// Add ourselves to Cache.
+  int add_transport_to_cache (void);
+
+  /// Process the @a listen_list
+  int process_listen_point_list (IIOP::ListenPointList &amp;listen_list);
+
+  /// Check if network priority needs to be enabled
+  int enable_network_priority (void);
+
+  TAO_Connection_Handler (ACE_Thread_Manager * = 0);
+
+  /// Constructor.
+  TAO_Connection_Handler (TAO_ORB_Core *orb_core,
+                          CORBA::Boolean flag);
+ </data>
+</add>
+
+<!-- Private data members -->
+<add>
+ <hook>CONNECTION_HANDLER_SPL_PRIVATE_DATA_ADD_HOOK</hook>
+ <data>int dscp_codepoint_;</data>
+</add>
+
+<!-- Typedef the class -->
+<add>
+ <hook>CONNECTION_HANDLER_SPL_EXTERN_ADD_HOOK</hook>
+ <data>typedef TAO_Connection_Handler TAO_IIOP_Connection_Handler;</data>
+</add>
+
+<!-- Remove all virtuals and =0; from the code -->
+<remove>virtual</remove>
+
+<substitute match-line="yes">
+  <search>= 0;</search>
+  <replace>;</replace>
+</substitute>
+
+</file>
+
+<file name="Connection_Handler.cpp">
+
+<!-- Add the include hook -->
+<add>
+ <hook>CONNECTION_HANDLER_SPL_INCLUDE_FORWARD_DECL_ADD_HOOK</hook>
+  <data>
+#include "IIOPC.h"
+#include "Thread_Lane_Resources.h"
+#include "Base_Transport_Property.h"
+#include "Protocols_Hooks.h"
+#include "Wait_Strategy.h"
+
+#include "ace/os_include/netinet/os_tcp.h"
+#include "ace/os_include/os_netdb.h"
+ </data>
+</add>
+
+<!-- IIOP_Connection_Handler constructors added -->
+<add>
+  <hook>CONNECTION_HANDLER_SPL_METHODS_ADD_HOOK</hook>
+  <data>
+TAO_Connection_Handler::TAO_Connection_Handler (ACE_Thread_Manager *t)
+  : TAO_IIOP_SVC_HANDLER (t, 0 , 0),
+    orb_core_ (0),
+    dscp_codepoint_ (IPDSFIELD_DSCP_DEFAULT &lt;&lt; 2)
+{
+  ACE_ASSERT (0);
+}
+
+TAO_Connection_Handler::TAO_Connection_Handler (
+  TAO_ORB_Core *orb_core,
+  CORBA::Boolean flag)
+  : TAO_IIOP_SVC_HANDLER (orb_core->thr_mgr (), 0, 0),
+    orb_core_ (orb_core),
+    transport_ (0),
+    dscp_codepoint_ (IPDSFIELD_DSCP_DEFAULT &lt;&lt; 2)
+{
+  TAO_IIOP_Transport* specific_transport = 0;
+  ACE_NEW (specific_transport,
+           TAO_IIOP_Transport (this, IOP::TAG_INTERNET_IOP, orb_core));
+
+  // store this pointer (indirectly increment ref count)
+  this->transport (specific_transport);
+
+  // @@todo: We need to have a distinct option/ method in the resource
+  // factory for this and TAO_Transport.
+  this->lock_ =
+    this->orb_core_->resource_factory ()->create_cached_connection_lock ();
+
+  // Put ourselves in the connection wait state as soon as we get
+  // created
+  this->state_changed (TAO_LF_Event::LFS_CONNECTION_WAIT,
+                       this->orb_core_->leader_follower ());
+}
+ </data>
+</add>
+
+<!-- Replace all occurances of IIOP_Connection_Handler with that
+     of TAO_Connection_Handler -->
+<substitute>
+  <search>TAO_IIOP_Connection_Handler</search>
+  <replace>TAO_Connection_Handler</replace>
+</substitute>
+
+<!-- Comment out base class methods that are over-ridden in the
+     derived class -->
+<comment>
+  <start-hook>CONNECTION_HANDLER_SPL_COMMENT_HOOK_START</start-hook>
+  <end-hook>CONNECTION_HANDLER_SPL_COMMENT_HOOK_END</end-hook>
+</comment>
+
+<!-- Copy operations from IIOP_Connection_Handler class and put them
+     in the Connection_Handler class -->
+
+<copy-from-source>
+
+ <source>IIOP_Connection_Handler.cpp</source>
+ <copy-hook-start>CONNECTION_HANDLER_SPL_COPY_HOOK_START</copy-hook-start>
+ <copy-hook-end>CONNECTION_HANDLER_SPL_COPY_HOOK_END</copy-hook-end>
+ <dest-hook>CONNECTION_HANDLER_SPL_METHODS_ADD_HOOK</dest-hook>
+
+</copy-from-source>
+
+<add>
+ <hook>CONNECTION_HANDLER_DESTRUCTOR_ADD_HOOK</hook>
+ <data>delete this->transport ();</data>
+</add>
+
+</file>
+
+<!-- Modifications to Acceptor and Connector Components in TAO -->
+<file name="Transport_Acceptor.h">
+
+<!-- Forward declaration -->
+<add>
+ <hook>TAO_ACCEPTOR_SPL_INCLUDE_FORWARD_DECL_ADD_HOOK</hook>
+ <data>
+#include "tao/Connection_Handler.h"
+#include "tao/Acceptor_Impl.h"
+#include "tao/GIOP_Message_Version.h"
+#include "ace/Acceptor.h"
+#include "ace/SOCK_Acceptor.h"
+ </data>
+</add>
+
+<!-- Methods from IIOP_Acceptor components -->
+<copy-from-source>
+ <source>IIOP_Acceptor.h</source>
+ <copy-hook-start>TAO_ACCEPTOR_SPL_CONCRETE_METHODS_COPY_HOOK_START</copy-hook-start>
+ <copy-hook-end>TAO_ACCEPTOR_SPL_CONCRETE_METHODS_COPY_HOOK_END</copy-hook-end>
+ <dest-hook>TAO_ACCEPTOR_SPL_PUBLIC_METHODS_ADD_HOOK</dest-hook>
+</copy-from-source>
+
+<!-- Typedef hook -->
+<add>
+ <hook>TAO_ACCEPTOR_SPL_EXTERN_ADD_HOOK</hook>
+ <data>typedef TAO_Acceptor TAO_IIOP_Acceptor;
+ #if defined(__ACE_INLINE__)
+ #include "tao/IIOP_Acceptor.i"
+ #endif /* __ACE_INLINE__ */
+ </data>
+</add>
+
+<!-- Private data memeber -->
+<copy-from-source>
+ <source>IIOP_Acceptor.h</source>
+
+ <copy-hook-start>TAO_ACCEPTOR_SPL_DATA_MEMBERS_COPY_HOOK_START</copy-hook-start>
+ <copy-hook-end>TAO_ACCEPTOR_SPL_DATA_MEMBERS_COPY_HOOK_END</copy-hook-end>
+
+ <dest-hook>TAO_ACCEPTOR_SPL_DATA_MEMBERS_ADD_HOOK</dest-hook>
+</copy-from-source>
+
+<!-- Eliminate the virtual functions -->
+<remove>virtual</remove>
+<substitute match-line="yes">
+ <search>= 0;</search>
+ <replace>;</replace>
+</substitute>
+
+<!-- Remove destructor -->
+<remove>~TAO_IIOP_Acceptor \(void\);</remove>
+
+<substitute>
+ <search>TAO_IIOP_Acceptor</search>
+ <replace>TAO_Acceptor</replace>
+</substitute>
+
+</file>
+
+<!-- Transformations to Transport_Acceptor.cpp -->
+<file name="Transport_Acceptor.cpp">
+
+<copy-from-source>
+ <source>IIOP_Acceptor.cpp</source>
+
+ <copy-hook-start>TAO_ACCEPTOR_SPL_COPY_HOOK_START</copy-hook-start>
+ <copy-hook-end>TAO_ACCEPTOR_SPL_COPY_HOOK_END</copy-hook-end>
+
+ <dest-hook>TAO_ACCEPTOR_SPL_METHODS_ADD_HOOK</dest-hook>
+</copy-from-source>
+
+<!-- Modify the constructor -->
+<substitute match-line="yes">
+ <search>: TAO_Acceptor \(IOP::TAG_INTERNET_IOP\),</search>
+ <replace>: tag_ (IOP::TAG_INTERNET_IOP),
+ </replace>
+</substitute>
+
+<!-- Add mthods to the destructor -->
+<add>
+ <hook>TAO_ACCEPTOR_DESTRUCTOR_ADD_HOOK</hook>
+ <data>
+  this->close ();
+  delete this->creation_strategy_;
+  delete this->concurrency_strategy_;
+  delete this->accept_strategy_;
+
+  delete [] this->addrs_;
+
+  for (CORBA::ULong i = 0; i &lt; this->endpoint_count_; ++i)
+    CORBA::string_free (this->hosts_[i]);
+
+  delete [] this->hosts_;
+ </data>
+</add>
+
+<!-- Trasnform IIOP_Acceptor to TAO_Acceptor -->
+<substitute match-line="yes">
+ <search>#include "tao/IIOP_Acceptor.h"</search>
+ <replace> </replace>
+</substitute>
+
+<substitute match-line="yes">
+ <search>#include "tao/IIOP_Profile.h"</search>
+ <replace>#include "tao/Profile.h"</replace>
+</substitute>
+
+<substitute>
+ <search>TAO_IIOP_Acceptor::TAO_IIOP_Acceptor</search>
+ <replace>TAO_Acceptor::TAO_Acceptor</replace>
+</substitute>
+
+</file>
+
+<file name="tao.mpc">
+
+<!-- Do not build all IIOP_* files as the specializations
+     are moved to the base classes -->
+
+<substitute>
+ <search>IIOP_Transport.cpp</search>
+ <replace>// IIOP_Transport.cpp </replace>
+</substitute>
+
+<substitute>
+ <search>IIOP_Transport.h</search>
+ <replace>// IIOP_Transport.h</replace>
+</substitute>
+
+<substitute>
+ <search>IIOP_Connection_Handler.cpp</search>
+ <replace>// IIOP_Connection_Handler.cpp</replace>
+</substitute>
+<substitute>
+ <search>IIOP_Connection_Handler.h</search>
+ <replace>// IIOP_Connection_Handler.h</replace>
+</substitute>
+
+<substitute>
+ <search>IIOP_Acceptor.cpp</search>
+ <replace>// IIOP_Acceptor.cpp</replace>
+</substitute>
+<substitute>
+ <search>IIOP_Acceptor.h</search>
+ <replace>// IIOP_Acceptor.h</replace>
+</substitute>
+
+<substitute>
+ <search>IIOP_Connector.cpp</search>
+ <replace>// IIOP_Connector.cpp</replace>
+</substitute>
+
+<substitute>
+ <search>IIOP_Endpoint.cpp</search>
+ <replace>// IIOP_Endpoint.cpp</replace>
+</substitute>
+
+<substitute>
+ <search>IIOP_Connector.h</search>
+ <replace>// IIOP_Connector.h</replace>
+</substitute>
+
+<substitute>
+ <search>IIOP_Endpoint.h</search>
+ <replace>// IIOP_Endpoint.h</replace>
+</substitute>
+
+<substitute>
+ <search>IIOP_Profile.cpp</search>
+ <replace>// IIOP_Profile.cpp</replace>
+</substitute>
+<substitute>
+ <search>IIOP_Profile.h</search>
+ <replace>// IIOP_Profile.h</replace>
+</substitute>
+
+</file>
+
+<file name="Endpoint.h">
+
+<!-- Include and forward declation add hook -->
+<add>
+ <hook>TAO_ENDPOINT_SPL_INCLUDE_FORWARD_DECL_ADD_HOOK</hook>
+ <data>
+#include "tao/IIOP_EndpointsC.h"
+#include "ace/INET_Addr.h"
+ </data>
+</add>
+
+<!-- Copy the private member declarations from IIOP_Endpoint
+     implementation -->
+
+<copy-from-source>
+  <source>IIOP_Endpoint.h</source>
+
+  <copy-hook-start>TAO_ENDPOINT_SPL_PRIVATE_DATA_COPY_HOOK_START</copy-hook-start>
+  <copy-hook-end>TAO_ENDPOINT_SPL_PRIVATE_DATA_COPY_HOOK_END</copy-hook-end>
+
+  <dest-hook>TAO_ENDPOINT_SPL_PRIVATE_DATA_ADD_HOOK</dest-hook>
+</copy-from-source>
+
+<copy-from-source>
+ <source>IIOP_Endpoint.h</source>
+ <copy-hook-start>TAO_ENDPOINT_SPL_PUBLIC_METHODS_COPY_HOOK_START</copy-hook-start>
+ <copy-hook-end>TAO_ENDPOINT_SPL_PUBLIC_METHODS_COPY_HOOK_END</copy-hook-end>
+ <dest-hook>TAO_ENDPOINT_SPL_PUBLIC_METHODS_ADD_HOOK</dest-hook>
+</copy-from-source>
+
+<!-- Remove the unimplemented copy constructor of the base class -->
+<remove>ACE_UNIMPLEMENTED_FUNC \(TAO_Endpoint \(const TAO_Endpoint&amp;\)\)</remove>
+
+<substitute>
+ <search>TAO_IIOP_Endpoint</search>
+ <replace>TAO_Endpoint</replace>
+</substitute>
+
+<substitute>
+ <search>TAO_IIOP_Profile</search>
+ <replace>TAO_Profile</replace>
+</substitute>
+
+<add>
+ <hook>TAO_ENDPOINT_SPL_EXTERN_ADD_HOOK</hook>
+ <data>typedef TAO_Endpoint TAO_IIOP_Endpoint;
+       #if defined (__ACE_INLINE__)
+       # include "tao/IIOP_Endpoint.i"
+       #endif /* __ACE_INLINE__ */
+ </data>
+</add>
+
+<!-- Eliminate the virtual functions -->
+<remove>virtual</remove>
+<substitute match-line="yes">
+ <search>= 0;</search>
+ <replace>;</replace>
+</substitute>
+
+</file>
+
+<file name="Endpoint.cpp">
+
+  <copy-from-source>
+   <source>IIOP_Endpoint.cpp</source>
+   <copy-hook-start>TAO_ENDPOINT_SPL_COPY_HOOK_START</copy-hook-start>
+   <copy-hook-end>TAO_ENDPOINT_SPL_COPY_HOOK_END</copy-hook-end>
+   <dest-hook>TAO_ENDPOINT_SPL_METHODS_ADD_HOOK</dest-hook>
+  </copy-from-source>
+
+  <!-- In the constructors copied from the derived class, there is a
+       invocation of the base class constructor. Expand it -->
+  <substitute match-line="yes">
+    <search>: TAO_Endpoint \(IOP::TAG_INTERNET_IOP\)</search>
+    <replace>: addr_lookup_lock_ ()
+              , hash_val_ (0)
+              , tag_ (IOP::TAG_INTERNET_IOP)
+              , priority_ (TAO_INVALID_PRIORITY)
+    </replace>
+  </substitute>
+
+  <substitute match-line="yes">
+    <search>: TAO_Endpoint \(IOP::TAG_INTERNET_IOP, priority\)</search>
+    <replace>: addr_lookup_lock_ ()
+              , hash_val_ (0)
+              , tag_ (IOP::TAG_INTERNET_IOP)
+              , priority_ (priority)
+    </replace>
+  </substitute>
+
+  <substitute match-line="yes">
+   <search>: TAO_Endpoint \(rhs.tag_, rhs.priority_\)</search>
+   <replace>: addr_lookup_lock_ ()
+             , hash_val_ (0)
+             , tag_ (rhs.tag_)
+             , priority_ (rhs.priority_)
+   </replace>
+ </substitute>
+
+<substitute>
+ <search>TAO_IIOP_Endpoint</search>
+ <replace>TAO_Endpoint</replace>
+</substitute>
+
+<remove>#include "IIOP_Endpoint.h"</remove>
+
+</file>
+
+<file name="Transport_Connector.h">
+
+<add>
+ <hook>TAO_CONNECTOR_SPL_INCLUDE_FORWARD_DECL_ADD_HOOK</hook>
+ <data>
+#include "ace/SOCK_Connector.h"
+#include "ace/Connector.h"
+#include "tao/Connector_Impl.h"
+#include "tao/Connection_Handler.h"
+ </data>
+</add>
+
+<copy-from-source>
+ <source>IIOP_Connector.h</source>
+ <copy-hook-start>TAO_CONNECTOR_SPL_PUBLIC_METHODS_COPY_HOOK_START</copy-hook-start>
+ <copy-hook-end>TAO_CONNECTOR_SPL_PUBLIC_METHODS_COPY_HOOK_END</copy-hook-end>
+ <dest-hook>TAO_CONNECTOR_SPL_PUBLIC_METHODS_ADD_HOOK</dest-hook>
+</copy-from-source>
+
+<!-- IIOP_Connector's constructor -->
+<add>
+ <hook>TAO_CONNECTOR_SPL_PUBLIC_METHODS_ADD_HOOK</hook>
+ <data>  TAO_Connector (CORBA::Boolean flag = 0);</data>
+</add>
+
+<copy-from-source>
+ <source>IIOP_Connector.h</source>
+ <copy-hook-start>TAO_CONNECTOR_SPL_COPY_HOOK_START</copy-hook-start>
+ <copy-hook-end>TAO_CONNECTOR_SPL_COPY_HOOK_END</copy-hook-end>
+ <dest-hook>TAO_CONNECTOR_SPL_PRIVATE_DATA_ADD_HOOK</dest-hook>
+</copy-from-source>
+
+<add>
+ <hook>TAO_CONNECTOR_SPL_EXTERN_ADD_HOOK</hook>
+ <data>typedef TAO_Connector TAO_IIOP_Connector;</data>
+</add>
+
+<!-- eliminate all virtual methods -->
+<remove>virtual</remove>
+
+<substitute match-line="yes">
+  <search>= 0;</search>
+  <replace>;</replace>
+</substitute>
+
+<substitute match-line="yes">
+ <search>class TAO_Endpoint;</search>
+ <replace>#include "tao/Endpoint.h"</replace>
+</substitute>
+
+</file>
+
+<file name="Transport_Connector.cpp">
+
+<add>
+ <hook>TAO_CONNECTOR_SPL_INCLUDE_ADD_HOOK</hook>
+ <data>
+#include "ace/OS_NS_strings.h"
+ </data>
+</add>
+
+<!-- Instrument the constructor -->
+<substitute match-line="yes">
+ <search>: TAO_Connector \(IOP::TAG_INTERNET_IOP\)</search>
+ <replace>: active_connect_strategy_ (0)
+          , tag_ (IOP::TAG_INTERNET_IOP)
+          , orb_core_ (0)
+ </replace>
+</substitute>
+
+<copy-from-source>
+ <source>IIOP_Connector.cpp</source>
+
+ <copy-hook-start>TAO_CONNECTOR_SPL_COPY_HOOK_START</copy-hook-start>
+ <copy-hook-end>TAO_CONNECTOR_SPL_COPY_HOOK_END</copy-hook-end>
+
+ <dest-hook>TAO_CONNECTOR_SPL_METHODS_ADD_HOOK</dest-hook>
+</copy-from-source>
+
+<!-- replace all IIOP_Connector with TAO_Connector -->
+<substitute>
+ <search>TAO_IIOP_Connector</search>
+ <replace>TAO_Connector</replace>
+</substitute>
+
+</file>
+
+<file name="IIOP_Factory.cpp">
+
+<substitute match-line="yes">
+  <search>#include "IIOP_Acceptor.h"</search>
+  <replace>#include "Transport_Acceptor.h"</replace>
+</substitute>
+
+<substitute match-line="yes">
+ <search>#include "IIOP_Connector.h"</search>
+ <replace>#include "Transport_Connector.h"</replace>
+</substitute>
+</file>
+
+<file name="IIOP_Lite_Factory.cpp">
+
+<substitute match-line="yes">
+  <search>#include "IIOP_Acceptor.h"</search>
+  <replace>#include "Transport_Acceptor.h"</replace>
+</substitute>
+
+<substitute match-line="yes">
+ <search>#include "IIOP_Connector.h"</search>
+ <replace>#include "Transport_Connector.h"</replace>
+</substitute>
+</file>
+
+<!-- Transformations to Profile class to make it tailored for IIOP
+     Profile -->
+<file name="Profile.h">
+
+<!-- include and forward declarations -->
+<substitute match-line="yes">
+ <search>class TAO_Endpoint;</search>
+ <replace>#include "tao/Endpoint.h"</replace>
+</substitute>
+
+<!-- Remove all virtual methods -->
+<remove>virtual</remove>
+<substitute match-line="yes">
+ <search>= 0;</search>
+ <replace>;</replace>
+</substitute>
+
+<!-- Copy all public methods from IIOP_Profile.h -->
+<copy-from-source>
+ <source>IIOP_Profile.h</source>
+ <copy-hook-start>TAO_PROFILE_SPL_PUBLIC_METHODS_COPY_HOOK_START</copy-hook-start>
+ <copy-hook-end>TAO_PROFILE_SPL_PUBLIC_METHODS_COPY_HOOK_END</copy-hook-end>
+ <dest-hook>TAO_PROFILE_SPL_PUBLIC_METHODS_ADD_HOOK</dest-hook>
+</copy-from-source>
+
+<!-- Add proteccted data from IIOP_Profile class -->
+<copy-from-source>
+ <source>IIOP_Profile.h</source>
+ <copy-hook-start>TAO_PROFILE_SPL_PROTECTED_METHODS_COPY_HOOK_START</copy-hook-start>
+ <copy-hook-end>TAO_PROFILE_SPL_PROTECTED_METHODS_COPY_HOOK_END</copy-hook-end>
+ <dest-hook>TAO_PROFILE_SPL_PROTECTED_METHODS_ADD_HOOK</dest-hook>
+</copy-from-source>
+
+<!-- Add all the private data methods -->
+<copy-from-source>
+ <source>IIOP_Profile.h</source>
+ <copy-hook-start>TAO_PROFILE_SPL_PRIVATE_DATA_COPY_HOOK_START</copy-hook-start>
+ <copy-hook-end>TAO_PROFILE_SPL_PRIVATE_DATA_COPY_HOOK_END</copy-hook-end>
+ <dest-hook>TAO_PROFILE_SPL_PRIVATE_DATA_ADD_HOOK</dest-hook>
+</copy-from-source>
+
+<!-- Typedef the Profile class as IIOP_Profile -->
+<add>
+ <hook>TAO_PROFILE_SPL_EXTERN_ADD_HOOK</hook>
+ <data>
+typedef TAO_Profile TAO_IIOP_Profile;
+ </data>
+</add>
+
+<substitute>
+ <search>TAO_IIOP_Profile</search>
+ <replace>TAO_Profile</replace>
+</substitute>
+
+
+</file>
+
+<!-- Transformations to Profile.cpp file specialized with the
+     IIOP_Profile implementation -->
+<file name="Profile.cpp">
+
+<!-- comment out virtual methods in the base class that do nothing
+     but have implementations due to compiler issues -->
+<comment>
+ <start-hook>TAO_PROFILE_SPL_COMMENT_HOOK_START</start-hook>
+ <end-hook>TAO_PROFILE_SPL_COMMENT_HOOK_END</end-hook>
+</comment>
+
+<copy-from-source>
+ <source>IIOP_Profile.cpp</source>
+
+ <copy-hook-start>TAO_PROFILE_SPL_COPY_HOOK_START</copy-hook-start>
+ <copy-hook-end>TAO_PROFILE_SPL_COPY_HOOK_END</copy-hook-end>
+
+ <dest-hook>TAO_PROFILE_SPL_METHODS_ADD_HOOK</dest-hook>
+</copy-from-source>
+
+<!-- Add methods to the constructor of the Profile -->
+<!-- Constructors are the exceptional case, we need to add
+     them specifically -->
+
+<add>
+ <hook>TAO_PROFILE_SPL_METHODS_ADD_HOOK</hook>
+ <data>
+TAO_Profile::TAO_Profile (const ACE_INET_Addr &amp;addr,
+                          const TAO::ObjectKey &amp;object_key,
+                          const TAO_GIOP_Message_Version &amp;version,
+                          TAO_ORB_Core *orb_core)
+  : version_ (version)
+  , are_policies_parsed_ (false)
+  , addressing_mode_ (0)
+  , tagged_profile_ (0)
+  , ref_object_key_ (0)
+  , tag_ (IOP::TAG_INTERNET_IOP)
+  , orb_core_ (orb_core)
+  , forward_to_ (0)
+  , refcount_lock_ (0)
+  , refcount_ (1)
+  , endpoint_ (addr,
+               orb_core->orb_params ()->use_dotted_decimal_addresses ())
+  , count_ (1)
+{
+ // @@ NOTE: Need to probably use a different type of lock.
+  this->refcount_lock_ =
+    this->orb_core_->client_factory ()->create_profile_lock ();
+
+  (void) this->orb_core_->object_key_table ().bind (object_key,
+                                                    this->ref_object_key_);
+}
+
+TAO_Profile::TAO_Profile (const char* host,
+                          CORBA::UShort port,
+                          const TAO::ObjectKey &amp;object_key,
+                          const ACE_INET_Addr &amp;addr,
+                          const TAO_GIOP_Message_Version &amp;version,
+                          TAO_ORB_Core *orb_core)
+  : version_ (version)
+  , are_policies_parsed_ (false)
+  , addressing_mode_ (0)
+  , tagged_profile_ (0)
+  , ref_object_key_ (0)
+  , tag_ (IOP::TAG_INTERNET_IOP)
+  , orb_core_ (orb_core)
+  , forward_to_ (0)
+  , refcount_lock_ (0)
+  , refcount_ (1)
+  , endpoint_ (host, port, addr)
+  , count_ (1)
+{
+  // @@ NOTE: Need to probably use a different type of lock.
+  this->refcount_lock_ =
+    this->orb_core_->client_factory ()->create_profile_lock ();
+  (void) this->orb_core_->object_key_table ().bind (object_key,
+                                                    this->ref_object_key_);
+}
+
+TAO_Profile::TAO_Profile (TAO_ORB_Core *orb_core)
+  : version_ (TAO_GIOP_Message_Version (TAO_DEF_GIOP_MAJOR,
+                                        TAO_DEF_GIOP_MINOR))
+  , are_policies_parsed_ (false)
+  , addressing_mode_ (0)
+  , tagged_profile_ (0)
+  , ref_object_key_ (0)
+  , tag_ (IOP::TAG_INTERNET_IOP)
+  , orb_core_ (orb_core)
+  , forward_to_ (0)
+  , refcount_lock_ (0)
+  , refcount_ (1)
+  , endpoint_ ()
+  , count_ (1)
+{
+   this->refcount_lock_ =
+    this->orb_core_->client_factory ()->create_profile_lock ();
+}
+</data>
+</add>
+
+<add>
+ <hook>TAO_PROFILE_SPL_DESTRUCTOR_ADD_HOOK</hook>
+ <data>
+TAO_Endpoint *tmp = 0;
+for (TAO_Endpoint *next = this->endpoint ()->next ();
+     next != 0;
+     next = tmp)
+{
+    tmp = next->next ();
+    delete next;
+}
+ </data>
+</add>
+
+<!-- Replace all occurances of IIOP_Profile
+     with TAO_Profile -->
+<substitute>
+ <search>TAO_IIOP_Profile</search>
+ <replace>TAO_Profile</replace>
+</substitute>
+
+<!-- remove the dynamic casts, as now there is no
+     inheritance hiearchy -->
+<substitute>
+ <search>dynamic_cast</search>
+ <replace>static_cast</replace>
+</substitute>
+
+</file>
+
+<file name="Invocation_Endpoint_Selectors.cpp">
+
+<substitute match-line="yes">
+ <search>#include "tao/IIOP_Endpoint.h"</search>
+ <replace>#include "tao/Endpoint.h"</replace>
+</substitute>
+</file>
+
+<file name="orbconf.h">
+
+<substitute match-line="yes">
+ <search>TAO_HAS_UIOP 1</search>
+ <replace>TAO_HAS_UIOP 0</replace>
+</substitute>
+
+<substitute match-line="yes">
+ <search>TAO_HAS_SHMIOP 1</search>
+ <replace>TAO_HAS_SHMIOP 0</replace>
+</substitute>
+
+<substitute match-line="yes">
+ <search>TAO_HAS_MIOP 1</search>
+ <replace>TAO_HAS_MIOP 0</replace>
+</substitute>
+
+<substitute match-line="yes">
+ <search>TAO_HAS_DIOP 1</search>
+ <replace>TAO_HAS_DIOP 0</replace>
+</substitute>
+</file>
+</module>
+
+<module name="/TAO/tao/RTPortableServer">
+
+<file name="RT_Servant_Dispatcher.cpp">
+
+<substitute>
+ <search>IIOP_Transport.h</search>
+ <replace>Transport.h</replace>
+</substitute>
+
+<substitute>
+ <search>IIOP_Connection_Handler.h</search>
+ <replace>Connection_Handler.h</replace>
+</substitute>
+
+</file>
+
+</module>
+
+</transform>

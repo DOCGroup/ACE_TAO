@@ -1,0 +1,36 @@
+// -*- MPC -*-
+// $Id$
+
+project(*idl): taoidldefaults, ami {
+  IDL_Files {
+    timeout.idl
+  }
+  custom_only = 1
+}
+
+project(*Server): taoserver, ami {
+  after += *idl
+  Source_Files {
+    timeout_i.cpp
+    timeout_client.cpp
+    server.cpp
+    timeoutS.cpp
+    timeoutC.cpp
+  }
+  IDL_Files {
+  }
+}
+
+project(*Client): taoserver, ami {
+  after += *idl
+  exename = client
+  Source_Files {
+    timeout_i.cpp
+    timeout_client.cpp
+    client.cpp
+    timeoutS.cpp
+    timeoutC.cpp
+  }
+  IDL_Files {
+  }
+}

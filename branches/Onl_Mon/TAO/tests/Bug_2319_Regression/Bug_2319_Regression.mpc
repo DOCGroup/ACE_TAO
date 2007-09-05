@@ -1,0 +1,8 @@
+// -*- MPC -*-
+// $Id$
+
+project(*server) : taoserver, amh {
+  source_files {
+    server.cpp
+  }
+}
