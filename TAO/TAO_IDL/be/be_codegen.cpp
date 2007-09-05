@@ -854,13 +854,10 @@ TAO_CodeGen::server_inline (void)
 int
 TAO_CodeGen::start_anyop_header (const char *fname)
 {
-  // It's ok, maybe even somtimes desirable, to generate an empty
-  // *A.h file even if Any operator generation is suppressed.
-  bool go_ahead =
-    (be_global->gen_anyop_files () && be_global->any_support ())
-     || be_global->gen_empty_anyop_header ();
-     
-  if (!go_ahead)
+  // We may want to generate the full file or generate an empty
+  // one, but this is the only condition under which we want to 
+  // skip it completely.
+  if (!be_global->gen_anyop_files () && !be_global->gen_empty_anyop_header ())
     {
       return 0;
     }
@@ -889,11 +886,17 @@ TAO_CodeGen::start_anyop_header (const char *fname)
                          "Error opening file\n"),
                         -1);
     }
+    
+  // We want the empty file not only with -GX
+  // but also when -GA appears with -Sa or -St.  
+  bool gen_empty_file = be_global->gen_empty_anyop_header ()
+                        || be_global->gen_anyop_files ()
+                           && !be_global->any_support ();
 
-  if (be_global->gen_empty_anyop_header ())
+  if (gen_empty_file)
     {
       *this->anyop_header_ << be_nl
-                           << "// Generated empty using -GX" << be_nl
+                           << "// Generated empty file" << be_nl
                            << be_nl;
       return 0;
     }
