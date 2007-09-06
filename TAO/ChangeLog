@@ -1,4 +1,12 @@
-Thu Sep  6 09:24:12 UTC 2007  Johnny WIllemsen  <jwillemsen@remedy.nl>
+Thu Sep  6 09:30:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Incoming_Message_Stack.h:
+          Improved CodeGear C++ Builder support
+
+        * tao/Utils/ORB_Manager.cpp:
+          Layout changes
+
+Thu Sep  6 09:24:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/ESF/ESF_Proxy_RefCount_Guard.h:
         * orbsvcs/orbsvcs/PortableGroup.idl:
