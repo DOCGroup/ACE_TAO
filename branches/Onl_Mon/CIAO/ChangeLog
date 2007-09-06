@@ -1,3 +1,31 @@
+Thu Sep  6 23:14:59 UTC 2007  Nilabja R  <nilabjar@dre.vanderbilt.edu>
+
+        * DAnCE/Deployment/QoS.idl:
+
+        * DAnCE/NodeApplication/App_Monitor.idl:
+        * DAnCE/NodeApplication/App_Monitor_Impl.h:
+        * DAnCE/NodeApplication/App_Monitor_Impl.cpp:
+
+        * DAnCE/NodeManager/NA_Monitor.h:
+        * DAnCE/NodeManager/NA_Monitor.cpp:
+        * DAnCE/NodeManager/NA_Monitor.mpc:
+        * DAnCE/NodeManager/NM_Monitor.idl:
+        * DAnCE/NodeManager/NM_Monitor_Impl.h:
+        * DAnCE/NodeManager/NM_Monitor_Impl.cpp:
+
+        * DAnCE/TM_Daemon:
+
+        * DAnCE/TM_Daemon/DomainDataManager.h:
+        * DAnCE/TM_Daemon/DomainDataManager.cpp:
+        * DAnCE/TM_Daemon/Handler_i.h:
+        * DAnCE/TM_Daemon/Handler_i.cpp:
+        * DAnCE/TM_Daemon/MonitorManager.h:
+        * DAnCE/TM_Daemon/Profile_Code.h:
+        * DAnCE/TM_Daemon/Profile_Code.cpp:
+        * DAnCE/TM_Daemon/TM_Daemon.cpp:
+        * DAnCE/TM_Daemon/TM_Daemon.mpc:
+          Files needed for Onlinie Monitoring
+
 Tue Sep  4 14:25:24 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * performance-tests/Benchmark/RoundTripClient/RoundTripClient_exec.cpp:

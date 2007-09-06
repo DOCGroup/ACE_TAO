@@ -1,0 +1,10 @@
+#include "DAnCE/Deployment/QoS.idl"
+
+
+module Onl_Monitor
+{
+  interface App_Monitor
+  {
+    ::Deployment::QoSSpecifications get_app_QoS ();
+  };
+};
