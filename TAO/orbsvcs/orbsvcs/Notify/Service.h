@@ -78,7 +78,7 @@ public:
   /// Create the Channel Factory.
   virtual CosNotifyChannelAdmin::EventChannelFactory_ptr create (
       PortableServer::POA_ptr default_POA,
-      const char* factory_name) = 0;
+      const char* factory_name = "EventChannelFactory") = 0;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
