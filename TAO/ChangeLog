@@ -1,3 +1,15 @@
+Thu Sep  6 12:37:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Borland/ChatClientWnd.cpp:
+          Catch exceptions as const
+
+        * examples/Simple/fullname:
+        * examples/Simple/fullname/README:
+        * examples/Simple/squareit:
+        * examples/Simple/squareit/README:
+          Removed, these examples where never implemented. Thanks to Douglas
+          Schmidt for pointing this out
+
 Thu Sep  6 10:32:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO-INSTALL.html:
