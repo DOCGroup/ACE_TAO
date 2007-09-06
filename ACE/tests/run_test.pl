@@ -531,7 +531,7 @@ if (defined $opt_v && defined $opt_o) {
 else {
 
   my $target = PerlACE::TestTarget::create_target ($PerlACE::TestConfig);
-  
+
   foreach $test (@tests) {
     if (defined $opt_d) {
       print "Would run test $test now\n";
