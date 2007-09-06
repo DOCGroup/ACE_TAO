@@ -90,7 +90,7 @@ void __fastcall TChatClientWindow::FormClose (TObject *,
       server_->remove (receiver_var_);
       receiver_i_.shutdown ();
     }
-  catch (CORBA::Exception &e)
+  catch (const CORBA::Exception &e)
     {
       ShowMessage ("CORBA Exception in FormClose: " + String (e._rep_id ()));
     }
@@ -106,7 +106,7 @@ void __fastcall TChatClientWindow::InputMemoKeyPress (TObject *, char &Key)
           // the server.
           server_->say (receiver_var_, InputMemo->Text.c_str ());
         }
-      catch (CORBA::Exception &e)
+      catch (const CORBA::Exception &e)
         {
           ShowMessage ("CORBA Exception in InputMemoKeyPress: " + String (e._rep_id ()));
         }
