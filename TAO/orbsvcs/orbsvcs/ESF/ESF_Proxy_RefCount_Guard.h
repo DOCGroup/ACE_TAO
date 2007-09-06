@@ -36,7 +36,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  * to handle scenarios where more than one operation is performed
  * while holding the reference count.
  *
- * @TODO: The type of lock could be parametric
+ * @todo The type of lock could be parametric
  */
 template<class EVENT_CHANNEL, class PROXY>
 class TAO_ESF_Proxy_RefCount_Guard
