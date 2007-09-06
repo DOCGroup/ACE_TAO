@@ -1,14 +1,14 @@
-Thu Sep  6 12:12:12 UTC 2007  Johnny WIllemsen  <jwillemsen@remedy.nl>
+Thu Sep  6 12:12:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * performance-tests/Synch-Benchmarks/run_tests.pl:
           Fixed typo
 
-Thu Sep  6 12:09:12 UTC 2007  Johnny WIllemsen  <jwillemsen@remedy.nl>
+Thu Sep  6 12:09:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/generate_rel_manpages:
           Added md5sum steps
 
-Thu Sep  6 09:27:12 UTC 2007  Johnny WIllemsen  <jwillemsen@remedy.nl>
+Thu Sep  6 09:27:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_Thread.h:
           Doxyen fix
