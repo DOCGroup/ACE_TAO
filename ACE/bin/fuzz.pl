@@ -304,7 +304,7 @@ sub check_for_tab ()
                     $disable = 0;
                 }
                 if ($disable == 0 and /\t/) {
-                    # The following directories are infested 
+                    # The following directories are infested
                     # with tabs. When don't check these
                     # directories for now to enable detection
                     # of new tabs introduced in the core
@@ -322,7 +322,7 @@ sub check_for_tab ()
                     }
 
                     # for now, we don't want to indicate
-                    # each occurance of tab in a file, 
+                    # each occurance of tab in a file,
                     # we just want to indicate once that
                     # tabs exist in a file.
                     # print_error ("$file:$.: tab found");
@@ -342,47 +342,47 @@ sub check_for_tab ()
 
 # This test checks for the lack of ACE_OS
 sub check_for_lack_ACE_OS ()
-{    
+{
     $OS_NS_arpa_inet_symbols = "inet_addr|inet_aton|inet_ntoa|inet_ntop|inet_pton";
-    
+
     $OS_NS_ctype_symbols = "isalnum|isalpha|iscntrl|isdigit|isgraph|islower|isprint|ispunct|isspace|isupper|isxdigit|tolower|toupper";
-                            
-    $OS_NS_dirent_symbols = "closedir|opendir|readdir|readdir_r|rewinddir|scandir|alphasort|seekdir|telldir|opendir_emulation|scandir_emulation|closedir_emulation|readdir_emulation"; 
-                             
+
+    $OS_NS_dirent_symbols = "closedir|opendir|readdir|readdir_r|rewinddir|scandir|alphasort|seekdir|telldir|opendir_emulation|scandir_emulation|closedir_emulation|readdir_emulation";
+
     $OS_NS_dlfcn_symbols = "dlclose|dlerror|dlopen|dlsym";
-    
+
     $OS_NS_errno_symbols = "last_error|set_errno_to_last_error|set_errno_to_wsa_last_error";
-                            
+
     $OS_NS_fcntl_symbols = "fcntl|open";
-    
+
     $OS_NS_math_symbols = "floor|ceil|log2";
-    
+
     $OS_NS_netdb_symbols = "gethostbyaddr|gethostbyaddr_r|gethostbyname|gethostbyname_r|getipnodebyaddr|getipnodebyname|getmacaddress|getprotobyname|getprotobyname_r|getprotobynumber|getprotobynumber_r|getservbyname|getservbyname_r|netdb_acquire|netdb_release";
-    
+
     $OS_NS_poll_symbols = "poll";
 
     $OS_NS_pwd_symbols = "endpwent|getpwent|getpwnam|getpwnam_r|setpwent";
-    
+
     $OS_NS_regex_symbols = "compile|step";
 
     $OS_NS_signal_symbols = "kill|pthread_sigmask|sigaction|sigaddset|sigdelset|sigemptyset|sigfillset|sigismember|signal|sigprocmask|sigsuspend";
-                             
-    $OS_NS_stdio_symbols = "checkUnicodeFormat|clearerr|cuserid|fclose|fdopen|fflush|fgetc|getc|fgetpos|fgets|flock_adjust_params|flock_init|flock_destroy|flock_rdlock|flock_tryrdlock|flock_trywrlock|flock_unlock|flock_wrlock|fopen|default_win32_security_attributes|default_win32_security_attributes_r|get_win32_versioninfo|get_win32_resource_module|set_win32_resource_module|fprintf|ungetc|fputc|putc|fputs|fread|freopen|fseek|fsetpos|ftell|fwrite|perror|printf|puts|rename|rewind|snprintf|sprintf|tempnam|vsprintf|vsnprintf";       
-                                                                            
+
+    $OS_NS_stdio_symbols = "checkUnicodeFormat|clearerr|cuserid|fclose|fdopen|fflush|fgetc|getc|fgetpos|fgets|flock_adjust_params|flock_init|flock_destroy|flock_rdlock|flock_tryrdlock|flock_trywrlock|flock_unlock|flock_wrlock|fopen|default_win32_security_attributes|default_win32_security_attributes_r|get_win32_versioninfo|get_win32_resource_module|set_win32_resource_module|fprintf|ungetc|fputc|putc|fputs|fread|freopen|fseek|fsetpos|ftell|fwrite|perror|printf|puts|rename|rewind|snprintf|sprintf|tempnam|vsprintf|vsnprintf";
+
     $OS_NS_stdlib_symbols = "_exit|abort|atexit|atoi|atop|bsearch|calloc|exit|free|getenv|getenvstrings|itoa|itoa_emulation|itow_emulation|malloc|mkstemp|mkstemp_emulation|mktemp|putenv|qsort|rand|rand_r|realloc|realpath|set_exit_hook|srand|strenvdup|strtod|strtol|strtol_emulation|strtoul|strtoul_emulation|system";
-                             
+
     $OS_NS_string_symbols = "memchr|memchr_emulation|memcmp|memcpy|fast_memcpy|memmove|memset|strcat|strchr|strcmp|strcpy|strcspn|strdup|strdup_emulation|strecpy|strerror|strerror_emulation|strlen|strncat|strnchr|strncmp|strncpy|strnlen|strnstr|strpbrk|strrchr|strrchr_emulation|strsncpy|strspn|strstr|strtok|strtok_r|strtok_r_emulation";
-                             
+
     $OS_NS_strings_symbols = "strcasecmp|strncasecmp|strcasecmp_emulation";
-    
+
     $OS_NS_stropts_symbols = "getmsg|getpmsg|fattach|fdetach|ioctl|isastream|putmsg|putpmsg";
-    
+
     $OS_NS_sys_mman_symbols = "madvise|mmap|mprotect|msync|munmap|shm_open|shm_unlink";
-                               
+
     $OS_NS_sys_msg_symbols = "msgctl|msgget|msgrcv|msgsnd";
-    
+
     $OS_NS_sys_resource_symbols = "getrlimit|getrusage|setrlimit";
-    
+
     $OS_NS_sys_select_symbols = "select";
 
     $OS_NS_sys_sendfile_symbols = "sendfile|sendfile_emulation";
@@ -390,25 +390,25 @@ sub check_for_lack_ACE_OS ()
     $OS_NS_sys_shm_symbols = "shmat|shmctl|shmdt|shmget";
 
     $OS_NS_sys_socket_symbols = "accept|bind|closesocket|connect|enum_protocols|getpeername|getsockname|getsockopt|join_leaf|listen|recv|recvfrom|recvmsg|recvv|send|sendmsg|sendto|sendv|setsockopt|shutdown|if_nametoindex|if_indextoname|if_nameindex|socket_init|socket_fini|socket|socketpair";
-    
+
     $OS_NS_sys_stat_symbols = "creat|filesize|fstat|lstat|mkdir|mkfifo|stat|umask";
-    
+
     $OS_NS_sys_time_symbols = "gettimeofday";
-    
+
     $OS_NS_sys_uio_symbols = "readv|readv_emulation|writev|writev_emulation";
-    
-    $OS_NS_sys_utsname_symbols = "uname";    
+
+    $OS_NS_sys_utsname_symbols = "uname";
 
     $OS_NS_sys_wait_symbols = "wait|waitpid";
-    
+
     $OS_NS_Thread_symbols = "cleanup_tss|condattr_init|condattr_destroy|cond_broadcast|cond_destroy|cond_init|cond_signal|cond_timedwait|cond_wait|event_destroy|event_init|event_pulse|event_reset|event_signal|event_timedwait|event_wait|lwp_getparams|lwp_setparams|mutex_destroy|mutex_init|mutex_lock|mutex_lock_cleanup|mutex_trylock|mutex_unlock|priority_control|recursive_mutex_cond_unlock|recursive_mutex_cond_relock|recursive_mutex_destroy|recursive_mutex_init|recursive_mutex_lock|recursive_mutex_trylock|recursive_mutex_unlock|rw_rdlock|rw_tryrdlock|rw_trywrlock|rw_trywrlock_upgrade|rw_unlock|rw_wrlock|rwlock_destroy|rwlock_init|sched_params|scheduling_class|sema_destroy|sema_init|sema_post|sema_trywait|sema_wait|semctl|semget|semop|set_scheduling_params|sigtimedwait|sigwait|sigwaitinfo|thr_cancel|thr_cmp|thr_continue|thr_create|thr_equal|thr_exit|thr_getconcurrency|thr_getprio|thr_getspecific_native|thr_getspecific|thr_join|thr_get_affinity|thr_set_affinity|thr_key_detach|thr_key_used|thr_keycreate_native|thr_keycreate|thr_keyfree|thr_kill|thr_min_stack|thr_self|thr_setcancelstate|thr_setcanceltype|thr_setconcurrency|thr_setprio|thr_setspecific_native|thr_setspecific|thr_sigsetmask|thr_suspend|thr_testcancel|thr_yield|thread_mutex_destroy|thread_mutex_init|thread_mutex_lock|thread_mutex_trylock|thread_mutex_unlock|unique_name";
-    
-    $OS_NS_time_symbols = "asctime|asctime_r|clock_gettime|clock_settime|ctime|ctime_r|difftime|gmtime|gmtime_r|localtime|localtime_r|mktime|nanosleep|readPPCTimeBase|strftime|strptime|strptime_emulation|strptime_getnum|time|timezone|tzset";  
-                           
+
+    $OS_NS_time_symbols = "asctime|asctime_r|clock_gettime|clock_settime|ctime|ctime_r|difftime|gmtime|gmtime_r|localtime|localtime_r|mktime|nanosleep|readPPCTimeBase|strftime|strptime|strptime_emulation|strptime_getnum|time|timezone|tzset";
+
     $OS_NS_unistd_symbols = "access|alarm|allocation_granularity|argv_to_string|chdir|rmdir|close|dup|dup2|execl|execle|execlp|execv|execve|execvp|fork|fork_exec|fsync|ftruncate|getcwd|getgid|getegid|getopt|getpagesize|getpgid|getpid|getppid|getuid|geteuid|hostname|isatty|lseek|llseek|num_processors|num_processors_online|pipe|pread|pwrite|read|read_n|readlink|sbrk|setgid|setegid|setpgid|setregid|setreuid|setsid|setuid|seteuid|sleep|string_to_argv|swab|sysconf|sysinfo|truncate|ualarm|unlink|write|write_n";
-                             
+
     $OS_NS_wchar_symbols = "fgetwc|wcscat_emulation|wcschr_emulation|wcscmp_emulation|wcscpy_emulation|wcscspn_emulation|wcsicmp_emulation|wcslen_emulation|wcsncat_emulation|wcsncmp_emulation|wcsncpy_emulation|wcsnicmp_emulation|wcspbrk_emulation|wcsrchr_emulation|wcsrchr_emulation|wcsspn_emulation|wcsstr_emulation|wslen|wscpy|wscmp|wsncmp|ungetwc";
-    
+
     print "Running ACE_OS check\n";
     foreach $file (@files_cpp, @files_inl) {
         if (open (FILE, $file)) {
@@ -422,174 +422,174 @@ sub check_for_lack_ACE_OS ()
                 if (/FUZZ\: enable check_for_lack_ACE_OS/) {
                     $disable = 0;
                 }
-                if ($disable == 0) {     
-                    if($file !~ /.c$/ && $file !~ /S.cpp$/ && $file !~ /S.inl$/ && $file !~ /C.cpp$/ && $file !~ /C.inl$/) {       
+                if ($disable == 0) {
+                    if($file !~ /.c$/ && $file !~ /S.cpp$/ && $file !~ /S.inl$/ && $file !~ /C.cpp$/ && $file !~ /C.inl$/) {
                         if($file !~ /OS_NS_arpa_inet/) {
                             if(/(\s+:{0,2}|\(:{0,2}|\s*!:{0,2}|^|\):{0,2})($OS_NS_arpa_inet_symbols)\s*\(/ and $` !~ /\/\// and $` !~ /\/\*/ and $` !~ /\*\*+/ and $` !~ /\s+\*+\s+/) {
-                                print_error ("$file:$.: missing ACE_OS");  
-                            }   
+                                print_error ("$file:$.: missing ACE_OS");
+                            }
                         }
                         if($file !~ /OS_NS_ctype/) {
                             if(/(\s+:{0,2}|\(:{0,2}|\s*!:{0,2}|^|\):{0,2})($OS_NS_ctype_symbols)\s*\(/ and $` !~ /\/\// and $` !~ /\/\*/ and $` !~ /\*\*+/ and $` !~ /\s+\*+\s+/) {
-                                print_error ("$file:$.: missing ACE_OS");  
-                            }   
+                                print_error ("$file:$.: missing ACE_OS");
+                            }
                         }
                         if($file !~ /OS_NS_dirent/) {
                             if(/(\s+:{0,2}|\(:{0,2}|\s*!:{0,2}|^|\):{0,2})($OS_NS_dirent_symbols)\s*\(/ and $` !~ /\/\// and $` !~ /\/\*/ and $` !~ /\*\*+/ and $` !~ /\s+\*+\s+/) {
-                                print_error ("$file:$.: missing ACE_OS");  
-                            }   
+                                print_error ("$file:$.: missing ACE_OS");
+                            }
                         }
                         if($file !~ /OS_NS_dlfcn/) {
                             if(/(\s+:{0,2}|\(:{0,2}|\s*!:{0,2}|^|\):{0,2})($OS_NS_dlfcn_symbols)\s*\(/ and $` !~ /\/\// and $` !~ /\/\*/ and $` !~ /\*\*+/ and $` !~ /\s+\*+\s+/) {
-                                print_error ("$file:$.: missing ACE_OS");  
-                            }   
+                                print_error ("$file:$.: missing ACE_OS");
+                            }
                         }
                         if($file !~ /OS_NS_errno/) {
                             if(/(\s+:{0,2}|\(:{0,2}|\s*!:{0,2}|^|\):{0,2})($OS_NS_errno_symbols)\s*\(/ and $` !~ /\/\// and $` !~ /\/\*/ and $` !~ /\*\*+/ and $` !~ /\s+\*+\s+/) {
-                                print_error ("$file:$.: missing ACE_OS");  
-                            }  
+                                print_error ("$file:$.: missing ACE_OS");
+                            }
                         }
                         if($file !~ /OS_NS_fcntl/) {
                             if(/(\s+:{0,2}|\(:{0,2}|\s*!:{0,2}|^|\):{0,2})($OS_NS_fcntl_symbols)\s*\(/ and $` !~ /\/\// and $` !~ /\/\*/ and $` !~ /\*\*+/ and $` !~ /\s+\*+\s+/) {
-                                print_error ("$file:$.: missing ACE_OS");  
+                                print_error ("$file:$.: missing ACE_OS");
                             }
                         }
                         if($file !~ /OS_NS_math/) {
                             if(/(\s+:{0,2}|\(:{0,2}|\s*!:{0,2}|^|\):{0,2})($OS_NS_math_symbols)\s*\(/ and $` !~ /\/\// and $` !~ /\/\*/ and $` !~ /\*\*+/ and $` !~ /\s+\*+\s+/) {
-                                print_error ("$file:$.: missing ACE_OS");  
+                                print_error ("$file:$.: missing ACE_OS");
                             }
                         }
                         if($file !~ /OS_NS_netdb/) {
                             if(/(\s+:{0,2}|\(:{0,2}|\s*!:{0,2}|^|\):{0,2})($OS_NS_netdb_symbols)\s*\(/ and $` !~ /\/\// and $` !~ /\/\*/ and $` !~ /\*\*+/ and $` !~ /\s+\*+\s+/) {
-                                print_error ("$file:$.: missing ACE_OS");  
+                                print_error ("$file:$.: missing ACE_OS");
                             }
                         }
                         if($file !~ /OS_NS_poll/) {
                             if(/(\s+:{0,2}|\(:{0,2}|\s*!:{0,2}|^|\):{0,2})($OS_NS_netdb_symbols)\s*\(/ and $` !~ /\/\// and $` !~ /\/\*/ and $` !~ /\*\*+/ and $` !~ /\s+\*+\s+/) {
-                                print_error ("$file:$.: missing ACE_OS");  
+                                print_error ("$file:$.: missing ACE_OS");
                             }
                         }
                         if($file !~ /OS_NS_pwd/) {
                             if(/(\s+:{0,2}|\(:{0,2}|\s*!:{0,2}|^|\):{0,2})($OS_NS_pwd_symbols)\s*\(/ and $` !~ /\/\// and $` !~ /\/\*/ and $` !~ /\*\*+/ and $` !~ /\s+\*+\s+/) {
-                                print_error ("$file:$.: missing ACE_OS");  
+                                print_error ("$file:$.: missing ACE_OS");
                             }
                         }
                         if($file !~ /OS_NS_regex/) {
                             if(/(\s+:{0,2}|\(:{0,2}|\s*!:{0,2}|^|\):{0,2})($OS_NS_regex_symbols)\s*\(/ and $` !~ /\/\// and $` !~ /\/\*/ and $` !~ /\*\*+/ and $` !~ /\s+\*+\s+/) {
-                                print_error ("$file:$.: missing ACE_OS");  
+                                print_error ("$file:$.: missing ACE_OS");
                             }
                         }
                         if($file !~ /OS_NS_signal/) {
                             if(/(\s+:{0,2}|\(:{0,2}|\s*!:{0,2}|^|\):{0,2})($OS_NS_signal_symbols)\s*\(/ and $` !~ /\/\// and $` !~ /\/\*/ and $` !~ /\*\*+/ and $` !~ /\s+\*+\s+/) {
-                                print_error ("$file:$.: missing ACE_OS");  
+                                print_error ("$file:$.: missing ACE_OS");
                             }
-                        }                                                                                                                                                                                                
+                        }
                         if($file !~ /OS_NS_stdlib/) {
                             if(/(\s+:{0,2}|\(:{0,2}|\s*!:{0,2}|^|\):{0,2})($OS_NS_stdlib_symbols)\s*\(/ and $` !~ /\/\// and $` !~ /\/\*/ and $` !~ /\*\*+/ and $` !~ /\s+\*+\s+/) {
-                                print_error ("$file:$.: missing ACE_OS");  
+                                print_error ("$file:$.: missing ACE_OS");
                             }
                         }
                         if($file !~ /OS_NS_stdio/) {
                             if(/(\s+:{0,2}|\(:{0,2}|\s*!:{0,2}|^|\):{0,2})($OS_NS_stdio_symbols)\s*\(/ and $` !~ /\/\// and $` !~ /\/\*/ and $` !~ /\*\*+/ and $` !~ /\s+\*+\s+/) {
-                                print_error ("$file:$.: missing ACE_OS");  
+                                print_error ("$file:$.: missing ACE_OS");
                             }
-                        }                        
+                        }
                         if($file !~ /OS_NS_string/) {
                             if(/(\s+:{0,2}|\(:{0,2}|\s*!:{0,2}|^|\):{0,2})($OS_NS_string_symbols)\s*\(/ and $` !~ /\/\// and $` !~ /\/\*/ and $` !~ /\*\*+/ and $` !~ /\s+\*+\s+/) {
-                                print_error ("$file:$.: missing ACE_OS");  
+                                print_error ("$file:$.: missing ACE_OS");
                             }
                         }
                         if($file !~ /OS_NS_strings/) {
                             if(/(\s+:{0,2}|\(:{0,2}|\s*!:{0,2}|^|\):{0,2})($OS_NS_strings_symbols)\s*\(/ and $` !~ /\/\// and $` !~ /\/\*/ and $` !~ /\*\*+/ and $` !~ /\s+\*+\s+/) {
-                                print_error ("$file:$.: missing ACE_OS");  
+                                print_error ("$file:$.: missing ACE_OS");
                             }
                         }
                         if($file !~ /OS_NS_stropts/) {
                             if(/(\s+:{0,2}|\(:{0,2}|\s*!:{0,2}|^|\):{0,2})($OS_NS_stropts_symbols)\s*\(/ and $` !~ /\/\// and $` !~ /\/\*/ and $` !~ /\*\*+/ and $` !~ /\s+\*+\s+/) {
-                                print_error ("$file:$.: missing ACE_OS");  
+                                print_error ("$file:$.: missing ACE_OS");
                             }
-                        } 
+                        }
                         if($file !~ /OS_NS_sys_mman/) {
                             if(/(\s+:{0,2}|\(:{0,2}|\s*!:{0,2}|^|\):{0,2})($OS_NS_sys_mman_symbols)\s*\(/ and $` !~ /\/\// and $` !~ /\/\*/ and $` !~ /\*\*+/ and $` !~ /\s+\*+\s+/) {
-                                print_error ("$file:$.: missing ACE_OS");  
+                                print_error ("$file:$.: missing ACE_OS");
                             }
                         }
                         if($file !~ /OS_NS_sys_msg/) {
                             if(/(\s+:{0,2}|\(:{0,2}|\s*!:{0,2}|^|\):{0,2})($OS_NS_sys_msg_symbols)\s*\(/ and $` !~ /\/\// and $` !~ /\/\*/ and $` !~ /\*\*+/ and $` !~ /\s+\*+\s+/) {
-                                print_error ("$file:$.: missing ACE_OS");  
+                                print_error ("$file:$.: missing ACE_OS");
                             }
                         }
                         if($file !~ /OS_NS_sys_resource/) {
                             if(/(\s+:{0,2}|\(:{0,2}|\s*!:{0,2}|^|\):{0,2})($OS_NS_sys_resource_symbols)\s*\(/ and $` !~ /\/\// and $` !~ /\/\*/ and $` !~ /\*\*+/ and $` !~ /\s+\*+\s+/) {
-                                print_error ("$file:$.: missing ACE_OS");  
+                                print_error ("$file:$.: missing ACE_OS");
                             }
                         }
                         if($file !~ /OS_NS_sys_select/) {
                             if(/(\s+:{0,2}|\(:{0,2}|\s*!:{0,2}|^|\):{0,2})($OS_NS_sys_select_symbols)\s*\(/ and $` !~ /\/\// and $` !~ /\/\*/ and $` !~ /\*\*+/ and $` !~ /\s+\*+\s+/) {
-                                print_error ("$file:$.: missing ACE_OS");  
+                                print_error ("$file:$.: missing ACE_OS");
                             }
                         }
                         if($file !~ /OS_NS_sys_sendfile/) {
                             if(/(\s+:{0,2}|\(:{0,2}|\s*!:{0,2}|^|\):{0,2})($OS_NS_sys_sendfile_symbols)\s*\(/ and $` !~ /\/\// and $` !~ /\/\*/ and $` !~ /\*\*+/ and $` !~ /\s+\*+\s+/) {
-                                print_error ("$file:$.: missing ACE_OS");  
+                                print_error ("$file:$.: missing ACE_OS");
                             }
                         }
                         if($file !~ /OS_NS_sys_shm/) {
                             if(/(\s+:{0,2}|\(:{0,2}|\s*!:{0,2}|^|\):{0,2})($OS_NS_sys_shm_symbols)\s*\(/ and $` !~ /\/\// and $` !~ /\/\*/ and $` !~ /\*\*+/ and $` !~ /\s+\*+\s+/) {
-                                print_error ("$file:$.: missing ACE_OS");  
+                                print_error ("$file:$.: missing ACE_OS");
                             }
                         }
                         if($file !~ /OS_NS_sys_socket/) {
                             if(/(\s+:{0,2}|\(:{0,2}|\s*!:{0,2}|^|\):{0,2})($OS_NS_sys_socket_symbols)\s*\(/ and $` !~ /\/\// and $` !~ /\/\*/ and $` !~ /\*\*+/ and $` !~ /\s+\*+\s+/) {
-                                print_error ("$file:$.: missing ACE_OS");  
+                                print_error ("$file:$.: missing ACE_OS");
                             }
                         }
                         if($file !~ /OS_NS_sys_stat/) {
                             if(/(\s+:{0,2}|\(:{0,2}|\s*!:{0,2}|^|\):{0,2})($OS_NS_sys_stat_symbols)\s*\(/ and $` !~ /\/\// and $` !~ /\/\*/ and $` !~ /\*\*+/ and $` !~ /\s+\*+\s+/) {
-                                print_error ("$file:$.: missing ACE_OS");  
+                                print_error ("$file:$.: missing ACE_OS");
                             }
-                        } 
+                        }
                         if($file !~ /OS_NS_sys_time/) {
                             if(/(\s+:{0,2}|\(:{0,2}|\s*!:{0,2}|^|\):{0,2})($OS_NS_sys_time_symbols)\s*\(/ and $` !~ /\/\// and $` !~ /\/\*/ and $` !~ /\*\*+/ and $` !~ /\s+\*+\s+/) {
-                                print_error ("$file:$.: missing ACE_OS");  
+                                print_error ("$file:$.: missing ACE_OS");
                             }
                         }
                         if($file !~ /OS_NS_sys_uio/) {
                             if(/(\s+:{0,2}|\(:{0,2}|\s*!:{0,2}|^|\):{0,2})($OS_NS_sys_uio_symbols)\s*\(/ and $` !~ /\/\// and $` !~ /\/\*/ and $` !~ /\*\*+/ and $` !~ /\s+\*+\s+/) {
-                                print_error ("$file:$.: missing ACE_OS");  
+                                print_error ("$file:$.: missing ACE_OS");
                             }
-                        } 
+                        }
                         if($file !~ /OS_NS_sys_utsname/) {
                             if(/(\s+:{0,2}|\(:{0,2}|\s*!:{0,2}|^|\):{0,2})($OS_NS_sys_utsname_symbols)\s*\(/ and $` !~ /\/\// and $` !~ /\/\*/ and $` !~ /\*\*+/ and $` !~ /\s+\*+\s+/) {
-                                print_error ("$file:$.: missing ACE_OS");  
+                                print_error ("$file:$.: missing ACE_OS");
                             }
                         }
                         if($file !~ /OS_NS_sys_wait/) {
                             if(/(\s+:{0,2}|\(:{0,2}|\s*!:{0,2}|^|\):{0,2})($OS_NS_sys_wait_symbols)\s*\(/ and $` !~ /\/\// and $` !~ /\/\*/ and $` !~ /\*\*+/ and $` !~ /\s+\*+\s+/) {
-                                print_error ("$file:$.: missing ACE_OS");  
+                                print_error ("$file:$.: missing ACE_OS");
                             }
                         }
                         if($file !~ /OS_NS_Thread/) {
                             if(/(\s+:{0,2}|\(:{0,2}|\s*!:{0,2}|^|\):{0,2})($OS_NS_Thread_symbols)\s*\(/ and $` !~ /\/\// and $` !~ /\/\*/ and $` !~ /\*\*+/ and $` !~ /\s+\*+\s+/) {
-                                print_error ("$file:$.: missing ACE_OS");  
+                                print_error ("$file:$.: missing ACE_OS");
                             }
                         }
                         if($file !~ /OS_NS_time/) {
                             if(/(\s+:{0,2}|\(:{0,2}|\s*!:{0,2}|^|\):{0,2})($OS_NS_time_symbols)\s*\(/ and $` !~ /\/\// and $` !~ /\/\*/ and $` !~ /\*\*+/ and $` !~ /\s+\*+\s+/) {
-                                print_error ("$file:$.: missing ACE_OS");  
+                                print_error ("$file:$.: missing ACE_OS");
                             }
                         }
                         if($file !~ /OS_NS_unistd/) {
                             if(/(\s+:{0,2}|\(:{0,2}|\s*!:{0,2}|^|\):{0,2})($OS_NS_unistd_symbols)\s*\(/ and $` !~ /\/\// and $` !~ /\/\*/ and $` !~ /\*\*+/ and $` !~ /\s+\*+\s+/) {
-                                print_error ("$file:$.: missing ACE_OS");  
+                                print_error ("$file:$.: missing ACE_OS");
                             }
                         }
                         if($file !~ /OS_NS_wchar/) {
                             if(/(\s+:{0,2}|\(:{0,2}|\s*!:{0,2}|^|\):{0,2})($OS_NS_wchar_symbols)\s*\(/ and $` !~ /\/\// and $` !~ /\/\*/ and $` !~ /\*\*+/ and $` !~ /\s+\*+\s+/) {
-                                print_error ("$file:$.: missing ACE_OS");  
+                                print_error ("$file:$.: missing ACE_OS");
                             }
-                        }                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
-                    }  
+                        }
+                    }
                 }
             }
             close (FILE);
@@ -639,9 +639,9 @@ sub check_for_exception_spec ()
 # This test checks for the use of NULL,
 # NULL shouldn't be used, use 0 instead
 sub check_for_NULL ()
-{        
+{
     print "Running NULL usage check\n";
-    
+
     foreach $file (@files_cpp, @files_inl, @files_h) {
         if (open (FILE, $file)) {
             my $disable = 0;
@@ -665,16 +665,16 @@ sub check_for_NULL ()
         else {
             print STDERR "Error: Could not open $file\n";
         }
-    }    
+    }
 }
 
 # This test checks for improper main declaration,
 # the proper form should look like:
 # int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 sub check_for_improper_main_declaration ()
-{        
+{
     print "Running Improper main declration check\n";
-    
+
     foreach $file (@files_cpp) {
         if (open (FILE, $file)) {
             my $disable = 0;
@@ -696,7 +696,7 @@ sub check_for_improper_main_declaration ()
                     }
                     if(/^\s*ACE_TMAIN\s*\(.*,\s*ACE_TCHAR\s*\*\*\)/) {
                         print_error ("$file:$.: Use proper form of main declaration (second argument should be ACE_TCHAR *argv[])");
-                    }                                        
+                    }
                 }
             }
             close (FILE);
@@ -704,7 +704,7 @@ sub check_for_improper_main_declaration ()
         else {
             print STDERR "Error: Could not open $file\n";
         }
-    }    
+    }
 }
 
 # This test checks for the use of "inline" instead of ACE_INLINE
