@@ -10,6 +10,7 @@ ACE_RCSID (ace,
     (defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 == 1))
 
 #include "ace/WIN32_Proactor.h"
+#include "ace/Proactor.h"
 #include "ace/Message_Block.h"
 #include "ace/Service_Config.h"
 #include "ace/INET_Addr.h"
@@ -158,6 +159,11 @@ ACE_WIN32_Asynch_Operation::open (const ACE_Handler::Proxy_Ptr &handler_proxy,
     }
   if (this->handle_ == ACE_INVALID_HANDLE)
     return -1;
+
+  if (this->proactor_!= 0)
+    // update implementation.
+    this->win32_proactor_ =
+      dynamic_cast <ACE_WIN32_Proactor *>(this->proactor_->implementation ());
 
   // Register with the <proactor>.
   return this->win32_proactor_->register_handle (this->handle_,
