@@ -35,10 +35,6 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-#if defined (__BORLANDC__)
-#pragma option push -w-rvl -w-rch -w-ccc -w-inl
-#endif /* __BORLANDC__ */
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 #ifndef RTCOSSCHEDULING_SERVER_CONTAINERS
@@ -277,11 +273,6 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 #if defined(_MSC_VER)
 #pragma warning(pop)
 #endif /* _MSC_VER */
-
-#if defined (__BORLANDC__)
-#pragma option pop
-#endif /* __BORLANDC__ */
-
 
 #include /**/ "ace/post.h"
 #endif /* SERVER_SCHEDULERI_H  */

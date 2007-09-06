@@ -1,3 +1,18 @@
+Thu Sep  6 10:32:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO-INSTALL.html:
+          Updated supported platform list
+
+        * orbsvcs/orbsvcs/AV/AV_Core.h:
+        * orbsvcs/orbsvcs/RTCosScheduling/RTCosScheduling_ClientScheduler_i.h:
+        * orbsvcs/orbsvcs/RTCosScheduling/RTCosScheduling_PCP_Manager.h:
+        * orbsvcs/orbsvcs/RTCosScheduling/RTCosScheduling_ServerScheduler_i.h:
+          Removed Borland workarounds
+
+        * orbsvcs/orbsvcs/IFRService/IFR_Service_Utils_T.cpp:
+        * orbsvcs/orbsvcs/Trader/Trader.h:
+          Improved CodeGear C++ Builder support
+
 Thu Sep  6 09:30:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Incoming_Message_Stack.h:
