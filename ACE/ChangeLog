@@ -1,3 +1,8 @@
+Thu Sep  6 15:33:15 UTC 2007  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
+
+        * docs/ACE-guidelines.html
+          Add guidelines about doxygen comments
+
 Thu Sep  6 14:41:50 UTC 2007  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * ace/WIN32_Asynch_IO.cpp (open): Update the win32_proactor_
