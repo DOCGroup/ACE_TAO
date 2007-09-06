@@ -1,4 +1,9 @@
-Wed Sep  6 00:13:48 UTC 2007  Ossama Othman  <ossama_othman at symantec dot com>
+Thu Sep  6 09:27:12 UTC 2007  Johnny WIllemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_Thread.h:
+          Doxyen fix
+
+Thu Sep  6 00:13:48 UTC 2007  Ossama Othman  <ossama_othman at symantec dot com>
 
         * tests/run_test.lst:
 
