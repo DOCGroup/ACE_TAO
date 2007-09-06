@@ -183,39 +183,28 @@ TAO::Security::ORBInitializer::register_policy_factories (
   CORBA::PolicyType type;
 
   type = ::Security::SecQOPPolicy;
-  info->register_policy_factory (type,
-                                 this->policy_factory_.in ());
+  info->register_policy_factory (type, this->policy_factory_.in ());
 
   type = ::Security::SecMechanismsPolicy;
-  info->register_policy_factory (type,
-                                 this->policy_factory_.in ());
+  info->register_policy_factory (type, this->policy_factory_.in ());
 
   type = ::Security::SecInvocationCredentialsPolicy;
-  info->register_policy_factory (type,
-                                 this->policy_factory_.in ());
+  info->register_policy_factory (type, this->policy_factory_.in ());
 
   type = ::Security::SecFeaturePolicy;   // Deprecated
-  info->register_policy_factory (type,
-                                 this->policy_factory_.in ());
+  info->register_policy_factory (type, this->policy_factory_.in ());
 
   type = ::Security::SecDelegationDirectivePolicy;
-  info->register_policy_factory (type,
-                                 this->policy_factory_.in ());
+  info->register_policy_factory (type, this->policy_factory_.in ());
 
   type = ::Security::SecEstablishTrustPolicy;
-  info->register_policy_factory (type,
-                                 this->policy_factory_.in ());
-
+  info->register_policy_factory (type, this->policy_factory_.in ());
 
   type = SecurityLevel3::ContextEstablishmentPolicyType;
-  info->register_policy_factory (type,
-                                 this->policy_factory_.in ());
-
+  info->register_policy_factory (type, this->policy_factory_.in ());
 
   type = SecurityLevel3::ObjectCredentialsPolicyType;
-  info->register_policy_factory (type,
-                                 this->policy_factory_.in ());
-
+  info->register_policy_factory (type, this->policy_factory_.in ());
 
   // ----------------------------------------------------------------
 }

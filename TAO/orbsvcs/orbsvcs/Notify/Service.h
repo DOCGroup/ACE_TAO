@@ -78,12 +78,12 @@ public:
   /// Create the Channel Factory.
   virtual CosNotifyChannelAdmin::EventChannelFactory_ptr create (
       PortableServer::POA_ptr default_POA,
-      const char* factory_name = "EventChannelFactory") = 0;
+      const char* factory_name) = 0;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
-/// Deprecated.  Use TAO_COS_NOTIFICATION_SERVICE_NAME instead.
+/// @deprecated Use TAO_COS_NOTIFICATION_SERVICE_NAME instead.
 #define TAO_NOTIFY_DEF_EMO_FACTORY_NAME "Notify_Default_Event_Manager_Objects_Factory"
 
 #define TAO_NOTIFICATION_SERVICE_NAME "TAO_Notify_Service"

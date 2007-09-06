@@ -256,7 +256,7 @@ module PortableGroup
      * Remove the registration of all factories that create a particular type of object.
      * If no factories exist for the given type, the registry is unchanged.
      * This is not an error.
-     * @param type_id the type of object formerly created by the factories to be unregistered.
+     * @param role the role played by the object formerly created by this factory.
      */
     void unregister_factory_by_role(in RoleName role);
 
@@ -264,7 +264,7 @@ module PortableGroup
      * Remove the registration of all factories that create objects at a particular location.
      * If the location is unknown the registry is unchanged.
      * This is not an error.
-     * @param location where the factories formerly created objects.
+     * @param the_location where the factories formerly created objects.
      */
     void unregister_factory_by_location(in Location the_location);
 
@@ -280,7 +280,7 @@ module PortableGroup
      * List all the factories that create a objects at a given location.
      * If no factories are registered for this location, an empty list is returned.
      * This is not an error.
-     * @param location where the factories create objects.
+     * @param the_location where the factories create objects.
      */
     FactoryInfos list_factories_by_location(in Location the_location);
 

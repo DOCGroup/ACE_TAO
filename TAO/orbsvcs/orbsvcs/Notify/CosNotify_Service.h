@@ -59,8 +59,9 @@ public:
     CosNotifyChannelAdmin::EventChannelFactory_ptr factory);
 
   /// Create the Channel Factory.
-  virtual CosNotifyChannelAdmin::EventChannelFactory_ptr
-    create (PortableServer::POA_ptr default_POA, const char* factory_name);
+  virtual CosNotifyChannelAdmin::EventChannelFactory_ptr create (
+    PortableServer::POA_ptr default_POA,
+    const char* factory_name = "EventChannelFactory");
 
   /// Called by the factory when it is destroyed.
   virtual void remove (TAO_Notify_EventChannelFactory* ecf);
