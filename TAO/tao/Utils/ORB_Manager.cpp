@@ -46,9 +46,7 @@ TAO_ORB_Manager::init (int &argc,
 {
   if (CORBA::is_nil (this->orb_.in ()))
     {
-      this->orb_ = CORBA::ORB_init (argc,
-                                    argv,
-                                    orb_name);
+      this->orb_ = CORBA::ORB_init (argc, argv, orb_name);
     }
 
   if (CORBA::is_nil (this->poa_.in ()))
@@ -63,15 +61,13 @@ TAO_ORB_Manager::init (int &argc,
                           -1);
 
       // Get the POA object.
-      this->poa_ =
-        PortableServer::POA::_narrow (poa_object.in ());
+      this->poa_ = PortableServer::POA::_narrow (poa_object.in ());
     }
 
   if (CORBA::is_nil (this->poa_manager_.in ()))
     {
       // Get the POA_Manager.
-      this->poa_manager_ =
-        this->poa_->the_POAManager ();
+      this->poa_manager_ = this->poa_->the_POAManager ();
     }
 
   return 0;
@@ -84,12 +80,8 @@ TAO_ORB_Manager::init_child_poa (int& argc,
                                  const char *poa_name,
                                  const char *orb_name)
 {
-  // check to see if root poa has to be created.
-  int init_result = this->init (argc,
-                                argv,
-                                orb_name);
-
-  if (init_result == -1)
+  // Check to see if root poa has to be created.
+  if (this->init (argc, argv, orb_name) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT (" (%P|%t) Error in init.\n")),
                       -1);
@@ -109,11 +101,8 @@ TAO_ORB_Manager::init_child_poa (int& argc,
 
   // We use a different POA, otherwise the user would have to change
   // the object key each time it invokes the server.
-
   this->child_poa_ =
-    this->poa_->create_POA (poa_name,
-                            this->poa_manager_.in (),
-                            policies);
+    this->poa_->create_POA (poa_name, this->poa_manager_.in (), policies);
 
   return 0;
 }
@@ -133,14 +122,11 @@ TAO_ORB_Manager::activate_poa_manager (void)
 char *
 TAO_ORB_Manager::activate (PortableServer::Servant servant)
 {
-  PortableServer::ObjectId_var id =
-    this->poa_->activate_object (servant);
+  PortableServer::ObjectId_var id = this->poa_->activate_object (servant);
 
-  CORBA::Object_var obj =
-    this->poa_->id_to_reference (id.in ());
+  CORBA::Object_var obj = this->poa_->id_to_reference (id.in ());
 
-  CORBA::String_var str =
-    this->orb_->object_to_string (obj.in ());
+  CORBA::String_var str = this->orb_->object_to_string (obj.in ());
 
   return str._retn ();
 }
@@ -148,8 +134,7 @@ TAO_ORB_Manager::activate (PortableServer::Servant servant)
 void
 TAO_ORB_Manager::deactivate (const char *id)
 {
-  CORBA::Object_var object =
-    this->orb_->string_to_object (id);
+  CORBA::Object_var object = this->orb_->string_to_object (id);
 
   PortableServer::ObjectId_var object_id =
     this->poa_->reference_to_id (object.in ());
@@ -172,14 +157,11 @@ TAO_ORB_Manager::activate_under_child_poa (const char *object_name,
   PortableServer::ObjectId_var id =
     PortableServer::string_to_ObjectId (object_name);
 
-  this->child_poa_->activate_object_with_id (id.in (),
-                                             servant);
+  this->child_poa_->activate_object_with_id (id.in (), servant);
 
-  CORBA::Object_var obj =
-    this->child_poa_->id_to_reference (id.in ());
+  CORBA::Object_var obj = this->child_poa_->id_to_reference (id.in ());
 
-  CORBA::String_var str =
-    this->orb_->object_to_string (obj.in ());
+  CORBA::String_var str = this->orb_->object_to_string (obj.in ());
 
   return str._retn();
 }
@@ -187,8 +169,7 @@ TAO_ORB_Manager::activate_under_child_poa (const char *object_name,
 void
 TAO_ORB_Manager::deactivate_under_child_poa (const char *id)
 {
-  CORBA::Object_var object =
-    this->orb_->string_to_object (id);
+  CORBA::Object_var object = this->orb_->string_to_object (id);
 
   PortableServer::ObjectId_var object_id =
     this->child_poa_->reference_to_id (object.in ());
