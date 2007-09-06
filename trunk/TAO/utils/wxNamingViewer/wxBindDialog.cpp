@@ -16,100 +16,50 @@
 namespace  // anonymous
 {
 
-void create_dialog_components( wxDialog* dialog)
+void create_dialog_components(wxDialog* dialog)
 {
-  wxBoxSizer *topsizer = new wxBoxSizer( wxVERTICAL);
+  wxBoxSizer *topsizer = new wxBoxSizer(wxVERTICAL);
 
   {
-    wxBoxSizer *sizer = new wxBoxSizer( wxHORIZONTAL);
-    sizer->Add(
-        new wxStaticText( dialog, -1, "ID:" ),
-        0,
-        wxALL,
-        5);
-    wxTextCtrl* text = new wxTextCtrl(
-	dialog,
-	IDC_ID
-	);
-    text->SetName( "idTextCtrl");
-    sizer->Add(
-	text,
-	1,
-	wxALL,
-	5);
-    topsizer->Add(
-        sizer,
-        0,
-        wxALIGN_LEFT | wxEXPAND);
+    wxBoxSizer *sizer = new wxBoxSizer(wxHORIZONTAL);
+    sizer->Add(new wxStaticText(dialog, -1, "ID:" ), 0, wxALL, 5);
+    wxTextCtrl* text = new wxTextCtrl(dialog, IDC_ID);
+    text->SetName("idTextCtrl");
+    sizer->Add(text, 1, wxALL, 5);
+    topsizer->Add(sizer, 0, wxALIGN_LEFT | wxEXPAND);
+  }
+
+  {
+    wxBoxSizer *sizer = new wxBoxSizer(wxHORIZONTAL);
+    sizer->Add(new wxStaticText(dialog, -1, "Kind:" ), 0, wxALL, 5);
+    wxTextCtrl* text = new wxTextCtrl(dialog, IDC_KIND);
+    text->SetName("kindTextCtrl");
+    sizer->Add(text, 1, wxALL, 5);
+    topsizer->Add(sizer, 0, wxALIGN_LEFT | wxEXPAND);
   }
 
   {
     wxBoxSizer *sizer = new wxBoxSizer( wxHORIZONTAL);
-    sizer->Add(
-        new wxStaticText( dialog, -1, "Kind:" ),
-        0,
-        wxALL,
-        5);
-    wxTextCtrl* text = new wxTextCtrl(
-	dialog,
-	IDC_KIND
-	);
-    text->SetName( "kindTextCtrl");
-    sizer->Add(
-	text,
-	1,
-	wxALL,
-	5);
-    topsizer->Add(
-        sizer,
-        0,
-        wxALIGN_LEFT | wxEXPAND);
-  }
-
-  {
-    wxBoxSizer *sizer = new wxBoxSizer( wxHORIZONTAL);
-    sizer->Add(
-        new wxStaticText( dialog, -1, "IOR:" ),
-        0,
-        wxALL,
-        5);
-    wxTextCtrl* text = new wxTextCtrl(
-	dialog,
-	IDC_IOR
-	);
+    sizer->Add(new wxStaticText( dialog, -1, "IOR:" ), 0, wxALL, 5);
+    wxTextCtrl* text = new wxTextCtrl(dialog, IDC_IOR);
     text->SetName( "iorTextCtrl");
-    sizer->Add(
-	text,
-	1,
-	wxALL,
-	5);
-    topsizer->Add(
-        sizer,
-        0,
-        wxALIGN_LEFT | wxEXPAND);
+    sizer->Add(text, 1, wxALL, 5);
+    topsizer->Add(sizer, 0, wxALIGN_LEFT | wxEXPAND);
   }
 
   wxBoxSizer* button_sizer = new wxBoxSizer( wxHORIZONTAL);
   {
     wxButton* button = new wxButton( dialog, wxID_OK, "OK" );
     button->SetName( "okButton");
-    button_sizer->Add(
-        button,
-        0,
-        wxALL,
-        5);
+    button_sizer->Add(button, 0, wxALL, 5);
   }
   {
-    button_sizer->Add(
-        new wxButton( dialog, wxID_CANCEL, "Cancel" ),
-        0,
-        wxALL,
-        5);
+    button_sizer->Add(new wxButton( dialog, wxID_CANCEL, "Cancel" ),
+                      0,
+                      wxALL,
+                      5);
   }
-  topsizer->Add(
-     button_sizer,
-     0,
-     wxALIGN_CENTER);
+  topsizer->Add(button_sizer, 0, wxALIGN_CENTER);
 
   dialog->SetSizer( topsizer);
   topsizer->SetSizeHints( dialog);

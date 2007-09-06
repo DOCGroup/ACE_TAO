@@ -20,56 +20,56 @@ static char THIS_FILE[] = __FILE__;
 class CAboutDlg : public CDialog
 {
 public:
-	CAboutDlg();
+  CAboutDlg();
 
 // Dialog Data
-	//{{AFX_DATA(CAboutDlg)
-	enum { IDD = IDD_ABOUTBOX };
-	//}}AFX_DATA
+  //{{AFX_DATA(CAboutDlg)
+  enum { IDD = IDD_ABOUTBOX };
+  //}}AFX_DATA
 
-	// ClassWizard generated virtual function overrides
-	//{{AFX_VIRTUAL(CAboutDlg)
-	protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
-	//}}AFX_VIRTUAL
+  // ClassWizard generated virtual function overrides
+  //{{AFX_VIRTUAL(CAboutDlg)
+  protected:
+  virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
+  //}}AFX_VIRTUAL
 
 // Implementation
 protected:
-	//{{AFX_MSG(CAboutDlg)
-	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
+  //{{AFX_MSG(CAboutDlg)
+  //}}AFX_MSG
+  DECLARE_MESSAGE_MAP()
 };
 
 CAboutDlg::CAboutDlg() : CDialog(CAboutDlg::IDD)
 {
-	//{{AFX_DATA_INIT(CAboutDlg)
-	//}}AFX_DATA_INIT
+  //{{AFX_DATA_INIT(CAboutDlg)
+  //}}AFX_DATA_INIT
 }
 
 void CAboutDlg::DoDataExchange(CDataExchange* pDX)
 {
-	CDialog::DoDataExchange(pDX);
-	//{{AFX_DATA_MAP(CAboutDlg)
-	//}}AFX_DATA_MAP
+  CDialog::DoDataExchange(pDX);
+  //{{AFX_DATA_MAP(CAboutDlg)
+  //}}AFX_DATA_MAP
 }
 
 BEGIN_MESSAGE_MAP(CAboutDlg, CDialog)
-	//{{AFX_MSG_MAP(CAboutDlg)
-		// No message handlers
-	//}}AFX_MSG_MAP
+  //{{AFX_MSG_MAP(CAboutDlg)
+    // No message handlers
+  //}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
 // CNamingViewerDlg dialog
 
 CNamingViewerDlg::CNamingViewerDlg(CORBA::ORB_ptr pORB, CWnd* pParent /*=0*/)
-	: CDialog(CNamingViewerDlg::IDD, pParent)
+  : CDialog(CNamingViewerDlg::IDD, pParent)
 {
-	//{{AFX_DATA_INIT(CNamingViewerDlg)
-	m_Server = _T("");
-	//}}AFX_DATA_INIT
-	// Note that LoadIcon does not require a subsequent DestroyIcon in Win32
-	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
+  //{{AFX_DATA_INIT(CNamingViewerDlg)
+  m_Server = _T("");
+  //}}AFX_DATA_INIT
+  // Note that LoadIcon does not require a subsequent DestroyIcon in Win32
+  m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 
   m_pORB = pORB;
 
@@ -77,21 +77,21 @@ CNamingViewerDlg::CNamingViewerDlg(CORBA::ORB_ptr pORB, CWnd* pParent /*=0*/)
 
 void CNamingViewerDlg::DoDataExchange(CDataExchange* pDX)
 {
-	CDialog::DoDataExchange(pDX);
-	//{{AFX_DATA_MAP(CNamingViewerDlg)
-	DDX_Control(pDX, IDC_TREE, m_Tree);
-	DDX_Text(pDX, IDC_SERVER, m_Server);
-	//}}AFX_DATA_MAP
+  CDialog::DoDataExchange(pDX);
+  //{{AFX_DATA_MAP(CNamingViewerDlg)
+  DDX_Control(pDX, IDC_TREE, m_Tree);
+  DDX_Text(pDX, IDC_SERVER, m_Server);
+  //}}AFX_DATA_MAP
 }
 
 BEGIN_MESSAGE_MAP(CNamingViewerDlg, CDialog)
-	//{{AFX_MSG_MAP(CNamingViewerDlg)
-	ON_WM_SYSCOMMAND()
-	ON_WM_PAINT()
-	ON_WM_QUERYDRAGICON()
-	ON_BN_CLICKED(IDC_SELECT_NS, OnSelectNs)
-	ON_WM_SIZE()
-	//}}AFX_MSG_MAP
+  //{{AFX_MSG_MAP(CNamingViewerDlg)
+  ON_WM_SYSCOMMAND()
+  ON_WM_PAINT()
+  ON_WM_QUERYDRAGICON()
+  ON_BN_CLICKED(IDC_SELECT_NS, OnSelectNs)
+  ON_WM_SIZE()
+  //}}AFX_MSG_MAP
 #if !defined (_WIN32_WCE)
   ON_WM_GETMINMAXINFO()
 #endif
@@ -102,35 +102,35 @@ END_MESSAGE_MAP()
 
 BOOL CNamingViewerDlg::OnInitDialog()
 {
-	CDialog::OnInitDialog();
+  CDialog::OnInitDialog();
 
-	// Add "About..." menu item to system menu.
+  // Add "About..." menu item to system menu.
 
-	// IDM_ABOUTBOX must be in the system command range.
-	ASSERT((IDM_ABOUTBOX & 0xFFF0) == IDM_ABOUTBOX);
-	ASSERT(IDM_ABOUTBOX < 0xF000);
+  // IDM_ABOUTBOX must be in the system command range.
+  ASSERT((IDM_ABOUTBOX & 0xFFF0) == IDM_ABOUTBOX);
+  ASSERT(IDM_ABOUTBOX < 0xF000);
 
 #if !defined (_WIN32_WCE)
-	CMenu* pSysMenu = GetSystemMenu(FALSE);
-	if (pSysMenu != 0)
-	{
-		CString strAboutMenu;
-		strAboutMenu.LoadString(IDS_ABOUTBOX);
-		if (!strAboutMenu.IsEmpty())
-		{
-			pSysMenu->AppendMenu(MF_SEPARATOR);
-			pSysMenu->AppendMenu(MF_STRING, IDM_ABOUTBOX, strAboutMenu);
-		}
-	}
+  CMenu* pSysMenu = GetSystemMenu(FALSE);
+  if (pSysMenu != 0)
+  {
+    CString strAboutMenu;
+    strAboutMenu.LoadString(IDS_ABOUTBOX);
+    if (!strAboutMenu.IsEmpty())
+    {
+      pSysMenu->AppendMenu(MF_SEPARATOR);
+      pSysMenu->AppendMenu(MF_STRING, IDM_ABOUTBOX, strAboutMenu);
+    }
+  }
 #endif
 
-	// Set the icon for this dialog.  The framework does this automatically
-	//  when the application's main window is not a dialog
-	SetIcon(m_hIcon, TRUE);			// Set big icon
-	SetIcon(m_hIcon, FALSE);		// Set small icon
+  // Set the icon for this dialog.  The framework does this automatically
+  //  when the application's main window is not a dialog
+  SetIcon(m_hIcon, TRUE);  // Set big icon
+  SetIcon(m_hIcon, FALSE); // Set small icon
 
-	// TODO: Add extra initialization here
-	m_Tree.SetpORB(m_pORB);
+  // TODO: Add extra initialization here
+  m_Tree.SetpORB(m_pORB);
 
   // Initialize the naming client and get the root context
   TAO_Naming_Client Client;
@@ -159,15 +159,15 @@ BOOL CNamingViewerDlg::OnInitDialog()
 
 void CNamingViewerDlg::OnSysCommand(UINT nID, LPARAM lParam)
 {
-	if ((nID & 0xFFF0) == IDM_ABOUTBOX)
-	{
-		CAboutDlg dlgAbout;
-		dlgAbout.DoModal();
-	}
-	else
-	{
-		CDialog::OnSysCommand(nID, lParam);
-	}
+  if ((nID & 0xFFF0) == IDM_ABOUTBOX)
+  {
+    CAboutDlg dlgAbout;
+    dlgAbout.DoModal();
+  }
+  else
+  {
+    CDialog::OnSysCommand(nID, lParam);
+  }
 }
 
 // If you add a minimize button to your dialog, you will need the code below
@@ -176,32 +176,32 @@ void CNamingViewerDlg::OnSysCommand(UINT nID, LPARAM lParam)
 
 void CNamingViewerDlg::OnPaint()
 {
-	if (IsIconic())
-	{
-		CPaintDC dc(this); // device context for painting
+  if (IsIconic())
+  {
+    CPaintDC dc(this); // device context for painting
 
-		// Center icon in client rectangle
-		int cxIcon = GetSystemMetrics(SM_CXICON);
-		int cyIcon = GetSystemMetrics(SM_CYICON);
-		CRect rect;
-		GetClientRect(&rect);
-		int x = (rect.Width() - cxIcon + 1) / 2;
-		int y = (rect.Height() - cyIcon + 1) / 2;
+    // Center icon in client rectangle
+    int cxIcon = GetSystemMetrics(SM_CXICON);
+    int cyIcon = GetSystemMetrics(SM_CYICON);
+    CRect rect;
+    GetClientRect(&rect);
+    int x = (rect.Width() - cxIcon + 1) / 2;
+    int y = (rect.Height() - cyIcon + 1) / 2;
 
-		// Draw the icon
-		dc.DrawIcon(x, y, m_hIcon);
-	}
-	else
-	{
-		CDialog::OnPaint();
-	}
+    // Draw the icon
+    dc.DrawIcon(x, y, m_hIcon);
+  }
+  else
+  {
+    CDialog::OnPaint();
+  }
 }
 
 // The system calls this to obtain the cursor to display while the user drags
 //  the minimized window.
 HCURSOR CNamingViewerDlg::OnQueryDragIcon()
 {
-	return (HCURSOR) m_hIcon;
+  return (HCURSOR) m_hIcon;
 }
 
 void CNamingViewerDlg::Resolve()
@@ -211,8 +211,8 @@ void CNamingViewerDlg::Resolve()
 
 void CNamingViewerDlg::OnSelectNs()
 {
-	// TODO: Add your control notification handler code here
-	CSelectNSDialog Dialog;
+  // TODO: Add your control notification handler code here
+  CSelectNSDialog Dialog;
   if(Dialog.DoModal() != IDOK)
   {
     return;
@@ -233,8 +233,8 @@ void CNamingViewerDlg::OnSelectNs()
 
 void CNamingViewerDlg::OnSize(UINT nType, int cx, int cy)
 {
-	CDialog::OnSize(nType, cx, cy);
-	// TODO: Add your message handler code here
+  CDialog::OnSize(nType, cx, cy);
+  // TODO: Add your message handler code here
 
   // Resize the tree control
   if(m_Tree.m_hWnd)

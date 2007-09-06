@@ -1,3 +1,26 @@
+Thu Sep  6 22:57:44 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * utils/NamingViewer/AddNameServerDlg.h:
+        * utils/NamingViewer/AddNameServerDlg.cpp:
+        * utils/NamingViewer/BindDialog.h:
+        * utils/NamingViewer/BindDialog.cpp:
+        * utils/NamingViewer/BindNewContext.h:
+        * utils/NamingViewer/BindNewContext.cpp:
+        * utils/NamingViewer/NamingTreeCtrl.h:
+        * utils/NamingViewer/NamingTreeCtrl.cpp:
+        * utils/NamingViewer/NamingViewer.h:
+        * utils/NamingViewer/NamingViewer.cpp:
+        * utils/NamingViewer/NamingViewerDlg.h:
+        * utils/NamingViewer/NamingViewerDlg.cpp:
+        * utils/NamingViewer/SelectNSDialog.h:
+        * utils/NamingViewer/SelectNSDialog.cpp:
+        * utils/NamingViewer/StdAfx.cpp:
+        * utils/NamingViewer/ViewIORDialog.h:
+        * utils/NamingViewer/ViewIORDialog.cpp:
+        * utils/catior/catior.cpp:
+        * utils/wxNamingViewer/wxBindDialog.cpp:
+          Untabify.
+
 Thu Sep  6 18:01:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Notify/Service.h (create):
