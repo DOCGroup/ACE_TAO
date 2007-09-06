@@ -1,3 +1,9 @@
+Thu Sep  6 22:59:24 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * bin/fuzz.pl:
+          Remove TAO/utils directory from the list of excluded
+          directories for the tabs check.
+
 Thu Sep  6 18:28:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-win32-borland.h:
