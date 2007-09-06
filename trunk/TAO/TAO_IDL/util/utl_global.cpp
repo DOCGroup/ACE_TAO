@@ -1331,6 +1331,18 @@ IDL_GlobalData::add_include_path (const char *s)
   this->include_paths_.enqueue_tail (ACE::strnew (s));
 }
 
+void
+IDL_GlobalData::add_rel_include_path (const char *s)
+{
+  this->rel_include_paths_.enqueue_tail (ACE::strnew (s));
+}
+
+ACE_Unbounded_Queue<char *> const &
+IDL_GlobalData::rel_include_paths (void) const
+{
+  return this->rel_include_paths_;
+}
+
 ACE_Hash_Map_Manager<char *, char *, ACE_Null_Mutex> &
 IDL_GlobalData::file_prefixes (void)
 {
@@ -1539,10 +1551,20 @@ IDL_GlobalData::fini (void)
   for (ACE_Unbounded_Queue_Iterator<char *>qiter (
             this->include_paths_
           );
-       !qiter.done ();
+       qiter.done () == 0;
        qiter.advance ())
     {
       qiter.next (path_tmp);
+      ACE::strdelete (*path_tmp);
+    }
+
+  for (ACE_Unbounded_Queue_Iterator<char *>riter (
+            this->rel_include_paths_
+          );
+       riter.done () == 0;
+       riter.advance ())
+    {
+      riter.next (path_tmp);
       ACE::strdelete (*path_tmp);
     }
 
