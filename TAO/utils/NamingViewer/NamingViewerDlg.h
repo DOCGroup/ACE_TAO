@@ -19,38 +19,38 @@ class CNamingViewerDlg : public CDialog
 {
 // Construction
 public:
-  CNamingViewerDlg(CORBA::ORB_ptr pORB, CWnd* pParent = 0);	// standard constructor
+  CNamingViewerDlg(CORBA::ORB_ptr pORB, CWnd* pParent = 0); // standard constructor
 
 // Dialog Data
-	//{{AFX_DATA(CNamingViewerDlg)
-	enum { IDD = IDD_NAMINGVIEWER_DIALOG };
-	CNamingTreeCtrl	m_Tree;
-	CString	m_Server;
-	//}}AFX_DATA
+  //{{AFX_DATA(CNamingViewerDlg)
+  enum { IDD = IDD_NAMINGVIEWER_DIALOG };
+  CNamingTreeCtrl m_Tree;
+  CString m_Server;
+  //}}AFX_DATA
 
-	// ClassWizard generated virtual function overrides
-	//{{AFX_VIRTUAL(CNamingViewerDlg)
-	protected:
-	virtual void DoDataExchange(CDataExchange* pDX);	// DDX/DDV support
-	//}}AFX_VIRTUAL
+  // ClassWizard generated virtual function overrides
+  //{{AFX_VIRTUAL(CNamingViewerDlg)
+  protected:
+  virtual void DoDataExchange(CDataExchange* pDX); // DDX/DDV support
+  //}}AFX_VIRTUAL
 
 // Implementation
 protected:
-	HICON m_hIcon;
+  HICON m_hIcon;
 
-	// Generated message map functions
-	//{{AFX_MSG(CNamingViewerDlg)
-	virtual BOOL OnInitDialog();
-	afx_msg void OnSysCommand(UINT nID, LPARAM lParam);
-	afx_msg void OnPaint();
-	afx_msg HCURSOR OnQueryDragIcon();
-	afx_msg void OnSelectNs();
-	afx_msg void OnSize(UINT nType, int cx, int cy);
-	//}}AFX_MSG
+  // Generated message map functions
+  //{{AFX_MSG(CNamingViewerDlg)
+  virtual BOOL OnInitDialog();
+  afx_msg void OnSysCommand(UINT nID, LPARAM lParam);
+  afx_msg void OnPaint();
+  afx_msg HCURSOR OnQueryDragIcon();
+  afx_msg void OnSelectNs();
+  afx_msg void OnSize(UINT nType, int cx, int cy);
+  //}}AFX_MSG
 #if !defined (_WIN32_WCE)
   afx_msg void OnGetMinMaxInfo( MINMAXINFO FAR* lpMMI );
 #endif
-	DECLARE_MESSAGE_MAP()
+  DECLARE_MESSAGE_MAP()
   void Resolve();
 
   CORBA::ORB_ptr                  m_pORB;

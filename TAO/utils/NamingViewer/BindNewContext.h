@@ -15,31 +15,31 @@ class CBindNewContext : public CDialog
 {
 // Construction
 public:
-	CBindNewContext(CWnd* pParent = 0);   // standard constructor
+  CBindNewContext(CWnd* pParent = 0);   // standard constructor
 
 // Dialog Data
-	//{{AFX_DATA(CBindNewContext)
-	enum { IDD = IDD_BIND_NEW_CONTEXT };
-	CString	m_ID;
-	CString	m_Kind;
-	//}}AFX_DATA
+  //{{AFX_DATA(CBindNewContext)
+  enum { IDD = IDD_BIND_NEW_CONTEXT };
+  CString m_ID;
+  CString m_Kind;
+  //}}AFX_DATA
   CosNaming::Name& GetName() {return m_Name;};
 
 // Overrides
-	// ClassWizard generated virtual function overrides
-	//{{AFX_VIRTUAL(CBindNewContext)
-	protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
-	//}}AFX_VIRTUAL
+  // ClassWizard generated virtual function overrides
+  //{{AFX_VIRTUAL(CBindNewContext)
+  protected:
+  virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
+  //}}AFX_VIRTUAL
 
 // Implementation
 protected:
 
-	// Generated message map functions
-	//{{AFX_MSG(CBindNewContext)
-	virtual void OnOK();
-	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
+  // Generated message map functions
+  //{{AFX_MSG(CBindNewContext)
+  virtual void OnOK();
+  //}}AFX_MSG
+  DECLARE_MESSAGE_MAP()
 
   CosNaming::Name   m_Name;
 };

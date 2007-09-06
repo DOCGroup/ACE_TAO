@@ -16,28 +16,28 @@ static char THIS_FILE[] = __FILE__;
 
 
 CBindNewContext::CBindNewContext(CWnd* pParent /*=NULL*/)
-	: CDialog(CBindNewContext::IDD, pParent)
+  : CDialog(CBindNewContext::IDD, pParent)
 {
-	//{{AFX_DATA_INIT(CBindNewContext)
-	m_ID = _T("");
-	m_Kind = _T("");
-	//}}AFX_DATA_INIT
+  //{{AFX_DATA_INIT(CBindNewContext)
+  m_ID = _T("");
+  m_Kind = _T("");
+  //}}AFX_DATA_INIT
 }
 
 
 void CBindNewContext::DoDataExchange(CDataExchange* pDX)
 {
-	CDialog::DoDataExchange(pDX);
-	//{{AFX_DATA_MAP(CBindNewContext)
-	DDX_Text(pDX, IDC_ID, m_ID);
-	DDX_Text(pDX, IDC_KIND, m_Kind);
-	//}}AFX_DATA_MAP
+  CDialog::DoDataExchange(pDX);
+  //{{AFX_DATA_MAP(CBindNewContext)
+  DDX_Text(pDX, IDC_ID, m_ID);
+  DDX_Text(pDX, IDC_KIND, m_Kind);
+  //}}AFX_DATA_MAP
 }
 
 
 BEGIN_MESSAGE_MAP(CBindNewContext, CDialog)
-	//{{AFX_MSG_MAP(CBindNewContext)
-	//}}AFX_MSG_MAP
+  //{{AFX_MSG_MAP(CBindNewContext)
+  //}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -45,10 +45,10 @@ END_MESSAGE_MAP()
 
 void CBindNewContext::OnOK()
 {
-	// TODO: Add extra validation here
-	UpdateData();
+  // TODO: Add extra validation here
+  UpdateData();
   m_Name.length(1);
   m_Name[0].id = CORBA::string_dup(ACE_TEXT_ALWAYS_CHAR (m_ID));
   m_Name[0].kind = CORBA::string_dup(ACE_TEXT_ALWAYS_CHAR (m_Kind));
-	CDialog::OnOK();
+  CDialog::OnOK();
 }
