@@ -557,7 +557,11 @@ public:
 
   void add_include_path (const char *s);
   // Add another path to 'include_paths_'.
-
+  
+  void add_rel_include_path (const char *s);
+  ACE_Unbounded_Queue<char *> const & rel_include_paths (void) const;
+  // Accessor/mutator for the rel_include_paths_ member.
+  
   FILE * open_included_file (char const * filename,
                              char const *& directory);
   // Attempt to open file for reading until it is found in one of the
@@ -694,6 +698,9 @@ private:
 
   ACE_Unbounded_Queue<char *> include_paths_;
   // List of -I options passed to us.
+  
+  ACE_Unbounded_Queue<char *> rel_include_paths_;
+  // Used by backends with the -r option.
 
   ACE_Hash_Map_Manager<char *, char *, ACE_Null_Mutex> file_prefixes_;
   // Associates a prefix with a file.
