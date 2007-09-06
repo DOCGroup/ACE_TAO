@@ -312,7 +312,6 @@ sub check_for_tab ()
                     if (($file =~ /(ACE)*.*examples/i)          ||
                         ($file =~ /(ACE)*.*apps/i)              ||
                         ($file =~ /(TAO)*.*tests/i)             ||
-                        ($file =~ /(TAO)*.*utils/i)             ||
                         ($file =~ /(TAO)*.*orbsvcs/i)           ||
                         ($file =~ /(TAO)*.*docs/i)              ||
                         ($file =~ /(TAO)*.*tools/i)             ||
