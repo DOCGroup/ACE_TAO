@@ -1,3 +1,16 @@
+Thu Sep  6 13:10:49 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/include/idl_global.h:
+        * TAO_IDL/be/be_visitor_enum/cdr_op_ch.cpp:
+        * TAO_IDL/be/be_enum.cpp:
+        * TAO_IDL/driver/drv_preproc.cpp:
+        * TAO_IDL/util/utl_global.cpp:
+        
+          Fixes intended for checkin last July and overlooked, including:
+          
+          - fixes to optional generated stream operators
+          - addition and usage of global list of relative include paths
+
 Thu Sep  6 12:37:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Borland/ChatClientWnd.cpp:
