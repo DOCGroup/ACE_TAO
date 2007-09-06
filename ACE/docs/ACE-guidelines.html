@@ -177,7 +177,36 @@ bgcolor="#ffffff">
         For an example header file using Doxygen-style comments,
         please refer to <a href="../ace/ACE.h">ACE.h</a>.<p>
 
-    <LI>All binary options for ACE and TAO should be specified in
+    <li>The header file comment should at least contain the following
+        entries:
+        <pre>
+        /**
+         * @file Foo.h
+         * @author Authors Name &lt;author@email.org&gt;
+         *
+         *  A few words describing the file.
+         */
+        </pre></p>
+
+    <li>A class should be commented this way:
+        <pre>
+        /**
+         * @class Foo_Impl
+         * @brief A brief description of the class
+         *
+         * A more detailed description.
+         */
+        </pre></p>
+
+     <li>The preferred way to document methods is:
+         <pre>
+         /// This function foos the bars
+         /// another line of documentation if necessary
+         /// @param bar The bar you want to foo
+         void foo (int bar);
+         </pre></p>
+
+    <li>All binary options for ACE and TAO should be specified in
         terms of the integral values 0 and 1, rather than "true" and
         "false" or "yes" and "no".  All TAO options should be
         documented in the <A HREF="../TAO/docs/Options.html">online
