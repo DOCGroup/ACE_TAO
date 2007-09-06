@@ -1512,9 +1512,9 @@ cat_tagged_components (TAO_InputCDR& stream)
         cat_tag_policies(stream);
         ACE_DEBUG ((LM_DEBUG, "%}%}"));
       } else if (tag == 20U /* SSLIOP::TAG_SSL_SEC_TRANS */) {
-	ACE_DEBUG ((LM_DEBUG,"%d (TAG_SSL_SEC_TRANS)\n", tag));
+        ACE_DEBUG ((LM_DEBUG,"%d (TAG_SSL_SEC_TRANS)\n", tag));
         ACE_DEBUG ((LM_DEBUG, "%{"));
-	cat_tag_ssl_sec_trans(stream);
+        cat_tag_ssl_sec_trans(stream);
         ACE_DEBUG ((LM_DEBUG, "%}"));
       } else {
         ACE_DEBUG ((LM_DEBUG,"%d\n", tag));

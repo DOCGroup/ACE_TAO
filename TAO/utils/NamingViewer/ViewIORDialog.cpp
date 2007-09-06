@@ -17,12 +17,12 @@ static char THIS_FILE[] = __FILE__;
 
 
 ViewIORDialog::ViewIORDialog(CORBA::ORB_ptr pORB, CORBA::Object_ptr pObject, CWnd* pParent /*=NULL*/)
-	: CDialog(ViewIORDialog::IDD, pParent)
+  : CDialog(ViewIORDialog::IDD, pParent)
 {
-	//{{AFX_DATA_INIT(ViewIORDialog)
-	m_TypeID = _T("");
-	m_IOR = _T("");
-	//}}AFX_DATA_INIT
+  //{{AFX_DATA_INIT(ViewIORDialog)
+  m_TypeID = _T("");
+  m_IOR = _T("");
+  //}}AFX_DATA_INIT
   m_pORB = pORB;
   if(pObject)
   {
@@ -35,19 +35,19 @@ ViewIORDialog::ViewIORDialog(CORBA::ORB_ptr pORB, CORBA::Object_ptr pObject, CWn
 
 void ViewIORDialog::DoDataExchange(CDataExchange* pDX)
 {
-	CDialog::DoDataExchange(pDX);
-	//{{AFX_DATA_MAP(ViewIORDialog)
-	DDX_Control(pDX, IDC_PROFILES, m_Profiles);
-	DDX_Text(pDX, IDC_TYPE_ID, m_TypeID);
-	DDX_Text(pDX, IDC_IOR, m_IOR);
-	//}}AFX_DATA_MAP
+  CDialog::DoDataExchange(pDX);
+  //{{AFX_DATA_MAP(ViewIORDialog)
+  DDX_Control(pDX, IDC_PROFILES, m_Profiles);
+  DDX_Text(pDX, IDC_TYPE_ID, m_TypeID);
+  DDX_Text(pDX, IDC_IOR, m_IOR);
+  //}}AFX_DATA_MAP
 }
 
 
 BEGIN_MESSAGE_MAP(ViewIORDialog, CDialog)
-	//{{AFX_MSG_MAP(ViewIORDialog)
-	ON_BN_CLICKED(IDC_APPLY, OnApply)
-	//}}AFX_MSG_MAP
+  //{{AFX_MSG_MAP(ViewIORDialog)
+  ON_BN_CLICKED(IDC_APPLY, OnApply)
+  //}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -55,17 +55,17 @@ END_MESSAGE_MAP()
 
 BOOL ViewIORDialog::OnInitDialog()
 {
-	CDialog::OnInitDialog();
-	
-	// TODO: Add extra initialization here
+  CDialog::OnInitDialog();
+
+  // TODO: Add extra initialization here
   DecodeIOR();
   return TRUE;  // return TRUE unless you set the focus to a control
-	              // EXCEPTION: OCX Property Pages should return FALSE
+  // EXCEPTION: OCX Property Pages should return FALSE
 }
 
 void ViewIORDialog::OnApply()
 {
-	// TODO: Add your control notification handler code here
+  // TODO: Add your control notification handler code here
   UpdateData();
   try
   {

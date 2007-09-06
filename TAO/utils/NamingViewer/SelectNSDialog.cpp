@@ -20,30 +20,30 @@ static char THIS_FILE[] = __FILE__;
 
 
 CSelectNSDialog::CSelectNSDialog(CWnd* pParent /*=NULL*/)
-	: CDialog(CSelectNSDialog::IDD, pParent)
+  : CDialog(CSelectNSDialog::IDD, pParent)
 {
-	//{{AFX_DATA_INIT(CSelectNSDialog)
-		// NOTE: the ClassWizard will add member initialization here
-	//}}AFX_DATA_INIT
+  //{{AFX_DATA_INIT(CSelectNSDialog)
+    // NOTE: the ClassWizard will add member initialization here
+  //}}AFX_DATA_INIT
   m_pConfig = 0;
 }
 
 
 void CSelectNSDialog::DoDataExchange(CDataExchange* pDX)
 {
-	CDialog::DoDataExchange(pDX);
-	//{{AFX_DATA_MAP(CSelectNSDialog)
-	DDX_Control(pDX, IDC_SERVERS, m_Servers);
-	//}}AFX_DATA_MAP
+  CDialog::DoDataExchange(pDX);
+  //{{AFX_DATA_MAP(CSelectNSDialog)
+  DDX_Control(pDX, IDC_SERVERS, m_Servers);
+  //}}AFX_DATA_MAP
 }
 
 
 BEGIN_MESSAGE_MAP(CSelectNSDialog, CDialog)
-	//{{AFX_MSG_MAP(CSelectNSDialog)
-	ON_BN_CLICKED(IDC_ADD, OnAdd)
-	ON_BN_CLICKED(IDC_REMOVE, OnRemove)
-	ON_WM_DESTROY()
-	//}}AFX_MSG_MAP
+  //{{AFX_MSG_MAP(CSelectNSDialog)
+  ON_BN_CLICKED(IDC_ADD, OnAdd)
+  ON_BN_CLICKED(IDC_REMOVE, OnRemove)
+  ON_WM_DESTROY()
+  //}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -51,8 +51,8 @@ END_MESSAGE_MAP()
 
 void CSelectNSDialog::OnOK()
 {
-	// TODO: Add extra validation here
-	int index = m_Servers.GetCurSel();
+  // TODO: Add extra validation here
+  int index = m_Servers.GetCurSel();
   if(index == LB_ERR)
   {
     AfxMessageBox(ACE_TEXT ("You must select a server or cancel"));
@@ -61,13 +61,13 @@ void CSelectNSDialog::OnOK()
   char* pIOR = (char*)m_Servers.GetItemData(index);
   m_IOR = pIOR;
   m_Servers.GetText(index, m_Name);
-	CDialog::OnOK();
+  CDialog::OnOK();
 }
 
 void CSelectNSDialog::OnAdd()
 {
-	// TODO: Add your control notification handler code here
-	CAddNameServerDlg Dialog;
+  // TODO: Add your control notification handler code here
+  CAddNameServerDlg Dialog;
   if(Dialog.DoModal() != IDOK)
   {
     return;
@@ -84,8 +84,8 @@ void CSelectNSDialog::OnAdd()
 
 void CSelectNSDialog::OnRemove()
 {
-	// TODO: Add your control notification handler code here
-	int index = m_Servers.GetCurSel();
+  // TODO: Add your control notification handler code here
+  int index = m_Servers.GetCurSel();
   if(index == LB_ERR)
   {
     return;
@@ -100,9 +100,9 @@ void CSelectNSDialog::OnRemove()
 
 BOOL CSelectNSDialog::OnInitDialog()
 {
-	CDialog::OnInitDialog();
-	
-	// TODO: Add extra initialization here
+  CDialog::OnInitDialog();
+
+  // TODO: Add extra initialization here
   HKEY hKey = ACE_Configuration_Win32Registry::resolve_key(HKEY_LOCAL_MACHINE, ACE_TEXT("Software\\TAO\\NamingViewer\\Servers"));
   m_pConfig = new ACE_Configuration_Win32Registry(hKey);
   ACE_Configuration_Section_Key Section = m_pConfig->root_section();;
@@ -122,16 +122,16 @@ BOOL CSelectNSDialog::OnInitDialog()
     index++;
   }
 
-	return TRUE;  // return TRUE unless you set the focus to a control
-	              // EXCEPTION: OCX Property Pages should return FALSE
+  return TRUE;  // return TRUE unless you set the focus to a control
+  // EXCEPTION: OCX Property Pages should return FALSE
 }
 
 void CSelectNSDialog::OnDestroy()
 {
-	CDialog::OnDestroy();
-	
-	// TODO: Add your message handler code here
-	int count = m_Servers.GetCount();
+  CDialog::OnDestroy();
+
+  // TODO: Add your message handler code here
+  int count = m_Servers.GetCount();
   for(int i=0; i < count; i++)
   {
     delete (char*)m_Servers.GetItemData(i);
