@@ -1,0 +1,18 @@
+#include "DAnCE/Deployment/Deployment_TargetData.idl"
+#include "DAnCE/NodeApplication/App_Monitor.idl"
+#include "DAnCE/Deployment/Deployment_DeploymentPlan.idl"
+
+module Onl_Monitor
+{
+  interface NM_Monitor
+  {
+    ///
+    void monitor_app_QoS (in ::Deployment::DeploymentPlan plan);
+
+    /// gets the resource data , called by TM
+    ::Deployment::Domain get_resource_data ();
+
+    /// app monitor registers by this , called by each App monitor
+//    void register_app_monitor (in App_Monitor monitor);
+  };
+};

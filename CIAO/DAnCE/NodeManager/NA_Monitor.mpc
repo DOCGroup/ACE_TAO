@@ -1,0 +1,29 @@
+// Monitor.mpc,v 1.3 2006/01/27 19:17:20 nilabjar Exp
+
+
+// MPC file for the Monitor 
+
+project(*na_monitorlib): ciao_deployment_stub, ciao_events_base_dnc {
+  after += CIAO_TargetManager_stub NodeManager_svnt
+  includes += $(CIAO_ROOT)/DAnCE/TargetManager $(CIAO_ROOT)/DAnCE/Interfaces
+
+  sharedname = namonlib 
+
+  libs += TargetManager_stub CIAO_Deployment_stub NodeManager_stub NodeManager
+
+  IDL_Files {
+  }
+
+  Header_Files {
+  }
+  
+  Inline_Files {
+  }
+
+  Template_Files {
+  }
+
+  Source_Files {
+    NA_Monitor.cpp
+  }
+}

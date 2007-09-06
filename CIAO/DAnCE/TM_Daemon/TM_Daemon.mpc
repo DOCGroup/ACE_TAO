@@ -1,0 +1,18 @@
+project(TM_Daemon): ciao_server_dnc, dance_extension_stub, ciaoexe , ciao_domainapplicationmanager_dnc , ciao_config_handlers{
+  exename = TM_Daemon
+
+  includes += $(CIAO_ROOT)/DAnCE/NodeManager
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    TM_Daemon.cpp
+    DomainDataManager.cpp
+    ../NodeManager/NM_MonitorS.cpp
+    ../NodeManager/NM_MonitorC.cpp
+    $(CIAO_ROOT)/DAnCE/NodeApplication/App_MonitorC.cpp
+    Handler_i.cpp
+      Profile_Code.cpp
+  }
+}
