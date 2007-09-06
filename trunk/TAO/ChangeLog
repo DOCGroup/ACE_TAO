@@ -1,26 +1,43 @@
+Thu Sep  6 09:24:12 UTC 2007  Johnny WIllemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/ESF/ESF_Proxy_RefCount_Guard.h:
+        * orbsvcs/orbsvcs/PortableGroup.idl:
+          Doxygen improvements
+
+        * orbsvcs/orbsvcs/IFRService/ComponentDef_i.cpp:
+        * orbsvcs/orbsvcs/Security/Security_ORBInitializer.cpp:
+          Layout changes
+
+        * orbsvcs/orbsvcs/Notify/CosNotify_Service.h (create):
+          Added default argument for factory_name, thanks to Lothar
+          Werzingen <lothar at tradescape dot biz> for reporting this
+
+        * orbsvcs/orbsvcs/Notify/Service.h (create):
+          Default argument for pure virtual function is not needed
+
 Wed Sep  5 13:26:26 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_codegen.cpp (start_anyop_header):
-        
+
           Changed logic again to generate empty *A.h file if -GA appears
           with -Sa or -St.
-          
+
         * docs/compiler.html:
-        
+
           Updated command line option table description to reflect the
           change above.
 
 Tue Sep  4 18:05:08 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * docs/compiler.html:
-        
+
           Updated command line option table descriptions to reflect
           changes below.
 
 Tue Sep  4 17:52:54 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_codegen.cpp (start_anyop_header);
-        
+
           Changed the logic of the check at the top of this method so
           that the options to suppress generation of Any operators or
           type codes will override the option to generate a separate
@@ -29,7 +46,7 @@ Tue Sep  4 17:52:54 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Mon Sep 03 02:50:30 CDT 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	      * TAO version 1.6 released.
+        * TAO version 1.6 released.
 
 Thu Aug 30 08:09:00 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
