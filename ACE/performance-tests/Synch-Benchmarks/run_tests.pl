@@ -103,7 +103,7 @@ for ($Cntr = 0; $Cntr < scalar (@Target); $Cntr++)
     $Redirect_Output = "$result_dir$DIR_SEPARATOR$Target[$Cntr].$name";
     if ($debug != 0)             # Only redirect output in actual run
     {
-        print "Redirectling output to $Redirect_Output\n";
+        print "Redirecting output to $Redirect_Output\n";
     }
     else
     {
