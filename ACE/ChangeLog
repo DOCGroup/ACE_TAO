@@ -1,3 +1,10 @@
+Thu Sep  6 14:41:50 UTC 2007  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/WIN32_Asynch_IO.cpp (open): Update the win32_proactor_
+          pointer so it's in synch after a call to open().  Thanks to
+          Erman Balcik <erman dot balcik at siemens dot com> for
+          contributing this.
+
 Thu Sep  6 12:12:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * performance-tests/Synch-Benchmarks/run_tests.pl:
