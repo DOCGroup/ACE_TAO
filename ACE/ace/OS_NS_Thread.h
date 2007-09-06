@@ -1622,7 +1622,7 @@ namespace ACE_OS {
    * thread to the "CPU 0", etc
    */
   extern ACE_Export
-  int thr_get_affinity (ACE_hthread_t id,
+  int thr_get_affinity (ACE_hthread_t thr_id,
                         size_t cpu_set_size,
                         cpu_set_t * cpu_mask);
 
