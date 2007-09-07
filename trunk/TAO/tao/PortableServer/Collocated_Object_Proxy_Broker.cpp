@@ -168,7 +168,6 @@ namespace TAO
 
     return _tao_retval._retn ();
   }
-#endif
 
   CORBA::InterfaceDef_ptr
   Collocated_Object_Proxy_Broker::_get_interface (CORBA::Object_ptr target)
@@ -212,6 +211,7 @@ namespace TAO
 
     return _tao_retval;
   }
+#endif
 
 #endif /* TAO_HAS_MINIMUM_CORBA == 0 */
 

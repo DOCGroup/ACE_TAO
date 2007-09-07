@@ -848,7 +848,7 @@ be_interface::gen_operation_table (const char *flat_name,
             ++this->skel_count_;
           }
 
-        if (!be_global->gen_minimum_corba ())
+        if (!be_global->gen_corba_e () && !be_global->gen_minimum_corba ())
           {
             *os << "{\"_interface\", &" << skeleton_class_name
                 << "::_interface_skel, 0}," << be_nl;
