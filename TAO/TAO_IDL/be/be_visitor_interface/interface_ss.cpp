@@ -502,7 +502,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
     s.get ()->destroy ();
   }
 
-  if (!be_global->gen_minimum_corba ())
+  if (!be_global->gen_corba_e () && !be_global->gen_minimum_corba ())
   {
     *os << be_nl << be_nl << "// TAO_IDL - Generated from " << be_nl
         << "// " << __FILE__ << ":" << __LINE__;

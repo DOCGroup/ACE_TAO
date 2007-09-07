@@ -187,7 +187,7 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
           << ");" << be_uidt_nl << be_nl;
     }
 
-  if (!be_global->gen_minimum_corba ())
+  if (!be_global->gen_corba_e () && !be_global->gen_minimum_corba ())
     {
       // Add a skeleton for our _interface method.
       *os << "static void _interface_skel (" << be_idt << be_idt_nl
@@ -197,7 +197,7 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
           << ");" << be_uidt_nl << be_nl;
     }
 
-  if (!be_global->gen_corba_e ())
+  if (!be_global->gen_corba_e () && !be_global->gen_minimum_corba ())
     {
       // Add a skeleton for our _component method.
       *os << "static void _component_skel (" << be_idt << be_idt_nl

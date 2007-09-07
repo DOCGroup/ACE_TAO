@@ -490,6 +490,7 @@ CORBA::Object::_non_existent (void)
 }
 
 
+#if ! defined (CORBA_E_COMPACT) && ! defined (CORBA_E_MICRO)
 CORBA::InterfaceDef_ptr
 CORBA::Object::_get_interface (void)
 {
@@ -503,7 +504,6 @@ CORBA::Object::_get_implementation (void)
   return 0;
 }
 
-#if ! defined (CORBA_E_COMPACT) && ! defined (CORBA_E_MICRO)
 CORBA::Object_ptr
 CORBA::Object::_get_component (void)
 {
@@ -530,8 +530,7 @@ CORBA::Object::_repository_id (void)
 #if (TAO_HAS_CORBA_MESSAGING == 1)
 
 CORBA::Policy_ptr
-CORBA::Object::_get_policy (
-  CORBA::PolicyType type)
+CORBA::Object::_get_policy (CORBA::PolicyType type)
 {
   TAO_OBJECT_IOR_EVALUATE_RETURN;
 
@@ -542,8 +541,7 @@ CORBA::Object::_get_policy (
 }
 
 CORBA::Policy_ptr
-CORBA::Object::_get_cached_policy (
-  TAO_Cached_Policy_Type type)
+CORBA::Object::_get_cached_policy (TAO_Cached_Policy_Type type)
 {
   TAO_OBJECT_IOR_EVALUATE_RETURN;
 

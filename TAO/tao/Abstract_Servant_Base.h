@@ -78,10 +78,10 @@ public:
   /// Default @c _non_existent: always returns false.
   virtual CORBA::Boolean _non_existent (void) = 0;
 
+#if !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
   /// Query the Interface Repository.
   virtual CORBA::InterfaceDef_ptr _get_interface (void) = 0;
 
-#if !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
   /// Default @c _get_component: always returns nil.
   virtual CORBA::Object_ptr _get_component (void) = 0;
 #endif
