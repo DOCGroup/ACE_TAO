@@ -1,3 +1,22 @@
+Fri Sep  7 18:15:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO-INSTALL.html:
+          Updated supported platform list
+
+        * tao/Abstract_Servant_Base.h:
+        * tao/Object.cpp:
+        * tao/Object.h:
+        * tao/Object_Proxy_Broker.h:
+        * tao/PortableServer/Collocated_Object_Proxy_Broker.cpp:
+        * tao/PortableServer/Collocated_Object_Proxy_Broker.h:
+        * tao/be/be_interface.cpp:
+        * tao/be/be_visitor_component/component_sh.cpp:
+        * tao/be/be_visitor_interface/amh_sh.cpp:
+        * tao/be/be_visitor_interface/interface_sh.cpp:
+        * tao/be/be_visitor_interface/interface_ss.cpp:
+          Disable get_interface when CORBA/e is enabled. This fixes bugzilla bug
+          3066
+
 Thu Sep  6 22:57:44 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * utils/NamingViewer/AddNameServerDlg.h:
@@ -52,9 +71,6 @@ Thu Sep  6 12:37:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
           Schmidt for pointing this out
 
 Thu Sep  6 10:32:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
-
-        * TAO-INSTALL.html:
-          Updated supported platform list
 
         * orbsvcs/orbsvcs/AV/AV_Core.h:
         * orbsvcs/orbsvcs/RTCosScheduling/RTCosScheduling_ClientScheduler_i.h:

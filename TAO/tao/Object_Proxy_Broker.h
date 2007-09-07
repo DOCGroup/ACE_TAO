@@ -62,9 +62,9 @@ namespace TAO
 
   virtual CORBA::Boolean _non_existent (CORBA::Object_ptr target) = 0;
 
+#if !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
   virtual CORBA::InterfaceDef *_get_interface (CORBA::Object_ptr target) = 0;
 
-#if !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
   virtual CORBA::Object_ptr _get_component (CORBA::Object_ptr target) = 0;
 #endif
 
