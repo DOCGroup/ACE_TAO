@@ -72,20 +72,23 @@ be_enum::be_enum (UTL_ScopedName *n,
 void
 be_enum::gen_ostream_operator (TAO_OutStream *os)
 {
-  static ACE_CString const tao_enumerators ("_tao_enumerators_");
-  ACE_CString const enumerators_name (tao_enumerators
-                                      + this->flat_name ());
   *os << be_nl
       << "std::ostream& operator<< (std::ostream &strm, const "
       << this->name () << " _tao_enumerator)" << be_nl
       << "{" << be_idt_nl
-      << "if( 0 <= _tao_enumerator && " << this->member_count () << " > _tao_enumerator )" << be_idt_nl
-      << "{" << be_idt_nl
-      << "return strm << " << enumerators_name.c_str () << "[_tao_enumerator];" << be_uidt_nl
-      << "}" << be_uidt_nl
-      << "else" << be_idt_nl
-      << "{" << be_idt_nl
-      << "return strm;" << be_uidt_nl
+      << "switch (_tao_enumerator)" << be_idt_nl
+      << "{" << be_idt_nl;
+      
+  for (int i = 0; i < this->member_count (); ++i)
+    {
+      UTL_ScopedName *mname =
+        this->value_to_name (static_cast<unsigned long> (i));
+    
+      *os << "case " << i << ": return strm << \""
+          << mname << "\";" << be_nl;
+    }
+    
+  *os << "default: return strm;" << be_uidt_nl
       << "}" << be_uidt << be_uidt_nl
       << "}" << be_nl;
 }
