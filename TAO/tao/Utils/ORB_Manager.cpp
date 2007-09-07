@@ -35,7 +35,7 @@ TAO_ORB_Manager::TAO_ORB_Manager (CORBA::ORB_ptr orb,
                                   PortableServer::POAManager_ptr poa_manager)
   : orb_ (CORBA::ORB::_duplicate(orb)),
     poa_ (PortableServer::POA::_duplicate(poa)),
-	  poa_manager_ (PortableServer::POAManager::_duplicate(poa_manager))
+    poa_manager_ (PortableServer::POAManager::_duplicate(poa_manager))
 {
 }
 
