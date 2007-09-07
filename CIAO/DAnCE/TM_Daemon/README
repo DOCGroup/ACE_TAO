@@ -1,0 +1,27 @@
+Steps to run the Online Monitoring 
+
+1. Source the file set_app_mon.sh  
+
+2. cd $APP_ROOT
+
+3. First run the Node Managers in each machine using the script run_NodeManager.pl
+
+4. Run the NS in blade 39 using the run_NS.pl
+
+5. From any blade run the Execution Manager 
+
+	eg. command  $CIAO_ROOT/bin/Execution_Manager -o EM.ior -i NodeManagerMap_4.dat &
+
+	Use the corresponding NodeManagerMap file.
+
+6. Run the plan Launcher
+
+        $CIAO_ROOT/bin/plan_launcher -p SPACE_4_no_Qos.cdp -k file://EM.ior -o DAM.ior
+
+7 Now when the application is deployed run the TM_Daemon
+
+	$CIAO_ROOT/bin/TM_Daemon -ORBInitRef NameService=corbaloc:iiop:blade39:60003/NameService SPACE_4_no_Qos.cdp NodeManagerMap_4.dat
+
+	Use the Plan in the second parameter and the NodeManagerMap file in the third.
+
+8. Before running stuff make sure to have the right Domain file. THere are different Domain files for different number of Nodes.
