@@ -1,3 +1,13 @@
+Fri Sep  7 18:42:26 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_enum.cpp:
+        * TAO_IDL/be/be_visitor_enum/cdr_op_ch.cpp:
+        
+          Removed some experimental code that was inadvertently checked
+          in with
+          
+          Thu Sep  6 13:10:49 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
+
 Fri Sep  7 18:15:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO-INSTALL.html:

@@ -64,10 +64,7 @@ be_visitor_enum_cdr_op_ch::visit_enum (be_enum *node)
       *os << be_nl
           << be_global->stub_export_macro () << " std::ostream&"
           << " operator<< (std::ostream &strm, const " << node->name ()
-          << " _tao_enumerator);" << be_nl
-          << be_global->stub_export_macro () << " std::istream&"
-          << " operator>> (std::istream &strm, " << node->name ()
-          << " &_tao_enumerator);" << be_nl;
+          << " _tao_enumerator);" << be_nl;
     }
 
   *os << be_global->core_versioning_end () << be_nl;
