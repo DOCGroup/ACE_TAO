@@ -1,17 +1,25 @@
+Sat Sep  8 15:03:05 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tests/POA/EndpointPolicy/README:
+          Revised the wording.
+
+        * tests/POA/POAManagerFactory/README:
+          Added a README for this test.
+
 Fri Sep  7 19:28:33 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_enum.cpp:
-        
+
           One  more bit of old code that needed to be restored,
 
 Fri Sep  7 18:42:26 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_enum.cpp:
         * TAO_IDL/be/be_visitor_enum/cdr_op_ch.cpp:
-        
+
           Removed some experimental code that was inadvertently checked
           in with
-          
+
           Thu Sep  6 13:10:49 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Fri Sep  7 18:15:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
