@@ -68,7 +68,7 @@ int main (int argc, char* argv[])
 
     // Activate the Stock_Factory object.
     child_poa->activate_object_with_id (oid.in (),
-					&stock_factory_i);
+                                        &stock_factory_i);
 
     // Get the object reference.
     CORBA::Object_var stock_factory =
