@@ -319,9 +319,12 @@ Sender::close (void)
 ssize_t
 Sender::send_message (void)
 {
+  ACE_Time_Value timeout (0, close_timeout * 1000);
+
   return ACE::send_n (this->handle_,
                       message,
-                      message_size);
+                      message_size,
+                      &timeout);
 }
 
 class Event_Loop_Thread : public ACE_Task_Base
@@ -407,7 +410,8 @@ Receiver::svc (void)
 
   int result = 0;
   ACE_DEBUG ((LM_DEBUG,
-    ACE_TEXT("(%t) Receiver::svc commencing\n")));
+              ACE_TEXT("(%t) Receiver::svc commencing, handle = %d\n"),
+              this->handle_));
 
   while (result != -1)
     {
@@ -415,7 +419,8 @@ Receiver::svc (void)
         this->handle_input (this->handle_);
     }
   ACE_DEBUG ((LM_DEBUG,
-    ACE_TEXT("(%t) Receiver::svc terminating\n")));
+              ACE_TEXT("(%t) Receiver::svc terminating, handle = %d\n"),
+              this->handle_));
   return 0;
 }
 
@@ -424,11 +429,20 @@ Receiver::handle_input (ACE_HANDLE handle)
 {
   char buf[message_size + 1];
 
+  ACE_Time_Value timeout (0, close_timeout * 1000);
+
   // Receive message.
   ssize_t result =
     ACE::recv_n (handle,
                  buf,
-                 sizeof buf - 1);
+                 message_size,
+                 &timeout);
+
+  if (debug && result < 1)
+    ACE_DEBUG ((LM_DEBUG,
+                ACE_TEXT("(%t) Receiver::handle input, ")
+                ACE_TEXT("h = %d, result = %d %p\n"),
+                handle_, result, ACE_TEXT("ACE::recv_n")));
 
   if (this->reactor ())
     this->reactor ()->resume_handler (handle);
@@ -1078,7 +1092,7 @@ int
 Purger_Thread::svc (void)
 {
   ACE_DEBUG ((LM_DEBUG,
-    ACE_TEXT("(%t) Event_Loop_Thread::svc commencing\n")));
+    ACE_TEXT("(%t) Purger_Thread::svc commencing\n")));
 
   for (; !this->reactor_.reactor_event_loop_done ();)
     {
@@ -1105,7 +1119,7 @@ Purger_Thread::svc (void)
         }
     }
   ACE_DEBUG ((LM_DEBUG,
-    ACE_TEXT("(%t) Event_Loop_Thread::svc terminating\n")));
+    ACE_TEXT("(%t) Purger_Thread::svc terminating\n")));
 
   return 0;
 }
