@@ -31,7 +31,18 @@ namespace CIAO
           dp.reset (xfi.get_plan ());
           DAnCE_OA::Admin_var OA = this->context_->get_connection_OA ();
           OA->deploy_plan (*dp);
-          return false;
+          return true;
+        }
+
+        ::CORBA::Boolean
+        SA_POP_IA_Component_exec_i::redeploy_string (const char * uri)
+        {
+          auto_ptr < ::Deployment::DeploymentPlan > dp;
+          Config_Handlers::XML_File_Intf xfi (uri);
+          dp.reset (xfi.get_plan ());
+          DAnCE_OA::Admin_var OA = this->context_->get_connection_OA ();
+          OA->redeploy_plan (*dp);
+          return true;
         }
 
         ::CIAO::RACE::SA_POP_IA::CCM_Admin_ptr

@@ -17,6 +17,9 @@ module CIAO
       interface Test
       {
         boolean deploy_string (in string uri);
+
+        boolean redeploy_string (in string uri);
+
       };
 
       interface Admin

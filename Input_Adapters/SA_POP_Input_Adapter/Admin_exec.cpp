@@ -50,6 +50,9 @@ namespace CIAO
         Admin_exec_i::delete_string (const char * ID)
           throw (UnknownID)
         {
+          // @@ TODO: We are currently not handling the case where the
+          // string has been deployed. Should we tear it down in addition
+          // to deleting it from the database?
           try
             {
               this->DB_->remove_string (ID);
@@ -114,6 +117,9 @@ namespace CIAO
         (const ::CIAO::RACE::OperationalString & opstring,
          const char * ID) throw (UnknownID)
         {
+          // @@ TODO: Now that we have ReDAC working, we need to redeploy
+          // the string if it has ben already deployed in addition to
+          // modifying it in the database.
           try
             {
               if (this->OA_->deploy_string (opstring))

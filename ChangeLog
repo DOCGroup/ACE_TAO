@@ -1,19 +1,30 @@
+Mon Sep 10 21:19:24 UTC 2007  Nishanth Shankaran  <shankaran_n@dre.vanderbilt.edu>
+
+        * Input_Adapters/SA_POP_Input_Adapter/Admin_exec.cpp:
+        * Input_Adapters/SA_POP_Input_Adapter/SA_POP_Input_Adapter.idl:
+        * Input_Adapters/SA_POP_Input_Adapter/SA_POP_Input_Adapter_exec.h:
+        * Input_Adapters/SA_POP_Input_Adapter/SA_POP_Input_Adapter_exec.cpp:
+        * Input_Adapters/SA_POP_Input_Adapter/tester.cpp:
+
+        Modified these files to support deployment of application assembly
+        via ReDAC.
+
 2007-07-06    <wotte@localhost.localdomain>
 
-	* SA_POP/SA_POP.mpc:
-	* SA_POP/SANet/XML_SANet.hpp:
-	* SA_POP/SANet/XML_SANet.cpp:
+        * SA_POP/SA_POP.mpc:
+        * SA_POP/SANet/XML_SANet.hpp:
+        * SA_POP/SANet/XML_SANet.cpp:
 
-	  Added an additional schema from previous commit.
-	
+          Added an additional schema from previous commit.
+
 2007-07-05    <wotte@localhost.localdomain>
 
-	* SA_POP/XML_TaskMap.cpp:
-	* SA_POP/XML_TaskMap.hpp:
-	* SA_POP/SA_POP.mpc:
+        * SA_POP/XML_TaskMap.cpp:
+        * SA_POP/XML_TaskMap.hpp:
+        * SA_POP/SA_POP.mpc:
 
-	  Updated generated code to latest version of XSC and added an
-	  XSC generation project to the MPC file.
+          Updated generated code to latest version of XSC and added an
+          XSC generation project to the MPC file.
 
 Thu May 17 17:49:57 UTC 2007  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
 
