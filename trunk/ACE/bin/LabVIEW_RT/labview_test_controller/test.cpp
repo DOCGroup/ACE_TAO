@@ -3,6 +3,10 @@
 #include <stdio.h>
 __declspec(dllimport) int test_entry(void);
 
+// This is plain Windows code, not ACE. Therefore we disable 
+// the check for ACE_OS
+// FUZZ: disable check_for_lack_ACE_OS
+
 int main (int, char *[])
 {
   char line[80];
