@@ -25,6 +25,10 @@
 // Windows code, not ACE, so we stick to the Microsoft way...
 // FUZZ: disable check_for_NULL
 
+// This is plain Windows code, not ACE. Therefore we disable 
+// the check for ACE_OS
+// FUZZ: disable check_for_lack_ACE_OS
+
 // TEST_FUNC is the prototype for the called test's main entrypoint. It's
 // the normal C main.
 typedef int (*TEST_FUNC) (int argc, char *argv[]);

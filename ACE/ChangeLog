@@ -1,3 +1,15 @@
+Mon Sep 10 13:22:38 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * apps/JAWS/stress_testing/util.cpp:
+        * apps/drwho/Multicast_Manager.cpp:
+        * apps/drwho/Options.cpp:
+        * bin/LabVIEW_RT/labview_test_controller/labview_test_controller.cpp:
+        * bin/LabVIEW_RT/labview_test_controller/test.cpp:
+
+          Fixed ACE_OS fuzz warnings. Use ACE_OS calls instead of raw OS functions
+          where possible. If fuzz detected a false-positive, then disable
+          the ACE_OS fuzz check for that section of the code.
+
 Mon Sep 10 12:17:24 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tests/MT_Reference_Counted_Event_Handler_Test.cpp:
