@@ -1,3 +1,8 @@
+Mon Sep 10 11:14:10 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * docs/tutorials/Quoter/Simple/Impl-Repo/server.cpp:
+          Untabify.
+
 Sat Sep  8 15:03:05 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tests/POA/EndpointPolicy/README:
