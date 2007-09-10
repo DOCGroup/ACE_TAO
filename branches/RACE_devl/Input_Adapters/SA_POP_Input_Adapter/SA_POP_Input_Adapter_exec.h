@@ -24,6 +24,8 @@ namespace CIAO
 
           virtual ::CORBA::Boolean deploy_string (const char * uri);
 
+          virtual ::CORBA::Boolean redeploy_string (const char * uri);
+
           virtual ::CIAO::RACE::SA_POP_IA::CCM_Admin_ptr
           get_admin ();
 

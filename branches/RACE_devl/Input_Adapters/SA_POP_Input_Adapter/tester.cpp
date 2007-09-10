@@ -4,11 +4,12 @@
 // IOR file of the SA_POP_IA.
 const char * ior = 0;
 const char * filename = 0;
+bool redeploy = false;
 
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "k:f:");
+  ACE_Get_Opt get_opts (argc, argv, "k:f:r");
   int c = 0;
 
   while ((c = get_opts ()) != -1)
@@ -22,13 +23,18 @@ parse_args (int argc, char *argv[])
         case 'f':
 	        filename = get_opts.opt_arg ();
 	        break;
+        case 'r':
+	        redeploy = true;
+	        break;
+
 
         case '?':  // display help for use of the server.
         default:
           ACE_ERROR_RETURN ((LM_ERROR,
-                            "Usage:  %s\n"
+                            "Usage:  %s"
                              "-k <SA_POP_IA IOR> (default is file://SA_POP_IA_Component.ior)\n",
                              "-f <Deployment plan filename>\n",
+                             "-r <redeploy>\n",
                             argv [0]),
                             -1);
           break;
@@ -72,7 +78,16 @@ main (int argc, char *argv[])
 
       if (filename)
       {
-        test->deploy_string (filename);
+        if (redeploy)
+          {
+            test->redeploy_string (filename);
+          }
+
+        else
+          {
+            test->deploy_string (filename);
+          }
+
       }
 
       orb->destroy ();
