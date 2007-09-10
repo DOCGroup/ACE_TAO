@@ -1,3 +1,24 @@
+Mon Sep 10 12:17:24 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tests/MT_Reference_Counted_Event_Handler_Test.cpp:
+          Add timeouts to recv_n and send_n calls to ensure the calling
+          loops always exit.
+
+          This is necessary due to certain races that can occur between
+          the start up of new send/recv threads, and the shutdown of
+          individual thread loops. What sometimes happens is that a thread
+          is started to read from a socket, and then a different thread
+          closes down the read-side of the socket. But due to thread
+          startup delays, the send side never gets to the point where it
+          detects the close, effectively leaving a half-closed connection.
+
+          In this case, on "weevil" a Windows 2003 server, the thread
+          blocked in recv on the half closed socket is not killed by the
+          nightly test script's shutdown signal, leaving a zombie
+          process. This zombie holds a lock on the libACE.dll file, which
+          then cannot be rebuilt, and as a result, subsequent nightly
+          builds fail catastrophically.
+
 Mon Sep 10 11:19:20 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * bin/fuzz.pl:
