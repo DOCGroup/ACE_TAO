@@ -50,7 +50,7 @@ ACE_Sample_History::dump_samples (const ACE_TCHAR *msg,
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("%s: ")
                   ACE_SIZE_T_FORMAT_SPECIFIER
-                  ACE_TEXT ("%Q\n"),
+                  ACE_TEXT ("\t%Q\n"),
                   msg,
                   i,
                   val));
