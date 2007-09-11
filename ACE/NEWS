@@ -5,6 +5,11 @@ PLANNED MAJOR CHANGES "SOMETIME IN THE FUTURE" (i.e., exact beta not known)
 
 . (OO) Various other fixes that have been piling up.
 
+USER VISIBLE CHANGES BETWEEN ACE-5.6 and ACE-5.6.1
+====================================================
+
+. Added support for CodeGear RAD Studio 2007
+
 USER VISIBLE CHANGES BETWEEN ACE-5.5.10 and ACE-5.6
 ====================================================
 
