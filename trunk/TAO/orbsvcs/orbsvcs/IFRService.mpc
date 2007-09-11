@@ -5,6 +5,7 @@ project(IFRService) : orbsvcslib, install, typecodefactory, svc_utils, iortable 
   avoids      += ace_for_tao    // Requires ace/Configuration
   sharedname   = TAO_IFRService
   dynamicflags = TAO_IFRSERVICE_BUILD_DLL
+  tagchecks   += IFRService
 
   IDL_Files {
   }
