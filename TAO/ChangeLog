@@ -1,3 +1,10 @@
+Tue Sep 11 15:28:45 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/orbsvcs/CosNotification.mpc:
+        * orbsvcs/orbsvcs/IFRService.mpc:
+
+          Added missing 'tagchecks' settings.
+
 Mon Sep 10 11:14:10 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * docs/tutorials/Quoter/Simple/Impl-Repo/server.cpp:
