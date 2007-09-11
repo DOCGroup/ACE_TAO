@@ -226,6 +226,7 @@ project(CosNotification_Serv) : orbsvcslib, svc_utils, install, notification_ske
 project(CosNotification_Persist) : notification_serv, install, acexml {
   sharedname   = TAO_CosNotification_Persist
   dynamicflags = TAO_NOTIFY_PERSIST_BUILD_DLL
+  tagchecks   += Notify
 
   IDL_Files {
   }
@@ -248,6 +249,7 @@ project(CosNotification_Persist) : notification_serv, install, acexml {
 project(CosNotification_MC): tao_versioning_idl_defaults, naming, portableserver, iortable, install {
   sharedname   = TAO_CosNotification_MC
   dynamicflags = TAO_NOTIFY_MC_BUILD_DLL
+  tagchecks   += Notify
 
   IDL_Files {
     gendir = Notify/MonitorControl
@@ -275,6 +277,7 @@ project(CosNotification_MC): tao_versioning_idl_defaults, naming, portableserver
 project(CosNotification_MC_Ext): notification_serv, notification_mc, install {
   sharedname   = TAO_CosNotification_MC_Ext
   dynamicflags = TAO_NOTIFY_MC_EXT_BUILD_DLL
+  tagchecks   += Notify
 
 
   // The using in the TAO_MC_Default_Factory class is apparently ignored by
