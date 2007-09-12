@@ -1,7 +1,7 @@
 Wed Sep 12 22:18:03 UTC 2007  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
 
 	* docs/schema/CIAOEvents.txt:
-	  Added documentation about how to integrated TAO Rt Event Service
+	  Added documentation about how to integrat TAO Real-Time Event Service
 	  into an CIAO based deployment.
 
 Tue Sep  4 14:25:24 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
