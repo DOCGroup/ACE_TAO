@@ -1,3 +1,9 @@
+Wed Sep 12 04:16:12 UTC 2007  Adam Mitz  <mitza@ociweb.com>
+
+        * ACE-INSTALL.html:
+
+          Added notes on Microsoft Visual C++ 2005 Express Edition.
+
 Tue Sep 11 15:50:35 UTC 2007  Nishanth Shankaran  <nshankar@nospam.com>
 
         * ace/Sample_History.cpp: Fixed formatting errors in the
