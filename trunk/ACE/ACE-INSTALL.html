@@ -556,6 +556,17 @@ development and target platforms. The platform/name mapping is shown below.
 All solution files have a <code>.sln</code> suffix and all project files have
 a <code>.vcproj</code> suffix.</p>
 
+The free Visual C++ 2005 Express Edition will work in place of the traditional
+Visual Studio 2005 editions.  Please note that there are additional setup steps
+needed to install the Windows Platform SDK and to make VC++ aware of it.  All
+of the steps documented
+<a href="http://msdn2.microsoft.com/en-us/express/aa700755.aspx">here</a>
+need to be done before ACE will build.  All the other notes in this document
+that are for VC8 also apply to the express edition.  MFC, 64-bit, and
+CE/mobile options are not available with the express edition.  64-bit binaries
+can be built with the tools included in the Platform SDK, using nmake as the
+build system.</p>
+
 <table border="1" width="400">
 <caption><b>Mapping of Platform to Solution/Project File Name</b></caption>
 <thead>
