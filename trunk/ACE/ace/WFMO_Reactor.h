@@ -966,10 +966,10 @@ public:
                                const ACE_Time_Value &interval = ACE_Time_Value::zero);
 
   /**
-   * Resets the interval of the timer represented by <timer_id> to
-   * <interval>, which is specified in relative time to the current
-   * <gettimeofday>.  If <interval> is equal to
-   * <ACE_Time_Value::zero>, the timer will become a non-rescheduling
+   * Resets the interval of the timer represented by @a timer_id to
+   * @a interval, which is specified in relative time to the current
+   * <gettimeofday>.  If @a interval is equal to
+   * ACE_Time_Value::zero, the timer will become a non-rescheduling
    * timer.  Returns 0 if successful, -1 if not.
    */
   virtual int reset_timer_interval (long timer_id,
@@ -981,12 +981,12 @@ public:
                             int dont_call_handle_close = 1);
 
   /**
-   * Cancel the single Event_Handler that matches the <timer_id> value
+   * Cancel the single Event_Handler that matches the @a timer_id value
    * (which was returned from the schedule method).  If arg is
    * non-NULL then it will be set to point to the ``magic cookie''
    * argument passed in when the Event_Handler was registered.  This
    * makes it possible to free up the memory and avoid memory leaks.
-   * Returns 1 if cancellation succeeded and 0 if the <timer_id>
+   * Returns 1 if cancellation succeeded and 0 if the @a timer_id
    * wasn't found.
    */
   virtual int cancel_timer (long timer_id,

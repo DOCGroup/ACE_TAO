@@ -1,3 +1,23 @@
+Wed Sep 12 18:02:38 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-win32-borland.h:
+          CodeGear RAD Studio 2007 doesn't seem to support inlined assembly
+
+        * ace/config-g++-common.h:
+        * ace/config-icc-common.h:
+          When we have pentium, AMD64, or EM64T as CPU define
+          ACE_HAS_INTEL_ASSEMBLY
+
+        * ace/Atomic_Op.h:
+          Simplified this file by using ACE_HAS_INTEL_ASSEMBLY
+
+        * ace/CDR_Base.{cpp.inl}:
+          Make use of ACE_HAS_INTEL_ASSEMBLY, this fixes bugzilla
+          issue 3072
+
+        * ace/WFMO_Reactor.h:
+          Doxygen fixes
+
 Wed Sep 12 04:16:12 UTC 2007  Adam Mitz  <mitza@ociweb.com>
 
         * ACE-INSTALL.html:

@@ -62,6 +62,10 @@
 # define ACE_HAS_PENTIUM
 #endif /* i386 */
 
+#if (defined (ACE_HAS_PENTIUM) || defined (__amd64__) || defined (__x86_64__))
+# define ACE_HAS_INTEL_ASSEMBLY
+#endif
+
 // GNU g++ >= 4.x implements "#pragma once".
 #if (__GNUC__ < 4) && !defined (ACE_LACKS_PRAGMA_ONCE)
 // We define it with a -D with make depend.
