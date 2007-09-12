@@ -41,9 +41,8 @@
 #    define ACE_HAS_BUILTIN_ATOMIC_OP
 #   endif /* _MSC_VER || __BORLANDC__ */
 #  endif /* ACE_HAS_INTERLOCKED_EXCHANGEADD */
-# elif (defined (__GNUC__) || defined (__INTEL_COMPILER)) && (defined (ACE_HAS_PENTIUM) || defined (__amd64__) || defined (__x86_64__))
+# elif defined (ACE_HAS_INTEL_ASSEMBLY)
 #  define ACE_HAS_BUILTIN_ATOMIC_OP
-#  define ACE_HAS_INTEL_ASSEMBLY
 # endif /* WIN32 */
 #endif /* ACE_HAS_THREADS */
 

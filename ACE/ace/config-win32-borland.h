@@ -103,7 +103,7 @@
 
 #define ACE_HAS_NONCONST_TEMPNAM
 
-#if (__BORLANDC__ < 0x592)
+#if (__BORLANDC__ <= 0x592)
 // Older Borland compilers can't handle assembly in inline methods or
 // templates (E2211). When we build for pentium optimized and we are inlining
 // then we disable inline assembly

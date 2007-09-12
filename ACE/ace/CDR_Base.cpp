@@ -34,7 +34,7 @@ ACE_CDR::swap_2_array (char const * orig, char* target, size_t n)
   // Later, we try to read in 32 or 64 bit chunks,
   // so make sure we don't do that for unaligned addresses.
 #if ACE_SIZEOF_LONG == 8 && \
-    !(defined(__amd64__) && defined(__GNUG__))
+    !((defined(__amd64__) || defined (__x86_64__)) && defined(__GNUG__))
   char const * const o8 = ACE_ptr_align_binary (orig, 8);
   while (orig < o8 && n > 0)
     {
@@ -69,7 +69,7 @@ ACE_CDR::swap_2_array (char const * orig, char* target, size_t n)
 
   // See if we're aligned for writting in 64 or 32 bit chunks...
 #if ACE_SIZEOF_LONG == 8 && \
-    !(defined(__amd64__) && defined(__GNUG__))
+    !((defined(__amd64__) || defined (__x86_64__)) && defined(__GNUG__))
   if (target == ACE_ptr_align_binary (target, 8))
 #else
   if (target == ACE_ptr_align_binary (target, 4))
@@ -77,7 +77,7 @@ ACE_CDR::swap_2_array (char const * orig, char* target, size_t n)
     {
       while (orig < end)
         {
-#if (defined (ACE_HAS_PENTIUM) || defined(__amd64__)) && defined (__GNUG__)
+#if defined (ACE_HAS_INTEL_ASSEMBLY)
           unsigned int a =
             * reinterpret_cast<const unsigned int*> (orig);
           unsigned int b =
@@ -138,7 +138,7 @@ ACE_CDR::swap_2_array (char const * orig, char* target, size_t n)
       // We're out of luck. We have to write in 2 byte chunks.
       while (orig < end)
         {
-#if (defined (ACE_HAS_PENTIUM) || defined(__amd64__)) && defined (__GNUG__)
+#if defined (ACE_HAS_INTEL_ASSEMBLY)
           unsigned int a =
             * reinterpret_cast<const unsigned int*> (orig);
           unsigned int b =
@@ -294,7 +294,7 @@ ACE_CDR::swap_4_array (char const * orig, char* target, size_t n)
           register unsigned long b =
             * reinterpret_cast<const long*> (orig + 8);
 
-#if defined(__amd64__) && defined(__GNUC__)
+#if defined(ACE_HAS_INTEL_ASSEMBLY)
           asm ("bswapq %1" : "=r" (a) : "0" (a));
           asm ("bswapq %1" : "=r" (b) : "0" (b));
           asm ("rol $32, %1" : "=r" (a) : "0" (a));
@@ -330,7 +330,7 @@ ACE_CDR::swap_4_array (char const * orig, char* target, size_t n)
           register unsigned long b =
             * reinterpret_cast<const long*> (orig + 8);
 
-#if defined(__amd64__) && defined(__GNUC__)
+#if defined(ACE_HAS_INTEL_ASSEMBLY)
           asm ("bswapq %1" : "=r" (a) : "0" (a));
           asm ("bswapq %1" : "=r" (b) : "0" (b));
           asm ("rol $32, %1" : "=r" (a) : "0" (a));
