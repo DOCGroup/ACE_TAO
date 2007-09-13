@@ -118,6 +118,7 @@
   // this must appear before its #include.
 # define ACE_HAS_STRING_CLASS
 # include "ace/config-g++-common.h"
+# undef ACE_HAS_INTEL_ASSEMBLY
 # define ACE_HAS_HI_RES_TIMER
   // Denotes that GNU has cstring.h as standard, to redefine memchr().
 # define ACE_HAS_GNU_CSTRING_H
@@ -364,11 +365,6 @@
 
 #define ACE_HAS_STL_MAP_CONFLICT
 
-// Sieg - gcc 2.95.1 declares queue in stream.h.  Might want to change
-// the == to >= to allow for future versions
-#if !( __GNUG__ && (__GNUC__ == 2) && (__GNUC_MINOR__ == 95) )
-#define ACE_HAS_STL_QUEUE_CONFLICT
-#endif /* !( __GNUG__ && (__GNUC__ == 2) && (__GNUC_MINOR__ == 95) ) */
 #define ACE_HAS_IDTYPE_T
 
 #define ACE_HAS_GPERF
