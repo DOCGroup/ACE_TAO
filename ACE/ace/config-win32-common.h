@@ -37,10 +37,6 @@
 #  endif  /* !_FILE_OFFSET_BITS */
 #endif /* _WIN64 || WIN64 */
 
-#if !defined (_WIN32_WINNT)
-# define _WIN32_WINNT 0x0400
-#endif
-
 // If the invoking procedure turned off debugging by setting NDEBUG, then
 // also set ACE_NDEBUG, unless the user has already set it.
 #if defined (NDEBUG)
@@ -607,6 +603,57 @@
 #   pragma comment(lib, "netapi32.lib") // needed for obtaing MACaddress
 #  endif
 # endif /* !ACE_HAS_WINCE */
+
+#if !defined (WINVER)
+# define WINVER 0x0400 // pretend it's at least WinNT 4.0
+#endif
+
+#if !defined (_WIN32_WINNT)
+# define _WIN32_WINNT WINVER // be sure the newer version symbol is defined
+                             // Note this isn't really legit. Some OS's use
+                             // _WIN32_WINDOWS rather than _WIN32_WINNT
+#endif
+
+
+///////////////////////////////////////
+// windows version-specific definitions
+// see: http://msdn2.microsoft.com/en-us/library/aa383745.aspx
+//
+// For TSS information
+// see http://msdn.microsoft.com/library/default.asp?url=/library/en-us/dllproc/base/thread_local_storage.asp
+
+#if (WINVER>=0x0600)
+// Windows Server 2008 definitions go here
+// Windows Vista defintions go here
+#  if ! defined(ACE_DEFAULT_THREAD_KEYS)
+#    define ACE_DEFAULT_THREAD_KEYS 1088
+#  endif // ! defined(ACE_DEFAULT_THREAD_KEYS)
+#elif (WINVER>=0x0502)
+  // Windows Server 2003 SP1 definitions go here
+#  if ! defined(ACE_DEFAULT_THREAD_KEYS)
+#    define ACE_DEFAULT_THREAD_KEYS 1088
+#  endif // ! defined(ACE_DEFAULT_THREAD_KEYS)
+#elif (WINVER>=0x0501)
+// Windows XP definitions go here
+#  if ! defined(ACE_DEFAULT_THREAD_KEYS)
+#    define ACE_DEFAULT_THREAD_KEYS 1088
+#  endif // ! defined(ACE_DEFAULT_THREAD_KEYS)
+#elif (WINVER>=0x0500)
+// Windows 2000 definitions go here
+#  if ! defined(ACE_DEFAULT_THREAD_KEYS)
+#    define ACE_DEFAULT_THREAD_KEYS 1088
+#  endif // ! defined(ACE_DEFAULT_THREAD_KEYS)
+#elif (WINVER>=0x0410)
+// Windows 98 definitions go here
+#  if ! defined(ACE_DEFAULT_THREAD_KEYS)
+#    define ACE_DEFAULT_THREAD_KEYS 80
+#  endif // ! defined(ACE_DEFAULT_THREAD_KEYS)
+#else
+// antique windows
+#  if ! defined(ACE_DEFAULT_THREAD_KEYS)
+#    define ACE_DEFAULT_THREAD_KEYS 64
+#  endif // ! defined(ACE_DEFAULT_THREAD_KEYS)
+#endif
 
 #if !defined (ACE_DEFAULT_BACKLOG)
 #  define ACE_DEFAULT_BACKLOG SOMAXCONN
