@@ -110,19 +110,23 @@ ACE_Service_Config::parse_args_i (int argc, ACE_TCHAR *argv[])
   // to the end of the argument vector. We'll pick them up
   // after processing our options and pass them on to the
   // base class for further parsing.
+  //FUZZ: disable check_for_lack_ACE_OS
   ACE_Get_Opt getopt (argc,
                       argv,
                       ACE_TEXT ("bs:p:"),
                       1  ,                       // Start at argv[1].
                       0,                       // Do not report errors
                       ACE_Get_Opt::RETURN_IN_ORDER);
+  //FUZZ: enable check_for_lack_ACE_OS
 
   // Keep a list of all unknown arguments, begin with the
   // executable's name
   ACE_ARGV superargv;
   superargv.add (argv[0]);
 
+  //FUZZ: disable check_for_lack_ACE_OS
   for (int c; (c = getopt ()) != -1; )
+  //FUZZ: enable check_for_lack_ACE_OS
     switch (c)
       {
       case 'p':

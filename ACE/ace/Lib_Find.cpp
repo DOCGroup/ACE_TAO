@@ -124,7 +124,7 @@ ACE::ldfind (const ACE_TCHAR* filename,
 {
   ACE_TRACE ("ACE::ldfind");
 #if defined (ACE_OPENVMS)
-  if (strlen(filename) >= maxpathnamelen)
+  if (ACE_OS::strlen(filename) >= maxpathnamelen)
   {
     errno = ENOMEM;
     return -1;
@@ -133,14 +133,14 @@ ACE::ldfind (const ACE_TCHAR* filename,
   dsc$descriptor nameDsc;
   nameDsc.dsc$b_class = DSC$K_CLASS_S;
   nameDsc.dsc$b_dtype = DSC$K_DTYPE_T;
-  nameDsc.dsc$w_length = strlen(filename);
+  nameDsc.dsc$w_length = ACE_OS::strlen(filename);
   nameDsc.dsc$a_pointer = (char*)filename;
 
   char symbol[] = "NULL";
   dsc$descriptor symbolDsc;
   symbolDsc.dsc$b_class = DSC$K_CLASS_S;
   symbolDsc.dsc$b_dtype = DSC$K_DTYPE_T;
-  symbolDsc.dsc$w_length = strlen(symbol);
+  symbolDsc.dsc$w_length = ACE_OS::strlen(symbol);
   symbolDsc.dsc$a_pointer = symbol;
 
   int symbolValue;
@@ -159,20 +159,20 @@ ACE::ldfind (const ACE_TCHAR* filename,
   if (severity == STS$K_SUCCESS || severity == STS$K_WARNING || severity == STS$K_INFO ||
       (severity == STS$K_ERROR && conditionId == (LIB$_KEYNOTFOU & STS$M_COND_ID)))
   {
-    strcpy(pathname, filename);
+    ACE_OS::strcpy(pathname, filename);
     return 0;
   }
 
-  if (strlen(filename) + strlen(ACE_DLL_PREFIX) >= maxpathnamelen)
+  if (ACE_OS::strlen(filename) + ACE_OS::strlen(ACE_DLL_PREFIX) >= maxpathnamelen)
   {
     errno = ENOMEM;
     return -1;
   }
 
 
-  strcpy(pathname, ACE_DLL_PREFIX);
-  strcat(pathname, filename);
-  nameDsc.dsc$w_length = strlen(pathname);
+  ACE_OS::strcpy(pathname, ACE_DLL_PREFIX);
+  ACE_OS::strcat(pathname, filename);
+  nameDsc.dsc$w_length = ACE_OS::strlen(pathname);
   nameDsc.dsc$a_pointer = pathname;
   try
   {

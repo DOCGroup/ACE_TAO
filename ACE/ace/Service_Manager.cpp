@@ -96,9 +96,12 @@ ACE_Service_Manager::init (int argc, ACE_TCHAR *argv[])
 {
   ACE_TRACE ("ACE_Service_Manager::init");
   ACE_INET_Addr local_addr (ACE_Service_Manager::DEFAULT_PORT_);
+
+  //FUZZ: disable check_for_lack_ACE_OS
   ACE_Get_Opt getopt (argc, argv, ACE_TEXT ("dp:s:"), 0); // Start at argv[0]
 
   for (int c; (c = getopt ()) != -1; )
+  //FUZZ: enable check_for_lack_ACE_OS
      switch (c)
        {
        case 'd':

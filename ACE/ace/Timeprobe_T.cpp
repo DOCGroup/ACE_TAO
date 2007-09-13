@@ -27,11 +27,13 @@ ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>::ACE_Timeprobe_Ex (u_long size)
     allocator_ (0)
 {
   ACE_timeprobe_t *temp;
+  //FUZZ: disable check_for_lack_ACE_OS
   ACE_NEW_MALLOC_ARRAY (temp,
                         (ACE_timeprobe_t *) this->allocator ()->
                         malloc (this->max_size_*sizeof(ACE_timeprobe_t)),
                         ACE_timeprobe_t,
                         this->max_size_);
+  //FUZZ: enable check_for_lack_ACE_OS
   this->timeprobes_ = temp;
 
 }
@@ -48,11 +50,13 @@ ACE_Timeprobe_Ex (ALLOCATOR *allocator,
     allocator_ (allocator)
 {
   ACE_timeprobe_t *temp = 0;
+  //FUZZ: disable check_for_lack_ACE_OS
   ACE_NEW_MALLOC_ARRAY (temp,
                         (ACE_timeprobe_t *) this->allocator ()->
                         malloc (this->max_size_*sizeof(ACE_timeprobe_t)),
                         ACE_timeprobe_t,
                         this->max_size_);
+  //FUZZ: enable check_for_lack_ACE_OS
   this->timeprobes_ = temp;
 
 }
@@ -143,12 +147,14 @@ ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>::increase_size (u_long size)
   if (size > this->max_size_)
     {
       ACE_timeprobe_t *temp = 0;
+      //FUZZ: disable check_for_lack_ACE_OS
       ACE_NEW_MALLOC_ARRAY (temp,
                             (ACE_timeprobe_t *) this->allocator ()->
                             malloc (this->max_size_
                                     * sizeof (ACE_timeprobe_t)),
                             ACE_timeprobe_t,
                             size);
+      //FUZZ: enable check_for_lack_ACE_OS
 
       if (this->max_size_ > 0)
         {
