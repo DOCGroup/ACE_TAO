@@ -1130,15 +1130,19 @@ int
 ACE_Service_Gestalt::parse_args_i (int argc, ACE_TCHAR *argv[])
 {
   ACE_TRACE ("ACE_Service_Gestalt::parse_args_i");
+  //FUZZ: disable check_for_lack_ACE_OS
   ACE_Get_Opt getopt (argc,
                       argv,
                       ACE_TEXT ("df:k:nyS:"),
                       1); // Start at argv[1].
+  //FUZZ: enable check_for_lack_ACE_OS
 
   if (this->init_svc_conf_file_queue () == -1)
     return -1;
 
+  //FUZZ: disable check_for_lack_ACE_OS
   for (int c; (argc != 0) && ((c = getopt ()) != -1); )
+  //FUZZ: enable check_for_lack_ACE_OS
     switch (c)
       {
       case 'd':

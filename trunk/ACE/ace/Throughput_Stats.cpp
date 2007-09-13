@@ -45,7 +45,7 @@ ACE_Throughput_Stats::sample (ACE_UINT64 throughput,
       this->throughput_sum_x2_ = throughput * throughput;
       this->throughput_sum_xy_ = throughput * this->samples_count_;
 
-      printf ("%f %qu\n", throughput / 400000000.0, this->samples_count_);
+      ACE_OS::printf ("%f %qu\n", throughput / 400000000.0, this->samples_count_);
 #endif /* 0 */
     }
   else
@@ -61,7 +61,7 @@ ACE_Throughput_Stats::sample (ACE_UINT64 throughput,
       this->throughput_sum_x2_ += throughput * throughput;
       this->throughput_sum_xy_ += throughput * this->samples_count_;
 
-      printf ("%f %qu\n", throughput / 400000000.0, this->samples_count_);
+      ACE_OS::printf ("%f %qu\n", throughput / 400000000.0, this->samples_count_);
 #endif /* 0 */
     }
 }
