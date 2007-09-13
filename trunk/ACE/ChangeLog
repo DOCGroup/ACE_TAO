@@ -1,3 +1,14 @@
+Thu Sep 13 15:34:15 UTC 2007  Dale Wilson  <wilsond@ociweb.com>
+
+        * ace/OS_NS_Thread.h:
+        * ace/config-win32-common.h:
+          Base the definiton of ACE_DEFAULT_THREAD_KEYS on the
+          Windows version rather than using the misleading
+          TLS_MINIMUM_AVAILABLE
+          Move the check to see if _WIN32_WINNT is defined
+          until *after* windows.h is included (directly or indirectly)
+
+
 Thu Sep 13 15:17:28 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * ace/ATM_Stream.cpp:
