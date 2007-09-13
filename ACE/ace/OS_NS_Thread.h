@@ -875,11 +875,9 @@ private:
 };
 
 # else   /* ! ACE_HAS_TSS_EMULATION */
-    // allow user to define its own ACE_DEFAULT_THREAD_KEYS in Windows,
-    // where The MSSDK defines only 64 entries
-#   if defined (TLS_MINIMUM_AVAILABLE) && !defined (ACE_DEFAULT_THREAD_KEYS)
-    // WIN32 platforms define TLS_MINIMUM_AVAILABLE natively.
-#     define ACE_DEFAULT_THREAD_KEYS TLS_MINIMUM_AVAILABLE
+#   if !defined (ACE_DEFAULT_THREAD_KEYS)
+      // This should have been defined in config-win32-common.h
+#     define ACE_DEFAULT_THREAD_KEYS 1088
 #   endif /* TSL_MINIMUM_AVAILABLE */
 
 # endif /* ACE_HAS_TSS_EMULATION */
