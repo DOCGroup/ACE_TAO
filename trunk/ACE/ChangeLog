@@ -1,3 +1,15 @@
+Fri Sep 14 04:51:38 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/CDR_Base.{cpp.inl}:
+          Don't use ACE_HAS_INTEL_ASSEMBLY, but just add EM64T, fixes problems
+          with solaris and vxworks
+
+        Revert this change, not needed
+
+        Thu Sep 13 08:55:38 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+        * ace/config-sunos5.5.h:
+          Don't use ACE_HAS_INTEL_ASSEMBLY with GCC
+
 Thu Sep 13 15:49:45 UTC 2007  Dale Wilson  <wilsond@ociweb.com>
 
         * NEWS:
@@ -12,7 +24,6 @@ Thu Sep 13 15:34:15 UTC 2007  Dale Wilson  <wilsond@ociweb.com>
           TLS_MINIMUM_AVAILABLE
           Move the check to see if _WIN32_WINNT is defined
           until *after* windows.h is included (directly or indirectly)
-
 
 Thu Sep 13 15:17:28 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
