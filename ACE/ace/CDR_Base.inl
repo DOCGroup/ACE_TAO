@@ -73,7 +73,7 @@ ACE_CDR::swap_2 (const char *orig, char* target)
 #elif defined (ACE_HAS_BSWAP_16)
   *reinterpret_cast<unsigned short *> (target) =
     bswap_16 (*reinterpret_cast<unsigned short const *> (orig));
-#elif (defined(ACE_HAS_PENTIUM) || defined (__amd64__) || defined (__x86_64__)) && defined(__GNUG__)
+#elif defined(ACE_HAS_INTEL_ASSEMBLY)
   unsigned short a =
     *reinterpret_cast<const unsigned short*> (orig);
   asm( "rolw $8, %0" : "=r" (a) : "0" (a) );
@@ -104,7 +104,7 @@ ACE_CDR::swap_4 (const char* orig, char* target)
 #elif defined (ACE_HAS_BSWAP_32)
   *reinterpret_cast<unsigned int *> (target) =
     bswap_32 (*reinterpret_cast<unsigned int const *> (orig));
-#elif (defined(ACE_HAS_PENTIUM) || defined (__amd64__) || defined (__x86_64__)) && defined(__GNUG__)
+#elif defined(ACE_HAS_INTEL_ASSEMBLY)
   // We have ACE_HAS_PENTIUM, so we know the sizeof's.
   register unsigned int j =
     *reinterpret_cast<const unsigned int*> (orig);
@@ -136,7 +136,7 @@ ACE_CDR::swap_8 (const char* orig, char* target)
 #elif defined (ACE_HAS_BSWAP_64)
   *reinterpret_cast<unsigned long long *> (target) =
     bswap_64 (*reinterpret_cast<unsigned long long const *> (orig));
-#elif (defined(ACE_HAS_PENTIUM) || defined (__amd64__) || defined (__x86_64__)) && defined(__GNUG__)
+#elif (defined (__amd64__) || defined (__x86_64__)) && defined(__GNUG__)
   register unsigned long x =
     * reinterpret_cast<const unsigned long*> (orig);
   asm ("bswapq %1" : "=r" (x) : "0" (x));
