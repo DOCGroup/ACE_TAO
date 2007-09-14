@@ -291,6 +291,8 @@ field nor in the <listen_port> field).
     </udp_receiver>
   </eventServiceConfiguration>  
 
+Note that for now, only UDP federation (either unicast or multicast) is supported.
+CORBA gateway federation is not implemented for CIAO.
 
 Once the event channel federation configuration is defined in the .ced
 file, the majority of the configuration effort is done. The rest of the
