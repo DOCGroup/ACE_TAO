@@ -1,3 +1,10 @@
+Fri Sep 14 18:53:38 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/acetest.mpb:
+        * tests/SSL/acetest.mpb:
+          Don't use ACE_ROOT, causes problems with GNU make on windows when we build
+          on a different drive then the autobuild system is located at
+
 Fri Sep 14 09:47:38 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/CDR_Base.{inl}:
