@@ -1,0 +1,377 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<Deployment:deploymentPlan xmlns:Deployment="http://www.omg.org/Deployment" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.omg.org/Deployment Deployment.xsd">
+
+  <UUID>9118168D-3AFE-4F0A-B79D-F6B31DB317E1</UUID>
+
+  <implementation id="_F9DE82A6-A889-401A-ABB2-FE6F5141651F">
+    <name>RACE_SAPOP_tester.ComponentImplementations.Data_Base_ComponentImplementation.Data_Base_ComponentMonolithicImpl</name>
+    <source/>
+    <artifact>_72FA7374-F988-4925-8CF6-4BD855EA91F7</artifact>
+    <artifact>_33265940-6C9F-490B-9CD8-851A2C6EE04F</artifact>
+    <artifact>_5492D328-FBB7-4D14-A0D7-21ACD9CEF41A</artifact>
+  </implementation>
+
+  <implementation id="_22FCECED-3632-49DD-AB8C-4D2AAC640757">
+    <name>RACE_SAPOP_tester.ComponentImplementations.Tester_ComponentImplementation.Tester_ComponentMonolithicImpl</name>
+    <source/>
+    <artifact>_8262A1FC-9010-4658-B572-63BE87A1E5D1</artifact>
+    <artifact>_730CBF4C-6368-4CAA-93E3-7768F887D5B1</artifact>
+    <artifact>_728AB69D-94CD-4DE7-8724-4E5703817A59</artifact>
+  </implementation>
+
+  <implementation id="_877EEDDD-2D4F-4850-808F-BA790A5A3AF8">
+    <name>RACE_SAPOP_tester.ComponentImplementations.SA_POP_ComponentImplementation.SA_POP_ComponentMonolithicImpl</name>
+    <source/>
+    <artifact>_E79D3141-D31B-478A-9D7A-7551AC83D3B3</artifact>
+    <artifact>_FA25477A-46AA-47C8-B97C-8CE85CC56634</artifact>
+    <artifact>_10827BE3-9039-4F3B-AA6F-2A27C5F32662</artifact>
+  </implementation>
+
+  <implementation id="_C0460AF8-EFC7-456F-AE43-657CC00190E7">
+    <name>RACE_SAPOP_tester.ComponentImplementations.SA_POP_IA_ComponentImplementation.SA_POP_IA_ComponentMonolithicImpl</name>
+    <source/>
+    <artifact>_F3759894-6720-4DAB-939D-631EF6EBF98A</artifact>
+    <artifact>_1BE8B8EC-4246-43E5-8AAE-E8CB051D1887</artifact>
+    <artifact>_CD3D41DD-D349-409D-8B12-4C1835479DBB</artifact>
+  </implementation>
+
+  <implementation id="_38CD0A90-B394-49AD-97A7-3F2A89AC9BFE">
+    <name>RACE_SAPOP_tester.ComponentImplementations.DAnCE_OA_ComponentImplementation.DAnCE_OA_ComponentMonolithicImpl</name>
+    <source/>
+    <artifact>_6BE0662F-599E-4799-A14F-56E870A28208</artifact>
+    <artifact>_24F701A4-E399-47BE-9CBF-3D1869A84D52</artifact>
+    <artifact>_260FB222-3020-49FD-80D8-FC4CC77A0FF8</artifact>
+  </implementation>
+
+  <instance id="RACE_SAPOP_tester.ComponentImplementations.Assembly_Tester.Tester_Assembly.Tester_Component">
+    <name>RACE_SAPOP_tester.ComponentImplementations.Assembly_Tester.Tester_Assembly.Tester_Component</name>
+    <node>TestNode</node>
+    <source/>
+    <implementation>_22FCECED-3632-49DD-AB8C-4D2AAC640757</implementation>
+    <configProperty>
+      <name>ComponentIOR</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Tester_Component.ior</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+
+  <instance id="RACE_SAPOP_tester.ComponentImplementations.Assembly_Tester.Tester_Assembly.RACE.DAnCE_OA_Component">
+    <name>RACE_SAPOP_tester.ComponentImplementations.Assembly_Tester.Tester_Assembly.RACE.DAnCE_OA_Component</name>
+    <node>TestNode</node>
+    <source/>
+    <implementation>_38CD0A90-B394-49AD-97A7-3F2A89AC9BFE</implementation>
+  </instance>
+
+  <instance id="RACE_SAPOP_tester.ComponentImplementations.Assembly_Tester.Tester_Assembly.RACE.SA_POP_IA_Component">
+    <name>RACE_SAPOP_tester.ComponentImplementations.Assembly_Tester.Tester_Assembly.RACE.SA_POP_IA_Component</name>
+    <node>TestNode</node>
+    <source/>
+    <implementation>_C0460AF8-EFC7-456F-AE43-657CC00190E7</implementation>
+  </instance>
+
+  <instance id="RACE_SAPOP_tester.ComponentImplementations.Assembly_Tester.Tester_Assembly.RACE.Data_Base_Component">
+    <name>RACE_SAPOP_tester.ComponentImplementations.Assembly_Tester.Tester_Assembly.RACE.Data_Base_Component</name>
+    <node>TestNode</node>
+    <source/>
+    <implementation>_F9DE82A6-A889-401A-ABB2-FE6F5141651F</implementation>
+  </instance>
+
+  <instance id="RACE_SAPOP_tester.ComponentImplementations.Assembly_Tester.Tester_Assembly.SAPOP.SA_POP_Component">
+    <name>RACE_SAPOP_tester.ComponentImplementations.Assembly_Tester.Tester_Assembly.SAPOP.SA_POP_Component</name>
+    <node>TestNode</node>
+    <source/>
+    <implementation>_877EEDDD-2D4F-4850-808F-BA790A5A3AF8</implementation>
+  </instance>
+
+  <connection>
+    <name>DB_queryRACE_SAPOP_tester.ComponentImplementations.Assembly_Tester.Tester_Assembly.SAPOP.SA_POP_ComponentRACE_SAPOP_tester.ComponentImplementations.Assembly_Tester.Tester_Assembly.RACE.Data_Base_Component</name>
+    <internalEndpoint>
+      <portName>DB</portName>
+      <kind>SimplexReceptacle</kind>
+      <instance>RACE_SAPOP_tester.ComponentImplementations.Assembly_Tester.Tester_Assembly.SAPOP.SA_POP_Component</instance>
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>query</portName>
+      <kind>Facet</kind>
+      <instance>RACE_SAPOP_tester.ComponentImplementations.Assembly_Tester.Tester_Assembly.RACE.Data_Base_Component</instance>
+    </internalEndpoint>
+  </connection>
+
+  <connection>
+    <name>RACE_IA_adminRACE_SAPOP_tester.ComponentImplementations.Assembly_Tester.Tester_Assembly.Tester_ComponentRACE_SAPOP_tester.ComponentImplementations.Assembly_Tester.Tester_Assembly.RACE.SA_POP_IA_Component</name>
+    <internalEndpoint>
+      <portName>RACE_IA</portName>
+      <kind>SimplexReceptacle</kind>
+      <instance>RACE_SAPOP_tester.ComponentImplementations.Assembly_Tester.Tester_Assembly.Tester_Component</instance>
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>admin</portName>
+      <kind>Facet</kind>
+      <instance>RACE_SAPOP_tester.ComponentImplementations.Assembly_Tester.Tester_Assembly.RACE.SA_POP_IA_Component</instance>
+    </internalEndpoint>
+  </connection>
+
+  <connection>
+    <name>SAPOP_planRACE_SAPOP_tester.ComponentImplementations.Assembly_Tester.Tester_Assembly.Tester_ComponentRACE_SAPOP_tester.ComponentImplementations.Assembly_Tester.Tester_Assembly.SAPOP.SA_POP_Component</name>
+    <internalEndpoint>
+      <portName>SAPOP</portName>
+      <kind>SimplexReceptacle</kind>
+      <instance>RACE_SAPOP_tester.ComponentImplementations.Assembly_Tester.Tester_Assembly.Tester_Component</instance>
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>plan</portName>
+      <kind>Facet</kind>
+      <instance>RACE_SAPOP_tester.ComponentImplementations.Assembly_Tester.Tester_Assembly.SAPOP.SA_POP_Component</instance>
+    </internalEndpoint>
+  </connection>
+
+  <connection>
+    <name>DB_adminRACE_SAPOP_tester.ComponentImplementations.Assembly_Tester.Tester_Assembly.RACE.SA_POP_IA_ComponentRACE_SAPOP_tester.ComponentImplementations.Assembly_Tester.Tester_Assembly.RACE.Data_Base_Component</name>
+    <internalEndpoint>
+      <portName>DB</portName>
+      <kind>SimplexReceptacle</kind>
+      <instance>RACE_SAPOP_tester.ComponentImplementations.Assembly_Tester.Tester_Assembly.RACE.SA_POP_IA_Component</instance>
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>admin</portName>
+      <kind>Facet</kind>
+      <instance>RACE_SAPOP_tester.ComponentImplementations.Assembly_Tester.Tester_Assembly.RACE.Data_Base_Component</instance>
+    </internalEndpoint>
+  </connection>
+
+  <connection>
+    <name>OA_adminRACE_SAPOP_tester.ComponentImplementations.Assembly_Tester.Tester_Assembly.RACE.SA_POP_IA_ComponentRACE_SAPOP_tester.ComponentImplementations.Assembly_Tester.Tester_Assembly.RACE.DAnCE_OA_Component</name>
+    <internalEndpoint>
+      <portName>OA</portName>
+      <kind>SimplexReceptacle</kind>
+      <instance>RACE_SAPOP_tester.ComponentImplementations.Assembly_Tester.Tester_Assembly.RACE.SA_POP_IA_Component</instance>
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>admin</portName>
+      <kind>Facet</kind>
+      <instance>RACE_SAPOP_tester.ComponentImplementations.Assembly_Tester.Tester_Assembly.RACE.DAnCE_OA_Component</instance>
+    </internalEndpoint>
+  </connection>
+
+  <artifact id="_72FA7374-F988-4925-8CF6-4BD855EA91F7">
+    <name>RACE_SAPOP_tester.ImplementationArtifacts.Data_Base_ComponentArtifacts.Data_Base_Component_stub</name>
+    <source/>
+    <node/>
+    <location>Data_Base_Component_stub</location>
+  </artifact>
+
+  <artifact id="_33265940-6C9F-490B-9CD8-851A2C6EE04F">
+    <name>RACE_SAPOP_tester.ImplementationArtifacts.Data_Base_ComponentArtifacts.Data_Base_Component_svnt</name>
+    <source/>
+    <node/>
+    <location>Data_Base_Component_svnt</location>
+    <execParameter>
+      <name>entryPoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_CIAO_RACE_Data_Base_Data_Base_Component_Home_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+  </artifact>
+
+  <artifact id="_5492D328-FBB7-4D14-A0D7-21ACD9CEF41A">
+    <name>RACE_SAPOP_tester.ImplementationArtifacts.Data_Base_ComponentArtifacts.Data_Base_Component_exec</name>
+    <source/>
+    <node/>
+    <location>Data_Base_Component_exec</location>
+    <execParameter>
+      <name>entryPoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_CIAO_RACE_Data_Base_Data_Base_Component_Home_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+  </artifact>
+
+  <artifact id="_8262A1FC-9010-4658-B572-63BE87A1E5D1">
+    <name>RACE_SAPOP_tester.ImplementationArtifacts.Tester_ComponentArtifacts.Tester_Component_stub</name>
+    <source/>
+    <node/>
+    <location>Tester_Component_stub</location>
+  </artifact>
+
+  <artifact id="_730CBF4C-6368-4CAA-93E3-7768F887D5B1">
+    <name>RACE_SAPOP_tester.ImplementationArtifacts.Tester_ComponentArtifacts.Tester_Component_svnt</name>
+    <source/>
+    <node/>
+    <location>Tester_Component_svnt</location>
+    <execParameter>
+      <name>entryPoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_CIAO_RACE_SA_POP_Tester_Component_Home_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+  </artifact>
+
+  <artifact id="_728AB69D-94CD-4DE7-8724-4E5703817A59">
+    <name>RACE_SAPOP_tester.ImplementationArtifacts.Tester_ComponentArtifacts.Tester_Component_exec</name>
+    <source/>
+    <node/>
+    <location>Tester_Component_exec</location>
+    <execParameter>
+      <name>entryPoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_CIAO_RACE_SA_POP_Tester_Component_Home_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+  </artifact>
+
+  <artifact id="_E79D3141-D31B-478A-9D7A-7551AC83D3B3">
+    <name>RACE_SAPOP_tester.ImplementationArtifacts.SA_POP_ComponentArtifacts.SA_POP_Component_stub</name>
+    <source/>
+    <node/>
+    <location>SA_POP_Component_stub</location>
+  </artifact>
+
+  <artifact id="_FA25477A-46AA-47C8-B97C-8CE85CC56634">
+    <name>RACE_SAPOP_tester.ImplementationArtifacts.SA_POP_ComponentArtifacts.SA_POP_Component_svnt</name>
+    <source/>
+    <node/>
+    <location>SA_POP_Component_svnt</location>
+    <execParameter>
+      <name>entryPoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_CIAO_RACE_SA_POP_SA_POP_Component_Home_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+  </artifact>
+
+  <artifact id="_10827BE3-9039-4F3B-AA6F-2A27C5F32662">
+    <name>RACE_SAPOP_tester.ImplementationArtifacts.SA_POP_ComponentArtifacts.SA_POP_Component_exec</name>
+    <source/>
+    <node/>
+    <location>SA_POP_Component_exec</location>
+    <execParameter>
+      <name>entryPoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_CIAO_RACE_SA_POP_SA_POP_Component_Home_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+  </artifact>
+
+  <artifact id="_F3759894-6720-4DAB-939D-631EF6EBF98A">
+    <name>RACE_SAPOP_tester.ImplementationArtifacts.SA_POP_IA_ComponentArtifacts.SA_POP_IA_Component_stub</name>
+    <source/>
+    <node/>
+    <location>SA_POP_IA_Component_stub</location>
+  </artifact>
+
+  <artifact id="_1BE8B8EC-4246-43E5-8AAE-E8CB051D1887">
+    <name>RACE_SAPOP_tester.ImplementationArtifacts.SA_POP_IA_ComponentArtifacts.SA_POP_IA_Component_svnt</name>
+    <source/>
+    <node/>
+    <location>SA_POP_IA_Component_svnt</location>
+    <execParameter>
+      <name>entryPoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_CIAO_RACE_SA_POP_IA_SA_POP_IA_Component_Home_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+  </artifact>
+
+  <artifact id="_CD3D41DD-D349-409D-8B12-4C1835479DBB">
+    <name>RACE_SAPOP_tester.ImplementationArtifacts.SA_POP_IA_ComponentArtifacts.SA_POP_IA_Component_exec</name>
+    <source/>
+    <node/>
+    <location>SA_POP_IA_Component_exec</location>
+    <execParameter>
+      <name>entryPoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_CIAO_RACE_SA_POP_IA_SA_POP_IA_Component_Home_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+  </artifact>
+
+  <artifact id="_6BE0662F-599E-4799-A14F-56E870A28208">
+    <name>RACE_SAPOP_tester.ImplementationArtifacts.DAnCE_OA_ComponentArtifacts.DAnCE_OA_Component_stub</name>
+    <source/>
+    <node/>
+    <location>DAnCE_OA_Component_stub</location>
+  </artifact>
+
+  <artifact id="_24F701A4-E399-47BE-9CBF-3D1869A84D52">
+    <name>RACE_SAPOP_tester.ImplementationArtifacts.DAnCE_OA_ComponentArtifacts.DAnCE_OA_Component_svnt</name>
+    <source/>
+    <node/>
+    <location>DAnCE_OA_Component_svnt</location>
+    <execParameter>
+      <name>entryPoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_CIAO_RACE_DAnCE_OA_DAnCE_OA_Component_Home_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+  </artifact>
+
+  <artifact id="_260FB222-3020-49FD-80D8-FC4CC77A0FF8">
+    <name>RACE_SAPOP_tester.ImplementationArtifacts.DAnCE_OA_ComponentArtifacts.DAnCE_OA_Component_exec</name>
+    <source/>
+    <node/>
+    <location>DAnCE_OA_Component_exec</location>
+    <execParameter>
+      <name>entryPoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_CIAO_RACE_DAnCE_OA_DAnCE_OA_Component_Home_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+  </artifact>
+
+</Deployment:deploymentPlan>

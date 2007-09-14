@@ -20,6 +20,7 @@
 
 #include "SA_POP_Component_exec.h"
 #include "ciao/CIAO_common.h"
+#include "Planning_exec.h"
 
 namespace CIAO
 {
@@ -87,7 +88,7 @@ namespace CIAO
         SA_POP_Component_exec_i::get_plan ()
         {
           // Your code here.
-          return ::CIAO::RACE::SA_POP::CCM_Planning::_nil ();
+          return new Planning_exec_i();
         }
 
         // Operations from Components::SessionComponent

@@ -1,3 +1,40 @@
+Fri Sep 14 19:31:50 UTC 2007  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
+
+        * RACE_SAPOP.mwc:
+
+        * SA_POP/Component/Planning_exec.cpp:
+        * SA_POP/Component/SA_POP_Component.mpc:
+        * SA_POP/Component/SA_POP_Component_exec.cpp:
+
+          Fixed pointer error in SA-POP Component.
+
+        * SA_POP/Tester:
+        * SA_POP/Tester/Tester_Client.cpp:
+        * SA_POP/Tester/Tester_Component.cidl:
+        * SA_POP/Tester/Tester_Component.idl:
+        * SA_POP/Tester/Tester_Component.mpc:
+        * SA_POP/Tester/Tester_Component_exec.h:
+        * SA_POP/Tester/Tester_Component_exec.cpp:
+        * SA_POP/Tester/Tester_Component_exec_export.h:
+        * SA_POP/Tester/Tester_Component_stub_export.h:
+        * SA_POP/Tester/Tester_Component_svnt_export.h:
+
+          Added SA-POP (with RACE) Tester component.
+
+        * SA_POP/models:
+        * SA_POP/models/RACE_SAPOP_tester.xme:
+
+          Added SA-POP/RACE Tester model.
+
+        * descriptors/NodeDetails_Tester.dat:
+        * descriptors/TesterDeploymentPlan.cdp:
+        * descriptors/run_RACE_SAPOP_Tester.pl:
+        * descriptors/test.san:
+        * descriptors/test.tm:
+
+          Added SA-POP/RACE Tester descriptor files.
+
+
 Mon Sep 10 21:19:24 UTC 2007  Nishanth Shankaran  <shankaran_n@dre.vanderbilt.edu>
 
         * Input_Adapters/SA_POP_Input_Adapter/Admin_exec.cpp:
