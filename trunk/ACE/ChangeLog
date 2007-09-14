@@ -1,3 +1,9 @@
+Fri Sep 14 09:47:38 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/CDR_Base.{inl}:
+          The swap_8 method was incorrect, there we use an EM64T instruction,
+          use ACE_HAS_INTEL_ASSEMBLY in the swap_2 and swap_4 method
+
 Fri Sep 14 04:51:38 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/CDR_Base.{cpp.inl}:
