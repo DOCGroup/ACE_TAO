@@ -3,7 +3,7 @@
 project(SA_POP_Component_stub): ciao_client_dnc {
   
   sharedname = SA_POP_Component_stub
-  after += OpString_stub Data_Base_stub
+  after += OpString_stub Data_Base_stub SA_POP
   
   idlflags -= -GT
   idlflags += -St \

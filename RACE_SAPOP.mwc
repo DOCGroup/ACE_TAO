@@ -5,4 +5,5 @@ workspace {
   Data_Base
   SA_POP/SA_POP_for_RACE.mpc
   SA_POP/Component/SA_POP_Component.mpc
+  SA_POP/Tester/Tester_Component.mpc
 }

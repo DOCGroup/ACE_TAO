@@ -42,22 +42,33 @@ namespace CIAO
           const char * task_map_file
         )
         {
+            ACE_DEBUG ((LM_DEBUG, "In Plannin_exec_i::init ()\n"));
           // Create SA-POP planner.
           ::SA_POP::SA_Builder builder;
           ::SANet::SANetFileIn sanet_in;
           ::SA_POP::TaskMapFileIn tm_in;
 
+
+          ACE_DEBUG ((LM_DEBUG, "In Plannin_exec_i::init () Before building SAN\n"));
           sanet_in.build_net (task_net_file, &builder);
+          ACE_DEBUG ((LM_DEBUG, "In Plannin_exec_i::init () After building SAN\n"));
+
           tm_in.build_task_map (task_map_file, &builder);
 
+          ACE_DEBUG ((LM_DEBUG, "In Plannin_exec_i::init () After building TM\n"));
+
           this->planner_ = builder.get_planner ();
+          ACE_DEBUG ((LM_DEBUG, "In Plannin_exec_i::init () After getting ptr\n"));
 
           // Add screen output adapter to planner.
           this->planner_->add_out_adapter (&(this->screen_out_));
+          ACE_DEBUG ((LM_DEBUG, "In Plannin_exec_i::init () After adding output adapter\n"));
 
           this->is_init_ = true;
           return this->is_init_;
-        }
+
+
+       }
 
         ::CORBA::Boolean
         Planning_exec_i::generate_opstring (
@@ -65,6 +76,7 @@ namespace CIAO
           ::CIAO::RACE::OperationalString_out opstring
         )
         {
+            ACE_DEBUG ((LM_DEBUG, "In Plannin_exec_i::generate_opstring ()\n"));
           // Check to make sure planner is initialized.
           if (!this->is_init_ || !this->planner_)
             return false;
@@ -83,7 +95,7 @@ namespace CIAO
           opstring_idl.goal = goal;
 
           ::CIAO::RACE::OperationalString_var opstring_var (&opstring_idl);
-          opstring = opstring_var.out ();
+          opstring = opstring_var._retn();
 
           return true;
         }
