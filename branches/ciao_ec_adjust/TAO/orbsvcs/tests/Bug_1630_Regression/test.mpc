@@ -1,0 +1,10 @@
+// -*- MPC -*-
+// $Id$
+
+project(Bug_1630_testclient ) : taoclient, anytypecode, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro, ifr_client {
+   exename = testclient
+
+   Source_Files {
+      testclient.cpp
+   }
+}

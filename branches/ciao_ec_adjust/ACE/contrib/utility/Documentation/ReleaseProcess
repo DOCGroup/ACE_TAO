@@ -1,0 +1,13 @@
+1) go thru '@@' in source code
+
+2) build & test with g++ and cxx
+
+3) update news pages
+
+4) spellcheck/tidy/validate all xhtml files
+
+5) copy Utility to Utility-x.y.z; make documentation
+
+6) go manually thru all documentation pages with lynx & gui ua
+
+$Id$
