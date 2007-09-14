@@ -118,7 +118,6 @@
   // this must appear before its #include.
 # define ACE_HAS_STRING_CLASS
 # include "ace/config-g++-common.h"
-# undef ACE_HAS_INTEL_ASSEMBLY
 # define ACE_HAS_HI_RES_TIMER
   // Denotes that GNU has cstring.h as standard, to redefine memchr().
 # define ACE_HAS_GNU_CSTRING_H
