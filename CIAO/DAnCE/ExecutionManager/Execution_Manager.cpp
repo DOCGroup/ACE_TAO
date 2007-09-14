@@ -65,8 +65,8 @@ namespace CIAO
             default:
               ACE_ERROR_RETURN ((LM_ERROR,
                                  "usage:  %s\n"
-                                 "-a : Using Asyncronous Deployment\n"
-                                 "-b : Using Acitve Object based deployment \n"
+                                 "-a : Using Asynchronous Deployment\n"
+                                 "-b : Using Active Object based deployment \n"
                                  "-o <ior_output_file>\n"
                                  "-i <installation data filename>\n"
                                  "-n <use naming service>\n"
