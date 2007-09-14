@@ -73,14 +73,14 @@ namespace CIAO
           ::CORBA::String_out ID)
         {
           try
+          {
+            if (this->OA_->deploy_string (opstring))
             {
-              if (this->OA_->deploy_string (opstring))
-                {
-                  this->DB_->add_string (opstring);
-                  ID = ::CORBA::string_dup (opstring.ID.in ());
-                  return true;
-                }
+             // this->DB_->add_string (opstring);
+              //ID = ::CORBA::string_dup (opstring.ID.in ());
+              return true;
             }
+          }
           catch (CORBA::Exception &ex)
             {
               ACE_PRINT_EXCEPTION (ex, "Exception caught in "

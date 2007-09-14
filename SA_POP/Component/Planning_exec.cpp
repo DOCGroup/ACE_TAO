@@ -94,9 +94,7 @@ namespace CIAO
           this->opstring_to_idl (opstring_sa, opstring_idl);
           opstring_idl.goal = goal;
 
-          ::CIAO::RACE::OperationalString_var opstring_var (&opstring_idl);
-          opstring = opstring_var._retn();
-
+          opstring = new ::CIAO::RACE::OperationalString (opstring_idl);
           return true;
         }
 

@@ -96,6 +96,8 @@ namespace CIAO
         Admin_exec_i::deploy_string
         (const ::CIAO::RACE::OperationalString & op_string)
         {
+          ACE_DEBUG ((LM_DEBUG, "In DANCE_OA::deploy string()\n"));
+/*
           ::Deployment::DeploymentPlan plan;
 
           if (this->opstring_to_dplan (op_string, plan))
@@ -106,6 +108,8 @@ namespace CIAO
             {
               return false;
             }
+*/
+          return false;
         }
 
 
