@@ -66,6 +66,18 @@
     <node>TestNode</node>
     <source/>
     <implementation>_38CD0A90-B394-49AD-97A7-3F2A89AC9BFE</implementation>
+<!--
+    <configProperty>
+      <name>repoman_id</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>repoman</string>
+        </value>
+      </value>
+    </configProperty> -->
   </instance>
 
   <instance id="RACE_SAPOP_tester.ComponentImplementations.Assembly_Tester.Tester_Assembly.RACE.SA_POP_IA_Component">

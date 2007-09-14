@@ -1,3 +1,11 @@
+Fri Sep 14 22:44:32 UTC 2007  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
+
+        * Input_Adapters/SA_POP_Input_Adapter/Admin_exec.cpp:
+        * Output_Adapters/DAnCE_Output_Adapter/Admin_exec.cpp:
+        * SA_POP/Component/Planning_exec.cpp:
+
+          Revised IDL return values.
+
 Fri Sep 14 19:31:50 UTC 2007  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
 
         * RACE_SAPOP.mwc:
