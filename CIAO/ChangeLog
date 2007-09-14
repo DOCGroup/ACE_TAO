@@ -1,3 +1,9 @@
+Fri Sep 14 15:19:17 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * DAnCE/ExecutionManager/Execution_Manager.cpp:
+
+          Fixed a couple of spelling errors to user diplayed messaged.
+
 Fri Sep 14 14:42:06 UTC 2007  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
 
         * docs/schema/CIAOEvents.txt:
