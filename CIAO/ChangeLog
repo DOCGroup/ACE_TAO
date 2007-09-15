@@ -2,7 +2,7 @@ Fri Sep 14 15:19:17 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * DAnCE/ExecutionManager/Execution_Manager.cpp:
 
-          Fixed a couple of spelling errors to user diplayed messaged.
+          Fixed a couple of spelling errors to user diplayed messages.
 
 Fri Sep 14 14:42:06 UTC 2007  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
 
@@ -11,9 +11,9 @@ Fri Sep 14 14:42:06 UTC 2007  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
 
 Wed Sep 12 22:18:03 UTC 2007  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
 
-	* docs/schema/CIAOEvents.txt:
-	  Added documentation about how to integrat TAO Real-Time Event Service
-	  into an CIAO based deployment.
+        * docs/schema/CIAOEvents.txt:
+          Added documentation about how to integrat TAO Real-Time Event Service
+          into an CIAO based deployment.
 
 Tue Sep  4 14:25:24 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
