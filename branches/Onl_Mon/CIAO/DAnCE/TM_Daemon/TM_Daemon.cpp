@@ -2,6 +2,10 @@
 #include "Handler_i.h"
 #include "Config_Handlers/XML_File_Intf.h"
 #include "Config_Handlers/DnC_Dump.h"
+#include "Client_Task.h"
+// To set RT Sched params.
+#include "ace/Sched_Params.h"
+#include "ace/OS_NS_errno.h"
 
 namespace CIAO
 {
@@ -11,6 +15,29 @@ namespace CIAO
     int
     run_main (int argc, char *argv[])
     {
+
+      int priority =
+        (ACE_Sched_Params::priority_min (ACE_SCHED_FIFO)
+         + ACE_Sched_Params::priority_max (ACE_SCHED_FIFO)) / 2;
+      priority = ACE_Sched_Params::next_priority (ACE_SCHED_FIFO,
+                                                  priority);
+      // Enable FIFO scheduling, e.g., RT scheduling class on Solaris.
+
+      if (ACE_OS::sched_params (ACE_Sched_Params (ACE_SCHED_FIFO,
+                                                  priority,
+                                                  ACE_SCOPE_PROCESS)) != 0)
+        {
+          if (ACE_OS::last_error () == EPERM)
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "server (%P|%t): user is not superuser, "
+                          "test runs in time-shared class\n"));
+            }
+          else
+            ACE_ERROR ((LM_ERROR,
+                        "server (%P|%t): sched_params failed\n"));
+        }
+
 
       try
         {
@@ -28,20 +55,17 @@ namespace CIAO
           poa_manager->activate ();
 
           // create the Domain data Manager
-          DomainDataManager* manager = 
-		  DomainDataManager::create (orb, NULL, argv[2]);
+          DomainDataManager* manager =
+            DomainDataManager::create (orb, NULL, argv[2]);
 
-          sleep (10); // wait for all the monitors to upload their obj. refs
+          // Wait for all the monitors to upload their obj. refs
+          sleep (10);
 
           manager->get_monitor_obj_ref ();
 
           ACE_DEBUG ((LM_DEBUG, "After get_monitor_obj_ref\n"));
 
           Monitor_Handler_I handler_i (manager);
-
-//          PortableServer::ServantBase_var servant =
-//              handler_i;
-
           Onl_Monitor::AMI_NM_MonitorHandler_var handlerV =
             handler_i._this ();
 
@@ -54,26 +78,28 @@ namespace CIAO
           ACE_DEBUG ((LM_DEBUG, "After call to get plan \n"));
 
           manager->start_monitor_qos (handlerV, plan);
-	
-	  //sleep (100);
 
+          // Now active the threads that run the orb.
+          Client_Task client_task (orb.in ());
+          // Spawn multiple threads to run the orb event loop.
+          // @@ TODO: Need to make this configurable via command line param.
+          if (client_task.activate (THR_NEW_LWP | THR_JOINABLE,
+                                    4) != 0)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "Cannot activate client threads\n"), 1);
+            }
           while (true)
           {
+            // Sampling period.
+            // @@ TODO: Need to make this configurable.
             sleep (5);
             ACE_DEBUG ((LM_DEBUG, "Calling get_all_data\n"));
             manager->get_all_data (handlerV);
-
-            while (!manager->got_all_response ())
-            {
-              if (orb->work_pending ())
-                orb->perform_work ();
-            }
-
-            // write the system snapshot
-            manager->write_snapshot ();
           }
+          // Wait for all the threads to complete execution.
+          client_task.thr_mgr ()->wait ();
           // Finally destroy the ORB
-          orb->run ();
           orb->destroy ();
         }
       catch (const CORBA::Exception& ex)

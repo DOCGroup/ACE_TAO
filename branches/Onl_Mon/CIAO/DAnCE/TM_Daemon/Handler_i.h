@@ -10,21 +10,24 @@ namespace CIAO
 
 class Monitor_Handler_I : public POA_Onl_Monitor::AMI_NM_MonitorHandler
 {
-  public:    
+  public:
 
-    Monitor_Handler_I (CIAO::DomainDataManager* manager);
-    void get_resource_data (const ::Deployment::Domain & ami_return_val);
-    
-    void get_resource_data_excep (
-        ::Messaging::ExceptionHolder * excep_holder);
-    
-    void monitor_app_QoS (void);
-    
-    void monitor_app_QoS_excep (
-        ::Messaging::ExceptionHolder * excep_holder);
+  // Constructor.
+  Monitor_Handler_I (CIAO::DomainDataManager* manager);
+
+  // Handle reply from corresponding method invocation.
+  void get_resource_data (const ::Deployment::Domain & ami_return_val);
+
+  void get_resource_data_excep (::Messaging::ExceptionHolder * excep_holder);
+
+  void monitor_app_QoS (void);
+
+  void monitor_app_QoS_excep (::Messaging::ExceptionHolder * excep_holder);
 
   protected:
-    CIAO::DomainDataManager* manager_;
+
+  // Reference to the DomainDataManager object.
+  CIAO::DomainDataManager* manager_;
 };
 
 #endif

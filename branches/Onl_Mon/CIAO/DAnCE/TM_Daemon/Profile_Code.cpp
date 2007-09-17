@@ -18,32 +18,32 @@ Profile_Code::~Profile_Code ()
 void Profile_Code::start ()
 {
 
-// if still running ... stop it and then run again ...
-  if (running_)
-     time.stop ();
+  // if still running ... stop it and then run again ...
+  if (this->running_)
+    {
+      this->timer_.stop ();
+    }
+
 
   // start the timer ....
-  time.start ();
+  this->timer_.start ();
 
-  running_ = true;
+  this->running_ = true;
 }
 
 
 void Profile_Code::stop ()
 {
-  time.stop ();
+  this->timer_.stop ();
+  this->timer_.elapsed_microseconds (this->elapsed_time_);
+    // reset the state
+  this->running_ = false;
 
-  ACE_Time_Value tv;
+}
 
-  //  time.elapsed_time (tv);
+void
+Profile_Code::dump ()
+{
+  this->file_ << this->elapsed_time_ << std::endl;
 
-  ACE_hrtime_t tm;
-
-  time.elapsed_microseconds (tm);
-
-  //  file_ << tv.msec () << std::endl;
-  file_ << tm << std::endl;
-
-  // reset the state 
-  running_ = false;
 }

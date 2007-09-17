@@ -193,12 +193,12 @@ int CIAO::NA_Monitor::stop ()
 
 ::Deployment::Domain* CIAO::NA_Monitor::get_current_data ()
 {
-  //  if (CIAO::debug_level () > 9)
-    {
-      ACE_DEBUG ((LM_DEBUG ,
-                 "NA_Monitor::Inside the get_current_data of[%s]\n",
-                 current_domain_->node[0].name.in ()));
-    }
+//   if (CIAO::debug_level () > 9)
+//     {
+//       ACE_DEBUG ((LM_DEBUG ,
+//                  "NA_Monitor::Inside the get_current_data of[%s]\n",
+//                  current_domain_->node[0].name.in ()));
+//     }
 
   // first get the process id for the NA from the controller
 
@@ -207,8 +207,8 @@ int CIAO::NA_Monitor::stop ()
 
   ACE_Unbounded_Set_Iterator<pid_t> iter (cids.process_ids_);
 
-  ACE_DEBUG ((LM_DEBUG , "The size of the Process Set is %d \n",
-	      cids.process_ids_.size ()));
+//   ACE_DEBUG ((LM_DEBUG , "The size of the Process Set is %d \n",
+// 	      cids.process_ids_.size ()));
 
   size_t counter = 0;
   // get process data for each NA process
@@ -241,7 +241,7 @@ int CIAO::NA_Monitor::stop ()
 
       //      ACE_DEBUG ((LM_INFO, "\n%3.2f\n", current_load));
 
-      std::cout << "\n The NA load is " << current_load << std::endl;
+      //      std::cout << "\n The NA load is " << current_load << std::endl;
 
       if (current_load > 100 || current_load < 0)
         current_load = 100;
@@ -289,10 +289,10 @@ int CIAO::NA_Monitor::stop ()
 
 
 
-  if (CIAO::debug_level () > 9)
-    {
-      //ACE_DEBUG ((LM_DEBUG , "CIAO::Monitor::Exiting from the get_current_data function\n"));
-    }
+//   if (CIAO::debug_level () > 9)
+//     {
+//       //ACE_DEBUG ((LM_DEBUG , "CIAO::Monitor::Exiting from the get_current_data function\n"));
+//     }
 
   return current_domain_.get ();
 }
@@ -321,8 +321,8 @@ CIAO::NA_Monitor::read_data (pid_t pid)
 
   std::ifstream ifstream_;
 
-  ACE_DEBUG ((LM_DEBUG, "The file name is %s\n",
-              str.str ().c_str ()));
+//   ACE_DEBUG ((LM_DEBUG, "The file name is %s\n",
+//               str.str ().c_str ()));
 
   ifstream_.open (str.str ().c_str (), std::ios_base::in);
 
