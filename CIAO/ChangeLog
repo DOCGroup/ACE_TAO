@@ -1,3 +1,213 @@
+Mon Sep 17 21:08:46 UTC 2007  Nishanth Shankaran  <nshankar@nospam.com>
+
+        * examples/space:
+
+        * examples/space/Analysis:
+
+        * examples/space/Analysis/Analysis_Component.ccd:
+        * examples/space/Analysis/Analysis_Component.cidl:
+        * examples/space/Analysis/Analysis_Component.idl:
+        * examples/space/Analysis/Analysis_Component.mpc:
+        * examples/space/Analysis/Analysis_Component_exec.h:
+        * examples/space/Analysis/Analysis_Component_exec.cpp:
+        * examples/space/Analysis/Analysis_Component_exec_export.h:
+        * examples/space/Analysis/Analysis_Component_stub_export.h:
+        * examples/space/Analysis/Analysis_Component_svnt_export.h:
+
+        * examples/space/Backup_Gizmo_High:
+
+        * examples/space/Backup_Gizmo_High/Backup_Gizmo_High.cidl:
+        * examples/space/Backup_Gizmo_High/Backup_Gizmo_High.idl:
+        * examples/space/Backup_Gizmo_High/Backup_Gizmo_High.mpc:
+        * examples/space/Backup_Gizmo_High/Backup_Gizmo_High_exec.h:
+        * examples/space/Backup_Gizmo_High/Backup_Gizmo_High_exec.cpp:
+        * examples/space/Backup_Gizmo_High/Backup_Gizmo_High_exec_export.h:
+        * examples/space/Backup_Gizmo_High/Backup_Gizmo_High_stub_export.h:
+        * examples/space/Backup_Gizmo_High/Backup_Gizmo_High_svnt_export.h:
+        * examples/space/Backup_Gizmo_High/Backup_Gizmo_Low.ccd:
+
+        * examples/space/Backup_Gizmo_Low:
+
+        * examples/space/Backup_Gizmo_Low/Backup_Gizmo_Low.ccd:
+        * examples/space/Backup_Gizmo_Low/Backup_Gizmo_Low.cidl:
+        * examples/space/Backup_Gizmo_Low/Backup_Gizmo_Low.idl:
+        * examples/space/Backup_Gizmo_Low/Backup_Gizmo_Low.mpc:
+        * examples/space/Backup_Gizmo_Low/Backup_Gizmo_Low_exec.h:
+        * examples/space/Backup_Gizmo_Low/Backup_Gizmo_Low_exec.cpp:
+        * examples/space/Backup_Gizmo_Low/Backup_Gizmo_Low_exec_export.h:
+        * examples/space/Backup_Gizmo_Low/Backup_Gizmo_Low_stub_export.h:
+        * examples/space/Backup_Gizmo_Low/Backup_Gizmo_Low_svnt_export.h:
+
+        * examples/space/Comm:
+
+        * examples/space/Comm/Comm_Component.ccd:
+        * examples/space/Comm/Comm_Component.cidl:
+        * examples/space/Comm/Comm_Component.idl:
+        * examples/space/Comm/Comm_Component.mpc:
+        * examples/space/Comm/Comm_Component_exec.h:
+        * examples/space/Comm/Comm_Component_exec.cpp:
+        * examples/space/Comm/Comm_Component_exec_export.h:
+        * examples/space/Comm/Comm_Component_stub_export.h:
+        * examples/space/Comm/Comm_Component_svnt_export.h:
+
+        * examples/space/Compression:
+
+        * examples/space/Compression/Compression_Component.ccd:
+        * examples/space/Compression/Compression_Component.cidl:
+        * examples/space/Compression/Compression_Component.idl:
+        * examples/space/Compression/Compression_Component.mpc:
+        * examples/space/Compression/Compression_Component_exec.h:
+        * examples/space/Compression/Compression_Component_exec.cpp:
+        * examples/space/Compression/Compression_Component_exec_export.h:
+        * examples/space/Compression/Compression_Component_stub_export.h:
+        * examples/space/Compression/Compression_Component_svnt_export.h:
+
+        * examples/space/Exec:
+
+        * examples/space/Exec/Exec_Component.ccd:
+        * examples/space/Exec/Exec_Component.cidl:
+        * examples/space/Exec/Exec_Component.idl:
+        * examples/space/Exec/Exec_Component.mpc:
+        * examples/space/Exec/Exec_Component_exec.h:
+        * examples/space/Exec/Exec_Component_exec.cpp:
+        * examples/space/Exec/Exec_Component_exec_export.h:
+        * examples/space/Exec/Exec_Component_stub_export.h:
+        * examples/space/Exec/Exec_Component_svnt_export.h:
+
+        * examples/space/Filter:
+
+        * examples/space/Filter/Filter_Component.ccd:
+        * examples/space/Filter/Filter_Component.cidl:
+        * examples/space/Filter/Filter_Component.idl:
+        * examples/space/Filter/Filter_Component.mpc:
+        * examples/space/Filter/Filter_Component_exec.h:
+        * examples/space/Filter/Filter_Component_exec.cpp:
+        * examples/space/Filter/Filter_Component_exec_export.h:
+        * examples/space/Filter/Filter_Component_stub_export.h:
+        * examples/space/Filter/Filter_Component_svnt_export.h:
+
+        * examples/space/Gizmo1_High:
+
+        * examples/space/Gizmo1_High/Gizmo1_High.ccd:
+        * examples/space/Gizmo1_High/Gizmo1_High.cidl:
+        * examples/space/Gizmo1_High/Gizmo1_High.idl:
+        * examples/space/Gizmo1_High/Gizmo1_High.mpc:
+        * examples/space/Gizmo1_High/Gizmo1_High_exec.h:
+        * examples/space/Gizmo1_High/Gizmo1_High_exec.cpp:
+        * examples/space/Gizmo1_High/Gizmo1_High_exec_export.h:
+        * examples/space/Gizmo1_High/Gizmo1_High_stub_export.h:
+        * examples/space/Gizmo1_High/Gizmo1_High_svnt_export.h:
+
+        * examples/space/Gizmo1_Low:
+
+        * examples/space/Gizmo1_Low/Gizmo1_Low.ccd:
+        * examples/space/Gizmo1_Low/Gizmo1_Low.cidl:
+        * examples/space/Gizmo1_Low/Gizmo1_Low.idl:
+        * examples/space/Gizmo1_Low/Gizmo1_Low.mpc:
+        * examples/space/Gizmo1_Low/Gizmo1_Low_exec.h:
+        * examples/space/Gizmo1_Low/Gizmo1_Low_exec.cpp:
+        * examples/space/Gizmo1_Low/Gizmo1_Low_exec_export.h:
+        * examples/space/Gizmo1_Low/Gizmo1_Low_stub_export.h:
+        * examples/space/Gizmo1_Low/Gizmo1_Low_svnt_export.h:
+
+        * examples/space/Gizmo1_Medium:
+
+        * examples/space/Gizmo1_Medium/Gizmo1_Medium.ccd:
+        * examples/space/Gizmo1_Medium/Gizmo1_Medium.cidl:
+        * examples/space/Gizmo1_Medium/Gizmo1_Medium.idl:
+        * examples/space/Gizmo1_Medium/Gizmo1_Medium.mpc:
+        * examples/space/Gizmo1_Medium/Gizmo1_Medium_exec.h:
+        * examples/space/Gizmo1_Medium/Gizmo1_Medium_exec.cpp:
+        * examples/space/Gizmo1_Medium/Gizmo1_Medium_exec_export.h:
+        * examples/space/Gizmo1_Medium/Gizmo1_Medium_stub_export.h:
+        * examples/space/Gizmo1_Medium/Gizmo1_Medium_svnt_export.h:
+
+        * examples/space/Gizmo2_High:
+
+        * examples/space/Gizmo2_High/Gizmo2_High.ccd:
+        * examples/space/Gizmo2_High/Gizmo2_High.cidl:
+        * examples/space/Gizmo2_High/Gizmo2_High.idl:
+        * examples/space/Gizmo2_High/Gizmo2_High.mpc:
+        * examples/space/Gizmo2_High/Gizmo2_High_exec.h:
+        * examples/space/Gizmo2_High/Gizmo2_High_exec.cpp:
+        * examples/space/Gizmo2_High/Gizmo2_High_exec_export.h:
+        * examples/space/Gizmo2_High/Gizmo2_High_stub_export.h:
+        * examples/space/Gizmo2_High/Gizmo2_High_svnt_export.h:
+
+        * examples/space/Gizmo2_Medium:
+
+        * examples/space/Gizmo2_Medium/Gizmo2_Medium.ccd:
+        * examples/space/Gizmo2_Medium/Gizmo2_Medium.cidl:
+        * examples/space/Gizmo2_Medium/Gizmo2_Medium.idl:
+        * examples/space/Gizmo2_Medium/Gizmo2_Medium.mpc:
+        * examples/space/Gizmo2_Medium/Gizmo2_Medium_exec.h:
+        * examples/space/Gizmo2_Medium/Gizmo2_Medium_exec.cpp:
+        * examples/space/Gizmo2_Medium/Gizmo2_Medium_exec_export.h:
+        * examples/space/Gizmo2_Medium/Gizmo2_Medium_stub_export.h:
+        * examples/space/Gizmo2_Medium/Gizmo2_Medium_svnt_export.h:
+
+        * examples/space/Ground:
+
+        * examples/space/Ground/Ground_Component.ccd:
+        * examples/space/Ground/Ground_Component.cidl:
+        * examples/space/Ground/Ground_Component.idl:
+        * examples/space/Ground/Ground_Component.mpc:
+        * examples/space/Ground/Ground_Component_exec.h:
+        * examples/space/Ground/Ground_Component_exec.cpp:
+        * examples/space/Ground/Ground_Component_exec_export.h:
+        * examples/space/Ground/Ground_Component_stub_export.h:
+        * examples/space/Ground/Ground_Component_svnt_export.h:
+
+        * examples/space/Primary_Gizmo:
+
+        * examples/space/Primary_Gizmo/Primary_Gizmo.ccd:
+        * examples/space/Primary_Gizmo/Primary_Gizmo.cidl:
+        * examples/space/Primary_Gizmo/Primary_Gizmo.idl:
+        * examples/space/Primary_Gizmo/Primary_Gizmo.mpc:
+        * examples/space/Primary_Gizmo/Primary_Gizmo_exec.h:
+        * examples/space/Primary_Gizmo/Primary_Gizmo_exec.cpp:
+        * examples/space/Primary_Gizmo/Primary_Gizmo_exec_export.h:
+        * examples/space/Primary_Gizmo/Primary_Gizmo_stub_export.h:
+        * examples/space/Primary_Gizmo/Primary_Gizmo_svnt_export.h:
+
+        * examples/space/common:
+
+        * examples/space/common/Event_Types.idl:
+        * examples/space/common/Event_Types.mpc:
+        * examples/space/common/Event_Types_exec_export.h:
+        * examples/space/common/Event_Types_stub_export.h:
+        * examples/space/common/Event_Types_svnt_export.h:
+
+        * examples/space/descriptors:
+
+        * examples/space/descriptors/Domain.cdd:
+        * examples/space/descriptors/Domain_4.cdd:
+        * examples/space/descriptors/Domain_6.cdd:
+        * examples/space/descriptors/Domain_MT.cdd:
+        * examples/space/descriptors/Domain_single.cdd:
+        * examples/space/descriptors/Domain_two.cdd:
+        * examples/space/descriptors/NodeManagerMap.dat:
+        * examples/space/descriptors/NodeManagerMap_4.dat:
+        * examples/space/descriptors/NodeManagerMap_6.dat:
+        * examples/space/descriptors/NodeManagerMap_MT.dat:
+        * examples/space/descriptors/NodeManagerMap_two.dat:
+        * examples/space/descriptors/SPACE.cdp:
+        * examples/space/descriptors/SPACE_4.cdp:
+        * examples/space/descriptors/SPACE_4.cdp_bak:
+        * examples/space/descriptors/SPACE_4_no_Qos.cdp:
+        * examples/space/descriptors/SPACE_6.cdp:
+        * examples/space/descriptors/SPACE_6.cdp_bak:
+        * examples/space/descriptors/multi_SPACE.cdp:
+        * examples/space/descriptors/multi_SPACE_new.cdp:
+        * examples/space/descriptors/run_ExecutionManager.pl:
+        * examples/space/descriptors/run_NS.pl:
+        * examples/space/descriptors/run_NodeManager.pl:
+        * examples/space/descriptors/run_test.pl:
+        * examples/space/descriptors/run_test_multi.pl:
+        * examples/space/descriptors/svc_node_manager.conf:
+
+        Adding space example that we use to test the monitoring framework.
+
 Mon Sep 17 20:53:15 UTC 2007  Nishanth Shankaran  <nshankar@nospam.com>
 
         * DAnCE/NodeManager/CIAO_Monitor.cpp:
