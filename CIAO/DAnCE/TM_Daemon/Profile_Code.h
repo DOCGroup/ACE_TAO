@@ -9,7 +9,7 @@ class ACE_High_Res_Timer;
 class Profile_Code
 {
 public:
-  Profile_Code (const std::string& file);
+  Profile_Code (const std::string &file);
 
   Profile_Code (){};
 
@@ -19,10 +19,16 @@ public:
 
   void stop ();
 
+  void dump ();
+
+
 private:
 
   /// The high resolution Timer ...
-  ACE_High_Res_Timer time;
+  ACE_High_Res_Timer timer_;
+
+  /// Elapsed time.
+  ACE_hrtime_t elapsed_time_;
 
   std::ofstream file_;
 

@@ -61,26 +61,26 @@ CIAO::MonitorController::MonitorController (CORBA::ORB_ptr orb,
 
 int CIAO::MonitorController::init ()
 {
-  ACE_DEBUG ((LM_DEBUG , "Inside the init function [%s]\n", 
+  ACE_DEBUG ((LM_DEBUG , "Inside the init function [%s]\n",
 	          initial_domain_.node[0].name.in ()));
 
 
   create_the_servant ();
 
-  ACE_DEBUG ((LM_DEBUG , "After the create servant function [%s]\n", 
+  ACE_DEBUG ((LM_DEBUG , "After the create servant function [%s]\n",
 	          initial_domain_.node[0].name.in ()));
   upload_obj_ref ();
 
-  ACE_DEBUG ((LM_DEBUG , "After the upload obj ref function [%s]\n", 
+  ACE_DEBUG ((LM_DEBUG , "After the upload obj ref function [%s]\n",
 	          initial_domain_.node[0].name.in ()));
     // Parse the intial domain and setup the options
   parse_initial_domain ();
-  ACE_DEBUG ((LM_DEBUG , "After the parse_initial_domain function [%s]\n", 
+  ACE_DEBUG ((LM_DEBUG , "After the parse_initial_domain function [%s]\n",
 	          initial_domain_.node[0].name.in ()));
-    
+
     // Populat and startup the monitor list
   populate_monitor_list ();
-  ACE_DEBUG ((LM_DEBUG , "After the populate monitor list function [%s]\n", 
+  ACE_DEBUG ((LM_DEBUG , "After the populate monitor list function [%s]\n",
 	          initial_domain_.node[0].name.in ()));
 
   return 1;
@@ -88,31 +88,33 @@ int CIAO::MonitorController::init ()
 
 ::Deployment::Domain* CIAO::MonitorController::update_data_for_TM ()
 {
-	ACE_DEBUG ((LM_DEBUG , "The list size is %d\n",
-		    monitor_list_.size ()));
+// 	ACE_DEBUG ((LM_DEBUG , "The list size is %d\n",
+// 		    monitor_list_.size ()));
 
-  ::Deployment::Domain* domain = 
+  ::Deployment::Domain* domain =
     new ::Deployment::Domain (this->initial_domain_);
 
   // Set the new domain resource to zero
   domain->node[0].resource.length (0);
 
-// form the monitor time file name 
+// form the monitor time file name
+
+/*
   std::string mon_file = domain->node[0].name.in ();
   mon_file += "_Tmon";
   Profile_Code prf_mon (mon_file);
+*/
 
-  for (size_t i =0;i < monitor_list_.size ();i++)
+  for (size_t i = 0;i < monitor_list_.size ();i++)
   {
-    
-     prf_mon.start ();
 
+    //     prf_mon.start ();
     ::Deployment::Domain *new_domain =
       monitor_list_[i]->monitor_->get_current_data ();
 
     add_resource_to_domain (*domain , *new_domain);
 
-    prf_mon.stop ();
+    //    prf_mon.stop ();
   }
 
   return domain;
@@ -120,13 +122,13 @@ int CIAO::MonitorController::init ()
 
 int CIAO::MonitorController::svc (void)
 {
-  ACE_DEBUG ((LM_DEBUG , "Inside the Node for [%s]\n", 
-	      initial_domain_.node[0].name.in ()));
-  
+//   ACE_DEBUG ((LM_DEBUG , "Inside the Node for [%s]\n",
+// 	      initial_domain_.node[0].name.in ()));
+
 
     // Parse the intial domain and setup the options
   parse_initial_domain ();
-    
+
     // Populat and startup the monitor list
   populate_monitor_list ();
 
@@ -330,7 +332,7 @@ void CIAO::MonitorController::populate_monitor_list ()
     } // if monitor_cpu_usage
   if (monitor_NA_usage_)
     {
-      
+
 
      // create a MonitorElement
       monitor_elem = new MonitorElement;
@@ -340,7 +342,7 @@ void CIAO::MonitorController::populate_monitor_list ()
       monitor_elem->lib_name_  += na_monitor_lib_name;
 
       ACE_DEBUG ((LM_DEBUG, "Inside the NA_Usage\n"));
-      
+
       ACE_DEBUG ((LM_DEBUG, "NA Monitor Lib name %s\n",
                   monitor_elem->lib_name_.c_str () ));
       int retval
@@ -446,7 +448,7 @@ void CIAO::MonitorController::upload_obj_ref ()
     orb_->resolve_initial_references ("NameService");
   CosNaming::NamingContext_var naming_context =
     CosNaming::NamingContext::_narrow (naming_context_object.in ());
- 
+
  // check for context first
   CosNaming::Name name (1);
   name.length (1);
@@ -458,7 +460,7 @@ void CIAO::MonitorController::upload_obj_ref ()
   }
   catch (CosNaming::NamingContext::NotFound& ex)
   {
-    ex._tao_print_exception ("MonitorController::upload_obj_ref\t\n"); 
+    ex._tao_print_exception ("MonitorController::upload_obj_ref\t\n");
 
     try
     {
@@ -466,7 +468,7 @@ void CIAO::MonitorController::upload_obj_ref ()
     }
     catch (CORBA::Exception & e)
     {
-      ex._tao_print_exception ("MonitorController::upload_obj_ref:bind_new_context\t\n"); 
+      ex._tao_print_exception ("MonitorController::upload_obj_ref:bind_new_context\t\n");
       return;
     }
 
@@ -483,7 +485,7 @@ void CIAO::MonitorController::upload_obj_ref ()
   }
   catch (CORBA::Exception& ex)
   {
-    ex._tao_print_exception ("MonitorController::upload_obj_ref\t\n"); 
+    ex._tao_print_exception ("MonitorController::upload_obj_ref\t\n");
     return;
   }
 }
@@ -494,15 +496,15 @@ void CIAO::MonitorController::create_the_servant ()
       orb_->resolve_initial_references ("RootPOA");
 
   poa_ = PortableServer::POA::_narrow (poa_object.in ());
-  
-  monitor_i_ = new Onl_Monitor_NM_Monitor_i (this, this->node_mgr_);  
-  
+
+  monitor_i_ = new Onl_Monitor_NM_Monitor_i (this, this->node_mgr_);
+
   monitorv_ = monitor_i_->_this ();
 }
 
-auto_ptr<Deployment::Domain>  
+auto_ptr<Deployment::Domain>
 CIAO::MonitorController::get_initial_domain ()
 {
   auto_ptr<Deployment::Domain> domain (new ::Deployment::Domain (this->initial_domain_));
-  return domain; 
+  return domain;
 }

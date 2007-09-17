@@ -8,6 +8,7 @@ project(TM_Daemon): ciao_server_dnc, dance_extension_stub, ciaoexe , ciao_domain
 
   Source_Files {
     TM_Daemon.cpp
+    Client_Task.cpp
     DomainDataManager.cpp
     ../NodeManager/NM_MonitorS.cpp
     ../NodeManager/NM_MonitorC.cpp
