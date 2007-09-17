@@ -1,0 +1,4 @@
+blade36    corbaloc:iiop:blade31:30000/NodeManager
+blade38    corbaloc:iiop:blade32:30000/NodeManager
+blade39    corbaloc:iiop:blade33:30000/NodeManager
+blade40    corbaloc:iiop:blade34:30000/NodeManager
