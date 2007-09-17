@@ -4381,7 +4381,9 @@ if test "$ac_cv_func_sem_open"   = yes &&
 #include <fcntl.h>
 #include <time.h>
 #include <stddef.h>  /* for definition of "NULL" */
-
+#if !defined (ACE_LACKS_ERRNO_H)
+# include <errno.h>
+#endif
 #include <semaphore.h>
 
 #ifndef SEM_FAILED
