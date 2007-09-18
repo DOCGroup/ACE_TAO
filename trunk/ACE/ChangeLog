@@ -7,7 +7,7 @@ Tue Sep 18 11:05:38 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 Mon Sep 17 15:51:38 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * configure.ac:
-          When cheching for ACE_LACKS_NAMED_POSIX_SEM, include errno.h when
+          When checking for ACE_LACKS_NAMED_POSIX_SEM, include errno.h when
           we have detected that this file is available. Hayim Shaul
           <hayim at iportent dot com> reported an autoconf log where this define
           was set because the test failed to compile because errno was not
