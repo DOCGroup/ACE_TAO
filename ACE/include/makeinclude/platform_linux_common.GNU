@@ -102,8 +102,8 @@ ifeq ($(insure),1)
   CXX = insure
 endif
 
-PIC     = -fPIC
-AR      = ar
-ARFLAGS = rsuv
-RANLIB  = @true
+PIC      = -fPIC
+AR      ?= ar
+ARFLAGS  = rsuv
+RANLIB   = @true
 
