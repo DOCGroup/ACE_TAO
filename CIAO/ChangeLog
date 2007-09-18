@@ -1,3 +1,12 @@
+Tue Sep 18 15:13:37 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * DAnCE/NodeApplication/NodeApp_Configurator.cpp:
+
+          StaticDAnCE applications stopped working since the introduction
+          of this file. This change fixes the problem. For details look
+          into Bugzilla 3073. Thanks to William R. Otte for providing 
+          the patch.
+
 Fri Sep 14 15:19:17 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * DAnCE/ExecutionManager/Execution_Manager.cpp:

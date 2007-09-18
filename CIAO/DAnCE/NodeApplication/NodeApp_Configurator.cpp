@@ -191,6 +191,9 @@ CORBA::PolicyList *
 CIAO::NodeApp_Configurator::find_container_policies
 (const ::Deployment::Properties &properties)
 {
+  if (!this->na_config_manager_.get ())
+    return 0;
+
   CORBA::PolicyList *configured_policies = 0;
   CORBA::PolicyList *rt_configured_policies = 0;
 
@@ -253,6 +256,9 @@ CIAO::NodeApp_Configurator::find_container_policies
 CORBA::PolicyList *
 CIAO::NodeApp_Configurator::find_policies_by_name (const char *policy_name)
 {
+  if (!this->na_config_manager_.get ())
+    return 0;
+
   CORBA::PolicyList *configured_policies = 0;
   CORBA::PolicyList *rt_configured_policies = 0;
 
@@ -297,6 +303,9 @@ CIAO::NodeApp_Configurator::find_policies_by_name (const char *policy_name)
 bool
 CIAO::NodeApp_Configurator::policy_exists (const char *policy_set_id)
 {
+  if (!this->na_config_manager_.get ())
+    return 0;
+
   bool result;
   result = (*this->na_config_manager_.get ()).
                policy_exists (policy_set_id);
