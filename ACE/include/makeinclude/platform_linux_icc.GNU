@@ -2,6 +2,8 @@
 
 # This file should allow ACE to be built on Linux, using the Intel compiler.
 
+AR      ?= xiar
+
 include $(ACE_ROOT)/include/makeinclude/platform_linux_common.GNU
 
 fast ?= 0
