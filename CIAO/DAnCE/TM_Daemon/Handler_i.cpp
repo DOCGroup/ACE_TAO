@@ -28,7 +28,7 @@ void Monitor_Handler_I::get_resource_data_excep (::Messaging::ExceptionHolder
   ::CORBA::StringSeq elements;
   ::Deployment::DomainUpdateKind kind = ::Deployment::Add;
 
-  manager_->update_domain (elements, ami_return_val, kind);
+//  manager_->update_domain (elements, ami_return_val, kind);
 }
 
 void Monitor_Handler_I::monitor_app_QoS (void)

@@ -101,19 +101,19 @@ CIAO::DomainDataManager::update_dynamic (const ::Deployment::Domain
 
     }
 
-  //     CORBA::Double load;
-  //     domainSubset.node[0].resource[0].property[0].value >>= load;
-  //     ACE_DEBUG ((LM_DEBUG, "The current load is %f\n", load));
+//       CORBA::Double load;
+//       domainSubset.node[0].resource[0].property[0].value >>= load;
+//       ACE_DEBUG ((LM_DEBUG, "The current load is %f\n", load));
 
 
   profile_nodes_[domainSubset.node[0].name.in ()]->stop ();
 
 
-  //   CORBA::ULong response_time;
+//     CORBA::ULong response_time;
 
-  //   domainSubset.node[0].qos_seq[0].value >>= response_time;
+//     domainSubset.node[0].qos_seq[0].value >>= response_time;
 
-  //   ACE_DEBUG ((LM_DEBUG, "The response time is %u\n", response_time));
+//     ACE_DEBUG ((LM_DEBUG, "The response time is %u\n", response_time));
 
   return 0;
 }
