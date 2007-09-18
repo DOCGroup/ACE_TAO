@@ -24,6 +24,16 @@
 # include "NodeApplicationManager_Impl.inl"
 #endif /* __ACE_INLINE__ */
 
+/// Variables for the DynInst API
+BPatch bpatch;
+BPatch_Vector<BPatch_function*> targetFuncs;
+BPatch_Vector<BPatch_point *> *entrypoints;
+BPatch_Vector<BPatch_point *> *exitpoints;
+BPatch_Vector<BPatch_function*> startFuncs;
+BPatch_Vector<BPatch_function*> stopFuncs;
+BPatch_Vector<BPatch_snippet *> startArgs;
+BPatch_Vector<BPatch_snippet *> stopArgs;
+///
 
 bool
 CIAO::NodeApplicationManager_Impl_Base::
@@ -1142,12 +1152,8 @@ monitor_qos (const ::Deployment::DeploymentPlan & plan)
   }
 
 
-  ACE_DEBUG ((LM_DEBUG, "Using DynInst\n"));
-
   if (func.length () == 0)
     return obj;
-
-  BPatch bpatch;
 
   // Attach to the program
   BPatch_process *appThread =
@@ -1160,7 +1166,6 @@ monitor_qos (const ::Deployment::DeploymentPlan & plan)
 
   ////// Insert your function calls in to the program ....
 
-  BPatch_Vector<BPatch_function*> targetFuncs;
   appImage->findFunction(func.c_str (), targetFuncs);
 
   if (targetFuncs.size () == 0)
@@ -1169,27 +1174,25 @@ monitor_qos (const ::Deployment::DeploymentPlan & plan)
   {
     ACE_DEBUG ((LM_DEBUG, "\t\nTarget Func Found\n"));
 
-    BPatch_Vector<BPatch_point *> *entrypoints =
-      targetFuncs[0]->findPoint(BPatch_entry);
+    entrypoints = targetFuncs[0]->findPoint(BPatch_entry);
+
     if ((*entrypoints).size() == 0) {
       //    fprintf(stderr, "Unable to find entry point to \"sleep.\"\n");
       ACE_DEBUG ((LM_DEBUG, "\t\nUnable to find entry point\n"));
     }
 
-    BPatch_Vector<BPatch_point *> *exitpoints =
-      targetFuncs[0]->findPoint(BPatch_exit);
+    exitpoints = targetFuncs[0]->findPoint(BPatch_exit);
+
     if ((*exitpoints).size() == 0) {
       //      fprintf(stderr, "Unable to find exit point to \"sleep.\"\n");
       ACE_DEBUG ((LM_DEBUG, "\t\nUnable to find exit point\n"));
     }
 
-    BPatch_Vector<BPatch_function*> startFuncs;
     appImage->findFunction("start_timing", startFuncs);
 
     if (startFuncs.size () == 0)
       ACE_DEBUG ((LM_DEBUG, "start_timing not found\n"));
 
-    BPatch_Vector<BPatch_function*> stopFuncs;
     appImage->findFunction("stop_timing",  stopFuncs);
 
     if (stopFuncs.size () == 0)
@@ -1202,17 +1205,17 @@ monitor_qos (const ::Deployment::DeploymentPlan & plan)
 
     //  appThread->beginInsertionSet ();
 
-    BPatch_Vector<BPatch_snippet *> startArgs;
     // Create a function call snippet write(fd, parameter[1], parameter[2])
     BPatch_funcCallExpr startCall(*startFuncs[0], startArgs);
     // Insert the code into the thread.
     if (appThread->insertSnippet(startCall, *entrypoints) == NULL)
       ACE_DEBUG ((LM_DEBUG, "\n\nInsert Snippet start WRONG \n\n"));
 
-    BPatch_Vector<BPatch_snippet *> stopArgs;
     // Create a function call snippet write(fd, parameter[1], parameter[2])
     BPatch_funcCallExpr stopCall(*stopFuncs[0], stopArgs);
-    // Insert the code into the thread.
+ 
+
+   // Insert the code into the thread.
     if (appThread->insertSnippet(stopCall, *exitpoints) == NULL)
       ACE_DEBUG ((LM_DEBUG, "\n\nERROR in Insert Snippet in stop_timing call \n\n"));
 

@@ -1,3 +1,12 @@
+Tue Sep 18 22:41:16 UTC 2007  Nilabja R  <nilabjar@dre.vanderbilt.edu>
+
+        * DAnCE/NodeApplicationManager/NodeApplicationManager.mpc:
+        * DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.cpp:
+
+        * DAnCE/TM_Daemon/DomainDataManager.cpp:
+        * DAnCE/TM_Daemon/Handler_i.cpp:
+          The files changes to introduce QoS Monitoring
+
 Mon Sep 17 21:08:46 UTC 2007  Nishanth Shankaran  <nshankar@nospam.com>
 
         * examples/space:

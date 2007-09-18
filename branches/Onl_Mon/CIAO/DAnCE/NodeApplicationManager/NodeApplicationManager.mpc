@@ -11,7 +11,7 @@ project(NodeApplicationManager): ciao_server_dnc, ciao_deployment_svnt, dance_ex
 
   libs += dyninstAPI dwarf elf common symtabAPI iberty
   
-  libpaths += $(DYNINST_ROOT)/$(PLATFORM)/lib /export/home/nilabjar/AppMon/dyninstAPI/dwarf-20070703/libdwarf
+  libpaths += $(DYNINST_ROOT)/$(PLATFORM)/lib /export/home/nilabjar/AppMon/dyninstAPI/dwarf-20070703/libdwarf /export/home/nilabjar/Software/lib/lib
 
   Source_Files {
     NodeApplicationManager_Impl.cpp
