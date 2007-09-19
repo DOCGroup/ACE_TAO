@@ -10,6 +10,8 @@ USER VISIBLE CHANGES BETWEEN ACE-5.6 and ACE-5.6.1
 
 . Added support for CodeGear RAD Studio 2007
 
+. Added support for CodeGear C++ Builder 2007 Update 3
+
 . Modified the definiton of ACE_DEFAULT_THREAD_KEYS on Windows so it
   is based on the version of the OS as defined by Microsoft in this web
   page: http://tinyurl.com/2jqcmd
