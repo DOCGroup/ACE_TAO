@@ -1,0 +1,101 @@
+                        CORBA COS Event Service
+                        -----------------------
+
+The CosEvent_Service is a COS compliant Event Service.
+
+The service is registered with the naming service with the name
+"CosEventService" .  It exposes the <EventChannel> interface which can be
+used by suppliers and consumers to send and receive events.
+
+WARNING: In TAO 1.0.14 we introduced a new implementation of the COS
+Event Service, this new implementation supports both the push and pull
+models, and does not use the Real-time Event Service as its backend.
+Both implementations are useful, for example, the native
+implementation is more efficient and fully featured, but cannot
+exploit the features in the RTEC, such as filtering and multicast
+based federations.
+
+To run the Event Channel:
+------------------------
+1. you should have a running Naming Service.
+   if not, start one as:
+   $TAO_ROOT/orbsvcs/Naming_Service/Naming_Service -m 1
+
+2. if you want to use the -t option you should have a running
+   Real Time Event Channel.
+   if not, start one at $TAO_ROOT/orbsvcs/Event_Service/Event_Service
+
+3. execute the CosEvent_Service.
+
+Command line parameters:
+------------------------
+       -n <COS Event Service name>
+        specifies the name with which to register the Event Service.
+
+       -r
+        specifies that a local Real Time Event Channel (Rtec) should be
+        created and used.
+
+        -t <Real Time Event Service name>
+        specifies the name with which to *look* for the RtEC.This option is
+        only useful along with the -r option.
+
+The next 3 options are used to introduce a filtering mechanism for the
+Event Channel based on event types and source ids.
+
+        -e ["EventType_1 EventType_2..."]
+        specifies the event types for the ConsumerQOS.When the Rtec is being
+        setup, the ConsumerQOS is specified.
+        The event types should start at  >= ACE_ES_EVENT_UNDEFINED = 16.
+        e.g. -e "17 20 40" specifies that event types with ids 17, 20 and 40
+        should be passed to the consumers.
+
+        -o ["EventSourceID_1 EventSourceID_2.."]
+        specifies the source ids for the ConsumerQOS.
+
+        -p ["sourceID EventTypeID"]
+        specifies a pair of sourceid and event type for the Supplier QOS.
+
+
+Running the native COS Event Channel
+------------------------------------
+
+	The native implementation of the COS Event Channel is run
+using:
+
+$ CosEvent_Service_Native
+
+	on top of the regular -ORB arguments and the service
+configurator parameters described in:
+
+$TAO_ROOT/docs/cec_options.html
+
+	this implementation also understands the following arguments:
+
+	-n name		Use <name> when binding the object
+			reference in the naming service
+	-r		Use rebind() to store the object
+			reference in the naming service
+	-x		do not use the naming service
+
+
+
+   Note:
+   ====
+   By default, the Naming Service disables multicast discovery. 
+   The "-m 1" option enables the Naming Service to be resolved via
+   multicast. 
+   
+   If you do not wish to do this, then use the
+   -ORBInitRef option in which case the Naming Service should be started
+   as:
+
+   $TAO_ROOT/orbsvcs/Naming_Service/Naming_Service -o naming.ior
+
+   and the CosEvent_Service as
+
+   $ CosEvent_Service_Native -ORBInitRef NameService=file://naming.ior
+
+Author:
+-------
+Pradeep Gore <pradeep@cs.wustl.edu>

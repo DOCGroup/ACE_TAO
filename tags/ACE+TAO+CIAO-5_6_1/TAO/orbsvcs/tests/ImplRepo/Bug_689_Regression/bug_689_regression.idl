@@ -1,0 +1,8 @@
+//
+// $Id$
+//
+
+interface bug_689_regression
+{
+  oneway void shutdown ();
+};
