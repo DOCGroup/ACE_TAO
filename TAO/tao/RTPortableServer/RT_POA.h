@@ -55,16 +55,20 @@ public:
   CORBA::Object_ptr create_reference_with_priority (const char * intf,
                                                     RTCORBA::Priority priority);
 
+#if !defined (CORBA_E_MICRO)
   CORBA::Object_ptr create_reference_with_id_and_priority (const PortableServer::ObjectId & oid,
                                                            const char * intf,
                                                            RTCORBA::Priority priority);
+#endif
 
   PortableServer::ObjectId * activate_object_with_priority (PortableServer::Servant p_servant,
                                                             RTCORBA::Priority priority);
 
+#if !defined (CORBA_E_MICRO)
   void activate_object_with_id_and_priority (const PortableServer::ObjectId & oid,
                                              PortableServer::Servant p_servant,
                                              RTCORBA::Priority priority);
+#endif
   // End RTCORBA specific methods
 
   // Standard POA interface methods
@@ -150,8 +154,10 @@ public:
 
   CORBA::Object_ptr create_reference (const char *intf);
 
+#if !defined (CORBA_E_MICRO)
   CORBA::Object_ptr create_reference_with_id (const PortableServer::ObjectId &oid,
                                               const char *intf);
+#endif
 
   PortableServer::ObjectId *servant_to_id (PortableServer::Servant p_servant);
 

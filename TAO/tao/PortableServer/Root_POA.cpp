@@ -720,6 +720,7 @@ TAO_Root_POA::id_to_reference (const PortableServer::ObjectId &oid)
 }
 
 
+#if ! defined (CORBA_E_MICRO)
 CORBA::Object_ptr
 TAO_Root_POA::create_reference_with_id (const PortableServer::ObjectId &id,
                                         const char *intf)
@@ -731,7 +732,7 @@ TAO_Root_POA::create_reference_with_id (const PortableServer::ObjectId &id,
                                            intf,
                                            this->server_priority ());
 }
-
+#endif
 
 void
 TAO_Root_POA::destroy (CORBA::Boolean etherealize_objects,
@@ -1286,6 +1287,7 @@ TAO_Root_POA::invoke_key_to_object_helper_i (const char * repository_id,
     }
 }
 
+#if ! defined (CORBA_E_MICRO)
 CORBA::Object_ptr
 TAO_Root_POA::create_reference_with_id_i (const PortableServer::ObjectId &user_id,
                                           const char *intf,
@@ -1309,6 +1311,7 @@ TAO_Root_POA::create_reference_with_id_i (const PortableServer::ObjectId &user_i
   return this->active_policy_strategies_.servant_retention_strategy()->
     create_reference_with_id (user_id, intf, priority);
 }
+#endif
 
 PortableServer::ObjectId *
 TAO_Root_POA::servant_to_id_i (PortableServer::Servant servant)

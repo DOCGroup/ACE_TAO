@@ -226,9 +226,11 @@ public:
 
   CORBA::Object_ptr create_reference (const char *intf);
 
+#if !defined (CORBA_E_MICRO)
   CORBA::Object_ptr create_reference_with_id (
       const PortableServer::ObjectId &oid,
       const char *intf);
+#endif
 
   PortableServer::ObjectId *servant_to_id (PortableServer::Servant p_servant);
 

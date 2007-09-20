@@ -221,8 +221,10 @@ module PortableServer
     Object create_reference (in CORBA::RepositoryId intf)
       raises (WrongPolicy);
 
+#if !defined (CORBA_E_MICRO)
     Object create_reference_with_id (in ObjectId oid,
                                      in CORBA::RepositoryId intf);
+#endif
 
     // Identity mapping operations:.
     ObjectId servant_to_id (in Servant p_servant)

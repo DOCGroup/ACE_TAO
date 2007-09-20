@@ -1,3 +1,20 @@
+Thu Sep 20 08:36:15 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/POA.pidl:
+        * tao/PortableServer/Root_POA.cpp:
+        * tao/PortableServer/Root_POA.h:
+        * tao/PortableServer/ServantRetentionStrategy.h:
+        * tao/PortableServer/ServantRetentionStrategyNonRetain.cpp:
+        * tao/PortableServer/ServantRetentionStrategyNonRetain.h:
+        * tao/PortableServer/ServantRetentionStrategyRetain.cpp:
+        * tao/PortableServer/ServantRetentionStrategyRetain.h:
+        * tao/RTPortableServer/RT_POA.cpp:
+        * tao/RTPortableServer/RT_POA.h:
+        * tao/RTPortableServer/RT_POA.inl:
+          Disable create_reference_with_id when CORBA/e micro is enabled.
+          This fixes bugzilla 3039, thanks to Simon Massey
+          <simon dot massey at prismtech dot com> for reporting this
+
 Thu Sep 20 07:32:15 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * performance-tests/POA/Demux/demux_test_client.h:
