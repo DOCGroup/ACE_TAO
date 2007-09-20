@@ -1,4 +1,13 @@
-Thu Sep 20 06:59:15 CDT 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+Thu Sep 20 07:24:15 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Log_Msg.{h,cpp,inl}:
+          Added new inline file and moved several methods to that file. Fixes
+          bugzilla 2364
+
+        * ace/Makefile.am:
+          Added new file
+
+Thu Sep 20 06:59:15 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/ATM_Params.h:
         * ace/Dev_Poll_Reactor.h:
