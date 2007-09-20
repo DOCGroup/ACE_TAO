@@ -1,3 +1,45 @@
+Fri Sep 14 00:36:43 UTC 2007  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/UUID.cpp: Changed the case of the clock_sequence from u_char
+          to ACE_UINT16 to avoid duplicate UUIDs.  Thanks to wim dot van
+          dot den dot boogaard at varianinc dot com for reporting this.
+
+Thu Sep 13 17:57:31 UTC 2007  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/Mutex.h: Updated the document for ACE_Mutex to indicate that
+          ACE_Process_Mutex or ACE_Thread_Mutex is preferred.  Thanks to
+          Nathan Glasser <nglasser at cantata dot com>
+
+Tue Sep 11 15:24:43 UTC 2007  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * docs/ACE-bug-process.html: Clarified bug fixing policies.  Thanks to
+          Torsten Saliwada <sally at gmx dot net> for motivating this.
+
+Mon Sep  3 18:54:54 UTC 2007  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * NEWS: Updated the NEWS file to reflect the recent changes to the UUID class.
+
+Mon Sep  3 14:54:55 UTC 2007  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * protocols/ace/HTBP/HTBP_ID_Requestor.cpp (get_HTID): 
+        * tests/UUID_Test.cpp (test): Updated to use the new "ACE-ified"
+          UUDI interface.
+
+Mon Sep  3 12:53:49 UTC 2007  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/UUID.{h,inl,cpp}: Converted this code to use ACE programming
+          conventions for naming. 
+
+Mon Sep  3 12:37:44 UTC 2007  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * Implemented an accessor to obtain the timestamp and
+          clockSequence in an atomic manner. The clockSequence could
+          change between the moment the timestamp is obtained and the
+          moment the clockSequence is used in a multithreaded environment
+          and that results in duplicate UUIDs.  Thanks to Wim van den
+          Boogaard <wim dot van dot den dot boogaard at varianinc dot com>
+          for contributing this.
+
 Thu Sep 20 18:49:27 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * include/makeinclude/platform_g++_common.GNU:
@@ -163,6 +205,7 @@ Thu Sep 20 06:59:15 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
         * docs/bczar/bczar.html:
           Updated based on the steps of x.6.1
 
+>>>>>>> .r79674
 Wed Sep 19 04:10:15 CDT 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ACE version 5.6.1 released.

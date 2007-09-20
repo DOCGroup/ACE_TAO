@@ -43,7 +43,7 @@ StockDistributor_i::subscribe_notifier (::Stock::StockNameConsumer_ptr c,
 
   // Generate a unique id for the cookie.
   ACE_Utils::UUID uuid;
-  ACE_Utils::UUID_GENERATOR::instance ()->generateUUID (uuid);
+  ACE_Utils::UUID_GENERATOR::instance ()->generate_UUID (uuid);
 
   // Create a new cookie object; initialize its value.
   Stock::Cookie_var cookie = new OBV_Stock::Cookie ();

@@ -104,7 +104,7 @@ ReplicaController (CORBA::ORB_ptr orb)
   // Generate member id
   ACE_Utils::UUID uuid;
   ACE_Utils::UUID_GENERATOR::instance ()->init ();
-  ACE_Utils::UUID_GENERATOR::instance ()->generateUUID (uuid);
+  ACE_Utils::UUID_GENERATOR::instance ()->generate_UUID (uuid);
 
   ACE_INET_Addr address (10000, "239.255.0.1");
 

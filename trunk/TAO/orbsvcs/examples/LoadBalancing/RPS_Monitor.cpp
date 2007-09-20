@@ -20,7 +20,7 @@ RPS_Monitor::RPS_Monitor (ServerRequestInterceptor * interceptor)
   ACE_Utils::UUID_GENERATOR::instance ()->init ();
 
   ACE_Utils::UUID uuid;
-  ACE_Utils::UUID_GENERATOR::instance ()->generateUUID (uuid);
+  ACE_Utils::UUID_GENERATOR::instance ()->generate_UUID (uuid);
 
   this->location_[0].id = CORBA::string_dup (uuid.to_string ()->c_str ());
   this->location_[0].kind = CORBA::string_dup ("UUID");

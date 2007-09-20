@@ -43,7 +43,9 @@ class ACE_Time_Value;
  * @class ACE_Mutex
  *
  * @brief @c ACE_Mutex wrapper (valid in same process or across
- *        processes (depending on @a TYPE flag)).
+ *        processes (depending on @a TYPE flag)).  In general,
+ *        however, we recommend using @a ACE_Process_Mutex or @a
+ *        ACE_Thread_Mutex rather than @a ACE_Mutex.
  */
 class ACE_Export ACE_Mutex
 {
