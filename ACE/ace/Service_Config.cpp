@@ -153,12 +153,12 @@ ACE_Service_Config::parse_args_i (int argc, ACE_TCHAR *argv[])
           break;
         }
       default:
-        superargv.add ( argv[getopt.opt_ind () - 1],true);
+        superargv.add (argv[getopt.opt_ind () - 1], true);
       }
 
   // Collect any argumets that were left
-  for (int c = getopt.opt_ind (); c < argc; c++)
-      superargv.add (argv[c-1],true);
+  for (int c = getopt.opt_ind (); c < argc; ++c)
+      superargv.add (argv[c-1], true);
 
   return ACE_Service_Gestalt::parse_args_i (superargv.argc (),
                                             superargv.argv ());
@@ -506,11 +506,11 @@ ACE_Service_Config::reconfigure (void)
 int
 ACE_Service_Config::close (void)
 {
-  int result1 = ACE_Service_Config::instance ()->close ();
+  int const result1 = ACE_Service_Config::instance ()->close ();
 
   // Delete the service repository.  All the objects inside the
   // service repository should already have been finalized.
-  int result2 = ACE_Service_Config::close_svcs ();
+  int const result2 = ACE_Service_Config::close_svcs ();
 
   // Do away with the Singleton
   ACE_SERVICE_CONFIG_SINGLETON::close ();

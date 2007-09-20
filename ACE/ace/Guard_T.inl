@@ -50,11 +50,10 @@ ACE_Guard<ACE_LOCK>::ACE_Guard (ACE_LOCK &l, int block)
 }
 
 template <class ACE_LOCK> ACE_INLINE
-ACE_Guard<ACE_LOCK>::ACE_Guard (ACE_LOCK &l, int block, int become_owner)
+ACE_Guard<ACE_LOCK>::ACE_Guard (ACE_LOCK &l, int /* block */, int become_owner)
   : lock_ (&l),
     owner_ (become_owner == 0 ? -1 : 0)
 {
-  ACE_UNUSED_ARG (block);
 }
 
 // Implicitly and automatically acquire (or try to acquire) the
