@@ -701,7 +701,7 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::schedule_i (const TYPE &type,
     return -1;
 }
 
-// Locate and remove the single timer with a value of <timer_id> from
+// Locate and remove the single timer with a value of @a timer_id from
 // the timer queue.
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK> int
@@ -793,7 +793,7 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::reset_interval (long timer_id,
     }
 }
 
-// Locate and remove all values of <type> from the timer queue.
+// Locate and remove all values of @a type from the timer queue.
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK> int
 ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::cancel (const TYPE &type,

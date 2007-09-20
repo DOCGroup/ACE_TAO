@@ -82,7 +82,7 @@ public:
 
   // = Set/get the handler associated with a particular signal.
 
-  /// Return the <ACE_Sig_Handler> associated with @a signum.
+  /// Return the ACE_Sig_Handler associated with @a signum.
   virtual ACE_Event_Handler *handler (int signum);
 
   /// Set a new ACE_Event_Handler that is associated with @a signum.
@@ -142,7 +142,6 @@ private:
   static ACE_Event_Handler *signal_handlers_[ACE_NSIG];
 };
 
-#if !defined (ACE_HAS_BROKEN_HPUX_TEMPLATES)
 /**
  * @class ACE_Sig_Handlers
  *
@@ -175,7 +174,7 @@ public:
 
   /**
    * Remove an ACE_Event_Handler currently associated with @a signum.
-   * We remove the handler if (1) its <sigkey> matches the <sigkey>
+   * We remove the handler if (1) its sigkey> matches the @a sigkey
    * passed as a parameter or (2) if we've been told to remove all the
    * handlers, i.e., <sigkey> == -1.  If a new disposition is given it
    * is installed and the previous disposition is returned (if desired
@@ -226,7 +225,6 @@ private:
   /// handler...
   static int third_party_sig_handler_;
 };
-#endif /* ACE_HAS_BROKEN_HPUX_TEMPLATES */
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 

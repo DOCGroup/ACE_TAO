@@ -688,13 +688,14 @@ def generate_workspaces (stage_dir):
     mpc_option += ' -relative TAO_ROOT=' + stage_dir + '/ACE_wrappers/TAO '
     mpc_option += ' -relative CIAO_ROOT=' + stage_dir + '/ACE_wrappers/TAO/CIAO '
 
-    static_option = ' -static -name_modifier *_Static -apply_project -exclude TAO/CIAO,TAO/TAO_*.mwc '
+    static_option = ' -static -name_modifier *_vc71_Static -apply_project -exclude TAO/CIAO,TAO/TAO_*.mwc '
     static_option += mpc_option
 
     vc8_option = ' -name_modifier *_vc8 '
+    vc71_option = ' -name_modifier *_vc71 '
 
     # Build option string for VC8 platforms
-    ce_option = ' -name_modifier *_WinCE -features "uses_wchar=1,wince=1" '
+    ce_option = ' -name_modifier *_vc8_WinCE -features "uses_wchar=1,wince=1" '
     ce_option += ' -value_template platforms=\'"Pocket PC 2003 (ARMV4)"\' '
     ce_option += ' -value_template platforms+=\'"Smartphone 2003 (ARMV4)"\' '
     ce_option += ' -value_template platforms+=\'"Windows Mobile 5.0 Pocket PC SDK (ARMV4I)"\' '
@@ -715,7 +716,7 @@ def generate_workspaces (stage_dir):
     ex (mpc_command + " -type vc8 " + mpc_option + exclude_option + ce_option + redirect_option)
 
     print "\tGenerating VC71 solutions..."
-    ex (mpc_command + " -type vc71 " + mpc_option + redirect_option)
+    ex (mpc_command + " -type vc71 " + mpc_option + vc71_option + redirect_option)
 
     print "\tGenerating Borland makefiles"
     ex (mpc_command + " -type borland " + mpc_option + exclude_option + redirect_option)

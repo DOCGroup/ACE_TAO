@@ -266,7 +266,7 @@ ACE_OutputCDR::write_string (const ACE_CDR::Char *x)
 {
   if (x)
     {
-      const ACE_CDR::ULong len =
+      ACE_CDR::ULong const len =
         static_cast<ACE_CDR::ULong> (ACE_OS::strlen (x));
       return this->write_string (len, x);
     }
@@ -279,7 +279,7 @@ ACE_OutputCDR::write_wstring (const ACE_CDR::WChar *x)
 {
   if (x)
     {
-      ACE_CDR::ULong len =
+      ACE_CDR::ULong const len =
         static_cast<ACE_CDR::ULong> (ACE_OS::strlen (x));
       return this->write_wstring (len, x);
     }

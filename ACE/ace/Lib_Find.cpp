@@ -71,7 +71,7 @@ void
 ACE_LD_Symbol_Registry::register_symbol (const ACE_TCHAR* symname,
                                          void* symaddr)
 {
-  int result = symbol_registry_.bind (symname, symaddr);
+  int const result = symbol_registry_.bind (symname, symaddr);
   if (result == 1)
     {
       ACE_DEBUG((LM_INFO, ACE_TEXT ("ACE_LD_Symbol_Registry:")
@@ -84,17 +84,13 @@ ACE_LD_Symbol_Registry::register_symbol (const ACE_TCHAR* symname,
                            ACE_TEXT (" failed to register symbol %s\n"),
                            ACE_TEXT_ALWAYS_CHAR (symname)));
     }
-
-  //::fprintf (stderr, "ACE_LD_Symbol_Registry::register_symbol(%s, %x) -> %d\n", symname, symaddr, result);
 }
 
 void*
 ACE_LD_Symbol_Registry::find_symbol (const ACE_TCHAR* symname)
 {
   void* symaddr = 0;
-  int result = symbol_registry_.find (symname, symaddr);
-
-  //::fprintf (stderr, "ACE_LD_Symbol_Registry::find_symbol(%s) -> %x, %d\n", symname, symaddr, result);
+  int const result = symbol_registry_.find (symname, symaddr);
 
   return (result == 0 ? symaddr : 0);
 }
@@ -110,7 +106,7 @@ typedef ACE_Singleton<ACE_LD_Symbol_Registry, ACE_Thread_Mutex>
 #if defined (ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION)
 template ACE_Singleton<ACE_LD_Symbol_Registry, ACE_Thread_Mutex> *
   ACE_Singleton<ACE_LD_Symbol_Registry, ACE_Thread_Mutex>::singleton_;
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+#endif /* ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION */
 #endif
 
 ACE_RCSID(ace, Lib_Find, "$Id$")

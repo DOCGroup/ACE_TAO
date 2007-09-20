@@ -16,7 +16,6 @@
 // The following three should be enabled/disabled together.
 #if _COMPILER_VERSION >= 720
 #define ACE_HAS_TEMPLATE_SPECIALIZATION
-#define ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION
 #else
 #define ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA
 #endif /* _COMPILER_VERSION >= 720 */

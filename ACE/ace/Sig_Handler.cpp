@@ -25,7 +25,6 @@ ace_sig_handler_dispatch (int signum, siginfo_t *info, ucontext_t *context)
 
 #define ace_signal_handler_dispatcher ACE_SignalHandler(ace_sig_handler_dispatch)
 
-#if !defined (ACE_HAS_BROKEN_HPUX_TEMPLATES)
 extern "C" void
 ace_sig_handlers_dispatch (int signum, siginfo_t *info, ucontext_t *context)
 {
@@ -34,14 +33,11 @@ ace_sig_handlers_dispatch (int signum, siginfo_t *info, ucontext_t *context)
 }
 
 #define ace_signal_handlers_dispatcher ACE_SignalHandler(ace_sig_handlers_dispatch)
-#endif /* ACE_HAS_BROKEN_HPUX_TEMPLATES */
 
 #else
 #define ace_signal_handler_dispatcher ACE_SignalHandler(ACE_Sig_Handler::dispatch)
 
-#if !defined (ACE_HAS_BROKEN_HPUX_TEMPLATES)
 #define ace_signal_handlers_dispatcher ACE_SignalHandler(ACE_Sig_Handlers::dispatch)
-#endif /* ACE_HAS_BROKEN_HPUX_TEMPLATES */
 #endif /* ACE_HAS_SIG_C_FUNC */
 
 
@@ -286,7 +282,6 @@ ACE_Sig_Handler::dispatch (int signum,
 
 // There are bugs with HP/UX's C++ compiler that prevents this stuff
 // from compiling...
-#if !defined (ACE_HAS_BROKEN_HPUX_TEMPLATES)
 #define ACE_MAX_SIGNAL_HANDLERS ((size_t) 20)
 
 // Keeps track of the id that uniquely identifies each registered
@@ -606,7 +601,7 @@ ACE_Sig_Handlers::handler (int signum, ACE_Event_Handler *new_sh)
   // ... and then insert the new signal handler into the beginning of
   // the set (note, this is a bit too tied up in the implementation of
   // ACE_Unbounded_Set...).
-  ACE_Sig_Adapter *temp;
+  ACE_Sig_Adapter *temp = 0;
 
   ACE_NEW_RETURN (temp,
                   ACE_Sig_Adapter (new_sh,
@@ -615,7 +610,5 @@ ACE_Sig_Handlers::handler (int signum, ACE_Event_Handler *new_sh)
   handler_set->insert (temp);
   return *eh;
 }
-
-#endif /* ACE_HAS_BROKEN_HPUX_TEMPLATES */
 
 ACE_END_VERSIONED_NAMESPACE_DECL

@@ -115,7 +115,7 @@ public:
   /**
    * Called when timer expires.  <current_time> represents the current
    * time that the <Event_Handler> was selected for timeout
-   * dispatching and <act> is the asynchronous completion token that
+   * dispatching and @a act is the asynchronous completion token that
    * was passed in when <schedule_timer> was invoked.
    */
   virtual int handle_timeout (const ACE_Time_Value &current_time,
