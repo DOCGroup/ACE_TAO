@@ -1604,20 +1604,20 @@ void
 ACE_InputCDR::exchange_data_blocks (ACE_InputCDR &cdr)
 {
   // Exchange byte orders
-  int byte_order = cdr.do_byte_swap_;
+  int const byte_order = cdr.do_byte_swap_;
   cdr.do_byte_swap_ = this->do_byte_swap_;
   this->do_byte_swap_ = byte_order;
 
   // Get the destination read and write pointers
-  size_t drd_pos =
+  size_t const drd_pos =
     cdr.start_.rd_ptr () - cdr.start_.base ();
-  size_t dwr_pos =
+  size_t const dwr_pos =
     cdr.start_.wr_ptr () - cdr.start_.base ();
 
   // Get the source read & write pointers
-  size_t srd_pos =
+  size_t const srd_pos =
     this->start_.rd_ptr () - this->start_.base ();
-  size_t swr_pos =
+  size_t const swr_pos =
     this->start_.wr_ptr () - this->start_.base ();
 
   // Exchange data_blocks. Dont release any of the data blocks.
@@ -1652,8 +1652,8 @@ ACE_InputCDR::exchange_data_blocks (ACE_InputCDR &cdr)
   if (this->start_.size () >= dwr_pos)
     this->start_.wr_ptr (dwr_pos);
 
-  ACE_CDR::Octet dmajor = cdr.major_version_;
-  ACE_CDR::Octet dminor = cdr.minor_version_;
+  ACE_CDR::Octet const dmajor = cdr.major_version_;
+  ACE_CDR::Octet const dminor = cdr.minor_version_;
 
   // Exchange the GIOP version info
   cdr.major_version_ = this->major_version_;

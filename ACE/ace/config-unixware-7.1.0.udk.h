@@ -10,7 +10,6 @@
 /* ACE configuration header file */
 
 #define ACE_TEMPLATES_REQUIRE_SOURCE
-#define ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION
 
 #ifndef UNIXWARE_7_1
 #define UNIXWARE_7_1

@@ -25,22 +25,7 @@
 // SunOS 5.7 has getloadavg()
 #undef ACE_LACKS_GETLOADAVG
 
-#if defined (__GNUG__)
-# if __GNUC__ <= 2  &&  __GNUC_MINOR__ < 8
-    // Assume that later g++ were built on SunOS 5.7, so they don't
-    // have these problems . . .
-
-    // Disable the following, because g++ 2.7.2.3 can't handle it.
-    // Maybe later g++ versions can?
-#   undef ACE_HAS_XPG4_MULTIBYTE_CHAR
-
-    // The Solaris86 g++ 2.7.2.3 sys/types.h doesn't have these . . .
-    typedef long          t_scalar_t;  /* historical versions */
-    typedef unsigned long t_uscalar_t;
-    typedef void          *timeout_id_t;
-# endif /* __GNUC__ <= 2  &&  __GNUC_MINOR__ < 8 */
-
-#elif defined (ghs)
+#if defined (ghs)
   // SunOS 5.7's /usr/include/sys/procfs_isa.h needs uint64_t,
   // but /usr/include/sys/int_types.h doesn't #define it because
   // _NO_LONGLONG is #

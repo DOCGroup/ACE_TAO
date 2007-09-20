@@ -1,3 +1,99 @@
+Thu Sep 20 06:59:15 CDT 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/ATM_Params.h:
+        * ace/Dev_Poll_Reactor.h:
+        * ace/Event_Handler.h:
+        * ace/Proactor.h:
+        * ace/Reactor_Impl.h:
+        * ace/Select_Reactor_T.h:
+        * ace/Timer_Hash_T.cpp:
+        * ace/Timer_Hash_T.h:
+        * ace/Timer_Heap_T.cpp:
+        * ace/Timer_Heap_T.h:
+        * ace/Timer_List_T.h:
+        * ace/Timer_Queue_T.h:
+        * ace/Timer_Wheel_T.h:
+        * ace/Timer_List_T.cpp:
+          Doxygen improvements
+
+        * ace/CDR_Stream.cpp:
+        * ace/CDR_Stream.inl:
+        * ace/Lib_Find.cpp:
+          Const improvements
+
+        * ace/config-ghs-common.h:
+        * ace/config-irix6.5.x-sgic++.h:
+        * ace/config-irix6.x-sgic++.h:
+        * ace/config-macosx-panther.h:
+        * ace/config-macosx-tiger.h:
+        * ace/config-macosx.h:
+        * ace/config-qnx-rtp-pre62x.h:
+        * ace/config-unixware-7.1.0.h:
+        * ace/config-unixware-7.1.0.udk.h:
+        * ace/config-win32-dmc.h:
+        * ace/config-win32-ghs.h:
+        * ace/config-win32-interix.h:
+          Removed ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION, we don't support that
+          already a long time
+
+        * ace/config-hpux-11.00.h:
+          Removed support for ancient HP compilers that also required explicit template
+          instantiations. Fixes bugzilla 3071
+
+        * ace/config-sunos5.6.h:
+          Removed undef of ACE_HAS_STL_QUEUE_CONFLICT, it is not set anywhere
+
+        * ace/config-sunos5.7.h:
+          Removed support for GCC 2.7.2
+
+        * ace/Malloc.cpp (name):
+        * ace/PI_Malloc.cpp (name):
+          No need for intermediate variable
+
+        * ace/os_include/os_semaphore.h:
+        * ace/OS_NS_Thread.inl:
+          Changed new_sema_ to a real bool
+
+        * ace/Reactor.h:
+          Only the methods derived from ACE_Reactor_Timer_Interface need to be virtual,
+          all other methods don't need to be that. Next step would be to inline these
+          methods.
+
+        * ace/Sig_Handler.cpp:
+        * ace/Sig_Handler.h:
+        * ace/Timer_Hash_T.h:
+        * ace/Timer_Heap_T.h:
+        * ace/Timer_List_T.h:
+        * ace/Timer_Queue_T.h:
+        * ace/Timer_Wheel_T.h:
+          Removed support for ACE_HAS_BROKEN_HPUX_TEMPLATES
+
+        * ace/Timer_Queue_Adapters.cpp:
+        * ace/Timer_Queue_Adapters.h:
+        * ace/Timer_Queue_Adapters.inl:
+          Changed delete_timer_queue to a real bool
+
+        * ace/Timer_Hash.cpp:
+        * ace/Timer_Heap.cpp:
+        * ace/Timer_List.cpp:
+        * ace/Timer_Wheel.cpp:
+        * ace/Timer_Queue.cpp:
+          Removed from the repo, they only existed because of a broken HP compiler.
+
+        * ace/ace.mpc:
+        * ace/ace_for_tao.mpc:
+        * ace/Makefile.am:
+          Updated for the removed files
+
+        * etc/ace.doxygen:
+          Use shortnames, fixes bugzilla 3069
+
+        * bin/make_release.py:
+          Use vc71 name modifier for the vc71 project files. Fixes bugzilla 2987
+
+        * docs/bczar/bczar.html:
+          Updated based on the steps of x.6.1
+
 Wed Sep 19 04:10:15 CDT 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* ACE version 5.6.1 released.

@@ -146,7 +146,6 @@
 #define ACE_LACKS_WCSPBRK
 #define ACE_LACKS_WCSRCHR
 
-#define ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION
 #define ACE_LACKS_ACE_IOSTREAM
 
 #include /**/ "ace/post.h"

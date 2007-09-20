@@ -14,8 +14,6 @@
 # include "ace/config-g++-common.h"
 #endif /* __GNUG__ */
 
-#undef ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION
-
 #define ACE_SIZE_T_FORMAT_SPECIFIER ACE_TEXT ("%lu")
 
 #if defined (ACE_HAS_PENTIUM)

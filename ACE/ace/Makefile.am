@@ -313,11 +313,6 @@ libACE_la_SOURCES = \
   Throughput_Stats.cpp \
   Time_Value.cpp \
   Timeprobe.cpp \
-  Timer_Hash.cpp \
-  Timer_Heap.cpp \
-  Timer_List.cpp \
-  Timer_Queue.cpp \
-  Timer_Wheel.cpp \
   Token.cpp \
   Token_Collection.cpp \
   Token_Invariants.cpp \

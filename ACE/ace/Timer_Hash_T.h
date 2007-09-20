@@ -201,17 +201,17 @@ public:
   virtual const ACE_Time_Value &earliest_time (void) const;
 
   /**
-   * Resets the interval of the timer represented by <timer_id> to
-   * <interval>, which is specified in relative time to the current
-   * <gettimeofday>.  If <interval> is equal to
-   * <ACE_Time_Value::zero>, the timer will become a non-rescheduling
+   * Resets the interval of the timer represented by @a timer_id to
+   * @a interval, which is specified in relative time to the current
+   * <gettimeofday>.  If @a interval is equal to
+   * ACE_Time_Value::zero, the timer will become a non-rescheduling
    * timer.  Returns 0 if successful, -1 if not.
    */
   virtual int reset_interval (long timer_id,
                               const ACE_Time_Value &interval);
 
   /**
-   * Cancel all timer associated with <type>.  If <dont_call> is 0
+   * Cancel all timer associated with @a type.  If <dont_call> is 0
    * then the <functor> will be invoked.  Returns number of timers
    * cancelled.
    */
@@ -219,13 +219,13 @@ public:
                       int dont_call_handle_close = 1);
 
   /**
-   * Cancel the single timer that matches the <timer_id> value (which
+   * Cancel the single timer that matches the @a timer_id value (which
    * was returned from the <schedule> method).  If act is non-NULL
    * then it will be set to point to the ``magic cookie'' argument
    * passed in when the timer was registered.  This makes it possible
    * to free up the memory and avoid memory leaks.  If <dont_call> is
    * 0 then the <functor> will be invoked.  Returns 1 if cancellation
-   * succeeded and 0 if the <timer_id> wasn't found.
+   * succeeded and 0 if the @a timer_id wasn't found.
    */
   virtual int cancel (long timer_id,
                       const void **act = 0,
@@ -260,10 +260,10 @@ public:
 private:
 
   /**
-   * Schedule <type> that will expire at <future_time>,
-   * which is specified in absolute time.  If it expires then <act> is
-   * passed in as the value to the <functor>.  If <interval> is != to
-   * <ACE_Time_Value::zero> then it is used to reschedule the <type>
+   * Schedule @a type that will expire at @a future_time,
+   * which is specified in absolute time.  If it expires then @a act is
+   * passed in as the value to the <functor>.  If @a interval is != to
+   * ACE_Time_Value::zero then it is used to reschedule the @a type
    * automatically, using relative time to the current <gettimeofday>.
    * This method returns a <timer_id> that is a pointer to a token
    * which stores information about the event. This <timer_id> can be
@@ -316,9 +316,9 @@ private:
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE) && !defined(ACE_HAS_BROKEN_HPUX_TEMPLATES)
+#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/Timer_Hash_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE && !ACE_HAS_BROKEN_HPUX_TEMPLATES */
+#endif /* ACE_TEMPLATES_REQUIRE_SOURCE  */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
 #pragma implementation ("Timer_Hash_T.cpp")

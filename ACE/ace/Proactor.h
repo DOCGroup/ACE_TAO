@@ -306,7 +306,7 @@ public:
   // = Timer management.
   /**
    * Schedule a <handler> that will expire after <time>.  If it
-   * expires then <act> is passed in as the value to the <handler>'s
+   * expires then @a act is passed in as the value to the <handler>'s
    * <handle_timeout> callback method.  This method returns a
    * <timer_id>. This <timer_id> can be used to cancel a timer before
    * it expires.  The cancellation ensures that <timer_ids> are unique
@@ -323,7 +323,7 @@ public:
                                  const void *act,
                                  const ACE_Time_Value &interval);
 
-  // Same as above except <interval> it is used to reschedule the
+  // Same as above except @a interval it is used to reschedule the
   // <handler> automatically.
 
   /// This combines the above two methods into one. Mostly for backward
@@ -339,12 +339,12 @@ public:
                     int dont_call_handle_close = 1);
 
   /**
-   * Cancel the single <ACE_Handler> that matches the <timer_id> value
-   * (which was returned from the <schedule> method).  If <act> is
+   * Cancel the single <ACE_Handler> that matches the @a timer_id value
+   * (which was returned from the <schedule> method).  If @a act is
    * non-NULL then it will be set to point to the ``magic cookie''
    * argument passed in when the <Handler> was registered.  This makes
    * it possible to free up the memory and avoid memory leaks.
-   * Returns 1 if cancellation succeeded and 0 if the <timer_id>
+   * Returns 1 if cancellation succeeded and 0 if the @a timer_id
    * wasn't found.
    */
   int cancel_timer (long timer_id,

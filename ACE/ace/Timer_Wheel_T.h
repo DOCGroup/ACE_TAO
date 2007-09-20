@@ -126,7 +126,7 @@ public:
   virtual int reset_interval (long timer_id,
                               const ACE_Time_Value& interval);
 
-  /// Cancel all timer associated with <type>.  If <dont_call> is 0
+  /// Cancel all timer associated with @a type.  If <dont_call> is 0
   /// then the <functor> will be invoked.  Returns number of timers
   /// cancelled.
   virtual int cancel (const TYPE& type,
@@ -215,9 +215,7 @@ private:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#if !defined (ACE_HAS_BROKEN_HPUX_TEMPLATES)
 #include "ace/Timer_Wheel_T.cpp"
-#endif /* !ACE_HAS_BROKEN_HPUX_TEMPLATES */
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
