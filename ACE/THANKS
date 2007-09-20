@@ -1902,7 +1902,7 @@ J. Abelardo Gutierrez <jabelardo at cantv dot net>
 Roger Sala <Roger dot Sala at gd-ais dot com>
 Razi Ben-Yehuda <raziebe at gmail dot com>
 Geo Sebastian <geosebastian at onmobile dot com>
-Simon Massey <simon dot massey at prismtechnologies dot com>
+Simon Massey <sma at prismtech dot com>
 Rich Shapiro <rshapiro at bbn dot com>
 Ramiro Morales <rm0 at gmx dot net>
 Andrew Athan <aathan-ace-bugs-1524 at cloakmail dot com>
@@ -2007,7 +2007,7 @@ Steven T. Hatton <hattons at globalsymmetry dot com>
 Yevgen Galchenko <yevgeng at softcomputer dot com>
 Timothy Wayne Gomez <gomezt at saic dot com>
 Ventimiglia Chere <Ventimiglia_Chere at emc dot com>
-Friedhelm Wolf <friedhelm dot wolf at homag dot de>
+Friedhelm Wolf <fwolf at dre dot vanderbilt dot edu>
 Frederick Heckel <fwph at cse dot wustl dot edu>
 Ian Zagorskih <ianzag at megasignal dot com>
 Olivier Guérin <guerin35 at hotmail dot com>
@@ -2220,6 +2220,9 @@ Norbert Thoden <thoden at rheinmetall-de dot com>
 Premkumar P <kumaran dot prem at gmail dot com>
 David Beck <davidbeck at acm dot org>
 Hayim Shaul <hayim at iportent dot com>
+Erman Balcik <erman dot balcik at siemens dot com>
+Torsten Saliwada <sally at gmx dot net>
+Nathan Glasser <nglasser at cantata dot com>
 
 I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson in the early 1990's.  Paul devised the recursive Makefile

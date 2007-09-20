@@ -100,7 +100,7 @@ typename Stock_Database<CALLBACK>::Cookie
 Stock_Database<CALLBACK>::register_callback (CALLBACK &obj)
 {
   ACE_Utils::UUID uuid;
-  ACE_Utils::UUID_GENERATOR::instance ()->generateUUID (uuid);
+  ACE_Utils::UUID_GENERATOR::instance ()->generate_UUID (uuid);
   
   this->callbacks_[uuid.to_string ()->c_str ()] = &obj;
   
