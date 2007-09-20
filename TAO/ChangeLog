@@ -1,3 +1,8 @@
+Thu Sep 20 07:32:15 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * performance-tests/POA/Demux/demux_test_client.h:
+          Removed not needed include
+
 Thu Sep 20 07:12:15 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Objref_VarOut_T.{h,cpp,inl}:
