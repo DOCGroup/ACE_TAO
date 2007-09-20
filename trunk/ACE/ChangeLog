@@ -1,3 +1,9 @@
+Thu Sep 20 18:49:27 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * include/makeinclude/platform_g++_common.GNU:
+          Enhance rules to detect FC6 explicitly. The prior rules didn't 
+          work under my FC6 distrubtion.
+
 Thu Sep 20 17:12:15 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * apps/JAWS2/JAWS/IO_Handler.cpp:
@@ -159,7 +165,7 @@ Thu Sep 20 06:59:15 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Wed Sep 19 04:10:15 CDT 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* ACE version 5.6.1 released.
+        * ACE version 5.6.1 released.
 
 Tue Sep 18 11:05:38 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
