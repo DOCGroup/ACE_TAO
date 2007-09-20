@@ -90,7 +90,7 @@ Thu Sep 20 23:58:15 UTC 2007  Ossama Othman  <ossama_othman at symantec dot com>
           just convert INADDR_LOOPBACK to in6addr_loopback - this won't
           work (i.e. IPv4 clients will not be able to connect to it).
 
-          The ip4 variable with be in network-byte-order (either because
+          The ip4 variable will be in network-byte-order (either because
           we converted it or it was passed in already in
           network-byte-order) so make sure we convert it back to
           host-byte-order before doing any comparisons.
