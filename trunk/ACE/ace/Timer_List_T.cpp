@@ -49,7 +49,7 @@ ACE_Timer_List_Iterator_T<TYPE, FUNCTOR, ACE_LOCK>::next (void)
 
 // Returns true when we are at <head_>
 
-template <class TYPE, class FUNCTOR, class ACE_LOCK> int
+template <class TYPE, class FUNCTOR, class ACE_LOCK> bool
 ACE_Timer_List_Iterator_T<TYPE, FUNCTOR, ACE_LOCK>::isdone (void) const
 {
   return this->current_node_ == 0;
@@ -96,7 +96,7 @@ ACE_Timer_List_T<TYPE, FUNCTOR, ACE_LOCK>::ACE_Timer_List_T (FUNCTOR* uf, FreeLi
 
 // Checks if list is empty.
 
-template <class TYPE, class FUNCTOR, class ACE_LOCK> int
+template <class TYPE, class FUNCTOR, class ACE_LOCK> bool
 ACE_Timer_List_T<TYPE, FUNCTOR, ACE_LOCK>::is_empty (void) const
 {
   ACE_TRACE ("ACE_Timer_List_T::is_empty");
@@ -314,9 +314,12 @@ template <class TYPE, class FUNCTOR, class ACE_LOCK> int
 ACE_Timer_List_T<TYPE, FUNCTOR, ACE_LOCK>::cancel (const TYPE &type, int skip_close)
 {
   ACE_TRACE ("ACE_Timer_List_T::cancel");
-  ACE_MT (ACE_GUARD_RETURN (ACE_LOCK, ace_mon, this->mutex_, -1));
 
   int num_canceled = 0; // Note : Technically this can overflow.
+
+  int cookie = 0;
+
+  ACE_MT (ACE_GUARD_RETURN (ACE_LOCK, ace_mon, this->mutex_, -1));
 
   if (!this->is_empty ())
     {
@@ -341,7 +344,6 @@ ACE_Timer_List_T<TYPE, FUNCTOR, ACE_LOCK>::cancel (const TYPE &type, int skip_cl
     }
 
   // Call the close hooks.
-  int cookie = 0;
 
   // cancel_type() called once per <type>.
   this->upcall_functor ().cancel_type (*this,

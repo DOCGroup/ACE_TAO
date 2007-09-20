@@ -56,7 +56,7 @@ public:
   virtual void next (void);
 
   /// Returns true when there are no more nodes in the sequence
-  virtual int isdone (void) const;
+  virtual bool isdone (void) const;
 
   /// Returns the node at the current position in the sequence
   virtual ACE_Timer_Node_T<TYPE>* item (void);
@@ -115,7 +115,7 @@ public:
   virtual ~ACE_Timer_Wheel_T (void);
 
   /// True if queue is empty, else false.
-  virtual int is_empty (void) const;
+  virtual bool is_empty (void) const;
 
   /// Returns the time of the earlier node in the ACE_Timer_Wheel.
   /// Must be called on a non-empty queue.

@@ -776,11 +776,12 @@ void
 ACE_TSS_Cleanup::thread_exit (void)
 {
   ACE_OS_TRACE ("ACE_TSS_Cleanup::thread_exit");
-  // variables to hold the destructors
+  // variables to hold the destructors, keys
   // and pointers to the object to be destructed
   // the actual destruction is deferred until the guard is released
   ACE_TSS_Info::Destructor destructor[ACE_DEFAULT_THREAD_KEYS];
   void * tss_obj[ACE_DEFAULT_THREAD_KEYS];
+  ACE_thread_key_t keys[ACE_DEFAULT_THREAD_KEYS];  
   // count of items to be destroyed
   unsigned int d_count = 0;
 
@@ -813,9 +814,11 @@ ACE_TSS_Cleanup::thread_exit (void)
               {
                 destructor[d_count] = 0;
                 tss_obj[d_count] = 0;
+                keys[d_count] = 0;
                 this->thread_release (info, destructor[d_count], tss_obj[d_count]);
                 if (destructor[d_count] != 0 && tss_obj[d_count] != 0)
                   {
+                    keys[d_count] = info.key_;
                     ++d_count;
                   }
               }
@@ -827,21 +830,22 @@ ACE_TSS_Cleanup::thread_exit (void)
     ACE_TSS_Info & info = this->table_[use_index];
     destructor[d_count] = 0;
     tss_obj[d_count] = 0;
+    keys[d_count] = 0;
     this->thread_release (info, destructor[d_count], tss_obj[d_count]);
     if (destructor[d_count] != 0 &&  tss_obj[d_count] != 0)
       {
+        keys[d_count] = info.key_;
         ++d_count;
       }
-#if defined (ACE_HAS_TSS_EMULATION)
-    ACE_TSS_Emulation::ts_object (this->in_use_) = 0;
-#else // defined (ACE_HAS_TSS_EMULATION)
-    ACE_OS::thr_setspecific_native (info.key_, 0);
-#endif // defined (ACE_HAS_TSS_EMULATION)
-
   } // end of guard scope
   for (unsigned int d_index = 0; d_index < d_count; ++d_index)
     {
       (*destructor[d_index])(tss_obj[d_index]);
+#if defined (ACE_HAS_TSS_EMULATION)
+      ACE_TSS_Emulation::ts_object (keys[d_index]) = 0;
+#else // defined (ACE_HAS_TSS_EMULATION)
+      ACE_OS::thr_setspecific_native (keys[d_index], 0);
+#endif // defined (ACE_HAS_TSS_EMULATION)
     }
 }
 

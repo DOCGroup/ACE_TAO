@@ -379,6 +379,8 @@ ACE_HAS_INLINED_OSCALLS                 Inline all the static class OS
                                         overhead
 ACE_HAS_IP_MULTICAST                    Platform supports IP multicast
 ACE_HAS_IPV6                            Platform supports IPv6.
+ACE_HAS_BROKEN_GETHOSTBYADDR_V4MAPPED   gethostbyaddr does not handle
+                                        IPv6-mapped-IPv4 addresses
 ACE_USES_IPV4_IPV6_MIGRATION            Enable IPv6 support in ACE on
                                         platforms that don't have IPv6
                                         turned on by default.

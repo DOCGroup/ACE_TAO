@@ -33,4 +33,7 @@
 // This is no longer the case for Sun 5.9 onwards
 # undef ACE_HAS_X86_STAT_MACROS
 
+// gethostbyaddr does not handle IPv6-mapped-IPv4 addresses
+#define ACE_HAS_BROKEN_GETHOSTBYADDR_V4MAPPED
+
 #endif /* ACE_CONFIG_H */
