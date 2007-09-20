@@ -45,6 +45,9 @@
 #    error Compiler is not supported
 #endif
 
+// gethostbyaddr does not handle IPv6-mapped-IPv4 addresses
+#define ACE_HAS_BROKEN_GETHOSTBYADDR_V4MAPPED
+
 #include /**/ "ace/post.h"
 #endif /* ACE_CONFIG_WIN32_H */
 

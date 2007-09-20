@@ -74,15 +74,16 @@ test (ACE_Configuration *config,
                                       42))
     return -4;
 
-  u_char data[80];
+  static size_t const data_len = 80;
+  u_char data[data_len];
 
-  for (int i = 0; i < 80; i++)
-    data[i] = i + 128;
+  for (size_t i = 0; i < data_len ; ++i)
+    data[i] = static_cast<u_char> (i + 128);
 
   if (config->set_binary_value (testsection,
                                 ACE_TEXT ("binvalue"),
                                 data,
-                                80))
+                                data_len))
     return -5;
 
   // Get the values and compare
@@ -117,12 +118,14 @@ test (ACE_Configuration *config,
     data_out = reinterpret_cast <u_char *> (data_tmp);
   }
 
+  u_char * the_data = static_cast<u_char *> (data_out);
+  
   // compare em
-  for (int j = 0; j < 80; j++)
-    if (data_out[j] != data[j])
+  for (size_t j = 0; j < data_len; ++j)
+    if (the_data[j] != data[j])
       return -11;
 
-  delete [] data_out;
+  delete [] the_data;
 
   // Test iteration.
   ACE_TString name;

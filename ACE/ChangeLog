@@ -1,7 +1,110 @@
+Thu Sep 20 23:58:15 Pacific Daylight Time 2007    <ossama_othman at symantec dot com>
+
+        * ace/ACE.cpp:
+
+          Simplified message block chunk length truncation code by taking
+          advantage of ACE_Utils::truncate_cast<>.
+
+        * ace/Guard_T.inl (ACE_Guard):
+
+          Removed unnecessary use of ACE_UNUSED_ARG macro.  Comment out
+          the parameter name instead.
+
+        * ace/Service_Config.cpp:
+
+          Minor const-correctness and loop increment improvements.
+
+        * ace/Service_Gestalt.cpp:
+
+          Replaced ACE_NEW_NORETURN() followed explicit by zero pointer
+          check with ACE_NEW_RETURN().
+
+        * ace/Service_Types.cpp:
+
+          Removed some leading whitespace.
+
+        * ace/Time_Value.h (msec):
+        * ace/Time_Value.inl (msec):
+
+          Enabled 64-bit version of this accessor method on all
+          platforms.
+
+        * ace/Timer_Hash_T.cpp (reschedule, schedule_i):
+        * ace/Timer_Hash_T.h:
+
+          Use a straight static_cast<> instead of
+          ACE_Utils::truncate_cast<> when computing the hash value.  The
+          former will provide more unique results when the number of
+          seconds is greater than std::numeric_limits<size_t>::max().
+
+          (reset_interval):
+
+          Don't bother grabbing the lock until a class member is actually
+          accessed.
+
+          (is_empty):
+
+          Return a bool instead of an int.  The former better reflects how
+          the return value should be interpreted.
+
+        * ace/Timer_Heap_T.cpp (ACE_HEAP_PARENT, ACE_HEAP_LCHILD):
+
+          Converted these macros to inline functions.  Nice and clean.
+
+          (ACE_Timer_Heap_T, grow_heap):
+          Replaced calls to std::numeric_limits<>::max() with
+          ACE_Numeric_Limits<>::max() to allow removal of "ifndef
+          ACE_LACKS_NUMERIC_LIMITS" block of code.
+
+          (cancel):
+
+          Moved zero initialized local variable out of lock scope.
+
+        * ace/Timer_Heap_T.h (isdone, is_empty):
+        * ace/Timer_List_T.cpp:
+        * ace/Timer_List_T.h:
+        * ace/Timer_Queue_T.h:
+        * ace/Timer_Wheel_T.cpp:
+        * ace/Timer_Wheel_T.h:
+
+          Return a bool instead of an int.  The former better reflects how
+          the return value should be interpreted.
+
+        * tests/Config_Test.cpp:
+
+          Addressed type conversion warnings.
+
+        From Russell Mora
+        * ace/INET_Addr.cpp (get_hostname_i, set_address):
+        * ace/README:
+        * ace/config-hpux-11.00.h:
+        * ace/config-sunos5.8.h:
+        * ace/config-tru64.h:
+        * ace/config-win32.h:
+
+          Some platforms don't convert IPv6-mapped-IPv4 addrs to IPv4
+          addrs when passed to gethostbyaddr(), even though it is in the
+          stardard.  This code will do it for them.
+
+          When mapping IPv4 addresses to IPv6-mapped-IPv4 addresses don't
+          just convert INADDR_LOOPBACK to in6addr_loopback - this won't
+          work (i.e. IPv4 clients will not be able to connect to it).
+
+          The ip4 variable with be in network-byte-order (either because
+          we converted it or it was passed in already in
+          network-byte-order) so make sure we convert it back to
+          host-byte-order before doing any comparisons.
+
+        * ace/OS_NS_Thread.cpp (thread_exit):
+
+          Zero out TSS values in ACE_OS::cleanup_tss().  This avoids
+          getting back dangling pointers if ACE TSS is used again after
+          the cleanup call.
+
 Thu Sep 20 21:22:30 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * ace/UUID.cpp:
-          
+
           Fixed typos.
 
 Fri Sep 14 00:36:43 UTC 2007  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
@@ -27,14 +130,14 @@ Mon Sep  3 18:54:54 UTC 2007  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
 Mon Sep  3 14:54:55 UTC 2007  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
-        * protocols/ace/HTBP/HTBP_ID_Requestor.cpp (get_HTID): 
+        * protocols/ace/HTBP/HTBP_ID_Requestor.cpp (get_HTID):
         * tests/UUID_Test.cpp (test): Updated to use the new "ACE-ified"
           UUDI interface.
 
 Mon Sep  3 12:53:49 UTC 2007  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * ace/UUID.{h,inl,cpp}: Converted this code to use ACE programming
-          conventions for naming. 
+          conventions for naming.
 
 Mon Sep  3 12:37:44 UTC 2007  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
@@ -49,7 +152,7 @@ Mon Sep  3 12:37:44 UTC 2007  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 Thu Sep 20 18:49:27 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * include/makeinclude/platform_g++_common.GNU:
-          Enhance rules to detect FC6 explicitly. The prior rules didn't 
+          Enhance rules to detect FC6 explicitly. The prior rules didn't
           work under my FC6 distrubtion.
 
 Thu Sep 20 17:12:15 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>

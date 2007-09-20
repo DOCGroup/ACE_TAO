@@ -460,5 +460,8 @@
 // Platform has POSIX terminal interface.
 #define ACE_HAS_TERMIOS
 
+// gethostbyaddr does not handle IPv6-mapped-IPv4 addresses
+#define ACE_HAS_BROKEN_GETHOSTBYADDR_V4MAPPED
+
 #include /**/ "ace/post.h"
 #endif /* ACE_CONFIG_H */

@@ -151,16 +151,14 @@ ACE_Time_Value::msec (void) const
   return ACE_Utils::truncate_cast<unsigned long> (secs);
 }
 
-#if !defined (ACE_LACKS_LONGLONG_T)
 ACE_INLINE void
 ACE_Time_Value::msec (ACE_UINT64 &ms) const
 {
   // ACE_OS_TRACE ("ACE_Time_Value::msec");
-  ms = static_cast<ACE_UINT64> (this->tv_.tv_sec);
+  ms = ACE_Utils::truncate_cast<ACE_UINT64> (this->tv_.tv_sec);
   ms *= 1000;
   ms += (this->tv_.tv_usec / 1000);
 }
-#endif /*ACE_LACKS_LONGLONG_T*/
 
 // Converts from milli-seconds format into Time_Value format.
 

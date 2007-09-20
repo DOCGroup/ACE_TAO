@@ -178,5 +178,8 @@
 #define ACE_LACKS_PREAD_PROTOTYPE
 #endif /* (DIGITAL_UNIX >= 0x400) && (DIGITAL_UNIX < 0x500) */
 
+// gethostbyaddr does not handle IPv6-mapped-IPv4 addresses
+#define ACE_HAS_BROKEN_GETHOSTBYADDR_V4MAPPED
+
 #include /**/ "ace/post.h"
 #endif /* ACE_CONFIG_TRU64_H */

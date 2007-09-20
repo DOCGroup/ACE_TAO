@@ -22,6 +22,7 @@
 #include "ace/OS_NS_sys_stat.h"
 #include "ace/OS_NS_ctype.h"
 #include "ace/OS_TLI.h"
+#include "ace/Truncate.h"
 
 #if defined (ACE_VXWORKS) && (ACE_VXWORKS < 0x620)
 extern "C" int maxFiles;
@@ -1146,12 +1147,10 @@ ACE::recv_n (ACE_HANDLE handle,
           // Check if this block has any space for incoming data.
           while (current_message_block_length > 0)
             {
-              u_long this_chunk_length;
-              if (current_message_block_length > ULONG_MAX)
-                this_chunk_length = ULONG_MAX;
-              else
-                this_chunk_length =
-                  static_cast<u_long> (current_message_block_length);
+              u_long const this_chunk_length =
+                ACE_Utils::truncate_cast<u_long> (
+                  current_message_block_length);
+
               // Collect the data in the iovec.
               iov[iovcnt].iov_base = this_rd_ptr;
               iov[iovcnt].iov_len  = this_chunk_length;
@@ -1169,11 +1168,11 @@ ACE::recv_n (ACE_HANDLE handle,
                 {
                   size_t current_transfer = 0;
 
-                  ssize_t result = ACE::recvv_n (handle,
-                                                 iov,
-                                                 iovcnt,
-                                                 timeout,
-                                                 &current_transfer);
+                  ssize_t const result = ACE::recvv_n (handle,
+                                                       iov,
+                                                       iovcnt,
+                                                       timeout,
+                                                       &current_transfer);
 
                   // Add to total bytes transferred.
                   bytes_transferred += current_transfer;
@@ -1201,11 +1200,11 @@ ACE::recv_n (ACE_HANDLE handle,
     {
       size_t current_transfer = 0;
 
-      ssize_t result = ACE::recvv_n (handle,
-                                     iov,
-                                     iovcnt,
-                                     timeout,
-                                     &current_transfer);
+      ssize_t const result = ACE::recvv_n (handle,
+                                           iov,
+                                           iovcnt,
+                                           timeout,
+                                           &current_transfer);
 
       // Add to total bytes transferred.
       bytes_transferred += current_transfer;
@@ -1924,12 +1923,10 @@ ACE::write_n (ACE_HANDLE handle,
           // Check if this block has any data to be sent.
           while (current_message_block_length > 0)
             {
-              u_long this_chunk_length;
-              if (current_message_block_length > ULONG_MAX)
-                this_chunk_length = ULONG_MAX;
-              else
-                this_chunk_length =
-                  static_cast<u_long> (current_message_block_length);
+              u_long const this_chunk_length =
+                ACE_Utils::truncate_cast<u_long> (
+                  current_message_block_length);
+
               // Collect the data in the iovec.
               iov[iovcnt].iov_base = this_block_ptr;
               iov[iovcnt].iov_len  = this_chunk_length;
@@ -1947,10 +1944,10 @@ ACE::write_n (ACE_HANDLE handle,
                 {
                   size_t current_transfer = 0;
 
-                  ssize_t result = ACE::writev_n (handle,
-                                                  iov,
-                                                  iovcnt,
-                                                  &current_transfer);
+                  ssize_t const result = ACE::writev_n (handle,
+                                                        iov,
+                                                        iovcnt,
+                                                        &current_transfer);
 
                   // Add to total bytes transferred.
                   bytes_transferred += current_transfer;
@@ -1978,10 +1975,10 @@ ACE::write_n (ACE_HANDLE handle,
     {
       size_t current_transfer = 0;
 
-      ssize_t result = ACE::writev_n (handle,
-                                      iov,
-                                      iovcnt,
-                                      &current_transfer);
+      ssize_t const result = ACE::writev_n (handle,
+                                            iov,
+                                            iovcnt,
+                                            &current_transfer);
 
       // Add to total bytes transferred.
       bytes_transferred += current_transfer;
@@ -2022,12 +2019,10 @@ ACE::send_n (ACE_HANDLE handle,
           // Check if this block has any data to be sent.
           while (current_message_block_length > 0)
             {
-              u_long this_chunk_length;
-              if (current_message_block_length > ULONG_MAX)
-                this_chunk_length = ULONG_MAX;
-              else
-                this_chunk_length =
-                  static_cast<u_long> (current_message_block_length);
+              u_long const this_chunk_length =
+                ACE_Utils::truncate_cast<u_long> (
+                  current_message_block_length);
+
               // Collect the data in the iovec.
               iov[iovcnt].iov_base = this_block_ptr;
               iov[iovcnt].iov_len  = this_chunk_length;
@@ -2045,11 +2040,11 @@ ACE::send_n (ACE_HANDLE handle,
                 {
                   size_t current_transfer = 0;
 
-                  ssize_t result = ACE::sendv_n (handle,
-                                                 iov,
-                                                 iovcnt,
-                                                 timeout,
-                                                 &current_transfer);
+                  ssize_t const result = ACE::sendv_n (handle,
+                                                       iov,
+                                                       iovcnt,
+                                                       timeout,
+                                                       &current_transfer);
 
                   // Add to total bytes transferred.
                   bytes_transferred += current_transfer;
@@ -2077,11 +2072,11 @@ ACE::send_n (ACE_HANDLE handle,
     {
       size_t current_transfer = 0;
 
-      ssize_t result = ACE::sendv_n (handle,
-                                     iov,
-                                     iovcnt,
-                                     timeout,
-                                     &current_transfer);
+      ssize_t const result = ACE::sendv_n (handle,
+                                           iov,
+                                           iovcnt,
+                                           timeout,
+                                           &current_transfer);
 
       // Add to total bytes transferred.
       bytes_transferred += current_transfer;

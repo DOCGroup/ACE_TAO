@@ -849,18 +849,36 @@ ACE_INET_Addr::get_host_name_i (char hostname[], size_t len) const
           return -1;
         }
 #else
+      void* const addr = this->ip_addr_pointer ();
+      int   const size = this->ip_addr_size ();
+      int   const type = this->get_type ();
+
+#  if defined (ACE_HAS_IPV6) && defined (ACE_HAS_BROKEN_GETHOSTBYADDR_V4MAPPED)
+      // Most OS can not handle IPv6-mapped-IPv4 addresses (even
+      // though they are meant to) so map them back to IPv4 addresses
+      // before trying to resolve them
+      in_addr demapped_addr;
+      if (type == PF_INET6 && 
+          (this->is_ipv4_mapped_ipv6 () || this->is_ipv4_compat_ipv6 ()))
+        {
+          ACE_OS::memcpy (&demapped_addr.s_addr, &this->inet_addr_.in6_.sin6_addr.s6_addr[12], 4);
+          addr = &demapped_addr;
+          size = sizeof(demapped_addr);
+          type = PF_INET;          
+        }
+#  endif /* ACE_HAS_IPV6 */
+
 #  if defined (DIGITAL_UNIX) && defined (__GNUC__)
-      hostent *hp = ACE_OS::gethostbyaddr ((char *)this->ip_addr_pointer (),
-                                           this->ip_addr_size (),
-                                           this->get_type ());
+      hostent * const hp =
+        ACE_OS::gethostbyaddr (static_cast <char *> (addr), size, type);
 #  else
       int h_error;  // Not the same as errno!
       hostent hentry;
       ACE_HOSTENT_DATA buf;
-      hostent *hp =
-        ACE_OS::gethostbyaddr_r ((char *)this->ip_addr_pointer (),
-                                 this->ip_addr_size (),
-                                 this->get_type (),
+      hostent * const hp =
+        ACE_OS::gethostbyaddr_r (static_cast <char *> (addr),
+                                 size,
+                                 type,
                                  &hentry,
                                  buf,
                                  &h_error);
@@ -945,19 +963,9 @@ int ACE_INET_Addr::set_address (const char *ip_addr,
 #endif
           this->inet_addr_.in6_.sin6_family = AF_INET6;
           this->set_size (sizeof (this->inet_addr_.in6_));
-          if (ip4 == INADDR_ANY)
+          if (ip4 == ACE_HTONL (INADDR_ANY))
             {
-              in6_addr ip6 = in6addr_any;
-              ACE_OS::memcpy (&this->inet_addr_.in6_.sin6_addr,
-                              &ip6,
-                              sizeof (ip6));
-              return 0;
-            }
-
-          // RFC 3330 defines loopback as any address with 127.x.x.x
-          if ((ip4 & 0XFF000000) == (INADDR_LOOPBACK & 0XFF000000))
-            {
-              in6_addr ip6 = in6addr_loopback;
+              in6_addr const ip6 = in6addr_any;
               ACE_OS::memcpy (&this->inet_addr_.in6_.sin6_addr,
                               &ip6,
                               sizeof (ip6));

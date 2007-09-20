@@ -266,10 +266,9 @@ ACE_Service_Gestalt::init_i (void)
     {
       if (this->svc_repo_is_owned_)
         {
-          ACE_NEW_NORETURN (this->repo_,
-                            ACE_Service_Repository (this->svc_repo_size_));
-          if (this->repo_ == 0)
-            return -1;
+          ACE_NEW_RETURN (this->repo_,
+                          ACE_Service_Repository (this->svc_repo_size_),
+                          -1);
         }
       else
         {
@@ -277,6 +276,7 @@ ACE_Service_Gestalt::init_i (void)
             ACE_Service_Repository::instance (this->svc_repo_size_);
         }
     }
+
   return 0;
 }
 
@@ -405,7 +405,7 @@ ACE_Service_Gestalt::add_processed_static_svc
 
   if (ACE::debug ())
     ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("ACE (%P|%t) SG::add_processed_statisc_svc, ")
+                ACE_TEXT ("ACE (%P|%t) SG::add_processed_static_svc, ")
                 ACE_TEXT ("repo=%@ - %s\n"),
                 this->repo_,
                 assd->name_));
@@ -818,8 +818,8 @@ ACE_Service_Gestalt::process_directives_i (ACE_Svc_Conf_Param *param)
                 ACE_TEXT ("repo=%@ - %s\n"),
                 this->repo_,
                 (param->type == ACE_Svc_Conf_Param::SVC_CONF_FILE)
-    ? ACE_TEXT ("<from file>")
-    : param->source.directive));
+                ? ACE_TEXT ("<from file>")
+                : param->source.directive));
 #endif
 
   ::ace_yyparse (param);
@@ -1263,11 +1263,11 @@ ACE_Service_Gestalt::close (void)
 #endif
 
   if (this->svc_repo_is_owned_)
-      delete this->repo_;
+    delete this->repo_;
 
   this->repo_ = 0;
-  return 0;
 
+  return 0;
 } /* close () */
 
 
