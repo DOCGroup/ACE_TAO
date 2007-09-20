@@ -560,7 +560,7 @@ Key_List::output_switch (int use_keyword_table)
       char * const tmp =
         new char[ACE_OS::strlen (s)
                  + 2 * ACE_OS::strlen (option.key_name ()) + 1];
-      ACE_AUTO_PTR_RESET (safe_comp_buffer, tmp, char);
+      safe_comp_buffer.reset (tmp);
 
       comp_buffer = safe_comp_buffer.get ();
 
