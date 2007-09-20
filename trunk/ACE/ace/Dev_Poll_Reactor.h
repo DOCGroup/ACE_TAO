@@ -748,10 +748,10 @@ public:
                                const ACE_Time_Value &interval = ACE_Time_Value::zero);
 
   /**
-   * Resets the interval of the timer represented by <timer_id> to
-   * <interval>, which is specified in relative time to the current
-   * <gettimeofday>.  If <interval> is equal to
-   * <ACE_Time_Value::zero>, the timer will become a non-rescheduling
+   * Resets the interval of the timer represented by @a timer_id to
+   * @a interval, which is specified in relative time to the current
+   * <gettimeofday>.  If @a interval is equal to
+   * ACE_Time_Value::zero, the timer will become a non-rescheduling
    * timer.  Returns 0 if successful, -1 if not.
    */
   virtual int reset_timer_interval (long timer_id,

@@ -176,11 +176,6 @@ project(ACE_FOR_TAO) : acedefaults, install, svcconf, uuid, versioned_namespace,
     Throughput_Stats.cpp
     Time_Value.cpp
     Timeprobe.cpp
-    Timer_Hash.cpp
-    Timer_Heap.cpp
-    Timer_List.cpp
-    Timer_Queue.cpp
-    Timer_Wheel.cpp
     Token.cpp
     TP_Reactor.cpp
     Trace.cpp

@@ -159,7 +159,7 @@ ACE_Thread_Timer_Queue_Adapter<TQ>::ACE_Thread_Timer_Queue_Adapter (ACE_Thread_M
                                                                     TQ* timer_queue)
   : ACE_Task_Base (tm),
     timer_queue_(timer_queue),
-    delete_timer_queue_(0),
+    delete_timer_queue_(false),
     condition_ (mutex_),
     active_ (1), // Assume that we start in active mode.
     thr_id_ (ACE_OS::NULL_thread)
@@ -168,7 +168,7 @@ ACE_Thread_Timer_Queue_Adapter<TQ>::ACE_Thread_Timer_Queue_Adapter (ACE_Thread_M
     {
       ACE_NEW (this->timer_queue_,
                TQ);
-      this->delete_timer_queue_ = 1;
+      this->delete_timer_queue_ = true;
     }
 }
 
@@ -179,7 +179,7 @@ ACE_Thread_Timer_Queue_Adapter<TQ>::~ACE_Thread_Timer_Queue_Adapter (void)
     {
       delete this->timer_queue_;
       this->timer_queue_ = 0;
-      this->delete_timer_queue_ = 0;
+      this->delete_timer_queue_ = false;
     }
 }
 

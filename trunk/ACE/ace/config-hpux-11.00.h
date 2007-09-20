@@ -31,31 +31,6 @@
 // support 64-bit or kernel threads.  So, though this file has the C++ info
 // in it, it's copied from the 10.x file and hasn't been verified.
 
-// There are 2 compiler-specific sections, plus a 3rd for common to both.
-// First is the HP C++ section...
-#  if __cplusplus < 199707L
-
-#    define ACE_HAS_BROKEN_HPUX_TEMPLATES
-
-// Compiler can't handle calls like foo->operator T *()
-#    define ACE_HAS_BROKEN_CONVERSIONS
-
-// Necessary with some compilers to pass ACE_TTY_IO as parameter to
-// DEV_Connector.
-#    define ACE_NEEDS_DEV_IO_CONVERSION
-
-// Compiler's template mechanism must see source code (i.e., .C files).
-#    define ACE_TEMPLATES_REQUIRE_SOURCE
-
-// Compiler's template mechanism requires the use of explicit C++
-// specializations for all used templates.
-#    define ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION
-
-// The HP/UX compiler doesn't support volatile!!!!
-#    define volatile
-
-#  else  // aC++ definitions
-
 // Parts of TAO (at least) use __HP_aCC to detect this compiler, but the
 // macro is not set until A.03.13. If it's not set, set it - it won't be an
 // HP-advertised value, but we don't check the value/version - just whether
@@ -127,8 +102,6 @@
 
 // Compiler supports template specialization.
 #    define ACE_HAS_TEMPLATE_SPECIALIZATION
-
-#  endif /* __cplusplus < 199707L */
 
 // Compiler doesn't handle 'signed char' correctly (used in ace/IOStream.h)
 #  define ACE_LACKS_SIGNED_CHAR

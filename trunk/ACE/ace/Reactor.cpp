@@ -449,8 +449,7 @@ ACE_Reactor::register_handler (ACE_Event_Handler *event_handler,
   // Assign *this* <Reactor> to the <Event_Handler>.
   event_handler->reactor (this);
 
-  int result = this->implementation ()->register_handler (event_handler,
-                                                          mask);
+  int result = this->implementation ()->register_handler (event_handler, mask);
   if (result == -1)
     // Reset the old reactor in case of failures.
     event_handler->reactor (old_reactor);
@@ -888,9 +887,7 @@ ACE_Reactor::mask_ops (ACE_HANDLE handle,
                        ACE_Reactor_Mask mask,
                        int ops)
 {
-  return this->implementation ()->mask_ops (handle,
-                                            mask,
-                                            ops);
+  return this->implementation ()->mask_ops (handle, mask, ops);
 }
 
 int
@@ -898,9 +895,7 @@ ACE_Reactor::ready_ops (ACE_Event_Handler *event_handler,
                         ACE_Reactor_Mask mask,
                         int ops)
 {
-  return this->implementation ()->ready_ops (event_handler,
-                                             mask,
-                                             ops);
+  return this->implementation ()->ready_ops (event_handler, mask, ops);
 }
 
 int
@@ -908,9 +903,7 @@ ACE_Reactor::ready_ops (ACE_HANDLE handle,
                         ACE_Reactor_Mask mask,
                         int ops)
 {
-  return this->implementation ()->ready_ops (handle,
-                                             mask,
-                                             ops);
+  return this->implementation ()->ready_ops (handle, mask, ops);
 }
 
 int

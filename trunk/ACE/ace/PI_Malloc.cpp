@@ -125,8 +125,7 @@ ACE_PI_Control_Block::ACE_Name_Node::ACE_Name_Node (const ACE_Name_Node &)
 const char *
 ACE_PI_Control_Block::ACE_Name_Node::name (void) const
 {
-  const char *c = this->name_;
-  return c;
+  return this->name_;
 }
 
 void

@@ -221,7 +221,7 @@ private:
 
   /// Keeps track of whether we should delete the timer queue (if we
   /// didn't create it, then we don't delete it).
-  int delete_timer_queue_;
+  bool delete_timer_queue_;
 
   /// The mutual exclusion mechanism that is required to use the
   /// <condition_>.

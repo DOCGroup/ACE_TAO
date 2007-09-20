@@ -492,7 +492,7 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET>::reset_interval (long timer_id
 }
 
 // Locate and remove the single <ACE_Event_Handler> with a value of
-// <timer_id> from the correct table timer queue.
+// @a timer_id from the correct table timer queue.
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK, class BUCKET> int
 ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET>::cancel (long timer_id,
@@ -726,7 +726,7 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET>::expire (const ACE_Time_Value 
         {
           expired = this->table_[i]->remove_first ();
           const void *act = expired->get_act ();
-          int reclaim = 1;
+          bool reclaim = true;
 
           Hash_Token<TYPE> *h =
             reinterpret_cast<Hash_Token<TYPE> *> (const_cast<void *> (act));
@@ -754,7 +754,7 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET>::expire (const ACE_Time_Value 
               // Since this is an interval timer, we need to
               // reschedule it.
               this->reschedule (expired);
-              reclaim = 0;
+              reclaim = false;
             }
 
           ACE_Timer_Node_Dispatch_Info_T<TYPE> info;

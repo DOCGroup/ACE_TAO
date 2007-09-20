@@ -272,7 +272,7 @@ ACE_Timer_List_T<TYPE, FUNCTOR, ACE_LOCK>::reset_interval (long timer_id,
 }
 
 // Locate and remove the single <ACE_Event_Handler> with a value of
-// <timer_id> from the timer queue.
+// @a timer_id from the timer queue.
 template <class TYPE, class FUNCTOR, class ACE_LOCK> int
 ACE_Timer_List_T<TYPE, FUNCTOR, ACE_LOCK>::cancel (long timer_id,
                                                    const void **act,

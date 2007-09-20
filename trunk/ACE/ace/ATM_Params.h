@@ -62,7 +62,7 @@ class ACE_Export ACE_ATM_Params
 public:
   /**
    * Initialize the data members.  This class combines options from
-   * ACE_SOCK_Connector (<protocol_family>, <protocol>, <type>,
+   * ACE_SOCK_Connector (<protocol_family>, <protocol>, @a type,
    * <protocol_info>, <group>, and <flags>) and
    * ACE_TLI_Connector (<device>, <info>, <rw_flag>, <oflag>, and <udata>)
    * so that either mechanism can be used transparently for ATM.

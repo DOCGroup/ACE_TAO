@@ -140,7 +140,7 @@ public:
    * passed in when the timer was registered.  This makes it possible
    * to free up the memory and avoid memory leaks.  If <dont_call> is
    * 0 then the <functor> will be invoked.  Returns 1 if cancellation
-   * succeeded and 0 if the <timer_id> wasn't found.
+   * succeeded and 0 if the @a timer_id wasn't found.
    */
   virtual int cancel (long timer_id,
                       const void** act = 0,
@@ -165,13 +165,13 @@ public:
 private:
 
   /**
-   * Schedule <type> that will expire at <future_time>, which is
-   * specified in absolute time.  If it expires then <act> is passed
-   * in as the value to the <functor>.  If <interval> is != to
-   * <ACE_Time_Value::zero> then it is used to reschedule the <type>
+   * Schedule @a type that will expire at @a future_time, which is
+   * specified in absolute time.  If it expires then @a act is passed
+   * in as the value to the <functor>.  If @a interval is != to
+   * ACE_Time_Value::zero then it is used to reschedule the @a type
    * automatically, using relative time to the current <gettimeofday>.
    * This method returns a <timer_id> that uniquely identifies the the
-   * <type> entry in an internal list.  This <timer_id> can be used to
+   * @a type entry in an internal list.  This <timer_id> can be used to
    * cancel the timer before it expires.  The cancellation ensures
    * that <timer_ids> are unique up to values of greater than 2
    * billion timers.  As long as timers don't stay around longer than
@@ -214,9 +214,9 @@ private:
   ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Timer_List_T<TYPE, FUNCTOR, ACE_LOCK> &))
 };
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE) && !defined(ACE_HAS_BROKEN_HPUX_TEMPLATES)
+#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/Timer_List_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE && !ACE_HAS_BROKEN_HPUX_TEMPLATES */
+#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
 #pragma implementation ("Timer_List_T.cpp")
