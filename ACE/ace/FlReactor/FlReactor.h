@@ -78,7 +78,7 @@ protected:
                                   ACE_Event_Handler *handler,
                                   ACE_Reactor_Mask mask);
 
-  /// Remove the <handler> associated with this <handle>.
+  /// Remove the <handler> associated with this @a handle.
   virtual int remove_handler_i (ACE_HANDLE handle,
                                 ACE_Reactor_Mask mask);
 

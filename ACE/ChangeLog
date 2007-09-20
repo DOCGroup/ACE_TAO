@@ -1,3 +1,24 @@
+Thu Sep 20 12:56:15 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Reactor.{cpp,inl}:
+          Made all non virtual single line methods inline methods to gain
+          performance and reduce footprint
+
+        * ace/Dev_Poll_Reactor.h:
+        * ace/File_Lock.h:
+        * ace/FlReactor/FlReactor.h:
+        * ace/FoxReactor/FoxReactor.h:
+        * ace/OS_NS_unistd.h:
+        * ace/Proactor.h:
+        * ace/QtReactor/QtReactor.h:
+        * ace/Reactor.h:
+        * ace/Reactor_Impl.h:
+        * ace/Select_Reactor_T.h:
+        * ace/TkReactor/TkReactor.h:
+        * ace/WFMO_Reactor.h:
+        * ace/XtReactor/XtReactor.h:
+          Fixed doxygen warnings
+
 Thu Sep 20 08:58:15 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Dynamic_Message_Strategy.{h,cpp,inl}:

@@ -56,7 +56,7 @@ public:
   /**
    * Called by a thread when it wants to unblock the <Reactor_Impl>.
    * This wakeups the <Reactor_Impl> if currently blocked.  Pass over
-   * both the <Event_Handler> *and* the <mask> to allow the caller to
+   * both the <Event_Handler> *and* the @a mask to allow the caller to
    * dictate which <Event_Handler> method the <Reactor_Impl> will
    * invoke.  The ACE_Time_Value indicates how long to blocking
    * trying to notify the <Reactor_Impl>.  If @a timeout == 0, the
@@ -215,19 +215,19 @@ public:
 
   /**
    * Control whether the Reactor will handle any more incoming events or not.
-   * If <do_stop> == 1, the Reactor will be disabled.  By default, a reactor
+   * If @a do_stop == 1, the Reactor will be disabled.  By default, a reactor
    * is in active state and can be deactivated/reactived as wish.
    */
   virtual void deactivate (int do_stop) = 0;
 
   // = Register and remove Handlers.
 
-  /// Register <event_handler> with <mask>.  The I/O handle will always
+  /// Register @a event_handler with @a mask.  The I/O handle will always
   /// come from <get_handle> on the <event_handler>.
   virtual int register_handler (ACE_Event_Handler *event_handler,
                                 ACE_Reactor_Mask mask) = 0;
 
-  /// Register <event_handler> with <mask>.  The I/O handle is provided
+  /// Register <event_handler> with @a mask.  The I/O handle is provided
   /// through the <io_handle> parameter.
   virtual int register_handler (ACE_HANDLE io_handle,
                                 ACE_Event_Handler *event_handler,
@@ -255,7 +255,7 @@ public:
 
   /**
    * Register an <event_handler> that will be notified when
-   * <event_handle> is signaled.  <mask> specifies the network events
+   * <event_handle> is signaled.  @a mask specifies the network events
    * that the <event_handler> is interested in.
    */
   virtual int register_handler (ACE_HANDLE event_handle,
@@ -288,14 +288,14 @@ public:
   /**
    * Removes <event_handler>.  Note that the I/O handle will be
    * obtained using <get_handle> method of <event_handler> .  If
-   * <mask> == <ACE_Event_Handler::DONT_CALL> then the <handle_close>
+   * @a mask == <ACE_Event_Handler::DONT_CALL> then the <handle_close>
    * method of the <event_handler> is not invoked.
    */
   virtual int remove_handler (ACE_Event_Handler *event_handler,
                               ACE_Reactor_Mask mask) = 0;
 
   /**
-   * Removes <handle>.  If <mask> == <ACE_Event_Handler::DONT_CALL>
+   * Removes <handle>.  If @a mask == <ACE_Event_Handler::DONT_CALL>
    * then the <handle_close> method of the associated <event_handler>
    * is not invoked.
    */
@@ -303,7 +303,7 @@ public:
                               ACE_Reactor_Mask mask) = 0;
 
   /**
-   * Removes all handles in <handle_set>.  If <mask> ==
+   * Removes all handles in <handle_set>.  If @a mask ==
    * <ACE_Event_Handler::DONT_CALL> then the <handle_close> method of
    * the associated <event_handler>s is not invoked.
    */
@@ -417,28 +417,28 @@ public:
 
   // = High-level Event_Handler scheduling operations
 
-  /// Add <masks_to_be_added> to the <event_handler>'s entry.
+  /// Add @a masks_to_be_added to the <event_handler>'s entry.
   /// <event_handler> must already have been registered.
   virtual int schedule_wakeup (ACE_Event_Handler *event_handler,
                                ACE_Reactor_Mask masks_to_be_added) = 0;
 
-  /// Add <masks_to_be_added> to the <handle>'s entry.  <event_handler>
+  /// Add @a masks_to_be_added to the <handle>'s entry.  <event_handler>
   /// associated with <handle> must already have been registered.
   virtual int schedule_wakeup (ACE_HANDLE handle,
                                ACE_Reactor_Mask masks_to_be_added) = 0;
 
-  /// Clear <masks_to_be_cleared> from the <event_handler>'s entry.
+  /// Clear @a masks_to_be_cleared from the <event_handler>'s entry.
   virtual int cancel_wakeup (ACE_Event_Handler *event_handler,
                              ACE_Reactor_Mask masks_to_be_cleared) = 0;
 
-  /// Clear <masks_to_be_cleared> from the <handle>'s entry.
+  /// Clear @a masks_to_be_cleared from the <handle>'s entry.
   virtual int cancel_wakeup (ACE_HANDLE handle,
                              ACE_Reactor_Mask masks_to_be_cleared) = 0;
 
   // = Notification methods.
 
   /**
-   * Notify <event_handler> of <mask> event.  The ACE_Time_Value
+   * Notify <event_handler> of @a mask event.  The ACE_Time_Value
    * indicates how long to blocking trying to notify.  If @a timeout ==
    * 0, the caller will block until action is possible, else will wait
    * until the relative time specified in @a timeout elapses).
@@ -483,7 +483,7 @@ public:
 
   /**
    * Check to see if <handle> is associated with a valid Event_Handler
-   * bound to <mask>.  Return the <event_handler> associated with this
+   * bound to @a mask.  Return the <event_handler> associated with this
    * <handler> if <event_handler> != 0.
    */
   virtual int handler (ACE_HANDLE handle,
@@ -533,25 +533,25 @@ public:
   // = Low-level wait_set mask manipulation methods.
 
   /// GET/SET/ADD/CLR the dispatch mask "bit" bound with the
-  /// <event_handler> and <mask>.
+  /// <event_handler> and @a mask.
   virtual int mask_ops (ACE_Event_Handler *event_handler,
                         ACE_Reactor_Mask mask,
                         int ops) = 0;
 
   /// GET/SET/ADD/CLR the dispatch MASK "bit" bound with the <handle>
-  /// and <mask>.
+  /// and @a mask.
   virtual int mask_ops (ACE_HANDLE handle,
                         ACE_Reactor_Mask mask,
                         int ops) = 0;
 
   // = Low-level ready_set mask manipulation methods.
   /// GET/SET/ADD/CLR the ready "bit" bound with the <event_handler>
-  /// and <mask>.
+  /// and @a mask.
   virtual int ready_ops (ACE_Event_Handler *event_handler,
                          ACE_Reactor_Mask mask,
                          int ops) = 0;
 
-  /// GET/SET/ADD/CLR the ready "bit" bound with the <handle> and <mask>.
+  /// GET/SET/ADD/CLR the ready "bit" bound with the <handle> and @a mask.
   virtual int ready_ops (ACE_HANDLE handle,
                          ACE_Reactor_Mask,
                          int ops) = 0;
