@@ -1295,6 +1295,7 @@ nobase_include_HEADERS = \
   Object_T.h \
   Objref_VarOut_T.cpp \
   Objref_VarOut_T.h \
+  Objref_VarOut_T.inl \
   OctetSeq.pidl \
   OctetSeq.pidl \
   OctetSeqC.h \
