@@ -323,7 +323,7 @@ public:
               ACE_HANDLE event_handle,
               int delete_event);
 
-  /// Remove the binding of ACE_HANDLE in accordance with the <mask>.
+  /// Remove the binding of ACE_HANDLE in accordance with the @a mask.
   int unbind (ACE_HANDLE,
               ACE_Reactor_Mask mask);
 
@@ -419,7 +419,7 @@ public:
 
   /**
    * Check to see if <handle> is associated with a valid Event_Handler
-   * bound to <mask>.  Return the <event_handler> associated with this
+   * bound to @a mask.  Return the <event_handler> associated with this
    * <handler> if <event_handler> != 0.
    */
   int handler (ACE_HANDLE handle,
@@ -510,7 +510,7 @@ public:
 
   /**
    * Special trick to unblock <WaitForMultipleObjects> when updates
-   * occur.  All we do is enqueue <event_handler> and <mask> onto the
+   * occur.  All we do is enqueue <event_handler> and @a mask onto the
    * ACE_Message_Queue and wakeup the <WFMO_Reactor> by signaling
    * its <ACE_Event> handle.  The ACE_Time_Value indicates how long
    * to blocking trying to notify the <WFMO_Reactor>.  If @a timeout ==
@@ -793,7 +793,7 @@ public:
                                 ACE_HANDLE event_handle = ACE_INVALID_HANDLE);
 
   /**
-   * Register an ACE_Event_Handler <event_handle>.  <mask> specifies
+   * Register an ACE_Event_Handler <event_handle>.  @a mask specifies
    * the network events that the <event_handler> is interested in.  If
    * <io_handle> == <ACE_INVALID_HANDLE> the <ACE_WFMO_Reactor> will
    * call the <get_handle> method of <event_handler> to extract the
@@ -852,7 +852,7 @@ public:
   /**
    * Removes <event_handler> from the <ACE_WFMO_Reactor>.  Note that
    * the <ACE_WFMO_Reactor> will call the <get_handle> method of
-   * <event_handler> to extract the underlying handle.  If <mask> ==
+   * <event_handler> to extract the underlying handle.  If @a mask ==
    * <ACE_Event_Handler::DONT_CALL> then the <handle_close> method of
    * the <event_handler> is not invoked. Note that the <handle> can
    * either be the <event_handle> or the <io_handle>
@@ -861,12 +861,12 @@ public:
                               ACE_Reactor_Mask mask);
 
   /**
-   * Removes <handle> from the <ACE_WFMO_Reactor>.  If <mask> ==
+   * Removes <handle> from the <ACE_WFMO_Reactor>.  If @a mask ==
    * <ACE_Event_Handler::DONT_CALL> then the <handle_close> method of
    * the <event_handler> is not invoked. Note that the <handle> can
    * either be the <event_handle> or the <io_handle>
    *
-   * For the case of I/O entries, this removes the <mask> binding of
+   * For the case of I/O entries, this removes the @a mask binding of
    * <Event_Handler> whose handle is <handle> from <WFMO_Reactor>.  If
    * there are no more bindings for this <event_handler> then it is
    * removed from the WFMO_Reactor.  For simple event entries, mask is
@@ -877,7 +877,7 @@ public:
                               ACE_Reactor_Mask mask);
 
   /**
-   * Removes all the <mask> bindings for handles in the <handle_set>
+   * Removes all the @a mask bindings for handles in the <handle_set>
    * bind of <Event_Handler>.  If there are no more bindings for any
    * of these handles then they are removed from WFMO_Reactor.
    */
@@ -996,7 +996,7 @@ public:
   // = High-level Event_Handler scheduling operations
 
   /**
-   * Add <masks_to_be_added> to the <event_handler>'s entry in
+   * Add @a masks_to_be_added to the <event_handler>'s entry in
    * WFMO_Reactor.  <event_handler> must already have been registered
    * with WFMO_Reactor.
    */
@@ -1004,7 +1004,7 @@ public:
                                ACE_Reactor_Mask masks_to_be_added);
 
   /**
-   * Add <masks_to_be_added> to the <handle>'s entry in WFMO_Reactor.
+   * Add @a masks_to_be_added to the <handle>'s entry in WFMO_Reactor.
    * The Event_Handler associated with <handle> must already have been
    * registered with WFMO_Reactor.
    */
@@ -1081,7 +1081,7 @@ public:
 
   /**
    * Check to see if <handle> is associated with a valid Event_Handler
-   * bound to <mask>.  Return the <event_handler> associated with this
+   * bound to @a mask.  Return the <event_handler> associated with this
    * <handler> if <event_handler> != 0.
    */
   virtual int handler (ACE_HANDLE handle,

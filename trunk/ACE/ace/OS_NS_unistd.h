@@ -347,7 +347,7 @@ namespace ACE_OS
                  ACE_OVERLAPPED *);
 
   /**
-   * Send @a len bytes from @a buf to <handle> (uses the <ACE_OS::write>
+   * Send @a len bytes from @a buf to @a handle (uses the <ACE_OS::write>
    * calls, which is uses the <write> system call on UNIX and the
    * <WriteFile> call on Win32).  If errors occur, -1 is returned.  If
    * EOF occurs, 0 is returned.  Whatever data has been transmitted
