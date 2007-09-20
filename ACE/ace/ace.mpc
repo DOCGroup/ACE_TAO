@@ -61,6 +61,7 @@ project(ACE) : acedefaults, install, other, codecs, token, svcconf, uuid, fileca
     Dirent_Selector.cpp
     Dump.cpp
     Dynamic.cpp
+    Dynamic_Message_Strategy.cpp
     Event.cpp
     Event_Handler.cpp
     FIFO.cpp

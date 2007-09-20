@@ -91,6 +91,7 @@ libACE_la_SOURCES = \
   Dirent_Selector.cpp \
   Dump.cpp \
   Dynamic.cpp \
+  Dynamic_Message_Strategy.cpp \
   Dynamic_Service_Base.cpp \
   Dynamic_Service_Dependency.cpp \
   Encoding_Converter.cpp \
@@ -487,6 +488,8 @@ nobase_include_HEADERS += \
   Dump_T.h \
   Dynamic.h \
   Dynamic.inl \
+  Dynamic_Message_Strategy.h \
+  Dynamic_Message_Strategy.inl \
   Dynamic_Service.cpp \
   Dynamic_Service.h \
   Dynamic_Service.inl \
