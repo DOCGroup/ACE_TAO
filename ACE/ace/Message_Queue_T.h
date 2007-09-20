@@ -15,6 +15,7 @@
 #include /**/ "ace/pre.h"
 
 #include "ace/Message_Queue.h"
+#include "ace/Dynamic_Message_Strategy.h"
 #include "ace/Synch_Traits.h"
 #include "ace/Guard_T.h"
 
