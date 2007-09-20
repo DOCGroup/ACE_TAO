@@ -60,7 +60,7 @@ JAWS_IO_Handler::~JAWS_IO_Handler (void)
   this->task_ = 0;
   this->factory_ = 0;
 
-  ACE_OS::close (this->handle_);
+  ACE_OS::closesocket (this->handle_);
   this->handle_ = ACE_INVALID_HANDLE;
 }
 
