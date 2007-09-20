@@ -1,3 +1,14 @@
+Thu Sep 20 08:58:15 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Dynamic_Message_Strategy.{h,cpp,inl}:
+        * ace/Message_Block.{h,cpp,inl}:
+        * ace/Message_Queue_T.h:
+        * ace/ace.mpc:
+        * ace/ace_for_tao.mpc:
+        * ace/Makefile.am:
+          Moved ACE_Dynamic_Message_Strategy to its own file to reduce footprint
+          for applications that don't use it. Fixes bugzilla 2998
+
 Thu Sep 20 08:05:15 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * apps/JAWS2/JAWS/IO_Handler.cpp:
