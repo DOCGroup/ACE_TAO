@@ -47,8 +47,7 @@ namespace TAO
       PortableServer::ObjectId *
       activate_object (PortableServer::Servant servant,
                        CORBA::Short priority,
-                       bool &wait_occurred_restart_call
-                            );
+                       bool &wait_occurred_restart_call);
 
 #if !defined (CORBA_E_MICRO)
       virtual
@@ -62,8 +61,7 @@ namespace TAO
       void deactivate_object (const PortableServer::ObjectId &id);
 
       virtual PortableServer::Servant find_servant (
-        const PortableServer::ObjectId &system_id
-       );
+        const PortableServer::ObjectId &system_id);
 
       virtual PortableServer::ObjectId * system_id_to_object_id (
         const PortableServer::ObjectId &system_id);
@@ -87,32 +85,29 @@ namespace TAO
 
       virtual int find_servant_priority (
         const PortableServer::ObjectId &system_id,
-        CORBA::Short &priority
-       );
+        CORBA::Short &priority);
 
       virtual void deactivate_all_objects (void);
 
       virtual PortableServer::ObjectId *servant_to_user_id (
-        PortableServer::Servant servant
-        );
+        PortableServer::Servant servant);
 
       virtual
       CORBA::Object_ptr
-      servant_to_reference (PortableServer::Servant servant
-                            );
+      servant_to_reference (PortableServer::Servant servant);
 
       virtual
       CORBA::Object_ptr create_reference (
         const char *intf,
-        CORBA::Short priority
-        );
+        CORBA::Short priority);
 
+#if !defined (CORBA_E_MICRO)
       virtual
       CORBA::Object_ptr create_reference_with_id (
         const PortableServer::ObjectId &oid,
         const char *intf,
-        CORBA::Short priority
-        );
+        CORBA::Short priority);
+#endif
 
       virtual ::PortableServer::ServantRetentionPolicyValue type() const;
 
@@ -124,14 +119,11 @@ namespace TAO
                          bool &wait_occurred_restart_call);
 
       void
-      deactivate_map_entry (TAO_Active_Object_Map_Entry *active_object_map_entry
-                           );
+      deactivate_map_entry (TAO_Active_Object_Map_Entry *active_object_map_entry);
 
       PortableServer::ObjectId *servant_to_system_id_i (
           PortableServer::Servant p_servant,
-          CORBA::Short &priority
-
-        );
+          CORBA::Short &priority);
 
       virtual
       int rebind_using_user_id_and_system_id (

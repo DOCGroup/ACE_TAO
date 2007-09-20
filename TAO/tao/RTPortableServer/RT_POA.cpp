@@ -665,12 +665,14 @@ TAO_RT_POA::create_reference (const char *intf)
   return this->TAO_Regular_POA::create_reference (intf);
 }
 
+#if !defined (CORBA_E_MICRO)
 CORBA::Object_ptr
 TAO_RT_POA::create_reference_with_id (const PortableServer::ObjectId &oid,
                                       const char *intf)
 {
   return this->TAO_Regular_POA::create_reference_with_id (oid, intf);
 }
+#endif
 
 PortableServer::ObjectId *
 TAO_RT_POA::servant_to_id (PortableServer::Servant p_servant)
