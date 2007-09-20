@@ -58,7 +58,7 @@ init (ConsumerAdmin_ptr consumer_admin,
   //
   ACE_Utils::UUID uuid;
   ACE_Utils::UUID_GENERATOR::instance ()->init ();
-  ACE_Utils::UUID_GENERATOR::instance ()->generateUUID (uuid);
+  ACE_Utils::UUID_GENERATOR::instance ()->generate_UUID (uuid);
 
   id_ = string_alloc (ACE_Utils::truncate_cast<CORBA::ULong> (
                         uuid.to_string ()->length () + 2));

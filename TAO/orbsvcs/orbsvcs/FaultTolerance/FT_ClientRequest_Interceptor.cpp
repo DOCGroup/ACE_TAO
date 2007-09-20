@@ -33,7 +33,7 @@ namespace TAO
     ACE_Utils::UUID_GENERATOR::instance ()->init ();
 
     this->uuid_ =
-      ACE_Utils::UUID_GENERATOR::instance ()->generateUUID ();
+      ACE_Utils::UUID_GENERATOR::instance ()->generate_UUID ();
 
     // Would be nice to have runtime option.
     ACE_NEW (this->lock_,

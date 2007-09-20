@@ -1,10 +1,24 @@
 // $Id$
 
-// Test the ACE UUID class which generates unique id's
-
+// ============================================================================
+//
+// = LIBRARY
+//    tests
+//
+// = FILENAME
+//    UUID_Test.cpp
+//
+// = DESCRIPTION
+//    Test the ACE UUID class which generates unique id's
+//
+// = AUTHOR
+ *   Andrew T. Finnel <andrew@activesol.net> and
+ *   Yamuna Krishnmaurthy <yamuna@oomworks.com>
+// ============================================================================
 
 #include "test_config.h"
 #include "ace/UUID.h"
+#include "ace/Auto_Ptr.h"
 
 class Tester
 {
@@ -28,12 +42,11 @@ Tester::test (void)
   int retval = 0;
 
   // Generate UUID
-  ACE_Utils::UUID* uuid = ACE_Utils::UUID_GENERATOR::instance ()->generateUUID ();
+  auto_ptr <ACE_Utils::UUID> uuid (ACE_Utils::UUID_GENERATOR::instance ()->generate_UUID ());
   ACE_CString uuid_str (uuid->to_string ()->c_str ());
   ACE_DEBUG ((LM_DEBUG,
               "Generated UUID\n %s\n",
               uuid_str.c_str ()));
-  delete uuid;
 
   // Construct UUID from string
   ACE_Utils::UUID new_uuid (uuid_str);
@@ -67,8 +80,8 @@ Tester::test (void)
     }
 
   // Generate UUID with process and thread ids.
-  ACE_Utils::UUID* uuid_with_tp_id =
-    ACE_Utils::UUID_GENERATOR::instance ()->generateUUID (0x0001, 0xc0);
+  auto_ptr <ACE_Utils::UUID> uuid_with_tp_id (ACE_Utils::UUID_GENERATOR::instance ()->generate_UUID (0x0001,
+                                                                                                     0xc0));
   ACE_DEBUG ((LM_DEBUG,
               "UUID with Thread and Process ID\n %s\n",
               uuid_with_tp_id->to_string ()->c_str ()));
@@ -84,8 +97,6 @@ Tester::test (void)
   ACE_DEBUG ((LM_DEBUG,
               "UUID with Thread and Process ID reconstructed from above UUID \n %s\n",
               new_uuid_with_tp_id.to_string ()->c_str ()));
-  delete uuid_with_tp_id;
-
 
   return retval;
 }
@@ -98,26 +109,21 @@ int run_main(int, ACE_TCHAR* [])
 
   if (tester.init () == -1)
     {
-
       ACE_DEBUG((LM_DEBUG,
                  "UUIDTest: Tester::init failed\n"));
       return -1;
     }
 
-  int testRetValue = tester.test();
+  int result = tester.test();
 
-  if (testRetValue == 0)
-    {
-      ACE_DEBUG((LM_DEBUG,
-                 "UUIDTest succeeded\n"));
-    }
+  if (result == 0)
+    ACE_DEBUG((LM_DEBUG,
+               "UUIDTest succeeded\n"));
   else
-    {
-      ACE_DEBUG((LM_DEBUG,
-                 "UUIDTest failed\n"));
-    }
+    ACE_DEBUG((LM_DEBUG,
+               "UUIDTest failed\n"));
 
   ACE_END_TEST;
 
-  return testRetValue;
+  return result;
 }

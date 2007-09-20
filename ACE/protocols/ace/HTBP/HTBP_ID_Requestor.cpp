@@ -114,7 +114,7 @@ ACE::HTBP::ID_Requestor::get_HTID ()
       this->send_request (&cli_stream) == -1)
     {
       ACE_Utils::UUID_Generator gen;
-      ACE_Utils::UUID *uuid = gen.generateUUID ();
+      ACE_Utils::UUID *uuid = gen.generate_UUID ();
       const ACE_CString *uuidstr = uuid->to_string();
       ACE::HTBP::ID_Requestor::htid_ = ACE_TEXT_CHAR_TO_TCHAR (uuidstr->c_str());
       delete uuid;

@@ -1,3 +1,16 @@
+Mon Sep  3 14:34:39 UTC 2007  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * orbsvcs/examples/FaultTolerance/RolyPoly/ReplicaController.cpp (ReplicaController): 
+        * orbsvcs/examples/LoadBalancing/RPS_Monitor.cpp (RPS_Monitor): 
+        * orbsvcs/examples/Notify/Federation/Gate/Gate.cpp (init): 
+        * orbsvcs/performance-tests/LoadBalancing/LBPerf/RPS/RPS_Monitor.cpp (RPS_Monitor): 
+        * orbsvcs/orbsvcs/FaultTolerance/FT_ClientRequest_Interceptor.cpp (TAO): 
+        * docs/tutorials/Quoter/RTCORBA/Distributor_i.cpp (subscribe_notifier): 
+        * docs/tutorials/Quoter/RTCORBA/Stock_Database.tpp: Chan
+        * tao/Strategies/COIOP_Acceptor.cpp (TAO_COIOP_Acceptor): Changed
+          generateUUID() to generate_UUID() to match new ACE-ification of
+          the UUDI class.
+
 Thu Sep 20 09:35:15 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Objref_VarOut_T.inl:
