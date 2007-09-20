@@ -620,6 +620,7 @@ nobase_include_HEADERS += \
   Lock_Adapter_T.h \
   Lock_Adapter_T.inl \
   Log_Msg.h \
+  Log_Msg.inl \
   Log_Msg_Backend.h \
   Log_Msg_Callback.h \
   Log_Msg_IPC.h \
