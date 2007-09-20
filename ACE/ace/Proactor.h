@@ -298,7 +298,7 @@ public:
   int proactor_reset_event_loop (void);
 
 
-  /// This method adds the <handle> to the I/O completion port. This
+  /// This method adds the @a handle to the I/O completion port. This
   /// function is a no-op function for Unix systems and returns 0;
   int register_handle (ACE_HANDLE handle,
                        const void *completion_key);

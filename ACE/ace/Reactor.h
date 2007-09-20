@@ -413,7 +413,7 @@ public:
                         ACE_Sig_Action *sig_action = 0);
 
   /**
-   * Remove <masks> from <handle> registration.
+   * Remove <masks> from @a handle registration.
    *
    * For I/O handles, <masks> are removed from the Reactor.  Unless
    * <masks> includes <ACE_Event_Handler::DONT_CALL>,
@@ -421,7 +421,7 @@ public:
    * that have been removed.  If all masks have been removed,
    * ACE_Event_Handler::remove_reference() will be called.
    *
-   * For OS handles, the <handle> is removed from the Reactor.  Unless
+   * For OS handles, the @a handle is removed from the Reactor.  Unless
    * <masks> includes <ACE_Event_Handler::DONT_CALL>,
    * ACE_Event_Handler::handle_close() will be called with
    * <ACE_Event_Handler::NULL_MASK>.
@@ -434,7 +434,7 @@ public:
    * Remove <masks> from <event_handler> registration.
    *
    * Same as remove_handler(ACE_HANDLE,ACE_Reactor_Mask), except
-   * <handle> comes from ACE_Event_Handler::get_handle().
+   * @a handle comes from ACE_Event_Handler::get_handle().
    */
   int remove_handler (ACE_Event_Handler *event_handler,
                       ACE_Reactor_Mask masks);
@@ -616,7 +616,7 @@ public:
 
   // = High-level Event_Handler scheduling operations
 
-  /// Add <masks_to_be_added> to the <event_handler>'s entry.
+  /// Add @a masks_to_be_added to the <event_handler>'s entry.
   /// <event_handler> must already have been registered.
   /// Note that this call does not cause the Reactor to re-examine
   /// its set of handlers - the new masks will be noticed the next
@@ -638,7 +638,7 @@ public:
   int schedule_wakeup (ACE_HANDLE handle,
                        ACE_Reactor_Mask masks_to_be_added);
 
-  /// Clear <masks_to_be_cleared> from the <event_handler>'s entry.
+  /// Clear @a masks_to_be_cleared from the <event_handler>'s entry.
   /// Note that this call does not cause the Reactor to re-examine
   /// its set of handlers - the new masks will be noticed the next
   /// time the Reactor waits for activity. If there is no other
@@ -648,7 +648,7 @@ public:
   int cancel_wakeup (ACE_Event_Handler *event_handler,
                      ACE_Reactor_Mask masks_to_be_cleared);
 
-  /// Clear <masks_to_be_cleared> from the <handle>'s entry.
+  /// Clear @a masks_to_be_cleared from the <handle>'s entry.
   /// Note that this call does not cause the Reactor to re-examine
   /// its set of handlers - the new masks will be noticed the next
   /// time the Reactor waits for activity. If there is no other
@@ -806,12 +806,12 @@ public:
 
   // = Low-level ready_set mask manipulation methods.
   /// GET/SET/ADD/CLR the ready "bit" bound with the <event_handler>
-  /// and <mask>.
+  /// and @a mask.
   int ready_ops (ACE_Event_Handler *event_handler,
                  ACE_Reactor_Mask mask,
                  int ops);
 
-  /// GET/SET/ADD/CLR the ready "bit" bound with the <handle> and <mask>.
+  /// GET/SET/ADD/CLR the ready "bit" bound with the <handle> and @a mask.
   int ready_ops (ACE_HANDLE handle,
                  ACE_Reactor_Mask mask,
                  int ops);

@@ -36,10 +36,10 @@ class ACE_Export ACE_File_Lock
 {
 public:
   /**
-   * Set the <handle_> of the File_Lock to <handle>.  Note that this
-   * constructor assumes ownership of the <handle> and will close it
-   * down in <remove>.  If you want the <handle> to stay open when
-   * <remove> is called make sure to call <dup> on the <handle>.
+   * Set the <handle_> of the File_Lock to @a handle.  Note that this
+   * constructor assumes ownership of the @a handle and will close it
+   * down in <remove>.  If you want the @a handle to stay open when
+   * <remove> is called make sure to call <dup> on the @a handle.
    * If you don't want the file unlinked in the destructor pass a
    * zero value for <unlink_in_destructor>.
    */
