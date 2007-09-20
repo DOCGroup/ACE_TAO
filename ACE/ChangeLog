@@ -1,3 +1,10 @@
+Thu Sep 20 07:56:15 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Based_Pointer_T.{h,inl}:
+          Let the operator* and operator[] return a & so that we don't make a
+          copy. This fixes bugzilla 742, thanks to Pavel Zaichenko
+          <zaichep at mail dot com> for reporting this
+
 Thu Sep 20 07:24:15 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Log_Msg.{h,cpp,inl}:
