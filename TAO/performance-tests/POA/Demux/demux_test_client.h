@@ -23,7 +23,6 @@
 #include "ace/Get_Opt.h"
 #include "demux_testC.h"
 #include "demux_test_macros.h"
-#include <math.h>
 
 class Demux_Test_Client
 {
