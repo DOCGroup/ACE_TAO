@@ -1,3 +1,13 @@
+Thu Sep 20 08:05:15 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * apps/JAWS2/JAWS/IO_Handler.cpp:
+          Use closesocket to close the socket, to prevent a leak on windows.
+          This fixes bugzilla 1124, thanks to Alain Totouom
+          <atotouom at gmx dot de> for reporting this.
+
+        * ace/OS_NS_sys_socket.h:
+          Doxygen improvement
+
 Thu Sep 20 07:56:15 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Based_Pointer_T.{h,inl}:
