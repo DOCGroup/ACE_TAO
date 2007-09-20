@@ -98,7 +98,7 @@ namespace ACE_OS
             struct sockaddr *name,
             int namelen);
 
-  // takes care of windows specific requirement to call closesocket
+  /// Takes care of windows specific requirement to call closesocket
   ACE_NAMESPACE_INLINE_FUNCTION
   int closesocket (ACE_HANDLE s);
 
