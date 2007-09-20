@@ -1,3 +1,8 @@
+Thu Sep 20 09:35:15 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Objref_VarOut_T.inl:
+          Fixed compile errors
+
 Thu Sep 20 08:36:15 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/POA.pidl:
