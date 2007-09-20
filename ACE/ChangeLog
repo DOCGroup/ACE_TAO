@@ -1,3 +1,9 @@
+Thu Sep 20 21:22:30 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * ace/UUID.cpp:
+          
+          Fixed typos.
+
 Fri Sep 14 00:36:43 UTC 2007  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * ace/UUID.cpp: Changed the case of the clock_sequence from u_char
