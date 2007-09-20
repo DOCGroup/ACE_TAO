@@ -187,6 +187,7 @@ public:
 
   /// Returns the current program name used for logging.
   static const ACE_TCHAR * program_name (void);
+
   /// Clears the flag from the default priority mask used to
   /// initialize ACE_Log_Msg instances.
   static void disable_debug_messages (ACE_Log_Priority priority = LM_DEBUG);
@@ -270,7 +271,7 @@ public:
 
   /// Get the result of the operation status (by convention, -1 means
   /// error).
-  int op_status (void);
+  int op_status (void) const;
 
   /// Set the value of the errnum (by convention this corresponds to
   /// errno).
@@ -278,13 +279,13 @@ public:
 
   /// Get the value of the errnum (by convention this corresponds to
   /// errno).
-  int errnum (void);
+  int errnum (void) const;
 
   /// Set the line number where an error occurred.
   void linenum (int);
 
   /// Get the line number where an error occurred.
-  int linenum (void);
+  int linenum (void) const;
 
   /// Set the file name where an error occurred.
   void file (const char *);
@@ -304,7 +305,7 @@ public:
 
   /// Get the field that indicates whether interrupted calls should be
   /// restarted.
-  int restart (void);
+  int restart (void) const;
 
   // = Notice that the following two function is equivalent to
   //   "void msg_ostream (HANDLE)" and "HANDLE msg_ostream (void)"
@@ -352,13 +353,13 @@ public:
   int dec (void);
 
   /// Get trace depth.
-  int trace_depth (void);
+  int trace_depth (void) const;
 
   /// Set trace depth.
   void trace_depth (int);
 
   /// Set trace active status.
-  int trace_active (void);
+  int trace_active (void) const;
 
   /// Get trace active status.
   void trace_active (int value);
@@ -401,7 +402,7 @@ public:
   void start_tracing (void);
 
   /// Query tracing status on a per-thread basis...
-  int  tracing_enabled (void);
+  int  tracing_enabled (void) const;
 
   typedef enum
   {
@@ -722,6 +723,10 @@ ACE_TSS_CLEANUP_NAME (void *ptr);
 #if defined(ACE_LEGACY_MODE)
 #include "ace/Log_Msg_Callback.h"
 #endif /* ACE_LEGACY_MODE */
+
+#if defined (__ACE_INLINE__)
+#include "ace/Log_Msg.inl"
+#endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
 #endif /* ACE_LOG_MSG_H */

@@ -13,12 +13,10 @@
 #include "ace/Thread_Manager.h"
 #include "ace/Guard_T.h"
 #include "ace/OS_NS_stdio.h"
-#include "ace/OS_NS_string.h"
 #include "ace/OS_NS_errno.h"
 #include "ace/OS_NS_sys_time.h"
 #include "ace/OS_NS_wchar.h"
 #include "ace/OS_NS_signal.h"
-#include "ace/OS_NS_unistd.h"
 
 #if !defined (ACE_MT_SAFE) || (ACE_MT_SAFE != 0)
 # include "ace/Object_Manager_Base.h"
@@ -40,6 +38,10 @@
 #include "ace/Log_Msg_UNIX_Syslog.h"
 #include "ace/Log_Record.h"
 #include "ace/Recursive_Thread_Mutex.h"
+
+#if !defined (__ACE_INLINE__)
+#include "ace/Log_Msg.inl"
+#endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, Log_Msg, "$Id$")
 
@@ -630,22 +632,6 @@ ACE_Log_Msg::priority_mask (u_long n_mask, MASK_TYPE mask_type)
     }
 
   return o_mask;
-}
-
-u_long
-ACE_Log_Msg::priority_mask (MASK_TYPE mask_type)
-{
-  return mask_type == THREAD
-    ? this->priority_mask_
-    :  ACE_Log_Msg::process_priority_mask_;
-}
-
-int
-ACE_Log_Msg::log_priority_enabled (ACE_Log_Priority log_priority)
-{
-  return ACE_BIT_ENABLED (this->priority_mask_ |
-                          ACE_Log_Msg::process_priority_mask_,
-                          log_priority);
 }
 
 int
@@ -2343,96 +2329,6 @@ ACE_Log_Msg::dump (void) const
 }
 
 void
-ACE_Log_Msg::op_status (int status)
-{
-  this->status_ = status;
-}
-
-int
-ACE_Log_Msg::op_status (void)
-{
-  return this->status_;
-}
-
-void
-ACE_Log_Msg::restart (int r)
-{
-  this->restart_ = r;
-}
-
-int
-ACE_Log_Msg::restart (void)
-{
-  return this->restart_;
-}
-
-int
-ACE_Log_Msg::errnum (void)
-{
-  return this->errnum_;
-}
-
-void
-ACE_Log_Msg::errnum (int e)
-{
-  this->errnum_ = e;
-}
-
-int
-ACE_Log_Msg::linenum (void)
-{
-  return this->linenum_;
-}
-
-void
-ACE_Log_Msg::linenum (int l)
-{
-  this->linenum_ = l;
-}
-
-int
-ACE_Log_Msg::inc (void)
-{
-  return this->trace_depth_++;
-}
-
-int
-ACE_Log_Msg::dec (void)
-{
-  return this->trace_depth_ == 0 ? 0 : --this->trace_depth_;
-}
-
-int
-ACE_Log_Msg::trace_depth (void)
-{
-  return this->trace_depth_;
-}
-
-void
-ACE_Log_Msg::trace_depth (int depth)
-{
-  this->trace_depth_ = depth;
-}
-
-int
-ACE_Log_Msg::trace_active (void)
-{
-  return this->trace_active_;
-}
-
-void
-ACE_Log_Msg::trace_active (int value)
-{
-  this->trace_active_ = value;
-}
-
-ACE_Thread_Descriptor *
-ACE_Log_Msg::thr_desc (void) const
-{
-  return this->thr_desc_;
-}
-
-void
 ACE_Log_Msg::thr_desc (ACE_Thread_Descriptor *td)
 {
   this->thr_desc_ = td;
@@ -2467,67 +2363,6 @@ ACE_Log_Msg::seh_except_handler (ACE_SEH_EXCEPT_HANDLER n)
 }
 #endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS && ACE_LEGACY_MODE */
 
-// Enable the tracing facility on a per-thread basis.
-
-void
-ACE_Log_Msg::start_tracing (void)
-{
-  this->tracing_enabled_ = 1;
-}
-
-// Disable the tracing facility on a per-thread basis.
-
-void
-ACE_Log_Msg::stop_tracing (void)
-{
-  this->tracing_enabled_ = 0;
-}
-
-int
-ACE_Log_Msg::tracing_enabled (void)
-{
-  return this->tracing_enabled_;
-}
-
-const char *
-ACE_Log_Msg::file (void)
-{
-  return this->file_;
-}
-
-void
-ACE_Log_Msg::file (const char *s)
-{
-  ACE_OS::strsncpy (this->file_, s, sizeof this->file_);
-}
-
-const ACE_TCHAR *
-ACE_Log_Msg::msg (void)
-{
-  return this->msg_ + ACE_Log_Msg::msg_off_;
-}
-
-void
-ACE_Log_Msg::msg (const ACE_TCHAR *m)
-{
-  ACE_OS::strsncpy (this->msg_, m,
-                    ((ACE_MAXLOGMSGLEN+1) / sizeof (ACE_TCHAR)));
-}
-
-ACE_Log_Msg_Callback *
-ACE_Log_Msg::msg_callback (void) const
-{
-  return this->msg_callback_;
-}
-
-ACE_Log_Msg_Callback *
-ACE_Log_Msg::msg_callback (ACE_Log_Msg_Callback *c)
-{
-  ACE_Log_Msg_Callback *old = this->msg_callback_;
-  this->msg_callback_ = c;
-  return old;
-}
-
 ACE_Log_Msg_Backend *
 ACE_Log_Msg::msg_backend (ACE_Log_Msg_Backend *b)
 {
@@ -2550,12 +2385,6 @@ ACE_Log_Msg::msg_backend (void)
   return ACE_Log_Msg_Manager::custom_backend_;
 }
 
-ACE_OSTREAM_TYPE *
-ACE_Log_Msg::msg_ostream (void) const
-{
-  return this->ostream_;
-}
-
 void
 ACE_Log_Msg::msg_ostream (ACE_OSTREAM_TYPE *m, int delete_ostream)
 {
@@ -2576,12 +2405,6 @@ ACE_Log_Msg::msg_ostream (ACE_OSTREAM_TYPE *m, int delete_ostream)
 }
 
 void
-ACE_Log_Msg::msg_ostream (ACE_OSTREAM_TYPE *m)
-{
-  this->ostream_ = m;
-}
-
-void
 ACE_Log_Msg::local_host (const ACE_TCHAR *s)
 {
   if (s)
@@ -2593,21 +2416,6 @@ ACE_Log_Msg::local_host (const ACE_TCHAR *s)
         ACE_ALLOCATOR (ACE_Log_Msg::local_host_, ACE_OS::strdup (s));
       }
     }
-}
-
-const ACE_TCHAR *
-ACE_Log_Msg::local_host (void) const
-{
-  return ACE_Log_Msg::local_host_;
-}
-
-pid_t
-ACE_Log_Msg::getpid (void) const
-{
-  if (ACE_Log_Msg::pid_ == -1)
-    ACE_Log_Msg::pid_ = ACE_OS::getpid ();
-
-  return ACE_Log_Msg::pid_;
 }
 
 int
