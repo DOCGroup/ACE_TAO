@@ -23,6 +23,7 @@ TAO_RT_POA::create_reference_with_priority (const char * intf,
   return this->create_reference_i (intf, priority);
 }
 
+#if !defined (CORBA_E_MICRO)
 ACE_INLINE CORBA::Object_ptr
 TAO_RT_POA::create_reference_with_id_and_priority (const PortableServer::ObjectId & oid,
                                                    const char * intf,
@@ -38,6 +39,7 @@ TAO_RT_POA::create_reference_with_id_and_priority (const PortableServer::ObjectI
 
   return this->create_reference_with_id_i (oid, intf, priority);
 }
+#endif
 
 ACE_INLINE PortableServer::ObjectId *
 TAO_RT_POA::activate_object_with_priority (PortableServer::Servant servant,
@@ -68,6 +70,7 @@ TAO_RT_POA::activate_object_with_priority (PortableServer::Servant servant,
     }
 }
 
+#if !defined (CORBA_E_MICRO)
 ACE_INLINE void
 TAO_RT_POA::activate_object_with_id_and_priority (const PortableServer::ObjectId & oid,
                                                   PortableServer::Servant servant,
@@ -99,6 +102,7 @@ TAO_RT_POA::activate_object_with_id_and_priority (const PortableServer::ObjectId
         return;
     }
 }
+#endif
 
 ACE_INLINE void *
 TAO_RT_POA::thread_pool (void) const

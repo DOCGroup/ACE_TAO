@@ -216,6 +216,7 @@ namespace TAO
       return this->poa_->invoke_key_to_object_helper_i (intf, user_id);
     }
 
+#if !defined (CORBA_E_MICRO)
     CORBA::Object_ptr
     ServantRetentionStrategyNonRetain::create_reference_with_id (
       const PortableServer::ObjectId &oid,
@@ -252,6 +253,7 @@ namespace TAO
 
       return this->poa_->invoke_key_to_object_helper_i (intf, oid);
     }
+#endif
 
     int
     ServantRetentionStrategyNonRetain::rebind_using_user_id_and_system_id (

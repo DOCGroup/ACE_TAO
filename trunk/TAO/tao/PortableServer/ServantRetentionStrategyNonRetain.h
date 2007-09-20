@@ -66,8 +66,7 @@ namespace TAO
                                      bool &wait_occurred_restart_call);
 
       virtual PortableServer::ObjectId *system_id_to_object_id (
-        const PortableServer::ObjectId &system_id
-        );
+        const PortableServer::ObjectId &system_id);
 
       virtual
       PortableServer::Servant
@@ -102,10 +101,12 @@ namespace TAO
         const char *intf,
         CORBA::Short priority);
 
+#if !defined (CORBA_E_MICRO)
       virtual CORBA::Object_ptr create_reference_with_id (
         const PortableServer::ObjectId &oid,
         const char *intf,
         CORBA::Short priority);
+#endif
 
       virtual int rebind_using_user_id_and_system_id (
         PortableServer::Servant servant,
