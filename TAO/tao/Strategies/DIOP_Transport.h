@@ -38,7 +38,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_DIOP_Connection_Handler;
 class TAO_ORB_Core;
 class TAO_Operation_Details;
-class TAO_Pluggable_Messaging;
 class TAO_Acceptor;
 
 // Service Handler for this transport
@@ -74,7 +73,6 @@ protected:
 
   virtual ACE_Event_Handler * event_handler_i (void);
   virtual TAO_Connection_Handler *connection_handler_i (void);
-  virtual TAO_Pluggable_Messaging *messaging_object (void);
 
   /// Write the complete Message_Block chain to the connection.
   virtual ssize_t send (iovec *iov, int iovcnt,
@@ -108,18 +106,11 @@ public:
                             int message_semantics = TAO_Transport::TAO_TWOWAY_REQUEST,
                             ACE_Time_Value *max_time_wait = 0);
 
-  /// Initialising the messaging object
-  virtual int messaging_init (CORBA::Octet major,
-                              CORBA::Octet minor);
-
 private:
 
   /// The connection service handler used for accessing lower layer
   /// communication protocols.
   TAO_DIOP_Connection_Handler *connection_handler_;
-
-  /// Our messaging object.
-  TAO_Pluggable_Messaging *messaging_object_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

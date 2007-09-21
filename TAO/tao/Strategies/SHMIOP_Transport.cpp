@@ -25,22 +25,12 @@ TAO_SHMIOP_Transport::TAO_SHMIOP_Transport (TAO_SHMIOP_Connection_Handler *handl
                                             TAO_ORB_Core *orb_core)
   : TAO_Transport (TAO_TAG_SHMEM_PROFILE,
                    orb_core),
-    connection_handler_ (handler),
-    messaging_object_ (0)
+    connection_handler_ (handler)
 {
-/*
- * Hook to customize the messaging object when the concrete messaging
- * object is known a priori. In this case, the flag is ignored.
- */
-//@@ MESSAGING_SPL_COMMENT_HOOK_START
-  ACE_NEW (this->messaging_object_,
-            TAO_GIOP_Message_Base (orb_core, this));
-//@@ MESSAGING_SPL_COMMENT_HOOK_END
 }
 
 TAO_SHMIOP_Transport::~TAO_SHMIOP_Transport (void)
 {
-  delete this->messaging_object_;
 }
 
 ACE_Event_Handler *
@@ -54,13 +44,6 @@ TAO_SHMIOP_Transport::connection_handler_i (void)
 {
   return this->connection_handler_;
 }
-
-TAO_Pluggable_Messaging *
-TAO_SHMIOP_Transport::messaging_object (void)
-{
-  return this->messaging_object_;
-}
-
 
 ssize_t
 TAO_SHMIOP_Transport::send (iovec *iov, int iovcnt,
@@ -339,15 +322,6 @@ TAO_SHMIOP_Transport::send_message (TAO_OutputCDR &stream,
       return -1;
     }
 
-  return 1;
-}
-
-
-int
-TAO_SHMIOP_Transport::messaging_init (CORBA::Octet major,
-                                    CORBA::Octet minor)
-{
-  this->messaging_object_->init (major, minor);
   return 1;
 }
 

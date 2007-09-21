@@ -36,7 +36,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_ORB_Core;
 class TAO_UIOP_Connection_Handler;
-class TAO_Pluggable_Messaging;
 
 typedef ACE_Svc_Handler<ACE_LSOCK_STREAM, ACE_NULL_SYNCH>
         TAO_UIOP_SVC_HANDLER;
@@ -69,7 +68,6 @@ protected:
 
   virtual ACE_Event_Handler * event_handler_i (void);
   virtual TAO_Connection_Handler *connection_handler_i (void);
-  virtual TAO_Pluggable_Messaging *messaging_object (void);
 
   /// Write the complete Message_Block chain to the connection.
   virtual ssize_t send (iovec *iov, int iovcnt,
@@ -94,11 +92,6 @@ public:
                             TAO_Stub *stub = 0,
                             int message_semantics = TAO_Transport::TAO_TWOWAY_REQUEST,
                             ACE_Time_Value *max_time_wait = 0);
-
-  /// Initialising the messaging object
-  virtual int messaging_init (CORBA::Octet major,
-                              CORBA::Octet minor);
-
   //@}
 
 private:
@@ -106,9 +99,6 @@ private:
   /// The connection service handler used for accessing lower layer
   /// communication protocols.
   TAO_UIOP_Connection_Handler *connection_handler_;
-
-  /// Our messaging object.
-  TAO_Pluggable_Messaging *messaging_object_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -26,29 +26,14 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 TAO_DIOP_Transport::TAO_DIOP_Transport (TAO_DIOP_Connection_Handler *handler,
                                         TAO_ORB_Core *orb_core)
   : TAO_Transport (TAO_TAG_DIOP_PROFILE,
-                   orb_core)
+                   orb_core,
+                   ACE_MAX_DGRAM_SIZE)
   , connection_handler_ (handler)
-  , messaging_object_ (0)
 {
-/*
- * Hook to customize the messaging object when the concrete messaging
- * object is known a priori. In this case, the flag is ignored.
- */
-//@@ MESSAGING_SPL_COMMENT_HOOK_START
-
-  // Use the normal GIOP object
-  ACE_NEW (this->messaging_object_,
-            TAO_GIOP_Message_Base (orb_core,
-                                  this,
-                                  ACE_MAX_DGRAM_SIZE));
-
-//@@ MESSAGING_SPL_COMMENT_HOOK_END
-
 }
 
 TAO_DIOP_Transport::~TAO_DIOP_Transport (void)
 {
-  delete this->messaging_object_;
 }
 
 ACE_Event_Handler *
@@ -61,12 +46,6 @@ TAO_Connection_Handler *
 TAO_DIOP_Transport::connection_handler_i (void)
 {
   return this->connection_handler_;
-}
-
-TAO_Pluggable_Messaging *
-TAO_DIOP_Transport::messaging_object (void)
-{
-  return this->messaging_object_;
 }
 
 ssize_t
@@ -322,14 +301,6 @@ TAO_DIOP_Transport::send_message_shared (TAO_Stub *stub,
     }
 
   return result;
-}
-
-int
-TAO_DIOP_Transport::messaging_init (CORBA::Octet major,
-                                    CORBA::Octet minor)
-{
-  this->messaging_object_->init (major, minor);
-  return 1;
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

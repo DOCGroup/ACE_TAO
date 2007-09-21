@@ -42,7 +42,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 // Forward decls.
 class TAO_ORB_Core;
 class TAO_Operation_Details;
-class TAO_Pluggable_Messaging;
 class TAO_Acceptor;
 class TAO_Adapter;
 
@@ -89,9 +88,6 @@ namespace TAO
       virtual ACE_Event_Handler * event_handler_i (void);
       virtual TAO_Connection_Handler * invalidate_event_handler_i (void);
 
-      /// Access the underlying messaging object
-      virtual TAO_Pluggable_Messaging *messaging_object (void);
-
       virtual ssize_t send (iovec *iov, int iovcnt,
                             size_t &bytes_transferred,
                             const ACE_Time_Value *timeout = 0);
@@ -130,10 +126,6 @@ namespace TAO
                                            TAO_Target_Specification &spec,
                                            TAO_OutputCDR &msg);
 
-
-      virtual int messaging_init (CORBA::Octet major,
-                                  CORBA::Octet minor);
-
       virtual int tear_listen_point_list (TAO_InputCDR &cdr);
 
       virtual TAO_Connection_Handler * connection_handler_i (void);
@@ -154,9 +146,6 @@ namespace TAO
       /// The connection service handler used for accessing lower layer
       /// communication protocols.
       Connection_Handler *connection_handler_;
-
-      /// Our messaging object.
-      TAO_Pluggable_Messaging *messaging_object_;
     };
   }
 }

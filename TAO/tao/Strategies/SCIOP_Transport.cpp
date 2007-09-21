@@ -32,15 +32,11 @@ TAO_SCIOP_Transport::TAO_SCIOP_Transport (TAO_SCIOP_Connection_Handler *handler,
   : TAO_Transport (TAO_TAG_SCIOP_PROFILE,
                    orb_core)
   , connection_handler_ (handler)
-  , messaging_object_ (0)
 {
-  ACE_NEW (this->messaging_object_,
-            TAO_GIOP_Message_Base (orb_core, this));
 }
 
 TAO_SCIOP_Transport::~TAO_SCIOP_Transport (void)
 {
-  delete this->messaging_object_;
 }
 
 ACE_Event_Handler *
@@ -53,12 +49,6 @@ TAO_Connection_Handler *
 TAO_SCIOP_Transport::connection_handler_i (void)
 {
   return this->connection_handler_;
-}
-
-TAO_Pluggable_Messaging *
-TAO_SCIOP_Transport::messaging_object (void)
-{
-  return this->messaging_object_;
 }
 
 ssize_t
@@ -221,15 +211,6 @@ TAO_SCIOP_Transport::generate_request_header (TAO_Operation_Details &opdetails,
   return TAO_Transport::generate_request_header (opdetails,
                                                  spec,
                                                  msg);
-}
-
-int
-TAO_SCIOP_Transport::messaging_init (CORBA::Octet major,
-                                    CORBA::Octet minor)
-{
-  this->messaging_object_->init (major, minor);
-
-  return 1;
 }
 
 int

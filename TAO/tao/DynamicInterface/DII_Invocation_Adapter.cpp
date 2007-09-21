@@ -10,14 +10,14 @@
 #include "tao/Profile_Transport_Resolver.h"
 #include "tao/Transport.h"
 #include "tao/Transport.h"
-#include "tao/Pluggable_Messaging.h"
+#include "tao/GIOP_Message_Base.h"
 #include "tao/SystemException.h"
 #include "tao/operation_details.h"
 
 #include "ace/os_include/os_errno.h"
 
-ACE_RCSID (tao,
-           Invocation_Adapter,
+ACE_RCSID (DynamicInterface,
+           DII_Invocation_Adapter,
            "$Id$")
 
 

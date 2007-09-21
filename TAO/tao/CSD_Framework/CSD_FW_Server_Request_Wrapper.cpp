@@ -163,7 +163,7 @@ TAO::CSD::FW_Server_Request_Wrapper::clone (TAO_ServerRequest*& request)
                   TAO_ServerRequest (),
                   0);
 
-  // TYPE: TAO_Pluggable_Messaging*
+  // TYPE: TAO_GIOP_Message_Base*
   // ACTION: Assuming that a shallow-copy is ok here.
   clone_obj->mesg_base_ = request->mesg_base_;
 

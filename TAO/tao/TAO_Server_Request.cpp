@@ -4,7 +4,7 @@
 #include "tao/ORB_Core.h"
 #include "tao/Timeprobe.h"
 #include "tao/debug.h"
-#include "tao/Pluggable_Messaging.h"
+#include "tao/GIOP_Message_Base.h"
 #include "tao/GIOP_Utils.h"
 #include "tao/Stub.h"
 #include "tao/operation_details.h"
@@ -48,7 +48,7 @@ ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_Server_Request_Timeprobe_Description,
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_ServerRequest::TAO_ServerRequest (TAO_Pluggable_Messaging *mesg_base,
+TAO_ServerRequest::TAO_ServerRequest (TAO_GIOP_Message_Base *mesg_base,
                                       TAO_InputCDR &input,
                                       TAO_OutputCDR &output,
                                       TAO_Transport *transport,
@@ -85,7 +85,7 @@ TAO_ServerRequest::TAO_ServerRequest (TAO_Pluggable_Messaging *mesg_base,
 }
 
 // This constructor is used, by the locate request code.
-TAO_ServerRequest::TAO_ServerRequest (TAO_Pluggable_Messaging *mesg_base,
+TAO_ServerRequest::TAO_ServerRequest (TAO_GIOP_Message_Base *mesg_base,
                                       CORBA::ULong request_id,
                                       CORBA::Boolean response_expected,
                                       CORBA::Boolean deferred_reply,

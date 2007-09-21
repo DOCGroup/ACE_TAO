@@ -36,7 +36,6 @@ template class TAO_Strategies_Export ACE_Svc_Handler<ACE_MEM_STREAM, ACE_NULL_SY
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_SHMIOP_Connection_Handler;
-class TAO_Pluggable_Messaging;
 class TAO_Target_Specification;
 class Tao_Operation_Details;
 
@@ -71,7 +70,6 @@ protected:
   //@{
   virtual ACE_Event_Handler * event_handler_i (void);
   virtual TAO_Connection_Handler *connection_handler_i (void);
-  virtual TAO_Pluggable_Messaging *messaging_object (void);
 
   /// Write the complete Message_Block chain to the connection.
   virtual ssize_t send (iovec *iov, int iovcnt,
@@ -101,16 +99,10 @@ public:
                             int message_semantics = TAO_Transport::TAO_TWOWAY_REQUEST,
                             ACE_Time_Value *max_time_wait = 0);
 
-  /// Initialising the messaging object
-  virtual int messaging_init (CORBA::Octet major, CORBA::Octet minor);
-
 private:
   /// The connection service handler used for accessing lower layer
   /// communication protocols.
   TAO_SHMIOP_Connection_Handler *connection_handler_;
-
-  /// Our messaging object.
-  TAO_Pluggable_Messaging *messaging_object_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
