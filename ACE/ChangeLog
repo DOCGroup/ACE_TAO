@@ -1,3 +1,8 @@
+Fri Sep 21 09:30:15 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Truncate.h:
+          Added another specialization for BCB
+
 Fri Sep 21 09:05:15 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Truncate.h:
