@@ -22,6 +22,7 @@
 #include "ace/SOCK_Dgram.h"
 #include "ace/INET_Addr.h"
 #include "ace/Thread_Manager.h"
+#include "ace/Select_Reactor.h"
 
 ACE_RCSID(tests, Reactor_Exceptions_Test, "$Id$")
 
@@ -96,7 +97,7 @@ My_Handler::handle_input (ACE_HANDLE)
   return 0;
 }
 
-class My_Reactor : public ACE_Reactor
+class My_Reactor : public ACE_Select_Reactor
 {
 public:
   virtual int handle_events (ACE_Time_Value *max_wait_time)
@@ -114,7 +115,7 @@ public:
         {
 #       endif /* defined (ACE_WIN32 && __BORLANDC__) */
 
-        ret = ACE_Reactor::handle_events (max_wait_time);
+        ret = ACE_Select_Reactor::handle_events (max_wait_time);
 
 #       if defined (ACE_WIN32) && defined (__BORLANDC__)
         }
@@ -174,7 +175,7 @@ run_main (int argc, ACE_TCHAR *argv[])
 
   ACE_INET_Addr local_addr (port);
   ACE_INET_Addr remote_addr (port, ACE_LOCALHOST, PF_INET);
-  My_Reactor reactor;
+  ACE_Reactor reactor (new My_Reactor, true);
 
   ACE_Reactor::instance (&reactor);
   ACE_Thread_Manager *thr_mgr = ACE_Thread_Manager::instance ();

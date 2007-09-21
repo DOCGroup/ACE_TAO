@@ -1,3 +1,10 @@
+Fri Sep 21 09:32:15 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Reactor_Exceptions_Test.cpp:
+          Updated this test to not derive from ACE_Reactor, that is not
+          possible anymore. Fixes the failing of this test on our
+          build systems
+
 Fri Sep 21 09:30:15 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Truncate.h:
