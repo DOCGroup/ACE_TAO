@@ -1,3 +1,10 @@
+Fri Sep 21 05:46:15 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Makefile.am:
+        * tests/run_test.lst:
+        * tests/tests.mpc:
+          Updated for UUIDTest rename
+
 Thu Sep 20 23:58:15 UTC 2007  Ossama Othman  <ossama_othman at symantec dot com>
 
         * ace/ACE.cpp:
@@ -141,7 +148,8 @@ Mon Sep  3 12:53:49 UTC 2007  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
 Mon Sep  3 12:37:44 UTC 2007  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
-        * Implemented an accessor to obtain the timestamp and
+        * ace/UUID.{h,inl,cpp}:
+          Implemented an accessor to obtain the timestamp and
           clockSequence in an atomic manner. The clockSequence could
           change between the moment the timestamp is obtained and the
           moment the clockSequence is used in a multithreaded environment
