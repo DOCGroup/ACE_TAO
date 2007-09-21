@@ -1,3 +1,9 @@
+Fri Sep 21 09:44:15 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Transport.{cpp,inl}:
+          Moved messaging_init to the cpp file, caused problem errors in the
+          inline file and this way it reduces dependencies
+
 Fri Sep 21 08:29:15 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvs/orbsvcs/HTIOP/HTIOP_Connection_Handler.h:
