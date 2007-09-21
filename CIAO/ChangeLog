@@ -1,3 +1,9 @@
+Fri Sep 21 22:11:16 UTC 2007  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
+
+        * docs/schema/CIAOEvents.txt:
+        
+          Added information about naming conventions for filter declaration.
+
 Mon Sep  3 14:49:07 UTC 2007  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * tools/Config_Handlers/IDD_Handler.cpp (CIAO): 
@@ -5,7 +11,7 @@ Mon Sep  3 14:49:07 UTC 2007  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
         * tools/Config_Handlers/ADD_Handler.cpp (CIAO): 
         * tools/Config_Handlers/MDD_Handler.cpp (CIAO): Changed
           generateUUID() to generate_UUID() to match new ACE-ification of
-          the UUDI class.
+          the UUID class.
   
 Wed Sep 19 04:10:15 CDT 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
