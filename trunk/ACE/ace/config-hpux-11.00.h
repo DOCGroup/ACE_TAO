@@ -31,14 +31,6 @@
 // support 64-bit or kernel threads.  So, though this file has the C++ info
 // in it, it's copied from the 10.x file and hasn't been verified.
 
-// Parts of TAO (at least) use __HP_aCC to detect this compiler, but the
-// macro is not set until A.03.13. If it's not set, set it - it won't be an
-// HP-advertised value, but we don't check the value/version - just whether
-// it's set or not.
-#    if !defined (__HP_aCC)
-#      define __HP_aCC
-#    endif /* __HP_aCC */
-
 // Precompiler needs extra flags to ignore "invalid #pragma directive"
 #    define ACE_CC_PREPROCESSOR_ARGS "-E +W 67"
 
