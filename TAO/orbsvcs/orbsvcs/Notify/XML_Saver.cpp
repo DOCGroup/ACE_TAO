@@ -109,7 +109,7 @@ namespace TAO_Notify
     }
     if (this->output_ != 0)
     {
-      FILE *out = this->output_;
+      FILE * const out = this->output_;
 
       ACE_OS::fprintf (out, "<?xml version=\"1.0\"?>\n");
 
@@ -118,11 +118,11 @@ namespace TAO_Notify
         bool changed = true;
         NVPList attrs;
 
-        ACE_Time_Value now = ACE_High_Res_Timer::gettimeofday();
+        ACE_Time_Value const now = ACE_High_Res_Timer::gettimeofday();
 
         ACE_UINT64 nowus = now.usec();
         static const ACE_UINT64 USECSPERSEC = 1000 * 1000;
-        ACE_UINT64 tmpus = now.sec();
+        ACE_UINT64 const tmpus = now.sec();
         nowus += tmpus * USECSPERSEC;
 
         char nowusstr[128];
@@ -144,33 +144,38 @@ namespace TAO_Notify
         ex._tao_print_exception (
           ACE_TEXT (
             "(%P|%t) XML_Saver Unknown exception\n"));
-        delete this->output_;
+        if (this->close_out_ && this->output_ != 0)
+          {
+            (void) ACE_OS::fclose (this->output_);
+          }
+
         this->output_ = 0;
       }
     }
     return this->output_ != 0;
   }
 
-  bool XML_Saver::begin_object(CORBA::Long id,
-    const ACE_CString& type,
-    const NVPList& attrs,
-    bool /* changed */)
+  bool
+  XML_Saver::begin_object(CORBA::Long id,
+                          const ACE_CString& type,
+                          const NVPList& attrs,
+                          bool /* changed */)
   {
     ACE_ASSERT(this->output_ != 0);
 
-    FILE *out = this->output_;
+    FILE * const out = this->output_;
 
     ACE_OS::fprintf (out, "%s%s%s", indent_.c_str(), "<", type.c_str());
     if (id != 0)
     {
       // not all ostreams know what to do with a CORBA::Long
-      long lid = id;
+      long const lid = id;
       ACE_OS::fprintf (out, " %s%s%ld%s", TOPOLOGY_ID_NAME, "=\"", lid, "\"");
     }
 
-    const size_t BUF_SIZE = 512;
+    ACE_CString::size_type const BUF_SIZE = 512;
     ACE_CString tmp(BUF_SIZE);
-    for (size_t idx = 0; idx < attrs.size(); idx++)
+    for (size_t idx = 0; idx < attrs.size(); ++idx)
     {
       ACEXML_escape_string(attrs[idx].value, tmp);
       ACE_OS::fprintf (out, "%s%s%s%s%s", " ",
@@ -185,7 +190,7 @@ namespace TAO_Notify
                               const ACE_CString& type)
   {
     ACE_ASSERT(this->output_ != 0);
-    FILE *out = this->output_;
+    FILE * const out = this->output_;
     if (this->indent_.length() >= 2)
     {
       this->indent_ = this->indent_.substr(2);

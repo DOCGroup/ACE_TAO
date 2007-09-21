@@ -8,6 +8,7 @@ ACE_INLINE
 TAO_Tagged_Profile::TAO_Tagged_Profile (TAO_ORB_Core *orb_core)
   : orb_core_ (orb_core),
     discriminator_ (0),
+    object_key_extracted_ (false),
     object_key_ (),
     profile_ (),
     profile_index_ (0),

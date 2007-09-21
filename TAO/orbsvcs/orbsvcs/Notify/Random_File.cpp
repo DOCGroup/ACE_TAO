@@ -31,14 +31,14 @@ Random_File::block_size() const
   return this->block_size_;
 }
 
-size_t
+ACE_OFF_T
 Random_File::size() const
 {
-  Random_File * mutable_this = const_cast<Random_File *> (this);
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, mutable_this->lock_, 0);
-  size_t original_pos = mutable_this->tell ();
+  Random_File * const mutable_this = const_cast<Random_File *> (this);
+  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, 0);
+  ACE_OFF_T original_pos = mutable_this->tell ();
   mutable_this->ACE_FILE::seek(0, SEEK_END);
-  size_t cursize = mutable_this->tell();
+  ACE_OFF_T cursize = mutable_this->tell();
   mutable_this->ACE_FILE::seek (original_pos, SEEK_SET);
   if ((cursize % this->block_size_) != 0)
   {

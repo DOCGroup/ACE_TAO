@@ -113,24 +113,28 @@ TAO_Endpoint_Acceptor_Filter::fill_profile (const TAO::ObjectKey &object_key,
               first_endpoint = false;
             }
         }
+
+      CORBA::ULong const ep_count = pfile->endpoint_count ();
+
       // Remove the profiles that have no endpoints match the endpoints in
       // endpoint policy.
-      if (pfile->endpoint_count () == 0)
+      if (ep_count == 0
+          && mprofile.remove_profile (pfile) != -1)
         {
+          --pfile_ndx; // Step back one.  We've just shifted the profile list.
+
           if (TAO_debug_level > 2)
             ACE_DEBUG ((LM_DEBUG,
                         ACE_TEXT("(%P|%t) EndpointPolicy filter ")
                         ACE_TEXT("removing profile\n")));
-          mprofile.remove_profile (pfile);
-          --pfile_ndx; // step back one, we've just shifted the profile list.
         }
-      else
+      else if (ep_count != 0)
         {
           if (TAO_debug_level > 2)
             ACE_DEBUG ((LM_DEBUG,
                         ACE_TEXT("(%P|%t) EndpointPolicy filter ")
                         ACE_TEXT("profile retained with %d endpoints\n"),
-                        pfile->endpoint_count()));
+                        ep_count));
         }
     }
 

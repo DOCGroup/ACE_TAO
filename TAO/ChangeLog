@@ -1,3 +1,55 @@
+Fri Sep 22 00:21:47 UTC 2007  Ossama Othman  <ossama_othman at symantec dot com>
+
+        * tao/GIOP_Message_State.cpp:
+
+          Cleaned up error checking code.
+
+        * tao/ORBInitializer_Registry.cpp:
+
+          Removed leading whitespace before preprocessor directives.
+
+        * tao/TAO_Internal.cpp (TAO_Ubergestalt_Ready_Condition):
+
+          Removed use of "this" pointer from base member initializer
+          list since such use is not portable.
+
+          Removed stray semi-colon.
+        
+        * tao/Tagged_Profile.inl (TAO_Tagged_Profile):
+
+          Added missing initialization of "object_key_extracted_" member
+          in base member initializer list.
+
+        * tao/Transport.cpp (schedule_output_i):
+
+          Simplified event handler clean-up code.
+
+        * tao/EndpointPolicy/Endpoint_Acceptor_Filter.cpp (fill_profile):
+
+          Fixed Coverity CHECKED_RETURN errors.  Error conditions in a
+          return value were not checked.
+
+        * tao/Messaging/Connection_Timeout_Policy_i.cpp (hook):
+          (set_time_value):
+        * tao/Messaging/Messaging_Policy_i.cpp (hook, set_time_value):
+
+          Corrected time types used in cast from a TimeBase::TimeT to
+          match the types used by the underlying ACE_Time_Value type to
+          properly support time values greater than 32 bits in size.
+
+        * orbsvcs/orbsvcs/Notify/Persistent_File_Allocator.cpp (file_size):
+        * orbsvcs/orbsvcs/Notify/Persistent_File_Allocator.h (file_size):
+        * orbsvcs/orbsvcs/Notify/Random_File.cpp (size):
+        * orbsvcs/orbsvcs/Notify/Random_File.h (size):
+
+          Corrected file offset type (s/size_t/ACE_OFF_T/).  Addresses
+          compile-time warnings.
+
+        * orbsvcs/orbsvcs/Notify/XML_Saver.cpp (open):
+
+	  Do not call operator delete() on a FILE* created through
+          fopen().  Finalize it using fclose() instead.
+
 Fri Sep 21 10:54:15 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/GIOP_Message_Base.cpp:
