@@ -187,7 +187,7 @@ SOCK_Test_IPv6: !nsk
 Process_Strategy_Test: !VxWorks !LynxOS !ACE_FOR_TAO !PHARLAP
 Recursive_Condition_Bug_Test: !DISABLE_ToFix_LynxOS_PPC !ST
 UnloadLibACE: !STATIC !WinCE
-UUIDTest: !NO_UUID !ACE_FOR_TAO
+UUID_Test: !NO_UUID !ACE_FOR_TAO
 SSL/Bug_2912_Regression_Test: SSL !ACE_FOR_TAO !BAD_AIO
 SSL/SSL_Asynch_Stream_Test: SSL !ACE_FOR_TAO !BAD_AIO
 SSL/Thread_Pool_Reactor_SSL_Test: SSL

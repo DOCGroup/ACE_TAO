@@ -3160,22 +3160,22 @@ UPIPE_SAP_Test_LDADD = \
 
 endif !BUILD_ACE_FOR_TAO
 
-## Makefile.UUIDTest.am
+## Makefile.UUID_Test.am
 
 if BUILD_ACE_UUID
 if !BUILD_ACE_FOR_TAO
 
-noinst_PROGRAMS += UUIDTest
+noinst_PROGRAMS += UUID_Test
 
-UUIDTest_CPPFLAGS = \
+UUID_Test_CPPFLAGS = \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR)
 
-UUIDTest_SOURCES = \
+UUID_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
-  UUIDTest.cpp
+  UUID_Test.cpp
 
-UUIDTest_LDADD = \
+UUID_Test_LDADD = \
   libTest_Output.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
