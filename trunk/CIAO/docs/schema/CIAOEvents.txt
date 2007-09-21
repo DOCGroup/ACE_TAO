@@ -148,6 +148,13 @@ The <Hello-Sender-idd_click_out> port means an event source port is on the
 the <Hello-Sender-idd-02_click_out> port means an event source port on the
 <Hello-Sender-idd-02> component with port name <click_out>.
 
+The general way, <source> names are put together is, to use the elements
+<instance id="INSTANCE-ID"> and the 
+<connection><internalEndpoint><portName>PORT-NAME</...>
+of the .cdp file and combine them by a "_" character, like this:
+<source>INSTANCE-ID_PORT-NAME</source>. This assures, that every source is 
+identified by a unique name.
+
     <filter>
       <name>my_filter_01</name>
       <type>DISJUNCTION</type>
