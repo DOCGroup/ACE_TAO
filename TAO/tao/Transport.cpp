@@ -774,23 +774,27 @@ TAO_Transport::schedule_output_i (void)
   // Check to see if our event handler is still registered with the
   // reactor.  It's possible for another thread to have run close_connection()
   // since we last used the event handler.
+
   ACE_Event_Handler * const found = reactor->find_handler (eh->get_handle ());
-  if (found != eh)
+  if (found)
     {
-      if(TAO_debug_level > 3)
+      found->remove_reference ();      
+
+      if (found != eh)
         {
-          ACE_DEBUG ((LM_DEBUG,
-                      "TAO (%P|%t) - Transport[%d]::schedule_output_i "
-                      "event handler not found in reactor, returning -1\n",
-                      this->id ()));
+          if (TAO_debug_level > 3)
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("TAO (%P|%t) - ")
+                          ACE_TEXT ("Transport[%d]::schedule_output_i ")
+                          ACE_TEXT ("event handler not found in reactor,")
+                          ACE_TEXT ("returning -1\n"),
+                          this->id ()));
+            }
+
+          return -1;
         }
-      if (found)
-        {
-          found->remove_reference ();
-        }
-      return -1;
     }
-  found->remove_reference ();
 
   if (TAO_debug_level > 3)
     {

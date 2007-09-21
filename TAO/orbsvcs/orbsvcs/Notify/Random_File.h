@@ -58,7 +58,7 @@ public:
   size_t block_size() const;
 
   /// Return the current file size, in number of blocks.
-  size_t size() const;
+  ACE_OFF_T size() const;
 
   /// Write a block to our file, potentially as an "atomic" write.
   /// If the atomic argument is true, then the operating system's
@@ -83,7 +83,7 @@ private:
 
 private:
   size_t block_size_;
-  ACE_SYNCH_MUTEX lock_;
+  mutable ACE_SYNCH_MUTEX lock_;
 };
 
 } /* namespace TAO_Notify */

@@ -319,7 +319,7 @@ Persistent_File_Allocator::thr_func(void * arg)
   return 0;
 }
 
-size_t
+ACE_OFF_T
 Persistent_File_Allocator::file_size () const
 {
   return this->pstore_.size ();
