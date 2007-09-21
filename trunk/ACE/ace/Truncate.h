@@ -890,6 +890,18 @@ namespace ACE_Utils
   };
 
   template<>
+  struct Truncator<const signed long, ACE_UINT64>
+  {
+    ACE_UINT64 operator() (const signed long val)
+    {
+      return
+        (val > static_cast<ACE_UINT64> (ACE_Numeric_Limits<signed long>::max ())
+         ? ACE_Numeric_Limits<signed long>::max ()
+         : static_cast<signed long> (val));
+    }
+  };
+
+  template<>
   struct Truncator<unsigned long, ACE_UINT64>
   {
     ACE_UINT64 operator() (unsigned long val)
