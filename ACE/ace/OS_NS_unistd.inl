@@ -897,7 +897,9 @@ ACE_OS::sleep (u_int seconds)
   // Initializer doesn't work with Green Hills 1.8.7
   rqtp.tv_sec = seconds;
   rqtp.tv_nsec = 0L;
+  //FUZZ: disable check_for_lack_ACE_OS
   ACE_OSCALL_RETURN (::nanosleep (&rqtp, 0), int, -1);
+  //FUZZ: enable check_for_lack_ACE_OS
 #else
   ACE_OSCALL_RETURN (::sleep (seconds), int, -1);
 #endif /* ACE_WIN32 */
@@ -912,7 +914,9 @@ ACE_OS::sleep (const ACE_Time_Value &tv)
   return 0;
 #elif defined (ACE_HAS_CLOCK_GETTIME)
   timespec_t rqtp = tv;
+  //FUZZ: disable check_for_lack_ACE_OS
   ACE_OSCALL_RETURN (::nanosleep (&rqtp, 0), int, -1);
+  //FUZZ: enable check_for_lack_ACE_OS
 #else
 # if defined (ACE_HAS_NONCONST_SELECT_TIMEVAL)
   // Copy the timeval, because this platform doesn't declare the timeval
@@ -921,11 +925,15 @@ ACE_OS::sleep (const ACE_Time_Value &tv)
 #  if defined(ACE_TANDEM_T1248_PTHREADS)
      ACE_OSCALL_RETURN (::spt_select (0, 0, 0, 0, &tv_copy), int, -1);
 #  else
+     //FUZZ: disable check_for_lack_ACE_OS
      ACE_OSCALL_RETURN (::select (0, 0, 0, 0, &tv_copy), int, -1);
+     //FUZZ: enable check_for_lack_ACE_OS
 #  endif
 # else  /* ! ACE_HAS_NONCONST_SELECT_TIMEVAL */
   const timeval *tvp = tv;
+  //FUZZ: disable check_for_lack_ACE_OS
   ACE_OSCALL_RETURN (::select (0, 0, 0, 0, tvp), int, -1);
+  //FUZZ: enable check_for_lack_ACE_OS
 # endif /* ACE_HAS_NONCONST_SELECT_TIMEVAL */
 #endif /* ACE_WIN32 */
 }

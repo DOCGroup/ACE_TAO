@@ -122,7 +122,9 @@ ACE_OS::closesocket (ACE_HANDLE handle)
 
   ACE_SOCKCALL_RETURN (::closesocket ((SOCKET) handle), int, -1);
 #else
+  //FUZZ: disable check_for_lack_ACE_OS
   ACE_OSCALL_RETURN (::close (handle), int, -1);
+  //FUZZ: enable check_for_lack_ACE_OS
 #endif /* ACE_WIN32 */
 }
 
