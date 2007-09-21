@@ -221,7 +221,7 @@ ACE_Reactor::run_reactor_event_loop (REACTOR_EVENT_HOOK eh)
 
   while (1)
     {
-      int result = this->implementation_->handle_events ();
+      int const result = this->implementation_->handle_events ();
 
       if (eh != 0 && (*eh)(this))
         continue;
@@ -244,7 +244,7 @@ ACE_Reactor::run_alertable_reactor_event_loop (REACTOR_EVENT_HOOK eh)
 
   while (1)
     {
-      int result = this->implementation_->alertable_handle_events ();
+      int const result = this->implementation_->alertable_handle_events ();
 
       if (eh != 0 && (*eh)(this))
         continue;
