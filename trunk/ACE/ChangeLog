@@ -1,3 +1,12 @@
+Fri Sep 21 19:00:43 UTC 2007  Dale Wilson  <wilsond@ociweb.com>
+
+        * ace/OS_NS_Thread.h:
+          Olli reports that the change to OS_NS_Thread.h causes
+          a test failure on LynxOS. (Bug #3074)
+          Since the change isn't critical -- the config-win32-common.h
+          change was the real fix to the problem -- I'm reverting this file.
+
+
 Fri Sep 21 18:59:15 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-hpux-11.00.h:
