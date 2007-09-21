@@ -12,8 +12,8 @@
 //    Test the ACE UUID class which generates unique id's
 //
 // = AUTHOR
- *   Andrew T. Finnel <andrew@activesol.net> and
- *   Yamuna Krishnmaurthy <yamuna@oomworks.com>
+//   Andrew T. Finnel <andrew@activesol.net> and
+//    Yamuna Krishnmaurthy <yamuna@oomworks.com>
 // ============================================================================
 
 #include "test_config.h"
