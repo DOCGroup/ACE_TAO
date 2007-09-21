@@ -3,42 +3,16 @@
 #include "Config_Handlers/XML_File_Intf.h"
 #include "Config_Handlers/DnC_Dump.h"
 #include "Client_Task.h"
-// To set RT Sched params.
-#include "ace/Sched_Params.h"
-#include "ace/OS_NS_errno.h"
+#include "utils/RT.h"
 
 namespace CIAO
 {
   namespace TM_Daemon
   {
-
     int
     run_main (int argc, char *argv[])
     {
-
-      int priority =
-        (ACE_Sched_Params::priority_min (ACE_SCHED_FIFO)
-         + ACE_Sched_Params::priority_max (ACE_SCHED_FIFO)) / 2;
-      priority = ACE_Sched_Params::next_priority (ACE_SCHED_FIFO,
-                                                  priority);
-      // Enable FIFO scheduling, e.g., RT scheduling class on Solaris.
-
-      if (ACE_OS::sched_params (ACE_Sched_Params (ACE_SCHED_FIFO,
-                                                  priority,
-                                                  ACE_SCOPE_PROCESS)) != 0)
-        {
-          if (ACE_OS::last_error () == EPERM)
-            {
-              ACE_DEBUG ((LM_DEBUG,
-                          "server (%P|%t): user is not superuser, "
-                          "test runs in time-shared class\n"));
-            }
-          else
-            ACE_ERROR ((LM_ERROR,
-                        "server (%P|%t): sched_params failed\n"));
-        }
-
-
+      utils::set_priority ();
       try
         {
           CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
@@ -55,13 +29,12 @@ namespace CIAO
           poa_manager->activate ();
 
           // create the Domain data Manager
-          DomainDataManager* manager =
-            DomainDataManager::create (orb, NULL, argv[2]);
+          DomainDataManager* manager = new DomainDataManager (orb, argv[2]);
 
-          // Wait for all the monitors to upload their obj. refs
-          sleep (10);
+//           // Wait for all the monitors to upload their obj. refs
+//           sleep (10);
 
-          manager->get_monitor_obj_ref ();
+//           manager->get_monitor_obj_ref ();
 
           ACE_DEBUG ((LM_DEBUG, "After get_monitor_obj_ref\n"));
 

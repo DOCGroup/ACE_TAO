@@ -1,3 +1,26 @@
+Fri Sep 21 22:18:53 UTC 2007  Nishanth Shanakran  <nshankar@nospam.com>
+
+        * DAnCE/TM_Daemon/DomainDataManager.h:
+        * DAnCE/TM_Daemon/DomainDataManager.cpp:
+        * DAnCE/TM_Daemon/Handler_i.cpp:
+        * DAnCE/TM_Daemon/TM_Daemon.cpp:
+        * DAnCE/TM_Daemon/TM_Daemon.mpc:
+        * DAnCE/TM_Daemon/utils:
+
+        * DAnCE/TM_Daemon/utils/Exceptions.h:
+        * DAnCE/TM_Daemon/utils/RT.h:
+        * DAnCE/TM_Daemon/utils/RT.cpp:
+        * DAnCE/TM_Daemon/utils/Timer.h:
+        * DAnCE/TM_Daemon/utils/Timer.cpp:
+
+        Cleaned up the implementation.
+
+        * DAnCE/TM_Daemon/MonitorManager.h:
+        * DAnCE/TM_Daemon/Profile_Code.h:
+        * DAnCE/TM_Daemon/Profile_Code.cpp:
+
+          Removed these files.
+
 Tue Sep 18 22:41:16 UTC 2007  Nilabja R  <nilabjar@dre.vanderbilt.edu>
 
         * DAnCE/NodeApplicationManager/NodeApplicationManager.mpc:
