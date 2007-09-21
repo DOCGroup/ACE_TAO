@@ -40,7 +40,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Forward decls.
 class TAO_ORB_Core;
-class TAO_Pluggable_Messaging;
 class TAO_Acceptor;
 
 namespace TAO
@@ -87,8 +86,6 @@ namespace TAO
       virtual ACE_Event_Handler * event_handler_i (void);
       virtual TAO_Connection_Handler *connection_handler_i (void);
 
-      virtual TAO_Pluggable_Messaging *messaging_object (void);
-
       /// Write the complete Message_Block chain to the connection.
       virtual ssize_t send (iovec *iov, int iovcnt,
                             size_t &bytes_transferred,
@@ -118,10 +115,6 @@ namespace TAO
                                            TAO_Target_Specification &spec,
                                            TAO_OutputCDR &msg);
 
-      /// Initialising the messaging object
-      virtual int messaging_init (CORBA::Octet major,
-                                  CORBA::Octet minor);
-
       /// Open teh service context list and process it.
       virtual int tear_listen_point_list (TAO_InputCDR &cdr);
       //@}
@@ -143,9 +136,6 @@ namespace TAO
       /// The connection service handler used for accessing lower layer
       /// communication protocols.
       Connection_Handler *connection_handler_;
-
-      /// Our messaging object.
-      TAO_Pluggable_Messaging *messaging_object_;
     };
 
   }  // End SSLIOP namespace.

@@ -28,24 +28,11 @@ TAO_COIOP_Transport::TAO_COIOP_Transport (TAO_COIOP_Connection_Handler *handler,
   : TAO_Transport (TAO_TAG_COIOP_PROFILE,
                    orb_core)
   , connection_handler_ (handler)
-  , messaging_object_ (0)
 {
-/*
- * Hook to customize the messaging object when the concrete messaging
- * object is known a priori. In this case, the flag is ignored.
- */
-//@@ MESSAGING_SPL_COMMENT_HOOK_START
-
-  ACE_NEW (this->messaging_object_,
-           TAO_GIOP_Message_Base (orb_core,
-                                  this));
-//@@ MESSAGING_SPL_COMMENT_HOOK_END
-
 }
 
 TAO_COIOP_Transport::~TAO_COIOP_Transport (void)
 {
-  delete this->messaging_object_;
 }
 
 ACE_Event_Handler *
@@ -58,12 +45,6 @@ TAO_Connection_Handler *
 TAO_COIOP_Transport::connection_handler_i (void)
 {
   return this->connection_handler_;
-}
-
-TAO_Pluggable_Messaging *
-TAO_COIOP_Transport::messaging_object (void)
-{
-  return this->messaging_object_;
 }
 
 ssize_t
@@ -131,14 +112,6 @@ TAO_COIOP_Transport::send_message_shared (TAO_Stub *,
                                          const ACE_Message_Block *,
                                          ACE_Time_Value *)
 {
-  return 1;
-}
-
-int
-TAO_COIOP_Transport::messaging_init (CORBA::Octet major,
-                                    CORBA::Octet minor)
-{
-  this->messaging_object_->init (major, minor);
   return 1;
 }
 

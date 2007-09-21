@@ -30,16 +30,12 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 TAO::HTIOP::Transport::Transport (TAO::HTIOP::Connection_Handler *h,
                                   TAO_ORB_Core *orb_core)
   : TAO_Transport (OCI_TAG_HTIOP_PROFILE, orb_core),
-    connection_handler_ (h),
-    messaging_object_ (0)
+    connection_handler_ (h)
 {
-  ACE_NEW (this->messaging_object_,
-           TAO_GIOP_Message_Base (orb_core, this));
 }
 
 TAO::HTIOP::Transport::~Transport (void)
 {
-  delete this->messaging_object_;
 }
 
 ACE_Event_Handler *
@@ -52,12 +48,6 @@ TAO_Connection_Handler *
 TAO::HTIOP::Transport::connection_handler_i (void)
 {
   return this->connection_handler_;
-}
-
-TAO_Pluggable_Messaging *
-TAO::HTIOP::Transport::messaging_object (void)
-{
-  return this->messaging_object_;
 }
 
 ssize_t
@@ -254,16 +244,6 @@ TAO::HTIOP::Transport::generate_request_header (TAO_Operation_Details &opdetails
   return TAO_Transport::generate_request_header (opdetails,
                                                  spec,
                                                  msg);
-}
-
-
-int
-TAO::HTIOP::Transport::messaging_init (CORBA::Octet major,
-                                       CORBA::Octet minor)
-{
-  this->messaging_object_->init (major,
-                                 minor);
-  return 1;
 }
 
 int

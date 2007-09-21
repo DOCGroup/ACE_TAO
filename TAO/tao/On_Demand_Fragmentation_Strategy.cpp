@@ -5,7 +5,7 @@
 
 #include "tao/Transport.h"
 #include "tao/CDR.h"
-#include "tao/Pluggable_Messaging.h"
+#include "tao/GIOP_Message_Base.h"
 #include "tao/debug.h"
 
 TAO_On_Demand_Fragmentation_Strategy::TAO_On_Demand_Fragmentation_Strategy (

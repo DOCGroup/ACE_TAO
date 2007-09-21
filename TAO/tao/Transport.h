@@ -40,7 +40,7 @@ class TAO_Operation_Details;
 class TAO_Transport_Mux_Strategy;
 class TAO_Wait_Strategy;
 class TAO_Connection_Handler;
-class TAO_Pluggable_Messaging;
+class TAO_GIOP_Message_Base;
 class TAO_Codeset_Translator_Base;
 
 class TAO_Queued_Message;
@@ -247,7 +247,9 @@ class TAO_Export TAO_Transport
 public:
 
   /// Default creator, requires the tag value be supplied.
-  TAO_Transport (CORBA::ULong tag, TAO_ORB_Core *orb_core);
+  TAO_Transport (CORBA::ULong tag,
+                 TAO_ORB_Core *orb_core,
+                 size_t input_cdr_size = ACE_CDR::DEFAULT_BUFSIZE);
 
   /// Destructor
   virtual ~TAO_Transport (void);
@@ -472,7 +474,7 @@ public:
    * connector side. On the acceptor side the connection handler
    * would take care of the messaging objects.
    */
-  virtual int messaging_init (CORBA::Octet major, CORBA::Octet minor) = 0;
+  void messaging_init (TAO_GIOP_Message_Version const &version);
 
   /// Extracts the list of listen points from the @a cdr stream. The
   /// list would have the protocol specific details of the
@@ -502,7 +504,7 @@ public:
 
   /// Return the messaging object that is used to format the data that
   /// needs to be sent.
-  virtual TAO_Pluggable_Messaging * messaging_object (void) = 0;
+  TAO_GIOP_Message_Base * messaging_object (void);
 
   /** @name Template methods
    *
@@ -1019,6 +1021,9 @@ protected:
   /// SYNC_NONE Policy we don't wait until the connection is ready and we
   /// buffer the requests in this transport until the connection is ready
   bool is_connected_;
+
+  /// Our messaging object.
+  TAO_GIOP_Message_Base *messaging_object_;
 
 private:
 

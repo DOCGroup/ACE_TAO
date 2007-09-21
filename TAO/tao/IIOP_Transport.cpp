@@ -28,16 +28,11 @@ TAO_IIOP_Transport::TAO_IIOP_Transport (TAO_IIOP_Connection_Handler *handler,
   : TAO_Transport (IOP::TAG_INTERNET_IOP,
                    orb_core)
   , connection_handler_ (handler)
-  , messaging_object_ (0)
 {
-  // Use the normal GIOP object
-  ACE_NEW (this->messaging_object_,
-           TAO_GIOP_Message_Base (orb_core, this));
 }
 
 TAO_IIOP_Transport::~TAO_IIOP_Transport (void)
 {
-  delete this->messaging_object_;
 }
 
 /*
@@ -60,12 +55,6 @@ TAO_Connection_Handler *
 TAO_IIOP_Transport::connection_handler_i (void)
 {
   return this->connection_handler_;
-}
-
-TAO_Pluggable_Messaging *
-TAO_IIOP_Transport::messaging_object (void)
-{
-  return this->messaging_object_;
 }
 
 ssize_t
@@ -327,15 +316,6 @@ TAO_IIOP_Transport::generate_request_header (TAO_Operation_Details &opdetails,
   return TAO_Transport::generate_request_header (opdetails,
                                                  spec,
                                                  msg);
-}
-
-int
-TAO_IIOP_Transport::messaging_init (CORBA::Octet major,
-                                    CORBA::Octet minor)
-{
-  this->messaging_object_->init (major, minor);
-
-  return 1;
 }
 
 int

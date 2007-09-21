@@ -6,7 +6,7 @@
 #include "tao/CDR.h"
 #include "tao/ORB_Core.h"
 #include "tao/ORB.h"
-#include "tao/Pluggable_Messaging.h"
+#include "tao/GIOP_Message_Base.h"
 #include "tao/Pluggable_Messaging_Utils.h"
 #include "tao/GIOP_Utils.h"
 #include "tao/debug.h"

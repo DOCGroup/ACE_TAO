@@ -10,7 +10,7 @@
 #include "tao/Stub.h"
 #include "tao/Transport_Queueing_Strategies.h"
 #include "tao/Connection_Handler.h"
-#include "tao/Pluggable_Messaging.h"
+#include "tao/GIOP_Message_Base.h"
 #include "tao/Synch_Queued_Message.h"
 #include "tao/Asynch_Queued_Message.h"
 #include "tao/Flushing_Strategy.h"
@@ -124,7 +124,8 @@ TAO::Transport::Stats::~Stats ()
 #endif /* TAO_HAS_TRANSPORT_CURRENT == 1 */
 
 TAO_Transport::TAO_Transport (CORBA::ULong tag,
-                              TAO_ORB_Core *orb_core)
+                              TAO_ORB_Core *orb_core,
+                              size_t input_cdr_size)
   : tag_ (tag)
   , orb_core_ (orb_core)
   , cache_map_entry_ (0)
@@ -142,6 +143,7 @@ TAO_Transport::TAO_Transport (CORBA::ULong tag,
   , recv_buffer_size_ (0)
   , sent_byte_count_ (0)
   , is_connected_ (false)
+  , messaging_object_ (0)
   , char_translator_ (0)
   , wchar_translator_ (0)
   , tcs_set_ (0)
@@ -157,7 +159,15 @@ TAO_Transport::TAO_Transport (CORBA::ULong tag,
       dynamic_cast<TAO_MMAP_Allocator *> (
         orb_core->output_cdr_buffer_allocator ()))
 #endif  /* TAO_HAS_SENDFILE==1 */
+#if TAO_HAS_TRANSPORT_CURRENT == 1
+  , stats_ (0)
+#endif /* TAO_HAS_TRANSPORT_CURRENT == 1 */
 {
+  ACE_NEW (this->messaging_object_,
+            TAO_GIOP_Message_Base (orb_core,
+                                   this,
+                                   input_cdr_size));
+
   TAO_Client_Strategy_Factory *cf =
     this->orb_core_->client_factory ();
 
@@ -185,6 +195,8 @@ TAO_Transport::TAO_Transport (CORBA::ULong tag,
 
 TAO_Transport::~TAO_Transport (void)
 {
+  delete this->messaging_object_;
+
   delete this->ws_;
 
   delete this->tms_;
@@ -1221,8 +1233,6 @@ void
 TAO_Transport::send_connection_closed_notifications_i (void)
 {
   this->cleanup_queue_i ();
-
-  this->messaging_object ()->reset ();
 }
 
 int

@@ -35,7 +35,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Transport;
-class TAO_Pluggable_Messaging;
+class TAO_GIOP_Message_Base;
 class TAO_Output_CDR;
 class TAO_ORB_Core;
 class TAO_ServerRequest;
@@ -131,7 +131,7 @@ private:
   TAO_AMH_Response_Handler& operator= (const TAO_AMH_Response_Handler&);
 
   /// Pointer to the original message-base
-  TAO_Pluggable_Messaging *mesg_base_;
+  TAO_GIOP_Message_Base *mesg_base_;
 
   /// Copy of the request-id of the original Server-Request
   CORBA::ULong request_id_;

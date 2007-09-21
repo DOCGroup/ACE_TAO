@@ -903,7 +903,6 @@ libTAO_la_SOURCES = \
   PI_ForwardC.cpp \
   ParameterModeC.cpp \
   Parser_Registry.cpp \
-  Pluggable_Messaging.cpp \
   Pluggable_Messaging_Utils.cpp \
   PolicyC.cpp \
   PolicyFactory_Registry_Adapter.cpp \
@@ -1310,7 +1309,6 @@ nobase_include_HEADERS = \
   ParameterModeS.h \
   Parser_Registry.h \
   Parser_Registry.inl \
-  Pluggable_Messaging.h \
   Pluggable_Messaging_Utils.h \
   Pluggable_Messaging_Utils.inl \
   Policy.pidl \
