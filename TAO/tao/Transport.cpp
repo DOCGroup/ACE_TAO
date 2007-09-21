@@ -2509,6 +2509,12 @@ TAO_Transport::out_stream (void)
 }
 
 void
+TAO_Transport::messaging_init (TAO_GIOP_Message_Version const &version)
+{
+  this->messaging_object ()->init (version.major, version.minor);
+}
+
+void
 TAO_Transport::pre_close (void)
 {
   this->is_connected_ = false;

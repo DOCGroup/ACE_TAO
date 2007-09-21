@@ -117,12 +117,6 @@ TAO_Transport::reset_flush_timer (void)
   this->current_deadline_ = ACE_Time_Value::zero;
 }
 
-ACE_INLINE void
-TAO_Transport::messaging_init (TAO_GIOP_Message_Version const &version)
-{
-  this->messaging_object_->init (version.major, version.minor);
-}
-
 ACE_INLINE TAO_GIOP_Message_Base *
 TAO_Transport::messaging_object (void)
 {
