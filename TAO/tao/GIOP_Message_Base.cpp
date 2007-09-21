@@ -1571,10 +1571,6 @@ int
 TAO_GIOP_Message_Base::parse_request_id (const TAO_Queued_Data *qd,
                                          CORBA::ULong &request_id) const
 {
-  // Get the parser we need to use
-  TAO_GIOP_Message_Generator_Parser *generator_parser =
-    this->get_parser (qd->giop_version ());
-
   // Get the read and write positions before we steal data.
   size_t rd_pos = qd->msg_block ()->rd_ptr () - qd->msg_block ()->base ();
   size_t wr_pos = qd->msg_block ()->wr_ptr () - qd->msg_block ()->base ();
