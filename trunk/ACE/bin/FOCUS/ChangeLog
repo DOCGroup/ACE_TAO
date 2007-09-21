@@ -1,3 +1,13 @@
+Fri Sep 21 09:44:15 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * FOCUS.pl:
+          Removed support for messaging specialization, this abstraction
+          has been removed from TAO
+
+        * specializations/Messaging_Strategy:
+        * specializations/Messaging_Strategy/GIOP.spl:
+          Removed from the repo
+
 Wed Dec 20 10:00:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * specializations/Reactor_Family/TP_Reactor.spl:
