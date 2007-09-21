@@ -78,10 +78,8 @@ namespace TAO
       // index that we need.
       CORBA::ULong index = 0;
       IOP::IOR *ior_info = 0;
-      int const retval =
-        this->resolver_.stub ()->create_ior_info (ior_info, index);
 
-      if (retval == -1)
+      if (this->resolver_.stub ()->create_ior_info (ior_info, index) == -1)
         {
           if (TAO_debug_level > 0)
             {
@@ -109,8 +107,7 @@ namespace TAO
     // Send the request for the header
     if (this->resolver_.transport ()->generate_request_header (this->details_,
                                                                spec,
-                                                               out_stream)
-        == -1)
+                                                               out_stream) == -1)
       {
         throw ::CORBA::MARSHAL ();
       }
@@ -151,7 +148,7 @@ namespace TAO
         // RTCORBA, but still setting DIffServ codepoints
         // using the DiffServ library takes precedence.
         //
-        CORBA::Long dscp = nph->get_dscp_codepoint (this->resolver_.stub (),
+        CORBA::Long const dscp = nph->get_dscp_codepoint (this->resolver_.stub (),
           this->resolver_.object ());
         connection_handler->set_dscp_codepoint (dscp);
       }

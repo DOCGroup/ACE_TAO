@@ -104,7 +104,9 @@ public:
   void msg_block (ACE_Message_Block *mb);
 
   /// Set the state
-  void set_state (const TAO_GIOP_Message_State& state);
+  void state (const TAO_GIOP_Message_State& state);
+  
+  const TAO_GIOP_Message_State& state (void) const;
 
 private:
 
