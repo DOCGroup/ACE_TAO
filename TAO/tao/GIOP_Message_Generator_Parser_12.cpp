@@ -99,8 +99,7 @@ TAO_GIOP_Message_Generator_Parser_12::write_locate_request_header (
   msg << request_id;
 
   // Write the target address
-  if (this->marshall_target_spec (spec,
-                                  msg) == false)
+  if (!(this->marshall_target_spec (spec, msg)))
     return false;
 
   // I dont think we need to align the pointer to an 8 byte boundary
@@ -313,7 +312,7 @@ TAO_GIOP_Message_Generator_Parser_12::parse_locate_header (
   // Get the stream .
   TAO_InputCDR &msg = request.incoming_stream ();
 
-  CORBA::Boolean hdr_status = 1;
+  CORBA::Boolean hdr_status = true;
 
   // Get the request id.
   CORBA::ULong req_id = 0;
@@ -337,17 +336,17 @@ TAO_GIOP_Message_Generator_Parser_12::parse_reply (
     TAO_InputCDR &cdr,
     TAO_Pluggable_Reply_Params &params)
 {
-  if (TAO_GIOP_Message_Generator_Parser::parse_reply (cdr,
-                                                      params) == -1)
-
+  if (TAO_GIOP_Message_Generator_Parser::parse_reply (cdr, params) == -1)
     return -1;
 
   if ((cdr >> params.svc_ctx_) == 0)
     {
-      // if (TAO_debug_level > 0)
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("TAO (%P|%t) parse_reply, ")
-                    ACE_TEXT ("extracting context\n")));
+      if (TAO_debug_level)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("TAO (%P|%t) parse_reply, ")
+                      ACE_TEXT ("extracting context\n")));
+        }
 
       return -1;
     }
@@ -454,7 +453,7 @@ TAO_GIOP_Message_Generator_Parser_12::marshall_target_spec (
             if (TAO_debug_level)
               {
                 ACE_DEBUG ((LM_DEBUG,
-                            ACE_TEXT ("(%N |%l) Unable to handle this request \n")));
+                            ACE_TEXT ("(%N |%l) Unable to handle this request\n")));
               }
             return false;
           }
@@ -467,7 +466,7 @@ TAO_GIOP_Message_Generator_Parser_12::marshall_target_spec (
 
         // Get the IOR
         IOP::IOR *ior = 0;
-        CORBA::ULong index = spec.iop_ior (ior);
+        CORBA::ULong const index = spec.iop_ior (ior);
 
         if (ior)
           {
@@ -484,7 +483,7 @@ TAO_GIOP_Message_Generator_Parser_12::marshall_target_spec (
                 ACE_DEBUG ((LM_DEBUG,
                             ACE_TEXT ("(%N |%l) Unable to handle this request \n")));
               }
-            return 0;
+            return false;
           }
         break;
       }
@@ -492,7 +491,7 @@ TAO_GIOP_Message_Generator_Parser_12::marshall_target_spec (
       if (TAO_debug_level)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%N |%l) Unable to handle this request \n")));
+                      ACE_TEXT ("(%N |%l) Unable to handle this request\n")));
         }
       return false;
     }

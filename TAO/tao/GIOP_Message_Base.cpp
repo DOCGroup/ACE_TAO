@@ -309,7 +309,7 @@ TAO_GIOP_Message_Base::parse_next_message (TAO_Queued_Data &qd,
         }
 
       /* init out-parameters */
-      qd.set_state (state);
+      qd.state (state);
       mesg_length = message_size;
 
       return 1; /* complete header */
@@ -399,7 +399,7 @@ TAO_GIOP_Message_Base::extract_next_message (ACE_Message_Block &incoming,
   qd->msg_block ()->copy (incoming.rd_ptr (), copying_len);
 
   incoming.rd_ptr (copying_len);
-  qd->set_state (state);
+  qd->state (state);
 
   return 1;
 }
@@ -503,7 +503,7 @@ TAO_GIOP_Message_Base::consolidate_node (TAO_Queued_Data *qd,
       incoming.rd_ptr (copy_len);
 
       // Get the other details...
-      qd->set_state (state);
+      qd->state (state);
     }
   else
     {

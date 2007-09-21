@@ -123,9 +123,15 @@ TAO_Queued_Data::msg_block (ACE_Message_Block *mb)
 }
 
 ACE_INLINE void
-TAO_Queued_Data::set_state (const TAO_GIOP_Message_State& state)
+TAO_Queued_Data::state (const TAO_GIOP_Message_State& state)
 {
   this->state_ = state;
+}
+
+ACE_INLINE const TAO_GIOP_Message_State& 
+TAO_Queued_Data::state (void) const
+{
+  return this->state_;
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
