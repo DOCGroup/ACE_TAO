@@ -60,7 +60,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_ALLOC_HOOK_DEFINE(ACE_Reactor)
 
 ACE_Reactor::ACE_Reactor (ACE_Reactor_Impl *impl,
-                          int delete_implementation)
+                          bool delete_implementation)
   : implementation_ (0),
     delete_implementation_ (delete_implementation)
 {
@@ -108,7 +108,7 @@ ACE_Reactor::ACE_Reactor (ACE_Reactor_Impl *impl,
 //@@ REACTOR_SPL_CONSTRUCTOR_COMMENT_HOOK_END
 
       this->implementation (impl);
-      this->delete_implementation_ = 1;
+      this->delete_implementation_ = true;
     }
 }
 
@@ -124,7 +124,7 @@ ACE_Reactor *ACE_Reactor::reactor_ = 0;
 
 // Controls whether the Reactor is deleted when we shut down (we can
 // only delete it safely if we created it!)
-int ACE_Reactor::delete_reactor_ = 0;
+bool ACE_Reactor::delete_reactor_ = false;
 
 ACE_Reactor *
 ACE_Reactor::instance (void)
@@ -142,7 +142,7 @@ ACE_Reactor::instance (void)
           ACE_NEW_RETURN (ACE_Reactor::reactor_,
                           ACE_Reactor,
                           0);
-          ACE_Reactor::delete_reactor_ = 1;
+          ACE_Reactor::delete_reactor_ = true;
           ACE_REGISTER_FRAMEWORK_COMPONENT(ACE_Reactor, ACE_Reactor::reactor_)
         }
     }
@@ -150,18 +150,14 @@ ACE_Reactor::instance (void)
 }
 
 ACE_Reactor *
-ACE_Reactor::instance (ACE_Reactor *r, int delete_reactor)
+ACE_Reactor::instance (ACE_Reactor *r, bool delete_reactor)
 {
   ACE_TRACE ("ACE_Reactor::instance");
 
   ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon,
                             *ACE_Static_Object_Lock::instance (), 0));
   ACE_Reactor *t = ACE_Reactor::reactor_;
-  if (delete_reactor != 0)
-    ACE_Reactor::delete_reactor_ = 1;
-  else
-    // We can't safely delete it since we don't know who created it!
-    ACE_Reactor::delete_reactor_ = 0;
+  ACE_Reactor::delete_reactor_ = delete_reactor;
 
   ACE_Reactor::reactor_ = r;
 
@@ -186,7 +182,7 @@ ACE_Reactor::close_singleton (void)
     {
       delete ACE_Reactor::reactor_;
       ACE_Reactor::reactor_ = 0;
-      ACE_Reactor::delete_reactor_ = 0;
+      ACE_Reactor::delete_reactor_ = false;
     }
 }
 
