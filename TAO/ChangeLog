@@ -1,3 +1,13 @@
+Fri Sep 21 10:54:15 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/GIOP_Message_Base.cpp:
+        * tao/GIOP_Message_Generator_Parser_12.cpp:
+        * tao/Queued_Data.h:
+        * tao/Queued_Data.inl:
+        * tao/Remote_Invocation.cpp:
+          Various small changes (const, layout, bool) merged in manually
+          from the ZIOP3 branch
+
 Fri Sep 21 09:44:15 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Transport.{cpp,inl}:
