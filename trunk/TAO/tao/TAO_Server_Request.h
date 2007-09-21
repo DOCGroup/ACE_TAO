@@ -48,7 +48,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-class TAO_Pluggable_Messaging;
+class TAO_GIOP_Message_Base;
 class TAO_Transport;
 class TAO_AMH_Response_Handler;
 
@@ -103,13 +103,13 @@ public:
 
   // Constructors.
 
-  TAO_ServerRequest (TAO_Pluggable_Messaging *mesg_base,
+  TAO_ServerRequest (TAO_GIOP_Message_Base *mesg_base,
                      TAO_InputCDR &input,
                      TAO_OutputCDR &output,
                      TAO_Transport *transport,
                      TAO_ORB_Core *orb_core);
 
-  TAO_ServerRequest (TAO_Pluggable_Messaging *mesg_base,
+  TAO_ServerRequest (TAO_GIOP_Message_Base *mesg_base,
                      CORBA::ULong request_id,
                      CORBA::Boolean response_expected,
                      CORBA::Boolean deferred_flag,
@@ -276,7 +276,7 @@ private:
   /// to be the target of a clone operation.
   TAO_ServerRequest (void);
 
-  TAO_Pluggable_Messaging *mesg_base_;
+  TAO_GIOP_Message_Base *mesg_base_;
 
   /// Operation name.
   const char* operation_;

@@ -72,16 +72,10 @@ TAO_UIPMC_Transport<CONNECTION_HANDLER>::TAO_UIPMC_Transport (
   TAO_ORB_Core *orb_core
 )
   : TAO_Transport (IOP::TAG_UIPMC,
-                   orb_core)
+                   orb_core,
+                   MIOP_MAX_DGRAM_SIZE)
   , connection_handler_ (handler)
-  , messaging_object_ (0)
 {
-  // Use the normal GIOP object
-  ACE_NEW (this->messaging_object_,
-           TAO_GIOP_Message_Base (orb_core,
-                                  this,
-                                  MIOP_MAX_DGRAM_SIZE));
-
   // Replace the default wait strategy with our own
   // since we don't support waiting on anything.
   delete this->ws_;
@@ -92,7 +86,6 @@ TAO_UIPMC_Transport<CONNECTION_HANDLER>::TAO_UIPMC_Transport (
 template<typename CONNECTION_HANDLER>
 TAO_UIPMC_Transport<CONNECTION_HANDLER>::~TAO_UIPMC_Transport (void)
 {
-  delete this->messaging_object_;
 }
 
 template<typename CONNECTION_HANDLER>
@@ -107,13 +100,6 @@ TAO_Connection_Handler *
 TAO_UIPMC_Transport<CONNECTION_HANDLER>::connection_handler_i (void)
 {
   return this->connection_handler_;
-}
-
-template<typename CONNECTION_HANDLER>
-TAO_Pluggable_Messaging *
-TAO_UIPMC_Transport<CONNECTION_HANDLER>::messaging_object (void)
-{
-  return this->messaging_object_;
 }
 
 template<typename CONNECTION_HANDLER>
@@ -604,15 +590,6 @@ TAO_UIPMC_Transport<CONNECTION_HANDLER>::send_message (TAO_OutputCDR &stream,
       return -1;
     }
 
-  return 1;
-}
-
-template<typename CONNECTION_HANDLER>
-int
-TAO_UIPMC_Transport<CONNECTION_HANDLER>::messaging_init (CORBA::Octet major,
-                                                         CORBA::Octet minor)
-{
-  this->messaging_object_->init (major, minor);
   return 1;
 }
 

@@ -27,17 +27,12 @@ TAO::SSLIOP::Transport::Transport (
   TAO::SSLIOP::Connection_Handler *handler,
   TAO_ORB_Core *orb_core)
   : TAO_Transport (IOP::TAG_INTERNET_IOP, orb_core),
-    connection_handler_ (handler),
-    messaging_object_ (0)
+    connection_handler_ (handler)
 {
-  // Use the normal GIOP object
-  ACE_NEW (this->messaging_object_,
-           TAO_GIOP_Message_Base (orb_core, this));
 }
 
 TAO::SSLIOP::Transport::~Transport (void)
 {
-  delete this->messaging_object_;
 }
 
 ACE_Event_Handler *
@@ -50,12 +45,6 @@ TAO_Connection_Handler *
 TAO::SSLIOP::Transport::connection_handler_i (void)
 {
   return this->connection_handler_;
-}
-
-TAO_Pluggable_Messaging *
-TAO::SSLIOP::Transport::messaging_object (void)
-{
-  return this->messaging_object_;
 }
 
 int
@@ -80,7 +69,7 @@ TAO::SSLIOP::Transport::send (iovec *iov,
                               size_t &bytes_transferred,
                               const ACE_Time_Value *max_wait_time)
 {
-  const ssize_t retval =
+  ssize_t const retval =
     this->connection_handler_->peer ().sendv (iov, iovcnt, max_wait_time);
 
   if (retval > 0)
@@ -94,7 +83,7 @@ TAO::SSLIOP::Transport::recv (char *buf,
                               size_t len,
                               const ACE_Time_Value *max_wait_time)
 {
-  const ssize_t n = this->connection_handler_->peer ().recv (buf,
+  ssize_t const n = this->connection_handler_->peer ().recv (buf,
                                                              len,
                                                              max_wait_time);
 
@@ -162,7 +151,7 @@ TAO::SSLIOP::Transport::send_message (TAO_OutputCDR &stream,
   // versions seem to need it though.  Leaving it costs little.
 
   // This guarantees to send all data (bytes) or return an error.
-  const ssize_t n = this->send_message_shared (stub,
+  ssize_t const n = this->send_message_shared (stub,
                                                message_semantics,
                                                stream.begin (),
                                                max_wait_time);
@@ -216,16 +205,6 @@ TAO::SSLIOP::Transport::generate_request_header (
                                                  spec,
                                                  msg);
 }
-
-int
-TAO::SSLIOP::Transport::messaging_init (CORBA::Octet major,
-                                        CORBA::Octet minor)
-{
-  this->messaging_object_->init (major,
-                                 minor);
-  return 1;
-}
-
 
 int
 TAO::SSLIOP::Transport::tear_listen_point_list (TAO_InputCDR &cdr)

@@ -9,7 +9,7 @@
 #include "tao/Bind_Dispatcher_Guard.h"
 #include "tao/Transport.h"
 #include "tao/Muxed_TMS.h"
-#include "tao/Pluggable_Messaging.h"
+#include "tao/GIOP_Message_Base.h"
 #include "tao/ORB_Constants.h"
 
 #if TAO_HAS_INTERCEPTORS == 1

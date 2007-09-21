@@ -95,14 +95,7 @@ namespace TAO
     TAO_GIOP_Message_Version const & version = this->profile_->version ();
 
     // Initialize the messaging object
-    if (this->transport_->messaging_init (version.major, version.minor) == -1)
-      {
-        throw ::CORBA::INTERNAL (
-                          CORBA::SystemException::_tao_minor_code (
-                            0,
-                            EINVAL),
-                          CORBA::COMPLETED_NO);
-      }
+    this->transport_->messaging_init (version);
 
     if (!this->transport_->is_tcs_set ())
       {

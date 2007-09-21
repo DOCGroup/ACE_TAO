@@ -31,11 +31,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-// Forward Decls
-class TAO_Pluggable_Messaging;
-
-// ****************************************************************
-
 namespace TAO
 {
   namespace HTIOP

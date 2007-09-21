@@ -45,9 +45,6 @@ namespace IIOP
   class ListenPointList;
 }
 
-// Forward Decls
-class TAO_Pluggable_Messaging;
-
 // ****************************************************************
 
 /**

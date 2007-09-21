@@ -33,9 +33,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-// Forward Decls
-class TAO_Pluggable_Messaging;
-
 // This connection handler.
 typedef ACE_Svc_Handler<ACE_SOCK_DGRAM_MCAST, ACE_NULL_SYNCH>
         TAO_UIPMC_MCAST_SVC_HANDLER;
