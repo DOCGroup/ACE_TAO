@@ -849,9 +849,9 @@ ACE_INET_Addr::get_host_name_i (char hostname[], size_t len) const
           return -1;
         }
 #else
-      void* const addr = this->ip_addr_pointer ();
-      int   const size = this->ip_addr_size ();
-      int   const type = this->get_type ();
+      void* addr = this->ip_addr_pointer ();
+      int   size = this->ip_addr_size ();
+      int   type = this->get_type ();
 
 #  if defined (ACE_HAS_IPV6) && defined (ACE_HAS_BROKEN_GETHOSTBYADDR_V4MAPPED)
       // Most OS can not handle IPv6-mapped-IPv4 addresses (even
