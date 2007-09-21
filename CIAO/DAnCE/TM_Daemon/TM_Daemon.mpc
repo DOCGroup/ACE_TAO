@@ -6,6 +6,12 @@ project(TM_Daemon): ciao_server_dnc, dance_extension_stub, ciaoexe , ciao_domain
   IDL_Files {
   }
 
+ Header_Files {
+    utils/RT.h
+    utils/Timer.h
+    utils/Exceptions.h
+  }
+
   Source_Files {
     TM_Daemon.cpp
     Client_Task.cpp
@@ -14,6 +20,8 @@ project(TM_Daemon): ciao_server_dnc, dance_extension_stub, ciaoexe , ciao_domain
     ../NodeManager/NM_MonitorC.cpp
     $(CIAO_ROOT)/DAnCE/NodeApplication/App_MonitorC.cpp
     Handler_i.cpp
-      Profile_Code.cpp
+    utils/RT.cpp
+    utils/Timer.cpp
+
   }
 }
