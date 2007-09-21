@@ -36,9 +36,9 @@ ACE_Hash_Cache_Map_Manager<ACE_T2>::~ACE_Hash_Cache_Map_Manager (void)
 }
 
 template <ACE_T1> int
-ACE_Hash_Cache_Map_Manager<ACE_T2>:: bind (const KEY &key,
-                                        const VALUE &value,
-                                        CACHE_ENTRY *&entry)
+ACE_Hash_Cache_Map_Manager<ACE_T2>::bind (const KEY &key,
+                                          const VALUE &value,
+                                          CACHE_ENTRY *&entry)
 {
   // Insert a entry which has the <key> and the <cache_value> which is
   // the combination of the <value> and the attributes of the caching

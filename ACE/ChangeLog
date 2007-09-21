@@ -1,3 +1,17 @@
+Fri Sep 21 16:34:47 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * ace/Hash_Cache_Map_Manager_T.cpp:
+        * ace/Log_Msg.cpp:
+        * ace/OS_NS_Thread.inl:
+        * ace/OS_NS_stdio.inl:
+        * ace/OS_NS_sys_mman.inl:
+        * ace/OS_NS_sys_socket.inl:
+        * ace/OS_NS_unistd.inl:
+
+          Fixed ACE_OS fuzz warnings. Use ACE_OS calls instead of raw OS functions
+          where possible. If fuzz detected a false-positive, then disable
+          the ACE_OS fuzz check for that section of the code.
+
 Fri Sep 21 17:19:52 UTC 2007  Ossama Othman  <ossama_othman at symantec dot com>
 
         * ace/INET_Addr.cpp (get_host_name_i):

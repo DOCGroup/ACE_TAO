@@ -3016,7 +3016,9 @@ ACE_OS::thr_kill (ACE_thread_t thr_id, int signum)
   if (tid == ERROR)
     return -1;
   else
+    //FUZZ: disable check_for_lack_ACE_OS
     ACE_OSCALL_RETURN (::kill (tid, signum), int, -1);
+    //FUZZ: enable check_for_lack_ACE_OS
 
 # else
   ACE_UNUSED_ARG (thr_id);
@@ -3239,7 +3241,7 @@ ACE_OS::thr_setprio (ACE_hthread_t ht_id, int priority, int policy)
 #   else
   int result;
   struct sched_param param;
-  memset ((void *) &param, 0, sizeof param);
+  ACE_OS::memset ((void *) &param, 0, sizeof param);
 
   // If <policy> is -1, we don't want to use it for
   // pthread_setschedparam().  Instead, obtain policy from
@@ -3314,11 +3316,15 @@ ACE_OS::thr_sigsetmask (int how,
   // platform, define ACE_LACKS_PTHREAD_THR_SIGSETMASK.
 #   if defined (ACE_HAS_PTHREADS_DRAFT4) || \
     defined (ACE_HAS_PTHREADS_DRAFT6) || (defined (_UNICOS) && _UNICOS == 9)
+  //FUZZ: disable check_for_lack_ACE_OS
   ACE_OSCALL_RETURN (::sigprocmask (how, nsm, osm), int, -1);
+  //FUZZ: enable check_for_lack_ACE_OS
 #   elif !defined (ACE_LACKS_PTHREAD_SIGMASK)
   int result;
+  //FUZZ: disable check_for_lack_ACE_OS
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_sigmask (how, nsm, osm),
                                        result), int, -1);
+  //FUZZ: enable check_for_lack_ACE_OS
 #   endif /* ACE_HAS_PTHREADS_DRAFT4 || ACE_HAS_PTHREADS_DRAFT6 || _UNICOS 9 */
 
 #if 0

@@ -430,15 +430,15 @@ ACE_OS::cuserid (char *user, size_t maxlen)
   struct passwd *pw = 0;
 
   // Make sure the file pointer is at the beginning of the password file
-  ::setpwent ();
+  ACE_OS::setpwent ();
   // Should use ACE_OS::setpwent() but I didn't want to move this
   // method after it.
 
   // Use the effective user ID to determine the user name.
-  pw = ::getpwuid (::geteuid ());
+  pw = ::getpwuid (ACE_OS::geteuid ());
 
   // Make sure the password file is closed.
-  ::endpwent ();
+  ACE_OS::endpwent ();
 
   if (pw == 0)
     {
