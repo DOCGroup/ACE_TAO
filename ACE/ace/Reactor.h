@@ -88,10 +88,10 @@ public:
 
   /**
    * Set pointer to a process-wide ACE_Reactor and return existing
-   * pointer.  If <delete_reactor> != 0 then we'll delete the Reactor
+   * pointer.  If @a delete_reactor == true then we'll delete the Reactor
    * at destruction time.
    */
-  static ACE_Reactor *instance (ACE_Reactor *, int delete_reactor = 0);
+  static ACE_Reactor *instance (ACE_Reactor *, bool delete_reactor = false);
 
   /// Delete the dynamically allocated Singleton
   static void close_singleton (void);
@@ -220,7 +220,7 @@ public:
    * delete the @a implementation on destruction.
    */
   ACE_Reactor (ACE_Reactor_Impl *implementation = 0,
-               int delete_implementation = 0);
+               bool delete_implementation = false);
 
   /// Close down and release all resources.
   /**
@@ -847,13 +847,13 @@ protected:
 
   /// Flag used to indicate whether we are responsible for cleaning up
   /// the implementation instance
-  int delete_implementation_;
+  bool delete_implementation_;
 
   /// Pointer to a process-wide ACE_Reactor singleton.
   static ACE_Reactor *reactor_;
 
-  /// Must delete the <reactor_> singleton if non-0.
-  static int delete_reactor_;
+  /// Must delete the reactor_ singleton if true.
+  static bool delete_reactor_;
 
   /// Deny access since member-wise won't work...
   ACE_Reactor (const ACE_Reactor &);

@@ -946,6 +946,18 @@ namespace ACE_Utils
   };
 #endif  /* ACE_SIZEOF_INT < 8 */
 
+  template<>
+  struct Truncator<size_t, unsigned long>
+  {
+    unsigned long operator() (size_t val)
+    {
+      return
+        (val > static_cast<unsigned long> (ACE_Numeric_Limits<size_t>::max ())
+         ? ACE_Numeric_Limits<size_t>::max ()
+         : static_cast<size_t> (val));
+    }
+  };
+
   // Partial specialization for the case where the types are the same.
   // No truncation is necessary.
   template<typename T>

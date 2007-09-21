@@ -1,3 +1,11 @@
+Fri Sep 21 09:05:15 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Truncate.h:
+          Added needed specialization for BCB
+
+        * ace/Reactor.{h,cpp}:
+          Changed delete_reactor and delete_implementation flags to bool
+
 Fri Sep 21 05:46:15 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Makefile.am:
