@@ -178,14 +178,12 @@ public:
   {
     return TAO_Singleton <TAO_Ubergestalt_Ready_Condition,
       TAO_SYNCH_RECURSIVE_MUTEX>::instance ();
-  };
+  }
 
   TAO_Ubergestalt_Ready_Condition (void)
-    : ACE_SYNCH_RECURSIVE_CONDITION
-  (this->mutex_)
+    : ACE_SYNCH_RECURSIVE_CONDITION (mutex_)
   {
-    // empty
-  };
+  }
 
 private:
   /// The mutex, associated with the condition. Do not use the ACE

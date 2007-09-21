@@ -50,7 +50,7 @@ namespace PortableInterceptor
       ACE_Dynamic_Service<TAO::ORBInitializer_Registry_Adapter>::instance
       ("ORBInitializer_Registry", true); // only look in the local repo
 
-  #if !defined (TAO_AS_STATIC_LIBS)
+#if !defined (TAO_AS_STATIC_LIBS)
     if (orbinitializer_registry_ == 0)
       {
         ACE_Service_Config::process_directive (
@@ -62,7 +62,7 @@ namespace PortableInterceptor
           ACE_Dynamic_Service<TAO::ORBInitializer_Registry_Adapter>::instance
             ("ORBInitializer_Registry");
       }
-  #endif /* !TAO_AS_STATIC_LIBS */
+#endif /* !TAO_AS_STATIC_LIBS */
 
     if (orbinitializer_registry_ != 0)
       {

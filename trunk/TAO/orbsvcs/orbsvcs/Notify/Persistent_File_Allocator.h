@@ -171,7 +171,7 @@ public:
   bool write(Persistent_Storage_Block* psb);
 
   /// for information (unit test) only.
-  size_t file_size () const;
+  ACE_OFF_T file_size () const;
 
 private:
   /// Free a previously assigned block.

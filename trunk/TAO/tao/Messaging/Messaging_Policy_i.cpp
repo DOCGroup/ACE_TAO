@@ -5,6 +5,7 @@
 #include "tao/ORB_Core.h"
 #include "tao/debug.h"
 #include "tao/AnyTypeCode/Any.h"
+#include "ace/Truncate.h"
 
 #if ! defined (__ACE_INLINE__)
 #include "tao/Messaging/Messaging_Policy_i.inl"
@@ -41,15 +42,13 @@ TAO_RelativeRoundtripTimeoutPolicy::TAO_RelativeRoundtripTimeoutPolicy (
 }
 
 TimeBase::TimeT
-TAO_RelativeRoundtripTimeoutPolicy::relative_expiry (
-    void)
+TAO_RelativeRoundtripTimeoutPolicy::relative_expiry (void)
 {
   return this->relative_expiry_;
 }
 
 CORBA::PolicyType
-TAO_RelativeRoundtripTimeoutPolicy::policy_type (
-    void)
+TAO_RelativeRoundtripTimeoutPolicy::policy_type (void)
 {
   return Messaging::RELATIVE_RT_TIMEOUT_POLICY_TYPE;
 }
@@ -86,20 +85,23 @@ TAO_RelativeRoundtripTimeoutPolicy::hook (TAO_ORB_Core *orb_core,
       Messaging::RelativeRoundtripTimeoutPolicy_var p =
         Messaging::RelativeRoundtripTimeoutPolicy::_narrow (policy.in ());
 
-      TimeBase::TimeT t = p->relative_expiry ();
-      TimeBase::TimeT seconds = t / 10000000u;
-      TimeBase::TimeT microseconds = (t % 10000000u) / 10;
-      time_value.set (ACE_U64_TO_U32 (seconds),
-                      ACE_U64_TO_U32 (microseconds));
+      TimeBase::TimeT const t = p->relative_expiry ();
+      TimeBase::TimeT const seconds = t / 10000000u;
+      TimeBase::TimeT const microseconds = (t % 10000000u) / 10;
+      time_value.set (ACE_Utils::truncate_cast<time_t> (seconds),
+                      ACE_Utils::truncate_cast<suseconds_t> (microseconds));
 
       // Set the flag once all operations complete successfully
       has_timeout = true;
 
       if (TAO_debug_level > 0)
         {
+          ACE_UINT64 msecs;
+          const_cast<ACE_Time_Value const &> (time_value).msec (msecs);
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("TAO (%P|%t) - Request timeout is <%dms>\n"),
-                      time_value.msec ()));
+                      ACE_TEXT ("TAO (%P|%t) - Request timeout is ")
+                      ACE_TEXT ("%Q milliseconds\n"),
+                      msecs));
         }
     }
   catch (const ::CORBA::Exception&)
@@ -164,16 +166,20 @@ TAO_RelativeRoundtripTimeoutPolicy::_tao_cached_type (void) const
 void
 TAO_RelativeRoundtripTimeoutPolicy::set_time_value (ACE_Time_Value &time_value)
 {
-  TimeBase::TimeT t = this->relative_expiry_;
-  TimeBase::TimeT seconds = t / 10000000u;
-  TimeBase::TimeT microseconds = (t % 10000000u) / 10;
-  time_value.set (ACE_U64_TO_U32 (seconds), ACE_U64_TO_U32 (microseconds));
+  TimeBase::TimeT const t = this->relative_expiry_;
+  TimeBase::TimeT const seconds = t / 10000000u;
+  TimeBase::TimeT const microseconds = (t % 10000000u) / 10;
+  time_value.set (ACE_Utils::truncate_cast<time_t> (seconds),
+                  ACE_Utils::truncate_cast<suseconds_t> (microseconds));
 
   if (TAO_debug_level > 0)
     {
+      ACE_UINT64 msecs;
+      const_cast<ACE_Time_Value const &> (time_value).msec (msecs);
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("TAO (%P|%t) - Request timeout is <%dms>\n"),
-                  time_value.msec ()));
+                  ACE_TEXT ("TAO (%P|%t) - Request timeout is ")
+                  ACE_TEXT ("%Q milliseconds\n"),
+                  msecs));
     }
 }
 

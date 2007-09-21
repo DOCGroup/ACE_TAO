@@ -40,21 +40,11 @@ TAO_GIOP_Message_State::parse_message_header_i (ACE_Message_Block &incoming)
                   ));
     }
 
-  // Grab the rd_ptr_ from the message block..
-  char *buf = incoming.rd_ptr ();
+  char * const buf = incoming.rd_ptr ();
 
-  // Parse the magic bytes first
-  if (this->parse_magic_bytes (buf) == -1)
-    {
-      return -1;
-    }
-
-  // Get the version information
-  if (this->get_version_info (buf) == -1)
-    return -1;
-
-  // Get the byte order information...
-  if (this->get_byte_order_info (buf) == -1)
+  if (this->parse_magic_bytes (buf) == -1        // Parse magic bytes first
+      || this->get_version_info (buf) == -1      // Get version information
+      || this->get_byte_order_info (buf) == -1)  // Get byte order information
     return -1;
 
   // Get the message type
@@ -71,7 +61,7 @@ TAO_GIOP_Message_State::parse_message_header_i (ACE_Message_Block &incoming)
         case TAO_PLUGGABLE_MESSAGE_CLOSECONNECTION:
           if (TAO_debug_level > 0)
             {
-              const char* which =
+              char const * const which =
                 (this->message_type_ == TAO_PLUGGABLE_MESSAGE_CLOSECONNECTION) ? "CloseConnection" :
                 (this->message_type_ == TAO_PLUGGABLE_MESSAGE_MESSAGERROR) ? "MessageError" : "unknown";
               ACE_DEBUG ((LM_DEBUG,
