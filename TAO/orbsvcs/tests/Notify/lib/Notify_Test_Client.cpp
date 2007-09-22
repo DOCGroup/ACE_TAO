@@ -66,17 +66,17 @@ Notify_Test_Client::init_ORB (int argc,
       return -1;
     }
 
-  CORBA::Object_ptr poa_object  =
+  CORBA::Object_var poa_object =
     this->orb_->resolve_initial_references("RootPOA");
 
-  if (CORBA::is_nil (poa_object))
+  if (CORBA::is_nil (poa_object.in ()))
     {
       ACE_ERROR ((LM_ERROR,
                   " (%P|%t) Unable to initialize the POA.\n"));
       return -1;
     }
   this->root_poa_ =
-    PortableServer::POA::_narrow (poa_object);
+    PortableServer::POA::_narrow (poa_object.in ());
 
   PortableServer::POAManager_var poa_manager =
     root_poa_->the_POAManager ();
