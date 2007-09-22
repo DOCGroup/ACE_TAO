@@ -2,7 +2,7 @@
 // $Id$
 
 // The following configuration file is designed to work for HP
-// platforms running HP-UX 11.00 using aC++, CC, or gcc (2.95 and up).
+// platforms running HP-UX 11.00 using aC++ or gcc (2.95 and up).
 
 #ifndef ACE_CONFIG_H
 #define ACE_CONFIG_H
@@ -21,21 +21,13 @@
 
 #else
 
-// The following configuration section is designed to work for HP
-// platforms running HP/UX 11.x with either of the HP C++ compilers.
-// There isn't a predefined macro for all cases of the compilers that
-// can be used to tell them apart from other compilers
-// only to tell C++ from aC++, using the value of __cplusplus.
-//
-// NOTE - HP advises people on 11.x to use aC++ since the older C++ doesn't
-// support 64-bit or kernel threads.  So, though this file has the C++ info
-// in it, it's copied from the 10.x file and hasn't been verified.
+// aC++...
 
 // Precompiler needs extra flags to ignore "invalid #pragma directive"
 #    define ACE_CC_PREPROCESSOR_ARGS "-E +W 67"
 
 // Compiler can't handle calls like foo->operator T *()
-#    define ACE_HAS_BROKEN_CONVERSIONS
+//#    define ACE_HAS_BROKEN_CONVERSIONS
 
 // Compiler supports C++ exception handling. It's on by default. If the
 // +noeh compiler option is used to disable exceptions, the compiler defines
