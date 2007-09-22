@@ -1,3 +1,9 @@
+Fri Sep 22 00:57:01 UTC 2007  Ossama Othman  <ossama_othman at symantec dot com>
+
+        * orbsvcs/tests/Notify/lib/Notify_Test_Client.cpp (init_ORB):
+
+          Fixed leaked RootPOA.
+
 Fri Sep 22 00:21:47 UTC 2007  Ossama Othman  <ossama_othman at symantec dot com>
 
         * tao/GIOP_Message_State.cpp:
