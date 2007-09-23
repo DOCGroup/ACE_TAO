@@ -103,7 +103,7 @@ Tester::test (void)
 
 int run_main(int, ACE_TCHAR* [])
 {
-  ACE_START_TEST (ACE_TEXT ("UUIDTest"));
+  ACE_START_TEST (ACE_TEXT ("UUID_Test"));
 
   Tester tester;
 
@@ -118,10 +118,10 @@ int run_main(int, ACE_TCHAR* [])
 
   if (result == 0)
     ACE_DEBUG((LM_DEBUG,
-               "UUIDTest succeeded\n"));
+               "UUID_Test succeeded\n"));
   else
-    ACE_DEBUG((LM_DEBUG,
-               "UUIDTest failed\n"));
+    ACE_ERROR((LM_ERROR,
+               "UUID_Test failed\n"));
 
   ACE_END_TEST;
 
