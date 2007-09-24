@@ -59,7 +59,7 @@ TAO_AMI_Arguments_Converter_Impl::convert_reply (
     {
       TAO_OutputCDR output;
       TAO_Pluggable_Reply_Params params (0);
-      params.reply_status_ = TAO_PLUGGABLE_MESSAGE_NO_EXCEPTION;
+      params.reply_status (GIOP::NO_EXCEPTION);
       for (CORBA::ULong j = 0; j < nargs; ++j)
         {
           if (!(args[j]->marshal (output)))
@@ -84,11 +84,11 @@ TAO_AMI_Arguments_Converter_Impl::handle_corba_exception (
   exception->_tao_encode (output);
   if (CORBA::SystemException::_downcast (exception) != 0)
     {
-      params.reply_status_ = TAO_PLUGGABLE_MESSAGE_SYSTEM_EXCEPTION;
+      params.reply_status (GIOP::SYSTEM_EXCEPTION);
     }
   else
     {
-      params.reply_status_ = TAO_PLUGGABLE_MESSAGE_USER_EXCEPTION;
+      params.reply_status (GIOP::USER_EXCEPTION);
     }
   TAO_InputCDR input (output);
   params.input_cdr_ = &input;

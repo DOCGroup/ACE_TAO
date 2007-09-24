@@ -73,7 +73,7 @@ TAO_GIOP_Message_Base::generate_request_header (
   cdr.get_version (giop_version);
 
   // Write the GIOP header first
-  if (!this->write_protocol_header (TAO_GIOP_REQUEST, giop_version, cdr))
+  if (!this->write_protocol_header (GIOP::Request, giop_version, cdr))
     {
       if (TAO_debug_level)
         {
@@ -116,7 +116,7 @@ TAO_GIOP_Message_Base::generate_locate_request_header (
     this->get_parser (giop_version);
 
   // Write the GIOP header first
-  if (!this->write_protocol_header (TAO_GIOP_LOCATEREQUEST, giop_version, cdr))
+  if (!this->write_protocol_header (GIOP::LocateRequest, giop_version, cdr))
     {
       if (TAO_debug_level)
         ACE_ERROR ((LM_ERROR,
@@ -151,7 +151,7 @@ TAO_GIOP_Message_Base::generate_reply_header (
   cdr.get_version (giop_version);
 
   // Write the GIOP header first
-  if (!this->write_protocol_header (TAO_GIOP_REPLY, giop_version, cdr))
+  if (!this->write_protocol_header (GIOP::Reply, giop_version, cdr))
     {
       if (TAO_debug_level)
         ACE_ERROR ((LM_ERROR,
@@ -208,7 +208,7 @@ TAO_GIOP_Message_Base::generate_fragment_header (TAO_OutputCDR & cdr,
     this->get_parser (giop_version);
 
   // Write the GIOP header first
-  if (!this->write_protocol_header (TAO_GIOP_FRAGMENT, giop_version, cdr)
+  if (!this->write_protocol_header (GIOP::Fragment, giop_version, cdr)
       || !generator_parser->write_fragment_header (cdr, request_id))
     {
       if (TAO_debug_level)
@@ -644,7 +644,7 @@ TAO_GIOP_Message_Base::process_request_message (TAO_Transport *transport,
 
   switch (qd->msg_type ())
     {
-    case TAO_PLUGGABLE_MESSAGE_REQUEST:
+    case GIOP::Request:
       // Should be taken care by the state specific invocations. They
       // could raise an exception or write things in the output CDR
       // stream
@@ -653,7 +653,7 @@ TAO_GIOP_Message_Base::process_request_message (TAO_Transport *transport,
                                     output,
                                     generator_parser);
 
-    case TAO_PLUGGABLE_MESSAGE_LOCATEREQUEST:
+    case GIOP::LocateRequest:
       return this->process_locate_request (transport,
                                            input_cdr,
                                            output,
@@ -706,12 +706,11 @@ TAO_GIOP_Message_Base::process_reply_message (
 
   switch (qd->msg_type ())
     {
-    case TAO_PLUGGABLE_MESSAGE_REPLY:
+    case GIOP::Reply:
       // Should be taken care by the state specific parsing
       retval = generator_parser->parse_reply (input_cdr, params);
-
       break;
-    case TAO_PLUGGABLE_MESSAGE_LOCATEREPLY:
+    case GIOP::LocateReply:
       retval = generator_parser->parse_locate_reply (input_cdr, params);
       break;
     default:
@@ -772,7 +771,7 @@ TAO_GIOP_Message_Base::generate_exception_reply (
 }
 
 int
-TAO_GIOP_Message_Base::write_protocol_header (TAO_GIOP_Message_Type type,
+TAO_GIOP_Message_Base::write_protocol_header (GIOP::MsgType type,
                                               const TAO_GIOP_Message_Version &version,
                                               TAO_OutputCDR &msg)
 {
@@ -795,7 +794,7 @@ TAO_GIOP_Message_Base::write_protocol_header (TAO_GIOP_Message_Type type,
   // "flags" octet, i.e. header[6] will be set up later when message
   // is formatted by the transport.
 
-  header[7] = CORBA::Octet (type);  // Message type
+  header[7] = static_cast <CORBA::Octet> (type);  // Message type
 
   static ACE_CDR::ULong const header_size =
     sizeof (header) / sizeof (header[0]);
@@ -873,10 +872,10 @@ TAO_GIOP_Message_Base::process_request (
           // We should forward to another object...
           TAO_Pluggable_Reply_Params_Base reply_params;
           reply_params.request_id_ = request_id;
-          reply_params.reply_status_ =
+          reply_params.reply_status (
               permanent_forward_condition
-              ? TAO_GIOP_LOCATION_FORWARD_PERM
-              : TAO_GIOP_LOCATION_FORWARD;
+              ? GIOP::LOCATION_FORWARD_PERM
+              : GIOP::LOCATION_FORWARD);
           reply_params.svc_ctx_.length (0);
 
           // Send back the reply service context.
@@ -1031,7 +1030,7 @@ TAO_GIOP_Message_Base::process_locate_request (TAO_Transport *transport,
   TAO_GIOP_Locate_Status_Msg status_info;
 
   // Defaulting.
-  status_info.status = TAO_GIOP_UNKNOWN_OBJECT;
+  status_info.status = GIOP::UNKNOWN_OBJECT;
 
   CORBA::Boolean response_required = true;
 
@@ -1081,17 +1080,17 @@ TAO_GIOP_Message_Base::process_locate_request (TAO_Transport *transport,
 
       if (!CORBA::is_nil (forward_to.in ()))
         {
-          status_info.status = TAO_GIOP_OBJECT_FORWARD;
+          status_info.status = GIOP::OBJECT_FORWARD;
           status_info.forward_location_var = forward_to;
           if (TAO_debug_level > 0)
             ACE_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("TAO (%P|%t) - TAO_GIOP_Message_Base::process_locate_request, ")
                         ACE_TEXT ("called: forwarding\n")));
         }
-      else if (server_request.exception_type () == TAO_GIOP_NO_EXCEPTION)
+      else if (server_request.reply_status () == GIOP::NO_EXCEPTION)
         {
           // We got no exception, so the object is here.
-          status_info.status = TAO_GIOP_OBJECT_HERE;
+          status_info.status = GIOP::OBJECT_HERE;
           if (TAO_debug_level > 0)
             ACE_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("TAO (%P|%t) - TAO_GIOP_Message_Base::process_locate_request, ")
@@ -1103,7 +1102,7 @@ TAO_GIOP_Message_Base::process_locate_request (TAO_Transport *transport,
 
           if (!CORBA::is_nil (status_info.forward_location_var.in ()))
             {
-              status_info.status = TAO_GIOP_OBJECT_FORWARD;
+              status_info.status = GIOP::OBJECT_FORWARD;
               ACE_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("TAO (%P|%t) - TAO_GIOP_Message_Base::process_locate_request, ")
                           ACE_TEXT ("forwarding\n")));
@@ -1111,7 +1110,7 @@ TAO_GIOP_Message_Base::process_locate_request (TAO_Transport *transport,
           else
             {
               // Normal exception, so the object is not here
-              status_info.status = TAO_GIOP_UNKNOWN_OBJECT;
+              status_info.status = GIOP::UNKNOWN_OBJECT;
               ACE_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("TAO (%P|%t) - TAO_GIOP_Message_Base::process_locate_request, ")
                           ACE_TEXT ("not here\n")));
@@ -1122,7 +1121,7 @@ TAO_GIOP_Message_Base::process_locate_request (TAO_Transport *transport,
   catch (const ::CORBA::Exception&)
     {
       // Normal exception, so the object is not here
-      status_info.status = TAO_GIOP_UNKNOWN_OBJECT;
+      status_info.status = GIOP::UNKNOWN_OBJECT;
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("TAO (%P|%t) - TAO_GIOP_Message_Base::process_locate_request, ")
@@ -1131,7 +1130,7 @@ TAO_GIOP_Message_Base::process_locate_request (TAO_Transport *transport,
   catch (...)
     {
       // Normal exception, so the object is not here
-      status_info.status = TAO_GIOP_UNKNOWN_OBJECT;
+      status_info.status = GIOP::UNKNOWN_OBJECT;
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("TAO (%P|%t) TAO_GIOP_Message_Base::process_locate_request - ")
@@ -1158,7 +1157,7 @@ TAO_GIOP_Message_Base::make_send_locate_reply (TAO_Transport *transport,
   // Note here we are making the Locate reply header which is *QUITE*
   // different from the reply header made by the make_reply () call..
   // Make the GIOP message header
-  this->write_protocol_header (TAO_GIOP_LOCATEREPLY, giop_version, output);
+  this->write_protocol_header (GIOP::LocateReply, giop_version, output);
 
   // This writes the header & body
   parser->write_locate_reply_mesg (output,
@@ -1205,7 +1204,7 @@ TAO_GIOP_Message_Base::send_error (TAO_Transport *transport)
     (CORBA::Octet) 1, // Use the lowest GIOP version
     (CORBA::Octet) 0,
     TAO_ENCAP_BYTE_ORDER,
-    TAO_GIOP_MESSAGERROR,
+    GIOP::MessageError,
     0, 0, 0, 0
   };
 
@@ -1290,8 +1289,7 @@ TAO_GIOP_Message_Base::get_parser (
 void
 TAO_GIOP_Message_Base::
   send_close_connection (const TAO_GIOP_Message_Version &version,
-                         TAO_Transport *transport,
-                         void *)
+                         TAO_Transport *transport)
 {
   // static CORBA::Octet
   // I hate  this in every method. Till the time I figure out a way
@@ -1307,7 +1305,7 @@ TAO_GIOP_Message_Base::
     version.major,
     version.minor,
     TAO_ENCAP_BYTE_ORDER,
-    TAO_GIOP_CLOSECONNECTION,
+    GIOP::CloseConnection,
     0, 0, 0, 0
   };
 
@@ -1387,11 +1385,13 @@ TAO_GIOP_Message_Base::send_reply_exception (
   // this).
   reply_params.service_context_notowned (svc_info);
 
-  reply_params.reply_status_ = TAO_GIOP_USER_EXCEPTION;
-
   if (CORBA::SystemException::_downcast (x) != 0)
     {
-      reply_params.reply_status_ = TAO_GIOP_SYSTEM_EXCEPTION;
+      reply_params.reply_status (GIOP::SYSTEM_EXCEPTION);
+    }
+  else
+    {
+      reply_params.reply_status (GIOP::USER_EXCEPTION);
     }
 
   if (this->generate_exception_reply (output, reply_params, *x) == -1)
@@ -1441,9 +1441,9 @@ TAO_GIOP_Message_Base::dump_msg (const char *label,
       CORBA::ULong *id = &tmp;
       char *tmp_id = 0;
 
-      if (ptr[TAO_GIOP_MESSAGE_TYPE_OFFSET] == TAO_GIOP_REQUEST ||
-          ptr[TAO_GIOP_MESSAGE_TYPE_OFFSET] == TAO_GIOP_REPLY ||
-          ptr[TAO_GIOP_MESSAGE_TYPE_OFFSET] == TAO_GIOP_FRAGMENT)
+      if (ptr[TAO_GIOP_MESSAGE_TYPE_OFFSET] == GIOP::Request ||
+          ptr[TAO_GIOP_MESSAGE_TYPE_OFFSET] == GIOP::Reply ||
+          ptr[TAO_GIOP_MESSAGE_TYPE_OFFSET] == GIOP::Fragment)
         {
           if (major == 1 && minor < 2)
             {
@@ -1618,8 +1618,8 @@ TAO_GIOP_Message_Base::parse_request_id (const TAO_Queued_Data *qd,
     {
       switch (qd->msg_type ())
       {
-        case TAO_PLUGGABLE_MESSAGE_REQUEST:
-        case TAO_PLUGGABLE_MESSAGE_REPLY:
+        case GIOP::Request:
+        case GIOP::Reply:
           {
             IOP::ServiceContextList service_context;
 
@@ -1630,9 +1630,9 @@ TAO_GIOP_Message_Base::parse_request_id (const TAO_Queued_Data *qd,
               }
           }
           break;
-        case TAO_PLUGGABLE_MESSAGE_CANCELREQUEST:
-        case TAO_PLUGGABLE_MESSAGE_LOCATEREQUEST:
-        case TAO_PLUGGABLE_MESSAGE_LOCATEREPLY:
+        case GIOP::CancelRequest:
+        case GIOP::LocateRequest:
+        case GIOP::LocateReply:
           {
             if ((input_cdr >> request_id))
               {
@@ -1648,12 +1648,12 @@ TAO_GIOP_Message_Base::parse_request_id (const TAO_Queued_Data *qd,
     {
       switch (qd->msg_type ())
       {
-        case TAO_PLUGGABLE_MESSAGE_REQUEST:
-        case TAO_PLUGGABLE_MESSAGE_REPLY:
-        case TAO_PLUGGABLE_MESSAGE_FRAGMENT:
-        case TAO_PLUGGABLE_MESSAGE_CANCELREQUEST:
-        case TAO_PLUGGABLE_MESSAGE_LOCATEREQUEST:
-        case TAO_PLUGGABLE_MESSAGE_LOCATEREPLY:
+        case GIOP::Request:
+        case GIOP::Reply:
+        case GIOP::Fragment:
+        case GIOP::CancelRequest:
+        case GIOP::LocateRequest:
+        case GIOP::LocateReply:
           {
             // Dealing with GIOP-1.2, the request-id is located directly
             // behind the GIOP-Header.  This is true for all message
@@ -1858,7 +1858,7 @@ TAO_GIOP_Message_Base::discard_fragmented_message (const TAO_Queued_Data *cancel
 
       if (head->giop_version ().major_version () == 1 &&
           head->giop_version ().minor_version () <= 1 &&
-          head->msg_type () != TAO_PLUGGABLE_MESSAGE_FRAGMENT && // GIOP11 fragment does not provide request id
+          head->msg_type () != GIOP::Fragment && // GIOP11 fragment does not provide request id
           this->parse_request_id (head, head_request_id) >= 0 &&
           cancel_request_id == head_request_id)
         {

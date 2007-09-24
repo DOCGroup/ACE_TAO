@@ -89,7 +89,7 @@ public:
   CORBA::Octet more_fragments (void) const;
 
   /// Get message type
-  TAO_Pluggable_Message_Type msg_type (void) const;
+  GIOP::MsgType msg_type (void) const;
 
   /// Get next
   TAO_Queued_Data *next (void) const;
@@ -105,7 +105,7 @@ public:
 
   /// Set the state
   void state (const TAO_GIOP_Message_State& state);
-  
+
   const TAO_GIOP_Message_State& state (void) const;
 
 private:

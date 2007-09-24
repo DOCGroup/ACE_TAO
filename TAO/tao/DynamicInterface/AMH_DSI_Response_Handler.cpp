@@ -374,10 +374,10 @@ TAO_AMH_DSI_Response_Handler::gateway_exception_reply (
   switch (reply_status)
     {
     case TAO_AMI_REPLY_USER_EXCEPTION:
-      this->exception_type_ = TAO_GIOP_USER_EXCEPTION;
+      this->reply_status_ = GIOP::USER_EXCEPTION;
       break;
     case TAO_AMI_REPLY_SYSTEM_EXCEPTION:
-      this->exception_type_ = TAO_GIOP_SYSTEM_EXCEPTION;
+      this->reply_status_ = GIOP::SYSTEM_EXCEPTION;
       break;
 
       // TODO: we don't handle location forward at this moment.
@@ -419,10 +419,10 @@ TAO_AMH_DSI_Response_Handler::gateway_exception_reply (
     {
     //case TAO_PLUGGABLE_MESSAGE_USER_EXCEPTION:
     case TAO_AMI_REPLY_USER_EXCEPTION:
-      this->exception_type_ = TAO_GIOP_USER_EXCEPTION;
+      this->reply_status_ = GIOP::USER_EXCEPTION;
       break;
     case TAO_AMI_REPLY_SYSTEM_EXCEPTION:
-      this->exception_type_ = TAO_GIOP_SYSTEM_EXCEPTION;
+      this->reply_status_ = GIOP::SYSTEM_EXCEPTION;
       break;
 
     // we don't handle location forward at this moment.

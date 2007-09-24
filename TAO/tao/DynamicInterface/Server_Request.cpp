@@ -132,7 +132,7 @@ CORBA::ServerRequest::set_exception (const CORBA::Any &value)
                     CORBA::Any (value),
                     CORBA::NO_MEMORY ());
 
-  this->orb_server_request_.exception_type (TAO_GIOP_USER_EXCEPTION);
+  this->orb_server_request_.reply_status (GIOP::USER_EXCEPTION);
 }
 
 // This method will be utilized by the DSI servant to marshal outgoing
@@ -146,12 +146,12 @@ CORBA::ServerRequest::dsi_marshal (void)
       return;
     }
 
-  if (this->orb_server_request_.exception_type () == TAO_GIOP_NO_EXCEPTION)
+  if (this->orb_server_request_.reply_status () == GIOP::NO_EXCEPTION)
     {
       // In DSI, we can't rely on the skeleton to do this.
       if (this->retval_ == 0 && this->params_ == 0)
         {
-          this->orb_server_request_.argument_flag (0);
+          this->orb_server_request_.argument_flag (false);
         }
 
       this->orb_server_request_.init_reply ();
@@ -173,8 +173,8 @@ CORBA::ServerRequest::dsi_marshal (void)
     }
   else
     {
-      // This defaults to 1, but just to be safe...
-      this->orb_server_request_.argument_flag (1);
+      // This defaults to true, but just to be safe...
+      this->orb_server_request_.argument_flag (true);
 
       // Write the reply header to the ORB request's outgoing CDR stream.
       this->orb_server_request_.init_reply ();
@@ -190,10 +190,10 @@ void
 CORBA::ServerRequest::gateway_exception_reply (ACE_CString &raw_exception)
 {
   // This defaults to 1, but just to be safe...
-  this->orb_server_request_.argument_flag (1);
+  this->orb_server_request_.argument_flag (true);
 
   // This reply path handles only user exceptions.
-  this->orb_server_request_.exception_type (TAO_GIOP_USER_EXCEPTION);
+  this->orb_server_request_.reply_status (GIOP::USER_EXCEPTION);
 
   this->orb_server_request_.init_reply ();
 

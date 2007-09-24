@@ -36,7 +36,8 @@ TAO_DII_Deferred_Reply_Dispatcher::dispatch_reply (
   if (params.input_cdr_ == 0)
     return -1;
 
-  this->reply_status_ = params.reply_status_;
+  this->reply_status_ = params.reply_status ();
+  this->locate_reply_status_ = params.locate_reply_status ();
 
   // Transfer the <params.input_cdr_>'s content to this->reply_cdr_
   ACE_Data_Block *db = this->reply_cdr_.clone_from (*params.input_cdr_);
@@ -110,7 +111,7 @@ TAO_DII_Deferred_Reply_Dispatcher::connection_closed (void)
       // Turn into an output CDR
       TAO_InputCDR cdr (out_cdr);
 
-      this->req_->handle_response (cdr, TAO_PLUGGABLE_MESSAGE_SYSTEM_EXCEPTION);
+      this->req_->handle_response (cdr, GIOP::SYSTEM_EXCEPTION);
     }
   catch (const ::CORBA::Exception& ex)
     {
@@ -155,7 +156,8 @@ int
 TAO_DII_Asynch_Reply_Dispatcher::dispatch_reply (
     TAO_Pluggable_Reply_Params &params)
 {
-  this->reply_status_ = params.reply_status_;
+  this->reply_status_ = params.reply_status ();
+  this->locate_reply_status_ = params.locate_reply_status ();
 
   // Transfer the <params.input_cdr_>'s content to this->reply_cdr_
   ACE_Data_Block *db =
@@ -223,7 +225,7 @@ TAO_DII_Asynch_Reply_Dispatcher::connection_closed (void)
       CORBA::Request::_tao_reply_stub (
           this->reply_cdr_,
           this->callback_,
-          TAO_PLUGGABLE_MESSAGE_SYSTEM_EXCEPTION);
+          GIOP::SYSTEM_EXCEPTION);
     }
   catch (const CORBA::Exception& ex)
     {

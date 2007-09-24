@@ -57,13 +57,13 @@ TAO_GIOP_Message_State::parse_message_header_i (ACE_Message_Block &incoming)
     {
       switch (this->message_type_)
         {
-        case TAO_PLUGGABLE_MESSAGE_MESSAGERROR:
-        case TAO_PLUGGABLE_MESSAGE_CLOSECONNECTION:
+        case GIOP::MessageError:
+        case GIOP::CloseConnection:
           if (TAO_debug_level > 0)
             {
               char const * const which =
-                (this->message_type_ == TAO_PLUGGABLE_MESSAGE_CLOSECONNECTION) ? "CloseConnection" :
-                (this->message_type_ == TAO_PLUGGABLE_MESSAGE_MESSAGERROR) ? "MessageError" : "unknown";
+                (this->message_type_ == GIOP::CloseConnection) ? "CloseConnection" :
+                (this->message_type_ == GIOP::MessageError) ? "MessageError" : "unknown";
               ACE_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("TAO (%P|%t) - GIOP %s received \n"), which));
             }
@@ -79,48 +79,6 @@ TAO_GIOP_Message_State::parse_message_header_i (ACE_Message_Block &incoming)
     }
 
   return 0; // success
-}
-
-TAO_Pluggable_Message_Type
-TAO_GIOP_Message_State::message_type (CORBA::Octet type) const
-{
-  // Convert to the right type of Pluggable Messaging message type.
-
-  switch (type)
-    {
-    case TAO_GIOP_REQUEST:
-      return TAO_PLUGGABLE_MESSAGE_REQUEST;
-    case TAO_GIOP_LOCATEREQUEST:
-      return TAO_PLUGGABLE_MESSAGE_LOCATEREQUEST;
-
-    case TAO_GIOP_LOCATEREPLY:
-      return TAO_PLUGGABLE_MESSAGE_LOCATEREPLY;
-
-    case TAO_GIOP_REPLY:
-      return TAO_PLUGGABLE_MESSAGE_REPLY;
-
-    case TAO_GIOP_CLOSECONNECTION:
-      return TAO_PLUGGABLE_MESSAGE_CLOSECONNECTION;
-
-    case TAO_GIOP_FRAGMENT:
-      return TAO_PLUGGABLE_MESSAGE_FRAGMENT;
-
-    case TAO_GIOP_MESSAGERROR:
-      return TAO_PLUGGABLE_MESSAGE_MESSAGERROR;
-
-    case TAO_GIOP_CANCELREQUEST:
-      return TAO_PLUGGABLE_MESSAGE_CANCELREQUEST;
-
-    default:
-        if (TAO_debug_level > 0)
-          {
-            ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("TAO (%P|%t) %N:%l        message_type : ")
-                    ACE_TEXT ("wrong message.\n")));
-           }
-    }
-
-  return TAO_PLUGGABLE_MESSAGE_MESSAGERROR;
 }
 
 int

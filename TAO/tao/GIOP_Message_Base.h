@@ -179,7 +179,7 @@ protected:
   /// Writes the GIOP header in to @a msg
   /// @note If the GIOP header happens to change in the future, we can
   /// push this method in to the generator_parser classes.
-  int write_protocol_header (TAO_GIOP_Message_Type t,
+  int write_protocol_header (GIOP::MsgType t,
                              const TAO_GIOP_Message_Version& version,
                              TAO_OutputCDR &msg);
 
@@ -198,8 +198,7 @@ protected:
 
   /// Close a connection, first sending GIOP::CloseConnection.
   void send_close_connection (const TAO_GIOP_Message_Version &version,
-                              TAO_Transport *transport,
-                              void *ctx);
+                              TAO_Transport *transport);
 
   /// We must send a LocateReply through @a transport, this request
   /// resulted in some kind of exception.

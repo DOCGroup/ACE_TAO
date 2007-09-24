@@ -55,7 +55,7 @@ namespace TAO
    *  collocated. Looks like there are no ways to utilize the
    *  opportunity that may have been presented.
    */
-  class TAO_Export LocateRequest_Invocation_Adapter
+  class LocateRequest_Invocation_Adapter
   {
   public:
     LocateRequest_Invocation_Adapter (CORBA::Object_ptr target);

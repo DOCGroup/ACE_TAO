@@ -25,6 +25,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/Basic_Types.h"
+#include "tao/GIOPC.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -33,7 +34,6 @@ class TAO_Pluggable_Reply_Params;
 
 /**
  * @class TAO_Reply_Dispatcher
- *
  *
  * Different invocation modes process the Reply messages in
  * different ways.  Traditional synchronous replies simply receive
@@ -78,12 +78,17 @@ public:
    */
   virtual void connection_closed (void) = 0;
 
-  /// Get the reply status.
-  CORBA::ULong reply_status (void) const;
+  /// Get the locate reply status.
+  GIOP::LocateStatusType locate_reply_status (void) const;
+
+  GIOP::ReplyStatusType reply_status (void) const;
 
 protected:
-  /// Reply or LocateReply status.
-  CORBA::ULong reply_status_;
+  /// LocateReply status.
+  GIOP::LocateStatusType locate_reply_status_;
+
+  // RequestReply status
+  GIOP::ReplyStatusType reply_status_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

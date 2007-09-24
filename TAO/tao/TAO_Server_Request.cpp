@@ -64,7 +64,7 @@ TAO_ServerRequest::TAO_ServerRequest (TAO_GIOP_Message_Base *mesg_base,
     sync_with_server_ (false),
     is_dsi_ (false),
     // @@ We shouldn't be using GIOP specific types here. Need to be revisited.
-    exception_type_ (TAO_GIOP_NO_EXCEPTION),
+    reply_status_ (GIOP::NO_EXCEPTION),
     orb_core_ (orb_core),
     request_id_ (0),
     profile_ (orb_core),
@@ -76,7 +76,7 @@ TAO_ServerRequest::TAO_ServerRequest (TAO_GIOP_Message_Base *mesg_base,
     , interceptor_count_ (0)
     , rs_pi_current_ (0)
     , caught_exception_ (0)
-    , reply_status_ (-1)
+    , pi_reply_status_ (-1)
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
     , transport_(transport) //already duplicated in TAO_Transport::process_parsed_messages ()
 {
@@ -105,7 +105,7 @@ TAO_ServerRequest::TAO_ServerRequest (TAO_GIOP_Message_Base *mesg_base,
     deferred_reply_ (deferred_reply),
     sync_with_server_ (false),
     is_dsi_ (false),
-    exception_type_ (TAO_GIOP_NO_EXCEPTION),
+    reply_status_ (GIOP::NO_EXCEPTION),
     orb_core_ (orb_core),
     request_id_ (request_id),
     profile_ (orb_core),
@@ -117,7 +117,7 @@ TAO_ServerRequest::TAO_ServerRequest (TAO_GIOP_Message_Base *mesg_base,
   , interceptor_count_ (0)
   , rs_pi_current_ (0)
   , caught_exception_ (0)
-  , reply_status_ (-1)
+  , pi_reply_status_ (-1)
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
   , transport_(transport) //already duplicated in TAO_Transport::process_parsed_messages ()
 {
@@ -141,7 +141,7 @@ TAO_ServerRequest::TAO_ServerRequest (TAO_ORB_Core * orb_core,
     deferred_reply_ (false),
     sync_with_server_ (details.response_flags () == static_cast<CORBA::Octet> (Messaging::SYNC_WITH_SERVER)),
     is_dsi_ (false),
-    exception_type_ (TAO_GIOP_NO_EXCEPTION),
+    reply_status_ (GIOP::NO_EXCEPTION),
     orb_core_ (orb_core),
     request_id_ (0),
     profile_ (orb_core),
@@ -153,7 +153,7 @@ TAO_ServerRequest::TAO_ServerRequest (TAO_ORB_Core * orb_core,
   , interceptor_count_ (0)
   , rs_pi_current_ (0)
   , caught_exception_ (0)
-  , reply_status_ (-1)
+  , pi_reply_status_ (-1)
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
   , transport_ (0)
 {
@@ -253,21 +253,16 @@ TAO_ServerRequest::init_reply (void)
         this->orb_core_->is_permanent_forward_condition (this->forward_location_.in (),
                                                          this->request_service_context ());
 
-      reply_params.reply_status_
-        = permanent_forward_condition
-        ? TAO_PLUGGABLE_MESSAGE_LOCATION_FORWARD_PERM
-        : TAO_PLUGGABLE_MESSAGE_LOCATION_FORWARD;
+      reply_params.reply_status (
+        permanent_forward_condition
+        ? GIOP::LOCATION_FORWARD_PERM
+        : GIOP::LOCATION_FORWARD);
     }
   // Any exception at all.
-  else if (this->exception_type_ == TAO_GIOP_NO_EXCEPTION)
-    {
-      reply_params.reply_status_ = TAO_PLUGGABLE_MESSAGE_NO_EXCEPTION;
-    }
   else
     {
-      reply_params.reply_status_ = this->exception_type_;
+      reply_params.reply_status (this->reply_status_);
     }
-
 
   this->outgoing_->message_attributes (this->request_id_,
                                        0,
@@ -278,8 +273,8 @@ TAO_ServerRequest::init_reply (void)
   this->mesg_base_->generate_reply_header (*this->outgoing_, reply_params);
 
   // Finish the GIOP Reply header, then marshal the exception.
-  if (reply_params.reply_status_ == TAO_PLUGGABLE_MESSAGE_LOCATION_FORWARD ||
-      reply_params.reply_status_ == TAO_PLUGGABLE_MESSAGE_LOCATION_FORWARD_PERM)
+  if (reply_params.reply_status () == GIOP::LOCATION_FORWARD ||
+      reply_params.reply_status () == GIOP::LOCATION_FORWARD_PERM)
     {
       // Marshal the forward location pointer.
       CORBA::Object_ptr object_ptr = this->forward_location_.in ();
@@ -311,7 +306,7 @@ TAO_ServerRequest::send_no_exception_reply (void)
   // Send back the reply service context.
   reply_params.service_context_notowned (&this->reply_service_info ());
 
-  reply_params.reply_status_ = TAO_GIOP_NO_EXCEPTION;
+  reply_params.reply_status (GIOP::NO_EXCEPTION);
 
   // No data anyway.
   reply_params.argument_flag_ = false;
@@ -388,12 +383,15 @@ TAO_ServerRequest::tao_send_reply_exception (const CORBA::Exception &ex)
       reply_params.argument_flag_ = true;
 
       // Make a default reply status
-      reply_params.reply_status_ = TAO_GIOP_USER_EXCEPTION;
 
       // Check whether we are able to downcast the exception
       if (CORBA::SystemException::_downcast (&ex) != 0)
         {
-          reply_params.reply_status_ = TAO_GIOP_SYSTEM_EXCEPTION;
+          reply_params.reply_status (GIOP::SYSTEM_EXCEPTION);
+        }
+      else
+        {
+          reply_params.reply_status (GIOP::USER_EXCEPTION);
         }
 
       // Create a new output CDR stream
@@ -503,7 +501,7 @@ TAO_ServerRequest::send_cached_reply (CORBA::OctetSeq &s)
   reply_params.argument_flag_ = true;
 
   // Make a default reply status
-  reply_params.reply_status_ = TAO_GIOP_NO_EXCEPTION;
+  reply_params.reply_status (GIOP::NO_EXCEPTION);
 
   this->outgoing_->message_attributes (this->request_id_,
                                        0,
@@ -547,9 +545,9 @@ void
 TAO_ServerRequest::caught_exception (CORBA::Exception *exception)
 {
   if (CORBA::SystemException::_downcast (exception) != 0)
-    this->reply_status_ = PortableInterceptor::SYSTEM_EXCEPTION;
+    this->pi_reply_status_ = PortableInterceptor::SYSTEM_EXCEPTION;
   else if (CORBA::UserException::_downcast (exception) != 0)
-    this->reply_status_ = PortableInterceptor::USER_EXCEPTION;
+    this->pi_reply_status_ = PortableInterceptor::USER_EXCEPTION;
 
   this->caught_exception_ = exception;
 }
