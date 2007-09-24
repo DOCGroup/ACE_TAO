@@ -26,9 +26,6 @@
 // Precompiler needs extra flags to ignore "invalid #pragma directive"
 #    define ACE_CC_PREPROCESSOR_ARGS "-E +W 67"
 
-// Compiler can't handle calls like foo->operator T *()
-//#    define ACE_HAS_BROKEN_CONVERSIONS
-
 // Compiler supports C++ exception handling. It's on by default. If the
 // +noeh compiler option is used to disable exceptions, the compiler defines
 // __HPACC_NOEH.
