@@ -944,6 +944,26 @@ ACE_OS::swab (const void *src,
               ssize_t length)
 {
 #if defined (ACE_LACKS_SWAB)
+  // ------------------------------------------------------------
+  // The following copyright notice applies to the swab()
+  // implementation within this "ACE_LACKS_SWAB" block of code.
+  // ------------------------------------------------------------
+  /*
+    Copyright (c) 1994-2006  Red Hat, Inc. All rights reserved.
+
+    This copyrighted material is made available to anyone wishing to
+    use, modify, copy, or redistribute it subject to the terms and
+    conditions of the BSD License.   This program is distributed in
+    the hope that it will be useful, but WITHOUT ANY WARRANTY
+    expressed or implied, including the implied warranties of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  A copy of
+    this license is available at
+    http://www.opensource.org/licenses. Any Red Hat trademarks that
+    are incorporated in the source code or documentation are not
+    subject to the BSD License and may only be used or replicated with
+    the express permission of Red Hat, Inc.
+  */
+
   const char *from = static_cast<const char*> (src);
   char *to = static_cast<char *> (dest);
   ssize_t ptr = 0;
