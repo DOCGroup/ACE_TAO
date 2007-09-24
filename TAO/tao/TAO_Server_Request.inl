@@ -19,7 +19,7 @@ TAO_ServerRequest::TAO_ServerRequest (void)
     deferred_reply_ (false),
     sync_with_server_ (false),
     is_dsi_ (false),
-    exception_type_ (TAO_GIOP_NO_EXCEPTION),
+    reply_status_ (GIOP::NO_EXCEPTION),
     orb_core_ (0),
     request_id_ (0),
     profile_ (0),
@@ -31,7 +31,7 @@ TAO_ServerRequest::TAO_ServerRequest (void)
   , interceptor_count_ (0)
   , rs_pi_current_ ()
   , caught_exception_ (0)
-  , reply_status_ (-1)
+  , pi_reply_status_ (-1)
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
   ,  transport_(0)
 {
@@ -177,16 +177,16 @@ TAO_ServerRequest::forward_location (void)
   return CORBA::Object::_duplicate (this->forward_location_.in ());
 }
 
-ACE_INLINE CORBA::ULong
-TAO_ServerRequest::exception_type (void)
+ACE_INLINE GIOP::ReplyStatusType
+TAO_ServerRequest::reply_status (void)
 {
-  return this->exception_type_;
+  return this->reply_status_;
 }
 
 ACE_INLINE void
-TAO_ServerRequest::exception_type (CORBA::ULong except_type)
+TAO_ServerRequest::reply_status (GIOP::ReplyStatusType reply_status)
 {
-  this->exception_type_ = except_type;
+  this->reply_status_ = reply_status;
 }
 
 ACE_INLINE void
@@ -240,15 +240,15 @@ TAO_ServerRequest::caught_exception (void)
 }
 
 ACE_INLINE void
-TAO_ServerRequest::reply_status (PortableInterceptor::ReplyStatus s)
+TAO_ServerRequest::pi_reply_status (PortableInterceptor::ReplyStatus s)
 {
-  this->reply_status_ = s;
+  this->pi_reply_status_ = s;
 }
 
 ACE_INLINE PortableInterceptor::ReplyStatus
-TAO_ServerRequest::reply_status (void)
+TAO_ServerRequest::pi_reply_status (void)
 {
-  return this->reply_status_;
+  return this->pi_reply_status_;
 }
 
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */

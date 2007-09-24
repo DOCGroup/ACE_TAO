@@ -329,7 +329,7 @@ CORBA::Request::poll_response (void)
 
 void
 CORBA::Request::handle_response (TAO_InputCDR &incoming,
-                                 CORBA::ULong reply_status)
+                                 GIOP::ReplyStatusType reply_status)
 {
   // If this request was created by a gateway, then result_
   // and/or args_ are shared by a CORBA::ServerRequest, whose
@@ -339,7 +339,7 @@ CORBA::Request::handle_response (TAO_InputCDR &incoming,
 
   switch (reply_status)
   {
-    case TAO_PLUGGABLE_MESSAGE_NO_EXCEPTION:
+    case GIOP::NO_EXCEPTION:
       if (this->result_ != 0)
         {
           // We can be sure that the impl is a TAO::Unknown_IDL_Type.
@@ -359,10 +359,10 @@ CORBA::Request::handle_response (TAO_InputCDR &incoming,
       }
 
       break;
-    case TAO_PLUGGABLE_MESSAGE_USER_EXCEPTION:
-    case TAO_PLUGGABLE_MESSAGE_SYSTEM_EXCEPTION:
-    case TAO_PLUGGABLE_MESSAGE_LOCATION_FORWARD:
-    case TAO_PLUGGABLE_MESSAGE_LOCATION_FORWARD_PERM:
+    case GIOP::USER_EXCEPTION:
+    case GIOP::SYSTEM_EXCEPTION:
+    case GIOP::LOCATION_FORWARD:
+    case GIOP::LOCATION_FORWARD_PERM:
     default:
       // @@ (JP) Don't know what to do about any of these yet.
       ACE_ERROR ((LM_ERROR,

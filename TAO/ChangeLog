@@ -1,3 +1,57 @@
+Mon Sep 24 07:43:15 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/CSD_Framework/CSD_FW_Server_Request_Wrapper.cpp:
+        * tao/DynamicInterface/AMH_DSI_Response_Handler.cpp:
+        * tao/DynamicInterface/DII_Invocation_Adapter.cpp:
+        * tao/DynamicInterface/DII_Reply_Dispatcher.cpp:
+        * tao/DynamicInterface/Request.cpp:
+        * tao/DynamicInterface/Request.h:
+        * tao/DynamicInterface/Server_Request.cpp:
+        * tao/GIOP_Message_Base.cpp:
+        * tao/GIOP_Message_Base.h:
+        * tao/GIOP_Message_Generator_Parser.cpp:
+        * tao/GIOP_Message_Generator_Parser.h:
+        * tao/GIOP_Message_Generator_Parser_10.cpp:
+        * tao/GIOP_Message_Generator_Parser_12.cpp:
+        * tao/GIOP_Message_State.cpp:
+        * tao/GIOP_Message_State.h:
+        * tao/GIOP_Message_State.inl:
+        * tao/GIOP_Utils.h:
+        * tao/Invocation_Adapter.cpp:
+        * tao/LocateRequest_Invocation.cpp:
+        * tao/LocateRequest_Invocation.h:
+        * tao/LocateRequest_Invocation_Adapter.cpp:
+        * tao/LocateRequest_Invocation_Adapter.h:
+        * tao/Messaging/AMH_Response_Handler.cpp:
+        * tao/Messaging/AMH_Response_Handler.h:
+        * tao/Messaging/AMI_Arguments_Converter_Impl.cpp:
+        * tao/Messaging/Asynch_Invocation_Adapter.cpp:
+        * tao/Messaging/Asynch_Reply_Dispatcher.cpp:
+        * tao/PI_Server/ServerInterceptorAdapter.cpp:
+        * tao/PI_Server/ServerRequestInfo.cpp:
+        * tao/PI_Server/ServerRequestInfo.inl:
+        * tao/Pluggable_Messaging_Utils.cpp:
+        * tao/Pluggable_Messaging_Utils.h:
+        * tao/Pluggable_Messaging_Utils.inl:
+        * tao/PortableServer/Upcall_Wrapper.cpp:
+        * tao/Queued_Data.h:
+        * tao/Queued_Data.inl:
+        * tao/Reply_Dispatcher.cpp:
+        * tao/Reply_Dispatcher.h:
+        * tao/Reply_Dispatcher.inl:
+        * tao/Synch_Invocation.cpp:
+        * tao/Synch_Reply_Dispatcher.cpp:
+        * tao/TAO_Server_Request.cpp:
+        * tao/TAO_Server_Request.h:
+        * tao/TAO_Server_Request.inl:
+        * tao/Transport.cpp:
+          Use the in IDL defined enums for message type, reply status type and
+          locate status type. By making this a real enum the compiler can check
+          whether we handle all possible values in a switch statement and can
+          also check incorrect checks. As a result the code to convert between
+          the IDL enums and the TAO enums has been removed. Also changes in several
+          classes exception_type to reply_status, that is meant by that flag
+
 Fri Sep 22 00:57:01 UTC 2007  Ossama Othman  <ossama_othman at symantec dot com>
 
         * orbsvcs/tests/Notify/lib/Notify_Test_Client.cpp (init_ORB):
@@ -20,7 +74,7 @@ Fri Sep 22 00:21:47 UTC 2007  Ossama Othman  <ossama_othman at symantec dot com>
           list since such use is not portable.
 
           Removed stray semi-colon.
-        
+
         * tao/Tagged_Profile.inl (TAO_Tagged_Profile):
 
           Added missing initialization of "object_key_extracted_" member

@@ -37,7 +37,7 @@ namespace TAO
    * @brief Object created by TAO::LocateRequest_Invocation_Adapter to
    * create and send LocateRequest invocation.
    */
-  class TAO_Export LocateRequest_Invocation
+  class LocateRequest_Invocation
     : public Synch_Twoway_Invocation
   {
   public:

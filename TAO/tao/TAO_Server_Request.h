@@ -30,6 +30,7 @@
 #include "tao/Service_Context.h"
 #include "tao/Object.h"
 #include "tao/Transport_Selection_Guard.h"
+#include "tao/GIOPC.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
 
@@ -209,11 +210,11 @@ public:
   /// Get the forward_location.
   CORBA::Object_ptr forward_location (void);
 
-  /// Get the exception type.
-  CORBA::ULong exception_type (void);
+  /// Get the reply status
+  GIOP::ReplyStatusType reply_status (void);
 
-  /// Set the exception type.
-  void exception_type (CORBA::ULong except_type);
+  /// Set the reply status
+  void reply_status (GIOP::ReplyStatusType except_type);
 
   /// Set the requesting principal
   void requesting_principal (const CORBA::OctetSeq & principal);
@@ -265,10 +266,10 @@ public:
   void caught_exception (CORBA::Exception *exception);
 
   /// Set the status of the received reply.
-  void reply_status (PortableInterceptor::ReplyStatus s);
+  void pi_reply_status (PortableInterceptor::ReplyStatus s);
 
   /// Get the status of the received reply.
-  PortableInterceptor::ReplyStatus reply_status (void);
+  PortableInterceptor::ReplyStatus pi_reply_status (void);
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
 private:
@@ -313,8 +314,8 @@ private:
   /// Did we get passed to a CORBA::ServerRequest?
   CORBA::Boolean is_dsi_;
 
-  /// Exception type (will be NO_EXCEPTION in the majority of the cases).
-  CORBA::ULong exception_type_;
+  /// Reply status (will be NO_EXCEPTION in the majority of the cases).
+  GIOP::ReplyStatusType reply_status_;
 
   /// A pointer to the ORB Core for the context where the request was
   /// created.
@@ -359,7 +360,7 @@ private:
   CORBA::Exception * caught_exception_;
 
   /// Reply status for the current request.
-  PortableInterceptor::ReplyStatus reply_status_;
+  PortableInterceptor::ReplyStatus pi_reply_status_;
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
   ///// Transport class.

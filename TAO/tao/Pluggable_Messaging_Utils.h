@@ -19,6 +19,7 @@
 #include /**/ "ace/pre.h"
 
 #include "tao/IOP_IORC.h"
+#include "tao/GIOPC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -31,7 +32,7 @@ class TAO_Transport;
 /**
  * @class TAO_Pluggable_Reply_Params_Base
  *
- * @brief TAO_Pluggable_Acceptor_Params
+ * @brief TAO_Pluggable_Reply_Params_Base
  *
  * This represents a set of data that would be assembled by the
  * acceptor to pass to the connector. This base class is used by
@@ -50,12 +51,6 @@ public:
 
   /// The request id for which the reply we (connector) has received.
   CORBA::ULong request_id_;
-
-  // @@ Bala: this is (again) an GIOPism (to coin a word).  Other
-  // protocol may choose to send different *messages* instead.
-  // @@ Carlos: I agree. Please see above.
-  /// The reply status.
-  CORBA::ULong reply_status_;
 
   /**
    * Since this class no longer contains an NVList, this is the
@@ -81,9 +76,22 @@ public:
   /// marshalled in the reply
   CORBA::Boolean argument_flag_;
 
+  GIOP::ReplyStatusType reply_status (void) const;
+  void reply_status (GIOP::ReplyStatusType status);
+
+  GIOP::LocateStatusType locate_reply_status (void) const;
+  void locate_reply_status (GIOP::LocateStatusType status);
+
 protected:
   /// The service context list that we don't own.
   IOP::ServiceContextList *service_context_;
+private:
+  /// The reply status.
+  GIOP::ReplyStatusType reply_status_;
+
+  /// The locate reply status
+  GIOP::LocateStatusType locate_reply_status_;
+
 };
 
 /**
@@ -104,82 +112,6 @@ public:
   TAO_InputCDR *input_cdr_;
 
   TAO_Transport *transport_;
-};
-
-// @@ Bala: this is a GIOPism too, there is no such thing as locate
-// request in HTTP (the basis for SOAP and XIOP), i don't know about
-// HTTP-NG, but i wouldn't be surprised if it had.  Furthermore, some
-// very influential people (Michi) is arguing against it in the OMG.
-//
-// @@Carlos: Yes, I also saw some of Michi's ideas. Even if OMG
-// decides to remove this, can I point that we may have to support that
-// for the existsing GIOP1.0,1.1 & GIOP 1.2.  Above all, the enum type
-// contains things that I know of today. I can go ahead and add HTTP-NG
-// stuff. They all seem to be in Working Draft stage. So, I am just
-// keeping off. I dont want to add something for the kick of it :-)
-enum TAO_Pluggable_Header_Type
-{
-  TAO_PLUGGABLE_MESSAGE_REQUEST_HEADER = 0,
-  TAO_PLUGGABLE_MESSAGE_LOCATE_REQUEST_HEADER
-};
-
-
-/**
- * Provide an external interface for the users of this pluggable
- * messaging framework to denote  existing message types. This has
- * an inspiration from GIOP. So if anybody wants to add more message
- * types you are welcome but please do not change the numbering
- * scheme as this would affect GIOP.
- *
- * @note
- * We may not need everything here. It would be good if we
- * have only the following messages TAO_PLUGGABLE_MESSAGE_REQUEST,
- * TAO_PLUGGABLE_MESSAGE_REPLY,
- * TAO_PLUGGABLE_MESSAGE_CLOSECONNECTION,
- * TAO_PLUGGABLE_MESSAGE_MESSAGE_ERROR.  Changes will be made once
- * the rest of the stuff gets ready to roll
- */
-enum TAO_Pluggable_Message_Type
-{
-  TAO_PLUGGABLE_MESSAGE_REQUEST = 0,                // sent by client.
-  TAO_PLUGGABLE_MESSAGE_REPLY = 1,                  // by server.
-  TAO_PLUGGABLE_MESSAGE_CANCELREQUEST = 2,          // by client.
-  TAO_PLUGGABLE_MESSAGE_LOCATEREQUEST = 3,          // by client.
-  TAO_PLUGGABLE_MESSAGE_LOCATEREPLY = 4,
-  TAO_PLUGGABLE_MESSAGE_CLOSECONNECTION = 5,
-  TAO_PLUGGABLE_MESSAGE_MESSAGERROR = 6,
-  TAO_PLUGGABLE_MESSAGE_FRAGMENT = 7
-};
-
-// @@ Bala: This is a hopeless GIOPism.
-// @@ Carlos: Agreed.
-
-/**
- * Provide an external interface for the users of this pluggable
- * messaging framework to denote  existing Exception types. This has
- * an inspiration from GIOP. So if anybody wants to add more message
- * types you are welcome but please do not change the numbering
- * scheme as this would affect GIOP.
- */
-enum TAO_Pluggable_Message_Exception_Type
-{
-  /// Request completed successfully
-  TAO_PLUGGABLE_MESSAGE_NO_EXCEPTION = 0,
-
-  /// Request terminated with user exception
-  TAO_PLUGGABLE_MESSAGE_USER_EXCEPTION,
-
-  /// Request terminated with system exception
-  TAO_PLUGGABLE_MESSAGE_SYSTEM_EXCEPTION,
-
-  /// Reply is a location forward type
-  TAO_PLUGGABLE_MESSAGE_LOCATION_FORWARD,
-
-  /// PLUGGABLE_MESSAGE 1.2, Reply is a location forward perm type..
-  TAO_PLUGGABLE_MESSAGE_LOCATION_FORWARD_PERM,
-
-  /// GIOP1.2,
-  TAO_PLUGGABLE_MESSAGE_NEEDS_ADDRESSING_MODE
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

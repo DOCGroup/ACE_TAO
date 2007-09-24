@@ -1557,7 +1557,7 @@ TAO_Transport::consolidate_process_message (TAO_Queued_Data *q_data,
     }
 
   if (q_data->more_fragments () ||
-      q_data->msg_type () == TAO_PLUGGABLE_MESSAGE_FRAGMENT)
+      q_data->msg_type () == GIOP::Fragment)
     {
       // consolidate message on top of stack, only for fragmented messages
       TAO_Queued_Data *new_q_data = 0;
@@ -1638,7 +1638,7 @@ TAO_Transport::consolidate_enqueue_message (TAO_Queued_Data *q_data)
     }
 
   if (q_data->more_fragments () ||
-      q_data->msg_type () == TAO_PLUGGABLE_MESSAGE_FRAGMENT)
+      q_data->msg_type () == GIOP::Fragment)
     {
       TAO_Queued_Data *new_q_data = 0;
 
@@ -2051,7 +2051,7 @@ TAO_Transport::handle_input_parse_data  (TAO_Resume_Handle &rh,
 
       if (qd.missing_data () != 0 ||
           qd.more_fragments ()   ||
-          qd.msg_type () == TAO_PLUGGABLE_MESSAGE_FRAGMENT)
+          qd.msg_type () == GIOP::Fragment)
         {
           if (qd.missing_data () == 0)
             {
@@ -2252,7 +2252,7 @@ TAO_Transport::process_parsed_messages (TAO_Queued_Data *qd,
 
   switch (qd->msg_type ())
   {
-    case TAO_PLUGGABLE_MESSAGE_CLOSECONNECTION:
+    case GIOP::CloseConnection:
     {
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
@@ -2265,8 +2265,8 @@ TAO_Transport::process_parsed_messages (TAO_Queued_Data *qd,
       return -1;
     }
     break;
-    case TAO_PLUGGABLE_MESSAGE_REQUEST:
-    case TAO_PLUGGABLE_MESSAGE_LOCATEREQUEST:
+    case GIOP::Request:
+    case GIOP::LocateRequest:
     {
       // Let us resume the handle before we go ahead to process the
       // request. This will open up the handle for other threads.
@@ -2282,15 +2282,14 @@ TAO_Transport::process_parsed_messages (TAO_Queued_Data *qd,
         }
     }
     break;
-    case TAO_PLUGGABLE_MESSAGE_REPLY:
-    case TAO_PLUGGABLE_MESSAGE_LOCATEREPLY:
+    case GIOP::Reply:
+    case GIOP::LocateReply:
     {
       rh.resume_handle ();
 
       TAO_Pluggable_Reply_Params params (this);
 
-      if (this->messaging_object ()->process_reply_message (params,
-                                                            qd) == -1)
+      if (this->messaging_object ()->process_reply_message (params, qd) == -1)
         {
           if (TAO_debug_level > 0)
             ACE_DEBUG ((LM_DEBUG,
@@ -2303,7 +2302,7 @@ TAO_Transport::process_parsed_messages (TAO_Queued_Data *qd,
 
     }
     break;
-    case TAO_PLUGGABLE_MESSAGE_CANCELREQUEST:
+    case GIOP::CancelRequest:
     {
       // The associated request might be incomplete residing
       // fragmented in messaging object. We must make sure the
@@ -2327,7 +2326,7 @@ TAO_Transport::process_parsed_messages (TAO_Queued_Data *qd,
       // off the connection.
     }
     break;
-    case TAO_PLUGGABLE_MESSAGE_MESSAGERROR:
+    case GIOP::MessageError:
     {
       if (TAO_debug_level > 0)
         {
@@ -2339,7 +2338,7 @@ TAO_Transport::process_parsed_messages (TAO_Queued_Data *qd,
       return -1;
     }
     break;
-    case TAO_PLUGGABLE_MESSAGE_FRAGMENT:
+    case GIOP::Fragment:
     {
       // Nothing to be done.
     }

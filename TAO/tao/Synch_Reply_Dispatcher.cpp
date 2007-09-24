@@ -55,7 +55,8 @@ TAO_Synch_Reply_Dispatcher::dispatch_reply (
   if (params.input_cdr_ == 0)
     return -1;
 
-  this->reply_status_ = params.reply_status_;
+  this->reply_status_ = params.reply_status ();
+  this->locate_reply_status_ = params.locate_reply_status ();
 
   // Steal the buffer, that way we don't do any unnecesary copies of
   // this data.
@@ -78,8 +79,7 @@ TAO_Synch_Reply_Dispatcher::dispatch_reply (
   }
   else
   {
-    ACE_Data_Block *db =
-      this->reply_cdr_.clone_from (*params.input_cdr_);
+    ACE_Data_Block *db = this->reply_cdr_.clone_from (*params.input_cdr_);
 
     if (db == 0)
       {

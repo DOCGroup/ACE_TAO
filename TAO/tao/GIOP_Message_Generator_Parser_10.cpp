@@ -263,8 +263,7 @@ TAO_GIOP_Message_Generator_Parser_10::write_reply_header (
   output.write_ulong (reply.request_id_);
 
   // Write the reply status
-  this->marshal_reply_status (output,
-                              reply);
+  output.write_ulong (reply.reply_status ());
 
   return true;
 }
@@ -280,7 +279,7 @@ TAO_GIOP_Message_Generator_Parser_10::write_locate_reply_mesg (
   output.write_ulong (request_id);
   output.write_ulong (status_info.status);
 
-  if (status_info.status == TAO_GIOP_OBJECT_FORWARD)
+  if (status_info.status == GIOP::OBJECT_FORWARD)
     {
       CORBA::Object_ptr object_ptr =
         status_info.forward_location_var.in ();

@@ -80,7 +80,7 @@ namespace TAO
 
 #if TAO_HAS_INTERCEPTORS == 1
                 CORBA::Boolean const is_permanent_forward =
-                  (synch.reply_status() == TAO_GIOP_LOCATION_FORWARD_PERM);
+                  (synch.reply_status() == GIOP::LOCATION_FORWARD_PERM);
 #else
                 CORBA::Boolean const is_permanent_forward = false;
 #endif

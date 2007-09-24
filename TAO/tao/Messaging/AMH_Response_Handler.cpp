@@ -18,13 +18,13 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_AMH_Response_Handler::TAO_AMH_Response_Handler ()
-  : exception_type_ (TAO_GIOP_NO_EXCEPTION)
+  : reply_status_ (GIOP::NO_EXCEPTION)
   , mesg_base_ (0)
   , request_id_ (0)
   , transport_ (0)
   , orb_core_ (0)
   , argument_flag_ (1)
-  , reply_status_ (TAO_RS_UNINITIALIZED)
+  , rh_reply_status_ (TAO_RS_UNINITIALIZED)
   , allocator_ (0)
 {
 }
@@ -46,7 +46,7 @@ TAO_AMH_Response_Handler::~TAO_AMH_Response_Handler (void)
     // If the ResponseHandler is being destroyed before a reply has
     // been sent to the client, we send a system exception
     // CORBA::NO_RESPONSE, with minor code to indicate the problem.
-    if (this->reply_status_ == TAO_RS_SENT)
+    if (this->rh_reply_status_ == TAO_RS_SENT)
       {
         return;
       }
@@ -86,7 +86,7 @@ TAO_AMH_Response_Handler::_tao_rh_init_reply (void)
 {
   {
     ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
-    if (this->reply_status_ != TAO_RS_UNINITIALIZED)
+    if (this->rh_reply_status_ != TAO_RS_UNINITIALIZED)
       {
         // Looks like someone is trying to call an AMH method
         // more than once
@@ -108,15 +108,7 @@ TAO_AMH_Response_Handler::_tao_rh_init_reply (void)
   reply_params.request_id_ = this->request_id_;
   reply_params.service_context_notowned (&(this->reply_service_context_.service_info ()));
   reply_params.argument_flag_ = this->argument_flag_;
-
-  if (this->exception_type_ == TAO_GIOP_NO_EXCEPTION)
-    {
-      reply_params.reply_status_ = TAO_PLUGGABLE_MESSAGE_NO_EXCEPTION;
-    }
-  else
-    {
-      reply_params.reply_status_ = this->exception_type_;
-    }
+  reply_params.reply_status (this->reply_status_);
 
   {
     ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
@@ -124,7 +116,7 @@ TAO_AMH_Response_Handler::_tao_rh_init_reply (void)
     this->mesg_base_->generate_reply_header (this->_tao_out, reply_params);
 
     // We are done initialising the reply
-    this->reply_status_ = TAO_RS_INITIALIZED;
+    this->rh_reply_status_ = TAO_RS_INITIALIZED;
   }
 
 }
@@ -137,7 +129,7 @@ TAO_AMH_Response_Handler::_tao_rh_send_reply (void)
 
     // If the reply has not been initialised, raise an exception to the
     // server-app saying it is not doing something right.
-    if (this->reply_status_ != TAO_RS_INITIALIZED)
+    if (this->rh_reply_status_ != TAO_RS_INITIALIZED)
       {
         throw ::CORBA::BAD_INV_ORDER (
                           CORBA::SystemException::_tao_minor_code (
@@ -145,7 +137,7 @@ TAO_AMH_Response_Handler::_tao_rh_send_reply (void)
                                                   ENOTSUP),
                           CORBA::COMPLETED_YES);
       }
-    this->reply_status_ = TAO_RS_SENDING;
+    this->rh_reply_status_ = TAO_RS_SENDING;
   }
 
   // Send the message.
@@ -169,7 +161,7 @@ TAO_AMH_Response_Handler::_tao_rh_send_reply (void)
 
   {
     ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
-    this->reply_status_ = TAO_RS_SENT;
+    this->rh_reply_status_ = TAO_RS_SENT;
   }
 }
 
@@ -178,7 +170,7 @@ TAO_AMH_Response_Handler::_tao_rh_send_exception (const CORBA::Exception &ex)
 {
   {
     ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
-    if (this->reply_status_ != TAO_RS_UNINITIALIZED)
+    if (this->rh_reply_status_ != TAO_RS_UNINITIALIZED)
       {
         throw ::CORBA::BAD_INV_ORDER (
           CORBA::SystemException::_tao_minor_code (
@@ -186,20 +178,25 @@ TAO_AMH_Response_Handler::_tao_rh_send_exception (const CORBA::Exception &ex)
             ENOTSUP),
           CORBA::COMPLETED_YES);
       }
-    this->reply_status_ = TAO_RS_SENDING;
+    this->rh_reply_status_ = TAO_RS_SENDING;
   }
 
   TAO_Pluggable_Reply_Params_Base reply_params;
   reply_params.request_id_ = this->request_id_;
   reply_params.svc_ctx_.length (0);
   reply_params.service_context_notowned (&this->reply_service_context_.service_info ());
-  reply_params.argument_flag_ = 1;
-  reply_params.reply_status_ = TAO_GIOP_USER_EXCEPTION;
+  reply_params.argument_flag_ = true;
   // @@ It appears as if there should be a more efficient way to do
   //    this: the caller already knows this because it is part of the
   //    ExceptionHolder information.
   if (CORBA::SystemException::_downcast (&ex))
-    reply_params.reply_status_ = TAO_GIOP_SYSTEM_EXCEPTION;
+    {
+      reply_params.reply_status (GIOP::SYSTEM_EXCEPTION);
+    }
+  else
+    {
+      reply_params.reply_status (GIOP::USER_EXCEPTION);
+    }
 
   if (this->mesg_base_->generate_exception_reply (this->_tao_out,
                                                   reply_params,
@@ -220,7 +217,7 @@ TAO_AMH_Response_Handler::_tao_rh_send_exception (const CORBA::Exception &ex)
 
   {
     ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
-    this->reply_status_ = TAO_RS_SENT;
+    this->rh_reply_status_ = TAO_RS_SENT;
   }
 }
 

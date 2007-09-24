@@ -118,7 +118,7 @@ TAO::Upcall_Wrapper::upcall (TAO_ServerRequest & server_request,
 #if TAO_HAS_INTERCEPTORS == 1
       if (interceptor_adapter == 0)
         {
-          server_request.reply_status (PortableInterceptor::SUCCESSFUL);
+          server_request.pi_reply_status (PortableInterceptor::SUCCESSFUL);
         }
       else
         {
@@ -136,7 +136,7 @@ TAO::Upcall_Wrapper::upcall (TAO_ServerRequest & server_request,
           if (CORBA::is_nil (forward_to_after.in ()))
             {
               // No location forward by interceptors and successful upcall.
-              server_request.reply_status (PortableInterceptor::SUCCESSFUL);
+              server_request.pi_reply_status (PortableInterceptor::SUCCESSFUL);
               interceptor_adapter->send_reply (server_request,
                                                the_args,
                                                the_nargs,

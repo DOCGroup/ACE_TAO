@@ -101,17 +101,16 @@ namespace TAO
     // Set the translators
     this->resolver_.transport ()->assign_translators (&cdr, 0);
 
-    switch (rd.reply_status ())
+    switch (rd.locate_reply_status ())
       {
-      case TAO_GIOP_OBJECT_HERE:
+      case GIOP::OBJECT_HERE:
         break;
-      case TAO_GIOP_UNKNOWN_OBJECT:
+      case GIOP::UNKNOWN_OBJECT:
         throw ::CORBA::OBJECT_NOT_EXIST (TAO::VMCID, CORBA::COMPLETED_YES);
-      case TAO_GIOP_OBJECT_FORWARD:
-      case TAO_GIOP_OBJECT_FORWARD_PERM:
+      case GIOP::OBJECT_FORWARD:
+      case GIOP::OBJECT_FORWARD_PERM:
         return this->location_forward (cdr);
-
-      case TAO_GIOP_LOC_SYSTEM_EXCEPTION:
+      case GIOP::LOC_SYSTEM_EXCEPTION:
         {
           // Pull the exception from the stream.
           CORBA::String_var buf;
@@ -127,7 +126,7 @@ namespace TAO
           // but if it does, we turn it into a CORBA::UNKNOWN exception.
           throw ::CORBA::UNKNOWN (TAO::VMCID, CORBA::COMPLETED_YES);
         }
-      case TAO_GIOP_LOC_NEEDS_ADDRESSING_MODE:
+      case GIOP::LOC_NEEDS_ADDRESSING_MODE:
         {
           // We have received an exception with a request to change the
           // addressing mode. First let us read the mode that the

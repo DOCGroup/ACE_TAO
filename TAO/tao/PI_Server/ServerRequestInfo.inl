@@ -32,7 +32,7 @@ TAO::ServerRequestInfo::forward_reference (
   // Note that we're converting the ForwardRequest exception in to a
   // LOCATION_FORWARD reply, so we do not set the exception status.
 
-  this->server_request_.reply_status (PortableInterceptor::LOCATION_FORWARD);
+  this->server_request_.pi_reply_status (PortableInterceptor::LOCATION_FORWARD);
 
   // Store the forward reference in the TAO_ServerRequest object.
   this->server_request_.forward_location (exc.forward.in ());
@@ -44,7 +44,7 @@ TAO::ServerRequestInfo::forward_reference (CORBA::Object_ptr obj)
   // We only get here if a servant manager threw a
   // PortableServer::ForwardRequest exception.
 
-  this->server_request_.reply_status (PortableInterceptor::LOCATION_FORWARD);
+  this->server_request_.pi_reply_status (PortableInterceptor::LOCATION_FORWARD);
 
   // Store the forward reference in the TAO_ServerRequest object.
   this->server_request_.forward_location (obj);

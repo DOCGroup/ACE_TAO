@@ -215,7 +215,7 @@ TAO::CSD::FW_Server_Request_Wrapper::clone (TAO_ServerRequest*& request)
 
   // TYPE: CORBA::ULong
   // ACTION: Primitive data type assignment.
-  clone_obj->exception_type_ = request->exception_type_;
+  clone_obj->reply_status_ = request->reply_status_;
 
   // TYPE: TAO_ORB_Core*
   // ACTION: Assuming that a shallow-copy is ok here.
