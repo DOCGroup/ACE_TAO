@@ -3,6 +3,10 @@ project : taolib, pi, portableserver, install, tao_versioning_idl_defaults {
   sharedname   = TAO_PI_Server
   dynamicflags = TAO_PI_SERVER_BUILD_DLL
 
+  specific(borland, bmake) {
+    compile_flags += -Q
+  }
+
   Source_Files {
     PI_Server
   }
