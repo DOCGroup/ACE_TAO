@@ -212,7 +212,7 @@ TAO::ServerRequestInterceptor_Adapter_Impl::receive_request_service_contexts (
   catch (const ::PortableInterceptor::ForwardRequest& exc)
     {
       server_request.forward_location (exc.forward.in ());
-      server_request.reply_status (PortableInterceptor::LOCATION_FORWARD);
+      server_request.pi_reply_status (PortableInterceptor::LOCATION_FORWARD);
       (void) this->send_other (server_request,
                                args,
                                nargs,
@@ -280,7 +280,7 @@ TAO::ServerRequestInterceptor_Adapter_Impl::receive_request (
   catch (const ::PortableInterceptor::ForwardRequest& exc)
     {
       server_request.forward_location (exc.forward.in ());
-      server_request.reply_status (PortableInterceptor::LOCATION_FORWARD);
+      server_request.pi_reply_status (PortableInterceptor::LOCATION_FORWARD);
       this->send_other (server_request,
                         args,
                         nargs,
@@ -391,7 +391,7 @@ TAO::ServerRequestInterceptor_Adapter_Impl::send_exception (
   catch (const ::PortableInterceptor::ForwardRequest& exc)
     {
       server_request.forward_location (exc.forward.in ());
-      server_request.reply_status (PortableInterceptor::LOCATION_FORWARD);
+      server_request.pi_reply_status (PortableInterceptor::LOCATION_FORWARD);
       this->send_other (server_request,
                         args,
                         nargs,
@@ -483,7 +483,7 @@ TAO::ServerRequestInterceptor_Adapter_Impl::send_other (
   catch (const ::PortableInterceptor::ForwardRequest& exc)
     {
       server_request.forward_location (exc.forward.in ());
-      server_request.reply_status (PortableInterceptor::LOCATION_FORWARD);
+      server_request.pi_reply_status (PortableInterceptor::LOCATION_FORWARD);
       this->send_other (server_request,
                         args,
                         nargs,

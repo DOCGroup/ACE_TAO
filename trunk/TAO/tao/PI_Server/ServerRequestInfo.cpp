@@ -108,8 +108,8 @@ TAO::ServerRequestInfo::arguments (void)
       parameter.mode = (*i)->mode ();
       // When we are in receive_request and have an out argument, then
       // don't copy it, just let the any be empty with typecode tk_null
-      if ((this->server_request_.reply_status () != -1) ||
-          (this->server_request_.reply_status () == -1 &&
+      if ((this->server_request_.pi_reply_status () != -1) ||
+          (this->server_request_.pi_reply_status () == -1 &&
            (*i)->mode () != CORBA::PARAM_OUT))
         {
           (*i)->interceptor_value (&parameter.argument);
@@ -203,17 +203,17 @@ TAO::ServerRequestInfo::sync_scope (void)
 PortableInterceptor::ReplyStatus
 TAO::ServerRequestInfo::reply_status (void)
 {
-  if (this->server_request_.reply_status () == -1)
+  if (this->server_request_.pi_reply_status () == -1)
     // A reply hasn't been received yet.
     throw ::CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14, CORBA::COMPLETED_NO);
 
-  return this->server_request_.reply_status ();
+  return this->server_request_.pi_reply_status ();
 }
 
 CORBA::Object_ptr
 TAO::ServerRequestInfo::forward_reference (void)
 {
-  if (this->server_request_.reply_status () != PortableInterceptor::LOCATION_FORWARD)
+  if (this->server_request_.pi_reply_status () != PortableInterceptor::LOCATION_FORWARD)
     throw ::CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14, CORBA::COMPLETED_NO);
 
   // TAO_ServerRequest::forward_location() already duplicates the
@@ -287,8 +287,8 @@ TAO::ServerRequestInfo::get_service_context_i (
 CORBA::Any *
 TAO::ServerRequestInfo::sending_exception (void)
 {
-  if (this->server_request_.reply_status () != PortableInterceptor::SYSTEM_EXCEPTION
-      && this->server_request_.reply_status () != PortableInterceptor::USER_EXCEPTION)
+  if (this->server_request_.pi_reply_status () != PortableInterceptor::SYSTEM_EXCEPTION
+      && this->server_request_.pi_reply_status () != PortableInterceptor::USER_EXCEPTION)
     {
       throw ::CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14, CORBA::COMPLETED_NO);
     }

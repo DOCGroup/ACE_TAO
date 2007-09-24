@@ -20,6 +20,7 @@
 #include /**/ "ace/pre.h"
 
 #include "tao/Object.h"
+#include "tao/GIOPC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -28,42 +29,13 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
- * All GIOP messages include a header and message type.  Not
- * really a message type, but needed to bring that information
- * back somehow.
- */
-typedef enum GIOP_Messages
-{
-  // = GIOP message types.
-  TAO_GIOP_REQUEST = 0,                // sent by client.
-  TAO_GIOP_REPLY = 1,                  // by server.
-  TAO_GIOP_CANCELREQUEST = 2,          // by client.
-  TAO_GIOP_LOCATEREQUEST = 3,          // by client.
-  TAO_GIOP_LOCATEREPLY = 4,
-  TAO_GIOP_CLOSECONNECTION = 5,        // by both.
-  TAO_GIOP_MESSAGERROR = 6,            // by both.
-  TAO_GIOP_FRAGMENT = 7                // by both.
-}  TAO_GIOP_Message_Type;
-
-
-typedef enum GIOP_LocateStatusType
-{
-  TAO_GIOP_UNKNOWN_OBJECT,
-  TAO_GIOP_OBJECT_HERE,
-  TAO_GIOP_OBJECT_FORWARD,
-  TAO_GIOP_OBJECT_FORWARD_PERM,      //GIOP1.2
-  TAO_GIOP_LOC_SYSTEM_EXCEPTION,     // GIOP1.2
-  TAO_GIOP_LOC_NEEDS_ADDRESSING_MODE //GIOP 1.2
-}TAO_GIOP_Locate_Status_Type;
-
-/**
  * @class TAO_GIOP_Locate_Status_Msg
  *
- * @brief Hold the relevant information for every type of Locate mesg.
+ * @brief Hold the relevant information for every type of Locate msg.
  *
  * This class is there to hold the relevant info for different
  * types of locate status messages. As on date we dont know much
- * about other mesg types other than OBJECT_FORWARD. This clss can
+ * about other mesg types other than OBJECT_FORWARD. This class can
  * be clearly defined as time progresses.
  */
 class TAO_Export TAO_GIOP_Locate_Status_Msg
@@ -74,32 +46,8 @@ public:
   CORBA::Object_var forward_location_var;
 
   /// Stype of Locate status message
-  ///@@ Other mesg types.
-  TAO_GIOP_Locate_Status_Type status;
+  GIOP::LocateStatusType status;
 };
-
-
-typedef enum GIOP_ReplyStatusType
-{
-  /// Request completed successfully
-  TAO_GIOP_NO_EXCEPTION,
-
-  /// Request terminated with user exception
-  TAO_GIOP_USER_EXCEPTION,
-
-  /// Request terminated with system exception
-  TAO_GIOP_SYSTEM_EXCEPTION,
-
-  /// Reply is a location forward type
-  TAO_GIOP_LOCATION_FORWARD,
-
-  /// GIOP 1.2, Reply is a location forward perm type..
-  TAO_GIOP_LOCATION_FORWARD_PERM,
-
-  /// GIOP1.2,
-  TAO_GIOP_NEEDS_ADDRESSING_MODE
-
-} TAO_GIOP_Reply_Status_Type;
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 

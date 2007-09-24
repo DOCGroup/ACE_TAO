@@ -105,13 +105,6 @@ public:
 
   /// The header length of a fragment
   virtual size_t fragment_header_length (void) const = 0;
-
-protected:
-
-  /// Marshall the reply status
-  void marshal_reply_status (TAO_OutputCDR &output,
-                             TAO_Pluggable_Reply_Params_Base &reply);
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

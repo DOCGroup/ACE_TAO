@@ -20,6 +20,7 @@
 #include "tao/CDR.h"
 #include "tao/LocalObject.h"
 #include "tao/Buffer_Allocator_T.h"
+#include "tao/GIOPC.h"
 #include "ace/Synch_Traits.h"
 #include "ace/Thread_Mutex.h"
 #include "ace/Null_Mutex.h"
@@ -116,13 +117,8 @@ protected:
    */
   TAO_OutputCDR _tao_out;
 
-  //  TAO_GIOP_ReplyStatusType exception_type_;
-  /// Exception type (will be NO_EXCEPTION in the majority of the
-  /// cases).
-  // @@ Mayur: I do not think we need this one, we can deduce the type
-  //    of reply depending on the _tao_rh_*() method called.
-  CORBA::ULong exception_type_;
-
+  /// Reply status (will be NO_EXCEPTION in the majority of the
+  GIOP::ReplyStatusType reply_status_;
 
 private:
 
@@ -165,14 +161,15 @@ private:
    * the states are used not only in implementing the 'once-only semantics of
    * RHs, but in making sure well the call thread-safe as well.
    */
-  enum Reply_Status
+  enum RH_Reply_Status
     {
       TAO_RS_UNINITIALIZED,
       TAO_RS_INITIALIZED,
       TAO_RS_SENDING,
       TAO_RS_SENT
     };
-  Reply_Status reply_status_;
+  RH_Reply_Status rh_reply_status_;
+
   // I would use the "state pattern"..
   // Carlos, Isn't that an overkill?
   // @@ Mayur: it depends on what form of the "State Pattern" you

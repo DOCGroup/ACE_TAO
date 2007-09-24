@@ -339,7 +339,7 @@ namespace TAO
     // have been handled in the reply dispatcher/protocol framework.
     switch (rd.reply_status ())
       {
-      case TAO_PLUGGABLE_MESSAGE_NO_EXCEPTION:
+      case GIOP::NO_EXCEPTION:
         {
           Reply_Guard mon (this, TAO_INVOKE_FAILURE);
           if (this->details_.demarshal_args (cdr) == false)
@@ -350,9 +350,9 @@ namespace TAO
           mon.set_status (TAO_INVOKE_SUCCESS);
         }
         break;
-      case TAO_PLUGGABLE_MESSAGE_LOCATION_FORWARD:
+      case GIOP::LOCATION_FORWARD:
         return this->location_forward (cdr);
-      case TAO_PLUGGABLE_MESSAGE_LOCATION_FORWARD_PERM:
+      case GIOP::LOCATION_FORWARD_PERM:
         {
           // Unmarshal the location forward object and set the
           // variable this->forward_to_.
@@ -379,12 +379,12 @@ namespace TAO
 
           return s;
         }
-      case TAO_PLUGGABLE_MESSAGE_USER_EXCEPTION:
+      case GIOP::USER_EXCEPTION:
         return this->handle_user_exception (cdr);
-      case TAO_PLUGGABLE_MESSAGE_SYSTEM_EXCEPTION:
+      case GIOP::SYSTEM_EXCEPTION:
         return this->handle_system_exception (cdr);
 
-      case TAO_PLUGGABLE_MESSAGE_NEEDS_ADDRESSING_MODE:
+      case GIOP::NEEDS_ADDRESSING_MODE:
         {
           Reply_Guard mon (this, TAO_INVOKE_FAILURE);
           // We have received a message with a request to change the

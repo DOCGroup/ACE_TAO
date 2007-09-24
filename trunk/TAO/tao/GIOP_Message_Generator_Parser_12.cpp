@@ -120,23 +120,8 @@ TAO_GIOP_Message_Generator_Parser_12::write_reply_header (
   // Write the request ID
   output.write_ulong (reply.request_id_);
 
-   // Write the reply status
-  if (reply.reply_status_ ==
-      TAO_PLUGGABLE_MESSAGE_LOCATION_FORWARD_PERM)
-    {
-      // Not sure when we will use this.
-      output.write_ulong (TAO_GIOP_LOCATION_FORWARD_PERM);
-    }
-  else if (reply.reply_status_ ==
-           TAO_PLUGGABLE_MESSAGE_NEEDS_ADDRESSING_MODE)
-    {
-      // Not sure when we will use this.
-      output.write_ulong (TAO_GIOP_LOC_NEEDS_ADDRESSING_MODE);
-    }
-  else
-    {
-      this->marshal_reply_status (output, reply);
-    }
+  // Write the reply status
+  output.write_ulong (reply.reply_status ());
 
   if (!(output << reply.service_context_notowned ()))
     return false;
@@ -181,10 +166,10 @@ TAO_GIOP_Message_Generator_Parser_12::write_locate_reply_mesg (
   */
   switch (status_info.status)
     {
-    case TAO_GIOP_OBJECT_FORWARD:
+    case GIOP::OBJECT_FORWARD:
 
       // More likely than not we will not have this in TAO
-    case TAO_GIOP_OBJECT_FORWARD_PERM:
+    case GIOP::OBJECT_FORWARD_PERM:
       {
         CORBA::Object_ptr object_ptr =
           status_info.forward_location_var.in ();
@@ -202,8 +187,8 @@ TAO_GIOP_Message_Generator_Parser_12::write_locate_reply_mesg (
         }
       }
       break;
-    case TAO_GIOP_LOC_SYSTEM_EXCEPTION:
-    case TAO_GIOP_LOC_NEEDS_ADDRESSING_MODE:
+    case GIOP::LOC_SYSTEM_EXCEPTION:
+    case GIOP::LOC_NEEDS_ADDRESSING_MODE:
       // Do we do these in TAO??
       // What to do here???? I dont really know. I have to do a survey
       // of the specifications that uses this.
@@ -365,8 +350,7 @@ TAO_GIOP_Message_Generator_Parser_12::parse_locate_reply (
     TAO_InputCDR &cdr,
     TAO_Pluggable_Reply_Params &params)
 {
-  if (TAO_GIOP_Message_Generator_Parser::parse_locate_reply (cdr,
-                                                             params) == -1)
+  if (TAO_GIOP_Message_Generator_Parser::parse_locate_reply (cdr, params) == -1)
 
     return -1;
 

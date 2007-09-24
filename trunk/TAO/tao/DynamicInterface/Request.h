@@ -34,6 +34,7 @@
 #include "tao/ORB.h"
 #include "tao/Environment.h"
 #include "tao/CDR.h"
+#include "tao/GIOPC.h"
 #include "tao/AnyTypeCode/NVList.h"
 
 #if defined (TAO_HAS_AMI)
@@ -154,7 +155,7 @@ namespace CORBA
     //@}
 
     /// Callback method for deferred synchronous requests.
-    void handle_response (TAO_InputCDR &incoming, CORBA::ULong reply_status);
+    void handle_response (TAO_InputCDR &incoming, GIOP::ReplyStatusType reply_status);
 
 #if defined (TAO_HAS_AMI)
     /// The 'asychronous' send method. The object is a DSI based callback

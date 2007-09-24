@@ -11,7 +11,6 @@ ACE_RCSID (tao,
            Pluggable_Messaging_Utils,
            "$Id$")
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Pluggable_Reply_Params::TAO_Pluggable_Reply_Params (TAO_Transport *t)

@@ -92,7 +92,7 @@ TAO_Queued_Data::more_fragments (void) const
   return this->state_.more_fragments ();
 }
 
-ACE_INLINE TAO_Pluggable_Message_Type
+ACE_INLINE GIOP::MsgType
 TAO_Queued_Data::msg_type (void) const
 {
   return this->state_.message_type ();
@@ -128,7 +128,7 @@ TAO_Queued_Data::state (const TAO_GIOP_Message_State& state)
   this->state_ = state;
 }
 
-ACE_INLINE const TAO_GIOP_Message_State& 
+ACE_INLINE const TAO_GIOP_Message_State&
 TAO_Queued_Data::state (void) const
 {
   return this->state_;

@@ -51,7 +51,8 @@ TAO_Asynch_Reply_Dispatcher::dispatch_reply (TAO_Pluggable_Reply_Params &params)
       // AMI Timeout Handling End
     }
 
-  this->reply_status_ = params.reply_status_;
+  this->reply_status_ = params.reply_status ();
+  this->locate_reply_status_ = params.locate_reply_status ();
 
   // Transfer the <params.input_cdr_>'s content to this->reply_cdr_
   ACE_Data_Block *db = this->reply_cdr_.clone_from (*params.input_cdr_);
@@ -94,18 +95,18 @@ TAO_Asynch_Reply_Dispatcher::dispatch_reply (TAO_Pluggable_Reply_Params &params)
   CORBA::ULong reply_error = TAO_AMI_REPLY_NOT_OK;
   switch (this->reply_status_)
     {
-    case TAO_PLUGGABLE_MESSAGE_NO_EXCEPTION:
+    case GIOP::NO_EXCEPTION:
       reply_error = TAO_AMI_REPLY_OK;
       break;
-    case TAO_PLUGGABLE_MESSAGE_USER_EXCEPTION:
+    case GIOP::USER_EXCEPTION:
       reply_error = TAO_AMI_REPLY_USER_EXCEPTION;
       break;
-    case TAO_PLUGGABLE_MESSAGE_SYSTEM_EXCEPTION:
+    case GIOP::SYSTEM_EXCEPTION:
       reply_error = TAO_AMI_REPLY_SYSTEM_EXCEPTION;
       break;
     default:
-    case TAO_PLUGGABLE_MESSAGE_LOCATION_FORWARD:
-    case TAO_PLUGGABLE_MESSAGE_LOCATION_FORWARD_PERM:
+    case GIOP::LOCATION_FORWARD:
+    case GIOP::LOCATION_FORWARD_PERM:
       // @@ Michael: Not even the spec mentions this case.
       //             We have to think about this case.
       // Handle the forwarding and return so the stub restarts the
