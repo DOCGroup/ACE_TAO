@@ -1,3 +1,16 @@
+Mon Sep 24 18:58:01 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * ace/ATM_Acceptor.inl:
+        * ace/IOStream_T.inl:
+        * ace/OS_NS_dlfcn.inl:
+        * ace/OS_NS_netdb.inl:
+        * ace/OS_NS_sys_mman.inl:
+        * ace/OS_NS_sys_stat.inl:
+
+          Fixed ACE_OS fuzz warnings. Use ACE_OS calls instead of raw OS functions
+          where possible. If fuzz detected a false-positive, then disable
+          the ACE_OS fuzz check for that section of the code.
+
 Mon Sep 24 18:44:08 UTC 2007  Ossama Othman  <ossama_othman at symantec dot com>
 
         * ace/OS_NS_unistd.inl (swab):

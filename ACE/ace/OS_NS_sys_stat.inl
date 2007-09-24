@@ -39,7 +39,9 @@ namespace ACE_OS
     ACE_OSCALL_RETURN (::_fstat (handle, stp), int, -1);
 #else
 # if defined (ACE_OPENVMS)
+    //FUZZ: disable check_for_lack_ACE_OS
     ::fsync(handle);
+    //FUZZ: enable check_for_lack_ACE_OS
 # endif
     ACE_OSCALL_RETURN (::fstat (handle, stp), int, -1);
 # endif /* !ACE_HAS_X86_STAT_MACROS */

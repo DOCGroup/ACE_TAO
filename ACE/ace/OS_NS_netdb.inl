@@ -67,17 +67,21 @@ ACE_OS::gethostbyaddr (const char *addr, int length, int type)
   int h_error;  // Not the same as errno!
   return ACE_OS::gethostbyaddr_r (addr, length, type, &hentry, buf, &h_error);
 #   elif defined (ACE_HAS_NONCONST_GETBY)
+  //FUZZ: disable check_for_lack_ACE_OS
   ACE_SOCKCALL_RETURN (::gethostbyaddr (const_cast<char *> (addr),
                                         (ACE_SOCKET_LEN) length,
                                         type),
                        struct hostent *,
                        0);
+  //FUZZ: enable check_for_lack_ACE_OS
 #   else
+  //FUZZ: disable check_for_lack_ACE_OS
   ACE_SOCKCALL_RETURN (::gethostbyaddr (addr,
                                         (ACE_SOCKET_LEN) length,
                                         type),
                        struct hostent *,
                        0);
+  //FUZZ: enable check_for_lack_ACE_OS
 #   endif /* ACE_HAS_NONCONST_GETBY */
 # endif /* !ACE_LACKS_GETHOSTBYADDR */
 }
@@ -111,9 +115,11 @@ ACE_OS::gethostbyaddr_r (const char *addr,
 #   if defined (AIX) || defined (DIGITAL_UNIX)
   ACE_OS::memset (buffer, 0, sizeof (ACE_HOSTENT_DATA));
 
+  //FUZZ: disable check_for_lack_ACE_OS
   if (::gethostbyaddr_r ((char *) addr, length, type, result,
                          (struct hostent_data *) buffer)== 0)
     return result;
+  //FUZZ: enable check_for_lack_ACE_OS
   else
     {
       *h_errnop = h_errno;
@@ -123,6 +129,7 @@ ACE_OS::gethostbyaddr_r (const char *addr,
   // GNU C library has a different signature
   ACE_OS::memset (buffer, 0, sizeof (ACE_HOSTENT_DATA));
 
+  //FUZZ: disable check_for_lack_ACE_OS
   if (::gethostbyaddr_r ((char *) addr,
                          length,
                          type,
@@ -132,12 +139,16 @@ ACE_OS::gethostbyaddr_r (const char *addr,
                          &result,
                          h_errnop) == 0)
     return result;
+  //FUZZ: enable check_for_lack_ACE_OS
   else
     return (struct hostent *) 0;
 #   elif defined (ACE_VXWORKS)
   // VxWorks 6.x has a threadsafe gethostbyaddr() which returns a heap-allocated
   // data structure which needs to be freed with hostentFree()
+  //FUZZ: disable check_for_lack_ACE_OS
   struct hostent* hp = ::gethostbyaddr (addr, length, type);
+  //FUZZ: enable check_for_lack_ACE_OS
+
   if (hp)
   {
     result->h_addrtype = hp->h_addrtype;
@@ -182,35 +193,43 @@ ACE_OS::gethostbyaddr_r (const char *addr,
 #     if defined(ACE_LACKS_NETDB_REENTRANT_FUNCTIONS)
   ACE_UNUSED_ARG (result);
   ACE_UNUSED_ARG (h_errnop);
+  //FUZZ: disable check_for_lack_ACE_OS
   ACE_NETDBCALL_RETURN (::gethostbyaddr (addr, (ACE_SOCKET_LEN) length, type),
                         struct hostent *, 0,
                         buffer, sizeof (ACE_HOSTENT_DATA));
+  //FUZZ: enable check_for_lack_ACE_OS
 #     else
+  //FUZZ: disable check_for_lack_ACE_OS
   ACE_SOCKCALL_RETURN (::gethostbyaddr_r (addr, length, type, result,
                                           buffer, sizeof (ACE_HOSTENT_DATA),
                                           h_errnop),
                        struct hostent *, 0);
+  //FUZZ: enable check_for_lack_ACE_OS
 #     endif /* ACE_LACKS_NETDB_REENTRANT_FUNCTIONS */
 #   endif /* defined (AIX) || defined (DIGITAL_UNIX) */
 # elif defined (ACE_HAS_NONCONST_GETBY)
   ACE_UNUSED_ARG (result);
   ACE_UNUSED_ARG (buffer);
   ACE_UNUSED_ARG (h_errnop);
+  //FUZZ: disable check_for_lack_ACE_OS
   ACE_SOCKCALL_RETURN (::gethostbyaddr (const_cast<char *> (addr),
                                         (ACE_SOCKET_LEN) length,
                                         type),
                        struct hostent *,
                        0);
+  //FUZZ: enable check_for_lack_ACE_OS
 # else
   ACE_UNUSED_ARG (h_errnop);
   ACE_UNUSED_ARG (buffer);
   ACE_UNUSED_ARG (result);
 
+  //FUZZ: disable check_for_lack_ACE_OS
   ACE_SOCKCALL_RETURN (::gethostbyaddr (addr,
                                         (ACE_SOCKET_LEN) length,
                                         type),
                        struct hostent *,
                        0);
+  //FUZZ: enable check_for_lack_ACE_OS
 # endif /* ACE_LACKS_GETHOSTBYADDR_R */
 }
 
@@ -239,13 +258,17 @@ ACE_OS::gethostbyname (const char *name)
   int h_error;  // Not the same as errno!
   return ACE_OS::gethostbyname_r (name, &hentry, buf, &h_error);
 #   elif defined (ACE_HAS_NONCONST_GETBY)
+  //FUZZ: disable check_for_lack_ACE_OS
   ACE_SOCKCALL_RETURN (::gethostbyname (const_cast<char *> (name)),
                        struct hostent *,
                        0);
+  //FUZZ: enable check_for_lack_ACE_OS
 #   else
+  //FUZZ: disable check_for_lack_ACE_OS
   ACE_SOCKCALL_RETURN (::gethostbyname (name),
                        struct hostent *,
                        0);
+  //FUZZ: enable check_for_lack_ACE_OS
 #   endif /* ACE_HAS_NONCONST_GETBY */
 # endif /* !ACE_LACKS_GETHOSTBYNAME */
 }
@@ -280,12 +303,16 @@ ACE_OS::gethostbyname_r (const char *name,
 
   // gethostbyname returns thread-specific storage on Digital Unix and
   // AIX 4.3
+  //FUZZ: disable check_for_lack_ACE_OS
   ACE_SOCKCALL_RETURN (::gethostbyname (name), struct hostent *, 0);
+  //FUZZ: enable check_for_lack_ACE_OS
 #   elif defined (AIX)
   ACE_OS::memset (buffer, 0, sizeof (ACE_HOSTENT_DATA));
 
+  //FUZZ: disable check_for_lack_ACE_OS
   if (::gethostbyname_r (name, result, (struct hostent_data *) buffer) == 0)
     return result;
+  //FUZZ: enable check_for_lack_ACE_OS
   else
     {
       *h_errnop = h_errno;
@@ -295,6 +322,7 @@ ACE_OS::gethostbyname_r (const char *name,
   // GNU C library has a different signature
   ACE_OS::memset (buffer, 0, sizeof (ACE_HOSTENT_DATA));
 
+  //FUZZ: disable check_for_lack_ACE_OS
   if (::gethostbyname_r (name,
                          result,
                          buffer,
@@ -302,12 +330,16 @@ ACE_OS::gethostbyname_r (const char *name,
                          &result,
                          h_errnop) == 0)
     return result;
+  //FUZZ: enable check_for_lack_ACE_OS
   else
     return (struct hostent *) 0;
 #   elif defined (ACE_VXWORKS)
   // VxWorks 6.x has a threadsafe gethostbyname() which returns a heap-allocated
   // data structure which needs to be freed with hostentFree()
+  //FUZZ: disable check_for_lack_ACE_OS
   struct hostent* hp = ::gethostbyname (name);
+  //FUZZ: enable check_for_lack_ACE_OS
+
   if (hp)
   {
     result->h_addrtype = hp->h_addrtype;
@@ -351,32 +383,40 @@ ACE_OS::gethostbyname_r (const char *name,
 #     if defined(ACE_LACKS_NETDB_REENTRANT_FUNCTIONS)
   ACE_UNUSED_ARG (result);
   ACE_UNUSED_ARG (h_errnop);
+  //FUZZ: disable check_for_lack_ACE_OS
   ACE_NETDBCALL_RETURN (::gethostbyname (name),
                         struct hostent *, 0,
                         buffer, sizeof (ACE_HOSTENT_DATA));
+  //FUZZ: enable check_for_lack_ACE_OS
 #     else
+  //FUZZ: disable check_for_lack_ACE_OS
   ACE_SOCKCALL_RETURN (::gethostbyname_r (name, result, buffer,
                                           sizeof (ACE_HOSTENT_DATA),
                                           h_errnop),
                        struct hostent *,
                        0);
+  //FUZZ: enable check_for_lack_ACE_OS
 #     endif /* ACE_LACKS_NETDB_REENTRANT_FUNCTIONS */
 #   endif /* defined (AIX) || defined (DIGITAL_UNIX) */
 # elif defined (ACE_HAS_NONCONST_GETBY)
   ACE_UNUSED_ARG (result);
   ACE_UNUSED_ARG (buffer);
   ACE_UNUSED_ARG (h_errnop);
+  //FUZZ: disable check_for_lack_ACE_OS
   ACE_SOCKCALL_RETURN (::gethostbyname (const_cast<char *> (name)),
                        struct hostent *,
                        0);
+  //FUZZ: enable check_for_lack_ACE_OS
 # else
   ACE_UNUSED_ARG (result);
   ACE_UNUSED_ARG (buffer);
   ACE_UNUSED_ARG (h_errnop);
 
+  //FUZZ: disable check_for_lack_ACE_OS
   ACE_SOCKCALL_RETURN (::gethostbyname (name),
                        struct hostent *,
                        0);
+  //FUZZ: enable check_for_lack_ACE_OS
 # endif /* defined (ACE_HAS_REENTRANT_FUNCTIONS) && !defined (UNIXWARE) */
 }
 
@@ -394,10 +434,12 @@ ACE_OS::getipnodebyaddr (const void *src, size_t len, int family)
 #  else
   struct hostent *hptr = 0;
   int errnum;
+  //FUZZ: disable check_for_lack_ACE_OS
   if ((hptr = ::getipnodebyaddr (src, len, family, &errnum)) == 0)
     {
       errno = errnum;
     }
+  //FUZZ: enable check_for_lack_ACE_OS
   return hptr;
 #  endif /* ACE_LACKS_GETIPNODEBYADDR */
 #else
@@ -429,10 +471,12 @@ ACE_OS::getipnodebyname (const char *name, int family, int flags)
 #   else
   struct hostent *hptr = 0;
   int errnum;
+  //FUZZ: disable check_for_lack_ACE_OS
   if ((hptr = ::getipnodebyname (name, family, flags, &errnum)) == 0)
     {
       errno = errnum;
     }
+  //FUZZ: enable check_for_lack_ACE_OS
   return hptr;
 #   endif /* ACE_LACKS_GETIPNODEBYNAME */
 # else
@@ -452,13 +496,17 @@ ACE_OS::getprotobyname (const char *name)
   ACE_UNUSED_ARG (name);
   ACE_NOTSUP_RETURN (0);
 #elif defined (ACE_HAS_NONCONST_GETBY)
+  //FUZZ: disable check_for_lack_ACE_OS
   ACE_SOCKCALL_RETURN (::getprotobyname (const_cast<char *> (name)),
                        struct protoent *,
                        0);
+  //FUZZ: enable check_for_lack_ACE_OS
 #else
+  //FUZZ: disable check_for_lack_ACE_OS
   ACE_SOCKCALL_RETURN (::getprotobyname (name),
                        struct protoent *,
                        0);
+  //FUZZ: enable check_for_lack_ACE_OS
 #endif /* ACE_LACKS_GETPROTOBYNAME */
 }
 
@@ -474,46 +522,58 @@ ACE_OS::getprotobyname_r (const char *name,
   ACE_NOTSUP_RETURN (0);
 #elif defined (ACE_HAS_REENTRANT_FUNCTIONS) && !defined (UNIXWARE)
 # if defined (AIX) || defined (DIGITAL_UNIX)
+  //FUZZ: disable check_for_lack_ACE_OS
   if (::getprotobyname_r (name, result, (struct protoent_data *) buffer) == 0)
     return result;
   else
     return 0;
+  //FUZZ: enable check_for_lack_ACE_OS
 # elif defined (__GLIBC__)
   // GNU C library has a different signature
+  //FUZZ: disable check_for_lack_ACE_OS
   if (::getprotobyname_r (name,
                           result,
                           buffer,
                           sizeof (ACE_PROTOENT_DATA),
                           &result) == 0)
+  //FUZZ: enable check_for_lack_ACE_OS
     return result;
   else
     return 0;
 # else
 #   if defined(ACE_LACKS_NETDB_REENTRANT_FUNCTIONS)
   ACE_UNUSED_ARG (result);
+  //FUZZ: disable check_for_lack_ACE_OS
   ACE_NETDBCALL_RETURN (::getprotobyname (name),
                         struct protoent *, 0,
                         buffer, sizeof (ACE_PROTOENT_DATA));
+  //FUZZ: enable check_for_lack_ACE_OS
 #   else
+    //FUZZ: disable check_for_lack_ACE_OS
     ACE_SOCKCALL_RETURN (::getprotobyname_r (name,
                                              result,
                                              buffer,
                                              sizeof (ACE_PROTOENT_DATA)),
                        struct protoent *, 0);
+    //FUZZ: enable check_for_lack_ACE_OS
 #   endif /* ACE_LACKS_NETDB_REENTRANT_FUNCTIONS */
 # endif /* defined (AIX) || defined (DIGITAL_UNIX) */
 #elif defined (ACE_HAS_NONCONST_GETBY)
   ACE_UNUSED_ARG (result);
   ACE_UNUSED_ARG (buffer);
+  //FUZZ: disable check_for_lack_ACE_OS
   ACE_SOCKCALL_RETURN (::getprotobyname (const_cast<char *> (name)),
                        struct protoent *, 0);
+  //FUZZ: enable check_for_lack_ACE_OS
 #else
   ACE_UNUSED_ARG (buffer);
   ACE_UNUSED_ARG (result);
 
+  //FUZZ: disable check_for_lack_ACE_OS
   ACE_SOCKCALL_RETURN (::getprotobyname (name),
                        struct protoent *,
                        0);
+  //FUZZ: enable check_for_lack_ACE_OS
 #endif /* defined (ACE_HAS_REENTRANT_FUNCTIONS) !defined (UNIXWARE) */
 }
 
@@ -524,8 +584,10 @@ ACE_OS::getprotobynumber (int proto)
   ACE_UNUSED_ARG (proto);
   ACE_NOTSUP_RETURN (0);
 #else
+  //FUZZ: disable check_for_lack_ACE_OS
   ACE_SOCKCALL_RETURN (::getprotobynumber (proto),
                        struct protoent *, 0);
+  //FUZZ: enable check_for_lack_ACE_OS
 #endif /* ACE_LACKS_GETPROTOBYNUMBER */
 }
 
@@ -541,37 +603,47 @@ ACE_OS::getprotobynumber_r (int proto,
   ACE_NOTSUP_RETURN (0);
 #elif defined (ACE_HAS_REENTRANT_FUNCTIONS) && !defined (UNIXWARE)
 # if defined (AIX) || defined (DIGITAL_UNIX)
+  //FUZZ: disable check_for_lack_ACE_OS
   if (::getprotobynumber_r (proto, result, (struct protoent_data *) buffer) == 0)
     return result;
+  //FUZZ: enable check_for_lack_ACE_OS
   else
     return 0;
 # elif defined (__GLIBC__)
   // GNU C library has a different signature
+  //FUZZ: disable check_for_lack_ACE_OS
   if (::getprotobynumber_r (proto,
                             result,
                             buffer,
                             sizeof (ACE_PROTOENT_DATA),
                             &result) == 0)
+  //FUZZ: enable check_for_lack_ACE_OS
     return result;
   else
     return 0;
 # else
 #   if defined(ACE_LACKS_NETDB_REENTRANT_FUNCTIONS)
   ACE_UNUSED_ARG (result);
+  //FUZZ: disable check_for_lack_ACE_OS
   ACE_NETDBCALL_RETURN (::getprotobynumber (proto),
                         struct protoent *, 0,
                         buffer, sizeof (ACE_PROTOENT_DATA));
+  //FUZZ: enable check_for_lack_ACE_OS
 #   else
+  //FUZZ: disable check_for_lack_ACE_OS
   ACE_SOCKCALL_RETURN (::getprotobynumber_r (proto, result, buffer, sizeof (ACE_PROTOENT_DATA)),
                        struct protoent *, 0);
+  //FUZZ: enable check_for_lack_ACE_OS
 #   endif /* ACE_LACKS_NETDB_REENTRANT_FUNCTIONS */
 # endif /* defined (AIX) || defined (DIGITAL_UNIX) */
 #else
   ACE_UNUSED_ARG (buffer);
   ACE_UNUSED_ARG (result);
 
+  //FUZZ: disable check_for_lack_ACE_OS
   ACE_SOCKCALL_RETURN (::getprotobynumber (proto),
                        struct protoent *, 0);
+  //FUZZ: enable check_for_lack_ACE_OS
 #endif /* defined (ACE_HAS_REENTRANT_FUNCTIONS) && !defined (UNIXWARE) */
 }
 
@@ -584,15 +656,19 @@ ACE_OS::getservbyname (const char *svc, const char *proto)
   ACE_UNUSED_ARG (proto);
   ACE_NOTSUP_RETURN (0);
 #elif defined (ACE_HAS_NONCONST_GETBY)
+  //FUZZ: disable check_for_lack_ACE_OS
   ACE_SOCKCALL_RETURN (::getservbyname (const_cast<char *> (svc),
                                         const_cast<char *> (proto)),
                        struct servent *,
                        0);
+  //FUZZ: enable check_for_lack_ACE_OS
 #else
+  //FUZZ: disable check_for_lack_ACE_OS
   ACE_SOCKCALL_RETURN (::getservbyname (svc,
                                         proto),
                        struct servent *,
                        0);
+  //FUZZ: enable check_for_lack_ACE_OS
 #endif /* ACE_HAS_NONCONST_GETBY */
 }
 
@@ -613,14 +689,17 @@ ACE_OS::getservbyname_r (const char *svc,
 # if defined (AIX) || defined (DIGITAL_UNIX)
   ACE_OS::memset (buf, 0, sizeof (ACE_SERVENT_DATA));
 
+  //FUZZ: disable check_for_lack_ACE_OS
   if (::getservbyname_r (svc, proto, result, (struct servent_data *) buf) == 0)
     return result;
+  //FUZZ: enable check_for_lack_ACE_OS
   else
     return (struct servent *) 0;
 # elif defined (__GLIBC__)
   // GNU C library has a different signature
   ACE_OS::memset (buf, 0, sizeof (ACE_SERVENT_DATA));
 
+  //FUZZ: disable check_for_lack_ACE_OS
   if (::getservbyname_r (svc,
                          proto,
                          result,
@@ -628,35 +707,43 @@ ACE_OS::getservbyname_r (const char *svc,
                          sizeof (ACE_SERVENT_DATA),
                          &result) == 0)
     return result;
+  //FUZZ: enable check_for_lack_ACE_OS
   else
     return (struct servent *) 0;
 # else
 #   if defined(ACE_LACKS_NETDB_REENTRANT_FUNCTIONS)
   ACE_UNUSED_ARG (result);
+  //FUZZ: disable check_for_lack_ACE_OS
   ACE_NETDBCALL_RETURN (::getservbyname (svc, proto),
                         struct servent *, 0,
                         buf, sizeof (ACE_SERVENT_DATA));
+  //FUZZ: enable check_for_lack_ACE_OS
 #   else
+  //FUZZ: disable check_for_lack_ACE_OS
   ACE_SOCKCALL_RETURN (::getservbyname_r (svc, proto, result, buf,
                                           sizeof (ACE_SERVENT_DATA)),
                        struct servent *, 0);
+  //FUZZ: enable check_for_lack_ACE_OS
 #   endif /* ACE_LACKS_NETDB_REENTRANT_FUNCTIONS */
 # endif /* defined (AIX) || defined (DIGITAL_UNIX) */
 #elif defined (ACE_HAS_NONCONST_GETBY)
   ACE_UNUSED_ARG (buf);
   ACE_UNUSED_ARG (result);
+  //FUZZ: disable check_for_lack_ACE_OS
   ACE_SOCKCALL_RETURN (::getservbyname (const_cast<char *> (svc),
                                         const_cast<char *> (proto)),
                        struct servent *,
                        0);
+  //FUZZ: enable check_for_lack_ACE_OS
 #else
   ACE_UNUSED_ARG (buf);
   ACE_UNUSED_ARG (result);
-
+  //FUZZ: disable check_for_lack_ACE_OS
   ACE_SOCKCALL_RETURN (::getservbyname (svc,
                                         proto),
                        struct servent *,
                        0);
+  //FUZZ: enable check_for_lack_ACE_OS
 #endif /* defined (ACE_HAS_REENTRANT_FUNCTIONS) && !defined (UNIXWARE) */
 }
 

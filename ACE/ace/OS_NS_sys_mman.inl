@@ -147,7 +147,9 @@ ACE_OS::mmap (void *addr,
 #  endif /* ACE_OS_EXTRA_MMAP_FLAGS */
   ACE_UNUSED_ARG (file_mapping);
 #  if defined (ACE_OPENVMS)
+  //FUZZ: disable check_for_lack_ACE_OS
   ::fsync(file_handle);
+  //FUZZ: enable check_for_lack_ACE_OS
 #  endif
   //FUZZ: disable check_for_lack_ACE_OS
   ACE_OSCALL_RETURN ((void *) ::mmap ((ACE_MMAP_TYPE) addr,
