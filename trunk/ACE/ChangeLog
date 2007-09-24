@@ -1,3 +1,11 @@
+Mon Sep 24 18:44:08 UTC 2007  Ossama Othman  <ossama_othman at symantec dot com>
+
+        * ace/OS_NS_unistd.inl (swab):
+
+          Added missing copyright notice for swab() implementation in
+          "ACE_LACKS_SWAB" block of code.  That implementation falls under
+          the BSD license.
+
 Mon Sep 24 15:51:14 UTC 2007  Steve Huston  <shuston@riverace.com>
 
         * bin/PerlACE/ProcessLVRT.pm: Clarify that the Net-Telnet Perl module
