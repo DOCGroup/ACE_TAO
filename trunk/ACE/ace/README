@@ -251,8 +251,6 @@ ACE_HAS_BROKEN_ACCEPT_ADDR              Platform can't correctly deal
                                         (e.g, VxWorks).
 ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS Compiler can't handle const char *
                                         as rvalue in conditional operator.
-ACE_HAS_BROKEN_CONVERSIONS              Compiler can't handle calls
-                                        like foo->operator T *()
 ACE_HAS_BROKEN_CTIME                    Compiler/platform uses macro
                                         for ctime (e.g., MVS)
 ACE_HAS_BROKEN_DGRAM_SENDV              Platform sendv() does not work
