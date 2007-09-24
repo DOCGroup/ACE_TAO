@@ -6,6 +6,9 @@
 # from a DLL loaded at LabVIEW RT boot time. The DLL on the target listens
 # on a TCP port (8888 by default) for connections from the host. Host requests
 # actions using text commands to the target.
+#
+# NOTE: This module requires the Net-Telnet Perl module.
+#
 # We can FTP files to and from the LabVIEW target, but there's no NFS or
 # SMB shares.
 
