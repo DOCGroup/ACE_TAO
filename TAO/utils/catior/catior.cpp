@@ -606,7 +606,7 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
                     str = subString.rep ();
                     b = catiiop (str);
                   }
-                else if (aString.find (":IR:") > 0)
+                else if (aString.find (":IR:") != ACE_CString::npos)
                   {
                     ACE_DEBUG ((LM_DEBUG,
                                 "decoding an POOP IOR\n"));
@@ -776,7 +776,7 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
                     str = subString.rep ();
                     b = catiiop (str);
                   }
-                else if (aString.find (":IR:") > 0)
+                else if (aString.find (":IR:") != ACE_CString::npos)
                   {
                     ACE_DEBUG ((LM_DEBUG,
                                 "decoding an POOP IOR\n"));
@@ -931,7 +931,7 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
                     str = subString.rep ();
                     b = catiiop (str);
                   }
-                else if (aString.find (":IR:") > 0)
+                else if (aString.find (":IR:") != ACE_CString::npos)
                   {
                     ACE_DEBUG ((LM_DEBUG,
                                 "decoding an POOP IOR\n"));
