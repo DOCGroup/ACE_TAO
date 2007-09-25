@@ -20,6 +20,9 @@ ACE_RCSID(ace,
 template <class TYPE>
 struct Hash_Token
 {
+  Hash_Token (void)
+  {}
+
   Hash_Token (const void *act,
               size_t pos,
               long orig_id,
@@ -30,10 +33,25 @@ struct Hash_Token
       type_ (type)
   {}
 
+  ~Hash_Token (void)
+  {}
+
+  Hash_Token<TYPE> *get_next (void)
+  {
+    return this->next_;
+  }
+
+  void set_next (Hash_Token<TYPE> *next)
+  {
+    this->next_ = next;
+  }
+
   const void *act_;
   size_t pos_;
   long orig_id_;
   TYPE type_;
+  /// Pointer to next token.
+  Hash_Token<TYPE> *next_;
 };
 
 // Default constructor
@@ -151,8 +169,6 @@ ACE_Timer_Hash_Upcall<TYPE, FUNCTOR, ACE_LOCK>::deletion (
               event_handler,
               h->act_);
 
-  delete h;
-
   return result;
 }
 
@@ -261,6 +277,7 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET>::ACE_Timer_Hash_T (
 #if defined (ACE_WIN64)
   , pointer_base_ (0)
 #endif /* ACE_WIN64 */
+  , token_list_ ()
 {
   ACE_TRACE ("ACE_Timer_Hash_T::ACE_Timer_Hash_T");
 
@@ -296,6 +313,7 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET>::ACE_Timer_Hash_T (
 #if defined (ACE_WIN64)
   , pointer_base_ (0)
 #endif /* ACE_WIN64 */
+  , token_list_ ()
 {
   ACE_TRACE ("ACE_Timer_Hash_T::ACE_Timer_Hash_T");
 
@@ -402,6 +420,10 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET>::reschedule (
                                      expired->get_interval ());
   ACE_ASSERT (h->orig_id_ != -1);
 
+  // Since schedule above will allocated new node
+  // then schedule <expired> for deletion.
+  this->free_node (expired);
+
 #if 0
   ACE_DEBUG ((LM_DEBUG, "Hash::reschedule() resets %d in slot %d where it's id is %d and token is %x\n",
               expired->get_timer_value ().msec (),
@@ -443,6 +465,7 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET>::schedule_i (
                                     0,
                                     type),
                   -1);
+  this->token_list_.add (h);
 
   h->orig_id_ =
     this->table_[position]->schedule (type,
@@ -580,8 +603,6 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET>::cancel (long timer_id,
       if (act != 0)
         *act = h->act_;
 
-      delete h;
-
       --this->size_;
     }
 
@@ -638,8 +659,6 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET>::cancel (const TYPE &type,
                                                   dont_call);
       ACE_ASSERT (result == 1);
       ACE_UNUSED_ARG (result);
-
-      delete timer_ids[i];
 
       --this->size_;
     }
@@ -796,6 +815,10 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET>::expire (const ACE_Time_Value 
               this->reschedule (expired);
               reclaim = false;
             }
+          else
+            {
+              this->free_node (expired);
+            }
 
           ACE_Timer_Node_Dispatch_Info_T<TYPE> info;
 
@@ -813,10 +836,7 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET>::expire (const ACE_Time_Value 
           this->postinvoke (info, cur_time, upcall_act);
 
           if (reclaim)
-            {
-              --this->size_;
-              delete h;
-            }
+            --this->size_;
 
           ++number_of_timers_expired;
          }

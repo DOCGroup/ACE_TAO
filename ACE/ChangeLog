@@ -1,3 +1,11 @@
+Tue Sep 25 15:55:21 UTC 2007  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * ace/Timer_Hash_T.h:
+        * ace/Timer_Hash_T.cpp:
+        * tests/Timer_Queue_Reference_Counting_Test.cpp:
+          An attempt to fix the memory leaks in tests/Timer_Queue_Test.cpp
+          and tests/Timer_Queue_Reference_Counting_Test.cpp.
+
 Tue Sep 25 15:22:15 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
         * ace/OS_NS_ctype.h:
