@@ -358,22 +358,19 @@ ACE_OS::strtok_r_emulation (ACE_WCHAR_T *s,
                             const ACE_WCHAR_T *tokens,
                             ACE_WCHAR_T **lasts)
 {
-  if (s == 0)
-    s = *lasts;
-  else
-    *lasts = s;
-  if (*s == 0)                  // We have reached the end
-    return 0;
-  int l_org = ACE_OS::strlen (s);
-  s = ACE_OS::strtok (s, tokens);
-  if (s == 0)
-    return 0;
-  const int l_sub = ACE_OS::strlen (s);
-  if (s + l_sub < *lasts + l_org)
-    *lasts = s + l_sub + 1;
-  else
-    *lasts = s + l_sub;
-  return s ;
+  ACE_WCHAR_T* sbegin = s ? s : *lasts;
+  sbegin += ACE_OS::strspn(sbegin, tokens);
+  if (*sbegin == 0) 
+    {
+      static ACE_WCHAR_T empty[1] = { 0 };
+      *lasts = empty;
+      return 0;
+  }
+  ACE_WCHAR_T*send = sbegin + ACE_OS::strcspn(sbegin, tokens);
+  if (*send != 0)
+      *send++ = 0;
+  *lasts = send;
+  return sbegin;
 }
 # endif  /* ACE_HAS_WCHAR && ACE_LACKS_WCSTOK */
 
