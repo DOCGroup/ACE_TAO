@@ -380,7 +380,7 @@ TAO_Object_Adapter::dispatch_servant (const TAO::ObjectKey &key,
   // sent in earlier stage, but in colocal scenario no message is sent
   // and the LocationForward object must be passed over here to
   // calling operation's mem-space.
-  if (req.collocated() && req.reply_status () == PortableInterceptor::LOCATION_FORWARD)
+  if (req.collocated() && req.pi_reply_status () == PortableInterceptor::LOCATION_FORWARD)
     {
       forward_to = CORBA::Object::_duplicate (req.forward_location ());
       result = TAO_Adapter::DS_FORWARD;
@@ -823,7 +823,7 @@ TAO_Object_Adapter::dispatch (TAO::ObjectKey &key,
                                        0,  // exceptions
                                        0);   // nexceptions
 
-          status = request.reply_status ();
+          status = request.pi_reply_status ();
         }
 
       // Only re-throw the exception if it hasn't been transformed by
