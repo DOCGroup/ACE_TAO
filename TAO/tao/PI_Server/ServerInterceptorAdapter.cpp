@@ -397,8 +397,7 @@ TAO::ServerRequestInterceptor_Adapter_Impl::send_exception (
                         nargs,
                         servant_upcall,
                         exceptions,
-                        nexceptions
-                       );
+                        nexceptions);
     }
   catch ( ::CORBA::Exception& ex)
     {
@@ -422,7 +421,7 @@ TAO::ServerRequestInterceptor_Adapter_Impl::send_exception (
                             nexceptions);
 
       PortableInterceptor::ReplyStatus status =
-        server_request.reply_status ();
+        server_request.pi_reply_status ();
 
       // Only re-throw the exception if it hasn't been transformed by
       // the send_exception() interception point (e.g. to a
