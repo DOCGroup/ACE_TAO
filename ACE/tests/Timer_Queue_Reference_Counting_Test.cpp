@@ -544,6 +544,7 @@ static int heap = 1;
 static int list = 1;
 static int hash = 1;
 static int wheel = 1;
+static int hashheap = 1;
 static int test_cancellation = 1;
 static int test_expire = 1;
 static int test_one_upcall = 1;
@@ -552,7 +553,7 @@ static int test_simple = 1;
 static int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("a:b:c:d:l:m:n:o:z:"));
+  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("a:b:c:d:e:l:m:n:o:z:"));
 
   int cc;
   while ((cc = get_opt ()) != -1)
@@ -570,6 +571,9 @@ parse_args (int argc, ACE_TCHAR *argv[])
           break;
         case 'd':
           wheel = ACE_OS::atoi (get_opt.opt_arg ());
+          break;
+        case 'e':
+          hashheap = ACE_OS::atoi (get_opt.opt_arg ());
           break;
         case 'l':
           test_cancellation = ACE_OS::atoi (get_opt.opt_arg ());
@@ -593,6 +597,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                       ACE_TEXT ("\t[-b list]  (defaults to %d)\n")
                       ACE_TEXT ("\t[-c hash]  (defaults to %d)\n")
                       ACE_TEXT ("\t[-d wheel] (defaults to %d)\n")
+                      ACE_TEXT ("\t[-e hashheap] (defaults to %d)\n")
                       ACE_TEXT ("\t[-l test_cancellation] (defaults to %d)\n")
                       ACE_TEXT ("\t[-m test_expire] (defaults to %d)\n")
                       ACE_TEXT ("\t[-n test_one_upcall] (defaults to %d)\n")
@@ -604,6 +609,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                       list,
                       hash,
                       wheel,
+                      hashheap,
                       test_cancellation,
                       test_expire,
                       test_one_upcall,
@@ -636,6 +642,7 @@ run_main (int argc, ACE_TCHAR *argv[])
       if (list)  { cancellation_test<ACE_Timer_List>  test ("ACE_Timer_List");  ACE_UNUSED_ARG (test); }
       if (hash)  { cancellation_test<ACE_Timer_Hash>  test ("ACE_Timer_Hash");  ACE_UNUSED_ARG (test); }
       if (wheel) { cancellation_test<ACE_Timer_Wheel> test ("ACE_Timer_Wheel"); ACE_UNUSED_ARG (test); }
+      if (hashheap) { cancellation_test<ACE_Timer_Hash_Heap> test ("ACE_Timer_Hash_Heap"); ACE_UNUSED_ARG (test); }
     }
 
   if (test_expire)
@@ -647,6 +654,7 @@ run_main (int argc, ACE_TCHAR *argv[])
       if (list)  { expire_test<ACE_Timer_List>  test ("ACE_Timer_List");  ACE_UNUSED_ARG (test); }
       if (hash)  { expire_test<ACE_Timer_Hash>  test ("ACE_Timer_Hash");  ACE_UNUSED_ARG (test); }
       if (wheel) { expire_test<ACE_Timer_Wheel> test ("ACE_Timer_Wheel"); ACE_UNUSED_ARG (test); }
+      if (hashheap) { expire_test<ACE_Timer_Hash_Heap> test ("ACE_Timer_Hash_Heap"); ACE_UNUSED_ARG (test); }
     }
 
   if (test_one_upcall)
@@ -658,6 +666,7 @@ run_main (int argc, ACE_TCHAR *argv[])
       if (list)  { upcall_test<ACE_Timer_List>  test ("ACE_Timer_List");  ACE_UNUSED_ARG (test); }
       if (hash)  { upcall_test<ACE_Timer_Hash>  test ("ACE_Timer_Hash");  ACE_UNUSED_ARG (test); }
       if (wheel) { upcall_test<ACE_Timer_Wheel> test ("ACE_Timer_Wheel"); ACE_UNUSED_ARG (test); }
+      if (hashheap) { upcall_test<ACE_Timer_Hash_Heap> test ("ACE_Timer_Hash_Heap"); ACE_UNUSED_ARG (test); }
     }
 
   if (test_simple)
@@ -669,6 +678,7 @@ run_main (int argc, ACE_TCHAR *argv[])
       if (list)  { simple_test<ACE_Timer_List>  test ("ACE_Timer_List");  ACE_UNUSED_ARG (test); }
       if (hash)  { simple_test<ACE_Timer_Hash>  test ("ACE_Timer_Hash");  ACE_UNUSED_ARG (test); }
       if (wheel) { simple_test<ACE_Timer_Wheel> test ("ACE_Timer_Wheel"); ACE_UNUSED_ARG (test); }
+      if (hashheap) { simple_test<ACE_Timer_Hash_Heap> test ("ACE_Timer_Hash_Heap"); ACE_UNUSED_ARG (test); }
     }
 
   ACE_END_TEST;

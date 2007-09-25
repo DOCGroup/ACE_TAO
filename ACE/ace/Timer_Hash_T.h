@@ -27,6 +27,8 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 // Forward declaration.
 template <class TYPE, class FUNCTOR, class ACE_LOCK, class BUCKET>
 class ACE_Timer_Hash_T;
+template <typename TYPE>
+class Hash_Token;
 
 /**
  * @class ACE_Timer_Hash_Upcall
@@ -308,6 +310,10 @@ private:
   // This is, essentially, the upper 32 bits of a 64-bit pointer on Win64.
   ptrdiff_t pointer_base_;
 #endif
+
+  /// Hash_Token is usually allocated in schedule but its
+  /// deallocation is problematic and token_list_ helps with this.
+  ACE_Locked_Free_List<Hash_Token<TYPE>, ACE_Null_Mutex> token_list_;
 
   // = Don't allow these operations for now.
   ACE_UNIMPLEMENTED_FUNC (ACE_Timer_Hash_T (const ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET> &))
