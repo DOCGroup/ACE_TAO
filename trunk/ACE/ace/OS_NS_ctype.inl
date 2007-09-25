@@ -131,13 +131,20 @@ ACE_OS::ace_tolower (int c)
   return tolower (c);
 }
 
-#if defined (ACE_HAS_WCHAR) && !defined (ACE_LACKS_TOWLOWER)
+#if defined (ACE_HAS_WCHAR)
 ACE_INLINE wint_t
 ACE_OS::ace_towlower (wint_t c)
 {
+#if defined (ACE_LACKS_TOWLOWER)
+  if (c < 256)
+    return tolower (static_cast<int> (c));
+  else
+    return c;
+#else
   return towlower (c);
+#endif /* ACE_LACKS_TOWLOWER */
 }
-#endif /* ACE_HAS_WCHAR && !ACE_LACKS_TOWLOWER */
+#endif /* ACE_HAS_WCHAR */
 
 ACE_INLINE int
 ACE_OS::ace_toupper (int c)

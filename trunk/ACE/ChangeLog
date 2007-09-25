@@ -1,3 +1,19 @@
+Tue Sep 25 15:22:15 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ace/OS_NS_ctype.h:
+        * ace/OS_NS_ctype.inl:
+
+          Implement a slightly dumb version of ace_towlower when towlower is
+          not available from the system libraries.  Previously, ace_towlower
+          would not be available if ACE_LACKS_TOWLOWER was defined.
+
+        * ace/OS_NS_string.cpp:
+
+          Replaced the ACE_OS::strtok_r_emulation() implementation, when
+          ACE_HAS_WCHAR and ACE_LACKS_WCSTOK are defined, with a public
+          domain implementation (converted to work with wide characters and
+          c++).  It did not compile as previously implemented.
+
 Mon Sep 24 18:58:01 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * ace/ATM_Acceptor.inl:
