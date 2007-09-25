@@ -1,3 +1,8 @@
+Tue Sep 25 06:49:15 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Portable_Interceptors/Bug_3079/*:
+          New regression test created by  Jaiganesh Balasubramanian
+
 Tue Sep 25 05:06:15 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PI_Server/ServerInterceptorAdapter.cpp:
