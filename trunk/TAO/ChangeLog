@@ -1,3 +1,10 @@
+Tue Sep 25 05:06:15 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PI_Server/ServerInterceptorAdapter.cpp:
+        * tao/PortableServer/Upcall_Wrapper.cpp:
+          Fixed two bugs introduced when renaming the reply_status
+          method to pi_reply_status
+
 Mon Sep 24 13:27:15 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PI_Server.mpc:

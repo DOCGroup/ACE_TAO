@@ -168,7 +168,7 @@ TAO::Upcall_Wrapper::upcall (TAO_ServerRequest & server_request,
                                                exceptions,
                                                nexceptions);
 
-          status = server_request.reply_status ();
+          status = server_request.pi_reply_status ();
         }
 #endif /* TAO_HAS_INTERCEPTORS */
 
