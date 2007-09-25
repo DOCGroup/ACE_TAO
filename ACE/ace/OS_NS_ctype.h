@@ -96,11 +96,11 @@ namespace ACE_OS {
   ACE_NAMESPACE_INLINE_FUNCTION
   int ace_tolower (int c);
 
-#if defined (ACE_HAS_WCHAR) && !defined (ACE_LACKS_TOWLOWER)
+#if defined (ACE_HAS_WCHAR)
   /// Converts a character to lower case (wchar_t version).
   ACE_NAMESPACE_INLINE_FUNCTION
   wint_t ace_towlower (wint_t c);
-#endif /* ACE_HAS_WCHAR && !ACE_LACKS_TOWLOWER */
+#endif /* ACE_HAS_WCHAR */
 
   /// Converts a character to upper case (char version).
   ACE_NAMESPACE_INLINE_FUNCTION
