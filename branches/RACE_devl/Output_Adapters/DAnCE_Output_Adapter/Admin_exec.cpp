@@ -1,4 +1,9 @@
 #include "Admin_exec.h"
+#include "ciao/CIAO_common.h"
+#include "Config_Handlers/DP_Handler.h"
+#include "Config_Handlers/Utils/XML_Helper.h"
+#include "Config_Handlers/Deployment.hpp"
+#include <string>
 
 namespace CIAO
 {
@@ -21,13 +26,17 @@ namespace CIAO
 
           if (this->repoman_id_.in () != 0)
             {
+              ACE_ERROR ((LM_ERROR, "Trying to initialize the RM PLANNER with ID %s!!!!!!\n",
+                this->repoman_id_.in()));
+
               if (this->plan_gen_.init (
                     this->context_->_ciao_the_Container ()->the_ORB (),
                     true,
                     this->repoman_id_.in ()))
-                {
-                  this->repoman_ = true;
-                }
+              {
+                this->repoman_ = true;
+                ACE_ERROR ((LM_ERROR, "DONE\n"));
+              }
               else
                 {
                   ACE_ERROR ((LM_ERROR, "DAnCE_OA::Admin_exec:: "
@@ -45,6 +54,25 @@ namespace CIAO
         {
           try
             {
+
+
+              // First let's dump the plan to a file.
+
+              using namespace CIAO::Config_Handlers;
+
+              DP_Handler reverse_handler (plan);
+              xercesc::DOMDocument *the_xsc (XML_HELPER->create_dom (0));
+
+              deploymentPlan (*reverse_handler.xsc (), the_xsc);
+
+              std::string dom_out (plan.UUID.in ());
+              dom_out += ".cdp";
+              XML_HELPER->write_DOM (the_xsc, dom_out.c_str());
+
+              delete the_xsc;
+
+              // Now do the remaining stuff.
+
               ACE_CString uuid (this->launcher_.launch_plan (plan));
 
               if (uuid.c_str () == 0)
@@ -97,7 +125,7 @@ namespace CIAO
         (const ::CIAO::RACE::OperationalString & op_string)
         {
           ACE_DEBUG ((LM_DEBUG, "In DANCE_OA::deploy string()\n"));
-/*
+
           ::Deployment::DeploymentPlan plan;
 
           if (this->opstring_to_dplan (op_string, plan))
@@ -108,7 +136,7 @@ namespace CIAO
             {
               return false;
             }
-*/
+
           return false;
         }
 
@@ -169,6 +197,8 @@ namespace CIAO
                   // @@ This is a temporaty hack. Later on we must be using the
                   // simple bin packer do perform the node assignment.
                   instance.node = op_instance.node;
+
+                  instance.node = CORBA::string_dup("SPACE");
                   instance.implementationRef = position;
                   instance.configProperty = op_instance.configProperty;
                   CORBA::ULong cur_len = plan.instance.length ();
