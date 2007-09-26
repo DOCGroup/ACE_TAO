@@ -1,3 +1,8 @@
+Wed Sep 26 08:16:15 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_sunos5_sunc++.GNU:
+          Changes for Sun Studio 12
+
 Tue Sep 25 15:55:21 UTC 2007  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * ace/Timer_Hash_T.h:

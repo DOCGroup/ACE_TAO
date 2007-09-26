@@ -179,8 +179,13 @@ else  # ! 4.2
               CFLAGS += -xarch=generic64
               LDFLAGS += -xarch=generic64
             else
-              CFLAGS += -xarch=v9
-              LDFLAGS += -xarch=v9
+              ifeq (C++ 5.9,$(findstring C++ 5.9,$(CC_VERSION)))
+                CFLAGS += -m64
+                LDFLAGS += -m64
+              else
+                CFLAGS += -xarch=v9
+                LDFLAGS += -xarch=v9
+              endif
             endif # C++ 5.8
           endif # C++ 5.7
         endif # buildbits
