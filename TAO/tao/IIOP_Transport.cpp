@@ -313,9 +313,7 @@ TAO_IIOP_Transport::generate_request_header (TAO_Operation_Details &opdetails,
       opdetails.request_id (this->tms ()->request_id ());
     }
 
-  return TAO_Transport::generate_request_header (opdetails,
-                                                 spec,
-                                                 msg);
+  return TAO_Transport::generate_request_header (opdetails, spec, msg);
 }
 
 int
