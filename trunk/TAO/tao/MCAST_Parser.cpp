@@ -354,8 +354,7 @@ TAO_MCAST_Parser::assign_to_variables (char const * mcast_name)
    */
   ACE_CString mcast_name_cstring (mcast_name);
 
-  ACE_CString::size_type pos_colon1 =
-    mcast_name_cstring.find (':', 0);
+  ACE_CString::size_type pos_colon1 = mcast_name_cstring.find (':', 0);
 
 #if defined (ACE_HAS_IPV6)
   // IPv6 numeric address in host string?
@@ -367,8 +366,7 @@ TAO_MCAST_Parser::assign_to_variables (char const * mcast_name)
     {
       // In this case we have to find the end of the numeric address and
       // start looking for the port separator from there.
-      ACE_CString::size_type const cp_pos =
-        mcast_name_cstring.find (']', 0);
+      ACE_CString::size_type const cp_pos = mcast_name_cstring.find (']', 0);
       if (cp_pos == 0)
         {
           // No valid IPv6 address specified.
@@ -419,25 +417,21 @@ TAO_MCAST_Parser::assign_to_variables (char const * mcast_name)
                                   mcast_name_cstring.length() -
                                   pos_colon1);
 
-  ACE_CString::size_type const pos_colon2 =
-    mcast_name_cstring.find (':', 0);
+  ACE_CString::size_type const pos_colon2 = mcast_name_cstring.find (':', 0);
 
   if (pos_colon2 == 0)
     {
-      if (mcast_name_cstring.find ("InterfaceRepository") !=
-          ACE_CString::npos)
+      if (mcast_name_cstring.find ("InterfaceRepository") != ACE_CString::npos)
         {
           this->mcast_port_ =
             TAO_DEFAULT_INTERFACEREPO_SERVER_REQUEST_PORT;
         }
-      else if (mcast_name_cstring.find ("ImplRepoService") !=
-               ACE_CString::npos)
+      else if (mcast_name_cstring.find ("ImplRepoService") != ACE_CString::npos)
         {
           this->mcast_port_ =
             TAO_DEFAULT_IMPLREPO_SERVER_REQUEST_PORT;
         }
-      else if (mcast_name_cstring.find ("TradingService") !=
-               ACE_CString::npos)
+      else if (mcast_name_cstring.find ("TradingService") != ACE_CString::npos)
         {
           this->mcast_port_ = TAO_DEFAULT_TRADING_SERVER_REQUEST_PORT;
         }
@@ -445,8 +439,7 @@ TAO_MCAST_Parser::assign_to_variables (char const * mcast_name)
   else
     {
       int const the_port =
-        ACE_OS::atoi (mcast_name_cstring.substring (0,
-                                                    pos_colon2).c_str ());
+        ACE_OS::atoi (mcast_name_cstring.substring (0, pos_colon2).c_str ());
 
       if (the_port > 0 && the_port < 0xffffL)
         this->mcast_port_ = the_port;
@@ -459,16 +452,13 @@ TAO_MCAST_Parser::assign_to_variables (char const * mcast_name)
 
   ACE_CString::size_type const pos_colon3 = mcast_name_cstring.find (':', 0);
 
-  this->mcast_nic_ =
-    mcast_name_cstring.substring (0,
-                                  pos_colon3).c_str ();
+  this->mcast_nic_ = mcast_name_cstring.substring (0, pos_colon3).c_str ();
 
   mcast_name_cstring =
     mcast_name_cstring.substring (pos_colon3 + 1,
                                   mcast_name_cstring.length() - pos_colon3);
 
-  ACE_CString::size_type const pos_colon4 =
-    mcast_name_cstring.find ('/', 0);
+  ACE_CString::size_type const pos_colon4 = mcast_name_cstring.find ('/', 0);
 
   if (pos_colon4 != 0)
     {
@@ -485,8 +475,7 @@ TAO_MCAST_Parser::assign_to_variables (char const * mcast_name)
                                   mcast_name_cstring.length() - pos_colon4);
 
   this->service_name_ =
-    mcast_name_cstring.substring (1,
-                                  mcast_name_cstring.length() - 1).c_str ();
+    mcast_name_cstring.substring (1, mcast_name_cstring.length() - 1).c_str ();
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

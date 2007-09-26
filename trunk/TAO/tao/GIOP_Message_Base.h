@@ -153,10 +153,9 @@ public:
 
   /// Is the messaging object ready for processing BiDirectional
   /// request/response?
-  int is_ready_for_bidirectional (TAO_OutputCDR &msg);
+  bool is_ready_for_bidirectional (TAO_OutputCDR &msg) const;
 
-protected:
-
+private:
   /// Processes the GIOP_REQUEST messages
   int process_request (TAO_Transport *transport,
                        TAO_InputCDR &input,
@@ -217,7 +216,6 @@ protected:
   /// node of size @a sz.
   TAO_Queued_Data *make_queued_data (size_t sz);
 
-private:
   /// Parse GIOP request-id of TAO_Queued_Data @a qd
   /// @return 0 on success, otherwise -1
   int parse_request_id (const TAO_Queued_Data *qd, CORBA::ULong &request_id) const;

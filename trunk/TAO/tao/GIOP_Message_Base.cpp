@@ -254,7 +254,7 @@ TAO_GIOP_Message_Base::format_message (TAO_OutputCDR &stream)
                      buf + TAO_GIOP_MESSAGE_SIZE_OFFSET);
 #endif /* ACE_ENABLE_SWAP_ON_WRITE */
 
-  if (TAO_debug_level > 2)
+  if (TAO_debug_level >= 5)
     {
       // Check whether the output cdr stream is build up of multiple
       // messageblocks. If so, consolidate them to one block that can be
@@ -590,11 +590,12 @@ TAO_GIOP_Message_Base::process_request_message (TAO_Transport *transport,
   size_t const wr_pos = qd->msg_block ()->wr_ptr () - qd->msg_block ()->base ();
   rd_pos += TAO_GIOP_MESSAGE_HEADER_LEN;
 
-  if (TAO_debug_level > 0)
-    this->dump_msg ("recv",
-                    reinterpret_cast <u_char *> (qd->msg_block ()->rd_ptr ()),
-                    qd->msg_block ()->length ());
-
+  if (TAO_debug_level >= 5)
+    {
+      this->dump_msg ("recv",
+                      reinterpret_cast <u_char *> (qd->msg_block ()->rd_ptr ()),
+                      qd->msg_block ()->length ());
+    }
 
   // Create a input CDR stream. We do the following
   //  1 - If the incoming message block has a data block with a flag
@@ -677,10 +678,12 @@ TAO_GIOP_Message_Base::process_reply_message (
   size_t const wr_pos = qd->msg_block ()->wr_ptr () - qd->msg_block ()->base ();
   rd_pos += TAO_GIOP_MESSAGE_HEADER_LEN;
 
-  if (TAO_debug_level > 0)
-    this->dump_msg ("recv",
-                    reinterpret_cast <u_char *> (qd->msg_block ()->rd_ptr ()),
-                    qd->msg_block ()->length ());
+  if (TAO_debug_level >= 5)
+    {
+      this->dump_msg ("recv",
+                      reinterpret_cast <u_char *> (qd->msg_block ()->rd_ptr ()),
+                      qd->msg_block ()->length ());
+    }
 
 
   // Create a empty buffer on stack
@@ -1208,9 +1211,12 @@ TAO_GIOP_Message_Base::send_error (TAO_Transport *transport)
     0, 0, 0, 0
   };
 
-  this->dump_msg ("send_error",
-                  (const u_char *) error_message,
-                  TAO_GIOP_MESSAGE_HEADER_LEN);
+  if (TAO_debug_level >= 5)
+    {
+      this->dump_msg ("send_error",
+                      reinterpret_cast <const u_char *> (error_message),
+                      TAO_GIOP_MESSAGE_HEADER_LEN);
+    }
 
   ACE_Data_Block data_block (TAO_GIOP_MESSAGE_HEADER_LEN,
                              ACE_Message_Block::MB_DATA,
@@ -1315,9 +1321,12 @@ TAO_GIOP_Message_Base::
   // @@ should recv and discard queued data for portability; note
   // that this won't block (long) since we never set SO_LINGER
 
-  this->dump_msg ("send_close_connection",
-                  (const u_char *) close_message,
-                  TAO_GIOP_MESSAGE_HEADER_LEN);
+  if (TAO_debug_level >= 5)
+    {
+      this->dump_msg ("send_close_connection",
+                      reinterpret_cast <const u_char *> (close_message),
+                      TAO_GIOP_MESSAGE_HEADER_LEN);
+    }
 
 #if 0
   // @@CJC I don't think we need this check b/c the transport's send()
@@ -1407,87 +1416,83 @@ TAO_GIOP_Message_Base::dump_msg (const char *label,
                                  const u_char *ptr,
                                  size_t len)
 {
-
-  if (TAO_debug_level >= 5)
+    static const char digits[] = "0123456789ABCD";
+    static const char *names[] =
     {
-      static const char digits[] = "0123456789ABCD";
-      static const char *names[] =
+      "Request",
+      "Reply",
+      "CancelRequest",
+      "LocateRequest",
+      "LocateReply",
+      "CloseConnection",
+      "MessageError",
+      "Fragment"
+    };
+
+    // Message name.
+    const char *message_name = "UNKNOWN MESSAGE";
+    u_long slot = ptr[TAO_GIOP_MESSAGE_TYPE_OFFSET];
+    if (slot < sizeof (names) / sizeof (names[0]))
+      message_name = names[slot];
+
+    // Byte order.
+    int byte_order = ptr[TAO_GIOP_MESSAGE_FLAGS_OFFSET] & 0x01;
+
+    // Get the version info
+    CORBA::Octet major = ptr[TAO_GIOP_VERSION_MAJOR_OFFSET];
+    CORBA::Octet minor = ptr[TAO_GIOP_VERSION_MINOR_OFFSET];
+
+    // request/reply id.
+    CORBA::ULong tmp = 0;
+    CORBA::ULong *id = &tmp;
+    char *tmp_id = 0;
+
+    if (ptr[TAO_GIOP_MESSAGE_TYPE_OFFSET] == GIOP::Request ||
+        ptr[TAO_GIOP_MESSAGE_TYPE_OFFSET] == GIOP::Reply ||
+        ptr[TAO_GIOP_MESSAGE_TYPE_OFFSET] == GIOP::Fragment)
       {
-        "Request",
-        "Reply",
-        "CancelRequest",
-        "LocateRequest",
-        "LocateReply",
-        "CloseConnection",
-        "MessageError",
-        "Fragment"
-      };
-
-      // Message name.
-      const char *message_name = "UNKNOWN MESSAGE";
-      u_long slot = ptr[TAO_GIOP_MESSAGE_TYPE_OFFSET];
-      if (slot < sizeof (names) / sizeof (names[0]))
-        message_name = names[slot];
-
-      // Byte order.
-      int byte_order = ptr[TAO_GIOP_MESSAGE_FLAGS_OFFSET] & 0x01;
-
-      // Get the version info
-      CORBA::Octet major = ptr[TAO_GIOP_VERSION_MAJOR_OFFSET];
-      CORBA::Octet minor = ptr[TAO_GIOP_VERSION_MINOR_OFFSET];
-
-      // request/reply id.
-      CORBA::ULong tmp = 0;
-      CORBA::ULong *id = &tmp;
-      char *tmp_id = 0;
-
-      if (ptr[TAO_GIOP_MESSAGE_TYPE_OFFSET] == GIOP::Request ||
-          ptr[TAO_GIOP_MESSAGE_TYPE_OFFSET] == GIOP::Reply ||
-          ptr[TAO_GIOP_MESSAGE_TYPE_OFFSET] == GIOP::Fragment)
-        {
-          if (major == 1 && minor < 2)
-            {
-              // @@ Only works if ServiceContextList is empty....
-              tmp_id = (char * ) (ptr + TAO_GIOP_MESSAGE_HEADER_LEN  + 4);
-            }
-          else
-            {
-              tmp_id = (char * ) (ptr + TAO_GIOP_MESSAGE_HEADER_LEN);
-            }
-#if !defined (ACE_DISABLE_SWAP_ON_READ)
-        if (byte_order == TAO_ENCAP_BYTE_ORDER)
+        if (major == 1 && minor < 2)
           {
-            id = reinterpret_cast <ACE_CDR::ULong*> (tmp_id);
+            // @@ Only works if ServiceContextList is empty....
+            tmp_id = (char * ) (ptr + TAO_GIOP_MESSAGE_HEADER_LEN  + 4);
           }
         else
           {
-            ACE_CDR::swap_4 (tmp_id, reinterpret_cast <char*> (id));
+            tmp_id = (char * ) (ptr + TAO_GIOP_MESSAGE_HEADER_LEN);
           }
+#if !defined (ACE_DISABLE_SWAP_ON_READ)
+      if (byte_order == TAO_ENCAP_BYTE_ORDER)
+        {
+          id = reinterpret_cast <ACE_CDR::ULong*> (tmp_id);
+        }
+      else
+        {
+          ACE_CDR::swap_4 (tmp_id, reinterpret_cast <char*> (id));
+        }
 #else
-        id = reinterpret_cast <ACE_CDR::ULong*> (tmp_id);
+      id = reinterpret_cast <ACE_CDR::ULong*> (tmp_id);
 #endif /* ACE_DISABLE_SWAP_ON_READ */
 
-        }
+      }
 
-      // Print.
-      ACE_DEBUG ((LM_DEBUG,
-                  "TAO (%P|%t) - GIOP_Message_Base::dump_msg, "
-                  "%s GIOP v%c.%c msg, %d data bytes, %s endian, "
-                  "Type %s[%u]\n",
-                  ACE_TEXT_CHAR_TO_TCHAR (label),
-                  digits[ptr[TAO_GIOP_VERSION_MAJOR_OFFSET]],
-                  digits[ptr[TAO_GIOP_VERSION_MINOR_OFFSET]],
-                  len - TAO_GIOP_MESSAGE_HEADER_LEN ,
-                  (byte_order == TAO_ENCAP_BYTE_ORDER) ? ACE_TEXT("my") : ACE_TEXT("other"),
-                  ACE_TEXT_CHAR_TO_TCHAR(message_name),
-                  *id));
+    // Print.
+    ACE_DEBUG ((LM_DEBUG,
+                "TAO (%P|%t) - GIOP_Message_Base::dump_msg, "
+                "%s GIOP v%c.%c msg, %d data bytes, %s endian, "
+                "Type %s[%u]\n",
+                ACE_TEXT_CHAR_TO_TCHAR (label),
+                digits[ptr[TAO_GIOP_VERSION_MAJOR_OFFSET]],
+                digits[ptr[TAO_GIOP_VERSION_MINOR_OFFSET]],
+                len - TAO_GIOP_MESSAGE_HEADER_LEN ,
+                (byte_order == TAO_ENCAP_BYTE_ORDER) ? ACE_TEXT("my") : ACE_TEXT("other"),
+                ACE_TEXT_CHAR_TO_TCHAR(message_name),
+                *id));
 
-      if (TAO_debug_level >= 10)
-        ACE_HEX_DUMP ((LM_DEBUG,
-                       (const char *) ptr,
-                       len,
-                       ACE_TEXT ("GIOP message")));
-    }
+    if (TAO_debug_level >= 10)
+      ACE_HEX_DUMP ((LM_DEBUG,
+                      (const char *) ptr,
+                      len,
+                      ACE_TEXT ("GIOP message")));
 }
 
 int
@@ -1498,8 +1503,8 @@ TAO_GIOP_Message_Base::generate_locate_reply_header (
   return 0;
 }
 
-int
-TAO_GIOP_Message_Base::is_ready_for_bidirectional (TAO_OutputCDR &msg)
+bool
+TAO_GIOP_Message_Base::is_ready_for_bidirectional (TAO_OutputCDR &msg) const
 {
   TAO_GIOP_Message_Version giop_version;
 
