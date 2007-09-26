@@ -17,23 +17,43 @@ ACE_RCSID(ace,
           Timer_Hash_T,
           "$Id$")
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 template <class TYPE>
 struct Hash_Token
 {
-  Hash_Token (const void *act,
-              size_t pos,
-              long orig_id,
-              const TYPE &type)
-    : act_ (act),
-      pos_ (pos),
-      orig_id_ (orig_id),
-      type_ (type)
+  // This constructor is required by ACE_Locked_Free_List::alloc.
+  Hash_Token (void)
   {}
+
+  Hash_Token<TYPE> *get_next (void)
+  {
+    return this->next_;
+  }
+
+  void set_next (Hash_Token<TYPE> *next)
+  {
+    this->next_ = next;
+  }
+
+  void set (const void *act,
+            size_t pos,
+            long orig_id,
+            const TYPE &type)
+  {
+    this->act_ = act;
+    this->pos_ = pos;
+    this->orig_id_ = orig_id;
+    this->type_ = type;
+    this->next_ = 0;
+  }
 
   const void *act_;
   size_t pos_;
   long orig_id_;
   TYPE type_;
+  /// Pointer to next token.
+  Hash_Token<TYPE> *next_;
 };
 
 // Default constructor
@@ -151,8 +171,6 @@ ACE_Timer_Hash_Upcall<TYPE, FUNCTOR, ACE_LOCK>::deletion (
               event_handler,
               h->act_);
 
-  delete h;
-
   return result;
 }
 
@@ -261,6 +279,7 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET>::ACE_Timer_Hash_T (
 #if defined (ACE_WIN64)
   , pointer_base_ (0)
 #endif /* ACE_WIN64 */
+  , token_list_ ()
 {
   ACE_TRACE ("ACE_Timer_Hash_T::ACE_Timer_Hash_T");
 
@@ -296,6 +315,7 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET>::ACE_Timer_Hash_T (
 #if defined (ACE_WIN64)
   , pointer_base_ (0)
 #endif /* ACE_WIN64 */
+  , token_list_ ()
 {
   ACE_TRACE ("ACE_Timer_Hash_T::ACE_Timer_Hash_T");
 
@@ -402,10 +422,6 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET>::reschedule (
                                      expired->get_interval ());
   ACE_ASSERT (h->orig_id_ != -1);
 
-  // Since schedule() above will allocate a new node
-  // then here schedule <expired> for deletion.
-  this->free_node (expired);
-
 #if 0
   ACE_DEBUG ((LM_DEBUG, "Hash::reschedule() resets %d in slot %d where it's id is %d and token is %x\n",
               expired->get_timer_value ().msec (),
@@ -413,6 +429,12 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET>::reschedule (
               h->orig_id_,
               h));
 #endif
+
+  // Since schedule() above will allocate a new node
+  // then here schedule <expired> for deletion. Don't call
+  // this->free_node() because that will invalidate <h>
+  // and that's what user have as timer_id.
+  ACE_Timer_Queue_T<TYPE,FUNCTOR,ACE_LOCK>::free_node (expired);
 
   if (this->table_[this->earliest_position_]->is_empty ()
       || this->table_[h->pos_]->earliest_time ()
@@ -439,14 +461,10 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET>::schedule_i (
   size_t const secs_hash_input = static_cast<size_t> (future_time.sec ());
   size_t const position = secs_hash_input % this->table_size_;
 
-  Hash_Token<TYPE> *h = 0;
-
-  ACE_NEW_RETURN (h,
-                  Hash_Token<TYPE> (act,
-                                    position,
-                                    0,
-                                    type),
-                  -1);
+  // Don't create Hash_Token directly. Instead we get one from Free_List
+  // and then set it properly.
+  Hash_Token<TYPE> *h = this->token_list_.remove ();
+  h->set (act, position, 0, type);
 
   h->orig_id_ =
     this->table_[position]->schedule (type,
@@ -584,7 +602,10 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET>::cancel (long timer_id,
       if (act != 0)
         *act = h->act_;
 
-      delete h;
+      // We could destruct Hash_Token explicitly but we better
+      // schedule it for destruction. In this case next
+      // token_list_.remove () will use it.
+      this->token_list_.add (h);
 
       --this->size_;
     }
@@ -611,7 +632,6 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET>::cancel (const TYPE &type,
   ACE_NEW_RETURN (timer_ids,
                   Hash_Token<TYPE> *[this->size_],
                   -1);
-
 
   for (i = 0;
        i < this->table_size_;
@@ -643,7 +663,9 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET>::cancel (const TYPE &type,
       ACE_ASSERT (result == 1);
       ACE_UNUSED_ARG (result);
 
-      delete timer_ids[i];
+      // We could destruct Hash_Token explicitly but we better
+      // schedule it for destruction.
+      this->token_list_.add (timer_ids[i]);
 
       --this->size_;
     }
@@ -717,6 +739,16 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET>::get_first (void)
     return 0;
 
   return this->table_[this->earliest_position_]->get_first ();
+}
+
+template <class TYPE, class FUNCTOR, class ACE_LOCK, class BUCKET> void
+ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET>::free_node (ACE_Timer_Node_T<TYPE> *node)
+{
+  ACE_Timer_Queue_T<TYPE,FUNCTOR,ACE_LOCK>::free_node (node);
+
+  Hash_Token<TYPE> *h =
+    reinterpret_cast<Hash_Token<TYPE> *> (const_cast<void *> (node->get_act ()));
+  this->token_list_.add (h);
 }
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK, class BUCKET> int
@@ -823,7 +855,6 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET>::expire (const ACE_Time_Value 
           if (reclaim)
             {
               --this->size_;
-              delete h;
             }
 
           ++number_of_timers_expired;
@@ -835,5 +866,7 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET>::expire (const ACE_Time_Value 
 
   return number_of_timers_expired;
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_TIMER_HASH_T_CPP */

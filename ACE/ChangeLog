@@ -1,3 +1,17 @@
+Wed Sep 26 16:51:47 UTC 2007  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * ace/Timer_Hash_T.h:
+        * ace/Timer_Hash_T.cpp:
+        * tests/Timer_Queue_Reference_Counting_Test.cpp:
+          Another attempt to fix the memory leak in ACE_Timer_Hash_T.
+          Now the solution is very similar to what was done in
+          ACE_Timer_Queue_T for memory management of ACE_Timer_Node_T.
+          So, it's not worse than what is already in the code base.
+          Now also it's important to cancel all valid timers before the
+          timer queue is destroyed otherwise a memory leak will occur.
+          In short it means if you called schedule at the beginning then
+          don't forget to call cancel at the end.
+
 Wed Sep 26 09:34:29 UTC 2007  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * ace/Timer_Hash_T.h:
