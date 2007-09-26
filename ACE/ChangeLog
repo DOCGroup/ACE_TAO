@@ -1,3 +1,10 @@
+Wed Sep 26 09:34:29 UTC 2007  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * ace/Timer_Hash_T.h:
+        * ace/Timer_Hash_T.cpp:
+          Back out a fix for one of the leaks fixed before. The solution
+          was not perfect.
+
 Wed Sep 26 08:37:15 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_sunos5_sunc++.GNU:
