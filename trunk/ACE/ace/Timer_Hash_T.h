@@ -27,6 +27,8 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 // Forward declaration.
 template <class TYPE, class FUNCTOR, class ACE_LOCK, class BUCKET>
 class ACE_Timer_Hash_T;
+template <typename TYPE>
+class Hash_Token;
 
 /**
  * @class ACE_Timer_Hash_Upcall
@@ -213,7 +215,9 @@ public:
   /**
    * Cancel all timer associated with @a type.  If <dont_call> is 0
    * then the <functor> will be invoked.  Returns number of timers
-   * cancelled.
+   * cancelled. If any valid timer is not cancelled before destruction
+   * of this instance of ACE_Timer_Hash_T then user will get a memory
+   * leak.
    */
   virtual int cancel (const TYPE &type,
                       int dont_call_handle_close = 1);
@@ -225,7 +229,9 @@ public:
    * passed in when the timer was registered.  This makes it possible
    * to free up the memory and avoid memory leaks.  If <dont_call> is
    * 0 then the <functor> will be invoked.  Returns 1 if cancellation
-   * succeeded and 0 if the @a timer_id wasn't found.
+   * succeeded and 0 if the @a timer_id wasn't found.  If any valid
+   * timer is not cancelled before destruction of this instance of
+   * ACE_Timer_Hash_T then user will get a memory leak.
    */
   virtual int cancel (long timer_id,
                       const void **act = 0,
@@ -256,6 +262,10 @@ public:
 
   /// Reads the earliest node from the queue and returns it.
   virtual ACE_Timer_Node_T<TYPE> *get_first (void);
+
+protected:
+  /// Factory method that frees a previously allocated node.
+  virtual void free_node (ACE_Timer_Node_T<TYPE> *);
 
 private:
 
@@ -308,6 +318,10 @@ private:
   // This is, essentially, the upper 32 bits of a 64-bit pointer on Win64.
   ptrdiff_t pointer_base_;
 #endif
+
+  /// Hash_Token is usually allocated in schedule but its
+  /// deallocation is problematic and token_list_ helps with this.
+  ACE_Locked_Free_List<Hash_Token<TYPE>, ACE_Null_Mutex> token_list_;
 
   // = Don't allow these operations for now.
   ACE_UNIMPLEMENTED_FUNC (ACE_Timer_Hash_T (const ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET> &))

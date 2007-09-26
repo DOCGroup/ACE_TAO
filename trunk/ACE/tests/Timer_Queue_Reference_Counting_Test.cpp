@@ -111,7 +111,6 @@ Reference_Counted_Event_Handler::handle_close (ACE_HANDLE handle,
 void
 cancellation (ACE_Timer_Queue &timer_queue,
               int repeat_timer,
-              int cancel_timers,
               int cancel_handler,
               int second_timer,
               int dont_call_handle_close)
@@ -120,21 +119,11 @@ cancellation (ACE_Timer_Queue &timer_queue,
 
   int expected_number_of_handle_close_calls = -1;
 
-  if (cancel_timers)
+  if (!dont_call_handle_close)
     {
-      if (!dont_call_handle_close)
-        {
-          if (cancel_handler)
-            expected_number_of_handle_close_calls = 1;
-          else if (second_timer)
-            expected_number_of_handle_close_calls = 2;
-          else
-            expected_number_of_handle_close_calls = 1;
-        }
-    }
-  else
-    {
-      if (second_timer)
+      if (cancel_handler)
+        expected_number_of_handle_close_calls = 1;
+      else if (second_timer)
         expected_number_of_handle_close_calls = 2;
       else
         expected_number_of_handle_close_calls = 1;
@@ -175,9 +164,6 @@ cancellation (ACE_Timer_Queue &timer_queue,
                               ACE_Time_Value (2));
       ACE_ASSERT (second_timer_id != -1);
     }
-
-  if (!cancel_timers)
-    return;
 
   if (cancel_handler)
     {
@@ -223,39 +209,23 @@ cancellation_test<TIMER_QUEUE>::cancellation_test (const char *timer_queue_type)
               "\nCancellation test for %C\n\n",
               timer_queue_type));
 
-  int configs[][5] = {
-    { 0, 0, 0, 0, 0, },
-    { 0, 0, 0, 0, 1, },
-    { 0, 0, 0, 1, 0, },
-    { 0, 0, 0, 1, 1, },
-    { 0, 0, 1, 0, 0, },
-    { 0, 0, 1, 0, 1, },
-    { 0, 0, 1, 1, 0, },
-    { 0, 0, 1, 1, 1, },
-    { 0, 1, 0, 0, 0, },
-    { 0, 1, 0, 0, 1, },
-    { 0, 1, 0, 1, 0, },
-    { 0, 1, 0, 1, 1, },
-    { 0, 1, 1, 0, 0, },
-    { 0, 1, 1, 0, 1, },
-    { 0, 1, 1, 1, 0, },
-    { 0, 1, 1, 1, 1, },
-    { 1, 0, 0, 0, 0, },
-    { 1, 0, 0, 0, 1, },
-    { 1, 0, 0, 1, 0, },
-    { 1, 0, 0, 1, 1, },
-    { 1, 0, 1, 0, 0, },
-    { 1, 0, 1, 0, 1, },
-    { 1, 0, 1, 1, 0, },
-    { 1, 0, 1, 1, 1, },
-    { 1, 1, 0, 0, 0, },
-    { 1, 1, 0, 0, 1, },
-    { 1, 1, 0, 1, 0, },
-    { 1, 1, 0, 1, 1, },
-    { 1, 1, 1, 0, 0, },
-    { 1, 1, 1, 0, 1, },
-    { 1, 1, 1, 1, 0, },
-    { 1, 1, 1, 1, 1, },
+  int configs[][4] = {
+    { 0, 0, 0, 0, },
+    { 0, 0, 0, 1, },
+    { 0, 0, 1, 0, },
+    { 0, 0, 1, 1, },
+    { 0, 1, 0, 0, },
+    { 0, 1, 0, 1, },
+    { 0, 1, 1, 0, },
+    { 0, 1, 1, 1, },
+    { 1, 0, 0, 0, },
+    { 1, 0, 0, 1, },
+    { 1, 0, 1, 0, },
+    { 1, 0, 1, 1, },
+    { 1, 1, 0, 0, },
+    { 1, 1, 0, 1, },
+    { 1, 1, 1, 0, },
+    { 1, 1, 1, 1, },
   };
 
   for (int i = 0;
@@ -268,8 +238,7 @@ cancellation_test<TIMER_QUEUE>::cancellation_test (const char *timer_queue_type)
                     configs[i][0],
                     configs[i][1],
                     configs[i][2],
-                    configs[i][3],
-                    configs[i][4]);
+                    configs[i][3]);
     }
 }
 
@@ -474,12 +443,13 @@ simple (ACE_Timer_Queue &timer_queue)
 {
   int events = 0;
   int result = 0;
+  long timer_id = -1;
 
   {
     Simple_Event_Handler *handler =
       new Simple_Event_Handler;
 
-    long timer_id =
+    timer_id =
       timer_queue.schedule (handler,
                             one_second_timeout,
                             ACE_Time_Value (1) + timer_queue.gettimeofday (),
@@ -487,9 +457,9 @@ simple (ACE_Timer_Queue &timer_queue)
     ACE_ASSERT (timer_id != -1);
 
     result =
-    timer_queue.cancel (timer_id,
-                        0,
-                        0);
+      timer_queue.cancel (timer_id,
+                          0,
+                          0);
     ACE_ASSERT (result == 1);
   }
 
@@ -497,7 +467,7 @@ simple (ACE_Timer_Queue &timer_queue)
     Simple_Event_Handler *handler =
       new Simple_Event_Handler;
 
-    long timer_id =
+    timer_id =
       timer_queue.schedule (handler,
                             one_second_timeout,
                             ACE_Time_Value (1) + timer_queue.gettimeofday (),
@@ -519,6 +489,8 @@ simple (ACE_Timer_Queue &timer_queue)
 
       i += result;
     }
+
+  timer_queue.cancel (timer_id, 0, 0);
 }
 
 template <class TIMER_QUEUE>
