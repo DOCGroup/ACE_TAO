@@ -66,7 +66,6 @@
     <node>TestNode</node>
     <source/>
     <implementation>_38CD0A90-B394-49AD-97A7-3F2A89AC9BFE</implementation>
-<!--
     <configProperty>
       <name>repoman_id</name>
       <value>
@@ -74,10 +73,10 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>repoman</string>
+          <string>RM</string>
         </value>
       </value>
-    </configProperty> -->
+    </configProperty>
   </instance>
 
   <instance id="RACE_SAPOP_tester.ComponentImplementations.Assembly_Tester.Tester_Assembly.RACE.SA_POP_IA_Component">
@@ -85,6 +84,17 @@
     <node>TestNode</node>
     <source/>
     <implementation>_C0460AF8-EFC7-456F-AE43-657CC00190E7</implementation>
+    <configProperty>
+      <name>ComponentIOR</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>SA_POP_IA_Component.ior</string>
+        </value>
+      </value>
+    </configProperty>
   </instance>
 
   <instance id="RACE_SAPOP_tester.ComponentImplementations.Assembly_Tester.Tester_Assembly.RACE.Data_Base_Component">

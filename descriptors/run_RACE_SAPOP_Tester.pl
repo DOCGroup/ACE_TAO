@@ -63,6 +63,14 @@ $node_app = "$CIAO_ROOT/bin/NodeApplication";
 $d_cmd = "$CIAO_ROOT/bin/NodeManager";
 $iorfile = "RACE.ior";
 $d_param = "-n -ORBEndpoint $iiop -s $node_app -o $iorfile -d 60";
+$race = new PerlACE::Process ($d_cmd, $d_param);
+$race->Spawn ();
+
+$iiop = "iiop://localhost:60000";
+$node_app = "$CIAO_ROOT/bin/NodeApplication";
+$d_cmd = "$CIAO_ROOT/bin/NodeManager";
+$iorfile = "SPACE.ior";
+$d_param = "-n -ORBEndpoint $iiop -s $node_app -o $iorfile -d 60";
 $space = new PerlACE::Process ($d_cmd, $d_param);
 $space->Spawn ();
 
