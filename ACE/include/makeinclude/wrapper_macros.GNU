@@ -52,6 +52,8 @@
 #  static_libs_only Only build static libraries.
 #  static_link      Link only static libs to executables, e.g., uses "-static"
 #                   flag with the GNU ld linker.
+#  symlinks         Make symbolic links (on appropriate platforms) in the lib
+#                   directory be either "absolute" or "relative".
 #  templates	    Type of template instantiation to perform. Can be one of
 #                   automatic, used. Defaults to automatic.
 #  threads          Build with thread support.
@@ -296,6 +298,7 @@ fast ?= 0
 versioned_so ?= 1
 use_dep_libs ?= 1
 threads ?= 1
+symlinks ?= relative
 
 SOVERSION ?=
 SONAME ?=

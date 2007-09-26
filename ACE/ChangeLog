@@ -1,3 +1,11 @@
+Wed Sep 26 17:56:02 GMT 2007  Rich Seibel <seibel_r@ociweb.com>
+
+        * bin/add_rel_links.sh:
+        * include/makeinclude/rules.local.GNU:
+        * include/makeinclude/wrapper_macros.GNU:
+          Make the symlinks in ACE_wrappers/lib be relative rather
+          than absolute.
+
 Wed Sep 26 16:51:47 UTC 2007  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * ace/Timer_Hash_T.h:
