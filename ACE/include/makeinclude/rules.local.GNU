@@ -247,7 +247,11 @@ ifndef LN_S
     #### Assume we're on a WIN32 host.
     LN_S = cp -p
   else  # ! WIN32
-    LN_S = ln -s
+    ifeq ($(symlinks),absolute)
+      LN_S = ln -s
+    else
+      LN_S = $(ACE_ROOT)/bin/add_rel_link.sh
+    endif # symlinks
   endif # ! WIN32
 endif # ! LN_S
 
