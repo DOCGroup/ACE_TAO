@@ -159,9 +159,9 @@ TAO_RT_Invocation_Endpoint_Selector::endpoint_from_profile (
     TAO_RT_Endpoint_Utils::policy (
       TAO_CACHED_POLICY_RT_PRIORITY_BANDED_CONNECTION, r);
 
-  int all_endpoints_are_valid = 0;
-  int match_priority = 0;
-  int match_bands = 0;
+  bool all_endpoints_are_valid = false;
+  bool match_priority = false;
+  bool match_bands = false;
   CORBA::Short client_thread_priority = 0;
   CORBA::Short min_priority = 0;
   CORBA::Short max_priority = 0;
@@ -185,7 +185,7 @@ TAO_RT_Invocation_Endpoint_Selector::endpoint_from_profile (
 
       // No priority model policy (and no bands policy): all endpoints
       // are fair game.
-      all_endpoints_are_valid = 1;
+      all_endpoints_are_valid = true;
     }
   // If the priority model policy is set.
   else
@@ -208,7 +208,7 @@ TAO_RT_Invocation_Endpoint_Selector::endpoint_from_profile (
           if (!is_client_propagated)
             {
               // Server declared: all endpoints are fair game.
-              all_endpoints_are_valid = 1;
+              all_endpoints_are_valid = true;
             }
           // Client propagated.
           else
@@ -216,8 +216,7 @@ TAO_RT_Invocation_Endpoint_Selector::endpoint_from_profile (
               // Get client thread priority.
               int status =
                 protocol_hooks->get_thread_CORBA_priority (
-                  client_thread_priority  // side effect
-                 );
+                  client_thread_priority);   // side effect
               if (status == -1)
                 {
                   throw ::CORBA::DATA_CONVERSION (
@@ -231,7 +230,7 @@ TAO_RT_Invocation_Endpoint_Selector::endpoint_from_profile (
 
                   // Match the priority of the client thread with the
                   // endpoint.
-                  match_priority = 1;
+                  match_priority = true;
                 }
               // There are bands.
               else
@@ -264,7 +263,7 @@ TAO_RT_Invocation_Endpoint_Selector::endpoint_from_profile (
                     }
 
                   // Match the priority of the band with the endpoint.
-                  match_bands = 1;
+                  match_bands = true;
                 }
             }
         }
@@ -327,13 +326,8 @@ TAO_RT_Invocation_Endpoint_Selector::endpoint_from_profile (
                 (&banded_connection_descriptor_property);
             }
 
-          bool status =
-            r.try_connect (&rt_transport_descriptor,
-                           val
-                          );
-
           // Check if the invocation has completed.
-          if (status == true)
+          if (r.try_connect (&rt_transport_descriptor, val))
             return 1;
         }
 

@@ -233,7 +233,7 @@ namespace TAO
     (void) this->set_response_flags (stub, details);
 
     CORBA::Octet rflags = details.response_flags ();
-    bool block_connect =
+    bool const block_connect =
       rflags != static_cast<CORBA::Octet> (Messaging::SYNC_NONE)
       && rflags != static_cast<CORBA::Octet> (TAO::SYNC_DELAYED_BUFFERING);
 
