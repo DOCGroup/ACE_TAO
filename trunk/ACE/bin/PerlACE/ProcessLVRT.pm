@@ -213,6 +213,7 @@ sub Spawn ()
         print STDERR "ERROR: target $targethost:$targetport: ",
                       $self->{TARGET}->errmsg(), "\n";
         $self->{NEED_REBOOT} = 1;
+        $self->{FTP}->delete($program);
         return -1;
     }
     my $cmdline = $self->CommandLine();
@@ -230,6 +231,7 @@ sub Spawn ()
         return 0;
     }
     print STDERR "ERROR: can't $cmdline: " . $reply . "\n";
+    $self->{FTP}->delete($program);
     $self->{NEED_REBOOT} = 1;
     return -1;
 }
