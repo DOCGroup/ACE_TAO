@@ -1,10 +1,10 @@
 // $Id$
 
-project(SA_POP_Component_stub): ciao_client_dnc {
+project(SA_POP_Component_stub): ciao_client_dnc, ciao_deployment_stub {
   
   sharedname = SA_POP_Component_stub
   after += OpString_stub Data_Base_stub SA_POP
-  
+  libs += RACE_common_stub  
   idlflags -= -GT
   idlflags += -St \
               -Wb,stub_export_macro=SA_POP_COMPONENT_STUB_Export \
@@ -31,7 +31,7 @@ project(SA_POP_Component_svnt) : ciao_servant_dnc {
   sharedname  = SA_POP_Component_svnt
   libs       += SA_POP_Component_stub \
                 OpString_stub \
-                Data_Base_Component_stub
+                Data_Base_Component_stub RACE_common_stub
 
 
 //  cidlflags -= --
@@ -59,7 +59,7 @@ project(SA_POP_Component_svnt) : ciao_servant_dnc {
   }
 }
 
-project(SA_POP_Component_exec) : ciao_component_dnc {
+project(SA_POP_Component_exec) : ciao_component_dnc, ciao_config_handlers  {
   after   += SA_POP_Component_svnt
   sharedname = SA_POP_Component_exec
 
@@ -70,7 +70,7 @@ project(SA_POP_Component_exec) : ciao_component_dnc {
           SA_POP_Component_svnt \
           OpString_stub \
           Data_Base_Component_stub \
-          SA_POP
+          SA_POP RACE_common_stub
    
   dynamicflags   = SA_POP_COMPONENT_EXEC_BUILD_DLL
 

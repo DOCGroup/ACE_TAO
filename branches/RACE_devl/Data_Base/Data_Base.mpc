@@ -1,4 +1,4 @@
-project(Data_Base_stub): ciao_client_dnc {
+project(Data_Base_stub): ciao_client_dnc, ciao_deployment_stub {
 
   sharedname = Data_Base_Component_stub
   after += OpString_stub

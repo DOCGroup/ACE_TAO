@@ -1,6 +1,6 @@
 // $Id$
 
-project(Tester_Component_stub): ciao_client_dnc {
+project(Tester_Component_stub): ciao_client_dnc, ciao_deployment_stub {
   
   sharedname = Tester_Component_stub
   
@@ -9,7 +9,7 @@ project(Tester_Component_stub): ciao_client_dnc {
 
 
   libs += SA_POP_Component_stub SA_POP_IA_Component_stub OpString_stub \
-          RACE_common_stub
+          RACE_common_stub Data_Base_Component_stub DAnCE_OA_Component_stub
 
 
   includes += $(CIAO_ROOT)/RACE
@@ -39,8 +39,9 @@ project(Tester_Component_svnt) : ciao_servant_dnc {
   libs       += Tester_Component_stub \
                 SA_POP_IA_Component_stub \
                 OpString_stub \
-                SA_POP_Component_stub
-
+                SA_POP_Component_stub \
+                RACE_common_stub Data_Base_Component_stub DAnCE_OA_Component_stub
+                
 
   includes += $(CIAO_ROOT)/RACE
    
@@ -81,7 +82,9 @@ project(Tester_Component_exec) : ciao_component_dnc {
                 SA_POP_Component_stub
 
   includes += $(CIAO_ROOT)/RACE
-   
+  libs += OpString_stub Data_Base_Component_stub DAnCE_OA_Component_stub RACE_common_stub CIAO_Deployment_stub TAO_Messaging CIAO_Events_Base CIAO_Container TAO_PortableServer   
+  libpaths += $(ACE_ROOT)/lib
+
   dynamicflags   = TESTER_COMPONENT_EXEC_BUILD_DLL
 
   IDL_Files {
@@ -95,11 +98,12 @@ project(Tester_Component_exec) : ciao_component_dnc {
 }
 
 
-project (Tester_Client) : ciao_client_dnc, valuetype {
+project (Tester_Client) : ciao_client_dnc, valuetype, ciao_deployment_stub {
   avoids += ace_for_tao
   exename = tester_client
   after += Tester_Component_stub
   libs += Tester_Component_stub OpString_stub
+  libs += SA_POP_Component_stub SA_POP_Component_stub SA_POP_IA_Component_stub RACE_common_stub Data_Base_Component_stub DAnCE_OA_Component_stub
 
 
   includes += $(CIAO_ROOT)/RACE
