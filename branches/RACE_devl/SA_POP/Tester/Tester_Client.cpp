@@ -1,5 +1,6 @@
 #include "Tester_ComponentC.h"
 #include "ace/Get_Opt.h"
+#include <iostream>
 
 // IOR file of the Tester_Component.
 const char * ior = 0;
