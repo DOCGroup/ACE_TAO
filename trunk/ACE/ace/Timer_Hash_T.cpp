@@ -20,8 +20,9 @@ ACE_RCSID(ace,
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class TYPE>
-struct Hash_Token
+class Hash_Token
 {
+public:
   // This constructor is required by ACE_Locked_Free_List::alloc.
   Hash_Token (void)
   {}
