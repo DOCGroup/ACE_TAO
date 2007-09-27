@@ -1,3 +1,8 @@
+Thu Sep 27 13:06:29 UTC 2007  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * ace/Timer_Hash_T.cpp:
+          Fix for a warning on Win2003_VC71_Inline_MFC build.
+
 Wed Sep 26 17:56:02 GMT 2007  Rich Seibel <seibel_r@ociweb.com>
 
         * bin/add_rel_links.sh:
