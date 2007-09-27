@@ -1,4 +1,4 @@
-project(SA_POP_Input_Adapter_stub): ciao_client_dnc {
+project(SA_POP_Input_Adapter_stub): ciao_client_dnc, ciao_deployment_stub {
 
   sharedname = SA_POP_IA_Component_stub
   after += OpString_stub Data_Base_stub DAnCE_Output_Adapter_stub
@@ -60,7 +60,7 @@ project(SA_POP_Input_Adapter_svnt) : ciao_servant_dnc {
 }
 
 project(SA_POP_Input_Adapter_exec) : ciao_component_dnc, ciao_config_handlers {
- after   += SA_POP_Input_Adapter_svnt
+ after   += SA_POP_Input_Adapter_svnt SA_POP_Component_stub
  sharedname = SA_POP_IA_Component_exec
  libs +=	SA_POP_IA_Component_stub \
 			SA_POP_IA_Component_svnt \
@@ -81,11 +81,14 @@ project(SA_POP_Input_Adapter_exec) : ciao_component_dnc, ciao_config_handlers {
  }
 }
 
-project (Tester) : ciao_client_dnc, valuetype {
+project (Tester) : ciao_client_dnc, valuetype, ciao_deployment_stub {
   avoids += ace_for_tao
   exename = tester
   after += SA_POP_Input_Adapter_stub
   libs += SA_POP_IA_Component_stub
+  
+  libs += SA_POP_Component_stub SA_POP_IA_Component_stub OpString_stub \
+          RACE_common_stub Data_Base_Component_stub DAnCE_OA_Component_stub
 
   IDL_Files {
   }

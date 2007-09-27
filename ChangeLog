@@ -1,3 +1,13 @@
+Thu Sep 27 21:29:33 UTC 2007  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * SA_POP/Component/SA_POP_Component.mpc
+        * SA_POP/Tester/Tester_Component.mpc
+        * Input_Adapters/SA_POP_Input_Adapter/SA_POP_Input_Adapter.mpc
+        * Data_Base/Data_Base.mpc
+        * Output_Adapters/DAnCE_Output_Adapter/DAnCE_Output_Adapter.mpc
+
+          Added missing libs+= to enable building on OS X.
+        
 Wed Sep 26 23:16:48 UTC 2007  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
 
         * Output_Adapters/DAnCE_Output_Adapter/Admin_exec.cpp:
