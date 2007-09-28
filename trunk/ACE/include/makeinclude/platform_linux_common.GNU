@@ -77,8 +77,12 @@ GNU_LIBPTHREAD_VERSION := $(shell getconf GNU_LIBPTHREAD_VERSION)
 ifeq (NPTL, $(word 1,$(GNU_LIBPTHREAD_VERSION)))
   NPTL_VERS := $(subst ., ,$(word 2,$(GNU_LIBPTHREAD_VERSION)))
   ifneq (0, $(word 1,$(NPTL_VERS)))
-    CPPFLAGS += -DACE_HAS_LINUX_NPTL
+    nptl ?= 1
   endif
+endif
+nptl ?= 0
+ifeq ($(nptl),1)
+  CPPFLAGS += -DACE_HAS_LINUX_NPTL
 endif
 
 ssl ?= 0

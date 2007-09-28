@@ -1,3 +1,9 @@
+Fri Sep 28 06:12:15 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_linux_common.GNU:
+          Added nptl=0|1 to disable/enable nptl support through the
+          platform_macros.GNU file
+
 Thu Sep 27 16:29:19 UTC 2007  Steve Huston  <shuston@riverace.com>
 
         * bin/PerlACE/ProcessLVRT.pm: Try to clean some files off the target
