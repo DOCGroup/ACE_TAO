@@ -24,7 +24,7 @@
 
 
 <p>The following table summarizes platforms on which TAO runs, see the
-<a href="../ACE-INSTALL.html#platforms">ACE installation notes</A> for an
+<a href="../ACE/ACE-INSTALL.html#platforms">ACE installation notes</A> for an
 overview of all the platforms ACE runs on, these are all candidates
 to run TAO on:<P>
 
@@ -87,7 +87,7 @@ bundle as a single piece instead of trying to mix and match things up.<P>
 
 <OL>
   <LI>Set <CODE>ACE_ROOT</CODE> environment variable as outlined in
-      the <a href="../ACE-INSTALL.html">ACE
+      the <a href="../ACE/ACE-INSTALL.html">ACE
       installation notes</A>.<P>
 
   <LI>Build and install ACE under <CODE>$ACE_ROOT</CODE>.<P>
@@ -190,7 +190,7 @@ work include those from Solaris 4.x and 5.x, HP-UX, the latest BSD,
 etc.<p>
 
 GNU Make can be obtained from various places in source and binary
-form. Please see <a href="../ACE-INSTALL.html"> ACE-INSTALL.html </a>
+form. Please see <a href="../ACE/ACE-INSTALL.html">ACE-INSTALL.html</a>
 for details from where they can be obtained.<P>
 
 <h2><strong><a name="makenotes">Explicit templates</a></strong></h2>
@@ -207,7 +207,7 @@ can for example be VxWorks, LynxOS or Linux.
 
 If you are building TAO for a VxWorks target, please see the detailed
 instructions for building and installing ACE and TAO in <a
-href="../ACE-INSTALL.html#vxworks">$ACE_ROOT/ACE-INSTALL.html</a>.<p>
+href="../ACE/ACE-INSTALL.html#vxworks">$ACE_ROOT/ACE-INSTALL.html</a>.<p>
 
     <P>Cross-compiling TAO is not much different than building it for a
       self-host.  The one major difference is that TAO's IDL compiler
@@ -342,9 +342,9 @@ $ echo 'include $(ACE_ROOT)/include/makeinclude/platform_TARGET.GNU' \
 
     <P>For Win32 hosts, please see the detailed instructions for building
       and installing ACE and TAO in
-      <a href="../ACE-INSTALL.html#vxworks">../ACE-INSTALL.html</a>,
+      <a href="../ACE/ACE-INSTALL.html#vxworks">ACE_ROOT/ACE-INSTALL.html</a>,
       and
-      <a href="../ACE-INSTALL.html#VxWorks/NT">Building ACE on
+      <a href="../ACE/ACE-INSTALL.html#VxWorks/NT">Building ACE on
         Tornado/NT hosts for VxWorks targets</a>
     </P>
 
@@ -384,11 +384,11 @@ be found in the <a href="docs/compiler.html#idl_env">TAO_IDL documentation.</a><
 
 <P>It is also advisable to set either the <CODE>ACE_ROOT</CODE> environment
 variable as outlined in the
-<a href="../ACE-INSTALL.html">ACE
+<a href="../ACE/ACE-INSTALL.html">ACE
 installation notes</A> or the <code>TAO_ROOT</code> environment variable.
   </P>
 
-Remember to <a href="../ACE-INSTALL.html">set
+Remember to <a href="../ACE/ACE-INSTALL.html">set
 up ACE</A> before building TAO.
 
 <H4>Visual C++ 7.1 and newer</H4>
@@ -437,7 +437,7 @@ MPC. Please report such bugs to the tao-users newsgroups.
 <H4>Borland C++ Builder</H4> <P>
 
 To build TAO using C++Builder please follow the
-<A HREF="../ACE-INSTALL.html#borland">ACE installation notes</A>, with the
+<A HREF="../ACE/ACE-INSTALL.html#borland">ACE installation notes</A>, with the
 difference being that you first build ACE and then you
 give the following command in the $ACE_ROOT\TAO directory:<BR>
 <BLOCKQUOTE><CODE>
@@ -471,7 +471,7 @@ creating static libraries and linking with them.
 <H4>MinGW and Cygwin</H4> <P>
 
 <P>First, follow the build instructions in the
-<A HREF="../ACE-INSTALL.html#mingw">ACE installation notes.</A>
+<A HREF="../ACE/ACE-INSTALL.html#mingw">ACE installation notes.</A>
 When building with MinGW and Cygwin you are using the GNU make under Windows.
 When you use make from the commandline, make sure that <code>TAO_ROOT</code> is
 set to a full path or to <code>%ACE_ROOT%/TAO</code>, which will also result
@@ -515,7 +515,7 @@ create <code>ACE_wrappers/bin/MakeProjectCreator/config/default.features</code>
 with the contents:</p>
 <code>minimum_corba=1</code><p>
 Then regenerate the project files with MPC using <code>perl bin/mwc.pl</code>,
-see also <A HREF="../ACE-INSTALL.html#MPC">ACE-INSTALL.html</A> for more info
+see also <A HREF="../ACE/ACE-INSTALL.html#MPC">ACE-INSTALL.html</A> for more info
 about the MPC generation. This <code>miminum_corba=1</code> will add compiler
 flags to the C++ compiler and the IDL compiler to indicate that minimum corba
 is enabled.
@@ -541,7 +541,7 @@ with the contents:</p>
 or</p>
 <code>corba_e_micro=1</code><p>
 Then regenerate the project files with MPC using <code>perl bin/mwc.pl</code>,
-see also <A HREF="../ACE-INSTALL.html#MPC">ACE-INSTALL.html</A> for more info
+see also <A HREF="../ACE/ACE-INSTALL.html#MPC">ACE-INSTALL.html</A> for more info
 about the MPC generation. This <code>corba_e_x=1</code> will add compiler
 flags to the C++ compiler and the IDL compiler to indicate that CORBA/e
 is enabled.
@@ -553,7 +553,7 @@ in the ace/config.h file.</P>
 <HR><P>
 <H3><A NAME="resource_requirements">System Resource Requirements</A></H3>
 Please see the
-<a href="../ACE-INSTALL.html#resource_requirements">ACE-INSTALL.html</a> System
+<a href="../ACE/ACE-INSTALL.html#resource_requirements">ACE-INSTALL.html</a> System
 Resource Requirements discussion for information on system resources
 required to build ACE and TAO.<p>
 
@@ -584,7 +584,7 @@ quickly.
     <UL>
     <LI> Build ACE and TAO seperately. ACE needs to be built first and
   instructins for building ACE are available at <a
-  href="../ACE-INSTALL.html#MPC">ACE-INSTALL</a>. GNUmakefiles and
+  href="../ACE/ACE-INSTALL.html#MPC">ACE-INSTALL</a>. GNUmakefiles and
   project files for TAO can be generated by using the following
   commands:<p>
     <CODE> $ACE_ROOT/bin/mwc.pl TAO.mwc -type gnuace </CODE> <p>
