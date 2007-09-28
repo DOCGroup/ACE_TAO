@@ -420,18 +420,20 @@ namespace
         component_emitter.traverse (t);
       }
 
-      os << "// Operations from Components::SessionComponent" << endl << endl;
+      os << "// Operations from Components::SessionComponent"
+         << endl << endl;
 
       os << "void" << endl
          << t.name () << "_exec_i::set_session_context (" << endl
          << STRS[COMP_SC] << "_ptr ctx)" << endl
          << "{"
          << "this->context_ =" << endl
-         << "  " << t.name () << "_Context::_narrow ("
+         << "  " << t.scoped_name ().scope_name () << "::CCM_"
+         << t.name () << "_Context::_narrow ("
          << "ctx);" 
          << endl;
 
-      os << "if (this->context_ == 0)" << endl
+      os << "if (CORBA::is_nil (this->context_.in ()))" << endl
          << "{"
          << "throw ::CORBA::INTERNAL ();"
          << "}"

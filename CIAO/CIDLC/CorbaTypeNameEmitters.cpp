@@ -1071,8 +1071,7 @@ NullReturnEmitter::traverse (SemanticGraph::Array&)
 void
 NullReturnEmitter::traverse (SemanticGraph::Enum& e)
 {
-  os << e.scoped_name () << " retval;" << endl
-     << "return retval;";
+  os << "return static_cast< " << e.scoped_name () << "> (0UL);";
 }
 
 void
