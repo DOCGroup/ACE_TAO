@@ -1,3 +1,11 @@
+Fri Sep 28 19:58:52 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * CIDLC/UtilityTypeNameEmitters.hpp:
+        
+          For some unknown reason, a class declaration was missing from
+          this file in updating on other machines, checking it in
+          explicitly to make sure.
+
 Fri Sep 28 19:37:39 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * CIDLC/CorbaTypeNameEmitters.cpp:
