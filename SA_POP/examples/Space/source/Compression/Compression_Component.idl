@@ -1,0 +1,24 @@
+
+#ifndef COMPRESSION_COMPONENT_IDL
+#define COMPRESSION_COMPONENT_IDL
+
+#include <Components.idl>
+#include "Event_Types.idl"
+
+module SPACE
+{
+  component Compression_Component
+  {
+    consumes Gizmo_Data recv_data;
+    
+    publishes Gizmo_Data send_data;
+  };
+  
+  home Compression_Component_Factory
+    manages Compression_Component
+  {
+  };
+};
+
+#endif // COMPRESSION_COMPONENT_IDL
+

@@ -1,0 +1,22 @@
+
+#ifndef GIZMO2_HIGH_IDL
+#define GIZMO2_HIGH_IDL
+
+#include <Components.idl>
+#include "Event_Types.idl"
+
+module SPACE
+{
+  component Gizmo2_High
+  {
+    publishes Gizmo_Data observation_data;
+  };
+  
+  home Gizmo2_High_Factory
+    manages Gizmo2_High
+  {
+  };
+};
+
+#endif // GIZMO2_HIGH_IDL
+

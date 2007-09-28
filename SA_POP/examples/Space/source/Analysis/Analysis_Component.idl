@@ -1,0 +1,23 @@
+
+#ifndef ANALYSIS_COMPONENT_IDL
+#define ANALYSIS_COMPONENT_IDL
+
+#include <Components.idl>
+#include "Event_Types.idl"
+
+module SPACE
+{
+  component Analysis_Component
+  {
+    consumes Gizmo_Data recv_data;
+
+    publishes Gizmo_Data send_data;
+  };
+
+  home Analysis_Component_Factory
+    manages Analysis_Component
+  {
+  };
+};
+
+#endif // ANALYSIS_COMPONENT_IDL

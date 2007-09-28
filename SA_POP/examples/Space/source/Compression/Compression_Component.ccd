@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<!DOCTYPE corbacomponent SYSTEM "corbacomponent.dtd">
+
+<corbacomponent>
+  <corbaversion>3.0</corbaversion>
+  <componentrepid repid="IDL:SPACE/Compression_Component:1.0"/>
+  <homerepid repid="IDL:SPACE/Compression_Component_Factory:1.0"/>
+  <componentkind>
+    <session>
+      <servant lifetime="container"/>
+    </session>
+  </componentkind>
+  <threading policy="multithread"/>
+  <configurationcomplete set="true"/>
+  
+  <homefeatures
+      name="Compression_Component_Factory"
+      repid="IDL:SPACE/Compression_Component_Factory:1.0">
+  </homefeatures>
+  
+  <componentfeatures
+      name="Compression_Component"
+      repid="IDL:SPACE/Compression_Component:1.0">
+    <ports>
+      <consumes
+          consumesname="recv_data"
+          eventtype="IDL:SPACE/Gizmo_Data:1.0">
+        <eventpolicy policy="normal"/>
+      </consumes>
+      <publishes
+          publishesname="send_data"
+          eventtype="IDL:SPACE/Gizmo_Data:1.0">
+        <eventpolicy policy="normal"/>
+      </publishes>
+    </ports>
+  </componentfeatures>
+  
+</corbacomponent>
