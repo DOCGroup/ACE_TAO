@@ -56,10 +56,10 @@ namespace CIAO
        * @param deployment_plan_uri A uri that points ot a valid deployment plan
        * @returns a string containing the UUID of the plan. Null indicates failure.
        */
-      const char * launch_plan (const char *deployment_plan_uri,
-                                const char *package_uri = 0,
-                                bool use_package_name = true,
-                                bool use_repoman = false);
+      virtual const char * launch_plan (const char *deployment_plan_uri,
+                                        const char *package_uri = 0,
+                                        bool use_package_name = true,
+                                        bool use_repoman = false);
 
       const char * re_launch_plan (const char *deployment_plan_uri,
                                    const char *package_uri = 0,

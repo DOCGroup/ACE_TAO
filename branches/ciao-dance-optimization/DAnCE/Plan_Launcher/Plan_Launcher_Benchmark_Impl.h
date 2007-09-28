@@ -27,6 +27,11 @@ namespace CIAO
       
       virtual ~Plan_Launcher_Benchmark_i  ();
 
+      virtual const char * launch_plan (const char *deployment_plan_uri,
+                                        const char *package_uri = 0,
+                                        bool use_package_name = true,
+                                        bool use_repoman = false);
+
       /**
        * @brief Launch a plan, given an IDL deployment plan
        * @param plan A valid IDL deployment plan
