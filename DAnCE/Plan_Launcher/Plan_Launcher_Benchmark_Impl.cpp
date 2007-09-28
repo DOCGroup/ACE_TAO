@@ -7,6 +7,7 @@
 #include "ace/Throughput_Stats.h"
 #include "ace/Sample_History.h"
 #include "ace/Task.h"
+#include "Config_Handlers/XML_File_Intf.h"
 #include "DAnCE/Utils/Plan_Handler.h"
 
 #include <iostream>
@@ -62,6 +63,57 @@ namespace CIAO
 
     Plan_Launcher_Benchmark_i::~Plan_Launcher_Benchmark_i ()
     {
+    }
+
+    const char *
+    Plan_Launcher_Benchmark_i::launch_plan (const char *deployment_plan_uri,
+                                            const char *package_uri,
+                                            bool use_package_name,
+                                            bool use_repoman)
+    {
+      if (CIAO::debug_level () > 9)
+        {
+          ACE_DEBUG ((LM_DEBUG, "Parsing plan...\n"));
+        }
+
+
+
+      // Benchmarking XML parsing time
+
+      ACE_Sample_History history_parsing_plan (this->niterations_);
+      ACE_hrtime_t call_start, call_end;
+
+      call_start = ACE_OS::gethrtime ();
+      CIAO::Config_Handlers::XML_File_Intf intf (deployment_plan_uri);
+      ::Deployment::DeploymentPlan_var plan = intf.get_plan ();
+      call_end = ACE_OS::gethrtime ();
+      history_parsing_plan.sample (call_end - call_start);
+
+      ACE_DEBUG ((LM_DEBUG, "(%P|%t) High resolution timer calibration...."));
+      ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
+      ACE_DEBUG ((LM_DEBUG, "done\n"));
+
+      ACE_Basic_Stats stats;
+      history_parsing_plan.dump_samples ("HISTORY -- XML Parsing", gsf);
+      history_parsing_plan.collect_basic_stats (stats);
+      stats.dump_results ("TOTAL -- XML Parsing", gsf);
+
+      // End of benchmarking
+
+      // Use the package name(s) or type(s) to modify the location of all the
+      // artifacts in DeploymentPlan.
+      if (use_repoman)
+        {
+          // @todo check return value
+          pg_.generate_plan (plan, package_uri, use_package_name);
+        }
+
+      if (CIAO::debug_level () > 9)
+        {
+          ACE_DEBUG ((LM_DEBUG, "(%P|%t) Parsing complete....\n"));
+        }
+
+      return this->launch_plan (plan.in ());
     }
 
     const char *
