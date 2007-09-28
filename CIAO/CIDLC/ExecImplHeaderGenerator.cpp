@@ -320,8 +320,9 @@ namespace
     virtual void
     post (Type& t)
     {
-      os << "protected:" << endl
-         << t.name () << "_Context *context_;" << endl
+      os << "private:" << endl
+         << t.scoped_name ().scope_name () << "::CCM_"
+         << t.name () << "_Context_var context_;" << endl
          << "};";
     }
 
@@ -653,15 +654,10 @@ ExecImplHeaderEmitter::pre (TranslationUnit&)
      << "#define " << guard << endl << endl
      << "#include /**/ \"ace/pre.h\"" << endl << endl;
 
-  string file_suffix = cl_.get_value ("svnt-hdr-file-suffix",
-                                      "_svnt.h");
+  string incl_file_name = regex::perl_s (file_name,
+                                         "/^(.+?)(\\.(idl|cidl|cdl))?$/$1EC.h/");
 
-  string svnt_file_name = regex::perl_s (file_name,
-                                         "/^(.+?)(\\.(idl|cidl|cdl))?$/$1"
-                                         + file_suffix
-                                         + "/");
-
-  os << "#include \"" << svnt_file_name << "\"" << endl << endl;
+  os << "#include \"" << incl_file_name << "\"" << endl << endl;
 
   os << "#if !defined (ACE_LACKS_PRAGMA_ONCE)" << endl
      << "# pragma once" << endl

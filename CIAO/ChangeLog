@@ -1,3 +1,29 @@
+Fri Sep 28 19:37:39 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * CIDLC/CorbaTypeNameEmitters.cpp:
+        
+          Fixed incorrect code generation for a null return of an enum type.
+          
+        * CIDLC/ServantSourceGenerator.cpp:
+        
+          Changed generated include of Cookies.h to ciao/Cookies.h.
+          
+        * CIDLC/ExecImplHeaderGenerator.cpp:
+        * CIDLC/ExecImplSourceGenerator.cpp:
+        
+          Changed generated context member type from Foo_Context* to
+          CCM_Foo_Context_var. Also replaced include of Foo_svnt.h with
+          FooEC.h. These changes reverse the existing dependency of
+          the executor DLL on the servant DLL, which makes more sense
+          since the servant delegates to the executor, which should
+          not be coupled with any specific CCM implementation.
+          
+        * bin/generate_component_mpc.pl:
+        
+          Changed the script to generate default MPC files to reflect the
+          dependency changes above. Also split the IDL and CIDL processing
+          into separate projects.
+
 Fri Sep 21 22:11:16 UTC 2007  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
 
         * docs/schema/CIAOEvents.txt:
