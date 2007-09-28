@@ -1,0 +1,20 @@
+#ifndef EXEC_COMPONENT_IDL
+#define EXEC_COMPONENT_IDL
+
+#include <Components.idl>
+#include "Event_Types.idl"
+
+module SPACE
+{
+  component Exec_Component
+  {
+    publishes Gizmo_Data send_command;
+  };
+
+  home Exec_Component_Factory
+    manages Exec_Component
+  {
+  };
+};
+
+#endif // EXEC_COMPONENT_IDL

@@ -1,0 +1,22 @@
+
+#ifndef BACKUP_GIZMO_LOW_IDL
+#define BACKUP_GIZMO_LOW_IDL
+
+#include <Components.idl>
+#include "Event_Types.idl"
+
+module SPACE
+{
+  component Backup_Gizmo_Low
+  {
+    publishes Gizmo_Data observation_data;
+  };
+  
+  home Backup_Gizmo_Low_Factory
+    manages Backup_Gizmo_Low
+  {
+  };
+};
+
+#endif // BACKUP_GIZMO_LOW_IDL
+

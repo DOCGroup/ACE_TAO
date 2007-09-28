@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!DOCTYPE corbacomponent SYSTEM "corbacomponent.dtd">
+
+<corbacomponent>
+  <corbaversion>3.0</corbaversion>
+  <componentrepid repid="IDL:SPACE/Primary_Gizmo:1.0"/>
+  <homerepid repid="IDL:SPACE/Primary_Gizmo_Factory:1.0"/>
+  <componentkind>
+    <session>
+      <servant lifetime="container"/>
+    </session>
+  </componentkind>
+  <threading policy="multithread"/>
+  <configurationcomplete set="true"/>
+  
+  <homefeatures
+      name="Primary_Gizmo_Factory"
+      repid="IDL:SPACE/Primary_Gizmo_Factory:1.0">
+  </homefeatures>
+  
+  <componentfeatures
+      name="Primary_Gizmo"
+      repid="IDL:SPACE/Primary_Gizmo:1.0">
+    <ports>
+      <publishes
+          publishesname="observation_data"
+          eventtype="IDL:SPACE/Gizmo_Data:1.0">
+        <eventpolicy policy="normal"/>
+      </publishes>
+    </ports>
+  </componentfeatures>
+  
+</corbacomponent>

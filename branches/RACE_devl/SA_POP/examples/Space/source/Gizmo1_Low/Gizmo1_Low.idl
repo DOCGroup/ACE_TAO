@@ -1,0 +1,22 @@
+
+#ifndef GIZMO1_LOW_IDL
+#define GIZMO1_LOW_IDL
+
+#include <Components.idl>
+#include "Event_Types.idl"
+
+module SPACE
+{
+  component Gizmo1_Low
+  {
+    publishes Gizmo_Data observation_data;
+  };
+  
+  home Gizmo1_Low_Factory
+    manages Gizmo1_Low
+  {
+  };
+};
+
+#endif // GIZMO1_LOW_IDL
+

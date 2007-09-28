@@ -1,3 +1,173 @@
+Fri Sep 28 21:15:48 UTC 2007  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
+
+        * SA_POP/examples/Space/packages:
+        * SA_POP/examples/Space/packages/win32-vc8:
+        * SA_POP/examples/Space/packages/win32-vc8/Analysis.cpk:
+        * SA_POP/examples/Space/packages/win32-vc8/Comm.cpk:
+        * SA_POP/examples/Space/packages/win32-vc8/Compression.cpk:
+        * SA_POP/examples/Space/packages/win32-vc8/Exec.cpk:
+        * SA_POP/examples/Space/packages/win32-vc8/Filter.cpk:
+        * SA_POP/examples/Space/packages/win32-vc8/Gizmo1_High.cpk:
+        * SA_POP/examples/Space/packages/win32-vc8/Gizmo1_Low.cpk:
+        * SA_POP/examples/Space/packages/win32-vc8/Gizmo1_Medium.cpk:
+        * SA_POP/examples/Space/packages/win32-vc8/Gizmo2_High.cpk:
+        * SA_POP/examples/Space/packages/win32-vc8/Gizmo2_Medium.cpk:
+        * SA_POP/examples/Space/packages/win32-vc8/Ground.cpk:
+
+          Added SPACE Demo packages for Win32-VC8.
+
+
+        * SA_POP/examples/Space/source:
+        * SA_POP/examples/Space/source/Analysis:
+        * SA_POP/examples/Space/source/Analysis/Analysis_Component.ccd:
+        * SA_POP/examples/Space/source/Analysis/Analysis_Component.cidl:
+        * SA_POP/examples/Space/source/Analysis/Analysis_Component.idl:
+        * SA_POP/examples/Space/source/Analysis/Analysis_Component.mpc:
+        * SA_POP/examples/Space/source/Analysis/Analysis_Component_exec.h:
+        * SA_POP/examples/Space/source/Analysis/Analysis_Component_exec.cpp:
+        * SA_POP/examples/Space/source/Analysis/Analysis_Component_exec_export.h:
+        * SA_POP/examples/Space/source/Analysis/Analysis_Component_stub_export.h:
+        * SA_POP/examples/Space/source/Analysis/Analysis_Component_svnt_export.h:
+        * SA_POP/examples/Space/source/Backup_Gizmo_High:
+        * SA_POP/examples/Space/source/Backup_Gizmo_High/Backup_Gizmo_High.cidl:
+        * SA_POP/examples/Space/source/Backup_Gizmo_High/Backup_Gizmo_High.idl:
+        * SA_POP/examples/Space/source/Backup_Gizmo_High/Backup_Gizmo_High.mpc:
+        * SA_POP/examples/Space/source/Backup_Gizmo_High/Backup_Gizmo_High_exec.h:
+        * SA_POP/examples/Space/source/Backup_Gizmo_High/Backup_Gizmo_High_exec.cpp:
+        * SA_POP/examples/Space/source/Backup_Gizmo_High/Backup_Gizmo_High_exec_export.h:
+        * SA_POP/examples/Space/source/Backup_Gizmo_High/Backup_Gizmo_High_stub_export.h:
+        * SA_POP/examples/Space/source/Backup_Gizmo_High/Backup_Gizmo_High_svnt_export.h:
+        * SA_POP/examples/Space/source/Backup_Gizmo_High/Backup_Gizmo_Low.ccd:
+        * SA_POP/examples/Space/source/Backup_Gizmo_Low:
+        * SA_POP/examples/Space/source/Backup_Gizmo_Low/Backup_Gizmo_Low.ccd:
+        * SA_POP/examples/Space/source/Backup_Gizmo_Low/Backup_Gizmo_Low.cidl:
+        * SA_POP/examples/Space/source/Backup_Gizmo_Low/Backup_Gizmo_Low.idl:
+        * SA_POP/examples/Space/source/Backup_Gizmo_Low/Backup_Gizmo_Low.mpc:
+        * SA_POP/examples/Space/source/Backup_Gizmo_Low/Backup_Gizmo_Low_exec.h:
+        * SA_POP/examples/Space/source/Backup_Gizmo_Low/Backup_Gizmo_Low_exec.cpp:
+        * SA_POP/examples/Space/source/Backup_Gizmo_Low/Backup_Gizmo_Low_exec_export.h:
+        * SA_POP/examples/Space/source/Backup_Gizmo_Low/Backup_Gizmo_Low_stub_export.h:
+        * SA_POP/examples/Space/source/Backup_Gizmo_Low/Backup_Gizmo_Low_svnt_export.h:
+        * SA_POP/examples/Space/source/Comm:
+        * SA_POP/examples/Space/source/Comm/Comm_Component.ccd:
+        * SA_POP/examples/Space/source/Comm/Comm_Component.cidl:
+        * SA_POP/examples/Space/source/Comm/Comm_Component.idl:
+        * SA_POP/examples/Space/source/Comm/Comm_Component.mpc:
+        * SA_POP/examples/Space/source/Comm/Comm_Component_exec.h:
+        * SA_POP/examples/Space/source/Comm/Comm_Component_exec.cpp:
+        * SA_POP/examples/Space/source/Comm/Comm_Component_exec_export.h:
+        * SA_POP/examples/Space/source/Comm/Comm_Component_stub_export.h:
+        * SA_POP/examples/Space/source/Comm/Comm_Component_svnt_export.h:
+        * SA_POP/examples/Space/source/Compression:
+        * SA_POP/examples/Space/source/Compression/Compression_Component.ccd:
+        * SA_POP/examples/Space/source/Compression/Compression_Component.cidl:
+        * SA_POP/examples/Space/source/Compression/Compression_Component.idl:
+        * SA_POP/examples/Space/source/Compression/Compression_Component.mpc:
+        * SA_POP/examples/Space/source/Compression/Compression_Component_exec.h:
+        * SA_POP/examples/Space/source/Compression/Compression_Component_exec.cpp:
+        * SA_POP/examples/Space/source/Compression/Compression_Component_exec_export.h:
+        * SA_POP/examples/Space/source/Compression/Compression_Component_stub_export.h:
+        * SA_POP/examples/Space/source/Compression/Compression_Component_svnt_export.h:
+        * SA_POP/examples/Space/source/Exec:
+        * SA_POP/examples/Space/source/Exec/Exec_Component.ccd:
+        * SA_POP/examples/Space/source/Exec/Exec_Component.cidl:
+        * SA_POP/examples/Space/source/Exec/Exec_Component.idl:
+        * SA_POP/examples/Space/source/Exec/Exec_Component.mpc:
+        * SA_POP/examples/Space/source/Exec/Exec_Component_exec.h:
+        * SA_POP/examples/Space/source/Exec/Exec_Component_exec.cpp:
+        * SA_POP/examples/Space/source/Exec/Exec_Component_exec_export.h:
+        * SA_POP/examples/Space/source/Exec/Exec_Component_stub_export.h:
+        * SA_POP/examples/Space/source/Exec/Exec_Component_svnt_export.h:
+        * SA_POP/examples/Space/source/Filter:
+        * SA_POP/examples/Space/source/Filter/Filter_Component.ccd:
+        * SA_POP/examples/Space/source/Filter/Filter_Component.cidl:
+        * SA_POP/examples/Space/source/Filter/Filter_Component.idl:
+        * SA_POP/examples/Space/source/Filter/Filter_Component.mpc:
+        * SA_POP/examples/Space/source/Filter/Filter_Component_exec.h:
+        * SA_POP/examples/Space/source/Filter/Filter_Component_exec.cpp:
+        * SA_POP/examples/Space/source/Filter/Filter_Component_exec_export.h:
+        * SA_POP/examples/Space/source/Filter/Filter_Component_stub_export.h:
+        * SA_POP/examples/Space/source/Filter/Filter_Component_svnt_export.h:
+        * SA_POP/examples/Space/source/Gizmo1_High:
+        * SA_POP/examples/Space/source/Gizmo1_High/Gizmo1_High.ccd:
+        * SA_POP/examples/Space/source/Gizmo1_High/Gizmo1_High.cidl:
+        * SA_POP/examples/Space/source/Gizmo1_High/Gizmo1_High.idl:
+        * SA_POP/examples/Space/source/Gizmo1_High/Gizmo1_High.mpc:
+        * SA_POP/examples/Space/source/Gizmo1_High/Gizmo1_High_exec.h:
+        * SA_POP/examples/Space/source/Gizmo1_High/Gizmo1_High_exec.cpp:
+        * SA_POP/examples/Space/source/Gizmo1_High/Gizmo1_High_exec_export.h:
+        * SA_POP/examples/Space/source/Gizmo1_High/Gizmo1_High_stub_export.h:
+        * SA_POP/examples/Space/source/Gizmo1_High/Gizmo1_High_svnt_export.h:
+        * SA_POP/examples/Space/source/Gizmo1_Low:
+        * SA_POP/examples/Space/source/Gizmo1_Low/Gizmo1_Low.ccd:
+        * SA_POP/examples/Space/source/Gizmo1_Low/Gizmo1_Low.cidl:
+        * SA_POP/examples/Space/source/Gizmo1_Low/Gizmo1_Low.idl:
+        * SA_POP/examples/Space/source/Gizmo1_Low/Gizmo1_Low.mpc:
+        * SA_POP/examples/Space/source/Gizmo1_Low/Gizmo1_Low_exec.h:
+        * SA_POP/examples/Space/source/Gizmo1_Low/Gizmo1_Low_exec.cpp:
+        * SA_POP/examples/Space/source/Gizmo1_Low/Gizmo1_Low_exec_export.h:
+        * SA_POP/examples/Space/source/Gizmo1_Low/Gizmo1_Low_stub_export.h:
+        * SA_POP/examples/Space/source/Gizmo1_Low/Gizmo1_Low_svnt_export.h:
+        * SA_POP/examples/Space/source/Gizmo1_Medium:
+        * SA_POP/examples/Space/source/Gizmo1_Medium/Gizmo1_Medium.ccd:
+        * SA_POP/examples/Space/source/Gizmo1_Medium/Gizmo1_Medium.cidl:
+        * SA_POP/examples/Space/source/Gizmo1_Medium/Gizmo1_Medium.idl:
+        * SA_POP/examples/Space/source/Gizmo1_Medium/Gizmo1_Medium.mpc:
+        * SA_POP/examples/Space/source/Gizmo1_Medium/Gizmo1_Medium_exec.h:
+        * SA_POP/examples/Space/source/Gizmo1_Medium/Gizmo1_Medium_exec.cpp:
+        * SA_POP/examples/Space/source/Gizmo1_Medium/Gizmo1_Medium_exec_export.h:
+        * SA_POP/examples/Space/source/Gizmo1_Medium/Gizmo1_Medium_stub_export.h:
+        * SA_POP/examples/Space/source/Gizmo1_Medium/Gizmo1_Medium_svnt_export.h:
+        * SA_POP/examples/Space/source/Gizmo2_High:
+        * SA_POP/examples/Space/source/Gizmo2_High/Gizmo2_High.ccd:
+        * SA_POP/examples/Space/source/Gizmo2_High/Gizmo2_High.cidl:
+        * SA_POP/examples/Space/source/Gizmo2_High/Gizmo2_High.idl:
+        * SA_POP/examples/Space/source/Gizmo2_High/Gizmo2_High.mpc:
+        * SA_POP/examples/Space/source/Gizmo2_High/Gizmo2_High_exec.h:
+        * SA_POP/examples/Space/source/Gizmo2_High/Gizmo2_High_exec.cpp:
+        * SA_POP/examples/Space/source/Gizmo2_High/Gizmo2_High_exec_export.h:
+        * SA_POP/examples/Space/source/Gizmo2_High/Gizmo2_High_stub_export.h:
+        * SA_POP/examples/Space/source/Gizmo2_High/Gizmo2_High_svnt_export.h:
+        * SA_POP/examples/Space/source/Gizmo2_Medium:
+        * SA_POP/examples/Space/source/Gizmo2_Medium/Gizmo2_Medium.ccd:
+        * SA_POP/examples/Space/source/Gizmo2_Medium/Gizmo2_Medium.cidl:
+        * SA_POP/examples/Space/source/Gizmo2_Medium/Gizmo2_Medium.idl:
+        * SA_POP/examples/Space/source/Gizmo2_Medium/Gizmo2_Medium.mpc:
+        * SA_POP/examples/Space/source/Gizmo2_Medium/Gizmo2_Medium_exec.h:
+        * SA_POP/examples/Space/source/Gizmo2_Medium/Gizmo2_Medium_exec.cpp:
+        * SA_POP/examples/Space/source/Gizmo2_Medium/Gizmo2_Medium_exec_export.h:
+        * SA_POP/examples/Space/source/Gizmo2_Medium/Gizmo2_Medium_stub_export.h:
+        * SA_POP/examples/Space/source/Gizmo2_Medium/Gizmo2_Medium_svnt_export.h:
+        * SA_POP/examples/Space/source/Ground:
+        * SA_POP/examples/Space/source/Ground/Ground_Component.ccd:
+        * SA_POP/examples/Space/source/Ground/Ground_Component.cidl:
+        * SA_POP/examples/Space/source/Ground/Ground_Component.idl:
+        * SA_POP/examples/Space/source/Ground/Ground_Component.mpc:
+        * SA_POP/examples/Space/source/Ground/Ground_Component_exec.h:
+        * SA_POP/examples/Space/source/Ground/Ground_Component_exec.cpp:
+        * SA_POP/examples/Space/source/Ground/Ground_Component_exec_export.h:
+        * SA_POP/examples/Space/source/Ground/Ground_Component_stub_export.h:
+        * SA_POP/examples/Space/source/Ground/Ground_Component_svnt_export.h:
+        * SA_POP/examples/Space/source/Primary_Gizmo:
+        * SA_POP/examples/Space/source/Primary_Gizmo/Primary_Gizmo.ccd:
+        * SA_POP/examples/Space/source/Primary_Gizmo/Primary_Gizmo.cidl:
+        * SA_POP/examples/Space/source/Primary_Gizmo/Primary_Gizmo.idl:
+        * SA_POP/examples/Space/source/Primary_Gizmo/Primary_Gizmo.mpc:
+        * SA_POP/examples/Space/source/Primary_Gizmo/Primary_Gizmo_exec.h:
+        * SA_POP/examples/Space/source/Primary_Gizmo/Primary_Gizmo_exec.cpp:
+        * SA_POP/examples/Space/source/Primary_Gizmo/Primary_Gizmo_exec_export.h:
+        * SA_POP/examples/Space/source/Primary_Gizmo/Primary_Gizmo_stub_export.h:
+        * SA_POP/examples/Space/source/Primary_Gizmo/Primary_Gizmo_svnt_export.h:
+        * SA_POP/examples/Space/source/common:
+        * SA_POP/examples/Space/source/common/Event_Types.idl:
+        * SA_POP/examples/Space/source/common/Event_Types.mpc:
+        * SA_POP/examples/Space/source/common/Event_Types_exec_export.h:
+        * SA_POP/examples/Space/source/common/Event_Types_stub_export.h:
+        * SA_POP/examples/Space/source/common/Event_Types_svnt_export.h:
+
+          Added SPACE Demo source files.
+
+
 Thu Sep 27 21:29:33 UTC 2007  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * SA_POP/Component/SA_POP_Component.mpc
@@ -7,7 +177,7 @@ Thu Sep 27 21:29:33 UTC 2007  William R. Otte  <wotte@dre.vanderbilt.edu>
         * Output_Adapters/DAnCE_Output_Adapter/DAnCE_Output_Adapter.mpc
 
           Added missing libs+= to enable building on OS X.
-        
+
 Wed Sep 26 23:16:48 UTC 2007  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
 
         * Output_Adapters/DAnCE_Output_Adapter/Admin_exec.cpp:

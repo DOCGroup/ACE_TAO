@@ -1,0 +1,18 @@
+#ifndef EVENT_TYPES_IDL
+#define EVENT_TYPES_IDL
+
+#include <Components.idl>
+
+module SPACE
+  {
+
+    eventtype Gizmo_Data
+    {
+      public long dispatch_time;
+      public string sender;
+      public long data;
+    };
+};
+
+
+#endif // EVENT_TYPES_IDL
