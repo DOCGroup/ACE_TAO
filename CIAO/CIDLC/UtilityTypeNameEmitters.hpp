@@ -63,4 +63,4 @@ struct FacetEnclosingTypeNameEmitter : Traversal::Type,
   traverse (SemanticGraph::Type&);
 };
 
-#endif  // UTILITYTYPENAMEEMITTERS_HPP
+#endif  // UTILITYTYPENAMEEMITTERS_HPP  
