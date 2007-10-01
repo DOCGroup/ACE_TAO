@@ -91,7 +91,7 @@ public:
    * - On EOF, 0 is returned, errno is irrelevant.
    *
    * On partial transfers, i.e., if any data is transferred before
-   * timeout/error/EOF, <bytes_transferred> will contain the number of
+   * timeout/error/EOF, @a bytes_transferred will contain the number of
    * bytes transferred.
    */
   ssize_t recv_n (void *buf,
@@ -117,7 +117,7 @@ public:
                 ACE_Str_Buf *data,
                 int *flags) const;
 
-  /// Send <cntl> and <data> via STREAM pipes.
+  /// Send @a cntl and @a data via STREAM pipes.
   ssize_t send (const ACE_Str_Buf *cntl,
                 const ACE_Str_Buf *data,
                 int flags = 0) const;
@@ -156,7 +156,7 @@ public:
   void dump (void) const;
 
   // = The following two methods are no-ops to keep the
-  // <ACE_Connector> happy.
+  // ACE_Connector happy.
   /// Return the local endpoint address.
   int get_local_addr (ACE_DEV_Addr &) const;
 

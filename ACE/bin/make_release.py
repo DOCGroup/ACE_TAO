@@ -688,8 +688,11 @@ def generate_workspaces (stage_dir):
     mpc_option += ' -relative TAO_ROOT=' + stage_dir + '/ACE_wrappers/TAO '
     mpc_option += ' -relative CIAO_ROOT=' + stage_dir + '/ACE_wrappers/TAO/CIAO '
 
-    static_option = ' -static -name_modifier *_vc71_Static -apply_project -exclude TAO/CIAO,TAO/TAO_*.mwc '
-    static_option += mpc_option
+    static_vc71_option = ' -static -name_modifier *_vc71_Static -apply_project -exclude TAO/CIAO '
+    static_vc71_option += mpc_option
+
+    static_vc8_option = ' -static -name_modifier *_vc8_Static -apply_project -exclude TAO/CIAO '
+    static_vc8_option += mpc_option
 
     vc8_option = ' -name_modifier *_vc8 '
     vc71_option = ' -name_modifier *_vc71 '
@@ -722,7 +725,10 @@ def generate_workspaces (stage_dir):
     ex (mpc_command + " -type borland " + mpc_option + exclude_option + redirect_option)
 
     print "\tGenerating VC71 Static solutions"
-    ex (mpc_command + " -type vc71 " + static_option + redirect_option)
+    ex (mpc_command + " -type vc71 " + static_vc71_option + redirect_option)
+
+    print "\tGenerating VC8 Static solutions"
+    ex (mpc_command + " -type vc8 " + static_vc8_option + redirect_option)
 
     print "\tBootstrapping autotools support"
     ex ("bin/bootstrap " + redirect_option)

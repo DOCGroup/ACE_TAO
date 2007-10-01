@@ -96,15 +96,15 @@ private:
   /// argc value before any argv has been passed.
   int before_pass_argc_;
 
-  /// FALSE represents original argv passed in is char, and TRUE
+  /// false represents original argv passed in is char, and true
   /// represents wchar_t.
-  const int original_type_;
+  bool const original_type_;
 
-  /// TRUE indicates wchar_t type argv has been passed.
-  int wchar_passed_;
+  /// true indicates wchar_t type argv has been passed.
+  bool wchar_passed_;
 
-  /// TRUE indicates char type argv has been passed.
-  int char_passed_;
+  /// true indicates char type argv has been passed.
+  bool char_passed_;
 #endif  /* ACE_USES_WCHAR */
 };
 

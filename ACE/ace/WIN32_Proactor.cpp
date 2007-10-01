@@ -43,7 +43,7 @@ public:
 };
 
 ACE_WIN32_Proactor::ACE_WIN32_Proactor (size_t number_of_threads,
-                                        int used_with_reactor_event_loop)
+                                        bool used_with_reactor_event_loop)
   : completion_port_ (0),
     // This *MUST* be 0, *NOT* ACE_INVALID_HANDLE !!!
     number_of_threads_ (static_cast<DWORD> (number_of_threads)),

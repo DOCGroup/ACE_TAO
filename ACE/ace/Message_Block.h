@@ -222,7 +222,7 @@ public:
    * to protect regions of code that access shared state (e.g.,
    * reference counting) from race conditions.  Note that the @a size
    * of the <Message_Block> will be @a size, but the @a length will be 0
-   * until  <wr_ptr> is set. The @a data_block_allocator is use to
+   * until <wr_ptr> is set. The @a data_block_allocator is use to
    * allocate the data blocks while the @a allocator_strategy is used
    * to allocate the buffers contained by those.
    */
@@ -274,7 +274,7 @@ public:
   Message_Flags flags (void) const;
 
   // = Data Block flag accessors and mutators.
-  /// Bitwise-or the <more_flags> into the existing message flags and
+  /// Bitwise-or the @a more_flags into the existing message flags and
   /// return the new value.
   /* @todo: I think the following set of methods could not be used at
    *  all. May be they are useless. Let us have it so that we dont
@@ -425,7 +425,7 @@ public:
                           ACE_Allocator *&message_block_allocator);
 
   /// Reset all the allocators in the message block.
-  /// @@todo: Not sure whether we would need finer control while
+  /// @todo Not sure whether we would need finer control while
   /// trying to reset allocators ie. a method for every allocator.
   /**
    * This method resets the allocators in all the message blocks in

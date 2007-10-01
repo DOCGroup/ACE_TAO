@@ -161,7 +161,7 @@ ACE_Thread_Timer_Queue_Adapter<TQ>::ACE_Thread_Timer_Queue_Adapter (ACE_Thread_M
     timer_queue_(timer_queue),
     delete_timer_queue_(false),
     condition_ (mutex_),
-    active_ (1), // Assume that we start in active mode.
+    active_ (true), // Assume that we start in active mode.
     thr_id_ (ACE_OS::NULL_thread)
 {
   if (timer_queue_ == 0)
@@ -219,7 +219,7 @@ ACE_Thread_Timer_Queue_Adapter<TQ>::deactivate (void)
 {
   ACE_GUARD (ACE_SYNCH_RECURSIVE_MUTEX, guard, this->mutex_);
 
-  this->active_ = 0;
+  this->active_ = false;
   this->condition_.signal ();
 }
 
@@ -297,16 +297,13 @@ ACE_Thread_Timer_Queue_Adapter<TQ>::activate (long flags,
                                               long priority,
                                               int grp_id,
                                               ACE_Task_Base *task,
-                                              ACE_hthread_t thread_handles[],
+                                              ACE_hthread_t [],
                                               void *stack[],
                                               size_t stack_size[],
                                               ACE_thread_t thread_names[])
 {
-  // Macros to avoid "warning: unused parameter" type warning.
-  ACE_UNUSED_ARG (thread_handles);
-
   // Make sure to set this flag in case we were deactivated earlier.
-  this->active_ = 1;
+  this->active_ = true;
 
   // Make sure that we only allow a single thread to be spawned for
   // our adapter.  Otherwise, too many weird things can happen.
