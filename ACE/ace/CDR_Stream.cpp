@@ -703,7 +703,7 @@ ACE_OutputCDR::consolidate (void)
       // if necessary.  The rd_ptr and wr_ptr remain at the original offsets
       // into the buffer, even if it is reallocated.
       // Return an error if the allocation failed.
-      size_t newsize =
+      size_t const newsize =
         ACE_CDR::first_size (this->total_length ()
                              + ACE_CDR::MAX_ALIGNMENT);
       if (this->start_.size (newsize) < 0)

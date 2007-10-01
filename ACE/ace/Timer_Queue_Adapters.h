@@ -236,7 +236,7 @@ private:
 
   /// When deactivate is called this variable turns to false and the
   /// dispatching thread is signalled, to terminate its main loop.
-  int active_;
+  bool active_;
 
   /// Thread id of our active object task.
   ACE_thread_t thr_id_;

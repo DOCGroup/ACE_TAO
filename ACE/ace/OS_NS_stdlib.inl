@@ -29,8 +29,7 @@ ACE_OS::_exit (int status)
 #elif !defined (ACE_HAS_WINCE)
   ::_exit (status);
 #else
-  ::TerminateProcess (::GetCurrentProcess (),
-                      status);
+  ::TerminateProcess (::GetCurrentProcess (), status);
 #endif /* ACE_VXWORKS */
 }
 

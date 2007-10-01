@@ -252,7 +252,7 @@ public:
    *
    * @deprecated This method has been deprecated, please use join() instead.
    * In addition, the following parameters have also been deprecated:
-   * <protocol_family> and <protocol> have no effect.
+   * @a protocol_family and @a protocol have no effect.
    */
   int subscribe (const ACE_INET_Addr &mcast_addr,
                  int reuse_addr = 1,               // (see above)
@@ -282,7 +282,7 @@ public:
    * non- NULL <net_if>).
    *
    * @deprecated This method has been deprecated.  Please use leave() instead.
-   * In addition, <protocol_family> and <protocol> have no effect.
+   * In addition, @a protocol_family and @a protocol have no effect.
    */
   int unsubscribe (const ACE_INET_Addr &mcast_addr,
                    const ACE_TCHAR *net_if = 0,
