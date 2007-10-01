@@ -1,3 +1,8 @@
+Mon Oct  1 13:39:29 UTC 2007  Olli Savia  <ops@iki.fi>
+
+        * ace/OS_NS_Thread.h:
+          Final fix (and code cleanup) for bug #3074.
+
 Fri Sep 28 06:12:15 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_linux_common.GNU:
