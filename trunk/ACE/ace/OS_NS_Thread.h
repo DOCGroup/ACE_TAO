@@ -873,22 +873,6 @@ private:
   static int key_created_;
 #   endif /* ACE_HAS_THREAD_SPECIFIC_STORAGE */
 };
-
-# else   /* ! ACE_HAS_TSS_EMULATION */
-    // allow user to define its own ACE_DEFAULT_THREAD_KEYS in Windows,
-    // where The MSSDK defines only 64 entries
-#   if defined (TLS_MINIMUM_AVAILABLE) && !defined (ACE_DEFAULT_THREAD_KEYS)
-    // WIN32 platforms define TLS_MINIMUM_AVAILABLE natively.
-    // NOTE: This doesn't do what the author expected it to
-    // because TLS_MINIMUM_AVAILABLE is a minimum, but ACE needs a maximum.
-    // config-win32-common.h has been changed to assign accurate values to
-    // ACE_DEFAULT_THREAD_KEYS (based on the build machine, not the runtime machine
-    // unfortunately).  This code is left here because Olli Savia reports that removing
-    // the test of defined(TLS_MINIMUM_AVAILABLE) causes build errors on his LynxOS
-    // machine (bug #3074).  <wilsond@ociweb.com>
-#     define ACE_DEFAULT_THREAD_KEYS TLS_MINIMUM_AVAILABLE
-#   endif /* TSL_MINIMUM_AVAILABLE */
-
 # endif /* ACE_HAS_TSS_EMULATION */
 
 // moved ACE_TSS_Ref, ACE_TSS_Info, and ACE_TSS_Keys class
