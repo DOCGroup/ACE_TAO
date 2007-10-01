@@ -8,7 +8,8 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::Run_Test;
 
-$server_ior   = PerlACE::LocalFile ("server_ior");
+$iorbase = "server_ior";
+$server_ior   = PerlACE::LocalFile ("$iorbase");
 $clerk_ior    = PerlACE::LocalFile ("clerk_ior");
 
 $status = 0;
@@ -17,7 +18,12 @@ $status = 0;
 
 unlink $server_ior, $clerk_ior;
 
-$SV = new PerlACE::Process ("../../Time_Service/Time_Service_Server", "-o $server_ior");
+if (PerlACE::is_vxworks_test()) {
+  $SV = new PerlACE::ProcessVX ("../../Time_Service/Time_Service_Server", "-o $iorbase");
+}
+else {
+  $SV = new PerlACE::Process ("../../Time_Service/Time_Service_Server", "-o $server_ior");
+}
 $CK = new PerlACE::Process ("../../Time_Service/Time_Service_Clerk", "-f $server_ior -o $clerk_ior -t 2");
 $CL = new PerlACE::Process ("client", "-f $clerk_ior");
 
@@ -45,14 +51,14 @@ if ($client != 0) {
     $status = 1;
 }
 
-$server = $SV->TerminateWaitKill (5);
+$server = $SV->TerminateWaitKill (15);
 
 if ($server != 0) {
     print STDERR "ERROR: server returned $server\n";
     $status = 1;
 }
 
-$clerk = $CK->TerminateWaitKill (5);
+$clerk = $CK->TerminateWaitKill (15);
 
 if ($clerk != 0) {
     print STDERR "ERROR: clerk returned $clerk\n";

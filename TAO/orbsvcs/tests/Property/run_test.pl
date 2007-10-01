@@ -15,12 +15,18 @@ $status = 0;
 
 # variables for parameters
 
-$nsior = PerlACE::LocalFile ("ns.ior");
+$nsiorbase = "ns.ior";
+$nsior = PerlACE::LocalFile ("$nsiorbase");
 
 unlink $nsior;
 
 $NS = new PerlACE::Process ("../../Naming_Service/Naming_Service", "-o $nsior");
-$SV = new PerlACE::Process ("server", "-ORBInitRef NameService=file://$nsior");
+if (PerlACE::is_vxworks_test()) {
+  $SV = new PerlACE::ProcessVX ("server", "-ORBInitRef NameService=file://$nsiorbase");
+}
+else {
+  $SV = new PerlACE::Process ("server", "-ORBInitRef NameService=file://$nsior");
+}
 $CL = new PerlACE::Process ("client", "-ORBInitRef NameService=file://$nsior");
 
 print STDERR "Starting Naming_Service\n";
@@ -47,14 +53,14 @@ if ($client != 0) {
     $status = 1;
 }
 
-$server = $SV->TerminateWaitKill (5);
+$server = $SV->TerminateWaitKill (15);
 
 if ($server != 0) {
     print STDERR "ERROR: server returned $server\n";
     $status = 1;
 }
 
-$nserver = $NS->TerminateWaitKill (5);
+$nserver = $NS->TerminateWaitKill (15);
 
 if ($nserver != 0) {
     print STDERR "ERROR: name server returned $nserver\n";
