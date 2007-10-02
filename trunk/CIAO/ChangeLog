@@ -1,3 +1,9 @@
+Tue Oct  2 20:34:15 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * bin/generate_component_mpc.pl:
+
+          Enhanced user displayed message.
+
 Tue Oct  2 19:52:30 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * docs/generate_component_mpc.html:
