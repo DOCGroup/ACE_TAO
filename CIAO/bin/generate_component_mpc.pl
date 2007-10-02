@@ -13,13 +13,14 @@ use Getopt::Std;
 $flags = join (" ", @ARGV);
 
 if (!getopts ('np:l:c:u:h') || $opt_h) {
-    print "generate_component_mpc.pl [-d] [-h] component_name\n";
+    print "generate_component_mpc.pl [-h] component_name\n";
     print "\n";
+    print "    -h         print help message explaining various options\n";
     print "    -p         Dependent component name\n";
     print "    -l         Dependent component path\n";
     print "    -n         Suppress component make/project\n";
     print "    -c         Create a client makefile\n";
-    print "    -u         Unique project name prefix (if not defined, name for -p flag will be used. \n";
+    print "    -u         Unique project name prefix (if not defined, name for -p flag will be used). \n";
     print "\n";
     print "generate_component_mpc creates and save a minimum mpc file\n";
     print "called $com_name.mpc that is needed for a single component implementation\n";
