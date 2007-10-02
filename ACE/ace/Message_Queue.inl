@@ -31,20 +31,20 @@ ACE_Message_Queue_NT::dequeue_head (ACE_Message_Block *&first_item,
   return this->dequeue (first_item, timeout);
 }
 
-ACE_INLINE int
+ACE_INLINE bool
 ACE_Message_Queue_NT::is_full (void)
 {
   ACE_TRACE ("ACE_Message_Queue_NT::is_full");
-  return 0; // Always not full.
+  return false; // Always not full.
 }
 
-ACE_INLINE int
+ACE_INLINE bool
 ACE_Message_Queue_NT::is_empty (void)
 {
   ACE_TRACE ("ACE_Message_Queue_NT::is_empty");
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, 0);
+  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, false);
 
-  return this->cur_bytes_ > 0 || this->cur_count_ > 0 ? 0 : 1;
+  return this->cur_bytes_ > 0 || this->cur_count_ > 0 ? false : true;
 }
 
 ACE_INLINE size_t

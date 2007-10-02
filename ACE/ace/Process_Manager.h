@@ -223,8 +223,7 @@ public:
    *
    * @retval 0 on success and -1 on failure.
    */
-  int terminate (pid_t pid,
-                 int sig);
+  int terminate (pid_t pid, int sig);
 
   /**
    * Block until there are no more child processes running that were
@@ -409,8 +408,8 @@ private:
   /// Resize the pool of Process_Descriptors.
   int resize (size_t);
 
-  /// Locate the index of the table slot occupied by <process_id>.
-  /// Returns -1 if <process_id> is not in the <process_table_>
+  /// Locate the index of the table slot occupied by @a process_id.
+  /// Returns -1 if @a process_id is not in the <process_table_>
   ssize_t find_proc (pid_t process_id);
 
 #if defined (ACE_WIN32)
@@ -440,8 +439,7 @@ private:
 
   /// If there's a specific handler for the Process at index @a n in the
   /// table, or there's a default handler, call it.
-  int notify_proc_handler (size_t n,
-                           ACE_exitcode status);
+  int notify_proc_handler (size_t n, ACE_exitcode status);
 
   /// Vector that describes process state within the Process_Manager.
   Process_Descriptor *process_table_;
@@ -462,7 +460,7 @@ private:
 
   /// Controls whether the <Process_Manager> is deleted when we shut
   /// down (we can only delete it safely if we created it!)
-  static int delete_instance_;
+  static bool delete_instance_;
 
 #if defined (ACE_HAS_THREADS)
   /// This lock protects access/ops on <process_table_>.

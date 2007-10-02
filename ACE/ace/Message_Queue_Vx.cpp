@@ -133,15 +133,14 @@ ACE_Message_Queue_Vx::close (void)
   return ::msgQDelete (msgq ());
 }
 
-
-int
+bool
 ACE_Message_Queue_Vx::is_empty_i (void)
 {
   ACE_TRACE ("ACE_Message_Queue_Vx::is_empty_i");
   return ::msgQNumMsgs (msgq ()) == 0;
 }
 
-int
+bool
 ACE_Message_Queue_Vx::is_full_i (void)
 {
   ACE_TRACE ("ACE_Message_Queue_Vx::is_full_i");

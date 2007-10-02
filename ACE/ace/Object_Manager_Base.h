@@ -136,13 +136,13 @@ public:
   virtual int fini (void);
 
   /**
-   * Returns 1 before the <ACE_OS_Object_Manager> has been
+   * Returns 1 before the ACE_OS_Object_Manager has been
    * constructed.  See <ACE_Object_Manager::starting_up> for more
    * information.
    */
   static int starting_up (void);
 
-  /// Returns 1 after the <ACE_OS_Object_Manager> has been destroyed.
+  /// Returns 1 after the ACE_OS_Object_Manager has been destroyed.
   /// See <ACE_Object_Manager::shutting_down> for more information.
   static int shutting_down (void);
 
@@ -171,7 +171,7 @@ public:
     };
 
   /// Accesses a default signal set used, for example, in
-  /// <ACE_Sig_Guard> methods.
+  /// ACE_Sig_Guard methods.
   static sigset_t *default_mask (void);
 
   /// Returns the current thread hook for the process.

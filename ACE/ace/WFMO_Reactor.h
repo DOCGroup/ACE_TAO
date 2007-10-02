@@ -724,22 +724,22 @@ public:
   virtual int work_pending (const ACE_Time_Value &max_wait_time =  ACE_Time_Value::zero);
 
   /**
-   * This event loop driver blocks for up to <max_wait_time> before
+   * This event loop driver blocks for up to @a max_wait_time before
    * returning.  It will return earlier if timer events, I/O events,
-   * or signal events occur.  Note that <max_wait_time> can be 0, in
+   * or signal events occur.  Note that @a max_wait_time can be 0, in
    * which case this method blocks indefinitely until events occur.
    *
-   * <max_wait_time> is decremented to reflect how much time this call
+   * @a max_wait_time is decremented to reflect how much time this call
    * took.  For instance, if a time value of 3 seconds is passed to
    * handle_events and an event occurs after 2 seconds,
-   * <max_wait_time> will equal 1 second.  This can be used if an
+   * @a max_wait_time will equal 1 second.  This can be used if an
    * application wishes to handle events for some fixed amount of
    * time.
    *
    * <WaitForMultipleObjects> is used as the demultiplexing call
    *
    * Returns the total number of I/O and timer ACE_Event_Handlers
-   * that were dispatched, 0 if the <max_wait_time> elapsed without
+   * that were dispatched, 0 if the @a max_wait_time elapsed without
    * dispatching any handlers, or -1 if an error occurs.
    *
    * The only difference between <alertable_handle_events> and
@@ -751,7 +751,7 @@ public:
 
   /**
    * This method is just like the one above, except the
-   * <max_wait_time> value is a reference and can therefore never be
+   * @a max_wait_time value is a reference and can therefore never be
    * NULL.
    *
    * The only difference between <alertable_handle_events> and
@@ -853,7 +853,7 @@ public:
    * Removes <event_handler> from the <ACE_WFMO_Reactor>.  Note that
    * the <ACE_WFMO_Reactor> will call the <get_handle> method of
    * <event_handler> to extract the underlying handle.  If @a mask ==
-   * <ACE_Event_Handler::DONT_CALL> then the <handle_close> method of
+   * ACE_Event_Handler::DONT_CALL then the <handle_close> method of
    * the <event_handler> is not invoked. Note that the <handle> can
    * either be the <event_handle> or the <io_handle>
    */
@@ -862,7 +862,7 @@ public:
 
   /**
    * Removes <handle> from the <ACE_WFMO_Reactor>.  If @a mask ==
-   * <ACE_Event_Handler::DONT_CALL> then the <handle_close> method of
+   * ACE_Event_Handler::DONT_CALL then the <handle_close> method of
    * the <event_handler> is not invoked. Note that the <handle> can
    * either be the <event_handle> or the <io_handle>
    *
@@ -1136,7 +1136,7 @@ public:
   // = Low-level wait_set mask manipulation methods.
 
   /**
-   * Modify <masks> of the <event_handler>'s entry in WFMO_Reactor
+   * Modify @a masks of the <event_handler>'s entry in WFMO_Reactor
    * depending upon <operation>.  <event_handler> must already have
    * been registered with WFMO_Reactor.
    */
@@ -1145,7 +1145,7 @@ public:
                         int operation);
 
   /**
-   * Modify <masks> of the <handle>'s entry in WFMO_Reactor depending
+   * Modify @a masks of the <handle>'s entry in WFMO_Reactor depending
    * upon <operation>.  <handle> must already have been registered
    * with WFMO_Reactor.
    */

@@ -125,9 +125,6 @@
 // Compiler/platform correctly calls init()/fini() for shared libraries.
 #define ACE_HAS_AUTOMATIC_INIT_FINI
 
-// Explicit dynamic linking permits "lazy" symbol resolution
-//#define ACE_HAS_RTLD_LAZY_V
-
 // platform supports POSIX O_NONBLOCK semantics
 #define ACE_HAS_POSIX_NONBLOCK
 

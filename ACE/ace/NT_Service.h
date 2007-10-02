@@ -234,8 +234,8 @@ public:
   // = Methods which control the service's execution.
 
   // These methods to start/pause/resume/stop/check the service all
-  // have the following common behavior with respect to <wait_time>
-  // and return value.  <wait_time> is a pointer to an ACE_Time_Value
+  // have the following common behavior with respect to @a wait_time
+  // and return value.  @a wait_time is a pointer to an ACE_Time_Value
   // object.  If not supplied (a zero pointer) the function will wait
   // indefinitely for the action to be finalized (service reach
   // running state, completely shut down, etc.) or get "stuck" before
@@ -243,7 +243,7 @@ public:
   // wait for the service to reach a steady state, and on return, it
   // is updated to the service's last reported wait hint.  So, if you
   // want to control the waiting yourself (for example, you want to
-  // react to UI events during the wait) specify a <wait_time> of (0,
+  // react to UI events during the wait) specify a @a wait_time of (0,
   // 0) and use the updated time to know when to check the service's
   // state again.  NOTE!!!! The wait_time things don't work yet.  The
   // calls always check status once, and do not wait for it to change.
@@ -264,7 +264,7 @@ public:
    * the time to wait for the service to reach a steady state before
    * returning.  If it is 0, the function waits as long as it takes
    * for the service to reach the 'running' state, or gets stuck in
-   * some other state, or exits.  If <wait_time> is supplied, it is
+   * some other state, or exits.  If @a wait_time is supplied, it is
    * updated on return to hold the service's last reported wait hint.
    * svc_state can be used to receive the state which the service
    * settled in.  If the value is 0, the service never ran.  argc/argv
@@ -276,7 +276,7 @@ public:
                  DWORD argc = 0, const ACE_TCHAR **argv = 0);
 
   /**
-   * Requests the service to stop.  Will wait up to <wait_time> for
+   * Requests the service to stop.  Will wait up to @a wait_time for
    * the service to actually stop.  If not specified, the function
    * waits until the service either stops or gets stuck in some other
    * state before it stops.  If <svc_state> is specified, it receives
@@ -332,7 +332,7 @@ protected:
   /**
    * Waits for the service to reach <desired_state> or get
    * (apparently) stuck before it reaches that state.  Will wait at
-   * most <wait_time> to get to the desired state.  If <wait_time> is
+   * most @a wait_time to get to the desired state.  If @a wait_time is
    * 0, then the function keeps waiting until the desired state is
    * reached or the service doesn't update its state any further.  The
    * svc_status_ class member is updated upon return.

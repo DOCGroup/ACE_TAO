@@ -166,10 +166,10 @@ protected:
 
   // = Check the boundary conditions (assumes locks are held).
   /// True if queue is full, else false.
-  virtual int is_full_i (void);
+  virtual bool is_full_i (void);
 
   /// True if queue is empty, else false.
-  virtual int is_empty_i (void);
+  virtual bool is_empty_i (void);
 
   // = Implementation of public <activate>/<deactivate> methods above.
 

@@ -59,7 +59,7 @@ ACE_Process_Manager *ACE_Process_Manager::instance_ = 0;
 
 // Controls whether the <Process_Manager> is deleted when we shut down
 // (we can only delete it safely if we created it!)
-int ACE_Process_Manager::delete_instance_ = 0;
+bool ACE_Process_Manager::delete_instance_ = false;
 
 ACE_Process_Manager::Process_Descriptor::~Process_Descriptor (void)
 {
@@ -121,7 +121,7 @@ ACE_Process_Manager::instance (void)
           ACE_NEW_RETURN (ACE_Process_Manager::instance_,
                           ACE_Process_Manager,
                           0);
-          ACE_Process_Manager::delete_instance_ = 1;
+          ACE_Process_Manager::delete_instance_ = true;
 
           // Register with the Object_Manager so that the wrapper to
           // delete the proactor will be called when Object_Manager is
@@ -152,20 +152,20 @@ ACE_Process_Manager::instance (ACE_Process_Manager *tm)
 
   ACE_Process_Manager *t = ACE_Process_Manager::instance_;
   // We can't safely delete it since we don't know who created it!
-  ACE_Process_Manager::delete_instance_ = 0;
+  ACE_Process_Manager::delete_instance_ = false;
 
-          // Register with the Object_Manager so that the wrapper to
-          // delete the proactor will be called when Object_Manager is
-          // being terminated.
+  // Register with the Object_Manager so that the wrapper to
+  // delete the proactor will be called when Object_Manager is
+  // being terminated.
 
 #if defined ACE_HAS_SIG_C_FUNC
-          ACE_Object_Manager::at_exit (ACE_Process_Manager::instance_,
-                                       ACE_Process_Manager_cleanup,
-                                       0);
+  ACE_Object_Manager::at_exit (ACE_Process_Manager::instance_,
+                                ACE_Process_Manager_cleanup,
+                                0);
 #else
-          ACE_Object_Manager::at_exit (ACE_Process_Manager::instance_,
-                                       ACE_Process_Manager::cleanup,
-                                       0);
+  ACE_Object_Manager::at_exit (ACE_Process_Manager::instance_,
+                                ACE_Process_Manager::cleanup,
+                                0);
 #endif /* ACE_HAS_SIG_C_FUNC */
 
   ACE_Process_Manager::instance_ = tm;
@@ -184,7 +184,7 @@ ACE_Process_Manager::close_singleton( void )
     {
       delete ACE_Process_Manager::instance_;
       ACE_Process_Manager::instance_ = 0;
-      ACE_Process_Manager::delete_instance_ = 0;
+      ACE_Process_Manager::delete_instance_ = false;
     }
 }
 
@@ -219,8 +219,7 @@ ACE_Process_Manager::resize (size_t size)
 // Create and initialize the table to keep track of the process pool.
 
 int
-ACE_Process_Manager::open (size_t size,
-                           ACE_Reactor *r)
+ACE_Process_Manager::open (size_t size, ACE_Reactor *r)
 {
   ACE_TRACE ("ACE_Process_Manager::open");
 
