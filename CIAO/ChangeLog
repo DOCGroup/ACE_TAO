@@ -1,7 +1,14 @@
+Tue Oct  2 19:52:30 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * docs/generate_component_mpc.html:
+
+          Changed documentation to match changes made in:
+          Fri Sep 28 19:37:39 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
+
 Fri Sep 28 19:58:52 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * CIDLC/UtilityTypeNameEmitters.hpp:
-        
+
           For some unknown reason, a class declaration was missing from
           this file in updating on other machines, checking it in
           explicitly to make sure.
@@ -9,25 +16,25 @@ Fri Sep 28 19:58:52 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
 Fri Sep 28 19:37:39 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * CIDLC/CorbaTypeNameEmitters.cpp:
-        
+
           Fixed incorrect code generation for a null return of an enum type.
-          
+
         * CIDLC/ServantSourceGenerator.cpp:
-        
+
           Changed generated include of Cookies.h to ciao/Cookies.h.
-          
+
         * CIDLC/ExecImplHeaderGenerator.cpp:
         * CIDLC/ExecImplSourceGenerator.cpp:
-        
+
           Changed generated context member type from Foo_Context* to
           CCM_Foo_Context_var. Also replaced include of Foo_svnt.h with
           FooEC.h. These changes reverse the existing dependency of
           the executor DLL on the servant DLL, which makes more sense
           since the servant delegates to the executor, which should
           not be coupled with any specific CCM implementation.
-          
+
         * bin/generate_component_mpc.pl:
-        
+
           Changed the script to generate default MPC files to reflect the
           dependency changes above. Also split the IDL and CIDL processing
           into separate projects.
@@ -35,21 +42,21 @@ Fri Sep 28 19:37:39 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
 Fri Sep 21 22:11:16 UTC 2007  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
 
         * docs/schema/CIAOEvents.txt:
-        
+
           Added information about naming conventions for filter declaration.
 
 Mon Sep  3 14:49:07 UTC 2007  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
-        * tools/Config_Handlers/IDD_Handler.cpp (CIAO): 
-        * tools/Config_Handlers/IDD_Handler.cpp (CIAO): 
-        * tools/Config_Handlers/ADD_Handler.cpp (CIAO): 
+        * tools/Config_Handlers/IDD_Handler.cpp (CIAO):
+        * tools/Config_Handlers/IDD_Handler.cpp (CIAO):
+        * tools/Config_Handlers/ADD_Handler.cpp (CIAO):
         * tools/Config_Handlers/MDD_Handler.cpp (CIAO): Changed
           generateUUID() to generate_UUID() to match new ACE-ification of
           the UUID class.
-  
+
 Wed Sep 19 04:10:15 CDT 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* CIAO version 0.6.1 released.
+        * CIAO version 0.6.1 released.
 
 Tue Sep 18 15:13:37 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
@@ -57,7 +64,7 @@ Tue Sep 18 15:13:37 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
           StaticDAnCE applications stopped working since the introduction
           of this file. This change fixes the problem. For details look
-          into Bugzilla 3073. Thanks to William R. Otte for providing 
+          into Bugzilla 3073. Thanks to William R. Otte for providing
           the patch.
 
 Fri Sep 14 15:19:17 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
