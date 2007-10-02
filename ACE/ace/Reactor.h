@@ -263,20 +263,20 @@ public:
   int work_pending (const ACE_Time_Value &max_wait_time =  ACE_Time_Value::zero);
 
   /**
-   * This event loop driver blocks for up to <max_wait_time> before
+   * This event loop driver blocks for up to @a max_wait_time before
    * returning.  It will return earlier if events occur.  Note that
-   * <max_wait_time> can be 0, in which case this method blocks
+   * @a max_wait_time can be 0, in which case this method blocks
    * indefinitely until events occur.
    *
-   * <max_wait_time> is decremented to reflect how much time this call
+   * @a max_wait_time is decremented to reflect how much time this call
    * took.  For instance, if a time value of 3 seconds is passed to
    * handle_events and an event occurs after 2 seconds,
-   * <max_wait_time> will equal 1 second.  This can be used if an
+   * @a max_wait_time will equal 1 second.  This can be used if an
    * application wishes to handle events for some fixed amount of
    * time.
    *
    * Returns the total number of timers and I/O ACE_Event_Handlers
-   * that were dispatched, 0 if the <max_wait_time> elapsed without
+   * that were dispatched, 0 if the @a max_wait_time elapsed without
    * dispatching any handlers, or -1 if an error occurs.
    *
    * The only difference between <alertable_handle_events> and
@@ -289,7 +289,7 @@ public:
 
   /**
    * This method is just like the one above, except the
-   * <max_wait_time> value is a reference and can therefore never be
+   * @a max_wait_time value is a reference and can therefore never be
    * NULL.
    *
    * The only difference between <alertable_handle_events> and
@@ -340,7 +340,7 @@ public:
   /**
    * Register handler for OS events.
    *
-   * Register an <event_handler> that will be notified when
+   * Register an @a event_handler that will be notified when
    * <event_handle> is signaled.  This will call back its
    * <handle_signal> hook method.
    *
@@ -377,7 +377,7 @@ public:
    *
    * Shorthand for calling
    * register_handler(ACE_HANDLE,ACE_Event_Handler*,ACE_Reactor_Mask),
-   * multiple times for the same <event_handler> and <masks> but
+   * multiple times for the same @a event_handler and @a masks but
    * different <handles>.
    */
   int register_handler (const ACE_Handle_Set &handles,
@@ -405,7 +405,7 @@ public:
    *
    * Shorthand for calling
    * register_handler(int,ACE_Event_Handler*,ACE_Sig_Action*,ACE_Event_Handler**,ACE_Sig_Action*)
-   * multiple times for the same <event_handler> and <sig_action> but
+   * multiple times for the same @a event_handler and <sig_action> but
    * different <signals>.
    */
   int register_handler (const ACE_Sig_Set &sigset,
@@ -413,25 +413,25 @@ public:
                         ACE_Sig_Action *sig_action = 0);
 
   /**
-   * Remove <masks> from @a handle registration.
+   * Remove @a masks from @a handle registration.
    *
-   * For I/O handles, <masks> are removed from the Reactor.  Unless
-   * <masks> includes <ACE_Event_Handler::DONT_CALL>,
-   * ACE_Event_Handler::handle_close() will be called with the <masks>
+   * For I/O handles, @a masks are removed from the Reactor.  Unless
+   * @a masks includes ACE_Event_Handler::DONT_CALL,
+   * ACE_Event_Handler::handle_close() will be called with the @a masks
    * that have been removed.  If all masks have been removed,
    * ACE_Event_Handler::remove_reference() will be called.
    *
    * For OS handles, the @a handle is removed from the Reactor.  Unless
-   * <masks> includes <ACE_Event_Handler::DONT_CALL>,
+   * @a masks includes ACE_Event_Handler::DONT_CALL,
    * ACE_Event_Handler::handle_close() will be called with
-   * <ACE_Event_Handler::NULL_MASK>.
+   * ACE_Event_Handler::NULL_MASK.
    * ACE_Event_Handler::remove_reference() will also be called.
    */
   int remove_handler (ACE_HANDLE handle,
                       ACE_Reactor_Mask masks);
 
   /**
-   * Remove <masks> from <event_handler> registration.
+   * Remove @a masks from @a event_handler registration.
    *
    * Same as remove_handler(ACE_HANDLE,ACE_Reactor_Mask), except
    * @a handle comes from ACE_Event_Handler::get_handle().
@@ -440,10 +440,10 @@ public:
                       ACE_Reactor_Mask masks);
 
   /**
-   * Remove <masks> from multiple <handle> registrations.
+   * Remove @a masks from multiple <handle> registrations.
    *
    * Shorthand for calling remove_handler(ACE_HANDLE,ACE_Reactor_Mask)
-   * multiple times for the same <masks> but different <handles>.
+   * multiple times for the same @a masks but different @a handles.
    */
   int remove_handler (const ACE_Handle_Set &handles,
                       ACE_Reactor_Mask masks);
@@ -538,7 +538,7 @@ public:
    *
    * Schedule a timer event that will expire after an <delay> amount
    * of time.  The return value of this method, a timer_id value,
-   * uniquely identifies the <event_handler> in the ACE_Reactor's
+   * uniquely identifies the @a event_handler in the ACE_Reactor's
    * internal list of timers.  This timer_id value can be used to
    * cancel the timer with the cancel_timer() call.
    *
@@ -601,7 +601,7 @@ public:
    * Cancel all timers associated with event handler.
    *
    * Shorthand for calling cancel_timer(long,const void **,int)
-   * multiple times for all timer associated with <event_handler>.
+   * multiple times for all timer associated with @a event_handler.
    *
    * ACE_Event_Handler::handle_close() will be called with
    * <ACE_Event_Handler::TIMER_MASK> only once irrespective of the
@@ -638,7 +638,7 @@ public:
   int schedule_wakeup (ACE_HANDLE handle,
                        ACE_Reactor_Mask masks_to_be_added);
 
-  /// Clear @a masks_to_be_cleared from the <event_handler>'s entry.
+  /// Clear @a masks_to_be_cleared from the @a event_handler's entry.
   /// Note that this call does not cause the Reactor to re-examine
   /// its set of handlers - the new masks will be noticed the next
   /// time the Reactor waits for activity. If there is no other
@@ -751,7 +751,7 @@ public:
 
   /**
    * Check to see if @a signum is associated with a valid Event_Handler
-   * bound to a signal.  Return the <event_handler> associated with
+   * bound to a signal.  Return the @a event_handler associated with
    * this <handler> if @a event_handler != 0.
    */
   int handler (int signum,
@@ -805,7 +805,7 @@ public:
                 int ops);
 
   // = Low-level ready_set mask manipulation methods.
-  /// GET/SET/ADD/CLR the ready "bit" bound with the <event_handler>
+  /// GET/SET/ADD/CLR the ready "bit" bound with the @a event_handler
   /// and @a mask.
   int ready_ops (ACE_Event_Handler *event_handler,
                  ACE_Reactor_Mask mask,

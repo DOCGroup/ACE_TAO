@@ -135,10 +135,10 @@ public:
 
   // = Check if queue is full/empty.
   /// True if queue is full, else false.
-  virtual int is_full (void) = 0;
+  virtual bool is_full (void) = 0;
 
   /// True if queue is empty, else false.
-  virtual int is_empty (void) = 0;
+  virtual bool is_empty (void) = 0;
 
   // = Queue statistic methods.
 
@@ -297,12 +297,12 @@ public:
    * Always return false.
    */
 
-  virtual int is_full (void);
+  virtual bool is_full (void);
   /**
    * True if queue is empty, else false.  Notice the return value is
    * only transient.
    */
-  virtual int is_empty (void);
+  virtual bool is_empty (void);
 
   // = Queue statistic methods (transient.)
   /**

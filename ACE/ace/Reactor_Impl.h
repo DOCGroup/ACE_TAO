@@ -167,20 +167,20 @@ public:
   virtual int work_pending (const ACE_Time_Value &max_wait_time =  ACE_Time_Value::zero)  = 0;
 
   /**
-   * This event loop driver blocks for up to <max_wait_time> before
+   * This event loop driver blocks for up to @a max_wait_time before
    * returning.  It will return earlier if events occur.  Note that
-   * <max_wait_time> can be 0, in which case this method blocks
+   * @a max_wait_time can be 0, in which case this method blocks
    * indefinitely until events occur.
    *
-   * <max_wait_time> is decremented to reflect how much time this call
+   * @a max_wait_time is decremented to reflect how much time this call
    * took.  For instance, if a time value of 3 seconds is passed to
    * handle_events and an event occurs after 2 seconds,
-   * <max_wait_time> will equal 1 second.  This can be used if an
+   * @a max_wait_time will equal 1 second.  This can be used if an
    * application wishes to handle events for some fixed amount of
    * time.
    *
    * Returns the total number of ACE_Event_Handlers that were
-   * dispatched, 0 if the <max_wait_time> elapsed without dispatching
+   * dispatched, 0 if the @a max_wait_time elapsed without dispatching
    * any handlers, or -1 if an error occurs.
    *
    * The only difference between <alertable_handle_events> and
@@ -193,7 +193,7 @@ public:
 
   /**
    * This method is just like the one above, except the
-   * <max_wait_time> value is a reference and can therefore never be
+   * @a max_wait_time value is a reference and can therefore never be
    * NULL.
    *
    * The only difference between <alertable_handle_events> and
@@ -223,11 +223,11 @@ public:
   // = Register and remove Handlers.
 
   /// Register @a event_handler with @a mask.  The I/O handle will always
-  /// come from <get_handle> on the <event_handler>.
+  /// come from <get_handle> on the @a event_handler.
   virtual int register_handler (ACE_Event_Handler *event_handler,
                                 ACE_Reactor_Mask mask) = 0;
 
-  /// Register <event_handler> with @a mask.  The I/O handle is provided
+  /// Register @a event_handler with @a mask.  The I/O handle is provided
   /// through the <io_handle> parameter.
   virtual int register_handler (ACE_HANDLE io_handle,
                                 ACE_Event_Handler *event_handler,
@@ -243,7 +243,7 @@ public:
   // have restricted this method to Win32 only.
 
   /**
-   * Register an <event_handler> that will be notified when
+   * Register an @a event_handler that will be notified when
    * <event_handle> is signaled.  Since no event mask is passed
    * through this interface, it is assumed that the <event_handle>
    * being passed in is an event handle and not an I/O handle.
@@ -254,16 +254,16 @@ public:
 #endif /* ACE_WIN32 */
 
   /**
-   * Register an <event_handler> that will be notified when
+   * Register an @a event_handler that will be notified when
    * <event_handle> is signaled.  @a mask specifies the network events
-   * that the <event_handler> is interested in.
+   * that the @a event_handler is interested in.
    */
   virtual int register_handler (ACE_HANDLE event_handle,
                                 ACE_HANDLE io_handle,
                                 ACE_Event_Handler *event_handler,
                                 ACE_Reactor_Mask mask) = 0;
 
-  /// Register <event_handler> with all the <handles> in the <Handle_Set>.
+  /// Register @a event_handler with all the <handles> in the <Handle_Set>.
   virtual int register_handler (const ACE_Handle_Set &handles,
                                 ACE_Event_Handler *event_handler,
                                 ACE_Reactor_Mask mask) = 0;
@@ -286,16 +286,16 @@ public:
                                 ACE_Sig_Action *new_disp = 0) = 0;
 
   /**
-   * Removes <event_handler>.  Note that the I/O handle will be
-   * obtained using <get_handle> method of <event_handler> .  If
-   * @a mask == <ACE_Event_Handler::DONT_CALL> then the <handle_close>
-   * method of the <event_handler> is not invoked.
+   * Removes @a event_handler.  Note that the I/O handle will be
+   * obtained using <get_handle> method of @a event_handler .  If
+   * @a mask == ACE_Event_Handler::DONT_CALL then the <handle_close>
+   * method of the @a event_handler is not invoked.
    */
   virtual int remove_handler (ACE_Event_Handler *event_handler,
                               ACE_Reactor_Mask mask) = 0;
 
   /**
-   * Removes <handle>.  If @a mask == <ACE_Event_Handler::DONT_CALL>
+   * Removes <handle>.  If @a mask == ACE_Event_Handler::DONT_CALL
    * then the <handle_close> method of the associated <event_handler>
    * is not invoked.
    */
@@ -304,7 +304,7 @@ public:
 
   /**
    * Removes all handles in <handle_set>.  If @a mask ==
-   * <ACE_Event_Handler::DONT_CALL> then the <handle_close> method of
+   * ACE_Event_Handler::DONT_CALL then the <handle_close> method of
    * the associated <event_handler>s is not invoked.
    */
   virtual int remove_handler (const ACE_Handle_Set &handle_set,
@@ -326,7 +326,7 @@ public:
 
   // = Suspend and resume Handlers.
 
-  /// Suspend <event_handler> temporarily.  Use
+  /// Suspend @a event_handler temporarily.  Use
   /// <ACE_Event_Handler::get_handle> to get the handle.
   virtual int suspend_handler (ACE_Event_Handler *event_handler) = 0;
 
@@ -339,7 +339,7 @@ public:
   /// Suspend all <handles> temporarily.
   virtual int suspend_handlers (void) = 0;
 
-  /// Resume <event_handler>. Use <ACE_Event_Handler::get_handle> to
+  /// Resume @a event_handler. Use <ACE_Event_Handler::get_handle> to
   /// get the handle.
   virtual int resume_handler (ACE_Event_Handler *event_handler) = 0;
 
@@ -398,7 +398,7 @@ public:
                                     const ACE_Time_Value &interval) = 0;
 
   /// Cancel all Event_Handlers that match the address of
-  /// <event_handler>.  Returns number of handlers cancelled.
+  /// @a event_handler.  Returns number of handlers cancelled.
   virtual int cancel_timer (ACE_Event_Handler *event_handler,
                             int dont_call_handle_close = 1) = 0;
 
@@ -417,8 +417,8 @@ public:
 
   // = High-level Event_Handler scheduling operations
 
-  /// Add @a masks_to_be_added to the <event_handler>'s entry.
-  /// <event_handler> must already have been registered.
+  /// Add @a masks_to_be_added to the @a event_handler's entry.
+  /// @a event_handler must already have been registered.
   virtual int schedule_wakeup (ACE_Event_Handler *event_handler,
                                ACE_Reactor_Mask masks_to_be_added) = 0;
 
@@ -438,7 +438,7 @@ public:
   // = Notification methods.
 
   /**
-   * Notify <event_handler> of @a mask event.  The ACE_Time_Value
+   * Notify @a event_handler of @a mask event.  The ACE_Time_Value
    * indicates how long to blocking trying to notify.  If @a timeout ==
    * 0, the caller will block until action is possible, else will wait
    * until the relative time specified in @a timeout elapses).
@@ -483,8 +483,8 @@ public:
 
   /**
    * Check to see if <handle> is associated with a valid Event_Handler
-   * bound to @a mask.  Return the <event_handler> associated with this
-   * <handler> if <event_handler> != 0.
+   * bound to @a mask.  Return the @a event_handler associated with this
+   * <handler> if @a event_handler != 0.
    */
   virtual int handler (ACE_HANDLE handle,
                        ACE_Reactor_Mask mask,
@@ -492,8 +492,8 @@ public:
 
   /**
    * Check to see if @a signum is associated with a valid Event_Handler
-   * bound to a signal.  Return the <event_handler> associated with
-   * this <handler> if <event_handler> != 0.
+   * bound to a signal.  Return the @a event_handler associated with
+   * this <handler> if @a event_handler != 0.
    */
   virtual int handler (int signum,
                        ACE_Event_Handler ** = 0) = 0;
@@ -533,7 +533,7 @@ public:
   // = Low-level wait_set mask manipulation methods.
 
   /// GET/SET/ADD/CLR the dispatch mask "bit" bound with the
-  /// <event_handler> and @a mask.
+  /// @a event_handler and @a mask.
   virtual int mask_ops (ACE_Event_Handler *event_handler,
                         ACE_Reactor_Mask mask,
                         int ops) = 0;
@@ -545,7 +545,7 @@ public:
                         int ops) = 0;
 
   // = Low-level ready_set mask manipulation methods.
-  /// GET/SET/ADD/CLR the ready "bit" bound with the <event_handler>
+  /// GET/SET/ADD/CLR the ready "bit" bound with the @a event_handler
   /// and @a mask.
   virtual int ready_ops (ACE_Event_Handler *event_handler,
                          ACE_Reactor_Mask mask,

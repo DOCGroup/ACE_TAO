@@ -562,7 +562,7 @@ public:
   /**
    * Create a timer result object which can be used with the Timer
    * mechanism of the Proactor.
-   * If <signal_number> is -1, <POSIX_SIG_Proactor> will create a
+   * If @a signal_number is -1, <POSIX_SIG_Proactor> will create a
    * Timer object with a meaningful signal number, choosing the
    * largest signal number from the signal mask of the Proactor.
    */

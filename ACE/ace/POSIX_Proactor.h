@@ -351,7 +351,7 @@ public:
   virtual int close (void);
 
   /**
-   * Dispatch a single set of events.  If <wait_time> elapses before
+   * Dispatch a single set of events.  If @a wait_time elapses before
    * any events occur, return 0.  Return 1 on success i.e., when a
    * completion is dispatched, non-zero (-1) on errors and errno is
    * set accordingly.
@@ -360,7 +360,7 @@ public:
 
   /**
    * Block indefinitely until at least one event is dispatched.
-   * Dispatch a single set of events.  If <wait_time> elapses before
+   * Dispatch a single set of events.  If @a wait_time elapses before
    * any events occur, return 0.  Return 1 on success i.e., when a
    * completion is dispatched, non-zero (-1) on errors and errno is
    * set accordingly.
@@ -538,7 +538,7 @@ public:
   virtual ~ACE_POSIX_SIG_Proactor (void);
 
   /**
-   * Dispatch a single set of events.  If <wait_time> elapses before
+   * Dispatch a single set of events.  If @a wait_time elapses before
    * any events occur, return 0.  Return 1 on success i.e., when a
    * completion is dispatched, non-zero (-1) on errors and errno is
    * set accordingly.
@@ -559,7 +559,7 @@ public:
   ///virtual int post_completion (ACE_POSIX_Asynch_Result *result);
 
   /**
-   * If <signal_number> is -1, check with the Proactor and use one of
+   * If @a signal_number is -1, check with the Proactor and use one of
    * the signals that is present in the mask set (i.e., the signals for
    * which the Proactor will be waiting) of the Proactor. If there are
    * more than one signal, the higher numbered signal will be chosen.
@@ -592,7 +592,6 @@ protected:
 
   /// Find free slot to store result and aiocb pointer
   virtual ssize_t allocate_aio_slot (ACE_POSIX_Asynch_Result *result);
-
 
   /// Notify queue of "post_completed" ACE_POSIX_Asynch_Results
   /// called from post_completion method
