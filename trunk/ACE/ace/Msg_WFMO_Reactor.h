@@ -61,23 +61,23 @@ public:
   virtual ~ACE_Msg_WFMO_Reactor (void);
 
   /**
-   * This event loop driver blocks for up to <max_wait_time> before
+   * This event loop driver blocks for up to @a max_wait_time before
    * returning.  It will return earlier if timer events, I/O events,
-   * window events, or signal events occur.  Note that <max_wait_time>
+   * window events, or signal events occur.  Note that @a max_wait_time
    * can be 0, in which case this method blocks indefinitely until
    * events occur.
    *
-   * <max_wait_time> is decremented to reflect how much time this call
+   * @a max_wait_time is decremented to reflect how much time this call
    * took.  For instance, if a time value of 3 seconds is passed to
    * handle_events and an event occurs after 2 seconds,
-   * <max_wait_time> will equal 1 second.  This can be used if an
+   * @a max_wait_time will equal 1 second.  This can be used if an
    * application wishes to handle events for some fixed amount of
    * time.
    *
    * <MsgWaitForMultipleObjects> is used as the demultiplexing call
    *
    * Returns the total number of ACE_Event_Handlers that were
-   * dispatched, 0 if the <max_wait_time> elapsed without dispatching
+   * dispatched, 0 if the @a max_wait_time elapsed without dispatching
    * any handlers, or -1 if an error occurs.
    *
    * The only difference between <alertable_handle_events> and
@@ -90,7 +90,7 @@ public:
 
   /**
    * This method is just like the one above, except the
-   * <max_wait_time> value is a reference and can therefore never be
+   * @a max_wait_time value is a reference and can therefore never be
    * NULL.
    */
   virtual int handle_events (ACE_Time_Value &max_wait_time);

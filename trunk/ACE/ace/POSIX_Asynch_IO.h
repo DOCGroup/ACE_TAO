@@ -1067,7 +1067,7 @@ public:
    * this is supported. Works like <nice> in Unix. Negative values are not
    * allowed. 0 means priority of the operation same as the process
    * priority. 1 means priority of the operation is one less than
-   * process.  <signal_number> argument is a no-op on non-POSIX4 systems.
+   * process.  @a signal_number argument is a no-op on non-POSIX4 systems.
    *
    * @note Unlike the Windows version of this facility, no indication of
    * immediate success can be returned, and @a number_of_bytes_read is

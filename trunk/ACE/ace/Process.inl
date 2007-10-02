@@ -234,14 +234,14 @@ ACE_Process_Options::get_stderr (void) const
   return stderr_;
 }
 
-ACE_INLINE int
+ACE_INLINE bool
 ACE_Process_Options::inherit_environment (void) const
 {
   return inherit_environment_;
 }
 
 ACE_INLINE void
-ACE_Process_Options::inherit_environment (int nv)
+ACE_Process_Options::inherit_environment (bool nv)
 {
   inherit_environment_ = nv;
 }

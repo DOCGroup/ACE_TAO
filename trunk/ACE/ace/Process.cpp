@@ -690,13 +690,13 @@ ACE_Process::close_passed_handles (void)
   return;
 }
 
-ACE_Process_Options::ACE_Process_Options (int ie,
-                                          int cobl,
-                                          int ebl,
-                                          int mea)
+ACE_Process_Options::ACE_Process_Options (bool inherit_environment,
+                                          int command_line_buf_len,
+                                          int env_buf_len,
+                                          int max_env_args)
   :
 #if !defined (ACE_HAS_WINCE)
-    inherit_environment_ (ie),
+    inherit_environment_ (inherit_environment),
 #endif /* ACE_HAS_WINCE */
     creation_flags_ (0),
     avoid_zombies_ (0),
@@ -719,26 +719,26 @@ ACE_Process_Options::ACE_Process_Options (int ie,
     environment_buf_index_ (0),
     environment_argv_index_ (0),
     environment_buf_ (0),
-    environment_buf_len_ (ebl),
-    max_environment_args_ (mea),
-    max_environ_argv_index_ (mea - 1),
+    environment_buf_len_ (env_buf_len),
+    max_environment_args_ (max_env_args),
+    max_environ_argv_index_ (max_env_args - 1),
 #endif /* !ACE_HAS_WINCE */
     command_line_argv_calculated_ (0),
     command_line_buf_ (0),
     command_line_copy_ (0),
-    command_line_buf_len_ (cobl),
+    command_line_buf_len_ (command_line_buf_len),
     process_group_ (ACE_INVALID_PID)
 {
   ACE_NEW (command_line_buf_,
-           ACE_TCHAR[cobl]);
+           ACE_TCHAR[command_line_buf_len]);
   command_line_buf_[0] = '\0';
 
 #if !defined (ACE_HAS_WINCE)
   working_directory_[0] = '\0';
   ACE_NEW (environment_buf_,
-           ACE_TCHAR[ebl]);
+           ACE_TCHAR[env_buf_len]);
   ACE_NEW (environment_argv_,
-           ACE_TCHAR *[mea]);
+           ACE_TCHAR *[max_env_args]);
   environment_buf_[0] = '\0';
   environment_argv_[0] = 0;
   process_name_[0] = '\0';

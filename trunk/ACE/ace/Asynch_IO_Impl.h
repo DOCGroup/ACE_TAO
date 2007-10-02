@@ -671,8 +671,8 @@ public:
    * allowed. 0 means priority of the operation same as the process
    * priority. 1 means priority of the operation is one less than
    * process. And so forth. On Win32, <priority> is a no-op.
-   * <signal_number> is the POSIX4 real-time signal number to be used
-   * for the operation. <signal_number> ranges from ACE_SIGRTMIN to
+   * @a signal_number is the POSIX4 real-time signal number to be used
+   * for the operation. @a signal_number ranges from ACE_SIGRTMIN to
    * ACE_SIGRTMAX. This argument is a no-op on non-POSIX4 systems.
    */
   virtual ssize_t recv (ACE_Message_Block *message_block,
@@ -757,8 +757,8 @@ public:
    * allowed. 0 means priority of the operation same as the process
    * priority. 1 means priority of the operation is one less than
    * process. And so forth. On Win32, this argument is a no-op.
-   * <signal_number> is the POSIX4 real-time signal number to be used
-   * for the operation. <signal_number> ranges from ACE_SIGRTMIN to
+   * @a signal_number is the POSIX4 real-time signal number to be used
+   * for the operation. @a signal_number ranges from ACE_SIGRTMIN to
    * ACE_SIGRTMAX. This argument is a no-op on non-POSIX4 systems.
    */
   virtual ssize_t send (ACE_Message_Block *message_block,

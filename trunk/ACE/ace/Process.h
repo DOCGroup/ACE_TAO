@@ -66,7 +66,7 @@ public:
 protected:
   // = Default settings not part of public Interface.
   //
-  // @@todo These sizes should be taken from the appropriate
+  // @todo These sizes should be taken from the appropriate
   // POSIX/system header files and/or defined dynamically.
   enum
   {
@@ -77,11 +77,11 @@ protected:
 
 public:
   /**
-   * If @a inherit_environment == 1, the new process will inherit the
+   * If @a inherit_environment == true, the new process will inherit the
    * environment of the current process.  @a command_line_buf_len is the
    * max strlen for command-line arguments.
    */
-  ACE_Process_Options (int inherit_environment = 1,
+  ACE_Process_Options (bool inherit_environment = true,
                        int command_line_buf_len = DEFAULT_COMMAND_LINE_BUF_LEN,
                        int env_buf_len = ENVIRONMENT_BUFFER,
                        int max_env_args = MAX_ENVIRONMENT_ARGS);
@@ -306,12 +306,12 @@ public:
   /**
    * Get the inherit_environment flag.
    */
-  int inherit_environment (void) const;
+  bool inherit_environment (void) const;
 
   /**
    * Set the inherit_environment flag.
    */
-  void inherit_environment (int nv);
+  void inherit_environment (bool nv);
 #endif /* ACE_WIN32 */
 protected:
 
@@ -322,7 +322,7 @@ protected:
 
   /// Whether the child process inherits the current process
   /// environment.
-  int inherit_environment_;
+  bool inherit_environment_;
 #endif /* !ACE_HAS_WINCE */
 
   /// Default 0.

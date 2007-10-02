@@ -468,7 +468,7 @@ ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::notification_strategy (AC
 
 // Check if queue is empty (holds locks).
 
-template <class ACE_MESSAGE_TYPE, ACE_SYNCH_DECL> int
+template <class ACE_MESSAGE_TYPE, ACE_SYNCH_DECL> bool
 ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::is_empty (void)
 {
   ACE_TRACE ("ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::is_empty");
@@ -478,7 +478,7 @@ ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::is_empty (void)
 
 // Check if queue is full (holds locks).
 
-template <class ACE_MESSAGE_TYPE, ACE_SYNCH_DECL> int
+template <class ACE_MESSAGE_TYPE, ACE_SYNCH_DECL> bool
 ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::is_full (void)
 {
   ACE_TRACE ("ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::is_full");
@@ -708,7 +708,7 @@ ACE_Message_Queue<ACE_SYNCH_USE>::notification_strategy (ACE_Notification_Strate
 
 // Check if queue is empty (does not hold locks).
 
-template <ACE_SYNCH_DECL> int
+template <ACE_SYNCH_DECL> bool
 ACE_Message_Queue<ACE_SYNCH_USE>::is_empty_i (void)
 {
   ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::is_empty_i");
@@ -717,7 +717,7 @@ ACE_Message_Queue<ACE_SYNCH_USE>::is_empty_i (void)
 
 // Check if queue is full (does not hold locks).
 
-template <ACE_SYNCH_DECL> int
+template <ACE_SYNCH_DECL> bool
 ACE_Message_Queue<ACE_SYNCH_USE>::is_full_i (void)
 {
   ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::is_full_i");
@@ -726,22 +726,22 @@ ACE_Message_Queue<ACE_SYNCH_USE>::is_full_i (void)
 
 // Check if queue is empty (holds locks).
 
-template <ACE_SYNCH_DECL> int
+template <ACE_SYNCH_DECL> bool
 ACE_Message_Queue<ACE_SYNCH_USE>::is_empty (void)
 {
   ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::is_empty");
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX_T, ace_mon, this->lock_, -1);
+  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX_T, ace_mon, this->lock_, false);
 
   return this->is_empty_i ();
 }
 
 // Check if queue is full (holds locks).
 
-template <ACE_SYNCH_DECL> int
+template <ACE_SYNCH_DECL> bool
 ACE_Message_Queue<ACE_SYNCH_USE>::is_full (void)
 {
   ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::is_full");
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX_T, ace_mon, this->lock_, -1);
+  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX_T, ace_mon, this->lock_, false);
 
   return this->is_full_i ();
 }

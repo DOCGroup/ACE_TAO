@@ -655,7 +655,7 @@ public:
                               ACE_Reactor_Mask mask);
 
   /**
-   * Removes @a handle.  If @a mask == <ACE_Event_Handler::DONT_CALL>
+   * Removes @a handle.  If @a mask == ACE_Event_Handler::DONT_CALL
    * then the <handle_close> method of the associated <event_handler>
    * is not invoked.
    */
@@ -664,7 +664,7 @@ public:
 
   /**
    * Removes all handles in <handle_set>.  If @a mask ==
-   * <ACE_Event_Handler::DONT_CALL> then the <handle_close> method of
+   * ACE_Event_Handler::DONT_CALL then the <handle_close> method of
    * the associated <event_handler>s is not invoked.
    */
   virtual int remove_handler (const ACE_Handle_Set &handle_set,
@@ -758,7 +758,7 @@ public:
                                     const ACE_Time_Value &interval);
 
   /// Cancel all Event_Handlers that match the address of
-  /// <event_handler>.  Returns number of handlers cancelled.
+  /// @a event_handler.  Returns number of handlers cancelled.
   virtual int cancel_timer (ACE_Event_Handler *event_handler,
                             int dont_call_handle_close = 1);
 
@@ -777,8 +777,8 @@ public:
 
   // = High-level event handler scheduling operations
 
-  /// Add @a masks_to_be_added to the <event_handler>'s entry.
-  /// <event_handler> must already have been registered.
+  /// Add @a masks_to_be_added to the @a event_handler's entry.
+  /// @a event_handler must already have been registered.
   virtual int schedule_wakeup (ACE_Event_Handler *event_handler,
                                ACE_Reactor_Mask masks_to_be_added);
 
@@ -787,7 +787,7 @@ public:
   virtual int schedule_wakeup (ACE_HANDLE handle,
                                ACE_Reactor_Mask masks_to_be_added);
 
-  /// Clear @a masks_to_be_cleared from the <event_handler>'s entry.
+  /// Clear @a masks_to_be_cleared from the @a event_handler's entry.
   virtual int cancel_wakeup (ACE_Event_Handler *event_handler,
                              ACE_Reactor_Mask masks_to_be_cleared);
 
@@ -798,7 +798,7 @@ public:
   // = Notification methods.
 
   /**
-   * Notify <event_handler> of @a mask event.  The ACE_Time_Value
+   * Notify @a event_handler of @a mask event.  The ACE_Time_Value
    * indicates how long to blocking trying to notify.  If @a timeout ==
    * 0, the caller will block until action is possible, else will wait
    * until the relative time specified in @a timeout elapses).
@@ -843,8 +843,8 @@ public:
 
   /**
    * Check to see if @a handle is associated with a valid Event_Handler
-   * bound to @a mask.  Return the <event_handler> associated with this
-   * <handler> if <event_handler> != 0.
+   * bound to @a mask.  Return the @a event_handler associated with this
+   * <handler> if @a event_handler != 0.
    */
   virtual int handler (ACE_HANDLE handle,
                        ACE_Reactor_Mask mask,
@@ -852,8 +852,8 @@ public:
 
   /**
    * Check to see if @a signum is associated with a valid Event_Handler
-   * bound to a signal.  Return the <event_handler> associated with
-   * this <handler> if <event_handler> != 0.
+   * bound to a signal.  Return the @a event_handler associated with
+   * this <handler> if @a event_handler != 0.
    */
   virtual int handler (int signum,
                        ACE_Event_Handler ** = 0);
