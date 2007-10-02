@@ -86,7 +86,7 @@ public:
 protected:
   // = Override the default definition in the Message_Queue, to count
   // the number of messages (and not their size).
-  virtual int is_full_i (void);
+  virtual bool is_full_i (void);
 };
 
 /**

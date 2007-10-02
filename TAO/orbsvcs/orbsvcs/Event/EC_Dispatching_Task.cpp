@@ -88,7 +88,7 @@ ACE_FACTORY_DEFINE (TAO_RTEvent_Serv, TAO_EC_Simple_Queue_Full_Action)
 
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-int
+bool
 TAO_EC_Queue::is_full_i (void)
 {
   return static_cast<size_t> (this->cur_count_) > this->high_water_mark_;
