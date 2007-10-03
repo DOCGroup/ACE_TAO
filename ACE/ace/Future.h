@@ -122,7 +122,7 @@ private:
            ACE_Time_Value *tv) const;
 
   /**
-   * Attaches the specified observer to a subject (i.e., the <ACE_Future_Rep>).
+   * Attaches the specified observer to a subject (i.e., the ACE_Future_Rep).
    * The update method of the specified subject will be invoked with a copy of
    * the written-to ACE_Future as input when the result gets set.
    *
@@ -133,9 +133,9 @@ private:
                ACE_Future<T> &caller);
 
   /**
-   * Detaches the specified observer from a subject (i.e., the <ACE_Future_Rep>).
+   * Detaches the specified observer from a subject (i.e., the ACE_Future_Rep).
    * The update method of the specified subject will not be invoked when the
-   * <ACE_Future_Rep>s result gets set.  Returns 1 if the specified observer was
+   * ACE_Future_Reps result gets set.  Returns 1 if the specified observer was
    * actually attached to the subject prior to this call and 0 if was not.
    *
    * Returns 0 if the observer was successfully detached, and -1 if the
@@ -195,8 +195,7 @@ private:
    *
    * Precondition (rep != 0 && new_rep != 0)
    */
-  static void assign (ACE_Future_Rep<T> *&rep,
-                      ACE_Future_Rep<T> *new_rep);
+  static void assign (ACE_Future_Rep<T> *&rep, ACE_Future_Rep<T> *new_rep);
 
   /// Is result available?
   int ready (void) const;
@@ -207,11 +206,9 @@ private:
   /// Reference count.
   int ref_count_;
 
-  typedef ACE_Future_Observer<T>
-            OBSERVER;
+  typedef ACE_Future_Observer<T> OBSERVER;
 
-  typedef ACE_Unbounded_Set<OBSERVER *>
-        OBSERVER_COLLECTION;
+  typedef ACE_Unbounded_Set<OBSERVER *> OBSERVER_COLLECTION;
 
   /// Keep a list of ACE_Future_Observers unread by client's reader thread.
   OBSERVER_COLLECTION observer_collection_;

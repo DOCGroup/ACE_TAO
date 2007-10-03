@@ -386,12 +386,12 @@ ACE_END_VERSIONED_NAMESPACE_DECL
   }                                                                         \
   VOID WINAPI ace_nt_svc_main_##SVCNAME (DWORD dwArgc,                      \
                                          ACE_TCHAR **lpszArgv) {            \
-    int delete_svc_obj = 0;                                                 \
+    bool delete_svc_obj = false;                                            \
     if (_ace_nt_svc_obj_##SVCNAME == 0) {                                   \
       ACE_NEW (_ace_nt_svc_obj_##SVCNAME, SVCCLASS);                        \
       if (_ace_nt_svc_obj_##SVCNAME == 0)                                   \
         return;                                                             \
-      delete_svc_obj = 1;                                                   \
+      delete_svc_obj = true;                                                \
     }                                                                       \
     else                                                                    \
       _ace_nt_svc_obj_##SVCNAME->inherit_log_msg_attributes ();             \

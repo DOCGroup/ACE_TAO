@@ -112,7 +112,7 @@ private:
 /**
  * @class ACE_Timer_Hash_Iterator_T
  *
- * @brief Iterates over an <ACE_Timer_Hash_T>.
+ * @brief Iterates over an ACE_Timer_Hash_T.
  *
  * This is a generic iterator that can be used to visit every
  * node of a timer queue.  Be aware that it doesn't transverse
@@ -151,7 +151,7 @@ protected:
 /**
  * @class ACE_Timer_Hash_T
  *
- * @brief Provides a hash table of <BUCKET>s as an implementation for
+ * @brief Provides a hash table of BUCKETs as an implementation for
  * a timer queue.
  *
  * This implementation uses a hash table of BUCKETs.  The hash
@@ -174,9 +174,9 @@ public:
 
   // = Initialization and termination methods.
   /**
-   * Default constructor. <table_size> determines the size of the
-   * hash table.  <upcall_functor> is the instance of the FUNCTOR
-   * to be used by the buckets. If <upcall_functor> is 0, a default
+   * Default constructor. @a table_size determines the size of the
+   * hash table.  @a upcall_functor is the instance of the FUNCTOR
+   * to be used by the buckets. If @a upcall_functor is 0, a default
    * FUNCTOR will be created.
    */
   ACE_Timer_Hash_T (size_t table_size,
@@ -184,9 +184,9 @@ public:
                     ACE_Free_List<ACE_Timer_Node_T <TYPE> > *freelist = 0);
 
   /**
-   * Default constructor. <upcall_functor> is the instance of the
-   * FUNCTOR to be used by the queue. If <upcall_functor> is 0, Timer
-   * Hash will create a default FUNCTOR.  <freelist> the freelist of
+   * Default constructor. @a upcall_functor is the instance of the
+   * FUNCTOR to be used by the queue. If @a upcall_functor is 0, Timer
+   * Hash will create a default FUNCTOR.  @a freelist the freelist of
    * timer nodes.  If 0, then a default freelist will be created.  The default
    * size will be ACE_DEFAULT_TIMERS and there will be no preallocation.
    */
@@ -245,7 +245,7 @@ public:
   virtual int expire (void);
 
   /**
-   * Run the <functor> for all timers whose values are <= <cur_time>.
+   * Run the <functor> for all timers whose values are <= @a current_time.
    * This does not account for <timer_skew>.  Returns the number of
    * timers canceled.
    */

@@ -1118,14 +1118,14 @@ protected:
 
   /// Keeps track of whether we should delete the timer queue (if we
   /// didn't create it, then we don't delete it).
-  int delete_timer_queue_;
+  bool delete_timer_queue_;
 
   /// Handle signals without requiring global/static variables.
   ACE_Sig_Handler *signal_handler_;
 
   /// Keeps track of whether we should delete the signal handler (if we
   /// didn't create it, then we don't delete it).
-  int delete_signal_handler_;
+  bool delete_signal_handler_;
 
   /// Callback object that unblocks the <ACE_Select_Reactor> if it's
   /// sleeping.
@@ -1133,7 +1133,7 @@ protected:
 
   /// Keeps track of whether we need to delete the notify handler (if
   /// we didn't create it, then we don't delete it).
-  int delete_notify_handler_;
+  bool delete_notify_handler_;
 
   /// Flag that determines if signals are masked during event
   /// dispatching.

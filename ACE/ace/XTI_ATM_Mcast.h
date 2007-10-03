@@ -42,7 +42,7 @@ public:
   ACE_XTI_ATM_Mcast (void);
 
   /**
-   * Actively connect and produce a <new_stream> if things go well.
+   * Actively connect and produce a @a new_stream if things go well.
    * The <remote_sap> is the address that we are trying to connect
    * with.  The @a timeout is the amount of time to wait to connect.
    * If it's 0 then we block indefinitely.  If *timeout == {0, 0} then
@@ -53,7 +53,7 @@ public:
    * time expires before the connection is made <errno == ETIME>.  The
    * <local_sap> is the value of local address to bind to.  If it's
    * the default value of <ACE_Addr::sap_any> then the user is letting
-   * the OS do the binding.  If <reuse_addr> == 1 then the
+   * the OS do the binding.  If @a reuse_addr == 1 then the
    * <local_addr> is reused, even if it hasn't been cleanedup yet.
    */
   ACE_XTI_ATM_Mcast (ACE_TLI_Stream &new_stream,
@@ -70,7 +70,7 @@ public:
                      struct netbuf *opt = 0);
 
   /**
-   * Actively connect and produce a <new_stream> if things go well.
+   * Actively connect and produce a @a new_stream if things go well.
    * The <remote_sap> is the address that we are trying to connect
    * with.  The @a timeout is the amount of time to wait to connect.
    * If it's 0 then we block indefinitely.  If *timeout == {0, 0} then
@@ -81,7 +81,7 @@ public:
    * time expires before the connection is made <errno == ETIME>.  The
    * <local_sap> is the value of local address to bind to.  If it's
    * the default value of <ACE_Addr::sap_any> then the user is letting
-   * the OS do the binding.  If <reuse_addr> == 1 then the
+   * the OS do the binding.  If @a reuse_addr == 1 then the
    * <local_addr> is reused, even if it hasn't been cleanedup yet.
    */
   int connect (ACE_TLI_Stream &new_stream,

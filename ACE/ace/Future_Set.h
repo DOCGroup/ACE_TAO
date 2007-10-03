@@ -128,7 +128,7 @@ private:
   ACE_Message_Queue<ACE_SYNCH> *future_notification_queue_;
 
   /// Keeps track of whether we need to delete the message queue.
-  int delete_queue_;
+  bool delete_queue_;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

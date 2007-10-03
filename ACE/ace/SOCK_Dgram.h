@@ -49,7 +49,7 @@ public:
 
   /**
    * This is a QoS-enabed method for initiating a socket dgram that
-   * will accept datagrams at the <local> address.  The <qos_params>
+   * will accept datagrams at the <local> address.  The @a qos_params
    * are passed to <ACE_OS::join_leaf>.
    */
   ACE_SOCK_Dgram (const ACE_Addr &local,
@@ -69,7 +69,7 @@ public:
 
   /**
    * This is a QoS-enabed method for initiating a socket dgram that
-   * will accept datagrams at the <local> address.  The <qos_params>
+   * will accept datagrams at the <local> address.  The @a qos_params
    * are passed to <ACE_OS::join_leaf>.
    */
   int open (const ACE_Addr &local,

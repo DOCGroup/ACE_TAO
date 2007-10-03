@@ -50,7 +50,7 @@ ACE_NS_String::char_rep (void) const
 ACE_NS_String::ACE_NS_String (void)
   : len_ (0),
     rep_ (0),
-    delete_rep_ (0)
+    delete_rep_ (false)
 {
   ACE_TRACE ("ACE_NS_String::ACE_NS_String");
 }
@@ -58,7 +58,7 @@ ACE_NS_String::ACE_NS_String (void)
 ACE_NS_String::ACE_NS_String (const ACE_NS_WString &s)
   : len_ ((s.length () + 1) * sizeof (ACE_WCHAR_T)),
     rep_ (s.rep ()),
-    delete_rep_ (1)
+    delete_rep_ (true)
 {
   ACE_TRACE ("ACE_NS_String::ACE_NS_String");
 }
@@ -118,7 +118,7 @@ ACE_NS_String::ACE_NS_String (ACE_WCHAR_T *dst,
                               size_t bytes)
   : len_ (bytes),
     rep_ (dst),
-    delete_rep_ (0)
+    delete_rep_ (false)
 {
   ACE_TRACE ("ACE_NS_String::ACE_NS_String");
   ACE_OS::memcpy (this->rep_, src, bytes);

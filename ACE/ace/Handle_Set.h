@@ -43,10 +43,10 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 /**
  * @class ACE_Handle_Set
  *
- * @brief C++ wrapper facade for the socket <fd_set> abstraction.
+ * @brief C++ wrapper facade for the socket @c fd_set abstraction.
  *
  * This abstraction is a very efficient wrapper facade over
- * <fd_set>.  In particular, no range checking is performed, so
+ * @c fd_set.  In particular, no range checking is performed, so
  * it's important not to set or clear bits that are outside the
  * @c ACE_DEFAULT_SELECT_REACTOR_SIZE.
  */
@@ -97,19 +97,19 @@ public:
   ACE_HANDLE max_set (void) const;
 
   /**
-   * Rescan the underlying <fd_set> up to handle @a max to find the new
+   * Rescan the underlying @c fd_set up to handle @a max to find the new
    * <max_handle> (highest bit set) and <size> (how many bits set) values.
    * This is useful for evaluating the changes after the handle set has
    * been manipulated in some way other than member functions; for example,
-   * after <select> modifies the <fd_set>.
+   * after <select> modifies the @c fd_set.
    */
   void sync (ACE_HANDLE max);
 
-  /// Returns a pointer to the underlying <fd_set>.  Returns 0 if
+  /// Returns a pointer to the underlying @c fd_set.  Returns 0 if
   /// there are no handle bits set (<size_> == 0).
   operator fd_set *();
 
-  /// Returns a pointer to the underlying <fd_set>.  Returns 0 if
+  /// Returns a pointer to the underlying @c fd_set.  Returns 0 if
   /// there are no handle bits set (<size_> == 0).
   fd_set *fdset (void);
 

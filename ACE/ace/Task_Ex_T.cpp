@@ -49,7 +49,7 @@ ACE_Task_Ex<ACE_SYNCH_USE, ACE_MESSAGE_TYPE>::ACE_Task_Ex (ACE_Thread_Manager *t
                                    ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE> *mq)
   : ACE_Task_Base (thr_man),
     msg_queue_ (0),
-    delete_msg_queue_ (0),
+    delete_msg_queue_ (false),
     mod_ (0),
     next_ (0)
 {
@@ -59,7 +59,7 @@ ACE_Task_Ex<ACE_SYNCH_USE, ACE_MESSAGE_TYPE>::ACE_Task_Ex (ACE_Thread_Manager *t
     {
       ACE_NEW (mq,
                (ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>));
-      this->delete_msg_queue_ = 1;
+      this->delete_msg_queue_ = true;
     }
 
   this->msg_queue_ = mq;
@@ -74,7 +74,7 @@ ACE_Task_Ex<ACE_SYNCH_USE, ACE_MESSAGE_TYPE>::~ACE_Task_Ex (void)
 
   // These assignments aren't strickly necessary but they help guard
   // against odd race conditions...
-  this->delete_msg_queue_ = 0;
+  this->delete_msg_queue_ = false;
 }
 
 template<ACE_SYNCH_DECL, class ACE_MESSAGE_TYPE> ACE_Task<ACE_SYNCH_USE> *

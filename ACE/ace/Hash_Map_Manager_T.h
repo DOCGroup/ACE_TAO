@@ -303,7 +303,7 @@ public:
    * then behaves just like <bind>.  Otherwise, store the old values
    * of @a ext_id and @a int_id into the "out" parameters and rebind the
    * new parameters.  This is very useful if you need to have an
-   * atomic way of updating <ACE_Hash_Map_Entrys> and you also need
+   * atomic way of updating ACE_Hash_Map_Entrys and you also need
    * full control over memory allocation.  Returns 0 if a new entry is
    * bound successfully, returns 1 if an existing entry was rebound,
    * and returns -1 if failures occur.
@@ -332,7 +332,7 @@ public:
   /// Returns 0 if the @a ext_id is in the mapping, otherwise -1.
   int find (const EXT_ID &ext_id) const;
 
-  /// Locate @a ext_id and pass out parameter via <entry>.  If found,
+  /// Locate @a ext_id and pass out parameter via @a entry.  If found,
   /// return 0, returns -1 if not found.
   int find (const EXT_ID &ext_id,
             ACE_Hash_Map_Entry<EXT_ID, INT_ID> *&entry) const;

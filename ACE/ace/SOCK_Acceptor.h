@@ -69,7 +69,7 @@ public:
   /**
    * Initialize a passive-mode BSD-style acceptor socket (no QoS).
    * <local_sap> is the address that we're going to listen for
-   * connections on.  If <reuse_addr> is 1 then we'll use the
+   * connections on.  If @a reuse_addr is 1 then we'll use the
    * <SO_REUSEADDR> to reuse this address.  Returns 0 on success and
    * -1 on failure.
    */
@@ -101,9 +101,9 @@ public:
    * Accept a new ACE_SOCK_Stream connection.  A @a timeout of 0
    * means block forever, a @a timeout of {0, 0} means poll.  <restart>
    * == 1 means "restart if interrupted," i.e., if errno == EINTR.
-   * Note that <new_stream> inherits the "blocking mode" of @c this
+   * Note that @a new_stream inherits the "blocking mode" of @c this
    * ACE_SOCK_Acceptor, i.e., if @c this acceptor factory is in
-   * non-blocking mode, the <net_stream> will be in non-blocking mode
+   * non-blocking mode, the @a new_stream will be in non-blocking mode
    * and vice versa.
    */
   int accept (ACE_SOCK_Stream &new_stream,
@@ -115,12 +115,12 @@ public:
 #if !defined (ACE_HAS_WINCE)
   /**
    * Accept a new ACE_SOCK_Stream connection using the QoS
-   * information in <qos_params>.  A @a timeout of 0 means block
+   * information in @a qos_params.  A @a timeout of 0 means block
    * forever, a @a timeout of {0, 0} means poll.  <restart> == 1 means
    * "restart if interrupted," i.e., if errno == EINTR.  Note that
-   * <new_stream> inherits the "blocking mode" of @c this
+   * @a new_stream inherits the "blocking mode" of @c this
    * ACE_SOCK_Acceptor, i.e., if @c this acceptor factory is in
-   * non-blocking mode, the <net_stream> will be in non-blocking mode
+   * non-blocking mode, the @a new_stream will be in non-blocking mode
    * and vice versa.
    */
   int accept (ACE_SOCK_Stream &new_stream,

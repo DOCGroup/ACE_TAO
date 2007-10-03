@@ -48,7 +48,7 @@ ACE_Thread_Manager *ACE_Thread_Manager::thr_mgr_ = 0;
 
 // Controls whether the Thread_Manager is deleted when we shut down
 // (we can only delete it safely if we created it!)
-int ACE_Thread_Manager::delete_thr_mgr_ = 0;
+bool ACE_Thread_Manager::delete_thr_mgr_ = false;
 #endif /* ! defined (ACE_THREAD_MANAGER_LACKS_STATICS) */
 
 ACE_TSS_TYPE (ACE_Thread_Exit) *ACE_Thread_Manager::thr_exit_ = 0;
@@ -391,7 +391,7 @@ ACE_Thread_Manager::instance (void)
           ACE_NEW_RETURN (ACE_Thread_Manager::thr_mgr_,
                           ACE_Thread_Manager,
                           0);
-          ACE_Thread_Manager::delete_thr_mgr_ = 1;
+          ACE_Thread_Manager::delete_thr_mgr_ = true;
         }
     }
 
@@ -407,7 +407,7 @@ ACE_Thread_Manager::instance (ACE_Thread_Manager *tm)
 
   ACE_Thread_Manager *t = ACE_Thread_Manager::thr_mgr_;
   // We can't safely delete it since we don't know who created it!
-  ACE_Thread_Manager::delete_thr_mgr_ = 0;
+  ACE_Thread_Manager::delete_thr_mgr_ = false;
 
   ACE_Thread_Manager::thr_mgr_ = tm;
   return t;
@@ -427,7 +427,7 @@ ACE_Thread_Manager::close_singleton (void)
       ACE_Thread_Manager::thr_mgr_->close ();
       delete ACE_Thread_Manager::thr_mgr_;
       ACE_Thread_Manager::thr_mgr_ = 0;
-      ACE_Thread_Manager::delete_thr_mgr_ = 0;
+      ACE_Thread_Manager::delete_thr_mgr_ = false;
     }
 
   ACE_Thread_Exit::cleanup (ACE_Thread_Manager::thr_exit_);

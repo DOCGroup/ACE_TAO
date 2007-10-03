@@ -211,7 +211,7 @@ public:
    * feature is not supported by the envriornment.)
    * The port# in <mcast_addr> may be 0, in which case a system-assigned
    * (ephemeral) port# is used for sending and receiving.
-   * If <reuse_addr> != 0, the SO_REUSEADDR option and, if it is supported,
+   * If @a reuse_addr != 0, the SO_REUSEADDR option and, if it is supported,
    * the SO_REUSEPORT option are enabled.
    *
    * Returns: -1 if the call fails.  Failure can occur due to problems with
@@ -247,7 +247,7 @@ public:
    * <ACE_Sock_Connect::get_ip_interfaces> is not implemented in this
    * environment.
    *
-   * Note that the optional <reuse_addr> parameter does not apply to
+   * Note that the optional @a reuse_addr parameter does not apply to
    * subscriptions; it is only used if <open> is implicitly invoked (see above).
    *
    * @deprecated This method has been deprecated, please use join() instead.
@@ -260,8 +260,8 @@ public:
                  int protocol_family = PF_INET,
                  int protocol = 0);
 
-  // join() replaces subscribe() and uses the mcast_addr to determine
-  // protocol_family, and protocol which we always pass as 0 anyway.
+  /// join() replaces subscribe() and uses the mcast_addr to determine
+  /// protocol_family, and protocol which we always pass as 0 anyway.
   int join (const ACE_INET_Addr &mcast_addr,
             int reuse_addr = 1,               // (see above)
             const ACE_TCHAR *net_if = 0);
@@ -289,8 +289,8 @@ public:
                    int protocol_family = PF_INET,
                    int protocol = 0);
 
-  // leave() replaces unsubscribe() and uses mcast_addr to determine
-  // protocol_family, and protocol which we always pass as 0 anyway.
+  /// leave() replaces unsubscribe() and uses mcast_addr to determine
+  /// protocol_family, and protocol which we always pass as 0 anyway.
   int leave (const ACE_INET_Addr &mcast_addr,
              const ACE_TCHAR *net_if = 0);
 
@@ -338,8 +338,7 @@ public:
    * @deprecated  This method has been deprecated since it cannot be used
    * easily with with IPv6 options. Use ACE_SOCK::set_option instead.
    */
-  int set_option (int option,
-                  char optval);
+  int set_option (int option, char optval);
 
   /// Dump the state of an object.
   /**

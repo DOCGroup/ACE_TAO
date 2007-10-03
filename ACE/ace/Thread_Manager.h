@@ -1121,8 +1121,8 @@ private:
   /// Pointer to a process-wide ACE_Thread_Manager.
   static ACE_Thread_Manager *thr_mgr_;
 
-  /// Must delete the <thr_mgr_> if non-0.
-  static int delete_thr_mgr_;
+  /// Must delete the thr_mgr_ if true.
+  static bool delete_thr_mgr_;
 
   /// Global ACE_TSS (ACE_Thread_Exit) object ptr.
   static ACE_TSS_TYPE (ACE_Thread_Exit) *thr_exit_;

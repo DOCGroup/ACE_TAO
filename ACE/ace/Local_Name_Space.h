@@ -87,7 +87,7 @@ private:
 
   /// Should rep_ be deleted when destructed (only used
   /// for WString conversions)
-  int delete_rep_;
+  bool delete_rep_;
 };
 
 /**

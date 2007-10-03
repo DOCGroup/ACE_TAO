@@ -51,7 +51,7 @@ public:
    * time expires before the connection is made <errno == ETIME>.  The
    * <local_sap> is the value of local address to bind to.  If it's
    * the default value of <ACE_Addr::sap_any> then the user is letting
-   * the OS do the binding.  If <reuse_addr> == 1 then the
+   * the OS do the binding.  If @a reuse_addr == 1 then the
    * <local_addr> is reused, even if it hasn't been cleanedup yet.
    */
   ACE_TLI_Connector (ACE_TLI_Stream &new_stream,
@@ -79,7 +79,7 @@ public:
    * time expires before the connection is made <errno == ETIME>.  The
    * <local_sap> is the value of local address to bind to.  If it's
    * the default value of <ACE_Addr::sap_any> then the user is letting
-   * the OS do the binding.  If <reuse_addr> == 1 then the
+   * the OS do the binding.  If @a reuse_addr == 1 then the
    * <local_addr> is reused, even if it hasn't been cleanedup yet.
    */
   int connect (ACE_TLI_Stream &new_stream,
@@ -97,7 +97,7 @@ public:
 
   /**
    * Try to complete a non-blocking connection.
-   * If connection completion is successful then <new_stream> contains
+   * If connection completion is successful then @a new_stream contains
    * the connected ACE_SOCK_Stream.  If <remote_sap> is non-NULL then it
    * will contain the address of the connected peer.
    */

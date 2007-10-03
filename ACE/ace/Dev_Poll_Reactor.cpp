@@ -613,11 +613,11 @@ ACE_Dev_Poll_Reactor::ACE_Dev_Poll_Reactor (ACE_Sig_Handler *sh,
   , token_ (*this, s_queue)
   , lock_adapter_ (token_)
   , timer_queue_ (0)
-  , delete_timer_queue_ (0)
+  , delete_timer_queue_ (false)
   , signal_handler_ (0)
-  , delete_signal_handler_ (0)
+  , delete_signal_handler_ (false)
   , notify_handler_ (0)
-  , delete_notify_handler_ (0)
+  , delete_notify_handler_ (false)
   , mask_signals_ (mask_signals)
   , restart_ (0)
 {
@@ -661,11 +661,11 @@ ACE_Dev_Poll_Reactor::ACE_Dev_Poll_Reactor (size_t size,
   , token_ (*this, s_queue)
   , lock_adapter_ (token_)
   , timer_queue_ (0)
-  , delete_timer_queue_ (0)
+  , delete_timer_queue_ (false)
   , signal_handler_ (0)
-  , delete_signal_handler_ (0)
+  , delete_signal_handler_ (false)
   , notify_handler_ (0)
-  , delete_notify_handler_ (0)
+  , delete_notify_handler_ (false)
   , mask_signals_ (mask_signals)
   , restart_ (0)
 {
@@ -721,7 +721,7 @@ ACE_Dev_Poll_Reactor::open (size_t size,
       if (this->signal_handler_ == 0)
         result = -1;
       else
-        this->delete_signal_handler_ = 1;
+        this->delete_signal_handler_ = true;
     }
 
   // Allows the timer queue to be overridden.
@@ -734,7 +734,7 @@ ACE_Dev_Poll_Reactor::open (size_t size,
       if (this->timer_queue_ == 0)
         result = -1;
       else
-        this->delete_timer_queue_ = 1;
+        this->delete_timer_queue_ = true;
     }
 
   // Allows the Notify_Handler to be overridden.
@@ -747,7 +747,7 @@ ACE_Dev_Poll_Reactor::open (size_t size,
       if (this->notify_handler_ == 0)
         result = -1;
       else
-        this->delete_notify_handler_ = 1;
+        this->delete_notify_handler_ = true;
     }
 
 #if defined (ACE_HAS_EVENT_POLL)
@@ -812,11 +812,11 @@ ACE_Dev_Poll_Reactor::current_info (ACE_HANDLE, size_t & /* size */)
 int
 ACE_Dev_Poll_Reactor::set_sig_handler (ACE_Sig_Handler *signal_handler)
 {
-  if (this->delete_signal_handler_ && this->signal_handler_)
+  if (this->delete_signal_handler_)
     delete this->signal_handler_;
 
   this->signal_handler_ = signal_handler;
-  this->delete_signal_handler_ = 0;
+  this->delete_signal_handler_ = false;
 
   return 0;
 }
@@ -824,11 +824,11 @@ ACE_Dev_Poll_Reactor::set_sig_handler (ACE_Sig_Handler *signal_handler)
 int
 ACE_Dev_Poll_Reactor::timer_queue (ACE_Timer_Queue *tq)
 {
-  if (this->delete_timer_queue_ && this->timer_queue_)
+  if (this->delete_timer_queue_)
     delete this->timer_queue_;
 
   this->timer_queue_ = tq;
-  this->delete_timer_queue_ = 0;
+  this->delete_timer_queue_ = false;
 
   return 0;
 
@@ -870,7 +870,7 @@ ACE_Dev_Poll_Reactor::close (void)
     {
       delete this->signal_handler_;
       this->signal_handler_ = 0;
-      this->delete_signal_handler_ = 0;
+      this->delete_signal_handler_ = false;
     }
 
  (void) this->handler_rep_.close ();
@@ -879,7 +879,7 @@ ACE_Dev_Poll_Reactor::close (void)
     {
       delete this->timer_queue_;
       this->timer_queue_ = 0;
-      this->delete_timer_queue_ = 0;
+      this->delete_timer_queue_ = false;
     }
 
   if (this->notify_handler_ != 0)
@@ -889,7 +889,7 @@ ACE_Dev_Poll_Reactor::close (void)
     {
       delete this->notify_handler_;
       this->notify_handler_ = 0;
-      this->delete_notify_handler_ = 0;
+      this->delete_notify_handler_ = false;
     }
 
   this->poll_fd_ = ACE_INVALID_HANDLE;

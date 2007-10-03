@@ -1,3 +1,66 @@
+Wed Oct  3 19:31:15 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Acceptor.cpp
+        * ace/Acceptor.h
+        * ace/ATM_Connector.h
+        * ace/Cached_Connect_Strategy_T.h
+        * ace/Caching_Strategies_T.h
+        * ace/Caching_Strategies_T.inl
+        * ace/Connector.cpp
+        * ace/Connector.h
+        * ace/Countdown_Time.h
+        * ace/DEV_Connector.h
+        * ace/Dev_Poll_Reactor.cpp
+        * ace/Dev_Poll_Reactor.h
+        * ace/Dirent.h
+        * ace/Event_Handler.h
+        * ace/FILE_Connector.h
+        * ace/Future.h
+        * ace/Future_Set.cpp
+        * ace/Future_Set.h
+        * ace/Handle_Set.h
+        * ace/Hash_Map_Manager_T.h
+        * ace/Local_Name_Space.cpp
+        * ace/Local_Name_Space.h
+        * ace/Lock_Adapter_T.cpp
+        * ace/Lock_Adapter_T.h
+        * ace/Lock_Adapter_T.inl
+        * ace/Message_Queue_T.h
+        * ace/NT_Service.h
+        * ace/OS_NS_sys_socket.h
+        * ace/Proactor.cpp
+        * ace/Proactor.h
+        * ace/RB_Tree.h
+        * ace/Service_Repository.cpp
+        * ace/Service_Repository.h
+        * ace/SOCK_Acceptor.h
+        * ace/SOCK_Dgram.h
+        * ace/SOCK_Dgram_Mcast.h
+        * ace/SOCK_SEQPACK_Acceptor.h
+        * ace/SPIPE_Connector.h
+        * ace/Strategies_T.cpp
+        * ace/Strategies_T.h
+        * ace/Svc_Handler.h
+        * ace/Task_Ex_T.cpp
+        * ace/Task_Ex_T.h
+        * ace/Task_Ex_T.inl
+        * ace/Task_T.cpp
+        * ace/Task_T.h
+        * ace/Task_T.inl
+        * ace/Thread_Control.h
+        * ace/Thread_Manager.cpp
+        * ace/Thread_Manager.h
+        * ace/Thread_Mutex.h
+        * ace/Timeprobe_T.h
+        * ace/Timer_Hash_T.h
+        * ace/Timer_Queue_T.h
+        * ace/TLI_Connector.h
+        * ace/WFMO_Reactor.cpp
+        * ace/WFMO_Reactor.h
+        * ace/WFMO_Reactor.inl
+        * ace/XTI_ATM_Mcast.h
+          Doxygen improvements, small cleanups and bool changes
+
 Tue Oct  2 17:06:15 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Asynch_IO_Impl.h

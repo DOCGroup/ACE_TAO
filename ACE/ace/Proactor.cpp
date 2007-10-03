@@ -46,7 +46,7 @@ ACE_Proactor *ACE_Proactor::proactor_ = 0;
 
 /// Controls whether the Proactor is deleted when we shut down (we can
 /// only delete it safely if we created it!)
-int ACE_Proactor::delete_proactor_ = 0;
+bool ACE_Proactor::delete_proactor_ = false;
 
 /**
  * @class ACE_Proactor_Timer_Handler
@@ -376,7 +376,7 @@ ACE_Proactor::instance (size_t /* threads */)
                           ACE_Proactor,
                           0);
 
-          ACE_Proactor::delete_proactor_ = 1;
+          ACE_Proactor::delete_proactor_ = true;
           ACE_REGISTER_FRAMEWORK_COMPONENT(ACE_Proactor, ACE_Proactor::proactor_);
         }
     }
@@ -384,7 +384,7 @@ ACE_Proactor::instance (size_t /* threads */)
 }
 
 ACE_Proactor *
-ACE_Proactor::instance (ACE_Proactor * r, int delete_proactor)
+ACE_Proactor::instance (ACE_Proactor * r, bool delete_proactor)
 {
   ACE_TRACE ("ACE_Proactor::instance");
 
@@ -410,10 +410,9 @@ ACE_Proactor::close_singleton (void)
 
   if (ACE_Proactor::delete_proactor_)
     {
-
       delete ACE_Proactor::proactor_;
       ACE_Proactor::proactor_ = 0;
-      ACE_Proactor::delete_proactor_ = 0;
+      ACE_Proactor::delete_proactor_ = false;
     }
 }
 

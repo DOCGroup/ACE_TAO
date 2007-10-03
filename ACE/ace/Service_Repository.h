@@ -205,8 +205,8 @@ private:
   /// Pointer to a process-wide ACE_Service_Repository.
   static ACE_Service_Repository *svc_rep_;
 
-  /// Must delete the <svc_rep_> if non-0.
-  static int delete_svc_rep_;
+  /// Must delete the <svc_rep_> if true.
+  static bool delete_svc_rep_;
 
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
   /// Synchronization variable for the MT_SAFE Repository

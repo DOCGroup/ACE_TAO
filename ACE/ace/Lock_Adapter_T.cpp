@@ -21,7 +21,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 template <class ACE_LOCKING_MECHANISM>
 ACE_Lock_Adapter<ACE_LOCKING_MECHANISM>::ACE_Lock_Adapter (void)
   : lock_ (0),
-    delete_lock_ (1)
+    delete_lock_ (true)
 {
   ACE_NEW (this->lock_,
            ACE_LOCKING_MECHANISM);
