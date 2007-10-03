@@ -1,3 +1,11 @@
+Wed Oct  3 06:17:20 UTC 2007  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
+
+        * descriptors/NodeDetails_Space1Demo.dat:
+        * descriptors/Space1Demo.cdp:
+        * descriptors/run_Space1Demo.pl:
+
+          Added Space1Demo files (MACRO demo for NASA annual review).
+
 Wed Oct  3 06:10:36 UTC 2007  John S. Kinnebrew  <john.s.kinnebrew@vanderbilt.edu>
 
         * Output_Adapters/DAnCE_Output_Adapter/Admin_exec.cpp:

@@ -1,0 +1,2 @@
+WinNode      corbaloc:iiop:localhost:50000/NodeManager
+SPACE         corbaloc:iiop:localhost:60000/NodeManager

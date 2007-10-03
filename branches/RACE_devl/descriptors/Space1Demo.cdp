@@ -1,0 +1,876 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<Deployment:deploymentPlan xmlns:Deployment="http://www.omg.org/Deployment" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.omg.org/Deployment Deployment.xsd">
+
+  <UUID>7B4070A3-7E57-42BA-A673-EBA07D1BAC02</UUID>
+
+  <implementation id="_92A72659-5893-465C-B9CC-9B0905AFE0A1">
+    <name>Space1.ComponentImplementations.SA_POP_ComponentImplementation.SA_POP_ComponentMonolithicImpl</name>
+    <source/>
+    <artifact>_B5BBFC8A-FFEA-4EEA-A1D8-18E21D449E25</artifact>
+    <artifact>_F582E442-A5A3-4D8A-8250-A25C8B8D0584</artifact>
+    <artifact>_68551D59-2268-4A9E-919C-E14651138F89</artifact>
+  </implementation>
+
+  <implementation id="_C068D31A-6268-44E2-AC85-94152C8416E7">
+    <name>Space1.ComponentImplementations.SA_POP_IA_ComponentImplementation.SA_POP_IA_ComponentMonolithicImpl</name>
+    <source/>
+    <artifact>_DD2169F1-1F46-4BE2-9FFA-027E8B8B1A69</artifact>
+    <artifact>_CC0D64AA-149B-4C03-A24F-58D9AC23CCF2</artifact>
+    <artifact>_F8A26F71-B564-489A-A286-78A487575DD8</artifact>
+  </implementation>
+
+  <implementation id="_063B4EE0-709E-4DDC-9236-1C0AE5FAF012">
+    <name>Space1.ComponentImplementations.DAnCE_OA_ComponentImplementation.DAnCE_OA_ComponentMonolithicImpl</name>
+    <source/>
+    <artifact>_2657E343-26A3-4A43-81F3-FDA70663A3BE</artifact>
+    <artifact>_42EB9107-CC44-41E5-9A17-FEC45912ACE3</artifact>
+    <artifact>_78EAFDB4-D6D6-4735-B0BF-D89111B33F1C</artifact>
+  </implementation>
+
+  <implementation id="_248D6696-4030-47DA-998E-1B90A9D56252">
+    <name>Space1.ComponentImplementations.Data_Base_ComponentImplementation.Data_Base_ComponentMonolithicImpl</name>
+    <source/>
+    <artifact>_4D945AFB-764C-4C4C-949A-A5ED832A895F</artifact>
+    <artifact>_13852430-601D-42F8-9B97-2DCE4203DB8F</artifact>
+    <artifact>_F8C7BB10-03C5-49B8-BDDB-503A55148251</artifact>
+  </implementation>
+
+  <implementation id="_22061D72-3D1B-4526-AA4D-938A2EF73AAC">
+    <name>Space1.ComponentImplementations.Agent_BaseImplementation.Agent_BaseMonolithicImpl</name>
+    <source/>
+    <artifact>_EA4672CB-8163-438D-8DA8-0681BF7B5B8A</artifact>
+    <artifact>_A846A1DA-8FB7-4894-8013-D88D88356BC2</artifact>
+    <artifact>_E4E638D2-49A4-4428-B2FE-EB83ED05EF9E</artifact>
+  </implementation>
+
+  <implementation id="_296989CE-DA98-4951-98D2-BCF5429B436F">
+    <name>Space1.ComponentImplementations.ExecAgentImplementation.ExecAgentMonolithicImpl</name>
+    <source/>
+    <artifact>_4D68FF1B-372F-4555-A766-18C1BA39A883</artifact>
+    <artifact>_0232191B-A025-4613-A25E-BC387E252DA1</artifact>
+    <artifact>_9B75920D-808B-4280-916B-AB5BCCCEC773</artifact>
+  </implementation>
+
+  <implementation id="_DFEE93F7-6B35-4ECE-8F48-7E49D8659EAC">
+    <name>Space1.ComponentImplementations.CommAgentImplementation.CommAgentMonolithicImpl</name>
+    <source/>
+    <artifact>_1DBDF424-EA72-4D44-9BED-60B9BB253A51</artifact>
+    <artifact>_DD0C185D-F3A8-4A01-A3B2-1956931B266F</artifact>
+    <artifact>_2B245B36-5D72-47C5-ACBA-9693589222AA</artifact>
+  </implementation>
+
+  <implementation id="_FDD6986F-E4E6-4EE2-8A6B-DB4BF6877F72">
+    <name>Space1.ComponentImplementations.GroundAgentImplementation.GroundAgentMonolithicImpl</name>
+    <source/>
+    <artifact>_D283E078-6FAB-419C-BC11-421896572EE1</artifact>
+    <artifact>_0C93CB71-7D60-4D46-A116-9D9381EFA0C5</artifact>
+    <artifact>_905518FA-B6E5-4B1E-B990-151B696FF301</artifact>
+  </implementation>
+
+  <implementation id="_7DD94268-C59B-4BAE-BAF1-752F5E4D2A7B">
+    <name>Space1.ComponentImplementations.ScienceAgentImplementation.ScienceAgentMonolithicImpl</name>
+    <source/>
+    <artifact>_A2245DFE-ED48-4075-834F-381AA8E4BDA4</artifact>
+    <artifact>_C5191E9B-0637-4609-B1DF-226BF093AB8A</artifact>
+    <artifact>_936FFC6D-596B-4D69-986C-7818C5E6BC38</artifact>
+  </implementation>
+
+  <implementation id="_DB1BEEF0-5CC6-43D8-80FE-5E771BEB4F5E">
+    <name>Space1.ComponentImplementations.Gizmo_BaseImplementation.Gizmo_BaseMonolithicImpl</name>
+    <source/>
+    <artifact>_B841B32D-C029-4BC0-BA1C-D353997585AE</artifact>
+    <artifact>_450A6588-E8E5-4EF2-8192-C0EC7EDF9023</artifact>
+    <artifact>_0E198801-8185-40DB-96B0-0A808864BD25</artifact>
+  </implementation>
+
+  <implementation id="_7A7BE111-7F4E-4F4B-A953-DBA800E67449">
+    <name>Space1.ComponentImplementations.Board_ComponentImplementation.Board_ComponentMonolithicImpl</name>
+    <source/>
+    <artifact>_14901494-3090-4C4E-A1F2-B8216C047B05</artifact>
+    <artifact>_E06B2D31-E12F-4B81-A589-A98FB5137E22</artifact>
+    <artifact>_5122B0B6-EF05-4FCB-9202-5B342D185DD9</artifact>
+  </implementation>
+
+  <implementation id="_6181EB7B-E530-4C25-A116-C30E6517767E">
+    <name>Space1.ComponentImplementations.GNCAgentImplementation.GNCAgentMonolithicImpl</name>
+    <source/>
+    <artifact>_336AD8A5-2775-4122-96CF-36045958E1D7</artifact>
+    <artifact>_8E3CFE25-3E0C-4217-A5C0-EFA1ADAE78FF</artifact>
+    <artifact>_55C4C166-485A-41D1-B248-EDC5E96FBDEB</artifact>
+  </implementation>
+
+  <instance id="Space1.ComponentImplementations.Assembly_Space1Demo.Space1Demo_Assm.Space_Linux_Assm.Services_Assm.SAPOP_Assm.SA_POP_Component">
+    <name>Space1.ComponentImplementations.Assembly_Space1Demo.Space1Demo_Assm.Space_Linux_Assm.Services_Assm.SAPOP_Assm.SA_POP_Component</name>
+    <node>WinNode</node>
+    <source/>
+    <implementation>_92A72659-5893-465C-B9CC-9B0905AFE0A1</implementation>
+  </instance>
+
+  <instance id="Space1.ComponentImplementations.Assembly_Space1Demo.Space1Demo_Assm.Space_Linux_Assm.Services_Assm.RACE_Assm.Data_Base_Component">
+    <name>Space1.ComponentImplementations.Assembly_Space1Demo.Space1Demo_Assm.Space_Linux_Assm.Services_Assm.RACE_Assm.Data_Base_Component</name>
+    <node>WinNode</node>
+    <source/>
+    <implementation>_248D6696-4030-47DA-998E-1B90A9D56252</implementation>
+  </instance>
+
+  <instance id="Space1.ComponentImplementations.Assembly_Space1Demo.Space1Demo_Assm.Space_Linux_Assm.Services_Assm.RACE_Assm.SA_POP_IA_Component">
+    <name>Space1.ComponentImplementations.Assembly_Space1Demo.Space1Demo_Assm.Space_Linux_Assm.Services_Assm.RACE_Assm.SA_POP_IA_Component</name>
+    <node>WinNode</node>
+    <source/>
+    <implementation>_C068D31A-6268-44E2-AC85-94152C8416E7</implementation>
+  </instance>
+
+  <instance id="Space1.ComponentImplementations.Assembly_Space1Demo.Space1Demo_Assm.Space_Linux_Assm.Services_Assm.RACE_Assm.DAnCE_OA_Component">
+    <name>Space1.ComponentImplementations.Assembly_Space1Demo.Space1Demo_Assm.Space_Linux_Assm.Services_Assm.RACE_Assm.DAnCE_OA_Component</name>
+    <node>WinNode</node>
+    <source/>
+    <implementation>_063B4EE0-709E-4DDC-9236-1C0AE5FAF012</implementation>
+    <configProperty>
+      <name>repoman_id</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>RM</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+
+  <instance id="Space1.ComponentImplementations.Assembly_Space1Demo.Space1Demo_Assm.Space_Linux_Assm.ScienceAgent">
+    <name>Space1.ComponentImplementations.Assembly_Space1Demo.Space1Demo_Assm.Space_Linux_Assm.ScienceAgent</name>
+    <node>WinNode</node>
+    <source/>
+    <implementation>_7DD94268-C59B-4BAE-BAF1-752F5E4D2A7B</implementation>
+    <configProperty>
+      <name>AgentName</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Space1_ScienceAgent</string>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>ComponentIOR</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>ScienceAgent.ior</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+
+  <instance id="Space1.ComponentImplementations.Assembly_Space1Demo.Space1Demo_Assm.Space_Linux_Assm.ExecAgent">
+    <name>Space1.ComponentImplementations.Assembly_Space1Demo.Space1Demo_Assm.Space_Linux_Assm.ExecAgent</name>
+    <node>WinNode</node>
+    <source/>
+    <implementation>_296989CE-DA98-4951-98D2-BCF5429B436F</implementation>
+    <configProperty>
+      <name>AgentName</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Space1_ExecAgent</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+
+  <instance id="Space1.ComponentImplementations.Assembly_Space1Demo.Space1Demo_Assm.Space_Linux_Assm.CommAgent">
+    <name>Space1.ComponentImplementations.Assembly_Space1Demo.Space1Demo_Assm.Space_Linux_Assm.CommAgent</name>
+    <node>WinNode</node>
+    <source/>
+    <implementation>_DFEE93F7-6B35-4ECE-8F48-7E49D8659EAC</implementation>
+    <configProperty>
+      <name>AgentName</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Space1_CommAgent</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+
+  <connection>
+    <name>RACE_adminSpace1.ComponentImplementations.Assembly_Space1Demo.Space1Demo_Assm.Space_Linux_Assm.ScienceAgentSpace1.ComponentImplementations.Assembly_Space1Demo.Space1Demo_Assm.Space_Linux_Assm.Services_Assm.RACE_Assm.SA_POP_IA_Component</name>
+    <internalEndpoint>
+      <portName>RACE</portName>
+      <kind>SimplexReceptacle</kind>
+      <instance>Space1.ComponentImplementations.Assembly_Space1Demo.Space1Demo_Assm.Space_Linux_Assm.ScienceAgent</instance>
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>admin</portName>
+      <kind>Facet</kind>
+      <instance>Space1.ComponentImplementations.Assembly_Space1Demo.Space1Demo_Assm.Space_Linux_Assm.Services_Assm.RACE_Assm.SA_POP_IA_Component</instance>
+    </internalEndpoint>
+  </connection>
+
+  <connection>
+    <name>local_agent_agent_interfaceSpace1.ComponentImplementations.Assembly_Space1Demo.Space1Demo_Assm.Space_Linux_Assm.ExecAgentSpace1.ComponentImplementations.Assembly_Space1Demo.Space1Demo_Assm.Space_Linux_Assm.ScienceAgent</name>
+    <internalEndpoint>
+      <portName>local_agent</portName>
+      <kind>SimplexReceptacle</kind>
+      <instance>Space1.ComponentImplementations.Assembly_Space1Demo.Space1Demo_Assm.Space_Linux_Assm.ExecAgent</instance>
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>agent_interface</portName>
+      <kind>Facet</kind>
+      <instance>Space1.ComponentImplementations.Assembly_Space1Demo.Space1Demo_Assm.Space_Linux_Assm.ScienceAgent</instance>
+    </internalEndpoint>
+  </connection>
+
+  <connection>
+    <name>local_agent_agent_interfaceSpace1.ComponentImplementations.Assembly_Space1Demo.Space1Demo_Assm.Space_Linux_Assm.ExecAgentSpace1.ComponentImplementations.Assembly_Space1Demo.Space1Demo_Assm.Space_Linux_Assm.CommAgent</name>
+    <internalEndpoint>
+      <portName>local_agent</portName>
+      <kind>SimplexReceptacle</kind>
+      <instance>Space1.ComponentImplementations.Assembly_Space1Demo.Space1Demo_Assm.Space_Linux_Assm.ExecAgent</instance>
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>agent_interface</portName>
+      <kind>Facet</kind>
+      <instance>Space1.ComponentImplementations.Assembly_Space1Demo.Space1Demo_Assm.Space_Linux_Assm.CommAgent</instance>
+    </internalEndpoint>
+  </connection>
+
+  <connection>
+    <name>Planner_planSpace1.ComponentImplementations.Assembly_Space1Demo.Space1Demo_Assm.Space_Linux_Assm.ScienceAgentSpace1.ComponentImplementations.Assembly_Space1Demo.Space1Demo_Assm.Space_Linux_Assm.Services_Assm.SAPOP_Assm.SA_POP_Component</name>
+    <internalEndpoint>
+      <portName>Planner</portName>
+      <kind>SimplexReceptacle</kind>
+      <instance>Space1.ComponentImplementations.Assembly_Space1Demo.Space1Demo_Assm.Space_Linux_Assm.ScienceAgent</instance>
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>plan</portName>
+      <kind>Facet</kind>
+      <instance>Space1.ComponentImplementations.Assembly_Space1Demo.Space1Demo_Assm.Space_Linux_Assm.Services_Assm.SAPOP_Assm.SA_POP_Component</instance>
+    </internalEndpoint>
+  </connection>
+
+  <connection>
+    <name>AgentPlanner_planSpace1.ComponentImplementations.Assembly_Space1Demo.Space1Demo_Assm.Space_Linux_Assm.CommAgentSpace1.ComponentImplementations.Assembly_Space1Demo.Space1Demo_Assm.Space_Linux_Assm.Services_Assm.SAPOP_Assm.SA_POP_Component</name>
+    <internalEndpoint>
+      <portName>AgentPlanner</portName>
+      <kind>SimplexReceptacle</kind>
+      <instance>Space1.ComponentImplementations.Assembly_Space1Demo.Space1Demo_Assm.Space_Linux_Assm.CommAgent</instance>
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>plan</portName>
+      <kind>Facet</kind>
+      <instance>Space1.ComponentImplementations.Assembly_Space1Demo.Space1Demo_Assm.Space_Linux_Assm.Services_Assm.SAPOP_Assm.SA_POP_Component</instance>
+    </internalEndpoint>
+  </connection>
+
+  <connection>
+    <name>RACE_IA_adminSpace1.ComponentImplementations.Assembly_Space1Demo.Space1Demo_Assm.Space_Linux_Assm.CommAgentSpace1.ComponentImplementations.Assembly_Space1Demo.Space1Demo_Assm.Space_Linux_Assm.Services_Assm.RACE_Assm.SA_POP_IA_Component</name>
+    <internalEndpoint>
+      <portName>RACE_IA</portName>
+      <kind>SimplexReceptacle</kind>
+      <instance>Space1.ComponentImplementations.Assembly_Space1Demo.Space1Demo_Assm.Space_Linux_Assm.CommAgent</instance>
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>admin</portName>
+      <kind>Facet</kind>
+      <instance>Space1.ComponentImplementations.Assembly_Space1Demo.Space1Demo_Assm.Space_Linux_Assm.Services_Assm.RACE_Assm.SA_POP_IA_Component</instance>
+    </internalEndpoint>
+  </connection>
+
+  <connection>
+    <name>outgoing_message_incoming_messageSpace1.ComponentImplementations.Assembly_Space1Demo.Space1Demo_Assm.Space_Linux_Assm.ScienceAgentSpace1.ComponentImplementations.Assembly_Space1Demo.Space1Demo_Assm.Space_Linux_Assm.ExecAgent</name>
+    <internalEndpoint>
+      <portName>outgoing_message</portName>
+      <kind>EventPublisher</kind>
+      <instance>Space1.ComponentImplementations.Assembly_Space1Demo.Space1Demo_Assm.Space_Linux_Assm.ScienceAgent</instance>
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>incoming_message</portName>
+      <kind>EventConsumer</kind>
+      <instance>Space1.ComponentImplementations.Assembly_Space1Demo.Space1Demo_Assm.Space_Linux_Assm.ExecAgent</instance>
+    </internalEndpoint>
+  </connection>
+
+  <connection>
+    <name>outgoing_message_incoming_messageSpace1.ComponentImplementations.Assembly_Space1Demo.Space1Demo_Assm.Space_Linux_Assm.CommAgentSpace1.ComponentImplementations.Assembly_Space1Demo.Space1Demo_Assm.Space_Linux_Assm.ExecAgent</name>
+    <internalEndpoint>
+      <portName>outgoing_message</portName>
+      <kind>EventPublisher</kind>
+      <instance>Space1.ComponentImplementations.Assembly_Space1Demo.Space1Demo_Assm.Space_Linux_Assm.CommAgent</instance>
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>incoming_message</portName>
+      <kind>EventConsumer</kind>
+      <instance>Space1.ComponentImplementations.Assembly_Space1Demo.Space1Demo_Assm.Space_Linux_Assm.ExecAgent</instance>
+    </internalEndpoint>
+  </connection>
+
+  <connection>
+    <name>DB_querySpace1.ComponentImplementations.Assembly_Space1Demo.Space1Demo_Assm.Space_Linux_Assm.Services_Assm.SAPOP_Assm.SA_POP_ComponentSpace1.ComponentImplementations.Assembly_Space1Demo.Space1Demo_Assm.Space_Linux_Assm.Services_Assm.RACE_Assm.Data_Base_Component</name>
+    <internalEndpoint>
+      <portName>DB</portName>
+      <kind>SimplexReceptacle</kind>
+      <instance>Space1.ComponentImplementations.Assembly_Space1Demo.Space1Demo_Assm.Space_Linux_Assm.Services_Assm.SAPOP_Assm.SA_POP_Component</instance>
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>query</portName>
+      <kind>Facet</kind>
+      <instance>Space1.ComponentImplementations.Assembly_Space1Demo.Space1Demo_Assm.Space_Linux_Assm.Services_Assm.RACE_Assm.Data_Base_Component</instance>
+    </internalEndpoint>
+  </connection>
+
+  <connection>
+    <name>OA_adminSpace1.ComponentImplementations.Assembly_Space1Demo.Space1Demo_Assm.Space_Linux_Assm.Services_Assm.RACE_Assm.SA_POP_IA_ComponentSpace1.ComponentImplementations.Assembly_Space1Demo.Space1Demo_Assm.Space_Linux_Assm.Services_Assm.RACE_Assm.DAnCE_OA_Component</name>
+    <internalEndpoint>
+      <portName>OA</portName>
+      <kind>SimplexReceptacle</kind>
+      <instance>Space1.ComponentImplementations.Assembly_Space1Demo.Space1Demo_Assm.Space_Linux_Assm.Services_Assm.RACE_Assm.SA_POP_IA_Component</instance>
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>admin</portName>
+      <kind>Facet</kind>
+      <instance>Space1.ComponentImplementations.Assembly_Space1Demo.Space1Demo_Assm.Space_Linux_Assm.Services_Assm.RACE_Assm.DAnCE_OA_Component</instance>
+    </internalEndpoint>
+  </connection>
+
+  <connection>
+    <name>DB_adminSpace1.ComponentImplementations.Assembly_Space1Demo.Space1Demo_Assm.Space_Linux_Assm.Services_Assm.RACE_Assm.SA_POP_IA_ComponentSpace1.ComponentImplementations.Assembly_Space1Demo.Space1Demo_Assm.Space_Linux_Assm.Services_Assm.RACE_Assm.Data_Base_Component</name>
+    <internalEndpoint>
+      <portName>DB</portName>
+      <kind>SimplexReceptacle</kind>
+      <instance>Space1.ComponentImplementations.Assembly_Space1Demo.Space1Demo_Assm.Space_Linux_Assm.Services_Assm.RACE_Assm.SA_POP_IA_Component</instance>
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>admin</portName>
+      <kind>Facet</kind>
+      <instance>Space1.ComponentImplementations.Assembly_Space1Demo.Space1Demo_Assm.Space_Linux_Assm.Services_Assm.RACE_Assm.Data_Base_Component</instance>
+    </internalEndpoint>
+  </connection>
+
+  <artifact id="_B5BBFC8A-FFEA-4EEA-A1D8-18E21D449E25">
+    <name>Space1.ImplementationArtifacts.SA_POP_ComponentArtifacts.SA_POP_Component_stub</name>
+    <source/>
+    <node/>
+    <location>SA_POP_Component_stub</location>
+  </artifact>
+
+  <artifact id="_F582E442-A5A3-4D8A-8250-A25C8B8D0584">
+    <name>Space1.ImplementationArtifacts.SA_POP_ComponentArtifacts.SA_POP_Component_svnt</name>
+    <source/>
+    <node/>
+    <location>SA_POP_Component_svnt</location>
+    <execParameter>
+      <name>entryPoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_CIAO_RACE_SA_POP_SA_POP_Component_Home_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+  </artifact>
+
+  <artifact id="_68551D59-2268-4A9E-919C-E14651138F89">
+    <name>Space1.ImplementationArtifacts.SA_POP_ComponentArtifacts.SA_POP_Component_exec</name>
+    <source/>
+    <node/>
+    <location>SA_POP_Component_exec</location>
+    <execParameter>
+      <name>entryPoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_CIAO_RACE_SA_POP_SA_POP_Component_Home_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+  </artifact>
+
+  <artifact id="_DD2169F1-1F46-4BE2-9FFA-027E8B8B1A69">
+    <name>Space1.ImplementationArtifacts.SA_POP_IA_ComponentArtifacts.SA_POP_IA_Component_stub</name>
+    <source/>
+    <node/>
+    <location>SA_POP_IA_Component_stub</location>
+  </artifact>
+
+  <artifact id="_CC0D64AA-149B-4C03-A24F-58D9AC23CCF2">
+    <name>Space1.ImplementationArtifacts.SA_POP_IA_ComponentArtifacts.SA_POP_IA_Component_svnt</name>
+    <source/>
+    <node/>
+    <location>SA_POP_IA_Component_svnt</location>
+    <execParameter>
+      <name>entryPoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_CIAO_RACE_SA_POP_IA_SA_POP_IA_Component_Home_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+  </artifact>
+
+  <artifact id="_F8A26F71-B564-489A-A286-78A487575DD8">
+    <name>Space1.ImplementationArtifacts.SA_POP_IA_ComponentArtifacts.SA_POP_IA_Component_exec</name>
+    <source/>
+    <node/>
+    <location>SA_POP_IA_Component_exec</location>
+    <execParameter>
+      <name>entryPoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_CIAO_RACE_SA_POP_IA_SA_POP_IA_Component_Home_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+  </artifact>
+
+  <artifact id="_2657E343-26A3-4A43-81F3-FDA70663A3BE">
+    <name>Space1.ImplementationArtifacts.DAnCE_OA_ComponentArtifacts.DAnCE_OA_Component_stub</name>
+    <source/>
+    <node/>
+    <location>DAnCE_OA_Component_stub</location>
+  </artifact>
+
+  <artifact id="_42EB9107-CC44-41E5-9A17-FEC45912ACE3">
+    <name>Space1.ImplementationArtifacts.DAnCE_OA_ComponentArtifacts.DAnCE_OA_Component_svnt</name>
+    <source/>
+    <node/>
+    <location>DAnCE_OA_Component_svnt</location>
+    <execParameter>
+      <name>entryPoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_CIAO_RACE_DAnCE_OA_DAnCE_OA_Component_Home_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+  </artifact>
+
+  <artifact id="_78EAFDB4-D6D6-4735-B0BF-D89111B33F1C">
+    <name>Space1.ImplementationArtifacts.DAnCE_OA_ComponentArtifacts.DAnCE_OA_Component_exec</name>
+    <source/>
+    <node/>
+    <location>DAnCE_OA_Component_exec</location>
+    <execParameter>
+      <name>entryPoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_CIAO_RACE_DAnCE_OA_DAnCE_OA_Component_Home_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+  </artifact>
+
+  <artifact id="_4D945AFB-764C-4C4C-949A-A5ED832A895F">
+    <name>Space1.ImplementationArtifacts.Data_Base_ComponentArtifacts.Data_Base_Component_stub</name>
+    <source/>
+    <node/>
+    <location>Data_Base_Component_stub</location>
+  </artifact>
+
+  <artifact id="_13852430-601D-42F8-9B97-2DCE4203DB8F">
+    <name>Space1.ImplementationArtifacts.Data_Base_ComponentArtifacts.Data_Base_Component_svnt</name>
+    <source/>
+    <node/>
+    <location>Data_Base_Component_svnt</location>
+    <execParameter>
+      <name>entryPoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_CIAO_RACE_Data_Base_Data_Base_Component_Home_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+  </artifact>
+
+  <artifact id="_F8C7BB10-03C5-49B8-BDDB-503A55148251">
+    <name>Space1.ImplementationArtifacts.Data_Base_ComponentArtifacts.Data_Base_Component_exec</name>
+    <source/>
+    <node/>
+    <location>Data_Base_Component_exec</location>
+    <execParameter>
+      <name>entryPoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_CIAO_RACE_Data_Base_Data_Base_Component_Home_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+  </artifact>
+
+  <artifact id="_EA4672CB-8163-438D-8DA8-0681BF7B5B8A">
+    <name>Space1.ImplementationArtifacts.Agent_BaseArtifacts.Agent_Base_stub</name>
+    <source/>
+    <node/>
+    <location>Agent_Base_stub</location>
+  </artifact>
+
+  <artifact id="_A846A1DA-8FB7-4894-8013-D88D88356BC2">
+    <name>Space1.ImplementationArtifacts.Agent_BaseArtifacts.Agent_Base_svnt</name>
+    <source/>
+    <node/>
+    <location>Agent_Base_svnt</location>
+    <execParameter>
+      <name>entryPoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_ANA_Agent_BaseHome_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+  </artifact>
+
+  <artifact id="_E4E638D2-49A4-4428-B2FE-EB83ED05EF9E">
+    <name>Space1.ImplementationArtifacts.Agent_BaseArtifacts.Agent_Base_exec</name>
+    <source/>
+    <node/>
+    <location>Agent_Base_exec</location>
+    <execParameter>
+      <name>entryPoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_ANA_Agent_BaseHome_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+  </artifact>
+
+  <artifact id="_4D68FF1B-372F-4555-A766-18C1BA39A883">
+    <name>Space1.ImplementationArtifacts.ExecAgentArtifacts.ExecAgent_stub</name>
+    <source/>
+    <node/>
+    <location>ExecAgent_stub</location>
+  </artifact>
+
+  <artifact id="_0232191B-A025-4613-A25E-BC387E252DA1">
+    <name>Space1.ImplementationArtifacts.ExecAgentArtifacts.ExecAgent_svnt</name>
+    <source/>
+    <node/>
+    <location>ExecAgent_svnt</location>
+    <execParameter>
+      <name>entryPoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_ANA_ExecModule_ExecAgentHome_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+  </artifact>
+
+  <artifact id="_9B75920D-808B-4280-916B-AB5BCCCEC773">
+    <name>Space1.ImplementationArtifacts.ExecAgentArtifacts.ExecAgent_exec</name>
+    <source/>
+    <node/>
+    <location>ExecAgent_exec</location>
+    <execParameter>
+      <name>entryPoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_ANA_ExecModule_ExecAgentHome_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+  </artifact>
+
+  <artifact id="_1DBDF424-EA72-4D44-9BED-60B9BB253A51">
+    <name>Space1.ImplementationArtifacts.CommAgentArtifacts.CommAgent_stub</name>
+    <source/>
+    <node/>
+    <location>CommAgent_stub</location>
+  </artifact>
+
+  <artifact id="_DD0C185D-F3A8-4A01-A3B2-1956931B266F">
+    <name>Space1.ImplementationArtifacts.CommAgentArtifacts.CommAgent_svnt</name>
+    <source/>
+    <node/>
+    <location>CommAgent_svnt</location>
+    <execParameter>
+      <name>entryPoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_ANA_CommModule_CommAgentHome_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+  </artifact>
+
+  <artifact id="_2B245B36-5D72-47C5-ACBA-9693589222AA">
+    <name>Space1.ImplementationArtifacts.CommAgentArtifacts.CommAgent_exec</name>
+    <source/>
+    <node/>
+    <location>CommAgent_exec</location>
+    <execParameter>
+      <name>entryPoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_ANA_CommModule_CommAgentHome_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+  </artifact>
+
+  <artifact id="_D283E078-6FAB-419C-BC11-421896572EE1">
+    <name>Space1.ImplementationArtifacts.GroundAgentArtifacts.GroundAgent_stub</name>
+    <source/>
+    <node/>
+    <location>GroundAgent_stub</location>
+  </artifact>
+
+  <artifact id="_0C93CB71-7D60-4D46-A116-9D9381EFA0C5">
+    <name>Space1.ImplementationArtifacts.GroundAgentArtifacts.GroundAgent_svnt</name>
+    <source/>
+    <node/>
+    <location>GroundAgent_svnt</location>
+    <execParameter>
+      <name>entryPoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_ANA_GroundModule_GroundAgentHome_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+  </artifact>
+
+  <artifact id="_905518FA-B6E5-4B1E-B990-151B696FF301">
+    <name>Space1.ImplementationArtifacts.GroundAgentArtifacts.GroundAgent_exec</name>
+    <source/>
+    <node/>
+    <location>GroundAgent_exec</location>
+    <execParameter>
+      <name>entryPoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_ANA_GroundModule_GroundAgentHome_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+  </artifact>
+
+  <artifact id="_A2245DFE-ED48-4075-834F-381AA8E4BDA4">
+    <name>Space1.ImplementationArtifacts.ScienceAgentArtifacts.ScienceAgent_stub</name>
+    <source/>
+    <node/>
+    <location>ScienceAgent_stub</location>
+  </artifact>
+
+  <artifact id="_C5191E9B-0637-4609-B1DF-226BF093AB8A">
+    <name>Space1.ImplementationArtifacts.ScienceAgentArtifacts.ScienceAgent_svnt</name>
+    <source/>
+    <node/>
+    <location>ScienceAgent_svnt</location>
+    <execParameter>
+      <name>entryPoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_ANA_ScienceModule_ScienceAgentHome_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+  </artifact>
+
+  <artifact id="_936FFC6D-596B-4D69-986C-7818C5E6BC38">
+    <name>Space1.ImplementationArtifacts.ScienceAgentArtifacts.ScienceAgent_exec</name>
+    <source/>
+    <node/>
+    <location>ScienceAgent_exec</location>
+    <execParameter>
+      <name>entryPoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_ANA_ScienceModule_ScienceAgentHome_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+  </artifact>
+
+  <artifact id="_B841B32D-C029-4BC0-BA1C-D353997585AE">
+    <name>Space1.ImplementationArtifacts.Gizmo_BaseArtifacts.Gizmo_Base_stub</name>
+    <source/>
+    <node/>
+    <location>Gizmo_Base_stub</location>
+  </artifact>
+
+  <artifact id="_450A6588-E8E5-4EF2-8192-C0EC7EDF9023">
+    <name>Space1.ImplementationArtifacts.Gizmo_BaseArtifacts.Gizmo_Base_svnt</name>
+    <source/>
+    <node/>
+    <location>Gizmo_Base_svnt</location>
+    <execParameter>
+      <name>entryPoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_ANA_GizmoModule_Gizmo_Base_Home_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+  </artifact>
+
+  <artifact id="_0E198801-8185-40DB-96B0-0A808864BD25">
+    <name>Space1.ImplementationArtifacts.Gizmo_BaseArtifacts.Gizmo_Base_exec</name>
+    <source/>
+    <node/>
+    <location>Gizmo_Base_exec</location>
+    <execParameter>
+      <name>entryPoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_ANA_GizmoModule_Gizmo_Base_Home_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+  </artifact>
+
+  <artifact id="_14901494-3090-4C4E-A1F2-B8216C047B05">
+    <name>Space1.ImplementationArtifacts.Board_ComponentArtifacts.Board_Component_stub</name>
+    <source/>
+    <node/>
+    <location>Board_Component_stub</location>
+  </artifact>
+
+  <artifact id="_E06B2D31-E12F-4B81-A589-A98FB5137E22">
+    <name>Space1.ImplementationArtifacts.Board_ComponentArtifacts.Board_Component_svnt</name>
+    <source/>
+    <node/>
+    <location>Board_Component_svnt</location>
+    <execParameter>
+      <name>entryPoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_ANA_GizmoModule_Board_Component_Home_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+  </artifact>
+
+  <artifact id="_5122B0B6-EF05-4FCB-9202-5B342D185DD9">
+    <name>Space1.ImplementationArtifacts.Board_ComponentArtifacts.Board_Component_exec</name>
+    <source/>
+    <node/>
+    <location>Board_Component_exec</location>
+    <execParameter>
+      <name>entryPoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_ANA_GizmoModule_Board_Component_Home_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+  </artifact>
+
+  <artifact id="_336AD8A5-2775-4122-96CF-36045958E1D7">
+    <name>Space1.ImplementationArtifacts.GNCAgentArtifacts.GNCAgent_stub</name>
+    <source/>
+    <node/>
+    <location>GNCAgent_stub</location>
+  </artifact>
+
+  <artifact id="_8E3CFE25-3E0C-4217-A5C0-EFA1ADAE78FF">
+    <name>Space1.ImplementationArtifacts.GNCAgentArtifacts.GNCAgent_svnt</name>
+    <source/>
+    <node/>
+    <location>GNCAgent_svnt</location>
+    <execParameter>
+      <name>entryPoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_ANA_GNCModule_GNCAgentHome_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+  </artifact>
+
+  <artifact id="_55C4C166-485A-41D1-B248-EDC5E96FBDEB">
+    <name>Space1.ImplementationArtifacts.GNCAgentArtifacts.GNCAgent_exec</name>
+    <source/>
+    <node/>
+    <location>GNCAgent_exec</location>
+    <execParameter>
+      <name>entryPoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_ANA_GNCModule_GNCAgentHome_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+  </artifact>
+
+</Deployment:deploymentPlan>
