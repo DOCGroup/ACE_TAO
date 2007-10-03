@@ -149,8 +149,8 @@ public: // Should be protected:
   /// Queue of messages on the ACE_Task..
   ACE_Message_Queue<ACE_SYNCH_USE> *msg_queue_;
 
-  /// 1 if should delete Message_Queue, 0 otherwise.
-  int delete_msg_queue_;
+  /// true if should delete Message_Queue, false otherwise.
+  bool delete_msg_queue_;
 
   /// Back-pointer to the enclosing module.
   ACE_Module<ACE_SYNCH_USE> *mod_;

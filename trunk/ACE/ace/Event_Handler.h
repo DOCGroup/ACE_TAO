@@ -113,7 +113,7 @@ public:
   virtual int handle_exception (ACE_HANDLE fd = ACE_INVALID_HANDLE);
 
   /**
-   * Called when timer expires.  <current_time> represents the current
+   * Called when timer expires.  @a current_time represents the current
    * time that the <Event_Handler> was selected for timeout
    * dispatching and @a act is the asynchronous completion token that
    * was passed in when <schedule_timer> was invoked.
@@ -126,7 +126,7 @@ public:
 
   /// Called when a <handle_*()> method returns -1 or when the
   /// <remove_handler> method is called on an ACE_Reactor.  The
-  /// <close_mask> indicates which event has triggered the
+  /// @a close_mask indicates which event has triggered the
   /// <handle_close> method callback on a particular @a handle.
   virtual int handle_close (ACE_HANDLE handle,
                             ACE_Reactor_Mask close_mask);

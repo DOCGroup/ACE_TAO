@@ -74,7 +74,7 @@ public:
 
   /**
    * Has the equivalent functionality as <readdir> except that an
-   * <entry> and <result> buffer must be supplied by the caller to
+   * @a entry and @a result buffer must be supplied by the caller to
    * store the result.
    */
   int read (struct ACE_DIRENT *entry,

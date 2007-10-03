@@ -27,7 +27,7 @@ ACE_Service_Repository *ACE_Service_Repository::svc_rep_ = 0;
 
 // Controls whether the Service_Repository is deleted when we shut
 // down (we can only delete it safely if we created it)!
-int ACE_Service_Repository::delete_svc_rep_ = 0;
+bool ACE_Service_Repository::delete_svc_rep_ = false;
 
 void
 ACE_Service_Repository::dump (void) const
@@ -63,7 +63,7 @@ ACE_Service_Repository::instance (size_t size /* = ACE_Service_Repository::DEFAU
               ACE_NEW_RETURN (ACE_Service_Repository::svc_rep_,
                               ACE_Service_Repository (size),
                               0);
-              ACE_Service_Repository::delete_svc_rep_ = 1;
+              ACE_Service_Repository::delete_svc_rep_ = true;
             }
         }
     }
@@ -80,7 +80,7 @@ ACE_Service_Repository::instance (ACE_Service_Repository *s)
 
   ACE_Service_Repository *t = ACE_Service_Repository::svc_rep_;
   // We can't safely delete it since we don't know who created it!
-  ACE_Service_Repository::delete_svc_rep_ = 0;
+  ACE_Service_Repository::delete_svc_rep_ = false;
 
   ACE_Service_Repository::svc_rep_ = s;
   return t;
@@ -98,7 +98,7 @@ ACE_Service_Repository::close_singleton (void)
     {
       delete ACE_Service_Repository::svc_rep_;
       ACE_Service_Repository::svc_rep_ = 0;
-      ACE_Service_Repository::delete_svc_rep_ = 0;
+      ACE_Service_Repository::delete_svc_rep_ = false;
     }
 }
 

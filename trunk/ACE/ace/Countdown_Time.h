@@ -31,7 +31,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * @brief Keeps track of the amount of elapsed time.
  *
  * This class has a side-effect on the @c max_wait_time -- every
- * time the <stop> method is called the <max_wait_time> is
+ * time the stop() method is called the @c max_wait_time is
  * updated.
  */
 class ACE_Export ACE_Countdown_Time

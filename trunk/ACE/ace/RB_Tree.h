@@ -332,7 +332,7 @@ public:
   int find (const EXT_ID &ext_id,
             INT_ID &int_id);
 
-  /// Locate @a ext_id and pass out parameter via <entry>.  If found,
+  /// Locate @a ext_id and pass out parameter via @a entry.  If found,
   /// return 0, returns -1 if not found.
   int find (const EXT_ID &ext_id,
             ACE_RB_Tree_Node<EXT_ID, INT_ID> *&entry);

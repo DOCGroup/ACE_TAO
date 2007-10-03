@@ -106,8 +106,8 @@ public:
   // = Factory method.
   /**
    * Create a SVC_HANDLER with the appropriate creation strategy.  The
-   * default behavior of this method is to make a new <SVC_HANDLER> if
-   * <sh> == 0 (passing in the <Thread_Manager>), else <sh> is
+   * default behavior of this method is to make a new SVC_HANDLER if
+   * @a sh == 0 (passing in the <Thread_Manager>), else @a sh is
    * unchanged.  Returns -1 on failure, else 0.
    */
   virtual int make_svc_handler (SVC_HANDLER *&sh);
@@ -130,7 +130,7 @@ protected:
  * @class ACE_Singleton_Strategy
  *
  * @brief Defines the interface for specifying a creation strategy for
- * a <SVC_HANDLER> that always returns the same <SVC_HANDLER> (i.e.,
+ * a SVC_HANDLER that always returns the same SVC_HANDLER (i.e.,
  * it's a Singleton).
  *
  * Note that this class takes over the ownership of the
@@ -167,8 +167,8 @@ protected:
   /// Pointer to the Singleton svc_handler.
   SVC_HANDLER *svc_handler_;
 
-  /// Keep track of whether we need to delete the <SVC_HANDLER>.
-  int delete_svc_handler_;
+  /// Keep track of whether we need to delete the SVC_HANDLER.
+  bool delete_svc_handler_;
 };
 
 /**
@@ -281,7 +281,7 @@ public:
 protected:
 
   /// Flags that are parsed to set options for the connected
-  /// <SVC_HANDLER>.
+  /// SVC_HANDLER.
   int flags_;
 };
 
@@ -293,7 +293,7 @@ protected:
  * methods run in the reactor's thread of control.
  *
  * This class provides a strategy that registers the
- * <SVC_HANDLER> with a <Reactor>.
+ * SVC_HANDLER with a <Reactor>.
  */
 template <class SVC_HANDLER>
 class ACE_Reactive_Strategy : public ACE_Concurrency_Strategy <SVC_HANDLER>
@@ -335,11 +335,11 @@ public:
 protected:
   typedef ACE_Concurrency_Strategy<SVC_HANDLER> inherited;
 
-  /// Pointer to the Reactor we'll use to register the <SVC_HANDLER>.
+  /// Pointer to the Reactor we'll use to register the SVC_HANDLER.
   ACE_Reactor *reactor_;
 
   /// The mask that we pass to the <Reactor> when we register the
-  /// <SVC_HANDLER>.
+  /// SVC_HANDLER.
   ACE_Reactor_Mask mask_;
 };
 
@@ -347,13 +347,13 @@ protected:
  * @class ACE_Thread_Strategy
  *
  * @brief Defines the interface for specifying a concurrency strategy
- * for a <SVC_HANDLER> based on multithreading.
+ * for a SVC_HANDLER based on multithreading.
  *
  * This class provides a strategy that manages the creation of threads
  * to handle requests from clients concurrently via a
  * thread-per-connection model.  It behaves as a "thread factory",
  * spawning threads "on-demand" to run the service specified by a
- * user-supplied <SVC_HANDLER>.
+ * user-supplied SVC_HANDLER.
  */
 template <class SVC_HANDLER>
 class ACE_Thread_Strategy : public ACE_Concurrency_Strategy<SVC_HANDLER>
@@ -743,7 +743,7 @@ protected:
  * as in connect or accept strategy.
  *
  * An example of the use of this is in the
- * <ACE_Cached_Connect_Strategy>, which only returns a single
+ * ACE_Cached_Connect_Strategy, which only returns a single
  * connection for a given endpoint.
  */
 template <class SVC_HANDLER>
@@ -765,7 +765,7 @@ public:
  * calling open on a svc_handler multiple times.
  *
  * An example of the use of this is in the
- * <ACE_Cached_Connect_Strategy>, which reuses svc_handlers.
+ * ACE_Cached_Connect_Strategy, which reuses svc_handlers.
  * Therefore we don't want to call open on the recycled
  * svc_handler more than once.
  */
@@ -818,7 +818,7 @@ protected:
  * @class ACE_Cached_Connect_Strategy
  *
  * @brief A connection strategy which caches connections to peers
- * (represented by <SVC_HANDLER> instances), thereby allowing
+ * (represented by SVC_HANDLER instances), thereby allowing
  * subsequent re-use of unused, but available, connections.
  *
  * <ACE_Cached_Connect_Strategy> is intended to be used as a
@@ -861,7 +861,7 @@ public:
                                ACE_Concurrency_Strategy<SVC_HANDLER> *con_s = 0,
                                ACE_Recycling_Strategy<SVC_HANDLER> *rec_s = 0,
                                MUTEX *mutex = 0,
-                               int delete_mutex = 0);
+                               bool delete_lock = false);
 
   /// Destructor
   virtual ~ACE_Cached_Connect_Strategy (void);
@@ -891,7 +891,7 @@ public:
    * Checks to see if there is already a <SVC_HANDLER> in the cache
    * connected to the <remote_addr>.  If so, we return this pointer.
    * Otherwise we establish the connection, put it into the cache, and
-   * return the <SVC_HANDLER> pointer.  <[NOTE]>: the <{reuse_addr}>
+   * return the SVC_HANDLER pointer.  <[NOTE]>: the <{reuse_addr}>
    * argument does NOT control re-use of addresses in the cache.
    * Rather, if the underlying protocol requires a "dead time" prior
    * to re-use of its addresses (TCP is a classic example of this),
@@ -1021,14 +1021,14 @@ protected:
     int perms,
     int &found);
 
-  /// Table that maintains the cache of connected <SVC_HANDLER>s.
+  /// Table that maintains the cache of connected SVC_HANDLERs.
   CONNECTION_MAP connection_map_;
 
   /// Mutual exclusion for this object.
   MUTEX *lock_;
 
   /// Mutual exclusion for this object.
-  int delete_lock_;
+  bool delete_lock_;
 
   /// Reverse lock.
   REVERSE_MUTEX *reverse_lock_;
@@ -1038,23 +1038,23 @@ protected:
   /// Creation strategy for an <Connector>.
   CREATION_STRATEGY *creation_strategy_;
 
-  /// 1 if <Connector> created the creation strategy and thus should
-  /// delete it, else 0.
-  int delete_creation_strategy_;
+  /// true if <Connector> created the creation strategy and thus should
+  /// delete it, else false.
+  bool delete_creation_strategy_;
 
   /// Concurrency strategy for an <Connector>.
   CONCURRENCY_STRATEGY *concurrency_strategy_;
 
-  /// 1 if <Connector> created the concurrency strategy and thus should
-  /// delete it, else 0.
-  int delete_concurrency_strategy_;
+  /// true if <Connector> created the concurrency strategy and thus should
+  /// delete it, else false.
+  bool delete_concurrency_strategy_;
 
   /// Recycling strategy for an <Connector>.
   RECYCLING_STRATEGY *recycling_strategy_;
 
-  /// 1 if <Connector> created the recycling strategy and thus should
-  /// delete it, else 0.
-  int delete_recycling_strategy_;
+  /// true if <Connector> created the recycling strategy and thus should
+  /// delete it, else false.
+  bool delete_recycling_strategy_;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

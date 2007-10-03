@@ -617,7 +617,7 @@ public:
   ACE_Message_Queue_Iterator (ACE_Message_Queue <ACE_SYNCH_USE> &queue);
 
   // = Iteration methods.
-  /// Pass back the <entry> that hasn't been seen in the queue.
+  /// Pass back the @a entry that hasn't been seen in the queue.
   /// Returns 0 when all items have been seen, else 1.
   int next (ACE_Message_Block *&entry);
 
@@ -655,7 +655,7 @@ public:
   ACE_Message_Queue_Reverse_Iterator (ACE_Message_Queue <ACE_SYNCH_USE> &queue);
 
   // = Iteration methods.
-  /// Pass back the <entry> that hasn't been seen in the queue.
+  /// Pass back the @a entry that hasn't been seen in the queue.
   /// Returns 0 when all items have been seen, else 1.
   int next (ACE_Message_Block *&entry);
 

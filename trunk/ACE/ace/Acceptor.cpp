@@ -560,7 +560,7 @@ ACE_Strategy_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::open
       ACE_NEW_RETURN (cre_s,
                       CREATION_STRATEGY,
                       -1);
-      this->delete_creation_strategy_ = 1;
+      this->delete_creation_strategy_ = true;
     }
   this->creation_strategy_ = cre_s;
 
@@ -571,7 +571,7 @@ ACE_Strategy_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::open
       ACE_NEW_RETURN (acc_s,
                       ACCEPT_STRATEGY (this->reactor ()),
                       -1);
-      this->delete_accept_strategy_ = 1;
+      this->delete_accept_strategy_ = true;
     }
   this->accept_strategy_ = acc_s;
 
@@ -594,7 +594,7 @@ ACE_Strategy_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::open
       ACE_NEW_RETURN (con_s,
                       CONCURRENCY_STRATEGY,
                       -1);
-      this->delete_concurrency_strategy_ = 1;
+      this->delete_concurrency_strategy_ = true;
     }
   this->concurrency_strategy_ = con_s;
 
@@ -605,7 +605,7 @@ ACE_Strategy_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::open
       ACE_NEW_RETURN (sch_s,
                       SCHEDULING_STRATEGY,
                       -1);
-      this->delete_scheduling_strategy_ = 1;
+      this->delete_scheduling_strategy_ = true;
     }
   this->scheduling_strategy_ = sch_s;
 
@@ -625,13 +625,13 @@ ACE_Strategy_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::ACE_Strategy_Acceptor
    int use_select,
    int reuse_addr)
     : creation_strategy_ (0),
-      delete_creation_strategy_ (0),
+      delete_creation_strategy_ (false),
       accept_strategy_ (0),
-      delete_accept_strategy_ (0),
+      delete_accept_strategy_ (false),
       concurrency_strategy_ (0),
-      delete_concurrency_strategy_ (0),
+      delete_concurrency_strategy_ (false),
       scheduling_strategy_ (0),
-      delete_scheduling_strategy_ (0),
+      delete_scheduling_strategy_ (false),
       service_name_ (0),
       service_description_ (0)
 {
@@ -660,13 +660,13 @@ ACE_Strategy_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::ACE_Strategy_Acceptor
    int use_select,
    int reuse_addr)
     : creation_strategy_ (0),
-      delete_creation_strategy_ (0),
+      delete_creation_strategy_ (false),
       accept_strategy_ (0),
-      delete_accept_strategy_ (0),
+      delete_accept_strategy_ (false),
       concurrency_strategy_ (0),
-      delete_concurrency_strategy_ (0),
+      delete_concurrency_strategy_ (false),
       scheduling_strategy_ (0),
-      delete_scheduling_strategy_ (0),
+      delete_scheduling_strategy_ (false),
       service_name_ (0),
       service_description_ (0)
 {
@@ -702,22 +702,22 @@ ACE_Strategy_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::handle_close (ACE_HANDL
 
       if (this->delete_creation_strategy_)
         delete this->creation_strategy_;
-      this->delete_creation_strategy_ = 0;
+      this->delete_creation_strategy_ = false;
       this->creation_strategy_ = 0;
 
       if (this->delete_accept_strategy_)
         delete this->accept_strategy_;
-      this->delete_accept_strategy_ = 0;
+      this->delete_accept_strategy_ = false;
       this->accept_strategy_ = 0;
 
       if (this->delete_concurrency_strategy_)
         delete this->concurrency_strategy_;
-      this->delete_concurrency_strategy_ = 0;
+      this->delete_concurrency_strategy_ = false;
       this->concurrency_strategy_ = 0;
 
       if (this->delete_scheduling_strategy_)
         delete this->scheduling_strategy_;
-      this->delete_scheduling_strategy_ = 0;
+      this->delete_scheduling_strategy_ = false;
       this->scheduling_strategy_ = 0;
 
       // We must use the <handle> obtained *before* we deleted the
@@ -873,7 +873,7 @@ ACE_Oneshot_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::open
       ACE_NEW_RETURN (con_s,
                       ACE_Concurrency_Strategy<SVC_HANDLER>,
                       -1);
-      this->delete_concurrency_strategy_ = 1;
+      this->delete_concurrency_strategy_ = true;
     }
   this->concurrency_strategy_ = con_s;
 
@@ -883,7 +883,7 @@ ACE_Oneshot_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::open
 
 template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1>
 ACE_Oneshot_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::ACE_Oneshot_Acceptor (void)
-  : delete_concurrency_strategy_ (0)
+  : delete_concurrency_strategy_ (false)
 {
   ACE_TRACE ("ACE_Oneshot_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::ACE_Oneshot_Acceptor");
   this->reactor (0);
@@ -894,7 +894,7 @@ ACE_Oneshot_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::ACE_Oneshot_Acceptor
   (const ACE_PEER_ACCEPTOR_ADDR &local_addr,
    ACE_Reactor *reactor,
    ACE_Concurrency_Strategy<SVC_HANDLER> *cs)
-    : delete_concurrency_strategy_ (0)
+    : delete_concurrency_strategy_ (false)
 {
   ACE_TRACE ("ACE_Oneshot_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::ACE_Oneshot_Acceptor");
   if (this->open (local_addr, reactor, cs) == -1)
@@ -927,7 +927,7 @@ ACE_Oneshot_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::handle_close (ACE_HANDLE
   if (this->delete_concurrency_strategy_)
     {
       delete this->concurrency_strategy_;
-      this->delete_concurrency_strategy_ = 0;
+      this->delete_concurrency_strategy_ = false;
       this->concurrency_strategy_ = 0;
     }
   // Note that if we aren't actually registered with the

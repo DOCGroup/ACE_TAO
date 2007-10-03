@@ -102,7 +102,7 @@ private:
 
   /// This flag keep track of whether we are responsible for deleting
   /// the lock
-  int delete_lock_;
+  bool delete_lock_;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL
