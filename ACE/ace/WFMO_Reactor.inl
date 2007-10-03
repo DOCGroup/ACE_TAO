@@ -33,8 +33,8 @@ ACE_WFMO_Reactor_Handler_Repository::Common_Info::Common_Info (void)
     event_handler_ (0),
     io_handle_ (ACE_INVALID_HANDLE),
     network_events_ (0),
-    delete_event_ (0),
-    delete_entry_ (0),
+    delete_event_ (false),
+    delete_entry_ (false),
     close_masks_ (ACE_Event_Handler::NULL_MASK)
 {
 }
@@ -46,8 +46,8 @@ ACE_WFMO_Reactor_Handler_Repository::Common_Info::reset (void)
   this->io_entry_ = 0;
   this->io_handle_ = ACE_INVALID_HANDLE;
   this->network_events_ = 0;
-  this->delete_event_ = 0;
-  this->delete_entry_ = 0;
+  this->delete_event_ = false;
+  this->delete_entry_ = false;
   this->close_masks_ = ACE_Event_Handler::NULL_MASK;
 }
 
@@ -56,8 +56,8 @@ ACE_WFMO_Reactor_Handler_Repository::Common_Info::set (int io_entry,
                                                        ACE_Event_Handler *event_handler,
                                                        ACE_HANDLE io_handle,
                                                        long network_events,
-                                                       int delete_event,
-                                                       int delete_entry,
+                                                       bool delete_event,
+                                                       bool delete_entry,
                                                        ACE_Reactor_Mask close_masks)
 {
   this->event_handler_ = event_handler;
@@ -128,8 +128,8 @@ ACE_WFMO_Reactor_Handler_Repository::Current_Info::set (int io_entry,
                                                         ACE_Event_Handler *event_handler,
                                                         ACE_HANDLE io_handle,
                                                         long network_events,
-                                                        int delete_event,
-                                                        int delete_entry,
+                                                        bool delete_event,
+                                                        bool delete_entry,
                                                         ACE_Reactor_Mask close_masks,
                                                         int suspend_entry)
 {
@@ -197,8 +197,8 @@ ACE_WFMO_Reactor_Handler_Repository::To_Be_Added_Info::set (ACE_HANDLE event_han
                                                             ACE_Event_Handler *event_handler,
                                                             ACE_HANDLE io_handle,
                                                             long network_events,
-                                                            int delete_event,
-                                                            int delete_entry,
+                                                            bool delete_event,
+                                                            bool delete_entry,
                                                             ACE_Reactor_Mask close_masks,
                                                             int suspend_entry)
 {
@@ -276,8 +276,8 @@ ACE_WFMO_Reactor_Handler_Repository::Suspended_Info::set (ACE_HANDLE event_handl
                                                           ACE_Event_Handler *event_handler,
                                                           ACE_HANDLE io_handle,
                                                           long network_events,
-                                                          int delete_event,
-                                                          int delete_entry,
+                                                          bool delete_event,
+                                                          bool delete_entry,
                                                           ACE_Reactor_Mask close_masks,
                                                           int resume_entry)
 {
@@ -372,9 +372,9 @@ ACE_INLINE int
 ACE_WFMO_Reactor_Handler_Repository::scheduled_for_deletion (size_t slot) const
 {
   if (ACE_Thread::self () == this->wfmo_reactor_.owner_i ())
-    return this->current_info_[slot].delete_entry_ == 1;
+    return this->current_info_[slot].delete_entry_ == true;
   else
-    return this->current_info_[slot + 1].delete_entry_ == 1;
+    return this->current_info_[slot + 1].delete_entry_ == true;
 }
 
 ACE_INLINE int

@@ -50,7 +50,7 @@ public:
    * time expires before the connection is made <errno == ETIME>.  The
    * <local_sap> is the value of local address to bind to.  If it's
    * the default value of <ACE_Addr::sap_any> then the user is letting
-   * the OS do the binding.  If <reuse_addr> == 1 then the
+   * the OS do the binding.  If @a reuse_addr == 1 then the
    * <local_addr> is reused, even if it hasn't been cleanedup yet.
    * The <flags> and <perms> arguments are passed down to the <open>
    * method.  The <pipe_mode> argument is only used in NT and is used to
@@ -78,7 +78,7 @@ public:
    * time expires before the connection is made <errno == ETIME>.  The
    * <local_sap> is the value of local address to bind to.  If it's
    * the default value of <ACE_Addr::sap_any> then the user is letting
-   * the OS do the binding.  If <reuse_addr> == 1 then the
+   * the OS do the binding.  If @a reuse_addr == 1 then the
    * <local_addr> is reused, even if it hasn't been cleanedup yet.
    * The <flags> and <perms> arguments are passed down to the <open>
    * method.  The <pipe_mode> argument is only used in NT and is used to

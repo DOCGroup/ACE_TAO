@@ -85,7 +85,7 @@ public:
 
   /**
    * Call this method if you want to recycling the @c Svc_Handler
-   * instead of closing it.  If the object does not have a recycler,
+   * instead of closing it. If the object does not have a recycler,
    * it will be closed.
    */
   virtual int idle (u_long flags = 0);
@@ -252,7 +252,7 @@ protected:
  * its connected peer and supports buffering.
  *
  * The buffering feature makes it possible to queue up
- * <ACE_Message_Blocks> in an ACE_Message_Queue until (1) the
+ * ACE_Message_Blocks in an ACE_Message_Queue until (1) the
  * queue is "full" or (2) a period of time elapses, at which
  * point the queue is "flushed" via <sendv_n> to the peer.
  */
@@ -262,12 +262,12 @@ class ACE_Buffered_Svc_Handler : public ACE_Svc_Handler<ACE_PEER_STREAM_2, ACE_S
 public:
   // = Initialization and termination methods.
   /**
-   * Constructor initializes the <thr_mgr> and <mq> by passing them
-   * down to the ACE_Task base class.  The <reactor> is passed to
-   * the ACE_Event_Handler.  The <max_buffer_size> and
-   * <relative_timeout> are used to determine at what point to flush
-   * the <mq>.  By default, there's no buffering at all.  The
-   * <relative_timeout> value is interpreted to be in a unit that's
+   * Constructor initializes the @a thr_mgr and @a mq by passing them
+   * down to the ACE_Task base class.  The @a reactor is passed to
+   * the ACE_Event_Handler.  The @a max_buffer_size and
+   * @a relative_timeout are used to determine at what point to flush
+   * the @a mq.  By default, there's no buffering at all.  The
+   * @a relative_timeout value is interpreted to be in a unit that's
    * relative to the current time returned by <ACE_OS::gettimeofday>.
    */
   ACE_Buffered_Svc_Handler (ACE_Thread_Manager *thr_mgr = 0,

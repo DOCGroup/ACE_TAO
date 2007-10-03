@@ -133,7 +133,7 @@ protected:
  */
 class ACE_Export ACE_Proactor
 {
-  // = Here are the private typedefs that the <ACE_Proactor> uses.
+  // = Here are the private typedefs that the ACE_Proactor uses.
 
   typedef ACE_Timer_Queue_Iterator_T<ACE_Handler *,
     ACE_Proactor_Handle_Timeout_Upcall,
@@ -190,14 +190,14 @@ public:
   /// Destruction.
   ~ACE_Proactor (void);
 
-  /// Get pointer to a process-wide <ACE_Proactor>.  <threads> should
+  /// Get pointer to a process-wide ACE_Proactor.  <threads> should
   /// be part of another method.
   static ACE_Proactor *instance (size_t threads = 0);
 
-  /// Set pointer to a process-wide <ACE_Proactor> and return existing
+  /// Set pointer to a process-wide ACE_Proactor and return existing
   /// pointer.
   static ACE_Proactor *instance (ACE_Proactor * proactor,
-                                 int delete_proactor = 0);
+                                 bool delete_proactor = false);
 
   /// Delete the dynamically allocated Singleton.
   static void close_singleton (void);
@@ -601,11 +601,11 @@ protected:
   /// the implementation instance.
   int delete_implementation_;
 
-  /// Pointer to a process-wide <ACE_Proactor>.
+  /// Pointer to a process-wide ACE_Proactor.
   static ACE_Proactor *proactor_;
 
-  /// Must delete the <proactor_> if non-0.
-  static int delete_proactor_;
+  /// Must delete the <proactor_> if true.
+  static bool delete_proactor_;
 
   /// Handles timeout events.
   ACE_Proactor_Timer_Handler *timer_handler_;

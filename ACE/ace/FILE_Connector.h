@@ -53,7 +53,7 @@ public:
    * indefinitely.  If *timeout == {0, 0} then the file is created
    * using non-blocking mode.  If *timeout > {0, 0} then this is the
    * maximum amount of time to wait before timing out.  The
-   * <local_sap> and <reuse_addr> parameters are ignored.  The <flags>
+   * <local_sap> and @a reuse_addr parameters are ignored.  The <flags>
    * and <perms> arguments are passed down to the <ACE_OS::open>
    * method.
    */
@@ -78,7 +78,7 @@ public:
    * EWOULDBLOCK>.  If *timeout > {0, 0} then this is the maximum amount of
    * time to wait before timing out.  If the time expires before the
    * connection is made <errno == ETIME>.  The <local_sap> and
-   * <reuse_addr> parameters are ignored.  The <flags> and <perms>
+   * @a reuse_addr parameters are ignored.  The <flags> and <perms>
    * arguments are passed down to the <ACE_OS::open> method.
    */
   int connect (ACE_FILE_IO &new_io,

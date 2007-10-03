@@ -211,8 +211,7 @@ ACE_WFMO_Reactor_Handler_Repository::unbind_i (ACE_HANDLE handle,
         && // Make sure that it is not already marked for deleted
         !this->current_info_[i].delete_entry_)
       {
-        result = this->remove_handler_i (i,
-                                         mask);
+        result = this->remove_handler_i (i, mask);
         if (result == -1)
           error = 1;
       }
@@ -243,8 +242,7 @@ ACE_WFMO_Reactor_Handler_Repository::unbind_i (ACE_HANDLE handle,
         // Make sure that it is not already marked for deleted
         !this->to_be_added_info_[i].delete_entry_)
       {
-        result = this->remove_to_be_added_handler_i (i,
-                                                     mask);
+        result = this->remove_to_be_added_handler_i (i, mask);
         if (result == -1)
           error = 1;
       }
@@ -303,7 +301,7 @@ ACE_WFMO_Reactor_Handler_Repository::remove_handler_i (size_t slot,
   if (this->current_info_[slot].network_events_ == 0)
     {
       // Mark to be deleted
-      this->current_info_[slot].delete_entry_ = 1;
+      this->current_info_[slot].delete_entry_ = true;
       // Remember the mask
       this->current_info_[slot].close_masks_ = to_be_removed_masks;
       // Increment the handle count
@@ -371,7 +369,7 @@ ACE_WFMO_Reactor_Handler_Repository::remove_suspended_handler_i (size_t slot,
   if (this->current_suspended_info_[slot].network_events_ == 0)
     {
       // Mark to be deleted
-      this->current_suspended_info_[slot].delete_entry_ = 1;
+      this->current_suspended_info_[slot].delete_entry_ = true;
       // Remember the mask
       this->current_suspended_info_[slot].close_masks_ = to_be_removed_masks;
       // Increment the handle count
@@ -438,7 +436,7 @@ ACE_WFMO_Reactor_Handler_Repository::remove_to_be_added_handler_i (size_t slot,
   if (this->to_be_added_info_[slot].network_events_ == 0)
     {
       // Mark to be deleted
-      this->to_be_added_info_[slot].delete_entry_ = 1;
+      this->to_be_added_info_[slot].delete_entry_ = true;
       // Remember the mask
       this->to_be_added_info_[slot].close_masks_ = to_be_removed_masks;
       // Increment the handle count
@@ -629,7 +627,7 @@ ACE_WFMO_Reactor_Handler_Repository::bind_i (int io_entry,
                                              long network_events,
                                              ACE_HANDLE io_handle,
                                              ACE_HANDLE event_handle,
-                                             int delete_event)
+                                             bool delete_event)
 {
   if (event_handler == 0)
     return -1;
@@ -1384,7 +1382,7 @@ ACE_WFMO_Reactor::register_handler_i (ACE_HANDLE event_handle,
     }
 
   long new_network_events = 0;
-  int delete_event = 0;
+  bool delete_event = false;
   auto_ptr <ACE_Auto_Event> event;
 
   // Look up the repository to see if the <event_handler> is already
@@ -1407,7 +1405,7 @@ ACE_WFMO_Reactor::register_handler_i (ACE_HANDLE event_handle,
       auto_ptr<ACE_Auto_Event> tmp (new ACE_Auto_Event);
       event = tmp;
       event_handle = event->handle ();
-      delete_event = 1;
+      delete_event = true;
     }
 
   int result = ::WSAEventSelect ((SOCKET) io_handle,
@@ -1459,7 +1457,7 @@ ACE_WFMO_Reactor::mask_ops_i (ACE_HANDLE io_handle,
     return -1;
 
   long new_network_events = 0;
-  int delete_event = 0;
+  bool delete_event = false;
   ACE_HANDLE event_handle = ACE_INVALID_HANDLE;
 
   // Look up the repository to see if the <Event_Handler> is already
@@ -1494,7 +1492,7 @@ ACE_WFMO_Reactor_Handler_Repository::modify_network_events_i (ACE_HANDLE io_hand
                                                               ACE_Reactor_Mask &old_masks,
                                                               long &new_network_events,
                                                               ACE_HANDLE &event_handle,
-                                                              int &delete_event,
+                                                              bool &delete_event,
                                                               int operation)
 {
   long *modified_network_events = &new_network_events;
@@ -1556,8 +1554,7 @@ ACE_Event_Handler *
 ACE_WFMO_Reactor_Handler_Repository::find_handler (ACE_HANDLE handle)
 {
   long existing_masks_ignored = 0;
-  return this->handler (handle,
-                        existing_masks_ignored);
+  return this->handler (handle, existing_masks_ignored);
 }
 
 ACE_Event_Handler *

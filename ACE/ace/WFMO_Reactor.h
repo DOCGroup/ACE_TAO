@@ -144,10 +144,10 @@ public:
      * <Event_Handler> removes itself from <WFMO_Reactor>.  This entry
      * is only valid if the <io_entry_> flag is true.
      */
-    int delete_event_;
+    bool delete_event_;
 
     /// This is set when the entry needed to be deleted.
-    int delete_entry_;
+    bool delete_entry_;
 
     /**
      * These are the masks related to <handle_close> for the
@@ -167,8 +167,8 @@ public:
               ACE_Event_Handler *event_handler,
               ACE_HANDLE io_handle,
               long network_events,
-              int delete_event,
-              int delete_entry,
+              bool delete_event,
+              bool delete_entry,
               ACE_Reactor_Mask close_masks);
 
     /// Set the structure to these new values
@@ -201,8 +201,8 @@ public:
               ACE_Event_Handler *event_handler,
               ACE_HANDLE io_handle,
               long network_events,
-              int delete_event,
-              int delete_entry = 0,
+              bool delete_event,
+              bool delete_entry = false,
               ACE_Reactor_Mask close_masks = ACE_Event_Handler::NULL_MASK,
               int suspend_entry = 0);
 
@@ -241,8 +241,8 @@ public:
               ACE_Event_Handler *event_handler,
               ACE_HANDLE io_handle,
               long network_events,
-              int delete_event,
-              int delete_entry = 0,
+              bool delete_event,
+              bool delete_entry = false,
               ACE_Reactor_Mask close_masks = ACE_Event_Handler::NULL_MASK,
               int suspend_entry = 0);
 
@@ -282,8 +282,8 @@ public:
               ACE_Event_Handler *event_handler,
               ACE_HANDLE io_handle,
               long network_events,
-              int delete_event,
-              int delete_entry = 0,
+              bool delete_event,
+              bool delete_entry = false,
               ACE_Reactor_Mask close_masks = 0,
               int resume_entry = 0);
 
@@ -321,7 +321,7 @@ public:
               long network_events,
               ACE_HANDLE io_handle,
               ACE_HANDLE event_handle,
-              int delete_event);
+              bool delete_event);
 
   /// Remove the binding of ACE_HANDLE in accordance with the @a mask.
   int unbind (ACE_HANDLE,
@@ -372,7 +372,7 @@ public:
                                ACE_Reactor_Mask &old_masks,
                                long &new_network_events,
                                ACE_HANDLE &event_handle,
-                               int &delete_event,
+                               bool &delete_event,
                                int operation);
 
   /// This method is used to change the network mask left (if any)

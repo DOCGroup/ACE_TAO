@@ -63,7 +63,7 @@ ACE_Task<ACE_SYNCH_USE>::msg_queue (ACE_Message_Queue<ACE_SYNCH_USE> *mq)
   if (this->delete_msg_queue_)
     {
       delete this->msg_queue_;
-      this->delete_msg_queue_ = 0;
+      this->delete_msg_queue_ = false;
     }
   this->msg_queue_ = mq;
 }

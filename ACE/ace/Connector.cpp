@@ -655,7 +655,7 @@ ACE_Connector<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::close (void)
   ACE_HANDLE *handle = 0;
   while (1)
     {
-      ACE_Unbounded_Set_Iterator<ACE_HANDLE> 
+      ACE_Unbounded_Set_Iterator<ACE_HANDLE>
         iterator (this->non_blocking_handles ());
       if (!iterator.next (handle))
         break;
@@ -775,12 +775,12 @@ ACE_Strategy_Connector<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::open
 
   // First we decide if we need to clean up.
   if (this->creation_strategy_ != 0 &&
-      this->delete_creation_strategy_ != 0 &&
+      this->delete_creation_strategy_ &&
       cre_s != 0)
     {
       delete this->creation_strategy_;
       this->creation_strategy_ = 0;
-      this->delete_creation_strategy_ = 0;
+      this->delete_creation_strategy_ = false;
     }
 
   if (cre_s != 0)
@@ -790,19 +790,19 @@ ACE_Strategy_Connector<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::open
       ACE_NEW_RETURN (this->creation_strategy_,
                       CREATION_STRATEGY,
                       -1);
-      this->delete_creation_strategy_ = 1;
+      this->delete_creation_strategy_ = true;
     }
 
 
   // Initialize the accept strategy.
 
   if (this->connect_strategy_ != 0 &&
-      this->delete_connect_strategy_ != 0 &&
+      this->delete_connect_strategy_ &&
       conn_s != 0)
     {
       delete this->connect_strategy_;
       this->connect_strategy_ = 0;
-      this->delete_connect_strategy_ = 0;
+      this->delete_connect_strategy_ = false;
     }
 
   if (conn_s != 0)
@@ -812,18 +812,18 @@ ACE_Strategy_Connector<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::open
       ACE_NEW_RETURN (this->connect_strategy_,
                       CONNECT_STRATEGY,
                       -1);
-      this->delete_connect_strategy_ = 1;
+      this->delete_connect_strategy_ = true;
     }
 
   // Initialize the concurrency strategy.
 
   if (this->concurrency_strategy_ != 0 &&
-      this->delete_concurrency_strategy_ != 0 &&
+      this->delete_concurrency_strategy_ &&
       con_s != 0)
     {
       delete this->concurrency_strategy_;
       this->concurrency_strategy_ = 0;
-      this->delete_concurrency_strategy_ = 0;
+      this->delete_concurrency_strategy_ = false;
     }
 
   if (con_s != 0)
@@ -833,7 +833,7 @@ ACE_Strategy_Connector<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::open
       ACE_NEW_RETURN (this->concurrency_strategy_,
                       CONCURRENCY_STRATEGY,
                       -1);
-      this->delete_concurrency_strategy_ = 1;
+      this->delete_concurrency_strategy_ = true;
     }
 
   return 0;
@@ -847,11 +847,11 @@ ACE_Strategy_Connector<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::ACE_Strategy_Connecto
  ACE_Concurrency_Strategy<SVC_HANDLER> *con_s,
  int flags)
   : creation_strategy_ (0),
-    delete_creation_strategy_ (0),
+    delete_creation_strategy_ (false),
     connect_strategy_ (0),
-    delete_connect_strategy_ (0),
+    delete_connect_strategy_ (false),
     concurrency_strategy_ (0),
-    delete_concurrency_strategy_ (0)
+    delete_concurrency_strategy_ (false)
 {
   ACE_TRACE ("ACE_Connector<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::ACE_Strategy_Connector");
 
@@ -873,17 +873,17 @@ ACE_Strategy_Connector<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::close (void)
 {
   if (this->delete_creation_strategy_)
     delete this->creation_strategy_;
-  this->delete_creation_strategy_ = 0;
+  this->delete_creation_strategy_ = false;
   this->creation_strategy_ = 0;
 
   if (this->delete_connect_strategy_)
     delete this->connect_strategy_;
-  this->delete_connect_strategy_ = 0;
+  this->delete_connect_strategy_ = false;
   this->connect_strategy_ = 0;
 
   if (this->delete_concurrency_strategy_)
     delete this->concurrency_strategy_;
-  this->delete_concurrency_strategy_ = 0;
+  this->delete_concurrency_strategy_ = false;
   this->concurrency_strategy_ = 0;
 
   return SUPER::close ();

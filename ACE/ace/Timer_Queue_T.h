@@ -212,9 +212,9 @@ public:
 
   // = Initialization and termination methods.
   /**
-   * Default constructor. <upcall_functor> is the instance of the
-   * FUNCTOR to be used by the queue. If <upcall_functor> is 0, Timer
-   * Queue will create a default FUNCTOR.  <freelist> the freelist of
+   * Default constructor. @a upcall_functor is the instance of the
+   * FUNCTOR to be used by the queue. If @a upcall_functor is 0, Timer
+   * Queue will create a default FUNCTOR.  @a freelist the freelist of
    * timer nodes.  If 0, then a default freelist will be created.
    */
   ACE_Timer_Queue_T (FUNCTOR *upcall_functor = 0,
@@ -445,10 +445,10 @@ protected:
   FUNCTOR *upcall_functor_;
 
   /// To delete or not to delete is the question?
-  int delete_upcall_functor_;
+  bool const delete_upcall_functor_;
 
   /// Flag to delete only if the class created the <free_list_>
-  int delete_free_list_;
+  bool const delete_free_list_;
 
 private:
 

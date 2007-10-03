@@ -164,19 +164,19 @@ public:
   typedef ACE_PEER_CONNECTOR_ADDR                ACE_PEER_ADDR_TYPEDEF;
 
   /**
-   * Initialize a connector.  @a flags indicates how <SVC_HANDLER>'s
+   * Initialize a connector.  @a flags indicates how SVC_HANDLER's
    * should be initialized prior to being activated.  Right now, the
    * only flag that is processed is ACE_NONBLOCK, which enabled
-   * non-blocking I/O on the <SVC_HANDLER> when it is opened.
+   * non-blocking I/O on the SVC_HANDLER when it is opened.
    */
   ACE_Connector (ACE_Reactor *r = ACE_Reactor::instance (),
                  int flags = 0);
 
   /**
-   * Initialize a connector.  @a flags indicates how <SVC_HANDLER>'s
+   * Initialize a connector.  @a flags indicates how SVC_HANDLER's
    * should be initialized prior to being activated.  Right now, the
    * only flag that is processed is ACE_NONBLOCK, which enabled
-   * non-blocking I/O on the <SVC_HANDLER> when it is opened.
+   * non-blocking I/O on the SVC_HANDLER when it is opened.
    */
   virtual int open (ACE_Reactor *r = ACE_Reactor::instance (),
                     int flags = 0);
@@ -230,7 +230,7 @@ public:
    * Initiate connection of @a n @a svc_handlers to peers at
    * @a remote_addrs using @a synch_options.  Returns -1 if failure
    * occurs and 0 otherwise.  If @a failed_svc_handlers is non-NULL, a
-   * 1 is placed in the corresponding index of <failed_svc_handler>
+   * 1 is placed in the corresponding index of @a failed_svc_handlers
    * for each <svc_handlers[i]> that failed to connect, else a 0 is
    * placed in that index.
    */
@@ -281,7 +281,7 @@ protected:
 
   /**
    * Bridge method for creating a SVC_HANDLER.  The default is to
-   * create a new SVC_HANDLER only if <sh> == 0, else <sh> is
+   * create a new SVC_HANDLER only if @a sh == 0, else @a sh is
    * unchanged.  However, subclasses can override this policy to
    * perform SVC_HANDLER creation in any way that they like (such as
    * creating subclass instances of SVC_HANDLER, using a singleton,
@@ -366,10 +366,10 @@ private:
   ACE_PEER_CONNECTOR connector_;
 
   /**
-   * Flags that indicate how <SVC_HANDLER>'s should be initialized
+   * Flags that indicate how SVC_HANDLER's should be initialized
    * prior to being activated.  Right now, the only flag that is
    * processed is ACE_NONBLOCK, which enabled non-blocking I/O on
-   * the <SVC_HANDLER> when it is opened.
+   * the SVC_HANDLER when it is opened.
    */
   int flags_;
 
@@ -425,7 +425,7 @@ public:
    * Initialize a connector.  @a flags indicates how <SVC_HANDLER>'s
    * should be initialized prior to being activated.  Right now, the
    * only flag that is processed is ACE_NONBLOCK, which enabled
-   * non-blocking I/O on the <SVC_HANDLER> when it is opened.
+   * non-blocking I/O on the SVC_HANDLER when it is opened.
    */
   ACE_Strategy_Connector (ACE_Reactor *r = ACE_Reactor::instance (),
                           ACE_Creation_Strategy<SVC_HANDLER> * = 0,
@@ -434,20 +434,20 @@ public:
                           int flags = 0);
 
   /**
-   * Initialize a connector.  @a flags indicates how <SVC_HANDLER>'s
+   * Initialize a connector.  @a flags indicates how SVC_HANDLER's
    * should be initialized prior to being activated.  Right now, the
    * only flag that is processed is ACE_NONBLOCK, which enabled
-   * non-blocking I/O on the <SVC_HANDLER> when it is opened.
+   * non-blocking I/O on the SVC_HANDLER when it is opened.
    * Default strategies would be created and used.
    */
   virtual int open (ACE_Reactor *r,
                     int flags);
 
   /**
-   * Initialize a connector.  @a flags indicates how <SVC_HANDLER>'s
+   * Initialize a connector.  @a flags indicates how SVC_HANDLER's
    * should be initialized prior to being activated.  Right now, the
    * only flag that is processed is ACE_NONBLOCK, which enabled
-   * non-blocking I/O on the <SVC_HANDLER> when it is opened.
+   * non-blocking I/O on the SVC_HANDLER when it is opened.
    */
   virtual int open (ACE_Reactor *r = ACE_Reactor::instance (),
                     ACE_Creation_Strategy<SVC_HANDLER> * = 0,
@@ -468,17 +468,17 @@ public:
 
 protected:
   // = The following three methods define the <Connector>'s strategies
-  // for creating, connecting, and activating <SVC_HANDLER>'s,
+  // for creating, connecting, and activating SVC_HANDLER's,
   // respectively.
 
   /**
-   * Bridge method for creating a <SVC_HANDLER>.  The strategy for
-   * creating a <SVC_HANDLER> are configured into the Connector via
+   * Bridge method for creating a SVC_HANDLER.  The strategy for
+   * creating a SVC_HANDLER are configured into the Connector via
    * it's <creation_strategy_>.  The default is to create a new
-   * <SVC_HANDLER> only if <sh> == 0, else <sh> is unchanged.
+   * SVC_HANDLER only if @a sh == 0, else @a sh is unchanged.
    * However, subclasses can override this policy to perform
-   * <SVC_HANDLER> creation in any way that they like (such as
-   * creating subclass instances of <SVC_HANDLER>, using a singleton,
+   * SVC_HANDLER creation in any way that they like (such as
+   * creating subclass instances of SVC_HANDLER, using a singleton,
    * dynamically linking the handler, etc.).  Returns -1 if failure,
    * else 0.
    */
@@ -486,7 +486,7 @@ protected:
 
   /**
    * Bridge method for connecting the new connection into the
-   * <SVC_HANDLER>.  The default behavior delegates to the
+   * SVC_HANDLER.  The default behavior delegates to the
    * <PEER_CONNECTOR::connect> in the <Connect_Strategy>.
    */
   virtual int connect_svc_handler (SVC_HANDLER *&sh,
@@ -499,13 +499,13 @@ protected:
 
   /**
    * Bridge method for connecting the new connection into the
-   * <SVC_HANDLER>.  The default behavior delegates to the
+   * SVC_HANDLER.  The default behavior delegates to the
    * <PEER_CONNECTOR::connect> in the <Connect_Strategy>.
-   * <sh_copy> is used to obtain a copy of the <sh> pointer, but that
+   * @a sh_copy is used to obtain a copy of the @a sh pointer, but that
    * can be kept in the stack; the motivation is a bit too long to
-   * include here, but basically we want to modify <sh> safely, using
+   * include here, but basically we want to modify @a sh safely, using
    * the internal locks in the Connect_Strategy, while saving a TSS
-   * copy in <sh_copy>, usually located in the stack.
+   * copy in @a sh_copy, usually located in the stack.
    */
   virtual int connect_svc_handler (SVC_HANDLER *&sh,
                                    SVC_HANDLER *&sh_copy,
@@ -517,39 +517,39 @@ protected:
                                    int perms);
 
   /**
-   * Bridge method for activating a <SVC_HANDLER> with the appropriate
+   * Bridge method for activating a SVC_HANDLER with the appropriate
    * concurrency strategy.  The default behavior of this method is to
-   * activate the <SVC_HANDLER> by calling its <open> method (which
-   * allows the <SVC_HANDLER> to define its own concurrency strategy).
+   * activate the SVC_HANDLER by calling its <open> method (which
+   * allows the SVC_HANDLER to define its own concurrency strategy).
    * However, subclasses can override this strategy to do more
    * sophisticated concurrency activations (such as creating the
-   * <SVC_HANDLER> as an "active object" via multi-threading or
+   * SVC_HANDLER as an "active object" via multi-threading or
    * multi-processing).
    */
   virtual int activate_svc_handler (SVC_HANDLER *svc_handler);
 
   // = Strategy objects.
 
-  /// Creation strategy for an <Connector>.
+  /// Creation strategy for an Connector.
   CREATION_STRATEGY *creation_strategy_;
 
-  /// 1 if <Connector> created the creation strategy and thus should
-  /// delete it, else 0.
-  int delete_creation_strategy_;
+  /// true if Connector created the creation strategy and thus should
+  /// delete it, else false.
+  bool delete_creation_strategy_;
 
-  /// Connect strategy for a <Connector>.
+  /// Connect strategy for a Connector.
   CONNECT_STRATEGY *connect_strategy_;
 
-  /// 1 if <Connector> created the connect strategy and thus should
-  /// delete it, else 0.
-  int delete_connect_strategy_;
+  /// true if Connector created the connect strategy and thus should
+  /// delete it, else false.
+  bool delete_connect_strategy_;
 
   /// Concurrency strategy for an <Connector>.
   CONCURRENCY_STRATEGY *concurrency_strategy_;
 
-  /// 1 if <Connector> created the concurrency strategy and thus should
-  /// delete it, else 0.
-  int delete_concurrency_strategy_;
+  /// true if Connector created the concurrency strategy and thus should
+  /// delete it, else false.
+  bool delete_concurrency_strategy_;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

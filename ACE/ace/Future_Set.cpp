@@ -15,7 +15,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class T>
 ACE_Future_Set<T>::ACE_Future_Set (ACE_Message_Queue<ACE_SYNCH> *new_queue)
-  : delete_queue_ (0)
+  : delete_queue_ (false)
 {
   if (new_queue)
     this->future_notification_queue_ = new_queue;
@@ -23,7 +23,7 @@ ACE_Future_Set<T>::ACE_Future_Set (ACE_Message_Queue<ACE_SYNCH> *new_queue)
     {
       ACE_NEW (this->future_notification_queue_,
                ACE_Message_Queue<ACE_SYNCH>);
-      this->delete_queue_ = 1;
+      this->delete_queue_ = true;
     }
 }
 
@@ -46,7 +46,7 @@ ACE_Future_Set<T>::~ACE_Future_Set (void)
       delete future_holder;
     }
 
-  if (this->delete_queue_ != 0)
+  if (this->delete_queue_)
     delete this->future_notification_queue_;
 }
 
