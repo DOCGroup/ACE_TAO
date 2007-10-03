@@ -43,6 +43,9 @@ namespace CIAO
                               "Error while initializing the repoman plan_generator!\n"));
                 }
             }
+          else {
+                  ACE_ERROR ((LM_ERROR, "DAnCE_OA::Admin_exec:: No repoman ID provided to constructor\n"));
+          }
         }
 
         Admin_exec_i::~Admin_exec_i (void)
@@ -134,6 +137,7 @@ namespace CIAO
             }
           else
             {
+              ACE_DEBUG ((LM_DEBUG, "DANCE_OA::deploy_string(): Failed to generate dp from opstring\n"));
               return false;
             }
 
@@ -169,6 +173,7 @@ namespace CIAO
           /// deployed.
           if (!this->repoman_)
             {
+              ACE_DEBUG ((LM_DEBUG, "DANCE_OA::opstring_to_dplan(): this->repoman_ not set\n"));
               return false;
             }
 
