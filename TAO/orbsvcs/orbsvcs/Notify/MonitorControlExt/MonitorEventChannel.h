@@ -36,6 +36,9 @@ public:
   void map_consumer_proxy (CosNotifyChannelAdmin::ProxyID id,
                            const ACE_CString& name);
 
+  virtual void cleanup_proxy (CosNotifyChannelAdmin::ProxyID id
+			      , bool is_supplier);
+
   /// Add the statistics for this event channel.  If the ec was
   /// constructed with a non-zero length string, this method will
   /// do nothing.
@@ -49,6 +52,9 @@ private:
   size_t calculate_queue_size (bool count);
   double get_oldest_event (void);
   void determine_slowest_consumer (TAO_Statistic::List* names);
+
+  void unmap_supplier_proxy (CosNotifyChannelAdmin::ProxyID id);
+  void unmap_consumer_proxy (CosNotifyChannelAdmin::ProxyID id);
 
   friend class EventChannelConsumers;
   friend class EventChannelSuppliers;

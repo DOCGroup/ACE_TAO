@@ -57,7 +57,8 @@ public:
   void insert (TAO_Notify_Proxy* proxy);
 
   /// Remove type from container_
-  void remove (TAO_Notify_Proxy *proxy);
+  /// and cleanup any EC resources.
+  void cleanup_proxy (TAO_Notify_Proxy *proxy, bool is_supplier);
 
   /// Access Admin FilterAdmin.
   TAO_Notify_FilterAdmin& filter_admin (void);
@@ -110,6 +111,9 @@ protected:
 
   bool is_default_;
 private:
+  /// Remove type from container_
+  void remove (TAO_Notify_Proxy *proxy);
+
   /// The Proxy Container.
   ACE_Auto_Ptr< TAO_Notify_Proxy_Container > proxy_container_;
 };

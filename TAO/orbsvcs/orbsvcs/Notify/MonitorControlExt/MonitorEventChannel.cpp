@@ -204,6 +204,36 @@ TAO_MonitorEventChannel::map_consumer_proxy (
 }
 
 void
+TAO_MonitorEventChannel::cleanup_proxy (CosNotifyChannelAdmin::ProxyID id
+                                        , bool is_supplier)
+{
+  if (is_supplier) {
+    this->unmap_supplier_proxy (id);
+  }
+  else {
+    this->unmap_consumer_proxy (id);
+  }
+}
+
+void
+TAO_MonitorEventChannel::unmap_supplier_proxy
+(CosNotifyChannelAdmin::ProxyID id)
+{
+  if (this->supplier_map_.unbind (id) != 0) {
+    throw NotifyMonitoringExt::NameMapError ();
+  }
+}
+
+void
+TAO_MonitorEventChannel::unmap_consumer_proxy
+(CosNotifyChannelAdmin::ProxyID id)
+{
+  if (this->consumer_map_.unbind (id) != 0) {
+    throw NotifyMonitoringExt::NameMapError ();
+  }
+}
+
+void
 TAO_MonitorEventChannel::add_stats (const char* name)
 {
   if (name != 0 && this->name_.length () == 0)
@@ -627,4 +657,3 @@ TAO_MonitorEventChannel::is_duplicate_name (
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
-

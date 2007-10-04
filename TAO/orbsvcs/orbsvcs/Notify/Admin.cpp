@@ -68,6 +68,15 @@ TAO_Notify_Admin::init (TAO_Notify::Topology_Parent* parent)
 }
 
 void
+TAO_Notify_Admin::cleanup_proxy (TAO_Notify_Proxy *proxy
+                                 , bool is_supplier)
+{
+  this->remove (proxy);
+
+  ec_->cleanup_proxy (proxy->id(), is_supplier);
+}
+
+void
 TAO_Notify_Admin::remove (TAO_Notify_Proxy* proxy)
 {
   this->proxy_container().remove (proxy);

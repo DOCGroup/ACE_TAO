@@ -133,7 +133,7 @@ void
 TAO_Notify_ProxySupplier::destroy (void)
 {
   this->shutdown ();
-  this->consumer_admin_->remove (this);
+  this->consumer_admin_->cleanup_proxy (this, true);
 
   // Do not reset this->consumer_.
   // It is not safe to delete the non-refcounted consumer here.

@@ -1,3 +1,25 @@
+Thu Oct  4 19:02:11 UTC 2007  Ciju John  <johnc at ociweb dot com>
+
+        Cleanup Named proxies upon disconnect.
+        * orbsvcs/orbsvcs/Notify/Admin.h:
+        * orbsvcs/orbsvcs/Notify/Admin.cpp:
+        * orbsvcs/orbsvcs/Notify/EventChannel.h:
+        * orbsvcs/orbsvcs/Notify/EventChannel.cpp:
+        * orbsvcs/orbsvcs/Notify/MonitorControlExt/MonitorEventChannel.h:
+        * orbsvcs/orbsvcs/Notify/MonitorControlExt/MonitorEventChannel.cpp:
+        * orbsvcs/orbsvcs/Notify/ProxyConsumer.cpp:
+        * orbsvcs/orbsvcs/Notify/ProxySupplier.cpp:
+          - Add virtual method 'cleanup_proxy' to EC.
+          - MonitorEventChannel::cleanup_proxy unbinds the name-ID
+          association.
+          - Add 'cleanup_proxy' to admin and make 'remove' private.
+          'cleanup_proxy' now calls 'remove' and ec->cleanup_proxy
+          - Consumer/Subscriber Proxies call admin::cleanup_proxy
+
+        * orbsvcs/tests/unit/Notify/MC/MonitorControlExt/MonitorControlExt.cpp:
+        * orbsvcs/tests/unit/Notify/MC/MonitorControlExt/README:
+          Extend to test named proxy disconnect and recreation.
+
 Mon Oct  1 18:57:15 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/Property/run_test.pl:
