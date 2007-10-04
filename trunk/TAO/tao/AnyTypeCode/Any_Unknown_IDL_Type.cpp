@@ -25,9 +25,8 @@ TAO::Unknown_IDL_Type::lock_i (void)
   return lock_.get ();
 }
 
-TAO::Unknown_IDL_Type::Unknown_IDL_Type (
-    CORBA::TypeCode_ptr tc,
-    TAO_InputCDR &cdr)
+TAO::Unknown_IDL_Type::Unknown_IDL_Type (CORBA::TypeCode_ptr tc,
+                                         TAO_InputCDR &cdr)
   : TAO::Any_Impl (0, tc, true)
   , cdr_ (static_cast<ACE_Message_Block*>(0), lock_i ())
 {
@@ -35,14 +34,12 @@ TAO::Unknown_IDL_Type::Unknown_IDL_Type (
     {
       this->_tao_decode (cdr);
     }
-  catch (const ::CORBA::Exception&)
+  catch (::CORBA::Exception const &)
     {
     }
 }
 
-TAO::Unknown_IDL_Type::Unknown_IDL_Type (
-    CORBA::TypeCode_ptr tc
-  )
+TAO::Unknown_IDL_Type::Unknown_IDL_Type (CORBA::TypeCode_ptr tc)
   : TAO::Any_Impl (0, tc, true)
   , cdr_ (static_cast<ACE_Message_Block*>(0), lock_i ())
 {
@@ -53,7 +50,7 @@ TAO::Unknown_IDL_Type::~Unknown_IDL_Type (void)
 }
 
 CORBA::Boolean
-TAO::Unknown_IDL_Type::marshal_value (TAO_OutputCDR &cdr)
+TAO::Unknown_IDL_Type::marshal_value (TAO_OutputCDR & cdr)
 {
   try
     {
@@ -71,7 +68,7 @@ TAO::Unknown_IDL_Type::marshal_value (TAO_OutputCDR &cdr)
           return false;
         }
     }
-  catch (const ::CORBA::Exception&)
+  catch (::CORBA::Exception const &)
     {
       return false;
     }
@@ -103,7 +100,7 @@ TAO::Unknown_IDL_Type::_tao_byte_order (void) const
   return this->cdr_.byte_order ();
 }
 void
-TAO::Unknown_IDL_Type::_tao_decode (TAO_InputCDR &cdr)
+TAO::Unknown_IDL_Type::_tao_decode (TAO_InputCDR & cdr)
 {
   // @@ (JP) The following code depends on the fact that
   //         TAO_InputCDR does not contain chained message blocks,
@@ -111,10 +108,10 @@ TAO::Unknown_IDL_Type::_tao_decode (TAO_InputCDR &cdr)
   //         different buffers!
 
   // This will be the start of a new message block.
-  char *begin = cdr.rd_ptr ();
+  char const * const begin = cdr.rd_ptr ();
 
   // Skip over the next argument.
-  TAO::traverse_status status =
+  TAO::traverse_status const status =
     TAO_Marshal_Object::perform_skip (this->type_, &cdr);
 
   if (status != TAO::TRAVERSE_CONTINUE)
@@ -123,7 +120,7 @@ TAO::Unknown_IDL_Type::_tao_decode (TAO_InputCDR &cdr)
     }
 
   // This will be the end of the new message block.
-  char *end = cdr.rd_ptr ();
+  char const * const end = cdr.rd_ptr ();
 
   // The ACE_CDR::mb_align() call can shift the rd_ptr by up to
   // ACE_CDR::MAX_ALIGNMENT - 1 bytes. Similarly, the offset adjustment
@@ -160,20 +157,11 @@ TAO::Unknown_IDL_Type::_tao_decode (TAO_InputCDR &cdr)
 }
 
 CORBA::Boolean
-TAO::Unknown_IDL_Type::to_object (CORBA::Object_ptr &obj) const
+TAO::Unknown_IDL_Type::to_object (CORBA::Object_ptr & obj) const
 {
   try
     {
-      CORBA::ULong kind = this->type_->kind ();
-
-      CORBA::TypeCode_var tcvar = CORBA::TypeCode::_duplicate (this->type_);
-
-      while (kind == CORBA::tk_alias)
-        {
-          tcvar = tcvar->content_type ();
-
-          kind = tcvar->kind ();
-        }
+      CORBA::TCKind const kind = TAO::unaliased_kind (this->type_);
 
       if (kind != CORBA::tk_objref)
         {
@@ -186,7 +174,7 @@ TAO::Unknown_IDL_Type::to_object (CORBA::Object_ptr &obj) const
 
       return for_reading >> obj;
     }
-  catch (const ::CORBA::Exception&)
+  catch (::CORBA::Exception const &)
     {
     }
 
@@ -194,20 +182,11 @@ TAO::Unknown_IDL_Type::to_object (CORBA::Object_ptr &obj) const
 }
 
 CORBA::Boolean
-TAO::Unknown_IDL_Type::to_value (CORBA::ValueBase *&val) const
+TAO::Unknown_IDL_Type::to_value (CORBA::ValueBase* & val) const
 {
   try
     {
-      CORBA::ULong kind = this->type_->kind ();
-
-      CORBA::TypeCode_var tcvar = CORBA::TypeCode::_duplicate (this->type_);
-
-      while (kind == CORBA::tk_alias)
-        {
-          tcvar = tcvar->content_type ();
-
-          kind = tcvar->kind ();
-        }
+      CORBA::TCKind const kind = TAO::unaliased_kind (this->type_);
 
       if (kind != CORBA::tk_value)
         {
@@ -222,15 +201,20 @@ TAO::Unknown_IDL_Type::to_value (CORBA::ValueBase *&val) const
           if (TAO_debug_level > 0)
             {
               ACE_DEBUG ((LM_WARNING,
-                          "TAO (%P|%t) WARNING: extracting "
-                          "valuetype using default ORB_Core\n"));
+                          ACE_TEXT ("TAO (%P|%t) WARNING: extracting ")
+                          ACE_TEXT ("valuetype using default ORB_Core\n")));
             }
         }
 
-      TAO_Valuetype_Adapter *adapter = orb_core->valuetype_adapter();
-      return adapter->stream_to_value (this->cdr_, val);
+      // We don't want the rd_ptr to move, in case we are shared by
+      // another Any, so we use this to copy the state, not the buffer.
+      TAO_InputCDR for_reading (this->cdr_);
+
+      TAO_Valuetype_Adapter * const adapter =
+        orb_core->valuetype_adapter ();
+      return adapter->stream_to_value (for_reading, val);
     }
-  catch (const ::CORBA::Exception&)
+  catch (::CORBA::Exception const &)
     {
     }
 
@@ -238,22 +222,13 @@ TAO::Unknown_IDL_Type::to_value (CORBA::ValueBase *&val) const
 }
 
 CORBA::Boolean
-TAO::Unknown_IDL_Type::to_abstract_base (CORBA::AbstractBase_ptr &obj) const
+TAO::Unknown_IDL_Type::to_abstract_base (CORBA::AbstractBase_ptr & obj) const
 {
   try
     {
-      CORBA::ULong kind = this->type_->kind ();
+      CORBA::TCKind const kind = TAO::unaliased_kind (this->type_);
 
-      CORBA::TypeCode_var tcvar = CORBA::TypeCode::_duplicate (this->type_);
-
-      while (kind == CORBA::tk_alias)
-        {
-          tcvar = tcvar->content_type ();
-
-          kind = tcvar->kind ();
-        }
-
-      if (kind != CORBA::tk_value)
+      if (kind != CORBA::tk_abstract_interface)
         {
           return false;
         }
@@ -266,15 +241,20 @@ TAO::Unknown_IDL_Type::to_abstract_base (CORBA::AbstractBase_ptr &obj) const
           if (TAO_debug_level > 0)
             {
               ACE_DEBUG ((LM_WARNING,
-                          "TAO (%P|%t) WARNING: extracting "
-                          "valuetype using default ORB_Core\n"));
+                          ACE_TEXT ("TAO (%P|%t) WARNING: extracting ")
+                          ACE_TEXT ("abstract base using default ORB_Core\n")));
             }
         }
 
-      TAO_Valuetype_Adapter *adapter = orb_core->valuetype_adapter();
-      return adapter->stream_to_abstract_base (this->cdr_, obj);
+      // We don't want the rd_ptr to move, in case we are shared by
+      // another Any, so we use this to copy the state, not the buffer.
+      TAO_InputCDR for_reading (this->cdr_);
+
+      TAO_Valuetype_Adapter * const adapter =
+        orb_core->valuetype_adapter ();
+      return adapter->stream_to_abstract_base (for_reading, obj);
     }
-  catch (const ::CORBA::Exception&)
+   catch (::CORBA::Exception const &)
     {
     }
 
