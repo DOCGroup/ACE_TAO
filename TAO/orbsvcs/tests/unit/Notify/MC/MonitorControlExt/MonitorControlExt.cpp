@@ -116,6 +116,19 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
         madmin->obtain_named_notification_push_consumer (
           CosNotifyChannelAdmin::STRUCTURED_EVENT, pid, "supplier");
 
+      try
+        {
+          CosNotifyChannelAdmin::ProxyConsumer_var fake =
+            madmin->obtain_named_notification_push_consumer
+            (CosNotifyChannelAdmin::STRUCTURED_EVENT, pid, "supplier");
+          error("Expected a ProxyConsumer "
+                "NotifyMonitoringExt::NameAlreadyUsed exception");
+        }
+      catch (const NotifyMonitoringExt::NameAlreadyUsed&)
+        {
+          // This is expected
+        }
+
       stat_name = ecf_name + "/" + ec_name + "/" +
                   ACE_CString (NotifyMonitoringExt::EventChannelSupplierCount);
       stat = instance->get (stat_name);
@@ -126,6 +139,24 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
       count = stat->last_sample ();
       if (count != 1)
         error("Invalid supplier count");
+
+      CosNotifyChannelAdmin::StructuredProxyPushConsumer_var push_conproxy
+        = CosNotifyChannelAdmin::StructuredProxyPushConsumer::_narrow
+        (conproxy.in());
+      ACE_ASSERT (!CORBA::is_nil (push_conproxy.in()));
+      push_conproxy->disconnect_structured_push_consumer();
+
+      try
+        {
+          CosNotifyChannelAdmin::ProxyConsumer_var fake =
+            madmin->obtain_named_notification_push_consumer
+            (CosNotifyChannelAdmin::STRUCTURED_EVENT, pid, "supplier");
+        }
+      catch (const NotifyMonitoringExt::NameAlreadyUsed&)
+        {
+          error("Unexpected ProxyConsumer "
+                "NotifyMonitoringExt::NameAlreadyUsed exception");
+        }
 
       TAO_MonitorManager::shutdown ();
       orb->destroy ();
