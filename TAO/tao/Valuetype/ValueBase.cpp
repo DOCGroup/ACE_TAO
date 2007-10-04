@@ -177,13 +177,8 @@ CORBA::ValueBase::_tao_unmarshal (TAO_InputCDR &strm,
       return false;
     }
 
-  if (new_object != 0)
-    {
-      if (!new_object->_tao_unmarshal_v (strm))
-        {
-          return false;
-        }
-    }
+  if (new_object && ! new_object->_tao_unmarshal_v (strm))
+    return false;
 
   return retval;
 }
@@ -194,8 +189,8 @@ CORBA::ValueBase::_tao_unmarshal_pre (TAO_InputCDR &strm,
                                       CORBA::ValueBase *&valuetype,
                                       const char * const repo_id)
 {
-  // Value factories are reference counted, when we get a new value factory
-  // from the ORB, its reference count is increased.
+  // Value factories are reference counted.  When we get a new value
+  // factory from the ORB, its reference count is increased.
   CORBA::ValueFactory_var factory;
 
   // %! yet much to do ... look for +++ !
@@ -414,9 +409,9 @@ CORBA::ValueBase::_tao_validate_box_type (TAO_InputCDR &strm,
      CORBA::String_var repo_id_stream;
 
      if (!strm.read_string (repo_id_stream.inout ()))
-      {
-        return false;
-      }
+       {
+         return false;
+       }
 
      if (!ACE_OS::strcmp (repo_id_stream.in (), repo_id_expected))
        {  // Repository ids matched as expected
@@ -754,8 +749,9 @@ TAO_ChunkInfo::handle_chunking (TAO_InputCDR &strm)
     }
   else // (tag >= 0x7fffff00)
     {
-      // This should not happen since the valuetag of the nested values
-      // are always unmarshalled in the ValueBase::_tao_unmarshal_pre().
+      // This should not happen since the valuetag of the nested
+      // values are always unmarshalled in the
+      // ValueBase::_tao_unmarshal_pre().
       return false;
     }
 
