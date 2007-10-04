@@ -187,6 +187,11 @@ TAO_Notify_EventChannel::release (void)
   //@@ inform factory
 }
 
+void
+TAO_Notify_EventChannel::cleanup_proxy (CosNotifyChannelAdmin::ProxyID
+                                        , bool )
+{ }
+
 int
 TAO_Notify_EventChannel::shutdown (void)
 {

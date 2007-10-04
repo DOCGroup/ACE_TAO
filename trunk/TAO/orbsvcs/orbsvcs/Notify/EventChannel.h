@@ -93,6 +93,10 @@ public:
   TAO_Notify_ProxyConsumer * find_proxy_consumer (TAO_Notify::IdVec & id_path, size_t position);
   TAO_Notify_ProxySupplier * find_proxy_supplier (TAO_Notify::IdVec & id_path, size_t position);
 
+  // cleanup any proxy resources held by the EC
+  virtual void cleanup_proxy (CosNotifyChannelAdmin::ProxyID id
+			      , bool is_supplier);
+
   /// Shutdown
   virtual int shutdown (void);
   virtual void load_attrs(const TAO_Notify::NVPList& attrs);
