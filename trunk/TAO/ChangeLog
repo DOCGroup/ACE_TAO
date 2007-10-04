@@ -1,3 +1,11 @@
+Thu Oct  4 20:05:47 UTC 2007  Ciju John  <johnc at ociweb dot com>
+
+        * orbsvcs/tests/Security/ssliop_CSD:
+          This test demonstrates CSD (Custom Servant Dispatch)
+          incompatibility with SSLIOP transport protocol. Once this
+          incompatibility has been fixed this test can be turned on in the
+          nightly tests.
+
 Thu Oct  4 19:02:11 UTC 2007  Ciju John  <johnc at ociweb dot com>
 
         Cleanup Named proxies upon disconnect.
