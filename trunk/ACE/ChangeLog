@@ -1,3 +1,9 @@
+Fri Oct  5 12:20:00 UTC 2007  Simon Massey  <sma@prismtech.com>
+
+        * ace/config-lynxos.h:
+
+          Updated for 4.0 -> 4.2.
+
 Wed Oct  3 19:31:15 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Acceptor.cpp
