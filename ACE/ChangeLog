@@ -1,11 +1,5 @@
 Fri Oct  5 18:45:48 UTC 2007  Ossama Othman  <ossama_othman at symantec dot com>
 
-        * ace/Atomic_Op_T.h (mutex_):
-
-          Declare this member as mutable so that non-const mutex
-          methods may be called in const ACE_Atomic_Op_Ex methods without
-          casting away the constness.
-
         * ace/Atomic_Op_T.inl (ACE_Atomic_Op_Ex, operator=):
 
           Implement the assignment operator in terms of the copy
@@ -19,8 +13,7 @@ Fri Oct  5 18:45:48 UTC 2007  Ossama Othman  <ossama_othman at symantec dot com>
           (value):
 
           Removed casts that removed const-ness of the mutex_ member.
-          They are no longer necessary now that the mutex_ member is
-          mutable.
+          They aren't necessary in this case.
 
         * ace/Atomic_Op_T.cpp:
 
