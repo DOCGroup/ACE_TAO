@@ -1,3 +1,27 @@
+Fri Oct  5 18:45:48 UTC 2007  Ossama Othman  <ossama_othman at symantec dot com>
+
+        * ace/Atomic_Op_T.inl (ACE_Atomic_Op_Ex, operator=):
+
+          Implement the assignment operator in terms of the copy
+          constructor, not the other way around.  This (1) allows one less
+          lock to be held during copy construction, (2) allows for finer
+          grained locking during copy assignment, and (3) allows the
+          copy assignment operator to be implemented in a strongly
+          exception safe manner.
+
+        * ace/Atomic_Op_T.cpp:
+
+          Only include "ace/Log_Msg.h" if ACE_HAS_DUMP is defined.  It
+          isn't needed otherwise.
+
+        From Russell Mora
+        * ace/Atomic_Op_T.h:
+        * ace/Atomic_Op_T.inl:
+        * ace/Atomic_Op_T.cpp:
+
+          Parameterized argument types using type traits.  Avoids warnings
+          about references being taken of temporaries for built-in types.
+
 Fri Oct  5 12:20:00 UTC 2007  Simon Massey  <sma@prismtech.com>
 
         * ace/config-lynxos.h:
