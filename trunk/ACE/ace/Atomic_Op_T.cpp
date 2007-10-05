@@ -2,7 +2,10 @@
 #define ACE_ATOMIC_OP_T_CPP
 
 #include "ace/Atomic_Op_T.h"
-#include "ace/Log_Msg.h"
+
+#ifdef ACE_HAS_DUMP
+# include "ace/Log_Msg.h"
+#endif  /* ACE_HAS_DUMP */
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -27,7 +30,8 @@ ACE_Atomic_Op_Ex<ACE_LOCK, TYPE>::mutex (void)
   return this->mutex_;
 }
 
-template <class ACE_LOCK, class TYPE> void
+template <class ACE_LOCK, class TYPE>
+void
 ACE_Atomic_Op_Ex<ACE_LOCK, TYPE>::dump (void) const
 {
 #if defined (ACE_HAS_DUMP)
@@ -39,21 +43,21 @@ ACE_Atomic_Op_Ex<ACE_LOCK, TYPE>::dump (void) const
 }
 
 template <class ACE_LOCK, class TYPE>
-ACE_Atomic_Op_Ex<ACE_LOCK, TYPE>::ACE_Atomic_Op_Ex
-  (ACE_LOCK &mtx)
-  : mutex_ (mtx),
-    value_ (0)
+ACE_Atomic_Op_Ex<ACE_LOCK, TYPE>::ACE_Atomic_Op_Ex (ACE_LOCK & mtx)
+  : mutex_ (mtx)
+  , value_ (0)
 {
   // ACE_TRACE ("ACE_Atomic_Op_Ex<ACE_LOCK, TYPE>::ACE_Atomic_Op_Ex");
 }
 
 template <class ACE_LOCK, class TYPE>
-ACE_Atomic_Op_Ex<ACE_LOCK, TYPE>::ACE_Atomic_Op_Ex
-  (ACE_LOCK &mtx, const TYPE &c)
-  : mutex_ (mtx),
-    value_ (c)
+ACE_Atomic_Op_Ex<ACE_LOCK, TYPE>::ACE_Atomic_Op_Ex (
+  ACE_LOCK & mtx,
+  typename ACE_Atomic_Op_Ex<ACE_LOCK, TYPE>::arg_type c)
+  : mutex_ (mtx)
+  , value_ (c)
 {
-// ACE_TRACE ("ACE_Atomic_Op_Ex<ACE_LOCK, TYPE>::ACE_Atomic_Op_Ex");
+  // ACE_TRACE ("ACE_Atomic_Op_Ex<ACE_LOCK, TYPE>::ACE_Atomic_Op_Ex");
 }
 
 // ****************************************************************
@@ -66,7 +70,8 @@ ACE_Atomic_Op<ACE_LOCK, TYPE>::ACE_Atomic_Op (void)
 }
 
 template <class ACE_LOCK, class TYPE>
-ACE_Atomic_Op<ACE_LOCK, TYPE>::ACE_Atomic_Op (const TYPE &c)
+ACE_Atomic_Op<ACE_LOCK, TYPE>::ACE_Atomic_Op (
+  typename ACE_Atomic_Op<ACE_LOCK, TYPE>::arg_type c)
   : impl_ (own_mutex_, c)
 {
   // ACE_TRACE ("ACE_Atomic_Op<ACE_LOCK, TYPE>::ACE_Atomic_Op");
