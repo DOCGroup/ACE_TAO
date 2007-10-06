@@ -5,11 +5,12 @@
  * Date: 26-Jan-2006
  */
 
-#include <ace/streams.h>
-#include <ace/Time_Value.h>
-
 #include "common.h"
 #include "ReadHandler.h"
+
+#include <ace/streams.h>
+#include <ace/Time_Value.h>
+#include <ace/Log_Msg.h>
 
 /**
  * This macro is used to increase the invocation counter by one when entering
