@@ -1,3 +1,15 @@
+Sat Oct  6 17:55:09 UTC 2007  Ossama Othman  <ossama_othman at symantec dot com>
+
+        * examples/Reactor/TP_Reactor/ReadHandler.cpp:
+        * examples/Reactor/TP_Reactor/AcceptHandler.cpp:
+        * examples/Reactor/WFMO_Reactor/Prerun_State_Changes.cpp:
+        * examples/Reactor/WFMO_Reactor/APC.cpp:
+        * examples/Reactor/WFMO_Reactor/Registration.cpp:
+        * examples/Reactor/WFMO_Reactor/Console_Input.cpp:
+        * examples/Reactor/WFMO_Reactor/Directory_Changes.cpp:
+
+          Include "ace/Log_Msg.h" to pull in ACE logging macros.
+
 Fri Oct  5 18:45:48 UTC 2007  Ossama Othman  <ossama_othman at symantec dot com>
 
         * ace/Atomic_Op_T.inl (ACE_Atomic_Op_Ex, operator=):

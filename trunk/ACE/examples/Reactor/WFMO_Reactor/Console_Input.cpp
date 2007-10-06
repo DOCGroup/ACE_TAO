@@ -22,6 +22,7 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_main.h"
+#include "ace/Log_Msg.h"
 
 ACE_RCSID(WFMO_Reactor, Console_Input, "$Id$")
 
