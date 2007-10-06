@@ -22,6 +22,7 @@
 #include "ace/Reactor.h"
 #include "ace/OS_main.h"
 #include "ace/OS_NS_sys_socket.h"
+#include "ace/Log_Msg.h"
 
 ACE_RCSID(WFMO_Reactor, Prerun_State_Changes, "$Id$")
 

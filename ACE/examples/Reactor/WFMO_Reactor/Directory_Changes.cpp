@@ -25,6 +25,7 @@
 #include "ace/Reactor.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_fcntl.h"
+#include "ace/Log_Msg.h"
 
 ACE_RCSID(WFMO_Reactor, Directory_Changes, "$Id$")
 

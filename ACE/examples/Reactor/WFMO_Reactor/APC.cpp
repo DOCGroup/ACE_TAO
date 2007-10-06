@@ -25,6 +25,7 @@
 
 #include "ace/Reactor.h"
 #include "ace/Auto_Event.h"
+#include "ace/Log_Msg.h"
 
 ACE_RCSID(WFMO_Reactor, APC, "$Id$")
 

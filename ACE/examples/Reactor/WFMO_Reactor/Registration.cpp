@@ -40,6 +40,7 @@
 #include "ace/Reactor.h"
 #include "ace/Auto_Event.h"
 #include "ace/OS_NS_unistd.h"
+#include "ace/Log_Msg.h"
 
 ACE_RCSID(WFMO_Reactor, Registration, "$Id$")
 
