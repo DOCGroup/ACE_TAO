@@ -1,3 +1,22 @@
+Sun Oct  7 18:52:15 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Asynch_IO_Impl.h
+        * ace/CDR_Stream.h
+        * ace/FILE.h
+        * ace/FILE_IO.h
+        * ace/MEM_IO.h
+        * ace/Pipe.h
+        * ace/POSIX_Asynch_IO.h
+        * ace/Shared_Memory_Pool.h
+        * ace/SOCK_SEQPACK_Association.h
+        * ace/Svc_Handler.h
+        * ace/Synch_Options.h
+        * ace/Task.h
+        * ace/Thread.h
+        * ace/Thread_Manager.h
+        * ace/WIN32_Asynch_IO.h
+          Doxygen improvements
+
 Sat Oct  6 17:55:09 UTC 2007  Ossama Othman  <ossama_othman at symantec dot com>
 
         * examples/Reactor/TP_Reactor/ReadHandler.cpp:

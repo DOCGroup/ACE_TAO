@@ -121,16 +121,16 @@ public:
   /**
    * Turn the task into an active object, i.e., having <n_threads> of
    * control, all running at the <priority> level (see below) with the
-   * same <grp_id>, all of which invoke <Task::svc>.  Returns -1 if
+   * same @a grp_id, all of which invoke <Task::svc>.  Returns -1 if
    * failure occurs, returns 1 if Task is already an active object and
-   * <force_active> is false (i.e., do *not* create a new thread in
+   * @a force_active is false (i.e., do *not* create a new thread in
    * this case), and returns 0 if Task was not already an active
    * object and a thread is created successfully or thread is an
-   * active object and <force_active> is true.  Note that if
-   * <force_active> is true and there are already threads spawned in
-   * this <Task>, the <grp_id> parameter is ignored and the <grp_id>
+   * active object and @a force_active is true.  Note that if
+   * @a force_active is true and there are already threads spawned in
+   * this <Task>, the @a grp_id parameter is ignored and the @a grp_id
    * of any newly activated thread(s) will inherit the existing
-   * <grp_id> of the existing thread(s) in the <Task>.
+   * @a grp_id of the existing thread(s) in the <Task>.
    *
    * The <{flags}> are a bitwise-OR of the following:
    * = BEGIN<INDENT>
@@ -154,24 +154,24 @@ public:
    * EXTREMEMLY implementation-dependent, and are probably best
    * avoided.
    *
-   * If <thread_handles> != 0 it is assumed to be an array of @a n
+   * If @a thread_handles != 0 it is assumed to be an array of @a n
    * thread_handles that will be assigned the values of the thread
    * handles being spawned.  Returns -1 on failure (@c errno will
    * explain...), otherwise returns the group id of the threads.
    *
-   * Assigning <task> allows you to associate the newly spawned
-   * threads with an instance of ACE_Task_Base.  If <task> == 0, then
+   * Assigning @a task allows you to associate the newly spawned
+   * threads with an instance of ACE_Task_Base.  If @a task == 0, then
    * the new threads are associated automatically with @c this
-   * ACE_Task_Base.  Setting the <task> argument to value other than
+   * ACE_Task_Base.  Setting the @a task argument to value other than
    * @c this makes the thread manipulating methods, such as wait(),
    * suspend(), resume(), useless.  Threads spawned with user
-   * specified <task> value must therefore be manipulated thru
+   * specified @a task value must therefore be manipulated thru
    * ACE_Thread_Manager directly.
    *
-   * If <stack> != 0 it is assumed to be an array of @a n pointers to
+   * If @a stack != 0 it is assumed to be an array of @a n pointers to
    * the base of the stacks to use for the threads being spawned.
-   * Likewise, if <stack_size> != 0 it is assumed to be an array of
-   * @a n values indicating how big each of the corresponding <stack>s
+   * Likewise, if @a stack_size != 0 it is assumed to be an array of
+   * @a n values indicating how big each of the corresponding @a stacks
    * are.
    *
    *

@@ -324,8 +324,8 @@ public:
   /// Constructor.
   ACE_WIN32_Asynch_Read_Stream (ACE_WIN32_Proactor *win32_proactor);
 
-  /// This starts off an asynchronous read.  Upto <bytes_to_read> will
-  /// be read and stored in the <message_block>.
+  /// This starts off an asynchronous read.  Upto @a bytes_to_read will
+  /// be read and stored in the @a message_block.
   int read (ACE_Message_Block &message_block,
             size_t bytes_to_read,
             const void *act,
@@ -502,8 +502,8 @@ public:
   /// Constructor.
   ACE_WIN32_Asynch_Write_Stream (ACE_WIN32_Proactor *win32_proactor);
 
-  /// This starts off an asynchronous write.  Upto <bytes_to_write>
-  /// will be written from the <message_block>.
+  /// This starts off an asynchronous write.  Upto @a bytes_to_write
+  /// will be written from the @a message_block.
   int write (ACE_Message_Block &message_block,
              size_t bytes_to_write,
              const void *act,
@@ -677,9 +677,9 @@ public:
   ACE_WIN32_Asynch_Read_File (ACE_WIN32_Proactor *win32_proactor);
 
   /**
-   * This starts off an asynchronous read.  Upto <bytes_to_read> will
-   * be read and stored in the <message_block>.  The read will start
-   * at <offset> from the beginning of the file.
+   * This starts off an asynchronous read.  Upto @a bytes_to_read will
+   * be read and stored in the @a message_block.  The read will start
+   * at @a offset from the beginning of the file.
    */
   int read (ACE_Message_Block &message_block,
             size_t bytes_to_read,
@@ -771,7 +771,7 @@ private:
  *     <ACE_Handler::handle_write_file> on the <handler> instead
  *     of <ACE_Handler::handle_write_stream>.  No additional state
  *     is required by this class as ACE_Asynch_Result can store
- *     the <offset>.
+ *     the @a offset.
  */
 class ACE_Export ACE_WIN32_Asynch_Write_File_Result : public virtual ACE_Asynch_Write_File_Result_Impl,
                                                       public ACE_WIN32_Asynch_Write_Stream_Result
@@ -884,9 +884,9 @@ public:
   ACE_WIN32_Asynch_Write_File (ACE_WIN32_Proactor *win32_proactor);
 
   /**
-   * This starts off an asynchronous write.  Upto <bytes_to_write>
-   * will be write and stored in the <message_block>.  The write will
-   * start at <offset> from the beginning of the file.
+   * This starts off an asynchronous write.  Upto @a bytes_to_write
+   * will be write and stored in the @a message_block.  The write will
+   * start at @a offset from the beginning of the file.
    */
   int write (ACE_Message_Block &message_block,
              size_t bytes_to_write,
@@ -1093,12 +1093,12 @@ public:
   /**
    * This starts off an asynchronous accept.  The asynchronous accept
    * call also allows any initial data to be returned to the
-   * <handler>.  Upto <bytes_to_read> will be read and stored in the
-   * <message_block>.  The <accept_handle> will be used for the
+   * <handler>.  Upto @a bytes_to_read will be read and stored in the
+   * @a message_block.  The <accept_handle> will be used for the
    * <accept> call.  If (<accept_handle> == INVALID_HANDLE), a new
    * handle will be created.
    *
-   * <message_block> must be specified. This is because the address of
+   * @a message_block must be specified. This is because the address of
    * the new connection is placed at the end of this buffer.
    */
   int accept (ACE_Message_Block &message_block,
@@ -1505,9 +1505,9 @@ public:
    * handle to an open file.  <header_and_trailer> is a pointer to a
    * data structure that contains pointers to data to send before and
    * after the file data is sent.  Set this parameter to 0 if you only
-   * want to transmit the file data.  Upto <bytes_to_write> will be
+   * want to transmit the file data.  Upto @a bytes_to_write will be
    * written to the <socket>.  If you want to send the entire file,
-   * let <bytes_to_write> = 0.  <bytes_per_send> is the size of each
+   * let @a bytes_to_write = 0.  @a bytes_per_send is the size of each
    * block of data sent per send operation.  Please read the Win32
    * documentation on what the flags should be.
    */
@@ -1692,7 +1692,7 @@ public:
 
    /** This starts off an asynchronous read.  Upto
    * <message_block->total_size()> will be read and stored in the
-   * <message_block>.  <message_block>'s <wr_ptr> will be updated to reflect
+   * @a message_block.  @a message_block's <wr_ptr> will be updated to reflect
    * the added bytes if the read operation is successfully completed.
    * Return code of 1 means immediate success and <number_of_bytes_recvd>
    * will contain number of bytes read.  The <ACE_Handler::handle_read_dgram>
@@ -1701,11 +1701,11 @@ public:
    * errno to get the error code.
    *
    * Scatter/gather is supported on WIN32 by using the <message_block->cont()>
-   * method.  Up to ACE_IOV_MAX <message_block>'s are supported.  Upto
+   * method.  Up to ACE_IOV_MAX @a message_block's are supported.  Upto
    * <message_block->size()> bytes will be read into each <message block> for
-   * a total of <message_block->total_size()> bytes.  All <message_block>'s
+   * a total of <message_block->total_size()> bytes.  All @a message_block's
    * <wr_ptr>'s will be updated to reflect the added bytes for each
-   * <message_block>
+   * @a message_block
    */
   virtual ssize_t recv (ACE_Message_Block *message_block,
                         size_t &number_of_bytes_recvd,
@@ -1875,7 +1875,7 @@ public:
   virtual ~ACE_WIN32_Asynch_Write_Dgram (void);
 
   /** This starts off an asynchronous send.  Upto
-   * <message_block->total_length()> will be sent.  <message_block>'s
+   * <message_block->total_length()> will be sent.  @a message_block's
    * <rd_ptr> will be updated to reflect the sent bytes if the send operation
    * is successfully completed.
    * Return code of 1 means immediate success and <number_of_bytes_sent>
@@ -1885,11 +1885,11 @@ public:
    * errno to get the error code.
    *
    * Scatter/gather is supported on WIN32 by using the <message_block->cont()>
-   * method.  Up to ACE_IOV_MAX <message_block>'s are supported.  Upto
+   * method.  Up to ACE_IOV_MAX @a message_block's are supported.  Upto
    * <message_block->length()> bytes will be sent from each <message block>
    * for a total of <message_block->total_length()> bytes.  All
-   * <message_block>'s <rd_ptr>'s will be updated to reflect the bytes sent
-   * from each <message_block>.
+   * @a message_block's <rd_ptr>'s will be updated to reflect the bytes sent
+   * from each @a message_block.
    */
   virtual ssize_t send (ACE_Message_Block *message_block,
                         size_t &number_of_bytes_sent,

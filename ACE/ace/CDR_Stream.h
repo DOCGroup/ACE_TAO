@@ -978,7 +978,7 @@ private:
   ACE_CDR::Boolean read_wchar_array_i (ACE_CDR::WChar * x,
                                        ACE_CDR::ULong length);
 
-  /// Move the rd_ptr ahead by <offset> bytes.
+  /// Move the rd_ptr ahead by @a offset bytes.
   void rd_ptr (size_t offset);
 
   /// Points to the continuation field of the current message block.

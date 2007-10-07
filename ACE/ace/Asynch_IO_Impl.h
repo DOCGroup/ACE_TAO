@@ -158,8 +158,8 @@ class ACE_Export ACE_Asynch_Read_Stream_Impl : public virtual ACE_Asynch_Operati
 public:
   virtual ~ACE_Asynch_Read_Stream_Impl (void);
 
-  /// This starts off an asynchronous read. Upto <bytes_to_read> will
-  /// be read and stored in the <message_block>.
+  /// This starts off an asynchronous read. Upto @a bytes_to_read will
+  /// be read and stored in the @a message_block.
   virtual int read (ACE_Message_Block &message_block,
                     size_t bytes_to_read,
                     const void *act,
@@ -224,8 +224,8 @@ class ACE_Export ACE_Asynch_Write_Stream_Impl : public virtual ACE_Asynch_Operat
 public:
   virtual ~ACE_Asynch_Write_Stream_Impl (void);
 
-  /// This starts off an asynchronous write.  Upto <bytes_to_write>
-  /// will be written from the <message_block>.
+  /// This starts off an asynchronous write.  Upto @a bytes_to_write
+  /// will be written from the @a message_block.
   virtual int write (ACE_Message_Block &message_block,
                      size_t bytes_to_write,
                      const void *act,
@@ -291,9 +291,9 @@ public:
   virtual ~ACE_Asynch_Read_File_Impl (void);
 
   /**
-   * This starts off an asynchronous read.  Upto <bytes_to_read> will
-   * be read and stored in the <message_block>.  The read will start
-   * at <offset> from the beginning of the file.
+   * This starts off an asynchronous read.  Upto @a bytes_to_read will
+   * be read and stored in the @a message_block.  The read will start
+   * at @a offset from the beginning of the file.
    */
   virtual int read (ACE_Message_Block &message_block,
                     size_t bytes_to_read,
@@ -319,8 +319,8 @@ public:
                      int signal_number) = 0;
 #endif /* (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) */
 
-  /// This starts off an asynchronous read. Upto <bytes_to_read> will
-  /// be read and stored in the <message_block>.
+  /// This starts off an asynchronous read. Upto @a bytes_to_read will
+  /// be read and stored in the @a message_block.
   virtual int read (ACE_Message_Block &message_block,
                     size_t bytes_to_read,
                     const void *act,
@@ -376,9 +376,9 @@ public:
   virtual ~ACE_Asynch_Write_File_Impl (void);
 
   /**
-   * This starts off an asynchronous write.  Upto <bytes_to_write>
-   * will be write and stored in the <message_block>.  The write will
-   * start at <offset> from the beginning of the file.
+   * This starts off an asynchronous write.  Upto @a bytes_to_write
+   * will be write and stored in the @a message_block.  The write will
+   * start at @a offset from the beginning of the file.
    */
   virtual int write (ACE_Message_Block &message_block,
                      size_t bytes_to_write,
@@ -464,7 +464,7 @@ public:
    * This starts off an asynchronous accept.  The asynchronous accept
    * call also allows any initial data to be returned to the
    * <handler>.  Upto @a bytes_to_read will be read and stored in the
-   * <message_block>.  The @a accept_handle will be used for the
+   * @a message_block.  The @a accept_handle will be used for the
    * <accept> call.  If (@a accept_handle == INVALID_HANDLE), a new
    * handle will be created.
    *
@@ -651,7 +651,7 @@ public:
 
   /** This starts off an asynchronous read.  Upto
    * <message_block->total_size()> will be read and stored in the
-   * <message_block>.  <message_block>'s <wr_ptr> will be updated to reflect
+   * @a message_block.  @a message_block's <wr_ptr> will be updated to reflect
    * the added bytes if the read operation is successful completed.
    * Return code of 1 means immediate success and <number_of_bytes_recvd>
    * will contain number of bytes read.  The <ACE_Handler::handle_read_dgram>
@@ -660,11 +660,11 @@ public:
    * errno to get the error code.
    *
    * Scatter/gather is supported on WIN32 by using the <message_block->cont()>
-   * method.  Up to ACE_IOV_MAX <message_block>'s are supported.  Upto
+   * method.  Up to ACE_IOV_MAX @a message_block's are supported.  Upto
    * <message_block->size()> bytes will be read into each <message block> for
-   * a total of <message_block->total_size()> bytes.  All <message_block>'s
+   * a total of <message_block->total_size()> bytes.  All @a message_block's
    * <wr_ptr>'s will be updated to reflect the added bytes for each
-   * <message_block>
+   * @a message_block
    *
    * Priority of the operation is specified by <priority>. On POSIX4-Unix,
    * this is supported. Works like <nice> in Unix. Negative values are not
@@ -736,7 +736,7 @@ public:
   virtual ~ACE_Asynch_Write_Dgram_Impl (void);
 
   /** This starts off an asynchronous send.  Upto
-   * <message_block->total_length()> will be sent.  <message_block>'s
+   * <message_block->total_length()> will be sent.  @a message_block's
    * <rd_ptr> will be updated to reflect the sent bytes if the send operation
    * is successful completed.
    * Return code of 1 means immediate success and <number_of_bytes_sent>
@@ -746,11 +746,11 @@ public:
    * errno to get the error code.
    *
    * Scatter/gather is supported on WIN32 by using the <message_block->cont()>
-   * method.  Up to ACE_IOV_MAX <message_block>'s are supported.  Upto
+   * method.  Up to ACE_IOV_MAX @a message_block's are supported.  Upto
    * <message_block->length()> bytes will be sent from each <message block>
    * for a total of <message_block->total_length()> bytes.  All
-   * <message_block>'s <rd_ptr>'s will be updated to reflect the bytes sent
-   * from each <message_block>.
+   * @a message_block's <rd_ptr>'s will be updated to reflect the bytes sent
+   * from each @a message_block.
    *
    * Priority of the operation is specified by <priority>. On POSIX4-Unix,
    * this is supported. Works like <nice> in Unix. Negative values are not

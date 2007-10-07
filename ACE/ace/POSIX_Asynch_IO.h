@@ -288,8 +288,8 @@ public:
   /// Constructor.
   ACE_POSIX_Asynch_Read_Stream (ACE_POSIX_Proactor *posix_proactor);
 
-  /// This starts off an asynchronous read.  Upto <bytes_to_read> will
-  /// be read and stored in the <message_block>.
+  /// This starts off an asynchronous read.  Upto @a bytes_to_read will
+  /// be read and stored in the @a message_block.
   int read (ACE_Message_Block &message_block,
             size_t bytes_to_read,
             const void *act,
@@ -378,8 +378,8 @@ public:
   /// Constructor.
   ACE_POSIX_Asynch_Write_Stream (ACE_POSIX_Proactor *posix_proactor);
 
-  /// This starts off an asynchronous write.  Upto <bytes_to_write>
-  /// will be written from the <message_block>.
+  /// This starts off an asynchronous write.  Upto @a bytes_to_write
+  /// will be written from the @a message_block.
   int write (ACE_Message_Block &message_block,
              size_t bytes_to_write,
              const void *act,
@@ -456,9 +456,9 @@ public:
   ACE_POSIX_Asynch_Read_File (ACE_POSIX_Proactor *posix_proactor);
 
   /**
-   * This starts off an asynchronous read.  Upto <bytes_to_read> will
-   * be read and stored in the <message_block>.  The read will start
-   * at <offset> from the beginning of the file.
+   * This starts off an asynchronous read.  Upto @a bytes_to_read will
+   * be read and stored in the @a message_block.  The read will start
+   * at @a offset from the beginning of the file.
    */
   int read (ACE_Message_Block &message_block,
             size_t bytes_to_read,
@@ -500,7 +500,7 @@ private:
  *     <ACE_Handler::handle_write_file> on the <handler> instead of
  *     <ACE_Handler::handle_write_stream>.  No additional state is
  *     required by this class as <ACE_Asynch_Result> can store the
- *     <offset>.
+ *     @a offset.
  */
 class ACE_Export ACE_POSIX_Asynch_Write_File_Result : public virtual ACE_Asynch_Write_File_Result_Impl,
                                                       public ACE_POSIX_Asynch_Write_Stream_Result
@@ -552,9 +552,9 @@ public:
   ACE_POSIX_Asynch_Write_File (ACE_POSIX_Proactor *posix_proactor);
 
   /**
-   * This starts off an asynchronous write.  Upto <bytes_to_write>
-   * will be written and stored in the <message_block>.  The write will
-   * start at <offset> from the beginning of the file.
+   * This starts off an asynchronous write.  Upto @a bytes_to_write
+   * will be written and stored in the @a message_block.  The write will
+   * start at @a offset from the beginning of the file.
    */
   int write (ACE_Message_Block &message_block,
              size_t bytes_to_write,
@@ -684,12 +684,12 @@ public:
   /**
    * This starts off an asynchronous accept.  The asynchronous accept
    * call also allows any initial data to be returned to the
-   * <handler>.  Upto <bytes_to_read> will be read and stored in the
-   * <message_block>.  The <accept_handle> will be used for the
+   * <handler>.  Upto @a bytes_to_read will be read and stored in the
+   * @a message_block.  The <accept_handle> will be used for the
    * <accept> call.  If (<accept_handle> == INVALID_HANDLE), a new
    * handle will be created.
    *
-   * <message_block> must be specified. This is because the address of
+   * @a message_block must be specified. This is because the address of
    * the new connection is placed at the end of this buffer.
    */
   int accept (ACE_Message_Block &message_block,
@@ -1015,9 +1015,9 @@ public:
    * handle to an open file.  <header_and_trailer> is a pointer to a
    * data structure that contains pointers to data to send before and
    * after the file data is sent.  Set this parameter to 0 if you only
-   * want to transmit the file data.  Upto <bytes_to_write> will be
+   * want to transmit the file data.  Upto @a bytes_to_write will be
    * written to the <socket>.  If you want to send the entire file,
-   * let <bytes_to_write> = 0.  <bytes_per_send> is the size of each
+   * let @a bytes_to_write = 0.  @a bytes_per_send is the size of each
    * block of data sent per send operation. Please read the POSIX
    * documentation on what the flags should be.
    */

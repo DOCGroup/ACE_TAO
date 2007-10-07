@@ -142,7 +142,7 @@ protected:
 
   /**
    * Commits a new shared memory segment if necessary after an
-   * <acquire> or a signal.  <offset> is set to the new offset into
+   * <acquire> or a signal.  @a offset is set to the new offset into
    * the backing store.
    */
   virtual int commit_backing_store_name (size_t rounded_bytes,
