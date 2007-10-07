@@ -140,7 +140,7 @@ public:
                   const ACE_Time_Value *timeout = 0,
                   size_t *bytes_transferred = 0) const;
 
-  /// Send all the <message_block>s chained through their <next> and
+  /// Send all the @a message_blocks chained through their <next> and
   /// <cont> pointers.  This call uses the underlying OS gather-write
   /// operation to reduce the domain-crossing penalty.
   ssize_t send_n (const ACE_Message_Block *message_block,

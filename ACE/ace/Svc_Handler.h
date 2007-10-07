@@ -207,7 +207,7 @@ public:
 
   // = Accessors to set/get the connection recycler.
 
-  /// Set the recycler and the <recycling_act> that is used during
+  /// Set the recycler and the @a recycling_act that is used during
   /// purging and caching.
   virtual void recycler (ACE_Connection_Recycling_Strategy *recycler,
                          const void *recycling_act);
@@ -280,7 +280,7 @@ public:
   virtual ~ACE_Buffered_Svc_Handler (void);
 
   /**
-   * Insert the ACE_Message_Block chain rooted at <message_block>
+   * Insert the ACE_Message_Block chain rooted at @a message_block
    * into the ACE_Message_Queue with the designated @a timeout.  The
    * <flush> method will be called if this <put> causes the number of
    * bytes to exceed the maximum buffer size or if the timeout period

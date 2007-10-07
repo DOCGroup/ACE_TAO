@@ -494,25 +494,25 @@ public:
    * Spawn N new threads, which execute <func> with argument <arg>.
    * If <thread_ids> != 0 the thread_ids of successfully spawned
    * threads will be placed into the <thread_ids> buffer (which must
-   * be the same size as @a n).  If <stack> != 0 it is assumed to be an
+   * be the same size as @a n).  If @a stack != 0 it is assumed to be an
    * array of @a n pointers to the base of the stacks to use for the
-   * threads being spawned.  If <stack_size> != 0 it is assumed to be
+   * threads being spawned.  If @a stack_size != 0 it is assumed to be
    * an array of @a n values indicating how big each of the
-   * corresponding <stack>s are.  If <thread_handles> != 0 it is
+   * corresponding @a stacks are.  If @a thread_handles != 0 it is
    * assumed to be an array of @a n thread_handles that will be
    * assigned the values of the thread handles being spawned.
    *
    * Threads in Thread_Manager can be manipulated in groups based on
-   * <grp_id> or <task> using functions such as kill_grp() or
+   * @a grp_id or @a task using functions such as kill_grp() or
    * cancel_task().
    *
-   * If <grp_id> is assigned, the newly spawned threads are added into
+   * If @a grp_id is assigned, the newly spawned threads are added into
    * the group.  Otherwise, the Thread_Manager assigns these @a n
    * threads with a grp_id.  You should choose either assigning
-   * <grp_id> everytime, or let the Thread_Manager handles it for
+   * @a grp_id everytime, or let the Thread_Manager handles it for
    * you consistently.
    *
-   * The argument <task> is usually assigned by
+   * The argument @a task is usually assigned by
    * <ACE_Task_Base::activate>.  It associates the newly spawned
    * threads with an ACE_Task instance, which defaults to @c this.
    *
@@ -534,25 +534,25 @@ public:
    * Spawn N new threads, which execute <func> with argument <arg>.
    * If <thread_ids> != 0 the thread_ids of successfully spawned
    * threads will be placed into the <thread_ids> buffer (which must
-   * be the same size as @a n).  If <stack> != 0 it is assumed to be an
+   * be the same size as @a n).  If @a stack != 0 it is assumed to be an
    * array of @a n pointers to the base of the stacks to use for the
-   * threads being spawned.  If <stack_size> != 0 it is assumed to be
+   * threads being spawned.  If @a stack_size != 0 it is assumed to be
    * an array of @a n values indicating how big each of the
-   * corresponding <stack>s are.  If <thread_handles> != 0 it is
+   * corresponding @a stacks are.  If @a thread_handles != 0 it is
    * assumed to be an array of @a n thread_handles that will be
    * assigned the values of the thread handles being spawned.
    *
    * Threads in Thread_Manager can be manipulated in groups based on
-   * <grp_id> or <task> using functions such as kill_grp() or
+   * @a grp_id or @a task using functions such as kill_grp() or
    * cancel_task().
    *
-   * If <grp_id> is assigned, the newly spawned threads are added into
+   * If @a grp_id is assigned, the newly spawned threads are added into
    * the group.  Otherwise, the Thread_Manager assigns these @a n
    * threads with a grp_id.  You should choose either assigning
-   * <grp_id> everytime, or let the Thread_Manager handles it for
+   * @a grp_id everytime, or let the Thread_Manager handles it for
    * you consistently.
    *
-   * The argument <task> is usually assigned by
+   * The argument @a task is usually assigned by
    * <ACE_Task_Base::activate>.  It associates the newly spawned
    * threads with an ACE_Task instance, which defaults to @c this.
    *
@@ -836,9 +836,9 @@ public:
                        size_t n);
 
   /**
-   * Returns in <hthread_list> a list of up to @a n thread handles in
+   * Returns in @a hthread_list a list of up to @a n thread handles in
    * an ACE_Task_Base.  The caller must allocate memory for
-   * <hthread_list>.  In case of an error, -1 is returned. If no
+   * @a hthread_list.  In case of an error, -1 is returned. If no
    * requested values are found, 0 is returned, otherwise correct
    * number of retrieved values are returned.
    */
@@ -848,7 +848,7 @@ public:
 
   /**
    * Returns in @a thread_list a list of up to @a n thread ids in a
-   * group <grp_id>.  The caller must allocate the memory for
+   * group @a grp_id.  The caller must allocate the memory for
    * @a thread_list.  In case of an error, -1 is returned. If no
    * requested values are found, 0 is returned, otherwise correct
    * number of retrieved values are returned.
@@ -858,9 +858,9 @@ public:
                            size_t n);
 
   /**
-   * Returns in <hthread_list> a list of up to @a n thread handles in
-   * a group <grp_id>.  The caller must allocate memory for
-   * <hthread_list>.
+   * Returns in @a hthread_list a list of up to @a n thread handles in
+   * a group @a grp_id.  The caller must allocate memory for
+   * @a hthread_list.
    */
   ssize_t hthread_grp_list (int grp_id,
                             ACE_hthread_t hthread_list[],
@@ -1002,8 +1002,8 @@ protected:
 
   /**
    * Locate the thread descriptor address of the list occupied by
-   * <task>.  Returns 0 if <task> is not in the table doesn't contain
-   * <task>.
+   * @a task.  Returns 0 if @a task is not in the table doesn't contain
+   * @a task.
    */
   ACE_Thread_Descriptor *find_task (ACE_Task_Base *task,
                                     size_t slot = 0);
@@ -1042,12 +1042,12 @@ protected:
                    ACE_thread_t thread,
                    int enable = 1);
 
-  /// Apply <func> to all members of the table that match the <task>
+  /// Apply <func> to all members of the table that match the @a task
   int apply_task (ACE_Task_Base *task,
                   ACE_THR_MEMBER_FUNC,
                   int = 0);
 
-  /// Apply <func> to all members of the table that match the <grp_id>.
+  /// Apply <func> to all members of the table that match the @a grp_id.
   int apply_grp (int grp_id,
                  ACE_THR_MEMBER_FUNC func,
                  int arg = 0);

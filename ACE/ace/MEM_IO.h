@@ -238,7 +238,7 @@ public:
                 const ACE_Time_Value *timeout);
 
   /**
-   * Wait to to @a timeout amount of time to send the <message_block>.
+   * Wait to to @a timeout amount of time to send the @a message_block.
    * If <send> times out a -1 is returned with <errno == ETIME>.  If
    * it succeeds the number of bytes sent is returned.
    */
