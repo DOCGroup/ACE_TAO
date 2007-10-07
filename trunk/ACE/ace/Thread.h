@@ -98,7 +98,7 @@ public:
    * assumed to be an array of @a n pointers to the base of the stacks
    * to use for the threads being spawned.  Likewise, if @a stack_size
    * != 0 it is assumed to be an array of @a n values indicating how
-   * big each of the corresponding <stack>s are.  Returns the number
+   * big each of the corresponding @a stacks are.  Returns the number
    * of threads actually spawned (if this doesn't equal the number
    * requested then something has gone wrong and @c errno will
    * explain...).
@@ -119,11 +119,11 @@ public:
    * (if <thread_adapter> is non-0 then <func> and <args> are ignored
    * and are obtained from <thread_adapter>).  The thread_ids of
    * successfully spawned threads will be placed into the <thread_ids>
-   * buffer (which must be the same size as @a n).  If <stack> != 0 it
+   * buffer (which must be the same size as @a n).  If @a stack != 0 it
    * is assumed to be an array of @a n pointers to the base of the
-   * stacks to use for the threads being spawned.  If <stack_size> !=
+   * stacks to use for the threads being spawned.  If @a stack_size !=
    * 0 it is assumed to be an array of @a n values indicating how big
-   * each of the corresponding <stack>s are.  If <thread_handles> != 0
+   * each of the corresponding @a stacks are.  If @a thread_handles != 0
    * it is assumed to be an array of @a n thread_handles that will be
    * assigned the values of the thread handles being spawned.  Returns
    * the number of threads actually spawned (if this doesn't equal the
