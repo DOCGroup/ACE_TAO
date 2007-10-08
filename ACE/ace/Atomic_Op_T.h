@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -27,19 +27,19 @@ struct ACE_Type_Traits
 {
   typedef TYPE const & parameter_type;
 };
-  	 
+
 template<>
 struct ACE_Type_Traits<bool>
 {
   typedef bool parameter_type;
 };
-  	 
+
 template<>
 struct ACE_Type_Traits<char>
 {
   typedef char parameter_type;
 };
-  	 
+
 template<>
 struct ACE_Type_Traits<signed char>
 {
@@ -51,37 +51,37 @@ struct ACE_Type_Traits<unsigned char>
 {
   typedef unsigned char parameter_type;
 };
-  	 
+
 template<>
 struct ACE_Type_Traits<short>
 {
   typedef short parameter_type;
 };
-  	 
+
 template<>
 struct ACE_Type_Traits<unsigned short>
 {
   typedef unsigned short parameter_type;
 };
-  	 
+
 template<>
 struct ACE_Type_Traits<int>
 {
   typedef int parameter_type;
 };
-  	 
+
 template<>
 struct ACE_Type_Traits<unsigned int>
 {
   typedef unsigned int parameter_type;
 };
-  	 
+
 template<>
 struct ACE_Type_Traits<long>
 {
   typedef long parameter_type;
 };
-  	 
+
 template<>
 struct ACE_Type_Traits<unsigned long>
 {
@@ -110,19 +110,19 @@ struct ACE_Type_Traits<float>
 {
   typedef float parameter_type;
 };
-  	 
+
 template<>
 struct ACE_Type_Traits<double>
 {
   typedef double parameter_type;
 };
-  	 
+
 template<>
 struct ACE_Type_Traits<long double>
 {
   typedef long double parameter_type;
 };
-  	 
+
 template<typename TYPE>
 struct ACE_Type_Traits<TYPE*>
 {
