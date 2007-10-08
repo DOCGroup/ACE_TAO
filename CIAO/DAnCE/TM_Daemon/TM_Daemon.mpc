@@ -1,5 +1,30 @@
-project(TM_Daemon): ciao_server_dnc, dance_extension_stub, ciaoexe , ciao_domainapplicationmanager_dnc , ciao_config_handlers{
+project(TM_Daemon_stub): ciao_deployment_stub {
+
+  sharedname = TM_Daemon_stub
+
+  idlflags -= -GT
+  idlflags += -St \
+              -Wb,stub_export_macro=TM_DAEMON_STUB_Export \
+              -Wb,stub_export_include=TM_Daemon_stub_export.h \
+              -Wb,skel_export_macro=TM_DAEMON_SVNT_Export \
+              -Wb,skel_export_include=TM_Daemon_svnt_export.h
+
+  dynamicflags   = TM_DAEMON_STUB_BUILD_DLL
+
+  IDL_Files {
+    TM_Daemon.idl
+  }
+
+  Source_Files {
+    TM_DaemonC.cpp
+  }
+}
+
+project(TM_Daemon): ciao_domainapplicationmanager_dnc, ciao_config_handlers, taoserver {
+
   exename = TM_Daemon
+  after      +=  TM_Daemon_stub
+  libs       += TM_Daemon_stub
 
   includes += $(CIAO_ROOT)/DAnCE/NodeManager
 
@@ -14,14 +39,35 @@ project(TM_Daemon): ciao_server_dnc, dance_extension_stub, ciaoexe , ciao_domain
 
   Source_Files {
     TM_Daemon.cpp
+    TM_DaemonS.cpp
+    driver.cpp
     Client_Task.cpp
     DomainDataManager.cpp
-    ../NodeManager/NM_MonitorS.cpp
-    ../NodeManager/NM_MonitorC.cpp
-    $(CIAO_ROOT)/DAnCE/NodeApplication/App_MonitorC.cpp
     Handler_i.cpp
     utils/RT.cpp
     utils/Timer.cpp
+    // @@ NOTE: This is not the right way to do things! We must have
+    // created a project called nodemanager_stub which complies these
+    // files, and should have included the project here!
+    ../NodeManager/NM_MonitorS.cpp
+    ../NodeManager/NM_MonitorC.cpp
+    // @@ NOTE: Same comment.
+    $(CIAO_ROOT)/DAnCE/NodeApplication/App_MonitorC.cpp
+  }
+}
 
+project(TM_Daemon_client): ciao_deployment_stub, taoclient {
+
+  exename = client
+  after      +=  TM_Daemon_stub
+  libs       += TM_Daemon_stub
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    utils/RT.cpp
+    utils/Timer.cpp
+    client.cpp
   }
 }

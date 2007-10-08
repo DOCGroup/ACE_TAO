@@ -11,14 +11,6 @@ Client_Task::svc (void)
 {
   try
     {
-//       while (!manager->got_all_response ())
-//         {
-//           if (orb->work_pending ())
-//             {
-//               orb->perform_work ();
-//             }
-//         }
-
       this->orb_->run ();
     }
   catch (const CORBA::Exception&){}

@@ -1,9 +1,12 @@
-
 #include "NM_Monitor_Impl.h"
 #include "MonitorController.h"
 #include "NodeManager_Impl.h"
 #include <fstream>
 #include "ace/High_Res_Timer.h"
+
+// To set RT params.
+#include "ace/Sched_Params.h"
+#include "ace/OS_NS_errno.h"
 
 // Implementation skeleton constructor
 Onl_Monitor_NM_Monitor_i::
@@ -12,6 +15,30 @@ Onl_Monitor_NM_Monitor_i (::CIAO::MonitorController* controller,
   : controller_ (controller),
     node_manager_ (node_mgr)
 {
+      int priority =
+    (ACE_Sched_Params::priority_min (ACE_SCHED_FIFO)
+     + ACE_Sched_Params::priority_max (ACE_SCHED_FIFO)) / 2;
+  priority = ACE_Sched_Params::next_priority (ACE_SCHED_FIFO,
+                                                  priority);
+  // Enable FIFO scheduling, e.g., RT scheduling class on Solaris.
+
+  if (ACE_OS::sched_params (ACE_Sched_Params (ACE_SCHED_FIFO,
+                                              priority,
+                                              ACE_SCOPE_PROCESS)) != 0)
+    {
+      if (ACE_OS::last_error () == EPERM)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "NM_Monitor_Impl (%P|%t): user is not superuser, "
+                      "test runs in time-shared class\n"));
+        }
+      else
+        ACE_ERROR ((LM_ERROR,
+                    "NM_Monitor_Impl (%P|%t): sched_params failed\n"));
+    }
+  ACE_DEBUG ((LM_DEBUG,
+              "NM_Monitor_Impl (%P|%t): Done setting RT Sched params!\n"));
+
 }
 
 // Implementation skeleton destructor
@@ -22,12 +49,12 @@ Onl_Monitor_NM_Monitor_i::~Onl_Monitor_NM_Monitor_i (void)
 void Onl_Monitor_NM_Monitor_i::monitor_app_QoS (
     const ::Deployment::DeploymentPlan & plan)
 {
-  ACE_DEBUG ((LM_DEBUG, "\t\nInside the monitor_app_QoS\n"));
+  //  ACE_DEBUG ((LM_DEBUG, "\t\nInside the monitor_app_QoS\n"));
 
   auto_ptr<Deployment::Domain> domain =
       controller_->get_initial_domain ();
 
-  ACE_DEBUG ((LM_DEBUG, "\t\nAfter the get_initial_domain\n"));
+  //  ACE_DEBUG ((LM_DEBUG, "\t\nAfter the get_initial_domain\n"));
   ACE_CString key (plan.UUID.in ());
   key += "@";
   key += domain->node[0].name.in ();
@@ -59,36 +86,36 @@ void Onl_Monitor_NM_Monitor_i::monitor_app_QoS (
 {
   // Add your implementation here
 
-  ACE_DEBUG ((LM_DEBUG, "Inside the get_resource_data\n"));
+  //  ACE_DEBUG ((LM_DEBUG, "Inside the get_resource_data\n"));
   Deployment::Domain_var domainv;
 
   // time stamp the call to measure overhead of monitoring ...
 
-  ACE_High_Res_Timer time;
-  time.start ();
+  //  ACE_High_Res_Timer time;
+  //time.start ();
 
-  domainv = (this->controller_->update_data_for_TM ());
+  domainv = this->controller_->update_data_for_TM ();
 
   ::Deployment::QoSSpecifications_var qos_seq = this->qos_monitor_->get_app_QoS ();
 
-  time.stop ();
+  //time.stop ();
 
   domainv->node[0].qos_seq = qos_seq;
 
   //  ACE_Time_Value tv;
   //time.elapsed_time (tv);
 
-  ACE_hrtime_t tm;
-  time.elapsed_microseconds (tm);
+  //ACE_hrtime_t tm;
+  //time.elapsed_microseconds (tm);
 
-  std::string file_prox = domainv->node[0].name.in ();
+  //std::string file_prox = domainv->node[0].name.in ();
 
-  file_prox += "_Tprox";
+  //file_prox += "_Tprox";
 
-  std::ofstream out (file_prox.c_str (), ios::app);
+  //std::ofstream out (file_prox.c_str (), ios::app);
   //out << tv.msec () << std::endl;
-  out << tm << std::endl;
-  out.close ();
+  //out << tm << std::endl;
+  //out.close ();
 
   return domainv._retn ();
 }

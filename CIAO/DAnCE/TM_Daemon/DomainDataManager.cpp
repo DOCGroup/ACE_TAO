@@ -7,34 +7,30 @@
 #include <orbsvcs/CosNamingC.h>
 #include "utils/Exceptions.h"
 
+
 namespace CIAO
 {
     DomainDataManager::DomainDataManager (CORBA::ORB_ptr orb,
-                                          const char* dat_file)
+                                          const char *dat_file,
+                                          const char *domain_file,
+                                          ::Deployment::DeploymentPlan& plan)
+
       : orb_ (CORBA::ORB::_duplicate (orb)),
         deployment_config_ (orb_.in()),
         delay_ (utils::Timer ("delay")),
-        dat_file_ (dat_file)
+        plan_ (plan),
+        dat_file_ (dat_file),
+        condition_ (condition_mutex_)
+
     {
-      // @@ TODO need to make the domain filename as a command param.
-      CIAO::Config_Handlers::DD_Handler dd ("Domain.cdd");
+      CIAO::Config_Handlers::DD_Handler dd (domain_file);
       ::Deployment::Domain* dmn = dd.domain_idl ();
       current_domain_ = *dmn;
       initial_domain_ = current_domain_;
 
-      //this->current_domain_ = *dd.domain_idl ();
-      //this->initial_domain_ = *dd.domain_idl ();
-
       // set up the profile timers for each node
       for (CORBA::ULong i = 0; i < this->current_domain_.node.length (); ++i)
         {
-
-//           utils::Timer temp (this->current_domain_.node[i].name.in ());
-//           std::pair <std::string, utils::Timer> pair;
-//           pair.first = this->current_domain_.node[i].name.in ();
-//           pair.second = temp;
-//           this->node_timers_.insert (pair);
-
           this->node_timers_ [this->current_domain_.node[i].name.in ()] =
             new utils::Timer (this->current_domain_.node[i].name.in ());
         }
@@ -48,6 +44,10 @@ namespace CIAO
       this->get_monitor_obj_ref ();
 
     }
+
+  DomainDataManager::~DomainDataManager ()
+  {}
+
 
     int
     DomainDataManager::call_all_node_managers ()
@@ -127,12 +127,7 @@ namespace CIAO
                                       const ::Deployment::Domain & domainSubset,
                                       ::Deployment::DomainUpdateKind /*update_kind*/)
     {
-      // Update the subset of the domain which the above
-      // parameter corresponds to
-      //  ACE_DEBUG ((LM_DEBUG, "[TM] Update domain called\n"));
-
       //check the type of update ..
-
       return this->update_dynamic (domainSubset);
 
       //   switch (update_kind)
@@ -153,19 +148,23 @@ namespace CIAO
     int
     DomainDataManager::update_dynamic (const ::Deployment::Domain &domainSubset)
     {
-      //      CORBA::ULong const size = current_domain_.node.length ();
       this->node_info_map_ [domainSubset.node[0].name.in ()] = domainSubset.node[0];
+      this->node_timers_[domainSubset.node[0].name.in ()]->stop ();
 
+      // Acquire the mutex before making any modifications as multiple
+      // threads might try to do this simultaneously.
       this->mutex_.acquire ();
-      this->response_count_++;
-      CORBA::ULong temp_count = this->response_count_;
+      CORBA::ULong temp_count = --this->response_count_;
       this->mutex_.release ();
 
-      if (temp_count == this->current_domain_.node.length ())
+      //      ACE_DEBUG ((LM_DEBUG, "Waiting for %u replies to come in.\n", temp_count));
+      if (temp_count == 0)
         {
           // all responses have come in .... now timestamp the event
           this->delay_.stop ();
           this->delay_.dump ();
+          this->condition_.signal ();
+
           for (std::map<std::string, utils::Timer*>::iterator itr = this->node_timers_.begin ();
                itr != this->node_timers_.end ();
                itr++)
@@ -178,7 +177,6 @@ namespace CIAO
       //       CORBA::Double load;
       //       domainSubset.node[0].resource[0].property[0].value >>= load;
       //       ACE_DEBUG ((LM_DEBUG, "The current load is %f\n", load));
-      this->node_timers_[domainSubset.node[0].name.in ()]->stop ();
       //     CORBA::ULong response_time;
       //     domainSubset.node[0].qos_seq[0].value >>= response_time;
       //     ACE_DEBUG ((LM_DEBUG, "The response time is %u\n", response_time));
@@ -186,9 +184,7 @@ namespace CIAO
       return 0;
     }
 
-
-
-    void
+  void
     CIAO::DomainDataManager::stop_monitors ()
     {
 
@@ -267,14 +263,11 @@ namespace CIAO
     }
 
 
-    void
-    CIAO::DomainDataManager::get_all_data (Onl_Monitor::AMI_NM_MonitorHandler_ptr
-                                           handler)
+  std::map<std::string, ::Deployment::Node>
+  CIAO::DomainDataManager::get_all_data
+  (Onl_Monitor::AMI_NM_MonitorHandler_ptr handler)
     {
-      this->mutex_.acquire ();
-      this->response_count_ = 0;
-      this->mutex_.release ();
-
+      this->response_count_ = this->current_domain_.node.length ();
       this->delay_.start ();
 
       for (CORBA::ULong i = 0; i < this->node_monitors_.size (); ++i)
@@ -283,17 +276,20 @@ namespace CIAO
           this->node_timers_[this->current_domain_.node[i].name.in ()]->start ();
           this->node_monitors_[i]->sendc_get_resource_data (handler);
         }
+      this->condition_.wait ();
+      return this->node_info_map_;
+
     }
 
 
     int
     CIAO::DomainDataManager::
-    start_monitor_qos (Onl_Monitor::AMI_NM_MonitorHandler_ptr handler,
-                       ::Deployment::DeploymentPlan& plan)
+    start_monitor_qos (Onl_Monitor::AMI_NM_MonitorHandler_ptr handler)
     {
       for (CORBA::ULong i = 0; i < this->node_monitors_.size (); ++i)
         {
-          this->node_monitors_[i]->sendc_monitor_app_QoS (handler, plan);
+          this->node_monitors_[i]->sendc_monitor_app_QoS (handler,
+                                                          this->plan_);
         }
       return 0;
 
