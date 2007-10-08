@@ -9,7 +9,7 @@ Monitor_Handler_I::Monitor_Handler_I (CIAO::DomainDataManager* manager)
 void Monitor_Handler_I::get_resource_data (const ::Deployment::Domain
                                            &ami_return_val)
 {
-  //  ACE_DEBUG ((LM_DEBUG, "getresource data returns \n"));
+  //ACE_DEBUG ((LM_DEBUG, "get resource data returns \n"));
 
   ::CORBA::StringSeq elements;
   ::Deployment::DomainUpdateKind kind = ::Deployment::UpdateDynamic;
@@ -21,7 +21,7 @@ void Monitor_Handler_I::get_resource_data_excep (::Messaging::ExceptionHolder
                                                  * /*excep_holder */)
 {
   // handle the exception here ....
-  ACE_DEBUG ((LM_DEBUG, "getresource exception occured \n"));
+  ACE_DEBUG ((LM_DEBUG, "get resource exception occured \n"));
 
   //  ::Deployment::Domain ami_return_val;
 
@@ -33,7 +33,7 @@ void Monitor_Handler_I::get_resource_data_excep (::Messaging::ExceptionHolder
 
 void Monitor_Handler_I::monitor_app_QoS (void)
 {
-  //  ACE_DEBUG ((LM_DEBUG, "Monitor app QoS returned\n"));
+  ACE_DEBUG ((LM_DEBUG, "Monitor app QoS returned\n"));
 }
 
 void Monitor_Handler_I::monitor_app_QoS_excep (::Messaging::ExceptionHolder * /*excep_holder*/)

@@ -1,3 +1,30 @@
+Mon Oct  8 21:27:20 UTC 2007  Nilabja R  <nilabjar@dre.vanderbilt.edu>
+
+        * DAnCE/NodeApplication/App_Monitor_Impl.cpp:
+
+        * DAnCE/NodeManager/MonitorController.cpp:
+        * DAnCE/NodeManager/NM_Monitor_Impl.cpp:
+        * DAnCE/NodeManager/NodeManager.mpc:
+
+        * DAnCE/TM_Daemon/Client_Task.cpp:
+        * DAnCE/TM_Daemon/DomainDataManager.h:
+        * DAnCE/TM_Daemon/DomainDataManager.cpp:
+        * DAnCE/TM_Daemon/Handler_i.cpp:
+        * DAnCE/TM_Daemon/TM_Daemon.cpp:
+        * DAnCE/TM_Daemon/TM_Daemon.mpc:
+        * DAnCE/TM_Daemon/client.cpp:
+        * DAnCE/TM_Daemon/driver.cpp:
+
+        * examples/Hello/descriptors/NodeManagerMap.dat:
+
+        * examples/space/descriptors/Domain_3.cdd:
+        * examples/space/descriptors/NodeManagerMap_3.dat:
+        * examples/space/descriptors/NodeManagerMap_6.dat:
+        * examples/space/descriptors/NodeManagerMap_two.dat:
+        * examples/space/descriptors/SPACE_3.cdp:
+          Added a client to call the TM_Daemon. Added Domains, plans for 3 Nodes.
+          Made changes in TM_Daemon
+
 Fri Sep 21 22:18:53 UTC 2007  Nishanth Shanakran  <nshankar@nospam.com>
 
         * DAnCE/TM_Daemon/DomainDataManager.h:

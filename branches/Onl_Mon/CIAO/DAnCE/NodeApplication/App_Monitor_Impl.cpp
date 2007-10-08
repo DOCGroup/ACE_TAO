@@ -33,7 +33,7 @@ App_Monitor_i::~App_Monitor_i (void)
 {
   // Add your implementation here
 
-  ACE_DEBUG ((LM_DEBUG, "Get App QoS returns "));
+  //  ACE_DEBUG ((LM_DEBUG, "Get App QoS returns "));
 
   Deployment::QoSSpecifications *qos = new Deployment::QoSSpecifications ();
 
@@ -47,7 +47,7 @@ App_Monitor_i::~App_Monitor_i (void)
 void App_Monitor_i::start_timing ()
 {
   this->tmp_elapsed_time_ = 0;
-  ACE_DEBUG ((LM_DEBUG , "\r\n Inside the START_TIMING %u\n\n", this->elapsed_time_));
+  //  ACE_DEBUG ((LM_DEBUG , "\r\n Inside the START_TIMING %u\n\n", this->elapsed_time_));
   timer_.start ();
 }
 
@@ -63,5 +63,5 @@ void App_Monitor_i::stop_timing ()
 
   this->elapsed_time_ = usec;
 
-  ACE_DEBUG ((LM_DEBUG , "\r\n The time is %u\n\n", this->elapsed_time_));
+  //  ACE_DEBUG ((LM_DEBUG , "\r\n The time is %u\n\n", this->elapsed_time_));
 }

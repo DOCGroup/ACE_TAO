@@ -1,95 +1,90 @@
-#include "DomainDataManager.h"
-#include "Handler_i.h"
+#include "TM_Daemon.h"
 #include "Config_Handlers/XML_File_Intf.h"
-#include "Config_Handlers/DnC_Dump.h"
 #include "Client_Task.h"
-#include "utils/RT.h"
 
 namespace CIAO
 {
   namespace TM_Daemon
   {
-    int
-    run_main (int argc, char *argv[])
+
+
+    Daemon_impl::Daemon_impl (CORBA::ORB_ptr orb,
+                              const char *deployment_plan,
+                              const char *mapping,
+                              const char *domain,
+                              ::PortableServer::POA_ptr poa,
+                              size_t threads)
+      : orb_ (CORBA::ORB::_duplicate (orb)),
+        thread_count_ (threads)
+
     {
-      utils::set_priority ();
-      try
+
+      //      ACE_DEBUG ((LM_DEBUG, "Making call to intf \n"));
+      CIAO::Config_Handlers::XML_File_Intf intf (deployment_plan);
+      ::Deployment::DeploymentPlan_var plan = intf.get_plan ();
+      //      ACE_DEBUG ((LM_DEBUG, "After call to get plan \n"));
+
+      // Now create the manager.
+      this->manager_ = new DomainDataManager (orb, mapping, domain, plan);
+
+      // Create the AMI handler providing it with the object reference of
+      // the manager.
+      Monitor_Handler_I * handler_i = new  Monitor_Handler_I (this->manager_);
+      PortableServer::ObjectId_var id = poa->activate_object (handler_i);
+      CORBA::Object_var object = poa->id_to_reference (id.in ());
+      this->handler_  = Onl_Monitor::AMI_NM_MonitorHandler::_narrow (object.in ());
+
+      this->manager_->start_monitor_qos (this->handler_);
+      //      ACE_DEBUG ((LM_DEBUG, "Created the Daemon!\n"));
+
+    }
+
+    Daemon_impl::~Daemon_impl ()
+    {
+      //delete this->manager_;
+    }
+
+    int
+    Daemon_impl::run ()
+    {
+      // Now active the threads that run the orb.
+      Client_Task client_task (this->orb_.in ());
+      // Spawn multiple threads to run the orb event loop.
+      if (client_task.activate (THR_NEW_LWP | THR_JOINABLE,
+                                this->thread_count_) != 0)
         {
-          CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
-
-          CORBA::Object_var poa_object =
-            orb->resolve_initial_references ("RootPOA");
-
-          PortableServer::POA_var poa =
-            PortableServer::POA::_narrow (poa_object.in ());
-
-          PortableServer::POAManager_var poa_manager =
-            poa->the_POAManager ();
-
-          poa_manager->activate ();
-
-          // create the Domain data Manager
-          DomainDataManager* manager = new DomainDataManager (orb, argv[2]);
-
-//           // Wait for all the monitors to upload their obj. refs
-//           sleep (10);
-
-//           manager->get_monitor_obj_ref ();
-
-          ACE_DEBUG ((LM_DEBUG, "After get_monitor_obj_ref\n"));
-
-          Monitor_Handler_I handler_i (manager);
-          Onl_Monitor::AMI_NM_MonitorHandler_var handlerV =
-            handler_i._this ();
-
-          ACE_DEBUG ((LM_DEBUG, "Making call to intf \n"));
-
-          CIAO::Config_Handlers::XML_File_Intf intf (argv[1]);
-
-          ::Deployment::DeploymentPlan_var plan = intf.get_plan ();
-
-          ACE_DEBUG ((LM_DEBUG, "After call to get plan \n"));
-
-          manager->start_monitor_qos (handlerV, plan);
-
-          // Now active the threads that run the orb.
-          Client_Task client_task (orb.in ());
-          // Spawn multiple threads to run the orb event loop.
-          // @@ TODO: Need to make this configurable via command line param.
-          if (client_task.activate (THR_NEW_LWP | THR_JOINABLE,
-                                    4) != 0)
-            {
-              ACE_ERROR_RETURN ((LM_ERROR,
-                                 "Cannot activate client threads\n"), 1);
-            }
-          while (true)
-          {
-            // Sampling period.
-            // @@ TODO: Need to make this configurable.
-            sleep (5);
-            ACE_DEBUG ((LM_DEBUG, "Calling get_all_data\n"));
-            manager->get_all_data (handlerV);
-          }
-          // Wait for all the threads to complete execution.
-          client_task.thr_mgr ()->wait ();
-          // Finally destroy the ORB
-          orb->destroy ();
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Cannot activate ORB threads\n"), 1);
         }
-      catch (const CORBA::Exception& ex)
-      {
-        ex._tao_print_exception ("CIAO_TM_Daemon::main\n");
-        return -1;
-      }
-
-      ACE_DEBUG ((LM_DEBUG,
-            "CIAO_TM_Daemon has closed\n"));
+      ACE_DEBUG ((LM_DEBUG, "ORB threads have been activated, now waiting "
+                  "for incoming requests.\n"));
+      // Wait for all the threads to complete execution.
+      client_task.thr_mgr ()->wait ();
       return 0;
     }
-  }
-}
 
-int
-main (int argc, char *argv[])
-{
-  return CIAO::TM_Daemon::run_main (argc, argv);
+    ::Deployment::Domain*
+    Daemon_impl::get_snapshot (void)
+    {
+      //      ACE_DEBUG ((LM_DEBUG, "In get_snapshot!\n"));
+      ::Deployment::Domain_var domain = new ::Deployment::Domain ();
+      std::map<std::string, ::Deployment::Node> temp =
+        this->manager_->get_all_data (this->handler_);
+
+      domain->node.length (temp.size ());
+      std::map<std::string, ::Deployment::Node>::iterator itr = temp.begin ();
+      CORBA::ULong i = 0;
+      for (;itr != temp.end (); ++itr, ++i)
+        {
+          domain->node [i] = (*itr).second;
+        }
+      return domain._retn ();
+    }
+
+    void
+    Daemon_impl::shutdown ()
+    {
+      this->orb_->shutdown (0);
+    }
+  }
 }

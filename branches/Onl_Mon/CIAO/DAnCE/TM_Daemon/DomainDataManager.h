@@ -24,6 +24,7 @@
 #include <string>
 #include "utils/Timer.h"
 #include "ace/Mutex.h"
+#include "ace/Condition_T.h"
 
 using namespace ::CIAO::TM_Daemon;
 
@@ -57,7 +58,9 @@ namespace CIAO
        * node managers.
        */
       DomainDataManager (CORBA::ORB_ptr orb,
-                         const char* dat_file);
+                         const char *dat_file,
+                         const char *domain_file,
+                         ::Deployment::DeploymentPlan& plan);
 
       ~DomainDataManager ();
 
@@ -80,13 +83,13 @@ namespace CIAO
       /**
        * @brief signals all the nodes to send in data
        */
-      void get_all_data (Onl_Monitor::AMI_NM_MonitorHandler_ptr handler);
+      std::map<std::string, ::Deployment::Node>
+      get_all_data (Onl_Monitor::AMI_NM_MonitorHandler_ptr handler);
 
       /**
        * @brief tells all the node managers to start the monitoring of QoS
        */
-      int start_monitor_qos (Onl_Monitor::AMI_NM_MonitorHandler_ptr handler,
-                             ::Deployment::DeploymentPlan& plan);
+      int start_monitor_qos (Onl_Monitor::AMI_NM_MonitorHandler_ptr handler);
 
       void stop_monitors ();
 
@@ -143,9 +146,6 @@ namespace CIAO
       /// Exception occured
       bool ex_occur_;
 
-      //      /// guard
-      //      ACE_Thread_Mutex lock_;
-
       /// Timers for each node to measure data collection delay latency for
       /// each node
       std::map<std::string, utils::Timer*> node_timers_;
@@ -153,12 +153,20 @@ namespace CIAO
       /// Map used to store "dynamic information" of each node.
       std::map<std::string, ::Deployment::Node> node_info_map_;
 
+      /// Deployment plan.
+      ::Deployment::DeploymentPlan plan_;
+
       /// the Data file which contains the Node Manager references
       std::string dat_file_;
 
-      /// Thread mutex.
-      ACE_Mutex mutex_;
+      /// Condition varibale.
+      ACE_Thread_Condition <ACE_Thread_Mutex> condition_;
 
+      /// Mutex used by the condition varibale.
+      ACE_Thread_Mutex condition_mutex_;
+
+      /// Thread mutex.
+      ACE_Thread_Mutex mutex_;
     };
   }
 

@@ -24,7 +24,7 @@
 #include "NodeManager_Impl.h"
 
 #include "MonitorCB.h"
-#include "Profile_Code.h"
+//#include "Profile_Code.h"
 
 
 namespace CIAO
@@ -481,7 +481,7 @@ void CIAO::MonitorController::upload_obj_ref ()
 
   try
   {
-    naming_context->bind (name, monitorv_);
+    naming_context->rebind (name, monitorv_);
   }
   catch (CORBA::Exception& ex)
   {

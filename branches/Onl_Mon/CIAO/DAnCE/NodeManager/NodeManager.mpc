@@ -22,7 +22,7 @@ project(NodeManager_svnt): ciao_component_dnc, ciao_deployment_svnt, iortable, i
     MonitorCB.cpp
     NM_Monitor_Impl.cpp
     $(CIAO_ROOT)/DAnCE/NodeApplication/App_MonitorC.cpp
-    $(CIAO_ROOT)/DAnCE/TM_Daemon/Profile_Code.cpp
+    $(CIAO_ROOT)/DAnCE/TM_Daemon/utils/Timer.cpp
 
   }
 }
@@ -39,4 +39,3 @@ project(NodeManager): ciao_server_dnc, iortable, ifr_client, dance_extension_stu
     Node_Manager.cpp
   }
 }
-
