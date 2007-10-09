@@ -1,3 +1,14 @@
+Tue Oct  9 02:55:18 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tests/POA/EndpointPolicy/server.cpp:
+
+          fix to address bug 3075. Replace references to "localhost" with
+          the hostname obtained via ACE_OS::hostname(). If this causes
+          trouble on windows hosts that are improperly configured so that
+          they cannot resolve themselves, then a "-h <hostname>" command
+          line parameter can be added to the server to explicitly set the
+          hostname to localhost or something else as needed.
+
 Thu Oct  4 23:20:27 UTC 2007  Ossama Othman  <ossama_othman at symantec dot com>
 
         * tao/AnyTypeCode/Any_Unknown_IDL_Type.cpp (to_value):
@@ -219,7 +230,7 @@ Fri Sep 22 00:21:47 UTC 2007  Ossama Othman  <ossama_othman at symantec dot com>
 
         * orbsvcs/orbsvcs/Notify/XML_Saver.cpp (open):
 
-	  Do not call operator delete() on a FILE* created through
+          Do not call operator delete() on a FILE* created through
           fopen().  Finalize it using fclose() instead.
 
 Fri Sep 21 10:54:15 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
@@ -346,7 +357,7 @@ Thu Sep 20 07:12:15 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Wed Sep 19 04:10:15 CDT 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* TAO version 1.6.1 released.
+        * TAO version 1.6.1 released.
 
 Tue Sep 11 15:28:45 UTC 2007  Chad Elliott  <elliott_c@ociweb.com>
 
