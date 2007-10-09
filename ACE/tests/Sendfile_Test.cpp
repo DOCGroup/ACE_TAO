@@ -91,18 +91,28 @@ client (void *arg)
                   O_CREAT | O_RDWR | O_TRUNC,
                   ACE_DEFAULT_FILE_PERMS);
 
-  ACE_ASSERT (in_fd != ACE_INVALID_HANDLE);
+  if (in_fd == ACE_INVALID_HANDLE)
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) open %p\n"), test_file));
+      Test_Result = 1;
+      goto cleanup;
+    }
 
   ACE_OS::unlink (test_file);
 
   ssize_t const byte_count =
     ACE_OS::write (in_fd, buffer, sizeof (buffer));
 
-  ACE_ASSERT (byte_count == static_cast<ssize_t> (sizeof (buffer)));
+  if (byte_count != static_cast<ssize_t> (sizeof (buffer)))
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) write %p\n"), test_file));
+      Test_Result = 1;
+      goto cleanup;
+    }
 
   off_t offset = 0;
 
-   ssize_t len =
+  ssize_t len =
      ACE_OS::sendfile (cli_stream.get_handle (),
                        in_fd,
                        &offset,
@@ -116,8 +126,10 @@ client (void *arg)
       Test_Result = 1;
       goto cleanup;
     }
-  else
-    ACE_ASSERT (len == 255);
+  else if (len != 255)
+    ACE_ERROR ((LM_ERROR,
+                ACE_TEXT ("(%P|%t) sendfile len %b; should be 255\n"),
+                len));
 
   //*******************   TEST 2   ******************************
   //
@@ -135,16 +147,15 @@ client (void *arg)
   if (len != 255)
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("(%P|%t) %p; len is %d, but should be 255!\n"),
+                  ACE_TEXT ("(%P|%t) recv len is %b, but should be 255!\n"),
                   len));
     }
-  ACE_ASSERT (len == 255);
 
-  for (i = 0; i < 255; i++)
+  for (i = 0; i < static_cast<size_t>(len); i++)
     if (buffer2[i] != buffer[i])
       {
         ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("(%P|%t) Test 2, rcvd byte %d is %d, not %d\n"),
+                    ACE_TEXT ("(%P|%t) Test 2, rcvd byte %B is %d, not %d\n"),
                     i, buffer2[i], buffer[i]));
         Test_Result = 1;
       }
@@ -199,12 +210,18 @@ server (void *arg)
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("(%P|%t) %p\n"),
-                  ACE_TEXT ("Test 1, recvv failed")));
+                  ACE_TEXT ("Test 1, recv failed")));
       Test_Result = 1;
     }
 
-  ACE_ASSERT (len == 255);
-  for (i = 0; i < 255; i++)
+  if (len != 255)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("(%P|%t) recv len is %b, but should be 255!\n"),
+                  len));
+    }
+
+  for (i = 0; i < static_cast<int>(len); i++)
     if (buffer[i] != i)
       {
         ACE_ERROR ((LM_ERROR,
@@ -226,8 +243,12 @@ server (void *arg)
                        189,
                        &buffer[231],
                        24);
-  ACE_ASSERT (len == 255);
-
+  if (len != 255)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("(%P|%t) send len is %b, but should be 255!\n"),
+                  len));
+    }
 
   sock_str.close();
 
