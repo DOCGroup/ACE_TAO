@@ -1,3 +1,21 @@
+Tue Oct  9 23:33:27 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * bin/ace_tests.lst: Disable WFMO tests and HTBP tests on LabVIEW_RT.
+          LabVIEW_RT lacks Winsock 2 stuff needed for the WMFO tests, and the
+          HTBP test scripts aren't converted to work on LabVIEW RT.
+
+        * tests/MT_Reactor_Upcall_Test.cpp:
+        * tests/Reactor_Dispatch_Order_Test.cpp:
+        * tests/Reactor_Registration_Test.cpp: Test ACE_WFMO_Reactor if
+          ACE_HAS_WINSOCK2 != 0, not if == 0.
+
+        * tests/Sendfile_Test.cpp: Remove ACE_ASSERTs; correct some logging.
+
+        * tests/run_test.lst: Disable Env_Value_Test, Dirent_Test, and
+          Multicast_Test on LabVIEW RT. LabVIEW_RT doesn't have env variables,
+          the Dirent_Test expects too much of the build machine's directory
+          structure to be available, and LabVIEW_RT lacks Winsock 2 and mcast.
+
 Mon Oct  8 17:59:15 UTC 2007  Ossama Othman  <ossama_othman at symantec dot com>
 
         * ace/Atomic_Op_T.h:
