@@ -7,6 +7,7 @@
 #include "tao/ORB_Constants.h"
 #include "ace/OS_NS_strings.h"
 #include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_unistd.h"
 
 ACE_RCSID (Hello,
            server,
@@ -62,6 +63,9 @@ parse_args (int argc, char *argv[])
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
+  char hostname[256];
+
+  ACE_OS::hostname(hostname,256);
 
   CORBA::ORB_var orb;
   CORBA::Object_var obj;
@@ -74,13 +78,13 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   extra[0] = CORBA::string_dup("-ORBEndpoint");
   extra[1] = CORBA::string_alloc(100);
   ACE_OS::sprintf (extra[1],
-                   "iiop://localhost:%d",
-                   endpoint_port);
+                   "iiop://%s:%d",
+                   hostname, endpoint_port);
   extra[2] = CORBA::string_dup("-ORBEndpoint");
   extra[3] = CORBA::string_alloc(100);
   ACE_OS::sprintf (extra[3],
-                   "iiop://localhost:%d/hostname_in_ior=unreachable",
-                   endpoint_port+1);
+                   "iiop://%s:%d/hostname_in_ior=unreachable",
+                   hostname, endpoint_port+1);
 
   char **largv = new char *[argc+4];
   int i = 0;
@@ -133,7 +137,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
   EndpointPolicy::EndpointList list;
   list.length (1);
-  list[0] = new IIOPEndpointValue_i("localhost", endpoint_port);
+  list[0] = new IIOPEndpointValue_i(hostname, endpoint_port);
 
   try
     {
