@@ -209,7 +209,7 @@ run_main (int, ACE_TCHAR *[])
 
   // Winsock 2 things are needed for WFMO_Reactor.
 #if defined (ACE_WIN32) && \
-    (defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 == 0))
+    (defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0))
 
   ACE_WFMO_Reactor wfmo_reactor_impl;
   ACE_Reactor wfmo_reactor (&wfmo_reactor_impl);

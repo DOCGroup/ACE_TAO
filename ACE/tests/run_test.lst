@@ -56,11 +56,11 @@ DLL_Test: !Unicos !STATIC !KCC_Linux
 DLList_Test: !ACE_FOR_TAO
 Date_Time_Test: !ACE_FOR_TAO
 Dev_Poll_Reactor_Test: !nsk
-Dirent_Test: !VxWorks_RTP
+Dirent_Test: !VxWorks_RTP !LabVIEW_RT
 Dynamic_Priority_Test
 Dynamic_Test
 Enum_Interfaces_Test: !LynxOS !NO_NETWORK
-Env_Value_Test: !WinCE
+Env_Value_Test: !WinCE !LabVIEW_RT
 FIFO_Test: !ACE_FOR_TAO
 Framework_Component_Test: !STATIC !nsk
 Future_Set_Test: !DISABLE_ToFix_LynxOS_PPC !nsk !ACE_FOR_TAO
@@ -96,7 +96,7 @@ Message_Block_Test: !DISABLE_ToFix_LynxOS_PPC !ACE_FOR_TAO
 Message_Queue_Notifications_Test: !DISABLE_ToFix_LynxOS_PPC
 Message_Queue_Test: !ACE_FOR_TAO
 Message_Queue_Test_Ex: !ACE_FOR_TAO
-Multicast_Test: !ST !NO_MCAST !nsk !LynxOS
+Multicast_Test: !ST !NO_MCAST !nsk !LynxOS !LabVIEW_RT
 Multihomed_INET_Addr_Test: !ACE_FOR_TAO
 Naming_Test: !NO_OTHER !LynxOS !Unicos !VxWorks !nsk !ACE_FOR_TAO !PHARLAP
 Network_Adapters_Test: !DISABLE_ToFix_LynxOS_PPC !DISABLE_ToFix_LynxOS_x86

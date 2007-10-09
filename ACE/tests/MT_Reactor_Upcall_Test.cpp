@@ -359,7 +359,7 @@ run_main (int argc, ACE_TCHAR *argv[])
 #endif /* ACE_HAS_EVENT_POLL */
 
 #if defined (ACE_WIN32) && \
-    (defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 == 0))
+    (defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0))
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing WFMO Reactor\n")));
 
