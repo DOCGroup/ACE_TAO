@@ -956,7 +956,7 @@ be_visitor_ami_pre_proc::create_excep_operation (be_operation *node,
   UTL_ScopedName *tmp = (UTL_ScopedName *)sn->copy ();
 
   // Create the new name
-  // Append _execp to the name of the operation
+  // Append _excep to the name of the operation
   ACE_CString original_op_name (
                   node->name ()->last_component ()->get_string ()
                 );
@@ -992,7 +992,8 @@ be_visitor_ami_pre_proc::create_excep_operation (be_operation *node,
   operation->be_add_argument (arg);
   operation->set_defined_in (reply_handler);
 
-  UTL_ScopedName *arg_name = (UTL_ScopedName *)op_name->copy ();
+  UTL_ScopedName *arg_name =
+    dynamic_cast<UTL_ScopedName *> (op_name->copy ());
   arg_name->nconc (tmp);
   arg->set_name (arg_name);
   arg->set_defined_in (operation);

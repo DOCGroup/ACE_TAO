@@ -99,20 +99,32 @@ Identifier::Identifier (const char *s)
 
       shift = true;
       this->escaped_ = true;
-      ACE_CString str (s, 0, false);
+      ACE_CString str (s);
+      const char *c_prefix = "_cxx_";
 
       if (str.find ("_tc_") == 0
           || str.find ("_tao_") == 0)
         {
           shift = false;
         }
-      else if (str.find ("_cxx_") == 0)
+      else if (str.find (c_prefix) == 0)
         {
+          str = str.substr (ACE_OS::strlen (c_prefix));
+          const char *eh_suffix = "_excep";
+          ACE_CString::size_type pos =
+            str.length () - ACE_OS::strlen (eh_suffix);
+            
+          // If we have an AMI exception holder suffix, strip it off.
+          if (str.find (eh_suffix) == pos)
+            {
+              str = str.substr (0, pos);
+            }
+            
           TAO_IDL_CPP_Keyword_Table cpp_key_tbl;
           unsigned int len =
-            static_cast<unsigned int> (ACE_OS::strlen (s + 5));
+            static_cast<unsigned int> (str.length ());
           const TAO_IDL_CPP_Keyword_Entry *entry =
-            cpp_key_tbl.lookup (s + 5, len);
+            cpp_key_tbl.lookup (str.c_str (), len);
 
           if (entry != 0)
             {
