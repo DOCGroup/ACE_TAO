@@ -1,3 +1,19 @@
+Wed Oct 10 20:23:11 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_ami_pre_proc.cpp:
+        
+          Fixed typo in comment and changed a C-style cast to C++-style.
+          
+        * TAO_IDL/util/utl_identifier.cpp:
+        
+          Fixed check in the constructor for an escaped indentifier to
+          handle the case where a C++ keyword clash prefix and an AMI
+          exception holder suffix are both present in the arg string.
+          Thanks to Greg <ustrel at free dot fr> for reporting the 
+          compile failure that results from the mismatch between code
+          generated from the AMI 'implied IDL' node and code generated
+          from the original node and mangled on the fly.
+
 Tue Oct  9 02:55:18 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tests/POA/EndpointPolicy/server.cpp:
