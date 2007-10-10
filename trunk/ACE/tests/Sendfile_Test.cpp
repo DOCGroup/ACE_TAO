@@ -79,6 +79,9 @@ client (void *arg)
 
   u_char buffer[255];
   size_t i;
+  ssize_t byte_count = 0;
+  ssize_t len = 0;
+  off_t offset = 0;
 
   // The server will verify that this data pattern gets there intact.
 
@@ -100,23 +103,18 @@ client (void *arg)
 
   ACE_OS::unlink (test_file);
 
-  ssize_t const byte_count =
-    ACE_OS::write (in_fd, buffer, sizeof (buffer));
+  byte_count = ACE_OS::write (in_fd, buffer, sizeof (buffer));
 
   if (byte_count != static_cast<ssize_t> (sizeof (buffer)))
     {
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) write %p\n"), test_file));
       Test_Result = 1;
-      goto cleanup;
     }
 
-  off_t offset = 0;
-
-  ssize_t len =
-     ACE_OS::sendfile (cli_stream.get_handle (),
-                       in_fd,
-                       &offset,
-                       byte_count);
+  len = ACE_OS::sendfile (cli_stream.get_handle (),
+                          in_fd,
+                          &offset,
+                          byte_count);
 
   if (len == -1)
     {
