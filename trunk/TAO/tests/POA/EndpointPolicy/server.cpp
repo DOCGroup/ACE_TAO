@@ -90,8 +90,15 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   int i = 0;
   for (i = 0; i < argc; i++)
     largv[i] = argv[i];
+
+  ACE_DEBUG ((LM_DEBUG,"server adding args: "));
   for (i = 0; i < 4; i++)
-    largv[argc+i] = extra[i];
+    {
+      ACE_DEBUG ((LM_DEBUG,"%s ", extra[i]));
+      largv[argc+i] = extra[i];
+    }
+  ACE_DEBUG ((LM_DEBUG,"\n"));
+
   argc += 4;
 
   try
