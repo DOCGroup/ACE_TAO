@@ -1,3 +1,9 @@
+Thu Oct 11 12:22:57 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * THANKS:
+        
+          Added Grégor Boirie <gregor dot boirie at free dot fr>
+
 Wed Oct 10 11:33:40 UTC 2007  Steve Huston  <shuston@riverace.com>
 
         * tests/Sendfile_Test.cpp: Fix compile error on AIX.
