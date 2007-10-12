@@ -69,6 +69,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       test_var test_object = test::_narrow (object_act.in ());
 
       test_object->destroy_poa ();
+
+      orb->destroy ();
     }
   catch (const CORBA::Exception& ex)
     {

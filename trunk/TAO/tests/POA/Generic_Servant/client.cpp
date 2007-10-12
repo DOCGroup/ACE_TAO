@@ -174,6 +174,8 @@ main (int argc, char **argv)
         {
           test->shutdown ();
         }
+
+      orb->destroy ();
     }
   catch (const CORBA::Exception& ex)
     {

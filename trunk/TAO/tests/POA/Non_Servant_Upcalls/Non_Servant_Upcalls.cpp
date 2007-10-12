@@ -100,6 +100,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       root_poa->deactivate_object (id2.in ());
 
       root_poa->destroy (1, 1);
+
+      orb->destroy ();
     }
   catch (const CORBA::Exception& ex)
     {

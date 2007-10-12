@@ -275,6 +275,8 @@ main (int argc, char **argv)
       poa_manager->activate ();
 
       orb->run ();
+
+      orb->destroy ();
     }
   catch (const CORBA::Exception& ex)
     {

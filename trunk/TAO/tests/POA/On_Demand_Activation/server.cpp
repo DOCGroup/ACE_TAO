@@ -185,14 +185,11 @@ main (int argc, char **argv)
         }
 
       // Allocate the servant activator.
-      ServantActivator *activator;
-      ACE_NEW_RETURN (activator,
-                      ServantActivator (orb.in ()),
-                      0);
+      ServantActivator activator (orb.in ());
 
       // Set ServantActivator object as the servant_manager of
       // firstPOA.
-      first_poa->set_servant_manager (activator);
+      first_poa->set_servant_manager (&activator);
       // For the code above, we're using the CORBA 3.0 servant manager
       // semantics supported by TAO.  For CORBA 2.x ORBs you'd need to
       // use the following code in place of the previous line:
@@ -212,15 +209,12 @@ main (int argc, char **argv)
       CORBA::Object_var first_test =
         first_poa->create_reference_with_id (first_test_oid.in (), "IDL:test:1.0");
 
-      // Allocate the servant activator.
-      ServantLocator *locator;
-      ACE_NEW_RETURN (locator,
-                      ServantLocator (orb.in ()),
-                      0);
+      // Allocate the servant locator.
+      ServantLocator locator (orb.in ());
 
       // Set ServantLocator object as the servant Manager of
       // secondPOA.
-      second_poa->set_servant_manager (locator);
+      second_poa->set_servant_manager (&locator);
       // For the code above, we're using the CORBA 3.0 servant manager
       // semantics supported by TAO.  For CORBA 2.x ORBs you'd need to
       // use the following code in place of the previous line:
@@ -267,6 +261,8 @@ main (int argc, char **argv)
 
       // Run the ORB.
       orb->run ();
+
+      orb->destroy ();
     }
   catch (const CORBA::Exception& ex)
     {
