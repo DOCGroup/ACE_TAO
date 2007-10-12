@@ -31,7 +31,7 @@
 ACE_RCSID(tests, Reactor_Timer_Test, "$Id$")
 
 static int done = 0;
-static int count = 0;
+static int the_count = 0;
 static int odd = 0;
 
 class Time_Handler : public ACE_Event_Handler
@@ -84,19 +84,19 @@ Time_Handler::handle_timeout (const ACE_Time_Value &tv,
 {
   long current_count = static_cast<long> (reinterpret_cast<size_t> (arg));
   if (current_count >= 0)
-    ACE_ASSERT (current_count == count);
+    ACE_ASSERT (current_count == the_count);
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("[%x] Timer id %d with count #%d|%d timed out at %d!\n"),
               this,
               this->timer_id (),
-              count,
+              the_count,
               current_count,
               tv.sec ()));
 
   if (current_count == long (ACE_MAX_TIMERS - 1))
     done = 1;
-  else if (count == ACE_MAX_TIMERS - 1)
+  else if (the_count == ACE_MAX_TIMERS - 1)
     {
       done = 1;
       return -1;
@@ -104,12 +104,12 @@ Time_Handler::handle_timeout (const ACE_Time_Value &tv,
   else if (current_count == -1)
     {
       int result = ACE_Reactor::instance ()->reset_timer_interval (this->timer_id (),
-                                                                   ACE_Time_Value (count + 1));
+                                                                   ACE_Time_Value (the_count + 1));
       if (result == -1)
         ACE_ERROR ((LM_ERROR,
                     ACE_TEXT ("Error resetting timer interval\n")));
     }
-  count += (1 + odd);
+  the_count += (1 + odd);
   return 0;
 }
 
@@ -158,7 +158,7 @@ test_registering_one_handler (void)
   long t_id[ACE_MAX_TIMERS];
 
   done = 0;
-  count = 0;
+  the_count = 0;
 
   for (size_t i = 0; i < ACE_MAX_TIMERS; i++)
     {
@@ -183,7 +183,7 @@ test_canceling_odd_timers (void)
   long t_id[ACE_MAX_TIMERS];
 
   done = 0;
-  count = 1;
+  the_count = 1;
   odd = 1;
 
   for (size_t i = 0; i < ACE_MAX_TIMERS; i++)
@@ -220,7 +220,7 @@ test_resetting_timer_intervals (void)
   long t_id;
 
   done = 0;
-  count = 0;
+  the_count = 0;
   odd = 0;
 
   t_id =
