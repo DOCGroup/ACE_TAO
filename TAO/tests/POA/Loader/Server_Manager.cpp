@@ -14,6 +14,9 @@ Server_i::Server_i (void)
 
 Server_i::~Server_i (void)
 {
+  delete this->servant_activator_;
+  delete this->servant_locator_;
+  this->orb_->destroy ();
 }
 
 // This method parses the input.
@@ -222,7 +225,7 @@ Server_i::create_activator (PortableServer::POA_var first_poa)
     {
       // An Servant Activator object is created which will activate
       // the servant on demand.
-      PortableServer::ServantManager_ptr temp_servant_activator;
+      ServantActivator *temp_servant_activator;
       ACE_NEW_RETURN (temp_servant_activator,
                       ServantActivator (orb_.in (),
                                         "Generic_Servant",
@@ -233,7 +236,7 @@ Server_i::create_activator (PortableServer::POA_var first_poa)
       // Set ServantActivator object as the servant_manager of
       // firstPOA.
       this->servant_activator_ = temp_servant_activator;
-      first_poa->set_servant_manager (this->servant_activator_.in ());
+      first_poa->set_servant_manager (this->servant_activator_);
       // For the code above, we're using the CORBA 3.0 servant manager
       // semantics supported by TAO.  For CORBA 2.x ORBs you'd need to
       // use the following code in place of the previous lines:
@@ -270,7 +273,7 @@ Server_i::create_locator (PortableServer::POA_var second_poa)
     {
       // An Servant Locator object is created which will activate
       // the servant on demand.
-      PortableServer::ServantManager_ptr temp_servant_locator;
+      ServantLocator *temp_servant_locator;
       ACE_NEW_RETURN (temp_servant_locator,
                       ServantLocator (orb_.in (),
                                       "Generic_Servant",
@@ -280,7 +283,7 @@ Server_i::create_locator (PortableServer::POA_var second_poa)
       // Set ServantLocator object as the servant Manager of
       // secondPOA.
       this->servant_locator_ = temp_servant_locator;
-      second_poa->set_servant_manager (this->servant_locator_.in ());
+      second_poa->set_servant_manager (this->servant_locator_);
       // For the code above, we're using the CORBA 3.0 servant manager
       // semantics supported by TAO.  For CORBA 2.x ORBs you'd need to
       // use the following code in place of the previous lines:

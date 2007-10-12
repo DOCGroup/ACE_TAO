@@ -46,7 +46,8 @@ test_i::destroy_poa (void)
 PortableServer::POA_ptr
 init_orb (int argc,
           char **argv,
-          const char *orb_name)
+          const char *orb_name,
+          CORBA::ORB_ptr &orb_ptr)
 {
   // Initialize the ORB first.
   CORBA::ORB_var orb = CORBA::ORB_init (argc,
@@ -67,6 +68,7 @@ init_orb (int argc,
 
   poa_manager->activate ();
 
+  orb_ptr = orb._retn ();
   return root_poa._retn ();
 }
 
@@ -77,15 +79,19 @@ main (int argc,
 
   try
     {
+      CORBA::ORB_var orb1;
       PortableServer::POA_var first_poa =
         init_orb (argc,
                   argv,
-                  "first ORB");
+                  "first ORB",
+                  orb1.inout ());
 
+      CORBA::ORB_var orb2;
       PortableServer::POA_var second_poa =
         init_orb (argc,
                   argv,
-                  "second ORB");
+                  "second ORB",
+                  orb2.inout ());
 
       test_i servant;
       PortableServer::ObjectId_var id =
@@ -127,6 +133,9 @@ main (int argc,
       test_object->destroy_poa ();
 
       first_poa->destroy (1, 1);
+
+      orb1->destroy ();
+      orb2->destroy ();
     }
   catch (const CORBA::Exception& ex)
     {

@@ -149,6 +149,7 @@ main (int argc, char **argv)
       // Run the ORB
       orb->run ();
 
+      orb->destroy ();
     }
   catch (const CORBA::Exception& ex)
     {

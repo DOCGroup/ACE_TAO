@@ -270,21 +270,17 @@ main (int argc, char **argv)
       PortableServer::POAManager_var poa_manager =
         root_poa->the_POAManager ();
 
-      Adapter_Activator *adapter_activator =
-        new Adapter_Activator (poa_manager.in (),
-                               orb.in ());
+      Adapter_Activator adapter_activator (poa_manager.in (),
+                                           orb.in ());
 
-      PortableServer::AdapterActivator_var adapter_activator_var =
-        adapter_activator;
-
-      root_poa->the_activator (adapter_activator_var.in ());
+      root_poa->the_activator (&adapter_activator);
 
       PortableServer::POA_var first_poa;
       PortableServer::POA_var second_poa;
 
       {
         // Policies for the firstPOA to be created.
-        CORBA::PolicyList &policies = adapter_activator->first_poa_policies_;
+        CORBA::PolicyList &policies = adapter_activator.first_poa_policies_;
         policies.length (4);
 
         // Id Assignment Policy
@@ -311,7 +307,7 @@ main (int argc, char **argv)
 
       {
         // Policies for the secondPOA to be created.
-        CORBA::PolicyList &policies = adapter_activator->second_poa_policies_;
+        CORBA::PolicyList &policies = adapter_activator.second_poa_policies_;
         policies.length (2);
 
         // Id Assignment Policy
@@ -377,6 +373,7 @@ main (int argc, char **argv)
 
       orb->run ();
 
+      orb->destroy ();
     }
   catch (const CORBA::Exception& ex)
     {

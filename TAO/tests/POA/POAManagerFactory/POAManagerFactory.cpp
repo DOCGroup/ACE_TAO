@@ -264,6 +264,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       root_poa->destroy (1, 1);
 
+      orb->destroy ();
+
       if (verbose)
         ACE_DEBUG ((LM_DEBUG,ACE_TEXT ("passed\n")));
     }

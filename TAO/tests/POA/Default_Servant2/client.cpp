@@ -137,6 +137,8 @@ main (int argc, char **argv)
       fd->destroy ();
 
       file_system->shutdown ();
+
+      orb->destroy ();
     }
   catch (const CORBA::Exception& ex)
     {

@@ -92,10 +92,10 @@ private:
   CORBA::Object_var second_test_;
   // The object pointer used by the Servant Locator.
 
-  PortableServer::ServantManager_var servant_activator_;
+  ServantActivator *servant_activator_;
   // The servant activator object.
 
-  PortableServer::ServantManager_var servant_locator_;
+  ServantLocator *servant_locator_;
   // The servant locator object.
 };
 

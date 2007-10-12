@@ -1,3 +1,43 @@
+Fri Oct 12 15:18:40 UTC 2007  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * tests/POA/DSI/client.cpp:
+        * tests/POA/DSI/server.cpp:
+        * tests/POA/Non_Servant_Upcalls/Non_Servant_Upcalls.cpp:
+        * tests/POA/Single_Threaded_POA/Single_Threaded_POA.cpp:
+        * tests/POA/Current/Current.cpp:
+        * tests/POA/RootPOA/RootPOA.cpp:
+        * tests/POA/Bug_2511_Regression/server.cpp:
+        * tests/POA/Default_Servant/Default_Servant.cpp:
+        * tests/POA/Etherealization/Etherealization.cpp:
+        * tests/POA/POA_BiDir/POA_BiDir.cpp:
+        * tests/POA/NewPOA/NewPOA.cpp:
+        * tests/POA/Identity/Identity.cpp:
+        * tests/POA/Adapter_Activator/server.cpp:
+        * tests/POA/Deactivate_Object/server.cpp:
+        * tests/POA/Explicit_Activation/server.cpp:
+        * tests/POA/On_Demand_Activation/server.cpp:
+        * tests/POA/Loader/Server_Manager.cpp:
+        * tests/POA/Loader/Server_Manager.h:
+        * tests/POA/Default_Servant2/client.cpp:
+        * tests/POA/Default_Servant2/server.cpp:
+        * tests/POA/Generic_Servant/client.cpp:
+        * tests/POA/FindPOA/FindPOA.cpp:
+        * tests/POA/Nested_Non_Servant_Upcalls/Nested_Non_Servant_Upcalls.cpp:
+        * tests/POA/Reference_Counted_Servant/server.cpp:
+        * tests/POA/Bug_1592_Regression/client.cpp:
+        * tests/POA/Excessive_Object_Deactivations/Excessive_Object_Deactivations.cpp:
+        * tests/POA/Forwarding/client.cpp:
+        * tests/POA/Forwarding/server.cpp:
+        * tests/POA/POA_Destruction/POA_Destruction.cpp:
+        * tests/POA/POAManagerFactory/POAManagerFactory.cpp:
+        * tests/POA/wait_for_completion/wait_for_completion.cpp:
+        * tests/POA/MT_Servant_Locator/MT_Servant_Locator.cpp:
+        * tests/POA/Persistent_ID/client.cpp:
+        * tests/POA/Persistent_ID/server.cpp:
+        * tests/POA/Object_Reactivation/Object_Reactivation.cpp:
+          Memory leak fixes in these tests. Mostly it was missing call to
+	  destroy() for orb.
+
 Thu Oct 11 13:24:26 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tests/POA/EndpointPolicy/server.cpp:

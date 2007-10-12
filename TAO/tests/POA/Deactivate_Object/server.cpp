@@ -52,6 +52,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       ACE_ASSERT (hello_impl == servant.in());
 
       root_poa->deactivate_object (new_obj_id.in ());
+
+      orb->destroy ();
     }
   catch (const CORBA::Exception& ex)
     {

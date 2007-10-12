@@ -43,11 +43,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (object.in ());
 
+      orb->destroy ();
+
       ACE_DEBUG ((LM_DEBUG,
                   "%s successful\n",
                   argv[0]));
-
-      orb->destroy ();
     }
   catch (const CORBA::Exception& ex)
     {

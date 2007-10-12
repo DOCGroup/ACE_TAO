@@ -172,6 +172,7 @@ main (int argc, char **argv)
 
       print_poa (root_poa.in ());
 
+      orb->destroy ();
     }
   catch (const CORBA::Exception& ex)
     {

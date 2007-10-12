@@ -54,6 +54,8 @@ main (int argc, char **argv)
       ACE_DEBUG ((LM_DEBUG,
                   "The RootPOA is : %s\n",
                   poa_name.in ()));
+
+      orb->destroy ();
     }
   catch (const CORBA::Exception& ex)
     {
