@@ -215,8 +215,10 @@ public:
   };
   //@}
 
-  // Return 0 on failure and 1 on success.
-  //@{ @name Write operations
+  /**
+   * @{ @name Write operations
+   * Return 0 on failure and 1 on success.
+   */
   ACE_CDR::Boolean write_boolean (ACE_CDR::Boolean x);
   ACE_CDR::Boolean write_char (ACE_CDR::Char x);
   ACE_CDR::Boolean write_wchar (ACE_CDR::WChar x);
@@ -231,9 +233,30 @@ public:
   ACE_CDR::Boolean write_double (const ACE_CDR::Double &x);
   ACE_CDR::Boolean write_longdouble (const ACE_CDR::LongDouble &x);
 
-  // Overwrite the stream at the specified location that is previously
-  // written as a long type placeholder. There is no alignment required
-  // since the alignment is done before writing the long type placeholder.
+  /**
+   * Writes a ACE_CDR::Long value into a specific location. This is commonly
+   * used to update a prior location in the stream which was previously
+   * written as a ACE_CDR::Long placeholder. There is no alignment required
+   * since the alignment is done before writing the long type placeholder.
+   * Treatment of @a x with repect to byte swapping is the same as for when
+   * any ACE_CDR::Long value is inserted.
+   *
+   * @param x   The Long value to insert into the specified location.
+   * @param loc The location at which to insert @a x. @a loc must be a valid
+   *            position within the stream's current set of message blocks.
+   *
+   * @note An example use for this feature is:
+   * @code
+        ACE_OutputCDR strm;
+        ...   // insert values...
+        strm.align_write_ptr (ACE_CDR::LONG_SIZE);
+        char *pos = strm.current ().wr_ptr ();
+        strm.write_long (0);   // Placeholder value
+        ...   // insert more values
+        ACE_CDR::Long real_val;       // Somehow assign the "correct" value
+        strm.replace (real_val, pos); // Replace earlier placeholder
+      @endcode
+   */
   ACE_CDR::Boolean replace (ACE_CDR::Long x, char* loc);
 
   /// For string we offer methods that accept a precomputed length.

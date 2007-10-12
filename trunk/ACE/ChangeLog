@@ -1,3 +1,9 @@
+Fri Oct 12 21:28:34 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * ace/CDR_Stream.h: Fix the replace() method's comments to be included
+          in Doxygen output; expanded the description and included an example
+          for how to use replace().
+
 Fri Oct 12 20:08:02 UTC 2007  Steve Huston  <shuston@riverace.com>
 
         * include/makeinclude/rules.common.GNU: Mark __prebuild__ .PHONY so
