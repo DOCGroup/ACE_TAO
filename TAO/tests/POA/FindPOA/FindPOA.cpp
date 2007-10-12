@@ -83,12 +83,11 @@ main (int argc, char **argv)
                              1);
 
       // Get a TAO_Adapter_Activator reference
-      PortableServer::AdapterActivator_var activator =
-        new TAO::Portable_Server::Adapter_Activator (poa_manager.in ());
+      TAO::Portable_Server::Adapter_Activator activator (poa_manager.in ());
 
       // Register the TAO_Adapter_Activator reference to be the RootPOA's
       // Adapter Activator.
-      root_poa->the_activator (activator.in ());
+      root_poa->the_activator (&activator);
 
       // Try to find a childPOA of RootPOA named firstPOA
       ACE_CString name = "firstPOA";
@@ -123,6 +122,8 @@ main (int argc, char **argv)
                   root_poa_name.in (),
                   first_poa_name.in (),
                   second_poa_name.in ()));
+
+      orb->destroy ();
     }
   catch (const CORBA::Exception& ex)
     {

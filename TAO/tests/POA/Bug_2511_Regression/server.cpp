@@ -186,8 +186,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                               poa_manager.in (),
                               policies);
 
-      Servant_Locator* servant_locator = new Servant_Locator(child_poa.in ()) ;
-      child_poa->set_servant_manager (servant_locator);
+      Servant_Locator servant_locator (child_poa.in ());
+      child_poa->set_servant_manager (&servant_locator);
 
       PortableServer::ObjectId_var objectID =
         PortableServer::string_to_ObjectId ("object");
@@ -234,6 +234,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       ACE_DEBUG ((LM_DEBUG,"unsuccessfull: %d errors\n", errorCount ));
       }
 
+      orb->destroy ();
     }
   catch (const CORBA::Exception& ex)
     {

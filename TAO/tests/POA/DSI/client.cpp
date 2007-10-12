@@ -204,6 +204,7 @@ main (int argc, char **argv)
 
       ACE_OS::free (IOR);
 
+      orb->destroy ();
     }
   catch (const CORBA::Exception& ex)
     {

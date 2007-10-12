@@ -189,7 +189,7 @@ main (int argc,
       PortableServer::POA_var child_poa =
         setup_poa (root_poa.in ());
 
-      PortableServer::ServantManager_var manager =
+      ServantActivator *manager =
         create_servant_manager (orb.in (),
                                 child_poa.in ());
 
@@ -198,6 +198,8 @@ main (int argc,
       orb->run ();
 
       orb->destroy ();
+
+      delete manager;
     }
   catch (const CORBA::Exception& ex)
     {

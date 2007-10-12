@@ -149,11 +149,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       poa_manager->activate ();
 
       // Create servant activator.
-      PortableServer::ServantManager_var servant_manager =
-        new Servant_Activator;
+      Servant_Activator servant_manager;
 
       // Set servant_activator as the servant_manager of child POA.
-      child_poa->set_servant_manager (servant_manager.in ());
+      child_poa->set_servant_manager (&servant_manager);
 
       {
         // Create a reference with user created ID in child POA which
@@ -222,6 +221,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       ACE_DEBUG ((LM_DEBUG,
                   "\nEnd of main()\n\n"));
+
+      orb->destroy ();
     }
   catch (const CORBA::Exception& ex)
     {

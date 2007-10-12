@@ -118,6 +118,8 @@ main (int argc, char **argv)
       do_calls (test.in ());
 
       test->shutdown ();
+
+      orb->destroy ();
     }
   catch (const CORBA::Exception& ex)
     {
