@@ -3,7 +3,7 @@ Fri Oct 12 09:18:06 UTC 2007  Ossama Othman  <ossama_othman at symantec.com>
         * tests/Reactor_Timer_Test.cpp:
 
           Renamed global "count" variable to "the_count" to disambiguate
-          from the VxWorks STL "count" function.  Thanks to Johnny for
+          it from the VxWorks STL "count" function.  Thanks to Johnny for
           suggesting where the problem actually lied.
 
 Thu Oct 11 12:22:57 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
