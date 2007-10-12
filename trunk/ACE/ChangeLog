@@ -1,3 +1,10 @@
+Fri Oct 12 20:08:02 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * include/makeinclude/rules.common.GNU: Mark __prebuild__ .PHONY so
+          users with hand-made Makefiles, or those generated with older MPC
+          versions, will work correctly without the MPC-inserted __prebuild__
+          target.
+
 Fri Oct 12 09:18:06 UTC 2007  Ossama Othman  <ossama_othman at symantec.com>
 
         * tests/Reactor_Timer_Test.cpp:
