@@ -1,3 +1,11 @@
+Mon Oct 15 15:31:04 UTC 2007  Ciju John  <johnc at ociweb dot com>
+
+        * orbsvcs/tests/Notify/MC/notify.conf:
+        * orbsvcs/tests/Notify/MC/run_test.pl:
+          The Montoring Service now registers itself with the Naming
+          Service. The test script now directly passes the NS reference to
+          the Monitoring service.
+
 Fri Oct 12 17:17:21 UTC 2007  Ciju John  <johnc at ociweb dot com>
 
         * orbsvcs/tests/Security/ssliop_CSD/Messenger_i.h:
@@ -47,7 +55,7 @@ Fri Oct 12 15:18:40 UTC 2007  Vladimir Zykov  <vladimir.zykov@prismtech.com>
         * tests/POA/Persistent_ID/server.cpp:
         * tests/POA/Object_Reactivation/Object_Reactivation.cpp:
           Memory leak fixes in these tests. Mostly it was missing call to
-	  destroy() for orb.
+          destroy() for orb.
 
 Thu Oct 11 13:24:26 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
 

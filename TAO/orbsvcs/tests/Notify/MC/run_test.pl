@@ -18,6 +18,10 @@ my $notifyior = PerlACE::LocalFile('notify.ior');
 my $ready = PerlACE::LocalFile('ready.txt');
 my $notify_conf = PerlACE::LocalFile("notify$PerlACE::svcconf_ext");
 my $port = PerlACE::random_port();
+my $mc_conf= "dynamic TAO_MonitorAndControl Service_Object * ".
+    "TAO_CosNotification_MC:_make_TAO_MonitorAndControl () \\\"-o ".
+    "monitor.ior -ORBArg \\\"-ORBInitRef ".
+    "NameService=corbaloc:iiop:localhost:12345/NameService\\\"\\\"";
 my $nscorbaloc = "-ORBInitRef NameService=corbaloc:iiop:" .
                  "localhost:$port/NameService";
 my $NS = new PerlACE::Process("../../../Naming_Service/Naming_Service",
@@ -26,7 +30,7 @@ my $NS = new PerlACE::Process("../../../Naming_Service/Naming_Service",
 my $TS = new PerlACE::Process("../../../Notify_Service/Notify_Service",
                               "$nscorbaloc " .
                               "-IORoutput $notifyior -ORBSvcConf " .
-                              "$notify_conf");
+                              "$notify_conf -ORBSvcConfDirective \"$mc_conf\"");
 my $MON = new PerlACE::Process("test_monitor",
                                "-k file://$monitorior");
 my $STS = new PerlACE::Process("Structured_Supplier",
@@ -36,6 +40,7 @@ my $STC = new PerlACE::Process("Structured_Consumer",
 
 unlink($ior, $monitorior, $notifyior, $namingior, $ready);
 
+print $NS->CommandLine()."\n";
 $NS->Spawn();
 if (PerlACE::waitforfile_timed(
                  $namingior,
@@ -45,6 +50,7 @@ if (PerlACE::waitforfile_timed(
   exit(1);
 }
 
+print $TS->CommandLine()."\n";
 $TS->Spawn();
 if (PerlACE::waitforfile_timed(
                  $notifyior,
@@ -55,6 +61,7 @@ if (PerlACE::waitforfile_timed(
   exit(1);
 }
 
+print $MON->CommandLine()."\n";
 $MON->Spawn();
 if (PerlACE::waitforfile_timed(
                  $ior,
@@ -66,6 +73,7 @@ if (PerlACE::waitforfile_timed(
   exit(1);
 }
 
+print $STC->CommandLine()."\n";
 my $client = $STC->Spawn();
 if ($client != 0) {
   print STDERR "ERROR: starting the consumer\n";
@@ -89,6 +97,7 @@ if (PerlACE::waitforfile_timed(
   exit(1);
 }
 
+print $STS->CommandLine()."\n";
 my $server = $STS->SpawnWaitKill(30);
 if ($server != 0) {
   print STDERR "ERROR: waiting for the supplier\n";
