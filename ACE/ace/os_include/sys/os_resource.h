@@ -51,7 +51,7 @@ extern "C"
 #endif /* __cplusplus */
 
 // There must be a better way to do this...
-#if !defined (RLIMIT_NOFILE)
+#if !defined (RLIMIT_NOFILE) && !defined (ACE_LACKS_RLIMIT_NOFILE)
 #  if defined (linux) || defined (AIX) || defined (SCO)
 #    if defined (RLIMIT_OFILE)
 #      define RLIMIT_NOFILE RLIMIT_OFILE
