@@ -1,3 +1,11 @@
+Mon Oct 15 14:05:00 UTC 2007  Simon Massey  <simon.massey@prismtech.com>
+
+        * ace/ACE.cpp:
+        * ace/config-lynxos.h:
+        * ace/os_include/sys/os_resource.h:
+
+          Add #define ACE_LACKS_RLIMIT_NOFILE processing for Lynxos.
+
 Fri Oct 12 21:28:34 UTC 2007  Steve Huston  <shuston@riverace.com>
 
         * ace/CDR_Stream.h: Fix the replace() method's comments to be included
