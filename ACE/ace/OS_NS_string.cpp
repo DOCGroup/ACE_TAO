@@ -123,7 +123,7 @@ ACE_OS::strerror (int errnum)
 
 #if defined (ACE_HAS_TR24731_2005_CRT)
   errmsg = ret_errortext;
-  ACE_SECURECRTCALL (strerror_s (ret_errortext, sizeof (ret_errortext), errno),
+  ACE_SECURECRTCALL (strerror_s (ret_errortext, sizeof(ret_errortext), errnum),
                      char *, 0, errmsg);
   return errmsg;
 #elif defined (ACE_WIN32)
