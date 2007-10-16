@@ -23,7 +23,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "Null_Component_svnt.h"
+#include "Null_ComponentEC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -62,39 +62,36 @@ namespace CIDL_Null_Component_Impl
 
     // Port operations.
 
-    virtual ::CCM_Null_Interface_ptr get_null_facet ();
+    virtual ::CCM_Null_Interface_ptr
+    get_null_facet ();
 
     // Operations from Components::SessionComponent
 
     virtual void
-    set_session_context (::Components::SessionContext_ptr ctx);
+    set_session_context (
+      ::Components::SessionContext_ptr ctx);
 
-    virtual void
-    ciao_preactivate ();
+    virtual void ciao_preactivate ();
 
-    virtual void
-    ciao_postactivate ();
+    virtual void ciao_postactivate ();
 
-    virtual void
-    ccm_activate ();
+    virtual void ccm_activate ();
 
-    virtual void
-    ccm_passivate ();
+    virtual void ccm_passivate ();
 
-    virtual void
-    ccm_remove ();
+    virtual void ccm_remove ();
 
-    protected:
-    Null_Component_Context *context_;
+    private:
+    ::CCM_Null_Component_Context_var context_;
   };
 
-  class NULL_COMPONENT_EXEC_Export Null_Component_Home_exec_i
-    : public virtual Null_Component_Home_Exec,
+  class NULL_COMPONENT_EXEC_Export Null_ComponentHome_exec_i
+    : public virtual Null_ComponentHome_Exec,
       public virtual TAO_Local_RefCounted_Object
   {
     public:
-    Null_Component_Home_exec_i (void);
-    virtual ~Null_Component_Home_exec_i (void);
+    Null_ComponentHome_exec_i (void);
+    virtual ~Null_ComponentHome_exec_i (void);
 
     // Supported or inherited operations.
 
@@ -111,7 +108,7 @@ namespace CIDL_Null_Component_Impl
   };
 
   extern "C" NULL_COMPONENT_EXEC_Export ::Components::HomeExecutorBase_ptr
-  create_Null_Component_Home_Impl (void);
+  create_Null_ComponentHome_Impl (void);
 }
 
 #include /**/ "ace/post.h"

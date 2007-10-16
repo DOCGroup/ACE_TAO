@@ -29,7 +29,7 @@ component Null_Component
  *
  * @brief home for Null_Component
  */
-home Null_Component_Home manages Null_Component
+home Null_ComponentHome manages Null_Component
 {
 };
 
