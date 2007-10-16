@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<Deployment:ImplementationArtifactDescription xmlns:Deployment="http://www.omg.org/Deployment" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.omg.org/Deployment Deployment.xsd">
+<Deployment:implementationArtifactDescription xmlns:Deployment="http://www.omg.org/Deployment" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.omg.org/Deployment Deployment.xsd">
 
-  <UUID>_6BECFE2C-84AB-4B4A-B14C-DB8048563368</UUID>
+  <UUID>7D050E10-E0DC-4A7A-810D-E847ED9ACC04</UUID>
 
   <location>Null_Component_exec</location>
 
   <dependsOn>
-    <name>Null_Component_svnt</name>
+    <name>Null_Component.ImplementationArtifacts.Null_ComponentArtifacts.Null_Component_svnt</name>
     <referencedArtifact href="Null_Component_svnt.iad"/>
   </dependsOn>
 
   <dependsOn>
-    <name>Null_Component_stub</name>
+    <name>Null_Component.ImplementationArtifacts.Null_ComponentArtifacts.Null_Component_stub</name>
     <referencedArtifact href="Null_Component_stub.iad"/>
   </dependsOn>
 
@@ -22,9 +22,57 @@
         <kind>tk_string</kind>
       </type>
       <value>
-        <string>create_Null_Component_Home_Impl</string>
+        <string>create_Null_ComponentHome_Impl</string>
       </value>
     </value>
   </execParameter>
 
-</Deployment:ImplementationArtifactDescription>
+  <execParameter>
+    <name>architecture</name>
+    <value>
+      <type>
+        <kind>tk_string</kind>
+      </type>
+      <value>
+        <string>x86</string>
+      </value>
+    </value>
+  </execParameter>
+
+  <execParameter>
+    <name>artifactVersion</name>
+    <value>
+      <type>
+        <kind>tk_string</kind>
+      </type>
+      <value>
+        <string>0.0.0.0</string>
+      </value>
+    </value>
+  </execParameter>
+
+  <execParameter>
+    <name>configuration</name>
+    <value>
+      <type>
+        <kind>tk_string</kind>
+      </type>
+      <value>
+        <string>Release</string>
+      </value>
+    </value>
+  </execParameter>
+
+  <execParameter>
+    <name>operatingSystem</name>
+    <value>
+      <type>
+        <kind>tk_string</kind>
+      </type>
+      <value>
+        <string>Linux</string>
+      </value>
+    </value>
+  </execParameter>
+
+</Deployment:implementationArtifactDescription>

@@ -11,9 +11,9 @@
 
 composition session Null_Component_Impl 
 {
-  home executor Null_Component_Home_Exec
+  home executor Null_ComponentHome_Exec
   {
-    implements Null_Component_Home;
+    implements Null_ComponentHome;
     manages Null_Component_Exec;
   };
 };

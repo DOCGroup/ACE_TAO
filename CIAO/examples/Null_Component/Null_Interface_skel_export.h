@@ -2,7 +2,7 @@
 // -*- C++ -*-
 // $Id$
 // Definition for Win32 Export directives.
-// This file is generated automatically by generate_export_file.pl NULL_INTERFACE_SVNT
+// This file is generated automatically by generate_export_file.pl NULL_INTERFACE_SKEL
 // ------------------------------
 #ifndef NULL_INTERFACE_SKEL_EXPORT_H
 #define NULL_INTERFACE_SKEL_EXPORT_H
