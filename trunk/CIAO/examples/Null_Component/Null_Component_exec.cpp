@@ -75,10 +75,9 @@ namespace CIDL_Null_Component_Impl
     ::Components::SessionContext_ptr ctx)
   {
     this->context_ =
-      Null_Component_Context::_narrow (
-        ctx);
+      ::CCM_Null_Component_Context::_narrow (ctx);
 
-    if (this->context_ == 0)
+    if (CORBA::is_nil (this->context_.in ()))
     {
       throw ::CORBA::INTERNAL ();
     }
@@ -115,14 +114,14 @@ namespace CIDL_Null_Component_Impl
   }
 
   //==================================================================
-  // Home Executor Implementation Class:   Null_Component_Home_exec_i
+  // Home Executor Implementation Class:   Null_ComponentHome_exec_i
   //==================================================================
 
-  Null_Component_Home_exec_i::Null_Component_Home_exec_i (void)
+  Null_ComponentHome_exec_i::Null_ComponentHome_exec_i (void)
   {
   }
 
-  Null_Component_Home_exec_i::~Null_Component_Home_exec_i (void)
+  Null_ComponentHome_exec_i::~Null_ComponentHome_exec_i (void)
   {
   }
 
@@ -137,7 +136,7 @@ namespace CIDL_Null_Component_Impl
   // Implicit operations.
 
   ::Components::EnterpriseComponent_ptr
-  Null_Component_Home_exec_i::create ()
+  Null_ComponentHome_exec_i::create ()
   {
     ::Components::EnterpriseComponent_ptr retval =
       ::Components::EnterpriseComponent::_nil ();
@@ -151,14 +150,14 @@ namespace CIDL_Null_Component_Impl
   }
 
   extern "C" NULL_COMPONENT_EXEC_Export ::Components::HomeExecutorBase_ptr
-  create_Null_Component_Home_Impl (void)
+  create_Null_ComponentHome_Impl (void)
   {
     ::Components::HomeExecutorBase_ptr retval =
       ::Components::HomeExecutorBase::_nil ();
 
     ACE_NEW_RETURN (
       retval,
-      Null_Component_Home_exec_i,
+      Null_ComponentHome_exec_i,
       ::Components::HomeExecutorBase::_nil ());
 
     return retval;
