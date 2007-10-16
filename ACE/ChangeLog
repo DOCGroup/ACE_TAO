@@ -1,3 +1,9 @@
+Tue Oct 16 16:22:26 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * ace/OS_NS_string.cpp (strerror): Fix to pass correct error value to
+          strerror_s in the ACE_HAS_TR24731_2005_CRT case (VC8+ at least).
+          Thank you to Pavel Zaichenko for this fix.
+
 Mon Oct 15 14:05:00 UTC 2007  Simon Massey  <simon.massey@prismtech.com>
 
         * ace/ACE.cpp:
