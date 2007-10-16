@@ -27,8 +27,11 @@ Tue Oct 16 20:49:21 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
           Thu Oct  4 11:27:17 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
 
-        * examples/Null_Component/descriptors/Domain.cdd:
         * examples/Null_Component/descriptors/NodeMap.dat:
+
+          Removed blank lines. Blank lines now cause the deployment to fail.
+
+        * examples/Null_Component/descriptors/Domain.cdd:
         * examples/Null_Component/descriptors/Null_Assembly.cid:
         * examples/Null_Component/descriptors/Null_Assembly_Package.cpd:
         * examples/Null_Component/descriptors/Null_Component.ccd:
