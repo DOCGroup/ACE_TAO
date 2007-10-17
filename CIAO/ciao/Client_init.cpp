@@ -1,9 +1,10 @@
 // $Id$
 
 #include "Client_init.h"
-#include "CIAO_common.h"
 #include "CCM_ComponentC.h"
 #include "CCM_StandardConfiguratorC.h"
+#include "CIAO_common.h"
+
 #include "ace/Env_Value_T.h"
 
 int

@@ -13,6 +13,7 @@
 
 #ifndef CIAO_DYNAMIC_COMPONENT_ACTIVATOR_H
 #define CIAO_DYNAMIC_COMPONENT_ACTIVATOR_H
+
 #include /**/ "ace/pre.h"
 
 #include "ciao/CIAO_Server_Export.h"
@@ -24,12 +25,10 @@
 #include "ciao/CCM_ContainerC.h"
 
 #include "tao/PortableServer/Key_Adapters.h"
-#include "tao/PortableServer/PortableServer.h"
 #include "tao/LocalObject.h"
 #include "tao/PortableServer/ServantActivatorC.h"
 
 #include "ace/Hash_Map_Manager_T.h"
-#include "ace/Array_Base.h"
 
 #if defined(_MSC_VER)
 #pragma warning(push)
@@ -95,4 +94,5 @@ namespace CIAO
 #endif /* _MSC_VER */
 
 #include /**/ "ace/post.h"
+
 #endif /* CIAO_DYNAMIC_COMPONENT_ACTIVATOR_H */

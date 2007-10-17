@@ -11,15 +11,14 @@
 
 #ifndef CIAO_PORT_ACTIVATOR_H
 #define CIAO_PORT_ACTIVATOR_H
+
 #include /**/ "ace/pre.h"
 
-#include "ace/config-lite.h"
+#include "ciao/CIAO_Server_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
-#include "ciao/CIAO_Server_Export.h"
 
 #include "tao/PortableServer/PortableServer.h"
 
@@ -82,7 +81,6 @@ namespace CIAO
   };
 }
 
-
-
 #include /**/ "ace/post.h"
+
 #endif /*CIAO_PORT_ACTIVATOR_H*/

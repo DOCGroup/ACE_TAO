@@ -10,15 +10,17 @@
 
 #ifndef CIAO_COOKIES_H
 #define CIAO_COOKIES_H
+
 #include /**/ "ace/pre.h"
 
-#include "CCM_CookieC.h"
+#include "CIAO_Container_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "CIAO_Container_Export.h"
+#include "CCM_CookieC.h"
+
 #include "ace/Active_Map_Manager.h"
 
 namespace CIAO
@@ -49,8 +51,8 @@ namespace CIAO
    *
    * @brief Valuefactory implementation for Cookie_Impl.
    */
-  class CIAO_CONTAINER_Export Cookie_Impl_init :
-    public virtual Components::Cookie_init
+  class CIAO_CONTAINER_Export Cookie_Impl_init
+    : public virtual Components::Cookie_init
   {
   public:
     virtual ~Cookie_Impl_init (void);
@@ -61,7 +63,8 @@ namespace CIAO
 
 #if defined (__ACE_INLINE__)
 #include "Cookies.inl"
-#endif /* !defined INLINE */
+#endif /* defined INLINE */
 
 #include /**/ "ace/post.h"
+
 #endif /* CIAO_COOKIES_H */

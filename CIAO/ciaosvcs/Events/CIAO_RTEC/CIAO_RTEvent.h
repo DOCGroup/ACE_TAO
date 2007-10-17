@@ -13,17 +13,18 @@
 
 #ifndef CIAO_RTEVENT_H
 #define CIAO_RTEVENT_H
+
 #include /**/ "ace/pre.h"
 
-#include "ace/config-all.h"
+#include "CIAO_RTEVENT_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "CIAO_RTEVENT_Export.h"
-#include "ciaosvcs/Events/CIAO_Events_Base/CIAO_EventServiceBase.h"
 #include "CIAO_RTEventS.h"
+
+#include "ciaosvcs/Events/CIAO_Events_Base/CIAO_EventServiceBase.h"
 
 #include "orbsvcs/orbsvcs/Event_Utilities.h"
 #include "orbsvcs/orbsvcs/Event/EC_Event_Channel.h"
@@ -31,13 +32,10 @@
 #include "orbsvcs/Event/ECG_Mcast_EH.h"
 #include "orbsvcs/Event/ECG_UDP_Sender.h"
 #include "orbsvcs/Event/ECG_UDP_Receiver.h"
-#include "orbsvcs/Event/ECG_UDP_Out_Endpoint.h"
 #include "orbsvcs/Event/ECG_UDP_EH.h"
-#include "ace/Hash_Map_Manager.h"
 
 namespace CIAO
 {
-
   /**
    * @class RTEventService
    *
@@ -48,60 +46,47 @@ namespace CIAO
    *         This should be the place where the RtecEventChannel servant was
    *         first time initialized.
    */
-  class CIAO_RTEVENT_Export RTEventService :
-    public virtual EventServiceBase,
-    public virtual POA_CIAO::CIAO_RT_Event_Service
+  class CIAO_RTEVENT_Export RTEventService
+    : public virtual EventServiceBase,
+      public virtual POA_CIAO::CIAO_RT_Event_Service
   {
   public:
-
     RTEventService (CORBA::ORB_ptr orb,
                     PortableServer::POA_ptr poa,
                     const char * ec_name);
 
     virtual ~RTEventService (void);
 
-    virtual Supplier_Config_ptr
-    create_supplier_config (void);
-
-    virtual Consumer_Config_ptr
-    create_consumer_config (void);
+    virtual Supplier_Config_ptr create_supplier_config (void);
+    virtual Consumer_Config_ptr create_consumer_config (void);
 
     virtual void connect_event_supplier (
-        CIAO::Supplier_Config_ptr supplier_config);
+      CIAO::Supplier_Config_ptr supplier_config);
 
     virtual void connect_event_consumer (
-        CIAO::Consumer_Config_ptr consumer_config);
+      CIAO::Consumer_Config_ptr consumer_config);
 
-    virtual void
-    disconnect_event_supplier (
-        const char * consumer_id);
+    virtual void disconnect_event_supplier (const char * consumer_id);
+    virtual void disconnect_event_consumer (const char * connection_id);
 
-    virtual void disconnect_event_consumer (
-        const char * connection_id);
+    virtual void push_event (Components::EventBase * ev);
 
-    virtual void push_event (
-        Components::EventBase * ev);
+    virtual void ciao_push_event (Components::EventBase * evt,
+                                  const char * source_id,
+                                  CORBA::TypeCode_ptr tc);
 
-    virtual void ciao_push_event (
-        Components::EventBase * evt,
-        const char * source_id,
-        CORBA::TypeCode_ptr tc);
+    virtual ::CORBA::Boolean create_addr_serv (const char * name,
+                                               ::CORBA::UShort port,
+                                               const char * address);
 
-    virtual ::CORBA::Boolean create_addr_serv (
-        const char * name,
-        ::CORBA::UShort port,
-        const char * address);
+    virtual ::CORBA::Boolean create_sender (const char * addr_serv_id);
 
-    virtual ::CORBA::Boolean create_sender (
-        const char * addr_serv_id);
+    virtual ::CORBA::Boolean create_receiver (const char * addr_serv_id,
+                                              ::CORBA::Boolean is_multicast,
+                                              ::CORBA::UShort listen_port);
 
-    virtual ::CORBA::Boolean create_receiver (
-        const char * addr_serv_id,
-        ::CORBA::Boolean is_multicast,
-        ::CORBA::UShort listen_port);
-
-    virtual ::RtecEventChannelAdmin::EventChannel_ptr tao_rt_event_channel (
-      );
+    virtual
+    ::RtecEventChannelAdmin::EventChannel_ptr tao_rt_event_channel (void);
 
   private:
     // @@ (GD) This is the place where use could provide a parameter
@@ -109,7 +94,6 @@ namespace CIAO
     void create_rt_event_channel (const char * ec_name);
 
   private:
-
     /// Reference to the ORB
     CORBA::ORB_var orb_;
 
@@ -132,7 +116,8 @@ namespace CIAO
                             RtecEventChannelAdmin::ProxyPushConsumer_var,
                             ACE_Hash<ACE_CString>,
                             ACE_Equal_To<ACE_CString>,
-                            ACE_Null_Mutex> proxy_consumer_map_;
+                            ACE_Null_Mutex>
+      proxy_consumer_map_;
 
     /**
      * @var ACE_Hash_Map_Manager<> proxy_supplier_map_
@@ -143,7 +128,8 @@ namespace CIAO
                             RtecEventChannelAdmin::ProxyPushSupplier_var,
                             ACE_Hash<ACE_CString>,
                             ACE_Equal_To<ACE_CString>,
-                            ACE_Null_Mutex> proxy_supplier_map_;
+                            ACE_Null_Mutex>
+      proxy_supplier_map_;
 
     /**
      * @var ACE_Hash_Map_Manager<> addr_serv_map_
@@ -155,8 +141,8 @@ namespace CIAO
                             RtecUDPAdmin::AddrServer_var,
                             ACE_Hash<ACE_CString>,
                             ACE_Equal_To<ACE_CString>,
-                            ACE_Null_Mutex> addr_serv_map_;
-
+                            ACE_Null_Mutex>
+      addr_serv_map_;
   };
 
   /**
@@ -164,18 +150,15 @@ namespace CIAO
    *
    * An implementation of the PushSupplier interface.
    */
-  class RTEventServiceSupplier_impl :
-    public virtual POA_RtecEventComm::PushSupplier
+  class RTEventServiceSupplier_impl
+    : public virtual POA_RtecEventComm::PushSupplier
   {
   public:
+    RTEventServiceSupplier_impl (PortableServer::POA_ptr poa);
 
-    RTEventServiceSupplier_impl (
-      PortableServer::POA_ptr poa);
-
-    virtual void disconnect_push_supplier ();
+    virtual void disconnect_push_supplier (void);
 
   private:
-
     PortableServer::POA_var poa_;
   };
 
@@ -184,22 +167,18 @@ namespace CIAO
    *
    * An implementation of the PushConsumer interface.
    */
-  class RTEventServiceConsumer_impl :
-    public virtual POA_RtecEventComm::PushConsumer
+  class RTEventServiceConsumer_impl
+    : public virtual POA_RtecEventComm::PushConsumer
   {
   public:
+    RTEventServiceConsumer_impl (PortableServer::POA_ptr poa,
+                                 Components::EventConsumerBase_ptr consumer);
 
-    RTEventServiceConsumer_impl (
-      PortableServer::POA_ptr poa,
-      Components::EventConsumerBase_ptr consumer);
+    virtual void push (const RtecEventComm::EventSet& events);
 
-    virtual void push (
-      const RtecEventComm::EventSet& events);
-
-    virtual void disconnect_push_consumer ();
+    virtual void disconnect_push_consumer (void);
 
   private:
-
     PortableServer::POA_var poa_;
 
     Components::EventConsumerBase_var event_consumer_;
@@ -213,11 +192,10 @@ namespace CIAO
    * from @c CIAO::Container::create_consumer_config () when @c RTEC is
    * specified as the event service type.
    */
-  class RTEvent_Consumer_Config_impl :
-    public virtual POA_CIAO::RTEvent_Consumer_Config,
-    public virtual Event_Consumer_Config_Base
+  class RTEvent_Consumer_Config_impl
+    : public virtual POA_CIAO::RTEvent_Consumer_Config,
+      public virtual Event_Consumer_Config_Base
   {
-
   public:
     RTEvent_Consumer_Config_impl (PortableServer::POA_ptr poa);
 
@@ -242,14 +220,13 @@ namespace CIAO
     virtual EventServiceType service_type ();
 
     //@@ (GD) There should be a place where the deployment tool could
-  //        set up the rt_event_qos properties for Consumer Config.
+    //        set up the rt_event_qos properties for Consumer Config.
 
-    virtual RtecEventChannelAdmin::ConsumerQOS * rt_event_qos ();
+    virtual RtecEventChannelAdmin::ConsumerQOS * rt_event_qos (void);
 
-    virtual void destroy ();
+    virtual void destroy (void);
 
   private:
-
     ACE_CString consumer_id_;
 
     Components::EventConsumerBase_var consumer_;
@@ -269,8 +246,8 @@ namespace CIAO
    * from @c CIAO::Container::create_supplier_config () when @c RTEC is
    * specified as the event service type.
    */
-  class RTEvent_Supplier_Config_impl :
-    public virtual POA_CIAO::RTEvent_Supplier_Config
+  class RTEvent_Supplier_Config_impl
+    : public virtual POA_CIAO::RTEvent_Supplier_Config
   {
   public:
     RTEvent_Supplier_Config_impl (PortableServer::POA_ptr poa);
@@ -279,16 +256,16 @@ namespace CIAO
 
     void supplier_id (const char * supplier_id);
 
-    CONNECTION_ID supplier_id ();
+    CONNECTION_ID supplier_id (void);
 
-    EventServiceType service_type ();
+    EventServiceType service_type (void);
 
     //@@ (GD) There should be a place where the deployment tool could
     //        set up the rt_event_qos properties for Supplier Config.
 
-    RtecEventChannelAdmin::SupplierQOS * rt_event_qos ();
+    RtecEventChannelAdmin::SupplierQOS * rt_event_qos (void);
 
-    virtual void destroy ();
+    virtual void destroy (void);
 
   private:
     ACE_CString supplier_id_;
@@ -302,4 +279,5 @@ namespace CIAO
 }
 
 #include /**/ "ace/post.h"
+
 #endif /* CIAO_RTEVENT_H */

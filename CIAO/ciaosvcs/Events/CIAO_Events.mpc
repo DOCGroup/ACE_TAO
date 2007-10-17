@@ -13,6 +13,7 @@ project (CIAO_Events) : orbsvcslib, ciao_rtevent_dnc {
 
   Header_Files {
     CIAO_EventService_Factory_impl.h
+    CIAO_Events_Export.h
   }
 
   IDL_Files {
