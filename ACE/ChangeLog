@@ -1,3 +1,10 @@
+Wed Oct 17 16:03:19 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * bin/msvc_static_order.lst:
+
+          Added a few project to the static order list to resolve
+          problems on WinXP_VC71_CIAOCore_Static_Debug build.
+
 Wed Oct 17 14:00:00 UTC 2007  Simon Massey  <simon.massey@prismtech.com>
 
         * tests/Signal_Test.cpp:
@@ -6,7 +13,7 @@ Wed Oct 17 14:00:00 UTC 2007  Simon Massey  <simon.massey@prismtech.com>
 
           Have to reduce the number of iterations of the test for LynxOS
           otherwise it grossly timesout during automatic testing.
-          
+
           Add correct parameter processing for tasks being run with parameters.
 
 Wed Oct 17 12:00:00 UTC 2007  Simon Massey  <simon.massey@prismtech.com>
@@ -54,7 +61,7 @@ Fri Oct 12 09:18:06 UTC 2007  Ossama Othman  <ossama_othman at symantec.com>
 Thu Oct 11 12:22:57 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * THANKS:
-        
+
           Added Grégor Boirie <gregor dot boirie at free dot fr>
 
 Wed Oct 10 11:33:40 UTC 2007  Steve Huston  <shuston@riverace.com>
