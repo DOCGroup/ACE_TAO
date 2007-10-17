@@ -1,3 +1,22 @@
+Wed Oct 17 17:18:04 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * DAnCE/TargetManager/descriptors/NodeDetails.dat:
+        * DAnCE/TargetManager/descriptors/NodeManagerMap.dat:
+        * DAnCE/tests/scripts/BasicSP/basicsp.dat:
+        * docs/tutorials/Quoter/Simple/descriptors/Stock.dat:
+        * examples/BasicSP/descriptors/BasicSP.dat:
+        * examples/Display/descriptors/NodeManagerMap.dat:
+        * examples/Hello/descriptors/NodeManagerMap.dat:
+        * examples/Hello/descriptors_RTCCM/NodeManagerMap.dat:
+        * examples/Hello/descriptors_events/NodeManagerMap.dat:
+        * examples/Hello/descriptors_events/NodeManagerMapTwoHosts.dat:
+        * performance-tests/Benchmark/descriptors/test-multi-process.dat:
+        * performance-tests/Benchmark/descriptors/test.dat:
+        * performance-tests/Protocols/descriptors/test.dat:
+        * tests/Bug_2130_Regression/descriptors/TestNodeManagerMap.dat:
+
+          Removed blank lines. Blank lines now cause the deployment to fail.
+
 Wed Oct 17 15:28:42 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * MPC/config/ciao_client_dnc.mpb:
