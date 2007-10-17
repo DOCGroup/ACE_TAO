@@ -1,3 +1,79 @@
+Wed Oct 17 15:28:42 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * MPC/config/ciao_client_dnc.mpb:
+        * MPC/config/ciao_events_dnc.mpb:
+        
+          Removed ifr_client from base project list.
+
+Wed Oct 17 15:24:13 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * CIAO_TAO_DAnCE.mwc:
+
+           Removed unnecessary directories, removing 24 unused builds.
+
+        * ciao/IFR_Base.idl:
+
+           New file, containing a dummy IRObject interface, to be used
+           as the return type for an unimplemented operation in CCM_Home.
+
+        * ciao/CCM_Home.idl:
+
+           Changed include of IFR_Base.idl from the one in
+           TAO_ROOT/tao/IFR_Client to the new file above.
+
+        * ciao/CCM_Core.mpc:
+
+           Removed dependency on IFR_Client lib from all projects.
+
+        * ciao/Server_init.h:
+        * ciao/Client_init.cpp:
+        * ciao/Cookies.h:
+        * ciao/Servant_Impl_Base.h:
+        * ciao/StandardConfigurator_Impl.cpp:
+        * ciao/Swapping_Servant_Home_Impl_T.h:
+        * ciao/Swapping_Servant_Home_Impl_Base.cpp:
+        * ciao/Dynamic_Component_Activator.cpp:
+        * ciao/Server_init.cpp:
+        * ciao/Servant_Impl_Base.cpp:
+        * ciao/Servant_Activator.cpp:
+        * ciao/Swapping_Container.h:
+        * ciao/StandardConfigurator_Impl.h:
+        * ciao/Dynamic_Component_Activator.h:
+        * ciao/Dynamic_Component_Servant_Base.cpp:
+        * ciao/Servant_Activator.h:
+        * ciao/Context_Impl_Base.h:
+        * ciao/Container_Base.cpp:
+        * ciao/Session_Container.h:
+        * ciao/Cookies.cpp:
+        * ciao/Port_Activator.h:
+        * ciao/Client_init.h:
+        * ciao/Dynamic_Component_Servant_Base.h:
+        * ciao/Home_Servant_Impl_Base.h:
+        * ciao/Container_Base.h:
+        * ciao/Swapping_Servant_Home_Impl_Base.h:
+        * ciao/Session_Container.cpp:
+        * ciao/Upgradeable_Context_Impl_T.h:
+        * ciao/CIAO_common.h:
+        * ciao/Swapping_Container.cpp:
+        * ciaosvcs/Events/CIAO_EventService_Factory_impl.cpp:
+        * ciaosvcs/Events/CIAO_RTEC/CIAO_RTEvent.cpp:
+        * ciaosvcs/Events/CIAO_RTEC/SimpleAddressServer.cpp:
+        * ciaosvcs/Events/CIAO_RTEC/CIAO_RTEvent.h:
+        * ciaosvcs/Events/CIAO_RTEC/SimpleAddressServer.h:
+        * ciaosvcs/Events/CIAO_Events_Base/CIAO_Events_Base.mpc:
+        * ciaosvcs/Events/CIAO_Events_Base/CIAO_EventServiceBase.cpp:
+        * ciaosvcs/Events/CIAO_Events_Base/CIAO_EventServiceBase.h:
+        * ciaosvcs/Events/CIAO_EventService_Factory_impl.h:
+
+           Removed unnecessary #includes, and general cleanup of
+           formatting and #includes to follow ACE style guidelines.
+
+        * ciaosvcs/Events/CIAO_RTEC/CIAO_RTEvent.mpc:
+        * ciaosvcs/Events/CIAO_Events.mpc:
+
+           Added export header files to projects, so they will be seen
+           by developers using IDEs.
+
 Wed Oct 17 14:02:41 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * examples/Null_Component/plan.h:
