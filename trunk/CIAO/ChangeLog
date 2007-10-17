@@ -1,3 +1,14 @@
+Wed Oct 17 18:47:50 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * ciao/Swapping_Servant_Home_Impl_T.h:
+        * ciao/Upgradeable_Context_Impl_T.cpp:
+        
+          Restored included files needed at instantiation time.
+          
+        * ciaosvcs/Events/CIAO_RTEC\CIAO_RTEvent.cpp(create_rt_event_channel):
+        
+          Commented out unused arg.
+
 Wed Oct 17 17:18:04 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * DAnCE/TargetManager/descriptors/NodeDetails.dat:

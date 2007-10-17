@@ -26,6 +26,10 @@
 
 #include "ciao/Dynamic_Component_Servant_Base.h"
 
+#include "tao/PortableServer/Key_Adapters.h"
+
+#include "ace/Hash_Map_Manager_T.h"
+
 namespace CIAO
 {
   class Session_Container;

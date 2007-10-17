@@ -269,7 +269,7 @@ namespace CIAO
   }
 
   void
-  RTEventService::create_rt_event_channel (const char * ec_name)
+  RTEventService::create_rt_event_channel (const char * /* ec_name */)
   {
     if (CIAO::debug_level () > 10)
       {
