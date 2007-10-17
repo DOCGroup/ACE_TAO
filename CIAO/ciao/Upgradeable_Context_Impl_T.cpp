@@ -5,6 +5,8 @@
 
 #include "Upgradeable_Context_Impl_T.h"
 
+#include "ciao/Servant_Activator.h"
+
 namespace CIAO
 {
   template <typename BASE_CTX,
