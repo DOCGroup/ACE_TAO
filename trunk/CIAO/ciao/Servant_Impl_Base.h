@@ -13,27 +13,26 @@
  */
 //=============================================================================
 
-
 #ifndef CIAO_SERVANT_IMPL_BASE_H
 #define CIAO_SERVANT_IMPL_BASE_H
 
 #include /**/ "ace/pre.h"
-#include "ace/Hash_Map_Manager_T.h"
-#include "ace/Array_Map.h"
+
+#include "CIAO_Server_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Thread_Mutex.h"
+#include "Home_Servant_Impl_Base.h"
+#include "Servant_Activator.h"
 
-#include "CCM_EventsC.h"
-#include "CIAO_Server_Export.h"
 #include "CCM_ContainerC.h"
 #include "CCM_ObjectS.h"
 #include "CCM_StandardConfiguratorC.h"
-#include "Home_Servant_Impl_Base.h"
-#include "Servant_Activator.h"
+
+#include "ace/Hash_Map_Manager_T.h"
+#include "ace/Array_Map.h"
 
 namespace CIAO
 {
@@ -59,41 +58,29 @@ namespace CIAO
 
     /// Operations for CCMObject interface.
 
-    virtual ::Components::PrimaryKeyBase *
-    get_primary_key ();
+    virtual ::Components::PrimaryKeyBase * get_primary_key (void);
 
-    virtual CORBA::IRObject_ptr
-    get_component_def ();
+    virtual CORBA::IRObject_ptr get_component_def (void);
 
-    virtual Components::SessionComponent_ptr
-    get_executor ()
-      = 0;
+    virtual Components::SessionComponent_ptr get_executor (void) = 0;
 
-    virtual void
-    configuration_complete ();
+    virtual void configuration_complete (void);
 
-    virtual void
-    remove ();
+    virtual void remove (void);
 
     virtual ::Components::ConnectionDescriptions *
     get_connections (const char *name);
 
-    virtual ::Components::ComponentPortDescription *
-    get_all_ports ();
+    virtual ::Components::ComponentPortDescription * get_all_ports (void);
 
-    virtual CORBA::Object_ptr
-    provide_facet (const char *name);
+    virtual CORBA::Object_ptr provide_facet (const char *name);
 
     virtual ::Components::FacetDescriptions *
     get_named_facets (const ::Components::NameList & names);
 
-    virtual ::Components::FacetDescriptions *
-    get_all_facets ();
+    virtual ::Components::FacetDescriptions * get_all_facets (void);
 
-
-    virtual ::Components::ConsumerDescriptions *
-    get_all_consumers ();
-
+    virtual ::Components::ConsumerDescriptions * get_all_consumers (void);
 
     virtual ::Components::EventConsumerBase_ptr
     get_consumer (const char *sink_name);
@@ -108,7 +95,7 @@ namespace CIAO
     get_named_receptacles (const ::Components::NameList & names);
 
     virtual ::Components::ReceptacleDescriptions *
-    get_all_receptacles ();
+    get_all_receptacles (void);
 
     virtual ::Components::PublisherDescriptions *
     get_named_publishers (const ::Components::NameList & names);
@@ -118,13 +105,12 @@ namespace CIAO
 
     // Creates and returns the StandardConfigurator for the component.
     virtual ::Components::StandardConfigurator_ptr
-    get_standard_configurator ();
+    get_standard_configurator (void);
 
     /// Override that returns the (passed-in) default POA of our member
     /// component's container, to ensure that we get registered
     /// to that POA when _this() is called.
-    virtual PortableServer::POA_ptr _default_POA (
-      );
+    virtual PortableServer::POA_ptr _default_POA (void);
 
   protected:
     void add_facet (const char *port_name,
@@ -133,8 +119,7 @@ namespace CIAO
     CORBA::Object_ptr lookup_facet (const char *port_name);
 
     ::Components::FacetDescription *lookup_facet_description (
-        const char *port_name
-      );
+      const char *port_name);
 
     void add_receptacle (const char *receptacle_name,
                          CORBA::Object_ptr recept_ref,
@@ -144,12 +129,10 @@ namespace CIAO
                        ::Components::EventConsumerBase_ptr port_ref);
 
     ::Components::EventConsumerBase_ptr lookup_consumer (
-        const char *port_name
-      );
+      const char *port_name);
 
     ::Components::ConsumerDescription *lookup_consumer_description (
-        const char *port_name
-      );
+      const char *port_name);
 
     /// Called from generated servant class to help with
     /// get_all_*() methods.

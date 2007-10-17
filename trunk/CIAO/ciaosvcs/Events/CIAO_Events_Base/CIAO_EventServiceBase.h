@@ -13,13 +13,16 @@
 
 #ifndef CIAO_EVENTSERVICEBASE_H
 #define CIAO_EVENTSERVICEBASE_H
+
 #include /**/ "ace/pre.h"
 
-#include "CIAO_EventsS.h"
+#include "CIAO_Events_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "CIAO_EventsS.h"
 
 namespace CIAO
 {
@@ -31,8 +34,8 @@ namespace CIAO
    * implementations of the connect, disconnect, and push methods depending on
    * the event mechanism used.
    */
-  class CIAO_EVENTS_Export EventServiceBase :
-    public virtual POA_CIAO::CIAO_Event_Service
+  class CIAO_EVENTS_Export EventServiceBase
+    : public virtual POA_CIAO::CIAO_Event_Service
   {
   public:
     EventServiceBase (void);
@@ -86,14 +89,13 @@ namespace CIAO
      * Pushes event @c ev to all consumers. The source id of the
      * supplier is specified through @c source_id.
      */
-    virtual void ciao_push_event (
-        ::Components::EventBase * evt,
-        const char * source_id,
-        ::CORBA::TypeCode_ptr tc);
+    virtual void ciao_push_event (::Components::EventBase * evt,
+                                  const char * source_id,
+                                  ::CORBA::TypeCode_ptr tc);
   };
 
-  class Event_Consumer_Config_Base :
-    public virtual POA_CIAO::Consumer_Config
+  class Event_Consumer_Config_Base
+    : public virtual POA_CIAO::Consumer_Config
   {
   public:
     virtual void start_conjunction_group (::CORBA::Long size) = 0;
@@ -107,4 +109,5 @@ namespace CIAO
 }
 
 #include /**/ "ace/post.h"
+
 #endif /* CIAO_EVENTSERVICEBASE_H */

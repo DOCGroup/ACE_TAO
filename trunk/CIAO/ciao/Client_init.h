@@ -12,6 +12,7 @@
 
 #ifndef CIAO_CLIENT_INIT_H
 #define CIAO_CLIENT_INIT_H
+
 #include /**/ "ace/pre.h"
 
 #include "CIAO_Client_Export.h"
@@ -42,6 +43,6 @@ namespace CIAO
   CIAO_CLIENT_Export int Client_init (CORBA::ORB_ptr o);
 }
 
-
 #include /**/ "ace/post.h"
+
 #endif /* CIAO_CLIENT_INIT_H */

@@ -1,11 +1,10 @@
 // $Id$
 
-#include "Container_Base.h"
 #include "Swapping_Container.h"
-#include "ace/DLL.h"
+#include "ciao/Servant_Activator.h"
+#include "ciao/Dynamic_Component_Activator.h"
+
 #include "tao/Utils/PolicyList_Destroyer.h"
-#include "ace/OS_NS_stdio.h"
-#include "DAnCE/Deployment//Deployment_CoreC.h"
 
 #if !defined (__ACE_INLINE__)
 # include "Swapping_Container.inl"
@@ -55,7 +54,8 @@ namespace CIAO
     if (name == 0)
       {
         this->number_ = ++Swapping_Container::serial_number_;
-        ACE_OS::sprintf (buffer, "CIAO::Swapping_Container-%ld",
+        ACE_OS::sprintf (buffer,
+                         "CIAO::Swapping_Container-%ld",
                          this->number_);
         name = buffer;
       }
@@ -64,9 +64,11 @@ namespace CIAO
       this->orb_->resolve_initial_references("RootPOA");
 
     if (CORBA::is_nil (poa_object.in ()))
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         " (%P|%t) Unable to initialize the POA.\n"),
-                        -1);
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           " (%P|%t) Unable to initialize the POA.\n"),
+                          -1);
+      }
 
     PortableServer::POA_var root_poa =
       PortableServer::POA::_narrow (poa_object.in ());
@@ -87,29 +89,32 @@ namespace CIAO
   }
 
   void
-  Swapping_Container::add_servant_to_map
-    (PortableServer::ObjectId &oid,
-     Dynamic_Component_Servant_Base* servant)
+  Swapping_Container::add_servant_to_map (
+    PortableServer::ObjectId &oid,
+    Dynamic_Component_Servant_Base* servant)
   {
     this->dsa_->add_servant_to_map (oid, servant);
   }
 
   void
-  Swapping_Container::delete_servant_from_map
-    (PortableServer::ObjectId &oid)
+  Swapping_Container::delete_servant_from_map (
+    PortableServer::ObjectId &oid)
   {
     this->dsa_->delete_servant_from_map (oid);
   }
 
   void
-  Swapping_Container::create_home_servant_POA (const char *name,
-                                          const CORBA::PolicyList *p,
-                                          PortableServer::POA_ptr root)
+  Swapping_Container::create_home_servant_POA (
+    const char *name,
+    const CORBA::PolicyList *p,
+    PortableServer::POA_ptr root)
   {
     CORBA::PolicyList policies (0);
 
     if (p != 0)
-      policies = *p;
+      {
+        policies = *p;
+      }
 
     PortableServer::POAManager_var poa_manager = root->the_POAManager ();
 
@@ -130,11 +135,11 @@ namespace CIAO
       root->create_id_assignment_policy (PortableServer::USER_ID);
 
     policies[1] =
-      root->create_request_processing_policy
-        (PortableServer::USE_SERVANT_MANAGER);
+      root->create_request_processing_policy (
+        PortableServer::USE_SERVANT_MANAGER);
 
 
-    // Servant Retention Policy
+    // Servant Retention Policy.
     policies[2] =
       root->create_servant_retention_policy (PortableServer::RETAIN);
 
@@ -159,7 +164,9 @@ namespace CIAO
     CORBA::PolicyList policies (0);
 
     if (p != 0)
-      policies = *p;
+      {
+        policies = *p;
+      }
 
     PortableServer::POAManager_var poa_manager =
       root->the_POAManager ();

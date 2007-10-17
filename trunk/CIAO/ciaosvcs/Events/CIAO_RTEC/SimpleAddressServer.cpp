@@ -1,8 +1,8 @@
 /* $Id$ */
 
 #include "SimpleAddressServer.h"
+
 #include <ace/INET_Addr.h>
-#include <ace/OS_NS_string.h>
 
 SimpleAddressServer::SimpleAddressServer (const ACE_INET_Addr& address)
 {
@@ -33,9 +33,12 @@ void
 SimpleAddressServer::get_addr (const RtecEventComm::EventHeader&,
                                RtecUDPAdmin::UDP_Addr& address)
 {
-  if (this->address_._d() == RtecUDPAdmin::Rtec_inet6)
-    throw CORBA::DATA_CONVERSION(0, CORBA::COMPLETED_YES);
-  address = this->address_.v4_addr();
+  if (this->address_._d( ) == RtecUDPAdmin::Rtec_inet6)
+    {
+      throw CORBA::DATA_CONVERSION (0, CORBA::COMPLETED_YES);
+    }
+    
+  address = this->address_.v4_addr ();
 }
 
 void

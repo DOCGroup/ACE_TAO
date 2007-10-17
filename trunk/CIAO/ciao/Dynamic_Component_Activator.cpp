@@ -1,8 +1,5 @@
 #include "ciao/Dynamic_Component_Activator.h"
 #include "ciao/Dynamic_Component_Servant_Base.h"
-#include "ciao/CIAO_common.h"
-#include "ace/Log_Msg.h"
-#include "ace/OS_NS_string.h"
 
 ACE_RCSID (ciao,
            Dynamic_Component_Activator,
@@ -10,7 +7,8 @@ ACE_RCSID (ciao,
 
 namespace CIAO
 {
-  Dynamic_Component_Activator::Dynamic_Component_Activator (CORBA::ORB_ptr o)
+  Dynamic_Component_Activator::Dynamic_Component_Activator (
+    CORBA::ORB_ptr o)
     : orb_ (CORBA::ORB::_duplicate (o))
   {
   }
@@ -55,6 +53,7 @@ namespace CIAO
     (PortableServer::ObjectId &oid)
   {
     Dynamic_Component_Servant_Base* servant = 0;
+    
     if (this->servant_map_.unbind (oid, servant) != 0)
       {
         ACE_DEBUG ((LM_DEBUG, "Invalid object reference\n"));

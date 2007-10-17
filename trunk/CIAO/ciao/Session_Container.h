@@ -13,24 +13,20 @@
  */
 //=============================================================================
 
-
 #ifndef CIAO_SESSION_CONTAINER_H
 #define CIAO_SESSION_CONTAINER_H
 
 #include /**/ "ace/pre.h"
 
-#include "ciao/Container_Base.h"
-
-#include "tao/PortableServer/PortableServer.h"
-#include "tao/PortableServer/Servant_Base.h"
-
-#include "tao/ORB.h"
-
-#include "ace/Hash_Map_Manager_T.h"
+#include "ciao/CIAO_Server_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "ciao/Container_Base.h"
+
+#include "tao/PortableServer/Servant_Base.h"
 
 namespace CIAO
 {
@@ -38,22 +34,24 @@ namespace CIAO
   class Servant_Activator;
 
   typedef ::Components::HomeExecutorBase_ptr (*HomeFactory) (void);
-  typedef ::PortableServer::Servant (*ServantFactory)
-    (::Components::HomeExecutorBase_ptr p,
-     ::CIAO::Session_Container *c,
-     const char *ins_name);
+  typedef ::PortableServer::Servant (*ServantFactory) (
+    ::Components::HomeExecutorBase_ptr p,
+    ::CIAO::Session_Container *c,
+    const char *ins_name);
 
   typedef ACE_Hash_Map_Manager_Ex<ACE_CString,
                                   HomeFactory,
                                   ACE_Hash<ACE_CString>,
                                   ACE_Equal_To<ACE_CString>,
-                                  ACE_Null_Mutex> HOMECREATOR_FUNCPTR_MAP;
+                                  ACE_Null_Mutex>
+    HOMECREATOR_FUNCPTR_MAP;
 
   typedef ACE_Hash_Map_Manager_Ex<ACE_CString,
                                   ServantFactory,
                                   ACE_Hash<ACE_CString>,
                                   ACE_Equal_To<ACE_CString>,
-                                  ACE_Null_Mutex> HOMESERVANTCREATOR_FUNCPTR_MAP;
+                                  ACE_Null_Mutex>
+    HOMESERVANTCREATOR_FUNCPTR_MAP;
 
   struct Static_Config_EntryPoints_Maps
   {
@@ -90,11 +88,11 @@ namespace CIAO
      * @retval Home objref of the installed home.
      */
     virtual Components::CCMHome_ptr ciao_install_home (
-        const char *exe_dll_name,
-        const char *exe_entrypt,
-        const char *sv_dll_name,
-        const char *sv_entrypt,
-        const char *ins_name);
+      const char *exe_dll_name,
+      const char *exe_entrypt,
+      const char *sv_dll_name,
+      const char *sv_entrypt,
+      const char *ins_name);
 
     /// Uninstall a servant for component or home.
     virtual void ciao_uninstall_home (Components::CCMHome_ptr homeref);
@@ -105,7 +103,7 @@ namespace CIAO
 
     /// Install a servant for component or home.
     virtual CORBA::Object_ptr install_servant (PortableServer::Servant p,
-                                       Container::OA_Type t);
+                                               Container::OA_Type t);
 
     /// Install a component servant.
     CORBA::Object_ptr install_component (PortableServer::Servant p,
@@ -149,7 +147,6 @@ namespace CIAO
     Servant_Activator *ports_servant_activator (void) const;
 
   private:
-
     /// Create POA for the component.
     /**
      * This is the POA that is returned to the component applications
@@ -188,4 +185,5 @@ namespace CIAO
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
+
 #endif /* CIAO_SESSION_CONTAINER_H */

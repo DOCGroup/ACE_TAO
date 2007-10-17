@@ -1,6 +1,6 @@
 // $Id$
 
-project (CIAO_Client) : taolib_with_idl, valuetype, ifr_client {
+project (CIAO_Client) : taolib_with_idl, valuetype {
   sharedname  = CIAO_Client
   idlflags  += -Wb,stub_export_include=CIAO_Client_Export.h
   idlflags  += -Wb,stub_export_macro=CIAO_CLIENT_Export
@@ -10,7 +10,14 @@ project (CIAO_Client) : taolib_with_idl, valuetype, ifr_client {
   // This is necessary for MPC to pull in rules.ciao.GNU
   includes += $(CIAO_ROOT)
 
-  dynamicflags    = CIAO_CLIENT_BUILD_DLL
+  dynamicflags = CIAO_CLIENT_BUILD_DLL
+
+  IDL_Files {
+    idlflags += -SS \
+                -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL \
+                -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL
+    IFR_Base.idl
+  }
 
   IDL_Files {
     idlflags += -SS -Sci
@@ -72,6 +79,7 @@ project (CIAO_Client) : taolib_with_idl, valuetype, ifr_client {
     CCM_PrimaryKeyBaseC.cpp
     Client_init.cpp
     ComponentsC.cpp
+    IFR_BaseC.cpp
   }
 
   Header_Files {
@@ -80,7 +88,7 @@ project (CIAO_Client) : taolib_with_idl, valuetype, ifr_client {
   }
 }
 
-project (CIAO_Container) : orbsvcslib, portableserver, valuetype, ifr_client, codecfactory, pi, ciao_client_dnc, avoids_corba_e_compact, avoids_corba_e_micro {
+project (CIAO_Container) : orbsvcslib, portableserver, valuetype, codecfactory, pi, ciao_client_dnc, avoids_corba_e_compact, avoids_corba_e_micro {
   sharedname  = CIAO_Container
   idlflags   += -Wb,export_include=CIAO_Container_Export.h
   idlflags   += -Wb,export_macro=CIAO_CONTAINER_Export
@@ -169,9 +177,12 @@ project (CIAO_Container) : orbsvcslib, portableserver, valuetype, ifr_client, co
     ComponentsS.cpp
   }
 
+  Header_Files {
+    CIAO_Container_Export.h
+  }
 }
 
-project (CIAO_Server) : orbsvcslib, portableserver, valuetype, naming, ifr_client, utils, ciao_container_dnc, ciao_client_dnc, ciao_deployment_svnt, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
+project (CIAO_Server) : orbsvcslib, portableserver, valuetype, naming, utils, ciao_container_dnc, ciao_client_dnc, ciao_deployment_svnt, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
   includes     += $(CIAO_ROOT)
   sharedname   =  CIAO_Server
   idlflags     += -Wb,export_include=CIAO_Server_Export.h -Wb,export_macro=CIAO_SERVER_Export

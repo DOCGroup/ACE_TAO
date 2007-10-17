@@ -13,19 +13,23 @@
  */
 //=============================================================================
 
-
 #ifndef CIAO_STANDARDCONFIGURATOR_IMPL_H
 #define CIAO_STANDARDCONFIGURATOR_IMPL_H
+
 # include /**/ "ace/pre.h"
 
-#include "CCM_StandardConfiguratorS.h"
+#include "CIAO_Server_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "CIAO_Server_Export.h"
-#include "Servant_Impl_Base.h"
+#include "CCM_StandardConfiguratorS.h"
+
+namespace CIAO
+{
+  class Servant_Impl_Base;
+}
 
 namespace CIAO
 {
@@ -65,4 +69,5 @@ namespace CIAO
 }
 
 #include /**/ "ace/post.h"
+
 #endif /* CIAO_STANDARDCONFIGURATOR_IMPL_H */

@@ -1,6 +1,7 @@
 // $Id$
 
 #include "Servant_Impl_Base.h"
+
 #include "StandardConfigurator_Impl.h"
 #include "Session_Container.h"
 
@@ -48,19 +49,20 @@ namespace CIAO
       Components::FacetDescriptions_var facets = this->get_all_facets ();
 
       CORBA::ULong const facet_len = facets->length ();
+      
       for (CORBA::ULong i = 0; i < facet_len; ++i)
       {
         PortableServer::ObjectId_var facet_id =
-          this->container_->the_facet_cons_POA ()->reference_to_id
-              (facets[i]->facet_ref ());
+          this->container_->the_facet_cons_POA ()->reference_to_id (
+            facets[i]->facet_ref ());
 
         CIAO::Servant_Activator *sa =
           this->container_->ports_servant_activator ();
 
         sa->update_port_activator (facet_id.in ());
 
-        this->container_->the_facet_cons_POA ()->deactivate_object
-          (facet_id);
+        this->container_->the_facet_cons_POA ()->deactivate_object (
+          facet_id);
       }
 
       // Removed Facets
@@ -70,25 +72,25 @@ namespace CIAO
         this->get_all_consumers ();
 
       CORBA::ULong const consumer_len = consumers->length ();
+      
       for (CORBA::ULong j = 0; j < consumer_len; ++j)
       {
         PortableServer::ObjectId_var cons_id =
-          this->container_->the_facet_cons_POA ()->reference_to_id
-              (consumers[j]->consumer ());
+          this->container_->the_facet_cons_POA ()->reference_to_id (
+            consumers[j]->consumer ());
 
         CIAO::Servant_Activator *sa =
           this->container_->ports_servant_activator ();
         sa->update_port_activator (cons_id.in ());
 
-        this->container_->the_facet_cons_POA ()->deactivate_object
-          (cons_id);
+        this->container_->the_facet_cons_POA ()->deactivate_object (
+          cons_id);
       }
 
       Components::SessionComponent_var temp = this->get_executor ();
       temp->ccm_remove ();
 
-      CORBA::Object_var objref =
-        this->container_->get_objref (this);
+      CORBA::Object_var objref = this->container_->get_objref (this);
 
       Components::CCMObject_var ccmobjref =
         Components::CCMObject::_narrow (objref.in ());
@@ -165,7 +167,7 @@ namespace CIAO
 
   Components::FacetDescriptions *
   Servant_Impl_Base::get_named_facets (
-      const ::Components::NameList & names)
+    const ::Components::NameList & names)
   {
     Components::FacetDescriptions *retval = 0;
     ACE_NEW_RETURN (retval,
@@ -261,7 +263,7 @@ namespace CIAO
 
   ::Components::ConsumerDescriptions *
   Servant_Impl_Base::get_named_consumers (
-      const ::Components::NameList & names)
+    const ::Components::NameList & names)
   {
     Components::ConsumerDescriptions *retval = 0;
     ACE_NEW_RETURN (retval,
@@ -296,8 +298,7 @@ namespace CIAO
 
   ::Components::ReceptacleDescriptions *
 
-  Servant_Impl_Base::get_all_receptacles (
-    )
+  Servant_Impl_Base::get_all_receptacles (void)
   {
     ACE_DEBUG ((LM_DEBUG, "In Servant_Impl_Base::get_all_receptacles\n"));
 
@@ -311,13 +312,17 @@ namespace CIAO
     retval->length (this->receptacle_table_.current_size ());
     CORBA::ULong i = 0;
 
-    ACE_DEBUG ((LM_DEBUG, "Building sequence of length %d\n", retval->length()));
+    ACE_DEBUG ((LM_DEBUG,
+                "Building sequence of length %d\n",
+                retval->length()));
 
     for (ReceptacleTable::iterator iter = this->receptacle_table_.begin ();
          iter != this->receptacle_table_.end ();
          ++iter, ++i)
       {
-        ACE_DEBUG ((LM_DEBUG, "Starting loop iteration...\n", retval->length()));
+        ACE_DEBUG ((LM_DEBUG,
+                    "Starting loop iteration...\n",
+                    retval->length()));
 
         ReceptacleTable::ENTRY & entry = *iter;
         retval[i] = entry.int_id_;
@@ -329,14 +334,14 @@ namespace CIAO
 
   ::Components::ReceptacleDescriptions *
   Servant_Impl_Base::get_named_receptacles (
-      const ::Components::NameList & /* names */)
+    const ::Components::NameList & /* names */)
   {
     throw ::CORBA::NO_IMPLEMENT ();
   }
 
   ::Components::PublisherDescriptions *
   Servant_Impl_Base::get_named_publishers (
-      const ::Components::NameList & /* names */)
+    const ::Components::NameList & /* names */)
   {
     throw ::CORBA::NO_IMPLEMENT ();
   }
@@ -428,7 +433,9 @@ namespace CIAO
                                      CORBA::Object_ptr recept_ref,
                                      ::Components::Cookie * cookie)
   {
-    ACE_DEBUG ((LM_DEBUG, "In Servant_Impl_Base::add_receptacle (%s)\n", receptacle_name));
+    ACE_DEBUG ((LM_DEBUG,
+                "In Servant_Impl_Base::add_receptacle (%s)\n",
+                receptacle_name));
 
     ::Components::ReceptacleDescription_var safe;
     ::Components::ReceptacleDescription *rd = 0;
@@ -436,7 +443,9 @@ namespace CIAO
     if (this->receptacle_table_.find (receptacle_name,
                                       safe) == -1)
     {
-      ACE_DEBUG ((LM_DEBUG, "Found no receptacle named (%s)\n", receptacle_name));
+      ACE_DEBUG ((LM_DEBUG,
+                  "Found no receptacle named (%s)\n",
+                  receptacle_name));
 
       ACE_NEW (rd,
                OBV_Components::ReceptacleDescription);
@@ -494,9 +503,8 @@ namespace CIAO
 
   void
   Servant_Impl_Base::add_consumer (
-      const char *port_name,
-      ::Components::EventConsumerBase_ptr port_ref
-    )
+    const char *port_name,
+    ::Components::EventConsumerBase_ptr port_ref)
   {
     if (0 == port_name || ::CORBA::is_nil (port_ref))
       {
@@ -545,14 +553,12 @@ namespace CIAO
 
     return
       ::Components::EventConsumerBase::_duplicate (
-          iter->second->consumer ()
-        );
+        iter->second->consumer ());
   }
 
   ::Components::ConsumerDescription *
   Servant_Impl_Base::lookup_consumer_description (
-      const char *port_name
-    )
+    const char *port_name)
   {
     if (0 == port_name)
       {
@@ -581,7 +587,7 @@ namespace CIAO
   }
 
   ::Components::StandardConfigurator_ptr
-  Servant_Impl_Base::get_standard_configurator ()
+  Servant_Impl_Base::get_standard_configurator (void)
   {
     // Create the configurator servant.
     StandardConfigurator_Impl *config_impl = 0;
@@ -598,7 +604,7 @@ namespace CIAO
   }
 
   PortableServer::POA_ptr
-  Servant_Impl_Base::_default_POA ()
+  Servant_Impl_Base::_default_POA (void)
   {
     return
       PortableServer::POA::_duplicate (container_->the_POA ());

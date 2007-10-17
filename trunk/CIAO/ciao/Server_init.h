@@ -12,15 +12,16 @@
 
 #ifndef CIAO_SERVER_INIT_H
 #define CIAO_SERVER_INIT_H
+
 #include /**/ "ace/pre.h"
 
 #include "CIAO_Server_Export.h"
-#include "tao/Versioned_Namespace.h"
-#include <orbsvcs/CosNamingC.h>
 
 #if !defined ACE_LACKS_PRAGMA_ONCE
 #pragma once
 #endif /* ! ACE_LACKS_PRAGMA_ONCE */
+
+#include <orbsvcs/CosNamingC.h>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace CORBA
@@ -88,4 +89,5 @@ namespace CIAO
 }
 
 #include /**/ "ace/post.h"
+
 #endif /* CIAO_SERVER_INIT_H */

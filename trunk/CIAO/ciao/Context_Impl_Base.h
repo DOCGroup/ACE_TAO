@@ -13,7 +13,6 @@
  */
 //=============================================================================
 
-
 #ifndef CIAO_CONTEXT_IMPL_BASE_H
 #define CIAO_CONTEXT_IMPL_BASE_H
 
@@ -26,7 +25,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ciao/CCM_ContainerC.h"
-#include "tao/Objref_VarOut_T.h"
 
 namespace Components
 {
