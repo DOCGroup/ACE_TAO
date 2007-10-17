@@ -269,11 +269,14 @@ TAO/CIAO/examples/Hello/Sender/Hello_Base_Sender_stub
 TAO/CIAO/examples/Hello/Sender/Hello_Base_Sender_svnt
 TAO/CIAO/examples/Hello/Sender/Hello_Base_Sender_exec
 TAO/CIAO/examples/Hello/Sender/Hello_Starter
+TAO/CIAO/examples/Null_Component/Null_Interface_idl_gen
 TAO/CIAO/examples/Null_Component/Null_Interface_stub
-TAO/CIAO/examples/Null_Component/Null_Interface_Null_Component_stub
 TAO/CIAO/examples/Null_Component/Null_Interface_skel
-TAO/CIAO/examples/Null_Component/Null_Interface_Null_Component_svnt
+TAO/CIAO/examples/Null_Component/Null_Interface_Null_Component_idl_gen
+TAO/CIAO/examples/Null_Component/Null_Interface_Null_Component_cidl_gen
+TAO/CIAO/examples/Null_Component/Null_Interface_Null_Component_stub
 TAO/CIAO/examples/Null_Component/Null_Interface_Null_Component_exec
+TAO/CIAO/examples/Null_Component/Null_Interface_Null_Component_svnt
 TAO/CIAO/examples/Null_Component/StaticDAnCEApp__StaticDAnCEApp
 TAO/CIAO/examples/Swapping/Hello_Base/Hello_Base_DnC_Upgradeable_stub
 TAO/CIAO/examples/Swapping/Hello_Base/Hello_Base_DnC_Upgradeable_svnt
