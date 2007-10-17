@@ -13,33 +13,27 @@
  */
 //=============================================================================
 
-
 #ifndef CIAO_SWAPPING_CONTAINER_H
 #define CIAO_SWAPPING_CONTAINER_H
+
 #include /**/ "ace/pre.h"
 
-// @@ Jai, are all these inclusions necessary? Please cut down on them
-// to a minimum
-#include "tao/ORB.h"
-#include "tao/PortableServer/PortableServer.h"
-#include "tao/PortableServer/Servant_Base.h"
-#include "ciao/Session_Container.h"
-#include "ciao/Dynamic_Component_Activator.h"
 #include "ciao/CIAO_Server_Export.h"
-#include "ciao/Servant_Activator.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ciao/Session_Container.h"
+
 namespace CIAO
 {
   class Dynamic_Component_Servant_Base;
+  class Dynamic_Component_Activator;
 
   class CIAO_SERVER_Export Swapping_Container : public Session_Container
   {
   public:
-
     Swapping_Container (CORBA::ORB_ptr o, Container_Impl *container_impl);
 
     virtual ~Swapping_Container (void);
@@ -67,17 +61,17 @@ namespace CIAO
     PortableServer::POA_ptr the_home_servant_POA (void) const;
 
   private:
-
     /// Create POA  for the component.
     void create_servant_POA (const char *name,
                              const CORBA::PolicyList *p,
                              PortableServer::POA_ptr root);
 
     void create_home_servant_POA (const char *name,
-                           const CORBA::PolicyList *p,
-                           PortableServer::POA_ptr root);
+                                  const CORBA::PolicyList *p,
+                                  PortableServer::POA_ptr root);
 
     void create_connections_POA (PortableServer::POA_ptr root);
+    
   protected:
     unsigned long number_;
 
@@ -86,7 +80,6 @@ namespace CIAO
     static ACE_Atomic_Op <ACE_SYNCH_MUTEX, unsigned long> serial_number_;
 
     Dynamic_Component_Activator *dsa_;
-
   };
 }
 
@@ -114,4 +107,5 @@ namespace CIAO
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
+
 #endif /* CIAO_SWAPPING_CONTAINER_H */

@@ -13,19 +13,18 @@
  */
 //=============================================================================
 
-
 #ifndef CIAO_HOME_SERVANT_IMPL_BASE_H
 #define CIAO_HOME_SERVANT_IMPL_BASE_H
 
 #include /**/ "ace/pre.h"
 
-#include "CCM_HomeS.h"
+#include "CIAO_Server_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "CIAO_Server_Export.h"
+#include "CCM_HomeS.h"
 
 namespace CIAO
 {
@@ -58,6 +57,7 @@ namespace CIAO
 
   protected:
     Session_Container *container_;
+    
   private:
     /// Not to be used
     Home_Servant_Impl_Base (void);

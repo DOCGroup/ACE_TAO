@@ -27,7 +27,8 @@ namespace CIAO
   Container::set_receptacle_policy_map (::CIAO::REC_POL_MAP &rec_pol_map)
   {
     for (::CIAO::REC_POL_MAP_ITERATOR it = rec_pol_map.begin ();
-         it != rec_pol_map.end (); ++it)
+         it != rec_pol_map.end ();
+         ++it)
       {
         this->rec_pol_map_.bind ((*it).ext_id_, (*it).int_id_);
       }
@@ -37,12 +38,16 @@ namespace CIAO
   Container::get_receptacle_policy (const char* name)
   {
     CORBA::PolicyList policy_list;
+    
     if (this->rec_pol_map_.find (name, policy_list) != 0)
       {
-        ACE_DEBUG ((LM_DEBUG, "Unable to find policies "
-                    "for the receptacle %s\n", name));
+        ACE_DEBUG ((LM_DEBUG,
+                    "Unable to find policies "
+                    "for the receptacle %s\n",
+                    name));
         policy_list.length (0);
       }
+      
     return policy_list;
   }
 

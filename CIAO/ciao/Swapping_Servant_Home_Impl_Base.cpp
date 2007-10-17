@@ -4,8 +4,8 @@
 
 namespace CIAO
 {
-  Swapping_Home_Servant_Impl_Base::Swapping_Home_Servant_Impl_Base
-    (Swapping_Container * c)
+  Swapping_Home_Servant_Impl_Base::Swapping_Home_Servant_Impl_Base (
+    Swapping_Container * c)
     : container_ (c)
   {
   }

@@ -10,6 +10,7 @@
 
 #ifndef CIAO_COMMON_H
 #define CIAO_COMMON_H
+
 #include /**/ "ace/pre.h"
 
 #include "ace/config-all.h"
@@ -77,4 +78,5 @@ namespace CIAO
 }
 
 #include /**/ "ace/post.h"
+
 #endif /* CIAO_COMMON_H */

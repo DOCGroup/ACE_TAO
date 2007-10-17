@@ -15,7 +15,8 @@
 
 #include <orbsvcs/RtecUDPAdminS.h>
 
-class SimpleAddressServer : public POA_RtecUDPAdmin::AddrServer {
+class SimpleAddressServer : public POA_RtecUDPAdmin::AddrServer
+{
 public:
   SimpleAddressServer (const ACE_INET_Addr& address);
 
@@ -29,7 +30,6 @@ public:
 
 private:
   RtecUDPAdmin::UDP_Address address_;
-
 };
 
 #endif

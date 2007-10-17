@@ -16,11 +16,12 @@
 #include /**/ "ace/pre.h"
 
 #include "ciao/CIAO_UpgradeableContextC.h"
-#include "ciao/Context_Impl_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "ciao/Context_Impl_T.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace CORBA

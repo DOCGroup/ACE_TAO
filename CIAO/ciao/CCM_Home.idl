@@ -14,7 +14,7 @@
 #if !defined (CCM_HOME_IDL)
 #define CCM_HOME_IDL
 
-#include "tao/IFR_Client/IFR_Base.pidl"
+#include "IFR_Base.idl"
 
 module Components
 {

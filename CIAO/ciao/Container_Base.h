@@ -13,25 +13,22 @@
  */
 //=============================================================================
 
-
 #ifndef CIAO_CONTAINER_BASE_H
 #define CIAO_CONTAINER_BASE_H
 
 #include /**/ "ace/pre.h"
 
-#include "ciao/CCM_ContainerC.h"
-
 #include "ciao/CIAO_Server_Export.h"
-
-#include "tao/PortableServer/PortableServer.h"
-
-#include "tao/ORB.h"
-
-#include "ace/Hash_Map_Manager_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "ciao/CCM_ContainerC.h"
+
+#include "tao/PortableServer/PortableServer.h"
+
+#include "ace/Hash_Map_Manager_T.h"
 
 namespace CIAO
 {
@@ -92,11 +89,11 @@ namespace CIAO
 
     /// Install a new home
     virtual Components::CCMHome_ptr ciao_install_home (
-        const char *exe_dll_name,
-        const char *exe_entrypt,
-        const char *sv_dll_name,
-        const char *sv_entrypt,
-        const char *ins_name) = 0;
+      const char *exe_dll_name,
+      const char *exe_entrypt,
+      const char *sv_dll_name,
+      const char *sv_entrypt,
+      const char *ins_name) = 0;
 
     // Uninstall a servant for component or home.
     virtual void ciao_uninstall_home (Components::CCMHome_ptr homeref) = 0;
@@ -131,6 +128,7 @@ namespace CIAO
     PortableServer::POA_var home_servant_poa_;
     Container_Impl *container_impl_;
     ::CIAO::REC_POL_MAP rec_pol_map_;
+    
   private:
     /// Not allowed to be used
     Container (void);
@@ -156,4 +154,5 @@ namespace CIAO
   }
 
 #include /**/ "ace/post.h"
+
 #endif /* CIAO_CONTAINER_BASE_H */

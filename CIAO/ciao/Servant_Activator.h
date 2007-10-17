@@ -12,19 +12,19 @@
 
 #ifndef CIAO_SERVANT_ACTIVATOR_H
 #define CIAO_SERVANT_ACTIVATOR_H
+
 #include /**/ "ace/pre.h"
 
-#include "ace/Array_Base.h"
 #include "ciao/CIAO_Server_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/PortableServer/PortableServer.h"
 #include "tao/PortableServer/ServantActivatorC.h"
-#include "tao/PortableServer/ForwardRequestC.h"
 #include "tao/LocalObject.h"
+
+#include "ace/Array_Base.h"
 
 #if defined(_MSC_VER)
 #pragma warning(push)
@@ -102,4 +102,5 @@ namespace CIAO
 #endif /* _MSC_VER */
 
 #include /**/ "ace/post.h"
+
 #endif /*CIAO_SERVANT_ACTIVATOR_H*/

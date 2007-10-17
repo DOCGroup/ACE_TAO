@@ -1,12 +1,12 @@
 // $Id$
 
 #include "Session_Container.h"
-#include "CIAO_common.h"
-#include "ace/DLL.h"
-#include "tao/Utils/PolicyList_Destroyer.h"
-#include "ace/OS_NS_stdio.h"
 #include "Servant_Activator.h"
+
 #include "DAnCE/Deployment/Deployment_CoreC.h"
+#include "CIAO_common.h"
+
+#include "tao/Utils/PolicyList_Destroyer.h"
 
 #if !defined (__ACE_INLINE__)
 # include "Session_Container.inl"
@@ -17,7 +17,7 @@ namespace CIAO
   ///////////////////////////////////////////////////////////////
 
   ACE_Atomic_Op <ACE_SYNCH_MUTEX, unsigned long>
-  Session_Container::serial_number_ (0);
+    Session_Container::serial_number_ (0);
 
   Session_Container::Session_Container (CORBA::ORB_ptr o,
                                         Container_Impl *container_impl,
@@ -69,7 +69,7 @@ namespace CIAO
       }
 
     CORBA::Object_var poa_object =
-      this->orb_->resolve_initial_references("RootPOA");
+      this->orb_->resolve_initial_references ("RootPOA");
 
     if (CORBA::is_nil (poa_object.in ()))
       {
@@ -135,8 +135,8 @@ namespace CIAO
     CIAO_TRACE ("Session_Container::create_facet_consumer_POA");
 
     PortableServer::POAManager_var poa_manager = root->the_POAManager ();
-
     CORBA::ULong p_length = 0;
+    
     if (p != 0)
       {
         p_length = p->length ();
@@ -150,8 +150,8 @@ namespace CIAO
 
     // Servant Manager Policy
     policies[1] =
-      root->create_request_processing_policy
-      (PortableServer::USE_SERVANT_MANAGER);
+      root->create_request_processing_policy (
+        PortableServer::USE_SERVANT_MANAGER);
 
     // Servant Retention Policy
     policies[2] =
@@ -257,8 +257,8 @@ namespace CIAO
                         exception.c_str ()));
 
             throw Deployment::UnknownImplId (
-                 "Session_Container::ciao_install_home",
-                 exception.c_str ());
+             "Session_Container::ciao_install_home",
+             exception.c_str ());
           }
 
         if (executor_dll.open (exe_dll_name,
@@ -274,9 +274,9 @@ namespace CIAO
                         "ERROR in opening the executor DLL [%s] \n",
                         exe_dll_name));
 
-            throw Deployment::UnknownImplId
-               ("Session_Container::ciao_install_home",
-                error.c_str ());
+            throw Deployment::UnknownImplId (
+              "Session_Container::ciao_install_home",
+              error.c_str ());
           }
 
         if (servant_dll.open (sv_dll_name,
@@ -292,9 +292,9 @@ namespace CIAO
                         "ERROR in opening the servant DLL [%s] \n",
                         sv_dll_name));
 
-            throw Deployment::UnknownImplId
-               ("Session_Container::ciao_install_home",
-                error.c_str ());
+            throw Deployment::UnknownImplId (
+              "Session_Container::ciao_install_home",
+              error.c_str ());
           }
 
         if (exe_entrypt == 0 || sv_entrypt == 0)
@@ -322,9 +322,9 @@ namespace CIAO
                 error += sv_dll_name;
               }
 
-            throw Deployment::ImplEntryPointNotFound
-               ("Session_Container::ciao_install_home",
-                error.c_str ());
+            throw Deployment::ImplEntryPointNotFound (
+              "Session_Container::ciao_install_home",
+              error.c_str ());
           }
 
         // We have to do this casting in two steps because the C++
@@ -375,18 +375,18 @@ namespace CIAO
             error += sv_dll_name;
           }
 
-        throw Deployment::ImplEntryPointNotFound
-           ("SessionContainer::ciao_install_home",
-            error.c_str ());
+        throw Deployment::ImplEntryPointNotFound (
+          "SessionContainer::ciao_install_home",
+          error.c_str ());
       }
 
     Components::HomeExecutorBase_var home_executor = hcreator ();
 
     if (CORBA::is_nil (home_executor.in ()))
       {
-        throw Deployment::InstallationFailure
-           ("SessionContainer::ciao_install_home",
-            "Executor entrypoint failed to create a home.");
+        throw Deployment::InstallationFailure (
+          "SessionContainer::ciao_install_home",
+          "Executor entrypoint failed to create a home.");
       }
 
     PortableServer::Servant home_servant = screator (home_executor.in (),
@@ -395,9 +395,9 @@ namespace CIAO
 
     if (home_servant == 0)
       {
-        throw Deployment::InstallationFailure
-           ("SessionContainer::ciao_install_home",
-            "Servant entrypoing failed to create a home.");
+        throw Deployment::InstallationFailure (
+          "SessionContainer::ciao_install_home",
+          "Servant entrypoing failed to create a home.");
       }
 
     PortableServer::ServantBase_var safe (home_servant);
@@ -525,13 +525,6 @@ namespace CIAO
       PortableServer::string_to_ObjectId (obj_id);
 
     CORBA::String_var str = PortableServer::ObjectId_to_string (oid.in ());
-
-    if (t == Container::Facet_Consumer)
-      {
-        //if (CIAO::debug_level () > 9)
-        //  ACE_DEBUG ((LM_DEBUG, "STRING in container is %s\n",
-        //              str.in ()));
-      }
 
     CORBA::Object_var objref =
       tmp->create_reference_with_id (oid.in (), repo_id);
