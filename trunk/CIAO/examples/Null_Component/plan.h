@@ -1,3 +1,5 @@
+// $Id$
+
 extern "C" ::Components::HomeExecutorBase_ptr create_Null_ComponentHome_Impl (void);
 extern "C" ::PortableServer::Servant create_Null_ComponentHome_Servant 
     (::Components::HomeExecutorBase_ptr p,
