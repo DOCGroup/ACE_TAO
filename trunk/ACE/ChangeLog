@@ -1,3 +1,14 @@
+Wed Oct 17 14:00:00 UTC 2007  Simon Massey  <simon.massey@prismtech.com>
+
+        * tests/Signal_Test.cpp:
+        * tests/run_tests.lst:
+        * tests/run_tests.pl:
+
+          Have to reduce the number of iterations of the test for LynxOS
+          otherwise it grossly timesout during automatic testing.
+          
+          Add correct parameter processing for tasks being run with parameters.
+
 Wed Oct 17 12:00:00 UTC 2007  Simon Massey  <simon.massey@prismtech.com>
 
         * tests/Log_Msg_Test.cpp:

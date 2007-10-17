@@ -137,8 +137,7 @@ Refcounted_Auto_Ptr_Test: !ACE_FOR_TAO
 Reference_Counted_Event_Handler_Test
 Reverse_Lock_Test
 Sendfile_Test: !QNX !NO_NETWORK
-Signal_Test: !LynxOS
-Signal_Test -i 10010 : LynxOS
+Signal_Test
 SOCK_Connector_Test: !NO_NETWORK
 SOCK_Netlink_Test: !ACE_FOR_TAO
 SOCK_Send_Recv_Test: !NO_NETWORK

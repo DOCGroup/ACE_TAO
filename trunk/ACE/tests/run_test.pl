@@ -108,11 +108,16 @@ sub check_resources
 sub run_program ($)
 {
     my $program = shift;
+    my $arguments = shift;
+    if ($program =~ /^(\S*)\s*(.*)/ ) {
+        $program = $1;
+        $arguments = $2 . $arguments;
+    }
 
     ## Print it out before we check for the executable
     ## if the executable doesn't exist, the error will show
     ## up as part of the previous test.
-    print "auto_run_tests: tests/$program\n";
+    print "auto_run_tests: tests/$program $arguments\n";
 
     unlink <log/$program*.log>;
     unlink "core";
@@ -120,15 +125,15 @@ sub run_program ($)
     my $P;
 
     if ($config_list->check_config ('Valgrind')) {
-      $P = new PerlACE::Process ($program);
+      $P = new PerlACE::Process ($program,$arguments);
       $P->IgnoreExeSubDir(1);
     }
     else {
       if ($config_list->check_config ('LabVIEW_RT')) {
-        $P = new PerlACE::ProcessLVRT ($program);
+        $P = new PerlACE::ProcessLVRT ($program,$arguments);
       }
       else {
-        $P = new PerlACE::Process ($program);
+        $P = new PerlACE::Process ($program,$arguments);
       }
 
       ### Try to run the program
@@ -152,10 +157,10 @@ sub run_program ($)
         $P->TimedWait (1);
     }
     elsif ($status != 0) {
-        print STDERR "Error: $program FAILED with exit status $status\n";
+        print STDERR "Error: $program $arguments FAILED with exit status $status\n";
     }
 
-    print "\nauto_run_tests_finished: tests/$program Time:$time"."s Result:$status\n";
+    print "\nauto_run_tests_finished: tests/$program $arguments Time:$time"."s Result:$status\n";
 
     check_log ($program);
 
