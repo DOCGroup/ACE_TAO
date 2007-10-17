@@ -34,7 +34,7 @@ ACE_RCSID(tests, Signal_Test, "$Id$")
 #if !defined (ACE_LACKS_UNIX_SIGNALS)
 
 // Global options.
-static size_t n_iterations = 100000;
+static size_t n_iterations = 10000;
 
 // Keeps track of whether we're the child or not.
 static int child = 0;
