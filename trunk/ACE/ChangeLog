@@ -1,3 +1,10 @@
+Wed Oct 17 12:00:00 UTC 2007  Simon Massey  <simon.massey@prismtech.com>
+
+        * tests/Log_Msg_Test.cpp:
+        * tests/run_tests.lst:
+
+          Update for Lynxos 4.2.
+
 Tue Oct 16 16:22:26 UTC 2007  Steve Huston  <shuston@riverace.com>
 
         * ace/OS_NS_string.cpp (strerror): Fix to pass correct error value to
