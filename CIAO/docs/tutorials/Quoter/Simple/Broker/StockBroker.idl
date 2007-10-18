@@ -1,5 +1,8 @@
 //$Id$
 
+#ifndef STOCKBROKER_IDL
+#define STOCKBROKER_IDL
+
 #include "../Stock_Base/Stock_Base.idl"
 
 module Stock
@@ -33,3 +36,5 @@ module Stock
   {
   };
 };
+
+#endif /* STOCKBROKER_IDL */

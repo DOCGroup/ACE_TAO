@@ -1,16 +1,16 @@
 //$Id$
 
-//Stock.cidl,v 1.0
+//StockBroker.cidl,v 1.0
 /**
- * @file Stock.cidl
+ * @file StockBroker.cidl
  *
  * @author ming xiong <xiongm@isis.vanderbilt.edu>
  */
 
-#ifndef STOCK_CIDL
-#define STOCK_CIDL
+#ifndef STOCKBROKER_CIDL
+#define STOCKBROKER_CIDL
 
-#include "Broker.idl"
+#include "StockBroker.idl"
 
 composition session StockBroker_Impl {
   home executor StockBrokerHome_Exec  {
@@ -19,4 +19,4 @@ composition session StockBroker_Impl {
   };
 };
 
-#endif /* STOCK_CIDL */
+#endif /* STOCKBROKER_CIDL */
