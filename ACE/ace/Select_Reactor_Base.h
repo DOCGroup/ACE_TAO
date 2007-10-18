@@ -97,8 +97,7 @@ public:
   ACE_Event_Tuple (void);
 
   /// Constructor.
-  ACE_Event_Tuple (ACE_Event_Handler *eh,
-                   ACE_HANDLE h);
+  ACE_Event_Tuple (ACE_Event_Handler *eh, ACE_HANDLE h);
 
   /// Equality operator.
   bool operator== (const ACE_Event_Tuple &rhs) const;
@@ -589,7 +588,6 @@ protected:
   /// Select_Reactor's token or not.
   int supress_notify_renew (void);
   void supress_notify_renew (int sr);
-
 
 private:
 
