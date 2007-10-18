@@ -1,5 +1,8 @@
 //$Id$
 
+#ifndef STOCK_BASE_IDL
+#define STOCK_BASE_IDL
+
 #include <Components.idl>
 
 module Stock
@@ -39,3 +42,5 @@ module Stock
     public string name;
   };
 };
+
+#endif /* STOCK_BASE_IDL */
