@@ -1,6 +1,6 @@
 //$Id$
 /*
- * @file Distributor.cpp
+ * @file StockDistributorDriver.cpp
  *
  * @author Ming Xiong <mxiong@dre.vanderbilt.edu>
  */

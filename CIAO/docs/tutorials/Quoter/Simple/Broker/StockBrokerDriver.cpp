@@ -1,6 +1,6 @@
 //$Id$
 /*
- * @file StockBroker.cpp
+ * @file StockBrokerDriver.cpp
  *
  * @author Ming Xiong <mxiong@dre.vanderbilt.edu>
  */
