@@ -1,3 +1,11 @@
+Thu Oct 18 22:04:28 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * bin/msvc_static_order.lst:
+
+          Added a few projects to the static order, this is necessary due
+          to the update of CIAO tutorial I committed today. This will 
+          avoid a build problem for WinXP_VC71_CIAOCore_Static_Debug build.
+
 Thu Oct 18 10:08:15 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Thread_Exit.{h,cpp}:
@@ -17,7 +25,7 @@ Wed Oct 17 16:03:19 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * bin/msvc_static_order.lst:
 
-          Added a few project to the static order list to resolve
+          Added a few projects to the static order list to resolve
           problems on WinXP_VC71_CIAOCore_Static_Debug build.
 
 Wed Oct 17 14:00:00 UTC 2007  Simon Massey  <simon.massey@prismtech.com>
