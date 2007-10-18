@@ -1,3 +1,22 @@
+Thu Oct 18 20:58:54 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * docs/tutorials/Quoter/Simple/01.html:
+        * docs/tutorials/Quoter/Simple/02.html:
+        * docs/tutorials/Quoter/Simple/03.html:
+        * docs/tutorials/Quoter/Simple/04.html:
+        * docs/tutorials/Quoter/Simple/index.html:
+
+          Updated the tutorial.
+
+        * docs/tutorials/Quoter/Simple/descriptors/NodeMap.dat:
+
+          Changed the name of this file to NodeMap.dat from Stock.dat
+          Naming everything Stock is confusing.
+
+        * docs/tutorials/Quoter/Simple/descriptors/Stock.dat:
+
+          Removed this file.
+
 Thu Oct 18 20:19:39 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * DAnCE/StaticConfigurator/StaticDAnCEParser.mpc:
