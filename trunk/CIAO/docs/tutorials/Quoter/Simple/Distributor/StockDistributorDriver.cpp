@@ -6,11 +6,11 @@
  */
 
 
-#include "DistributorC.h"
+#include "StockDistributorC.h"
 #include "ace/streams.h"
 #include "ace/Get_Opt.h"
 
-const char *distributor_ior = "file://Distributor.ior";
+const char *distributor_ior = "file://StockDistributor.ior";
 int rate = 2;
 int turn_on = 1;
 
