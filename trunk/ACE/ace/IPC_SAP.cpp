@@ -67,7 +67,7 @@ ACE_IPC_SAP::enable (int value) const
     default:
       ACE_NOTSUP_RETURN (-1);
     }
-#else  /* ! ACE_WIN32 && ! VXWORKS */
+#else  /* ! ACE_WIN32 && ! ACE_VXWORKS */
   switch (value)
     {
 #if defined (SIGURG)
@@ -114,7 +114,7 @@ ACE_IPC_SAP::enable (int value) const
       return -1;
     }
   return 0;
-#endif /* ! ACE_WIN32 && ! VXWORKS */
+#endif /* ! ACE_WIN32 && ! ACE_VXWORKS */
 
   /* NOTREACHED */
 }
@@ -139,7 +139,7 @@ ACE_IPC_SAP::disable (int value) const
     default:
       ACE_NOTSUP_RETURN (-1);
     }
-#else  /* ! ACE_WIN32 && ! VXWORKS */
+#else  /* ! ACE_WIN32 && ! ACE_VXWORKS */
   switch (value)
     {
 #if defined (SIGURG)
@@ -186,7 +186,7 @@ ACE_IPC_SAP::disable (int value) const
       return -1;
     }
   return 0;
-#endif /* ! ACE_WIN32 && ! VXWORKS */
+#endif /* ! ACE_WIN32 && ! ACE_VXWORKS */
   /* NOTREACHED */
 }
 

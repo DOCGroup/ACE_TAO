@@ -9,7 +9,7 @@ ACE_RCSID(ace, Thread_Exit, "$Id$")
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-u_int ACE_Thread_Exit::is_constructed_ = 0;
+bool ACE_Thread_Exit::is_constructed_ = false;
 
 void
 ACE_Thread_Exit::cleanup (void *instance)
@@ -22,7 +22,7 @@ ACE_Thread_Exit::cleanup (void *instance)
   // ACE::fini() is enabled here.
   ACE_Thread_Manager::thr_exit_ = 0;
 
-  ACE_Thread_Exit::is_constructed_ = 0;
+  ACE_Thread_Exit::is_constructed_ = false;
   // All TSS objects have been destroyed.  Reset this flag so
   // ACE_Thread_Exit singleton can be created again.
 }
@@ -42,20 +42,20 @@ ACE_Thread_Exit::instance (void)
 
   // Implement the Double Check pattern.
 
-  if (ACE_Thread_Exit::is_constructed_ == 0)
+  if (!ACE_Thread_Exit::is_constructed_)
     {
       ACE_MT (ACE_Thread_Mutex *lock =
               ACE_Managed_Object<ACE_Thread_Mutex>::get_preallocated_object
                 (ACE_Object_Manager::ACE_THREAD_EXIT_LOCK);
               ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, *lock, 0));
 
-      if (ACE_Thread_Exit::is_constructed_ == 0)
+      if (!ACE_Thread_Exit::is_constructed_)
         {
           ACE_NEW_RETURN (instance_,
                           ACE_TSS_TYPE (ACE_Thread_Exit),
                           0);
 
-          ACE_Thread_Exit::is_constructed_ = 1;
+          ACE_Thread_Exit::is_constructed_ = true;
 
           ACE_Thread_Manager::set_thr_exit (instance_);
         }

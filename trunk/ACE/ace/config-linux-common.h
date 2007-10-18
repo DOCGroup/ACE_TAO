@@ -318,10 +318,7 @@
 // Although the scandir man page says otherwise, this setting is correct.
 #define ACE_SCANDIR_CMP_USES_CONST_VOIDPTR
 
-//#define ACE_LACKS_STRRECVFD
 #define ACE_HAS_STRBUF_T
-
-//#define ACE_LACKS_MSYNC
 
 // A conflict appears when including both <ucontext.h> and
 // <sys/procfs.h> with recent glibc headers.

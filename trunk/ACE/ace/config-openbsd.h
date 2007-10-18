@@ -154,10 +154,6 @@
 // Compiler/platform defines the sig_atomic_t typedef.
 #define ACE_HAS_SIG_ATOMIC_T
 
-// Compiler/platform supports sys_siglist array.
-// *** This refers to (_sys_siglist) instead of (sys_siglist)
-// #define ACE_HAS_SYS_SIGLIST
-
 // Compiler/platform defines a union semun for SysV shared memory.
 #define ACE_HAS_SEMUN
 
@@ -180,8 +176,6 @@
 
 // Platform/compiler supports timezone * as second parameter to gettimeofday().
 #define ACE_HAS_TIMEZONE_GETTIMEOFDAY
-
-//#define ACE_HAS_SIG_C_FUNC
 
 // OpenBSD's dlsym call segfaults when passed an invalid handle.
 // It seems as if most other OSs detect this and just report an

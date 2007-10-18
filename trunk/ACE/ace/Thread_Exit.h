@@ -71,7 +71,7 @@ private:
    * See bug #526.
    * We don't follow the singleton pattern due to dependency issues.
    */
-  static unsigned int is_constructed_;
+  static bool is_constructed_;
 };
 
 /**
