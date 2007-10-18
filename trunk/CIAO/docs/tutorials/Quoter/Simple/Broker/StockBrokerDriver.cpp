@@ -1,15 +1,15 @@
 //$Id$
 /*
- * @file Broker.cpp
+ * @file StockBroker.cpp
  *
  * @author Ming Xiong <mxiong@dre.vanderbilt.edu>
  */
 
-#include "BrokerC.h"
+#include "StockBrokerC.h"
 #include "ace/streams.h"
 #include "ace/Get_Opt.h"
 
-const char *broker_ior = "file://Broker.ior";
+const char *broker_ior = "file://StockBroker.ior";
 const char *subscribe_name = 0;
 const char *unsubscribe_name = 0;
 
