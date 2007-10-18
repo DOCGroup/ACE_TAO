@@ -1,3 +1,22 @@
+Thu Oct 18 20:19:39 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * DAnCE/StaticConfigurator/StaticDAnCEParser.mpc:
+        * DAnCE/Plan_Launcher/Plan_Launcher.mpc:
+        
+          Removed unneeded lib TAO_IFR_Client from list, to avoid clash with
+          dummy IRObject interface added for CIAO_Client, CIAO_Container,
+          and CIAO_Server in
+          
+          Wed Oct 17 15:24:13 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
+          
+        * ciaosvcs/Events/CIAO_RTEC/CIAO_RTEvent.mpc:
+        * ciaosvcs/Events/CIAO_Events_Base/CIAO_Events_Base.mpc:
+        * ciaosvcs/Events/CIAO_Events.mpc:
+        
+          Reverted changed inadvertently checked in with
+          
+          Wed Oct 17 15:24:13 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
+
 Thu Oct 18 19:29:01 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * docs/tutorials/Quoter/Simple/Broker/StockBrokerDriver.cpp:

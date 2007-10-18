@@ -1,21 +1,10 @@
 // -*- MPC -*-
 // $Id$
 
-project (CIAO_RTEvent) : valuetype, taoidldefaults {
+project (CIAO_RTEvent) : naming, rtevent_serv, ciao_events_base_dnc  {
   sharedname  = CIAO_RTEvent
   idlflags  += -Wb,export_include=CIAO_RTEVENT_Export.h \
                -Wb,export_macro=CIAO_RTEVENT_Export
-  includes += $(CIAO_ROOT) \
-              $(TAO_ROOT)/orbsvcs
-  after += CIAO_Events_Base \
-           RTEvent_Serv
-  libs += CIAO_Events_Base \
-          CIAO_Container \
-          CIAO_Client \
-          TAO_RTEvent_Serv \
-          TAO_RTEvent_Skel \
-          TAO_RTEvent \
-          TAO_PortableServer
   dynamicflags = CIAO_RTEVENT_BUILD_DLL
 
   IDL_Files {
