@@ -1,15 +1,15 @@
 //$Id$
-//Distributor.cidl,v 1.0
+//StockDistributor.cidl,v 1.0
 /**
  * @file Distributor.cidl
  *
  * @author ming xiong <xiongm@isis.vanderbilt.edu>
  */
 
-#ifndef DISTRIBUTOR_CIDL
-#define DISTRIBUTOR_CIDL
+#ifndef STOCKDISTRIBUTOR_CIDL
+#define STOCKDISTRIBUTOR_CIDL
 
-#include "Distributor.idl"
+#include "StockDistributor.idl"
 
 composition session StockDistributor_Impl {
   home executor StockDistributorHome_Exec  {
@@ -18,4 +18,4 @@ composition session StockDistributor_Impl {
   };
 };
 
-#endif /* DISTRIBUTOR_CIDL */
+#endif /* STOCKDISTRIBUTOR_CIDL */

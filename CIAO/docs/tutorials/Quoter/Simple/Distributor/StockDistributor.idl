@@ -1,5 +1,8 @@
 //$Id$
 
+#ifndef STOCKDISTRIBUTOR_IDL
+#define STOCKDISTRIBUTOR_IDL
+
 #include "../Stock_Base/Stock_Base.idl"
 
 module Stock
@@ -38,5 +41,6 @@ module Stock
   home StockDistributorHome manages StockDistributor
   {
   };
-
 };
+
+#endif /* STOCKDISTRIBUTOR_IDL */
