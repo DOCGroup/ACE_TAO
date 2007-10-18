@@ -1,3 +1,9 @@
+Thu Oct 18 14:17:52 UTC 2007  Ciju John  <johnc at ociweb dot com>
+
+        * orbsvcs/tests/Notify/MC/run_test.pl:
+          Test was failing because MC ORB didn't have the correct NS
+          endpoint info.
+
 Mon Oct 15 15:31:04 UTC 2007  Ciju John  <johnc at ociweb dot com>
 
         * orbsvcs/tests/Notify/MC/notify.conf:

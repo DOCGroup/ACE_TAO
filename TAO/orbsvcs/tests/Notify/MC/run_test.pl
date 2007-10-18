@@ -21,7 +21,7 @@ my $port = PerlACE::random_port();
 my $mc_conf= "dynamic TAO_MonitorAndControl Service_Object * ".
     "TAO_CosNotification_MC:_make_TAO_MonitorAndControl () \\\"-o ".
     "monitor.ior -ORBArg \\\"-ORBInitRef ".
-    "NameService=corbaloc:iiop:localhost:12345/NameService\\\"\\\"";
+    "NameService=corbaloc:iiop:localhost:$port/NameService\\\"\\\"";
 my $nscorbaloc = "-ORBInitRef NameService=corbaloc:iiop:" .
                  "localhost:$port/NameService";
 my $NS = new PerlACE::Process("../../../Naming_Service/Naming_Service",
