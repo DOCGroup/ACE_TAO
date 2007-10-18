@@ -1,15 +1,10 @@
 // -*- MPC -*-
 // $Id$
 
-project (CIAO_Events_Base) : valuetype, taoidldefaults {
+project (CIAO_Events_Base) : orbsvcslib, ciao_client_dnc, ciao_container_dnc {
   sharedname  = CIAO_Events_Base
   idlflags  += -Wb,export_include=CIAO_Events_Export.h \
                -Wb,export_macro=CIAO_EVENTS_Export
-  includes += $(CIAO_ROOT)
-  after += CIAO_Container
-  libs += CIAO_Container \
-          CIAO_Client \
-          TAO_PortableServer
   dynamicflags = CIAO_EVENTS_BUILD_DLL
 
   IDL_Files {

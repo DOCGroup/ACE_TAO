@@ -3,6 +3,7 @@
 
 project(StaticDAnCEParser): ciao_component_dnc, taoexe, ciao_config_handlers, ciao_domainapplicationmanager_dnc, iortable, ciao_server_dnc, ciao_nodeapplicationmanager {
   exename   = StaticDAnCEParser
+  libs -= TAO_IFR_Client
 
   Source_Files {
     StaticDAnCEParser.cpp
