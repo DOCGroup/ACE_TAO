@@ -1,3 +1,57 @@
+Thu Oct 18 18:21:18 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * docs/tutorials/Quoter/Simple/Model/Quoter.xme:
+
+          Updated model to the latest CoSMIC release.
+
+        * docs/tutorials/Quoter/Simple/descriptors/Broker.cpd:
+        * docs/tutorials/Quoter/Simple/descriptors/Default.pcd:
+        * docs/tutorials/Quoter/Simple/descriptors/Distributor.cpd:
+        * docs/tutorials/Quoter/Simple/descriptors/Domain.cdd:
+        * docs/tutorials/Quoter/Simple/descriptors/Plan.cdp:
+        * docs/tutorials/Quoter/Simple/descriptors/StockBroker.ccd:
+        * docs/tutorials/Quoter/Simple/descriptors/StockBrokerMonolithicImpl.cid:
+        * docs/tutorials/Quoter/Simple/descriptors/StockBroker_exec.iad:
+        * docs/tutorials/Quoter/Simple/descriptors/StockBroker_stub.iad:
+        * docs/tutorials/Quoter/Simple/descriptors/StockBroker_svnt.iad:
+        * docs/tutorials/Quoter/Simple/descriptors/StockDistributor.ccd:
+        * docs/tutorials/Quoter/Simple/descriptors/StockDistributorMonolithicImpl.cid:
+        * docs/tutorials/Quoter/Simple/descriptors/StockDistributor_exec.iad:
+        * docs/tutorials/Quoter/Simple/descriptors/StockDistributor_stub.iad:
+        * docs/tutorials/Quoter/Simple/descriptors/StockDistributor_svnt.iad:
+        * docs/tutorials/Quoter/Simple/descriptors/StockQuoter.cid:
+        * docs/tutorials/Quoter/Simple/descriptors/StockQuoter.cpd:
+        * docs/tutorials/Quoter/Simple/descriptors/TopLevelPackage.tpd:
+
+          Regenerated descriptors. Older descriptors were hand written, 
+          we want users to use CoSMIC for this sort of stuff, especially
+          in the tutorial.
+
+        * docs/tutorials/Quoter/Simple/descriptors/runNodeDaemons.pl:
+
+          Increased spawn dealy for NodeApplication in order to have
+          this tutorial work on slower systems.
+
+        * docs/tutorials/Quoter/Simple/descriptors/Broker.ccd:
+        * docs/tutorials/Quoter/Simple/descriptors/Broker.cid:
+        * docs/tutorials/Quoter/Simple/descriptors/Broker_Exec.iad:
+        * docs/tutorials/Quoter/Simple/descriptors/Broker_Stub.iad:
+        * docs/tutorials/Quoter/Simple/descriptors/Broker_Svnt.iad:
+        * docs/tutorials/Quoter/Simple/descriptors/Distributor.ccd:
+        * docs/tutorials/Quoter/Simple/descriptors/Distributor.cid:
+        * docs/tutorials/Quoter/Simple/descriptors/Distributor_Exec.iad:
+        * docs/tutorials/Quoter/Simple/descriptors/Distributor_Stub.iad:
+        * docs/tutorials/Quoter/Simple/descriptors/Distributor_Svnt.iad:
+        * docs/tutorials/Quoter/Simple/descriptors/Libraries.iad:
+        * docs/tutorials/Quoter/Simple/descriptors/Stock.cdp:
+        * docs/tutorials/Quoter/Simple/descriptors/Stock.cid:
+        * docs/tutorials/Quoter/Simple/descriptors/Stock.cpd:
+        * docs/tutorials/Quoter/Simple/descriptors/Stock.pcd:
+        * docs/tutorials/Quoter/Simple/descriptors/flattened_deploymentplan.cdp:
+        * docs/tutorials/Quoter/Simple/descriptors/package.tpd:
+
+          Removed these files.
+
 Thu Oct 18 18:13:35 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * docs/tutorials/Quoter/Simple/Broker/StockBroker.cidl:
