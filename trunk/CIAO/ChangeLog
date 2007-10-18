@@ -1,18 +1,29 @@
+Thu Oct 18 17:42:58 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * docs/tutorials/Quoter/Simple/Stock_Base/Stock_Base.idl:
+
+          Use include guards, as is done with other IDL files in 
+          the distribution.
+
+        * docs/tutorials/Quoter/Simple/Stock_Base/Stock_Base.mpc:
+
+          Rengerate the MPC files with the new generate_component_mpc.pl
+
 Wed Oct 17 20:20:34 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tests/IDL3/Events/Any/main.cpp:
-        
+
           Added #include of Any.h.
 
 Wed Oct 17 18:47:50 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * ciao/Swapping_Servant_Home_Impl_T.h:
         * ciao/Upgradeable_Context_Impl_T.cpp:
-        
+
           Restored included files needed at instantiation time.
-          
+
         * ciaosvcs/Events/CIAO_RTEC\CIAO_RTEvent.cpp(create_rt_event_channel):
-        
+
           Commented out unused arg.
 
 Wed Oct 17 17:18:04 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
@@ -38,7 +49,7 @@ Wed Oct 17 15:28:42 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * MPC/config/ciao_client_dnc.mpb:
         * MPC/config/ciao_events_dnc.mpb:
-        
+
           Removed ifr_client from base project list.
 
 Wed Oct 17 15:24:13 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
