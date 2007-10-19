@@ -1,3 +1,24 @@
+Fri Oct 19 18:04:13 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * docs/tutorials/Quoter/Simple/images/fig10.jpg:
+        * docs/tutorials/Quoter/Simple/images/fig11.jpg:
+        * docs/tutorials/Quoter/Simple/images/fig12.jpg:
+        * docs/tutorials/Quoter/Simple/images/fig2.jpg:
+        * docs/tutorials/Quoter/Simple/images/fig3.jpg:
+        * docs/tutorials/Quoter/Simple/images/fig4.jpg:
+        * docs/tutorials/Quoter/Simple/images/fig5.jpg:
+        * docs/tutorials/Quoter/Simple/images/fig6.jpg:
+        * docs/tutorials/Quoter/Simple/images/fig7.jpg:
+        * docs/tutorials/Quoter/Simple/images/fig8.jpg:
+        * docs/tutorials/Quoter/Simple/images/fig9.jpg:
+
+          Update the images to reflect what the user would
+          in CoSMIC 0.6
+
+        * docs/tutorials/Quoter/Simple/03.html:
+
+          Slight modification to make the images appear pretty.
+
 Fri Oct 19 17:56:34 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * ciao/IFR_Base.idl:
