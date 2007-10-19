@@ -583,6 +583,7 @@ run_tests (void)
                         -1);
   }
 
+#if !defined (ACE_LACKS_MMAP)
   // Test persistent heap version
   ACE_OS::unlink (ACE_TEXT ("test.reg"));
   ACE_Configuration_Heap pers_config;
@@ -600,6 +601,7 @@ run_tests (void)
                          result),
                         -1);
   }
+#endif /* !ACE_LACKS_MMAP */
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Test passed\n")));
   return 0;
