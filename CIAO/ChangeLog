@@ -1,3 +1,22 @@
+Fri Oct 19 17:56:34 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * ciao/IFR_Base.idl:
+        
+          Removed this file - see below.
+        
+        * ciao/CCM_Home.idl:
+        * ciao/CCM_Core.mpc:
+        * MPC/config/ciao_client_dnc.mpb:
+        * MPC/config/ciao_events_dnc.mpb:
+        * DAnCE/StaticConfigurator/StaticDAnCEParser.mpc:
+        * DAnCE/Plan_Launcher/Plan_Launcher.mpc:
+        
+          Reverted all changes that attempted to replace dependency
+          on IFR_Client library with a dummy interface. The fact
+          that one or more config handlers must depend on IFR_Client
+          makes linking clashes between the dummy and real interfaces
+          unavoidable.
+
 Fri Oct 19 15:35:13 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * examples/Null_Component/StaticDAnCEApp.mpc:
