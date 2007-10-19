@@ -1,3 +1,9 @@
+Fri Oct 19 21:34:01 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * examples/APG/Reactor/HAStatus-AC.cpp: Set accepted connections into
+          nonblocking mode so the checks for EWOULDBLOCK when sending data
+          are meaningful. Thanks to Johnny Willemsen for noticing this.
+
 Fri Oct 19 16:00:00 UTC 2007  Simon Massey  <simon.massey@prismtech.com>
 
         * bin/tao_other_tests.lst:

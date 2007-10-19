@@ -126,7 +126,9 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_INET_Addr port_to_listen ("HAStatus");
   ClientAcceptor acceptor;
-  if (acceptor.open (port_to_listen) == -1)
+  if (acceptor.open (port_to_listen,
+                     ACE_Reactor::instance (),
+                     ACE_NONBLOCK) == -1)
     return 1;
 
   ACE_Reactor::instance ()->run_reactor_event_loop ();
