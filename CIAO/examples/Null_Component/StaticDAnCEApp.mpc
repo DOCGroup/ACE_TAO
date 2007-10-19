@@ -2,7 +2,7 @@
 // $Id$
 
 project(Null_Component_StaticDAnCEApp): ciao_static_dnc_app, iortable {
-  after    += Null_Interface_Null_Component_svnt
+  after    += Null_Component_svnt
   exename   = StaticDAnCEApp
 
   libs     += Null_Interface_stub

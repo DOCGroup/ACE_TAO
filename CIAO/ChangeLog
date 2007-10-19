@@ -1,3 +1,10 @@
+Fri Oct 19 15:35:13 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * examples/Null_Component/StaticDAnCEApp.mpc:
+        * examples/Null_Component/Null_Component.mpc:
+        
+          Change 'after' lines to match recent changes to project names.
+
 Fri Oct 19 15:22:36 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * examples/Null_Component/plan.h:
