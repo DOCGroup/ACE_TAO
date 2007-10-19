@@ -1,3 +1,10 @@
+Fri Oct 19 16:00:00 UTC 2007  Simon Massey  <simon.massey@prismtech.com>
+
+        * bin/tao_other_tests.lst:
+        * bin/tao_orb_tests.lst:
+
+          Update for Lynxos 4.2.
+
 Fri Oct 19 10:28:02 UTC 2007  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * ace/Priority_Reactor.{h,cpp}: Revised the build_bucket() method
