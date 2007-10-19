@@ -14,7 +14,7 @@
 #if !defined (CCM_HOME_IDL)
 #define CCM_HOME_IDL
 
-#include "IFR_Base.idl"
+#include "tao/IFR_Client/IFR_Base.pidl"
 
 module Components
 {
@@ -44,7 +44,7 @@ module Components
   {
     CORBA::IRObject get_component_def ();
     CORBA::IRObject get_home_def ();
-    void remove_component ( in CCMObject comp)
+    void remove_component (in CCMObject comp)
       raises (RemoveFailure);
   };
 };
