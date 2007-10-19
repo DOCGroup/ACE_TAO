@@ -1,3 +1,10 @@
+Fri Oct 19 10:28:02 UTC 2007  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/Priority_Reactor.{h,cpp}: Revised the build_bucket() method
+          to fix some bugs when trying to remove non-existent event
+          handlers.  Thanks to Alex Solan <alex dot solan at gmail dot
+          com> for reporting this.
+
 Thu Oct 18 22:04:28 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * bin/msvc_static_order.lst:
