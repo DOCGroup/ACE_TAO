@@ -1,3 +1,14 @@
+Fri Oct 19 21:56:11 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * tests/Config_Test.cpp: Don't attempt the persistent heap-based
+          test if the platform doesn't have memory-mapped file capability.
+
+        * tests/run_test.lst: Don't try UnloadLibACE on LabVIEW RT - the
+          platform has special needs to run tests that are taken care of by
+          trickery in MPC and the ACE_TMAIN setup. UnloadLibACE is a
+          specialized test that doesn't use the usuall facilities so doesn't
+          play well in the LabVIEW RT test environment.
+
 Fri Oct 19 21:34:01 UTC 2007  Steve Huston  <shuston@riverace.com>
 
         * examples/APG/Reactor/HAStatus-AC.cpp: Set accepted connections into
