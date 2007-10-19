@@ -1,3 +1,16 @@
+Fri Oct 19 15:22:36 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * examples/Null_Component/plan.h:
+        * examples/Null_Component/StaticDAnCEApp.cpp:
+        
+          Reordered and reduced #includes, cosmetic changes.
+          
+        * examples/Null_Component/StaticDAnCEApp.mpc:
+        
+          Changed dependency to reflect recent changes in Null_Component.mpc,
+          added Header_File and Inline_File blocks to eliminate the
+          appearance of unwanted files in IDEs.
+
 Thu Oct 18 21:17:45 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * examples/Null_Component/Null_Component.mpc:
