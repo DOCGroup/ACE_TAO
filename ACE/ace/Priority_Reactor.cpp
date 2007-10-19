@@ -73,7 +73,7 @@ ACE_Priority_Reactor::~ACE_Priority_Reactor (void)
   delete tuple_allocator_;
 }
 
-void
+int
 ACE_Priority_Reactor::build_bucket (ACE_Handle_Set &dispatch_mask,
                                     int &min_priority,
                                     int &max_priority)
@@ -84,7 +84,12 @@ ACE_Priority_Reactor::build_bucket (ACE_Handle_Set &dispatch_mask,
        (handle = handle_iter ()) != ACE_INVALID_HANDLE;
        )
     {
-      ACE_Event_Tuple et (this->handler_rep_.find (handle),
+      ACE_Event_Handler *event_handler = 
+        this->handler_rep_.find (handle);
+      if (event_handler == 0)
+        return -1;
+
+      ACE_Event_Tuple et (event_handler,
                           handle);
       int prio = et.event_handler_->priority ();
 
@@ -93,7 +98,8 @@ ACE_Priority_Reactor::build_bucket (ACE_Handle_Set &dispatch_mask,
           || prio > ACE_Event_Handler::HI_PRIORITY)
         prio = ACE_Event_Handler::LO_PRIORITY;
 
-      bucket_[prio]->enqueue_tail (et);
+      if (bucket_[prio]->enqueue_tail (et) == -1)
+        return -1;
 
       // Update the priority ranges....
       if (min_priority > prio)
@@ -102,6 +108,7 @@ ACE_Priority_Reactor::build_bucket (ACE_Handle_Set &dispatch_mask,
         max_priority = prio;
     }
 
+  return 0;
 }
 
 int
@@ -124,9 +131,10 @@ ACE_Priority_Reactor::dispatch_io_set (int number_of_active_handles,
   int max_priority =
     ACE_Event_Handler::LO_PRIORITY;
 
-  (void) this->build_bucket (dispatch_mask,
-                             min_priority,
-                             max_priority);
+  if (this->build_bucket (dispatch_mask,
+                          min_priority,
+                          max_priority) == -1)
+    return -1;
 
   for (int i = max_priority; i >= min_priority; --i)
     {
@@ -152,9 +160,7 @@ ACE_Priority_Reactor::dispatch_io_set (int number_of_active_handles,
                                      mask);
 
           if (this->state_changed_)
-            {
-              this->state_changed_ = false; // so it will not rebuild it ...
-            }
+            this->state_changed_ = false; // so it will not rebuild it ...
         }
 
       // Even if we are aborting the loop due to this->state_changed
