@@ -57,7 +57,9 @@ Thu Oct 18 18:21:18 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * docs/tutorials/Quoter/Simple/Model/Quoter.xme:
 
-          Updated model to the latest CoSMIC release.
+          The entry points for the Servant and Executor were messed up. New
+          releases of CoSMIC generate the proper entry point signitures. 
+          This change fixes the entry point signitures.
 
         * docs/tutorials/Quoter/Simple/descriptors/Broker.cpd:
         * docs/tutorials/Quoter/Simple/descriptors/Default.pcd:
