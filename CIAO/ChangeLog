@@ -1,3 +1,10 @@
+Fri Oct 19 18:19:12 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * DAnCE/StaticConfigurator/StaticDAnCEApp.cpp.tmpl:
+
+          Updated this template implementation to reflect enhancement done by:
+          Fri Oct 19 15:22:36 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
+
 Fri Oct 19 18:04:13 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * docs/tutorials/Quoter/Simple/images/fig10.jpg:
@@ -22,16 +29,16 @@ Fri Oct 19 18:04:13 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 Fri Oct 19 17:56:34 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * ciao/IFR_Base.idl:
-        
+
           Removed this file - see below.
-        
+
         * ciao/CCM_Home.idl:
         * ciao/CCM_Core.mpc:
         * MPC/config/ciao_client_dnc.mpb:
         * MPC/config/ciao_events_dnc.mpb:
         * DAnCE/StaticConfigurator/StaticDAnCEParser.mpc:
         * DAnCE/Plan_Launcher/Plan_Launcher.mpc:
-        
+
           Reverted all changes that attempted to replace dependency
           on IFR_Client library with a dummy interface. The fact
           that one or more config handlers must depend on IFR_Client
@@ -42,18 +49,18 @@ Fri Oct 19 15:35:13 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * examples/Null_Component/StaticDAnCEApp.mpc:
         * examples/Null_Component/Null_Component.mpc:
-        
+
           Change 'after' lines to match recent changes to project names.
 
 Fri Oct 19 15:22:36 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * examples/Null_Component/plan.h:
         * examples/Null_Component/StaticDAnCEApp.cpp:
-        
+
           Reordered and reduced #includes, cosmetic changes.
-          
+
         * examples/Null_Component/StaticDAnCEApp.mpc:
-        
+
           Changed dependency to reflect recent changes in Null_Component.mpc,
           added Header_File and Inline_File blocks to eliminate the
           appearance of unwanted files in IDEs.
@@ -118,7 +125,7 @@ Thu Oct 18 18:21:18 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
         * docs/tutorials/Quoter/Simple/Model/Quoter.xme:
 
           The entry points for the Servant and Executor were messed up. New
-          releases of CoSMIC generate the proper entry point signitures. 
+          releases of CoSMIC generate the proper entry point signitures.
           This change fixes the entry point signitures.
 
         * docs/tutorials/Quoter/Simple/descriptors/Broker.cpd:
