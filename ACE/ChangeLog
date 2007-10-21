@@ -1,3 +1,7 @@
+Sun Oct 21 03:43:13 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * THANKS: added Venkat Sidhabathuni <venkats at idengines dot com>
+
 Fri Oct 19 21:56:11 UTC 2007  Steve Huston  <shuston@riverace.com>
 
         * tests/Config_Test.cpp: Don't attempt the persistent heap-based
@@ -34,7 +38,7 @@ Thu Oct 18 22:04:28 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
         * bin/msvc_static_order.lst:
 
           Added a few projects to the static order, this is necessary due
-          to the update of CIAO tutorial I committed today. This will 
+          to the update of CIAO tutorial I committed today. This will
           avoid a build problem for WinXP_VC71_CIAOCore_Static_Debug build.
 
 Thu Oct 18 10:08:15 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
