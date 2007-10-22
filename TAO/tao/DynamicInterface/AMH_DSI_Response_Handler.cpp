@@ -23,35 +23,6 @@ ACE_RCSID (DynamicInterface, AMH_DSI_Response_Handler,
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_AMH_DSI_Response_Handler_ptr
-TAO::Objref_Traits<TAO_AMH_DSI_Response_Handler>::duplicate (
-    TAO_AMH_DSI_Response_Handler_ptr p)
-{
-  return TAO_AMH_DSI_Response_Handler::_duplicate (p);
-}
-
-void
-TAO::Objref_Traits<TAO_AMH_DSI_Response_Handler>::release (
-    TAO_AMH_DSI_Response_Handler_ptr p)
-{
-  ::CORBA::release (p);
-}
-
-TAO_AMH_DSI_Response_Handler_ptr
-TAO::Objref_Traits<TAO_AMH_DSI_Response_Handler>::nil (void)
-{
-  return TAO_AMH_DSI_Response_Handler::_nil ();
-}
-
-::CORBA::Boolean
-TAO::Objref_Traits<TAO_AMH_DSI_Response_Handler>::marshal (
-    const TAO_AMH_DSI_Response_Handler_ptr p,
-    TAO_OutputCDR & cdr)
-{
-  return ::CORBA::Object::marshal (p, cdr);
-}
-
-
 const char*
 TAO_AMH_DSI_Exception_Holder::_tao_obv_static_repository_id ()
 {
@@ -65,6 +36,202 @@ TAO_AMH_DSI_Exception_Holder::TAO_AMH_DSI_Exception_Holder (CORBA::Exception *ex
 
 TAO_AMH_DSI_Exception_Holder::~TAO_AMH_DSI_Exception_Holder ()
 {
+}
+
+void
+tao_TAO_AMH_DSI_Exception_Holder_add_ref (TAO_AMH_DSI_Exception_Holder * p)
+{
+  CORBA::add_ref (p);
+}
+
+void
+tao_TAO_AMH_DSI_Exception_Holder_remove_ref (TAO_AMH_DSI_Exception_Holder * p)
+{
+  CORBA::remove_ref (p);
+}
+
+
+TAO_AMH_DSI_Exception_Holder_var::TAO_AMH_DSI_Exception_Holder_var (void)
+  : ptr_ (0)
+{
+}
+
+TAO_AMH_DSI_Exception_Holder_var::TAO_AMH_DSI_Exception_Holder_var (
+    TAO_AMH_DSI_Exception_Holder * p)
+  : ptr_ (p)
+{
+}
+
+TAO_AMH_DSI_Exception_Holder_var::TAO_AMH_DSI_Exception_Holder_var (
+    const TAO_AMH_DSI_Exception_Holder * p)
+  : ptr_ (const_cast<TAO_AMH_DSI_Exception_Holder *> (p))
+{
+}
+
+TAO_AMH_DSI_Exception_Holder *
+TAO_AMH_DSI_Exception_Holder_var::ptr (void) const
+{
+  return this->ptr_;
+}
+
+TAO_AMH_DSI_Exception_Holder_var::TAO_AMH_DSI_Exception_Holder_var (
+    const TAO_AMH_DSI_Exception_Holder_var & p)
+{
+  CORBA::add_ref (p.ptr ());
+  this->ptr_ = p.ptr ();
+}
+
+TAO_AMH_DSI_Exception_Holder_var::~TAO_AMH_DSI_Exception_Holder_var (void)
+{
+  CORBA::remove_ref (this->ptr_);
+}
+
+TAO_AMH_DSI_Exception_Holder_var &
+TAO_AMH_DSI_Exception_Holder_var::operator= (TAO_AMH_DSI_Exception_Holder *p)
+{
+  CORBA::remove_ref (this->ptr_);
+  this->ptr_ = p;
+  return *this;
+}
+
+TAO_AMH_DSI_Exception_Holder_var &
+TAO_AMH_DSI_Exception_Holder_var::operator= (
+    const TAO_AMH_DSI_Exception_Holder_var & p)
+{
+  if (this != &p)
+    {
+      CORBA::remove_ref (this->ptr_);
+      TAO_AMH_DSI_Exception_Holder *tmp = p.ptr ();
+      CORBA::add_ref (tmp);
+      this->ptr_ = tmp;
+    }
+
+  return *this;
+}
+
+TAO_AMH_DSI_Exception_Holder_var::operator const TAO_AMH_DSI_Exception_Holder* (
+    ) const // cast
+{
+  return this->ptr_;
+}
+
+TAO_AMH_DSI_Exception_Holder_var::operator TAO_AMH_DSI_Exception_Holder*& (
+    ) // cast
+{
+  return this->ptr_;
+}
+
+TAO_AMH_DSI_Exception_Holder *
+TAO_AMH_DSI_Exception_Holder_var::operator-> (void) const
+{
+  return this->ptr_;
+}
+
+TAO_AMH_DSI_Exception_Holder *
+TAO_AMH_DSI_Exception_Holder_var::in (void) const
+{
+  return this->ptr_;
+}
+
+TAO_AMH_DSI_Exception_Holder *&
+TAO_AMH_DSI_Exception_Holder_var::inout (void)
+{
+  return this->ptr_;
+}
+
+TAO_AMH_DSI_Exception_Holder *&
+TAO_AMH_DSI_Exception_Holder_var::out (void)
+{
+  CORBA::remove_ref (this->ptr_);
+  this->ptr_ = 0;
+  return this->ptr_;
+}
+
+TAO_AMH_DSI_Exception_Holder *
+TAO_AMH_DSI_Exception_Holder_var::_retn (void)
+{
+  // yield ownership of managed obj reference
+  TAO_AMH_DSI_Exception_Holder* tmp = this->ptr_;
+  this->ptr_ = 0;
+  return tmp;
+}
+
+void
+TAO_AMH_DSI_Exception_Holder_var::tao_add_ref (
+    TAO_AMH_DSI_Exception_Holder *p
+  )
+{
+  CORBA::add_ref (p);
+}
+
+void
+TAO_AMH_DSI_Exception_Holder_var::tao_remove_ref (
+    TAO_AMH_DSI_Exception_Holder *p
+  )
+{
+  CORBA::remove_ref (p);
+}
+
+TAO_AMH_DSI_Exception_Holder_out::TAO_AMH_DSI_Exception_Holder_out (
+    TAO_AMH_DSI_Exception_Holder * &p)
+  : ptr_ (p)
+{
+  this->ptr_ = 0;
+}
+
+TAO_AMH_DSI_Exception_Holder_out::TAO_AMH_DSI_Exception_Holder_out (
+     TAO_AMH_DSI_Exception_Holder_var & p)
+  : ptr_ (p.out ())
+{
+  CORBA::remove_ref (this->ptr_);
+  this->ptr_ = 0;
+}
+
+TAO_AMH_DSI_Exception_Holder_out::TAO_AMH_DSI_Exception_Holder_out (
+    const TAO_AMH_DSI_Exception_Holder_out &p)
+  : ptr_ (const_cast<TAO_AMH_DSI_Exception_Holder_out&> (p).ptr_)
+{}
+
+TAO_AMH_DSI_Exception_Holder_out &
+TAO_AMH_DSI_Exception_Holder_out::operator= (
+    const TAO_AMH_DSI_Exception_Holder_out &p)
+{
+  this->ptr_ = const_cast<TAO_AMH_DSI_Exception_Holder_out &> (p).ptr_;
+  return *this;
+}
+
+TAO_AMH_DSI_Exception_Holder_out &
+TAO_AMH_DSI_Exception_Holder_out::operator= (
+    const TAO_AMH_DSI_Exception_Holder_var &p)
+{
+  TAO_AMH_DSI_Exception_Holder *tmp = p.ptr ();
+  CORBA::add_ref (tmp);
+  this->ptr_ = tmp;
+  return *this;
+}
+
+TAO_AMH_DSI_Exception_Holder_out &
+TAO_AMH_DSI_Exception_Holder_out::operator= (TAO_AMH_DSI_Exception_Holder *p)
+{
+  this->ptr_ = p;
+  return *this;
+}
+
+TAO_AMH_DSI_Exception_Holder_out::operator TAO_AMH_DSI_Exception_Holder*& ()
+{
+  return this->ptr_;
+}
+
+TAO_AMH_DSI_Exception_Holder *&
+TAO_AMH_DSI_Exception_Holder_out::ptr (void) // ptr
+{
+  return this->ptr_;
+}
+
+TAO_AMH_DSI_Exception_Holder *
+TAO_AMH_DSI_Exception_Holder_out::operator-> (void)
+{
+  return this->ptr_;
 }
 
 TAO_AMH_DSI_Exception_Holder *
