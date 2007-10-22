@@ -84,7 +84,7 @@ public:
            ACE_OFF_T offset = 0,
            LPSECURITY_ATTRIBUTES sa = 0);
 
-  /// Map a file specified by <filename>.
+  /// Map a file specified by @a filename.
   int map (const ACE_TCHAR *filename,
            size_t length = static_cast<size_t> (-1),
            int flags = O_RDWR | O_CREAT,

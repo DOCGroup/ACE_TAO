@@ -666,11 +666,11 @@ public:
    * <wr_ptr>'s will be updated to reflect the added bytes for each
    * @a message_block
    *
-   * Priority of the operation is specified by <priority>. On POSIX4-Unix,
+   * Priority of the operation is specified by @a priority. On POSIX4-Unix,
    * this is supported. Works like <nice> in Unix. Negative values are not
    * allowed. 0 means priority of the operation same as the process
    * priority. 1 means priority of the operation is one less than
-   * process. And so forth. On Win32, <priority> is a no-op.
+   * process. And so forth. On Win32, @a priority is a no-op.
    * @a signal_number is the POSIX4 real-time signal number to be used
    * for the operation. @a signal_number ranges from ACE_SIGRTMIN to
    * ACE_SIGRTMAX. This argument is a no-op on non-POSIX4 systems.
@@ -752,7 +752,7 @@ public:
    * @a message_block's <rd_ptr>'s will be updated to reflect the bytes sent
    * from each @a message_block.
    *
-   * Priority of the operation is specified by <priority>. On POSIX4-Unix,
+   * Priority of the operation is specified by @a priority. On POSIX4-Unix,
    * this is supported. Works like <nice> in Unix. Negative values are not
    * allowed. 0 means priority of the operation same as the process
    * priority. 1 means priority of the operation is one less than

@@ -83,7 +83,7 @@ public:
   /**
    * Try to send exactly @a len bytes into @a buf from <handle> (uses
    * the <send> call).  If <send> blocks for longer than @a timeout the
-   * number of bytes actually sent is returned with <errno == ETIME>.
+   * number of bytes actually sent is returned with @c errno == ETIME.
    * If a timeout does not occur, <send_n> return @a len (i.e., the
    * number of bytes requested to be sent).
    */
@@ -99,7 +99,7 @@ public:
    * will block until action is possible, else will wait until the
    * relative time specified in *@a timeout elapses).  If <recv> blocks
    * for longer than @a timeout the number of bytes actually read is
-   * returned with <errno == ETIME>.  If a timeout does not occur,
+   * returned with @c errno == ETIME.  If a timeout does not occur,
    * <recv_n> return @a len (i.e., the number of bytes requested to be
    * read).
    */

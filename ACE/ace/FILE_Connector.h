@@ -44,17 +44,17 @@ public:
   ACE_FILE_Connector (void);
 
   /**
-   * Actively ``connect'' and produce a <new_io> <ACE_FILE_IO> object
-   * if things go well.  The <remote_sap> is the file that we are
+   * Actively ``connect'' and produce a @a new_io <ACE_FILE_IO> object
+   * if things go well.  The @a remote_sap is the file that we are
    * trying to create/open.  If it's the default value of
-   * <ACE_Addr::sap_any> then the user is letting the OS create the
+   * ACE_Addr::sap_any then the user is letting the OS create the
    * filename (via <ACE_OS::mkstemp>).  The @a timeout is the amount of
    * time to wait to create/open the file.  If it's 0 then we block
    * indefinitely.  If *timeout == {0, 0} then the file is created
    * using non-blocking mode.  If *timeout > {0, 0} then this is the
    * maximum amount of time to wait before timing out.  The
-   * <local_sap> and @a reuse_addr parameters are ignored.  The <flags>
-   * and <perms> arguments are passed down to the <ACE_OS::open>
+   * @a local_sap and @a reuse_addr parameters are ignored.  The @a flags
+   * and @a perms arguments are passed down to the <ACE_OS::open>
    * method.
    */
   ACE_FILE_Connector (ACE_FILE_IO &new_io,
@@ -66,10 +66,10 @@ public:
                       int perms = ACE_DEFAULT_FILE_PERMS);
 
   /**
-   * Actively ``connect'' and produce a <new_io> <ACE_FILE_IO> object
-   * if things go well.  The <remote_sap> is the file that we are
+   * Actively ``connect'' and produce a @a new_io <ACE_FILE_IO> object
+   * if things go well.  The @a remote_sap is the file that we are
    * trying to create/open.  If it's the default value of
-   * <ACE_Addr::sap_any> then the user is letting the OS create the
+   * ACE_Addr::sap_any then the user is letting the OS create the
    * filename (via <ACE_OS::mkstemp>).  The @a timeout is the amount of
    * time to wait to create/open the file.  If it's 0 then we block
    * indefinitely.  If *timeout == {0, 0} then the file is created
@@ -77,8 +77,8 @@ public:
    * be done immediately the value of -1 is returned with <errno ==
    * EWOULDBLOCK>.  If *timeout > {0, 0} then this is the maximum amount of
    * time to wait before timing out.  If the time expires before the
-   * connection is made <errno == ETIME>.  The <local_sap> and
-   * @a reuse_addr parameters are ignored.  The <flags> and <perms>
+   * connection is made @c errno == ETIME.  The @a local_sap and
+   * @a reuse_addr parameters are ignored.  The @a flags and @a perms
    * arguments are passed down to the <ACE_OS::open> method.
    */
   int connect (ACE_FILE_IO &new_io,

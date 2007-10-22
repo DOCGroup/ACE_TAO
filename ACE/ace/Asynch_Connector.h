@@ -57,7 +57,7 @@ public:
    */
   virtual int open (int pass_addresses = 0,
                     ACE_Proactor *proactor = 0,
-                    int validate_new_connection = 1);
+                    bool validate_new_connection = true);
 
   /// This initiates a new asynchronous connect
   virtual int connect (const ACE_INET_Addr &remote_sap,
@@ -120,8 +120,8 @@ public:
 
   /// Set and get flag that indicates if address validation is
   /// required.
-  virtual int  validate_new_connection (void) const;
-  virtual void validate_new_connection (int new_value);
+  virtual bool validate_new_connection (void) const;
+  virtual void validate_new_connection (bool new_value);
 
 protected:
 
@@ -150,11 +150,10 @@ private:
   ACE_Asynch_Connect asynch_connect_;
 
   /// Flag that indicates if parsing of addresses is necessary.
-  int pass_addresses_;
+  bool pass_addresses_;
 
   /// Flag that indicates if address validation is required.
-  int validate_new_connection_;
-
+  bool validate_new_connection_;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

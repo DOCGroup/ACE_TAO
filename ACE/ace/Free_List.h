@@ -71,7 +71,7 @@ class ACE_Locked_Free_List : public ACE_Free_List<T>
 public:
   // = Initialization and termination.
   /**
-   * Constructor takes a <mode> (i.e., ACE_FREE_LIST_WITH_POOL or
+   * Constructor takes a @a mode (i.e., ACE_FREE_LIST_WITH_POOL or
    * ACE_PURE_FREE_LIST), a count of the number of nodes to
    * <prealloc>, a low and high water mark (<lwm> and <hwm>) that
    * indicate when to allocate more nodes, an increment value (<inc>)

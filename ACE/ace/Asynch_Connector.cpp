@@ -23,8 +23,8 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class HANDLER>
 ACE_Asynch_Connector<HANDLER>::ACE_Asynch_Connector (void)
-  : pass_addresses_ (0),
-    validate_new_connection_ (0)
+  : pass_addresses_ (false),
+    validate_new_connection_ (false)
 {
 }
 
@@ -35,9 +35,9 @@ ACE_Asynch_Connector<HANDLER>::~ACE_Asynch_Connector (void)
 }
 
 template <class HANDLER> int
-ACE_Asynch_Connector<HANDLER>::open (int pass_addresses,
+ACE_Asynch_Connector<HANDLER>::open (bool pass_addresses,
                                      ACE_Proactor *proactor,
-                                     int validate_new_connection)
+                                     bool validate_new_connection)
 {
   this->proactor (proactor);
   this->pass_addresses_ = pass_addresses;
@@ -266,26 +266,26 @@ ACE_Asynch_Connector<HANDLER>::make_handler (void)
   return handler;
 }
 
-template <class HANDLER> int
+template <class HANDLER> bool
 ACE_Asynch_Connector<HANDLER>::pass_addresses (void) const
 {
   return this->pass_addresses_;
 }
 
 template <class HANDLER> void
-ACE_Asynch_Connector<HANDLER>::pass_addresses (int new_value)
+ACE_Asynch_Connector<HANDLER>::pass_addresses (bool new_value)
 {
   this->pass_addresses_ = new_value;
 }
 
-template <class HANDLER> int
+template <class HANDLER> bool
 ACE_Asynch_Connector<HANDLER>::validate_new_connection (void) const
 {
   return this->validate_new_connection_;
 }
 
 template <class HANDLER> void
-ACE_Asynch_Connector<HANDLER>::validate_new_connection (int new_value)
+ACE_Asynch_Connector<HANDLER>::validate_new_connection (bool new_value)
 {
   this->validate_new_connection_ = new_value;
 }
