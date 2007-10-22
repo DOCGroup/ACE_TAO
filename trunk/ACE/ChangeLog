@@ -1,3 +1,42 @@
+Mon Oct 22 18:53:15 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Asynch_Connector.{h,cpp}:
+          Use bool instead of int for all the flags
+
+        * ace/Asynch_IO_Impl.h:
+        * ace/Asynch_Pseudo_Task.h:
+        * ace/ATM_Connector.h:
+        * ace/Configuration.h:
+        * ace/ATM_Params.h:
+        * ace/Connection_Recycling_Strategy.h:
+        * ace/Connector.h:
+        * ace/Countdown_Time.h:
+        * ace/DEV_Connector.h:
+        * ace/FILE_Connector.h:
+        * ace/File_Lock.h:
+        * ace/Free_List.h:
+        * ace/Logging_Strategy.h:
+        * ace/MEM_IO.h:
+        * ace/Mem_Map.h:
+        * ace/MEM_SAP.h:
+        * ace/MEM_Stream.h:
+        * ace/Module.h:
+          Doxygen changes
+
+        * ace/config-unixware-2.01-g++.h:
+        * ace/config-unixware-2.1.2-g++.h:
+          Deleted, we don't support unixware already for a long time
+
+        * ace/config-vxworks5.x.h:
+        * ace/config-vxworks6.2.h:
+        * ace/config-vxworks6.3.h:
+        * ace/config-vxworks6.4.h:
+          Added ACE_HAS_VXTHREADS as new define which is used when
+          we use the VxWorks specific threading model instead of pthread
+
+        * ace/config-vxworks6.4.h:
+          Improved VxWorks 6.4 support
+
 Mon Oct 22 12:25:15 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_3102_Regression_Test.cpp:

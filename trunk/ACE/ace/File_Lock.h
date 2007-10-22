@@ -46,7 +46,7 @@ public:
   ACE_File_Lock (ACE_HANDLE handle = ACE_INVALID_HANDLE,
                  int unlink_in_destructor = 1);
 
-  /// Open the <filename> with <flags> and <mode> and set the result
+  /// Open the @a filename with @a flags and @a mode and set the result
   /// to <handle_>.  If you don't want the file unlinked in the
   /// destructor pass a zero value for <unlink_in_destructor>.
   ACE_File_Lock (const ACE_TCHAR *filename,
@@ -54,7 +54,7 @@ public:
                  mode_t mode = 0,
                  int unlink_in_destructor = 1);
 
-  /// Open the <filename> with <flags> and <mode> and set the result to
+  /// Open the @a filename with @a flags and @a mode and set the result to
   /// <handle_>.
   int open (const ACE_TCHAR *filename,
             int flags,

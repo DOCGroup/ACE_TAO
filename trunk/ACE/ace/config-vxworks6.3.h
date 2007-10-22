@@ -256,6 +256,7 @@
 #include "types/vxTypesOld.h"
 #else
 # define ACE_LACKS_PTHREAD_H
+# define ACE_HAS_VXTHREADS
 # if !defined __RTP__
 // Only when building for kernel mode we can use TSS emulation, in rtp mode
 // we can't use the WIND_TCB struct anymore

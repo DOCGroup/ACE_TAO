@@ -50,7 +50,7 @@ public:
   /// Mark as closed.(non-locking version)
   virtual int mark_as_closed_i (const void *recycling_act) = 0;
 
-  /// Cleanup hint and reset <*act_holder> to zero if <act_holder != 0>.
+  /// Cleanup hint and reset @a act_holder to zero if @a act_holder != 0.
   virtual int cleanup_hint (const void *recycling_act,
                             void **act_holder = 0) = 0;
 

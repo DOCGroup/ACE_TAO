@@ -60,7 +60,7 @@ public:
 
   /**
    * Wait to to @a timeout amount of time to send @a buf.  If <send>
-   * times out a -1 is returned with <errno == ETIME>.  If it succeeds
+   * times out a -1 is returned with @c errno == ETIME.  If it succeeds
    * the number of bytes sent is returned.  */
   virtual ssize_t send_buf (ACE_MEM_SAP_Node *buf,
                             int flags,
@@ -129,7 +129,7 @@ public:
 
   /**
    * Wait to to @a timeout amount of time to send @a buf.  If <send>
-   * times out a -1 is returned with <errno == ETIME>.  If it succeeds
+   * times out a -1 is returned with @c errno == ETIME.  If it succeeds
    * the number of bytes sent is returned.  */
   virtual ssize_t send_buf (ACE_MEM_SAP_Node *buf,
                             int flags,
@@ -219,7 +219,7 @@ public:
   /**
    * Wait to to @a timeout amount of time to send up to @a n bytes into
    * @a buf from <handle> (uses the <send> call).  If <send> times out
-   * a -1 is returned with <errno == ETIME>.  If it succeeds the
+   * a -1 is returned with @c errno == ETIME.  If it succeeds the
    * number of bytes sent is returned.
    */
   ssize_t send (const void *buf,
@@ -229,7 +229,7 @@ public:
   /**
    * Wait to to @a timeout amount of time to send up to @a n bytes into
    * @a buf from <handle> (uses the <send> call).  If <send> times out
-   * a -1 is returned with <errno == ETIME>.  If it succeeds the
+   * a -1 is returned with @c errno == ETIME.  If it succeeds the
    * number of bytes sent is returned.
    */
   ssize_t send (const void *buf,
@@ -239,7 +239,7 @@ public:
 
   /**
    * Wait to to @a timeout amount of time to send the @a message_block.
-   * If <send> times out a -1 is returned with <errno == ETIME>.  If
+   * If <send> times out a -1 is returned with @c errno == ETIME.  If
    * it succeeds the number of bytes sent is returned.
    */
   ssize_t send (const ACE_Message_Block *message_block,
@@ -248,7 +248,7 @@ public:
   /**
    * Wait up to @a timeout amount of time to receive up to @a n bytes
    * into @a buf from <handle> (uses the <recv> call).  If <recv> times
-   * out a -1 is returned with <errno == ETIME>.  If it succeeds the
+   * out a -1 is returned with @c errno == ETIME.  If it succeeds the
    * number of bytes received is returned.
    */
   ssize_t recv (void *buf,
@@ -258,7 +258,7 @@ public:
   /**
    * Wait up to @a timeout amount of time to receive up to @a n bytes
    * into @a buf from <handle> (uses the <recv> call).  If <recv> times
-   * out a -1 is returned with <errno == ETIME>.  If it succeeds the
+   * out a -1 is returned with @c errno == ETIME.  If it succeeds the
    * number of bytes received is returned.
    */
   ssize_t recv (void *buf,

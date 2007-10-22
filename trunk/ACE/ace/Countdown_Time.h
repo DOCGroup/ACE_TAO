@@ -37,7 +37,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_Countdown_Time
 {
 public:
-  // = Initialization and termination methods.
   /// Cache the @a max_wait_time and call @c start().
   ACE_Countdown_Time (ACE_Time_Value *max_wait_time);
 

@@ -62,7 +62,7 @@ class ACE_NonBlocking_Connect_Handler : public ACE_Event_Handler
 {
 public:
 
-  // Constructor.
+  /// Constructor.
   ACE_NonBlocking_Connect_Handler (ACE_Connector_Base<SVC_HANDLER> &connector,
                                    SVC_HANDLER *,
                                    long timer_id);
@@ -84,14 +84,12 @@ public:
   /// Get SVC_HANDLER.
   SVC_HANDLER *svc_handler (void);
 
-  // = Get/set handle.
   /// Get handle.
   ACE_HANDLE handle (void);
 
   /// Set handle.
   void handle (ACE_HANDLE);
 
-  // = Set/get timer id.
   /// Get timer id.
   long timer_id (void);
 
@@ -110,11 +108,9 @@ public:
 
   /// This method is called if a connection times out before
   /// completing.
-  virtual int handle_timeout (const ACE_Time_Value &tv,
-                              const void *arg);
+  virtual int handle_timeout (const ACE_Time_Value &tv, const void *arg);
 
-  /// Should Reactor resume us if we have been suspended before the
-  /// upcall?
+  /// Should Reactor resume us if we have been suspended before the upcall?
   virtual int resume_handler (void);
 
   /// Dump the state of an object.
@@ -327,7 +323,7 @@ protected:
   int nonblocking_connect (SVC_HANDLER *,
                            const ACE_Synch_Options &);
 
-  /// Implementation the <connect> methods.
+  /// Implementation of the connect methods.
   virtual int connect_i (SVC_HANDLER *&svc_handler,
                          SVC_HANDLER **sh_copy,
                          const ACE_PEER_CONNECTOR_ADDR &remote_addr,
@@ -346,7 +342,7 @@ protected:
   /// by application developer to do anything meaningful.
   virtual int init (int argc, ACE_TCHAR *argv[]);
 
-  /// Calls <handle_close> to shutdown the Connector gracefully.
+  /// Calls handle_close() to shutdown the Connector gracefully.
   virtual int fini (void);
 
   /// Default version returns address info in @a buf.

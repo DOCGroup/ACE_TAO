@@ -57,16 +57,16 @@ public:
 
   /**
    * Actively connect and produce a @a new_stream if things go well.
-   * The <remote_sap> is the address that we are trying to connect
+   * The @a remote_sap is the address that we are trying to connect
    * with.  The <params> are the parameters needed for either socket
    * or XTI/ATM connections.  The @a timeout is the amount of time to
    * wait to connect. If it's 0 then we block indefinitely.  If
    * *timeout == {0, 0} then the connection is done using non-blocking
    * mode.  In this case, if the connection can't be made immediately
-   * the value of -1 is returned with <errno == EWOULDBLOCK>.  If
+   * the value of -1 is returned with @c errno == EWOULDBLOCK.  If
    * *timeout > {0, 0} then this is the maximum amount of time to wait before
    * timing out.  If the time expires before the connection is made
-   * <errno == ETIME>.  The <local_sap> is the value of local address
+   * @c errno == ETIME.  The @a local_sap is the value of local address
    * to bind to.  If it's the default value of <ACE_ATM_Addr::sap_any> then
    * the user is letting the OS do the binding.  If @a reuse_addr == 1
    * then the <local_addr> is reused, even if it hasn't been cleanedup yet.
@@ -87,16 +87,16 @@ public:
 
   /**
    * Actively connect and produce a @a new_stream if things go well.
-   * The <remote_sap> is the address that we are trying to connect
+   * The @a remote_sap is the address that we are trying to connect
    * with.  The <params> are the parameters needed for either socket
    * or XTI/ATM connections.  The @a timeout is the amount of time to
    * wait to connect. If it's 0 then we block indefinitely.  If
    * *timeout == {0, 0} then the connection is done using non-blocking
    * mode.  In this case, if the connection can't be made immediately
-   * the value of -1 is returned with <errno == EWOULDBLOCK>.  If
+   * the value of -1 is returned with @c errno == EWOULDBLOCK.  If
    * *timeout > {0, 0} then this is the maximum amount of time to wait before
    * timing out.  If the time expires before the connection is made
-   * <errno == ETIME>.  The <local_sap> is the value of local address
+   * @c errno == ETIME.  The @a local_sap is the value of local address
    * to bind to.  If it's the default value of <ACE_ATM_Addr::sap_any> then
    * the user is letting the OS do the binding.  If @a reuse_addr == 1
    * then the <local_addr> is reused, even if it hasn't been cleanedup yet.
@@ -119,7 +119,7 @@ public:
   /**
    * Try to complete a non-blocking connection.
    * If connection completion is successful then @a new_stream contains
-   * the connected ACE_SOCK_Stream.  If <remote_sap> is non-NULL then it
+   * the connected ACE_SOCK_Stream.  If @a remote_sap is non-NULL then it
    * will contain the address of the connected peer.
    */
   int complete (ACE_ATM_Stream &new_stream,
@@ -128,7 +128,7 @@ public:
 
   /**
    * Actively add a leaf to the root (i.e., point-to-multipoint). The
-   * <remote_sap> is the address of the leaf that we
+   * @a remote_sap is the address of the leaf that we
    * are trying to add.
    */
   int add_leaf (ACE_ATM_Stream &current_stream,
