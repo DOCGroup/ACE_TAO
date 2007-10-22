@@ -39,10 +39,10 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * If @a timeout != 0, the call will wait until the relative time
  * specified in *@a timeout elapses.
  * Errors are reported by -1 and 0 return values.  If the
- * operation times out, -1 is returned with <errno == ETIME>.
+ * operation times out, -1 is returned with @c errno == ETIME.
  * If it succeeds the number of bytes transferred is returned.
- * Methods with the extra <flags> argument will always result in
- * <send> getting called. Methods without the extra <flags>
+ * Methods with the extra @a flags argument will always result in
+ * <send> getting called. Methods without the extra @a flags
  * argument will result in <send> getting called on Win32
  * platforms, and <write> getting called on non-Win32 platforms.
  */

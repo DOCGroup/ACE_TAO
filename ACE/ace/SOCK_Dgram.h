@@ -130,7 +130,7 @@ public:
    * trying to receive.  If @a timeout == 0, the caller will block
    * until action is possible, else will wait until the relative time
    * specified in *@a timeout elapses).  If <recv> times out a -1 is
-   * returned with <errno == ETIME>.  If it succeeds the number of
+   * returned with @c errno == ETIME.  If it succeeds the number of
    * bytes received is returned.
    */
   ssize_t recv (void *buf,
@@ -145,7 +145,7 @@ public:
    * trying to receive.  If @a timeout == 0, the caller will block
    * until action is possible, else will wait until the relative time
    * specified in *@a timeout elapses).  If <send> times out a -1 is
-   * returned with <errno == ETIME>.  If it succeeds the number of
+   * returned with @c errno == ETIME.  If it succeeds the number of
    * bytes sent is returned.
    */
   ssize_t send (const void *buf,

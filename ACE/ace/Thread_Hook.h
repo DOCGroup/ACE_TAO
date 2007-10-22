@@ -43,7 +43,7 @@ public:
   /**
    * This method can be overridden in a subclass to customize this
    * pre-function call "hook" invocation that can perform
-   * initialization processing before the thread entry point <func>
+   * initialization processing before the thread entry point @a func
    * method is called back.  The @a func and @a arg passed into the
    * start hook are the same as those passed by the application that
    * spawned the thread.
