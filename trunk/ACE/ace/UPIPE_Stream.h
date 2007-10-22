@@ -118,8 +118,7 @@ private:
   /// @c UPIPE_Connector to link together two UPIPE_Streams.
   MT_Stream stream_;
 
-  /// Keep track of whether the sender and receiver have both shut
-  /// down.
+  /// Keep track of whether the sender and receiver have both shutdown.
   int reference_count_;
 
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)

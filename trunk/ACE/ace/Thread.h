@@ -52,14 +52,14 @@ class ACE_Export ACE_Thread
 {
 public:
   /**
-   * Creates a new thread having <flags> attributes and running <func>
-   * with <args> (if <thread_adapter> is non-0 then <func> and <args>
+   * Creates a new thread having @a flags attributes and running @a func
+   * with <args> (if <thread_adapter> is non-0 then @a func and <args>
    * are ignored and are obtained from <thread_adapter>).  <thr_id>
    * and <t_handle> are set to the thread's ID and handle (?),
-   * respectively.  The thread runs at <priority> priority (see
+   * respectively.  The thread runs at @a priority priority (see
    * below).
    *
-   * The <flags> are a bitwise-OR of the following:
+   * The @a flags are a bitwise-OR of the following:
    * = BEGIN<INDENT>
    * THR_CANCEL_DISABLE, THR_CANCEL_ENABLE, THR_CANCEL_DEFERRED,
    * THR_CANCEL_ASYNCHRONOUS, THR_BOUND, THR_NEW_LWP, THR_DETACHED,
@@ -68,7 +68,7 @@ public:
    * THR_SCOPE_SYSTEM, THR_SCOPE_PROCESS
    * = END<INDENT>
    *
-   * By default, or if <priority> is set to
+   * By default, or if @a priority is set to
    * ACE_DEFAULT_THREAD_PRIORITY, an "appropriate" priority value for
    * the given scheduling policy (specified in <flags}>, e.g.,
    * <THR_SCHED_DEFAULT>) is used.  This value is calculated
@@ -115,8 +115,8 @@ public:
                          ACE_Thread_Adapter *thread_adapter = 0);
 
   /**
-   * Spawn @a n new threads, which execute <func> with argument <arg>
-   * (if <thread_adapter> is non-0 then <func> and <args> are ignored
+   * Spawn @a n new threads, which execute @a func with argument <arg>
+   * (if <thread_adapter> is non-0 then @a func and <args> are ignored
    * and are obtained from <thread_adapter>).  The thread_ids of
    * successfully spawned threads will be placed into the <thread_ids>
    * buffer (which must be the same size as @a n).  If @a stack != 0 it

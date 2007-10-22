@@ -70,8 +70,8 @@ class ACE_Message_Block;
  * bytes transferred.
  * Methods with <iovec> parameter are I/O vector variants of the I/O
  * operations.
- * Methods with the extra <flags> argument will always result in
- * <send> getting called. Methods without the extra <flags> argument
+ * Methods with the extra @a flags argument will always result in
+ * <send> getting called. Methods without the extra @a flags argument
  * will result in <send> getting called on Win32 platforms, and
  * <write> getting called on non-Win32 platforms.
  */

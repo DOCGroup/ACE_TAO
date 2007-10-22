@@ -1,3 +1,22 @@
+Mon Oct 22 18:57:15 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/POSIX_Asynch_IO.h:
+        * ace/RW_Process_Mutex.h:
+        * ace/SOCK_Acceptor.h:
+        * ace/SOCK_Dgram.h:
+        * ace/SOCK_IO.h:
+        * ace/SOCK_SEQPACK_Acceptor.h:
+        * ace/SOCK_SEQPACK_Association.h:
+        * ace/SPIPE_Connector.h:
+        * ace/Task.h:
+        * ace/Thread.h:
+        * ace/Thread_Hook.h:
+        * ace/TLI_Connector.h:
+        * ace/UPIPE_Connector.h:
+        * ace/UPIPE_Stream.h:
+        * ace/XTI_ATM_Mcast.h:
+          Doxygen changes
+
 Mon Oct 22 18:53:15 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Asynch_Connector.{h,cpp}:
