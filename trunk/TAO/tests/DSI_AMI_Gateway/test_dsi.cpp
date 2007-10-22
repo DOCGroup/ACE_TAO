@@ -48,18 +48,12 @@ DSI_Simple_Server::_dispatch (TAO_ServerRequest &request,
 
   try
     {
-      TAO_AMH_DSI_Response_Handler_ptr rh_ptr = 0;
-      ACE_NEW (rh_ptr, TAO_AMH_DSI_Response_Handler(request));
+      TAO_AMH_DSI_Response_Handler_var rh;
+      ACE_NEW (rh, TAO_AMH_DSI_Response_Handler(request));
 
-      TAO_AMH_DSI_Response_Handler_var rh = rh_ptr;
-
-      // init the handler
-      TAO_AMH_BUFFER_ALLOCATOR* amh_allocator =
-              request.orb()->orb_core ()->lane_resources().amh_response_handler_allocator();
-      rh->init (request, amh_allocator);
+      rh->init (request, 0);
       // Delegate to user.
-      this->invoke (dsi_request,
-                    rh.in());
+      this->invoke (dsi_request, rh.in());
     }
   catch (const CORBA::Exception& ex)
 
@@ -107,11 +101,10 @@ DSI_Simple_Server::invoke (CORBA::ServerRequest_ptr request,
   try
     {
       // Updates the byte order state, if necessary.
-      My_DII_Reply_Handler * rh_ptr = 0;
-      ACE_NEW (rh_ptr, My_DII_Reply_Handler (rph, this->orb_));
+      TAO_DII_Reply_Handler_var rh;
+      ACE_NEW (rh, My_DII_Reply_Handler (rph, this->orb_));
 
-      target_request->sendc (rh_ptr);
-      CORBA::release (rh_ptr);
+      target_request->sendc (rh.in());
     }
   catch (const CORBA::UNKNOWN&)
     {
@@ -120,7 +113,6 @@ DSI_Simple_Server::invoke (CORBA::ServerRequest_ptr request,
 
       request->gateway_exception_reply (
           target_request->raw_user_exception ());
-
       return;
     }
 

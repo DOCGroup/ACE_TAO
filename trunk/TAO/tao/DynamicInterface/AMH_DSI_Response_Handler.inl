@@ -30,6 +30,7 @@ TAO_AMH_DSI_Response_Handler_var::TAO_AMH_DSI_Response_Handler_var (TAO_AMH_DSI_
 ACE_INLINE
 TAO_AMH_DSI_Response_Handler_var::~TAO_AMH_DSI_Response_Handler_var (void)
 {
+  CORBA::release(ptr_);
 }
 
 ACE_INLINE TAO_AMH_DSI_Response_Handler_ptr
