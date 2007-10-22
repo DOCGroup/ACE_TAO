@@ -73,7 +73,7 @@ namespace CIDL_Sender_Impl
     ccm_remove ();
 
     protected:
-    Sender_Context *context_;
+    Minimum::CCM_Sender_Context_var context_;
   };
 
   class SENDER_EXEC_Export SenderHome_exec_i

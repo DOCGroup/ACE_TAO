@@ -4,8 +4,6 @@
 #include "ace/Sched_Params.h"
 #include "ace/OS_NS_errno.h"
 
-#include "tao/Strategies/advanced_resource.h"
-
 const char *ior_output_file = "rtserver.ior";
 
 int
@@ -70,7 +68,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Cannot open output file for writing IOR: %s",
                            ior_output_file),
-                              1);
+                          1);
       ACE_OS::fprintf (output_file, "%s", ior.in ());
       ACE_OS::fclose (output_file);
 

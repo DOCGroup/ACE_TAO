@@ -14,7 +14,6 @@
  */
 //==============================================================
 #include "RoundTripC.h"
-#include "tao/Strategies/advanced_resource.h"
 #include "ace/Get_Opt.h"
 #include "ace/High_Res_Timer.h"
 #include "ace/Sched_Params.h"
