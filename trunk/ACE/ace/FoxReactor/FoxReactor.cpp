@@ -21,9 +21,9 @@ ACE_ALLOC_HOOK_DEFINE (ACE_FoxReactor)
 
 // Must be called with lock held
 ACE_FoxReactor::ACE_FoxReactor (FXApp* a,
-                              size_t size,
-                            int restart,
-                            ACE_Sig_Handler *h)
+                                size_t size,
+                                int restart,
+                                ACE_Sig_Handler *h)
   : ACE_Select_Reactor (size, restart, h), fxapp(a)
 {
   // When the ACE_Select_Reactor is constructed it creates the notify
@@ -47,9 +47,10 @@ ACE_FoxReactor::~ACE_FoxReactor (void)
 {
 }
 
-void ACE_FoxReactor::fxapplication(FXApp *a){
+void ACE_FoxReactor::fxapplication(FXApp *a)
+{
    fxapp=a;
-};
+}
 
 // This is just the <wait_for_multiple_events> from ace/Reactor.cpp
 // but we use the Fox functions to wait for an event, not <select>
@@ -263,7 +264,7 @@ ACE_FoxReactor::reset_timer_interval
   ACE_TRACE ("ACE_FoxReactor::reset_timer_interval");
   ACE_MT (ACE_GUARD_RETURN (ACE_Select_Reactor_Token, ace_mon, this->token_, -1));
 
-  int result =
+  int const result =
     ACE_Select_Reactor::reset_timer_interval (timer_id,
                                               interval);
 
@@ -300,12 +301,12 @@ ACE_FoxReactor::schedule_timer (ACE_Event_Handler *event_handler,
 
 int
 ACE_FoxReactor::cancel_timer (ACE_Event_Handler *handler,
-                           int dont_call_handle_close)
+                              int dont_call_handle_close)
 {
   ACE_TRACE ("ACE_FoxReactor::cancel_timer");
 
   if (ACE_Select_Reactor::cancel_timer (handler,
-                                      dont_call_handle_close) == -1)
+                                        dont_call_handle_close) == -1)
     return -1;
   else
     {
@@ -322,8 +323,8 @@ ACE_FoxReactor::cancel_timer (long timer_id,
   ACE_TRACE ("ACE_FoxReactor::cancel_timer");
 
   if (ACE_Select_Reactor::cancel_timer (timer_id,
-                                      arg,
-                                      dont_call_handle_close) == -1)
+                                        arg,
+                                        dont_call_handle_close) == -1)
     return -1;
   else
     {

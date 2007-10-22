@@ -1,3 +1,28 @@
+Mon Oct 22 19:03:15 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_TLI.h:
+          Removed workaround for unixware 2.0
+
+        * ace/Proactor.{h,cpp}:
+          Use bool for delete_implementation flag
+
+        * ace/Select_Reactor_Base.cpp:
+          Const improvement
+
+        * ace/config-WinCE.h:
+        * ace/OS_NS_time.h:
+          Added ACE_LACKS_STRUCT_TM which is set in the config file and used in
+          OS_NS_time.h
+
+        * ace/FoxReactor/FoxReactor.cpp:
+          Layout and const changes
+
+        * ace/OS_QoS.h:
+          Doxygen changes
+
+        * ace/Process_Semaphore.cpp:
+          Use ACE_UNUSED_ARG
+
 Mon Oct 22 18:57:15 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/POSIX_Asynch_IO.h:

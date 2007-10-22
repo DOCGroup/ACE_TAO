@@ -47,12 +47,7 @@ static const ACE_UINT32 ACE_U_ONE_SECOND_IN_MSECS = 1000U;
 static const ACE_UINT32 ACE_U_ONE_SECOND_IN_USECS = 1000000U;
 static const ACE_UINT32 ACE_U_ONE_SECOND_IN_NSECS = 1000000000U;
 
-#if defined (ACE_HAS_WINCE) && (defined (_MSC_VER) && (_MSC_VER < 1400))
-// WinCE prior to Visual Studio 2005 integration doesn't have most of
-// the standard C library time functions. It also doesn't define struct tm.
-// SYSTEMTIME has pretty much the same info though, so we can map it when
-// needed. Define struct tm here and use it when needed. This is taken
-// from the standard C library.
+#if defined (ACE_LACKS_STRUCT_TM)
 struct tm {
   int tm_sec;
   int tm_min;
@@ -64,7 +59,7 @@ struct tm {
   int tm_yday;      // Day in the year
   int tm_isdst;     // >0 if dst in effet; 0 if not; <0 if unknown
 };
-#endif /* ACE_HAS_WINCE */
+#endif /* ACE_LACKS_STRUCT_TM */
 
 /// Helper for the ACE_OS::timezone() function
 /**
