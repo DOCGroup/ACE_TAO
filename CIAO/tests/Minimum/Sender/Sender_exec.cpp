@@ -54,7 +54,7 @@ namespace CIDL_Sender_Impl
   ::Components::SessionContext_ptr ctx)
   {
     this->context_ =
-    Sender_Context::_narrow (
+    Minimum::CCM_Sender_Context::_narrow (
     ctx);
 
     if (this->context_ == 0)

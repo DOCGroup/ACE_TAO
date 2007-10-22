@@ -1,3 +1,74 @@
+Mon Oct 22 18:54:03 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * performance-tests\Protocols\Sender\Custom_Network_Priority_Mapping.cpp:
+        * performance-tests\Protocols\Sender\Custom_Network_Priority_Mapping.h:
+
+          New files, factored out of existing files.
+
+        * performance-tests\Benchmark\Benchmark_skel_export.h:
+        * tests\Minimum\Minimum_Base\Minimum_Base.mpc:
+        * tests\Minimum\Minimum_Base\Minimum_Base_skel_export.h:
+        * examples\Hello\Hello_Base\Hello_Base_skel_export.h:
+        * examples\Swapping\Hello_Base\Hello_Base_skel_export.h:
+
+          New files, renamed from corresponding files removed, as
+          listed below.
+
+        * performance-tests\Benchmark\Benchmark_svnt_export.h:
+        * tests\Minimum\Minimum_Base\Minimum_Base_svnt_export.h:
+        * tests\Minimum\Minimum_Base\Minimum.mpc:
+        * examples\Hello\Hello_Base\Hello_Base_svnt_export.h:
+        * examples\Swapping\Hello_Base\Hello_Base_svnt_export.h:
+
+          Removed files, renamed as described above.
+
+        * performance-tests\Protocols\Sender\Sender_exec.cpp:
+        * performance-tests\Protocols\Sender\Sender.mpc:
+        * performance-tests\Protocols\Controller\Controller.mpc:
+        * performance-tests\Protocols\Receiver\Receiver.mpc:
+        * performance-tests\Protocols\common\Protocols.mpc:
+        * performance-tests\Benchmark\RoundTripClient\RoundTripClient.mpc:
+        * performance-tests\Benchmark\RoundTrip\client.cpp:
+        * performance-tests\Benchmark\RoundTrip\RoundTrip.mpc:
+        * performance-tests\Benchmark\server.cpp:
+        * performance-tests\Benchmark\Multi_Threaded\client.cpp:
+        * performance-tests\Benchmark\Multi_Threaded\Multi_Threaded.mpc:
+        * performance-tests\Benchmark\README
+        * performance-tests\Benchmark\Benchmark.mpc:
+        * performance-tests\Benchmark\RoundTripServer\server.cpp:
+        * performance-tests\Benchmark\RoundTripServer\RoundTripServer.mpc:
+        * tests\Minimum\Sender\Sender_exec.cpp:
+        * tests\Minimum\Sender\Sender_exec.h:
+        * tests\Minimum\Sender\Sender.mpc:
+        * tests\Minimum\Receiver\Receiver.mpc:
+        * tests\Minimum\Receiver\Receiver_exec.cpp:
+        * tests\Minimum\Receiver\Receiver_exec.h:
+        * examples\Hello\Sender\Sender.mpc:
+        * examples\Hello\Receiver\Receiver.mpc:
+        * examples\Hello\Hello_Base\Hello_Base.mpc:
+        * examples\Display\Display_Base\Display_Base.mpc:
+        * examples\Display\RateGen\RateGen.mpc:
+        * examples\Display\GPS\GPS.mpc:
+        * examples\Display\NavDisplay\NavDisplay.mpc:
+        * examples\Swapping\Sender\Sender.mpc:
+        * examples\Swapping\Receiver\Receiver.mpc:
+        * examples\Swapping\Hello_Base\Hello_Base.mpc:
+
+          - Modified *_exec.{h, cpp} files and MPC files to reverse
+            the exec->svnt dependency. Also moved generated
+            <IDL file>EC.{h, inl, cpp} files from svnt buidl to
+            exec build.
+
+          - Added file names to MPC projects so that all build files
+            are displayed in IDEs.
+
+          - For non-component builds, changed _svnt suffix to _skel
+            for project names, library names, and export header file
+            names.
+
+          - Separated IDL and CIDL/executor IDL processing into
+            separate projects.
+
 Fri Oct 19 18:19:12 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * DAnCE/StaticConfigurator/StaticDAnCEApp.cpp.tmpl:

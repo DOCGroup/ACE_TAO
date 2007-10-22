@@ -15,7 +15,6 @@
 //===============================================================
 
 #include "Client_Task.h"
-#include "tao/Strategies/advanced_resource.h"
 
 //IOR of the components
 const char *ior1 = "file://comp1.ior";
