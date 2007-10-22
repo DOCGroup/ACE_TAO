@@ -682,7 +682,7 @@ ACE_Select_Reactor_Notify::notify (ACE_Event_Handler *event_handler,
   ACE_Notification_Buffer buffer (event_handler, mask);
 
 #if defined (ACE_HAS_REACTOR_NOTIFICATION_QUEUE)
-  int notification_required =
+  int const notification_required =
     notification_queue_.push_new_notification(buffer);
 
   if (notification_required == -1)
@@ -782,8 +782,8 @@ ACE_Select_Reactor_Notify::dispatch_notify (ACE_Notification_Buffer &buffer)
   bool more_messages_queued = false;
   ACE_Notification_Buffer next;
 
-  result = notification_queue_.pop_next_notification(buffer, 
-                                                     more_messages_queued, 
+  result = notification_queue_.pop_next_notification(buffer,
+                                                     more_messages_queued,
                                                      next);
 
   if (result == 0)

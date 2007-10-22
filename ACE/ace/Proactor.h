@@ -178,19 +178,19 @@ public:
   TIMER_QUEUE;
 
   /**
-   * Constructor. If <implementation> is 0, the correct implementation
-   * object will be created. <delete_implementation> flag determines
+   * Constructor. If @a implementation is 0, the correct implementation
+   * object will be created. @a delete_implementation flag determines
    * whether the implementation object should be deleted by the
-   * Proactor or not. If <tq> is 0, a new TIMER_QUEUE is created.
+   * Proactor or not. If @a tq is 0, a new TIMER_QUEUE is created.
    */
   ACE_Proactor (ACE_Proactor_Impl *implementation = 0,
-                int delete_implementation = 0,
+                bool delete_implementation = false,
                 TIMER_QUEUE *tq = 0);
 
   /// Destruction.
   ~ACE_Proactor (void);
 
-  /// Get pointer to a process-wide ACE_Proactor.  <threads> should
+  /// Get pointer to a process-wide ACE_Proactor.  @a threads should
   /// be part of another method.
   static ACE_Proactor *instance (size_t threads = 0);
 
@@ -599,7 +599,7 @@ protected:
 
   /// Flag used to indicate whether we are responsible for cleaning up
   /// the implementation instance.
-  int delete_implementation_;
+  bool delete_implementation_;
 
   /// Pointer to a process-wide ACE_Proactor.
   static ACE_Proactor *proactor_;
