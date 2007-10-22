@@ -1,3 +1,15 @@
+Sun Oct 21 20:43:18 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/DynamicInterface/AMH_DSI_Response_Handler.h:
+        * tao/DynamicInterface/AMH_DSI_Response_Handler.inl:
+        * tao/DynamicInterface/AMH_DSI_Response_Handler.cpp:
+        * tests/DSI_AMH/Roundtrip.cpp:
+        * tests/DSI_AMI_Gateway/My_DII_Reply_Handler.h:
+        * tests/DSI_AMI_Gateway/My_DII_Reply_Handler.cpp:
+        * tests/DSI_AMI_Gateway/test_dsi.cpp:
+
+          Reverted previous change, it wasn't building on some platforms.
+
 Sun Oct 21 03:37:10 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/DynamicInterface/AMH_DSI_Response_Handler.h:
