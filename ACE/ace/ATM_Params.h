@@ -63,7 +63,7 @@ public:
   /**
    * Initialize the data members.  This class combines options from
    * ACE_SOCK_Connector (@a protocol_family, @a protocol, <type>,
-   * @a protocol_info, <group>, and <flags>) and
+   * @a protocol_info, <group>, and @a flags) and
    * ACE_TLI_Connector (<device>, <info>, <rw_flag>, <oflag>, and <udata>)
    * so that either mechanism can be used transparently for ATM.
    */

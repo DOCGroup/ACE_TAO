@@ -111,7 +111,7 @@ public:
 
   /**
    * Wait to to @a timeout amount of time to send @a buf.  If <send>
-   * times out a -1 is returned with <errno == ETIME>.  If it succeeds
+   * times out a -1 is returned with @c errno == ETIME.  If it succeeds
    * the number of bytes sent is returned.  */
   virtual ssize_t send_buf (ACE_MEM_SAP_Node *buf,
                             int flags,

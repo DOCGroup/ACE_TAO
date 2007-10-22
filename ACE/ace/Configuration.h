@@ -409,7 +409,7 @@ protected:
    * and not contain the path separator '\', brackets [] or = (maybe
    * just restrict to alphanumeric?) returns non zero if name is not
    * valid.  The path separator is allowed, except for the first character,
-   * if <allow_path> is true.
+   * if @a allow_path is true.
    */
   int validate_name (const ACE_TCHAR* name, int allow_path = 0);
 

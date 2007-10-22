@@ -282,6 +282,7 @@
 // so that hopefully in the future we can zap this include
 #include "types/vxTypesOld.h"
 #else
+# define ACE_HAS_VXTHREADS
 # define ACE_LACKS_PTHREAD_H
 # define ACE_LACKS_COND_T
 // VxWorks has no recursive mutexes. This was set in the past but it doesn't
