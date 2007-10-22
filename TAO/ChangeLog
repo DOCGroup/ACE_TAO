@@ -1,3 +1,24 @@
+Mon Oct 22 03:30:03 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/DynamicInterface/AMH_DSI_Response_Handler.inl:
+
+        * tests/DSI_AMH/Roundtrip.cpp:
+
+        * tests/DSI_AMI_Gateway/My_DII_Reply_Handler.h:
+        * tests/DSI_AMI_Gateway/My_DII_Reply_Handler.cpp:
+        * tests/DSI_AMI_Gateway/test_dsi.cpp:
+
+          This is a somewhat more conservative application of the changes
+          originally suggested in but #3093. I still believe the
+          AMH_DSI_Response_Handler implementation should be replaced with
+          template instances, but apparently this takes more effort than I
+          have to give.
+
+          I am now avoiding the use of NVList_var in the test code, it
+          caused build failures on some scoreboard platforms. Again, I
+          believe that should be the correct solution, but requires
+          further study to determine what I was doing wrong.
+
 Sun Oct 21 20:43:18 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/DynamicInterface/AMH_DSI_Response_Handler.h:

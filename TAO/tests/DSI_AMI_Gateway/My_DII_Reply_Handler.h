@@ -20,6 +20,6 @@ public:
                              CORBA::ULong reply_status);
 
 private:
-  TAO_AMH_DSI_Response_Handler * response_handler_;
+  TAO_AMH_DSI_Response_Handler_var response_handler_;
   CORBA::ORB_var orb_;
 };
