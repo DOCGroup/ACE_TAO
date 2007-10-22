@@ -119,8 +119,8 @@ public:
 
   // = Active object activation method.
   /**
-   * Turn the task into an active object, i.e., having <n_threads> of
-   * control, all running at the <priority> level (see below) with the
+   * Turn the task into an active object, i.e., having @a n_threads of
+   * control, all running at the @a priority level (see below) with the
    * same @a grp_id, all of which invoke <Task::svc>.  Returns -1 if
    * failure occurs, returns 1 if Task is already an active object and
    * @a force_active is false (i.e., do *not* create a new thread in

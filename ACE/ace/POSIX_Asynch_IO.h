@@ -1063,7 +1063,7 @@ public:
    * @a message_block beginning at its write pointer. The @a message_block
    * write pointer will be updated to reflect any added bytes if the read
    * operation is successful completed.
-   * Priority of the operation is specified by <priority>. On POSIX4-Unix,
+   * Priority of the operation is specified by @a priority. On POSIX4-Unix,
    * this is supported. Works like <nice> in Unix. Negative values are not
    * allowed. 0 means priority of the operation same as the process
    * priority. 1 means priority of the operation is one less than

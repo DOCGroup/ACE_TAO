@@ -68,7 +68,7 @@ public:
 
   /**
    * Initialize a passive-mode BSD-style acceptor socket (no QoS).
-   * <local_sap> is the address that we're going to listen for
+   * @a local_sap is the address that we're going to listen for
    * connections on.  If @a reuse_addr is 1 then we'll use the
    * <SO_REUSEADDR> to reuse this address.  Returns 0 on success and
    * -1 on failure.
