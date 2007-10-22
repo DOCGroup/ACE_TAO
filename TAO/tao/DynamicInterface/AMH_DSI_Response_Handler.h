@@ -24,42 +24,9 @@
 #include "tao/PortableServer/PortableServer.h"
 #include "tao/Messaging/AMH_Response_Handler.h"
 #include "tao/Valuetype/ValueBase.h"
-#include "tao/Valuetype/Value_VarOut_T.h"
-#include "tao/Objref_VarOut_T.h"
-#include "tao/VarOut_T.h"
-
 #include "dynamicinterface_export.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
-class TAO_AMH_DSI_Response_Handler;
-typedef TAO_AMH_DSI_Response_Handler *TAO_AMH_DSI_Response_Handler_ptr;
-typedef
-  TAO_Objref_Var_T<
-      TAO_AMH_DSI_Response_Handler
-    >
-  TAO_AMH_DSI_Response_Handler_var;
-
-typedef
-  TAO_Objref_Out_T<
-      TAO_AMH_DSI_Response_Handler
-    >
-  TAO_AMH_DSI_Response_Handler_out;
-
-class TAO_AMH_DSI_Exception_Holder;
-typedef
-  TAO_Value_Var_T<
-      TAO_AMH_DSI_Exception_Holder
-    >
-  TAO_AMH_DSI_Exception_Holder_var;
-
-typedef
-  TAO_Value_Out_T<
-      TAO_AMH_DSI_Exception_Holder
-    >
-  TAO_AMH_DSI_Exception_Holder_out;
-
-#if 0
 
 class TAO_AMH_DSI_Response_Handler;
 typedef TAO_AMH_DSI_Response_Handler *TAO_AMH_DSI_Response_Handler_ptr;
@@ -173,8 +140,6 @@ private:
   TAO_AMH_DSI_Exception_Holder* &ptr_;
 };
 
-#endif
-
 /**
  * @class TAO_AMH_DSI_Exception_Holder
  *
@@ -186,10 +151,7 @@ class TAO_DynamicInterface_Export TAO_AMH_DSI_Exception_Holder
     public virtual CORBA::ValueBase
 {
 public:
-  typedef TAO_AMH_DSI_Exception_Holder * _ptr_type;
   typedef TAO_AMH_DSI_Exception_Holder_var _var_type;
-  typedef TAO_AMH_DSI_Exception_Holder_out _out_type;
-
   TAO_AMH_DSI_Exception_Holder (CORBA::Exception *ex);
 
   virtual ~TAO_AMH_DSI_Exception_Holder (void);
@@ -254,7 +216,6 @@ class TAO_DynamicInterface_Export TAO_AMH_DSI_Response_Handler
 public:
   typedef TAO_AMH_DSI_Response_Handler_ptr _ptr_type;
   typedef TAO_AMH_DSI_Response_Handler_var _var_type;
-  typedef TAO_AMH_DSI_Response_Handler_out _out_type;
 
   TAO_AMH_DSI_Response_Handler (TAO_ServerRequest &sr);
   ~TAO_AMH_DSI_Response_Handler (void);
@@ -291,25 +252,6 @@ protected:
 private:
   TAO_ORB_Core *orb_core_;
 };
-
-namespace TAO {
-  template<>
-  struct  Objref_Traits<TAO_AMH_DSI_Response_Handler>
-  {
-    static TAO_AMH_DSI_Response_Handler_ptr duplicate (
-        TAO_AMH_DSI_Response_Handler_ptr
-      );
-    static void release (
-        TAO_AMH_DSI_Response_Handler_ptr
-      );
-    static TAO_AMH_DSI_Response_Handler_ptr nil (void);
-    static ::CORBA::Boolean marshal (
-        const TAO_AMH_DSI_Response_Handler_ptr p,
-        TAO_OutputCDR & cdr
-      );
-  };
-
-}
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 

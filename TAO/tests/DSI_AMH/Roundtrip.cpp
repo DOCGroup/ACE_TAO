@@ -51,10 +51,10 @@ Roundtrip::invoke (CORBA::ServerRequest_ptr request,
       result_any <<= CORBA::Any::from_boolean (type_matches);
 
       // AMH way of replying
-      CORBA::NamedValue_var result;
-      this->orb_->create_named_value (result.out());
+      CORBA::NamedValue_ptr result = 0;
+      this->orb_->create_named_value (result);
       *(result->value()) = result_any;
-      rh->invoke_reply (list, result.in());
+      rh->invoke_reply (list, result);
       return;
     }
 
@@ -117,18 +117,25 @@ Roundtrip::_dispatch (TAO_ServerRequest &request,
     }
 
   // Create DSI request object.
-  CORBA::ServerRequest_var dsi_request;
-  ACE_NEW (dsi_request, CORBA::ServerRequest (request));
+  CORBA::ServerRequest *dsi_request = 0;
+  ACE_NEW (dsi_request,
+           CORBA::ServerRequest (request));
+
   try
     {
-      TAO_AMH_DSI_Response_Handler_var rh;
-      ACE_NEW (rh, TAO_AMH_DSI_Response_Handler(request));
+      TAO_AMH_DSI_Response_Handler_ptr rh_ptr = 0;
+      ACE_NEW (rh_ptr, TAO_AMH_DSI_Response_Handler(request));
+
+      TAO_AMH_DSI_Response_Handler_var rh = rh_ptr;
 
       // init the handler
-      rh->init (request, 0);
-
+      TAO_ORB_Core *orbcore = request.orb()->orb_core ();
+      TAO_AMH_BUFFER_ALLOCATOR* amh_allocator =
+          orbcore->lane_resources().amh_response_handler_allocator();
+      rh->init (request, amh_allocator);
       // Delegate to user.
-      this->invoke (dsi_request.in(), rh.in());
+      this->invoke (dsi_request,
+                    rh.in());
     }
   catch (const CORBA::Exception& ex)
 
@@ -139,6 +146,8 @@ Roundtrip::_dispatch (TAO_ServerRequest &request,
           request.tao_send_reply_exception (ex);
         }
     }
+
+  CORBA::release (dsi_request);
 }
 
 void
