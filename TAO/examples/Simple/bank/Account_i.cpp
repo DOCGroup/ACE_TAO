@@ -23,7 +23,6 @@ Account_i::Account_i (const char *name,
 
 Account_i::~Account_i (void)
 {
-  CORBA::string_free (name_);
 }
 
 // Set the ORB pointer.

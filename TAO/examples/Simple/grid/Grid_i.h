@@ -100,6 +100,9 @@ public:
   // Set the ORB pointer.
 
 private:
+  Grid_i *grid_;
+  // This pointer is here only for proper clean up.
+
   CORBA::ORB_var orb_;
   // ORB pointer.
 
