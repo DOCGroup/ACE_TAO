@@ -85,9 +85,11 @@ private:
   PortableServer::POA_ptr poa_;
   // POA pointer.
 
-  ACE_Hash_Map_Manager<ACE_CString,
-                       Account_i *,
-                       ACE_Null_Mutex> hash_map_;
+  typedef ACE_Hash_Map_Manager<ACE_CString,
+                               Account_i *,
+                               ACE_Null_Mutex> MAP_MANAGER_TYPE;
+
+  MAP_MANAGER_TYPE hash_map_;
   // Calls to <open> will create a new instance of <Account_i> and
   // bind into the hash map manager if <name> is unique, else it will
   // return a previously bound entry.

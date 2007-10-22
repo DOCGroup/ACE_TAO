@@ -23,7 +23,6 @@ Grid_Client_i::Grid_Client_i (void)
 //Destructor.
 Grid_Client_i::~Grid_Client_i (void)
 {
-  ACE_DEBUG ((LM_DEBUG, "Called \n"));
   //no-op
 }
 
@@ -106,7 +105,6 @@ Grid_Client_i::run (const char *name,
         client->shutdown ();
       }
 
-      client.orb ()->destroy ();
       ACE_UNUSED_ARG (ret_val);
     }
   catch (const CORBA::UserException& range_ex)

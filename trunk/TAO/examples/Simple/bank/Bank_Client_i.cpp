@@ -88,8 +88,6 @@ Bank_Client_i::test_for_same_name (void)
   ACE_ASSERT (acct_id1->_is_equivalent ((CORBA::Object *) acct_id2.in ()) != 0);
 
   client->close (acct_id1.in ());
-
-  client->close (acct_id2.in ());
 }
 
 // This method tests whether an account with different names can be opened
@@ -119,7 +117,6 @@ Bank_Client_i::test_for_different_name (void)
 void
 Bank_Client_i::test_for_overdraft (void)
 {
-
   CORBA::Float initial_bal = 100.0;
   const char *name = "Name";
   Bank::Account_var acct_id = client->open (name, initial_bal);
@@ -127,7 +124,15 @@ Bank_Client_i::test_for_overdraft (void)
 
   CORBA::Float bal = acct_id->balance ();
 
-  acct_id->withdraw (bal + 20);
+  try
+    {
+      acct_id->withdraw (bal + 20);
+    }
+  catch (Bank::Account::Overdraft &)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "Overdraft caught.\n"));
+    }
 
   client->close (acct_id.in ());
 }

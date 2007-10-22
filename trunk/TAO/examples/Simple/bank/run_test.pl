@@ -15,7 +15,7 @@ $iorfile = PerlACE::LocalFile ("bank.ior");
 unlink $iorfile;
 
 $SV = new PerlACE::Process ("server", "-o $iorfile");
-$CL = new PerlACE::Process ("client", "-f $iorfile");
+$CL = new PerlACE::Process ("client", "-f $iorfile -x");
 
 $SV->Spawn ();
 
@@ -32,7 +32,7 @@ if ($client != 0) {
     $status = 1;
 }
 
-$server = $SV->TerminateWaitKill (5);
+$server = $SV->WaitKill (5);
 
 if ($server != 0) {
     print STDERR "ERROR: server returned $server\n";

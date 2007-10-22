@@ -198,11 +198,13 @@ Server<Servant>::init (const char *servant_name,
 template <class Servant>int
 Server<Servant>::run (void)
 {
-    // Run the main event loop for the ORB.
+  // Run the main event loop for the ORB.
   if (this->orb_manager_.run () == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Server_i::run"),
                       -1);
+
+  this->orb_manager_.fini ();
 
   return 0;
 }
@@ -347,6 +349,8 @@ template <class INTERFACE_OBJECT, class Var>
 Client<INTERFACE_OBJECT, Var>::~Client (void)
 {
   ACE_OS::free (this->ior_);
+
+  this->orb_->destroy ();
 }
 
 template <class INTERFACE_OBJECT, class Var> int
