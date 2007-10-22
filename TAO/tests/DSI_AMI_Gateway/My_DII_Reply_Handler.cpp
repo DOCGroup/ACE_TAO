@@ -8,7 +8,7 @@
 My_DII_Reply_Handler::My_DII_Reply_Handler(
     TAO_AMH_DSI_Response_Handler_ptr rph,
     CORBA::ORB_var orb)
- : response_handler_ (rph),
+ : response_handler_ (TAO_AMH_DSI_Response_Handler::_duplicate(rph)),
   orb_ (orb)
 {
 }
@@ -20,7 +20,9 @@ My_DII_Reply_Handler::~My_DII_Reply_Handler()
 void
 My_DII_Reply_Handler::handle_response(TAO_InputCDR &incoming)
 {
-  CORBA::NVList_ptr list;
+  // list really should be an NVList_var, but that caused some
+  // compilation problems.
+  CORBA::NVList_ptr list = 0;
 
   try
   {
@@ -30,6 +32,12 @@ My_DII_Reply_Handler::handle_response(TAO_InputCDR &incoming)
     list->_tao_incoming_cdr (incoming,
                              CORBA::ARG_OUT | CORBA::ARG_INOUT,
                              lazy_evaluation);
+
+  if (!CORBA::is_nil (this->response_handler_.in()))
+    this->response_handler_->invoke_reply (list,
+                                           0 // result
+                                           );
+
   }
   catch (CORBA::SystemException &ex)
   {
@@ -44,10 +52,8 @@ My_DII_Reply_Handler::handle_response(TAO_InputCDR &incoming)
     response_handler_->invoke_excep(&h);
   }
 
-    if (!CORBA::is_nil (this->response_handler_))
-    this->response_handler_->invoke_reply (list,
-                                           0 // result
-                                          );
+  CORBA::release(list);
+
 }
 
 void
@@ -58,4 +64,3 @@ My_DII_Reply_Handler::handle_excep (TAO_InputCDR &incoming,
   this->response_handler_->gateway_exception_reply (reply_status, incoming);
 
 }
-
