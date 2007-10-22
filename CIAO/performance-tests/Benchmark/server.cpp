@@ -5,7 +5,7 @@
 #include "ace/Sched_Params.h"
 #include "ace/OS_NS_errno.h"
 
-#include "tao/Strategies/advanced_resource.h"
+//#include "tao/Strategies/advanced_resource.h"
 
 const char *ior_output_file = "test.ior";
 
@@ -15,8 +15,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   int priority =
     (ACE_Sched_Params::priority_min (ACE_SCHED_FIFO)
      + ACE_Sched_Params::priority_max (ACE_SCHED_FIFO)) / 2;
+     
   priority = ACE_Sched_Params::next_priority (ACE_SCHED_FIFO,
-                                                  priority);
+                                              priority);
   // Enable FIFO scheduling, e.g., RT scheduling class on Solaris.
 
   if (ACE_OS::sched_params (ACE_Sched_Params (ACE_SCHED_FIFO,
@@ -30,8 +31,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                       "test runs in time-shared class\n"));
         }
       else
-        ACE_ERROR ((LM_ERROR,
-                    "server (%P|%t): sched_params failed\n"));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "server (%P|%t): sched_params failed\n"));
+        }
     }
 
   try
@@ -43,9 +46,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         orb->resolve_initial_references("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Unable to initialize the POA.\n"),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             " (%P|%t) Unable to initialize the POA.\n"),
+                            1);
+        }
 
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (poa_object.in ());

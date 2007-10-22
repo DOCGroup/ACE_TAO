@@ -17,7 +17,6 @@
 #include "ace/Array.h"
 #include "ace/Sample_History.h"
 #include "Custom_Network_Priority_Mapping.h"
-#include "Custom_Network_Priority_Mapping.cpp"
 #include "Sender_exec.h"
 
 static ACE_UINT32 gsf = 0;

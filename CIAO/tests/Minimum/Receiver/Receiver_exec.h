@@ -70,7 +70,7 @@ namespace CIDL_Receiver_Impl
     ccm_remove ();
 
     protected:
-    Receiver_Context *context_;
+    Minimum::CCM_Receiver_Context_var context_;
   };
 
   class RECEIVER_EXEC_Export ReceiverHome_exec_i
