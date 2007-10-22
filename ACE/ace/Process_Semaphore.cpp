@@ -37,8 +37,8 @@ ACE_Process_Semaphore::ACE_Process_Semaphore (u_int count,
            count)
 #endif /* ACE_WIN32 || ACE_HAS_POSIX_SEM */
 {
-  arg = arg;
-  max = max;
+  ACE_UNUSED_ARG (arg);
+  ACE_UNUSED_ARG (max);
 // ACE_TRACE ("ACE_Process_Semaphore::ACE_Process_Semaphore");
 }
 

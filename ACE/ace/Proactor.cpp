@@ -299,7 +299,7 @@ ACE_Proactor_Handle_Timeout_Upcall::proactor (ACE_Proactor &proactor)
 // *********************************************************************
 
 ACE_Proactor::ACE_Proactor (ACE_Proactor_Impl *implementation,
-                            int delete_implementation,
+                            bool delete_implementation,
                             TIMER_QUEUE *tq)
   : implementation_ (0),
     delete_implementation_ (delete_implementation),
@@ -336,7 +336,7 @@ ACE_Proactor::ACE_Proactor (ACE_Proactor_Impl *implementation,
                ACE_WIN32_Proactor);
 #endif /* ACE_HAS_AIO_CALLS */
       this->implementation (implementation);
-      this->delete_implementation_ = 1;
+      this->delete_implementation_ = true;
     }
 
   // Set the timer queue.

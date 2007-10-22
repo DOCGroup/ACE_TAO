@@ -40,6 +40,15 @@
 # define ACE_HAS_WINCE 1
 #endif
 
+#if defined (_MSC_VER) && (_MSC_VER < 1400)
+// WinCE prior to Visual Studio 2005 integration doesn't have most of
+// the standard C library time functions. It also doesn't define struct tm.
+// SYSTEMTIME has pretty much the same info though, so we can map it when
+// needed. Define struct tm here and use it when needed. This is taken
+// from the standard C library.
+# define ACE_LACKS_STRUCT_TM
+#endif
+
 // We need these libraries to build:
 #pragma comment(lib,"corelibc.lib")
 #pragma comment(linker, "/nodefaultlib:oldnames.lib")

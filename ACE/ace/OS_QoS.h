@@ -319,7 +319,7 @@ public:
    * connection establishment.  The_<socket_qos> is a pointer to the
    * flow specifications for the socket, one for each direction.  The
    * <group_socket_qos> is a pointer to the flow speicfications for
-   * the socket group, if applicable.  The_<flags> indicate if we're a
+   * the socket group, if applicable.  The_@a flags indicate if we're a
    * sender, receiver, or both.
    */
   ACE_QoS_Params (iovec *caller_data = 0,
