@@ -20,7 +20,7 @@ Grid_i::Grid_i (CORBA::Short x,
   : width_ (x),
     height_ (y)
 {
-  ACE_NEW_THROW_EX (array_,
+  ACE_NEW_THROW_EX (this->array_,
                     CORBA::Long *[y],
                     CORBA::NO_MEMORY ());
 
@@ -28,7 +28,7 @@ Grid_i::Grid_i (CORBA::Short x,
 
   for (int ctr = 0; ctr < y; ctr++)
     {
-      ACE_NEW_THROW_EX (array_[ctr],
+      ACE_NEW_THROW_EX (this->array_[ctr],
                         CORBA::Long[x],
                         CORBA::NO_MEMORY ());
     }
@@ -39,7 +39,12 @@ Grid_i::Grid_i (CORBA::Short x,
 
 Grid_i::~Grid_i (void)
 {
-  // no-op.
+  for (int ctr = 0; ctr < this->height_; ctr++)
+    {
+      delete [] this->array_[ctr];
+    }
+
+  delete [] this->array_;
 }
 
 //  Set a value in the grid.
@@ -140,6 +145,7 @@ Grid_Factory_i::shutdown (void)
 // Constructor
 
 Grid_Factory_i::Grid_Factory_i (void)
+  : grid_ (0)
 {
   // no-op
 }
@@ -148,7 +154,7 @@ Grid_Factory_i::Grid_Factory_i (void)
 
 Grid_Factory_i::~Grid_Factory_i (void)
 {
-  // no-op
+  delete this->grid_;
 }
 
 // Make a <Grid>.
@@ -157,8 +163,6 @@ Grid_ptr
 Grid_Factory_i::make_grid (CORBA::Short width,
                            CORBA::Short height)
 {
-  Grid_i *grid_ptr = 0;
-
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) Making a new Grid\n"));
 
@@ -172,7 +176,7 @@ Grid_Factory_i::make_grid (CORBA::Short width,
 
   // This attempts to create a new Grid_i and throws an exception and
   // returns a null value if it fails
-  ACE_NEW_THROW_EX (grid_ptr,
+  ACE_NEW_THROW_EX (this->grid_,
                     Grid_i (width, height),
                     CORBA::NO_MEMORY ());
 
@@ -184,7 +188,7 @@ Grid_Factory_i::make_grid (CORBA::Short width,
     PortableServer::POA::_narrow (poa_object.in ());
 
   PortableServer::ObjectId_var id =
-    root_poa->activate_object (grid_ptr);
+    root_poa->activate_object (this->grid_);
 
   CORBA::Object_var object = root_poa->id_to_reference (id.in ());
 

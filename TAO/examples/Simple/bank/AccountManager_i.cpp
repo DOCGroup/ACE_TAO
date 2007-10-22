@@ -18,7 +18,12 @@ AccountManager_i::AccountManager_i (void)
 
 AccountManager_i::~AccountManager_i (void)
 {
-  // no-op
+  for (MAP_MANAGER_TYPE::ITERATOR iter = this->hash_map_.begin ();
+       iter != this->hash_map_.end ();
+       ++iter)
+    {
+      delete (*iter).int_id_;
+    }
 }
 
 // Set the ORB pointer
@@ -93,20 +98,30 @@ AccountManager_i::close (Bank::Account_ptr account)
 {
   try
     {
-      CORBA::String_var name =
-        CORBA::string_dup (account->name ());
+      CORBA::String_var name = account->name ();
 
+      ACE_DEBUG((LM_DEBUG,
+                 "[SERVER] Process/Thread Id : (%P/%t) Closing Account for %s\n",
+                 name.in ()));
 
-      if (hash_map_.unbind (name.in ()) == -1)
+      Account_i *account = 0;
+      if (hash_map_.unbind (name.in (), account) == -1)
         {
           if (TAO_debug_level > 0)
             ACE_DEBUG((LM_DEBUG,
                        "Unable to close account\n"));
         }
-      else if (TAO_debug_level > 0)
-        ACE_DEBUG((LM_DEBUG,
-                   "[SERVER] Process/Thread Id : (%P/%t) Closing Account for %s\n",
-                   (char *) name));
+
+      if (account)
+        {
+          PortableServer::POA_var poa = account->_default_POA ();
+
+          PortableServer::ObjectId_var id = poa->servant_to_id (account);
+
+          poa->deactivate_object (id.in ());
+
+          delete account;
+        }
     }
   catch (const CORBA::Exception& ex)
     {
