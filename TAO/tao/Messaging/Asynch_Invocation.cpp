@@ -39,7 +39,7 @@ namespace TAO
   }
 
   Invocation_Status
-  Asynch_Remote_Invocation::remote_invocation (ACE_Time_Value * max_wait_time)
+  Asynch_Remote_Invocation::remote_invocation (ACE_Time_Value *max_wait_time)
   {
     TAO_Target_Specification tspec;
     this->init_target_spec (tspec);

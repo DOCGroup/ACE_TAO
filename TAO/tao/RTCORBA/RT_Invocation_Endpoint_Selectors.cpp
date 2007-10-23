@@ -69,8 +69,7 @@ TAO_RT_Invocation_Endpoint_Selector::select_endpoint (
         *r,
         client_protocol_policy.in (),
         client_protocols,
-        val
-       );
+        val);
     }
 }
 
@@ -110,9 +109,7 @@ TAO_RT_Invocation_Endpoint_Selector::select_endpoint_based_on_client_protocol_po
 
               r.profile (profile);
 
-              int const status = this->endpoint_from_profile (r, val);
-
-              if (status == 1)
+              if (this->endpoint_from_profile (r, val) == 1)
                 return;
               // @@ Else we should check for potential forwarding here.
             }
@@ -269,8 +266,7 @@ TAO_RT_Invocation_Endpoint_Selector::endpoint_from_profile (
         }
     }
 
-  TAO_Endpoint *ep =
-    r.profile ()->endpoint ();
+  TAO_Endpoint *ep = r.profile ()->endpoint ();
 
   while (ep != 0)
     {
@@ -302,12 +298,10 @@ TAO_RT_Invocation_Endpoint_Selector::endpoint_from_profile (
           TAO_RT_Transport_Descriptor_Banded_Connection_Property
             banded_connection_descriptor_property;
 
-          TAO_RT_Transport_Descriptor
-            rt_transport_descriptor (ep);
+          TAO_RT_Transport_Descriptor rt_transport_descriptor (ep);
 
           CORBA::Policy_var private_connection_policy =
-            rt_stub->get_cached_policy (TAO_CACHED_POLICY_RT_PRIVATE_CONNECTION
-                                       );
+            rt_stub->get_cached_policy (TAO_CACHED_POLICY_RT_PRIVATE_CONNECTION);
 
           if (!CORBA::is_nil (private_connection_policy.in ()))
             {

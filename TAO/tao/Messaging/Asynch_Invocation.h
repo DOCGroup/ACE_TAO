@@ -57,7 +57,6 @@ namespace TAO
     // are given
     ACE_Utils::Auto_Functor <TAO_Asynch_Reply_Dispatcher_Base,
                              ARDB_Refcount_Functor> safe_rd_;
-
   };
 }
 

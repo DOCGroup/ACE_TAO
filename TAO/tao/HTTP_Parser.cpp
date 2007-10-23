@@ -94,7 +94,7 @@ TAO_HTTP_Parser::parse_string (const char *nior,
   if (TAO_debug_level > 4)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("TAO (%P|%t) HTTP_Parser::parse_string, getting IOR from <%s> <%s> <%d>\n"),
+                  ACE_TEXT ("TAO (%P|%t) - HTTP_Parser::parse_string, getting IOR from <%s> <%s> <%d>\n"),
                   hostname, filename, port));
     }
 

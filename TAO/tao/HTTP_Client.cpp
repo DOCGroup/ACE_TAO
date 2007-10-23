@@ -38,7 +38,7 @@ TAO_HTTP_Client::read (ACE_Message_Block *mb)
   // Connect to the server
   if (connector_.connect (brp, this->inet_addr_) == -1)
     {
-      ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "TAO_HTTP_Client::read(): Connector error\n"), -1);
+      ACE_ERROR_RETURN ((LM_ERROR, "TAO (%P|%t) - HTTP_Client::read, Connector error\n"), -1);
     }
 
   return HTTP_reader.byte_count ();

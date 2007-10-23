@@ -1,3 +1,28 @@
+Tue Oct 23 12:38:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Bind_Dispatcher_Guard.cpp:
+        * tao/Endpoint_Selector_Factory.h:
+        * tao/Invocation_Endpoint_Selectors.{h,cpp}:
+        * tao/Messaging/Asynch_Invocation.{h,cpp}:
+        * tao/Messaging/Asynch_Invocation_Adapter.cpp:
+        * tao/RTCORBA/RT_Invocation_Endpoint_Selectors.{h,cpp}:
+        * tao/RTCORBA/RT_ORB.cpp:
+        * tao/Strategies/advanced_resource.cpp:
+          Layout changes
+
+        * tao/CodecFactory/IOP_Codec_include.pidl:
+          Removed obsolete regeneration instructions
+
+        * tao/HTTP_Client.cpp:
+        * tao/HTTP_Handler.cpp:
+        * tao/HTTP_Parser.cpp:
+          Updated debug statements to use the same formatting as in other
+          places in TAO
+
+        * tao/PI/PI_include.pidl:
+          New file to be included when you want to include a pidl file of the
+          PI library
+
 Tue Oct 23 10:54:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_interface/tie_ss.cpp:
