@@ -59,7 +59,7 @@ project(Hello_Sender_stub) : ciao_client_dnc {
 
 project(Hello_Sender_exec) : ciao_component_dnc {
   avoids += ace_for_tao
-  after   += Hello_Sender_cidl_gen Sender_stub
+  after   += Hello_Sender_cidl_gen Hello_Sender_stub
   sharedname = Sender_exec
   libs += Sender_stub Hello_Base_stub
   
