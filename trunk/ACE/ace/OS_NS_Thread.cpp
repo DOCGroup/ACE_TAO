@@ -781,7 +781,7 @@ ACE_TSS_Cleanup::thread_exit (void)
   // the actual destruction is deferred until the guard is released
   ACE_TSS_Info::Destructor destructor[ACE_DEFAULT_THREAD_KEYS];
   void * tss_obj[ACE_DEFAULT_THREAD_KEYS];
-  ACE_thread_key_t keys[ACE_DEFAULT_THREAD_KEYS];  
+  ACE_thread_key_t keys[ACE_DEFAULT_THREAD_KEYS];
   // count of items to be destroyed
   unsigned int d_count = 0;
 
@@ -1498,8 +1498,8 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
 #     elif defined (ACE_VXWORKS)
       // Inline the call to ACE_OS::sema_wait () because it takes an
       // ACE_Time_Value argument.  Avoid the cost of that conversion . . .
-      int ticks_per_sec = ::sysClkRateGet ();
-      int ticks = msec_timeout * ticks_per_sec / ACE_ONE_SECOND_IN_MSECS;
+      int const ticks_per_sec = ::sysClkRateGet ();
+      int const ticks = msec_timeout * ticks_per_sec / ACE_ONE_SECOND_IN_MSECS;
       result = ::semTake (cv->sema_.sema_, ticks);
 #     endif /* ACE_WIN32 || VXWORKS */
     }
@@ -4661,7 +4661,7 @@ ACE_OS::thr_exit (ACE_THR_FUNC_RETURN status)
 #endif /* ACE_HAS_THREADS */
 }
 
-#if defined (ACE_VXWORKS) && !defined (ACE_HAS_PTHREADS)
+#if defined (ACE_HAS_VXTHREADS)
 // Leave this in the global scope to allow
 // users to adjust the delay value.
 int ACE_THR_JOIN_DELAY = 5;
@@ -4725,7 +4725,7 @@ ACE_OS::thr_join (ACE_thread_t waiter_id,
   thr_id = 0;
   return ACE_OS::thr_join (taskNameToId (waiter_id), status);
 }
-#endif /* ACE_VXWORKS */
+#endif /* ACE_HAS_VXTHREADS */
 
 int
 ACE_OS::thr_key_detach (ACE_thread_key_t key, void *)
