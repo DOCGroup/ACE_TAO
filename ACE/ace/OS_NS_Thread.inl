@@ -44,12 +44,12 @@ ACE_INLINE
 void **&
 ACE_TSS_Emulation::tss_base ()
 {
-#    if defined (ACE_VXWORKS)
+#    if defined (ACE_HAS_VXTHREADS)
   return (void **&) taskIdCurrent->ACE_VXWORKS_SPARE;
 #    else
   // Uh oh.
   ACE_NOTSUP_RETURN (0);
-#    endif /* ACE_VXWORKS */
+#    endif /* ACE_HAS_VXTHREADS */
 }
 #  endif /* ! ACE_HAS_THREAD_SPECIFIC_STORAGE */
 
@@ -76,7 +76,7 @@ ACE_TSS_Emulation::ts_object (const ACE_thread_key_t key)
 {
   ACE_KEY_INDEX (key_index, key);
 
-#    if defined (ACE_VXWORKS)
+#    if defined (ACE_HAS_VXTHREADS)
     /* If someone wants tss_base make sure they get one.  This
        gets used if someone spawns a VxWorks task directly, not
        through ACE.  The allocated array will never be deleted! */
@@ -94,7 +94,7 @@ ACE_TSS_Emulation::ts_object (const ACE_thread_key_t key)
             *tss_base_p = 0;
           }
       }
-#    endif /* ACE_VXWORKS */
+#    endif /* ACE_HAS_VXTHREADS */
 
   return tss_base ()[key_index];
 }
@@ -113,8 +113,16 @@ ACE_OS::thr_equal (ACE_thread_t t1, ACE_thread_t t2)
 # else
   return pthread_equal (t1, t2);
 # endif /* pthread_equal */
-#elif defined (ACE_VXWORKS)
-  return ! ACE_OS::strcmp (t1, t2);
+#elif defined (ACE_HAS_VXTHREADS)
+  // Guard against the fact that ACE_thread_t is a char* when using VxWorks.
+  // Maybe the user passes in an unitialized ACE_thread_t, which is then 0,
+  // which causes strcmp to cause an access violation.
+  if (!t1 && !t2)
+    return 1;
+  else if (!t1 || !t2)
+    return 0;
+  else
+    return !ACE_OS::strcmp (t1, t2);
 #else /* For both STHREADS and WTHREADS... */
   // Hum, Do we need to treat WTHREAD differently?
   // levine 13 oct 98 % I don't think so, ACE_thread_t is a DWORD.
@@ -2638,7 +2646,7 @@ ACE_OS::thr_cancel (ACE_thread_t thr_id)
                            int, -1);
 #     endif /* pthread_cancel */
 #   endif /* ACE_HAS_PTHREADS_DRAFT4 || ACE_HAS_PTHREADS_DRAFT6 */
-# elif defined (ACE_VXWORKS)
+# elif defined (ACE_HAS_VXTHREADS)
   ACE_hthread_t tid;
   ACE_OSCALL (::taskNameToId (thr_id), int, ERROR, tid);
 
@@ -2707,7 +2715,7 @@ ACE_OS::thr_continue (ACE_hthread_t target_thread)
     ACE_FAIL_RETURN (-1);
   else
     return 0;
-# elif defined (ACE_VXWORKS)
+# elif defined (ACE_HAS_VXTHREADS)
   ACE_OSCALL_RETURN (::taskResume (target_thread), int, -1);
 # endif /* ACE_HAS_STHREADS */
 #else
@@ -2797,7 +2805,7 @@ ACE_OS::thr_getprio (ACE_hthread_t ht_id, int &priority, int &policy)
 #   endif /* ACE_HAS_PHARLAP */
 
   return 0;
-# elif defined (ACE_VXWORKS)
+# elif defined (ACE_HAS_VXTHREADS)
   ACE_OSCALL_RETURN (::taskPriorityGet (ht_id, &priority), int, -1);
 # else
   ACE_UNUSED_ARG (ht_id);
@@ -2882,7 +2890,7 @@ ACE_OS::thr_getspecific (ACE_thread_key_t key, void **data)
 #endif /* ACE_HAS_THREADS */
 }
 
-#if !(defined (ACE_VXWORKS) && !defined (ACE_HAS_PTHREADS))
+#if !defined (ACE_HAS_VXTHREADS)
 ACE_INLINE int
 ACE_OS::thr_join (ACE_hthread_t thr_handle,
                   ACE_THR_FUNC_RETURN *status)
@@ -3009,7 +3017,7 @@ ACE_OS::thr_kill (ACE_thread_t thr_id, int signum)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::thr_kill (thr_id, signum),
                                        result),
                      int, -1);
-# elif defined (ACE_VXWORKS)
+# elif defined (ACE_HAS_VXTHREADS)
   ACE_hthread_t tid;
   ACE_OSCALL (::taskNameToId (thr_id), int, ERROR, tid);
 
@@ -3054,7 +3062,7 @@ ACE_OS::thr_min_stack (void)
 #   endif /* _SC_THREAD_STACK_MIN */
 # elif defined (ACE_HAS_WTHREADS)
   ACE_NOTSUP_RETURN (0);
-# elif defined (ACE_VXWORKS)
+# elif defined (ACE_HAS_VXTHREADS)
   TASK_DESC taskDesc;
   STATUS status;
 
@@ -3085,8 +3093,8 @@ ACE_OS::thr_self (void)
   ACE_OSCALL_RETURN (::thr_self (), int, -1);
 # elif defined (ACE_HAS_WTHREADS)
   return ::GetCurrentThreadId ();
-# elif defined (ACE_VXWORKS)
-  return ::taskName (::taskIdSelf ());
+# elif defined (ACE_HAS_VXTHREADS)
+  return ::taskIdSelf ();
 # endif /* ACE_HAS_STHREADS */
 #else
   return 1; // Might as well make it the first thread ;-)
@@ -3107,8 +3115,8 @@ ACE_OS::thr_self (ACE_hthread_t &self)
   self = ::thr_self ();
 # elif defined (ACE_HAS_WTHREADS)
   self = ::GetCurrentThread ();
-# elif defined (ACE_VXWORKS)
-  self = ::taskIdSelf ();
+# elif defined (ACE_HAS_VXTHREADS)
+  self = ::taskName(::taskIdSelf ());
 # endif /* ACE_HAS_STHREADS */
 #else
   self = 1; // Might as well make it the main thread ;-)
@@ -3272,7 +3280,7 @@ ACE_OS::thr_setprio (ACE_hthread_t ht_id, int priority, int policy)
   ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::SetThreadPriority (ht_id, priority),
                                           ace_result_),
                         int, -1);
-# elif defined (ACE_VXWORKS)
+# elif defined (ACE_HAS_VXTHREADS)
   ACE_OSCALL_RETURN (::taskPrioritySet (ht_id, priority), int, -1);
 # else
   // For example, platforms that support Pthreads but LACK_SETSCHED.
@@ -3410,7 +3418,7 @@ ACE_OS::thr_suspend (ACE_hthread_t target_thread)
   else
     ACE_FAIL_RETURN (-1);
   /* NOTREACHED */
-# elif defined (ACE_VXWORKS)
+# elif defined (ACE_HAS_VXTHREADS)
   ACE_OSCALL_RETURN (::taskSuspend (target_thread), int, -1);
 # endif /* ACE_HAS_STHREADS */
 #else
@@ -3432,7 +3440,7 @@ ACE_OS::thr_testcancel (void)
 #endif /* !ACE_HAS_PTHREADS_DRAFT6 */
 # elif defined (ACE_HAS_STHREADS)
 # elif defined (ACE_HAS_WTHREADS)
-# elif defined (ACE_VXWORKS)
+# elif defined (ACE_HAS_VXTHREADS)
 # else
   // no-op:  can't use ACE_NOTSUP_RETURN because there is no return value
 # endif /* ACE_HAS_PTHREADS */
@@ -3458,7 +3466,7 @@ ACE_OS::thr_yield (void)
   ::thr_yield ();
 # elif defined (ACE_HAS_WTHREADS)
   ::Sleep (0);
-# elif defined (ACE_VXWORKS)
+# elif defined (ACE_HAS_VXTHREADS)
   // An argument of 0 to ::taskDelay doesn't appear to yield the
   // current thread.
   // Now, it does seem to work.  The context_switch_time test

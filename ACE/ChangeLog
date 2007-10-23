@@ -1,3 +1,16 @@
+Tue Oct 23 13:51:15 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_Thread.{h,cpp,inl}:
+          Use ACE_HAS_VXTHREADS, use bool, doxygen improvements and
+          improved ACE_OS::thr_equal to guard against an unitialized
+          ACE_thread_t which is a 0 pointer on VxWorks. This fixes then
+          the crash of the Reader_Writer_Test in our daily regression
+          suite
+
+        * tests/Reader_Writer_Test.cpp:
+          Use prefix increment/decrement, also use a long for the counts,
+          these are implemented in assembly on most architectures
+
 Tue Oct 23 13:17:15 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-vxworks6.2.h:

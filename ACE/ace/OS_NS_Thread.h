@@ -179,7 +179,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 // Fortran or Ada support
 #     define VX_UNBREAKABLE        0x0002  /* breakpoints ignored */
 #     if !defined (VX_FP_TASK)
-#       define VX_FP_TASK            0x0008  /* floating point coprocessor */
+#       define VX_FP_TASK          0x0008  /* floating point coprocessor */
 #     endif
 #     define VX_PRIVATE_ENV        0x0080  /* private environment support */
 #     define VX_NO_STACK_FILL      0x0100  /* do not stack fill for
@@ -318,9 +318,6 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #     define THR_SCOPE_SYSTEM        0
 #   endif /* ACE_HAS_PTHREADS / STHREADS / VXWORKS / WTHREADS **********/
 
-// If we're using PACE then we don't want this class (since PACE
-// takes care of it) unless we're on Windows. Win32 mutexes, semaphores,
-// and condition variables are not yet supported in PACE.
 #   if defined (ACE_LACKS_COND_T)
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -1514,14 +1511,14 @@ namespace ACE_OS {
   int thr_continue (ACE_hthread_t target_thread);
 
   /*
-   * Creates a new thread having <flags> attributes and running <func>
-   * with <args> (if <thread_adapter> is non-0 then <func> and <args>
+   * Creates a new thread having @a flags attributes and running @a func
+   * with <args> (if <thread_adapter> is non-0 then @a func and <args>
    * are ignored and are obtained from <thread_adapter>).  <thr_id>
    * and <t_handle> are set to the thread's ID and handle (?),
-   * respectively.  The thread runs at <priority> priority (see
+   * respectively.  The thread runs at @a priority priority (see
    * below).
    *
-   * The <flags> are a bitwise-OR of the following:
+   * The @a flags are a bitwise-OR of the following:
    * = BEGIN<INDENT>
    * THR_CANCEL_DISABLE, THR_CANCEL_ENABLE, THR_CANCEL_DEFERRED,
    * THR_CANCEL_ASYNCHRONOUS, THR_BOUND, THR_NEW_LWP, THR_DETACHED,
@@ -1530,7 +1527,7 @@ namespace ACE_OS {
    * THR_SCOPE_SYSTEM, THR_SCOPE_PROCESS
    * = END<INDENT>
    *
-   * By default, or if <priority> is set to
+   * By default, or if @a priority is set to
    * ACE_DEFAULT_THREAD_PRIORITY, an "appropriate" priority value for
    * the given scheduling policy (specified in <flags}>, e.g.,
    * <THR_SCHED_DEFAULT>) is used.  This value is calculated
@@ -1584,19 +1581,19 @@ namespace ACE_OS {
   int thr_getspecific (ACE_thread_key_t key,
                        void **data);
 
-#if defined (ACE_VXWORKS)
+#if defined (ACE_HAS_VXTHREADS)
   extern ACE_Export
 #else
   ACE_NAMESPACE_INLINE_FUNCTION
-#endif /* ACE_VXWORKS */
+#endif /* ACE_HAS_VXTHREADS */
   int thr_join (ACE_hthread_t waiter_id,
                 ACE_THR_FUNC_RETURN *status);
 
-#if defined (ACE_VXWORKS)
+#if defined (ACE_HAS_VXTHREADS)
   extern ACE_Export
 #else
   ACE_NAMESPACE_INLINE_FUNCTION
-#endif /* ACE_VXWORKS */
+#endif /* ACE_HAS_VXTHREADS */
   int thr_join (ACE_thread_t waiter_id,
                 ACE_thread_t *thr_id,
                 ACE_THR_FUNC_RETURN *status);
@@ -1783,9 +1780,9 @@ namespace ACE_OS {
    * This method uses process id and object pointer to come up with a
    * machine wide unique name.  The process ID will provide uniqueness
    * between processes on the same machine. The "this" pointer of the
-   * <object> will provide uniqueness between other "live" objects in
+   * @a object will provide uniqueness between other "live" objects in
    * the same process. The uniqueness of this name is therefore only
-   * valid for the life of <object>.
+   * valid for the life of @a object.
    */
   extern ACE_Export
   void unique_name (const void *object,
