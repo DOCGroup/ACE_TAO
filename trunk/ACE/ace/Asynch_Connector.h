@@ -55,7 +55,7 @@ public:
   /**
    * This opens asynch connector
    */
-  virtual int open (int pass_addresses = 0,
+  virtual int open (bool pass_addresses = false,
                     ACE_Proactor *proactor = 0,
                     bool validate_new_connection = true);
 
@@ -115,8 +115,8 @@ public:
 
   /// Set and get flag that indicates if parsing and passing of
   /// addresses to the service_handler is necessary.
-  virtual int  pass_addresses (void) const;
-  virtual void pass_addresses (int new_value);
+  virtual bool pass_addresses (void) const;
+  virtual void pass_addresses (bool new_value);
 
   /// Set and get flag that indicates if address validation is
   /// required.
