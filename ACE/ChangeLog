@@ -1,3 +1,9 @@
+Tue Oct 23 14:10:15 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/run_test.lst:
+          Sendfile_Test will not work on VxWorks kernel mode, we don't have
+          sendfile but we also lack mmap for the emulation
+
 Tue Oct 23 13:57:30 UTC 2007  Steve Huston  <shuston@riverace.com>
 
         * tests/run_test.pl: Changed handling of tests in subdirectories to

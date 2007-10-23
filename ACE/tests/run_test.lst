@@ -137,7 +137,7 @@ Recursive_Mutex_Test: !ST
 Refcounted_Auto_Ptr_Test: !ACE_FOR_TAO
 Reference_Counted_Event_Handler_Test
 Reverse_Lock_Test
-Sendfile_Test: !QNX !NO_NETWORK
+Sendfile_Test: !QNX !NO_NETWORK !VxWorks
 Signal_Test
 SOCK_Connector_Test: !NO_NETWORK
 SOCK_Netlink_Test: !ACE_FOR_TAO
