@@ -2,7 +2,7 @@
 // -*- C++ -*-
 // $Id$
 // Definition for Win32 Export directives.
-// This file is generated automatically by generate_export_file.pl -s CODEGEN_STUB
+// This file is generated automatically by generate_export_file.pl CODEGEN_STUB
 // ------------------------------
 #ifndef CODEGEN_STUB_EXPORT_H
 #define CODEGEN_STUB_EXPORT_H
