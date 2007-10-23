@@ -293,7 +293,7 @@ worker_parent (void *arg)
   child_pid = pm.spawn (options);
 
   if (child_pid == ACE_INVALID_PID)
-    ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) spawning child process failed\n"), -1);
+    ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) spawning child process failed\n"), 0);
   else
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("(%P|%t) spawning child process %d\n"),
