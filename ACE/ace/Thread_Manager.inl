@@ -9,7 +9,7 @@ ACE_At_Thread_Exit::ACE_At_Thread_Exit (void)
   : next_ (0),
     td_ (0),
     was_applied_ (0),
-    is_owner_ (1)
+    is_owner_ (true)
 {
 }
 
@@ -29,14 +29,14 @@ ACE_At_Thread_Exit::was_applied (int applied)
   return was_applied_;
 }
 
-ACE_INLINE int
+ACE_INLINE bool
 ACE_At_Thread_Exit::is_owner() const
 {
   return is_owner_;
 }
 
-ACE_INLINE int
-ACE_At_Thread_Exit::is_owner (int owner)
+ACE_INLINE bool
+ACE_At_Thread_Exit::is_owner (bool owner)
 {
   is_owner_ = owner;
   return is_owner_;
@@ -289,13 +289,13 @@ ACE_Thread_Manager::wait_on_exit (void)
 ACE_INLINE int
 ACE_Thread_Manager::register_as_terminated (ACE_Thread_Descriptor *td)
 {
-#if defined (ACE_VXWORKS)
+#if defined (ACE_HAS_VXTHREADS)
   ACE_UNUSED_ARG (td);
-#else  /* ! ACE_VXWORKS */
+#else  /* ! ACE_HAS_VXTHREADS */
   ACE_Thread_Descriptor_Base *tdb = 0;
   ACE_NEW_RETURN (tdb, ACE_Thread_Descriptor_Base (*td), -1);
   this->terminated_thr_list_.insert_tail (tdb);
-#endif /* ! ACE_VXWORKS */
+#endif /* !ACE_HAS_VXTHREADS */
   return 0;
 }
 

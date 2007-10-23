@@ -1,3 +1,24 @@
+Tue Oct 23 10:41:15 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Asynch_Connector.h:
+          Fixed some missing bool usage
+
+        * ace/Asynch_Acceptor.{h,cpp}:
+          Use bool and remove validate_new_connection which was deprecated in
+          ACE 5.4
+
+        * ace/Log_Msg.{cpp,inl}:
+          The Log_Msg stores the process id a static pid so that we only have to
+          obtain it once. It was initialized with -1, but when the OS doesn't have
+          process support (like VxWorks), then -1 is returned by ACE_OS::getpid()
+          which reduces in a performance reduction. Changed the default value to -2
+          so that on a platform like VxWorks we also just obtain once.
+
+        * ace/Thread_Manager.{h,cpp,inl}:
+          Doxygen changes, const changes, use bool when possible. Also use
+          ACE_HAS_VXTHREADS instead of ACE_HAS_VXWORKS to check if we are using
+          VxWorks with task support
+
 Mon Oct 22 19:03:15 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_TLI.h:

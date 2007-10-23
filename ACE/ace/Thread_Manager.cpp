@@ -114,7 +114,7 @@ ACE_Thread_Descriptor::at_pop (int apply)
 }
 
 void
-ACE_Thread_Descriptor::at_push (ACE_At_Thread_Exit* cleanup, int is_owner)
+ACE_Thread_Descriptor::at_push (ACE_At_Thread_Exit* cleanup, bool is_owner)
 {
   ACE_TRACE ("ACE_Thread_Descriptor::at_push");
   cleanup->is_owner (is_owner);
@@ -168,7 +168,7 @@ ACE_Thread_Descriptor::terminate ()
       {
          int close_handle = 0;
 
-#if !defined (ACE_VXWORKS)
+#if !defined (ACE_HAS_VXTHREADS)
          // Threads created with THR_DAEMON shouldn't exist here, but
          // just to be safe, let's put it here.
 
@@ -190,7 +190,7 @@ ACE_Thread_Descriptor::terminate ()
                }
 #endif /* ACE_WIN32 */
            }
-#endif /* ! ACE_VXWORKS */
+#endif /* !ACE_HAS_VXTHREADS */
 
          // Remove thread descriptor from the table.
          if (this->tm_ != 0)
@@ -591,7 +591,7 @@ ACE_Thread_Manager::spawn_i (ACE_THR_FUNC func,
   ACE_TRACE ("ACE_Thread_Manager::spawn_i");
   ACE_hthread_t thr_handle;
 
-#if defined (ACE_VXWORKS) && !defined (ACE_HAS_PTHREADS)
+#if defined (ACE_HAS_VXTHREADS)
   // On VxWorks, ACE_thread_t is char *.  If t_id is 0, allocate space
   // for ACE_OS::thr_create () to store the task name.  If t_id is not
   // 0, and it doesn't point to a 0 char *, then the non-zero char *
@@ -611,16 +611,16 @@ ACE_Thread_Manager::spawn_i (ACE_THR_FUNC func,
        (*t_id)[0] = ACE_THR_ID_ALLOCATED;
        (*t_id)[1] = '\0';
     }
-#else  /* ! ACE_VXWORKS */
+#else  /* ! ACE_HAS_VXTHREADS */
   ACE_thread_t thr_id;
   if (t_id == 0)
     t_id = &thr_id;
-#endif /* ! ACE_VXWORKS */
+#endif /* ! ACE_VXTHREADS */
 
-  new_thr_desc->sync_->acquire ();
   // Acquire the <sync_> lock to block the spawned thread from
   // removing this Thread Descriptor before it gets put into our
   // thread table.
+  new_thr_desc->sync_->acquire ();
 
   int const result = ACE_Thread::spawn (func,
                                         args,
@@ -875,13 +875,13 @@ ACE_Thread_Manager::insert_thr (ACE_thread_t t_id,
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
 
   // Check for duplicates and bail out if we're already registered...
-#if defined (ACE_VXWORKS) && !defined (ACE_HAS_PTHREADS)
+#if defined (ACE_HAS_VXTHREADS)
   if (this->find_hthread (t_handle) != 0 )
     return -1;
-#else  /* ! ACE_VXWORKS */
+#else  /* ! ACE_HAS_VXTHREADS */
   if (this->find_thread (t_id) != 0 )
     return -1;
-#endif /* ! ACE_VXWORKS */
+#endif /* ! ACE_HAS_VXTHREADS */
 
   if (grp_id == -1)
     grp_id = this->grp_id_++;
@@ -931,20 +931,20 @@ ACE_Thread_Manager::remove_thr (ACE_Thread_Descriptor *td,
 {
   ACE_TRACE ("ACE_Thread_Manager::remove_thr");
 
-#if defined (ACE_VXWORKS) && !defined (ACE_HAS_PTHREADS)
+#if defined (ACE_HAS_VXTHREADS)
   ACE_thread_t tid = td->self ();
 #endif /* ACE_VXWORKS */
 
   td->tm_ = 0;
   this->thr_list_.remove (td);
 
-#if defined (ACE_VXWORKS) && !defined (ACE_HAS_PTHREADS)
+#if defined (ACE_HAS_VXTHREADS)
   // Delete the thread ID, if the ACE_Thread_Manager allocated it.
   if (tid  &&  tid[0] == ACE_THR_ID_ALLOCATED)
     {
       delete [] tid;
     }
-#endif /* ACE_VXWORKS */
+#endif /* ACE_HAS_VXTHREADS */
 
 #if defined (ACE_WIN32)
   if (close_handler != 0)
@@ -1063,7 +1063,7 @@ ACE_Thread_Manager::kill_thr (ACE_Thread_Descriptor *td, int signum)
   ACE_TRACE ("ACE_Thread_Manager::kill_thr");
 
   ACE_thread_t tid = td->thr_id_;
-#if defined (ACE_VXWORKS) && !defined (ACE_HAS_PTHREADS)
+#if defined (ACE_HAS_VXTHREADS)
   // Skip over the ID-allocated marker, if present.
   tid += tid[0] == ACE_THR_ID_ALLOCATED  ?  1  :  0;
 #endif /* ACE_VXWORKS */
@@ -1424,7 +1424,7 @@ ACE_Thread_Manager::join (ACE_thread_t tid, ACE_THR_FUNC_RETURN *status)
   {
     ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
 
-#if !defined (ACE_VXWORKS)
+#if !defined (ACE_HAS_VXTHREADS)
     for (ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor_Base> biter (this->terminated_thr_list_);
          !biter.done ();
          biter.advance ())
@@ -1457,7 +1457,7 @@ ACE_Thread_Manager::join (ACE_thread_t tid, ACE_THR_FUNC_RETURN *status)
           return 0;
           // return immediately if we've found the thread we want to join.
         }
-#endif /* !ACE_VXWORKS */
+#endif /* !ACE_HAS_VXTHREADS */
 
     for (ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor> iter (this->thr_list_);
          !iter.done ();
@@ -1518,7 +1518,7 @@ ACE_Thread_Manager::wait_grp (int grp_id)
   {
     ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
 
-#if !defined (ACE_VXWORKS)
+#if !defined (ACE_HAS_VXTHREADS)
     ACE_NEW_RETURN (copy_table,
                     ACE_Thread_Descriptor_Base [this->thr_list_.size ()
                                                + this->terminated_thr_list_.size ()],
@@ -1527,7 +1527,7 @@ ACE_Thread_Manager::wait_grp (int grp_id)
     ACE_NEW_RETURN (copy_table,
                     ACE_Thread_Descriptor_Base [this->thr_list_.size ()],
                     -1);
-#endif /* ACE_VXWORKS */
+#endif /* !ACE_HAS_VXTHREADS */
 
     for (ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor> iter (this->thr_list_);
          !iter.done ();
@@ -1542,7 +1542,7 @@ ACE_Thread_Manager::wait_grp (int grp_id)
           copy_table[copy_count++] = *iter.next ();
         }
 
-#if !defined (ACE_VXWORKS)
+#if !defined (ACE_HAS_VXTHREADS)
     for (ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor_Base> biter (this->terminated_thr_list_);
          !biter.done ();
          biter.advance ())
@@ -1554,7 +1554,7 @@ ACE_Thread_Manager::wait_grp (int grp_id)
           copy_table[copy_count++] = *tdb;
           delete tdb;
         }
-#endif /* !ACE_VXWORKS */
+#endif /* !ACE_HAS_VXTHREADS */
   }
 
   // Now actually join() with all the threads in this group.
@@ -1613,14 +1613,14 @@ ACE_Thread_Manager::exit (ACE_THR_FUNC_RETURN status, int do_thr_exit)
 
     // Find the thread id, but don't use the cache.  It might have been
     // deleted already.
-#if defined (ACE_VXWORKS) && !defined (ACE_HAS_PTHREADS)
+#if defined (ACE_HAS_VXTHREADS)
     ACE_hthread_t id;
     ACE_OS::thr_self (id);
     ACE_Thread_Descriptor* td = this->find_hthread (id);
-#else  /* ! ACE_VXWORKS */
+#else  /* ! ACE_HAS_VXTHREADS */
     ACE_thread_t id = ACE_OS::thr_self ();
     ACE_Thread_Descriptor* td = this->find_thread (id);
-#endif /* ! ACE_VXWORKS */
+#endif /* ! ACE_VXTHREADS */
     if (td != 0)
      {
        // @@ We call Thread_Descriptor terminate this realize the cleanup
@@ -1658,9 +1658,9 @@ ACE_Thread_Manager::wait (const ACE_Time_Value *timeout,
       timeout = &local_timeout;
     }
 
-#if !defined (ACE_VXWORKS)
+#if !defined (ACE_HAS_VXTHREADS)
   ACE_Double_Linked_List<ACE_Thread_Descriptor_Base> term_thr_list_copy;
-#endif /* ACE_VXWORKS */
+#endif /* ACE_HAS_VXTHREADS */
 
 #if defined (ACE_HAS_THREADS)
   {
@@ -1687,7 +1687,7 @@ ACE_Thread_Manager::wait (const ACE_Time_Value *timeout,
 
             if (! this->thr_to_be_removed_.is_empty ())
               {
-                ACE_Thread_Descriptor *td;
+                ACE_Thread_Descriptor *td = 0;
                 while (this->thr_to_be_removed_.dequeue_head (td) != -1)
                   this->remove_thr (td, 1);
               }
@@ -1702,19 +1702,19 @@ ACE_Thread_Manager::wait (const ACE_Time_Value *timeout,
         // Therefore, we'll just remove threads from the list.
         this->remove_thr_all ();
 
-#if !defined (ACE_VXWORKS)
+#if !defined (ACE_HAS_VXTHREADS)
   ACE_Thread_Descriptor_Base* item = 0;
   while ((item = this->terminated_thr_list_.delete_head ()) != 0)
     {
       term_thr_list_copy.insert_tail (item);
     }
-#endif /* ACE_VXWORKS */
+#endif /* ACE_HAS_VXTHREADS */
     // Release the guard, giving other threads a chance to run.
   }
 
-#if !defined (ACE_VXWORKS)
+#if !defined (ACE_HAS_VXTHREADS)
     // @@ VxWorks doesn't support thr_join (yet.)  We are working
-    //on our implementation.   Chorus'es thr_join seems broken.
+    // on our implementation.   Chorus'es thr_join seems broken.
     ACE_Thread_Descriptor_Base *item = 0;
 
     while ((item = term_thr_list_copy.delete_head ()) != 0)
@@ -1732,7 +1732,7 @@ ACE_Thread_Manager::wait (const ACE_Time_Value *timeout,
         delete item;
       }
 
-#endif /* ! ACE_VXWORKS */
+#endif /* !ACE_HAS_VXTHREADS */
 #else
   ACE_UNUSED_ARG (timeout);
   ACE_UNUSED_ARG (abandon_detached_threads);
@@ -1790,7 +1790,7 @@ ACE_Thread_Manager::wait_task (ACE_Task_Base *task)
   {
     ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
 
-#if !defined (ACE_VXWORKS)
+#if !defined (ACE_HAS_VXTHREADS)
     ACE_NEW_RETURN (copy_table,
                     ACE_Thread_Descriptor_Base [this->thr_list_.size ()
                                                 + this->terminated_thr_list_.size ()],
@@ -1799,7 +1799,7 @@ ACE_Thread_Manager::wait_task (ACE_Task_Base *task)
     ACE_NEW_RETURN (copy_table,
                     ACE_Thread_Descriptor_Base [this->thr_list_.size ()],
                     -1);
-#endif /* ACE_VXWORKS */
+#endif /* !ACE_HAS_VXTHREADS */
 
     for (ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor> iter (this->thr_list_);
          !iter.done ();
@@ -1817,7 +1817,7 @@ ACE_Thread_Manager::wait_task (ACE_Task_Base *task)
           copy_table[copy_count++] = *iter.next ();
         }
 
-#if !defined (ACE_VXWORKS)
+#if !defined (ACE_HAS_VXTHREADS)
     for (ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor_Base> titer (this->terminated_thr_list_);
          !titer.done ();
          titer.advance ())
@@ -1829,7 +1829,7 @@ ACE_Thread_Manager::wait_task (ACE_Task_Base *task)
           copy_table[copy_count++] = *tdb;
           delete tdb;
         }
-#endif /* ACE_VXWORKS */
+#endif /* !ACE_HAS_VXTHREADS */
   }
 
   // Now to do the actual work
@@ -1939,9 +1939,9 @@ ACE_Thread_Manager::num_tasks_in_group (int grp_id)
       if (iter.next ()->grp_id_ == grp_id
           && this->find_task (iter.next ()->task_, i) == 0
           && iter.next ()->task_ != 0)
-        tasks_count++;
+        ++tasks_count;
 
-      i++;
+      ++i;
     }
   return tasks_count;
 }
@@ -1960,7 +1960,7 @@ ACE_Thread_Manager::num_threads_in_task (ACE_Task_Base *task)
        !iter.done ();
        iter.advance ())
     if (iter.next ()->task_ == task)
-      threads_count++;
+      ++threads_count;
 
   return threads_count;
 }
@@ -2019,7 +2019,7 @@ ACE_Thread_Manager::thread_all_list (ACE_thread_t thread_list[],
         break;
 
       thread_list[thread_count] = iter.next ()->thr_id_;
-      thread_count ++;
+      ++thread_count;
     }
 
   return thread_count;
@@ -2033,7 +2033,7 @@ ACE_Thread_Manager::thr_state (ACE_thread_t id,
   ACE_TRACE ("ACE_Thread_Manager::thr_state");
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
 
-  int self_check = ACE_OS::thr_equal (id, ACE_OS::thr_self ());
+  int const self_check = ACE_OS::thr_equal (id, ACE_OS::thr_self ());
 
   // If we're checking the state of our thread, try to get the cached
   // value out of TSS to avoid lookup.
@@ -2112,7 +2112,7 @@ ACE_Thread_Manager::thread_list (ACE_Task_Base *task,
       if (iter.next ()->task_ == task)
         {
           thread_list[thread_count] = iter.next ()->thr_id_;
-          thread_count++;
+          ++thread_count;
         }
     }
 

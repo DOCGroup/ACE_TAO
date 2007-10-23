@@ -98,10 +98,10 @@ public:
   virtual ~ACE_At_Thread_Exit (void);
 
   /// At_Thread_Exit has the ownership?
-  int is_owner (void) const;
+  bool is_owner (void) const;
 
   /// Set the ownership of the At_Thread_Exit.
-  int is_owner (int owner);
+  bool is_owner (bool owner);
 
   /// This At_Thread_Exit was applied?
   int was_applied (void) const;
@@ -126,7 +126,7 @@ protected:
   int was_applied_;
 
   /// The at has the ownership of this?
-  int is_owner_;
+  bool is_owner_;
 };
 
 class ACE_Export ACE_At_Thread_Exit_Func : public ACE_At_Thread_Exit
@@ -313,7 +313,7 @@ private:
   /// Push an At_Thread_Exit to at thread termination list and set the
   /// ownership of at.
   void at_push (ACE_At_Thread_Exit* cleanup,
-                int is_owner = 0);
+                bool is_owner = false);
 
   /// Run the AT_Thread_Exit hooks.
   void do_at_exit (void);
@@ -476,7 +476,7 @@ public:
   //                                     argument is not modified.
 
   /**
-   * Create a new thread, which executes <func> with argument <arg>.
+   * Create a new thread, which executes @a func with argument <arg>.
    * Returns: on success a unique group id that can be used to control
    * other threads added to the same group.  On failure, returns -1.
    */
@@ -491,7 +491,7 @@ public:
              size_t stack_size = ACE_DEFAULT_THREAD_STACKSIZE);
 
   /**
-   * Spawn N new threads, which execute <func> with argument <arg>.
+   * Spawn N new threads, which execute @a func with argument <arg>.
    * If <thread_ids> != 0 the thread_ids of successfully spawned
    * threads will be placed into the <thread_ids> buffer (which must
    * be the same size as @a n).  If @a stack != 0 it is assumed to be an
@@ -531,7 +531,7 @@ public:
                size_t stack_size[] = 0);
 
   /**
-   * Spawn N new threads, which execute <func> with argument <arg>.
+   * Spawn N new threads, which execute @a func with argument <arg>.
    * If <thread_ids> != 0 the thread_ids of successfully spawned
    * threads will be placed into the <thread_ids> buffer (which must
    * be the same size as @a n).  If @a stack != 0 it is assumed to be an
@@ -1034,7 +1034,7 @@ protected:
   // operating on a collection of threads atomically.
 
   /**
-   * Efficiently check whether <thread> is in a particular <state>.
+   * Efficiently check whether @a thread is in a particular @a state.
    * This call updates the TSS cache if possible to speed up
    * subsequent searches.
    */
@@ -1042,37 +1042,37 @@ protected:
                    ACE_thread_t thread,
                    int enable = 1);
 
-  /// Apply <func> to all members of the table that match the @a task
+  /// Apply @a func to all members of the table that match the @a task
   int apply_task (ACE_Task_Base *task,
-                  ACE_THR_MEMBER_FUNC,
+                  ACE_THR_MEMBER_FUNC func,
                   int = 0);
 
-  /// Apply <func> to all members of the table that match the @a grp_id.
+  /// Apply @a func to all members of the table that match the @a grp_id.
   int apply_grp (int grp_id,
                  ACE_THR_MEMBER_FUNC func,
                  int arg = 0);
 
-  /// Apply <func> to all members of the table.
+  /// Apply @a func to all members of the table.
   int apply_all (ACE_THR_MEMBER_FUNC,
                  int  = 0);
 
-  /// Join the thread described in <tda>.
+  /// Join the thread described in @a td.
   int join_thr (ACE_Thread_Descriptor *td,
                 int = 0);
 
-  /// Resume the thread described in <tda>.
+  /// Resume the thread described in @a td.
   int resume_thr (ACE_Thread_Descriptor *td,
                   int = 0);
 
-  /// Suspend the thread described in <tda>.
+  /// Suspend the thread described in @a td.
   int suspend_thr (ACE_Thread_Descriptor *td,
                    int = 0);
 
-  /// Send signal @a signum to the thread described in <tda>.
+  /// Send signal @a signum to the thread described in @a td.
   int kill_thr (ACE_Thread_Descriptor *td,
                 int signum);
 
-  /// Set the cancellation flag for the thread described in <tda>.
+  /// Set the cancellation flag for the thread described in @a td.
   int cancel_thr (ACE_Thread_Descriptor *td,
                   int async_cancel = 0);
 
@@ -1090,10 +1090,10 @@ protected:
    */
   ACE_Double_Linked_List<ACE_Thread_Descriptor> thr_list_;
 
-#if !defined (ACE_VXWORKS)
+#if !defined (ACE_HAS_VXTHREADS)
   /// Collect terminated but not yet joined thread entries.
   ACE_Double_Linked_List<ACE_Thread_Descriptor_Base> terminated_thr_list_;
-#endif /* ACE_VXWORKS */
+#endif /* !ACE_HAS_VXTHREADS */
 
   /// Collect pointers to thread descriptors of threads to be removed later.
   ACE_Unbounded_Queue<ACE_Thread_Descriptor*> thr_to_be_removed_;
