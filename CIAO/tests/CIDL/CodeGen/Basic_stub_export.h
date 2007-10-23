@@ -2,7 +2,7 @@
 // -*- C++ -*-
 // $Id$
 // Definition for Win32 Export directives.
-// This file is generated automatically by generate_export_file.pl -s BASIC_STUB
+// This file is generated automatically by generate_export_file.pl BASIC_STUB
 // ------------------------------
 #ifndef BASIC_STUB_EXPORT_H
 #define BASIC_STUB_EXPORT_H

@@ -1,3 +1,32 @@
+Tue Oct 23 14:37:05 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * tests/CIDL/CodeGen/Basic.mpc:
+        * tests/CIDL/CodeGen/Basic_skel_export.h:
+        * tests/CIDL/CodeGen/Basic_stub_export.h:
+        * tests/CIDL/CodeGen/CodeGen.mpc:
+        * tests/CIDL/CodeGen/CodeGen_exec_export.h:
+        * tests/CIDL/CodeGen/CodeGen_stub_export.h:
+        * tests/CIDL/CodeGen/CodeGen_svnt_export.h:
+
+          - Modified *_exec.{h, cpp} files and MPC files to reverse
+            the exec->svnt dependency. Also moved generated
+            <IDL file>EC.{h, inl, cpp} files from svnt buidl to
+            exec build.
+
+          - Added file names to MPC projects so that all build files
+            are displayed in IDEs.
+
+          - For non-component builds, changed _svnt suffix to _skel
+            for project names, library names, and export header file
+            names.
+
+          - Separated IDL and CIDL/executor IDL processing into
+            separate projects.
+
+        * tests/CIDL/CodeGen/Basic_svnt_export.h:
+
+          Removed this file.
+
 Tue Oct 23 14:27:18 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * tests/Minimum/Receiver/Receiver_exec.h:
@@ -8,11 +37,11 @@ Tue Oct 23 14:27:18 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
         * tests/Minimum/Sender/Sender_exec.cpp:
         * tests/Minimum/Receiver/Receiver_exec.cpp:
 
-          The generate context is a var type now (it used to be a pointer). 
+          The generate context is a var type now (it used to be a pointer).
           Do not compare it directly with 0, use CORBA::is_nil instead.
 
           Effectively, we just renegerated the executor files with a newer
-          cidlc compiler.          
+          cidlc compiler.
 
 Mon Oct 22 18:54:03 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
 
