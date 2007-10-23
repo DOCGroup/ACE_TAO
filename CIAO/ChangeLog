@@ -1,3 +1,19 @@
+Tue Oct 23 14:27:18 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * tests/Minimum/Receiver/Receiver_exec.h:
+        * tests/Minimum/Sender/Sender_exec.h:
+
+          Removed dependency on including Servant header files.
+
+        * tests/Minimum/Sender/Sender_exec.cpp:
+        * tests/Minimum/Receiver/Receiver_exec.cpp:
+
+          The generate context is a var type now (it used to be a pointer). 
+          Do not compare it directly with 0, use CORBA::is_nil instead.
+
+          Effectively, we just renegerated the executor files with a newer
+          cidlc compiler.          
+
 Mon Oct 22 18:54:03 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * performance-tests\Protocols\Sender\Custom_Network_Priority_Mapping.cpp:
