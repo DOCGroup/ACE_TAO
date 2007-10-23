@@ -80,7 +80,7 @@ public:
    * @param proactor Optional, pointer to the @c ACE_Proactor to use for
    *                demultiplexing asynchronous accepts. If 0, the
    *                process's singleton @c ACE_Proactor is used.
-   * @param validate_new_connection Optional, if non-zero, this object's
+   * @param validate_new_connection Optional, if true, this object's
    *                @c validate_connection() method is called after
    *                the accept completes, but before the service handler's
    *                @c open() hook method is called. If @c
@@ -108,11 +108,11 @@ public:
    */
   virtual int open (const ACE_INET_Addr &address,
                     size_t bytes_to_read = 0,
-                    int pass_addresses = 0,
+                    bool pass_addresses = false,
                     int backlog = ACE_DEFAULT_ASYNCH_BACKLOG,
                     int reuse_addr = 1,
                     ACE_Proactor *proactor = 0,
-                    int validate_new_connection = 0,
+                    bool validate_new_connection = false,
                     int reissue_accept = 1,
                     int number_of_initial_accepts = -1);
 
@@ -167,21 +167,6 @@ public:
                                    const ACE_INET_Addr& local);
 
   /**
-   * @deprecated Use validate_connection() instead. Will be removed after
-   * ACE 5.3.
-   *
-   * Template method for address validation.
-   *
-   * This hook method is called after a connection is accepted if
-   * so specified on the call to the @c open() method. If this
-   * method returns -1, the connection is immediately closed and
-   * the service handler is not opened.
-   *
-   * The default implemenation always return 0.
-   */
-  virtual int validate_new_connection (const ACE_INET_Addr &remote_address);
-
-  /**
    * Template method for deciding whether to reissue accept.
    *
    * This hook method is called after each accept completes to decide if
@@ -200,17 +185,17 @@ public:
 
   /// Get flag that indicates if parsing and passing of addresses to
   /// the service_handler is necessary.
-  virtual int pass_addresses (void) const;
+  virtual bool pass_addresses (void) const;
 
   /// Set flag that indicates if parsing and passing of addresses to
   /// the service_handler is necessary.
-  virtual void pass_addresses (int new_value);
+  virtual void pass_addresses (bool new_value);
 
   /// Get flag that indicates if address validation is required.
-  virtual int validate_new_connection (void) const;
+  virtual bool validate_new_connection (void) const;
 
   /// Set flag that indicates if address validation is required.
-  virtual void validate_new_connection (int new_value);
+  virtual void validate_new_connection (bool new_value);
 
   /// Get flag that indicates if a new accept should be reissued when a accept
   /// completes.
@@ -264,10 +249,10 @@ private:
   ACE_Asynch_Accept asynch_accept_;
 
   /// Flag that indicates if parsing of addresses is necessary.
-  int pass_addresses_;
+  bool pass_addresses_;
 
   /// Flag that indicates if address validation is required.
-  int validate_new_connection_;
+  bool validate_new_connection_;
 
   /// Flag that indicates if a new accept should be reissued when a
   /// accept completes.

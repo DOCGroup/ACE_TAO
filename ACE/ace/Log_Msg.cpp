@@ -450,7 +450,7 @@ const ACE_TCHAR *ACE_Log_Msg::program_name_ = 0;
 u_long ACE_Log_Msg::flags_ = ACE_Log_Msg::STDERR;
 
 /// Process id of the current process.
-pid_t ACE_Log_Msg::pid_ = -1;
+pid_t ACE_Log_Msg::pid_ = -2;
 
 /// Current offset of msg_[].
 ptrdiff_t ACE_Log_Msg::msg_off_ = 0;
