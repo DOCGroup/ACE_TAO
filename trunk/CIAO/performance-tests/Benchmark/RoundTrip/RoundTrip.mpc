@@ -10,7 +10,7 @@ project(Benchmark_RoundTrip_idl_gen) : taoidldefaults, anytypecode {
               -Wb,skel_export_include=RoundTrip_svnt_export.h
 
   IDL_Files {
-    Roundtrip.idl
+    RoundTrip.idl
   }
 }
 
