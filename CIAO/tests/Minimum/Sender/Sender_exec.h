@@ -23,7 +23,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "Sender_svnt.h"
+#include "SenderEC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -35,8 +35,8 @@
 namespace CIDL_Sender_Impl
 {
   class SENDER_EXEC_Export Sender_exec_i
-  : public virtual Sender_Exec,
-  public virtual TAO_Local_RefCounted_Object
+    : public virtual Sender_Exec,
+      public virtual TAO_Local_RefCounted_Object
   {
     public:
     Sender_exec_i (void);
@@ -55,30 +55,25 @@ namespace CIDL_Sender_Impl
 
     virtual void
     set_session_context (
-    ::Components::SessionContext_ptr ctx);
+      ::Components::SessionContext_ptr ctx);
 
-    virtual void
-    ciao_preactivate ();
+    virtual void ciao_preactivate ();
 
-    virtual void
-    ciao_postactivate ();
+    virtual void ciao_postactivate ();
 
-    virtual void
-    ccm_activate ();
+    virtual void ccm_activate ();
 
-    virtual void
-    ccm_passivate ();
+    virtual void ccm_passivate ();
 
-    virtual void
-    ccm_remove ();
+    virtual void ccm_remove ();
 
-    protected:
-    Minimum::CCM_Sender_Context_var context_;
+    private:
+    ::Minimum::CCM_Sender_Context_var context_;
   };
 
   class SENDER_EXEC_Export SenderHome_exec_i
-  : public virtual SenderHome_Exec,
-  public virtual TAO_Local_RefCounted_Object
+    : public virtual SenderHome_Exec,
+      public virtual TAO_Local_RefCounted_Object
   {
     public:
     SenderHome_exec_i (void);
@@ -99,7 +94,7 @@ namespace CIDL_Sender_Impl
   };
 
   extern "C" SENDER_EXEC_Export ::Components::HomeExecutorBase_ptr
-  createSenderHome_Impl (void);
+  create_Minimum_SenderHome_Impl (void);
 }
 
 #include /**/ "ace/post.h"

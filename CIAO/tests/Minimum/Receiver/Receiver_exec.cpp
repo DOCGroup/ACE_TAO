@@ -45,15 +45,14 @@ namespace CIDL_Receiver_Impl
 
   void
   Receiver_exec_i::set_session_context (
-  ::Components::SessionContext_ptr ctx)
+    ::Components::SessionContext_ptr ctx)
   {
     this->context_ =
-    Minimum::CCM_Receiver_Context::_narrow (
-    ctx);
+      ::Minimum::CCM_Receiver_Context::_narrow (ctx);
 
-    if (this->context_ == 0)
+    if (CORBA::is_nil (this->context_.in ()))
     {
-      throw CORBA::INTERNAL ();
+      throw ::CORBA::INTERNAL ();
     }
   }
 
@@ -113,26 +112,26 @@ namespace CIDL_Receiver_Impl
   ReceiverHome_exec_i::create ()
   {
     ::Components::EnterpriseComponent_ptr retval =
-    ::Components::EnterpriseComponent::_nil ();
+      ::Components::EnterpriseComponent::_nil ();
 
     ACE_NEW_THROW_EX (
-    retval,
-    Receiver_exec_i,
-    CORBA::NO_MEMORY ());
+      retval,
+      Receiver_exec_i,
+      ::CORBA::NO_MEMORY ());
 
     return retval;
   }
 
   extern "C" RECEIVER_EXEC_Export ::Components::HomeExecutorBase_ptr
-  createReceiverHome_Impl (void)
+  create_Minimum_ReceiverHome_Impl (void)
   {
     ::Components::HomeExecutorBase_ptr retval =
-    ::Components::HomeExecutorBase::_nil ();
+      ::Components::HomeExecutorBase::_nil ();
 
     ACE_NEW_RETURN (
-    retval,
-    ReceiverHome_exec_i,
-    ::Components::HomeExecutorBase::_nil ());
+      retval,
+      ReceiverHome_exec_i,
+      ::Components::HomeExecutorBase::_nil ());
 
     return retval;
   }
