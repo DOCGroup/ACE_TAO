@@ -70,7 +70,6 @@ TAO_Default_Endpoint_Selector::select_endpoint (TAO::Profile_Transport_Resolver 
               if (r->try_connect (&desc, max_wait_time))
                 return;
             }
-
         }
     }
   while (r->stub ()->next_profile_retry () != 0);

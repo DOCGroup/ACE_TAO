@@ -303,7 +303,7 @@ TAO_Advanced_Resource_Factory::init (int argc, ACE_TCHAR** argv)
 int
 TAO_Advanced_Resource_Factory::load_default_protocols (void)
 {
-  const int r =
+  int const r =
     this->TAO_Default_Resource_Factory::load_default_protocols ();
 
   this->protocol_factories_ =
@@ -322,7 +322,6 @@ TAO_Advanced_Resource_Factory::load_default_protocols (void)
 int
 TAO_Advanced_Resource_Factory::init_protocol_factories (void)
 {
-
   // If the default resource factory exists, then disable it.
   // This causes any directives for the "Resource_Factory" to
   // report warnings.

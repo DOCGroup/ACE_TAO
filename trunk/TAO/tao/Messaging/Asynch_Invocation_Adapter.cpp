@@ -180,9 +180,7 @@ namespace TAO
 
         if (this->get_timeout (r.stub (), tmp))
           {
-            this->safe_rd_->schedule_timer (
-                op.request_id (),
-                *max_wait_time);
+            this->safe_rd_->schedule_timer (op.request_id (), *max_wait_time);
           }
       }
 
