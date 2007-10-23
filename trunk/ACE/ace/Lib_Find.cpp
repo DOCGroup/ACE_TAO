@@ -671,7 +671,7 @@ ACE::strrepl (char *s, char search, char replace)
     if (s[i] == search)
       {
         s[i] = replace;
-        replaced++;
+        ++replaced;
       }
 
   return replaced;
@@ -759,7 +759,7 @@ ACE::strrepl (wchar_t *s, wchar_t search, wchar_t replace)
     if (s[i] == search)
       {
         s[i] = replace;
-        replaced++;
+        ++replaced;
       }
 
   return replaced;

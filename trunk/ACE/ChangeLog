@@ -1,3 +1,17 @@
+Tue Oct 23 13:17:15 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-vxworks6.2.h:
+        * ace/config-vxworks6.3.h:
+        * ace/config-vxworks6.4.h:
+          VxWorks 6.x doesn't have perfect multicast filtering
+
+        * ace/FILE_Addr.h:
+        * ace/FILE_IO.h:
+          Doxygen fixes
+
+        * ace/Lib_Find.cpp:
+          Use prefix increment
+
 Tue Oct 23 10:41:15 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Asynch_Connector.h:
