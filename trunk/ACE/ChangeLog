@@ -1,3 +1,11 @@
+Tue Oct 23 19:15:15 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/SOCK_Dgram_Test.cpp:
+          On VxWorks binding the socket seems to clear the port number. For the
+          moment just reset the port number, that will fix this test failure. We
+          are in contact with WindRiver to sort out the real problem in the
+          network stack.
+
 Tue Oct 23 14:40:15 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Signal_Test.cpp:
