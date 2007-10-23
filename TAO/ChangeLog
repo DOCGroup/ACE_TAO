@@ -1,3 +1,11 @@
+Tue Oct 23 10:54:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_interface/tie_ss.cpp:
+          Use true/false, const changes
+
+        * TAO_IDL/be/be_visitor_traits.cpp:
+          Generate argument names so that doxygen can handle the traits better
+
 Mon Oct 22 11:50:34 UTC 2007  Vladimir Zykov  <vladimir.zykov@prismtech.com>
 
         * examples/Simple/grid/Grid_i.h:

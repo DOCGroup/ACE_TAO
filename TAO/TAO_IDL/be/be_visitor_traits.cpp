@@ -126,10 +126,10 @@ be_visitor_traits::visit_interface (be_interface *node)
           << "{" << be_idt_nl
           << "static ::" << node->name () << "_ptr duplicate ("
           << be_idt << be_idt_nl
-          << "::" << node->name () << "_ptr" << be_uidt_nl
+          << "::" << node->name () << "_ptr p" << be_uidt_nl
           << ");" << be_uidt_nl
           << "static void release (" << be_idt << be_idt_nl
-          << "::" << node->name () << "_ptr" << be_uidt_nl
+          << "::" << node->name () << "_ptr p" << be_uidt_nl
           << ");" << be_uidt_nl
           << "static ::" << node->name () << "_ptr nil (void);" << be_nl
           << "static ::CORBA::Boolean marshal (" << be_idt << be_idt_nl
