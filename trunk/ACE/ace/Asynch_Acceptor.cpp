@@ -29,8 +29,8 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 template <class HANDLER>
 ACE_Asynch_Acceptor<HANDLER>::ACE_Asynch_Acceptor (void)
   : listen_handle_ (ACE_INVALID_HANDLE),
-    pass_addresses_ (0),
-    validate_new_connection_ (0),
+    pass_addresses_ (false),
+    validate_new_connection_ (false),
     reissue_accept_ (1),
     bytes_to_read_ (0)
 {
@@ -50,11 +50,11 @@ ACE_Asynch_Acceptor<HANDLER>::~ACE_Asynch_Acceptor (void)
 template <class HANDLER> int
 ACE_Asynch_Acceptor<HANDLER>::open (const ACE_INET_Addr &address,
                                     size_t bytes_to_read,
-                                    int pass_addresses,
+                                    bool pass_addresses,
                                     int backlog,
                                     int reuse_addr,
                                     ACE_Proactor *proactor,
-                                    int validate_new_connection,
+                                    bool validate_new_connection,
                                     int reissue_accept,
                                     int number_of_initial_accepts)
 {
@@ -280,8 +280,7 @@ ACE_Asynch_Acceptor<HANDLER>::handle_accept (const ACE_Asynch_Accept::Result &re
   // Validate remote address
   if (!error &&
       this->validate_new_connection_ &&
-      (this->validate_connection (result, remote_address, local_address) == -1
-       || this->validate_new_connection (remote_address) == -1))
+      (this->validate_connection (result, remote_address, local_address) == -1))
     {
       error = 1;
     }
@@ -347,13 +346,6 @@ ACE_Asynch_Acceptor<HANDLER>::validate_connection
   (const ACE_Asynch_Accept::Result& /* result */,
    const ACE_INET_Addr& /* remote */,
    const ACE_INET_Addr& /* local */)
-{
-  // Default implementation always validates the remote address.
-  return 0;
-}
-
-template <class HANDLER> int
-ACE_Asynch_Acceptor<HANDLER>::validate_new_connection (const ACE_INET_Addr&)
 {
   // Default implementation always validates the remote address.
   return 0;
@@ -464,26 +456,26 @@ ACE_Asynch_Acceptor<HANDLER>::address_size (void)
   return sizeof (sockaddr) + sizeof (sockaddr_in);
 }
 
-template <class HANDLER> int
+template <class HANDLER> bool
 ACE_Asynch_Acceptor<HANDLER>::pass_addresses (void) const
 {
   return this->pass_addresses_;
 }
 
 template <class HANDLER> void
-ACE_Asynch_Acceptor<HANDLER>::pass_addresses (int new_value)
+ACE_Asynch_Acceptor<HANDLER>::pass_addresses (bool new_value)
 {
   this->pass_addresses_ = new_value;
 }
 
-template <class HANDLER> int
+template <class HANDLER> bool
 ACE_Asynch_Acceptor<HANDLER>::validate_new_connection (void) const
 {
   return this->validate_new_connection_;
 }
 
 template <class HANDLER> void
-ACE_Asynch_Acceptor<HANDLER>::validate_new_connection (int new_value)
+ACE_Asynch_Acceptor<HANDLER>::validate_new_connection (bool new_value)
 {
   this->validate_new_connection_ = new_value;
 }

@@ -223,7 +223,7 @@ ACE_INLINE
 pid_t
 ACE_Log_Msg::getpid (void) const
 {
-  if (ACE_Log_Msg::pid_ == -1)
+  if (ACE_Log_Msg::pid_ == -2)
     ACE_Log_Msg::pid_ = ACE_OS::getpid ();
 
   return ACE_Log_Msg::pid_;
