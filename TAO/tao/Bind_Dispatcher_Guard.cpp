@@ -25,8 +25,7 @@ TAO_Bind_Dispatcher_Guard::TAO_Bind_Dispatcher_Guard (CORBA::ULong request_id,
     this->tms_->bind_dispatcher (this->request_id_, this->rd_);
 
   if (retval == -1)
-    this->status_ =
-      TAO_Bind_Dispatcher_Guard::NO_UNBIND;
+    this->status_ = TAO_Bind_Dispatcher_Guard::NO_UNBIND;
 }
 
 TAO_Bind_Dispatcher_Guard::~TAO_Bind_Dispatcher_Guard (void)

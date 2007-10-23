@@ -230,8 +230,7 @@ TAO_RT_ORB::create_tcp_protocol_properties (CORBA::Long send_buffer_size,
 RTCORBA::UnixDomainProtocolProperties_ptr
 TAO_RT_ORB::create_unix_domain_protocol_properties (
                                                     CORBA::Long send_buffer_size,
-                                                    CORBA::Long recv_buffer_size
-                                                    )
+                                                    CORBA::Long recv_buffer_size)
 {
   TAO_UnixDomain_Protocol_Properties *tmp = 0;
   ACE_NEW_THROW_EX (tmp,
@@ -388,8 +387,7 @@ TAO_RT_ORB::create_threadpool_policy (RTCORBA::ThreadpoolId threadpool)
 
 RTCORBA::PriorityBandedConnectionPolicy_ptr
 TAO_RT_ORB::create_priority_banded_connection_policy (const
-                                                      RTCORBA::PriorityBands & priority_bands
-                                                      )
+                                                      RTCORBA::PriorityBands & priority_bands)
 {
   TAO_PriorityBandedConnectionPolicy *tmp = 0;
   ACE_NEW_THROW_EX (tmp,
@@ -413,8 +411,7 @@ TAO_RT_ORB::create_private_connection_policy (void)
 }
 
 RTCORBA::ServerProtocolPolicy_ptr
-TAO_RT_ORB::create_server_protocol_policy (const RTCORBA::ProtocolList & protocols
-                                           )
+TAO_RT_ORB::create_server_protocol_policy (const RTCORBA::ProtocolList & protocols)
 {
   TAO_ServerProtocolPolicy *tmp = 0;
   ACE_NEW_THROW_EX (tmp,
