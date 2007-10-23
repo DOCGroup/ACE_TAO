@@ -215,11 +215,18 @@ spawn (int proto)
 
   // Bind UDP server to the appropriate port
   if (server_dgram.open (server_addr, proto) == -1)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("(%P|%t) %p\n"),
-                ACE_TEXT ("server dgram open")));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("(%P|%t) %p\n"),
+                  ACE_TEXT ("server dgram open")));
+    }
   else
     {
+#if defined (ACE_VXWORKS) && (ACE_VXWORKS == 0x640)
+      // On VxWorks it seems the port number is cleared during opening the
+      // socket.
+      server_addr.set (SERVER_PORT, ACE_LOCALHOST, 1, proto);
+#endif
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%P|%t) started server at proto %d, port %d\n"),
                   proto,
