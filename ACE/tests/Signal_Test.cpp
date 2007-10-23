@@ -291,11 +291,13 @@ worker_parent (void *arg)
   ACE_Process pm;
 
   child_pid = pm.spawn (options);
-  ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("(%P|%t) spawning child process %d\n"),
-              child_pid));
 
-  ACE_ASSERT (child_pid != -1);
+  if (child_pid == ACE_INVALID_PID)
+    ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) spawning child process failed\n"), -1);
+  else
+    ACE_DEBUG ((LM_DEBUG,
+                ACE_TEXT ("(%P|%t) spawning child process %d\n"),
+                child_pid));
 
   // Perform a <wait> until our child process has exited.
 
