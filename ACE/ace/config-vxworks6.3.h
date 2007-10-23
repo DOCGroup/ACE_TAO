@@ -304,6 +304,10 @@
 #define ACE_USE_RCSID 0
 #endif /* !ACE_USE_RCSID */
 
+#if defined (ACE_HAS_IP_MULTICAST)
+# define ACE_LACKS_PERFECT_MULTICAST_FILTERING 1
+#endif /* ACE_HAS_IP_MULTICAST */
+
 #include /**/ "ace/post.h"
 #endif /* ACE_CONFIG_VXWORKS_6_3_H */
 
