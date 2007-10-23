@@ -24,7 +24,6 @@
 # include "ace/config-g++-common.h"
 #endif /* __GNUG__ */
 
-
 // Platform specific directives
 // gcc defines __OpenBSD__ automatically for us.
 #include <sys/param.h>

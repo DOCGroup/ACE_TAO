@@ -127,7 +127,7 @@ public:
                 size_t n,
                 ACE_OVERLAPPED *overlapped) const;
 
-  /// Send an <iovec> of size @a n to the file.
+  /// Send an @c iovec of size @a n to the file.
   ssize_t sendv (const iovec iov[],
                  int n) const;
 

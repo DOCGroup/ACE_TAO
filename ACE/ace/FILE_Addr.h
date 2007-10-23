@@ -40,8 +40,8 @@ public:
   /// Copy constructor.
   ACE_FILE_Addr (const ACE_FILE_Addr &sa);
 
-  /// Acts like a copy constructor.  If <sa> == ACE_Addr::sap_any then
-  /// create a temporary filename using <ACE_OS::mktemp>.
+  /// Acts like a copy constructor.  If @a sa == ACE_Addr::sap_any then
+  /// create a temporary filename using ACE_OS::mktemp.
   int set (const ACE_FILE_Addr &sa);
 
   /// Create a ACE_FILE_Addr from a pathname.
