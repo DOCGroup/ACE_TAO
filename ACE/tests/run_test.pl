@@ -107,18 +107,24 @@ sub check_resources
 
 sub run_program ($)
 {
-    my $program = shift;
+    my $path = shift;
     my $arguments = shift;
-    if ($program =~ /^(\S*)\s*(.*)/ ) {
-        $program = $1;
+    if ($path =~ /^(\S*)\s*(.*)/ ) {
+        $path = $1;
         $arguments = $2 . $arguments;
     }
 
     ## Print it out before we check for the executable
     ## if the executable doesn't exist, the error will show
     ## up as part of the previous test.
-    print "auto_run_tests: tests/$program $arguments\n";
+    print "auto_run_tests: tests/$path $arguments\n";
 
+    my ($program, $dir, $suffix) = fileparse($path);
+    my $start_dir = getcwd ();
+    if ($dir ne "" && !chdir $dir) {
+        print STDERR "Error: Can\'t chdir to $dir for $path\n";
+        return;
+    }
     unlink <log/$program*.log>;
     unlink "core";
 
@@ -141,6 +147,7 @@ sub run_program ($)
       if (! -e $P->Executable ()) {
           print STDERR "Error: " . $P->Executable () .
                        " does not exist or is not runnable\n";
+          chdir $start_dir;
           return;
        }
     }
@@ -167,6 +174,7 @@ sub run_program ($)
     if ($config_list->check_config ('Codeguard')) {
     	check_codeguard_log ($program);
     }
+    chdir $start_dir;
 }
 
 ################################################################################

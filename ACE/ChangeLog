@@ -1,3 +1,10 @@
+Tue Oct 23 13:57:30 UTC 2007  Steve Huston  <shuston@riverace.com>
+
+        * tests/run_test.pl: Changed handling of tests in subdirectories to
+          chdir to the subdirectory to run the test; allows tests to pick up
+          files they need (like keys and ciphers). This places the test's
+          log under its subdirectory (e.g. SSL/log) as well.
+
 Tue Oct 23 13:51:15 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_Thread.{h,cpp,inl}:
