@@ -3094,7 +3094,7 @@ ACE_OS::thr_self (void)
 # elif defined (ACE_HAS_WTHREADS)
   return ::GetCurrentThreadId ();
 # elif defined (ACE_HAS_VXTHREADS)
-  return ::taskIdSelf ();
+  return ::taskName (::taskIdSelf ());
 # endif /* ACE_HAS_STHREADS */
 #else
   return 1; // Might as well make it the first thread ;-)
@@ -3116,7 +3116,7 @@ ACE_OS::thr_self (ACE_hthread_t &self)
 # elif defined (ACE_HAS_WTHREADS)
   self = ::GetCurrentThread ();
 # elif defined (ACE_HAS_VXTHREADS)
-  self = ::taskName(::taskIdSelf ());
+  self = ::taskIdSelf ();
 # endif /* ACE_HAS_STHREADS */
 #else
   self = 1; // Might as well make it the main thread ;-)
