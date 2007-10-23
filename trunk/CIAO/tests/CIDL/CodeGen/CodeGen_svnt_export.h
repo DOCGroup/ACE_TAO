@@ -2,7 +2,7 @@
 // -*- C++ -*-
 // $Id$
 // Definition for Win32 Export directives.
-// This file is generated automatically by generate_export_file.pl -s CODEGEN_SVNT
+// This file is generated automatically by generate_export_file.pl CODEGEN_SVNT
 // ------------------------------
 #ifndef CODEGEN_SVNT_EXPORT_H
 #define CODEGEN_SVNT_EXPORT_H
