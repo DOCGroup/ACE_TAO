@@ -23,7 +23,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "Receiver_svnt.h"
+#include "ReceiverEC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -35,8 +35,8 @@
 namespace CIDL_Receiver_Impl
 {
   class RECEIVER_EXEC_Export Receiver_exec_i
-  : public virtual Receiver_Exec,
-  public virtual TAO_Local_RefCounted_Object
+    : public virtual Receiver_Exec,
+      public virtual TAO_Local_RefCounted_Object
   {
     public:
     Receiver_exec_i (void);
@@ -52,30 +52,25 @@ namespace CIDL_Receiver_Impl
 
     virtual void
     set_session_context (
-    ::Components::SessionContext_ptr ctx);
+      ::Components::SessionContext_ptr ctx);
 
-    virtual void
-    ciao_preactivate ();
+    virtual void ciao_preactivate ();
 
-    virtual void
-    ciao_postactivate ();
+    virtual void ciao_postactivate ();
 
-    virtual void
-    ccm_activate ();
+    virtual void ccm_activate ();
 
-    virtual void
-    ccm_passivate ();
+    virtual void ccm_passivate ();
 
-    virtual void
-    ccm_remove ();
+    virtual void ccm_remove ();
 
-    protected:
-    Minimum::CCM_Receiver_Context_var context_;
+    private:
+    ::Minimum::CCM_Receiver_Context_var context_;
   };
 
   class RECEIVER_EXEC_Export ReceiverHome_exec_i
-  : public virtual ReceiverHome_Exec,
-  public virtual TAO_Local_RefCounted_Object
+    : public virtual ReceiverHome_Exec,
+      public virtual TAO_Local_RefCounted_Object
   {
     public:
     ReceiverHome_exec_i (void);
@@ -96,7 +91,7 @@ namespace CIDL_Receiver_Impl
   };
 
   extern "C" RECEIVER_EXEC_Export ::Components::HomeExecutorBase_ptr
-  createReceiverHome_Impl (void);
+  create_Minimum_ReceiverHome_Impl (void);
 }
 
 #include /**/ "ace/post.h"

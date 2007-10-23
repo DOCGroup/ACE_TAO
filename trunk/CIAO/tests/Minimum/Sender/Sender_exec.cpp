@@ -51,15 +51,14 @@ namespace CIDL_Sender_Impl
 
   void
   Sender_exec_i::set_session_context (
-  ::Components::SessionContext_ptr ctx)
+    ::Components::SessionContext_ptr ctx)
   {
     this->context_ =
-    Minimum::CCM_Sender_Context::_narrow (
-    ctx);
+      ::Minimum::CCM_Sender_Context::_narrow (ctx);
 
-    if (this->context_ == 0)
+    if (CORBA::is_nil (this->context_.in ()))
     {
-      throw CORBA::INTERNAL ();
+      throw ::CORBA::INTERNAL ();
     }
   }
 
@@ -119,26 +118,26 @@ namespace CIDL_Sender_Impl
   SenderHome_exec_i::create ()
   {
     ::Components::EnterpriseComponent_ptr retval =
-    ::Components::EnterpriseComponent::_nil ();
+      ::Components::EnterpriseComponent::_nil ();
 
     ACE_NEW_THROW_EX (
-    retval,
-    Sender_exec_i,
-    CORBA::NO_MEMORY ());
+      retval,
+      Sender_exec_i,
+      ::CORBA::NO_MEMORY ());
 
     return retval;
   }
 
   extern "C" SENDER_EXEC_Export ::Components::HomeExecutorBase_ptr
-  createSenderHome_Impl (void)
+  create_Minimum_SenderHome_Impl (void)
   {
     ::Components::HomeExecutorBase_ptr retval =
-    ::Components::HomeExecutorBase::_nil ();
+      ::Components::HomeExecutorBase::_nil ();
 
     ACE_NEW_RETURN (
-    retval,
-    SenderHome_exec_i,
-    ::Components::HomeExecutorBase::_nil ());
+      retval,
+      SenderHome_exec_i,
+      ::Components::HomeExecutorBase::_nil ());
 
     return retval;
   }
