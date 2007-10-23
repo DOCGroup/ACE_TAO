@@ -44,8 +44,7 @@ project(Hello_Base_skel) : ciao_component_dnc {
   avoids += ace_for_tao
   after      +=  Hello_Base_stub
   sharedname  = Hello_Base_skel
-  libs       += \
-                Hello_Base_stub
+  libs       += Hello_Base_stub
  
   
   dynamicflags = HELLO_BASE_SKEL_BUILD_DLL

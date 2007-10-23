@@ -2,7 +2,7 @@
 // -*- C++ -*-
 // $Id$
 // Definition for Win32 Export directives.
-// This file is generated automatically by generate_export_file.pl HELLO_BASE_SVNT
+// This file is generated automatically by generate_export_file.pl HELLO_BASE_SKEL
 // ------------------------------
 #ifndef HELLO_BASE_SKEL_EXPORT_H
 #define HELLO_BASE_SKEL_EXPORT_H
