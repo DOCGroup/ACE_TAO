@@ -45,18 +45,28 @@ TAO_Parser_Registry::open (TAO_ORB_Core *orb_core)
                   TAO_IOR_Parser*[this->size_],
                   -1);
 
-  for (size_t i = 0; i != this->size_; ++i)
+  for (size_t i = 0, index = 0; i != this->size_; ++i)
     {
-      this->parsers_[i] =
+      this->parsers_[index] =
         ACE_Dynamic_Service<TAO_IOR_Parser>::instance (orb_core->configuration (),
                                                        names [i]);
 
-      if (this->parsers_[i] == 0)
+      if (this->parsers_[index] == 0)
         {
-          return -1;
+          --number_of_names;
+          if (TAO_debug_level >= 1)
+            {
+              ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) Failed to find Service Object"
+                          " for %s.\n", names[i]));
+            }
+        }
+      else
+        {
+          ++index;
         }
     }
 
+  this->size_ = number_of_names;
   return 0;
 }
 
