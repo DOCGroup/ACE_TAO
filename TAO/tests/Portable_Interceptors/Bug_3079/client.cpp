@@ -11,16 +11,17 @@ ACE_RCSID (Redirection,
 
 const char *ior1 = 0;
 const char *ior2 = 0;
+const char *ior3 = 0;
 
 int
 parse_args (int argc, char *argv[])
 {
-  if (argc != 5)  // foo -p IOR_1 -s IOR_2
+  if (argc != 7)  // foo -p IOR_1 -f IOR_2 -s IOR_3
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Wrong number of arguments.\n"),
                       -1);
 
-  ACE_Get_Opt get_opts (argc, argv, "p:s:");
+  ACE_Get_Opt get_opts (argc, argv, "p:f:s:");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -29,13 +30,16 @@ parse_args (int argc, char *argv[])
       case 'p':
         ior1 = get_opts.opt_arg ();
         break;
-      case 's':
+      case 'f':
         ior2 = get_opts.opt_arg ();
+        break;
+      case 's':
+        ior3 = get_opts.opt_arg ();
         break;
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Usage:  %s "
-                           "-p IOR_1 -s IOR_2\n",
+                           "-p IOR_1 -f IOR_2 -s IOR_3\n",
                            argv[0]),
                           -1);
       }
@@ -85,7 +89,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         }
 
       CORBA::Short number = 0;
-      for (int i = 1; i <= 4; ++i)
+      for (int i = 1; i <= 9; ++i)
         {
           ACE_DEBUG ((LM_INFO,
                       "CLIENT: Issuing request %d.\n",

@@ -3,6 +3,9 @@
 #include "Client_Request_Interceptor.h"
 #include "testC.h"
 #include "ace/Log_Msg.h"
+#include "tao/AnyTypeCode/TypeCode.h"
+#include "tao/AnyTypeCode/AnyTypeCode_Adapter_Impl.h"
+#include "ace/OS_NS_string.h"
 
 ACE_RCSID (Redirection,
            Client_Request_Interceptor,
@@ -10,11 +13,13 @@ ACE_RCSID (Redirection,
 
 Client_Request_Interceptor::Client_Request_Interceptor (
   const char *orb_id,
-  const char *forward_str)
+  const char *first_forward_str, const char *second_forward_str)
   : orb_id_ (CORBA::string_dup (orb_id)),
     orb_ (),
     request_count_ (0),
-    forward_str_ (CORBA::string_dup (forward_str))
+    exception_count_ (0),
+    first_forward_str_ (CORBA::string_dup (first_forward_str)),
+    second_forward_str_ (CORBA::string_dup (second_forward_str))
 {
 }
 
@@ -50,9 +55,11 @@ Client_Request_Interceptor::receive_reply (
 
 void
 Client_Request_Interceptor::receive_exception (
-    PortableInterceptor::ClientRequestInfo_ptr)
+    PortableInterceptor::ClientRequestInfo_ptr ri)
 {
-  ACE_DEBUG ((LM_DEBUG, "RECEIVED EXCEPTION\n"));
+  ++this->exception_count_;
+  ACE_DEBUG ((LM_DEBUG, "RECEIVED EXCEPTION %d\n", 
+              this->exception_count_));
   if (CORBA::is_nil (this->orb_.in ()))
   {
     int argc = 0;
@@ -61,11 +68,35 @@ Client_Request_Interceptor::receive_exception (
                                   this->orb_id_.in ());
   }
 
-  CORBA::Object_var forward =
-  this->orb_->string_to_object (this->forward_str_.in ());
+  if (this->exception_count_ == 1)
+    {
+      CORBA::Object_var first_forward =
+        this->orb_->string_to_object (this->first_forward_str_.in ());
 
-  // Notice that this is not a permanent forward.
-  throw PortableInterceptor::ForwardRequest (forward.in ());
+      // Notice that this is not a permanent forward.
+      throw PortableInterceptor::ForwardRequest (first_forward.in ());
+    }
+  else if (this->exception_count_ == 2)
+    {
+      CORBA::Object_var second_forward =
+        this->orb_->string_to_object (this->second_forward_str_.in ());
+
+      // Notice that this is not a permanent forward.
+      throw PortableInterceptor::ForwardRequest (second_forward.in ());
+    }
+  else if (this->exception_count_ == 3)
+    {
+      CORBA::Any_var ex = ri->received_exception ();
+
+      CORBA::TypeCode_var tc;
+      const char * id = 0;
+      tc = ex->type ();
+      id = tc->id ();
+
+      if (ACE_OS_String::strcmp (id,
+                                 "IDL:omg.org/CORBA/TRANSIENT:1.0") == 0)
+          throw ::CORBA::TRANSIENT (CORBA::OMGVMCID | 2, CORBA::COMPLETED_NO);
+    }
 }
 
 void

@@ -32,7 +32,8 @@ public:
 
   /// Constructor.
   Client_Request_Interceptor (const char *orb_id,
-                              const char *forward_str);
+                              const char *first_forward_str,
+                              const char *second_forward_str);
 
   /**
    * @name Methods Required by the Client Request Interceptor
@@ -76,7 +77,11 @@ private:
   /// The number of requests intercepted by this interceptor.
   CORBA::ULong request_count_;
 
-  CORBA::String_var forward_str_;
+  /// The number of exceptions intercepted by this interceptor.
+  CORBA::ULong exception_count_;
+
+  CORBA::String_var first_forward_str_;
+  CORBA::String_var second_forward_str_;
 
 };
 
