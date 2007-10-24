@@ -178,7 +178,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>createSenderHome_Impl</string>
+          <string>create_Hello_SenderHome_Impl</string>
         </value>
       </value>
     </execParameter>
@@ -214,7 +214,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>createReceiverHome_Impl</string>
+          <string>create_Hello_ReceiverHome_Impl</string>
         </value>
       </value>
     </execParameter>
