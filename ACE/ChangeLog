@@ -1,3 +1,9 @@
+Wed Oct 24 11:41:15 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/SOCK_Dgram_Test.cpp:
+          Improved this test to handle the problem on VxWorks. The change below
+          has been reverted, it seems we have somewhere a problem in ACE
+
 Tue Oct 23 19:15:15 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/SOCK_Dgram_Test.cpp:

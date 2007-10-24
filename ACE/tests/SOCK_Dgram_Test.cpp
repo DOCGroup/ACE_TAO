@@ -196,7 +196,7 @@ server (void *arg)
   return 0;
 }
 
-static void
+static int
 spawn (int proto)
 {
   ACE_SOCK_Dgram server_dgram;
@@ -216,80 +216,90 @@ spawn (int proto)
   // Bind UDP server to the appropriate port
   if (server_dgram.open (server_addr, proto) == -1)
     {
-      ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("(%P|%t) %p\n"),
-                  ACE_TEXT ("server dgram open")));
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("(%P|%t) %p\n"),
+                         ACE_TEXT ("server dgram open")),
+                         1);
     }
   else
     {
-#if defined (ACE_VXWORKS) && (ACE_VXWORKS == 0x640)
-      // On VxWorks it seems the port number is cleared during opening the
-      // socket.
-      server_addr.set (SERVER_PORT, ACE_LOCALHOST, 1, proto);
-#endif
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("(%P|%t) started server at proto %d, port %d\n"),
-                  proto,
-                  server_addr.get_port_number ()));
-#if !defined (ACE_LACKS_FORK)
-      switch (ACE_OS::fork (ACE_TEXT ("child")))
+      if (server_addr.get_port_number() != SERVER_PORT)
         {
-        case -1:
-          ACE_ERROR_BREAK ((LM_ERROR,
-                            ACE_TEXT ("(%P|%t) %p\n"),
-                            ACE_TEXT ("fork failed")));
-          /* NOTREACHED */
-        case 0:
-          client (&server_addr);
-          ACE_OS::exit (0);
-          /* NOTREACHED */
-        default:
-          server ((void *) &server_dgram);
-          ACE_OS::wait ();
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT("(%P|%t) Portnumber has unexpected value\n")), 1);
         }
+      else
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("(%P|%t) started server at proto %d, port %d\n"),
+                      proto,
+                      server_addr.get_port_number ()));
+#if !defined (ACE_LACKS_FORK)
+          switch (ACE_OS::fork (ACE_TEXT ("child")))
+            {
+            case -1:
+              ACE_ERROR_BREAK ((LM_ERROR,
+                                ACE_TEXT ("(%P|%t) %p\n"),
+                                ACE_TEXT ("fork failed")));
+              /* NOTREACHED */
+            case 0:
+              client (&server_addr);
+              ACE_OS::exit (0);
+              /* NOTREACHED */
+            default:
+              server ((void *) &server_dgram);
+              ACE_OS::wait ();
+            }
 #elif defined (ACE_HAS_THREADS)
-      if (ACE_Thread_Manager::instance ()->spawn
-          (ACE_THR_FUNC (server),
-           (void *) &server_dgram,
-           THR_NEW_LWP | THR_DETACHED) == -1)
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("(%P|%t) %p\n"),
-                    ACE_TEXT ("thread create failed")));
+          if (ACE_Thread_Manager::instance ()->spawn
+              (ACE_THR_FUNC (server),
+               (void *) &server_dgram,
+               THR_NEW_LWP | THR_DETACHED) == -1)
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               ACE_TEXT ("(%P|%t) %p\n"),
+                               ACE_TEXT ("thread create failed")),
+                               1);
 
-      if (ACE_Thread_Manager::instance ()->spawn
-          (ACE_THR_FUNC (client),
-           (void *) &server_addr,
-           THR_NEW_LWP | THR_DETACHED) == -1)
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("(%P|%t) %p\n%a"),
-                    ACE_TEXT ("thread create failed"),
-                    1));
+          if (ACE_Thread_Manager::instance ()->spawn
+              (ACE_THR_FUNC (client),
+               (void *) &server_addr,
+               THR_NEW_LWP | THR_DETACHED) == -1)
+            ACE_ERROR_RETURN ((LM_ERROR,
+                        ACE_TEXT ("(%P|%t) %p\n"),
+                        ACE_TEXT ("thread create failed")),
+                        1);
 
-      // Wait for the threads to exit.
-      ACE_Thread_Manager::instance ()->wait ();
+          // Wait for the threads to exit.
+          ACE_Thread_Manager::instance ()->wait ();
 #else
-      ACE_ERROR ((LM_INFO,
-                  ACE_TEXT ("(%P|%t) ")
-                  ACE_TEXT ("only one thread may be run ")
-                  ACE_TEXT ("in a process on this platform\n")));
+          ACE_ERROR ((LM_INFO,
+                      ACE_TEXT ("(%P|%t) ")
+                      ACE_TEXT ("only one thread may be run ")
+                      ACE_TEXT ("in a process on this platform\n")));
 #endif /* ACE_HAS_THREADS */
+      }
 
       server_dgram.close ();
     }
+
+  return 0;
 }
 
 int run_main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("SOCK_Dgram_Test"));
 
-  spawn (AF_INET);
+  int retval = spawn (AF_INET);
 
 #if defined (ACE_HAS_IPV6)
 
-  spawn (AF_INET6);
+  if (retval == 0)
+    {
+      retval = spawn (AF_INET6);
+    }
 
 #endif /* ACE_HAS_IPV6 */
 
   ACE_END_TEST;
-  return 0;
+  return retval;
 }
