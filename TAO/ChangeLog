@@ -1,3 +1,12 @@
+Wed Oct 24 14:38:06 UTC 2007  Adam Mitz  <mitza@ociweb.com>
+
+        * tao/Parser_Registry.cpp:
+
+          ACE_Dynamic_Service<>::instance() could return null if the parser
+          isn't registered with the ACE svc conf.  Check for nulls and avoid
+          storing them in the array.  Also, warn at TAO_debug_level 1 or more.
+          See Bugzilla bug# 3103.
+
 Tue Oct 23 12:38:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Bind_Dispatcher_Guard.cpp:
