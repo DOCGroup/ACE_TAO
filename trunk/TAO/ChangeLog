@@ -1,3 +1,9 @@
+Thu Oct 25 12:56:53 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connector.cpp:
+
+          Improved support for IPv6 addresses.
+
 Thu Oct 25 11:41:18 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tests/DSI_AMH/Roundtrip.cpp:
