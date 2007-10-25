@@ -1,3 +1,9 @@
+Thu Oct 25 15:32:19 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tests/DII_AMI_Forward/test_i.cpp:
+
+          Missed this one with the previous fuzz fix.
+
 Thu Oct 25 14:27:42 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/Messaging/AMH_Response_Handler.cpp:
