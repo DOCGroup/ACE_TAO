@@ -363,6 +363,13 @@ TAO_AMH_DSI_Response_Handler::invoke_excep (TAO_AMH_DSI_Exception_Holder * h)
 }
 
 void
+TAO_AMH_DSI_Response_Handler::invoke_location_forward (CORBA::Object_ptr fwd,
+                                                       CORBA::Boolean is_perm)
+{
+  this->_tao_rh_send_location_forward (fwd,is_perm);
+}
+
+void
 TAO_AMH_DSI_Response_Handler::gateway_exception_reply (
     CORBA::ULong reply_status,
     TAO_OutputCDR & encap)

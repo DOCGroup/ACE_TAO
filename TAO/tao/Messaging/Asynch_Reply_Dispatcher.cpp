@@ -88,8 +88,9 @@ TAO_Asynch_Reply_Dispatcher::dispatch_reply (TAO_Pluggable_Reply_Params &params)
   if (TAO_debug_level >= 4)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("TAO_Messaging (%P|%t) - Asynch_Reply_Dispatcher::")
-                  ACE_TEXT ("dispatch_reply\n")));
+                  ACE_TEXT ("TAO_Messaging (%P|%t) - Asynch_Reply_Dispatcher")
+                  ACE_TEXT ("::dispatch_reply status = %d\n"),
+                            this->reply_status_));
     }
 
   CORBA::ULong reply_error = TAO_AMI_REPLY_NOT_OK;
@@ -104,9 +105,14 @@ TAO_Asynch_Reply_Dispatcher::dispatch_reply (TAO_Pluggable_Reply_Params &params)
     case GIOP::SYSTEM_EXCEPTION:
       reply_error = TAO_AMI_REPLY_SYSTEM_EXCEPTION;
       break;
-    default:
     case GIOP::LOCATION_FORWARD:
+      reply_error = TAO_AMI_REPLY_LOCATION_FORWARD;
+      break;
     case GIOP::LOCATION_FORWARD_PERM:
+      reply_error = TAO_AMI_REPLY_LOCATION_FORWARD_PERM;
+      break;
+
+    default:
       // @@ Michael: Not even the spec mentions this case.
       //             We have to think about this case.
       // Handle the forwarding and return so the stub restarts the
@@ -120,9 +126,9 @@ TAO_Asynch_Reply_Dispatcher::dispatch_reply (TAO_Pluggable_Reply_Params &params)
       try
         {
           // Call the Reply Handler's stub.
-          reply_handler_stub_ (this->reply_cdr_,
-                               this->reply_handler_.in (),
-                               reply_error);
+          this->reply_handler_stub_ (this->reply_cdr_,
+                                     this->reply_handler_.in (),
+                                     reply_error);
         }
       catch (const ::CORBA::Exception& ex)
         {

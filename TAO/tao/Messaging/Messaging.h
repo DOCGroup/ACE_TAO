@@ -58,7 +58,13 @@ enum TAO_AMI_Reply_Status
   TAO_AMI_REPLY_USER_EXCEPTION,
 
   /// An system exception was raised.
-  TAO_AMI_REPLY_SYSTEM_EXCEPTION
+  TAO_AMI_REPLY_SYSTEM_EXCEPTION,
+
+  /// A location forward exception was raised.
+  TAO_AMI_REPLY_LOCATION_FORWARD,
+
+  /// A location forward perm exception was raised.
+  TAO_AMI_REPLY_LOCATION_FORWARD_PERM
 };
 
 

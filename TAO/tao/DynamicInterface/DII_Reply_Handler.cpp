@@ -52,4 +52,19 @@ TAO_DII_Reply_Handler::_unchecked_narrow (CORBA::Object_ptr obj)
         &TAO_DII_Reply_Handler::_tao_class_id);
 }
 
+void
+TAO_DII_Reply_Handler::handle_location_forward (TAO_InputCDR &incoming,
+                                                CORBA::ULong reply_status)
+{
+  if (TAO_debug_level > 3)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT("TAO (%P|%t) Base DII_Reply_Handler::")
+                  ACE_TEXT("handle_location_forward called, ")
+                  ACE_TEXT("reply_status = \n"),
+                  reply_status));
+    }
+  this->handle_response (incoming);
+}
+
 TAO_END_VERSIONED_NAMESPACE_DECL
