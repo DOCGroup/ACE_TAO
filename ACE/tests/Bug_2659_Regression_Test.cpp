@@ -152,7 +152,7 @@ run_main (int, ACE_TCHAR *[])
       ACE_OS::sleep (1);
     }
 
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Signalling task.\n"))
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Signalling task.\n"));
 
   if (thread_manager->kill_all (SIGUSR1) == -1)
     {
