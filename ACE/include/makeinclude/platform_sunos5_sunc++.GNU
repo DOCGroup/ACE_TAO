@@ -222,8 +222,8 @@ endif # ! exceptions
 ifeq ($(shared_libs), 1)
   ifneq ($(static_libs_only), 1)
 
-   # Sun Studio 8 or better has version greater than 5.5.
-    SUN_STUDIO_8_OR_BETTER := $(shell a=`echo $(CC_VERSION) | sed -e 's/[^0-9]*\([0-9]*\)\.\([0-9]*\).*$$/\1\2/g'`; if test "$$a" -gt 55; then echo 1; else echo 0; fi)
+   # Sun Studio 8 or better has version greater than 5.4 (Studio 8 == CC 5.5).
+    SUN_STUDIO_8_OR_BETTER := $(shell a=`echo $(CC_VERSION) | sed -e 's/[^0-9]*\([0-9]*\)\.\([0-9]*\).*$$/\1\2/g'`; if test "$$a" -gt 54; then echo 1; else echo 0; fi)
 
     # Take advantage of Sun Studio 8 (v5.5) symbol scopes to
     # generate improved shared library binaries.
