@@ -1,3 +1,8 @@
+Thu Oct 25 13:07:11 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * bin/tao_orb_tests.lst:
+          Added DII_AMI_Forward test
+
 Thu Oct 25 12:24:15 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-vxworks6.2.h:
