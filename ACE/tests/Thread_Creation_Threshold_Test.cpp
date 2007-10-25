@@ -35,8 +35,13 @@ ACE_RCSID(tests, Thread_Pool_Test, "$Id$")
 #include "ace/OS_NS_unistd.h"
 
 // Number of iterations to run the test.
+#if defined (ACE_VXWORKS)
+const int THREADS_PER_POOL = 50;
+const unsigned long MAX_THREAD = 500;
+#else
 const int THREADS_PER_POOL = 1000;
 const unsigned long MAX_THREAD = 100000;
+#endif
 
 namespace
 {
@@ -217,7 +222,7 @@ run_main (int, ACE_TCHAR *[])
       if (thread_pool.total_threads() >= (THREAD_THRESHOLD - n_threads))
         n_threads = 1;
     }
-  
+
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("%u total threads successfully started and died;")
               ACE_TEXT (" expected %u.\n"),
