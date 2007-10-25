@@ -1,3 +1,44 @@
+Thu Oct 25 08:36:15 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Thread_Creation_Threshold_Test.cpp:
+          Limit the number of threads for VxWorks. Spawning 50 threads takes
+          more then a second on VxWorks, the tests wants to spawn 100000 which
+          would take about 30 minutes on VxWorks :-(
+
+Thu Oct 25 08:26:15 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-netbsd.h:
+          Include config-g++-common.h to get the needed defines for the
+          GCC compiler. This fixes bugzilla 3094. Thanks to Venkat Sidhabathuni
+          <venkats at idengines dot com> for reporting this.
+
+        * ace/INET_Addr.cpp:
+          Const changes and set some sin_len fields for VxWorks
+
+        * ace/OS_NS_netdb.inl (gethostbyname_r):
+          Fixed invalid check in VxWorks specific part
+
+        * ace/OS_NS_stdlib.cpp:
+          Const change
+
+        * ace/OS_NS_sys_socket.inl:
+          After bind of sin_addr.s_addr != INADDR_ANY VxWorks clears the sin_port
+          field. This leads to a failure of the SOCK_Dgram_Test but could also
+          affect other parts of ACE/TAO. After the bind, we use getsockname()
+          to retrieve the sockaddr struct again. This mimics the behaviour of
+          other network stacks. This fixes bugzilla 3107
+
+        * ace/OS_NS_sys_stat.inl (fstat):
+          Cleanup done to this method. Thanks to Rick Ohnemus
+          <rick dot ohnemus at systemware dot com> for reporting this. This
+          fixes bugzilla 3109
+
+        * ace/Process.cpp:
+          Use this-> when calling a method
+
+        * ace/SOCK_Dgram.cpp:
+          Use bool
+
 Wed Oct 24 11:41:15 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/SOCK_Dgram_Test.cpp:
