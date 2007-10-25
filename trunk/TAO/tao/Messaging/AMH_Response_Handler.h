@@ -108,6 +108,10 @@ protected:
   /// Send back an exception to the client.
   void _tao_rh_send_exception (const CORBA::Exception &ex);
 
+  /// Send back a location forward exception to the client.
+  void _tao_rh_send_location_forward (CORBA::Object_ptr fwd,
+                                      CORBA::Boolean is_perm);
+
   /// The outgoing CDR stream
   /**
    * The IDL-generated ResponseHandler implementations used this field

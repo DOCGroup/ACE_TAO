@@ -1,3 +1,47 @@
+Thu Oct 25 13:01:00 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * NEWS:
+
+        * tao/DynamicInterface/AMH_DSI_Response_Handler.h:
+        * tao/DynamicInterface/AMH_DSI_Response_Handler.cpp:
+        * tao/DynamicInterface/DII_Reply_Handler.h:
+        * tao/DynamicInterface/DII_Reply_Handler.cpp:
+        * tao/DynamicInterface/Request.cpp:
+
+        * tao/Messaging/AMH_Response_Handler.h:
+        * tao/Messaging/AMH_Response_Handler.cpp:
+        * tao/Messaging/Asynch_Reply_Dispatcher.cpp:
+        * tao/Messaging/Messaging.h:
+
+          New implementation described in bug #3105. Location Forward
+          exceptions are different than ordinary exceptions in that the
+          payload is an object reference to which the request must be
+          resent. This code now provides the framework in which such
+          exceptions may be at least detected or handled. Coupling the AMI
+          receipt of such exception with the AMH sending ability gives
+          middle tier applications the ability to pass the exception back
+          to the original caller, perhaps with a modified reference.
+
+        * tests/DII_AMI_Forward:
+
+        * tests/DII_AMI_Forward/DII_AMI_Forward.mpc:
+        * tests/DII_AMI_Forward/DII_ReplyHandler.h:
+        * tests/DII_AMI_Forward/DII_ReplyHandler.cpp:
+        * tests/DII_AMI_Forward/README:
+        * tests/DII_AMI_Forward/client.cpp:
+        * tests/DII_AMI_Forward/orb_initializer.h:
+        * tests/DII_AMI_Forward/orb_initializer.cpp:
+        * tests/DII_AMI_Forward/run_test.pl:
+        * tests/DII_AMI_Forward/server.cpp:
+        * tests/DII_AMI_Forward/server_interceptor.h:
+        * tests/DII_AMI_Forward/server_interceptor.cpp:
+        * tests/DII_AMI_Forward/test.idl:
+        * tests/DII_AMI_Forward/test_i.h:
+        * tests/DII_AMI_Forward/test_i.cpp:
+
+          This is a new test demonstrating the capability of handling
+          location forward exceptions in DII reply handlers.
+
 Thu Oct 25 12:56:53 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connector.cpp:

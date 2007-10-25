@@ -276,6 +276,12 @@ CORBA::Request::_tao_reply_stub (TAO_InputCDR &_tao_in,
         reply_handler->handle_excep (_tao_in, reply_status);
         break;
       }
+    case TAO_AMI_REPLY_LOCATION_FORWARD:
+    case TAO_AMI_REPLY_LOCATION_FORWARD_PERM:
+      {
+        reply_handler->handle_location_forward (_tao_in, reply_status);
+        break;
+      }
     }
 }
 #endif /* TAO_HAS_AMI */

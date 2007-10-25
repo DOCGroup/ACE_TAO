@@ -83,6 +83,13 @@ public:
   virtual void handle_excep (TAO_InputCDR &incoming,
                              CORBA::ULong reply_status) = 0;
 
+  /// Handle a location forward message. This one has a default method
+  /// supplied that simply forwards to the handle_response, since that
+  /// is what the legacy code did. This way we maintain backwards
+  /// compatibility.
+  virtual void handle_location_forward (TAO_InputCDR &incoming,
+                                        CORBA::ULong reply_status);
+
   /// CORBA Object related methods
   static TAO_DII_Reply_Handler* _duplicate (TAO_DII_Reply_Handler_ptr);
   static TAO_DII_Reply_Handler* _nil (void);
