@@ -372,6 +372,9 @@ ACE_INET_Addr::set (u_short port_number,
   address_family = AF_INET;
   this->set_type (address_family);
   this->inet_addr_.in4_.sin_family = static_cast<short> (address_family);
+#ifdef ACE_HAS_SOCKADDR_IN_SIN_LEN
+  this->inet_addr_.in4_.sin_len = sizeof (this->inet_addr_.in4_);
+#endif
   struct in_addr addrv4;
   if (ACE_OS::inet_aton (host_name,
                          &addrv4) == 1)
@@ -413,11 +416,9 @@ ACE_INET_Addr::set (u_short port_number,
 static int get_port_number_from_name (const char port_name[],
                                       const char protocol[])
 {
-  int port_number = 0;
-
   // Maybe port_name is directly a port number?
   char *endp = 0;
-  port_number = static_cast<int> (ACE_OS::strtol (port_name, &endp, 10));
+  int port_number = static_cast<int> (ACE_OS::strtol (port_name, &endp, 10));
 
   if (port_number >= 0 && *endp == '\0')
     {
@@ -460,7 +461,7 @@ ACE_INET_Addr::set (const char port_name[],
 {
   ACE_TRACE ("ACE_INET_Addr::set");
 
-  int port_number = get_port_number_from_name (port_name, protocol);
+  int const port_number = get_port_number_from_name (port_name, protocol);
   if (port_number == -1)
     {
       ACE_UNUSED_ARG (host_name);
@@ -858,13 +859,13 @@ ACE_INET_Addr::get_host_name_i (char hostname[], size_t len) const
       // though they are meant to) so map them back to IPv4 addresses
       // before trying to resolve them
       in_addr demapped_addr;
-      if (type == PF_INET6 && 
+      if (type == PF_INET6 &&
           (this->is_ipv4_mapped_ipv6 () || this->is_ipv4_compat_ipv6 ()))
         {
           ACE_OS::memcpy (&demapped_addr.s_addr, &this->inet_addr_.in6_.sin6_addr.s6_addr[12], 4);
           addr = &demapped_addr;
           size = sizeof(demapped_addr);
-          type = PF_INET;          
+          type = PF_INET;
         }
 #  endif /* ACE_HAS_IPV6 */
 
@@ -995,6 +996,9 @@ int ACE_INET_Addr::set_address (const char *ip_addr,
       // We protect ourselves up above so IPv6 must be possible here.
       this->base_set (AF_INET6, sizeof (this->inet_addr_.in6_));
       this->inet_addr_.in6_.sin6_family = AF_INET6;
+#ifdef ACE_HAS_SOCKADDR_IN6_SIN6_LEN
+      this->inet_addr_.in6_.sin6_len = sizeof (this->inet_addr_.in6_);
+#endif
       ACE_OS::memcpy (&this->inet_addr_.in6_.sin6_addr, ip_addr, len);
 
       return 0;

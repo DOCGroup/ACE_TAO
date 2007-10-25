@@ -77,7 +77,7 @@ ACE_Process::prepare (ACE_Process_Options &)
 pid_t
 ACE_Process::spawn (ACE_Process_Options &options)
 {
-  if (prepare (options) < 0)
+  if (this->prepare (options) < 0)
     return ACE_INVALID_PID;
 
   // Stash the passed/duped handle sets away in this object for later

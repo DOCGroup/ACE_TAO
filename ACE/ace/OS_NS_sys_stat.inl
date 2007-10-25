@@ -24,8 +24,6 @@ namespace ACE_OS
 #endif /* ACE_WIN32 */
   }
 
-#if !defined (ACE_WIN32)
-
   ACE_INLINE int
   fstat (ACE_HANDLE handle, ACE_stat *stp)
   {
@@ -36,24 +34,6 @@ namespace ACE_OS
     // causes compile and runtime problems.
     ACE_OSCALL_RETURN (::_fxstat (_STAT_VER, handle, stp), int, -1);
 #elif defined (ACE_WIN32)
-    ACE_OSCALL_RETURN (::_fstat (handle, stp), int, -1);
-#else
-# if defined (ACE_OPENVMS)
-    //FUZZ: disable check_for_lack_ACE_OS
-    ::fsync(handle);
-    //FUZZ: enable check_for_lack_ACE_OS
-# endif
-    ACE_OSCALL_RETURN (::fstat (handle, stp), int, -1);
-# endif /* !ACE_HAS_X86_STAT_MACROS */
-  }
-
-#else /* ACE_WIN32 */
-
-  ACE_INLINE int
-  fstat (ACE_HANDLE handle, ACE_stat *stp)
-  {
-    ACE_OS_TRACE ("ACE_OS::fstat");
-# if 1
     BY_HANDLE_FILE_INFORMATION fdata;
 
     if (::GetFileInformationByHandle (handle, &fdata) == FALSE)
@@ -79,20 +59,14 @@ namespace ACE_OS
           (fdata.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY ? S_IFDIR : S_IFREG);
       }
     return 0;
-# else /* 1 */
-    // This implementation close the handle.
-    int retval = -1;
-    int fd = ::_open_osfhandle ((long) handle, 0);
-    if (fd != -1)
-      retval = ::_fstat (fd, stp);
-
-    ::_close (fd);
-    // Remember to close the file handle.
-    return retval;
-# endif /* 1 */
+#elif defined (ACE_OPENVMS)
+    //FUZZ: disable check_for_lack_ACE_OS
+    ::fsync(handle);
+    //FUZZ: enable check_for_lack_ACE_OS
+#else
+    ACE_OSCALL_RETURN (::fstat (handle, stp), int, -1);
+# endif /* !ACE_HAS_X86_STAT_MACROS */
   }
-
-#endif /* WIN32 */
 
   // This function returns the number of bytes in the file referenced by
   // FD.
