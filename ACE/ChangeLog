@@ -1,3 +1,8 @@
+Thu Oct 25 09:51:15 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+          Added Bug_3108_Regression
+
 Thu Oct 25 09:27:15 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/tao_orb_tests.lst:
