@@ -1,5 +1,9 @@
 // -*-  C++ -*-
 
+//
+// $Id$
+//
+
 #ifndef DII_REPLY_HANDLER_H
 #define DII_REPLY_HANDLER_H
 
@@ -17,7 +21,6 @@ public:
   DII_ReplyHandler ();
   virtual ~DII_ReplyHandler ();
 
-  // Callback method for deferred synchronous requests.
   virtual void handle_response (TAO_InputCDR &incoming);
   virtual void handle_excep (TAO_InputCDR &incoming,
                              CORBA::ULong reply_status);
@@ -27,4 +30,4 @@ public:
 };
 
 
-#endif // TAO_PROXY_REPLY_HANDLER_H
+#endif // DII_REPLY_HANDLER_H

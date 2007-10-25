@@ -210,9 +210,11 @@ TAO_AMH_Response_Handler::_tao_rh_send_exception (const CORBA::Exception &ex)
                                       0,
                                       TAO_Transport::TAO_REPLY) == -1)
     {
-      ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("TAO: (%P|%t|%N|%l):  ")
-                  ACE_TEXT ("TAO_AMH_Response_Handler: could not send exception reply\n")));
+      if (TAO_debug_level > 0)
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT ("TAO: (%P|%t|%N|%l):  ")
+                    ACE_TEXT ("TAO_AMH_Response_Handler:")
+                    ACE_TEXT (" could not send exception reply\n")));
     }
 
   {
@@ -225,9 +227,6 @@ void
 TAO_AMH_Response_Handler::_tao_rh_send_location_forward (CORBA::Object_ptr fwd,
                                                          CORBA::Boolean is_perm)
 {
-
-  ACE_DEBUG ((LM_DEBUG,"_tao_rh_send_location_forward called\n"));
-
   {
     ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
     if (this->rh_reply_status_ != TAO_RS_UNINITIALIZED)
@@ -245,7 +244,8 @@ TAO_AMH_Response_Handler::_tao_rh_send_location_forward (CORBA::Object_ptr fwd,
   TAO_Pluggable_Reply_Params_Base reply_params;
   reply_params.request_id_ = this->request_id_;
   reply_params.svc_ctx_.length (0);
-  reply_params.service_context_notowned (&this->reply_service_context_.service_info ());
+  reply_params.service_context_notowned
+    (&this->reply_service_context_.service_info ());
   reply_params.argument_flag_ = true;
   if (is_perm)
     {
@@ -262,9 +262,6 @@ TAO_AMH_Response_Handler::_tao_rh_send_location_forward (CORBA::Object_ptr fwd,
       throw ::CORBA::INTERNAL ();
     }
 
-  ACE_DEBUG ((LM_DEBUG,"_tao_rh_send_location_forward args set, putting in fwd\n"));
-
-
   if (!(this->_tao_out << fwd))
     {
       if (TAO_debug_level > 0)
@@ -274,24 +271,22 @@ TAO_AMH_Response_Handler::_tao_rh_send_location_forward (CORBA::Object_ptr fwd,
       return;
     }
 
-  ACE_DEBUG ((LM_DEBUG,"_tao_rh_send_location_forward sending...\n"));
-
   // Send the Exception
   if (this->transport_->send_message (this->_tao_out,
                                       0,
                                       TAO_Transport::TAO_REPLY) == -1)
     {
-      ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("TAO: (%P|%t|%N|%l):  ")
-                  ACE_TEXT ("TAO_AMH_Response_Handler: could not send ")
-                  ACE_TEXT ("location forward reply\n")));
+      if (TAO_debug_level > 0)
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT ("TAO: (%P|%t|%N|%l):  ")
+                    ACE_TEXT ("TAO_AMH_Response_Handler: could not send ")
+                    ACE_TEXT ("location forward reply\n")));
     }
 
   {
     ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
     this->rh_reply_status_ = TAO_RS_SENT;
   }
-  ACE_DEBUG ((LM_DEBUG,"_tao_rh_send_location_forward done\n"));
 }
 
 void
