@@ -1,3 +1,8 @@
+Thu Oct 25 09:25:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Portable_Interceptors/Bug_3080/*:
+          New regression test for bugzilla 3080
+
 Wed Oct 24 18:00:59 UTC 2007  Jaiganesh B  <jai@shiva.dre.vanderbilt.edu>
 
         * tests/Portable_Interceptors/Bug_3079/Client_Request_Interceptor.cpp:
@@ -5,7 +10,7 @@ Wed Oct 24 18:00:59 UTC 2007  Jaiganesh B  <jai@shiva.dre.vanderbilt.edu>
         * tests/Portable_Interceptors/Bug_3079/client.cpp:
         * tests/Portable_Interceptors/Bug_3079/Client_ORBInitializer.cpp:
         * tests/Portable_Interceptors/Bug_3079/run_test.pl:
-        
+
           Updated regression test for Bug 3079.
 
 Wed Oct 24 14:38:06 UTC 2007  Adam Mitz  <mitza@ociweb.com>
