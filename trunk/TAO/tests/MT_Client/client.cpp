@@ -10,7 +10,7 @@ ACE_RCSID(MT_Client, client, "$Id$")
 const char *ior = "file://test.ior";
 int nthreads = 5;
 int niterations = 5;
-int server_shutdown = 0;
+bool server_shutdown = false;
 
 int
 parse_args (int argc, char *argv[])
@@ -31,7 +31,7 @@ parse_args (int argc, char *argv[])
         niterations = ACE_OS::atoi (get_opts.opt_arg ());
         break;
       case 'x':
-        server_shutdown = 1;
+        server_shutdown = true;
         break;
       case '?':
       default:
