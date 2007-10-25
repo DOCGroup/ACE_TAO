@@ -1,8 +1,13 @@
 //$Id$
 
+
+// note: This order of header inclusion is required in order to satisfy
+// template instantiation rules.
+#include "tao/CORBA_methods.h"
+#include "tao/AnyTypeCode/NVList.h"
+
 #include "My_DII_Reply_Handler.h"
 #include "ace/Log_Msg.h"
-#include "tao/AnyTypeCode/NVList.h"
 #include "tao/AnyTypeCode/Any.h"
 
 My_DII_Reply_Handler::My_DII_Reply_Handler(
@@ -20,21 +25,19 @@ My_DII_Reply_Handler::~My_DII_Reply_Handler()
 void
 My_DII_Reply_Handler::handle_response(TAO_InputCDR &incoming)
 {
-  // list really should be an NVList_var, but that caused some
-  // compilation problems.
-  CORBA::NVList_ptr list = 0;
+  CORBA::NVList_var opList;
 
   try
   {
-    this->orb_->create_list (0, list);
+    this->orb_->create_list (0, opList.out());
 
     bool lazy_evaluation = true;
-    list->_tao_incoming_cdr (incoming,
-                             CORBA::ARG_OUT | CORBA::ARG_INOUT,
-                             lazy_evaluation);
+    opList->_tao_incoming_cdr (incoming,
+                               CORBA::ARG_OUT | CORBA::ARG_INOUT,
+                               lazy_evaluation);
 
   if (!CORBA::is_nil (this->response_handler_.in()))
-    this->response_handler_->invoke_reply (list,
+    this->response_handler_->invoke_reply (opList.in(),
                                            0 // result
                                            );
 
@@ -51,8 +54,6 @@ My_DII_Reply_Handler::handle_response(TAO_InputCDR &incoming)
     TAO_AMH_DSI_Exception_Holder h (new CORBA::UNKNOWN());
     response_handler_->invoke_excep(&h);
   }
-
-  CORBA::release(list);
 
 }
 

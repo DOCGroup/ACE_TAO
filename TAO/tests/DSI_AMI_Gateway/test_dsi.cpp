@@ -48,9 +48,10 @@ DSI_Simple_Server::_dispatch (TAO_ServerRequest &request,
 
   try
     {
-      TAO_AMH_DSI_Response_Handler_var rh;
-      ACE_NEW (rh, TAO_AMH_DSI_Response_Handler(request));
+      TAO_AMH_DSI_Response_Handler_ptr rh_ptr;
+      ACE_NEW (rh_ptr, TAO_AMH_DSI_Response_Handler(request));
 
+      TAO_AMH_DSI_Response_Handler_var rh(rh_ptr);
       rh->init (request, 0);
       // Delegate to user.
       this->invoke (dsi_request, rh.in());
@@ -77,16 +78,16 @@ void
 DSI_Simple_Server::invoke (CORBA::ServerRequest_ptr request,
                            TAO_AMH_DSI_Response_Handler * rph)
 {
-  CORBA::NVList_ptr list;
-  this->orb_->create_list (0, list);
+  CORBA::NVList_var opList;
+  this->orb_->create_list (0, opList.out());
 
-  request->arguments (list);
+  request->arguments (opList.inout());
 
   CORBA::Request_var target_request;
 
   this->target_->_create_request (0, // ctx
                                   request->operation (),
-                                  list,
+                                  opList.in(),
                                   0, // result
                                   0, // exception_list,
                                   0, // context_list,
@@ -101,9 +102,9 @@ DSI_Simple_Server::invoke (CORBA::ServerRequest_ptr request,
   try
     {
       // Updates the byte order state, if necessary.
-      TAO_DII_Reply_Handler_var rh;
-      ACE_NEW (rh, My_DII_Reply_Handler (rph, this->orb_));
-
+      TAO_DII_Reply_Handler_ptr rh_ptr;
+      ACE_NEW (rh_ptr, My_DII_Reply_Handler (rph, this->orb_));
+      TAO_DII_Reply_Handler_var rh(rh_ptr);
       target_request->sendc (rh.in());
     }
   catch (const CORBA::UNKNOWN&)
