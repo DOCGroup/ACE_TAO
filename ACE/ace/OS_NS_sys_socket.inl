@@ -103,6 +103,19 @@ ACE_OS::bind (ACE_HANDLE handle, struct sockaddr *addr, int addrlen)
   ACE_UNUSED_ARG (addr);
   ACE_UNUSED_ARG (addrlen);
   ACE_NOTSUP_RETURN (-1);
+#elif defined (ACE_VXWORKS) && (ACE_VXWORKS <= 0x640)
+  // VxWorks clears the sin_port member after a succesfull bind when
+  // sin_addr != INADDR_ANY, so after the bind we do retrieve the
+  // original address so that user code can safely check the addr
+  // after the bind. See bugzilla 3107 for more details
+  int result;
+  ACE_SOCKCALL (::bind ((ACE_SOCKET) handle,
+                        addr,
+                        (ACE_SOCKET_LEN) addrlen), int, -1, result);
+  if (result == -1)
+    return -1;
+  else
+    return ACE_OS::getsockname (handle, addr, &addrlen);
 #else
   ACE_SOCKCALL_RETURN (::bind ((ACE_SOCKET) handle,
                                addr,
