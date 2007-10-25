@@ -1,4 +1,8 @@
-/* -*- Mode: C++; tab-width: 2; indent-tabs-mode: f; c-basic-offset: 2 -*- */
+// -*- C++ -*-
+
+//
+// $Id$
+//
 
 #include "test_i.h"
 #include "ace/Get_Opt.h"

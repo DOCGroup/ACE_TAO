@@ -1,3 +1,19 @@
+Thu Oct 25 14:27:42 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/Messaging/AMH_Response_Handler.cpp:
+
+        * tests/DII_AMI_Forward/DII_AMI_Forward.mpc:
+        * tests/DII_AMI_Forward/DII_ReplyHandler.h:
+        * tests/DII_AMI_Forward/DII_ReplyHandler.cpp:
+        * tests/DII_AMI_Forward/README:
+        * tests/DII_AMI_Forward/client.cpp:
+        * tests/DII_AMI_Forward/run_test.pl:
+        * tests/DII_AMI_Forward/server.cpp:
+        * tests/DII_AMI_Forward/test.idl:
+        * tests/DII_AMI_Forward/test_i.h:
+
+          Fuzz fixes.
+
 Thu Oct 25 13:01:00 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * NEWS:
