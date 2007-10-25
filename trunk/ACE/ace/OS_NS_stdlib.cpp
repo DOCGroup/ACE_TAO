@@ -692,7 +692,7 @@ ACE_OS::mkstemp_emulation (ACE_TCHAR * s)
 
   // Use a const ACE_Time_Value to resolve ambiguity between
   // ACE_Time_Value::msec (long) and ACE_Time_Value::msec(ACE_UINT64&) const.
-  const ACE_Time_Value now = ACE_OS::gettimeofday();
+  ACE_Time_Value const now = ACE_OS::gettimeofday();
   now.msec (msec);
 
   // Add the process and thread ids to ensure uniqueness.

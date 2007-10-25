@@ -137,7 +137,7 @@ ACE_SOCK_Dgram::shared_open (const ACE_Addr &local,
                              int protocol_family)
 {
   ACE_TRACE ("ACE_SOCK_Dgram::shared_open");
-  int error = 0;
+  bool error = false;
 
   if (local == ACE_Addr::sap_any)
     {
@@ -150,15 +150,15 @@ ACE_SOCK_Dgram::shared_open (const ACE_Addr &local,
           if (ACE::bind_port (this->get_handle (),
                               INADDR_ANY,
                               protocol_family) == -1)
-            error = 1;
+            error = true;
         }
     }
   else if (ACE_OS::bind (this->get_handle (),
                          reinterpret_cast<sockaddr *> (local.get_addr ()),
                          local.get_size ()) == -1)
-    error = 1;
+    error = true;
 
-  if (error != 0)
+  if (error)
     this->close ();
 
   return error ? -1 : 0;

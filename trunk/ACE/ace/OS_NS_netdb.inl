@@ -360,7 +360,7 @@ ACE_OS::gethostbyname_r (const char *name,
     // And no aliases, so null-terminate h_aliases.
     result->h_aliases = &result->h_addr_list[1];
 
-    if (((2*sizeof(char*))+hp->h_length+ACE_OS::strlen (hp->h_name)+1) > sizeof (ACE_HOSTENT_DATA))
+    if (((2*sizeof(char*))+hp->h_length+ACE_OS::strlen (hp->h_name)+1) <= sizeof (ACE_HOSTENT_DATA))
     {
       result->h_name = (char *) result->h_addr_list[0] + hp->h_length;
       ACE_OS::strcpy (result->h_name, hp->h_name);
