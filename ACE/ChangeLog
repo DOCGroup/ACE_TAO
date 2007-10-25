@@ -1,3 +1,10 @@
+Thu Oct 25 12:24:15 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-vxworks6.2.h:
+        * ace/config-vxworks6.3.h:
+        * ace/config-vxworks6.4.h:
+          Added ACE_HAS_SIGACTION_CONSTP2
+
 Thu Oct 25 10:26:15 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_2659_Regression_Test.cpp:
