@@ -1,13 +1,15 @@
 //
 // $Id$
 //
-#include "Roundtrip.h"
+#include "tao/DynamicInterface/Server_Request.h"
 #include "tao/AnyTypeCode/TypeCode_Constants.h"
 #include "tao/AnyTypeCode/NVList.h"
 #include "tao/AnyTypeCode/SystemExceptionA.h"
-#include "tao/DynamicInterface/Server_Request.h"
+
 #include "tao/ORB_Core.h"
 #include "tao/Thread_Lane_Resources.h"
+
+#include "Roundtrip.h"
 
 Roundtrip::Roundtrip (CORBA::ORB_ptr orb)
   : orb_ (CORBA::ORB::_duplicate (orb))
@@ -27,15 +29,16 @@ Roundtrip::invoke (CORBA::ServerRequest_ptr request,
 
   else if (ACE_OS::strcmp ("_is_a", request->operation ()) == 0)
     {
-      CORBA::NVList_ptr list;
-      this->orb_->create_list (0, list);
+      CORBA::NVList_var list;
+      this->orb_->create_list (0, list.out());
 
       CORBA::Any type_id;
       type_id._tao_set_typecode (CORBA::_tc_string);
       list->add_value ("type_id", type_id, CORBA::ARG_IN);
 
-      request->arguments (list);
+      request->arguments (list.inout());
 
+      // list still has ownership of the item
       CORBA::NamedValue_ptr nv = list->item (0);
 
       const char *arg;
@@ -51,31 +54,30 @@ Roundtrip::invoke (CORBA::ServerRequest_ptr request,
       result_any <<= CORBA::Any::from_boolean (type_matches);
 
       // AMH way of replying
-      CORBA::NamedValue_ptr result = 0;
-      this->orb_->create_named_value (result);
+      CORBA::NamedValue_var result = 0;
+      this->orb_->create_named_value (result.out());
       *(result->value()) = result_any;
       rh->invoke_reply (list, result);
-      CORBA::release (list);
-      CORBA::release (result);
+
       return;
     }
 
   else if (ACE_OS::strcmp ("test_method", request->operation ()) == 0)
     {
-      CORBA::NVList_ptr list;
-      this->orb_->create_list (0, list);
+      CORBA::NVList_var list;
+      this->orb_->create_list (0, list.out());
 
       CORBA::Any send_time;
       send_time._tao_set_typecode (CORBA::_tc_ulonglong);
       list->add_value ("send_time", send_time, CORBA::ARG_IN);
 
-      request->arguments (list);
+      request->arguments (list.inout());
 
       CORBA::NamedValue_ptr nv = list->item (0);
 
       // AMH way of replying
       rh->invoke_reply (list, nv);
-      CORBA::release (list);
+
       return;
     }
 
@@ -125,9 +127,9 @@ Roundtrip::_dispatch (TAO_ServerRequest &request,
 
   try
     {
-      TAO_AMH_DSI_Response_Handler_var rh;
-      ACE_NEW (rh, TAO_AMH_DSI_Response_Handler(request));
-
+      TAO_AMH_DSI_Response_Handler_ptr rh_ptr;
+      ACE_NEW (rh_ptr, TAO_AMH_DSI_Response_Handler(request));
+      TAO_AMH_DSI_Response_Handler_var rh(rh_ptr);
       rh->init (request, 0);
       // Delegate to user.
       this->invoke (dsi_request, rh.in());
