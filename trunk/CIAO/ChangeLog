@@ -1,3 +1,9 @@
+Thu Oct 25 15:44:50 UTC 2007  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
+
+        * examples/Hello/descriptors_events:
+        
+          Added scripts and README files for documentation purposes
+
 Wed Oct 24 16:17:41 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * examples/Hello/Receiver/Receiver_exec.h:
