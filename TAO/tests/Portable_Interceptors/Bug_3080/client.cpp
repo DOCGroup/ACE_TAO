@@ -82,7 +82,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       try
         {
-          CORBA::Short const number = server->number ();
+          (void) server->number ();
         }
       catch (const CORBA::TRANSIENT&)
         {
