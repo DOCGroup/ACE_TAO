@@ -1,3 +1,14 @@
+Thu Oct 25 21:00:46 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * bin/msvc_static_order.lst:
+
+          Project names in CIAO have been changed recently due to the effort 
+          to break servant dependency on executors. generate_component_mpc.pl
+          script now also generates project names that are different than 
+          the names that existed in the repository. As such, we needed to 
+          modify this file accordingly. This should fix compile time 
+          problems for WinXP_VC71_CIAOCore_Static_Debug build.
+
 Thu Oct 25 15:21:02 UTC 2007  Adam Mitz  <mitza@ociweb.com>
 
         * include/makeinclude/platform_sunos5_sunc++.GNU:
