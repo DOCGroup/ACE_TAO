@@ -26,7 +26,6 @@
   </eventServiceConfiguration>
   
   
-<!--  
   <eventServiceConfiguration id="es_configuration-02">
     <name>ES_02</name>
     <node>SenderNode</node>
@@ -45,6 +44,5 @@
       <listen_port>1234</listen_port>
     </udp_receiver>
   </eventServiceConfiguration>  
--->
 
 </CIAO:CIAOEvents>  
