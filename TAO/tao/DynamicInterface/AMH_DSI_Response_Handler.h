@@ -225,6 +225,9 @@ public:
 
   virtual void invoke_excep ( TAO_AMH_DSI_Exception_Holder * h);
 
+  virtual void invoke_location_forward (CORBA::Object_ptr fwd,
+                                        CORBA::Boolean is_perm);
+
   virtual void gateway_exception_reply (CORBA::ULong reply_status,
                                         TAO_OutputCDR &encap);
 
