@@ -37,7 +37,7 @@ project(Hello_Sender_stub) : ciao_client_dnc {
   after += Hello_Sender_idl_gen Hello_Base_stub
   libs  += Hello_Base_stub
   
-  sharedname = Sender_stub
+  sharedname = Hello_Sender_stub
   dynamicflags   = SENDER_STUB_BUILD_DLL
 
   IDL_Files {
@@ -60,8 +60,8 @@ project(Hello_Sender_stub) : ciao_client_dnc {
 project(Hello_Sender_exec) : ciao_component_dnc {
   avoids += ace_for_tao
   after   += Hello_Sender_cidl_gen Hello_Sender_stub
-  sharedname = Sender_exec
-  libs += Sender_stub Hello_Base_stub
+  sharedname = Hello_Sender_exec
+  libs += Hello_Sender_stub Hello_Base_stub
   
   dynamicflags   = SENDER_EXEC_BUILD_DLL
 
@@ -88,9 +88,9 @@ project(Hello_Sender_exec) : ciao_component_dnc {
 project(Hello_Sender_svnt) : ciao_servant_dnc {
   avoids += ace_for_tao
   after      += Hello_Base_skel Hello_Sender_exec
-  sharedname  = Sender_svnt
-  libs       += Sender_exec \
-                Sender_stub \
+  sharedname  = Hello_Sender_svnt
+  libs       += Hello_Sender_exec \
+                Hello_Sender_stub \
                 Hello_Base_skel \
                 Hello_Base_stub
   
@@ -121,7 +121,7 @@ project(Hello_Sender_svnt) : ciao_servant_dnc {
 project (Hello_starter) : ciao_client_dnc, valuetype {
   exename = starter
   after += Hello_Sender_stub
-  libs  += Sender_stub Hello_Base_stub
+  libs  += Hello_Sender_stub Hello_Base_stub
   
   IDL_Files {
   }
