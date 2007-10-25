@@ -1,3 +1,20 @@
+Thu Oct 25 11:41:18 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tests/DSI_AMH/Roundtrip.cpp:
+
+        * tests/DSI_AMI_Gateway/My_DII_Reply_Handler.h:
+        * tests/DSI_AMI_Gateway/My_DII_Reply_Handler.cpp:
+        * tests/DSI_AMI_Gateway/test_dsi.cpp:
+
+          Reintroduction of the use of NVList_var for more streamlined
+          memory management. The new *_VarOut_T templates require some
+          bizzare include file ordering, such as the inclusion of
+          CORBA_methods.h.
+
+          Also reverted a previous change where a _var was used as the
+          pointer in an ACE_NEW macro. The Borland compiler just couldn't
+          take it.
+
 Thu Oct 25 09:49:12 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_3108_Regression/*:
