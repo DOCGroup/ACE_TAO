@@ -57,6 +57,7 @@ Client::Client (test_ptr server)
 {
 }
 
+int
 Client::svc (void)
 {
   try
