@@ -40,8 +40,9 @@ EntryExit ee (CNAME,MNAME,LOC)
 class EntryExit
 {
 public:
-  EntryExit (const ACE_TCHAR* class_name, const ACE_TCHAR *method_name
-       , void *location = 0)
+  EntryExit (const ACE_TCHAR* class_name,
+             const ACE_TCHAR *method_name,
+             void *location = 0)
   {
     class_name_ [20] = method_name_[20] = 0;
 
@@ -156,14 +157,20 @@ run_main (int, ACE_TCHAR *[])
 
   if (thread_manager->kill_all (SIGUSR1) == -1)
     {
-      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("(%P|%t) Task signalling failed.\n"))
-            , -1);
+      ACE_ERROR_RETURN ((LM_ERROR,
+                        ACE_TEXT ("(%P|%t) Task signalling failed.\n")),
+                        -1);
     }
 
-  if (reactor_task.wait () == -1) {
-    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("(%P|%t) Task wait failed.\n"))
-          , -1);
-  }
+  // Wait 5 seconds for the other thread to exit, if it didn't exit the
+  // wait return -1 and we return with an error
+  ACE_Time_Value timeout (5);
+  if (thread_manager->wait (&timeout, false, false) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                        ACE_TEXT ("(%P|%t) Error, task wait failed.\n")),
+                        -1);
+      }
 
   ACE_END_TEST;
 
