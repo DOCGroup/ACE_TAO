@@ -8,29 +8,54 @@ how to configure descriptor files accordingly.
 
 The rest of this file describes the rule of the files in this directory.
 
+single files and their role:
+----------------------------
+
+./run_test.pl			: script that executes all available tests
+
+./run_NodeDaemons.pl 		: script to launch two empty NodeApplications
+./run_NodeDaemons_svc_conf.pl 	: starts two node NodeApplications on the 
+				  localhost interface and loads rtec.conf on 
+				  startup
+./run_NodeDaemons_with_ip.pl 	: starts two node NodeApplications under the
+				  IP address and not on the localhost interface
+
+./NodeManagerMap.dat		: contains ip addresses for SenderNode and 
+				  ReceiverNode (both on localhost)
+./NodeManagerMap_collocated.dat	: contains an ip address for a single 
+				  SenderNode (on localhost)
+./NodeManagerMapTwoHosts.dat	: contains ip addresses for SenderNode 
+				  (on localhost) and ReceiverNode 
+				  (on real ip address)
+
+./rtec.conf			: example for a service configurator file 
+				  for the event service
+
+
 existing test cases:
 --------------------
 
 ./ciao-events-example.ced
 ./flattened_deploymentplan_events.cdp 
-./simple.sh
+./run_test_simple.pl
 
-	Uses the standard event service and connects one sender to one receiver.
-	In the standard configuration, used here, the EventChannel is running collocated
-  	within the NodeApplication "SenderNode", where the sender component is located:
+	Uses the standard event service and connects one sender to one 
+	receiver. In the standard configuration, used here, the EventChannel 
+	is running collocated within the NodeApplication "SenderNode", where
+	the sender component is located:
 	SenderNode[Sender --> ES] --> ReceiverNode[Receiver]
 
 ./ciao-events-example-collocated.ced
 ./flattened_deploymentplan_events_collocated.cdp 
-./collocated.sh:
+./run_test_collocated.pl:
 
-	This example modifies the standard example by deploying all components within
-  	one node:
+	This example modifies the standard example by deploying all components
+	within one node:
 	SenderNode[Sender --> ES --> Receiver]
 
 ./ciao-events-example-with-federation.ced
 ./flattened_deploymentplan_federation.cdp
-./federated.sh:
+./run_test_federated.pl:
 
 	In this example, two Event Services ES_01 and ES_02 are federated.
 	The Sender Event Port is then connected to the first service, while
@@ -49,7 +74,7 @@ existing test cases:
 
 ./ciao-events-example-with-filters.ced
 ./flattened_deploymentplan_with_filters.cdp
-./filtered.sh:
+./run_test_filtered.pl:
 
 	This example applies a filter to the EventService connection on the
  	receiver side. In this case the filter contains a disjunction group
@@ -58,7 +83,7 @@ existing test cases:
 
 ./ciao-events-federation-mcast.ced
 ./flattened_deploymentplan_federation_mcast.cdp
-./multicast.sh:
+./run_test_multicast.pl:
 
 	To test collocated use of multicast federation of event channels
 	use this example. It deploys sender and receiver in the same
@@ -79,7 +104,7 @@ existing test cases:
 
 ./ciao-events-federation-udp.ced
 ./flattened_deploymentplan_federation_udp.cdp
-./udp.sh:
+./run_test_udp.pl:
 
 	In this example, udp communication is used to send the event
 	from one sender node to a receiver node:
@@ -88,7 +113,7 @@ existing test cases:
 
 ./ciao-events-federation-udp-collocated.ced
 ./flattened_deploymentplan_federation_udp_collocated.cdp
-./udp_collocated.sh:
+./run_test_udp_collocated.pl:
 
 	Same example, as the above udp example, but deployed on a
 	single node application and therefore collocated:
@@ -108,28 +133,13 @@ existing test cases:
 ./flattened_deploymentplan_multiple_senders.cdp
 ./run_test_multiple_senders.pl:
 
-	This example extends the standard example by adding two more sender components
-	to the SenderNode:
+	This example extends the standard example by adding two more sender
+	components to the SenderNode:
 		  [Sender01  -->    ]	
 	SenderNode[Sender02  --> ES ] --> ReceiverNode[Receiver]
 		  [Sender03  -->    ]
 
-single files and their role:
-----------------------------
-
-./run_test.pl			: script that encapsulates the execution logic for all tests
-
-./run_NodeDaemons.pl 		: script to launch two empty NodeApplications
-./run_NodeDaemons_svc_conf.pl 	: starts two node NodeApplications on the localhost interface and loads rtec.conf on startup
-./run_NodeDaemons_with_ip.pl 	: starts two node NodeApplications under the IP address and not on the localhost interface.
-
-./NodeManagerMap.dat		: contains ip addresses for SenderNode and ReceiverNode (both on localhost)
-./NodeManagerMap_collocated.dat	: contains an ip address for a single SenderNode (on localhost)
-./NodeManagerMapTwoHosts.dat	: contains ip addresses for SenderNode (on localhost) and ReceiverNode (on network if)
-
-./rtec.conf			: example for a service configurator file for the event service
-
 
 ------
 
-author: fwolf@dre.vanderbilt.edu
+author: Friedhelm Wolf (fwolf@dre.vanderbilt.edu)

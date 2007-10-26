@@ -1,3 +1,9 @@
+Fri Oct 26 01:01:37 UTC 2007  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
+
+        * examples/Hello/descriptors_events:
+        
+          Changed test scripts to perl and make them autobuild conform
+
 Thu Oct 25 21:28:13 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * examples/Hello/Receiver/Receiver.mpc:
