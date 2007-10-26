@@ -1,3 +1,9 @@
+Fri Oct 26 13:15:24 UTC 2007  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
+
+        * DAnCE/DomainApplicationManager/Deployment_Configuration.cpp:
+        
+          Removed some code, that accidentially was commited
+
 Fri Oct 26 01:01:37 UTC 2007  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
 
         * examples/Hello/descriptors_events:

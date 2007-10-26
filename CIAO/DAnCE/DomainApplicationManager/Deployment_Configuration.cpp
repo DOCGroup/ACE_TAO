@@ -49,20 +49,8 @@ CIAO::Deployment_Configuration::init (const char *filename)
     {
       // Search from the right to the first space
       const char* ior_start = ACE_OS::strrchr (string, ' ');
-      if (ior_start == NULL)
-	{
-	  ior_start = ACE_OS::strrchr (string, '\t');
-	}
-      ACE_ASSERT (ior_start != NULL);
-
       // Search from the left to the first space
       const char* dest_end = ACE_OS::strchr (string, ' ');
-      if (dest_end == NULL)
-	{
-	  dest_end = ACE_OS::strchr (string, '\t');
-	}
-      ACE_ASSERT (dest_end != NULL);
-
       // The destination is first followed by some spaces
       ACE_CString destination (string, dest_end - string);
       // And then the IOR
