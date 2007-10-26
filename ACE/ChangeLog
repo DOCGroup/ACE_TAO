@@ -1,3 +1,10 @@
+Fri Oct 26 11:17:15 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_vxworks6.3.GNU:
+          Applied patch of Thomas Lockhart
+          <Thomas dot Lockhart at jpl dot nasa dot gov> for shared library
+          building on VxWorks 6.3. This fixes bugzilla 3113
+
 Fri Oct 26 05:18:13 UTC 2007  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * ace/config-netbsd.h:

@@ -232,12 +232,12 @@ ifeq ("$(VXWORKSLINK)","true")
   ifeq ($(SHARED_LIBS),1)
     ##LD_PARTIAL += -L$(ACE_ROOT)/lib -L./ $(LDLIBPATH) $(LD_LINK_PATH)
     PRJ_OBJS_FOR_LD_PARTIAL=$(addprefix $(VDIR), $(OBJS)) $(VSHOBJS)
-	ifeq ($(VX_SO_BUILD),1)
-	  ## Shared lib builds for VxWorks will also build 'import' libraries
+    ifeq ($(VX_SO_BUILD),1)
+      ## Shared lib builds for VxWorks will also build 'import' libraries
       LIB_INSTALL += $(VLIB:%=$(INSLIB)/%)
       CLEANUP_INSTALL += $(CLEANUP_VLIB:%=$(INSLIB)/%)
-	  REALCLEAN_FILES += $(CLEANUP_LIB:%=%) $(CLEANUP_LIB:%=%_debug) $(CLEANUP_LIB:%=%_profile) $(CLEANUP_LIB:%=%_optimize)
-	endif
+      REALCLEAN_FILES += $(CLEANUP_LIB:%=%) $(CLEANUP_LIB:%=%_debug) $(CLEANUP_LIB:%=%_profile) $(CLEANUP_LIB:%=%_optimize)
+    endif
   else
     LD_PARTIAL += -L$(ACE_ROOT)/ace -L./ $(LDLIBPATH) $(LD_LINK_PATH)
     PRJ_OBJS_FOR_LD_PARTIAL=$(addprefix $(VDIR), $(OBJS)) $(VSHOBJS) $(VLDLIBS) $(ACE_SHLIBS) $(LIBS)
@@ -273,11 +273,11 @@ ifeq ("$(TOOL_FAMILY)","gnu")
 include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
 
 ifeq ("$(templates)","automatic")
-ifdef repo
+ifeq ($(repo),1)
 ifeq ("$(VXWORKSLINK)","true")
   ifeq ($(VX_APP_BUILD),1)
 	ifneq ($(SHARED_LIBS),1)
-      LD_PARTIAL += -frepo
+          LD_PARTIAL += -frepo
 	endif
   endif
 else
@@ -285,7 +285,9 @@ else
     ace_lib_prelink := 1
     LINK.cc          = override
     LINK.cc.override = $(LD_PARTIAL) -frepo -L$(ACE_ROOT)/ace -L$(INSLIB) -L./ $(LDLIBPATH) $(LD_LINK_PATH)
-    LDFLAGS          = $(ACE_SHLIBS)
+    ifneq ($(SHARED_LIBS),1)
+      LDFLAGS        = $(ACE_SHLIBS)
+    endif
   endif
 endif
 else
@@ -341,17 +343,17 @@ CCFLAGS         += $(C++FLAGS)
 
 ifeq ("$(VXWORKSLINK)","true")
 
-  ifdef repo
+  ifeq ($(repo),1)
     ifeq ($(SHARED_LIBS),1)
-      BACKUP_RPO_RULE = for %f in ($(basename $(addprefix $(VDIR), $(OBJS)) $(VSHOBJS))) do if exist %f.rpo mv %f.rpo %f.rpobak $(ACE_NUL_STDERR)
-      POST_BUILD_RULE = for %f in ($(basename $(addprefix $(VDIR), $(OBJS)) $(VSHOBJS))) do if exist %f.rpobak mv %f.rpobak %f.rpo $(ACE_NUL_STDERR)
+      BACKUP_RPO_RULE = for f in $(basename $(addprefix $(VDIR), $(OBJS)) $(VSHOBJS)) ; do if [ -a $$f.rpo ] ; then mv $$f.rpo $$f.rpobak $(ACE_NUL_STDERR) ; fi ; done ;
+      POST_BUILD_RULE = for f in $(basename $(addprefix $(VDIR), $(OBJS)) $(VSHOBJS)) ; do if [ -a $$f.rpobak ] ; then mv $$f.rpobak $$f.rpo $(ACE_NUL_STDERR) ; fi ; done ;
     endif
   endif
 
 .PHONY: $(PRJ_DIR)/$(PRJ_FILE)
   ## special target to satisfy VxWorks dependencies for images
 $(PRJ_DIR)/$(PRJ_FILE):
-  ifdef repo
+  ifeq ($(repo),1)
     ifeq ($(SHARED_LIBS),1)
     #### execute prelink step to make compiler instantiate all needed
     #### templates; discard image and repo files (*.rpo) after linkstep
