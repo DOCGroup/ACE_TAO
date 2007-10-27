@@ -10,7 +10,8 @@
 #include "tao/AnyTypeCode/Any.h"
 #include "tao/AnyTypeCode/Any_Impl.h"
 
-DII_ReplyHandler::DII_ReplyHandler ()
+DII_ReplyHandler::DII_ReplyHandler (bool &reply_notifier)
+  :got_reply_(reply_notifier)
 {
 }
 
@@ -22,6 +23,7 @@ DII_ReplyHandler::~DII_ReplyHandler ()
 void
 DII_ReplyHandler::handle_response (TAO_InputCDR &incoming)
 {
+  this->got_reply_ = true;
   CORBA::String_var result;
   try
     {
