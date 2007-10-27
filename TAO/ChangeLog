@@ -1,3 +1,12 @@
+Sat Oct 27 11:54:44 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tests/DII_AMI_Forward/client.cpp (main):
+        * tests/DII_AMI_Forward/DII_ReplyHandler.cpp:
+        * tests/DII_AMI_Forward/DII_ReplyHandler.h:
+          Make the test more efficient by signaling from the reply handler
+          to the main loop when a reply is received so the main can exit
+          quickly rather than waiting for a hard timeout.
+
 Fri Oct 26 11:25:35 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tests/DII_AMI_Forward/DII_ReplyHandler.cpp:
