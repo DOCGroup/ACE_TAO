@@ -59,11 +59,12 @@ namespace ACE_OS
           (fdata.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY ? S_IFDIR : S_IFREG);
       }
     return 0;
-#elif defined (ACE_OPENVMS)
+#else
+# if defined (ACE_OPENVMS)
     //FUZZ: disable check_for_lack_ACE_OS
     ::fsync(handle);
     //FUZZ: enable check_for_lack_ACE_OS
-#else
+ #endif
     ACE_OSCALL_RETURN (::fstat (handle, stp), int, -1);
 # endif /* !ACE_HAS_X86_STAT_MACROS */
   }
