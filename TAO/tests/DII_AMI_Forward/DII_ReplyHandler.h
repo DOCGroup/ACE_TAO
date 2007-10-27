@@ -8,17 +8,13 @@
 #define DII_REPLY_HANDLER_H
 
 #include "tao/DynamicInterface/DII_Reply_Handler.h"
-#include "tao/DynamicInterface/Server_Request.h"
-#include "tao/DynamicInterface/AMH_DSI_Response_Handler.h"
-#include "tao/DynamicInterface/Dynamic_Implementation.h"
-#include "tao/DynamicInterface/Request.h"
 
 class DII_ReplyHandler :
   public virtual TAO_DII_Reply_Handler,
   public virtual Messaging::ReplyHandler
 {
 public:
-  DII_ReplyHandler ();
+  DII_ReplyHandler (bool &reply_notifier);
   virtual ~DII_ReplyHandler ();
 
   virtual void handle_response (TAO_InputCDR &incoming);
@@ -26,7 +22,8 @@ public:
                              CORBA::ULong reply_status);
   virtual void handle_location_forward (TAO_InputCDR &incoming,
                                         CORBA::ULong reply_status);
-
+private:
+  bool &got_reply_;
 };
 
 
