@@ -139,14 +139,14 @@
     <name>Hello.ImplementationArtifacts.ReceiverArtifacts.Receiver_stub</name>
     <source/>
     <node/>
-    <location>Receiver_stub</location>
+    <location>Hello_Receiver_stub</location>
   </artifact>
 
   <artifact id="_B1AD305F-9124-4C36-8502-C5878C6841C7">
     <name>Hello.ImplementationArtifacts.ReceiverArtifacts.Receiver_svnt</name>
     <source/>
     <node/>
-    <location>Receiver_svnt</location>
+    <location>Hello_Receiver_svnt</location>
     <execParameter>
       <name>entryPoint</name>
       <value>
@@ -164,7 +164,7 @@
     <name>Hello.ImplementationArtifacts.ReceiverArtifacts.Receiver_exec</name>
     <source/>
     <node/>
-    <location>Receiver_exec</location>
+    <location>Hello_Receiver_exec</location>
     <execParameter>
       <name>entryPoint</name>
       <value>
@@ -182,14 +182,14 @@
     <name>Hello.ImplementationArtifacts.SenderArtifacts.Sender_stub</name>
     <source/>
     <node/>
-    <location>Sender_stub</location>
+    <location>Hello_Sender_stub</location>
   </artifact>
 
   <artifact id="_CB2D05F4-48C0-4567-9D59-534F461A81E7">
     <name>Hello.ImplementationArtifacts.SenderArtifacts.Sender_svnt</name>
     <source/>
     <node/>
-    <location>Sender_svnt</location>
+    <location>Hello_Sender_svnt</location>
     <execParameter>
       <name>entryPoint</name>
       <value>
@@ -207,7 +207,7 @@
     <name>Hello.ImplementationArtifacts.SenderArtifacts.Sender_exec</name>
     <source/>
     <node/>
-    <location>Sender_exec</location>
+    <location>Hello_Sender_exec</location>
     <execParameter>
       <name>entryPoint</name>
       <value>

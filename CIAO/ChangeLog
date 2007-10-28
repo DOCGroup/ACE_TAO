@@ -1,26 +1,40 @@
+Sun Oct 28 19:11:39 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * examples/Hello/descriptors/DeploymentPlan.cdp:
+        * examples/Hello/descriptors/DeploymentPlan_without_ns.cdp:
+        * examples/Hello/descriptors/Receiver_Exec.iad:
+        * examples/Hello/descriptors/Receiver_Stub.iad:
+        * examples/Hello/descriptors/Receiver_Svnt.iad:
+        * examples/Hello/descriptors/Sender_Exec.iad:
+        * examples/Hello/descriptors/Sender_Stub.iad:
+        * examples/Hello/descriptors/Sender_Svnt.iad:
+
+          Recent changes to MPC files changed library names. As such,
+          the example was failing. Correct the library names in the files above.
+
 Fri Oct 26 13:15:24 UTC 2007  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
 
         * DAnCE/DomainApplicationManager/Deployment_Configuration.cpp:
-        
+
           Removed some code, that accidentially was commited
 
 Fri Oct 26 01:01:37 UTC 2007  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
 
         * examples/Hello/descriptors_events:
-        
+
           Changed test scripts to perl and make them autobuild conform
 
 Thu Oct 25 21:28:13 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * examples/Hello/Receiver/Receiver.mpc:
         * examples/Hello/Sender/Sender.mpc:
-        
+
           Fixed mismatches of lib names.
 
 Thu Oct 25 15:44:50 UTC 2007  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
 
         * examples/Hello/descriptors_events:
-        
+
           Added scripts and README files for documentation purposes
 
 Wed Oct 24 16:17:41 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
