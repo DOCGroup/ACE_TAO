@@ -119,6 +119,10 @@ extern "C" { char * cuserid (char *s); }
 // Compiler/platform contains the <sys/syscall.h> file.
 #define ACE_HAS_SYS_SYSCALL_H
 
+#if (__FreeBSD_version >= 220000)
+#define ACE_HAS_VASPRINTF
+#endif
+
 #if (__FreeBSD_version >= 300000)
 #define ACE_HAS_SIGINFO_T
 #endif /* __FreeBSD_version >= 300000 */
@@ -128,6 +132,11 @@ extern "C" { char * cuserid (char *s); }
 #define ACE_LACKS_NETDB_REENTRANT_FUNCTIONS
 #define ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R
 #endif /* __FreeBSD_version >= 320000 */
+
+#if (__FreeBSD_version >= 440000)
+#define ACE_HAS_GETPROGNAME
+#define ACE_HAS_SETPROGNAME
+#endif
 
 #if (__FreeBSD_version < 501000)
 #define ACE_LACKS_PWD_REENTRANT_FUNCTIONS

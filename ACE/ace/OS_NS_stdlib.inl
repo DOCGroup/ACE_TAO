@@ -476,4 +476,24 @@ ACE_OS::system (const ACE_TCHAR *s)
 #endif /* ACE_LACKS_SYSTEM */
 }
 
+ACE_INLINE const char*
+ACE_OS::getprogname ()
+{
+#if defined (ACE_HAS_GETPROGNAME)
+  return ::getprogname ();
+#else
+  return ACE_OS::getprogname_emulation ();
+#endif /* ACE_HAS_GETPROGNAME */
+}
+
+ACE_INLINE void
+ACE_OS::setprogname (const char* name)
+{
+#if defined (ACE_HAS_SETPROGNAME)
+  ::setprogname (name);
+#else
+  ACE_OS::setprogname_emulation (name);
+#endif /* ACE_HAS_SETPROGNAME */
+}
+
 ACE_END_VERSIONED_NAMESPACE_DECL

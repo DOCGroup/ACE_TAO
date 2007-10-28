@@ -257,14 +257,17 @@ ACE_OS::fopen (const wchar_t *filename,
 
 #endif /* ACE_WIN32 */
 
+// The following *printf functions aren't inline because
+// they use varargs.
+
 int
 ACE_OS::fprintf (FILE *fp, const char *format, ...)
 {
-  ACE_OS_TRACE ("ACE_OS::fprintf");
+  // ACE_OS_TRACE ("ACE_OS::fprintf");
   int result = 0;
   va_list ap;
   va_start (ap, format);
-  ACE_OSCALL (::vfprintf (fp, format, ap), int, -1, result);
+  result = ACE_OS::vfprintf (fp, format, ap);
   va_end (ap);
   return result;
 }
@@ -273,28 +276,41 @@ ACE_OS::fprintf (FILE *fp, const char *format, ...)
 int
 ACE_OS::fprintf (FILE *fp, const wchar_t *format, ...)
 {
-  ACE_OS_TRACE ("ACE_OS::fprintf");
-
-# if !defined (ACE_HAS_VFWPRINTF)
-  ACE_UNUSED_ARG (fp);
-  ACE_UNUSED_ARG (format);
-  ACE_NOTSUP_RETURN (-1);
-
-# else
+  // ACE_OS_TRACE ("ACE_OS::fprintf");
   int result = 0;
   va_list ap;
   va_start (ap, format);
-  ACE_OSCALL (ACE_STD_NAMESPACE::vfwprintf (fp, format, ap), int, -1, result);
+  result = ACE_OS::vfprintf (fp, format, ap);
   va_end (ap);
   return result;
-
-# endif /* ACE_HAS_VFWPRINTF */
 }
 #endif /* ACE_HAS_WCHAR */
 
+int
+ACE_OS::asprintf (char **bufp, const char *format, ...)
+{
+  // ACE_OS_TRACE ("ACE_OS::aprintf");
+  int result;
+  va_list ap;
+  va_start (ap, format);
+  result = ACE_OS::vasprintf (bufp, format, ap);
+  va_end (ap);
+  return result;
+}
 
-// The following *printf functions aren't inline because
-// they use varargs.
+#if defined (ACE_HAS_WCHAR)
+int
+ACE_OS::asprintf (wchar_t **bufp, const wchar_t *format, ...)
+{
+  // ACE_OS_TRACE ("ACE_OS::aprintf");
+  int result;
+  va_list ap;
+  va_start (ap, format);
+  result = ACE_OS::vasprintf (bufp, format, ap);
+  va_end (ap);
+  return result;
+}
+#endif /* ACE_HAS_WCHAR */
 
 int
 ACE_OS::printf (const char *format, ...)
@@ -303,10 +319,24 @@ ACE_OS::printf (const char *format, ...)
   int result;
   va_list ap;
   va_start (ap, format);
-  ACE_OSCALL (::vprintf (format, ap), int, -1, result);
+  result = ACE_OS::vprintf (format, ap);
   va_end (ap);
   return result;
 }
+
+#if defined (ACE_HAS_WCHAR)
+int
+ACE_OS::printf (const wchar_t *format, ...)
+{
+  // ACE_OS_TRACE ("ACE_OS::printf");
+  int result;
+  va_list ap;
+  va_start (ap, format);
+  result = ACE_OS::vprintf (format, ap);
+  va_end (ap);
+  return result;
+}
+#endif /* ACE_HAS_WCHAR */
 
 int
 ACE_OS::snprintf (char *buf, size_t maxlen, const char *format, ...)
@@ -321,53 +351,16 @@ ACE_OS::snprintf (char *buf, size_t maxlen, const char *format, ...)
 }
 
 #if defined (ACE_HAS_WCHAR)
-
 int
 ACE_OS::snprintf (wchar_t *buf, size_t maxlen, const wchar_t *format, ...)
 {
   // ACE_OS_TRACE ("ACE_OS::snprintf");
-# if (defined _XOPEN_SOURCE && (_XOPEN_SOURCE - 0) >= 500) || \
-     (defined (sun) && !defined (_XPG4) || defined(_XPG5)) || \
-     defined (ACE_WIN32) || defined (ACE_HAS_VSWPRINTF)
   int result;
   va_list ap;
   va_start (ap, format);
-#  if 0 /* defined (ACE_HAS_TR24731_2005_CRT) */
-  // _vsnwprintf_s() doesn't report the length needed when it truncates. This
-  // info is needed for the API contract return value, so don't use this.
-  // There's adequate protection via the maxlen.
-  result = _vsnwprintf_s (buf, maxlen, _TRUNCATE, format, ap);
-#  elif defined (ACE_WIN32)
-  // Microsoft's vswprintf() doesn't have the maxlen argument that
-  // XPG4/UNIX98 define. They do, however, recommend use of _vsnwprintf()
-  // as a substitute, which does have the same signature as the UNIX98 one.
-  ACE_OSCALL (::_vsnwprintf (buf, maxlen, format, ap), int, -1, result);
-  // Win32 doesn't regard a full buffer with no 0-terminate as an overrun.
-  if (result == static_cast <int> (maxlen))
-    result = -1;
-
-  // Win32 doesn't 0-terminate the string if it overruns maxlen.
-  if (result == -1)
-    buf[maxlen-1] = '\0';
-#  else
-  ACE_OSCALL (::vswprintf (buf, maxlen, format, ap), int, -1, result);
-#  endif /* ACE_WIN32 */
+  result = ACE_OS::vsnprintf (buf, maxlen, format, ap);
   va_end (ap);
-  // In out-of-range conditions, C99 defines vsnprintf to return the number
-  // of characters that would have been written if enough space was available.
-  // Earlier variants of the vsnprintf() (e.g. UNIX98) defined it to return
-  // -1. This method follows the C99 standard, but needs to guess at the
-  // value; uses maxlen + 1.
-  if (result == -1)
-    result = static_cast <int> (maxlen + 1);
   return result;
-
-# else
-  ACE_UNUSED_ARG (buf);
-  ACE_UNUSED_ARG (maxlen);
-  ACE_UNUSED_ARG (format);
-  ACE_NOTSUP_RETURN (-1);
-# endif /* _XOPEN_SOURCE ...  */
 }
 #endif /* ACE_HAS_WCHAR */
 
@@ -375,11 +368,10 @@ int
 ACE_OS::sprintf (char *buf, const char *format, ...)
 {
   // ACE_OS_TRACE ("ACE_OS::sprintf");
-
   int result;
   va_list ap;
   va_start (ap, format);
-  ACE_OSCALL (::vsprintf (buf, format, ap), int, -1, result);
+  result = ACE_OS::vsprintf (buf, format, ap);
   va_end (ap);
   return result;
 }
@@ -388,46 +380,77 @@ ACE_OS::sprintf (char *buf, const char *format, ...)
 int
 ACE_OS::sprintf (wchar_t *buf, const wchar_t *format, ...)
 {
-  ACE_OS_TRACE ("ACE_OS::sprintf");
-
-# if (defined _XOPEN_SOURCE && (_XOPEN_SOURCE - 0) >= 500) || \
-     (defined (sun) && !defined (_XPG4) || defined(_XPG5)) || \
-      defined (ACE_HAS_DINKUM_STL) || defined (__DMC__) || \
-      defined (ACE_HAS_VSWPRINTF) || \
-     (defined (ACE_WIN32_VC8) && !defined (ACE_HAS_WINCE) && \
-      _MSC_FULL_VER > 140050000)
-
-  // The XPG4/UNIX98/C99 signature of the wide-char sprintf has a
-  // maxlen argument. Since this method doesn't supply one, pass in
-  // a length that works (ULONG_MAX doesn't on all platform since some check
-  // to see if the operation will remain in bounds). If this isn't ok, use
-  // ACE_OS::snprintf().
+  // ACE_OS_TRACE ("ACE_OS::sprintf");
   int result;
   va_list ap;
   va_start (ap, format);
-  ACE_OSCALL (ACE_STD_NAMESPACE::vswprintf (buf, 4096, format, ap), int, -1, result);
+  result = ACE_OS::vsprintf (buf, format, ap);
   va_end (ap);
   return result;
-
-# elif defined (ACE_WIN32)
-  // Pre-VC8 Windows has vswprintf, but the signature is from the older ISO C
-  // standard. Also see ACE_OS::snprintf() for more info on this.
-
-  int result;
-  va_list ap;
-  va_start (ap, format);
-  ACE_OSCALL (::vswprintf (buf, format, ap), int, -1, result);
-  va_end (ap);
-  return result;
-
-# else
-
-  ACE_UNUSED_ARG (buf);
-  ACE_UNUSED_ARG (format);
-  ACE_NOTSUP_RETURN (-1);
-
-# endif /* XPG5 || ACE_HAS_DINKUM_STL */
 }
+#endif /* ACE_HAS_WCHAR */
+
+#if !defined (ACE_HAS_VASPRINTF)
+int
+ACE_OS::vasprintf_emulation(char **bufp, const char *format, va_list argptr)
+{
+  int size;
+
+  va_list ap;
+  va_copy (ap, argptr);
+  size = ACE_OS::vsnprintf(NULL, 0, format, ap);
+  va_end (ap);
+
+  if (size != -1) 
+    {
+      char *buf = reinterpret_cast<char*>(ACE_OS::malloc(size + 1));
+      if (!buf)
+	return -1;
+
+      va_list aq;
+      va_copy (aq, argptr);
+      size = ACE_OS::vsnprintf(buf, size + 1, format, aq);
+      va_end (aq);
+
+      if (size != -1)
+        *bufp = buf;
+    }
+
+  return size;
+}
+#endif /* !ACE_HAS_VASPRINTF */
+
+#if defined (ACE_HAS_WCHAR)
+#if !defined (ACE_HAS_VASWPRINTF)
+int
+ACE_OS::vaswprintf_emulation(wchar_t **bufp, const wchar_t *format, va_list argptr)
+{
+  int size;
+
+  va_list ap;
+  va_copy (ap, argptr);
+  size = ACE_OS::vsnprintf(NULL, 0, format, ap);
+  va_end (ap);
+
+  if (size != -1) 
+    {
+      wchar_t *buf = reinterpret_cast<wchar_t*>
+	(ACE_OS::malloc((size + 1) * sizeof(wchar_t)));
+      if (!buf)
+	return -1;
+
+      va_list aq;
+      va_copy (aq, argptr);
+      size = ACE_OS::vsnprintf(buf, size + 1, format, aq);
+      va_end (aq);
+
+      if (size != -1)
+        *bufp = buf;
+    }
+
+  return size;
+}
+#endif /* !ACE_HAS_VASWPRINTF */
 #endif /* ACE_HAS_WCHAR */
 
 ACE_END_VERSIONED_NAMESPACE_DECL

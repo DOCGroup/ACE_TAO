@@ -774,4 +774,28 @@ ACE_OS::mkstemp_emulation (ACE_TCHAR * s)
 }
 #endif /* ACE_LACKS_MKSTEMP */
 
+#if !defined (ACE_HAS_GETPROGNAME) && !defined (ACE_HAS_SETPROGNAME)
+static const char *__progname = 0;
+#endif /* !ACE_HAS_GETPROGNAME && !ACE_HAS_SETPROGNAME */
+
+#if !defined (ACE_HAS_GETPROGNAME)
+const char*
+ACE_OS::getprogname_emulation ()
+{
+    return __progname;
+}
+#endif /* !ACE_HAS_GETPROGNAME */
+
+#if !defined (ACE_HAS_SETPROGNAME)
+void
+ACE_OS::setprogname_emulation (const char* progname) 
+{
+  const char *p = ACE_OS::strrchr (progname, '/');
+  if (p != 0)
+    __progname = p + 1;
+  else
+    __progname = progname;
+}
+#endif /* !ACE_HAS_SETPROGNAME */
+
 ACE_END_VERSIONED_NAMESPACE_DECL

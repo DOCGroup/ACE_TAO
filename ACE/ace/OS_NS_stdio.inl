@@ -949,6 +949,69 @@ ACE_OS::tempnam (const wchar_t *dir, const wchar_t *pfx)
 #endif /* ACE_HAS_WCHAR */
 
 ACE_INLINE int
+ACE_OS::vasprintf (char **bufp, const char* format, va_list argptr)
+{
+#if defined (ACE_HAS_VASPRINTF)
+  return ::vasprintf (bufp, format, argptr);
+#else
+  return ACE_OS::vasprintf_emulation (bufp, format, argptr); 
+#endif /* ACE_HAS_VASPRINTF */
+}
+
+#if defined (ACE_HAS_WCHAR)
+ACE_INLINE int
+ACE_OS::vasprintf (wchar_t **bufp, const wchar_t* format, va_list argptr)
+{
+#if defined (ACE_HAS_VASWPRINTF)
+  return ::vaswprintf (bufp, format, argptr);
+#else
+  return ACE_OS::vaswprintf_emulation (bufp, format, argptr);
+#endif /* ACE_HAS_VASWPRINTF */
+}
+#endif /* ACE_HAS_WCHAR */
+
+ACE_INLINE int
+ACE_OS::vprintf (const char *format, va_list argptr)
+{
+  return ::vprintf (format, argptr);
+}
+
+#if defined (ACE_HAS_WCHAR)
+ACE_INLINE int
+ACE_OS::vprintf (const wchar_t *format, va_list argptr)
+{
+#if defined (ACE_HAS_VWPRINTF)
+  return ::vwprintf (format, argptr);
+#else
+  ACE_UNUSED_ARG (format);
+  ACE_UNUSED_ARG (argptr);
+  ACE_NOTSUP_RETURN (-1);
+#endif /* ACE_HAS_VWPRINTF */
+}
+#endif /* ACE_HAS_WCHAR */
+
+ACE_INLINE int
+ACE_OS::vfprintf (FILE *fp, const char *format, va_list argptr)
+{
+  return ::vfprintf (fp, format, argptr);
+}
+
+#if defined (ACE_HAS_WCHAR)
+ACE_INLINE int
+ACE_OS::vfprintf (FILE *fp, const wchar_t *format, va_list argptr)
+{
+#if defined (ACE_HAS_VFWPRINTF)
+  return ::vfwprintf (fp, format, argptr);
+#else
+  ACE_UNUSED_ARG (fp);
+  ACE_UNUSED_ARG (format);
+  ACE_UNUSED_ARG (argptr);
+  ACE_NOTSUP_RETURN (-1);
+#endif /* ACE_HAS_VFWPRINTF */
+}
+#endif /* ACE_HAS_WCHAR */
+
+ACE_INLINE int
 ACE_OS::vsprintf (char *buffer, const char *format, va_list argptr)
 {
   return ::vsprintf (buffer, format, argptr);
