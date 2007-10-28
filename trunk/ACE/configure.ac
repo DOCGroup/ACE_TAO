@@ -3550,6 +3550,8 @@ fi
 
 ACE_CHECK_LACKS_FUNCS(getppid)
 
+ACE_CHECK_HAS_FUNCS(getprogname)
+
 ACE_CHECK_HAS_FUNCS(getrusage)
 if test $ac_cv_func_getrusage = yes; then
     AC_CHECK_DECL([getrusage],
@@ -3695,6 +3697,8 @@ if test "$ac_cv_func_setpgid" = yes; then
   AH_TEMPLATE([ACE_LACKS_SETPGID_PROTOTYPE],
   [Define to 1 if platform lacks setpgid() declaration in <unistd.h>.])
 fi
+
+ACE_CHECK_HAS_FUNCS([setprogname])
 
 ACE_CHECK_LACKS_FUNCS([setregid])
 if test "$ac_cv_func_setregid" = yes; then
@@ -4109,7 +4113,7 @@ ACE_CHECK_LACKS_FUNCS(uname)
 
 ACE_CHECK_LACKS_FUNCS(unlink)
 
-ACE_CHECK_HAS_FUNCS(vfwprintf vswprintf)
+ACE_CHECK_HAS_FUNCS(vasprintf vaswprintf vfwprintf vswprintf)
 
 ACE_CHECK_LACKS_FUNCS(fgetws fputws itow towlower towupper wcscat wcschr wcscmp wcscpy wcscspn wcslen wcsncat wcsncmp wcsncpy wcsnicmp wcspbrk wcsrchr wcsspn wcsstr wcstod wcstok wcstol wcstoul)
 

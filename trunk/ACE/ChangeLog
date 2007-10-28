@@ -1,3 +1,63 @@
+Sun Oct 28 21:11:57 UTC 2007  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * configure.ac:
+
+          Add ACE_HAS_GETPROGNAME, ACE_HAS_SETPROGNAME, ACE_HAS_VASPRINTF,
+          and ACE_HAS_VASWPRINTF feature tests.
+
+        * ace/config-freebsd.h:
+        * ace/config-netbsd.h:
+
+          Add ACE_HAS_GETPROGNAME, ACE_HAS_SETPROGNAME, and
+          ACE_HAS_VASPRINTF feature test macros.
+
+        * ace/OS_NS_stdio.cpp:
+        * ace/OS_NS_stdio.h:
+        * ace/OS_NS_stdio.inl:
+
+          Add new ACE_OS::asprintf(), ACE_OS::aswprintf(),
+          ACE_OS::vasprintf(), and ACE_OS::vaswprintf() wrapper facades.
+          These functions dynamically allocate the buffer used for their
+          output with malloc().  Add ACE_OS::vasprintf_emulation() and
+          ACE_OS::vaswprintf_emulation() functions for systems without
+          native ::vasprintf() and ::vaswprintf() implementations.
+
+          Add missing wide character version of ACE_OS::printf() wrapper
+          facade.
+
+          Add missing wide and narrow character versions of ACE_OS::vprintf()
+          wrapper facades.
+
+          Add missing wide and narrow character versions of ACE_OS::vfprintf()
+          wrapper facades.
+
+          Implement ACE_OS::*printf() in terms of its cooresponding
+          ACE_OS::v*printf() function to ensure consistant behavior.
+
+        * ace/OS_NS_stdlib.cpp:
+        * ace/OS_NS_stdlib.h:
+        * ace/OS_NS_stdlib.inl:
+
+          Add ACE_OS::getprogname() and ACE_OS::setprogname() wrapper
+          facades.  These functions are used to get and set the program
+          name for error handling, logging, etc. On systems with native
+          implementations, the program name is automatically set by the
+          C/C++ startup code.  On others, ACE_OS::setprogname() must be
+          used.
+
+          Add ACE_OS::getprogname_emulation() and
+          ACE_OS::setprogname_emulation() for systems without native
+          ::getprogname() and ::setprogname() implementations.  One
+          limitation of the emulated version is the program name is
+          not available from static constructors.
+
+        * ace/Process.cpp:
+
+          If ACE_HAS_THREADS, don't invoke ACE_ERROR() in the child
+          process between the fork() and exec().  ACE_ERROR() undoubtedly
+          calls async signal unsafe functions, which results in undefined
+          behavior in threaded programs.
+
 Fri Oct 26 11:17:15 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_vxworks6.3.GNU:
