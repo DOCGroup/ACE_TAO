@@ -353,9 +353,16 @@ ACE_Process::spawn (ACE_Process_Options &options)
       if (options.getgroup () != ACE_INVALID_PID
           && ACE_OS::setpgid (0,
                               options.getgroup ()) < 0)
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("%p.\n"),
-                    ACE_TEXT ("ACE_Process::spawn: setpgid failed.")));
+	{
+#if !defined (ACE_HAS_THREADS) 
+	  // We can't emit this log message because ACE_ERROR(), etc.
+	  // will invoke async signal unsafe functions, which results
+	  // in undefined behavior in threaded programs.
+	  ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("%p.\n"),
+                      ACE_TEXT ("ACE_Process::spawn: setpgid failed.")));
+#endif
+	}
 # endif /* ACE_LACKS_SETPGID */
 
 # if !defined (ACE_LACKS_SETREGID)
@@ -363,9 +370,16 @@ ACE_Process::spawn (ACE_Process_Options &options)
           || options.getegid () != (uid_t) -1)
         if (ACE_OS::setregid (options.getrgid (),
                               options.getegid ()) == -1)
-          ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("%p.\n"),
-                      ACE_TEXT ("ACE_Process::spawn: setregid failed.")));
+	  {
+#if !defined (ACE_HAS_THREADS)
+	    // We can't emit this log message because ACE_ERROR(), etc.
+	    // will invoke async signal unsafe functions, which results
+	    // in undefined behavior in threaded programs.
+	    ACE_ERROR ((LM_ERROR,
+			ACE_TEXT ("%p.\n"),
+			ACE_TEXT ("ACE_Process::spawn: setregid failed.")));
+#endif
+	  }
 # endif /* ACE_LACKS_SETREGID */
 
 # if !defined (ACE_LACKS_SETREUID)
@@ -374,9 +388,16 @@ ACE_Process::spawn (ACE_Process_Options &options)
           || options.geteuid () != (uid_t) -1)
         if (ACE_OS::setreuid (options.getruid (),
                               options.geteuid ()) == -1)
-          ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("%p.\n"),
-                      ACE_TEXT ("ACE_Process::spawn: setreuid failed.")));
+	  {
+#if !defined (ACE_HAS_THREADS)
+	    // We can't emit this log message because ACE_ERROR(), etc.
+	    // will invoke async signal unsafe functions, which results
+	    // in undefined behavior in threaded programs.
+	    ACE_ERROR ((LM_ERROR,
+			ACE_TEXT ("%p.\n"),
+			ACE_TEXT ("ACE_Process::spawn: setreuid failed.")));
+#endif
+	  }
 # endif /* ACE_LACKS_SETREUID */
 
       this->child (ACE_OS::getppid ());

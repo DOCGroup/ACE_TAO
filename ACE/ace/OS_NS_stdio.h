@@ -208,6 +208,14 @@ namespace ACE_OS {
 # endif /* ACE_LACKS_CUSERID */
   //@}
 
+  extern ACE_Export
+  int asprintf (char **bufp, const char* format, ...);
+
+# if defined (ACE_HAS_WCHAR)
+  extern ACE_Export
+  int asprintf (wchar_t **bufp, const wchar_t* format, ...);
+#endif /* ACE_HAS_WCHAR */
+
   ACE_NAMESPACE_INLINE_FUNCTION
   int fclose (FILE *fp);
 
@@ -408,6 +416,11 @@ namespace ACE_OS {
   extern ACE_Export
   int printf (const char *format, ...);
 
+#if defined (ACE_HAS_WCHAR)
+  extern ACE_Export
+  int printf (const wchar_t *format, ...);
+#endif
+
   ACE_NAMESPACE_INLINE_FUNCTION
   int puts (const char *s);
 
@@ -458,6 +471,15 @@ namespace ACE_OS {
 #endif /* ACE_HAS_WCHAR */
 
   ACE_NAMESPACE_INLINE_FUNCTION
+  int vasprintf (char **bufp, const char *format, va_list argptr);
+
+  ACE_NAMESPACE_INLINE_FUNCTION
+  int vprintf (const char *format, va_list argptr);
+
+  ACE_NAMESPACE_INLINE_FUNCTION
+  int vfprintf (FILE *fp, const char *format, va_list argptr);
+
+  ACE_NAMESPACE_INLINE_FUNCTION
   int vsprintf (char *buffer, const char *format, va_list argptr);
 
   ACE_NAMESPACE_INLINE_FUNCTION
@@ -465,11 +487,32 @@ namespace ACE_OS {
 
 # if defined (ACE_HAS_WCHAR)
   ACE_NAMESPACE_INLINE_FUNCTION
+  int vasprintf (wchar_t **bufp, const wchar_t *format, va_list argptr);
+
+  ACE_NAMESPACE_INLINE_FUNCTION
+  int vprintf (const wchar_t *format, va_list argptr);
+
+  ACE_NAMESPACE_INLINE_FUNCTION
+  int vfprintf (FILE *fp, const wchar_t *format, va_list argptr);
+
+  ACE_NAMESPACE_INLINE_FUNCTION
   int vsprintf (wchar_t *buffer, const wchar_t *format, va_list argptr);
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int vsnprintf (wchar_t *buffer, size_t maxlen, const wchar_t *format, va_list argptr);
 # endif /* ACE_HAS_WCHAR */
+
+#if !defined (ACE_HAS_VASPRINTF)
+  extern ACE_Export
+  int vasprintf_emulation (char **bufp, const char *format, va_list argptr); 
+#endif /* !ACE_HAS_VASPRINTF */
+
+#if defined (ACE_HAS_WCHAR)
+#if !defined (ACE_HAS_VASWPRINTF)
+  extern ACE_Export
+  int vaswprintf_emulation (wchar_t **bufp, const wchar_t *format, va_list argptr);
+#endif /* !ACE_HAS_VASWPRINTF */
+#endif /* ACE_HAS_WCHAR */
 
 } /* namespace ACE_OS */
 
