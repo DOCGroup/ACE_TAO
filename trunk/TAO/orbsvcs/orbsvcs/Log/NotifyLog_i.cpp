@@ -6,9 +6,6 @@ ACE_RCSID (Log,
            NotifyLog_i,
            "$Id$")
 
-#define CA_FILTER "threshold > 10"
-#define TCL_GRAMMAR "TCL"
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_NotifyLog_i::TAO_NotifyLog_i (CORBA::ORB_ptr orb,
@@ -108,25 +105,6 @@ TAO_NotifyLog_i::activate (void)
     this->event_channel_->new_for_consumers (ifgop, adminid);
 
   ACE_ASSERT (!CORBA::is_nil (consumer_admin_.in ()));
-
-  CosNotifyFilter::FilterFactory_var ffact =
-    this->event_channel_->default_filter_factory ();
-
-  // setup a filter at the consumer admin
-  CosNotifyFilter::Filter_var ca_filter =
-    ffact->create_filter (TCL_GRAMMAR);
-
-  ACE_ASSERT (!CORBA::is_nil (ca_filter.in ()));
-
-  CosNotifyFilter::ConstraintExpSeq constraint_list (1);
-  constraint_list.length (1);
-
-  constraint_list[0].event_types.length (0);
-  constraint_list[0].constraint_expr = CORBA::string_dup (CA_FILTER);
-
-  ca_filter->add_constraints (constraint_list);
-
-  consumer_admin_->add_filter (ca_filter.in ());
 
   // Setup the CA to receive all type of events
   CosNotification::EventTypeSeq added(1);
