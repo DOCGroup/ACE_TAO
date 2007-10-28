@@ -1,3 +1,15 @@
+Sun Oct 28 20:47:53 UTC 2007  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * orbsvcs/orbsvcs/Log/NotifyLog_i.cpp:
+
+          Changed to not install a default Notify Service Filter on the
+          consumer admin.  The filter will prevent most events from being
+          logged (since a generic event will not likely match the default
+          filter's constraints).  Although the current TAO implementation
+          does not support it, the Notify Log Service API supports adding
+          filters.  When this is added, users will be able to install
+          filters appropriate to their deployment.
+
 Sun Oct 28 13:02:06 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tests/DII_AMI_Forward/DII_AMI_Forward.mpc:
