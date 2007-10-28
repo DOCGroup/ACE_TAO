@@ -6,7 +6,7 @@
  xsi:schemaLocation="http://www.omg.org/Deployment Deployment.xsd">
   <label>Sender Stub Artifact</label>
   <UUID>93bbdf7d-d3f7-4227-bb75-b0562ac15b92</UUID>
-  <location>Sender_DnC_stub</location>
+  <location>Hello_Sender_stub</location>
   <dependsOn>
     <name>ACE</name>
     <referencedArtifact href="Libraries.iad"/>

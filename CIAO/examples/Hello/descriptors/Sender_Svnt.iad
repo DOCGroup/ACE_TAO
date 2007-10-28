@@ -6,7 +6,7 @@
  xsi:schemaLocation="http://www.omg.org/Deployment Deployment.xsd">
   <label>Sender Servant Artifact</label>
   <UUID>04e4d246-e6eb-4b0e-8e32-60b996497cea</UUID>
-  <location>Sender_DnC_svnt</location>
+  <location>Hello_Receiver_svnt</location>
   <dependsOn>
     <name>ACE</name>
     <referencedArtifact href="Libraries.iad"/>
