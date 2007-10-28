@@ -1,3 +1,9 @@
+Sun Oct 28 13:02:06 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tests/DII_AMI_Forward/DII_AMI_Forward.mpc:
+
+          Ensure it doesn't build for minimum CORBA.
+
 Sat Oct 27 11:54:44 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tests/DII_AMI_Forward/client.cpp (main):
