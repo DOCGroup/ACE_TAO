@@ -36,7 +36,7 @@ existing test cases:
 --------------------
 
 ./ciao-events-example.ced
-./flattened_deploymentplan_events.cdp 
+./deploymentplan_events.cdp 
 ./run_test_simple.pl
 
 	Uses the standard event service and connects one sender to one 
@@ -46,7 +46,7 @@ existing test cases:
 	SenderNode[Sender --> ES] --> ReceiverNode[Receiver]
 
 ./ciao-events-example-collocated.ced
-./flattened_deploymentplan_events_collocated.cdp 
+./deploymentplan_events_collocated.cdp 
 ./run_test_collocated.pl:
 
 	This example modifies the standard example by deploying all components
@@ -54,7 +54,7 @@ existing test cases:
 	SenderNode[Sender --> ES --> Receiver]
 
 ./ciao-events-example-with-federation.ced
-./flattened_deploymentplan_federation.cdp
+./deploymentplan_federation.cdp
 ./run_test_federated.pl:
 
 	In this example, two Event Services ES_01 and ES_02 are federated.
@@ -73,7 +73,7 @@ existing test cases:
 	)
 
 ./ciao-events-example-with-filters.ced
-./flattened_deploymentplan_with_filters.cdp
+./deploymentplan_with_filters.cdp
 ./run_test_filtered.pl:
 
 	This example applies a filter to the EventService connection on the
@@ -82,7 +82,7 @@ existing test cases:
 	SenderNode[Sender --> ES -{Filter}-> Receiver]
 
 ./ciao-events-federation-mcast.ced
-./flattened_deploymentplan_federation_mcast.cdp
+./deploymentplan_federation_mcast.cdp
 ./run_test_multicast.pl:
 
 	To test collocated use of multicast federation of event channels
@@ -103,7 +103,7 @@ existing test cases:
 	)
 
 ./ciao-events-federation-udp.ced
-./flattened_deploymentplan_federation_udp.cdp
+./deploymentplan_federation_udp.cdp
 ./run_test_udp.pl:
 
 	In this example, udp communication is used to send the event
@@ -112,7 +112,7 @@ existing test cases:
 	    ReceiverNode[udp_receiver --> ES_02 --> Receiver]
 
 ./ciao-events-federation-udp-collocated.ced
-./flattened_deploymentplan_federation_udp_collocated.cdp
+./deploymentplan_federation_udp_collocated.cdp
 ./run_test_udp_collocated.pl:
 
 	Same example, as the above udp example, but deployed on a
@@ -121,7 +121,7 @@ existing test cases:
 	    udp_receiver --> ES_02 --> Receiver]
 
 ./ciao-events-federation-udp-two-hosts.ced
-./flattened_deploymentplan_federation_udp_two_hosts.cdp
+./deploymentplan_federation_udp_two_hosts.cdp
 
 	this test is not yet automated, because the nodes are
 	supposed to be deployed on two different host machines:
@@ -130,7 +130,7 @@ existing test cases:
 	        ReceiverNode[udp_receiver --> ES_02 --> ReceiverNode]
 
 ./ciao-events-example.ced
-./flattened_deploymentplan_multiple_senders.cdp
+./deploymentplan_multiple_senders.cdp
 ./run_test_multiple_senders.pl:
 
 	This example extends the standard example by adding two more sender
