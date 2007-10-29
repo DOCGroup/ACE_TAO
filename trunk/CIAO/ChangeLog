@@ -1,3 +1,24 @@
+Mon Oct 29 19:10:34 UTC 2007  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * examples/Display/NavDisPlayGUI/NavDisplayGUI.mpc:
+        
+          Modified exec project to reflect recent dependency changes,
+          and added svnt project that links to the GUI version of the
+          exec lib.
+          
+        * examples/Display/NavDisPlayGUI/NavDisplayGUI_exec.cpp:
+        * examples/Display/NavDisPlayGUI/NavDisplayGUI_exec.h:
+        
+          Cosmetic changes.
+          
+        * examples/Display/NavDisPlayGUI/NavDisplayGUI_exec_stub_export.h:
+        * examples/Display/NavDisPlayGUI/NavDisplayGUI_exec_exec_export.h:
+        * examples/Display/NavDisPlayGUI/NavDisplayGUI_svnt_export.h:
+        * examples/Display/NavDisPlayGUI/NavDisplayGUI_exec_svnt_export.h:
+        * examples/Display/NavDisPlayGUI/NavDisplayGUI_stub_export.h:
+        
+          Removed these unused files.
+
 Mon Oct 29 17:45:24 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * examples/Hello/descriptors_ReDaC/deploymentplan.cdp:
