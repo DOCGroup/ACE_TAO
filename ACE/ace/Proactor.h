@@ -305,8 +305,8 @@ public:
 
   // = Timer management.
   /**
-   * Schedule a <handler> that will expire after <time>.  If it
-   * expires then @a act is passed in as the value to the <handler>'s
+   * Schedule a @a handler that will expire after <time>.  If it
+   * expires then @a act is passed in as the value to the @a handler's
    * <handle_timeout> callback method.  This method returns a
    * <timer_id>. This <timer_id> can be used to cancel a timer before
    * it expires.  The cancellation ensures that <timer_ids> are unique
@@ -324,7 +324,7 @@ public:
                                  const ACE_Time_Value &interval);
 
   // Same as above except @a interval it is used to reschedule the
-  // <handler> automatically.
+  // @a handler automatically.
 
   /// This combines the above two methods into one. Mostly for backward
   /// compatibility.
@@ -333,7 +333,7 @@ public:
                        const ACE_Time_Value &time,
                        const ACE_Time_Value &interval);
 
-  /// Cancel all timers associated with this <handler>.  Returns number
+  /// Cancel all timers associated with this @a handler.  Returns number
   /// of timers cancelled.
   int cancel_timer (ACE_Handler &handler,
                     int dont_call_handle_close = 1);

@@ -118,7 +118,7 @@ public:
 
   /**
    * Assigns the various fields of a @c sigaction struct and registers
-   * the <handler> to process signal @a signum via the @c sigaction
+   * the @a handler to process signal @a signum via the @c sigaction
    * function.
    */
   ACE_Sig_Action (ACE_SignalHandler handler,
@@ -128,7 +128,7 @@ public:
 
   /**
    * Assigns the various fields of a @c sigaction struct and registers
-   * the <handler> to process signal @a signum via the @c sigaction
+   * the @a handler to process signal @a signum via the @c sigaction
    * function.
    */
   ACE_Sig_Action (ACE_SignalHandler handler,
@@ -150,7 +150,7 @@ public:
 
   /**
    * Assigns the various fields of a @c sigaction struct and registers
-   * the <handler> to process all @a signalss via the @c sigaction
+   * the @a handler to process all @a signalss via the @c sigaction
    * function.
    */
   ACE_Sig_Action (const ACE_Sig_Set &signalss,
@@ -160,7 +160,7 @@ public:
 
   /**
    * Assigns the various fields of a @c sigaction struct and registers
-   * the <handler> to process all @a signalss via the @c sigaction
+   * the @a handler to process all @a signalss via the @c sigaction
    * function.
    */
   ACE_Sig_Action (const ACE_Sig_Set &signalss,
