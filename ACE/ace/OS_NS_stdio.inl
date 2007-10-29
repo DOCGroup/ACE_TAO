@@ -954,7 +954,7 @@ ACE_OS::vasprintf (char **bufp, const char* format, va_list argptr)
 #if defined (ACE_HAS_VASPRINTF)
   return ::vasprintf (bufp, format, argptr);
 #else
-  return ACE_OS::vasprintf_emulation (bufp, format, argptr); 
+  return ACE_OS::vasprintf_emulation (bufp, format, argptr);
 #endif /* ACE_HAS_VASPRINTF */
 }
 
@@ -993,7 +993,7 @@ ACE_OS::vprintf (const wchar_t *format, va_list argptr)
 ACE_INLINE int
 ACE_OS::vfprintf (FILE *fp, const char *format, va_list argptr)
 {
-  return ::vfprintf (fp, format, argptr);
+  return ACE_STD_NAMESPACE::vfprintf (fp, format, argptr);
 }
 
 #if defined (ACE_HAS_WCHAR)
