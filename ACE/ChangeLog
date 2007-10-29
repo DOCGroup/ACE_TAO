@@ -1,3 +1,11 @@
+Mon Oct 29 16:10:07 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * bin/fuzz.pl:
+
+          Updated check_for_lack_ACE_OS to incorporate new wrapper facade functions
+          introduced in:
+          Sun Oct 28 21:11:57 UTC 2007  J.T. Conklin  <jtc@acorntoolworks.com>
+
 Mon Oct 29 15:01:28 UTC 2007  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * ace/OS_NS_stdio.cpp:
