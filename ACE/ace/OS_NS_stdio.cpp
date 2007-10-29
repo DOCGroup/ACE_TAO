@@ -293,7 +293,7 @@ ACE_OS::fprintf (FILE *fp, const wchar_t *format, ...)
 int
 ACE_OS::asprintf (char **bufp, const char *format, ...)
 {
-  // ACE_OS_TRACE ("ACE_OS::aprintf");
+  // ACE_OS_TRACE ("ACE_OS::asprintf");
   int result;
   va_list ap;
   va_start (ap, format);
@@ -306,7 +306,7 @@ ACE_OS::asprintf (char **bufp, const char *format, ...)
 int
 ACE_OS::asprintf (wchar_t **bufp, const wchar_t *format, ...)
 {
-  // ACE_OS_TRACE ("ACE_OS::aprintf");
+  // ACE_OS_TRACE ("ACE_OS::asprintf");
   int result;
   va_list ap;
   va_start (ap, format);
@@ -413,7 +413,7 @@ ACE_OS::vasprintf_emulation(char **bufp, const char *format, va_list argptr)
     {
       char *buf = reinterpret_cast<char*>(ACE_OS::malloc(size + 1));
       if (!buf)
-	return -1;
+        return -1;
 
       va_list aq;
 #ifdef va_copy
@@ -451,9 +451,9 @@ ACE_OS::vaswprintf_emulation(wchar_t **bufp, const wchar_t *format, va_list argp
   if (size != -1) 
     {
       wchar_t *buf = reinterpret_cast<wchar_t*>
-	(ACE_OS::malloc((size + 1) * sizeof(wchar_t)));
+        (ACE_OS::malloc((size + 1) * sizeof(wchar_t)));
       if (!buf)
-	return -1;
+        return -1;
 
       va_list aq;
 #ifdef va_copy
