@@ -46,9 +46,8 @@
     -->
   </implementation>
 
-
-  <instance id="Hello-Sender-idd">
-    <name>Hello-Sender-idd</name>
+  <instance id="Hello-Sender-idd-01">
+    <name>Hello-Sender-idd-01</name>
     <node>SenderNode</node>
     <source><!-- @@ What goes here --></source>
     <implementation>Hello-Sender-mdd</implementation>
@@ -61,7 +60,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>Sender.ior</string>
+          <string>Sender01.ior</string>
         </value>
       </value>
     </configProperty>
@@ -100,7 +99,116 @@
       </value>
     </configProperty>
   </instance>
-  
+
+  <instance id="Hello-Sender-idd-02">
+    <name>Hello-Sender-idd-02</name>
+    <node>SenderNode</node>
+    <source><!-- @@ What goes here --></source>
+    <implementation>Hello-Sender-mdd</implementation>
+
+    <!-- Add this property if you want to write component reference to IOR -->
+    <configProperty>
+      <name>ComponentIOR</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Sender02.ior</string>
+        </value>
+      </value>
+    </configProperty>
+
+    <!-- Add this property if you want to initialize component attribute -->
+    <configProperty>
+      <name>local_message</name>
+      <value>
+        <type>
+         <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>This is a test message from Sender 02 passed in through XML.</string>
+        </value>
+      </value> 
+    </configProperty>
+        
+    <!-- This attribute initializes an enumerated value -->
+    <configProperty>
+      <name>color</name>
+      <value>
+        <type>
+          <kind>tk_enum</kind>
+          <enum>
+            <name>COLOR_SELECTION</name>
+            <typeId>IDL:Hello/COLOR_SELECTION:1.0</typeId>
+            <member>empty</member>
+            <member>white</member>
+            <member>red</member>
+            <member>yellow</member>
+          </enum>
+        </type>
+        <value>
+          <enum>red</enum>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+
+
+  <instance id="Hello-Sender-idd-03">
+    <name>Hello-Sender-idd-03</name>
+    <node>SenderNode</node>
+    <source><!-- @@ What goes here --></source>
+    <implementation>Hello-Sender-mdd</implementation>
+
+    <!-- Add this property if you want to write component reference to IOR -->
+    <configProperty>
+      <name>ComponentIOR</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Sender03.ior</string>
+        </value>
+      </value>
+    </configProperty>
+
+    <!-- Add this property if you want to initialize component attribute -->
+    <configProperty>
+      <name>local_message</name>
+      <value>
+        <type>
+         <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>This is a test message from Sender 03 passed in through XML.</string>
+        </value>
+      </value> 
+    </configProperty>
+        
+    <!-- This attribute initializes an enumerated value -->
+    <configProperty>
+      <name>color</name>
+      <value>
+        <type>
+          <kind>tk_enum</kind>
+          <enum>
+            <name>COLOR_SELECTION</name>
+            <typeId>IDL:Hello/COLOR_SELECTION:1.0</typeId>
+            <member>empty</member>
+            <member>white</member>
+            <member>red</member>
+            <member>yellow</member>
+          </enum>
+        </type>
+        <value>
+          <enum>white</enum>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+
   <instance id="Hello-Receiver-idd">
     <name>Hello-Receiver-idd</name>
     <node>ReceiverNode</node>
@@ -119,12 +227,13 @@
     </configProperty>
   </instance>
 
+
   <connection>
     <name>hello_facet_connection</name>
     <internalEndpoint>
       <portName>push_message</portName>
       <kind>Facet</kind>
-      <instance>Hello-Sender-idd</instance>
+      <instance>Hello-Sender-idd-01</instance>
     </internalEndpoint>
     <internalEndpoint>
       <portName>read_message</portName>
@@ -133,35 +242,75 @@
     </internalEndpoint>
   </connection>
 
-  <!-- The Sender Component connects to "ES_01" -->
+<!--
   <connection>
-    <name>hello_event_ec_publisher_connection</name>
+    <name>hello_event_connection</name>
     <internalEndpoint>
       <portName>click_out</portName>
       <kind>EventPublisher</kind>
-      <instance>Hello-Sender-idd</instance>
+      <instance>Hello-Sender-idd-01</instance>
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>click_in</portName>
+      <kind>EventConsumer</kind>
+      <instance>Hello-Receiver-idd</instance>
+    </internalEndpoint>
+  </connection>
+-->
+
+  <connection>
+    <name>hello_event_ec_publisher_connection_01</name>
+    <internalEndpoint>
+      <portName>click_out</portName>
+      <kind>EventPublisher</kind>
+      <instance>Hello-Sender-idd-01</instance>
     </internalEndpoint>
     <externalReference>
       <location>ES_01</location>
     </externalReference>
   </connection>
-  
-  <!-- The Receiver Component connects to "ES_02" -->    
+
   <connection>
-    <name>hello_event_ec_consumer_connection</name>
+    <name>hello_event_ec_publisher_connection_02</name>
+    <internalEndpoint>
+      <portName>click_out</portName>
+      <kind>EventPublisher</kind>
+      <instance>Hello-Sender-idd-02</instance>
+    </internalEndpoint>
+    <externalReference>
+      <location>ES_01</location>
+    </externalReference>
+  </connection>
+
+  <connection>
+    <name>hello_event_ec_publisher_connection_03</name>
+    <internalEndpoint>
+      <portName>click_out</portName>
+      <kind>EventPublisher</kind>
+      <instance>Hello-Sender-idd-03</instance>
+    </internalEndpoint>
+    <externalReference>
+      <location>ES_01</location>
+    </externalReference>
+  </connection>
+
+  <connection>
+    <name>hello_event_ec_consumer_connection_01</name>
     <internalEndpoint>
       <portName>click_in</portName>
       <kind>EventConsumer</kind>
       <instance>Hello-Receiver-idd</instance>
     </internalEndpoint>
     <externalReference>
-      <location>ES_02</location>
+      <location>ES_01</location>
     </externalReference>
-  </connection> 
+  </connection>
+
+
 
   <!-- @@ Runtime library name must match exactly in "location" tag -->
   <artifact id="Hello-Sender_exec">
-    <name>Sender_exec</name>
+    <name>Hello_Sender_exec</name>
     <source><!-- @@ Not sure about this--></source>
     <node><!-- blank --></node>
     <location>Hello_Sender_exec</location>
@@ -182,7 +331,7 @@
     <name>Hello_Sender_svnt</name>
     <source><!-- @@ Not sure --></source>
     <node><!-- blank --></node>
-    <location>Sender_svnt</location>
+    <location>Hello_Sender_svnt</location>
     <execParameter>
       <name>entryPoint</name>
       <value>
@@ -200,7 +349,7 @@
     <name>Hello_Receiver_exec</name>
     <source><!-- @@ Not sure about this--></source>
     <node><!-- blank --></node>
-    <location>Receiver_exec</location>
+    <location>Hello_Receiver_exec</location>
     <execParameter>
       <name>entryPoint</name>
       <value>
@@ -215,10 +364,10 @@
   </artifact>
   
   <artifact id="Hello-Receiver_svnt">
-    <name>Hello_Receiver_svnt</name>
+    <name>Receiver_svnt</name>
     <source><!-- @@ Not sure --></source>
     <node><!-- blank --></node>
-    <location>Receiver_svnt</location>
+    <location>Hello_Receiver_svnt</location>
     <execParameter>
       <name>entryPoint</name>
       <value>
@@ -239,7 +388,7 @@
         <kind>tk_string</kind>
       </type>
       <value>
-        <string>ciao-events-federation-udp.ced</string>
+        <string>ciao-events-example.ced</string>
       </value>
     </value>
   </infoProperty>  

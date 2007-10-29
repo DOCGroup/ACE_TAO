@@ -1,3 +1,11 @@
+Mon Oct 29 16:40:08 UTC 2007  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
+
+        * examples/Hello/descriptors_events:
+        
+          Renamed deployment descriptor files and corrected some entries,
+          according to recent changes in library names of the Hello example,
+          so that the tests succeed.
+
 Mon Oct 29 01:37:04 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * examples/Hello/descriptors_RTCCM/rt-config-example.cdp:
