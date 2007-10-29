@@ -13,13 +13,12 @@
 #define NAVDISPLAY_EXEC_H
 
 #include "NavDisplayEC.h"
-#include "NavDisplay_exec_export.h"
+#include "NavDisplayGUI_exec_export.h"
 #include "ace/Synch.h"
 #include "tao/LocalObject.h"
 #include "NavUnit.h"
 
 class Worker;
-
 
 namespace MyImpl
 {
@@ -28,16 +27,16 @@ namespace MyImpl
    *
    * RateGen executor implementation class.
    */
-  class NAVDISPLAY_EXEC_Export NavDisplayGUI_exec_impl :
-    public virtual CIDL_NavDisplay_Impl::NavDisplay_exec,
-    public virtual TAO_Local_RefCounted_Object
+  class NAVDISPLAY_EXEC_Export NavDisplayGUI_exec_impl
+    : public virtual CIDL_NavDisplay_Impl::NavDisplay_exec,
+      public virtual TAO_Local_RefCounted_Object
   {
   public:
     /// Default constructor.
-    NavDisplayGUI_exec_impl ();
+    NavDisplayGUI_exec_impl (void);
 
     /// Default destructor.
-    ~NavDisplayGUI_exec_impl ();
+    ~NavDisplayGUI_exec_impl (void);
 
     // Operations from HUDisplay::NavDisplay
 
@@ -50,19 +49,19 @@ namespace MyImpl
     set_session_context (Components::SessionContext_ptr ctx);
 
     virtual void
-    ciao_preactivate ();
+    ciao_preactivate (void);
 
     virtual void
-    ccm_activate ();
+    ccm_activate (void);
 
     virtual void
-    ciao_postactivate ();
+    ciao_postactivate (void);
 
     virtual void
-    ccm_passivate ();
+    ccm_passivate (void);
 
     virtual void
-    ccm_remove ();
+    ccm_remove (void);
   protected:
     /// Copmponent specific context
     HUDisplay::CCM_NavDisplay_Context_var context_;
@@ -77,28 +76,30 @@ namespace MyImpl
    *
    * NavDisplay home executor implementation class.
    */
-  class NAVDISPLAY_EXEC_Export NavDisplayGUIHome_exec_impl :
-    public virtual HUDisplay::CCM_NavDisplayHome,
-    public virtual TAO_Local_RefCounted_Object
+  class NAVDISPLAY_EXEC_Export NavDisplayGUIHome_exec_impl
+    : public virtual HUDisplay::CCM_NavDisplayHome,
+      public virtual TAO_Local_RefCounted_Object
   {
   public:
     /// Default ctor.
-    NavDisplayGUIHome_exec_impl ();
+    NavDisplayGUIHome_exec_impl (void);
 
     /// Default dtor.
-    ~NavDisplayGUIHome_exec_impl ();
+    ~NavDisplayGUIHome_exec_impl (void);
 
     // Explicit home operations.
 
     // Implicit home operations.
 
-    virtual ::Components::EnterpriseComponent_ptr
-    create ();
+    virtual
+    ::Components::EnterpriseComponent_ptr
+    create (void);
   };
 
 }
 
-extern "C" NAVDISPLAY_EXEC_Export ::Components::HomeExecutorBase_ptr
+extern "C" NAVDISPLAY_EXEC_Export
+::Components::HomeExecutorBase_ptr
 createNavDisplayHome_Impl (void);
 
 #endif /* NAVDISPLAY_EXEC_H */
