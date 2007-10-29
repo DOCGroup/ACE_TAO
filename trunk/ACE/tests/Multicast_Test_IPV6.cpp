@@ -1,5 +1,6 @@
 // $Id$
 // ============================================================================
+//FUZZ: disable check_for_lack_ACE_OS
 /**
  * @file Multicast_Test_IPV6.cpp
  *
@@ -31,6 +32,7 @@
  *         Brian Buesker <bbuesker@qualcomm.com>
  */
 // ============================================================================
+//FUZZ: enable check_for_lack_ACE_OS
 
 #include "tests/test_config.h"
 #include "ace/Get_Opt.h"
