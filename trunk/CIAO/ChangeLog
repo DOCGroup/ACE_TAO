@@ -1,7 +1,18 @@
+Mon Oct 29 17:45:24 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * examples/Hello/descriptors_ReDaC/deploymentplan.cdp:
+        * examples/Hello/descriptors_ReDaC/deploymentplan_add.cdp:
+        * examples/Hello/descriptors_ReDaC/deploymentplan_remove.cdp:
+        * examples/Hello/descriptors_naming/deploymentplan_naming.cdp:
+        * examples/Hello/descriptors_shared_components/deploymentplan.cdp:
+
+          Corrected some entries, according to recent changes in library 
+          names of the Hello example, so that the tests succeed.
+
 Mon Oct 29 16:40:08 UTC 2007  Friedhelm Wolf  <fwolf@dre.vanderbilt.edu>
 
         * examples/Hello/descriptors_events:
-        
+
           Renamed deployment descriptor files and corrected some entries,
           according to recent changes in library names of the Hello example,
           so that the tests succeed.

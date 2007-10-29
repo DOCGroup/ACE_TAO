@@ -167,10 +167,10 @@
   </artifact>
   
   <artifact id="Hello-Sender_svnt">
-    <name>Hello_Sender_svnt</name>
+    <name>Sender_svnt</name>
     <source><!-- @@ Not sure --></source>
     <node><!-- blank --></node>
-    <location>Sender_svnt</location>
+    <location>Hello_Sender_svnt</location>
     <execParameter>
       <name>entryPoint</name>
       <value>
@@ -185,10 +185,10 @@
   </artifact>
   
   <artifact id="Hello-Receiver_exec">
-    <name>Hello_Receiver_exec</name>
+    <name>Receiver_exec</name>
     <source><!-- @@ Not sure about this--></source>
     <node><!-- blank --></node>
-    <location>Receiver_exec</location>
+    <location>Hello_Receiver_exec</location>
     <execParameter>
       <name>entryPoint</name>
       <value>
@@ -203,10 +203,10 @@
   </artifact>
   
   <artifact id="Hello-Receiver_svnt">
-    <name>Hello_Receiver_svnt</name>
+    <name>Receiver_svnt</name>
     <source><!-- @@ Not sure --></source>
     <node><!-- blank --></node>
-    <location>Receiver_svnt</location>
+    <location>Hello_Receiver_svnt</location>
     <execParameter>
       <name>entryPoint</name>
       <value>
