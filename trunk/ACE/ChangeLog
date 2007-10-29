@@ -1,3 +1,25 @@
+Mon Oct 29 14:44:15 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-openbsd.h:
+          Improved OpenBSD support. Thanks to Vladimir Panov
+          <gbr at voidland dot org> for reporting this.
+
+        * ace/Dev_Poll_Reactor.h:
+        * ace/FlReactor/FlReactor.h:
+        * ace/FoxReactor/FoxReactor.h:
+        * ace/POSIX_Asynch_IO.h:
+        * ace/Proactor.h:
+        * ace/QtReactor/QtReactor.h:
+        * ace/Reactor.h:
+        * ace/Signal.h:
+          Doxygen improvements
+
+        * ace/Service_Config.{h,cpp}:
+          Changed be_a_deamon to bool
+
+        * ace/Service_Repository.cpp:
+          Initialise pointer with 0
+
 Mon Oct 29 14:17:15 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/ARGV.h:

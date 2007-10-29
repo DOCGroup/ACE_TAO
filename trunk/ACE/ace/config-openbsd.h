@@ -59,7 +59,11 @@
 #define ACE_HAS_SIG_MACROS
 #define ACE_HAS_CHARPTR_DL
 #define ACE_HAS_DIRENT
-#define ACE_USES_ASM_SYMBOL_IN_DLSYM
+
+// OpenBSD 3.6
+#if (OpenBSD < 200411)
+# define ACE_USES_ASM_SYMBOL_IN_DLSYM
+#endif
 
 #define ACE_LACKS_UCONTEXT_H
 

@@ -109,7 +109,7 @@ ACE_Service_Repository::open (size_t size)
 {
   ACE_TRACE ("ACE_Service_Repository::open");
 
-  ACE_Service_Type **temp;
+  ACE_Service_Type **temp = 0;
 
   ACE_NEW_RETURN (temp,
                   ACE_Service_Type *[size],

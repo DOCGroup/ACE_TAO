@@ -86,7 +86,7 @@ sig_atomic_t ACE_Service_Config::reconfig_occurred_ = 0;
 ACE_TCHAR *ACE_Service_Config::pid_file_name_ = 0;
 
 /// Shall we become a daemon process?
-int ACE_Service_Config::be_a_daemon_ = 0;
+bool ACE_Service_Config::be_a_daemon_ = false;
 
 // Number of the signal used to trigger reconfiguration.
 int ACE_Service_Config::signum_ = SIGHUP;
@@ -133,7 +133,7 @@ ACE_Service_Config::parse_args_i (int argc, ACE_TCHAR *argv[])
         ACE_Service_Config::pid_file_name_ = getopt.opt_arg ();
         break;
       case 'b':
-        ACE_Service_Config::be_a_daemon_ = 1;
+        ACE_Service_Config::be_a_daemon_ = true;
         break;
       case 's':
         {

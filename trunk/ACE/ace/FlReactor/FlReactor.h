@@ -68,7 +68,7 @@ public:
 
 protected:
   // = Register timers/handles with Fl.
-  /// Register a single <handler>.
+  /// Register a single @a handler.
   virtual int register_handler_i (ACE_HANDLE handle,
                                   ACE_Event_Handler *handler,
                                   ACE_Reactor_Mask mask);
