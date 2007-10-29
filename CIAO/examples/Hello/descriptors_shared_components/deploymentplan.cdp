@@ -151,10 +151,10 @@
 
   <!-- @@ Runtime library name must match exactly in "location" tag -->
   <artifact id="Hello-Sender_exec">
-    <name>Hello_Sender_exec</name>
+    <name>Sender_exec</name>
     <source><!-- @@ Not sure about this--></source>
     <node><!-- blank --></node>
-    <location>Sender_exec</location>
+    <location>Hello_Sender_exec</location>
     <execParameter>
       <name>entryPoint</name>
       <value>
