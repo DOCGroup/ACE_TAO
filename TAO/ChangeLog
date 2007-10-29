@@ -1,3 +1,12 @@
+Mon Oct 29 14:31:15 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_2084_Regression/EventNode.cpp:
+        * tests/Bug_2084_Regression/Hello.cpp:
+          Removed tid_to_int usage
+
+        * tests/Bug_2084_Regression/tid_to_int.h:
+          Deleted
+
 Sun Oct 28 20:47:53 UTC 2007  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * orbsvcs/orbsvcs/Log/NotifyLog_i.cpp:
