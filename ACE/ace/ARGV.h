@@ -109,8 +109,8 @@ public:
    *              its environment variable value in the resultant vector
    *              in place of the environment variable name.
    */
-  ACE_ARGV_T (const CHAR_TYPE buf[],
-              bool substitute_env_args = true);
+  explict ACE_ARGV_T (const CHAR_TYPE buf[],
+                      bool substitute_env_args = true);
 
   /**
    * Initializes the argument vector from a set of arguments. Any environment
@@ -131,9 +131,9 @@ public:
    * @param quote_args  If non-zero each argument @a argv[i] needs to
    *                    be enclosed in double quotes ('"').
    */
-  ACE_ARGV_T (CHAR_TYPE *argv[],
-              bool substitute_env_args = true,
-              bool quote_args = false);
+  explicit ACE_ARGV_T (CHAR_TYPE *argv[],
+                       bool substitute_env_args = true,
+                       bool quote_args = false);
 
   /**
    * Initializes the argument vector from two combined argument vectors.
@@ -163,7 +163,7 @@ public:
    * of the add methods. This is referred to as the @i iterative method
    * of adding arguments to this object.
    */
-  ACE_ARGV_T (bool substitute_env_args = true);
+  explicit ACE_ARGV_T (bool substitute_env_args = true);
 
   /// Destructor.
   ~ACE_ARGV_T (void);

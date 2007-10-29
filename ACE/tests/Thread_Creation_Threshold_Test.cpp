@@ -210,7 +210,9 @@ run_main (int, ACE_TCHAR *[])
       // point the barrier in the destructor of the <ACE_Task> portion of
       // <Thread_Pool> will return.
       if (thread_pool.wait () == -1)
-        return 1;
+        {
+          ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("wait")), 1);
+        }
 
       if (PRINT_DEBUG_MSGS)
         ACE_DEBUG ((LM_DEBUG,

@@ -113,16 +113,6 @@ ACE_OS::thr_equal (ACE_thread_t t1, ACE_thread_t t2)
 # else
   return pthread_equal (t1, t2);
 # endif /* pthread_equal */
-#elif defined (ACE_HAS_VXTHREADS)
-  // Guard against the fact that ACE_thread_t is a char* when using VxWorks.
-  // Maybe the user passes in an unitialized ACE_thread_t, which is then 0,
-  // which causes strcmp to cause an access violation.
-  if (!t1 && !t2)
-    return 1;
-  else if (!t1 || !t2)
-    return 0;
-  else
-    return !ACE_OS::strcmp (t1, t2);
 #else /* For both STHREADS and WTHREADS... */
   // Hum, Do we need to treat WTHREAD differently?
   // levine 13 oct 98 % I don't think so, ACE_thread_t is a DWORD.
@@ -2647,13 +2637,7 @@ ACE_OS::thr_cancel (ACE_thread_t thr_id)
 #     endif /* pthread_cancel */
 #   endif /* ACE_HAS_PTHREADS_DRAFT4 || ACE_HAS_PTHREADS_DRAFT6 */
 # elif defined (ACE_HAS_VXTHREADS)
-  ACE_hthread_t tid;
-  ACE_OSCALL (::taskNameToId (thr_id), int, ERROR, tid);
-
-  if (tid == ERROR)
-    return -1;
-  else
-    ACE_OSCALL_RETURN (::taskDelete (tid), int, -1);
+  ACE_OSCALL_RETURN (::taskDelete (thr_id), int, -1);
 # else /* Could be ACE_HAS_PTHREADS && ACE_LACKS_PTHREAD_CANCEL */
   ACE_UNUSED_ARG (thr_id);
   ACE_NOTSUP_RETURN (-1);
@@ -2674,6 +2658,20 @@ ACE_OS::thr_cmp (ACE_hthread_t t1, ACE_hthread_t t2)
 # else
   return pthread_equal (t1, t2);
 # endif /* pthread_equal */
+#elif defined (ACE_HAS_VXTHREADS)
+  // Guard against the fact that ACE_thread_t is a char* when using VxWorks.
+  // Maybe the user passes in an unitialized ACE_thread_t, which is then 0,
+  // which causes strcmp to cause an access violation.
+  if (!t1 && !t2)
+    return 1;
+  else if (!t1 || !t2)
+    return 0;
+  else
+    {
+      t1 += t1[0] == ACE_THR_ID_ALLOCATED  ?  1  :  0;
+      t2 += t2[0] == ACE_THR_ID_ALLOCATED  ?  1  :  0;
+      return !ACE_OS::strcmp (t1, t2);
+    }
 #else /* For STHREADS, WTHREADS, and VXWORKS ... */
   // Hum, Do we need to treat WTHREAD differently?
   // levine 13 oct 98 % Probably, ACE_hthread_t is a HANDLE.
@@ -2716,7 +2714,15 @@ ACE_OS::thr_continue (ACE_hthread_t target_thread)
   else
     return 0;
 # elif defined (ACE_HAS_VXTHREADS)
-  ACE_OSCALL_RETURN (::taskResume (target_thread), int, -1);
+  // Skip over the ID-allocated marker, if present.
+  target_thread += target_thread[0] == ACE_THR_ID_ALLOCATED  ?  1  :  0;
+  ACE_thread_t tid;
+  ACE_OSCALL (::taskNameToId (target_thread), int, ERROR, tid);
+
+  if (tid == ERROR)
+    return -1;
+  else
+    ACE_OSCALL_RETURN (::taskResume (tid), int, -1);
 # endif /* ACE_HAS_STHREADS */
 #else
   ACE_UNUSED_ARG (target_thread);
@@ -2806,7 +2812,15 @@ ACE_OS::thr_getprio (ACE_hthread_t ht_id, int &priority, int &policy)
 
   return 0;
 # elif defined (ACE_HAS_VXTHREADS)
-  ACE_OSCALL_RETURN (::taskPriorityGet (ht_id, &priority), int, -1);
+  // Skip over the ID-allocated marker, if present.
+  ht_id += ht_id[0] == ACE_THR_ID_ALLOCATED  ?  1  :  0;
+  ACE_thread_t tid;
+  ACE_OSCALL (::taskNameToId (ht_id), int, ERROR, tid);
+
+  if (tid == ERROR)
+    return -1;
+  else
+    ACE_OSCALL_RETURN (::taskPriorityGet (tid, &priority), int, -1);
 # else
   ACE_UNUSED_ARG (ht_id);
   ACE_UNUSED_ARG (priority);
@@ -3018,16 +3032,9 @@ ACE_OS::thr_kill (ACE_thread_t thr_id, int signum)
                                        result),
                      int, -1);
 # elif defined (ACE_HAS_VXTHREADS)
-  ACE_hthread_t tid;
-  ACE_OSCALL (::taskNameToId (thr_id), int, ERROR, tid);
-
-  if (tid == ERROR)
-    return -1;
-  else
-    //FUZZ: disable check_for_lack_ACE_OS
-    ACE_OSCALL_RETURN (::kill (tid, signum), int, -1);
-    //FUZZ: enable check_for_lack_ACE_OS
-
+  //FUZZ: disable check_for_lack_ACE_OS
+  ACE_OSCALL_RETURN (::kill (thr_id, signum), int, -1);
+  //FUZZ: enable check_for_lack_ACE_OS
 # else
   ACE_UNUSED_ARG (thr_id);
   ACE_UNUSED_ARG (signum);
@@ -3066,8 +3073,7 @@ ACE_OS::thr_min_stack (void)
   TASK_DESC taskDesc;
   STATUS status;
 
-  ACE_hthread_t tid;
-  ACE_OS::thr_self (tid);
+  ACE_thread_t tid = ACE_OS::thr_self ();
 
   ACE_OSCALL (ACE_ADAPT_RETVAL (::taskInfoGet (tid, &taskDesc),
                                 status),
@@ -3094,7 +3100,7 @@ ACE_OS::thr_self (void)
 # elif defined (ACE_HAS_WTHREADS)
   return ::GetCurrentThreadId ();
 # elif defined (ACE_HAS_VXTHREADS)
-  return ::taskName (::taskIdSelf ());
+  return ::taskIdSelf ();
 # endif /* ACE_HAS_STHREADS */
 #else
   return 1; // Might as well make it the first thread ;-)
@@ -3116,7 +3122,7 @@ ACE_OS::thr_self (ACE_hthread_t &self)
 # elif defined (ACE_HAS_WTHREADS)
   self = ::GetCurrentThread ();
 # elif defined (ACE_HAS_VXTHREADS)
-  self = ::taskIdSelf ();
+  self = ::taskName(::taskIdSelf ());
 # endif /* ACE_HAS_STHREADS */
 #else
   self = 1; // Might as well make it the main thread ;-)
@@ -3281,7 +3287,15 @@ ACE_OS::thr_setprio (ACE_hthread_t ht_id, int priority, int policy)
                                           ace_result_),
                         int, -1);
 # elif defined (ACE_HAS_VXTHREADS)
-  ACE_OSCALL_RETURN (::taskPrioritySet (ht_id, priority), int, -1);
+  // Skip over the ID-allocated marker, if present.
+  ht_id += ht_id[0] == ACE_THR_ID_ALLOCATED  ?  1  :  0;
+  ACE_thread_t tid;
+  ACE_OSCALL (::taskNameToId (ht_id), int, ERROR, tid);
+
+  if (tid == ERROR)
+    return -1;
+  else
+    ACE_OSCALL_RETURN (::taskPrioritySet (tid, priority), int, -1);
 # else
   // For example, platforms that support Pthreads but LACK_SETSCHED.
   ACE_UNUSED_ARG (ht_id);
@@ -3419,7 +3433,15 @@ ACE_OS::thr_suspend (ACE_hthread_t target_thread)
     ACE_FAIL_RETURN (-1);
   /* NOTREACHED */
 # elif defined (ACE_HAS_VXTHREADS)
-  ACE_OSCALL_RETURN (::taskSuspend (target_thread), int, -1);
+  // Skip over the ID-allocated marker, if present.
+  target_thread += target_thread[0] == ACE_THR_ID_ALLOCATED  ?  1  :  0;
+  ACE_thread_t tid;
+  ACE_OSCALL (::taskNameToId (target_thread), int, ERROR, tid);
+
+  if (tid == ERROR)
+    return -1;
+  else
+    ACE_OSCALL_RETURN (::taskSuspend (tid), int, -1);
 # endif /* ACE_HAS_STHREADS */
 #else
   ACE_UNUSED_ARG (target_thread);

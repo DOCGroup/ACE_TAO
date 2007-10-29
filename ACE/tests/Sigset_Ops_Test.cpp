@@ -27,7 +27,7 @@ ACE_RCSID(tests, Sigset_Ops_Test, "$Id$")
 void
 siglistset (sigset_t x, int *sigset, int can_miss = 0)
 {
-  int empty = 1;
+  bool empty = true;
   int result = 0;
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Signal (s) in the set = %08x:\n"), x)) ;
@@ -39,7 +39,7 @@ siglistset (sigset_t x, int *sigset, int can_miss = 0)
       if (result > 0)
         {
           ACE_DEBUG ((LM_DEBUG, ACE_TEXT (" %d\n"), i)) ;
-          empty = 0 ;
+          empty = false;
         }
       else if (can_miss)
         {

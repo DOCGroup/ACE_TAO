@@ -617,15 +617,15 @@ spawn_threads (ACCEPTOR *acceptor,
 {
   int status = 0;
 
-#if defined (VXWORKS) && !defined (ACE_HAS_PTHREADS)
+#if defined (ACE_HAS_VXTHREADS)
   // Assign thread (VxWorks task) names to test that feature.
-  ACE_thread_t *server_name;
+  ACE_hthread_t *server_name = 0;
   ACE_NEW_RETURN (server_name,
-                  ACE_thread_t[n_servers],
+                  ACE_hthread_t[n_servers],
                   -1);
 
   // And test ability to provide stacks.
-  size_t *stack_size;
+  size_t *stack_size = 0;
   ACE_NEW_RETURN (stack_size,
                   size_t[n_servers],
                   -1);
@@ -649,27 +649,26 @@ spawn_threads (ACCEPTOR *acceptor,
     }
 
   ACE_TCHAR *client_name = ACE_TEXT ("Conn client");
-#endif /* VXWORKS && !ACE_HAS_PTHREADS*/
+#endif /* ACE_HAS_VXTHREADS */
 
   if (ACE_Thread_Manager::instance ()->spawn_n
       (
-#if defined (VXWORKS) && !defined (ACE_HAS_PTHREADS)
-       server_name,
-#endif /* VXWORKS */
        n_servers,
        (ACE_THR_FUNC) server,
        (void *) acceptor,
        THR_NEW_LWP
-#if defined (VXWORKS) && !defined (ACE_HAS_PTHREADS)
        , ACE_DEFAULT_THREAD_PRIORITY
        , -1
+       , 0
+#if defined (ACE_HAS_VXTHREADS)
+       , server_name
 #if 0 /* Don't support setting of stack, because it doesn't seem to work. */
        , (void **) stack
 #else
        , 0
 #endif /* 0 */
        , stack_size
-#endif /* VXWORKS */
+#endif /* ACE_HAS_VXTHREADS */
        ) == -1)
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("(%P|%t) %p\n%a"),
@@ -679,10 +678,11 @@ spawn_threads (ACCEPTOR *acceptor,
   if (ACE_Thread_Manager::instance ()->spawn
       ((ACE_THR_FUNC) client,
        (void *) server_addr,
-       THR_NEW_LWP
-#if defined (VXWORKS) && !defined (ACE_HAS_PTHREADS)
+       THR_NEW_LWP,
+       0
+#if defined (ACE_HAS_VXTHREADS)
        , &client_name
-#endif /* VXWORKS */
+#endif /* ACE_HAS_VXTHREADS */
        ) == -1)
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("(%P|%t) %p\n%a"),
@@ -691,8 +691,8 @@ spawn_threads (ACCEPTOR *acceptor,
 
   // Wait for the threads to exit.
   // But, wait for a limited time because sometimes the test hangs on Irix.
-  const ACE_Time_Value max_wait (200 /* seconds */);
-  const ACE_Time_Value wait_time (ACE_OS::gettimeofday () + max_wait);
+  ACE_Time_Value const max_wait (200 /* seconds */);
+  ACE_Time_Value const wait_time (ACE_OS::gettimeofday () + max_wait);
   if (ACE_Thread_Manager::instance ()->wait (&wait_time) == -1)
     {
       if (errno == ETIME)
@@ -705,7 +705,7 @@ spawn_threads (ACCEPTOR *acceptor,
       status = -1;
     }
 
-#if defined (VXWORKS) && !defined (ACE_HAS_PTHREADS)
+#if defined (ACE_HAS_VXTHREADS)
   for (i = 0; i < n_servers; ++i)
     {
       delete [] server_name[i];
@@ -714,7 +714,7 @@ spawn_threads (ACCEPTOR *acceptor,
   delete [] server_name;
   delete [] stack;
   delete [] stack_size;
-#endif /* VXWORKS */
+#endif /* ACE_HAS_VXTHREADS */
 
   return status;
 }
