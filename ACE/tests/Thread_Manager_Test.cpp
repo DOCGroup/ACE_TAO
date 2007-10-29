@@ -36,7 +36,7 @@ ACE_RCSID(tests, Thread_Manager_Test, "$Id$")
 // global array.  It must be dynamically allocated to allow sizing at
 // runtime, based on the number of threads.
 static ACE_thread_t *signalled = 0;
-static u_int n_threads = ACE_MAX_THREADS;
+static size_t n_threads = ACE_MAX_THREADS;
 
 // Helper function that looks for an existing entry in the signalled
 // array.  Also finds the position of the first unused entry in the
@@ -89,11 +89,11 @@ handler (int /* signum */)
 static void *
 worker (int iterations)
 {
-#if defined (ACE_VXWORKS) && !defined (ACE_HAS_PTHREADS)
+#if defined (ACE_HAS_VXTHREADS)
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) %s: stack size is %u\n"),
               ACE_OS::thr_self (),
               ACE_OS::thr_min_stack ()));
-#endif /* ACE_VXWORKS */
+#endif /* ACE_HAS_VXTHREADS */
 
 #if !defined (ACE_LACKS_UNIX_SIGNALS)
   // Cache this thread's ID.
@@ -283,15 +283,15 @@ run_main (int, ACE_TCHAR *[])
 
   ACE_Thread_Manager *thr_mgr = ACE_Thread_Manager::instance ();
 
-#if defined (ACE_VXWORKS) && !defined (ACE_HAS_PTHREADS)
+#if defined (ACE_HAS_VXTHREADS)
   // Assign thread (VxWorks task) names to test that feature.
-  ACE_thread_t *thread_name;
+  ACE_hthread_t *thread_name = 0;
   ACE_NEW_RETURN (thread_name,
-                  ACE_thread_t[n_threads],
+                  ACE_hthread_t[n_threads],
                   -1);
 
   // And test the ability to specify stack size.
-  size_t *stack_size;
+  size_t *stack_size = 0;
   ACE_NEW_RETURN (stack_size,
                   size_t[n_threads],
                   -1);
@@ -313,23 +313,22 @@ run_main (int, ACE_TCHAR *[])
 
       stack_size[i] = 40000;
     }
-#endif /* ACE_VXWORKS && !ACE_HAS_PTHREADS */
+#endif /* ACE_HAS_VXTHREADS */
 
   int grp_id = thr_mgr->spawn_n
                  (
-#if defined (ACE_VXWORKS) && !defined (ACE_HAS_PTHREADS)
-                  thread_name,
-#endif /* ACE_VXWORKS && !ACE_HAS_PTHREADS */
                   n_threads,
                   (ACE_THR_FUNC) worker,
                   reinterpret_cast <void *> (n_iterations),
                   THR_BOUND
-#if defined (ACE_VXWORKS) && !defined (ACE_HAS_PTHREADS)
                   , ACE_DEFAULT_THREAD_PRIORITY
                   , -1
+#if defined (ACE_HAS_VXTHREADS)
+                  , 0
+                  , thread_name
                   , 0
                   , stack_size
-#endif /* ACE_VXWORKS */
+#endif /* ACE_HAS_VXTHREADS */
                   );
 
   ACE_ASSERT (grp_id != -1);
@@ -426,8 +425,8 @@ run_main (int, ACE_TCHAR *[])
 
   // Perform a barrier wait until all the threads have shut down.
   // But, wait for a limited time, just in case.
-  const ACE_Time_Value max_wait (600);
-  const ACE_Time_Value wait_time (ACE_OS::gettimeofday () + max_wait);
+  ACE_Time_Value const max_wait (600);
+  ACE_Time_Value const wait_time (ACE_OS::gettimeofday () + max_wait);
   if (thr_mgr->wait (&wait_time) == -1)
     {
       if (errno == ETIME)
@@ -443,7 +442,7 @@ run_main (int, ACE_TCHAR *[])
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) main thread finished\n")));
 
-#if defined (ACE_VXWORKS) && !defined (ACE_HAS_PTHREADS)
+#if defined (ACE_HAS_VXTHREADS)
   for (i = 0; i < n_threads - 1; ++i)
     {
       delete [] thread_name[i];
@@ -452,7 +451,7 @@ run_main (int, ACE_TCHAR *[])
     }
   delete [] thread_name;
   delete [] stack_size;
-#endif /* ACE_VXWORKS && !ACE_HAS_PTHREADS */
+#endif /* ACE_HAS_VXTHREADS */
 
   delete thread_start;
   thread_start = 0;

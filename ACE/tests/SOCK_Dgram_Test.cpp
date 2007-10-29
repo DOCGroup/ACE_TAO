@@ -225,8 +225,11 @@ spawn (int proto)
     {
       if (server_addr.get_port_number() != SERVER_PORT)
         {
+          ACE_TCHAR hostname_string[100];
+          server_addr.addr_to_string (hostname_string, 100);
           ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT("(%P|%t) Portnumber has unexpected value\n")), 1);
+                             ACE_TEXT("(%P|%t) Portnumber has unexpected value of %d on host %s\n"),
+                             server_addr.get_port_number(), hostname_string), 1);
         }
       else
         {

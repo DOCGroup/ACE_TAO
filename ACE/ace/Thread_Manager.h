@@ -589,7 +589,7 @@ public:
    *
    * @param timeout is treated as "absolute" time by default, but this
    *                can be changed to "relative" time by setting the @c
-   *                use_absolute_time to 0.
+   *                use_absolute_time to false.
    * @param abandon_detached_threads If non-0, @c wait() will first
    *                                 check thru its thread list for
    *                                 threads with THR_DETACHED or

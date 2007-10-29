@@ -592,30 +592,25 @@ ACE_Thread_Manager::spawn_i (ACE_THR_FUNC func,
   ACE_hthread_t thr_handle;
 
 #if defined (ACE_HAS_VXTHREADS)
-  // On VxWorks, ACE_thread_t is char *.  If t_id is 0, allocate space
-  // for ACE_OS::thr_create () to store the task name.  If t_id is not
-  // 0, and it doesn't point to a 0 char *, then the non-zero char *
-  // will be used for the task name in ACE_OS::thr_create ().  If t_id
-  // is not 0, but does point to a 0 char *, the t_id will be set to
-  // point to the task name in the TCB in ACE_OS::thr_create ().
-  if (t_id == 0)
+  if (t_handle != 0)
     {
-       ACE_NEW_RETURN (t_id,
-                       char*,
-                       -1);
-       ACE_NEW_RETURN (*t_id,
-                       char[16],
-                       -1);
-       // Mark the thread ID to show that the ACE_Thread_Manager
-       // allocated it.
-       (*t_id)[0] = ACE_THR_ID_ALLOCATED;
-       (*t_id)[1] = '\0';
+      thr_handle = *t_handle;
     }
-#else  /* ! ACE_HAS_VXTHREADS */
+  else
+    {
+      ACE_NEW_RETURN (thr_handle,
+                      char[16],
+                      -1);
+      // Mark the thread ID to show that the ACE_Thread_Manager
+      // allocated it.
+      thr_handle[0] = ACE_THR_ID_ALLOCATED;
+      thr_handle[1] = '\0';
+    }
+#endif  /* !ACE_HAS_VXTHREADS */
+
   ACE_thread_t thr_id;
   if (t_id == 0)
     t_id = &thr_id;
-#endif /* ! ACE_VXTHREADS */
 
   // Acquire the <sync_> lock to block the spawned thread from
   // removing this Thread Descriptor before it gets put into our
@@ -875,13 +870,8 @@ ACE_Thread_Manager::insert_thr (ACE_thread_t t_id,
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
 
   // Check for duplicates and bail out if we're already registered...
-#if defined (ACE_HAS_VXTHREADS)
-  if (this->find_hthread (t_handle) != 0 )
-    return -1;
-#else  /* ! ACE_HAS_VXTHREADS */
   if (this->find_thread (t_id) != 0 )
     return -1;
-#endif /* ! ACE_HAS_VXTHREADS */
 
   if (grp_id == -1)
     grp_id = this->grp_id_++;
@@ -931,18 +921,14 @@ ACE_Thread_Manager::remove_thr (ACE_Thread_Descriptor *td,
 {
   ACE_TRACE ("ACE_Thread_Manager::remove_thr");
 
-#if defined (ACE_HAS_VXTHREADS)
-  ACE_thread_t tid = td->self ();
-#endif /* ACE_VXWORKS */
-
   td->tm_ = 0;
   this->thr_list_.remove (td);
 
 #if defined (ACE_HAS_VXTHREADS)
   // Delete the thread ID, if the ACE_Thread_Manager allocated it.
-  if (tid  &&  tid[0] == ACE_THR_ID_ALLOCATED)
+  if (td->thr_handle_ && td->thr_handle_[0] == ACE_THR_ID_ALLOCATED)
     {
-      delete [] tid;
+      delete [] td->thr_handle_;
     }
 #endif /* ACE_HAS_VXTHREADS */
 
@@ -1063,10 +1049,6 @@ ACE_Thread_Manager::kill_thr (ACE_Thread_Descriptor *td, int signum)
   ACE_TRACE ("ACE_Thread_Manager::kill_thr");
 
   ACE_thread_t tid = td->thr_id_;
-#if defined (ACE_HAS_VXTHREADS)
-  // Skip over the ID-allocated marker, if present.
-  tid += tid[0] == ACE_THR_ID_ALLOCATED  ?  1  :  0;
-#endif /* ACE_VXWORKS */
 
   int const result = ACE_Thread::kill (tid, signum);
 
@@ -1613,14 +1595,8 @@ ACE_Thread_Manager::exit (ACE_THR_FUNC_RETURN status, int do_thr_exit)
 
     // Find the thread id, but don't use the cache.  It might have been
     // deleted already.
-#if defined (ACE_HAS_VXTHREADS)
-    ACE_hthread_t id;
-    ACE_OS::thr_self (id);
-    ACE_Thread_Descriptor* td = this->find_hthread (id);
-#else  /* ! ACE_HAS_VXTHREADS */
     ACE_thread_t id = ACE_OS::thr_self ();
     ACE_Thread_Descriptor* td = this->find_thread (id);
-#endif /* ! ACE_VXTHREADS */
     if (td != 0)
      {
        // @@ We call Thread_Descriptor terminate this realize the cleanup
@@ -1915,7 +1891,7 @@ ACE_Thread_Manager::find_task (ACE_Task_Base *task, size_t slot)
       if (task == iter.next ()->task_)
         return iter.next ();
 
-      i++;
+      ++i;
     }
 
   return 0;
@@ -2081,10 +2057,10 @@ ACE_Thread_Manager::task_list (int grp_id,
           && this->find_task (iter.next ()->task_, i) == 0)
         {
           task_list_iterator[task_list_count] = iter.next ()->task_;
-          task_list_count++;
+          ++task_list_count;
         }
 
-      i++;
+      ++i;
     }
 
   return task_list_count;
@@ -2141,7 +2117,7 @@ ACE_Thread_Manager::hthread_list (ACE_Task_Base *task,
       if (iter.next ()->task_ == task)
         {
           hthread_list[hthread_count] = iter.next ()->thr_handle_;
-          hthread_count++;
+          ++hthread_count;
         }
     }
 

@@ -1,3 +1,41 @@
+Mon Oct 29 14:17:15 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/ARGV.h:
+          Made several constructor explicit
+
+        * ace/OS_NS_Thread.cpp:
+        * ace/OS_NS_Thread.h:
+        * ace/OS_NS_Thread.inl:
+        * ace/Thread_Manager.cpp:
+        * ace/Thread_Manager.h:
+          Switched ACE_thread_t and ACE_hthread_t definitions for VxWorks
+          with task support. ACE_thread_t is now an int, ACE_hthread_t is
+          a char*. This improves speed and solves possible raise conditions
+          with the TP_Reactor, see bugzilla 2441. The new code can be
+          refactored a little bit more, but that will be a seperate iteration.
+
+        * tests/Bound_Ptr_Test.cpp:
+          Initialize some pointers with 0 and replaced some ACE_ASSERT with if
+          checks
+
+        * tests/Conn_Test.cpp:
+        * tests/Thread_Manager_Test.cpp:
+          Updates for ACE_thread_t/ACE_hthread_t change
+
+        * tests/Dirent_Test.cpp:
+          Fixed default path which caused runtime failure on VxWorks
+
+        * tests/Sigset_Ops_Test.cpp:
+          Use bool
+
+        * tests/SOCK_Dgram_Bcast_Test.cpp:
+        * tests/SOCK_Dgram_Test.cpp:
+        * tests/Thread_Creation_Threshold_Test.cpp:
+          Extended error information
+
+        * tests/Thread_Pool_Reactor_Test.cpp:
+          Removed chorus check
+
 Mon Oct 29 12:42:34 UTC 2007  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * ace/OS_NS_stdio.cpp:

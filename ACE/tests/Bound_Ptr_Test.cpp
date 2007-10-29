@@ -378,11 +378,13 @@ run_main (int, ACE_TCHAR *[])
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) Parent instance count is %d, expecting 0\n"),
               Parent::instance_count_));
-  ACE_ASSERT (Parent::instance_count_ == 0);
+  if (Parent::instance_count_ != 0)
+    return -1;
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) Child instance count is %d, expecting 0\n"),
               Child::instance_count_));
-  ACE_ASSERT (Child::instance_count_ == 0);
+  if (Child::instance_count_ != 0)
+    return -1;
   // Weak pointer should now be set to null.
   ACE_ASSERT (p8.null ());
 
@@ -420,7 +422,7 @@ run_main (int, ACE_TCHAR *[])
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) performing asynchronous test...\n")));
 
-  Scheduler *scheduler_ptr;
+  Scheduler *scheduler_ptr = 0;
 
   // Create active objects..
   ACE_NEW_RETURN (scheduler_ptr,
@@ -432,7 +434,7 @@ run_main (int, ACE_TCHAR *[])
   ACE_ASSERT (scheduler->open () != -1);
 
   {
-    Printer *printer2;
+    Printer *printer2 = 0;
     ACE_NEW_RETURN (printer2,
                     Printer ("I am printer 2"),
                     -1);
@@ -455,7 +457,8 @@ run_main (int, ACE_TCHAR *[])
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) Printer instance count is %d, expecting 0\n"),
               Printer::instance_count_));
-  ACE_ASSERT (Printer::instance_count_ == 0);
+  if (Printer::instance_count_ != 0)
+    return -1;
 
 #endif /* ACE_HAS_THREADS */
   ACE_END_TEST;
