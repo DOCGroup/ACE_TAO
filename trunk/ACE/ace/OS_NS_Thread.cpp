@@ -3872,17 +3872,6 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
     stacksize = ACE_NEEDS_HUGE_THREAD_STACKSIZE;
 # endif /* ACE_NEEDS_HUGE_THREAD_STACKSIZE */
 
-# if !(defined (ACE_VXWORKS) && !defined (ACE_HAS_PTHREADS))
-  // On VxWorks, using the task API, the OS will provide a task name if
-  // the user doesn't. So, we don't need to create a tmp_thr.  If the
-  // caller of this member function is the Thread_Manager, than thr_id
-  // will be non-zero anyways.
-  ACE_thread_t tmp_thr;
-
-  if (thr_id == 0)
-    thr_id = &tmp_thr;
-# endif /* !(ACE_VXWORKS && !ACE_HAS_PTHREADS) */
-
   ACE_hthread_t tmp_handle;
   if (thr_handle == 0)
     thr_handle = &tmp_handle;
@@ -4498,10 +4487,10 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
   if (flags == 0) flags = VX_FP_TASK;
   if (stacksize == 0) stacksize = 20000;
 
-  const u_int thr_id_provided =
-    thr_id  &&  *thr_id  &&  (*thr_id)[0] != ACE_THR_ID_ALLOCATED;
+  const bool thr_h_provided =
+    thr_handle && *thr_handle && (*thr_handle)[0] != ACE_THR_ID_ALLOCATED;
 
-  ACE_hthread_t tid;
+  ACE_thread_t tid;
 #   if 0 /* Don't support setting of stack, because it doesn't seem to work. */
   if (stack == 0)
     {
@@ -4511,7 +4500,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
       // The call below to ::taskSpawn () causes VxWorks to assign a
       // unique task name of the form: "t" + an integer, because the
       // first argument is 0.
-      tid = ::taskSpawn (thr_id_provided  ?  *thr_id  :  0,
+      tid = ::taskSpawn (thr_h_provided  ?  *thr_handle  :  0,
                          priority,
                          (int) flags,
                          (int) stacksize,
@@ -4546,7 +4535,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
           status = ::taskActivate ((ACE_hthread_t) tcb);
         }
 
-      tid = status == OK  ?  (ACE_hthread_t) tcb  :  ERROR;
+      tid = status == OK  ?  (ACE_thread_t) tcb  :  ERROR;
     }
 #   endif /* 0 */
 
@@ -4554,9 +4543,9 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
     return -1;
   else
     {
-      if (! thr_id_provided && thr_id)
+      if (!thr_h_provided && thr_handle)
         {
-          if (*thr_id && (*thr_id)[0] == ACE_THR_ID_ALLOCATED)
+          if (*thr_handle && (*thr_handle)[0] == ACE_THR_ID_ALLOCATED)
             // *thr_id was allocated by the Thread_Manager.  ::taskTcb
             // (int tid) returns the address of the WIND_TCB (task
             // control block).  According to the ::taskSpawn()
@@ -4564,19 +4553,18 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
             // pStackBase, but is that of the current task?  If so, it
             // might be a bit quicker than this extraction of the tcb
             // . . .
-            ACE_OS::strsncpy (*thr_id + 1, ::taskName (tid), 10);
+            ACE_OS::strsncpy (*thr_handle + 1, ::taskName (tid), 10);
           else
             // *thr_id was not allocated by the Thread_Manager.
             // Pass back the task name in the location pointed to
             // by thr_id.
-            *thr_id = ::taskName (tid);
+            *thr_handle = ::taskName (tid);
         }
       // else if the thr_id was provided, there's no need to overwrite
       // it with the same value (string).  If thr_id is 0, then we can't
       // pass the task name back.
-
-      if (thr_handle)
-        *thr_handle = tid;
+      if (thr_id)
+        *thr_id = tid;
 
       auto_thread_args.release ();
       return 0;
@@ -4651,9 +4639,8 @@ ACE_OS::thr_exit (ACE_THR_FUNC_RETURN status)
     ACE_ENDTHREADEX (status);
 #   endif /* ACE_HAS_MFC && ACE_HAS_MFS != 0*/
 
-# elif defined (ACE_VXWORKS)
-    ACE_hthread_t tid;
-    ACE_OS::thr_self (tid);
+# elif defined (ACE_HAS_VXTHREADS)
+    ACE_thread_t tid = ACE_OS::thr_self ();
     *((int *) status) = ::taskDelete (tid);
 # endif /* ACE_HAS_PTHREADS */
 #else
@@ -4685,6 +4672,15 @@ ACE_OS::thr_join (ACE_hthread_t thr_handle,
   int retval = ESRCH;
   ACE_hthread_t current;
   ACE_OS::thr_self (current);
+  ACE_thread_t tid;
+  // Skip over the ID-allocated marker, if present.
+  thr_handle += thr_handle[0] == ACE_THR_ID_ALLOCATED  ?  1  :  0;
+  ACE_OSCALL (::taskNameToId (thr_handle), int, ERROR, tid);
+
+  // If we can't convert task name to id we assume the thread has already
+  // exited
+  if (tid == ERROR)
+    return 0;
 
   // Make sure we are not joining ourself
   if (ACE_OS::thr_cmp (thr_handle, current))
@@ -4698,7 +4694,7 @@ ACE_OS::thr_join (ACE_hthread_t thr_handle,
       retval = 0;
 
       // Verify that the task id still exists
-      while (taskIdVerify (thr_handle) == OK)
+      while (taskIdVerify (tid) == OK)
         {
           // Wait a bit to see if the task is still active.
           ACE_OS::sleep (ACE_THR_JOIN_DELAY);
@@ -4723,7 +4719,7 @@ ACE_OS::thr_join (ACE_thread_t waiter_id,
                   ACE_THR_FUNC_RETURN *status)
 {
   thr_id = 0;
-  return ACE_OS::thr_join (taskNameToId (waiter_id), status);
+  return ACE_OS::thr_join ( ::taskName(waiter_id), status);
 }
 #endif /* ACE_HAS_VXTHREADS */
 

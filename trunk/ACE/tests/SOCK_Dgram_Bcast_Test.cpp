@@ -112,11 +112,16 @@ int run_receiver ()
         return 0;
       }
     else
-      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
-                         ACE_TEXT ("Cannot receive datagrams")), -1);
-
-  ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
-                     ACE_TEXT ("Cannot open broadcast socket")), -1);
+      {
+        ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
+                           ACE_TEXT ("Cannot receive datagrams")), -1);
+      }
+  else
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p: %d\n"),
+                         ACE_TEXT ("Cannot open broadcast socket on port"), dgram_port), -1);
+    }
 }
 
 #if !defined (ACE_HAS_PROCESS_SPAWN) && defined (ACE_HAS_THREADS)

@@ -382,7 +382,9 @@ run_main (int, ACE_TCHAR *[])
       TestDir += ACE_TEXT ("tests");
     }
   else
-    TestDir = ACE_TEXT ("../test");
+    {
+      TestDir = ACE_TEXT ("../tests");
+    }
 #endif /* TEST_DIR */
 
   int status = 0;
