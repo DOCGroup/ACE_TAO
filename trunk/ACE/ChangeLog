@@ -1,3 +1,13 @@
+Mon Oct 29 16:35:09 UTC 2007  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * ace/OS_NS_stdio.cpp:
+        * ace/os_include/os_stdarg.h:
+
+          Move workaround for the lack of va_copy() macro from
+          OS_NS_stdio.cpp to os_include/os_stdarg.h.
+
+          Thanks to Johnny Willemsen for suggesting this improvement.
+
 Mon Oct 29 16:10:07 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * bin/fuzz.pl:
