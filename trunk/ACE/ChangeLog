@@ -1,3 +1,14 @@
+Mon Oct 29 12:42:34 UTC 2007  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * ace/OS_NS_stdio.cpp:
+
+          Add workarounds for systems without va_copy() macro.  Use
+          __va_copy() on systems that have it, otherwise memcpy().
+
+          Use 0 instead of NULL for portability.
+
+          Thanks to Johnny Willemsen for pointing out these errors.
+
 Mon Oct 29 12:26:15 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/run_test.lst:
