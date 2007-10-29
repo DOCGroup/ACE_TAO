@@ -1,3 +1,11 @@
+Mon Oct 29 12:26:15 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/run_test.lst:
+          Don't run Signal_Test and Bug_2659_Regression_Test on VxWorks
+          6.4 and 6.5. These kernels have a bug which causes these tests
+          to fail. According to WindRiver support the issue will be
+          resolved with VxWorks 6.6
+
 Mon Oct 29 07:30:15 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_stdio.inl:
