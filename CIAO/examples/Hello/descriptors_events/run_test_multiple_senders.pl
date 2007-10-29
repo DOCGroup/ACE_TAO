@@ -20,7 +20,7 @@ $daemons = 2;
 @senderiors = ( "Sender01.ior", "Sender02.ior", "Sender03.ior");
 $status = 0;
 $dat_file = "NodeManagerMap.dat";
-$cdp_file = "flattened_deploymentplan_multiple_senders.cdp";
+$cdp_file = "deploymentplan_multiple_senders.cdp";
 $controller_exec = "$CIAO_ROOT/examples/Hello/Sender/starter";
 
 $nsior = PerlACE::LocalFile ("ns.ior");

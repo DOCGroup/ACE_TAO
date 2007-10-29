@@ -8,5 +8,5 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 use RunEventTest;
 
 exit RunEventTest::run_test (
-       "flattened_deploymentplan_with_filters.cdp", 
+       "deploymentplan_with_filters.cdp", 
        "NodeManagerMap_collocated.dat");
