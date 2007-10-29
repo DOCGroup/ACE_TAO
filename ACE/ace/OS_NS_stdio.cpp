@@ -12,6 +12,10 @@ ACE_RCSID (ace,
 # include "ace/OS_NS_stdio.inl"
 #endif /* ACE_HAS_INLINED_OSCALLS */
 
+#if !defined (va_copy) && defined (__va_copy)
+#define va_copy(d,s) __va_copy((d),(s))
+#endif
+
 # if defined (ACE_WIN32)
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -397,8 +401,12 @@ ACE_OS::vasprintf_emulation(char **bufp, const char *format, va_list argptr)
   int size;
 
   va_list ap;
+#ifdef va_copy
   va_copy (ap, argptr);
-  size = ACE_OS::vsnprintf(NULL, 0, format, ap);
+#else
+  memcpy ((void *) &ap, (void *) &argptr, sizeof (va_list));
+#endif
+  size = ACE_OS::vsnprintf(0, 0, format, ap);
   va_end (ap);
 
   if (size != -1) 
@@ -408,7 +416,11 @@ ACE_OS::vasprintf_emulation(char **bufp, const char *format, va_list argptr)
 	return -1;
 
       va_list aq;
+#ifdef va_copy
       va_copy (aq, argptr);
+#else
+      memcpy ((void *) &aq, (void *) &argptr, sizeof (va_list));
+#endif
       size = ACE_OS::vsnprintf(buf, size + 1, format, aq);
       va_end (aq);
 
@@ -428,8 +440,12 @@ ACE_OS::vaswprintf_emulation(wchar_t **bufp, const wchar_t *format, va_list argp
   int size;
 
   va_list ap;
+#ifdef va_copy
   va_copy (ap, argptr);
-  size = ACE_OS::vsnprintf(NULL, 0, format, ap);
+#else
+  memcpy ((void *) &ap, (void *) &argptr, sizeof (va_list));
+#endif
+  size = ACE_OS::vsnprintf(0, 0, format, ap);
   va_end (ap);
 
   if (size != -1) 
@@ -440,7 +456,11 @@ ACE_OS::vaswprintf_emulation(wchar_t **bufp, const wchar_t *format, va_list argp
 	return -1;
 
       va_list aq;
+#ifdef va_copy
       va_copy (aq, argptr);
+#else
+      memcpy ((void *) &aq, (void *) &argptr, sizeof (va_list));
+#endif
       size = ACE_OS::vsnprintf(buf, size + 1, format, aq);
       va_end (aq);
 
