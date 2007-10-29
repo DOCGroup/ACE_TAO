@@ -309,7 +309,7 @@ public:
  *
  *
  *     This class has all the information necessary for the
- *     <handler> to uniquiely identify the completion of the
+ *     @c handler to uniquiely identify the completion of the
  *     asynchronous write.
  */
 class ACE_Export ACE_POSIX_Asynch_Write_Stream_Result : public virtual ACE_Asynch_Write_Stream_Result_Impl,
@@ -440,7 +440,7 @@ protected:
  *
  *     Once <open> is called, multiple asynchronous <read>s can
  *     started using this class.  A <ACE_Asynch_Read_File::Result>
- *     will be passed back to the <handler> when the asynchronous
+ *     will be passed back to the @c handler when the asynchronous
  *     reads completes through the <ACE_Handler::handle_read_file>
  *     callback.
  *
@@ -492,12 +492,12 @@ private:
  *     <ACE_Asynch_Write_File_Result> for POSIX platforms.
  *
  *     This class has all the information necessary for the
- *     <handler> to uniquiely identify the completion of the
+ *     @c handler to uniquiely identify the completion of the
  *     asynchronous write.
  *
  *     This class differs slightly from
  *     <ACE_Asynch_Write_Stream::Result> as it calls back
- *     <ACE_Handler::handle_write_file> on the <handler> instead of
+ *     <ACE_Handler::handle_write_file> on the @c handler instead of
  *     <ACE_Handler::handle_write_stream>.  No additional state is
  *     required by this class as <ACE_Asynch_Result> can store the
  *     @a offset.
@@ -684,7 +684,7 @@ public:
   /**
    * This starts off an asynchronous accept.  The asynchronous accept
    * call also allows any initial data to be returned to the
-   * <handler>.  Upto @a bytes_to_read will be read and stored in the
+   * @c handler.  Upto @a bytes_to_read will be read and stored in the
    * @a message_block.  The <accept_handle> will be used for the
    * <accept> call.  If (<accept_handle> == INVALID_HANDLE), a new
    * handle will be created.

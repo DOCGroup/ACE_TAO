@@ -572,7 +572,7 @@ private:
 
   // = Set by command-line options.
   /// Shall we become a daemon process?
-  static int be_a_daemon_;
+  static bool be_a_daemon_;
 
   /// Pathname of file to write process id.
   static ACE_TCHAR *pid_file_name_;
