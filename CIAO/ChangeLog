@@ -1,3 +1,26 @@
+Mon Oct 29 01:37:04 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
+
+        * examples/Hello/descriptors_RTCCM/rt-config-example.cdp:
+        * examples/Hello/descriptors_RTCCM/rt-example.cdp:
+        * examples/Hello/descriptors_ReDaC/deploymentplan.cdp:
+        * examples/Hello/descriptors_ReDaC/deploymentplan_add.cdp:
+        * examples/Hello/descriptors_ReDaC/deploymentplan_remove.cdp:
+        * examples/Hello/descriptors_events/flattened_deploymentplan_events.cdp:
+        * examples/Hello/descriptors_events/flattened_deploymentplan_events_collocated.cdp:
+        * examples/Hello/descriptors_events/flattened_deploymentplan_federation.cdp:
+        * examples/Hello/descriptors_events/flattened_deploymentplan_federation_mcast.cdp:
+        * examples/Hello/descriptors_events/flattened_deploymentplan_federation_udp.cdp:
+        * examples/Hello/descriptors_events/flattened_deploymentplan_federation_udp_collocated.cdp:
+        * examples/Hello/descriptors_events/flattened_deploymentplan_federation_udp_two_hosts.cdp:
+        * examples/Hello/descriptors_events/flattened_deploymentplan_multiple_senders.cdp:
+        * examples/Hello/descriptors_events/flattened_deploymentplan_with_filters.cdp:
+        * examples/Hello/descriptors_naming/deploymentplan_naming.cdp:
+        * examples/Hello/descriptors_shared_components/deploymentplan.cdp:
+        * examples/Hello/descriptors_shared_components/deploymentplan_shared_components.cdp:
+
+          Recent changes to MPC files changed library names. As such,
+          the example was failing. Correct the library names in the files above.
+
 Sun Oct 28 19:11:39 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * examples/Hello/descriptors/DeploymentPlan.cdp:
