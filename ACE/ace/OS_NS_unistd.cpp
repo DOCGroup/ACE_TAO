@@ -213,8 +213,23 @@ ACE_OS::fork (const ACE_TCHAR *program_name)
 #endif /* ACE_HAS_STHREADS */
 
 #if !defined (ACE_HAS_MINIMAL_ACE_OS)
+#if !defined (ACE_HAS_THREADS)
+
+  // ACE_Base_Thread_Adapter::sync_log_msg() is used to update the
+  // program name and process id in ACE's log framework.  However, we
+  // can't invoke it from (the child process of) threaded programs
+  // because it calls async signal unsafe functions, which will result
+  // in undefined behavior (only async signal safe functions can be
+  // called after fork() until an exec()).
+  //
+  // This is no great loss.  Using the ACE log framework in the child
+  // process will undoubtedly call async signal unsafe functions too.
+  // So it doesn't really matter that the program name and process id
+  // will not be updated.
+  
   if (pid == 0)
     ACE_Base_Thread_Adapter::sync_log_msg (program_name);
+#endif /* ! ACE_HAS_THREADS */
 #endif /* ! ACE_HAS_MINIMAL_ACE_OS */
 
   return pid;
