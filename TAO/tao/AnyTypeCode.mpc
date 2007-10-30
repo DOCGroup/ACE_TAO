@@ -109,7 +109,9 @@ project : taolib, install, extra_anytypecode, tao_versioning_idl_defaults, nolin
     AnyTypeCode/OctetSeqA.h
     AnyTypeCode/PI_ForwardA.h
     AnyTypeCode/ParameterModeA.h
+    AnyTypeCode/Policy_CurrentA.h
     AnyTypeCode/Policy_ForwardA.h
+    AnyTypeCode/Policy_ManagerA.h
     AnyTypeCode/PortableInterceptorA.h
     AnyTypeCode/ServicesA.h
     AnyTypeCode/ShortSeqA.h
