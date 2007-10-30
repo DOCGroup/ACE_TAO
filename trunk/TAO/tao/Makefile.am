@@ -1319,16 +1319,19 @@ nobase_include_HEADERS = \
   PolicyS.h \
   Policy_Current.h \
   Policy_Current.inl \
+  Policy_Current.pidl \
   Policy_CurrentC.h \
+  Policy_CurrentS.h \
   Policy_Current_Impl.h \
   Policy_Current_Impl.inl \
-  Policy_Forward.pidl \
   Policy_Forward.pidl \
   Policy_ForwardC.h \
   Policy_ForwardS.h \
   Policy_Manager.h \
   Policy_Manager.inl \
+  Policy_Manager.pidl \
   Policy_ManagerC.h \
+  Policy_ManagerS.h \
   Policy_Set.h \
   Policy_Set.inl \
   Policy_Validator.h \
@@ -1918,7 +1921,9 @@ nobase_include_HEADERS += \
   AnyTypeCode/PI_ForwardA.h \
   AnyTypeCode/ParameterModeA.h \
   AnyTypeCode/PolicyA.h \
+  AnyTypeCode/Policy_CurrentA.h \
   AnyTypeCode/Policy_ForwardA.h \
+  AnyTypeCode/Policy_ManagerA.h \
   AnyTypeCode/PortableInterceptorA.h \
   AnyTypeCode/Recursive_Type_TypeCode.cpp \
   AnyTypeCode/Recursive_Type_TypeCode.h \
