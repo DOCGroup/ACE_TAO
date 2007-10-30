@@ -1,3 +1,12 @@
+Tue Oct 30 14:51:21 UTC 2007  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * ace/OS_NS_unistd.cpp:
+
+          Changed ACE_OS::fork() to not call ACE_Base_Thread_Adapter::
+          sync_log_msg() if ACE_HAS_THREADS.  sync_log_msg() will call
+          async signal unsafe functions, which results in undefined
+          behavior.
+
 Tue Oct 30 14:29:31 UTC 2007  Abdullah Sowayan  <abdullah.sowayan@lmco.com>
 
         * bin/msvc_static_order.lst:
