@@ -29,13 +29,16 @@ exceptions ?= 1
 rtp ?= 1
 pthread ?= 1
 xerces ?= 0
+versioned_so ?= 0
 
 ifeq ($(static_libs),1)
   shared_libs = 0
 else
   static_libs = 0
 endif
-versioned_so ?= 0
+ifeq ($(static_libs_only),1)
+  shared_libs = 0
+endif
 
 # VxWorks doesn't have rwho
 rwho = 0

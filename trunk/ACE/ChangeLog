@@ -1,3 +1,10 @@
+Tue Oct 30 10:56:15 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_vxworks5.5.x.GNU:
+        * include/makeinclude/platform_vxworks6.2.GNU:
+        * include/makeinclude/platform_vxworks6.3.GNU:
+          Support static_libs_only=1 correctly
+
 Mon Oct 29 16:35:09 UTC 2007  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * ace/OS_NS_stdio.cpp:
