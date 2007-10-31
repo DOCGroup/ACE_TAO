@@ -1,3 +1,9 @@
+Wed Oct 31 04:09:15 UTC 2007  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * docs/Options.html:
+
+          Fix typo in -ORBGestalt description.
+
 Tue Oct 30 13:54:31 UTC 2007  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * tao/Makefile.am:
