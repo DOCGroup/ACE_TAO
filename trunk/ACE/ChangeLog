@@ -1,3 +1,9 @@
+Wed Oct 31 13:54:15 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/PerlACE/ProcessVX_Win32.pm:
+          Updated to work with the new test setup for VxWorks. Thanks to
+          Martin Corino for updating this file
+
 Wed Oct 31 13:38:39 UTC 2007  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * ace/OS_NS_unistd.cpp:
