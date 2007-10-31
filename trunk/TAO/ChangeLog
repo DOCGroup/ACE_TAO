@@ -1,3 +1,13 @@
+Wed Oct 31 14:44:23 UTC 2007  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * tests/Bug_2417_Regression/publisher_impl.cpp:
+
+          This test used ACE_Guards that take ownership of a mutex.  But
+          since the mutex had never been acquired, critical regions were
+          not protected, and the unacquired mutex was released, which is
+          undefined behavior.  Changed to use the other constructor that
+          acquires the mutex, blocking if necessary.
+
 Wed Oct 31 13:47:28 UTC 2007  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * tests/OBV/TC_Alignment/run_test.pl:
