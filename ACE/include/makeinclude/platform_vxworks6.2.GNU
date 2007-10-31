@@ -244,8 +244,6 @@ else
     LDFLAGS          = $(ACE_SHLIBS)
   endif
 endif
-else
-  C++FLAGS += -fimplicit-templates
 endif
 endif
 
