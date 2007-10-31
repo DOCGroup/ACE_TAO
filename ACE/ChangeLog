@@ -1,3 +1,9 @@
+Wed Oct 31 12:17:15 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_vxworks6.2.GNU:
+        * include/makeinclude/platform_vxworks6.3.GNU:
+          Improved VxWorks 6.x support
+
 Tue Oct 30 14:51:21 UTC 2007  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * ace/OS_NS_unistd.cpp:

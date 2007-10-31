@@ -293,8 +293,6 @@ else
     endif
   endif
 endif
-else
-  C++FLAGS += -fimplicit-templates
 endif
 endif
 
