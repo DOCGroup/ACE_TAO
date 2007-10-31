@@ -1,3 +1,9 @@
+Wed Oct 31 13:38:39 UTC 2007  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * ace/OS_NS_unistd.cpp:
+
+          Add ACE_UNUSED_ARG for ACE_HAS_THREADS case.
+
 Wed Oct 31 12:17:15 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_vxworks6.2.GNU:
