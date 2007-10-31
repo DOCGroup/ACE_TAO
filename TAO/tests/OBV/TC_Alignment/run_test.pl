@@ -55,7 +55,7 @@ if (PerlACE::waitforfile_timed ($iorfile,
 
 print STDERR $CL->CommandLine(), "\n";
 
-$client = $CL->SpawnWaitKill (10);
+$client = $CL->SpawnWaitKill (15);
 
 if ($client != 0) {
     print STDERR "ERROR: client returned $client\n";

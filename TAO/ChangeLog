@@ -1,3 +1,13 @@
+Wed Oct 31 13:47:28 UTC 2007  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * tests/OBV/TC_Alignment/run_test.pl:
+
+          Change client timeout from 10 to 15 seconds.  Calibrating the
+          high resolution timer used within the ORB takes ~5 seconds on
+          some platforms.  This happens once in the server, once in the
+          client, at different times.  This causes the test to run in
+          just over 10 seconds.
+
 Wed Oct 31 10:31:15 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * performance-tests/Cubit/TAO/MT_Cubit/client.cpp:
@@ -38,7 +48,6 @@ Tue Oct 30 13:54:31 UTC 2007  J.T. Conklin  <jtc@acorntoolworks.com>
 
           Add AnyTypeCode/Policy_CurrentA.h,
           AnyTypeCode/Policy_ManagerA.h to Header_Files section.
-
 
 Mon Oct 29 14:31:15 UTC 2007  Johnny Willemsen  <jwillemsen@remedy.nl>
 
